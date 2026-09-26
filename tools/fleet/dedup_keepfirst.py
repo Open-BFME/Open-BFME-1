@@ -6,10 +6,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2 if Path(__file__).resolve().parent.name == "fleet" else 1]
 sys.path.insert(0, str(ROOT / "tools"))
 import os, ledger_io, portable_lock
-with open(ROOT / "reverse/.add_match.lock", "a+") as h:
+with open(ROOT / "targets/game/reverse/.add_match.lock", "a+") as h:
     if not os.environ.get("HARVEST_HAS_LOCK"):
         portable_lock.lock(h, exclusive=True)
-    for name in ("reverse/functions.csv", "reverse/symbols.csv"):
+    for name in ("targets/game/reverse/functions.csv", "targets/game/reverse/symbols.csv"):
         p = ROOT / name
         raw = p.read_bytes()
         seen = set()

@@ -2,12 +2,12 @@
 
 Two frozen populations for `test_boundary_validator.py`. They are committed
 rather than rebuilt in-test because both derive from inputs the fleet rewrites
-every few minutes (`reverse/functions.csv`, `reverse/re_attempts.log`,
-`reverse/zh_sweep/drift_report.csv`), and a measurement whose population moves
+every few minutes (`targets/game/reverse/functions.csv`, `targets/game/reverse/re_attempts.log`,
+`targets/game/reverse/zh_sweep/drift_report.csv`), and a measurement whose population moves
 under you is not a measurement. The Ghidra inventory is pinned the same way, by
 the commit named in that test.
 
-- `dead_ends.csv` — 2,291 `no-match` rows from `reverse/re_attempts.log` whose
+- `dead_ends.csv` — 2,291 `no-match` rows from `targets/game/reverse/re_attempts.log` whose
   boundary could be resolved to an rva and a size (from the row's own evidence
   text, else the drift candidate it was queued from, else the ledger). Each one
   is a work slot the fleet already spent proving the address was wrong.

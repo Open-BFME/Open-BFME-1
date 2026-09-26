@@ -1,9 +1,9 @@
 # Byte-exact payloads the build verifies by hash; EOL normalization on any of
 # these (including the toolchain's headers) would silently break byte-matching.
-baselines/** -text
-build/toolchains/vs2003/** -text
+inputs/baselines/** -text
+inputs/toolchains/vs2003/** -text
 
-# The built mod executable. Same reasoning as baselines/: it is a byte-exact
+# The built mod executable. Same reasoning as inputs/baselines/: it is a byte-exact
 # artifact whose hash is recorded in mods/dist/manifest.json, and any EOL
 # normalization would corrupt it.
 mods/dist/** -text
@@ -13,21 +13,21 @@ mods/dist/** -text
 # markers, so parallel row appends never conflict. Run tools/dedup_csv.py after
 # a merge if the full build reports a duplicate/overlap (two agents claimed one
 # shared COMDAT address).
-reverse/functions.csv merge=union
-reverse/symbols.csv merge=union
+targets/game/reverse/functions.csv merge=union
+targets/game/reverse/symbols.csv merge=union
 # The counterweight to functions.csv being union-merged: a deletion there is
 # invisible to a merge, and this file is the only record of one. It has to
 # union-merge too, or retracting a batch of rows conflicts with every branch in
 # flight at exactly the moment the escape hatch is needed.
-reverse/deleted_rows.csv merge=union
-reverse/re_attempts.log merge=union
+targets/game/reverse/deleted_rows.csv merge=union
+targets/game/reverse/re_attempts.log merge=union
 # so it deliberately gets no union merge.
 
 # Target ledgers remain independent; validation rejects overlapping appends.
-reverse/worldbuilder/functions.csv text eol=lf merge=union
-reverse/worldbuilder/attempts.jsonl text eol=lf merge=union
+targets/worldbuilder/reverse/functions.csv text eol=lf merge=union
+targets/worldbuilder/reverse/attempts.jsonl text eol=lf merge=union
 # Attempt hashes bind the exact saved source, including its line endings.
-reverse/worldbuilder/attempts/*.cpp -text
-reverse/worldbuilder/*.json text eol=lf
-worldbuilder/**/*.json text eol=lf
-worldbuilder/dependencies/*.csv text eol=lf
+targets/worldbuilder/reverse/attempts/*.cpp -text
+targets/worldbuilder/reverse/*.json text eol=lf
+targets/worldbuilder/*.json text eol=lf
+targets/worldbuilder/dependencies/*.csv text eol=lf

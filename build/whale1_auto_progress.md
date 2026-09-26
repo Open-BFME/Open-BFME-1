@@ -13,7 +13,7 @@ Started 2026-09-16 on branch `whale1-auto` from `origin/master`.
 - Commit/push: commit `fd5ee19206` is on `origin/master`. The first push
   raced another writer once, then passed the normal rebase/retry sequence and
   the final pull is up to date.
-- Bodies added to `reverse/unlocked.txt`: none. No shared shim, pin set, or
+- Bodies added to `targets/game/reverse/unlocked.txt`: none. No shared shim, pin set, or
   byte-verified layout landed.
 - `0x007C7FD0`: identity-supported `FlatTerrainShaderPixelShader::set`
   candidate banked as a partial. The best source-backed candidate is 1,811
@@ -31,7 +31,7 @@ Started 2026-09-16 on branch `whale1-auto` from `origin/master`.
   `Render2DClass::Render` identity at `0x00933E50` and the anonymous target's
   unresolved owner make a rename or pin unsafe.
 - Commit/push: pending for this checkpoint; bodies added to
-  `reverse/unlocked.txt`: none.
+  `targets/game/reverse/unlocked.txt`: none.
 - Next: pull/rebase/push this verdict, then inspect and work `0x007DD180`.
 
 ## Checkpoint - 2026-09-16 (WHALE-1 continuation)
@@ -46,7 +46,7 @@ Started 2026-09-16 on branch `whale1-auto` from `origin/master`.
 - Commit/push: the `0x007DD180` verdict was published in the prior checkpoint;
   this checkpoint adds the `0x005674F0` bank, its immutable attempt history,
   and its fresh `partial` evidence row before publication.
-- Bodies added to `reverse/unlocked.txt`: none; both `0x007DD180 w3d-render`
+- Bodies added to `targets/game/reverse/unlocked.txt`: none; both `0x007DD180 w3d-render`
   and `0x007DF1F0 w3d-render` were already present.
 - `0x005674F0`: matched caller proves `BfmeConsumerED::bfmeApply` with a
   24-byte polymorphic `BfmeArgED`; the best candidate is 5,745 bytes versus
@@ -57,7 +57,7 @@ Started 2026-09-16 on branch `whale1-auto` from `origin/master`.
   drifts remain. The streak local-copy lever was tested and rejected at 6,522
   bytes. No unlock rows were added.
 - Commit/push: pending for this checkpoint; the fifth body's source bank,
-  `reverse/re_attempts.log`, recipe, and immutable attempt history are ready
+  `targets/game/reverse/re_attempts.log`, recipe, and immutable attempt history are ready
   to publish.
 - Next: publish this verdict, run `python3 tools/check_csv.py`, then inspect
   `python3 tools/next_work.py --ranked` for the next open body above 4 KB not
@@ -68,7 +68,7 @@ Started 2026-09-16 on branch `whale1-auto` from `origin/master`.
 - `0x005674F0` verdict, bank, recipe, and attempt history are published in
   commit `8b712700d6` on `origin/master`. Pre-commit passed ledger and
   identity checks; pre-push passed pin consistency and source verification.
-- Bodies added to `reverse/unlocked.txt`: none. The fifth body's preference
+- Bodies added to `targets/game/reverse/unlocked.txt`: none. The fifth body's preference
   layout and APT callee set did not prove a shared blocker for a smaller dump.
 - Next ranked open dump above 4 KB not listed by WHALE-2: `0x0095CE80`,
   `?RenderStreak@StreakRendererClass@@...`, 12,206 bytes, starting from its
@@ -84,7 +84,7 @@ Started 2026-09-16 on branch `whale1-auto` from `origin/master`.
   frame-pad candidate was compiled and rejected at 12,111 bytes with 10,633
   non-relocation differences; the bank is retained and the new blocked verdict
   is recorded.
-- Bodies added to `reverse/unlocked.txt`: none. No safe pin or shared layout
+- Bodies added to `targets/game/reverse/unlocked.txt`: none. No safe pin or shared layout
   proof was established.
 - Next: inspect the ranked queue after this blocked recheck; the next eligible
   large dump is `0x00084510` (4,499 B) unless a larger non-WHALE-2 open body is
@@ -99,7 +99,7 @@ Started 2026-09-16 on branch `whale1-auto` from `origin/master`.
   `+0x9C` array-element candidates were compiled; none improved the bank. The
   new blocked verdict records the 14-target contract, the `0x10138` frame, and
   the unresolved first member-init wall.
-- Bodies added to `reverse/unlocked.txt`: none.
+- Bodies added to `targets/game/reverse/unlocked.txt`: none.
 - Next: refresh `python3 tools/next_work.py --ranked` and take the next open
   dump over 4 KB not listed by WHALE-2, with exact boundary evidence.
 
@@ -114,7 +114,7 @@ Started 2026-09-16 on branch `whale1-auto` from `origin/master`.
   `readAdditionalDisconnectsFromUserFile` call at `0x004DB0B0` and GameSpy
   slots `+0x70/+0x90/+0x170/+0x174` are preserved in the bank.
 - No exact candidate, ledger row, pin, or shared unlock proof was found.
-  `reverse/unlocked.txt` remains unchanged. The partial verdict and immutable
+  `targets/game/reverse/unlocked.txt` remains unchanged. The partial verdict and immutable
   attempt history are ready to publish.
 - Commit/push: pending for this checkpoint.
 - Next: run the ledger gate, publish this verdict with the normal pull/rebase,
@@ -127,7 +127,7 @@ Started 2026-09-16 on branch `whale1-auto` from `origin/master`.
   published in commit `df16e53aec` on `origin/master`. The final pull was
   already up to date; `git status --short` was clean and `check_csv.py`, the
   pre-commit ledger/identity checks, and the pre-push checks passed.
-- Bodies added to `reverse/unlocked.txt`: none. No body in this session landed
+- Bodies added to `targets/game/reverse/unlocked.txt`: none. No body in this session landed
   byte-exactly, and no shared shim, pin set, or class layout was proven broadly
   enough to unlock a smaller neighbour.
 - Pool result: the refreshed `python3 tools/next_work.py --ranked` lists

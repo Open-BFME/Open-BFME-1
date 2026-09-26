@@ -1,0 +1,122 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
+
+#include "../WWMath/vector2.h"
+
+class TextureClass;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/shader.h
+class ShaderClass
+{
+public:
+	unsigned int ShaderBits;
+	static ShaderClass _PresetAdditiveSpriteShader;
+};
+
+class Vector3
+{
+public:
+	Vector3(float x, float y, float z) : X(x), Y(y), Z(z) {}
+	float X;
+	float Y;
+	float Z;
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
+class WW3D
+{
+public:
+	static unsigned int Get_Sync_Time() { return SyncTime; }
+	static unsigned int SyncTime;
+};
+
+class VertexFormatXYZUV1;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/streakRender.h
+class StreakRendererClass
+{
+public:
+	StreakRendererClass();
+	void Set_Merge_Intersections(int onoff);
+	void Set_Freeze_Random(int onoff);
+	void Set_Disable_Sorting(int onoff);
+	void Set_End_Caps(int onoff);
+	void Set_UV_Offset_Rate(const Vector2 &rate);
+
+private:
+	enum { DEFAULT_BITS = 1 };
+	TextureClass *Texture;
+	ShaderClass Shader;
+	float Width;
+	Vector3 Color;
+	float Opacity;
+	unsigned int SubdivisionLevel;
+	float NoiseAmplitude;
+	float MergeAbortFactor;
+	float TextureTileFactor;
+	unsigned int LastUsedSyncTime;
+	Vector2 CurrentUVOffset;
+	Vector2 UVOffsetDeltaPerMS;
+	unsigned int Bits;
+	unsigned int m_vertexBufferSize;
+	VertexFormatXYZUV1 *m_vertexBuffer;
+};
+
+StreakRendererClass::StreakRendererClass() :
+	Texture(0),
+	Shader(ShaderClass::_PresetAdditiveSpriteShader),
+	Width(0.0f),
+	Color(1.0f, 1.0f, 1.0f),
+	Opacity(1.0f),
+	SubdivisionLevel(0),
+	NoiseAmplitude(0.0f),
+	MergeAbortFactor(1.5f),
+	TextureTileFactor(1.0f),
+	LastUsedSyncTime(WW3D::Get_Sync_Time()),
+	CurrentUVOffset(0.0f, 0.0f),
+	UVOffsetDeltaPerMS(0.0f, 0.0f),
+	Bits(DEFAULT_BITS),
+	m_vertexBufferSize(0),
+	m_vertexBuffer(0)
+{
+}
+
+void StreakRendererClass::Set_Merge_Intersections(int onoff)
+{
+	if (onoff) {
+		Bits |= 0x00000001;
+	} else {
+		Bits &= ~0x00000001;
+	}
+}
+
+void StreakRendererClass::Set_Freeze_Random(int onoff)
+{
+	if (onoff) {
+		Bits |= 0x00000002;
+	} else {
+		Bits &= ~0x00000002;
+	}
+}
+
+void StreakRendererClass::Set_Disable_Sorting(int onoff)
+{
+	if (onoff) {
+		Bits |= 0x00000004;
+	} else {
+		Bits &= ~0x00000004;
+	}
+}
+
+void StreakRendererClass::Set_End_Caps(int onoff)
+{
+	if (onoff) {
+		Bits |= 0x00000008;
+	} else {
+		Bits &= ~0x00000008;
+	}
+}
+
+void StreakRendererClass::Set_UV_Offset_Rate(const Vector2 &rate)
+{
+	UVOffsetDeltaPerMS = rate * 0.001f;
+}

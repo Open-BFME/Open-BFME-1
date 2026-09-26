@@ -12,8 +12,8 @@ from build import ledger_object_symbol
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC_DIR = ROOT / "src"
-FUNCTIONS_CSV = ROOT / "reverse" / "functions.csv"
-CLAIMS_WHITELIST = ROOT / "reverse" / "unclaimed_sources_whitelist.txt"
+FUNCTIONS_CSV = ROOT / "targets/game/reverse" / "functions.csv"
+CLAIMS_WHITELIST = ROOT / "targets/game/reverse" / "unclaimed_sources_whitelist.txt"
 
 # `// <label> present-unmatched` / `// <label> absent-from-retail` definition markers
 UNMATCHED_MARKER_RE = re.compile(
@@ -265,7 +265,7 @@ def main():
             violations.append(
                 f"{rel_path}: ZERO matched functions.csv rows — match at least one "
                 f"function before committing this file, or whitelist it with a reason "
-                f"(reverse/unclaimed_sources_whitelist.txt)"
+                f"(targets/game/reverse/unclaimed_sources_whitelist.txt)"
             )
         own_names = {n for n, srcs in matched_sources.items()
                      if rel_path.as_posix() in srcs}

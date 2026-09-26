@@ -48,19 +48,19 @@ ROOT = Path(__file__).resolve().parents[1]
 # drift/structural/ghidra tiers. The ZH source-porting sweep beside it is not
 # retired: tools/zh_sweep.py still writes work packets, and the `packet` tier
 # below spends them.
-DRIFT = ROOT / "reverse" / "zh_sweep" / "drift_report.csv"
-PACKETS = ROOT / "reverse" / "zh_sweep" / "packets"
-GHIDRA_FUNCTIONS = ROOT / "reverse" / "ghidra_functions.csv"
-STRING_XREFS = ROOT / "reverse" / "string_xrefs.tsv"
-ANCHORED = ROOT / "reverse" / "anchored_candidates.csv"
-RELOC_NAMES = ROOT / "reverse" / "reloc_names.csv"
+DRIFT = ROOT / "targets/game/reverse" / "zh_sweep" / "drift_report.csv"
+PACKETS = ROOT / "targets/game/reverse" / "zh_sweep" / "packets"
+GHIDRA_FUNCTIONS = ROOT / "targets/game/reverse" / "ghidra_functions.csv"
+STRING_XREFS = ROOT / "targets/game/reverse" / "string_xrefs.tsv"
+ANCHORED = ROOT / "targets/game/reverse" / "anchored_candidates.csv"
+RELOC_NAMES = ROOT / "targets/game/reverse" / "reloc_names.csv"
 _SOURCE_INDEX = None
 _SOURCE_TEXT = {}
 
 POINTERS = [
     ("python3 tools/land_ambiguous.py",
      "land string-anchored exact-ambiguous drift copies"),
-    ("python3 tools/list_naked_candidates.py Code",
+    ("python3 tools/list_naked_candidates.py game",
      "choose one naked-asm function worth decompiling to C++"),
 ]
 
@@ -138,7 +138,7 @@ def source_index():
     global _SOURCE_INDEX
     if _SOURCE_INDEX is None:
         _SOURCE_INDEX = {}
-        for base in (ROOT / "Code", ROOT / "src"):
+        for base in (ROOT / "game", ROOT / "src"):
             if not base.exists():
                 continue
             for path in sorted(base.rglob("*.cpp")):
@@ -148,7 +148,7 @@ def source_index():
 
 def resolve_drift_source(basename, function=None):
     """drift_report source column is a bare basename; landed files live under
-    Code/ (official tree layout); a few remainders sit under src/. Resolve
+    game/ (official tree layout); a few remainders sit under src/. Resolve
     case-insensitively because drift reports normalize names to lowercase.
     When duplicate basenames exist, the decorated-symbol marker is decisive."""
     hits = source_index().get(Path(basename).name.casefold(), [])
@@ -752,20 +752,20 @@ def proven_dump_extents(rvas):
     extents = {}
     if not wanted:
         return extents
-    with (ROOT / "reverse" / "functions.csv").open(newline="") as stream:
+    with (ROOT / "targets/game/reverse" / "functions.csv").open(newline="") as stream:
         for row in csv.DictReader(stream):
             address = row.get("target_rva")
             if not address or int(address, 16) not in wanted:
                 continue
             notes = set(row.get("notes", "").split(";"))
             if (row.get("status") != "matched"
-                    or not row.get("source", "").startswith("Code/gen_asm/")
+                    or not row.get("source", "").startswith("game/gen_asm/")
                     or not {"gen-dump", "bounds=high"} <= notes):
                 continue
             rva, size = int(address, 16), int(row["target_size"])
             if size <= 0 or (rva in extents and extents[rva] != size):
                 raise SystemExit(f"conflicting/invalid dump extent at {address}: "
-                                 "repair reverse/functions.csv")
+                                 "repair targets/game/reverse/functions.csv")
             extents[rva] = size
     return extents
 
@@ -780,7 +780,7 @@ def proven_carved_extents(rvas):
     """
     wanted = set(rvas)
     extents = {}
-    path = ROOT / "reverse" / "carved.csv"
+    path = ROOT / "targets/game/reverse" / "carved.csv"
     if not wanted or not path.exists():
         return extents
     with path.open(newline="", encoding="utf-8", errors="replace") as stream:
@@ -795,7 +795,7 @@ def proven_carved_extents(rvas):
                 continue
             if rva in extents and extents[rva] != size:
                 raise SystemExit(f"conflicting carved extents at 0x{rva:08X}: "
-                                 "repair reverse/carved.csv")
+                                 "repair targets/game/reverse/carved.csv")
             extents[rva] = size
     return extents
 
@@ -1064,7 +1064,7 @@ def anchored_candidates(claimed, claimed_names, claimed_ranges):
         source = resolve_drift_source(row["zh_source"])
         out.append({
             "function": row["ghidra_name"],
-            "source": source or f"(no Code/ file yet; ZH: {row['zh_source']})",
+            "source": source or f"(no game/ file yet; ZH: {row['zh_source']})",
             "zh_source": row["zh_source"],
             "target_rva": row["target_rva"],
             "size": int(row["target_size"]),
@@ -1099,7 +1099,7 @@ def reloc_named_candidates(claimed, claimed_ranges):
     minted name tells a worker what the function is, and serving them anyway is
     how sessions ended as "log anonymous template" dead ends -- the sort put
     them last, but the weighted draw ignores the sort and landed on them almost
-    half the time. Their bytes are already claimed as Code/gen_asm/ dumps, so
+    half the time. Their bytes are already claimed as game/gen_asm/ dumps, so
     the convert lane serves them with the byte evidence attached instead.
     """
     _, rows = read_csv(RELOC_NAMES, "./build.sh")
@@ -1465,7 +1465,7 @@ def main():
                     help="sort structural candidates by size (byte yield) instead of alignment")
     ap.add_argument("--include-logged", action="store_true",
                     help="keep candidates already recorded no-match in "
-                         "reverse/re_attempts.log (they are dropped by default)")
+                         "targets/game/reverse/re_attempts.log (they are dropped by default)")
     args = ap.parse_args()
 
     ledger = check_ledger()  # exit 2 happens in there; nothing below matters if red
@@ -1608,12 +1608,12 @@ def main():
         print(validator_note(structural_meta))
     if candidate is None:
         print(f"\nNo {label} candidates remain.")
-        print("Convert lane always has work: python3 tools/list_naked_candidates.py Code")
+        print("Convert lane always has work: python3 tools/list_naked_candidates.py game")
         return
     print()
     print_candidate(label, candidate, meta, candidates)
-    print("\nConvert lane (byte-true dumps in Code/gen_asm/, the largest queue): "
-          "python3 tools/list_naked_candidates.py Code")
+    print("\nConvert lane (byte-true dumps in game/gen_asm/, the largest queue): "
+          "python3 tools/list_naked_candidates.py game")
 
 
 if __name__ == "__main__":

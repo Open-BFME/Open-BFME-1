@@ -28,7 +28,7 @@ _spec.loader.exec_module(audit_ret_arity)
 
 NAKED_RE = re.compile(r"__declspec\s*\(\s*naked\s*\)")
 EMIT_RE = re.compile(r"__emit\s+0x([0-9a-fA-F]{1,2})")
-RE_ATTEMPTS = build.ROOT / "reverse" / "re_attempts.log"
+RE_ATTEMPTS = build.ROOT / "targets/game/reverse" / "re_attempts.log"
 
 
 def logged_no_match(paths):
@@ -164,7 +164,7 @@ PROC_RE = re.compile(r"^(\S+)\s+PROC\b")
 def asm_proc_blocks(lines):
     """(symbol, body bytes, start index, end index) per PROC in a MASM dump.
 
-    Code/gen_asm/ holds the scaled dump pass: 4.5 MB of machine bodies in `db`
+    game/gen_asm/ holds the scaled dump pass: 4.5 MB of machine bodies in `db`
     rows, which no __declspec(naked) scan can see. Without this reader the
     convert lane goes empty the moment dumping replaces the .cpp wave form.
     """
@@ -342,7 +342,7 @@ def candidate_weights(candidates):
     return [yield_model.weight(item["size"]) for item in candidates]
 
 
-PACKET_DIR = build.ROOT / "reverse" / "zh_sweep" / "packets"
+PACKET_DIR = build.ROOT / "targets/game/reverse" / "zh_sweep" / "packets"
 
 
 def packet_rvas():
@@ -438,8 +438,8 @@ def print_candidate(item):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("paths", nargs="*", default=["Code"],
-                        help="source files or directories to scan (default: Code)")
+    parser.add_argument("paths", nargs="*", default=["game"],
+                        help="source files or directories to scan (default: game)")
     parser.add_argument("--all", action="store_true", help="include untracked naked functions")
     parser.add_argument("--ranked", action="store_true",
                         help="show the complete ranking for humans/debugging")
@@ -595,7 +595,7 @@ def main():
         if meta.get("exhausted"):
             print("  POOL EXHAUSTED: every candidate here has been attempted before; "
                   f"this one {meta.get('attempts', 0)}x. The untried queue is empty, so "
-                  "this is a REPEAT, not new work — read its reverse/re_attempts.log "
+                  "this is a REPEAT, not new work — read its targets/game/reverse/re_attempts.log "
                   "entries first and stop early if they already refute the approach.")
         print(f"  {selected['symbol'] or selected['signature'] or '(unnamed)'}")
         print(f"  {selected['size']} bytes  {selected['path']}:{selected['line']}")
@@ -618,7 +618,7 @@ def main():
         return
 
     if already_matched:
-        print(f"{already_matched} excluded as already matched in reverse/functions.csv")
+        print(f"{already_matched} excluded as already matched in targets/game/reverse/functions.csv")
     if retired_count:
         print(f"{retired_count} excluded as already no-match in the investigation log")
     if arity_conflicts:

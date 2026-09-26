@@ -26,10 +26,10 @@ ROOT = Path(".").resolve()
 
 def prepare(lo, hi, root=ROOT):
     """Rank the whole current review pool without holding the picker lock."""
-    latest = eligibility.latest_verdicts(root / "reverse/re_attempts.log")
+    latest = eligibility.latest_verdicts(root / "targets/game/reverse/re_attempts.log")
     busy = eligibility.busy_rvas(root)
     recent = eligibility.recent_run_rvas(48, root)
-    rows = eligibility.load_rows(root / "reverse/functions.csv")
+    rows = eligibility.load_rows(root / "targets/game/reverse/functions.csv")
     cands = []
     for row, path, score in eligibility.finish_bodies(lo, rows=rows, latest=latest):
         rva = eligibility.rva_of(row)
@@ -51,8 +51,8 @@ def finalize(prepared, n_want, lo, hi, root=ROOT, dry=False):
     wanted = {int(c[2], 16) for c in shortlist}
     with (root / "build/.fleet_claims.lock").open("a+b") as handle:
         lock(handle, exclusive=True)
-        rows = eligibility.load_rows(root / "reverse/functions.csv", rvas=wanted)
-        latest = eligibility.latest_verdicts(root / "reverse/re_attempts.log")
+        rows = eligibility.load_rows(root / "targets/game/reverse/functions.csv", rvas=wanted)
+        latest = eligibility.latest_verdicts(root / "targets/game/reverse/re_attempts.log")
         live_sizes = {row["target_rva"].lower(): int(row.get("target_size") or 0)
                       for row, path, score in eligibility.finish_bodies(
                     lo, rows=rows, latest=latest)

@@ -1,4 +1,4 @@
-"""Guards for reverse/ghidra_functions.csv, which nothing else validates.
+"""Guards for targets/game/reverse/ghidra_functions.csv, which nothing else validates.
 
 check_csv covers functions.csv and symbols.csv only, so the inventory every
 queue tool reads for sizes and anonymity has had no shape check at all. These
@@ -20,7 +20,7 @@ from pathlib import Path
 
 TOOLS = Path(__file__).resolve().parents[1]
 ROOT = TOOLS.parent
-INVENTORY = ROOT / "reverse" / "ghidra_functions.csv"
+INVENTORY = ROOT / "targets/game/reverse" / "ghidra_functions.csv"
 IMAGE_BASE = 0x400000
 
 
@@ -112,7 +112,7 @@ def test_call_derived_starts_stay_derivable():
     print("PASS call-derived starts: re-derivation is idempotent")
 
 
-CLOSURE_SEEDS = "reverse/game_end/seeds.json"
+CLOSURE_SEEDS = "targets/game/reverse/game_end/seeds.json"
 # `callers_of.py --closure` per (group, tier), regenerated for every cell in
 # Phase 2 when the E_leave vcall seed moved from 0x012F76F0 to the live
 # TheNetwork global 0x012F7714 (the old global matched no call site) and again
@@ -229,7 +229,7 @@ def test_game_end_closure_coverage_never_regresses():
     print("PASS game-end closure: no state or identity figure moved the wrong way")
 
 
-CLAIMS = ROOT / "reverse" / "game_end" / "claims.csv"
+CLAIMS = ROOT / "targets/game/reverse" / "game_end" / "claims.csv"
 # Address facts the game-end identity packs rest on, each checked against the
 # retail image. Address/expected per kind: bytes 0xRVA/hex; insn 0xRVA/capstone
 # text; vslot 0xVTABLEVA+0xOFF/body RVA after the thunk chain; jt
@@ -329,7 +329,7 @@ def test_game_end_claims_hold_against_retail():
     print(f"PASS game-end claims: {len(rows)} rows hold against retail")
 
 
-FINDINGS = ROOT / "reverse" / "game_end" / "FINDINGS.md"
+FINDINGS = ROOT / "targets/game/reverse" / "game_end" / "FINDINGS.md"
 # 6-8 hex digits: RVAs and VAs. Offsets (+0x484) and immediates (0x7530) are
 # shorter and are not addresses.
 ADDRESS_LITERAL = re.compile(r"\b0x([0-9A-Fa-f]{6,8})\b")

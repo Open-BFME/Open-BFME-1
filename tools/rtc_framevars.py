@@ -109,7 +109,7 @@ def main():
 
     root = Path(__file__).resolve().parent.parent
     rows = []
-    with io.open(root / "reverse" / "functions.csv", encoding="utf-8") as fh:
+    with io.open(root / "targets/game/reverse" / "functions.csv", encoding="utf-8") as fh:
         for i, row in enumerate(csv.reader(fh)):
             if i == 0 or len(row) != 7:
                 continue
@@ -119,7 +119,7 @@ def main():
                     rows.append((rva, int(row[3]), row[4]))
                 continue
             # notes, not the source path: dump rows are not confined to
-            # Code/gen_asm/ and a path test silently skips the ones that moved.
+            # game/gen_asm/ and a path test silently skips the ones that moved.
             if not build.is_scaffold_row({"notes": row[6]}) or "Unwind@" in row[6]:
                 continue
             if args.lo <= rva <= args.hi and args.min_size <= int(row[3]) <= 4096:

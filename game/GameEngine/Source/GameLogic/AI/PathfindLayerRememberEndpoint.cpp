@@ -1,0 +1,59 @@
+// Record at most two distinct PathfindLayer endpoint cells. The snap-goal
+// caller invokes this twice after finding boundary intersections.
+
+typedef int Int;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
+struct ICoord2D
+{
+	Int x;
+	Int y;
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
+class PathfindLayer
+{
+public:
+	void bfmeRememberEndpoint(const ICoord2D *endpointCell);
+
+private:
+	unsigned char opaque[0x18];
+	ICoord2D startCell;
+	ICoord2D endCell;
+};
+
+// ?bfmeRememberEndpoint@PathfindLayer@@QAEXPBUICoord2D@@@Z
+void PathfindLayer::bfmeRememberEndpoint(const ICoord2D *endpointCell)
+{
+	const volatile ICoord2D *coord = endpointCell;
+	volatile PathfindLayer *layer = this;
+	Int value = coord->x;
+	if (value == layer->startCell.x)
+	{
+		Int y = coord->y;
+		if (y == layer->startCell.y)
+			return;
+	}
+
+	if (value == layer->endCell.x)
+	{
+		value = coord->y;
+		if (value == layer->endCell.y)
+			return;
+	}
+
+	Int first = startCell.x;
+	Int empty = -1;
+	if (first == empty)
+	{
+		startCell.x = coord->x;
+		startCell.y = coord->y;
+		return;
+	}
+
+	if (endCell.x == empty)
+	{
+		endCell.x = coord->x;
+		endCell.y = coord->y;
+	}
+}

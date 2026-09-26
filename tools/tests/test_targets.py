@@ -33,36 +33,30 @@ def image(body=b"\xC3", virtual_size=0x20, image_base=0x400000):
 
 def configure(root, target_id="worldbuilder", data=None):
     data = image() if data is None else data
-    binary = root / "baselines" / (target_id + ".exe")
+    name = {"game": "lotrbfme.exe", "worldbuilder": "worldbuilder.exe"}[target_id]
+    path = root / "inputs/baselines/bfme1/workshop-vanilla-1.03/manifest.json"
+    binary = path.parent / "files" / name
     binary.parent.mkdir(parents=True, exist_ok=True)
     binary.write_bytes(data)
-    config = {
-        "schema_version": 1,
-        "target_id": target_id,
-        "image": {"path": binary.relative_to(root).as_posix(),
-                  "sha256": hashlib.sha256(data).hexdigest()},
-        "ledger_root": "reverse/" + target_id,
-        "build_root": "build/" + target_id,
-        "profiles": {"size": {"flags": ["-O1"], "toolchain_includes": []}},
-    }
-    path = root / target_id / "target.json"
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(config))
-    return path, binary, config
+    manifest = json.loads(path.read_text()) if path.exists() else {"schema_version": 1, "files": []}
+    manifest["files"] = [entry for entry in manifest["files"] if entry["path"] != "files/" + name]
+    manifest["files"].append({"path": "files/" + name, "sha256": hashlib.sha256(data).hexdigest()})
+    path.write_text(json.dumps(manifest))
+    return path, binary, manifest
 
 
 def test_hash_bound_targets_keep_distinct_same_rva_images(tmp_path):
-    configure(tmp_path, "first", image(b"\xC3"))
-    configure(tmp_path, "second", image(b"\x90\xC3", image_base=0x500000))
-    first = load_target("first", root=tmp_path)
-    second = load_target("second", root=tmp_path)
+    configure(tmp_path, "game", image(b"\xC3"))
+    configure(tmp_path, "worldbuilder", image(b"\x90\xC3", image_base=0x500000))
+    first = load_target("game", root=tmp_path)
+    second = load_target("worldbuilder", root=tmp_path)
 
     assert first.read_rva(0x1000, 1) == b"\xC3"
     assert second.read_rva(0x1000, 1) == b"\x90"
     assert first.read_rva(0x1000, 1) == b"\xC3"
     assert first.image_base == 0x400000
     assert second.image_base == 0x500000
-    assert first.ledger_path == tmp_path / "reverse/first/functions.csv"
+    assert first.ledger_path == tmp_path / "targets/game/reverse/functions.csv"
     assert first.build_root != second.build_root
     assert first.image_bytes == first.verify_hash()
 
@@ -108,34 +102,33 @@ def test_truncated_raw_section_is_rejected(tmp_path):
 
 def test_missing_target_does_not_use_another_config(tmp_path):
     configure(tmp_path)
-    with pytest.raises(TargetError, match="cannot load target absent"):
+    with pytest.raises(TargetError, match="invalid target ID"):
         load_target("absent", root=tmp_path)
 
 
-@pytest.mark.parametrize("changed", [{"target_id": "other"}, {"schema_version": 2}, {"schema_version": True},
-                                     {"ledger_root": "reverse"}, {"build_root": "build/match"}])
-def test_invalid_identity_or_shared_state_namespace_is_rejected(tmp_path, changed):
-    path, _, config = configure(tmp_path)
-    config.update(changed)
-    path.write_text(json.dumps(config))
+@pytest.mark.parametrize("changed", [{"schema_version": 2}, {"schema_version": True}, {"files": []}])
+def test_invalid_manifest_is_rejected(tmp_path, changed):
+    path, _, manifest = configure(tmp_path)
+    manifest.update(changed)
+    path.write_text(json.dumps(manifest))
     with pytest.raises(TargetError):
         load_target("worldbuilder", root=tmp_path)
 
 
-def test_image_path_cannot_escape_root(tmp_path):
-    path, _, config = configure(tmp_path)
-    config["image"]["path"] = "../worldbuilder.exe"
-    path.write_text(json.dumps(config))
-    with pytest.raises(TargetError, match="relative path"):
+def test_manifest_cannot_select_another_image(tmp_path):
+    path, _, manifest = configure(tmp_path)
+    manifest["files"][0]["path"] = "../worldbuilder.exe"
+    path.write_text(json.dumps(manifest))
+    with pytest.raises(TargetError, match="expected one files/worldbuilder.exe"):
         load_target("worldbuilder", root=tmp_path)
 
 
 def test_target_state_cannot_redirect_to_game_ledgers(tmp_path):
     configure(tmp_path)
-    reverse = tmp_path / "reverse"
-    reverse.mkdir()
+    reverse = tmp_path / "targets/worldbuilder"
+    reverse.mkdir(parents=True)
     try:
-        (reverse / "worldbuilder").symlink_to(reverse, target_is_directory=True)
+        (reverse / "targets/game/reverse").symlink_to(reverse, target_is_directory=True)
     except OSError:
         pytest.skip("symlink creation unavailable on this host")
     with pytest.raises(TargetError, match="must not redirect through a symlink"):
@@ -148,9 +141,9 @@ def test_selected_target_and_profile_are_immutable(tmp_path):
     with pytest.raises(FrozenInstanceError):
         target.target_id = "other"
     with pytest.raises(TypeError):
-        target.profiles["size"] = None
+        target.profiles["engine-size"] = None
     with pytest.raises(FrozenInstanceError):
-        target.profiles["size"].flags = ("-O2",)
+        target.profiles["engine-size"].flags = ("-O2",)
 
 
 def ilt_image():

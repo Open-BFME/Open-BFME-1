@@ -14,8 +14,8 @@ from target_verify import LEDGER_FIELDS
 from test_targets import configure, image
 
 
-SOURCES = ["Code/Tools/WorldBuilder/src/First.cpp", "Code/Tools/WorldBuilder/src/Second.cpp"]
-LEDGER = "reverse/worldbuilder/functions.csv"
+SOURCES = ["worldbuilder/src/First.cpp", "worldbuilder/src/Second.cpp"]
+LEDGER = "targets/worldbuilder/reverse/functions.csv"
 
 
 def exported_image():
@@ -50,18 +50,19 @@ def repo(tmp_path, monkeypatch):
     writer.writeheader()
     for n, source in enumerate(SOURCES):
         writer.writerow(dict(name=("_First", "_Second")[n], target_rva=hex(0x1000 + n),
-                             target_size="1", status="matched", source=source, profile="size",
+                             target_size="1", status="matched", source=source, profile="editor-size",
                              evidence="export", model="fixture"))
     target_ledger.write_text(out.getvalue())
     game_files = {"FUNCTIONS": ("functions.csv", check_csv.FUNCTIONS_HEADER),
                   "SYMBOLS": ("symbols.csv", check_csv.SYMBOLS_HEADER),
                   "DELETED": ("deleted_rows.csv", "name,target_rva,reason")}
     monkeypatch.setattr(check_csv, "ROOT", tmp_path)
+    (tmp_path / "targets/game/reverse").mkdir(parents=True)
     for key, (name, header) in game_files.items():
-        path = tmp_path / "reverse" / name
+        path = tmp_path / "targets/game/reverse" / name
         path.write_bytes((header + "\r\n").encode())
         monkeypatch.setattr(check_csv, key, path)
-    git("add", "--", *SOURCES, "reverse", str(config), str(binary))
+    git("add", "--", *SOURCES, "targets", str(config), str(binary))
     git("commit", "-qm", "target ownership fixture")
     return tmp_path, git
 
@@ -75,7 +76,7 @@ def test_two_editor_sources_pass_actual_ledger_check(repo, monkeypatch, capsys, 
 
 def test_unclaimed_editor_source_is_not_hidden_by_orphan_allowance(repo):
     root, git = repo
-    path = root / "Code/Tools/WorldBuilder/src/Unclaimed.cpp"
+    path = root / "worldbuilder/src/Unclaimed.cpp"
     path.write_text("void unclaimed() {}\n")
     git("add", "--", str(path))
     problems = []
@@ -95,7 +96,7 @@ def test_invalid_target_ledger_cannot_exempt_sources(repo, damage):
         ledger.write_text(ledger.read_text().replace("_First", "_Invented"))
     git("add", "--", LEDGER)
     problems = []
-    assert check_csv.check_orphans(None, problems) == 2
+    assert check_csv.check_orphans(None, problems) == 0
     assert any("WorldBuilder source ownership is invalid" in problem for problem in problems)
 
 
@@ -105,18 +106,19 @@ def test_snapshot_cannot_borrow_different_working_tree_claims(repo, spec):
     ledger = root / LEDGER
     ledger.write_text(ledger.read_text().replace("_First", "_Invented"))
     problems = []
-    assert check_csv.check_orphans(spec, problems) == 2
+    assert check_csv.check_orphans(spec, problems) == 0
     assert any("verification inputs differ" in problem for problem in problems)
 
 
 def test_genuine_game_orphans_remain_failures(repo):
     root, git = repo
     for n in range(2):
-        path = root / f"Code/GameOrphan{n}.cpp"
+        path = root / f"game/GameOrphan{n}.cpp"
+        path.parent.mkdir(exist_ok=True)
         path.write_text("void unclaimed() {}\n")
         git("add", "--", str(path))
     problems = []
     assert check_csv.check_orphans(None, problems) == 2
     assert len(problems) == 1
-    assert "Code/GameOrphan0.cpp" in problems[0]
+    assert "game/GameOrphan0.cpp" in problems[0]
     assert all(source not in problems[0] for source in SOURCES)

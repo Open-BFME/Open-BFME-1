@@ -58,11 +58,25 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
             || fail "name checker differs from pushed snapshot: $checker; commit or revert its edits"
     done
     python3 tools/name_regression.py "$base" "$local_sha" || fail "descriptive names regressed in outgoing range (see above)"
+    # A move of every game TU cannot fit the normal bounded selector list.
+    # Recheck the exact migration and whole image against the pushed snapshot.
+    if migration_marker=$(python3 tools/layout_migration.py detect "$base" "$local_sha") \
+       && [ "$migration_marker" = layout-migration ]; then
+        python3 tools/layout_migration.py check "$base" "$local_sha" || fail "layout mapping (see above)"
+        git diff --quiet "$local_sha" -- game worldbuilder targets inputs tools \
+            || fail "working tree differs from pushed layout snapshot"
+        python3 tools/pin_consistency.py --check || fail "pin consistency (see above)"
+        python3 tools/b_pin_check.py --ref "$local_sha" || fail "b_<rva> pins (see above)"
+        python3 tools/identity_guard.py || fail "identity guard (see above)"
+        BUILD_POOL="${BUILD_POOL:-4}" python3 tools/gate_baseline.py --check \
+            || fail "full game gate after layout migration (see above)"
+        continue
+    fi
     python3 tools/name_history.py "$base" "$local_sha" || fail "descriptive names regressed in an outgoing commit (see above)"
     python3 tools/retired_guard.py --range "$base..$local_sha" || fail "retired path re-added in outgoing range (see above)"
 
     # Identity, for the same reason conversion_gate runs here: byte-verification
-    # cannot see it. reverse/symbols.csv is an ADDITIVE candidate list, so a pin
+    # cannot see it. targets/game/reverse/symbols.csv is an ADDITIVE candidate list, so a pin
     # naming the WRONG function still reproduces its caller's bytes and every
     # scoped build below stays green. This guard only ever ran in the full gate,
     # which no hook path reaches — pre-commit runs it for header/shim changes
@@ -95,7 +109,7 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
     # instantiations only that body referenced, and sibling rows stop resolving
     # with "symbol not found in object": one assignDefaultGadgetLook orphaned 67
     # rows in GameWindowManager.cpp. pre-commit already byte-verifies every
-    # staged Code/*.cpp for exactly this reason; --no-verify skips pre-commit
+    # staged game/*.cpp for exactly this reason; --no-verify skips pre-commit
     # entirely, so the push gate has to repeat it.
     # Same trap as the two delta_sources calls around it: a process substitution
     # hides this script's exit status, so a crash read as "no edited sources" and
@@ -113,9 +127,9 @@ def git(*argv):
 
 
 claimed = {r["source"] for r in csv.DictReader(io.StringIO(
-    git("show", "%s:reverse/functions.csv" % rev))) if r.get("status") == "matched"}
+    git("show", "%s:targets/game/reverse/functions.csv" % rev))) if r.get("status") == "matched"}
 touched = git("diff", "--name-only", "--diff-filter=ACMRT", base, rev,
-              "--", "Code/*.cpp", "Code/*.c").splitlines()
+              "--", "game/*.cpp", "game/*.c").splitlines()
 sys.stdout.reconfigure(newline="\n")
 for path in sorted(set(touched) & claimed):
     print(path)
@@ -123,7 +137,7 @@ PY
     mapfile -t edited < "$edited_out"
     rm -f "$edited_out"
 
-    # A reverse/symbols.csv pin DELETION reddens rows in files the range never
+    # A targets/game/reverse/symbols.csv pin DELETION reddens rows in files the range never
     # touches: it removes a REL32 candidate, and every claimed row whose retail
     # bytes call that address now resolves to a different ICF copy of the name.
     # Neither list above can see it -- both are keyed on functions.csv -- which
@@ -132,7 +146,7 @@ PY
     # so a delta_sources crash used to look exactly like "no pin-affected
     # sources" and the gate waved the push through. Run it to a file first.
     pin_delta=()
-    if ! git diff --quiet "$base" "$local_sha" -- reverse/symbols.csv; then
+    if ! git diff --quiet "$base" "$local_sha" -- targets/game/reverse/symbols.csv; then
         pin_delta_out=$(mktemp)
         python3 tools/delta_sources.py --range "$base" "$local_sha" --pins --selectors > "$pin_delta_out" \
             || { rm -f "$pin_delta_out"; fail "delta_sources --pins (see above)"; }

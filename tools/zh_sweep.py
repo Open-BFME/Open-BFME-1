@@ -43,7 +43,7 @@ ZH = build.ZH_REFERENCE_ROOT
 OBJ_DIR = ROOT / "build" / "spike_zh"
 OUT_DIR = ROOT / "build" / "zh_sweep"
 MATCH_JSON = OUT_DIR / "match.json"
-PACKET_DIR = ROOT / "reverse" / "zh_sweep" / "packets"
+PACKET_DIR = ROOT / "targets/game/reverse" / "zh_sweep" / "packets"
 
 MIN_FUNC = 24           # under this, a body is a stub that places all over .text
 SEARCHABLE = 10         # a body whose longest reloc-free run is shorter has no needle
@@ -232,7 +232,7 @@ def merged_claims():
     code a Zero Hour packet is worth writing for. Counting dumps as claims made
     do_packets blind to 112 of its own best leads and, because it wipes the
     directory before rewriting, silently deleted the packets already written for
-    them. build.load_claim_rows owns that rule: filtering on the Code/gen_asm/
+    them. build.load_claim_rows owns that rule: filtering on the game/gen_asm/
     path instead, as this did, still hid the 349 dumps outside that directory.
     """
     spans = []
@@ -467,7 +467,7 @@ def retail_extent(rva, validator, text, text_rva):
     leaves this body's end unknown rather than guessable.
     """
     if rva in validator.sizes:
-        return validator.sizes[rva], "the Ghidra inventory", "reverse/ghidra_functions.csv"
+        return validator.sizes[rva], "the Ghidra inventory", "targets/game/reverse/ghidra_functions.csv"
     offset = rva - text_rva
     run = text.find(b"\xcc" * boundary_validator.MIN_PAD_RUN, offset, offset + PAD_SCAN)
     if run <= offset:
@@ -641,7 +641,7 @@ def pin_sources():
 
     A name is not an address. `build.load_symbol_map` already folds in the ILT
     thunks a call site encodes in place of the body, but it merges the ledger
-    and reverse/symbols.csv into one list, and which of the two holds an address
+    and targets/game/reverse/symbols.csv into one list, and which of the two holds an address
     is the whole claim a pin makes: symbols.csv routinely pins a per-TU copy of
     a name the ledger holds somewhere else entirely, as
     ?releaseBuffer@UnicodeString@@IAEXXZ is a ledger row at 0x009409F0 and a
@@ -669,7 +669,7 @@ def elsewhere(callee):
     """Where a name IS known, for a call site that reaches none of it."""
     known = [f"{label} {', '.join(f'0x{rva:08X}' for rva in rvas)}"
              for label, rvas in (("the ledger holds this name at", callee.ledger_rvas),
-                                 ("reverse/symbols.csv pins it at", callee.csv_rvas)) if rvas]
+                                 ("targets/game/reverse/symbols.csv pins it at", callee.csv_rvas)) if rvas]
     return f" (unpinned: this is the address retail calls; {'; '.join(known)})" if known else ""
 
 
@@ -696,7 +696,7 @@ def callee_pins(rva, body, relocs, sources):
         elif target in symbol.ledger_targets:
             mark = " (already in the ledger)"
         elif target in symbol.csv_targets:
-            mark = " (already pinned in reverse/symbols.csv)"
+            mark = " (already pinned in targets/game/reverse/symbols.csv)"
         else:
             mark = elsewhere(symbol)
         lines.append(f"{callee},0x{target:08X}{mark}")
@@ -775,7 +775,7 @@ def header_lines(rva, bounds, best):
     extent = (f", an extent measured from {bounds['extent_from']}" if bounds["extent"] else
               ", an UNVERIFIED size — the Zero Hour candidate's own length, which nothing"
               " here measures against retail")
-    start = {True: "address is a confirmed function start (reverse/ghidra_functions.csv)",
+    start = {True: "address is a confirmed function start (targets/game/reverse/ghidra_functions.csv)",
              None: "no inventory row confirms a function starts at this address; treat the"
                    " start as unverified",
              False: f"address is NOT a function start ({bounds['start_why']}) — see above"
@@ -831,7 +831,7 @@ def packet_text(rva, bounds, group, body, relocs, sources):
         "bytes. Near is not identical, so the names above are leads and not identity: the",
         "two versions differ by something real — a changed constant, an extra member, a",
         "different inlining decision — or they are different functions that share a shape.",
-        "Port the reference body into a `Code/` source, then close the remaining gap",
+        "Port the reference body into a `game/` source, then close the remaining gap",
         "against the disassembly below.",
         "",
         f"## Retail disassembly ({bounds['served']} bytes from this address)",
@@ -840,7 +840,7 @@ def packet_text(rva, bounds, group, body, relocs, sources):
         disassemble(body, rva),
         "```",
         "",
-        "## Callee pins (paste unresolved ones into reverse/symbols.csv)",
+        "## Callee pins (paste unresolved ones into targets/game/reverse/symbols.csv)",
         "",
         "```",
         callee_pins(rva, body, relocs, sources),
@@ -848,7 +848,7 @@ def packet_text(rva, bounds, group, body, relocs, sources):
         "",
         "## Landing it",
         "",
-        "Add a row to `reverse/functions.csv` naming your source and this address, then",
+        "Add a row to `targets/game/reverse/functions.csv` naming your source and this address, then",
         "run `./build.sh '<your symbol>'`. It passes only when every byte outside a",
         "relocation site is identical to the address above — which is exactly why the",
         "name and the extent above still need checking by hand. The gate copies",
@@ -889,7 +889,7 @@ def dump_rows():
     """{rva: size} for every gen-dump row a wave may supersede.
 
     Dumpness is the NOTE and only the NOTE — the same predicate validate_rows
-    supersedes on, and the one 349 dumps outside Code/gen_asm/ are invisible to
+    supersedes on, and the one 349 dumps outside game/gen_asm/ are invisible to
     when a tool asks the directory instead.
     """
     rows = {int(row["target_rva"], 16): int(row["target_size"])
@@ -1142,7 +1142,7 @@ class Landing:
 
 
 def whitelisted_dir32():
-    path = ROOT / "reverse" / "dir32_consistency_whitelist.txt"
+    path = ROOT / "targets/game/reverse" / "dir32_consistency_whitelist.txt"
     if not path.exists():
         raise SystemExit(f"zh_sweep: {path.relative_to(ROOT)} is missing; without it every "
                          "known-legitimate multi-base symbol reads as a new conflict")
@@ -1301,7 +1301,7 @@ def harvest_pins(chosen, by_address, landing):
     body reproduces retail there — the precedent from 1a6060b38, and the only
     thing separating a pin from a guess.
 
-    Pins split in two by how they can be written. A callee reverse/symbols.csv
+    Pins split in two by how they can be written. A callee targets/game/reverse/symbols.csv
     already spends at a DIFFERENT address comes back as `extra`: symbols.csv is
     additive and 512 names in it already hold several addresses, but a wave
     transaction refuses to add a second address for a pinned name, so those have
@@ -1338,7 +1338,7 @@ def harvest_pins(chosen, by_address, landing):
 
 
 def spent_pins():
-    """{name: address} reverse/symbols.csv already holds."""
+    """{name: address} targets/game/reverse/symbols.csv already holds."""
     with build.SYMBOLS.open(encoding="utf-8", newline="") as handle:
         return {row["name"]: int(row["address"], 16) for row in csv.DictReader(handle)}
 
@@ -1461,7 +1461,7 @@ def do_land_multi(args):
 
 
 def pin_rows(pins, chosen, landing):
-    """The pins the surviving rows still need, in reverse/symbols.csv's columns."""
+    """The pins the surviving rows still need, in targets/game/reverse/symbols.csv's columns."""
     live = defaultdict(set)
     for rva, entry in chosen.items():
         for sym, target in landing.unresolved_calls(rva, entry["body"]):

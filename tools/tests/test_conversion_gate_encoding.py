@@ -18,17 +18,17 @@ def test_staged_direction_scan_handles_comment_encoding(tmp_path, monkeypatch, c
     git("init", "-q")
     git("-c", "user.name=Gate fixture", "-c", "user.email=fixture@example.invalid",
         "commit", "--allow-empty", "-qm", "Fixture baseline")
-    source = tmp_path / "Code/GameEngine/Encoding.cpp"
+    source = tmp_path / "game/GameEngine/Encoding.cpp"
     source.parent.mkdir(parents=True)
     body = b"__declspec(naked) void f() { __asm { __emit 0xC3 } }\n" if lift else b"int f() { return 1; }\n"
     source.write_bytes(comment + body)
-    git("add", "Code/GameEngine/Encoding.cpp")
+    git("add", "game/GameEngine/Encoding.cpp")
     monkeypatch.chdir(tmp_path)
 
     failures = conversion_gate.added_lift_lines("HEAD", ":")
     if lift:
         assert len(failures) == 1
-        assert failures[0][0] == "Code/GameEngine/Encoding.cpp"
+        assert failures[0][0] == "game/GameEngine/Encoding.cpp"
         assert "__emit" in failures[0][1]
     else:
         assert failures == []

@@ -29,7 +29,7 @@ lands 17 wrong addresses. So a placement is only claimed when all three hold:
                    assignment, not a guess among equals.
 
 This is deliberately WEAKER than global uniqueness, which is why the standard
-is written down here and in vendor/d3dx9/PROVENANCE.txt rather than left
+is written down here and in inputs/vendor/d3dx9/PROVENANCE.txt rather than left
 implicit in a matcher. Its corroborations and its limits are recorded there.
 
 Four tests keep the ordering premise honest, because ordering is the part of the
@@ -111,9 +111,9 @@ import locate
 ROOT = B.ROOT
 MEMBER_CACHE = ROOT / "build" / "lib_window_sweep" / "members"
 
-VC_LIB = (ROOT / "build/toolchains/vs2003/Program Files"
+VC_LIB = (ROOT / "inputs/toolchains/vs2003/Program Files"
           / "Microsoft Visual Studio .NET 2003/Vc7/lib")
-PSDK_LIB = (ROOT / "build/toolchains/vs2003/Program Files"
+PSDK_LIB = (ROOT / "inputs/toolchains/vs2003/Program Files"
             / "Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Lib")
 
 # The exe links /MD, so the static CRTs cannot be what retail holds; they are
@@ -128,7 +128,7 @@ DEBUG_VARIANTS = {"libcd", "libcmtd", "libcpd", "libcpmtd", "msvcrtd", "msvcprtd
 # library's first attached row.
 #
 # d3dx9's run starts BELOW its lowest attached row (0xA0009A) and below the
-# 0xA00000 vendor/d3dx9/PROVENANCE.txt states: [0x9F8AC0, 0xA00000) holds
+# 0xA00000 inputs/vendor/d3dx9/PROVENANCE.txt states: [0x9F8AC0, 0xA00000) holds
 # d3dxmath.obj laid out in object order — ?WithinEpsilon, ?sincosf,
 # c_D3DXFloat32To16Array, then thirty init_/c_ pairs in source sequence. Only
 # one d3dxmath body had ever been attached, so the region read as unowned. The
@@ -145,11 +145,11 @@ WINDOWS = {
 # and has no ledger home yet; it is swept for accounting and refused for
 # emission rather than silently attached to the wrong archive.
 LEDGER_SOURCE = {
-    "d3dx9": ("vendor/d3dx9/d3dx9.lib", "d3dx9"),
-    "dxerr9": ("vendor/dxerr9/dxerr9.lib", "dxerr9"),
-    "vcomsupp": ("vendor/comsupp/comsupp.lib", "comsupp"),
-    "comsupp": ("vendor/comsupp/comsupp.lib", "comsupp"),
-    "comsuppw": ("vendor/comsupp/comsupp.lib", "comsupp"),
+    "d3dx9": ("inputs/vendor/d3dx9/d3dx9.lib", "d3dx9"),
+    "dxerr9": ("inputs/vendor/dxerr9/dxerr9.lib", "dxerr9"),
+    "vcomsupp": ("inputs/vendor/comsupp/comsupp.lib", "comsupp"),
+    "comsupp": ("inputs/vendor/comsupp/comsupp.lib", "comsupp"),
+    "comsuppw": ("inputs/vendor/comsupp/comsupp.lib", "comsupp"),
 }
 for _stem in ("libc", "libcmt", "libcp", "libcpmt", "msvcrt", "msvcprt",
               "oldnames", "RunTmChk"):
@@ -187,9 +187,9 @@ def archive_paths():
         libs[path.stem] = path
     for path in sorted(VC_LIB.glob("*.obj")):
         libs["obj:" + path.stem] = path
-    for tag, path in [("d3dx9", ROOT / "vendor/d3dx9/d3dx9.lib"),
-                      ("dxerr9", ROOT / "vendor/dxerr9/dxerr9.lib"),
-                      ("vcomsupp", ROOT / "vendor/comsupp/comsupp.lib"),
+    for tag, path in [("d3dx9", ROOT / "inputs/vendor/d3dx9/d3dx9.lib"),
+                      ("dxerr9", ROOT / "inputs/vendor/dxerr9/dxerr9.lib"),
+                      ("vcomsupp", ROOT / "inputs/vendor/comsupp/comsupp.lib"),
                       ("strsafe", PSDK_LIB / "strsafe.lib"),
                       ("bufferoverflow", PSDK_LIB / "bufferoverflow.lib")]:
         if path.exists():
@@ -200,7 +200,7 @@ def archive_paths():
 def tracked_sources():
     """The set of repo-relative paths git holds, so no wave can `git add` a 5 MB lib."""
     out = subprocess.run(["git", "-C", str(ROOT), "ls-files", "-z", "--",
-                          "vendor", "build/toolchains"],
+                          "inputs/vendor", "inputs/toolchains"],
                          capture_output=True, text=True, check=True)
     return set(out.stdout.split("\0")) - {""}
 
@@ -211,13 +211,13 @@ class Ledger:
     def __init__(self, ref=None):
         self.rows = []
         if ref is None:
-            text = (ROOT / "reverse" / "functions.csv").read_text(encoding="utf-8")
+            text = (ROOT / "targets/game/reverse" / "functions.csv").read_text(encoding="utf-8")
         else:
             # Re-deriving a wave that has already landed needs the ledger as it
             # was BEFORE it: read against today's rows, every class the wave
             # claimed is `consumed` and the sweep correctly reports nothing.
             text = subprocess.run(
-                ["git", "-C", str(ROOT), "show", f"{ref}:reverse/functions.csv"],
+                ["git", "-C", str(ROOT), "show", f"{ref}:targets/game/reverse/functions.csv"],
                 capture_output=True, check=True).stdout.decode("utf-8")
         with io.StringIO(text, newline="") as handle:
             for record in csv.DictReader(handle):
@@ -756,7 +756,7 @@ def sweep(report, ledger_ref=None):
     return refuse_dir32_conflicts(results, anchors, report), ledger, tracked
 
 
-GHIDRA_FUNCTIONS = ROOT / "reverse" / "ghidra_functions.csv"
+GHIDRA_FUNCTIONS = ROOT / "targets/game/reverse" / "ghidra_functions.csv"
 
 
 @functools.lru_cache(maxsize=1)
@@ -790,7 +790,7 @@ def witnessed_candidates(rva, candidates, names=None):
     return [name] if name in candidates else candidates
 
 
-DIR32_WHITELIST = ROOT / "reverse" / "dir32_consistency_whitelist.txt"
+DIR32_WHITELIST = ROOT / "targets/game/reverse" / "dir32_consistency_whitelist.txt"
 
 
 def gate_disagreements(bases, anchors):

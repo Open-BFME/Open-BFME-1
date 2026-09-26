@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Move attempt rows for FINISHED work out of reverse/re_attempts.log.
+"""Move attempt rows for FINISHED work out of targets/game/reverse/re_attempts.log.
 
 The log is 24,457 lines and every work-selection tool reads it -- next_work,
 brief, fleet_run and the three fleet pickers through re_log, plus
@@ -29,7 +29,7 @@ difference aborts with the symbol that differed.
     python3 tools/compact_re_attempts.py --check    # report, touch nothing
     python3 tools/compact_re_attempts.py --apply
 
-Removed rows go to reverse/re_attempts-converted.log, which is evidence, not a
+Removed rows go to targets/game/reverse/re_attempts-converted.log, which is evidence, not a
 middens: it is never read by tooling and never appended to by an agent.
 """
 import argparse
@@ -40,9 +40,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-LOG = ROOT / "reverse/re_attempts.log"
-ARCHIVE = ROOT / "reverse/re_attempts-converted.log"
-FUNCTIONS = ROOT / "reverse/functions.csv"
+LOG = ROOT / "targets/game/reverse/re_attempts.log"
+ARCHIVE = ROOT / "targets/game/reverse/re_attempts-converted.log"
+FUNCTIONS = ROOT / "targets/game/reverse/functions.csv"
 
 PLACEHOLDER_PREFIXES = ("?dup_", "?d_", "?j_", "?uw_")
 
@@ -55,7 +55,7 @@ def finished_rvas():
             continue
         name = row.get("name") or ""
         source = row.get("source") or ""
-        if name.startswith(PLACEHOLDER_PREFIXES) or source.startswith("Code/gen_"):
+        if name.startswith(PLACEHOLDER_PREFIXES) or source.startswith("game/gen_"):
             continue
         rva = (row.get("target_rva") or "").lower()
         if rva:
@@ -195,7 +195,7 @@ def main():
           f"({len(before['verdicts']):,} symbols, {len(before['raw']):,} RVAs checked)")
 
     if not args.apply:
-        print("\n--apply to write. Removed rows go to reverse/re_attempts-converted.log")
+        print("\n--apply to write. Removed rows go to targets/game/reverse/re_attempts-converted.log")
         return 0
 
     with open(ARCHIVE, "a", encoding="utf-8") as fh:

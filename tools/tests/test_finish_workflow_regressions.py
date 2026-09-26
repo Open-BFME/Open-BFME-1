@@ -70,13 +70,13 @@ def test_four_target_selection_keeps_one_unmeasured_exploration_slot(tmp_path, p
 def test_hypothesis_tracks_target_row_symbol_and_probe_logic(tmp_path, monkeypatch):
     import build
     root = tmp_path
-    (root / "reverse").mkdir()
+    (root / "targets/game/reverse").mkdir(parents=True)
     (root / "tools").mkdir()
     for name in ("finish_measure.py", "probe.py", "build.py", "experiment_store.py"):
         shutil.copy2(finish_measure.ROOT / "tools" / name, root / "tools" / name)
-    ledger = root / "reverse/functions.csv"
+    ledger = root / "targets/game/reverse/functions.csv"
     header = "name,export_rva,target_rva,target_size,source,status,notes\n"
-    row = "?d_0041AE50@@YAXXZ,,0x0041AE50,396,Code/gen_asm/test.asm,matched,\n"
+    row = "?d_0041AE50@@YAXXZ,,0x0041AE50,396,game/gen_asm/test.asm,matched,\n"
     ledger.write_text(header + row)
     path = _stash(root, "body.cpp", "?old@@YAXXZ", "int f;")
     monkeypatch.setattr(finish_measure, "ROOT", root)

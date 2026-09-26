@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read reverse/re_attempts.log into a boundary-aware dead-end index.
+"""Read targets/game/reverse/re_attempts.log into a boundary-aware dead-end index.
 
 Every work-selection tool must consult this, or it serves candidates the fleet
 has already investigated. Two log shapes are in the file and both are load-bearing:
@@ -49,7 +49,7 @@ from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-RE_ATTEMPTS = ROOT / "reverse" / "re_attempts.log"
+RE_ATTEMPTS = ROOT / "targets/game/reverse" / "re_attempts.log"
 
 # Rows fall into three kinds and only two of them are verdicts. `note`,
 # `evidence`, `lever`, `method`, `open`, `correction` and friends are
@@ -73,7 +73,7 @@ DEAD_END_STATUSES = frozenset({
 # stays for findings about the BOUNDARY (not a function, wrong anchor, refuted
 # identity), which re-serving cannot fix.
 # `partial` is a deferral that also hands the next agent what the attempt
-# produced: the body is banked under reverse/attempts/<rva>.cpp and served
+# produced: the body is banked under targets/game/reverse/attempts/<rva>.cpp and served
 # beside the candidate. Same class because it is the same fact about the
 # world -- an agent failed to match a real body -- and re-serving is correct.
 DEFERRED_STATUSES = frozenset({
@@ -380,7 +380,7 @@ def _take(argv, flag):
 
 
 def _bank(symbol, rva_text, source_text, score_text):
-    """Copy an attempt body under reverse/attempts/ and return its evidence tokens.
+    """Copy an attempt body under targets/game/reverse/attempts/ and return its evidence tokens.
 
     Runs before the log row is appended: an orphan stash is visible to hygiene
     and deletable, whereas a row pointing at a file that was never written sends
@@ -406,7 +406,7 @@ def _bank(symbol, rva_text, source_text, score_text):
     history = RE_ATTEMPTS.parent / "attempt_history" / f"0x{rva:08x}"
     history.mkdir(parents=True, exist_ok=True)
     # Lock files live in ignored build/, never among the tracked evidence.
-    lockdir = RE_ATTEMPTS.parent.parent / "build" / "attempt_locks"
+    lockdir = RE_ATTEMPTS.parents[3] / "build" / "attempt_locks"
     lockdir.mkdir(parents=True, exist_ok=True)
     with (lockdir / f"{rva:08x}.lock").open("a+b") as handle:
         lock(handle, exclusive=True)
@@ -435,7 +435,7 @@ def _bank(symbol, rva_text, source_text, score_text):
             preferred = score if previous is None else max(score, previous[1])
         finally:
             unlock(handle)
-    base = RE_ATTEMPTS.parent.parent
+    base = RE_ATTEMPTS.parents[3]
     return (f"score={preferred} stash={target.relative_to(base).as_posix()} "
             f"submitted={score} alternative={archived.relative_to(base).as_posix()}")
 
@@ -477,7 +477,7 @@ def _record(argv):
                                      [--stash <file> --score <0..1>]
 
     `<status> = partial` is a near miss: the candidate stays servable and the
-    two flags bank the body you are about to revert as reverse/attempts/<rva>.cpp
+    two flags bank the body you are about to revert as targets/game/reverse/attempts/<rva>.cpp
     for whoever draws it next. They are REQUIRED for `partial` and legal on no
     other status -- a partial without a body measured worse than silence.
 
@@ -537,7 +537,7 @@ def _record(argv):
             raise SystemExit(
                 f"--stash/--score belong to {STASH_STATUS!r}, not "
                 f"{status!r}: a dead end has nothing worth handing on, and a "
-                f"landed body belongs in Code/.")
+                f"landed body belongs in game/.")
         evidence = f"{evidence} {_bank(symbol, rva_text, stash_text, score_text)}"
     row = f"{symbol}\t{rva_text}\t{size_text}\t{status}\t{evidence}\r\n"
     with RE_ATTEMPTS.open("ab") as handle:

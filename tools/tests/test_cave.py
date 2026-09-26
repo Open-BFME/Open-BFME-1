@@ -30,7 +30,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 from cave import CHARACTERISTICS, PE, CaveError  # noqa: E402
 
-EXE = ROOT / "baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
+EXE = ROOT / "inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
 UPDATE = 0x0035F920  # VictoryConditions::update; prologue is push -1 / push imm32
 
 pytestmark = pytest.mark.skipif(not EXE.exists(), reason="retail baseline not present")

@@ -12,8 +12,8 @@ import pytest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 
-EXE = ROOT / "baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
-VC71 = ROOT / "build/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/bin/cl.exe"
+EXE = ROOT / "inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
+VC71 = ROOT / "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/bin/cl.exe"
 capstone = pytest.importorskip("capstone")
 
 import modbuild  # noqa: E402

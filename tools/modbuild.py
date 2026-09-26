@@ -29,7 +29,7 @@ import build as toolchain  # noqa: E402  — vc71_root/wine_path/compiler_enviro
 from cave import PE  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
-BASELINE = ROOT / "baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
+BASELINE = ROOT / "inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
 # Retail game data the mods rebuild from. The exe baseline was already tracked;
 # this is the same idea, three orders of magnitude smaller, and without it a
 # feature that lives partly in the game's data cannot be built reproducibly from

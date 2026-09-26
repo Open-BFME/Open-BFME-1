@@ -40,8 +40,8 @@ def test_dedup_refuses_when_one_row_is_claimed_by_two_sources(tmp_path):
     defines it, and the full gate died with 'symbol not found in object'."""
     ledger = tmp_path / "functions.csv"
     _write(ledger,
-           f"{FIND_FIELD_PARSE},,0x00850880,128,Code/GameEngine/Source/Common/INI/ini.cpp,matched,",
-           f"{FIND_FIELD_PARSE},,0x00850880,128,Code/GameEngine/Source/Common/INI/ini_parsers.cpp,matched,moved to the parser TU")
+           f"{FIND_FIELD_PARSE},,0x00850880,128,game/GameEngine/Source/Common/INI/ini.cpp,matched,",
+           f"{FIND_FIELD_PARSE},,0x00850880,128,game/GameEngine/Source/Common/INI/ini_parsers.cpp,matched,moved to the parser TU")
     before = ledger.read_bytes()
 
     with pytest.raises(SystemExit) as exc:
@@ -54,7 +54,7 @@ def test_dedup_refuses_when_one_row_is_claimed_by_two_sources(tmp_path):
 def test_dedup_still_collapses_true_duplicates(tmp_path):
     """Same source twice is the ordinary union-merge case and must still collapse."""
     ledger = tmp_path / "functions.csv"
-    src = "Code/GameEngine/Source/Common/INI/ini_parsers.cpp"
+    src = "game/GameEngine/Source/Common/INI/ini_parsers.cpp"
     _write(ledger,
            f"{FIND_FIELD_PARSE},,0x00850880,128,{src},matched,",
            f"{FIND_FIELD_PARSE},,0x00850880,128,{src},matched,moved to the parser TU")
@@ -70,7 +70,7 @@ def test_dedup_still_collapses_true_duplicates(tmp_path):
 def test_icf_alias_group_survives_dedup(tmp_path):
     """Distinct names at one address are an identity question, not a duplicate row."""
     ledger = tmp_path / "functions.csv"
-    src = "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp"
+    src = "game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp"
     _write(ledger,
            f"?removeAllTerrainBibs@BaseHeightMapRenderObjClass@@QAEXXZ,,0x006CB050,31,{src},matched,",
            f"?setShoreLineDetail@BaseHeightMapRenderObjClass@@QAEXXZ,,0x006CB050,31,{src},matched,")
@@ -89,7 +89,7 @@ def test_check_csv_flags_a_resurrected_row(tmp_path, monkeypatch):
         "# comment line must be ignored\n"
         "??0BehaviorModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00121F60,vtable base disagrees with ten other TUs\n",
         encoding="utf-8")
-    src = "Code/GameEngine/Source/GameLogic/Object/Update/StructureToppleUpdate.cpp"
+    src = "game/GameEngine/Source/GameLogic/Object/Update/StructureToppleUpdate.cpp"
     raw = (HEADER + "\r\n"
            + f"??0BehaviorModule@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00121F60,46,{src},matched,\r\n"
            ).encode("utf-8")
@@ -107,7 +107,7 @@ def test_check_csv_allows_rows_that_are_not_tombstoned(tmp_path, monkeypatch):
         "name,target_rva,reason\n"
         "??0BehaviorModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00121F60,proven wrong\n",
         encoding="utf-8")
-    src = "Code/GameEngine/Source/GameLogic/Object/Update/StructureToppleUpdate.cpp"
+    src = "game/GameEngine/Source/GameLogic/Object/Update/StructureToppleUpdate.cpp"
     # same name, DIFFERENT address -> not the tombstoned row
     raw = (HEADER + "\r\n"
            + f"??0BehaviorModule@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00999000,46,{src},matched,\r\n"
@@ -123,7 +123,7 @@ def test_check_csv_allows_rows_that_are_not_tombstoned(tmp_path, monkeypatch):
 @pytest.mark.parametrize("terminator", [b"\n", b"\r\n", b"\r\r\n"])
 def test_check_csv_rejects_empty_and_short_function_records(payload, terminator):
     """An empty record passed the commit gate but stopped readability measurement."""
-    src = "Code/GameEngine/Source/Common/Thing.cpp"
+    src = "game/GameEngine/Source/Common/Thing.cpp"
     first = f"?a@Thing@@QAEXXZ,,0x00401000,16,{src},matched,\r\r\n"
     second = f"?b@Thing@@QAEXXZ,,0x00402000,16,{src},matched,\n"
     raw = (HEADER + "\r\n" + first).encode() + payload + terminator + second.encode()
@@ -137,7 +137,7 @@ def test_check_csv_rejects_empty_and_short_function_records(payload, terminator)
 
 
 def test_check_csv_accepts_mixed_function_terminators():
-    src = "Code/GameEngine/Source/Common/Thing.cpp"
+    src = "game/GameEngine/Source/Common/Thing.cpp"
     raw = (HEADER + "\r\n"
            + f"?a@Thing@@QAEXXZ,,0x00401000,16,{src},matched,\r\r\n"
            + f"?b@Thing@@QAEXXZ,,0x00402000,16,{src},matched,\n").encode()
@@ -148,9 +148,9 @@ def test_check_csv_accepts_mixed_function_terminators():
 
 
 def test_shipped_tombstone_file_parses():
-    """The real reverse/deleted_rows.csv must load, or the guard is silently off."""
+    """The real targets/game/reverse/deleted_rows.csv must load, or the guard is silently off."""
     entries = check_csv.tombstones()
-    assert entries, "reverse/deleted_rows.csv produced no entries"
+    assert entries, "targets/game/reverse/deleted_rows.csv produced no entries"
     assert all(isinstance(rva, int) and reason for (_, rva), reason in entries.items()), entries
 
 
@@ -165,7 +165,7 @@ def test_tombstones_parse_quoted_commas_from_the_selected_state():
 
 
 def test_staged_identity_removal_requires_a_tombstone():
-    src = "Code/GameEngine/Source/Common/Thing.cpp"
+    src = "game/GameEngine/Source/Common/Thing.cpp"
     old = (HEADER + "\r\n"
            + f"?old@Thing@@QAEXXZ,,0x00401000,16,{src},matched,gen-dump\r\n").encode()
     new = (HEADER + "\r\n"
@@ -180,7 +180,7 @@ def test_staged_identity_removal_requires_a_tombstone():
 
 
 def test_staged_tombstone_makes_the_identity_removal_durable():
-    src = "Code/GameEngine/Source/Common/Thing.cpp"
+    src = "game/GameEngine/Source/Common/Thing.cpp"
     old = (HEADER + "\r\n"
            + f"?old@Thing@@QAEXXZ,,0x00401000,16,{src},matched,gen-dump\r\n").encode()
     new = (HEADER + "\r\n"
@@ -194,7 +194,7 @@ def test_staged_tombstone_makes_the_identity_removal_durable():
 
 
 def test_same_key_metadata_rewrite_needs_no_tombstone():
-    src = "Code/GameEngine/Source/Common/Thing.cpp"
+    src = "game/GameEngine/Source/Common/Thing.cpp"
     old = (HEADER + "\r\n"
            + f"?same@Thing@@QAEXXZ,,0x00401000,16,{src},matched,old\r\n").encode()
     new = old.replace(b",old\r\n", b",better evidence\r\n")
@@ -205,14 +205,14 @@ def test_same_key_metadata_rewrite_needs_no_tombstone():
     assert problems == []
 
 
-# --- banked near-miss attempts (reverse/attempts/) -------------------------
+# --- banked near-miss attempts (targets/game/reverse/attempts/) -------------------------
 # check_attempts reads the state being gated through known_sources/read_ledger,
 # so these drive it with both stubbed rather than writing into the real repo.
 
 def _attempts_harness(monkeypatch, tmp_path, stash_body, ledger_rows=(),
                       sources=()):
     """Point check_attempts at one synthetic stash plus a synthetic ledger."""
-    rel = "reverse/attempts/0x000c8220.cpp"
+    rel = "targets/game/reverse/attempts/0x000c8220.cpp"
     files = {rel: stash_body}
     files.update(sources)
     for path, text in files.items():
@@ -255,7 +255,7 @@ def test_attempts_rejects_an_oversize_body(tmp_path, monkeypatch):
 
 def test_attempts_rejects_a_stash_whose_rva_has_real_cpp(tmp_path, monkeypatch):
     """It landed: the body the stash was for now exists as authored C++."""
-    src = "Code/GameEngine/Source/Common/Handicap.cpp"
+    src = "game/GameEngine/Source/Common/Handicap.cpp"
     problems = _attempts_harness(
         monkeypatch, tmp_path, GOOD_HEADER + "void f() {}\n",
         ledger_rows=[f"?readFromDict@Handicap@@QAEXPBVDict@@@Z,,0x000C8220,362,{src},matched,\r\n"],
@@ -270,7 +270,7 @@ def test_attempts_exempts_a_dump_backed_rva(tmp_path, monkeypatch):
     a naked transcription lands byte-verified -- so a bare matched-check would
     reject exactly the stashes this feature exists to serve.
     """
-    src = "Code/GameEngine/Source/Common/Handicap_readFromDict_Thunk.cpp"
+    src = "game/GameEngine/Source/Common/Handicap_readFromDict_Thunk.cpp"
     problems = _attempts_harness(
         monkeypatch, tmp_path, GOOD_HEADER + "void f() {}\n",
         ledger_rows=[f"?readFromDict@Handicap@@QAEXPBVDict@@@Z,,0x000C8220,362,{src},matched,string-anchor Open-BFME4+Grok BUILDCOST\r\n"],
@@ -280,7 +280,7 @@ def test_attempts_exempts_a_dump_backed_rva(tmp_path, monkeypatch):
 
 
 def test_attempts_rejects_a_misnamed_file(tmp_path, monkeypatch):
-    rel = "reverse/attempts/handicap.cpp"
+    rel = "targets/game/reverse/attempts/handicap.cpp"
     target = tmp_path / rel
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(GOOD_HEADER + "void f() {}\n", encoding="utf-8")
@@ -294,11 +294,11 @@ def test_attempts_rejects_a_misnamed_file(tmp_path, monkeypatch):
 
 
 def test_attempts_exempts_an_asm_backed_rva(tmp_path, monkeypatch):
-    """A Code/gen_asm/*.asm row is retail re-encoded by extension alone: it
+    """A game/gen_asm/*.asm row is retail re-encoded by extension alone: it
     carries no __declspec(naked)/__emit token, so a body-text-only test reads
     it as real C++ and rejects the stash. Caught by the pre-commit hook on the
     first real seeding, not by review."""
-    src = "Code/gen_asm/d_00435170.asm"
+    src = "game/gen_asm/d_00435170.asm"
     problems = _attempts_harness(
         monkeypatch, tmp_path, GOOD_HEADER + "void f() {}\n",
         ledger_rows=[f"?d_00439280@@YAXXZ,,0x000C8220,82,{src},matched,gen-dump\r\n"],
@@ -307,13 +307,13 @@ def test_attempts_exempts_an_asm_backed_rva(tmp_path, monkeypatch):
 
 
 def test_orphan_ratchet_refuses_one_more_than_baseline(tmp_path, monkeypatch):
-    """A new row-less Code/*.cpp is refused; the existing backlog is not.
+    """A new row-less game/*.cpp is refused; the existing backlog is not.
 
     verify_source_claims already catches these, but it runs only in the FULL
     gate, which no commit or push hook invokes -- which is how 6 of them
     accumulated over three weeks while every routine gate stayed green.
     """
-    src = "Code/GameEngine/Source/Common/Real.cpp"
+    src = "game/GameEngine/Source/Common/Real.cpp"
     ledger = (HEADER + "\r\n"
               + f"?f@@YAXXZ,,0x00401000,16,{src},matched,\r\n").encode("utf-8")
     monkeypatch.setattr(check_csv, "read_ledger", lambda path, spec: ledger)
@@ -328,10 +328,10 @@ def test_orphan_ratchet_refuses_one_more_than_baseline(tmp_path, monkeypatch):
     # The claimed source alone is clean at any baseline.
     assert run([src], 0) == []
     # One orphan is tolerated while the baseline still covers it...
-    assert run([src, "Code/GameEngine/Source/Common/Orphan.cpp"], 1) == []
+    assert run([src, "game/GameEngine/Source/Common/Orphan.cpp"], 1) == []
     # ...and refused the moment it exceeds it, naming the file.
-    problems = run([src, "Code/GameEngine/Source/Common/Orphan.cpp"], 0)
+    problems = run([src, "game/GameEngine/Source/Common/Orphan.cpp"], 0)
     assert any("own no matched row" in p and "Orphan.cpp" in p for p in problems), problems
     # Generated trees are machine output and never count as orphans.
-    assert run([src, "Code/gen_asm/d_00401000.asm",
-                "Code/gen_small/uw_gen_0.cpp"], 0) == []
+    assert run([src, "game/gen_asm/d_00401000.asm",
+                "game/gen_small/uw_gen_0.cpp"], 0) == []

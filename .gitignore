@@ -1,17 +1,11 @@
 build/*
-!build/toolchains/
-build/toolchains/*
-!build/toolchains/vs2003/
-!build/toolchains/vs2003/**
-!build/toolchains/dx81/
-!build/toolchains/dx81/**
 
 .venv/
 __pycache__/
 *.pyc
-# reverse/exports.csv, reverse/ghidra_functions.csv and reverse/string_xrefs.tsv
+# targets/game/reverse/exports.csv, targets/game/reverse/ghidra_functions.csv and targets/game/reverse/string_xrefs.tsv
 # are NOT ignored. They are derived from the baseline binary, but so is the
-# committed reverse/vtables.tsv, and withholding them silently cripples every
+# committed targets/game/reverse/vtables.tsv, and withholding them silently cripples every
 # fresh clone: harvest.py opens exports.csv unguarded and dies without it, and
 # next_work.py's structural tier drops from 493 candidates to 1 and its Ghidra
 # tier reports "outputs unavailable". Regenerating them needs Ghidra plus a
@@ -23,20 +17,20 @@ __pycache__/
 # the next machine.
 .env
 
-reverse/.add_match.lock
-reverse/zh_sweep/locate_state.json
+targets/game/reverse/.add_match.lock
+targets/game/reverse/zh_sweep/locate_state.json
 
 # Alternate-case sweep shims: only the canonical spelling of each dual-case
 # include is committed (a case-only-colliding path breaks Windows/macOS checkout).
 # tools/gen_case_shims.py regenerates these at build time on case-sensitive FSes.
-reference/shims/sweep/mss.h
-reference/shims/sweep/wsys/file.h
-reference/shims/sweep/stdAfx.h
-reference/shims/sweep/WorldBuilder.h
-reference/shims/sweep/wpaudio/Source.h
-reference/shims/sweep/D3DX8Math.h
+inputs/reference/shims/sweep/mss.h
+inputs/reference/shims/sweep/wsys/file.h
+inputs/reference/shims/sweep/stdAfx.h
+inputs/reference/shims/sweep/WorldBuilder.h
+inputs/reference/shims/sweep/wpaudio/Source.h
+inputs/reference/shims/sweep/D3DX8Math.h
 
 # ledger_io.py writes <name>.tmp-<pid> and renames it into place. A process killed
 # between the write and the rename leaves one behind; two 23 MB ones were committed
 # by a broad `git add` on 2026-09-06 and shipped to every clone.
-reverse/*.tmp-*
+targets/game/reverse/*.tmp-*

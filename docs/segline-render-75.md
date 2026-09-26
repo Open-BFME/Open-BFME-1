@@ -3,19 +3,19 @@
 As of 2026-09-12, the reconstruction produces **14,081 bytes with 51 actual
 resolved byte differences** at RVA `0x00960A30` (VA `0x00D60A30`). This is
 99.638% byte similarity, not a completed conversion or a runtime correctness
-claim. The `Code/gen_asm/d_00960a30.asm` ledger entry remains unchanged.
+claim. The `game/gen_asm/d_00960a30.asm` ledger entry remains unchanged.
 The document keeps its original filename so existing links continue to work.
 
 ## Saved source and proof
 
-- [Preferred body](../reverse/attempts/0x00960a30.cpp), including the canonical
+- [Preferred body](../targets/game/reverse/attempts/0x00960a30.cpp), including the canonical
   class members and subdivision companion needed for integration.
-- [TU-local ABI declarations](../reverse/attempt_support/0x00960a30.inc).
+- [TU-local ABI declarations](../targets/game/reverse/attempt_support/0x00960a30.inc).
   This unchanged declaration prefix retains its upstream license. Splitting
   the prefix keeps the bank below the 64 KiB banking limit.
-- [Verification receipt](../reverse/attempt_support/0x00960a30-verification.json):
+- [Verification receipt](../targets/game/reverse/attempt_support/0x00960a30-verification.json):
   source hashes, compiler options, all 51 differing offsets, and 17 sibling checks.
-- [Earlier self-contained source archive](../reverse/attempt_history/0x00960a30/655db775d83c3ef215e70d9298cd3a8ebd870fae82fc54296a7ebf00fadf30a2.json).
+- [Earlier self-contained source archive](../targets/game/reverse/attempt_history/0x00960a30/655db775d83c3ef215e70d9298cd3a8ebd870fae82fc54296a7ebf00fadf30a2.json).
   Its `source` field contains the complete **75-difference** predecessor before
   the include split. Keep it when retiring the bank: ordinary bank archives
   still depend on the companion include.
@@ -118,7 +118,7 @@ Useful negative evidence:
 Copy the bank and support include together. Reproduce it with:
 
 ```sh
-python tools/probe.py reverse/attempts/0x00960a30.cpp \
+python tools/probe.py targets/game/reverse/attempts/0x00960a30.cpp \
   '?Render@SegLineRendererClass@@QAEXAAVRenderInfoClass@@ABVMatrix3D@@IPAVVector3@@ABVSphereClass@@PAVVector4@@@Z' \
   0x00960A30 --size 14081
 ```

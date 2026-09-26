@@ -1,0 +1,75 @@
+// cl: /DNDEBUG /MD
+// Retail 0x00726EA0: fill the taint overlay's dword and byte buffers.
+//
+// TaintBuffer is the repository's established descriptive family name, not a
+// recovered EA class spelling.  The matched constructor, destructor, init, surface fill,
+// reacquire, and dirty-cell methods establish this object's family and the
+// buffer fields used here.  The byte-loop counter is defined before the row
+// accumulator to retain the retail base/index SIB encoding.
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
+class GlobalData
+{
+public:
+	unsigned char m_pad00[0xCA0];
+	unsigned char m_taintAlpha;
+	unsigned char m_padCA1[0xCF5 - 0xCA1];
+	unsigned char m_taintOn;
+};
+
+extern GlobalData *TheWritableGlobalData;
+
+class TaintBuffer
+{
+public:
+	void fill(unsigned char alpha);
+
+private:
+	unsigned int m_width;
+	unsigned int m_height;
+	unsigned char m_pad08[0x18 - 0x08];
+	unsigned int *m_dwords;
+	unsigned char m_pad1C[0x38 - 0x1C];
+	unsigned char *m_bytes;
+};
+
+// ?fill@TaintBuffer@@QAEXE@Z
+void TaintBuffer::fill(unsigned char alpha)
+{
+	GlobalData *g = TheWritableGlobalData;
+	if (!g)
+		return;
+	if (!g->m_taintOn)
+		return;
+	unsigned char floor = g->m_taintAlpha;
+	if (alpha < floor)
+		alpha = floor;
+	unsigned int color = alpha;
+	color = (color << 8) | alpha;
+	color = (color << 8) | alpha;
+	color = (color << 8) | alpha;
+	unsigned int *dst = m_dwords;
+	unsigned int y;
+	for (y = 0; y < m_height; y++)
+	{
+		unsigned int x;
+		for (x = 0; x < m_width; )
+		{
+			*dst = color;
+			x++;
+			dst++;
+		}
+	}
+	unsigned int i = 0;
+	unsigned int row = (unsigned int)m_bytes;
+	for (y = 0; y < m_height; y++)
+	{
+		i = 0;
+		for (; i < m_width; )
+		{
+			*(char *)(i + row) = alpha;
+			i++;
+		}
+		row += m_width;
+	}
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Append MANY verified rows to reverse/functions.csv in one locked pass.
+"""Append MANY verified rows to targets/game/reverse/functions.csv in one locked pass.
 
 Why this exists: add_match.py is correct and its per-row cost is fine for a
 handful of claims, but a family conversion lands 40-115 rows at once and the
@@ -111,8 +111,8 @@ def main():
     args = ap.parse_args()
 
     root = args.root.resolve()
-    functions_csv = root / "reverse" / "functions.csv"
-    deleted_csv = root / "reverse" / "deleted_rows.csv"
+    functions_csv = root / "targets/game/reverse" / "functions.csv"
+    deleted_csv = root / "targets/game/reverse" / "deleted_rows.csv"
     if not functions_csv.exists():
         add_match.fail(f"no ledger at {functions_csv}")
 
@@ -136,7 +136,7 @@ def main():
             add_match.fail(f"manifest line {c['line']}: source does not exist: {p}",
                            "a ledger row must never point at a missing file")
 
-    lock_file = (root / "reverse" / ".add_match.lock").open("a")
+    lock_file = (root / "targets/game/reverse" / ".add_match.lock").open("a")
     lock(lock_file, exclusive=True,
          wait_notice="add_match_batch: waiting for ledger lock...")
 

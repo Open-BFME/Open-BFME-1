@@ -22,7 +22,7 @@ gen_asm dump -> real C++ lane -- and a real Types gain changes the declaration's
 type or its extent. So the refusal is for renames that keep the source, or keep
 the base type and the extent, and only past a budget: exactly one commit in those
 600 renamed a row in place (553094eb6, ?dup_00217620 -> ??1CollideModule@@UAE@XZ),
-and exactly one in the last 800 commits touching Code/ renamed a pad member into a
+and exactly one in the last 800 commits touching game/ renamed a pad member into a
 same-type same-extent field.
 
 Every test below stages the gaming edit and asserts it is caught, or stages the
@@ -60,13 +60,13 @@ def world(tmp_path, header=PADS_H, names=ALIASES):
     """A committed fixture tree whose ledger is all alias rows."""
     root = (tmp_path / "repo").resolve()
     (root / AREA).mkdir(parents=True)
-    (root / "reverse").mkdir()
+    (root / "targets/game/reverse").mkdir(parents=True)
     (root / AREA / "alpha.h").write_text(header)
     (root / AREA / "alpha.cpp").write_text(ALPHA_CPP)
     (root / AREA / "gamma.cpp").write_text(GAMMA_CPP)
     (root / LEDGER_PATH).write_bytes(rows(names))
     subprocess.run(["git", "init", "-q", str(root)], check=True)
-    stage(root, "Code", "reverse")
+    stage(root, "game", "targets/game/reverse")
     commit(root)
     return root
 

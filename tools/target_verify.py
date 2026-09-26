@@ -39,8 +39,7 @@ def read_rows(target):
 
 
 def _exclusive_roots(target):
-    return (target.root / "Code/Tools/WorldBuilder",
-            target.root / target.target_id / "Code")
+    return (target.root / "worldbuilder",)
 
 
 def validate_rows(target, rows):
@@ -112,11 +111,11 @@ def _source(target, value, *, scratch=False):
              and "\\" not in value and ":" not in value,
              f"source {value!r} must be repository-relative without '..'")
     path = (target.root / value).resolve()
-    roots = [target.root / "Code", target.root / target.target_id / "Code"]
+    roots = [target.root / "game", target.root / "worldbuilder"]
     if scratch:
         roots.append(target.build_root)
     _require(any(path.is_relative_to(root.resolve()) for root in roots),
-             f"source {value!r} must belong to Code/ or {target.target_id}/Code/")
+             f"source {value!r} must belong to game/ or worldbuilder/")
     _require(path.suffix.lower() == ".cpp" and path.is_file(),
              f"source {value!r} must be an existing C++ translation unit")
     text = path.read_text(encoding="utf-8-sig", errors="replace")

@@ -13,8 +13,8 @@ import name_history as H
 FIXTURES = Path(__file__).parent / 'fixtures/name_regression'
 BEFORE = (FIXTURES / 'before.cpp').read_text()
 AFTER = (FIXTURES / 'after.cpp').read_text()
-BANK = 'reverse/attempts/0x00695e20.cpp'
-CODE = 'Code/GameEngine/Source/Common/Rva00695E20LodGate.cpp'
+BANK = 'targets/game/reverse/attempts/0x00695e20.cpp'
+CODE = 'game/GameEngine/Source/Common/Rva00695E20LodGate.cpp'
 EXPECTED = {
     ('GameLODManager', 'Rva00695E20LodView'),
     ('m_rowFlags', 'm_field174'),
@@ -54,7 +54,7 @@ def incident(root, keep_bank=False, path=CODE):
     if not keep_bank:
         git(root, 'rm', '-q', BANK)
     put(root, path, AFTER)
-    put(root, 'reverse/functions.csv', f'?check@Rva00695E20LodGate@@QBE_NXZ,,0x00695E20,54,{path},matched,evidence\n')
+    put(root, 'targets/game/reverse/functions.csv', f'?check@Rva00695E20LodGate@@QBE_NXZ,,0x00695E20,54,{path},matched,evidence\n')
     return old
 
 
@@ -86,7 +86,7 @@ def test_pushed_history_catches_a_regression_restored_later(repo):
     old = commit(repo)
     git(repo, 'rm', '-q', BANK)
     put(repo, CODE, AFTER)
-    put(repo, 'reverse/functions.csv',
+    put(repo, 'targets/game/reverse/functions.csv',
         f'?check@Rva00695E20LodGate@@QBE_NXZ,,0x00695E20,54,{CODE},matched,evidence\n')
     bad = commit(repo)
     put(repo, CODE, BEFORE)
@@ -226,17 +226,17 @@ def test_staged_bank_move(repo):
 
 
 def test_generated_multi_body_source_is_not_paired_with_native_conversion(repo):
-    generated = 'Code/gen_small/fun_002.cpp'
-    native = 'Code/VectorCopy.cpp'
+    generated = 'game/gen_small/fun_002.cpp'
+    native = 'game/VectorCopy.cpp'
     put(repo, generated, 'struct V_ { virtual void v(int); };\n')
-    put(repo, 'reverse/functions.csv',
+    put(repo, 'targets/game/reverse/functions.csv',
         '?m@Gen_003A6290@@QAEPAXHH@Z,,0x003A6290,11,'
-        'Code/gen_small/fun_002.cpp,matched,gen-shim\n')
+        'game/gen_small/fun_002.cpp,matched,gen-shim\n')
     commit(repo)
     put(repo, native, 'struct Gen_t_003ab520_p24cd { int a[6]; };\n')
-    put(repo, 'reverse/functions.csv',
+    put(repo, 'targets/game/reverse/functions.csv',
         '?real@Rva003A6290@@QAEXXZ,,0x003A6290,11,'
-        'Code/VectorCopy.cpp,matched,authored\n')
+        'game/VectorCopy.cpp,matched,authored\n')
 
     findings, accepted = N.check(repo, 'HEAD', ':')
     assert findings == []
@@ -244,12 +244,12 @@ def test_generated_multi_body_source_is_not_paired_with_native_conversion(repo):
 
 
 def test_rehomed_row_does_not_rename_unchanged_multirow_source(repo):
-    original = 'Code/Owner.cpp'
-    extracted = 'Code/Rva00527200Wrapper.cpp'
+    original = 'game/Owner.cpp'
+    extracted = 'game/Rva00527200Wrapper.cpp'
     put(repo, original,
         'class Drawable { public: void clearModelConditionState(int); };\n'
         'void Drawable::clearModelConditionState(int) {}\n')
-    put(repo, 'reverse/functions.csv',
+    put(repo, 'targets/game/reverse/functions.csv',
         '?clearModelConditionState@Drawable@@QAEXH@Z,,0x00527200,15,'
         f'{original},matched,evidence\n')
     commit(repo)
@@ -257,7 +257,7 @@ def test_rehomed_row_does_not_rename_unchanged_multirow_source(repo):
     put(repo, extracted,
         'class Rva00527200Owner { public: void rva00527200(int); };\n'
         'void Rva00527200Owner::rva00527200(int) {}\n')
-    put(repo, 'reverse/functions.csv',
+    put(repo, 'targets/game/reverse/functions.csv',
         '?rva00527200@Rva00527200Owner@@QAEXH@Z,,0x00527200,15,'
         f'{extracted},matched,evidence\n')
 
@@ -268,15 +268,15 @@ def test_rehomed_row_does_not_rename_unchanged_multirow_source(repo):
     }
     findings, _ = N.check(repo, 'HEAD', ':')
     assert {(f.old_path, f.old_name, f.new_name) for f in findings} == {
-        ('reverse/functions.csv', 'Drawable', 'Rva00527200Owner'),
-        ('reverse/functions.csv', 'clearModelConditionState', 'rva00527200'),
+        ('targets/game/reverse/functions.csv', 'Drawable', 'Rva00527200Owner'),
+        ('targets/game/reverse/functions.csv', 'clearModelConditionState', 'rva00527200'),
     }
 
 
 def test_changed_source_extraction_still_detects_owner_and_member_downgrades(repo):
-    old_path, new_path = 'Code/Named.cpp', 'Code/Rva00695E20LodGate.cpp'
+    old_path, new_path = 'game/Named.cpp', 'game/Rva00695E20LodGate.cpp'
     put(repo, old_path, BEFORE)
-    put(repo, 'reverse/functions.csv',
+    put(repo, 'targets/game/reverse/functions.csv',
         f'?check@@YAXXZ,,0x00695E20,54,{old_path},matched,evidence\n')
     commit(repo)
 
@@ -284,14 +284,14 @@ def test_changed_source_extraction_still_detects_owner_and_member_downgrades(rep
     # is still needed here to catch names absent from the unchanged symbol.
     put(repo, old_path, 'void retainedSibling() {}\n')
     put(repo, new_path, AFTER)
-    put(repo, 'reverse/functions.csv',
+    put(repo, 'targets/game/reverse/functions.csv',
         f'?check@@YAXXZ,,0x00695E20,54,{new_path},matched,evidence\n')
     findings, _ = N.check(repo, 'HEAD', ':')
     assert EXPECTED <= {(f.old_name, f.new_name) for f in findings}
 
 
 def test_bank_need_not_be_deleted_and_filename_need_not_have_rva(repo):
-    incident(repo, keep_bank=True, path='Code/LodGate.cpp')
+    incident(repo, keep_bank=True, path='game/LodGate.cpp')
     findings, _ = N.check(repo, 'HEAD', ':')
     assert {(f.old_name, f.new_name) for f in findings} == EXPECTED
 
@@ -317,17 +317,17 @@ def test_committed_range_reads_snapshots_not_worktree(repo):
 
 
 def test_same_path_change_without_rva_or_ledger(repo):
-    put(repo, 'Code/Named.cpp', BEFORE)
+    put(repo, 'game/Named.cpp', BEFORE)
     commit(repo)
-    put(repo, 'Code/Named.cpp', AFTER)
+    put(repo, 'game/Named.cpp', AFTER)
     assert len(N.check(repo, 'HEAD', ':')[0]) == 4
 
 
 def test_git_move_without_rva_or_ledger(repo):
-    put(repo, 'Code/Old.cpp', BEFORE)
+    put(repo, 'game/Old.cpp', BEFORE)
     commit(repo)
-    git(repo, 'rm', '-q', 'Code/Old.cpp')
-    put(repo, 'Code/New.cpp', BEFORE.replace('m_lodSelector', 'm_fieldB60'))
+    git(repo, 'rm', '-q', 'game/Old.cpp')
+    put(repo, 'game/New.cpp', BEFORE.replace('m_lodSelector', 'm_fieldB60'))
     findings, _ = N.check(repo, 'HEAD', ':')
     assert [(f.old_name, f.new_name) for f in findings] == [('m_lodSelector', 'm_fieldB60')]
 
@@ -395,23 +395,23 @@ def test_restore_is_not_a_regression():
 
 
 def test_rva_ledger_link_between_semantic_paths(repo):
-    old_path, new_path = 'Code/Named.cpp', 'Code/Moved.cpp'
+    old_path, new_path = 'game/Named.cpp', 'game/Moved.cpp'
     put(repo, old_path, BEFORE)
-    put(repo, 'reverse/functions.csv', f'?check@@YAXXZ,,0x00695E20,54,{old_path},matched,evidence\n')
+    put(repo, 'targets/game/reverse/functions.csv', f'?check@@YAXXZ,,0x00695E20,54,{old_path},matched,evidence\n')
     commit(repo)
     git(repo, 'rm', '-q', old_path)
     put(repo, new_path, AFTER)
-    put(repo, 'reverse/functions.csv', f'?check@@YAXXZ,,0x00695E20,54,{new_path},matched,evidence\n')
+    put(repo, 'targets/game/reverse/functions.csv', f'?check@@YAXXZ,,0x00695E20,54,{new_path},matched,evidence\n')
     assert len(N.check(repo, 'HEAD', ':')[0]) == 4
 
 
 def test_ledger_only_symbol_downgrade_at_same_address(repo):
-    path = 'Code/Named.cpp'
+    path = 'game/Named.cpp'
     put(repo, path, 'class GameLODManager { public: int calculateScore(); };\n')
-    put(repo, 'reverse/functions.csv',
+    put(repo, 'targets/game/reverse/functions.csv',
         f'?calculateScore@GameLODManager@@QAEHXZ,,0x00123456,16,{path},matched,evidence\n')
     commit(repo)
-    put(repo, 'reverse/functions.csv',
+    put(repo, 'targets/game/reverse/functions.csv',
         f'?Rva00123456@Rva00123456Owner@@QAEHXZ,,0x00123456,16,{path},matched,evidence\n')
     findings, accepted = N.check(repo, 'HEAD', ':')
     assert accepted == 0
@@ -419,30 +419,30 @@ def test_ledger_only_symbol_downgrade_at_same_address(repo):
         ('calculateScore', 'Rva00123456'),
         ('GameLODManager', 'Rva00123456Owner'),
     }
-    assert all(f.old_path == f.new_path == 'reverse/functions.csv' for f in findings)
+    assert all(f.old_path == f.new_path == 'targets/game/reverse/functions.csv' for f in findings)
 
 
 def test_ledger_symbol_at_different_address_is_not_paired(repo):
-    path = 'Code/Named.cpp'
-    put(repo, 'reverse/functions.csv',
+    path = 'game/Named.cpp'
+    put(repo, 'targets/game/reverse/functions.csv',
         f'?calculateScore@GameLODManager@@QAEHXZ,,0x00123456,16,{path},matched,evidence\n')
     commit(repo)
-    put(repo, 'reverse/functions.csv',
+    put(repo, 'targets/game/reverse/functions.csv',
         f'?Rva00654321@Rva00654321Owner@@QAEHXZ,,0x00654321,16,{path},matched,evidence\n')
     assert N.check(repo, 'HEAD', ':') == ([], 0)
 
 
 def test_ledger_symbol_correction_requires_exact_row_snapshot(repo):
-    path = 'Code/Named.cpp'
-    put(repo, 'reverse/functions.csv',
+    path = 'game/Named.cpp'
+    put(repo, 'targets/game/reverse/functions.csv',
         f'?calculateScore@Known@@QAEHXZ,,0x00123456,16,{path},matched,evidence\n')
     commit(repo)
-    put(repo, 'reverse/functions.csv',
+    put(repo, 'targets/game/reverse/functions.csv',
         f'?Rva00123456@Known@@QAEHXZ,,0x00123456,16,{path},matched,evidence\n')
     finding = N.check(repo, 'HEAD', ':')[0][0]
     correction(repo, finding)
     assert N.check(repo, 'HEAD', ':') == ([], 1)
-    put(repo, 'reverse/functions.csv',
+    put(repo, 'targets/game/reverse/functions.csv',
         f'?Rva00123456@Known@@QAEHXZ,,0x00123456,16,{path},matched,changed evidence\n')
     assert len(N.check(repo, 'HEAD', ':')[0]) == 1
 
@@ -453,14 +453,14 @@ def test_constructor_owner_name_is_read_from_msvc_symbol():
 
 
 def test_source_path_with_spaces(repo):
-    path = 'Code/Space In Name.cpp'
+    path = 'game/Space In Name.cpp'
     put(repo, path, BEFORE)
     commit(repo)
     put(repo, path, AFTER)
     assert len(N.check(repo, 'HEAD', ':')[0]) == 4
 
 
-@pytest.mark.parametrize('path', ['Code/Owner.cxx', 'Code/Owner.cc', 'Code/Owner.hh', 'reference/shims/Owner.h'])
+@pytest.mark.parametrize('path', ['game/Owner.cxx', 'game/Owner.cc', 'game/Owner.hh', 'inputs/reference/shims/Owner.h'])
 def test_authored_source_and_shim_suffixes(repo, path):
     put(repo, path, BEFORE)
     commit(repo)
@@ -478,7 +478,7 @@ def hook_fixture(repo):
                  'conversion_gate', 'check_csv', 'retired_guard', 'one_identity',
                  'eol_guard', 'b_pin_check', 'target_hooks'):
         put(repo, f'tools/{tool}.py', 'raise SystemExit(0)\n')
-    put(repo, 'Code/Names.cpp', BEFORE)
+    put(repo, 'game/Names.cpp', BEFORE)
     return commit(repo)
 
 
@@ -493,7 +493,7 @@ def run_hook(repo, hook, old):
 @pytest.mark.parametrize('checker', ['name_regression', 'name_oracle'])
 def test_real_hooks_refuse_unstaged_checker_changes(repo, hook, checker):
     old = hook_fixture(repo)
-    put(repo, 'Code/Names.cpp', AFTER)
+    put(repo, 'game/Names.cpp', AFTER)
     if hook == 'pre-push':
         commit(repo)
     put(repo, f'tools/{checker}.py', 'raise SystemExit(0)  # unreviewed\n', stage=False)
@@ -505,7 +505,7 @@ def test_real_hooks_refuse_unstaged_checker_changes(repo, hook, checker):
 
 def test_pre_push_refuses_unstaged_history_checker(repo):
     old = hook_fixture(repo)
-    put(repo, 'Code/Names.cpp', AFTER)
+    put(repo, 'game/Names.cpp', AFTER)
     commit(repo)
     put(repo, 'tools/name_history.py', 'raise SystemExit(0)  # unreviewed\n',
         stage=False)
@@ -518,7 +518,7 @@ def test_pre_push_refuses_unstaged_history_checker(repo):
 def test_real_hooks_refuse_an_untracked_checker(repo, hook):
     old = hook_fixture(repo)
     git(repo, 'rm', '--cached', 'tools/name_regression.py')
-    put(repo, 'Code/Names.cpp', AFTER)
+    put(repo, 'game/Names.cpp', AFTER)
     if hook == 'pre-push':
         commit(repo)
     result = run_hook(repo, hook, old)

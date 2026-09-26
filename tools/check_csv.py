@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fast integrity check for reverse/functions.csv and reverse/symbols.csv (<1s).
+"""Fast integrity check for targets/game/reverse/functions.csv and targets/game/reverse/symbols.csv (<1s).
 
 Catches the corruption classes that break the full gate long after the fact:
 duplicate rows from union merges, two agents claiming overlapping bytes,
@@ -25,9 +25,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import ledger_io  # noqa: E402  (after the path insert that makes it importable)
 
 ROOT = Path(__file__).resolve().parents[1]
-FUNCTIONS = ROOT / "reverse" / "functions.csv"
-SYMBOLS = ROOT / "reverse" / "symbols.csv"
-DELETED = ROOT / "reverse" / "deleted_rows.csv"
+FUNCTIONS = ROOT / "targets/game/reverse" / "functions.csv"
+SYMBOLS = ROOT / "targets/game/reverse" / "symbols.csv"
+DELETED = ROOT / "targets/game/reverse" / "deleted_rows.csv"
 
 # Union merge duplicates contiguous BLOCKS of records, not single lines, and the
 # ledgers mix \r\r\n, \r\n and bare-LF terminators that add_match indexes by
@@ -55,6 +55,9 @@ def read_ledger(path, spec):
     if spec is None:
         return path.read_bytes()
     rel = path.relative_to(ROOT).as_posix()
+    if rel == "targets/game/reverse/functions.csv":
+        import layout_history
+        return layout_history.read_at(spec, rel, layout_history.OLD_LEDGER, root=ROOT)
     out = subprocess.run(["git", "-C", str(ROOT), "show", f"{spec}:{rel}"],
                          capture_output=True)
     if out.returncode != 0:
@@ -128,7 +131,7 @@ def known_sources(spec):
 
 
 def tombstones(raw=None):
-    """(name, rva) pairs deleted on purpose -> why. See reverse/deleted_rows.csv.
+    """(name, rva) pairs deleted on purpose -> why. See targets/game/reverse/deleted_rows.csv.
 
     functions.csv merges with git's union driver, which cannot express a
     deletion: any branch forked before the delete puts the row back with no
@@ -175,7 +178,7 @@ def check_removed_rows(before, after, deleted, problems):
     for name, rva in missing:
         problems.append(
             f"functions.csv removes {name} @ 0x{rva:08X} without a staged "
-            "reverse/deleted_rows.csv tombstone. A union merge will resurrect it; "
+            "targets/game/reverse/deleted_rows.csv tombstone. A union merge will resurrect it; "
             "stage the transaction's tombstone with the ledger change.")
 
 
@@ -243,7 +246,7 @@ def check_functions(raw, problems, sources_ok, deleted=None):
                             f"purpose and has come back (a union merge from a branch that "
                             f"forked before the delete). Reason it was deleted: "
                             f"{deleted[(name, rva)]}. Drop the row again, or — if you can "
-                            f"byte-prove it — remove its line from reverse/deleted_rows.csv "
+                            f"byte-prove it — remove its line from targets/game/reverse/deleted_rows.csv "
                             f"in the same commit.")
 
         # Keyed on the parsed address: the ledger spells it three ways
@@ -271,7 +274,7 @@ def check_functions(raw, problems, sources_ok, deleted=None):
                 problems.append(f"functions.csv: {name} and {prev_name} claim the same range "
                                 f"at {target_rva} but exactly one is a gen-* placeholder. "
                                 "Retract the placeholder row and tombstone it in "
-                                "reverse/deleted_rows.csv.")
+                                "targets/game/reverse/deleted_rows.csv.")
             # same (rva, size), same kind: an alias group. Retail has no ICF, so at
             # most one name is right; identity_guard ratchets the count down.
         by_rva.setdefault(rva, (name, size, gen_row))
@@ -357,7 +360,7 @@ def check_symbols(raw, problems):
     return len(rows) - 1
 
 
-ATTEMPTS_DIR = "reverse/attempts/"
+ATTEMPTS_DIR = "targets/game/reverse/attempts/"
 ATTEMPT_NAME = re.compile(r"^0x[0-9a-f]{8}\.cpp$")
 ATTEMPT_LIMIT = 64 * 1024
 
@@ -375,7 +378,7 @@ def _attempt_paths(spec, sources_ok=None):
 
 
 def check_attempts(spec, problems, *, functions_raw=None, sources_ok=None):
-    """Validate banked near-miss bodies under reverse/attempts/.
+    """Validate banked near-miss bodies under targets/game/reverse/attempts/.
 
     A stash is evidence handed to the next agent, so a malformed one is worse
     than none: it gets served at a score nobody measured. Absent directory means
@@ -459,7 +462,7 @@ def check_attempts(spec, problems, *, functions_raw=None, sources_ok=None):
     return len(paths)
 
 
-# Orphans that already exist: 6 .cpp under Code/ own no matched row, the oldest
+# Orphans that already exist: 6 .cpp under game/ own no matched row, the oldest
 # added 2026-08-03. They fail build.py's verify_source_claims, but that runs only
 # in the FULL gate -- which no commit or push hook invokes -- so they accumulated
 # silently for weeks while every routine gate stayed green. This is a ratchet,
@@ -481,15 +484,15 @@ def worldbuilder_claims(spec, sources_ok):
         # The target validator reads disk; it may exempt only this snapshot's claims.
         snapshot = ":" if spec == "" else spec
         sources = target_hooks._sources(ROOT, snapshot, sources_ok)
-        config = json.loads(read_ledger(ROOT / target_hooks.CONFIG, spec))
         dependencies = owned | sources | target_hooks._donor_paths(ROOT, snapshot, sources_ok)
-        dependencies.add(config["image"]["path"])
+        dependencies.add(target_hooks.CONFIG)
+        dependencies.add("inputs/baselines/bfme1/workshop-vanilla-1.03/files/worldbuilder.exe")
         target_hooks._clean(ROOT, snapshot, dependencies)
     return target_hooks.validated_worldbuilder_sources(ROOT)
 
 
 def check_orphans(spec, problems, *, functions_raw=None, sources_ok=None):
-    """Refuse a NEW Code/*.cpp that owns no matched row.
+    """Refuse a NEW game/*.cpp that owns no matched row.
 
     A source with no row is presence pretending to be progress: nothing compiles
     it, nothing verifies it, and the only check that catches it is one the
@@ -513,12 +516,12 @@ def check_orphans(spec, problems, *, functions_raw=None, sources_ok=None):
         problems.append(f"WorldBuilder source ownership is invalid: {error}")
     orphans = sorted(
         path for path in sources_ok
-        if path.startswith("Code/") and path.endswith(".cpp")
-        and not path.startswith(("Code/gen_asm/", "Code/gen_small/"))
+        if path.startswith("game/") and path.endswith(".cpp")
+        and not path.startswith(("game/gen_asm/", "game/gen_small/"))
         and path not in claimed)
     if len(orphans) > ORPHAN_BASELINE:
         problems.append(
-            f"{len(orphans)} Code/*.cpp own no matched row, over the "
+            f"{len(orphans)} game/*.cpp own no matched row, over the "
             f"{ORPHAN_BASELINE} already known. Byte-match one function in your "
             f"new file or delete it -- source presence is not progress. "
             f"Never raise ORPHAN_BASELINE to get green; it only goes down. "

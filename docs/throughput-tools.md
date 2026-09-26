@@ -116,8 +116,8 @@ diff is not EH, which the run established in 3 minutes instead of a session).
 ## Retained attempts and compiler experiments
 
 `re_log.py record ... partial --stash FILE --score N` preserves the prior body
-and every alternative in `reverse/attempt_history/0xRVA/<sha256>.json`. The
-existing `reverse/attempts/0xRVA.cpp` path remains the preferred candidate, and
+and every alternative in `targets/game/reverse/attempt_history/0xRVA/<sha256>.json`. The
+existing `targets/game/reverse/attempts/0xRVA.cpp` path remains the preferred candidate, and
 only moves to a higher author score. A lower-scored submission cannot destroy
 a better one. The log's `score=` describes that preferred file; `submitted=`
 describes the new alternative. History is evidence, never compiled progress.
@@ -151,7 +151,7 @@ exactly once; edits cannot overlap. The original is always tested first.
 ```
 
 ```sh
-python tools/shape_search.py Code/path/Foo.cpp 'MANGLED' 0xRVA \
+python tools/shape_search.py game/path/Foo.cpp 'MANGLED' 0xRVA \
   --size 101 --choices build/choices.json --max-trials 32 --plateau 8 --seconds 600
 ```
 

@@ -23,7 +23,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-EXE = ROOT / "baselines" / "bfme1" / "workshop-vanilla-1.03" / "files" / "lotrbfme.exe"
+EXE = ROOT / "inputs/baselines" / "bfme1" / "workshop-vanilla-1.03" / "files" / "lotrbfme.exe"
 
 # Calling-convention letter -> who cleans the stack. A parsed __cdecl signature
 # is the one caller-cleaned case whose cleanup is still known: it must end in
@@ -263,7 +263,7 @@ def decoded_actual_ret(body):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=40)
-    ap.add_argument("--csv", default=str(ROOT / "reverse" / "functions.csv"))
+    ap.add_argument("--csv", default=str(ROOT / "targets/game/reverse" / "functions.csv"))
     args = ap.parse_args()
 
     data = EXE.read_bytes()

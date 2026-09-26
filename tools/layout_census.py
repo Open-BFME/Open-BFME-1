@@ -186,7 +186,7 @@ def probe_one(source, cls):
 
 def sources_defining(cls):
     proc = subprocess.run(
-        ["git", "grep", "-lE", rf"^(class|struct) {cls}( *[:{{]|$)", "--", "Code/*.cpp"],
+        ["git", "grep", "-lE", rf"^(class|struct) {cls}( *[:{{]|$)", "--", "game/*.cpp"],
         cwd=ROOT, capture_output=True, text=True)
     return [ROOT / line for line in proc.stdout.splitlines() if line]
 
@@ -216,7 +216,7 @@ def named(record):
 
 def witness(cls):
     try:
-        rows = json.loads((ROOT / "reverse" / "bfme_layouts.json").read_text(encoding="utf-8"))
+        rows = json.loads((ROOT / "targets/game/reverse" / "bfme_layouts.json").read_text(encoding="utf-8"))
     except OSError:
         return {}
     out = collections.defaultdict(list)

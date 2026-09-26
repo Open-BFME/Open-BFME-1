@@ -53,5 +53,5 @@ def test_a_scoped_build_clears_nothing(monkeypatch, tmp_path):
     monkeypatch.setattr(build, "INFLIGHT_DIR", tmp_path)
     monkeypatch.setattr(build, "main", lambda argv: None)
     (tmp_path / str(DEAD)).write_text("dead build\n")
-    build.run_marked(["Code/Some.cpp"])
+    build.run_marked(["game/Some.cpp"])
     assert (tmp_path / str(DEAD)).exists()

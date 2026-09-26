@@ -265,7 +265,7 @@ class GateAgreement(unittest.TestCase):
 class RowNames(unittest.TestCase):
     """check_csv rejects one name at two RVAs, and a twin is the common case here."""
 
-    SOURCE = "vendor/d3dx9/d3dx9.lib"
+    SOURCE = "inputs/vendor/d3dx9/d3dx9.lib"
     TWIN = "?build_ycc_rgb_table@D3DX@@YGXPAUjpeg_decompress_struct@1@@Z"
 
     def build(self, rows, held=()):
@@ -330,7 +330,7 @@ class RowNames(unittest.TestCase):
 
     def test_an_untracked_archive_is_refused_rather_than_git_added(self):
         row = self.row(self.TWIN, "obj\\i386\\jdcolor.obj", 0xAC5BE0)
-        row["source"] = "build/toolchains/vs2003/nowhere.lib"
+        row["source"] = "inputs/toolchains/vs2003/nowhere.lib"
         named, refused, report = self.build([row])
         self.assertEqual(named, [])
         self.assertEqual(len(refused), 1)

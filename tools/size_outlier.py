@@ -64,7 +64,7 @@ RATIO = 4            # flag a member at or below median/RATIO
 
 
 def _image():
-    data = (B.ROOT / "baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe").read_bytes()
+    data = (B.ROOT / "inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe").read_bytes()
     pe = struct.unpack_from("<I", data, 0x3C)[0]
     nsec = struct.unpack_from("<H", data, pe + 6)[0]
     opt = struct.unpack_from("<H", data, pe + 20)[0]

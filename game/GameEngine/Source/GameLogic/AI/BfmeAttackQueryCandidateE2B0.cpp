@@ -1,0 +1,215 @@
+// cl: /DNDEBUG /MD /EHsc
+extern "C" int __cdecl abs( int n );
+#pragma intrinsic(abs)
+//
+// Retail 0x003EE2B0: BFME attack-query candidate test.  The query walks from
+// a cell coordinate to an offset candidate, resolves the candidate's effective
+// zone, and accepts it when the movement-zone check allows the transition.
+
+typedef int Int;
+typedef bool Bool;
+typedef unsigned short zoneStorageType;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
+struct ICoord2D
+{
+	Int x;
+	Int y;
+};
+
+struct PathfindMovementProfile
+{
+	Int acceptableSurfaces;
+	Bool crusher;
+	Bool terrainOnly;
+	unsigned char padding[2];
+	Int layer;
+};
+
+struct BfmeCellResult
+{
+	Int m_field00;
+	Int m_ownerId;
+	Int m_candidateZone;
+	Int m_candidateX;
+	Int m_candidateY;
+};
+
+struct BfmeCellInfo
+{
+	unsigned char m_pad00[0x20];
+	Int m_field20;
+};
+
+class PathfindCell
+{
+public:
+	BfmeCellInfo *m_info;
+	Int m_ownerId;
+	unsigned short m_zone;
+	unsigned short m_pad0a;
+	unsigned char m_pad0c[4];
+};
+
+class PathfindLayer
+{
+public:
+	PathfindCell *getCell(Int cellX, Int cellY);
+
+private:
+	unsigned char m_unreconstructed[0x44];
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
+class PathfindZoneManager
+{
+public:
+	zoneStorageType getEffectiveZone(const PathfindMovementProfile &profile,
+		zoneStorageType zone) const;
+};
+
+class BfmeAttackQuery
+{
+public:
+	Int fillCellAlongLine(const ICoord2D *from, const ICoord2D *to,
+		Int layer, BfmeCellResult *result);
+	Bool validMovement(Int layer, Int fromZone, zoneStorageType toZone,
+		const void *extra);
+
+	Bool checkCandidate(const ICoord2D *base, Int offsetX, Int offsetY,
+		Int movementLayer, Int pathLayer, Int fromZone, BfmeCellResult *result,
+		const PathfindMovementProfile *profile, const void *extra);
+
+private:
+	unsigned char m_pad000[0x10];
+	PathfindCell **m_map;
+	struct
+	{
+		ICoord2D lo;
+		ICoord2D hi;
+	} m_extent;
+	unsigned char m_beforeLayers[0x85c - 0x24];
+	PathfindLayer m_layers[16];
+	PathfindZoneManager m_zoneManager;
+
+	__forceinline PathfindCell *getCell(Int layerIndex, Int cellX, Int cellY)
+	{
+		if (cellX >= m_extent.lo.x && cellX <= m_extent.hi.x &&
+			cellY >= m_extent.lo.y && cellY <= m_extent.hi.y)
+		{
+			if (layerIndex > 1 && layerIndex <= 15)
+			{
+				PathfindCell *cell = m_layers[layerIndex].getCell(cellX, cellY);
+				if (cell)
+					return cell;
+			}
+			return &m_map[cellX][cellY];
+		}
+		return 0;
+	}
+};
+
+// Retail body 0x003D6DC0; the checkCandidate caller reaches it through ILT
+// 0x00042E01.  The body returns true when the line finds a cell whose owner
+// differs from result->m_ownerId and records that cell in result.
+Int BfmeAttackQuery::fillCellAlongLine(const ICoord2D *from,
+	const ICoord2D *to, Int layer, BfmeCellResult *result)
+{
+	const ICoord2D *from_ptr = from;
+	const ICoord2D *to_ptr = to;
+	Int to_x = to_ptr->x;
+	Int x = from_ptr->x;
+	Int delta_x = abs(to_x - x);
+	Int y = from_ptr->y;
+	Int to_y = to_ptr->y;
+	Int delta_y = abs(to_y - y);
+
+	Int xinc2, yinc1, xinc1, numpixels, numadd, den;
+	Int yinc2, num;
+	if (delta_x >= delta_y)
+	{
+		numpixels = delta_x + 1;
+		num = 2 * delta_y - delta_x;
+		numadd = delta_y << 1;
+		den = 2 * (delta_y - delta_x);
+		xinc2 = 1;
+		yinc2 = 0;
+		yinc1 = 1;
+		xinc1 = 1;
+	}
+	else
+	{
+		numpixels = delta_y + 1;
+		num = 2 * delta_x - delta_y;
+		numadd = delta_x << 1;
+		den = 2 * (delta_x - delta_y);
+		yinc2 = 1;
+		xinc2 = 0;
+		yinc1 = 1;
+		xinc1 = 1;
+	}
+
+	if (from->x > to_x)
+	{
+		xinc2 = -xinc2;
+		xinc1 = -1;
+	}
+	if (from->y > to_y)
+	{
+		yinc2 = -yinc2;
+		yinc1 = -1;
+	}
+
+	for (Int curpixel = 0; curpixel < numpixels; curpixel++)
+	{
+		PathfindCell *cell = getCell(layer, x, y);
+		if (cell == 0)
+			return false;
+
+		BfmeCellInfo *info = cell->m_info;
+		Int owner = info != 0 ? info->m_field20 : 0;
+		if (owner != result->m_ownerId)
+		{
+			result->m_candidateZone = cell->m_zone;
+			result->m_candidateX = x;
+			result->m_candidateY = y;
+			return true;
+		}
+
+		if (num < 0)
+		{
+			num += numadd;
+			x += xinc2;
+			y += yinc2;
+		}
+		else
+		{
+			num += den;
+			x += xinc1;
+			y += yinc1;
+		}
+	}
+
+	return false;
+}
+
+Bool BfmeAttackQuery::checkCandidate(const ICoord2D *base, Int offsetX,
+	Int offsetY, Int movementLayer, Int pathLayer, Int fromZone,
+	BfmeCellResult *result,
+	const PathfindMovementProfile *profile, const void *extra)
+{
+	ICoord2D candidate = *base;
+	candidate.x += offsetX;
+	candidate.y += offsetY;
+	fillCellAlongLine(base, &candidate, pathLayer, result);
+
+	if (result->m_candidateZone != 0)
+	{
+		Int effectiveZone = m_zoneManager.getEffectiveZone(
+			*profile, (zoneStorageType)result->m_candidateZone);
+		if (fromZone == effectiveZone ||
+			validMovement(movementLayer, fromZone, effectiveZone, extra))
+			return true;
+	}
+	return false;
+}

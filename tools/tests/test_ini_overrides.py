@@ -27,8 +27,8 @@ import pytest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 
-EXE = ROOT / "baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
-FINDINGS = ROOT / "reverse/network_delay/FINDINGS.md"
+EXE = ROOT / "inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
+FINDINGS = ROOT / "targets/game/reverse/network_delay/FINDINGS.md"
 
 # offset -> (field, compiled imm32, shipped value)
 FIELDS = {

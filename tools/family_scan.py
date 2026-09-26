@@ -48,7 +48,7 @@ family as a HYPOTHESIS to look at, never as a claim. This decides only what is
 worth LOOKING at; the byte gate still decides every member individually.
 
 FILTERS, each of which exists because omitting it cost a run:
-  * only unclaimed Code/gen_asm/ dump rows -- Code/gen_small/ owns its own;
+  * only unclaimed game/gen_asm/ dump rows -- game/gen_small/ owns its own;
   * drop rows whose address carries a REAL (not address-derived) symbols.csv
     pin: those are tgrid territory;
   * drop ghidra=Unwind@ rows: compiler unwind residue, not function bodies;
@@ -161,7 +161,7 @@ def ends_in_return_or_jump(body, md):
 
 def load_real_pins():
     pins = set()
-    with io.open(ROOT / "reverse" / "symbols.csv", encoding="utf-8",
+    with io.open(ROOT / "targets/game/reverse" / "symbols.csv", encoding="utf-8",
                  errors="replace") as fh:
         for i, row in enumerate(csv.reader(fh)):
             if i == 0 or len(row) < 2 or ADDRESS_DERIVED.search(row[0]):
@@ -180,13 +180,13 @@ def load_attempted():
     siblings as context; dead-end members are removed individually. Shared
     blockers require explicit evidence, not merely equal normalized bytes.
     """
-    latest = re_log.latest_records(ROOT / "reverse/re_attempts.log")
+    latest = re_log.latest_records(ROOT / "targets/game/reverse/re_attempts.log")
     seen = set(latest)
     dead = {rva for rva, fields in latest.items() if fields[3] in re_log.DEAD_END_STATUSES}
     return seen, dead
 
 
-ATEXIT_RVA = 0x009F6E26          # _atexit, per reverse/symbols.csv
+ATEXIT_RVA = 0x009F6E26          # _atexit, per targets/game/reverse/symbols.csv
 
 
 def registers_a_local_static(body, rva):
@@ -220,12 +220,12 @@ def registers_a_local_static(body, rva):
 
 
 def candidates(min_size, max_size, real_pins):
-    with io.open(ROOT / "reverse" / "functions.csv", encoding="utf-8") as fh:
+    with io.open(ROOT / "targets/game/reverse" / "functions.csv", encoding="utf-8") as fh:
         for i, row in enumerate(csv.reader(fh)):
             if i == 0 or len(row) != 7:
                 continue
             name, _, rva_s, size_s, src, _, notes = row
-            if not src.startswith("Code/gen_asm/"):
+            if not src.startswith("game/gen_asm/"):
                 continue
             size = int(size_s)
             if not (min_size <= size <= max_size) or "Unwind@" in notes:

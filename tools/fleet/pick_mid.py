@@ -56,7 +56,7 @@ def blocked(rva):
     return eligibility.retired(a, latest) or eligibility.boundary_suspect(a, records)
 
 # Score the BODIES, not the file's address span. A catch-all dump file
-# (Code/gen_small/dumps_000.cpp holds bodies from 0x005ADC10 to 0x009B58F0)
+# (game/gen_small/dumps_000.cpp holds bodies from 0x005ADC10 to 0x009B58F0)
 # spans every landed row in the image, so span/len scored it 492 against ~1
 # for a real file and it won every pick: three unrelated bodies, no shared
 # neighbourhood. eligibility.neighbour_density asks each body how many of its

@@ -8,7 +8,7 @@ direct REL32 call/jump targets prove starts, Ghidra entries are advisory starts
 ``jmp`` followed by an MSVC ``int3`` run proves an end.  The output is deterministic and shrink-on-land: rows covered by the
 current ledger are never emitted.
 
-``python3 tools/carve_unclaimed.py --summary`` writes ``reverse/carved.csv``
+``python3 tools/carve_unclaimed.py --summary`` writes ``targets/game/reverse/carved.csv``
 and prints the candidate counts and bytes by size band.
 """
 from __future__ import annotations
@@ -23,9 +23,9 @@ from pathlib import Path
 import capstone
 
 ROOT = Path(__file__).resolve().parents[1]
-FUNCTIONS = ROOT / "reverse" / "functions.csv"
-GHIDRA = ROOT / "reverse" / "ghidra_functions.csv"
-OUTPUT = ROOT / "reverse" / "carved.csv"
+FUNCTIONS = ROOT / "targets/game/reverse" / "functions.csv"
+GHIDRA = ROOT / "targets/game/reverse" / "ghidra_functions.csv"
+OUTPUT = ROOT / "targets/game/reverse" / "carved.csv"
 TEXT_START = 0x1000
 TEXT_SIZE = 0xC72000
 MIN_PAD_RUN = 3

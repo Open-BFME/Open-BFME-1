@@ -56,10 +56,10 @@ prints the evidence from retail's own bytes, and none of it depends on a ledger 
 So every retail body has exactly one identity. When two real names claim one
 address, at most one is right, and a matched caller, a vtable slot between named
 neighbours or a pin decides which. Retire each other name by deleting its row and
-adding its tombstone, with the evidence as the reason, to `reverse/deleted_rows.csv`.
+adding its tombstone, with the evidence as the reason, to `targets/game/reverse/deleted_rows.csv`.
 When nothing decides, add no second name. `add_match --icf-owner` is
 refused. `identity_guard` fails a commit that raises `one_identity.surplus` in
-`reverse/identity_baseline.txt`, and a commit that retires a surplus name lowers
+`targets/game/reverse/identity_baseline.txt`, and a commit that retires a surplus name lowers
 that number in the same commit. `python3 tools/one_identity.py --list` prints every
 address still carrying more than one real name, and `--callers` shows, for each, which
 symbol the matched C++ callers' objects name at retail's call sites into the body. When
@@ -94,11 +94,11 @@ than guessing.
 
 | Source | Real names | Notes |
 |---|---|---|
-| `reverse/zh_offsets.json` | **9,539** `(class, member)` at ZH offsets, 1,488 classes | parsed from ZH headers |
-| `reverse/name_tables.tsv` | **4,814** enumerator names, 229 confident tables | SAGE puts every shipped enum's full name list in the image, in declaration order |
-| `reverse/field_names.csv` | **2,063** members (1,984 with ≥2 votes) | binary `FieldParse` tables × upstream `offsetof` |
-| `reverse/exports.csv` | **1,820** real mangled symbols at RVAs | authoritative |
-| `reverse/bfme_layouts.json` | **2,780** members, 430 classes | the harvested slice, at *BFME* offsets |
+| `targets/game/reverse/zh_offsets.json` | **9,539** `(class, member)` at ZH offsets, 1,488 classes | parsed from ZH headers |
+| `targets/game/reverse/name_tables.tsv` | **4,814** enumerator names, 229 confident tables | SAGE puts every shipped enum's full name list in the image, in declaration order |
+| `targets/game/reverse/field_names.csv` | **2,063** members (1,984 with ≥2 votes) | binary `FieldParse` tables × upstream `offsetof` |
+| `targets/game/reverse/exports.csv` | **1,820** real mangled symbols at RVAs | authoritative |
+| `targets/game/reverse/bfme_layouts.json` | **2,780** members, 430 classes | the harvested slice, at *BFME* offsets |
 | `lotrbfme.exe` string data | **118** `\bfme\Code\...` source paths | EA's own build tree; anchors nearby vftables |
 
 Against ~15,620 remaining `char pad[N]` members, the 9,539 ZH pairs are roughly **61%
@@ -166,7 +166,7 @@ naming a witnessed class, so 7.2 exposed/h). Replaying the 3,000 that already ar
 is the same evidence and took 2m36s:
 
     replayed 3000 commits
-       1139  commits touching Code/
+       1139  commits touching game/
          70  commits introducing ANY finding   (all already in the baseline)
           1  *** WOULD HAVE BEEN BLOCKED ***
 
@@ -210,7 +210,7 @@ A conflict is **a question, not a verdict**. The witness is itself inferred, and
 forked the ZH layout — a field BFME added can land on an offset ZH used for something
 else. `ScoreKeeper+0x124` reads `m_powerPoints` in source and `m_totalUnitsBuilt` in the
 witness, and BFME really does have power points. Two independent claims conflicting is
-something a human settles, which is why `reverse/name_oracle_baseline.csv` is a
+something a human settles, which is why `targets/game/reverse/name_oracle_baseline.csv` is a
 shrink-only debt register in the same shape as `pin_consistency_baseline.csv`.
 **Never add a line to go green.**
 
@@ -241,7 +241,7 @@ appears in eleven files. 94 findings are far fewer than 94 decisions.
 
 Over 14 days to 12 Sep 2026 master took roughly 12,000 commits. `Body` rose 63 → 75
 while `Iface` fell 59 → 47, `Local` 34 → 26 and `SrcIdent` 65 → 58; the composite `BRI`
-read 48 then 47. In the last seven days 3,942 real `.cpp` were added under `Code/` and
+read 48 then 47. In the last seven days 3,942 real `.cpp` were added under `game/` and
 840 removed, and **1,615 of the additions — 41% — shipped with a fresh address-derived
 identifier**, every one from a conversion commit.
 
@@ -253,7 +253,7 @@ cheaper applied at conversion time than retrofitted.
 ## A lane with evidence already in the ledger: aliased base classes
 
 Some invented class names are already PROVED to be a real class, by a pin somebody
-landed: `reverse/symbols.csv` pins the invented class's destructor onto the real
+landed: `targets/game/reverse/symbols.csv` pins the invented class's destructor onto the real
 class's destructor body. That pin is the evidence the naming rule asks for -- the
 address disappears as a reward for evidence, and here the evidence exists.
 
@@ -286,7 +286,7 @@ Of the 22, several alias a target that is itself invented (`BfmeHostZB`,
     ServiceHubImpl      <- Gen007EB140
 
 **Why this has not been done.** Renaming a class changes the mangled name of every
-one of its members, so each rename is a large `reverse/functions.csv` edit, not a
+one of its members, so each rename is a large `targets/game/reverse/functions.csv` edit, not a
 source edit. That is the shape that hides defects when it goes wrong, so it wants a
 green full gate, a byte-verify per touched row, and one class per commit -- not a
 batch. The evidence is banked here so the next attempt starts from the list rather
@@ -318,8 +318,8 @@ The earlier `Gen000C3410 -> DamageInfo` entry was false. Retail
 ILT `0x000167CF` to `0x000C3410`. That 89-byte destructor releases three strings at
 `+8`, `+4`, and `+0`; the real DamageInfo constructor instead places its output
 subobject at `+0x4C`. The canonical recovered layout is
-`Code/GameEngine/Include/GameClient/Video.h`, and its parser/destructor owner is
-`Code/GameEngine/Source/Common/INI/INIVideo.cpp`.
+`game/GameEngine/Include/GameClient/Video.h`, and its parser/destructor owner is
+`game/GameEngine/Source/Common/INI/INIVideo.cpp`.
 
 Retail field table RVA`0x00D2CBD8` names Filename (+0), Comment (+8),
 HasSubtitles (+0xC), Volume (+0x10; percent-to-real parser), and IsDefault (+0x14).
@@ -351,7 +351,7 @@ there is no recovered `Video::handle` method.
 compares descriptive names with address/offset placeholders. Both commit and
 push hooks run it. It links files by path, Git rename, and the function RVA in
 changed ledger rows or address-bearing filenames, including an existing bank
-under `reverse/attempts/`. Renaming the owning class cannot hide a regression
+under `targets/game/reverse/attempts/`. Renaming the owning class cannot hide a regression
 behind an unknown `(class, offset)` witness key. Comments retaining the old
 name do not count as preserving its declaration.
 
@@ -371,16 +371,16 @@ an established name with an opaque name merely to land a matching body.
 To replace a matched real-name ledger row whose identity independent evidence
 refutes, use `tools/add_match.py` with `--replace-rva <rva>`,
 `--correct-identity <old-name>`, and `--identity-evidence` pointing to a
-`reverse/identity_evidence/*.md` proof. The transaction requires the exact old
+`targets/game/reverse/identity_evidence/*.md` proof. The transaction requires the exact old
 name and the same proven extent, verifies the new source, and tombstones the
 old claim. Retire an orphaned source after the replacement verifies. Ordinary
 `--replace-rva` remains limited to generated scaffolds.
 
 An intentional descriptive-to-opaque identity correction requires an entry in
-`reverse/name_corrections.json` (a JSON list). Each entry contains `old_path`,
+`targets/game/reverse/name_corrections.json` (a JSON list). Each entry contains `old_path`,
 `new_path`, `old_name`, `new_name`, `before_sha256`, `after_sha256`, `evidence`,
 and `reason`. Hashes are SHA-256 of the exact UTF-8 source snapshots, including
-line endings. `evidence` names a nonempty tracked file under `docs/` or `reverse/`
+line endings. `evidence` names a nonempty tracked file under `docs/` or `targets/game/reverse/`
 that independently refutes the old identity; `reason` explains that evidence.
 The record applies only to those exact snapshots and that name pair. It is not
 a reusable exemption or a growable count baseline. Review the evidence with the
@@ -403,4 +403,4 @@ the former ledger note naming `0x001B80D0` conflicts with that body's recorded
 hover/bob analysis. Its method purpose and clamp-field name remain unresolved,
 so the source and row use address-derived `Locomotor::rva001B5A30` and
 `m_value24`; no pin or semantic `getMaxLift` identity is claimed. The evidence
-and exact ABI are recorded in `reverse/identity_evidence/001b5a30.md`.
+and exact ABI are recorded in `targets/game/reverse/identity_evidence/001b5a30.md`.

@@ -25,11 +25,11 @@ def context(tmp_path, monkeypatch):
     target = SimpleNamespace(root=tmp_path, build_root=tmp_path / "build/worldbuilder",
                              expected_sha256="a" * 64, target_id="worldbuilder",
                              verify_hash=lambda: b"target")
-    packets = [{"id": "view-grid", "source": "Code/Tools/WorldBuilder/src/WorldBuilderView.cpp",
+    packets = [{"id": "view-grid", "source": "worldbuilder/src/WorldBuilderView.cpp",
                 "packet_sha256": "b" * 64},
-               {"id": "view-texture", "source": "Code/Tools/WorldBuilder/src/WorldBuilderView.cpp",
+               {"id": "view-texture", "source": "worldbuilder/src/WorldBuilderView.cpp",
                 "packet_sha256": "c" * 64},
-               {"id": "frame-brush", "source": "Code/Tools/WorldBuilder/src/MainFrm.cpp",
+               {"id": "frame-brush", "source": "worldbuilder/src/MainFrm.cpp",
                 "packet_sha256": "d" * 64}]
     monkeypatch.setitem(sys.modules, "worldbuilder", SimpleNamespace(open_candidates=lambda _t: packets))
     return target, packets
@@ -74,7 +74,7 @@ def test_wrong_binary_fails_before_any_write(context):
 
 def test_shared_game_source_is_not_editable_by_pilot(context):
     target, packets = context
-    packets[0]["source"] = "Code/GameEngine/Common/Shared.cpp"
+    packets[0]["source"] = "game/GameEngine/Common/Shared.cpp"
     with pytest.raises(ValueError, match="shared engine donors are read-only"):
         fleet.claim(target, "view-grid", "shared")
     assert not target.build_root.exists()

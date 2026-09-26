@@ -22,10 +22,10 @@ def row(name, rva, size, source):
 
 def test_union_and_cpp_precedence():
     matched = {}
-    matched.update(row("cpp-a", 0x1000, 10, "Code/a.cpp"))
-    matched.update(row("cpp-b", 0x1005, 10, "Code/b.cpp"))
-    matched.update(row("asm-overlap", 0x1008, 12, "Code/masm_dumps/a.asm"))
-    matched.update(row("asm-only", 0x1030, 10, "Code/masm_dumps/b.asm"))
+    matched.update(row("cpp-a", 0x1000, 10, "game/a.cpp"))
+    matched.update(row("cpp-b", 0x1005, 10, "game/b.cpp"))
+    matched.update(row("asm-overlap", 0x1008, 12, "game/masm_dumps/a.asm"))
+    matched.update(row("asm-only", 0x1030, 10, "game/masm_dumps/b.asm"))
     stats = progress.coverage(matched, 0x1000, 100)
     assert stats == {
         "cpp": 15,
@@ -39,8 +39,8 @@ def test_union_and_cpp_precedence():
 
 def test_text_clipping():
     matched = {}
-    matched.update(row("before", 0x0FF8, 12, "Code/a.cpp"))
-    matched.update(row("after", 0x105E, 12, "Code/masm_dumps/a.asm"))
+    matched.update(row("before", 0x0FF8, 12, "game/a.cpp"))
+    matched.update(row("after", 0x105E, 12, "game/masm_dumps/a.asm"))
     stats = progress.coverage(matched, 0x1000, 100)
     assert stats["cpp"] == 4 and stats["asm_only"] == 6, stats
     assert stats["exact"] == 10 and stats["unmatched"] == 90, stats
@@ -48,7 +48,7 @@ def test_text_clipping():
 
 
 def test_unknown_source_suffix_fails():
-    matched = row("unknown", 0x1000, 10, "Code/generated/object.bin")
+    matched = row("unknown", 0x1000, 10, "game/generated/object.bin")
     try:
         progress.coverage(matched, 0x1000, 100)
     except SystemExit as exc:
@@ -60,7 +60,7 @@ def test_unknown_source_suffix_fails():
 
 
 def test_naked_cpp_to_clean_cpp_shifts_category_only():
-    matched = row("?convert@Widget@@QAEXXZ", 0x1000, 3, "Code/convert.cpp")
+    matched = row("?convert@Widget@@QAEXXZ", 0x1000, 3, "game/convert.cpp")
     naked_text = """\
 // ?convert@Widget@@QAEXXZ
 __declspec(naked) void Widget::convert()
@@ -69,7 +69,7 @@ __declspec(naked) void Widget::convert()
 }
 """
     naked_rows = progress.naked_cpp_rows(
-        matched, {"Code/convert.cpp": naked_text},
+        matched, {"game/convert.cpp": naked_text},
         target_reader=lambda rva, size: bytes.fromhex("8b c1 c3"))
     assert naked_rows == set(matched), naked_rows
 
@@ -86,7 +86,7 @@ def test_bare_asm_emit_spray_is_asm_but_partial_emit_is_cpp():
     """A plain function whose __asm block emits the row's full retail bytes is
     a lift, not C++ (18 fleet commits smuggled these past the naked-only scan);
     a real body using the period _emit idiom for a few opcodes stays C++."""
-    spray = row("?showBox@@YAXXZ", 0x1000, 8, "Code/spray.cpp")
+    spray = row("?showBox@@YAXXZ", 0x1000, 8, "game/spray.cpp")
     spray_text = """\
 void showBox()
 {
@@ -100,11 +100,11 @@ void showBox()
 }
 """
     found = progress.naked_cpp_rows(
-        spray, {"Code/spray.cpp": spray_text},
+        spray, {"game/spray.cpp": spray_text},
         target_reader=lambda rva, size: bytes.fromhex("8bc1e800000000" + "59c3")[:size])
     assert found == set(spray), found
 
-    idiom = row("?Init_CPU@@YAXXZ", 0x2000, 200, "Code/cpu.cpp")
+    idiom = row("?Init_CPU@@YAXXZ", 0x2000, 200, "game/cpu.cpp")
     idiom_text = """\
 void Init_CPU()
 {
@@ -118,7 +118,7 @@ void Init_CPU()
 }
 """
     found = progress.naked_cpp_rows(
-        idiom, {"Code/cpu.cpp": idiom_text},
+        idiom, {"game/cpu.cpp": idiom_text},
         target_reader=lambda rva, size: b"\x0f\xa2" + bytes(size - 2))
     assert found == set(), found
     print("PASS bare __asm emit spray is ASM; partial _emit idiom stays C++")
@@ -126,21 +126,21 @@ void Init_CPU()
 
 def test_mixed_file_marks_only_proven_naked_row():
     matched = {}
-    matched.update(row("?raw@Widget@@QAEXXZ", 0x1000, 1, "Code/mixed.cpp"))
-    matched.update(row("?clean@Widget@@QAEXXZ", 0x1010, 1, "Code/mixed.cpp"))
+    matched.update(row("?raw@Widget@@QAEXXZ", 0x1000, 1, "game/mixed.cpp"))
+    matched.update(row("?clean@Widget@@QAEXXZ", 0x1010, 1, "game/mixed.cpp"))
     text = """\
 __declspec(naked) void Widget::raw() { __asm { ret } }
 void Widget::clean() {}
 """
-    found = progress.naked_cpp_rows(matched, {"Code/mixed.cpp": text})
+    found = progress.naked_cpp_rows(matched, {"game/mixed.cpp": text})
     assert found == {("?raw@Widget@@QAEXXZ", "0x1000")}, found
     print("PASS mixed source classifies only signature-proven naked row")
 
 
 def test_naked_body_callee_is_not_signature_evidence():
     matched = {}
-    matched.update(row("?raw@Widget@@QAEXXZ", 0x1000, 1, "Code/wrapper.cpp"))
-    matched.update(row("?clean@Widget@@QAEXXZ", 0x1010, 1, "Code/wrapper.cpp"))
+    matched.update(row("?raw@Widget@@QAEXXZ", 0x1000, 1, "game/wrapper.cpp"))
+    matched.update(row("?clean@Widget@@QAEXXZ", 0x1010, 1, "game/wrapper.cpp"))
     text = """\
 __declspec(naked) void Widget::raw()
 {
@@ -148,7 +148,7 @@ __declspec(naked) void Widget::raw()
 }
 void Widget::clean() {}
 """
-    found = progress.naked_cpp_rows(matched, {"Code/wrapper.cpp": text})
+    found = progress.naked_cpp_rows(matched, {"game/wrapper.cpp": text})
     assert found == {("?raw@Widget@@QAEXXZ", "0x1000")}, found
     print("PASS naked callee text cannot reclassify a clean row")
 
@@ -165,21 +165,21 @@ __declspec(naked) void Widget::defined() { __asm { ret } }
 
 def test_signature_prefix_does_not_match_another_method():
     matched = {}
-    matched.update(row("?raw@Widget@@QAEXXZ", 0x1000, 1, "Code/prefix.cpp"))
-    matched.update(row("?rawHelper@Widget@@QAEXXZ", 0x1010, 1, "Code/prefix.cpp"))
+    matched.update(row("?raw@Widget@@QAEXXZ", 0x1000, 1, "game/prefix.cpp"))
+    matched.update(row("?rawHelper@Widget@@QAEXXZ", 0x1010, 1, "game/prefix.cpp"))
     text = """\
 void Widget::raw() {}
 __declspec(naked) void Widget::rawHelper() { __asm { ret } }
 """
-    found = progress.naked_cpp_rows(matched, {"Code/prefix.cpp": text})
+    found = progress.naked_cpp_rows(matched, {"game/prefix.cpp": text})
     assert found == {("?rawHelper@Widget@@QAEXXZ", "0x1010")}, found
     print("PASS naked signature matching respects method boundaries")
 
 
 def test_c_naked_signature_matches_decorated_row():
-    matched = row("_GetPreviewFromMap", 0x1000, 1, "Code/free.cpp")
+    matched = row("_GetPreviewFromMap", 0x1000, 1, "game/free.cpp")
     text = "__declspec(naked) void *GetPreviewFromMap(void *, void *) { __asm { ret } }\n"
-    found = progress.naked_cpp_rows(matched, {"Code/free.cpp": text})
+    found = progress.naked_cpp_rows(matched, {"game/free.cpp": text})
     assert found == set(matched), found
     print("PASS C-linkage naked signature maps to its decorated row")
 
@@ -249,16 +249,16 @@ def test_source_lanes_partition_claims_and_exclude_dumps():
     human-written source may land in the recovered lane."""
     matched, notes = {}, {}
     for name, rva, size, source, note in (
-        ("authored", 0x1000, 10, "Code/GameEngine/Source/a.cpp", ""),
-        ("vendored", 0x1010, 10, "Code/Libraries/Source/Lua/l.c", ""),
-        ("gen-noted", 0x1020, 10, "Code/GameEngine/Source/b.cpp", "gen-thunk;"),
-        ("gen-path", 0x1030, 10, "Code/gen_small/uw_gen_001.cpp", ""),
-        ("lib", 0x1040, 10, "vendor/d3dx9/d3dx9.lib", ""),
-        ("dump", 0x1050, 10, "Code/gen_asm/d_001050.asm", "gen-dump;"),
-        ("emit", 0x1060, 10, "Code/GameEngine/Source/c.cpp", ""),
+        ("authored", 0x1000, 10, "game/GameEngine/Source/a.cpp", ""),
+        ("vendored", 0x1010, 10, "game/Libraries/Source/Lua/l.c", ""),
+        ("gen-noted", 0x1020, 10, "game/GameEngine/Source/b.cpp", "gen-thunk;"),
+        ("gen-path", 0x1030, 10, "game/gen_small/uw_gen_001.cpp", ""),
+        ("lib", 0x1040, 10, "inputs/vendor/d3dx9/d3dx9.lib", ""),
+        ("dump", 0x1050, 10, "game/gen_asm/d_001050.asm", "gen-dump;"),
+        ("emit", 0x1060, 10, "game/GameEngine/Source/c.cpp", ""),
         # An ICF alias of the authored row, claimed again as a dump: the byte
         # is credited once, to the claim that says the most about it.
-        ("alias", 0x1000, 10, "Code/gen_asm/d_001000.asm", "gen-dump;"),
+        ("alias", 0x1000, 10, "game/gen_asm/d_001000.asm", "gen-dump;"),
     ):
         matched.update(row(name, rva, size, source))
         notes[(name, f"0x{rva:X}")] = note
@@ -276,22 +276,22 @@ def test_zero_hour_reference_source_is_not_authored():
     """A row compiled out of the pristine Zero Hour tree is EA's source, not ours.
 
     The zh_sweep waves point ledger rows straight at
-    reference/CnC_Generals_Zero_Hour/... — a tree this project is forbidden to
+    inputs/reference/CnC_Generals_Zero_Hour/... — a tree this project is forbidden to
     modify — so nobody wrote those bytes from the disassembly. Before the lane
     was added, 34,291 bytes of Zero Hour scored as "C++ we wrote". The headline
     may not move either way: rebuildable() spans authored and vendored alike.
     """
-    zh = "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/"
+    zh = "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/"
     assert progress.source_lane(zh + "GameClient/GUI/ControlBar/ControlBar.cpp",
                                 "", False) == "vendored"
-    # ...and only under that root. The shims are ours, and so is Code/.
-    assert progress.source_lane("reference/shims/controlbar/x.cpp", "", False) == "authored"
-    assert progress.source_lane("Code/GameEngine/Source/Common/x.cpp", "", False) == "authored"
+    # ...and only under that root. The shims are ours, and so is game/.
+    assert progress.source_lane("inputs/reference/shims/controlbar/x.cpp", "", False) == "authored"
+    assert progress.source_lane("game/GameEngine/Source/Common/x.cpp", "", False) == "authored"
 
     matched, notes = {}, {}
     for name, rva, size, source in (
         ("zh-twin", 0x1000, 10, zh + "Common/x.cpp"),
-        ("ours", 0x1010, 10, "Code/GameEngine/Source/Common/y.cpp"),
+        ("ours", 0x1010, 10, "game/GameEngine/Source/Common/y.cpp"),
     ):
         matched.update(row(name, rva, size, source))
         notes[(name, f"0x{rva:X}")] = ""
@@ -311,7 +311,7 @@ def test_gamespy_sdk_c_is_vendored_but_the_cpp_beside_it_is_not():
     is the half that keeps the fix from over-reaching: PeerDefs.cpp and the
     thunks beside gp.c ARE this project's.
     """
-    root = "Code/GameEngine/Source/GameNetwork/GameSpy/"
+    root = "game/GameEngine/Source/GameNetwork/GameSpy/"
     assert progress.source_lane(root + "gp/gp.c", "", False) == "vendored"
     assert progress.source_lane(root + "nonport.c", "", False) == "vendored"
     assert progress.source_lane(root + "PeerDefs.cpp", "", False) == "authored"

@@ -17,7 +17,7 @@ import xml.etree.ElementTree as ET
 import pefile
 
 ROOT = Path(__file__).resolve().parents[1]
-DEPENDENCIES = ROOT / "worldbuilder/dependencies"
+DEPENDENCIES = ROOT / "targets/worldbuilder/dependencies"
 MANIFEST = DEPENDENCIES / "mfc71.json"
 MAPPING = DEPENDENCIES / "mfc71.csv"
 CACHE = ROOT / "build/worldbuilder/dependencies/mfc71"

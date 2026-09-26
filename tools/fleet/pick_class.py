@@ -35,7 +35,7 @@ rank.sort(key=lambda e: (bool(e.get('names')), e['landed'] / max(e['slots'], 1),
 lf = (ROOT / 'build/.fleet_claims.lock').open('a'); lock(lf, exclusive=True)
 ok = eligibility.servable(ROOT)
 fn = {}
-for r in csv.DictReader(open(ROOT / 'reverse/functions.csv', newline='', encoding='utf-8', errors='replace')):
+for r in csv.DictReader(open(ROOT / 'targets/game/reverse/functions.csv', newline='', encoding='utf-8', errors='replace')):
     a = (r['target_rva'] or '').lower()
     if a.startswith('0x'):
         fn[int(a, 16)] = r

@@ -115,7 +115,7 @@ callback(drawable, userData)-> indirect call for each accepted Drawable
 ```
 
 The list and `+0x104` link are `PROVEN` by the body and by
-`Code/GameEngine/Source/GameClient/GameClient_iterateDrawablesInRegion.cpp`.
+`game/GameEngine/Source/GameClient/GameClient_iterateDrawablesInRegion.cpp`.
 The callback ABI is also visible: the exact slot-20 walker pushes the user
 data and Drawable arguments before the indirect call. The W3DView source
 callback is:
@@ -145,7 +145,7 @@ sets fields near `+0x3B4`/`+0x23C`. Its callback identity is not established.
 The exact matched body `Display::drawViews` at RVA `0x0040DA30`, size 44,
 loads the View list at `Display+0x18`, calls each View at vtable `+0x178`,
 then advances through vtable `+0x23C`. That agrees with
-`Code/GameEngine/Source/GameClient/Display.cpp:195-201` at the byte level.
+`game/GameEngine/Source/GameClient/Display.cpp:195-201` at the byte level.
 
 There is also an unnamed retail body at RVA `0x0040D9E0`, size 63 (return at
 `0x0040DA1E`). It performs the Display state gates, walks `Display+0x18`,
@@ -205,7 +205,7 @@ The W3DModelDraw primary table entry at slot 39 (`+0x9C`) is an ILT at RVA
 returns `this+0x0C` when `this` is non-null. This is the direct retail proof
 for the interface pointer used by the unit-interpolation code.
 
-The generated row and current `reverse/symbols.csv` pins around RVA
+The generated row and current `targets/game/reverse/symbols.csv` pins around RVA
 `0x0075BE60` (`isLaser`) and `0x0075BF30` (`getObjectDrawInterface`) have
 suspicious argument/return shapes and do not match this getter. They are not
 used as evidence here. The vptr stores, table slot, getter bytes, and

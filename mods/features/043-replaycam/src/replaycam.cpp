@@ -59,14 +59,14 @@ typedef Real(__fastcall *GetBound)(void *self, void *edx);
 typedef void(__fastcall *SetHeight)(void *self, void *edx, Real height);
 
 #define c_getasynckey (*(GetAsyncKey *)0x01358FE8)
-// W3DView::setPitch, reverse/functions.csv RVA 0x00742D50. Preferred over
+// W3DView::setPitch, targets/game/reverse/functions.csv RVA 0x00742D50. Preferred over
 // writing m_pitchAngle: it clamps to the engine's own -36 degree floor, drops
 // the five in-progress camera-movement flags, and rebuilds the camera
 // transform. Poking the field does none of that and fights the next update.
 #define c_setpitch ((SetPitch)0x00B42D50)
 // UnicodeString::UnicodeString(const WideChar *) -- the GameEngine one, in the
 // same string TU as AsciiString's literal ctor at 0x00C88BC0, NOT the WWLib
-// class of the same mangled name that reverse/functions.csv pins at RVA
+// class of the same mangled name that targets/game/reverse/functions.csv pins at RVA
 // 0x00065410. message takes its format BY VALUE and destroys it on the way out
 // (`call 0x00C881D0` on the parameter slot), so the string has to be a real
 // refcounted one; handing it a static body would hand the destructor a static

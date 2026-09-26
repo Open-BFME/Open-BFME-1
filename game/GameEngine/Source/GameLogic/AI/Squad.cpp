@@ -1,0 +1,314 @@
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+////////////////////////////////////////////////////////////////////////////////
+//																																						//
+//  (c) 2001-2003 Electronic Arts Inc.																				//
+//																																						//
+////////////////////////////////////////////////////////////////////////////////
+
+// FILE: Squad.cpp 
+/*---------------------------------------------------------------------------*/
+/* EA Pacific                                                                */
+/* Confidential Information	                                                 */
+/* Copyright (C) 2001 - All Rights Reserved                                  */
+/* DO NOT DISTRIBUTE                                                         */
+/*---------------------------------------------------------------------------*/
+/* Project:    RTS3                                                          */
+/* File name:  Squad.cpp                                                      */
+/* Created:    John K. McDonald, Jr., 4/19/2002                               */
+/* Desc:       // @todo                                                      */
+/* Revision History:                                                         */
+/*		4/19/2002 : Initial creation                                          */
+/*---------------------------------------------------------------------------*/
+#include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+
+#include "GameLogic/Squad.h"
+
+#include "Common/GameState.h"
+#include "Common/Team.h"
+#include "Common/Xfer.h"
+
+#include "GameLogic/AI.h"
+#include "GameLogic/GameLogic.h"
+#include "GameLogic/Object.h"
+
+#ifdef _INTERNAL
+// for occasional debugging...
+//#pragma optimize("", off)
+//#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
+#endif
+
+// addObject //////////////////////////////////////////////////////////////////////////////////////
+// ?addObject@Squad@@QAEXPAVObject@@@Z present-unmatched
+void Squad::addObject(Object *objectToAdd)
+{
+	if (objectToAdd) {
+		m_objectIDs.push_back(objectToAdd->getID());
+	}
+}
+
+// addObjectID ////////////////////////////////////////////////////////////////////////////////////
+void Squad::addObjectID(ObjectID objectID) {
+	m_objectIDs.push_back(objectID);
+}
+
+// removeObject ///////////////////////////////////////////////////////////////////////////////////
+// RE-HOMED. The row for 0x0018B620 is now ?dup_0018b620@@YAXXZ -- the existing
+// convention for a real body whose identity is unknown -- because that body
+// reads a container at this+0x04 and the two symbolic rows above prove retail's
+// Squad keeps m_objectIDs at +0x08. The BFMESquad view below is what made it
+// byte-verify under the wrong name; it is kept because those bytes are real and
+// this file is where they are emitted, not because the name was right.
+void Squad::removeObject(Object *objectToRemove)
+{
+	if (objectToRemove) {
+		ObjectID objID;
+		objID = objectToRemove->getID();
+		// m_objectIDs starts at Squad+0x04 in BFME; this tree lands it at +0x08 --
+		// one base vtable pointer fewer, the pattern ObjectTypes and
+		// PlayerRelationMap also show. Object::m_id at +0x74 was already right.
+		struct BFMESquad { char pad[0x04]; VecObjectID m_objectIDs; };
+		BFMESquad *self = (BFMESquad *)this;
+		VecObjectIDIt it = std::find(self->m_objectIDs.begin(), self->m_objectIDs.end(), objID);
+		if (it != self->m_objectIDs.end()) {
+			self->m_objectIDs.erase(it);
+		}
+	}
+}
+
+// clearSquad /////////////////////////////////////////////////////////////////////////////////////
+// ?clearSquad@Squad@@QAEXXZ present-unmatched
+void Squad::clearSquad() {
+	m_objectIDs.clear();
+	m_objectsCached.clear();
+}
+
+// getAllObjects //////////////////////////////////////////////////////////////////////////////////
+// ?getAllObjects@Squad@@QAEABV?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@XZ present-unmatched
+const VecObjectPtr& Squad::getAllObjects(void) // Not a const function cause we clear away dead object here too
+{
+	// prunes all NULL objects
+	m_objectsCached.clear();
+	for (VecObjectIDIt it = m_objectIDs.begin(); it != m_objectIDs.end(); ) {
+		Object *obj = TheGameLogic->findObjectByID(*it);
+		if (obj) {
+			m_objectsCached.push_back(obj);
+			++it;
+		} else {
+			it = m_objectIDs.erase(it);
+		}
+	}
+
+	return m_objectsCached;
+}
+
+// getLiveObjects /////////////////////////////////////////////////////////////////////////////////
+// ?getLiveObjects@Squad@@QAEABV?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@XZ present-unmatched
+const VecObjectPtr& Squad::getLiveObjects(void) 
+{
+	// first get all the objects.
+	// cheat, since we are a member function, and just use m_objectsCached
+	getAllObjects();
+	for (VecObjectPtrIt it = m_objectsCached.begin(); it != m_objectsCached.end(); ) {
+		if (!(*it)->isSelectable()) {
+			it = m_objectsCached.erase(it);		
+		} else {
+			++it;
+		}
+	}
+	
+	return m_objectsCached;
+}
+
+// getSizeOfGroup /////////////////////////////////////////////////////////////////////////////////
+Int Squad::getSizeOfGroup(void) const
+{
+	return m_objectIDs.size();
+}
+
+// isOnSquad //////////////////////////////////////////////////////////////////////////////////////
+// RESOLVED, and not in this body's favour. Retail's 0x0018B520 reads the
+// membership pair from this+0x04 and this+0x08; compiled here it reads +0x08 and
+// +0x0C, because Squad derives from both MemoryPoolObject and Snapshot.
+//
+// The liveness test settles it: does retail use OUR offset anywhere? It does, in
+// two rows of this file that name the member SYMBOLICALLY and carry no view --
+//   getSizeOfGroup 0x000ED420  mov eax,[ecx+0x0C]; sub eax,[ecx+0x08]; sar eax,2
+//   addObjectID    0x0036B770  mov eax,[ecx+0x0C]; mov edx,[ecx+0x10]; add ecx,8
+// which is start +0x08, finish +0x0C, end_of_storage +0x10 -- exactly this tree's
+// layout, byte-verified from `m_objectIDs.size()` and `m_objectIDs.push_back()`.
+// A symbolic matched row is evidence about the header. A view-based one is not:
+// its offsets are chosen to fit, so it can only ever prove the SHAPE of a body.
+//
+// So retail's Squad has the vector where we put it, and the +0x04 claims are the
+// error. That indicts removeObject below as well -- it is matched only through
+// its inline BFMESquad view making the same +0x04 claim, and 0x0018B620 sits one
+// body after 0x0018B520. Two adjacent bodies reading a container at +0x04 are
+// siblings of each other, not of Squad. Both logged mis-anchored?; neither is
+// re-homed, because a 38- and a 62-byte body are not ILT thunks and the
+// ?j_XXXXXXXX convention does not fit them.
+// ?isOnSquad@Squad@@QBE_NPBVObject@@@Z present-unmatched
+Bool Squad::isOnSquad(const Object *objToTest) const
+{
+	// @todo need a faster way to do this. Perhaps a more efficient data structure?
+	ObjectID objID = objToTest->getID();
+	for (VecObjectID::const_iterator cit = m_objectIDs.begin(); cit != m_objectIDs.end(); ++cit) {
+		if (objID == (*cit)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
+ * There should never be a TeamFromSqaud as Teams are entirely a construct to work with the AI. 
+ * Since things can only be on one Team at a time, creating a Team from an arbitrary Squad will 
+ * cause weird, difficult to reproduce bugs. Please don't do it.
+ */
+
+// squadFromTeam //////////////////////////////////////////////////////////////////////////////////
+// ?squadFromTeam@Squad@@QAEXPBVTeam@@_N@Z present-unmatched
+void Squad::squadFromTeam(const Team* fromTeam, Bool clearSquadFirst)
+{
+	if (!fromTeam) {
+		return;
+	}
+
+	if (clearSquadFirst) {
+		m_objectIDs.clear();
+	}
+
+	for (DLINK_ITERATOR<Object> iter = fromTeam->iterate_TeamMemberList(); !iter.done(); iter.advance()) {
+		Object *obj = iter.cur();
+		m_objectIDs.push_back(obj->getID());
+	}
+}
+
+// squadFromAIGroup ///////////////////////////////////////////////////////////////////////////////
+// ?squadFromAIGroup@Squad@@QAEXPBVAIGroup@@_N@Z present-unmatched
+void Squad::squadFromAIGroup(const AIGroup* fromAIGroup, Bool clearSquadFirst)
+{
+	if (!fromAIGroup) {
+		return;
+	}
+
+	if (clearSquadFirst) {
+		m_objectIDs.clear();
+	}
+
+	m_objectIDs = fromAIGroup->getAllIDs();
+}
+
+// aiGroupFromSquad ///////////////////////////////////////////////////////////////////////////////
+// ?aiGroupFromSquad@Squad@@QAEXPAVAIGroup@@@Z present-unmatched
+void Squad::aiGroupFromSquad(AIGroup* aiGroupToFill)
+{
+	if (!aiGroupToFill) {
+		return;
+	}
+	
+	// cheat, since we are a member function, and just use m_objectsCached
+	getLiveObjects();
+	for (VecObjectPtr::iterator it = m_objectsCached.begin(); it != m_objectsCached.end(); ++it) {
+		aiGroupToFill->add((*it));
+	}
+}
+
+// ------------------------------------------------------------------------------------------------
+/** CRC */
+// ------------------------------------------------------------------------------------------------
+// ?crc@Squad@@MAEXPAVXfer@@@Z present-unmatched
+void Squad::crc( Xfer *xfer )
+{
+
+}  // end crc
+
+// ------------------------------------------------------------------------------------------------
+/** Xfer method
+	* Version Info:
+	* 1: Initial version */
+// ------------------------------------------------------------------------------------------------
+// ?xfer@Squad@@MAEXPAVXfer@@@Z present-unmatched
+void Squad::xfer( Xfer *xfer )
+{
+
+	// version
+	XferVersion currentVersion = 1;
+	XferVersion version = currentVersion;
+	xfer->xferVersion( &version, currentVersion );
+
+	// length of object ID list
+	UnsignedShort objectCount = m_objectIDs.size();
+	xfer->xferUnsignedShort( &objectCount );
+
+	// object id elements
+	ObjectID objectID;
+	if( xfer->getXferMode() == XFER_SAVE )
+	{
+
+		// save each object id
+		VecObjectIDIt it;
+		for( it = m_objectIDs.begin(); it != m_objectIDs.end(); ++it )
+		{
+
+			// save object ID
+			objectID = *it;
+			xfer->xferObjectID( &objectID );
+
+		}  // end for, it
+
+	}  // end if, save
+	else
+	{
+		
+		// the cached objects list should be empty
+		if( m_objectsCached.size() != 0 )
+		{
+
+			DEBUG_CRASH(( "Squad::xfer - m_objectsCached should be emtpy, but is not\n" ));
+			throw SC_INVALID_DATA;
+
+		}  // end of
+
+		// read all items
+		for( UnsignedShort i = 0; i < objectCount; ++i )
+		{
+
+			// read id
+			xfer->xferObjectID( &objectID );
+
+			// put on list
+			m_objectIDs.push_back( objectID );
+
+		}  // end for, i
+
+	}  // end else, load
+
+}  // end xfer
+
+// ------------------------------------------------------------------------------------------------
+/** Load post process */
+// ------------------------------------------------------------------------------------------------
+void Squad::loadPostProcess( void )
+{
+
+}  // end loadPostProcess

@@ -2,7 +2,7 @@
   "symbol": "?cameraModFinalLookToward@W3DView@@UAEXPAUCoord3D@@@Z",
   "rva": "0x007401A0",
   "size": 528,
-  "source": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewCameraModFinalLookTowardBfme.cpp",
+  "source": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewCameraModFinalLookTowardBfme.cpp",
   "source_sha256_lf": "7cf375c2e1bfbd45680f26a1776ec333594a986ec4734b23c2c12fcc40002107",
   "raw_sha256": "da15dc0d234216c9e5c507438a3a66ca2d65fabb1cee014614a5d4d08862ed0e",
   "resolved_sha256": "032d5bab3e93c6de0a81cf5becf0496634114895b748d1836db00648f2ef75d9",

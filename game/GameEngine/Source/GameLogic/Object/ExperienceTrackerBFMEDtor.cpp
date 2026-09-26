@@ -1,0 +1,62 @@
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+
+class Object;
+class Xfer;
+class AsciiString;
+
+#include "string_base.h"
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+class AsciiString : public StringBase<char>
+{
+public:
+	AsciiString(const char *text) : StringBase<char>(text) {}
+	~AsciiString() {}
+};
+
+class BfmeThingEFE
+{
+public:
+	virtual ~BfmeThingEFE();
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
+class Snapshot
+{
+public:
+	virtual ~Snapshot() {}
+	virtual void crc(Xfer *xfer) = 0;
+	virtual void xfer(Xfer *xfer) = 0;
+	virtual void loadPostProcess() = 0;
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ExperienceTracker.h
+class ExperienceTracker : public Snapshot
+{
+public:
+	virtual ~ExperienceTracker();
+	virtual void crc(Xfer *xfer);
+	virtual void xfer(Xfer *xfer);
+	virtual void loadPostProcess();
+
+private:
+	Object *m_parent;
+	AsciiString m_levelName;
+	float m_currentExperience;
+	int m_currentLevel;
+	int m_unknown14;
+	int m_experienceSink;
+	float m_experienceScalar;
+	int m_unknown20;
+	bool m_unknown24;
+	unsigned char m_padding25[3];
+	int m_scalarIndex;
+	BfmeThingEFE *m_scalarTable;
+};
+
+ExperienceTracker::~ExperienceTracker()
+{
+	if (m_scalarTable)
+		delete m_scalarTable;
+	m_scalarTable = 0;
+}

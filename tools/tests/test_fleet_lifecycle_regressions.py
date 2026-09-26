@@ -18,10 +18,10 @@ from fleet.reconcile_legacy import reconcile  # noqa: E402
 
 
 def ledger(root, *targets):
-    reverse = root / "reverse"
-    reverse.mkdir(exist_ok=True)
+    reverse = root / "targets/game/reverse"
+    reverse.mkdir(parents=True, exist_ok=True)
     rows = ["name,export_rva,target_rva,target_size,source,status,notes"]
-    rows.extend(f"?d_{rva:08X}@@YAXXZ,,0x{rva:08X},{size},Code/gen_asm/test.asm,matched,"
+    rows.extend(f"?d_{rva:08X}@@YAXXZ,,0x{rva:08X},{size},game/gen_asm/test.asm,matched,"
                 for rva, size in targets)
     (reverse / "functions.csv").write_text("\n".join(rows) + "\n")
 
@@ -502,14 +502,14 @@ def test_file_picker_selection_is_advisory_and_live_run_excludes_file(tmp_path):
     def pick():
         return subprocess.run([sys.executable, str(script), "1"], cwd=tmp_path,
                               env=env, capture_output=True, text=True, check=True).stdout.strip()
-    assert pick() == "Code/gen_asm/test.asm"
-    assert pick() == "Code/gen_asm/test.asm"
+    assert pick() == "game/gen_asm/test.asm"
+    assert pick() == "game/gen_asm/test.asm"
     assert "seat pick selected" in path.read_text()
     assert eligibility.busy_rvas(tmp_path) == set()
     fleet_run.claim(tmp_path, "live", [("0x00001000", 8)])
     assert pick() == ""
     release_legacy_after_stop(tmp_path, "live")
-    assert pick() == "Code/gen_asm/test.asm"
+    assert pick() == "game/gen_asm/test.asm"
 
 
 def test_unblock_launcher_routes_through_runner_and_preserves_exit(tmp_path):

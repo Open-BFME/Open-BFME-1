@@ -120,7 +120,7 @@ def ledger_rows(root):
         if len(parts) < 6:
             continue
         source = parts[mc.SOURCE_AT]
-        if not source.startswith("Code/") or not source.endswith(".cpp"):
+        if not source.startswith("game/") or not source.endswith(".cpp"):
             continue
         if "/gen_asm/" in source or "/gen_small/" in source or "/masm_dumps/" in source:
             continue

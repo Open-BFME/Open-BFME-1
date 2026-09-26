@@ -135,7 +135,7 @@ Snapshot: `969a884d8a` (after synchronization and ledger validation).
 | Fleet: verified/pushed dump-to-C++ bodies | 9 |
 | Fleet: authored/rebuildable bytes | +2,040 B / +0.02103 pp |
 | All contributors: rebuildable/authored bytes | +4,620 B / +0.04762 pp |
-| All contributors: generated/vendor/prebuilt bytes | 0 B |
+| All contributors: generated/inputs/vendor/prebuilt bytes | 0 B |
 | All contributors: total exact coverage | 0 B |
 | Fleet cumulative | 19 bodies / 4,856 B / +0.05005 pp |
 

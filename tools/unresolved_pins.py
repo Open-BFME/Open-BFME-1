@@ -5,7 +5,7 @@ WHY. `symbols.csv` is an ADDITIVE candidate list, so a symbol with no pin is not
 a wrong answer -- it is NO answer. build.py says so and emits a zero
 displacement:
 
-    unresolved call(s): ?bfmeStep3_250@@YAXPAX@Z (add to reverse/symbols.csv)
+    unresolved call(s): ?bfmeStep3_250@@YAXPAX@Z (add to targets/game/reverse/symbols.csv)
     target:   ... 56 e8 b9 b5 00 00 ...
     compiled: ... 56 e8 00 00 00 00 ...
 
@@ -45,7 +45,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build
 
-SYMBOLS = build.ROOT / "reverse/symbols.csv"
+SYMBOLS = build.ROOT / "targets/game/reverse/symbols.csv"
 UNRESOLVED = re.compile(r"unresolved call\(s\): (.+?) \(add to")
 
 

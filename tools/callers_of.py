@@ -14,7 +14,7 @@ Usage:
     python3 tools/callers_of.py 0x000efe10        # who calls this address
     python3 tools/callers_of.py --report [N]      # best N naming candidates
     python3 tools/callers_of.py --files [N]       # ...plus the source file each names
-    python3 tools/callers_of.py --closure reverse/game_end/seeds.json
+    python3 tools/callers_of.py --closure targets/game/reverse/game_end/seeds.json
 
 `--report` lists anonymous dumps that have exactly one distinct named caller,
 largest first, which are the ones a single source read can settle.
@@ -27,7 +27,7 @@ listed slots of its named globals, over every Ghidra and ledger start. Each
 function lands in one group at its shallowest depth. The table counts functions
 and bytes per group and tier (min(depth, 2)) by ledger state - UNCLAIMED (no
 row), ASM (gen-dump, naked or masm body), SMALL (gen_small), LIB
-(Code/Libraries), CPP - and by identity: a function is identified when a ledger
+(game/Libraries), CPP - and by identity: a function is identified when a ledger
 row or a symbols.csv pin at its address carries a non-anonymous name.
 
 Direct `E8`/`E9` displacements are followed through link thunk chains, and a
@@ -46,7 +46,7 @@ from pathlib import Path
 import build
 import progress
 
-EXE = 'baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe'
+EXE = 'inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe'
 ANON = re.compile(r'^\?[dj]i?_[0-9a-f]{8}@@YAXXZ$')
 IMAGE_BASE = 0x400000
 CALL = re.compile(rb'[\xe8\xe9]')
@@ -84,7 +84,7 @@ def make_off(secs):
 def load_rows():
     """Return (starts, sized, anon, named) keyed by RVA."""
     starts, sized, anon, named = set(), {}, {}, {}
-    for r in csv.DictReader(open('reverse/functions.csv', newline='')):
+    for r in csv.DictReader(open('targets/game/reverse/functions.csv', newline='')):
         try:
             rva = int(r['target_rva'], 16)
             size = int(r['target_size'] or 0)
@@ -251,7 +251,7 @@ def closure(seeds_path):
     data, secs = load_image()
     off = make_off(secs)
     sized = {int(r['rva'], 16): int(r['size'])
-             for r in csv.DictReader(open('reverse/ghidra_functions.csv', newline=''))}
+             for r in csv.DictReader(open('targets/game/reverse/ghidra_functions.csv', newline=''))}
     rows_at = collections.defaultdict(list)
     for row in build.load_function_rows():
         rows_at[int(row['target_rva'], 16)].append(row)
@@ -322,11 +322,11 @@ def closure(seeds_path):
         states = set()
         for row in rows_at[rva]:
             if build.is_scaffold_row(row) or (row['name'], row['target_rva']) in naked \
-                    or row['source'].startswith('Code/masm_dumps/'):
+                    or row['source'].startswith('game/masm_dumps/'):
                 states.add('ASM')
-            elif row['source'].startswith('Code/gen_small/'):
+            elif row['source'].startswith('game/gen_small/'):
                 states.add('SMALL')
-            elif row['source'].startswith('Code/Libraries/'):
+            elif row['source'].startswith('game/Libraries/'):
                 states.add('LIB')
             else:
                 states.add('CPP')
@@ -335,7 +335,7 @@ def closure(seeds_path):
         return max(states, key=STATES.index)
 
     pins = collections.defaultdict(list)
-    for r in csv.DictReader(open('reverse/symbols.csv', newline='')):
+    for r in csv.DictReader(open('targets/game/reverse/symbols.csv', newline='')):
         pins[int(r['address'], 16)].append(r['name'])
     prefixes = tuple(cfg['anonymous_prefixes'])
     substrings = cfg['anonymous_substrings']
@@ -376,7 +376,7 @@ def main():
         return 2
     if args[0] == '--closure':
         if len(args) != 2:
-            sys.exit('usage: callers_of.py --closure reverse/game_end/seeds.json')
+            sys.exit('usage: callers_of.py --closure targets/game/reverse/game_end/seeds.json')
         return closure(args[1])
 
     data, secs = load_image()

@@ -11,17 +11,17 @@ import sys
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = "worldbuilder/target.json"
-LEDGER = "reverse/worldbuilder/functions.csv"
-OWNED = ("Code/Tools/WorldBuilder/", "worldbuilder/", "reverse/worldbuilder/")
+CONFIG = "inputs/baselines/bfme1/workshop-vanilla-1.03/manifest.json"
+LEDGER = "targets/worldbuilder/reverse/functions.csv"
+OWNED = ("worldbuilder/", "targets/worldbuilder/")
 CHECKERS = frozenset("tools/" + name + ".py" for name in (
     "target_hooks", "target_guard", "targets", "target_verify", "worldbuilder", "worldbuilder_inventory",
     "build", "coffar", "gen_case_shims", "portable_lock"))
 REQUIRED = {"name", "target_rva", "target_size", "status", "source", "profile", "evidence", "model"}
 HEADERS = {".h", ".hpp", ".hh", ".hxx", ".inl", ".inc"}
 SOURCE_SUFFIXES = {".c", ".cc", ".cpp", ".cxx", ".asm", ".s"}
-SOURCE_ROOTS = ("Code/Tools/WorldBuilder/", "worldbuilder/Code/")
-DONOR_ROOT = "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/"
+SOURCE_ROOTS = ("worldbuilder/",)
+DONOR_ROOT = "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/"
 
 
 class HookError(ValueError):
@@ -56,7 +56,7 @@ def _sources(root, snapshot, paths):
         source = row["source"]
         path = PurePosixPath(source)
         if ("\\" in source or ":" in source or ".." in path.parts or path.is_absolute()
-                or not source.startswith(("Code/", "worldbuilder/Code/"))
+                or not source.startswith(("game/", "worldbuilder/"))
                 or path.suffix != ".cpp"):
             raise HookError(f"{LEDGER}:{line}: invalid source path {source!r}")
         if source not in paths:
@@ -68,9 +68,9 @@ def _sources(root, snapshot, paths):
 def _game_sources(root, snapshot, candidates):
     if not candidates:
         return set()
-    rows = csv.DictReader(io.StringIO(_blob(root, snapshot, "reverse/functions.csv").decode("utf-8-sig")))
+    rows = csv.DictReader(io.StringIO(_blob(root, snapshot, "targets/game/reverse/functions.csv").decode("utf-8-sig")))
     if not rows.fieldnames or not {"source", "status"} <= set(rows.fieldnames):
-        raise HookError("reverse/functions.csv: invalid source membership schema")
+        raise HookError("targets/game/reverse/functions.csv: invalid source membership schema")
     return {row["source"] for row in rows
             if row.get("status") == "matched" and row.get("source") in candidates}
 
@@ -95,7 +95,7 @@ def _checker_paths(root, snapshot, paths):
 def _donor_paths(root, snapshot, paths):
     result = set()
     for name in ("candidates.json", "provenance.json"):
-        path = "reverse/worldbuilder/" + name
+        path = "targets/worldbuilder/reverse/" + name
         if path not in paths:
             continue
         data = json.loads(_blob(root, snapshot, path))
@@ -106,7 +106,7 @@ def _donor_paths(root, snapshot, paths):
             source = donor["path"]
             if (not isinstance(source, str) or "\\" in source or ":" in source
                     or ".." in PurePosixPath(source).parts
-                    or not source.startswith(("reference/", "Code/")) or source not in paths):
+                    or not source.startswith(("inputs/reference/", "game/")) or source not in paths):
                 raise HookError(f"{path}: donor is absent from snapshot or invalid: {source!r}")
             result.add(source)
     return result
@@ -117,9 +117,9 @@ def _exclusive_source(path):
 
 
 def _compiler_input(path, checkers=CHECKERS):
-    return (path in checkers or path.startswith(("reference/shims/", "build/toolchains/", DONOR_ROOT))
+    return (path in checkers or path.startswith(("inputs/reference/shims/", "inputs/toolchains/", DONOR_ROOT))
             or (PurePosixPath(path).suffix.lower() in HEADERS
-                and path.startswith(("Code/", "reference/"))))
+                and path.startswith(("game/", "inputs/reference/"))))
 
 
 def _clean(root, snapshot, paths):
@@ -178,8 +178,12 @@ def run(root, snapshot, base=None, exclusive_output=None):
         if snapshot != ":" and _git(root, "rev-parse", snapshot).strip() != _git(root, "rev-parse", "HEAD").strip():
             raise HookError("WorldBuilder outgoing revision must be checked out at HEAD before verification")
         config = json.loads(_blob(root, snapshot, CONFIG))
+        image = next((entry["path"] for entry in config["files"]
+                      if entry.get("path") == "files/worldbuilder.exe"), None)
+        if image is None:
+            raise HookError("baseline manifest lacks files/worldbuilder.exe")
         dependencies = {path for path in paths if path.startswith(OWNED) or _compiler_input(path, checkers)}
-        dependencies |= sources | donors | {CONFIG, LEDGER, config["image"]["path"]}
+        dependencies |= sources | donors | {CONFIG, LEDGER, "inputs/baselines/bfme1/workshop-vanilla-1.03/" + image}
         unclaimed = {path for path in paths if _exclusive_source(path)} - sources
         if unclaimed:
             raise HookError("Unclaimed WorldBuilder sources in snapshot: " + ", ".join(sorted(unclaimed)))

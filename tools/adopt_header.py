@@ -3,7 +3,7 @@
 
 WHY. "533 headers against the original's 1,471" is the usual way this tree's
 unreadability is described, and it is the wrong description: the headers mostly
-EXIST. `Code/Libraries/Source/WWVegas/WWLib/ascii_string.h` is right there, 45
+EXIST. `game/Libraries/Source/WWVegas/WWLib/ascii_string.h` is right there, 45
 translation units include it -- and 1,342 declare their own `class AsciiString`
 instead. `Object` is redeclared 1,317 times, `Coord3D` 484. What makes the tree
 unnavigable is not that a type has no definition to jump to; it is that it has a
@@ -19,7 +19,7 @@ Layout is necessary and not sufficient. The header also defines `operator==`,
 `operator!=` and `operator<` at namespace scope and pulls in `string_base.h`, so a
 TU that spells any of those itself gets a redefinition error. 202 of the 762 do.
 They are pre-filtered, and anything the pre-filter misses is caught by the
-compiler and recorded in reverse/header_adopt_blocked.tsv so the next run does
+compiler and recorded in targets/game/reverse/header_adopt_blocked.tsv so the next run does
 not pay for it again.
 
 THE GATE IS THE PROOF, AND IT IS ASKED ONE FILE AT A TIME. `build.sh` raises
@@ -49,7 +49,7 @@ from pathlib import Path
 from typing import NamedTuple
 
 ROOT = Path(__file__).resolve().parents[1]
-BLOCKED = ROOT / "reverse/header_adopt_blocked.tsv"
+BLOCKED = ROOT / "targets/game/reverse/header_adopt_blocked.tsv"
 
 # The types this tool may touch, DERIVED rather than listed: a type qualifies
 # when exactly ONE header in the tree defines it. Types with two or more are left
@@ -60,7 +60,7 @@ BLOCKED = ROOT / "reverse/header_adopt_blocked.tsv"
 # they are rare enough that nobody ever copied them into a .cpp.
 # The header's own scalar-member count is read from the header too, so adding a
 # type is not a hand-edit of a table that can drift out of step with it.
-AREAS = ("Code/GameEngine", "Code/GameEngineDevice", "Code/Libraries")
+AREAS = ("game/GameEngine", "game/GameEngineDevice", "game/Libraries")
 
 # The gate REFUSES a commit only for these. Every type headers() derives is fair
 # game for the batch tool, but demanding a swap at commit time is only fair when
@@ -104,11 +104,11 @@ def headers():
     # These canonical string headers were settled by review; keep the selection
     # stable while duplicate definitions elsewhere are removed.
     out = {
-        "AsciiString": ("ascii_string.h", "Code/Libraries/Source/WWVegas/WWLib", 1),
-        "UnicodeString": ("unicode_string.h", "Code/Libraries/Source/WWVegas/WWLib", 1),
+        "AsciiString": ("ascii_string.h", "game/Libraries/Source/WWVegas/WWLib", 1),
+        "UnicodeString": ("unicode_string.h", "game/Libraries/Source/WWVegas/WWLib", 1),
     }
     defining = {}
-    for path in (ROOT / "Code").rglob("*.h"):
+    for path in (ROOT / "game").rglob("*.h"):
         text = path.read_text(encoding="utf-8", errors="replace")
         for match in TYPE_BODY.finditer(text):
             defining.setdefault(match.group(1), []).append(path)
@@ -310,7 +310,7 @@ def check():
 
     The block is narrow by construction and never a dead end: the fix is one
     command, and a shim the compiler will not take gets recorded in
-    reverse/header_adopt_blocked.tsv and skipped from then on -- an exemption that
+    targets/game/reverse/header_adopt_blocked.tsv and skipped from then on -- an exemption that
     is a recorded decision rather than a silent pass.
     """
     bad = offenders(staged_sources())
@@ -382,7 +382,7 @@ def main():
 
     known = blocked_paths()
     listed = subprocess.run(
-        ["git", "grep", "-l", "-E", rf"^\s*class\s+{args.type}\b", "--", "Code/***.cpp"],
+        ["git", "grep", "-l", "-E", rf"^\s*class\s+{args.type}\b", "--", "game/***.cpp"],
         cwd=ROOT, capture_output=True, text=True).stdout.split()
 
     changed = []

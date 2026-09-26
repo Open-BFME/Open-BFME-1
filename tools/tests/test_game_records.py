@@ -1,4 +1,4 @@
-"""Property tests over the measured game-end records in reverse/game_end/measured/.
+"""Property tests over the measured game-end records in targets/game/reverse/game_end/measured/.
 
 Each row of the LAN result matrix is one group in measured.jsonl, and every row is
 declared in tools/tests/rows.py before it is run. These hold the measurement
@@ -17,7 +17,7 @@ from pathlib import Path
 import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
-MEASURED = ROOT / "reverse" / "game_end" / "measured.jsonl"
+MEASURED = ROOT / "targets/game/reverse" / "game_end" / "measured.jsonl"
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import rows  # noqa: E402

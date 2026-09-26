@@ -21,16 +21,16 @@ not a fully rebuilt or runnable editor.
 
 ## Target and source ownership
 
-`worldbuilder/target.json` selects the vanilla 1.03 WorldBuilder image
-and its SHA-256. A different image is an error, including images with similar
-addresses or export names. The target ledger is
-`reverse/worldbuilder/functions.csv`; generated runs live under ignored
+The baseline manifest at `inputs/baselines/bfme1/workshop-vanilla-1.03/manifest.json`
+records the WorldBuilder image and its SHA-256. The verifier checks that image
+before comparing bytes. The target ledger is
+`targets/worldbuilder/reverse/functions.csv`; generated runs live under ignored
 `build/worldbuilder/`.
 
-Editor sources belong in `Code/Tools/WorldBuilder/`. Independently verified
-engine implementations can reuse existing `Code/` sources. When WorldBuilder
+Editor sources belong in `worldbuilder/src/`. Independently verified
+engine implementations can reuse existing `game/` sources. When WorldBuilder
 needs a different implementation, put it at the corresponding path beneath
-`worldbuilder/Code/`. A game claim never implies a WorldBuilder claim.
+`worldbuilder/`. A game claim never implies a WorldBuilder claim.
 Edits to a source claimed by both targets trigger both verification paths.
 
 The initial compiler profiles use the existing MSVC 7.1 toolchain
@@ -100,7 +100,7 @@ boundary by themselves.
 The optional whole-image analysis is reproducible with
 `python3 tools/worldbuilder_analysis.py --analyze --ghidra <installation>`.
 It writes function ranges, call sites and string references under ignored
-`build/worldbuilder-inventory/`; the tracked `reverse/worldbuilder/analysis.json`
+`build/worldbuilder-inventory/`; the tracked `targets/worldbuilder/reverse/analysis.json`
 records tool versions, hashes and boundary samples. Ordinary recovery does not
 require a Ghidra database. Ghidra can miss metadata-proven function starts, and
 its owned-address count can describe noncontiguous ranges; neither is an
@@ -119,7 +119,7 @@ editor references include the vendoring revision and normalized file hashes;
 the original upstream revision is not known.
 
 MFC ordinal evidence and acquisition commands are documented in
-[`worldbuilder/dependencies/README.md`](../worldbuilder/dependencies/README.md).
+[`targets/worldbuilder/dependencies/README.md`](../targets/worldbuilder/dependencies/README.md).
 The small verified map is sufficient for normal compilation/verification;
 large dependency downloads are explicit. Unproven ordinals remain unsupported.
 

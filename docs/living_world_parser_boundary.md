@@ -49,5 +49,5 @@ as a dependency because the incorrect 496-byte claim overlapped its body.
 
 Both replacement bodies are authored C++ and receive their own scoped byte
 verification. The obsolete naked source and its row are removed together;
-`reverse/deleted_rows.csv` records the retirement so a stale merge cannot
+`targets/game/reverse/deleted_rows.csv` records the retirement so a stale merge cannot
 resurrect it. The 84 padding bytes receive no replacement claim.

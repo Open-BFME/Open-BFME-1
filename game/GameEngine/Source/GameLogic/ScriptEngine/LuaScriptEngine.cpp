@@ -1,0 +1,208 @@
+// cl: /DNDEBUG /DWIN32 /MD /O2
+
+typedef float Real;
+
+struct lua_State;
+
+extern "C" int lua_gettop(lua_State *state);
+extern "C" double lua_tonumber(lua_State *state, int index);
+extern "C" void lua_pushnumber(lua_State *state, double value);
+extern "C" const char *lua_tostring(lua_State *state, int index);
+extern "C" void lua_pushnil(lua_State *state);
+extern "C" void lua_pushboolean(lua_State *state, int value);
+extern "C" void lua_pushstring(lua_State *state, const char *value);
+
+extern Real GetGameClientRandomValueReal(Real low, Real high, char *file, int line);
+
+int GetClientRandomNumberReal(lua_State *state)
+{
+	if (lua_gettop(state) <= 1) {
+		lua_pushnumber(state, 0.0);
+	} else {
+		Real low = (Real)lua_tonumber(state, 1);
+		Real high = (Real)lua_tonumber(state, 2);
+#line 1744 "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\ScriptEngine\\LuaScriptEngine.cpp"
+		lua_pushnumber(state, GetGameClientRandomValueReal(low, high, __FILE__, __LINE__));
+	}
+	return 1;
+}
+#line 30
+
+enum KindOfType { KINDOF_INVALID = -1 };
+
+template<int Bits> class BitFlags
+{
+public:
+	static int getSingleBitFromName(const char *name);
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
+class Thing
+{
+public:
+	bool isKindOf(KindOfType kind) const;
+};
+
+class Object : public Thing {};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
+class GameLogic
+{
+public:
+	Object *findObjectByID(int id);
+};
+
+extern GameLogic *TheGameLogic;
+
+struct LuaTargetRecord
+{
+	char m_targetPad[0x2B4];
+	int m_targetID;
+};
+
+struct LuaTargetOwner
+{
+	char m_targetPad[0xFC];
+	LuaTargetRecord *m_target;
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+class AsciiString
+{
+private:
+	struct Data
+	{
+		int m_references;
+		unsigned short m_length;
+		unsigned short m_capacity;
+		char m_text[1];
+	};
+
+public:
+	AsciiString() : m_data(0) {}
+	~AsciiString();
+	AsciiString &operator=(const AsciiString &other);
+	bool isEmpty() const { return m_data == 0 || m_data->m_length == 0; }
+	const char *str() const { return m_data->m_text; }
+
+private:
+	Data *m_data;
+};
+
+struct LuaDrawableLink
+{
+	AsciiString m_previousAnimationState;
+	AsciiString m_transitionAnimationState;
+	AsciiString m_previousAnimation;
+	LuaTargetOwner *m_owner;
+};
+
+struct LuaDrawableState
+{
+	char m_drawablePad[0x78];
+	LuaDrawableLink *m_drawable;
+};
+
+extern LuaDrawableState *g_obj12F060C;
+
+int CurDrawableIsCurrentTargetKindof(lua_State *state)
+{
+	LuaDrawableLink *drawable = g_obj12F060C->m_drawable;
+	if (drawable != 0 && drawable->m_owner != 0 && drawable->m_owner->m_target != 0) {
+		Object *target = TheGameLogic->findObjectByID(drawable->m_owner->m_target->m_targetID);
+		if (target != 0 && lua_gettop(state) > 0) {
+			int kind = BitFlags<17>::getSingleBitFromName(lua_tostring(state, 1));
+			if (target->isKindOf((KindOfType)kind)) {
+				lua_pushboolean(state, 1);
+				return 1;
+			}
+		}
+	} else {
+		lua_pushnil(state);
+	}
+
+	lua_pushboolean(state, 0);
+	return 1;
+}
+
+int CurDrawablePrevAnimationState(lua_State *state)
+{
+	AsciiString previousState;
+	LuaDrawableLink *drawable = g_obj12F060C->m_drawable;
+	if (drawable != 0) {
+		previousState = drawable->m_previousAnimationState;
+	}
+
+	if (!previousState.isEmpty()) {
+		lua_pushstring(state, previousState.str());
+	} else {
+		lua_pushnil(state);
+	}
+	return 1;
+}
+
+int CurDrawablePrevAnimation(lua_State *state)
+{
+	AsciiString previousAnimation;
+	LuaDrawableLink *drawable = g_obj12F060C->m_drawable;
+	if (drawable != 0) {
+		previousAnimation = drawable->m_previousAnimation;
+	}
+
+	if (!previousAnimation.isEmpty()) {
+		lua_pushstring(state, previousAnimation.str());
+	} else {
+		lua_pushnil(state);
+	}
+	return 1;
+}
+
+typedef unsigned char Bool;
+
+extern double g_bfmeSubB3;
+
+// The status word this binding tests sits at +0x90 of the target record, inside
+// the run LuaTargetRecord already declares as padding, so reading it through an
+// accessor keeps that layout and the rows above it unchanged.
+class LuaTargetStatus
+{
+public:
+	Bool test(int bit) const
+	{
+		return (Bool)((m_bits[(unsigned int)bit >> 5] & (1u << (bit & 31))) != 0);
+	}
+
+	Bool isKindOf(int bit) const
+	{
+		return test(bit);
+	}
+
+private:
+	unsigned int m_lead[0x24];
+	unsigned int m_bits[2];
+};
+
+// ?rva002E7740@@YAHPAUlua_State@@@Z
+int rva002E7740(lua_State *state)
+{
+	LuaDrawableLink *drawable = g_obj12F060C->m_drawable;
+	if (drawable != 0) {
+		LuaTargetOwner *owner = drawable->m_owner;
+		if (owner != 0 && lua_gettop(state) > 0) {
+			Bool hit = 0;
+			const char *name = lua_tostring(state, 1);
+			LuaTargetStatus *status = (LuaTargetStatus *)owner->m_target;
+			int bit = BitFlags<45>::getSingleBitFromName(name);
+			if (bit != -1)
+				hit = status->isKindOf(bit);
+
+			if (hit) {
+				lua_pushnumber(state, g_bfmeSubB3);
+				return 1;
+			}
+		}
+	}
+
+	lua_pushnil(state);
+	return 1;
+}

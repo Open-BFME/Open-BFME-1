@@ -85,13 +85,13 @@ in every scan mode. `git diff --check` passes.
 ## Promising result: reuse already working C++ as a source donor
 
 A prototype compared the newly admitted bodies with existing nongenerated
-`Code/*.cpp` rows, excluding files containing assembly markers. Matching the
+`game/*.cpp` rows, excluding files containing assembly markers. Matching the
 operand-normalized instruction shape found **60 candidate bodies / 4,443 bytes**
 with an existing C++ donor. This is deliberately a shortlist, not an identity
 claim: types, constants, callees and calling conventions still need checking.
 
 One concrete experiment was better than a similarity score. Compiling the
-existing `Code/GameEngine/Source/Common/Rva006472C0DequeIntPushBackAux.cpp` with
+existing `game/GameEngine/Source/Common/Rva006472C0DequeIntPushBackAux.cpp` with
 the repo's MSVC 7.1 toolchain emitted 101 bytes matching all five newly exposed
 targets outside relocation slots:
 
@@ -158,7 +158,7 @@ targets as a bounded evaluation before expanding the mechanism.
    Keep this separate from the tested terminal-filter patch.
 
 5. **Make publication a short transaction over verified, immutable inputs.**
-   `harvest.py` holds `reverse/.add_match.lock` through commit, fetch, rebase and
+   `harvest.py` holds `targets/game/reverse/.add_match.lock` through commit, fetch, rebase and
    push; workers need the same lock to land a body. It stages all tracked Code
    edits even if they are in flight. Its post-rebase checker invokes the main
    checkout's absolute `tools/check_csv.py` path with the other worktree as cwd;

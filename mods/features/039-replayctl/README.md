@@ -30,7 +30,7 @@ of what a replay wants.
 That setter takes **three** arguments in BFME — `(Bool paused, Int mode, Bool
 affectMouse)`, the middle one a dword tested against 1 and 2 — not Zero Hour's
 `(Bool paused, Bool pauseMusic)`. The 300-byte retail body is byte-verified in
-`Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/BfmeGameLogicPause_setGamePaused.cpp`,
+`game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/BfmeGameLogicPause_setGamePaused.cpp`,
 where the class is spelled `BfmeGameLogicPause` as a TU-local call view. The
 two-argument `GameLogic::setGamePaused` in `GameLogic.cpp` is Zero Hour's and
 is not what retail runs.

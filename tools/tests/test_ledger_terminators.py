@@ -1,4 +1,4 @@
-"""reverse/symbols.csv has to carry ONE line terminator, and who enforces it.
+"""targets/game/reverse/symbols.csv has to carry ONE line terminator, and who enforces it.
 
 symbols.csv is `merge=union` and its rows are pins that several tools legitimately
 re-emit. A line differing from its twin only by a `\\r` is a DISTINCT line to the
@@ -125,7 +125,7 @@ def test_dedup_still_collapses_duplicate_pins(tmp_path):
 # --------------------------------------------------------------------------
 
 FN_HEADER = "name,export_rva,target_rva,target_size,source,status,notes"
-SRC = "Code/GameEngine/Source/Common/Thing.cpp"
+SRC = "game/GameEngine/Source/Common/Thing.cpp"
 ROW_A = f"?a@Thing@@QAEXXZ,,0x00401000,16,{SRC},matched,"
 ROW_B = f"?b@Thing@@QAEXXZ,,0x00402000,16,{SRC},matched,"
 
@@ -161,7 +161,7 @@ def test_dedup_functions_still_collapses_and_keeps_the_survivor_verbatim(tmp_pat
 
 def test_dedup_functions_still_refuses_a_two_source_tie(tmp_path):
     path = tmp_path / "functions.csv"
-    other = ROW_A.replace(SRC, "Code/GameEngine/Source/Common/Other.cpp")
+    other = ROW_A.replace(SRC, "game/GameEngine/Source/Common/Other.cpp")
     path.write_bytes(functions((ROW_A, b"\r\n"), (other, b"\r\n")))
     before = path.read_bytes()
     with pytest.raises(SystemExit) as exc:

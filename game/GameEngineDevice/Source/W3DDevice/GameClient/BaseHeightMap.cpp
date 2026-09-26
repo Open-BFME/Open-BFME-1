@@ -1,0 +1,4428 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/bfmeheightmap /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+#define Matrix4x4 Matrix4  // BFME renamed it
+#define __PLACEMENT_VEC_NEW_INLINE  // always.h defines array placement-new itself
+#define _STLP_USE_STATIC_LIB       // the retail floor list calls __node_alloc directly
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+////////////////////////////////////////////////////////////////////////////////
+//																																						//
+//  (c) 2001-2003 Electronic Arts Inc.																				//
+//																																						//
+////////////////////////////////////////////////////////////////////////////////
+
+// FILE: Heightmap.cpp ////////////////////////////////////////////////
+//-----------------------------------------------------------------------------
+//                                                                          
+//                       Westwood Studios Pacific.                          
+//                                                                          
+//                       Confidential Information                           
+//                Copyright (C) 2001 - All Rights Reserved                  
+//                                                                          
+//-----------------------------------------------------------------------------
+//
+// Project:   RTS3
+//
+// File name: Heightmap.cpp
+//
+// Created:   Mark W., John Ahlquist, April/May 2001
+//
+// Desc:      Draw the terrain and scorchmarks in a scene.
+//
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+//         Includes                                                      
+//-----------------------------------------------------------------------------
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <list>
+#include <assetmgr.h>
+#include <texture.h>
+#include <tri.h>
+#include <colmath.h>
+#include <coltest.h>
+#include <rinfo.h>
+#include <camera.h>
+#include <d3dx8core.h>
+#include "Common/GlobalData.h"
+#include "Common/PerfTimer.h"
+
+#include "GameClient/TerrainVisual.h"
+#include "GameClient/View.h"
+#include "GameClient/Water.h"
+
+#include "GameLogic/AIPathfind.h"
+#include "GameLogic/TerrainLogic.h"
+#include "W3DDevice/GameClient/TerrainTex.h"
+#include "W3DDevice/GameClient/W3DDynamicLight.h"
+#include "W3DDevice/GameClient/W3DScene.h"
+#include "W3DDevice/GameClient/W3DTerrainTracks.h"
+#include "W3DDevice/GameClient/W3DBibBuffer.h"
+#include "W3DDevice/GameClient/W3DPropBuffer.h"
+#include "W3DDevice/GameClient/W3DTreeBuffer.h"
+#include "W3DDevice/GameClient/W3DRoadBuffer.h"
+#include "W3DDevice/GameClient/W3DBridgeBuffer.h"
+#include "W3DDevice/GameClient/W3DWaypointBuffer.h"
+#include "W3DDevice/GameClient/W3DCustomEdging.h"
+#include "W3DDevice/GameClient/WorldHeightMap.h"
+#include "W3DDevice/GameClient/W3DShaderManager.h"
+#include "W3DDevice/GameClient/W3DShadow.h"
+#include "W3DDevice/GameClient/W3DWater.h"
+#include "W3DDevice/GameClient/W3DShroud.h"
+#include "WW3D2/DX8Wrapper.h"
+#include "WW3D2/Light.h"
+#include "WW3D2/Scene.h"
+#include "W3DDevice/GameClient/W3DPoly.h"
+#include "W3DDevice/GameClient/W3DCustomScene.h"
+
+#include "Common/PerfTimer.h"
+#include "Common/UnitTimings.h" //Contains the DO_UNIT_TIMINGS define jba.		 
+#include "W3DDevice/GameClient/BaseHeightMap.h"
+
+#include "W3DDevice/GameClient/HeightMap.h"
+#include "W3DDevice/GameClient/FlatHeightMap.h"
+#include "W3DDevice/GameClient/W3DSmudge.h"
+#include "W3DDevice/GameClient/W3DSnow.h"
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
+#ifdef _INTERNAL
+// for occasional debugging...
+//#pragma optimize("", off)
+//#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
+#endif
+
+extern FlatHeightMapRenderObjClass *TheFlatHeightMap;
+extern HeightMapRenderObjClass *TheHeightMap;
+
+//-----------------------------------------------------------------------------
+//         Private Data                                                     
+//-----------------------------------------------------------------------------
+#define SC_DETAIL_BLEND ( SHADE_CNST(ShaderClass::PASS_LEQUAL, ShaderClass::DEPTH_WRITE_ENABLE, ShaderClass::COLOR_WRITE_ENABLE, ShaderClass::SRCBLEND_ONE, \
+	ShaderClass::DSTBLEND_ZERO, ShaderClass::FOG_DISABLE, ShaderClass::GRADIENT_MODULATE, ShaderClass::SECONDARY_GRADIENT_DISABLE, ShaderClass::TEXTURING_ENABLE, \
+	ShaderClass::ALPHATEST_DISABLE, ShaderClass::CULL_MODE_ENABLE, ShaderClass::DETAILCOLOR_SCALE, ShaderClass::DETAILALPHA_DISABLE) )
+
+static ShaderClass detailOpaqueShader(SC_DETAIL_BLEND);
+
+#ifdef DO_SCORCH
+class BaseHeightMapScorchUpdater
+{
+public:
+	void updateScorches();
+};
+
+void __cdecl BaseHeightMapScorchSetShader(const ShaderClass &shader);
+// Retail's x87 conversion proves this terrain path used the older float Z-bias ABI.
+class BFMEZBiasSetter : public DX8Wrapper
+{
+public:
+	static void set(Real bias);
+};
+
+__declspec(noinline) void __cdecl BaseHeightMapScorchSetZBias(Int bias)
+{
+	BFMEZBiasSetter::set(static_cast<Real>(bias));
+}
+void __cdecl BoxSetTexture(unsigned stage, TextureBaseClass *&texture);
+extern UnsignedInt BaseHeightMapScorchStageChanges;
+
+namespace {
+	typedef HRESULT (__stdcall *BFMESetSamplerState)(IDirect3DDevice8 *, DWORD, DWORD, DWORD);
+}
+#endif
+
+//-----------------------------------------------------------------------------
+//         Global Functions & Data                                              
+//-----------------------------------------------------------------------------
+/// The one-of for the terrain rendering object.
+BaseHeightMapRenderObjClass *TheTerrainRenderObject=NULL;
+
+// Keep the matched TScorch copy COMDAT live after addScorch moved to the BFME layout proxy.
+static void bfmeRetainTScorchCopy(void)
+{
+	TScorch destination;
+	TScorch source;
+	destination = source;
+}
+
+static int s_bfmeRetainTScorchCopy = (bfmeRetainTScorchCopy(), 0);
+
+/** Entry point so that trees can be drawn at the appropriate point in the rendering pipe for 
+    transparent objects. */
+void DoTrees(RenderInfoClass & rinfo)
+{
+	if (TheTerrainRenderObject) {
+		TheTerrainRenderObject->renderTrees(&rinfo.Camera);
+	}
+}
+
+void oversizeTheTerrain(Int amount)
+{
+	if (TheTerrainRenderObject) 
+	{
+		TheTerrainRenderObject->oversizeTerrain(amount);
+	}
+}
+
+#define DEFAULT_MAX_BATCH_SHORELINE_TILES		512	//maximum number of terrain tiles rendered per call (must fit in one VB)
+#define DEFAULT_MAX_MAP_SHORELINE_TILES		4096	//default size of array allocated to hold all map shoreline tiles.
+
+#define ADJUST_FROM_INDEX_TO_REAL(k) ((k-m_map->getBorderSizeInline())*MAP_XY_FACTOR)
+inline Int IABS(Int x) {	if (x>=0) return x; return -x;};
+
+//-----------------------------------------------------------------------------
+//         Private Functions                                               
+//-----------------------------------------------------------------------------
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::freeMapResources
+//=============================================================================
+/** Frees the w3d resources used to draw the terrain. */
+//=============================================================================
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapFreeMapResources.cpp
+// ?freeMapResources@BaseHeightMapRenderObjClass@@UAEHXZ present-unmatched
+Int BaseHeightMapRenderObjClass::freeMapResources(void)
+{
+#ifdef DO_SCORCH
+	freeScorchBuffers();
+#endif
+	REF_PTR_RELEASE(m_vertexMaterialClass);
+	REF_PTR_RELEASE(m_stageZeroTexture);
+	REF_PTR_RELEASE(m_stageOneTexture);
+	REF_PTR_RELEASE(m_stageTwoTexture);
+	REF_PTR_RELEASE(m_stageThreeTexture);
+	REF_PTR_RELEASE(m_destAlphaTexture);
+	REF_PTR_RELEASE(m_map);
+
+	return 0;
+}
+
+#ifdef DO_SCORCH
+//=============================================================================
+// BaseHeightMapRenderObjClass::drawScorches
+//=============================================================================
+/** Draws the scorch marks. */
+//=============================================================================
+void BaseHeightMapRenderObjClass::drawScorches(void)
+{
+	char *heightMap = reinterpret_cast<char *>(this);
+	reinterpret_cast<BaseHeightMapScorchUpdater *>(this)->updateScorches();
+	if (*reinterpret_cast<Int *>(heightMap + 0xe0) == 0 || Is_Hidden()) {
+		return;
+	}
+
+	BaseHeightMapScorchSetShader(ShaderClass::_PresetAlphaShader);
+	DX8Wrapper::Set_Index_Buffer(
+		*reinterpret_cast<IndexBufferClass **>(heightMap + 0xd4), 0);
+	DX8Wrapper::Set_Vertex_Buffer(
+		*reinterpret_cast<VertexBufferClass **>(heightMap + 0xd0));
+	TextureBaseClass *&texture = *reinterpret_cast<TextureBaseClass **>(heightMap + 0xd8);
+	BoxSetTexture(0, texture);
+	BaseHeightMapScorchSetZBias(1);
+
+	DX8Wrapper::Apply_Render_State_Changes();
+	IDirect3DDevice8 *device = DX8Wrapper::_Get_D3D_Device8();
+	(*(BFMESetSamplerState **)device)[69](device, 0, 1, D3DTADDRESS_CLAMP);
+	number_of_DX8_calls++;
+	BaseHeightMapScorchStageChanges++;
+	device = DX8Wrapper::_Get_D3D_Device8();
+	(*(BFMESetSamplerState **)device)[69](device, 0, 2, D3DTADDRESS_CLAMP);
+	number_of_DX8_calls++;
+	BaseHeightMapScorchStageChanges++;
+
+	UnsignedShort vertices = *reinterpret_cast<UnsignedShort *>(heightMap + 0xdc);
+	Int indices = *reinterpret_cast<Int *>(heightMap + 0xe0);
+	DX8Wrapper::Draw_Triangles(0, indices / 3, 0, vertices);
+	BaseHeightMapScorchSetZBias(0);
+}
+#endif
+
+
+//-----------------------------------------------------------------------------
+//         Public Functions                                                
+//-----------------------------------------------------------------------------
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::~BaseHeightMapRenderObjClass
+//=============================================================================
+/** Destructor. Releases w3d assets. */
+//=============================================================================
+// byte-exact reconstruction: game/GameEngine/Source/Common/BaseHeightMapRenderObjClassDestructorThunk.cpp
+// ??1BaseHeightMapRenderObjClass@@UAE@XZ present-unmatched
+BaseHeightMapRenderObjClass::~BaseHeightMapRenderObjClass(void)
+{
+	freeMapResources();
+	if (m_treeBuffer) {
+		delete m_treeBuffer;
+ 		m_treeBuffer = NULL;
+	}
+	if (m_propBuffer) {
+		delete m_propBuffer;
+ 		m_propBuffer = NULL;
+	}
+	if (m_bibBuffer) {
+		delete m_bibBuffer;
+ 		m_bibBuffer = NULL;
+	}
+#ifdef DO_ROADS
+	if (m_roadBuffer) {
+		delete m_roadBuffer;
+ 		m_roadBuffer = NULL;
+	}
+#endif
+	if (m_bridgeBuffer) {
+		delete m_bridgeBuffer;
+	}
+
+	if( m_waypointBuffer )
+	{
+		delete m_waypointBuffer;
+		m_waypointBuffer = NULL;
+	}
+	if (m_shroud) {
+		delete m_shroud;
+		m_shroud = NULL;
+	}
+	if (m_shoreLineTilePositions)	{
+		delete [] m_shoreLineTilePositions;
+		m_shoreLineTilePositions = NULL;
+	}
+	if (m_shoreLineSortInfos)
+	{
+		delete [] m_shoreLineSortInfos;
+		m_shoreLineSortInfos = NULL;
+	}
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::BaseHeightMapRenderObjClass
+//=============================================================================
+/** Constructor. Mostly nulls out the member variables. */
+//=============================================================================
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructorThunk.cpp
+// ??0BaseHeightMapRenderObjClass@@QAE@XZ present-unmatched
+BaseHeightMapRenderObjClass::BaseHeightMapRenderObjClass(void)
+{
+	m_x=0;
+	m_y=0;
+	m_needFullUpdate = false;
+	m_showImpassableAreas = false;
+	m_updating = false;
+	//Set height to the maximum value that can be stored.
+	//We should refine this with actual value.
+	m_maxHeight=(pow(256.0, sizeof(HeightSampleType))-1.0)*MAP_HEIGHT_SCALE;
+	m_minHeight=0;
+	m_shoreLineTilePositions=NULL;
+	m_numShoreLineTiles=0;
+	m_shoreLineSortInfos=NULL;
+	m_shoreLineSortInfosSize=0;
+	m_shoreLineSortInfosXMajor=TRUE;
+	m_shoreLineTileSortMaxCoordinate=0;
+	m_shoreLineTileSortMinCoordinate=0;
+	m_numVisibleShoreLineTiles=0;
+	m_shoreLineTilePositionsSize=0;
+	m_currentMinWaterOpacity = -1.0f;
+
+	m_vertexMaterialClass=NULL;
+	m_stageZeroTexture=NULL;
+	m_stageOneTexture=NULL;
+	m_stageTwoTexture=NULL;
+	m_stageThreeTexture=NULL;
+	m_destAlphaTexture=NULL;
+	m_map=NULL;
+	m_depthFade.X = 0.0f;
+	m_depthFade.Y = 0.0f;
+	m_depthFade.Z = 0.0f;
+	m_useDepthFade = false;
+	m_disableTextures = false;
+	TheTerrainRenderObject = this;
+	m_treeBuffer = NULL; 
+
+	m_treeBuffer = NEW W3DTreeBuffer;
+
+	m_propBuffer = NULL; 
+
+	m_propBuffer = NEW W3DPropBuffer;
+
+
+	m_bibBuffer = NULL;
+	m_bibBuffer = NEW W3DBibBuffer;
+	m_curImpassableSlope = 45.0f;	// default to 45 degrees.
+	m_bridgeBuffer = NULL;
+	m_bridgeBuffer = NEW W3DBridgeBuffer;
+	m_waypointBuffer = NEW W3DWaypointBuffer;
+#ifdef DO_ROADS
+	m_roadBuffer = NULL;
+	m_roadBuffer = NEW W3DRoadBuffer;
+#endif
+#ifdef DO_SCORCH
+	m_vertexScorch = NULL;
+	m_indexScorch = NULL;
+	m_scorchTexture = NULL;
+	clearAllScorches();
+#endif
+#if defined(_DEBUG) || defined(_INTERNAL)
+	if (TheGlobalData->m_shroudOn)
+		m_shroud = NEW W3DShroud;
+	else
+		m_shroud = NULL;
+#else
+	m_shroud = NEW W3DShroud;
+#endif
+	DX8Wrapper::SetCleanupHook(this);
+}
+
+// ?setTextureLOD@BaseHeightMapRenderObjClass@@QAEXH@Z present-unmatched
+void BaseHeightMapRenderObjClass::setTextureLOD(Int lod)
+{
+	if (m_treeBuffer)
+		m_treeBuffer->setTextureLOD(lod);
+	if (m_map)
+		m_map->setTextureLOD(lod);
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::adjustTerrainLOD
+//=============================================================================
+/** Adjust the terrain Level Of Detail.  If adj > 0 , increases LOD 1 step, if 
+adj < 0 decreases it one step, if adj==0, then just sets up for the current LOD */
+//=============================================================================
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapAdjustTerrainLOD.cpp
+// ?adjustTerrainLOD@BaseHeightMapRenderObjClass@@UAEXH@Z present-unmatched
+void BaseHeightMapRenderObjClass::adjustTerrainLOD(Int adj) 
+{
+	if (adj>0 && TheGlobalData->m_terrainLOD<TERRAIN_LOD_MAX) TheWritableGlobalData->m_terrainLOD=(TerrainLOD)(TheGlobalData->m_terrainLOD+1);
+	if (adj<0 && TheGlobalData->m_terrainLOD>TERRAIN_LOD_MIN) TheWritableGlobalData->m_terrainLOD=(TerrainLOD)(TheGlobalData->m_terrainLOD-1);
+
+	if (TheGlobalData->m_terrainLOD ==TERRAIN_LOD_AUTOMATIC) {
+		TheWritableGlobalData->m_terrainLOD=TERRAIN_LOD_MAX;
+	}
+
+	if (m_map==NULL) return;
+	if (m_shroud)
+		m_shroud->reset();	//need reset here since initHeightData will load new shroud.
+
+	BaseHeightMapRenderObjClass *newROBJ = NULL;
+	if (TheGlobalData->m_terrainLOD==7) {
+		newROBJ = TheHeightMap;
+		if (newROBJ==NULL) {
+			newROBJ = NEW_REF( HeightMapRenderObjClass, () );
+		}
+	}	else {
+		newROBJ = TheFlatHeightMap;
+		if (newROBJ==NULL) {
+			newROBJ = NEW_REF( FlatHeightMapRenderObjClass, () );
+		}
+	}
+	if (TheGlobalData->m_terrainLOD == 5)
+		newROBJ = NULL;
+	RTS3DScene *pMyScene = (RTS3DScene *)Scene;
+	if (pMyScene) {
+		pMyScene->Remove_Render_Object(this);
+		pMyScene->Unregister(this, SceneClass::ON_FRAME_UPDATE);
+		// add our terrain render object to the scene
+		if (newROBJ) {
+			pMyScene->Add_Render_Object( newROBJ );
+			pMyScene->Register(newROBJ,SceneClass::ON_FRAME_UPDATE);
+		}
+	}
+
+	if (newROBJ) {
+		// apply the heightmap to the terrain render object
+		newROBJ->initHeightData( m_map->getDrawWidth(), 
+																					 m_map->getDrawHeight(),
+																					 m_map,
+																					 NULL);
+		TheTerrainRenderObject = newROBJ;
+		newROBJ->staticLightingChanged();
+		newROBJ->m_roadBuffer->loadRoads();
+	}
+	if (TheTacticalView) {
+		TheTacticalView->setAngle(TheTacticalView->getAngle() + 1);
+		TheTacticalView->setAngle(TheTacticalView->getAngle() - 1);
+	}
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::ReleaseResources
+//=============================================================================
+/** Releases all w3d assets, to prepare for Reset device call. */
+//=============================================================================
+// ?ReleaseResources@BaseHeightMapRenderObjClass@@UAEXXZ present-unmatched
+void BaseHeightMapRenderObjClass::ReleaseResources(void)
+{
+	if (m_treeBuffer) {
+		m_treeBuffer->freeTreeBuffers();
+	}
+	if (m_bibBuffer) {
+		m_bibBuffer->freeBibBuffers();
+	}
+	if (m_bridgeBuffer) {
+		m_bridgeBuffer->freeBridgeBuffers();
+	}
+
+	if( m_waypointBuffer )
+	{
+		m_waypointBuffer->freeWaypointBuffers();
+	}
+	// We need to save the map.
+	WorldHeightMap *pMap=NULL;
+	REF_PTR_SET(pMap, m_map);
+	freeMapResources();
+	m_map = pMap; // ref_ptr_set has already incremented the ref count.
+	if (TheWaterRenderObj)
+		TheWaterRenderObj->ReleaseResources();
+	if (TheTerrainTracksRenderObjClassSystem)
+		TheTerrainTracksRenderObjClassSystem->ReleaseResources();
+	if (TheW3DShadowManager)
+		TheW3DShadowManager->ReleaseResources();
+	if (m_shroud)
+	{	m_shroud->reset();
+		m_shroud->ReleaseResources();
+	}
+
+	if (TheSmudgeManager)
+		TheSmudgeManager->ReleaseResources();
+
+	if (TheSnowManager)
+		((W3DSnowManager *)TheSnowManager)->ReleaseResources();
+
+	//Release any resources that may be used by custom pixel/vertex shaders
+	W3DShaderManager::shutdown();
+#ifdef DO_ROADS
+	if (m_roadBuffer) {
+		m_roadBuffer->freeRoadBuffers();
+	}		  
+#endif
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::ReAcquireResources
+//=============================================================================
+/** Reallocates all W3D assets after a reset.. */
+//=============================================================================
+// ?ReAcquireResources@BaseHeightMapRenderObjClass@@UAEXXZ present-unmatched
+void BaseHeightMapRenderObjClass::ReAcquireResources(void)
+{
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/Gen_00718E90_W3DShaderManager_Init.cpp
+// ?init@W3DShaderManager@@ present-unmatched
+	W3DShaderManager::init();	//reaquire resources which may be needed by custom shaders
+
+	if (TheWaterRenderObj)
+		TheWaterRenderObj->ReAcquireResources();
+
+	if (TheTerrainTracksRenderObjClassSystem)
+		TheTerrainTracksRenderObjClassSystem->ReAcquireResources();
+
+	if (TheW3DShadowManager)
+		TheW3DShadowManager->ReAcquireResources();
+	if (m_shroud)
+		m_shroud->ReAcquireResources();
+
+	if (m_map)
+	{
+		this->initHeightData(m_x,m_y,m_map, NULL);
+		// Tell lights to update next time through.
+		m_needFullUpdate = true;
+	}
+
+	if (m_treeBuffer) {
+		m_treeBuffer->allocateTreeBuffers();
+	}
+	if (m_bibBuffer) {
+		m_bibBuffer->allocateBibBuffers();
+	}
+	if (m_bridgeBuffer) {
+		m_bridgeBuffer->allocateBridgeBuffers();
+	}
+
+	if (TheSmudgeManager)
+		TheSmudgeManager->ReAcquireResources();
+
+	if (TheSnowManager)
+		((W3DSnowManager *)TheSnowManager)->ReAcquireResources();
+
+	//Waypoint buffers are done dynamically. One line, one node (just rendered multiple times accessing other data).
+	//Internally creates it if needed.
+
+#ifdef DO_ROADS
+	if (m_roadBuffer) {
+		m_roadBuffer->allocateRoadBuffers();
+		m_roadBuffer->loadRoads();
+	}
+#endif
+
+	if (TheTacticalView)
+	{	TheTacticalView->forceRedraw();	//force map to update itself for the current camera position.
+		//for some reason we need to do it twice otherwise we sometimes end up with a black map until
+		//the player moves.
+		TheTacticalView->forceRedraw();
+	}
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::doTheLight
+//=============================================================================
+/** Calculates the diffuse lighting for a vertex in the terrain, taking all of the
+static lights into account as well.  It is possible to just use the normal in the 
+vertex and let D3D do the lighting, but it is slower to render, and can only 
+handle 4 lights at this point. */
+//=============================================================================
+struct BFMEGlobalLightingData
+{
+	char pad0[0x7c];
+	Real waterPositionZ;
+	char pad1[0x93c];
+	RGBColor terrainAmbient[1];
+	char pad2[0x18];
+	RGBColor terrainDiffuse[MAX_GLOBAL_LIGHTS];
+	char pad3[0x54];
+	Int numGlobalLights;
+};
+
+struct BFMEHeightMapLightingData
+{
+	char pad0[0x2ff8];
+	Bool useDepthFade;
+	char pad1[3];
+	Vector3 depthFade;
+};
+
+void BaseHeightMapRenderObjClass::doTheLight(VERTEX_FORMAT *vb, Vector3*light, Vector3*normal, RefRenderObjListIterator *pLightsIterator, UnsignedByte alpha)
+{
+#ifdef USE_NORMALS
+	vb->nx = normal->X;
+	vb->ny = normal->Y;
+	vb->nz = normal->Z;
+#else
+	Real shadeR, shadeG, shadeB;
+	Real shade;
+	shadeR = ((BFMEGlobalLightingData *)TheGlobalData)->terrainAmbient[0].red;	//only the first terrain light contributes to ambient
+	shadeG = ((BFMEGlobalLightingData *)TheGlobalData)->terrainAmbient[0].green;
+	shadeB = ((BFMEGlobalLightingData *)TheGlobalData)->terrainAmbient[0].blue;
+
+	if (pLightsIterator) {
+		for (pLightsIterator->First(); !pLightsIterator->Is_Done(); pLightsIterator->Next())
+		{		
+			LightClass *pLight = (LightClass*)pLightsIterator->Peek_Obj();
+			Vector3 lightDirection(vb->x, vb->y, vb->z);
+			Real factor = 1.0f;
+			switch(pLight->Get_Type()) {
+			case LightClass::POINT:
+			case LightClass::SPOT: {
+					Vector3 lightLoc = pLight->Get_Position();
+					lightDirection -= lightLoc;
+					double range, midRange;
+					pLight->Get_Far_Attenuation_Range(midRange, range);
+					if (vb->x < lightLoc.X-range) continue;
+					if (vb->x > lightLoc.X+range) continue;
+					if (vb->y < lightLoc.Y-range) continue;
+					if (vb->y > lightLoc.Y+range) continue;
+					Real dist = lightDirection.Length();
+					if (dist >= range) continue;
+					if (midRange < 0.1) continue;
+#if 1
+					factor = 1.0f - (dist - midRange) / (range - midRange);
+#else
+					// f = 1.0 / (atten0 + d*atten1 + d*d/atten2);
+					if (fabs(range-midRange)<1e-5)	{
+						// if the attenuation range is too small assume uniform with cutoff
+						factor = 1.0;
+					}	else  {
+						factor = 1.0f/(0.1+dist/midRange + 5.0f*dist*dist/(range*range));
+					}
+#endif
+					factor = WWMath::Clamp(factor,0.0f,1.0f);
+				} 
+				break;
+			case LightClass::DIRECTIONAL:
+				lightDirection = pLight->Get_Transform().Get_Z_Vector();
+				factor = 1.0;
+				break;
+			};
+			lightDirection.Normalize();
+			Vector3 lightRay(-lightDirection.X, -lightDirection.Y, -lightDirection.Z);
+			shade = Vector3::Dot_Product(lightRay, *normal); 
+			shade *= factor;
+			Vector3 diffuse;
+			pLight->Get_Diffuse(&diffuse);
+			Vector3 ambient;
+			pLight->Get_Ambient(&ambient);
+			if (shade > 1.0) shade = 1.0;
+			if(shade < 0.0f) shade = 0.0f;
+			shadeR += shade*diffuse.X;
+			shadeG += shade*diffuse.Y;
+			shadeB += shade*diffuse.Z;		
+			shadeR += factor*ambient.X;
+			shadeG += factor*ambient.Y;
+			shadeB += factor*ambient.Z;		
+
+		}
+	} 
+	// Add in global diffuse value.
+	const RGBColor *terrainDiffuse;
+	for (Int lightIndex=0; lightIndex < ((BFMEGlobalLightingData *)TheGlobalData)->numGlobalLights; lightIndex++)
+	{
+		shade = light[lightIndex].X * normal->X + light[lightIndex].Z * normal->Z + light[lightIndex].Y * normal->Y;
+		if (shade > 1.0) shade = 1.0;
+		if(shade < 0.0f) shade = 0.0f;
+		terrainDiffuse=&((BFMEGlobalLightingData *)TheGlobalData)->terrainDiffuse[lightIndex];
+		shadeR += shade*terrainDiffuse->red;
+		shadeG += shade*terrainDiffuse->green;
+		shadeB += shade*terrainDiffuse->blue;
+	}
+
+	if (shadeR > 1.0) shadeR = 1.0;
+	if(shadeR < 0.0f) shadeR = 0.0f;
+	if (shadeG > 1.0) shadeG = 1.0;
+	if(shadeG < 0.0f) shadeG = 0.0f;
+	if (shadeB > 1.0) shadeB = 1.0;
+	if(shadeB < 0.0f) shadeB = 0.0f;
+
+	if (((BFMEHeightMapLightingData *)this)->useDepthFade && vb->z <= ((BFMEGlobalLightingData *)TheGlobalData)->waterPositionZ)
+	{	//height is below water level
+		//reduce lighting values based on light fall off as it travels through water.
+		float depthScale = (1.4f - vb->z)/((BFMEGlobalLightingData *)TheGlobalData)->waterPositionZ;
+		shadeR *= 1.0f - depthScale * (1.0f-((BFMEHeightMapLightingData *)this)->depthFade.X);
+		shadeG *= 1.0f - depthScale * (1.0f-((BFMEHeightMapLightingData *)this)->depthFade.Y);
+		shadeB *= 1.0f - depthScale * (1.0f-((BFMEHeightMapLightingData *)this)->depthFade.Z);
+	}
+
+	shadeR*=255.0f;
+	shadeG*=255.0f;
+	shadeB*=255.0f;
+	vb->diffuse = (Int)shadeB | ((Int)shadeG << 8) | ((Int)shadeR << 16) | ((Int)alpha << 24);
+#endif
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::updateMacroTexture
+//=============================================================================
+/** Updates the macro noise/lightmap texture (pass 3) */
+//=============================================================================
+// ?updateMacroTexture@BaseHeightMapRenderObjClass@@QAEXVAsciiString@@@Z present-unmatched
+void BaseHeightMapRenderObjClass::updateMacroTexture(AsciiString textureName)
+{
+	m_macroTextureName = textureName;
+	// Release texture.
+	REF_PTR_RELEASE(m_stageThreeTexture);
+	// Reallocate texture.
+	m_stageThreeTexture=NEW LightMapTerrainTextureClass(m_macroTextureName);	
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::reset
+//=============================================================================
+/** Updates the macro noise/lightmap texture (pass 3) */
+//=============================================================================
+// BFME terrain children the Zero Hour header does not describe (+0x3098, +0x30A4, +0x30B4).
+class W3DShrubBuffer
+{
+public:
+	void clearAllTrees();
+};
+
+class W3DFloorBuffer
+{
+public:
+	void rva006F9050();
+};
+
+class Rva006DED60RoadBuffer
+{
+public:
+	void rva006DEB70();
+};
+
+class BfmeListHeader;
+
+class BfmeShroudList
+{
+public:
+	void bfmeErase(BfmeListHeader *node);
+
+	BfmeListHeader *m_header;
+	int m_count;
+};
+
+class BfmeListHeader
+{
+public:
+	BfmeListHeader *m_previous;
+	BfmeListHeader *m_next;
+	BfmeListHeader *m_first;
+	BfmeListHeader *m_last;
+};
+
+struct TaintBufferFields
+{
+	char m_padding00[0x18];
+	void *m_field18;
+	char m_padding1c[0x1c];
+	void *m_field38;
+	void *m_field3c;
+	char m_padding40[4];
+};
+
+class TaintBuffer : public TaintBufferFields,
+	public BfmeShroudList
+{
+public:
+	void reset();
+	void setBorderShroudLevel(UnsignedByte level);
+};
+
+// All three releases go to 0x00881EF0, the ARRAY operator delete, not to the
+// scalar 0x00881EB0 next to it: these members are arrays.
+void TaintBuffer::reset()
+{
+	if (m_field18) {
+		::operator delete[](m_field18);
+	}
+	m_field18 = NULL;
+	if (m_field38) {
+		::operator delete[](m_field38);
+	}
+	m_field38 = NULL;
+	if (m_field3c) {
+		::operator delete[]((void *)m_field3c);
+	}
+	m_field3c = NULL;
+	*(UnsignedByte *)((char *)this + 0x35) = 1;
+
+	BfmeShroudList *list = (BfmeShroudList *)((char *)this + 0x44);
+	if (list->m_count) {
+		list->bfmeErase(list->m_header->m_next);
+		list->m_header->m_first = list->m_header;
+		list->m_header->m_next = NULL;
+		list->m_header->m_last = list->m_header;
+		list->m_count = 0;
+	}
+}
+
+class BaseHeightMapResetStringBase
+{
+public:
+	BaseHeightMapResetStringBase(const char *text);
+	BaseHeightMapResetStringBase(const BaseHeightMapResetStringBase &text);
+};
+
+// Visible delegation preserves retail's by-value unwind-record scheduling.
+class BaseHeightMapResetAsciiString
+{
+public:
+	BaseHeightMapResetAsciiString(const char *text)
+	{
+		((BaseHeightMapResetStringBase *)this)->BaseHeightMapResetStringBase::BaseHeightMapResetStringBase(text);
+	}
+	BaseHeightMapResetAsciiString(const BaseHeightMapResetAsciiString &text)
+	{
+		((BaseHeightMapResetStringBase *)this)->BaseHeightMapResetStringBase::BaseHeightMapResetStringBase(
+			*(const BaseHeightMapResetStringBase *)&text);
+	}
+	~BaseHeightMapResetAsciiString();
+
+private:
+	void *m_data;
+};
+
+// Spells BaseHeightMapRenderObjClass::updateMacroTexture(AsciiString, Bool) (0x006CB8D0) so the
+// temporary keeps retail's unwind order; the shim header declares only the one-argument form.
+class BaseHeightMapResetTerrain
+{
+public:
+	void updateMacroTexture(BaseHeightMapResetAsciiString textureName, Bool force);
+};
+
+// ?reset@BaseHeightMapRenderObjClass@@UAEXXZ
+void BaseHeightMapRenderObjClass::reset(void)
+{
+	// BFME added terrain buffers and a second cliff vector absent from the imported header.
+	char *heightMap = reinterpret_cast<char *>(this);
+	W3DTreeBuffer *treeBuffer =
+		*reinterpret_cast<W3DTreeBuffer **>(heightMap + 0x3094);
+	*reinterpret_cast<UnsignedByte *>(heightMap + 0x30d0) = 1;
+	if (treeBuffer) {
+		treeBuffer->clearAllTrees();
+	}
+	Rva006DED60RoadBuffer *buffer30B4 =
+		*reinterpret_cast<Rva006DED60RoadBuffer **>(heightMap + 0x30b4);
+	if (buffer30B4) {
+		buffer30B4->rva006DEB70();
+	}
+	W3DShrubBuffer *shrubBuffer =
+		*reinterpret_cast<W3DShrubBuffer **>(heightMap + 0x3098);
+	if (shrubBuffer) {
+		shrubBuffer->clearAllTrees();
+	}
+	W3DPropBuffer *propBuffer =
+		*reinterpret_cast<W3DPropBuffer **>(heightMap + 0x309c);
+	if (propBuffer) {
+		propBuffer->clearAllProps();
+	}
+
+	W3DRoadBuffer *roadBuffer =
+		*reinterpret_cast<W3DRoadBuffer **>(heightMap + 0x30ac);
+	*reinterpret_cast<Int *>(heightMap + 0x2fc4) = 0;
+	*reinterpret_cast<Int *>(heightMap + 0x2fc8) = 0;
+	*reinterpret_cast<Int *>(heightMap + 0x2fcc) = 0;
+	*reinterpret_cast<Int *>(heightMap + 0x2fe0) = 0;
+	if (roadBuffer) {
+		roadBuffer->clearAllRoads();
+	}
+	W3DBridgeBuffer *bridgeBuffer =
+		*reinterpret_cast<W3DBridgeBuffer **>(heightMap + 0x30b0);
+	if (bridgeBuffer) {
+		bridgeBuffer->clearAllBridges();
+	}
+	W3DFloorBuffer *floorBuffer =
+		*reinterpret_cast<W3DFloorBuffer **>(heightMap + 0x30a4);
+	if (floorBuffer) {
+		floorBuffer->rva006F9050();
+	}
+	W3DBibBuffer *bibBuffer =
+		*reinterpret_cast<W3DBibBuffer **>(heightMap + 0x30a0);
+	if (bibBuffer) {
+		bibBuffer->clearAllBibs();
+	}
+
+	BaseHeightMapRenderObjClass *bfmeVisibleCliffLayout =
+		reinterpret_cast<BaseHeightMapRenderObjClass *>(heightMap + 8);
+	bfmeVisibleCliffLayout->m_showAsVisibleCliff.clear();
+	BaseHeightMapRenderObjClass *bfmeImpassableLayout =
+		reinterpret_cast<BaseHeightMapRenderObjClass *>(heightMap + 0x1c);
+	bfmeImpassableLayout->m_showAsVisibleCliff.clear();
+
+	if (*reinterpret_cast<W3DShroud **>(heightMap + 0x30b8)) {
+		(*reinterpret_cast<W3DShroud **>(heightMap + 0x30b8))->reset();
+		(*reinterpret_cast<W3DShroud **>(heightMap + 0x30b8))->setBorderShroudLevel(
+			*reinterpret_cast<const UnsignedByte *>(reinterpret_cast<const char *>(TheGlobalData) + 0xc86));
+	}
+	if (*reinterpret_cast<TaintBuffer **>(heightMap + 0x30bc)) {
+		(*reinterpret_cast<TaintBuffer **>(heightMap + 0x30bc))->reset();
+		(*reinterpret_cast<TaintBuffer **>(heightMap + 0x30bc))->setBorderShroudLevel(
+			*reinterpret_cast<const UnsignedByte *>(reinterpret_cast<const char *>(TheGlobalData) + 0xca0));
+	}
+	reinterpret_cast<BaseHeightMapResetTerrain *>(this)->updateMacroTexture(
+		BaseHeightMapResetAsciiString(""), false);
+}
+
+/**@todo: Ray intersection needs to be optimized with some sort of grid-tracing
+(ala line drawing).  We should also try making the search in a front->back order
+relative to the ray so we can early exit as soon as we have a hit.
+*
+//=============================================================================
+// BaseHeightMapRenderObjClass::Cast_Ray
+//=============================================================================
+/** Return intersection of a ray with the heightmap mesh.
+This is a quick version that just checks every polygon inside
+a 2D bounding rectangle of the ray projected onto the heightfield plane.
+For most of our view-picking cases the ray in almost perpendicular to the
+map plane so this is very quick (small bounding box).  But it can become slow
+for arbitrary rays such as those used in AI visbility checks.(2 units on
+opposite corners of the map would check every polygon in the map).
+*/
+//=============================================================================
+// ?Cast_Ray@BaseHeightMapRenderObjClass@@UAE_NAAVRayCollisionTestClass@@@Z
+// Body in BaseHeightMap_Cast_Ray.asm (exact 2839B retail @ 0x006CDF90; queue
+// 0x0096A3CA was MISPLACED). m_map@+0x2FF4; field-offset blocks C++.
+// Keep MinMaxAABoxClass(Vector3,Vector3) + LineSegClass::operator= COMDATs
+// in this TU (were only referenced by the old C++ Cast_Ray body).
+static MinMaxAABoxClass _BaseHeightMap_Force_MinMaxAABox(Vector3(0,0,0), Vector3(0,0,0));
+LineSegClass& (LineSegClass::*_BaseHeightMap_Force_LineSeg_eq)(const LineSegClass&) = &LineSegClass::operator=;
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::getHeightMapHeight
+//=============================================================================
+/** return the height and normal of the triangle plane containing given location within heightmap. */
+//=============================================================================
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_getHeightMapHeight.asm
+// ?getHeightMapHeight@BaseHeightMapRenderObjClass@@QBEMMMPAUCoord3D@@@Z present-unmatched
+Real BaseHeightMapRenderObjClass::getHeightMapHeight(Real x, Real y, Coord3D* normal) const
+{
+  
+  // SORRY, KIDS
+  // Had to make this function logic safe, so,
+  // even though this is a renderObject, and is thus classified as client-side
+  // it is responsible for reporting height map heights (for reasons I can't say)
+  // but to do so safely, I a going to pass it the logical heighmap from the W3dTerrainVisual
+  // yes another nosequiter. Ugh!
+
+  // M Lorenzen
+
+  // by doing it this way the compiler won't call getLogicHeightMap twice...
+  WorldHeightMap *logicHeightMap = TheTerrainVisual?TheTerrainVisual->getLogicHeightMap():m_map;
+
+  if ( !logicHeightMap )
+  {
+		if (normal)
+		{	
+			// return a default normal pointing up
+			normal->x = 0.0f;
+			normal->y = 0.0f;
+			normal->z = 1.0f;
+		}
+		return 0;
+  }
+
+  
+	float height;
+
+	//	3-----2
+	//  |    /|
+	//  |  /  |
+	//	|/    |
+	//  0-----1
+	//Find surrounding grid points
+	
+	const Real MAP_XY_FACTOR_INV = 1.0f / MAP_XY_FACTOR;
+
+	float xdiv = x * MAP_XY_FACTOR_INV;
+	float ydiv = y * MAP_XY_FACTOR_INV;
+
+	float ixf = FAST_REAL_FLOOR(xdiv);
+	float iyf = FAST_REAL_FLOOR(ydiv);
+
+	float fx = xdiv - ixf; //get fraction
+	float fy = ydiv - iyf; //get fraction
+
+	// since ixf & iyf are already floor'ed, we can use the fastest f->i conversion we have...
+	Int	ix = fast_float2long_round(ixf) + logicHeightMap->getBorderSizeInline();
+	Int	iy = fast_float2long_round(iyf) + logicHeightMap->getBorderSizeInline();
+	Int xExtent = logicHeightMap->getXExtent();
+
+	// Check for extent-3, not extent-1: we go into the next row/column of data for smoothed triangle points, so extent-1
+	// goes off the end...
+	if (ix > (xExtent-3) || iy > (logicHeightMap->getYExtent()-3) || iy < 1 || ix < 1)
+	{	
+		// sample point is not on the heightmap
+		if (normal)
+		{	
+			// return a default normal pointing up
+			normal->x = 0.0f;
+			normal->y = 0.0f;
+			normal->z = 1.0f;
+		}
+		return getClipHeight(ix, iy) * MAP_HEIGHT_SCALE;
+	}
+
+	const UnsignedByte* data = logicHeightMap->getDataPtr();
+	int idx = ix + iy*xExtent;
+	float p0 = data[idx];
+	float p2 = data[idx + xExtent + 1];
+	if (fy > fx) // test if we are in the upper triangle
+	{	
+		float p3 = data[idx + xExtent];
+		height = (p3 + (1.0f-fy)*(p0-p3) + fx*(p2-p3)) * MAP_HEIGHT_SCALE;
+	}
+	else
+	{	
+		// we are in the lower triangle
+		float p1 = data[idx + 1];
+		height = (p1 + fy*(p2-p1) + (1.0f-fx)*(p0-p1)) * MAP_HEIGHT_SCALE;
+	}
+
+//  DEBUG_ASSERTCRASH( height < 30, ("SOMEBODY THINKS THE CLIENT HEIGHTMAP IS GOOD ENOUGH FOR LOGIC SAMPLING."));
+
+	if (normal) {
+		//		9		  8
+		//
+		//10	3-----2		7
+		//	  |    /|
+		//	  |  /  |
+		//		|/    |
+		//11	0-----1		6
+		//
+		//		4			5
+		//Find surrounding grid points for smoothed normals.
+ 		int idx4 = ix + (iy-1)*xExtent;
+ 		int idx0 = ix + iy*xExtent;
+ 		int idx3 = ix + iy*xExtent+xExtent;
+		int idx9 = ix + (iy+2)*xExtent;
+		UnsignedByte d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11;
+		d0 = data[idx0];
+		d1 = data[idx0+1];
+		d2 = data[idx3+1];
+		d3 = data[idx3];
+		d4 = data[idx4];
+		d5 = data[idx4+1];
+		d6 = data[idx0+2];
+		d7 = data[idx3+2];
+		d8 = data[idx9+1];
+		d9 = data[idx9];
+		d10 = data[idx3-1];
+		d11 = data[idx0-1];
+
+		Real deltaZ_X0 = d1-d11;
+		Real deltaZ_X1 = d6-d0;
+		Real deltaZ_X2 = d7-d3;
+		Real deltaZ_X3 = d6-d0;
+
+		Real deltaZ_Y0 = d3-d4;
+		Real deltaZ_Y1 = d2-d5;
+		Real deltaZ_Y2 = d8-d1;
+		Real deltaZ_Y3 = d9-d0;
+
+		// Interpolate to get the smoothed valued.
+		Real deltaZ_X_Left = deltaZ_X0*(1.0f-fx) + fx*deltaZ_X3;
+		Real deltaZ_X_Right = deltaZ_X1*(1.0f-fx) + fx*deltaZ_X2;
+		Real deltaZ_X = deltaZ_X_Left*(1.0-fy) + fy*deltaZ_X_Right;
+
+		Real deltaZ_Y_Left = deltaZ_Y0*(1.0f-fx) + fx*deltaZ_Y3;
+		Real deltaZ_Y_Right = deltaZ_Y1*(1.0f-fx) + fx*deltaZ_Y2;
+		Real deltaZ_Y = deltaZ_Y_Left*(1.0-fy) + fy*deltaZ_Y_Right;
+
+
+
+			Vector3 l2r, n2f, normalAtTexel;
+			l2r.Set(2*MAP_XY_FACTOR/MAP_HEIGHT_SCALE, 0, deltaZ_X);
+			n2f.Set(0, 2*MAP_XY_FACTOR/MAP_HEIGHT_SCALE, deltaZ_Y);
+			Vector3::Normalized_Cross_Product(l2r,n2f, &normalAtTexel);
+			normal->x = normalAtTexel.X;
+			normal->y = normalAtTexel.Y;
+			normal->z = normalAtTexel.Z;
+
+	}
+
+
+	return height;
+}
+
+//=============================================================================
+// ?isClearLineOfSight@BaseHeightMapRenderObjClass@@QBE_NABUCoord3D@@0@Z present-unmatched
+Bool BaseHeightMapRenderObjClass::isClearLineOfSight(const Coord3D& pos, const Coord3D& posOther) const
+{
+	if (m_map == NULL)
+		return false;	// doh. should not happen.
+
+  WorldHeightMap *logicHeightMap = TheTerrainVisual?TheTerrainVisual->getLogicHeightMap():m_map;
+
+#define DO_BRESENHAM
+#ifdef DO_BRESENHAM
+
+	/*
+		this is WAY faster, though not quite as accurate... however, the inaccuracy
+		is pretty minimal, so we really should force other code to live with it. (srj)
+	*/
+	const Real MAP_XY_FACTOR_INV = 1.0f / MAP_XY_FACTOR;
+
+	Int borderSize = logicHeightMap->getBorderSizeInline();
+	Int start_x = REAL_TO_INT_FLOOR(pos.x * MAP_XY_FACTOR_INV) + borderSize;
+	Int start_y = REAL_TO_INT_FLOOR(pos.y * MAP_XY_FACTOR_INV) + borderSize;
+	Int end_x = REAL_TO_INT_FLOOR(posOther.x * MAP_XY_FACTOR_INV) + borderSize;
+	Int end_y = REAL_TO_INT_FLOOR(posOther.y * MAP_XY_FACTOR_INV) + borderSize;
+	Int delta_x = abs(end_x - start_x);			// The difference between the x's
+	Int delta_y = abs(end_y - start_y);			// The difference between the y's
+	Int x = start_x;												// Start x off at the first pixel
+	Int y = start_y;												// Start y off at the first pixel
+
+	Int xinc1, xinc2;
+	if (end_x >= start_x)								// The x-values are increasing
+	{
+		xinc1 = 1;
+		xinc2 = 1;
+	}
+	else																// The x-values are decreasing
+	{
+		xinc1 = -1;
+		xinc2 = -1;
+	}
+
+	Int yinc1, yinc2;
+	if (end_y >= start_y)               // The y-values are increasing
+	{
+		yinc1 = 1;
+		yinc2 = 1;
+	}
+	else																// The y-values are decreasing
+	{
+		yinc1 = -1;
+		yinc2 = -1;
+	}
+
+	Int den, num, numadd, numpixels;
+
+	Bool checkY = true;
+	if (delta_x >= delta_y)							// There is at least one x-value for every y-value
+	{
+		xinc1 = 0;												// Don't change the x when numerator >= denominator
+		yinc2 = 0;												// Don't change the y for every iteration
+		den = delta_x;
+		num = delta_x / 2;
+		numadd = delta_y;
+		numpixels = delta_x;							// There are more x-values than y-values
+	}
+	else																// There is at least one y-value for every x-value
+	{
+		checkY = false;
+		xinc2 = 0;												// Don't change the x for every iteration
+		yinc1 = 0;												// Don't change the y when numerator >= denominator
+		den = delta_y;
+		num = delta_y / 2;
+		numadd = delta_x;
+		numpixels = delta_y;							// There are more y-values than x-values
+	}
+
+	Real nsInv = 1.0f / numpixels;
+	Real z = pos.z;
+	Real dz = posOther.z - z;
+	Real zinc = dz * nsInv;
+
+	Bool result = true;
+	const UnsignedByte* data = logicHeightMap->getDataPtr();
+	Int xExtent = logicHeightMap->getXExtent();
+	Int yExtent = logicHeightMap->getYExtent();
+	for (Int curpixel = 0; curpixel < numpixels; curpixel++)
+	{
+		if (x < 0 || 
+				y < 0 ||
+				x >= xExtent-1 ||
+				y >= yExtent-1)
+		{
+			// once we go off the map, we're done
+			break;
+		}
+
+		Int idx = x + y*xExtent;
+		float height = data[idx];
+		height = __max(height, data[idx + 1]);
+		height = __max(height, data[idx + xExtent]);
+		height = __max(height, data[idx + xExtent + 1]);
+		height *= MAP_HEIGHT_SCALE;
+
+		// if terrainHeight > z, we can't see, so punt.
+		// add a little fudge to account for slop.
+		const Real LOS_FUDGE = 0.5f;
+		if (height > z + LOS_FUDGE)
+		{
+			result = false;
+			break;
+		}
+
+		// we're above the max height of the terrain and still looking up, so we're done.
+		// (don't bother for reverse test, since that doesn't generally happen)
+		if (z >= getMaxHeight() && zinc > 0.0f)
+		{
+			break;
+		}
+
+		z += zinc;
+
+		// continue with the maintenance.
+		num += numadd;										// Increase the numerator by the top of the fraction
+		if (num >= den)										// Check if numerator >= denominator
+		{
+			num -= den;											// Calculate the new numerator value
+			x += xinc1;											// Change the x as appropriate
+			y += yinc1;											// Change the y as appropriate
+		}
+		x += xinc2;												// Change the x as appropriate
+		y += yinc2;												// Change the y as appropriate
+	}
+	
+	return result;
+
+#else
+
+	// walk a line from obj to objOther and
+	// find the highest point in between 'em. while
+	// we're doing this, also estimate the point on the
+	// line at the same x,y as the high-terrain-point.
+
+	Real fx = pos.x;
+	Real fy = pos.y;
+	Real fz = pos.z;
+	Real fdx = posOther.x - fx;
+	Real fdy = posOther.y - fy;
+	Real fdz = posOther.z - fz;
+
+	// What's the largest step size that will be accurate enough?
+	// Currently we use a step size of about 2 "feet", which
+	// seems acceptable accuracy. If performance here is inadequate,
+	// we can try increasing the step size, but be sure to retest
+	// accuracy.
+	Real len = ceilf(sqrtf(fdx*fdx + fdy*fdy));
+	const Real STEP_LEN = 2.0f;
+	Int numSteps = REAL_TO_INT_CEIL(len / STEP_LEN);
+	if (numSteps < 1) numSteps = 1;
+	Real fnsInv = 1.0f / numSteps;
+	Real fxinc = fdx * fnsInv;
+	Real fyinc = fdy * fnsInv;
+	Real fzinc = fdz * fnsInv;
+	while (numSteps--)
+	{
+		Real terrainHeight = getHeightMapHeight( fx, fy, NULL );
+
+		// if terrainHeight > fz, we can't see, so punt.
+		// add a little fudge to account for slop.
+		const Real LOS_FUDGE = 0.5f;
+		if (terrainHeight > fz + LOS_FUDGE)
+		{
+			return false;
+		}
+
+		// we're above the max height of the terrain and still looking up, so we're done.
+		// (don't bother for reverse test, since that doesn't generally happen)
+		if (fz >= getMaxHeight() && fzinc > 0.0f)
+		{
+			return true;
+		}
+
+		fx += fxinc;
+		fy += fyinc;
+		fz += fzinc;
+
+	}
+
+	return true;
+#endif
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::getMaxCellHeight
+//=============================================================================
+/** Returns maximum height of the 4 corners containing the given point */
+//=============================================================================
+Real BaseHeightMapRenderObjClass::getMaxCellHeight(Real x, Real y) const
+{
+	float p0,p1,p2,p3;
+	float height;
+	WorldHeightMap *logicHeightMap = m_map;
+	// BFME rereads the owning map while sampling instead of folding every access into this local.
+	_ReadWriteBarrier();
+
+	//	3-----2
+	//  |    /|
+	//  |  /  |
+	//	|/    |
+	//  0-----1
+	//Find surrounding grid points
+
+	if (logicHeightMap == NULL)
+	{	//sample point is not on the heightmap
+		return 0.0f;	//return default height
+	}
+
+	Int offset = 1;
+	Int borderSize = m_map->getBorderSizeInline();
+	Int iX = x/MAP_XY_FACTOR;
+	Int iY = y/MAP_XY_FACTOR;
+	iX += borderSize;
+	iY += borderSize;
+	if (iX<0) iX = 0;
+	if (iY<0) iY = 0;
+	if (iX >= (logicHeightMap->getXExtent()-1)) {
+		iX = logicHeightMap->getXExtent()-2;
+	}
+	if (iY >= (logicHeightMap->getYExtent()-1)) {
+		iY = logicHeightMap->getYExtent()-2;
+	}
+	register UnsignedShort *data;
+	_ReadWriteBarrier();
+	data = reinterpret_cast<UnsignedShort *>(logicHeightMap->getDataPtr());
+	Int xExtent = m_map->getXExtent();
+	p0=data[iX+iY*xExtent]*0.0390625f;
+	p1=data[(iX+offset)+iY*xExtent]*0.0390625f;
+	p2=data[(iX+offset)+(iY+offset)*xExtent]*0.0390625f;
+	p3=data[iX+(iY+offset)*xExtent]*0.0390625f;
+
+	height=p0;
+	height=__max(height,p1);
+	height=__max(height,p2);
+	height=__max(height,p3);
+
+	return height;
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::isCliffCell
+//=============================================================================
+/** Returns true if the cell containing the point is a cliff cell */
+//=============================================================================
+// ?isCliffCell@BaseHeightMapRenderObjClass@@QAE_NMM@Z present-unmatched
+Bool BaseHeightMapRenderObjClass::isCliffCell(Real x, Real y)
+{
+
+	if (m_map == NULL)
+	{	//sample point is not on the heightmap
+		return false;
+	}
+
+  WorldHeightMap *logicHeightMap = TheTerrainVisual?TheTerrainVisual->getLogicHeightMap():m_map;
+
+	Int iX = x/MAP_XY_FACTOR;
+	Int iY = y/MAP_XY_FACTOR;
+	iX += logicHeightMap->getBorderSizeInline();
+	iY += logicHeightMap->getBorderSizeInline();
+	if (iX<0) iX = 0;
+	if (iY<0) iY = 0;
+	if (iX >= (logicHeightMap->getXExtent()-1)) {
+		iX = logicHeightMap->getXExtent()-2;
+	}
+	if (iY >= (logicHeightMap->getYExtent()-1)) {
+		iY = logicHeightMap->getYExtent()-2;
+	}
+	return logicHeightMap->getCliffState(iX, iY);
+}
+
+//=============================================================================
+//=============================================================================
+// ?showAsVisibleCliff@BaseHeightMapRenderObjClass@@QBE_NHH@Z present-unmatched
+Bool BaseHeightMapRenderObjClass::showAsVisibleCliff(Int xIndex, Int yIndex) const
+{
+	if (m_map == NULL)
+	{	
+		return false;
+	}
+
+	Int xSize = m_map->getXExtent();
+
+	return m_showAsVisibleCliff[xIndex + yIndex * xSize];
+}
+
+//=============================================================================
+//=============================================================================
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapEvaluateVisibleCliff.cpp
+// ?evaluateAsVisibleCliff@BaseHeightMapRenderObjClass@@ present-unmatched
+Bool BaseHeightMapRenderObjClass::evaluateAsVisibleCliff(Int xIndex, Int yIndex, Real valuesGreaterThanRad)
+{
+	// This one never changes, so don't bother recomputing it.
+	static const Real distance[4] = 
+	{
+		0.0f,
+		1.0 * MAP_XY_FACTOR,
+		sqrt(2.0f) * MAP_XY_FACTOR,
+		1.0 * MAP_XY_FACTOR,
+	};
+
+	// Note: getHeight will protect us from going out of bounds by returning 0 if we give it
+	// a value outside of its bounds.
+	UnsignedByte bytes[4] = 
+	{ 
+		m_map->getHeight(xIndex + 0, yIndex + 0), 
+		m_map->getHeight(xIndex + 1, yIndex + 0), 
+		m_map->getHeight(xIndex + 1, yIndex + 1), 
+		m_map->getHeight(xIndex + 0, yIndex + 1),
+	};
+
+	Real heights[4] = 
+	{
+		INT_TO_REAL(bytes[0]) * MAP_HEIGHT_SCALE,
+		INT_TO_REAL(bytes[1]) * MAP_HEIGHT_SCALE,
+		INT_TO_REAL(bytes[2]) * MAP_HEIGHT_SCALE,
+		INT_TO_REAL(bytes[3]) * MAP_HEIGHT_SCALE,
+	};
+
+	Bool anyImpassable = FALSE;	
+
+	for (Int i = 1; i < 4 && !anyImpassable; ++i) {
+		if (fabs((heights[i] - heights[0]) / distance[i]) > valuesGreaterThanRad) {
+			anyImpassable = TRUE;
+		}
+	}
+
+	return anyImpassable;
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::oversizeTerrain
+//=============================================================================
+/** Sets the terrain oversize amount. */
+//=============================================================================
+void BaseHeightMapRenderObjClass::oversizeTerrain(Int tilesToOversize) 
+{
+	// Not needed with flat version. [3/20/2003]
+}
+
+
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::Get_Obj_Space_Bounding_Sphere
+//=============================================================================
+/** WW3D method that returns object bounding sphere used in frustum culling*/
+//=============================================================================
+// ?Get_Obj_Space_Bounding_Sphere@BaseHeightMapRenderObjClass@@UBEXAAVSphereClass@@@Z
+void BaseHeightMapRenderObjClass::Get_Obj_Space_Bounding_Sphere(SphereClass &sphere) const
+{
+	Int x = 0; Int y = 0;
+	if (m_map) {
+		x = m_map->getXExtent();
+		y = m_map->getYExtent();
+	}
+	Vector3 ObjSpaceCenter((float)x*0.5f*MAP_XY_FACTOR,(float)y*0.5f*MAP_XY_FACTOR,(float)m_minHeight+(m_maxHeight-m_minHeight)*0.5f);
+	float length = ObjSpaceCenter.Length();
+
+	if (m_map) {
+		ObjSpaceCenter.X += *(Int *)((char *)m_map + 0x120e0)*MAP_XY_FACTOR;
+		ObjSpaceCenter.Y += *(Int *)((char *)m_map + 0x120e4)*MAP_XY_FACTOR;
+	}
+	sphere.Init(ObjSpaceCenter, length);
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::Get_Obj_Space_Bounding_Box
+//=============================================================================
+/** WW3D method that returns object bounding box used in collision detection*/
+//=============================================================================
+// ?Get_Obj_Space_Bounding_Box@BaseHeightMapRenderObjClass@@UBEXAAVAABoxClass@@@Z
+void BaseHeightMapRenderObjClass::Get_Obj_Space_Bounding_Box(AABoxClass &box) const
+{
+	WorldHeightMap *map = *(WorldHeightMap **)((char *)this + 0x2ff4);
+	Int x = 0;
+	Int y = 0;
+	if (map != NULL)
+	{
+		x = *(Int *)((char *)map + 0x08);
+		y = *(Int *)((char *)map + 0x0c);
+	}
+
+	Vector3 minPt(0, 0, *(const Real *)((const char *)this + 0x300c));
+	Vector3 maxPt((Real)x * MAP_XY_FACTOR, (Real)y * MAP_XY_FACTOR,
+		*(const Real *)((const char *)this + 0x3010));
+	MinMaxAABoxClass minMaxBox(minPt, maxPt);
+	box.Init(minMaxBox);
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Get the 3D extent of the terrain visible through the camera.  Return value
+	is false if no part of terrain is visible.  This function returns a worse
+	case bounding volume based on lowest/highest points in entire terrain.  It
+	does not optimize the volume to heights actually visible.  Unlike some of
+	the other methods, this function is guaranteed not to miss any visible
+	polygons.  The ignoreMaxHeight flag is used to return a box that uses the
+	camera position as the maximum height instead of the terrain - good for getting
+	a volume enclosing things that can float above terrain.
+ */
+//-------------------------------------------------------------------------------------------------
+// ?getMaximumVisibleBox@BaseHeightMapRenderObjClass@@QAE_NABVFrustumClass@@PAVAABoxClass@@_N@Z
+// Body in BaseHeightMap_getMaximumVisibleBox.cpp (exact 1439B retail).
+// Keep AABoxClass::Init(Vector3*,int) COMDAT in this TU (was only referenced by the
+// old C++ getMaximumVisibleBox body; 869B matched at 0x006C9EF0).
+void (AABoxClass::*_BaseHeightMap_Force_AABox_Init)(Vector3 *, int) = &AABoxClass::Init;
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::Class_ID
+//=============================================================================
+/** returns the class id, so the scene can tell what kind of render object it has. */
+//=============================================================================
+// ?Class_ID@BaseHeightMapRenderObjClass@@UBEHXZ present-unmatched
+Int BaseHeightMapRenderObjClass::Class_ID(void) const
+{
+	return RenderObjClass::CLASSID_TILEMAP;
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::Clone
+//=============================================================================
+/** Not used, but required virtual method. */
+//=============================================================================
+// ?Clone@BaseHeightMapRenderObjClass@@UBEPAVRenderObjClass@@XZ
+RenderObjClass *	 BaseHeightMapRenderObjClass::Clone(void) const
+{
+	assert(false);
+	return NULL;
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::loadRoadsAndBridges
+//=============================================================================
+/** Loads the roads from the map objects. */
+//=============================================================================
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_loadRoadsAndBridges.cpp
+// ?loadRoadsAndBridges@BaseHeightMapRenderObjClass@@QAEXPAVW3DTerrainLogic@@_N@Z present-unmatched
+void BaseHeightMapRenderObjClass::loadRoadsAndBridges(W3DTerrainLogic *pTerrainLogic, Bool saveGame)
+{	
+	if (DX8Wrapper::_Get_D3D_Device8() && (DX8Wrapper::_Get_D3D_Device8()->TestCooperativeLevel()) != D3D_OK)
+		return;	//device not ready to render anything
+
+#ifdef DO_ROADS
+	if (m_roadBuffer) {
+		m_roadBuffer->loadRoads();
+	}
+#endif
+	if (m_bridgeBuffer) {
+		m_bridgeBuffer->loadBridges(pTerrainLogic, saveGame);
+	}
+}
+
+// ============================================================================
+// BaseHeightMapRenderObjClass::worldBuilderUpdateBridgeTowers
+// ============================================================================
+/** The worldbuilder has it's own method here to update the visual representation
+	* of the bridge towers */
+// ============================================================================
+// ?worldBuilderUpdateBridgeTowers@BaseHeightMapRenderObjClass@@QAEXPAVW3DAssetManager@@PAVSimpleSceneClass@@@Z present-unmatched
+void BaseHeightMapRenderObjClass::worldBuilderUpdateBridgeTowers( W3DAssetManager *assetManager,
+																															SimpleSceneClass *scene )
+{
+
+	if( m_bridgeBuffer )
+		m_bridgeBuffer->worldBuilderUpdateBridgeTowers( assetManager, scene );
+
+}
+
+void BaseHeightMapRenderObjClass::setShoreLineDetail(void)
+{
+	WorldHeightMap *retailMap = *reinterpret_cast<WorldHeightMap **>(
+		reinterpret_cast<unsigned char *>(this) + 0x2ff4);
+	if (!retailMap)
+		return;
+
+	Int m_mapDX = *reinterpret_cast<Int *>(reinterpret_cast<unsigned char *>(retailMap) + 0x8);
+	Int m_mapDY = *reinterpret_cast<Int *>(reinterpret_cast<unsigned char *>(retailMap) + 0xc);
+
+	//Find all shoreline tiles so they can get extra alpha blend
+	updateShorelineTiles(0, 0, m_mapDX - 1, m_mapDY - 1, retailMap);
+}
+
+/** This is an extra pre-process of shoreline data to make it more efficient for runtime culling.  It is not
+used by the world builder since it modifies the terrain too frequently.  The function also assumes that updateShoreLineTiles()
+was previously called and inserted the tiles in the correctly sorted order.
+WARNING!!! Current version assumes we always sort the entire map!  So don't set parameters to partial updates! */
+// ?recordShoreLineSortInfos@BaseHeightMapRenderObjClass@@QAEXXZ present-unmatched
+void BaseHeightMapRenderObjClass::recordShoreLineSortInfos(void)
+{
+	if (TheGlobalData->m_isWorldBuilder || !m_shoreLineTilePositions || !m_map)
+		return;	//we must be in the builder so don't sort.
+
+	//Find how many sortinfos we need.
+	Int shoreLineSortInfosSize = m_map->getXExtent()-1;
+	Bool shoreLineSortInfosXMajor=TRUE;
+
+	if (shoreLineSortInfosSize <= (m_map->getYExtent()-1))
+	{	shoreLineSortInfosSize = m_map->getYExtent()-1;
+		shoreLineSortInfosXMajor=FALSE;
+	}
+
+	m_shoreLineSortInfosXMajor= shoreLineSortInfosXMajor;
+
+	//Check if we need to allocate memory
+	if (!m_shoreLineSortInfos || shoreLineSortInfosSize > m_shoreLineSortInfosSize)
+	{	
+		if (m_shoreLineSortInfos)
+			delete [] m_shoreLineSortInfos;	//old buffer was too small.
+
+		//Find the major map axis (having the most tiles).
+		m_shoreLineSortInfosSize = shoreLineSortInfosSize;
+
+		m_shoreLineSortInfos = NEW shoreLineTileSortInfo[m_shoreLineSortInfosSize];
+	}
+
+	//Clear the sort infos
+	memset(m_shoreLineSortInfos,0,sizeof(shoreLineTileSortInfo)*m_shoreLineSortInfosSize);
+
+	if (m_shoreLineSortInfosXMajor)	//map is wider than taller, so tiles are already sorted by x
+	{
+		//scan all the tiles and record batches of tiles using same x value.
+		m_shoreLineTileSortMaxCoordinate=m_shoreLineTileSortMinCoordinate=(m_shoreLineTilePositions[0].m_xy & 0xffff);
+		for (Int i=0; i<m_numShoreLineTiles; i++)
+		{
+			Int x=(m_shoreLineTilePositions[i].m_xy & 0xffff);
+		
+			shoreLineTileSortInfo *sortInfo=&m_shoreLineSortInfos[x];
+
+			if (x > m_shoreLineTileSortMaxCoordinate)
+				m_shoreLineTileSortMaxCoordinate=x;
+
+			//find number of tiles in a row using same y coordinate.
+			Int j=i+1;
+			Int minY,maxY;
+			minY=maxY=m_shoreLineTilePositions[i].m_xy >> 16;
+
+			while ((m_shoreLineTilePositions[j].m_xy & 0xffff) == x && j < m_numShoreLineTiles)
+			{	//keep track of highest y coordinate.
+				Int y = m_shoreLineTilePositions[j].m_xy >> 16;
+				if (y > maxY)
+					maxY=y;
+				j++;
+			}
+
+			sortInfo->tileStartIndex=i;
+			sortInfo->numTiles=j-i;
+			sortInfo->minTileCoordinate=minY;
+			sortInfo->maxTileCoordinate=maxY;
+			i += sortInfo->numTiles-1;	//skip tiles we just scanned.
+		}
+	}
+	else	//map is taller than wider so tiles are already sorted by y
+	{
+		//scan all the tiles and record batches of tiles using same y value.
+		m_shoreLineTileSortMaxCoordinate=m_shoreLineTileSortMinCoordinate=(m_shoreLineTilePositions[0].m_xy >> 16);
+		for (Int i=0; i<m_numShoreLineTiles; i++)
+		{
+			Int y=(m_shoreLineTilePositions[i].m_xy >> 16);
+		
+			shoreLineTileSortInfo *sortInfo=&m_shoreLineSortInfos[y];
+
+			if (y > m_shoreLineTileSortMaxCoordinate)
+				m_shoreLineTileSortMaxCoordinate=y;
+
+			//find number of tiles in a row using same y coordinate.
+			Int j=i+1;
+			Int minX,maxX;
+			minX=maxX=m_shoreLineTilePositions[i].m_xy & 0xffff;
+
+			while ((m_shoreLineTilePositions[j].m_xy >> 16) == y && j < m_numShoreLineTiles)
+			{	//keep track of highest x coordinate.
+				Int x = m_shoreLineTilePositions[j].m_xy & 0xffff;
+				if (x > maxX)
+					maxX=x;
+				j++;
+			}
+
+			sortInfo->tileStartIndex=i;
+			sortInfo->numTiles=j-i;
+			sortInfo->minTileCoordinate=minX;
+			sortInfo->maxTileCoordinate=maxX;
+			i += sortInfo->numTiles-1;	//skip tiles we just scanned.
+		}
+	}
+}
+
+// ?updateShorelineTile@BaseHeightMapRenderObjClass@@QAEXHHHPAVWorldHeightMap@@@Z present-unmatched
+void BaseHeightMapRenderObjClass::updateShorelineTile(Int i, Int j, Int border, WorldHeightMap *pMap)
+{
+	Int waterSide;
+	Real waterZ0,waterZ1,waterZ2,waterZ3;
+	Real terrainZ0, terrainZ1, terrainZ2, terrainZ3;
+
+	//Figure out maximum depth of water before we reach the m_minWaterOpacity value.  Depths greater than this don't need
+	//custom shoreline tiles because they will get their opacity from the default value stored in the frame buffer during
+	//a screen clear operation.
+	Real transparentDepth=TheWaterTransparency->m_transparentWaterDepth*TheWaterTransparency->m_minWaterOpacity;
+	Real depthScaleFactor = 1.0f/transparentDepth;
+
+	Real X0=(i-border)*MAP_XY_FACTOR;
+	Real Y0=(j-border)*MAP_XY_FACTOR;
+	waterSide=(waterZ0=TheWaterRenderObj->getWaterHeight(X0,Y0)) > ((terrainZ0=MAP_HEIGHT_SCALE*pMap->getHeight(i,j)));
+	Real X1=(i-border+1)*MAP_XY_FACTOR;
+	Real Y1=(j-border+1)*MAP_XY_FACTOR;
+	waterSide |=((waterZ1=TheWaterRenderObj->getWaterHeight(X1,Y0)) > ((terrainZ1=MAP_HEIGHT_SCALE*pMap->getHeight(i+1,j)))) << 1;
+	waterSide |=((waterZ2=TheWaterRenderObj->getWaterHeight(X1,Y1)) > ((terrainZ2=MAP_HEIGHT_SCALE*pMap->getHeight(i+1,j+1)))) << 2;
+	waterSide |=((waterZ3=TheWaterRenderObj->getWaterHeight(X0,Y1)) > ((terrainZ3=MAP_HEIGHT_SCALE*pMap->getHeight(i,j+1)))) << 3;
+
+	if (!waterSide || (waterZ0*waterZ1*waterZ2*waterZ3) <= 0)
+		return;	//all verts are on positive (surface) side of water so don't need blending.  Or one of them is outside the water plane bounds (waterHeight <= 0!)
+
+	//Check if mix of under/over water vertices or some vertices within depth fade region.
+	if (waterSide < 0xf || (waterZ0 - terrainZ0) < transparentDepth ||
+		(waterZ1 - terrainZ1) < transparentDepth || (waterZ2 - terrainZ2) < transparentDepth
+		|| (waterZ3 - terrainZ3) < transparentDepth)
+	{	//add tile to set that needs shoreline blending.
+		if (m_numShoreLineTiles >= m_shoreLineTilePositionsSize)
+		{	//no more room to store extra blend tiles so enlarge the buffer.
+			shoreLineTileInfo *tempPositions=NEW shoreLineTileInfo[m_shoreLineTilePositionsSize+512];
+			memcpy(tempPositions, m_shoreLineTilePositions, m_shoreLineTilePositionsSize*sizeof(shoreLineTileInfo));
+			delete [] m_shoreLineTilePositions;
+			//enlarge by more tiles to reduce memory trashing
+			m_shoreLineTilePositions = tempPositions;
+			m_shoreLineTilePositionsSize += 512;
+		}
+		//Pack x and y position into single integer since maps are limited in size
+		shoreLineTileInfo *shoreInfo=&m_shoreLineTilePositions[m_numShoreLineTiles];
+		shoreInfo->m_xy=i | (j <<16);
+		shoreInfo->verts[0]=X0;	shoreInfo->verts[1]=Y0; shoreInfo->verts[2]=terrainZ0;
+		shoreInfo->t0=(waterZ0 - terrainZ0)*depthScaleFactor;
+		shoreInfo->verts[3]=X1;	shoreInfo->verts[4]=Y0; shoreInfo->verts[5]=terrainZ1;
+		shoreInfo->t1=(waterZ1 - terrainZ1)*depthScaleFactor;
+		shoreInfo->verts[6]=X1;	shoreInfo->verts[7]=Y1; shoreInfo->verts[8]=terrainZ2;
+		shoreInfo->t2=(waterZ2 - terrainZ2)*depthScaleFactor;
+		shoreInfo->verts[9]=X0;	shoreInfo->verts[10]=Y1; shoreInfo->verts[11]=terrainZ3;
+		shoreInfo->t3=(waterZ3 - terrainZ3)*depthScaleFactor;
+
+		m_numShoreLineTiles++;
+	}
+}
+
+/**Scan through our map and record all tiles which cross a water plane and are within visible depth under
+water.*/
+// ?updateShorelineTiles@BaseHeightMapRenderObjClass@@QAEXHHHHPAVWorldHeightMap@@@Z matched 1249 bytes (Open-BFME5)
+__declspec(naked) void BaseHeightMapRenderObjClass::updateShorelineTiles(Int, Int, Int, Int, WorldHeightMap *)
+{
+	__asm
+	{
+		__emit 0x83;
+		__emit 0xec;
+		__emit 0x40;
+		__emit 0x53;
+		__emit 0x55;
+		__emit 0x56;
+		__emit 0x8b;
+		__emit 0x74;
+		__emit 0x24;
+		__emit 0x50;
+		__emit 0x8b;
+		__emit 0xd9;
+		__emit 0x8b;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x60;
+		__emit 0x8b;
+		__emit 0x41;
+		__emit 0x10;
+		__emit 0x33;
+		__emit 0xed;
+		__emit 0x3b;
+		__emit 0xf5;
+		__emit 0x57;
+		__emit 0x89;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x44;
+		__emit 0x7d;
+		__emit 0x06;
+		__emit 0x89;
+		__emit 0x6c;
+		__emit 0x24;
+		__emit 0x54;
+		__emit 0x8b;
+		__emit 0xf5;
+		__emit 0x8b;
+		__emit 0x7c;
+		__emit 0x24;
+		__emit 0x58;
+		__emit 0x3b;
+		__emit 0xfd;
+		__emit 0x7d;
+		__emit 0x06;
+		__emit 0x89;
+		__emit 0x6c;
+		__emit 0x24;
+		__emit 0x58;
+		__emit 0x8b;
+		__emit 0xfd;
+		__emit 0x8b;
+		__emit 0x41;
+		__emit 0x08;
+		__emit 0x8b;
+		__emit 0x54;
+		__emit 0x24;
+		__emit 0x5c;
+		__emit 0x48;
+		__emit 0x3b;
+		__emit 0xd0;
+		__emit 0x7e;
+		__emit 0x04;
+		__emit 0x89;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x5c;
+		__emit 0x8b;
+		__emit 0x49;
+		__emit 0x0c;
+		__emit 0x8d;
+		__emit 0x41;
+		__emit 0xff;
+		__emit 0x39;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x60;
+		__emit 0x7e;
+		__emit 0x04;
+		__emit 0x89;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x60;
+		__emit 0x39;
+		__emit 0xab;
+		__emit 0xc0;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x75;
+		__emit 0x1d;
+		__emit 0x68;
+		__emit 0x00;
+		__emit 0x40;
+		__emit 0x01;
+		__emit 0x00;
+		__emit 0xe8;
+		__emit 0x5c;
+		__emit 0xa8;
+		__emit 0x1b;
+		__emit 0x00;
+		__emit 0x83;
+		__emit 0xc4;
+		__emit 0x04;
+		__emit 0x89;
+		__emit 0x83;
+		__emit 0xc0;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xc7;
+		__emit 0x83;
+		__emit 0xc8;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x10;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x39;
+		__emit 0xab;
+		__emit 0xc4;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x7e;
+		__emit 0x6f;
+		__emit 0x33;
+		__emit 0xd2;
+		__emit 0x8b;
+		__emit 0x8b;
+		__emit 0xc0;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x04;
+		__emit 0x11;
+		__emit 0x8d;
+		__emit 0x3c;
+		__emit 0x11;
+		__emit 0x8b;
+		__emit 0xc8;
+		__emit 0x81;
+		__emit 0xe1;
+		__emit 0xff;
+		__emit 0xff;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xc1;
+		__emit 0xf8;
+		__emit 0x10;
+		__emit 0x3b;
+		__emit 0xce;
+		__emit 0x7c;
+		__emit 0x40;
+		__emit 0x3b;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x5c;
+		__emit 0x7d;
+		__emit 0x3a;
+		__emit 0x3b;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x58;
+		__emit 0x7c;
+		__emit 0x34;
+		__emit 0x3b;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x60;
+		__emit 0x7d;
+		__emit 0x2e;
+		__emit 0x8b;
+		__emit 0x83;
+		__emit 0xc4;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x2b;
+		__emit 0xc5;
+		__emit 0x48;
+		__emit 0x8d;
+		__emit 0x0c;
+		__emit 0x80;
+		__emit 0xc1;
+		__emit 0xe1;
+		__emit 0x02;
+		__emit 0x8b;
+		__emit 0xc1;
+		__emit 0xc1;
+		__emit 0xe9;
+		__emit 0x02;
+		__emit 0x8d;
+		__emit 0x77;
+		__emit 0x14;
+		__emit 0xf3;
+		__emit 0xa5;
+		__emit 0x8b;
+		__emit 0xc8;
+		__emit 0x83;
+		__emit 0xe1;
+		__emit 0x03;
+		__emit 0xf3;
+		__emit 0xa4;
+		__emit 0xff;
+		__emit 0x8b;
+		__emit 0xc4;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x74;
+		__emit 0x24;
+		__emit 0x54;
+		__emit 0x4d;
+		__emit 0x83;
+		__emit 0xea;
+		__emit 0x14;
+		__emit 0x8b;
+		__emit 0x83;
+		__emit 0xc4;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x45;
+		__emit 0x83;
+		__emit 0xc2;
+		__emit 0x14;
+		__emit 0x3b;
+		__emit 0xe8;
+		__emit 0x7c;
+		__emit 0x97;
+		__emit 0x8b;
+		__emit 0x7c;
+		__emit 0x24;
+		__emit 0x58;
+		__emit 0xd9;
+		__emit 0x05;
+		__emit 0x50;
+		__emit 0x53;
+		__emit 0x07;
+		__emit 0x01;
+		__emit 0xd9;
+		__emit 0x83;
+		__emit 0x18;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xda;
+		__emit 0xe9;
+		__emit 0xdf;
+		__emit 0xe0;
+		__emit 0xf6;
+		__emit 0xc4;
+		__emit 0x44;
+		__emit 0x0f;
+		__emit 0x8b;
+		__emit 0xd0;
+		__emit 0x03;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x0d;
+		__emit 0xc8;
+		__emit 0xd5;
+		__emit 0x2e;
+		__emit 0x01;
+		__emit 0x8a;
+		__emit 0x81;
+		__emit 0x8c;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x84;
+		__emit 0xc0;
+		__emit 0x0f;
+		__emit 0x84;
+		__emit 0xbc;
+		__emit 0x03;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xd9;
+		__emit 0x83;
+		__emit 0x1c;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x60;
+		__emit 0x3b;
+		__emit 0xf8;
+		__emit 0xd8;
+		__emit 0x8b;
+		__emit 0x18;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x89;
+		__emit 0x7c;
+		__emit 0x24;
+		__emit 0x28;
+		__emit 0xd9;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x58;
+		__emit 0xd9;
+		__emit 0x05;
+		__emit 0x34;
+		__emit 0x53;
+		__emit 0x07;
+		__emit 0x01;
+		__emit 0xd8;
+		__emit 0x74;
+		__emit 0x24;
+		__emit 0x58;
+		__emit 0xd9;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x20;
+		__emit 0x0f;
+		__emit 0x8d;
+		__emit 0x8e;
+		__emit 0x03;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x2b;
+		__emit 0x7c;
+		__emit 0x24;
+		__emit 0x44;
+		__emit 0x89;
+		__emit 0x7c;
+		__emit 0x24;
+		__emit 0x40;
+		__emit 0x3b;
+		__emit 0x74;
+		__emit 0x24;
+		__emit 0x5c;
+		__emit 0x89;
+		__emit 0x74;
+		__emit 0x24;
+		__emit 0x3c;
+		__emit 0x0f;
+		__emit 0x8d;
+		__emit 0x5a;
+		__emit 0x03;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xdb;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x40;
+		__emit 0x8b;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x44;
+		__emit 0x47;
+		__emit 0x89;
+		__emit 0x7c;
+		__emit 0x24;
+		__emit 0x38;
+		__emit 0xd8;
+		__emit 0x0d;
+		__emit 0x74;
+		__emit 0x5c;
+		__emit 0x07;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0xee;
+		__emit 0x2b;
+		__emit 0xe8;
+		__emit 0x89;
+		__emit 0x6c;
+		__emit 0x24;
+		__emit 0x24;
+		__emit 0xd9;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x48;
+		__emit 0xdb;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x38;
+		__emit 0xd8;
+		__emit 0x0d;
+		__emit 0x74;
+		__emit 0x5c;
+		__emit 0x07;
+		__emit 0x01;
+		__emit 0xd9;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x4c;
+		__emit 0xeb;
+		__emit 0x04;
+		__emit 0x8b;
+		__emit 0x6c;
+		__emit 0x24;
+		__emit 0x24;
+		__emit 0xdb;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x24;
+		__emit 0x8b;
+		__emit 0x7c;
+		__emit 0x24;
+		__emit 0x48;
+		__emit 0x8b;
+		__emit 0x0d;
+		__emit 0x7c;
+		__emit 0x6d;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x57;
+		__emit 0xd8;
+		__emit 0x0d;
+		__emit 0x74;
+		__emit 0x5c;
+		__emit 0x07;
+		__emit 0x01;
+		__emit 0xd9;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x3c;
+		__emit 0x8b;
+		__emit 0x74;
+		__emit 0x24;
+		__emit 0x3c;
+		__emit 0x56;
+		__emit 0xe8;
+		__emit 0x6f;
+		__emit 0x5c;
+		__emit 0x96;
+		__emit 0xff;
+		__emit 0xd9;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x10;
+		__emit 0x8b;
+		__emit 0x0d;
+		__emit 0x7c;
+		__emit 0x6d;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x45;
+		__emit 0x89;
+		__emit 0x6c;
+		__emit 0x24;
+		__emit 0x38;
+		__emit 0xdb;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x38;
+		__emit 0x57;
+		__emit 0xd8;
+		__emit 0x0d;
+		__emit 0x74;
+		__emit 0x5c;
+		__emit 0x07;
+		__emit 0x01;
+		__emit 0xd9;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x3c;
+		__emit 0x8b;
+		__emit 0x7c;
+		__emit 0x24;
+		__emit 0x3c;
+		__emit 0x57;
+		__emit 0xe8;
+		__emit 0x47;
+		__emit 0x5c;
+		__emit 0x96;
+		__emit 0xff;
+		__emit 0xd9;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x14;
+		__emit 0x8b;
+		__emit 0x6c;
+		__emit 0x24;
+		__emit 0x4c;
+		__emit 0x8b;
+		__emit 0x0d;
+		__emit 0x7c;
+		__emit 0x6d;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x55;
+		__emit 0x57;
+		__emit 0xe8;
+		__emit 0x32;
+		__emit 0x5c;
+		__emit 0x96;
+		__emit 0xff;
+		__emit 0xd9;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x18;
+		__emit 0x8b;
+		__emit 0x0d;
+		__emit 0x7c;
+		__emit 0x6d;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x55;
+		__emit 0x56;
+		__emit 0xe8;
+		__emit 0x21;
+		__emit 0x5c;
+		__emit 0x96;
+		__emit 0xff;
+		__emit 0xd9;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x1c;
+		__emit 0x8b;
+		__emit 0x54;
+		__emit 0x24;
+		__emit 0x64;
+		__emit 0x8b;
+		__emit 0x4a;
+		__emit 0x08;
+		__emit 0x8b;
+		__emit 0x6c;
+		__emit 0x24;
+		__emit 0x28;
+		__emit 0x8b;
+		__emit 0x7c;
+		__emit 0x24;
+		__emit 0x3c;
+		__emit 0x8b;
+		__emit 0xc1;
+		__emit 0x0f;
+		__emit 0xaf;
+		__emit 0xc5;
+		__emit 0x03;
+		__emit 0xc7;
+		__emit 0x78;
+		__emit 0x12;
+		__emit 0x3b;
+		__emit 0x42;
+		__emit 0x20;
+		__emit 0x7d;
+		__emit 0x0d;
+		__emit 0x8b;
+		__emit 0x72;
+		__emit 0x24;
+		__emit 0x85;
+		__emit 0xf6;
+		__emit 0x74;
+		__emit 0x06;
+		__emit 0x66;
+		__emit 0x8b;
+		__emit 0x34;
+		__emit 0x46;
+		__emit 0xeb;
+		__emit 0x02;
+		__emit 0x33;
+		__emit 0xf6;
+		__emit 0x40;
+		__emit 0x0f;
+		__emit 0xb7;
+		__emit 0xf6;
+		__emit 0x89;
+		__emit 0x74;
+		__emit 0x24;
+		__emit 0x38;
+		__emit 0xdb;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x38;
+		__emit 0xd8;
+		__emit 0x0d;
+		__emit 0x3c;
+		__emit 0x65;
+		__emit 0x0f;
+		__emit 0x01;
+		__emit 0xd9;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x2c;
+		__emit 0x78;
+		__emit 0x12;
+		__emit 0x3b;
+		__emit 0x42;
+		__emit 0x20;
+		__emit 0x7d;
+		__emit 0x0d;
+		__emit 0x8b;
+		__emit 0x72;
+		__emit 0x24;
+		__emit 0x85;
+		__emit 0xf6;
+		__emit 0x74;
+		__emit 0x06;
+		__emit 0x66;
+		__emit 0x8b;
+		__emit 0x04;
+		__emit 0x46;
+		__emit 0xeb;
+		__emit 0x02;
+		__emit 0x33;
+		__emit 0xc0;
+		__emit 0x0f;
+		__emit 0xb7;
+		__emit 0xc0;
+		__emit 0x89;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x38;
+		__emit 0x8d;
+		__emit 0x45;
+		__emit 0x01;
+		__emit 0x0f;
+		__emit 0xaf;
+		__emit 0xc1;
+		__emit 0xdb;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x38;
+		__emit 0xd8;
+		__emit 0x0d;
+		__emit 0x3c;
+		__emit 0x65;
+		__emit 0x0f;
+		__emit 0x01;
+		__emit 0xd9;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x30;
+		__emit 0x8d;
+		__emit 0x0c;
+		__emit 0x38;
+		__emit 0x8d;
+		__emit 0x41;
+		__emit 0x01;
+		__emit 0x85;
+		__emit 0xc0;
+		__emit 0x7c;
+		__emit 0x12;
+		__emit 0x3b;
+		__emit 0x42;
+		__emit 0x20;
+		__emit 0x7d;
+		__emit 0x0d;
+		__emit 0x8b;
+		__emit 0x72;
+		__emit 0x24;
+		__emit 0x85;
+		__emit 0xf6;
+		__emit 0x74;
+		__emit 0x06;
+		__emit 0x66;
+		__emit 0x8b;
+		__emit 0x04;
+		__emit 0x46;
+		__emit 0xeb;
+		__emit 0x02;
+		__emit 0x33;
+		__emit 0xc0;
+		__emit 0x85;
+		__emit 0xc9;
+		__emit 0x0f;
+		__emit 0xb7;
+		__emit 0xc0;
+		__emit 0x89;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x38;
+		__emit 0xdb;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x38;
+		__emit 0xd8;
+		__emit 0x0d;
+		__emit 0x3c;
+		__emit 0x65;
+		__emit 0x0f;
+		__emit 0x01;
+		__emit 0xd9;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x34;
+		__emit 0x7c;
+		__emit 0x12;
+		__emit 0x3b;
+		__emit 0x4a;
+		__emit 0x20;
+		__emit 0x7d;
+		__emit 0x0d;
+		__emit 0x8b;
+		__emit 0x52;
+		__emit 0x24;
+		__emit 0x85;
+		__emit 0xd2;
+		__emit 0x74;
+		__emit 0x06;
+		__emit 0x66;
+		__emit 0x8b;
+		__emit 0x0c;
+		__emit 0x4a;
+		__emit 0xeb;
+		__emit 0x02;
+		__emit 0x33;
+		__emit 0xc9;
+		__emit 0x0f;
+		__emit 0xb7;
+		__emit 0xc9;
+		__emit 0x89;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x38;
+		__emit 0xdb;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x38;
+		__emit 0xd8;
+		__emit 0x0d;
+		__emit 0x3c;
+		__emit 0x65;
+		__emit 0x0f;
+		__emit 0x01;
+		__emit 0xd9;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x38;
+		__emit 0xd9;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x10;
+		__emit 0xd8;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x2c;
+		__emit 0xdf;
+		__emit 0xe0;
+		__emit 0xf6;
+		__emit 0xc4;
+		__emit 0x41;
+		__emit 0x75;
+		__emit 0x07;
+		__emit 0xb9;
+		__emit 0x01;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xeb;
+		__emit 0x02;
+		__emit 0x33;
+		__emit 0xc9;
+		__emit 0xd9;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x14;
+		__emit 0xd8;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x30;
+		__emit 0xdf;
+		__emit 0xe0;
+		__emit 0xf6;
+		__emit 0xc4;
+		__emit 0x41;
+		__emit 0x75;
+		__emit 0x07;
+		__emit 0xb8;
+		__emit 0x01;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xeb;
+		__emit 0x02;
+		__emit 0x33;
+		__emit 0xc0;
+		__emit 0xd9;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x18;
+		__emit 0x8d;
+		__emit 0x14;
+		__emit 0x00;
+		__emit 0xd8;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x34;
+		__emit 0x0b;
+		__emit 0xca;
+		__emit 0xdf;
+		__emit 0xe0;
+		__emit 0xf6;
+		__emit 0xc4;
+		__emit 0x41;
+		__emit 0x75;
+		__emit 0x07;
+		__emit 0xb8;
+		__emit 0x01;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xeb;
+		__emit 0x02;
+		__emit 0x33;
+		__emit 0xc0;
+		__emit 0xd9;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x1c;
+		__emit 0xc1;
+		__emit 0xe0;
+		__emit 0x02;
+		__emit 0xd8;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x38;
+		__emit 0x0b;
+		__emit 0xc8;
+		__emit 0xdf;
+		__emit 0xe0;
+		__emit 0xf6;
+		__emit 0xc4;
+		__emit 0x41;
+		__emit 0x75;
+		__emit 0x07;
+		__emit 0xb8;
+		__emit 0x01;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xeb;
+		__emit 0x02;
+		__emit 0x33;
+		__emit 0xc0;
+		__emit 0x8d;
+		__emit 0x14;
+		__emit 0xc5;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x0b;
+		__emit 0xca;
+		__emit 0x0f;
+		__emit 0x84;
+		__emit 0x48;
+		__emit 0x01;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xd9;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x1c;
+		__emit 0xd8;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x18;
+		__emit 0xd8;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x14;
+		__emit 0xd8;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x10;
+		__emit 0xd8;
+		__emit 0x1d;
+		__emit 0x50;
+		__emit 0x53;
+		__emit 0x07;
+		__emit 0x01;
+		__emit 0xdf;
+		__emit 0xe0;
+		__emit 0xf6;
+		__emit 0xc4;
+		__emit 0x41;
+		__emit 0x0f;
+		__emit 0x8b;
+		__emit 0x27;
+		__emit 0x01;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x83;
+		__emit 0xf9;
+		__emit 0x0f;
+		__emit 0x7c;
+		__emit 0x50;
+		__emit 0xd9;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x10;
+		__emit 0xd8;
+		__emit 0x64;
+		__emit 0x24;
+		__emit 0x2c;
+		__emit 0xd8;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x58;
+		__emit 0xdf;
+		__emit 0xe0;
+		__emit 0xf6;
+		__emit 0xc4;
+		__emit 0x05;
+		__emit 0x7b;
+		__emit 0x3d;
+		__emit 0xd9;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x14;
+		__emit 0xd8;
+		__emit 0x64;
+		__emit 0x24;
+		__emit 0x30;
+		__emit 0xd8;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x58;
+		__emit 0xdf;
+		__emit 0xe0;
+		__emit 0xf6;
+		__emit 0xc4;
+		__emit 0x05;
+		__emit 0x7b;
+		__emit 0x2a;
+		__emit 0xd9;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x18;
+		__emit 0xd8;
+		__emit 0x64;
+		__emit 0x24;
+		__emit 0x34;
+		__emit 0xd8;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x58;
+		__emit 0xdf;
+		__emit 0xe0;
+		__emit 0xf6;
+		__emit 0xc4;
+		__emit 0x05;
+		__emit 0x7b;
+		__emit 0x17;
+		__emit 0xd9;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x1c;
+		__emit 0xd8;
+		__emit 0x64;
+		__emit 0x24;
+		__emit 0x38;
+		__emit 0xd8;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x58;
+		__emit 0xdf;
+		__emit 0xe0;
+		__emit 0xf6;
+		__emit 0xc4;
+		__emit 0x05;
+		__emit 0x0f;
+		__emit 0x8a;
+		__emit 0xd2;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x83;
+		__emit 0xc8;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x39;
+		__emit 0x83;
+		__emit 0xc4;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x7c;
+		__emit 0x62;
+		__emit 0x8d;
+		__emit 0x84;
+		__emit 0x80;
+		__emit 0x00;
+		__emit 0x0a;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xc1;
+		__emit 0xe0;
+		__emit 0x02;
+		__emit 0x50;
+		__emit 0xe8;
+		__emit 0xd9;
+		__emit 0xa4;
+		__emit 0x1b;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0xb3;
+		__emit 0xc0;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0xe8;
+		__emit 0x8b;
+		__emit 0x83;
+		__emit 0xc8;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8d;
+		__emit 0x0c;
+		__emit 0x80;
+		__emit 0xc1;
+		__emit 0xe1;
+		__emit 0x02;
+		__emit 0x8b;
+		__emit 0xd1;
+		__emit 0xc1;
+		__emit 0xe9;
+		__emit 0x02;
+		__emit 0x8b;
+		__emit 0xfd;
+		__emit 0xf3;
+		__emit 0xa5;
+		__emit 0x8b;
+		__emit 0xca;
+		__emit 0x83;
+		__emit 0xe1;
+		__emit 0x03;
+		__emit 0xf3;
+		__emit 0xa4;
+		__emit 0x8b;
+		__emit 0x83;
+		__emit 0xc0;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x50;
+		__emit 0xe8;
+		__emit 0x29;
+		__emit 0xa4;
+		__emit 0x1b;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x83;
+		__emit 0xc8;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x7c;
+		__emit 0x24;
+		__emit 0x44;
+		__emit 0x83;
+		__emit 0xc4;
+		__emit 0x08;
+		__emit 0x05;
+		__emit 0x00;
+		__emit 0x02;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x89;
+		__emit 0xab;
+		__emit 0xc0;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x6c;
+		__emit 0x24;
+		__emit 0x28;
+		__emit 0x89;
+		__emit 0x83;
+		__emit 0xc8;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x83;
+		__emit 0xc4;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xd9;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x10;
+		__emit 0xd8;
+		__emit 0x64;
+		__emit 0x24;
+		__emit 0x2c;
+		__emit 0x8b;
+		__emit 0x93;
+		__emit 0xc0;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8d;
+		__emit 0x0c;
+		__emit 0x80;
+		__emit 0x8d;
+		__emit 0x04;
+		__emit 0x8a;
+		__emit 0xd8;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x20;
+		__emit 0xc1;
+		__emit 0xe5;
+		__emit 0x10;
+		__emit 0x0b;
+		__emit 0xef;
+		__emit 0xd9;
+		__emit 0x58;
+		__emit 0x04;
+		__emit 0x89;
+		__emit 0x28;
+		__emit 0xd9;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x14;
+		__emit 0xd8;
+		__emit 0x64;
+		__emit 0x24;
+		__emit 0x30;
+		__emit 0xd8;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x20;
+		__emit 0xd9;
+		__emit 0x58;
+		__emit 0x08;
+		__emit 0xd9;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x18;
+		__emit 0xd8;
+		__emit 0x64;
+		__emit 0x24;
+		__emit 0x34;
+		__emit 0xd8;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x20;
+		__emit 0xd9;
+		__emit 0x58;
+		__emit 0x0c;
+		__emit 0xd9;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x1c;
+		__emit 0xd8;
+		__emit 0x64;
+		__emit 0x24;
+		__emit 0x38;
+		__emit 0xd8;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x20;
+		__emit 0xd9;
+		__emit 0x58;
+		__emit 0x10;
+		__emit 0x8b;
+		__emit 0x83;
+		__emit 0xc4;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x40;
+		__emit 0x89;
+		__emit 0x83;
+		__emit 0xc4;
+		__emit 0x30;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x24;
+		__emit 0x8b;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x5c;
+		__emit 0x47;
+		__emit 0x41;
+		__emit 0x3b;
+		__emit 0xf8;
+		__emit 0x89;
+		__emit 0x7c;
+		__emit 0x24;
+		__emit 0x3c;
+		__emit 0x89;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x24;
+		__emit 0x0f;
+		__emit 0x8c;
+		__emit 0xd9;
+		__emit 0xfc;
+		__emit 0xff;
+		__emit 0xff;
+		__emit 0x8b;
+		__emit 0x74;
+		__emit 0x24;
+		__emit 0x54;
+		__emit 0x8b;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x28;
+		__emit 0x8b;
+		__emit 0x7c;
+		__emit 0x24;
+		__emit 0x40;
+		__emit 0x8b;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x60;
+		__emit 0x40;
+		__emit 0x47;
+		__emit 0x3b;
+		__emit 0xc1;
+		__emit 0x89;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x28;
+		__emit 0x89;
+		__emit 0x7c;
+		__emit 0x24;
+		__emit 0x40;
+		__emit 0x0f;
+		__emit 0x8c;
+		__emit 0x7a;
+		__emit 0xfc;
+		__emit 0xff;
+		__emit 0xff;
+		__emit 0x5f;
+		__emit 0x5e;
+		__emit 0x5d;
+		__emit 0x5b;
+		__emit 0x83;
+		__emit 0xc4;
+		__emit 0x40;
+		__emit 0xc2;
+		__emit 0x14;
+		__emit 0x00;
+	}
+}
+
+/** Generate a lookup table for arbitrary angled impassable area viewing. */
+// ?updateViewImpassableAreas@BaseHeightMapRenderObjClass@@QAEX_NHHHH@Z
+void BaseHeightMapRenderObjClass::updateViewImpassableAreas(
+	Bool partial, Int minX, Int maxX, Int minY, Int maxY)
+{
+	char *heightMap = reinterpret_cast<char *>(this);
+	// BFME inserts eight bytes before the packed cliff vector relative to the imported header.
+	BaseHeightMapRenderObjClass *bfmeLayout =
+		reinterpret_cast<BaseHeightMapRenderObjClass *>(heightMap + 8);
+	Int xSize = m_map->getXExtent();
+	Int ySize = m_map->getYExtent();
+	if (bfmeLayout->m_showAsVisibleCliff.size() != xSize * ySize) {
+		bfmeLayout->m_showAsVisibleCliff.resize(xSize * ySize);
+	}
+
+	if (!partial) {
+		minX = 0;
+		minY = 0;
+		maxX = xSize;
+		maxY = ySize;
+	}
+
+	Real slope = *reinterpret_cast<Real *>(heightMap + 0x2fd0);
+	Real tanImpassableRad = tan(slope / 360.0f * 2.0f * PI);
+	for (Int j = minY; j < maxY; ++j) {
+		for (Int i = minX; i < maxX; ++i) {
+			bfmeLayout->m_showAsVisibleCliff[i + j * xSize] =
+				evaluateAsVisibleCliff(i, j, tanImpassableRad);
+		}
+	}
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::initHeightData
+//=============================================================================
+/** Allocate a heightmap of x by y vertices and fill with initial height values.
+Also allocates all rendering resources such as vertex buffers, index buffers, 
+shaders, and materials.*/
+//=============================================================================
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_initHeightData.asm
+// ?initHeightData@BaseHeightMapRenderObjClass@@UAEHHHPAVWorldHeightMap@@PAV?$RefMultiListIterator@VRenderObjClass@@@@_N@Z present-unmatched
+Int BaseHeightMapRenderObjClass::initHeightData(Int x, Int y, WorldHeightMap *pMap, RefRenderObjListIterator *pLightsIteratork, Bool updateExtraPassTiles)
+{	
+
+	REF_PTR_SET(m_map, pMap);	//update our heightmap pointer in case it changed since last call.
+
+	if (m_shroud)
+		m_shroud->init(m_map,TheGlobalData->m_partitionCellSize,TheGlobalData->m_partitionCellSize);
+#ifdef DO_ROADS
+	m_roadBuffer->setMap(m_map);
+#endif
+	HeightSampleType *data = NULL;
+	if (pMap) {
+		data = pMap->getDataPtr();
+	}
+
+	if (m_treeBuffer) {
+		Region2D bounds;
+		bounds.lo.x = 0;
+		bounds.lo.y = 0;
+		bounds.hi.x = (pMap->getXExtent() - 2*pMap->getBorderSize()) *MAP_XY_FACTOR;
+		bounds.hi.y = (pMap->getYExtent() - 2*pMap->getBorderSize()) *MAP_XY_FACTOR;
+		m_treeBuffer->setBounds(bounds);
+	}
+
+	if (updateExtraPassTiles)
+	{
+		m_numShoreLineTiles = 0;
+		//Do some preprocessing on map to extract useful data
+		if (pMap)
+		{
+			//Find min/max values for all terrain heights, useful for rendering optimization
+			Int m_mapDX=pMap->getXExtent();
+			Int m_mapDY=pMap->getYExtent();
+			Int i, j, minHt, maxHt;
+
+			minHt = pMap->getMaxHeightValue();
+			maxHt = 0;
+
+			for (j=0; j<m_mapDY; j++) {
+				for (i=0; i<m_mapDX; i++) {
+					Short cur = pMap->getHeight(i,j);
+					if (cur<minHt) minHt = cur;
+					if (maxHt<cur) maxHt = cur;
+				}
+			}
+			m_minHeight = minHt * MAP_HEIGHT_SCALE;
+			m_maxHeight = maxHt * MAP_HEIGHT_SCALE;
+
+			//Find all shoreline tiles so they can get extra alpha blend
+			updateShorelineTiles(0,0,m_mapDX-1,m_mapDY-1,pMap);
+			if (TheWaterTransparency->m_minWaterOpacity != m_currentMinWaterOpacity)
+				initDestAlphaLUT();
+		}
+	}
+
+	Set_Force_Visible(TRUE);	//terrain is always visible.
+	m_needFullUpdate = true;
+
+	m_scorchesInBuffer = 0; 
+	m_curNumScorchVertices=0;
+	m_curNumScorchIndices=0;
+	// If the textures aren't allocated (usually because of a hardware reset) need to allocate.
+	Bool needToAllocate = false;
+	if (m_stageTwoTexture == NULL) {
+		needToAllocate = true;
+	}
+	if (data && needToAllocate)
+	{	//requested heightmap different from old one.
+		//allocate a new one.
+		freeMapResources();	//free old data and ib/vb
+		REF_PTR_SET(m_map,pMap);	//update our heightmap pointer in case it changed since last call.
+		m_stageTwoTexture=NEW CloudMapTerrainTextureClass;
+		m_stageThreeTexture=NEW LightMapTerrainTextureClass(m_macroTextureName);
+		m_destAlphaTexture=MSGNEW("TextureClass") TextureClass(256,1,WW3D_FORMAT_A8R8G8B8,MIP_LEVELS_1);
+		initDestAlphaLUT();
+#ifdef DO_SCORCH
+		allocateScorchBuffers();
+#endif
+
+		m_vertexMaterialClass=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
+
+		m_shaderClass = detailOpaqueShader;	//		ShaderClass::_PresetOpaqueShader;
+	}
+
+	return 0;
+}
+
+#ifdef DO_SCORCH
+//=============================================================================
+// BaseHeightMapRenderObjClass::freeScorchBuffers
+//=============================================================================
+/** Frees the vertex buffers for scorches.*/
+//=============================================================================
+// ?freeScorchBuffers@BaseHeightMapRenderObjClass@@IAEXXZ present-unmatched
+void BaseHeightMapRenderObjClass::freeScorchBuffers(void)
+{
+	REF_PTR_RELEASE(m_vertexScorch);
+	REF_PTR_RELEASE(m_indexScorch);
+	REF_PTR_RELEASE(m_scorchTexture);
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::allocateScorchBuffers
+//=============================================================================
+/** Allocates the vertex buffer and texture for scorches.*/
+//=============================================================================
+// ?allocateScorchBuffers@BaseHeightMapRenderObjClass@@IAEXXZ present-unmatched
+void BaseHeightMapRenderObjClass::allocateScorchBuffers(void)
+{
+	m_vertexScorch=NEW_REF(DX8VertexBufferClass,(DX8_FVF_XYZDUV1,MAX_SCORCH_VERTEX,DX8VertexBufferClass::USAGE_DEFAULT));
+	m_indexScorch=NEW_REF(DX8IndexBufferClass,(MAX_SCORCH_INDEX));
+	m_scorchTexture=NEW ScorchTextureClass;
+	m_scorchesInBuffer = 0; // If we just allocated the buffers, we got no scorches in the buffer.
+	m_curNumScorchVertices=0;
+	m_curNumScorchIndices=0;
+#ifdef _DEBUG
+	Vector3 loc(4*MAP_XY_FACTOR,4*MAP_XY_FACTOR,0);
+	addScorch(loc, 1*MAP_XY_FACTOR, SCORCH_1);
+	loc.Y += 10*MAP_XY_FACTOR;
+	loc.X += 5*MAP_XY_FACTOR;
+	addScorch(loc, 3*MAP_XY_FACTOR, SCORCH_1);
+#endif
+
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::updateScorches
+//=============================================================================
+/** Builds the vertex buffer data for drawing the scorches.*/
+//=============================================================================
+// ?updateScorches@BaseHeightMapRenderObjClass@@IAEXXZ present-unmatched
+void BaseHeightMapRenderObjClass::updateScorches(void)
+{
+	if (m_scorchesInBuffer > 1) {
+		return;
+	}
+	if (m_numScorches==0) {
+		return;
+	}
+	if (!m_indexScorch || !m_vertexScorch) {
+		return;
+	}
+	m_curNumScorchVertices = 0;
+	m_curNumScorchIndices = 0;
+	DX8IndexBufferClass::WriteLockClass lockIdxBuffer(m_indexScorch);
+	UnsignedShort *ib=lockIdxBuffer.Get_Index_Array();
+	UnsignedShort *curIb = ib;
+
+	DX8VertexBufferClass::WriteLockClass lockVtxBuffer(m_vertexScorch);
+	VertexFormatXYZDUV1 *vb = (VertexFormatXYZDUV1*)lockVtxBuffer.Get_Vertex_Array();
+	VertexFormatXYZDUV1 *curVb = vb;
+
+	Int curScorch;
+	Real shadeR, shadeG, shadeB;
+	shadeR = TheGlobalData->m_terrainAmbient[0].red;
+	shadeG = TheGlobalData->m_terrainAmbient[0].green;
+	shadeB = TheGlobalData->m_terrainAmbient[0].blue;
+	shadeR += TheGlobalData->m_terrainDiffuse[0].red/2;
+	shadeG += TheGlobalData->m_terrainDiffuse[0].green/2;
+	shadeB += TheGlobalData->m_terrainDiffuse[0].blue/2;
+	shadeR*=255.0f;
+	shadeG*=255.0f;
+	shadeB*=255.0f;
+	Int diffuse=REAL_TO_INT(shadeB) | (REAL_TO_INT(shadeG) << 8) | (REAL_TO_INT(shadeR) << 16) | ((int)255 << 24);
+	m_scorchesInBuffer = 0;
+	for (curScorch=m_numScorches-1; curScorch>=0; curScorch--) {
+		m_scorchesInBuffer++;
+		Real radius = m_scorches[curScorch].radius;
+		Vector3 loc = m_scorches[curScorch].location;
+		Int type = m_scorches[curScorch].scorchType;
+		if (type<0) {
+			type = 0;
+		}
+		if (type >= SCORCH_MARKS_IN_TEXTURE) {
+			type = 0;
+		}
+		Real amtToFloat = 0;
+		amtToFloat = MAP_HEIGHT_SCALE/10;
+
+		Int minX = REAL_TO_INT_FLOOR((loc.X-radius)/MAP_XY_FACTOR);
+		Int minY = REAL_TO_INT_FLOOR((loc.Y-radius)/MAP_XY_FACTOR);
+		if (minX<-m_map->getBorderSizeInline()) minX=-m_map->getBorderSizeInline();
+		if (minY<-m_map->getBorderSizeInline()) minY=-m_map->getBorderSizeInline();
+		Int maxX = REAL_TO_INT_CEIL((loc.X+radius)/MAP_XY_FACTOR);
+		Int maxY = REAL_TO_INT_CEIL((loc.Y+radius)/MAP_XY_FACTOR);
+		maxX++; maxY++;
+		if (maxX > m_map->getXExtent()-m_map->getBorderSizeInline()) {
+			maxX = m_map->getXExtent()-m_map->getBorderSizeInline();
+		}
+		if (maxY > m_map->getYExtent()-m_map->getBorderSizeInline()) {
+			maxY = m_map->getYExtent()-m_map->getBorderSizeInline();
+		}
+		Int startVertex = m_curNumScorchVertices;
+		Int i, j;
+		for (j=minY; j<maxY; j++) {
+			for (i=minX; i<maxX; i++) {
+				if (m_curNumScorchVertices >= MAX_SCORCH_VERTEX) return;
+				curVb->diffuse = diffuse;
+				Real theZ; 
+				theZ = amtToFloat+((float)getClipHeight(i+m_map->getBorderSizeInline(),j+m_map->getBorderSizeInline())*MAP_HEIGHT_SCALE);
+				// The scorchmarks are spaced out by 1.5 in the texture.
+				Real uOffset = (type%SCORCH_PER_ROW) * 1.5f;
+				Real vOffset = (type/SCORCH_PER_ROW) * 1.5f;
+				Real X = i*MAP_XY_FACTOR; 
+				Real Y = j*MAP_XY_FACTOR;
+				curVb->u1 = (uOffset + 0.5f + (X - loc.X)/(2*radius)) / (SCORCH_PER_ROW+1);
+				curVb->v1 = (vOffset + 0.5f + (Y - loc.Y)/(2*radius)) / (SCORCH_PER_ROW+1);
+				curVb->x = X;
+				curVb->y = Y;
+				curVb->z = theZ;
+				curVb++;
+				m_curNumScorchVertices++;
+			}
+		}
+		Int yOffset = maxX-minX;
+		for (j=0; j<maxY-minY-1; j++) {
+			for (i=0; i<maxX-minX-1; i++) {
+				if (m_curNumScorchIndices+6 > MAX_SCORCH_INDEX) return;
+				Int xNdx = i+minX+m_map->getBorderSizeInline();
+				Int yNdx = j+minY+m_map->getBorderSizeInline();
+				Bool flipForBlend = m_map->getFlipState(xNdx, yNdx);
+#if 0
+				UnsignedByte alpha[4];
+				float UA[4], VA[4];
+				m_map->getAlphaUVData(xNdx, yNdx, UA, VA, alpha, &flipForBlend, false);
+#endif
+				if (flipForBlend) {
+					*curIb++ = startVertex + j*yOffset + i+1;
+ 					*curIb++ = startVertex + j*yOffset + i+yOffset;
+					*curIb++ = startVertex + j*yOffset + i;
+ 					*curIb++ = startVertex + j*yOffset + i+1;
+ 					*curIb++ = startVertex + j*yOffset + i+1+yOffset;
+					*curIb++ = startVertex + j*yOffset + i+yOffset;
+				}	
+				else 
+				{
+					*curIb++ = startVertex + j*yOffset + i;
+					*curIb++ = startVertex + j*yOffset + i+1+yOffset;
+					*curIb++ = startVertex + j*yOffset + i+yOffset;
+					*curIb++ = startVertex + j*yOffset + i;
+					*curIb++ = startVertex + j*yOffset + i+1;
+					*curIb++ = startVertex + j*yOffset + i+1+yOffset;
+				}
+				m_curNumScorchIndices+=6;
+			}
+		}
+	}
+
+}
+
+#endif
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::clearAllScorches
+//=============================================================================
+/** Removes all scorches. */
+//=============================================================================
+// ?clearAllScorches@BaseHeightMapRenderObjClass@@QAEXXZ present-unmatched
+void BaseHeightMapRenderObjClass::clearAllScorches(void)
+{
+#ifdef DO_SCORCH
+	m_numScorches=0;
+	m_scorchesInBuffer=0;	
+#endif	
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::addScorch
+//=============================================================================
+/** Adds a scorch mark. */
+//=============================================================================
+void BaseHeightMapRenderObjClass::addScorch(Vector3 location, Real radius, Scorches type)
+{
+#ifdef DO_SCORCH
+	struct BFMEScorch {
+		Vector3 location;
+		Real radius;
+		Scorches scorchType;
+		Bool flag;
+	};
+	struct BFMEState {
+		UnsignedByte padding[0xe4];
+		BFMEScorch scorches[MAX_SCORCH_MARKS];
+		Int numScorches;
+		Int scorchesInBuffer;
+		Int nextScorch;
+	};
+
+	BFMEState *state = (BFMEState *)this;
+	Real limit = radius/4;
+	Int i;
+	Int index;
+	for (i=0; i<state->numScorches; i++) {
+		if ( abs(location.X-state->scorches[i].location.X) < limit &&
+				 abs(location.Y-state->scorches[i].location.Y) < limit &&
+				 abs(radius - state->scorches[i].radius) < limit &&
+				 state->scorches[i].scorchType == type) {
+			goto duplicate;
+		}
+	}
+
+	index = state->numScorches;
+	if (state->numScorches >= MAX_SCORCH_MARKS) {
+		index = state->nextScorch;
+		state->nextScorch = (state->nextScorch + 1) % MAX_SCORCH_MARKS;
+		state->numScorches--;
+	}
+
+	state->scorches[index].location = location;
+	state->scorches[index].radius = radius;
+	state->scorches[index].scorchType = type;
+	state->scorches[index].flag = FALSE;
+	state->numScorches++;
+	state->scorchesInBuffer = 0; // force buffer regenerations.
+	return;
+
+duplicate:
+	state->scorches[i].flag = FALSE;
+#endif	
+}
+
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::getStaticDiffuse
+//=============================================================================
+/** Gets the static diffuse color value for a terrain vertex.*/
+//=============================================================================
+struct BfmeStaticDiffuseGlobalData
+{
+	char m_padding0[0xA04];
+	Coord3D m_terrainLightPos[4];
+	char m_paddingA34[0xA58 - 0xA34];
+	Int m_numGlobalLights;
+};
+
+class BfmeStaticDiffuseWorldHeightMap
+{
+public:
+	inline Int getBorderSizeInline(void) const { return m_borderSize; }
+	Int getXExtent(void) { return m_width; }
+	Int getYExtent(void) { return m_height; }
+
+	inline unsigned short getHeight(Int xIndex, Int yIndex)
+	{
+		Int ndx = (yIndex*m_width)+xIndex;
+		if ((ndx>=0) && (ndx<m_dataSize) && m_data)
+			return(((unsigned short *)m_data)[ndx]);
+		else
+			return(0);
+	};
+
+private:
+	char m_padding0[0x08];
+	Int m_width;
+	Int m_height;
+	Int m_borderSize;
+	char m_padding14[0x0C];
+	Int m_dataSize;
+	UnsignedByte *m_data;
+};
+
+Int BaseHeightMapRenderObjClass::getStaticDiffuse(Int x, Int y)
+{ 	
+	#define BFME_STATIC_DIFFUSE_MAP ((BfmeStaticDiffuseWorldHeightMap *)m_map)
+
+	if (x<0) x = 0;
+	if (y<0) y = 0;
+	if (x >= BFME_STATIC_DIFFUSE_MAP->getXExtent())
+		x=BFME_STATIC_DIFFUSE_MAP->getXExtent()-1;
+	if (y >= BFME_STATIC_DIFFUSE_MAP->getYExtent())
+		y=BFME_STATIC_DIFFUSE_MAP->getYExtent()-1;
+
+	if (m_map == NULL) {
+		return(0);
+	}
+
+	Vector3 l2r,n2f,normalAtTexel;
+	Int vn0,un0,vp1,up1;
+	const Int cellOffset = 1;
+
+	vn0 = y-cellOffset;
+	vp1 = y+cellOffset;
+	if (vp1 >= BFME_STATIC_DIFFUSE_MAP->getYExtent())
+		vp1=BFME_STATIC_DIFFUSE_MAP->getYExtent()-1;
+	if (vn0<0) vn0 = 0;
+	un0 = x-cellOffset;
+	up1 = x+cellOffset;
+	if (un0 < 0)
+		un0=0;
+	if (up1 >= BFME_STATIC_DIFFUSE_MAP->getXExtent())
+		up1=BFME_STATIC_DIFFUSE_MAP->getXExtent()-1;
+
+	Vector3 lightRay[MAX_GLOBAL_LIGHTS];
+	const Coord3D *lightPos;
+
+	for (Int lightIndex=0; lightIndex <
+		((const BfmeStaticDiffuseGlobalData *)TheWritableGlobalData)->m_numGlobalLights; lightIndex++)
+	{
+		lightPos=&((const BfmeStaticDiffuseGlobalData *)TheWritableGlobalData)->m_terrainLightPos[lightIndex];
+		lightRay[lightIndex].Set(-lightPos->x,-lightPos->y,	-lightPos->z);
+	}
+
+	//top-left sample
+	l2r.Set(2*MAP_XY_FACTOR,0,MAP_HEIGHT_SCALE*(BFME_STATIC_DIFFUSE_MAP->getHeight(up1, y) - BFME_STATIC_DIFFUSE_MAP->getHeight(un0, y)));
+	n2f.Set(0,2*MAP_XY_FACTOR,MAP_HEIGHT_SCALE*(BFME_STATIC_DIFFUSE_MAP->getHeight(x, vp1) - BFME_STATIC_DIFFUSE_MAP->getHeight(x, vn0)));
+	
+	Vector3::Normalized_Cross_Product(l2r,n2f, &normalAtTexel);
+
+	VERTEX_FORMAT vertex;
+	vertex.x=ADJUST_FROM_INDEX_TO_REAL(x);
+	vertex.y=ADJUST_FROM_INDEX_TO_REAL(y);
+
+	vertex.z=  ((float)BFME_STATIC_DIFFUSE_MAP->getHeight(x,y))*MAP_HEIGHT_SCALE;
+	vertex.u1=0;
+	vertex.v1=0;
+	vertex.u2=1;
+	vertex.v2=1;
+
+	RTS3DScene *pMyScene = (RTS3DScene *)Scene;
+	if (pMyScene) {
+		RefRenderObjListIterator *it = pMyScene->createLightsIterator();
+		doTheLight(&vertex, lightRay, &normalAtTexel, it, 1.0f);
+		if (it) {
+		 pMyScene->destroyLightsIterator(it);
+		 it = NULL;
+		}
+	} else {
+		doTheLight(&vertex, lightRay, &normalAtTexel, NULL, 1.0f);
+	}
+	return vertex.diffuse;
+	#undef BFME_STATIC_DIFFUSE_MAP
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::On_Frame_Update
+//=============================================================================
+/** Updates the diffuse color values in the vertices as affected by the dynamic lights.*/
+//=============================================================================
+// ?On_Frame_Update@BaseHeightMapRenderObjClass@@UAEXXZ present-unmatched
+void BaseHeightMapRenderObjClass::On_Frame_Update(void)
+{	
+
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::unitMoved
+//=============================================================================
+/** Tell that a unit moved.*/
+//=============================================================================
+// ?unitMoved@BaseHeightMapRenderObjClass@@QAEXPAVObject@@@Z present-unmatched
+void BaseHeightMapRenderObjClass::unitMoved( Object *unit )
+{
+	if (m_treeBuffer) {
+		m_treeBuffer->unitMoved(unit);
+	}
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::removeTreesAndPropsForConstruction
+//=============================================================================
+/** Tell that a unit moved.*/
+//=============================================================================
+void BaseHeightMapRenderObjClass::removeTreesAndPropsForConstruction(const Coord3D* pos, const GeometryInfo& geom, Real angle )
+{
+	// BFME: retail's 18B body null-checks and tail-calls only the PROP buffer
+	// (callee body 0x7039E0 sits inside the W3DPropBuffer.cpp region; BFME
+	// trees are props, so there is no separate tree-buffer call)
+	if (m_propBuffer) {
+		m_propBuffer->removePropsForConstruction(pos, geom, angle);
+	}
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::addTree
+//=============================================================================
+/** Adds a tree to the tree buffer.*/
+//=============================================================================
+// ?addTree@BaseHeightMapRenderObjClass@@QAEXW4DrawableID@@UCoord3D@@MMMPBVW3DTreeDrawModuleData@@@Z present-unmatched
+void BaseHeightMapRenderObjClass::addTree(DrawableID id, Coord3D location, Real scale, Real angle,
+								Real randomScaleAmount,  const W3DTreeDrawModuleData *data)
+{
+	if (m_treeBuffer) {
+		m_treeBuffer->addTree(id, location, scale, angle, randomScaleAmount, data); 
+	}
+};
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::removeTree
+//=============================================================================
+/** Adds a tree to the tree buffer.*/
+//=============================================================================
+void BaseHeightMapRenderObjClass::removeTree(DrawableID id)
+{
+	if (m_treeBuffer) {
+		m_treeBuffer->removeTree(id); 
+	}
+};
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::removeAllTrees
+//=============================================================================
+/** Adds a tree to the tree buffer.*/
+//=============================================================================
+// ?removeAllTrees@BaseHeightMapRenderObjClass@@QAEXXZ present-unmatched
+void BaseHeightMapRenderObjClass::removeAllTrees()
+{
+	if (m_treeBuffer) {
+		m_treeBuffer->clearAllTrees(); 
+	}
+};
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::updateTreePosition
+//=============================================================================
+/** Updates a tree's position and angle in the tree buffer.*/
+//=============================================================================
+// ?updateTreePosition@BaseHeightMapRenderObjClass@@QAE_NW4DrawableID@@UCoord3D@@M@Z present-unmatched
+Bool BaseHeightMapRenderObjClass::updateTreePosition(DrawableID id, Coord3D location, Real angle)
+{
+	if (m_treeBuffer) {
+		return m_treeBuffer->updateTreePosition(id, location, angle);
+	}
+	return false;
+};
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::addProp
+//=============================================================================
+/** Adds a prop to the prop buffer.*/
+//=============================================================================
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapAddProp.cpp
+// ?addProp@BaseHeightMapRenderObjClass@@QAEXHUCoord3D@@MMABVAsciiString@@@Z present-unmatched
+void BaseHeightMapRenderObjClass::addProp(Int id, Coord3D location, Real angle, Real scale, 
+																					const AsciiString &modelName)
+{
+	if (m_propBuffer) {
+		m_propBuffer->addProp(id, location, angle, scale, modelName);
+	}
+};
+
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::removeProp
+//=============================================================================
+/** Adds a prop to the prop buffer.*/
+//=============================================================================
+void BaseHeightMapRenderObjClass::removeProp(Int id)
+{
+	if (m_propBuffer) {
+		m_propBuffer->removeProp(id); 
+	}
+};
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::removeAllProps
+//=============================================================================
+/** Adds a prop to the prop buffer.*/
+//=============================================================================
+void BaseHeightMapRenderObjClass::removeAllProps()
+{
+	if (m_propBuffer) {
+		m_propBuffer->clearAllProps(); 
+	}
+};
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::notifyShroudChanged
+//=============================================================================
+/** Notifies that the local shroud changed.*/
+//=============================================================================
+// ?notifyShroudChanged@BaseHeightMapRenderObjClass@@QAEXXZ present-unmatched
+void BaseHeightMapRenderObjClass::notifyShroudChanged(void)
+{
+	if (m_propBuffer) {
+		m_propBuffer->notifyShroudChanged();
+	}
+};
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::addTerrainBib
+//=============================================================================
+/** Adds a terrainBib to the bib buffer.*/
+//=============================================================================
+// ?addTerrainBib@BaseHeightMapRenderObjClass@@QAEXQAVVector3@@W4ObjectID@@_N@Z present-unmatched
+void BaseHeightMapRenderObjClass::addTerrainBib(Vector3 corners[4], 
+																						ObjectID id, Bool highlight)
+{
+	m_bibBuffer->addBib(corners, id, highlight); 
+};
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::addTerrainBib
+//=============================================================================
+/** Adds a terrainBib to the bib buffer.*/
+//=============================================================================
+// ?addTerrainBibDrawable@BaseHeightMapRenderObjClass@@QAEXQAVVector3@@W4DrawableID@@_N@Z present-unmatched
+void BaseHeightMapRenderObjClass::addTerrainBibDrawable(Vector3 corners[4], 
+																						DrawableID id, Bool highlight)
+{
+	m_bibBuffer->addBibDrawable(corners, id, highlight); 
+};
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::removeAllTerrainBibs
+//=============================================================================
+/** Removes all terrainBib highlighting from the bib buffer.*/
+//=============================================================================
+void BaseHeightMapRenderObjClass::removeTerrainBibHighlighting()
+{
+	// BFME dropped the ZH bib-buffer call; retail refreshes the whole map's
+	// shoreline tiles instead (byte-identical twin of removeAllTerrainBibs)
+	if (m_map)
+		updateShorelineTiles(0, 0, m_map->getXExtent()-1, m_map->getYExtent()-1, m_map);
+};
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::removeAllTerrainBibs
+//=============================================================================
+/** Removes all terrainBibs from the bib buffer.*/
+//=============================================================================
+void BaseHeightMapRenderObjClass::removeAllTerrainBibs()
+{
+	// BFME dropped the ZH bib-buffer call; retail refreshes the whole map's
+	// shoreline tiles instead
+	if (m_map)
+		updateShorelineTiles(0, 0, m_map->getXExtent()-1, m_map->getYExtent()-1, m_map);
+};
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::removeTerrainBib
+//=============================================================================
+/** Removes a terrainBib from the bib buffer.*/
+//=============================================================================
+// ?removeTerrainBib@BaseHeightMapRenderObjClass@@QAEXW4ObjectID@@@Z present-unmatched
+void BaseHeightMapRenderObjClass::removeTerrainBib(ObjectID id)
+{
+	m_bibBuffer->removeBib( id ); 
+};
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::removeTerrainBib
+//=============================================================================
+/** Removes a terrainBib from the bib buffer.*/
+//=============================================================================
+void BaseHeightMapRenderObjClass::removeTerrainBibDrawable(DrawableID id)
+{
+	m_bibBuffer->removeBibDrawable( id ); 
+};
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::staticLightingChanged
+//=============================================================================
+/** Notification that all lighting needs to be recalculated. */
+//=============================================================================
+// ?staticLightingChanged@BaseHeightMapRenderObjClass@@UAEXXZ present-unmatched
+void BaseHeightMapRenderObjClass::staticLightingChanged( void )
+{
+	// Cause the terrain to get updated with new lighting.
+	m_needFullUpdate = true;
+
+	// Cause the scorches to get updated with new lighting.
+	m_scorchesInBuffer = 0; // If we just allocated the buffers, we got no scorches in the buffer.
+	m_curNumScorchVertices=0;
+	m_curNumScorchIndices=0;
+	m_roadBuffer->updateLighting();
+
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::setTimeOfDay
+//=============================================================================
+/** When the time of day changes, the lighting changes and we need to update. */
+//=============================================================================
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapSetTimeOfDay.cpp
+// ?setTimeOfDay@BaseHeightMapRenderObjClass@@QAEXW4TimeOfDay@@@Z present-unmatched
+void BaseHeightMapRenderObjClass::setTimeOfDay( TimeOfDay tod )
+{		 
+	staticLightingChanged();
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::Notify_Added
+//=============================================================================
+/** W3D render object method, we use it to add ourselves to tthe update 
+list, so On_Frame_Update gets called. */
+//=============================================================================
+// ?Notify_Added@BaseHeightMapRenderObjClass@@UAEXPAVSceneClass@@@Z present-unmatched
+void BaseHeightMapRenderObjClass::Notify_Added(SceneClass * scene)
+{
+	RenderObjClass::Notify_Added(scene);
+	scene->Register(this,SceneClass::ON_FRAME_UPDATE);
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::updateCenter
+//=============================================================================
+/** Updates the positioning of the drawn portion of the height map in the 
+heightmap.  As the view slides around, this determines what is the actually
+rendered portion of the terrain.  Only a 96x96 section is rendered at any time, 
+even though maps can be up to 1024x1024.  This function determines which subset
+is rendered. */
+//=============================================================================
+class BaseHeightMapUpdateNoArgs
+{
+public:
+	void updateCenter();
+};
+
+class BaseHeightMapUpdateBridge
+{
+public:
+	void updateCenter(CameraClass *camera, RefRenderObjListIterator *lights);
+};
+
+class BaseHeightMapUpdateCamera
+{
+public:
+	void updateCenter(CameraClass *camera);
+};
+
+void BaseHeightMapRenderObjClass::updateCenter(CameraClass *camera , RefRenderObjListIterator *pLightsIterator)
+{
+	// BFME added terrain buffers and uses a substantially larger layout than Zero Hour.
+	char *heightMap = reinterpret_cast<char *>(this);
+	if (*reinterpret_cast<void **>(heightMap + 0x2ff4) == NULL) {
+		return;
+	}
+	if (*reinterpret_cast<unsigned char *>(heightMap + 0x2ff9)) {
+		return;
+	}
+
+	void *buffer = *reinterpret_cast<void **>(heightMap + 0x3094);
+	if (buffer) {
+		*reinterpret_cast<unsigned char *>(reinterpret_cast<char *>(buffer) + 0x2a7cb6) = 1;
+	}
+	buffer = *reinterpret_cast<void **>(heightMap + 0x3098);
+	if (buffer) {
+		*reinterpret_cast<unsigned char *>(reinterpret_cast<char *>(buffer) + 0x1e1cce) = 1;
+	}
+	W3DPropBuffer *prop = *reinterpret_cast<W3DPropBuffer **>(heightMap + 0x309c);
+	if (prop) {
+		prop->doFullUpdate();
+	}
+
+	*reinterpret_cast<unsigned char *>(heightMap + 0x2ff9) = 1;
+	BaseHeightMapUpdateNoArgs *road =
+		*reinterpret_cast<BaseHeightMapUpdateNoArgs **>(heightMap + 0x30ac);
+	if (road) {
+		road->updateCenter();
+	}
+
+	if (*reinterpret_cast<unsigned char *>(heightMap + 0x3009)) {
+		W3DBridgeBuffer *bridge = *reinterpret_cast<W3DBridgeBuffer **>(heightMap + 0x30b0);
+		if (bridge) {
+			bridge->doFullUpdate();
+		}
+		BaseHeightMapUpdateCamera *terrain =
+			*reinterpret_cast<BaseHeightMapUpdateCamera **>(heightMap + 0x30a4);
+		if (terrain) {
+			*reinterpret_cast<unsigned char *>(reinterpret_cast<char *>(terrain) + 0x29) = 1;
+		}
+	}
+	BaseHeightMapUpdateBridge *bridge =
+		*reinterpret_cast<BaseHeightMapUpdateBridge **>(heightMap + 0x30b0);
+	if (bridge) {
+		bridge->updateCenter(camera, pLightsIterator);
+	}
+	BaseHeightMapUpdateCamera *terrain =
+		*reinterpret_cast<BaseHeightMapUpdateCamera **>(heightMap + 0x30a4);
+	if (terrain) {
+		terrain->updateCenter(camera);
+	}
+	*reinterpret_cast<unsigned char *>(heightMap + 0x2ff9) = 0;
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::Render
+//=============================================================================
+/** Renders (draws) the terrain. */
+//=============================================================================
+//DECLARE_PERF_TIMER(Terrain_Render)
+
+// ?Render@BaseHeightMapRenderObjClass@@UAEXAAVRenderInfoClass@@@Z present-unmatched
+void BaseHeightMapRenderObjClass::Render(RenderInfoClass & rinfo)
+{
+
+}
+
+/**Render parts of terrain that are along the coast line and have vertices directly under the
+water plane.  Applying a custom render to these polygons allows for a smoother land->water
+transition*/
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_renderShoreLines.asm
+// ?renderShoreLines@BaseHeightMapRenderObjClass@@IAEXPAVCameraClass@@@Z present-unmatched
+void BaseHeightMapRenderObjClass::renderShoreLines(CameraClass *pCamera)
+{
+	if (!TheGlobalData->m_isWorldBuilder)	//use faster version optimized for game and not world builder?
+	{	renderShoreLinesSorted(pCamera);
+		return;
+	}
+
+	m_numVisibleShoreLineTiles=0;
+
+	if (!TheGlobalData->m_showSoftWaterEdge || TheWaterTransparency->m_transparentWaterDepth==0 || m_numShoreLineTiles == 0)
+		return;
+
+	//Check if video card is capable of using this effect
+	if (DX8Wrapper::getBackBufferFormat() != WW3D_FORMAT_A8R8G8B8)
+		return;	//can't apply effect on cards without destination alpha
+
+	Int vertexCount = 0;
+	Int indexCount = 0;
+	Int drawEdgeY=m_map->getDrawOrgY()+m_map->getDrawHeight()-1;
+	Int drawEdgeX=m_map->getDrawOrgX()+m_map->getDrawWidth()-1;
+	if (drawEdgeX > (m_map->getXExtent()-1))
+		drawEdgeX = m_map->getXExtent()-1;
+	if (drawEdgeY > (m_map->getYExtent()-1))
+		drawEdgeY = m_map->getYExtent()-1;
+	Int drawStartX=m_map->getDrawOrgX();
+	Int drawStartY=m_map->getDrawOrgY();
+	Int j=0;
+
+	ShaderClass unlitShader=ShaderClass::_PresetOpaque2DShader;
+	unlitShader.Set_Depth_Compare(ShaderClass::PASS_LEQUAL);
+	DX8Wrapper::Set_Shader(unlitShader);
+	VertexMaterialClass *vmat=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
+	DX8Wrapper::Set_Material(vmat);
+	REF_PTR_RELEASE(vmat);
+	DX8Wrapper::Set_Texture(0,m_destAlphaTexture);
+	DX8Wrapper::Set_Transform(D3DTS_WORLD,Matrix3D(1));
+	//Enabled writes to destination alpha only
+	DX8Wrapper::Set_DX8_Render_State(D3DRS_COLORWRITEENABLE,D3DCOLORWRITEENABLE_ALPHA);
+	DX8Wrapper::Set_DX8_Texture_Stage_State(0,  D3DTSS_TEXCOORDINDEX, 0);
+	
+
+	while (j != m_numShoreLineTiles)
+	{
+		DynamicVBAccessClass vb_access(BUFFER_TYPE_DYNAMIC_DX8,dynamic_fvf_type,DEFAULT_MAX_BATCH_SHORELINE_TILES*4);
+		DynamicIBAccessClass ib_access(BUFFER_TYPE_DYNAMIC_DX8,DEFAULT_MAX_BATCH_SHORELINE_TILES*6);
+
+		{	//Need to put this in another code block so vb/ib gets automatically locked/unlocked by destructors
+			DynamicVBAccessClass::WriteLockClass lock(&vb_access);
+			VertexFormatXYZNDUV2 *vb= lock.Get_Formatted_Vertex_Array();
+			DynamicIBAccessClass::WriteLockClass lockib(&ib_access);
+			UnsignedShort *ib=lockib.Get_Index_Array();
+			if (!ib || !vb)
+			{	DX8Wrapper::Set_DX8_Render_State(D3DRS_COLORWRITEENABLE,D3DCOLORWRITEENABLE_BLUE|D3DCOLORWRITEENABLE_GREEN|D3DCOLORWRITEENABLE_RED);
+				return;
+			}
+
+			try {
+			//Loop over visible terrain and extract all the tiles that need shoreline blend
+			for (; j<m_numShoreLineTiles; j++)
+			{
+				if (vertexCount >= (DEFAULT_MAX_BATCH_SHORELINE_TILES*4))
+					break;	//no room in vertex buffer
+
+				shoreLineTileInfo *shoreInfo=&m_shoreLineTilePositions[j];
+
+				Int x = shoreInfo->m_xy & 0xffff;
+				Int y = shoreInfo->m_xy >> 16;
+
+				if (x >= drawStartX && x < drawEdgeX &&	y >= drawStartY && y < drawEdgeY)
+				{	//this tile is inside visible region
+
+					vb->x = shoreInfo->verts[0];
+					vb->y = shoreInfo->verts[1];
+					vb->z = shoreInfo->verts[2];
+					vb->nx=0;	//filling these to keep AGP write buffer happy.
+					vb->ny=0;
+					vb->nz=0;
+					vb->diffuse=0;
+					vb->u1=shoreInfo->t0;
+					vb->v1=0;
+					vb->u2=0;
+					vb->v2=0;
+					vb++;
+
+					vb->x = shoreInfo->verts[3];
+					vb->y = shoreInfo->verts[4];
+					vb->z = shoreInfo->verts[5];
+					vb->nx=0;	//filling these to keep AGP write buffer happy.
+					vb->ny=0;
+					vb->nz=0;
+					vb->diffuse=0;
+					vb->u1=shoreInfo->t1;
+					vb->v1=0;
+					vb->u2=0;
+					vb->v2=0;
+					vb++;
+
+					vb->x = shoreInfo->verts[6];
+					vb->y = shoreInfo->verts[7];
+					vb->z = shoreInfo->verts[8];
+					vb->nx=0;	//filling these to keep AGP write buffer happy.
+					vb->ny=0;
+					vb->nz=0;
+					vb->diffuse=0;
+					vb->u1=shoreInfo->t2;
+					vb->v1=0;
+					vb->u2=0;
+					vb->v2=0;
+					vb++;
+
+					vb->x = shoreInfo->verts[9];
+					vb->y = shoreInfo->verts[10];
+					vb->z = shoreInfo->verts[11];
+					vb->nx=0;	//filling these to keep AGP write buffer happy.
+					vb->ny=0;
+					vb->nz=0;
+					vb->diffuse=0;
+					vb->u1=shoreInfo->t3;
+					vb->v1=0;
+					vb->u2=0;
+					vb->v2=0;
+					vb++;
+					
+					if (m_map->getQuickFlipState(x,y))
+					{
+						ib[0]=1+vertexCount;
+						ib[1]=3+vertexCount;
+						ib[2]=0+vertexCount;
+						ib[3]=1+vertexCount;
+						ib[4]=2+vertexCount;
+						ib[5]=3+vertexCount;
+					}
+					else
+					{
+						ib[0]=0+vertexCount;
+						ib[1]=2+vertexCount;
+						ib[2]=3+vertexCount;
+						ib[3]=0+vertexCount;
+						ib[4]=1+vertexCount;
+						ib[5]=2+vertexCount;
+					}
+					ib += 6;
+					vertexCount +=4;
+					indexCount +=6;
+				}
+			}
+			IndexBufferExceptionFunc();
+			} catch(...) {
+				IndexBufferExceptionFunc();
+			}
+		}//lock and fill ib/vb
+
+		if (indexCount > 0 && vertexCount > 0)
+		{
+			DX8Wrapper::Set_Index_Buffer(ib_access,0);
+			DX8Wrapper::Set_Vertex_Buffer(vb_access);
+// ?Draw_Triangles@DX8Wrapper@@ present-unmatched
+			DX8Wrapper::Draw_Triangles(	0,indexCount/3, 0,	vertexCount);	//draw a quad, 2 triangles, 4 verts
+			m_numVisibleShoreLineTiles += indexCount/6;
+		}
+
+		vertexCount=0;
+		indexCount=0;
+	}//for all shore tiles
+
+	//Disable writes to destination alpha
+	DX8Wrapper::Set_DX8_Render_State(D3DRS_COLORWRITEENABLE,D3DCOLORWRITEENABLE_BLUE|D3DCOLORWRITEENABLE_GREEN|D3DCOLORWRITEENABLE_RED);
+	ShaderClass::Invalidate();
+}
+
+/**Render parts of terrain that are along the coast line and have vertices directly under the
+water plane.  Applying a custom render to these polygons allows for a smoother land->water
+transition.  This version is exactly like the one above but optimized for the case where tiles
+are assumed to be sorted.  Not used by World Builder. */
+// ?renderShoreLinesSorted@BaseHeightMapRenderObjClass@@IAEXPAVCameraClass@@@Z present-unmatched
+void BaseHeightMapRenderObjClass::renderShoreLinesSorted(CameraClass *pCamera)
+{
+	m_numVisibleShoreLineTiles=0;
+
+	if (!TheGlobalData->m_showSoftWaterEdge || TheWaterTransparency->m_transparentWaterDepth==0 || m_numShoreLineTiles == 0)
+		return;
+
+	//Check if video card is capable of using this effect
+	if (DX8Wrapper::getBackBufferFormat() != WW3D_FORMAT_A8R8G8B8)
+		return;	//can't apply effect on cards without destination alpha
+
+	Int vertexCount = 0;
+	Int indexCount = 0;
+	Int drawEdgeY=m_map->getDrawOrgY()+m_map->getDrawHeight()-1;
+	Int drawEdgeX=m_map->getDrawOrgX()+m_map->getDrawWidth()-1;
+	if (drawEdgeX > (m_map->getXExtent()-1))
+		drawEdgeX = m_map->getXExtent()-1;
+	if (drawEdgeY > (m_map->getYExtent()-1))
+		drawEdgeY = m_map->getYExtent()-1;
+	Int drawStartX=m_map->getDrawOrgX();
+	Int drawStartY=m_map->getDrawOrgY();
+
+	if (m_shoreLineSortInfosXMajor)	//map is wider than taller.
+	{
+		//Clamp the major map axis to available shoreline tiles.
+		if (m_shoreLineTileSortMinCoordinate > drawStartX)
+			drawStartX=m_shoreLineTileSortMinCoordinate;
+		if ((m_shoreLineTileSortMaxCoordinate+1) < drawEdgeX)
+			drawEdgeX=(m_shoreLineTileSortMaxCoordinate+1);
+		if ((drawEdgeX-drawStartX) <= 0)
+			return;	//nothing to draw
+	}
+	else
+	{
+		//Clamp the major map axis to available shoreline tiles.
+		if (m_shoreLineTileSortMinCoordinate > drawStartY)
+			drawStartY=m_shoreLineTileSortMinCoordinate;
+		if ((m_shoreLineTileSortMaxCoordinate+1) < drawEdgeY)
+			drawEdgeY=(m_shoreLineTileSortMaxCoordinate+1);
+	
+		if ((drawEdgeY-drawStartY) <= 0)
+			return;	//nothing to draw
+	}
+
+	ShaderClass unlitShader=ShaderClass::_PresetOpaque2DShader;
+	unlitShader.Set_Depth_Compare(ShaderClass::PASS_LEQUAL);
+	DX8Wrapper::Set_Shader(unlitShader);
+	VertexMaterialClass *vmat=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
+	DX8Wrapper::Set_Material(vmat);
+	REF_PTR_RELEASE(vmat);
+	DX8Wrapper::Set_Texture(0,m_destAlphaTexture);
+	DX8Wrapper::Set_Transform(D3DTS_WORLD,Matrix3D(1));
+	//Enabled writes to destination alpha only
+	DX8Wrapper::Set_DX8_Render_State(D3DRS_COLORWRITEENABLE,D3DCOLORWRITEENABLE_ALPHA);
+	DX8Wrapper::Set_DX8_Texture_Stage_State(0,  D3DTSS_TEXCOORDINDEX, 0);
+
+	Bool isDone=FALSE;
+	Int lastRenderedTile=0;
+
+	while (!isDone)
+	{
+		DynamicVBAccessClass vb_access(BUFFER_TYPE_DYNAMIC_DX8,dynamic_fvf_type,DEFAULT_MAX_BATCH_SHORELINE_TILES*4);
+		DynamicIBAccessClass ib_access(BUFFER_TYPE_DYNAMIC_DX8,DEFAULT_MAX_BATCH_SHORELINE_TILES*6);
+
+		{	//Need to put this in another code block so vb/ib gets automatically locked/unlocked by destructors
+			DynamicVBAccessClass::WriteLockClass lock(&vb_access);
+			VertexFormatXYZNDUV2 *vb= lock.Get_Formatted_Vertex_Array();
+			DynamicIBAccessClass::WriteLockClass lockib(&ib_access);
+			UnsignedShort *ib=lockib.Get_Index_Array();
+			if (!ib || !vb)
+			{	DX8Wrapper::Set_DX8_Render_State(D3DRS_COLORWRITEENABLE,D3DCOLORWRITEENABLE_BLUE|D3DCOLORWRITEENABLE_GREEN|D3DCOLORWRITEENABLE_RED);
+				return;
+			}
+
+			try {
+			//Loop over visible terrain and extract all the tiles that need shoreline blend
+			if (m_shoreLineSortInfosXMajor)	//map is wider than taller.
+			{	
+				for (Int x=drawStartX; x<drawEdgeX; x++)
+				{	//figure out how many tiles are available in this column
+					shoreLineTileSortInfo *sortInfo=&m_shoreLineSortInfos[x];
+
+					if (!sortInfo->numTiles)
+						continue;	//no tiles in this column.
+
+					//Clamp visible area to actual tiles in this column
+					Int startY=drawStartY;
+					if (sortInfo->minTileCoordinate > startY)
+						startY = sortInfo->minTileCoordinate;
+					Int edgeY=drawEdgeY;
+					if ((sortInfo->maxTileCoordinate+1) < edgeY)
+						edgeY = sortInfo->maxTileCoordinate+1;
+
+					if ((edgeY-startY) <= 0)
+						continue;	//no tiles visible in this column.
+
+					//Pointer to first tile in this column
+					shoreLineTileInfo *shoreInfo=m_shoreLineTilePositions+sortInfo->tileStartIndex+lastRenderedTile;
+					//Loop over tiles in this column and render visible ones
+					for (Int k=lastRenderedTile; k<sortInfo->numTiles; k++)
+					{
+						Int tileY = shoreInfo->m_xy >> 16;
+						if (tileY < startY)
+						{	shoreInfo++;	//advance to next tile.
+							continue;	//this tile is not visible
+						}
+
+						if (tileY >= edgeY)
+							break;	//since tiles are x-sorted, there will not be any visible ones after this one.
+
+						if (vertexCount >= (DEFAULT_MAX_BATCH_SHORELINE_TILES*4))
+						{	lastRenderedTile=k;
+							goto flushVertexBuffer0;
+						}
+
+						vb->x = shoreInfo->verts[0];
+						vb->y = shoreInfo->verts[1];
+						vb->z = shoreInfo->verts[2];
+						vb->nx=0;	//filling these to keep AGP write buffer happy.
+						vb->ny=0;
+						vb->nz=0;
+						vb->diffuse=0;
+						vb->u1=shoreInfo->t0;
+						vb->v1=0;
+						vb->u2=0;
+						vb->v2=0;
+						vb++;
+
+						vb->x = shoreInfo->verts[3];
+						vb->y = shoreInfo->verts[4];
+						vb->z = shoreInfo->verts[5];
+						vb->nx=0;	//filling these to keep AGP write buffer happy.
+						vb->ny=0;
+						vb->nz=0;
+						vb->diffuse=0;
+						vb->u1=shoreInfo->t1;
+						vb->v1=0;
+						vb->u2=0;
+						vb->v2=0;
+						vb++;
+
+						vb->x = shoreInfo->verts[6];
+						vb->y = shoreInfo->verts[7];
+						vb->z = shoreInfo->verts[8];
+						vb->nx=0;	//filling these to keep AGP write buffer happy.
+						vb->ny=0;
+						vb->nz=0;
+						vb->diffuse=0;
+						vb->u1=shoreInfo->t2;
+						vb->v1=0;
+						vb->u2=0;
+						vb->v2=0;
+						vb++;
+
+						vb->x = shoreInfo->verts[9];
+						vb->y = shoreInfo->verts[10];
+						vb->z = shoreInfo->verts[11];
+						vb->nx=0;	//filling these to keep AGP write buffer happy.
+						vb->ny=0;
+						vb->nz=0;
+						vb->diffuse=0;
+						vb->u1=shoreInfo->t3;
+						vb->v1=0;
+						vb->u2=0;
+						vb->v2=0;
+						vb++;
+					
+						if (m_map->getQuickFlipState(x,tileY))
+						{
+							ib[0]=1+vertexCount;
+							ib[1]=3+vertexCount;
+							ib[2]=0+vertexCount;
+							ib[3]=1+vertexCount;
+							ib[4]=2+vertexCount;
+							ib[5]=3+vertexCount;
+						}
+						else
+						{
+							ib[0]=0+vertexCount;
+							ib[1]=2+vertexCount;
+							ib[2]=3+vertexCount;
+							ib[3]=0+vertexCount;
+							ib[4]=1+vertexCount;
+							ib[5]=2+vertexCount;
+						}
+						ib += 6;
+						vertexCount +=4;
+						indexCount +=6;
+						shoreInfo++;	//advance to next tile.
+					}//looping over tiles in column
+					lastRenderedTile=0;
+				}//looping over all visible columns.
+flushVertexBuffer0:
+				drawStartX = x;	//record how far we've moved so far
+				isDone = x >= drawEdgeX;
+			}
+			else
+			{
+				for (Int y=drawStartY; y<drawEdgeY; y++)
+				{	//figure out how many tiles are available in this row
+					shoreLineTileSortInfo *sortInfo=&m_shoreLineSortInfos[y];
+
+					if (!sortInfo->numTiles)
+						continue;	//no tiles in this row.
+
+					//Clamp visible area to actual tiles in this row
+					Int startX=drawStartX;
+					if (sortInfo->minTileCoordinate > startX)
+						startX = sortInfo->minTileCoordinate;
+					Int edgeX=drawEdgeX;
+					if ((sortInfo->maxTileCoordinate+1) < edgeX)
+						edgeX = sortInfo->maxTileCoordinate+1;
+
+					if ((edgeX-startX) <= 0)
+						continue;	//no tiles visible in this row.
+
+					//Pointer to first tile in this row
+					shoreLineTileInfo *shoreInfo=m_shoreLineTilePositions+sortInfo->tileStartIndex+lastRenderedTile;
+					//Loop over tiles in this row and render visible ones
+					for (Int k=lastRenderedTile; k<sortInfo->numTiles; k++)
+					{
+						Int tileX = shoreInfo->m_xy & 0xffff;
+						if (tileX < startX)
+						{	shoreInfo++;	//advance to next tile.
+							continue;	//this tile is not visible
+						}
+
+						if (tileX >= edgeX)
+							break;	//since tiles are x-sorted, there will not be any visible ones after this one.
+
+						if (vertexCount >= (DEFAULT_MAX_BATCH_SHORELINE_TILES*4))
+						{	lastRenderedTile=k;
+							goto flushVertexBuffer1;
+						}
+
+						vb->x = shoreInfo->verts[0];
+						vb->y = shoreInfo->verts[1];
+						vb->z = shoreInfo->verts[2];
+						vb->nx=0;	//filling these to keep AGP write buffer happy.
+						vb->ny=0;
+						vb->nz=0;
+						vb->diffuse=0;
+						vb->u1=shoreInfo->t0;
+						vb->v1=0;
+						vb->u2=0;
+						vb->v2=0;
+						vb++;
+
+						vb->x = shoreInfo->verts[3];
+						vb->y = shoreInfo->verts[4];
+						vb->z = shoreInfo->verts[5];
+						vb->nx=0;	//filling these to keep AGP write buffer happy.
+						vb->ny=0;
+						vb->nz=0;
+						vb->diffuse=0;
+						vb->u1=shoreInfo->t1;
+						vb->v1=0;
+						vb->u2=0;
+						vb->v2=0;
+						vb++;
+
+						vb->x = shoreInfo->verts[6];
+						vb->y = shoreInfo->verts[7];
+						vb->z = shoreInfo->verts[8];
+						vb->nx=0;	//filling these to keep AGP write buffer happy.
+						vb->ny=0;
+						vb->nz=0;
+						vb->diffuse=0;
+						vb->u1=shoreInfo->t2;
+						vb->v1=0;
+						vb->u2=0;
+						vb->v2=0;
+						vb++;
+
+						vb->x = shoreInfo->verts[9];
+						vb->y = shoreInfo->verts[10];
+						vb->z = shoreInfo->verts[11];
+						vb->nx=0;	//filling these to keep AGP write buffer happy.
+						vb->ny=0;
+						vb->nz=0;
+						vb->diffuse=0;
+						vb->u1=shoreInfo->t3;
+						vb->v1=0;
+						vb->u2=0;
+						vb->v2=0;
+						vb++;
+					
+						if (m_map->getQuickFlipState(tileX,y))
+						{
+							ib[0]=1+vertexCount;
+							ib[1]=3+vertexCount;
+							ib[2]=0+vertexCount;
+							ib[3]=1+vertexCount;
+							ib[4]=2+vertexCount;
+							ib[5]=3+vertexCount;
+						}
+						else
+						{
+							ib[0]=0+vertexCount;
+							ib[1]=2+vertexCount;
+							ib[2]=3+vertexCount;
+							ib[3]=0+vertexCount;
+							ib[4]=1+vertexCount;
+							ib[5]=2+vertexCount;
+						}
+						ib += 6;
+						vertexCount +=4;
+						indexCount +=6;
+						shoreInfo++;	//advance to next tile.
+					}//looping over tiles in row
+					lastRenderedTile=0;
+				}//looping over all visible rows.
+flushVertexBuffer1:
+				drawStartY = y;	//record how far we've moved so far
+				isDone = y >= drawEdgeY;
+				IndexBufferExceptionFunc();
+			}
+			} catch(...) {
+				IndexBufferExceptionFunc();
+			}
+		}//lock and fill ib/vb
+
+		if (indexCount > 0 && vertexCount > 0)
+		{
+			DX8Wrapper::Set_Index_Buffer(ib_access,0);
+			DX8Wrapper::Set_Vertex_Buffer(vb_access);
+// ?Draw_Triangles@DX8Wrapper@@ present-unmatched
+			DX8Wrapper::Draw_Triangles(	0,indexCount/3, 0,	vertexCount);	//draw a quad, 2 triangles, 4 verts
+			m_numVisibleShoreLineTiles += indexCount/6;
+		}
+
+		vertexCount=0;
+		indexCount=0;
+	}//for all shore tiles
+
+	//Disable writes to destination alpha
+	DX8Wrapper::Set_DX8_Render_State(D3DRS_COLORWRITEENABLE,D3DCOLORWRITEENABLE_BLUE|D3DCOLORWRITEENABLE_GREEN|D3DCOLORWRITEENABLE_RED);
+	ShaderClass::Invalidate();
+}
+
+//=============================================================================
+// BaseHeightMapRenderObjClass::renderTrees
+//=============================================================================
+/** Renders (draws) the trees. Since the trees are transparent, this has to be
+called after flush. */
+//=============================================================================
+// byte-exact reconstruction: game/Libraries/Source/WWVegas/WWLib/PhysicsRenderThunks.cpp
+// ?renderTrees@BaseHeightMapRenderObjClass@@QAEXPAVCameraClass@@@Z present-unmatched
+void BaseHeightMapRenderObjClass::renderTrees(CameraClass * camera)
+{
+#ifdef EXTENDED_STATS
+	if (DX8Wrapper::stats.m_disableObjects) {
+		return;
+	}
+#endif
+	if (m_map==NULL) return;
+	if (Scene==NULL) return;
+	if (m_treeBuffer) {
+		Matrix3D tm(Transform);
+		DX8Wrapper::Set_Transform(D3DTS_WORLD,tm);
+		DX8Wrapper::Set_Material(m_vertexMaterialClass);
+		RTS3DScene *pMyScene = (RTS3DScene *)Scene;
+		RefRenderObjListIterator pDynamicLightsIterator(pMyScene->getDynamicLights());
+		m_treeBuffer->drawTrees(camera, &pDynamicLightsIterator);
+	}
+}
+
+// ------------------------------------------------------------------------------------------------
+/** CRC */
+// ------------------------------------------------------------------------------------------------
+// ?crc@BaseHeightMapRenderObjClass@@MAEXPAVXfer@@@Z present-unmatched
+void BaseHeightMapRenderObjClass::crc( Xfer *xfer )
+{
+	// empty. jba [8/11/2003]	
+}  // end CRC
+
+// ------------------------------------------------------------------------------------------------
+/** Xfer
+	* Version Info:
+	* 1: Initial version */
+// ------------------------------------------------------------------------------------------------
+// ?xfer@BaseHeightMapRenderObjClass@@MAEXPAVXfer@@@Z present-unmatched
+void BaseHeightMapRenderObjClass::xfer( Xfer *xfer )
+{
+
+	// version
+	XferVersion currentVersion = 1;
+	XferVersion version = currentVersion;
+	xfer->xferVersion( &version, currentVersion );
+
+	xfer->xferSnapshot( m_treeBuffer );
+	xfer->xferSnapshot( m_propBuffer );
+
+
+}  // end xfer
+
+// ------------------------------------------------------------------------------------------------
+/** Load post process */
+// ------------------------------------------------------------------------------------------------
+// ?loadPostProcess@BaseHeightMapRenderObjClass@@MAEXXZ present-unmatched
+void BaseHeightMapRenderObjClass::loadPostProcess( void )
+{
+	// empty. jba [8/11/2003]	
+}  // end loadPostProcess

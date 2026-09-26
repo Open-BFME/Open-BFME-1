@@ -37,11 +37,11 @@ def shape(rva, size):
 def refresh(max_size=1000):
     index = dict(exe=sha(build.EXE), max_size=max_size, shapes={})
     sources = {}
-    with (build.ROOT / "reverse/functions.csv").open(newline="", encoding="utf-8") as handle:
+    with (build.ROOT / "targets/game/reverse/functions.csv").open(newline="", encoding="utf-8") as handle:
         for row in csv.DictReader(handle):
             source = row.get("source", "")
-            if (row.get("status") != "matched" or not source.startswith("Code/")
-                    or source.startswith("Code/gen_") or not source.endswith((".cpp", ".c"))):
+            if (row.get("status") != "matched" or not source.startswith("game/")
+                    or source.startswith("game/gen_") or not source.endswith((".cpp", ".c"))):
                 continue
             size = int(row["target_size"])
             if not 8 <= size <= max_size:

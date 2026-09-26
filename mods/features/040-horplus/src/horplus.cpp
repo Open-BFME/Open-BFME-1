@@ -47,8 +47,8 @@ enum {
 typedef UnsignedInt(__fastcall *DisplayDimension)(void *self, void *edx);
 typedef void(__fastcall *SetViewPlane)(void *self, void *edx, Real hfov, Real vfov);
 
-// CameraClass::Set_View_Plane(float,float), reverse/functions.csv RVA
-// 0x00931780, matched against Code/Libraries/.../WW3D2/camera.cpp. Payload
+// CameraClass::Set_View_Plane(float,float), targets/game/reverse/functions.csv RVA
+// 0x00931780, matched against game/Libraries/.../WW3D2/camera.cpp. Payload
 // calls use the fixed retail VA (RVA + the 0x00400000 image base). Passing
 // vfov=-1 preserves the retail behavior of deriving the vertical extent from
 // the camera's current tactical viewport aspect.

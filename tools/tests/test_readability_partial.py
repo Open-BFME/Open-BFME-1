@@ -28,12 +28,12 @@ def _two_staged_edits(tmp_path):
     (root / AREA / "gamma.cpp").write_text(
         (root / AREA / "gamma.cpp").read_text().replace(
             "m_flag = 0;", "__asm { nop }\n\t__emit 0x90"))
-    stage(root, "Code")
+    stage(root, "game")
     return root
 
 
 def test_only_without_staged_is_refused(tmp_path):
-    out = cli(world(tmp_path), "--only", "Code")
+    out = cli(world(tmp_path), "--only", "game")
     assert out.returncode != 0
     assert "--only belongs to --staged" in out.stderr + out.stdout
 
@@ -42,7 +42,7 @@ def test_only_selecting_nothing_staged_fails_loudly(tmp_path):
     """A silent 'no measurable change' here would be the bug, not the answer."""
     root = world(tmp_path)
     commit(root)
-    out = cli(root, "--staged", "--only", "reverse")
+    out = cli(root, "--staged", "--only", "targets/game/reverse")
     assert out.returncode != 0
     assert "selects nothing staged" in out.stderr + out.stdout
 

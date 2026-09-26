@@ -53,12 +53,12 @@ and departure duties add work when the local peer is the router.
    and fast paths, not simply the Zero Hour lexicographic loop.
 
 The principal readable sources are
-[the command pump](../Code/GameEngine/Source/GameNetwork/Network_GetCommandsFromCommandList.cpp),
-[enqueue/fragmentation](../Code/GameEngine/Source/GameNetwork/Connection_sendNetCommandMsg.cpp),
-[packet sending](../Code/GameEngine/Source/GameNetwork/Connection_doSend.cpp),
-[frame storage](../Code/GameEngine/Source/GameNetwork/FrameData.cpp),
-[command insertion](../Code/GameEngine/Source/GameNetwork/NetCommandList_addMessage.cpp),
-and [routing/readiness](../Code/GameEngine/Source/GameNetwork/native_connection_timing.cpp).
+[the command pump](../game/GameEngine/Source/GameNetwork/Network_GetCommandsFromCommandList.cpp),
+[enqueue/fragmentation](../game/GameEngine/Source/GameNetwork/Connection_sendNetCommandMsg.cpp),
+[packet sending](../game/GameEngine/Source/GameNetwork/Connection_doSend.cpp),
+[frame storage](../game/GameEngine/Source/GameNetwork/FrameData.cpp),
+[command insertion](../game/GameEngine/Source/GameNetwork/NetCommandList_addMessage.cpp),
+and [routing/readiness](../game/GameEngine/Source/GameNetwork/native_connection_timing.cpp).
 
 ## Why there is delay even on a fast network
 
@@ -80,7 +80,7 @@ simulation age, but a stalled simulation does not age frames like a wall clock.
 Read each installation's INI archives before quoting configurable values.
 
 See [the caller and phase evidence](bfme1-network-admission-and-client-phases.md)
-and the recovered [admission function](../Code/GameEngine/Source/GameNetwork/BFMENativeNetwork_getFrameAdvanceCount.cpp).
+and the recovered [admission function](../game/GameEngine/Source/GameNetwork/BFMENativeNetwork_getFrameAdvanceCount.cpp).
 
 ## Loss, leaving and router replacement
 
@@ -116,9 +116,9 @@ The checksum accumulator's implementation is a rotate/add over words and tail
 bytes despite the historical CRC name.
 
 Readable evidence includes
-[state collection](../Code/GameEngine/Source/Common/GameLogicCRC.cpp),
-[peer comparison](../Code/GameEngine/Source/GameLogic/System/GameLogicPeerCRC.cpp),
-and [the local guard](../Code/GameEngine/Source/GameNetwork/native_desync_report.cpp).
+[state collection](../game/GameEngine/Source/Common/GameLogicCRC.cpp),
+[peer comparison](../game/GameEngine/Source/GameLogic/System/GameLogicPeerCRC.cpp),
+and [the local guard](../game/GameEngine/Source/GameNetwork/native_desync_report.cpp).
 Object registration, wake-up scheduling and deferred destruction matter here:
 all peers must update the same objects in the same phases and order.
 

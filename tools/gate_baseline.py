@@ -10,7 +10,7 @@ red NOW and was not red THEN. Counts only ever go down; a baseline edit that
 adds a row is refused by --validate, so a red cannot be hidden by writing it
 into the file.
 
-  python3 tools/gate_baseline.py --record      run the gate, write reverse/full_gate_baseline.txt
+  python3 tools/gate_baseline.py --record      run the gate, write targets/game/reverse/full_gate_baseline.txt
   python3 tools/gate_baseline.py --check       run the gate, fail on any NEW red (hook use)
   python3 tools/gate_baseline.py --validate    staged baseline must be a subset of HEAD's
   python3 tools/gate_baseline.py --check --output FILE   compare a saved gate transcript
@@ -28,7 +28,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BASELINE = ROOT / "reverse" / "full_gate_baseline.txt"
+BASELINE = ROOT / "targets/game/reverse" / "full_gate_baseline.txt"
 FAIL_RE = re.compile(r"^  FAIL (?P<name>.+) \((?P<source>[^()]*)\)$")
 FUNCTIONS_RE = re.compile(r"^Functions: (OK|FAIL) ")
 HEADER = "# full-gate red rows, shrink-only (tools/gate_baseline.py). One 'name (source)' per line.\n"
@@ -106,7 +106,7 @@ def check(output, baseline):
     for row in new:
         print("  NEW RED " + row)
     for row in fixed:
-        print("  now green (remove from reverse/full_gate_baseline.txt in the fixing commit): " + row)
+        print("  now green (remove from targets/game/reverse/full_gate_baseline.txt in the fixing commit): " + row)
     print(f"gate_baseline: {len(now)} red now, {len(baseline)} in baseline, "
           f"{len(new)} NEW, {len(fixed)} fixed")
     return 1 if new else 0

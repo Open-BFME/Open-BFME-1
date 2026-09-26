@@ -10,7 +10,7 @@
 //
 // Why an event log and not one verdict object: a single write at game end is
 // only produced by a machine that survives to game end. A crash, or a player
-// who quits (reverse/game_end/FINDINGS.md: "The leaver that called quitGame
+// who quits (targets/game/reverse/game_end/FINDINGS.md: "The leaver that called quitGame
 // does not wait: it posts MSG_CLEAR_GAME_DATA and is on the score screen a tick
 // later"), leaves no trace at all — indistinguishable downstream from a game
 // that never happened. So:
@@ -66,7 +66,7 @@ enum {
     LEAVE_SLOTS = 8
 };
 
-// VictoryConditions layout and vtable slots (reverse/game_end/FINDINGS.md).
+// VictoryConditions layout and vtable slots (targets/game/reverse/game_end/FINDINGS.md).
 enum {
     VC_PLAYERS = 0x14,     // m_players[32]
     VC_LOCALSLOT = 0x94,   // < 0 when this machine has no seat

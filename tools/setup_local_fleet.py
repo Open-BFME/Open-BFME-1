@@ -11,9 +11,9 @@ DEFAULT_FLEET = Path.home() / "Projects" / "open-bfme-local-fleet"
 DEFAULT_ORIGIN = "https://github.com/Open-BFME/Open-BFME-1.git"
 GH_EXE = Path("/mnt/c/Program Files/GitHub CLI/gh.exe")
 GENERATED_INPUTS = (
-    "reverse/exports.csv",
-    "reverse/ghidra_functions.csv",
-    "reverse/string_xrefs.tsv",
+    "targets/game/reverse/exports.csv",
+    "targets/game/reverse/ghidra_functions.csv",
+    "targets/game/reverse/string_xrefs.tsv",
 )
 
 

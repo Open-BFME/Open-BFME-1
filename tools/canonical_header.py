@@ -132,7 +132,7 @@ def main():
     args = ap.parse_args()
 
     defining = {}
-    for path in (ROOT / "Code").rglob("*.h"):
+    for path in (ROOT / "game").rglob("*.h"):
         if any(v in path.as_posix() for v in VENDORED):
             continue
         for head in HEAD.finditer(path.read_text(encoding="utf-8", errors="replace")):

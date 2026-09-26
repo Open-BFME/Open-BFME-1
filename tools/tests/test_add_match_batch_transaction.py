@@ -21,8 +21,8 @@ def dump(name, rva, size, source, kind="gen-dump"):
 
 
 def arrange(tmp_path, monkeypatch, dumps, claims, outcomes=(0,)):
-    reverse = tmp_path / "reverse"
-    reverse.mkdir()
+    reverse = tmp_path / "targets/game/reverse"
+    reverse.mkdir(parents=True)
     functions = reverse / "functions.csv"
     functions.write_bytes(
         (HEADER + "\r\n" + "".join(row + "\r\n" for row in dumps)).encode("utf-8"))
@@ -53,12 +53,12 @@ def arrange(tmp_path, monkeypatch, dumps, claims, outcomes=(0,)):
 @pytest.mark.parametrize("kind", ["gen-dump", "gen-thunk"])
 def test_batch_takeover_tombstones_each_scaffold(tmp_path, monkeypatch, kind):
     old = "?d_00abcd00@@YAXXZ" if kind == "gen-dump" else "?j_00abcd00@@YAXXZ"
-    source = "Code/gen_asm/d_00abcd00.asm" if kind == "gen-dump" else "Code/gen_small/t.cpp"
+    source = "game/gen_asm/d_00abcd00.asm" if kind == "gen-dump" else "game/gen_small/t.cpp"
     real = "?realBody@Thing@@QAEXXZ"
     functions, deleted, _sources = arrange(
         tmp_path, monkeypatch,
         [dump(old, "0x00ABCD00", 32, source, kind)],
-        [(real, "0x00ABCD00", "32", "Code/Thing.cpp", "", "0x00ABCD00")])
+        [(real, "0x00ABCD00", "32", "game/Thing.cpp", "", "0x00ABCD00")])
 
     add_match_batch.main()
 
@@ -72,12 +72,12 @@ def test_batch_takeover_tombstones_each_scaffold(tmp_path, monkeypatch, kind):
 
 def test_later_red_gate_restores_every_file_byte_for_byte(tmp_path, monkeypatch):
     dumps = [
-        dump("?d_00abcd00@@YAXXZ", "0x00ABCD00", 32, "Code/gen_asm/a.asm"),
-        dump("?d_00abce00@@YAXXZ", "0x00ABCE00", 48, "Code/gen_asm/b.asm"),
+        dump("?d_00abcd00@@YAXXZ", "0x00ABCD00", 32, "game/gen_asm/a.asm"),
+        dump("?d_00abce00@@YAXXZ", "0x00ABCE00", 48, "game/gen_asm/b.asm"),
     ]
     claims = [
-        ("?a@Thing@@QAEXXZ", "0x00ABCD00", "32", "Code/A.cpp", "", "0x00ABCD00"),
-        ("?b@Thing@@QAEXXZ", "0x00ABCE00", "48", "Code/B.cpp", "", "0x00ABCE00"),
+        ("?a@Thing@@QAEXXZ", "0x00ABCD00", "32", "game/A.cpp", "", "0x00ABCD00"),
+        ("?b@Thing@@QAEXXZ", "0x00ABCE00", "48", "game/B.cpp", "", "0x00ABCE00"),
     ]
     functions, deleted, sources = arrange(
         tmp_path, monkeypatch, dumps, claims, outcomes=(0, 1))
@@ -94,8 +94,8 @@ def test_later_red_gate_restores_every_file_byte_for_byte(tmp_path, monkeypatch)
 def test_interruption_restores_every_file_byte_for_byte(tmp_path, monkeypatch):
     functions, deleted, sources = arrange(
         tmp_path, monkeypatch,
-        [dump("?d_00abcd00@@YAXXZ", "0x00ABCD00", 32, "Code/gen_asm/a.asm")],
-        [("?a@Thing@@QAEXXZ", "0x00ABCD00", "32", "Code/A.cpp", "", "0x00ABCD00")])
+        [dump("?d_00abcd00@@YAXXZ", "0x00ABCD00", 32, "game/gen_asm/a.asm")],
+        [("?a@Thing@@QAEXXZ", "0x00ABCD00", "32", "game/A.cpp", "", "0x00ABCD00")])
     before = (functions.read_bytes(), deleted.read_bytes(), sources[0].read_bytes())
     monkeypatch.setattr(
         add_match_batch.subprocess, "run",
@@ -110,8 +110,8 @@ def test_interruption_restores_every_file_byte_for_byte(tmp_path, monkeypatch):
 def test_dry_run_is_mutation_free(tmp_path, monkeypatch):
     functions, deleted, sources = arrange(
         tmp_path, monkeypatch,
-        [dump("?d_00abcd00@@YAXXZ", "0x00ABCD00", 32, "Code/gen_asm/a.asm")],
-        [("?a@Thing@@QAEXXZ", "0x00ABCD00", "32", "Code/A.cpp", "", "0x00ABCD00")])
+        [dump("?d_00abcd00@@YAXXZ", "0x00ABCD00", 32, "game/gen_asm/a.asm")],
+        [("?a@Thing@@QAEXXZ", "0x00ABCD00", "32", "game/A.cpp", "", "0x00ABCD00")])
     before = (functions.read_bytes(), deleted.read_bytes(), sources[0].read_bytes())
     sys.argv.insert(1, "--dry-run")
 
@@ -123,8 +123,8 @@ def test_dry_run_is_mutation_free(tmp_path, monkeypatch):
 def test_batch_rejects_a_different_scaffold_extent_without_changes(tmp_path, monkeypatch):
     functions, deleted, sources = arrange(
         tmp_path, monkeypatch,
-        [dump("?d_00abcd00@@YAXXZ", "0x00ABCD00", 32, "Code/gen_asm/a.asm")],
-        [("?a@Thing@@QAEXXZ", "0x00ABCD00", "47", "Code/A.cpp", "", "0x00ABCD00")])
+        [dump("?d_00abcd00@@YAXXZ", "0x00ABCD00", 32, "game/gen_asm/a.asm")],
+        [("?a@Thing@@QAEXXZ", "0x00ABCD00", "47", "game/A.cpp", "", "0x00ABCD00")])
     before = (functions.read_bytes(), deleted.read_bytes(), sources[0].read_bytes())
 
     with pytest.raises(SystemExit):
@@ -136,7 +136,7 @@ def test_batch_rejects_a_different_scaffold_extent_without_changes(tmp_path, mon
 def test_ordinary_batch_append_does_not_touch_deletion_ledger(tmp_path, monkeypatch):
     functions, deleted, _sources = arrange(
         tmp_path, monkeypatch, [],
-        [("?a@Thing@@QAEXXZ", "0x00ABCD00", "32", "Code/A.cpp", "", "")])
+        [("?a@Thing@@QAEXXZ", "0x00ABCD00", "32", "game/A.cpp", "", "")])
     deleted_before = deleted.read_bytes()
 
     add_match_batch.main()
@@ -147,8 +147,8 @@ def test_ordinary_batch_append_does_not_touch_deletion_ledger(tmp_path, monkeypa
 
 def test_batch_build_receives_every_new_source_boundary(tmp_path, monkeypatch):
     claims = [
-        ("?a@Thing@@QAEXXZ", "0x00ABCD00", "32", "Code/A.cpp", "", ""),
-        ("?b@Thing@@QAEXXZ", "0x00ABCE00", "48", "Code/A.cpp", "", ""),
+        ("?a@Thing@@QAEXXZ", "0x00ABCD00", "32", "game/A.cpp", "", ""),
+        ("?b@Thing@@QAEXXZ", "0x00ABCE00", "48", "game/A.cpp", "", ""),
     ]
     arrange(tmp_path, monkeypatch, [], claims)
     environments = []
@@ -175,8 +175,8 @@ def test_batch_rejects_same_key_scaffold_replacement(tmp_path, monkeypatch):
     name = "?d_00abcd00@@YAXXZ"
     functions, deleted, sources = arrange(
         tmp_path, monkeypatch,
-        [dump(name, "0x00ABCD00", 32, "Code/gen_asm/a.asm")],
-        [(name, "0x00ABCD00", "32", "Code/A.cpp", "", "0x00ABCD00")])
+        [dump(name, "0x00ABCD00", 32, "game/gen_asm/a.asm")],
+        [(name, "0x00ABCD00", "32", "game/A.cpp", "", "0x00ABCD00")])
     before = (functions.read_bytes(), deleted.read_bytes(), sources[0].read_bytes())
 
     with pytest.raises(SystemExit):
@@ -188,8 +188,8 @@ def test_batch_rejects_same_key_scaffold_replacement(tmp_path, monkeypatch):
 def test_batch_rejects_a_torn_deletion_ledger_before_writing(tmp_path, monkeypatch):
     functions, deleted, sources = arrange(
         tmp_path, monkeypatch,
-        [dump("?d_00abcd00@@YAXXZ", "0x00ABCD00", 32, "Code/gen_asm/a.asm")],
-        [("?a@Thing@@QAEXXZ", "0x00ABCD00", "32", "Code/A.cpp", "", "0x00ABCD00")])
+        [dump("?d_00abcd00@@YAXXZ", "0x00ABCD00", 32, "game/gen_asm/a.asm")],
+        [("?a@Thing@@QAEXXZ", "0x00ABCD00", "32", "game/A.cpp", "", "0x00ABCD00")])
     deleted.write_bytes(b"name,target_rva,reason")
     before = (functions.read_bytes(), deleted.read_bytes(), sources[0].read_bytes())
 
@@ -202,8 +202,8 @@ def test_batch_rejects_a_torn_deletion_ledger_before_writing(tmp_path, monkeypat
 def test_batch_rejects_unterminated_tombstone_csv_before_writing(tmp_path, monkeypatch):
     functions, deleted, sources = arrange(
         tmp_path, monkeypatch,
-        [dump("?d_00abcd00@@YAXXZ", "0x00ABCD00", 32, "Code/gen_asm/a.asm")],
-        [("?a@Thing@@QAEXXZ", "0x00ABCD00", "32", "Code/A.cpp", "", "0x00ABCD00")])
+        [dump("?d_00abcd00@@YAXXZ", "0x00ABCD00", 32, "game/gen_asm/a.asm")],
+        [("?a@Thing@@QAEXXZ", "0x00ABCD00", "32", "game/A.cpp", "", "0x00ABCD00")])
     deleted.write_bytes(b'name,target_rva,reason\n"unterminated,0x00123456,bad\n')
     before = (functions.read_bytes(), deleted.read_bytes(), sources[0].read_bytes())
 
@@ -216,7 +216,7 @@ def test_batch_rejects_unterminated_tombstone_csv_before_writing(tmp_path, monke
 def test_batch_canonicalizes_an_absolute_in_repo_source(tmp_path, monkeypatch):
     functions, _deleted, sources = arrange(
         tmp_path, monkeypatch, [],
-        [("?a@Thing@@QAEXXZ", "0x00ABCD00", "32", "Code/A.cpp", "", "")])
+        [("?a@Thing@@QAEXXZ", "0x00ABCD00", "32", "game/A.cpp", "", "")])
     manifest = tmp_path / "rows.csv"
     manifest.write_text(
         f"?a@Thing@@QAEXXZ,0x00ABCD00,32,{sources[0]},,\n", encoding="utf-8")
@@ -224,14 +224,14 @@ def test_batch_canonicalizes_an_absolute_in_repo_source(tmp_path, monkeypatch):
     add_match_batch.main()
 
     ledger = functions.read_text(encoding="utf-8")
-    assert ",Code/A.cpp,matched," in ledger
+    assert ",game/A.cpp,matched," in ledger
     assert str(tmp_path) not in ledger
 
 
 def test_batch_rejects_an_outside_repo_source(tmp_path, monkeypatch):
     functions, deleted, sources = arrange(
         tmp_path, monkeypatch, [],
-        [("?a@Thing@@QAEXXZ", "0x00ABCD00", "32", "Code/A.cpp", "", "")])
+        [("?a@Thing@@QAEXXZ", "0x00ABCD00", "32", "game/A.cpp", "", "")])
     manifest = tmp_path / "rows.csv"
     manifest.write_text(
         f"?a@Thing@@QAEXXZ,0x00ABCD00,32,{tmp_path.parent / 'outside.cpp'},,\n",

@@ -51,7 +51,7 @@ DELIVERABLES, in this order, under build/hub_{rva:08x}/:
 3. Bank the best body before you stop: python tools/re_log.py record "{name}" 0x{rva:08X} {size} partial "<evidence>
    t=<min>min model={model}-{effort}" --stash build/hub_{rva:08x}/body.cpp --score <measured> where measured =
    max(0, 1 - (differing bytes + 2 x |ours - retail|) / {size}). If EXACT, land it with tools/add_match.py (source under an
-   official Code/ path, AGENTS.md 'File placement').
+   official game/ path, AGENTS.md 'File placement').
 4. REPORT.md: what was proved, what the decompiler got wrong, the biggest remaining obstacle, minutes per deliverable.
 
 RULES. Never run git. No full gate, no whole-tree build, never launch the game. Do not edit tools/ or docs/. Stop at

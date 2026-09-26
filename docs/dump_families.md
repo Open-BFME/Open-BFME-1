@@ -9,9 +9,9 @@ or other independent witness proves its identity.
 
 The explicit session list contains 31 bodies (the live `dump_families.py`
 scan also reports 31, 66,570 bytes).  Every member loads VA `0x012F7FE0`.
-The existing aliases in `reverse/symbols.csv` store the same location as RVA
+The existing aliases in `targets/game/reverse/symbols.csv` store the same location as RVA
 `0x00EF7FE0`; `0x012F7FE0 = 0x00400000 + 0x00EF7FE0`.  `TerrainTextureMatrix.cpp`
-and the canonical `reference/shims/bfmeheightmap/.../BaseHeightMap.h` provide
+and the canonical `inputs/reference/shims/bfmeheightmap/.../BaseHeightMap.h` provide
 the owner witness: this is `TheTerrainRenderObject`, a
 `BaseHeightMapRenderObjClass`-compatible object.  The opaque pin
 `?g_bfmeA1087@@3PAVBfmeA1087@@A` is an address alias, not a reason to invent a
@@ -36,7 +36,7 @@ add a second `BfmeA1087` header or a TU-local copy of `BaseHeightMap`.
 
 The smallest clean candidate, `0x0071A680` (140 bytes), was compiled through
 the existing `W3DShroud::getShroudTexture`/texture-handle shape.  The best
-source is banked at `reverse/attempts/0x0071a680.cpp`, score 0.95: it is
+source is banked at `targets/game/reverse/attempts/0x0071a680.cpp`, score 0.95: it is
 139 bytes versus retail 140, with the remaining difference in the hidden
 handle return-slot register and temporary-handle store/destructor schedule.
 The second short candidate, `0x006EBC30` (192 bytes), is the ZH
@@ -66,11 +66,11 @@ Recipe for an anonymous seat:
 The user-supplied family-14 and family-15 lists are subsets/overlaps of the
 live DX8 family scan.  Their shared character operand is VA `0x0134ECC8`.
 The ledger pin is correctly written as RVA `0x00F4ECC8`; do not “fix” it to a
-VA in `reverse/symbols.csv`.  The bytes and `symbols.csv` therefore agree.
+VA in `targets/game/reverse/symbols.csv`.  The bytes and `symbols.csv` therefore agree.
 The value is one character of storage (`g_bfmeCh1035`), not a class layout.
 
 The shared DX8 declarations belong to
-`reference/shims/dx8state/DX8State.h` and the canonical WW3D2 headers.  The
+`inputs/reference/shims/dx8state/DX8State.h` and the canonical WW3D2 headers.  The
 existing matched helper
 `DX8Wrapper::Get_DX8_Texture_Stage_State_Value_Name` at `0x00906FE0`, plus
 `BoxSetTexture` at `0x00905AC0`, `StringClass::Get_String` at `0x009DB890`,
@@ -117,14 +117,14 @@ declarations.  These are existing ledger identities, not new speculative
 pins.
 
 The declaration belongs in
-`reference/shims/stringbaseunicode/Common/UnicodeString.h` and its canonical
+`inputs/reference/shims/stringbaseunicode/Common/UnicodeString.h` and its canonical
 `StringBase` include path.  A candidate that also needs narrow strings must
 use the existing ASCII shim selected by that source; do not add a local
 UnicodeString, StringBase, or GameSpy text-object stand-in.  The working
 compile contract is `/DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC` with the relevant
-`reference/shims/stringbaseunicode` and
-`reference/shims/asciistring_downloadmanager` include roots.  Run
+`inputs/reference/shims/stringbaseunicode` and
+`inputs/reference/shims/asciistring_downloadmanager` include roots.  Run
 `tools/callees.py` on each body first and pin only a callee whose identity is
 independently established.
 
@@ -144,7 +144,7 @@ body, compile with the flags above, and compare the full range with the byte
 gate.  The first useful lever is preserving the canonical temporary lifetime
 through `releaseBuffer`; do not replace it with a helper or a guessed global.
 The family has a verdict for every member and is unlocked in
-`reverse/unlocked.txt` with the `fam16` tag.  Family 17 shares the wide-string
+`targets/game/reverse/unlocked.txt` with the `fam16` tag.  Family 17 shares the wide-string
 constructor and can reuse this recipe, but still needs its own per-body
 identity and byte verdict.
 
@@ -199,7 +199,7 @@ members overlap the already unlocked family-16/17 rows; those addresses stay
 listed once under their earlier tag.
 
 The owner declaration belongs in the canonical GameSpy peer definitions,
-`reference/shims/peerdefs/GameNetwork/GameSpy/PeerDefs.h` and
+`inputs/reference/shims/peerdefs/GameNetwork/GameSpy/PeerDefs.h` and
 `PeerDefsImplementation.h`, with any TU-local ABI view justified by an
 independent vtable slot or named caller.  Use `/DNDEBUG /MD /EHsc` and the
 existing string/GameSpy include roots.  Do not name an anonymous body merely
@@ -214,7 +214,7 @@ The next non-DX8 family in the live top-40 scan is 40 bodies / 61,958 bytes,
 anchored on `StringBase<wchar_t>` construction at RVA `0x00888DE0`.  Twenty-
 three bodies overlap family 16 and retain the `UnicodeString::format` recipe;
 the other 17 are the family-17-only rows listed with the `fam17` tag in
-`reverse/unlocked.txt`.  The additional shared witnesses are
+`targets/game/reverse/unlocked.txt`.  The additional shared witnesses are
 `StringBaseWideAP::bfmeConcatAP` at `0x00888600`,
 `BfmeStrWVUY::bfmeTranslateVUY` at `0x008891F0`, and the existing
 `GameSpyInfo`/`MapCache` globals.  They identify the reusable string ABI, not
@@ -260,7 +260,7 @@ witnesses include the existing GadgetTextEntry, MapCache, GameSpyInfo, and
 wide-string translation contracts.  This is another shared string-global
 surface, not one common owner layout.
 
-Use `reference/shims/stringbaseunicode/Common/UnicodeString.h` and the
+Use `inputs/reference/shims/stringbaseunicode/Common/UnicodeString.h` and the
 existing GameSpy/GUI declarations, preserving the by-value string ABI and
 temporary cleanup.  The normal flags are `/DNDEBUG /MD /EHsc`; use
 `tools/callees.py` and named caller/vtable evidence before claiming a real

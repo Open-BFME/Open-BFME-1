@@ -30,10 +30,10 @@ def require_cgroup_v2(test):
 
 
 def open_ledger(root, *targets):
-    reverse = root / "reverse"
-    reverse.mkdir(exist_ok=True)
+    reverse = root / "targets/game/reverse"
+    reverse.mkdir(parents=True, exist_ok=True)
     rows = ["name,export_rva,target_rva,target_size,source,status,notes"]
-    rows += [f"?d_{rva:08X}@@YAXXZ,,0x{rva:08X},{size},Code/gen_asm/test.asm,matched,"
+    rows += [f"?d_{rva:08X}@@YAXXZ,,0x{rva:08X},{size},game/gen_asm/test.asm,matched,"
              for rva, size in targets]
     (reverse / "functions.csv").write_text("\n".join(rows) + "\n", encoding="utf-8")
 

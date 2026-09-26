@@ -29,8 +29,8 @@ def test_latest_finished_run_of_the_seat(tmp_path):
 
 def test_yield_counts_landings_banks_and_verdicts_of_one_run(tmp_path):
     functions = tmp_path / "functions.csv"
-    functions.write_text("h\n?a@@YAXXZ,,0x1,4,Code/A.cpp,matched,x run=r1\n"
-                         "?b@@YAXXZ,,0x2,4,Code/B.cpp,matched,x run=r2\n")
+    functions.write_text("h\n?a@@YAXXZ,,0x1,4,game/A.cpp,matched,x run=r1\n"
+                         "?b@@YAXXZ,,0x2,4,game/B.cpp,matched,x run=r2\n")
     log = tmp_path / "re_attempts.log"
     log.write_text("s\t0x3\t4\tblocked\tt=20 run=r1\n"
                    "s\t0x4\t4\tpartial\tt=40 stash=x run=r1\n"

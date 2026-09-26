@@ -1,0 +1,141 @@
+// cl: /DNDEBUG /MD /EHsc
+// readable body of ??0PhysicsBehaviorModuleData@@QAE@XZ: game/GameEngine/Source/GameLogic/Object/Update/PhysicsUpdate.cpp
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/PhysicsUpdate.h
+class PhysicsBehaviorModuleData
+{
+public:
+    PhysicsBehaviorModuleData();
+};
+
+__declspec(naked) PhysicsBehaviorModuleData::PhysicsBehaviorModuleData()
+{
+    __asm {
+        _emit 8Bh
+        _emit 0C1h
+        _emit 0B9h
+        _emit 66h
+        _emit 66h
+        _emit 0A6h
+        _emit 3Fh
+        _emit 89h
+        _emit 48h
+        _emit 08h
+        _emit 89h
+        _emit 48h
+        _emit 0Ch
+        _emit 89h
+        _emit 48h
+        _emit 2Ch
+        _emit 89h
+        _emit 48h
+        _emit 30h
+        _emit 33h
+        _emit 0C9h
+        _emit 0BAh
+        _emit 0C3h
+        _emit 0F5h
+        _emit 28h
+        _emit 3Fh
+        _emit 89h
+        _emit 48h
+        _emit 3Ch
+        _emit 88h
+        _emit 48h
+        _emit 40h
+        _emit 88h
+        _emit 48h
+        _emit 41h
+        _emit 88h
+        _emit 48h
+        _emit 42h
+        _emit 89h
+        _emit 48h
+        _emit 50h
+        _emit 89h
+        _emit 48h
+        _emit 54h
+        _emit 88h
+        _emit 48h
+        _emit 58h
+        _emit 88h
+        _emit 48h
+        _emit 59h
+        _emit 0B9h
+        _emit 05h
+        _emit 00h
+        _emit 00h
+        _emit 00h
+        _emit 0C7h
+        _emit 00h
+        _emit 10h
+        _emit 09h
+        _emit 0Ch
+        _emit 01h
+        _emit 0C7h
+        _emit 40h
+        _emit 10h
+        _emit 0C3h
+        _emit 0F5h
+        _emit 0A8h
+        _emit 3Eh
+        _emit 89h
+        _emit 50h
+        _emit 14h
+        _emit 0C7h
+        _emit 40h
+        _emit 24h
+        _emit 02h
+        _emit 00h
+        _emit 00h
+        _emit 00h
+        _emit 0C7h
+        _emit 40h
+        _emit 28h
+        _emit 00h
+        _emit 00h
+        _emit 0A0h
+        _emit 40h
+        _emit 0C7h
+        _emit 40h
+        _emit 34h
+        _emit 0C3h
+        _emit 0F5h
+        _emit 0A8h
+        _emit 3Eh
+        _emit 89h
+        _emit 50h
+        _emit 38h
+        _emit 0C7h
+        _emit 40h
+        _emit 44h
+        _emit 0C3h
+        _emit 0F5h
+        _emit 0A8h
+        _emit 3Eh
+        _emit 89h
+        _emit 50h
+        _emit 48h
+        _emit 0C7h
+        _emit 40h
+        _emit 4Ch
+        _emit 00h
+        _emit 00h
+        _emit 80h
+        _emit 3Fh
+        _emit 89h
+        _emit 48h
+        _emit 18h
+        _emit 0C7h
+        _emit 40h
+        _emit 1Ch
+        _emit 0Ah
+        _emit 00h
+        _emit 00h
+        _emit 00h
+        _emit 89h
+        _emit 48h
+        _emit 20h
+        _emit 0C3h
+    }
+}

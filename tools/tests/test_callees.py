@@ -1,5 +1,6 @@
 """Instruction boundaries and placeholder identities must not invent contracts."""
 import csv
+import importlib
 import struct
 import sys
 from pathlib import Path
@@ -8,12 +9,11 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import callees
-import pin_consistency
 
 
 def test_ledger_aliases_show_compiled_body_without_claiming_alias_identity(monkeypatch, tmp_path):
-    reverse = tmp_path / "reverse"
-    reverse.mkdir()
+    reverse = tmp_path / "targets/game/reverse"
+    reverse.mkdir(parents=True)
     with (reverse / "functions.csv").open("w", newline="") as fh:
         writer = csv.DictWriter(fh, fieldnames=["name", "target_rva", "notes"])
         writer.writeheader()
@@ -34,8 +34,8 @@ def test_ledger_aliases_show_compiled_body_without_claiming_alias_identity(monke
 
 
 def test_distinct_object_symbols_at_same_rva_are_reported_ambiguous(monkeypatch, tmp_path):
-    reverse = tmp_path / "reverse"
-    reverse.mkdir()
+    reverse = tmp_path / "targets/game/reverse"
+    reverse.mkdir(parents=True)
     with (reverse / "functions.csv").open("w", newline="") as fh:
         writer = csv.DictWriter(fh, fieldnames=["name", "target_rva", "notes"])
         writer.writeheader()
@@ -100,7 +100,7 @@ def test_placeholder_name_is_not_reported_as_a_typed_contract(monkeypatch, capsy
 def test_import_calls_use_pe_names_and_ignore_unknown_slots(monkeypatch):
     body = bytes.fromhex("ff 15 00 30 00 00 ff 15 00 30 00 00 ff 15 00 40 00 00 c3")
     install_body(monkeypatch, body)
-    monkeypatch.setattr(pin_consistency, "import_table",
+    monkeypatch.setattr(importlib.import_module("pin_consistency"), "import_table",
                         lambda: {0x3000: ("mss32.dll", "_AIL_open_stream@12")})
     assert callees.import_calls(0x2000, len(body)) == {
         (0x3000, "mss32.dll", "_AIL_open_stream@12"): 2}
@@ -110,7 +110,7 @@ def test_import_calls_use_pe_names_and_ignore_unknown_slots(monkeypatch):
 def test_import_inventory_respects_boundaries_and_absolute_operand(monkeypatch, body):
     raw = bytes.fromhex(body)
     install_body(monkeypatch, raw)
-    monkeypatch.setattr(pin_consistency, "import_table", lambda: {0x3000: ("x.dll", "f")})
+    monkeypatch.setattr(importlib.import_module("pin_consistency"), "import_table", lambda: {0x3000: ("x.dll", "f")})
     assert not callees.import_calls(0x2000, len(raw))
 
 

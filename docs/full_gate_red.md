@@ -5,9 +5,9 @@ Nothing else runs it on purpose, so rows rot unseen — the scoped gate a commit
 runs verifies only the sources that commit touched.
 
 **This blocks more than it looks.** `.githooks/pre-commit` gives any staged `.h`
-or `reference/shims/*` the full gate with **no baseline tolerance**
+or `inputs/reference/shims/*` the full gate with **no baseline tolerance**
 (`wide_change=1` then `./build.sh || fail`). While the full gate is red, *nobody
-can commit a header*. Verified: no `Code/` header landed from any author in the
+can commit a header*. Verified: no `game/` header landed from any author in the
 three days before this was written. Every structural lane that touches a header —
 including all of `docs/header_adoption.md` — is parked behind this.
 
@@ -24,20 +24,20 @@ String-ref verify, pin consistency, CRT import pins, and null relocs were OK.
 Null relocs read 161893 rows and reported 789 unreadable rows. Source claims
 had 4 zero-row sources. The no-op patch did not run because verify_functions
 did not produce a patch set while functions were red. The raw failing rows are
-preserved in docs/full_gate_red_2026-09-15.txt; reverse/reloc_names.csv was
+preserved in docs/full_gate_red_2026-09-15.txt; targets/game/reverse/reloc_names.csv was
 unchanged.
 
 After the same day's campaign (three parallel Astra lanes plus Claude):
 Functions 90 red (the ini.cpp trio landed through the baseline-tolerant hook,
 six more rows went green under it), DIR32 99 live inconsistent symbols after
-lane B's nine source fixes, `reverse/full_gate_baseline.txt` at 90 rows. The
-retired generators are deleted again and guarded (reverse/retired_paths.txt).
+lane B's nine source fixes, `targets/game/reverse/full_gate_baseline.txt` at 90 rows. The
+retired generators are deleted again and guarded (targets/game/reverse/retired_paths.txt).
 
 ## The hook now compares against a baseline (2026-09-15)
 
 `.githooks/pre-commit` no longer demands a fully green gate for a header or
 shim. It runs `tools/gate_baseline.py --check`, which fails on any row that is
-red now and absent from `reverse/full_gate_baseline.txt`, and on a gate that
+red now and absent from `targets/game/reverse/full_gate_baseline.txt`, and on a gate that
 dies before byte comparison. The baseline is recorded once with `--record`
 on a stated revision and may only SHRINK: `--validate` refuses a staged
 baseline that adds a row, so a red cannot be hidden by writing it down. Rows
@@ -54,12 +54,12 @@ baseline file were ever absent the hook falls back to strict.
 | 5 | named symbol absent from its object | the compiler stopped emitting an out-of-line body |
 | 9 | orphaned compiler-local label | byte-ambiguous; see below |
 
-57 distinct files. 79 failures sit in Code/ sources and 21 in the vendored
+57 distinct files. 79 failures sit in game/ sources and 21 in the vendored
 ZH reference tree.
 
 ## The trap that governs this whole campaign
 
-`reverse/symbols.csv` is an **additive candidate list**: the resolver keeps the
+`targets/game/reverse/symbols.csv` is an **additive candidate list**: the resolver keeps the
 first pinned address that reproduces retail. So **a pin naming the wrong function
 still byte-matches, and a green gate proves nothing about it.** The dir32
 whitelist carries the same warning from experience — 18 entries once got in
@@ -74,7 +74,7 @@ operator delete at 0x00881EB0.
 ## The 2 generator-written funclets need a decision, not a fix
 
 Both are gen-funclet rows in
-Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayString.cpp.
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayString.cpp.
 The gate reports stale $L45506 and $L45507 object-symbol pins after the
 translation unit was edited; their emitted destructor call also remains a
 call-target identity issue. Do not repoint them from bytes alone.
@@ -112,8 +112,8 @@ are different objects, so the likely defect is the element type in the source
 rather than the pin.
 
 Resolved 2026-09-18: the two observed families now have separate address-qualified
-owners, `Code/GameEngine/Source/Common/Containers/Rva0013B8F0Vector.cpp` and
-`Code/GameEngine/Source/Common/Containers/Rva007701C0Vector.cpp`. The former
+owners, `game/GameEngine/Source/Common/Containers/Rva0013B8F0Vector.cpp` and
+`game/GameEngine/Source/Common/Containers/Rva007701C0Vector.cpp`. The former
 retains the string-at-+0x0C/reference-at-+0x10 records; the latter retains the
 string-at-+0/vector-at-+4 records. All 821B and 1048B of their scoped ranges
 remain byte-verified. Their original class names are still unknown; unrelated
@@ -159,7 +159,7 @@ these three, and fixing them requires the full gate to be green.**
 
 That circularity is worth a decision rather than more attempts. The obvious
 resolution is the one every other check here already uses: compare a header
-change against a BASELINE of known reds -- the way `reverse/identity_baseline.txt`
+change against a BASELINE of known reds -- the way `targets/game/reverse/identity_baseline.txt`
 works -- instead of demanding zero. A header edit would then have to not make
 things WORSE, which is the property that actually matters, rather than having to
 fix everything first. That is a policy change to the hook and belongs to whoever

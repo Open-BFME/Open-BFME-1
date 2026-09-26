@@ -63,7 +63,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 _rows = {}
 _notes = {}
-for _line in open(ROOT / "reverse" / "functions.csv", "rb"):
+for _line in open(ROOT / "targets/game/reverse" / "functions.csv", "rb"):
     _f = _line.decode("utf-8", "replace").split(",")
     if len(_f) > 5 and _f[2].startswith("0x"):
         _rows[_f[0]] = (_f[2], _f[3], _f[4])
@@ -93,7 +93,7 @@ def resolve(donor, symbol):
 
 def markers():
     """Every (donor, destination, symbol) the markers name, smallest row first."""
-    out = subprocess.run(["grep", "-rn", "readable body of ", "Code/"],
+    out = subprocess.run(["grep", "-rn", "readable body of ", "game/"],
                          cwd=ROOT, capture_output=True, text=True).stdout
     pat = re.compile(r"^(.*?):\d+:// readable body of (\S+): (\S+)\s*$")
     seen, found = set(), []

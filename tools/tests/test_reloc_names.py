@@ -15,7 +15,7 @@ from pathlib import Path
 
 TOOLS = Path(__file__).resolve().parents[1]
 ROOT = TOOLS.parent
-RELOC_NAMES = ROOT / "reverse" / "reloc_names.csv"
+RELOC_NAMES = ROOT / "targets/game/reverse" / "reloc_names.csv"
 REL32 = 0x0014
 NOTES_RE = re.compile(r"reloc-derived;call-sites=[1-9]\d*;identity=(real|generated)")
 
@@ -42,7 +42,7 @@ def call_row(caller_rva, callee_rva, opcode=0xE8, symbol="?callee@@YAXXZ",
     a fixture that omitted it would exercise the wrong branch.
     """
     displacement = struct.pack("<i", callee_rva - caller_rva - 5)
-    return {"name": name, "target_rva": caller_rva, "source": "Code/test.cpp",
+    return {"name": name, "target_rva": caller_rva, "source": "game/test.cpp",
             "target": bytes([opcode]) + displacement + b"\xc3",
             "relocs": [(1, REL32, symbol)]}
 
@@ -57,7 +57,7 @@ def a_publishable_function():
     """A thunked body that survives select_reloc_names' anonymous+unclaimed
     filters, so a test can exercise what the file actually publishes."""
     inventory = {int(row["rva"], 16): row["name"] for row in csv.DictReader(
-        (ROOT / "reverse" / "ghidra_functions.csv").open(
+        (ROOT / "targets/game/reverse" / "ghidra_functions.csv").open(
             newline="", encoding="utf-8"))}
     claimed = {int(row["target_rva"], 16)
                for row in build.load_all_function_rows()}
@@ -72,7 +72,7 @@ def test_callee_comes_from_the_retail_bytes():
     caller = 0x1000
     named = build.harvest_reloc_names([call_row(caller, body)])
     assert named == {body: {"names": {"?callee@@YAXXZ"},
-                            "sources": {"Code/test.cpp"}, "sites": 1}}, named
+                            "sources": {"game/test.cpp"}, "sites": 1}}, named
     print("PASS callee decoded from the displacement in the retail bytes")
 
 
@@ -171,7 +171,7 @@ def test_published_rows_are_unambiguous_anonymous_and_sized_by_the_inventory():
     """
     rows = published_rows()
     inventory = {int(row["rva"], 16): (int(row["size"]), row["name"])
-                 for row in csv.DictReader((ROOT / "reverse" /
+                 for row in csv.DictReader((ROOT / "targets/game/reverse" /
                  "ghidra_functions.csv").open(newline="", encoding="utf-8"))}
 
     seen = {}
@@ -266,7 +266,7 @@ def a_dup_claimed_function():
     """A body whose ONLY ledger claim is a ?dup_<rva> row, and which Ghidra
     still calls FUN_. The ledger covers its bytes and names nothing."""
     inventory = {int(row["rva"], 16): row["name"] for row in csv.DictReader(
-        (ROOT / "reverse" / "ghidra_functions.csv").open(
+        (ROOT / "targets/game/reverse" / "ghidra_functions.csv").open(
             newline="", encoding="utf-8"))}
     names_by_rva = {}
     for row in build.load_all_function_rows():

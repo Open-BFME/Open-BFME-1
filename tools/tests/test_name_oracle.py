@@ -198,7 +198,7 @@ def test_scan_can_be_pointed_at_alternate_file_contents():
     """The introduced-vs-inherited gate works by running the identical walk against
     HEAD's version of each staged file. An inherited placeholder is somebody else's
     backlog and must never fail a commit; only what this diff ADDS does."""
-    path = N.ROOT / "Code/GameEngine/Source/__fixture__.cpp"
+    path = N.ROOT / "game/GameEngine/Source/__fixture__.cpp"
     body = "struct Anything {\n\tint m_unk04;\n};\n"
     tally, todo, conflicts = N.scan([str(path)], False, texts={path: body})
     # No witness knows `Anything`, so nothing is claimed either way -- what this
@@ -210,7 +210,7 @@ def test_scan_can_be_pointed_at_alternate_file_contents():
 def test_todo_refuses_a_name_already_declared_at_another_offset(monkeypatch):
     """A duplicate member name is proof that the proposed rename is unsafe, even
     when the placeholder and the witness otherwise qualify for --todo."""
-    path = N.ROOT / "Code/GameEngine/Source/__fixture__.cpp"
+    path = N.ROOT / "game/GameEngine/Source/__fixture__.cpp"
     body = """struct ScoreKeeper {
 	int m_totalBuildingsBuilt;
 	int m_pad04;

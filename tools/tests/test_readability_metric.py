@@ -46,7 +46,7 @@ def _load(name):
 
 metric = _load("readability_metric")
 
-AREA = "Code/GameEngine/Source/Common"
+AREA = "game/GameEngine/Source/Common"
 
 # 7 lines. One pad member, one named member, two virtual slots of which v12 is
 # anonymous, and one class body that does NOT count against SSoT: it is in a
@@ -107,7 +107,7 @@ void filler{n}(void)
 }}
 """
 
-LEDGER_PATH = "reverse/functions.csv"
+LEDGER_PATH = "targets/game/reverse/functions.csv"
 
 
 def ledger(reset_lives_in=f"{AREA}/gamma.cpp"):
@@ -144,7 +144,7 @@ def world(tmp_path, header=ALPHA_H, fillers=0):
     sources have to be in an index, not merely on disk."""
     root = (tmp_path / "repo").resolve()
     (root / AREA).mkdir(parents=True)
-    (root / "reverse").mkdir()
+    (root / "targets/game/reverse").mkdir(parents=True)
     (root / AREA / "alpha.h").write_text(header)
     (root / AREA / "alpha.cpp").write_text(ALPHA_CPP)
     (root / AREA / "gamma.cpp").write_text(GAMMA_CPP)
@@ -152,7 +152,7 @@ def world(tmp_path, header=ALPHA_H, fillers=0):
         (root / AREA / f"filler{n}.cpp").write_text(FILLER.format(n=n))
     (root / LEDGER_PATH).write_bytes(LEDGER)
     subprocess.run(["git", "init", "-q", str(root)], check=True)
-    stage(root, "Code", "reverse")
+    stage(root, "game", "targets/game/reverse")
     return root
 
 
@@ -222,7 +222,7 @@ def test_an_unreadable_source_aborts_instead_of_totalling_the_rest(tmp_path):
     done = cli(root)
     assert done.returncode != 0
     assert str(blocked) in done.stderr
-    assert "ALL Code/" not in done.stdout
+    assert "ALL game/" not in done.stdout
 
 
 def test_a_warm_run_opens_no_file_it_already_has_counters_for(tmp_path, capsys,
@@ -406,7 +406,7 @@ def test_an_address_derived_name_counts_however_it_ends(tmp_path):
     """PLACEHOLDER's `\\b` after the hex run meant an address-derived name counted
     only when nothing followed the digits. `Rva001EFF60` did; `Rva0026C320Owner`
     -- the shape the file names actually use -- did not, so 4,278 rows of
-    reverse/functions.csv were scored as semantic names and Ident read 2.65 pp
+    targets/game/reverse/functions.csv were scored as semantic names and Ident read 2.65 pp
     higher than the tree deserved. That is the wrong direction for a scoreboard
     to be wrong in: it hid the single largest rename lane from the axis meant to
     measure it.
@@ -429,7 +429,7 @@ def test_a_mangling_prefix_does_not_hide_an_address(tmp_path):
     """`??0`, `??1`, `??_G`, `??$` and the type tags `@U`/`@PAV`/`$$CBU` all END in
     a word character, so `\\b` never fires in front of the class name that follows
     and `??0Rva006D51B0@@QAE@II@Z` -- a constructor of an address-named class --
-    scored as a real name. 2,982 rows of reverse/functions.csv, Ident 20.72 ->
+    scored as a real name. 2,982 rows of targets/game/reverse/functions.csv, Ident 20.72 ->
     18.82. Third defect of this family: the two before it were the wrong RIGHT
     edge of the hex run, and both were also worth pp in the wrong direction.
 

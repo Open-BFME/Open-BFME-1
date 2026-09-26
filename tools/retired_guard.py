@@ -5,12 +5,12 @@
 tests were retired in 2d4dab0ad5 ("retire the C++ generators") and came back
 three days later as a side effect of a fleet harvest, f43040e9c5. A harvest
 commits whatever the index holds, and an index seeded from a stale branch held
-them. reverse/retired_paths.txt lists every path that must stay gone; this
+them. targets/game/reverse/retired_paths.txt lists every path that must stay gone; this
 guard fails when a staged change ADDS one of them (--staged, the commit hook)
 or when a commit range does (--range A..B, the push hook / harvest).
 
 Restoring one is a decision, not an accident: remove its line from
-reverse/retired_paths.txt in the same commit and say why.
+targets/game/reverse/retired_paths.txt in the same commit and say why.
 
   python3 tools/retired_guard.py --staged
   python3 tools/retired_guard.py --range origin/master..HEAD
@@ -22,7 +22,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-RETIRED = ROOT / "reverse" / "retired_paths.txt"
+RETIRED = ROOT / "targets/game/reverse" / "retired_paths.txt"
 
 
 def retired_paths(path=RETIRED):
@@ -59,7 +59,7 @@ def main():
     bad = offenders(paths)
     if bad:
         print("retired_guard: these paths were deleted on purpose and may not come back "
-              "(reverse/retired_paths.txt; remove the line there, in the same commit, if you mean it):")
+              "(targets/game/reverse/retired_paths.txt; remove the line there, in the same commit, if you mean it):")
         for p in bad:
             print("  " + p)
         sys.exit(1)

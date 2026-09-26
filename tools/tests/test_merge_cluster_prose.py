@@ -22,8 +22,8 @@ def _markers(tmp_path, text):
 
 
 def test_well_formed_marker_is_read(tmp_path):
-    got = _markers(tmp_path, "// readable body of ?foo@@YAXXZ: Code/Dest.cpp\n")
-    assert got == [("?foo@@YAXXZ", "Code/Dest.cpp")]
+    got = _markers(tmp_path, "// readable body of ?foo@@YAXXZ: game/Dest.cpp\n")
+    assert got == [("?foo@@YAXXZ", "game/Dest.cpp")]
 
 
 def test_prose_mentioning_the_phrase_is_not_a_marker(tmp_path):
@@ -35,17 +35,17 @@ def test_prose_mentioning_the_phrase_is_not_a_marker(tmp_path):
 
 def test_prose_and_a_real_marker_coexist(tmp_path):
     text = ("// Explaining a `readable body of` marker in prose here.\n"
-            "// readable body of ?bar@@YAXXZ: Code/Dest.cpp\n")
-    assert _markers(tmp_path, text) == [("?bar@@YAXXZ", "Code/Dest.cpp")]
+            "// readable body of ?bar@@YAXXZ: game/Dest.cpp\n")
+    assert _markers(tmp_path, text) == [("?bar@@YAXXZ", "game/Dest.cpp")]
 
 
 def test_malformed_marker_still_fails_loudly(tmp_path):
     """A dropped marker silently loses a body from its cluster -- keep failing."""
     with pytest.raises(SystemExit):
-        _markers(tmp_path, "// readable body of ?baz@@YAXXZ -> Code/Dest.cpp\n")
+        _markers(tmp_path, "// readable body of ?baz@@YAXXZ -> game/Dest.cpp\n")
 
 
 def test_trailing_comment_marker_still_fails_loudly(tmp_path):
     """Marker position matters; a trailing one would never be applied."""
     with pytest.raises(SystemExit):
-        _markers(tmp_path, "int x; // readable body of ?qux@@YAXXZ: Code/Dest.cpp\n")
+        _markers(tmp_path, "int x; // readable body of ?qux@@YAXXZ: game/Dest.cpp\n")

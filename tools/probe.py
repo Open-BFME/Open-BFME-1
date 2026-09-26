@@ -4,7 +4,7 @@
 Read-only: writes its cache and experiment history under build/, never touches
 the ledgers or the lock. This is the inner loop of every conversion, packaged:
 
-  python3 tools/probe.py Code/.../Foo.cpp "?bar@Foo@@QAEXXZ" 0x0048ACF0 [--size N] [--all]
+  python3 tools/probe.py game/.../Foo.cpp "?bar@Foo@@QAEXXZ" 0x0048ACF0 [--size N] [--all]
 
 Prints size, the non-relocation byte diffs, a side-by-side disassembly around
 the first divergence, and a SYMPTOM -> LEVER line keyed to docs/shape_levers.md:
@@ -36,7 +36,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LEVERS = {
     "exact": "instruction shape matches; validate callees and identity with tools/add_match.py before claiming a conversion",
     "sib-order": "shape_levers.md row 1: add the pointer as an integer on the right of the counter: *(T*)(i + (unsigned)p)",
-    "eh-transposition": "shape_levers.md row 2: by-value string class must be `: private StringBase<T>` with INLINE forwarding copy ctor/dtor (reference/shims/stringinline/StringInline.h)",
+    "eh-transposition": "shape_levers.md row 2: by-value string class must be `: private StringBase<T>` with INLINE forwarding copy ctor/dtor (inputs/reference/shims/stringinline/StringInline.h)",
     "register-mirror": "shape_levers.md rows 3-5: reorder local DEFINITIONS to retail's first-use order; copy params to locals just before the guard; call dllimports directly (IAT CSE)",
     "adjacent-swap": "shape_levers.md rows 3-4: two values materialized in the other order -- swap the two local DEFINITIONS (or move the param copies to just before the guard); if one side is an EH state store see row 2",
     "length-delta": "shape/CSE/inline difference at the first divergent instruction -- see shape_levers.md rows 6, 8, 9 (flag tail, `new` statement, trivially-copyable arg)",
@@ -47,7 +47,7 @@ LEVERS = {
 
 
 def ledger_size(rva):
-    with open(ROOT / "reverse/functions.csv", newline="", encoding="utf-8", errors="replace") as f:
+    with open(ROOT / "targets/game/reverse/functions.csv", newline="", encoding="utf-8", errors="replace") as f:
         for r in csv.DictReader(f):
             try:
                 if int(r["target_rva"], 16) == rva:

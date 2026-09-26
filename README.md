@@ -12,6 +12,13 @@ Goal: Source code that rebuilds BFME 1's executable byte-for-byte, and game mode
 
 [![BFME 1 rebuild progress](docs/progress.svg)](tools/progress.py)
 
+## Status
+
+The bar above tracks source that rebuilds from what this repository holds.
+Game source lives in `game/`, WorldBuilder source in `worldbuilder/`, and their
+separate recovery ledgers in `targets/`. Original binaries, toolchains and
+reference sources live in `inputs/`; mods remain in `mods/`.
+
 ## Roadmap
 
 * [ ] BFME 1 Source Code (see the live progress bar above)
@@ -58,5 +65,5 @@ four cores.
 To check a single function while iterating, pass its file or name — a few seconds instead of the full run:
 
 ```bash
-./build.sh Code/Libraries/Source/WWVegas/WWMath/color.cpp
+./build.sh game/Libraries/Source/WWVegas/WWMath/color.cpp
 ```

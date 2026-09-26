@@ -90,7 +90,7 @@ def initial_ilt_map(image_bytes, text):
 class Target:
     target_id: str
     root: Path
-    config_path: Path
+    manifest_path: Path
     image_path: Path
     expected_sha256: str
     ledger_root: Path
@@ -204,33 +204,37 @@ def _name(value):
 
 
 def load_target(target_id, *, root=ROOT):
-    if not isinstance(target_id, str) or not re.fullmatch(r"[a-z0-9][a-z0-9-]*", target_id):
+    image_names = {"game": "lotrbfme.exe", "worldbuilder": "worldbuilder.exe"}
+    if not isinstance(target_id, str) or target_id not in image_names:
         raise TargetError(f"invalid target ID: {target_id!r}")
     root = Path(root).resolve()
-    config_path = _under(root, f"{target_id}/target.json", "target config")
+    manifest_path = _under(root, "inputs/baselines/bfme1/workshop-vanilla-1.03/manifest.json", "baseline manifest")
     try:
-        config = json.loads(config_path.read_text(encoding="utf-8"))
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     except (OSError, ValueError) as error:
-        raise TargetError(f"cannot load target {target_id} at {config_path}: {error}") from error
-    _keys(config, ("schema_version", "target_id", "image", "ledger_root", "build_root", "profiles"),
-          str(config_path))
-    if type(config["schema_version"]) is not int or config["schema_version"] != 1 or config["target_id"] != target_id:
-        raise TargetError(f"{config_path}: expected schema_version 1 and target_id {target_id}")
-    _keys(config["image"], ("path", "sha256"), "image")
-    expected = config["image"]["sha256"]
+        raise TargetError(f"cannot load baseline manifest at {manifest_path}: {error}") from error
+    if (not isinstance(manifest, dict) or type(manifest.get("schema_version")) is not int
+            or manifest["schema_version"] != 1 or not isinstance(manifest.get("files"), list)):
+        raise TargetError(f"{manifest_path}: invalid baseline manifest")
+    image_name = "files/" + image_names[target_id]
+    entries = [entry for entry in manifest["files"] if isinstance(entry, dict) and entry.get("path") == image_name]
+    if len(entries) != 1:
+        raise TargetError(f"{manifest_path}: expected one {image_name} entry")
+    expected = entries[0].get("sha256")
     if not isinstance(expected, str) or not re.fullmatch(r"[0-9a-f]{64}", expected):
-        raise TargetError(f"{config_path}: image.sha256 must be 64 lowercase hex digits")
-    for key, expected_path in (("ledger_root", f"reverse/{target_id}"),
-                               ("build_root", f"build/{target_id}")):
-        if config[key] != expected_path:
-            raise TargetError(f"{target_id}: {key} must be {expected_path} to isolate target state")
-    image_path = _under(root, config["image"]["path"], "image.path")
-    ledger_root = _under(root, config["ledger_root"], "ledger_root")
-    build_root = _under(root, config["build_root"], "build_root")
-    for path, key in ((ledger_root, "ledger_root"), (build_root, "build_root")):
-        if path != root / config[key]:
-            raise TargetError(f"{target_id}: {key} must not redirect through a symlink")
-    profiles = _profiles(config["profiles"])
+        raise TargetError(f"{manifest_path}: {image_name} needs a lowercase SHA-256")
+    image_path = _under(root, "inputs/baselines/bfme1/workshop-vanilla-1.03/" + image_name, "image path")
+    ledger_root = _under(root, f"targets/{target_id}/reverse", "ledger root")
+    build_root = _under(root, f"build/{target_id}", "build root")
+    for label, path, expected_path in (("ledger root", ledger_root, root / "targets" / target_id / "reverse"),
+                                      ("build root", build_root, root / "build" / target_id)):
+        if path != expected_path:
+            raise TargetError(f"{target_id}: {label} must not redirect through a symlink")
+    profiles = _profiles({
+        "engine-size": {"flags": ["-O1", "-Gy", "-GR-", "-EHsc"], "toolchain_includes": []},
+        "editor-size": {"flags": ["-O1", "-Gy", "-GR-", "-EHsc", "-MD", "-D_AFXDLL"],
+                        "toolchain_includes": ["Vc7/atlmfc/include", "Vc7/PlatformSDK/Include"]},
+    }) if target_id == "worldbuilder" else MappingProxyType({})
     data = _verified_image(image_path, expected)
     try:
         pe = pefile.PE(data=data, fast_load=True)
@@ -266,7 +270,7 @@ def load_target(target_id, *, root=ROOT):
     texts = [section for section in sections if section.name == ".text"]
     if len(texts) != 1:
         raise TargetError(f"{target_id}: expected exactly one .text section")
-    target = Target(target_id, root, config_path, image_path, expected, ledger_root, build_root,
+    target = Target(target_id, root, manifest_path, image_path, expected, ledger_root, build_root,
                     profiles, image_base, sections, data, exports, imports, relocations,
                     initial_ilt_map(data, texts[0]))
     return target

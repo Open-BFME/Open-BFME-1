@@ -12,7 +12,7 @@ Rules (Claude/Astra consensus, 2026-09-15; see docs/baseline-2026-09-15.md):
 
   * a DUMP row is open work: gen-dump note or a .asm/.s source; it fixes a
     boundary and holds no source (build.is_scaffold_row is the canonical
-    note test, the suffix test covers MASM rows outside Code/gen_asm/). A
+    note test, the suffix test covers MASM rows outside game/gen_asm/). A
     named naked/__emit lift in a .cpp is the same thing under a real name,
     and counts once lift_lane.py has proven its extent (is_lift_row).
   * a DEAD-END verdict retires the address: no-match, refuted, ... are
@@ -53,7 +53,7 @@ def load_rows(path=None, tries=4, wait=1, rvas=None):
     With ``rvas``, retain only those addresses while still checking every row
     for a torn read. Pickers use this for bounded final validation.
     """
-    path = path or ROOT / "reverse/functions.csv"
+    path = path or ROOT / "targets/game/reverse/functions.csv"
     wanted = None if rvas is None else {int(r, 16) if isinstance(r, str) else r for r in rvas}
     reason = "no read was tried"
     for _ in range(tries):
@@ -94,8 +94,8 @@ def is_dump_row(row):
 @functools.lru_cache(maxsize=1)
 def _lift_keys():
     """lift_lane's servable set, computed once per process. A checkout with no
-    Code/ tree (the tools-only CI checkout) has no lifts to find."""
-    if not (ROOT / "Code").is_dir():
+    game/ tree (the tools-only CI checkout) has no lifts to find."""
+    if not (ROOT / "game").is_dir():
         return frozenset()
     import lift_lane
 
@@ -112,7 +112,7 @@ def is_lift_row(row):
     listed by `lift_lane.py --suspect` instead."""
     source = row.get("source", "")
     if (row.get("status") != "matched" or Path(source).suffix.lower() not in (".c", ".cpp")
-            or source.startswith(("Code/gen_small/", "Code/gen_asm/"))):
+            or source.startswith(("game/gen_small/", "game/gen_asm/"))):
         return False
     return (row.get("name"), row.get("target_rva")) in _lift_keys()
 
@@ -183,7 +183,7 @@ def attempt_counts(path=None):
     return counts
 
 
-CARVED = ROOT / "reverse" / "carved.csv"
+CARVED = ROOT / "targets/game/reverse" / "carved.csv"
 
 
 def carved_rows(path=None, rows=None):
@@ -240,7 +240,7 @@ def carved_rows(path=None, rows=None):
                 "export_rva": "",
                 "target_rva": f"0x{rva:08X}",
                 "target_size": str(size),
-                "source": "reverse/carved.csv",
+                "source": "targets/game/reverse/carved.csv",
                 "status": "carved",
                 "notes": ";".join(filter(None, (
                     f"start={row.get('start_evidence', '')}",
@@ -256,7 +256,7 @@ def carved_rows(path=None, rows=None):
 
 
 def is_carved_row(row):
-    return row.get("status") == "carved" and row.get("source") == "reverse/carved.csv"
+    return row.get("status") == "carved" and row.get("source") == "targets/game/reverse/carved.csv"
 
 
 def open_dumps(rows=None, latest=None, min_size=0, max_size=None, anonymous=None,
@@ -350,11 +350,11 @@ def hard_bodies(min_score=0.9, max_attempts=5, rows=None, latest=None, counts=No
     return [t for t in served if counts.get(rva_of(t[0]), 0) >= max_attempts]
 
 
-UNLOCKED = ROOT / "reverse" / "unlocked.txt"
+UNLOCKED = ROOT / "targets/game/reverse" / "unlocked.txt"
 
 
 def unlocked_rvas(path=None):
-    """{rva:int -> tag} from reverse/unlocked.txt: dump bodies whose shared
+    """{rva:int -> tag} from targets/game/reverse/unlocked.txt: dump bodies whose shared
     blocker (a family shim, a class layout, a set of pins) a stronger session
     has already landed, so a luna seat's context pack now proves their
     callees. Lines are `0x%08x <tag>`; `#` comments. pick_anon adds warmth
@@ -413,7 +413,7 @@ def neighbour_density(rows=None, k=6, min_size=60):
         source = row["source"]
         if is_dump_row(row):
             known.append((rva, False))
-        elif source.endswith((".cpp", ".c")) and not source.startswith("Code/gen_"):
+        elif source.endswith((".cpp", ".c")) and not source.startswith("game/gen_"):
             known.append((rva, True))
     known.sort()
     addresses = [a for a, _ in known]
@@ -448,7 +448,7 @@ def servable(root=None, hours=48):
     """The one predicate every lane should ask before serving a dump body:
     returns ok(rva:int) -> bool. False while a live worker owns the body, for
     `hours` after a run worked on it, once it has ATTEMPT_CAP verdicts (unless
-    reverse/unlocked.txt reopens it), after a dead end, and while its boundary
+    targets/game/reverse/unlocked.txt reopens it), after a dead end, and while its boundary
     is suspect. pick_class had its own rules -- a permanent claim file and
     none of the rest -- so a vtable served once was never served again."""
     root = root or ROOT

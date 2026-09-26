@@ -1,0 +1,2 @@
+game/GameEngine/Source/Common/Thing/ModuleInfoClearAi.cpp	pre-existing byte-red: retail copy and Nugget destructor calls resolve to different candidates
+game/GameEngine/Source/GameLogic/Object/Update/DynamicGeometryInfoUpdateConstructor.cpp	defines a function no ledger row declares

@@ -1,0 +1,5541 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /DBFME_VOLUMETRIC_DELETE_LAYOUT /Iinputs/reference/shims/volumetricshadow /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+// readable body of ?Fabs@WWMath@@: game/Libraries/Source/WWVegas/WW3D2/coltest.cpp
+#define Matrix4x4 Matrix4  // BFME renamed it
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+////////////////////////////////////////////////////////////////////////////////
+//																																						//
+//  (c) 2001-2003 Electronic Arts Inc.																				//
+//																																						//
+////////////////////////////////////////////////////////////////////////////////
+
+// FILE: W3DVolumetricShadow.cpp ///////////////////////////////////////////////////////////
+//
+// Real time shadow volume representations
+//
+// Author: Colin Day, January 2001
+// Adapted for W3D: Mark Wilczynski October 2001
+//
+//
+///////////////////////////////////////////////////////////////////////////////
+///@todo: Must cap shadow volumes if we ever allow camera inside the volumes.
+///@todo: Find better way to determine when shadow volumes need updating - lights move, objects move.
+
+// SYSTEM INCLUDES ////////////////////////////////////////////////////////////
+#include <assert.h>
+
+// USER INCLUDES //////////////////////////////////////////////////////////////
+#include "always.h"
+#include "GameClient/View.h"
+#include "WW3D2/Camera.h"
+#include "WW3D2/Light.h"
+#define MESH_RENDER_SNAPSHOT_ENABLED
+#include "../../../../../Libraries/Source/WWVegas/WW3D2/dx8wrapper.h"
+#undef MESH_RENDER_SNAPSHOT_ENABLED
+#include "WW3D2/DX8Wrapper.h"
+#include "WW3D2/HLod.h"
+#include "WW3D2/mesh.h"
+#include "WW3D2/meshmdl.h"
+#include "Lib/BaseType.h"
+#include "W3DDevice/GameClient/W3DGranny.h"
+#include "W3DDevice/GameClient/Heightmap.h"
+#include "D3dx8math.h"
+#include "common/GlobalData.h"
+#include "common/drawmodule.h"
+#include "W3DDevice/GameClient/W3DVolumetricShadow.h"
+#include "W3DDevice/GameClient/W3DShadow.h"
+#include "WW3D2/statistics.h"
+#include "GameLogic/TerrainLogic.h"
+#include "WW3D2/DX8Caps.h"
+#include "GameClient/Drawable.h"
+#include "wwshade/shdmesh.h"
+#include "wwshade/shdsubmesh.h"
+
+struct Rva007BDB70Record
+{
+	unsigned char bytes[22];
+};
+
+class Rva007BDB70ArrayOwner
+{
+public:
+	Rva007BDB70Record *lookup(int index);
+	void ensureStorage(void);
+
+private:
+	unsigned char m_prefix[0x24];
+	Rva007BDB70Record *m_records;
+	int m_count;
+};
+
+Rva007BDB70Record *Rva007BDB70ArrayOwner::lookup(int index)
+{
+	if (!m_records)
+		ensureStorage();
+
+	if (index >= 0 && index < m_count)
+		return &m_records[index];
+
+	return 0;
+}
+
+#ifdef _INTERNAL
+// for occasional debugging...
+//#pragma optimize("", off)
+//#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
+#endif
+
+// Global Variables and Functions /////////////////////////////////////////////
+
+W3DVolumetricShadowManager	*TheW3DVolumetricShadowManager=NULL;
+extern const FrustumClass *shadowCameraFrustum;	//defined in W3DShadow.
+extern void __cdecl bfmeDrawFilterUV(int, int, Coord2D *);
+
+///////////////////////////////////////////////////////////////////////////////
+// DEFINITIONS ////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+// when the change in angle from the object to the light source
+// (represented in degrees in the first number below)
+// is large enough the shadow info will be reconstructed
+const Real cosAngleToCare = cos ((0.2 * PI) / 180.0);	//1.5 degree difference
+#define MAX_SILHOUETTE_EDGES	1024	//maximum number of shadov volume sides or edges in silhoutte
+#define	SHADOW_EXTRUSION_BUFFER	0.1f		//amount to extend shadow volume beyond what's required to hit ground.
+#define AIRBORNE_UNIT_GROUND_DELTA 2.0f
+#define MAX_SHADOW_LENGTH_SCALE_FACTOR	1.0f //amount shadow can extend beyond the objects normal bounding sphere
+#define MAX_SHADOW_LENGTH_EXTRA_AIRBORNE_SCALE_FACTOR 1.5f	//scales MAX_SHADOW_LENGTH_SCALE_FACTOR a little more for flying units
+#define MAX_EXTRUSION_LENGTH (512.0f*MAP_XY_FACTOR)	//maximum length of a shadow extrusion - assumed as 512x512 cell map for now.
+#define MAX_SHADOW_EXTRUSION_UNDER_OBJECT_BEFORE_CLAMP	5.0f		//maximum amount that shadow can reach below object base (z-position) before we clamp it's length to reduce artifacts.
+#define SHADOW_SAMPLING_INTERVAL (MAP_XY_FACTOR * 2.0f)				//stepsize along ray used to find lowest point on terrain within shadow's reach.
+#define OVERHANGING_OBJECT_CLAMP_ANGLE	(80.0f/180.0f*PI)				//for objects that are right on a cliff edge, clamp light angle to cast a nearly vertical shadow.
+
+//#define SV_DEBUG
+//#define SV_DEBUG_BOUNDS
+
+struct SHADOW_STATIC_VOLUME_VERTEX	//vertex structure passed to D3D
+{
+		float x,y,z;
+}; 
+#define SHADOW_STATIC_VOLUME_FVF	D3DFVF_XYZ
+
+#ifdef SV_DEBUG	//in debug mode, dynamic shadows are rendered with random diffuse color
+	struct SHADOW_DYNAMIC_VOLUME_VERTEX	//vertex structure passed to D3D
+	{
+			float x,y,z;
+			DWORD diffuse;
+	}; 
+	#define SHADOW_DYNAMIC_VOLUME_FVF	D3DFVF_XYZ|D3DFVF_DIFFUSE
+#else
+	typedef struct SHADOW_STATIC_VOLUME_VERTEX	SHADOW_DYNAMIC_VOLUME_VERTEX;
+	#define SHADOW_DYNAMIC_VOLUME_FVF	D3DFVF_XYZ
+#endif
+
+LPDIRECT3DVERTEXBUFFER8 shadowVertexBufferD3D=NULL;		///<D3D vertex buffer
+LPDIRECT3DINDEXBUFFER8	shadowIndexBufferD3D=NULL;	///<D3D index buffer
+int nShadowVertsInBuf=0;	//model vetices in vertex buffer
+int nShadowStartBatchVertex=0;
+int nShadowIndicesInBuf=0;	//model vetices in vertex buffer
+int nShadowStartBatchIndex=0;
+int SHADOW_VERTEX_SIZE=4096;
+int SHADOW_INDEX_SIZE=8192;
+
+//Rough bounding box around visible portion of the terrain
+//useful for quick culling
+static Real bcX;
+static Real bcY;
+static Real bcZ;
+static Real beX;
+static Real beY;
+static Real beZ;
+
+static LPDIRECT3DVERTEXBUFFER8 lastActiveVertexBuffer=NULL;
+
+/** A simple structure to hold random geometry (vertices, polygons, etc.).  We'll use this
+* to store shadow volumes. */
+struct Geometry
+{
+	enum VisibleState {
+		STATE_UNKNOWN = CollisionMath::BOTH,
+		STATE_VISIBLE = CollisionMath::INSIDE,
+		STATE_INVISIBLE = CollisionMath::OUTSIDE,
+	};
+
+	Geometry(void) : m_verts(NULL),m_indices(NULL),m_numPolygon(0),m_numVertex(0),m_flags(0) {}
+	~Geometry(void) { Release();}
+
+	Int Create( Int numVertices, Int numPolygons )
+	{
+		if (numVertices)
+		{
+			if (m_verts)
+				delete [] m_verts;
+			if((m_verts=NEW Vector3[numVertices]) == 0)
+				return FALSE;
+		}
+		if (numPolygons)
+		{
+			if (m_indices)
+				delete [] m_indices;
+			if((m_indices=NEW UnsignedShort[numPolygons*3]) == 0)
+				return FALSE;
+		}
+		m_numPolygon=numPolygons;
+		m_numVertex=numVertices;
+		m_numActivePolygon=0;
+		m_numActiveVertex=0;
+		return TRUE;
+	}
+	void Release(void)
+	{	if (m_verts)
+		{	delete [] m_verts;
+			m_verts=NULL;
+		}
+		if (m_indices)
+		{	delete [] m_indices;
+			m_indices=NULL;
+		}
+		m_numActivePolygon=m_numPolygon=0;
+		m_numActiveVertex=m_numVertex=0;
+	}
+	Int GetFlags (void) { return m_flags;}
+	void SetFlags (Int flags) { m_flags = flags;}
+	Int GetNumPolygon (void) { return m_numPolygon;}
+	Int GetNumVertex (void)	{ return m_numVertex;}
+	Int GetNumActivePolygon (void) { return m_numActivePolygon;}
+	Int GetNumActiveVertex (void)	{ return m_numActiveVertex;}
+	Int SetNumActivePolygon (Int numPolygons) { return m_numActivePolygon=numPolygons;}
+	Int SetNumActiveVertex (Int numVertices)	{ return m_numActiveVertex=numVertices;}
+	UnsignedShort *GetPolygonIndex (long dwPolyId, short *psIndexList) const
+	{
+		*psIndexList++ = m_indices[dwPolyId*3];
+		*psIndexList++ = m_indices[dwPolyId*3+1];
+		*psIndexList++ = m_indices[dwPolyId*3+2];
+		return &m_indices[dwPolyId];
+	}
+	Int SetPolygonIndex (long dwPolyId, short *psIndexList)
+	{
+		m_indices[dwPolyId*3]=psIndexList[0];
+		m_indices[dwPolyId*3+1]=psIndexList[1];
+		m_indices[dwPolyId*3+2]=psIndexList[2];
+		return 3;
+	}
+	Vector3 *GetVertex (int dwVertId)
+	{
+		return &m_verts[dwVertId];
+	}
+	const Vector3 *SetVertex (int dwVertId, const Vector3 *pvVertex)
+	{
+		m_verts[dwVertId]=*pvVertex;
+		return 	pvVertex;
+	}
+	///Find a vertex within given range
+	Int	FindVertexInRange (Int start, Int end, Vector3 *pvVertex)
+	{
+		for (Int i=start; i<end; i++)
+		{
+			if ((m_verts[i]-*pvVertex).Length2() == 0)
+				return i;
+		}
+		return -1;
+	}
+
+	AABoxClass &getBoundingBox(void) {return m_boundingBox;}
+	void	setBoundingBox(const AABoxClass &box)	{m_boundingBox=box;}
+	void	setBoundingSphere(const SphereClass &sphere) {m_boundingSphere=sphere;}
+	SphereClass &getBoundingSphere(void) {return m_boundingSphere;}
+	void	setVisibleState(VisibleState state)	{m_visibleState=state;}
+	VisibleState	getVisibleState(void) {return m_visibleState;}
+
+private:
+	Vector3	*m_verts;
+	UnsignedShort *m_indices;
+	Int m_numPolygon;
+	Int m_numVertex;
+	Int m_numActivePolygon;	///<number of polygons filled with valid data
+	Int m_numActiveVertex;		///<number of vertices filled with valid data
+	Int	m_flags;				///<geometry attribute flags - static vs. dynamic, etc.
+	AABoxClass m_boundingBox;	///<object space bounding box of shadow volume
+	SphereClass m_boundingSphere;	///<object space bounding sphere of shadow volume
+	VisibleState	m_visibleState;		///<flag if this geometry was visible in this frame.
+};
+
+// CONST //////////////////////////////////////////////////////////////////////
+const Int MAX_POLYGON_NEIGHBORS = 3;  // we use nothing but triangles for 
+																			// geometry polygons so we have at 
+																			// most 3 neighbors
+const Int NO_NEIGHBOR = -1;  // entry value for neighbor when there isn't one
+
+const Byte POLY_VISIBLE	  = 0x01;  // polygon is visible from light
+const Byte POLY_PROCESSED = 0x02;  // this poly has been processed
+
+// STRUCT /////////////////////////////////////////////////////////////////////
+
+// NeighborEdge ---------------------------------------------------------------
+typedef struct _NeighborEdge
+{
+
+	Short neighborIndex;  // index of polygon who is our neighbor, if there is
+												// not a neighbor it contains NO_NEIGHBOR
+	Short neighborEdgeIndex[ 2 ];  // the two vertex indices that represent the
+																 // shared edge
+
+} NeighborEdge;
+
+// PolygonNeighbor ------------------------------------------------------------
+struct  PolyNeighbor
+{
+
+	Short myIndex;  // our polygon index so we know who we are
+	Byte status;  // status flags used when processing neighbors
+	NeighborEdge neighbor[ MAX_POLYGON_NEIGHBORS ];
+
+};
+
+/**This class holds original mesh specific data and geometry.  The meshes stored in this
+class have been cleaned to remove replicated vertices and also cache mesh data needed for
+faster silhouette computation.  A model can contain many meshes for which we need to store
+separate data so they can move relative to each other.*/
+class W3DShadowGeometryMesh
+{
+	//for the sake of speed, give direct access to classes that need this data.
+	friend class W3DShadowGeometry;
+	friend class W3DVolumetricShadow;
+	
+public:
+	W3DShadowGeometryMesh::W3DShadowGeometryMesh( void );
+#ifdef DO_TERRAIN_SHADOW_VOLUMES
+	virtual
+#endif
+	W3DShadowGeometryMesh::~W3DShadowGeometryMesh( void );
+
+	/// @todo: Cache/Store face normals someplace so they are not recomputed when lights move.
+	const Vector3& GetPolygonNormal(long dwPolyNormId) const
+	{
+		WWASSERT(m_polygonNormals);
+		return m_polygonNormals[dwPolyNormId];
+	}
+	int GetNumPolygon (void) const {return m_numPolygons;}
+	/// given loaded geometry this builds the polygon neighbor information
+	void buildPolygonNeighbors( void );
+	void buildPolygonNormals(void)
+	{
+		if (!m_polygonNormals)
+		{	//need to allocate storage
+			Vector3 *tempVec = NEW Vector3[m_numPolygons];
+			for (int i=0; i<m_numPolygons; i++)
+			{
+				buildPolygonNormal(i,&tempVec[i]);
+			}
+			m_polygonNormals = tempVec;
+		}
+	}
+protected:
+	Vector3 *buildPolygonNormal (long dwPolyNormId, Vector3 *pvNorm) const
+	{
+		if (m_polygonNormals)
+			return &(*pvNorm=m_polygonNormals[dwPolyNormId]);
+		short indexList[3];
+//		Vector3 vertexList[3];
+		//get vertex indices for this polygon
+		GetPolygonIndex(dwPolyNormId,indexList);
+		//get the vertices	
+//		GetVertex(indexList[0],&vertexList[0]);
+//		GetVertex(indexList[1],&vertexList[1]);
+//		GetVertex(indexList[2],&vertexList[2]);
+		const Vector3& v0=GetVertex(indexList[0]);
+		const Vector3& v1=GetVertex(indexList[1]);
+		const Vector3& v2=GetVertex(indexList[2]);
+
+		//compute triangle normal by crossing 2 edges
+		Vector3 edge1=v1-v0;
+		Vector3 edge2=v1-v2;
+#ifdef ALLOW_TEMPORARIES
+		*pvNorm=Vector3::Cross_Product(edge2,edge1);
+		pvNorm->Normalize();
+#else
+		Vector3::Normalized_Cross_Product(edge2,edge1, pvNorm);
+#endif
+		return pvNorm;
+	}
+
+	/// creating and deleting storage for the polygon neighbors
+	Bool allocateNeighbors( Int numPolys );
+	void deleteNeighbors( void );
+
+	// geometry shadow data access
+	PolyNeighbor *GetPolyNeighbor( Int polyIndex );
+	int GetNumVertex (void)	const {	return m_numVerts;}
+	///Get indices to the 3 vertices of this face.
+#ifdef DO_TERRAIN_SHADOW_VOLUMES
+	virtual
+#endif
+	void GetPolygonIndex (long dwPolyId, short *psIndexList) const
+	{	const TriIndex *polyi=&m_polygons[dwPolyId];
+		*psIndexList++ = m_parentVerts[polyi->I];
+		*psIndexList++ = m_parentVerts[polyi->J];
+		*psIndexList++ = m_parentVerts[polyi->K];
+	}
+#ifdef DO_TERRAIN_SHADOW_VOLUMES
+	virtual
+#endif
+	const Vector3& GetVertex (int dwVertId) const
+	{
+		return m_verts[dwVertId];
+	}
+
+	MeshClass *m_mesh;	///< W3D mesh for this geometry
+	Int m_meshRobjIndex;	///<index of this mesh within hlod robj
+	const Vector3	*m_verts;		///<array of vertices
+	Vector3	*m_polygonNormals;	///<array of face normals
+	Int m_numVerts;	 ///< number of actual vertices after duplicates are removed.
+	Int m_numPolygons; ///<number of polygons in source geometry
+	const TriIndex	*m_polygons;	///<array of 3 vertex indices per face
+	UnsignedShort *m_parentVerts;	///<array of parent vertex indices for each vertex.
+	/// the neighbor info indexed by polygon id
+	PolyNeighbor *m_polyNeighbors;
+	Int m_numPolyNeighbors;  // length of m_polyNeighbors and the number of polygons
+							 // in our current geometry.
+	W3DShadowGeometry *m_parentGeometry; // mesh hierarchy containing this mesh.
+
+};	//end of meshInfo
+
+#ifdef DO_TERRAIN_SHADOW_VOLUMES
+
+//Custom version of W3DShadowGeometryMesh for meshes stored as heightmap
+class W3DShadowGeometryHeightmapMesh : public W3DShadowGeometryMesh
+{
+
+public:
+	virtual int GetPolygonIndex (long dwPolyId, short *psIndexList) const;
+	virtual Vector3 *GetVertex (int dwVertId, Vector3 *pvVertex);
+	W3DShadowGeometryHeightmapMesh(void) : m_patchOriginX(0),m_patchOriginY(0) { }
+	void setPatchOrigin(Int x, Int y) {m_patchOriginX=x; m_patchOriginY=y;}
+	void getPatchOrigin(Int *x, Int *y) {*x=m_patchOriginX; *y=m_patchOriginY;}
+	void setPatchSize(Int size)	{m_width=size; m_numPolygons=(size-1)*(size-1)*2;}
+	Int getPatchSize(void)	{return m_width;}
+
+	protected:
+
+		Int m_heightmapPitch;	///<width of full heightmap of which this mesh is a sub-rectangle
+		Int m_width;			///<patch width
+		Int m_patchOriginX;		///<location of patch within parent heightmap
+		Int m_patchOriginY;		///<location of patch within parent heightmap
+};
+
+// ?GetPolygonIndex@W3DShadowGeometryHeightmapMesh@@ present-unmatched
+int W3DShadowGeometryHeightmapMesh::GetPolygonIndex (long dwPolyId, short *psIndexList) const
+{
+	//Find top left vertex of cell containing polygon
+	WorldHeightMap *map=NULL;
+	if (TheTerrainRenderObject)
+		map=TheTerrainRenderObject->getMap();
+	if (!map)
+		return 0;
+
+	Int row=dwPolyId/((m_width-1)<<1);
+	Int column=(dwPolyId>>1)-row*((m_width-1));
+
+#ifdef FLIP_TRIANGLES
+	UnsignedByte alpha[4];
+	float UA[4], VA[4];
+	Bool flipForBlend;
+	map->getAlphaUVData(column+m_patchOriginX, row+m_patchOriginY, UA, VA, alpha, &flipForBlend, false);
+	if (flipForBlend)
+	{
+		if (dwPolyId &1)
+		{	psIndexList[0]=row*m_width+column+1;
+			psIndexList[1]=(row+1)*m_width+column+1;
+			psIndexList[2]=(row+1)*m_width+column;
+		}
+		else
+		{	psIndexList[0]=row*m_width+column;
+			psIndexList[1]=row*m_width+column+1;
+			psIndexList[2]=(row+1)*m_width+column;
+		}
+	}
+	else
+#endif
+	{	if (dwPolyId &1)
+		{	psIndexList[0]=row*m_width+column;
+			psIndexList[1]=row*m_width+column+1;
+			psIndexList[2]=(row+1)*m_width+column+1;
+		}
+		else
+		{	psIndexList[0]=row*m_width+column;
+			psIndexList[1]=(row+1)*m_width+column+1;
+			psIndexList[2]=(row+1)*m_width+column;
+		}
+	}
+
+	return 3;
+}
+
+// ?GetVertex@W3DShadowGeometryHeightmapMesh@@ present-unmatched
+Vector3 *W3DShadowGeometryHeightmapMesh::GetVertex (int dwVertId, Vector3 *pvVertex)
+{
+	WorldHeightMap *map=NULL;
+
+	if (TheTerrainRenderObject)
+		map=TheTerrainRenderObject->getMap();
+
+	if (!map)
+		return NULL;
+
+	Int row=dwVertId/m_width;
+	Int column=dwVertId-row*m_width;
+
+	UnsignedByte *data=map->getDataPtr();
+	pvVertex->X=(m_patchOriginX+column)*MAP_XY_FACTOR;
+	pvVertex->Y=(m_patchOriginY+row)*MAP_XY_FACTOR;
+	pvVertex->Z=(Real)data[(m_patchOriginX+column)+(m_patchOriginY+row)*map->getXExtent()]*MAP_HEIGHT_SCALE;
+
+	return pvVertex;
+}
+
+Bool isPatchShadowed(W3DShadowGeometryHeightmapMesh	*hm_mesh)
+{
+	WorldHeightMap *map=NULL;
+	Short poly[ 3 ];
+	Vector3 vertex;
+	Vector3 normal,lightVector;
+	Int firstVisible=0;
+	Int testVisible;
+
+	if (TheTerrainRenderObject)
+		map=TheTerrainRenderObject->getMap();
+
+	if (!map)
+		return NULL;
+
+	hm_mesh->buildPolygonNormal( 0, &normal );
+
+	// get the vertex indices at this polygon
+	hm_mesh->GetPolygonIndex( 0, poly, 3 );
+
+	//
+	// find out "lightVector" to this polygon
+	//
+	// since our light source could be very close to the object and that
+	// would change the shadow we are going to say that the light vector
+	// is from the light position to one of the vertices in the polygon.
+	// To be more correct we should use the center of the polygon but
+	// this is a good approximation ... an ever broader approximation that
+	// we could use would be the object center
+	//
+	hm_mesh->GetVertex( poly[ 0 ], &vertex );
+	lightVector= vertex - LightPosWorld[0];
+
+	//
+	// dot the light vector with the normal of the polygon to see if the
+	// poly is visible from this location
+	//
+	if( Vector3::Dot_Product( lightVector, normal ) < 0.0f )
+		firstVisible=1;
+
+	for (Int i=1; i<hm_mesh->GetNumPolygon(); i++)
+	{
+		hm_mesh->buildPolygonNormal( i, &normal );
+
+		// get the vertex indices at this polygon
+		hm_mesh->GetPolygonIndex( i, poly, 3 );
+
+		//
+		// find out "lightVector" to this polygon
+		//
+		// since our light source could be very close to the object and that
+		// would change the shadow we are going to say that the light vector
+		// is from the light position to one of the vertices in the polygon.
+		// To be more correct we should use the center of the polygon but
+		// this is a good approximation ... an ever broader approximation that
+		// we could use would be the object center
+		//
+		hm_mesh->GetVertex( poly[ 0 ], &vertex );
+		lightVector= vertex - LightPosWorld[0];
+
+		//
+		// dot the light vector with the normal of the polygon to see if the
+		// poly is visible from this location
+		//
+		testVisible=0;
+		if( Vector3::Dot_Product( lightVector, normal ) < 0.0f )
+			testVisible=1;
+
+//		if (testVisible ^ firstVisible)
+//			return TRUE;	//found polys facing different directions to sun, will cast shadow
+		if (!testVisible)
+			return TRUE;	//some part of mesh not facing light, so it could cast a shadow
+	}
+	return FALSE;
+}
+
+#define SV_MAX_TERRAIN_MESHES	16
+
+static W3DShadowGeometryHeightmapMesh terrainMeshes[SV_MAX_TERRAIN_MESHES];
+static Int numTerrainMeshes=0;
+
+// ?loadTerrainShadows@W3DVolumetricShadowManager@@ present-unmatched
+void W3DVolumetricShadowManager::loadTerrainShadows(void)
+{
+	WorldHeightMap *map=NULL;
+	Int patchSize=3;
+
+	if (TheTerrainRenderObject)
+		map=TheTerrainRenderObject->getMap();
+
+	if (!map)
+		return;
+
+	for (Int y=0; y<map->getYExtent(); y += patchSize-1)
+	{
+		for (Int x=0; x<map->getXExtent(); x += patchSize-1)
+		{
+			W3DShadowGeometryHeightmapMesh	*hm_mesh=&terrainMeshes[numTerrainMeshes];
+			hm_mesh->setPatchOrigin(x,y);
+			hm_mesh->setPatchSize(patchSize);
+
+			if(isPatchShadowed(hm_mesh))
+			{	//some polygons in this patch cast shadows, need to generate a mesh
+//				hm_mesh->buildPolygonNeighbors();
+				numTerrainMeshes++;
+			}
+		}
+	}
+
+/*	W3DShadowGeometryHeightmapMesh	hm_mesh;
+	short indexList[3];
+	Vector3 vertexList[3];
+*/
+/*	W3DShadow *shadow = NEW W3DShadow;
+	// add to our shadow list through the shadow next links
+	shadow->m_next = m_shadowList;
+	m_shadowList = shadow;	
+*/
+}
+
+#endif //DO_TERRAIN_SHADOW_VOLUMES
+
+// BFME's MeshClass has two render-object view slots after Class_ID; the
+// recovered HLOD path uses the later slot, which the Zero Hour headers omit.
+class BfmeMeshRenderObjView
+{
+public:
+	virtual void Slot_00(void);
+	virtual void Slot_04(void);
+	virtual void Slot_08(void);
+	virtual int Class_ID(void) const;
+	virtual RenderObjClass *Mesh_View_10(void);
+	virtual RenderObjClass *Mesh_View_14(void);
+};
+
+#define BFME_HLOD_EIGHT_SLOTS(a, b, c, d, e, f, g, h) \
+	virtual void Slot_##a(void); virtual void Slot_##b(void); \
+	virtual void Slot_##c(void); virtual void Slot_##d(void); \
+	virtual void Slot_##e(void); virtual void Slot_##f(void); \
+	virtual void Slot_##g(void); virtual void Slot_##h(void);
+
+class BfmeHLodRenderObjView
+{
+public:
+	BFME_HLOD_EIGHT_SLOTS(000, 001, 002, 003, 004, 005, 006, 007)
+	BFME_HLOD_EIGHT_SLOTS(008, 009, 010, 011, 012, 013, 014, 015)
+	BFME_HLOD_EIGHT_SLOTS(016, 017, 018, 019, 020, 021, 022, 023)
+	BFME_HLOD_EIGHT_SLOTS(024, 025, 026, 027, 028, 029, 030, 031)
+	BFME_HLOD_EIGHT_SLOTS(032, 033, 034, 035, 036, 037, 038, 039)
+	BFME_HLOD_EIGHT_SLOTS(040, 041, 042, 043, 044, 045, 046, 047)
+	BFME_HLOD_EIGHT_SLOTS(048, 049, 050, 051, 052, 053, 054, 055)
+	BFME_HLOD_EIGHT_SLOTS(056, 057, 058, 059, 060, 061, 062, 063)
+	BFME_HLOD_EIGHT_SLOTS(064, 065, 066, 067, 068, 069, 070, 071)
+	BFME_HLOD_EIGHT_SLOTS(072, 073, 074, 075, 076, 077, 078, 079)
+	virtual int Get_LOD_Count(void) const;
+	BFME_HLOD_EIGHT_SLOTS(081, 082, 083, 084, 085, 086, 087, 088)
+	BFME_HLOD_EIGHT_SLOTS(089, 090, 091, 092, 093, 094, 095, 096)
+	BFME_HLOD_EIGHT_SLOTS(097, 098, 099, 100, 101, 102, 103, 104)
+	BFME_HLOD_EIGHT_SLOTS(105, 106, 107, 108, 109, 110, 111, 112)
+	BFME_HLOD_EIGHT_SLOTS(113, 114, 115, 116, 117, 118, 119, 120)
+	BFME_HLOD_EIGHT_SLOTS(121, 122, 123, 124, 125, 126, 127, 128)
+	BFME_HLOD_EIGHT_SLOTS(129, 130, 131, 132, 133, 134, 135, 136)
+	virtual void Slot_137(void);
+	virtual int Get_Lod_Model_Count(int lod_index) const;
+	virtual RenderObjClass *Peek_Lod_Model(int lod_index, int model_index) const;
+};
+
+#undef BFME_HLOD_EIGHT_SLOTS
+
+class BfmeW3DShadowGeometryLayout
+{
+public:
+	unsigned char m_opaque[0x2094];
+	Int m_meshCount;
+	Int m_numTotalsVerts;
+};
+
+/** This class will wrap any shadow casting geometry with additional
+data needed for efficient shadow volume generation.  The W3DVolumetricShadowManager
+will allocate these structures and hash them for quick re-use on other
+models sharing the same geometry.*/
+class W3DShadowGeometry : public RefCountClass, public	HashableClass
+{
+
+	public:
+
+	W3DShadowGeometry( void );
+		~W3DShadowGeometry( void ) { };
+
+		virtual	const char * Get_Key( void )	{ return m_namebuf;	}
+
+		Int init (RenderObjClass *robj);
+		Int initFromHLOD (RenderObjClass *robj);	///<initialize the geometry from a W3D HLOD object.
+		Int initFromMesh (RenderObjClass *robj);///<initialize the geometry from a W3D Mesh object.
+		Int initFromMesh (RenderObjClass *robj, Int mesh_index, W3DShadowGeometry *parent_geometry);
+
+		const char *		Get_Name(void) const	{ return m_namebuf;}
+		void				Set_Name(const char *name)
+		{	memset(m_namebuf,0,sizeof(m_namebuf));	//pad with zero so always ends with null character.
+			strncpy(m_namebuf,name,sizeof(m_namebuf)-1);
+		}
+		Int					getMeshCount(void)	{ return m_meshCount;}
+		W3DShadowGeometryMesh	*getMesh(Int index)	{ return &m_meshList[index];}
+
+		
+		int GetNumTotalVertex (void)	{	return m_numTotalsVerts;}	///<total number of vertices in all meshes of this geometry
+
+	private:
+
+		char m_namebuf[2*W3D_NAME_LEN];	///<name of model hierarchy
+
+		W3DShadowGeometryMesh m_meshList[MAX_SHADOW_CASTER_MESHES]; ///<collection of meshes for this geometry.
+		Int m_meshCount;							///<number of meshes in hierarchy
+		Int m_numTotalsVerts;						///<number of verts in entire hierarchy
+};
+  
+#define MAX_SHADOW_VOLUME_VERTS 16384
+
+// ?initFromHLOD@W3DShadowGeometry@@QAEHPAVRenderObjClass@@@Z
+Int W3DShadowGeometry::initFromHLOD(RenderObjClass *robj)
+{
+	BfmeHLodRenderObjView *hlod = (BfmeHLodRenderObjView *)robj;
+	BfmeW3DShadowGeometryLayout *layout = (BfmeW3DShadowGeometryLayout *)this;
+
+	layout->m_numTotalsVerts = 0;
+	layout->m_meshCount = 0;
+
+	Int top = hlod->Get_LOD_Count() - 1;
+	for (Int i = 0; i < hlod->Get_Lod_Model_Count(top); ++i)
+	{
+		if (hlod->Peek_Lod_Model(top, i) != 0 &&
+			hlod->Peek_Lod_Model(top, i)->Class_ID() == RenderObjClass::CLASSID_MESH)
+		{
+			RenderObjClass *mesh =
+				((BfmeMeshRenderObjView *)hlod->Peek_Lod_Model(top, i))->Mesh_View_14();
+			initFromMesh(mesh, i, this);
+		}
+	}
+
+	return layout->m_meshCount != 0;
+}
+
+// ?initFromMesh@W3DShadowGeometry@@QAEHPAVRenderObjClass@@@Z present-unmatched
+Int W3DShadowGeometry::initFromMesh(RenderObjClass *robj)
+{
+	//locations of parent vertices inside the vertex array after duplicate
+	//vertices are removed.
+	UnsignedShort vertParent[MAX_SHADOW_VOLUME_VERTS];
+
+	Int j,k,newVertexCount;
+	W3DShadowGeometryMesh *geomMesh=&m_meshList[m_meshCount];
+
+	assert (m_meshCount < MAX_SHADOW_CASTER_MESHES);
+
+	geomMesh->m_mesh = (MeshClass *)robj;
+	geomMesh->m_meshRobjIndex = -1;	//robj is the mesh so no index needed.
+	if (((geomMesh->m_mesh->Is_Alpha() || geomMesh->m_mesh->Is_Translucent()) && !geomMesh->m_mesh->Peek_Model()->Get_Flag(MeshGeometryClass::CAST_SHADOW)))
+		return FALSE; //transparent meshes that don't have forced shadows will not cast volumetric shadows
+
+	MeshModelClass *mm = geomMesh->m_mesh->Peek_Model();
+	geomMesh->m_numVerts=mm->Get_Vertex_Count();
+	geomMesh->m_verts=mm->Get_Vertex_Array();
+	geomMesh->m_numPolygons=mm->Get_Polygon_Count();
+	geomMesh->m_polygons=mm->Get_Polygon_Array();
+
+	if (geomMesh->m_numVerts > MAX_SHADOW_VOLUME_VERTS)
+		return FALSE;	//too many vertices to process
+
+	//reset index of all vertices
+	memset(vertParent,0xffffffff,sizeof(vertParent));
+	newVertexCount=geomMesh->m_numVerts;
+	//Find all duplicated vertices.
+	for (j=0; j<geomMesh->m_numVerts; j++)
+	{
+		if (vertParent[j] != 0xffff)
+			continue;	//this vertex has already been processed
+
+		const Vector3 *v_curr=&geomMesh->m_verts[j];
+
+		for (k=j+1; k<geomMesh->m_numVerts; k++)
+		{
+			Vector3 len(*v_curr - geomMesh->m_verts[k]);
+			if (len.Length2() == 0)
+			{	//found duplicate vertex
+				vertParent[k]=j;
+				newVertexCount--;	//decrease total vertices since duplicate found.
+			}
+		}
+		vertParent[j]=j;	//first instance of new vertex
+	}
+
+	geomMesh->m_parentVerts = NEW UnsignedShort[geomMesh->m_numVerts];
+	memcpy(geomMesh->m_parentVerts,vertParent,sizeof(UnsignedShort)*geomMesh->m_numVerts);
+	geomMesh->m_numVerts=newVertexCount;	//adjust actual vertex count to ignore duplicates
+	geomMesh->m_parentGeometry = this;
+
+	m_meshCount=1;
+	m_numTotalsVerts=newVertexCount;
+
+	// build our neighboring polygon information
+//	geomMesh->buildPolygonNeighbors();
+
+	return TRUE;
+}
+
+Int W3DShadowGeometry::init(RenderObjClass *robj)
+{
+	return TRUE;
+//	m_robj=robj;
+/*	//code to deal with granny - don't think we'll use shadow volumes on these!?
+	granny_file *fileInfo=robj->getPrototype().m_file;
+
+	for (Int modelIndex=0; modelIndex<fileInfo->ModelCount; modelIndex++)
+	{
+		granny_model *sourceModel =  fileInfo->Models[modelIndex];
+		if (stricmp(sourceModel->Name,"AABOX") == 0)
+		{	//found a collision box, copy out data
+			int MeshCount = sourceModel->MeshBindingCount;
+			if (MeshCount==1)
+			{
+				granny_mesh *sourceMesh = sourceModel->MeshBindings[0].Mesh;
+				granny_pn33_vertex *Vertices = (granny_pn33_vertex *)sourceMesh->PrimaryVertexData->Vertices;
+				Vector3 points[24];
+
+				assert (sourceMesh->PrimaryVertexData->VertexCount <= 24);
+
+				for (Int boxVertex=0; boxVertex<sourceMesh->PrimaryVertexData->VertexCount; boxVertex++)
+				{	points[boxVertex].Set(Vertices[boxVertex].Position[0],
+										  Vertices[boxVertex].Position[1],
+										  Vertices[boxVertex].Position[2]);
+				}
+				box.Init(points,sourceMesh->PrimaryVertexData->VertexCount);
+			}
+		}
+		else
+		{	//mesh is part of model
+			int meshCount = sourceModel->MeshBindingCount;
+			for (Int meshIndex=0; meshIndex<meshCount; meshIndex++)
+			{
+				granny_mesh *sourceMesh = sourceModel->MeshBindings[meshIndex].Mesh;
+				if (sourceMesh->PrimaryVertexData)
+					vertexCount+=sourceMesh->PrimaryVertexData->VertexCount;
+			}
+		}
+	}*/
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// MEMBER DEFINITIONS /////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+// W3DShadowGeometry =============================================================
+// ============================================================================
+// ??0W3DShadowGeometryMesh@@QAE@XZ present-unmatched
+W3DShadowGeometryMesh::W3DShadowGeometryMesh( void )
+{	
+	// init polygon neighbor information
+	m_polyNeighbors = NULL;
+	m_numPolyNeighbors = 0;
+	m_parentVerts = NULL;
+	m_polygonNormals = NULL;
+}  // end W3DShadowGeometry
+
+// ~W3DShadowGeometry ============================================================
+// ============================================================================
+// ??1W3DShadowGeometryMesh@@QAE@XZ present-unmatched
+W3DShadowGeometryMesh::~W3DShadowGeometryMesh( void )
+{
+	// remove our neighbor list information allocated
+	deleteNeighbors();
+	if (m_parentVerts) {
+		delete [] m_parentVerts;
+	}
+	if (m_polygonNormals)
+		delete [] m_polygonNormals;
+
+}  // end ~W3DShadowGeometry
+
+// GetPolyNeighbor ============================================================
+// Return the poly neighbor structure at the given index
+// ============================================================================
+// ?GetPolyNeighbor@W3DShadowGeometryMesh@@IAEPAUPolyNeighbor@@H@Z present-unmatched
+PolyNeighbor *W3DShadowGeometryMesh::GetPolyNeighbor( Int polyIndex )
+{
+if (!m_polyNeighbors) {
+	buildPolygonNeighbors();
+}
+
+	// sanity
+	if( polyIndex < 0 || polyIndex >= m_numPolyNeighbors )
+	{
+
+//		DBGPRINTF(( "Invalid neighbor index '%d'\n", polyIndex ));
+		assert( 0 );
+		return NULL;
+
+	}  // en dif
+
+	return &m_polyNeighbors[ polyIndex ];
+
+}  // end GetPolyNeighbor
+
+// buildPolygonNeighbors ======================================================
+// Whenever we set a new geometry we want to build some information about
+// the faces in the new geometry so that we can efficienty traverse across
+// the surface to neighboring polygons
+// ============================================================================
+// ?buildPolygonNeighbors@W3DShadowGeometryMesh@@QAEXXZ present-unmatched
+void W3DShadowGeometryMesh::buildPolygonNeighbors( void )
+{
+	Int numPolys;
+	Int i, j;
+	// Jani: Make sure we have polygon normals BEFORE we need them...
+	buildPolygonNormals();
+
+	// how many polygons are in our geometry
+	numPolys = GetNumPolygon();
+
+	//
+	// if there are no polygons for this geometry then we should have no
+	// neighbor information
+	//
+	if( numPolys == 0 )
+	{
+
+		//
+		// if our geometry has somehow deformed and we used to have polygon
+		// neighbor information we should delete it before we bail
+		//
+		if( m_numPolyNeighbors != 0 )
+			deleteNeighbors();
+
+		return;  // nothing to see here people, move along
+
+	}  // end if
+
+	//
+	// in the event that this geometry can deform on the fly or we are
+	// building our neighbor information for the very first time ...
+	// if our current geometry has a different number of polygons than
+	// we had previously calculated we need to delete and reallocate a
+	// new storate space for the neighbor information
+	//
+	if( numPolys != m_numPolyNeighbors )
+	{
+
+		// delete the old neighbor storage
+		deleteNeighbors();
+
+		// allocate a new pool for neighbor information
+		if( allocateNeighbors( numPolys ) == FALSE )
+			return;
+
+	}  // end if
+
+	//
+	// initialize all polygon neighbor information to none and assign our
+	// own reference to myIndex so we know who we are
+	//
+	for( i = 0; i < m_numPolyNeighbors; i++ )
+	{
+
+		// assign our own identification
+		m_polyNeighbors[ i ].myIndex = i;
+
+		// assign our neighbors to none
+		for( j = 0; j < MAX_POLYGON_NEIGHBORS; j++ )
+			m_polyNeighbors[ i ].neighbor[ j ].neighborIndex = NO_NEIGHBOR;
+
+	}  // end for i
+
+	// assign polygon data for each of our polygons
+	for( i = 0; i < m_numPolyNeighbors; i++ )
+	{
+		Short poly[ 3 ];  // vertex indices for this polygon
+		Short otherPoly[ 3 ];  // vertex indices for other polygon
+
+		// get the indices of the three triangle points for this polygon
+		GetPolygonIndex( i, poly );
+		const Vector3& vNorm=GetPolygonNormal(i);
+
+		// find the neighbors of this polygon
+		for( j = 0; j < m_numPolyNeighbors; j++ )
+		{
+			Int a, b;
+			Int index1, index2;
+			Int index1Pos[2]; //positions of shared edge vertices in triangle list. (0,1 or 2)
+			Int diff1,diff2;
+
+			// ignore our own polygon
+			if( i == j )
+				continue;
+
+			// get the vertex index information for this other polygon
+			GetPolygonIndex( j, otherPoly );
+
+			//
+			// if 2 of the 3 vertex indices are the same then these polygons
+			// are neighbors
+			//
+			//Also check if winding order of vertices on edge is opposite.
+			//If vertices are in same order as our polygon, then it's
+			//not a valid edge because the neighbor is flipped.
+
+			index1 = -1;
+			index2 = -1;
+			for( a = 0; a < 3; a++ )
+				for( b = 0; b < 3; b++ )
+					if( poly[ a ] == otherPoly[ b ] )
+					{
+
+						if( index1 == -1 )
+						{	index1 = poly[ a ];  // record matching index1
+							index1Pos[0]=a;
+							index1Pos[1]=b;
+						}
+						else if( index2 == -1 )
+						{	//Check direction of edge in each polygon.  If they are same direction skip it.
+							diff1 = a-index1Pos[0];
+							diff2 = b-index1Pos[1];
+							if ( ((diff1&0x80000000)^((abs(diff1)&2)<<30)) != ((diff2&0x80000000)^((abs(diff2)&2)<<30)))
+							{
+
+								const Vector3& vOtherNorm=GetPolygonNormal(j);
+								
+								//Check if the 2 polygons face in exactly opposite directions - don't allow this type of neighbor.
+								if (fabs(Vector3::Dot_Product(vOtherNorm,vNorm) + 1.0f) <= 0.01f)
+									continue;
+
+								index2 = poly[ a ];  // record matching index2
+							}
+							else
+								continue;
+						}
+						else
+						{//This is the same poly facing opposite direction.	//assert( 0 );  // should never match 3 vertices!
+							index1=index2=-1;
+							continue; 
+						}
+					}  // end if
+			if( index1 != -1 && index2 != -1  )
+			{
+				//
+				// the polygon j is a neighbor of our polygon i, put the j
+				// index into the first free neighbor slot for polygon i
+				//
+				for( a = 0; a < MAX_POLYGON_NEIGHBORS; a++ )
+					if( m_polyNeighbors[ i ].neighbor[ a ].neighborIndex == NO_NEIGHBOR )
+					{
+
+						// record the neighbor index
+						m_polyNeighbors[ i ].neighbor[ a ].neighborIndex = j;
+
+						// record the sharded edge vertex indices
+						m_polyNeighbors[ i ].neighbor[ a ].neighborEdgeIndex[ 0 ] = index1;
+						m_polyNeighbors[ i ].neighbor[ a ].neighborEdgeIndex[ 1 ] = index2;
+
+						break;  // exit for a
+
+					}  // end if
+
+				//
+				// error condition, if our counter a is at the max number
+				// of neighbors, which is 3 for a triangle mesh, we did something
+				// wrong here because that would mean we found a 4th match!
+				//
+				if (a == MAX_POLYGON_NEIGHBORS)
+				{
+//					Vector3 pv[3];
+//					char errorText[255];
+
+//					GetVertex (poly[0], &pv[0]);
+//					GetVertex (poly[1], &pv[1]);
+//					GetVertex (poly[2], &pv[2]);
+
+//					pv[0] = pv[0] + pv[1] + pv[2];
+//					pv[0] /= 3.0f;	//find center of polygon
+
+//					sprintf(errorText,"%s: Shadow Polygon with too many neighbors at %f,%f,%f",m_parentGeometry->Get_Name(),pv[0].X,pv[0].Y,pv[0].Z);
+//					DEBUG_LOG(("****%s Shadow Polygon with too many neighbors at %f,%f,%f\n",m_parentGeometry->Get_Name(),pv[0].X,pv[0].Y,pv[0].Z));
+//					DEBUG_ASSERTCRASH(a != MAX_POLYGON_NEIGHBORS,(errorText));
+				}
+
+			}  // end if
+
+		}  // end for j
+
+	}  // end for i
+
+}  // end buildPolygonNeighbors
+
+// allocateNeighbors ==========================================================
+// Allocate storage for the polygon neighbors and record its size
+// ============================================================================
+// BFME's W3DShadowGeometryMesh is polymorphic: retail writes m_polyNeighbors at
+// this+0x24 and m_numPolyNeighbors at this+0x28 where the flat vendored layout
+// puts them at +0x20 and +0x24. A uniform four-byte shift of every trailing
+// member is what a vptr at +0x00 looks like, and the reference has the switch for
+// exactly that -- it declares GetPolygonIndex and its neighbours virtual under
+// DO_TERRAIN_SHADOW_VOLUMES. A view rather than the macro, because the macro
+// would move all 89 rows in this file at once.
+//
+// The allocation is a plain global operator new[]: sizeof(PolyNeighbor) is 22 and
+// retail confirms it with `imul eax,eax,0x16`, a POD array with no cookie. NEW
+// would route it through the memory pool instead.
+struct BfmeShadowGeometryMeshNeighbors
+{
+	unsigned char m_unreconstructed_000[ 0x24 ];
+	PolyNeighbor *m_polyNeighbors;				///< retail this+0x24
+	Int m_numPolyNeighbors;					///< retail this+0x28
+};
+
+Bool W3DShadowGeometryMesh::allocateNeighbors( Int numPolys )
+{
+	BfmeShadowGeometryMeshNeighbors *self = (BfmeShadowGeometryMeshNeighbors *)this;
+
+	// assure we're not re-allocating without deleting
+	assert( self->m_numPolyNeighbors == 0 );
+	assert( self->m_polyNeighbors == NULL );
+
+	// allocate the list
+	self->m_polyNeighbors = ::new PolyNeighbor[ numPolys ];
+	if( self->m_polyNeighbors == NULL )
+	{
+
+//		DBGPRINTF(( "Unable to allocate polygon neighbors\n" ));
+		assert( 0 );
+		return FALSE;
+
+	}  // end if
+
+	// list is now acutally allocated
+	self->m_numPolyNeighbors = numPolys;
+
+	return TRUE;  // success!
+
+}  // end allocateNeighbors
+
+// deleteNeighbors ============================================================
+// Delete all polygon neighbor storage and information
+// ============================================================================
+// ?deleteNeighbors@W3DShadowGeometryMesh@@IAEXXZ present-unmatched
+void W3DShadowGeometryMesh::deleteNeighbors( void )
+{
+
+	// delete list
+	if( m_polyNeighbors )
+	{
+
+		delete [] m_polyNeighbors;
+		m_polyNeighbors = NULL;
+		m_numPolyNeighbors = 0;
+
+	}  // end if
+
+	// sanity error checking
+	assert( m_numPolyNeighbors == 0 );
+	assert( m_polyNeighbors == NULL );
+
+}  // end deleteNeighbors
+
+//#include "Common/ThingTemplate.h"
+
+// updateOptimalExtrusionPadding ==============================================
+// Use raycasting to figure out a shadow extrusion length that guarantees that
+// the highest point of the object is extruded long enough to hit some ground.
+// This is a very slow operation so only do once for static non-moving objects.
+// ============================================================================
+// ?updateOptimalExtrusionPadding@W3DVolumetricShadow@@IAEXXZ present-unmatched
+void W3DVolumetricShadow::updateOptimalExtrusionPadding(void)
+{
+	if (m_robj)
+	{
+//		DrawableInfo *drawInfo=(DrawableInfo *)m_robj->Get_User_Data();
+//		Drawable *draw = drawInfo->m_drawable;
+
+//		if (strstr(draw->getTemplate()->getName().str(),"Right02") != 0)
+//			draw = draw;	//debug code for China06 wacky bridge shadow
+
+		// get the light
+		Vector3 lightPosWorld=TheW3DShadowManager->getLightPosWorld(0);
+
+		// check if object has a limit/clamp on shadow length and adjust light
+		// position of necessary.
+		if (m_shadowLengthScale)
+		{	//Find light's distance from origin in xy plane
+			Real lightXYDistance = sqrt(lightPosWorld.X*lightPosWorld.X + lightPosWorld.Y * lightPosWorld.Y);
+			Real newZ=lightXYDistance*m_shadowLengthScale;
+
+			if (newZ > lightPosWorld.Z)
+			{	//clamped z component is higher than actual light position allows so adjust it.
+				lightPosWorld.Z = newZ;
+			}
+		}
+
+		// find maximum shadow length which will not cause any corners of the object's bounding box
+		// to cast shadows that drop significantly below the object's base.  This will help avoid
+		// artifacts when we have an object on a cliff/hill casting shadows onto the ground below.
+		// We need this hack because the terrain does not cast shadows and looks weird when objects
+		//	sitting on an incline cast shadows down below.
+		Vector3 objPos=m_robj->Get_Position();
+		Vector3 lastValidTerrainPoint = objPos;
+		Real baseGroundHeight=objPos.Z;
+		const AABoxClass &box=m_robj->Get_Bounding_Box();
+		Vector3 lightRay,shadowRay;
+		LineSegClass lineseg;
+		CastResultStruct result;
+		Vector3 Corners[4];
+
+		RayCollisionTestClass raytest(lineseg,&result);
+
+		//Get vertices of top of bounding box since they will generate the longest shadow
+		Corners[0]=box.Center+box.Extent;	//top right corner
+		Corners[1]=Corners[0];
+		Corners[1].X -= 2.0f*box.Extent.X;		//top left corner
+		Corners[2]=Corners[1];
+		Corners[2].Y -= 2.0f*box.Extent.Y;		//bottom left corner
+		Corners[3]=Corners[2];
+		Corners[3].X += 2.0f*box.Extent.X;		//bottom right corner
+
+		//find the corner that causes the longest shadow projection
+		//and clamp light position to make sure it falls on even ground about
+		//the same height as the object's base.
+		for (Int i=0; i<4; i++)
+		{
+			//Cast ray from top volume corners onto ground plane
+			lightRay = Corners[i] - lightPosWorld;	//vector light to corner
+			lightRay.Normalize();
+
+			raytest.Ray.Set(Corners[i],Corners[i]+lightRay*MAX_EXTRUSION_LENGTH);
+			result.Reset();
+
+			//find out where this ray intersects terrain.
+			if (TheTerrainRenderObject->Cast_Ray(raytest) && !raytest.Result->StartBad)
+			{	//Found intersection point where shadow has its maximum length.  Do a quick
+				//search to see if terrain falls significantly below the height of the object
+				//anywhere between the base and the intersection point.  If so, we either need
+				//to extend shadow extrusion or make the light angle more vertical.
+
+				shadowRay.Set(result.ContactPoint-Corners[i]);	//vector from object corner to terrain intersection.
+				shadowRay.Z = 0;	//remove z-component since we'll be sampling along the xy plane.
+
+				//walk along the shadow/light direction vector looking for large dips - indicating object
+				//is on hill or cliff.
+				Real len=shadowRay.Length();
+				Int  numSteps=REAL_TO_INT_CEIL(len/SHADOW_SAMPLING_INTERVAL);
+				Real stepSize = 1.0f/(Real)numSteps;
+				Vector3 terrainPoint;
+
+				Real t=stepSize;
+				for (Int j=0; j<numSteps; j++)
+				{
+					terrainPoint = Corners[i] + shadowRay*t;
+					terrainPoint.Z=0;	//ignore height
+					
+					Real terrainHeight=TheTerrainRenderObject->getHeightMapHeight(terrainPoint.X,terrainPoint.Y,NULL);
+					if (terrainHeight < (objPos.Z - MAX_SHADOW_EXTRUSION_UNDER_OBJECT_BEFORE_CLAMP))	//check if terrain dips more than 10 units under object.
+					{	
+						if (j == 0)	//this is the initial point so object must be right on the edge of a cliff.
+						{	baseGroundHeight = terrainHeight;	//force extrusion all the way down cliff.
+							Real tanAngle=tan(OVERHANGING_OBJECT_CLAMP_ANGLE);	//clamp to about 89 degrees or close to vertical lightpos.
+							setShadowLengthScale(tanAngle);	//update the clamp angle to shorted shadow enough so this corner on flat ground.
+							break;
+						}
+
+						//Find ray from last valid terrain contact point to object box corner.
+						Vector3 clampRay(Corners[i]-lastValidTerrainPoint);
+						Real clampAngle=asin(clampRay.Z/clampRay.Length());
+						if (clampAngle >= (PI/2.0f) || clampAngle <= 0)
+							clampAngle = OVERHANGING_OBJECT_CLAMP_ANGLE;	//clamp to about 89 degrees or close to vertical lightpos.
+						Real tanAngle=tan(clampAngle);
+						if (tanAngle > m_shadowLengthScale)
+							setShadowLengthScale(tanAngle);	//update the clamp angle to shorted shadow enough so this corner on flat ground.
+						break;
+					}
+
+					if (terrainHeight < baseGroundHeight)
+					{	baseGroundHeight = terrainHeight;	//point was below object but within safety margin so record it's position.
+						lastValidTerrainPoint = terrainPoint;
+						lastValidTerrainPoint.Z = baseGroundHeight;
+					}
+
+					t+=stepSize;
+				}
+			}
+		}
+
+
+		m_extraExtrusionPadding = objPos.Z - baseGroundHeight + SHADOW_EXTRUSION_BUFFER;
+
+		DEBUG_ASSERTCRASH(m_extraExtrusionPadding <= (255.0f*MAP_HEIGHT_SCALE),("Warning: Volumetric Shadow UpdateOptimalExtrusionPadding too large"));
+	}
+}
+
+// getRenderCost ============================================================
+// Returns number of draw calls for this shadow.
+// ============================================================================
+#if defined(_DEBUG) || defined(_INTERNAL)	
+// ?getRenderCost@W3DVolumetricShadow@@ present-unmatched
+void W3DVolumetricShadow::getRenderCost(RenderCost & rc) const
+{
+	Int drawCount = 0;
+
+	if (m_geometry && m_isEnabled && !m_isInvisibleEnabled && TheGlobalData->m_useShadowVolumes)
+	{
+		Int i,j;
+
+		HLodClass *hlod=(HLodClass *)m_robj;
+		MeshClass *mesh;
+		Int meshIndex;
+
+		for( i = 0; i < MAX_SHADOW_LIGHTS; i++ )
+		{
+			for (j=0; j<m_geometry->getMeshCount(); j++)
+			{
+				meshIndex=m_geometry->getMesh(j)->m_meshRobjIndex;
+
+				if (meshIndex >= 0)
+					mesh = (MeshClass *)hlod->Peek_Lod_Model(0,meshIndex);
+				else
+					mesh = (MeshClass *)m_robj;
+
+				if (mesh && mesh->Is_Not_Hidden_At_All())
+						drawCount++;
+			}
+		}
+	}
+
+	rc.addShadowDrawCalls(drawCount*2);
+}
+#endif
+
+/************************************ New Buffered Rendering Code ************************/
+// ?RenderVolume@W3DVolumetricShadow@@IAEXHH@Z present-unmatched
+void W3DVolumetricShadow::RenderVolume(Int meshIndex, Int lightIndex)
+{
+	HLodClass *hlod=(HLodClass *)m_robj;
+	MeshClass *mesh=NULL;
+
+	Int meshRobjIndex=m_geometry->getMesh(meshIndex)->m_meshRobjIndex;
+
+	if (meshRobjIndex >= 0)
+		mesh = (MeshClass *)hlod->Peek_Lod_Model(0,meshRobjIndex);
+	else
+		mesh = (MeshClass *)m_robj;
+
+	if (mesh)
+	{
+#ifdef SV_DEBUG_BOUNDS
+			RenderMeshVolumeBounds(meshIndex,lightIndex, &mesh->Get_Transform());
+#endif
+			if (m_shadowVolume[0][ meshIndex ]->GetFlags() & SHADOW_DYNAMIC)
+				RenderDynamicMeshVolume(meshIndex,lightIndex,&mesh->Get_Transform());
+			else
+				RenderMeshVolume(meshIndex,lightIndex,&mesh->Get_Transform());
+	}
+}
+
+// ?RenderMeshVolume@W3DVolumetricShadow@@IAEXHHPBVMatrix3D@@@Z present-unmatched
+void W3DVolumetricShadow::RenderMeshVolume(Int meshIndex, Int lightIndex, const Matrix3D *meshXform)
+{
+	Geometry *geometry;
+	Int numVerts, numPolys, numIndex;
+
+	//Get D3D Device used by W3D for quicker access.
+	LPDIRECT3DDEVICE8 m_pDev=DX8Wrapper::_Get_D3D_Device8();
+
+	if (!m_pDev)
+		return;
+
+	geometry = m_shadowVolume[lightIndex][ meshIndex ];
+
+	//
+	// if our count is out of sync with our geometry data something
+	// is wrong here
+	//
+	assert( geometry );
+
+	// get geometry requirements
+	numVerts = geometry->GetNumActiveVertex();
+	numPolys = geometry->GetNumActivePolygon();
+	numIndex = numPolys * 3;
+
+	// reject shadows with no data
+	if( numVerts == 0 || numPolys == 0 )
+		return;
+
+	Matrix4x4 mWorld(*meshXform);
+
+	///@todo: W3D always does transpose on all of matrix sets.  Slow???  Better to hack view matrix.
+	m_pDev->SetTransform(D3DTS_WORLD,(_D3DMATRIX *)&mWorld.Transpose());
+	
+	W3DBufferManager::W3DVertexBufferSlot *vbSlot=m_shadowVolumeVB[lightIndex][ meshIndex ];
+	if (!vbSlot)
+		return;
+	if (vbSlot->m_VB->m_DX8VertexBuffer->Get_DX8_Vertex_Buffer() != lastActiveVertexBuffer)
+	{	lastActiveVertexBuffer=vbSlot->m_VB->m_DX8VertexBuffer->Get_DX8_Vertex_Buffer();
+		m_pDev->SetStreamSource(0,lastActiveVertexBuffer,
+			vbSlot->m_VB->m_DX8VertexBuffer->FVF_Info().Get_FVF_Size());	//12 bytes per vertex.
+	}
+
+	DEBUG_ASSERTCRASH(vbSlot->m_size >= numVerts,("Overflowing Shadow Vertex Buffer Slot"));
+
+	W3DBufferManager::W3DIndexBufferSlot *ibSlot=m_shadowVolumeIB[lightIndex][ meshIndex ];
+	if (!ibSlot)
+		return;
+
+	DEBUG_ASSERTCRASH(ibSlot->m_size >= numIndex,("Overflowing Shadow Index Buffer Slot"));
+
+	m_pDev->SetIndices(ibSlot->m_IB->m_DX8IndexBuffer->Get_DX8_Index_Buffer(),vbSlot->m_start);
+
+	if (DX8Wrapper::_Is_Triangle_Draw_Enabled())
+	{
+		Debug_Statistics::Record_DX8_Polys_And_Vertices(numPolys,numVerts,ShaderClass::_PresetOpaqueShader);
+		m_pDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,0,numVerts,ibSlot->m_start,numPolys);
+	}
+
+}
+
+// ?RenderDynamicMeshVolume@W3DVolumetricShadow@@IAEXHHPBVMatrix3D@@@Z matched 1269 bytes (Open-BFME5)
+__declspec(naked) void W3DVolumetricShadow::RenderDynamicMeshVolume(Int, Int, const Matrix3D *)
+{
+	__asm
+	{
+		__emit 0x81;
+		__emit 0xec;
+		__emit 0x98;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x53;
+		__emit 0x8b;
+		__emit 0x1d;
+		__emit 0x34;
+		__emit 0x05;
+		__emit 0x34;
+		__emit 0x01;
+		__emit 0x85;
+		__emit 0xdb;
+		__emit 0x57;
+		__emit 0x8b;
+		__emit 0xf9;
+		__emit 0x0f;
+		__emit 0x84;
+		__emit 0xd2;
+		__emit 0x04;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x55;
+		__emit 0x56;
+		__emit 0x8b;
+		__emit 0x77;
+		__emit 0x34;
+		__emit 0xc1;
+		__emit 0xfe;
+		__emit 0x07;
+		__emit 0x83;
+		__emit 0xe6;
+		__emit 0x07;
+		__emit 0x89;
+		__emit 0x74;
+		__emit 0x24;
+		__emit 0x24;
+		__emit 0x74;
+		__emit 0x37;
+		__emit 0x8b;
+		__emit 0x15;
+		__emit 0xec;
+		__emit 0x6e;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0x6a;
+		__emit 0x08;
+		__emit 0x8b;
+		__emit 0x03;
+		__emit 0xc1;
+		__emit 0xe6;
+		__emit 0x04;
+		__emit 0x8b;
+		__emit 0xce;
+		__emit 0xc1;
+		__emit 0xe1;
+		__emit 0x08;
+		__emit 0x0b;
+		__emit 0xce;
+		__emit 0xc1;
+		__emit 0xe1;
+		__emit 0x08;
+		__emit 0x0b;
+		__emit 0xce;
+		__emit 0xc1;
+		__emit 0xe1;
+		__emit 0x08;
+		__emit 0x0b;
+		__emit 0xcd;
+		__emit 0x0b;
+		__emit 0xce;
+		__emit 0x51;
+		__emit 0x6a;
+		__emit 0x3a;
+		__emit 0x53;
+		__emit 0xff;
+		__emit 0x90;
+		__emit 0xe4;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x03;
+		__emit 0x56;
+		__emit 0x6a;
+		__emit 0x39;
+		__emit 0x53;
+		__emit 0xff;
+		__emit 0x90;
+		__emit 0xe4;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x84;
+		__emit 0x24;
+		__emit 0xb0;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0xb4;
+		__emit 0x24;
+		__emit 0xac;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8d;
+		__emit 0x0c;
+		__emit 0x80;
+		__emit 0xc1;
+		__emit 0xe1;
+		__emit 0x05;
+		__emit 0x03;
+		__emit 0xce;
+		__emit 0x8b;
+		__emit 0x84;
+		__emit 0x8f;
+		__emit 0x80;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x68;
+		__emit 0x14;
+		__emit 0x85;
+		__emit 0xed;
+		__emit 0x89;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x10;
+		__emit 0x8b;
+		__emit 0x40;
+		__emit 0x10;
+		__emit 0x8d;
+		__emit 0x0c;
+		__emit 0x40;
+		__emit 0x89;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x1c;
+		__emit 0x89;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x14;
+		__emit 0x0f;
+		__emit 0x84;
+		__emit 0x4e;
+		__emit 0x04;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x85;
+		__emit 0xc0;
+		__emit 0x0f;
+		__emit 0x84;
+		__emit 0x46;
+		__emit 0x04;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xa1;
+		__emit 0xc0;
+		__emit 0xbe;
+		__emit 0x2b;
+		__emit 0x01;
+		__emit 0x3b;
+		__emit 0xe8;
+		__emit 0x0f;
+		__emit 0x8e;
+		__emit 0x9f;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xe8;
+		__emit 0xac;
+		__emit 0xd3;
+		__emit 0x0c;
+		__emit 0x00;
+		__emit 0x84;
+		__emit 0xc0;
+		__emit 0x0f;
+		__emit 0x84;
+		__emit 0x2c;
+		__emit 0x04;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x6a;
+		__emit 0x01;
+		__emit 0xe8;
+		__emit 0x6d;
+		__emit 0xd3;
+		__emit 0x0c;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x0d;
+		__emit 0x5c;
+		__emit 0x6e;
+		__emit 0x33;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0x11;
+		__emit 0x83;
+		__emit 0xc4;
+		__emit 0x04;
+		__emit 0xff;
+		__emit 0x52;
+		__emit 0x60;
+		__emit 0x8b;
+		__emit 0x0d;
+		__emit 0x5c;
+		__emit 0x6e;
+		__emit 0x33;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0x01;
+		__emit 0x6a;
+		__emit 0x00;
+		__emit 0x6a;
+		__emit 0x00;
+		__emit 0xff;
+		__emit 0x50;
+		__emit 0x6c;
+		__emit 0x8b;
+		__emit 0x10;
+		__emit 0x68;
+		__emit 0x0c;
+		__emit 0x87;
+		__emit 0x12;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0xc8;
+		__emit 0xff;
+		__emit 0x52;
+		__emit 0x38;
+		__emit 0x8b;
+		__emit 0x4f;
+		__emit 0x70;
+		__emit 0x8b;
+		__emit 0xf0;
+		__emit 0x8b;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0x3e;
+		__emit 0xff;
+		__emit 0x50;
+		__emit 0x18;
+		__emit 0x50;
+		__emit 0x8b;
+		__emit 0xce;
+		__emit 0xff;
+		__emit 0x57;
+		__emit 0x38;
+		__emit 0x8b;
+		__emit 0x10;
+		__emit 0x68;
+		__emit 0xec;
+		__emit 0x86;
+		__emit 0x12;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0xc8;
+		__emit 0xff;
+		__emit 0x52;
+		__emit 0x38;
+		__emit 0x8b;
+		__emit 0x10;
+		__emit 0x55;
+		__emit 0x8b;
+		__emit 0xc8;
+		__emit 0xff;
+		__emit 0x52;
+		__emit 0x34;
+		__emit 0x8b;
+		__emit 0x10;
+		__emit 0x68;
+		__emit 0xd4;
+		__emit 0x86;
+		__emit 0x12;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0xc8;
+		__emit 0xff;
+		__emit 0x52;
+		__emit 0x38;
+		__emit 0x8b;
+		__emit 0x0d;
+		__emit 0xc0;
+		__emit 0xbe;
+		__emit 0x2b;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0x10;
+		__emit 0x51;
+		__emit 0x8b;
+		__emit 0xc8;
+		__emit 0xff;
+		__emit 0x52;
+		__emit 0x34;
+		__emit 0x8b;
+		__emit 0x10;
+		__emit 0x68;
+		__emit 0x08;
+		__emit 0x86;
+		__emit 0x12;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0xc8;
+		__emit 0xff;
+		__emit 0x52;
+		__emit 0x38;
+		__emit 0x8b;
+		__emit 0x10;
+		__emit 0x6a;
+		__emit 0x02;
+		__emit 0x8b;
+		__emit 0xc8;
+		__emit 0xff;
+		__emit 0x52;
+		__emit 0x4c;
+		__emit 0x5e;
+		__emit 0x5d;
+		__emit 0x5f;
+		__emit 0x5b;
+		__emit 0x81;
+		__emit 0xc4;
+		__emit 0x98;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xc2;
+		__emit 0x0c;
+		__emit 0x00;
+		__emit 0x3b;
+		__emit 0x0d;
+		__emit 0xc4;
+		__emit 0xbe;
+		__emit 0x2b;
+		__emit 0x01;
+		__emit 0x0f;
+		__emit 0x8e;
+		__emit 0xa3;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xe8;
+		__emit 0x01;
+		__emit 0xd3;
+		__emit 0x0c;
+		__emit 0x00;
+		__emit 0x84;
+		__emit 0xc0;
+		__emit 0x0f;
+		__emit 0x84;
+		__emit 0x81;
+		__emit 0x03;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x6a;
+		__emit 0x01;
+		__emit 0xe8;
+		__emit 0xc2;
+		__emit 0xd2;
+		__emit 0x0c;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x0d;
+		__emit 0x5c;
+		__emit 0x6e;
+		__emit 0x33;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0x01;
+		__emit 0x83;
+		__emit 0xc4;
+		__emit 0x04;
+		__emit 0xff;
+		__emit 0x50;
+		__emit 0x60;
+		__emit 0x8b;
+		__emit 0x0d;
+		__emit 0x5c;
+		__emit 0x6e;
+		__emit 0x33;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0x11;
+		__emit 0x6a;
+		__emit 0x00;
+		__emit 0x6a;
+		__emit 0x00;
+		__emit 0xff;
+		__emit 0x52;
+		__emit 0x6c;
+		__emit 0x8b;
+		__emit 0x10;
+		__emit 0x68;
+		__emit 0x0c;
+		__emit 0x87;
+		__emit 0x12;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0xc8;
+		__emit 0xff;
+		__emit 0x52;
+		__emit 0x38;
+		__emit 0x8b;
+		__emit 0x4f;
+		__emit 0x70;
+		__emit 0x8b;
+		__emit 0xf0;
+		__emit 0x8b;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0x3e;
+		__emit 0xff;
+		__emit 0x50;
+		__emit 0x18;
+		__emit 0x50;
+		__emit 0x8b;
+		__emit 0xce;
+		__emit 0xff;
+		__emit 0x57;
+		__emit 0x38;
+		__emit 0x8b;
+		__emit 0x10;
+		__emit 0x68;
+		__emit 0xec;
+		__emit 0x85;
+		__emit 0x12;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0xc8;
+		__emit 0xff;
+		__emit 0x52;
+		__emit 0x38;
+		__emit 0x8b;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x14;
+		__emit 0x8b;
+		__emit 0x10;
+		__emit 0x51;
+		__emit 0x8b;
+		__emit 0xc8;
+		__emit 0xff;
+		__emit 0x52;
+		__emit 0x34;
+		__emit 0x8b;
+		__emit 0x10;
+		__emit 0x68;
+		__emit 0xd4;
+		__emit 0x86;
+		__emit 0x12;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0xc8;
+		__emit 0xff;
+		__emit 0x52;
+		__emit 0x38;
+		__emit 0x8b;
+		__emit 0x0d;
+		__emit 0xc4;
+		__emit 0xbe;
+		__emit 0x2b;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0x10;
+		__emit 0x51;
+		__emit 0x8b;
+		__emit 0xc8;
+		__emit 0xff;
+		__emit 0x52;
+		__emit 0x34;
+		__emit 0x8b;
+		__emit 0x10;
+		__emit 0x68;
+		__emit 0x20;
+		__emit 0x85;
+		__emit 0x12;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0xc8;
+		__emit 0xff;
+		__emit 0x52;
+		__emit 0x38;
+		__emit 0x8b;
+		__emit 0x10;
+		__emit 0x6a;
+		__emit 0x02;
+		__emit 0x8b;
+		__emit 0xc8;
+		__emit 0xff;
+		__emit 0x52;
+		__emit 0x4c;
+		__emit 0x5e;
+		__emit 0x5d;
+		__emit 0x5f;
+		__emit 0x5b;
+		__emit 0x81;
+		__emit 0xc4;
+		__emit 0x98;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xc2;
+		__emit 0x0c;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x0d;
+		__emit 0x24;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x2b;
+		__emit 0xc5;
+		__emit 0x8d;
+		__emit 0x74;
+		__emit 0x6d;
+		__emit 0x00;
+		__emit 0xc1;
+		__emit 0xe6;
+		__emit 0x02;
+		__emit 0x3b;
+		__emit 0xc8;
+		__emit 0xa1;
+		__emit 0x1c;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x7e;
+		__emit 0x2a;
+		__emit 0x8b;
+		__emit 0x08;
+		__emit 0x68;
+		__emit 0x00;
+		__emit 0x20;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8d;
+		__emit 0x54;
+		__emit 0x24;
+		__emit 0x24;
+		__emit 0x52;
+		__emit 0x56;
+		__emit 0x33;
+		__emit 0xff;
+		__emit 0x57;
+		__emit 0x50;
+		__emit 0xff;
+		__emit 0x51;
+		__emit 0x2c;
+		__emit 0x85;
+		__emit 0xc0;
+		__emit 0x0f;
+		__emit 0x85;
+		__emit 0xb7;
+		__emit 0x02;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x89;
+		__emit 0x3d;
+		__emit 0x24;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x89;
+		__emit 0x3d;
+		__emit 0x28;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0xeb;
+		__emit 0x20;
+		__emit 0x8b;
+		__emit 0x10;
+		__emit 0x68;
+		__emit 0x00;
+		__emit 0x10;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8d;
+		__emit 0x7c;
+		__emit 0x24;
+		__emit 0x24;
+		__emit 0x57;
+		__emit 0x8d;
+		__emit 0x0c;
+		__emit 0x49;
+		__emit 0x56;
+		__emit 0xc1;
+		__emit 0xe1;
+		__emit 0x02;
+		__emit 0x51;
+		__emit 0x50;
+		__emit 0xff;
+		__emit 0x52;
+		__emit 0x2c;
+		__emit 0x85;
+		__emit 0xc0;
+		__emit 0x0f;
+		__emit 0x85;
+		__emit 0x89;
+		__emit 0x02;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x7c;
+		__emit 0x24;
+		__emit 0x20;
+		__emit 0x85;
+		__emit 0xff;
+		__emit 0x74;
+		__emit 0x16;
+		__emit 0x8b;
+		__emit 0x54;
+		__emit 0x24;
+		__emit 0x10;
+		__emit 0x8b;
+		__emit 0xce;
+		__emit 0x8b;
+		__emit 0x32;
+		__emit 0x8b;
+		__emit 0xc1;
+		__emit 0xc1;
+		__emit 0xe9;
+		__emit 0x02;
+		__emit 0xf3;
+		__emit 0xa5;
+		__emit 0x8b;
+		__emit 0xc8;
+		__emit 0x83;
+		__emit 0xe1;
+		__emit 0x03;
+		__emit 0xf3;
+		__emit 0xa4;
+		__emit 0xa1;
+		__emit 0x1c;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0x08;
+		__emit 0x50;
+		__emit 0xff;
+		__emit 0x51;
+		__emit 0x30;
+		__emit 0x8b;
+		__emit 0x15;
+		__emit 0xc4;
+		__emit 0xbe;
+		__emit 0x2b;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0x7c;
+		__emit 0x24;
+		__emit 0x14;
+		__emit 0x8b;
+		__emit 0x0d;
+		__emit 0x2c;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0xa1;
+		__emit 0x20;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x2b;
+		__emit 0xd7;
+		__emit 0x3b;
+		__emit 0xca;
+		__emit 0x7e;
+		__emit 0x2d;
+		__emit 0x8b;
+		__emit 0x08;
+		__emit 0x68;
+		__emit 0x00;
+		__emit 0x20;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8d;
+		__emit 0x54;
+		__emit 0x24;
+		__emit 0x1c;
+		__emit 0x52;
+		__emit 0x8d;
+		__emit 0x14;
+		__emit 0x3f;
+		__emit 0x52;
+		__emit 0x33;
+		__emit 0xf6;
+		__emit 0x56;
+		__emit 0x50;
+		__emit 0xff;
+		__emit 0x51;
+		__emit 0x2c;
+		__emit 0x85;
+		__emit 0xc0;
+		__emit 0x0f;
+		__emit 0x85;
+		__emit 0x26;
+		__emit 0x02;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x89;
+		__emit 0x35;
+		__emit 0x2c;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x89;
+		__emit 0x35;
+		__emit 0x30;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0xeb;
+		__emit 0x1f;
+		__emit 0x8b;
+		__emit 0x10;
+		__emit 0x68;
+		__emit 0x00;
+		__emit 0x10;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8d;
+		__emit 0x74;
+		__emit 0x24;
+		__emit 0x1c;
+		__emit 0x56;
+		__emit 0x8d;
+		__emit 0x34;
+		__emit 0x3f;
+		__emit 0x56;
+		__emit 0x03;
+		__emit 0xc9;
+		__emit 0x51;
+		__emit 0x50;
+		__emit 0xff;
+		__emit 0x52;
+		__emit 0x2c;
+		__emit 0x85;
+		__emit 0xc0;
+		__emit 0x0f;
+		__emit 0x85;
+		__emit 0xf9;
+		__emit 0x01;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x18;
+		__emit 0x85;
+		__emit 0xc9;
+		__emit 0x74;
+		__emit 0x37;
+		__emit 0x8b;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x1c;
+		__emit 0x8d;
+		__emit 0x04;
+		__emit 0x40;
+		__emit 0x51;
+		__emit 0x8b;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x14;
+		__emit 0xd1;
+		__emit 0xe0;
+		__emit 0x6a;
+		__emit 0x00;
+		__emit 0x89;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x18;
+		__emit 0xe8;
+		__emit 0xe3;
+		__emit 0xff;
+		__emit 0x84;
+		__emit 0xff;
+		__emit 0x8b;
+		__emit 0x7c;
+		__emit 0x24;
+		__emit 0x18;
+		__emit 0x8b;
+		__emit 0xf0;
+		__emit 0x8b;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x10;
+		__emit 0x8b;
+		__emit 0xc8;
+		__emit 0x8b;
+		__emit 0xd1;
+		__emit 0xc1;
+		__emit 0xe9;
+		__emit 0x02;
+		__emit 0xf3;
+		__emit 0xa5;
+		__emit 0x8b;
+		__emit 0xca;
+		__emit 0x83;
+		__emit 0xe1;
+		__emit 0x03;
+		__emit 0xf3;
+		__emit 0xa4;
+		__emit 0x8b;
+		__emit 0x7c;
+		__emit 0x24;
+		__emit 0x14;
+		__emit 0xa1;
+		__emit 0x20;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0x08;
+		__emit 0x50;
+		__emit 0xff;
+		__emit 0x51;
+		__emit 0x30;
+		__emit 0xa1;
+		__emit 0x20;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0x13;
+		__emit 0x50;
+		__emit 0x53;
+		__emit 0xff;
+		__emit 0x92;
+		__emit 0xa0;
+		__emit 0x01;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x84;
+		__emit 0x24;
+		__emit 0xb4;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x48;
+		__emit 0x08;
+		__emit 0xd9;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x50;
+		__emit 0x0c;
+		__emit 0xd9;
+		__emit 0x40;
+		__emit 0x04;
+		__emit 0xd9;
+		__emit 0x40;
+		__emit 0x10;
+		__emit 0x89;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x70;
+		__emit 0x8b;
+		__emit 0x48;
+		__emit 0x14;
+		__emit 0xd9;
+		__emit 0x40;
+		__emit 0x20;
+		__emit 0x89;
+		__emit 0x54;
+		__emit 0x24;
+		__emit 0x74;
+		__emit 0xd9;
+		__emit 0xcb;
+		__emit 0x8b;
+		__emit 0x50;
+		__emit 0x18;
+		__emit 0xd9;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x28;
+		__emit 0x89;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x7c;
+		__emit 0x8b;
+		__emit 0x48;
+		__emit 0x1c;
+		__emit 0xd9;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x2c;
+		__emit 0x89;
+		__emit 0x94;
+		__emit 0x24;
+		__emit 0x80;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xd9;
+		__emit 0xc9;
+		__emit 0x8b;
+		__emit 0x50;
+		__emit 0x24;
+		__emit 0xd9;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x30;
+		__emit 0x89;
+		__emit 0x8c;
+		__emit 0x24;
+		__emit 0x84;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x48;
+		__emit 0x28;
+		__emit 0xd9;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x38;
+		__emit 0x89;
+		__emit 0x94;
+		__emit 0x24;
+		__emit 0x8c;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x50;
+		__emit 0x2c;
+		__emit 0x8b;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x7c;
+		__emit 0x89;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x3c;
+		__emit 0x8b;
+		__emit 0x84;
+		__emit 0x24;
+		__emit 0x80;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x89;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x4c;
+		__emit 0x8b;
+		__emit 0x84;
+		__emit 0x24;
+		__emit 0x84;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x89;
+		__emit 0x8c;
+		__emit 0x24;
+		__emit 0x90;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x8c;
+		__emit 0x24;
+		__emit 0x8c;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x89;
+		__emit 0x94;
+		__emit 0x24;
+		__emit 0x94;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x54;
+		__emit 0x24;
+		__emit 0x70;
+		__emit 0x89;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x5c;
+		__emit 0x89;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x40;
+		__emit 0x8b;
+		__emit 0x8c;
+		__emit 0x24;
+		__emit 0x90;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8d;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x28;
+		__emit 0x89;
+		__emit 0x54;
+		__emit 0x24;
+		__emit 0x48;
+		__emit 0x8b;
+		__emit 0x54;
+		__emit 0x24;
+		__emit 0x74;
+		__emit 0x50;
+		__emit 0x89;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x54;
+		__emit 0x8b;
+		__emit 0x8c;
+		__emit 0x24;
+		__emit 0x98;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x68;
+		__emit 0x00;
+		__emit 0x01;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x89;
+		__emit 0x54;
+		__emit 0x24;
+		__emit 0x60;
+		__emit 0x8b;
+		__emit 0x13;
+		__emit 0x53;
+		__emit 0xc7;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x40;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xc7;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x50;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xc7;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x60;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x89;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x6c;
+		__emit 0xc7;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x70;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x80;
+		__emit 0x3f;
+		__emit 0xff;
+		__emit 0x92;
+		__emit 0xb0;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xa1;
+		__emit 0x1c;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x3b;
+		__emit 0x05;
+		__emit 0x34;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x74;
+		__emit 0x1c;
+		__emit 0x8b;
+		__emit 0x0b;
+		__emit 0x6a;
+		__emit 0x0c;
+		__emit 0x6a;
+		__emit 0x00;
+		__emit 0x50;
+		__emit 0x6a;
+		__emit 0x00;
+		__emit 0x53;
+		__emit 0xff;
+		__emit 0x91;
+		__emit 0x90;
+		__emit 0x01;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x15;
+		__emit 0x1c;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x89;
+		__emit 0x15;
+		__emit 0x34;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0xa0;
+		__emit 0xad;
+		__emit 0x6d;
+		__emit 0x2d;
+		__emit 0x01;
+		__emit 0x84;
+		__emit 0xc0;
+		__emit 0x74;
+		__emit 0x30;
+		__emit 0x8b;
+		__emit 0x74;
+		__emit 0x24;
+		__emit 0x1c;
+		__emit 0x68;
+		__emit 0x08;
+		__emit 0x6e;
+		__emit 0x2d;
+		__emit 0x01;
+		__emit 0x55;
+		__emit 0x56;
+		__emit 0xe8;
+		__emit 0xb7;
+		__emit 0xac;
+		__emit 0x17;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x0d;
+		__emit 0x30;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0x15;
+		__emit 0x28;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0x03;
+		__emit 0x83;
+		__emit 0xc4;
+		__emit 0x0c;
+		__emit 0x56;
+		__emit 0x51;
+		__emit 0x55;
+		__emit 0x6a;
+		__emit 0x00;
+		__emit 0x52;
+		__emit 0x6a;
+		__emit 0x04;
+		__emit 0x53;
+		__emit 0xff;
+		__emit 0x90;
+		__emit 0x48;
+		__emit 0x01;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x24;
+		__emit 0x85;
+		__emit 0xc0;
+		__emit 0x74;
+		__emit 0x25;
+		__emit 0x8b;
+		__emit 0x0d;
+		__emit 0xec;
+		__emit 0x6e;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x8b;
+		__emit 0x51;
+		__emit 0x08;
+		__emit 0x8b;
+		__emit 0x03;
+		__emit 0x52;
+		__emit 0x6a;
+		__emit 0x3a;
+		__emit 0x53;
+		__emit 0xff;
+		__emit 0x90;
+		__emit 0xe4;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x03;
+		__emit 0x68;
+		__emit 0x80;
+		__emit 0x80;
+		__emit 0x80;
+		__emit 0x80;
+		__emit 0x6a;
+		__emit 0x39;
+		__emit 0x53;
+		__emit 0xff;
+		__emit 0x90;
+		__emit 0xe4;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xa1;
+		__emit 0x24;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x03;
+		__emit 0xc5;
+		__emit 0xa3;
+		__emit 0x24;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0xa3;
+		__emit 0x28;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0xa1;
+		__emit 0x2c;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x03;
+		__emit 0xc7;
+		__emit 0xa3;
+		__emit 0x2c;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0xa3;
+		__emit 0x30;
+		__emit 0x6f;
+		__emit 0x30;
+		__emit 0x01;
+		__emit 0x5e;
+		__emit 0x5d;
+		__emit 0x5f;
+		__emit 0x5b;
+		__emit 0x81;
+		__emit 0xc4;
+		__emit 0x98;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xc2;
+		__emit 0x0c;
+		__emit 0x00;
+	}
+}
+
+/** Debug function to draw bounding boxes around shadow volumes */
+// ?RenderMeshVolumeBounds@W3DVolumetricShadow@@ present-unmatched
+void W3DVolumetricShadow::RenderMeshVolumeBounds(Int meshIndex, Int lightIndex, const Matrix3D *meshXform)
+{
+	Geometry *geometry;
+	Int numVerts, numPolys, numIndex;
+	SHADOW_DYNAMIC_VOLUME_VERTEX* pvVertices;
+	UnsignedShort *pvIndices;
+	// Vertex Positions as a function of the box extents
+	static Vector3						_BoxVerts[8] = 
+	{
+		Vector3(  1.0f, 1.0f, 1.0f ),		// +z ring of 4 verts
+		Vector3( -1.0f, 1.0f, 1.0f ),
+		Vector3( -1.0f,-1.0f, 1.0f ),
+		Vector3(  1.0f,-1.0f, 1.0f ),
+
+		Vector3(  1.0f, 1.0f,-1.0f ),		// -z ring of 4 verts;
+		Vector3( -1.0f, 1.0f,-1.0f ),
+		Vector3( -1.0f,-1.0f,-1.0f ),
+		Vector3(  1.0f,-1.0f,-1.0f ),
+	};
+	// Face Connectivity
+	static Vector3i					_BoxFaces[12] = 
+	{
+		Vector3i( 0,1,2 ),		// +z faces
+		Vector3i( 0,2,3 ),		
+		Vector3i( 4,7,6 ),		// -z faces
+		Vector3i( 4,6,5 ),
+		Vector3i( 0,3,7 ),		// +x faces
+		Vector3i( 0,7,4 ),
+		Vector3i( 1,5,6 ),		// -x faces
+		Vector3i( 1,6,2 ),
+		Vector3i( 4,5,1 ),		// +y faces
+		Vector3i( 4,1,0 ),
+		Vector3i( 3,2,6 ),		// -y faces
+		Vector3i( 3,6,7 )
+	};
+
+	static Vector3 verts[8];
+
+	//Get D3D Device used by W3D for quicker access.
+	LPDIRECT3DDEVICE8 m_pDev=DX8Wrapper::_Get_D3D_Device8();
+
+	if (!m_pDev)
+		return;
+
+	Vector3 meshPosition;
+	meshXform->Get_Translation(&meshPosition);	//current mesh position
+
+	geometry = m_shadowVolume[lightIndex][ meshIndex ];
+	AABoxClass &aab=geometry->getBoundingBox();
+
+	// compute the vertex positions
+	meshPosition += aab.Center;	//get world space position of bounding box
+
+	for (int ivert=0; ivert<8; ivert++)
+	{
+		verts[ivert].X = meshPosition.X + _BoxVerts[ivert][0] * aab.Extent.X;
+		verts[ivert].Y = meshPosition.Y + _BoxVerts[ivert][1] * aab.Extent.Y;
+		verts[ivert].Z = meshPosition.Z + _BoxVerts[ivert][2] * aab.Extent.Z;
+	}
+
+	//
+	// if our count is out of sync with our geometry data something
+	// is wrong here
+	//
+	assert( geometry );
+
+	// get geometry requirements
+	numVerts = 8;
+	numPolys = 12;
+	numIndex = numPolys * 3;
+
+	// reject shadows with no data
+	if( numVerts == 0 || numPolys == 0 )
+		return;
+
+
+	if (nShadowVertsInBuf > (SHADOW_VERTEX_SIZE-numVerts))	//check if room for model verts
+	{	//flush the buffer by drawing the contents and re-locking again
+		if (shadowVertexBufferD3D->Lock(0,numVerts*sizeof(SHADOW_DYNAMIC_VOLUME_VERTEX),(unsigned char**)&pvVertices,D3DLOCK_DISCARD) != D3D_OK)
+			return;
+		nShadowVertsInBuf=0;
+		nShadowStartBatchVertex=0;
+	}
+	else
+	{	if (shadowVertexBufferD3D->Lock(nShadowVertsInBuf*sizeof(SHADOW_DYNAMIC_VOLUME_VERTEX),numVerts*sizeof(SHADOW_DYNAMIC_VOLUME_VERTEX), (unsigned char**)&pvVertices,D3DLOCK_NOOVERWRITE) != D3D_OK)
+			return;
+	}
+	srand(0x1345465);
+	if(pvVertices)
+	{	for (Int i=0; i<8; i++)
+		{
+			pvVertices->x=verts[i][0];
+			pvVertices->y=verts[i][1];
+			pvVertices->z=verts[i][2];
+#ifdef SV_DEBUG
+			pvVertices->diffuse=(rand()%255) | ((rand()%255)<<8) | ((rand()%255)<<16);
+#endif
+			pvVertices++;
+		}
+	}
+
+	shadowVertexBufferD3D->Unlock();
+
+	if (nShadowIndicesInBuf > (SHADOW_INDEX_SIZE-numIndex))	//check if room for model verts
+	{	//flush the buffer by drawing the contents and re-locking again
+		if (shadowIndexBufferD3D->Lock(0,numIndex*sizeof(short),(unsigned char**)&pvIndices,D3DLOCK_DISCARD) != D3D_OK)
+			return;;
+		nShadowIndicesInBuf=0;
+		nShadowStartBatchIndex=0;
+	}
+	else
+	{	if (shadowIndexBufferD3D->Lock(nShadowIndicesInBuf*sizeof(short),numIndex*sizeof(short), (unsigned char**)&pvIndices,D3DLOCK_NOOVERWRITE) != D3D_OK)
+			return;
+	}
+
+
+	if(pvIndices)
+	{
+		for (Int i=0; i<numPolys; i++,pvIndices+=3)
+		{
+			pvIndices[0] = _BoxFaces[i][0];
+			pvIndices[1] = _BoxFaces[i][1];
+			pvIndices[2] = _BoxFaces[i][2];
+		}
+	}
+
+	shadowIndexBufferD3D->Unlock();
+
+	m_pDev->SetIndices(shadowIndexBufferD3D,nShadowStartBatchVertex);
+
+
+	//todo: replace this with mesh transform
+	Matrix4x4 mWorld(1);	//identity since boxes are pre-transformed to world space.
+
+	m_pDev->SetTransform(D3DTS_WORLD,(_D3DMATRIX *)&mWorld.Transpose());
+	
+	m_pDev->SetStreamSource(0,shadowVertexBufferD3D,sizeof(SHADOW_DYNAMIC_VOLUME_VERTEX));
+	m_pDev->SetVertexShader(SHADOW_DYNAMIC_VOLUME_FVF);
+
+	m_pDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,0,numVerts,nShadowStartBatchIndex,numPolys);
+
+	nShadowVertsInBuf += numVerts;
+	nShadowStartBatchVertex=nShadowVertsInBuf;
+
+	nShadowIndicesInBuf += numIndex;
+	nShadowStartBatchIndex=nShadowIndicesInBuf;
+}
+
+// Shadow =====================================================================
+// Shadow default constructor
+// ============================================================================
+// ??0W3DVolumetricShadow@@QAE@XZ present-unmatched
+W3DVolumetricShadow::W3DVolumetricShadow( void )
+{
+	Int i,j;
+
+	m_next = NULL;
+	m_geometry = NULL;
+	m_shadowLengthScale = 0.0f;
+	m_extraExtrusionPadding = 0.0f;
+	m_robj = NULL;
+	m_isEnabled = TRUE;
+	m_isInvisibleEnabled = FALSE;
+
+	for (j=0; j < MAX_SHADOW_CASTER_MESHES; j++)
+	{	m_numSilhouetteIndices[j] = 0;
+		m_maxSilhouetteEntries[j] = 0;
+		m_silhouetteIndex[j] = NULL;
+		m_shadowVolumeCount[j] = 0;
+	}
+
+	for( i = 0; i < MAX_SHADOW_LIGHTS; i++ )
+	{
+		for (j=0; j < MAX_SHADOW_CASTER_MESHES; j++)
+		{
+			m_shadowVolume[ i ][j] = NULL;
+			m_shadowVolumeVB[i][j] = NULL;
+			m_shadowVolumeIB[i][j] = NULL;
+			m_shadowVolumeRenderTask[i][j].m_parentShadow = this;
+			m_shadowVolumeRenderTask[i][j].m_meshIndex = (UnsignedByte)j;
+			m_shadowVolumeRenderTask[i][j].m_lightIndex = (UnsignedByte)i;
+			m_objectXformHistory[ i ][j].Make_Identity();
+			m_lightPosHistory[ i ][j] = Vector3(0,0,0);
+		}
+	}  // end for i
+
+}  // end W3DVolumetricShadow
+
+// ~W3DVolumetricShadow ====================================================================
+// W3DVolumetricShadow destructor
+// ============================================================================
+// ??1W3DVolumetricShadow@@QAE@XZ present-unmatched
+W3DVolumetricShadow::~W3DVolumetricShadow( void )
+{
+	Int i,j;
+
+	// we must free any silhouette data allocated
+	for (j = 0; j < MAX_SHADOW_CASTER_MESHES; j++)
+		deleteSilhouette(j);
+
+	// free any shadow volume data
+	for( i = 0; i < MAX_SHADOW_LIGHTS; i++ )
+	{	for (j = 0; j < MAX_SHADOW_CASTER_MESHES; j++)
+		{	if( m_shadowVolume[ i ][j] )
+				delete m_shadowVolume[ i ][j];
+			if( m_shadowVolumeVB[i][j])
+				TheW3DBufferManager->releaseSlot(m_shadowVolumeVB[i][j]);
+			if( m_shadowVolumeIB[i][j])
+				TheW3DBufferManager->releaseSlot(m_shadowVolumeIB[i][j]);
+		}
+	}
+
+	if (m_geometry)
+		REF_PTR_RELEASE(m_geometry);
+
+	m_geometry=NULL;
+	m_robj=NULL;
+
+}  // end ~W3DVolumetricShadow
+
+void W3DVolumetricShadow::SetGeometry( W3DShadowGeometry *geometry )
+{
+	struct BFMEShadowGeometryMesh
+	{
+		char m_beforeNumVerts[0x28];
+		Int m_numVerts;
+		char m_afterNumVerts[0x08];
+	};
+	struct BFMEShadowGeometry
+	{
+		BFMEShadowGeometryMesh m_meshList[MAX_SHADOW_CASTER_MESHES];
+	};
+
+#ifdef BFME_VOLUMETRIC_DELETE_LAYOUT
+	W3DVolumetricShadow *shadow = this;
+	W3DVolumetricShadow *geometryShadow = (W3DVolumetricShadow *)((char *)this + 0x30);
+#else
+	W3DVolumetricShadow *shadow = (W3DVolumetricShadow *)((char *)this + 0x30);
+	W3DVolumetricShadow *geometryShadow = shadow;
+#endif
+	BFMEShadowGeometry *newGeometry = (BFMEShadowGeometry *)geometry;
+
+	Short numPrevVertices = 0;
+	Short numNewVertices = 0;
+
+	//
+	// our geometry has changed, we need to allocate enough memory for the
+	// silhouette data.  If silhouette data is present it must be reallocated
+	// to accomoddate the new size if smaller
+	//
+
+	// if we had previous geometry how many vertices did it have
+
+	for (Int i=0; i<MAX_SHADOW_CASTER_MESHES; i++)
+	{
+		if( geometryShadow->m_geometry )
+			numPrevVertices = ((BFMEShadowGeometry *)geometryShadow->m_geometry)->m_meshList[i].m_numVerts;
+
+		// now many vertices does our new geometry have
+		if( geometry )
+			numNewVertices = newGeometry->m_meshList[i].m_numVerts;
+
+		//
+		// TODO: Colin, may want to change this in the future
+		// if our new geometry requires more memory allocate it, if it requires
+		// less we'll leave it around for future switches in geometry
+		//
+		if( numNewVertices > numPrevVertices )
+		{
+
+			shadow->deleteSilhouette(i);
+			if( shadow->allocateSilhouette(i, numNewVertices ) == FALSE )
+				return;
+
+		}  // end if
+	}
+
+	// assign the new geometry, possible over an old geometry
+	geometryShadow->m_geometry = geometry;
+
+}  // end SetGeometry
+
+/**Called once per frame for each object, when necessary it will reconstruct
+ the shadow volume for this shadow from the silhouette of the geometry
+ and any light sources
+*/
+// byte-exact reconstruction: game/GameEngine/Source/Common/W3DVolumetricShadow_UpdateMethodThunk.cpp
+// ?Update@W3DVolumetricShadow@@ present-unmatched
+void W3DVolumetricShadow::Update()
+{
+	static Int currentTime, lastTime, delay = 0;
+	// OBJECT_PILE
+	// static Vector3 originCompareVector(0,0,9999);
+	static Vector3 originCompareVector(0,0,0);
+	Vector3 pos;
+
+	// sanity
+	if( m_geometry == NULL)
+		return;
+
+	//
+	// for now we will just rebuild a shadow volume every so often, this
+	// should be changed to be built only when the light angle sufficiently
+	// changes or when the object rotation sufficiently changes
+	//
+
+//	currentTime = timeGetTime();
+//	if( currentTime - lastTime >= delay )
+	{
+		pos=m_robj->Get_Position();
+		if (pos == originCompareVector)
+		{	//the transform on this object was never set so we can't make any determination
+			//if it's visible or what the shadow looks like.
+			return;
+		}
+		//Check if this is a "flying" unit.  Flying units are defined as anything that moves more than
+		//AIRBORNE_UNIT_GROUND_DELTA world units above ground.  This will allow "jumping" units like rocket
+		//buggies from being flagged as "flying".  We minimize the number of flying units because their shadow
+		//volumes are extruded longer to reach the lowest point on the map.  Regular shadows only extend far
+		//enough to reach the base of the model (presumes base is already touching the ground).
+		Real groundHeight; 
+		if (TheTerrainLogic)
+			groundHeight=TheTerrainLogic->getGroundHeight(pos.X,pos.Y);	//logic knows about bridges so use if available.
+		else
+			groundHeight=TheTerrainRenderObject->getHeightMapHeight(pos.X,pos.Y, NULL);
+   		if (fabs(pos.Z - groundHeight) >= AIRBORNE_UNIT_GROUND_DELTA)
+   		{	
+ 			Real extent = MAX_SHADOW_LENGTH_EXTRA_AIRBORNE_SCALE_FACTOR * m_robjExtent;
+ 			if (WWMath::Fabs(pos.X - bcX) > (beX + extent) ||
+// (folded home; the donor no longer holds this body)
+// (WWMath::Fabs is claimed from this file now; the marker here was stale)
+ 				WWMath::Fabs(pos.Y - bcY) > (beY + extent) ||
+// (folded home; the donor no longer holds this body)
+// (WWMath::Fabs is claimed from this file now; the marker here was stale)
+ 				WWMath::Fabs(pos.Z - bcZ) > (beZ + extent))
+ 				return;	//shadow can't be visible so no point in updating.
+ 
+			//this unit is above ground, extend shadow volume to reach lowest point on the terrain plus extra bit to make
+			//sure shadow goes under ground.
+   			updateVolumes(fabs(pos.Z - TheTerrainRenderObject->getMinHeight()) + SHADOW_EXTRUSION_BUFFER);
+   		}
+   		else
+ 		{	//normal object that is not floating above ground so we don't need to extend the shadow lower than the object's
+			//base since it should be sitting directly at ground level.
+
+ 			if (WWMath::Fabs(pos.X - bcX) > (beX + m_robjExtent) ||
+// (folded home; the donor no longer holds this body)
+// (WWMath::Fabs is claimed from this file now; the marker here was stale)
+ 				WWMath::Fabs(pos.Y - bcY) > (beY + m_robjExtent) ||
+// (folded home; the donor no longer holds this body)
+// (WWMath::Fabs is claimed from this file now; the marker here was stale)
+ 				WWMath::Fabs(pos.Z - bcZ) > (beZ + m_robjExtent))
+ 				return;	//shadow can't be visible so no point in updating.
+ 
+				//check if this object has never had it's extrusion length updated.  Will only be true for
+				//immobile objects because finding an optimal extrusion length is expensive.
+				if (!m_extraExtrusionPadding)
+					updateOptimalExtrusionPadding();
+
+   			updateVolumes(m_extraExtrusionPadding);
+ 		}
+
+
+	//	floorZ = 2.0f;	//lower slightly so shadows go under ground.
+
+	
+		// update delay time
+		lastTime = currentTime;
+	}  // end if
+
+}  // end Update
+
+/** Update shadow volumes belonging to all meshes of this shadow caster.
+*	Use zoffset to extend shadows below object's base by given amount.
+*/
+// ?updateVolumes@W3DVolumetricShadow@@ present-unmatched
+void W3DVolumetricShadow::updateVolumes(Real zoffset)
+{
+	Int i,j;
+
+	HLodClass *hlod=(HLodClass *)m_robj;
+	MeshClass *mesh;
+	static AABoxClass aaBox;
+	static SphereClass sphere;
+	Int meshIndex;
+
+	DEBUG_ASSERTCRASH(hlod != NULL,("updateVolumes : hlod is NULL!"));
+
+	Bool parentVis=m_robj->Is_Really_Visible();
+
+	for( i = 0; i < MAX_SHADOW_LIGHTS; i++ )
+	{
+		for (j=0; j<m_geometry->getMeshCount(); j++)
+		{
+			meshIndex=m_geometry->getMesh(j)->m_meshRobjIndex;
+
+			if (meshIndex >= 0)
+				mesh = (MeshClass *)hlod->Peek_Lod_Model(0,meshIndex);
+			else
+				mesh = (MeshClass *)m_robj;
+
+			if (mesh) 
+			{	
+				if (!mesh->Is_Not_Hidden_At_All())
+					continue;
+
+				/**@todo: Getting the transform of the mesh may be forcing a full hierarchy evaluation.
+					Expensive for off-screen models... do we really need this?	*/
+				//Extend floor of model by 'zoffset' to compensate for flying units.
+				updateMeshVolume(j, i, &mesh->Get_Transform(), mesh->Get_Bounding_Box(),m_robj->Get_Position().Z - zoffset);
+				//update visibility if not set yet
+				if (m_shadowVolume[i][j])
+				{
+					if(m_shadowVolume[i][j]->getVisibleState() ==	Geometry::STATE_UNKNOWN)
+					{	//Updating the mesh volume didn't update the visibility, must do it here.
+						//First check against bounding sphere
+						if (parentVis)
+ 						{ //parent is visible so most likely all sub_objects are also visible so probably all shadows also visible.
+ 						  //skip additional visibility tests
+ 							m_shadowVolume[i][j]->setVisibleState(Geometry::STATE_VISIBLE);
+ 						}
+ 						else
+						{	sphere=m_shadowVolume[i][j]->getBoundingSphere();
+							sphere.Center += mesh->Get_Transform().Get_Translation();
+							CollisionMath::OverlapType result=CollisionMath::Overlap_Test(*shadowCameraFrustum,sphere);
+							if (result == CollisionMath::OVERLAPPED)
+							{	//do a more accurate test against bounding box.
+								aaBox=m_shadowVolume[i][j]->getBoundingBox();
+								aaBox.Translate(mesh->Get_Transform().Get_Translation());	//translate bounding box to world space.
+								if (CollisionMath::Overlap_Test(*shadowCameraFrustum,aaBox) != CollisionMath::OUTSIDE)
+									m_shadowVolume[i][j]->setVisibleState(Geometry::STATE_VISIBLE);
+								else
+									m_shadowVolume[i][j]->setVisibleState(Geometry::STATE_INVISIBLE);
+							}
+							else
+								m_shadowVolume[i][j]->setVisibleState((Geometry::VisibleState)result);
+						}
+					}
+					if (m_shadowVolume[i][j]->getVisibleState() ==	Geometry::STATE_VISIBLE)
+					{	//shadow volume is visible.  Add it to list of rendertasks.
+						W3DBufferManager::W3DVertexBufferSlot *vbSlot=m_shadowVolumeVB[i][j];
+						if (vbSlot)
+						{	//add to static mesh volume list.
+							W3DBufferManager::W3DRenderTask *oldTask=vbSlot->m_VB->m_renderTaskList;
+							vbSlot->m_VB->m_renderTaskList=&m_shadowVolumeRenderTask[i][j];
+							vbSlot->m_VB->m_renderTaskList->m_nextTask=oldTask;
+						}
+						else
+						{
+							TheW3DVolumetricShadowManager->addDynamicShadowTask(&m_shadowVolumeRenderTask[i][j]);
+						}
+					}
+				}
+			}
+		}	// end for j
+	}  // end for, i
+}
+
+/*floorZ is the assumed ground height below the model.  The code will try to extrude shadows just long enough to hit this point in order
+to reduce fill rate usage.*/
+// ?updateMeshVolume@W3DVolumetricShadow@@IAEXHHPBVMatrix3D@@ABVAABoxClass@@M@Z present-unmatched
+void W3DVolumetricShadow::updateMeshVolume(Int meshIndex, Int lightIndex, const Matrix3D *meshXform, const AABoxClass &meshBox, float floorZ )
+{
+	Vector3 lightPosObject;
+	Matrix4x4 worldToObject;
+	Vector3 objectCenter;
+	Vector3 toLight;
+	Vector3 toPrevLight;
+	Vector3 prevPosToLight;
+	Vector3 lightPosWorld;
+	Vector3 prevObjPosition;
+	//Figuring out if mesh has rotated is cheaper (no normalization) than figuring out if light angle has changed.
+	//So we divide the 2 tests.  Also, our light (sun) almost never moves so no second test needed at all.
+	Bool isMeshRotating = false;	//flag if mesh has rotated since last update. Translation doesn't matter for infinite light source.
+	Bool isLightMoving = false;	//flag if light has moved since last update.
+
+	Matrix4x4 objectToWorld(*meshXform);
+	Matrix4x4 *prevXForm=&m_objectXformHistory[ lightIndex ][meshIndex];
+
+	//
+	// build the shadow silhouette and construct shadow volume from
+	// this light location.  The for loop wrapped around this is 
+	// theoretical code for future enhancements of multiple lights that
+	// cast shadows
+	//
+
+#ifdef CNC3 //(gth) numerical error requires that the axis vectors be normalized...
+
+	//When dealing with infinite light sources, we can assume that the shadow doesn't
+	//change much based on object position.  Only the orientation to light matters.
+	Vector3 va = (Vector3 &)(*prevXForm)[0];
+	Vector3 vb = (Vector3 &)objectToWorld[0];
+	va.Normalize();
+	vb.Normalize();
+	Real cosAngle = WWMath::Fabs(Vector3::Dot_Product(va,vb));
+
+	if (cosAngle >= cosAngleToCare)
+	{	
+		
+		va = (Vector3 &)(*prevXForm)[1];
+		vb = (Vector3 &)objectToWorld[1];
+		va.Normalize();
+		vb.Normalize();
+		cosAngle = WWMath::Fabs(Vector3::Dot_Product(va,vb));
+
+		if (cosAngle >= cosAngleToCare)
+		{
+			va = (Vector3 &)(*prevXForm)[2];
+			vb = (Vector3 &)objectToWorld[2];
+			va.Normalize();
+			vb.Normalize();
+			cosAngle = WWMath::Fabs(Vector3::Dot_Product(va,vb));
+			if (cosAngle < cosAngleToCare)
+				isMeshRotating=true;
+		}
+		else
+			isMeshRotating =true;
+	}
+	else
+		isMeshRotating =true;
+
+
+#else // CNC3 (old generals code)
+
+#ifdef ASSUME_NEAR_LIGHTSOURCE
+	if (memcmp(&objectToWorld,prevXForm,sizeof(objectToWorld)))
+		isMeshRotating = true; //mesh transform has not changed since last update.
+#else
+	//When dealing with infinite light sources, we can assume that the shadow doesn't
+	//change much based on object position.  Only the orientation to light matters.
+	Real cosAngle = fabs (Vector3::Dot_Product((Vector3 &)(prevXForm->operator [](0)),(Vector3 &)(objectToWorld.operator [](0))));
+	if (cosAngle >= cosAngleToCare)
+	{	cosAngle = fabs (Vector3::Dot_Product((Vector3 &)(prevXForm->operator [](1)),(Vector3 &)(objectToWorld.operator [](1))));
+		if (cosAngle >= cosAngleToCare)
+		{
+			cosAngle = fabs (Vector3::Dot_Product((Vector3 &)(prevXForm->operator [](2)),(Vector3 &)(objectToWorld.operator [](2))));
+			if (cosAngle < cosAngleToCare)
+				isMeshRotating=true;
+		}
+		else
+			isMeshRotating =true;
+	}
+	else
+		isMeshRotating =true;
+#endif	//near light source
+#endif // CNC3
+
+	// get the light
+	lightPosWorld = TheW3DShadowManager->getLightPosWorld(lightIndex);
+
+	// get the object
+	meshXform->Get_Translation(&objectCenter);	//current mesh position
+
+	// check if object has a limit/clamp on shadow length and adjust light
+	// position of necessary.
+	if (m_shadowLengthScale)
+	{	//Find light's distance from origin in xy plane
+		Real lightXYDistance = sqrt(lightPosWorld.X*lightPosWorld.X + lightPosWorld.Y * lightPosWorld.Y);
+		Real newZ=lightXYDistance*m_shadowLengthScale;
+
+		if (newZ > lightPosWorld.Z)
+		{	//clamped z component is higher than actual light position allows so adjust it.
+			lightPosWorld.Z = newZ;
+		}
+	}
+
+	if (lightPosWorld != m_lightPosHistory[ lightIndex ][meshIndex])
+	{	//Light position has moved, see if enough to matter
+
+		// compute vector from the light to the current object position
+		toLight = objectCenter - lightPosWorld;
+		toLight.Normalize();
+
+		// compute vector from the previous light to the object position
+		toPrevLight = objectCenter - m_lightPosHistory[ lightIndex ][meshIndex];
+		toPrevLight.Normalize();
+
+		Real cosAngle = fabs (Vector3::Dot_Product(toLight,toPrevLight));
+		if (cosAngle < cosAngleToCare)	//less than 45 degree change
+			isLightMoving =true;
+	}
+	else
+	///@todo: Find a better way to deal with this - use maximum extrusion once!  Also avoid hit for units climbing hills.
+	if (fabs(objectCenter.Z - prevXForm->operator [](2).W) > SHADOW_EXTRUSION_BUFFER)
+		isLightMoving = true;	//treat model rising just like rotation since volume needs update for longer extrusion.
+
+	// reconstruct if needed
+	if (isLightMoving || isMeshRotating)
+	{
+		//
+		// transform the light in the world to object space, we
+		// care only about the rotation of components for the coordinate
+		// system change, not the translations
+		//
+		Real det;
+		D3DXMatrixInverse((D3DXMATRIX*)&worldToObject, &det, (D3DXMATRIX*)&objectToWorld);
+
+		// find out light position in object space
+		Matrix4x4::Transform_Vector(worldToObject,lightPosWorld,&lightPosObject);
+
+		//Updating shadow volumes is expensive, so verify that this volume is even visible.
+
+		//Generate bounding box around shadow volume by extruding AABB corners
+		AABoxClass box(meshBox);	//copy current mesh bounding box (will be smaller than shadow box).
+		SphereClass sphere;			//rough bounding sphere of shadow volume - based on box.
+		Vector3 Corners[8];
+		Vector3 lightRay;
+		Real vectorScale,vectorScaleTemp, vectorScaleMax;
+		Real length;
+
+		//Get vertices of top of bounding box
+		Corners[0]=box.Center+box.Extent;	//top right corner
+		Corners[1]=Corners[0];
+		Corners[1].X -= 2.0f*box.Extent.X;		//top left corner
+		Corners[2]=Corners[1];
+		Corners[2].Y -= 2.0f*box.Extent.Y;		//bottom left corner
+		Corners[3]=Corners[2];
+		Corners[3].X += 2.0f*box.Extent.X;		//bottom right corner
+
+		//Project top volume corners onto ground plane
+		lightRay = Corners[0] - lightPosWorld;	//vector light to corner
+		length= 1.0f/lightRay.Length();
+		lightRay *= length;
+		vectorScaleMax=vectorScale=(Real)fabs((Corners[0].Z-floorZ)/lightRay.Z);	//length of vector from top corner to ground.
+		Corners[4]=Corners[0]+lightRay*vectorScale;
+		vectorScaleMax *= length;
+
+		lightRay = Corners[1] - lightPosWorld;	//vector light to corner
+		length= 1.0f/lightRay.Length();
+		lightRay *= length;
+		vectorScaleTemp=(Real)fabs((Corners[1].Z-floorZ)/lightRay.Z);	//length of vector from top corner to ground.
+		Corners[5]=Corners[1]+lightRay*vectorScaleTemp;
+		vectorScaleTemp *= length;
+
+		if (vectorScaleTemp > vectorScaleMax)
+			vectorScaleMax=vectorScaleTemp;	//keep track of maximum required extrusion length.
+
+		lightRay = Corners[2] - lightPosWorld;	//vector light to corner
+		length= 1.0f/lightRay.Length();
+		lightRay *= length;
+		vectorScale=(Real)fabs((Corners[2].Z-floorZ)/lightRay.Z);	//length of vector from top corner to ground.
+		Corners[6]=Corners[2]+lightRay*vectorScale;
+		vectorScale *= length;
+
+		if (vectorScale > vectorScaleMax)
+			vectorScaleMax=vectorScale;	//keep track of maximum required extrusion length.
+
+		lightRay = Corners[3] - lightPosWorld;	//vector light to corner
+		length= 1.0f/lightRay.Length();
+		lightRay *= length;
+		vectorScaleTemp=(Real)fabs((Corners[3].Z-floorZ)/lightRay.Z);	//length of vector from top corner to ground.
+		Corners[7]=Corners[3]+lightRay*vectorScaleTemp;
+		vectorScaleTemp *= length;
+
+		if (vectorScaleTemp > vectorScaleMax)
+			vectorScaleMax=vectorScaleTemp;	//keep track of maximum required extrusion length.
+
+		box.Init(Corners, 8);	//generate a new bounding box
+		sphere.Init(box.Center,box.Extent.Length());	//generate object space bounding sphere containing box.
+
+		CollisionMath::OverlapType result=CollisionMath::Overlap_Test(*shadowCameraFrustum,sphere);
+		if (result == CollisionMath::OVERLAPPED)	//do a more accurate test
+			result=CollisionMath::Overlap_Test(*shadowCameraFrustum, box);
+		
+		if (result != CollisionMath::OUTSIDE)
+		{
+			//
+			// reset the silhouette data and build a new one from this light
+			// source perspective
+			//
+
+			if (m_numSilhouetteIndices[meshIndex] != 0)
+			{	//this silhouette was built before and is being updated.
+				//this probably means it will change again in the future.
+				//make future updates faster by pre-caching face normals.
+				m_geometry->getMesh(meshIndex)->buildPolygonNormals();
+			}
+			resetSilhouette(meshIndex);
+			buildSilhouette(meshIndex, &lightPosObject);
+
+			//
+			// in a multiple shadow situation we would be allocating a volume
+			// for this current shadow light, not the 0 index volume all the time
+			//
+			if (!m_shadowVolume[ lightIndex ][meshIndex])
+				allocateShadowVolume( lightIndex,meshIndex );
+			if( m_shadowVolumeVB[ lightIndex ][meshIndex] )
+			{	//Updating an existing vertex buffer shadow volume.  This means we're
+				//probably dealing with an animated mesh.  Update flags to reflect this fact.
+				if (isMeshRotating || isLightMoving)
+				{
+					if (isMeshRotating)
+					{	//rotating meshes will most likely need updates each frame, so stop using static vertex buffers.
+						m_shadowVolume[ lightIndex ][meshIndex]->SetFlags(
+							m_shadowVolume[ lightIndex ][meshIndex]->GetFlags() | SHADOW_DYNAMIC);
+					}
+					//release memory used to store vertices/polygons
+					resetShadowVolume( lightIndex,meshIndex );	//free vertex buffers since not used for dynamic.
+					//Resize the shadow volume since we'll need room to store the vertices in memory instead of VB.
+					allocateShadowVolume( lightIndex,meshIndex );
+				}
+			}
+
+			//
+			// construct the shadow volume at this light position in the
+			// passed shadow volume geometry index
+			//
+			if (m_shadowVolume[ lightIndex ][meshIndex]->GetFlags() & SHADOW_DYNAMIC)
+				constructVolume( &lightPosObject, vectorScaleMax, lightIndex, meshIndex );
+			else
+				constructVolumeVB( &lightPosObject, vectorScaleMax, lightIndex, meshIndex );
+
+			//
+			// store the current light position and orientation that
+			// we constructed shadow info at
+			//
+			m_objectXformHistory[ lightIndex ][meshIndex] = objectToWorld;
+			m_lightPosHistory[lightIndex][meshIndex] = lightPosWorld;
+
+			box.Translate(-objectCenter);	//translate box to object space.
+			m_shadowVolume[ lightIndex ][meshIndex]->setBoundingBox(box);
+			sphere.Center -= objectCenter;
+			m_shadowVolume[ lightIndex ][meshIndex]->setBoundingSphere(sphere);
+			m_shadowVolume[ lightIndex ][meshIndex]->setVisibleState(Geometry::STATE_VISIBLE);	//this volume needs rendering.
+		}//end if inside view frustum
+		else
+		if (m_shadowVolume[ lightIndex ][meshIndex])
+		{	//outside view frustum, shadow wasn't updated.
+			box.Translate(-objectCenter);	//translate box to object space.
+			m_shadowVolume[ lightIndex ][meshIndex]->setBoundingBox(box);
+			sphere.Center -= objectCenter;
+			m_shadowVolume[ lightIndex ][meshIndex]->setBoundingSphere(sphere);
+			m_shadowVolume[ lightIndex ][meshIndex]->setVisibleState(Geometry::STATE_INVISIBLE);
+		}
+	}  // end if
+	else
+	{	//not reconstructing volume, so don't know if visible or not.
+		if (m_shadowVolume[ lightIndex ][meshIndex])
+			m_shadowVolume[ lightIndex ][meshIndex]->setVisibleState(Geometry::STATE_UNKNOWN);
+	}
+}
+
+// addSilhouetteEdge ==========================================================
+// It has been determined that the polygon neighbor in the "neighborIndex"
+// of "visible" needs to be added to the silhouette.  We will add those two
+// vertex indices to the silhouette in the order they were specified in 
+// "visible" to assure that the constructed edge is in counter clockwise order
+// ============================================================================
+// ?addSilhouetteEdge@W3DVolumetricShadow@@IAEXHPAUPolyNeighbor@@0@Z present-unmatched
+void W3DVolumetricShadow::addSilhouetteEdge(Int meshIndex, PolyNeighbor *visible, PolyNeighbor *hidden )
+{
+	Int i;
+	Int neighborIndex = 0;
+	Short visibleIndexList[ 3 ];
+	Short edgeStart, edgeEnd;
+
+	W3DShadowGeometryMesh *geomMesh=m_geometry->getMesh(meshIndex);
+
+	// sanity
+	assert( visible && hidden );
+
+	//
+	// which index in the neighbor list of "visible" refers to the 
+	// polygon "hidden"
+	//
+	for( i = 0; i < MAX_POLYGON_NEIGHBORS; i++ )
+	{
+
+		if( visible->neighbor[ i ].neighborIndex == hidden->myIndex )
+		{
+
+			neighborIndex = i;
+			break;  // exit for
+
+		}  // end if
+
+	}  // end for i
+
+	// get the three vertex indices of "visible"
+	geomMesh->GetPolygonIndex( visible->myIndex, visibleIndexList );
+
+	//
+	// we know that 2 of the 3 vertex indices will be present in the edge.
+	// will construct the edge as follows to ensure we have counter 
+	// clockwise order.  note that this assumes the vertices of the
+	// polygons specified in the geometry are in counter clockwise order,
+	// which they are
+	//
+	// 1) [ v1  Absent, v2 Present, v3 Present ] -> edge = (v2, v3)
+	// 2) [ v1 Present, v2  Absent, v3 Present ] -> edge = (v3, v1)
+	// 3) [ v1 Present, v2 Present, v3 Absent  ] -> edge = (v1, v2)
+	//
+	if( (visibleIndexList[ 0 ] != 
+			 visible->neighbor[ neighborIndex ].neighborEdgeIndex[ 0 ]) &&
+			(visibleIndexList[ 0 ] != 
+			visible->neighbor[ neighborIndex ].neighborEdgeIndex[ 1 ]) )
+	{
+
+		// case 1 above
+		edgeStart = visibleIndexList[ 1 ];
+		edgeEnd = visibleIndexList[ 2 ];
+
+	}  // end if
+	else if( (visibleIndexList[ 1 ] != 
+					 visible->neighbor[ neighborIndex ].neighborEdgeIndex[ 0 ]) &&
+					 (visibleIndexList[ 1 ] != 
+					 visible->neighbor[ neighborIndex ].neighborEdgeIndex[ 1 ]) )
+	{
+
+		// case 2 above
+		edgeStart = visibleIndexList[ 2 ];
+		edgeEnd = visibleIndexList[ 0 ];
+
+	}  // end if
+	else
+	{
+
+		// case 3 above
+		edgeStart = visibleIndexList[ 0 ];
+		edgeEnd = visibleIndexList[ 1 ];
+
+	}  // end if
+
+	// add to silhouette edge list
+	addSilhouetteIndices(meshIndex, edgeStart, edgeEnd );
+
+}  // end addSilhouetteEdge
+
+// addNeighborlessEdges =======================================================
+// Given a polygon neighbor information, it has been determined that this
+// polygon is visible and has edges which are not connected to other 
+// polygons, these edges need to be added to the silhouette.  The edge(s)
+// must be added in such an order that we create silhouette edges in a
+// counter clockwise order.
+// ============================================================================
+void W3DVolumetricShadow::addNeighborlessEdges(Int meshIndex, PolyNeighbor *us )
+{
+	struct BFMEShadowGeometryMeshData
+	{
+		char m_beforePolygons[0xc];
+		const TriIndex *m_polygons;
+	};
+	struct BFMEShadowGeometryMeshView
+	{
+		BFMEShadowGeometryMeshData *m_mesh;
+		char m_afterMesh[0x1c];
+		UnsignedShort *m_parentVerts;
+		char m_afterParentVerts[0x10];
+	};
+	struct BFMEShadowGeometryView
+	{
+		char m_beforeMeshList[0x14];
+		BFMEShadowGeometryMeshView m_meshList[MAX_SHADOW_CASTER_MESHES];
+	};
+	struct BFMEVolumetricShadowView
+	{
+		char m_beforeGeometry[0x6c];
+		BFMEShadowGeometryView *m_geometry;
+	};
+	Short vertexIndexList[ 3 ];
+	Int i, j;
+	Short edgeStart, edgeEnd;
+	Bool addEdge;
+
+	// sanity
+	assert( us );
+
+	BFMEVolumetricShadowView *shadow = (BFMEVolumetricShadowView *)this;
+	BFMEShadowGeometryView *geometry = shadow->m_geometry;
+	BFMEShadowGeometryMeshView *geomMesh = &geometry->m_meshList[meshIndex];
+
+	// get the vertex index list from the geometry
+	const TriIndex *polyi = &geomMesh->m_mesh->m_polygons[us->myIndex];
+	vertexIndexList[0] = geomMesh->m_parentVerts[polyi->I];
+	vertexIndexList[1] = geomMesh->m_parentVerts[polyi->J];
+	vertexIndexList[2] = geomMesh->m_parentVerts[polyi->K];
+
+	//
+	// go through each edge, if these indices to NOT appear TOGETHER in
+	// neighbor list then we must add it.
+	//
+	for( i = 0; i < 3; i++ )
+	{
+
+		// get the edge start and end vertex indices
+		edgeStart = vertexIndexList[ i ];
+		if( i == 2 )
+			edgeEnd = vertexIndexList[ 0 ];  // wraps to begging of list
+		else
+			edgeEnd = vertexIndexList[ i + 1 ];
+
+		// do these two vertices appear in a neighbor list of the poly?
+		addEdge = TRUE;
+		for( j = 0; j < MAX_POLYGON_NEIGHBORS; j++ )
+		{
+
+			if( us->neighbor[ j ].neighborIndex != NO_NEIGHBOR )
+			{
+
+				if( (us->neighbor[ j ].neighborEdgeIndex[ 0 ] == edgeStart &&
+						 us->neighbor[ j ].neighborEdgeIndex[ 1 ] == edgeEnd) ||
+						(us->neighbor[ j ].neighborEdgeIndex[ 1 ] == edgeStart &&
+						 us->neighbor[ j ].neighborEdgeIndex[ 0 ] == edgeEnd) )
+				{
+
+					addEdge = FALSE;
+					break;  // exit for j, no need to search on
+
+				}  // end if
+
+			}  // end if
+
+		}  // end for j
+
+		// add the edge if no neighbors have that edge
+		if( addEdge == TRUE )
+		{
+
+			addSilhouetteIndices(meshIndex, edgeStart, edgeEnd );
+
+		}  // end if
+
+	}  // end for i
+
+}  // end addNeighborlessEdges
+
+// addSilhouetteIndices =======================================================
+// Add these two indices to the silhouette data
+// ============================================================================
+void W3DVolumetricShadow::addSilhouetteIndices(Int meshIndex, Short edgeStart, Short edgeEnd )
+{
+
+//	DBGPRINTF(( "addSilhouetteIndices: Adding (%d,%d), the storage before the add is = (%d/%d)\n",
+//							edgeStart, edgeEnd, m_numSilhouetteIndices, m_maxSilhouetteEntries ));
+
+	// add to silhouette edge list
+	assert( m_numSilhouetteIndices[meshIndex] < m_maxSilhouetteEntries[meshIndex] );
+	m_silhouetteIndex[meshIndex][ m_numSilhouetteIndices[meshIndex]++ ] = edgeStart;
+	assert( m_numSilhouetteIndices[meshIndex] < m_maxSilhouetteEntries[meshIndex] );
+	m_silhouetteIndex[meshIndex][ m_numSilhouetteIndices[meshIndex]++ ] = edgeEnd;
+
+}  // end if
+
+// buildSilhouette ============================================================
+// Given a light position, and our polygon neighbor information this will
+// build the silhouette of the object edges from the given light position
+// ============================================================================
+void W3DVolumetricShadow::buildSilhouette(Int meshIndex, Vector3 *lightPosObject)
+{
+	struct BFMEShadowGeometryMeshData
+	{
+		char m_beforePolygons[0xc];
+		const TriIndex *m_polygons;
+	};
+	struct BFMEShadowGeometryMeshView
+	{
+		BFMEShadowGeometryMeshData *m_mesh;
+		char m_pad04[4];
+		const Vector3 *m_verts;
+		char m_pad0c[4];
+		Vector3 *m_polygonNormals;
+		char m_pad14[8];
+		Int m_numPolygons;
+		UnsignedShort *m_parentVerts;
+		PolyNeighbor *m_polyNeighbors;
+		Int m_numPolyNeighbors;
+		char m_tail[8];
+
+		__forceinline PolyNeighbor *GetPolyNeighbor(Int polyIndex)
+		{
+			if (!m_polyNeighbors)
+				reinterpret_cast<W3DShadowGeometryMesh *>(this)->buildPolygonNeighbors();
+			if (polyIndex < 0 || polyIndex >= m_numPolyNeighbors)
+				return NULL;
+			return &m_polyNeighbors[polyIndex];
+		}
+
+		__forceinline Int GetNumPolygon() const
+		{
+			return m_numPolygons;
+		}
+
+		__forceinline const Vector3 &GetPolygonNormal(long polygon) const
+		{
+			return m_polygonNormals[polygon];
+		}
+
+		__forceinline void GetPolygonIndex(long polygon, Short *indexList) const
+		{
+			const TriIndex *poly = &m_mesh->m_polygons[polygon];
+			*indexList++ = m_parentVerts[poly->I];
+			*indexList++ = m_parentVerts[poly->J];
+			*indexList++ = m_parentVerts[poly->K];
+		}
+	};
+	struct BFMEShadowGeometryView
+	{
+		char m_beforeMeshList[0x14];
+		BFMEShadowGeometryMeshView m_meshList[MAX_SHADOW_CASTER_MESHES];
+	};
+	struct BFMEVolumetricShadowView
+	{
+		char m_beforeGeometry[0x6c];
+		BFMEShadowGeometryView *m_geometry;
+		char m_beforeSilhouette[0x4110];
+		Short *m_silhouetteIndex[MAX_SHADOW_CASTER_MESHES];
+		Short m_numSilhouetteIndices[MAX_SHADOW_CASTER_MESHES];
+		char m_beforeIndicesPerMesh[0x140];
+		Int m_numIndicesPerMesh[MAX_SHADOW_CASTER_MESHES];
+	};
+	PolyNeighbor *polyNeighbor;  // the poly we're looking at right now
+	Vector3 lightVector;  // vector from light to polygon
+	Bool visibleNeighborless;
+	Int numPolys;  // number of polys in our geometry
+	W3DShadowGeometryMesh *geomMesh;
+	Int i, j;
+	Int meshEdgeStart=0; //index to first edge contributed by specific mesh
+
+	//
+	// go through each of our shadow geometry polygon info and find out
+	// which polys are visible from this light source and which ones are not
+	//
+
+	BFMEVolumetricShadowView *shadow = (BFMEVolumetricShadowView *)this;
+	BFMEShadowGeometryView *geometry = shadow->m_geometry;
+	BFMEShadowGeometryMeshView *mesh = &geometry->m_meshList[meshIndex];
+	geomMesh = (W3DShadowGeometryMesh *)mesh;
+	if (!mesh->m_polygonNormals)
+		geomMesh->buildPolygonNormals();
+
+	//record where this meshes indices will begin.
+	meshEdgeStart=shadow->m_numSilhouetteIndices[meshIndex];
+
+	numPolys = mesh->GetNumPolygon();
+	for( i = 0; i < numPolys; i++ )
+	{
+		Short poly[ 3 ];
+
+		// get this polygon neighbor information
+		polyNeighbor = mesh->GetPolyNeighbor( i );
+
+		// take this opportunity to initialize our processing flags to zero
+		polyNeighbor->status = 0;
+
+		// get the normal for this polygon
+		const Vector3& normal=mesh->GetPolygonNormal(i);
+
+		// get the vertex indices at this polygon
+		mesh->GetPolygonIndex( i, poly );
+
+		//
+		// find out "lightVector" to this polygon
+		//
+		// since our light source could be very close to the object and that
+		// would change the shadow we are going to say that the light vector
+		// is from the light position to one of the vertices in the polygon.
+		// To be more correct we should use the center of the polygon but
+		// this is a good approximation ... an ever broader approximation that
+		// we could use would be the object center
+		//
+		const Vector3& vertex=mesh->m_verts[poly[ 0 ]];
+		lightVector= vertex - *lightPosObject;
+
+		//
+		// dot the light vector with the normal of the polygon to see if the
+		// poly is visible from this location
+		//
+		if( Vector3::Dot_Product( lightVector, normal ) < 0.0f )
+			BitSet( polyNeighbor->status, POLY_VISIBLE );
+
+	}  // end for i
+
+	//
+	// check all our polys using our poly neighbors, where one poly neighbor
+	// is not the same visible status as a neighbor that represents a
+	// silhouette edge
+	//
+	for( i = 0; i < numPolys; i++ )
+	{
+		PolyNeighbor *otherNeighbor;
+
+		// get this poly neighbor ... this is "us"
+		polyNeighbor = mesh->GetPolyNeighbor( i );
+
+		// initialize ourselves to not be a visible edge
+		visibleNeighborless = FALSE;
+
+		// check our 3 potential neighbors
+		for( j = 0; j < MAX_POLYGON_NEIGHBORS; j++ )
+		{
+
+			// initialize this neighbor to nuttin
+			otherNeighbor = NULL;
+
+			// get our neighbor if present and cull them if processed
+			if( polyNeighbor->neighbor[ j ].neighborIndex != NO_NEIGHBOR )
+			{
+
+				// get the jth polygon neighbor ... this is "them"
+				otherNeighbor = 
+					mesh->GetPolyNeighbor(
+						polyNeighbor->neighbor[ j ].neighborIndex );
+
+				//
+				// ignore neighbors that are marked as processed as those
+				// onces have already detected edges if present
+				//
+				if( BitTest( otherNeighbor->status, POLY_PROCESSED ) )
+					continue;  // for j
+
+			}  // end if
+
+			//
+			// finally, if our own visible status is different from our 
+			// neighbor visible status then that defines an edge we must
+			// add to the silhouette.  Also, a visible polygon that has
+			// no neighbor automatically makes a silhouette edge.  Note that
+			// if we have no neighbor we just record the fact that we have
+			// real model end edges to add after this inner j loop;
+			//
+			if( BitTest( polyNeighbor->status, POLY_VISIBLE ) )
+			{
+
+				// check for no neighbor edges
+				if( otherNeighbor == NULL )
+				{
+
+					visibleNeighborless = TRUE;
+
+				}  // end if
+				else if( BitTest( otherNeighbor->status, POLY_VISIBLE ) == FALSE )
+				{
+
+					// "we" are visible and "they" are not
+					addSilhouetteEdge(meshIndex, polyNeighbor, otherNeighbor );
+
+				}  // end if
+
+			}  // end if
+			else if( otherNeighbor != NULL &&
+							 BitTest( otherNeighbor->status, POLY_VISIBLE ) )
+			{
+
+				// "they" are visible and "we" are not
+				addSilhouetteEdge(meshIndex, otherNeighbor, polyNeighbor );
+
+			}  // end else
+
+		}  // end for j
+
+		//
+		// if this polygon is visible, add any edges that are not
+		// neighbors of adjacent polygons.
+		//
+		if( visibleNeighborless == TRUE )
+		{
+
+			addNeighborlessEdges(meshIndex, polyNeighbor );
+
+		}  // end if
+
+		//
+		// this polyNeighbor is now considered "processed", any other
+		// polygons that reference back to this one can ignore their
+		// processing cause any edges were already detected
+		//
+		BitSet( polyNeighbor->status, POLY_PROCESSED );
+
+	}  // end for i
+	
+	//record number of edge indices contrinuted by this mesh
+	shadow->m_numIndicesPerMesh[meshIndex]=shadow->m_numSilhouetteIndices[meshIndex]-meshEdgeStart;
+	
+}  // end buildSilhouette
+
+// constructVolume ============================================================
+// Given a fresh new geometry class called "shadowVolume" to hold the actual
+// shadow volume data, this method will create the shadow volume polygons
+// given the information in the current silhouette of this Shadow and the
+// light source position.  
+//
+// The light source should be in object space and the shadow volume polygon 
+// data is also constructed in object space.
+//
+// The polygon we will create for a given edge will be that edge extruded
+// out in the direction away from the light source.  This conceptual 4 sided
+// polygon is however broken up into two triangles for storage.
+//
+// This version is designed to construct the volume inside a system memory
+// buffer - to be rendered via a dynamic vertex buffer.
+//
+// ============================================================================
+void W3DVolumetricShadow::constructVolume( Vector3 *lightPosObject,Real shadowExtrudeDistance, Int volumeIndex, Int meshIndex )
+{
+	Geometry *shadowVolume;
+	Vector3 extrude2;  // the polypoints extruded from edge and light
+	Short indexList[ 3 ];
+	Int i,k;
+	Int vertexCount;
+	Int polygonCount;
+	Int indicesPerMesh;
+	W3DShadowGeometryMesh *geomMesh;
+
+	// sanity
+	if( volumeIndex < 0 || 
+			volumeIndex >= MAX_SHADOW_LIGHTS ||
+			lightPosObject == NULL )
+	{
+
+		assert( 0 );
+		return;
+
+	}  // end if
+
+	// get the geometry struct we're storing the actual shadow volume data in
+	shadowVolume = m_shadowVolume[ volumeIndex ][meshIndex];
+
+	if( shadowVolume == NULL )
+	{
+
+//		DBGPRINTF(( "No volume allocated at index '%d'\n", volumeIndex ));
+		assert( 0 );
+		return;
+
+	}  // end if
+
+	// step through each of the silhouette pairs
+	vertexCount = 0;
+	polygonCount = 0;
+
+	indicesPerMesh=m_numIndicesPerMesh[meshIndex];
+	if (!indicesPerMesh)
+		return;	//nothing to draw
+
+	// BFME layout view: retail stores the active geometry pointer at this+0x6c
+	// (0x30 past the ZH m_geometry slot) and W3DShadowGeometryMesh grew to
+	// 0x34 bytes with the mesh list at +0x14 inside W3DShadowGeometry.
+	struct BFMEConstructVolumeMesh
+	{
+		char m_beforeVerts[0x8];
+		const Vector3 *m_verts;
+		char m_afterVerts[0x28];
+	};
+	struct BFMEConstructVolumeGeometry
+	{
+		char m_beforeMeshList[0x14];
+		BFMEConstructVolumeMesh m_meshList[MAX_SHADOW_CASTER_MESHES];
+		BFMEConstructVolumeMesh *getMesh(Int index) { return &m_meshList[index]; }
+	};
+
+	geomMesh = (W3DShadowGeometryMesh *)((BFMEConstructVolumeGeometry *)
+		((W3DVolumetricShadow *)((char *)this + 0x30))->m_geometry)->getMesh(meshIndex);
+
+	shadowVolume->SetNumActivePolygon(0);
+	shadowVolume->SetNumActiveVertex(0);
+
+#ifdef RECORD_SHADOW_STRIP_STATS
+	Int numStrips=0;	//keeps track of number of strips generated.
+	Int stripLength=1;	//keeps track of segments in strip (each being 2 triangles).
+	Int maxStripLength=0;	//keeps track of longest strip generated.
+#endif
+
+	Short *silhouetteIndices=m_silhouetteIndex[meshIndex];
+
+	//Initialize first strip info
+	Short stripStartIndex=silhouetteIndices[ 0 ];
+	Short stripStartVertex=0;
+
+	//Insert the first vertex and extrusion into strip.
+	// get edge point
+	const Vector3& ev2=  // second edge of silhouette
+		geomMesh->GetVertex( silhouetteIndices[ 0 ] );
+
+	// take one edge point and extrude away from the light
+	extrude2 = ev2 - *lightPosObject;
+	extrude2 *= shadowExtrudeDistance;
+	extrude2 += ev2;
+
+	shadowVolume->SetVertex( vertexCount, &ev2 );
+	shadowVolume->SetVertex( vertexCount + 1, &extrude2 );
+
+	vertexCount=2;
+	Int lastEdgeVertex2Index=0;
+	Int lastExtrude2Index=1;
+
+	for( i = 0; i < indicesPerMesh; i += 2 )
+	{
+		Short currentEdgeEnd=silhouetteIndices[i+1];
+
+		//look for edge connected to this one and move it next to this edge
+		//in index list.  Rendering edges back-to-back improves vertex cache usage.
+		for (k=i+2; k<indicesPerMesh; k+=2)
+			if (silhouetteIndices[k]==currentEdgeEnd)
+			{	//swap the two edges
+				Int tempIndex=*(Int *)(&silhouetteIndices[i+2]);
+				*(Int *)&silhouetteIndices[i+2]=*(Int *)&silhouetteIndices[k];
+				*(Int *)&silhouetteIndices[k]=tempIndex;
+				break;
+			}
+
+		if (k >= indicesPerMesh)
+		{	//reached end of strip. Insert final edge.
+			//Check if last edge wraps around to start.
+			if (currentEdgeEnd == stripStartIndex)
+			{	//add end of strip that wraps around to start (forming closed cylinder/shape)
+				//
+				// add the polygon consisting of the two edge vertices and the
+				// first extruded point
+				//
+				indexList[ 0 ] = lastEdgeVertex2Index;  // lastedgeVertex2 index
+				indexList[ 1 ] = lastExtrude2Index;  // lastextrude2 index
+				indexList[ 2 ] = stripStartVertex;  // edgeVertex2 index
+				shadowVolume->SetPolygonIndex( polygonCount, indexList );
+
+				indexList[ 0 ] = stripStartVertex;  // edgeVertex2 index
+				indexList[ 1 ] = lastExtrude2Index;  // extrude1 index
+				indexList[ 2 ] = stripStartVertex+1;  // extrude2 index
+				shadowVolume->SetPolygonIndex( polygonCount + 1, indexList );
+			}
+			else
+			{	//add end of strip.  Finishes the last 2 polygons.
+				const Vector3& ev=geomMesh->GetVertex(currentEdgeEnd);
+				shadowVolume->SetVertex( vertexCount, &ev );
+
+				//
+				// add the polygon consisting of the two edge vertices and the
+				// first extruded point
+				//
+				indexList[ 0 ] = lastEdgeVertex2Index;  // lastedgeVertex2 index
+				indexList[ 1 ] = lastExtrude2Index;  // lastextrude2 index
+				indexList[ 2 ] = vertexCount;  // edgeVertex2 index
+				shadowVolume->SetPolygonIndex( polygonCount, indexList );
+
+				// take the other edge point and extrude away from light
+				extrude2 = ev - *lightPosObject;
+				extrude2 *= shadowExtrudeDistance;
+				extrude2 += ev;
+				// add the one new vertex
+				shadowVolume->SetVertex( vertexCount + 1, &extrude2 );
+
+				indexList[ 0 ] = vertexCount;  // edgeVertex2 index
+				indexList[ 1 ] = lastExtrude2Index;  // extrude1 index
+				indexList[ 2 ] = vertexCount+1;  // extrude2 index
+				shadowVolume->SetPolygonIndex( polygonCount + 1, indexList );
+
+				lastEdgeVertex2Index=vertexCount;
+				lastExtrude2Index=vertexCount+1;
+				vertexCount += 2;
+			}
+
+			if ((i+2) >= indicesPerMesh)
+			{	//finished with all silhouette edges
+				polygonCount += 2;
+#ifdef RECORD_SHADOW_STRIP_STATS
+				numStrips++;
+#endif
+				break;	//reached end of all edges
+			}
+	
+			//Start a new strip by adding first vertex and extrusion.
+			const Vector3& ev=geomMesh->GetVertex( silhouetteIndices[ i+2 ] );
+			// take one edge point and extrude away from the light
+			extrude2 = ev - *lightPosObject;
+			extrude2 *= shadowExtrudeDistance;
+			extrude2 += ev;
+
+			lastEdgeVertex2Index=vertexCount;
+			lastExtrude2Index=vertexCount + 1;
+			//record start of new strip info
+			stripStartIndex=silhouetteIndices[ i+2 ];
+			stripStartVertex=lastEdgeVertex2Index;
+
+			shadowVolume->SetVertex( lastEdgeVertex2Index, &ev );
+			shadowVolume->SetVertex( lastExtrude2Index, &extrude2 );
+			vertexCount += 2;
+
+			polygonCount += 2;
+#ifdef RECORD_SHADOW_STRIP_STATS
+			numStrips++;
+			stripLength=1;
+#endif
+			continue;
+		}
+		else
+		{	//continue existing strip by adding extra vertex and extrusion
+
+			const Vector3& ev=geomMesh->GetVertex( currentEdgeEnd );
+			shadowVolume->SetVertex( vertexCount, &ev );
+			//
+			// add the polygon consisting of the two edge vertices and the
+			// first extruded point
+			//
+			indexList[ 0 ] = lastEdgeVertex2Index;  // lastedgeVertex2 index
+			indexList[ 1 ] = lastExtrude2Index;  // lastextrude2 index
+			indexList[ 2 ] = vertexCount;  // edgeVertex2 index
+			shadowVolume->SetPolygonIndex( polygonCount, indexList );
+
+			// take the other edge point and extrude away from light
+			extrude2 = ev - *lightPosObject;
+			extrude2 *= shadowExtrudeDistance;
+			extrude2 += ev;
+
+			// add the one new vertex
+			shadowVolume->SetVertex( vertexCount + 1, &extrude2 );
+
+			indexList[ 0 ] = vertexCount;  // edgeVertex2 index
+			indexList[ 1 ] = lastExtrude2Index;  // extrude1 index
+			indexList[ 2 ] = vertexCount+1;  // extrude2 index
+			shadowVolume->SetPolygonIndex( polygonCount + 1, indexList );
+
+			lastEdgeVertex2Index=vertexCount;
+			lastExtrude2Index=vertexCount+1;
+
+			vertexCount += 2;
+			polygonCount += 2;
+		}
+#ifdef RECORD_SHADOW_STRIP_STATS
+		//Continuing strip.
+		stripLength++;
+		maxStripLength=__max(maxStripLength,stripLength);
+#endif
+	}
+
+	shadowVolume->SetNumActivePolygon(polygonCount);
+	shadowVolume->SetNumActiveVertex(vertexCount);
+}  // end constructVolume
+
+// constructVolumeVB ==========================================================
+// Given a fresh new geometry class called "shadowVolume" to hold the actual
+// shadow volume data, this method will create the shadow volume polygons
+// given the information in the current silhouette of this Shadow and the
+// light source position.  
+//
+// The light source should be in object space and the shadow volume polygon 
+// data is also constructed in object space.
+//
+// The polygon we will create for a given edge will be that edge extruded
+// out in the direction away from the light source.  This conceptual 4 sided
+// polygon is however broken up into two triangles for storage.
+//
+// This version is designed to construct the volume directly inside a vertex
+// buffer so it's optimal for static geometry.  Since it's assumed to be called
+// only once per model, we can use some more expensive computations to generate
+// the volume.
+//
+// ============================================================================
+void W3DVolumetricShadow::constructVolumeVB( Vector3 *lightPosObject,Real shadowExtrudeDistance, Int volumeIndex, Int meshIndex )
+{
+	Geometry *shadowVolume;
+	Vector3 extrude2;  // the polypoints extruded from edge and light
+	Vector3 edgeVertex2;  // second edge of silhouette
+	Int i,k;
+	Int vertexCount;
+	Int polygonCount;
+	Int indicesPerMesh;
+	W3DShadowGeometryMesh *geomMesh;
+
+	W3DBufferManager::W3DVertexBufferSlot *vbSlot;
+	W3DBufferManager::W3DIndexBufferSlot *ibSlot;
+
+	// sanity
+	if( volumeIndex < 0 || 
+			volumeIndex >= MAX_SHADOW_LIGHTS ||
+			lightPosObject == NULL )
+	{
+
+		assert( 0 );
+		return;
+
+	}  // end if
+
+	// get the geometry struct we're storing the actual shadow volume data in
+	shadowVolume = m_shadowVolume[ volumeIndex ][meshIndex];
+
+	if( shadowVolume == NULL )
+	{
+
+//		DBGPRINTF(( "No volume allocated at index '%d'\n", volumeIndex ));
+		assert( 0 );
+		return;
+
+	}  // end if
+
+	//*****************************************************************************************/
+	//Do an initial pass through silhouette data to determine the actual vertex/polygon counts.
+	//This number can't be determined any other way since it depends on degree of vertex sharing
+	//in model.  We don't want to overallocate because vertex buffer space is limited.
+	//This pass is also used to sort the edges so they are all connected in strip order.
+	{
+		#ifdef RECORD_SHADOW_STRIP_STATS
+			Int numStrips=0;	//keeps track of number of strips generated.
+			Int stripLength=1;	//keeps track of segments in strip (each being 2 triangles).
+			Int maxStripLength=0;	//keeps track of longest strip generated.
+		#endif
+
+		// step through each of the silhouette pairs
+		vertexCount = 0;
+		polygonCount = 0;
+
+		indicesPerMesh=m_numIndicesPerMesh[meshIndex];
+		if (!indicesPerMesh)
+			return;	//nothing to draw
+
+		Short *silhouetteIndices=m_silhouetteIndex[meshIndex];
+
+		//Initialize first strip info
+		Short stripStartIndex=silhouetteIndices[ 0 ];
+		Short stripStartVertex=0;
+
+		vertexCount=2;
+		Int lastEdgeVertex2Index=0;
+		Int lastExtrude2Index=1;
+
+		for( i = 0; i < indicesPerMesh; i += 2 )
+		{
+			Short currentEdgeEnd=silhouetteIndices[i+1];
+
+			//look for edge connected to this one and move it next to this edge
+			//in index list.  Rendering edges back-to-back improves vertex cache usage.
+			for (k=i+2; k<indicesPerMesh; k+=2)
+				if (silhouetteIndices[k]==currentEdgeEnd)
+				{	//swap the two edges
+					Int tempIndex=*(Int *)(&silhouetteIndices[i+2]);
+					*(Int *)&silhouetteIndices[i+2]=*(Int *)&silhouetteIndices[k];
+					*(Int *)&silhouetteIndices[k]=tempIndex;
+					break;
+				}
+
+			if (k >= indicesPerMesh)
+			{	//reached end of strip. Insert final edge.
+				//Check if last edge wraps around to start.
+				if (currentEdgeEnd == stripStartIndex)
+				{	//add end of strip that wraps around to start (forming closed cylinder/shape)
+					//
+					// add the polygon consisting of the two edge vertices and the
+					// first extruded point
+					//
+				}
+				else
+				{	//add end of strip.  Finishes the last 2 polygons.
+					lastEdgeVertex2Index=vertexCount;
+					lastExtrude2Index=vertexCount+1;
+					vertexCount += 2;
+				}
+
+				if ((i+2) >= indicesPerMesh)
+				{	//finished with all silhouette edges
+					polygonCount += 2;
+	#ifdef RECORD_SHADOW_STRIP_STATS
+					numStrips++;
+	#endif
+					break;	//reached end of all edges
+				}
+		
+				lastEdgeVertex2Index=vertexCount;
+				lastExtrude2Index=vertexCount + 1;
+				//record start of new strip info
+				stripStartIndex=silhouetteIndices[ i+2 ];
+				stripStartVertex=lastEdgeVertex2Index;
+
+				vertexCount += 2;
+
+				polygonCount += 2;
+	#ifdef RECORD_SHADOW_STRIP_STATS
+				numStrips++;
+				stripLength=1;
+	#endif
+				continue;
+			}
+			else
+			{	//continue existing strip by adding extra vertex and extrusion
+
+				lastEdgeVertex2Index=vertexCount;
+				lastExtrude2Index=vertexCount+1;
+
+				vertexCount += 2;
+				polygonCount += 2;
+			}
+	#ifdef RECORD_SHADOW_STRIP_STATS
+			//Continuing strip.
+			stripLength++;
+			maxStripLength=__max(maxStripLength,stripLength);
+	#endif
+		}
+	}	//initial pass to determine vertex/polygon counts.
+	//***********************************************************************************************
+
+	DEBUG_ASSERTCRASH(m_shadowVolumeVB[ volumeIndex ][meshIndex] == NULL,("Updating Existing Static Vertex Buffer Shadow"));
+	vbSlot=m_shadowVolumeVB[ volumeIndex ][meshIndex] = TheW3DBufferManager->getSlot(W3DBufferManager::VBM_FVF_XYZ,
+		vertexCount);
+
+	DEBUG_ASSERTCRASH(vbSlot != NULL, ("Can't allocate vertex buffer slot for shadow volume"));
+
+	DEBUG_ASSERTCRASH(vbSlot->m_size >= vertexCount,("Overflowing Shadow Vertex Buffer Slot"));
+
+	DEBUG_ASSERTCRASH(m_shadowVolume[ volumeIndex ][meshIndex]->GetNumPolygon() == 0,("Updating Existing Static Shadow Volume"));
+
+	DEBUG_ASSERTCRASH(m_shadowVolumeIB[ volumeIndex ][meshIndex] == NULL,("Updating Existing Static Index Buffer Shadow"));
+	ibSlot=m_shadowVolumeIB[ volumeIndex ][meshIndex] = TheW3DBufferManager->getSlot(polygonCount*3);
+
+	DEBUG_ASSERTCRASH(ibSlot != NULL, ("Can't allocate index buffer slot for shadow volume"));
+
+	DEBUG_ASSERTCRASH(ibSlot->m_size >= (polygonCount*3),("Overflowing Shadow Index Buffer Slot"));
+
+	if (!ibSlot || !vbSlot)
+	{	//could not allocate storage to hold buffers
+		if (ibSlot)
+			TheW3DBufferManager->releaseSlot(ibSlot);
+		if (vbSlot)
+			TheW3DBufferManager->releaseSlot(vbSlot);
+
+		m_shadowVolumeIB[ volumeIndex ][meshIndex]=NULL;
+		m_shadowVolumeVB[ volumeIndex ][meshIndex]=NULL;
+		return; 
+	}
+
+	// BFME stores the active geometry pointer 0x30 bytes past the ZH layout,
+	// and its mesh records are 0x34 bytes with the mesh list at +0x14.
+	struct BFMEConstructVolumeVBMesh
+	{
+		char m_beforeVerts[0x8];
+		const Vector3 *m_verts;
+		char m_afterVerts[0x28];
+	};
+	struct BFMEConstructVolumeVBGeometry
+	{
+		char m_beforeMeshList[0x14];
+		BFMEConstructVolumeVBMesh m_meshList[MAX_SHADOW_CASTER_MESHES];
+		BFMEConstructVolumeVBMesh *getMesh(Int index) { return &m_meshList[index]; }
+	};
+	geomMesh = (W3DShadowGeometryMesh *)((BFMEConstructVolumeVBGeometry *)
+		((W3DVolumetricShadow *)((char *)this + 0x30))->m_geometry)->getMesh(meshIndex);
+
+	DX8VertexBufferClass::AppendLockClass lockVtxBuffer(vbSlot->m_VB->m_DX8VertexBuffer,vbSlot->m_start,vertexCount);
+	VertexFormatXYZ *vb = (VertexFormatXYZ*)lockVtxBuffer.Get_Vertex_Array();
+
+	if (vb == NULL)
+		return;
+
+	DX8IndexBufferClass::AppendLockClass lockIdxBuffer(ibSlot->m_IB->m_DX8IndexBuffer,ibSlot->m_start,polygonCount*3);
+	UnsignedShort *ib = (UnsignedShort*)lockIdxBuffer.Get_Index_Array();
+
+	if (ib == NULL)
+		return;
+
+	shadowVolume->SetNumActivePolygon(polygonCount);
+	shadowVolume->SetNumActiveVertex(vertexCount);
+
+	Short *silhouetteIndices=m_silhouetteIndex[meshIndex];
+
+	//Initialize first strip info
+	Short stripStartIndex=silhouetteIndices[ 0 ];
+	Short stripStartVertex=0;
+
+	//Insert the first vertex and extrusion into strip.
+	// get edge point
+	const Vector3& ev=geomMesh->GetVertex( silhouetteIndices[ 0 ] );
+
+	// take one edge point and extrude away from the light
+	extrude2 = ev - *lightPosObject;
+	extrude2 *= shadowExtrudeDistance;
+	extrude2 += ev;
+
+	*vb++ = *(VertexFormatXYZ *)&ev;
+	*vb++ = *(VertexFormatXYZ *)&extrude2;
+
+	vertexCount=2;
+	polygonCount=0;
+	Int lastEdgeVertex2Index=0;
+	Int lastExtrude2Index=1;
+
+	for( i = 0; i < indicesPerMesh; i += 2 )
+	{
+		Short currentEdgeEnd=silhouetteIndices[i+1];
+
+		//Check if another edge is connected to this one, edges were sorted in initial
+		//pass so only need to check the next one.
+		if (((i+2) >= indicesPerMesh) || silhouetteIndices[i+2] != currentEdgeEnd)
+		{	//reached end of strip. Insert final edge.
+			//Check if last edge wraps around to start.
+			if (currentEdgeEnd == stripStartIndex)
+			{	//add end of strip that wraps around to start (forming closed cylinder/shape)
+				//
+				// add the polygon consisting of the two edge vertices and the
+				// first extruded point
+				//
+				ib[ 0 ] = lastEdgeVertex2Index;  // lastedgeVertex2 index
+				ib[ 4 ] = ib[ 1 ] = lastExtrude2Index;  // lastextrude2 index
+				ib[ 3 ] = ib[ 2 ] = stripStartVertex;  // edgeVertex2 index
+				ib[ 5 ] = stripStartVertex+1;  // extrude2 index
+				ib += 6;	//skip past 2 triangles just added.
+			}
+			else
+			{	//add end of strip.  Finishes the last 2 polygons.
+				const Vector3& ev=geomMesh->GetVertex( currentEdgeEnd );
+				*vb++ = *(VertexFormatXYZ *)&ev;
+
+				//
+				// add the polygon consisting of the two edge vertices and the
+				// first extruded point
+				//
+				ib[ 0 ] = lastEdgeVertex2Index;  // lastedgeVertex2 index
+				ib[ 4 ] = ib[ 1 ] = lastExtrude2Index;  // lastextrude2 index
+				ib[ 3 ] = ib[ 2 ] = vertexCount;  // edgeVertex2 index
+				ib[ 5 ] = vertexCount+1;  // extrude2 index
+				ib += 6;	//skip past 2 triangles just added.
+
+				// take the other edge point and extrude away from light
+				extrude2 = ev - *lightPosObject;
+				extrude2 *= shadowExtrudeDistance;
+				extrude2 += ev;
+				// add the one new vertex
+				*vb++ = *(VertexFormatXYZ *)&extrude2;
+
+				lastEdgeVertex2Index=vertexCount;
+				lastExtrude2Index=vertexCount+1;
+				vertexCount += 2;
+			}
+
+			if ((i+2) >= indicesPerMesh)
+			{	//finished with all silhouette edges
+				polygonCount += 2;
+				break;	//reached end of all edges
+			}
+	
+			//Start a new strip by adding first vertex and extrusion.
+			const Vector3& evb=geomMesh->GetVertex( silhouetteIndices[ i+2 ] );
+			// take one edge point and extrude away from the light
+			extrude2 = evb - *lightPosObject;
+			extrude2 *= shadowExtrudeDistance;
+			extrude2 += evb;
+
+			lastEdgeVertex2Index=vertexCount;
+			lastExtrude2Index=vertexCount + 1;
+			//record start of new strip info
+			stripStartIndex=silhouetteIndices[ i+2 ];
+			stripStartVertex=lastEdgeVertex2Index;
+
+			*vb++ = *(VertexFormatXYZ *)&evb;
+			*vb++ = *(VertexFormatXYZ *)&extrude2;
+			vertexCount += 2;
+
+			polygonCount += 2;
+			continue;
+		}
+		else
+		{	//continue existing strip by adding extra vertex and extrusion
+
+			const Vector3& ev=geomMesh->GetVertex( currentEdgeEnd );
+			*vb++ = *(VertexFormatXYZ *)&ev;
+			//
+			// add the polygon consisting of the two edge vertices and the
+			// first extruded point
+			//
+			ib[ 0 ] = lastEdgeVertex2Index;  // lastedgeVertex2 index
+			ib[ 4 ] = ib[ 1 ] = lastExtrude2Index;  // lastextrude2 index
+			ib[ 3 ] = ib[ 2 ] = vertexCount;  // edgeVertex2 index
+			ib[ 5 ] = vertexCount+1;  // extrude2 index
+			ib += 6;	//skip past 2 triangles just added
+
+			// take the other edge point and extrude away from light
+			extrude2 = ev - *lightPosObject;
+			extrude2 *= shadowExtrudeDistance;
+			extrude2 += ev;
+
+			// add the one new vertex
+			*vb++ = *(VertexFormatXYZ *)&extrude2;
+			
+			lastEdgeVertex2Index=vertexCount;
+			lastExtrude2Index=vertexCount+1;
+
+			vertexCount += 2;
+			polygonCount += 2;
+		}
+	}
+
+//	DEBUG_ASSERTLOG(polygonCount == vertexCount, ("WARNING***Shadow volume mesh not optimal: %s\n",m_geometry->Get_Name()));
+}  // end constructVolume
+
+// allocateShadowVolume =======================================================
+// Allocate a space for us to construct the shadow volume in
+// ============================================================================
+// ?allocateShadowVolume@W3DVolumetricShadow@@IAE_NHH@Z present-unmatched
+Bool W3DVolumetricShadow::allocateShadowVolume( Int volumeIndex, Int meshIndex )
+{
+	Int numVertices, numPolygons;
+	Geometry *shadowVolume;
+
+	// sanity
+	if( volumeIndex < 0 || volumeIndex >= MAX_SHADOW_LIGHTS )
+	{
+
+//		DBGPRINTF(( "Illegal allocate shadow volume index '%d'\n", volumeIndex ));
+		assert( 0 );
+		return FALSE;
+
+	}  // end if
+
+	if ((shadowVolume = m_shadowVolume[ volumeIndex ][meshIndex]) == 0)
+	{	
+		// poolify
+		shadowVolume = NEW Geometry;		// create the new geometry
+		// we now have one more valid geometry volume
+		m_shadowVolumeCount[meshIndex]++;
+	}
+
+	if( shadowVolume == NULL )
+	{
+
+//		DBGPRINTF(( "Unable to allocate '%d' shadow volume\n", volumeIndex ));
+		assert( 0 );
+		// we now have one more valid geometry volume
+		m_shadowVolumeCount[meshIndex]--;
+		return FALSE;
+
+	}  // end if
+
+	// assign to list
+	m_shadowVolume[ volumeIndex ][meshIndex] = shadowVolume;
+
+	//
+	// polygons are determined from the edges extruded from the light.
+	// since we have a list of disjoint edge pairs we will have a 4 sided
+	// polygon for each edge pair, however we will be splitting the
+	// 4 sided polys into 2 triangles so it just works out that num polys
+	// is the number of silhouette indices
+	//
+	numPolygons = m_maxSilhouetteEntries[meshIndex];
+
+	//
+	// vertices are an extrusion of the edges, and since we have disjoint
+	// pairs of edge indices we will have num indices * 2 actual vertex
+	// points.  it may be a good future optimization to not duplicate
+	// any vertices that appear twice here, but then again the cost over
+	// optimizing this routine over the rendering and transformation
+	// optimization may not be worth it
+	//
+	numVertices = m_maxSilhouetteEntries[meshIndex] * 2;
+
+	//Only allocate space here for dynamic shadows.  Shadows for static/non-animated
+	//models will be stored in vertex buffers which are allocated once exact size
+	//is known.
+	if (shadowVolume->GetFlags() & SHADOW_DYNAMIC)
+	{
+		//for dynamic shadow casters, we need to allocate the maximum amount of vertices that could ever be required.
+//		if (m_shadowVolumeVB[ volumeIndex ][meshIndex])
+//			TheW3DBufferManager->releaseSlot(m_shadowVolumeVB[ volumeIndex ][meshIndex]);
+//		m_shadowVolumeVB[ volumeIndex ][meshIndex] = TheW3DVertexBufferManager->getSlot(W3DVertexBufferManager::VBM_FVF_XYZ, numVertices);
+
+		// allocate memory for the vertices and polygons
+		if( shadowVolume->Create( numVertices, numPolygons ) == FALSE )
+		{
+
+	//		DBGPRINTF(( "Unable to create shadow volume\n" ));
+			assert( 0 );
+			delete shadowVolume;
+			return FALSE;
+
+		}  // end if
+	}
+
+	return TRUE;  // success
+
+}  // end allocateShadowVolume
+
+// deleteShadowVolume =========================================================
+// Free all resources allocated to the shadow volume(s)
+// ============================================================================
+void W3DVolumetricShadow::deleteShadowVolume( Int volumeIndex )
+{
+
+	// sanity
+	if( volumeIndex < 0 || volumeIndex >= MAX_SHADOW_LIGHTS )
+	{
+
+//		DBGPRINTF(( "Illegal delete shadow volume index '%d'\n", volumeIndex ));
+		assert( 0 );
+		return;
+
+	}  // end if
+
+	// delete it!
+	for (Int meshIndex=0; meshIndex<MAX_SHADOW_CASTER_MESHES; meshIndex++)
+	{
+		if( m_shadowVolume[ volumeIndex ][meshIndex] )
+		{
+
+			delete m_shadowVolume[ volumeIndex ][meshIndex];
+			m_shadowVolume[ volumeIndex ][meshIndex] = NULL;
+
+			// we now have one less shadow volume
+			m_shadowVolumeCount[meshIndex]--;
+
+		}  // end if
+	}
+
+}  // end deleteShadowVolume
+
+// resetShadowVolume ==========================================================
+// Reset the contents of the shadow volume information.  Since we're using
+// a geometry class it would be ideal if these structures had a reset
+// option where their resoures were released back to a pool rather than
+// delete and allocate new storage space
+// ============================================================================
+void W3DVolumetricShadow::resetShadowVolume( Int volumeIndex, Int meshIndex )
+{
+	Geometry *geometry;
+
+	// sanity
+	if( volumeIndex < 0 || volumeIndex >= MAX_SHADOW_LIGHTS )
+	{
+
+//		DBGPRINTF(( "Illegal reset shadow volume index '%d'\n", volumeIndex ));
+		assert( 0 );
+		return;
+
+	}  // end if
+
+	geometry = m_shadowVolume[ volumeIndex ][meshIndex];
+
+	//Release buffers used to hold shadow volume geometry
+	if (geometry)
+	{	if (m_shadowVolumeVB[volumeIndex][meshIndex])
+		{	TheW3DBufferManager->releaseSlot(m_shadowVolumeVB[volumeIndex][meshIndex]);
+			m_shadowVolumeVB[volumeIndex][meshIndex]=NULL;
+		}
+		if (m_shadowVolumeIB[ volumeIndex ][meshIndex])
+		{	TheW3DBufferManager->releaseSlot(m_shadowVolumeIB[volumeIndex][meshIndex]);
+			m_shadowVolumeIB[volumeIndex][meshIndex]=NULL;
+		}
+		geometry->Release();
+	}
+
+}  // end resetShadowVolume
+
+// allocateSilhouette =========================================================
+// Allocate space for new silhouette storage, the number of vertices passed
+// in is the total vertices in the model, a silhouette must be able to
+// accomodate that as a series of disjoint edge pairs, otherwise known
+// as numVertices * 2
+// ============================================================================
+Bool W3DVolumetricShadow::allocateSilhouette(Int meshIndex, Int numVertices )
+{
+	Int numEntries = numVertices * 5;	///@todo: HACK, HACK... Should be 2!
+
+	// sanity
+	assert( m_silhouetteIndex[meshIndex] == NULL && 
+					m_numSilhouetteIndices[meshIndex] == 0 &&
+					numEntries > 0 );
+
+	// allocate memory
+	m_silhouetteIndex[meshIndex] = NEW short[ numEntries ];
+	if( m_silhouetteIndex[meshIndex] == NULL )
+	{
+	
+//		DBGPRINTF(( "Unable to allcoate silhouette storage '%d'\n", numEntries ));
+		assert( 0 );
+		return FALSE;
+
+	}  // end if
+		
+	// set our list to empty just to be clean
+	m_numSilhouetteIndices[meshIndex] = 0;
+	
+	// save the size of our silhouette list
+	m_maxSilhouetteEntries[meshIndex] = numEntries;
+
+	return TRUE;  // success
+
+}  // end allocateSilhouette
+
+// deleteSilhouette ===========================================================
+// Delete all silhouette data and memory allocated
+// ============================================================================
+void W3DVolumetricShadow::deleteSilhouette( Int meshIndex )
+{
+
+	if( m_silhouetteIndex[meshIndex])
+		delete [] m_silhouetteIndex[meshIndex];
+	m_silhouetteIndex[meshIndex] = NULL;
+	m_numSilhouetteIndices[meshIndex] = 0;
+
+}  // end deletesilhouette
+
+// resetSilhouette ============================================================
+// Resets the silhouette to empty, it does NOT free any of the memory
+// allocated for silhouette data
+// ============================================================================
+void W3DVolumetricShadow::resetSilhouette( Int meshIndex )
+{
+
+	m_numSilhouetteIndices[meshIndex] = 0;
+
+}  // end resetSilhouette
+
+// renderStencilShadows =======================================================
+// The stencil buffer now has our shadow information in it, take that
+// info and draw a big transparent rectangle over the screen for the final
+// shadow pass wherever there is data in the stencil buffer
+// ============================================================================
+void W3DVolumetricShadowManager::renderStencilShadows( void )
+{
+	LPDIRECT3DDEVICE8 m_pDev=DX8Wrapper::_Get_D3D_Device8();
+
+	if (!m_pDev)
+		return;	//need device to render anything.
+
+	m_pDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	m_pDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_DESTCOLOR);
+	m_pDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ZERO);
+	m_pDev->SetRenderState(D3DRS_ZENABLE, TRUE);
+	m_pDev->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+	m_pDev->SetRenderState(D3DRS_STENCILENABLE, TRUE);
+	m_pDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_LESSEQUAL);
+	m_pDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
+
+	if (TheW3DShadowManager->getStencilShadowMask() == 0x80808080)
+		m_pDev->SetRenderState(D3DRS_STENCILMASK, 0x7f7f7f0f);
+	m_pDev->SetRenderState(D3DRS_STENCILREF, 1);
+	m_pDev->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_FLAT);
+
+	if (DX8Wrapper::_Is_Triangle_Draw_Enabled())
+	{
+		Coord2D uv;
+		uv.x = 1.0f;
+		uv.y = 1.0f;
+		bfmeDrawFilterUV(TheW3DShadowManager->getShadowColor(), 0, &uv);
+	}
+
+	m_pDev->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
+	m_pDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	m_pDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
+
+}  // end renderStencilShadows
+
+extern void BoxSetTexture(unsigned, TextureBaseClass*&);
+class Rva007C2CD0Receiver { public: void invoke(); };
+extern Rva007C2CD0Receiver* Rva01307178;
+class Gen0003D172 { public: void handle(int); };
+
+struct Rva007BFB90TextureRef {
+    TextureClass* texture;
+    Rva007BFB90TextureRef():texture(0){}
+    __forceinline ~Rva007BFB90TextureRef(){if(texture) texture->Release_Ref();}
+};
+// BFME retail device-interface slots, witnessed by the calls in this body.
+class Rva007BFB90Device { public:
+    virtual void rva_slot_000() = 0;
+    virtual void rva_slot_004() = 0;
+    virtual void rva_slot_008() = 0;
+    virtual void rva_slot_00c() = 0;
+    virtual void rva_slot_010() = 0;
+    virtual void rva_slot_014() = 0;
+    virtual void rva_slot_018() = 0;
+    virtual void rva_slot_01c() = 0;
+    virtual void rva_slot_020() = 0;
+    virtual void rva_slot_024() = 0;
+    virtual void rva_slot_028() = 0;
+    virtual void rva_slot_02c() = 0;
+    virtual void rva_slot_030() = 0;
+    virtual void rva_slot_034() = 0;
+    virtual void rva_slot_038() = 0;
+    virtual void rva_slot_03c() = 0;
+    virtual void rva_slot_040() = 0;
+    virtual void rva_slot_044() = 0;
+    virtual void rva_slot_048() = 0;
+    virtual void rva_slot_04c() = 0;
+    virtual void rva_slot_050() = 0;
+    virtual void rva_slot_054() = 0;
+    virtual void rva_slot_058() = 0;
+    virtual void rva_slot_05c() = 0;
+    virtual void rva_slot_060() = 0;
+    virtual void rva_slot_064() = 0;
+    virtual void rva_slot_068() = 0;
+    virtual void rva_slot_06c() = 0;
+    virtual void rva_slot_070() = 0;
+    virtual void rva_slot_074() = 0;
+    virtual void rva_slot_078() = 0;
+    virtual void rva_slot_07c() = 0;
+    virtual void rva_slot_080() = 0;
+    virtual void rva_slot_084() = 0;
+    virtual void rva_slot_088() = 0;
+    virtual void rva_slot_08c() = 0;
+    virtual void rva_slot_090() = 0;
+    virtual void rva_slot_094() = 0;
+    virtual void rva_slot_098() = 0;
+    virtual void rva_slot_09c() = 0;
+    virtual void rva_slot_0a0() = 0;
+    virtual void rva_slot_0a4() = 0;
+    virtual void rva_slot_0a8() = 0;
+    virtual void rva_slot_0ac() = 0;
+    virtual void rva_slot_0b0() = 0;
+    virtual void rva_slot_0b4() = 0;
+    virtual void rva_slot_0b8() = 0;
+    virtual void rva_slot_0bc() = 0;
+    virtual void rva_slot_0c0() = 0;
+    virtual void rva_slot_0c4() = 0;
+    virtual void rva_slot_0c8() = 0;
+    virtual void rva_slot_0cc() = 0;
+    virtual void rva_slot_0d0() = 0;
+    virtual void rva_slot_0d4() = 0;
+    virtual void rva_slot_0d8() = 0;
+    virtual void rva_slot_0dc() = 0;
+    virtual void rva_slot_0e0() = 0;
+    virtual long __stdcall SetRenderState(D3DRENDERSTATETYPE,unsigned) = 0;
+    virtual long __stdcall GetRenderState(D3DRENDERSTATETYPE,unsigned long*) = 0;
+    virtual void rva_slot_0ec() = 0;
+    virtual void rva_slot_0f0() = 0;
+    virtual void rva_slot_0f4() = 0;
+    virtual void rva_slot_0f8() = 0;
+    virtual void rva_slot_0fc() = 0;
+    virtual void rva_slot_100() = 0;
+    virtual long __stdcall SetTexture(unsigned,IDirect3DBaseTexture8*) = 0;
+    virtual void rva_slot_108() = 0;
+    virtual long __stdcall SetTextureStageState(unsigned,D3DTEXTURESTAGESTATETYPE,unsigned) = 0;
+    virtual void rva_slot_110() = 0;
+    virtual void rva_slot_114() = 0;
+    virtual void rva_slot_118() = 0;
+    virtual void rva_slot_11c() = 0;
+    virtual void rva_slot_120() = 0;
+    virtual void rva_slot_124() = 0;
+    virtual void rva_slot_128() = 0;
+    virtual void rva_slot_12c() = 0;
+    virtual void rva_slot_130() = 0;
+    virtual void rva_slot_134() = 0;
+    virtual void rva_slot_138() = 0;
+    virtual void rva_slot_13c() = 0;
+    virtual void rva_slot_140() = 0;
+    virtual void rva_slot_144() = 0;
+    virtual void rva_slot_148() = 0;
+    virtual void rva_slot_14c() = 0;
+    virtual void rva_slot_150() = 0;
+    virtual void rva_slot_154() = 0;
+    virtual void rva_slot_158() = 0;
+    virtual void rva_slot_15c() = 0;
+    virtual void rva_slot_160() = 0;
+    virtual long __stdcall SetVertexShader(unsigned) = 0;
+    virtual void rva_slot_168() = 0;
+    virtual void rva_slot_16c() = 0;
+    virtual long __stdcall SetPixelShader(unsigned) = 0;
+};
+static __forceinline W3DBufferManager::W3DVertexBuffer* Rva007BFB90NextVB(W3DBufferManager::W3DVertexBuffer* previous)
+{
+    return previous ? *(W3DBufferManager::W3DVertexBuffer**)((char*)previous+0x10)
+                    : *(W3DBufferManager::W3DVertexBuffer**)((char*)TheW3DBufferManager+0x9000);
+}
+
+extern int Rva007AD820Lookup(int); // landed 12-byte table lookup, retail ILT 0x0001AFF0
+
+
+void W3DVolumetricShadowManager::renderShadows( Bool forceStencilFill )
+{
+	W3DVolumetricShadow *shadow;
+	Int numRenderedShadows = 0;
+
+ 	AABoxClass bbox;
+	SphereClass bsphere;
+ 
+ 	//Get a bounding box around our visible universe.  Bounded by terrain and the sky
+ 	//so much tighter fitting volume than what's actually visible.  This will cull
+ 	//particles falling under the ground.
+ 
+ 	TheTerrainRenderObject->getMaximumVisibleBox(*shadowCameraFrustum, &bbox, TRUE);
+ 
+ 	bcX = bbox.Center.X;
+ 	bcY = bbox.Center.Y;
+ 	bcZ = bbox.Center.Z;
+ 	beX = bbox.Extent.X;
+ 	beY = bbox.Extent.Y;
+ 	beZ = bbox.Extent.Z;
+
+	if (Rva01307178) reinterpret_cast<W3DVolumetricShadowManager*>(Rva01307178)->renderShadows();
+
+	if (m_shadowList && *(const Bool*)((const char*)TheGlobalData+0x64))
+	{
+
+		Rva007BFB90Device* m_pDev=(Rva007BFB90Device*)DX8Wrapper::_Get_D3D_Device8();
+
+		if (!m_pDev)
+			return;	//need device to render anything.
+
+ 		//According to Nvidia there's a D3D bug that happens if you don't start with a
+ 		//new dynamic VB each frame - so we force a DISCARD by overflowing the counter.
+ 		nShadowIndicesInBuf = 0xffff;
+ 		nShadowVertsInBuf = 0xffff;
+
+		//Set W3D to some known state
+		VertexMaterialClass *vmat=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
+		DX8Wrapper::Set_Material(vmat);
+		REF_PTR_RELEASE(vmat);
+
+		DX8Wrapper::Set_Shader(ShaderClass::_PresetOpaqueShader);
+// ?Set_Texture@DX8Wrapper@@SAXIPAVTextureBaseClass@@@Z present-unmatched
+		{ Rva007BFB90TextureRef tex; BoxSetTexture(0, (TextureBaseClass*&)tex.texture); }	//turn off textures
+// ?Set_Texture@DX8Wrapper@@SAXIPAVTextureBaseClass@@@Z present-unmatched
+		{ Rva007BFB90TextureRef tex; BoxSetTexture(1, (TextureBaseClass*&)tex.texture); }	//turn off textures
+// ?Apply_Render_State_Changes@DX8Wrapper@@ present-unmatched
+		DX8Wrapper::Apply_Render_State_Changes();	//force update of view and projection matrices
+
+		// turn off z writing
+		m_pDev->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+	  m_pDev->SetRenderState( D3DRS_ZENABLE,          TRUE );
+		m_pDev->SetRenderState(D3DRS_ZWRITEENABLE , FALSE);
+		m_pDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+		m_pDev->SetRenderState(D3DRS_FOGENABLE, FALSE);
+
+
+		// setup the TMU to default
+		m_pDev->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_FLAT);
+		m_pDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+		m_pDev->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
+		m_pDev->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
+		m_pDev->SetTextureStageState( 0, D3DTSS_COLOROP,   D3DTOP_SELECTARG2);
+		m_pDev->SetTextureStageState( 0, D3DTSS_ALPHAOP,   D3DTOP_DISABLE );
+		m_pDev->SetTextureStageState( 0, D3DTSS_TEXCOORDINDEX, 0 );
+
+		m_pDev->SetTextureStageState( 1, D3DTSS_COLOROP,   D3DTOP_DISABLE);
+		m_pDev->SetTextureStageState( 1, D3DTSS_ALPHAOP,   D3DTOP_DISABLE );
+		m_pDev->SetTextureStageState( 1, D3DTSS_TEXCOORDINDEX, 1 );
+		m_pDev->SetTexture(0,NULL);
+		m_pDev->SetTexture(1,NULL);
+
+		DWORD oldColorWriteEnable=0x12345678;
+
+	#ifdef SV_DEBUG
+		m_pDev->SetRenderState(D3DRS_ALPHABLENDENABLE , TRUE);
+		m_pDev->SetRenderState( D3DRS_STENCILENABLE, FALSE );
+		m_pDev->SetRenderState( D3DRS_SRCBLEND, /*D3DBLEND_DESTCOLOR*/D3DBLEND_ONE );
+		m_pDev->SetRenderState( D3DRS_DESTBLEND, D3DBLEND_ZERO );
+		m_pDev->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+	#else
+		//disable writes to color buffer
+		if (DX8Wrapper::Get_Current_Caps()->Get_DX8_Caps().PrimitiveMiscCaps & D3DPMISCCAPS_COLORWRITEENABLE)
+		{	((Rva007BFB90Device*)DX8Wrapper::_Get_D3D_Device8())->GetRenderState(D3DRS_COLORWRITEENABLE, &oldColorWriteEnable);
+			DX8Wrapper::Set_DX8_Render_State(D3DRS_COLORWRITEENABLE,0);
+		}
+		else
+		{	//device does not support disabling writes to color buffer so fake it through alpha blending
+			m_pDev->SetRenderState( D3DRS_SRCBLEND, D3DBLEND_ZERO );
+			m_pDev->SetRenderState( D3DRS_DESTBLEND, D3DBLEND_ONE );
+			m_pDev->SetRenderState(D3DRS_ALPHABLENDENABLE , TRUE);
+		}
+		m_pDev->SetRenderState( D3DRS_STENCILENABLE, TRUE );
+	#endif
+		//Any pixels with stencil already set to 128 contains a potential occluder.  If this pixels also has any of the player
+		//color stencil bits also set, it means that it's an occluded player color and we need to NOT render shadows here.  We
+		//do this determination by comparing the value in the combined bits against a value containing only a potential occluder.
+		//If the value of just the potential occluder bit is >= than the combined bits, then we know none of the player color
+		//bits were set and it's okay to render shadow.
+		if (TheW3DShadowManager->getStencilShadowMask() == 0x80808080)
+			m_pDev->SetRenderState( D3DRS_STENCILFUNC,     D3DCMP_GREATER );	//in this mode, MSB indicates occluded player pixels.
+		else
+			m_pDev->SetRenderState( D3DRS_STENCILFUNC,     D3DCMP_GREATEREQUAL );	//in this mode, multiple bits indicate occluded player pixels.
+		m_pDev->SetRenderState( D3DRS_STENCILREF,      0x80808080 );			//isolate MSB, it's used to indicate pixels containing potential occluders.
+		m_pDev->SetRenderState( D3DRS_STENCILMASK,     TheW3DShadowManager->getStencilShadowMask());	//isolate upper bits containing PotentialOccluderBit|PlayerColorBits
+		m_pDev->SetRenderState( D3DRS_STENCILWRITEMASK,0xffffffff );
+		m_pDev->SetRenderState( D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP );
+		m_pDev->SetRenderState( D3DRS_STENCILFAIL,  D3DSTENCILOP_KEEP );
+		m_pDev->SetRenderState( D3DRS_STENCILPASS,  D3DSTENCILOP_INCR );
+		
+		m_pDev->SetPixelShader(0);
+		m_pDev->SetVertexShader(SHADOW_DYNAMIC_VOLUME_FVF);
+
+		m_pDev->SetRenderState(D3DRS_CULLMODE,D3DCULL_CW);
+//		m_pDev->SetRenderState(D3DRS_ZBIAS,1);	///@todo: See if this helps or makes things worse.
+		//m_pDev->SetRenderState(D3DRS_FILLMODE,D3DFILL_WIREFRAME);
+
+
+		lastActiveVertexBuffer=NULL;	//reset
+
+		m_dynamicShadowVolumesToRender=NULL;	//clear list of pending dynamic shadows
+		W3DVolumetricShadowRenderTask *shadowDynamicTasksStart,*shadowDynamicTask;
+		
+		// step through each of our shadows and render
+		for( shadow = m_shadowList; shadow; shadow = *(W3DVolumetricShadow**)((char*)shadow+0x68) )
+		{
+			if (shadow->m_isEnabled && !shadow->m_isInvisibleEnabled)
+			{
+				//Record last added task
+				shadowDynamicTasksStart=m_dynamicShadowVolumesToRender;
+				reinterpret_cast<Gen0003D172*>(shadow)->handle(false);
+				shadowDynamicTask=m_dynamicShadowVolumesToRender;
+				while (shadowDynamicTask != shadowDynamicTasksStart)
+				{	//update() added a dynamic shadow
+					//dynamic shadow columes don't need to wait in queue since they
+					//all use the same vertex buffer.  Flush them ASAP.
+					shadow->RenderVolume(shadowDynamicTask->m_meshIndex,shadowDynamicTask->m_lightIndex);
+					//move to next dynamic task
+					shadowDynamicTask=(W3DVolumetricShadowRenderTask *)shadowDynamicTask->m_nextTask;
+					numRenderedShadows++;
+				}
+			}
+		}  // end for
+
+		// Set vertex format to that used by static shadow volumes
+		m_pDev->SetVertexShader(Rva007AD820Lookup(0));
+
+		//Empty queue of static shadow volumes to render.
+		W3DBufferManager::W3DVertexBuffer *nextVb;
+		W3DVolumetricShadowRenderTask *nextTask;
+		for (nextVb=Rva007BFB90NextVB(NULL);nextVb != NULL; nextVb=Rva007BFB90NextVB(nextVb))
+		{
+			nextTask=(W3DVolumetricShadowRenderTask *)nextVb->m_renderTaskList;
+			while (nextTask)
+			{
+				nextTask->m_parentShadow->RenderVolume(nextTask->m_meshIndex,nextTask->m_lightIndex);
+				nextTask=(W3DVolumetricShadowRenderTask *)nextTask->m_nextTask;
+				numRenderedShadows++;
+			}
+		}
+
+		// change the stencil op to decrement
+		m_pDev->SetRenderState( D3DRS_STENCILPASS,  D3DSTENCILOP_DECRSAT);
+
+		//
+		// invert normals of shadow volumes so we can decrement in the
+		// stencil buffer and render
+		//
+
+		m_pDev->SetRenderState(D3DRS_CULLMODE,D3DCULL_CCW);
+
+		for (nextVb=Rva007BFB90NextVB(NULL);nextVb != NULL; nextVb=Rva007BFB90NextVB(nextVb))
+		{
+			nextTask=(W3DVolumetricShadowRenderTask *)nextVb->m_renderTaskList;
+			while (nextTask)
+			{
+				nextTask->m_parentShadow->RenderVolume(nextTask->m_meshIndex,nextTask->m_lightIndex);
+				nextTask=(W3DVolumetricShadowRenderTask *)nextTask->m_nextTask;
+			}
+		}
+
+		m_pDev->SetVertexShader(SHADOW_DYNAMIC_VOLUME_FVF);
+		//flush any dynamic shadow volumes
+		shadowDynamicTask=m_dynamicShadowVolumesToRender;
+		while (shadowDynamicTask)
+		{	//dynamic shadow columes don't need to wait in queue since they
+			//all use the same vertex buffer.  Flush them ASAP.
+			shadowDynamicTask->m_parentShadow->RenderVolume(shadowDynamicTask->m_meshIndex,shadowDynamicTask->m_lightIndex);
+			shadowDynamicTask=(W3DVolumetricShadowRenderTask *)shadowDynamicTask->m_nextTask;
+		}
+
+		//Reset all render tasks for next frame.
+		for (nextVb=Rva007BFB90NextVB(NULL);nextVb != NULL; nextVb=Rva007BFB90NextVB(nextVb))
+		{
+			nextVb->m_renderTaskList=NULL;
+		}
+
+		m_pDev->SetRenderState(D3DRS_CULLMODE,D3DCULL_CW);
+//		m_pDev->SetRenderState(D3DRS_ZBIAS,0);	///@todo: See if this helps or makes things worse.
+		//m_pDev->SetRenderState(D3DRS_FILLMODE,D3DFILL_SOLID);
+
+
+		if (oldColorWriteEnable != 0x12345678)
+			DX8Wrapper::Set_DX8_Render_State(D3DRS_COLORWRITEENABLE,oldColorWriteEnable);
+
+		//
+		// render the big transparent square of shadows in the stencil buffer
+		// to the screen
+		//
+///@todo: Put this check back in after water is fixed so it doesn't require shadow rendering to fix alpha.
+//		if (numRenderedShadows)
+			renderStencilShadows();
+
+		m_pDev->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
+		m_pDev->SetRenderState(D3DRS_ALPHABLENDENABLE , FALSE);
+		m_pDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+		DX8Wrapper::Invalidate_Cached_Render_States();
+	}
+	else
+	if (forceStencilFill)
+	{	//no shadows to render, but still need to fill stencil buffer
+		//for other effects.
+
+		//Set W3D to some known state
+		VertexMaterialClass *vmat=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
+		DX8Wrapper::Set_Material(vmat);
+		REF_PTR_RELEASE(vmat);
+		DX8Wrapper::Set_Shader(ShaderClass::_PresetOpaqueShader);
+		{ Rva007BFB90TextureRef tex; BoxSetTexture(0, (TextureBaseClass*&)tex.texture); }
+// ?Apply_Render_State_Changes@DX8Wrapper@@ present-unmatched
+		DX8Wrapper::Apply_Render_State_Changes();	//force update of view and projection matrices
+
+		renderStencilShadows();
+
+		DX8Wrapper::Invalidate_Cached_Render_States();
+	}
+
+}  // end RenderShadows
+
+/** This class will manage shadow geometry for each render object.  Shadow geometry may
+be the same as render geometry but doesn't need to be.  This allows lower LOD versions of
+the geometry to be used in shadow calculations.  Shadow geometry also keeps extended vertex
+connectivity information that's not used during rendering.
+*/
+class W3DShadowGeometryManager
+{
+public:
+	W3DShadowGeometryManager(void);
+	~W3DShadowGeometryManager(void);
+
+	int			 		Load_Geom(RenderObjClass *robj, const char *name);
+	W3DShadowGeometry *		Get_Geom(const char * name);
+	W3DShadowGeometry *		Peek_Geom(const char * name);
+	Bool					Add_Geom(W3DShadowGeometry *new_anim);
+	void			 		Free_All_Geoms(void);
+
+	void					Register_Missing( const char * name );
+	Bool					Is_Missing( const char * name );
+	void					Reset_Missing( void );
+
+private:
+
+	HashTableClass	*	GeomPtrTable;
+	HashTableClass	*	MissingGeomTable;
+
+	friend	class		W3DShadowGeometryManagerIterator;
+};
+
+/*
+** An Iterator to get to all loaded W3DShadowGeometries in a W3DShadowGeometryManager
+*/
+class W3DShadowGeometryManagerIterator : public HashTableIteratorClass {
+public:
+	W3DShadowGeometryManagerIterator( W3DShadowGeometryManager & manager ) : HashTableIteratorClass( *manager.GeomPtrTable ) {}
+	W3DShadowGeometry * Get_Current_Geom( void );
+};
+
+/** Used to cause a rebuild of all shadow volumes*/
+// ?invalidateCachedLightPositions@W3DVolumetricShadowManager@@QAEXXZ present-unmatched
+void W3DVolumetricShadowManager::invalidateCachedLightPositions(void)
+{
+
+	if (!m_shadowList)
+		return;	//there are no shadows to render.
+
+	W3DVolumetricShadow *shadow;
+	Vector3 vec(0,0,0);
+
+	// step through each of our shadows and update previous light position.
+	for( shadow = m_shadowList; shadow; shadow = shadow->m_next )
+	{
+		for(Int i = 0; i < MAX_SHADOW_LIGHTS; i++ )
+		{
+			for (Int meshIndex=0; meshIndex<MAX_SHADOW_CASTER_MESHES; meshIndex++)
+			{
+				shadow->setLightPosHistory(i,meshIndex,vec);
+			}
+		}
+	}  // end for
+}
+
+// W3DVolumetricShadowManager =============================================================
+// ============================================================================
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DVolumetricShadowManager_ctor_Thunk.cpp
+// ??0W3DVolumetricShadowManager@@QAE@XZ present-unmatched
+W3DVolumetricShadowManager::W3DVolumetricShadowManager( void )
+{
+
+	m_shadowList = NULL;
+
+	m_W3DShadowGeometryManager = NEW W3DShadowGeometryManager;
+
+	TheW3DBufferManager = NEW W3DBufferManager;
+
+}  // end ShadowManager
+
+// ~W3DVolumetricShadowManager ============================================================
+// ============================================================================
+W3DVolumetricShadowManager::~W3DVolumetricShadowManager( void )
+{
+	ReleaseResources();
+	delete m_W3DShadowGeometryManager;
+	m_W3DShadowGeometryManager = NULL;
+	delete TheW3DBufferManager;
+	TheW3DBufferManager=NULL;
+
+	//all shadows should be freed up at this point but check anyway
+	assert(m_shadowList==NULL);
+
+}  // end ~W3DVolumetricShadowManager
+
+/** Releases all W3D/D3D assets before a reset.. */
+// ?ReleaseResources@W3DVolumetricShadowManager@@QAEXXZ present-unmatched
+void W3DVolumetricShadowManager::ReleaseResources(void)
+{
+	if (shadowIndexBufferD3D)
+		shadowIndexBufferD3D->Release();
+	if (shadowVertexBufferD3D)
+		shadowVertexBufferD3D->Release();
+	shadowIndexBufferD3D=NULL;
+	shadowVertexBufferD3D=NULL;
+	if (TheW3DBufferManager)
+	{	TheW3DBufferManager->ReleaseResources();
+		invalidateCachedLightPositions();	//vertex buffers need to be refilled.
+	}
+}
+
+/** (Re)allocates all W3D/D3D assets after a reset.. */
+// BFME does not talk to D3D here at all. Where Zero Hour releases everything and
+// then creates a raw index buffer and vertex buffer through the device, retail
+// keeps two WW3D wrapper objects on the manager itself, at +0x00 and +0x04, and
+// creates each one only if it is still null -- so this is idempotent where the
+// reference is destructive, and it never calls ReleaseResources.
+//
+// The sizes and arguments name the classes exactly: 0x20 bytes taking
+// (2, 30000, USAGE_DYNAMIC, 0) is DX8VertexBufferClass, 0x18 bytes taking
+// (30000, USAGE_DYNAMIC) is DX8IndexBufferClass.
+// Retail allocates 0x20 bytes for the vertex buffer and 0x18 for the index
+// buffer; the vendored classes are four bytes shorter in each case, and the
+// allocation size comes from the class rather than from anything this .cpp can
+// cast. These are standalone views at the retail sizes, with the constructors
+// declared and never defined so the calls land on the real bodies.
+class BfmeDX8VertexBuffer
+{
+public:
+	enum UsageType { USAGE_DEFAULT = 0, USAGE_DYNAMIC = 1 };
+
+	BfmeDX8VertexBuffer(unsigned fvf, unsigned short count, UsageType usage, unsigned size);
+
+private:
+	unsigned char m_bfmeBody[ 0x20 ];
+};
+
+class BfmeDX8IndexBuffer
+{
+public:
+	enum UsageType { USAGE_DEFAULT = 0, USAGE_DYNAMIC = 1 };
+
+	BfmeDX8IndexBuffer(unsigned short count, UsageType usage);
+
+private:
+	unsigned char m_bfmeBody[ 0x18 ];
+};
+
+struct BfmeVolumetricShadowManagerBuffers
+{
+	BfmeDX8VertexBuffer *m_vertexBuffer;			///< retail this+0x00
+	BfmeDX8IndexBuffer *m_indexBuffer;			///< retail this+0x04
+};
+
+Bool W3DVolumetricShadowManager::ReAcquireResources(void)
+{
+	BfmeVolumetricShadowManagerBuffers *self = (BfmeVolumetricShadowManagerBuffers *)this;
+
+	if (self->m_vertexBuffer == NULL)
+		self->m_vertexBuffer = ::new BfmeDX8VertexBuffer(2, 30000, BfmeDX8VertexBuffer::USAGE_DYNAMIC, 0);
+
+	if (self->m_indexBuffer == NULL)
+		self->m_indexBuffer = ::new BfmeDX8IndexBuffer(30000, BfmeDX8IndexBuffer::USAGE_DYNAMIC);
+
+	return TRUE;
+}
+
+// Init =======================================================================
+// User called initialization
+// ============================================================================
+Bool W3DVolumetricShadowManager::init( void )
+{
+	ReAcquireResources();
+	return TRUE;
+}  // end Init
+
+// Reset ======================================================================
+// Reset our list of shadows to empty
+// ============================================================================
+// ?reset@W3DVolumetricShadowManager@@QAEXXZ present-unmatched
+void W3DVolumetricShadowManager::reset( void )
+{
+
+	assert (m_shadowList == NULL);
+	m_W3DShadowGeometryManager->Free_All_Geoms();
+	TheW3DBufferManager->freeAllBuffers();
+
+}  // end Reset
+
+// addShadow ==================================================================
+// Add the shadows for this hierarchy to the shadow management for
+// rendering.
+// ============================================================================
+// ?addShadow@W3DVolumetricShadowManager@@QAEPAVW3DVolumetricShadow@@PAVRenderObjClass@@PAUShadowTypeInfo@Shadow@@PAVDrawable@@@Z present-unmatched
+W3DVolumetricShadow* W3DVolumetricShadowManager::addShadow(RenderObjClass *robj, Shadow::ShadowTypeInfo *shadowInfo, Drawable *draw)
+{
+	if (!DX8Wrapper::Has_Stencil() || !robj || !TheGlobalData->m_useShadowVolumes)
+		return NULL;	//right now we require a stencil buffer
+
+	W3DShadowGeometry *sg=NULL;
+	if (!robj)
+		return NULL;	//must have a render object in order to read shadow geometry
+
+	const char *name=robj->Get_Name();
+
+	if (!name)
+		return NULL;
+
+	sg=m_W3DShadowGeometryManager->Get_Geom(name);
+
+	if (sg==NULL)
+	{	//did not find a cached copy of the shadow geometry, create a new one
+		m_W3DShadowGeometryManager->Load_Geom(robj,name);
+		//try loading again
+		sg=m_W3DShadowGeometryManager->Get_Geom(name);
+		if (sg==NULL)
+			return NULL;	//could not create the shadow geometry
+	}
+
+	W3DVolumetricShadow *shadow = NEW W3DVolumetricShadow;	// poolify
+
+	// sanity
+	if( shadow == NULL )
+		return NULL;
+
+	shadow->setRenderObject(robj);
+	shadow->SetGeometry(sg);
+ 	SphereClass sphere;
+ 	robj->Get_Obj_Space_Bounding_Sphere(sphere);
+ 	shadow->setRenderObjExtent(sphere.Radius*MAX_SHADOW_LENGTH_SCALE_FACTOR);
+
+	Real sunElevationAngleTan = 0;
+	if (shadowInfo->m_sizeX)
+	{	//need to adjust sun elevation for this model in order to limit shadow length
+		sunElevationAngleTan=tan(shadowInfo->m_sizeX/180.0f*PI);
+	}
+	shadow->setShadowLengthScale(sunElevationAngleTan);
+
+	if (!draw || !draw->isKindOf(KINDOF_IMMOBILE))
+		shadow->setOptimalExtrusionPadding(SHADOW_EXTRUSION_BUFFER);
+
+	// add to our shadow list through the shadow next links
+	shadow->m_next = m_shadowList;
+	m_shadowList = shadow;	
+	return shadow;
+}
+
+/** removeShadow ===========================================================
+ Removes the shadows for this hierarchy from the shadow manger.  No further
+ shadows from this caster will be rendered.
+ ===========================================================================
+*/
+// ?removeShadow@W3DVolumetricShadowManager@@QAEXPAVW3DVolumetricShadow@@@Z present-unmatched
+void W3DVolumetricShadowManager::removeShadow(W3DVolumetricShadow *shadow)
+{
+	W3DVolumetricShadow *prev_shadow=NULL;
+	W3DVolumetricShadow *next_shadow=NULL;
+
+	//search for this shadow
+	for( next_shadow = m_shadowList; next_shadow; prev_shadow=next_shadow, next_shadow = next_shadow->m_next )
+	{
+		if (next_shadow == shadow)
+		{
+			if (prev_shadow)
+				prev_shadow->m_next=shadow->m_next;
+			else
+				m_shadowList=shadow->m_next;
+
+			delete shadow;
+			break;
+		}
+	}  // end for
+}
+
+/** removeAllShadows ===========================================================
+ Removes all shadows from the shadow manger.  No further
+ shadows will be rendered.
+ ===========================================================================
+*/
+// ?removeAllShadows@W3DVolumetricShadowManager@@QAEXXZ present-unmatched
+void W3DVolumetricShadowManager::removeAllShadows(void)
+{
+	W3DVolumetricShadow *cur_shadow=NULL;
+	W3DVolumetricShadow *next_shadow=m_shadowList;
+	m_shadowList = NULL;
+
+	//search for this shadow
+	for( cur_shadow = next_shadow; cur_shadow; cur_shadow = next_shadow )
+	{
+		next_shadow = cur_shadow->m_next;
+		cur_shadow->m_next = NULL;
+		delete cur_shadow;
+	}  // end for
+}
+
+// ??0W3DShadowGeometryManager@@QAE@XZ present-unmatched
+W3DShadowGeometryManager::W3DShadowGeometryManager(void) 
+{
+	// Create the hash tables
+	GeomPtrTable = NEW HashTableClass( 2048 );
+	MissingGeomTable = NEW HashTableClass( 2048 );
+}
+
+W3DShadowGeometryManager::~W3DShadowGeometryManager(void)
+{
+	Free_All_Geoms();
+
+	delete GeomPtrTable;
+	GeomPtrTable = NULL;
+
+	delete MissingGeomTable;
+	MissingGeomTable = NULL;
+}
+
+/** Release all loaded animations */
+void W3DShadowGeometryManager::Free_All_Geoms(void)
+{
+	// Make an iterator, and release all ptrs
+	W3DShadowGeometryManagerIterator it( *this );
+	for( it.First(); !it.Is_Done(); it.Next() ) {
+		W3DShadowGeometry *geom = it.Get_Current_Geom();
+		geom->Release_Ref();
+	}
+
+	// Then clear the table
+	GeomPtrTable->Reset();
+}
+
+/** Find animation in cache */
+W3DShadowGeometry * W3DShadowGeometryManager::Peek_Geom(const char * name)
+{
+	return (W3DShadowGeometry*)GeomPtrTable->Find( name );
+}
+
+/** Get animation from cache and increment its reference count */
+W3DShadowGeometry * W3DShadowGeometryManager::Get_Geom(const char * name)
+{	
+	W3DShadowGeometry * geom = Peek_Geom( name );
+	if ( geom != NULL ) {
+		geom->Add_Ref();
+	}
+	return geom;
+}
+
+/** Add animation to cache */
+Bool W3DShadowGeometryManager::Add_Geom(W3DShadowGeometry *new_geom)
+{
+	WWASSERT (new_geom != NULL);
+
+	// Increment the refcount on the new animation and add it to our table.
+	new_geom->Add_Ref ();
+	GeomPtrTable->Add( new_geom );
+
+	return true;
+}
+
+/*
+** An entry for a table of anims not found, so we can quickly determine their loss
+*/
+class MissingGeomClass : public HashableClass {
+
+public:
+	MissingGeomClass( const char * name ) : Name( name ) {}
+	virtual	~MissingGeomClass( void ) {}
+
+	virtual	const char * Get_Key( void )	{ return Name;	}
+
+private:
+	StringClass	Name;
+
+};
+
+/*
+** Missing Geoms
+**
+** The idea here, allow the system to register which anims are determined to be missing
+** so that if they are asked for again, we can quickly return NULL, without searching the
+** disk again.
+*/
+void	W3DShadowGeometryManager::Register_Missing( const char * name )
+{
+	MissingGeomTable->Add( NEW MissingGeomClass( name ) );
+}
+
+Bool	W3DShadowGeometryManager::Is_Missing( const char * name )
+{
+	return ( MissingGeomTable->Find( name ) != NULL );
+}
+
+/** Create shadow geometry from a reference W3D RenderObject*/
+// byte-exact reconstruction: game/GameEngine/Source/Common/W3DShadowGeometryManager_Load_Geom_Thunk.cpp
+// ?Load_Geom@W3DShadowGeometryManager@@QAEHPAVRenderObjClass@@PBD@Z present-unmatched
+int W3DShadowGeometryManager::Load_Geom(RenderObjClass *robj, const char *name)
+{
+	Bool res=FALSE;
+
+	W3DShadowGeometry * newgeom = NEW W3DShadowGeometry;
+
+	if (newgeom == NULL) {
+		goto Error;
+	}
+
+	SET_REF_OWNER( newgeom );
+
+	newgeom->Set_Name(name);
+
+	switch (robj->Class_ID())
+	{
+		case RenderObjClass::CLASSID_HLOD:
+			res=newgeom->initFromHLOD(robj);
+			break;
+		case RenderObjClass::CLASSID_MESH:
+			res=newgeom->initFromMesh(robj);
+			break;
+		default:
+			break;	//unknown render object type
+	};
+
+	if (res != TRUE)
+	{	// load failed!
+		newgeom->Release_Ref();
+		//DEBUG_LOG(("****Shadow Volume Creation Failed on %s\n",name));
+		goto Error;
+	} else if (Peek_Geom(newgeom->Get_Name()) != NULL)
+	{	// duplicate exists!
+		newgeom->Release_Ref();	// Release the one we just loaded
+		goto Error;
+	} else
+	{	Add_Geom( newgeom );
+		newgeom->Release_Ref();
+	}
+
+	return 0;
+
+Error:
+	return 1;
+}
+
+/*
+** Iterator converter from HashableClass to GrannyAnimClass
+*/
+W3DShadowGeometry * W3DShadowGeometryManagerIterator::Get_Current_Geom( void )	
+{ 
+	return (W3DShadowGeometry *)Get_Current(); 
+}

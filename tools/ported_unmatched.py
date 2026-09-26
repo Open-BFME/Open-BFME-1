@@ -1,18 +1,18 @@
 import csv,re,os,collections
-rows=list(csv.DictReader(open('reverse/functions.csv',newline='',encoding='utf-8',errors='replace')))
+rows=list(csv.DictReader(open('targets/game/reverse/functions.csv',newline='',encoding='utf-8',errors='replace')))
 dump={}
 for r in rows:
     if 'gen_asm' in r['source'] and r['source'].endswith('.asm'):
         try: dump[int(r['target_rva'],16)]=int(r['target_size'] or 0)
         except: pass
 pins=collections.defaultdict(list)
-for r in csv.reader(open('reverse/symbols.csv',newline='',encoding='utf-8',errors='replace')):
+for r in csv.reader(open('targets/game/reverse/symbols.csv',newline='',encoding='utf-8',errors='replace')):
     if len(r)>1 and r[1].startswith('0x'):
         try: pins[int(r[1],16)].append(r[0])
         except: pass
 MARK=re.compile(r"^\s*//\s*(\S+)\s+present-unmatched\b",re.M)
 markers={}
-for root,_,files in os.walk('Code'):
+for root,_,files in os.walk('game'):
     if 'gen_asm' in root or 'gen_small' in root or 'masm_dumps' in root: continue
     for f in files:
         if f.endswith('.cpp'):
@@ -24,7 +24,7 @@ prefix=[m for m in markers if m.endswith('@@')]
 claimed_path='build/fleet_mid_claimed.txt'
 claimed={l.strip().lower() for l in open(claimed_path)} if os.path.exists(claimed_path) else set()
 lat={}
-for l in open('reverse/re_attempts.log',encoding='utf-8',errors='replace'):
+for l in open('targets/game/reverse/re_attempts.log',encoding='utf-8',errors='replace'):
     p=l.rstrip('\n').split('\t')
     if len(p)>=5 and p[1].startswith('0x'): lat[p[1].lower()]=p[3]
 hits=[]

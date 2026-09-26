@@ -33,10 +33,10 @@ def require_cgroup_v2():
 
 
 def open_ledger(root, *targets):
-    reverse = root / "reverse"
-    reverse.mkdir(exist_ok=True)
+    reverse = root / "targets/game/reverse"
+    reverse.mkdir(parents=True, exist_ok=True)
     rows = ["name,export_rva,target_rva,target_size,source,status,notes"]
-    rows += [f"?d_{rva:08X}@@YAXXZ,,0x{rva:08X},{size},Code/gen_asm/test.asm,matched,"
+    rows += [f"?d_{rva:08X}@@YAXXZ,,0x{rva:08X},{size},game/gen_asm/test.asm,matched,"
              for rva, size in targets]
     (reverse / "functions.csv").write_text("\n".join(rows) + "\n", encoding="utf-8")
 
@@ -95,7 +95,7 @@ def test_outcome_dedup_keeps_target_callee_and_addend_identity(tmp_path):
 @pytest.fixture
 def compiler(tmp_path, monkeypatch):
     monkeypatch.setattr(experiments.build, "ROOT", tmp_path)
-    code = tmp_path / "Code"
+    code = tmp_path / "game"
     code.mkdir()
     source = code / "test.cpp"
     source.write_text("int f() { return 1; }")
@@ -243,14 +243,14 @@ def test_retry_requires_changed_source_not_a_larger_claimed_score(tmp_path, monk
     before = fleet_run.stash_fingerprint(0x1000)
     path.write_text("// name\n// partial score=0.9 date=2026-09-05\nint f(){return 1;}")
     assert fleet_run.stash_fingerprint(0x1000) == before
-    (tmp_path / "reverse").mkdir()
-    (tmp_path / "reverse/re_attempts.log").write_text("name\t0x1000\t8\tpartial\tbanked\n")
-    ledger = tmp_path / "reverse/functions.csv"
-    ledger.write_text("target_rva,source\n0x1000,Code/a.asm\n")
+    (tmp_path / "targets/game/reverse").mkdir(parents=True)
+    (tmp_path / "targets/game/reverse/re_attempts.log").write_text("name\t0x1000\t8\tpartial\tbanked\n")
+    ledger = tmp_path / "targets/game/reverse/functions.csv"
+    ledger.write_text("target_rva,source\n0x1000,game/a.asm\n")
     assert not fleet_run.retry_allowed(tmp_path, 0x1000, before)
     path.write_text("// name\n// partial score=0.9 date=2026-09-05\nint f(){return 2;}")
     assert fleet_run.retry_allowed(tmp_path, 0x1000, before)
-    ledger.write_text("target_rva,source\n0x1000,Code/a.cpp\n")
+    ledger.write_text("target_rva,source\n0x1000,game/a.cpp\n")
     assert not fleet_run.retry_allowed(tmp_path, 0x1000, before)
 
 
@@ -282,9 +282,9 @@ def test_search_preserves_best_and_stops_on_plateau(tmp_path, monkeypatch):
 
 
 def test_report_deduplicates_aliases_and_excludes_dumps():
-    def row(rva, size, source="Code/Test.cpp", run="r1"):
+    def row(rva, size, source="game/Test.cpp", run="r1"):
         return dict(target_rva=rva, target_size=str(size), source=source, status="matched", notes="run=" + run)
-    rows = [row("0x1000", 10), row("0x1000", 10), row("0x1008", 5), row("0x2000", 30, "Code/gen_asm/a.asm")]
+    rows = [row("0x1000", 10), row("0x1000", 10), row("0x1008", 5), row("0x2000", 30, "game/gen_asm/a.asm")]
     assert fleet_report.published(rows) == {"r1": 13}
 
 

@@ -79,7 +79,7 @@ def write_object(path, bodies, sites=None):
 
 def make_row(pin, size=len(TARGET)):
     return {"name": "uw_00bfa6c0", "target_rva": "0x00BFA6C0", "target_size": str(size),
-            "source": "Code/GameEngine/Source/Common/RTS/PlayerTemplate.cpp",
+            "source": "game/GameEngine/Source/Common/RTS/PlayerTemplate.cpp",
             "status": "matched", "notes": f"gen-funclet;parent={PARENT};object-symbol={pin}"}
 
 

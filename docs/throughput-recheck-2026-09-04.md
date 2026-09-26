@@ -38,7 +38,7 @@ test runs under a temporary directory, not the shared attempts log.
 ## Newly verified loss of useful work
 
 **The stash retains the latest body, not the best body or alternative bodies.**
-`re_log._bank` unconditionally writes `reverse/attempts/<rva>.cpp`; it has no
+`re_log._bank` unconditionally writes `targets/game/reverse/attempts/<rva>.cpp`; it has no
 existing-score check, version retention, or per-boundary lock. A temporary test
 banked a 0.99 body followed by a different 0.80 body: the stash contained only
 the latter. Among 1,179 scored partial log entries, 13 successive partial pairs

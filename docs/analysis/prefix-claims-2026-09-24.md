@@ -55,7 +55,7 @@ GameClient); that is shim-header work with a full gate, like `MessageStream.h`.
   at +0x27. A prefix claim hides its own misidentification.
 * **The build cache misses a new shadowing header.** An object's recorded
   dependencies name the header it found last time. Adding
-  `reference/shims/sweep/Common/MessageStream.h`, which shadows Zero Hour's copy,
+  `inputs/reference/shims/sweep/Common/MessageStream.h`, which shadows Zero Hour's copy,
   left `NetPacket.obj` current until the object was deleted by hand. A
   full gate run after adding a new shim should start from an empty
   `build/match/`, or it can reuse stale objects.

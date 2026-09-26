@@ -28,7 +28,7 @@ The run must also be MAXIMAL. Every suffix of a name table is itself a run of
 string pointers, so reporting non-maximal runs would bury the real tables under
 hundreds of their own tails.
 
-  python3 tools/name_tables.py             # write reverse/name_tables.tsv
+  python3 tools/name_tables.py             # write targets/game/reverse/name_tables.tsv
   python3 tools/name_tables.py --bitflags  # ledger BitFlags widths vs table sizes
 """
 import collections
@@ -41,7 +41,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build as B  # noqa: E402
 
-OUT = B.ROOT / "reverse/name_tables.tsv"
+OUT = B.ROOT / "targets/game/reverse/name_tables.tsv"
 IMAGE_BASE = 0x400000
 MIN_ENTRIES = 6          # shorter runs are mostly coincidence
 MAX_NAME = 64

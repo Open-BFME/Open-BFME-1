@@ -42,7 +42,7 @@ import capstone
 import build
 
 ROOT = Path(__file__).resolve().parents[1]
-ZH_ROOT = ROOT / "reference" / "CnC_Generals_Zero_Hour"
+ZH_ROOT = ROOT / "inputs/reference" / "CnC_Generals_Zero_Hour"
 READABLE_RE = re.compile(r"^//\s*readable (?:ZH )?body(?: of \S+)?:\s*(\S+)", re.M)
 
 _LIFTS = None
@@ -301,7 +301,7 @@ def _class_index():
     for row in rows:
         source = row.get("source", "")
         if (row.get("status") != "matched" or not source.endswith((".cpp", ".c"))
-                or source.startswith("Code/gen_") or (row["name"], row["target_rva"]) in lifts
+                or source.startswith("game/gen_") or (row["name"], row["target_rva"]) in lifts
                 or build.is_scaffold_row(row)):
             continue
         cls = class_of(row["name"])
@@ -379,12 +379,12 @@ def proposed_extent(row, problems, ledger, reader=read):
     return start, end - start, "; ".join(evidence)
 
 
-EXTENTS = ROOT / "reverse" / "lift_extents.csv"
+EXTENTS = ROOT / "targets/game/reverse" / "lift_extents.csv"
 EXTENT_FIELDS = ["name", "ledger_rva", "ledger_size", "start", "size", "evidence"]
 
 
 def load_extents(path=None):
-    """{(name, ledger_rva): {start, size, evidence}} from reverse/lift_extents.csv."""
+    """{(name, ledger_rva): {start, size, evidence}} from targets/game/reverse/lift_extents.csv."""
     import csv
 
     path = Path(path or EXTENTS)
@@ -398,7 +398,7 @@ def lift_verdicts(rows=None, extents=None):
     """[(row, problems, correction)] for every lift row, one per address.
 
     `problems` judges the recorded extent. `correction` is the entry for this
-    lift in reverse/lift_extents.csv, re-verified against the image now, or
+    lift in targets/game/reverse/lift_extents.csv, re-verified against the image now, or
     None; a correction that no longer passes is dropped rather than trusted."""
     import eligibility
 
@@ -434,7 +434,7 @@ def servable_lift_keys(rows=None):
 
 
 def correction_for(row):
-    """The verified reverse/lift_extents.csv entry for a servable lift, else None."""
+    """The verified targets/game/reverse/lift_extents.csv entry for a servable lift, else None."""
     found = _verdict_map().get((row["name"], row["target_rva"]))
     return found[1] if found else None
 
@@ -453,7 +453,7 @@ def reset():
 
 
 def write_extents(rows=None, path=None):
-    """Recompute reverse/lift_extents.csv from the image: one row per suspect
+    """Recompute targets/game/reverse/lift_extents.csv from the image: one row per suspect
     lift whose extent `proposed_extent` can prove. Returns the rows written."""
     import csv
     import eligibility
@@ -522,7 +522,7 @@ def main(argv=None):
                     help="list lifts whose extent fails and has no proven correction")
     ap.add_argument("--summary", action="store_true", help="counts and bytes only")
     ap.add_argument("--write-extents", action="store_true",
-                    help="recompute reverse/lift_extents.csv (proven extent corrections)")
+                    help="recompute targets/game/reverse/lift_extents.csv (proven extent corrections)")
     ap.add_argument("--limit", type=int, default=40)
     ap.add_argument("--min-size", type=int, default=0)
     args = ap.parse_args(argv)

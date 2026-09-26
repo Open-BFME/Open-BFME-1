@@ -21,7 +21,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 
-EXE = ROOT / "baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
+EXE = ROOT / "inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
 pytestmark = pytest.mark.skipif(not EXE.exists(), reason="retail baseline not present")
 
 from modbuild import TARGET_DISCARD  # noqa: E402

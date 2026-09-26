@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Read BFME's module registry straight out of the retail image.
 
-WHY THIS EXISTS. `Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp` is Zero
+WHY THIS EXISTS. `game/GameEngine/Source/Common/Thing/ModuleFactory.cpp` is Zero
 Hour's file: its `addModule(X)` list names 224 ZH module classes, and the
 compiler emits `X::friend_newModuleInstance` / `X::friend_newModuleData` for
 every one of them. Those emitted bodies are three-instruction allocate-and-
@@ -36,8 +36,8 @@ carries its own class name as a literal. Spot-checked on the four bodies at
 0x00114A40/B50/C60/D70: the literal agrees with this table and contradicts the
 ledger in all four.
 
-  python3 tools/module_registry.py            # write reverse/module_registry.tsv
-  python3 tools/module_registry.py --check    # cross-check reverse/functions.csv
+  python3 tools/module_registry.py            # write targets/game/reverse/module_registry.tsv
+  python3 tools/module_registry.py --check    # cross-check targets/game/reverse/functions.csv
 """
 import bisect, collections, csv, re, struct, sys
 from pathlib import Path
@@ -46,7 +46,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build
 from capstone import Cs, CS_ARCH_X86, CS_MODE_32
 
-OUT = build.ROOT / 'reverse/module_registry.tsv'
+OUT = build.ROOT / 'targets/game/reverse/module_registry.tsv'
 MODULE_FACTORY_INIT = '?init@ModuleFactory@@UAEXXZ'
 DRAW_REGISTRAR_ANCHOR = 'W3DDefaultDraw'   # first literal the W3D registrar pushes
 ADD_MODULE_INTERNAL = 0x00129AC0           # ?addModuleInternal@ModuleFactory@@IAEXPBX00HABVAsciiString@@H@Z
@@ -91,7 +91,7 @@ def in_text(rva):
 
 
 def ledger_rows():
-    with open(build.ROOT / 'reverse/functions.csv', newline='', encoding='utf-8', errors='replace') as f:
+    with open(build.ROOT / 'targets/game/reverse/functions.csv', newline='', encoding='utf-8', errors='replace') as f:
         return list(csv.DictReader(f))
 
 

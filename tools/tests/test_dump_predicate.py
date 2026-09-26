@@ -5,7 +5,7 @@ and holds no source, so a work finder must treat the ground under it as open
 while an over-claim guard must treat it as taken. Three tools decided that for
 themselves and all three got it wrong; two of the fixes then keyed on the source
 path, which still hides the 349 gen-dump rows that live in
-Code/gen_small/dumps_000.cpp rather than Code/gen_asm/.
+game/gen_small/dumps_000.cpp rather than game/gen_asm/.
 
 build.is_scaffold_row is the predicate and build.load_claim_rows serves the two
 answers. The guard at the bottom is the point of the exercise: it fails the next
@@ -23,15 +23,15 @@ TOOLS = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(TOOLS))
 
 HEADER = "name,export_rva,target_rva,target_size,source,status,notes"
-GEN_ASM_DUMP = ("?d_00abcd00@@YAXXZ,,0x00ABCD00,32,Code/gen_asm/d_00abcd00.asm,"
+GEN_ASM_DUMP = ("?d_00abcd00@@YAXXZ,,0x00ABCD00,32,game/gen_asm/d_00abcd00.asm,"
                 "matched,gen-dump;ghidra=FUN_00eacd00")
 # The row both of this week's path-based fixes get wrong: a dump outside gen_asm.
-GEN_SMALL_DUMP = ("?d_00abce00@@YAXXZ,,0x00ABCE00,48,Code/gen_small/dumps_000.cpp,"
+GEN_SMALL_DUMP = ("?d_00abce00@@YAXXZ,,0x00ABCE00,48,game/gen_small/dumps_000.cpp,"
                   "matched,gen-dump;ghidra=FUN_00eace00")
 REAL = ("?realBody@Thing@@QAEXXZ,,0x00ABCF00,64,"
-        "Code/GameEngine/Source/Common/Thing.cpp,matched,")
+        "game/GameEngine/Source/Common/Thing.cpp,matched,")
 UNMATCHED = ("?hypothesis@Thing@@QAEXXZ,,0x00ABD000,16,"
-             "Code/GameEngine/Source/Common/Thing.cpp,unmatched,")
+             "game/GameEngine/Source/Common/Thing.cpp,unmatched,")
 
 DUMP_RVA = 0x00ABCE00
 REAL_RVA = 0x00ABCF00
@@ -128,18 +128,18 @@ def test_next_work_offers_the_address_a_dump_covers(build, tmp_path, monkeypatch
                              "hint": "one immediate drifted", "votes": "3"})
     monkeypatch.setattr(next_work, "DRIFT", drift)
     monkeypatch.setattr(next_work, "resolve_drift_source",
-                        lambda source, name: "Code/GameEngine/Source/Common/Thing.cpp")
+                        lambda source, name: "game/GameEngine/Source/Common/Thing.cpp")
 
     served = {item["candidate_rva"] for item in next_work.drift_quick_wins()}
     assert served == {f"0x{DUMP_RVA:08X}"}, "a dump-covered candidate is open work"
 
 
 # Every way a tool has spelled "this row is a dump" from its source path: the
-# Code/gen_asm/ literal, gen_small's DUMP_DIR_PREFIX bare or module-qualified,
+# game/gen_asm/ literal, gen_small's DUMP_DIR_PREFIX bare or module-qualified,
 # and conversion_gate's GEN_ASM. Written escaped so the guard does not flag its
 # own definition.
 BY_PATH = re.compile(
-    r"""startswith\(\s*(?:["']Code/gen_asm/|(?:\w+\.)?(?:DUMP_DIR_PREFIX|GEN_ASM)\b)""")
+    r"""startswith\(\s*(?:["']game/gen_asm/|(?:\w+\.)?(?:DUMP_DIR_PREFIX|GEN_ASM)\b)""")
 
 # Placement questions, not claim questions: each of these asks WHERE a dump was
 # written, and is allowed to read the directory to answer it.
@@ -149,7 +149,7 @@ ALLOWED = {
                           "the invariant is_scaffold_row rests on",
     "wave_accounting.py": "splits an already-classified dump lane into genasm and naked",
     "family_scan.py": "scopes its family search to the gen_asm lane on purpose -- the 312 "
-                      "gen-dump rows under Code/gen_small/ are owned by gen_small and "
+                      "gen-dump rows under game/gen_small/ are owned by gen_small and "
                       "gen_uw, which AGENTS.md forbids hand-editing. The note cannot say "
                       "this: both lanes spell it `gen-dump`, so the lane is the path",
     "struct_match.py": "same lane restriction as family_scan.py, for the same reason",
@@ -163,7 +163,7 @@ ALLOWED = {
 def test_no_tool_decides_dumpness_by_source_path():
     """The fourth instance of this bug fails here instead of in the ledger.
 
-    Phrased over the predicate rather than the bare string: `Code/gen_asm/`
+    Phrased over the predicate rather than the bare string: `game/gen_asm/`
     appears all over tools/ as prose and fixtures, and build.py never contains
     it at all, so a guard over the literal could only ever pass vacuously.
     """
@@ -176,7 +176,7 @@ def test_no_tool_decides_dumpness_by_source_path():
                 offences.append(f"{path.relative_to(TOOLS.parent)}:{number}: {line.strip()}")
     assert not offences, (
         "a dump is a gen-dump note, never a directory -- 349 of them live in "
-        "Code/gen_small/dumps_000.cpp. Ask build.is_scaffold_row or "
+        "game/gen_small/dumps_000.cpp. Ask build.is_scaffold_row or "
         "build.load_claim_rows instead:\n  " + "\n  ".join(offences))
 
 
@@ -194,7 +194,7 @@ def test_the_marker_is_a_whole_token_not_a_prefix_of_free_text(build):
 
 
 def test_no_row_of_real_source_passes_as_a_dump(build):
-    with (build.ROOT / "reverse" / "functions.csv").open(newline="", encoding="utf-8", errors="replace") as fh:
+    with (build.ROOT / "targets/game/reverse" / "functions.csv").open(newline="", encoding="utf-8", errors="replace") as fh:
         wrong = [row["target_rva"] for row in csv.DictReader(fh)
-                 if build.is_scaffold_row(row) and not row["source"].startswith("Code/gen_")]
-    assert not wrong, f"{len(wrong)} rows outside Code/gen_ read as dumps: {wrong[:5]}"
+                 if build.is_scaffold_row(row) and not row["source"].startswith("game/gen_")]
+    assert not wrong, f"{len(wrong)} rows outside game/gen_ read as dumps: {wrong[:5]}"

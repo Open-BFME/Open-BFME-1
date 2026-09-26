@@ -3,7 +3,7 @@
 
 `git rebase` and `git cherry-pick` create commits without running pre-commit,
 and the union merge driver can put a tombstoned functions.csv row back while
-they do (reverse/deleted_rows.csv records deletions exactly because the union
+they do (targets/game/reverse/deleted_rows.csv records deletions exactly because the union
 driver cannot express one). Until now that was first caught at pre-push. The
 post-rewrite and post-commit hooks run this: check_csv (duplicates, tombstoned
 rows, overlaps) and b_pin_check (every b_<rva>() call keeps its pin), and on a
@@ -27,7 +27,7 @@ A rebase or cherry-pick skipped pre-commit, and the ledger no longer passes.
   3. python3 tools/b_pin_check.py                    # must pass: restore any
                                                      # ?b_<rva>@@YAXXZ pin BESIDE
                                                      # the real name
-  4. git add reverse/functions.csv reverse/symbols.csv && git commit
+  4. git add targets/game/reverse/functions.csv targets/game/reverse/symbols.csv && git commit
 Do this before pushing; pre-push will refuse it otherwise.
 ================================================================
 """

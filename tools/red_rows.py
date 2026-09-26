@@ -23,7 +23,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-RELOC_NAMES = ROOT / "reverse" / "reloc_names.csv"
+RELOC_NAMES = ROOT / "targets/game/reverse" / "reloc_names.csv"
 FAIL_RE = re.compile(r"^  FAIL (?P<name>.+) \((?P<source>[^()]*)\)$")
 
 
@@ -49,7 +49,7 @@ def report(code, output, reloc_rewritten):
                 for match in map(FAIL_RE.match, output.splitlines()) if match]
     for name, source in failures:
         print(f"RED {name} ({source})")
-    print("reverse/reloc_names.csv: "
+    print("targets/game/reverse/reloc_names.csv: "
           + ("REWRITTEN by this run - commit or discard it" if reloc_rewritten
              else "unchanged"))
     if failures:

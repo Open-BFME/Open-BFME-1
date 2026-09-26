@@ -42,7 +42,7 @@ def sourced_rows():
     """
     import build
 
-    with (ROOT / "reverse" / "functions.csv").open(newline="") as fh:
+    with (ROOT / "targets/game/reverse" / "functions.csv").open(newline="") as fh:
         return [row for row in csv.DictReader(fh) if not build.is_scaffold_row(row)]
 
 
@@ -489,18 +489,19 @@ def test_corrupt_ledger():
     with tempfile.TemporaryDirectory(dir=ROOT / "build") as temp:
         temp = Path(temp)
         (temp / "tools").mkdir()
-        (temp / "reverse" / "zh_sweep").mkdir(parents=True)
+        (temp / "targets/game/reverse" / "zh_sweep").mkdir(parents=True)
         (temp / "src" / "zh").mkdir(parents=True)
         for name in ("next_work.py", "check_csv.py", "re_log.py", "yield_model.py",
-                     "boundary_validator.py", "audit_ret_arity.py", "ledger_io.py"):
+                     "boundary_validator.py", "audit_ret_arity.py", "ledger_io.py",
+                     "target_guard.py"):
             (temp / "tools" / name).write_bytes((ROOT / "tools" / name).read_bytes())
         (temp / "src" / "zh" / "stub.cpp").write_text("// stub\n")
         row = "?Foo@@QAEXXZ,,0x00400000,16,src/zh/stub.cpp,matched,\r\n"
-        (temp / "reverse" / "functions.csv").write_bytes(
+        (temp / "targets/game/reverse" / "functions.csv").write_bytes(
             b"name,export_rva,target_rva,target_size,source,status,notes\r\n"
             + (row + row).encode())
-        (temp / "reverse" / "symbols.csv").write_text("name,address,notes\n")
-        (temp / "reverse" / "zh_sweep" / "drift_report.csv").write_text(
+        (temp / "targets/game/reverse" / "symbols.csv").write_text("name,address,notes\n")
+        (temp / "targets/game/reverse" / "zh_sweep" / "drift_report.csv").write_text(
             "function,source,size,candidate_rva,aligned_pct,class,first_diff,hint,votes\n")
         proc = run(cwd=temp)
         output = proc.stdout + proc.stderr
@@ -516,10 +517,10 @@ def test_call_identity_overrules_a_different_valid_boundary():
     wrong = {"function": name, "candidate_rva": "0x00975100"}
     right = {"function": name, "candidate_rva": "0x0095CE80"}
     rows = [{"name": name, "target_rva": "0x0095CE80",
-             "source": "Code/StreakLineRender.cpp",
+             "source": "game/StreakLineRender.cpp",
              "notes": "reloc-derived;call-sites=1;identity=real"}]
     kept, conflicts = next_work.prefer_call_derived_identities(
-        [wrong, right], rows, {"Code/StreakLineRender.cpp"})
+        [wrong, right], rows, {"game/StreakLineRender.cpp"})
     assert kept == [right]
     assert conflicts == [{"function": name, "candidate_rva": "0x00975100",
                           "call_derived_rvas": ["0x0095CE80"]}]
@@ -534,9 +535,9 @@ def test_call_identity_requires_real_name_and_live_caller(notes, live):
     import next_work
     candidate = {"function": "?method@@YAXXZ", "candidate_rva": "0x2000"}
     rows = [{"name": candidate["function"], "target_rva": "0x1000",
-             "source": "Code/caller.cpp", "notes": notes}]
+             "source": "game/caller.cpp", "notes": notes}]
     assert next_work.prefer_call_derived_identities(
-        [candidate], rows, {"Code/caller.cpp"} if live else set()) == ([candidate], [])
+        [candidate], rows, {"game/caller.cpp"} if live else set()) == ([candidate], [])
 
 
 def test_call_identity_preserves_all_supported_addresses_and_unknown_names():
@@ -545,10 +546,10 @@ def test_call_identity_preserves_all_supported_addresses_and_unknown_names():
                   for address in ["0x1000", "0x2000"]]
     candidates.append({"function": "?unknown@@YAXXZ", "candidate_rva": "0x3000"})
     rows = [{"name": "?method@@YAXXZ", "target_rva": address,
-             "source": "Code/caller.cpp", "notes": "identity=real"}
+             "source": "game/caller.cpp", "notes": "identity=real"}
             for address in ["0x1000", "0x2000"]]
     assert next_work.prefer_call_derived_identities(
-        candidates, rows, {"Code/caller.cpp"}) == (candidates, [])
+        candidates, rows, {"game/caller.cpp"}) == (candidates, [])
 
 
 def test_identity_conflicts_are_explained_when_the_queue_becomes_empty():

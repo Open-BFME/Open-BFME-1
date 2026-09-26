@@ -409,7 +409,7 @@ caller are intentionally left unresolved:
 The focused absolute-reference scan found the following nine function bodies
 that load the GameEngine singleton at `0x012ED524` and then read or multiply
 `GameEngine+0x38`. This is exhaustive for direct absolute loads in the
-scanned `reverse/ghidra_functions.csv` envelopes. An indirect reader or a
+scanned `targets/game/reverse/ghidra_functions.csv` envelopes. An indirect reader or a
 body that receives a copied ratio would require a separate data-flow pass.
 
 | Reader body | RVA / VA | Size | Reader operation and relevant callers | Status |

@@ -11,7 +11,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import check_csv  # noqa: E402
 
-SRC = "Code/GameEngine/Source/Common/System/GameMemory.cpp"
+SRC = "game/GameEngine/Source/Common/System/GameMemory.cpp"
 ROW = f"?dup@@YAXXZ,,0x00401000,16,{SRC},matched,\r\n"
 
 

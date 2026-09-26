@@ -9,8 +9,8 @@ is UNIQUE and every REL32 call site in the target resolves to a known function s
 or link thunk; ambiguous or inconsistent placements are reported and skipped, never
 guessed.
 
-For each accepted placement it prints the reverse/functions.csv row plus the
-reverse/symbols.csv rows for callees derived from the target's call displacements
+For each accepted placement it prints the targets/game/reverse/functions.csv row plus the
+targets/game/reverse/symbols.csv rows for callees derived from the target's call displacements
 (that is how you unblock call-using functions: the binary itself tells us the
 callee address). Verify afterwards with ./build.sh <source>.
 
@@ -105,7 +105,7 @@ def main():
     parser.add_argument("-I", dest="includes", action="append", default=[])
     parser.add_argument("--min-size", type=int, default=MIN_SIZE_DEFAULT)
     parser.add_argument("--emit", action="store_true",
-                        help="append accepted rows to reverse/functions.csv and reverse/symbols.csv")
+                        help="append accepted rows to targets/game/reverse/functions.csv and targets/game/reverse/symbols.csv")
     args = parser.parse_args()
 
     exe = build.EXE.read_bytes()
@@ -115,14 +115,14 @@ def main():
     text_end = text_raw + text_size
 
     ghidra = {}
-    inventory = build.ROOT / "reverse" / "ghidra_functions.csv"
+    inventory = build.ROOT / "targets/game/reverse" / "ghidra_functions.csv"
     if not inventory.exists():
         # Not optional here, whatever the module docstring implies. The
         # inventory gates acceptance in plausible_small_start and in
         # ghidra_boundary, and this tool LANDS claims -- running without it
         # would not merely weaken the search, it would drop the boundary
         # evidence that stops a tail match being accepted as a function start.
-        sys.exit("""reverse/ghidra_functions.csv not found - this tool needs the Ghidra
+        sys.exit("""targets/game/reverse/ghidra_functions.csv not found - this tool needs the Ghidra
 inventory for the boundary evidence that gates its claims. It is a generated,
 gitignored file; regenerate it per tools/ghidra/README.md, or pick another rung
 of the ladder (python3 tools/next_work.py).""")
@@ -155,7 +155,7 @@ of the ladder (python3 tools/next_work.py).""")
 
     export_body = {}
     export_rva = {}
-    with (build.ROOT / "reverse" / "exports.csv").open(newline="") as handle:
+    with (build.ROOT / "targets/game/reverse" / "exports.csv").open(newline="") as handle:
         for row in csv.DictReader(handle):
             if row["kind"] == "code":
                 export_body.setdefault(row["name"], int(row["target_rva"] or row["rva"], 16))
@@ -476,7 +476,7 @@ of the ladder (python3 tools/next_work.py).""")
     for row in rows:
         print("  " + row)
     if new_symbols:
-        print("reverse/symbols.csv additions (callee addresses read from the binary):")
+        print("targets/game/reverse/symbols.csv additions (callee addresses read from the binary):")
         for sym, addr in new_symbols:
             print(f"  {sym},0x{addr:08X}")
     for name, size, candidates in ambiguous:

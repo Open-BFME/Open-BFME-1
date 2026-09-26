@@ -2,7 +2,7 @@
   "symbol": "?buildCameraTransform@W3DView@@AAEXPAVMatrix3D@@@Z",
   "rva": "0x00741D30",
   "size": 1322,
-  "source": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewBuildCameraTransformBfme.cpp",
+  "source": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewBuildCameraTransformBfme.cpp",
   "source_sha256_lf": "b66ded4f2191f99c151433f8da4fe13e48c374e9c3249d1eda50fceeeb172768",
   "raw_sha256": "c383cae5e34f5fd6b5a0e355060f566a3af13cd76e7e2b4b263bbe06c4a5e172",
   "resolved_sha256": "38858a727dfffa08bec39706b8694066eec61aeb1bf41e4770e4353143d537fb",

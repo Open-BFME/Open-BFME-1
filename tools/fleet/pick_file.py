@@ -25,8 +25,8 @@ active = active_rvas(ROOT)
 
 minb = int(sys.argv[1]) if len(sys.argv) > 1 else 6
 maxb = int(sys.argv[2]) if len(sys.argv) > 2 else 2500
-rows = eligibility.load_rows(ROOT / 'reverse/functions.csv')
-latest = eligibility.latest_verdicts(ROOT / 'reverse/re_attempts.log')
+rows = eligibility.load_rows(ROOT / 'targets/game/reverse/functions.csv')
+latest = eligibility.latest_verdicts(ROOT / 'targets/game/reverse/re_attempts.log')
 # Count the bodies the following brief can actually include.  A dead-end or
 # oversized row must not make a file look full, and aliases count only once.
 live_by_file = collections.defaultdict(dict)
@@ -50,7 +50,7 @@ for row in rows:
         # Keep the file exclusive even if its owned row was since retired.
         if f'0x{rva:08x}' in active:
             busy_stems.add(Path(source).stem)
-    elif row.get('status') == 'matched' and not source.startswith('Code/gen_'):
+    elif row.get('status') == 'matched' and not source.startswith('game/gen_'):
         landed.append(rva)
 # Order by landed-neighbour density: real C++ rows inside the file's address
 # range per remaining dump body. Measured land rate is 19.5% for a body whose

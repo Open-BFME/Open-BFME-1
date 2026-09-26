@@ -4,7 +4,7 @@
 # Usage: tools/collect_clone.sh <clone-path>
 #
 # One clone at a time, so a conflict in one seat's range never poisons another's.
-# reverse/*.csv are merge=union and CRLF, so a ledger clash is taken from the
+# targets/game/reverse/*.csv are merge=union and CRLF, so a ledger clash is taken from the
 # clone and repaired wholesale afterwards with tools/ledger_repair.py rather than
 # resolved by hand per commit.
 #
@@ -27,8 +27,8 @@ picked=0
 for c in $(git cherry HEAD FETCH_HEAD | sed -n 's/^+ //p'); do
     if git cherry-pick -x "$c" >/dev/null 2>&1; then
         picked=$((picked+1))
-    elif git checkout --theirs -- reverse/functions.csv reverse/symbols.csv 2>/dev/null \
-         && git add reverse/functions.csv reverse/symbols.csv 2>/dev/null \
+    elif git checkout --theirs -- targets/game/reverse/functions.csv targets/game/reverse/symbols.csv 2>/dev/null \
+         && git add targets/game/reverse/functions.csv targets/game/reverse/symbols.csv 2>/dev/null \
          && git -c core.editor=true cherry-pick --continue >/dev/null 2>&1; then
         picked=$((picked+1))
     else
@@ -40,7 +40,7 @@ echo "picked $picked commit(s) from $CLONE"
 [ "$picked" -eq 0 ] && exit 0
 
 python3 tools/ledger_repair.py | tail -2
-git add -A reverse/ 2>/dev/null
+git add -A targets/game/reverse/ 2>/dev/null
 git diff --cached --quiet || git commit -q -m "Repair the ledger after collecting a clone batch
 
 Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
@@ -50,7 +50,7 @@ for try in 1 2 3 4 5; do
     if [ "$(git rev-list --count HEAD..origin/master)" != "0" ]; then
         git rebase origin/master >/dev/null 2>&1 || { git rebase --abort; echo "REBASE CONFLICT"; exit 8; }
         python3 tools/ledger_repair.py >/dev/null 2>&1
-        git add -A reverse/ 2>/dev/null
+        git add -A targets/game/reverse/ 2>/dev/null
         git diff --cached --quiet || git commit -q -m "Repair the ledger after rebasing onto upstream
 
 Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>" >/dev/null 2>&1

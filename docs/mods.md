@@ -8,9 +8,9 @@
 build error, never a last-writer-wins merge. `--dist` refuses `--only` for the
 same reason — a partial build silently replaced the shipped artifact once.
 
-**No mod is part of the byte-exact decomp.** A feature never touches `Code/` or
-`reverse/`, so `./build.sh` and both git hooks are unaffected. That separation
-is what keeps the byte gate meaningful, and why `mods/` sits outside `Code/`.
+**No mod is part of the byte-exact decomp.** A feature never touches `game/` or
+`targets/game/reverse/`, so `./build.sh` and both git hooks are unaffected. That separation
+is what keeps the byte gate meaningful, and why `mods/` sits outside `game/`.
 
 **`tools/modbuild.py` is the authority on which features exist**, and no
 document lists them. One used to — a `features = [...]` array in a `.toml`
@@ -46,7 +46,7 @@ must not move the byte gate.
 ## Addresses worth keeping
 
 **`PlayerLeaveStatus` at `TheGameLogic+0x1B0`, stride `0x1C`** — layout in
-`reverse/game_end/FINDINGS.md`, except the AsciiString is at `+0x18`, chars at
+`targets/game/reverse/game_end/FINDINGS.md`, except the AsciiString is at `+0x18`, chars at
 `+8`, not `+0x14` as FINDINGS reads.
 
 **Strings live bit-inverted** in `lang/english.big` → `lotr.csf`, so grep finds
@@ -120,7 +120,7 @@ reproducible: two consecutive `--dist` runs give identical hashes for the exe
 and the archive, and the manifest agrees with both.
 
 The source is a **tracked baseline**,
-`baselines/bfme1/workshop-vanilla-1.03/files/apt/options.big`. The retail exe
+`inputs/baselines/bfme1/workshop-vanilla-1.03/files/apt/options.big`. The retail exe
 baseline was already tracked and this is the same idea at 516 KB against 16 MB;
 without it the archive could only be built from whatever happens to sit in
 someone's install, which is not a build. A feature that declares data and finds

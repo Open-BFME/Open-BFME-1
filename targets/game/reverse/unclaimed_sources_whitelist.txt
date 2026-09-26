@@ -1,0 +1,16 @@
+# Sources under game/ that deliberately carry no matched functions.csv row.
+#
+# THIS LIST EXEMPTS NOTHING AT COMMIT TIME. The pre-commit gate's own check lives
+# in tools/build.py (verify_source_claims) and deliberately honours no exception
+# list: "a source file nothing has ever byte-verified is a reconstruction, not a
+# port, and must not live here." Only tools/find_declared_unmatched.py reads this
+# file, and it scans src/, which this layout does not use.
+#
+# Two entries were removed after they were found to be doing nothing:
+# Win32BIGFileSystem_openArchiveFile.cpp and Win32BIGFileSystem_loadBigFiles.cpp
+# were listed here and still failed the gate. Both sources are gone; what they
+# established is in docs/filesystem_family.md with git hashes to recover the
+# bodies.
+#
+# Do not add entries expecting them to work. Byte-match a function or delete the
+# file.

@@ -4,7 +4,7 @@
 Two things went wrong repeatedly on 2026-09-02 and this catches both:
 
   * STALE: the attempts log's latest entry for an RVA says `partial`/`blocked`,
-    but reverse/functions.csv already points that RVA at real C++ -- someone
+    but targets/game/reverse/functions.csv already points that RVA at real C++ -- someone
     landed it by another route. Agents kept re-working these.
   * RE-QUEUE: a body was banked because a callee/global it needs was unpinned;
     every address its evidence cites is now claimed or pinned, so the blocker
@@ -30,7 +30,7 @@ def load():
     rows = {}
     dump = {}
     claimed = set()
-    for r in csv.DictReader(open(ROOT / "reverse/functions.csv", newline="", encoding="utf-8", errors="replace")):
+    for r in csv.DictReader(open(ROOT / "targets/game/reverse/functions.csv", newline="", encoding="utf-8", errors="replace")):
         try:
             rva = int(r["target_rva"], 16)
         except ValueError:
@@ -40,14 +40,14 @@ def load():
         if r["source"].endswith((".asm", ".s")):
             dump[rva] = int(r["target_size"] or 0)
     pinned = set()
-    for r in csv.reader(open(ROOT / "reverse/symbols.csv", newline="", encoding="utf-8", errors="replace")):
+    for r in csv.reader(open(ROOT / "targets/game/reverse/symbols.csv", newline="", encoding="utf-8", errors="replace")):
         if len(r) > 1 and r[1].startswith("0x"):
             try:
                 pinned.add(int(r[1], 16))
             except ValueError:
                 pass
     latest = {}
-    for l in open(ROOT / "reverse/re_attempts.log", encoding="utf-8", errors="replace"):
+    for l in open(ROOT / "targets/game/reverse/re_attempts.log", encoding="utf-8", errors="replace"):
         p = l.rstrip("\n").split("\t")
         if len(p) >= 5:
             try:
@@ -81,7 +81,7 @@ def main():
             continue
         r = rows.get(rva)
         if r and not is_naked(r["source"]):
-            stash = ROOT / "reverse/attempts" / f"0x{rva:08x}.cpp"
+            stash = ROOT / "targets/game/reverse/attempts" / f"0x{rva:08x}.cpp"
             stale.append((rva, p[0], r["source"], stash.exists()))
             continue
         if rva not in dump:

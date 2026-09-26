@@ -145,11 +145,11 @@ def main():
           % (args.source, len(compiled), undecodable))
 
     rows = []
-    with io.open("reverse/functions.csv", encoding="utf-8") as fh:
+    with io.open("targets/game/reverse/functions.csv", encoding="utf-8") as fh:
         for i, r in enumerate(csv.reader(fh)):
             if i == 0 or len(r) != 7:
                 continue
-            if not r[4].startswith("Code/gen_asm/"):
+            if not r[4].startswith("game/gen_asm/"):
                 continue
             rva = int(r[2], 16)
             if args.lo <= rva <= args.hi and args.min_size <= int(r[3]) <= 4096:

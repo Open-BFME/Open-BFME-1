@@ -28,7 +28,7 @@ CALLS = re.compile(r"\+0x[0-9a-f]+ (\S+): retail calls (0x[0-9A-Fa-f]+)"
                    r"(?: -> body (0x[0-9A-Fa-f]+))? \(ledger: ([^;)]+)")
 
 by_name, by_rva = {}, collections.defaultdict(list)
-with open("reverse/functions.csv", newline="") as fh:
+with open("targets/game/reverse/functions.csv", newline="") as fh:
     for row in csv.DictReader(fh):
         if row.get("status") != "matched":
             continue

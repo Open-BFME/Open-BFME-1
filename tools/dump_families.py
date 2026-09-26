@@ -58,7 +58,7 @@ def main():
 
     names = {}
     pin_names = {}
-    for r in csv.reader(open(ROOT / "reverse/symbols.csv", newline="", encoding="utf-8", errors="replace")):
+    for r in csv.reader(open(ROOT / "targets/game/reverse/symbols.csv", newline="", encoding="utf-8", errors="replace")):
         if len(r) > 1 and r[1].startswith("0x"):
             try:
                 v = int(r[1], 16)
@@ -67,7 +67,7 @@ def main():
             if not r[0].startswith(("?d_", "?b_", "?j_", "?dup_")):
                 pin_names.setdefault(v, r[0])
     dump = []
-    for r in csv.DictReader(open(ROOT / "reverse/functions.csv", newline="", encoding="utf-8", errors="replace")):
+    for r in csv.DictReader(open(ROOT / "targets/game/reverse/functions.csv", newline="", encoding="utf-8", errors="replace")):
         try:
             rva = int(r["target_rva"], 16)
         except ValueError:

@@ -7,9 +7,9 @@ list at the moment of writing and drops anything that no longer points at a
 dump row, then attaches what the ledger knows per body: size, pins, the latest
 attempt's evidence and stash, and the ZH twin when the sweep found one.
 
-  python3 tools/brief.py --dump Code/gen_asm/d_0023c310.asm            > brief.txt
+  python3 tools/brief.py --dump game/gen_asm/d_0023c310.asm            > brief.txt
   python3 tools/brief.py --rvas 0x002FDDB0 0x002FC4C0 --note "..."      > brief.txt
-  python3 tools/brief.py --csv reverse/zh_sweep/big_identified_worklist.csv --limit 12 > brief.txt
+  python3 tools/brief.py --csv targets/game/reverse/zh_sweep/big_identified_worklist.csv --limit 12 > brief.txt
 
 Then launch it with the engine of your choice, e.g.
   grok -p "$(cat brief.txt)" --always-approve --output-format plain
@@ -36,10 +36,10 @@ METHOD. Read AGENTS.md and docs/matching.md first. docs/shape_levers.md is a 97 
 reference, not reading: open the sections a target's LEVER SECTIONS line names, and
 `grep -n "^## " docs/shape_levers.md` for the first divergence you meet. The HISTORY
 block under a target is every earlier verdict on it: do not repeat a lever it lists. For each
-target: confirm the row still points at a .asm dump, a carved boundary, or (LIFT) a naked __emit copy (`grep ,0xRVA, reverse/functions.csv reverse/carved.csv`);
-grep reverse/symbols.csv and reverse/re_attempts.log for the RVA; use
+target: confirm the row still points at a .asm dump, a carved boundary, or (LIFT) a naked __emit copy (`grep ,0xRVA, targets/game/reverse/functions.csv targets/game/reverse/carved.csv`);
+grep targets/game/reverse/symbols.csv and targets/game/reverse/re_attempts.log for the RVA; use
 `python3 tools/vtable_lookup.py <vtable VA>` for owning-class questions; port from the
-Zero Hour twin under reference/CnC_Generals_Zero_Hour when one is named. Iterate with
+Zero Hour twin under inputs/reference/CnC_Generals_Zero_Hour when one is named. Iterate with
 `python3 tools/probe.py SOURCE.cpp "MANGLED" 0xRVA` -- it compiles, diffs against retail
 with relocations masked, and prints a CANDIDATE cause with evidence; treat the label as
 a hint and check the evidence lines. Land with
@@ -78,15 +78,15 @@ to stay UNIQUE, because ICF means one spelling reaches several retail copies; it
 to be the whole name. Never put a real class's name on a shim whose layout you have not
 checked. docs/naming_evidence.md has the detail.
 HARD RULES: never run git commands (the orchestrator owns VCS); never run a full ./build.sh;
-never edit files under Code/gen_asm/; only touch your assigned bodies; new sources go in
-the class's home directory under Code/ with descriptive names.
+never edit files under game/gen_asm/; only touch your assigned bodies; new sources go in
+the class's home directory under game/ with descriptive names.
 REPORT at the end: bodies landed (name rva size), partials banked, total bytes.
 """
 
 
 def load():
     rows = {}
-    ledger_rows = list(csv.DictReader(open(ROOT / "reverse/functions.csv", newline="", encoding="utf-8", errors="replace")))
+    ledger_rows = list(csv.DictReader(open(ROOT / "targets/game/reverse/functions.csv", newline="", encoding="utf-8", errors="replace")))
     for r in ledger_rows:
         try:
             rows[int(r["target_rva"], 16)] = r
@@ -96,13 +96,13 @@ def load():
     for r in eligibility.carved_rows(rows=ledger_rows):
         rows.setdefault(int(r["target_rva"], 16), r)
     pins = {}
-    for r in csv.reader(open(ROOT / "reverse/symbols.csv", newline="", encoding="utf-8", errors="replace")):
+    for r in csv.reader(open(ROOT / "targets/game/reverse/symbols.csv", newline="", encoding="utf-8", errors="replace")):
         if len(r) > 1 and r[1].startswith("0x"):
             try:
                 pins.setdefault(int(r[1], 16), []).append((r[0], r[2] if len(r) > 2 else ""))
             except ValueError:
                 pass
-    latest = re_log.latest_records(ROOT / "reverse/re_attempts.log")
+    latest = re_log.latest_records(ROOT / "targets/game/reverse/re_attempts.log")
     near = {}
     mj = ROOT / "build/zh_sweep/match.json"
     if mj.exists():
@@ -136,7 +136,7 @@ def history(rva):
     global _history
     if _history is None:
         _history = {}
-        log = ROOT / "reverse/re_attempts.log"
+        log = ROOT / "targets/game/reverse/re_attempts.log"
         if log.exists():
             for line in log.read_text(encoding="utf-8", errors="replace").splitlines():
                 fields = line.split("\t")
@@ -247,7 +247,7 @@ def describe(rva, rows, pins, latest, near, depth=5):
     stash = re_log.stash_for(rva)
     if stash:
         parts.append(f"    PREFERRED STASH: {stash[0].relative_to(ROOT).as_posix()} (author estimate {stash[1]}; verify it)")
-        history = ROOT / "reverse/attempt_history" / f"0x{rva:08x}"
+        history = ROOT / "targets/game/reverse/attempt_history" / f"0x{rva:08x}"
         if history.exists():
             parts.append(f"    Saved alternatives: {history.relative_to(ROOT).as_posix()} (immutable source JSON)")
     # mechanical evidence (callees, callers, vtable slot, strings, fields,

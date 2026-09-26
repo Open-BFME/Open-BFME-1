@@ -2,7 +2,7 @@
 
 Retail vtable `0x0111EDD0` slot 1 routes through ILT `0x000323D0` to this
 body. The final `ret` is at `+0x71F` and padding begins at `+0x720`, giving
-1,824 bytes. The bank at `reverse/attempts/0x006ed5b0.cpp` currently compiles
+1,824 bytes. The bank at `targets/game/reverse/attempts/0x006ed5b0.cpp` currently compiles
 to 1,824 bytes with 101 relocation sites and zero differences outside those
 sites. This is a masked probe result, **not** a verified byte-match landing.
 

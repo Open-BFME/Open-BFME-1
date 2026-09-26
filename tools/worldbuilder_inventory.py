@@ -15,7 +15,7 @@ from targets import Section, initial_ilt_map, load_target
 
 
 SCHEMA = 1
-DONOR = "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder"
+DONOR = "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder"
 DONOR_IMPORT = "4d091bbeec43fcdf420241849233bf444bbe355e"
 # These are boundary and donor-association witnesses, not guessed names for bytes.
 EDITOR_RECIPES = (
@@ -300,7 +300,7 @@ def editor_candidates(image, maps):
                 strings.append(dict(operand_rva=ins.address + 1, string_rva=address, value=image.string(address)))
         ident = f"{cls}::{method}"
         candidates.append(dict(id=ident, evidence=f"mfc:{ident}", readable_name=ident, **donor,
-                               source=f"Code/Tools/WorldBuilder/src/{filename}.cpp", profile="editor-size",
+                               source=f"worldbuilder/src/{filename}.cpp", profile="editor-size",
                                target_rva=rva, target_size=size, bytes_sha256=sha256(raw),
                                boundary="message-map entry, complete instructions, contained branches, RET then INT3",
                                chain={k: v for k, v in owner.items() if k != "entries"}, message_entry=entry,
@@ -328,7 +328,7 @@ def assertion_candidate(image):
             "Coord2D::Negate branch leaves proven extent")
     candidate = dict(id="Coord2D::Negate", name=name, readable_name="Coord2D::Negate", evidence="export",
                      target_rva=rva, target_size=size, export_rva=exported.rva, ilt_route_rvas=route,
-                     source="worldbuilder/Code/Libraries/Source/Math/MathCoord2D.cpp",
+                     source="worldbuilder/Libraries/Source/Math/MathCoord2D.cpp",
                      profile="engine-size", bytes_sha256=sha256(raw), donor_files=[],
                      boundary="named export, complete instructions, contained branches, RET then INT3",
                      callee_contract=callee_contract(image, instructions),
@@ -367,7 +367,7 @@ def source_strings(image):
 
 
 def game_reference(root):
-    manifest_path = root / "baselines/bfme1/workshop-vanilla-1.03/manifest.json"
+    manifest_path = root / "inputs/baselines/bfme1/workshop-vanilla-1.03/manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     row = next(x for x in manifest["files"] if x["path"] == "files/lotrbfme.exe")
     raw = (manifest_path.parent / row["path"]).read_bytes()
@@ -428,7 +428,7 @@ def generate(target):
     provenance = dict(**binding, generator="tools/worldbuilder_inventory.py", generator_sha256=text_sha256(Path(__file__)),
                       text_hash_normalization="CRLF-to-LF; binary fingerprints remain byte-exact",
                       ilt=target.ilt_provenance,
-                      donor=dict(path="reference/CnC_Generals_Zero_Hour", import_commit=DONOR_IMPORT,
+                      donor=dict(path="inputs/reference/CnC_Generals_Zero_Hour", import_commit=DONOR_IMPORT,
                                  upstream_revision=None, upstream_revision_status="not recorded by the vendoring commit or bundled README",
                                  files=[dict(path=p, sha256=h) for p, h in sorted(files.items())]),
                       mfc_schema=dict(version="MFC 7.1 x86 _AFXDLL", runtime_class_bytes=28,

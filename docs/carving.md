@@ -1,9 +1,9 @@
 # Carving unclaimed `.text`
 
 `tools/carve_unclaimed.py` serves a second anonymous lane for bytes that are
-not covered by `reverse/functions.csv`. A carved row is a temporary boundary
+not covered by `targets/game/reverse/functions.csv`. A carved row is a temporary boundary
 claim, not an identity claim. Its name is `?d_%08x@@YAXXZ`, its source is
-`reverse/carved.csv`, and `eligibility.carved_rows()` removes it as soon as a
+`targets/game/reverse/carved.csv`, and `eligibility.carved_rows()` removes it as soon as a
 new ledger row covers its range.
 
 ## Evidence and columns
@@ -38,7 +38,7 @@ python3 tools/callees.py 0x003B92D0 296
 
 Keep the address token in the name unless a caller, vtable, string, layout, or
 other independent evidence proves a real identity. Write clean C++ under its
-official `Code/` path and land it with the ordinary `tools/add_match.py`
+official `game/` path and land it with the ordinary `tools/add_match.py`
 command. A partial reconstruction is banked with `re_log.py --stash`, just as
 for a dump body; no carved-specific ledger exception is needed.
 

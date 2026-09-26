@@ -1,0 +1,131 @@
+Lua 4.0.1 — TeCGraf/PUC-Rio's interpreter, as compiled into lotrbfme.exe
+========================================================================
+
+ALTERED SOURCE VERSION. This tree is NOT pristine upstream. Read the
+"What differs from upstream" section before treating any file here as
+upstream's. Saying so is a condition of the licence, not a courtesy.
+
+Artifact
+--------
+    https://www.lua.org/ftp/lua-4.0.1.tar.gz
+    md5     a31d963dbdf727f9b34eee1e0d29132c
+    sha256  df746e149cf6939e90009d2e540eee918d585b4d1bc6d68b19316a050d484d2a
+
+The version is pinned in-tree and not inferred: `lua.h:25` reads
+`#define LUA_VERSION "Lua 4.0.1"`, and the rows sourced here carry
+`vendored=lua-4.0.1`.
+
+Where the files sit
+-------------------
+Upstream ships four source directories; this tree is those flattened into one,
+which is how EA built it:
+
+    src/        lapi lcode ldebug ldo lfunc lgc llex lmem lobject lparser
+                lstate lstring ltable ltm lundump lvm lzio (+ their headers,
+                llimits.h, lopcodes.h)
+    src/lib/    lauxlib lbaselib ldblib liolib lmathlib lstrlib
+    src/luac/   luac.h print.h
+    include/    lua.h lauxlib.h lualib.h luadebug.h
+
+Each .c carries a `// cl: /MD` first line. /MD is load-bearing: retail linked
+the DLL CRT, so its libc calls go through `__imp__` indirections, and the
+static-CRT direct calls do not byte-match.
+
+What differs from upstream
+--------------------------
+The entries below record code changes reconstructed for this BFME tree. This is
+a deliberately scoped record, not a fresh audit of every flattened Lua file;
+an unlisted file must not be treated as independently re-audited here. BFME's
+Lua is EA's own fork of 4.0.1 — it has a real boolean type where stock 4.0.1
+has none — and the changes below are a RECONSTRUCTION inferred from retail's
+bytes, not a copy of EA's source, which has never been published. Every listed
+change is marked at the point of change in the file itself as well as here.
+
+    lvm.c       58   the boolean tag itself: `not` yields a boolean, the four
+                     conditional-jump opcodes test it, tostring/lessthan handle
+                     it, and OP_PUSHBOOL is dispatched. OP_PUSHNILJMP pushes
+                     EA boolean false. A zero-instruction MSVC _WriteBarrier
+                     keeps the two conditional-jump pop tails separate;
+                     this compiler-shaping addition is not claimed as EA source.
+    lcode.c     31   OP_PUSHBOOL's opcode-mode table entry; `true` compiles to
+                     OP_PUSHBOOL rather than stock's PUSHINT 1; plus
+                     `codepushbool`, a function with NO upstream counterpart
+                     (see the caveat below); __assume(i != 0) preserves
+                     retail encoding order without an emitted instruction
+    lobject.h   15   LUA_TMARK 6 -> 7 and NUM_TAGS 6 -> 7 (retail's luaD_call
+                     stores 7); `int b` added to Value and `bvalue()` to reach
+                     it; `int reqsize` added to Hash
+    lparser.c   14   simpleexp gains TK_TRUE and TK_FALSE cases
+    lobject.c    4   luaO_equalval handles tag 6
+    llex.c       3   "true"/"false" added to the reserved-word table
+    llex.h       3   TK_TRUE, TK_FALSE, and NUM_RESERVED counted to TK_FALSE
+    ltable.c     3   luaH_new takes and stores the caller's requested size
+    ltable.h     2   luaH_new's declaration follows it
+    lopcodes.h   2   OP_PUSHBOOL inserted after OP_POP
+    lapi.c       2   the luaH_new call site
+    lstate.c     2   the luaH_new call site
+    liolib.c         `setreturn`, `io_open`, and `io_write` use retail's fixed
+                     generic error tuple (`pushresult_close`) instead of the
+                     errno-based `pushresult`; numeric `io_write` output uses
+                     the reconstructed `bfmeLogSF` import; `io_open`,
+                     `io_fromto`, and `io_appendto` route regular file opens
+                     through the reconstructed `bfmeFopenVIF` import.
+                     These are BFME-specific reconstruction claims, not claims
+                     about upstream Lua source.
+
+For any file not listed above, compare it with the pinned Lua artifact before
+describing it as pristine; no additional whole-tree audit is claimed here.
+
+The boolean tag has no name in this tree because it has none in the image:
+retail switches on the literal 6, and lotrbfme.exe exports no Lua symbols and
+carries no string naming the tag. Writing `LUA_TBOOLEAN` here would assert a
+spelling the image does not witness, so the literal is used and commented.
+
+What this tree does NOT claim
+-----------------------------
+1. `codepushbool` in lcode.c is THIS repository's C, not upstream's and not
+   EA's. It reproduces all 151 bytes at 0x0099EF70, including the
+   call-vs-encode order around `codelineinfo()`. A compiler assumption that
+   the encoded instruction is nonzero is valid because OP_PUSHBOOL is 6;
+   it supplies a second use that prevents MSVC's single-use folding while
+   emitting no instruction. This reconstruction shaping is not claimed as
+   original EA source. The ledger now attributes the address to lcode.c.
+
+2. `LoadInt`/`LoadSize` in lundump.c compile to the same 25 bytes, and exactly
+   two unclaimed addresses hold them: 0x0099D670 and 0x0099D690. Counts agree,
+   so both are certainly present, but nothing decides which is which. Neither
+   is claimed, following the same standard as the LZHL `_wrap`/`_distance`
+   pair and the inputs/vendor/d3dx9 twins. See `targets/game/reverse/re_attempts.log`.
+
+3. The reconstruction is pinned by bytes, not by documents. No EA Lua source
+   exists publicly to diff against; the evidence that these are EA's changes
+   is that the bodies compiled from them reproduce retail exactly, and that
+   the stock 4.0.1 bodies do not.
+
+Licence
+-------
+Lua 4.0.1 is distributed under TeCGraf/PUC-Rio's own permissive grant, carried
+at the end of `lua.h` (line 215 in this tree) and reproduced verbatim there.
+It grants use, copying, modification and distribution for any purpose,
+including commercial, subject to three conditions:
+
+  - the copyright and permission notice must appear in all copies;
+  - the origin must not be misrepresented — you must not claim you wrote the
+    original software;
+  - ALTERED SOURCE VERSIONS MUST BE PLAINLY MARKED AS SUCH, and must not be
+    misrepresented as being the original software.
+
+That is an MIT/zlib-class permissive licence with no further restrictions, so
+it is compatible with this repository's GPLv3 and combining it with GPLv3 code
+is allowed.
+
+All three conditions are met here: the notice in lua.h is intact and no file
+was stripped of it; nothing in this repository claims authorship of Lua; and
+the alteration is marked in this file, in the header block of every .c, at the
+top of each altered .h, and inline at each point of change.
+
+The third condition was NOT met before this file existed. Every .c carried a
+header block reading "pristine upstream source" while twelve files in the tree
+differed from upstream in code — the licence's own words for that are
+"misrepresented as being the original software". Correcting it is why this
+file was written.

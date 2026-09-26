@@ -15,7 +15,7 @@ import next_work
 def candidate(monkeypatch):
     row = {"name": "?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z",
            "target_rva": "0x001C5A30", "target_size": "267",
-           "source": "Code/Caller.cpp",
+           "source": "game/Caller.cpp",
            "notes": "reloc-derived;call-sites=2;identity=real"}
     monkeypatch.setattr(next_work, "read_csv", lambda *_: ([], [row]))
     rows, _ = next_work.reloc_named_candidates(set(), [])

@@ -1,0 +1,395 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
+#define Matrix4x4 Matrix4  // BFME renamed it
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+////////////////////////////////////////////////////////////////////////////////
+//																																						//
+//  (c) 2001-2003 Electronic Arts Inc.																				//
+//																																						//
+////////////////////////////////////////////////////////////////////////////////
+
+// FILE: PopupReplay.cpp /////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------
+//                                                                          
+//                       Electronic Arts Pacific.                          
+//                                                                          
+//                       Confidential Information                           
+//                Copyright (C) 2002 - All Rights Reserved                  
+//                                                                          
+//-----------------------------------------------------------------------------
+//
+// Project:   Generals
+//
+// File name: PopupReplay.cpp
+//
+// Created:   Matthew D. Campbell, November 2002
+//
+// Desc:      the Replay Save window control
+//
+//-----------------------------------------------------------------------------
+///////////////////////////////////////////////////////////////////////////////
+
+// INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
+
+#include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+
+#include "Common/LocalFileSystem.h"
+#include "Common/MessageStream.h"
+#include "Common/Recorder.h"
+#include "GameClient/GadgetListBox.h"
+#include "GameClient/GadgetTextEntry.h"
+#include "GameClient/GameText.h"
+#include "GameClient/GameWindowManager.h"
+#include "GameClient/GUICallbacks.h"
+#include "GameClient/MessageBox.h"
+#include "GameClient/Shell.h"
+#include "GameLogic/GameLogic.h"
+
+#ifdef _INTERNAL
+// for occasional debugging...
+//#pragma optimize("", off)
+//#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
+#endif
+
+// PRIVATE DATA ///////////////////////////////////////////////////////////////////////////////////
+// The four Replay TUs share these exact retail objects. Name keys occupy
+// VA 0x012F404C..58; windows/time/message box occupy 0x012F405C..68;
+// replayPath is the 12-byte STLport string at 0x012F406C. Namespace linkage
+// prevents collision with other menus' private variables named parent.
+namespace PopupReplayState
+{
+NameKeyType buttonBackKey					= NAMEKEY_INVALID;
+NameKeyType buttonSaveKey					= NAMEKEY_INVALID;
+NameKeyType listboxGamesKey				= NAMEKEY_INVALID;
+NameKeyType textEntryReplayNameKey = NAMEKEY_INVALID;
+
+GameWindow *parent = NULL;
+GameWindow *replaySavedParent = NULL;
+
+time_t s_fileSavePopupStartTime = 0;
+static const time_t s_fileSavePopupDuration = 1000;
+std::string replayPath;
+GameWindow *messageBoxWin = NULL;
+
+}
+using namespace PopupReplayState;
+
+// PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////////////////////////
+extern void PopulateReplayFileListbox(GameWindow *listbox);
+extern void ScoreScreenEnableControls(Bool enable);
+extern UnicodeString GetReplayFilenameFromListbox(GameWindow *listbox, Int index);
+extern std::string LastReplayFileName;
+
+//-------------------------------------------------------------------------------------------------
+/** Show or hide the "Replay Saved" popup */
+//-------------------------------------------------------------------------------------------------
+void ShowReplaySavedPopup(Bool show)
+{
+	if (replaySavedParent != NULL) {
+		if (show) {
+			replaySavedParent->winHide(FALSE);
+		} else {
+			replaySavedParent->winHide(TRUE);
+		}
+	}
+}
+
+// ------------------------------------------------------------------------------------------------
+/** Close the save/load menu */
+// ------------------------------------------------------------------------------------------------
+static void closeSaveMenu( GameWindow *window )
+{
+	WindowLayout *layout = window->winGetLayout();
+
+	if( layout )
+	{
+		struct PopupReplayWindowLayoutVirtual
+		{
+			virtual void unused0( void ) = 0;
+			virtual void unused1( void ) = 0;
+			virtual void unused2( void ) = 0;
+			virtual void unused3( void ) = 0;
+			virtual void hide( Bool hide ) = 0;
+		};
+		((PopupReplayWindowLayoutVirtual *)layout)->hide( TRUE );
+	}
+
+}  // end closeSaveMenu
+
+//-------------------------------------------------------------------------------------------------
+/** Initialize the SaveLoad menu */
+//-------------------------------------------------------------------------------------------------
+// Retail initialization is emitted by PopupReplayInit_Thunk.cpp.
+extern void PopupReplayInit(WindowLayout *, void *);
+
+//-------------------------------------------------------------------------------------------------
+/** SaveLoad menu shutdown method */
+//-------------------------------------------------------------------------------------------------
+void PopupReplayShutdown( WindowLayout *layout, void *userData )
+{
+	parent = NULL;
+
+}  // end SaveLoadMenuShutdown
+
+//-------------------------------------------------------------------------------------------------
+/** SaveLoad menu update method */
+//-------------------------------------------------------------------------------------------------
+void PopupReplayUpdate( WindowLayout *layout, void *userData )
+{
+
+	if (s_fileSavePopupStartTime != 0) 
+	{
+		// the replay save confirmation popup is up
+		// check to see if its time to take it down.
+		if ((timeGetTime() - s_fileSavePopupStartTime) >= s_fileSavePopupDuration) 
+		{
+			ShowReplaySavedPopup(FALSE);
+
+			// close the save/load menu
+			closeSaveMenu( parent );
+			ScoreScreenEnableControls(TRUE);
+
+			// reset the timer to 0 cause we have to.
+			s_fileSavePopupStartTime = 0;
+		}
+	}
+}  // end SaveLoadMenuUpdate 
+
+// ------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+WindowMsgHandledType PopupReplayInput( GameWindow *window, UnsignedInt msg, WindowMsgData mData1, WindowMsgData mData2 )
+{
+	switch( msg ) 
+	{
+
+		// --------------------------------------------------------------------------------------------
+		case GWM_CHAR:
+		{
+			UnsignedByte key = mData1;
+			UnsignedByte state = mData2;
+
+			switch( key )
+			{
+
+				// ----------------------------------------------------------------------------------------
+				case KEY_ESC:
+				{
+					
+					//
+					// send a simulated selected event to the parent window of the
+					// back/exit button
+					//
+					if( BitTest( state, KEY_STATE_UP ) )
+					{
+						GameWindow *button = TheWindowManager->winGetWindowFromId( parent, buttonBackKey );
+						TheWindowManager->winSendSystemMsg( window, GBM_SELECTED, 
+																								(WindowMsgData)button, buttonBackKey );
+
+					}  // end if
+
+					// don't let key fall through anywhere else
+					return MSG_HANDLED;
+
+				}  // end escape
+
+			}  // end switch( key )
+
+		}  // end char
+
+	}  // end switch( msg )
+
+	return MSG_IGNORED;
+}
+
+extern void saveReplay( UnicodeString filename );
+extern void reallySaveReplay(void);
+
+//-------------------------------------------------------------------------------------------------
+/** SaveLoad menu system callback */
+//-------------------------------------------------------------------------------------------------
+// BFME's UnicodeString copy constructor and assignment helpers are inline
+// forwarders to StringBase<unsigned short> (retail 0x00888400/0x00888530).
+// Keeping these definitions immediately before this callback preserves the
+// retail EH temporary ordering. One unchanged funclet gets a new compiler label.
+#include "string_base.h"
+
+inline UnicodeString::UnicodeString(const UnicodeString &stringSrc)
+{
+	((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(
+		*(const StringBase<unsigned short> *)&stringSrc);
+}
+
+inline void PopupReplaySetUnicodeString(UnicodeString &destination,
+	const UnicodeString &source)
+{
+	((StringBase<unsigned short> *)&destination)->set(
+		*(const StringBase<unsigned short> *)&source);
+}
+
+WindowMsgHandledType PopupReplaySystem( GameWindow *window, UnsignedInt msg, 
+																				 WindowMsgData mData1, WindowMsgData mData2 )
+{
+
+  switch( msg ) 
+	{
+
+		// --------------------------------------------------------------------------------------------
+		case GWM_CREATE:
+		{
+
+			break;
+
+		}  // end create
+    //---------------------------------------------------------------------------------------------
+		case GWM_DESTROY:
+		{
+
+			break;
+
+		}  // end case
+
+    //----------------------------------------------------------------------------------------------
+    case GWM_INPUT_FOCUS:
+		{
+
+			// if we're givin the opportunity to take the keyboard focus we must say we want it
+			if( mData1 == TRUE )
+				*(Bool *)mData2 = TRUE;
+
+			break;
+
+		}  // end input
+
+		// --------------------------------------------------------------------------------------------
+		case 0x4014: // BFME GLM_SELECTED
+		{
+			GameWindow *control = (GameWindow *)mData1;
+
+			GameWindow *listboxGames = TheWindowManager->winGetWindowFromId( window, listboxGamesKey );
+			DEBUG_ASSERTCRASH( listboxGames != NULL, ("PopupReplaySystem - Unable to find games listbox\n") );
+
+			//
+			// handle games listbox, when certain items are selected in the listbox only some
+			// commands are available
+			//
+			if( control == listboxGames )
+			{
+				int rowSelected = mData2;
+				if (rowSelected >= 0)
+				{
+					UnicodeString filename;
+					PopupReplaySetUnicodeString(filename,
+						GadgetListBoxGetText(listboxGames, rowSelected));
+					GameWindow *textEntryReplayName = TheWindowManager->winGetWindowFromId( window, textEntryReplayNameKey );
+					DEBUG_ASSERTCRASH( textEntryReplayName != NULL, ("PopupReplaySystem - Unable to find text entry\n") );
+					GadgetTextEntrySetText(textEntryReplayName, filename);
+				}
+			}
+
+			break;
+
+		}  // end selected
+
+    //---------------------------------------------------------------------------------------------
+		case GEM_EDIT_DONE:
+		{
+			GameWindow *control = (GameWindow *)mData1;
+			Int controlID = control->winGetWindowId();
+
+      if( controlID == textEntryReplayNameKey )
+      {
+				UnicodeString filename = GadgetTextEntryGetText( control );
+				if (filename.isEmpty())
+					break;
+
+				saveReplay(filename);
+
+      }
+	
+			break;
+
+		}  // end selected
+    //---------------------------------------------------------------------------------------------
+		case GBM_SELECTED:
+		{
+			GameWindow *control = (GameWindow *)mData1;
+			Int controlID = control->winGetWindowId();
+
+      if( controlID == buttonSaveKey )
+      {
+				// get the filename, and see if we are overwriting
+				GameWindow *textEntryReplayName = TheWindowManager->winGetWindowFromId( window, textEntryReplayNameKey );
+				DEBUG_ASSERTCRASH( textEntryReplayName != NULL, ("PopupReplaySystem - Unable to find text entry\n") );
+
+				UnicodeString filename = GadgetTextEntryGetText( textEntryReplayName );
+				if (filename.isEmpty())
+					break;
+
+				saveReplay(filename);
+
+      }
+			else if( controlID == buttonBackKey )
+			{
+
+				// close the save/load menu
+				closeSaveMenu( window );
+				ScoreScreenEnableControls(TRUE);
+
+			}  // end if
+	
+			break;
+
+		}  // end selected
+
+		case GEM_UPDATE_TEXT:
+		{
+			//Kris:
+			//Enable or disable the save button -- disabled when empty.
+			GameWindow *control = TheWindowManager->winGetWindowFromId( parent, textEntryReplayNameKey );
+			if( control )
+			{
+				UnicodeString filename;
+				PopupReplaySetUnicodeString(filename, GadgetTextEntryGetText( control ));
+				control = TheWindowManager->winGetWindowFromId( parent, buttonSaveKey );
+				if( control )
+				{
+					if( filename.isEmpty() )
+					{
+						control->winEnable( FALSE );
+					}
+					else
+					{
+						control->winEnable( TRUE );
+					}
+				}
+			}
+		}
+
+		default:
+			return MSG_IGNORED;
+
+	}  // end switch
+
+	return MSG_HANDLED;
+
+}
+
+typedef char PopupReplayUnicodeSize[sizeof(UnicodeString) == 4 ? 1 : -1];
+typedef char PopupReplayStringBaseSize[sizeof(StringBase<unsigned short>) == 4 ? 1 : -1];

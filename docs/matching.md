@@ -1,8 +1,8 @@
 # Matching a function
 
-1. Write the C++ under `Code/` at its official-tree path (see below), add a row to
-   `reverse/functions.csv`, then verify.
-   - `./build.sh Code/path/to/file.cpp` (or a function name) compiles and byte-compares that source.
+1. Write the C++ under `game/` at its official-tree path (see below), add a row to
+   `targets/game/reverse/functions.csv`, then verify.
+   - `./build.sh game/path/to/file.cpp` (or a function name) compiles and byte-compares that source.
    - The commit hook runs the full gate for header/reference changes; run it once after a
      resolved merge. Normal commits and pushes gate their delta.
    Builds use MSVC 7.1 and fail on any mismatch.
@@ -15,14 +15,14 @@
      references (`verify_dir32_consistency`). Write the real literal, not a lookalike.
    - **REL32** (calls/jumps): resolved to the callee's address. A matched callee resolves
      automatically; for anything else (CRT helpers like `__ftol2`, not-yet-matched functions)
-     add `name,address` to `reverse/symbols.csv`. The build prints the unresolved name on
+     add `name,address` to `targets/game/reverse/symbols.csv`. The build prints the unresolved name on
      failure. Find the address by disassembling the target and computing the call destination,
      or look it up in the Ghidra inventory (`tools/ghidra/`). Append with the file's own line
      terminator (CRLF today): it is `merge=union`, so a pin that differs from its twin only by
      a `\r` is a new line to the merge driver and duplicates on the next rebase. `check_csv`
      rejects a mixed file; `python3 tools/dedup_csv.py` repairs one.
 
-Leaf functions (no calls) are easiest; `reverse/symbols.csv` is what makes call-using functions matchable.
+Leaf functions (no calls) are easiest; `targets/game/reverse/symbols.csv` is what makes call-using functions matchable.
 
 Useful iteration tools:
 
@@ -34,7 +34,7 @@ Useful iteration tools:
 
 A new header earlier in the include search path can shadow a recorded dependency
 without invalidating its cached object. When checking such a change, force the
-affected TU with `BUILD_RECOMPILE_ONLY=Code/path/to/file.cpp ./build.sh Code/path/to/file.cpp`
+affected TU with `BUILD_RECOMPILE_ONLY=game/path/to/file.cpp ./build.sh game/path/to/file.cpp`
 and confirm that it recompiles. Existing dependency hashes do not prove which
 header a fresh compiler would select; forcing a build does not fix that cache limitation.
 
@@ -77,7 +77,7 @@ so `float`, `unsigned int`, `int`, and `const char *` land at the target vtable 
 ## Reference source
 
 BFME is the SAGE engine — its original source largely survives in the vendored
-`reference/CnC_Generals_Zero_Hour/` (GPLv3, same license as this repo). **BFME forks from Zero
+`inputs/reference/CnC_Generals_Zero_Hour/` (GPLv3, same license as this repo). **BFME forks from Zero
 Hour: always port from `GeneralsMD/` (= ZH), never `Generals/`.** Many functions match verbatim.
 Reconcile against the binary (the source of truth).
 
@@ -86,9 +86,9 @@ For exact function sizes, the full function inventory, and the bulk-port pipelin
 
 ### Rows sourced from the vendored tree
 
-A ledger row may name a `reference/` file directly, and `./build.sh <that file>` builds it.
+A ledger row may name a `inputs/reference/` file directly, and `./build.sh <that file>` builds it.
 The tree stays pristine — being unmodified upstream is its whole value — so its files carry
-neither the `// stlport` marker nor the `// cl:` line a `Code/` source uses to declare its
+neither the `// stlport` marker nor the `// cl:` line a `game/` source uses to declare its
 build settings. `build.py` derives both from the path instead: the ZH include set, and
 STLport for everything outside `Libraries/Source/WWVegas/`. `tools/zh_sweep.py` measured
 that split over 420 translation units, with no exceptions either way.
@@ -100,12 +100,12 @@ leaves 252 with no consistent copy and 16 with exactly one — every one of whic
 claimed. The anchor lands nothing, because the functions distinctive enough to anchor are
 the ones earlier passes already identified.
 
-`tools/conversion_gate.py` scans added lines under `Code/` only, so these rows fall outside
+`tools/conversion_gate.py` scans added lines under `game/` only, so these rows fall outside
 its Rule A, and that is deliberate. Rule A stops a contributor deleting authored C++ and
 committing an `__emit` byte dump in its place; nobody authors the vendored tree, and nine of
 its files legitimately contain `__emit` already, so scanning it would fire on the next
 re-vendor rather than on any real regression. Rule B — a matched RVA that had a clean C++
-source must still have one — reads whatever path a row names, so a `reference/` row can
+source must still have one — reads whatever path a row names, so a `inputs/reference/` row can
 never be swapped out from under a live clean claim.
 
 ## Third-party code the binary links, and where each one stands

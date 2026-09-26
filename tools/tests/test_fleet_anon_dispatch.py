@@ -12,13 +12,13 @@ import portable_lock  # noqa: E402
 
 
 def fixture(tmp_path, monkeypatch, busy=()):
-    (tmp_path / "reverse").mkdir()
+    (tmp_path / "targets/game/reverse").mkdir(parents=True)
     (tmp_path / "build/fleet_logs").mkdir(parents=True)
-    (tmp_path / "reverse/functions.csv").write_text(
+    (tmp_path / "targets/game/reverse/functions.csv").write_text(
         "name,export_rva,target_rva,target_size,source,status,notes\n"
-        "?f@@YAXXZ,,0x00000ff0,32,Code/landed.cpp,matched,\n"
-        "?d_00002000@@YAXXZ,,0x00002000,400,Code/masm_dumps/body.asm,matched,\n")
-    (tmp_path / "reverse/carved.csv").write_text(
+        "?f@@YAXXZ,,0x00000ff0,32,game/landed.cpp,matched,\n"
+        "?d_00002000@@YAXXZ,,0x00002000,400,game/masm_dumps/body.asm,matched,\n")
+    (tmp_path / "targets/game/reverse/carved.csv").write_text(
         "rva,size,start_evidence,callers,end_evidence,ghidra\n"
         "0x00001000,400,rel32-call/jmp,2,ret+int3,\n")
     monkeypatch.setattr(eligibility, "busy_rvas", lambda root: set(busy))
@@ -69,11 +69,11 @@ def test_expensive_anonymous_preparation_runs_while_picker_lock_is_held(tmp_path
 
 def test_removed_unlock_cannot_authorize_an_unchanged_blind_repeat(tmp_path, monkeypatch):
     fixture(tmp_path, monkeypatch)
-    (tmp_path / "reverse/re_attempts.log").write_text(
+    (tmp_path / "targets/game/reverse/re_attempts.log").write_text(
         "?d_00002000@@YAXXZ\t0x00002000\t400\tblocked\tt=20 first\n"
         "?d_00002000@@YAXXZ\t0x00002000\t400\tblocked\tt=20 second\n")
     prepared = [(4, 400, "0x00002000", None, 0)]  # warmth was only the unlock bonus
-    unlocks = tmp_path / "reverse/unlocked.txt"
+    unlocks = tmp_path / "targets/game/reverse/unlocked.txt"
     unlocks.write_text("0x00002000 shared-pin\n")
     assert pick_anon.finalize(prepared, 1, 300, 2500, tmp_path, dry=True) == ["0x00002000"]
     unlocks.unlink()

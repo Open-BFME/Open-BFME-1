@@ -91,7 +91,7 @@ the two operands is touched.
 ## Applying it to a real body: negative result
 
 `drawTypeText` at `0x005A0450` has EXACTLY the P7 shape in its real source
-(`reverse/attempts/0x005a0450.cpp`): `clipRegion.lo.x = origin.x;` and
+(`targets/game/reverse/attempts/0x005a0450.cpp`): `clipRegion.lo.x = origin.x;` and
 `clipRegion.lo.y = origin.y;` sit between `origin`/`size` being filled and
 the `addCoords(origin.x, width)` call at the residual `+0xDE`. Per the
 micro-experiment, REMOVING that intervening touch (moving the `lo.x`/`lo.y`
@@ -133,7 +133,7 @@ register-pressure argument applies to all three (all are ~220-560 byte
 bodies with several other live locals around the residual `lea`).
 
 No new bodies landed this session. All four RVAs remain at their prior
-`blocked`/`partial` state in `reverse/re_attempts.log`; no new re_log entry
+`blocked`/`partial` state in `targets/game/reverse/re_attempts.log`; no new re_log entry
 was needed since nothing changed about them (this session worked entirely
 in the untracked `build/sib_experiment/` scratch harness plus one revert-only
 probe against the existing stash).

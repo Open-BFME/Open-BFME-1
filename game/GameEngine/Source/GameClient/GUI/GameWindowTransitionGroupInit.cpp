@@ -1,0 +1,317 @@
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
+// stlport
+#define _STLP_NO_EXCEPTIONS 1
+#include <list>
+
+typedef int NameKeyType;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+struct AsciiStringData
+{
+	int m_refCount;
+	int m_length;
+	char m_text[1];
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+class AsciiString
+{
+public:
+	const char *str(void) const
+	{
+		return m_data ? m_data->m_text : "";
+	}
+
+private:
+	AsciiStringData *m_data;
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+class NameKeyGenerator
+{
+public:
+	NameKeyType nameToKey(const char *name);
+};
+
+extern NameKeyGenerator *TheNameKeyGenerator;
+
+class GameWindow;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
+class GameWindowManager
+{
+public:
+	virtual void bfmeSlot00(void) = 0;
+	virtual void bfmeSlot01(void) = 0;
+	virtual void bfmeSlot02(void) = 0;
+	virtual void bfmeSlot03(void) = 0;
+	virtual void bfmeSlot04(void) = 0;
+	virtual void bfmeSlot05(void) = 0;
+	virtual void bfmeSlot06(void) = 0;
+	virtual void bfmeSlot07(void) = 0;
+	virtual void bfmeSlot08(void) = 0;
+	virtual void bfmeSlot09(void) = 0;
+	virtual void bfmeSlot10(void) = 0;
+	virtual void bfmeSlot11(void) = 0;
+	virtual void bfmeSlot12(void) = 0;
+	virtual void bfmeSlot13(void) = 0;
+	virtual void bfmeSlot14(void) = 0;
+	virtual void bfmeSlot15(void) = 0;
+	virtual void bfmeSlot16(void) = 0;
+	virtual void bfmeSlot17(void) = 0;
+	virtual void bfmeSlot18(void) = 0;
+	virtual void bfmeSlot19(void) = 0;
+	virtual void bfmeSlot20(void) = 0;
+	virtual void bfmeSlot21(void) = 0;
+	virtual void bfmeSlot22(void) = 0;
+	virtual void bfmeSlot23(void) = 0;
+	virtual void bfmeSlot24(void) = 0;
+	virtual void bfmeSlot25(void) = 0;
+	virtual void bfmeSlot26(void) = 0;
+	virtual void bfmeSlot27(void) = 0;
+	virtual void bfmeSlot28(void) = 0;
+	virtual void bfmeSlot29(void) = 0;
+	virtual void bfmeSlot30(void) = 0;
+	virtual void bfmeSlot31(void) = 0;
+	virtual void bfmeSlot32(void) = 0;
+	virtual void bfmeSlot33(void) = 0;
+	virtual void bfmeSlot34(void) = 0;
+	virtual void bfmeSlot35(void) = 0;
+	virtual void bfmeSlot36(void) = 0;
+	virtual void bfmeSlot37(void) = 0;
+	virtual void bfmeSlot38(void) = 0;
+	virtual void bfmeSlot39(void) = 0;
+	virtual void bfmeSlot40(void) = 0;
+	virtual void bfmeSlot41(void) = 0;
+	virtual void bfmeSlot42(void) = 0;
+	virtual void bfmeSlot43(void) = 0;
+	virtual void bfmeSlot44(void) = 0;
+	virtual void bfmeSlot45(void) = 0;
+	virtual void bfmeSlot46(void) = 0;
+	virtual void bfmeSlot47(void) = 0;
+	virtual void bfmeSlot48(void) = 0;
+	virtual void bfmeSlot49(void) = 0;
+	virtual void bfmeSlot50(void) = 0;
+	virtual void bfmeSlot51(void) = 0;
+	virtual void bfmeSlot52(void) = 0;
+	virtual void bfmeSlot53(void) = 0;
+	virtual void bfmeSlot54(void) = 0;
+	virtual GameWindow *winGetWindowFromId(GameWindow *parent, NameKeyType id) = 0;
+};
+
+extern GameWindowManager *TheWindowManager;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
+class Transition
+{
+public:
+	virtual void bfmeSlot0(void) = 0;
+	virtual void init(GameWindow *window) = 0;
+	virtual void update(int frame) = 0;
+	virtual void reverse(void) = 0;
+	virtual void draw(void) = 0;
+	virtual void reset(void) = 0;
+	virtual void skip(void) = 0;
+
+	int getFrameLength(void) { return m_frameLength; }
+
+private:
+	int m_frameLength;
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
+class TransitionWindow
+{
+public:
+	bool init(void);
+	void draw(void);
+	void update(int frame);
+	void reverse(int totalFrames);
+	void reset(void);
+	void skip(void);
+	int getTotalFrames(void);
+
+private:
+	AsciiString m_winName;
+	int m_frameDelay;
+	NameKeyType m_winID;
+	GameWindow *m_win;
+	Transition *m_transition;
+	int m_currentFrameDelay;
+};
+
+inline bool TransitionWindow::init(void)
+{
+	m_winID = TheNameKeyGenerator->nameToKey(m_winName.str());
+	m_win = TheWindowManager->winGetWindowFromId(0, m_winID);
+	m_currentFrameDelay = m_frameDelay;
+	m_transition->init(m_win);
+	return true;
+}
+
+inline void TransitionWindow::draw(void)
+{
+	if (m_transition)
+		m_transition->draw();
+}
+
+inline void TransitionWindow::update(int frame)
+{
+	if (frame < m_currentFrameDelay ||
+		frame > m_currentFrameDelay + m_transition->getFrameLength())
+		return;
+
+	if (m_transition)
+		m_transition->update(frame - m_currentFrameDelay);
+}
+
+inline void TransitionWindow::reverse(int)
+{
+	if (m_transition)
+		m_transition->reverse();
+}
+
+inline void TransitionWindow::reset(void)
+{
+	if (m_transition)
+		m_transition->reset();
+}
+
+inline void TransitionWindow::skip(void)
+{
+	if (m_transition)
+		m_transition->skip();
+}
+
+inline int TransitionWindow::getTotalFrames(void)
+{
+	if (m_transition)
+		return m_frameDelay + m_transition->getFrameLength();
+
+	return m_frameDelay;
+}
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
+class GameWindowTransitionsHandler
+{
+public:
+	unsigned char m_unmodelled[0x50];
+	int m_transitionEndFrame;
+};
+
+extern GameWindowTransitionsHandler *TheTransitionHandler;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
+class TransitionGroup
+{
+public:
+	void init(void);
+	void draw(void);
+	void update(void);
+	void reverse(void);
+	void reset(void);
+	void skip(void);
+	int getTotalFrames(void);
+
+private:
+	bool m_fireOnce;
+	unsigned char m_unmodelled01[3];
+	_STL::list<TransitionWindow *> m_transitionWindowList;
+	int m_directionMultiplier;
+	int m_currentFrame;
+	AsciiString m_name;
+};
+
+// BFME extends the ZH initialization with an end-frame cache on the global
+// transition handler.
+// ?init@TransitionGroup@@QAEXXZ
+void TransitionGroup::init(void)
+{
+	m_currentFrame = 0;
+	m_directionMultiplier = 1;
+	_STL::list<TransitionWindow *>::iterator it = m_transitionWindowList.begin();
+	while (it != m_transitionWindowList.end())
+	{
+		TransitionWindow *window = *it;
+		window->init();
+		++it;
+	}
+
+	TheTransitionHandler->m_transitionEndFrame = getTotalFrames() + 3;
+}
+
+// ?draw@TransitionGroup@@QAEXXZ
+void TransitionGroup::draw(void)
+{
+	_STL::list<TransitionWindow *>::iterator it = m_transitionWindowList.begin();
+	while (it != m_transitionWindowList.end())
+	{
+		TransitionWindow *window = *it;
+		window->draw();
+		++it;
+	}
+}
+
+// ?update@TransitionGroup@@QAEXXZ
+void TransitionGroup::update(void)
+{
+	m_currentFrame += m_directionMultiplier;
+	_STL::list<TransitionWindow *>::iterator it = m_transitionWindowList.begin();
+	while (it != m_transitionWindowList.end())
+	{
+		TransitionWindow *window = *it;
+		window->update(m_currentFrame);
+		++it;
+	}
+}
+
+// ?reverse@TransitionGroup@@QAEXXZ
+void TransitionGroup::reverse(void)
+{
+	int totalFrames = 0;
+	m_directionMultiplier = -1;
+
+	_STL::list<TransitionWindow *>::iterator it = m_transitionWindowList.begin();
+	while (it != m_transitionWindowList.end())
+	{
+		TransitionWindow *window = *it;
+		int windowFrames = window->getTotalFrames();
+		if (windowFrames > totalFrames)
+			totalFrames = windowFrames;
+		++it;
+	}
+
+	it = m_transitionWindowList.begin();
+	while (it != m_transitionWindowList.end())
+	{
+		TransitionWindow *window = *it;
+		window->reverse(totalFrames);
+		++it;
+	}
+
+	m_currentFrame = totalFrames;
+}
+
+// ?reset@TransitionGroup@@QAEXXZ
+void TransitionGroup::reset(void)
+{
+	_STL::list<TransitionWindow *>::iterator it = m_transitionWindowList.begin();
+	while (it != m_transitionWindowList.end())
+	{
+		TransitionWindow *window = *it;
+		window->reset();
+		++it;
+	}
+}
+
+// ?skip@TransitionGroup@@QAEXXZ
+void TransitionGroup::skip(void)
+{
+	_STL::list<TransitionWindow *>::iterator it = m_transitionWindowList.begin();
+	while (it != m_transitionWindowList.end())
+	{
+		TransitionWindow *window = *it;
+		window->skip();
+		++it;
+	}
+}

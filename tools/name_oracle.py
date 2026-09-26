@@ -3,8 +3,8 @@
 
 WHY THIS EXISTS. An agent invents `m_unk20` because finding the real name costs it
 four minutes and inventing one costs nothing. The repository already holds the real
-name -- 9,539 (class, member) pairs sit in reverse/zh_offsets.json and 2,063 more in
-reverse/field_names.csv -- but nothing puts them in front of the agent at the moment
+name -- 9,539 (class, member) pairs sit in targets/game/reverse/zh_offsets.json and 2,063 more in
+targets/game/reverse/field_names.csv -- but nothing puts them in front of the agent at the moment
 it is choosing, so the evidence is re-derived by hand or, more often, skipped. The
 ASK mode is the fix for that: one command, one answer, no judgement.
 
@@ -36,11 +36,11 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-LAYOUTS = ROOT / "reverse/bfme_layouts.json"
-FIELDS = ROOT / "reverse/field_names.csv"
-BASELINE = ROOT / "reverse/name_oracle_baseline.csv"
-ZH_OFFSETS = ROOT / "reverse/zh_offsets.json"
-AREAS = ("Code/GameEngine", "Code/GameEngineDevice", "Code/Libraries")
+LAYOUTS = ROOT / "targets/game/reverse/bfme_layouts.json"
+FIELDS = ROOT / "targets/game/reverse/field_names.csv"
+BASELINE = ROOT / "targets/game/reverse/name_oracle_baseline.csv"
+ZH_OFFSETS = ROOT / "targets/game/reverse/zh_offsets.json"
+AREAS = ("game/GameEngine", "game/GameEngineDevice", "game/Libraries")
 
 # The confidence floor below which layout_witness's own aggregation says the
 # alignment was too poor to name a member. Quoting a 0.4-confidence witness at an

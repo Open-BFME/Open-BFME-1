@@ -1,0 +1,581 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// stlport
+#define Matrix4x4 Matrix4  // BFME renamed it
+#define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
+// stlport
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+////////////////////////////////////////////////////////////////////////////////
+//																																						//
+//  (c) 2001-2003 Electronic Arts Inc.																				//
+//																																						//
+////////////////////////////////////////////////////////////////////////////////
+
+
+#include "Common/Debug.h"
+#include "W3DDevice/GameClient/W3DBufferManager.h"
+
+W3DBufferManager *TheW3DBufferManager=NULL;	//singleton
+
+static int FVFTypeIndexList[W3DBufferManager::MAX_FVF]=
+{
+	D3DFVF_XYZ,
+	D3DFVF_XYZ|D3DFVF_DIFFUSE,
+	D3DFVF_XYZ|D3DFVF_TEX1,
+	D3DFVF_XYZ|D3DFVF_DIFFUSE|D3DFVF_TEX1,
+	D3DFVF_XYZ|D3DFVF_TEX2,
+	D3DFVF_XYZ|D3DFVF_DIFFUSE|D3DFVF_TEX2,
+	D3DFVF_XYZ|D3DFVF_NORMAL,
+	D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_DIFFUSE,
+	D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_TEX1,
+	D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_DIFFUSE|D3DFVF_TEX1,
+	D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_TEX2,
+	D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_DIFFUSE|D3DFVF_TEX2,
+	D3DFVF_XYZRHW,
+	D3DFVF_XYZRHW|D3DFVF_DIFFUSE,
+	D3DFVF_XYZRHW|D3DFVF_TEX1,
+	D3DFVF_XYZRHW|D3DFVF_DIFFUSE|D3DFVF_TEX1,
+	D3DFVF_XYZRHW|D3DFVF_TEX2,
+	D3DFVF_XYZRHW|D3DFVF_DIFFUSE|D3DFVF_TEX2
+};
+
+Int W3DBufferManager::getDX8Format(VBM_FVF_TYPES format)
+{
+	return FVFTypeIndexList[format];
+}
+
+// header's declarations.  Keep that drift local to this body so the matched
+// ZH-era methods below continue to compile against their vendored header.
+W3DBufferManager::W3DBufferManager(void)
+{
+	struct BFMEBufferSlotStorage
+	{
+		unsigned int value0;
+		unsigned int value1;
+		unsigned int value2;
+		unsigned int value3;
+		unsigned int value4;
+		unsigned int value5;
+		unsigned int value6;
+	};
+	struct BFMEIndexBufferStorage
+	{
+		unsigned int value0;
+		unsigned int value1;
+		unsigned int value2;
+		unsigned int value3;
+		unsigned int value4;
+	};
+	struct BFMEBufferManagerView
+	{
+		unsigned int vertexSlotLists[18][512];
+		unsigned int vertexBuffers[18];
+		BFMEBufferSlotStorage emptyVertexSlots[4096];
+		unsigned int numEmptySlots;
+		BFMEBufferSlotStorage emptyVertexBuffers[32];
+		unsigned int numEmptyVertexBuffers;
+		unsigned int indexSlotLists[1024];
+		unsigned int indexBuffers;
+		BFMEBufferSlotStorage emptyIndexSlots[4096];
+		unsigned int numEmptyIndexSlots;
+		BFMEIndexBufferStorage emptyIndexBuffers[32];
+		unsigned int numEmptyIndexBuffers;
+	};
+	BFMEBufferManagerView *bfme = reinterpret_cast<BFMEBufferManagerView *>(this);
+
+	bfme->numEmptySlots=0;
+	bfme->numEmptyVertexBuffers=0;
+	bfme->indexBuffers=0;
+	bfme->numEmptyIndexSlots=0;
+	bfme->numEmptyIndexBuffers=0;
+
+	for (Int i=0; i<18; i++)
+		bfme->vertexBuffers[i]=0;
+	for (Int i=0; i<18*512; i++)
+		reinterpret_cast<unsigned int *>(bfme->vertexSlotLists)[i]=0;
+	for (Int i=0; i<4096; i++)
+	{
+		bfme->emptyVertexSlots[i].value0=0;
+		bfme->emptyVertexSlots[i].value1=0;
+		bfme->emptyVertexSlots[i].value2=0;
+		bfme->emptyVertexSlots[i].value3=0;
+		bfme->emptyVertexSlots[i].value4=0;
+		bfme->emptyVertexSlots[i].value5=0;
+		bfme->emptyVertexSlots[i].value6=0;
+	}
+	for (Int i=0; i<32; i++)
+	{
+		bfme->emptyVertexBuffers[i].value0=0;
+		bfme->emptyVertexBuffers[i].value1=0;
+		bfme->emptyVertexBuffers[i].value2=0;
+		bfme->emptyVertexBuffers[i].value3=0;
+		bfme->emptyVertexBuffers[i].value4=0;
+		bfme->emptyVertexBuffers[i].value5=0;
+		bfme->emptyVertexBuffers[i].value6=0;
+	}
+	for (Int i=0; i<1024; i++)
+		bfme->indexSlotLists[i]=0;
+	for (Int i=0; i<4096; i++)
+	{
+		bfme->emptyIndexSlots[i].value0=0;
+		bfme->emptyIndexSlots[i].value1=0;
+		bfme->emptyIndexSlots[i].value2=0;
+		bfme->emptyIndexSlots[i].value3=0;
+		bfme->emptyIndexSlots[i].value4=0;
+		bfme->emptyIndexSlots[i].value5=0;
+		bfme->emptyIndexSlots[i].value6=0;
+	}
+	for (Int i=0; i<32; i++)
+	{
+		bfme->emptyIndexBuffers[i].value0=0;
+		bfme->emptyIndexBuffers[i].value1=0;
+		bfme->emptyIndexBuffers[i].value2=0;
+		bfme->emptyIndexBuffers[i].value3=0;
+		bfme->emptyIndexBuffers[i].value4=0;
+	}
+}
+
+W3DBufferManager::~W3DBufferManager(void)
+{
+	freeAllSlots();
+	freeAllBuffers();
+}
+
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DBufferManager_Slots.cpp
+// ?freeAllSlots@W3DBufferManager@@ present-unmatched
+void W3DBufferManager::freeAllSlots(void)
+{
+	Int i,j;
+
+	for (i=0; i<MAX_FVF; i++)
+	{
+		for (j=0; j<MAX_VB_SIZES; j++)
+		{
+			//Release all slots allocated for each size
+			W3DVertexBufferSlot *vbSlot = m_W3DVertexBufferSlots[i][j];
+			while (vbSlot)
+			{
+				if (vbSlot->m_prevSameVB)
+					vbSlot->m_prevSameVB->m_nextSameVB=vbSlot->m_nextSameVB;
+				else
+					vbSlot->m_VB->m_usedSlots=NULL;
+
+				if (vbSlot->m_nextSameVB)
+					vbSlot->m_nextSameVB->m_prevSameVB=vbSlot->m_prevSameVB;
+				vbSlot=vbSlot->m_nextSameSize;
+				m_numEmptySlotsAllocated--;
+			}
+			m_W3DVertexBufferSlots[i][j]=NULL;
+		}
+	}
+
+	for (j=0; j<MAX_IB_SIZES; j++)
+	{
+		//Release all slots allocated for each size
+		W3DIndexBufferSlot *ibSlot = m_W3DIndexBufferSlots[j];
+		while (ibSlot)
+		{
+			if (ibSlot->m_prevSameIB)
+				ibSlot->m_prevSameIB->m_nextSameIB=ibSlot->m_nextSameIB;
+			else
+				ibSlot->m_IB->m_usedSlots=NULL;
+
+			if (ibSlot->m_nextSameIB)
+				ibSlot->m_nextSameIB->m_prevSameIB=ibSlot->m_prevSameIB;
+			ibSlot=ibSlot->m_nextSameSize;
+			m_numEmptyIndexSlotsAllocated--;
+		}
+		m_W3DIndexBufferSlots[j]=NULL;
+	}
+
+	DEBUG_ASSERTCRASH(m_numEmptySlotsAllocated==0, ("Failed to free all empty vertex buffer slots"));
+	DEBUG_ASSERTCRASH(m_numEmptyIndexSlotsAllocated==0, ("Failed to free all empty index buffer slots"));
+}
+
+void W3DBufferManager::freeAllBuffers(void)
+{
+	struct BFMEBufferManagerView
+	{
+		unsigned char pad_to_vertex_buffers[0x9000];
+		W3DVertexBuffer *vertex_buffers[MAX_FVF];
+		unsigned char pad_to_vertex_count[0x1c384];
+		Int empty_vertex_count;
+		unsigned char pad_to_index_buffers[0x1000];
+		W3DIndexBuffer *index_buffers;
+		unsigned char pad_to_index_count[0x1c284];
+		Int empty_index_count;
+	};
+	BFMEBufferManagerView *bfme = reinterpret_cast<BFMEBufferManagerView *>(this);
+	Int i;
+
+	//Make sure all slots are free
+	freeAllSlots();	///<release all slots to pool.
+
+	for (i=0; i<MAX_FVF; i++)
+	{
+		W3DVertexBuffer *vb = bfme->vertex_buffers[i];
+		while (vb)
+		{	DEBUG_ASSERTCRASH(vb->m_usedSlots == NULL, ("Freeing Non-Empty Vertex Buffer"));
+			if (vb->m_DX8VertexBuffer)
+				REF_PTR_RELEASE(vb->m_DX8VertexBuffer);
+			bfme->empty_vertex_count--;
+			vb=vb->m_nextVB;	//get next vertex buffer of this type
+		}
+		bfme->vertex_buffers[i]=NULL;
+	}
+
+	W3DIndexBuffer *ib = bfme->index_buffers;
+	while (ib)
+	{	DEBUG_ASSERTCRASH(ib->m_usedSlots == NULL, ("Freeing Non-Empty Index Buffer"));
+		if (ib->m_DX8IndexBuffer)
+			REF_PTR_RELEASE(ib->m_DX8IndexBuffer);
+		bfme->empty_index_count--;
+		ib=ib->m_nextIB;	//get next vertex buffer of this type
+	}
+	bfme->index_buffers=NULL;
+
+	DEBUG_ASSERTCRASH(m_numEmptyVertexBuffersAllocated==0, ("Failed to free all empty vertex buffers"));
+	DEBUG_ASSERTCRASH(m_numEmptyIndexBuffersAllocated==0, ("Failed to free all empty index buffers"));
+}
+
+// ?ReleaseResources@W3DBufferManager@@ present-unmatched
+void W3DBufferManager::ReleaseResources(void)
+{
+	for (Int i=0; i<MAX_FVF; i++)
+	{
+		W3DVertexBuffer *vb = m_W3DVertexBuffers[i];
+		while (vb)
+		{
+			REF_PTR_RELEASE(vb->m_DX8VertexBuffer);
+			vb=vb->m_nextVB;	//get next vertex buffer of this type
+		}
+	}
+
+	W3DIndexBuffer *ib = m_W3DIndexBuffers;
+	while (ib)
+	{
+		REF_PTR_RELEASE(ib->m_DX8IndexBuffer);
+		ib=ib->m_nextIB;	//get next vertex buffer of this type
+	}
+}
+
+class BfmeDX8VertexBuffer
+{
+public:
+	enum UsageType { USAGE_DEFAULT = 0 };
+
+	BfmeDX8VertexBuffer(unsigned fvf, unsigned short count,
+		UsageType usage, unsigned vertexSize);
+
+private:
+	unsigned char m_storage[0x20];
+};
+
+class BfmeDX8IndexBuffer
+{
+public:
+	enum UsageType { USAGE_DEFAULT = 0 };
+
+	BfmeDX8IndexBuffer(unsigned count, UsageType usage);
+
+private:
+	unsigned char m_storage[0x18];
+};
+
+struct BFMEReAcquireBufferManagerView
+{
+	unsigned char m_beforeVertexBuffers[0x9000];
+	W3DBufferManager::W3DVertexBuffer *m_vertexBuffers[W3DBufferManager::MAX_FVF];
+	unsigned char m_beforeIndexBuffers[0x1c384];
+	Int m_emptyVertexBufferCount;
+	unsigned char m_beforeIndexBufferList[0x1000];
+	W3DBufferManager::W3DIndexBuffer *m_indexBuffers;
+};
+
+Bool W3DBufferManager::ReAcquireResources(void)
+{
+	BFMEReAcquireBufferManagerView *self =
+		(BFMEReAcquireBufferManagerView *)this;
+
+	for (Int i = 0; i < MAX_FVF; ++i)
+	{
+		W3DVertexBuffer *vb = self->m_vertexBuffers[i];
+		while (vb)
+		{
+			vb->m_DX8VertexBuffer = (DX8VertexBufferClass *)
+				::new BfmeDX8VertexBuffer(
+					FVFTypeIndexList[vb->m_format], vb->m_size,
+					BfmeDX8VertexBuffer::USAGE_DEFAULT, 0);
+			if (!vb->m_DX8VertexBuffer)
+				return FALSE;
+			vb = vb->m_nextVB;
+		}
+	}
+
+	W3DIndexBuffer *ib = self->m_indexBuffers;
+	while (ib)
+	{
+		ib->m_DX8IndexBuffer = (DX8IndexBufferClass *)
+			::new BfmeDX8IndexBuffer(
+				(unsigned)ib->m_size, BfmeDX8IndexBuffer::USAGE_DEFAULT);
+		if (!ib->m_DX8IndexBuffer)
+			return FALSE;
+		ib = ib->m_nextIB;
+	}
+
+	return TRUE;
+}
+
+/**Searches through previously allocated vertex buffer slots and returns a matching type.  If none found,
+   creates a new slot and adds it to the pool.  Returns an integer slotId used to reference the VB.
+   Returns -1 in case of failure.
+*/
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DBufferManager_Slots.cpp
+// ?getSlot@W3DBufferManager@@ present-unmatched
+W3DBufferManager::W3DVertexBufferSlot *W3DBufferManager::getSlot(VBM_FVF_TYPES fvfType, Int size)
+{
+	W3DVertexBufferSlot *vbSlot=NULL;
+
+	//round size to next multiple of minimum slot size.
+	//should help avoid fragmentation.
+	size = (size + (MIN_SLOT_SIZE-1)) & (~(MIN_SLOT_SIZE-1));
+	Int sizeIndex = (size >> MIN_SLOT_SIZE_SHIFT)-1;
+
+	DEBUG_ASSERTCRASH(sizeIndex < MAX_VB_SIZES && size, ("Allocating too large vertex buffer slot"));
+
+	if ((vbSlot=m_W3DVertexBufferSlots[fvfType][sizeIndex]) != 0)
+	{	//found a previously allocated slot matching required size
+		m_W3DVertexBufferSlots[fvfType][sizeIndex]=vbSlot->m_nextSameSize;
+		if (vbSlot->m_nextSameSize)
+			vbSlot->m_nextSameSize->m_prevSameSize=NULL;
+		return vbSlot;
+	}
+	else
+	{	//need to allocate a new slot
+		return allocateSlotStorage(fvfType, size);
+	}
+
+	return NULL;
+}
+
+/**Returns vertex buffer space back to pool so it can be reused later*/
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DBufferManager_Slots.cpp
+// ?releaseSlot@W3DBufferManager@@ present-unmatched
+void W3DBufferManager::releaseSlot(W3DVertexBufferSlot *vbSlot)
+{
+	Int sizeIndex = (vbSlot->m_size >> MIN_SLOT_SIZE_SHIFT)-1;
+
+	vbSlot->m_nextSameSize=m_W3DVertexBufferSlots[vbSlot->m_VB->m_format][sizeIndex];
+	if (m_W3DVertexBufferSlots[vbSlot->m_VB->m_format][sizeIndex])
+		m_W3DVertexBufferSlots[vbSlot->m_VB->m_format][sizeIndex]->m_prevSameSize=vbSlot;
+
+	m_W3DVertexBufferSlots[vbSlot->m_VB->m_format][sizeIndex]=vbSlot;
+}
+
+/**Reserves space inside existing vertex buffer or allocates a new one to fit the required size.
+*/
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DBufferManager_Slots.cpp
+// ?allocateSlotStorage@W3DBufferManager@@ present-unmatched
+W3DBufferManager::W3DVertexBufferSlot * W3DBufferManager::allocateSlotStorage(VBM_FVF_TYPES fvfType, Int size)
+{
+
+	W3DVertexBuffer *pVB;
+	W3DVertexBufferSlot *vbSlot;
+//	Int sizeIndex = (size >> MIN_SLOT_SIZE_SHIFT)-1;
+
+	DEBUG_ASSERTCRASH(m_numEmptySlotsAllocated < MAX_NUMBER_SLOTS, ("Nore more VB Slots"));
+
+	pVB=m_W3DVertexBuffers[fvfType];
+	while (pVB)
+	{
+		if ((pVB->m_size - pVB->m_startFreeIndex) >= size)
+		{	//found enough free space in this vertex buffer
+
+			if (m_numEmptySlotsAllocated < MAX_NUMBER_SLOTS)
+			{	//we're allowing more slots to be allocated.
+				vbSlot=&m_W3DVertexBufferEmptySlots[m_numEmptySlotsAllocated];
+				vbSlot->m_size=size;
+				vbSlot->m_start=pVB->m_startFreeIndex;
+				vbSlot->m_VB=pVB;
+				//Link to VB list of slots
+				vbSlot->m_nextSameVB=pVB->m_usedSlots;
+				vbSlot->m_prevSameVB=NULL;	//this will be the new head
+				if (pVB->m_usedSlots)
+					pVB->m_usedSlots->m_prevSameVB=vbSlot;
+				vbSlot->m_prevSameSize=vbSlot->m_nextSameSize=NULL;
+				pVB->m_usedSlots=vbSlot;
+				pVB->m_startFreeIndex += size;
+				m_numEmptySlotsAllocated++;
+				return vbSlot;
+			}
+		}
+		pVB = pVB->m_nextVB;
+	}
+
+	pVB=m_W3DVertexBuffers[fvfType];	//save old list head
+
+	//Didn't find any vertex buffers with room, create a new one
+	DEBUG_ASSERTCRASH(m_numEmptyVertexBuffersAllocated < MAX_VERTEX_BUFFERS_CREATED, ("Reached Max Static VB Shadow Geometry"));
+
+	if (m_numEmptyVertexBuffersAllocated < MAX_VERTEX_BUFFERS_CREATED)
+	{
+		m_W3DVertexBuffers[fvfType] = &m_W3DEmptyVertexBuffers[m_numEmptyVertexBuffersAllocated];
+		m_W3DVertexBuffers[fvfType]->m_nextVB=pVB;	//link to list
+		m_numEmptyVertexBuffersAllocated++;
+		
+		pVB=m_W3DVertexBuffers[fvfType];	//get new list head
+
+		Int vbSize=__max(DEFAULT_VERTEX_BUFFER_SIZE,size);
+
+		pVB->m_DX8VertexBuffer=NEW_REF(DX8VertexBufferClass,(FVFTypeIndexList[fvfType],vbSize,DX8VertexBufferClass::USAGE_DEFAULT));
+		pVB->m_format=fvfType;
+		pVB->m_startFreeIndex=size;
+		pVB->m_size=vbSize;
+		vbSlot=&m_W3DVertexBufferEmptySlots[m_numEmptySlotsAllocated];
+		m_numEmptySlotsAllocated++;
+		pVB->m_usedSlots=vbSlot;
+		vbSlot->m_size=size;
+		vbSlot->m_start=0;
+		vbSlot->m_VB=pVB;
+		vbSlot->m_prevSameVB=vbSlot->m_nextSameVB=NULL;
+		vbSlot->m_prevSameSize=vbSlot->m_nextSameSize=NULL;
+		return vbSlot;
+	}
+
+	return NULL;
+}
+
+//******************************** Index Buffer code ******************************************************
+/**Searches through previously allocated index buffer slots and returns a matching type.  If none found,
+   creates a new slot and adds it to the pool.  Returns an integer slotId used to reference the VB.
+   Returns -1 in case of failure.
+*/
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DBufferManager_Slots.cpp
+// ?getSlot@W3DBufferManager@@ present-unmatched
+W3DBufferManager::W3DIndexBufferSlot *W3DBufferManager::getSlot(Int size)
+{
+	W3DIndexBufferSlot *ibSlot=NULL;
+
+	//round size to next multiple of minimum slot size.
+	//should help avoid fragmentation.
+	size = (size + (MIN_SLOT_SIZE-1)) & (~(MIN_SLOT_SIZE-1));
+	Int sizeIndex = (size >> MIN_SLOT_SIZE_SHIFT)-1;
+
+	DEBUG_ASSERTCRASH(sizeIndex < MAX_IB_SIZES && size, ("Allocating too large index buffer slot"));
+
+	if ((ibSlot=m_W3DIndexBufferSlots[sizeIndex]) != 0)
+	{	//found a previously allocated slot matching required size
+		m_W3DIndexBufferSlots[sizeIndex]=ibSlot->m_nextSameSize;
+		if (ibSlot->m_nextSameSize)
+			ibSlot->m_nextSameSize->m_prevSameSize=NULL;
+		return ibSlot;
+	}
+	else
+	{	//need to allocate a new slot
+		return allocateSlotStorage(size);
+	}
+
+	return NULL;
+}
+
+/**Returns index buffer space back to pool so it can be reused later*/
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DBufferManager_Slots.cpp
+// ?releaseSlot@W3DBufferManager@@ present-unmatched
+void W3DBufferManager::releaseSlot(W3DIndexBufferSlot *ibSlot)
+{
+	Int sizeIndex = (ibSlot->m_size >> MIN_SLOT_SIZE_SHIFT)-1;
+
+	ibSlot->m_nextSameSize=m_W3DIndexBufferSlots[sizeIndex];
+	if (m_W3DIndexBufferSlots[sizeIndex])
+		m_W3DIndexBufferSlots[sizeIndex]->m_prevSameSize=ibSlot;
+
+	m_W3DIndexBufferSlots[sizeIndex]=ibSlot;
+}
+
+/**Reserves space inside existing index buffer or allocates a new one to fit the required size.
+*/
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DBufferManager_Slots.cpp
+// ?allocateSlotStorage@W3DBufferManager@@ present-unmatched
+W3DBufferManager::W3DIndexBufferSlot * W3DBufferManager::allocateSlotStorage(Int size)
+{
+
+	W3DIndexBuffer *pIB;
+	W3DIndexBufferSlot *ibSlot;
+//	Int sizeIndex = (size >> MIN_SLOT_SIZE_SHIFT)-1;
+
+	DEBUG_ASSERTCRASH(m_numEmptyIndexSlotsAllocated < MAX_NUMBER_SLOTS, ("Nore more IB Slots"));
+
+	pIB=m_W3DIndexBuffers;
+	while (pIB)
+	{
+		if ((pIB->m_size - pIB->m_startFreeIndex) >= size)
+		{	//found enough free space in this index buffer
+
+			if (m_numEmptyIndexSlotsAllocated < MAX_NUMBER_SLOTS)
+			{	//we're allowing more slots to be allocated.
+				ibSlot=&m_W3DIndexBufferEmptySlots[m_numEmptyIndexSlotsAllocated];
+				ibSlot->m_size=size;
+				ibSlot->m_start=pIB->m_startFreeIndex;
+				ibSlot->m_IB=pIB;
+				//Link to IB list of slots
+				ibSlot->m_nextSameIB=pIB->m_usedSlots;
+				ibSlot->m_prevSameIB=NULL;	//this will be the new head
+				if (pIB->m_usedSlots)
+					pIB->m_usedSlots->m_prevSameIB=ibSlot;
+				ibSlot->m_prevSameSize=ibSlot->m_nextSameSize=NULL;
+				pIB->m_usedSlots=ibSlot;
+				pIB->m_startFreeIndex += size;
+				m_numEmptyIndexSlotsAllocated++;
+				return ibSlot;
+			}
+		}
+		pIB = pIB->m_nextIB;
+	}
+
+	pIB=m_W3DIndexBuffers;	//save old list head
+
+	//Didn't find any index buffers with room, create a new one
+	DEBUG_ASSERTCRASH(m_numEmptyIndexBuffersAllocated < MAX_INDEX_BUFFERS_CREATED, ("Reached Max Static IB Shadow Geometry"));
+
+	if (m_numEmptyIndexBuffersAllocated < MAX_INDEX_BUFFERS_CREATED)
+	{
+		m_W3DIndexBuffers = &m_W3DEmptyIndexBuffers[m_numEmptyIndexBuffersAllocated];
+		m_W3DIndexBuffers->m_nextIB=pIB;	//link to list
+		m_numEmptyIndexBuffersAllocated++;
+		
+		pIB=m_W3DIndexBuffers;	//get new list head
+
+		Int ibSize=__max(DEFAULT_INDEX_BUFFER_SIZE,size);
+
+		pIB->m_DX8IndexBuffer=NEW_REF(DX8IndexBufferClass,(ibSize,DX8IndexBufferClass::USAGE_DEFAULT));
+		pIB->m_startFreeIndex=size;
+		pIB->m_size=ibSize;
+		ibSlot=&m_W3DIndexBufferEmptySlots[m_numEmptyIndexSlotsAllocated];
+		m_numEmptyIndexSlotsAllocated++;
+		pIB->m_usedSlots=ibSlot;
+		ibSlot->m_size=size;
+		ibSlot->m_start=0;
+		ibSlot->m_IB=pIB;
+		ibSlot->m_prevSameIB=ibSlot->m_nextSameIB=NULL;
+		ibSlot->m_prevSameSize=ibSlot->m_nextSameSize=NULL;
+		return ibSlot;
+	}
+
+	return NULL;
+}

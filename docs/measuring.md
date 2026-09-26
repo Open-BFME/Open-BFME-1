@@ -1,6 +1,6 @@
 # Measuring BFME: the rigs, and the traps that cost real time
 
-Two kinds of measurement live here — game-end fixtures (`reverse/game_end/`)
+Two kinds of measurement live here — game-end fixtures (`targets/game/reverse/game_end/`)
 and network latency (`030-netlatprobe`). They share a machine and most of the
 traps, so they share a document.
 
@@ -14,7 +14,7 @@ python3 -m pytest tools/tests/test_cave.py tools/tests/test_mods_build.py \
 `test_cave` needs the committed baseline exe and `capstone`; `test_mods_build`
 also builds the feature, so it needs wine and the MSVC 7.1 toolchain. Both
 disassemble what the build actually produced. `test_game_records` holds every
-row in `reverse/game_end/measured.jsonl` against the prediction
+row in `targets/game/reverse/game_end/measured.jsonl` against the prediction
 `tools/tests/rows.py` declared before it ran. None launch the game.
 
 ## The rig, if you are rebuilding one
@@ -202,9 +202,9 @@ Declare it in `tools/tests/rows.py` **before** running it — shape, each seat's
 exit mode and order, the records that seat should hold, the expected winning
 team. That is what makes a fixture a measurement rather than a transcription.
 
-Then play it, append its records to `reverse/game_end/measured.jsonl` with `row`
+Then play it, append its records to `targets/game/reverse/game_end/measured.jsonl` with `row`
 and `seat` prepended, and run the tests. A row whose measurement contradicts its
 declaration is a finding about the engine — correct the declaration in a commit
 saying why the original model was wrong, never to make a test pass.
 
-`reverse/game_end/measured.md` lists what the existing rows established.
+`targets/game/reverse/game_end/measured.md` lists what the existing rows established.

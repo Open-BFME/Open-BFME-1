@@ -20,7 +20,7 @@ def in_rdata(rva): return RDATA["rva"] <= rva < RDATA["rva"] + RDATA["size"]
 
 # ledger
 rows = []
-with open(ROOT / "reverse/functions.csv", newline="", encoding="utf-8", errors="replace") as fh:
+with open(ROOT / "targets/game/reverse/functions.csv", newline="", encoding="utf-8", errors="replace") as fh:
     for r in csv.DictReader(fh):
         if r["status"] != "matched" or not r["target_rva"].lower().startswith("0x"):
             continue
@@ -55,7 +55,7 @@ cand = {}  # rva -> set(evidence)
 def add(rva, ev):
     if gap_of(rva) is None: return
     cand.setdefault(rva, set()).add(ev)
-with open(ROOT / "reverse/ghidra_functions.csv", newline="") as fh:
+with open(ROOT / "targets/game/reverse/ghidra_functions.csv", newline="") as fh:
     gh = {int(r["rva"], 16): int(r["size"] or 0) for r in csv.DictReader(fh)}
 for a in gh:
     add(a, "ghidra")

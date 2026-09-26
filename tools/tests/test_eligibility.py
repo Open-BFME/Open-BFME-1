@@ -19,7 +19,7 @@ SYM = "?d_00354c10@@YAXXZ"
 
 def row(**kw):
     base = {"name": SYM, "target_rva": f"0x{RVA:08X}", "target_size": "400",
-            "source": "Code/gen_asm/d_003492a0.asm", "status": "matched",
+            "source": "game/gen_asm/d_003492a0.asm", "status": "matched",
             "notes": "gen-dump"}
     base.update(kw)
     return base
@@ -51,8 +51,8 @@ def bank(tmp_path, score):
 
 def test_dump_row_predicate_covers_note_and_suffix():
     assert eligibility.is_dump_row(row())
-    assert eligibility.is_dump_row(row(notes="", source="Code/masm_dumps/x.asm"))
-    assert not eligibility.is_dump_row(row(notes="", source="Code/GameEngine/X.cpp"))
+    assert eligibility.is_dump_row(row(notes="", source="game/masm_dumps/x.asm"))
+    assert not eligibility.is_dump_row(row(notes="", source="game/GameEngine/X.cpp"))
     assert not eligibility.is_dump_row(row(status="unmatched"))
 
 
@@ -164,7 +164,7 @@ def test_a_quick_look_is_not_an_attempt(world):
     assert eligibility.quick_look("blocked", "no named caller t=2min model=x")
     assert not eligibility.quick_look("blocked", "register shape tried t=2min blocker=regalloc")
     assert not eligibility.quick_look("blocked", "three shapes tried t=45min model=x")
-    assert not eligibility.quick_look("partial", "t=3min stash=reverse/attempts/x.cpp score=0.4")
+    assert not eligibility.quick_look("partial", "t=3min stash=targets/game/reverse/attempts/x.cpp score=0.4")
     assert not eligibility.quick_look("blocked", "no duration given")      # unknown effort still counts
     assert eligibility.attempt_counts().get(RVA, 0) == 0                   # somebody looked, nobody tried
     with log.open("a", encoding="utf-8") as fh:
@@ -178,9 +178,9 @@ def test_neighbour_density_counts_landed_cpp_around_a_body():
     def row(rva, source, size=200):
         return dict(name=f"?f{rva:x}@@YAXXZ", target_rva=f"0x{rva:08X}", target_size=str(size),
                     source=source, status="matched", notes="")
-    rows = [row(0x1000 + 0x100 * i, "Code/GameEngine/Source/a.cpp") for i in range(6)]
-    rows += [row(0x2000 + 0x100 * i, "Code/gen_asm/d_00002000.asm") for i in range(6)]
-    rows += [row(0x1050, "Code/gen_small/thunks_001.cpp"), row(0x1060, "Code/GameEngine/Source/tiny.cpp", size=8)]
+    rows = [row(0x1000 + 0x100 * i, "game/GameEngine/Source/a.cpp") for i in range(6)]
+    rows += [row(0x2000 + 0x100 * i, "game/gen_asm/d_00002000.asm") for i in range(6)]
+    rows += [row(0x1050, "game/gen_small/thunks_001.cpp"), row(0x1060, "game/GameEngine/Source/tiny.cpp", size=8)]
     density = eligibility.neighbour_density(rows, k=3)
     assert density(0x1200) == 1.0            # generated rows and tiny bodies are not neighbours
     assert density(0x2300) == 0.0

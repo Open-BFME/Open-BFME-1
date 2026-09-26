@@ -19,16 +19,18 @@ import worldbuilder as wb
 def target(tmp_path):
     image = tmp_path / "worldbuilder.exe"
     image.write_bytes(b"\xc3\xcc" * 32)
-    ledger = tmp_path / "reverse/worldbuilder"
+    ledger = tmp_path / "targets/worldbuilder/reverse"
     ledger.mkdir(parents=True)
     (ledger / "functions.csv").write_bytes(wb.serialize([]))
-    (tmp_path / "reverse/functions.csv").write_bytes(b"GAME LEDGER MUST NOT CHANGE\r\n")
-    source = tmp_path / "Code/Tools/WorldBuilder/src/Editor.cpp"
+    game_ledger = tmp_path / "targets/game/reverse/functions.csv"
+    game_ledger.parent.mkdir(parents=True)
+    game_ledger.write_bytes(b"GAME LEDGER MUST NOT CHANGE\r\n")
+    source = tmp_path / "worldbuilder/src/Editor.cpp"
     source.parent.mkdir(parents=True)
     source.write_text("void Body() {}\n")
     subprocess.run(["git", "init", "--quiet", str(tmp_path)], check=True)
-    subprocess.run(["git", "add", "Code/Tools/WorldBuilder/src/Editor.cpp"], cwd=tmp_path, check=True)
-    return Target("worldbuilder", tmp_path, tmp_path / "target.json", image,
+    subprocess.run(["git", "add", "worldbuilder/src/Editor.cpp"], cwd=tmp_path, check=True)
+    return Target("worldbuilder", tmp_path, tmp_path / "manifest.json", image,
                   hashlib.sha256(image.read_bytes()).hexdigest(), ledger,
                   tmp_path / "build/worldbuilder", {"editor-size": CompilerProfile(("-O1",), ())},
                   0x400000, (Section(".text", 0x1000, 64, 64, 0, 0x60000020),),
@@ -37,7 +39,7 @@ def target(tmp_path):
 
 def row(**changes):
     result = dict(name="?Body@@YAXXZ", target_rva="0x00001000", target_size="1",
-                  status="matched", source="Code/Tools/WorldBuilder/src/Editor.cpp",
+                  status="matched", source="worldbuilder/src/Editor.cpp",
                   profile="editor-size", evidence="export", model="test-model")
     result.update(changes)
     return result
@@ -60,7 +62,7 @@ def queue_candidates(target, identities):
     for index, identity in enumerate(identities):
         family = identity.split("::")[0]
         rva = 0x1002 + index * 2
-        packet = row(name=identity, target_rva=rva, source=f"Code/Tools/WorldBuilder/src/{family}.cpp")
+        packet = row(name=identity, target_rva=rva, source=f"worldbuilder/src/{family}.cpp")
         packet.update(id=identity, bytes_sha256=hashlib.sha256(target.read_rva(rva, 1)).hexdigest())
         packet["packet_sha256"] = wb.packet_hash(packet)
         candidates.append(packet)
@@ -123,7 +125,7 @@ def test_land_verifies_before_append_and_preserves_game(target, monkeypatch):
     assert len(target_verify.read_rows(target)) == 1
     assert calls[0][2] == [row()["source"]]
     assert b"\r" not in target.ledger_path.read_bytes()
-    assert (target.root / "reverse/functions.csv").read_bytes() == b"GAME LEDGER MUST NOT CHANGE\r\n"
+    assert (target.root / "targets/game/reverse/functions.csv").read_bytes() == b"GAME LEDGER MUST NOT CHANGE\r\n"
 
 
 def test_failed_verify_leaves_ledger_unchanged(target, monkeypatch):
@@ -182,7 +184,7 @@ def test_changed_binary_cannot_land(target, monkeypatch):
     assert target.ledger_path.read_bytes() == before
 
 
-@pytest.mark.parametrize("source", ["../other.cpp", "/tmp/other.cpp", "Code/../../other.cpp"])
+@pytest.mark.parametrize("source", ["../other.cpp", "/tmp/other.cpp", "game/../../other.cpp"])
 def test_land_rejects_path_traversal(target, source):
     with pytest.raises(ValueError, match="repository-relative"):
         wb.land(target, row(source=source))
@@ -213,7 +215,7 @@ def test_queue_rejects_wrong_image_and_altered_packet(target):
     with pytest.raises(ValueError, match="target hash mismatch"):
         wb.load_candidates(target)
     data["binary_sha256"] = target.expected_sha256
-    data["candidates"][0]["source"] = "Code/Tools/WorldBuilder/src/Wrong.cpp"
+    data["candidates"][0]["source"] = "worldbuilder/src/Wrong.cpp"
     path.write_text(json.dumps(data))
     with pytest.raises(ValueError, match="packet hash"):
         wb.load_candidates(target)
@@ -309,7 +311,7 @@ def test_check_validates_queue_and_donor_index(target, monkeypatch, capsys):
 def test_show_attaches_offline_donors_without_changing_candidate_hash(target, monkeypatch, capsys):
     item = candidate(target)
     monkeypatch.setattr(wb, "load_target", lambda name: target)
-    donor = dict(reference="bfme2", revision="b" * 40, source="Code/GameEngine/Math.cpp")
+    donor = dict(reference="bfme2", revision="b" * 40, source="game/GameEngine/Math.cpp")
     calls = []
 
     def lookup(selected, symbol, exact):
@@ -368,7 +370,7 @@ def test_partial_without_source_cannot_claim_useful_attempt(target):
 
 
 def test_progress_separates_editor_and_engine_bytes(target):
-    result = wb.progress(target, [row(), row(name="other", source="Code/GameEngine/Math.cpp",
+    result = wb.progress(target, [row(), row(name="other", source="game/GameEngine/Math.cpp",
                                           target_size="47")])
     assert result["editor"] == {"functions": 1, "bytes": 1}
     assert result["engine"] == {"functions": 1, "bytes": 47}
@@ -376,6 +378,6 @@ def test_progress_separates_editor_and_engine_bytes(target):
 
 
 def test_divergent_engine_source_is_not_labelled_shared(target):
-    result = wb.progress(target, [row(source="worldbuilder/Code/GameEngine/Math.cpp")])
+    result = wb.progress(target, [row(source="worldbuilder/GameEngine/Math.cpp")])
     assert result["engine"] == {"functions": 1, "bytes": 1}
     assert "shared_engine" not in result

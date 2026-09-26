@@ -25,7 +25,7 @@ def mask(b):
                 out[i:i+4] = b'\0\0\0\0'; i += 4; continue
         i += 1
     return bytes(out)
-rows = list(csv.DictReader(open('reverse/functions.csv', newline='', encoding='utf-8', errors='replace')))
+rows = list(csv.DictReader(open('targets/game/reverse/functions.csv', newline='', encoding='utf-8', errors='replace')))
 landed = collections.defaultdict(list); dumps = []
 for r in rows:
     try: rva = int(r['target_rva'], 16); size = int(r['target_size'] or 0)
@@ -34,7 +34,7 @@ for r in rows:
     src = r['source']
     if src.endswith('.asm') and 'gen_asm' in src:
         dumps.append((rva, size, r['name'], src))
-    elif r.get('status') == 'matched' and src.startswith('Code/') and not src.startswith(('Code/gen_', 'Code/masm_dumps')) and src.endswith(('.cpp', '.c')):
+    elif r.get('status') == 'matched' and src.startswith('game/') and not src.startswith(('game/gen_', 'game/masm_dumps')) and src.endswith(('.cpp', '.c')):
         landed[size].append((rva, r['name'], src))
 hits = []
 for rva, size, name, src in dumps:

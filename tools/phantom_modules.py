@@ -13,7 +13,7 @@ exactly those two, never an inference between them:
               module class of that name. BFME did not ship the class, so every
               ledger row naming it carries a borrowed Zero Hour name rather
               than an identity. This is a proof, not a search result.
-  REGISTERED  reverse/module_registry.tsv lists it. The class exists and the
+  REGISTERED  targets/game/reverse/module_registry.tsv lists it. The class exists and the
               registry gives its two factory bodies.
 
 and three states it deliberately refuses to decide:
@@ -53,7 +53,7 @@ sources, because a row can be load-bearing through a relocation from a sibling
 row even when the class is fictional. Drop AnimationSteeringUpdate's ModuleData
 destructor and the ??_G thunk beside it stops resolving its call.
 
-  python3 tools/phantom_modules.py               # write reverse/phantom_modules.tsv
+  python3 tools/phantom_modules.py               # write targets/game/reverse/phantom_modules.tsv
   python3 tools/phantom_modules.py --rows        # list the affected ledger rows
   python3 tools/phantom_modules.py --candidates  # screen those rows for retraction
 """
@@ -64,13 +64,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build
 import module_registry as reg
 
-OUT = build.ROOT / 'reverse/phantom_modules.tsv'
+OUT = build.ROOT / 'targets/game/reverse/phantom_modules.tsv'
 ZH_FACTORIES = [
-    'reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp',
-    'reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp',
+    'inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp',
+    'inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp',
 ]
 FACTORY_SYMBOL = re.compile(r'^\?(friend_newModuleInstance|friend_newModuleData)@([A-Za-z0-9_]+)@@')
-MODULE_FACTORY_TU = 'Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp'
+MODULE_FACTORY_TU = 'game/GameEngine/Source/Common/Thing/ModuleFactory.cpp'
 # Every '@'-terminated component of a mangled name. The class can be the LEADING
 # one (??0X@@, ??1X@@, ??_GX@@) as easily as a qualifier between separators
 # (?method@X@@), so the '@X@' spelling this used to search for cannot see a

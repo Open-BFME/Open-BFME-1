@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Say which definitions in a .cpp are backed by a byte-verified ledger row.
 
-Most sources under Code/ mix bodies this project verified against retail with
+Most sources under game/ mix bodies this project verified against retail with
 bodies copied verbatim from the ZH reference, which are not verified and are not
 necessarily even BFME's. Nothing in the file distinguishes them, and the harm is
 live: GameLogic.cpp defines `setGamePaused( Bool, Bool )` -- ZH's two-argument
@@ -31,7 +31,7 @@ import ledger_io
 from find_declared_unmatched import iter_definitions, mangle_method
 
 ROOT = Path(__file__).resolve().parents[1]
-FUNCTIONS_CSV = ROOT / "reverse" / "functions.csv"
+FUNCTIONS_CSV = ROOT / "targets/game/reverse" / "functions.csv"
 MARKERS = ("present-unmatched", "absent-from-retail")
 
 # A definition at brace depth 0 that is not `Class::method(`. The shared parser

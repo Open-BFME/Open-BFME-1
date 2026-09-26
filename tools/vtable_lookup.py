@@ -31,7 +31,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def load_ledger():
     by_rva = {}
-    for r in csv.DictReader(open(ROOT / "reverse/functions.csv", newline="", encoding="utf-8", errors="replace")):
+    for r in csv.DictReader(open(ROOT / "targets/game/reverse/functions.csv", newline="", encoding="utf-8", errors="replace")):
         try:
             rva = int(r["target_rva"], 16)
         except ValueError:
@@ -157,8 +157,8 @@ def main():
             return
     by_rva = load_ledger()
     sorted_rvas = sorted(by_rva)
-    sym_lines = open(ROOT / "reverse/symbols.csv", encoding="utf-8", errors="replace").read().splitlines()
-    fn_lines = open(ROOT / "reverse/functions.csv", encoding="utf-8", errors="replace").read().splitlines()
+    sym_lines = open(ROOT / "targets/game/reverse/symbols.csv", encoding="utf-8", errors="replace").read().splitlines()
+    fn_lines = open(ROOT / "targets/game/reverse/functions.csv", encoding="utf-8", errors="replace").read().splitlines()
 
     pinned_vtables = set(discovered_starts)
     for l in sym_lines:

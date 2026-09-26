@@ -38,7 +38,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 
-EXE = ROOT / "baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
+EXE = ROOT / "inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
 SOURCE = ROOT / "mods/features/020-gameresult/src/gameresult.cpp"
 UPDATE = 0x0035F920      # VictoryConditions::update
 SENDLEAVE = 0x00665C10   # ConnectionManager::sendPlayerLeaveCommands
@@ -48,7 +48,7 @@ SENDLEAVE = 0x00665C10   # ConnectionManager::sendPlayerLeaveCommands
 # by a jump back to exactly this address.
 STOLEN = {UPDATE: 7, SENDLEAVE: 7}
 
-VC71 = (ROOT / "build/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003"
+VC71 = (ROOT / "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003"
         / "Vc7/bin/cl.exe")
 
 pytestmark = [
@@ -67,7 +67,7 @@ VC_LOCALSLOT = 0x94               # < 0 when this machine has no seat
 VC_ENDFRAME = 0x98                # non-zero once the match resolved on this machine
 
 # The shape every downstream reader of GameResult.jsonl is keyed on. These are
-# not "the strings the source happens to hold" -- reverse/game_end/measured.jsonl
+# not "the strings the source happens to hold" -- targets/game/reverse/game_end/measured.jsonl
 # was recorded through them, and test_game_records.py reads that file by these
 # field names.
 RECORD_FORMATS = [
@@ -283,7 +283,7 @@ def test_the_update_payload_is_the_one_that_calls_fputs(payloads):
 
 
 def test_the_record_formats_are_the_measured_ones(built):
-    """reverse/game_end/measured.jsonl was recorded through these exact strings
+    """targets/game/reverse/game_end/measured.jsonl was recorded through these exact strings
     and test_game_records.py reads it by these field names. A rewrite that
     renames a field or drops a `\\n` produces a file no reader can join."""
     pe, _ = built

@@ -91,7 +91,7 @@ layout drift.
 ### 3. Unclaimed 8.6%: the carve pool is spent
 
 `tools/gap_census.py` proves 3,489 function starts in the gaps covering
-693,346 B; 162 KB has no proven start. `reverse/carved.csv` serves 397 rows /
+693,346 B; 162 KB has no proven start. `targets/game/reverse/carved.csv` serves 397 rows /
 406,956 B and all but 155 B of it has been attempted. The ~290 KB of proven
 starts that never became carved rows is the next pool, and what it needs is end
 evidence (`BoundaryValidator.check_end`), not more attempts on the served rows.
@@ -126,7 +126,7 @@ lane should attack. Tagging a verdict with the class whose layout it lacks
 
 1. Canonical headers from witnessed layouts, `Object` first, then `Player`,
    `AIUpdateInterface`, `Drawable`, `ThingTemplate`. The hook runs the full
-   gate for a staged `.h` against `reverse/full_gate_baseline.txt`, so one
+   gate for a staged `.h` against `targets/game/reverse/full_gate_baseline.txt`, so one
    header landing costs one full gate.
 2. A layout-tagged re-sweep of the large-body banks once a header exists.
 3. End-evidence for the ~290 KB of proven starts outside `carved.csv`.
@@ -137,6 +137,6 @@ lane should attack. Tagging a verdict with the class whose layout it lacks
     python3 tools/gap_census.py
     python3 tools/next_work.py --ranked --limit 3
     # dump census: matched rows whose source ends in .asm, joined on RVA to
-    # the latest reverse/re_attempts.log verdict and its score= / blocker= fields
+    # the latest targets/game/reverse/re_attempts.log verdict and its score= / blocker= fields
     # Rich header: XOR the dwords between 0x80 and 'Rich' with the key that
     # follows 'Rich'; each (prodid<<16|build, count) pair follows 'DanS'.

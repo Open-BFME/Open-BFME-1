@@ -16,7 +16,7 @@ objnames = set(s["name"] for s in symbols)
 # markers for INI_stl.cpp, and an earlier version of this script reported
 # eleven "ready" rows of which only two were actually movable.
 donors = {}
-for p in Path("Code").rglob("*.cpp"):
+for p in Path("game").rglob("*.cpp"):
     try: t = p.read_text(errors="ignore")
     except Exception: continue
     marks = [m.group(1).strip() for m in re.finditer(r"// readable body of ([^:]+): (\S+)", t)
@@ -25,7 +25,7 @@ for p in Path("Code").rglob("*.cpp"):
         donors[str(p)] = marks
 
 rows = {}
-for line in Path("reverse/functions.csv").read_bytes().decode("utf-8", "replace").splitlines():
+for line in Path("targets/game/reverse/functions.csv").read_bytes().decode("utf-8", "replace").splitlines():
     f = next(csv.reader([line]), [])
     # a marker may name a TRUNCATED symbol, so match by prefix as merge_cluster does
     if len(f) >= 5 and f[4] in donors and any(f[0].startswith(m) for m in donors[f[4]]):

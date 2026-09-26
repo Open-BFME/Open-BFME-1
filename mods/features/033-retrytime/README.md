@@ -7,7 +7,7 @@ into that store. No cave, no detour — one imm32.
 Not `Connection::init`, which is what this file and `docs/net-fixes.md` used to
 say: that name is Zero Hour's. BFME folds ZH's `init()` work into the
 constructor, so grepping for `init` finds nothing. The body is C++ at
-`Code/GameEngine/Source/GameNetwork/Connection.cpp`.
+`game/GameEngine/Source/GameNetwork/Connection.cpp`.
 
 **SHIPPED** in `mods/dist` as of 2026-08-29. See `docs/net-fixes.md` for
 results; this file records the mechanism and the limits.

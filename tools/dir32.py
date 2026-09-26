@@ -11,9 +11,9 @@ sys.path.insert(0, 'tools')
 import build
 
 want = sys.argv[1]
-data = open('baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe', 'rb').read()
+data = open('inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe', 'rb').read()
 
-for r in csv.DictReader(open('reverse/functions.csv', newline='')):
+for r in csv.DictReader(open('targets/game/reverse/functions.csv', newline='')):
     if r['status'] != 'matched':
         continue
     src = r['source']

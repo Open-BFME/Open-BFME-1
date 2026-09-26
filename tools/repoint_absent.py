@@ -34,7 +34,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build
 import find_emitter
 
-LEDGER = build.ROOT / "reverse/functions.csv"
+LEDGER = build.ROOT / "targets/game/reverse/functions.csv"
 ABSENT = re.compile(r"symbol not found in object: (\S+)")
 # `$E14`, `$L86009`: assigned per compile and meaningless across TUs. Another
 # object's $E14 is a DIFFERENT label, not the same function, so "somebody else

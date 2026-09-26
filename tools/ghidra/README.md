@@ -14,32 +14,32 @@ regenerate only if the baseline changes (it shouldn't).
 
 `python tools/ghidra_decompile.py 0xRVA [0xRVA ...]` (or `./ghdec 0xRVA`) prints, per function, the references to
 its entry, its direct callees and Ghidra's decompile. `--out DIR` writes one `<rva>.c` per function. It finds Ghidra
-in `$GHIDRA_INSTALL_DIR` or `build/toolchains/ghidra_*`, and a JDK in `$JAVA_HOME`, `build/toolchains/jdk-*` or on
+in `$GHIDRA_INSTALL_DIR` or `inputs/toolchains/ghidra_*`, and a JDK in `$JAVA_HOME`, `inputs/toolchains/jdk-*` or on
 `PATH`; both are plain unpacked archives, no installer. Analyze once per host (about 13 minutes on a desktop):
 
     python tools/ghidra_decompile.py --analyze
 
-The project is written to `build/toolchains/bfme_ghidra` (untracked). A call costs about 10 s of JVM start-up, so
+The project is written to `inputs/toolchains/bfme_ghidra` (untracked). A call costs about 10 s of JVM start-up, so
 pass several RVAs at once. The output is a DRAFT of control flow, call order and argument passing. Ghidra's names
 and types are invented; decompiled C is never byte-match proof and never identity evidence (AGENTS.md).
 
 ## Regenerate (≈3 min)
-Run from the repo root; replace `$EXE` with `baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe`:
+Run from the repo root; replace `$EXE` with `inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe`:
 
     analyzeHeadless /tmp/bfme_ghidra bfme -import $EXE -overwrite \
-        -scriptPath tools/ghidra -postScript list_functions.java $PWD/reverse/ghidra_functions.csv
+        -scriptPath tools/ghidra -postScript list_functions.java $PWD/targets/game/reverse/ghidra_functions.csv
     # reuse the saved project (no re-analysis) for further scripts:
     analyzeHeadless /tmp/bfme_ghidra bfme -process lotrbfme.exe -noanalysis \
-        -scriptPath tools/ghidra -postScript list_string_xrefs.java $PWD/reverse/string_xrefs.tsv
+        -scriptPath tools/ghidra -postScript list_string_xrefs.java $PWD/targets/game/reverse/string_xrefs.tsv
 
-Outputs (gitignored, derived from the binary, like `reverse/exports.csv`):
-- `reverse/ghidra_functions.csv` — `rva,size,name` for every function. Consumed by `tools/harvest.py`.
-- `reverse/string_xrefs.tsv` — `string<TAB>referencing function rvas`. For identification.
-- `reverse/vtables.tsv` — `vtable_rva<TAB>label<TAB>slot<TAB>func_rva<TAB>func_name` for every
+Outputs (gitignored, derived from the binary, like `targets/game/reverse/exports.csv`):
+- `targets/game/reverse/ghidra_functions.csv` — `rva,size,name` for every function. Consumed by `tools/harvest.py`.
+- `targets/game/reverse/string_xrefs.tsv` — `string<TAB>referencing function rvas`. For identification.
+- `targets/game/reverse/vtables.tsv` — `vtable_rva<TAB>label<TAB>slot<TAB>func_rva<TAB>func_name` for every
   recovered vtable. Read BFME's exact class vtable slot order instead of hand-triangulating.
   Generate (reuse the analyzed project, store it on disk not /tmp — tmpfs quota):
-    analyzeHeadless build/toolchains/bfme_ghidra bfme -process lotrbfme.exe -noanalysis \
-        -scriptPath tools/ghidra -postScript export_vtables.java $PWD/reverse/vtables.tsv
+    analyzeHeadless inputs/toolchains/bfme_ghidra bfme -process lotrbfme.exe -noanalysis \
+        -scriptPath tools/ghidra -postScript export_vtables.java $PWD/targets/game/reverse/vtables.tsv
 
 ## Use
 - **Sizes:** `list_functions.java` exports `getBody().getNumAddresses()`, not
@@ -52,7 +52,7 @@ Outputs (gitignored, derived from the binary, like `reverse/exports.csv`):
   Do not fix this by blindly taking the largest Ghidra body address: shared or
   discontiguous tails can span other functions. Keep the inventory as evidence,
   and prove the actual range from retail control flow.
-- **Calls:** a call target's address (e.g. `__ftol2` at `0x9F6E38`) goes in `reverse/symbols.csv`.
+- **Calls:** a call target's address (e.g. `__ftol2` at `0x9F6E38`) goes in `targets/game/reverse/symbols.csv`.
 - **Identification:** ~12% of `.text` is in functions referencing strings that are greppable in
   the Generals source — anchoring them to a specific source file. See `tools/harvest.py` and `../../docs/matching.md`.
 
@@ -61,7 +61,7 @@ Outputs (gitignored, derived from the binary, like `reverse/exports.csv`):
 `tools/next_work.py --tier ghidra` prints an RVA backed by source-string xrefs.
 Decompile it, including callers/data references and direct callees, with:
 
-    analyzeHeadless build/toolchains/bfme_ghidra bfme -process lotrbfme.exe -noanalysis \
+    analyzeHeadless inputs/toolchains/bfme_ghidra bfme -process lotrbfme.exe -noanalysis \
         -scriptPath tools/ghidra -postScript decompile_function.java 0x82190
 
 ## Windows
@@ -95,7 +95,7 @@ those finish in seconds.
 
 Two independent checks, worth re-running after any Ghidra upgrade.
 
-**Against a tracked artifact.** `reverse/vtables.tsv` is committed. Re-exporting
+**Against a tracked artifact.** `targets/game/reverse/vtables.tsv` is committed. Re-exporting
 it with `export_vtables.java` must produce a byte-identical file (562 lines, 205
 vtables). If it does, this Ghidra version agrees with the one the project was
 built against; if it does not, treat every other export as suspect before using
@@ -120,7 +120,7 @@ byte-verify at any length.
 
 `locate.py`, `harvest.py`, `explain_mismatch.py`,
 `decode_calls.py` and `drift_classify.py` all raise `FileNotFoundError` on a
-fresh clone, because `reverse/ghidra_functions.csv` is gitignored. That is the
+fresh clone, because `targets/game/reverse/ghidra_functions.csv` is gitignored. That is the
 whole function-finding pipeline, and the failure is loud but easy to
 misdiagnose as a broken checkout. Regenerate before concluding a tool is
 broken.

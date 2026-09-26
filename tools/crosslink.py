@@ -21,7 +21,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-LEDGER = ROOT / "reverse" / "functions.csv"
+LEDGER = ROOT / "targets/game/reverse" / "functions.csv"
 SOURCE_SUFFIXES = (".cpp", ".h")
 SKIP_DIRS = ("gen_asm", "gen_small", "masm_dumps")
 
@@ -34,7 +34,7 @@ CLASS_RE_MULTI = re.compile(r"\b(?:class|struct)\s+(?:[A-Z_]+\s+)?(\w+)\s*(?::[^
 # base-class clause. Scan a short way ahead, and stop at `;` -- that is a forward
 # declaration, which has no layout to point at.
 DEFINITION_LOOKAHEAD = 4
-UPSTREAM = ROOT / "reference" / "CnC_Generals_Zero_Hour" / "GeneralsMD" / "Code"
+UPSTREAM = ROOT / "inputs/reference" / "CnC_Generals_Zero_Hour" / "GeneralsMD" / "Code"
 FORWARD = "// byte-exact reconstruction: "
 REVERSE = "// readable body of "
 LAYOUT = "// upstream layout: "
@@ -53,20 +53,20 @@ def writable(relative):
     assemble."""
     path = Path(relative)
     return (
-        path.parts[:1] == ("Code",)
+        path.parts[:1] == ("game",)
         and path.suffix in SOURCE_SUFFIXES
         and not any(d in path.parts for d in SKIP_DIRS)
     )
 
 
 def sources():
-    for path in sorted((ROOT / "Code").rglob("*")):
+    for path in sorted((ROOT / "game").rglob("*")):
         if writable(path.relative_to(ROOT).as_posix()):
             yield path
 
 
 def read(path):
-    """Read without newline translation: 265 sources under Code/ are CRLF or
+    """Read without newline translation: 265 sources under game/ are CRLF or
     mixed, and normalising them rewrites the whole file instead of one line."""
     with path.open("r", encoding="utf-8", errors="surrogateescape", newline="") as handle:
         return handle.read()

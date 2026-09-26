@@ -25,12 +25,12 @@ CL = re.compile(r"^//\s*cl:(.*)$", re.M)
 TYPE = re.compile(r"^[ \t]*(?:class|struct)[ \t]+([A-Za-z_]\w*)\b[^;{]*\{", re.M)
 
 owners = collections.defaultdict(set)
-with open("reverse/functions.csv", newline="") as fh:
+with open("targets/game/reverse/functions.csv", newline="") as fh:
     for row in csv.DictReader(fh):
         if row.get("status") != "matched":
             continue
         src = row.get("source") or ""
-        if not src.startswith(("Code/GameEngine", "Code/Libraries", "Code/GameEngineDevice")):
+        if not src.startswith(("game/GameEngine", "game/Libraries", "game/GameEngineDevice")):
             continue
         m = METHOD.match(row.get("name") or "") or STRUCTOR.match(row.get("name") or "")
         if m:

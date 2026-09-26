@@ -43,7 +43,7 @@ Finding: 14 other sites use 0x133f498 (DX8Wrapper::ZNear/ZFar).
 Impact: Our source spells BOTH pairs with DX8Wrapper statics.
         Retail's ZBiasSetter reads camera-specific values from a different global.
 
-Blocker: The global at 0x1340500 is not named in reverse/*.csv.
+Blocker: The global at 0x1340500 is not named in targets/game/reverse/*.csv.
          This requires binary image analysis to identify.
          NOT solvable by source code changes alone.
 

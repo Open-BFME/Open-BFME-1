@@ -21,12 +21,12 @@ import re_log  # noqa: E402
 HEADER = "name,export_rva,target_rva,target_size,source,status,notes\n"
 
 
-def row(rva, size=100, source="Code/masm_dumps/test.asm"):
+def row(rva, size=100, source="game/masm_dumps/test.asm"):
     return f"?d_{rva:08x}@@YAXXZ,,0x{rva:08x},{size},{source},matched,\n"
 
 
 def seed(tmp_path, monkeypatch, scores):
-    reverse = tmp_path / "reverse"
+    reverse = tmp_path / "targets/game/reverse"
     attempts = reverse / "attempts"
     attempts.mkdir(parents=True)
     (tmp_path / "build/fleet_logs").mkdir(parents=True)
@@ -48,7 +48,7 @@ def test_review_rechecks_landed_and_resized_bodies(tmp_path, monkeypatch):
     prepared = pick_review.prepare(.5, .95, tmp_path)
     assert [c[2] for c in prepared] == ["0x00001000", "0x00002000", "0x00003000"]
     (reverse / "functions.csv").write_text(
-        HEADER + row(0x1000, source="Code/landed.cpp") + row(0x2000, size=101)
+        HEADER + row(0x1000, source="game/landed.cpp") + row(0x2000, size=101)
         + row(0x3000))
     assert pick_review.finalize(prepared, 2, .5, .95, tmp_path, dry=True) == [
         "0x00003000"]
@@ -139,8 +139,8 @@ def test_review_exhausted_shortlist_does_not_spin_or_log(tmp_path, monkeypatch):
     assert len(prepared) == 33
     stale = {int(c[2], 16) for c in prepared[:32]}
     (reverse / "functions.csv").write_text(HEADER + "".join(
-        row(rva, source="Code/landed.cpp" if rva in stale
-            else "Code/masm_dumps/test.asm") for rva in scores))
+        row(rva, source="game/landed.cpp" if rva in stale
+            else "game/masm_dumps/test.asm") for rva in scores))
     assert pick_review.finalize(prepared, 1, .5, .95, tmp_path) == []
     assert not (tmp_path / "build/fleet_logs/seats.log").exists()
     assert [c[2] for c in pick_review.prepare(.5, .95, tmp_path)] == [

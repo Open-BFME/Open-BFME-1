@@ -11,14 +11,14 @@ import pick_finish  # noqa: E402
 import portable_lock  # noqa: E402
 
 
-def row(rva, size=100, source="Code/masm_dumps/body.asm"):
+def row(rva, size=100, source="game/masm_dumps/body.asm"):
     return f"?d_{rva:08x}@@YAXXZ,,0x{rva:08x},{size},{source},matched,\n"
 
 
 def fixture(tmp_path, monkeypatch, busy=None):
-    (tmp_path / "reverse").mkdir()
+    (tmp_path / "targets/game/reverse").mkdir(parents=True)
     (tmp_path / "build/fleet_logs").mkdir(parents=True)
-    ledger = tmp_path / "reverse/functions.csv"
+    ledger = tmp_path / "targets/game/reverse/functions.csv"
     header = "name,export_rva,target_rva,target_size,source,status,notes\n"
     stash = {}
     for rva in (0x1000, 0x2000, 0x3000):
@@ -36,7 +36,7 @@ def fixture(tmp_path, monkeypatch, busy=None):
 def test_finish_rechecks_landed_busy_and_changed_size_targets(tmp_path, monkeypatch):
     ledger, header, stash = fixture(tmp_path, monkeypatch)
     # 0x2000 landed after the expensive probe; 0x3000 changed boundary size.
-    ledger.write_text(header + row(0x1000) + row(0x2000, source="Code/real.cpp")
+    ledger.write_text(header + row(0x1000) + row(0x2000, source="game/real.cpp")
                       + row(0x3000, size=120))
     prepared = [(stash[rva][1], 100, f"0x{rva:08x}", stash[rva][0])
                 for rva in (0x1000, 0x2000, 0x3000)]

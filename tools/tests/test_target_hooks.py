@@ -16,8 +16,8 @@ TOOLS = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location("target_hooks", TOOLS / "target_hooks.py")
 H = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(H)
-SOURCE = "Code/Tools/WorldBuilder/src/Example.cpp"
-SHARED = "Code/GameEngine/Shared.cpp"
+SOURCE = "worldbuilder/src/Example.cpp"
+SHARED = "game/GameEngine/Shared.cpp"
 
 
 def git(root, *args):
@@ -52,21 +52,21 @@ def repo(tmp_path):
     put(tmp_path, "tools/worldbuilder.py", '''import csv, pathlib, sys
 root = pathlib.Path('.')
 with open('calls', 'a') as out: out.write(sys.argv[1] + '\\n')
-rows = list(csv.DictReader(open('reverse/worldbuilder/functions.csv')))
+rows = list(csv.DictReader(open('targets/worldbuilder/reverse/functions.csv')))
 claimed = {row['source'] for row in rows}
 import subprocess
 owned = {path for path in subprocess.check_output(['git', 'ls-files'], text=True).splitlines()
-         if path.startswith(('Code/Tools/WorldBuilder/', 'worldbuilder/Code/')) and path.endswith('.cpp')}
+         if path.startswith('worldbuilder/') and path.endswith('.cpp')}
 if owned - claimed:
     raise SystemExit('unclaimed target source')
 if any('BAD' in pathlib.Path(path).read_text() for path in claimed):
     raise SystemExit('byte verification failed')
 ''')
-    put(tmp_path, H.CONFIG, json.dumps({"image": {"path": "image.exe"}}))
-    put(tmp_path, "image.exe", "fixture binary")
-    put(tmp_path, "reverse/functions.csv", "source,status\n")
+    put(tmp_path, H.CONFIG, json.dumps({"files": [{"path": "files/worldbuilder.exe"}]}))
+    put(tmp_path, "inputs/baselines/bfme1/workshop-vanilla-1.03/files/worldbuilder.exe", "fixture binary")
+    put(tmp_path, "targets/game/reverse/functions.csv", "source,status\n")
     ledger(tmp_path, [])
-    git(tmp_path, "add", "tools", "worldbuilder", "reverse", "image.exe")
+    git(tmp_path, "add", "tools", "targets", "inputs")
     git(tmp_path, "commit", "-qm", "fixture foundation")
     return tmp_path
 
@@ -76,8 +76,8 @@ def add_source(repo, source=SOURCE, shared=False):
     ledger(repo, [source])
     paths = [source, H.LEDGER]
     if shared:
-        put(repo, "reverse/functions.csv", f"source,status\n{source},matched\n")
-        paths.append("reverse/functions.csv")
+        put(repo, "targets/game/reverse/functions.csv", f"source,status\n{source},matched\n")
+        paths.append("targets/game/reverse/functions.csv")
     git(repo, "add", *paths)
 
 
@@ -120,8 +120,8 @@ def test_unrelated_dirty_game_source_is_not_verified(repo):
 
 
 def test_shared_header_change_triggers_worldbuilder(repo):
-    put(repo, "Code/GameEngine/shared.h", "struct Shared {};\n")
-    git(repo, "add", "Code/GameEngine/shared.h")
+    put(repo, "game/GameEngine/shared.h", "struct Shared {};\n")
+    git(repo, "add", "game/GameEngine/shared.h")
     assert H.run(repo, ":", "HEAD")
     assert calls(repo) == ["check", "verify"]
 
@@ -181,7 +181,7 @@ def test_unknown_remote_base_still_verifies_target(repo):
 
 
 def test_malformed_membership_cannot_exempt_game_source(repo):
-    put(repo, H.LEDGER, "source,status\nCode/GameEngine/Bad.cpp,matched\n")
+    put(repo, H.LEDGER, "source,status\ngame/GameEngine/Bad.cpp,matched\n")
     git(repo, "add", H.LEDGER)
     with pytest.raises(H.HookError, match="schema"):
         H.run(repo, ":", "HEAD", repo / "exclusive")
@@ -204,7 +204,7 @@ def test_game_only_change_does_not_run_worldbuilder(repo):
 
 def test_untracked_header_cannot_influence_compilation(repo):
     add_source(repo)
-    put(repo, "Code/GameEngine/untracked.h", "struct Untracked {};\n")
+    put(repo, "game/GameEngine/untracked.h", "struct Untracked {};\n")
     with pytest.raises(H.HookError, match="Untracked"):
         H.run(repo, ":", "HEAD")
     assert not calls(repo)
@@ -301,7 +301,7 @@ def test_worker_target_is_cleared_only_inside_publication_hook(repo, monkeypatch
     assert SHARED in (repo / "game-build").read_text()
 
 
-def test_game_source_scan_exempts_only_validated_target_membership(tmp_path, monkeypatch, capsys):
+def test_game_source_scan_excludes_editor_tree(tmp_path, monkeypatch, capsys):
     monkeypatch.syspath_prepend(str(TOOLS))
     import build
     import target_hooks
@@ -316,15 +316,15 @@ def test_game_source_scan_exempts_only_validated_target_membership(tmp_path, mon
         return {SOURCE, SHARED}
     monkeypatch.setattr(target_hooks, "validated_worldbuilder_sources", validated)
     build.verify_source_claims()
-    assert checked == [tmp_path]
+    assert checked == []
     assert "1 sources" in capsys.readouterr().out
-    put(tmp_path, "Code/GameEngine/unclaimed.cpp", "void unclaimed() {}\n")
+    put(tmp_path, "game/GameEngine/unclaimed.cpp", "void unclaimed() {}\n")
     with pytest.raises(SystemExit):
         build.verify_source_claims()
     assert "ZERO matched rows" in capsys.readouterr().out
 
 
-def test_game_source_scan_cannot_use_invalid_target_claims(tmp_path, monkeypatch):
+def test_game_source_scan_does_not_consult_editor_claims(tmp_path, monkeypatch):
     monkeypatch.syspath_prepend(str(TOOLS))
     import build
     import target_hooks
@@ -334,14 +334,13 @@ def test_game_source_scan_cannot_use_invalid_target_claims(tmp_path, monkeypatch
     def invalid(root):
         raise ValueError("invalid target identity")
     monkeypatch.setattr(target_hooks, "validated_worldbuilder_sources", invalid)
-    with pytest.raises(ValueError, match="identity"):
-        build.verify_source_claims()
+    build.verify_source_claims()
 
 
 @pytest.mark.parametrize("suffix", ["cpp", "c", "cc", "cxx", "asm", "s"])
 def test_other_worker_untracked_translation_unit_does_not_block_landing(repo, suffix):
     add_source(repo)
-    put(repo, f"Code/Tools/WorldBuilder/src/OtherWorker.{suffix}", "unfinished work\n")
+    put(repo, f"worldbuilder/src/OtherWorker.{suffix}", "unfinished work\n")
     assert H.run(repo, ":", "HEAD")
     assert calls(repo) == ["check", "verify"]
 
@@ -349,7 +348,7 @@ def test_other_worker_untracked_translation_unit_does_not_block_landing(repo, su
 @pytest.mark.parametrize("suffix", ["cpp", "c", "cc", "cxx", "asm", "s"])
 def test_staged_unclaimed_translation_unit_is_rejected_from_snapshot(repo, suffix):
     add_source(repo)
-    path = f"worldbuilder/Code/GameEngine/Unclaimed.{suffix}"
+    path = f"worldbuilder/GameEngine/Unclaimed.{suffix}"
     put(repo, path, "unfinished work\n")
     git(repo, "add", path)
     with pytest.raises(H.HookError, match="Unclaimed"):
@@ -370,10 +369,10 @@ def test_dirty_donor_source_is_rejected_before_identity_verification(repo):
 
 
 def test_additional_manifest_donor_is_a_snapshot_dependency(repo):
-    donor = "reference/NewDonor/Editor.cpp"
+    donor = "inputs/reference/NewDonor/Editor.cpp"
     put(repo, donor, "donor identity evidence\n")
-    put(repo, "reverse/worldbuilder/provenance.json", json.dumps({"donor": {"files": [{"path": donor}]}}))
-    git(repo, "add", donor, "reverse/worldbuilder/provenance.json")
+    put(repo, "targets/worldbuilder/reverse/provenance.json", json.dumps({"donor": {"files": [{"path": donor}]}}))
+    git(repo, "add", donor, "targets/worldbuilder/reverse/provenance.json")
     git(repo, "commit", "-qm", "additional donor fixture")
     add_source(repo)
     put(repo, donor, "uncommitted identity change\n")
@@ -382,8 +381,8 @@ def test_additional_manifest_donor_is_a_snapshot_dependency(repo):
     assert not calls(repo)
 
 
-@pytest.mark.parametrize("path", ["worldbuilder/references.json", "worldbuilder/dependencies/mfc71.csv",
-                                  "reverse/worldbuilder/provenance.json"])
+@pytest.mark.parametrize("path", ["targets/worldbuilder/references.json", "targets/worldbuilder/dependencies/mfc71.csv",
+                                  "targets/worldbuilder/reverse/provenance.json"])
 def test_reference_and_dependency_metadata_are_snapshot_bound(repo, path):
     put(repo, path, "{}\n")
     git(repo, "add", path)

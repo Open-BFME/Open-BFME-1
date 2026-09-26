@@ -2,10 +2,10 @@
 """Every `b_<rva>()` a compiled source calls needs its `?b_<rva>@@YAXXZ` pin.
 
 A generated ILT thunk is `void j_<rva>() { b_<target>(); }`: the gate resolves
-the call's rel32 from the ?b_<target>@@YAXXZ row in reverse/symbols.csv, so the
+the call's rel32 from the ?b_<target>@@YAXXZ row in targets/game/reverse/symbols.csv, so the
 bytes prove the target. Commit a8ad18240f (pushed without the pre-push hook)
 REPLACED that pin with the target's new real name instead of adding the name
-beside it; j_0002efbe in Code/gen_small/gthunks_052.cpp lost its target and
+beside it; j_0002efbe in game/gen_small/gthunks_052.cpp lost its target and
 the full gate went red (fixed in 0a34e68a0f). check_csv, pin_consistency and
 one_identity all passed on that commit. This check needs no compiler and no
 retail image, so it also runs in CI, which a skipped local hook cannot skip.
@@ -44,14 +44,14 @@ def read(ref, path):
 
 
 def candidates(ref):
-    """Paths under Code/ that mention b_<8 hex>( at this state."""
+    """Paths under game/ that mention b_<8 hex>( at this state."""
     args = ["grep", "-l"]
     if ref == ":":
         args.append("--cached")     # an option: before the pattern, or git reads a revision
     args += ["-E", r"b_[0-9a-fA-F]{8}[[:space:]]*\("]
     if ref not in (None, ":"):
         args.append(ref)
-    proc = subprocess.run(["git", *args, "--", "Code"], cwd=ROOT, capture_output=True)
+    proc = subprocess.run(["git", *args, "--", "game"], cwd=ROOT, capture_output=True)
     if proc.returncode not in (0, 1):
         raise SystemExit(f"b_pin_check: git grep failed: {proc.stderr.decode(errors='replace').strip()}")
     out = []
@@ -83,11 +83,11 @@ def batch(ref, paths):
 
 
 def problems(ref=None):
-    functions = csv.DictReader(io.StringIO(read(ref, "reverse/functions.csv")))
+    functions = csv.DictReader(io.StringIO(read(ref, "targets/game/reverse/functions.csv")))
     compiled = {row["source"].replace("\\", "/") for row in functions if row.get("status") == "matched"}
     pins = {}
     bad = []
-    for row in csv.reader(io.StringIO(read(ref, "reverse/symbols.csv"))):
+    for row in csv.reader(io.StringIO(read(ref, "targets/game/reverse/symbols.csv"))):
         if len(row) < 2:
             continue
         m = PIN.match(row[0])
@@ -97,7 +97,7 @@ def problems(ref=None):
     for name_rva, addresses in sorted(pins.items()):
         wrong = sorted(a for a in addresses if a.startswith("0x") and int(a, 16) != int(name_rva, 16))
         if wrong:
-            bad.append(f"reverse/symbols.csv: ?b_{name_rva}@@YAXXZ is pinned at {', '.join(wrong)}, "
+            bad.append(f"targets/game/reverse/symbols.csv: ?b_{name_rva}@@YAXXZ is pinned at {', '.join(wrong)}, "
                        f"not the 0x{name_rva.upper()} its name says")
     paths = [p for p in candidates(ref) if p in compiled]
     for path, text in sorted(batch(ref, paths).items()):
@@ -108,7 +108,7 @@ def problems(ref=None):
         called = {m.group(1).lower() for m in CALL.finditer(text) if m.start(1) not in in_decl}
         for target in sorted(called & declared):
             if not any(a.startswith("0x") and int(a, 16) == int(target, 16) for a in pins.get(target, ())):
-                bad.append(f"{path}: calls b_{target}() but reverse/symbols.csv has no "
+                bad.append(f"{path}: calls b_{target}() but targets/game/reverse/symbols.csv has no "
                            f"?b_{target}@@YAXXZ pin at 0x{target.upper()} -- add the real name BESIDE "
                            f"the b_ pin, never in place of it")
     return bad

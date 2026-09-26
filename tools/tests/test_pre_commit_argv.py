@@ -25,7 +25,7 @@ def hook_runner(tmp_path):
         pytest.skip('Git Bash is required on Windows; Bash is required elsewhere')
     root = tmp_path / 'hook fixture with spaces'
     root.mkdir()
-    (root / 'reverse').mkdir()
+    (root / 'targets/game/reverse').mkdir(parents=True)
     (root / 'calls').mkdir()
     (root / 'hook').write_bytes(HOOK.read_bytes())
     (root / 'build.sh').write_text(r'''#!/usr/bin/env bash
@@ -45,16 +45,16 @@ git() {
         case "$*" in
         'rev-parse --show-toplevel') printf '%s\n' "$PWD" ;;
         'diff --cached --name-only --diff-filter=ACMRT')
-            printf '%s\n' reverse/functions.csv
+            printf '%s\n' targets/game/reverse/functions.csv
             [ -z "${STAGED_SOURCE:-}" ] || printf '%s\n' "$STAGED_SOURCE"
             ;;
         'diff --cached --name-only --diff-filter=ACMR') return 0 ;;
         'cat-file -e :tools/target_hooks.py'|'cat-file -e :tools/name_regression.py'|'cat-file -e :tools/name_oracle.py') return 0 ;;
         'diff --quiet -- tools/name_regression.py'|'diff --quiet -- tools/name_oracle.py') return 0 ;;
-        'diff --cached --quiet -- reverse/functions.csv') return 1 ;;
-        'diff --cached --quiet -- reverse/symbols.csv'|'diff --cached --quiet -- reverse/pin_consistency_baseline.csv') return 0 ;;
-        'diff --cached --quiet -- reverse/full_gate_baseline.txt') return 0 ;;
-        'diff --quiet -- reverse/functions.csv') return 0 ;;
+        'diff --cached --quiet -- targets/game/reverse/functions.csv') return 1 ;;
+        'diff --cached --quiet -- targets/game/reverse/symbols.csv'|'diff --cached --quiet -- targets/game/reverse/pin_consistency_baseline.csv') return 0 ;;
+        'diff --cached --quiet -- targets/game/reverse/full_gate_baseline.txt') return 0 ;;
+        'diff --quiet -- targets/game/reverse/functions.csv') return 0 ;;
         'diff --quiet -- '*) return 0 ;;
         'diff --cached --name-only --diff-filter=ACM -- tools/*.py'|'diff --cached --name-only --diff-filter=A') return 0 ;;
         *) printf 'unexpected Git test invocation: %s\n' "$*" >&2; return 92 ;;
@@ -88,7 +88,7 @@ source ./hook
             selectors = [f'row:0x{i + 0x1000:08X}:16:{p}'
                          for i, p in enumerate(selected_paths)]
         (root / 'deltas').write_text(''.join(p + '\n' for p in selectors), encoding='utf-8', newline='\n')
-        with (root / 'reverse/functions.csv').open('w', encoding='utf-8', newline='') as stream:
+        with (root / 'targets/game/reverse/functions.csv').open('w', encoding='utf-8', newline='') as stream:
             writer = csv.writer(stream)
             writer.writerow(['broken' if broken_csv else 'source', 'status'])
             writer.writerows((path, 'matched') for path in claimed)
@@ -113,13 +113,13 @@ source ./hook
 
 
 def long_paths(count=998):
-    return [f"Code/GameEngine/Folder with spaces {i:04}/" + 'long segment/' * (8 + i % 9)
+    return [f"game/GameEngine/Folder with spaces {i:04}/" + 'long segment/' * (8 + i % 9)
             + "Unicode \u00e9\U0001f30d/[brackets]/quote's file.cpp" for i in range(count)]
 
 
 def test_many_long_spaced_paths_are_verified_once_in_bounded_chunks(hook_runner):
     paths = long_paths()
-    parked = 'Code/GameEngine/parked reconstruction.cpp'
+    parked = 'game/GameEngine/parked reconstruction.cpp'
     result, chunks, root = hook_runner(paths + [parked, paths[0]], claimed=paths, build_pool='7')
     expected = [f'row:0x{i + 0x1000:08X}:16:{p}' for i, p in enumerate(paths)]
     assert result.returncode == 0, result.stderr
@@ -150,7 +150,7 @@ def test_failed_chunk_stops_without_success_or_later_chunks(hook_runner):
 
 
 def test_filter_error_fails_closed_without_build(hook_runner):
-    result, chunks, _ = hook_runner(['Code/GameEngine/claimed.cpp'], broken_csv=True)
+    result, chunks, _ = hook_runner(['game/GameEngine/claimed.cpp'], broken_csv=True)
     assert result.returncode != 0
     assert not chunks
     assert 'filtering claimed sources' in result.stderr
@@ -158,7 +158,7 @@ def test_filter_error_fails_closed_without_build(hook_runner):
 
 
 def test_unclaimed_staged_sources_are_removed_without_empty_build(hook_runner):
-    source = 'Code/GameEngine/parked reconstruction.cpp'
+    source = 'game/GameEngine/parked reconstruction.cpp'
     result, chunks, root = hook_runner([], claimed=[], staged_source=source)
     assert result.returncode == 0, result.stderr
     assert not chunks
@@ -174,14 +174,14 @@ def test_no_delta_does_not_invoke_filter_or_build(hook_runner):
 
 
 def test_individually_oversized_path_is_rejected(hook_runner):
-    result, chunks, _ = hook_runner(['Code/GameEngine/' + 'x' * 12000 + '.cpp'])
+    result, chunks, _ = hook_runner(['game/GameEngine/' + 'x' * 12000 + '.cpp'])
     assert result.returncode != 0
     assert not chunks
     assert 'byte-verify selector exceeds argument limit' in result.stderr
 
 
 def test_small_delta_remains_one_build(hook_runner):
-    paths = ['Code/GameEngine/a.cpp', 'Code/GameEngine/folder with spaces/b.cpp']
+    paths = ['game/GameEngine/a.cpp', 'game/GameEngine/folder with spaces/b.cpp']
     result, chunks, _ = hook_runner(paths)
     assert result.returncode == 0, result.stderr
     assert len(chunks) == 1
@@ -190,9 +190,9 @@ def test_small_delta_remains_one_build(hook_runner):
 
 
 def test_changed_staged_source_still_uses_full_source_selector(hook_runner):
-    source = 'Code/GameEngine/Edited.cpp'
-    result, chunks, _ = hook_runner(['Code/GameEngine/claim.cpp'],
-                                   claimed=['Code/GameEngine/claim.cpp', source],
+    source = 'game/GameEngine/Edited.cpp'
+    result, chunks, _ = hook_runner(['game/GameEngine/claim.cpp'],
+                                   claimed=['game/GameEngine/claim.cpp', source],
                                    staged_source=source)
     assert result.returncode == 0, result.stderr
     assert len(chunks) == 1

@@ -21,7 +21,7 @@ B = "?beta@X@@QAEXXZ"
 
 def _two_row_donor(tmp_path):
     """One donor carrying two rows, both markered for DEST."""
-    donor = "Code/Donor.cpp"
+    donor = "game/Donor.cpp"
     text = (f"// readable body of {A}: {DEST}\n"
             f"// readable body of {B}: {DEST}\n"
             "void alpha() {}\nvoid beta() {}\n")

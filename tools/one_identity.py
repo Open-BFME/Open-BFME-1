@@ -24,7 +24,7 @@ VECTOR_DELETING = bytes.fromhex("f644240401")  # test byte ptr [esp+4],1
 
 def matched_rows(path=None, text=None):
     if text is None:
-        path = path or B.ROOT / "reverse" / "functions.csv"
+        path = path or B.ROOT / "targets/game/reverse" / "functions.csv"
         text = Path(path).read_text(encoding="utf-8", errors="replace")
     return [r for r in csv.DictReader(io.StringIO(text, newline=""))
             if r["status"] == "matched" and r["target_rva"].startswith("0x")]
@@ -41,7 +41,7 @@ def check_ref(ref):
         return subprocess.run(["git", "show", f"{ref}:{path}"], capture_output=True,
                               check=True, cwd=B.ROOT).stdout.decode("utf-8", "replace")
     limit = re.search(r"^one_identity\.surplus\s*=\s*(\d+)",
-                      show("reverse/identity_baseline.txt"), re.M)
+                      show("targets/game/reverse/identity_baseline.txt"), re.M)
     if limit is None:
         # Only a commit from before this tool existed may lack the key.
         present = subprocess.run(["git", "cat-file", "-e", f"{ref}:tools/one_identity.py"],
@@ -51,7 +51,7 @@ def check_ref(ref):
                   file=sys.stderr)
             return 1
         return 0
-    found = surplus(matched_rows(text=show("reverse/functions.csv")))
+    found = surplus(matched_rows(text=show("targets/game/reverse/functions.csv")))
     if found > int(limit.group(1)):
         print(f"one_identity: {ref[:10]} has {found} surplus real names, baseline "
               f"{limit.group(1)}. A commit made before the baseline was lowered adds a second "
@@ -101,7 +101,7 @@ def folding_evidence(rows, text, text_rva, table_end):
     return len(shared), sum(len(v) for v in shared.values()), template, widest
 
 
-NOT_EVIDENCE = ("Code/gen_small/", "Code/gen_asm/", "Code/masm_dumps/")
+NOT_EVIDENCE = ("game/gen_small/", "game/gen_asm/", "game/masm_dumps/")
 
 
 def caller_names(rows, bodies):
@@ -123,7 +123,7 @@ def caller_names(rows, bodies):
         while k >= 0 and ends[k] > site:
             start, size, i = owners[k]
             source = rows[i]["source"]
-            if (site < start + size and source.startswith("Code/") and source.endswith(".cpp")
+            if (site < start + size and source.startswith("game/") and source.endswith(".cpp")
                     and not source.startswith(NOT_EVIDENCE)):
                 by_object[B.row_object(rows[i])].append((rows[i], site, target[callee]))
             k -= 1

@@ -2,7 +2,7 @@
 
 A reporter that cannot go red is worse than none: it would publish "0 red rows"
 over the exact wall it exists to find. So the gate's exit code, its output and
-whether it rewrote reverse/reloc_names.csv are all knobs here, and the compile
+whether it rewrote targets/game/reverse/reloc_names.csv are all knobs here, and the compile
 wall that exits 2 without ever reaching byte comparison has to land on a
 different verdict than a clean run.
 """
@@ -46,11 +46,11 @@ Reloc names: 903 anonymous function(s) named from byte-true call sites
 """
 
 TWO_RED = """Compile: 0 of 264 TU(s) (deps-cache: 264 current)
-  FAIL ??_G?$SList@VTagBlockIndex@@@@UAEPAXI@Z (Code/Libraries/Source/WWVegas/WWLib/tagblock.cpp)
+  FAIL ??_G?$SList@VTagBlockIndex@@@@UAEPAXI@Z (game/Libraries/Source/WWVegas/WWLib/tagblock.cpp)
     target:   56 8B F1 E8 4D FF FF FF
     compiled: 57 8B F9 E8 4D FF FF FF
-  FAIL ?resetIdleScan@TurretAI@@QAEXXZ (Code/GameEngine/Source/Common/TurretAI.cpp)
-    unresolved call(s): _theGameLogic (add to reverse/symbols.csv)
+  FAIL ?resetIdleScan@TurretAI@@QAEXXZ (game/GameEngine/Source/Common/TurretAI.cpp)
+    unresolved call(s): _theGameLogic (add to targets/game/reverse/symbols.csv)
     target:   8B 44 24 04 CC CC
     compiled: 8B 44 24 08 90 90
 Functions: FAIL 2/5127
@@ -58,7 +58,7 @@ Functions: FAIL 2/5127
 """
 
 COMPILE_WALL = """Compile: 3 of 264 TU(s) (deps-cache: 261 current)
-compile failed: Code/GameEngine/Source/Common/TurretAI.cpp
+compile failed: game/GameEngine/Source/Common/TurretAI.cpp
 TurretAI.cpp(41) : error C2065: 'theGameLogic' : undeclared identifier
 """
 
@@ -75,7 +75,7 @@ class Gate:
             if rewrites_reloc:
                 self.reloc.write_text(
                     "name,target_rva,target_size,source,notes\n"
-                    "?named@@YAXXZ,0x00401000,16,Code/a.cpp,reloc-derived\n",
+                    "?named@@YAXXZ,0x00401000,16,game/a.cpp,reloc-derived\n",
                     encoding="utf-8")
             return code, output
 
@@ -117,7 +117,7 @@ def test_a_clean_gate_is_zero_red_rows(tmp_path, monkeypatch, capsys):
     out = capsys.readouterr().out
     assert "0 red rows" in out
     assert "RED " not in out
-    assert "reverse/reloc_names.csv: unchanged" in out
+    assert "targets/game/reverse/reloc_names.csv: unchanged" in out
 
 
 def test_a_rewritten_reloc_file_is_reported(tmp_path, monkeypatch, capsys):

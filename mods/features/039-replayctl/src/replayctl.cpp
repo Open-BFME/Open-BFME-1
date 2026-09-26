@@ -2,7 +2,7 @@
 //
 // The spike that produced this is archived at build/s1/replayctl-spike.cpp.bak;
 // it also carried a checkpoint/restore probe for a 30-second step-back, which
-// does not work. plans/replay-controls.md has the eight runs and the evidence.
+// does not work. docs/plans/replay-controls.md has the eight runs and the evidence.
 // What ships here is the half that does.
 //
 // THE HOOK, and why it is this one. RVA 0x0006B910 is the body behind GameEngine

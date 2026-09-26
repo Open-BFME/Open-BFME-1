@@ -1,6 +1,6 @@
 """Terminator-preserving ledger rewrite. The ONLY safe way to drop/edit rows.
 
-reverse/functions.csv is not uniformly CRLF: at fa05aaa4b it holds 93,713 rows
+targets/game/reverse/functions.csv is not uniformly CRLF: at fa05aaa4b it holds 93,713 rows
 ending \r\r\n, 11,140 ending \r\n and 309 ending with a bare \n. Every rewrite
 that has split on "\r\n" or used str.splitlines() has silently dropped or
 duplicated rows (twice this session):
@@ -55,7 +55,7 @@ def terminator_census(raw):
 def uniform_terminator(raw, label):
     """The one line ending `raw` uses; a file mixing two is not appendable.
 
-    reverse/symbols.csv is `merge=union`. A pin differing from its twin only by a
+    targets/game/reverse/symbols.csv is `merge=union`. A pin differing from its twin only by a
     `\\r` is a DISTINCT line to the merge driver, so the same pin lands twice and
     every later rebase compounds it -- that is how 4,172 pins became 8,784.
     Matching the file keeps each batch a pure append.

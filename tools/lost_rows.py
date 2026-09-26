@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Rows that were landed once and have since vanished from the ledger.
 
-WHY. `reverse/*.csv` are union-merged, and a rebase can drop an appended line
+WHY. `targets/game/reverse/*.csv` are union-merged, and a rebase can drop an appended line
 without a conflict. When that happens the SOURCE stays and its row disappears, so
 the file reads exactly like an abandoned attempt -- "ZERO matched rows -- source
 presence is not progress" -- and the obvious response is to delete it. That throws
@@ -20,7 +20,7 @@ matched row; a lost row did. This asks history.
     python3 tools/lost_rows.py --zero-only     # only files with NO rows left,
                                                # i.e. the ones the gate is red on
 
-A row that was deliberately retired is not lost: `reverse/deleted_rows.csv`
+A row that was deliberately retired is not lost: `targets/game/reverse/deleted_rows.csv`
 tombstones those, and anything tombstoned is excluded.
 """
 import argparse
@@ -31,7 +31,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-LEDGER = ROOT / "reverse/functions.csv"
+LEDGER = ROOT / "targets/game/reverse/functions.csv"
 ADDED = re.compile(r"^\+(\?\??[^,]+|[A-Za-z_][^,]*),")
 
 
@@ -45,7 +45,7 @@ def current():
 
 
 def tombstoned():
-    path = ROOT / "reverse/deleted_rows.csv"
+    path = ROOT / "targets/game/reverse/deleted_rows.csv"
     if not path.exists():
         return set()
     with open(path, newline="") as fh:
@@ -56,10 +56,10 @@ def landed(since):
     """{row name: (commit, source)} for every matched row ever added."""
     out = {}
     log = subprocess.run(
-        ["git", "log", f"--since={since}", "--format=%H", "--", "reverse/functions.csv"],
+        ["git", "log", f"--since={since}", "--format=%H", "--", "targets/game/reverse/functions.csv"],
         cwd=ROOT, capture_output=True, text=True).stdout.split()
     for commit in log:
-        diff = subprocess.run(["git", "show", commit, "--", "reverse/functions.csv"],
+        diff = subprocess.run(["git", "show", commit, "--", "targets/game/reverse/functions.csv"],
                               cwd=ROOT, capture_output=True, text=True).stdout
         for line in diff.splitlines():
             if not line.startswith("+") or line.startswith("++"):

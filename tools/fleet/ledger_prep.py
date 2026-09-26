@@ -12,22 +12,22 @@ sys.path.insert(0, str(ROOT / "tools"))
 import portable_lock
 import build
 BS = chr(92).encode()
-with open(ROOT / "reverse/.add_match.lock", "a+") as h:
+with open(ROOT / "targets/game/reverse/.add_match.lock", "a+") as h:
     if not os.environ.get("HARVEST_HAS_LOCK"):
         portable_lock.lock(h, exclusive=True)
-    gone = subprocess.run(["git", "ls-files", "-d", "reverse/attempts"], cwd=ROOT, capture_output=True, text=True).stdout.split()
+    gone = subprocess.run(["git", "ls-files", "-d", "targets/game/reverse/attempts"], cwd=ROOT, capture_output=True, text=True).stdout.split()
     if gone:
         subprocess.run(["git", "checkout", "HEAD", "--", *gone], cwd=ROOT)
         print(f"ledger_prep: restored {len(gone)} deleted stash(es) for retirement")
-    p = ROOT / "reverse/functions.csv"
+    p = ROOT / "targets/game/reverse/functions.csv"
     b = p.read_bytes()
-    n = b.count(b"Code" + BS)
+    n = b.count(b"game" + BS)
     if n:
         # only the source column is a path; notes may legitimately contain backslashes
         out = []
         for line in b.split(b"\n"):
             parts = line.split(b",")
-            if len(parts) > 4 and parts[4].startswith(b"Code" + BS):
+            if len(parts) > 4 and parts[4].startswith(b"game" + BS):
                 parts[4] = parts[4].replace(BS, b"/")
             out.append(b",".join(parts))
         with open(p, "r+b") as f:
@@ -42,7 +42,7 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
     real = {}
     for payload, _ in ledger_io.split_records(raw):
         f = [norm(x) for x in ledger_io.fields(payload)]
-        if len(f) >= 6 and f[5] == "matched" and not f[4].startswith("Code/gen_") and not f[0].startswith(("?d_", "?j_", "?b_", "?dup_")):
+        if len(f) >= 6 and f[5] == "matched" and not f[4].startswith("game/gen_") and not f[0].startswith(("?d_", "?j_", "?b_", "?dup_")):
             real.setdefault(f[2].upper(), f[0])
     victims = []
     def keep(f):
@@ -54,7 +54,7 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
     new, dropped = ledger_io.rewrite(raw, keep)
     if dropped:
         ledger_io.atomic_write_bytes(p, new)
-        d = ROOT / "reverse/deleted_rows.csv"; b = d.read_bytes()
+        d = ROOT / "targets/game/reverse/deleted_rows.csv"; b = d.read_bytes()
         term = b"\r\n" if b"\r\n" in b[:2000] else b"\n"
         if not b.endswith(term): b += term
         for name, rva in victims:
@@ -64,7 +64,7 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
     # a union merge can resurrect a row that deleted_rows.csv tombstoned
     # (name + rva); drop it again
     tomb = set()
-    for line in (ROOT / "reverse/deleted_rows.csv").read_bytes().splitlines()[1:]:
+    for line in (ROOT / "targets/game/reverse/deleted_rows.csv").read_bytes().splitlines()[1:]:
         f = [norm(x) for x in line.split(b",")]
         if len(f) >= 2 and f[1].startswith("0x"):
             tomb.add((f[0], f[1].upper()))

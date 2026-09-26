@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Check that selected CRT pins really land on their MSVCR71 imports.
 
-``reverse/symbols.csv`` is an additive candidate list.  A pin can therefore
+``targets/game/reverse/symbols.csv`` is an additive candidate list.  A pin can therefore
 name a body that happens to produce the right relocation while still being a
 different CRT helper.  This guard checks the small group of compiler helpers
 whose names are easy to confuse: it reads the import directory from the

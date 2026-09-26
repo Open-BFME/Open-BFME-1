@@ -23,9 +23,9 @@ water resource path.  `callees.py` confirms the expected DX8 ILTs, `__ftol2`,
 
 ## Shared include
 
-The shared include is [DX8State.h](../reference/shims/dx8state/DX8State.h).
+The shared include is [DX8State.h](../inputs/reference/shims/dx8state/DX8State.h).
 It adopts the canonical WW3D/WWLib declarations from
-`Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h` and does not redeclare
+`game/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h` and does not redeclare
 `DX8Wrapper`, `StringClass`, `ShaderClass`, `VertexMaterial`, or their
 methods.  The temporary access widening is limited to that include so a W3D
 caller can name the existing protected state fields.  The StringClass call
@@ -86,13 +86,13 @@ permission to copy its addresses blindly:
 
 | BFME family | Zero Hour twin |
 | --- | --- |
-| texture apply/resource bodies, including the `0x0090C840` shape | `reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.cpp` (`TextureClass::Apply` and resource paths) |
-| terrain texture and alpha-terrain paths around `0x006D4690` | `.../Code/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTex.cpp` |
-| screen filter/render-to-texture path around `0x007171F0` | `.../Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp` |
-| snow resource/render path around `0x00725710` | `.../Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DSnow.cpp` |
-| water resource and track paths around `0x00905140`/`0x0071BBC0` | `.../Code/GameEngineDevice/Source/W3DDevice/Water/W3DWater.cpp` and `W3DWaterTracks.cpp` |
-| volumetric-shadow path around `0x007B93E0` | `.../Code/GameEngineDevice/Source/W3DDevice/Shadow/W3DVolumetricShadow.cpp` |
-| device state implementation | `.../Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h` and `dx8wrapper.cpp` |
+| texture apply/resource bodies, including the `0x0090C840` shape | `inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.cpp` (`TextureClass::Apply` and resource paths) |
+| terrain texture and alpha-terrain paths around `0x006D4690` | `.../game/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTex.cpp` |
+| screen filter/render-to-texture path around `0x007171F0` | `.../game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp` |
+| snow resource/render path around `0x00725710` | `.../game/GameEngineDevice/Source/W3DDevice/GameClient/W3DSnow.cpp` |
+| water resource and track paths around `0x00905140`/`0x0071BBC0` | `.../game/GameEngineDevice/Source/W3DDevice/Water/W3DWater.cpp` and `W3DWaterTracks.cpp` |
+| volumetric-shadow path around `0x007B93E0` | `.../game/GameEngineDevice/Source/W3DDevice/Shadow/W3DVolumetricShadow.cpp` |
+| device state implementation | `.../game/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h` and `dx8wrapper.cpp` |
 
 The ZH files establish the family mapping and declaration order.  They do
 not prove a BFME identity where the BFME caller, vtable slot, unique literal,
@@ -105,15 +105,15 @@ settled.
 
 1. Run `tools/callees.py <rva> <size>` and read every target before writing
    the body; use the ZH file only for control-flow/layout hypotheses.
-2. Include `../../../../../reference/shims/dx8state/DX8State.h` first from a
+2. Include `../../../../../inputs/reference/shims/dx8state/DX8State.h` first from a
    `GameClient` TU, then the normal W3D/WW3D headers; never add TU-local
    `DX8Wrapper`, `StringClass`, shader, or material declarations.
 3. Use the focused MSVC-compatible flags
    `/DNDEBUG /MD /EHsc` plus the repository include roots for
-   `reference/shims`, `Code/Libraries/{Include,Source}`, `WWVegas/WWLib`,
+   `inputs/reference/shims`, `game/Libraries/{Include,Source}`, `WWVegas/WWLib`,
    `WWVegas/WW3D2`, `WWVegas/WWMath`, `WWVegas/WWDebug`, `WWSaveLoad`,
-   `WWAudio`, `Code/GameEngine/{Include,Source,Source/Common}`, and
-   `Code/GameEngineDevice/{Include,Source}`.
+   `WWAudio`, `game/GameEngine/{Include,Source,Source/Common}`, and
+   `game/GameEngineDevice/{Include,Source}`.
 4. Add `_STLP_NO_EXCEPTIONS` for STLport/WWLib-heavy bodies whose retail
    frame has no C++ EH state; use `throw()` on the local StringClass/resource
    RAII declarations where that removes the unwanted unwind states.  Keep
@@ -136,7 +136,7 @@ byte-wrong state access or an invented identity.
 
 The focused family-1-through-12 sweep contains 61 unique dump bodies. Running
 `tools/callees.py` over every member found zero unnamed direct callees for 59
-members. Those 59 are listed in `reverse/unlocked.txt` with the `w3d-render`
+members. Those 59 are listed in `targets/game/reverse/unlocked.txt` with the `w3d-render`
 tag so the anonymous lane can serve them immediately. The two exceptions are
 `0x00907960` and `0x0090AB60`; each still has one unnamed direct callee and
 remains gated until that target is independently identified.

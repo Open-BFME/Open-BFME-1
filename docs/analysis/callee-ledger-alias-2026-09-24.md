@@ -5,7 +5,7 @@ earlier names for a shared target RVA. Its output for `0x00887B60` is
 `??0GameSpyGroupRoom@@QAE@ABV0@@Z`, the lexically last row. The same ledger
 has a matched `StringBase<char>` copy-constructor body at that address and
 marks the GameSpy row `object-symbol=...StringBase...;C++ alias`. Existing
-`reverse/name_corrections.json` explicitly rejects inferring a GameSpy owner
+`targets/game/reverse/name_corrections.json` explicitly rejects inferring a GameSpy owner
 from that alias. All 13 existing callee tests pass because none exercises the
 real ledger-name grouping path.
 

@@ -178,13 +178,13 @@ def refresh(target, revisions):
              "source_audit": "Pinned source file contains no naked, emit or inline-assembly code",
              "excluded_assembly_sources": excluded,
              "donors": sorted(records, key=lambda row: (row["symbol"], row["reference"], row["source"], row["donor_rva"]))}
-    atomic_write_bytes(target.config_path.parent / "references.json", config_bytes)
+    atomic_write_bytes(target.root / "targets/worldbuilder/references.json", config_bytes)
     atomic_write_bytes(target.ledger_root / "donors.json", _json_bytes(index))
     return index
 
 
 def _load(target):
-    config_path = target.config_path.parent / "references.json"
+    config_path = target.root / "targets/worldbuilder/references.json"
     raw = config_path.read_bytes()
     config = json.loads(raw)
     index = json.loads((target.ledger_root / "donors.json").read_bytes())

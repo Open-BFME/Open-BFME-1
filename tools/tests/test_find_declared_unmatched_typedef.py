@@ -45,7 +45,7 @@ def test_the_real_file_no_longer_reports_unclaimed():
     import subprocess
     result = subprocess.run(
         [sys.executable, str(TOOLS / "find_declared_unmatched.py"), "--fail",
-         "Code/GameEngine/Source/Common/RTS/TeamFactory_M_insert.cpp"],
+         "game/GameEngine/Source/Common/RTS/TeamFactory_M_insert.cpp"],
         cwd=str(TOOLS.parent), capture_output=True, text=True)
     assert result.returncode == 0, result.stdout + result.stderr
     assert "_M_insert" not in result.stdout

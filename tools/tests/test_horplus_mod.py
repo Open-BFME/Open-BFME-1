@@ -12,8 +12,8 @@ import pytest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 
-EXE = ROOT / "baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
-VC71 = ROOT / "build/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/bin/cl.exe"
+EXE = ROOT / "inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
+VC71 = ROOT / "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/bin/cl.exe"
 capstone = pytest.importorskip("capstone")
 
 import modbuild  # noqa: E402
@@ -69,7 +69,7 @@ def test_horplus_patches_post_operation_sites_and_reaches_the_cave(built):
     cave_end = cave_start + cave["vsize"]
     cave_bytes = pe.read(cave["vaddr"], cave["vsize"])
     # Calls inside a payload use fixed retail VAs; 0x00931780 is the RVA in
-    # reverse/functions.csv, while the executable's image base is 0x00400000.
+    # targets/game/reverse/functions.csv, while the executable's image base is 0x00400000.
     assert b"\xB8\x80\x17\xD3\x00" in cave_bytes  # mov eax, 0x00D31780
     md = _md()
     shim_targets = []

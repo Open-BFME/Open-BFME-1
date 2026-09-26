@@ -1,0 +1,5564 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /DZH_EMIT_POOL_GLUE /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+#define Matrix4x4 Matrix4  // BFME renamed it
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+////////////////////////////////////////////////////////////////////////////////
+//																																						//
+//  (c) 2001-2003 Electronic Arts Inc.																				//
+//																																						//
+////////////////////////////////////////////////////////////////////////////////
+
+// FILE: Player.cpp /////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------
+//                                                                          
+//                       Westwood Studios Pacific.                          
+//                                                                          
+//                       Confidential Information                           
+//                Copyright (C) 2001 - All Rights Reserved                  
+//                                                                          
+//-----------------------------------------------------------------------------
+//
+// Project:   RTS3
+//
+// File name: Player.cpp
+//
+// Created:   Steven Johnson, October 2001
+//
+// Desc:      @todo
+//
+//-----------------------------------------------------------------------------
+
+#include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+
+#define DEFINE_SCIENCE_AVAILABILITY_NAMES
+
+#include "Common/ActionManager.h"
+#include "Common/BuildAssistant.h"
+#include "Common/CRCDebug.h"
+#include "Common/DisabledTypes.h"
+#include "Common/GameState.h"
+#include "Common/GlobalData.h"
+#include "Common/MessageStream.h"
+#include "Common/MiscAudio.h"
+#include "Common/PerfTimer.h"
+#include "Common/Player.h"
+#include "Common/PlayerList.h"
+#include "Common/PlayerTemplate.h"
+#include "Common/ProductionPrerequisite.h"
+#include "Common/Radar.h"
+#include "Common/ResourceGatheringManager.h"
+#include "Common/Team.h"
+#include "Common/ThingFactory.h"
+#include "Common/ThingTemplate.h"
+#include "Common/TunnelTracker.h"
+#include "Common/Upgrade.h"
+#include "Common/WellKnownKeys.h"
+#include "Common/Xfer.h"
+#include "Common/BitFlagsIO.h"
+#include "Common/SpecialPower.h"
+
+#include "GameClient/ControlBar.h"
+#include "GameClient/Drawable.h"
+#include "GameClient/Eva.h"
+#include "GameClient/GameClient.h"
+#include "GameClient/GameText.h"
+
+#include "GameLogic/AI.h"
+#include "GameLogic/AIPathfind.h"
+#include "GameLogic/AISkirmishPlayer.h"
+#include "GameLogic/ExperienceTracker.h"
+#include "GameLogic/Object.h"
+#include "GameLogic/Scripts.h"
+#include "GameLogic/PartitionManager.h"
+#include "GameLogic/SidesList.h"
+#include "GameLogic/Squad.h"
+#include "GameLogic/RankInfo.h"
+#include "GameLogic/ScriptEngine.h"
+#include "GameLogic/Weapon.h"
+#include "GameLogic/Module/AIUpdate.h"
+#include "GameLogic/Module/ContainModule.h"
+#include "GameLogic/Module/AutoDepositUpdate.h"
+#include "GameLogic/Module/StealthUpdate.h"
+#include "GameLogic/Module/SpecialPowerModule.h"
+#include "GameLogic/Module/SupplyTruckAIUpdate.h"
+#include "GameLogic/Module/BattlePlanUpdate.h"
+#include "GameLogic/Module/ProductionUpdate.h"
+#include "GameLogic/VictoryConditions.h"
+
+#include "GameNetwork/GameInfo.h"
+
+#ifdef _INTERNAL
+// for occasional debugging...
+//#pragma optimize("", off)
+//#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
+#endif
+
+//Grey for neutral.  
+#define NEUTRAL_PLAYER_COLOR 0xffffffff
+
+namespace {
+
+// BFME's AIPlayer query slots precede their recovered Zero Hour positions by one entry.
+class BFMEAIPlayerVirtuals
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot04() = 0;
+	virtual void slot08() = 0;
+	virtual void slot0c() = 0;
+	virtual void slot10() = 0;
+	virtual void slot14() = 0;
+	virtual void slot18() = 0;
+	virtual void slot1c() = 0;
+	virtual void slot20() = 0;
+	virtual void slot24() = 0;
+	virtual void slot28() = 0;
+	virtual Bool isSkirmishAI() = 0;
+	virtual Player *getAiEnemy() = 0;
+	virtual Bool checkBridges(Object *unit, Waypoint *way) = 0;
+};
+
+struct BFMEPlayerAIView
+{
+	char data[0x220];
+	BFMEAIPlayerVirtuals *ai;
+};
+
+} // namespace
+
+class GameLogicPortraitShim
+{
+public:
+	Bool isInMultiplayerOrSkirmishGame();
+};
+
+extern GameLogic *TheBfmeGameLogic;
+
+template <typename T>
+class StringBase
+{
+public:
+	StringBase() : m_data(0) {}
+	void set(const StringBase<T> &source);
+
+	friend class BfmePlayerAsciiString;
+
+private:
+	~StringBase();
+	void *m_data;
+};
+
+class BfmePlayerAsciiString : private StringBase<char>
+{
+public:
+	BfmePlayerAsciiString() : StringBase<char>() {}
+	~BfmePlayerAsciiString() {}
+	BfmePlayerAsciiString &operator=(const BfmePlayerAsciiString &source)
+	{
+		StringBase<char>::set((const StringBase<char> &)source);
+		return *this;
+	}
+};
+
+class BfmePlayerFinalHelper
+{
+public:
+	void call();
+};
+
+// ------------------------------------------------------------------------------------------------
+class ClosestKindOfData
+{
+public:
+
+	ClosestKindOfData( void );
+
+	//In
+	KindOfMaskType m_setKindOf;
+	KindOfMaskType m_clearKindOf;
+	Object *m_source;
+
+	//Out
+	Object *m_closest;
+	Real m_closestDistSq;
+
+};
+
+// ------------------------------------------------------------------------------------------------
+// ??0ClosestKindOfData@@QAE@XZ present-unmatched
+ClosestKindOfData::ClosestKindOfData( void )
+{
+	m_setKindOf.clear();
+	m_clearKindOf.clear();
+	m_source = NULL;
+	m_closest = NULL;
+	m_closestDistSq = FLT_MAX;
+}
+
+// ------------------------------------------------------------------------------------------------
+static void findClosestKindOf( Object *obj, void *userData )
+{
+	ClosestKindOfData *closestData = (ClosestKindOfData *)userData;
+
+	if( ! obj->isKindOfMulti( closestData->m_setKindOf, closestData->m_clearKindOf ) )
+		return; // Do nothing to the magic running total pointer man.
+
+	// is this the closest one so far
+	Real distSq = ThePartitionManager->getDistanceSquared( closestData->m_source, obj, FROM_CENTER_2D );
+	if( distSq < closestData->m_closestDistSq )
+	{
+		closestData->m_closest = obj;
+		closestData->m_closestDistSq = distSq;
+	} 
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+#ifdef DEBUG_CRC
+#define CRCDUMPBATTLEPLANBONUSES(x,y,z) dumpBattlePlanBonuses(x, #x, y, z, __FILE__, __LINE__, FALSE)
+#define DUMPBATTLEPLANBONUSES(x,y,z) dumpBattlePlanBonuses(x, #x, y, z, __FILE__, __LINE__, TRUE)
+AsciiString kindofMaskAsAsciiString(KindOfMaskType m)
+{
+	AsciiString s;
+	const char** kindofNames = KindOfMaskType::getBitNames();
+	for (Int i=KINDOF_FIRST; i<KINDOF_COUNT; ++i)
+	{
+		if (m.test(i))
+		{
+			if (s.isNotEmpty())
+				s.concat("|");
+			s.concat(kindofNames[i]);
+		}
+	}
+	if (s.isEmpty())
+		s = "KINDOF_INVALID";
+	return s;
+}
+void dumpBattlePlanBonuses(const BattlePlanBonuses *b, AsciiString name, const Player *p, const Object *o, AsciiString fname, Int line, Bool doDebugLog)
+{
+	CRCDEBUG_LOG(("dumpBattlePlanBonuses() %s:%d %s\n  Player %d(%ls) object %d(%s) armor:%g/%8.8X bombardment:%d, holdTheLine:%d, searchAndDestroy:%d sight:%g/%8.8X, valid:%s invalid:%s\n",
+		fname.str(), line, name.str(),
+		(p)?p->getPlayerIndex():-1, (p)?((Player *)p)->getPlayerDisplayName().str():L"<No Name>", (o)?o->getID():-1, (o)?o->getTemplate()->getName().str():"<No Name>",
+		b->m_armorScalar, AS_INT(b->m_armorScalar),
+		b->m_bombardment, b->m_holdTheLine, b->m_searchAndDestroy,
+		b->m_sightRangeScalar, AS_INT(b->m_sightRangeScalar),
+		kindofMaskAsAsciiString(b->m_validKindOf).str(),
+		kindofMaskAsAsciiString(b->m_invalidKindOf).str()));
+	if (!doDebugLog)
+		return;
+	DEBUG_LOG(("dumpBattlePlanBonuses() %s:%d %s\n  Player %d(%ls) object %d(%s) armor:%g/%8.8X bombardment:%d, holdTheLine:%d, searchAndDestroy:%d sight:%g/%8.8X, valid:%s invalid:%s\n",
+		fname.str(), line, name.str(),
+		(p)?p->getPlayerIndex():-1, (p)?((Player *)p)->getPlayerDisplayName().str():L"<No Name>", (o)?o->getID():-1, (o)?o->getTemplate()->getName().str():"<No Name>",
+		b->m_armorScalar, AS_INT(b->m_armorScalar),
+		b->m_bombardment, b->m_holdTheLine, b->m_searchAndDestroy,
+		b->m_sightRangeScalar, AS_INT(b->m_sightRangeScalar),
+		kindofMaskAsAsciiString(b->m_validKindOf).str(),
+		kindofMaskAsAsciiString(b->m_invalidKindOf).str()));
+}
+#else
+#define DUMPBATTLEPLANBONUSES(x,y,z) {}
+#define CRCDUMPBATTLEPLANBONUSES(x,y,z) {}
+#endif // DEBUG_CRC
+
+// ------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+// ??0PlayerRelationMap@@QAE@XZ present-unmatched
+PlayerRelationMap::PlayerRelationMap( void )
+{
+
+}  // end PlayerRelationMap
+
+// ------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+// ??1PlayerRelationMap@@MAE@XZ present-unmatched
+PlayerRelationMap::~PlayerRelationMap( void )
+{
+
+	// make sure the data is cleared
+	m_map.clear();
+
+}  // end ~PlayerRelationmap
+
+// ------------------------------------------------------------------------------------------------
+/** CRC */
+// ------------------------------------------------------------------------------------------------
+// ?crc@PlayerRelationMap@@MAEXPAVXfer@@@Z present-unmatched
+void PlayerRelationMap::crc( Xfer *xfer )
+{
+
+}  // end crc
+
+// ------------------------------------------------------------------------------------------------
+/** Xfer method
+	* Version Info:
+	* 1: Initial version 
+	*/
+// ------------------------------------------------------------------------------------------------
+// ?xfer@PlayerRelationMap@@MAEXPAVXfer@@@Z present-unmatched
+void PlayerRelationMap::xfer( Xfer *xfer )
+{
+
+	// version
+	XferVersion currentVersion = 1;
+	XferVersion version = currentVersion;
+	xfer->xferVersion( &version, currentVersion );
+
+	// player relation count
+	PlayerRelationMapType::iterator playerRelationIt;
+	UnsignedShort playerRelationCount = m_map.size();
+	xfer->xferUnsignedShort( &playerRelationCount );
+
+	// player relations
+	Int playerIndex;
+	Relationship r;
+	if( xfer->getXferMode() == XFER_SAVE )
+	{
+
+		// go through all player relations
+		for( playerRelationIt = m_map.begin(); playerRelationIt != m_map.end(); ++playerRelationIt )
+		{
+		
+			// write player index
+			playerIndex = (*playerRelationIt).first;
+			xfer->xferInt( &playerIndex );
+
+			// write relationship
+			r = (*playerRelationIt).second;
+			xfer->xferUser( &r, sizeof( Relationship ) );
+
+		}  // end for, playerRelationIt
+					
+	}  // end if, save
+	else
+	{
+			
+		for( UnsignedShort i = 0; i < playerRelationCount; ++i )
+		{
+
+			// read player index
+			xfer->xferInt( &playerIndex );
+
+			// read relationship
+			xfer->xferUser( &r, sizeof( Relationship ) );
+
+			// assign relationship
+			m_map[ playerIndex ] = r;
+				
+		}  // end for, i
+
+	}  // end else, load
+
+}  // end xfer
+
+// ------------------------------------------------------------------------------------------------
+/** Load post process */
+// ------------------------------------------------------------------------------------------------
+// ?loadPostProcess@PlayerRelationMap@@MAEXXZ present-unmatched
+void PlayerRelationMap::loadPostProcess( void )
+{
+
+}  // end loadPostProcess
+
+// The carved boundary at 0x000E6120 contains only a return.
+void Rva000E6120Noop(void)
+{
+}
+
+//=============================================================================
+// ??0Player@@QAE@H@Z present-unmatched
+Player::Player( Int playerIndex )
+{
+	m_isPreorder = FALSE;
+	m_isPlayerDead = FALSE;
+
+	m_playerIndex = playerIndex;
+
+	// allocate new relation map pools
+	m_playerRelations = newInstance(PlayerRelationMap);
+	m_teamRelations = newInstance(TeamRelationMap);
+
+	m_upgradeList = NULL;
+	m_pBuildList = NULL;
+	m_ai = NULL;
+	m_resourceGatheringManager = NULL;
+	m_defaultTeam = NULL;
+	m_radarCount = 0;
+	m_disableProofRadarCount = 0;
+	m_radarDisabled = FALSE;
+	m_bombardBattlePlans = 0;
+	m_holdTheLineBattlePlans = 0;
+	m_searchAndDestroyBattlePlans = 0;
+	m_tunnelSystem = NULL;
+	m_playerTemplate = NULL;
+	m_battlePlanBonuses = NULL;
+	m_skillPointsModifier = 1.0f;
+	//Added By Sadullah 
+	//Initializations inserted
+	m_canBuildUnits = TRUE;
+	m_canBuildBase  = TRUE;
+	m_cashBountyPercent = 0.0f;
+	m_color = 0;
+	m_currentSelection = NULL;
+	m_rankLevel = 0;
+	m_sciencePurchasePoints = 0;
+	m_side = 0;
+	m_baseSide = 0;
+	m_skillPoints = 0;
+	Int i;
+	m_upgradeList = NULL;
+	for(i = 0; i < NUM_HOTKEY_SQUADS; i++)
+	{
+		m_squads[i] = NULL;
+	}
+	//
+	for (i = 0; i < MAX_PLAYER_COUNT; ++i) 
+	{
+		m_attackedBy[i] = false;
+	}
+	m_attackedFrame = 0;
+
+	m_unitsShouldHunt = FALSE;
+	init( NULL );
+
+}
+
+//=============================================================================
+// ?init@Player@@QAEXPBVPlayerTemplate@@@Z present-unmatched
+void Player::init(const PlayerTemplate* pt)
+{
+
+	DEBUG_ASSERTCRASH(m_playerTeamPrototypes.size() == 0, ("Player::m_playerTeamPrototypes is not empty at game start!\n"));
+	m_skillPointsModifier = 1.0f;
+	m_attackedFrame = 0;
+
+	m_isPreorder = FALSE;
+	m_isPlayerDead = FALSE;
+
+	m_radarCount = 0;
+	m_disableProofRadarCount = 0;
+	m_radarDisabled = FALSE;
+
+	m_bombardBattlePlans = 0;
+	m_holdTheLineBattlePlans = 0;
+	m_searchAndDestroyBattlePlans = 0;
+	if( m_battlePlanBonuses )
+	{
+		m_battlePlanBonuses->deleteInstance();
+		m_battlePlanBonuses = NULL;
+	}
+
+	deleteUpgradeList();
+
+	m_energy.init(this);
+	m_stats.init();
+	if (m_pBuildList != NULL) 
+	{
+		m_pBuildList->deleteInstance();
+		m_pBuildList = NULL;
+	}
+	m_defaultTeam = NULL;
+
+	if (m_ai)
+	{
+		m_ai->deleteInstance();
+	}
+	m_ai = NULL;
+
+	if( m_resourceGatheringManager )
+	{
+		m_resourceGatheringManager->deleteInstance();
+		m_resourceGatheringManager = NULL;
+	}
+
+	for (Int i = 0; i < NUM_HOTKEY_SQUADS; ++i) {
+		if (m_squads[i] != NULL) {
+			m_squads[i]->deleteInstance();
+			m_squads[i] = NULL;
+		}
+		m_squads[i] = newInstance(Squad);	
+	}
+
+	if (m_currentSelection != NULL) {
+		m_currentSelection->deleteInstance() ;
+		m_currentSelection = NULL;
+	}
+	m_currentSelection = newInstance(Squad);
+	
+	if( m_tunnelSystem )
+	{
+		m_tunnelSystem->deleteInstance();
+		m_tunnelSystem = NULL;
+	}
+	
+	m_canBuildBase = true;
+	m_canBuildUnits = true;
+	m_observer = false;
+	m_cashBountyPercent = 0.0f;
+	m_listInScoreScreen = TRUE;
+
+	m_unitsShouldHunt = FALSE;
+
+#if defined(_DEBUG) || defined(_INTERNAL)
+	m_DEMO_ignorePrereqs = FALSE;
+	m_DEMO_freeBuild = FALSE;
+#endif
+
+#if defined(_DEBUG) || defined(_INTERNAL) || defined(_ALLOW_DEBUG_CHEATS_IN_RELEASE)
+	m_DEMO_instantBuild = FALSE;
+#endif
+
+	if (pt)
+	{
+		m_side = pt->getSide();
+		m_baseSide = pt->getBaseSide();
+		m_productionCostChanges = pt->getProductionCostChanges();
+		m_productionTimeChanges = pt->getProductionTimeChanges();
+		m_productionVeterancyLevels = pt->getProductionVeterancyLevels();
+		m_color = pt->getPreferredColor()->getAsInt() | 0xff000000;
+		m_nightColor = m_color;
+
+		m_money = *pt->getMoney();
+		m_money.setPlayerIndex(getPlayerIndex());
+
+		m_handicap = *pt->getHandicap();
+
+		if( m_money.countMoney() == 0 )
+		{
+      if ( TheGameInfo )
+      {
+        m_money = TheGameInfo->getStartingCash();
+      }
+      else
+      {
+  			m_money = TheGlobalData->m_defaultStartingCash;
+      }
+		}
+
+		m_playerDisplayName.clear();
+		m_playerName.clear();
+		m_playerNameKey = NAMEKEY_INVALID;
+		m_playerType = PLAYER_COMPUTER;
+		m_observer = pt->isObserver();
+		m_isPlayerDead = m_observer; // observers are dead
+
+	}
+	else
+	{
+		// no player template? must be the neutral player!
+		m_side = "";
+		m_baseSide = "";
+		m_productionCostChanges.clear();
+		m_productionTimeChanges.clear();
+		m_productionVeterancyLevels.clear();
+		m_color = NEUTRAL_PLAYER_COLOR;
+		m_nightColor = NEUTRAL_PLAYER_COLOR;
+		m_money.init();
+		m_handicap.init();
+
+		m_playerDisplayName = UnicodeString::TheEmptyString;
+		m_playerName = AsciiString::TheEmptyString;
+		m_playerNameKey = NAMEKEY(AsciiString::TheEmptyString);
+		m_playerType = PLAYER_COMPUTER;
+
+		// neutral is always "allied" with self -- this is the only thing ever allied with neutral!
+		setPlayerRelationship(this, ALLIES);
+
+	}
+	// reset each player
+	m_scoreKeeper.reset(m_playerIndex);
+	m_playerTemplate = pt;
+
+	// reset rank info
+	resetRank();
+	m_sciencesDisabled.clear();
+	m_sciencesHidden.clear();
+
+	{
+		SpecialPowerReadyTimerListIterator it = m_specialPowerReadyTimerList.begin();
+		while(it != m_specialPowerReadyTimerList.end())
+		{
+			SpecialPowerReadyTimerType *sprt = &(*it);
+			it = m_specialPowerReadyTimerList.erase( it );
+			if(sprt)
+				sprt->clear();
+		}
+	}
+
+	KindOfPercentProductionChangeListIt it = m_kindOfPercentProductionChangeList.begin();
+	while(it != m_kindOfPercentProductionChangeList.end())
+	{
+		KindOfPercentProductionChange *tof = *it;
+		it = m_kindOfPercentProductionChangeList.erase( it );
+		if(tof)
+			tof->deleteInstance();
+	}
+
+	getAcademyStats()->init( this );
+
+	//Always off at the beginning of a game! Only GameLogic::update has
+	//the power to turn it on. Don't want to cause desyncs!
+	m_logicalRetaliationModeEnabled = FALSE;
+}
+
+//=============================================================================
+// ??1Player@@UAE@XZ present-unmatched
+Player::~Player()
+{
+	m_defaultTeam = NULL;
+	m_playerTemplate = NULL;
+
+	for( PlayerTeamList::iterator it = m_playerTeamPrototypes.begin(); 
+			 it != m_playerTeamPrototypes.end(); ++it)
+	{
+		(*it)->friend_setOwningPlayer(NULL);
+	}
+	m_playerTeamPrototypes.clear();	// empty, but don't free the contents
+
+	// delete the relation maps (the destructor clears the actual map if any data is present)
+	m_teamRelations->deleteInstance();
+	m_playerRelations->deleteInstance();
+
+	for (Int i = 0; i < NUM_HOTKEY_SQUADS; ++i) {
+		if (m_squads[i] != NULL) {
+			m_squads[i]->deleteInstance();
+			m_squads[i] = NULL;
+		}
+	}
+
+	if (m_currentSelection != NULL) {
+		m_currentSelection->deleteInstance();
+		m_currentSelection = NULL;
+	}
+
+	if( m_battlePlanBonuses )
+	{
+		m_battlePlanBonuses->deleteInstance();
+		m_battlePlanBonuses = NULL;
+	}
+}
+
+//=============================================================================
+// BFME's relation maps carry one base vtable pointer where MemoryPoolObject
+// plus Snapshot give them two here, so m_map sits at +0x04 -- the same offset
+// setPlayerRelationship below already casts for. Spelled as types rather than
+// as a reference to the map so the address of m_map is still formed at the
+// call, which is what keeps the retail lea out of the empty() test.
+struct RetailTeamRelationMap { void *m_baseVtbl; TeamRelationMapType m_map; };
+struct RetailPlayerRelationMap { void *m_baseVtbl; PlayerRelationMapType m_map; };
+
+// m_teamRelations is at Player+0x290 and m_playerRelations at +0x28c, where
+// this tree has +0x1a8 and +0x1a4. Re-read at every use rather than hoisted
+// into a local: retail reloads m_playerRelations after getControllingPlayer,
+// which a local would have kept in a register.
+static RetailTeamRelationMap *teamRelationsOf( const Player *p ) { return *(RetailTeamRelationMap **)((char *)p + 0x290); }
+static RetailPlayerRelationMap *playerRelationsOf( const Player *p ) { return *(RetailPlayerRelationMap **)((char *)p + 0x28c); }
+
+// Team loses that second vtable pointer too, putting m_id at +0x08. A function
+// so the key stays an rvalue: find takes it by const reference, and retail
+// copies it to a stack temp rather than passing the member's own address.
+static TeamID getRetailTeamID( const Team *that ) { return *(const TeamID *)((const char *)that + 0x08); }
+
+//DECLARE_PERF_TIMER(Player_getRelationship)
+Relationship Player::getRelationship(const Team *that) const
+{
+	//USE_PERF_TIMER(Player_getRelationship)
+	// getPlayerIndex needs no adjustment: retail reads +0x24 too.
+	if (that)
+	{
+		// do we have an override for that particular team? if so, return it.
+		if (!teamRelationsOf(this)->m_map.empty())
+		{
+			TeamRelationMapType::const_iterator it = teamRelationsOf(this)->m_map.find(getRetailTeamID(that));
+			if (it != teamRelationsOf(this)->m_map.end())
+			{
+				return (*it).second;
+			}
+		}
+
+		// hummm... well, do we have something for that team's player?
+		if (!playerRelationsOf(this)->m_map.empty())
+		{
+			const Player* thatPlayer = that->getControllingPlayer();
+			if (thatPlayer != NULL)
+			{
+				// Spelled out rather than through playerRelationsOf: as a call
+				// the reload gets scheduled ahead of the key store and lands in
+				// eax, where retail stores the key first and reloads into ecx.
+				const PlayerIndex thatIndex = thatPlayer->getPlayerIndex();
+				PlayerRelationMapType::const_iterator it =
+					(*(RetailPlayerRelationMap **)((char *)this + 0x28c))->m_map.find(thatIndex);
+				if (it != playerRelationsOf(this)->m_map.end())
+				{
+					return (*it).second;
+				}
+			}
+		}
+	}
+	return NEUTRAL;
+}
+
+//=============================================================================
+void Player::setPlayerRelationship(const Player *that, Relationship r)
+{
+	if (that != NULL)
+	{
+		// note that this creates the entry if it doesn't exist.
+		// Two offsets are BFME's: m_playerRelations at Player+0x28c (this tree
+		// +0x1a4), and m_map at +0x04 of it rather than +0x08 -- BFME's
+		// PlayerRelationMap carries one base vtable pointer where
+		// MemoryPoolObject plus Snapshot give it two here.
+		(*(PlayerRelationMapType *)(*(char **)((char *)this + 0x28c) + 0x04))
+			[that->getPlayerIndex()] = r;
+	}
+}
+
+// ------------------------------------------------------------------------
+// ?removePlayerRelationship@Player@@QAE_NPBV1@@Z present-unmatched
+Bool Player::removePlayerRelationship(const Player *that)
+{
+	if (!m_playerRelations->m_map.empty())
+	{
+		if (that == NULL)
+		{
+			m_playerRelations->m_map.clear();
+			return true;
+		}
+		else
+		{
+			PlayerRelationMapType::iterator it = m_playerRelations->m_map.find(that->getPlayerIndex());
+			if (it != m_playerRelations->m_map.end())
+			{
+				m_playerRelations->m_map.erase(it);
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+//=============================================================================
+// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/Player_setTeamRelationship.cpp
+// ?setTeamRelationship@Player@@QAEXPBVTeam@@W4Relationship@@@Z present-unmatched
+// Cannot come home yet, and not for a layout reason: with teamRelationsOf and
+// getRetailTeamID (the same two offsets removeTeamRelationship reads) and the
+// map bound to a reference so it is loaded before the key, the body reaches
+// retail's exact call and differs only in register assignment -- retail keeps
+// `that' in eax and drops m_teamRelations into ecx, this TU uses edx and eax.
+// The callee needs ??A?$hash_map@IW4Relationship@@... (the TeamID-keyed
+// spelling this tree compiles) pinned at 0x000d6280, which retail reaches via
+// ILT 0x0002a1da; that half is proven, the register half is not steerable from
+// the source shapes tried.
+void Player::setTeamRelationship(const Team *that, Relationship r)
+{
+	if (that != NULL)
+	{
+		// note that this creates the entry if it doesn't exist.
+		m_teamRelations->m_map[that->getID()] = r;
+	}
+}
+
+// ------------------------------------------------------------------------
+Bool Player::removeTeamRelationship(const Team *that)
+{
+	// The same two BFME offsets getRelationship above casts for: m_teamRelations
+	// at Player+0x290, and its m_map at +0x04 of that.
+	if (!teamRelationsOf(this)->m_map.empty())
+	{
+		if (that == NULL)
+		{
+			teamRelationsOf(this)->m_map.clear();
+			return true;
+		}
+		else
+		{
+			TeamRelationMapType::iterator it = teamRelationsOf(this)->m_map.find(getRetailTeamID(that));
+			if (it != teamRelationsOf(this)->m_map.end())
+			{
+				teamRelationsOf(this)->m_map.erase(it);
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+//=============================================================================
+// ?setBuildList@Player@@QAEXPAVBuildListInfo@@@Z present-unmatched
+void Player::setBuildList(BuildListInfo *pBuildList)
+{
+
+	if (m_pBuildList != NULL) 
+	{
+		m_pBuildList->deleteInstance();
+	}
+	m_pBuildList = pBuildList;
+
+} 
+
+//=============================================================================
+// ?addToBuildList@Player@@QAEXPAVObject@@@Z present-unmatched
+void Player::addToBuildList(Object *obj)
+{
+	BuildListInfo *newInfo = newInstance( BuildListInfo );
+	newInfo->setObjectID(obj->getID());	
+	newInfo->setTemplateName(obj->getTemplate()->getName());
+	newInfo->setLocation(*obj->getPosition());
+	newInfo->setAngle(obj->getOrientation());
+	newInfo->setNumRebuilds(0);	 // Can't rebuild. 
+	newInfo->setNextBuildList(m_pBuildList);
+	m_pBuildList = newInfo;
+} 
+
+//=============================================================================
+// ?addToPriorityBuildList@Player@@QAEXVAsciiString@@PAUCoord3D@@M@Z present-unmatched
+void Player::addToPriorityBuildList(AsciiString templateName, Coord3D *pos, Real angle)
+{
+	BuildListInfo *newInfo = newInstance( BuildListInfo );
+	newInfo->setTemplateName(templateName);
+	newInfo->setLocation(*pos);
+	newInfo->setAngle(angle);
+	newInfo->markPriorityBuild();
+	newInfo->setNumRebuilds(1);	 // Build once. 
+	newInfo->setNextBuildList(m_pBuildList);
+	m_pBuildList = newInfo;
+} 
+
+//=============================================================================
+void Player::update()
+{
+	if (m_ai)
+		m_ai->update();
+
+	// Allow the teams this player owns to update themselves.
+	for( PlayerTeamList::iterator it = m_playerTeamPrototypes.begin(); it != m_playerTeamPrototypes.end(); ++it ) 
+	{
+		for( DLINK_ITERATOR<Team> iter = (*it)->iterate_TeamInstanceList(); !iter.done(); iter.advance() ) 
+		{
+			Team *team = iter.cur();
+			if( !team ) 
+			{
+				continue;
+			}
+			team->updateGenericScripts();
+		}
+	}
+
+	if( m_energy.getPowerSabotagedTillFrame() != 0 && TheGameLogic->getFrame() > m_energy.getPowerSabotagedTillFrame() )
+	{
+		m_energy.setPowerSabotagedTillFrame( 0 ); //Tells us we're no longer sabotaged for above check.
+		onPowerBrownOutChange( !m_energy.hasSufficientPower() );
+	}
+
+	//Update the academy stats (this only checks applicable things that require a polling method)
+	getAcademyStats()->update();
+
+	//Kris: August 25, 2003 (DAY OF CODE LOCK -- NO NEW FEATURES, REALLY!)
+	if( ThePlayerList->getLocalPlayer() == this )
+	{
+		UnsignedInt now = TheGameLogic->getFrame();
+		//Only check and post the message once every second so we don't spam the message stream to account for lag.
+		if( now % LOGICFRAMES_PER_SECOND == 0 )
+		{
+			if( TheGlobalData->m_clientRetaliationModeEnabled != isLogicalRetaliationModeEnabled() )
+			{
+				//Post a logical message that will switch the retaliation mode on or off.
+				GameMessage *msg = TheMessageStream->appendMessage( GameMessage::MSG_ENABLE_RETALIATION_MODE );
+				if( msg )
+				{
+					msg->appendIntegerArgument( getPlayerIndex() );
+					msg->appendBooleanArgument( TheGlobalData->m_clientRetaliationModeEnabled );
+				}
+			}
+		}
+	}
+}
+
+// BFME's newMap is not the reference one-liner through the AI player's virtual.
+// It reads a flag at +0x118 of the pointer at Player+0x04 and hands it, with the
+// field at Player+0x24, to a non-virtual call on the subobject at Player+0x30 --
+// as two separate call sites, which is what an if/else with a statement in each
+// arm compiles to rather than one call with a conditional argument.
+struct BfmePlayerMapFlagSource
+{
+	UnsignedByte m_unreconstructed_000[0x118];
+	Bool m_bfmeFlag;					///< retail this+0x118
+};
+
+class BfmePlayerMapState
+{
+public:
+	void bfmeNewMap( Int field, Bool flag );		///< retail ILT 0x00018679
+};
+
+struct BfmePlayerMapFields
+{
+	UnsignedByte m_unreconstructed_00[4];
+	BfmePlayerMapFlagSource *m_bfmeFlagSource;		///< retail this+0x04
+	UnsignedByte m_unreconstructed_08[0x24 - 8];
+	Int m_bfmeField24;					///< retail this+0x24
+	UnsignedByte m_unreconstructed_28[0x30 - 0x28];
+	BfmePlayerMapState m_bfmeMapState;			///< retail this+0x30
+};
+
+struct BfmePlayerLoadFields
+{
+	unsigned char m_unreconstructed_00[4];
+	PlayerTemplate *m_playerTemplate;
+	unsigned char m_unreconstructed_08[0x220 - 8];
+	AIPlayer *m_ai;
+	unsigned char m_unreconstructed_224[0x0c];
+	Team *m_defaultTeam;
+	unsigned char m_unreconstructed_234[0x63c - 0x234];
+	ObjectID m_startingObjectID;
+};
+
+class BfmePlayerCreateModuleInterface
+{
+public:
+	virtual void onCreate() = 0;
+	virtual void onBuildComplete() = 0;
+};
+
+class BfmePlayerBehaviorModuleInterface
+{
+public:
+	virtual BodyModuleInterface *getBody() = 0;
+	virtual CollideModuleInterface *getCollide() = 0;
+	virtual ContainModuleInterface *getContain() = 0;
+	virtual BfmePlayerCreateModuleInterface *getCreate() = 0;
+};
+
+class BfmePlayerGameInfo
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot04() = 0;
+	virtual void slot08() = 0;
+	virtual void slot0c() = 0;
+	virtual void slot10() = 0;
+	virtual void slot14() = 0;
+	virtual void slot18() = 0;
+	virtual void slot1c() = 0;
+	virtual void slot20() = 0;
+	virtual void slot24() = 0;
+	virtual Bool isSkirmish() = 0;
+	virtual Bool isMultiplayer() = 0;
+	virtual Bool isSandBox() = 0;
+};
+
+typedef BitFlags<86> BfmePlayerObjectStatusMaskType;
+
+typedef const ThingTemplate *(ThingFactory::*PlayerFindTemplateCall)(const BfmePlayerAsciiString &);
+typedef Object *(ThingFactory::*PlayerNewObjectCall)(
+	const ThingTemplate *, Team *, const volatile BfmePlayerObjectStatusMaskType &, void *);
+typedef void (BfmePlayerFinalHelper::*PlayerFinalCall)();
+
+extern void j_0000d305();
+extern void j_00028560();
+extern void j_0004494a();
+
+//=============================================================================
+// ?newMap@Player@@QAEXXZ
+void Player::newMap()
+{
+	BfmePlayerMapFields *self = (BfmePlayerMapFields *)this;
+
+	if (self->m_bfmeFlagSource)
+		self->m_bfmeMapState.bfmeNewMap(self->m_bfmeField24, self->m_bfmeFlagSource->m_bfmeFlag);
+	else
+		self->m_bfmeMapState.bfmeNewMap(self->m_bfmeField24, false);
+}
+
+//=============================================================================
+// byte-exact reconstruction: game/GameEngine/Source/Common/PlayerSetPlayerType.cpp
+// ?setPlayerType@Player@@QAEXW4PlayerType@@_N@Z present-unmatched
+void Player::setPlayerType(PlayerType t, Bool skirmish)
+{
+	m_playerType = t;
+
+	if (m_ai)
+	{
+		m_ai->deleteInstance();
+	}
+	m_ai = NULL;
+
+	if (t == PLAYER_COMPUTER)
+	{
+		if (skirmish || TheAI->getAiData()->m_forceSkirmishAI) {
+			// create AIPlayer and attach to this Player
+			m_ai = newInstance(AISkirmishPlayer)( this );
+		} else {
+			// create AIPlayer and attach to this Player
+			m_ai = newInstance(AIPlayer)( this );
+		}
+	}
+}
+
+//=============================================================================
+// This is called from PlayerList->newGame()
+//
+// ?setDefaultTeam@Player@@QAEXXZ present-unmatched
+void Player::setDefaultTeam(void) {
+	AsciiString tname;
+	tname.set("team");
+	tname.concat(m_playerName);
+	Team *dt = TheTeamFactory->findTeam(tname);
+	DEBUG_ASSERTCRASH(dt, ("no team"));
+	if (dt) {
+		m_defaultTeam = dt;
+		dt->setActive();
+	}
+}
+
+//=============================================================================
+// This is called from PlayerList->newGame()
+//
+// ?initFromDict@Player@@QAEXPBVDict@@@Z present-unmatched
+void Player::initFromDict(const Dict* d)
+{
+	AsciiString tmplname = d->getAsciiString(TheKey_playerFaction);
+	const PlayerTemplate* pt = ThePlayerTemplateStore->findPlayerTemplate(NAMEKEY(tmplname));
+	DEBUG_ASSERTCRASH(pt != NULL, ("PlayerTemplate %s not found -- this is an obsolete map (please open and resave in WB)\n",tmplname.str()));
+	
+	init(pt);
+
+	m_playerDisplayName = d->getUnicodeString(TheKey_playerDisplayName);
+	AsciiString pname = d->getAsciiString(TheKey_playerName);
+	m_playerName = pname;
+	m_playerNameKey = NAMEKEY(pname);
+
+	Bool exists;
+	Bool skirmish = false;
+	Bool forceHuman = false;
+	if (d->getBool(TheKey_playerIsSkirmish, &exists))
+	{
+
+		// srj sez: check to ensure the map actually has a skirmish player... ordinarily it should, but
+		// poorly-formed user maps might not, which would be bad, and could crash us later. so if it doesn't
+		// actually have a skirmish player defined for this side, declare it nonskirmish... the player won't
+		// really work, but it's better than crashing.
+		for (Int spIdx = 0; spIdx < TheSidesList->getNumSkirmishSides(); ++spIdx)
+		{
+			AsciiString spTemplateName = TheSidesList->getSkirmishSideInfo(spIdx)->getDict()->getAsciiString(TheKey_playerFaction);
+			const PlayerTemplate* spt = ThePlayerTemplateStore->findPlayerTemplate(NAMEKEY(spTemplateName));
+			if (spt && spt->getSide() == getSide()) 
+			{
+				skirmish = true;
+				break;
+			}
+		}
+
+		DEBUG_ASSERTCRASH(skirmish, ("Could not find skirmish player for side %s... quietly making into nonskirmish.", getSide().str()));
+		if (!skirmish)
+			forceHuman = true;
+
+	}
+
+	if (d->getBool(TheKey_playerIsHuman) || forceHuman)
+	{
+		setPlayerType(PLAYER_HUMAN, false);
+		if (d->getBool(TheKey_playerIsPreorder, &exists))
+		{
+			m_isPreorder = TRUE;
+		}
+		if (TheSidesList->getNumSkirmishSides()>0) {
+			// Human player gets scripts from CIVILIAN player.
+			AsciiString  mySide = "Civilian";
+			Int i;
+			Bool found = false;
+			AsciiString  qualTemplatePlayerName;
+			for (i=0; i<TheSidesList->getNumSkirmishSides(); i++) {
+				AsciiString templateName = TheSidesList->getSkirmishSideInfo(i)->getDict()->getAsciiString(TheKey_playerFaction);
+				pt = ThePlayerTemplateStore->findPlayerTemplate(NAMEKEY(templateName));
+				if (pt && pt->getSide() == mySide) {
+					qualTemplatePlayerName.format("%s%d", TheSidesList->getSkirmishSideInfo(i)->getDict()->getAsciiString(TheKey_playerName).str(), m_mpStartIndex);
+					found = true;
+					break;
+				}
+			}
+			if (found && TheSidesList->getSkirmishSideInfo(i)->getScriptList()) {
+				AsciiString qualifier;
+				qualifier.format("%d", m_mpStartIndex);
+
+				ScriptList *scripts = TheSidesList->getSkirmishSideInfo(i)->getScriptList()->duplicateAndQualify(
+							qualifier, qualTemplatePlayerName, pname);
+				if (TheSidesList->getSideInfo(getPlayerIndex())->getScriptList()) {
+					TheSidesList->getSideInfo(getPlayerIndex())->getScriptList()->deleteInstance();
+				}
+				TheSidesList->getSideInfo(getPlayerIndex())->setScriptList(scripts);
+				TheSidesList->getSkirmishSideInfo(i)->getScriptList()->deleteInstance();
+				TheSidesList->getSkirmishSideInfo(i)->setScriptList(NULL);
+			}
+
+		}
+		skirmish = false;
+	}
+	else
+	{
+		setPlayerType(PLAYER_COMPUTER, skirmish);
+	}
+	m_mpStartIndex = d->getInt(TheKey_multiplayerStartIndex, &exists);
+	if (skirmish) {
+		// Copy and qualify scripts, and teams.
+
+		AsciiString mySide = getSide();
+		Int i, skirmishNdx;
+		Bool found = false;
+		AsciiString  qualTemplatePlayerName;
+		for (skirmishNdx=0; skirmishNdx<TheSidesList->getNumSkirmishSides(); skirmishNdx++) {
+			AsciiString templateName = TheSidesList->getSkirmishSideInfo(skirmishNdx)->getDict()->getAsciiString(TheKey_playerFaction);
+			pt = ThePlayerTemplateStore->findPlayerTemplate(NAMEKEY(templateName));
+			if (pt && pt->getSide() == mySide) {
+				qualTemplatePlayerName.format("%s%d", TheSidesList->getSkirmishSideInfo(skirmishNdx)->getDict()->getAsciiString(TheKey_playerName).str(), m_mpStartIndex);
+				found = true;
+				break;
+			}
+		}
+		Int diffInt  = d->getInt(TheKey_skirmishDifficulty, &exists);
+		GameDifficulty difficulty = TheScriptEngine->getGlobalDifficulty();
+		if (exists) 
+		{
+			difficulty = (GameDifficulty) diffInt;
+		}
+		if (m_ai) 
+		{
+			m_ai->setAIDifficulty(difficulty);
+		}
+
+		if (!found) 
+		{
+			DEBUG_CRASH(("Could not find skirmish player for side %s", mySide.str()));
+		} else {
+			m_playerName = qualTemplatePlayerName;
+			AsciiString qualifier;
+			qualifier.format("%d", m_mpStartIndex);
+			ScriptList *scripts = TheSidesList->getSkirmishSideInfo(skirmishNdx)->getScriptList()->duplicateAndQualify(
+						qualifier, qualTemplatePlayerName, pname);
+			ScriptList* slist = TheSidesList->getSideInfo(getPlayerIndex())->getScriptList();
+			if (slist) 
+			{
+				slist->deleteInstance();
+			}
+			TheSidesList->getSideInfo(getPlayerIndex())->setScriptList(scripts);
+			for (i=0; i<TheSidesList->getNumTeams(); i++) {
+				if (TheSidesList->getTeamInfo(i)->getDict()->getAsciiString(TheKey_teamOwner) == pname)
+				{
+					// Remove any teams in this player.
+					TheSidesList->removeTeam(i);
+					i--;
+				}
+			}
+			// Now add teams.
+
+			AsciiString originalPlayerName = TheSidesList->getSkirmishSideInfo(skirmishNdx)->getDict()->getAsciiString(TheKey_playerName);
+			for (i=0; i<TheSidesList->getNumSkirmishTeams(); i++) {
+				if (TheSidesList->getSkirmishTeamInfo(i)->getDict()->getAsciiString(TheKey_teamOwner) == originalPlayerName)
+				{
+					Dict teamDict(*TheSidesList->getSkirmishTeamInfo(i)->getDict());
+					AsciiString teamName = teamDict.getAsciiString(TheKey_teamName); 
+					AsciiString newName;
+					newName.format("%s%d", teamDict.getAsciiString(TheKey_teamName).str(), m_mpStartIndex);
+
+					if (TheSidesList->findTeamInfo(newName)) continue;
+					teamDict.setAsciiString(TheKey_teamOwner, pname);
+					teamDict.setAsciiString(TheKey_teamName, newName);
+					// qualify scripts.
+
+					NameKeyType nameKeys[] = 
+					{
+						TheKey_teamOnCreateScript,
+						TheKey_teamOnIdleScript,
+						TheKey_teamOnUnitDestroyedScript,
+						TheKey_teamOnDestroyedScript,
+						TheKey_teamEnemySightedScript,
+						TheKey_teamAllClearScript,
+						TheKey_teamProductionCondition
+					};
+
+					Int j;
+					const Int numKeys = sizeof(nameKeys) / sizeof(NameKeyType);
+					AsciiString tmpStr;
+					for (j = 0; j < numKeys; ++j)
+					{
+						tmpStr = teamDict.getAsciiString(nameKeys[j], &exists);
+						if (exists && !tmpStr.isEmpty())
+						{
+							newName.format("%s%d", tmpStr.str(), m_mpStartIndex);
+							teamDict.setAsciiString(nameKeys[j], newName);
+						}
+					}
+
+					// Now do the TheKey_teamGenericScriptHookN (where N can be from 0 to 15.)
+					for (j = 0; j < MAX_GENERIC_SCRIPTS; ++j) {
+						AsciiString keyName;
+						keyName.format("%s%d", TheNameKeyGenerator->keyToName(TheKey_teamGenericScriptHook).str(), j);
+						tmpStr = teamDict.getAsciiString(NAMEKEY(keyName), &exists);
+						if (exists && !tmpStr.isEmpty())
+						{
+							newName.format("%s%d", tmpStr.str(), m_mpStartIndex);
+							teamDict.setAsciiString(NAMEKEY(keyName), newName);
+						}
+					}
+
+					// Done. Now add the team.
+					TheSidesList->addTeam(&teamDict);
+				}
+			}
+		}						 
+	}																																 
+	if( m_resourceGatheringManager )
+	{
+		m_resourceGatheringManager->deleteInstance();
+		m_resourceGatheringManager = NULL;
+	}
+	m_resourceGatheringManager = newInstance(ResourceGatheringManager);
+
+	if( m_tunnelSystem )
+	{
+		m_tunnelSystem->deleteInstance();
+		m_tunnelSystem = NULL;
+	}
+	m_tunnelSystem = newInstance(TunnelTracker);
+
+	m_handicap.readFromDict(d);
+
+	/// @todo Ack!  the todo in PlayerList::reset() mentioning the need for a Player::reset() really needs to get done.
+	m_playerRelations->m_map.clear(); // For now, it has been decided to just fix this one.  Dear god me must reset.
+	m_teamRelations->m_map.clear(); // For now, it has been decided to just fix this one.  Dear god me must reset.
+	
+	Int i;
+	for ( i = 0; i < MAX_PLAYER_COUNT; ++i ) // For now, it has been decided to just fix this one.  Dear god me must reset.
+	{ 
+		m_attackedBy[i] = false;
+	}
+
+	Int c = d->getInt(TheKey_playerColor, &exists);
+	if (exists)
+	{
+		m_color = c | 0xff000000;
+		m_nightColor = m_color;
+	}
+
+	c = d->getInt(TheKey_playerNightColor, &exists);
+	if (exists)
+	{
+		m_nightColor = c | 0xff000000;
+	}
+
+	Int m = d->getInt(TheKey_playerStartMoney, &exists);
+	if (exists)
+		m_money.deposit(m);
+
+	for ( i = 0; i < NUM_HOTKEY_SQUADS; ++i ) {
+		if (m_squads[i] != NULL)
+		{
+			m_squads[i]->deleteInstance();
+			m_squads[i] = NULL;
+		}
+		m_squads[i] = newInstance( Squad );
+	}
+
+	if (m_currentSelection != NULL) {
+		m_currentSelection->deleteInstance();
+		m_currentSelection = NULL;
+	}
+	m_currentSelection = newInstance( Squad );
+}
+
+//=============================================================================
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Player_becomingTeamMember_Thunk.cpp
+// ?becomingTeamMember@Player@@QAEXPAVObject@@_N@Z present-unmatched
+//
+// Blocked the same way addUpgrade is: a SECOND row depends on an expression this
+// body would stop emitting. The call to areModulesReady below is the only one in
+// this TU, and the COMDAT copy MSVC emits for that inline is itself a matched
+// row -- ?areModulesReady@Object@@QBE_NXZ, 0x002ed260, 7 bytes, claimed from
+// this file. The merged body cannot keep the call: the two read DIFFERENT
+// fields. The reference inline compiles to a read of +0x295 and byte-matches
+// retail's standalone body there, while retail inlines a read of +0x341 here.
+// Both facts are right; they are simply not the same member, so the donor's name
+// for +0x341 is doing double duty.
+//
+// The rest is authored and settled, for whoever unblocks it: object template at
+// +0x04, status byte at +0x90 (bit 2 = under construction), AI module at +0x204,
+// the neutral player at PlayerList+0x14, the battle-plan counters at Player
+// +0x64/+0x68/+0x6c immediately ahead of the bonuses at +0x70, InGameUI's
+// addIdleWorker at vtable +0x17c and removeIdleWorker at +0x180, and
+// AIUpdateInterface::isIdle at +0x180.
+//
+// Behaviour the reference copy gets wrong, worth keeping even unmerged: BFME
+// asks TheNameKeyGenerator for "AutoDepositUpdate" on every call where the
+// reference caches it in a function-local static, and it tests bit 14 of the
+// kind-of mask at ThingTemplate+0xc8 directly instead of calling isKindOf with
+// KINDOF_DOZER. That +0xc8 is the same mask Object.cpp's getShroudedStatus reads
+// at +0xcc -- +0xcc is its SECOND dword, so the flag that body calls bit 20 is
+// bit 52 of the whole 192-bit mask.
+void Player::becomingTeamMember(Object *obj, Bool yes) 
+{ 
+	if (!obj)
+		return;	
+
+	// energy production/consumption hooks, note we ignore things that are UNDER_CONSTRUCTION
+	if( !obj->getStatusBits().test( OBJECT_STATUS_UNDER_CONSTRUCTION ) )
+	{
+		obj->friend_adjustPowerForPlayer(yes);
+	}  // end if
+		
+	// when we capture a building, we need to see if there's an AutoDepositUpdate hooked to it,
+	// if so, award the cash bonus
+	if(this != ThePlayerList->getNeutralPlayer() && yes)
+	{
+		NameKeyType key_AutoDepositUpdate = NAMEKEY("AutoDepositUpdate");
+		AutoDepositUpdate *adu = (AutoDepositUpdate *)obj->findUpdateModule(key_AutoDepositUpdate);
+		if (adu != NULL) {
+			adu->awardInitialCaptureBonus( this );
+		}
+	}
+
+	if( getNumBattlePlansActive() > 0 && obj->areModulesReady() )
+	{
+		if( yes )
+		{
+			//We are entering a team with active battle plans so add it's bonuses now
+			applyBattlePlanBonusesForObject( obj );
+		}
+		else
+		{
+			//We are leaving a team with active battle plans so remove them now.
+			removeBattlePlanBonusesForObject( obj ); 
+		}
+	}
+	
+
+	if (obj->isKindOf(KINDOF_DOZER) 
+			&& obj->getAIUpdateInterface() 
+			&& obj->getAIUpdateInterface()->isIdle())
+	{
+		// Need to remove it from the pick a peasant button
+		if (yes)
+			TheInGameUI->addIdleWorker(obj);
+		else
+			TheInGameUI->removeIdleWorker(obj, getPlayerIndex());
+	}
+}
+
+//=============================================================================
+void Player::becomingLocalPlayer(Bool yes)
+{
+	if (yes)
+	{
+		// This changes the color of the little dot on the upper right side of the screen indicating
+		// which team is under control.
+		if( TheGameClient )
+		{
+			RGBColor rgb;
+			rgb.setFromInt(m_color);
+			TheGameClient->setTeamColor(REAL_TO_INT(rgb.red*255), REAL_TO_INT(rgb.green*255), REAL_TO_INT(rgb.blue*255));
+		}
+
+		if( ThePartitionManager )
+		{
+			ObjectIterator *iter = ThePartitionManager->iterateAllObjects();
+			for( Object* object = iter->first(); object; object = iter->next() )
+			{
+				// Added support for updating the perceptions of garrisoned buildings containing enemy stealth units.
+				// When changing teams, it is necessary to update this information.
+				ContainModuleInterface *contain = object->getContain();
+				if( contain )
+				{
+					contain->recalcApparentControllingPlayer();
+					TheRadar->removeObject( object );
+					TheRadar->addObject( object );
+				}
+
+				if( object->isKindOf( KINDOF_DISGUISER ) )
+				{
+					//KM -- August 2002:
+					//Added support for disguised objects, based on relationships, we either show the real color or the disguised color.
+					Drawable *draw = object->getDrawable();
+					if( draw )
+					{
+            
+            StealthUpdate *update = object->getStealth();
+
+						if( update && update->isDisguised() )
+						{
+							Player *disguisedPlayer = ThePlayerList->getNthPlayer( update->getDisguisedPlayerIndex() );
+							if( getRelationship( object->getTeam() ) != ALLIES && isPlayerActive() )
+							{
+								//Neutrals and enemies will see this disguised unit as the team it's disguised as.
+								if (TheGlobalData->m_timeOfDay == TIME_OF_DAY_NIGHT)
+									draw->setIndicatorColor( disguisedPlayer->getPlayerNightColor());
+								else
+									draw->setIndicatorColor( disguisedPlayer->getPlayerColor() );
+							}
+							else
+							{
+								//Otherwise, the color will show up as the team it really belongs to.
+								if (TheGlobalData->m_timeOfDay == TIME_OF_DAY_NIGHT)
+									draw->setIndicatorColor(object->getNightIndicatorColor());
+								else
+									draw->setIndicatorColor( object->getIndicatorColor() );
+							}
+							TheRadar->removeObject( object );
+							TheRadar->addObject( object );
+						}
+					}
+				}
+			}
+			iter->deleteInstance();
+		}
+
+		if( TheControlBar )
+			TheControlBar->markUIDirty();
+	}
+	else
+	{
+		// nothing to do
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Is this player a skirmish ai player? */
+//-------------------------------------------------------------------------------------------------
+// ?isSkirmishAIPlayer@Player@@QAE_NXZ present-unmatched
+Bool Player::isSkirmishAIPlayer( void )
+{
+	return m_ai ? m_ai->isSkirmishAI() : false; 
+}
+
+
+//----------------------------------------------------------------------------------------------------------
+/**
+ * Find a good spot to fire a superweapon.
+ */
+// ?computeSuperweaponTarget@Player@@UAE_NPBVSpecialPowerTemplate@@PAUCoord3D@@HM@Z present-unmatched
+Bool Player::computeSuperweaponTarget(const SpecialPowerTemplate *power, Coord3D *retPos, Int playerNdx, Real weaponRadius)
+{
+	if (m_ai) {
+		return m_ai->computeSuperweaponTarget(power, retPos, playerNdx, weaponRadius);
+	}
+
+  return FALSE;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Get this player's current enemy. NOTE - Can be NULL. */
+//-------------------------------------------------------------------------------------------------
+// ?getCurrentEnemy@Player@@QAEPAV1@XZ present-unmatched
+Player  *Player::getCurrentEnemy( void )
+{
+	return m_ai?m_ai->getAiEnemy():NULL; 
+}
+
+//-------------------------------------------------------------------------------------------------
+// PlayerObjectFindInfo is used to find a player's object. For example, we iterate through
+// to find a player's command center, or a specific building capable of firing the specified
+// special power.
+//
+// if he has none, return null. 
+// if he has multiple, return one arbitrarily. 
+//-------------------------------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------------------------------
+// Iterator data struct
+//-------------------------------------------------------------------------------------------------
+struct PlayerObjectFindInfo
+{
+	Player* player;
+	Object* obj;
+	SpecialPowerType spType;
+	const ThingTemplate *thing;
+	UnsignedInt lowestReadyFrame;
+	UnsignedInt highestPercentage;
+	UnsignedInt numReady;
+};
+
+//-------------------------------------------------------------------------------------------------
+// Iterator function
+// Find the first available command center that is naturally ours (not captured from enemy).
+//-------------------------------------------------------------------------------------------------
+static void doFindCommandCenter(Object* obj, void* userData)
+{
+	if (!obj)
+		return;
+
+	PlayerObjectFindInfo* info = (PlayerObjectFindInfo*)userData;
+
+	if (info->obj == NULL 
+			&& obj->isKindOf(KINDOF_COMMANDCENTER)
+			&& obj->getTemplate()->getDefaultOwningSide() == info->player->getSide()
+			&& !obj->testStatus(OBJECT_STATUS_UNDER_CONSTRUCTION)
+			&& !obj->testStatus(OBJECT_STATUS_SOLD))
+	{
+		info->obj = obj;
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+// Iterator function
+// Find first object capable of firing specified special power right now.
+//-------------------------------------------------------------------------------------------------
+static void doFindSpecialPowerSourceObject( Object *obj, void *userData )
+{
+	PlayerObjectFindInfo* info = (PlayerObjectFindInfo*)userData;
+
+	if( info->lowestReadyFrame == 0 )
+	{
+		//We already found the best case scenario, so no need to iterate any more.
+		return;
+	}
+	if( !obj->testStatus( OBJECT_STATUS_UNDER_CONSTRUCTION ) 
+			&& !obj->testStatus( OBJECT_STATUS_SOLD )
+			&& !obj->isEffectivelyDead() )
+	{
+		if( info->spType == SPECIAL_INVALID && obj->hasAnySpecialPower() )
+		{
+			//We just care about find an object that has *any* shortcut capable special power.
+			//Iterate through the special power modules and look for one.
+			SpecialPowerModuleInterface *spmInterface = obj->findAnyShortcutSpecialPowerModuleInterface();
+			if( spmInterface && !spmInterface->isScriptOnly() )
+			{
+				info->obj = obj;
+				info->lowestReadyFrame = 0;
+				return;
+			}
+		}
+		else if( obj->hasSpecialPower( info->spType ) )
+		{
+			SpecialPowerModuleInterface *spmInterface = obj->findSpecialPowerModuleInterface( info->spType );
+			if( spmInterface && !spmInterface->isScriptOnly() )
+			{
+				UnsignedInt readyFrame = spmInterface->getReadyFrame();
+				
+#if defined(_DEBUG) || defined(_INTERNAL) || defined(_ALLOW_DEBUG_CHEATS_IN_RELEASE)
+				// Everything is ready if timers are debug off'd
+				if( ! TheGlobalData->m_specialPowerUsesDelay )
+					readyFrame = 0;
+#endif
+				// A disabled guy should only be considered as a last resort.  We need it to be counted
+				// so that a disabled button can appear on the shortcut.
+				if( obj->isDisabled() )
+					readyFrame = UINT_MAX - 10;
+
+				if( readyFrame < TheGameLogic->getFrame())
+				{
+					//This special power is ready now and matches, so simply return the
+					//first one.
+					info->obj = obj;
+					info->lowestReadyFrame = 0;
+					return;
+				}
+				else if( readyFrame < info->lowestReadyFrame )
+				{
+					//This special power isn't ready, but it is going to be ready sooner than any others
+					//we checked (or it's the first one we checked).
+					info->obj = obj;
+					info->lowestReadyFrame = readyFrame;
+					return;
+				}
+			}
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+// Iterator function
+// Count number of specified special powers that are ready to fire now.
+//-------------------------------------------------------------------------------------------------
+static void doCountSpecialPowersReady( Object *obj, void *userData )
+{
+	PlayerObjectFindInfo* info = (PlayerObjectFindInfo*)userData;
+
+	if( !obj->testStatus( OBJECT_STATUS_UNDER_CONSTRUCTION ) 
+			&& !obj->testStatus( OBJECT_STATUS_SOLD ) 
+			&& !obj->isEffectivelyDead() )
+	{
+		if( obj->hasSpecialPower( info->spType ) )
+		{
+			SpecialPowerModuleInterface *spmInterface = obj->findSpecialPowerModuleInterface( info->spType );
+			if( spmInterface && !spmInterface->isScriptOnly() )
+			{
+
+	      if( spmInterface->getSpecialPowerTemplate()->isSharedNSync() && info->numReady == 1 )
+				{
+					//Shared powers don't stack after the first one is counted.
+					return;
+				}
+				
+				UnsignedInt readyFrame = spmInterface->getReadyFrame();
+
+#if defined(_DEBUG) || defined(_INTERNAL) || defined(_ALLOW_DEBUG_CHEATS_IN_RELEASE)
+				// Everything is ready if timers are debug off'd
+				if( ! TheGlobalData->m_specialPowerUsesDelay )
+					readyFrame = 0;
+#endif
+
+				// A disabled guy should only be considered as a last resort.  We do not want him counted here
+				// so that Disabled guys do not go in to the number on the shortcut button.
+				if( obj->isDisabled() )
+					readyFrame = UINT_MAX - 10;
+
+				if( readyFrame < TheGameLogic->getFrame())
+				{
+					//This special power is ready now and matches, so simply return the
+					//first one.
+					info->numReady++;
+				}
+			}
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+static void doFindMostReadyWeaponForThing( Object *obj, void *userData )
+{
+	PlayerObjectFindInfo* info = (PlayerObjectFindInfo*)userData;
+
+	if( info->highestPercentage >= 100 )
+	{
+		//We already found the best case scenario, so no need to iterate any more.
+		return;
+	}
+	
+	if( info->thing->isEquivalentTo( obj->getTemplate() ) )
+	{
+		if( !obj->testStatus( OBJECT_STATUS_UNDER_CONSTRUCTION ) 
+				&& !obj->testStatus( OBJECT_STATUS_SOLD ) 
+				&& !obj->isEffectivelyDead() )
+		{
+			if( obj->hasAnyWeapon() )
+			{
+				UnsignedInt percentage = obj->getMostPercentReadyToFireAnyWeapon();
+				if( percentage > info->highestPercentage )
+				{
+					//This weapon is more ready than any others we've checked.
+					info->obj = obj;
+					info->highestPercentage = percentage;
+					return;
+				}
+			}
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+static void doFindMostReadySpecialPowerForThing( Object *obj, void *userData )
+{
+	PlayerObjectFindInfo* info = (PlayerObjectFindInfo*)userData;
+
+	if( info->highestPercentage >= 100 )
+	{
+		//We already found the best case scenario, so no need to iterate any more.
+		return;
+	}
+	
+	if( info->thing->isEquivalentTo( obj->getTemplate() ) )
+	{
+		if( !obj->testStatus( OBJECT_STATUS_UNDER_CONSTRUCTION ) 
+				&& !obj->testStatus( OBJECT_STATUS_SOLD ) 
+				&& !obj->isEffectivelyDead() )
+		{
+			// search the modules for the one with the matching template
+			for( BehaviorModule** m = obj->getBehaviorModules(); *m; ++m )
+			{
+				SpecialPowerModuleInterface* sp = (*m)->getSpecialPower();
+				if (!sp)
+					continue;
+
+				UnsignedInt percentage = sp->getPercentReady();
+				if( percentage > info->highestPercentage )
+				{
+					//This weapon is more ready than any others we've checked.
+					info->obj = obj;
+					info->highestPercentage = percentage;
+				}
+			}
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+static void doFindExistingObjectWithThingTemplate( Object *obj, void *userData )
+{
+	PlayerObjectFindInfo* info = (PlayerObjectFindInfo*)userData;
+
+	if( info->obj )
+	{
+		//We already found a matching obj, so return
+		return;
+	}
+	
+	if( info->thing->isEquivalentTo( obj->getTemplate() ) )
+	{
+		if( !obj->testStatus( OBJECT_STATUS_UNDER_CONSTRUCTION ) 
+				&& !obj->testStatus( OBJECT_STATUS_SOLD ) 
+				&& !obj->isEffectivelyDead() )
+		{
+			//We found one.
+			info->obj = obj;
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+Object* Player::findNaturalCommandCenter()
+{
+	// BFME allocates only eight bytes here -- retail opens with `sub esp,8` --
+	// so this finder pairs with a two-field block, not the seven-field
+	// PlayerObjectFindInfo the other finders in this file share.
+	// doFindCommandCenter reads only .player and .obj, which are the two
+	// that overlay.
+	struct { Player* player; Object* obj; } info;
+	info.player = this;
+	info.obj = NULL;
+	iterateObjects(doFindCommandCenter, &info);
+	return info.obj;
+}
+
+//-------------------------------------------------------------------------------------------------
+// ?findMostReadyShortcutSpecialPowerOfType@Player@@QAEPAVObject@@W4SpecialPowerType@@@Z present-unmatched
+Object* Player::findMostReadyShortcutSpecialPowerOfType( SpecialPowerType spType )
+{
+	PlayerObjectFindInfo info;
+	info.player = this;
+	info.obj = NULL;
+	info.spType = spType;
+	info.lowestReadyFrame = 0xffffffff;
+	iterateObjects( doFindSpecialPowerSourceObject, &info );
+	return info.obj;
+}
+
+//-------------------------------------------------------------------------------------------------
+// ?findMostReadyShortcutWeaponForThing@Player@@QAEPAVObject@@PBVThingTemplate@@AAI@Z present-unmatched
+Object* Player::findMostReadyShortcutWeaponForThing( const ThingTemplate *thing, UnsignedInt &mostReadyPercentage )
+{
+	PlayerObjectFindInfo info;
+	info.player = this;
+	info.obj = NULL;
+	info.thing = thing;
+	info.highestPercentage = 0;
+	iterateObjects( doFindMostReadyWeaponForThing, &info );
+	mostReadyPercentage = info.highestPercentage;
+	return info.obj;
+}
+
+//-------------------------------------------------------------------------------------------------
+// ?findMostReadyShortcutSpecialPowerForThing@Player@@QAEPAVObject@@PBVThingTemplate@@AAI@Z present-unmatched
+Object* Player::findMostReadyShortcutSpecialPowerForThing( const ThingTemplate *thing, UnsignedInt &mostReadyPercentage )
+{
+	PlayerObjectFindInfo info;
+	info.player = this;
+	info.obj = NULL;
+	info.thing = thing;
+	info.highestPercentage = 0;
+	iterateObjects( doFindMostReadySpecialPowerForThing, &info );
+	mostReadyPercentage = info.highestPercentage;
+	return info.obj;
+}
+
+//-------------------------------------------------------------------------------------------------
+// ?findAnyExistingObjectWithThingTemplate@Player@@QAEPAVObject@@PBVThingTemplate@@@Z present-unmatched
+Object* Player::findAnyExistingObjectWithThingTemplate( const ThingTemplate *thing )
+{
+	PlayerObjectFindInfo info;
+	info.player = this;
+	info.obj = NULL;
+	info.thing = thing;
+	iterateObjects( doFindExistingObjectWithThingTemplate, &info );
+	return info.obj;
+}
+
+//-------------------------------------------------------------------------------------------------
+// Finds a short-cut firing special power of any type arbitrarily.
+//-------------------------------------------------------------------------------------------------
+// ?hasAnyShortcutSpecialPower@Player@@QAE_NXZ present-unmatched
+Bool Player::hasAnyShortcutSpecialPower()
+{
+	PlayerObjectFindInfo info;
+	info.player = this;
+	info.obj = NULL;
+	info.spType = SPECIAL_INVALID; //Invalid dictates that we don't care about the type.
+	info.lowestReadyFrame = 0xffffffff;
+	iterateObjects( doFindSpecialPowerSourceObject, &info );
+	return info.obj;
+}
+
+//-------------------------------------------------------------------------------------------------
+// ?countReadyShortcutSpecialPowersOfType@Player@@QAEHW4SpecialPowerType@@@Z present-unmatched
+Int Player::countReadyShortcutSpecialPowersOfType( SpecialPowerType spType )
+{
+	PlayerObjectFindInfo info;
+	info.spType = spType; 
+	info.numReady = 0;
+	iterateObjects( doCountSpecialPowersReady, &info );
+	return info.numReady;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Difficulty level for this player */
+//-------------------------------------------------------------------------------------------------
+GameDifficulty Player::getPlayerDifficulty(void) const
+{
+	// BFME's Player and ScriptEngine tails differ from the recovered Zero Hour declarations.
+	AIPlayer *ai = *reinterpret_cast<AIPlayer *const *>(reinterpret_cast<const char *>(this) + 0x220);
+	if (ai)
+	{
+		return ai->getAIDifficulty();
+	}
+	return *reinterpret_cast<const GameDifficulty *>(reinterpret_cast<const char *>(TheScriptEngine) + 0x17620);
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Do any bridges need repair, and if so repair them. */
+//-------------------------------------------------------------------------------------------------
+Bool Player::checkBridges(Object *unit, Waypoint *way)
+{
+	BFMEPlayerAIView *player = reinterpret_cast<BFMEPlayerAIView *>(this);
+	return player->ai ? player->ai->checkBridges(unit, way) : false;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Do any bridges need repair, and if so repair them. */
+//-------------------------------------------------------------------------------------------------
+Bool Player::getAiBaseCenter(Coord3D *pos)
+{
+	// BFME places the AI pointer and base-center pair earlier than the Zero Hour declarations.
+	AIPlayer *ai = *reinterpret_cast<AIPlayer **>(reinterpret_cast<char *>(this) + 0x220);
+	if (ai)
+	{
+		*pos = *reinterpret_cast<Coord3D *>(reinterpret_cast<char *>(ai) + 0x34);
+		return *reinterpret_cast<Bool *>(reinterpret_cast<char *>(ai) + 0x40);
+	}
+	return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Repair bridge or structure. */
+//-------------------------------------------------------------------------------------------------
+// BFME keeps the AI player at +0x220; the vendored header lands it at +0x150.
+struct BfmePlayerAiField
+{
+	UnsignedByte m_unreconstructed_00[0x220];
+	AIPlayer *m_ai;						///< retail this+0x220
+};
+
+// ?repairStructure@Player@@UAEXW4ObjectID@@@Z
+void Player::repairStructure(ObjectID structureID)
+{
+	if (((BfmePlayerAiField *)this)->m_ai) 
+	{
+		((BfmePlayerAiField *)this)->m_ai->repairStructure(structureID); 
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+/** A unit was just created and is ready to control */
+//-------------------------------------------------------------------------------------------------
+// ?onUnitCreated@Player@@QAEXPAVObject@@0@Z present-unmatched
+void Player::onUnitCreated( Object *factory, Object *unit )
+{
+	// When a a unit is completed, it becomes "real" as far as scripting is 
+	// concerned. jba.
+	TheScriptEngine->notifyOfObjectCreationOrDestruction();
+
+	// increment our scorekeeper
+	m_scoreKeeper.addObjectBuilt(unit);
+
+	// ai notification callback
+	if( m_ai )
+		m_ai->onUnitProduced( factory, unit );
+}  // end onUnitCreated
+
+
+//-------------------------------------------------------------------------------------------------
+/** Is the nearest supply source safe? */
+//-------------------------------------------------------------------------------------------------
+Bool Player::isSupplySourceSafe( Int minSupplies )
+{
+	// ai query
+	// BFME's Player tail is wider than the recovered Zero Hour declaration.
+	AIPlayer *ai = *reinterpret_cast<AIPlayer **>(reinterpret_cast<char *>(this) + 0x220);
+	if( ai )
+		return ai->isSupplySourceSafe( minSupplies );
+	return true;
+}  // isSupplySourceSafe
+
+//-------------------------------------------------------------------------------------------------
+/** Is a supply source attacked? */
+//-------------------------------------------------------------------------------------------------
+// ?isSupplySourceAttacked@Player@@QAE_NXZ present-unmatched
+Bool Player::isSupplySourceAttacked( void )
+{
+	// ai query
+	if( m_ai )
+		return m_ai->isSupplySourceAttacked( );
+	return false;
+}  // isSupplySourceSafe
+
+//-------------------------------------------------------------------------------------------------
+/** Set delay between team production */
+//-------------------------------------------------------------------------------------------------
+void Player::setTeamDelaySeconds(Int delay  )
+{
+	// ai action
+	// BFME places both fields earlier than the recovered Zero Hour declarations.
+	AIPlayer *ai = *reinterpret_cast<AIPlayer **>(reinterpret_cast<char *>(this) + 0x220);
+	if( ai )
+		*reinterpret_cast<Int *>(reinterpret_cast<char *>(ai) + 0x1c) = delay;
+}  // guardSupplyCenter
+
+//-------------------------------------------------------------------------------------------------
+/** Guard supply center */
+//-------------------------------------------------------------------------------------------------
+void Player::guardSupplyCenter( Team *team, Int minSupplies  )
+{
+	// ai action
+	// BFME's Player tail is wider than the recovered Zero Hour declaration.
+	AIPlayer *ai = *reinterpret_cast<AIPlayer **>(reinterpret_cast<char *>(this) + 0x220);
+	if( ai )
+		ai->guardSupplyCenter( team, minSupplies );
+}  // guardSupplyCenter
+
+//-------------------------------------------------------------------------------------------------
+/** A team is about to be destroyed */
+//-------------------------------------------------------------------------------------------------
+void Player::preTeamDestroy( const Team *team )
+{
+	// ai notification callback
+	// BFME's Player tail is wider than the recovered Zero Hour declaration.
+	AIPlayer *ai = *reinterpret_cast<AIPlayer **>(reinterpret_cast<char *>(this) + 0x220);
+	if( ai )
+		ai->aiPreTeamDestroy( team );
+}  // preTeamDestroy
+
+//-------------------------------------------------------------------------------------------------
+/// a structuer was just created, but is under construction
+//-------------------------------------------------------------------------------------------------
+// ?onStructureCreated@Player@@QAEXPAVObject@@0@Z present-unmatched
+void Player::onStructureCreated( Object *builder, Object *structure )
+{
+
+}  // end onStructureCreated
+
+//-------------------------------------------------------------------------------------------------
+/// a structure that was under construction has become completed
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/Common/Player_onStructureConstructionComplete_Thunk.cpp
+// ?onStructureConstructionComplete@Player@@QAEXPAVObject@@0_N@Z present-unmatched
+void Player::onStructureConstructionComplete( Object *builder, Object *structure, Bool isRebuild )
+{
+	// When a a structure is completed, it becomes "real" as far as scripting is 
+	// concerned. jba.
+	TheScriptEngine->notifyOfObjectCreationOrDestruction();
+
+	// Update the pathfind footprint.  Sometimes when rubble has to be removed
+	// to build, the initial footprint while building is goofy.  jba.
+	TheAI->pathfinder()->removeObjectFromPathfindMap(structure);
+	TheAI->pathfinder()->addObjectToPathfindMap(structure);
+
+	// increment our scorekeeper
+	if (isRebuild == FALSE) {
+		m_scoreKeeper.addObjectBuilt(structure);
+		m_scoreKeeper.addMoneySpent(structure->getTemplate()->calcCostToBuild(this));
+	}
+
+	structure->friend_adjustPowerForPlayer(TRUE);
+
+	// ai notification callback
+	if( m_ai )
+		m_ai->onStructureProduced( builder, structure );
+
+	// the GUI needs to re-evaluate the information being displayed to the user now
+	if( TheControlBar )
+		TheControlBar->markUIDirty();
+	
+	// This object may require us to play some EVA sounds.
+	Player *localPlayer = ThePlayerList->getLocalPlayer();
+
+	if( structure->hasSpecialPower( SPECIAL_PARTICLE_UPLINK_CANNON ) || 
+			structure->hasSpecialPower( SUPW_SPECIAL_PARTICLE_UPLINK_CANNON ) ||
+			structure->hasSpecialPower( LAZR_SPECIAL_PARTICLE_UPLINK_CANNON ) )
+  {
+    if ( localPlayer == structure->getControllingPlayer() )
+    {
+		  TheEva->setShouldPlay(EVA_SuperweaponDetected_Own_ParticleCannon);
+    }
+    else if ( localPlayer->getRelationship(structure->getTeam()) != ENEMIES )
+    {
+      // Note: treating NEUTRAL as ally. Is this correct?
+      TheEva->setShouldPlay(EVA_SuperweaponDetected_Ally_ParticleCannon);
+    }
+    else
+    {
+      TheEva->setShouldPlay(EVA_SuperweaponDetected_Enemy_ParticleCannon);
+    }
+  }
+
+	if( structure->hasSpecialPower( SPECIAL_NEUTRON_MISSILE ) || 
+			structure->hasSpecialPower( NUKE_SPECIAL_NEUTRON_MISSILE ) || 
+			structure->hasSpecialPower( SUPW_SPECIAL_NEUTRON_MISSILE ) )
+  {
+    if ( localPlayer == structure->getControllingPlayer() )
+    {
+      TheEva->setShouldPlay(EVA_SuperweaponDetected_Own_Nuke);
+    }
+    else if ( localPlayer->getRelationship(structure->getTeam()) != ENEMIES )
+    {
+      // Note: treating NEUTRAL as ally. Is this correct?
+      TheEva->setShouldPlay(EVA_SuperweaponDetected_Ally_Nuke);
+    }
+    else
+    {
+      TheEva->setShouldPlay(EVA_SuperweaponDetected_Enemy_Nuke);
+    }
+  }
+  
+	if (structure->hasSpecialPower(SPECIAL_SCUD_STORM))
+  {
+    if ( localPlayer == structure->getControllingPlayer() )
+    {
+      TheEva->setShouldPlay(EVA_SuperweaponDetected_Own_ScudStorm);
+    }
+    else if ( localPlayer->getRelationship(structure->getTeam()) != ENEMIES )
+    {
+      // Note: treating NEUTRAL as ally. Is this correct?
+      TheEva->setShouldPlay(EVA_SuperweaponDetected_Ally_ScudStorm);
+    }
+    else
+    {
+      TheEva->setShouldPlay(EVA_SuperweaponDetected_Enemy_ScudStorm);
+    }
+  }
+}  // end onStructureConstructionComplete
+
+//=============================================================================
+void Player::onStructureUndone(Object *structure)
+{
+	m_scoreKeeper.removeObjectBuilt(structure);
+} // end onStructureUndone
+
+//=============================================================================
+// ?addTeamToList@Player@@QAEXPAVTeamPrototype@@@Z present-unmatched
+void Player::addTeamToList(TeamPrototype* team)
+{
+	for( PlayerTeamList::const_iterator it = m_playerTeamPrototypes.begin(); 
+			 it != m_playerTeamPrototypes.end(); ++it )
+	{
+		if (team == *it)
+			return;	// already present
+	}
+
+	m_playerTeamPrototypes.push_back(team);
+}
+
+//=============================================================================
+void Player::removeTeamFromList(TeamPrototype* team)
+{
+	struct BfmePlayerTeamRemovalNode
+	{
+		BfmePlayerTeamRemovalNode *m_next;
+		BfmePlayerTeamRemovalNode *m_prev;
+		TeamPrototype *m_team;
+	};
+	struct BfmePlayerTeamRemovalFields
+	{
+		unsigned char m_pad[0x288];
+		BfmePlayerTeamRemovalNode *m_list;
+	};
+	extern void bfmeFree915A(void *p, unsigned int n);
+
+	BfmePlayerTeamRemovalFields *self =
+		reinterpret_cast<BfmePlayerTeamRemovalFields *>(this);
+	BfmePlayerTeamRemovalNode *list = self->m_list;
+	for (BfmePlayerTeamRemovalNode *node = list->m_next;
+			node != list; node = node->m_next)
+	{
+		if (team == node->m_team)
+		{
+			BfmePlayerTeamRemovalNode *next = node->m_next;
+			BfmePlayerTeamRemovalNode *prev = node->m_prev;
+			prev->m_next = next;
+			next->m_prev = prev;
+			bfmeFree915A(node, 0xc);
+			return;
+		}
+	}
+}
+
+//=============================================================================
+void Player::healAllObjects()
+{
+	const PlayerTeamList *teams = reinterpret_cast<const PlayerTeamList *>(
+		reinterpret_cast<const char *>(this) + 0x288);
+	for (PlayerTeamList::const_iterator it = teams->begin();
+			 it != teams->end(); ++it)
+	{
+		(*it)->healAllObjects();
+	}
+}
+
+//=============================================================================
+// ?iterateObjects@Player@@QBEXP6AXPAVObject@@PAX@Z1@Z
+// The five-byte void decoration forwards to the matched int-return body at
+// 0x000CDCF0. The symbol pins and 28 callers prove this thunk's identity.
+class PlayerIterateObjectsShim
+{
+public:
+	void iterateObjects( ObjectIterateFunc func, void *userData ) const;
+};
+
+void Player::iterateObjects( ObjectIterateFunc func, void *userData ) const
+{
+	((const PlayerIterateObjectsShim *)this)->iterateObjects(func, userData);
+}
+
+// BFME's team-prototype list sits at +0x288; the vendored header lands it at
+// +0x1a0. Both walkers below read it through this view.
+struct BfmePlayerTeamFields
+{
+	UnsignedByte m_unreconstructed_00[0x288];
+	Player::PlayerTeamList m_playerTeamPrototypes;		///< retail this+0x288
+};
+
+class BfmeTeamInstanceLink
+{
+public:
+	BfmeTeamInstanceLink *_bfme_nextInInstanceList();
+};
+
+class BfmePlayerObjectDlinkObject;
+
+class BfmePlayerObjectVirtualTail
+{
+public:
+	unsigned char m_vt[4];
+};
+
+class BfmePlayerObjectVbptrCarrier : public virtual BfmePlayerObjectVirtualTail
+{
+public:
+	unsigned char m_carrier[4];
+};
+
+class BfmePlayerObjectVtbl
+{
+public:
+	virtual void bfmeObjectSlot0();
+};
+
+class BfmePlayerObjectDlinkBase
+{
+public:
+	BfmePlayerObjectDlinkObject *dlink_next_TeamMemberList() const;
+};
+
+class BfmePlayerObjectDlinkPad
+{
+public:
+	unsigned char m_pad[0x64];
+};
+
+class BfmePlayerObjectDlinkObject : public BfmePlayerObjectVtbl,
+	public BfmePlayerObjectDlinkBase, public BfmePlayerObjectDlinkPad,
+	public BfmePlayerObjectVbptrCarrier
+{
+public:
+	unsigned char m_tail[0x40];
+};
+
+template <class ObjectType> class BfmePlayerDlinkIterator
+{
+public:
+	typedef ObjectType *(ObjectType::*GetNextFunc)() const;
+
+	BfmePlayerDlinkIterator(ObjectType *cur,
+		GetNextFunc getNext)
+		: m_cur(cur), m_getNext(getNext) { }
+
+	Bool done() const { return m_cur == NULL; }
+	ObjectType *cur() const { return m_cur; }
+
+	void advance()
+	{
+		if (m_cur)
+			m_cur = (m_cur->*m_getNext)();
+	}
+
+	private:
+	ObjectType *m_cur;
+	GetNextFunc m_getNext;
+};
+
+struct BfmePlayerTeamMemberListView
+{
+	unsigned char m_unmodelled_000[0x0c];
+	BfmePlayerObjectDlinkObject *m_head;
+
+	BfmePlayerDlinkIterator<BfmePlayerObjectDlinkObject> iterate() const
+	{
+		return BfmePlayerDlinkIterator<BfmePlayerObjectDlinkObject>(m_head,
+			BfmePlayerObjectDlinkBase::dlink_next_TeamMemberList);
+	}
+};
+
+class BfmePlayerTeamView
+{
+public:
+	unsigned char m_unmodelled_000[0x0c];
+	BfmePlayerObjectDlinkObject *m_head;
+
+	BfmePlayerDlinkIterator<BfmePlayerObjectDlinkObject> iterate_TeamMemberList() const
+	{
+		return BfmePlayerDlinkIterator<BfmePlayerObjectDlinkObject>(m_head,
+			BfmePlayerObjectDlinkBase::dlink_next_TeamMemberList);
+	}
+};
+
+class BfmePlayerTeamInstanceIterator;
+
+struct BfmePlayerTeamPrototypeInstances
+{
+	unsigned char m_unmodelled_000[0x274];
+	BfmePlayerTeamView *m_teamInstanceList;
+};
+
+class BfmePlayerTeamInstanceIterator
+{
+public:
+	BfmePlayerTeamInstanceIterator(BfmePlayerTeamView *head) : m_cur(head) { }
+
+	Bool done() const { return m_cur == NULL; }
+	BfmePlayerTeamView *cur() const { return m_cur; }
+
+	void advance()
+	{
+		if (m_cur)
+			m_cur = (BfmePlayerTeamView *)
+				((BfmeTeamInstanceLink *)m_cur)->_bfme_nextInInstanceList();
+	}
+
+	private:
+	BfmePlayerTeamView *m_cur;
+	Int m_unmodelled;
+};
+
+struct BfmePlayerTeamListNode
+{
+	BfmePlayerTeamListNode *m_next;
+	BfmePlayerTeamListNode *m_prev;
+	BfmePlayerTeamPrototypeInstances *m_prototype;
+};
+
+class BfmeOverridable
+{
+public:
+	const BfmeOverridable *getFinalOverride() const;
+
+	void *m_vtable;
+	BfmeOverridable *m_nextOverride;
+};
+
+class BfmePlayerThingTemplate : public BfmeOverridable
+{
+public:
+	unsigned char m_unmodelled_008[0xc8 - 0x08];
+	signed char m_kindOfC8;
+};
+
+struct BfmePlayerSupplyTruckAIView;
+
+class BfmePlayerAIUpdateView
+{
+public:
+#define BFME_PLAYER_AI_SLOT(n) virtual void slot##n();
+	BFME_PLAYER_AI_SLOT(00) BFME_PLAYER_AI_SLOT(04) BFME_PLAYER_AI_SLOT(08)
+	BFME_PLAYER_AI_SLOT(0c) BFME_PLAYER_AI_SLOT(10) BFME_PLAYER_AI_SLOT(14)
+	BFME_PLAYER_AI_SLOT(18) BFME_PLAYER_AI_SLOT(1c) BFME_PLAYER_AI_SLOT(20)
+	BFME_PLAYER_AI_SLOT(24) BFME_PLAYER_AI_SLOT(28) BFME_PLAYER_AI_SLOT(2c)
+	BFME_PLAYER_AI_SLOT(30) BFME_PLAYER_AI_SLOT(34) BFME_PLAYER_AI_SLOT(38)
+	BFME_PLAYER_AI_SLOT(3c) BFME_PLAYER_AI_SLOT(40) BFME_PLAYER_AI_SLOT(44)
+	BFME_PLAYER_AI_SLOT(48) BFME_PLAYER_AI_SLOT(4c) BFME_PLAYER_AI_SLOT(50)
+	BFME_PLAYER_AI_SLOT(54) BFME_PLAYER_AI_SLOT(58) BFME_PLAYER_AI_SLOT(5c)
+	BFME_PLAYER_AI_SLOT(60) BFME_PLAYER_AI_SLOT(64) BFME_PLAYER_AI_SLOT(68)
+	BFME_PLAYER_AI_SLOT(6c) BFME_PLAYER_AI_SLOT(70) BFME_PLAYER_AI_SLOT(74)
+	BFME_PLAYER_AI_SLOT(78) BFME_PLAYER_AI_SLOT(7c) BFME_PLAYER_AI_SLOT(80)
+	BFME_PLAYER_AI_SLOT(84) BFME_PLAYER_AI_SLOT(88) BFME_PLAYER_AI_SLOT(8c)
+	BFME_PLAYER_AI_SLOT(90) BFME_PLAYER_AI_SLOT(94) BFME_PLAYER_AI_SLOT(98)
+	BFME_PLAYER_AI_SLOT(9c) BFME_PLAYER_AI_SLOT(a0) BFME_PLAYER_AI_SLOT(a4)
+	BFME_PLAYER_AI_SLOT(a8) BFME_PLAYER_AI_SLOT(ac) BFME_PLAYER_AI_SLOT(b0)
+	BFME_PLAYER_AI_SLOT(b4) BFME_PLAYER_AI_SLOT(b8) BFME_PLAYER_AI_SLOT(bc)
+	BFME_PLAYER_AI_SLOT(c0) BFME_PLAYER_AI_SLOT(c4) BFME_PLAYER_AI_SLOT(c8)
+	BFME_PLAYER_AI_SLOT(cc) BFME_PLAYER_AI_SLOT(d0) BFME_PLAYER_AI_SLOT(d4)
+	BFME_PLAYER_AI_SLOT(d8) BFME_PLAYER_AI_SLOT(dc) BFME_PLAYER_AI_SLOT(e0)
+	BFME_PLAYER_AI_SLOT(e4) BFME_PLAYER_AI_SLOT(e8) BFME_PLAYER_AI_SLOT(ec)
+	BFME_PLAYER_AI_SLOT(f0) BFME_PLAYER_AI_SLOT(f4) BFME_PLAYER_AI_SLOT(f8)
+	BFME_PLAYER_AI_SLOT(fc) BFME_PLAYER_AI_SLOT(100) BFME_PLAYER_AI_SLOT(104)
+	BFME_PLAYER_AI_SLOT(108) BFME_PLAYER_AI_SLOT(10c) BFME_PLAYER_AI_SLOT(110)
+	BFME_PLAYER_AI_SLOT(114) BFME_PLAYER_AI_SLOT(118) BFME_PLAYER_AI_SLOT(11c)
+	BFME_PLAYER_AI_SLOT(120) BFME_PLAYER_AI_SLOT(124) BFME_PLAYER_AI_SLOT(128)
+	BFME_PLAYER_AI_SLOT(12c) BFME_PLAYER_AI_SLOT(130) BFME_PLAYER_AI_SLOT(134)
+	BFME_PLAYER_AI_SLOT(138) BFME_PLAYER_AI_SLOT(13c) BFME_PLAYER_AI_SLOT(140)
+	virtual BfmePlayerSupplyTruckAIView *getSupplyTruckAIInterface() const = 0;
+	BFME_PLAYER_AI_SLOT(148) BFME_PLAYER_AI_SLOT(14c) BFME_PLAYER_AI_SLOT(150)
+	BFME_PLAYER_AI_SLOT(154) BFME_PLAYER_AI_SLOT(158) BFME_PLAYER_AI_SLOT(15c)
+	BFME_PLAYER_AI_SLOT(160) BFME_PLAYER_AI_SLOT(164) BFME_PLAYER_AI_SLOT(168)
+	BFME_PLAYER_AI_SLOT(16c) BFME_PLAYER_AI_SLOT(170) BFME_PLAYER_AI_SLOT(174)
+	BFME_PLAYER_AI_SLOT(178) BFME_PLAYER_AI_SLOT(17c)
+	virtual Bool isIdle() const = 0;
+#undef BFME_PLAYER_AI_SLOT
+};
+
+struct BfmePlayerSupplyTruckAIView
+{
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0c();
+	virtual void slot10();
+	virtual void slot14();
+	virtual void slot18();
+	virtual void slot1c();
+	virtual void slot20();
+	virtual void slot24();
+	virtual void slot28();
+	virtual void setForceWantingState(Bool force);
+};
+
+class BfmePlayerObjectView
+{
+public:
+	void *m_vtable;
+	BfmePlayerThingTemplate *m_template;
+	unsigned char m_unmodelled_008[0x38 - 0x08];
+	Coord3D m_position;
+	unsigned char m_unmodelled_044[0x204 - 0x44];
+	BfmePlayerAIUpdateView *m_ai;
+};
+
+class BfmeKindOfMask
+{
+public:
+	BfmeKindOfMask(Int idx1, Int idx2, Int idx3)
+	{
+		m_bits.set(idx1);
+		m_bits.set(idx2);
+		m_bits.set(idx3);
+	}
+
+	BfmeKindOfMask(Int idx1, Int idx2, Int idx3, Int idx4, Int idx5)
+	{
+		m_bits.set(idx1);
+		m_bits.set(idx2);
+		m_bits.set(idx3);
+		m_bits.set(idx4);
+		m_bits.set(idx5);
+	}
+
+private:
+	std::bitset<192> m_bits;
+};
+
+class BfmeKindOfTester
+{
+public:
+	Bool isAnyKindOf(const BfmeKindOfMask &mask) const;
+};
+
+class BfmeShroudManagerHuntView
+{
+public:
+	void getMostValuableLocation(Int playerMask, Int value,
+		Coord3D *outLocation);
+};
+
+class BfmePlayerListHuntView
+{
+public:
+	unsigned short getPlayersWithRelationship(Int playerIndex,
+		Int whichPlayerTypes, Bool exact);
+};
+
+extern PartitionManager *TheShroudManager;
+#pragma comment(linker, "/alternatename:?getMostValuableLocation@BfmeShroudManagerHuntView@@QAEXHHPAUCoord3D@@@Z=?m@Gen_008f7450@@QAEXXZ")
+#pragma comment(linker, "/alternatename:?getPlayersWithRelationship@BfmePlayerListHuntView@@QAEGHH_N@Z=?getPlayersWithRelationship@PlayerList@@QAEGHH_N@Z")
+
+extern void j_00001140();
+extern void j_000022a70();
+extern void j_000022bb();
+#pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmePlayerObjectDlinkBase@@QBEPAVBfmePlayerObjectDlinkObject@@@Z=?j_00001140@@YAXXZ")
+#pragma comment(linker, "/alternatename:?_bfme_nextInInstanceList@BfmePlayerTeamInstanceLink@@QAEPAV1@XZ=?j_000022a70@@YAXXZ")
+#pragma comment(linker, "/alternatename:?getFinalOverride@BfmePlayerOverridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
+
+//=============================================================================
+// ?countObjectsByThingTemplate@Player@@QBEXHPBQBVThingTemplate@@_NPAH1@Z
+void Player::countObjectsByThingTemplate(Int numTmplates, const ThingTemplate* const * things, Bool ignoreDead, Int *counts, Bool ignoreUnderConstruction ) const
+{
+	Int i;
+
+	for (i = 0; i < numTmplates; ++i)
+		counts[i] = 0;
+
+	const BfmePlayerTeamFields *self = (const BfmePlayerTeamFields *)this;
+	for (PlayerTeamList::const_iterator it = self->m_playerTeamPrototypes.begin(); 
+			 it != self->m_playerTeamPrototypes.end(); 
+			 ++it)
+	{	
+		(*it)->countObjectsByThingTemplate(numTmplates, things, ignoreDead, counts, ignoreUnderConstruction);
+	}
+}
+
+//=============================================================================
+// BFME m_playerTeamPrototypes at +0x288 (ZH header places it earlier).
+Int Player::countBuildings(void)
+{
+	struct BFMEPlayerTeamListField {
+		unsigned char pad[0x288];
+		PlayerTeamList playerTeamPrototypes;
+	};
+	BFMEPlayerTeamListField *self = reinterpret_cast<BFMEPlayerTeamListField *>(this);
+	int retVal = 0;
+
+	for (PlayerTeamList::const_iterator it = self->playerTeamPrototypes.begin();
+			 it != self->playerTeamPrototypes.end(); ++it)
+	{
+		retVal += (*it)->countBuildings();
+	}
+	return retVal;
+}
+
+//=============================================================================
+// ?countObjects@Player@@QAEHV?$BitFlags@$0HE@@@0@Z present-unmatched
+Int Player::countObjects(KindOfMaskType setMask, KindOfMaskType clearMask)
+{
+	int retVal = 0;
+
+	for (PlayerTeamList::const_iterator it = m_playerTeamPrototypes.begin(); 
+			 it != m_playerTeamPrototypes.end(); ++it)
+	{	
+		retVal += (*it)->countObjects(setMask, clearMask);
+	}
+	return retVal;
+}
+
+//=============================================================================
+// ?findClosestByKindOf@Player@@QAEPAVObject@@PAV2@V?$BitFlags@$0HE@@@1@Z present-unmatched
+Object *Player::findClosestByKindOf( Object *queryObject, KindOfMaskType setMask, KindOfMaskType clearMask )
+{
+	if( queryObject == NULL )
+		return NULL; 
+
+	ClosestKindOfData data;
+	data.m_setKindOf = setMask;
+	data.m_clearKindOf = clearMask;
+	data.m_source = queryObject;
+
+	// Magic presto!  data ends up with the answer in it!
+	iterateObjects( findClosestKindOf, &data );
+
+	return data.m_closest;
+}
+
+//=============================================================================
+// ?hasAnyBuildings@Player@@ present-unmatched
+Bool Player::hasAnyBuildings(void) const
+{
+	for (PlayerTeamList::const_iterator it = m_playerTeamPrototypes.begin(); 
+			 it != m_playerTeamPrototypes.end(); ++it)
+	{	
+		if ((*it)->hasAnyBuildings()) {
+			return true;
+		}
+	}
+	return false;
+}
+
+//=============================================================================
+// ?hasAnyBuildings@Player@@ present-unmatched
+Bool Player::hasAnyBuildings(KindOfMaskType kindOf) const
+{
+	for (PlayerTeamList::const_iterator it = m_playerTeamPrototypes.begin(); 
+			 it != m_playerTeamPrototypes.end(); ++it)
+	{	
+		if ((*it)->hasAnyBuildings(kindOf)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+//=============================================================================
+Bool Player::hasAnyUnits(void) const
+{
+	// BFME places this list at +0x288; the shared ZH header places it earlier.
+	struct BFMEPlayerTeamListField {
+		unsigned char pad[0x288];
+		PlayerTeamList playerTeamPrototypes;
+	};
+	const BFMEPlayerTeamListField *self = reinterpret_cast<const BFMEPlayerTeamListField *>(this);
+
+	for (PlayerTeamList::const_iterator it = self->playerTeamPrototypes.begin();
+			 it != self->playerTeamPrototypes.end(); ++it)
+	{	
+		if ((*it)->hasAnyUnits()) {
+			return true;
+		}
+	}
+	return false;
+}
+
+//=============================================================================
+// ?hasAnyObjects@Player@@QBE_NXZ present-unmatched
+Bool Player::hasAnyObjects(void) const
+{
+	for (PlayerTeamList::const_iterator it = m_playerTeamPrototypes.begin(); 
+			 it != m_playerTeamPrototypes.end(); ++it)
+	{	
+		if ((*it)->hasAnyObjects()) {
+			return true;
+		}
+	}
+	return false;
+}
+
+//=============================================================================
+// ?hasAnyBuildFacility@Player@@QBE_NXZ
+Bool Player::hasAnyBuildFacility(void) const
+{
+	const BfmePlayerTeamFields *self = (const BfmePlayerTeamFields *)this;
+	for (PlayerTeamList::const_iterator it = self->m_playerTeamPrototypes.begin(); 
+			 it != self->m_playerTeamPrototypes.end(); ++it)
+	{	
+		if ((*it)->hasAnyBuildFacility())
+			return true;
+	}
+	return false;
+}
+
+//=============================================================================
+// ?updateTeamStates@Player@@QAEXXZ
+void Player::updateTeamStates(void) 
+{
+	const BfmePlayerTeamFields *self = (const BfmePlayerTeamFields *)this;
+	for (PlayerTeamList::const_iterator it = self->m_playerTeamPrototypes.begin(); 
+			 it != self->m_playerTeamPrototypes.end(); ++it)
+	{	
+		(*it)->updateState();
+	}
+}
+
+//=============================================================================
+Bool Player::isLocalPlayer() const
+{
+	return this == ThePlayerList->getLocalPlayer();
+}
+
+//=============================================================================
+void Player::setListInScoreScreen(Bool listInScoreScreen)
+{
+	*reinterpret_cast<Bool *>(reinterpret_cast<char *>(this) + 0x29C) = listInScoreScreen;
+}
+
+//=============================================================================
+Bool Player::getListInScoreScreen()
+{
+	return *reinterpret_cast<const Bool *>(
+		reinterpret_cast<const char *>(this) + 0x29C);
+}
+
+//=============================================================================
+UnsignedInt Player::getSupplyBoxValue()
+{
+	/// @todo This would be the hookup for difficulty level modifiers and special economy buildings
+	struct BfmeSupplyBoxGlobalData
+	{
+		unsigned char m_pad[0xB24];
+		UnsignedInt m_baseValuePerSupplyBox;
+	};
+	const BfmeSupplyBoxGlobalData *global =
+		reinterpret_cast<const BfmeSupplyBoxGlobalData *>(TheWritableGlobalData);
+	return global->m_baseValuePerSupplyBox;
+}
+
+//=============================================================================
+// ?getProductionCostChangePercent@Player@@QBEMVAsciiString@@@Z
+// Body in PlayerProductionCostChangePercentThunk.cpp (exact 91B retail @ 0xD47F0;
+// queue 0x79CED4 was INSIDE MOTDSystem; map at this+0x1CC).
+
+//=============================================================================
+// ?getProductionTimeChangePercent@Player@@QBEMVAsciiString@@@Z present-unmatched
+Real Player::getProductionTimeChangePercent( AsciiString buildTemplateName ) const 
+{ 
+  ProductionChangeMap::const_iterator it = m_productionTimeChanges.find(NAMEKEY(buildTemplateName));
+  if (it != m_productionTimeChanges.end()) 
+	{
+		return (*it).second;
+	}
+	
+	return 0.0f;
+}	
+
+//=============================================================================
+// ?getProductionVeterancyLevel@Player@@QBE?AW4VeterancyLevel@@VAsciiString@@@Z present-unmatched
+VeterancyLevel Player::getProductionVeterancyLevel( AsciiString buildTemplateName ) const 
+{ 
+	NameKeyType templateNameKey = NAMEKEY(buildTemplateName);
+  ProductionVeterancyMap::const_iterator it = m_productionVeterancyLevels.find(templateNameKey);
+  if (it != m_productionVeterancyLevels.end()) 
+	{
+		return (*it).second;
+	}
+	
+	return LEVEL_FIRST;
+}	
+
+//=============================================================================
+// ?friend_setSkillset@Player@@QAEXH@Z present-unmatched
+void Player::friend_setSkillset(Int skillSet)
+{
+	if (m_ai) {
+		m_ai->selectSkillset(skillSet);
+	}
+}
+
+//=============================================================================
+void Player::setUnitsShouldHunt(Bool unitsShouldHunt, CommandSourceType source)
+{
+	struct BfmePlayerHuntFields
+	{
+		unsigned char m_unmodelled_000[0x29d];
+		volatile Bool m_unitsShouldHunt;
+	};
+	BfmePlayerHuntFields *self = (BfmePlayerHuntFields *)this;
+	self->m_unitsShouldHunt = unitsShouldHunt;
+
+	Coord3D pos;
+	((BfmeShroudManagerHuntView *)TheShroudManager)->getMostValuableLocation(
+		((BfmePlayerListHuntView *)ThePlayerList)->getPlayersWithRelationship(
+			getPlayerIndex(), ALLOW_ENEMIES, false),
+		0, &pos);
+	struct BfmePlayerTeamListField
+	{
+		unsigned char m_unmodelled_000[0x288];
+		BfmePlayerTeamListNode *m_head;
+	};
+	BfmePlayerTeamListField *teams = (BfmePlayerTeamListField *)this;
+	for (BfmePlayerTeamListNode *it = teams->m_head->m_next;
+			it != teams->m_head; it = it->m_next) {
+		for (BfmePlayerTeamInstanceIterator iter(
+				it->m_prototype->m_teamInstanceList);
+				!iter.done(); iter.advance()) {
+			BfmePlayerTeamView *team = iter.cur();
+			if (!team) {
+				continue;
+			}
+			
+			BfmePlayerDlinkIterator<BfmePlayerObjectDlinkObject> iterObj =
+				team->iterate_TeamMemberList();
+			for (; !iterObj.done(); iterObj.advance()) {
+				BfmePlayerObjectView *obj =
+					(BfmePlayerObjectView *)iterObj.cur();
+				if (!obj) {
+					continue;
+				}
+
+				BfmeKindOfMask disqualifyingKindofs(14, 16, 90);
+
+				if (((BfmeKindOfTester *)obj)->isAnyKindOf(
+						disqualifyingKindofs)) {
+					continue;	// Harvesters, dozers etc.
+				}
+				if (*(unsigned char *)((char *)obj + 0x94) & 0x20) {
+					continue;
+				}
+
+				((Object *)obj)->leaveGroup();
+				BfmePlayerAIUpdateView *ai = obj->m_ai;
+				if (ai) {
+					if (unitsShouldHunt) {
+						((AICommandInterface *)((char *)ai + 0x20))->aiHunt(source);
+					} else {
+						((AICommandInterface *)((char *)ai + 0x20))->aiIdle(source);
+					}
+				}
+			}
+		}
+	}
+}
+
+//=============================================================================
+// byte-exact reconstruction: game/GameEngine/Source/Common/Player_killPlayer_Thunk.cpp
+// ?killPlayer@Player@@QAEXXZ present-unmatched
+void Player::killPlayer(void)
+{
+	for (PlayerTeamList::iterator it = m_playerTeamPrototypes.begin(); it != m_playerTeamPrototypes.end(); ++it) {
+		for (DLINK_ITERATOR<Team> iter = (*it)->iterate_TeamInstanceList(); !iter.done(); iter.advance()) {
+			Team *team = iter.cur();
+			if (!team) {
+				continue;
+			}
+			team->evacuateTeam(); // force containers on team to dump contents
+		}
+	}
+
+	m_isPlayerDead = TRUE; // this is so OCLs don't ever again spawn useful units for us.
+
+	for (it = m_playerTeamPrototypes.begin(); it != m_playerTeamPrototypes.end(); ++it) {
+		for (DLINK_ITERATOR<Team> iter = (*it)->iterate_TeamInstanceList(); !iter.done(); iter.advance()) {
+			Team *team = iter.cur();
+			if (!team) {
+				continue;
+			}
+			team->killTeam();
+		}
+	}
+	if (TheGameLogic->isInSinglePlayerGame()) {
+		if (getPlayerType()==PLAYER_COMPUTER) {
+			// This is an AI player in a solo mission - leave him alive so he can be used later. jba.
+			m_isPlayerDead = FALSE; // this is so we can later spawn useful units for us.
+			return;
+		}
+	}
+	if (isLocalPlayer() && !TheGameLogic->isInShellGame())
+	{
+		becomingLocalPlayer(TRUE); // recalc disguises, etc
+		if (TheControlBar )
+		{
+			if (isPlayerActive())
+			{
+				TheControlBar->setControlBarSchemeByPlayer(this);
+			}
+			else
+			{
+				TheControlBar->setControlBarSchemeByPlayerTemplate(ThePlayerTemplateStore->findPlayerTemplate(NAMEKEY("FactionObserver")));
+			}
+		}
+
+	}
+
+	m_money.withdraw(m_money.countMoney()); // force $$$ to 0 on death
+}
+
+//=============================================================================
+// ?setObjectsEnabled@Player@@QAEXVAsciiString@@_N@Z present-unmatched
+void Player::setObjectsEnabled(AsciiString templateTypeToAffect, Bool enable)
+{
+	for (PlayerTeamList::iterator it = m_playerTeamPrototypes.begin(); 
+			 it != m_playerTeamPrototypes.end(); ++it) {
+		for (DLINK_ITERATOR<Team> iter = (*it)->iterate_TeamInstanceList(); !iter.done(); iter.advance()) {
+			Team *team = iter.cur();
+			if (!team) {
+				continue;
+			}
+			
+			for (DLINK_ITERATOR<Object> iterObj = team->iterate_TeamMemberList(); !iterObj.done(); iterObj.advance()) {
+				Object *obj = iterObj.cur();
+				if (!obj) {
+					continue;
+				}
+
+				if (obj->getTemplate()->getName().compare(templateTypeToAffect) == 0) 
+				{
+					obj->setScriptStatus( OBJECT_STATUS_SCRIPT_DISABLED, !enable );
+				}
+			}
+		}
+	}
+}
+
+//=============================================================================
+// ?transferAssetsFromThat@Player@@QAEXPAV1@@Z present-unmatched
+void Player::transferAssetsFromThat(Player *that)
+{
+	Team *defaultTeam = getDefaultTeam();
+	if (!defaultTeam) {
+		return;
+	}
+
+	std::list<Object *> objsToTransfer;
+
+	// let's not transfer beacons
+	const ThingTemplate *beaconTemplate = TheThingFactory->findTemplate( that->getPlayerTemplate()->getBeaconTemplate() );
+
+	// transfer all his units.
+	for (PlayerTeamList::iterator it = that->m_playerTeamPrototypes.begin(); 
+			 it != that->m_playerTeamPrototypes.end(); ++it) 
+	{
+		for (DLINK_ITERATOR<Team> iter = (*it)->iterate_TeamInstanceList(); !iter.done(); iter.advance()) 
+		{
+			Team *team = iter.cur();
+			if (!team) 
+			{
+				continue;
+			}
+			
+			for (DLINK_ITERATOR<Object> iterObj = team->iterate_TeamMemberList(); !iterObj.done(); iterObj.advance()) 
+			{
+				Object *obj = iterObj.cur();
+				if (!obj || obj->getTemplate()->isEquivalentTo(beaconTemplate))  // don't transfer NULL objs or beacons
+				{
+					continue;
+				}
+				objsToTransfer.push_back(obj);
+			}
+		}
+	}
+
+	for (std::list<Object *>::iterator itObjs = objsToTransfer.begin(); itObjs != objsToTransfer.end(); ++itObjs) {
+		(*itObjs)->setTeam(defaultTeam);
+	}
+
+	// transfer all his money
+	UnsignedInt allMoney = that->getMoney()->countMoney();
+	that->getMoney()->withdraw(allMoney);
+	getMoney()->deposit(allMoney);
+}
+
+//=============================================================================
+void Player::ungarrisonAllUnits(CommandSourceType source)
+{
+	struct BfmePlayerTeamListField
+	{
+		unsigned char m_unmodelled_000[0x288];
+		BfmePlayerTeamListNode *m_head;
+	};
+	for (BfmePlayerTeamListNode *it =
+			((BfmePlayerTeamListField *)this)->m_head->m_next;
+			it != ((BfmePlayerTeamListField *)this)->m_head; it = it->m_next)
+	{
+			for (BfmePlayerTeamInstanceIterator iter(
+					it->m_prototype->m_teamInstanceList);
+				!iter.done(); iter.advance())
+			{
+				BfmePlayerTeamView *team = iter.cur();
+				if (!team)
+					continue;
+
+				BfmePlayerDlinkIterator<BfmePlayerObjectDlinkObject> iterObj =
+					team->iterate_TeamMemberList();
+				for (; !iterObj.done(); iterObj.advance())
+				{
+					BfmePlayerObjectView *obj =
+						(BfmePlayerObjectView *)iterObj.cur();
+					if (!obj)
+						continue;
+
+					BfmePlayerThingTemplate *thingTemplate;
+					BfmePlayerAIUpdateView *ai = obj->m_ai;
+					if (!ai)
+						continue;
+
+					thingTemplate = obj->m_template;
+					if (thingTemplate && thingTemplate->m_nextOverride)
+						thingTemplate = (BfmePlayerThingTemplate *)
+							thingTemplate->m_nextOverride->getFinalOverride();
+
+					if (thingTemplate->m_kindOfC8 & 0x80)
+						((AICommandInterface *)((char *)ai + 0x20))->aiEvacuate(
+							FALSE, source);
+				}
+		}
+	}
+}
+
+
+//=============================================================================
+void Player::setUnitsShouldIdleOrResume(Bool idle)
+{
+	struct BfmePlayerTeamListField
+	{
+		unsigned char m_unmodelled_000[0x288];
+		BfmePlayerTeamListNode *m_head;
+	};
+	for (BfmePlayerTeamListNode *it =
+			((BfmePlayerTeamListField *)this)->m_head->m_next;
+			it != ((BfmePlayerTeamListField *)this)->m_head; it = it->m_next)
+	{
+			for (BfmePlayerTeamInstanceIterator iter(
+					it->m_prototype->m_teamInstanceList);
+				!iter.done(); iter.advance())
+			{
+				BfmePlayerTeamView *team = iter.cur();
+				if (team)
+				{
+					BfmePlayerDlinkIterator<BfmePlayerObjectDlinkObject> iterObj(
+						team->m_head,
+						BfmePlayerObjectDlinkBase::dlink_next_TeamMemberList);
+					for (; !iterObj.done(); iterObj.advance())
+					{
+						BfmePlayerObjectView *obj =
+							(BfmePlayerObjectView *)iterObj.cur();
+						if (!obj)
+							continue;
+					BfmePlayerThingTemplate *thingTemplate = obj->m_template;
+					if (thingTemplate && thingTemplate->m_nextOverride)
+						thingTemplate = (BfmePlayerThingTemplate *)
+							thingTemplate->m_nextOverride->getFinalOverride();
+
+					if (!(thingTemplate->m_kindOfC8 & 0x80))
+					{
+						BfmePlayerAIUpdateView *ai = obj->m_ai;
+						if (ai)
+						{
+							if (idle)
+							{
+								// force it to move to its position to make it stop.
+								((AICommandInterface *)((char *)ai + 0x20))->aiMoveToPosition(
+									&obj->m_position, CMD_FROM_SCRIPT);
+							}
+							else
+							{
+								// Here is the special bit for this exit style, force wanting on SupplyTruck types
+								if (ai->isIdle())
+								{
+									BfmePlayerSupplyTruckAIView *supplyTruckAI =
+										ai->getSupplyTruckAIInterface();
+									if( supplyTruckAI )
+										supplyTruckAI->setForceWantingState(true);
+								}
+								}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------
+void sellBuildings( Object *obj, void *userData )
+{
+  if( obj->isFactionStructure() || obj->isKindOf( KINDOF_COMMANDCENTER ) || obj->isKindOf( KINDOF_FS_POWER ) )
+  {
+    TheBuildAssistant->sellObject( obj );
+  }
+}
+
+//=============================================================================
+class BfmeBuildAssistantSellInterface
+{
+public:
+    virtual void unusedSlot00();
+    virtual void unusedSlot01();
+    virtual void unusedSlot02();
+    virtual void unusedSlot03();
+    virtual void unusedSlot04();
+    virtual void unusedSlot05();
+    virtual void unusedSlot06();
+    virtual void unusedSlot07();
+    virtual void unusedSlot08();
+    virtual void unusedSlot09();
+    virtual void unusedSlot10();
+    virtual void unusedSlot11();
+    virtual void unusedSlot12();
+    virtual void unusedSlot13();
+    virtual void unusedSlot14();
+    virtual void unusedSlot15();
+    virtual void unusedSlot16();
+    virtual void unusedSlot17();
+    virtual void sellObject(Object *obj);
+};
+
+void Player::sellEverythingUnderTheSun()
+{
+    struct BfmePlayerTeamListField
+    {
+        unsigned char m_unmodelled_000[0x288];
+        BfmePlayerTeamListNode *m_head;
+    };
+    for (BfmePlayerTeamListNode *it =
+            ((BfmePlayerTeamListField *)this)->m_head->m_next;
+            it != ((BfmePlayerTeamListField *)this)->m_head; it = it->m_next)
+    {
+        BfmePlayerTeamInstanceIterator teams(
+            it->m_prototype->m_teamInstanceList);
+        for (; !teams.done(); teams.advance())
+        {
+            BfmePlayerTeamView *team = teams.cur();
+            if (!team)
+                continue;
+            BfmePlayerDlinkIterator<BfmePlayerObjectDlinkObject> objects(
+                team->m_head,
+                BfmePlayerObjectDlinkBase::dlink_next_TeamMemberList);
+            for (; !objects.done(); objects.advance())
+            {
+                BfmePlayerObjectDlinkObject *object = objects.cur();
+                if (!object)
+                    continue;
+                reinterpret_cast<BfmeBuildAssistantSellInterface *>(TheBuildAssistant)->sellObject(
+                    (Object *)object);
+            }
+        }
+    }
+}
+
+
+//=============================================================================
+// ?allowedToBuild@Player@@QBE_NPBVThingTemplate@@@Z present-unmatched
+Bool Player::allowedToBuild(const ThingTemplate *tmplate) const
+{
+	if (!m_canBuildBase && tmplate->isKindOf(KINDOF_STRUCTURE)) {
+		return false;
+	}
+
+	if (!m_canBuildUnits && !tmplate->isKindOf(KINDOF_STRUCTURE)) {
+		return false;
+	}
+
+	return true;
+}
+
+//=============================================================================
+// byte-exact reconstruction: game/GameEngine/Source/Common/Rva000C9740Wrap.cpp
+// ?buildSpecificTeam@Player@@QAEXPAVTeamPrototype@@@Z present-unmatched
+void Player::buildSpecificTeam( TeamPrototype *teamProto) 
+{
+	if (m_ai) 
+	{
+		// Do a priority build.
+		m_ai->buildSpecificAITeam(teamProto, true);
+	}
+}
+
+//=============================================================================
+// ?buildBaseDefense@Player@@QAEX_N@Z present-unmatched
+void Player::buildBaseDefense(Bool flank) 
+{
+	if (m_ai) 
+	{
+		// Do a priority build.
+		m_ai->buildAIBaseDefense(flank);
+	}
+}
+
+//=============================================================================
+// ?buildBaseDefenseStructure@Player@@QAEXABVAsciiString@@_N@Z present-unmatched
+void Player::buildBaseDefenseStructure(const AsciiString &thingName, Bool flank) 
+{
+	if (m_ai) 
+	{
+		// Do a priority build.
+		m_ai->buildAIBaseDefenseStructure(thingName, flank);
+	}
+}
+
+//=============================================================================
+// ?buildSpecificBuilding@Player@@QAEXABVAsciiString@@@Z present-unmatched
+void Player::buildSpecificBuilding(const AsciiString &thingName) 
+{
+	if (m_ai) 
+	{
+		// Do a priority build.
+		m_ai->buildSpecificAIBuilding(thingName);
+	}
+}
+
+//=============================================================================
+// ?buildBySupplies@Player@@QAEXHABVAsciiString@@@Z present-unmatched
+void Player::buildBySupplies(Int minimumCash, const AsciiString &thingName) 
+{
+	if (m_ai) 
+	{
+		m_ai->buildBySupplies(minimumCash, thingName);
+	}
+}
+
+//=============================================================================
+// ?buildSpecificBuildingNearestTeam@Player@@QAEXABVAsciiString@@PBVTeam@@@Z present-unmatched
+void Player::buildSpecificBuildingNearestTeam( const AsciiString &thingName, const Team *team )
+{
+	if( m_ai )
+	{
+		m_ai->buildSpecificBuildingNearestTeam( thingName, team );
+	}
+}
+
+//=============================================================================
+// ?buildUpgrade@Player@@QAEXABVAsciiString@@@Z present-unmatched
+void Player::buildUpgrade( const AsciiString &upgrade) 
+{
+	if (m_ai) 
+	{
+		m_ai->buildUpgrade(upgrade);
+	}
+}
+
+//=============================================================================
+// ?recruitSpecificTeam@Player@@QAEXPAVTeamPrototype@@M@Z present-unmatched
+void Player::recruitSpecificTeam( TeamPrototype *teamProto, Real recruitRadius) 
+{
+	if (m_ai) 
+	{
+		// Do a priority build.
+		m_ai->recruitSpecificAITeam(teamProto, recruitRadius);
+	}
+}
+
+
+//=============================================================================
+// Calculates the closest construction zone location based on a template. Gets plassed to aiPlayer
+//=============================================================================
+// ?calcClosestConstructionZoneLocation@Player@@QAE_NPBVThingTemplate@@PAUCoord3D@@@Z present-unmatched
+Bool Player::calcClosestConstructionZoneLocation( const ThingTemplate *constructTemplate, Coord3D *location )
+{
+	if( m_ai )
+	{
+		return m_ai->calcClosestConstructionZoneLocation( constructTemplate, location );
+	}
+
+  return FALSE;
+}
+
+//=============================================================================
+// byte-exact BFME reconstruction: game/GameEngine/Source/Common/RTS/PlayerDoBountyForKill.cpp
+// ?doBountyForKill@Player@@QAEXPBVObject@@0@Z present-unmatched
+// BFME's OBJECT_STATUS_UNDER_CONSTRUCTION is BIT 2, not bit 3, and retail tests
+// it as a single byte at Object+0x90 rather than through the vendored pair of
+// status dwords at +0x90 and +0x94.
+#define BFME_UNDER_CONSTRUCTION(o) ((*((const UnsignedByte *)(o) + 0x90) & 0x4) != 0)
+
+void Player::doBountyForKill(const Object* killer, const Object* victim)
+{
+	if (!killer || !victim)
+		return;
+
+	// srj sez: per dustin, no experience (et al) for killing things under construction.
+	if (BFME_UNDER_CONSTRUCTION(victim))
+		return;
+
+	Int costToBuild = victim->getTemplate()->calcCostToBuild(victim->getControllingPlayer());
+	Int bounty = REAL_TO_INT_CEIL(costToBuild * m_cashBountyPercent);
+	
+	if( bounty )
+	{
+
+		getMoney()->deposit( bounty );
+		m_scoreKeeper.addMoneyEarned( bounty );
+
+		//Display cash income floating over the recipient.
+		UnicodeString moneyString;
+		moneyString.format( TheGameText->fetch( "GUI:AddCash" ), bounty );
+		Coord3D pos;
+		pos.zero();
+		pos.add( killer->getPosition() );
+		pos.z += 10.0f; //add a little z to make it show up above the unit.
+		TheInGameUI->addFloatingText( moneyString, &pos, GameMakeColor( 255, 255, 0, 255 ) );
+	}
+}
+
+//=============================================================================
+Bool Player::hasPrereqsForScience(ScienceType t) const
+{
+	return TheScienceStore->playerHasPrereqsForScience(this, t);
+}
+
+//=============================================================================
+/// returns TRUE if the player gained/lost levels as a result.
+// ?addSkillPoints@Player@@QAE_NH@Z present-unmatched
+Bool Player::addSkillPoints(Int delta)
+{
+	delta = REAL_TO_INT_CEIL(m_skillPointsModifier * INT_TO_REAL(delta));
+
+	if( delta == 0 )
+		return false;
+
+	Int levelCap = min( TheGameLogic->getRankLevelLimit(), TheRankInfoStore->getRankLevelCount() );
+	Int pointCap = TheRankInfoStore->getRankInfo(levelCap)->m_skillPointsNeeded; // Cap at lowest point of cap level, not highest.
+
+	Bool levelGained = FALSE;
+	m_skillPoints = min( pointCap, (m_skillPoints + delta) );
+	while( m_skillPoints >= m_levelUp )
+	{
+		// LevelUp gets increased as a side effect of setRankLevel, and this won't infinitely loop,
+		// because when there are no more levels to be gained, m_levelUp is set to INT_MAX.
+		setRankLevel( m_rankLevel + 1 );
+		levelGained = TRUE;
+	}
+
+	return levelGained;
+}
+
+//=============================================================================
+/// returns TRUE if the player gained/lost levels as a result.
+// ?addSkillPointsForKill@Player@@QAE_NPBVObject@@0@Z present-unmatched
+Bool Player::addSkillPointsForKill(const Object* killer, const Object* victim)
+{
+	if (!killer || !victim)
+		return false;
+
+	// srj sez: per dustin, no experience (et al) for killing things under construction.
+	if (victim->testStatus(OBJECT_STATUS_UNDER_CONSTRUCTION))
+		return false;
+	
+	Int victimLevel = victim->getVeterancyLevel();
+	Int skillValue = victim->getTemplate()->getSkillPointValue(victimLevel);
+	
+	return addSkillPoints(skillValue);
+}
+
+//=============================================================================
+// ?resetSciences@Player@@QAEXXZ present-unmatched
+void Player::resetSciences()
+{
+	m_sciences.clear();
+
+	if (getPlayerTemplate())
+		m_sciences = getPlayerTemplate()->getIntrinsicSciences();
+
+	for (Int i = 1; i <= m_rankLevel; ++i)
+	{
+		const RankInfo* rank = TheRankInfoStore->getRankInfo(i);
+		if (rank)
+		{
+			for (ScienceVec::const_iterator it = rank->m_sciencesGranted.begin(); it != rank->m_sciencesGranted.end(); ++it)
+			{
+				addScience(*it);
+			}
+		}
+	}
+
+	for (ScienceVec::const_iterator it = m_sciences.begin(); it != m_sciences.end(); ++it)
+		TheScriptEngine->notifyOfAcquiredScience(getPlayerIndex(), *it);
+}
+
+//=============================================================================
+/// returns TRUE if sciences were gained/lost.
+// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/PlayerAddScienceThunk.cpp
+// ?addScience@Player@@AAE_NW4ScienceType@@@Z present-unmatched
+Bool Player::addScience(ScienceType science)
+{
+	if (hasScience(science))
+		return false;
+
+	//DEBUG_LOG(("Adding Science %s\n",TheScienceStore->getInternalNameForScience(science).str()));
+
+	m_sciences.push_back(science);
+
+	// 'wake up' any special powers controlled by, well, stuff
+	for (PlayerTeamList::iterator it = m_playerTeamPrototypes.begin(); 
+			 it != m_playerTeamPrototypes.end(); ++it) 
+	{
+		for (DLINK_ITERATOR<Team> iter = (*it)->iterate_TeamInstanceList(); !iter.done(); iter.advance()) 
+		{
+			Team *team = iter.cur();
+			if (!team)
+				continue;
+			
+			for (DLINK_ITERATOR<Object> iterObj = team->iterate_TeamMemberList(); !iterObj.done(); iterObj.advance()) 
+			{
+				Object *obj = iterObj.cur();
+				if (!obj)
+					continue;
+
+				for (BehaviorModule** m = obj->getBehaviorModules(); *m; ++m)
+				{
+					SpecialPowerModuleInterface* sp = (*m)->getSpecialPower();
+					if (!sp)
+						continue;
+
+					if (sp->getRequiredScience() == science)
+					{
+						// Turn on the power, and set it to be instantly ready, because that is cool.
+						sp->onSpecialPowerCreation();
+						sp->setReadyFrame( TheGameLogic->getFrame() );
+					}
+				}
+			}
+		}
+
+		TheControlBar->markUIDirty();// Refresh the UI to show new cameos, etc
+
+	}
+
+	// notify the script engine
+	TheScriptEngine->notifyOfAcquiredScience(getPlayerIndex(), science);
+	
+	return true;
+}
+
+// BFME inserts 0x14 bytes ahead of the radar counters and 0xd0 ahead of the
+// science vectors, so both families are read through a view rather than through
+// the members the vendored header declares. The three ScienceVecs land at
+// +0x234, +0x240 and +0x24c, twelve bytes apart, which corroborates the first
+// offset against the other two.
+struct BfmePlayerRadarFields
+{
+	UnsignedByte m_unreconstructed_00[0x58];
+	Int m_radarCount;					///< retail this+0x58
+	Int m_disableProofRadarCount;				///< retail this+0x5c
+	Bool m_radarDisabled;					///< retail this+0x60
+};
+
+struct BfmePlayerScienceFields
+{
+	UnsignedByte m_unreconstructed_00[0x234];
+	ScienceVec m_sciences;					///< retail this+0x234
+	ScienceVec m_sciencesDisabled;				///< retail this+0x240
+	ScienceVec m_sciencesHidden;				///< retail this+0x24c
+	UnsignedByte m_unreconstructed_258[0x264 - 0x258];
+	Int m_sciencePurchasePoints;				///< retail this+0x264
+};
+
+// BFME records points EARNED, as opposed to spent, on the subobject at
+// Player+0x348 before the running total moves; the reference body has no such
+// statement.
+class BfmeAcademyPointRecorder
+{
+public:
+	void _bfme_recordPointsEarned( Int points );		///< retail ILT 0x0001b969
+};
+
+struct BfmePlayerPointRecorderField
+{
+	UnsignedByte m_unreconstructed_000[0x348];
+	BfmeAcademyPointRecorder m_pointRecorder;		///< retail this+0x348
+};
+
+// BFME hands the control bar a non-const Player; the reference ControlBar.h
+// declares the same notification taking a const one.
+class BfmeSciencePointsControlBar
+{
+public:
+	void onPlayerSciencePurchasePointsChanged( Player *player );	///< retail ILT 0x000439d7
+};
+
+//=============================================================================
+// ?addSciencePurchasePoints@Player@@QAEXH@Z
+// noinline: retail attemptToPurchaseScience calls this out-of-line (ILT 0xF0F1)
+__declspec(noinline) void Player::addSciencePurchasePoints(Int delta)
+{
+	//DEBUG_LOG(("Adding SciencePurchasePoints %d -> %d\n",m_sciencePurchasePoints,m_sciencePurchasePoints+delta));
+	if (delta > 0)
+		((BfmePlayerPointRecorderField *)this)->m_pointRecorder._bfme_recordPointsEarned(delta);
+
+	BfmePlayerScienceFields *points = (BfmePlayerScienceFields *)this;
+
+	Int oldSPP = points->m_sciencePurchasePoints;
+	points->m_sciencePurchasePoints += delta;
+	if (points->m_sciencePurchasePoints < 0)
+		points->m_sciencePurchasePoints = 0;
+
+	if (oldSPP != points->m_sciencePurchasePoints && TheControlBar != NULL)
+		((BfmeSciencePointsControlBar *)TheControlBar)->onPlayerSciencePurchasePointsChanged(this);
+
+}
+
+//=============================================================================
+// BFME: no AcademyStats / markUIDirty tail (ZH-only); body @ 0xD55B0 size 60
+Bool Player::attemptToPurchaseScience(ScienceType science)
+{
+	if (!isCapableOfPurchasingScience(science))
+	{
+		return false;
+	}
+
+	Int cost = TheScienceStore->getSciencePurchaseCost(science);
+	addSciencePurchasePoints(-cost);
+	addScience(science);
+
+	return true;
+}
+
+//=============================================================================
+Bool Player::grantScience(ScienceType science)
+{
+	if (!TheScienceStore->isScienceGrantable(science))
+	{
+		DEBUG_CRASH(("Cannot grant science %s, since it is marked as nonGrantable.\n",TheScienceStore->getInternalNameForScience(science).str()));
+		return false;	// it's not grantable, so tough, can't have it, even via this method.
+	}
+
+	return addScience(science);
+}
+
+//=============================================================================
+
+// BFME does not consult the disabled or hidden lists here; retail goes straight
+// from the inlined hasScience find to the prereq call.
+// ?isCapableOfPurchasingScience@Player@@QBE_NW4ScienceType@@@Z
+Bool Player::isCapableOfPurchasingScience(ScienceType science) const
+{
+	if (science == SCIENCE_INVALID)
+	{
+		return false;
+	}
+
+	if (hasScience(science))
+	{
+		return false;
+	}
+
+	if (!hasPrereqsForScience(science))
+	{
+		return false;
+	}
+
+	Int cost = TheScienceStore->getSciencePurchaseCost(science);
+	// purchase cost of zero means "not purchasable!"
+	if (cost == 0 || cost > ((const BfmePlayerScienceFields *)this)->m_sciencePurchasePoints)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+//=============================================================================
+// ?resetRank@Player@@QAEXXZ
+// Body in Player_resetRank.asm (exact 319B retail @ 0xD7CA0; queue 0xD7CAE was mid-prologue).
+
+//=============================================================================
+/// returns TRUE if rank level really changed.
+// ?setRankLevel@Player@@QAE_NH@Z
+// Body in Player_setRankLevel.asm (exact 395B retail).
+
+//=============================================================================
+// ?hasScience@Player@@QBE_NW4ScienceType@@@Z
+Bool Player::hasScience(ScienceType t) const
+{
+	const BfmePlayerScienceFields *self = (const BfmePlayerScienceFields *)this;
+	return std::find(self->m_sciences.begin(), self->m_sciences.end(), t) != self->m_sciences.end();
+}
+
+//=============================================================================
+// ?isScienceDisabled@Player@@QBE_NW4ScienceType@@@Z
+Bool Player::isScienceDisabled( ScienceType t ) const
+{
+	const BfmePlayerScienceFields *self = (const BfmePlayerScienceFields *)this;
+	return std::find(self->m_sciencesDisabled.begin(), self->m_sciencesDisabled.end(), t) != self->m_sciencesDisabled.end();
+}
+
+//=============================================================================
+// ?isScienceHidden@Player@@QBE_NW4ScienceType@@@Z
+Bool Player::isScienceHidden( ScienceType t ) const
+{
+	const BfmePlayerScienceFields *self = (const BfmePlayerScienceFields *)this;
+	return std::find(self->m_sciencesHidden.begin(), self->m_sciencesHidden.end(), t) != self->m_sciencesHidden.end();
+}
+
+//=============================================================================
+// ?setScienceAvailability@Player@@QAEXW4ScienceType@@W4ScienceAvailabilityType@@@Z
+// Body in Player_setScienceAvailability.asm (exact 288B retail @ 0xD5640;
+// C++ blocked by Player layout: m_sciencesDisabled/Hidden +0x240/+0x24c vs ZH +0x170/+0x17c).
+
+// Force-emit ScienceVec::erase(iterator) COMDAT claimed on this TU @ 0xCEA00.
+// Was previously only referenced by the C++ setScienceAvailability body.
+static ScienceType *bfme_force_ScienceVec_erase(ScienceVec *v, ScienceType *it)
+{
+	return v->erase(it);
+}
+ScienceType *(*bfme_force_ScienceVec_erase_anchor)(ScienceVec *, ScienceType *) =
+	&bfme_force_ScienceVec_erase;
+
+namespace
+{
+  // ------------------------------------------------------------------------------------------------
+  // For countExisting
+  struct TypeCountData
+  {
+    UnsignedInt count;
+    const ThingTemplate *type;
+    NameKeyType linkKey;
+    Bool        checkProductionInterface;
+  };
+}
+
+// ------------------------------------------------------------------------------------------------
+/** Count all the units of a given type that exist or are in any production queues for a player */
+// ------------------------------------------------------------------------------------------------
+static void countExisting( Object *obj, void *userData )
+{
+  // Don't care about dead objects
+  if ( obj->isEffectivelyDead() )
+    return;
+
+  TypeCountData *typeCountData = (TypeCountData *)userData;
+  
+  // Compare templates
+  if ( typeCountData->type->isEquivalentTo( obj->getTemplate() ) ||
+       ( typeCountData->linkKey != NAMEKEY_INVALID && obj->getTemplate() != NULL && typeCountData->linkKey == obj->getTemplate()->getMaxSimultaneousLinkKey() ) )
+  {
+    typeCountData->count++;
+  }
+
+  // Also consider objects that have a production update interface
+  if ( typeCountData->checkProductionInterface )
+  {
+    ProductionUpdateInterface *pui = ProductionUpdate::getProductionUpdateInterfaceFromObject( obj );
+    if( pui )
+    { 
+      // add the count of this type that are in the queue
+      typeCountData->count += pui->countUnitTypeInQueue( typeCountData->type ); 
+    }  // end if
+  }  
+}  // end countInProduction
+
+//=============================================================================
+// Make sure that building another of this unit/structure/object won't exceed MaxSimultaneousOfType()
+// ?canBuildMoreOfType@Player@@QBE_NPBVThingTemplate@@@Z present-unmatched
+Bool Player::canBuildMoreOfType( const ThingTemplate *whatToBuild ) const
+{
+  // make sure we're not maxed out for this type of unit.
+  UnsignedInt maxSimultaneousOfType = whatToBuild->getMaxSimultaneousOfType();
+  if (maxSimultaneousOfType != 0)
+  {
+
+    TypeCountData typeCountData;
+    typeCountData.count = 0;
+    typeCountData.type = whatToBuild;
+    typeCountData.linkKey = whatToBuild->getMaxSimultaneousLinkKey();
+    // Assumption: Things with a KINDOF_STRUCTURE flag can never be built from 
+    // a factory (ProductionUpdateInterface), because the building can't move
+    // out of the factory. When we do our Starcraft port and have flying Terran
+    // buildings, we'll have to change this ;-)
+    // Remember: To ASSUME makes an ASS out of U and ME. 
+    typeCountData.checkProductionInterface = !whatToBuild->isKindOf( KINDOF_STRUCTURE );
+
+    iterateObjects( countExisting, &typeCountData );
+    if( typeCountData.count >= maxSimultaneousOfType )
+      return false;
+  }
+  return true;
+}
+
+//=============================================================================
+// ?canBuild@Player@@QBE_NPBVThingTemplate@@@Z present-unmatched
+Bool Player::canBuild(const ThingTemplate *tmplate) const
+{
+	if (!tmplate)
+		return false;
+
+	if (!allowedToBuild(tmplate))
+		return false;
+
+	if (tmplate->getBuildable() == BSTATUS_NO)
+		return false;
+
+	if (tmplate->getBuildable() == BSTATUS_IGNORE_PREREQUISITES)
+		return true;
+	
+	if (tmplate->getBuildable() == BSTATUS_ONLY_BY_AI && getPlayerType() != PLAYER_COMPUTER)
+		return false;
+	
+	// else BSTATUS tmplate->getBuildable() == BSTATUS_YES
+	{
+
+		// we must satisfy all of the prereqs
+		Bool prereqsOK = true;
+		for (Int i = 0; i < tmplate->getPrereqCount(); i++)
+		{
+			const ProductionPrerequisite *pre = tmplate->getNthPrereq(i);
+			if (pre->isSatisfied(this) == false )
+				prereqsOK = false;
+		}
+
+#if defined(_DEBUG) || defined(_INTERNAL)
+		if (ignoresPrereqs())
+			prereqsOK = true;
+#endif
+
+		if (!prereqsOK)
+			return false;
+
+	}
+
+  if ( !canBuildMoreOfType( tmplate ) )
+    return false;
+  
+
+	return true;
+}
+
+//=================================================================================================
+// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/PlayerCanAffordBuild.cpp
+// ?canAffordBuild@Player@@QBE_NPBVThingTemplate@@@Z present-unmatched
+Bool Player::canAffordBuild( const ThingTemplate *whatToBuild ) const
+{
+	// make sure we have enough money to build this
+	const Money *money = getMoney();
+	if( whatToBuild->calcCostToBuild( this ) <= money->countMoney() )
+	{
+		return true;
+	}
+	return false;
+}
+
+//=================================================================================================
+// ?deleteUpgradeList@Player@@IAEXXZ present-unmatched
+void Player::deleteUpgradeList( void )
+{
+	Upgrade *next;
+
+	// delete all of the upgrades we have
+	while( m_upgradeList )
+	{
+
+		next = m_upgradeList->friend_getNext();
+		m_upgradeList->deleteInstance();
+		m_upgradeList = next;
+
+	}  // end while
+
+	// This doesn't call removeUpgrade, so clear these ourselves.
+	m_upgradesInProgress.clear();
+	m_upgradesCompleted.clear();
+
+}  // end deleteUpgradeList
+
+//=================================================================================================
+/** Find an upgrade in our list of upgrades with matching name key */
+//=================================================================================================
+// ?findUpgrade@Player@@QAEPAVUpgrade@@PBVUpgradeTemplate@@@Z present-unmatched
+Upgrade *Player::findUpgrade( const UpgradeTemplate *upgradeTemplate )
+{
+	Upgrade *upgrade;
+
+	for( upgrade = m_upgradeList; upgrade; upgrade = upgrade->friend_getNext() )
+		if( upgrade->getTemplate() == upgradeTemplate )
+			return upgrade;
+
+	return NULL;
+	
+}  // end findUpgrade
+
+//=================================================================================================
+/** Does the player have this completed upgrade */
+//=================================================================================================
+// ?hasUpgradeComplete@Player@@ present-unmatched
+Bool Player::hasUpgradeComplete( const UpgradeTemplate *upgradeTemplate )
+{
+	UpgradeMaskType testMask = upgradeTemplate->getUpgradeMask();
+	return hasUpgradeComplete( testMask );
+} 
+
+//=================================================================================================
+/** 
+	Does the player have this completed upgrade.  This form is exposed so Objects can do quick lookups.
+*/
+//=================================================================================================
+// ?hasUpgradeComplete@Player@@ present-unmatched
+Bool Player::hasUpgradeComplete( UpgradeMaskType testMask )
+{
+	return m_upgradesCompleted.testForAll( testMask );
+}
+
+//=================================================================================================
+/** Does the player have this upgrade In Production*/
+//=================================================================================================
+// ?hasUpgradeInProduction@Player@@QAE_NPBVUpgradeTemplate@@@Z present-unmatched
+Bool Player::hasUpgradeInProduction( const UpgradeTemplate *upgradeTemplate )
+{
+	UpgradeMaskType testMask = upgradeTemplate->getUpgradeMask();
+	return m_upgradesInProgress.testForAll( testMask );
+}
+
+//=================================================================================================
+/** Give the player an upgrade or change status on an existing upgrade entry */
+//=================================================================================================
+// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/Player_addUpgrade.cpp
+// ?addUpgrade@Player@@QAEPAVUpgrade@@PBVUpgradeTemplate@@W4UpgradeStatusType@@@Z present-unmatched
+//
+// Cannot come home, and NOT for anything inside the body. The merged form is
+// settled: m_upgradeList at Player+0x54, the two six-dword masks at +0x74 and
+// +0x8c, Upgrade's fields at +0x04/+0x08/+0x0c/+0x10, and the template's single
+// word at +0x20 passed as a BIT INDEX -- the same field Object::hasUpgrade
+// reads, at the same 192-bit width the kind-of masks carry. BFME builds the
+// Upgrade with the class's own operator new (0x00881f30) and constructor (ILT
+// 0x00005bb4), and has no markUIDirty tail.
+//
+// What blocks it is a SECOND row. The newInstance(Upgrade) below is the only
+// memory-pool new for Upgrade in this TU, and it is what makes MSVC emit the
+// matching placement delete, Upgrade::operator delete(void*, UpgradeMagicEnum).
+// That compiler-generated symbol is itself a matched row: 0x007efff0, 12 bytes,
+// claimed from this file. Replacing this body deletes the expression, the symbol
+// stops being emitted, and that row fails "symbol not found in object" -- which
+// is how this was found. Trading a 238-byte row for a 12-byte one is still C++
+// exact going backward. Moving it needs whatever other newInstance(Upgrade)
+// retail's own Player.cpp holds, which nothing in this tree has recovered yet.
+Upgrade *Player::addUpgrade( const UpgradeTemplate *upgradeTemplate, UpgradeStatusType status )
+{
+	Upgrade *u = findUpgrade( upgradeTemplate );
+
+	// if no upgrade instance found, make a new one
+	if( u == NULL )
+	{
+
+		// make new one
+		u = newInstance(Upgrade)( upgradeTemplate );
+	
+		// tie to list	
+		u->friend_setPrev( NULL );
+		u->friend_setNext( m_upgradeList );
+		if( m_upgradeList )
+			m_upgradeList->friend_setPrev( u );
+		m_upgradeList = u;
+
+	}  // end if
+
+	// set the new status for the upgrade
+	u->setStatus( status );
+
+	// Update our Bitmasks
+	UpgradeMaskType newMask = upgradeTemplate->getUpgradeMask();
+	if( status == UPGRADE_STATUS_IN_PRODUCTION )
+	{
+		m_upgradesInProgress.set( newMask );
+	}
+	else if( status == UPGRADE_STATUS_COMPLETE )
+	{
+		m_upgradesInProgress.clear( newMask );
+		m_upgradesCompleted.set( newMask );
+		onUpgradeCompleted( upgradeTemplate );
+	}
+	
+	if( ThePlayerList->getLocalPlayer() == this )
+	{
+		TheControlBar->markUIDirty();
+	}
+
+	return u;
+
+}  // end addUpgrade
+
+//=================================================================================================
+/** 
+	An upgrade just finished, do things like tell all objects to recheck UpgradeModules 
+*/  
+// ?onUpgradeCompleted@Player@@QAEXPBVUpgradeTemplate@@@Z present-unmatched
+void Player::onUpgradeCompleted( const UpgradeTemplate *upgradeTemplate )
+{
+	for (PlayerTeamList::iterator it = m_playerTeamPrototypes.begin(); 
+			 it != m_playerTeamPrototypes.end(); ++it) 
+	{
+		for (DLINK_ITERATOR<Team> iter = (*it)->iterate_TeamInstanceList(); !iter.done(); iter.advance()) 
+		{
+			Team *team = iter.cur();
+			if( team == NULL ) 
+			{
+				continue;
+			}
+			for (DLINK_ITERATOR<Object> iterObj = team->iterate_TeamMemberList(); !iterObj.done(); iterObj.advance()) 
+			{
+				Object *obj = iterObj.cur();
+				if( obj == NULL ) 
+				{
+					continue;
+				}
+				// Dear copy-paste monkeys, the meat of this iterate-all-player-objects loop goes twixt the MEAT comments
+
+				obj->updateUpgradeModules();
+
+				// end MEAT
+			}
+		}
+	}
+}
+
+//=================================================================================================
+/** Remove upgrade from a player */
+//=================================================================================================
+// ?removeUpgrade@Player@@QAEXPBVUpgradeTemplate@@@Z present-unmatched
+void Player::removeUpgrade( const UpgradeTemplate *upgradeTemplate )
+{
+	Upgrade *upgrade = findUpgrade( upgradeTemplate );
+	
+	if( upgrade )
+	{
+		if( upgrade->friend_getNext() )
+			upgrade->friend_getNext()->friend_setPrev( upgrade->friend_getPrev() );
+		if( upgrade->friend_getPrev() )
+			upgrade->friend_getPrev()->friend_setNext( upgrade->friend_getNext() );
+		else
+			m_upgradeList = upgrade->friend_getNext();
+
+		// Clear this upgrade's bits from our mind
+		UpgradeMaskType oldMask = upgradeTemplate->getUpgradeMask();
+		m_upgradesInProgress.clear( oldMask );
+		m_upgradesCompleted.clear( oldMask );
+
+		if( upgrade->getStatus() == UPGRADE_STATUS_COMPLETE )
+			onUpgradeRemoved();
+
+	if( ThePlayerList->getLocalPlayer() == this )
+	{
+		TheControlBar->markUIDirty();
+	}
+
+	}  // end if
+
+}  // end removeUpgrade
+
+
+//-------------------------------------------------------------------------------------------------
+// BFME reads all four flags in place rather than through accessors. The
+// victory-conditions test is slot 11 (+0x2c) of its table and ONLY that slot is
+// named here; the frame test is unsigned, which is what makes it a jbe.
+class BfmeVictoryConditionsSlots
+{
+public:
+	virtual void _bfme_slot0() = 0;		virtual void _bfme_slot1() = 0;
+	virtual void _bfme_slot2() = 0;		virtual void _bfme_slot3() = 0;
+	virtual void _bfme_slot4() = 0;		virtual void _bfme_slot5() = 0;
+	virtual void _bfme_slot6() = 0;		virtual void _bfme_slot7() = 0;
+	virtual void _bfme_slot8() = 0;		virtual void _bfme_slot9() = 0;
+	virtual void _bfme_slot10() = 0;
+	virtual Bool bfmeIsPlayerOut( Player *player ) = 0;	///< vtable +0x2c
+};
+
+struct BfmeInGameUIQuietFlag
+{
+	UnsignedByte m_unreconstructed_00000[0x12BE];
+	Bool m_bfmeSuppressed;					///< retail this+0x12be
+};
+
+struct BfmeGameLogicFrameSlice
+{
+	UnsignedByte m_unreconstructed_00[0x3C];
+	UnsignedInt m_bfmeFrame;				///< retail this+0x3c
+	UnsignedByte m_unreconstructed_40[0x6B - 0x40];
+	Bool m_bfmeStarted;					///< retail this+0x6b
+};
+
+struct BfmePlayerRadarEdgeFlag
+{
+	UnsignedByte m_unreconstructed_000[0x680];
+	Bool m_bfmeRadarEdgeSoundOff;				///< retail this+0x680
+};
+
+//-------------------------------------------------------------------------------------------------
+// ?okToPlayRadarEdgeSound@Player@@QAE_NXZ
+Bool Player::okToPlayRadarEdgeSound( void )
+{
+	return (
+		! ((BfmeVictoryConditionsSlots *)TheVictoryConditions)->bfmeIsPlayerOut( this )
+		&& ! ((BfmePlayerRadarEdgeFlag *)this)->m_bfmeRadarEdgeSoundOff
+		&& ! ((BfmeInGameUIQuietFlag *)TheInGameUI)->m_bfmeSuppressed
+		&& ((BfmeGameLogicFrameSlice *)TheGameLogic)->m_bfmeStarted
+		&& ((BfmeGameLogicFrameSlice *)TheGameLogic)->m_bfmeFrame > 0 );
+
+}
+
+//-------------------------------------------------------------------------------------------------
+/** The parameter object has just aquired a radar */
+// BFME's AudioEventRTS is twelve bytes larger than the vendored class, which is
+// the entire frame difference these two bodies showed (sub esp,0x70 against
+// 0x64).  A padded wrapper buys retail's frame without touching the class: the
+// event sits at offset 0, so its address, constructor and destructor are
+// unchanged.
+// The destructor these three bodies call is the 162-byte body at 0x000B31F0
+// (ILT 0x00026F35) -- ??0AudioEventRTS@@QAE@ABV0@@Z at 0x000B2FB0 copy-builds
+// the very same object two instructions earlier, so the destructor is that
+// class's.  The ledger spells that body ??1AudioEventRTS@@QAE@XZ, while
+// ??1AudioEventRTS@@UAE@XZ -- the spelling the vendored header's virtual
+// destructor emits -- names a different 77-byte body at 0x000CFA40, and no pin
+// can join a 162-byte body to a 77-byte one.  So this translation unit gives
+// the object a name of its own, the way DozerAIUpdateDestructorThunk.cpp does
+// at the same address, and constructs it with AudioEventRTS' own copy ctor.
+class BfmePlayerAudioEvent
+{
+public:
+	BfmePlayerAudioEvent( const AudioEventRTS &src )
+	{ ((AudioEventRTS *)this)->AudioEventRTS::AudioEventRTS( src ); }
+	~BfmePlayerAudioEvent();
+
+	AudioEventRTS &event( void ) { return *(AudioEventRTS *)this; }
+
+private:
+	UnsignedByte _bfme_body[ sizeof(AudioEventRTS) + 12 ];
+};
+
+// getMiscAudio is a VIRTUAL at vtable +0x124 where the vendored header makes it
+// a direct call, and addAudioEvent is +0x44 rather than +0x30.
+class BfmeAudioManagerView
+{
+public:
+	virtual void _bfme_audio_v0( void ) = 0;
+	virtual void _bfme_audio_v1( void ) = 0;
+	virtual void _bfme_audio_v2( void ) = 0;
+	virtual void _bfme_audio_v3( void ) = 0;
+	virtual void _bfme_audio_v4( void ) = 0;
+	virtual void _bfme_audio_v5( void ) = 0;
+	virtual void _bfme_audio_v6( void ) = 0;
+	virtual void _bfme_audio_v7( void ) = 0;
+	virtual void _bfme_audio_v8( void ) = 0;
+	virtual void _bfme_audio_v9( void ) = 0;
+	virtual void _bfme_audio_v10( void ) = 0;
+	virtual void _bfme_audio_v11( void ) = 0;
+	virtual void _bfme_audio_v12( void ) = 0;
+	virtual void _bfme_audio_v13( void ) = 0;
+	virtual void _bfme_audio_v14( void ) = 0;
+	virtual void _bfme_audio_v15( void ) = 0;
+	virtual void _bfme_audio_v16( void ) = 0;
+	virtual void addAudioEvent( const AudioEventRTS *e ) = 0;		///< vtable +0x44
+	virtual void _bfme_audio_v18( void ) = 0;
+	virtual void _bfme_audio_v19( void ) = 0;
+	virtual void _bfme_audio_v20( void ) = 0;
+	virtual void _bfme_audio_v21( void ) = 0;
+	virtual void _bfme_audio_v22( void ) = 0;
+	virtual void _bfme_audio_v23( void ) = 0;
+	virtual void _bfme_audio_v24( void ) = 0;
+	virtual void _bfme_audio_v25( void ) = 0;
+	virtual void _bfme_audio_v26( void ) = 0;
+	virtual void _bfme_audio_v27( void ) = 0;
+	virtual void _bfme_audio_v28( void ) = 0;
+	virtual void _bfme_audio_v29( void ) = 0;
+	virtual void _bfme_audio_v30( void ) = 0;
+	virtual void _bfme_audio_v31( void ) = 0;
+	virtual void _bfme_audio_v32( void ) = 0;
+	virtual void _bfme_audio_v33( void ) = 0;
+	virtual void _bfme_audio_v34( void ) = 0;
+	virtual void _bfme_audio_v35( void ) = 0;
+	virtual void _bfme_audio_v36( void ) = 0;
+	virtual void _bfme_audio_v37( void ) = 0;
+	virtual void _bfme_audio_v38( void ) = 0;
+	virtual void _bfme_audio_v39( void ) = 0;
+	virtual void _bfme_audio_v40( void ) = 0;
+	virtual void _bfme_audio_v41( void ) = 0;
+	virtual void _bfme_audio_v42( void ) = 0;
+	virtual void _bfme_audio_v43( void ) = 0;
+	virtual void _bfme_audio_v44( void ) = 0;
+	virtual void _bfme_audio_v45( void ) = 0;
+	virtual void _bfme_audio_v46( void ) = 0;
+	virtual void _bfme_audio_v47( void ) = 0;
+	virtual void _bfme_audio_v48( void ) = 0;
+	virtual void _bfme_audio_v49( void ) = 0;
+	virtual void _bfme_audio_v50( void ) = 0;
+	virtual void _bfme_audio_v51( void ) = 0;
+	virtual void _bfme_audio_v52( void ) = 0;
+	virtual void _bfme_audio_v53( void ) = 0;
+	virtual void _bfme_audio_v54( void ) = 0;
+	virtual void _bfme_audio_v55( void ) = 0;
+	virtual void _bfme_audio_v56( void ) = 0;
+	virtual void _bfme_audio_v57( void ) = 0;
+	virtual void _bfme_audio_v58( void ) = 0;
+	virtual void _bfme_audio_v59( void ) = 0;
+	virtual void _bfme_audio_v60( void ) = 0;
+	virtual void _bfme_audio_v61( void ) = 0;
+	virtual void _bfme_audio_v62( void ) = 0;
+	virtual void _bfme_audio_v63( void ) = 0;
+	virtual void _bfme_audio_v64( void ) = 0;
+	virtual void _bfme_audio_v65( void ) = 0;
+	virtual void _bfme_audio_v66( void ) = 0;
+	virtual void _bfme_audio_v67( void ) = 0;
+	virtual void _bfme_audio_v68( void ) = 0;
+	virtual void _bfme_audio_v69( void ) = 0;
+	virtual void _bfme_audio_v70( void ) = 0;
+	virtual void _bfme_audio_v71( void ) = 0;
+	virtual void _bfme_audio_v72( void ) = 0;
+	virtual const MiscAudio *getMiscAudio( void ) = 0;				///< vtable +0x124
+};
+
+// The radar sounds sit at MiscAudio+0x1C0 and +0x150, against the vendored
+// +0x258.
+#define BFME_MISC_SOUND(m, off) (*(const AudioEventRTS *)((const UnsignedByte *)(m) + (off)))
+
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Player_addRadar_Thunk.cpp
+// ?addRadar@Player@@QAEX_N@Z present-unmatched
+void Player::addRadar( Bool disableProof )
+{
+	Bool hadRadar = hasRadar();
+
+	// increment count
+	++((BfmePlayerRadarFields *)this)->m_radarCount;
+
+	if( disableProof )
+		++((BfmePlayerRadarFields *)this)->m_disableProofRadarCount;// Disable proof is also in the normal refcount
+
+	if( !hadRadar && hasRadar()	&& okToPlayRadarEdgeSound() )
+	{
+		// This player just got radar, so play the "You have Radar!" sound
+		AudioEventRTS soundToPlay( BFME_MISC_SOUND(
+			((BfmeAudioManagerView *)TheAudio)->getMiscAudio(), 0x150) );
+		soundToPlay.setPlayerIndex(getPlayerIndex());
+		((BfmeAudioManagerView *)TheAudio)->addAudioEvent(&soundToPlay);
+	}
+}  // end addRadar
+
+//-------------------------------------------------------------------------------------------------
+/** The parameter object has is taking its radar away from the player */
+//-------------------------------------------------------------------------------------------------
+void Player::removeRadar( Bool disableProof )
+{
+	Bool hadRadar = hasRadar();
+
+	// decrement count
+	DEBUG_ASSERTCRASH( m_radarCount > 0, ("removeRadar: An Object is taking its radar away, but the player radar count says they don't have radar!\n") );
+	--((BfmePlayerRadarFields *)this)->m_radarCount;
+
+	if( disableProof )
+		--((BfmePlayerRadarFields *)this)->m_disableProofRadarCount;// Disable proof is also in the normal refcount
+
+	if( hadRadar && !hasRadar()	&& okToPlayRadarEdgeSound() ) 
+	{
+		// This player just lost radar, so play the "You lost Radar!" sound
+		BfmePlayerAudioEvent soundToPlay( BFME_MISC_SOUND(
+			((BfmeAudioManagerView *)TheAudio)->getMiscAudio(), 0x1c0) );
+		soundToPlay.event().setPlayerIndex(getPlayerIndex());
+		((BfmeAudioManagerView *)TheAudio)->addAudioEvent(&soundToPlay.event());
+	}
+}  // end removeRadar
+
+//-------------------------------------------------------------------------------------------------
+void Player::disableRadar()
+{
+	Bool hadRadar = hasRadar();
+	((BfmePlayerRadarFields *)this)->m_radarDisabled = TRUE;
+
+	if( hadRadar  
+		&& !hasRadar() && okToPlayRadarEdgeSound() ) 
+	{
+		// This player just lost radar, so play the "You lost Radar!" sound
+		BfmePlayerAudioEvent soundToPlay( BFME_MISC_SOUND(
+			((BfmeAudioManagerView *)TheAudio)->getMiscAudio(), 0x1c0) );
+		soundToPlay.event().setPlayerIndex(getPlayerIndex());
+		((BfmeAudioManagerView *)TheAudio)->addAudioEvent(&soundToPlay.event());
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+void Player::enableRadar()
+{
+	Bool hadRadar = hasRadar();
+	((BfmePlayerRadarFields *)this)->m_radarDisabled = FALSE;
+
+	if( !hadRadar && hasRadar() && okToPlayRadarEdgeSound() )  
+	{
+		// This player just got radar, so play the "You have Radar!" sound
+		BfmePlayerAudioEvent soundToPlay( BFME_MISC_SOUND(
+			((BfmeAudioManagerView *)TheAudio)->getMiscAudio(), 0x150) );
+		soundToPlay.event().setPlayerIndex(getPlayerIndex());
+		((BfmeAudioManagerView *)TheAudio)->addAudioEvent(&soundToPlay.event());
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// ?hasRadar@Player@@QBE_NXZ
+Bool Player::hasRadar() const
+{
+	const BfmePlayerRadarFields *self = (const BfmePlayerRadarFields *)this;
+	if( self->m_radarDisabled  && (self->m_disableProofRadarCount == 0) )
+		return FALSE;// Nope, no matter how many you have, if I say no, you don't have it
+
+	// Otherwise, check if I actually do have it.
+	return self->m_radarCount > 0;
+}
+
+//-------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------
+static void doPowerDisable( Object *obj, void *userData )
+{
+	Bool disabling = *((Bool*)userData);
+	if( obj && obj->isKindOf(KINDOF_POWERED) )
+	{
+		if( disabling )
+			obj->setDisabled( DISABLED_UNDERPOWERED ); //set disabled has a pauseAllSpecialPowers that prevents double pausing
+		else
+			obj->clearDisabled( DISABLED_UNDERPOWERED );
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+void Player::onPowerBrownOutChange( Bool brownOut )
+{
+	// Everything that changes due to Player's power supply goes in here.
+	if( brownOut )
+		disableRadar();
+	else
+		enableRadar(); //This doesn't give radar necessarily, it just removes the restriction
+
+	iterateObjects( doPowerDisable, &brownOut );// This function is so cool.
+}
+
+
+
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// SEVERAL OBJECTS (LIKE MULTIPLE COMMAND CENTERS) MAY HAVE MATCHING SETS OF SPECIAL POWERS 
+// THIS KEEPS THEM IN SYNC SO IT LOOKS LIKE EACH SPECIAL POWER IS SHARED BETWEEN ALL
+
+// ?addNewSharedSpecialPowerTimer@Player@@QAEXPBVSpecialPowerTemplate@@I@Z present-unmatched
+void Player::addNewSharedSpecialPowerTimer( const SpecialPowerTemplate *temp, UnsignedInt frame )
+{
+
+	SpecialPowerReadyTimerType newTimer;
+	newTimer.m_templateID = temp->getID();
+	newTimer.m_readyFrame = frame;
+	m_specialPowerReadyTimerList.push_back( newTimer );
+
+}
+
+// ?resetOrStartSpecialPowerReadyFrame@Player@@QAEXPBVSpecialPowerTemplate@@@Z present-unmatched
+void Player::resetOrStartSpecialPowerReadyFrame( const SpecialPowerTemplate *temp )
+{
+
+	UnsignedInt lookupID = temp->getID();
+	UnsignedInt now = TheGameLogic->getFrame();
+
+	SpecialPowerReadyTimerType *timer;
+	SpecialPowerReadyTimerListIterator it;
+	for( it = m_specialPowerReadyTimerList.begin(); it != m_specialPowerReadyTimerList.end(); ++it )
+	{
+		timer = &(*it);
+		if ( timer->m_templateID == lookupID )
+		{
+			timer->m_readyFrame = now + temp->getReloadTime();
+			return;
+		}
+	}
+
+	addNewSharedSpecialPowerTimer( temp, now );
+}
+
+
+// ?expressSpecialPowerReadyFrame@Player@@QAEXPBVSpecialPowerTemplate@@I@Z present-unmatched
+void Player::expressSpecialPowerReadyFrame( const SpecialPowerTemplate *temp, UnsignedInt frame )
+{
+	SpecialPowerReadyTimerType *timer;
+	SpecialPowerReadyTimerListIterator it;
+	for( it = m_specialPowerReadyTimerList.begin(); it != m_specialPowerReadyTimerList.end(); ++it )
+	{
+		timer = &(*it);
+		if ( timer->m_templateID == temp->getID() )
+		{
+			timer->m_readyFrame = frame;
+			return;
+		}
+	}
+
+	addNewSharedSpecialPowerTimer( temp, frame );
+}
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------
+// ?getOrStartSpecialPowerReadyFrame@Player@@QAEIPBVSpecialPowerTemplate@@@Z present-unmatched
+UnsignedInt Player::getOrStartSpecialPowerReadyFrame( const SpecialPowerTemplate *temp)
+{
+
+	UnsignedInt lookupID = temp->getID();
+	UnsignedInt now = TheGameLogic->getFrame();
+
+	SpecialPowerReadyTimerType *timer;
+	SpecialPowerReadyTimerListIterator it;
+
+
+	UnsignedInt count = 0;
+	UnsignedInt timerID = 0xfacade;
+
+	for( it = m_specialPowerReadyTimerList.begin(); it != m_specialPowerReadyTimerList.end(); ++it )
+	{
+		timer = &(*it);
+		++count;
+
+		timerID = timer->m_templateID;
+
+		if ( timerID == lookupID )
+		{
+			return timer->m_readyFrame;
+		}
+	}
+
+	addNewSharedSpecialPowerTimer( temp, now );
+	return now;
+
+}
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// ?friend_applyDifficultyBonusesForObject@Player@@ present-unmatched
+void Player::friend_applyDifficultyBonusesForObject(Object* obj, Bool apply) const
+{
+	if (TheGameLogic->isInSinglePlayerGame())
+	{
+		Real healthFactor = TheGlobalData->m_soloPlayerHealthBonusForDifficulty[getPlayerType()][getPlayerDifficulty()];
+		if (healthFactor != 1.0f)
+		{
+			BodyModuleInterface* body = obj->getBodyModule();
+			if (apply)
+				body->setMaxHealth(body->getMaxHealth() * healthFactor, PRESERVE_RATIO);
+			else 
+				body->setMaxHealth(body->getMaxHealth() / healthFactor, PRESERVE_RATIO);
+		}
+		static const WeaponBonusConditionType wbonus[PLAYERTYPE_COUNT][DIFFICULTY_COUNT] = 
+		{
+			{
+				WEAPONBONUSCONDITION_SOLO_HUMAN_EASY,
+				WEAPONBONUSCONDITION_SOLO_HUMAN_NORMAL,
+				WEAPONBONUSCONDITION_SOLO_HUMAN_HARD
+			},
+			{
+				WEAPONBONUSCONDITION_SOLO_AI_EASY,
+				WEAPONBONUSCONDITION_SOLO_AI_NORMAL,
+				WEAPONBONUSCONDITION_SOLO_AI_HARD
+			}
+		};
+		if (apply)
+			obj->setWeaponBonusCondition(wbonus[getPlayerType()][getPlayerDifficulty()]);
+		else
+			obj->clearWeaponBonusCondition(wbonus[getPlayerType()][getPlayerDifficulty()]);
+	}
+
+}
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// BFME keeps m_battlePlanBonuses at Player+0x70 where the vendored header
+// computes +0x5c, and inside it the valid kind-of mask at +0x14 and the invalid
+// one at +0x2c. Those two are 0x18 apart, not 0x10: a BFME kind-of mask is 24
+// bytes, as the six-dword mask isFactionStructure's merged body builds already
+// shows, so the eight bytes the reference type does not cover are the rest of
+// the first mask rather than a gap between two fields. Only the offsets are
+// proven, so the run ahead of the first mask stays unnamed.
+struct BfmeBattlePlanBonuses
+{
+	UnsignedByte m_unreconstructed_00[0x14];
+	KindOfMaskType m_validKindOf;				///< retail this+0x14
+	UnsignedByte m_unreconstructed_24[0x2C - 0x24];
+	KindOfMaskType m_invalidKindOf;				///< retail this+0x2c
+};
+
+struct BfmePlayerBattlePlanField
+{
+	UnsignedByte m_unreconstructed_00[0x70];
+	BfmeBattlePlanBonuses *m_battlePlanBonuses;		///< retail this+0x70
+};
+
+// ?doesObjectQualifyForBattlePlan@Player@@QBE_NPAVObject@@@Z
+Bool Player::doesObjectQualifyForBattlePlan( Object *obj ) const
+{
+	const BfmePlayerBattlePlanField *self = (const BfmePlayerBattlePlanField *)this;
+
+	if( self->m_battlePlanBonuses && obj )
+	{
+		if( obj->isAnyKindOf( self->m_battlePlanBonuses->m_validKindOf ) )
+		{
+			if( !obj->isAnyKindOf( self->m_battlePlanBonuses->m_invalidKindOf ) )
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+// note, bonus is an in-out parm.
+void Player::changeBattlePlan( BattlePlanStatus plan, Int delta, BattlePlanBonuses *bonus )
+{
+	DUMPBATTLEPLANBONUSES(bonus, this, NULL);
+	// The BFME retail layouts differ from the later SAGE headers retained by
+	// this tree.  Keep the accesses tied to the BFME ABI used by this body.
+	Int *const battlePlans = reinterpret_cast<Int *>(reinterpret_cast<char *>(this) + 0x64);
+	char *const battlePlanBonus = reinterpret_cast<char *>(bonus);
+	Bool addBonus = false;
+	Bool removeBonus = false;
+	switch( plan )
+	{
+		case PLANSTATUS_BOMBARDMENT:
+		{
+			battlePlans[ 0 ] += delta;
+			if( battlePlans[ 0 ] == 1 && delta == 1 )
+			{
+				addBonus = true;
+			}
+			else if( battlePlans[ 0 ] == 0 && delta == -1 )
+			{
+				removeBonus = true;
+			}
+			break;
+		}
+		case PLANSTATUS_HOLDTHELINE:
+		{
+			battlePlans[ 1 ] += delta;
+			if( battlePlans[ 1 ] == 1 && delta == 1 )
+			{
+				addBonus = true;
+			}
+			else if( battlePlans[ 1 ] == 0 && delta == -1 )
+			{
+				removeBonus = true;
+			}
+			break;
+		}
+		case PLANSTATUS_SEARCHANDDESTROY:
+		{
+			battlePlans[ 2 ] += delta;
+			if( battlePlans[ 2 ] == 1 && delta == 1 )
+			{
+				addBonus = true;
+			}
+			else if( battlePlans[ 2 ] == 0 && delta == -1 )
+			{
+				removeBonus = true;
+			}
+			break;
+		}
+	}
+	if( addBonus )
+	{
+		applyBattlePlanBonusesForPlayerObjects( bonus );
+	}
+	else if( removeBonus )
+	{
+		//First, inverse the bonuses
+		*reinterpret_cast<Real *>(battlePlanBonus + 0x00) = 1.0f / __max( *reinterpret_cast<Real *>(battlePlanBonus + 0x00), 0.01f );
+		*reinterpret_cast<Real *>(battlePlanBonus + 0x10) = 1.0f / __max( *reinterpret_cast<Real *>(battlePlanBonus + 0x10), 0.01f );
+		if( *reinterpret_cast<Int *>(battlePlanBonus + 0x04) > 0 )
+		{
+			*reinterpret_cast<Int *>(battlePlanBonus + 0x04) = -1;
+		}
+		if( *reinterpret_cast<Int *>(battlePlanBonus + 0x0c) > 0 )
+		{
+			*reinterpret_cast<Int *>(battlePlanBonus + 0x0c) = -1;
+		}
+		if( *reinterpret_cast<Int *>(battlePlanBonus + 0x08) > 0 )
+		{
+			*reinterpret_cast<Int *>(battlePlanBonus + 0x08) = -1;
+		}
+
+		applyBattlePlanBonusesForPlayerObjects( bonus );
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/PlayerGetBattlePlansActiveSpecificThunk.cpp
+// ?getBattlePlansActiveSpecific@Player@@QBEHW4BattlePlanStatus@@@Z present-unmatched
+Int Player::getBattlePlansActiveSpecific( BattlePlanStatus plan ) const
+{
+	switch( plan )
+	{
+		case PLANSTATUS_BOMBARDMENT:
+		{
+			return m_bombardBattlePlans;
+		}
+		case PLANSTATUS_HOLDTHELINE:
+		{
+			return m_holdTheLineBattlePlans;
+		}
+		case PLANSTATUS_SEARCHANDDESTROY:
+		{
+			return m_searchAndDestroyBattlePlans;
+		}
+	}
+	return 0;
+}
+
+//------------------------------------------------------------------------------------------------
+static void localApplyBattlePlanBonusesToObject( Object *obj, void *userData )
+{
+	const BattlePlanBonuses* bonus = (const BattlePlanBonuses*)userData;
+	Object *objectToValidate = obj;
+	Object *objectToModify = obj;
+
+	DEBUG_LOG(("localApplyBattlePlanBonusesToObject() - looking at object %d (%s)\n",
+		(objectToValidate)?objectToValidate->getID():INVALID_ID,
+		(objectToValidate)?objectToValidate->getTemplate()->getName().str():"<No Object>"));
+
+	//First check if the obj is a projectile -- if so split the
+	//object so that the producer is validated, not the projectile.
+	Bool isProjectile = obj->isKindOf( KINDOF_PROJECTILE );
+	if( isProjectile )
+	{
+		objectToValidate = TheGameLogic->findObjectByID( obj->getProducerID() );
+		DEBUG_LOG(("Object is a projectile - looking at object %d (%s) instead\n",
+			(objectToValidate)?objectToValidate->getID():INVALID_ID,
+			(objectToValidate)?objectToValidate->getTemplate()->getName().str():"<No Object>"));
+	}
+	if( objectToValidate && objectToValidate->isAnyKindOf( bonus->m_validKindOf ) )
+	{
+		DEBUG_LOG(("Is valid kindof\n"));
+		if( !objectToValidate->isAnyKindOf( bonus->m_invalidKindOf ) )
+		{
+			DEBUG_LOG(("Is not invalid kindof\n"));
+			//Quite the trek eh? Now we can apply the bonuses!
+			if( !isProjectile )
+			{
+				DEBUG_LOG(("Is not projectile.  Armor scalar is %g\n", bonus->m_armorScalar));
+				//Really important to not apply certain bonuses like health augmentation to projectiles!
+				if( bonus->m_armorScalar != 1.0f )
+				{
+					BodyModuleInterface *body = objectToModify->getBodyModule();
+					body->applyDamageScalar( bonus->m_armorScalar );
+					CRCDEBUG_LOG(("Applying armor scalar of %g (%8.8X) to object %d (%ls) owned by player %d\n",
+						bonus->m_armorScalar, AS_INT(bonus->m_armorScalar), objectToModify->getID(),
+						objectToModify->getTemplate()->getDisplayName().str(),
+						objectToModify->getControllingPlayer()->getPlayerIndex()));
+					DEBUG_LOG(("After apply, armor scalar is %g\n", body->getDamageScalar()));
+				}
+				if( bonus->m_sightRangeScalar != 1.0f )
+				{
+					objectToModify->setVisionRange( obj->getVisionRange() * bonus->m_sightRangeScalar );
+					objectToModify->setShroudClearingRange( obj->getShroudClearingRange() * bonus->m_sightRangeScalar );
+				}
+			}
+
+			if( bonus->m_bombardment > 0 )
+			{
+				objectToModify->setWeaponBonusCondition( WEAPONBONUSCONDITION_BATTLEPLAN_BOMBARDMENT );
+			}
+			else
+			{
+				objectToModify->clearWeaponBonusCondition( WEAPONBONUSCONDITION_BATTLEPLAN_BOMBARDMENT );
+			}
+			if( bonus->m_holdTheLine > 0 )
+			{
+				objectToModify->setWeaponBonusCondition( WEAPONBONUSCONDITION_BATTLEPLAN_HOLDTHELINE );
+			}
+			else
+			{
+				objectToModify->clearWeaponBonusCondition( WEAPONBONUSCONDITION_BATTLEPLAN_HOLDTHELINE );
+			}
+			if( bonus->m_searchAndDestroy > 0 )
+			{
+				objectToModify->setWeaponBonusCondition( WEAPONBONUSCONDITION_BATTLEPLAN_SEARCHANDDESTROY );
+			}
+			else
+			{
+				objectToModify->clearWeaponBonusCondition( WEAPONBONUSCONDITION_BATTLEPLAN_SEARCHANDDESTROY );
+			}
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+//New object or converted object gaining our current battle plan bonuses.
+//-------------------------------------------------------------------------------------------------
+// BFME keeps m_battlePlanBonuses at Player+0x70; the vendored class lands it
+// elsewhere.
+#define BFME_BATTLE_PLAN_BONUSES(p) (*(BattlePlanBonuses *const *)((const UnsignedByte *)(p) + 0x70))
+
+void Player::applyBattlePlanBonusesForObject( Object *obj ) const
+{
+	localApplyBattlePlanBonusesToObject( obj, BFME_BATTLE_PLAN_BONUSES(this) );
+}
+
+//-------------------------------------------------------------------------------------------------
+//Object has just left our team, so remove it's bonuses!
+//-------------------------------------------------------------------------------------------------
+// ?removeBattlePlanBonusesForObject@Player@@QBEXPAVObject@@@Z present-unmatched
+void Player::removeBattlePlanBonusesForObject( Object *obj ) const
+{
+	//Copy bonuses, and invert them.
+	BattlePlanBonuses* bonus = newInstance(BattlePlanBonuses);
+	*bonus = *m_battlePlanBonuses;
+	bonus->m_armorScalar					= 1.0f / __max( bonus->m_armorScalar, 0.01f );
+	bonus->m_sightRangeScalar			= 1.0f / __max( bonus->m_sightRangeScalar, 0.01f );
+	bonus->m_bombardment					= -ALL_PLANS; //Safe to remove as it clears the weapon bonus flag
+	bonus->m_searchAndDestroy			= -ALL_PLANS; //Safe to remove as it clears the weapon bonus flag
+	bonus->m_holdTheLine					= -ALL_PLANS; //Safe to remove as it clears the weapon bonus flag
+
+	DUMPBATTLEPLANBONUSES(bonus, this, obj);
+	localApplyBattlePlanBonusesToObject( obj, bonus );
+
+	bonus->deleteInstance();
+}
+
+//-------------------------------------------------------------------------------------------------
+//Battle plan bonuses changing, so apply to all of our objects!
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Player_applyBattlePlanBonusesForPlayerObjects_Thunk.cpp
+// ?applyBattlePlanBonusesForPlayerObjects@Player@@QAEXPBVBattlePlanBonuses@@@Z present-unmatched
+void Player::applyBattlePlanBonusesForPlayerObjects( const BattlePlanBonuses *bonus )
+{
+	DUMPBATTLEPLANBONUSES(bonus, this, NULL);
+
+	//Only allocate the battle plan bonuses if we actually use it!
+	if( !m_battlePlanBonuses )
+	{
+		DEBUG_LOG(("Allocating new m_battlePlanBonuses\n"));
+		m_battlePlanBonuses = newInstance( BattlePlanBonuses );	
+		*m_battlePlanBonuses = *bonus;
+	}
+	else
+	{
+		DEBUG_LOG(("Adding bonus into existing m_battlePlanBonuses\n"));
+		DUMPBATTLEPLANBONUSES(m_battlePlanBonuses, this, NULL);
+		//Just apply the differences by multiplying the scalars together (kindofs won't change)
+		//These bonuses are used for new objects that are created or objects that are transferred
+		//to our team.
+		m_battlePlanBonuses->m_armorScalar					*= bonus->m_armorScalar;
+		m_battlePlanBonuses->m_sightRangeScalar			*= bonus->m_sightRangeScalar;
+		m_battlePlanBonuses->m_bombardment					+= bonus->m_bombardment;
+		m_battlePlanBonuses->m_bombardment					=	 MAX( 0, m_battlePlanBonuses->m_bombardment );
+		m_battlePlanBonuses->m_holdTheLine					+= bonus->m_holdTheLine;
+		m_battlePlanBonuses->m_holdTheLine					=	 MAX( 0, m_battlePlanBonuses->m_holdTheLine );
+		m_battlePlanBonuses->m_searchAndDestroy			+= bonus->m_searchAndDestroy;
+		m_battlePlanBonuses->m_searchAndDestroy			=	 MAX( 0, m_battlePlanBonuses->m_searchAndDestroy );
+	}
+
+	DUMPBATTLEPLANBONUSES(m_battlePlanBonuses, this, NULL);
+	iterateObjects( localApplyBattlePlanBonusesToObject, (void*)bonus );
+}
+
+
+//-------------------------------------------------------------------------------------------------
+/** Create a hotkey team based on this GameMessage */
+//-------------------------------------------------------------------------------------------------
+// ?processCreateTeamGameMessage@Player@@QAEXHPAVGameMessage@@@Z present-unmatched
+void Player::processCreateTeamGameMessage(Int hotkeyNum, GameMessage *msg) {
+	// GameMessage arguments are the object ID's of the objects that are to be in this team.
+
+	if ((hotkeyNum < 0) || (hotkeyNum >= NUM_HOTKEY_SQUADS)) {
+		DEBUG_CRASH(("processCreateTeamGameMessage got an invalid hotkey number"));
+		return;
+	}
+
+	m_squads[hotkeyNum]->clearSquad();
+
+	UnsignedByte numArgs = msg->getArgumentCount();
+	for (UnsignedByte i = 0; i < numArgs; ++i) {
+		ObjectID objID = msg->getArgument(i)->objectID;
+		Object *obj = TheGameLogic->findObjectByID(objID);
+		if (obj != NULL) {
+			// first, remove it from any other hotkey squads it is in.
+			removeObjectFromHotkeySquad(obj);
+			m_squads[hotkeyNum]->addObject(obj);
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Select a hotkey team based on this GameMessage */
+//-------------------------------------------------------------------------------------------------
+// ?processSelectTeamGameMessage@Player@@QAEXHPAVGameMessage@@@Z present-unmatched
+void Player::processSelectTeamGameMessage(Int hotkeyNum, GameMessage *msg) {
+	if ((hotkeyNum < 0) || (hotkeyNum >= NUM_HOTKEY_SQUADS)) {
+		DEBUG_CRASH(("processSelectTeamGameMessage got an invalid hotkey number"));
+		return;
+	}
+
+	if (m_squads[hotkeyNum] == NULL) {
+		return;
+	}
+
+	m_currentSelection->clearSquad();
+
+	VecObjectPtr objectList = m_squads[hotkeyNum]->getLiveObjects();
+	Int numObjs = objectList.size();
+	
+	for (Int i = 0; i < numObjs; ++i) 
+	{
+		m_currentSelection->addObject(objectList[i]);
+	}
+
+	if( numObjs > 0 )
+	{
+		getAcademyStats()->recordControlGroupsUsed();
+	}
+
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Select a hotkey team based on this GameMessage */
+//-------------------------------------------------------------------------------------------------
+// ?processAddTeamGameMessage@Player@@QAEXHPAVGameMessage@@@Z present-unmatched
+void Player::processAddTeamGameMessage(Int hotkeyNum, GameMessage *msg) {
+	if ((hotkeyNum < 0) || (hotkeyNum >= NUM_HOTKEY_SQUADS)) {
+		DEBUG_CRASH(("processAddTeamGameMessage got an invalid hotkey number"));
+		return;
+	}
+
+	if (m_squads[hotkeyNum] == NULL) {
+		return;
+	}
+
+	if (m_currentSelection == NULL) {
+		m_currentSelection = newInstance( Squad );
+	}
+
+	VecObjectPtr objectList = m_squads[hotkeyNum]->getLiveObjects();
+	Int numObjs = objectList.size();
+
+	for (Int i = 0; i < numObjs; ++i) {
+		m_currentSelection->addObject(objectList[i]);
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Select a hotkey team based on this GameMessage */
+//-------------------------------------------------------------------------------------------------
+class Gen_000C9B40Target
+{
+public:
+	void bfmeForward(void *a0);
+};
+
+void Player::getCurrentSelectionAsAIGroup(AIGroup *group)
+{
+	struct BfmePlayerCurrentSelectionFields
+	{
+		unsigned char m_pad[0x67c];
+		Gen_000C9B40Target *m_currentSelection;
+	};
+	BfmePlayerCurrentSelectionFields *self =
+		reinterpret_cast<BfmePlayerCurrentSelectionFields *>(this);
+	if (self->m_currentSelection != NULL)
+		self->m_currentSelection->bfmeForward(group);
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Select a hotkey team based on this GameMessage */
+//-------------------------------------------------------------------------------------------------
+// ?setCurrentlySelectedAIGroup@Player@@QAEXPAVAIGroup@@@Z present-unmatched
+void Player::setCurrentlySelectedAIGroup(AIGroup *group) {
+	if (m_currentSelection == NULL) {
+		m_currentSelection = newInstance( Squad );
+	}
+
+	m_currentSelection->clearSquad();
+
+	if (group != NULL) {
+		m_currentSelection->squadFromAIGroup(group, true);
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Select a hotkey team based on this GameMessage */
+//-------------------------------------------------------------------------------------------------
+// ?getHotkeySquad@Player@@QAEPAVSquad@@H@Z present-unmatched
+Squad *Player::getHotkeySquad(Int squadNumber) 
+{
+	if ((squadNumber >= 0) && (squadNumber < NUM_HOTKEY_SQUADS)) {
+		return m_squads[squadNumber];
+	}
+	return NULL;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** return the hotkey squad that a unit is in, or NO_HOTKEY_SQUAD if it isn't in one */
+//-------------------------------------------------------------------------------------------------
+Int Player::getSquadNumberForObject(const Object *objToFind) const
+{
+	#pragma pack(push, 1)
+	struct RetailPlayerHotkeyLayout {
+		char padding[0x654];
+		Squad *squads[NUM_HOTKEY_SQUADS];
+	};
+	#pragma pack(pop)
+	const RetailPlayerHotkeyLayout *retail = reinterpret_cast<const RetailPlayerHotkeyLayout *>(this);
+	for (Int i = 0; i < NUM_HOTKEY_SQUADS; ++i) {
+		if (retail->squads[i]->isOnSquad(objToFind)) {
+			return i;
+		}
+	}
+
+	return NO_HOTKEY_SQUAD;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Remove an object from any hotkey squads its on. (Should never be more than one, but do them */
+/** all for good measure. */
+//-------------------------------------------------------------------------------------------------
+void Player::removeObjectFromHotkeySquad(Object *objToRemove)
+{
+	// m_squads is at Player+0x654 in BFME; this tree lands it at +0x41c.
+	// Spelled as a member array on a cast `this` rather than a bare pointer:
+	// MSVC strength-reduces the former to a pointer walk, which is what retail
+	// has, and leaves the latter as scaled indexing.
+	struct BFMEPlayerSquads { char pad[0x654]; Squad *m_squads[NUM_HOTKEY_SQUADS]; };
+	BFMEPlayerSquads *squads = (BFMEPlayerSquads *)this;
+	for (Int i = 0; i < NUM_HOTKEY_SQUADS; ++i) {
+		if (!squads->m_squads[i]) {
+			continue;
+		}
+
+		squads->m_squads[i]->removeObject(objToRemove);
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Select a hotkey team based on this GameMessage */
+//-------------------------------------------------------------------------------------------------
+// ?addAIGroupToCurrentSelection@Player@@QAEXPAVAIGroup@@@Z present-unmatched
+void Player::addAIGroupToCurrentSelection(AIGroup *group) {
+	if (group == NULL) {
+		return;
+	}
+
+	if (m_currentSelection == NULL) {
+		m_currentSelection = newInstance( Squad );
+	}
+	
+	VecObjectID objectIDVec = group->getAllIDs();
+	Int numObjs = objectIDVec.size();
+	for (Int i = 0; i < numObjs; ++i) {
+		m_currentSelection->addObjectID(objectIDVec[i]);
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+/** addTypeOfProductionCostChange adds a production change to the typeof list */
+//-------------------------------------------------------------------------------------------------
+// ?addKindOfProductionCostChange@Player@@QAEXV?$BitFlags@$0HE@@@M@Z present-unmatched
+void Player::addKindOfProductionCostChange(	KindOfMaskType kindOf, Real percent )
+{
+	KindOfPercentProductionChangeListIt it = m_kindOfPercentProductionChangeList.begin();
+	while(it != m_kindOfPercentProductionChangeList.end())
+	{
+		
+		KindOfPercentProductionChange *tof = *it;
+		if( tof->m_percent == percent && tof->m_kindOf == kindOf)
+		{
+			tof->m_ref++;
+			return;
+		}
+		++it;
+	}	
+
+	KindOfPercentProductionChange *newTof = newInstance( KindOfPercentProductionChange );
+	newTof->m_kindOf = kindOf;
+	newTof->m_percent = percent;
+	newTof->m_ref = 1;
+	m_kindOfPercentProductionChangeList.push_back(newTof);
+
+}
+
+//-------------------------------------------------------------------------------------------------
+/** addTypeOfProductionCostChange adds a production change to the typeof list */
+//-------------------------------------------------------------------------------------------------
+// ?removeKindOfProductionCostChange@Player@@QAEXV?$BitFlags@$0HE@@@M@Z present-unmatched
+void Player::removeKindOfProductionCostChange(	KindOfMaskType kindOf, Real percent )
+{
+	KindOfPercentProductionChangeListIt it = m_kindOfPercentProductionChangeList.begin();
+	while(it != m_kindOfPercentProductionChangeList.end())
+	{
+		
+		KindOfPercentProductionChange* tof = *it;
+		if( tof->m_percent == percent && tof->m_kindOf == kindOf)
+		{
+			tof->m_ref--;
+			if(tof->m_ref == 0)
+			{
+				m_kindOfPercentProductionChangeList.erase( it );
+				if(tof)
+					tof->deleteInstance();
+			}
+			return;
+		}
+		++it;
+	}
+	DEBUG_ASSERTCRASH(FALSE, ("removeKindOfProductionCostChange was called with kindOf=%d and percent=%f. We could not find the entry in the list with these variables. CLH.",kindOf, percent));
+}
+
+//-------------------------------------------------------------------------------------------------
+/** getProductionCostChangeBasedOnKindOf gets the cost percentage change based off of Kindof Mask */
+//-------------------------------------------------------------------------------------------------
+// ?getProductionCostChangeBasedOnKindOf@Player@@QBEMV?$BitFlags@$0HE@@@@Z present-unmatched
+Real Player::getProductionCostChangeBasedOnKindOf( KindOfMaskType kindOf ) const
+{
+	Real start = 1.0f;
+	KindOfPercentProductionChangeListIt it = m_kindOfPercentProductionChangeList.begin();
+	while(it != m_kindOfPercentProductionChangeList.end())
+	{
+		
+		KindOfPercentProductionChange *tof = *it;
+		if(TEST_KINDOFMASK_MULTI(kindOf, tof->m_kindOf, KINDOFMASK_NONE))
+		{
+			start *= (1 + tof->m_percent);
+		}
+		++it;
+	}
+	return (start);
+}
+
+//-------------------------------------------------------------------------------------------------
+/** setAttackedBy */
+//-------------------------------------------------------------------------------------------------
+void Player::setAttackedBy( Int playerNdx )
+{
+	DEBUG_ASSERTCRASH(playerNdx >= 0, ("Player::setAttackedBy Player index is %d", playerNdx));
+	// BFME's Player tail is wider than the recovered Zero Hour declaration.
+	reinterpret_cast<Bool *>(reinterpret_cast<char *>(this) + 0x29f)[playerNdx] = true;
+	*reinterpret_cast<UnsignedInt *>(reinterpret_cast<char *>(this) + 0x2c0) = TheGameLogic->getFrame();
+
+}
+
+//-------------------------------------------------------------------------------------------------
+/** getAttackedBy */
+//-------------------------------------------------------------------------------------------------
+Bool Player::getAttackedBy( Int playerNdx ) const
+{
+	// BFME stores this tail array at +0x29f; the older declaration's member
+	// offset is from the Zero Hour layout and is not valid for this binary.
+	return reinterpret_cast<const Bool *>(
+		reinterpret_cast<const char *>(this) + 0x29f)[playerNdx];
+}
+
+// ------------------------------------------------------------------------------------------------
+// Little wrapper function so I can use it in iterateObjects, which is cool.
+struct VisionSpiedStruct
+{
+	Bool setting;
+	KindOfMaskType whichUnits;
+	PlayerIndex byWhom;
+};
+
+static void iterator_setUnitsVisionSpied( Object *obj, void * voidData)
+{
+	VisionSpiedStruct *data = (VisionSpiedStruct *)voidData;
+	
+	// I feel I have to disapprove of the naming of this gathering of cell functions.  It is called by death,
+	// alliance change, containment, spy change, and dynamic view range as well as partition cell change.
+	if( obj && obj->isAnyKindOf(data->whichUnits) )
+		obj->setVisionSpied(data->setting, data->byWhom);
+}
+
+// ------------------------------------------------------------------------------------------------
+// ?setUnitsVisionSpied@Player@@QAEX_NV?$BitFlags@$0HE@@@H@Z present-unmatched
+void Player::setUnitsVisionSpied( Bool setting, KindOfMaskType whichUnits, PlayerIndex byWhom )
+{
+	VisionSpiedStruct data;
+	data.setting = setting;
+	data.whichUnits = whichUnits;
+	data.byWhom = byWhom;
+	// Being spied is now a property of the unit, not us, since we can spy only a portion of the enemy.
+	iterateObjects( iterator_setUnitsVisionSpied, &data );
+}
+
+// ------------------------------------------------------------------------------------------------
+Bool Player::isPlayerObserver(void) const
+{
+	return *reinterpret_cast<const Bool *>(reinterpret_cast<const char *>(this) + 0x296);
+}
+
+// ------------------------------------------------------------------------------------------------
+Bool Player::isPlayerDead(void) const
+{
+	return *reinterpret_cast<const Bool *>(reinterpret_cast<const char *>(this) + 0x680);
+}
+
+// ------------------------------------------------------------------------------------------------
+struct BfmePlayerActiveFields
+{
+	unsigned char m_prefix[0x296];
+	unsigned char m_observer;
+	unsigned char m_between[0x680 - 0x297];
+	unsigned char m_isPlayerDead;
+};
+
+Bool Player::isPlayerActive(void) const
+{
+	const BfmePlayerActiveFields *fields =
+		reinterpret_cast<const BfmePlayerActiveFields *>(this);
+	return !fields->m_observer && !fields->m_isPlayerDead;
+}
+
+// ------------------------------------------------------------------------------------------------
+Bool Player::isPlayableSide( void ) const
+{
+
+	return m_playerTemplate ? *reinterpret_cast<const Bool *>(
+		reinterpret_cast<const char *>(m_playerTemplate) + 0xBD) : FALSE;
+	
+}  // end isPlayableSide
+
+// ------------------------------------------------------------------------------------------------
+/** CRC */
+// ------------------------------------------------------------------------------------------------
+// ?crc@Player@@MAEXPAVXfer@@@Z present-unmatched
+void Player::crc( Xfer *xfer )
+{
+	// Player battle plan bonuses
+	Bool battlePlanBonus = m_battlePlanBonuses != NULL;
+	xfer->xferBool( &battlePlanBonus );
+	CRCDEBUG_LOG(("Player %d[%ls] %s battle plans\n", m_playerIndex, m_playerDisplayName.str(), (battlePlanBonus)?"has":"doesn't have"));
+	if( m_battlePlanBonuses )
+	{
+		CRCDUMPBATTLEPLANBONUSES(m_battlePlanBonuses, this, NULL);
+		xfer->xferReal( &m_battlePlanBonuses->m_armorScalar );
+		xfer->xferReal( &m_battlePlanBonuses->m_sightRangeScalar );
+		xfer->xferInt( &m_battlePlanBonuses->m_bombardment );
+		xfer->xferInt( &m_battlePlanBonuses->m_holdTheLine );
+		xfer->xferInt( &m_battlePlanBonuses->m_searchAndDestroy );
+		m_battlePlanBonuses->m_validKindOf.xfer(xfer);
+		m_battlePlanBonuses->m_invalidKindOf.xfer(xfer);
+	}
+	
+	xfer->xferInt( &m_skillPoints );
+	xfer->xferInt( &m_sciencePurchasePoints );
+
+}  // end crc
+
+// ------------------------------------------------------------------------------------------------
+/** Xfer Method
+	* Version Info:
+	* 1: Initial version
+	* 2: Player can now have a modifier on his skill points (multiplicative)
+	* 3: Player can be excluded from the score screen via script.
+	* 4: Player stores a list of specialpowerreadyframe timers, used by specialpowermodules abroad
+	* 5: ??? (Profit)
+	* 6: Store m_unitsShouldHunt, set to true after the script "Tell player to hunt" is called.
+	* 7: added Preorder flag
+	* 8: Save m_disabledSciences & m_hiddenSciences. jba.
+	*/
+// ------------------------------------------------------------------------------------------------
+// ?xfer@Player@@MAEXPAVXfer@@@Z present-unmatched
+void Player::xfer( Xfer *xfer )
+{
+
+	// version
+	const XferVersion currentVersion = 8;
+	XferVersion version = currentVersion;
+	xfer->xferVersion( &version, currentVersion );
+
+	// money
+	xfer->xferSnapshot( &m_money );
+
+	// upgrade list count
+	Upgrade *upgrade;
+	UnsignedShort upgradeCount = 0;
+	for( upgrade = m_upgradeList; upgrade; upgrade = upgrade->friend_getNext() )
+		upgradeCount++;
+	xfer->xferUnsignedShort( &upgradeCount );
+
+	if (version >= 7)
+	{
+		// preorder info
+		xfer->xferBool( & m_isPreorder );
+	}
+
+	if (version >= 8)
+	{
+		xfer->xferScienceVec(&m_sciencesDisabled);
+		xfer->xferScienceVec(&m_sciencesHidden);
+	}
+
+	// xfer upgrade instances
+	AsciiString upgradeName;
+	if( xfer->getXferMode() == XFER_SAVE )
+	{
+
+		for( upgrade = m_upgradeList; upgrade; upgrade = upgrade->friend_getNext() )
+		{
+
+			// write upgrade name
+			upgradeName = upgrade->getTemplate()->getUpgradeName();
+			xfer->xferAsciiString( &upgradeName );
+
+			// xfer upgrade data
+			xfer->xferSnapshot( upgrade );
+
+		}  // end for, upgrade
+
+	}  // end if, save
+	else
+	{
+		const UpgradeTemplate *upgradeTemplate;
+
+		for( UnsignedShort i = 0; i < upgradeCount; ++i )
+		{
+
+			// read name
+			xfer->xferAsciiString( &upgradeName );
+
+			// find template for this upgrade
+			upgradeTemplate = TheUpgradeCenter->findUpgrade( upgradeName );
+			
+			// sanity
+			if( upgradeTemplate == NULL )
+			{
+
+				DEBUG_CRASH(( "Player::xfer - Unable to find upgrade '%s'\n", upgradeName.str() ));
+				throw SC_INVALID_DATA;
+
+			}  // end if
+
+			// add upgrade to player, the status is invalid, but that's OK cause we're about to xfer it
+			upgrade = addUpgrade( upgradeTemplate, UPGRADE_STATUS_INVALID );
+
+			// xfer upgrade data
+			xfer->xferSnapshot( upgrade );
+						
+		}  // end for, i
+
+	}  // end else, load
+
+	// radar info
+	xfer->xferInt( &m_radarCount );
+	xfer->xferBool( & m_isPlayerDead );
+	xfer->xferInt( &m_disableProofRadarCount );
+	xfer->xferBool( & m_radarDisabled );
+
+	// upgrades in progress
+	xfer->xferUpgradeMask( &m_upgradesInProgress );
+
+	// upgrades complete
+	xfer->xferUpgradeMask( &m_upgradesCompleted );
+
+	// energy info
+	xfer->xferSnapshot( &m_energy );
+
+	//
+	// team prototypes ... this is only the fact that team prototypes are on this player
+	// it is not the team prototype data itself
+	//
+	UnsignedShort prototypeCount = m_playerTeamPrototypes.size();
+	xfer->xferUnsignedShort( &prototypeCount );
+	TeamPrototypeID prototypeID;
+	TeamPrototype *prototype;
+	if( xfer->getXferMode() == XFER_SAVE )
+	{
+
+		PlayerTeamList::iterator it;
+		for( it = m_playerTeamPrototypes.begin(); it != m_playerTeamPrototypes.end(); ++it )
+		{
+
+			prototype = *it;
+			prototypeID = prototype->getID();
+			xfer->xferUser( &prototypeID, sizeof( TeamPrototypeID ) );
+
+		}  // end for
+
+	}  // end if, save
+	else
+	{
+
+		// empty the list right now
+		m_playerTeamPrototypes.clear();
+
+		// read all the data
+		for( UnsignedShort i = 0; i < prototypeCount; ++i )
+		{
+
+			// read id
+			xfer->xferUser( &prototypeID, sizeof( TeamPrototypeID ) );
+
+			// find prototype
+			prototype = TheTeamFactory->findTeamPrototypeByID( prototypeID );
+
+			// sanity
+			if( prototype == NULL )
+			{
+
+				DEBUG_CRASH(( "Player::xfer - Unable to find team prototype by id\n" ));
+				throw SC_INVALID_DATA;
+
+			}  // end if
+
+			// put in list
+			m_playerTeamPrototypes.push_back( prototype );
+
+		}  // end for, i
+
+	}  // end else, load
+
+	// build list info
+	UnsignedShort buildListInfoCount = 0;
+	BuildListInfo *buildListInfo;
+	for( buildListInfo = m_pBuildList; buildListInfo; buildListInfo = buildListInfo->getNext() )
+		buildListInfoCount++;
+	xfer->xferUnsignedShort( &buildListInfoCount );
+	if( xfer->getXferMode() == XFER_SAVE )
+	{
+
+		// xfer each build list info
+		for( buildListInfo = m_pBuildList; buildListInfo; buildListInfo = buildListInfo->getNext() )
+			xfer->xferSnapshot( buildListInfo );
+
+	}  // end if, save
+	else
+	{
+
+		//
+		// destroy any build list that we got from loading the bare bones map, note that deleting
+		// the head of these structures automatically deletes any links attached
+		//
+		if( m_pBuildList)
+			m_pBuildList->deleteInstance();
+		m_pBuildList = NULL;
+
+		// read each build list info
+		for( UnsignedShort i = 0; i < buildListInfoCount; ++i )
+		{
+
+			// allocate new build list
+			buildListInfo = newInstance( BuildListInfo );	
+			buildListInfo->setNextBuildList( NULL );
+
+			// attach to the *end* of the list in the player
+			if( m_pBuildList == NULL )
+				m_pBuildList = buildListInfo;
+			else
+			{
+				BuildListInfo *last = m_pBuildList;
+
+				while( last->getNext() != NULL )
+					last = last->getNext();
+
+				last->setNextBuildList( buildListInfo );
+
+			}  // end else
+
+			// xfer data
+			xfer->xferSnapshot( buildListInfo );
+
+		}  // end for,i
+
+	}  // end else, load
+
+	// ai player data
+	Bool aiPlayerPresent = m_ai ? TRUE : FALSE;
+	xfer->xferBool( &aiPlayerPresent );
+	if( (aiPlayerPresent == TRUE && m_ai == NULL) || (aiPlayerPresent == FALSE && m_ai != NULL) )
+	{
+
+		DEBUG_CRASH(( "Player::xfer - m_ai present/missing mismatch\n" ));
+		throw SC_INVALID_DATA;;
+
+	}  // end if
+	if( m_ai )
+		xfer->xferSnapshot( m_ai );
+
+	// resource gathering manager
+	Bool resourceGatheringManagerPresent = m_resourceGatheringManager ? TRUE : FALSE;
+	xfer->xferBool( &resourceGatheringManagerPresent );
+	if( (resourceGatheringManagerPresent == TRUE && m_resourceGatheringManager == NULL) ||	
+			(resourceGatheringManagerPresent == FALSE && m_resourceGatheringManager != NULL ) )
+	{
+
+		DEBUG_CRASH(( "Player::xfer - m_resourceGatheringManager present/missing mismatch\n" ));
+		throw SC_INVALID_DATA;
+
+	}  // end if
+	if( m_resourceGatheringManager )
+		xfer->xferSnapshot( m_resourceGatheringManager );
+
+	// tunnel tracking system
+	Bool tunnelTrackerPresent = m_tunnelSystem ? TRUE : FALSE;
+	xfer->xferBool( &tunnelTrackerPresent );
+	if( (tunnelTrackerPresent == TRUE && m_tunnelSystem == NULL) ||
+			(tunnelTrackerPresent == FALSE && m_tunnelSystem != NULL) )
+	{
+
+		DEBUG_CRASH(( "Player::xfer - m_tunnelSystem present/missing mismatch\n" ));
+		throw SC_INVALID_DATA;
+
+	}  // end if
+	if( m_tunnelSystem )
+		xfer->xferSnapshot( m_tunnelSystem );
+
+	// default team
+	TeamID teamID = m_defaultTeam ? m_defaultTeam->getID() : TEAM_ID_INVALID;
+	xfer->xferUser( &teamID, sizeof( TeamID ) );
+	if( xfer->getXferMode() == XFER_LOAD )
+		m_defaultTeam = TheTeamFactory->findTeamByID( teamID );
+
+	// sciences
+	if (version >= 5)
+	{
+		// m_sciences will contain some intrinsic sciences and stuff, which we don't want.
+		// so nuke 'em for load.
+		if( xfer->getXferMode() == XFER_LOAD )
+			m_sciences.clear();
+		xfer->xferScienceVec(&m_sciences);
+	}
+	else
+	{
+		/*
+			This code is WRONG WRONG WRONG and must not be used or mimicked; it
+			is present for backwards "compatibility" only. (srj)
+		*/
+		UnsignedShort scienceCount = m_sciences.size();
+		xfer->xferUnsignedShort( &scienceCount );
+		ScienceType science;
+		if( xfer->getXferMode() == XFER_SAVE )
+		{
+			ScienceVec::const_iterator it;
+			for( it = m_sciences.begin(); it != m_sciences.end(); ++it )
+			{
+
+				science = *it;
+				xfer->xferUser( &science, sizeof( ScienceType ) );
+			}
+		}
+		else
+		{
+			for( UnsignedShort i = 0; i < scienceCount; ++i )
+			{
+				xfer->xferUser( &science, sizeof( ScienceType ) );
+				m_sciences.push_back( science );
+
+			}
+		}
+		/*
+			This code is WRONG WRONG WRONG and must not be used or mimicked; it
+			is present for backwards "compatibility" only. (srj)
+		*/
+	}
+
+	// rank level
+	xfer->xferInt( &m_rankLevel );
+
+	// skill points
+	xfer->xferInt( &m_skillPoints );
+
+	// science purchase points
+	xfer->xferInt( &m_sciencePurchasePoints );
+
+	// level up
+	xfer->xferInt( &m_levelUp );
+
+	// level down
+	xfer->xferInt( &m_levelDown );
+
+	// general name
+	xfer->xferUnicodeString( &m_generalName );
+
+	// player relations
+	xfer->xferSnapshot( m_playerRelations );
+
+	// team relations
+	xfer->xferSnapshot( m_teamRelations );
+
+	// can build units
+	xfer->xferBool( &m_canBuildUnits );
+
+	// can build base
+	xfer->xferBool( &m_canBuildBase );
+
+	// observer
+	xfer->xferBool( &m_observer );
+
+	if (version >= 2) 
+	{
+		// current skill point modifier value
+		xfer->xferReal( &m_skillPointsModifier);
+	} 
+	else
+	{
+		m_skillPointsModifier = 1.0f;
+	}
+
+	if (version >= 3)
+	{
+		xfer->xferBool( &m_listInScoreScreen );
+	}
+	else
+	{
+		m_listInScoreScreen = TRUE;
+	}
+	// attacked by
+	xfer->xferUser( m_attackedBy, sizeof( Bool ) * MAX_PLAYER_COUNT );
+
+	// cash bounty percent
+	xfer->xferReal( &m_cashBountyPercent );
+
+	// score keeper
+	xfer->xferSnapshot( &m_scoreKeeper );
+
+	// size of and data for kindof percent production change list
+	UnsignedShort percentProductionChangeCount = m_kindOfPercentProductionChangeList.size();
+	xfer->xferUnsignedShort( &percentProductionChangeCount );
+	KindOfPercentProductionChange *entry;
+	if( xfer->getXferMode() == XFER_SAVE )
+	{
+		KindOfPercentProductionChangeListIt it;
+
+		// save each item
+		for( it = m_kindOfPercentProductionChangeList.begin();
+				 it != m_kindOfPercentProductionChangeList.end();
+				 ++it )
+		{
+
+			// get entry data
+			entry = *it;
+
+			// kind of mask type
+			entry->m_kindOf.xfer(xfer);
+
+			// percent
+			xfer->xferReal( &entry->m_percent );
+
+			// ref
+			xfer->xferUnsignedInt( &entry->m_ref );
+
+		}  // end for
+
+	}  // end if, save
+	else
+	{
+
+		// sanity, list must be empty right now
+		if( m_kindOfPercentProductionChangeList.size() != 0 )
+		{
+
+			DEBUG_CRASH(( "Player::xfer - m_kindOfPercentProductionChangeList should be empty but is not\n" ));
+			throw SC_INVALID_DATA;
+
+		}  // end if
+
+		// read each entry
+		for( UnsignedInt i = 0; i < percentProductionChangeCount; ++i )
+		{
+
+			// allocate new entry
+			entry = newInstance( KindOfPercentProductionChange );	
+
+			// read data
+			entry->m_kindOf.xfer(xfer);
+			xfer->xferReal( &entry->m_percent );
+			xfer->xferUnsignedInt( &entry->m_ref );
+
+			// put at end of list
+			m_kindOfPercentProductionChangeList.push_back( entry );
+
+		}  // end for i
+
+	}  // end else, load
+
+
+
+
+	///////////////////////////////////////////////////////////////////////////
+	if ( version < 4 )
+	{
+		 m_specialPowerReadyTimerList.clear();
+	}
+	else
+	{
+		UnsignedShort timerListSize = m_specialPowerReadyTimerList.size();
+		xfer->xferUnsignedShort( &timerListSize );// HANDY LITTLE SHORT TO SIZE MY LIST
+		if( xfer->getXferMode() == XFER_SAVE )
+		{
+
+			SpecialPowerReadyTimerType *timer;
+			SpecialPowerReadyTimerListIterator it;
+			for( it = m_specialPowerReadyTimerList.begin(); it != m_specialPowerReadyTimerList.end(); ++it )
+			{
+				timer = &(*it);
+				xfer->xferUnsignedInt( &timer->m_templateID );
+				xfer->xferUnsignedInt( &timer->m_readyFrame );
+			}
+		}
+		else
+		{
+			if( m_specialPowerReadyTimerList.size() != 0 ) // sanity, list must be empty right now
+			{
+				DEBUG_CRASH(( "Player::xfer - m_specialPowerReadyTimerList should be empty but is not\n" ));
+				throw SC_INVALID_DATA;
+			}  // end if
+
+			// read each entry
+			for( UnsignedInt i = 0; i < timerListSize; ++i )
+			{
+				SpecialPowerReadyTimerType timer;	
+
+				// read data
+				xfer->xferUnsignedInt( &timer.m_templateID );
+				xfer->xferUnsignedInt( &timer.m_readyFrame );
+
+				// put at end of list
+				m_specialPowerReadyTimerList.push_back( timer );
+
+			}  // end for i
+		}
+	}
+	///////////////////////////////////////////////////////////////////////////
+
+
+
+
+	// squads
+	UnsignedShort squadCount = NUM_HOTKEY_SQUADS;
+	xfer->xferUnsignedShort( &squadCount );
+	if( squadCount != NUM_HOTKEY_SQUADS )
+	{
+
+		DEBUG_CRASH(( "Player::xfer - size of m_squadCount array has changed\n" ));
+		throw SC_INVALID_DATA;
+
+	}  // end if
+	for( UnsignedShort i = 0; i < squadCount; ++i )
+	{
+
+		if( m_squads[ i ] == NULL )
+		{
+
+			DEBUG_CRASH(( "Player::xfer - NULL squad at index '%d'\n", i ));
+			throw SC_INVALID_DATA;
+
+		}  // end if
+
+		xfer->xferSnapshot( m_squads[ i ] );
+
+	}  // end for, i
+
+	// current squad selection
+	Bool currentSelectionPresent = m_currentSelection ? TRUE : FALSE;
+	xfer->xferBool( &currentSelectionPresent );
+	if( currentSelectionPresent )
+	{
+
+		// allocate squad if needed
+		if( m_currentSelection == NULL && xfer->getXferMode() == XFER_LOAD )
+			m_currentSelection = newInstance( Squad );
+
+		// xfer
+		xfer->xferSnapshot( m_currentSelection );
+
+	}  // end if
+
+	// Player battle plan bonuses
+	Bool battlePlanBonus = m_battlePlanBonuses != NULL;
+	xfer->xferBool( &battlePlanBonus ); //If we're loading, it just replaces the bool
+	if( xfer->getXferMode() == XFER_LOAD )
+	{
+		if (m_battlePlanBonuses)
+		{
+			m_battlePlanBonuses->deleteInstance();
+			m_battlePlanBonuses = NULL;
+		}
+		if ( battlePlanBonus )
+		{
+			m_battlePlanBonuses = newInstance( BattlePlanBonuses );	
+		}
+	}
+	if( m_battlePlanBonuses )
+	{
+		xfer->xferReal( &m_battlePlanBonuses->m_armorScalar );
+		xfer->xferReal( &m_battlePlanBonuses->m_sightRangeScalar );
+		xfer->xferInt( &m_battlePlanBonuses->m_bombardment );
+		xfer->xferInt( &m_battlePlanBonuses->m_holdTheLine );
+		xfer->xferInt( &m_battlePlanBonuses->m_searchAndDestroy );
+		m_battlePlanBonuses->m_validKindOf.xfer(xfer);
+		m_battlePlanBonuses->m_invalidKindOf.xfer(xfer);
+	}
+	xfer->xferInt( &m_bombardBattlePlans );
+	xfer->xferInt( &m_holdTheLineBattlePlans );
+	xfer->xferInt( &m_searchAndDestroyBattlePlans );
+
+	if (version >= 6)
+	{
+		xfer->xferBool(&m_unitsShouldHunt);
+	}
+	else
+		m_unitsShouldHunt = FALSE;
+
+}  // end xfer
+
+// ------------------------------------------------------------------------------------------------
+/** Load post process */
+// ------------------------------------------------------------------------------------------------
+// Retail 0x000D9D30 (434 bytes) was filed here as Player::loadPostProcess, but
+// Player's vftable holds the one-byte ret at 0x000DD960 in slot 1 (BFME's
+// Snapshot loadPostProcess slot) and no table references this body: its only
+// caller is the PlayerList routine at 0x000DF330, once per player. It creates
+// the player's starting object and runs the new-map step, so its name is not
+// proven and it keeps the address.
+class Rva000D9D30Player : public Player
+{
+public:
+	void method( void );
+};
+
+// ?method@Rva000D9D30Player@@QAEXXZ
+void Rva000D9D30Player::method( void )
+{
+	BfmePlayerLoadFields *self = (BfmePlayerLoadFields *)this;
+	if (self->m_defaultTeam != NULL && self->m_playerTemplate != NULL)
+	{
+		BfmePlayerAsciiString startingObjectName;
+		if (((GameLogicPortraitShim *)TheBfmeGameLogic)->isInMultiplayerOrSkirmishGame())
+			startingObjectName = *(BfmePlayerAsciiString *)((char *)self->m_playerTemplate + 0x114);
+		else
+			startingObjectName = *(BfmePlayerAsciiString *)((char *)self->m_playerTemplate + 0x110);
+
+		union
+		{
+			void (*raw)();
+			PlayerFindTemplateCall member;
+		} findTemplateCall;
+		if (*(void **)&startingObjectName != NULL &&
+			*(unsigned short *)(*(char **)&startingObjectName + 4) != 0)
+		{
+			findTemplateCall.raw = j_00028560;
+			const ThingTemplate *thingTemplate =
+				(TheThingFactory->*findTemplateCall.member)(startingObjectName);
+			if (thingTemplate == NULL)
+				return;
+
+			BfmePlayerObjectStatusMaskType statusMask;
+			union
+			{
+				void (*raw)();
+				PlayerNewObjectCall member;
+			} newObjectCall;
+			newObjectCall.raw = j_0004494a;
+			Object *object = (TheThingFactory->*newObjectCall.member)(
+				thingTemplate, self->m_defaultTeam, statusMask, 0);
+			self->m_startingObjectID = object->getID();
+
+			BehaviorModule **modules = *(BehaviorModule ***)((char *)object + 0x1f0);
+			for (BehaviorModule **module = modules; *module; ++module)
+			{
+				BfmePlayerCreateModuleInterface *create =
+					((BfmePlayerBehaviorModuleInterface *)((char *)*module + 0x0c))->getCreate();
+				if (create != NULL)
+					create->onBuildComplete();
+			}
+		}
+	}
+
+	BfmePlayerMapFields *mapFields = (BfmePlayerMapFields *)this;
+	if (self->m_playerTemplate != NULL)
+		mapFields->m_bfmeMapState.bfmeNewMap(
+			mapFields->m_bfmeField24,
+			((BfmePlayerMapFlagSource *)self->m_playerTemplate)->m_bfmeFlag);
+	else
+		mapFields->m_bfmeMapState.bfmeNewMap(mapFields->m_bfmeField24, false);
+
+	BFMEAIPlayerVirtuals *ai = (BFMEAIPlayerVirtuals *)self->m_ai;
+	if (ai != NULL)
+		ai->slot18();
+
+	if ((TheGameInfo != NULL &&
+		 (((BfmePlayerGameInfo *)TheGameInfo)->isSkirmish() ||
+		  ((BfmePlayerGameInfo *)TheGameInfo)->isMultiplayer() ||
+		  ((BfmePlayerGameInfo *)TheGameInfo)->isSandBox())) ||
+		(TheBfmeGameLogic != NULL &&
+		 ((GameLogicPortraitShim *)TheBfmeGameLogic)->isInMultiplayerOrSkirmishGame()))
+	{
+		union
+		{
+			void (*raw)();
+			PlayerFinalCall member;
+		} finalCall;
+		finalCall.raw = j_0000d305;
+		(((BfmePlayerFinalHelper *)this)->*finalCall.member)();
+	}
+
+}  // end Rva000D9D30Player::method
+
+// ------------------------------------------------------------------------------------------------
+/** Load post process */
+// ------------------------------------------------------------------------------------------------
+// ?loadPostProcess@Player@@MAEXXZ
+void Player::loadPostProcess( void )
+{
+
+}  // end loadPostProcess

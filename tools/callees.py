@@ -52,7 +52,7 @@ def ledger_names():
     # compiled COMDAT. The ledger is sorted by name, so last-row-wins can
     # present an unrelated alias as the callee's identity.
     at_rva = collections.defaultdict(set)
-    with open(build.ROOT / "reverse/functions.csv", newline="") as fh:
+    with open(build.ROOT / "targets/game/reverse/functions.csv", newline="") as fh:
         for row in csv.DictReader(fh):
             try:
                 rva = int(row["target_rva"], 16)

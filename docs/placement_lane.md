@@ -4,10 +4,10 @@
 
 | | this tree | the original (ZH reference) |
 |---|---|---|
-| `.cpp` under `Code/` | **14,841** | 1,421 |
-| `.h` under `Code/` | **533** | 1,471 |
+| `.cpp` under `game/` | **14,841** | 1,421 |
+| `.h` under `game/` | **533** | 1,471 |
 | median functions per `.cpp` | **1** (76% hold exactly one) | — |
-| files directly in `Code/GameEngine/Source/Common/` | **6,892** | — |
+| files directly in `game/GameEngine/Source/Common/` | **6,892** | — |
 
 The conversion lane writes one new TU per recovered function, wherever it happens
 to be standing, which is usually the flat root of `Common/`. AI state machines,
@@ -58,7 +58,7 @@ The three reasons a merge is refused, each paid for once:
   readable statement of that function.
 * The `// cl:` line is the TU's entire compile environment, flags *and* include
   search path. `BezierSegmentEvaluation.cpp` builds against
-  `Code/GameEngine/Include` and `BezierSegment.cpp` against the ZH reference
+  `game/GameEngine/Include` and `BezierSegment.cpp` against the ZH reference
   tree; folding the first into the second resolved different headers and gave
   `FAIL 1/68` from byte-identical source text.
 * Two TUs that each declare their own shim for the same type cannot simply be
@@ -76,7 +76,7 @@ Measured over 103 landed moves, a move is byte-neutral.
 
 ## The tools
 
-    python3 tools/placement_queue.py --by-dir     # rebuild reverse/placement_queue.tsv
+    python3 tools/placement_queue.py --by-dir     # rebuild targets/game/reverse/placement_queue.tsv
     python3 tools/placement_batch.py --count 80   # move + byte-gate, land nothing
     python3 tools/placement_batch.py --count 80 --commit
 
@@ -95,7 +95,7 @@ and the evidence names a different home for it. Three sources, strongest first:
    not nominate one: ignoring them hid an exact destructor family split across
    two directories and let a stale identity-corrected TU nominate a third.
 
-The queue also excludes `reverse/placement_blocked.tsv`: those sources already
+The queue also excludes `targets/game/reverse/placement_blocked.tsv`: those sources already
 failed the placement gate at the proposed path and remain blocked until the
 underlying source-claim, compile, or byte-match defect is repaired and its row is
 removed. Serving them again only repeats a known failure that `placement_batch.py`
@@ -106,7 +106,7 @@ bodies mostly sit in the dumping ground is not evidence that the dumping ground 
 where they belong), a directory that does not exist, and **any ancestor of where
 the file already is** — a file inside the destination subtree is already home.
 
-The regenerated `reverse/placement_queue.tsv` and the tool's printed skip summary
+The regenerated `targets/game/reverse/placement_queue.tsv` and the tool's printed skip summary
 are the authoritative current state; counts become stale as other workers land
 moves and evidence guards. An empty queue means this evidence-backed lane is
 exhausted, not broken. Sources skipped because no evidence names a destination —
@@ -156,7 +156,7 @@ them went against a ZH location.
 
 ## State
 
-181 files moved and landed. The `0x002978A0` row that was blocking every `Code/`
+181 files moved and landed. The `0x002978A0` row that was blocking every `game/`
 commit is settled, and `identity_guard` is green.
 
 If `identity_guard` fails again with `multi_name.different: 0 -> N`, read its own
@@ -178,12 +178,12 @@ than build an empty set.
 the moved path, so it reads like the move's fault. Return it, do not diagnose it.
 About 1 file in 80.
 
-**`git add -A Code/` is `git add .` by another door.** It swept a file outside the
+**`git add -A game/` is `git add .` by another door.** It swept a file outside the
 batch into a commit and the hook rejected the whole thing. Stage the batch's own
 paths only.
 
 **`git mv` and the ledger repoint are two halves of one change.** Committing one
-without the other leaves `reverse/functions.csv` pointing at an untracked path;
+without the other leaves `targets/game/reverse/functions.csv` pointing at an untracked path;
 `check_csv` catches it, but only if you run it.
 
 **`git mv` already stages both halves of the rename.** Naming the old paths again
@@ -191,7 +191,7 @@ without the other leaves `reverse/functions.csv` pointing at an untracked path;
 them is gone from the working tree, which is all of them. A batch moved 80 files,
 byte-verified them, and threw the result away on that line.
 
-**The ledger is bytes.** `reverse/functions.csv` carries mixed line terminators
+**The ledger is bytes.** `targets/game/reverse/functions.csv` carries mixed line terminators
 and a `csv` round-trip flattens them, which `check_csv` rejects. Repoint the
 source column by byte replacement, anchored on the surrounding commas so a path
 that is a prefix of another cannot be hit.

@@ -5,7 +5,7 @@
     python tools/bfme_layout.py --grep Tunnel      # every class whose name matches
     python tools/bfme_layout.py --changed          # only members whose offset moved
 
-Source: reverse/bfme_layouts.json, built by tools/layout_witness.py. Every row is a
+Source: targets/game/reverse/bfme_layouts.json, built by tools/layout_witness.py. Every row is a
 WITNESS, not a declaration: a ZH-compiled body aligned instruction-for-instruction
 with its retail twin, reading this+zh in ZH and this+bfme in retail. `votes/total`
 is how many aligned accesses agreed on the retail offset; `alts` are the dissenting
@@ -16,7 +16,7 @@ import argparse, json, re
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 def load():
-    return json.load(open(ROOT / 'reverse' / 'bfme_layouts.json', encoding='utf-8'))
+    return json.load(open(ROOT / 'targets/game/reverse' / 'bfme_layouts.json', encoding='utf-8'))
 def rows_for(rows, cls):
     return [r for r in rows if (r['owner'] or r['fn_class'] or '?') == cls]
 def show(rows, cls, changed_only=False):

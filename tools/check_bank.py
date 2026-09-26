@@ -4,7 +4,7 @@
   python3 tools/check_bank.py 0x0048ACF0 [0xRVA ...]
   python3 tools/check_bank.py --all [--min-score 0.5]
 
-A stash under reverse/attempts/ is the starting point of the next attempt on
+A stash under targets/game/reverse/attempts/ is the starting point of the next attempt on
 that body, and its header score ranks it for serving. That score is an author
 estimate. This tool reports the two facts the next agent otherwise spends its
 first probes finding out:
@@ -33,7 +33,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build
 
 ROOT = Path(__file__).resolve().parents[1]
-ATTEMPTS = ROOT / "reverse" / "attempts"
+ATTEMPTS = ROOT / "targets/game/reverse" / "attempts"
 WORK = ROOT / "build" / "check-bank"
 
 

@@ -58,7 +58,7 @@ say WHICH name is wrong -- the attester could be the mistake -- only that the
 two cannot both stand.
 
 NO MASS EDIT FOLLOWS FROM A COUNT. The point is to make an invisible class of
-defect countable; like every number in reverse/identity_baseline.txt it only
+defect countable; like every number in targets/game/reverse/identity_baseline.txt it only
 goes down.
 
   python3 tools/ctor_vtable.py            # full report
@@ -352,7 +352,7 @@ def classify(rows, image, names_at, pinned=None, read=None):
 
 
 def pinned_vtables(records=None):
-    """{vtable VA: class} from the reverse/symbols.csv ??_7 pins.
+    """{vtable VA: class} from the targets/game/reverse/symbols.csv ??_7 pins.
 
     A pin is the one place a vtable is named directly rather than through a
     slot. It is also the least trustworthy evidence here -- symbols.csv is an
@@ -367,7 +367,7 @@ def pinned_vtables(records=None):
     matches a real vtable simply goes unused.
     """
     if records is None:
-        path = B.ROOT / "reverse" / "symbols.csv"
+        path = B.ROOT / "targets/game/reverse" / "symbols.csv"
         with open(path, newline="", encoding="utf-8", errors="replace") as handle:
             records = list(csv.reader(handle))
     claims = collections.defaultdict(set)

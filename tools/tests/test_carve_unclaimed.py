@@ -88,17 +88,17 @@ def test_carved_rows_shape_and_filter_stale_overlap(tmp_path):
                                                 "target_size": "2"}])
     assert [r["target_rva"] for r in rows] == ["0x00002000"]
     assert rows[0]["status"] == "carved"
-    assert rows[0]["source"] == "reverse/carved.csv"
+    assert rows[0]["source"] == "targets/game/reverse/carved.csv"
     assert rows[0]["callers"] == "0"
 
 
 def test_carved_ranking_uses_expected_bytes(monkeypatch):
     rows = [
         {"name": "?d_00001000@@YAXXZ", "target_rva": "0x1000", "target_size": "400",
-         "source": "reverse/carved.csv", "status": "carved", "callers": "0",
+         "source": "targets/game/reverse/carved.csv", "status": "carved", "callers": "0",
          "start_evidence": "ghidra-start", "end_evidence": "ghidra-size", "ghidra": ""},
         {"name": "?d_00002000@@YAXXZ", "target_rva": "0x2000", "target_size": "300",
-         "source": "reverse/carved.csv", "status": "carved", "callers": "3",
+         "source": "targets/game/reverse/carved.csv", "status": "carved", "callers": "3",
          "start_evidence": "rel32-call/jmp", "end_evidence": "ret+int3", "ghidra": ""},
     ]
     monkeypatch.setattr(eligibility, "open_dumps", lambda **kwargs: rows)
@@ -110,7 +110,7 @@ def test_carved_ranking_uses_expected_bytes(monkeypatch):
 
 def test_carved_attempts_follow_boundary_after_name_recovery(monkeypatch):
     row = {"name": "?d_00001000@@YAXXZ", "target_rva": "0x1000",
-           "target_size": "120", "source": "reverse/carved.csv",
+           "target_size": "120", "source": "targets/game/reverse/carved.csv",
            "status": "carved", "callers": "1"}
     monkeypatch.setattr(eligibility, "open_dumps", lambda **kwargs: [row])
     monkeypatch.setattr(eligibility, "boundary_suspect", lambda *args: False)

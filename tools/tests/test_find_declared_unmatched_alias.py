@@ -13,8 +13,8 @@ import find_declared_unmatched as claims  # noqa: E402
 
 def _source_claim(tmp_path, monkeypatch, capsys, *, alias=True, same_source=True,
                   status="matched", marker=False):
-    source_a = "Code/GameEngine/Source/GameClient/AliasOwner.cpp"
-    source_b = "Code/GameEngine/Source/GameClient/OtherOwner.cpp"
+    source_a = "game/GameEngine/Source/GameClient/AliasOwner.cpp"
+    source_b = "game/GameEngine/Source/GameClient/OtherOwner.cpp"
     rows = [
         ["?retail@AliasOwner@@QAEXXZ", "", "0x00123400", "12", source_a,
          status, "object-symbol=?emitter@AliasOwner@@QAEXXZ" if alias else ""],
@@ -26,7 +26,7 @@ def _source_claim(tmp_path, monkeypatch, capsys, *, alias=True, same_source=True
     if not same_source:
         rows.append(["?other@AliasOwner@@QAEXXZ", "", "0x00123420", "12",
                      source_b, "matched", ""])
-    ledger = tmp_path / "reverse/functions.csv"
+    ledger = tmp_path / "targets/game/reverse/functions.csv"
     ledger.parent.mkdir(parents=True)
     with ledger.open("w", newline="") as handle:
         writer = csv.writer(handle)
@@ -39,11 +39,11 @@ def _source_claim(tmp_path, monkeypatch, capsys, *, alias=True, same_source=True
     annotation = "// ?emitter@AliasOwner@@QAEXXZ present-unmatched\n" if marker else ""
     source.write_text(annotation + "void AliasOwner::emitter() {}\n", encoding="utf-8")
     subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
-    subprocess.run(["git", "add", "reverse/functions.csv", inspected],
+    subprocess.run(["git", "add", "targets/game/reverse/functions.csv", inspected],
                    cwd=tmp_path, check=True)
     monkeypatch.setattr(claims, "ROOT", tmp_path)
     monkeypatch.setattr(claims, "FUNCTIONS_CSV", ledger)
-    monkeypatch.setattr(claims, "CLAIMS_WHITELIST", tmp_path / "reverse/whitelist.txt")
+    monkeypatch.setattr(claims, "CLAIMS_WHITELIST", tmp_path / "targets/game/reverse/whitelist.txt")
     monkeypatch.setattr(sys, "argv", ["find_declared_unmatched.py", "--fail",
                                   "--staged", inspected])
     try:
@@ -61,7 +61,7 @@ def test_staged_emitter_alias_is_declared_in_its_own_source(tmp_path, monkeypatc
 
 def test_real_ingameui_staged_emitter_alias_is_declared():
     root = Path(__file__).resolve().parents[2]
-    source = "Code/GameEngine/Source/GameClient/InGameUISubtitleLabelRva0043E510.cpp"
+    source = "game/GameEngine/Source/GameClient/InGameUISubtitleLabelRva0043E510.cpp"
     result = subprocess.run(
         [sys.executable, str(root / "tools/find_declared_unmatched.py"),
          "--fail", "--staged", source],

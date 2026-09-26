@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """The gate hole d27ae4b7b went through, and the mode that closes it.
 
-That commit deleted 1,599 reverse/symbols.csv pins and byte-verified two files.
+That commit deleted 1,599 targets/game/reverse/symbols.csv pins and byte-verified two files.
 The original delta selector read only new/edited functions.csv rows, so the
 deletion was invisible to it: 612 rows went red. GameLogic.cpp was 17/70 red
 afterward and 70/70 with those pins
@@ -22,12 +22,12 @@ import pytest
 
 TOOLS = Path(__file__).resolve().parents[1]
 ROOT = TOOLS.parent
-EXE = ROOT / "baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
+EXE = ROOT / "inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
 
 OLD, NEW = "d27ae4b7b~1", "d27ae4b7b"
-CONVERTED = ["Code/Libraries/Source/WWVegas/WW3D2/BoxDynamicVBAccess_AllocateDX8.cpp",
-             "Code/Libraries/Source/WWVegas/WW3D2/BoxDynamicVBAccess_AllocateSorting.cpp"]
-REDDENED = "Code/GameEngine/Source/GameLogic/System/GameLogic.cpp"
+CONVERTED = ["game/Libraries/Source/WWVegas/WW3D2/BoxDynamicVBAccess_AllocateDX8.cpp",
+             "game/Libraries/Source/WWVegas/WW3D2/BoxDynamicVBAccess_AllocateSorting.cpp"]
+REDDENED = "game/GameEngine/Source/GameLogic/System/GameLogic.cpp"
 
 pytestmark = pytest.mark.skipif(
     not EXE.exists() or subprocess.run(["git", "-C", str(ROOT), "cat-file", "-e", NEW],
@@ -68,7 +68,7 @@ def test_plain_delta_bounds_the_additional_row_loss_caller():
     sources = set(run())
     assert set(CONVERTED) <= sources
     assert sources <= set(CONVERTED) | {
-        "Code/Libraries/Source/WWVegas/WW3D2/BoxDynamicVBAccessCtor.cpp"}
+        "game/Libraries/Source/WWVegas/WW3D2/BoxDynamicVBAccessCtor.cpp"}
 
 
 def test_pin_mode_sees_a_source_the_deletion_reddened(pin_sources):

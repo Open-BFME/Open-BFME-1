@@ -1,0 +1,9 @@
+# LANAPI::OnChat at 0x00689BD0
+
+The old `targets/game/reverse/symbols.csv` candidate `?OnChat@LANAPI@@UAEXVUnicodeString@@I0W4ChatType@LANAPIInterface@@@Z` uses Zero Hour's scalar-IP signature. Its method and vtable slot are supported, but its second argument does not describe BFME's body.
+
+Two byte-matched callers independently establish the BFME call. `LANAPI::handleChat` at 0x0068B6A0 passes `&player->m_address` in the lobby and the address returned by `LANGameInfo::getIP(player)` in a game. Its retail calls at 0x0068B719 and 0x0068B80D dispatch through slot 35 (`+0x8C`). `LANAPI::RequestChat` at 0x006865C0 passes the result of virtual slot 55 (`+0xDC`), the local address pointer, into the same slot-35 call at 0x006866E3.
+
+The slot-35 target at 0x00689BD0 uses the incoming second argument as a pointer. Its normal-chat path reads the dword at +0 and conditionally the word at +4; its emote path compares both fields against the local address pair returned by slot 55. The body ends in `ret 0x10`, consistent with the four 32-bit arguments after `this`. This corroborates the pointer ABI independently of the C++ caller spellings. The normal path's conditional word read does not itself prove a second-field comparison.
+
+The project calls the observed eight-byte IP/port layout `BfmeNetAddress`; that is a local type name for the measured layout, not evidence of the original source's type spelling. The corrected candidate is `?OnChat@LANAPI@@UAEXVUnicodeString@@PAUBfmeNetAddress@@0W4ChatType@LANAPIInterface@@@Z`. A small `clang-cl` object confirmed this exact decorated spelling for that declaration. The `ChatType` enum comes from the preserved LANAPI interface and the matched `RequestChat` signature. The target still has only a generated body and a partial native reconstruction, so this change makes no byte-match claim for `OnChat` itself.

@@ -252,7 +252,7 @@ and all three are the reference header expanding something retail keeps thin:
   and the one-argument `concat`s are inline wrappers over the two-argument
   `StringBase<char>::concat` at 0x00887D60.
 
-`reference/shims/asciistring_thin` un-inlines the first three; write the field
+`inputs/reference/shims/asciistring_thin` un-inlines the first three; write the field
 reads and the concat wrappers out in the source. Do **not** un-inline `concat`
 itself — it resolves to the right address and looks close, but models as
 out-of-line something retail inlines, and it does not match.
@@ -275,17 +275,17 @@ its own file.
 
 `Win32BIGFileSystem::openArchiveFile` (0x009CC710, 832 bytes) and
 `Win32BIGFileSystem::loadBigFilesFromDirectory` (0x009CDB90, 459 bytes) each
-reached their exact retail length without ever matching. Both lived under `Code/`
+reached their exact retail length without ever matching. Both lived under `game/`
 as sources carrying no matched row, which the commit gate rejects — a source
 nothing has byte-verified is a reconstruction, not a port, and there is
 deliberately no exception list. An earlier revision of this work added
-`reverse/unclaimed_sources_whitelist.txt` believing it exempted them. It does
+`targets/game/reverse/unclaimed_sources_whitelist.txt` believing it exempted them. It does
 not: that file is read only by `tools/find_declared_unmatched.py`, which scans
 `src/`, while the gate's own check in `tools/build.py` honours nothing.
 
 `openArchiveFile` was removed on those grounds. Its body is recoverable in full:
 
-    git show 1e975e7ea:Code/GameEngineDevice/Source/Win32Device/Common/Win32BIGFileSystem_openArchiveFile.cpp
+    git show 1e975e7ea:game/GameEngineDevice/Source/Win32Device/Common/Win32BIGFileSystem_openArchiveFile.cpp
 
 `loadBigFilesFromDirectory` **survives**, and the reason is worth recording. Its
 TU no longer carries zero matched rows: five STL instantiations the vector work

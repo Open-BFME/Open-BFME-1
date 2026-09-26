@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Normalize reverse/functions.csv and reverse/symbols.csv after a union merge.
+"""Normalize targets/game/reverse/functions.csv and targets/game/reverse/symbols.csv after a union merge.
 
 Many agents append rows concurrently and push straight to main; the union merge
 driver combines both sides, which can leave the ledger unsorted or holding two
@@ -62,7 +62,7 @@ def dedup_functions(path, drop=frozenset()):
     best, ambiguous = {}, []
     for key, group in groups.items():
         # A tombstoned (name, rva) that a union merge brought back: the delete
-        # was a decision recorded in reverse/deleted_rows.csv, not merge noise.
+        # was a decision recorded in targets/game/reverse/deleted_rows.csv, not merge noise.
         if (key[1], key[0]) in drop:
             print(f"functions.csv: dropped tombstoned {key[1]} @ 0x{key[0]:08X}")
             continue
@@ -134,7 +134,7 @@ def main(argv=None):
     # normalized both live ledgers and reordered thousands of unrelated rows.
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--drop-tombstoned", action="store_true",
-                        help="also drop functions.csv rows whose (name, rva) reverse/deleted_rows.csv "
+                        help="also drop functions.csv rows whose (name, rva) targets/game/reverse/deleted_rows.csv "
                              "tombstones -- the rows a union merge resurrects during a rebase or "
                              "cherry-pick, which skip the pre-commit hook")
     args = parser.parse_args(argv)
@@ -142,9 +142,9 @@ def main(argv=None):
     if args.drop_tombstoned:
         import check_csv
         drop = frozenset(check_csv.tombstones())
-    before, after = dedup_functions(ROOT / "reverse" / "functions.csv", drop)
+    before, after = dedup_functions(ROOT / "targets/game/reverse" / "functions.csv", drop)
     print(f"functions.csv: {before} -> {after} rows")
-    before, after = dedup_symbols(ROOT / "reverse" / "symbols.csv")
+    before, after = dedup_symbols(ROOT / "targets/game/reverse" / "symbols.csv")
     print(f"symbols.csv:   {before} -> {after} rows")
 
 

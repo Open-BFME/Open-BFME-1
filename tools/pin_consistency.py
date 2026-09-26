@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Pin-consistency guard for reverse/symbols.csv.
+"""Pin-consistency guard for targets/game/reverse/symbols.csv.
 
 symbols.csv is an ADDITIVE candidate list. build.py's REL32 resolver walks a
 name's addresses in file order and keeps the first displacement that reproduces
@@ -93,7 +93,7 @@ misses: `??3@YAXPAX@Z` at 0x009F6C3A (that slot imports MSVCR71 `free`) and
 
 BASELINE, NOT WHITELIST
 -----------------------
-First run found a backlog of known-bad pins. reverse/pin_consistency_baseline.csv
+First run found a backlog of known-bad pins. targets/game/reverse/pin_consistency_baseline.csv
 records each one WITH its evidence so the guard fails on anything NEW while the
 backlog is drained. It is deliberately not self-seeding: an absent baseline is a
 hard failure with instructions, never an auto-written free pass, because
@@ -122,7 +122,7 @@ import import_pin_guard  # noqa: E402
 import progress  # noqa: E402
 
 ROOT = build.ROOT
-BASELINE = ROOT / "reverse" / "pin_consistency_baseline.csv"
+BASELINE = ROOT / "targets/game/reverse" / "pin_consistency_baseline.csv"
 BASELINE_FIELDS = ["symbol", "bodies", "kind", "evidence"]
 
 # A chain longer than this is not incremental linking, it is a cycle or a bug.
@@ -427,11 +427,11 @@ def load_ledger():
 def load_extra_boundaries():
     """Fallback extents for a body no functions.csv row claims."""
     ghidra, derived = {}, {}
-    with (ROOT / "reverse" / "ghidra_functions.csv").open("r", encoding="utf-8",
+    with (ROOT / "targets/game/reverse" / "ghidra_functions.csv").open("r", encoding="utf-8",
                                                           newline="") as handle:
         for row in csv.DictReader(handle):
             ghidra.setdefault(int(row["rva"], 16), int(row["size"]))
-    with (ROOT / "reverse" / "derived_boundaries.csv").open("r", encoding="utf-8",
+    with (ROOT / "targets/game/reverse" / "derived_boundaries.csv").open("r", encoding="utf-8",
                                                             newline="") as handle:
         for row in csv.DictReader(handle):
             derived.setdefault(int(row["rva"], 16), int(row["size"]))
@@ -780,7 +780,7 @@ BASELINE_PREAMBLE = """\
 #
 # WHAT EACH LINE MEANS
 # --------------------
-# reverse/symbols.csv is an ADDITIVE candidate list: build.py's REL32 resolver
+# targets/game/reverse/symbols.csv is an ADDITIVE candidate list: build.py's REL32 resolver
 # walks a name's addresses and keeps the first displacement that reproduces
 # retail. Give one name enough addresses and something matches, so a green gate
 # proves the caller's BYTES and says nothing about WHICH function the callee is.
@@ -807,7 +807,7 @@ BASELINE_PREAMBLE = """\
 #        a byte-verified functions.csv row naming this symbol at that body;
 #        a ghidra xref/vtable slot; a decoded store offset (the GameWindow family
 #        fell out of `lea eax,[eax+eax*2+d]` alone). Decompiled C is not proof.
-#   3. Delete the losing pin rows from reverse/symbols.csv -- splice in place,
+#   3. Delete the losing pin rows from targets/game/reverse/symbols.csv -- splice in place,
 #        every surviving line byte-identical, terminators unchanged (uniform
 #        CRLF), and verify the census before/after. Deleting is a rewrite.
 #   4. Delete this line, in the SAME commit. A fixed symbol leaves a stale line
@@ -891,7 +891,7 @@ def write_baseline(violations, path=BASELINE, seed=False):
                 f"pin_consistency: --write-baseline is SHRINK-ONLY and refuses to add "
                 f"{len(added)} line(s) that {shown(path)} does not already carry. A new "
                 "violation means a pin got worse, not that the baseline got shorter — fix "
-                "the pin in reverse/symbols.csv instead. New key(s):\n"
+                "the pin in targets/game/reverse/symbols.csv instead. New key(s):\n"
                 + "".join(f"    {v['symbol']} [{v['kind']}] "
                           + " ".join(f"0x{b:08X}" for b in sorted(v["bodies"])) + "\n"
                           for v in added[:12]))
@@ -1009,7 +1009,7 @@ def verify(path=BASELINE):
         for violation in new[:12]:
             print(f"    {violation['symbol']}")
             print(f"        {violation['kind']}: {violation['evidence']}")
-        print("    Fix the pin in reverse/symbols.csv. Do NOT add these to "
+        print("    Fix the pin in targets/game/reverse/symbols.csv. Do NOT add these to "
               f"{shown(path)} to get green.")
         raise SystemExit(1)
     if stale:
@@ -1029,7 +1029,7 @@ def main(argv=None):
     parser.add_argument("--check", action="store_true",
                         help="gate mode: fail on any violation not in the baseline")
     parser.add_argument("--write-baseline", action="store_true",
-                        help="regenerate reverse/pin_consistency_baseline.csv (may only DROP lines)")
+                        help="regenerate targets/game/reverse/pin_consistency_baseline.csv (may only DROP lines)")
     parser.add_argument("--seed-baseline", action="store_true",
                         help="create a baseline for a surface that has none (refuses to overwrite)")
     parser.add_argument("--assert-shrink-only", metavar="REF", nargs="?", const="HEAD",
@@ -1063,7 +1063,7 @@ def main(argv=None):
         scanner = Scanner()
         pins = load_pins().get(args.symbol)
         if not pins:
-            raise SystemExit(f"pin_consistency: {args.symbol} has no reverse/symbols.csv pin")
+            raise SystemExit(f"pin_consistency: {args.symbol} has no targets/game/reverse/symbols.csv pin")
         routes = load_routes()
         print(f"{args.symbol}: " + " ".join(f"0x{p:08X}" for p in pins))
         for pin in pins:

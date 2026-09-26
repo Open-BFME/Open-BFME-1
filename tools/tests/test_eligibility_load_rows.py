@@ -12,7 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import eligibility
 
 HEADER = "name,export_rva,target_rva,target_size,source,status,notes\r\n"
-ROW = "?f@@YAXXZ,0x00001000,0x00001000,16,Code/a.cpp,matched,\r\n"
+ROW = "?f@@YAXXZ,0x00001000,0x00001000,16,game/a.cpp,matched,\r\n"
 
 
 def test_a_whole_ledger_loads(tmp_path):

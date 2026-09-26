@@ -1,0 +1,2447 @@
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringbaseunicode /Iinputs/reference/shims/stringbaseascii /Iinputs/reference/shims/asciistringsetoutofline /Iinputs/reference/shims/fullfade /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
+#define Matrix4x4 Matrix4  // BFME renamed it
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+////////////////////////////////////////////////////////////////////////////////
+//																																						//
+//  (c) 2001-2003 Electronic Arts Inc.																				//
+//																																						//
+////////////////////////////////////////////////////////////////////////////////
+
+// FILE: GameWindowTransitionsStyles.cpp /////////////////////////////////////////////////
+//-----------------------------------------------------------------------------
+//                                                                          
+//                       Electronic Arts Pacific.                          
+//                                                                          
+//                       Confidential Information                           
+//                Copyright (C) 2002 - All Rights Reserved                  
+//                                                                          
+//-----------------------------------------------------------------------------
+//
+//	created:	Dec 2002
+//
+//	Filename: 	GameWindowTransitionsStyles.cpp
+//
+//	author:		Chris Huybregts
+//	
+//	purpose:	The Actual Styles that can fire off.
+//
+//-----------------------------------------------------------------------------
+///////////////////////////////////////////////////////////////////////////////
+
+//-----------------------------------------------------------------------------
+// SYSTEM INCLUDES ////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------
+#include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+#ifdef _INTERNAL
+// for occasional debugging...
+//#pragma optimize("", off)
+//#pragma message("************************************** WARNING, optimization disabled for debugging purposes")
+#endif
+
+//-----------------------------------------------------------------------------
+// USER INCLUDES //////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------
+#include "Common/AudioEventRTS.h"
+#include "Common/GameAudio.h"
+#include "GameClient/GameWindowTransitions.h"
+#include "GameClient/GameWindow.h"
+#include "GameClient/GameWindowManager.h"
+#include "GameClient/Display.h"
+#include "GameClient/DisplayStringManager.h"
+#include "GameClient/GadgetPushButton.h"
+#include "GameClient/GadgetStaticText.h"
+#include "GameClient/Controlbar.h"
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
+// BFME stores ControlBar::m_genArrow at this offset. The ZH header places it
+// at +0x2fc, so this transition keeps the corrected view local to its one
+// direct field read.
+class BfmeControlBarArrowImageView
+{
+public:
+	char m_padding[0x2bc];
+	const Image *m_genArrow;
+};
+
+//-----------------------------------------------------------------------------
+// DEFINES ////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------
+void drawTypeText( GameWindow *window, DisplayString *str);
+//-----------------------------------------------------------------------------
+// PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------
+// ??0Transition@@QAE@XZ present-unmatched
+Transition::Transition ( void )
+{
+	
+}
+
+// ??1Transition@@UAE@XZ present-unmatched
+Transition::~Transition( void )
+{
+
+}
+//-----------------------------------------------------------------------------
+
+// ??0FlashTransition@@QAE@XZ present-unmatched
+FlashTransition::FlashTransition ( void )
+{
+	m_frameLength = FLASHTRANSITION_END;
+	m_win = NULL;
+	m_drawState = -1;
+	m_isForward = TRUE;
+}
+
+// ??1FlashTransition@@UAE@XZ present-unmatched
+FlashTransition::~FlashTransition( void )
+{
+	m_win = NULL;
+}
+
+void FlashTransition::init( GameWindow *win )
+{
+	if(win)
+	{
+		m_win = win;
+		m_win->winGetSize(&m_size.x, &m_size.y);
+		m_win->winGetScreenPosition(&m_pos.x, &m_pos.y );
+	}
+	m_isForward = FALSE;
+	update(FLASHTRANSITION_START);
+	m_isFinished = FALSE;
+	m_isForward = TRUE;
+
+}
+
+// BFME: no GUIBoarderFadeIn audio path (string absent); switch collapses to
+// Fade-like groups — hide TRUE on FADE_IN_*, hide FALSE on FADE_TO_BACKGROUND_*.
+void FlashTransition::update( Int frame )
+{
+	m_drawState = -1;
+	if(frame < FLASHTRANSITION_START || frame > FLASHTRANSITION_END)
+	{
+		DEBUG_ASSERTCRASH(FALSE, ("FlashTransition::update - Frame is out of the range the this update can handle %d", frame));
+		return;
+	}
+	switch (frame) {
+	case FLASHTRANSITION_START:
+		{
+			if(m_isForward || !m_win)
+				break;
+			m_win->winHide(TRUE);
+			m_isFinished = TRUE;
+		}
+		break;
+	case FLASHTRANSITION_FADE_IN_1:
+	case FLASHTRANSITION_FADE_IN_2:
+	case FLASHTRANSITION_FADE_IN_3:
+		{
+			if(!m_win)
+				break;
+			m_win->winHide(TRUE);
+			m_drawState = frame;
+		}
+		break;
+	case FLASHTRANSITION_FADE_TO_BACKGROUND_1:
+	case FLASHTRANSITION_FADE_TO_BACKGROUND_2:
+	case FLASHTRANSITION_FADE_TO_BACKGROUND_3:
+	case FLASHTRANSITION_FADE_TO_BACKGROUND_4:
+		{
+			if(!m_win)
+				break;
+			m_win->winHide(FALSE);
+			m_drawState = frame;
+		}
+		break;
+	case FLASHTRANSITION_END:
+		{
+			if(!m_isForward || !m_win)
+				break;
+			m_win->winHide(FALSE);
+			m_isFinished = TRUE;
+		}
+		break;
+	}
+}
+
+// ?reverse@FlashTransition@@UAEXXZ present-unmatched
+void FlashTransition::reverse( void )
+{
+	m_isFinished = FALSE;
+	m_isForward = FALSE;
+
+}
+
+// ?draw@FlashTransition@@UAEXXZ present-unmatched
+void FlashTransition::draw( void )
+{
+	switch (m_drawState) 
+	{
+		case FLASHTRANSITION_FADE_IN_1:
+		{
+			TheDisplay->drawOpenRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, 1, GameMakeColor(255, 255, 255,100));
+			TheDisplay->drawFillRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, GameMakeColor(255, 255, 255, 33));
+		}
+		break;
+		case FLASHTRANSITION_FADE_IN_2:
+		{
+			TheDisplay->drawOpenRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, 1, GameMakeColor(255, 255, 255,150));
+			TheDisplay->drawFillRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, GameMakeColor(255, 255, 255, 66));
+		}
+		break;
+		case FLASHTRANSITION_FADE_IN_3:
+		{
+			TheDisplay->drawOpenRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, 1, GameMakeColor(255, 255, 255,200));
+			TheDisplay->drawFillRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, GameMakeColor(255, 255, 255, 99));
+		}
+		break;
+		case FLASHTRANSITION_FADE_TO_BACKGROUND_1:
+		{
+			TheDisplay->drawOpenRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, 1, GameMakeColor(255, 255, 255,250));
+			TheDisplay->drawFillRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, GameMakeColor(255, 255, 255, 75));
+		}
+		break;
+		case FLASHTRANSITION_FADE_TO_BACKGROUND_2:
+		{
+			TheDisplay->drawOpenRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, 1, GameMakeColor(255, 255, 255,250));
+			TheDisplay->drawFillRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, GameMakeColor(255, 255, 255,50));
+		}
+		break;
+		case FLASHTRANSITION_FADE_TO_BACKGROUND_3:
+		{
+			TheDisplay->drawOpenRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, 1, GameMakeColor(255, 255, 255,250));
+			TheDisplay->drawFillRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, GameMakeColor(255, 255, 255, 25));
+		}
+		break;
+		case FLASHTRANSITION_FADE_TO_BACKGROUND_4:
+		{
+			TheDisplay->drawOpenRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, 1, GameMakeColor(255, 255, 255,250));
+			TheDisplay->drawFillRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, GameMakeColor(255, 255, 255, 10));
+		}
+		break;
+	}
+}
+	
+void FlashTransition::skip( void )
+{
+	update(FLASHTRANSITION_END);
+}
+	
+//-----------------------------------------------------------------------------
+
+
+// ??0ButtonFlashTransition@@QAE@XZ present-unmatched
+ButtonFlashTransition::ButtonFlashTransition ( void )
+{
+	m_frameLength = BUTTONFLASHTRANSITION_END;
+	m_win = NULL;
+	m_drawState = -1;
+	m_isForward = TRUE;
+}
+
+// ??1ButtonFlashTransition@@UAE@XZ present-unmatched
+ButtonFlashTransition::~ButtonFlashTransition( void )
+{
+	m_win = NULL;
+}
+
+void ButtonFlashTransition::init( GameWindow *win )
+{
+	if(win)
+	{
+		m_win = win;
+		m_win->winGetSize(&m_size.x, &m_size.y);
+		m_win->winGetScreenPosition(&m_pos.x, &m_pos.y );
+	}
+	m_isForward = FALSE;
+	update(BUTTONFLASHTRANSITION_START);
+	m_isFinished = FALSE;
+	m_isForward = TRUE;
+	m_gradient = (Image *)TheMappedImageCollection->findImageByName("Gradient");
+}
+
+// ?update@ButtonFlashTransition@@UAEXH@Z present-unmatched
+void ButtonFlashTransition::update( Int frame )
+{
+	m_drawState = -1;
+	if(frame < BUTTONFLASHTRANSITION_START || frame > BUTTONFLASHTRANSITION_END)
+	{
+		DEBUG_ASSERTCRASH(FALSE, ("ButtonFlashTransition::update - Frame is out of the range the this update can handle %d", frame));
+		return;
+	}
+	switch (frame) {
+	case BUTTONFLASHTRANSITION_START:
+		{
+			
+			if(m_isForward || !m_win)
+				break;
+			m_win->winHide(TRUE);
+			m_isFinished = TRUE;
+		}
+		break;
+	case BUTTONFLASHTRANSITION_FADE_IN_1:
+		{
+				if(!m_win)
+					break;
+				m_win->winHide(TRUE);
+				if(m_isForward)
+				{
+					AudioEventRTS buttonClick("GUIButtonsFadeIn");
+	
+					if( TheAudio )
+					{
+						TheAudio->addAudioEvent( &buttonClick );
+					}  // end if
+
+					m_drawState = frame;
+				}
+				else
+					m_drawState = BUTTONFLASHTRANSITION_FADE_TO_BACKGROUND_4;
+		}
+		break;
+	case BUTTONFLASHTRANSITION_FADE_IN_2:
+		{
+				if(!m_win)
+					break;
+				m_win->winHide(TRUE);
+				if(m_isForward)
+					m_drawState = frame;
+				else
+					m_drawState = BUTTONFLASHTRANSITION_FADE_TO_BACKGROUND_3;
+		}
+		break;
+	case BUTTONFLASHTRANSITION_FADE_IN_3:
+		{
+				if(!m_win)
+					break;
+				m_win->winHide(TRUE);
+				if(m_isForward)
+					m_drawState = frame;
+				else
+					m_drawState = BUTTONFLASHTRANSITION_FADE_TO_BACKGROUND_2;		
+		}
+		break;
+	case BUTTONFLASHTRANSITION_FADE_TO_BACKGROUND_1:
+		{
+				if(!m_win)
+					break;
+				m_win->winHide(TRUE);
+				if(m_isForward)
+					m_drawState = frame;
+				else
+					m_drawState = BUTTONFLASHTRANSITION_FADE_TO_BACKGROUND_1;
+		}
+		break;
+	case BUTTONFLASHTRANSITION_FADE_TO_BACKGROUND_2:
+		{
+				if(!m_win)
+					break;
+				m_win->winHide(TRUE);
+				if(m_isForward)
+					m_drawState = frame;
+				else
+					m_drawState = BUTTONFLASHTRANSITION_FADE_IN_3;
+		}
+		break;
+	case BUTTONFLASHTRANSITION_FADE_TO_BACKGROUND_3:
+		{
+				if(!m_win)
+					break;
+				m_win->winHide(TRUE);
+				if(m_isForward)
+					m_drawState = frame;
+				else
+					m_drawState = BUTTONFLASHTRANSITION_FADE_IN_2;
+		}
+		break;
+	case BUTTONFLASHTRANSITION_FADE_TO_BACKGROUND_4:
+		{
+				if(!m_win)
+					break;
+				m_win->winHide(TRUE);
+				if(m_isForward)
+					m_drawState = frame;
+				else
+					m_drawState = BUTTONFLASHTRANSITION_FADE_IN_1;
+		}
+		break;
+	case BUTTONFLASHTRANSITION_FADE_TO_GRADE_IN_1:
+		{
+			if(!m_win)
+				break;
+			if(m_isForward)
+			{
+//				AudioEventRTS buttonClick("GUIBlip");
+//	
+//				if( TheAudio )
+//				{
+//					TheAudio->addAudioEvent( &buttonClick );
+//				}  // end if
+
+				m_win->winHide(FALSE);			
+				m_drawState = frame;
+			}
+			else
+			{
+				
+				m_win->winHide(TRUE);	
+				m_drawState = BUTTONFLASHTRANSITION_FADE_TO_GRADE_OUT_4;
+			}
+
+		}
+		break;
+	case BUTTONFLASHTRANSITION_FADE_TO_GRADE_IN_2:
+		{
+			if(!m_win)
+				break;
+			if(m_isForward)
+			{
+				m_win->winHide(FALSE);			
+				m_drawState = frame;
+			}
+			else
+			{
+				m_win->winHide(TRUE);	
+				m_drawState = BUTTONFLASHTRANSITION_FADE_TO_GRADE_OUT_3;
+			}
+		}
+		break;
+	case BUTTONFLASHTRANSITION_FADE_TO_GRADE_OUT_1:
+		{
+			if(!m_win)
+				break;
+			if(m_isForward)
+			{
+				m_win->winHide(FALSE);			
+				m_drawState = frame;
+			}
+			else
+			{
+				m_win->winHide(TRUE);	
+				m_drawState = BUTTONFLASHTRANSITION_FADE_TO_GRADE_OUT_2;
+			}
+		}
+		break;
+	case BUTTONFLASHTRANSITION_FADE_TO_GRADE_OUT_2:
+		{
+			if(!m_win)
+				break;
+			if(m_isForward)
+			{
+				m_win->winHide(FALSE);			
+				m_drawState = frame;
+			}
+			else
+			{
+				m_win->winHide(TRUE);	
+				m_drawState = BUTTONFLASHTRANSITION_FADE_TO_GRADE_OUT_1;
+			}
+		}
+		break;
+	case BUTTONFLASHTRANSITION_FADE_TO_GRADE_OUT_3:
+		{
+			if(!m_win)
+				break;
+			if(m_isForward)
+			{
+				m_win->winHide(FALSE);			
+				m_drawState = frame;
+			}
+			else
+			{
+				m_win->winHide(FALSE);			
+				m_drawState = BUTTONFLASHTRANSITION_FADE_TO_GRADE_IN_2;
+			}
+		}
+		break;
+	case BUTTONFLASHTRANSITION_FADE_TO_GRADE_OUT_4:
+		{
+
+			if(!m_win)
+				break;
+			if(m_isForward)
+			{
+				m_win->winHide(FALSE);			
+				m_drawState = frame;
+			}
+			else
+			{
+				m_win->winHide(FALSE);	
+				m_drawState = BUTTONFLASHTRANSITION_FADE_TO_GRADE_IN_1;
+			}
+			
+		}
+		break;
+	case BUTTONFLASHTRANSITION_END:
+		{
+			if(!m_isForward || !m_win)
+				break;
+			m_win->winHide(FALSE);
+			m_isFinished = TRUE;
+		}
+		break;
+	}
+	if(frame > BUTTONFLASHTRANSITION_FADE_TO_BACKGROUND_4 && frame < BUTTONFLASHTRANSITION_FADE_TO_GRADE_IN_1)
+		m_drawState = BUTTONFLASHTRANSITION_SHOW_BACKGROUND;
+	
+}
+
+void ButtonFlashTransition::reverse( void )
+{
+	m_isFinished = FALSE;
+	m_isForward = FALSE;
+
+}
+
+// ?draw@ButtonFlashTransition@@UAEXXZ present-unmatched
+void ButtonFlashTransition::draw( void )
+{
+	switch (m_drawState) 
+	{
+		case BUTTONFLASHTRANSITION_FADE_IN_1:
+		{
+			//PushButtonImageDrawThree(m_win, 100);
+			TheDisplay->drawOpenRect(m_pos.x, m_pos.y,m_size.x, m_size.y, 1, GameMakeColor(255, 255, 255,100));
+			TheDisplay->drawFillRect(m_pos.x, m_pos.y,m_size.x, m_size.y, GameMakeColor(255, 255, 255, 75));
+		}
+		break;
+		case BUTTONFLASHTRANSITION_FADE_IN_2:
+		{
+			//PushButtonImageDrawThree(m_win, 150);
+			TheDisplay->drawOpenRect(m_pos.x, m_pos.y,m_size.x, m_size.y, 1, GameMakeColor(255, 255, 255,150));
+			TheDisplay->drawFillRect(m_pos.x, m_pos.y,m_size.x, m_size.y, GameMakeColor(255, 255, 255, 150));
+		}
+		break;
+		case BUTTONFLASHTRANSITION_FADE_IN_3:
+		{
+			//PushButtonImageDrawThree(m_win, 200);
+			TheDisplay->drawOpenRect(m_pos.x, m_pos.y,m_size.x, m_size.y, 1, GameMakeColor(255, 255, 255,200));
+			TheDisplay->drawFillRect(m_pos.x, m_pos.y,m_size.x, m_size.y, GameMakeColor(255, 255, 255, 200));
+		}
+		break;
+		case BUTTONFLASHTRANSITION_FADE_TO_BACKGROUND_1:
+		{
+			PushButtonImageDrawThree(m_win, 255);
+			TheDisplay->drawOpenRect(m_pos.x, m_pos.y,m_size.x, m_size.y, 1, GameMakeColor(255, 255, 255,250));
+			TheDisplay->drawFillRect(m_pos.x, m_pos.y,m_size.x, m_size.y, GameMakeColor(255, 255, 255, 150));
+		}
+		break;
+		case BUTTONFLASHTRANSITION_FADE_TO_BACKGROUND_2:
+		{
+			PushButtonImageDrawThree(m_win, 255);
+			TheDisplay->drawOpenRect(m_pos.x, m_pos.y,m_size.x, m_size.y, 1, GameMakeColor(255, 255, 255,250));
+			TheDisplay->drawFillRect(m_pos.x, m_pos.y,m_size.x, m_size.y, GameMakeColor(255, 255, 255,100));
+		}
+		break;
+		case BUTTONFLASHTRANSITION_FADE_TO_BACKGROUND_3:
+		{
+			PushButtonImageDrawThree(m_win, 255);
+			TheDisplay->drawOpenRect(m_pos.x, m_pos.y,m_size.x, m_size.y, 1, GameMakeColor(255, 255, 255,250));
+			TheDisplay->drawFillRect(m_pos.x, m_pos.y,m_size.x, m_size.y, GameMakeColor(255, 255, 255, 50));
+		}
+		break;
+		case BUTTONFLASHTRANSITION_FADE_TO_BACKGROUND_4:
+		{
+			PushButtonImageDrawThree(m_win, 255);
+			TheDisplay->drawOpenRect(m_pos.x, m_pos.y,m_size.x, m_size.y, 1, GameMakeColor(255, 255, 255,250));
+			TheDisplay->drawFillRect(m_pos.x, m_pos.y,m_size.x, m_size.y, GameMakeColor(255, 255, 255, 15));
+		}
+		break;
+		case BUTTONFLASHTRANSITION_FADE_TO_GRADE_IN_1:
+		{
+			if(m_isForward)
+				PushButtonImageDrawThree(m_win, 255);
+			TheDisplay->drawImage(m_gradient, m_pos.x, m_pos.y, m_pos.x +m_size.x, m_pos.y + m_size.y,GameMakeColor(255,255,255,100));
+		}
+		break;
+		case BUTTONFLASHTRANSITION_FADE_TO_GRADE_IN_2:
+		{
+			TheDisplay->drawImage(m_gradient, m_pos.x, m_pos.y, m_pos.x +m_size.x, m_pos.y + m_size.y,GameMakeColor(255,255,255,200));
+		}
+		break;
+		case BUTTONFLASHTRANSITION_FADE_TO_GRADE_OUT_1:
+		{
+			if(!m_isForward)
+				PushButtonImageDrawThree(m_win, 255);
+
+			TheDisplay->drawImage(m_gradient, m_pos.x, m_pos.y, m_pos.x +m_size.x, m_pos.y + m_size.y,GameMakeColor(255,255,255,150));
+		}
+		break;
+		case BUTTONFLASHTRANSITION_FADE_TO_GRADE_OUT_2:
+		{
+			if(!m_isForward)
+				PushButtonImageDrawThree(m_win, 255);
+
+			TheDisplay->drawImage(m_gradient, m_pos.x, m_pos.y, m_pos.x +m_size.x, m_pos.y + m_size.y,GameMakeColor(255,255,255,100));
+		}
+		break;
+		case BUTTONFLASHTRANSITION_FADE_TO_GRADE_OUT_3:
+		{
+			if(!m_isForward)
+				PushButtonImageDrawThree(m_win, 255);
+
+			TheDisplay->drawImage(m_gradient, m_pos.x, m_pos.y, m_pos.x +m_size.x, m_pos.y + m_size.y,GameMakeColor(255,255,255,50));
+		}
+		break;
+		case BUTTONFLASHTRANSITION_FADE_TO_GRADE_OUT_4:
+		{
+			if(!m_isForward)
+				PushButtonImageDrawThree(m_win, 255);
+
+			TheDisplay->drawImage(m_gradient, m_pos.x, m_pos.y, m_pos.x +m_size.x, m_pos.y + m_size.y,GameMakeColor(255,255,255,17));
+		}
+		break;
+		case BUTTONFLASHTRANSITION_SHOW_BACKGROUND:
+		{
+			PushButtonImageDrawThree(m_win, 255);
+		}
+		break;
+
+	}
+}
+	
+void ButtonFlashTransition::skip( void )
+{
+	update(BUTTONFLASHTRANSITION_END);
+}
+
+
+//-----------------------------------------------------------------------------
+
+// ??0FadeTransition@@QAE@XZ present-unmatched
+FadeTransition::FadeTransition ( void )
+{
+	m_frameLength = FADETRANSITION_END;
+	m_win = NULL;
+	m_drawState = -1;
+	m_isForward = TRUE;
+}
+
+// ??1FadeTransition@@UAE@XZ present-unmatched
+FadeTransition::~FadeTransition( void )
+{
+	m_win = NULL;
+}
+
+void FadeTransition::init( GameWindow *win )
+{
+	if(win)
+	{
+		m_win = win;
+		m_win->winGetSize(&m_size.x, &m_size.y);
+		m_win->winGetScreenPosition(&m_pos.x, &m_pos.y );
+	}
+	m_isForward = FALSE;
+	update(FADETRANSITION_START);
+	m_isFinished = FALSE;
+	m_isForward = TRUE;
+}
+
+void FadeTransition::update( Int frame )
+{
+	m_drawState = -1;
+	if(frame < FADETRANSITION_START || frame > FADETRANSITION_END)
+	{
+		DEBUG_ASSERTCRASH(FALSE, ("FadeTransition::update - Frame is out of the range the this update can handle %d", frame));
+		return;
+	}
+	switch (frame) {
+	case FADETRANSITION_START:
+		{
+			
+			if(m_isForward || !m_win)
+				break;
+			m_win->winHide(TRUE);
+			m_isFinished = TRUE;
+		}
+		break;
+	case FADETRANSITION_FADE_IN_1:
+	case FADETRANSITION_FADE_IN_2:
+	case FADETRANSITION_FADE_IN_3:
+	case FADETRANSITION_FADE_IN_4:
+	case FADETRANSITION_FADE_IN_5:
+	case FADETRANSITION_FADE_IN_6:
+	case FADETRANSITION_FADE_IN_7:
+	case FADETRANSITION_FADE_IN_8:
+	case FADETRANSITION_FADE_IN_9:
+		m_win->winHide(TRUE);
+
+		m_drawState = frame;
+		break;
+	case FADETRANSITION_END:
+		{
+			if(!m_isForward || !m_win)
+				break;
+			m_win->winHide(FALSE);
+			m_isFinished = TRUE;
+		}
+	}	
+}
+
+// ?reverse@FadeTransition@@UAEXXZ present-unmatched
+void FadeTransition::reverse( void )
+{
+	m_isFinished = FALSE;
+	m_isForward = FALSE;
+
+}
+
+// ?draw@FadeTransition@@UAEXXZ present-unmatched
+void FadeTransition::draw( void )
+{
+	if(!m_win)
+		return;
+	const Image *image = m_win->winGetEnabledImage(0);
+	switch (m_drawState) 
+	{
+		case FADETRANSITION_FADE_IN_1:
+		{
+			TheDisplay->drawImage(image, m_pos.x, m_pos.y, m_pos.x + m_size.x, m_pos.y + m_size.y, GameMakeColor(255, 255, 255, 25));
+		}
+		break;
+		case FADETRANSITION_FADE_IN_2:
+		{
+			TheDisplay->drawImage(image, m_pos.x, m_pos.y, m_pos.x + m_size.x, m_pos.y + m_size.y, GameMakeColor(255, 255, 255, 50));
+		}
+		break;
+		case FADETRANSITION_FADE_IN_3:
+		{
+			TheDisplay->drawImage(image, m_pos.x, m_pos.y, m_pos.x + m_size.x, m_pos.y + m_size.y, GameMakeColor(255, 255, 255, 75));
+		}
+		break;
+		case FADETRANSITION_FADE_IN_4:
+		{
+			TheDisplay->drawImage(image, m_pos.x, m_pos.y, m_pos.x + m_size.x, m_pos.y + m_size.y, GameMakeColor(255, 255, 255, 100));
+		}
+		break;
+		case FADETRANSITION_FADE_IN_5:
+		{
+			TheDisplay->drawImage(image, m_pos.x, m_pos.y, m_pos.x + m_size.x, m_pos.y + m_size.y, GameMakeColor(255, 255, 255, 125));
+		}
+		break;
+		case FADETRANSITION_FADE_IN_6:
+		{
+			TheDisplay->drawImage(image, m_pos.x, m_pos.y, m_pos.x + m_size.x, m_pos.y + m_size.y, GameMakeColor(255, 255, 255, 150));
+		}
+		break;
+		case FADETRANSITION_FADE_IN_7:
+		{
+			TheDisplay->drawImage(image, m_pos.x, m_pos.y, m_pos.x + m_size.x, m_pos.y + m_size.y, GameMakeColor(255, 255, 255, 175));
+		}
+		break;
+		case FADETRANSITION_FADE_IN_8:
+		{
+			TheDisplay->drawImage(image, m_pos.x, m_pos.y, m_pos.x + m_size.x, m_pos.y + m_size.y, GameMakeColor(255, 255, 255, 200));
+		}
+		break;
+		case FADETRANSITION_FADE_IN_9:
+		{
+			TheDisplay->drawImage(image, m_pos.x, m_pos.y, m_pos.x + m_size.x, m_pos.y + m_size.y, GameMakeColor(255, 255, 255, 225));
+		}
+	}
+}
+	
+void FadeTransition::skip( void )
+{
+	update(FADETRANSITION_END);
+}
+//-----------------------------------------------------------------------------
+
+// ??0ScaleUpTransition@@QAE@XZ present-unmatched
+ScaleUpTransition::ScaleUpTransition ( void )
+{
+	m_frameLength = SCALEUPTRANSITION_END;
+	m_win = NULL;
+	m_drawState = -1;
+	m_isForward = TRUE;
+}
+
+// ??1ScaleUpTransition@@UAE@XZ present-unmatched
+ScaleUpTransition::~ScaleUpTransition( void )
+{
+	m_win = NULL;
+}
+
+void ScaleUpTransition::init( GameWindow *win )
+{
+	if(win)
+	{
+		m_win = win;
+		m_win->winGetSize(&m_size.x, &m_size.y);
+		m_win->winGetScreenPosition(&m_pos.x, &m_pos.y );
+	}
+	m_isForward = FALSE;
+	update(SCALEUPTRANSITION_START);
+	m_isFinished = FALSE;
+	m_isForward = TRUE;
+	
+	m_centerPos.x = m_pos.x + m_size.x / 2;
+	m_centerPos.y = m_pos.y + m_size.y / 2;
+	m_incrementSize.x = m_size.x / SCALEUPTRANSITION_END;
+	m_incrementSize.y = m_size.y / SCALEUPTRANSITION_END;
+
+}
+
+void ScaleUpTransition::update( Int frame )
+{
+	m_drawState = -1;
+	if(frame < SCALEUPTRANSITION_START || frame > SCALEUPTRANSITION_END)
+	{
+		DEBUG_ASSERTCRASH(FALSE, ("ScaleUpTransition::update - Frame is out of the range the this update can handle %d", frame));
+		return;
+	}
+	switch (frame) {
+	case SCALEUPTRANSITION_START:
+		{
+			if(m_isForward || !m_win)
+				break;
+			m_win->winHide(TRUE);
+			m_isFinished = TRUE;
+		}
+		break;
+	// BFME: no GUILogoMouseOver string/audio in retail; cases 1-5 share hide+drawState.
+	case SCALEUPTRANSITION_1:
+	case SCALEUPTRANSITION_2:
+	case SCALEUPTRANSITION_3:
+	case SCALEUPTRANSITION_4:
+	case SCALEUPTRANSITION_5:
+		if(m_win)
+			m_win->winHide(TRUE);
+		m_drawState = frame;
+		break;
+	case SCALEUPTRANSITION_END:
+		{
+			if(!m_isForward || !m_win)
+				break;
+			m_win->winHide(FALSE);
+			m_isFinished = TRUE;
+		}
+	}	
+}
+
+// ?reverse@ScaleUpTransition@@UAEXXZ present-unmatched
+void ScaleUpTransition::reverse( void )
+{
+	m_isFinished = FALSE;
+	m_isForward = FALSE;
+
+}
+
+void ScaleUpTransition::skip( void )
+{
+	update(SCALEUPTRANSITION_END);
+}
+
+//-----------------------------------------------------------------------------
+
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp
+// ??0ScoreScaleUpTransition@@QAE@XZ present-unmatched
+ScoreScaleUpTransition::ScoreScaleUpTransition ( void )
+{
+	m_frameLength = SCORESCALEUPTRANSITION_END;
+	m_win = NULL;
+	m_drawState = -1;
+	m_isForward = TRUE;
+}
+
+// ??1ScoreScaleUpTransition@@UAE@XZ present-unmatched
+ScoreScaleUpTransition::~ScoreScaleUpTransition( void )
+{
+	m_win = NULL;
+}
+
+void ScoreScaleUpTransition::init( GameWindow *win )
+{
+	if(win)
+	{
+		m_win = win;
+		m_win->winGetSize(&m_size.x, &m_size.y);
+		m_win->winGetScreenPosition(&m_pos.x, &m_pos.y );
+	}
+	m_isForward = FALSE;
+	update(SCORESCALEUPTRANSITION_START);
+	m_isFinished = FALSE;
+	m_isForward = TRUE;
+	
+	m_centerPos.x = m_pos.x + m_size.x / 2;
+	m_centerPos.y = m_pos.y + m_size.y / 2;
+	m_incrementSize.x = m_size.x / SCORESCALEUPTRANSITION_END;
+	m_incrementSize.y = m_size.y / SCORESCALEUPTRANSITION_END;
+
+}
+
+// ?update@ScoreScaleUpTransition@@UAEXH@Z present-unmatched
+void ScoreScaleUpTransition::update( Int frame )
+{
+	m_drawState = -1;
+	if(frame < SCORESCALEUPTRANSITION_START || frame > SCORESCALEUPTRANSITION_END)
+	{
+		DEBUG_ASSERTCRASH(FALSE, ("ScoreScaleUpTransition::update - Frame is out of the range the this update can handle %d", frame));
+		return;
+	}
+	switch (frame) {
+	case SCORESCALEUPTRANSITION_START:
+		{
+			if(m_isForward || !m_win)
+				break;
+			m_win->winHide(TRUE);
+			m_isFinished = TRUE;
+		}
+		break;
+	case SCORESCALEUPTRANSITION_1:
+		if(m_isForward)
+		{
+			AudioEventRTS buttonClick("GUIScoreScreenPictures");
+
+			if( TheAudio )
+			{
+				TheAudio->addAudioEvent( &buttonClick );
+			}  // end if
+
+			
+		}
+
+	case SCORESCALEUPTRANSITION_2:
+	case SCORESCALEUPTRANSITION_3:
+	case SCORESCALEUPTRANSITION_4:
+	case SCORESCALEUPTRANSITION_5:
+//	case SCORESCALEUPTRANSITION_6:
+//	case SCORESCALEUPTRANSITION_7:
+//	case SCORESCALEUPTRANSITION_8:
+//	case SCORESCALEUPTRANSITION_9:
+//	case SCORESCALEUPTRANSITION_10:
+//	case SCORESCALEUPTRANSITION_11:
+//	case SCORESCALEUPTRANSITION_12:
+//	case SCORESCALEUPTRANSITION_13:
+//	case SCORESCALEUPTRANSITION_14:
+//	case SCORESCALEUPTRANSITION_15:
+//	case SCORESCALEUPTRANSITION_16:
+//	case SCORESCALEUPTRANSITION_17:
+//	case SCORESCALEUPTRANSITION_18:
+//	case SCORESCALEUPTRANSITION_19:
+		if(m_win)
+			m_win->winHide(TRUE);
+		m_drawState = frame;
+		break;
+	case SCORESCALEUPTRANSITION_END:
+		{
+			if(!m_isForward || !m_win)
+				break;
+			m_win->winHide(FALSE);
+			m_isFinished = TRUE;
+		}
+	}	
+}
+
+// ?reverse@ScoreScaleUpTransition@@UAEXXZ present-unmatched
+void ScoreScaleUpTransition::reverse( void )
+{
+	m_isFinished = FALSE;
+	m_isForward = FALSE;
+
+}
+
+void ScoreScaleUpTransition::skip( void )
+{
+	update(SCORESCALEUPTRANSITION_END);
+}
+
+//-----------------------------------------------------------------------------
+
+// ??0MainMenuScaleUpTransition@@QAE@XZ present-unmatched
+MainMenuScaleUpTransition::MainMenuScaleUpTransition ( void )
+{
+	m_frameLength = MAINMENUSCALEUPTRANSITION_END;
+	m_win = NULL;
+	m_drawState = -1;
+	m_isForward = TRUE;
+}
+
+// ??1MainMenuScaleUpTransition@@UAE@XZ present-unmatched
+MainMenuScaleUpTransition::~MainMenuScaleUpTransition( void )
+{
+	m_win = NULL;
+}
+
+// BFME parameterises the frame bounds: retail compares against this+0x10 and
+// this+0x14 where the reference uses the MAINMENUSCALEUPTRANSITION_START/_END
+// constants. That has a knock-on effect -- a switch needs constant cases, so the
+// two frame tests become an if/else-if chain rather than a switch.
+//
+// The reference's `frame == 1' block builds an AudioEventRTS and plays
+// GUILogoSelect. Retail has no trace of it and could not have: that temporary
+// has a destructor and would have forced an SEH frame onto a function that has
+// none. So BFME does not play that click here at all.
+struct BfmeScaleUpTransitionFields
+{
+	unsigned char m_unreconstructed_00[ 0x08 ];		///< vtable pointer at +0x00
+	Bool m_isFinished;					///< retail this+0x08
+	Bool m_isForward;					///< retail this+0x09
+	unsigned char m_unreconstructed_0a[ 2 ];
+	GameWindow *m_win;					///< retail this+0x0c
+	Int m_startFrame;					///< retail this+0x10
+	Int m_endFrame;						///< retail this+0x14
+	ICoord2D m_pos;						///< retail this+0x18
+	ICoord2D m_size;					///< retail this+0x20
+	Int m_drawState;					///< retail this+0x28
+	ICoord2D m_growPos;					///< retail this+0x2c
+	ICoord2D m_growSize;					///< retail this+0x34
+	ICoord2D m_incrementPos;				///< retail this+0x3c
+	ICoord2D m_incrementSize;				///< retail this+0x44
+	GameWindow *m_growWin;					///< retail this+0x4c
+};
+
+// winGetDisabledImage does NOT survive as a call: retail reads the image straight
+// out of the window at win+0xb4, so it is an inline read over an array rather
+// than the out-of-line accessor the other two window calls use.
+struct BfmeTransitionWindowImages
+{
+	unsigned char m_unreconstructed_00[ 0xb4 ];
+	const Image *m_disabledImage[ 1 ];			///< retail this+0xb4
+};
+
+// Same parameterisation as the matching update: the frame handed to update and
+// the divisor of the four increments both come from members at this+0x10 and
+// this+0x14 where the reference uses the START/END constants.
+// ?init@MainMenuScaleUpTransition@@UAEXPAVGameWindow@@@Z
+void MainMenuScaleUpTransition::init( GameWindow *win )
+{
+	BfmeScaleUpTransitionFields *self = (BfmeScaleUpTransitionFields *)this;
+
+	if(win)
+	{
+		self->m_win = win;
+		self->m_win->winGetSize(&self->m_size.x, &self->m_size.y);
+		self->m_win->winGetScreenPosition(&self->m_pos.x, &self->m_pos.y );
+	}
+	self->m_growWin = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey("MainMenu.wnd:WinGrowMarker"));
+	if(!self->m_growWin)
+		return;
+
+	self->m_growWin->winGetSize(&self->m_growSize.x, &self->m_growSize.y);
+	self->m_growWin->winGetScreenPosition(&self->m_growPos.x, &self->m_growPos.y );
+
+	self->m_isForward = FALSE;
+	update(self->m_startFrame);
+	self->m_isFinished = FALSE;
+	self->m_isForward = TRUE;
+	self->m_incrementPos.x = (self->m_growPos.x - self->m_pos.x)  / self->m_endFrame;
+	self->m_incrementPos.y = (self->m_growPos.y - self->m_pos.y)  / self->m_endFrame;
+	self->m_incrementSize.x = (self->m_growSize.x - self->m_size.x) / self->m_endFrame;
+	self->m_incrementSize.y = (self->m_growSize.y - self->m_size.y) / self->m_endFrame;
+	const Image *image = ((const BfmeTransitionWindowImages *)self->m_win)->m_disabledImage[0];
+	self->m_growWin->winSetEnabledImage(0, image);
+	
+}
+
+
+// ?update@MainMenuScaleUpTransition@@UAEXH@Z
+void MainMenuScaleUpTransition::update( Int frame )
+{
+	BfmeScaleUpTransitionFields *self = (BfmeScaleUpTransitionFields *)this;
+
+	self->m_drawState = -1;
+	if(frame < self->m_startFrame || frame > self->m_endFrame)
+	{
+		return;
+	}
+	if (frame == self->m_startFrame)
+	{
+		if(!self->m_isForward && self->m_win && self->m_growWin)
+		{
+//			m_win->winHide(TRUE);
+			self->m_growWin->winHide(TRUE);
+			self->m_isFinished = TRUE;
+		}
+	}
+	else if (frame == self->m_endFrame)
+	{
+		if(self->m_isForward && self->m_win && self->m_growWin)
+		{
+			self->m_win->winHide(TRUE);
+			self->m_growWin->winHide(FALSE);
+			self->m_isFinished = TRUE;
+		}
+	}
+	if(frame > self->m_startFrame && frame < self->m_endFrame)
+	{
+		if(self->m_win)
+			self->m_win->winHide(TRUE);
+		if(self->m_growWin)
+			self->m_growWin->winHide(TRUE);
+		self->m_drawState = frame;
+	}
+}
+
+// ?reverse@MainMenuScaleUpTransition@@UAEXXZ present-unmatched
+void MainMenuScaleUpTransition::reverse( void )
+{
+	m_isFinished = FALSE;
+	m_isForward = FALSE;
+
+}
+
+// ?draw@MainMenuScaleUpTransition@@UAEXXZ present-unmatched
+void MainMenuScaleUpTransition::draw( void )
+{
+	if(!m_win)
+		return;
+	const Image *image = m_growWin->winGetEnabledImage(0);
+	if(m_drawState <= MAINMENUSCALEUPTRANSITION_START || m_drawState >= MAINMENUSCALEUPTRANSITION_END)
+		return;
+	Int x = m_pos.x + ((m_incrementPos.x * m_drawState));
+	Int y = m_pos.y + ((m_incrementPos.y * m_drawState));
+	Int x1 = x + m_size.x + ((m_incrementSize.x * m_drawState));
+	Int y1 = y + m_size.y + ((m_incrementSize.y * m_drawState));
+	TheDisplay->drawImage(image, x,y, x1, y1);
+}
+	
+// ?skip@MainMenuScaleUpTransition@@UAEXXZ present-unmatched
+void MainMenuScaleUpTransition::skip( void )
+{
+	update(MAINMENUSCALEUPTRANSITION_END);
+}
+
+//-----------------------------------------------------------------------------
+
+// ??0MainMenuMediumScaleUpTransition@@QAE@XZ present-unmatched
+MainMenuMediumScaleUpTransition::MainMenuMediumScaleUpTransition ( void )
+{
+	m_frameLength = MAINMENUMEDIUMSCALEUPTRANSITION_END;
+	m_win = NULL;
+	m_drawState = -1;
+	m_isForward = TRUE;
+}
+
+// ??1MainMenuMediumScaleUpTransition@@UAE@XZ present-unmatched
+MainMenuMediumScaleUpTransition::~MainMenuMediumScaleUpTransition( void )
+{
+	m_win = NULL;
+}
+
+// byte-exact reconstruction: game/GameEngine/Source/Common/MainMenuMediumScaleUpTransition_init_Thunk.cpp
+// ?init@MainMenuMediumScaleUpTransition@@UAEXPAVGameWindow@@@Z present-unmatched
+void MainMenuMediumScaleUpTransition::init( GameWindow *win )
+{
+	if(win)
+	{
+		m_win = win;
+		m_win->winGetSize(&m_size.x, &m_size.y);
+		m_win->winGetScreenPosition(&m_pos.x, &m_pos.y );
+	}
+	AsciiString growWinName;
+	growWinName = m_win->winGetInstanceData()->m_decoratedNameString;
+	growWinName.concat("Medium");
+	m_growWin = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey(growWinName));
+	if(!m_growWin)
+		return;
+
+	m_growWin->winGetSize(&m_growSize.x, &m_growSize.y);
+	m_growWin->winGetScreenPosition(&m_growPos.x, &m_growPos.y );
+
+	m_isForward = FALSE;
+	update(MAINMENUMEDIUMSCALEUPTRANSITION_START);
+	m_isFinished = FALSE;
+	m_isForward = TRUE;
+	
+	m_incrementSize.x = (m_growSize.x - m_size.x) / MAINMENUMEDIUMSCALEUPTRANSITION_END;
+	m_incrementSize.y = (m_growSize.y - m_size.y) / MAINMENUMEDIUMSCALEUPTRANSITION_END;
+//	const Image *image = m_win->winGetEnabledImage(0);
+	//m_growWin->winSetEnabledImage(0, image);
+	
+}
+
+// The medium variant is the same shape as MainMenuScaleUpTransition::update
+// above, with two differences of its own: its grow window is at +0x44 rather than
+// +0x4c, and it opens the start case by SHOWING m_win where the plain variant has
+// that call commented out. It drops an audio block too -- the reference plays
+// GUILogoMouseOver on the first forward frame and retail has no trace of it.
+struct BfmeMediumScaleUpTransitionFields
+{
+	unsigned char m_unreconstructed_00[ 0x08 ];		///< vtable pointer at +0x00
+	Bool m_isFinished;					///< retail this+0x08
+	Bool m_isForward;					///< retail this+0x09
+	unsigned char m_unreconstructed_0a[ 2 ];
+	GameWindow *m_win;					///< retail this+0x0c
+	Int m_startFrame;					///< retail this+0x10
+	Int m_endFrame;						///< retail this+0x14
+	unsigned char m_unreconstructed_18[ 0x28 - 0x18 ];
+	Int m_drawState;					///< retail this+0x28
+	unsigned char m_unreconstructed_2c[ 0x44 - 0x2c ];
+	GameWindow *m_growWin;					///< retail this+0x44
+};
+
+// ?update@MainMenuMediumScaleUpTransition@@UAEXH@Z
+void MainMenuMediumScaleUpTransition::update( Int frame )
+{
+	BfmeMediumScaleUpTransitionFields *self = (BfmeMediumScaleUpTransitionFields *)this;
+
+	self->m_drawState = -1;
+	if(frame < self->m_startFrame || frame > self->m_endFrame)
+	{
+		return;
+	}
+	if (frame == self->m_startFrame)
+	{
+		if(!self->m_isForward && self->m_win && self->m_growWin)
+		{
+			self->m_win->winHide(FALSE);
+			self->m_growWin->winHide(TRUE);
+			self->m_isFinished = TRUE;
+		}
+	}
+	else if (frame == self->m_endFrame)
+	{
+		if(self->m_isForward && self->m_win && self->m_growWin)
+		{
+			self->m_win->winHide(TRUE);
+			self->m_growWin->winHide(FALSE);
+			self->m_isFinished = TRUE;
+		}
+	}
+	if(frame > self->m_startFrame && frame < self->m_endFrame)
+	{
+		if(self->m_win)
+			self->m_win->winHide(TRUE);
+		if(self->m_growWin)
+			self->m_growWin->winHide(TRUE);
+		self->m_drawState = frame;
+	}
+}
+
+void MainMenuMediumScaleUpTransition::reverse( void )
+{
+	m_isFinished = FALSE;
+	m_isForward = FALSE;
+	m_win->winHide(TRUE);
+	m_growWin->winHide(TRUE);
+
+}
+
+// ?skip@MainMenuMediumScaleUpTransition@@UAEXXZ present-unmatched
+void MainMenuMediumScaleUpTransition::skip( void )
+{
+	update(MAINMENUMEDIUMSCALEUPTRANSITION_END);
+}
+//-----------------------------------------------------------------------------
+
+// ??0MainMenuSmallScaleDownTransition@@QAE@XZ present-unmatched
+MainMenuSmallScaleDownTransition::MainMenuSmallScaleDownTransition ( void )
+{
+	m_frameLength = MAINMENUSMALLSCALEDOWNTRANSITION_END;
+	m_win = NULL;
+	m_drawState = -1;
+	m_isForward = TRUE;
+}
+
+// ??1MainMenuSmallScaleDownTransition@@UAE@XZ present-unmatched
+MainMenuSmallScaleDownTransition::~MainMenuSmallScaleDownTransition( void )
+{
+	m_win = NULL;
+}
+
+// This transition's own layout: the base ends at +0x10, so position lands at
+// +0x10, size at +0x18, draw state at +0x20, the grow window's position and size
+// at +0x24 and +0x2c, the single increment at +0x34 and the grow window at +0x3c.
+// Unlike the scale-up pair, its bounds really are constants here.
+struct BfmeSmallScaleDownFields
+{
+	unsigned char m_unreconstructed_00[ 0x08 ];		///< vtable pointer and frame length
+	Bool m_isFinished;					///< retail this+0x08
+	Bool m_isForward;					///< retail this+0x09
+	unsigned char m_pad0a[ 2 ];
+	GameWindow *m_win;					///< retail this+0x0c
+	ICoord2D m_pos;						///< retail this+0x10
+	ICoord2D m_size;					///< retail this+0x18
+	Int m_drawState;					///< retail this+0x20
+	ICoord2D m_growPos;					///< retail this+0x24
+	ICoord2D m_growSize;					///< retail this+0x2c
+	ICoord2D m_incrementSize;				///< retail this+0x34
+	GameWindow *m_growWin;					///< retail this+0x3c
+};
+
+// concat takes an explicit LENGTH in BFME, and str() reads the payload at
+// m_data+8 -- the eight-byte string header again.
+struct BfmeSmallScaleDownString
+{
+	void *m_data;
+
+	// Declared, never defined: retail CALLS the copy-assignment where this tree's
+	// AsciiString expands it inline with its null and refcount tests.
+	BfmeSmallScaleDownString &operator=( const BfmeSmallScaleDownString &other );
+	void concat( const char *text, Int length );
+	const char *str() const
+	{
+		return m_data ? (const char *)m_data + 8 : "";
+	}
+};
+
+struct BfmeSmallScaleDownInstanceData
+{
+	unsigned char m_pad00[ 0x18c ];
+	BfmeSmallScaleDownString m_decoratedNameString;		///< retail this+0x18c
+};
+
+// winGetEnabledImage takes NO index in BFME: retail reads the image straight out
+// of the window at +0x48.
+struct BfmeSmallScaleDownWindow
+{
+	unsigned char m_pad00[ 0x48 ];
+	const Image *m_enabledImage;				///< retail this+0x48
+};
+
+// winGetWindowFromId is vtable slot 55 (+0xdc) on the window manager.
+class BfmeSmallScaleDownWindowManager
+{
+public:
+	virtual void slot000();
+	virtual void slot004();
+	virtual void slot008();
+	virtual void slot00c();
+	virtual void slot010();
+	virtual void slot014();
+	virtual void slot018();
+	virtual void slot01c();
+	virtual void slot020();
+	virtual void slot024();
+	virtual void slot028();
+	virtual void slot02c();
+	virtual void slot030();
+	virtual void slot034();
+	virtual void slot038();
+	virtual void slot03c();
+	virtual void slot040();
+	virtual void slot044();
+	virtual void slot048();
+	virtual void slot04c();
+	virtual void slot050();
+	virtual void slot054();
+	virtual void slot058();
+	virtual void slot05c();
+	virtual void slot060();
+	virtual void slot064();
+	virtual void slot068();
+	virtual void slot06c();
+	virtual void slot070();
+	virtual void slot074();
+	virtual void slot078();
+	virtual void slot07c();
+	virtual void slot080();
+	virtual void slot084();
+	virtual void slot088();
+	virtual void slot08c();
+	virtual void slot090();
+	virtual void slot094();
+	virtual void slot098();
+	virtual void slot09c();
+	virtual void slot0a0();
+	virtual void slot0a4();
+	virtual void slot0a8();
+	virtual void slot0ac();
+	virtual void slot0b0();
+	virtual void slot0b4();
+	virtual void slot0b8();
+	virtual void slot0bc();
+	virtual void slot0c0();
+	virtual void slot0c4();
+	virtual void slot0c8();
+	virtual void slot0cc();
+	virtual void slot0d0();
+	virtual void slot0d4();
+	virtual void slot0d8();
+	virtual GameWindow *winGetWindowFromId(GameWindow *parent, Int id);	///< vtable +0xdc
+};
+
+// ?init@MainMenuSmallScaleDownTransition@@UAEXPAVGameWindow@@@Z
+void MainMenuSmallScaleDownTransition::init( GameWindow *win )
+{
+	BfmeSmallScaleDownFields *self = (BfmeSmallScaleDownFields *)this;
+
+	if(win)
+	{
+		self->m_win = win;
+		self->m_win->winGetSize(&self->m_size.x, &self->m_size.y);
+		self->m_win->winGetScreenPosition(&self->m_pos.x, &self->m_pos.y );
+	}
+	AsciiString growWinName;
+	*(BfmeSmallScaleDownString *)&growWinName =
+			((BfmeSmallScaleDownInstanceData *)self->m_win->winGetInstanceData())->m_decoratedNameString;
+	((BfmeSmallScaleDownString *)&growWinName)->concat("Small", 5);
+	self->m_growWin = ((BfmeSmallScaleDownWindowManager *)TheWindowManager)->winGetWindowFromId(NULL,
+			TheNameKeyGenerator->nameToKey(((BfmeSmallScaleDownString *)&growWinName)->str()));
+	if(!self->m_growWin)
+		return;
+
+	self->m_growWin->winGetSize(&self->m_growSize.x, &self->m_growSize.y);
+	self->m_growWin->winGetScreenPosition(&self->m_growPos.x, &self->m_growPos.y );
+
+	self->m_isForward = FALSE;
+	update(MAINMENUSMALLSCALEDOWNTRANSITION_START);
+	self->m_isFinished = FALSE;
+	self->m_isForward = TRUE;
+	
+	self->m_incrementSize.x = (self->m_growSize.x - self->m_size.x) / MAINMENUSMALLSCALEDOWNTRANSITION_END;
+	self->m_incrementSize.y = (self->m_growSize.y - self->m_size.y) / MAINMENUSMALLSCALEDOWNTRANSITION_END;
+	const Image *image = ((const BfmeSmallScaleDownWindow *)self->m_win)->m_enabledImage;
+	self->m_growWin->winSetEnabledImage(0, image);
+}
+
+void MainMenuSmallScaleDownTransition::update( Int frame )
+{
+	m_drawState = -1;
+	if(frame < MAINMENUSMALLSCALEDOWNTRANSITION_START || frame > MAINMENUSMALLSCALEDOWNTRANSITION_END)
+	{
+		DEBUG_ASSERTCRASH(FALSE, ("MainMenuSmallScaleDownTransition::update - Frame is out of the range the this update can handle %d", frame));
+		return;
+	}
+	switch (frame) {
+	case MAINMENUSMALLSCALEDOWNTRANSITION_START:
+		{
+			
+			if(m_isForward || !m_win || !m_growWin)
+				break;
+			m_win->winHide(FALSE);
+			m_growWin->winHide(TRUE);
+			m_isFinished = TRUE;
+		}
+		break;
+	case MAINMENUSMALLSCALEDOWNTRANSITION_1:
+	case MAINMENUSMALLSCALEDOWNTRANSITION_2:
+	case MAINMENUSMALLSCALEDOWNTRANSITION_3:
+	case MAINMENUSMALLSCALEDOWNTRANSITION_4:
+	case MAINMENUSMALLSCALEDOWNTRANSITION_5:
+		if(m_win)
+			m_win->winHide(TRUE);
+		if(m_growWin)
+			m_growWin->winHide(TRUE);
+		m_drawState = frame;
+		break;
+	case MAINMENUSMALLSCALEDOWNTRANSITION_END:
+		{
+			if(!m_isForward || !m_win || !m_growWin)
+				break;
+			m_win->winHide(TRUE);
+			m_growWin->winHide(FALSE);
+			m_isFinished = TRUE;
+		}
+	}	
+}
+
+// ?reverse@MainMenuSmallScaleDownTransition@@UAEXXZ present-unmatched
+void MainMenuSmallScaleDownTransition::reverse( void )
+{
+	m_isFinished = FALSE;
+	m_isForward = FALSE;
+
+}
+
+void MainMenuSmallScaleDownTransition::skip( void )
+{
+	update(MAINMENUSMALLSCALEDOWNTRANSITION_END);
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
+// byte-exact reconstruction: game/GameEngine/Source/Common/TextTypeTransitionDestructorThunk.cpp
+// ??1TextTypeTransition@@UAE@XZ present-unmatched
+// Neither this destructor nor CountUpTransition's can come home: class shape,
+// and the evidence is worth keeping because both get very close.
+//
+// Everything a body controls already matches -- the vtable store, the zeroing,
+// the guard, the two member destructor calls in the right order and the EH
+// state transitions. What does not is generated from the CLASS rather than from
+// the body, and no cast in a .cpp reaches it:
+//   - every member sits EIGHT bytes later in retail than the vendored Transition
+//     base puts it. m_dStr is at +0x34 against +0x2c here, and the two strings at
+//     +0x30 and +0x2c against +0x28 and +0x24, so the compiler-generated member
+//     destructor calls all take the wrong address.
+//   - the BASE destructor call is missing entirely from what this tree emits,
+//     because the reference hierarchy does not have the base retail destroys.
+//   - freeDisplayString is vtable slot 10 (+0x28) in BFME against slot 7 (+0x1c)
+//     here. That one alone a view WOULD reach, the same way the newDisplayString
+//     slot was corrected in init above -- but it is not the blocker.
+//
+// Unblocking these means correcting the Transition base layout in a header, which
+// re-verifies every one of this file's matched rows and is not a Tier 1 job.
+TextTypeTransition::~TextTypeTransition( void )
+{
+	m_win = NULL;
+	if(m_dStr)
+		TheDisplayStringManager->freeDisplayString(m_dStr);
+	m_dStr = NULL;
+}
+
+// Same parameterisation as the scale-up transitions: the frame handed to update
+// and the clamp on the text length come from members at this+0x10 and this+0x14,
+// not from the TEXTTYPETRANSITION_START/_END constants. The clamp is written as
+// the ternary retail emits rather than through MIN.
+struct BfmeTextTypeTransitionFields
+{
+	unsigned char m_unreconstructed_00[ 0x04 ];		///< vtable pointer at +0x00
+	Int m_frameLength;					///< retail this+0x04
+	Bool m_isFinished;					///< retail this+0x08
+	Bool m_isForward;					///< retail this+0x09
+	unsigned char m_pad0a[ 2 ];
+	GameWindow *m_win;					///< retail this+0x0c
+	Int m_startFrame;					///< retail this+0x10
+	Int m_endFrame;						///< retail this+0x14
+	ICoord2D m_pos;						///< retail this+0x18
+	ICoord2D m_size;					///< retail this+0x20
+	Int m_drawState;					///< retail this+0x28
+	UnicodeString m_fullText;				///< retail this+0x2c
+	UnicodeString m_partialText;				///< retail this+0x30
+	DisplayString *m_dStr;					///< retail this+0x34
+};
+
+// The two strings are one pointer each; if that ever stops being true the
+// offsets above silently shift, so say it out loud.
+typedef char BfmeTextTypeTransitionStringWidth[
+		(sizeof(UnicodeString) == 4) ? 1 : -1];
+
+// CountUpTransition's retail object keeps the same transition prefix as the
+// text style, then stores its integer counter after the two string slots.
+// The shipped C++ base is eight bytes shorter than BFME's transition base, so
+// this view is required for the member accesses in the retail body.
+struct BfmeCountUpTransitionFields
+{
+	unsigned char m_unreconstructed_00[ 0x04 ];
+	Int m_frameLength;
+	Bool m_isFinished;
+	Bool m_isForward;
+	unsigned char m_pad0a[ 2 ];
+	GameWindow *m_win;
+	Int m_startFrame;
+	Int m_endFrame;
+	ICoord2D m_pos;
+	ICoord2D m_size;
+	Int m_drawState;
+	UnicodeString m_fullText;
+	UnicodeString m_unusedText;
+	Int m_intValue;
+	Int m_currentValue;
+	Int m_countState;
+};
+
+typedef char BfmeCountUpTransitionStringWidth[
+		(sizeof(UnicodeString) == 4) ? 1 : -1];
+
+// newDisplayString is vtable slot 9 (+0x24) in BFME, not the slot 6 (+0x18) the
+// vendored manager puts it at.
+class BfmeTransitionDisplayStringManager
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02();
+	virtual void slot03(); virtual void slot04(); virtual void slot05();
+	virtual void slot06(); virtual void slot07(); virtual void slot08();
+	virtual DisplayString *newDisplayString();		///< vtable +0x24
+};
+
+// getLength inlines to a 16-bit read of the length in the string header at
+// m_data+4; this tree's UnicodeString calls out of line for it instead.
+struct BfmeTransitionUnicodeString
+{
+	const unsigned char *m_data;
+
+	Int getLength() const
+	{
+		return m_data ? *(const unsigned short *)(m_data + 4) : 0;
+	}
+};
+
+// ?init@TextTypeTransition@@UAEXPAVGameWindow@@@Z
+void TextTypeTransition::init( GameWindow *win )
+{
+	BfmeTextTypeTransitionFields *self = (BfmeTextTypeTransitionFields *)this;
+
+	if(win)
+	{
+		self->m_win = win;
+		self->m_win->winGetSize(&self->m_size.x, &self->m_size.y);
+		self->m_win->winGetScreenPosition(&self->m_pos.x, &self->m_pos.y );
+	}
+	self->m_isForward = FALSE;
+	update(self->m_startFrame);
+	self->m_isFinished = FALSE;
+	self->m_isForward = TRUE;
+	self->m_dStr = ((BfmeTransitionDisplayStringManager *)TheDisplayStringManager)->newDisplayString();
+	self->m_fullText = GadgetStaticTextGetText(self->m_win);		
+	Int length = ((const BfmeTransitionUnicodeString *)&self->m_fullText)->getLength();
+	self->m_frameLength = length < self->m_endFrame ? length : self->m_endFrame;
+}
+
+// Open-BFME5: convert TextTypeTransition::update from retail ASM to clean C++.
+void TextTypeTransition::update( Int frame )
+{
+	BfmeTextTypeTransitionFields *self = (BfmeTextTypeTransitionFields *)this;
+
+	self->m_drawState = -1;
+	if(frame < self->m_startFrame || frame > self->m_endFrame)
+	{
+		return;
+	}
+	if(frame == self->m_startFrame)
+		{
+			if(!self->m_isForward && self->m_win )
+			{
+				self->m_win->winHide(TRUE);
+				self->m_isFinished = TRUE;
+			}
+		}
+	else if(frame == self->m_endFrame)
+		{
+			if(self->m_isForward && self->m_win )
+			{
+				self->m_win->winHide(FALSE);
+				self->m_isFinished = TRUE;
+			}
+	}
+	if(frame >= self->m_frameLength)
+	{
+		self->m_win->winHide(FALSE);
+
+	}
+	if(frame > self->m_startFrame && frame < self->m_frameLength)
+	{
+		self->m_win->winHide(TRUE);
+		self->m_drawState = frame;
+		if(self->m_isForward)
+		{
+			WideChar character = ((StringBase<WideChar> *)&self->m_fullText)->getCharAt(frame - 1);
+			((StringBase<WideChar> *)&self->m_partialText)->concat(&character, 1);
+		}
+		else
+		{
+			((StringBase<WideChar> *)&self->m_partialText)->removeLastChar();
+		}
+	}
+}
+
+// ?reverse@TextTypeTransition@@UAEXXZ present-unmatched
+void TextTypeTransition::reverse( void )
+{
+	m_isFinished = FALSE;
+	m_isForward = FALSE;
+
+	m_partialText = m_fullText;
+}
+
+// ?draw@TextTypeTransition@@UAEXXZ present-unmatched
+void TextTypeTransition::draw( void )
+{
+	if(m_drawState > TEXTTYPETRANSITION_START && m_drawState < m_frameLength)
+	{
+		m_dStr->setText(m_partialText);
+		drawTypeText(m_win, m_dStr);
+	}
+}
+	
+// ?skip@TextTypeTransition@@UAEXXZ present-unmatched
+void TextTypeTransition::skip( void )
+{
+	update(TEXTTYPETRANSITION_END);
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
+// ??0CountUpTransition@@QAE@XZ present-unmatched
+CountUpTransition::CountUpTransition ( void )
+{
+	m_frameLength = COUNTUPTRANSITION_END;
+	m_win = NULL;
+	m_drawState = -1;
+	m_isForward = TRUE;
+
+}
+
+// byte-exact reconstruction: game/GameEngine/Source/Common/CountUpTransitionDestructorThunk.cpp
+// ??1CountUpTransition@@UAE@XZ present-unmatched
+CountUpTransition::~CountUpTransition( void )
+{
+	m_win = NULL;
+}
+
+// Open-BFME5: convert CountUpTransition::init from retail ASM to clean C++.
+void CountUpTransition::init( GameWindow *win )
+{
+	BfmeCountUpTransitionFields *self = (BfmeCountUpTransitionFields *)this;
+
+	if(win)
+	{
+		self->m_win = win;
+		self->m_win->winGetSize(&self->m_size.x, &self->m_size.y);
+		self->m_win->winGetScreenPosition(&self->m_pos.x, &self->m_pos.y );
+
+		if( self->m_win->winIsHidden() )
+		{
+			self->m_isForward = TRUE;
+			self->m_isFinished = TRUE;
+			self->m_frameLength = 0;
+			return;
+		}
+	}
+	self->m_fullText = GadgetStaticTextGetText(self->m_win);
+	self->m_isForward = FALSE;
+	update(self->m_startFrame);
+	self->m_isFinished = FALSE;
+	self->m_isForward = TRUE;
+	
+	AsciiString tempStr;
+	tempStr.translate(self->m_fullText);
+	self->m_intValue = atoi(tempStr.str());
+	if(self->m_intValue < self->m_endFrame)
+	{
+		self->m_countState = COUNT_ONES;
+		self->m_frameLength = MIN(self->m_intValue, self->m_endFrame);
+	}
+	else if(self->m_intValue/100 < self->m_endFrame)
+	{
+		self->m_countState = COUNT_100S;
+		self->m_frameLength = MIN(self->m_intValue/100, self->m_endFrame);
+	}
+	else
+	{
+		self->m_countState = COUNT_1000S;
+		self->m_frameLength = MIN(self->m_intValue/1000, self->m_endFrame);
+	}
+	
+	self->m_currentValue = 0;
+	UnicodeString currVal;
+	currVal.format(UnicodeString(L"%d"),self->m_currentValue);
+	GadgetStaticTextSetText(self->m_win, currVal);
+}
+
+// Open-BFME5: convert CountUpTransition::update from retail ASM to clean C++.
+void CountUpTransition::update( Int frame )
+{
+	BfmeCountUpTransitionFields *self = (BfmeCountUpTransitionFields *)this;
+
+	self->m_drawState = -1;
+	if(frame < self->m_startFrame || frame > self->m_endFrame)
+	{
+		return;
+	}
+	if(frame == self->m_startFrame)
+	{
+		if(!self->m_isForward && self->m_win)
+		{
+			self->m_currentValue = 0;
+			UnicodeString currVal;
+			currVal.format(UnicodeString(L"%d"), self->m_currentValue);
+			GadgetStaticTextSetText(self->m_win, currVal);
+			self->m_win->winHide(TRUE);
+			self->m_isFinished = TRUE;
+		}
+	}
+	else if(frame == self->m_endFrame)
+	{
+		if(self->m_isForward && self->m_win)
+		{
+			self->m_win->winHide(FALSE);
+			self->m_isFinished = TRUE;
+		}
+	}
+	if(frame >= self->m_frameLength)
+	{
+		self->m_win->winHide(FALSE);
+	}
+	if(frame > self->m_startFrame && frame < self->m_frameLength)
+	{
+		self->m_win->winHide(FALSE);
+		self->m_currentValue += self->m_countState;
+		self->m_drawState = frame;
+		if(self->m_currentValue > self->m_intValue)
+			self->m_currentValue = self->m_intValue;
+		UnicodeString currVal;
+		currVal.format(UnicodeString(L"%d"), self->m_currentValue);
+		GadgetStaticTextSetText(self->m_win, currVal);
+	}
+	if(frame == self->m_frameLength)
+	{
+		GadgetStaticTextSetText(self->m_win, self->m_fullText);
+		self->m_isFinished = TRUE;
+	}
+}
+
+void CountUpTransition::reverse( void )
+{
+	if( m_win->winIsHidden() )
+	{
+		m_isForward = FALSE;
+		m_isFinished = TRUE;
+		m_frameLength = 0;
+		return;
+	}
+	m_isFinished = FALSE;
+	m_isForward = FALSE;
+
+}
+
+// ?draw@CountUpTransition@@UAEXXZ present-unmatched
+void CountUpTransition::draw( void )
+{
+}
+	
+// ?skip@CountUpTransition@@UAEXXZ present-unmatched
+void CountUpTransition::skip( void )
+{
+	if (!m_isFinished)
+		update(COUNTUPTRANSITION_END);
+}
+
+//-----------------------------------------------------------------------------
+
+// ??0ScreenFadeTransition@@QAE@XZ present-unmatched
+ScreenFadeTransition::ScreenFadeTransition ( void )
+{
+	m_frameLength = SCREENFADETRANSITION_END;
+	m_win = NULL;
+	m_drawState = -1;
+	m_isForward = TRUE;
+	
+}
+
+// ??1ScreenFadeTransition@@UAE@XZ present-unmatched
+ScreenFadeTransition::~ScreenFadeTransition( void )
+{
+	m_win = NULL;
+	
+}
+
+// ?init@ScreenFadeTransition@@UAEXPAVGameWindow@@@Z present-unmatched
+void ScreenFadeTransition::init( GameWindow *win )
+{
+	m_isForward = FALSE;
+	update(SCREENFADETRANSITION_START);
+	m_isFinished = FALSE;
+	m_isForward = TRUE;
+
+	m_percent = 1.0f / (SCREENFADETRANSITION_END - 1);
+
+	m_pos.y = m_pos.x = 0;
+	m_size.x = TheDisplay->getWidth();
+	m_size.y = TheDisplay->getHeight();
+
+}
+
+// ?update@ScreenFadeTransition@@UAEXH@Z present-unmatched
+void ScreenFadeTransition::update( Int frame )
+{
+	m_drawState = -1;
+	if(frame < SCREENFADETRANSITION_START || frame > SCREENFADETRANSITION_END)
+	{
+		DEBUG_ASSERTCRASH(FALSE, ("ScreenFadeTransition::update - Frame is out of the range the this update can handle %d", frame));
+		return;
+	}
+	switch (frame) {
+	case SCREENFADETRANSITION_START:
+		{
+			m_isFinished = TRUE;
+		}
+		break;
+	case SCREENFADETRANSITION_END:
+		{
+			m_isFinished = TRUE;
+		}
+	}	
+	m_drawState = frame;	
+}
+
+// ?reverse@ScreenFadeTransition@@UAEXXZ present-unmatched
+void ScreenFadeTransition::reverse( void )
+{
+	m_isFinished = FALSE;
+	m_isForward = FALSE;
+}
+
+// ?draw@ScreenFadeTransition@@UAEXXZ present-unmatched
+void ScreenFadeTransition::draw( void )
+{
+	Int alpha = m_percent*255 *m_drawState;
+	if(alpha > 255)
+		alpha = 255;
+	TheDisplay->drawFillRect(m_pos.x, m_pos.y, m_size.x, m_size.y , GameMakeColor(0,0,0,alpha));
+
+}
+	
+// ?skip@ScreenFadeTransition@@UAEXXZ present-unmatched
+void ScreenFadeTransition::skip( void )
+{
+	update(SCREENFADETRANSITION_END);
+}
+
+
+//-----------------------------------------------------------------------------
+
+// ??0ControlBarArrowTransition@@QAE@XZ present-unmatched
+ControlBarArrowTransition::ControlBarArrowTransition ( void )
+{
+	m_frameLength = CONTROLBARARROWTRANSITION_END;
+	m_win = NULL;
+	m_drawState = -1;
+	m_isForward = TRUE;
+	m_arrowImage = NULL;
+	
+}
+
+// ??1ControlBarArrowTransition@@UAE@XZ present-unmatched
+ControlBarArrowTransition::~ControlBarArrowTransition( void )
+{
+	m_win = NULL;
+	m_arrowImage = NULL;
+}
+
+void ControlBarArrowTransition::init( GameWindow *win )
+{
+	m_isForward = FALSE;
+	update(CONTROLBARARROWTRANSITION_START);
+	m_isFinished = FALSE;
+	m_isForward = TRUE;
+
+	m_percent = 1.0f / CONTROLBARARROWTRANSITION_BEGIN_FADE;
+	m_fadePercent = 1.0f/ (CONTROLBARARROWTRANSITION_END - CONTROLBARARROWTRANSITION_BEGIN_FADE);
+	
+	m_arrowImage = reinterpret_cast<const BfmeControlBarArrowImageView *>(TheControlBar)->m_genArrow;
+	GameWindow *twin = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey("ControlBar.wnd:ButtonGeneral"));
+	if(!twin || !m_arrowImage)
+	{
+		m_isFinished = TRUE;
+		return;
+	}
+	ICoord2D screenPos, screenSize;
+	twin->winGetScreenPosition(&screenPos.x, &screenPos.y);
+	twin->winGetSize(&screenSize.x, &screenSize.y);
+	
+	m_incrementPos.x = 0;
+	m_incrementPos.y = screenPos.y * m_percent;
+
+	m_pos.y = 0 - m_arrowImage->getImageHeight() + 20;
+	m_pos.x = (screenPos.x + screenSize.x /2) - m_arrowImage->getImageWidth() /2;
+
+	m_size.x = m_arrowImage->getImageWidth();
+	m_size.y = m_arrowImage->getImageHeight();
+
+}
+
+void ControlBarArrowTransition::update( Int frame )
+{
+	m_drawState = -1;
+	if(frame < CONTROLBARARROWTRANSITION_START || frame > CONTROLBARARROWTRANSITION_END)
+	{
+		DEBUG_ASSERTCRASH(FALSE, ("ControlBarArrowTransition::update - Frame is out of the range the this update can handle %d", frame));
+		return;
+	}
+	switch (frame) {
+	case CONTROLBARARROWTRANSITION_START:
+		{
+			m_isFinished = TRUE;
+		}
+		break;
+	case CONTROLBARARROWTRANSITION_END:
+		{
+			m_isFinished = TRUE;
+		}
+	}	
+	m_drawState = frame;	
+}
+
+// ?reverse@ControlBarArrowTransition@@UAEXXZ present-unmatched
+void ControlBarArrowTransition::reverse( void )
+{
+	m_isFinished = FALSE;
+	m_isForward = FALSE;
+}
+
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp
+// ?draw@ControlBarArrowTransition@@UAEXXZ present-unmatched
+void ControlBarArrowTransition::draw( void )
+{
+	if(m_drawState <0)
+		return;
+	if(m_drawState < CONTROLBARARROWTRANSITION_BEGIN_FADE)
+	{
+		Int yPos = 	m_pos.y + m_incrementPos.y* m_drawState;
+		TheDisplay->drawImage(m_arrowImage, m_pos.x, yPos, m_pos.x + m_size.x, yPos + m_size.y );
+
+	}
+	else
+	{
+		Int alpha = (1 - (m_fadePercent *(m_drawState - CONTROLBARARROWTRANSITION_BEGIN_FADE )) )*255 ;
+		if(alpha > 255)
+			alpha = 255;
+		Int yPos = 	m_pos.y + m_incrementPos.y* (CONTROLBARARROWTRANSITION_BEGIN_FADE - 1);
+
+		TheDisplay->drawImage(m_arrowImage, m_pos.x, yPos, m_pos.x + m_size.x, yPos + m_size.y , GameMakeColor(255,255,255,alpha));
+	}
+	
+}
+	
+void ControlBarArrowTransition::skip( void )
+{
+	update(CONTROLBARARROWTRANSITION_END);
+}
+
+
+
+
+
+//-----------------------------------------------------------------------------
+
+// ??0FullFadeTransition@@QAE@XZ present-unmatched
+FullFadeTransition::FullFadeTransition ( void )
+{
+	m_frameLength = FULLFADETRANSITION_END;
+	m_startFrame = FULLFADETRANSITION_START;
+	m_endFrame = FULLFADETRANSITION_END;
+	m_win = NULL;
+	m_drawState = -1;
+	m_isForward = TRUE;
+	
+}
+
+// ??1FullFadeTransition@@UAE@XZ present-unmatched
+FullFadeTransition::~FullFadeTransition( void )
+{
+	m_win = NULL;
+	
+}
+
+// matched via game/masm_dumps/_sa__init_FullFadeTransition_UAEXPAVGameWindow_Z_59D420.asm
+void FullFadeTransition::init( GameWindow *win )
+{
+
+	if(win)
+	{
+		m_win = win;
+		m_win->winGetSize(&m_size.x, &m_size.y);
+		m_win->winGetScreenPosition(&m_pos.x, &m_pos.y );
+	}
+
+	m_isForward = FALSE;
+	update(FULLFADETRANSITION_START);
+	m_isFinished = FALSE;
+	m_isForward = TRUE;
+
+	m_percent = 1.0f / (FULLFADETRANSITION_END/2);
+
+}
+
+void FullFadeTransition::update( Int frame )
+{
+	m_drawState = -1;
+	if(frame < m_startFrame || frame > m_endFrame)
+	{
+		return;
+	}
+	if(frame == m_startFrame)
+	{
+		if(!m_isForward && m_win)
+		{
+			m_win->winHide(TRUE);
+			m_isFinished = TRUE;
+		}
+	}
+	else if(frame == m_endFrame)
+	{
+		if(m_isForward && m_win)
+		{
+			m_win->winHide(FALSE);
+			m_isFinished = TRUE;
+		}
+	}	
+	if(frame == m_endFrame/2)
+	{
+		if(m_isForward)
+			m_win->winHide(FALSE);	
+		else
+			m_win->winHide(TRUE);	
+	}
+	m_drawState = frame;	
+}
+
+// ?reverse@FullFadeTransition@@UAEXXZ present-unmatched
+void FullFadeTransition::reverse( void )
+{
+	m_isFinished = FALSE;
+	m_isForward = FALSE;
+}
+
+// ?draw@FullFadeTransition@@UAEXXZ present-unmatched
+void FullFadeTransition::draw( void )
+{
+	Int alpha;
+	if(m_drawState > (FULLFADETRANSITION_END/2))
+		alpha = m_percent * 255 * (FULLFADETRANSITION_END - m_drawState);
+	else
+		alpha = m_percent * 255 *m_drawState;
+	if(alpha > 255)
+		alpha = 255;
+	TheDisplay->drawFillRect(m_pos.x, m_pos.y, m_size.x, m_size.y , GameMakeColor(0,0,0,alpha));
+	TheDisplay->drawOpenRect(m_pos.x, m_pos.y, m_size.x, m_size.y , 1.0f, GameMakeColor(60,60,180,alpha));
+}
+	
+void FullFadeTransition::skip( void )
+{
+	update(m_endFrame);
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
+// ??0TextOnFrameTransition@@QAE@XZ present-unmatched
+TextOnFrameTransition::TextOnFrameTransition ( void )
+{
+	m_frameLength = TEXTONFRAMETRANSITION_END;
+	m_win = NULL;
+	m_isForward = TRUE;
+	
+}
+
+// ??1TextOnFrameTransition@@UAE@XZ present-unmatched
+TextOnFrameTransition::~TextOnFrameTransition( void )
+{
+	m_win = NULL;
+	
+}
+
+void TextOnFrameTransition::init( GameWindow *win )
+{
+
+	if(win)
+	{
+		m_win = win;
+	}
+	if(m_win->winIsHidden())
+	{
+		m_isFinished = TRUE;
+		m_isForward = TRUE;
+		m_frameLength = 0;
+	}
+	else
+	{
+		m_isForward = FALSE;
+		update(TEXTONFRAMETRANSITION_START);
+		m_isFinished = FALSE;
+		m_isForward = TRUE;
+	}
+}
+
+void TextOnFrameTransition::update( Int frame )
+{
+	if(frame < m_startFrame || frame > m_endFrame)
+	{
+		return;
+	}
+	if(frame == m_startFrame)
+	{
+		if(!m_isForward && m_win)
+		{
+			m_win->winHide(TRUE);
+			m_isFinished = TRUE;
+		}
+	}
+	else if(frame == m_endFrame)
+	{
+		if(m_isForward && m_win)
+		{
+			m_win->winHide(FALSE);
+			m_isFinished = TRUE;
+		}
+	}
+}
+
+void TextOnFrameTransition::reverse( void )
+{
+	m_isFinished = FALSE;
+	m_isForward = FALSE;
+	if(m_win->winIsHidden())
+	{
+		m_isFinished = TRUE;
+		m_frameLength = 0;
+	}
+}
+
+// ?draw@TextOnFrameTransition@@UAEXXZ present-unmatched
+void TextOnFrameTransition::draw( void )
+{
+}
+	
+// ?skip@TextOnFrameTransition@@UAEXXZ present-unmatched
+void TextOnFrameTransition::skip( void )
+{
+	if (!m_isFinished)
+		update(TEXTONFRAMETRANSITION_END);
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
+// ??0ReverseSoundTransition@@QAE@XZ present-unmatched
+ReverseSoundTransition::ReverseSoundTransition ( void )
+{
+	m_frameLength = REVERSESOUNDTRANSITION_END;
+	m_win = NULL;
+	m_isForward = TRUE;
+	
+}
+
+// ??1ReverseSoundTransition@@UAE@XZ present-unmatched
+ReverseSoundTransition::~ReverseSoundTransition( void )
+{
+	m_win = NULL;
+	
+}
+
+void ReverseSoundTransition::init( GameWindow *win )
+{
+	m_isFinished = TRUE;
+	m_isForward = TRUE;
+}
+
+// BFME removed the Zero Hour audio-event body from the fire-sound case but
+// retains the transition's original fall-through state machine.
+void ReverseSoundTransition::update( Int frame )
+{
+	if(frame < REVERSESOUNDTRANSITION_START || frame > REVERSESOUNDTRANSITION_END)
+		return;
+	switch(frame) {
+	case REVERSESOUNDTRANSITION_START:
+		if(m_isForward)
+			break;
+		m_isFinished = TRUE;
+		break;
+	case REVERSESOUNDTRANSITION_FIRESOUND:
+		if(m_isForward)
+			m_isFinished = TRUE;
+		break;
+	case REVERSESOUNDTRANSITION_END:
+		if(m_isForward)
+			m_isFinished = TRUE;
+		break;
+	}
+}
+
+// ?reverse@ReverseSoundTransition@@UAEXXZ present-unmatched
+void ReverseSoundTransition::reverse( void )
+{
+	m_isFinished = FALSE;
+	m_isForward = FALSE;
+}
+
+void ReverseSoundTransition::draw( void )
+{
+}
+	
+void ReverseSoundTransition::skip( void )
+{
+	if (!m_isFinished)
+		update(REVERSESOUNDTRANSITION_END);
+}
+
+
+
+//-----------------------------------------------------------------------------
+// PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------
+
+void PushButtonImageDrawThree(GameWindow *window, Int alpha )
+{
+	WinInstanceData *instData = window->winGetInstanceData();
+	const Image *leftImage, *rightImage, *centerImage;
+	ICoord2D origin, size, start, end;
+	Int xOffset, yOffset;
+	Int i;
+	Int color = GameMakeColor(255,255,255,alpha);
+	// get screen position and size
+	window->winGetScreenPosition( &origin.x, &origin.y );
+	window->winGetSize( &size.x, &size.y );
+
+	// get image offset
+	xOffset = instData->m_imageOffset.x;
+	yOffset = instData->m_imageOffset.y;
+
+	leftImage					= GadgetButtonGetLeftEnabledImage( window );
+	rightImage				= GadgetButtonGetRightEnabledImage( window );
+	centerImage				= GadgetButtonGetMiddleEnabledImage( window );
+
+	// sanity, we need to have these images to make it look right
+	if( leftImage == NULL || rightImage == NULL || 
+			centerImage == NULL )
+		return;
+
+	// get image sizes for the ends
+	ICoord2D leftSize, rightSize;
+	leftSize.x = leftImage->getImageWidth();
+	leftSize.y = leftImage->getImageHeight();
+	rightSize.x = rightImage->getImageWidth();
+	rightSize.y = rightImage->getImageHeight();
+
+	// get two key points used in the end drawing
+	ICoord2D leftEnd, rightStart;
+	leftEnd.x = origin.x + leftSize.x + xOffset;
+	leftEnd.y = origin.y + size.y + yOffset;
+	rightStart.x = origin.x + size.x - rightSize.x + xOffset;
+	rightStart.y = origin.y + yOffset;
+
+	// draw the center repeating bar
+	Int centerWidth, pieces;
+
+	// get width we have to draw our repeating center in
+	centerWidth = rightStart.x - leftEnd.x;
+	
+	if( centerWidth <= 0)
+	{
+		// draw left end
+		start.x = origin.x + xOffset;
+		start.y = origin.y + yOffset;
+		end.y = leftEnd.y;
+		end.x = origin.x + xOffset + size.x/2;
+		TheDisplay->drawImage(leftImage, start.x, start.y, end.x, end.y,color);
+
+		// draw right end
+		start.y = rightStart.y;
+		start.x = end.x;
+		end.x = origin.x + size.x;
+		end.y = start.y + size.y;
+		TheDisplay->drawImage(rightImage, start.x, start.y, end.x, end.y,color);
+	}
+	else
+	{
+		
+		// how many whole repeating pieces will fit in that width
+		pieces = centerWidth / centerImage->getImageWidth();
+
+		// draw the pieces
+		start.x = leftEnd.x;
+		start.y = origin.y + yOffset;
+		end.y = start.y + size.y + yOffset; //centerImage->getImageHeight() + yOffset;
+		for( i = 0; i < pieces; i++ )
+		{
+
+			end.x = start.x + centerImage->getImageWidth();
+			
+			TheDisplay->drawImage( centerImage, 
+																			start.x, start.y,
+																			end.x, end.y,color );
+			start.x += centerImage->getImageWidth();
+
+		}  // end for i
+
+		// we will draw the image but clip the parts we don't want to show
+		IRegion2D reg;
+		reg.lo.x = start.x;
+		reg.lo.y = start.y;
+		reg.hi.x = rightStart.x;
+		reg.hi.y = end.y;
+		centerWidth = rightStart.x - start.x;
+		if( centerWidth > 0)
+		{
+			TheDisplay->setClipRegion(&reg);
+			end.x = start.x + centerImage->getImageWidth();
+			TheDisplay->drawImage( centerImage,
+																			start.x, start.y,
+																			end.x, end.y,color );
+			TheDisplay->enableClipping(FALSE);
+		}
+
+		// draw left end
+		start.x = origin.x + xOffset;
+		start.y = origin.y + yOffset;
+		end = leftEnd;
+		TheDisplay->drawImage(leftImage, start.x, start.y, end.x, end.y,color);
+
+		// draw right end
+		start = rightStart;
+		end.x = start.x + rightSize.x;
+		end.y = start.y + size.y;
+		TheDisplay->drawImage(rightImage, start.x, start.y, end.x, end.y,color);
+	}
+	
+}
+
+static void drawTypeText( GameWindow *window, DisplayString *str)
+{
+	TextData *tData = (TextData *)window->winGetUserData();
+	Int textColor = window->winGetEnabledTextColor();
+	Int textDropColor = window->winGetEnabledTextBorderColor();
+	Int textWidth, textHeight, wordWrap;
+	DisplayString *text = tData->text;
+	ICoord2D origin, size, textPos;
+	IRegion2D clipRegion;
+	// sanity
+	if( text == NULL || text->getTextLength() == 0 )
+		return;
+	GameFont *font = text->getFont();
+	
+	str->setFont(font);
+
+	// get window position and size
+	window->winGetScreenPosition( &origin.x, &origin.y );
+	window->winGetSize( &size.x, &size.y );
+	
+	// Set the text Wrap width
+	wordWrap = size.x - 10;
+	text->setWordWrap(wordWrap);	
+	str->setWordWrap(wordWrap);
+	if( BitTest(window->winGetStatus(), WIN_STATUS_WRAP_CENTERED)		)
+	{
+		str->setWordWrapCentered(TRUE);
+		text->setWordWrapCentered(TRUE);
+	}
+	else
+	{
+		text->setWordWrapCentered(FALSE);
+		str->setWordWrapCentered(FALSE);
+
+	}
+
+
+	// how much space will this text take up
+	text->getSize( &textWidth, &textHeight );
+		
+	//Init the clip region
+	clipRegion.lo.x = origin.x ;
+	clipRegion.lo.y = origin.y ;
+	clipRegion.hi.x = origin.x + size.x ;
+	clipRegion.hi.y = origin.y + size.y;
+	
+	if( tData->centered )
+	{
+
+		textPos.x = origin.x + (size.x / 2) - (textWidth / 2);
+		textPos.y = origin.y + (size.y / 2) - (textHeight / 2);
+		str->setClipRegion(&clipRegion);
+		str->draw( textPos.x, textPos.y, textColor, textDropColor );
+	}  // end if
+	else
+	{
+
+		// draw the text
+		textPos.x = origin.x + 7;
+		textPos.y = origin.y + (size.y / 2) - (textHeight / 2);
+		str->setClipRegion(&clipRegion);
+		str->draw( textPos.x, textPos.y, textColor, textDropColor );
+
+	}  // end else
+
+
+}  // end drawStaticTextText

@@ -7,7 +7,7 @@ verify_string_refs gate then PROVES the copy assignment (a wrong copy references
 wrong string content and fails the build loudly). Copies with no string reference stay
 unassigned: byte-identical + anchorless means no evidence says which address is whose.
 
-Usage: python3 tools/land_ambiguous.py [--report reverse/zh_sweep/drift_report.csv]
+Usage: python3 tools/land_ambiguous.py [--report targets/game/reverse/zh_sweep/drift_report.csv]
 """
 import argparse
 import csv
@@ -24,14 +24,14 @@ ROOT = build.ROOT
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--report", default="reverse/zh_sweep/drift_report.csv")
-    ap.add_argument("--src-dir", default="Code")
+    ap.add_argument("--report", default="targets/game/reverse/zh_sweep/drift_report.csv")
+    ap.add_argument("--src-dir", default="game")
     args = ap.parse_args()
 
     # The Ghidra inventory is gitignored, so a fresh clone does not have it and
     # this tool is the first rung of the work ladder. Say which file is missing
     # and how to make it instead of dying on an unhandled FileNotFoundError.
-    inventory = ROOT / "reverse" / "ghidra_functions.csv"
+    inventory = ROOT / "targets/game/reverse" / "ghidra_functions.csv"
     if not inventory.exists():
         raise SystemExit(
             f"{inventory.relative_to(ROOT).as_posix()} not found — this tool needs the Ghidra\n"
@@ -60,7 +60,7 @@ def main():
 
     emitted_total = 0
     for cpp_name, rows in sorted(by_source.items()):
-        # drift report stores bare basenames (often lowercased); resolve under Code/
+        # drift report stores bare basenames (often lowercased); resolve under game/
         src = ROOT / args.src_dir / cpp_name
         if not src.exists():
             want = Path(cpp_name).name.lower()

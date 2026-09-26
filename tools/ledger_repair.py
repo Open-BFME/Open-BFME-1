@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Repair reverse/*.csv after a rebase that union-merged our own appended rows.
+"""Repair targets/game/reverse/*.csv after a rebase that union-merged our own appended rows.
 
 `merge=union` keeps both sides of every appended line, so rebasing over one's own
 work resurrects rows this branch had superseded. A rebase runs no hook, so nothing
@@ -11,7 +11,7 @@ in descending order of confidence -- nothing here guesses:
      (name, target_rva) names a file that does                    -> drop the dead one
   3. same, matched by target_rva alone, for rows where this branch renamed the
      SYMBOL as well as the file                                    -> drop the dead one
-  4. a row reverse/deleted_rows.csv already tombstones, arriving again from a
+  4. a row targets/game/reverse/deleted_rows.csv already tombstones, arriving again from a
      branch that forked before the delete                          -> re-apply the
      tombstone; the recorded reason is the proof, so this is replay, not a decision
   5. a bare LF terminator in the otherwise-CRLF symbols.csv. The union driver
@@ -23,7 +23,7 @@ in descending order of confidence -- nothing here guesses:
 Anything else is reported and left alone. Run from the repo root, then check_csv,
 pin_consistency --check and identity_guard.
 
-Never rewrite Code/gen_asm/ rows' bytes here: conversion_gate rule C3 reads the
+Never rewrite game/gen_asm/ rows' bytes here: conversion_gate rule C3 reads the
 range as "adds dump rows AND edits sources" and blocks the push.
 """
 import collections
@@ -41,7 +41,7 @@ def repair():
     handle = (ROOT / mc.LOCK).open("a")
     lock(handle, exclusive=True, wait_notice="ledger_repair: waiting for the ledger lock...")
     try:
-        for rel in ("reverse/functions.csv", "reverse/symbols.csv"):
+        for rel in ("targets/game/reverse/functions.csv", "targets/game/reverse/symbols.csv"):
             path = ROOT / rel
             records = ledger_io.split_records(path.read_bytes())
 
@@ -68,7 +68,7 @@ def repair():
                 for i, (payload, term) in enumerate(kept):
                     if i:
                         f = ledger_io.fields(payload)
-                        if (len(f) >= 6 and f[4].startswith("Code/")
+                        if (len(f) >= 6 and f[4].startswith("game/")
                                 and not (ROOT / f[4]).exists()):
                             if (f[0], f[2]) in live_pair:
                                 dead_named += 1
@@ -80,13 +80,13 @@ def repair():
                     out.append((payload, term))
                 kept = out
 
-            # A row tombstoned in reverse/deleted_rows.csv comes back through
+            # A row tombstoned in targets/game/reverse/deleted_rows.csv comes back through
             # union merge from any branch that forked before the delete, and
             # check_csv refuses the commit. The tombstone already carries the
             # proof, so re-applying it is replay, not a new decision.
             if rel.endswith("functions.csv"):
                 tomb = set()
-                path_t = ROOT / "reverse/deleted_rows.csv"
+                path_t = ROOT / "targets/game/reverse/deleted_rows.csv"
                 if path_t.exists():
                     for i, (payload, _t) in enumerate(
                             ledger_io.split_records(path_t.read_bytes())):

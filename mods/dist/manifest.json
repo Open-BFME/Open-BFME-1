@@ -4,7 +4,7 @@
   "name": "BFME1 mod build",
   "note": "Retail lotrbfme.exe with a .bfmemod code cave appended and the mods detoured into it. Rebuild with python3 tools/modbuild.py --dist",
   "baseline": {
-    "path": "baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe",
+    "path": "inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe",
     "sha256": "c1a907c44b84df129c1f18dc7365ea25ba438f9b8f39a374b86ed852936ff0a9",
     "size": 16433152
   },
@@ -76,7 +76,7 @@
   "data": [
     {
       "path": "mods/dist/apt/options.big",
-      "from": "baselines/bfme1/workshop-vanilla-1.03/files/apt/options.big",
+      "from": "inputs/baselines/bfme1/workshop-vanilla-1.03/files/apt/options.big",
       "sha256": "f4188c7361ca63ad9e4c1e284266fbd3a2f81e5422ab6380e2be2326c8a8a1b5",
       "size": 536494
     }

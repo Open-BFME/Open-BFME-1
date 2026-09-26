@@ -114,7 +114,7 @@ def screen(dest, rows=None, symbol_map=None):
 
 def destinations():
     out = set()
-    for path in sorted((B.ROOT / "Code").rglob("*.cpp")):
+    for path in sorted((B.ROOT / "game").rglob("*.cpp")):
         rel = path.relative_to(B.ROOT).as_posix()
         if MARKER.search(path.read_text(encoding="utf-8", errors="replace")):
             out.add(rel)

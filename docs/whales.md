@@ -2,16 +2,16 @@
 
 ## 0x00960A30 — SegLineRendererClass::Render
 
-- Status: banked partial, not landed. Preferred source is `reverse/attempts/0x00960a30.cpp` with support declarations in `reverse/attempt_support/0x00960a30.inc`.
+- Status: banked partial, not landed. Preferred source is `targets/game/reverse/attempts/0x00960a30.cpp` with support declarations in `targets/game/reverse/attempt_support/0x00960a30.inc`.
 - Evidence: 14,081 bytes, frame `0x6d84`, 190 relocation tuples, all callees resolved, and 17 canonical sibling emissions exact. The preferred body has 51 non-relocation differences (`0.9963780981464385`); the remaining groups are merge base/index SIB encodings (40), merge X-product order (2), initial-output SIB encodings (5), and expansion TOP-X addition order (4).
 - Recipe: include canonical `matrix3d.h` before the TU-local ABI prefix, retain the hidden-result VB ABI, the proven `BoxDynamicVBAccessClass`/lock declarations, `BoxSetTexture` at `0x00905AC0`, the `TILED_TEXTURE_MAP` dead fall-through, the asymmetric `DotSegLineBottomOutput` helper with volatile `point.Y`, and `ScaleSegLineExpansion` for the three component stores. No new pins are required.
-- Search: 12 explicit pointer/index alternatives were compiled with `tools/shape_search.py`; all legal alternatives stayed at the same 51-byte shape. Integer-address and reversed-index forms are therefore recorded as exhausted for this bank. Keep the bank; do not edit `Code/gen_asm` until an exact source is found.
+- Search: 12 explicit pointer/index alternatives were compiled with `tools/shape_search.py`; all legal alternatives stayed at the same 51-byte shape. Integer-address and reversed-index forms are therefore recorded as exhausted for this bank. Keep the bank; do not edit `game/gen_asm` until an exact source is found.
 
 ## 0x007DF1F0 - TerrainShader8Stage::set
 
-- Status: banked partial, not landed. The function remains anonymous in the ledger; the preferred body is `reverse/attempts/0x007df1f0.cpp`.
+- Status: banked partial, not landed. The function remains anonymous in the ledger; the preferred body is `targets/game/reverse/attempts/0x007df1f0.cpp`.
 - Identity: the 9,305-byte body is `TerrainShader8Stage::set`, supported by the eight-stage terrain state sequence, the long branch to `terrainShader2Stage.set` at `0x007DD180`, nearby landed terrain shader methods, and the ten-callee contract from `tools/callees.py`.
-- Best gate: clean C++ compiled through `Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp`; `probe.py` reported 9,282 bytes versus 9,305 retail, 860 relocations, 5,431 non-relocation differences, and 796 relocation-layout sites that do not align. The sampler-state prefix matched through the first direct device call, but the prologue/register allocation and by-value texture-handle/vtable scheduling did not.
+- Best gate: clean C++ compiled through `game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp`; `probe.py` reported 9,282 bytes versus 9,305 retail, 860 relocations, 5,431 non-relocation differences, and 796 relocation-layout sites that do not align. The sampler-state prefix matched through the first direct device call, but the prologue/register allocation and by-value texture-handle/vtable scheduling did not.
 - Recipe: preserve the existing `BfmeHandleCX` by-value wrapper and direct slot-65 device call, `BFME_SET_SAMP` for sampler slots 1/2, `setTerrainTextureFilters`, ordinary `BFME_SET_TSS`, and `bfmeSetDX8Texture` for stages 2-7. The best candidate used separate scopes for the two returned handles and direct `m_Buffer[0]` in the snapshot-name wrapper. It still scored only `0.416`; no ledger change or pin is justified.
 - Tried: inline versus named wrappers, raw-first and typed sampler calls, helper inlining, no-arg/direct-buffer snapshot construction, scoped and explicit handle/device/vtable locals, a reference-handle form, and an inline handle binder. The reference form lowered the byte diff but was not a safe clean source lifetime. A genuinely new frame/register scheduling lever is required.
 
@@ -19,37 +19,37 @@
 
 ## 0x0029E330 — ProductionUpdate candidate
 
-- Status: banked partial, not landed. Preferred source: `reverse/attempts/0x0029e330.cpp`.
+- Status: banked partial, not landed. Preferred source: `targets/game/reverse/attempts/0x0029e330.cpp`.
 - Gate: 943 bytes versus retail 4,685; first divergence is offset `+0x0` (retail SEH prologue versus the normal-frame candidate).
 - Recipe: the BFME secondary-interface and queue layouts, callee ABI shims, and production/UI/audio tail were tried against the ZH update body. The remaining factory/upgrade/UI/audio expansion is not byte-convergent; no pin was added.
 
 ## 0x00506726 — WOLQuickMatchMenuUpdate
 
-- Status: banked partial, not landed. Preferred source: `reverse/attempts/0x00506726.cpp`.
+- Status: banked partial, not landed. Preferred source: `targets/game/reverse/attempts/0x00506726.cpp`.
 - Gate: 3,944 bytes versus retail 4,682; frame diverges at `+0x15` (`sub esp,0x9bc` retail versus `0x568` candidate), with the first non-relocation mismatch at `+0x17`.
 - Recipe: the ZH twin, BFME object-form ECX wrapper, GameLogic `+0x10c`, `psplayerstats`, PeerResponse `+0x330`, and all 61 direct callees were tried. The remaining blocker is broad GameSpy ABI and response-layout drift.
 
 ## 0x00781660 — W3DTruckDraw::doDrawModule candidate
 
-- Status: banked partial, not landed. Preferred source: `reverse/attempts/0x00781660.cpp`.
+- Status: banked partial, not landed. Preferred source: `targets/game/reverse/attempts/0x00781660.cpp`.
 - Gate: 4,261 bytes versus retail 4,431; frame diverges at `+0x4`, then GlobalData is `+0xa80` in retail versus `+0x714` at `+0x16`, followed by BFME module/drawable offset drift at `+0x25`.
 - Recipe: vtable slot 9 and the truck constructor support this owner. The W3DTruckDraw twin and alternate W3DTankTruckDraw route were tried; the BFME eight-wheel, locomotor/AI, and render-layout expansion remains.
 
 ## 0x004A4240 — ControlBar::getCommandAvailability candidate
 
-- Status: banked partial, not landed. Preferred source: `reverse/attempts/0x004a4240.cpp`.
+- Status: banked partial, not landed. Preferred source: `targets/game/reverse/attempts/0x004a4240.cpp`.
 - Gate: 2,446 bytes versus retail 4,572; first divergence is `+0x1c`, where retail saves EBX and keeps ECX as `this`, while the candidate saves EBP/ESI.
 - Recipe: both caller-derived argument orders, Real output initialization, the ZH twin, EH frame shaping, and the `updateSpecialPowerShortcut` context were tried. The BFME availability ladder and ABI expansion remain.
 
 ## 0x004C1C30 — ControlBar tooltip candidate
 
-- Status: banked partial, not landed. Preferred source: `reverse/attempts/0x004c1c30.cpp`.
+- Status: banked partial, not landed. Preferred source: `targets/game/reverse/attempts/0x004c1c30.cpp`.
 - Gate: 4,364 bytes versus retail 4,289; raw divergence is `+0x2` (retail SEH setup versus candidate push-zero), and the frame diverges at `+0x15` (`0x28` versus `0x48`).
 - Recipe: the ZH tooltip twin, four-output/ret16 ABI, BFME text/global fields, and EH cleanup layout were tried. The probe required a case-compatible `Basetype.h` bridge in ignored build scratch; the source still does not match.
 
 ## 0x0089ABC0 — Apt builtin registry initializer
 
-- Status: banked partial, not landed. Preferred source: `reverse/attempts/0x0089abc0.cpp`.
+- Status: banked partial, not landed. Preferred source: `targets/game/reverse/attempts/0x0089abc0.cpp`.
 - Gate: 4,310 bytes versus retail 4,137; first divergence is `+0x15` (retail `sub esp,8` versus candidate `push ecx`), with 3,508 non-relocation differences. `tools/callees.py` still reports unnamed direct callee `0x0089D890`.
 - Recipe: the 11 callback/11 linked-value construction order, tagged retain/release wiring, allocator/vtable layouts, and registry globals were tried. No identity pin or unlock row was justified.
 
@@ -61,31 +61,31 @@
 
 ## 0x009BFA40 — DeblockLoopFilteredBand_WMT
 
-- Status: banked partial, not landed. Preferred source: `reverse/attempts/0x009bfa40.cpp`.
+- Status: banked partial, not landed. Preferred source: `targets/game/reverse/attempts/0x009bfa40.cpp`.
 - Gate: 2,743 bytes versus retail 4,068; divergence begins at `+0x8`, where the retail entry uses the `m_tableIndex`/`g_rva01356A9C` broadcast and the candidate has different field/register order.
 - Recipe: corrected context fields (`+0xc`, `+0x24`, `+0x28`), unconditional q broadcast, scalar horizontal/vertical filter, aligned frame, and the `0x009BEBB0` sibling shape were tried. The q>3 and cross-edge SIMD islands remain.
 
 ## 0x007D9AA0 — ScreenMotionBlurFilter::postRender
 
-- Status: banked partial, not landed. Preferred source: `reverse/attempts/0x007d9aa0.cpp`.
+- Status: banked partial, not landed. Preferred source: `targets/game/reverse/attempts/0x007d9aa0.cpp`.
 - Gate: 2,179 bytes versus retail 4,005; divergence is `+0x0`, where retail registers EH and reserves `0x138` bytes while the candidate starts with a `0x98`-byte frame.
 - Recipe: complete ZH control flow, BFME texture/state semantics, DynamicVB/DynamicIB quad substitution, and EH cleanup shape were tried. The retail dynamic-buffer/EH expansion remains.
 
 ## 0x007CCF50 — FlatTerrainShader2Stage::set
 
-- Status: banked partial, not landed. Preferred source: `reverse/attempts/0x007ccf50.cpp`.
+- Status: banked partial, not landed. Preferred source: `targets/game/reverse/attempts/0x007ccf50.cpp`.
 - Gate: 2,274 bytes versus retail 3,931; divergence is `+0x0`, where retail registers EH and reserves `0x1e8` bytes while the candidate starts with a `0x218` frame.
 - Recipe: ZH/BFME shader-manager source, flat-shroud projection, stage clears/state cache, and the full 16-callee set were tried. BFME state-cache/EH expansion remains.
 
 ## 0x006F2CC0 — W3DDisplay animation-debug candidate
 
-- Status: banked partial, not landed. Preferred source: `reverse/attempts/0x006f2cc0.cpp`.
+- Status: banked partial, not landed. Preferred source: `targets/game/reverse/attempts/0x006f2cc0.cpp`.
 - Gate: 31 bytes versus retail 3,881; divergence is `+0x0`, where retail begins SEH registration and a `0x5c` frame while the candidate is only a placeholder call sequence.
 - Recipe: unique animation/weapon/locked-object strings, protected-member source shape, UnicodeString/FontLibrary callees, and the BFME debug ladder were exhausted without a clean source body.
 
 ## 0x009B9700 — VP6 wide reconstruct candidate
 
-- Status: banked partial, not landed. Preferred source: `reverse/attempts/0x009b9700.cpp`.
+- Status: banked partial, not landed. Preferred source: `targets/game/reverse/attempts/0x009b9700.cpp`.
 - Gate: 4,588 bytes versus retail 4,240; frame divergence is `+0x16` (`0x1d8` retail versus `0x1f8` candidate), and the shared scalar reduction diverges at `+0x6e9`.
 - Recipe: aligned `/Z7` frame map, explicit EAX mode-index lookup, both transcribed MMX islands, pointer prelude, reverse-order scalar reductions, frame-slot padding/alignment, and register/loop-shape levers were tried. The first MMX island aligns, but frame and remaining scalar/second-island layout do not.
 # WHALE-1 recipes
@@ -120,7 +120,7 @@ that ABI correction is evidence, not a semantic name claim.
 - The handle points at a short string header containing 16-bit reference
   count, length, capacity, and flags. The shared pool at `0x01337A30` releases
   the header when the count reaches zero.
-- The 178 literals are the exact `reverse/string_xrefs.tsv` order from
+- The 178 literals are the exact `targets/game/reverse/string_xrefs.tsv` order from
   `__proto__` through `yMin`; each assignment constructs a temporary, calls
   `bfmeSetVKI`, retains the new handle, releases the old table handle, then
   releases the temporary.
@@ -131,7 +131,7 @@ that ABI correction is evidence, not a semantic name claim.
 ### Levers tried
 
 The best bank is the inline `BfmeStrVKI` model in
-`reverse/attempts/0x008bf100.cpp`, compiled with `/O2 /DNDEBUG /DWIN32
+`targets/game/reverse/attempts/0x008bf100.cpp`, compiled with `/O2 /DNDEBUG /DWIN32
 /D_WINDOWS /MD /EHsc`. It reproduces the literal order, the setter call
 contract, the two-slot default initialization, reference-count release, and
 hash-array tail, but emits a 16,229-byte body with an 8-byte scratch frame
@@ -150,22 +150,22 @@ produced retail's unique cleanup-slot permutation. Do not add a pin or hand
 edit the generated dump; the next useful attack is a source-level ABI/lifetime
 shape supported by another matched APT string initializer.
 
-No rows were added to `reverse/unlocked.txt`: this partial establishes the
+No rows were added to `targets/game/reverse/unlocked.txt`: this partial establishes the
 callee/layout hypothesis for this body, but does not land a shared shim or a
 byte-verified source body that would unlock a neighbour.
 ## 0x007CE290 - TerrainShader2Stage::set
 
-- Status: banked partial, not landed. The preferred source is `reverse/attempts/0x007ce290.cpp`; the retail body is the anonymous `?d_007ce290@@YAXXZ` row in `Code/gen_asm/d_007ccf50.asm`.
+- Status: banked partial, not landed. The preferred source is `targets/game/reverse/attempts/0x007ce290.cpp`; the retail body is the anonymous `?d_007ce290@@YAXXZ` row in `game/gen_asm/d_007ccf50.asm`.
 - Identity: the 8,147-byte body is `TerrainShader2Stage::set(Int)`. The address neighborhood places `FlatTerrainShader2Stage::set` at 0x007C5690, and this body has five `BoxSetTexture` calls matching Terrain’s five-texture pass sequence, plus the larger Terrain state/noise contract.
 - Best gate: the current BFME state-cache/noise candidate compiled and probed at 9,265 bytes versus 8,147 retail, with 821 relocations, 5,045 non-relocation differences, and 802 relocation-layout sites that do not align. The earlier FlatTerrain-labelled candidate was rejected as wrong identity (7,168 bytes, 651 relocations, 4,403 non-relocation differences, 632 relocation-layout drifts).
 - Recipe: retain `BFME_SET_TSS` for the proven cache path, `BFME_SET_SAMP` for sampler slot 69, `BFME_SET_RS` for render slot 57, and the `bfmeSetTexture` routes used by the one-texture noise branches. The retail callee contract includes five `BoxSetTexture` calls, slot-67 TSS calls, and helpers at `0x007DCF00` and `0x007DCCE0`.
-- Blocker: the BFME handle/EH frame schedule and matrix/noise helper ABI remain unproven; no pin is justified. Do not edit `Code/gen_asm` or replace the anonymous row until a clean source is byte-exact.
+- Blocker: the BFME handle/EH frame schedule and matrix/noise helper ABI remain unproven; no pin is justified. Do not edit `game/gen_asm` or replace the anonymous row until a clean source is byte-exact.
 
 ## 0x007C7FD0 — FlatTerrainShaderPixelShader::set
 
 Status: banked partial; identity is supported, but no exact clean-C++ body
 was found. The preferred function-sized candidate is
-`reverse/attempts/0x007c7fd0.cpp`, compiled in the existing
+`targets/game/reverse/attempts/0x007c7fd0.cpp`, compiled in the existing
 `W3DShaderManager.cpp` TU context.
 
 ### Callee table
@@ -209,7 +209,7 @@ first divergence at `+0` (`sub esp,0x198` versus retail EH registration and
 2,274 bytes with 1,489 non-relocation diffs and the same `+0` frame mismatch.
 Enabling the project snapshot macro did not change either object shape. The
 remaining BFME taint/pixel-shader expansion and state-cache/EH ladder are not
-represented by the current source. The existing `reverse/unlocked.txt` row
+represented by the current source. The existing `targets/game/reverse/unlocked.txt` row
 `0x007c7fd0 w3d-render` establishes the shared DX8 family only; no new unlock
 row, pin, or guessed class/member name is justified.
 
@@ -217,7 +217,7 @@ row, pin, or guessed class/member name is justified.
 
 Status: banked partial; identity remains unresolved and no clean-C++ body was
 byte-exact. The preferred function-sized candidate is
-`reverse/attempts/0x00934940.cpp`, compiled in the current
+`targets/game/reverse/attempts/0x00934940.cpp`, compiled in the current
 `render2d.cpp` TU context. The anonymous ledger row remains
 `?d_00934940@@YAXXZ`; `Render2DClass::Render` is already caller/vtable-proven
 at `0x00933E50`, so reusing that semantic name or adding a pin would be an
@@ -265,11 +265,11 @@ bytes with 2,553 non-relocation differences. Enabling
 `MESH_RENDER_SNAPSHOT_ENABLED` made no shape change. The mechanical EH search
 attempted all 128 generated combinations; its `throw()` variants failed
 syntax compilation and none beat the baseline. No semantic source owner,
-pin, or new unlock row is justified. The existing `reverse/unlocked.txt`
+pin, or new unlock row is justified. The existing `targets/game/reverse/unlocked.txt`
 entry `0x00934940 w3d-render` predates this attempt and was not changed.
 ## 0x007C5690 - FlatTerrainShader2Stage::set
 
-- Status: banked partial, not landed. The preferred source is `reverse/attempts/0x007c5690.cpp`; the retail body is the anonymous `?d_007c5690@@YAXXZ` row in `Code/gen_asm/d_007afaa0.asm`.
+- Status: banked partial, not landed. The preferred source is `targets/game/reverse/attempts/0x007c5690.cpp`; the retail body is the anonymous `?d_007c5690@@YAXXZ` row in `game/gen_asm/d_007afaa0.asm`.
 - Identity: the 7,909-byte body is `FlatTerrainShader2Stage::set(Int)`, supported by `FlatTerrainShader2Stage::init`/`reset` at `0x007C55B0`/`0x007C5600` and the flat terrain shroud/noise sequence.
 - Best gate: the best clean candidate compiled and probed at 7,093 bytes versus 7,909 retail, with 622 relocations, 4,415 non-relocation differences, and 600 relocation-layout mismatches. The target frame is `0x2b4` versus candidate `0x230`; target register setup begins `xor ebp`/`push ebp`/`mov ebx,1`, while the candidate begins `xor ebx`/`push ebx`/`mov ebp,1`.
 - Recipe: call `setTerrainTextureFilters(0)` and `(1)`, use `BFME_SET_TSS`/`BFME_SET_SAMP`/`BFME_SET_RS`, and use the proven `bfmeGet` plus direct slot-65 texture binding for the flat/noise texture routes. The retail contract has `setTerrainTextureFilters` at `0x006D4690` x2, `j_0001aded`/`bfmeGet` at `0x007C34A0` x7, `Peek_D3D_Base_Texture` x6, sampler slot 69 x14, TSS slot 67 x34, RS slot 57 x4, and texture slot 65 x6.
@@ -277,34 +277,34 @@ entry `0x00934940 w3d-render` predates this attempt and was not changed.
 
 ## 0x009B8130 - VP6 reconstruct / MMX dispatch body
 
-- Status: blocked after bounded review; the existing stale scaffold remains at `reverse/attempts/0x009b8130.cpp` and no generated body was edited.
+- Status: blocked after bounded review; the existing stale scaffold remains at `targets/game/reverse/attempts/0x009b8130.cpp` and no generated body was edited.
 - Evidence: `tools/callees.py 0x009B8130 5572` resolves zero direct call targets. Retail begins with the proven `/Z7` aligned-frame prologue and `sub esp,0x1f8`, then runs a single fragment loop with one mandatory literal MMX island and a separate branch-controlled island; the context uses the `+0x24` qIndex indirection and packed scratch buffers.
 - Candidates: the existing scalar scaffold compiled to 182 versus 5,572 retail with score `0.03`; the available aligned-frame `0x009B9700` sibling compiled to 4,214 versus this target with 23 relocations and 3,794 non-relocation differences, diverging structurally at `+0x16` (`sub esp,0x1f8` versus `sub esp,0x1c8`) and using the wrong index chain/body length. No exact source, pin, or safe dump lift was found.
 - Next lever: a dedicated transcription of both retail MMX islands with the 0x1f8 frame-slot order and the qIndex lookup; reusing the sibling would assert the wrong identity.
 
 ## 0x009D9D90 - _bfme_dumpXferStream
 
-- Status: blocked after reviewing the existing source-backed stash; `reverse/attempts/0x009d9d90.cpp` remains retained at score `0.55`.
+- Status: blocked after reviewing the existing source-backed stash; `targets/game/reverse/attempts/0x009d9d90.cpp` remains retained at score `0.55`.
 - Identity: `_bfme_dumpXferStream` is supported by the named `GameLogic::_bfme_reportDesync` caller and the BFME RTS1/RTS2 tagged transfer-stream behavior.
 - Evidence: the retail contract has 14 direct targets, including parser helpers `0x009D9110` x34 and `0x009D9160` x32, `_bfmeFormatText` x7, vector/string buffer lifetime helpers, and a `0x288` EH frame. The stash probes at 3,046 versus 5,472 bytes with 96 relocations, 2,389 non-relocation differences, 93 relocation-layout mismatches, and a `0x2f0` frame.
 - No exact parser/error-ladder source, pin, or unlock row is justified; adding the missing BFME behavior without its live format/throw contract would be invented.
 
 ## 0x0057A470 - BfmeAptScreenSkirmish::_bfme_updateProfileDisplay
 
-- Status: blocked at the existing score `0.47`; `reverse/attempts/0x0057a470.cpp` remains the preferred source-backed stash.
+- Status: blocked at the existing score `0.47`; `targets/game/reverse/attempts/0x0057a470.cpp` remains the preferred source-backed stash.
 - Identity: the BFME Skirmish profile display updater is supported by the three `AptSkirmish::InitGadgets` callsites and its APT-specific labels.
 - Evidence: the stash probes at 2,614 versus 5,296 bytes with the exact `0x13c` frame, then diverges at `+0x1c` in callee-saved/register setup. Retail has 27 direct targets, including `_bfmeFormatText`, 19 Unicode formatting calls, 3 translations, and the corresponding string constructor/release ladder; the source models the visible labels but not the retail profile/global dispatch state.
 - No exact source, pin, or unlock row is justified.
 
 ## 0x003EEB90 - Pathfinder::internal_findHierarchicalPath
 
-- Status: blocked at the existing score `0.55`; `reverse/attempts/0x003eeb90.cpp` remains scratch evidence only.
+- Status: blocked at the existing score `0.55`; `targets/game/reverse/attempts/0x003eeb90.cpp` remains scratch evidence only.
 - Identity: the BFME seven-argument internal hierarchical-path routine is supported by the matched `findGroundPath`/`findPath`/`findClosestPath` callers through thunk `0x001FA14` and the `ret 0x1c` contract.
 - Evidence: retail has 34 direct, ledger-resolved helper targets. The Zero Hour `AIPathfind.cpp` twin probes at 3,427 versus 4,836 bytes with 58 relocations, 3,037 non-relocation differences, and 55 relocation-layout mismatches; the first divergence is +0x08 (`0xec` retail frame versus `0xb4`) and the BFME `Object*`/`rawTo` argument layout. No exact BFME hierarchical-path source, pin, or unlock row is justified.
 
 ## 0x0073E050 - W3DView::draw
 
-- Status: blocked at the existing score `0.30`; `reverse/attempts/0x0073e050.cpp` remains scratch evidence only.
+- Status: blocked at the existing score `0.30`; `targets/game/reverse/attempts/0x0073e050.cpp` remains scratch evidence only.
 - Identity: the body is `W3DView::draw`, supported by the `W3DDisplay::m_3DScene` path, `filterPreRender`/`filterPostRender` calls, and W3DView field accesses.
 - Evidence: retail has 13 direct targets including `DX8Wrapper::Clear` x3. The source twin probes at 1,831 versus 5,126 bytes with 57 relocations, 1,527 non-relocation differences, and 56 relocation-layout mismatches; retail begins with a no-EH `0x120` frame while the twin begins with EH and a `0x1bc` frame. The scratch bank’s relative include path is also not independently compilable.
 - No exact BFME display-global/filter ladder, pin, or unlock row is justified.
@@ -312,7 +312,7 @@ entry `0x00934940 w3d-render` predates this attempt and was not changed.
 
 Status: banked partial; identity is supported, but no exact clean-C++ body
 was found. The preferred function-sized candidate is
-`reverse/attempts/0x007dd180.cpp`, compiled in the existing
+`targets/game/reverse/attempts/0x007dd180.cpp`, compiled in the existing
 `W3DShaderManager.cpp` TU context. The anonymous ledger row remains
 `?d_007dd180@@YAXXZ`.
 
@@ -360,14 +360,14 @@ The attempted levers were the original ZH state wrappers; BFME slot-67,
 slot-69, slot-57, and slot-65 lowering; inline snapshot string construction;
 RAII texture lifetimes; the proven filter helper; direct j-thunk calls; and
 the two source-backed terrain matrix helper routes. No new pin or unlock row
-is justified: `reverse/unlocked.txt` already contains `0x007dd180 w3d-render`.
+is justified: `targets/game/reverse/unlocked.txt` already contains `0x007dd180 w3d-render`.
 
 ## 0x005674F0 - BfmeConsumerED::bfmeApply
 
 Status: banked partial; the caller and the 24-byte by-value argument layout are
 supported, but no exact clean-C++ body was found. The preferred candidate is
-`reverse/attempts/0x005674f0.cpp`; the anonymous body remains the generated
-row in `Code/gen_asm/d_00563370.asm`.
+`targets/game/reverse/attempts/0x005674f0.cpp`; the anonymous body remains the generated
+row in `game/gen_asm/d_00563370.asm`.
 
 ### Callee table
 
@@ -418,15 +418,15 @@ and two manager calls versus one factored favorite-side branch. Direct number
 formatting and the streak local-copy form enlarged the frame substantially;
 the factored favorite branch was the useful lever because it restored the exact
 37 manager writes. The partial is banked with all candidate names and measured
-evidence in `reverse/re_attempts.log`. No shared shim, pin, or layout proof for
-a smaller neighbour was established, so `reverse/unlocked.txt` is unchanged.
+evidence in `targets/game/reverse/re_attempts.log`. No shared shim, pin, or layout proof for
+a smaller neighbour was established, so `targets/game/reverse/unlocked.txt` is unchanged.
 
 ## 0x0095CE80 - StreakRendererClass::RenderStreak
 
 Status: blocked for this pass after rechecking the existing source-backed
 bank. The matched `StreakLineRender.cpp` caller proves the identity, but the
 clean candidate is not byte-exact; the preferred source remains
-`reverse/attempts/0x0095ce80.cpp` and the generated dump remains untouched.
+`targets/game/reverse/attempts/0x0095ce80.cpp` and the generated dump remains untouched.
 
 ### Callee table
 
@@ -475,7 +475,7 @@ Earlier evidence already covers EH/frame alternatives, clamp-loop forms,
 texture-setter visibility, register/local layout, x87 scheduling, and
 `ALLOW_TEMPORARIES`/`G7`/`/O1` variants. No unresolved callee was independently
 safe to pin, and no shared layout proof for a smaller neighbour was gained;
-`reverse/unlocked.txt` is unchanged.
+`targets/game/reverse/unlocked.txt` is unchanged.
 
 ## 0x00084510 - GlobalData::GlobalData
 
@@ -483,7 +483,7 @@ Status: blocked after a source-backed constructor recheck. The ranked queue
 reported 4,499 bytes, but retail disassembly proves the complete constructor
 extent is 4,621 bytes through the `ret` at `+0x120C`; the generated body was
 not edited. The preferred structural bank remains
-`reverse/attempts/0x00084510.cpp`.
+`targets/game/reverse/attempts/0x00084510.cpp`.
 
 ### Callee table
 
@@ -532,12 +532,12 @@ explicit store produced 2,813 bytes and 2,395 non-relocation differences; the
 other two did not improve the useful shape. The prior bank also records the
 discarded CRC/file-loop theory, flat versus looped water initialization, and
 frame-first experiments. No exact body or safe pin was found, and no shared
-unlock proof was established; `reverse/unlocked.txt` is unchanged.
+unlock proof was established; `targets/game/reverse/unlocked.txt` is unchanged.
 
 ## 0x004DBE80 - PopulatePlayerInfoWindows
 
 - Status: banked partial, not landed. Preferred source is
-  `reverse/attempts/0x004dbe80.cpp`, with identity supported by the WOL welcome
+  `targets/game/reverse/attempts/0x004dbe80.cpp`, with identity supported by the WOL welcome
   callers and the existing `PopulatePlayerInfoWindows` definition.
 - Best probe: 3,953 emitted bytes versus the corrected 4,126-byte retail
   extent, 229 relocations, 1,344 masked-equal bytes, 2,609 non-relocation
@@ -599,4 +599,4 @@ corrected the frame and vtable slots but still diverged in register allocation,
 temporary scheduling, and the remaining WOL/UI body. A cached GameSpyInfo
 pointer in the helper was retained because it was the best of the tested
 helper shapes. No exact candidate, semantic pin, or shared layout proof was
-found, so `reverse/unlocked.txt` is unchanged.
+found, so `targets/game/reverse/unlocked.txt` is unchanged.

@@ -34,9 +34,9 @@ def finalize(prepared, measured, n_want, min_score, max_attempts,
     wanted = {int(c[2], 16) for c in shortlist}
     with (root / 'build/.fleet_claims.lock').open('a+b') as handle:
         lock(handle, exclusive=True)
-        rows = eligibility.load_rows(root / 'reverse/functions.csv', rvas=wanted)
-        latest = eligibility.latest_verdicts(root / 'reverse/re_attempts.log')
-        counts = eligibility.attempt_counts(root / 'reverse/re_attempts.log') if max_attempts else {}
+        rows = eligibility.load_rows(root / 'targets/game/reverse/functions.csv', rvas=wanted)
+        latest = eligibility.latest_verdicts(root / 'targets/game/reverse/re_attempts.log')
+        counts = eligibility.attempt_counts(root / 'targets/game/reverse/re_attempts.log') if max_attempts else {}
         live = {r['target_rva'].lower(): (score, int(r.get('target_size') or 0),
                                           r['target_rva'], path)
                 for r, path, score in eligibility.finish_bodies(

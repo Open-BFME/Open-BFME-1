@@ -23,7 +23,7 @@ An explicit request or assigned lane overrides the queue:
 2. `python3 tools/check_csv.py` — repair ledger errors before other work
 3. `python3 tools/next_work.py` for identity and structural work; it explains
    its own tiers. **This is the default work.** Its first tier is `finish`:
-   a dump address with a banked body scoring 0.90+ (`reverse/attempts/`).
+   a dump address with a banked body scoring 0.90+ (`targets/game/reverse/attempts/`).
    Measured 2026-09-15: 404 such bodies, 106 KB, 1.1 pp, each one lever from
    landing. START FROM THE STASH; a later `blocked` on the same address is a
    failed session, not a reason to rewrite. The tier hides a body after 5
@@ -54,7 +54,7 @@ An explicit request or assigned lane overrides the queue:
    first; `eligibility.is_lift_row` admits a lift only when its extent passes
    the boundary checks, because an `__emit` body matches whatever extent it
    claims and the lifts copied Ghidra sizes that stop short of the real `ret`.
-   `reverse/lift_extents.csv` carries the proven corrections (the brief says
+   `targets/game/reverse/lift_extents.csv` carries the proven corrections (the brief says
    EXTENT); `--suspect` lists the rest, mostly names whose stack cleanup
    contradicts the body. Convert one like `33110b4b40`: real body in the TU the
    lift's `// readable body of` comment names, `add_match --replace-existing`
@@ -64,8 +64,8 @@ An explicit request or assigned lane overrides the queue:
    already counted) and it consumed the seats meant for dumps once the naked
    pool ran dry. Take it only when `next_work.py` and the fleet lanes are
    both dry, and say so.
-4. `python3 tools/list_naked_candidates.py Code` serves a byte-true dump from
-   `Code/gen_asm/`, boundary already proven. Take one only when next_work.py is
+4. `python3 tools/list_naked_candidates.py game` serves a byte-true dump from
+   `game/gen_asm/`, boundary already proven. Take one only when next_work.py is
    also dry -- measured 2026-09-14, this lane's untried pool is EMPTY: all 3,885
    candidates have been attempted at least once (2,289 once, the rest 2-11
    times). A draw from it is a REPEAT, and it now says so.
@@ -125,7 +125,7 @@ shared header edit costs a full gate: edit every dependent body, pay once.
    function still compiles to retail's bytes, so no other check can see that
    class of defect. Five detectors find it, and the commit hook now runs the three
    fast ones through `tools/identity_guard.py`, baselined in
-   `reverse/identity_baseline.txt`; the slow one runs in the full gate. Those
+   `targets/game/reverse/identity_baseline.txt`; the slow one runs in the full gate. Those
    counts only go DOWN — raising one to go green is the ORPHAN_BASELINE move, and
    lowering one belongs in the same commit as the fix. Run them by hand when a
    row's identity is in doubt: `tools/multi_name.py` (one address, several names),
@@ -171,9 +171,9 @@ enforces this in both hooks, and the push hook scans your whole outgoing range
 Ghidra boundaries, xrefs and vtables are identity evidence; decompiled C is
 not byte-match proof. After several failed shapes or ~30 minutes without byte
 progress take a fresh candidate, never leaving a nonmatching reconstruction in
-`Code/`. Record the verdict:
+`game/`. Record the verdict:
 `python3 tools/re_log.py record <symbol> <rva> <size> <status> <evidence>`
-(never hand-edit `reverse/re_attempts.log`); cite the real boundary and
+(never hand-edit `targets/game/reverse/re_attempts.log`); cite the real boundary and
 include `t=<minutes>` and your model. `re_log` refuses a verdict with no
 `model=`, and a `partial` or a real `blocked` session (more than 10 minutes)
 with no `blocker=<family>` (`tools/blockers.py` lists the families);
@@ -191,8 +191,8 @@ record `blocked`.
 
 ## Placement and integrity
 
-- Game source under `Code/`; MASM dumps in `Code/masm_dumps/`; scratch
-  untracked under `build/`. Banked attempts (`reverse/attempts/<rva>.cpp`) are
+- Game source under `game/`; MASM dumps in `game/masm_dumps/`; scratch
+  untracked under `build/`. Banked attempts (`targets/game/reverse/attempts/<rva>.cpp`) are
   evidence, never progress: nothing compiles them, `add_match` deletes one on
   landing, `check_csv` flags leftovers.
 - Prefer TU-scoped shims over shared-header EDITS — editing a header costs a
@@ -202,13 +202,13 @@ record `blocked`.
   The hook refuses a staged source that redeclares a covered type;
   `tools/adopt_header.py --fix-staged` does the swap and byte-gates it. See
   `docs/header_adoption.md`.
-- Progress = `matched` `reverse/functions.csv` rows backed by real source and
+- Progress = `matched` `targets/game/reverse/functions.csv` rows backed by real source and
   byte verification. Markers and prose are not.
-- **Landing a `reverse/symbols.csv` pin?** It is an ADDITIVE candidate list:
+- **Landing a `targets/game/reverse/symbols.csv` pin?** It is an ADDITIVE candidate list:
   the resolver keeps the first pinned address that reproduces retail, so a pin
   naming the *wrong* function still byte-matches and a green gate proves
   nothing about it. Run `tools/pin_consistency.py --symbol <name>` before you
-  pin and `--check` after. `reverse/pin_consistency_baseline.csv` is the
+  pin and `--check` after. `targets/game/reverse/pin_consistency_baseline.csv` is the
   known-bad backlog and may only shrink — never add a line to get green. A
   `pinharvest` row is a CANDIDATE, not an address: it proposes a name for an
   address, and the resolver keeping it is not evidence that it is right.
@@ -228,7 +228,7 @@ record `blocked`.
   --class <C> --offset <N>` answers from `bfme_layouts.json` and `field_names.csv`
   (an offset neither witnesses gets ZH's member as a labelled hint, exit 2);
   `--todo` lists placeholders the evidence can already name, `--check` reports sources
-  that CONFLICT with the witness (shrink-only `reverse/name_oracle_baseline.csv`).
+  that CONFLICT with the witness (shrink-only `targets/game/reverse/name_oracle_baseline.csv`).
   An address-derived name is self-labelling and harmless; a plausible WRONG one is
   invisible and no gate can see it, so the address may only be dropped for a name
   evidence supports. `docs/naming_evidence.md` has the supply, the rule and the traps.
@@ -239,15 +239,15 @@ record `blocked`.
   fits its SIZE; neither throws away byte coverage and neither asserts an identity
   the evidence does not support.
 - No fallback paths; they conceal mismatches.
-- Never load `reverse/functions.csv`, `ghidra_functions.csv` or `exports.csv`
+- Never load `targets/game/reverse/functions.csv`, `ghidra_functions.csv` or `exports.csv`
   wholesale; use `rg` or narrow filters.
 - Preserve unrelated dirty-tree work; revert only your own attempt.
 
 ## Generated claims
 
-`gen-*` rows (`Code/gen_small/`, `Code/gen_asm/`) are byte-true placeholders,
+`gen-*` rows (`game/gen_small/`, `game/gen_asm/`) are byte-true placeholders,
 not progress. Recovering a real identity means writing clean C++ at its proper
-`Code/` path and repointing the row:
+`game/` path and repointing the row:
 `tools/add_match.py <real-name> <rva> <size> <source> --replace-rva <rva>` for
 `gen_asm` dumps (`--replace-existing` when the name is unchanged). `check_csv`
 rejects a gen-* row sharing a range with a real-name row; the placeholder
@@ -261,13 +261,13 @@ byte-true and unreadable, so the stock of it may only SHRINK from here: no more
 is minted, and every row under those roots is waiting to be replaced by real
 C++. Nothing regenerates these files any more.
 
-**Never edit a file under `Code/gen_asm/`**: repoint the row and leave the
+**Never edit a file under `game/gen_asm/`**: repoint the row and leave the
 orphaned `PROC`, which keeps converters conflict-free there. The same restraint
-now covers `Code/gen_small/` — including `uw_gen_*.cpp`, which `tools/gen_uw.py
+now covers `game/gen_small/` — including `uw_gen_*.cpp`, which `tools/gen_uw.py
 land` used to own end to end — but for a different reason: **there is no
 generator left to regenerate it, so a hand edit is permanent and nothing will
 ever cross-check it.** Repoint the row and leave the body alone; recover the
-identity in real C++ at its proper `Code/` path instead. Never infer a funclet's
+identity in real C++ at its proper `game/` path instead. Never infer a funclet's
 `parent=` from adjacency either — a guessed parent is invented identity.
 
 After landing a batch, sweep your own rows: one body per address. A duplicate
@@ -285,4 +285,4 @@ address is an over-claim to retire, never an alias to keep: `add_match
 `vendored=<lib>-<ver>` rows carry the upstream's real identities, never `gen-`
 prefixes; the header comment names the exact release. Library sources live at
 their official BFME paths, and pristine C TUs compile against
-`reference/shims/gamespy/`, never a real Platform SDK.
+`inputs/reference/shims/gamespy/`, never a real Platform SDK.

@@ -70,11 +70,11 @@ for selector in "${delta_raw[@]}"; do
     esac
 done
 
-# The third gate with the same blind spot the hooks had: a reverse/symbols.csv
+# The third gate with the same blind spot the hooks had: a targets/game/reverse/symbols.csv
 # PIN DELETION changes no functions.csv row, so the delta above is empty for it
 # while claimed rows across the tree lose their REL32 candidate and go red.
 # d27ae4b7b reached master with 1,599 deletions and a two-file byte-verify.
-if ! git diff --quiet "$base" HEAD -- reverse/symbols.csv; then
+if ! git diff --quiet "$base" HEAD -- targets/game/reverse/symbols.csv; then
     pin_delta_out=$(mktemp)
     if ! python3 tools/delta_sources.py --range "$base" HEAD --pins --selectors > "$pin_delta_out"; then
         rm -f "$pin_delta_out"

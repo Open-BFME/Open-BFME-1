@@ -8,7 +8,7 @@ NULL-terminated `FieldParse` array of
 `{const char* token; INIFieldParseProc parse; const void* userData; Int offset;}`.
 
 `Type` is the parse procedure the field dispatches to; where that procedure is
-already recovered in `reverse/functions.csv` it is named, otherwise its address
+already recovered in `targets/game/reverse/functions.csv` it is named, otherwise its address
 is given. `Offset` is the field's byte offset into the block's own struct, so
 these tables double as the class layouts.
 

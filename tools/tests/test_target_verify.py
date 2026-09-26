@@ -19,14 +19,14 @@ def target(tmp_path):
     image[:6] = b"\xb8\x01\0\0\0\xc3"
     path = tmp_path / "retail.exe"
     path.write_bytes(image)
-    source = tmp_path / "Code/example.cpp"
+    source = tmp_path / "game/example.cpp"
     source.parent.mkdir()
     source.write_text("int Example() { return 1; }\n")
     result = SimpleNamespace(
         target_id="worldbuilder", root=tmp_path, image_path=path,
         image_bytes=bytes(image), image_base=0x400000,
         expected_sha256=hashlib.sha256(image).hexdigest(),
-        ledger_path=tmp_path / "reverse/worldbuilder/functions.csv",
+        ledger_path=tmp_path / "targets/worldbuilder/reverse/functions.csv",
         build_root=tmp_path / "build/worldbuilder",
         profiles={"size": SimpleNamespace(flags=("-O1", "-Gy"), toolchain_includes=())},
         exports=(SimpleNamespace(name="_Example", rva=0x1000, forwarder=None),),
@@ -51,7 +51,7 @@ def target(tmp_path):
 
 def row(**changes):
     return {"name": "_Example", "target_rva": "0x1000", "target_size": "6",
-            "status": "matched", "source": "Code/example.cpp", "profile": "size",
+            "status": "matched", "source": "game/example.cpp", "profile": "size",
             "evidence": "export", "model": "test", **changes}
 
 
@@ -91,7 +91,7 @@ def test_overlap_is_not_an_alias(target):
 
 
 def test_naked_source_rejected(target):
-    (target.root / "Code/example.cpp").write_text("__declspec(naked) void f() {}")
+    (target.root / "game/example.cpp").write_text("__declspec(naked) void f() {}")
     with pytest.raises(verify.TargetVerificationError, match="naked"):
         verify.validate_rows(target, [row()])
 
@@ -103,7 +103,7 @@ def test_source_cannot_escape_target_roots(target):
 
 @pytest.mark.parametrize("suffix", [".cpp", ".cc", ".c", ".cxx", ".asm", ".s"])
 def test_unclaimed_worldbuilder_source_refused(target, suffix):
-    unclaimed = target.root / ("Code/Tools/WorldBuilder/forgotten" + suffix)
+    unclaimed = target.root / ("worldbuilder/forgotten" + suffix)
     unclaimed.parent.mkdir(parents=True)
     unclaimed.write_text("int forgot() { return 2; }")
     subprocess.run(["git", "add", str(unclaimed)], cwd=target.root, check=True)
@@ -210,7 +210,7 @@ def test_branch_into_an_instruction_operand_is_rejected(target):
 
 
 def test_exclusive_translation_unit_cannot_hide_unclaimed_functions(target, monkeypatch):
-    source = target.root / "Code/Tools/WorldBuilder/editor.cpp"
+    source = target.root / "worldbuilder/editor.cpp"
     source.parent.mkdir(parents=True)
     source.write_text("int claimed(); int unclaimed();")
     obj = target.root / "editor.obj"
@@ -223,7 +223,7 @@ def test_exclusive_translation_unit_cannot_hide_unclaimed_functions(target, monk
 
 
 def test_header_helpers_do_not_claim_authored_functions(target, monkeypatch):
-    source = target.root / "Code/Tools/WorldBuilder/editor.cpp"
+    source = target.root / "worldbuilder/editor.cpp"
     source.parent.mkdir(parents=True)
     source.write_text("void Claimed() {}")
     obj = target.root / "editor.obj"
@@ -236,14 +236,14 @@ def test_header_helpers_do_not_claim_authored_functions(target, monkeypatch):
 
 
 def test_untracked_other_worker_source_does_not_block_validation(target):
-    pending = target.root / "Code/Tools/WorldBuilder/other_worker.cpp"
+    pending = target.root / "worldbuilder/other_worker.cpp"
     pending.parent.mkdir(parents=True)
     pending.write_text("int Pending() { return 1; }")
     verify.validate_rows(target, [row()])
 
 
 def test_macro_or_included_lift_rejected_after_preprocessing(target, monkeypatch):
-    source = target.root / "Code/example.cpp"
+    source = target.root / "game/example.cpp"
     source.write_text('#include "lift.h"\n')
     output = target.build_root / "attempt.obj"
     output.parent.mkdir(parents=True)
@@ -263,7 +263,7 @@ def test_probe_accepts_scratch_without_claiming_other_worldbuilder_files(target,
     source = target.build_root / "attempt.cpp"
     source.parent.mkdir(parents=True)
     source.write_text("int Example() { return 1; }")
-    other = target.root / "Code/Tools/WorldBuilder/new.cpp"
+    other = target.root / "worldbuilder/new.cpp"
     other.parent.mkdir(parents=True)
     other.write_text("int unrelated() { return 2; }")
     monkeypatch.setattr(verify, "_compile", lambda *args: {})

@@ -48,17 +48,17 @@ def warmth(rva, unlocked):
 
 def prepare(min_b, max_b, root=ROOT):
     """Build and score the whole pool without monopolizing the claim lock."""
-    latest = eligibility.latest_verdicts(root / "reverse/re_attempts.log")
-    ledger_rows = eligibility.load_rows(root / "reverse/functions.csv")
+    latest = eligibility.latest_verdicts(root / "targets/game/reverse/re_attempts.log")
+    ledger_rows = eligibility.load_rows(root / "targets/game/reverse/functions.csv")
     rows = eligibility.open_dumps(
         rows=ledger_rows, latest=latest,
         min_size=min_b, max_size=max_b, anonymous=True, include_carved=True,
-        carved_path=root / "reverse/carved.csv")
+        carved_path=root / "targets/game/reverse/carved.csv")
     busy = eligibility.busy_rvas(root) | eligibility.recent_run_rvas(48, root)
-    attempts = eligibility.attempt_counts(root / "reverse/re_attempts.log")
-    records = re_log.latest_records(root / "reverse/re_attempts.log")
+    attempts = eligibility.attempt_counts(root / "targets/game/reverse/re_attempts.log")
+    records = re_log.latest_records(root / "targets/game/reverse/re_attempts.log")
     # An unlocked shared prerequisite adds a new lead to the evidence pack.
-    unlocked = eligibility.unlocked_rvas(root / "reverse/unlocked.txt")
+    unlocked = eligibility.unlocked_rvas(root / "targets/game/reverse/unlocked.txt")
     density = eligibility.neighbour_density(rows=ledger_rows)
     cands = []
     for row in rows:
@@ -89,18 +89,18 @@ def finalize(prepared, n_want, min_b, max_b, root=ROOT, dry=False):
     wanted = {int(c[2], 16) for c in shortlist}
     with (root / "build/.fleet_claims.lock").open("a+b") as handle:
         lock(handle, exclusive=True)
-        latest = eligibility.latest_verdicts(root / "reverse/re_attempts.log")
+        latest = eligibility.latest_verdicts(root / "targets/game/reverse/re_attempts.log")
         # Carved rows must be checked against EVERY current claimed range, not
         # only the shortlist, or a newly landed overlap could be resurrected.
         live = {eligibility.rva_of(row): row for row in eligibility.open_dumps(
-            rows=eligibility.load_rows(root / "reverse/functions.csv"), latest=latest,
+            rows=eligibility.load_rows(root / "targets/game/reverse/functions.csv"), latest=latest,
             min_size=min_b, max_size=max_b, anonymous=True, include_carved=True,
-            carved_path=root / "reverse/carved.csv")
+            carved_path=root / "targets/game/reverse/carved.csv")
             if eligibility.rva_of(row) in wanted}
         taken = eligibility.busy_rvas(root) | eligibility.recent_run_rvas(48, root)
-        attempts = eligibility.attempt_counts(root / "reverse/re_attempts.log")
-        unlocked = eligibility.unlocked_rvas(root / "reverse/unlocked.txt")
-        records = re_log.latest_records(root / "reverse/re_attempts.log")
+        attempts = eligibility.attempt_counts(root / "targets/game/reverse/re_attempts.log")
+        unlocked = eligibility.unlocked_rvas(root / "targets/game/reverse/unlocked.txt")
+        records = re_log.latest_records(root / "targets/game/reverse/re_attempts.log")
         valid = []
         for c in shortlist:
             rva = int(c[2], 16)

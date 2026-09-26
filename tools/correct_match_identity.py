@@ -39,17 +39,17 @@ def correct(root, old_name, new_name, rva, size, source, evidence):
     evidence = checked_field("evidence", evidence)
     if old_name == new_name:
         fail("old and new names are identical")
-    if not evidence.startswith(("docs/", "reverse/")) or ".." in Path(evidence).parts:
-        fail("evidence must be a file under docs/ or reverse/")
-    if not source.startswith("Code/") or ".." in Path(source).parts:
-        fail("source must be a file under Code/")
+    if not evidence.startswith(("docs/", "targets/game/reverse/")) or ".." in Path(evidence).parts:
+        fail("evidence must be a file under docs/ or targets/game/reverse/")
+    if not source.startswith("game/") or ".." in Path(source).parts:
+        fail("source must be a file under game/")
     if not (root / evidence).is_file() or not (root / evidence).read_bytes().strip():
         fail(f"evidence file is missing or empty: {evidence}")
     if not (root / source).is_file():
         fail(f"source file is missing: {source}")
-    functions = root / "reverse/functions.csv"
-    deleted = root / "reverse/deleted_rows.csv"
-    with (root / "reverse/.add_match.lock").open("a") as lock_file:
+    functions = root / "targets/game/reverse/functions.csv"
+    deleted = root / "targets/game/reverse/deleted_rows.csv"
+    with (root / "targets/game/reverse/.add_match.lock").open("a") as lock_file:
         lock(lock_file, exclusive=True,
              wait_notice="correct_match_identity: waiting for ledger lock...")
         before = functions.read_bytes()

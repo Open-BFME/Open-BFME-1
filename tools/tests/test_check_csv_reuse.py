@@ -19,17 +19,17 @@ ARGS = {None: (), "": ("--staged",), "REF": ("--ref", "REF")}
 @pytest.fixture
 def fake_state(tmp_path, monkeypatch):
     monkeypatch.setattr(check_csv, "ROOT", tmp_path)
-    monkeypatch.setattr(check_csv, "FUNCTIONS", tmp_path / "reverse/functions.csv")
-    monkeypatch.setattr(check_csv, "SYMBOLS", tmp_path / "reverse/symbols.csv")
-    monkeypatch.setattr(check_csv, "DELETED", tmp_path / "reverse/deleted_rows.csv")
+    monkeypatch.setattr(check_csv, "FUNCTIONS", tmp_path / "targets/game/reverse/functions.csv")
+    monkeypatch.setattr(check_csv, "SYMBOLS", tmp_path / "targets/game/reverse/symbols.csv")
+    monkeypatch.setattr(check_csv, "DELETED", tmp_path / "targets/game/reverse/deleted_rows.csv")
 
     source_by_mode = {
-        None: "Code/worktree_dump.asm",
-        "": "Code/index_dump.asm",
-        "REF": "Code/ref_dump.asm",
+        None: "game/worktree_dump.asm",
+        "": "game/index_dump.asm",
+        "REF": "game/ref_dump.asm",
     }
     count_by_mode = {None: 1, "": 2, "REF": 3}
-    attempt = "reverse/attempts/0x00001000.cpp"
+    attempt = "targets/game/reverse/attempts/0x00001000.cpp"
     states = {}
     for mode, count in count_by_mode.items():
         source = source_by_mode[mode]
@@ -45,7 +45,7 @@ def fake_state(tmp_path, monkeypatch):
         ).encode()
         states[mode] = {
             "functions": functions,
-            "sources": {source, attempt, f"Code/gen_small/{mode or 'worktree'}.cpp"},
+            "sources": {source, attempt, f"game/gen_small/{mode or 'worktree'}.cpp"},
         }
 
     symbols = (check_csv.SYMBOLS_HEADER + "\r\n").encode()

@@ -12,14 +12,14 @@ import next_work
 
 
 def ledger(tmp_path, monkeypatch, rows):
-    (tmp_path / "reverse").mkdir()
-    with (tmp_path / "reverse/functions.csv").open("w", newline="") as stream:
+    (tmp_path / "targets/game/reverse").mkdir(parents=True)
+    with (tmp_path / "targets/game/reverse/functions.csv").open("w", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=[
             "target_rva", "target_size", "source", "status", "notes"])
         writer.writeheader()
         for changes in rows:
             row = dict(target_rva="0x00001400", target_size=534,
-                       source="Code/gen_asm/d_00001400.asm", status="matched",
+                       source="game/gen_asm/d_00001400.asm", status="matched",
                        notes="gen-dump;bounds=high")
             row.update(changes)
             writer.writerow(row)
@@ -28,7 +28,7 @@ def ledger(tmp_path, monkeypatch, rows):
 
 def candidate():
     return dict(function="?f@C@@QAEXH@Z", candidate_rva="0x00001400",
-                size=494, source="Code/fixture.cpp", aligned_pct=55, hint="old drift")
+                size=494, source="game/fixture.cpp", aligned_pct=55, hint="old drift")
 
 
 def test_missing_inventory_uses_current_dump_without_reweighting(tmp_path, monkeypatch):
@@ -48,8 +48,8 @@ def test_missing_inventory_uses_current_dump_without_reweighting(tmp_path, monke
 
 @pytest.mark.parametrize("changes", [
     {"status": "pending"}, {"notes": "gen-dump;bounds=medium"},
-    {"notes": "gen-alias;bounds=high"}, {"source": "Code/real.cpp"},
-    {"source": "Code/gen_small/uw.cpp"}, {"target_rva": "0x00001500"},
+    {"notes": "gen-alias;bounds=high"}, {"source": "game/real.cpp"},
+    {"source": "game/gen_small/uw.cpp"}, {"target_rva": "0x00001500"},
 ])
 def test_only_requested_matched_high_confidence_dumps(tmp_path, monkeypatch, changes):
     ledger(tmp_path, monkeypatch, [changes])
@@ -64,7 +64,7 @@ def test_conflicting_dump_extents_fail_explicitly(tmp_path, monkeypatch):
 
 def test_ret_int3_carving_supersedes_stale_inventory_extent(tmp_path, monkeypatch):
     ledger(tmp_path, monkeypatch, [{"target_rva": "0x00001500"}])
-    with (tmp_path / "reverse/carved.csv").open("w", newline="") as stream:
+    with (tmp_path / "targets/game/reverse/carved.csv").open("w", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=[
             "rva", "size", "start_evidence", "callers", "end_evidence", "ghidra"])
         writer.writeheader()
@@ -85,7 +85,7 @@ def test_ret_int3_carving_supersedes_stale_inventory_extent(tmp_path, monkeypatc
 
 def test_only_ret_int3_carvings_are_boundary_proof(tmp_path, monkeypatch):
     ledger(tmp_path, monkeypatch, [{"target_rva": "0x00001500"}])
-    with (tmp_path / "reverse/carved.csv").open("w", newline="") as stream:
+    with (tmp_path / "targets/game/reverse/carved.csv").open("w", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=[
             "rva", "size", "start_evidence", "callers", "end_evidence", "ghidra"])
         writer.writeheader()

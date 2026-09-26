@@ -2,13 +2,13 @@
 
     python tools/layout_witness.py --compile   # compile every reference GameEngine(Device) TU, and every reference TU the
                                                # ledger builds rows from, to build/layout/ref/ (~10 min, resumable)
-    python tools/layout_witness.py             # align + aggregate -> reverse/bfme_layouts.json
+    python tools/layout_witness.py             # align + aggregate -> targets/game/reverse/bfme_layouts.json
 
 For every function the ledger or a pin names, whose ZH source compiled, the ZH body
 and the retail body are aligned instruction-for-instruction (difflib over opcode
 shapes; bodies under 70% alignment are dropped). Each `this`-relative memory
 operand whose displacement differs is a witness: ZH offset -> retail offset. The
-ZH offset is named through reverse/zh_offsets.json (tools/zh_offsets.py) walking
+ZH offset is named through targets/game/reverse/zh_offsets.json (tools/zh_offsets.py) walking
 the primary base chain; witnesses are weighted by alignment quality and summed
 per (owner class, member). Read the result with tools/bfme_layout.py.
 
@@ -19,7 +19,7 @@ import argparse,sys,json,re,difflib,collections,csv,struct
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent)); import build as B
 
-ZH=B.ROOT/'reference/CnC_Generals_Zero_Hour/GeneralsMD/Code'
+ZH=B.ROOT/'inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code'
 
 
 def format_failure_groups(fails, examples=5):
@@ -42,8 +42,8 @@ def format_failure_groups(fails, examples=5):
 
 def ledger_reference_sources():
     """Vendored reference TUs the ledger builds rows from; its Libraries and Generals TUs lie outside the sweep."""
-    rows = csv.DictReader(open(B.ROOT / 'reverse/functions.csv', encoding='utf-8', errors='replace'))
-    return {B.ROOT / r['source'] for r in rows if (r.get('source') or '').startswith('reference/')}
+    rows = csv.DictReader(open(B.ROOT / 'targets/game/reverse/functions.csv', encoding='utf-8', errors='replace'))
+    return {B.ROOT / r['source'] for r in rows if (r.get('source') or '').startswith('inputs/reference/')}
 
 
 def reference_name(p):
@@ -169,15 +169,15 @@ def run_witness():
         o=B.rva_to_file_offset(secs,rva); return data[o:o+size]
     # ---- names -> retail address/size
     addr={}; size={}
-    for r in csv.DictReader(open(B.ROOT/'reverse/functions.csv',encoding='utf-8',errors='replace')):
+    for r in csv.DictReader(open(B.ROOT/'targets/game/reverse/functions.csv',encoding='utf-8',errors='replace')):
         try: a=int(r['target_rva'],16); addr.setdefault(r['name'],a); size.setdefault(a,int(r['target_size']))
         except: pass
-    for r in csv.DictReader(open(B.ROOT/'reverse/symbols.csv',encoding='utf-8',errors='replace')):
+    for r in csv.DictReader(open(B.ROOT/'targets/game/reverse/symbols.csv',encoding='utf-8',errors='replace')):
         try: addr.setdefault(r['name'],int(r['address'],16))
         except: pass
     # ---- ZH offsets and inheritance
     zh={}
-    for h,cls in json.load(open(B.ROOT/'reverse/zh_offsets.json')).items():
+    for h,cls in json.load(open(B.ROOT/'targets/game/reverse/zh_offsets.json')).items():
         for c,ms in cls.items(): zh.setdefault(c,{}).update(ms)
     bases={}
     for h in list((ZH/'GameEngine/Include').rglob('*.h'))+list((ZH/'GameEngineDevice/Include').rglob('*.h'))+list((ZH/'Libraries/Source/WWVegas').rglob('*.h')):
@@ -243,7 +243,7 @@ def run_witness():
         out.append(dict(owner=owner,fn_class=sorted(fcls[(owner,mem,z)])[0],member=mem,zh=z,bfme=bf,votes=round(nv,1),total=round(tot,1),
                         confidence=round(nv/tot,2),alts={f'{k:#x}':round(v,1) for k,v in c.items() if k!=bf},fns=sorted(fns[(owner,mem,z)])[:3]))
     out.sort(key=lambda o:(o['owner'] or '',o['zh']))
-    json.dump(out,open(B.ROOT/'reverse/bfme_layouts.json','w'),indent=0)
+    json.dump(out,open(B.ROOT/'targets/game/reverse/bfme_layouts.json','w'),indent=0)
     changed=[o for o in out if o['bfme']!=o['zh']]
     print('members witnessed',len(out),'changed',len(changed),'classes',len({o['owner'] or o['fn_class'] for o in out}))
     for o in changed[:40]: print(f"  {(o['owner'] or o['fn_class'] or '?'):28s} {o['member']:34s} zh={o['zh']:#6x} bfme={o['bfme']:#6x} votes={o['votes']}/{o['total']}")

@@ -12,9 +12,9 @@ are not evidence.
   python tools/ghidra_decompile.py --out build/ghdec 0x003E8E10   # one file per RVA
   python tools/ghidra_decompile.py --analyze                      # one-time import + analysis (long)
 
-Looked up in this order: $GHIDRA_INSTALL_DIR, build/toolchains/ghidra_*; and
-$JAVA_HOME, build/toolchains/jdk-*, then `java` on PATH. The project lives in
-build/toolchains/bfme_ghidra (untracked; every host that wants to decompile
+Looked up in this order: $GHIDRA_INSTALL_DIR, inputs/toolchains/ghidra_*; and
+$JAVA_HOME, inputs/toolchains/jdk-*, then `java` on PATH. The project lives in
+inputs/toolchains/bfme_ghidra (untracked; every host that wants to decompile
 analyzes once, hosts that do not still get any exported drafts through git).
 """
 import argparse
@@ -26,22 +26,22 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-PROJECT = ROOT / "build" / "toolchains" / "bfme_ghidra"
-EXE = ROOT / "baselines" / "bfme1" / "workshop-vanilla-1.03" / "files" / "lotrbfme.exe"
+PROJECT = ROOT / "inputs/toolchains" / "bfme_ghidra"
+EXE = ROOT / "inputs/baselines" / "bfme1" / "workshop-vanilla-1.03" / "files" / "lotrbfme.exe"
 
 
 def find_ghidra():
-    roots = [os.environ.get("GHIDRA_INSTALL_DIR")] + sorted(map(str, (ROOT / "build" / "toolchains").glob("ghidra_*")), reverse=True)
+    roots = [os.environ.get("GHIDRA_INSTALL_DIR")] + sorted(map(str, (ROOT / "inputs/toolchains").glob("ghidra_*")), reverse=True)
     for root in filter(None, roots):
         launcher = Path(root) / "support" / ("analyzeHeadless.bat" if os.name == "nt" else "analyzeHeadless")
         if launcher.exists():
             return launcher
-    sys.exit("Ghidra not found: set GHIDRA_INSTALL_DIR or unpack a release under build/toolchains/ (tools/ghidra/README.md)")
+    sys.exit("Ghidra not found: set GHIDRA_INSTALL_DIR or unpack a release under inputs/toolchains/ (tools/ghidra/README.md)")
 
 
 def java_env():
     env = dict(os.environ)
-    homes = [os.environ.get("JAVA_HOME")] + sorted(map(str, (ROOT / "build" / "toolchains").glob("jdk-*")), reverse=True)
+    homes = [os.environ.get("JAVA_HOME")] + sorted(map(str, (ROOT / "inputs/toolchains").glob("jdk-*")), reverse=True)
     for home in filter(None, homes):
         binary = Path(home) / "bin" / ("java.exe" if os.name == "nt" else "java")
         if binary.exists():
@@ -50,7 +50,7 @@ def java_env():
             return env
     if shutil.which("java"):
         return env
-    sys.exit("no JDK found: set JAVA_HOME or unpack a JDK 21 under build/toolchains/")
+    sys.exit("no JDK found: set JAVA_HOME or unpack a JDK 21 under inputs/toolchains/")
 
 
 def headless(*args, capture=True):

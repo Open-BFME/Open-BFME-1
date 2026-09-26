@@ -1,6 +1,6 @@
 """The pin-consistency guard: one name, one function.
 
-reverse/symbols.csv is an additive candidate list, so a wrong pin does not fail
+targets/game/reverse/symbols.csv is an additive candidate list, so a wrong pin does not fail
 anything by itself -- it waits for a call site whose displacement it happens to
 reproduce and then lends its address to a body that is not the function. The
 mistakes this file pins down are the ones that still look like they worked:

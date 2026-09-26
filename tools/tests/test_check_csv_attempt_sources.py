@@ -20,12 +20,12 @@ def attempt_repo(tmp_path, monkeypatch):
     git('config', 'user.name', 'Attempt source test')
     git('config', 'user.email', 'attempt@example.invalid')
     monkeypatch.setattr(check_csv, 'ROOT', tmp_path)
-    ledger = tmp_path / 'reverse/functions.csv'
+    ledger = tmp_path / 'targets/game/reverse/functions.csv'
     monkeypatch.setattr(check_csv, 'FUNCTIONS', ledger)
 
     def populate(source_body=b'__declspec(naked) void fn() {}', count=3,
-                 source='Code/shared source.cpp', bank_body=None, commit_source=True):
-        bank_dir = tmp_path / 'reverse/attempts'
+                 source='game/shared source.cpp', bank_body=None, commit_source=True):
+        bank_dir = tmp_path / 'targets/game/reverse/attempts'
         bank_dir.mkdir(parents=True)
         body = bank_body if bank_body is not None else b'// fn\n// partial score=0.9 date=2026-09-04\n'
         for i in range(count):
@@ -36,7 +36,7 @@ def attempt_repo(tmp_path, monkeypatch):
         code = tmp_path / source
         code.parent.mkdir(parents=True, exist_ok=True)
         code.write_bytes(source_body)
-        git('add', '--', 'reverse')
+        git('add', '--', 'targets/game/reverse')
         if commit_source:
             git('add', '--', source)
         git('commit', '-m', 'attempt snapshot')
@@ -61,9 +61,9 @@ def test_immutable_ref_keeps_committed_banks_and_sources_and_batches_once(attemp
     assert problems == []
     batches = [call for call in calls.call_args_list if 'cat-file' in call.args[0]]
     assert len(batches) == 2  # Existing bank batch plus one unique-source batch.
-    assert batches[1].kwargs['input'] == f'{sha}:Code/shared source.cpp\n'.encode()
+    assert batches[1].kwargs['input'] == f'{sha}:game/shared source.cpp\n'.encode()
     assert not any('show' in call.args[0] and
-                   call.args[0][-1].endswith(':Code/shared source.cpp')
+                   call.args[0][-1].endswith(':game/shared source.cpp')
                    for call in calls.call_args_list)
 
 
@@ -120,7 +120,7 @@ def test_bad_score_does_not_trigger_unreachable_source_read(attempt_repo):
 def test_binary_placeholders_need_no_cpp_source_evidence(attempt_repo, suffix):
     root, git, populate = attempt_repo
     sha, code, banks = populate(commit_source=False, count=1,
-                               source='Code/binary'+suffix)
+                               source='game/binary'+suffix)
     problems = []
     assert check_csv.check_attempts(sha, problems) == 1
     assert problems == []

@@ -2,7 +2,7 @@
 
 pin_status is a reporting layer over find_declared_unmatched's definition parser,
 so the tests here are about the one thing it adds: deciding, per definition, what
-reverse/functions.csv actually says about that body. Two of them are the reason
+targets/game/reverse/functions.csv actually says about that body. Two of them are the reason
 the tool exists at all --
 
   * an OVERLOAD's matched row is not this body's verification. `Widget::Draw(int)`
@@ -43,8 +43,8 @@ def _load(name):
 
 pin_status = _load("pin_status")
 
-SOURCE = "Code/Widget.cpp"
-LEDGER_PATH = "reverse/functions.csv"
+SOURCE = "game/Widget.cpp"
+LEDGER_PATH = "targets/game/reverse/functions.csv"
 
 WIDGET_CPP = """// ?Draw@Widget@@QAEXH@Z
 void Widget::Draw( int n )
@@ -92,7 +92,7 @@ def ledger(extra=()):
         # matched, and named by THIS source -- the only `matched` in the fixture.
         (f"?Draw@Widget@@QAEXH@Z,,0x00401000,16,{SOURCE},matched,".encode(), b"\r\r\n"),
         # matched, but the row names another TU: `row-elsewhere`.
-        (b"?Paint@Widget@@QAEXXZ,,0x00401020,16,Code/Other.cpp,matched,", b"\n"),
+        (b"?Paint@Widget@@QAEXXZ,,0x00401020,16,game/Other.cpp,matched,", b"\n"),
         # a row exists whose status is not matched: `unmatched`.
         (f"?Tick@Widget@@QAEXXZ,,0x00401040,16,{SOURCE},unmatched,".encode(), b"\r\n"),
         # one row against the file's TWO un-annotated Blend bodies.
@@ -103,8 +103,8 @@ def ledger(extra=()):
 
 def world(tmp_path, source=WIDGET_CPP, rows=()):
     root = (tmp_path / "repo").resolve()
-    (root / "Code").mkdir(parents=True)
-    (root / "reverse").mkdir()
+    (root / "game").mkdir(parents=True)
+    (root / "targets/game/reverse").mkdir(parents=True)
     (root / SOURCE).write_text(source)
     (root / LEDGER_PATH).write_bytes(ledger(rows))
     return root
@@ -200,7 +200,7 @@ def test_a_row_behind_each_terminator_is_read(tmp_path):
 # Measured on GameLogic.cpp at the commit that added this file. Conversions move
 # these -- `matched` up, `no-row` down -- so the assertion is directional: a drop
 # in matched, or a rise in no-row, is the tool regressing, not the tree changing.
-GAMELOGIC = "Code/GameEngine/Source/GameLogic/System/GameLogic.cpp"
+GAMELOGIC = "game/GameEngine/Source/GameLogic/System/GameLogic.cpp"
 MEASURED = {"matched": 9, "row-elsewhere": 15, "unmatched": 0, "no-row": 37,
             "ambiguous": 0}
 DEFINITIONS = 61

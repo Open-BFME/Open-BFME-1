@@ -40,7 +40,7 @@ def sources_by_object():
     row claiming it, and those are precisely the ones worth finding.
     """
     out = {}
-    for src in build.ROOT.joinpath("Code").rglob("*.cpp"):
+    for src in build.ROOT.joinpath("game").rglob("*.cpp"):
         try:
             out[str(build.obj_path(src))] = str(src.relative_to(build.ROOT))
         except Exception:

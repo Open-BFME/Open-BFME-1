@@ -87,7 +87,7 @@ def scan_pointers(raw, base_va, lo, hi):
 def load_owner_index():
     """Sorted function starts and rows, so a .text site maps to its owner row."""
     rows = []
-    with open(ROOT / "reverse/functions.csv", newline="", encoding="utf-8", errors="replace") as fh:
+    with open(ROOT / "targets/game/reverse/functions.csv", newline="", encoding="utf-8", errors="replace") as fh:
         for row in csv.DictReader(fh):
             if row.get("status") != "matched" or not (row.get("target_rva") or "").startswith("0x"):
                 continue

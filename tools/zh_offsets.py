@@ -1,9 +1,9 @@
 """Dump member offsets per class from the ZH (GeneralsMD) headers -- or the few
-BFME-patched headers under Code/ -- by compiling `(int)&((C*)0)->m_x` tables with
+BFME-patched headers under game/ -- by compiling `(int)&((C*)0)->m_x` tables with
 the project's own cl and reading the constants back out of the object.
 
     python tools/zh_offsets.py GameEngine/Include/GameLogic/Object.h        # one header, JSON
-    python tools/zh_offsets.py --all                                       # every engine header -> reverse/zh_offsets.json
+    python tools/zh_offsets.py --all                                       # every engine header -> targets/game/reverse/zh_offsets.json
 
 MSVC 7.1 has no /d1reportAllClassLayout, so this is the layout oracle: 728
 classes / 6,064 members on 2026-09-10. Members hidden behind #ifdefs are dropped
@@ -12,9 +12,9 @@ import sys,re,subprocess,struct,json
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent)); import build as B
 from pathlib import Path
-ZH=B.ROOT/'reference/CnC_Generals_Zero_Hour/GeneralsMD/Code'
-ROOTS={'zh':ZH,'bfme':B.ROOT/'Code'}
-CLFROM={'zh':'Code/GameEngine/Source/GameLogic/Object/Contain/TunnelContain.cpp','bfme':'Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp'}
+ZH=B.ROOT/'inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code'
+ROOTS={'zh':ZH,'bfme':B.ROOT/'game'}
+CLFROM={'zh':'game/GameEngine/Source/GameLogic/Object/Contain/TunnelContain.cpp','bfme':'game/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp'}
 MEM=re.compile(r'^\s*(?!return|typedef|friend|static|enum|class|struct|union|virtual|using|#)[A-Za-z_][\w:<>,\*&\s]*?\s+\*?\s*(\w+)\s*(\[[^\]]*\])?\s*(?::\s*\d+)?\s*;',re.M)
 def classes_in(header):
     """{qualified class name: [members]} for every class/struct in the header;
@@ -60,7 +60,7 @@ def dump(header_rel, extra_includes=(), cl_from=None, drop=(), root='zh'):
     cls={c:ms for c,ms in cls.items() if ms}
     head=Path(B.ROOT/cl_from).read_text(encoding='utf-8',errors='replace').splitlines()[:2]
     if root=='zh':
-        ww='reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/'
+        ww='inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/'
         head[0]+=' '+' '.join('/I'+ww+d for d in ('WW3D2','WWMath','WWDebug','WWSaveLoad','WWLib'))
     inc=header_rel.split('Include/')[-1] if 'Include/' in header_rel else Path(header_rel).name
     lines=list(head)+['#define private public','#define protected public','#include "PreRTS.h"']+[f'#include "{h}"' for h in extra_includes]+[f'#include "{inc}"']
@@ -106,7 +106,7 @@ def dump_all(root='zh'):
             if rc==0 and '{' in out: res[h]=json.loads(out[out.index('{'):])
             else: fails[h]=((out+err).strip().splitlines() or ['?'])[-1][:160]
             print(f'{len(res)} ok / {len(fails)} fail  {h}',file=sys.stderr,flush=True)
-    outp=B.ROOT/'reverse'/(root+'_offsets.json'); json.dump(res,open(outp,'w'),indent=0)
+    outp=B.ROOT/'targets/game/reverse'/(root+'_offsets.json'); json.dump(res,open(outp,'w'),indent=0)
     json.dump(fails,open(B.ROOT/'build/layout'/(root+'_offsets_fail.json'),'w'),indent=0)
     print('wrote',outp,len(res),'headers;',len(fails),'failed (build/layout/*_fail.json)')
 if __name__=='__main__':

@@ -32,8 +32,8 @@ def test_no_arguments_preserves_explicit_normalization(monkeypatch):
 
 
 HEADER = "name,export_rva,target_rva,target_size,source,status,notes\r\n"
-KEEP = "?keep@@YAXXZ,,0x00401000,16,Code/A.cpp,matched,\r\n"
-DEAD = "?dead@@YAXXZ,,0x00402000,16,Code/B.cpp,matched,\r\n"
+KEEP = "?keep@@YAXXZ,,0x00401000,16,game/A.cpp,matched,\r\n"
+DEAD = "?dead@@YAXXZ,,0x00402000,16,game/B.cpp,matched,\r\n"
 
 
 def test_drop_tombstoned_removes_a_resurrected_row(tmp_path, capsys):

@@ -22,11 +22,11 @@ boundary, resolved callees -- but naming them means synthesising an identity
 rather than recovering one, which is a different job with a different review bar.
 
 Scanning 5,512 reference files takes far longer than next_work.py's ten-second
-budget, so the result is cached in reverse/anchored_candidates.csv the way
+budget, so the result is cached in targets/game/reverse/anchored_candidates.csv the way
 drift_report.csv is. Regenerate after a batch of landings.
 
 Usage:
-  python3 tools/anchor_unclaimed.py [--min-size 32] [--out reverse/anchored_candidates.csv]
+  python3 tools/anchor_unclaimed.py [--min-size 32] [--out targets/game/reverse/anchored_candidates.csv]
 """
 import argparse
 import collections
@@ -44,10 +44,10 @@ import build
 import progress as P
 
 ROOT = Path(__file__).resolve().parents[1]
-GHIDRA = ROOT / "reverse" / "ghidra_functions.csv"
-XREFS = ROOT / "reverse" / "string_xrefs.tsv"
-ZH = ROOT / "reference" / "CnC_Generals_Zero_Hour"
-OUT = ROOT / "reverse" / "anchored_candidates.csv"
+GHIDRA = ROOT / "targets/game/reverse" / "ghidra_functions.csv"
+XREFS = ROOT / "targets/game/reverse" / "string_xrefs.tsv"
+ZH = ROOT / "inputs/reference" / "CnC_Generals_Zero_Hour"
+OUT = ROOT / "targets/game/reverse" / "anchored_candidates.csv"
 
 # Short literals ("OK", "%d") are shared by hundreds of functions and identify
 # nothing; the floor is what makes a match evidence rather than a coincidence.

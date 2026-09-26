@@ -563,12 +563,12 @@ def set_pid(root, run, pid, expected=None):
 def validate_targets(root, targets):
     """Use eligibility's one open-body rule just before spawning a worker."""
     import eligibility
-    rows = eligibility.load_rows(root / "reverse/functions.csv")
-    latest = eligibility.latest_verdicts(root / "reverse/re_attempts.log")
+    rows = eligibility.load_rows(root / "targets/game/reverse/functions.csv")
+    latest = eligibility.latest_verdicts(root / "targets/game/reverse/re_attempts.log")
     live = {row["target_rva"].lower(): int(row.get("target_size") or 0)
             for row in eligibility.open_dumps(
                 rows, latest, include_carved=True,
-                carved_path=root / "reverse/carved.csv")}
+                carved_path=root / "targets/game/reverse/carved.csv")}
     for rva, size in targets:
         if live.get(rva) != size:
             raise StaleBrief(f"{rva}/{size}B is no longer an open body at that size")
@@ -662,11 +662,11 @@ def stash_fingerprint(rva):
 def retry_allowed(root, rva, before):
     import re_log
     current = stash_fingerprint(rva)
-    record = re_log.latest_records(root / "reverse/re_attempts.log").get(rva)
+    record = re_log.latest_records(root / "targets/game/reverse/re_attempts.log").get(rva)
     stash = re_log.stash_for(rva)
     if current in ("none", before) or not record or record[3] != "partial" or stash[1] < .5:
         return False
-    with (root / "reverse/functions.csv").open(newline="", encoding="utf-8") as ledger:
+    with (root / "targets/game/reverse/functions.csv").open(newline="", encoding="utf-8") as ledger:
         return any(int(row["target_rva"], 16) == rva and row["source"].endswith(".asm")
                    for row in csv.DictReader(ledger) if row.get("target_rva"))
 

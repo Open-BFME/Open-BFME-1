@@ -267,7 +267,7 @@ def test_pin_consistency_check_rejects_an_additive_wrong_cifmod_pin(
 
     class CleanScanner:
         def scan(self):
-            return [], {"multi_pinned": 0, "names": 0}
+            return [], {"multi_pinned": 0, "names": 0, "routes": 0}
 
     monkeypatch.setattr(pin_consistency, "Scanner", CleanScanner)
     monkeypatch.setattr(pin_consistency.build, "EXE", exe)

@@ -1,0 +1,47 @@
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// BFME FloatingTextData destructor from the InGameUI floating-text path.
+
+#include "unicode_string.h"
+
+class DisplayString;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayStringManager.h
+class DisplayStringManager
+{
+public:
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0c();
+	virtual void slot10();
+	virtual void slot14();
+	virtual void slot18();
+	virtual void slot1c();
+	virtual void slot20();
+	virtual DisplayString *newDisplayString();
+	virtual void freeDisplayString(DisplayString *string);
+};
+
+extern DisplayStringManager *TheDisplayStringManager;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
+class FloatingTextData
+{
+public:
+	virtual ~FloatingTextData();
+
+private:
+	unsigned int m_color;
+	UnicodeString m_text;
+	DisplayString *m_dString;
+	char m_tail[0x14];
+};
+
+FloatingTextData::~FloatingTextData()
+{
+	if (m_dString)
+	{
+		TheDisplayStringManager->freeDisplayString(m_dString);
+	}
+	m_dString = 0;
+}

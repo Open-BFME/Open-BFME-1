@@ -21,7 +21,7 @@ costs an agent a look, never a bad match.
 
 Usage:
   python3 tools/drift_classify.py [--src Code] [--limit N] [--min-size 24]
-Report: reverse/zh_sweep/drift_report.csv (function,source,...,class,hint)
+Report: targets/game/reverse/zh_sweep/drift_report.csv (function,source,...,class,hint)
 """
 import argparse
 import bisect
@@ -39,7 +39,7 @@ from locate import object_functions
 
 ROOT = build.ROOT
 SCRATCH = ROOT / "build" / "drift"
-REPORT = ROOT / "reverse" / "zh_sweep" / "drift_report.csv"
+REPORT = ROOT / "targets/game/reverse" / "zh_sweep" / "drift_report.csv"
 IMAGE_BASE = 0x400000
 
 CLASS_ORDER = {"exact-ambiguous": -1, "immediate-only": 0, "imm+reg": 1, "structural": 2,
@@ -51,7 +51,7 @@ def load_world():
     pe = build.pe_sections(exe)
     text = next(s for s in pe if s["name"] == ".text")
     ghidra = {}
-    ghidra_file = ROOT / "reverse" / "ghidra_functions.csv"
+    ghidra_file = ROOT / "targets/game/reverse" / "ghidra_functions.csv"
     if ghidra_file.exists():
         with ghidra_file.open(newline="") as fh:
             for row in csv.DictReader(fh):
@@ -264,7 +264,7 @@ def classify(exe, pe, body, relocs, cand_rva, ghidra):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--src", default="Code")
+    ap.add_argument("--src", default="game")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--min-size", type=int, default=24)
     args = ap.parse_args()

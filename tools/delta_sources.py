@@ -7,7 +7,7 @@ need verification. Used by the git hooks instead of running the full gate.
 
   --staged        HEAD vs the git index (pre-commit)
   --range A B     committed state A vs committed state B (pre-push)
-  --pins          print instead the sources a reverse/symbols.csv PIN DELETION
+  --pins          print instead the sources a targets/game/reverse/symbols.csv PIN DELETION
                   can redden (see pin_deletion_sources)
 
 Default output: one repo-relative source path per line for legacy callers.
@@ -27,28 +27,40 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build
+import layout_history
 
 ROOT = Path(__file__).resolve().parents[1]
-LEDGER = "reverse/functions.csv"
-PINS = "reverse/symbols.csv"
+LEDGER = "targets/game/reverse/functions.csv"
+PINS = "targets/game/reverse/symbols.csv"
 REL32 = 0x0014
 LIB_SUFFIX = ".lib"
 
 
 def text_at(spec):
     """File content at a git object spec, or "" where the path does not exist."""
+    ref, path = spec.split(":", 1)
+    old_path = {LEDGER: layout_history.OLD_LEDGER,
+                PINS: layout_history.OLD_PINS}.get(path)
+    if old_path:
+        path = layout_history.path_at(ref, path, old_path, allow_missing=True, root=ROOT)
+        if path is None:
+            return ""
+        spec = f"{ref}:{path}"
     out = subprocess.run(["git", "-C", str(ROOT), "show", spec], capture_output=True)
     return out.stdout.decode("utf-8", errors="replace") if out.returncode == 0 else ""
 
 
 def rows_at(spec):
-    """Ledger rows at a git object spec (e.g. 'HEAD:reverse/...', ':reverse/...').
+    """Ledger rows at a git object spec (e.g. 'HEAD:targets/game/reverse/...', ':targets/game/reverse/...').
     Returns an empty set when the ledger does not exist there (new repo)."""
     return {tuple(r) for r in csv.reader(io.StringIO(text_at(spec))) if r and r[0] != "name"}
 
 
 def dict_rows_at(spec):
-    return [r for r in csv.DictReader(io.StringIO(text_at(spec))) if r.get("name")]
+    rows = [r for r in csv.DictReader(io.StringIO(text_at(spec))) if r.get("name")]
+    for row in rows:
+        row["source"] = layout_history.canonical_source(row["source"])
+    return rows
 
 
 def row_candidates(rows):
@@ -60,7 +72,7 @@ def row_candidates(rows):
 
 
 def pins_at(spec):
-    """{(name, address)} pinned by reverse/symbols.csv at a git object spec."""
+    """{(name, address)} pinned by targets/game/reverse/symbols.csv at a git object spec."""
     pairs = set()
     for row in csv.DictReader(io.StringIO(text_at(spec))):
         name = row.get("name")

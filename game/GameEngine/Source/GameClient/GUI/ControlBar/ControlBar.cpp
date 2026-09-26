@@ -1,0 +1,3894 @@
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/controlbarvtables /Iinputs/reference/shims/controlbarlayout /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+#define Matrix4x4 Matrix4  // BFME renamed it
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+////////////////////////////////////////////////////////////////////////////////
+//																																						//
+//  (c) 2001-2003 Electronic Arts Inc.																				//
+//																																						//
+////////////////////////////////////////////////////////////////////////////////
+
+// FILE: ControlBar.cpp ///////////////////////////////////////////////////////////////////////////
+// Author: Colin Day, March 2002
+// Desc:   Context sensitive command interface
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// USER INCLUDES //////////////////////////////////////////////////////////////////////////////////
+
+#include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+
+// BFME de-pooled this glue: retail's per-class `operator delete(void*, MagicEnum)`
+// is one 12-byte body (0x007EFFF0) that calls the CRT free IMPORT THUNK -- a
+// `call rel32` into `jmp [__imp__free]` -- where ::operator delete (0x00881EB0)
+// is a different function. <stdlib.h> declares free __declspec(dllimport) under
+// /MD, which compiles to the `ff 15` indirect form instead, so the C-linkage
+// redeclaration below is what names `_free` for the linker's thunk; it is
+// namespaced so every other free() call in this TU keeps the indirect form
+// retail also uses. Same TU-scoped override Team.cpp already carries.
+namespace BfmePoolGlue { extern "C" void __cdecl free(void *); }
+#undef MEMORY_POOL_GLUE_WITHOUT_GCMP
+#define MEMORY_POOL_GLUE_WITHOUT_GCMP(ARGCLASS) \
+protected: \
+	virtual ~ARGCLASS(); \
+public: \
+	enum ARGCLASS##MagicEnum { ARGCLASS##_GLUE_NOT_IMPLEMENTED = 0 }; \
+public: \
+	inline void *operator new(size_t s, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
+	{ return MP_GLUE_ALLOCATE(ARGCLASS); } \
+public: \
+	inline void operator delete(void *p, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
+	{ BfmePoolGlue::free(p); } \
+protected: \
+	inline void *operator new(size_t s) { return ::operator new(s); } \
+	inline void operator delete(void *p) { ::operator delete(p); } \
+private: \
+	virtual MemoryPool *getObjectMemoryPool() { return ARGCLASS::getClassMemoryPool(); } \
+public:
+#define DEFINE_GUI_COMMMAND_NAMES
+#define DEFINE_COMMAND_OPTION_NAMES
+#define DEFINE_WEAPONSLOTTYPE_NAMES
+#define DEFINE_RADIUSCURSOR_NAMES
+
+#include "Common/ActionManager.h"
+#include "Common/GameType.h"
+#include "Common/MultiplayerSettings.h"
+#include "Common/NameKeyGenerator.h"
+#include "Common/OVERRIDE.h"
+#include "Common/PlayerTemplate.h"
+#include "Common/Player.h"
+#include "Common/PlayerList.h"
+#include "Common/ProductionPrerequisite.h"
+#include "Common/SpecialPower.h"
+#include "Common/ThingTemplate.h"
+#include "Common/ThingFactory.h"
+#include "Common/Upgrade.h"
+#include "Common/Recorder.h"
+
+#include "GameLogic/GameLogic.h"
+#include "GameLogic/Object.h"
+#include "GameLogic/Module/ProductionUpdate.h"
+#include "GameLogic/Module/OCLUpdate.h"
+#include "GameLogic/Module/ContainModule.h"
+#include "GameLogic/Module/SpecialPowerModule.h"
+#include "GameLogic/Module/StealthUpdate.h"
+#include "GameLogic/Module/RebuildHoleBehavior.h"
+#include "GameLogic/ScriptEngine.h"
+
+#include "GameClient/AnimateWindowManager.h"
+#include "GameClient/ControlBar.h"
+#include "GameClient/ControlBarScheme.h"
+#include "GameClient/Drawable.h"
+#include "GameClient/Display.h"
+#include "GameClient/DisplayStringManager.h"
+#include "GameClient/GameClient.h"
+#include "GameClient/GameWindowManager.h"
+#include "GameClient/GameText.h"
+#include "GameClient/GadgetPushButton.h"
+#include "GameClient/GadgetProgressBar.h"
+#include "GameClient/GadgetStaticText.h"
+#include "GameClient/GadgetTextEntry.h"
+#include "GameClient/InGameUI.h"
+#include "GameClient/WindowVideoManager.h"
+#include "GameClient/ControlBarResizer.h"
+#include "GameClient/GadgetListBox.h"
+#include "GameClient/HotKey.h"
+#include "GameClient/GameWindowTransitions.h"
+#include "GameClient/GUICallbacks.h"
+
+#include "GameNetwork/GameInfo.h"
+
+// BFME's InGameUI vtable puts setGUICommand at slot 46; the ZH header lands it
+// at 37, so the tail call comes out [eax+0x94] instead of [eax+0xb8]. Only the
+// one slot is named; the rest stay anonymous because nothing here needs them.
+class BFMERetailInGameUIVTable
+{
+public:
+	virtual void slot0() = 0;
+	virtual void slot1() = 0;
+	virtual void slot2() = 0;
+	virtual void slot3() = 0;
+	virtual void slot4() = 0;
+	virtual void slot5() = 0;
+	virtual void slot6() = 0;
+	virtual void slot7() = 0;
+	virtual void slot8() = 0;
+	virtual void slot9() = 0;
+	virtual void slot10() = 0;
+	virtual void slot11() = 0;
+	virtual void slot12() = 0;
+	virtual void slot13() = 0;
+	virtual void slot14() = 0;
+	virtual void slot15() = 0;
+	virtual void slot16() = 0;
+	virtual void slot17() = 0;
+	virtual void slot18() = 0;
+	virtual void slot19() = 0;
+	virtual void slot20() = 0;
+	virtual void slot21() = 0;
+	virtual void slot22() = 0;
+	virtual void slot23() = 0;
+	virtual void slot24() = 0;
+	virtual void slot25() = 0;
+	virtual void slot26() = 0;
+	virtual void slot27() = 0;
+	virtual void slot28() = 0;
+	virtual void slot29() = 0;
+	virtual void slot30() = 0;
+	virtual void slot31() = 0;
+	virtual void slot32() = 0;
+	virtual void slot33() = 0;
+	virtual void slot34() = 0;
+	virtual void slot35() = 0;
+	virtual void slot36() = 0;
+	virtual void slot37() = 0;
+	virtual void slot38() = 0;
+	virtual void slot39() = 0;
+	virtual void slot40() = 0;
+	virtual void slot41() = 0;
+	virtual void slot42() = 0;
+	virtual void slot43() = 0;
+	virtual void slot44() = 0;
+	virtual void slot45() = 0;
+	virtual void setGUICommand(const void *cmd) = 0;
+};
+
+// The BFME object grew two context-parent slots and moved the selected-draw
+// state one word past the Zero Hour layout.  Keep this view local to the
+// reconstruction so the real ControlBar header remains untouched.
+struct BfmeContextSwitchControlBarView
+{
+	char pad00[0x34];
+	GameWindow *contextParent[10];
+	Drawable *currentSelectedDrawable;
+	ControlBarContext currContext;
+	char pad64[0x9c];
+	GameWindow *commandWindows[20];
+	char pad150[0x1a0];
+	void *contextOverlay;
+};
+
+struct BfmeContextSwitchSelectionState
+{
+	void *chat;
+	Drawable *oldSelected;
+};
+
+class BfmeSourceCB
+{
+public:
+	char m_bfmeHead[0x74];
+	int m_bfmeValue;
+};
+
+class Gen_004AFA80
+{
+public:
+	void bfmeTake(BfmeSourceCB *source);
+
+private:
+	int m_bfmeHead[7];
+	int m_bfmeValue;
+};
+
+struct BfmeContextSwitchDrawableView
+{
+	char pad00[0xfc];
+	BfmeSourceCB *object;
+};
+
+// Calls in the context arms are deliberately declaration-only.  This keeps
+// each retail call boundary visible to the compiler instead of inlining an
+// already-converted sibling body into this large dispatcher.
+extern void j_0000d495(void);
+extern void j_0000efe8(void);
+extern void j_0001df4d(void);
+extern void j_00034581(void);
+class Rva0049E780Calls {
+public:
+    void commandSignature(Object *, Bool);
+    void multiSignature(void);
+    __forceinline void populateCommand(Object *object, Bool refresh) {
+        typedef void (Rva0049E780Calls::*Method)(Object *, Bool);
+        union { void (*raw)(void); Method member; } call;
+        call.raw = j_0000d495;
+        (this->*call.member)(object, refresh);
+    }
+    __forceinline void populateStructureInventory(Object *object, Bool refresh) {
+        typedef void (Rva0049E780Calls::*Method)(Object *, Bool);
+        union { void (*raw)(void); Method member; } call;
+        call.raw = j_0001df4d;
+        (this->*call.member)(object, refresh);
+    }
+    __forceinline void populateOCLTimer(Object *object) {
+        typedef void (Rva0049E780Calls::*Method)(Object *);
+        union { void (*raw)(void); Method member; } call;
+        call.raw = j_00034581;
+        (this->*call.member)(object);
+    }
+    __forceinline void populateMultiSelect(void) {
+        typedef void (Rva0049E780Calls::*Method)(void);
+        union { void (*raw)(void); Method member; } call;
+        call.raw = j_0000efe8;
+        (this->*call.member)();
+    }
+};
+
+class BfmeContextSwitchBfmeTransitionMD
+{
+public:
+	virtual void slot00(void) = 0;
+	virtual void slot01(void) = 0;
+	virtual void slot02(void) = 0;
+	virtual void slot03(void) = 0;
+	virtual void slot04(void) = 0;
+};
+
+class BfmeContextSwitchInGameUI : public BFMERetailInGameUIVTable
+{
+public:
+	virtual void slot47(void) = 0;
+	virtual void slot48(void) = 0;
+	virtual void slot49(void) = 0;
+	virtual void slot50(void) = 0;
+	virtual void slot51(void) = 0;
+	virtual void slot52(void) = 0;
+	virtual void slot53(void) = 0;
+	virtual void slot54(void) = 0;
+	virtual void slot55(void) = 0;
+	virtual void slot56(void) = 0;
+	virtual void slot57(void) = 0;
+	virtual void slot58(void) = 0;
+	virtual void slot59(void) = 0;
+	virtual void slot60(void) = 0;
+	virtual void slot61(void) = 0;
+	virtual void slot62(void) = 0;
+	virtual void slot63(void) = 0;
+	virtual void slot64(void) = 0;
+	virtual void slot65(void) = 0;
+	virtual void slot66(void) = 0;
+	virtual void slot67(void) = 0;
+	virtual void slot68(void) = 0;
+	virtual void slot69(void) = 0;
+	virtual void slot70(void) = 0;
+	virtual void setRadiusCursorNone(void) = 0;
+};
+
+class BfmeContextSwitchOverlaySink
+{
+public:
+	virtual void slot00(void) = 0;
+	virtual void slot01(void) = 0;
+	virtual void slot02(void) = 0;
+	virtual void slot03(void) = 0;
+	virtual void slot04(void) = 0;
+};
+
+class BfmeContextSwitchGameLogicView
+{
+public:
+	char pad00[0x10c];
+	Int mode;
+};
+
+class Rva0058C040
+{
+public:
+	void invoke(void);
+};
+
+extern void j_00018f2f(void);
+extern void j_0003367c(void);
+
+class BfmeTransitionMD;
+class Rva005127A0InGameChat;
+class Glo012F4B98Type;
+extern BfmeTransitionMD *g_bfmeTransitionMD;
+extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
+extern void *g_obj12F4C38;
+extern Glo012F4B98Type *Glo012F4B98;
+// No recovered source name exists for this retail selection cache.
+extern volatile Drawable *g_Rva012F340C;
+#define BFME_CONTEXT_TRANSITION ((BfmeContextSwitchBfmeTransitionMD *)g_bfmeTransitionMD)
+#define BFME_CONTEXT_INGAME_UI ((BfmeContextSwitchInGameUI *)TheInGameUI)
+#define BFME_CONTEXT_IN_GAME_CHAT g_Rva005127A0InGameChat
+#define BFME_CONTEXT_OBJECT_12F4C38 g_obj12F4C38
+#define BFME_CONTEXT_GAME_LOGIC ((BfmeContextSwitchGameLogicView *)TheGameLogic)
+#define BFME_CONTEXT_GLO_12F4B98 ((Rva0058C040 *)Glo012F4B98)
+#define BFME_CONTEXT_SELECTION_CACHE g_Rva012F340C
+
+
+#ifdef _INTERNAL
+// for occasional debugging...
+//#pragma optimize("", off)
+//#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
+#endif
+
+// PUBLIC /////////////////////////////////////////////////////////////////////////////////////////
+ControlBar *TheControlBar = NULL;
+
+void (Coord3D::*g_controlBarCoord3DSet)( const Coord3D * ) = &Coord3D::set;
+
+const Image* ControlBar::m_rankVeteranIcon	= NULL;
+const Image* ControlBar::m_rankEliteIcon		= NULL;
+const Image* ControlBar::m_rankHeroicIcon		= NULL;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// CommandButton //////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+const FieldParse CommandButton::s_commandButtonFieldParseTable[] = 
+{
+
+	{ "Command",							CommandButton::parseCommand, NULL, offsetof( CommandButton, m_command ) },
+	{ "Options",							INI::parseBitString32,		   TheCommandOptionNames, offsetof( CommandButton, m_options ) },
+	{ "Object",								INI::parseThingTemplate,		 NULL, offsetof( CommandButton, m_thingTemplate ) },
+	{ "Upgrade",							INI::parseUpgradeTemplate,	 NULL, offsetof( CommandButton, m_upgradeTemplate ) },
+	{ "WeaponSlot",						INI::parseLookupList,				 TheWeaponSlotTypeNamesLookupList, offsetof( CommandButton, m_weaponSlot ) },
+	{ "MaxShotsToFire",				INI::parseInt,							 NULL, offsetof( CommandButton, m_maxShotsToFire ) },
+	{ "Science",							INI::parseScienceVector,					 NULL, offsetof( CommandButton, m_science ) },
+	{ "SpecialPower",					INI::parseSpecialPowerTemplate,			 NULL, offsetof( CommandButton, m_specialPower ) },
+	{ "TextLabel",						INI::parseAsciiString,			 NULL, offsetof( CommandButton, m_textLabel ) },
+	{ "DescriptLabel",				INI::parseAsciiString,			 NULL, offsetof( CommandButton, m_descriptionLabel ) },
+	{ "PurchasedLabel",				INI::parseAsciiString,			 NULL, offsetof( CommandButton, m_purchasedLabel ) },
+	{ "ConflictingLabel",			INI::parseAsciiString,			 NULL, offsetof( CommandButton, m_conflictingLabel ) },
+	{ "ButtonImage",					INI::parseAsciiString,			 NULL, offsetof( CommandButton, m_buttonImageName ) },
+	{ "CursorName",						INI::parseAsciiString,			 NULL, offsetof( CommandButton, m_cursorName ) },
+	{ "InvalidCursorName",		INI::parseAsciiString,       NULL, offsetof( CommandButton, m_invalidCursorName ) },
+	{ "ButtonBorderType",			INI::parseLookupList,				 CommandButtonMappedBorderTypeNames, offsetof( CommandButton, m_commandButtonBorder ) },
+	{ "RadiusCursorType",			INI::parseIndexList,				 TheRadiusCursorNames, offsetof( CommandButton, m_radiusCursor ) },
+	{ "UnitSpecificSound",		INI::parseAudioEventRTS,		 NULL, offsetof( CommandButton, m_unitSpecificSound ) }, 
+
+	{ NULL,						NULL,												 NULL, 0 }  // keep this last
+
+};
+// Retail loads TheScienceStore here, not TheControlBar, and calls
+// ScienceStore::friend_lookupScience -- the seventeen bytes at 0x000B8F40 are
+// mov ecx,[0x12ed7ac] ; push eax ; call 0x17503, and 0x00017503 is the
+// incremental-link thunk for the matched friend_lookupScience body at
+// 0x000E7240. Calling TheControlBar->showBuildTooltipLayout(window) reproduced
+// those bytes only because a five-byte thunk row stood in for the callee, which
+// is what targets/game/reverse/dir32_consistency_whitelist.txt recorded as a wrong name that
+// still matched.
+//
+// The argument is passed straight through, so the cast is retail's shape rather
+// than a conversion this code chose. The function's own name is still Zero
+// Hour's guess and is very likely wrong too -- nothing in the image names it --
+// but the global and the callee are now right.
+static void commandButtonTooltip(GameWindow *window,
+													WinInstanceData *instData,
+													UnsignedInt mouse)
+{
+	TheScienceStore->friend_lookupScience( (const char *)window );
+}
+
+/// mark the UI as dirty so the context of everything is re-evaluated
+// ?markUIDirty@ControlBar@@QAEXXZ present-unmatched
+void ControlBar::markUIDirty( void )
+{ 
+  m_UIDirty = TRUE;
+
+#if defined( _INTERNAL ) || defined( _DEBUG )
+	UnsignedInt now = TheGameLogic->getFrame();
+	if( now == m_lastFrameMarkedDirty )
+	{
+		//Do nothing.
+	}
+	else if( now == m_lastFrameMarkedDirty + 1 )
+	{
+		m_consecutiveDirtyFrames++;
+	}
+	else
+	{
+		m_consecutiveDirtyFrames = 1;
+	}
+	m_lastFrameMarkedDirty = now;
+
+	if( m_consecutiveDirtyFrames > 20 )
+	{
+		DEBUG_CRASH( ("Serious flaw in interface system! Either new code or INI has caused the interface to be marked dirty every frame. This problem actually causes the interface to completely lockup not allowing you to click normal game buttons.") );
+	}
+
+#endif
+}
+
+
+// ?populatePurchaseScience@ControlBar@@IAEXPAVPlayer@@@Z
+// Body in game/masm_dumps/_str3__populatePurchaseScience_ControlBar_IAEXPAVPlayer_Z_4A0B90.asm (exact 783B retail @ 0x004A0B90).
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// BFME's skill points are a Real at Player+0x25C, not an Int: every read floors
+// them through the CRT and converts, which is what the float round trip
+// (fld dword / floor / fstp dword / fistp) in retail is.  The two level bounds
+// either side of the experience bar are plain Ints at +0x268 and +0x26C.
+struct BfmePurchaseSciencePlayer
+{
+	Int getSkillPoints() const { return (Int)floorf( m_skillPoints ); }
+
+	unsigned char m_unreconstructed_000[ 0x25c ];
+	Real m_skillPoints;					///< retail this+0x25C
+	unsigned char m_unreconstructed_260[ 0x268 - 0x260 ];
+	Int m_skillPointsLevelUp;				///< retail this+0x268
+	Int m_skillPointsLevelDown;				///< retail this+0x26C
+};
+
+void ControlBar::updateContextPurchaseScience( void )
+{
+	GameWindow *win =NULL;
+	Player *player = ThePlayerList->getLocalPlayer();
+	win = TheWindowManager->winGetWindowFromId( m_contextParent[ CP_PURCHASE_SCIENCE ], TheNameKeyGenerator->nameToKey( "GeneralsExpPoints.wnd:ProgressBarExperience" ) );
+	if(win)
+	{
+		BfmePurchaseSciencePlayer *scores = (BfmePurchaseSciencePlayer *)player;
+		Real skillPoints = floorf( scores->m_skillPoints );
+		Int points = fast_float2long_round( skillPoints );
+		Int progress;
+		progress = ((points - scores->m_skillPointsLevelDown) * 100) /(scores->m_skillPointsLevelUp - scores->m_skillPointsLevelDown);
+		GadgetProgressBarSetProgress(win, progress);
+	}
+	
+//	win = TheWindowManager->winGetWindowFromId( m_contextParent[ CP_PURCHASE_SCIENCE ], TheNameKeyGenerator->nameToKey( "ControlBar.wnd:TextEntryGeneralName" ) );
+//	if(win)
+//	{
+//		UnicodeString temp = GadgetTextEntryGetText(win);
+//		if(temp.compare(player->getGeneralName()) != 0)
+//			player->setGeneralName(temp);
+//	}
+/*
+	/// @todo srj -- evil hack testing code. do not imitate.
+	Object *obj = m_currentSelectedDrawable->getObject();
+
+	if( obj == NULL )
+		return;
+
+	// sanity
+	if( obj->isKindOf( KINDOF_COMMANDCENTER ) == FALSE )
+		switchToContext( CB_CONTEXT_NONE, NULL );
+	
+	GameWindow* win = m_contextParent[ CP_PURCHASE_SCIENCE ];
+
+	Int selected;
+	GadgetListBoxGetSelected( win, &selected );
+	if( selected != -1 )
+	{
+		UnicodeString usci = GadgetListBoxGetText( win, selected, 0 );
+		AsciiString sci;
+		sci.translate(usci);
+		ScienceType st = usci.getCharAt(0) == '(' ? SCIENCE_INVALID : TheScienceStore->getScienceFromInternalName(sci);
+
+		if (st != SCIENCE_INVALID)
+		{
+			GameMessage *msg = TheMessageStream->appendMessage( GameMessage::MSG_PURCHASE_SCIENCE );
+			msg->appendIntegerArgument( st );
+		}
+
+		switchToContext( CB_CONTEXT_NONE, NULL );
+	}
+*/
+
+}
+
+//-------------------------------------------------------------------------------------------------
+/** parse command definition */
+//-------------------------------------------------------------------------------------------------
+// ?parseCommand@CommandButton@@SAXPAVINI@@PAX1PBX@Z
+// Body in game/masm_dumps/CommandButton_parseCommand.asm (exact 124B retail @ 0x49AB90).
+// True body via unique TheGuiCommandNames table; queue 0x23E4F6 was INSIDE FUN_0063e420.
+// BFME throws formatted "Command '%s' not found" + expanded name table vs ZH enum throw.
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// ??0CommandButton@@QAE@XZ present-unmatched
+CommandButton::CommandButton( void )
+{
+
+	m_command = GUI_COMMAND_NONE;
+	m_thingTemplate = NULL;
+	m_upgradeTemplate = NULL;
+	m_weaponSlot = PRIMARY_WEAPON;
+	m_maxShotsToFire = 0x7fffffff;	// huge number
+	m_science.clear();
+	m_specialPower = NULL;
+	m_buttonImage = NULL;
+
+	//Code renderer handles these states now.
+	//m_disabledImage = NULL;
+	//m_hiliteImage = NULL;
+	//m_pushedImage = NULL;
+
+	m_flashCount = 0;
+
+	// Added by Sadullah Nader
+	// The purpose is to initialize these variable to values that are zero or empty
+
+	m_conflictingLabel.clear();
+	m_cursorName.clear();
+	m_descriptionLabel.clear();
+	m_invalidCursorName.clear();
+	m_name.clear();
+	m_options = 0;
+	m_purchasedLabel.clear();
+	m_textLabel.clear();
+
+	// End Add
+	
+	m_window = NULL;
+	m_commandButtonBorder = COMMAND_BUTTON_BORDER_NONE;
+	//m_prev = NULL;
+	m_next = NULL;			
+	m_radiusCursor = RADIUSCURSOR_NONE;													
+	
+}
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// ??1CommandButton@@MAE@XZ present-unmatched
+CommandButton::~CommandButton( void )
+{
+	
+}
+
+//-------------------------------------------------------------------------------------------------
+Bool CommandButton::isValidRelationshipTarget(Relationship r) const
+{
+	UnsignedInt mask = 0;
+	if (r == ENEMIES) mask |= NEED_TARGET_ENEMY_OBJECT;
+	else if (r == ALLIES) mask |= NEED_TARGET_ALLY_OBJECT;
+	else if (r == NEUTRAL) mask |= NEED_TARGET_NEUTRAL_OBJECT;
+
+	return (m_options & mask) != 0;
+}
+
+//-------------------------------------------------------------------------------------------------
+Bool CommandButton::isValidObjectTarget(const Player* sourcePlayer, const Object* targetObj) const
+{
+	if (!sourcePlayer || !targetObj)
+		return false;
+
+	// BFME Object::m_team at +0x23c (ZH getTeam() inlines the wrong offset).
+	// Same overlay used by Object::isLocallyControlled / isNeutralControlled.
+	struct BFMEObjectTeamField {
+		unsigned char pad[0x23c];
+		Team *team;
+	};
+	const BFMEObjectTeamField *obj = reinterpret_cast<const BFMEObjectTeamField *>(targetObj);
+	Relationship r = sourcePlayer->getRelationship(obj->team);
+
+	return isValidRelationshipTarget(r);
+}
+
+//-------------------------------------------------------------------------------------------------
+Bool CommandButton::isValidObjectTarget(const Object* sourceObj, const Object* targetObj) const
+{
+	if (!sourceObj || !targetObj)
+		return false;
+
+	Relationship r = sourceObj->getRelationship(targetObj);
+
+	return isValidRelationshipTarget(r);
+}
+
+//-------------------------------------------------------------------------------------------------
+class BfmeCommandButtonProductionEntry
+{
+public:
+	char m_unmodelled00[4];
+	Int m_type;
+	char m_unmodelled08[4];
+	const UpgradeTemplate *m_upgrade;
+};
+
+class BfmeCommandButtonProductionUpdate
+{
+public:
+	virtual void slot00(void) = 0;
+	virtual void slot01(void) = 0;
+	virtual void slot02(void) = 0;
+	virtual void slot03(void) = 0;
+	virtual void slot04(void) = 0;
+	virtual void slot05(void) = 0;
+	virtual void slot06(void) = 0;
+	virtual void slot07(void) = 0;
+	virtual void slot08(void) = 0;
+	virtual void slot09(void) = 0;
+	virtual void slot10(void) = 0;
+	virtual void slot11(void) = 0;
+	virtual void slot12(void) = 0;
+	virtual void slot13(void) = 0;
+	virtual void slot14(void) = 0;
+	virtual void slot15(void) = 0;
+	virtual void slot16(void) = 0;
+	virtual void slot17(void) = 0;
+	virtual BfmeCommandButtonProductionEntry *firstProduction(void) = 0;
+	virtual BfmeCommandButtonProductionEntry *nextProduction(
+		const BfmeCommandButtonProductionEntry *) = 0;
+};
+
+
+Bool CommandButton::isValidToUseOn(const Object *sourceObj, const Object *targetObj, const Coord3D *targetLocation, CommandSourceType commandSource) const
+{
+	if (m_upgradeTemplate && m_command != (GUICommandType)0x16) {
+		// @todo: Make a const version of pui. We're not altering the production queue, so this const-cast
+		// is okay.
+		BfmeCommandButtonProductionUpdate *pui = reinterpret_cast<BfmeCommandButtonProductionUpdate *>(
+			const_cast<Object*>(sourceObj)->getProductionUpdateInterface());
+		if (pui) {
+			BfmeCommandButtonProductionEntry *pe = pui->firstProduction();
+			while (pe) {
+				if (pe->m_type == 2 && pe->m_upgrade != NULL)
+					return false;
+				pe = pui->nextProduction(pe);
+			}
+			return sourceObj->affectedByUpgrade(m_upgradeTemplate) && !sourceObj->hasUpgrade(m_upgradeTemplate);
+		}
+		// No ProductionUpdateInterface means we can't do this.
+		return false;
+	}
+
+	if( BitTest( m_options, COMMAND_OPTION_NEED_OBJECT_TARGET ) && !targetObj ) 
+	{
+		return false;
+	}
+
+	if( BitTest( m_options, NEED_TARGET_POS ) && !targetLocation ) 
+	{
+		return false;
+	}
+	
+	if( BitTest( m_options, COMMAND_OPTION_NEED_OBJECT_TARGET ) ) 
+	{
+		if (m_specialPower)
+			return TheActionManager->canDoSpecialPowerAtObject( sourceObj, targetObj, commandSource, m_specialPower, m_options, false );
+
+		return TheActionManager->canFireWeaponAtObject( sourceObj, targetObj, commandSource,
+			*reinterpret_cast<const WeaponSlotType *>(reinterpret_cast<const char *>(this) + 0x6c) );
+	}
+
+	if( BitTest( m_options, NEED_TARGET_POS ) )
+	{
+		return TheActionManager->canDoSpecialPowerAtLocation( sourceObj, targetLocation, commandSource, m_specialPower, NULL, m_options, false );
+	}
+
+	if (m_command == (GUICommandType)0x16)
+		return isReady( sourceObj );
+
+	return TheActionManager->canDoSpecialPower( sourceObj, m_specialPower, commandSource, m_options, false );
+}
+
+//-------------------------------------------------------------------------------------------------
+Bool CommandButton::isReady(const Object *sourceObj) const
+{
+	if (sourceObj == NULL)
+		return FALSE;
+
+	// BFME branches command type 22 off to a frame comparison of its own: the
+	// upgrade has to be un-owned, and then TheGameLogic's counter at +0x3c has to
+	// have caught up with the object's stamp at +0x36c. Both are reached by offset
+	// because neither member is named yet -- the same way Science.cpp already
+	// reaches TheGameLogic+0x10c.
+	if (m_command == GUI_COMMAND_PURCHASE_SCIENCE)
+	{
+		if (m_upgradeTemplate && !sourceObj->hasUpgrade(m_upgradeTemplate))
+			return FALSE;
+
+		const Bool ready = *reinterpret_cast<const UnsignedInt *>(
+					reinterpret_cast<const char *>(sourceObj) + 0x36c)
+			<= *reinterpret_cast<const UnsignedInt *>(
+					reinterpret_cast<const char *>(TheGameLogic) + 0x3c);
+		return ready;
+	}
+
+	SpecialPowerModuleInterface *mod = sourceObj->getSpecialPowerModule( m_specialPower );
+	if( mod && mod->getPercentReady() == 1.0f ) 
+		return true;
+	
+	if (m_upgradeTemplate && sourceObj->affectedByUpgrade(m_upgradeTemplate) && !sourceObj->hasUpgrade(m_upgradeTemplate))
+		return true;
+
+	return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+struct BFMEDrawableObjectView
+{
+	char m_pad000[0xfc];
+	Object *m_object;
+};
+
+Bool CommandButton::isValidObjectTarget(const Drawable *source, const Drawable *target) const
+{
+	const BFMEDrawableObjectView *sourceView = reinterpret_cast<const BFMEDrawableObjectView *>(source);
+	const BFMEDrawableObjectView *targetView = reinterpret_cast<const BFMEDrawableObjectView *>(target);
+	return isValidObjectTarget(source ? sourceView->m_object : NULL, target ? targetView->m_object : NULL);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// CommandSet /////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+//-------------------------------------------------------------------------------------------------
+/** These are the fields you can define in a command set, they correspond to physical
+	* buttons in the GUI */
+//-------------------------------------------------------------------------------------------------
+const FieldParse CommandSet::m_commandSetFieldParseTable[] = 
+{
+	
+	{ "1",			CommandSet::parseCommandButton, (void *)0,		offsetof( CommandSet, m_command ) },
+	{ "2",			CommandSet::parseCommandButton, (void *)1,		offsetof( CommandSet, m_command ) },
+	{ "3",			CommandSet::parseCommandButton, (void *)2,		offsetof( CommandSet, m_command ) },
+	{ "4",			CommandSet::parseCommandButton, (void *)3,		offsetof( CommandSet, m_command ) },
+	{ "5",			CommandSet::parseCommandButton, (void *)4,		offsetof( CommandSet, m_command ) },
+	{ "6",			CommandSet::parseCommandButton, (void *)5,		offsetof( CommandSet, m_command ) },
+	{ "7",			CommandSet::parseCommandButton, (void *)6,		offsetof( CommandSet, m_command ) },
+	{ "8",			CommandSet::parseCommandButton, (void *)7,		offsetof( CommandSet, m_command ) },
+	{ "9",			CommandSet::parseCommandButton, (void *)8,		offsetof( CommandSet, m_command ) },
+	{ "10",			CommandSet::parseCommandButton, (void *)9,		offsetof( CommandSet, m_command ) },
+	{ "11",			CommandSet::parseCommandButton, (void *)10,		offsetof( CommandSet, m_command ) },
+	{ "12",			CommandSet::parseCommandButton, (void *)11,		offsetof( CommandSet, m_command ) },
+	{ "13",			CommandSet::parseCommandButton, (void *)12,		offsetof( CommandSet, m_command ) },
+	{ "14",			CommandSet::parseCommandButton, (void *)13,		offsetof( CommandSet, m_command ) },
+	{ "15",			CommandSet::parseCommandButton, (void *)14,		offsetof( CommandSet, m_command ) },
+	{ "16",			CommandSet::parseCommandButton, (void *)15,		offsetof( CommandSet, m_command ) },
+	{ "17",			CommandSet::parseCommandButton, (void *)16,		offsetof( CommandSet, m_command ) },
+	{ "18",			CommandSet::parseCommandButton, (void *)17,		offsetof( CommandSet, m_command ) },
+	{ NULL,			NULL,														 NULL,				0	}  // keep this last
+
+};
+
+//-------------------------------------------------------------------------------------------------
+Bool CommandButton::isContextCommand() const
+{
+	// BFME treats these command types as context commands even when their
+	// option mask does not carry CONTEXTMODE_COMMAND.  The select-all command
+	// is 0x24 in the retail command table; the ZH header's enum is two entries
+	// shorter, so keep that BFME value local to this TU.
+	if( m_command == GUI_COMMAND_HACK_INTERNET ||
+			m_command == GUI_COMMAND_SPECIAL_POWER_FROM_SHORTCUT ||
+			m_command == (GUICommandType)0x24 ||
+			m_command == GUI_COMMAND_PURCHASE_SCIENCE )
+	{
+		return TRUE;
+	}
+
+	return BitTest( m_options, CONTEXTMODE_COMMAND );
+}
+
+//-------------------------------------------------------------------------------------------------
+// bleah. shouldn't be const, but is. sue me. (srj)
+// ?copyImagesFrom@CommandButton@@QBEXPBV1@_N@Z present-unmatched
+void CommandButton::copyImagesFrom( const CommandButton *button, Bool markUIDirtyIfChanged ) const
+{
+	if( m_buttonImage != button->getButtonImage() )
+	{
+		m_buttonImage = button->getButtonImage();
+
+		//Code renderer handles these states now.
+		//m_disabledImage = button->getDisabledImage();
+		//m_hiliteImage = button->getHiliteImage();
+		//m_pushedImage = button->getPushedImage();
+
+		if( markUIDirtyIfChanged )
+		{
+			TheControlBar->markUIDirty();
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+// bleah. shouldn't be const, but is. sue me. (Kris) -snork!
+// ?copyButtonTextFrom@CommandButton@@QBEXPBV1@_N1@Z present-unmatched
+void CommandButton::copyButtonTextFrom( const CommandButton *button, Bool shortcutButton, Bool markUIDirtyIfChanged ) const
+{
+	//This function was added to change the strings when you upgrade from a DaisyCutter to a MOAB. All other special
+	//powers are the same.
+	Bool change = FALSE;
+	if( shortcutButton )
+	{
+		//Not the best code, but conflicting label means shortcut label (most won't have any string specified).
+		if( button->getConflictingLabel().isNotEmpty() && m_textLabel.compare( button->getConflictingLabel() ) )
+		{
+			m_textLabel = button->getConflictingLabel();
+			change = TRUE;
+		}
+	}
+	else
+	{	
+		//Copy the text from the purchase science button if it exists (most won't).
+		if( button->getTextLabel().isNotEmpty() && m_textLabel.compare( button->getTextLabel() ) )
+		{
+			m_textLabel = button->getTextLabel();
+			change = TRUE;
+		}
+	}
+	if( button->getDescriptionLabel().isNotEmpty() && m_descriptionLabel.compare( button->getDescriptionLabel() ) )
+	{
+		m_descriptionLabel = button->getDescriptionLabel();
+		change = TRUE;
+	}
+	if( markUIDirtyIfChanged && change )
+	{
+		TheControlBar->markUIDirty();
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Parse a single command button definition */
+//-------------------------------------------------------------------------------------------------
+// ?parseCommandButton@CommandSet@@CAXPAVINI@@PAX1PBX@Z present-unmatched
+void CommandSet::parseCommandButton( INI* ini, void *instance, void *store, const void *userData )
+{
+	const char *token = ini->getNextToken();
+
+	// get find the command button from this name
+	const CommandButton *commandButton = TheControlBar->findCommandButton( AsciiString( token ) );
+	if( commandButton == NULL )
+	{
+
+		DEBUG_CRASH(( "[LINE: %d - FILE: '%s'] Unknown command '%s' found in command set\n",
+								  ini->getLineNum(), ini->getFilename().str(), token ));
+		throw INI_INVALID_DATA;
+
+	}  // end if
+
+	// get the index to store the command at, and the command array itself
+	const CommandButton **buttonArray = (const CommandButton **)store;
+	Int buttonIndex = (Int)userData;
+
+	// sanity
+	DEBUG_ASSERTCRASH( buttonIndex < MAX_COMMANDS_PER_SET, ("parseCommandButton: button index '%d' out of range\n", 
+										 buttonIndex) );
+
+	// save it
+	buttonArray[ buttonIndex ] = commandButton;
+
+}  // end parseCommand
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/ControlBar/CommandSetConstructor.cpp
+// ??0CommandSet@@QAE@ABVAsciiString@@@Z present-unmatched
+CommandSet::CommandSet(const AsciiString& name) : 
+	m_name(name),
+	m_next(NULL)
+{
+	for( Int i = 0; i < MAX_COMMANDS_PER_SET; i++ )
+		m_command[ i ] = NULL;
+}
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+const CommandButton* CommandSet::getCommandButton(Int i) const 
+{ 
+	const CommandButton* button;
+  // Check for TheGameLogic == null, cause it is in Worldbuilder, and wb gets command bar info. jba.
+	if (TheGameLogic && TheGameLogic->findControlBarOverride(m_name, i, button))
+		return button;
+
+	return m_command[i]; 
+}
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// ?friend_addToList@CommandSet@@QAEXPAPAV1@@Z present-unmatched
+void CommandSet::friend_addToList(CommandSet** listHead)
+{
+	m_next = *listHead;
+	*listHead = this;
+}
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// ??1CommandSet@@MAE@XZ present-unmatched
+CommandSet::~CommandSet( void )
+{
+
+}  // end ~CommandSet
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// ControlBar /////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// ??0ControlBar@@QAE@XZ
+// Body in ControlBar_ctor.asm (exact 819B retail).
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/Common/ControlBarDestructorThunk.cpp
+// ??1ControlBar@@UAE@XZ present-unmatched
+ControlBar::~ControlBar( void )
+{
+
+	if(m_scienceLayout)
+	{
+		m_scienceLayout->destroyWindows();
+		m_scienceLayout->deleteInstance();
+	}
+	m_scienceLayout = NULL;
+	m_genArrow = NULL;
+	if(m_videoManager)
+		delete m_videoManager;
+	m_videoManager = NULL;
+
+
+	if(m_animateWindowManagerForGenShortcuts)
+		delete m_animateWindowManagerForGenShortcuts;
+	m_animateWindowManagerForGenShortcuts = NULL;
+	if(m_animateWindowManager)
+		delete m_animateWindowManager;
+	m_animateWindowManager = NULL;
+	
+	if(m_generalsScreenAnimate)
+		delete m_generalsScreenAnimate;
+	m_generalsScreenAnimate = NULL;
+
+	if( m_controlBarSchemeManager )
+		delete m_controlBarSchemeManager;
+	m_controlBarSchemeManager = NULL;
+
+//	if(m_controlBarResizer)
+//		delete m_controlBarResizer;
+//	m_controlBarResizer = NULL;
+	// destroy all the command set definitions
+	CommandSet *set;
+	while( m_commandSets )
+	{
+		set = m_commandSets->friend_getNext();
+		m_commandSets->deleteInstance();
+		m_commandSets = set;
+
+	}  // end while
+
+	// destroy all our command button definitions
+	CommandButton *button;
+	while( m_commandButtons )
+	{
+		button = m_commandButtons->friend_getNext();
+		m_commandButtons->deleteInstance();
+		m_commandButtons = button;
+
+	}  // end while
+	if(m_buildToolTipLayout)
+	{
+		m_buildToolTipLayout->destroyWindows();
+		m_buildToolTipLayout->deleteInstance();
+		m_buildToolTipLayout = NULL;
+	}
+
+	if(m_specialPowerLayout)
+	{
+		m_specialPowerLayout->destroyWindows();
+		m_specialPowerLayout->deleteInstance();
+		m_specialPowerLayout = NULL;
+	}
+
+	m_radarAttackGlowWindow = NULL;
+
+	if (m_rightHUDCameoWindow && m_rightHUDCameoWindow->winGetUserData())
+		delete m_rightHUDCameoWindow->winGetUserData();
+
+}  // end ~ControlBar
+void ControlBarPopupDescriptionUpdateFunc( WindowLayout *layout, void *param );
+
+//-------------------------------------------------------------------------------------------------
+/** Initialzie the control bar, this is our interface to the context sinsitive GUI */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarInitThunk.cpp
+// ?init@ControlBar@@UAEXXZ present-unmatched
+void ControlBar::init( void )
+{
+	INI ini;
+	m_sideSelectAnimateDown = FALSE;
+	// load the command buttons
+	ini.load( AsciiString( "Data\\INI\\Default\\CommandButton.ini" ), INI_LOAD_OVERWRITE, NULL );
+	ini.load( AsciiString( "Data\\INI\\CommandButton.ini" ), INI_LOAD_OVERWRITE, NULL );
+
+	// load the command sets
+	ini.load( AsciiString( "Data\\INI\\CommandSet.ini" ), INI_LOAD_OVERWRITE, NULL );
+
+	// post process step after loading the command buttons and command sets
+	postProcessCommands();
+
+	// Init the scheme manager, this will call it's won INI init funciton.
+	m_controlBarSchemeManager = NEW ControlBarSchemeManager;
+	m_controlBarSchemeManager->init();
+
+	//Added this check because the builder uses the ControlBar, but doesn't care about
+	//the GUI.
+	if( TheWindowManager )
+	{
+		//
+		// the control bar has several windows that make up our context sensitive interface, we
+		// want those parent windows so that we can easily hide and show them to make the 
+		// interface context sensitive
+		//
+		NameKeyType id;
+		id = TheNameKeyGenerator->nameToKey( "ControlBar.wnd:ControlBarParent" );
+		m_contextParent[ CP_MASTER ] = TheWindowManager->winGetWindowFromId( NULL, id );
+	m_contextParent[ CP_MASTER ]->winGetPosition(&m_defaultControlBarPosition.x, &m_defaultControlBarPosition.y);
+		
+		m_scienceLayout = TheWindowManager->winCreateLayout("GeneralsExpPoints.wnd");
+		m_scienceLayout->hide(TRUE);
+		id = TheNameKeyGenerator->nameToKey( "GeneralsExpPoints.wnd:GenExpParent" );
+
+		m_contextParent[ CP_PURCHASE_SCIENCE ] = TheWindowManager->winGetWindowFromId( NULL, id );//m_scienceLayout->getFirstWindow();
+
+		id = TheNameKeyGenerator->nameToKey( "ControlBar.wnd:UnderConstructionWindow" );
+		m_contextParent[ CP_UNDER_CONSTRUCTION ] = TheWindowManager->winGetWindowFromId( NULL, id );
+
+		id = TheNameKeyGenerator->nameToKey( "ControlBar.wnd:OCLTimerWindow" );
+		m_contextParent[ CP_OCL_TIMER ] = TheWindowManager->winGetWindowFromId( NULL, id );
+
+		id = TheNameKeyGenerator->nameToKey( "ControlBar.wnd:BeaconWindow" );
+		m_contextParent[ CP_BEACON ] = TheWindowManager->winGetWindowFromId( NULL, id );
+
+		id = TheNameKeyGenerator->nameToKey( "ControlBar.wnd:CommandWindow" );
+		m_contextParent[ CP_COMMAND ] = TheWindowManager->winGetWindowFromId( NULL, id );
+
+		id = TheNameKeyGenerator->nameToKey( "ControlBar.wnd:ProductionQueueWindow" );
+		m_contextParent[ CP_BUILD_QUEUE ] = TheWindowManager->winGetWindowFromId( NULL, id );
+
+		id = TheNameKeyGenerator->nameToKey( "ControlBar.wnd:ObserverPlayerListWindow" );
+		m_contextParent[ CP_OBSERVER_LIST ] = TheWindowManager->winGetWindowFromId( NULL, id );
+
+		id = TheNameKeyGenerator->nameToKey( "ControlBar.wnd:ObserverPlayerInfoWindow" );
+		m_contextParent[ CP_OBSERVER_INFO ] = TheWindowManager->winGetWindowFromId( NULL, id );
+
+
+		// get the command windows and save for easy access later
+		Int i;
+		ICoord2D commandSize, commandPos;
+		AsciiString windowName;
+		for( i = 0; i < MAX_COMMANDS_PER_SET; i++ )
+		{
+		
+			windowName.format( "ControlBar.wnd:ButtonCommand%02d", i + 1 );
+			id = TheNameKeyGenerator->nameToKey( windowName.str() );
+			m_commandWindows[ i ] = 
+				TheWindowManager->winGetWindowFromId( m_contextParent[ CP_COMMAND ], id );
+			if (m_commandWindows[ i ])
+			{
+				m_commandWindows[ i ]->winGetPosition(&commandPos.x, &commandPos.y);
+				m_commandWindows[ i ]->winGetSize(&commandSize.x, &commandSize.y);
+				m_commandWindows[ i ]->winSetStatus( WIN_STATUS_USE_OVERLAY_STATES );
+			}
+
+	// removed from multiplayer branch
+//			windowName.format( "ControlBar.wnd:CommandMarker%02d", i + 1 );
+//			id = TheNameKeyGenerator->nameToKey( windowName.str() );
+//			m_commandMarkers[ i ] = 
+//				TheWindowManager->winGetWindowFromId( m_contextParent[ CP_COMMAND ], id );
+//			// set the size and position to make sure their in the same place as the buttons.
+//			m_commandMarkers[i]->winSetPosition(commandPos.x -2, commandPos.y - 2);
+//			m_commandMarkers[i]->winSetSize(commandSize.x + 2, commandSize.y + 2);
+			
+
+
+		}  // end for i
+
+
+		for( i = 0; i < MAX_PURCHASE_SCIENCE_RANK_1; i++ )
+		{
+			windowName.format( "GeneralsExpPoints.wnd:ButtonRank1Number%d", i );
+			id = TheNameKeyGenerator->nameToKey( windowName.str() );
+			m_sciencePurchaseWindowsRank1[ i ] = 
+				TheWindowManager->winGetWindowFromId( m_contextParent[ CP_PURCHASE_SCIENCE ], id );
+			m_sciencePurchaseWindowsRank1[ i ]->winSetStatus( WIN_STATUS_USE_OVERLAY_STATES );
+		}  // end for i
+		for( i = 0; i < MAX_PURCHASE_SCIENCE_RANK_3; i++ )
+		{
+			windowName.format( "GeneralsExpPoints.wnd:ButtonRank3Number%d", i );
+			id = TheNameKeyGenerator->nameToKey( windowName.str() );
+			m_sciencePurchaseWindowsRank3[ i ] = 
+				TheWindowManager->winGetWindowFromId( m_contextParent[ CP_PURCHASE_SCIENCE ], id );
+			m_sciencePurchaseWindowsRank3[ i ]->winSetStatus( WIN_STATUS_USE_OVERLAY_STATES );
+		}  // end for i
+		
+		for( i = 0; i < MAX_PURCHASE_SCIENCE_RANK_8; i++ ) 
+		{
+			windowName.format( "GeneralsExpPoints.wnd:ButtonRank8Number%d", i );
+			id = TheNameKeyGenerator->nameToKey( windowName.str() );
+			m_sciencePurchaseWindowsRank8[ i ] = 
+				TheWindowManager->winGetWindowFromId( m_contextParent[ CP_PURCHASE_SCIENCE ], id );
+			m_sciencePurchaseWindowsRank8[ i ]->winSetStatus( WIN_STATUS_USE_OVERLAY_STATES );
+		}  // end for i
+
+		// keep a pointer to the window making up the right HUD display
+		id = TheNameKeyGenerator->nameToKey( "ControlBar.wnd:RightHUD" );
+		m_rightHUDWindow = TheWindowManager->winGetWindowFromId( NULL, id );
+	
+		id = TheNameKeyGenerator->nameToKey( "ControlBar.wnd:WinUnitSelected" );
+		m_rightHUDUnitSelectParent = TheWindowManager->winGetWindowFromId( NULL, id );
+		
+		id = TheNameKeyGenerator->nameToKey( "ControlBar.wnd:CameoWindow" );
+		m_rightHUDCameoWindow = TheWindowManager->winGetWindowFromId( NULL, id );
+		for( i = 0; i < MAX_RIGHT_HUD_UPGRADE_CAMEOS; i++ )
+		{
+			windowName.format( "ControlBar.wnd:UnitUpgrade%d", i+1 );
+			id = TheNameKeyGenerator->nameToKey( windowName.str() );
+			m_rightHUDUpgradeCameos[ i ] = 
+				TheWindowManager->winGetWindowFromId( m_rightHUDWindow, id );
+			m_rightHUDUpgradeCameos[ i ]->winSetStatus( WIN_STATUS_USE_OVERLAY_STATES );
+		}
+
+//		m_transitionHandler = NEW GameWindowTransitionsHandler;
+//		m_transitionHandler->load();
+//		m_transitionHandler->init();
+
+		// don't forget about the communicator button CCB
+		id = TheNameKeyGenerator->nameToKey( "ControlBar.wnd:PopupCommunicator" );
+		m_communicatorButton = TheWindowManager->winGetWindowFromId( NULL, id );
+		setControlCommand(m_communicatorButton, findCommandButton("NonCommand_Communicator") );
+		m_communicatorButton->winSetTooltipFunc(commandButtonTooltip);
+
+		GameWindow *win = TheWindowManager->winGetWindowFromId(NULL,TheNameKeyGenerator->nameToKey("ControlBar.wnd:ButtonOptions"));
+		if(win)
+		{
+			setControlCommand(win, findCommandButton("NonCommand_Options") );
+			win->winSetTooltipFunc(commandButtonTooltip);
+		}
+		win = TheWindowManager->winGetWindowFromId(NULL,TheNameKeyGenerator->nameToKey("ControlBar.wnd:ButtonIdleWorker"));
+		if(win)
+		{
+			setControlCommand(win, findCommandButton("NonCommand_IdleWorker") );
+			win->winSetTooltipFunc(commandButtonTooltip);
+		}
+		win = TheWindowManager->winGetWindowFromId(NULL,TheNameKeyGenerator->nameToKey("ControlBar.wnd:ButtonPlaceBeacon"));
+		if(win)
+		{
+			setControlCommand(win, findCommandButton("NonCommand_Beacon") );
+			win->winSetTooltipFunc(commandButtonTooltip);
+		}
+		win = TheWindowManager->winGetWindowFromId(NULL,TheNameKeyGenerator->nameToKey("ControlBar.wnd:ButtonGeneral"));
+		if(win)
+		{
+			setControlCommand(win, findCommandButton("NonCommand_GeneralsExperience") );
+			win->winSetTooltipFunc(commandButtonTooltip);
+		}
+		win = TheWindowManager->winGetWindowFromId(NULL,TheNameKeyGenerator->nameToKey("ControlBar.wnd:ButtonLarge"));
+		if(win)
+		{
+			setControlCommand(win, findCommandButton("NonCommand_UpDown") );
+			win->winSetTooltipFunc(commandButtonTooltip);
+		}
+		
+		win = TheWindowManager->winGetWindowFromId(NULL,TheNameKeyGenerator->nameToKey("ControlBar.wnd:PowerWindow"));
+		if(win)
+		{
+			win->winSetTooltipFunc(commandButtonTooltip);
+		}
+		win = TheWindowManager->winGetWindowFromId(NULL,TheNameKeyGenerator->nameToKey("ControlBar.wnd:MoneyDisplay"));
+		if(win)
+		{
+			win->winSetTooltipFunc(commandButtonTooltip);
+		}
+		win = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey("ControlBar.wnd:GeneralsExp"));
+		if(win)
+		{
+			win->winSetTooltipFunc(commandButtonTooltip);
+		}
+
+		m_radarAttackGlowWindow = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey("ControlBar.wnd:WinUAttack"));
+
+
+		win = TheWindowManager->winGetWindowFromId(NULL,TheNameKeyGenerator->nameToKey( AsciiString( "ControlBar.wnd:BackgroundMarker" ) ));
+		win->winGetScreenPosition(&m_controlBarForegroundMarkerPos.x, &m_controlBarForegroundMarkerPos.y);
+		win = TheWindowManager->winGetWindowFromId(NULL,TheNameKeyGenerator->nameToKey( AsciiString( "ControlBar.wnd:BackgroundMarker" ) ));
+		win->winGetScreenPosition(&m_controlBarBackgroundMarkerPos.x,&m_controlBarBackgroundMarkerPos.y);
+
+		if(!m_videoManager)
+			m_videoManager = NEW WindowVideoManager;
+		if(!m_animateWindowManager)
+			m_animateWindowManager = NEW AnimateWindowManager;
+		if(!m_generalsScreenAnimate)
+			m_generalsScreenAnimate = NEW AnimateWindowManager;
+		if(!m_animateWindowManagerForGenShortcuts)
+			m_animateWindowManagerForGenShortcuts = NEW AnimateWindowManager;
+		m_buildToolTipLayout = TheWindowManager->winCreateLayout( "ControlBarPopupDescription.wnd" );
+		if(m_buildToolTipLayout)
+		{
+			m_buildToolTipLayout->hide(TRUE);
+			m_buildToolTipLayout->setUpdate(ControlBarPopupDescriptionUpdateFunc);
+		}
+			
+		m_genStarOn = TheMappedImageCollection ? (Image *)TheMappedImageCollection->findImageByName("BarButtonGenStarON") : NULL;
+		m_genStarOff = TheMappedImageCollection ? (Image *)TheMappedImageCollection->findImageByName("BarButtonGenStarOFF") : NULL;
+		m_genStarFlash = TRUE;
+		m_lastFlashedAtPointValue = -1;
+
+		m_rankVeteranIcon = TheMappedImageCollection ? TheMappedImageCollection->findImageByName( "SSChevron1L" ) : NULL;
+		m_rankEliteIcon		= TheMappedImageCollection ? TheMappedImageCollection->findImageByName( "SSChevron2L" ) : NULL;
+		m_rankHeroicIcon	= TheMappedImageCollection ? TheMappedImageCollection->findImageByName( "SSChevron3L" ) : NULL;
+
+
+//		if(!m_controlBarResizer)
+//			m_controlBarResizer = NEW ControlBarResizer;
+//		m_controlBarResizer->init();
+		
+
+
+		// Initialize the Observer controls
+		initObserverControls();
+
+		// by default switch to the none context
+		switchToContext( CB_CONTEXT_NONE, NULL );
+	}
+
+}  // end init
+
+//-------------------------------------------------------------------------------------------------
+/** Reset the context sensitive control bar GUI */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/Common/ControlBar_resetMethodThunk.cpp
+// ?reset@ControlBar@@UAEXXZ present-unmatched
+void ControlBar::reset( void )
+{
+	hideSpecialPowerShortcut();
+	// do not destroy the rally drawable, it will get destroyed with everythign else during a reset
+	m_rallyPointDrawableID = INVALID_DRAWABLE_ID;
+	if(m_radarAttackGlowWindow)
+		m_radarAttackGlowWindow->winEnable(TRUE);
+	m_radarAttackGlowOn = FALSE;
+	m_remainingRadarAttackGlowFrames = 0;
+
+	m_displayedConstructPercent = -1.0f;
+	m_displayedOCLTimerSeconds = 0;
+
+	m_isObserverCommandBar = FALSE; // reset us to use a normal command bar
+	m_observerLookAtPlayer = NULL;
+	
+	if(m_buildToolTipLayout)
+		m_buildToolTipLayout->hide(TRUE);
+	m_showBuildToolTipLayout = FALSE;
+
+	if(m_animateWindowManager)
+		m_animateWindowManager->reset();
+
+	if(m_animateWindowManagerForGenShortcuts)
+		m_animateWindowManagerForGenShortcuts->reset();
+
+	if(m_generalsScreenAnimate)
+		m_generalsScreenAnimate->reset();
+
+
+	if(m_videoManager)
+		m_videoManager->reset();
+	
+	// go back to default context
+	switchToContext( CB_CONTEXT_NONE, NULL );
+	m_sideSelectAnimateDown = FALSE;
+	if(m_animateDownWindow)
+	{
+		TheWindowManager->winDestroy( m_animateDownWindow );
+		m_animateDownWindow = NULL;		
+	}
+
+	// Remove any overridden sets.
+	CommandSet *set, *nextSet;
+	set = m_commandSets;
+	while (set) {
+		Bool possibleAdjustment = FALSE;
+		nextSet = set->friend_getNext();
+		if (set == m_commandSets) {
+			possibleAdjustment = TRUE;
+		}
+
+		Overridable *stillValid = set->deleteOverrides();
+		if (stillValid == NULL && possibleAdjustment) {
+			m_commandSets = nextSet;
+		}
+
+		set = nextSet;
+	}
+
+	// Remove any overridden command buttons.
+	CommandButton *button, *nextButton;
+	button = m_commandButtons;
+	while (button) {
+		Bool possibleAdjustment = FALSE;
+		nextButton = button->friend_getNext();
+		if (button == m_commandButtons) {
+			possibleAdjustment = TRUE;
+		}
+
+		Overridable *stillValid = button->deleteOverrides();
+		if (stillValid == NULL && possibleAdjustment) {
+			m_commandButtons = nextButton;
+		}
+
+		button = nextButton;
+	}
+	if(TheTransitionHandler)
+		TheTransitionHandler->remove("ControlBarArrow");
+	m_genArrow = NULL;
+
+	m_lastFlashedAtPointValue = -1;
+	m_genStarFlash = TRUE;
+}  // end reset
+
+//-------------------------------------------------------------------------------------------------
+/** Update phase, we can track if our selected object is destroyed, update button
+	* percentages, status, enabled status etc */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_setControlBarSchemeByPlayerTemplate_Thunk.cpp
+// ?update@ControlBar@@ present-unmatched
+void ControlBar::update( void )
+{
+	getStarImage();
+	updateRadarAttackGlow();
+	if(m_controlBarSchemeManager)
+		m_controlBarSchemeManager->update();
+
+	// Update our video manager
+	if( m_videoManager )
+		m_videoManager->update();
+
+	if (m_animateWindowManager)
+		m_animateWindowManager->update();
+
+	if (m_animateWindowManager)
+		{
+			if (m_animateWindowManager->isFinished() && m_animateWindowManager->isReversed())
+			{
+				Int id = (Int)TheNameKeyGenerator->nameToKey(AsciiString("ControlBar.wnd:ControlBarParent"));
+				GameWindow *window = TheWindowManager->winGetWindowFromId(NULL, id);
+				if (window && !window->winIsHidden())
+					window->winHide(TRUE);
+			}
+		}
+
+	if(m_animateWindowManagerForGenShortcuts)
+		m_animateWindowManagerForGenShortcuts->update();
+	if (m_animateWindowManagerForGenShortcuts && m_specialPowerShortcutParent)
+		{
+			if (m_animateWindowManagerForGenShortcuts->isFinished() && m_animateWindowManagerForGenShortcuts->isReversed())
+			{
+				if (m_specialPowerShortcutParent && !m_specialPowerShortcutParent->winIsHidden())
+					m_specialPowerShortcutParent->winHide(TRUE);
+			}
+		}
+
+
+
+	if( !m_buildToolTipLayout->isHidden())
+	{
+		m_buildToolTipLayout->runUpdate();
+		m_showBuildToolTipLayout = FALSE;
+	}
+/*
+	else if( m_buildToolTipLayout )
+	{
+		hideBuildTooltipLayout();
+	}*/
+
+	updateSpecialPowerShortcut();
+	// if we're an observer, don't do the complete update
+	if( m_isObserverCommandBar)
+	{
+		if((TheGameLogic->getFrame() % (LOGICFRAMES_PER_SECOND/2)) == 0)
+			populateObserverInfoWindow();
+
+		Drawable *drawToEvaluateFor = NULL;
+		Bool multiSelect = FALSE;
+		if( TheInGameUI->getSelectCount() > 1 )
+		{
+			// Attempt to isolate a Drawable here to evaluate
+			// The need arises when selected is an AngryMob,
+			// whose selection actually consists of varied units
+			// but is represented in the UI as a single unit,
+			// so we must isolate and evaluate only the Nexus 
+			drawToEvaluateFor = TheGameClient->findDrawableByID( TheInGameUI->getSoloNexusSelectedDrawableID() ) ;
+			multiSelect = ( drawToEvaluateFor == NULL );
+
+		}  
+		else // get the first and only drawble in the selection list
+			drawToEvaluateFor = TheInGameUI->getAllSelectedDrawables()->front();
+		Object *obj = drawToEvaluateFor ? drawToEvaluateFor->getObject() : NULL;
+		setPortraitByObject( obj );
+		
+		return;
+	}
+		
+
+	// check flashing
+	if( m_flash )
+	{
+		// go through all the command buttons to see which one needs to flash
+		for( Int i = 0; i < MAX_COMMANDS_PER_SET; ++i )
+		{
+			GameWindow *button = m_commandWindows[ i ];
+			if( button != NULL)
+			{
+				const CommandButton *commandButton = (const CommandButton *)GadgetButtonGetData(button);
+				if( commandButton != NULL )
+				{
+					if( commandButton->getFlashCount() > 0 && TheGameClient->getFrame() % 10 == 0 )
+					{
+						if( commandButton->getFlashCount() % 2 == 0 )
+						{
+							commandButton->setFlashCount(commandButton->getFlashCount() - 1);
+							button->winSetStatus( WIN_STATUS_FLASHING );
+						}
+						else
+						{
+							commandButton->setFlashCount(commandButton->getFlashCount() - 1);
+							button->winClearStatus( WIN_STATUS_FLASHING );
+							if( commandButton->getFlashCount() == 0 )
+							{
+								setFlash( FALSE );
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	if(!m_contextParent[ CP_PURCHASE_SCIENCE ]->winIsHidden())
+		updateContextPurchaseScience();
+
+	//
+	// first, if the UI is dirty repopulate the UI with what the user should see for all the
+	// selected drawables
+	//
+	if( m_UIDirty )
+	{
+		evaluateContextUI();
+		populateSpecialPowerShortcut(ThePlayerList->getLocalPlayer());
+		// if we have a build tooltip layout, update it with the new data.
+		repopulateBuildTooltipLayout(); 
+	}
+
+	// enable/disable the beacon button depending on if the max has been reached
+	if (ThePlayerList && ThePlayerList->getLocalPlayer() && ThePlayerList->getLocalPlayer()->getPlayerTemplate())
+	{
+		Int count;
+		const ThingTemplate *thing = TheThingFactory->findTemplate( ThePlayerList->getLocalPlayer()->getPlayerTemplate()->getBeaconTemplate() );
+		ThePlayerList->getLocalPlayer()->countObjectsByThingTemplate( 1, &thing, false, &count );
+		static NameKeyType beaconPlacementButtonID = NAMEKEY("ControlBar.wnd:ButtonPlaceBeacon");
+		GameWindow *win = TheWindowManager->winGetWindowFromId(NULL, beaconPlacementButtonID);
+		if (win)
+		{
+			if (count < TheMultiplayerSettings->getMaxBeaconsPerPlayer())
+			{
+				win->winEnable(TRUE);
+			}
+			else
+			{
+				win->winEnable(FALSE);
+			}
+		}
+	}
+
+	//
+	// most control bar contexts have one selected thing that we switch on and update
+	// based on if that thing changed in some way ... the exception is when multi selected
+	//
+	if( m_currContext == CB_CONTEXT_MULTI_SELECT )
+	{
+
+		updateContextMultiSelect();
+		return;
+
+	}  // end if
+
+	// if nothing is selected get out of here except if we're in the Purchase science context... that requires
+	// us to not have anything selected
+	if( m_currentSelectedDrawable == NULL )
+	{
+
+		// we better be in the default none context
+		DEBUG_ASSERTCRASH( m_currContext == CB_CONTEXT_NONE, ("ControlBar::update no selection, but not we're not showing the default NONE context\n") );
+		return;
+
+	}  // end if
+	
+	
+
+	// if our selected drawable has no object get out of here
+	Object *obj = NULL;
+	if(m_currentSelectedDrawable)
+		obj = m_currentSelectedDrawable->getObject();
+	if( obj == NULL )
+	{
+
+		switchToContext( CB_CONTEXT_NONE, NULL );
+		return;
+
+	}  // end if
+
+	switch( m_currContext )
+	{
+
+		//---------------------------------------------------------------------------------------------
+		case CB_CONTEXT_NONE:  
+			break;
+
+		//---------------------------------------------------------------------------------------------
+		case CB_CONTEXT_COMMAND:
+			updateContextCommand();
+			break;
+
+		//---------------------------------------------------------------------------------------------
+		case CB_CONTEXT_STRUCTURE_INVENTORY:
+			updateContextStructureInventory();
+			break;
+
+		//---------------------------------------------------------------------------------------------
+		case CB_CONTEXT_BEACON:
+			updateContextBeacon();
+			break;
+
+		//---------------------------------------------------------------------------------------------
+		case CB_CONTEXT_UNDER_CONSTRUCTION:
+			updateContextUnderConstruction();
+			break;
+
+		//---------------------------------------------------------------------------------------------
+		case CB_CONTEXT_OCL_TIMER:
+			updateContextOCLTimer();
+			break;
+
+	}  // end switch
+
+
+
+}  // end update
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+void ControlBar::onDrawableSelected( Drawable *draw )
+{
+
+	// set a dirty flag so next time we update we can reconstruct the UI
+	markUIDirty();
+
+	// cancel any pending GUI commands
+	reinterpret_cast<BFMERetailInGameUIVTable *>(TheInGameUI)->setGUICommand( NULL );
+
+
+}  // end onDrawableSelected
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// ?onDrawableDeselected@ControlBar@@QAEXPAVDrawable@@@Z present-unmatched
+void ControlBar::onDrawableDeselected( Drawable *draw )
+{
+
+	// set a dirty flag so next time we update we can reconstruct the UI
+	markUIDirty();
+
+	if (TheInGameUI->getSelectCount() == 0)
+	{
+		// we just deselected everything - cancel any pending GUI commands
+		TheInGameUI->setGUICommand( NULL );
+	}
+
+	//
+	// always when becoming unselected should we remove any build placement icons because if
+	// we have some and are in the middle of a build process, it must obiously be over now
+	// because we are no longer selecting the dozer or worker
+	//
+	TheInGameUI->placeBuildAvailable( NULL, NULL );
+
+}  // end onDrawableDeselected
+
+//-------------------------------------------------------------------------------------------------
+
+// Matched via game/masm_dumps/ControlBar_getStarImage.asm @ 0x0049CC00
+const Image *ControlBar::getStarImage(void )
+{
+	if(m_lastFlashedAtPointValue > ThePlayerList->getLocalPlayer()->getSciencePurchasePoints() || ThePlayerList->getLocalPlayer()->getSciencePurchasePoints() <= 0)
+		m_genStarFlash = FALSE;
+	else
+		m_lastFlashedAtPointValue = ThePlayerList->getLocalPlayer()->getSciencePurchasePoints();
+	
+	GameWindow *win= TheWindowManager->winGetWindowFromId( NULL, TheNameKeyGenerator->nameToKey( "ControlBar.wnd:ButtonGeneral" ) );
+	if(!win)
+		return NULL;
+	if(!m_genStarFlash)
+	{
+		GadgetButtonSetEnabledImage(win, m_generalButtonEnable);
+		return NULL;
+	}
+
+	if(TheGameLogic->getFrame()% LOGICFRAMES_PER_SECOND > LOGICFRAMES_PER_SECOND/2)
+	{
+		GadgetButtonSetEnabledImage(win, m_generalButtonHighlight);
+		return NULL;
+	}
+
+	GadgetButtonSetEnabledImage(win, m_generalButtonEnable);
+
+	return NULL;
+
+}
+
+
+//-------------------------------------------------------------------------------------------------
+// Matched via game/masm_dumps/ControlBar_onPlayerRankChanged.asm @ 0x0049DC90
+// byte-exact reconstruction: game/GameEngine/Source/Common/ControlBar_onPlayerRankChanged_Thunk.cpp
+// ?onPlayerRankChanged@ControlBar@@QAEXPBVPlayer@@@Z present-unmatched
+// onPlayerRankChanged cannot come home: it stops two bytes short on the
+// EH-temporary transposition, a known wall this
+// toolchain does not cross. Recorded so nobody spends the cycle again.
+//
+// The merged form is otherwise EXACT. Every byte matches except one pair:
+// retail writes the unwind cookie before loading ecx with the temporary's
+// address (89 64 24 10 / 8b cc) and this toolchain emits them the other way
+// round. That is the same residue as the 0x002F4080 and 0x002F74E0 families in
+// targets/game/reverse/re_attempts.log, where /EHs, /GX, /MT, /G7, /O1, /Ox and /Gy were all
+// tried and none moved it.
+//
+// Two levers DID work on the way there and are worth reusing:
+//   - binding the local player's point total to a local on its own line gets
+//     retail's compare form (member against register, not register against
+//     memory);
+//   - routing the local-player fetch through an in-class accessor on the view
+//     fixes the register chain, so the walk reuses eax the way retail does
+//     instead of switching to ecx one load earlier. That is a register
+//     allocation difference that a source shape DID reach, which is worth
+//     knowing, since register allocation is not source-controllable.
+//
+// The layout and behaviour are settled: PlayerList's local player at +0x0c, the
+// player's science points at +0x264, ControlBar's UI-dirty flag at +0x24, the
+// star flash at +0x2c8 and the last flashed value at +0x2cc. Two real
+// differences from the reference: TransitionHandler::setGroup takes a SECOND
+// argument, always zero, and the input test reads TWO bytes -- enabled at
+// InGameUI+0x0d AND allowed at +0x0e -- so the arrow transition fires only when
+// input is both enabled and allowed. The setGroup ILT at 0x00045C28 is pinned in
+// targets/game/reverse/symbols.csv and was byte-proved by this attempt's rel32.
+void ControlBar::onPlayerRankChanged(const Player *p)
+{
+	if (!p->isLocalPlayer())
+		return;
+
+	if(!(m_lastFlashedAtPointValue > ThePlayerList->getLocalPlayer()->getSciencePurchasePoints()))
+	{
+		if(TheTransitionHandler && TheInGameUI->getInputEnabled())
+			TheTransitionHandler->setGroup("ControlBarArrow");
+	}
+//	populateSpecialPowerShortcut((Player *)p);
+	m_genStarFlash = TRUE;
+	/// @todo implement me
+	markUIDirty();
+}
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// ?onPlayerSciencePurchasePointsChanged@ControlBar@@QAEXPBVPlayer@@@Z present-unmatched
+void ControlBar::onPlayerSciencePurchasePointsChanged(const Player *p)
+{
+	if (!p->isLocalPlayer())
+		return;
+	if(!(m_lastFlashedAtPointValue > ThePlayerList->getLocalPlayer()->getSciencePurchasePoints()))
+	{
+		if(TheTransitionHandler && TheInGameUI->getInputEnabled())
+			TheTransitionHandler->setGroup("ControlBarArrow");
+	}
+//	populateSpecialPowerShortcut((Player *)p);
+	m_genStarFlash = TRUE;
+	/// @todo implement me
+	markUIDirty();
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Given the drawables that we have selected into our context sensitive UI, evaluate 
+	* and perform all UI manipulations to make the GUI show to the user what we want them
+	* to see */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarEvaluateContextUIThunk.cpp
+// ?evaluateContextUI@ControlBar@@ present-unmatched
+void ControlBar::evaluateContextUI( void )
+{
+
+	//
+	// the UI has been "evaluated" and is now displaying the most current and correct
+	// information to the player
+	//
+	m_UIDirty = FALSE;
+	
+	// if our purchase science window is up, we will want to update it by repopulating it.
+	if(!m_contextParent[ CP_PURCHASE_SCIENCE ]->winIsHidden())
+		showPurchaseScience();
+
+	// erase any current state of the GUI by switching out to the empty context
+	switchToContext( CB_CONTEXT_NONE, NULL );
+
+	// sanity, nothing selected
+	if( TheInGameUI->getSelectCount() == 0 )
+		return;
+
+	// get the list of drawable IDs from the in game UI
+	const DrawableList *selectedDrawables = TheInGameUI->getAllSelectedDrawables();
+
+	// sanity
+	if( selectedDrawables->empty() == TRUE )
+		return;
+
+	//Make sure the selected objects are in fact, controllable! If not, then
+	//we don't show any GUI commands for them!!!
+	//This is used when we select enemy objects or objects on another team.
+	//@todo we may want to show their portrait
+	if( !TheInGameUI->areSelectedObjectsControllable() )
+	{
+		//Also make sure the unit isn't a garrisonable neutral civ team building!
+		Drawable *draw = selectedDrawables->front();
+
+		//sanity 
+		if( !draw )
+		{
+			return;
+		}
+		Object *obj = draw->getObject();
+		if( !obj )
+		{
+			return;
+		}
+		
+		if (obj->getControllingPlayer()
+			&& obj->getControllingPlayer()->getPlayerTemplate()
+			&& obj->getControllingPlayer()->getPlayerTemplate()->getBeaconTemplate().compare(obj->getTemplate()->getName()) == 0
+			)
+		{
+			switchToContext( CB_CONTEXT_BEACON, draw );
+		}
+		else
+		{
+			switchToContext( CB_CONTEXT_NONE, draw );
+		}
+
+		//Check for a contain interface and a enemy relationship and reject that!
+		ContainModuleInterface *contain = obj->getContain();
+		if( contain && contain->getContainMax() > 0 )
+		{
+
+			const Player *otherPlayer = contain->getApparentControllingPlayer(ThePlayerList->getLocalPlayer());
+			if (!otherPlayer)
+				otherPlayer = obj->getControllingPlayer();
+			Player *player = ThePlayerList->getLocalPlayer();
+
+			if( !player || !otherPlayer )
+			{
+				//Sanity.
+				return;
+			}
+			Relationship relation = player->getRelationship( otherPlayer->getDefaultTeam() );
+
+			//Note: All following checks already account for the fact that this object
+			//isn't ours.
+
+			//The only case we can actually see a non-controlled controlbar is a neutral garrisonable structure.
+			if( !contain->isGarrisonable() || relation != NEUTRAL )
+			{
+				//Can't peek inside enemy/allied containers period!
+				return;
+			}
+		}
+		else
+		{
+			return;
+		}
+	}
+
+	//
+	// when we have multiple things selected, we will only display the common commands
+	// in the center command bar that can be displayed with multi-units selected
+	//
+
+
+	Drawable *drawToEvaluateFor = NULL;
+	Bool multiSelect = FALSE;
+
+
+	if( TheInGameUI->getSelectCount() > 1 )
+	{
+		// Attempt to isolate a Drawable here to evaluate
+		// The need arises when selected is an AngryMob,
+		// whose selection actually consists of varied units
+		// but is represented in the UI as a single unit,
+		// so we must isolate and evaluate only the Nexus 
+		drawToEvaluateFor = TheGameClient->findDrawableByID( TheInGameUI->getSoloNexusSelectedDrawableID() ) ;
+		multiSelect = ( drawToEvaluateFor == NULL );
+
+	}  
+	else // get the first and only drawble in the selection list
+		drawToEvaluateFor = selectedDrawables->front();
+	
+
+
+	if( multiSelect )
+	{
+		switchToContext( CB_CONTEXT_MULTI_SELECT, NULL );
+	}  
+	else if ( drawToEvaluateFor )// either we have exactly one drawable, or we have isolated one to evaluate for...
+	{
+
+		// get the first and only drawble in the selection list
+		//Drawable *draw = selectedDrawables->front();
+
+		// sanity
+		//if( draw == NULL )
+		//	return;
+
+		// get object
+		Object *obj = drawToEvaluateFor->getObject();
+		if( obj == NULL )
+			return;
+
+		// we show no interface for objects being sold
+		if( obj->getStatusBits().test( OBJECT_STATUS_SOLD ) )
+			return;
+
+		static const NameKeyType key_OCLUpdate = NAMEKEY( "OCLUpdate" );
+		OCLUpdate *update = (OCLUpdate*)obj->findUpdateModule( key_OCLUpdate );
+	
+		//
+		// a command center is context sensitive itself, if a side has *NOT* been chosen we display
+		// the side select interface for command centers only, but note how under construction is
+		// more important than anything
+		//
+		Bool contextSelected = FALSE;
+		if( obj->getStatusBits().test( OBJECT_STATUS_UNDER_CONSTRUCTION ) )
+		{
+
+			switchToContext( CB_CONTEXT_UNDER_CONSTRUCTION, drawToEvaluateFor );
+			contextSelected = TRUE;
+
+		}  // end else if
+
+		// check for a regular switch to the appropriate context
+		if( contextSelected == FALSE )
+		{
+			ContainModuleInterface *cmi = obj->getContain();
+
+			if( cmi && cmi->isGarrisonable() && obj->getCommandSetString().isEmpty() )
+			{
+				//Kris: This is a convenient section to graft an inventory commandset for
+				//garrisoned troops. However, we only want to use this if we DON'T have
+				//a commandset defined. If we do, then trust that the commandset will
+				//handle it!
+
+				Player *localPlayer = ThePlayerList->getLocalPlayer();
+				Relationship relationship;
+
+				// we cannot select objects that are controlled by our enemies
+				relationship = localPlayer->getRelationship( obj->getTeam() );
+				if( obj->isLocallyControlled() == TRUE || relationship == NEUTRAL )
+					switchToContext( CB_CONTEXT_STRUCTURE_INVENTORY, drawToEvaluateFor );
+
+			}  // end else if
+			else if( update )
+			{
+				switchToContext( CB_CONTEXT_OCL_TIMER, drawToEvaluateFor );
+			}
+			else if( obj->getCommandSetString().isEmpty() == FALSE )
+			{
+
+				switchToContext( CB_CONTEXT_COMMAND, drawToEvaluateFor );
+
+			}  // end else if
+			else if (obj->getControllingPlayer()->getPlayerTemplate()->getBeaconTemplate().compare(obj->getTemplate()->getName()) == 0)
+			{
+				switchToContext( CB_CONTEXT_BEACON, drawToEvaluateFor );
+			}
+			else 
+				switchToContext( CB_CONTEXT_NONE, drawToEvaluateFor );
+		}  // end else
+
+	}  // end else	
+
+}  // end evaluateContextUI
+
+//-------------------------------------------------------------------------------------------------
+/** Find a command button of the given name if present */
+//-------------------------------------------------------------------------------------------------
+// ?findNonConstCommandButton@ControlBar@@IAEPAVCommandButton@@ABVAsciiString@@@Z
+// Retail does not call AsciiString::operator== here -- it inlines the whole
+// comparison, reading each string's 16-bit length at header+4 and its payload at
+// header+8, then a repe cmpsb over the shorter of the two and a length
+// subtraction for the tie.  That is BFME's eight-byte string header, so the
+// comparison is spelled against a TU-local view of it rather than against this
+// tree's AsciiString, which puts the payload at header+4 and compares by strcmp.
+struct BfmeControlBarStringHeader
+{
+	int refCount;
+	unsigned short length;					///< retail header+0x04
+	unsigned short capacity;
+	char data[ 1 ];						///< retail header+0x08
+};
+
+struct BfmeControlBarStringView
+{
+	BfmeControlBarStringHeader *m_data;
+
+	int compare( const BfmeControlBarStringView &string ) const
+	{
+		const BfmeControlBarStringView *self = this;
+		const BfmeControlBarStringView *that = &string;
+		int thatLen = that->m_data ? that->m_data->length : 0;
+		const char *thatData = that->m_data ? &that->m_data->data[ 0 ] : (const char *)"";
+		int thisLen = self->m_data ? self->m_data->length : 0;
+		const char *thisData = self->m_data ? &self->m_data->data[ 0 ] : (const char *)"";
+		int n = thisLen < thatLen ? thisLen : thatLen;
+		int c = memcmp( thisData, thatData, n );
+		if( c != 0 )
+			return c;
+		return thisLen - thatLen;
+	}
+};
+
+// Overridable::getFinalOverride is inline AND recursive in the vendored header,
+// so MSVC unrolls one level of the chain walk into this body where retail just
+// calls it through ILT 0x000022BB.  Declared-not-defined on a view, the call
+// survives -- the same lever the Team.cpp folds needed.
+class BfmeControlBarOverridable
+{
+public:
+	const BfmeControlBarOverridable *getFinalOverride() const;	///< ILT 0x000022BB
+};
+
+// One level of the override walk is inline: only a button that actually has an
+// override at +0x04 reaches the out-of-line chain walk.
+struct BfmeCommandButtonNode
+{
+	unsigned char m_unmodelled_000[ 0x04 ];
+	const BfmeControlBarOverridable *m_override;		///< retail this+0x04
+	unsigned char m_unmodelled_008[ 0x0c - 0x08 ];
+	BfmeControlBarStringView m_name;			///< retail this+0x0c
+	unsigned char m_unmodelled_010[ 0x14 - 0x10 ];
+	const BfmeCommandButtonNode *m_next;			///< retail this+0x14
+
+	const BfmeControlBarStringView &getName() const { return m_name; }
+	const BfmeCommandButtonNode *getNext() const { return m_next; }
+	const BfmeCommandButtonNode *getFinalOverride() const
+	{
+		if( m_override )
+			return (const BfmeCommandButtonNode *)m_override->getFinalOverride();
+		return this;
+	}
+};
+
+struct BfmeControlBarButtonList
+{
+	unsigned char m_unmodelled_000[ 0x28 ];
+	const BfmeCommandButtonNode *m_commandButtons;		///< retail this+0x28
+};
+
+CommandButton *ControlBar::findNonConstCommandButton( const AsciiString& name )
+{
+	const BfmeControlBarStringView &searchName = reinterpret_cast<const BfmeControlBarStringView &>( name );
+
+	for( const BfmeCommandButtonNode *command = ((const BfmeControlBarButtonList *)this)->m_commandButtons;
+			command; command = command->getNext() )
+		if( command->getName().compare( searchName ) == 0 )
+			return (CommandButton *)command->getFinalOverride();
+
+	return NULL;  // not found
+
+}  // end findCommandButton
+
+//-------------------------------------------------------------------------------------------------
+/** Allocate a new command button, assign name, and tie to list */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarNewCommandSet.cpp
+// ?newCommandButton@ControlBar@@IAEPAVCommandButton@@ABVAsciiString@@@Z present-unmatched
+// The newCommandButton / newCommandSet / newCommandSetOverride family cannot come
+// home: class shape. Retail allocates 472 bytes for a CommandButton and 100 for a
+// CommandSet; the vendored declarations give 224 and 92, and the allocation size
+// comes from the class, not from anything a .cpp can cast. A view class with the
+// right size would have to bring its own pool operator new, which would break the
+// ??2CommandButton / ??2CommandSet rows THIS file owns -- so the workaround costs
+// more rows than it converts. The eight-byte half of the same drift is visible in
+// findNonConstCommandSet above, where a BFME command set holds twenty command
+// slots against Zero Hour's eighteen; there it is only a displacement and a view
+// reaches it.
+CommandButton *ControlBar::newCommandButton( const AsciiString& name )
+{
+	CommandButton *newButton;
+
+	// allocate new button
+	newButton = newInstance(CommandButton);
+
+	// assign name
+	newButton->setName(name);
+
+	// link to list
+	newButton->friend_addToList(&m_commandButtons);
+
+	// return the new button
+	return newButton;
+
+}  // end newCommandButton
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// ?newCommandButtonOverride@ControlBar@@IAEPAVCommandButton@@PAV2@@Z present-unmatched
+CommandButton *ControlBar::newCommandButtonOverride( CommandButton *buttonToOverride )
+{
+	if (!buttonToOverride) {
+		return NULL;
+	}
+
+	CommandButton *newOverride;
+
+	// allocate new button
+	newOverride = newInstance(CommandButton);
+
+	*newOverride = *buttonToOverride;
+
+	newOverride->markAsOverride();
+	buttonToOverride->setNextOverride(newOverride);
+
+	return newOverride;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Parse a command set */
+//-------------------------------------------------------------------------------------------------
+/*static*/ void ControlBar::parseCommandSetDefinition( INI *ini )
+{
+	AsciiString name;
+	CommandSet *commandSet;
+
+	// read the name
+	const char* c = ini->getNextToken();
+	name.set( c );	
+
+	// find existing item if present
+	commandSet = TheControlBar->findNonConstCommandSet( name );
+	if( commandSet == NULL )
+	{
+
+		// allocate a new item
+		commandSet = TheControlBar->newCommandSet( name );
+		if (ini->getLoadType() == INI_LOAD_CREATE_OVERRIDES) {
+			commandSet->markAsOverride();
+		}
+	}  // end if
+	else if( ini->getLoadType() != INI_LOAD_CREATE_OVERRIDES )
+	{
+		//Holy crap, this sucks to debug!!!
+		//If you have two different command sets, the previous
+		//code would simply allow you to define multiple command set
+		//with the same name, and just nuke the old button with the new one.
+		//So, I (KM) have added this assert to notify in case of two same-name
+		//command set.
+		DEBUG_CRASH(( "[LINE: %d in '%s'] Duplicate commandset %s found!", ini->getLineNum(), ini->getFilename().str(), name.str() ));
+		throw INI_INVALID_DATA;
+
+		//@todo SUPPORT OVERRIDES -- JM
+	} else {
+		commandSet = TheControlBar->newCommandSetOverride(commandSet);
+	}
+
+	// sanity
+	DEBUG_ASSERTCRASH( commandSet, ("parseCommandSetDefinition: Unable to allocate set '%s'\n", name.str()) );
+
+	// parse the ini definition
+	ini->initFromINI( commandSet, commandSet->friend_getFieldParse() );
+
+}  // end parseCommandSetDefinition
+
+//-------------------------------------------------------------------------------------------------
+/** Find existing command set by name */
+//-------------------------------------------------------------------------------------------------
+// A BFME command set holds twenty command slots where Zero Hour's holds
+// eighteen, so its next pointer lands at +0x60 rather than +0x58 -- and the name
+// is compared the same inlined way findNonConstCommandButton above needs.
+struct BfmeCommandSetNode
+{
+	unsigned char m_unmodelled_000[ 0x0c ];
+	BfmeControlBarStringView m_name;			///< retail this+0x0c
+	unsigned char m_unmodelled_010[ 0x60 - 0x10 ];		///< twenty command slots at +0x10
+	BfmeCommandSetNode *m_next;				///< retail this+0x60
+
+	const BfmeControlBarStringView &getName() const { return m_name; }
+	BfmeCommandSetNode *friend_getNext() { return m_next; }
+};
+
+struct BfmeControlBarSetList
+{
+	unsigned char m_unmodelled_000[ 0x2c ];
+	BfmeCommandSetNode *m_commandSets;			///< retail this+0x2c
+};
+
+// ?findNonConstCommandSet@ControlBar@@AAEPAVCommandSet@@ABVAsciiString@@@Z
+CommandSet* ControlBar::findNonConstCommandSet( const AsciiString& name )
+{
+	const BfmeControlBarStringView &searchName = reinterpret_cast<const BfmeControlBarStringView &>( name );
+	BfmeCommandSetNode *set;
+
+	for( set = ((BfmeControlBarSetList *)this)->m_commandSets; set != NULL; set = set->friend_getNext() )
+		if( set->getName().compare( searchName ) == 0 )
+			return (CommandSet *)set;
+
+	return NULL;  // set not found
+
+}
+//-------------------------------------------------------------------------------------------------
+/** find existing command button if present	*/
+//-------------------------------------------------------------------------------------------------
+const CommandButton *ControlBar::findCommandButton( const AsciiString& name ) 
+{ 
+	CommandButton *btn =  findNonConstCommandButton(name); 
+	if( btn )
+	{
+		btn = (CommandButton *)btn->friend_getFinalOverride();
+	}
+	return btn; 
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Find existing command set by name */
+//-------------------------------------------------------------------------------------------------
+const CommandSet *ControlBar::findCommandSet( const AsciiString& name ) 
+{ 
+	CommandSet *set = findNonConstCommandSet(name); 
+	if (set)
+		set = (CommandSet*)set->friend_getFinalOverride();
+	return set; 
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Allocate a new command set, link to list, initialize to default, and return it */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarNewCommandSet.cpp
+// ?newCommandSet@ControlBar@@IAEPAVCommandSet@@ABVAsciiString@@@Z present-unmatched
+CommandSet *ControlBar::newCommandSet( const AsciiString& name )
+{
+	// allocate a new set
+	CommandSet* set = newInstance(CommandSet)(name);
+	// add it to the list.
+	set->friend_addToList(&m_commandSets);
+	// return the newly created set
+	return set;
+
+}  // end newCommandSet
+
+//-------------------------------------------------------------------------------------------------
+/** Create an overridden command set. */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/ControlBar_newCommandSetOverride.cpp
+// ?newCommandSetOverride@ControlBar@@IAEPAVCommandSet@@PAV2@@Z present-unmatched
+CommandSet *ControlBar::newCommandSetOverride( CommandSet *setToOverride )
+{
+	if (!setToOverride) {
+		return NULL;
+	}
+
+	// allocate a new set
+	CommandSet* set = newInstance(CommandSet)(setToOverride->getName());
+
+	// it's an override; DON'T add it to the main list.
+	// !!! DO NOT DO THIS !!! -- > set->friend_addToList(&m_commandSets); <-- !!! DO NOT DO THIS !!!
+
+	*set = *setToOverride;
+	set->markAsOverride();
+
+	setToOverride->setNextOverride(set);
+
+	return set;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Process a button click for the context sensitive GUI */
+//-------------------------------------------------------------------------------------------------
+// ?processContextSensitiveButtonClick@ControlBar@@QAE?AW4CBCommandStatus@@PAVGameWindow@@W4GadgetGameMessage@@@Z present-unmatched
+CBCommandStatus ControlBar::processContextSensitiveButtonClick( GameWindow *button, 
+																																GadgetGameMessage gadgetMessage )
+{
+
+	// call command processing method
+	return processCommandUI( button, gadgetMessage );
+
+}  // end processContextSensitiveButtonClick
+
+//-------------------------------------------------------------------------------------------------
+/** Process a button click for the context sensitive GUI */
+//-------------------------------------------------------------------------------------------------
+// ?processContextSensitiveButtonTransition@ControlBar@@QAE?AW4CBCommandStatus@@PAVGameWindow@@W4GadgetGameMessage@@@Z present-unmatched
+CBCommandStatus ControlBar::processContextSensitiveButtonTransition( GameWindow *button, 
+																																GadgetGameMessage gadgetMessage )
+{
+
+	// call command processing method
+	return processCommandTransitionUI( button, gadgetMessage );
+
+}  // end processContextSensitiveButtonClick
+
+
+//-------------------------------------------------------------------------------------------------
+/** Switch the user interface to the new context specified and fill out any of the
+	* art and/or buttons that we need to for the new context using data from the object
+	* passed in */
+//-------------------------------------------------------------------------------------------------
+// ?switchToContext@ControlBar@@IAEXW4ControlBarContext@@PAVDrawable@@@Z
+// Retail switchToContext starts at RVA 0x0049E780; old 0x0049E901 claim was interior.
+
+void ControlBar::switchToContext(ControlBarContext context, Drawable *draw)
+{
+	BfmeContextSwitchControlBarView *self = (BfmeContextSwitchControlBarView *)this;
+	ControlBarContext incomingContext = context;
+	Drawable *incomingDraw = draw;
+	Bool changed;
+	if (incomingContext == self->currContext)
+	{
+		changed = false;
+		if (incomingDraw != self->currentSelectedDrawable)
+			changed = true;
+	}
+	else
+	{
+		changed = true;
+	}
+
+	Object *drawObject = incomingDraw ? (Object *)((BfmeContextSwitchDrawableView *)incomingDraw)->object : 0;
+
+	BfmeContextSwitchBfmeTransitionMD *transition = BFME_CONTEXT_TRANSITION;
+	if (transition != 0)
+		transition->slot04();
+	BfmeContextSwitchInGameUI *inGameUI = BFME_CONTEXT_INGAME_UI;
+	inGameUI->setRadiusCursorNone();
+
+	if (incomingDraw != BFME_CONTEXT_SELECTION_CACHE &&
+		incomingDraw != self->currentSelectedDrawable)
+		((BfmeContextSwitchOverlaySink *)self->contextOverlay)->slot04();
+
+	BfmeContextSwitchSelectionState state;
+	state.oldSelected = self->currentSelectedDrawable;
+	self->currentSelectedDrawable = incomingDraw;
+	state.chat = BFME_CONTEXT_IN_GAME_CHAT;
+	if (state.chat == 0)
+	{
+		BFME_CONTEXT_SELECTION_CACHE = state.oldSelected;
+		if (BFME_CONTEXT_OBJECT_12F4C38 == 0 && BFME_CONTEXT_GAME_LOGIC != 0 &&
+			BFME_CONTEXT_GAME_LOGIC->mode != 8 && BFME_CONTEXT_GAME_LOGIC->mode != 4)
+			TheWindowManager->winSetFocus(0);
+	}
+	else
+	{
+		BFME_CONTEXT_SELECTION_CACHE = state.oldSelected;
+	}
+
+	((Gen_004AFA80 *)self->contextOverlay)->bfmeTake((BfmeSourceCB *)drawObject);
+	showRallyPoint(0);
+
+	switch ((Int)incomingContext)
+	{
+	case 0:
+	case 4:
+		if (BFME_CONTEXT_GLO_12F4B98 != 0)
+			((Rva0058C040 *)BFME_CONTEXT_GLO_12F4B98)->invoke();
+		self->contextParent[2]->winHide(true);
+		self->contextParent[9]->winHide(true);
+		self->contextParent[3]->winHide(true);
+		self->contextParent[4]->winHide(true);
+		self->contextParent[5]->winHide(true);
+		self->contextParent[8]->winHide(true);
+		self->contextParent[6]->winHide(true);
+		self->contextParent[7]->winHide(true);
+		{
+			GameWindow **window = self->commandWindows;
+			Int count = 20;
+			do
+			{
+				if (*window != 0)
+					(*window)->winClearStatus(0x800000);
+				++window;
+				--count;
+			} while (count != 0);
+		}
+		break;
+
+	case 1:
+		self->contextParent[2]->winHide(false);
+		self->contextParent[9]->winHide(false);
+		self->contextParent[3]->winHide(true);
+		self->contextParent[4]->winHide(true);
+		self->contextParent[5]->winHide(true);
+		self->contextParent[8]->winHide(true);
+		self->contextParent[6]->winHide(true);
+		self->contextParent[7]->winHide(true);
+		((Rva0049E780Calls *)this)->populateCommand((Object *)((BfmeContextSwitchDrawableView *)incomingDraw)->object, changed);
+		break;
+
+	case 2:
+		if (BFME_CONTEXT_GLO_12F4B98 != 0)
+			((Rva0058C040 *)BFME_CONTEXT_GLO_12F4B98)->invoke();
+		self->contextParent[2]->winHide(false);
+		self->contextParent[9]->winHide(false);
+		self->contextParent[3]->winHide(true);
+		self->contextParent[4]->winHide(true);
+		self->contextParent[5]->winHide(true);
+		self->contextParent[8]->winHide(true);
+		self->contextParent[6]->winHide(true);
+		self->contextParent[7]->winHide(true);
+		((Rva0049E780Calls *)this)->populateStructureInventory((Object *)((BfmeContextSwitchDrawableView *)incomingDraw)->object, false);
+		break;
+	case 3:
+		if (BFME_CONTEXT_GLO_12F4B98 != 0)
+			((Rva0058C040 *)BFME_CONTEXT_GLO_12F4B98)->invoke();
+		self->contextParent[2]->winHide(false);
+		self->contextParent[9]->winHide(false);
+		self->contextParent[3]->winHide(true);
+		self->contextParent[4]->winHide(true);
+		self->contextParent[5]->winHide(true);
+		self->contextParent[8]->winHide(true);
+		self->contextParent[6]->winHide(true);
+		self->contextParent[7]->winHide(true);
+		((Rva0049E780Calls *)this)->populateStructureInventory((Object *)((BfmeContextSwitchDrawableView *)incomingDraw)->object, true);
+		break;
+	case 5:
+		if (BFME_CONTEXT_GLO_12F4B98 != 0)
+			((Rva0058C040 *)BFME_CONTEXT_GLO_12F4B98)->invoke();
+		self->contextParent[2]->winHide(true);
+		self->contextParent[9]->winHide(true);
+		self->contextParent[3]->winHide(true);
+		self->contextParent[4]->winHide(false);
+		self->contextParent[5]->winHide(true);
+		self->contextParent[8]->winHide(true);
+		self->contextParent[6]->winHide(true);
+		self->contextParent[7]->winHide(true);
+		populateBeacon((Object *)((BfmeContextSwitchDrawableView *)incomingDraw)->object);
+		break;
+	case 6:
+		self->contextParent[2]->winHide(true);
+		self->contextParent[9]->winHide(false);
+		self->contextParent[3]->winHide(true);
+		self->contextParent[4]->winHide(true);
+		self->contextParent[5]->winHide(true);
+		self->contextParent[8]->winHide(true);
+		self->contextParent[6]->winHide(true);
+		self->contextParent[7]->winHide(true);
+		populateUnderConstruction((Object *)((BfmeContextSwitchDrawableView *)incomingDraw)->object);
+		break;
+	case 10:
+		if (BFME_CONTEXT_GLO_12F4B98 != 0)
+			((Rva0058C040 *)BFME_CONTEXT_GLO_12F4B98)->invoke();
+		self->contextParent[2]->winHide(true);
+		self->contextParent[9]->winHide(true);
+		self->contextParent[3]->winHide(true);
+		self->contextParent[4]->winHide(true);
+		self->contextParent[5]->winHide(true);
+		self->contextParent[8]->winHide(false);
+		self->contextParent[6]->winHide(true);
+		self->contextParent[7]->winHide(true);
+		((Rva0049E780Calls *)this)->populateOCLTimer((Object *)((BfmeContextSwitchDrawableView *)incomingDraw)->object);
+		break;
+
+	case 7:
+		self->contextParent[2]->winHide(false);
+		self->contextParent[9]->winHide(false);
+		self->contextParent[3]->winHide(true);
+		self->contextParent[4]->winHide(true);
+		self->contextParent[5]->winHide(true);
+		self->contextParent[8]->winHide(true);
+		self->contextParent[6]->winHide(true);
+		self->contextParent[7]->winHide(true);
+		((Rva0049E780Calls *)this)->populateMultiSelect();
+		break;
+	case 9:
+		if (BFME_CONTEXT_GLO_12F4B98 != 0)
+			((Rva0058C040 *)BFME_CONTEXT_GLO_12F4B98)->invoke();
+		self->contextParent[2]->winHide(true);
+		self->contextParent[9]->winHide(true);
+		self->contextParent[3]->winHide(true);
+		self->contextParent[4]->winHide(true);
+		self->contextParent[5]->winHide(true);
+		self->contextParent[8]->winHide(true);
+		self->contextParent[6]->winHide(true);
+		self->contextParent[7]->winHide(false);
+		populateObserverList();
+		break;
+	default:
+		break;
+	}
+
+	self->currContext = incomingContext;
+}
+
+// BFME adds a FIFTH border type Zero Hour does not have. Retail's jump table
+// covers switch values 1 through 5 as an identity map, so the arms are in source
+// order and the new one follows the reference's four.
+//
+// The colour members are NOT declared in the enum's order -- the arms read
+// this+0x280, +0x288, +0x284, +0x28c and +0x290 in case order -- so the offsets
+// are proven while the pairing of the reference's names to them rests on BFME
+// having kept the enum order and appended to it. The fifth has no reference name
+// at all, hence the _bfme_ one.
+struct BfmeControlBarBorderColors
+{
+	unsigned char m_unreconstructed_00[ 0x280 ];
+	Color m_commandButtonBorderBuildColor;			///< retail this+0x280
+	Color m_commandButtonBorderActionColor;			///< retail this+0x284
+	Color m_commandButtonBorderUpgradeColor;		///< retail this+0x288
+	Color m_commandButtonBorderSystemColor;			///< retail this+0x28c
+	Color m_bfmeCommandButtonBorderFifthColor;		///< retail this+0x290
+};
+
+enum { COMMAND_BUTTON_BORDER_BFME_FIFTH = 5 };
+
+// ?setCommandBarBorder@ControlBar@@AAEXPAVGameWindow@@W4CommandButtonMappedBorderType@@@Z
+void ControlBar::setCommandBarBorder( GameWindow *button, CommandButtonMappedBorderType type)
+{
+	BfmeControlBarBorderColors *self = (BfmeControlBarBorderColors *)this;
+
+	if(!button)
+		return;
+
+	// GadgetButtonSetBorder's third argument is defaulted in the reference's four
+	// arms; retail pushes it every time, which is what a defaulted argument looks
+	// like from the outside.
+	switch( type )
+	{
+		case COMMAND_BUTTON_BORDER_BUILD:
+		{
+			GadgetButtonSetBorder(button, self->m_commandButtonBorderBuildColor, TRUE);
+			break;
+		}
+		//-------------------------------------------------------------------------------------------------
+		case COMMAND_BUTTON_BORDER_UPGRADE:
+		{
+			GadgetButtonSetBorder(button, self->m_commandButtonBorderUpgradeColor, TRUE );
+			break;
+		}
+		//-------------------------------------------------------------------------------------------------
+		case COMMAND_BUTTON_BORDER_ACTION:
+		{
+			GadgetButtonSetBorder(button, self->m_commandButtonBorderActionColor, TRUE);
+			break;
+		}
+		//-------------------------------------------------------------------------------------------------
+		case COMMAND_BUTTON_BORDER_SYSTEM:
+		{
+			GadgetButtonSetBorder(button, self->m_commandButtonBorderSystemColor, TRUE);
+			break;
+		}
+		//-------------------------------------------------------------------------------------------------
+		case COMMAND_BUTTON_BORDER_BFME_FIFTH:
+		{
+			GadgetButtonSetBorder(button, self->m_bfmeCommandButtonBorderFifthColor, TRUE);
+			break;
+		}
+		//-------------------------------------------------------------------------------------------------
+		case COMMAND_BUTTON_BORDER_NONE:
+		default:
+			GadgetButtonSetBorder(button, GAME_COLOR_UNDEFINED, FALSE);
+	}
+}
+
+
+//-------------------------------------------------------------------------------------------------
+/** Set the command data into the control */
+//-------------------------------------------------------------------------------------------------
+// ?setControlCommand@ControlBar@@ present-unmatched
+void ControlBar::setControlCommand( GameWindow *button, const CommandButton *commandButton )
+{
+
+	// the window must be a gadget button
+	if( button->winGetInputFunc() != GadgetPushButtonInput )
+	{
+
+		DEBUG_ASSERTCRASH( 0, ("setControlCommand: Window is not a button\n") );
+		return;
+
+	}  // end if
+
+	// sanity
+	if( commandButton == NULL )
+	{
+
+		DEBUG_ASSERTCRASH( 0, ("setControlCommand: NULL commandButton passed in\n") );
+		return;
+
+	}  // end if
+
+	//
+	// set the button gadget control to be a normal button or a check like button if
+	// the command says it needs one
+	//
+	if( BitTest( commandButton->getOptions(), CHECK_LIKE ))
+		GadgetButtonEnableCheckLike( button, TRUE, FALSE );
+	else
+		GadgetButtonEnableCheckLike( button, FALSE, FALSE );
+
+	//
+	// set the imagry ... note that for 99% of the command buttons it's sufficient to specify
+	// only the disabled, enabled, hilite, and hilite pushed images.  For push-like buttons
+	// we actually utilize all the state available to a GameWindow.  We will replicate the
+	// hilite pushed image to be the enabled pushed image ... and we will also replicate
+	// the disabled image to be the disabled pushed image.  For complete control over all
+	// the states of these buttons we would add additional lines to the INI for a command
+	// button and store those additional images in the command button 
+	//
+	if( commandButton->getButtonImage() )
+		GadgetButtonSetEnabledImage( button, commandButton->getButtonImage() );
+
+	//if( commandButton->getDisabledImage() )
+	//{
+	//	GadgetButtonSetDisabledImage( button, commandButton->getDisabledImage() );
+	//	GadgetButtonSetDisabledSelectedImage( button, commandButton->getDisabledImage() );
+	//}  //end if
+	//if( commandButton->getHiliteImage() )
+	//	GadgetButtonSetHiliteImage( button, commandButton->getHiliteImage() );
+	//if( commandButton->getPushedImage() )
+	//{
+	//	GadgetButtonSetHiliteSelectedImage( button, commandButton->getPushedImage() );
+	//	GadgetButtonSetEnabledSelectedImage( button, commandButton->getPushedImage() );
+	//}  // end if
+
+	// set the text
+	if( commandButton->getTextLabel().isEmpty() == FALSE || !commandButton->getScienceVec().empty()) 
+	{
+		button->winSetTooltipFunc(commandButtonTooltip);
+	}
+	else
+		GadgetButtonSetText( button, UnicodeString( L"" ) );
+
+	// save the command in the user data of the window
+	GadgetButtonSetData(button, (void*)commandButton);
+	//button->winSetUserData( commandButton );
+	
+	setCommandBarBorder(button, commandButton->getCommandButtonMappedBorderType());
+	
+	if (TheHotKeyManager)
+	{
+		AsciiString hotKey =	TheHotKeyManager->searchHotKey(commandButton->getTextLabel());
+		if(hotKey.isNotEmpty())
+			TheHotKeyManager->addHotKey(button, hotKey);
+	}
+	GadgetButtonSetAltSound(button, "GUICommandBarClick");
+
+}  // end setControlCommand
+
+//-------------------------------------------------------------------------------------------------
+// ?cacheButtonImage@CommandButton@@QAEXXZ present-unmatched
+void CommandButton::cacheButtonImage()
+{
+	if (!TheMappedImageCollection) {
+		return;
+	}
+	if( m_buttonImageName.isNotEmpty() )
+	{
+		m_buttonImage = TheMappedImageCollection->findImageByName( m_buttonImageName );
+		DEBUG_ASSERTCRASH( m_buttonImage, ("CommandButton: %s is looking for button image %s but can't find it. Skipping...", m_name.str(), m_buttonImageName.str() ) );
+		m_buttonImageName.clear();	// we're done with this, so nuke it
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+/** post process step, after all commands and command sets are loaded */
+//-------------------------------------------------------------------------------------------------
+// ?postProcessCommands@ControlBar@@IAEXXZ present-unmatched
+void ControlBar::postProcessCommands( void )
+{
+	for ( CommandButton *button = m_commandButtons; button; button = button->friend_getNext() ) 
+	{
+		button->cacheButtonImage();
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+/** set the command for the button identified by the window name
+	* NOTE that parent may be NULL, it only helps to speed up the search for a particular
+	* window ID */
+//-------------------------------------------------------------------------------------------------
+// ?setControlCommand@ControlBar@@ present-unmatched
+void ControlBar::setControlCommand( const AsciiString& buttonWindowName, GameWindow *parent,
+																		const CommandButton *commandButton )
+{
+	UnsignedInt winID = TheNameKeyGenerator->nameToKey( buttonWindowName );
+	GameWindow *win = TheWindowManager->winGetWindowFromId( parent, winID );
+
+	if( win == NULL )
+	{
+
+		DEBUG_ASSERTCRASH( 0, ("setControlCommand: Unable to find window '%s'\n", buttonWindowName.str()) );
+		return;
+
+	}  // end if
+
+	// call the workhorse
+	setControlCommand( win, commandButton );
+
+}  // end setControlCommand
+
+//-------------------------------------------------------------------------------------------------
+/** show/hide the portrait window image */
+//-------------------------------------------------------------------------------------------------
+void ControlBar::setPortraitByImage( const Image *image )
+{
+
+	if( image )
+	{
+		m_rightHUDUnitSelectParent->winHide(FALSE);
+		m_rightHUDCameoWindow->winSetEnabledImage( 0, image );
+		//m_rightHUDWindow->winSetEnabledImage( 0, image );
+		m_rightHUDWindow->winClearStatus( WIN_STATUS_IMAGE );
+		m_rightHUDCameoWindow->winSetStatus( WIN_STATUS_IMAGE );
+		for(Int i = 0; i < MAX_UPGRADE_CAMEO_UPGRADES; ++i)
+			m_rightHUDUpgradeCameos[i]->winHide(TRUE);
+
+	}  // end if
+	else
+	{
+		m_rightHUDWindow->winSetStatus( WIN_STATUS_IMAGE );
+		m_rightHUDCameoWindow->winClearStatus( WIN_STATUS_IMAGE );
+		m_rightHUDUnitSelectParent->winHide(TRUE);
+		for(Int i = 0; i < MAX_UPGRADE_CAMEO_UPGRADES; ++i)
+			m_rightHUDUpgradeCameos[i]->winHide(TRUE);
+		//m_rightHUDWindow->winSetEnabledImage( 0, image );
+		//m_rightHUDWindow->winSetStatus( WIN_STATUS_IMAGE );
+
+	}
+
+}  // end setPortraitByImage
+
+//-------------------------------------------------------------------------------------------------
+/** show/hide the portrait image by object.  We like to use this method as opposed to the
+	* plain image one above so that we can build more intelligence into what portrait to
+	* show for an object given its current state or object type */
+//-------------------------------------------------------------------------------------------------
+// ?setPortraitByObject@ControlBar@@IAEXPAVObject@@@Z
+// Body in ControlBar_setPortraitByObject.asm (exact 739B retail).
+
+// ControlBar::populateBeacon, retail 0x004A3830, 416 bytes.  The callback is
+// the BEACON arm of switchToContext: its three function-local name keys and
+// the reference ControlBarBeacon.cpp body identify the method.  BFME keeps
+// the local-owner test and three-window visibility order.
+// BFME's Object exposes getDrawable at vtable+0x28 (slot 10): Object's retail
+// ctor at 0x001D29A0 stores vtable 0x0109EE58, and the independently matched
+// 0x001BE440 body reads the +0x80 m_drawable field.  This callback uses the
+// same proven local virtual view used by other BFME Object call sites.
+class BfmeBeaconObjectGetDrawable
+{
+public:
+	virtual void slot00(void) = 0;
+	virtual void slot01(void) = 0;
+	virtual void slot02(void) = 0;
+	virtual void slot03(void) = 0;
+	virtual void slot04(void) = 0;
+	virtual void slot05(void) = 0;
+	virtual void slot06(void) = 0;
+	virtual void slot07(void) = 0;
+	virtual void slot08(void) = 0;
+	virtual void slot09(void) = 0;
+	virtual Drawable *getDrawable(void) const = 0;
+};
+
+// The caption callsite targets the already-real 58-byte body at 0x00416BD0.
+// Its canonical Drawable spelling is still present-unmatched, so retain the
+// independently matched address-derived ABI view rather than adding a pin.
+// The raw body proves MSVC's hidden UnicodeString return storage at [esp+0xc]
+// and returns that storage pointer in eax (ret 4).
+class Rva00416BD0
+{
+public:
+	UnicodeString getName(void);
+};
+
+// The portrait-looking ILT at 0x0002262E is not the named
+// ControlBar::setPortraitByObject body: it jumps to the already matched 3-byte
+// Gen_0049cfe0::m(int) body at 0x0049CFE0, whose raw body is ret 4.  The old
+// AAE setPortraitByObject spelling therefore is not asserted here; call the
+// existing RVA owner with its independently established thiscall ABI.
+class Gen_0049cfe0
+{
+public:
+	void m(Int value);
+};
+
+void ControlBar::populateBeacon( Object *beacon )
+{
+
+	// Preserve the retail no-op member call and its one-argument ABI.
+	((Gen_0049cfe0 *)this)->m((Int)beacon);
+
+	static NameKeyType textID = NAMEKEY("ControlBar.wnd:EditBeaconText");
+	static NameKeyType staticTextID = NAMEKEY("ControlBar.wnd:StaticTextBeaconLabel");
+	static NameKeyType clearButtonID = NAMEKEY("ControlBar.wnd:ButtonClearBeaconText");
+
+	GameWindow *textEntryWin = TheWindowManager->winGetWindowFromId(NULL, textID);
+	GameWindow *staticTextWin = TheWindowManager->winGetWindowFromId(NULL, staticTextID);
+	GameWindow *buttonWin = TheWindowManager->winGetWindowFromId(NULL, clearButtonID);
+
+	if (beacon->isLocallyControlled())
+	{
+		if (textEntryWin)
+		{
+			textEntryWin->winHide(FALSE);
+			GadgetTextEntrySetText( textEntryWin,
+				((Rva00416BD0 *)((BfmeBeaconObjectGetDrawable *)beacon)->getDrawable())->getName() );
+			TheWindowManager->winSetFocus( textEntryWin );
+		}
+
+		if (staticTextWin)
+			staticTextWin->winHide(FALSE);
+
+		if (buttonWin)
+			buttonWin->winHide(FALSE);
+	}
+	else
+	{
+		if (textEntryWin)
+			textEntryWin->winHide(TRUE);
+
+		if (staticTextWin)
+			staticTextWin->winHide(TRUE);
+
+		if (buttonWin)
+			buttonWin->winHide(TRUE);
+	}
+}
+
+// ------------------------------------------------------------------------------------------------
+/** Show a rally point marker at the world location specified.  If no location is specified
+	* any marker that we might have visible is hidden */
+// ------------------------------------------------------------------------------------------------
+// BFME's rally-point marker differs from the reference in three ways that are
+// all visible in the call sequence: newDrawable takes a third argument (retail
+// pushes -1 after the status bits), setDrawableStatus is inlined to an OR into
+// the dword at Drawable+0x110, and the whole position/orientation/colour block
+// is guarded by `if (marker)`.  The reference guards only the creation arm and
+// then dereferences the marker unconditionally -- under NDEBUG its
+// DEBUG_ASSERTCRASH compiles away and nothing is left to stop a null.
+class BFMERetailAsciiString
+{
+public:
+	BFMERetailAsciiString( const char *string );
+	~BFMERetailAsciiString() { releaseBuffer(); }
+private:
+	void releaseBuffer();
+	char *m_data;
+};
+
+// BFME's GameClient vtable is not the vendored one: findDrawableByID is slot 11
+// (+0x2C) against slot 8 (+0x20) here, and destroyDrawable slot 24 (+0x60)
+// against slot 19 (+0x4C).  Three virtuals ahead of findDrawableByID and two more
+// between it and destroyDrawable that the reference header does not declare.
+class BFMEGameClientDrawables
+{
+public:
+	virtual void unused00() = 0;
+	virtual void unused01() = 0;
+	virtual void unused02() = 0;
+	virtual void unused03() = 0;
+	virtual void unused04() = 0;
+	virtual void unused05() = 0;
+	virtual void unused06() = 0;
+	virtual void unused07() = 0;
+	virtual void unused08() = 0;
+	virtual void unused09() = 0;
+	virtual void unused10() = 0;
+	virtual Drawable *findDrawableByID( const DrawableID id ) = 0;	///< vtable +0x2C
+	virtual void unused12() = 0;
+	virtual void unused13() = 0;
+	virtual void unused14() = 0;
+	virtual void unused15() = 0;
+	virtual void unused16() = 0;
+	virtual void unused17() = 0;
+	virtual void unused18() = 0;
+	virtual void unused19() = 0;
+	virtual void unused20() = 0;
+	virtual void unused21() = 0;
+	virtual void unused22() = 0;
+	virtual void unused23() = 0;
+	virtual void destroyDrawable( Drawable *draw ) = 0;		///< vtable +0x60
+};
+
+// Four fields the vendored headers place earlier than BFME does: the downwind
+// angle at GlobalData+0x17C against +0x15C, the time of day at +0x218 against
+// +0x204, and the player's day/night indicator colours at Player+0x1C4/+0x1C8
+// against +0x124/+0x128.
+struct BfmeRallyPointGlobalData
+{
+	unsigned char m_unreconstructed_000[ 0x17c ];
+	Real m_downwindAngle;					///< retail this+0x17C
+	unsigned char m_unreconstructed_180[ 0x218 - 0x180 ];
+	TimeOfDay m_timeOfDay;					///< retail this+0x218
+};
+
+struct BfmeRallyPointPlayer
+{
+	unsigned char m_unreconstructed_000[ 0x1c4 ];
+	Color m_playerColor;					///< retail this+0x1C4
+	Color m_playerNightColor;				///< retail this+0x1C8
+};
+
+struct BfmeRallyPointControlBar
+{
+	unsigned char m_unreconstructed_000[ 0x64 ];
+	DrawableID m_rallyPointDrawableID;			///< retail this+0x64
+};
+
+struct BfmeRallyPointDrawable
+{
+	unsigned char m_unreconstructed_000[ 0x110 ];
+	UnsignedInt m_status;					///< retail this+0x110
+};
+
+// findTemplate is an inline forwarding to findTemplateInternal(name, check) in
+// the vendored header, so the shared spelling pushes the default TRUE as well;
+// retail calls a one-argument lookup.  newDrawable takes a third argument retail
+// passes -1 for, which is the spelling BFMEThingFactory_newDrawable.cpp already
+// carries.
+class BFMEThingFactory
+{
+public:
+	const ThingTemplate *findTemplate( const AsciiString &name );
+	Drawable *newDrawable( const ThingTemplate *tmplate, DrawableStatus statusBits, Int unknown );
+};
+
+void ControlBar::showRallyPoint( const Coord3D *loc )
+{
+	BfmeRallyPointControlBar *self = (BfmeRallyPointControlBar *)this;
+
+	// if loc is NULL, destroy any rally point drawble we have shown
+	if( loc == NULL )
+	{
+
+		// destroy rally point drawable if present
+		// BFME clears the id only when it actually destroyed something; the
+		// reference clears it unconditionally, one line further out.
+		if( self->m_rallyPointDrawableID != INVALID_DRAWABLE_ID )
+		{
+			((BFMEGameClientDrawables *)TheGameClient)->destroyDrawable( ((BFMEGameClientDrawables *)TheGameClient)->findDrawableByID( self->m_rallyPointDrawableID ) );
+			self->m_rallyPointDrawableID = INVALID_DRAWABLE_ID;
+		}
+
+	}  // end if
+	else
+	{
+		Drawable *marker = NULL;
+
+		// create a rally point drawble if necessary
+		if( self->m_rallyPointDrawableID == INVALID_DRAWABLE_ID )
+		{
+
+			const ThingTemplate* ttn;
+			{
+				BFMERetailAsciiString markerName( "RallyPointMarker" );
+				ttn = ((BFMEThingFactory *)TheThingFactory)->findTemplate( *(const AsciiString *)&markerName );
+			}
+			marker = ((BFMEThingFactory *)TheThingFactory)->newDrawable( ttn, DRAWABLE_STATUS_NONE, -1 );
+			if (marker)
+			{
+				((BfmeRallyPointDrawable *)marker)->m_status |= DRAWABLE_STATUS_NO_SAVE;
+				self->m_rallyPointDrawableID = marker->getID();
+			}
+
+		}  // end if
+		else
+			marker = ((BFMEGameClientDrawables *)TheGameClient)->findDrawableByID( self->m_rallyPointDrawableID );
+
+		if (marker)
+		{
+
+			// set the position of the rally point drawble to the position passed in
+			marker->setPosition( loc );
+			marker->setOrientation( ((const BfmeRallyPointGlobalData *)TheGlobalData)->m_downwindAngle );//To blow down wind -- ML
+
+			// set the marker colors to that of the local player
+			Player *player = ThePlayerList->getLocalPlayer();
+
+			if (((const BfmeRallyPointGlobalData *)TheGlobalData)->m_timeOfDay == TIME_OF_DAY_NIGHT)
+				marker->setIndicatorColor( ((const BfmeRallyPointPlayer *)player)->m_playerNightColor );
+			else
+				marker->setIndicatorColor( ((const BfmeRallyPointPlayer *)player)->m_playerColor );
+
+		}
+
+	}  // end else
+
+}  // end showRallyPoint
+
+// ------------------------------------------------------------------------------------------------
+/** Show a rally point marker at the world location specified.  If no location is specified
+	* any marker that we might have visible is hidden */
+// ------------------------------------------------------------------------------------------------
+// ?setControlBarSchemeByPlayer@ControlBar@@ exact retail body is emitted by
+// ControlBarSetControlBarSchemeByPlayerThunk.cpp.
+
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_setControlBarSchemeByPlayerTemplate_Thunk.cpp
+// ?setControlBarSchemeByPlayerTemplate@ControlBar@@ present-unmatched
+void ControlBar::setControlBarSchemeByPlayerTemplate( const PlayerTemplate *pt)
+{
+	if(m_controlBarSchemeManager)
+		m_controlBarSchemeManager->setControlBarSchemeByPlayerTemplate(pt);
+
+	static NameKeyType buttonPlaceBeaconID = NAMEKEY( "ControlBar.wnd:ButtonPlaceBeacon" );
+	static NameKeyType buttonIdleWorkerID = NAMEKEY("ControlBar.wnd:ButtonIdleWorker");
+	static NameKeyType buttonGeneralID = NAMEKEY("ControlBar.wnd:ButtonGeneral");
+	GameWindow *buttonPlaceBeacon = TheWindowManager->winGetWindowFromId( NULL, buttonPlaceBeaconID );
+	GameWindow *buttonIdleWorker = TheWindowManager->winGetWindowFromId( NULL, buttonIdleWorkerID );
+	GameWindow *buttonGeneral = TheWindowManager->winGetWindowFromId( NULL, buttonGeneralID );
+
+	if(pt == ThePlayerTemplateStore->findPlayerTemplate(TheNameKeyGenerator->nameToKey("FactionObserver")))
+	{
+		m_isObserverCommandBar = TRUE;
+		switchToContext( CB_CONTEXT_OBSERVER_LIST, NULL );
+		DEBUG_LOG(("We're loading the Observer Command Bar\n"));
+
+		if (buttonPlaceBeacon)
+			buttonPlaceBeacon->winHide(TRUE);
+		if (buttonIdleWorker)
+			buttonIdleWorker->winHide(TRUE);
+		if (buttonGeneral)
+			buttonGeneral->winEnable(FALSE);
+	}
+	else
+	{
+		switchToContext( CB_CONTEXT_NONE, NULL );
+		m_isObserverCommandBar = FALSE;
+
+		if (buttonPlaceBeacon)
+			buttonPlaceBeacon->winHide(
+			(TheGameLogic->getGameMode() != GAME_LAN && TheGameLogic->getGameMode() != GAME_INTERNET) ||
+			!TheGameInfo->isMultiPlayer());
+		if (buttonIdleWorker)
+			buttonIdleWorker->winHide(FALSE);
+		if (buttonGeneral)
+		{
+			buttonGeneral->winHide(FALSE);
+			buttonGeneral->winEnable(TRUE);
+		}
+	}
+	switchControlBarStage(CONTROL_BAR_STAGE_DEFAULT);
+
+	hidePurchaseScience();
+}
+
+// ?setControlBarSchemeByName@ControlBar@@QAEXABVAsciiString@@@Z
+// Body in game/masm_dumps/ControlBar_setControlBarSchemeByName.asm (exact 68B @ 0x4A0090).
+// Retail: if manager, setControlBarScheme(by-value name); if not playback, setDefaultControlBarConfig.
+// (Not switchControlBarStage — inlined recorder check. C++ blocked on AsciiString by-value shape.)
+
+
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/ControlBarPreloadAssets.cpp
+// ?preloadAssets@ControlBar@@QAEXW4TimeOfDay@@@Z present-unmatched
+// preloadAssets cannot come home, and the blocker is the ledger row rather than
+// the body. Its row carries object-symbol=?bfme_preloadAssets_wrapper@ControlBar@@QAEXXZ,
+// a member name that exists only inside the donor's own private ControlBar. The
+// retail body takes NO argument -- it ends c3 and tail-jumps -- while the row is
+// named for the reference's preloadAssets(TimeOfDay). This TU compiles the real
+// ControlBar, which declares the one-argument form, so it cannot emit a
+// no-argument function and cannot satisfy that object-symbol without a header
+// change. The override is the correct mechanism here, not a wart.
+void ControlBar::preloadAssets( TimeOfDay timeOfDay )
+{
+	if (m_controlBarSchemeManager)
+		m_controlBarSchemeManager->preloadAssets( timeOfDay );
+}
+
+// ?updateBuildQueueDisabledImages@ControlBar@@ present-unmatched
+void ControlBar::updateBuildQueueDisabledImages( const Image *image )
+{
+	if(!image)
+		return;
+	// We have to do this because the build queue data might have been reset
+	static NameKeyType buildQueueIDs[ MAX_BUILD_QUEUE_BUTTONS ];
+	static Bool idsInitialized = FALSE;
+	Int i;
+
+	// get name key ids for the build queue buttons
+	if( idsInitialized == FALSE )
+	{
+		AsciiString buttonName;
+
+		for( i = 0; i < MAX_BUILD_QUEUE_BUTTONS; i++ )
+		{
+			
+			buttonName.format( "ControlBar.wnd:ButtonQueue%02d", i + 1 );
+			buildQueueIDs[ i ] = TheNameKeyGenerator->nameToKey( buttonName );
+
+		}  // end for i
+
+		idsInitialized = TRUE;
+
+	}  // end if
+
+	// get window pointers to all the buttons for the build queue
+	for( i = 0; i < MAX_BUILD_QUEUE_BUTTONS; i++ )
+	{
+
+		// get window commented out cause I believe we already set this.  We'll see in a few minutes
+		m_queueData[ i ].control = TheWindowManager->winGetWindowFromId( m_contextParent[ CP_BUILD_QUEUE ],
+																																		 buildQueueIDs[ i ] );
+
+		GadgetButtonSetDisabledImage( m_queueData[ i ].control, image );
+
+	}  // end for i
+
+}
+
+void ControlBar::updateRightHUDImage( const Image *image )
+{
+	if(!m_rightHUDWindow || !image)
+		return;
+	m_rightHUDWindow->winSetEnabledImage(0, image);
+
+}
+
+// ?updateBuildUpClockColor@ControlBar@@QAEXH@Z present-unmatched
+void ControlBar::updateBuildUpClockColor( Color color)
+{
+	m_buildUpClockColor = color;
+}
+
+
+
+// ?updateCommanBarBorderColors@ControlBar@@QAEXHHHH@Z present-unmatched
+void ControlBar::updateCommanBarBorderColors(Color build, Color action, Color upgrade, Color system )
+{
+	m_commandButtonBorderBuildColor = build;
+	m_commandButtonBorderActionColor = action;
+	m_commandButtonBorderUpgradeColor = upgrade;
+	m_commandButtonBorderSystemColor = system;
+}
+
+// ---------------------------------------------------------------------------------------
+// hides the communicator button
+void ControlBar::hideCommunicator( Bool b )
+{
+	//sanity
+	if( m_communicatorButton != NULL )
+		m_communicatorButton->winHide( b );
+}
+
+// ---------------------------------------------------------------------------------------
+// Outside hook so when the genera's head is pushed, we can switch to the purchase science
+// context
+// ?updatePurchaseScience@ControlBar@@QAEXXZ present-unmatched
+void ControlBar::updatePurchaseScience( void )
+{
+//	if(m_generalsScreenAnimate && TheGlobalData->m_animateWindows)
+//	{
+//		Bool wasFinished = m_generalsScreenAnimate->isFinished();
+//		m_generalsScreenAnimate->update();
+//		if (m_generalsScreenAnimate->isFinished() && !wasFinished && m_generalsScreenAnimate->isReversed())
+//			m_contextParent[ CP_PURCHASE_SCIENCE ]->winHide(TRUE);
+//	}
+}
+
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_showPurchaseScience.cpp
+// ?showPurchaseScience@ControlBar@@QAEXXZ present-unmatched
+void ControlBar::showPurchaseScience( void )
+{
+	
+	if(TheScriptEngine->isGameEnding())
+		return;
+	populatePurchaseScience(ThePlayerList->getLocalPlayer());
+	m_genStarFlash = FALSE;
+	if(!m_contextParent[ CP_PURCHASE_SCIENCE ]->winIsHidden())
+		return;
+	//switchToContext(CB_CONTEXT_PURCHASE_SCIENCE, NULL);
+	m_contextParent[ CP_PURCHASE_SCIENCE ]->winHide(FALSE);
+	if (TheGlobalData->m_animateWindows)
+		TheTransitionHandler->setGroup("GenExpFade");
+		//m_generalsScreenAnimate->registerGameWindow( m_contextParent[ CP_PURCHASE_SCIENCE ], WIN_ANIMATION_SLIDE_TOP, TRUE, 200 );
+
+}
+
+// The BFME purchase-science path uses these singleton slots directly.  The
+// ZH declarations describe a different window and Shell layout, so the
+// retail offsets stay local to this recovered body.
+struct BfmePurchaseScienceWindowView
+{
+	char m_pad000[0x254];
+	unsigned char m_hidden;
+};
+
+extern int g_Va012F4C38;
+class Shell;
+extern Shell *TheShell;
+
+struct BfmeShellStateView
+{
+	char m_pad000[0x50];
+	unsigned char m_isShellActive;
+};
+
+class BfmeGlobal_012f19e8
+{
+public:
+	void bfmeCall_000290d2();
+};
+
+void ControlBar::hidePurchaseScience( void )
+{
+	BfmePurchaseScienceWindowView *purchaseWindow =
+		reinterpret_cast<BfmePurchaseScienceWindowView *>(g_Va012F4C38);
+	if(purchaseWindow == NULL || purchaseWindow->m_hidden)
+		return;
+	purchaseWindow->m_hidden = TRUE;
+	reinterpret_cast<BfmeShellStateView *>(TheShell)->m_isShellActive = TRUE;
+	reinterpret_cast<BfmeGlobal_012f19e8 **>(0x012f19e8)[0]->bfmeCall_000290d2();
+}
+
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_togglePurchaseScience.cpp
+// ?togglePurchaseScience@ControlBar@@QAEXXZ present-unmatched
+void ControlBar::togglePurchaseScience( void )
+{
+	if(m_contextParent[ CP_PURCHASE_SCIENCE ]->winIsHidden())
+		showPurchaseScience();
+	else
+		hidePurchaseScience();
+}
+
+void ControlBar::toggleControlBarStage( void )
+{
+	if(m_currentControlBarStage == CONTROL_BAR_STAGE_DEFAULT )
+		switchControlBarStage(CONTROL_BAR_STAGE_LOW);
+	else
+		switchControlBarStage(CONTROL_BAR_STAGE_DEFAULT);
+}
+
+// Functions for repositioning/resizing the control bar
+void ControlBar::switchControlBarStage( ControlBarStages stage )
+{
+	if(stage < CONTROL_BAR_STAGE_DEFAULT || stage >= MAX_CONTROL_BAR_STAGES)
+		return;
+	if (TheRecorder && TheRecorder->getMode() == RECORDERMODETYPE_PLAYBACK)
+		return;
+	switch (stage) {
+	case CONTROL_BAR_STAGE_DEFAULT:
+		setDefaultControlBarConfig();
+		break;
+//	case CONTROL_BAR_STAGE_SQUISHED:
+//		setSquishedControlBarConfig();
+//		break;
+	case CONTROL_BAR_STAGE_LOW:
+		setLowControlBarConfig();
+		break;
+	case CONTROL_BAR_STAGE_HIDDEN:
+		setHiddenControlBar();
+		break;
+	default:
+		DEBUG_ASSERTCRASH(FALSE,("ControlBar::switchControlBarStage we were passed in a stage that's not supported %d", stage));
+	}
+	
+}
+void ControlBar::setDefaultControlBarConfig( void )
+{
+//	if(m_currentControlBarStage == CONTROL_BAR_STAGE_SQUISHED)
+//	{
+//		m_controlBarResizer->sizeWindowsDefault();
+//		m_controlBarSchemeManager->setControlBarSchemeByPlayerTemplate(ThePlayerList->getLocalPlayer()->getPlayerTemplate(), FALSE);
+//	}
+	m_currentControlBarStage = CONTROL_BAR_STAGE_DEFAULT;
+	TheTacticalView->setHeight((Int)(TheDisplay->getHeight() * 0.80f)); 
+	m_contextParent[ CP_MASTER ]->winSetPosition(m_defaultControlBarPosition.x, m_defaultControlBarPosition.y);
+	m_contextParent[ CP_MASTER ]->winHide(FALSE);
+	repopulateBuildTooltipLayout();
+	setUpDownImages();
+
+}
+
+void ControlBar::setSquishedControlBarConfig( void )
+{
+	if(m_currentControlBarStage == CONTROL_BAR_STAGE_SQUISHED)
+		return;
+	m_currentControlBarStage = CONTROL_BAR_STAGE_SQUISHED;
+	m_contextParent[ CP_MASTER ]->winSetPosition(m_defaultControlBarPosition.x, m_defaultControlBarPosition.y);
+	
+//	m_controlBarResizer->sizeWindowsAlt();
+	repopulateBuildTooltipLayout();	
+	TheTacticalView->setHeight((Int)(TheDisplay->getHeight())); 
+	m_controlBarSchemeManager->setControlBarSchemeByPlayerTemplate(ThePlayerList->getLocalPlayer()->getPlayerTemplate(), TRUE);
+}
+
+// The default bar position is at ControlBar+0x18, the stage at +0x20 and the
+// context parents from +0x34 with the master first.
+struct BfmeControlBarLowConfig
+{
+	char m_slice_pad[ 0x18 ];				///< retail this+0x00..+0x17, untouched
+	ICoord2D m_defaultControlBarPosition;			///< retail this+0x18
+	Int m_currentControlBarStage;				///< retail this+0x20
+	char m_slice_padB[ 0x34 - 0x24 ];
+	GameWindow *m_contextParent[ NUM_CONTEXT_PARENTS ];	///< retail this+0x34
+};
+
+// ?setLowControlBarConfig@ControlBar@@IAEXXZ
+void ControlBar::setLowControlBarConfig( void )
+{
+	BfmeControlBarLowConfig *self = (BfmeControlBarLowConfig *)this;
+
+	self->m_currentControlBarStage = CONTROL_BAR_STAGE_LOW;
+	ICoord2D pos;
+	pos.x = self->m_defaultControlBarPosition.x;
+	// Retail truncates only the tenth -- fild, multiply by 0.1, ftol -- and
+	// subtracts that integer from a freshly fetched height, so the cast sits on
+	// the second term rather than around the whole expression.  getHeight is
+	// fetched three times and is unsigned, the fild carrying the 2^32 fixup.
+	pos.y = TheDisplay->getHeight() - (Int)(.1 * TheDisplay->getHeight());
+	TheTacticalView->setHeight((Int)(TheDisplay->getHeight())); 
+	self->m_contextParent[ CP_MASTER ]->winSetPosition(pos.x, pos.y);
+	self->m_contextParent[ CP_MASTER ]->winHide(FALSE);
+	setUpDownImages();
+}
+
+void ControlBar::setHiddenControlBar( void )
+{
+	m_currentControlBarStage = CONTROL_BAR_STAGE_HIDDEN;
+	m_contextParent[ CP_MASTER ]->winHide(TRUE);
+}
+// removed from multiplayer test
+//void ControlBar::showCommandMarkers( void )
+//{
+//	for(Int i =0; i < MAX_COMMANDS_PER_SET; ++i)
+//	{
+//		if(m_commandWindows[i]->winIsHidden())
+//			m_commandMarkers[i]->winHide(FALSE);
+//		else
+//			m_commandMarkers[i]->winHide(TRUE);
+//	}
+//}
+//
+class BFMERetailCommandButton
+{
+public:
+	void setButtonImage( const Image *image );
+};
+
+void ControlBar::updateCommandMarkerImage( const Image *image )
+{
+	if(!image)
+		return;
+
+	CommandButton *cmdButton;
+	{
+		BFMERetailAsciiString commandName( "Command_StructureExit" );
+		cmdButton = findNonConstCommandButton( *(const AsciiString*)&commandName );
+	}
+	if(cmdButton)
+		((BFMERetailCommandButton*)cmdButton)->setButtonImage(image);
+
+	{
+		BFMERetailAsciiString commandName( "Command_TransportExit" );
+		cmdButton = findNonConstCommandButton( *(const AsciiString*)&commandName );
+	}
+	if(cmdButton)
+		((BFMERetailCommandButton*)cmdButton)->setButtonImage(image);
+}
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarUpdateSlotExitImageThunk.cpp
+// ?updateSlotExitImage@ControlBar@@QAEXPBVImage@@@Z present-unmatched
+void ControlBar::updateSlotExitImage( const Image *image )
+{
+	//Hardcoding values here Not a good thing but there's no other way right now.
+	if(!image)
+		return;
+
+	//Kris:
+	//Other than this being a completely ridiculously retarded idea, I'm not inclined
+	//to recode this in a better way, yikes! Btw, I DID NOT CODE THIS! But this is
+	//what this does: The button images are overridden by a faction specific icon.
+	//The proper way to fix this would be to make a commandbutton option and loop
+	//through all buttons on init to replace the icon. We need a system like this
+	//for neutral buildings which can have a different empty inventory icon based
+	//on the faction player.
+
+	CommandButton *cmdButton = findNonConstCommandButton( "Command_StructureExit" );
+	if(cmdButton)
+		cmdButton->setButtonImage(image);
+
+	cmdButton = findNonConstCommandButton( "Command_TransportExit" );
+	if(cmdButton)
+		cmdButton->setButtonImage(image);
+
+	cmdButton = findNonConstCommandButton( "Command_BunkerExit" );
+	if(cmdButton)
+		cmdButton->setButtonImage(image);
+
+	cmdButton = findNonConstCommandButton( "Command_FireBaseExit" );
+	if(cmdButton)
+		cmdButton->setButtonImage(image);
+
+}
+
+// Retail places the final two image fields at +0x2c0/+0x2c4.  The shared ZH
+// ControlBar declaration places them at +0x300/+0x304, so keep this BFME
+// layout correction local to the recovered method.
+struct BfmeControlBarUpdateImageTail
+{
+	unsigned char prefix[0x2c0];
+	const Image *generalButtonEnable;
+	const Image *generalButtonHighlight;
+};
+
+void ControlBar::updateUpDownImages( const Image *toggleButtonUpIn, const Image *toggleButtonUpOn, const Image *toggleButtonUpPushed,
+																		 const Image *toggleButtonDownIn, const Image *toggleButtonDownOn, const Image *toggleButtonDownPushed,
+																		 const Image *generalButtonEnable, const Image *generalButtonHighlight  )
+{
+	m_toggleButtonUpIn = toggleButtonUpIn;
+	m_toggleButtonUpOn = toggleButtonUpOn;
+	m_toggleButtonUpPushed = toggleButtonUpPushed;
+	m_toggleButtonDownIn = toggleButtonDownIn;
+	m_toggleButtonDownOn = toggleButtonDownOn;
+	m_toggleButtonDownPushed = toggleButtonDownPushed;
+
+
+	BfmeControlBarUpdateImageTail *bfme = reinterpret_cast<BfmeControlBarUpdateImageTail *>(this);
+	bfme->generalButtonEnable = generalButtonEnable;
+	bfme->generalButtonHighlight = generalButtonHighlight;
+
+	setUpDownImages();
+}
+
+void ControlBar::setUpDownImages( void )
+{
+	GameWindow *win= TheWindowManager->winGetWindowFromId( NULL, TheNameKeyGenerator->nameToKey( "ControlBar.wnd:ButtonLarge" ) );
+	if(!win)
+		return;
+	// we only care if it's in it's low state, else we put the default images up
+	if(m_currentControlBarStage == CONTROL_BAR_STAGE_LOW)
+	{
+		GadgetButtonSetEnabledImage(win, m_toggleButtonUpOn);
+		GadgetButtonSetHiliteImage(win, m_toggleButtonUpIn);
+		GadgetButtonSetHiliteSelectedImage(win, m_toggleButtonUpPushed);
+		return;
+	}
+
+	GadgetButtonSetEnabledImage(win, m_toggleButtonDownOn);
+	GadgetButtonSetHiliteImage(win, m_toggleButtonDownIn);
+	GadgetButtonSetHiliteSelectedImage(win, m_toggleButtonDownPushed);
+
+}
+
+// ?getForegroundMarkerPos@ControlBar@@QAEXPAH0@Z present-unmatched
+void ControlBar::getForegroundMarkerPos(Int *x, Int *y)
+{
+	*x = m_controlBarForegroundMarkerPos.x;
+	*y = m_controlBarForegroundMarkerPos.y;
+}
+// ?getBackgroundMarkerPos@ControlBar@@QAEXPAH0@Z present-unmatched
+void ControlBar::getBackgroundMarkerPos(Int *x, Int *y)
+{
+	*x = m_controlBarBackgroundMarkerPos.x;
+	*y = m_controlBarBackgroundMarkerPos.y;
+}
+
+// ?drawTransitionHandler@ControlBar@@QAEXXZ present-unmatched
+void ControlBar::drawTransitionHandler( void )
+{
+//	if(m_transitionHandler)
+//		m_transitionHandler->draw();
+}
+enum{
+	RADAR_ATTACK_GLOW_FRAMES = 150,
+	RADAR_ATTACK_GLOW_NUM_TIMES = 15  ///< number of times we'll flash
+};
+
+#pragma pack(push, 1)
+struct BFMEControlBarRadarGlowLayout
+{
+	unsigned char pad0[0x2E0];
+	unsigned char glowOn;
+	unsigned char pad1[3];
+	Int remainingFrames;
+	GameWindow *glowWindow;
+};
+#pragma pack(pop)
+
+__declspec(noinline) void ControlBar::triggerRadarAttackGlow( void )
+{
+	BFMEControlBarRadarGlowLayout *retail = reinterpret_cast<BFMEControlBarRadarGlowLayout *>(this);
+	if(!retail->glowWindow)
+		return;
+	retail->glowOn = TRUE;
+	retail->remainingFrames = RADAR_ATTACK_GLOW_FRAMES;
+	if(BitTest(retail->glowWindow->winGetStatus(),WIN_STATUS_ENABLED) == TRUE)
+		retail->glowWindow->winEnable(FALSE);
+}
+
+// The three radar-glow fields sit 0x40 earlier in BFME than the vendored
+// ControlBar puts them: the on flag at +0x2e0, the remaining frame count at
+// +0x2e4 and the window at +0x2e8.
+struct BfmeControlBarRadarGlow
+{
+	unsigned char m_unreconstructed_00[ 0x2e0 ];
+	unsigned char m_radarAttackGlowOn;			///< retail this+0x2e0
+	unsigned char m_unreconstructed_2e1[ 3 ];
+	Int m_remainingRadarAttackGlowFrames;			///< retail this+0x2e4
+	GameWindow *m_radarAttackGlowWindow;			///< retail this+0x2e8
+};
+
+// ?updateRadarAttackGlow@ControlBar@@IAEXXZ
+void ControlBar::updateRadarAttackGlow ( void )
+{
+	BfmeControlBarRadarGlow *self = (BfmeControlBarRadarGlow *)this;
+
+	if(!self->m_radarAttackGlowOn || !self->m_radarAttackGlowWindow)
+		return;
+	self->m_remainingRadarAttackGlowFrames--;
+	if(self->m_remainingRadarAttackGlowFrames <= 0)
+	{
+		self->m_radarAttackGlowOn = FALSE;
+		self->m_radarAttackGlowWindow->winEnable(TRUE);
+		return;
+	}
+	
+	if(self->m_remainingRadarAttackGlowFrames % RADAR_ATTACK_GLOW_NUM_TIMES == 0)
+	{
+		self->m_radarAttackGlowWindow->winEnable(!BitTest(self->m_radarAttackGlowWindow->winGetStatus(),WIN_STATUS_ENABLED));
+	}
+
+	
+}
+// ?initSpecialPowershortcutBar@ControlBar@@QAEXPAVPlayer@@@Z
+// Body in game/masm_dumps/_str3__initSpecialPowershortcutBar_ControlBar_QAEXPAVPlayer_Z_49F1C0.asm (exact 766B retail @ 0x0049F1C0).
+// byte-exact reconstruction: game/GameEngine/Source/Common/ControlBar_populateSpecialPowerShortcutMethodThunk.cpp
+// ?populateSpecialPowerShortcut@ControlBar@@IAEXPAVPlayer@@@Z present-unmatched
+void ControlBar::populateSpecialPowerShortcut( Player *player)
+{
+	const CommandSet *commandSet;
+	Int i;
+	if(!player || !player->getPlayerTemplate() 
+			|| !player->isLocalPlayer() || m_currentlyUsedSpecialPowersButtons == 0
+			|| m_specialPowerShortcutButtons == NULL || m_specialPowerShortcutButtonParents == NULL)
+		return;
+	for( i = 0; i < MAX_SPECIAL_POWER_SHORTCUTS; ++i )
+	{
+		if (m_specialPowerShortcutButtons[i])
+			m_specialPowerShortcutButtons[i]->winHide(TRUE);
+		if (m_specialPowerShortcutButtonParents[i])
+			m_specialPowerShortcutButtonParents[i]->winHide(TRUE);
+		
+	}
+	
+	// get command set
+	if(player->getPlayerTemplate()->getSpecialPowerShortcutCommandSet().isEmpty() )
+		return;
+	commandSet = TheControlBar->findCommandSet(player->getPlayerTemplate()->getSpecialPowerShortcutCommandSet()); // TEMP WILL CHANGE TO PROPER WAY ONCE WORKING
+	if(!commandSet)
+		return;
+	// populate the button with commands defined
+	Int currentButton = 0;
+	const CommandButton *commandButton;
+	for( i = 0; i < m_currentlyUsedSpecialPowersButtons; i++ )
+	{
+
+		// get command button
+		commandButton = commandSet->getCommandButton(i);
+
+		// if button is not present, just hide the window
+		if( commandButton == NULL )
+		{
+			continue;
+			// hide window on interface
+			//m_specialPowerShortcutButtons[ i ]->winHide( TRUE );
+
+		}  // end if
+		else
+		{
+
+			if( BitTest( commandButton->getOptions(), NEED_UPGRADE ) )
+			{
+				const UpgradeTemplate *upgrade = commandButton->getUpgradeTemplate();
+				if( upgrade && !ThePlayerList->getLocalPlayer()->hasUpgradeComplete( upgrade->getUpgradeMask() ) )
+				{
+					//Kris: 8/13/03 - Don't show shortcut buttons that require upgrades we don't have. As far as 
+					//I know, only the radar van scan has this. The MOAB is handled differently (sciences).
+					continue;
+				}
+			}
+
+			//
+			// commands that require sciences we don't have are hidden so they never show up
+			// cause we can never pick "another" general technology throughout the game
+			//
+			if( BitTest( commandButton->getOptions(), NEED_SPECIAL_POWER_SCIENCE ) )
+			{
+				const SpecialPowerTemplate *power = commandButton->getSpecialPowerTemplate();
+
+				if( !power )
+				{
+					//Should have the power.. button is probably missing the SpecialPower = xxx entry.
+					DEBUG_CRASH( ("CommandButton %s needs a SpecialPower entry, but it's either incorrect or missing.", commandButton->getName().str()) );
+					continue;
+				}
+
+				//We just need to find something that has the power.
+				Object *obj = ThePlayerList->getLocalPlayer()->findMostReadyShortcutSpecialPowerOfType( commandButton->getSpecialPowerTemplate()->getSpecialPowerType() );
+				if( !obj )
+				{
+					continue;
+				}
+
+				if( power->getRequiredScience() != SCIENCE_INVALID )
+				{
+					if( player->hasScience( power->getRequiredScience() ) == FALSE )
+					{
+						//Hide the power
+						//m_specialPowerShortcutButtons[ i ]->winHide( TRUE );
+						continue;
+					}
+					else
+					{
+						//The player does have the special power! Now determine if the images require
+						//enhancement based on upgraded versions. This is determined by the command
+						//button specifying a vector of sciences in the command button.
+						Int bestIndex = -1;
+						ScienceType science;
+						for( Int scienceIndex = 0; scienceIndex < commandButton->getScienceVec().size(); ++scienceIndex )
+						{
+							science = commandButton->getScienceVec()[ scienceIndex ];
+							
+							//Keep going until we reach the end or don't have the required science!
+							if( player->hasScience( science ) )
+							{
+								bestIndex = scienceIndex;
+							}
+							else
+							{
+								break;
+							}
+						}
+
+						if( bestIndex != -1 )
+						{
+							//Now get the best sciencetype.
+							science = commandButton->getScienceVec()[ bestIndex ];
+
+							const CommandSet *commandSet1;
+							const CommandSet *commandSet3;
+							const CommandSet *commandSet8;
+							Int i;
+
+							// get command set
+							if( !player || !player->getPlayerTemplate() 
+									|| player->getPlayerTemplate()->getPurchaseScienceCommandSetRank1().isEmpty()
+									|| player->getPlayerTemplate()->getPurchaseScienceCommandSetRank3().isEmpty()
+									|| player->getPlayerTemplate()->getPurchaseScienceCommandSetRank8().isEmpty() )
+							{
+								continue;
+							}
+							commandSet1 = TheControlBar->findCommandSet( player->getPlayerTemplate()->getPurchaseScienceCommandSetRank1() ); 
+							commandSet3 = TheControlBar->findCommandSet( player->getPlayerTemplate()->getPurchaseScienceCommandSetRank3() ); 
+							commandSet8 = TheControlBar->findCommandSet( player->getPlayerTemplate()->getPurchaseScienceCommandSetRank8() ); 
+
+							if( !commandSet1 || !commandSet3 || !commandSet8 )
+							{
+								continue;
+							}
+
+							Bool found = FALSE;
+							for( i = 0; !found && i < MAX_PURCHASE_SCIENCE_RANK_1; i++ )
+							{
+								const CommandButton *command = commandSet1->getCommandButton( i );
+								if( command && command->getCommandType() == GUI_COMMAND_PURCHASE_SCIENCE )
+								{
+									//All purchase sciences specify a single science.
+									if( command->getScienceVec().empty() )
+									{
+										DEBUG_CRASH( ("Commandbutton %s is a purchase science button without any science! Please add it.", command->getName().str() ) );
+									}
+									else if( command->getScienceVec()[0] == science )
+									{
+										commandButton->copyImagesFrom( command, TRUE );
+										commandButton->copyButtonTextFrom( command, TRUE, TRUE );
+										found = TRUE;
+										break;
+									}
+								}
+							}
+							for( i = 0; !found && i < MAX_PURCHASE_SCIENCE_RANK_3; i++ )
+							{
+								const CommandButton *command = commandSet3->getCommandButton( i );
+								if( command && command->getCommandType() == GUI_COMMAND_PURCHASE_SCIENCE )
+								{
+									//All purchase sciences specify a single science.
+									if( command->getScienceVec().empty() )
+									{
+										DEBUG_CRASH( ("Commandbutton %s is a purchase science button without any science! Please add it.", command->getName().str() ) );
+									}
+									else if( command->getScienceVec()[0] == science )
+									{
+										commandButton->copyImagesFrom( command, TRUE );
+										commandButton->copyButtonTextFrom( command, TRUE, TRUE );
+										found = TRUE;
+										break;
+									}
+								}
+							}
+							for( i = 0; !found && i < MAX_PURCHASE_SCIENCE_RANK_8; i++ )
+							{
+								const CommandButton *command = commandSet8->getCommandButton( i );
+								if( command && command->getCommandType() == GUI_COMMAND_PURCHASE_SCIENCE )
+								{
+									//All purchase sciences specify a single science.
+									if( command->getScienceVec().empty() )
+									{
+										DEBUG_CRASH( ("Commandbutton %s is a purchase science button without any science! Please add it.", command->getName().str() ) );
+									}
+									else if( command->getScienceVec()[0] == science )
+									{
+										commandButton->copyImagesFrom( command, TRUE );
+										commandButton->copyButtonTextFrom( command, TRUE, TRUE );
+										found = TRUE;
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+			}  // end if			
+			else if( commandButton->getCommandType() == GUI_COMMAND_SELECT_ALL_UNITS_OF_TYPE )
+			{
+				//Make sure we actually have an object of type that we want to be able to select.
+				Object *obj = ThePlayerList->getLocalPlayer()->findAnyExistingObjectWithThingTemplate( commandButton->getThingTemplate() );
+				if( !obj )
+				{
+					continue;
+				}
+			}
+
+			// make sure the window is not hidden
+			m_specialPowerShortcutButtons[ currentButton ]->winHide( FALSE );
+			m_specialPowerShortcutButtonParents[ currentButton ]->winHide( FALSE );
+			// enable by default
+			m_specialPowerShortcutButtons[ currentButton ]->winEnable( TRUE );
+			m_specialPowerShortcutButtonParents[ currentButton ]->winEnable( TRUE );
+
+			// populate the visible button with data from the command button
+			setControlCommand( m_specialPowerShortcutButtons[ currentButton ], commandButton );
+			GadgetButtonSetAltSound(m_specialPowerShortcutButtons[ currentButton ], "GUIGenShortcutClick");
+			currentButton++;
+					
+		}  // end else
+
+	}  // end for i
+	if(m_contextParent[ CP_MASTER ] && !m_contextParent[ CP_MASTER ]->winIsHidden() && m_specialPowerShortcutParent->winIsHidden())
+	{
+		showSpecialPowerShortcut();
+		animateSpecialPowerShortcut(TRUE);
+	}
+	updateSpecialPowerShortcut();
+}
+
+//-------------------------------------------------------------------------------------------------
+// ?hasAnyShortcutSelection@ControlBar@@QBE_NXZ present-unmatched
+Bool ControlBar::hasAnyShortcutSelection() const
+{
+	for( Int i = 0; i < m_currentlyUsedSpecialPowersButtons; i++ )
+	{
+		GameWindow *win;
+		const CommandButton *command;
+
+		win = m_specialPowerShortcutButtons[ i ];
+		if( win->winIsHidden() == TRUE )
+			continue;
+
+		// get the command from the control
+		command = (const CommandButton *)GadgetButtonGetData(win);
+		if( !command )
+			continue;
+
+		if( command->getCommandType() == GUI_COMMAND_SELECT_ALL_UNITS_OF_TYPE )
+		{
+			//We found one, so we'll always show shortcuts!
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
+//-------------------------------------------------------------------------------------------------
+// ControlBar::updateSpecialPowerShortcut is byte-verified in ControlBar_updateSpecialPowerShortcut.cpp.
+
+//-------------------------------------------------------------------------------------------------
+// ?drawSpecialPowerShortcutMultiplierText@ControlBar@@QAEXXZ present-unmatched
+void ControlBar::drawSpecialPowerShortcutMultiplierText()
+{
+	for( Int i = 0; i < m_currentlyUsedSpecialPowersButtons; i++ )
+	{
+		GameWindow *win;
+		const CommandButton *command;
+		// get the window
+		win = m_specialPowerShortcutButtons[ i ];
+
+		if( win->winIsHidden() == TRUE )
+			continue;
+		// get the command from the control
+		command = (const CommandButton *)GadgetButtonGetData(win);
+		//command = (const CommandButton *)win->winGetUserData();
+		if( command == NULL )
+			continue;
+
+		//draw superweapon ready multipliers
+		for( int i = 0; i < MAX_SPECIAL_POWER_SHORTCUTS; i++ )
+		{
+			if( !m_shortcutDisplayStrings[ i ] )
+			{
+				//m_shortcutDisplayStrings[ i ] = TheDisplayStringManager->newDisplayString();
+				//m_shortcutDisplayStrings[ i ]->setFont( TheFontLibrary->getFont( "Arial", 16, false ) );
+			}
+			
+			const SpecialPowerTemplate *spTemplate = command->getSpecialPowerTemplate();
+			Int numReady = 0;
+			if( spTemplate )
+			{
+				numReady = ThePlayerList->getLocalPlayer()->countReadyShortcutSpecialPowersOfType( spTemplate->getSpecialPowerType() );
+			}
+			if( numReady > 1 ) // Lorenzen changed... Displaying a "1" is superfluous
+			{
+				UnicodeString unibuffer;
+				unibuffer.format( L"%d", numReady );
+				
+				GadgetButtonSetText( win, unibuffer );
+
+				//m_shortcutDisplayStrings[ i ]->setText( unibuffer );
+				//TheControlBar->m_shortcutDisplayStrings[ i ]->draw( 600, i * 40 + 40, GameMakeColor(255,255,255,255), GameMakeColor(0,0,0,0), 0, 0 );
+			}
+			else
+			{
+				UnicodeString unibuffer;
+				GadgetButtonSetText( win, unibuffer );
+				//TheDisplayStringManager->freeDisplayString( m_shortcutDisplayStrings[ i ] );
+				//m_shortcutDisplayStrings[ i ] = NULL;
+			}
+		}
+	}
+}
+
+// The animation manager is at ControlBar+0x10, the shortcut button array at
+// +0xcc, the used-button count at +0xf4 and the shortcut parent at +0xfc.  reset
+// is the virtual at vtable+0x10 while the other two are direct calls.
+class BfmeAnimateWindowManager
+{
+public:
+	virtual void unused00();
+	virtual void unused01();
+	virtual void unused02();
+	virtual void unused03();
+	virtual void reset(void);				///< vtable +0x10
+
+	void registerGameWindow(GameWindow *win, Int animType, Bool needsToFinish,
+			Int ms, Int delayMs);				///< ILT 0x00045322
+	void reverseAnimateWindow(void);			///< ILT 0x00027B65
+};
+
+struct BfmeControlBarShortcutFields
+{
+	unsigned char m_unreconstructed_00[ 0x10 ];
+	BfmeAnimateWindowManager *m_animateWindowManagerForGenShortcuts;	///< retail this+0x10
+	unsigned char m_unreconstructed_14[ 0xcc - 0x14 ];
+	GameWindow *m_specialPowerShortcutButtons[ 10 ];	///< retail this+0xcc
+	Int m_currentlyUsedSpecialPowersButtons;		///< retail this+0xf4
+	unsigned char m_unreconstructed_f8[ 4 ];
+	GameWindow *m_specialPowerShortcutParent;		///< retail this+0xfc
+};
+
+// ?animateSpecialPowerShortcut@ControlBar@@QAEX_N@Z
+void ControlBar::animateSpecialPowerShortcut( Bool isOn )
+{
+	BfmeControlBarShortcutFields *self = (BfmeControlBarShortcutFields *)this;
+
+	if(!self->m_specialPowerShortcutParent || !self->m_animateWindowManagerForGenShortcuts || !self->m_currentlyUsedSpecialPowersButtons)
+		return;
+	Bool dontAnimate = TRUE;
+	for( Int i = 0; i < self->m_currentlyUsedSpecialPowersButtons; ++i )
+	{
+		if (self->m_specialPowerShortcutButtons[i]->winGetUserData())
+		{
+			dontAnimate = FALSE;
+			break;
+		}
+	}
+	if(dontAnimate)
+		return;
+
+	if(isOn)
+	{	
+		self->m_animateWindowManagerForGenShortcuts->reset();
+		self->m_animateWindowManagerForGenShortcuts->registerGameWindow(self->m_specialPowerShortcutParent,WIN_ANIMATION_SLIDE_RIGHT,TRUE,500,0);
+	}
+	else
+	{
+		self->m_animateWindowManagerForGenShortcuts->reverseAnimateWindow();
+	}
+}
+
+// BFME's final guard asks ONE question where the reference asks two: retail
+// checks only whether the local player has a shortcut special power, and has no
+// hasAnyShortcutSelection() term at all. With the extra term the shortcut bar
+// stayed hidden whenever the player had no shortcut power, even if a selection
+// would have shown it.
+//
+// isGameEnding does not survive as a call -- it inlines to a signed test of the
+// field at TheScriptEngine+0x17080 -- and the array null check is kept even
+// though it cannot fail: retail takes the address of the member array with lea
+// and tests that, which is what testing an array member compiles to.
+struct BfmeShowScriptEngine
+{
+	unsigned char m_unreconstructed_00[ 0x17080 ];
+	Int m_endGameTimer;					///< retail this+0x17080
+
+	Bool isGameEnding() const { return m_endGameTimer >= 0; }
+};
+
+class BfmeShortcutPlayer
+{
+public:
+	// Returns a 32-bit value: retail tests eax, not al.
+	Int hasAnyShortcutSpecialPower(void);			///< ILT 0x0002331C
+};
+
+struct BfmeShortcutPlayerList
+{
+	unsigned char m_unreconstructed_00[ 0x0c ];
+	BfmeShortcutPlayer *m_localPlayer;			///< retail this+0x0c
+
+	BfmeShortcutPlayer *getLocalPlayer() { return m_localPlayer; }
+};
+
+// ?showSpecialPowerShortcut@ControlBar@@QAEXXZ
+void ControlBar::showSpecialPowerShortcut( void )
+{
+	BfmeControlBarShortcutFields *self = (BfmeControlBarShortcutFields *)this;
+
+	// ThePlayerList is re-read from the global at every use rather than hoisted:
+	// retail loads it three separate times.
+
+	if(((const BfmeShowScriptEngine *)TheScriptEngine)->isGameEnding() || !self->m_specialPowerShortcutParent 
+		||!self->m_specialPowerShortcutButtons || !ThePlayerList || !((BfmeShortcutPlayerList *)ThePlayerList)->getLocalPlayer())
+		return;
+	Bool dontAnimate = TRUE;
+	for( Int i = 0; i < self->m_currentlyUsedSpecialPowersButtons; ++i )
+	{
+		if (self->m_specialPowerShortcutButtons[i]->winGetUserData())
+		{
+			dontAnimate = FALSE;
+			break;
+		}
+	}
+	if( dontAnimate || !((BfmeShortcutPlayerList *)ThePlayerList)->getLocalPlayer()->hasAnyShortcutSpecialPower() )
+		return;
+	self->m_specialPowerShortcutParent->winHide(FALSE);
+	populateSpecialPowerShortcut((Player *)((BfmeShortcutPlayerList *)ThePlayerList)->getLocalPlayer());
+		
+}
+
+// ControlBar::hideSpecialPowerShortcut moved to ControlBarFields.cpp: it
+// needs the reconstructed-offset shim (inputs/reference/shims/controlbar), which
+// this TU does not use (see ControlBarFields.cpp for why).

@@ -1,6 +1,6 @@
 """What the join may name, what it must leave blank, and what it must refuse.
 
-The offsets in reverse/field_names.csv end up in shim declarations, which the
+The offsets in targets/game/reverse/field_names.csv end up in shim declarations, which the
 byte gate cannot check: a wrong offset there compiles, links, matches, and
 mis-models the struct for every reader afterwards. Upstream's offsets are the
 one plausible-looking source of exactly that damage -- BFME moved fields, so
@@ -29,8 +29,8 @@ TEXT_RVA = 0x1000
 TEXT_SIZE = 0x400
 RDATA_RVA = 0x2000
 HEADERS = 0x400
-BINARY = "baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
-OUT = "reverse/field_names.csv"
+BINARY = "inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
+OUT = "targets/game/reverse/field_names.csv"
 
 fieldnames = importlib.util.module_from_spec(
     importlib.util.spec_from_file_location("fieldnames", TOOLS / "fieldnames.py"))
@@ -94,10 +94,10 @@ def plant(root, tables, upstream):
     binary = root / BINARY
     binary.parent.mkdir(parents=True)
     binary.write_bytes(image)
-    reference = root / "reference" / "CnC_Generals_Zero_Hour"
+    reference = root / "inputs/reference" / "CnC_Generals_Zero_Hour"
     reference.mkdir(parents=True)
     (reference / "Fixture.cpp").write_text(upstream)
-    (root / "reverse").mkdir()
+    (root / "targets/game/reverse").mkdir(parents=True)
     return rvas
 
 
@@ -169,7 +169,7 @@ def test_undecodable_offset_aborts_the_table_and_writes_nothing(tmp_path):
 
 def test_upstream_index_carries_no_offsets(tmp_path):
     """There is nothing to fall back TO: the join's upstream side is names only."""
-    reference = tmp_path / "reference" / "CnC_Generals_Zero_Hour"
+    reference = tmp_path / "inputs/reference" / "CnC_Generals_Zero_Hour"
     reference.mkdir(parents=True)
     (reference / "Fixture.cpp").write_text(
         "const FieldParse f[] = {\n" + entries("Fine", "Carrier", "m_fine") + "};\n")
@@ -211,7 +211,7 @@ def test_weapon_template_attack_range(tmp_path):
 
 def test_weapon_cpp_still_says_what_the_fixture_says():
     """The fixture is only evidence while the reference tree still reads this way."""
-    weapon = (REPO / "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine"
+    weapon = (REPO / "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine"
               "/Source/GameLogic/Object/Weapon.cpp")
     line = weapon.read_text("utf-8", "replace").splitlines()[176]      # :177
     assert '"AttackRange"' in line

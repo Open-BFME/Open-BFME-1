@@ -52,7 +52,7 @@ def test_layout_mismatches_are_explained(compiled, retail, offset, why):
 
 
 def run_main(monkeypatch, tmp_path, compiled, retail, relocs):
-    source = tmp_path / "Code" / "foo.cpp"
+    source = tmp_path / "game" / "foo.cpp"
     source.parent.mkdir()
     source.write_text("void foo() {}\n")
     monkeypatch.setattr(decode_calls.build, "ROOT", tmp_path)
@@ -60,7 +60,7 @@ def run_main(monkeypatch, tmp_path, compiled, retail, relocs):
     monkeypatch.setattr(decode_calls.build, "compile_source", lambda *args: None)
     monkeypatch.setattr(decode_calls.build, "load_all_function_rows", lambda: [{
         "name": "?foo@@YAXXZ", "target_rva": "0x1000",
-        "target_size": str(len(retail)), "source": "Code/foo.cpp", "status": "matched",
+        "target_size": str(len(retail)), "source": "game/foo.cpp", "status": "matched",
     }])
     monkeypatch.setattr(decode_calls.build, "load_symbol_map", lambda: {})
     monkeypatch.setattr(decode_calls.build, "build_call_thunks", lambda: {})
@@ -69,7 +69,7 @@ def run_main(monkeypatch, tmp_path, compiled, retail, relocs):
     monkeypatch.setattr(decode_calls.build, "read_target_bytes", lambda *args: retail)
     monkeypatch.setattr(decode_calls, "load_ghidra", lambda _: ({}, []))
     monkeypatch.setattr(decode_calls, "load_exports", lambda _: {})
-    monkeypatch.setattr(sys, "argv", ["decode_calls.py", "Code/foo.cpp"])
+    monkeypatch.setattr(sys, "argv", ["decode_calls.py", "game/foo.cpp"])
     decode_calls.main()
 
 

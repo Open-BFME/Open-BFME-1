@@ -23,12 +23,12 @@ def padding_split(chunk):
 
 
 def main():
-    data = open('baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe', 'rb').read()
+    data = open('inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe', 'rb').read()
     TEXT_START = 0x1000
     TEXT_END = 0x1000 + 13049856
 
     iv = []
-    for r in csv.DictReader(open('reverse/functions.csv', newline='')):
+    for r in csv.DictReader(open('targets/game/reverse/functions.csv', newline='')):
         if r['status'] != 'matched':
             continue
         s = int(r['target_rva'], 16)

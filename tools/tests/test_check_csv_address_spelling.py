@@ -13,7 +13,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import check_csv  # noqa: E402
 
-SRC = "Code/GameEngine/Source/Common/System/GameMemory.cpp"
+SRC = "game/GameEngine/Source/Common/System/GameMemory.cpp"
 
 
 def problems_for(*rows):
@@ -41,7 +41,7 @@ def test_distinct_claims_stay_clean():
 
 
 def test_stash_lookup_meets_a_short_spelled_row(monkeypatch):
-    stash = "reverse/attempts/0x00001005.cpp"
+    stash = "targets/game/reverse/attempts/0x00001005.cpp"
     ledger = (check_csv.FUNCTIONS_HEADER + "\r\n" + f"?f@@YAXXZ,,0x1005,5,{SRC},matched,\r\n").encode()
     blobs = {check_csv.ROOT / stash: b"// ?f@@YAXXZ\n// partial score=0.50 date=2026-09-21\nvoid f() {}\n",
              check_csv.ROOT / SRC: b"void f() {}\n"}

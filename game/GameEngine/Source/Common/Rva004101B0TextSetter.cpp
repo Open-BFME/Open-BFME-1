@@ -1,0 +1,41 @@
+// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+//
+// Bfme5TextWidget's by-value UnicodeString setter.  The parameter is compared
+// with the inline StringBase member before the member is replaced and the
+// widget notification is dispatched.
+
+class UnicodeString;
+class Rva004101B0TextWidget;
+
+#include "string_base.h"
+
+class UnicodeString : public StringBase<unsigned short>
+{
+public:
+	UnicodeString(const UnicodeString &other)
+		: StringBase<unsigned short>(other) {}
+	~UnicodeString() {}
+};
+
+class Rva004101B0TextWidget
+{
+public:
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0C();
+	virtual void onTextChanged();
+
+	void setText(UnicodeString text);
+
+	StringBase<unsigned short> m_text;
+};
+
+void Rva004101B0TextWidget::setText(UnicodeString text)
+{
+	if (text.compare(m_text) != 0)
+	{
+		m_text.set(text);
+		onTextChanged();
+	}
+}

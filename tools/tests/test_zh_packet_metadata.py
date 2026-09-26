@@ -44,7 +44,7 @@ LEDGER_HEADER = "name,export_rva,target_rva,target_size,source,status,notes"
 # after it. Everything else is nop, so nothing but these bounds a body.
 KNOWN = {0x2000: 32, 0x3000: 16}
 PAD = 0x2020
-SOURCE = "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/T.cpp"
+SOURCE = "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/T.cpp"
 
 
 def image():
@@ -63,7 +63,7 @@ def run_packets(tmp_path, monkeypatch, records, ledger_rows=(), relocs=(), pins=
     """do_packets over a synthetic image; returns {rva: packet text}.
 
     `patches` writes retail bytes at an rva, which is how a call site is given a
-    displacement to decode; `pins` is the scratch reverse/symbols.csv.
+    displacement to decode; `pins` is the scratch targets/game/reverse/symbols.csv.
     """
     text = bytearray(image())
     for rva, raw in patches:
@@ -124,7 +124,7 @@ def test_an_interior_address_is_corrected_to_the_body_it_landed_in(tmp_path, mon
     assert list(written) == [0x2000]
     packet = flat(written[0x2000])
     assert "not a function start" not in packet
-    assert "address is a confirmed function start (reverse/ghidra_functions.csv)" in packet
+    assert "address is a confirmed function start (targets/game/reverse/ghidra_functions.csv)" in packet
     assert served_size(written[0x2000]) == 32
 
 
@@ -137,7 +137,7 @@ def test_an_address_in_padding_is_corrected_forward_to_the_next_body(tmp_path, m
     assert list(written) == [0x3000]
     packet = flat(written[0x3000])
     assert "not a function start" not in packet
-    assert "address is a confirmed function start (reverse/ghidra_functions.csv)" in packet
+    assert "address is a confirmed function start (targets/game/reverse/ghidra_functions.csv)" in packet
     assert served_size(written[0x3000]) == 16
 
 
@@ -156,7 +156,7 @@ def test_a_confirmed_start_says_so_and_says_where_from(tmp_path, monkeypatch):
     written = run_packets(tmp_path, monkeypatch, [near(0x3000, 16)])
 
     packet = flat(written[0x3000])
-    assert "address is a confirmed function start (reverse/ghidra_functions.csv)" in packet
+    assert "address is a confirmed function start (targets/game/reverse/ghidra_functions.csv)" in packet
     assert "not a function start" not in packet
 
 
@@ -211,7 +211,7 @@ def test_tied_candidates_are_not_offered_as_an_identity(tmp_path, monkeypatch):
 def test_no_packet_for_ground_the_ledger_already_claims(tmp_path, monkeypatch):
     """The claim is re-asked against the live ledger and against the extent the
     packet would quote, not against the snapshot taken when the match ran."""
-    claimed = "?owner@Thing@@QAEXXZ,,0x00003000,16,Code/Thing.cpp,matched,"
+    claimed = "?owner@Thing@@QAEXXZ,,0x00003000,16,game/Thing.cpp,matched,"
     written = run_packets(tmp_path, monkeypatch, [near(0x3000, 16)], ledger_rows=[claimed])
 
     assert written == {}
@@ -261,4 +261,4 @@ def test_a_pin_only_symbols_csv_holds_names_symbols_csv_and_not_the_ledger(
                           pins=[f"{CALLEE},0x00002400,per-TU copy"], **calls(0x2400))
 
     assert pins_of(written[0x3000]) == (f"{CALLEE},0x00002400 "
-                                        "(already pinned in reverse/symbols.csv)")
+                                        "(already pinned in targets/game/reverse/symbols.csv)")

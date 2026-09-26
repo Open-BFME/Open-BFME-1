@@ -42,8 +42,8 @@ def latest_run(engine, seat, runs=None):
 def run_yield(run_id, functions=None, attempts=None):
     """(landed rows, banked partials, verdict rows) carrying run=<run_id>."""
     token = f"run={run_id}"
-    functions = Path(functions or ROOT / "reverse" / "functions.csv")
-    attempts = Path(attempts or ROOT / "reverse" / "re_attempts.log")
+    functions = Path(functions or ROOT / "targets/game/reverse" / "functions.csv")
+    attempts = Path(attempts or ROOT / "targets/game/reverse" / "re_attempts.log")
     landed = sum(1 for line in functions.read_text(encoding="utf-8", errors="replace").splitlines()
                  if token in line and ",matched," in line)
     banked = verdicts = 0

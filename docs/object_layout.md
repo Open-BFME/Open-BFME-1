@@ -106,8 +106,8 @@ The first four are ZH offsets carried over unshifted.
 
 ## The header
 
-`Code/GameEngine/Source/GameLogic/Object/object.h` (with
-`Code/GameEngine/Source/Common/Thing/thing.h`) is written from this page:
+`game/GameEngine/Source/GameLogic/Object/object.h` (with
+`game/GameEngine/Source/Common/Thing/thing.h`) is written from this page:
 
 1. `class Thing` (+0x00..+0x5F) and `class Object : public Thing`, so the
    witnessed `Thing` names are inherited rather than restated.

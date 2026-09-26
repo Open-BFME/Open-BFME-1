@@ -24,7 +24,7 @@ def find_header(root, name):
     if name == '?':
         return '', []
     search = subprocess.run(['rg', '-l', rf'\bclass\s+{re.escape(name)}\b',
-                             str(root / 'reference/CnC_Generals_Zero_Hour/GeneralsMD'),
+                             str(root / 'inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD'),
                              '--iglob', '*.h'], capture_output=True, text=True)
     if search.returncode not in (0, 1):
         raise RuntimeError(search.stderr.strip())

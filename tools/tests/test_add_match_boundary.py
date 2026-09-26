@@ -32,7 +32,7 @@ DISPLAY = bytes.fromhex(
 )
 
 
-def row(name="?candidate@Test@@QAEXXZ", source="Code/Test.cpp", notes=""):
+def row(name="?candidate@Test@@QAEXXZ", source="game/Test.cpp", notes=""):
     return {
         "name": name,
         "source": source,
@@ -165,11 +165,11 @@ def test_object_symbol_alias_checks_the_body_selected_by_the_row(monkeypatch):
 def test_add_match_passes_only_the_new_cpp_row_to_the_build_child(
         monkeypatch, tmp_path):
     root = tmp_path
-    (root / "reverse").mkdir()
-    source = root / "Code" / "Candidate.cpp"
+    (root / "targets/game/reverse").mkdir(parents=True)
+    source = root / "game" / "Candidate.cpp"
     source.parent.mkdir()
     source.write_text("void candidate() {}\n", encoding="utf-8")
-    (root / "reverse" / "functions.csv").write_text(
+    (root / "targets/game/reverse" / "functions.csv").write_text(
         "name,export_rva,target_rva,target_size,source,status,notes\r\n",
         encoding="utf-8")
     build_sh = root / "build.sh"
@@ -184,7 +184,7 @@ def test_add_match_passes_only_the_new_cpp_row_to_the_build_child(
     monkeypatch.setattr(add_match.subprocess, "run", fake_build)
     monkeypatch.setattr(sys, "argv", [
         "add_match.py", "?candidate@Test@@QAEXXZ", "0x00401000", "5",
-        "Code/Candidate.cpp", "--root", str(root),
+        "game/Candidate.cpp", "--root", str(root),
     ])
 
     add_match.main()
@@ -193,7 +193,7 @@ def test_add_match_passes_only_the_new_cpp_row_to_the_build_child(
     environment = calls[0][2]
     assert environment[add_match.BOUNDARY_ENV["name"]] == "?candidate@Test@@QAEXXZ"
     assert environment[add_match.BOUNDARY_ENV["rva"]] == "0x00401000"
-    assert environment[add_match.BOUNDARY_ENV["source"]] == "Code/Candidate.cpp"
+    assert environment[add_match.BOUNDARY_ENV["source"]] == "game/Candidate.cpp"
 
 
 @pytest.mark.parametrize("suffix, expected", [
@@ -207,7 +207,7 @@ def test_add_match_requests_the_guard_only_for_compiled_sources(
         suffix, expected):
     source = Path("candidate" + suffix)
     environment = add_match.verification_environment(
-        source, "Code/candidate" + suffix, "?f@Test@@YAXXZ", 0x401000)
+        source, "game/candidate" + suffix, "?f@Test@@YAXXZ", 0x401000)
 
     has_request = all(variable in environment for variable in add_match.BOUNDARY_ENV.values())
     assert has_request is expected
@@ -228,20 +228,20 @@ def test_batch_environment_carries_every_new_cpp_claim_in_the_source(monkeypatch
         monkeypatch.setenv(variable, "stale")
     monkeypatch.setenv(add_match.BOUNDARY_BATCH_FILE_ENV, "stale")
     claims = [
-        {"name": "?a@Test@@YAXXZ", "rva": 0x401000, "source": "Code/Family.cpp"},
-        {"name": "?b@Test@@YAXXZ", "rva": 0x401020, "source": "Code/Family.cpp"},
-        {"name": "?asm@Test@@YAXXZ", "rva": 0x401040, "source": "Code/Family.asm"},
-        {"name": "?other@Test@@YAXXZ", "rva": 0x402000, "source": "Code/Other.cpp"},
+        {"name": "?a@Test@@YAXXZ", "rva": 0x401000, "source": "game/Family.cpp"},
+        {"name": "?b@Test@@YAXXZ", "rva": 0x401020, "source": "game/Family.cpp"},
+        {"name": "?asm@Test@@YAXXZ", "rva": 0x401040, "source": "game/Family.asm"},
+        {"name": "?other@Test@@YAXXZ", "rva": 0x402000, "source": "game/Other.cpp"},
     ]
 
-    requests = add_match.batch_boundary_requests(claims, "Code/Family.cpp")
+    requests = add_match.batch_boundary_requests(claims, "game/Family.cpp")
     environment = add_match.batch_verification_environment(Path("requests.json"))
 
     assert not any(variable in environment for variable in add_match.BOUNDARY_ENV.values())
     assert environment[add_match.BOUNDARY_BATCH_FILE_ENV] == "requests.json"
     assert requests == [
-        {"name": "?a@Test@@YAXXZ", "rva": 0x401000, "source": "Code/Family.cpp"},
-        {"name": "?b@Test@@YAXXZ", "rva": 0x401020, "source": "Code/Family.cpp"},
+        {"name": "?a@Test@@YAXXZ", "rva": 0x401000, "source": "game/Family.cpp"},
+        {"name": "?b@Test@@YAXXZ", "rva": 0x401020, "source": "game/Family.cpp"},
     ]
 
 
@@ -249,16 +249,16 @@ def test_build_parses_a_batch_boundary_request(monkeypatch, tmp_path):
     for variable in add_match.BOUNDARY_ENV.values():
         monkeypatch.delenv(variable, raising=False)
     payload = [
-        {"name": "?a@Test@@YAXXZ", "rva": 0x401000, "source": "Code/Family.cpp"},
-        {"name": "?b@Test@@YAXXZ", "rva": "0x00401020", "source": "Code/Family.cpp"},
+        {"name": "?a@Test@@YAXXZ", "rva": 0x401000, "source": "game/Family.cpp"},
+        {"name": "?b@Test@@YAXXZ", "rva": "0x00401020", "source": "game/Family.cpp"},
     ]
     request = tmp_path / "requests.json"
     request.write_text(json.dumps(payload), encoding="utf-8")
     monkeypatch.setenv(add_match.BOUNDARY_BATCH_FILE_ENV, str(request))
 
     assert build._boundary_requests() == frozenset({
-        ("?a@Test@@YAXXZ", 0x401000, "Code/Family.cpp"),
-        ("?b@Test@@YAXXZ", 0x401020, "Code/Family.cpp"),
+        ("?a@Test@@YAXXZ", 0x401000, "game/Family.cpp"),
+        ("?b@Test@@YAXXZ", 0x401020, "game/Family.cpp"),
     })
 
 

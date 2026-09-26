@@ -41,6 +41,7 @@ def _modules():
 def _stub_gate(monkeypatch, red=()):
     """Replace every check with a recorder; names in `red` fail like the real ones."""
     build, pin_consistency = _modules()
+    null_reloc = importlib.import_module("null_reloc")
     calls = []
 
     def check(name, result=None):
@@ -61,6 +62,7 @@ def _stub_gate(monkeypatch, red=()):
     monkeypatch.setattr(build, "verify_source_claims", check("source-claims"))
     monkeypatch.setattr(build, "verify_noop_patch", check("noop"))
     monkeypatch.setattr(pin_consistency, "verify", check("pins"))
+    monkeypatch.setattr(null_reloc, "verify", check("null-relocs"))
     return calls, build
 
 
@@ -131,7 +133,7 @@ def test_a_scoped_run_is_untouched(monkeypatch, capsys):
         calls.append("functions"), (_ for _ in ()).throw(SystemExit(1)))[0])
 
     with pytest.raises(SystemExit):
-        build.main(only=["Code/whatever.cpp"])
+        build.main(only=["game/whatever.cpp"])
 
     assert "string-refs" not in calls, "the scoped path must not keep going"
     assert "pins" not in calls, "the scoped path does not run the full-gate checks"

@@ -17,7 +17,7 @@ compiles to a different shape. Expect 30-60 minutes per function.
       vanishes.
    b. **misplaced candidate** — target bytes opening like another function's
       tail (`ret`/`int3` within a few bytes) mean the drift vote shifted. Find
-      the true start in `reverse/ghidra_functions.csv`; trust a `ret` boundary
+      the true start in `targets/game/reverse/ghidra_functions.csv`; trust a `ret` boundary
       plus export evidence where Ghidra merged functions.
    c. **field-offset diffs** (`[reg+0xNN]` vs `[reg+0xMM]`, same shape): BFME
       relaid a struct, or retail has a real bug. Change the member access — the
@@ -33,7 +33,7 @@ compiles to a different shape. Expect 30-60 minutes per function.
 5. If it did not land, bank it before reverting:
    `re_log.py record '<sym>' <rva> <size> partial '<diff>' --stash <src>
    --score <0..1>` — both flags required, else `blocked`. Then revert; keep no
-   nonmatching body in `Code/`.
+   nonmatching body in `game/`.
 
 An interior-only body is probably inlined; identical already-claimed bytes are
 probably ICF-folded. Compiler-only machinery (SEH array-constructor,

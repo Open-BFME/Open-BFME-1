@@ -14,7 +14,7 @@ Fix it NOW, before any other work:
   1. python3 tools/dedup_csv.py
   2. python3 tools/check_csv.py     # must pass. A surviving conflict means
      two agents claimed the same bytes — byte-verify decides which row lives.
-  3. git add reverse/functions.csv reverse/symbols.csv && git commit
+  3. git add targets/game/reverse/functions.csv targets/game/reverse/symbols.csv && git commit
 =============================================================
 MSG
     exit 1

@@ -2,7 +2,7 @@
 """Which sources sit in a directory their own class keeps nothing else in.
 
 WHY THIS EXISTS. 14,718 real sources against the original's 1,421, and 6,892 of
-them sit directly in Code/GameEngine/Source/Common/ -- AI state machines, W3D
+them sit directly in game/GameEngine/Source/Common/ -- AI state machines, W3D
 drawable modules, script-engine bodies, all in one flat directory because the
 conversion lane writes a new TU wherever it happens to be standing. Nobody can
 navigate that, and no amount of renaming inside those files fixes it.
@@ -37,19 +37,19 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ZH = "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code"
-AREAS = ("Code/GameEngine", "Code/Libraries", "Code/GameEngineDevice")
-QUEUE = "reverse/placement_queue.tsv"
-BLOCKED = "reverse/placement_blocked.tsv"
+ZH = "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code"
+AREAS = ("game/GameEngine", "game/Libraries", "game/GameEngineDevice")
+QUEUE = "targets/game/reverse/placement_queue.tsv"
+BLOCKED = "targets/game/reverse/placement_blocked.tsv"
 # The flat root of Common/ holds 6,892 files because the conversion lane writes
 # new TUs there by default. A class whose bodies mostly sit in the dumping ground
 # is not evidence that the dumping ground is where they belong, so it is never a
 # destination inferred from sibling counts. ZH naming it explicitly still counts:
 # some classes really do live in Common/.
-DUMPING_GROUND = "Code/GameEngine/Source/Common"
+DUMPING_GROUND = "game/GameEngine/Source/Common"
 LEGACY_DONOR_ROOTS = (
     DUMPING_GROUND,
-    "Code/GameEngineDevice/Source/W3DDevice/Common",
+    "game/GameEngineDevice/Source/W3DDevice/Common",
 )
 
 # ?method@Class@@..., ??0Class@@ / ??1Class@@ constructors and destructors, and
@@ -113,12 +113,12 @@ def survey(root):
     """(file -> its one owning class, class -> Counter of directories it lives in)."""
     owners = collections.defaultdict(set)
     homes = collections.defaultdict(collections.Counter)
-    with open(root / "reverse/functions.csv", newline="") as fh:
+    with open(root / "targets/game/reverse/functions.csv", newline="") as fh:
         for row in csv.DictReader(fh):
             if row.get("status") != "matched":
                 continue
             source = row.get("source") or ""
-            if not source.startswith(AREAS) or source.startswith("Code/gen"):
+            if not source.startswith(AREAS) or source.startswith("game/gen"):
                 continue
             cls = owning_class(row.get("name"))
             if not cls:
@@ -136,12 +136,12 @@ def deleting_destructor_homes(root):
     their own: doing that turned every generated wrapper into fresh queue work.
     """
     out = collections.defaultdict(set)
-    with open(root / "reverse/functions.csv", newline="") as fh:
+    with open(root / "targets/game/reverse/functions.csv", newline="") as fh:
         for row in csv.DictReader(fh):
             if row.get("status") != "matched":
                 continue
             source = row.get("source") or ""
-            if not source.startswith(AREAS) or source.startswith("Code/gen"):
+            if not source.startswith(AREAS) or source.startswith("game/gen"):
                 continue
             hit = DELETING_DESTRUCTOR.match(row.get("name") or "")
             if hit:
@@ -221,7 +221,7 @@ def destination(root, source, cls, homes, zh, zh_hdr, corroborating_homes=None):
 
     zh_dir = zh.get(cls.lower())
     if zh_dir:
-        candidate = zh_dir.replace(ZH, "Code", 1)
+        candidate = zh_dir.replace(ZH, "game", 1)
         # ZH naming this very directory is the strongest evidence there is, and it
         # says the file is already home -- including in a deeper established
         # family -- so stop, do not fall through. Falling
@@ -237,7 +237,7 @@ def destination(root, source, cls, homes, zh, zh_hdr, corroborating_homes=None):
     # "Common" is not evidence that 6,892 files belong in one directory.
     hdr_dir = zh_hdr.get(cls)
     if hdr_dir:
-        candidate = hdr_dir.replace(ZH, "Code", 1)
+        candidate = hdr_dir.replace(ZH, "game", 1)
         if candidate == here or here.startswith(candidate + "/"):
             return None
         if candidate != DUMPING_GROUND and usable(candidate):
@@ -302,8 +302,8 @@ def destination(root, source, cls, homes, zh, zh_hdr, corroborating_homes=None):
 
 
 def zh_keeps_source_here(root, source):
-    """Whether ZH keeps this exact source at the same path below Code/."""
-    relative = Path(source).relative_to("Code")
+    """Whether ZH keeps this exact source at the same path below game/."""
+    relative = Path(source).relative_to("game")
     return (root / ZH / relative).is_file()
 
 
@@ -318,7 +318,7 @@ def included_by_siblings(root):
     it moved, and what it moved compiled fine at its new home.
     """
     pinned = set()
-    for path in glob.glob(str(root / "Code") + "/**/*.cpp", recursive=True):
+    for path in glob.glob(str(root / "game") + "/**/*.cpp", recursive=True):
         here = Path(path).relative_to(root).parent
         try:
             text = Path(path).read_text(encoding="utf-8", errors="replace")

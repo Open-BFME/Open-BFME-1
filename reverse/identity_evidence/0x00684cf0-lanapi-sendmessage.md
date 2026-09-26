@@ -1,7 +1,0 @@
-# LANAPI::sendMessage at 0x00684CF0
-
-The ILT thunk at 0x0002B599 jumps to the 221-byte body at 0x00684CF0. That body is byte-matched as `?sendMessage@LANAPI@@IAEXPAULANMessage@@I@Z` in `Code/GameEngine/Source/GameNetwork/LANAPISendPath.cpp`: it queues one `LANMessage` through the transport for a named destination, sends to direct-connect game slots, or broadcasts across ports 8086 through 8093. The preserved LANAPI header also declares `sendMessage(LANMessage *, UnsignedInt)` as protected.
-
-Two matched callers had called the same thunk through a synthetic `queuePacket(LANAPIRequestPacket *, int)` declaration. The packet type in `RequestEnableMPSetupUI` was a local name for the same 0x1DC-byte LAN message layout; `RequestGameLeave` cast its `LANMessage` to that name. Changing both sources to call protected `sendMessage(LANMessage *, UnsignedInt)` preserves their byte matches (166/166 and 341/341). The resolver's old `queuePacket` pin was thus a name for the verified send body, not independent evidence for a separate method.
-
-A second pin spelled `sendMessage` as public (`QAEX`) at the same thunk. Access control does not change the machine call, so the byte match cannot validate that spelling. The matched body symbol and the preserved header support the protected (`IAEX`) candidate already in the ledger. Both unsupported aliases have been removed; the protected candidate still resolves through the thunk.

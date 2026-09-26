@@ -9,22 +9,22 @@ sys.path.insert(0, str(TOOLS))
 import placement_queue as queue  # noqa: E402
 
 
-POPUP = "Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupHostGame.cpp"
-MISPLACED = "Code/GameEngine/Source/Common/GameInfoReset.cpp"
-NETWORK = "Code/GameEngine/Source/GameNetwork"
-COMMAND_SET = "Code/GameEngine/Source/Common/BfmeConv1641.cpp"
-CLIENT = "Code/GameEngine/Source/GameClient"
+POPUP = "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupHostGame.cpp"
+MISPLACED = "game/GameEngine/Source/Common/GameInfoReset.cpp"
+NETWORK = "game/GameEngine/Source/GameNetwork"
+COMMAND_SET = "game/GameEngine/Source/Common/BfmeConv1641.cpp"
+CLIENT = "game/GameEngine/Source/GameClient"
 CONTROL_BAR = f"{CLIENT}/GUI/ControlBar"
-SPLIT = "Code/GameEngine/Source/Common/SplitOwner.cpp"
-DOMINATE = ("Code/GameEngine/Source/GameLogic/Object/SpecialPower/"
+SPLIT = "game/GameEngine/Source/Common/SplitOwner.cpp"
+DOMINATE = ("game/GameEngine/Source/GameLogic/Object/SpecialPower/"
             "DominateEnemySpecialPower_slot15.cpp")
-SPECIAL_POWER = "Code/GameEngine/Source/GameLogic/Object/SpecialPower"
-THING = "Code/GameEngine/Source/Common/Thing"
-REGION_DTOR = "Code/GameEngine/Source/GameLogic/AI/RegionOwnerDestructor.cpp"
+SPECIAL_POWER = "game/GameEngine/Source/GameLogic/Object/SpecialPower"
+THING = "game/GameEngine/Source/Common/Thing"
+REGION_DTOR = "game/GameEngine/Source/GameLogic/AI/RegionOwnerDestructor.cpp"
 REGION_DELETING = (
-    "Code/GameEngine/Source/GameLogic/LivingWorld/RegionOwnerDeleting.cpp"
+    "game/GameEngine/Source/GameLogic/LivingWorld/RegionOwnerDeleting.cpp"
 )
-REGION_BEHAVIOR = "Code/GameEngine/Source/GameLogic/Object/Behavior"
+REGION_BEHAVIOR = "game/GameEngine/Source/GameLogic/Object/Behavior"
 
 
 def _write(root, relative, text="// fixture\n"):
@@ -49,7 +49,7 @@ def _world(tmp_path):
         f"?setUseStats@GameInfo@@QAEXH@Z,,0x00100000,10,{POPUP},matched,\n"
         f"?reset@GameInfo@@QAEXXZ,,0x00100010,10,{MISPLACED},matched,\n"
     )
-    _write(root, "reverse/functions.csv", ledger)
+    _write(root, "targets/game/reverse/functions.csv", ledger)
     return root
 
 
@@ -70,7 +70,7 @@ def _command_set_world(tmp_path):
         f"??0CommandSet@@QAE@XZ,,0x00100010,10,{CONTROL_BAR}/CommandSetLifetime.cpp,matched,\n"
         f"?parse@CommandSet@@QAEXXZ,,0x00100020,10,{CONTROL_BAR}/CommandSetParser.cpp,matched,\n"
     )
-    _write(root, "reverse/functions.csv", ledger)
+    _write(root, "targets/game/reverse/functions.csv", ledger)
     return root
 
 
@@ -97,7 +97,7 @@ def _split_home_world(tmp_path):
     rows = ["name,export_rva,target_rva,target_size,source,status,notes\n"]
     for index, (name, source) in enumerate(sources):
         rows.append(f"{name},,0x{0x100000 + index * 0x10:08X},10,{source},matched,\n")
-    _write(root, "reverse/functions.csv", "".join(rows))
+    _write(root, "targets/game/reverse/functions.csv", "".join(rows))
     return root
 
 
@@ -118,7 +118,7 @@ def _module_family_world(tmp_path):
     rows = ["name,export_rva,target_rva,target_size,source,status,notes\n"]
     for index, (name, source) in enumerate(sources):
         rows.append(f"{name},,0x{0x100000 + index * 0x10:08X},10,{source},matched,\n")
-    _write(root, "reverse/functions.csv", "".join(rows))
+    _write(root, "targets/game/reverse/functions.csv", "".join(rows))
     return root
 
 
@@ -137,7 +137,7 @@ def _split_destructor_world(tmp_path):
     rows = ["name,export_rva,target_rva,target_size,source,status,notes\n"]
     for index, (name, source) in enumerate(sources):
         rows.append(f"{name},,0x{0x200000 + index * 0x10:08X},10,{source},matched,\n")
-    _write(root, "reverse/functions.csv", "".join(rows))
+    _write(root, "targets/game/reverse/functions.csv", "".join(rows))
     return root
 
 
@@ -157,7 +157,7 @@ def _established_split_family_world(tmp_path, cls, current, alternate):
     rows = ["name,export_rva,target_rva,target_size,source,status,notes\n"]
     for index, (name, source) in enumerate(sources):
         rows.append(f"{name},,0x{0x300000 + index * 0x10:08X},10,{source},matched,\n")
-    _write(root, "reverse/functions.csv", "".join(rows))
+    _write(root, "targets/game/reverse/functions.csv", "".join(rows))
     return root
 
 
@@ -183,14 +183,14 @@ def test_a_source_without_exact_zh_path_still_moves_to_its_class(tmp_path):
 
 def test_reference_filename_does_not_move_an_unrelated_class(tmp_path):
     root = tmp_path / "repo"
-    source = "Code/Libraries/Source/WWVegas/WWDebug/DebugAssert.cpp"
+    source = "game/Libraries/Source/WWVegas/WWDebug/DebugAssert.cpp"
     _write(root, source, "void Debug::AssertBegin() {}\n")
-    _write(root, "Code/GameEngine/Source/Common/System/keep.txt")
+    _write(root, "game/GameEngine/Source/Common/System/keep.txt")
     _write(root, f"{queue.ZH}/GameEngine/Source/Common/System/Debug.cpp",
            '// Debug::AssertBegin() {}\n'
            'const char *message = "Debug::AssertBegin() {}";\n'
            'void DebugLog() { if (Debug::IsEnabled()) {} }\n')
-    _write(root, "reverse/functions.csv",
+    _write(root, "targets/game/reverse/functions.csv",
            "name,export_rva,target_rva,target_size,source,status,notes\n"
            f"?AssertBegin@Debug@@SAXXZ,,0x00100000,10,{source},matched,\n")
 
@@ -213,8 +213,8 @@ def test_exact_multiclass_zh_source_prevents_a_weak_sibling_reversal(tmp_path):
     root = tmp_path / "repo"
     official = (f"{queue.ZH}/GameEngineDevice/Source/W3DDevice/GameClient/"
                 "WorldHeightMap.cpp")
-    canonical = "Code/GameEngineDevice/Source/W3DDevice/GameClient"
-    alternate = "Code/GameEngine/Source/GameLogic/Map"
+    canonical = "game/GameEngineDevice/Source/W3DDevice/GameClient"
+    alternate = "game/GameEngine/Source/GameLogic/Map"
     candidate = f"{canonical}/MapObjectVerify.cpp"
     sources = [
         ("?verify@MapObject@@QAEXXZ", candidate),
@@ -235,7 +235,7 @@ def test_exact_multiclass_zh_source_prevents_a_weak_sibling_reversal(tmp_path):
     rows = ["name,export_rva,target_rva,target_size,source,status,notes\n"]
     for index, (name, source) in enumerate(sources):
         rows.append(f"{name},,0x{0x500000 + index * 0x10:08X},10,{source},matched,\n")
-    _write(root, "reverse/functions.csv", "".join(rows))
+    _write(root, "targets/game/reverse/functions.csv", "".join(rows))
 
     single, homes = queue.survey(root)
     assert queue.destination(
@@ -243,7 +243,7 @@ def test_exact_multiclass_zh_source_prevents_a_weak_sibling_reversal(tmp_path):
     ) == alternate
 
     zh = queue.zh_directories(root)
-    assert zh["mapobject"].replace(queue.ZH, "Code", 1) == canonical
+    assert zh["mapobject"].replace(queue.ZH, "game", 1) == canonical
     assert "mentiononly" not in zh
 
     queued, _skipped = queue.build(root)
@@ -271,7 +271,7 @@ def test_a_malformed_placement_blocker_fails_explicitly(tmp_path):
 
 def test_a_sibling_include_prevents_moving_its_source_on_every_host(tmp_path):
     root = _world(tmp_path)
-    _write(root, "Code/GameEngine/Source/Common/GameInfoWrapper.cpp",
+    _write(root, "game/GameEngine/Source/Common/GameInfoWrapper.cpp",
            '#include "GameInfoReset.cpp"\n')
 
     assert MISPLACED in queue.included_by_siblings(root)
@@ -288,7 +288,7 @@ def test_a_coarse_header_refines_to_one_established_descendant(tmp_path):
 
     assert single[COMMAND_SET] == "CommandSet"
     assert homes["CommandSet"][CONTROL_BAR] == 2
-    assert zh_hdr["CommandSet"].replace(queue.ZH, "Code", 1) == CLIENT
+    assert zh_hdr["CommandSet"].replace(queue.ZH, "game", 1) == CLIENT
     assert queue.destination(root, COMMAND_SET, "CommandSet", homes, zh, zh_hdr) == CONTROL_BAR
 
     queued, _skipped = queue.build(root)
@@ -297,8 +297,8 @@ def test_a_coarse_header_refines_to_one_established_descendant(tmp_path):
 
 def test_a_coarse_header_keeps_a_source_in_its_descendant_family(tmp_path):
     root = tmp_path / "repo"
-    current = "Code/GameEngine/Source/GameNetwork/GameSpy/Thread"
-    alternate = "Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus"
+    current = "game/GameEngine/Source/GameNetwork/GameSpy/Thread"
+    alternate = "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus"
     candidate = f"{current}/PeerResponseCopies.cpp"
     sources = [
         ("??0PeerResponse@@QAE@ABV0@@Z", candidate),
@@ -316,11 +316,11 @@ def test_a_coarse_header_keeps_a_source_in_its_descendant_family(tmp_path):
     rows = ["name,export_rva,target_rva,target_size,source,status,notes\n"]
     for index, (name, source) in enumerate(sources):
         rows.append(f"{name},,0x{0x180000 + index * 0x10:08X},10,{source},matched,\n")
-    _write(root, "reverse/functions.csv", "".join(rows))
+    _write(root, "targets/game/reverse/functions.csv", "".join(rows))
 
     single, homes = queue.survey(root)
     zh_hdr = queue.zh_header_directories(root)
-    assert zh_hdr["PeerResponse"].replace(queue.ZH, "Code", 1) == current.rsplit("/", 1)[0]
+    assert zh_hdr["PeerResponse"].replace(queue.ZH, "game", 1) == current.rsplit("/", 1)[0]
     assert queue.destination(
         root, candidate, single[candidate], homes, {}, zh_hdr
     ) is None
@@ -363,8 +363,8 @@ def test_sibling_counts_do_not_split_a_module_from_its_module_data(tmp_path):
 
 def test_weak_sibling_inference_never_moves_back_into_legacy_common(tmp_path):
     root = tmp_path / "repo"
-    current = "Code/GameEngine/Source/GameClient/System"
-    legacy = "Code/GameEngine/Source/Common/System"
+    current = "game/GameEngine/Source/GameClient/System"
+    legacy = "game/GameEngine/Source/Common/System"
     candidate = f"{current}/RadarCandidate.cpp"
     sources = [
         ("?candidate@Radar@@QAEXXZ", candidate),
@@ -377,7 +377,7 @@ def test_weak_sibling_inference_never_moves_back_into_legacy_common(tmp_path):
     rows = ["name,export_rva,target_rva,target_size,source,status,notes\n"]
     for index, (name, source) in enumerate(sources):
         rows.append(f"{name},,0x{0x400000 + index * 0x10:08X},10,{source},matched,\n")
-    _write(root, "reverse/functions.csv", "".join(rows))
+    _write(root, "targets/game/reverse/functions.csv", "".join(rows))
 
     single, homes = queue.survey(root)
     assert single[candidate] == "Radar"
@@ -407,13 +407,13 @@ def test_weak_sibling_inference_does_not_rank_split_class_homes(tmp_path):
 @pytest.mark.parametrize("cls,current,alternate", [
     (
         "LivingWorldRegion",
-        "Code/GameEngine/Source/GameLogic/LivingWorld",
-        "Code/GameEngine/Source/GameLogic/Object/Behavior",
+        "game/GameEngine/Source/GameLogic/LivingWorld",
+        "game/GameEngine/Source/GameLogic/Object/Behavior",
     ),
     (
         "BoneFXUpdateModuleData",
-        "Code/GameEngine/Source/GameLogic/Object/Update",
-        "Code/GameEngine/Source/Common/RTS",
+        "game/GameEngine/Source/GameLogic/Object/Update",
+        "game/GameEngine/Source/Common/RTS",
     ),
 ])
 def test_sibling_counts_do_not_move_an_established_split_family(

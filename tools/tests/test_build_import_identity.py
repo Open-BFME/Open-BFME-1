@@ -28,7 +28,7 @@ def _row(symbol):
         "name": "?guardedImport@Test@@YAXXZ",
         "target_rva": f"0x{TARGET_RVA:08X}",
         "target_size": str(TARGET_SIZE),
-        "source": "Code/GameEngine/Source/Common/BfmeSkipLevelPrefix.cpp",
+        "source": "game/GameEngine/Source/Common/BfmeSkipLevelPrefix.cpp",
         "status": "matched",
         "notes": f"object-symbol=body;test-coff={symbol}",
     }

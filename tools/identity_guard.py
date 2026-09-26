@@ -20,7 +20,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BASELINE = ROOT / "reverse" / "identity_baseline.txt"
+BASELINE = ROOT / "targets/game/reverse" / "identity_baseline.txt"
 
 # An ANCHOR is a line the tool prints unconditionally, so its presence proves the
 # output is still the format the count pattern was written against. multi_name

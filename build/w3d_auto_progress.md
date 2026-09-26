@@ -5,7 +5,7 @@
 - Branch: `w3d-auto`, based on the current `origin/master` at session start.
 - Commits pushed: none yet; the handoff/docs commit is being prepared.
 - Bodies landed: 0 byte-exact bodies in this session.
-- Bodies added to `reverse/unlocked.txt`: 59 of 61 family-1-through-12 members,
+- Bodies added to `targets/game/reverse/unlocked.txt`: 59 of 61 family-1-through-12 members,
   tagged `w3d-render`.
 - Evidence: `tools/callees.py` reports zero unnamed direct callees for those
   59 members. `0x00907960` and `0x0090AB60` each retain one unnamed target.
@@ -21,7 +21,7 @@
 ## Pool audit: 2026-09-16 10:37 EDT
 
 - All 61 pool addresses now have a five-field verdict in
-  `reverse/re_attempts.log`. The three previously unlogged large generated
+  `targets/game/reverse/re_attempts.log`. The three previously unlogged large generated
   bodies (`0x007C34E0`, `0x007C3FD0`, `0x007C5690`) were recorded as blocked
   after callee sweeps found 0 unnamed targets; no speculative source claims
   were added.

@@ -25,9 +25,9 @@ def pr_runner(tmp_path):
 
     root = tmp_path / "verify PR fixture with spaces"
     (root / "tools").mkdir(parents=True)
-    (root / "Code/Caller With Space").mkdir(parents=True)
+    (root / "game/Caller With Space").mkdir(parents=True)
     (root / "tools/verify_pr.sh").write_bytes(SCRIPT.read_bytes())
-    (root / "Code/Caller With Space/claim.cpp").touch()
+    (root / "game/Caller With Space/claim.cpp").touch()
     bindir = root / "bin"
     bindir.mkdir()
 
@@ -61,7 +61,7 @@ a = sys.argv[1:]
 if a[:1] in (["tools/check_csv.py"], ["tools/conversion_gate.py"], ["tools/target_hooks.py"]):
     pass
 elif a[:1] == ["tools/delta_sources.py"]:
-    print("source:Code/Caller With Space/claim.cpp")
+    print("source:game/Caller With Space/claim.cpp")
     for i in range(int(os.environ["SELECTOR_COUNT"])):
         print("row:0x%08X:16:?candidate_%04d_%s@@YAXXZ" %
               (0x1000 + i, i, "x" * int(os.environ["NAME_LENGTH"])))
@@ -106,7 +106,7 @@ if [ "$n" -eq "${FAIL_CHUNK:-0}" ]; then exit 23; fi
 
 def test_many_exact_rows_are_verified_once_in_bounded_chunks(pr_runner):
     result, chunks, root = pr_runner()
-    expected = [b"source:Code/Caller With Space/claim.cpp"] + [
+    expected = [b"source:game/Caller With Space/claim.cpp"] + [
         ("row:0x%08X:16:?candidate_%04d_%s@@YAXXZ" %
          (0x1000 + i, i, "x" * 140)).encode("utf-8")
         for i in range(240)

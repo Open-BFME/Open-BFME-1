@@ -11,16 +11,20 @@ import argparse
 import csv
 import difflib
 import hashlib
+import io
 import json
 import re
 import subprocess
+from collections import defaultdict
+from functools import lru_cache
 from dataclasses import dataclass
 from pathlib import Path
 
 import name_oracle as oracle
+import layout_history
 
 ROOT = Path(__file__).resolve().parents[1]
-CORRECTIONS = 'reverse/name_corrections.json'
+CORRECTIONS = 'targets/game/reverse/name_corrections.json'
 SOURCE = ('.cpp', '.cc', '.cxx', '.c', '.h', '.hh', '.hpp', '.hxx')
 TOKEN = re.compile(r'//[^\n]*|/\*.*?\*/|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|[A-Za-z_]\w*|0[xX][0-9a-fA-F]+|\d+|[^\s]', re.S)
 IDENT = re.compile(r'^[A-Za-z_]\w*$')
@@ -202,6 +206,8 @@ def layouts(text):
 def regressions(before, after):
     found = set()
     old, new = tokens(before), tokens(after)
+    if old == new:
+        return []
     # Moving a retained type before a new namespace can align its old
     # declaration with the namespace declaration. That is not a type rename.
     type_definition = re.compile(r'\b(?:class|struct)\s+([A-Za-z_]\w*)[^;{}]*\{')
@@ -274,35 +280,107 @@ def read(root, ref, path):
     return git(root, 'show', spec)
 
 
+def read_many(root, ref, paths):
+    """Read changed Git blobs in one framed request; missing paths stay explicit."""
+    paths = sorted(set(paths))
+    if not paths:
+        return {}
+    specs = [':' + path if ref == ':' else ref + ':' + path for path in paths]
+    if any('\n' in spec or '\r' in spec for spec in specs):
+        raise ValueError('newline in Git blob request')
+    out = subprocess.run(['git', 'cat-file', '--batch'], cwd=root,
+                         input=('\n'.join(specs) + '\n').encode(),
+                         capture_output=True, check=True).stdout
+    stream = io.BytesIO(out)
+    values = {}
+    for path in paths:
+        header = stream.readline().rstrip(b'\n')
+        if header.endswith(b' missing'):
+            values[path] = None
+            continue
+        fields = header.split(b' ')
+        if len(fields) != 3 or fields[1] != b'blob':
+            raise ValueError(f'{ref}:{path}: unexpected Git object header {header!r}')
+        size = int(fields[2])
+        data = stream.read(size)
+        if len(data) != size or stream.read(1) != b'\n':
+            raise ValueError(f'{ref}:{path}: truncated Git blob batch')
+        values[path] = data.decode('utf-8', 'replace')
+    if stream.read(1):
+        raise ValueError('extra Git blob batch data')
+    return values
+
+
 def diff_args(old, new):
     return ['--cached', old] if new == ':' else [old, new]
+
+
+def ledger_diff(root, old, new):
+    old_path = layout_history.path_at(old, 'targets/game/reverse/functions.csv',
+                                       layout_history.OLD_LEDGER, root=root,
+                                       allow_missing=True)
+    new_path = layout_history.path_at('' if new == ':' else new,
+                                       'targets/game/reverse/functions.csv',
+                                       layout_history.OLD_LEDGER, root=root,
+                                       allow_missing=True)
+    if not old_path or not new_path or old_path == new_path:
+        return git(root, 'diff', '--unified=0', '--no-renames',
+                   *diff_args(old, new), '--', new_path or old_path or
+                   'targets/game/reverse/functions.csv')
+    before = csv.DictReader((read(root, old, old_path) or '').splitlines())
+    after = csv.DictReader((read(root, new, new_path) or '').splitlines())
+    def claims(rows):
+        return [(r['name'], r['export_rva'], r['target_rva'], r['target_size'],
+                 layout_history.canonical_source(r['source']), r['status'])
+                for r in rows]
+    if claims(before) != claims(after):
+        raise ValueError('ledger relocation changed a function claim')
+    return ''
 
 
 def source(path):
     # Generated files hold many unrelated placeholder bodies.  A ledger row
     # moving from one of them to authored C++ links the entire old file to the
     # new one, so comparing its declarations invents name regressions.
-    return (not path.startswith('Code/gen_small/') and
-            path.startswith(('Code/', 'reference/shims/', 'reverse/attempts/')) and
+    return (not path.startswith('game/gen_small/') and
+            path.startswith(('game/', 'inputs/reference/shims/', 'targets/game/reverse/attempts/')) and
             path.endswith(SOURCE))
 
 
 def pairs(root, old, new):
     args = diff_args(old, new)
-    paths = git(root, 'diff', '--name-only', '-z', '--no-renames', *args).split('\0')
+    changes = []
+    fields = git(root, 'diff', '--name-status', '-z', '-M1%', *args).split('\0')
+    i = 0
+    while i < len(fields) and fields[i]:
+        status = fields[i]; i += 1
+        count = 2 if status.startswith(('R', 'C')) else 1
+        changes.append((status, fields[i:i + count]))
+        i += count
+    paths = {path for status, names in changes if status not in ('R100', 'C100')
+             for path in names}
+    source_paths = {path for path in paths if source(path)}
+    old_paths = source_paths | {names[0] for status, names in changes
+                                if status.startswith(('R', 'C')) and status not in ('R100', 'C100')
+                                and source(names[1])}
+    snapshots = {(old, path): value for path, value in read_many(root, old, old_paths).items()}
+    snapshots.update({(new, path): value for path, value in read_many(root, new, source_paths).items()})
+    @lru_cache(maxsize=None)
+    def snapshot(ref, path):
+        return snapshots.get((ref, path)) if (ref, path) in snapshots else read(root, ref, path)
     left, right = {}, {}
     ids = {}
     for path in paths:
         if not source(path):
             continue
         for ref, dest in ((old, left), (new, right)):
-            text = read(root, ref, path)
+            text = snapshot(ref, path)
             if text is not None:
                 dest[path] = text
         ids[path] = {int(m[1], 16) for m in ADDRESS.finditer(Path(path).stem)}
     # Read only changed ledger rows, never the complete ledger. These link
     # semantic filenames and functions whose source carries no address token.
-    delta = git(root, 'diff', '--unified=0', '--no-renames', *args, '--', 'reverse/functions.csv')
+    delta = ledger_diff(root, old, new)
     for line in delta.splitlines():
         if not line.startswith(('+', '-')) or line.startswith(('+++', '---')):
             continue
@@ -316,36 +394,45 @@ def pairs(root, old, new):
         path = row[4]
         ids.setdefault(path, set()).add(rva)
         ref, dest = (new, right) if line[0] == '+' else (old, left)
-        text = read(root, ref, path)
+        text = snapshot(ref, path)
         if text is not None:
             dest[path] = text
     # A bank may remain in place while a conversion is prepared. Compare it
     # too; deletion and git's rename similarity heuristic are not prerequisites.
+    old_banks = set(git(root, 'ls-tree', '-r', '--name-only', old, '--',
+                        'reverse/attempts/', 'targets/game/reverse/attempts/').splitlines())
     for path in list(right):
         for rva in ids.get(path, ()):
-            bank = f'reverse/attempts/0x{rva:08x}.cpp'
-            text = read(root, old, bank)
+            bank = f'targets/game/reverse/attempts/0x{rva:08x}.cpp'
+            old_bank = bank if bank in old_banks else 'reverse/' + bank[len('targets/game/reverse/') :]
+            if old_bank not in old_banks:
+                continue
+            text = snapshot(old, old_bank)
             if text is not None:
-                left[bank] = text
-                ids.setdefault(bank, set()).add(rva)
+                left[old_bank] = text
+                ids.setdefault(old_bank, set()).add(rva)
     linked = {(p, p) for p in left.keys() & right.keys()}
     # Git-detected moves cover address-free files without a ledger edit.
-    moved = git(root, 'diff', '--name-status', '-z', '-M', *args).split('\0')
-    i = 0
-    while i < len(moved) and moved[i]:
-        status = moved[i]; i += 1
-        count = 2 if status.startswith(('R', 'C')) else 1
-        names = moved[i:i + count]; i += count
-        if count == 2 and names[0] in left and names[1] in right:
-            linked.add(tuple(names))
+    for status, names in changes:
+        if status.startswith(('R', 'C')) and status not in ('R100', 'C100') and source(names[1]):
+            before = snapshot(old, names[0])
+            after = snapshot(new, names[1])
+            if before is not None and after is not None:
+                left[names[0]] = before
+                right[names[1]] = after
+                linked.add(tuple(names))
+    by_rva = defaultdict(set)
+    for path in right:
+        for rva in ids.get(path, ()):
+            by_rva[rva].add(path)
     for a in left:
-        targets = [b for b in right if a != b and ids.get(a, set()) & ids.get(b, set())]
+        targets = {b for rva in ids.get(a, ()) for b in by_rva[rva] if a != b}
         if not targets:
             continue
-        # Rehoming one row out of a retained Code/ TU does not move its other
+        # Rehoming one row out of a retained game/ TU does not move its other
         # declarations. Comparing that unchanged whole source to the new file
         # invents unrelated renames; the same-RVA ledger check still runs.
-        if a.startswith('Code/') and read(root, new, a) == left[a]:
+        if a.startswith('game/') and snapshot(new, a) == left[a]:
             continue
         linked.update((a, b) for b in targets)
     return [(a, b, left[a], right[b]) for a, b in sorted(linked)]
@@ -364,8 +451,7 @@ def _symbol_names(symbol):
 
 def ledger_symbol_regressions(root, old, new):
     """Catch a ledger-only rename of the same physical body."""
-    delta = git(root, 'diff', '--unified=0', '--no-renames',
-                *diff_args(old, new), '--', 'reverse/functions.csv')
+    delta = ledger_diff(root, old, new)
     removed, added = {}, {}
     for line in delta.splitlines():
         if not line.startswith(('+', '-')) or line.startswith(('+++', '---')):
@@ -389,8 +475,8 @@ def ledger_symbol_regressions(root, old, new):
         for old_name, new_name in zip(_symbol_names(old_symbol),
                                       _symbol_names(new_symbol)):
             if downgrade(old_name, new_name):
-                found.append(Finding('reverse/functions.csv',
-                                     'reverse/functions.csv', old_name, new_name,
+                found.append(Finding('targets/game/reverse/functions.csv',
+                                     'targets/game/reverse/functions.csv', old_name, new_name,
                                      digest(before), digest(after)))
     return sorted(found, key=lambda f: (f.before_sha256, f.old_name, f.new_name))
 
@@ -433,7 +519,7 @@ def check(root, old, new):
                 # An exact, reviewable correction, not a count baseline or
                 # reusable allowlist. Its evidence must exist in this snapshot.
                 if (not isinstance(evidence, str) or not isinstance(reason, str)
-                        or not evidence.startswith(('docs/', 'reverse/'))
+                        or not evidence.startswith(('docs/', 'targets/game/reverse/'))
                         or '..' in Path(evidence).parts or not reason.strip()
                         or not (read(root, new, evidence) or '').strip()):
                     raise ValueError(f'{CORRECTIONS}: correction needs tracked evidence and a reason')

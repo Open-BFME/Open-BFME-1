@@ -14,8 +14,8 @@ import worldbuilder_donors as donors
 
 def fixture(tmp_path):
     target = SimpleNamespace(root=tmp_path, target_id="worldbuilder",
-        config_path=tmp_path / "worldbuilder/target.json",
-        ledger_root=tmp_path / "reverse/worldbuilder", build_root=tmp_path / "build/worldbuilder",
+        manifest_path=tmp_path / "inputs/baselines/bfme1/workshop-vanilla-1.03/manifest.json",
+        ledger_root=tmp_path / "targets/worldbuilder/reverse", build_root=tmp_path / "build/worldbuilder",
         expected_sha256="a" * 64,
         exports=[SimpleNamespace(name="?method@Owner@@QAEXXZ", rva=0x1234, forwarder=None)],
         section_for_rva=lambda _: SimpleNamespace(characteristics=0x60000020))
@@ -29,9 +29,9 @@ def fixture(tmp_path):
         "donors": [{"reference": "bfme2", "symbol": "?method@Owner@@QAEXXZ",
             "worldbuilder_export_rva": 0x1234, "donor_rva": 0x2345, "donor_size": 1,
             "source": "Code/GameEngine/Owner.cpp", "source_git_blob_sha1": donors.git_blob_hash(body)}]}
-    target.config_path.parent.mkdir(parents=True)
+    (target.root / "targets/worldbuilder").mkdir(parents=True)
     target.ledger_root.mkdir(parents=True)
-    (target.config_path.parent / "references.json").write_bytes(raw)
+    (target.root / "targets/worldbuilder" / "references.json").write_bytes(raw)
     (target.ledger_root / "donors.json").write_bytes(donors._json_bytes(index))
     return target, body, config, index
 
@@ -51,7 +51,7 @@ def test_lookup_is_offline_and_supplies_revision_hash_and_source(tmp_path, monke
 def test_changing_pin_invalidates_existing_index(tmp_path):
     target, _, config, _ = fixture(tmp_path)
     config["references"]["bfme2"]["revision"] = "3" * 40
-    (target.config_path.parent / "references.json").write_bytes(donors._json_bytes(config))
+    (target.root / "targets/worldbuilder" / "references.json").write_bytes(donors._json_bytes(config))
     with pytest.raises(donors.DonorError, match="index/reference/target mismatch"):
         donors.lookup(target)
 

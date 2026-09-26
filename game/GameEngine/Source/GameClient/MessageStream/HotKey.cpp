@@ -1,0 +1,227 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+#define Matrix4x4 Matrix4  // BFME renamed it
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+////////////////////////////////////////////////////////////////////////////////
+//																																						//
+//  (c) 2001-2003 Electronic Arts Inc.																				//
+//																																						//
+////////////////////////////////////////////////////////////////////////////////
+
+// FILE: HotKey.cpp /////////////////////////////////////////////////
+//-----------------------------------------------------------------------------
+//                                                                          
+//                       Electronic Arts Pacific.                          
+//                                                                          
+//                       Confidential Information                           
+//                Copyright (C) 2002 - All Rights Reserved                  
+//                                                                          
+//-----------------------------------------------------------------------------
+//
+//	created:	Sep 2002
+//
+//	Filename: 	HotKey.cpp
+//
+//	author:		Chris Huybregts
+//	
+//	purpose:	
+//
+//-----------------------------------------------------------------------------
+///////////////////////////////////////////////////////////////////////////////
+
+//-----------------------------------------------------------------------------
+// SYSTEM INCLUDES ////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------
+#define __PLACEMENT_VEC_NEW_INLINE
+#include <map>
+#include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+
+class HotKeyAsciiStringLess
+{
+public:
+	bool operator()(const AsciiString& lhs, const AsciiString& rhs) const
+	{
+		return lhs.compare(rhs) < 0;
+	}
+};
+
+namespace _STL
+{
+	template <>
+	struct less<AsciiString> : public HotKeyAsciiStringLess
+	{
+	};
+}
+//-----------------------------------------------------------------------------
+// USER INCLUDES //////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------
+#include "GameClient/HotKey.h"
+#include "GameClient/KeyDefs.h"
+#include "GameClient/MetaEvent.h"
+#include "GameClient/GameWindow.h"
+#include "GameClient/GameWindowManager.h"
+#include "GameClient/keyboard.h"
+#include "GameClient/GameText.h"
+#include "Common/AudioEventRTS.h"
+//-----------------------------------------------------------------------------
+// DEFINES ////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+// PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/HotKeyTranslator_translateGameMessage_Thunk.cpp
+// ?translateGameMessage@HotKeyTranslator@@UAE?AW4GameMessageDisposition@@PBVGameMessage@@@Z present-unmatched
+GameMessageDisposition HotKeyTranslator::translateGameMessage(const GameMessage *msg)
+{
+	GameMessageDisposition disp = KEEP_MESSAGE;
+	GameMessage::Type t = msg->getType();
+
+	if ( t == GameMessage::MSG_RAW_KEY_UP)
+	{
+		
+		//char key = msg->getArgument(0)->integer;
+		Int keyState = msg->getArgument(1)->integer;
+
+		// for our purposes here, we don't care to distinguish between right and left keys,
+		// so just fudge a little to simplify things.
+		Int newModState = 0;
+
+		if( keyState & KEY_STATE_CONTROL )
+		{
+			newModState |= CTRL;
+		}
+
+		if( keyState & KEY_STATE_SHIFT )
+		{
+			newModState |= SHIFT;
+		}
+
+		if( keyState & KEY_STATE_ALT )
+		{
+			newModState |= ALT;
+		}
+		if(newModState != 0)
+			return disp;
+		WideChar key = TheKeyboard->getPrintableKey(msg->getArgument(0)->integer, 0);
+		UnicodeString uKey;
+		uKey.set(&key);
+		AsciiString aKey;
+		aKey.translate(uKey);
+		if(TheHotKeyManager && TheHotKeyManager->executeHotKey(aKey))
+			disp = DESTROY_MESSAGE;
+	}
+	return disp;
+}
+
+//-----------------------------------------------------------------------------
+// byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Source/GameClient/MessageStream/HotKey.cpp
+// ??0HotKey@@ present-unmatched
+HotKey::HotKey()
+{
+	m_win = NULL;
+	//Added By Sadullah Nader
+	//Initializations missing and needed
+	m_key.clear();
+	//
+}
+
+// The exact retail constructor is emitted by HotKeyManagerCtorThunk.cpp.
+
+//-----------------------------------------------------------------------------
+// ??1HotKeyManager@@UAE@XZ present-unmatched
+HotKeyManager::~HotKeyManager( void )
+{
+	m_hotKeyMap.clear();
+}
+	
+//-----------------------------------------------------------------------------
+void HotKeyManager::init( void )
+{
+	m_hotKeyMap.clear();
+}
+
+//-----------------------------------------------------------------------------
+// ?reset@HotKeyManager@@UAEXXZ
+void HotKeyManager::reset( void )
+{
+	m_hotKeyMap.clear();
+}
+
+//-----------------------------------------------------------------------------
+// ?addHotKey@HotKeyManager@@QAEXPAVGameWindow@@ABVAsciiString@@@Z present-unmatched
+void HotKeyManager::addHotKey( GameWindow *win, const AsciiString& keyIn)
+{
+	AsciiString key = keyIn;
+	key.toLower();
+	HotKeyMap::iterator it = m_hotKeyMap.find(key);
+	if( it != m_hotKeyMap.end() )
+	{
+		DEBUG_ASSERTCRASH(FALSE,("Hotkey %s is already mapped to window %s, current window is %s", key.str(), it->second.m_win->winGetInstanceData()->m_decoratedNameString.str(), win->winGetInstanceData()->m_decoratedNameString.str()));
+		return;
+	}
+	HotKey newHK;
+	newHK.m_key.set(key);
+	newHK.m_win = win;
+	m_hotKeyMap[key] = newHK;
+}
+
+//-----------------------------------------------------------------------------
+// ?executeHotKey@HotKeyManager@@QAE_NABVAsciiString@@@Z
+// Body in HotKey_executeHotKey.asm (exact 597B retail).
+
+//-----------------------------------------------------------------------------
+// ?searchHotKey@HotKeyManager@@QAE?AVAsciiString@@ABV2@@Z
+// Body in HotKey_searchHotKey_AsciiString.asm (exact 135B retail @ 0x005B2AD0).
+// Queue RVA 0x9DB068 was mid-function elsewhere; C++ diverges on by-value
+// AsciiString fetch arg (retail out-of-line StringBase copy @ 0x887B60).
+
+//-----------------------------------------------------------------------------
+// ?searchHotKey@HotKeyManager@@ present-unmatched
+AsciiString HotKeyManager::searchHotKey( const UnicodeString& uStr )
+{
+	if(uStr.isEmpty())
+		return AsciiString::TheEmptyString;
+
+	const WideChar *marker = (const WideChar *)uStr.str();
+	while (marker && *marker)
+	{
+		if (*marker == L'&')
+		{
+			// found a '&' - now look for the next char
+			UnicodeString tmp = UnicodeString::TheEmptyString;
+			tmp.concat(*(marker+1));
+			AsciiString retStr;
+			retStr.translate(tmp);
+			return retStr;
+		}
+		marker++;
+	}
+	return AsciiString::TheEmptyString;	
+}
+
+//-----------------------------------------------------------------------------
+HotKeyManager *TheHotKeyManager = NULL;
+
+//-----------------------------------------------------------------------------
+// PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------

@@ -1,0 +1,3339 @@
+// cl: /Igame/GameEngine/Include /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Igame/GameEngine/Source/Common/System /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+// readable body of ?ParseBlendTileData@WorldHeightMap@@IAE_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z: game/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp
+#define Matrix4x4 Matrix4  // BFME renamed it
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+////////////////////////////////////////////////////////////////////////////////
+//																																						//
+//  (c) 2001-2003 Electronic Arts Inc.																				//
+//																																						//
+////////////////////////////////////////////////////////////////////////////////
+
+// FILE: TerrainLogic.cpp /////////////////////////////////////////////////////////////////////////
+// Logical terrain representation for the game logic side
+// Author: Colin Day, April 2001
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+
+
+#include "Common/DataChunk.h"
+#include "Common/GameState.h"
+#include "Common/MapObject.h"
+#include "Common/Radar.h"
+#include "Common/ThingFactory.h"
+#include "Common/ThingTemplate.h"
+#include "Common/WellKnownKeys.h"
+#include "Common/Xfer.h"
+
+#include "GameClient/TerrainVisual.h"
+
+#include "GameLogic/AI.h"
+#include "GameLogic/AIPathfind.h"
+#include "GameLogic/GameLogic.h"
+#include "GameLogic/Damage.h"
+#include "GameLogic/Object.h"
+#include "GameLogic/PartitionManager.h"
+#include "GameLogic/PolygonTrigger.h"
+#include "GameLogic/Scripts.h"
+#include "GameLogic/SidesList.h"
+#include "GameLogic/TerrainLogic.h"
+#include "GameLogic/Module/BodyModule.h"
+#include "GameLogic/Module/BridgeBehavior.h"
+#include "GameLogic/Module/BridgeTowerBehavior.h"
+#include "GameLogic/GhostObject.h"
+
+#include "WWMath/plane.h"
+#include "WWMath/tri.h"
+
+#ifdef _INTERNAL
+// for occasional debugging...
+//#pragma optimize("", off)
+//#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
+#endif
+
+// GLOBALS ////////////////////////////////////////////////////////////////////////////////////////
+TerrainLogic *TheTerrainLogic = NULL;
+
+#pragma optimize("", off)
+static void preserveBridgeSetLayer(Bridge *bridge, PathfindLayerEnum layer)
+{
+	bridge->setLayer(layer);
+}
+#pragma optimize("", on)
+
+// STATIC /////////////////////////////////////////////////////////////////////////////////////////
+WaterHandle TerrainLogic::m_gridWaterHandle;
+
+// Waypoint ///////////////////////////////////////////////////////////////////////////////////////
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// ??0Waypoint@@QAE@W4WaypointID@@VAsciiString@@PBUCoord3D@@111_N@Z present-unmatched
+Waypoint::Waypoint(WaypointID id, AsciiString name, const Coord3D *pLoc, AsciiString label1, AsciiString label2, 
+									 AsciiString label3, Bool biDirectional) :
+m_name(name),
+m_pNext(NULL),
+m_location(*pLoc),
+m_id(id),
+m_pathLabel1(label1),
+m_pathLabel2(label2),
+m_pathLabel3(label3),
+m_numLinks(0),
+m_biDirectional(biDirectional)
+{
+	Int i;
+	for (i=0; i<MAX_LINKS; i++) {
+		m_links[i] = NULL;
+	}
+}  // end Waypoint
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// ??1Waypoint@@MAE@XZ present-unmatched
+Waypoint::~Waypoint()
+{
+
+}  // end ~Waypoint
+
+// Bridge ////////////////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+BridgeInfo::BridgeInfo()
+{
+
+	from.zero();
+	to.zero();
+	bridgeWidth = 0.0f;
+	fromLeft.zero();
+	fromRight.zero();
+	toLeft.zero();
+	toRight.zero();
+  bridgeIndex = 0;
+	curDamageState = BODY_PRISTINE;
+	damageStateChanged = FALSE;
+	bridgeObjectID = INVALID_ID;
+	for( Int i = 0; i < BRIDGE_MAX_TOWERS; ++i )
+		towerObjectID[ i ] = INVALID_ID;
+
+}
+
+// ------------------------------------------------------------------------------------------------
+/** Create a tower object for the bridge of the specified type (and therefore position) */
+// ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Bridge_createTower_Thunk.cpp
+// ?createTower@Bridge@@QAEPAVObject@@PAUCoord3D@@W4BridgeTowerType@@PBVThingTemplate@@PAV2@@Z present-unmatched
+Object *Bridge::createTower( Coord3D *worldPos,
+														 BridgeTowerType towerType, 
+														 const ThingTemplate *towerTemplate, 
+														 Object *bridge )
+{
+
+	// sanity
+	if( towerTemplate == NULL || bridge == NULL )
+	{
+
+		DEBUG_CRASH(( "Bridge::createTower(): Invalid params\n" ));
+		return NULL;
+
+	}  // end if
+
+	// create the tower object
+	Object *tower = TheThingFactory->newObject( towerTemplate, bridge->getTeam() );
+
+	// location information
+	Real angle = 0;
+	switch( towerType )
+	{
+		
+		// --------------------------------------------------------------------------------------------
+		case BRIDGE_TOWER_FROM_LEFT:
+			angle = bridge->getOrientation() + PI;
+			break;
+
+		// --------------------------------------------------------------------------------------------
+		case BRIDGE_TOWER_FROM_RIGHT:
+			angle = bridge->getOrientation() + PI;
+			break;
+
+		// --------------------------------------------------------------------------------------------
+		case BRIDGE_TOWER_TO_LEFT:
+			angle = bridge->getOrientation();
+			break;
+
+		// --------------------------------------------------------------------------------------------
+		case BRIDGE_TOWER_TO_RIGHT:
+			angle = bridge->getOrientation();
+			break;
+
+		// --------------------------------------------------------------------------------------------
+		default:
+			DEBUG_CRASH(( "Bridge::createTower - Unknown bridge tower type '%d'\n", towerType )); 
+			return NULL;
+
+	}  // end switch
+
+	// set the position and angle
+	tower->setPosition( worldPos );
+	tower->setOrientation( angle );
+
+	// tie it to the bridge
+	BridgeBehaviorInterface *bridgeInterface = BridgeBehavior::getBridgeBehaviorInterfaceFromObject( bridge );
+	DEBUG_ASSERTCRASH( bridgeInterface != NULL, ("Bridge::createTower - no 'BridgeBehaviorInterface' found\n") );
+	if( bridgeInterface )
+		bridgeInterface->setTower( towerType, tower );
+
+	// tie the bridge to us
+	BridgeTowerBehaviorInterface *bridgeTowerInterface = BridgeTowerBehavior::getBridgeTowerBehaviorInterfaceFromObject( tower );
+	DEBUG_ASSERTCRASH( bridgeTowerInterface != NULL, ("Bridge::createTower - no 'BridgeTowerBehaviorInterface' found\n") );
+	if( bridgeTowerInterface )
+	{
+
+		// set bridge object
+		bridgeTowerInterface->setBridge( bridge );
+
+		// save our position type
+		bridgeTowerInterface->setTowerType( towerType );
+
+	}  // end if
+
+	// if the bridge is indestructible, so is this tower
+	BodyModuleInterface *bridgeBody = bridge->getBodyModule();
+	if( bridgeBody->isIndestructible() )
+	{
+		BodyModuleInterface *towerBody = tower->getBodyModule();
+
+		towerBody->setIndestructible( TRUE );
+
+	}  // end if
+
+	// return the newly created tower
+	return tower;
+
+}  // end createTower
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Bridge_ctor_Thunk.cpp
+// ??0Bridge@@ present-unmatched
+Bridge::Bridge(BridgeInfo &theInfo, Dict *props, AsciiString bridgeTemplateName) :
+m_bridgeInfo(theInfo)
+{
+
+	// save the template name
+	m_templateName = bridgeTemplateName;
+
+	//Coord3D fromLeft, fromRight, toLeft, toRight; /// The 4 corners of the rectangle that the bridge covers.
+	m_bounds.lo.x = m_bridgeInfo.fromLeft.x;
+	m_bounds.lo.y = m_bridgeInfo.fromLeft.y;
+	m_bounds.hi = m_bounds.lo;
+	if (m_bounds.lo.x > m_bridgeInfo.fromRight.x) m_bounds.lo.x = m_bridgeInfo.fromRight.x;
+	if (m_bounds.lo.y > m_bridgeInfo.fromRight.y) m_bounds.lo.y = m_bridgeInfo.fromRight.y;
+	if (m_bounds.hi.x < m_bridgeInfo.fromRight.x) m_bounds.hi.x = m_bridgeInfo.fromRight.x;
+	if (m_bounds.hi.y < m_bridgeInfo.fromRight.y) m_bounds.hi.y = m_bridgeInfo.fromRight.y;
+	if (m_bounds.lo.x > m_bridgeInfo.toLeft.x) m_bounds.lo.x = m_bridgeInfo.toLeft.x;
+	if (m_bounds.lo.y > m_bridgeInfo.toLeft.y) m_bounds.lo.y = m_bridgeInfo.toLeft.y;
+	if (m_bounds.hi.x < m_bridgeInfo.toLeft.x) m_bounds.hi.x = m_bridgeInfo.toLeft.x;
+	if (m_bounds.hi.y < m_bridgeInfo.toLeft.y) m_bounds.hi.y = m_bridgeInfo.toLeft.y;
+	if (m_bounds.lo.x > m_bridgeInfo.toRight.x) m_bounds.lo.x = m_bridgeInfo.toRight.x;
+	if (m_bounds.lo.y > m_bridgeInfo.toRight.y) m_bounds.lo.y = m_bridgeInfo.toRight.y;
+	if (m_bounds.hi.x < m_bridgeInfo.toRight.x) m_bounds.hi.x = m_bridgeInfo.toRight.x;
+	if (m_bounds.hi.y < m_bridgeInfo.toRight.y) m_bounds.hi.y = m_bridgeInfo.toRight.y;
+
+	m_bridgeInfo.curDamageState = BODY_PRISTINE;
+
+
+	static const ThingTemplate* genericBridgeTemplate = TheThingFactory->findTemplate("GenericBridge");
+	if (!genericBridgeTemplate) {
+		DEBUG_LOG(("*** GenericBridge template not found."));
+		return;
+	}
+	Object *bridge = TheThingFactory->newObject(genericBridgeTemplate, NULL);
+	Coord3D center;
+	center.x = (m_bridgeInfo.fromLeft.x + m_bridgeInfo.toRight.x)/2.0f;
+	center.y = (m_bridgeInfo.fromLeft.y + m_bridgeInfo.toRight.y)/2.0f;
+	center.z = (m_bridgeInfo.fromLeft.z + m_bridgeInfo.toRight.z)/2.0f;
+	bridge->setPosition(&center);
+	m_bridgeInfo.bridgeObjectID = bridge->getID();
+	bridge->updateObjValuesFromMapProperties(props);
+
+	//
+	// we'll say the angle of this object representing the bridge is from the 'from' side
+	// to the 'to' side.
+	//
+	Coord2D v;
+	v.x = m_bridgeInfo.toLeft.x - m_bridgeInfo.fromLeft.x;
+	v.y = m_bridgeInfo.toLeft.y - m_bridgeInfo.fromLeft.y;
+	bridge->setOrientation( v.toAngle() );
+
+	v.x = m_bridgeInfo.toLeft.x - m_bridgeInfo.toRight.x;
+	v.y = m_bridgeInfo.toLeft.y - m_bridgeInfo.toRight.y;
+	v.normalize();
+
+	// get the template of the bridge
+	TerrainRoadType *bridgeTemplate = TheTerrainRoads->findBridge( bridgeTemplateName );
+	if( bridgeTemplate == NULL ) {
+		DEBUG_LOG(( "*** Bridge Template Not Found '%s'.", bridgeTemplateName ));
+		return;
+	}
+
+#define no_BRIDGE_TOWERS // since they aren't destructable, don't need towers.
+#if BRIDGE_TOWERS
+	// initialize each of the tower positions to that of the bridge info bounding rect
+	Coord3D towerPos[ BRIDGE_MAX_TOWERS ];
+	towerPos[ BRIDGE_TOWER_FROM_LEFT ] = m_bridgeInfo.fromLeft;
+	towerPos[ BRIDGE_TOWER_FROM_RIGHT ] = m_bridgeInfo.fromRight;
+	towerPos[ BRIDGE_TOWER_TO_LEFT ] = m_bridgeInfo.toLeft;
+	towerPos[ BRIDGE_TOWER_TO_RIGHT ] = m_bridgeInfo.toRight;
+
+	// create objects targetable objects for the 4 tower pieces
+	const ThingTemplate *towerTemplate;
+	BridgeTowerType type;
+	Object *tower;
+	Real offset = PATHFIND_CELL_SIZE_F/2.0f;
+	for( Int i = 0; i < BRIDGE_MAX_TOWERS; ++i )
+	{
+
+		// create the tower
+		type = (BridgeTowerType)i;
+		towerTemplate = TheThingFactory->findTemplate( bridgeTemplate->getTowerObjectName( type ) );
+		if (towerTemplate) {
+			offset = towerTemplate->getTemplateGeometryInfo().getMajorRadius();
+		}
+		Coord3D pos = towerPos[type];
+		switch( type )
+		{
+			case BRIDGE_TOWER_FROM_LEFT:
+			case BRIDGE_TOWER_TO_LEFT:
+				pos.x += v.x*offset;
+				pos.y += v.y*offset;
+				break;
+			case BRIDGE_TOWER_FROM_RIGHT:
+			case BRIDGE_TOWER_TO_RIGHT:
+				pos.x -= v.x*offset;
+				pos.y -= v.y*offset;
+				break;
+
+		}  // end switch
+		tower = createTower( &pos, type, towerTemplate, bridge );
+		
+		// store the tower object ID
+		m_bridgeInfo.towerObjectID[ i ] = tower->getID();
+
+	}  // end for, i
+#endif
+	
+	m_next = NULL;
+}  // end Bridge
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Bridge_ctor_Thunk.cpp
+// ??0Bridge@@ present-unmatched
+Bridge::Bridge(Object *bridgeObj) 
+{
+
+	// save the template name
+	m_templateName = bridgeObj->getTemplate()->getName();
+
+	DEBUG_ASSERTLOG( bridgeObj->getGeometryInfo().getGeomType()==GEOMETRY_BOX, ("Bridges need to be rectangles.\n"));
+
+	const Coord3D *pos = bridgeObj->getPosition();
+	Real angle = bridgeObj->getOrientation();
+
+	Real halfsizeX = bridgeObj->getGeometryInfo().getMajorRadius();
+	Real halfsizeY = bridgeObj->getGeometryInfo().getMinorRadius();
+	m_bridgeInfo.bridgeWidth = 2*halfsizeY;
+
+	Real c = (Real)Cos(angle);
+	Real s = (Real)Sin(angle);
+
+	m_bridgeInfo.fromLeft.set(pos->x-halfsizeX*c-halfsizeY*s, pos->y + halfsizeY*c - halfsizeX*s, pos->z);
+	m_bridgeInfo.toLeft.set(pos->x+halfsizeX*c-halfsizeY*s, pos->y + halfsizeY*c + halfsizeX*s, pos->z);
+	m_bridgeInfo.fromRight.set(pos->x-halfsizeX*c+halfsizeY*s, pos->y - halfsizeY*c - halfsizeX*s, pos->z);
+	m_bridgeInfo.toRight.set(pos->x+halfsizeX*c+halfsizeY*s, pos->y - halfsizeY*c + halfsizeX*s, pos->z);
+
+	m_bridgeInfo.from.x = (m_bridgeInfo.fromLeft.x + m_bridgeInfo.fromRight.x)/2.0f;
+	m_bridgeInfo.from.y = (m_bridgeInfo.fromLeft.y + m_bridgeInfo.fromRight.y)/2.0f;
+	m_bridgeInfo.from.z = (m_bridgeInfo.fromLeft.z + m_bridgeInfo.fromRight.z)/2.0f;
+
+	m_bridgeInfo.to.x = (m_bridgeInfo.toLeft.x + m_bridgeInfo.toRight.x)/2.0f;
+	m_bridgeInfo.to.y = (m_bridgeInfo.toLeft.y + m_bridgeInfo.toRight.y)/2.0f;
+	m_bridgeInfo.to.z = (m_bridgeInfo.toLeft.z + m_bridgeInfo.toRight.z)/2.0f;
+
+	//Coord3D fromLeft, fromRight, toLeft, toRight; /// The 4 corners of the rectangle that the bridge covers.
+	m_bounds.lo.x = m_bridgeInfo.fromLeft.x;
+	m_bounds.lo.y = m_bridgeInfo.fromLeft.y;
+	m_bounds.hi = m_bounds.lo;
+	if (m_bounds.lo.x > m_bridgeInfo.fromRight.x) m_bounds.lo.x = m_bridgeInfo.fromRight.x;
+	if (m_bounds.lo.y > m_bridgeInfo.fromRight.y) m_bounds.lo.y = m_bridgeInfo.fromRight.y;
+	if (m_bounds.hi.x < m_bridgeInfo.fromRight.x) m_bounds.hi.x = m_bridgeInfo.fromRight.x;
+	if (m_bounds.hi.y < m_bridgeInfo.fromRight.y) m_bounds.hi.y = m_bridgeInfo.fromRight.y;
+	if (m_bounds.lo.x > m_bridgeInfo.toLeft.x) m_bounds.lo.x = m_bridgeInfo.toLeft.x;
+	if (m_bounds.lo.y > m_bridgeInfo.toLeft.y) m_bounds.lo.y = m_bridgeInfo.toLeft.y;
+	if (m_bounds.hi.x < m_bridgeInfo.toLeft.x) m_bounds.hi.x = m_bridgeInfo.toLeft.x;
+	if (m_bounds.hi.y < m_bridgeInfo.toLeft.y) m_bounds.hi.y = m_bridgeInfo.toLeft.y;
+	if (m_bounds.lo.x > m_bridgeInfo.toRight.x) m_bounds.lo.x = m_bridgeInfo.toRight.x;
+	if (m_bounds.lo.y > m_bridgeInfo.toRight.y) m_bounds.lo.y = m_bridgeInfo.toRight.y;
+	if (m_bounds.hi.x < m_bridgeInfo.toRight.x) m_bounds.hi.x = m_bridgeInfo.toRight.x;
+	if (m_bounds.hi.y < m_bridgeInfo.toRight.y) m_bounds.hi.y = m_bridgeInfo.toRight.y;
+
+	m_bridgeInfo.curDamageState = BODY_PRISTINE;
+
+	m_bridgeInfo.bridgeObjectID = bridgeObj->getID();
+
+	// get the template of the bridge
+	AsciiString bridgeTemplateName = bridgeObj->getTemplate()->getName();
+	TerrainRoadType *bridgeTemplate = TheTerrainRoads->findBridge( bridgeTemplateName );
+	if( bridgeTemplate == NULL ) {
+		DEBUG_LOG(( "*** Bridge Template Not Found '%s'.", bridgeTemplateName ));
+		return;
+	}
+
+	Coord2D v;
+	v.x = m_bridgeInfo.toLeft.x - m_bridgeInfo.toRight.x;
+	v.y = m_bridgeInfo.toLeft.y - m_bridgeInfo.toRight.y;
+	v.normalize();
+
+	// initialize each of the tower positions to that of the bridge info bounding rect
+	Coord3D towerPos[ BRIDGE_MAX_TOWERS ];
+	towerPos[ BRIDGE_TOWER_FROM_LEFT ] = m_bridgeInfo.fromLeft;
+	towerPos[ BRIDGE_TOWER_FROM_RIGHT ] = m_bridgeInfo.fromRight;
+	towerPos[ BRIDGE_TOWER_TO_LEFT ] = m_bridgeInfo.toLeft;
+	towerPos[ BRIDGE_TOWER_TO_RIGHT ] = m_bridgeInfo.toRight;
+
+	Real offset = PATHFIND_CELL_SIZE_F/2.0f;
+	// create objects targetable objects for the 4 tower pieces
+	const ThingTemplate *towerTemplate;
+	BridgeTowerType type;
+	Object *tower;	
+	for( Int i = 0; i < BRIDGE_MAX_TOWERS; ++i )
+	{
+
+		type = (BridgeTowerType)i;
+		towerTemplate = TheThingFactory->findTemplate( bridgeTemplate->getTowerObjectName( type ) );
+		if (towerTemplate) {
+			offset = towerTemplate->getTemplateGeometryInfo().getMajorRadius();
+		}
+		Coord3D pos = towerPos[type];
+		switch( type )
+		{
+			case BRIDGE_TOWER_FROM_LEFT:
+			case BRIDGE_TOWER_TO_LEFT:
+				pos.x += v.x*offset;
+				pos.y += v.y*offset;
+				break;
+			case BRIDGE_TOWER_FROM_RIGHT:
+			case BRIDGE_TOWER_TO_RIGHT:
+				pos.x -= v.x*offset;
+				pos.y -= v.y*offset;
+				break;
+
+		}  // end switch
+		tower = createTower( &pos, type, towerTemplate, bridgeObj );
+		if( tower )
+		{
+			// store the tower object ID
+			m_bridgeInfo.towerObjectID[ i ] = tower->getID();
+		}
+
+	}  // end for, i
+
+	m_next = NULL;
+}  // end Bridge
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// ??1Bridge@@MAE@XZ present-unmatched
+Bridge::~Bridge()
+{
+
+}  // end ~Bridge
+
+
+//-------------------------------------------------------------------------------------------------
+/** isPointOnBridge - see if point is on bridge. */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/BridgeIsPointOnBridgeThunk.cpp
+// ?isPointOnBridge@Bridge@@QAE_NPBUCoord3D@@@Z present-unmatched
+// DECLINED under the anti-lift rule, not merely unattempted. The donor is a
+// 5-byte ILT whose whole content is a cast-and-call into an unnamed shim, and
+// its jump lands at 0x001a5f40 -- still an unconverted dump (game/gen_asm/d_001a38b0.asm).
+// This body is therefore the only readable statement of what the function does,
+// and folding would replace it with a three-line stub forwarding into a dump.
+Bool Bridge::isPointOnBridge(const Coord3D *pLoc)
+{
+	if (pLoc->x < m_bounds.lo.x) return(false);
+	if (pLoc->x > m_bounds.hi.x) return(false);
+	if (pLoc->y < m_bounds.lo.y) return(false);
+	if (pLoc->y > m_bounds.hi.y) return(false);
+
+	Vector3 testPt(pLoc->x, pLoc->y, pLoc->z);
+	Vector3 left1(m_bridgeInfo.fromLeft.x, m_bridgeInfo.fromLeft.y, m_bridgeInfo.fromLeft.z);
+	Vector3 right1(m_bridgeInfo.fromRight.x, m_bridgeInfo.fromRight.y, m_bridgeInfo.fromRight.z);
+	Vector3 left2(m_bridgeInfo.toLeft.x, m_bridgeInfo.toLeft.y, m_bridgeInfo.toLeft.z);
+	Vector3 right2(m_bridgeInfo.toRight.x, m_bridgeInfo.toRight.y, m_bridgeInfo.toRight.z);
+
+	unsigned char flags;
+
+	if (Point_In_Triangle_2D(left1, right1, left2, testPt, 0, 1, flags)) {
+		return true;
+	}
+	if (Point_In_Triangle_2D(right1, left2, right2, testPt, 0, 1, flags)) {
+		return true;
+	}
+	return(false);
+}
+
+/*-------------------------------------------------------------------------------------------------
+/** Clip a floating point line to the region provided.  The source line runs from p1 to p2, and is clipped
+	* using the clipRegion.  
+	*
+	* Return values: 
+	*				TRUE  - Line intersects the region
+	*				FALSE - Line does not intersect the region
+	*/
+//-------------------------------------------------------------------------------------------------
+Bool LineInRegion( const Coord2D *p1, const Coord2D *p2, const Region2D *clipRegion )
+{
+	enum { CLIP_LEFT  = 0x01,
+				CLIP_RIGHT  = 0x02,
+				CLIP_BOTTOM = 0x04,
+				CLIP_TOP	  = 0x08 };
+	Real x1, y1, x2, y2;
+	Real clipLeft;
+	Real clipRight;
+	Real clipTop;
+	Real clipBottom;
+	Int clipCode1;
+	Int clipCode2;
+	Real diff;
+
+	// Use clip window that includes bottom right pixel
+	clipLeft = clipRegion->lo.x;
+	clipRight = clipRegion->hi.x;
+	clipTop = clipRegion->lo.y;
+	clipBottom = clipRegion->hi.y;
+
+	x1 = p1->x;
+	y1 = p1->y;
+	x2 = p2->x;
+	y2 = p2->y;
+		
+	// Test first point
+	clipCode1 = 0;
+
+	if (x1 < clipLeft)
+		clipCode1 = CLIP_LEFT;
+	else
+	if (x1 > clipRight)
+		clipCode1 = CLIP_RIGHT;
+
+	if (y1 < clipTop)
+		clipCode1 |= CLIP_TOP;
+	else
+	if (y1 > clipBottom)
+		clipCode1 |= CLIP_BOTTOM;
+
+
+	// Test second point
+	clipCode2 = 0;
+
+	if (x2 < clipLeft)
+		clipCode2 = CLIP_LEFT;
+	else
+	if (x2 > clipRight)
+		clipCode2 = CLIP_RIGHT;
+
+	if (y2 < clipTop)
+		clipCode2 |= CLIP_TOP;
+	else
+	if (y2 > clipBottom)
+		clipCode2 |= CLIP_BOTTOM;
+
+
+	// Both points inside window?
+	if ((clipCode1 | clipCode2) == 0)
+	{
+		return TRUE;
+	}  // end if
+
+	// Both points outside window?
+	if (clipCode1 & clipCode2)
+		return FALSE;
+
+	// First point outside window?
+	if (clipCode1)
+	{
+		if (clipCode1 & CLIP_TOP)
+		{
+			if ((diff = (y2 - y1)) == 0)
+				return FALSE;
+			x1 += (x2 - x1) * (clipTop - y1) / diff;
+			y1 = clipTop;
+		}
+		else
+		if (clipCode1 & CLIP_BOTTOM)
+		{
+			if ((diff = (y2 - y1)) == 0)
+				return FALSE;
+			x1 += (x2 - x1) * (clipBottom - y1) / diff;
+			y1 = clipBottom;
+		}
+
+		if (x1 > clipRight)
+		{
+			if ((diff = (x2 - x1)) == 0)
+				return FALSE;
+			y1 += (y2 - y1) * (clipRight - x1) / diff;
+			x1 = clipRight;
+		}
+		else
+		if (x1 < clipLeft)
+		{
+			if ((diff = (x2 - x1)) == 0)
+				return FALSE;
+			y1 += (y2 - y1) * (clipLeft - x1) / diff;
+			x1 = clipLeft;
+		}
+	}
+
+	// Second point outside window?
+	if (clipCode2)
+	{
+		if (clipCode2 & CLIP_TOP)
+		{
+			if ((diff = (y2 - y1)) == 0)
+				return FALSE;
+			x2 += (x2 - x1) * (clipTop - y2) / diff;
+			y2 = clipTop;
+		}
+		else
+		if (clipCode2 & CLIP_BOTTOM)
+		{
+			if ((diff = (y2 - y1)) == 0)
+				return FALSE;
+			x2 += (x2 - x1) * (clipBottom - y2) / diff;
+			y2 = clipBottom;
+		}
+
+		if (x2 > clipRight)
+		{
+			if ((diff = (x2 - x1)) == 0)
+				return FALSE;
+			y2 += (y2 - y1) * (clipRight - x2) / diff;
+			x2 = clipRight;
+		}
+		else
+		if (x2 < clipLeft)
+		{
+			if ((diff = (x2 - x1)) == 0)
+				return FALSE;
+			y2 += (y2 - y1) * (clipLeft - x2) / diff;
+			x2 = clipLeft;
+		}
+	}
+
+	// Line is visible
+	return (x1 >= clipLeft && x1 <= clipRight &&
+		    y1 >= clipTop && y1 <= clipBottom &&
+			x2 >= clipLeft && x2 <= clipRight &&
+			y2 >= clipTop && y2 <= clipBottom);
+
+}  // end LineInRegion
+
+static Bool PointInRegion2D( const Coord3D *pt, const Region2D *clipRegion )
+{
+	return (pt->x>=clipRegion->lo.x && 
+					pt->y>=clipRegion->lo.y &&
+					pt->x<=clipRegion->hi.x && 
+					pt->y<=clipRegion->hi.y);
+}
+
+
+//-------------------------------------------------------------------------------------------------
+/** isCellOnEnd - see if cell is on the end of the bridge. */
+//-------------------------------------------------------------------------------------------------
+// Retail body 0x001A24B0; the public entry at 0x0000DAAD is an ILT jump.
+Bool Bridge::isCellOnEnd(const Region2D *cell)
+{
+	Coord3D fromLeft;
+	Coord3D endVector;
+	Coord3D fromRight;
+	Coord3D toLeft;
+	Coord3D toRight;
+
+	endVector.y = m_bridgeInfo.fromRight.y;
+	endVector.z = m_bridgeInfo.fromRight.z;
+	Real dx = m_bridgeInfo.fromRight.x - m_bridgeInfo.fromLeft.x;
+	Real dy = endVector.y - m_bridgeInfo.fromLeft.y;
+	Real dz = endVector.z - m_bridgeInfo.fromLeft.z;
+	{
+		Real len = (Real)sqrt(dz * dz + dy * dy + dx * dx);
+		if (len != 0.0f)
+		{
+			Real scale = 1.0f / len;
+			dx *= scale;
+			dy *= scale;
+		}
+	}
+
+	// BFME tests an additional word at +0x8c before normalizing the far end.
+	const void *extra = *(const void * const *)((const char *)this + 0x8C);
+	dx *= 10.0f;
+	dy *= 10.0f;
+	endVector.x = dx;
+	endVector.y = dy;
+
+	fromLeft.x = m_bridgeInfo.fromLeft.x;
+	fromLeft.y = m_bridgeInfo.fromLeft.y;
+	fromLeft.x += endVector.x;
+	fromLeft.y += endVector.y;
+
+	fromRight.x = m_bridgeInfo.fromRight.x;
+	fromRight.y = m_bridgeInfo.fromRight.y;
+	fromRight.x -= endVector.x;
+	fromRight.y -= endVector.y;
+
+	if (extra)
+	{
+		endVector = m_bridgeInfo.toRight;
+		endVector.x -= m_bridgeInfo.toLeft.x;
+		endVector.y -= m_bridgeInfo.toLeft.y;
+		endVector.z -= m_bridgeInfo.toLeft.z;
+		endVector.normalize();
+		endVector.x *= 10.0f;
+		endVector.y *= 10.0f;
+	}
+
+	toLeft.x = m_bridgeInfo.toLeft.x;
+	toLeft.y = m_bridgeInfo.toLeft.y;
+	toLeft.x += endVector.x;
+	toLeft.y += endVector.y;
+
+	toRight.x = m_bridgeInfo.toRight.x;
+	toRight.y = m_bridgeInfo.toRight.y;
+	toRight.x -= endVector.x;
+	toRight.y -= endVector.y;
+
+/*	if (PointInRegion2D(&fromLeft, cell)) return false;
+	if (PointInRegion2D(&fromRight, cell)) return false;
+	if (PointInRegion2D(&toLeft, cell)) return false;
+	if (PointInRegion2D(&toRight, cell)) return false; */
+	Coord2D line1, line2;
+	line1.x = fromLeft.x;
+	line1.y = fromLeft.y;
+	line2.x = fromRight.x;
+	line2.y = fromRight.y;
+	if (LineInRegion(&line1, &line2, cell)) {
+		return true;
+	}
+	line1.x = toLeft.x;
+	line1.y = toLeft.y;
+	line2.x = toRight.x;
+	line2.y = toRight.y;
+	if (LineInRegion(&line1, &line2, cell)) {
+		return true;
+	}
+	return(false);
+}
+
+//-------------------------------------------------------------------------------------------------
+/** isCellOnSide - see if cell is on the end of the bridge. */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/Common/Bridge_isCellOnSide_Thunk.cpp
+// ?isCellOnSide@Bridge@@QAE_NPBURegion2D@@@Z present-unmatched
+Bool Bridge::isCellOnSide(const Region2D *cell)
+{
+	Coord3D endVector;
+	endVector.x = m_bridgeInfo.fromRight.x - m_bridgeInfo.fromLeft.x;
+	endVector.y = m_bridgeInfo.fromRight.y - m_bridgeInfo.fromLeft.y;
+	endVector.z = m_bridgeInfo.fromRight.z - m_bridgeInfo.fromLeft.z;
+	endVector.normalize();
+	// Offset by 1 pathfind cell.
+	endVector.x *= PATHFIND_CELL_SIZE*0.51f;
+	endVector.y *= PATHFIND_CELL_SIZE*0.51f;
+
+	Coord3D fromLeft = m_bridgeInfo.fromLeft;
+	fromLeft.x -= endVector.x;
+	fromLeft.y -= endVector.y;
+
+	Coord3D fromRight = m_bridgeInfo.fromRight;
+	fromRight.x += endVector.x;
+	fromRight.y += endVector.y;
+
+	Coord3D toLeft = m_bridgeInfo.toLeft;
+	toLeft.x -= endVector.x;
+	toLeft.y -= endVector.y;
+
+	Coord3D toRight = m_bridgeInfo.toRight;
+	toRight.x += endVector.x;
+	toRight.y += endVector.y;
+
+	Coord2D line1, line2;
+	line1.x = fromLeft.x; 
+	line1.y = fromLeft.y; 
+	line2.x = toLeft.x; 
+	line2.y = toLeft.y; 
+	if (LineInRegion(&line1, &line2, cell)) {
+		return true;
+	}
+	line1.x = fromRight.x; 
+	line1.y = fromRight.y; 
+	line2.x = toRight.x; 
+	line2.y = toRight.y; 
+	if (LineInRegion(&line1, &line2, cell)) {
+		return true;
+	}
+	fromLeft.x -= endVector.x;
+	fromLeft.y -= endVector.y;
+
+	fromRight.x += endVector.x;
+	fromRight.y += endVector.y;
+
+	toLeft.x -= endVector.x;
+	toLeft.y -= endVector.y;
+
+	toRight.x += endVector.x;
+	toRight.y += endVector.y;
+
+	line1.x = fromLeft.x; 
+	line1.y = fromLeft.y; 
+	line2.x = toLeft.x; 
+	line2.y = toLeft.y; 
+	if (LineInRegion(&line1, &line2, cell)) {
+		return true;
+	}
+	line1.x = fromRight.x; 
+	line1.y = fromRight.y; 
+	line2.x = toRight.x; 
+	line2.y = toRight.y; 
+	if (LineInRegion(&line1, &line2, cell)) {
+		return true;
+	}
+	return(false);
+}
+
+//-------------------------------------------------------------------------------------------------
+/** isCellEntryPoint - Is a pathfind cell a spot to move onto the bridge. */
+//-------------------------------------------------------------------------------------------------
+// ?isCellEntryPoint@Bridge@@QAE_NPBURegion2D@@@Z present-unmatched
+Bool Bridge::isCellEntryPoint(const Region2D *cell)
+{
+	Coord3D endVector;
+	endVector.x = m_bridgeInfo.fromRight.x - m_bridgeInfo.fromLeft.x;
+	endVector.y = m_bridgeInfo.fromRight.y - m_bridgeInfo.fromLeft.y;
+	endVector.z = m_bridgeInfo.fromRight.z - m_bridgeInfo.fromLeft.z;
+	endVector.normalize();
+	// Offset by 1 pathfind cell.
+	endVector.x *= PATHFIND_CELL_SIZE;
+	endVector.y *= PATHFIND_CELL_SIZE;
+	Coord3D bridgeVector;
+	bridgeVector.x = m_bridgeInfo.to.x - m_bridgeInfo.from.x;
+	bridgeVector.y = m_bridgeInfo.to.y - m_bridgeInfo.from.y;
+	bridgeVector.z = m_bridgeInfo.to.z - m_bridgeInfo.from.z;
+	bridgeVector.normalize();
+	// Offset by 1/2 pathfind cell.
+	bridgeVector.x *= PATHFIND_CELL_SIZE/2;
+	bridgeVector.y *= PATHFIND_CELL_SIZE/2;
+
+	Coord3D fromLeft = m_bridgeInfo.fromLeft;
+	fromLeft.x -= bridgeVector.x;
+	fromLeft.y -= bridgeVector.y;
+	fromLeft.x += endVector.x;
+	fromLeft.y += endVector.y;
+
+	Coord3D fromRight = m_bridgeInfo.fromRight;
+	fromRight.x -= bridgeVector.x;
+	fromRight.y -= bridgeVector.y;
+	fromRight.x -= endVector.x;
+	fromRight.y -= endVector.y;
+
+	Coord3D toLeft = m_bridgeInfo.toLeft;
+	toLeft.x += bridgeVector.x;
+	toLeft.y += bridgeVector.y;
+ 	toLeft.x += endVector.x;
+	toLeft.y += endVector.y;
+
+	Coord3D toRight = m_bridgeInfo.toRight;
+	toRight.x += bridgeVector.x;
+	toRight.y += bridgeVector.y;
+ 	toRight.x -= endVector.x;
+	toRight.y -= endVector.y;
+
+/*	if (PointInRegion2D(&fromLeft, cell)) return false;
+	if (PointInRegion2D(&fromRight, cell)) return false;
+	if (PointInRegion2D(&toLeft, cell)) return false;
+	if (PointInRegion2D(&toRight, cell)) return false;
+	*/
+	Coord2D line1, line2;
+	line1.x = fromLeft.x; 
+	line1.y = fromLeft.y; 
+	line2.x = fromRight.x; 
+	line2.y = fromRight.y; 
+	if (LineInRegion(&line1, &line2, cell)) {
+		return true;
+	}
+	line1.x = toLeft.x; 
+	line1.y = toLeft.y; 
+	line2.x = toRight.x; 
+	line2.y = toRight.y; 
+	if (LineInRegion(&line1, &line2, cell)) {
+		return true;
+	}
+	return(false);
+
+}
+
+//-------------------------------------------------------------------------------------------------
+/** pickBridge - see if point is on bridge. */
+//-------------------------------------------------------------------------------------------------
+// ?pickBridge@Bridge@@QAE_NABVVector3@@0PAV2@@Z
+Bool Bridge::pickBridge(const Vector3 &from, const Vector3 &to, Vector3 *pos)
+{
+
+	Vector3 left1(m_bridgeInfo.fromLeft.x, m_bridgeInfo.fromLeft.y, m_bridgeInfo.fromLeft.z);
+	Vector3 right1(m_bridgeInfo.fromRight.x, m_bridgeInfo.fromRight.y, m_bridgeInfo.fromRight.z);
+	Vector3 left2(m_bridgeInfo.toLeft.x, m_bridgeInfo.toLeft.y, m_bridgeInfo.toLeft.z);
+
+	PlaneClass plane(left1, right1, left2);
+	Real t;
+	plane.Compute_Intersection(from, to, &t);
+	Vector3 intersectPos;
+	intersectPos = from + (to-from) * t;
+
+	Coord3D loc;
+	loc.x = intersectPos.X;
+	loc.y = intersectPos.Y;
+	loc.z = intersectPos.Z;
+
+	if (isPointOnBridge(&loc)) {
+		*pos = intersectPos;
+		//DEBUG_LOG(("Picked bridge %.2f, %.2f, %.2f\n", intersectPos.X, intersectPos.Y, intersectPos.Z));
+		return TRUE;
+	}
+	return FALSE;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** updateDamageState - Update the damage state. */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/Bridge.cpp
+// ?updateDamageState@Bridge@@QAEXXZ present-unmatched
+void Bridge::updateDamageState( void )
+{
+	m_bridgeInfo.damageStateChanged = false;
+	if (m_bridgeInfo.bridgeObjectID==0) return;
+	Object *bridge = TheGameLogic->findObjectByID(m_bridgeInfo.bridgeObjectID);
+	if (bridge) {
+		// get object damage state
+		{
+			enum BodyDamageType damageState = bridge->getBodyModule()->getDamageState(); 
+			enum BodyDamageType curState = m_bridgeInfo.curDamageState;
+			if (damageState != curState) {
+				m_bridgeInfo.curDamageState = damageState;
+				if (damageState == BODY_RUBBLE) {
+					TheAI->pathfinder()->changeBridgeState(m_layer, false);
+					m_bridgeInfo.damageStateChanged = true;
+					Object *obj;
+					for (obj = TheGameLogic->getFirstObject(); obj; obj=obj->getNextObject()) {
+						if (obj->getLayer() == m_layer) {
+							// don't consider the bridge health, 'cuz it's already dead. (srj)
+							const Bool considerBridgeHealth = false;
+							if (TheTerrainLogic->objectInteractsWithBridgeLayer(obj, obj->getLayer(), considerBridgeHealth)) 
+							{
+								// srj sez: if we use this threshold, then stuff on the bridge apron doesn't die but
+								// might sink thru the eyecandy of bridge drbris, looking funny. so now we just indiscriminately
+								// kill everything that was on the bridge, regardless of height they might fall.
+								//Real deltaHeight = obj->getPosition()->z - TheTerrainLogic->getGroundHeight(obj->getPosition()->x, obj->getPosition()->y);
+								//if (deltaHeight>PATHFIND_CELL_SIZE_F * 0.5f) 
+								{
+									// The object fell off the bridge.
+									// Destroy it.
+									DamageInfo extraDamageInfo;
+									extraDamageInfo.in.m_damageType = DAMAGE_FALLING;
+									extraDamageInfo.in.m_deathType = DEATH_SPLATTED;
+									extraDamageInfo.in.m_sourceID = obj->getID();
+									extraDamageInfo.in.m_amount = HUGE_DAMAGE_AMOUNT;
+									obj->attemptDamage(&extraDamageInfo);
+								}
+							}
+						}
+					}
+				}
+				if (curState==BODY_RUBBLE) {
+
+					//
+					// we do not set the bridge as usable if scaffolding is up ... the scaffolding
+					// code will take care of that
+					//
+					BridgeBehaviorInterface *bbi = BridgeBehavior::getBridgeBehaviorInterfaceFromObject( bridge );
+					if( bbi == NULL || bbi->isScaffoldPresent() == FALSE )
+						TheAI->pathfinder()->changeBridgeState(m_layer, true);
+					m_bridgeInfo.damageStateChanged = true;
+				}
+			}
+		}
+	}	else {
+		m_bridgeInfo.bridgeObjectID = INVALID_ID;
+		DEBUG_CRASH(("Bridge object disappeared - unexpected. jba."));
+	}
+
+}
+
+
+//-------------------------------------------------------------------------------------------------
+/** getHeight - Get the height for an object on bridge.. */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/BridgeGetBridgeHeightThunk.cpp
+// ?getBridgeHeight@Bridge@@QAEMPBUCoord3D@@PAU2@@Z present-unmatched
+// DECLINED under the anti-lift rule, not merely unattempted. The donor is a
+// 5-byte ILT whose whole content is a cast-and-call into an unnamed shim, and
+// its jump lands at 0x001a7520 -- still an unconverted dump (game/gen_asm/d_001a38b0.asm).
+// This body is therefore the only readable statement of what the function does,
+// and folding would replace it with a three-line stub forwarding into a dump.
+Real Bridge::getBridgeHeight(const Coord3D *pLoc, Coord3D* normal)
+{
+	Vector3 left1(m_bridgeInfo.fromLeft.x, m_bridgeInfo.fromLeft.y, m_bridgeInfo.fromLeft.z);
+	Vector3 right1(m_bridgeInfo.fromRight.x, m_bridgeInfo.fromRight.y, m_bridgeInfo.fromRight.z);
+	Vector3 left2(m_bridgeInfo.toLeft.x, m_bridgeInfo.toLeft.y, m_bridgeInfo.toLeft.z);
+	PlaneClass plane(left1, right1, left2);
+	const Real factor = 1000.0f;
+	Vector3 bottom(pLoc->x, pLoc->y, 0);
+	Vector3 top(pLoc->x, pLoc->y, factor);
+	Real t;
+	plane.Compute_Intersection(bottom, top, &t);
+	if (normal) {
+		normal->x = plane.N.X;
+		normal->y = plane.N.Y;
+		normal->z = plane.N.Z;
+	}
+
+	return t*factor;
+}
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicCtorThunk.cpp
+// ??0TerrainLogic@@QAE@XZ present-unmatched
+// Blocked on class shape, which no view or alias pin reaches. Retail's is 46
+// bytes and the class it constructs is sizeof 0x1904 with TWO vptrs, at +0x00
+// and +0x04, both rewritten after the base constructor returns; the base
+// subobject reaches at least +0x2c and +0x0c is a BASE member this constructor
+// assigns, not a member of TerrainLogic. A constructor's codegen is a function
+// of the real hierarchy, so reproducing it means changing the class, and
+// TerrainLogic.h is not a header this lane edits for one body.
+TerrainLogic::TerrainLogic()
+{
+	Int i;
+	
+	//Added By Sadullah Nader
+	//Initialization(s) inserted
+	m_activeBoundary = 0;
+	m_waterGridEnabled = FALSE;
+	//
+	for( i = 0; i < MAX_DYNAMIC_WATER; ++i )
+	{
+
+		m_waterToUpdate[ i ].waterTable = NULL;
+		m_waterToUpdate[ i ].changePerFrame = 0.0f;
+		m_waterToUpdate[ i ].targetHeight = 0.0f;
+		m_waterToUpdate[ i ].damageAmount = 0.0f;
+		m_waterToUpdate[ i ].currentHeight = 0.0f;
+
+	}  // end for i
+	m_numWaterToUpdate = 0;
+
+	m_waypointListHead = NULL;
+	m_bridgeListHead = NULL;
+	m_mapData = NULL;
+	m_bridgeDamageStatesChanged = FALSE;
+	m_mapDX = 0;
+	m_mapDY = 0;
+
+
+}  // end TerrainLogic
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/Common/TerrainLogicDestructorThunk.cpp
+// ??1TerrainLogic@@UAE@XZ present-unmatched
+TerrainLogic::~TerrainLogic()
+{
+
+	reset(); // just in case
+
+}  // end ~TerrainLogic
+
+//-------------------------------------------------------------------------------------------------
+/** Init */
+//-------------------------------------------------------------------------------------------------
+// ?init@TerrainLogic@@UAEXXZ present-unmatched
+void TerrainLogic::init( void )
+{
+
+}  // end init
+
+//-------------------------------------------------------------------------------------------------
+/** Reset */
+//-------------------------------------------------------------------------------------------------
+// ?reset@TerrainLogic@@UAEXXZ present-unmatched
+void TerrainLogic::reset( void )
+{
+
+	deleteWaypoints();
+	deleteBridges();
+	PolygonTrigger::deleteTriggers();
+	m_numWaterToUpdate = 0;
+
+}  // end reset
+
+//-------------------------------------------------------------------------------------------------
+/** Update */
+//-------------------------------------------------------------------------------------------------
+// ?update@TerrainLogic@@UAEXXZ present-unmatched
+void TerrainLogic::update( void )
+{
+
+	// bridge damage states have not changed this frame now
+	m_bridgeDamageStatesChanged = false;
+
+	// update any water tables that we need to
+	if( m_numWaterToUpdate )
+	{
+		const WaterHandle *water;
+		Real changePerFrame,
+				 damageAmount,
+				 targetHeight,
+				 currentHeight;
+		Bool finalTransition,
+				 doDamageThisFrame = (TheGameLogic->getFrame() % LOGICFRAMES_PER_SECOND) == 0;
+
+		for( Int i = m_numWaterToUpdate - 1; i >= 0; --i )
+		{
+			
+			// get the water info
+			water = m_waterToUpdate[ i ].waterTable;
+			changePerFrame = m_waterToUpdate[ i ].changePerFrame;
+			targetHeight = m_waterToUpdate[ i ].targetHeight;
+			damageAmount = m_waterToUpdate[ i ].damageAmount;
+			currentHeight = m_waterToUpdate[ i ].currentHeight;
+
+			//
+			// check to see if this change per frame will get us to our target height, if so
+			// we adjust the changePerFrame to make us be exactly at our target height, and after
+			// the change we will remove our entry from this update phase
+			//
+			finalTransition = FALSE;
+			if( changePerFrame > 0 )
+			{
+			
+				if( currentHeight + changePerFrame >= targetHeight )
+					finalTransition = TRUE;
+
+			}  // end if
+			else
+			{
+			
+				if( currentHeight + changePerFrame <= targetHeight )
+					finalTransition = TRUE;
+				
+			}  // end else
+
+			if( finalTransition == TRUE )
+			{
+
+				//
+				// make the final water height change, note we do damage on the final transition
+				// in all situations by passing a valid damage amount 
+				//
+				setWaterHeight( water, targetHeight, damageAmount, TRUE );
+
+				//
+				// remove our water entry from the per frame water list, we're processing this array
+				// backwards which makes cleanup easy, we just move everything after our index
+				// position up one
+				//
+				for( Int j = i; j < m_numWaterToUpdate; j++ )
+					m_waterToUpdate[ i ] = m_waterToUpdate[ j ];
+				m_numWaterToUpdate -= 1;
+
+			}  // end if
+			else
+			{
+
+				//
+				// we're not doing damage every frame (0 damage) from the water 
+				// because it's an expensive process
+				//
+				if( doDamageThisFrame == FALSE )
+					damageAmount = 0.0f;
+
+				//
+				// because some water implementation store the height as integers, some changes
+				// are too small to keep track of in the actual water data structures so we have to
+				// keep track of it outselves
+				//
+				currentHeight += changePerFrame;
+				m_waterToUpdate[ i ].currentHeight = currentHeight;
+
+				// update actual water
+				setWaterHeight( water, currentHeight, damageAmount, FALSE );
+
+			}  // end else
+
+		}  // end for i
+
+	}  // end if
+
+}  // end update
+
+//-------------------------------------------------------------------------------------------------
+/** newMap */
+//-------------------------------------------------------------------------------------------------
+// ?newMap@TerrainLogic@@UAEX_N@Z present-unmatched
+void TerrainLogic::newMap( Bool saveGame )
+{
+
+	// Set waypoint's z value, now that the height map is loaded.
+	for( Waypoint *way = m_waypointListHead; way; way = way->getNext() ) 
+	{
+		const Coord3D* loc = way->getLocation();
+		way->setLocationZ(getGroundHeight(loc->x, loc->y));
+	}
+	//
+	// until we have a real way to specify different water planes in the map, we will check
+	// for a special waypoint name that we will put in maps that we want to have a 
+	// water grid
+	/// @todo Mark W, remove this when you have water plane placements in the map done (Colin)
+	//
+	Waypoint *waypoint = getWaypointByName( "WaveGuide1" );
+	Bool enable = FALSE;
+	if( waypoint )
+		enable = TRUE;
+	enableWaterGrid( enable );
+
+}  // end newMap
+
+// ------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+// ?enableWaterGrid@TerrainLogic@@QAEX_N@Z present-unmatched
+void TerrainLogic::enableWaterGrid( Bool enable )
+{
+
+	// set our internal variable we can query
+	m_waterGridEnabled = enable;
+
+	//
+	// set the vertex animated water properties, that is, the clamps, the water position,
+	// the grid resolution etc ...
+	//
+	if( enable == TRUE )
+	{
+
+		/** @todo we should have this stuff stored with the map and have a real interface for
+		design to edit such things so that people can put gridded water in any map without all
+		this hard coded nasty stuff, but this is what "they" want for now */
+
+		Int waterSettingIndex = -1;
+		for( Int i = 0; i < GlobalData::MAX_WATER_GRID_SETTINGS; i++ )
+		{
+
+			if( TheGlobalData->m_mapName.compareNoCase( TheGlobalData->m_vertexWaterAvailableMaps[ i ].str() ) == 0 )
+			{
+
+				waterSettingIndex = i;
+				break;  // exit for i
+
+			}  // end if
+
+			//
+			// no exact map name (including path) was found, try to look for a match in just the
+			// mapname.map without any path information.  This is necessary for save/load due to
+			// the fact that the map Data\CHI01\CHI01.map will turn into Save\CHI01.map when
+			// loading the map from a save game file
+			//
+			AsciiString strippedMapNameOnly;
+			AsciiString strippedCompareMapNameOnly;
+			char *c;
+
+			// create stripped map name
+			c = strrchr( TheGlobalData->m_mapName.str(), '\\' );
+			if( c )
+				strippedMapNameOnly.set( c );
+			else
+				strippedMapNameOnly = TheGlobalData->m_mapName;
+
+			// create stripped compare name
+			c = strrchr( TheGlobalData->m_vertexWaterAvailableMaps[ i ].str(), '\\' );
+			if( c )
+				strippedCompareMapNameOnly.set( c );
+			else
+				strippedCompareMapNameOnly = TheGlobalData->m_vertexWaterAvailableMaps[ i ];
+
+			// now try this compare
+			if( strippedMapNameOnly.compareNoCase( strippedCompareMapNameOnly.str() ) == 0 )
+			{
+				
+				waterSettingIndex = i;
+				break;  // exit for i
+
+			}  // end if
+
+		}  // end for i
+
+		// check for no match found
+		if( waterSettingIndex == -1 )
+		{
+
+			DEBUG_CRASH(( "!!!!!! Deformable water won't work because there was no group of vertex water data defined in GameData.INI for this map name '%s' !!!!!! (C. Day)\n",
+										TheGlobalData->m_mapName.str() ));
+			return;
+
+		}  // end if
+
+		TheTerrainVisual->setWaterGridHeightClamps( NULL, 
+																								TheGlobalData->m_vertexWaterHeightClampLow[ waterSettingIndex ], 
+																								TheGlobalData->m_vertexWaterHeightClampHi[ waterSettingIndex ] );
+		TheTerrainVisual->setWaterTransform( NULL, 
+																				 TheGlobalData->m_vertexWaterAngle[ waterSettingIndex ], 
+																				 TheGlobalData->m_vertexWaterXPosition[ waterSettingIndex ], 
+																				 TheGlobalData->m_vertexWaterYPosition[ waterSettingIndex ], 
+																				 TheGlobalData->m_vertexWaterZPosition[ waterSettingIndex ] );
+		TheTerrainVisual->setWaterGridResolution( NULL, 
+																							TheGlobalData->m_vertexWaterXGridCells[ waterSettingIndex ], 
+																							TheGlobalData->m_vertexWaterYGridCells[ waterSettingIndex ], 
+																							TheGlobalData->m_vertexWaterGridSize[ waterSettingIndex ] );
+		TheTerrainVisual->setWaterAttenuationFactors( NULL, 
+																									TheGlobalData->m_vertexWaterAttenuationA[ waterSettingIndex ], 
+																									TheGlobalData->m_vertexWaterAttenuationB[ waterSettingIndex ], 
+																									TheGlobalData->m_vertexWaterAttenuationC[ waterSettingIndex ], 
+																									TheGlobalData->m_vertexWaterAttenuationRange[ waterSettingIndex ] );	
+
+	}  // end if
+
+	// notify the terrain visual of the change
+	TheTerrainVisual->enableWaterGrid( enable );
+
+}  // end enableWaterGrid
+
+//-------------------------------------------------------------------------------------------------
+/** device independent terrain logic load.  If query is true, we are just loading it to get
+look at some data rather than running a game, so don't pass this load to the client. */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/Common/TerrainLogic_loadMap_Thunk.cpp
+// ?loadMap@TerrainLogic@@UAE_NVAsciiString@@_N@Z present-unmatched
+Bool TerrainLogic::loadMap( AsciiString filename, Bool query )
+{
+
+	// sanity
+	if( filename.isEmpty() )
+		return FALSE;
+
+	// copy filename
+	m_filenameString = filename;
+
+	// Add waypoint objects.
+	MapObject *pObj;
+	for (pObj = MapObject::getFirstMapObject(); pObj; pObj = pObj->getNext()) {
+		if (pObj->isWaypoint()) {
+			addWaypoint(pObj);
+		}
+	}
+
+	CachedFileInputStream theInputStream;
+	if (theInputStream.open(AsciiString(m_filenameString.str()))) 
+	try {
+		ChunkInputStream *pStrm = &theInputStream;
+		pStrm->absoluteSeek(0);
+		DataChunkInput file( pStrm );
+		if (file.isValidFileType()) {	// Backwards compatible files aren't valid data chunk files.
+			// Read the waypoints.
+			file.registerParser( AsciiString("WaypointsList"), AsciiString::TheEmptyString, parseWaypointDataChunk );
+			if (!file.parse(this)) {
+				DEBUG_CRASH(("Unable to read waypoint info."));
+				return false;
+			}
+		}
+		theInputStream.close();
+	} catch (...) {
+		// Eat the error - legacy files are not valid chunk format (and don't have waypoint info.)
+		DEBUG_LOG(("Unable to read waypoint info."));
+	}
+#if 0 //def DEBUG_LOGGING
+	// Dump out the waypoint links.
+	Waypoint *pWay;
+	// Traverse all waypoints.
+	int count = 0;
+	for (pWay = getFirstWaypoint(); pWay; pWay = pWay->getNext()) {
+		count++;
+		Coord3D loc;
+		pWay->getLocation(&loc);
+		DEBUG_LOG(("Waypoint %d - '%s' id=%d ", count, pWay->getName().str(), pWay->getID()));
+		DEBUG_LOG(("{%.2f, %.2f, %.2f} ", loc.x, loc.y, loc.z));
+		Int i;
+		if (pWay->getNumLinks()) {
+			DEBUG_LOG(("Links to: "));
+			for (i=0; i<pWay->getNumLinks(); i++) {
+				Waypoint *pLink = pWay->getLink(i);
+				DEBUG_LOG(("'%s' id=%d ", pLink->getName().str(), pLink->getID()));
+			}
+		} else {
+			DEBUG_LOG(("No links."));
+		}
+		DEBUG_LOG(("\n"));
+	}
+	DEBUG_LOG(("Total of %d waypoints.\n", count));
+#endif
+
+	if (!query) {
+		// tell the game interface a new terrain file has been loaded up
+		TheTerrainVisual->load( getSourceFilename() );
+	}
+
+	return TRUE;  // success
+
+}  // end load
+
+//-------------------------------------------------------------------------------------------------
+/** Reads in the waypoint chunk */
+//-------------------------------------------------------------------------------------------------
+Bool TerrainLogic::parseWaypointDataChunk(DataChunkInput &file, DataChunkInfo *info, void *userData)
+{
+	TerrainLogic *pThis = (TerrainLogic *)userData;
+	return pThis->parseWaypointData(file, info, userData);
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Reads in the waypoint chunk */
+//-------------------------------------------------------------------------------------------------
+Bool TerrainLogic::parseWaypointData(DataChunkInput &file, DataChunkInfo *info, void *userData)
+{
+	Int numWaypointLinks = file.readInt();
+	Int i;
+	for (i=0; i<numWaypointLinks; i++) {
+		Int waypoint1 = file.readInt();
+		Int waypoint2 = file.readInt();
+		addWaypointLink(waypoint1, waypoint2);
+	}
+	DEBUG_ASSERTCRASH(file.atEndOfChunk(), ("Unexpected data left over."));
+	return true;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Adds one waypoint. */
+//-------------------------------------------------------------------------------------------------
+// ?addWaypoint@TerrainLogic@@IAEXPAVMapObject@@@Z present-unmatched
+void TerrainLogic::addWaypoint(MapObject *pMapObj)
+{
+	Coord3D loc = *pMapObj->getLocation();
+	// Snap the waypoint down to the terrain.
+	loc.z = getGroundHeight(loc.x, loc.y);
+	Bool exists;
+	AsciiString label1, label2, label3;
+	label1 = pMapObj->getProperties()->getAsciiString(TheKey_waypointPathLabel1, &exists);
+	label2 = pMapObj->getProperties()->getAsciiString(TheKey_waypointPathLabel2, &exists);
+	label3 = pMapObj->getProperties()->getAsciiString(TheKey_waypointPathLabel3, &exists);
+	Bool biDirectional;
+	biDirectional = pMapObj->getProperties()->getBool(TheKey_waypointPathBiDirectional, &exists);
+	DEBUG_ASSERTCRASH(pMapObj->isWaypoint(), ("not a waypoint"));
+	Waypoint *pWay = newInstance(Waypoint)(pMapObj->getWaypointID(), pMapObj->getWaypointName(), 
+																&loc, label1, label2, label3, biDirectional);
+	pWay->setNext(m_waypointListHead);
+	m_waypointListHead = pWay;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Links 2 waypoints. */
+//-------------------------------------------------------------------------------------------------
+void TerrainLogic::addWaypointLink(Int id1, Int id2)
+{
+	// BFME's Waypoint layout differs from the ZH header used by this TU.  Keep
+	// the conversion local: the link array starts at +0x20, its count is at
+	// +0x4c, the list link is at +0x1c, and addLink records its source at +0x40.
+	struct BFMEWaypoint
+	{
+		char pad0[4];
+		WaypointID m_id;
+		char pad8[0x14];
+		BFMEWaypoint *m_pNext;
+		BFMEWaypoint *m_links[8];
+		BFMEWaypoint *m_linkSource;
+		char pad44[8];
+		Int m_numLinks;
+		char pad50[0xc];
+		Bool m_biDirectional;
+
+		BFMEWaypoint *getNext(void) const { return m_pNext; }
+		WaypointID getID(void) const { return m_id; }
+		Int getNumLinks(void) const { return m_numLinks; }
+		BFMEWaypoint *getLink(Int ndx) const
+		{
+			if (ndx >= 0 && ndx < 8)
+				return m_links[ndx];
+			return NULL;
+		}
+		void addLink(BFMEWaypoint *pLink)
+		{
+			if (m_numLinks < 8)
+			{
+				m_links[m_numLinks] = pLink;
+				++m_numLinks;
+			}
+			pLink->m_linkSource = this;
+		}
+		Bool getBiDirectional(void) const { return m_biDirectional; }
+	};
+	class BFME_TerrainLogic
+	{
+	public:
+		virtual void slot0(void) = 0;
+		virtual void slot1(void) = 0;
+		virtual void slot2(void) = 0;
+		virtual void slot3(void) = 0;
+		virtual void slot4(void) = 0;
+		virtual void slot5(void) = 0;
+		virtual void slot6(void) = 0;
+		virtual void slot7(void) = 0;
+		virtual void slot8(void) = 0;
+		virtual void slot9(void) = 0;
+		virtual void slot10(void) = 0;
+		virtual void slot11(void) = 0;
+		virtual void slot12(void) = 0;
+		virtual void slot13(void) = 0;
+		virtual void slot14(void) = 0;
+		virtual void slot15(void) = 0;
+		virtual void slot16(void) = 0;
+		virtual void slot17(void) = 0;
+		virtual void slot18(void) = 0;
+		virtual void slot19(void) = 0;
+		virtual void slot20(void) = 0;
+		virtual void slot21(void) = 0;
+		virtual void slot22(void) = 0;
+		virtual void slot23(void) = 0;
+		virtual void slot24(void) = 0;
+		virtual void slot25(void) = 0;
+		virtual void slot26(void) = 0;
+		virtual void slot27(void) = 0;
+		virtual void slot28(void) = 0;
+		virtual void slot29(void) = 0;
+		virtual BFMEWaypoint *getFirstWaypoint(void) = 0;
+	};
+
+	BFMEWaypoint *pWay1 = NULL;
+	BFMEWaypoint *pWay2 = NULL;
+	BFMEWaypoint *pWay;
+	// Traverse all waypoints.
+	/// @todo ID's should be UnsignedInts (MSB)
+	for (pWay = ((BFME_TerrainLogic *)this)->getFirstWaypoint(); pWay; pWay = pWay->getNext()) {
+		if (pWay->getID() == (UnsignedInt)id1) {
+			pWay1 = pWay;
+		}
+		if (pWay->getID() == (UnsignedInt)id2) {
+			pWay2 = pWay;
+		}
+	}
+	if (pWay1 && pWay2 && (pWay1 != pWay2)) {
+		Int i;
+		for (i=0; i<pWay1->getNumLinks(); i++) {
+			if (pWay1->getLink(i) == pWay2) {
+				return; // already linked;
+			}
+		}
+		pWay1->addLink(pWay2);
+
+		if (pWay1->getBiDirectional()) {
+			// Link the other way.
+			for (i=0; i<pWay2->getNumLinks(); i++) {
+				if (pWay2->getLink(i) == pWay1) {
+					return; // already linked;
+				}
+			}
+			pWay2->addLink(pWay1);
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Deletes the waypoints list. */
+//-------------------------------------------------------------------------------------------------
+// ?deleteWaypoints@TerrainLogic@@IAEXXZ present-unmatched
+void TerrainLogic::deleteWaypoints(void)
+{
+	Waypoint *pNext = NULL;
+	Waypoint *pWay;
+	// Traverse all waypoints.
+	for (pWay = getFirstWaypoint(); pWay; pWay = pNext) {
+		pNext = pWay->getNext();
+		pWay->setNext(NULL);
+		pWay->deleteInstance();
+	}
+	m_waypointListHead = NULL;
+}
+
+//-------------------------------------------------------------------------------------------------
+// ?isClearLineOfSight@TerrainLogic@@UBE_NABUCoord3D@@0@Z present-unmatched
+Bool TerrainLogic::isClearLineOfSight(const Coord3D& pos, const Coord3D& posOther) const
+{
+	DEBUG_CRASH(("implement ME"));
+	return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** default get height for terrain logic */
+//-------------------------------------------------------------------------------------------------
+Real TerrainLogic::getGroundHeight( Real x, Real y, Coord3D* normal ) const
+{
+	if( normal )
+		normal->zero();
+
+	return 0;
+
+}  // end getHight
+
+//-------------------------------------------------------------------------------------------------
+/** default get height for terrain logic */
+//-------------------------------------------------------------------------------------------------
+Real TerrainLogic::getLayerHeight( Real x, Real y, PathfindLayerEnum layer, Coord3D* normal, Bool clip ) const
+{
+	if( normal )
+		normal->zero();
+
+	return 0;
+
+}  // end getLayerHeight
+
+//-------------------------------------------------------------------------------------------------
+/** default isCliffCell for terrain logic */
+//-------------------------------------------------------------------------------------------------
+// ?isCliffCell@TerrainLogic@@UBE_NMM@Z present-unmatched
+Bool TerrainLogic::isCliffCell( Real x, Real y) const
+{
+
+	return false;
+
+}  // end isCliffCell
+
+//-------------------------------------------------------------------------------------------------
+void makeAlignToNormalMatrix( Real angle, const Coord3D& pos, const Coord3D& normal, Matrix3D& mtx)
+{
+	Coord3D x, y, z;
+
+	z = normal;
+
+	/*
+		It is extremely important that the resulting matrix is such that
+		the xvector points in the angle we specified; specifically,
+		that atan2(xvec.y, xvec.x) == angle. So we must construct
+		the matrix carefully to ensure this!
+	*/
+	x.x = Cos( angle ); 
+	x.y = Sin( angle ); 
+	x.z = 0.0f; 
+//x.normalize();	-- redundant; is normalized by definition
+
+	// dot of two unit vectors is cos of angle between them; 
+	// we want there to be a 90-deg angle between the x and z
+	// vectors, so calc x.z to satisfy this (ie, cos==0)
+	/*
+		xx*zx + xy*zy + xz*zz = 0
+		xz = (-xx*zz - xy*zy)/zz
+	*/
+	if (z.z != 0.0f)
+	{
+		x.z = -(x.x*z.x + x.y*z.y) / z.z;
+		x.normalize();
+	}
+
+	DEBUG_ASSERTCRASH(fabs(x.x*z.x + x.y*z.y + x.z*z.z)<0.0001,("dot is not zero (%f)\n",fabs(x.x*z.x + x.y*z.y + x.z*z.z)));
+
+	// now computing the y vector is trivial.
+	y.crossProduct( &z, &x, &y );
+	y.normalize();
+
+	mtx.Set(  x.x, y.x, z.x, pos.x,
+							x.y, y.y, z.y, pos.y,
+							x.z, y.z, z.z, pos.z );
+}
+
+//-------------------------------------------------------------------------------------------------
+/** given angle and position, return the matrix aligning this
+	* position with the ground */
+//-------------------------------------------------------------------------------------------------
+PathfindLayerEnum TerrainLogic::alignOnTerrain( Real angle, const Coord3D& pos, Bool stickToGround, Matrix3D& mtx)
+{
+	Coord3D terrainNormal;
+	PathfindLayerEnum layer;
+
+	layer = getLayerForDestination(NULL, &pos);
+
+	// get the normal of the terrain at our position
+	Real terrainAtPos = getLayerHeight(pos.x, pos.y, layer, &terrainNormal );
+	if (layer > LAYER_GROUND) {
+		/// @todo - fix brutal hack for bridges that are too high. jba
+		terrainAtPos += 2.5f;
+	}
+	makeAlignToNormalMatrix(angle, pos, terrainNormal, mtx);
+	if (stickToGround)
+		mtx.Set_Z_Translation(terrainAtPos);
+
+	return layer;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Adds a bridge's info get height function for logical terrain */
+//-------------------------------------------------------------------------------------------------
+// BFME's Bridge is 0x90 bytes where the vendored class is 0x8c, and this one is
+// built with the GLOBAL operator new rather than the memory pool -- which is
+// what makes the allocation 0x90 exactly, with no pool cookie. The list head is
+// at TerrainLogic+0x34, not the vendored +0x2c. Bridge's own offsets are already
+// right: setNext writes +0x04 and setLayer writes +0x88, both inlined.
+struct BfmeBridgeNode
+{
+	BfmeBridgeNode( Object *bridgeObj );				///< retail ILT 0x00047c0d
+
+	void setNext( BfmeBridgeNode *next ) { m_next = next; }
+	void setLayer( PathfindLayerEnum layer ) { m_layer = layer; }
+
+	void *m_unreconstructed_00;
+	BfmeBridgeNode *m_next;						///< retail this+0x04
+	UnsignedByte m_unreconstructed_08[0x88 - 8];
+	PathfindLayerEnum m_layer;					///< retail this+0x88
+	UnsignedByte m_unreconstructed_8C[0x90 - 0x8C];			///< out to sizeof 0x90
+};
+
+struct BfmeTerrainBridgeList
+{
+	UnsignedByte m_unreconstructed_00[0x34];
+	BfmeBridgeNode *m_bridgeListHead;				///< retail this+0x34
+};
+
+// ?addLandmarkBridgeToLogic@TerrainLogic@@UAEXPAVObject@@@Z
+void TerrainLogic::addLandmarkBridgeToLogic(Object *bridgeObj)
+{
+	BfmeTerrainBridgeList *self = (BfmeTerrainBridgeList *)this;
+
+	BfmeBridgeNode *pBridge = ::new BfmeBridgeNode(bridgeObj);
+	pBridge->setNext(self->m_bridgeListHead);
+	self->m_bridgeListHead = pBridge;
+	PathfindLayerEnum layer = TheAI->pathfinder()->addBridge((Bridge *)pBridge);
+	((Bridge *)pBridge)->setLayer(layer);
+
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Given a name, return the associated waypoint. */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicNameLookups.cpp
+// ?getWaypointByName@TerrainLogic@@UAEPAVWaypoint@@VAsciiString@@@Z present-unmatched
+Waypoint *TerrainLogic::getWaypointByName( AsciiString name )
+{
+	for( Waypoint *way = m_waypointListHead; way; way = way->getNext() )
+		if (way->getName() == name)
+			return way;
+
+	return NULL;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Given a unique integer ID, return the associated waypoint. */
+//-------------------------------------------------------------------------------------------------
+// ?getWaypointByID@TerrainLogic@@UAEPAVWaypoint@@I@Z present-unmatched
+Waypoint *TerrainLogic::getWaypointByID( UnsignedInt id )
+{
+	for( Waypoint *way = m_waypointListHead; way; way = way->getNext() )
+		if (way->getID() == id)
+			return way;
+
+	return NULL;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Return the closest waypoint on the labeled path. */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicNameLookups.cpp
+// ?getClosestWaypointOnPath@TerrainLogic@@UAEPAVWaypoint@@PBUCoord3D@@VAsciiString@@@Z present-unmatched
+Waypoint *TerrainLogic::getClosestWaypointOnPath( const Coord3D *pos, AsciiString label )
+{
+	Real distSqr = 0;
+	Waypoint *pClosestWay = NULL;
+	if (label.isEmpty()) {
+		DEBUG_LOG(("***Warning - asking for empty path label.\n"));
+		return NULL;
+	}
+
+	for( Waypoint *way = m_waypointListHead; way; way = way->getNext() ) {
+		Bool match = false;
+		if (label.compareNoCase(way->getPathLabel1())==0) match = true;
+		if (label.compareNoCase(way->getPathLabel2())==0) match = true;
+		if (label.compareNoCase(way->getPathLabel3())==0) match = true;
+		if (match) {
+			Coord3D curPos = *way->getLocation();
+			Real newDistSqr = (curPos.x-pos->x)*(curPos.x-pos->x) + (curPos.y-pos->y)*(curPos.y-pos->y);
+			if (pClosestWay==NULL) {
+				pClosestWay = way;
+				distSqr = newDistSqr;
+			} else if (newDistSqr < distSqr) {
+				pClosestWay = way;
+				distSqr = newDistSqr;
+			}
+		}
+	}
+		
+	return pClosestWay;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Return true if the waypoint path containing pWay is labeled with the label. */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicNameLookups.cpp
+// ?isPurposeOfPath@TerrainLogic@@UAE_NPAVWaypoint@@VAsciiString@@@Z present-unmatched
+Bool TerrainLogic::isPurposeOfPath( Waypoint *pWay, AsciiString label )
+{
+	if (label.isEmpty() || pWay==NULL) {
+		DEBUG_LOG(("***Warning - asking for empth path label.\n"));
+		return false;
+	}
+
+	Bool match = false;
+	if (label == pWay->getPathLabel1()) match = true;
+	if (label == pWay->getPathLabel2()) match = true;
+	if (label == pWay->getPathLabel3()) match = true;
+
+	return match;
+}
+
+
+//-------------------------------------------------------------------------------------------------
+/** Given a name, return the associated trigger area, or NULL if one doesn't exist. */
+//-------------------------------------------------------------------------------------------------
+// ?getTriggerAreaByName@TerrainLogic@@UAEPAVPolygonTrigger@@VAsciiString@@@Z present-unmatched
+PolygonTrigger *TerrainLogic::getTriggerAreaByName( AsciiString name )
+{
+	for (PolygonTrigger* pTrig = PolygonTrigger::getFirstPolygonTrigger(); pTrig; pTrig = pTrig->getNext()) {
+		AsciiString trigName = pTrig->getTriggerName();
+		if (name == trigName) 
+			return pTrig;
+	}
+	return NULL;
+}
+
+
+//-------------------------------------------------------------------------------------------------
+/** Finds the bridge at a given x/y coordinate.  */
+//-------------------------------------------------------------------------------------------------
+Bridge * TerrainLogic::findBridgeAt( const Coord3D *pLoc) const
+{
+
+	Bridge *pBridge = getFirstBridge();
+	while (pBridge) {
+		if (pBridge->isPointOnBridge(pLoc)) {
+			return(pBridge);
+		}
+		pBridge = pBridge->getNext();
+	}
+	return(NULL);
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Finds the bridge at a given x/y coordinate.  On a layer. */
+//-------------------------------------------------------------------------------------------------
+Bridge * TerrainLogic::findBridgeLayerAt( const Coord3D *pLoc, PathfindLayerEnum layer, Bool clip) const
+{
+	// BFME: reject LAYER_GROUND and layers > LAYER_LAST (shared early-exit shape).
+	if (layer == LAYER_GROUND || layer > LAYER_LAST)
+		return NULL;
+
+	Bridge *pBridge = getFirstBridge();
+	while (pBridge) 
+	{
+		if (pBridge->getLayer() == layer)
+		{
+			if (!clip || pBridge->isPointOnBridge(pLoc))
+			{
+				return(pBridge);
+			}
+		}
+		pBridge = pBridge->getNext();
+	}
+	return(NULL);
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Returns the layer id for the bridge, if any, at this destination.  Otherwisee
+return LAYER_GROUND. */
+//-------------------------------------------------------------------------------------------------
+// ?getLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PBUCoord3D@@@Z present-unmatched
+PathfindLayerEnum TerrainLogic::getLayerForDestination(const Coord3D *pos)
+{
+	Bridge *pBridge = getFirstBridge();
+	PathfindLayerEnum bestLayer = LAYER_GROUND;
+	Real bestDistance = fabs(pos->z - getGroundHeight(pos->x, pos->y));
+
+	if (bestDistance > TheAI->pathfinder()->getWallHeight()/2) {
+		// check wall.
+		if (TheAI->pathfinder()->isPointOnWall(pos)) {
+			Real delta = fabs(pos->z-TheAI->pathfinder()->getWallHeight());
+			if (delta<bestDistance) {
+				bestLayer = (PathfindLayerEnum)LAYER_WALL;
+				bestDistance = delta;
+			}
+		}
+	}
+
+	while (pBridge ) {
+		if (pBridge->isPointOnBridge(pos) ) {
+			Real delta = fabs(pos->z-pBridge->getBridgeHeight(pos, NULL));
+			if (delta<bestDistance) {
+				bestLayer = pBridge->getLayer();
+				bestDistance = delta;
+			}
+		}
+		pBridge = pBridge->getNext();
+	}
+	return(bestLayer);
+}
+
+//-------------------------------------------------------------------------------------------------
+// this is just like getLayerForDestination, but always return the highest layer that will be <= z at that point
+// (unlike getLayerForDestination, which will return the closest layer)
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicGetHighestLayer.cpp
+// ?getHighestLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PBUCoord3D@@_N@Z present-unmatched
+PathfindLayerEnum TerrainLogic::getHighestLayerForDestination(const Coord3D *pos, Bool onlyHealthyBridges)
+{
+	PathfindLayerEnum bestLayer = LAYER_GROUND;
+	Real bestDistance = pos->z - getGroundHeight(pos->x, pos->y);	// NOT fabs in this case.
+
+	if (bestDistance > TheAI->pathfinder()->getWallHeight()/2) {
+		// check wall.
+		if (TheAI->pathfinder()->isPointOnWall(pos)) {
+			Real delta = pos->z - TheAI->pathfinder()->getWallHeight();
+			// must be ABOVE (or on) the wall for this call. (srj)
+			if (delta >= 0 && fabs(delta) < fabs(bestDistance)) {
+				bestLayer = (PathfindLayerEnum)LAYER_WALL;
+				bestDistance = delta;
+			}
+		}
+	}
+
+	for (Bridge *pBridge = getFirstBridge(); pBridge != NULL; pBridge = pBridge->getNext()) {
+
+		if (onlyHealthyBridges && pBridge->peekBridgeInfo()->curDamageState == BODY_RUBBLE)
+			continue;
+
+		if (pBridge->isPointOnBridge(pos) ) {
+			Real delta = pos->z - pBridge->getBridgeHeight(pos, NULL);
+			// must be ABOVE (or on) the bridge for this call. (srj)
+			if (delta >= 0 && fabs(delta) < fabs(bestDistance)) {
+				bestLayer = pBridge->getLayer();
+				bestDistance = delta;
+			}
+		}
+	}
+	return(bestLayer);
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Determines whether the object interacts with the bridge on specified layer. */
+//-------------------------------------------------------------------------------------------------
+// BFME places the first-bridge accessor at vtable slot 37 (+0x94).
+class BfmeTerrainFirstBridgeDispatch
+{
+public:
+	virtual void slot00() const = 0;
+	virtual void slot01() const = 0;
+	virtual void slot02() const = 0;
+	virtual void slot03() const = 0;
+	virtual void slot04() const = 0;
+	virtual void slot05() const = 0;
+	virtual void slot06() const = 0;
+	virtual void slot07() const = 0;
+	virtual void slot08() const = 0;
+	virtual void slot09() const = 0;
+	virtual void slot10() const = 0;
+	virtual void slot11() const = 0;
+	virtual void slot12() const = 0;
+	virtual void slot13() const = 0;
+	virtual void slot14() const = 0;
+	virtual void slot15() const = 0;
+	virtual void slot16() const = 0;
+	virtual void slot17() const = 0;
+	virtual void slot18() const = 0;
+	virtual void slot19() const = 0;
+	virtual void slot20() const = 0;
+	virtual void slot21() const = 0;
+	virtual void slot22() const = 0;
+	virtual void slot23() const = 0;
+	virtual void slot24() const = 0;
+	virtual void slot25() const = 0;
+	virtual void slot26() const = 0;
+	virtual void slot27() const = 0;
+	virtual void slot28() const = 0;
+	virtual void slot29() const = 0;
+	virtual void slot30() const = 0;
+	virtual void slot31() const = 0;
+	virtual void slot32() const = 0;
+	virtual void slot33() const = 0;
+	virtual void slot34() const = 0;
+	virtual void slot35() const = 0;
+	virtual void slot36() const = 0;
+	virtual Bridge *getFirstBridge() const = 0;
+};
+
+Bool TerrainLogic::objectInteractsWithBridgeLayer(Object *obj, Int layer, Bool considerBridgeHealth) const
+{
+	if (layer == LAYER_GROUND) return false;
+	Bridge *pBridge = reinterpret_cast<const BfmeTerrainFirstBridgeDispatch *>(this)->getFirstBridge();
+
+	while (pBridge ) {
+		if (pBridge->getLayer() == layer) {
+			Bool match = false;
+			if (pBridge->isPointOnBridge(obj->getPosition()) ) {
+				match = true;
+			}
+
+			Real radius = obj->getGeometryInfo().getMinorRadius();
+			radius += PATHFIND_CELL_SIZE_F/2.0f;
+			Region2D bounds;
+			bounds.lo.x = obj->getPosition()->x;
+			bounds.lo.y = obj->getPosition()->y;
+			bounds.hi = bounds.lo;
+			bounds.lo.x -= radius;
+			bounds.lo.y -= radius;
+			bounds.hi.x += radius;
+			bounds.hi.y += radius;
+			if (pBridge->isCellOnEnd(&bounds)) {
+				match = true;
+			}
+
+			if (match) {
+				Real bridgeHeight = pBridge->getBridgeHeight(obj->getPosition(), NULL);
+				Real delta = fabs(obj->getPosition()->z-bridgeHeight);
+				if (delta>LAYER_Z_CLOSE_ENOUGH_F) {
+					return false;
+				}
+
+				// make sure it's not destroyed. can't interact with dead bridges.
+				if (considerBridgeHealth && pBridge->peekBridgeInfo()->curDamageState == BODY_RUBBLE)
+				{
+					return false;
+				}
+
+				return true;
+			}
+			return false;
+		}
+
+		pBridge = pBridge->getNext();
+	}
+	return(false);
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Determines whether the object interacts with the bridge on specified layer. */
+//-------------------------------------------------------------------------------------------------
+Bool TerrainLogic::objectInteractsWithBridgeEnd(Object *obj, Int layer) const
+{
+	if (layer == LAYER_GROUND) return NULL;
+	Bridge *pBridge = getFirstBridge();
+
+	while (pBridge ) {
+		if (pBridge->getLayer() == layer) {
+			Bool match = false;
+
+			Real radius = obj->getGeometryInfo().getMinorRadius();
+			radius += PATHFIND_CELL_SIZE_F/2.0f;
+			Region2D bounds;
+			bounds.lo.x = obj->getPosition()->x;
+			bounds.lo.y = obj->getPosition()->y;
+			bounds.hi = bounds.lo;
+			bounds.lo.x -= radius;
+			bounds.lo.y -= radius;
+			bounds.hi.x += radius;
+			bounds.hi.y += radius;
+			if (pBridge->isCellOnEnd(&bounds)) {
+				match = true;
+			}
+
+			if (match) {
+				Real bridgeHeight = pBridge->getBridgeHeight(obj->getPosition(), NULL);
+				Real delta = fabs(obj->getPosition()->z-bridgeHeight);
+				if (delta>LAYER_Z_CLOSE_ENOUGH_F) 
+				{
+					return false;
+				}			
+				return true;
+			}
+			return false;
+		}
+
+		pBridge = pBridge->getNext();
+	}
+	return(false);
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Updates the damage state of the bridge from the logic. */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicBridges.cpp
+// ?updateBridgeDamageStates@TerrainLogic@@UAEXXZ present-unmatched here - the matched copy has the flag at +0x38
+void TerrainLogic::updateBridgeDamageStates( void )
+{
+	Bridge *pBridge = getFirstBridge();
+	while (pBridge) {
+		pBridge->updateDamageState();
+		pBridge = pBridge->getNext();
+	}
+	m_bridgeDamageStatesChanged = true;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Checks if a bridge is repaired. */
+//-------------------------------------------------------------------------------------------------
+Bool TerrainLogic::isBridgeRepaired(const Object *bridge)
+{
+	if (!bridge) return false;
+	ObjectID id = bridge->getID();
+	Bridge *pBridge = getFirstBridge();
+	while (pBridge) {
+		const BridgeInfo *info = pBridge->peekBridgeInfo();
+		if (info->bridgeObjectID == id) {
+			// found the right bridge.
+			if (info->damageStateChanged) {
+				// Damage state just changed.
+				if (info->curDamageState != BODY_RUBBLE) {
+					return true;
+				}
+			}
+			return false;
+		}
+		pBridge = pBridge->getNext();
+	}
+	return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Checks if a bridge is broken. */
+//-------------------------------------------------------------------------------------------------
+Bool TerrainLogic::isBridgeBroken( const Object *bridge )
+{
+	if (!bridge) return false;
+	ObjectID id = bridge->getID();
+	Bridge *pBridge = getFirstBridge();
+	while (pBridge) {
+		const BridgeInfo *info = pBridge->peekBridgeInfo();
+		if (info->bridgeObjectID == id) {
+			// found the right bridge.
+			if (info->damageStateChanged) {
+				// Damage state just changed.
+				if (info->curDamageState == BODY_RUBBLE) {
+					return true;
+				}
+			}
+			return false;
+		}
+		pBridge = pBridge->getNext();
+	}
+	return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Gets the attack points for a bridge. */
+//-------------------------------------------------------------------------------------------------
+void TerrainLogic::getBridgeAttackPoints(const Object *bridge, TBridgeAttackInfo *attackInfo)
+{
+	ObjectID id = bridge->getID();
+	Bridge *pBridge = getFirstBridge();
+	while (pBridge) {
+		const BridgeInfo *info = pBridge->peekBridgeInfo();
+		if (info->bridgeObjectID == id) {
+			// found the right bridge.
+			Coord3D delta;
+			delta.x = info->to.x - info->from.x;
+			delta.y = info->to.y - info->from.y;
+			delta.z = info->to.z - info->from.z;
+			delta.normalize();
+			Coord3D width;
+			width.x = info->fromRight.x - info->fromLeft.x;
+			width.y = info->fromRight.y - info->fromLeft.y;
+			width.z = info->fromRight.z - info->fromLeft.z;
+			Real len = width.length();
+			len /= 2.0f;
+			attackInfo->attackPoint1.x = info->from.x + delta.x*len;
+			attackInfo->attackPoint1.y = info->from.y + delta.y*len;
+			attackInfo->attackPoint1.z = info->from.z + delta.z*len;
+
+			attackInfo->attackPoint2.x = info->to.x - delta.x*len;
+			attackInfo->attackPoint2.y = info->to.y - delta.y*len;
+			attackInfo->attackPoint2.z = info->to.z - delta.z*len;
+
+			return;
+		}
+		pBridge = pBridge->getNext();
+	}
+	attackInfo->attackPoint1 = *bridge->getPosition();
+	attackInfo->attackPoint2 = *bridge->getPosition();
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Picks a bridge, and returns it's drawable. */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicBridges.cpp
+// ?pickBridge@TerrainLogic@@UAE_NABVVector3@@0PAV2@@Z present-unmatched
+Bool TerrainLogic::pickBridge(const Vector3 &from, const Vector3 &to, Vector3 *pos)
+{
+	Bool curDraw = FALSE;
+	Vector3 curPos(0,0,0);
+
+	Bridge *pBridge = getFirstBridge();
+	while (pBridge) {
+		Vector3 thisPos;
+		Bool thisDraw = pBridge->pickBridge(from, to , &thisPos);
+		if (!curDraw) {
+			curDraw = thisDraw;
+			curPos = thisPos;
+		}
+		pBridge = pBridge->getNext();
+	}
+	*pos = curPos;
+	return(curDraw);
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Deletes the bridges list. */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicBridges.cpp
+// ?deleteBridges@TerrainLogic@@IAEXXZ present-unmatched
+void TerrainLogic::deleteBridges(void)
+{
+	Bridge *pNext = NULL;
+	Bridge *pBridge;
+	// Traverse all waypoints.
+	for (pBridge = getFirstBridge(); pBridge; pBridge = pNext) {
+		pNext = pBridge->getNext();
+		pBridge->setNext(NULL);
+		pBridge->deleteInstance();
+	}
+	m_bridgeListHead = NULL;
+}
+
+//-------------------------------------------------------------------------------------------------
+/** Delete the bridge specified */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicBridges.cpp
+// ?deleteBridge@TerrainLogic@@UAEXPAVBridge@@@Z present-unmatched
+void TerrainLogic::deleteBridge( Bridge *bridge )
+{
+
+	// sanity
+	if( bridge == NULL )
+		return;
+
+	// check for removing the head
+	if( m_bridgeListHead == bridge )
+	{
+
+		m_bridgeListHead = bridge->getNext();
+
+	}  // end if
+	else
+	{
+
+		for( Bridge *otherBridge = getFirstBridge(); 
+				 otherBridge; 
+				 otherBridge = otherBridge->getNext() )
+		{
+
+			//
+			// if the next bridge is the one in question to delete, set this bridge to point
+			// to the next pointer of the bridge we are deleting
+			//
+			if( otherBridge->getNext() == bridge )
+			{
+
+				otherBridge->setNext( bridge->getNext() );
+				break;  // exit for
+
+			}  // end if
+
+		}  // end for, otherBridge
+
+	}  // end else
+
+	// delete object associated with bridge if present
+	BridgeInfo bridgeInfo;
+	bridge->getBridgeInfo( &bridgeInfo );
+	TheAI->pathfinder()->changeBridgeState(bridge->getLayer(), false);
+
+	Object *bridgeObj = TheGameLogic->findObjectByID( bridgeInfo.bridgeObjectID );
+	if( bridgeObj )
+		TheGameLogic->destroyObject( bridgeObj );
+
+	// delete the bridge in question
+	bridge->deleteInstance();
+
+}  // end deleteBridge
+
+//-------------------------------------------------------------------------------------------------
+/** Returns the ground aligned point on the bounding box closest to the given point*/
+//-------------------------------------------------------------------------------------------------
+// ?findClosestEdgePoint@TerrainLogic@@UBE?AUCoord3D@@PBU2@@Z present-unmatched
+Coord3D TerrainLogic::findClosestEdgePoint ( const Coord3D *closestTo ) const 
+{
+	Region3D mapExtent;
+	getExtent( &mapExtent );
+
+	Real distances[4];
+	distances[0] = fabs( closestTo->y - mapExtent.lo.y );//top
+	distances[1] = fabs( closestTo->x - mapExtent.hi.x );//right
+	distances[2] = fabs( closestTo->y - mapExtent.hi.y );//bottom
+	distances[3] = fabs( closestTo->x - mapExtent.lo.x );//left
+	Real bestDistance = distances[0];
+	Int bestDistanceIndex = 0;
+	for( Int lameIndex = 1; lameIndex < 4; lameIndex++ )
+	{
+		if( distances[lameIndex] < bestDistance )
+		{
+			bestDistance = distances[lameIndex];
+			bestDistanceIndex = lameIndex;
+		}
+	}
+
+	Coord3D retVal = *closestTo;
+	if( bestDistanceIndex == 0 )
+	{
+		retVal.y = mapExtent.lo.y;
+	}
+	else if( bestDistanceIndex == 1 )
+	{
+		retVal.x = mapExtent.hi.x;
+	}
+	else if( bestDistanceIndex == 2 )
+	{
+		retVal.y = mapExtent.hi.y;
+	}
+	else
+	{
+		retVal.x = mapExtent.lo.x;
+	}
+
+	retVal.z = getGroundHeight( retVal.x, retVal.y );
+
+	return retVal;
+
+}
+
+
+
+
+//-------------------------------------------------------------------------------------------------
+/** Returns the ground aligned point on the bounding box farthest from the given point*/
+//-------------------------------------------------------------------------------------------------
+// Lorenzen was here
+// ?findFarthestEdgePoint@TerrainLogic@@UBE?AUCoord3D@@PBU2@@Z present-unmatched
+Coord3D TerrainLogic::findFarthestEdgePoint( const Coord3D *farthestFrom ) const 
+{
+	Region3D mapExtent;
+	getExtent( &mapExtent );
+
+	Coord3D retVal = *farthestFrom;
+
+	if (farthestFrom->x < (mapExtent.width()/2) )
+		retVal.x = mapExtent.hi.x;
+	else
+		retVal.x = mapExtent.lo.x;
+
+	if (farthestFrom->y < (mapExtent.height()/2) )
+		retVal.y = mapExtent.hi.y;
+	else
+		retVal.y = mapExtent.lo.y;
+
+
+	retVal.z = getGroundHeight( retVal.x, retVal.y );
+
+	return retVal;
+
+}
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------
+/** See if a location is underwater, and what the water height is. */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicIsUnderwater.cpp
+// ?isUnderwater@TerrainLogic@@UAE_NMMPAM0@Z present-unmatched
+Bool TerrainLogic::isUnderwater( Real x, Real y, Real *waterZ, Real *terrainZ )
+{
+
+	// get the water handle at this location
+	const WaterHandle *waterHandle = getWaterHandle( x, y );
+
+	// if no water here, no height, no nuttin
+	if( waterHandle == NULL )
+  {
+    // but we have to return the terrain Z if requested!
+    if (terrainZ)
+      *terrainZ=getGroundHeight(x,y);
+		return FALSE;
+  }
+
+	//
+	// if this water handle is a grid water use the grid height function, otherwise look into
+	// the polygon trigger
+	//
+	Real wZ = 0.0f;
+	if( waterHandle == &m_gridWaterHandle )
+		TheTerrainVisual->getWaterGridHeight( x, y, &wZ );
+	else
+		wZ = getWaterHeight( waterHandle );
+
+	// fill out the waterZ parameter with the water height
+	if( waterZ )
+		*waterZ = wZ;
+
+	// see if the terrain height here is below the water
+	Real terrainHeight = getGroundHeight( x, y );
+	if (terrainZ)
+		*terrainZ = terrainHeight;
+
+	return terrainHeight < wZ;
+
+}
+
+// BFME moved PolygonTrigger's water-query fields and the TerrainVisual water-grid
+// slot, so the Zero Hour headers above cannot express the retail accesses.
+class BFMETerrainWaterPolygonView
+{
+public:
+	void *m_vtable;
+	BFMETerrainWaterPolygonView *m_next;
+	UnsignedByte m_unreconstructed_08[8];
+	ICoord3D *m_points;
+	Int m_numPoints;
+	UnsignedByte m_unreconstructed_18[0x1a];
+	Bool m_isWaterArea;
+
+	BFMETerrainWaterPolygonView *getNext() { return m_next; }
+	Bool isWaterArea() const { return m_isWaterArea; }
+	const ICoord3D *getPoint(Int index) const
+	{
+		if (index < 0)
+			index = 0;
+		if (index >= m_numPoints)
+			index = m_numPoints - 1;
+		return m_points + index;
+	}
+	Bool pointInTrigger(ICoord3D &point) const
+	{
+		return ((const PolygonTrigger *)this)->pointInTrigger(point);
+	}
+	const WaterHandle *getWaterHandle() const
+	{
+		return ((const PolygonTrigger *)this)->getWaterHandle();
+	}
+};
+
+struct BFMETerrainWaterPolygonTableView
+{
+	BFMETerrainWaterPolygonView *m_head;
+};
+
+class BFMETerrainWaterVisualView
+{
+public:
+	virtual void v00() = 0; virtual void v01() = 0;
+	virtual void v02() = 0; virtual void v03() = 0;
+	virtual void v04() = 0; virtual void v05() = 0;
+	virtual void v06() = 0; virtual void v07() = 0;
+	virtual void v08() = 0; virtual void v09() = 0;
+	virtual void v10() = 0; virtual void v11() = 0;
+	virtual void v12() = 0; virtual void v13() = 0;
+	virtual void v14() = 0; virtual void v15() = 0;
+	virtual void v16() = 0; virtual void v17() = 0;
+	virtual void v18() = 0; virtual void v19() = 0;
+	virtual Bool getWaterGridHeight(Real x, Real y, Real *height) = 0;
+};
+
+extern "C" BFMETerrainWaterPolygonTableView *g_bfmePolygonTriggerTable;
+extern "C" BFMETerrainWaterVisualView *g_bfmeTerrainVisual;
+extern "C" WaterHandle g_bfmeGridWaterHandle;
+
+// ------------------------------------------------------------------------------------------------
+/** Get the water table with the highest water Z value at the location */
+// ------------------------------------------------------------------------------------------------
+// ?getWaterHandle@TerrainLogic@@UAEPBVWaterHandle@@MM@Z
+const WaterHandle* TerrainLogic::getWaterHandle( Real x, Real y )
+{
+	const WaterHandle *waterHandle = NULL;
+	Real waterZ = 0.0f;
+	ICoord3D location;
+
+	location.x = (Int)x;
+	location.y = (Int)y;
+	location.z = 0;
+
+	for (BFMETerrainWaterPolygonView *trigger = g_bfmePolygonTriggerTable->m_head;
+		trigger; trigger = trigger->getNext()) {
+		if (trigger->isWaterArea() && trigger->pointInTrigger(location) &&
+			trigger->getPoint(0)->z >= waterZ) {
+			waterZ = trigger->getPoint(0)->z;
+			waterHandle = trigger->getWaterHandle();
+		}
+	}
+
+	Real meshZ;
+	if (g_bfmeTerrainVisual->getWaterGridHeight(x, y, &meshZ) && meshZ >= waterZ) {
+		waterHandle = &g_bfmeGridWaterHandle;
+	}
+
+	return waterHandle;
+}
+
+// ------------------------------------------------------------------------------------------------
+/** Get water handle by name assigned from the editor */
+// ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicNameLookups.cpp
+// ?getWaterHandleByName@TerrainLogic@@UAEPBVWaterHandle@@VAsciiString@@@Z present-unmatched
+const WaterHandle* TerrainLogic::getWaterHandleByName( AsciiString name )
+{
+	if (name.compare(WATER_GRID) == 0)
+		return &TerrainLogic::m_gridWaterHandle;
+
+	PolygonTrigger *trig = PolygonTrigger::getFirstPolygonTrigger();
+	while (trig)
+	{
+		if (trig->getTriggerName().compare(name) == 0 && trig->isWaterArea())
+			return trig->getWaterHandle();
+		trig = trig->getNext();
+	}
+
+	return NULL;
+
+}  // end getWaterHandleByName
+
+// ------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+Real TerrainLogic::getWaterHeight( const WaterHandle *water )
+{
+
+	// sanity
+	if( water == NULL )
+		return 0.0f;
+
+	//
+	// when querying the water height given a handle, we cannot query gridded water in this
+	// way because it's variable across the whole surface of the water
+	//
+	if( water == &m_gridWaterHandle )
+	{
+
+		DEBUG_CRASH(( "TerrainLogic::getWaterHeight( WaterHandle *water ) - water is a grid handle, cannot make this query\n" ));
+		return 0.0f;
+
+	}  //  end if
+
+	// sanity
+	DEBUG_ASSERTCRASH( water->m_polygon != NULL, ("getWaterHeight: polygon trigger in water handle is NULL\n") );
+
+	// return the height of the water using the polygon trigger
+	// PolygonTrigger's m_points and m_numPoints sit 8 bytes earlier in BFME --
+	// +0x10 and +0x14 against +0x18 and +0x1c here. Spelled as an overlay with
+	// getPoint's clamp inline, which is how retail has it: index 0 unless the
+	// count is non-positive, then count-1. The fild says the coordinate is an
+	// Int and the stride of 12 with z at +8 says ICoord3D.
+	struct BFMEPolygonTrigger
+	{
+		char pad[0x10];
+		const ICoord3D *m_points;
+		Int m_numPoints;
+	};
+	const BFMEPolygonTrigger *poly = (const BFMEPolygonTrigger *)water->m_polygon;
+	Int i = 0;
+	if( poly->m_numPoints <= 0 )
+		i = poly->m_numPoints - 1;
+	return poly->m_points[ i ].z;
+
+}  // end getWaterHeight
+
+// ------------------------------------------------------------------------------------------------
+/** Set the water height.  If the water rises, then any objects that now find themselves
+	* underwater will be damaged by the amount provided in the parameter 'damageAmount' */
+// ------------------------------------------------------------------------------------------------
+// byte-exact BFME reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicSetWaterHeight.cpp
+// ?setWaterHeight@TerrainLogic@@UAEXPBVWaterHandle@@MM_N@Z present-unmatched
+void TerrainLogic::setWaterHeight( const WaterHandle *water, Real height, Real damageAmount,
+																	 Bool forcePathfindUpdate )
+{
+
+	// sanity
+	if( water == NULL )
+		return;
+
+	//
+	// if this is a handle to gridded water simple change the transform to raise/lower the whole
+	// water table.  Note: The other meaning this *could* have if we want it to is to leave
+	// the water table transform where it is and actually change the height of the water at
+	// every grid point
+	//
+	Real previousHeight = 0.0f;
+	if( water == &m_gridWaterHandle )
+	{
+
+		// get transform information
+		Matrix3D transform;
+		TheTerrainVisual->getWaterTransform( water, &transform );
+
+		// save the old height
+		previousHeight = transform.Get_Z_Translation();
+
+		// set the new height
+		transform.Set_Z_Translation( height );
+		TheTerrainVisual->setWaterTransform( &transform );
+
+	}  // end if
+	else
+	{
+
+		// save the previous height
+		previousHeight = getWaterHeight( water );
+
+		// set the new height at all the points in the polygon trigger
+		const ICoord3D *p;
+		ICoord3D newPoint;
+		Int numPoints = water->m_polygon->getNumPoints();
+		for( Int i = 0; i < numPoints; ++i )
+		{
+
+			p = water->m_polygon->getPoint( i );
+			newPoint.x = p->x;
+			newPoint.y = p->y;
+			newPoint.z = height;
+			water->m_polygon->setPoint( newPoint, i );
+
+		}  // end for
+		height = getWaterHeight(water);
+
+	}  // end else
+
+	// find the bounding rectangle of this water area
+	Region3D affectedRegion;
+	affectedRegion.zero();
+	findAxisAlignedBoundingRect( water, &affectedRegion );
+
+	// changes in the water level force us to recalculate the pathfinding map
+	if( forcePathfindUpdate || previousHeight != height )
+	{
+
+		// do the pathfind remapping
+		TheAI->pathfinder()->forceMapRecalculation(); 
+
+	}  // end if
+
+	//
+	// if the water height has risen, we need apply water damage to things that are now
+	// under the water
+	//
+	if( damageAmount > 0.0f && height > previousHeight )
+	{
+
+		// find the center of the water "area" given the bounding region
+		Coord3D center;
+		center.x = affectedRegion.lo.x + affectedRegion.width() / 2.0f;
+		center.y = affectedRegion.lo.y + affectedRegion.height() / 2.0f;
+		center.z = 0.0f;  // irrelavant
+
+		// the max radius to scan around us is the diagonal of the bounding region
+		Real maxDist = sqrt( affectedRegion.width() * affectedRegion.width() + 
+												 affectedRegion.height() * affectedRegion.height() );
+
+		// scan the objects in the area of the water affected
+		ObjectIterator *iter = ThePartitionManager->iterateObjectsInRange( &center,
+																																			 maxDist,
+																																			 FROM_CENTER_2D, 
+																																			 NULL );
+		MemoryPoolObjectHolder hold( iter );
+		Object *obj;
+		const Coord3D *objPos;
+		for( obj = iter->first(); obj; obj = iter->next() )
+		{
+
+			// get other object position
+			objPos = obj->getPosition();
+
+			// if this object is underwater, do some damage
+			if( isUnderwater( objPos->x, objPos->y ) )
+			{
+
+				// do a lot of water damage
+				DamageInfo damageInfo;
+				damageInfo.in.m_damageType = DAMAGE_WATER;
+				damageInfo.in.m_deathType = DEATH_NORMAL;
+				damageInfo.in.m_sourceID = INVALID_ID;
+				damageInfo.in.m_amount = damageAmount;
+				obj->attemptDamage( &damageInfo );
+
+			}  // end if
+
+		}  // end for obj
+
+	}  // end if, water has risen
+
+}  // end setWaterHeight
+
+// ------------------------------------------------------------------------------------------------
+/** Change the height of a water table over time */
+// ------------------------------------------------------------------------------------------------
+// The retail TerrainLogic water array begins at +0x4c and its count at +0x54c.
+// The imported layout is sixteen bytes short before this array.
+struct BfmeTerrainWaterUpdateView
+{
+	unsigned char beforeWaterUpdates[0x4c];
+	struct Entry
+	{
+		const WaterHandle *waterTable;
+		Real changePerFrame;
+		Real targetHeight;
+		Real damageAmount;
+		Real currentHeight;
+	} entries[64];
+	Int count;
+};
+
+// The retail water-height query is vtable slot 27 (+0x6c).
+class BfmeTerrainWaterHeightDispatch
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void slot02() = 0;
+	virtual void slot03() = 0;
+	virtual void slot04() = 0;
+	virtual void slot05() = 0;
+	virtual void slot06() = 0;
+	virtual void slot07() = 0;
+	virtual void slot08() = 0;
+	virtual void slot09() = 0;
+	virtual void slot10() = 0;
+	virtual void slot11() = 0;
+	virtual void slot12() = 0;
+	virtual void slot13() = 0;
+	virtual void slot14() = 0;
+	virtual void slot15() = 0;
+	virtual void slot16() = 0;
+	virtual void slot17() = 0;
+	virtual void slot18() = 0;
+	virtual void slot19() = 0;
+	virtual void slot20() = 0;
+	virtual void slot21() = 0;
+	virtual void slot22() = 0;
+	virtual void slot23() = 0;
+	virtual void slot24() = 0;
+	virtual void slot25() = 0;
+	virtual void slot26() = 0;
+	virtual Real getWaterHeight(const WaterHandle *water) = 0;
+};
+
+void TerrainLogic::changeWaterHeightOverTime( const WaterHandle *water,
+																							Real finalHeight,
+																							Real transitionTimeInSeconds,
+																							Real damageAmount )
+{
+	BfmeTerrainWaterUpdateView *waterUpdate = reinterpret_cast<BfmeTerrainWaterUpdateView *>(this);
+
+	// if we don't have room, oops!
+	if( waterUpdate->count >= MAX_DYNAMIC_WATER )
+	{
+
+		DEBUG_CRASH(( "Only '%d' simultaneous water table changes are supported\n", MAX_DYNAMIC_WATER ));
+		return;
+
+	}  // end if
+
+	// sanity
+	if( water == NULL )
+		return;
+
+	// if this water table already has an entry in the array to update, remove it
+	for( Int i = 0; i < waterUpdate->count; i++ )
+	{
+
+		if( waterUpdate->entries[ i ].waterTable == water )
+		{
+
+			// put the entry at the end of the list here
+			waterUpdate->entries[ i ] = waterUpdate->entries[ waterUpdate->count - 1 ];
+
+			// we now have one less entry
+			--waterUpdate->count;
+
+			//
+			// process this index over again just to be complete, but we should never find "another"
+			// duplicate water entry
+			//
+			--i;
+
+		}  // end if
+
+	}  // end for i
+
+	// get the current height of the water
+	Real currentHeight = reinterpret_cast<BfmeTerrainWaterHeightDispatch *>(this)->getWaterHeight( water );
+
+	// add the entry into the array of water to update
+	waterUpdate->entries[ waterUpdate->count ].waterTable = water;
+	waterUpdate->entries[ waterUpdate->count ].changePerFrame = (finalHeight - currentHeight) /
+																												 (LOGICFRAMES_PER_SECOND * transitionTimeInSeconds);
+	waterUpdate->entries[ waterUpdate->count ].targetHeight = finalHeight;
+	waterUpdate->entries[ waterUpdate->count ].damageAmount = damageAmount;
+	waterUpdate->entries[ waterUpdate->count ].currentHeight = currentHeight;
+
+	// we now have one more entry to update
+	++waterUpdate->count;
+
+}  // end chanageWaterHeightOverTime
+
+// ------------------------------------------------------------------------------------------------
+/** Find the axis aligned bounding region around a water table */
+// ------------------------------------------------------------------------------------------------
+// byte-exact BFME reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicFindAxisAlignedBoundingRect.cpp
+// ?findAxisAlignedBoundingRect@TerrainLogic@@IAEXPBVWaterHandle@@PAURegion3D@@@Z present-unmatched
+void TerrainLogic::findAxisAlignedBoundingRect( const WaterHandle *water, Region3D *region )
+{
+
+	// sanity
+	if( water == NULL || region == NULL )
+		return;
+
+	// setup the lo and high of the region to the *opposite* side of the map plus some big number
+	#define BUFFER 99999.9f  /// just to have extreme regions outside of the map
+	Region3D mapExtent;
+	getExtent( &mapExtent );
+	region->lo.x = mapExtent.hi.x + BUFFER;
+	region->lo.y = mapExtent.hi.y + BUFFER;
+	region->hi.x = mapExtent.lo.x - BUFFER;
+	region->hi.y = mapExtent.lo.y - BUFFER;
+	// for water grid we must access the transform
+	if( water == &m_gridWaterHandle )
+	{
+		Int i;
+		ICoord3D p[ 4 ];
+
+		// compute the 4 corners of the table according to the grids and grid spacing
+		Real gridX, gridY, cellSize;
+		TheTerrainVisual->getWaterGridResolution( water, &gridX, &gridY, &cellSize );
+		p[ 0 ].x = 0;
+		p[ 0 ].y = 0;
+		p[ 1 ].x = gridX * cellSize;
+		p[ 1 ].y = 0;
+		p[ 2 ].x = gridX * cellSize;
+		p[ 2 ].y = gridY * cellSize;
+		p[ 3 ].x = 0;
+		p[ 3 ].y = gridY * cellSize;
+
+		// transform the 4 points using the transform matrix of the water
+		Vector3 v;
+		Matrix3D transform;
+		TheTerrainVisual->getWaterTransform( water, &transform );
+		for( i = 0; i < 4; i++ )
+		{
+
+			v.Set( p[ i ].x, p[ i ].y, p[ i ].z );
+			transform.Transform_Vector( transform, v, &v );
+
+			// do the region compares
+			if( v.X < region->lo.x )
+				region->lo.x = v.X;
+			if( v.X > region->hi.x )
+				region->hi.x = v.X;
+			if( v.Y < region->lo.y )
+				region->lo.y = v.Y;
+			if( v.Y > region->hi.y )
+				region->hi.y = v.Y;
+
+		}  // end for i
+
+	}  // end if
+	else
+	{
+
+		// go through each polygon point and find the extents
+		const ICoord3D *p;
+		Int numPoints = water->m_polygon->getNumPoints();
+		for( Int i = 0; i < numPoints; i++ )
+		{
+		
+			// get this point
+			p = water->m_polygon->getPoint( i );
+
+			// compare to our region
+			if( p->x < region->lo.x )
+				region->lo.x = p->x;
+			if( p->x > region->hi.x )
+				region->hi.x = p->x;
+
+			if( p->y < region->lo.y )
+				region->lo.y = p->y;
+			if( p->y > region->hi.y )
+				region->hi.y = p->y;
+
+			if( p->z < region->lo.z )
+				region->lo.z = p->z;
+			if( p->z > region->hi.z )
+				region->hi.z = p->z;
+
+		}  // end for i
+				
+	}  // end else
+
+}  // end findAxisAlignedBoundingRect
+
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/TerrainLogic_setActiveBoundary_Thunk.cpp
+// ?setActiveBoundary@TerrainLogic@@QAEXH@Z present-unmatched
+void TerrainLogic::setActiveBoundary(Int newActiveBoundary)
+{
+	if (newActiveBoundary < 0 || newActiveBoundary >= m_boundaries.size()) {
+		// probably should DEBUG_ASSERT here
+		return;
+	}
+
+	if (newActiveBoundary == m_activeBoundary) {
+		// since this is fairly expensive (causes reset of PartitionManager as well as pathfinding),
+		// we should probably return
+		return;
+	}
+
+	if (m_boundaries[newActiveBoundary].x == 0 || m_boundaries[newActiveBoundary].y == 0) {
+		return;
+	}
+
+	ShroudStatusStoreRestore partitionStore;
+	
+	// Can't have any lingering looks persist over the resize, so flush the queue now
+	ThePartitionManager->processEntirePendingUndoShroudRevealQueue();
+	
+	//Store fogged cells
+	ThePartitionManager->storeFoggedCells(partitionStore, TRUE);
+
+	m_activeBoundary = newActiveBoundary;
+
+	//Remove ghost objects from partition manager so that their partition data
+	//can be released when parent object detaches.
+	TheGhostObjectManager->releasePartitionData();
+
+	//Remove objects from partition manager so that any remaining cleared
+	//cells must be permanently revealed.
+	Object *obj = TheGameLogic->getFirstObject();
+	while (obj) {
+		obj->friend_prepareForMapBoundaryAdjust();
+		obj = obj->getNextObject();
+	}
+
+	//Store permanently revealed cells.
+	ThePartitionManager->storeFoggedCells(partitionStore, FALSE);
+	
+	ThePartitionManager->reset();
+	ThePartitionManager->init();
+	TheRadar->newMap(TheTerrainLogic);
+
+	ThePartitionManager->restoreFoggedCells(partitionStore, FALSE);
+
+	//Tell the ghost object manager to not allow creation/modification of
+	//ghost objects.  This will prevent new ones from being recreated and allow
+	//us to restore the existing ones.
+	TheGhostObjectManager->lockGhostObjects(TRUE);
+
+	obj = TheGameLogic->getFirstObject();
+	while (obj) {
+		obj->friend_notifyOfNewMapBoundary();
+		obj = obj->getNextObject();
+	}
+
+	ThePartitionManager->restoreFoggedCells(partitionStore, TRUE);
+	//reinsert ghost objects into the partition manager.
+	TheGhostObjectManager->restorePartitionData();
+
+	//Allow creation of new ghost objects since we restored all existing ones.
+	TheGhostObjectManager->lockGhostObjects(FALSE);
+
+	// Don't do a newMap on the pathfinder - It uses the largest active boundary to start.  jba.
+	//TheAI->pathfinder()->newMap();
+
+	TheTacticalView->forceCameraConstraintRecalc();
+}
+
+// ------------------------------------------------------------------------------------------------
+/** Flatten the terrain beneath a struture. */
+// ------------------------------------------------------------------------------------------------
+// ?flattenTerrain@TerrainLogic@@QAEXPAVObject@@@Z present-unmatched
+void TerrainLogic::flattenTerrain(Object *obj) 
+{
+	if (obj->getGeometryInfo().getIsSmall()) {
+		return;
+	}
+
+	const Coord3D *pos = obj->getPosition();
+	switch(obj->getGeometryInfo().getGeomType())
+	{
+		case GEOMETRY_BOX:
+		{
+			Real angle = obj->getOrientation();
+
+			Real halfsizeX = obj->getGeometryInfo().getMajorRadius();
+			Real halfsizeY = obj->getGeometryInfo().getMinorRadius();
+
+
+			Real c = (Real)Cos(angle);
+			Real s = (Real)Sin(angle);
+
+			Vector3 topLeft(pos->x-halfsizeX*c-halfsizeY*s, pos->y + halfsizeY*c - halfsizeX*s, 0);
+			Vector3 topRight(pos->x+halfsizeX*c-halfsizeY*s, pos->y + halfsizeY*c + halfsizeX*s, 0);
+			Vector3 bottomRight(pos->x+halfsizeX*c+halfsizeY*s, pos->y - halfsizeY*c + halfsizeX*s, 0);
+			Vector3 bottomLeft(pos->x-halfsizeX*c+halfsizeY*s, pos->y - halfsizeY*c - halfsizeX*s, 0);
+
+			Real minX = topLeft.X;
+			if (minX>topRight.X) minX = topRight.X;
+			if (minX>bottomRight.X) minX = bottomRight.X;
+			if (minX>bottomLeft.X) minX = bottomLeft.X;
+			Real maxX = topLeft.X;
+			if (maxX<topRight.X) maxX = topRight.X;
+			if (maxX<bottomRight.X) maxX = bottomRight.X;
+			if (maxX<bottomLeft.X) maxX = bottomLeft.X;
+
+			Real minY = topLeft.Y;
+			if (minY>topRight.Y) minY = topRight.Y;
+			if (minY>bottomRight.Y) minY = bottomRight.Y;
+			if (minY>bottomLeft.Y) minY = bottomLeft.Y;
+			Real maxY = topLeft.Y;
+			if (maxY<topRight.Y) maxY = topRight.Y;
+			if (maxY<bottomRight.Y) maxY = bottomRight.Y;
+			if (maxY<bottomLeft.Y) maxY = bottomLeft.Y;
+
+			ICoord2D iMin, iMax;
+			iMin.x = REAL_TO_INT_FLOOR(minX/MAP_XY_FACTOR);
+			iMin.y = REAL_TO_INT_FLOOR(minY/MAP_XY_FACTOR);
+			iMax.x = REAL_TO_INT_FLOOR(maxX/MAP_XY_FACTOR);
+			iMax.y = REAL_TO_INT_FLOOR(maxY/MAP_XY_FACTOR);
+
+			Int i, j;
+			Real totalHeight = 0;
+			Int numSamples = 0;
+			for (i=iMin.x; i<=iMax.x; i++) {
+				for (j=0; j<=iMax.y; j++) {
+					Vector3	testPt(i*MAP_XY_FACTOR, j*MAP_XY_FACTOR, 0);
+					Bool match = false;
+					unsigned char flags;
+					if (Point_In_Triangle_2D(topLeft, topRight, bottomLeft, testPt, 0, 1, flags)) {
+						match = true;
+					}
+					if (Point_In_Triangle_2D(topRight, bottomRight, bottomLeft, testPt, 0, 1, flags)) {
+						match = true;
+					}
+					if (match) {
+						totalHeight += TheTerrainLogic->getGroundHeight(testPt.X, testPt.Y);
+						numSamples++;
+					}
+				}
+			}
+			if (numSamples == 0) return;
+			Real avgHeight = totalHeight/numSamples;
+			Int rawDataHeight = REAL_TO_INT_FLOOR(0.5f + avgHeight/MAP_HEIGHT_SCALE);
+
+			// Compare to the height at the building's origin, because setRawMapHeight will only lower, 
+			// not raise.  jba
+			Int centerHeight = REAL_TO_INT_FLOOR(TheTerrainLogic->getGroundHeight(pos->x, pos->y)/MAP_HEIGHT_SCALE);
+			if (rawDataHeight>centerHeight) rawDataHeight = centerHeight;
+
+			for (i=iMin.x; i<=iMax.x; i++) {
+				for (j=0; j<=iMax.y; j++) {
+					Vector3	testPt(i*MAP_XY_FACTOR, j*MAP_XY_FACTOR, 0);
+					Bool match = false;
+					unsigned char flags;
+					if (Point_In_Triangle_2D(topLeft, topRight, bottomLeft, testPt, 0, 1, flags)) {
+						match = true;
+					}
+					if (Point_In_Triangle_2D(topRight, bottomRight, bottomLeft, testPt, 0, 1, flags)) {
+						match = true;
+					}
+					if (match) {
+						ICoord2D gridPos;
+						gridPos.x = i;
+						gridPos.y = j;
+						TheTerrainVisual->setRawMapHeight(&gridPos, rawDataHeight);
+						gridPos.x = i-1;
+						gridPos.y = j;
+						TheTerrainVisual->setRawMapHeight(&gridPos, rawDataHeight);
+						gridPos.x = i+1;
+						gridPos.y = j;
+						TheTerrainVisual->setRawMapHeight(&gridPos, rawDataHeight);
+						gridPos.x = i;
+						gridPos.y = j-1;
+						TheTerrainVisual->setRawMapHeight(&gridPos, rawDataHeight);
+						gridPos.x = i;
+						gridPos.y = j+1;
+						TheTerrainVisual->setRawMapHeight(&gridPos, rawDataHeight);
+
+						//Added the corners so it does a whole 3X3 square... ML
+						gridPos.x = i-1;
+						gridPos.y = j-1;
+						TheTerrainVisual->setRawMapHeight(&gridPos, rawDataHeight);
+						gridPos.x = i+1;
+						gridPos.y = j+1;
+						TheTerrainVisual->setRawMapHeight(&gridPos, rawDataHeight);
+						gridPos.x = i+1;
+						gridPos.y = j-1;
+						TheTerrainVisual->setRawMapHeight(&gridPos, rawDataHeight);
+						gridPos.x = i-1;
+						gridPos.y = j+1;
+						TheTerrainVisual->setRawMapHeight(&gridPos, rawDataHeight);
+
+					}
+				}
+			}
+
+				
+		break;
+		}
+		case GEOMETRY_SPHERE:	// not quite right, but close enough
+		case GEOMETRY_CYLINDER:
+		{
+			// fill in all cells that overlap as obstacle cells
+			Real radius = obj->getGeometryInfo().getMajorRadius();	
+			Real radiusSqr = sqr(radius);
+			ICoord2D iMin, iMax;
+			iMin.x = REAL_TO_INT_FLOOR((pos->x-radius)/MAP_XY_FACTOR);
+			iMin.y = REAL_TO_INT_FLOOR((pos->y-radius)/MAP_XY_FACTOR);
+			iMax.x = REAL_TO_INT_FLOOR((pos->x+radius)/MAP_XY_FACTOR);
+			iMax.y = REAL_TO_INT_FLOOR((pos->y+radius)/MAP_XY_FACTOR);
+
+			Int i, j;
+			Real totalHeight = 0;
+			Int numSamples = 0;
+			for (i=iMin.x; i<=iMax.x; i++) {
+				for (j=0; j<=iMax.y; j++) {
+					Vector3	testPt(i*MAP_XY_FACTOR, j*MAP_XY_FACTOR, 0);
+					Bool match = false;
+					Real dx = testPt.X - pos->x;
+					Real dy = testPt.Y - pos->y;
+					if ( dx*dx+dy*dy<radiusSqr) {
+						match = true;
+					}
+					if (match) {
+						totalHeight += TheTerrainLogic->getGroundHeight(testPt.X, testPt.Y);
+						numSamples++;
+					}
+				}
+			}
+			if (numSamples == 0) return;
+			Real avgHeight = totalHeight/numSamples;
+			Int rawDataHeight = REAL_TO_INT_FLOOR(0.5f + avgHeight/MAP_HEIGHT_SCALE);
+			for (i=iMin.x; i<=iMax.x; i++) {
+				for (j=0; j<=iMax.y; j++) {
+					Vector3	testPt(i*MAP_XY_FACTOR, j*MAP_XY_FACTOR, 0);
+					Bool match = false;
+					Real dx = testPt.X - pos->x;
+					Real dy = testPt.Y - pos->y;
+					if ( dx*dx+dy*dy<radiusSqr) {
+						match = true;
+					}
+					if (match) {
+						ICoord2D gridPos;
+						gridPos.x = i;
+						gridPos.y = j;
+						TheTerrainVisual->setRawMapHeight(&gridPos, rawDataHeight);
+						gridPos.x = i-1;
+						gridPos.y = j;
+						TheTerrainVisual->setRawMapHeight(&gridPos, rawDataHeight);
+						gridPos.x = i+1;
+						gridPos.y = j;
+						TheTerrainVisual->setRawMapHeight(&gridPos, rawDataHeight);
+						gridPos.x = i;
+						gridPos.y = j-1;
+						TheTerrainVisual->setRawMapHeight(&gridPos, rawDataHeight);
+						gridPos.x = i;
+						gridPos.y = j+1;
+						TheTerrainVisual->setRawMapHeight(&gridPos, rawDataHeight);
+
+						//Added the corners so it does a whole 3X3 square... ML
+						gridPos.x = i-1;
+						gridPos.y = j-1;
+						TheTerrainVisual->setRawMapHeight(&gridPos, rawDataHeight);
+						gridPos.x = i+1;
+						gridPos.y = j+1;
+						TheTerrainVisual->setRawMapHeight(&gridPos, rawDataHeight);
+						gridPos.x = i+1;
+						gridPos.y = j-1;
+						TheTerrainVisual->setRawMapHeight(&gridPos, rawDataHeight);
+						gridPos.x = i-1;
+						gridPos.y = j+1;
+						TheTerrainVisual->setRawMapHeight(&gridPos, rawDataHeight);
+
+
+					}
+				}
+			}
+		
+		} // cylinder
+		break;
+	} // switch
+
+}
+
+
+
+// ------------------------------------------------------------------------------------------------
+/** Dig a deep circular gorge into the terrain beneath an object. */
+// ------------------------------------------------------------------------------------------------
+// ?createCraterInTerrain@TerrainLogic@@QAEXPAVObject@@@Z present-unmatched
+void TerrainLogic::createCraterInTerrain(Object *obj) 
+{
+	if (obj->getGeometryInfo().getIsSmall()) 
+		return;
+
+	const Coord3D *pos = obj->getPosition();
+  Real radius = obj->getGeometryInfo().getMajorRadius();	
+
+  if ( radius <= 0.0f )
+    return; // sanity
+
+  ICoord2D iMin, iMax;
+  iMin.x = REAL_TO_INT_FLOOR( ( pos->x - radius ) / MAP_XY_FACTOR );
+  iMin.y = REAL_TO_INT_FLOOR( ( pos->y - radius ) / MAP_XY_FACTOR );
+  iMax.x = REAL_TO_INT_FLOOR( ( pos->x + radius ) / MAP_XY_FACTOR );
+	iMax.y = REAL_TO_INT_FLOOR( ( pos->y + radius ) / MAP_XY_FACTOR );
+
+  Real deltaX, deltaY;
+
+	for (Int i = iMin.x; i <= iMax.x; i++ ) 
+  {
+		for ( Int j=0; j <= iMax.y; j++ ) 
+    {
+			deltaX = ( i * MAP_XY_FACTOR ) - pos->x;
+			deltaY = ( j * MAP_XY_FACTOR ) - pos->y;
+
+      Real distance = sqrt( sqr( deltaX ) + sqr( deltaY ) );
+
+			if ( distance < radius ) //inside circle
+      {
+				ICoord2D gridPos;
+				gridPos.x = i;
+				gridPos.y = j;
+
+
+        Real displacementAmount = radius * (1.0f - distance / radius );
+
+        Int targetHeight = MAX( 1, TheTerrainVisual->getRawMapHeight( &gridPos ) - displacementAmount );
+
+				TheTerrainVisual->setRawMapHeight( &gridPos, targetHeight );
+			}
+    } // next j
+  } // next i
+
+}
+
+
+
+
+
+
+
+// ------------------------------------------------------------------------------------------------
+/** CRC */
+// ------------------------------------------------------------------------------------------------
+// ?crc@TerrainLogic@@MAEXPAVXfer@@@Z present-unmatched
+void TerrainLogic::crc( Xfer *xfer )
+{
+
+}  // end crc
+
+// ------------------------------------------------------------------------------------------------
+/** Xfer
+	* Version Info:
+	* 1: Initial version
+	* 2: Added water updates over time (CBD)
+	*/
+// ------------------------------------------------------------------------------------------------
+// BFME's TerrainLogic::xfer is 45 bytes: it writes a two-byte version pair on
+// the stack -- both bytes from one materialised 1, which is what
+// `const XferVersion currentVersion = 1; XferVersion version = currentVersion;'
+// compiles to -- hands that ONE pointer to Xfer's vtable slot 10 (+0x28), and
+// then makes a single call to xferTerrainState. The reference copy passes a
+// second argument to xferVersion, starts at version 2, and inlines the whole
+// transfer that BFME keeps in a separate body.
+struct BfmeXferVersionPair
+{
+	UnsignedByte m_version;
+	UnsignedByte m_currentVersion;
+};
+
+class BfmeVersionXfer
+{
+public:
+	virtual void bfmeSlot00() = 0;	virtual void bfmeSlot04() = 0;
+	virtual void bfmeSlot08() = 0;	virtual void bfmeSlot0C() = 0;
+	virtual void bfmeSlot10() = 0;	virtual void bfmeSlot14() = 0;
+	virtual void bfmeSlot18() = 0;	virtual void bfmeSlot1C() = 0;
+	virtual void bfmeSlot20() = 0;	virtual void bfmeSlot24() = 0;
+	virtual void xferVersion( BfmeXferVersionPair *versionData ) = 0;	///< vtable +0x28
+};
+
+class BfmeTerrainStateXfer
+{
+public:
+	void xferTerrainState( Xfer *xfer );				///< retail ILT 0x00043ed7
+};
+
+// ?xfer@TerrainLogic@@MAEXPAVXfer@@@Z
+void TerrainLogic::xfer( Xfer *xfer )
+{
+	// version
+	const UnsignedByte currentVersion = 1;
+	BfmeXferVersionPair version;
+
+	version.m_version = currentVersion;
+	version.m_currentVersion = currentVersion;
+	((BfmeVersionXfer *)xfer)->xferVersion( &version );
+
+	((BfmeTerrainStateXfer *)this)->xferTerrainState( xfer );
+}
+ // end xfer
+
+// ------------------------------------------------------------------------------------------------
+/** Load post process */
+// ------------------------------------------------------------------------------------------------
+// ?loadPostProcess@TerrainLogic@@MAEXXZ present-unmatched
+void TerrainLogic::loadPostProcess( void )
+{
+	Bridge* pBridge = getFirstBridge();
+	Bridge* pNext;
+	while (pBridge) 
+	{
+		pNext = pBridge->getNext();
+		Object* obj = TheGameLogic->findObjectByID(pBridge->peekBridgeInfo()->bridgeObjectID);
+		if (obj == NULL)
+		{
+			deleteBridge(pBridge);
+		}
+		pBridge = pNext;
+	}
+
+}  // end loadPostProcess

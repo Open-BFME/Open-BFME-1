@@ -3,7 +3,7 @@
 #
 # A rebase replays commits without the pre-commit hook, and the union merge
 # driver combines functions.csv with no conflict markers, so a row tombstoned
-# in reverse/deleted_rows.csv can come back from a branch that forked before
+# in targets/game/reverse/deleted_rows.csv can come back from a branch that forked before
 # the delete -- and was first caught at pre-push. A post hook cannot undo the
 # rewrite; it says so loudly while the fix is one command.
 set -uo pipefail

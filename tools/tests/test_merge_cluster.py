@@ -1,6 +1,6 @@
 """What `--apply` may move, what it must refuse, and what it may never delete.
 
-The merge driver edits reverse/functions.csv, so the terminator test is not
+The merge driver edits targets/game/reverse/functions.csv, so the terminator test is not
 decoration: the ledger legitimately mixes \\r\\r\\n, \\r\\n and bare \\n
 (tools/ledger_io.py:1-14) and every naive rewrite has silently dropped or
 invented rows. A row count that survives a repoint but a terminator that does
@@ -25,9 +25,9 @@ TOOLS = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(TOOLS))
 
 HEADER = "name,export_rva,target_rva,target_size,source,status,notes"
-DEST = "Code/GameEngine/Source/Common/RTS/Team.cpp"
-OTHER = "Code/GameEngine/Source/Common/INI/ini.cpp"
-MERGED = "Code/GameEngine/Source/Common/RTS/TeamPrototypeInstanceWalks.cpp"
+DEST = "game/GameEngine/Source/Common/RTS/Team.cpp"
+OTHER = "game/GameEngine/Source/Common/INI/ini.cpp"
+MERGED = "game/GameEngine/Source/Common/RTS/TeamPrototypeInstanceWalks.cpp"
 
 
 def _load(name):
@@ -90,7 +90,7 @@ def repo(tmp_path, sources, rows):
         path = tmp_path / rel
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(text)
-    ledger = tmp_path / "reverse" / "functions.csv"
+    ledger = tmp_path / "targets/game/reverse" / "functions.csv"
     ledger.parent.mkdir(parents=True, exist_ok=True)
     payload = (HEADER + "\r\n").encode()
     for row in rows:
@@ -126,8 +126,8 @@ def run(*argv):
 def test_a_member_declared_at_two_offsets_is_reported_and_blocks_apply(tmp_path, capsys):
     """Two shims cannot both be right about where m_unmodelled_000 ends, and a
     merged TU that picks one silently mis-models the other body."""
-    a = "Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
-    b = "Code/GameEngine/Source/Common/RTS/TeamPrototype_countBuildings.cpp"
+    a = "game/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
+    b = "game/GameEngine/Source/Common/RTS/TeamPrototype_countBuildings.cpp"
     ledger = repo(tmp_path, {
         a: sibling("?hasAnyUnits@TeamPrototype@@QBE_NXZ", DEST, pad="0x274"),
         b: sibling("?countBuildings@TeamPrototype@@QAEHXZ", DEST, pad="0x280"),
@@ -154,8 +154,8 @@ def test_a_member_declared_at_two_offsets_is_reported_and_blocks_apply(tmp_path,
 def test_a_const_overload_is_a_reconciliation_not_a_contradiction(tmp_path, capsys):
     """The real Team.cpp merge turns on this: `iterate_TeamInstanceList()` and its
     const twin are legal in one TU, so they are reported and not refused."""
-    a = "Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
-    b = "Code/GameEngine/Source/Common/RTS/TeamPrototype_countBuildings.cpp"
+    a = "game/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
+    b = "game/GameEngine/Source/Common/RTS/TeamPrototype_countBuildings.cpp"
     walk = "\n\tBfmeIterator walk() const\n\t{\n\t\treturn BfmeIterator( 0 );\n\t}\n"
     ledger = repo(tmp_path, {
         a: sibling("?hasAnyUnits@TeamPrototype@@QBE_NXZ", DEST, extra_body=walk),
@@ -180,8 +180,8 @@ def test_a_const_overload_is_a_reconciliation_not_a_contradiction(tmp_path, caps
 def test_every_terminator_survives_a_repoint(tmp_path):
     """functions.csv mixes all three; a rewrite that normalises them hands the
     union merge driver a brand-new line for every row it did not change."""
-    a = "Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
-    keep = "Code/GameEngine/Source/Common/RTS/Untouched.cpp"
+    a = "game/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
+    keep = "game/GameEngine/Source/Common/RTS/Untouched.cpp"
     ledger = repo(tmp_path, {
         a: sibling("?hasAnyUnits@TeamPrototype@@QBE_NXZ", DEST),
         keep: "// nothing to see\n",
@@ -207,7 +207,7 @@ def test_every_terminator_survives_a_repoint(tmp_path):
 # --------------------------------------------------------------- refusals ---
 
 def test_apply_refuses_an_into_that_does_not_exist(tmp_path, capsys):
-    a = "Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
+    a = "game/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
     ledger = repo(tmp_path, {a: sibling("?hasAnyUnits@TeamPrototype@@QBE_NXZ", DEST)},
                   [("?hasAnyUnits@TeamPrototype@@QBE_NXZ", a, b"\r\n")])
     before = ledger.read_bytes()
@@ -223,7 +223,7 @@ def test_apply_refuses_an_into_that_does_not_exist(tmp_path, capsys):
 
 def test_apply_requires_only(tmp_path, capsys):
     """A whole-cluster merge would repoint rows for bodies the TU does not hold."""
-    a = "Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
+    a = "game/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
     ledger = repo(tmp_path, {a: sibling("?hasAnyUnits@TeamPrototype@@QBE_NXZ", DEST),
                              MERGED: "// merged\n"},
                   [("?hasAnyUnits@TeamPrototype@@QBE_NXZ", a, b"\r\n")])
@@ -238,8 +238,8 @@ def test_apply_requires_only(tmp_path, capsys):
 
 
 def test_apply_refuses_a_file_with_no_marker_for_this_destination(tmp_path, capsys):
-    a = "Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
-    stray = "Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyObjects.cpp"
+    a = "game/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
+    stray = "game/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyObjects.cpp"
     ledger = repo(tmp_path, {
         a: sibling("?hasAnyUnits@TeamPrototype@@QBE_NXZ", DEST),
         stray: "// cl: /DNDEBUG /MD /EHsc\n// no marker, so not in the cluster\n",
@@ -261,7 +261,7 @@ def test_apply_refuses_a_file_with_no_marker_for_this_destination(tmp_path, caps
 def test_a_donor_holding_a_second_destinations_body_is_never_deleted(tmp_path, capsys):
     """ini_parsers.cpp is claimed by ten destinations. Draining one of them must
     leave the other nine's bodies exactly where they are."""
-    shared = "Code/GameEngine/Source/Common/RTS/INIParseSoundsListThunk.cpp"
+    shared = "game/GameEngine/Source/Common/RTS/INIParseSoundsListThunk.cpp"
     ledger = repo(tmp_path, {
         shared: sibling("?hasAnyUnits@TeamPrototype@@QBE_NXZ", DEST,
                         extra_marker=("?parseSoundsList@INI@@", OTHER),
@@ -285,7 +285,7 @@ def test_a_donor_holding_a_second_destinations_body_is_never_deleted(tmp_path, c
 
 # -------------------------------------------- a donor that is only partly ours ---
 
-# The real shape, from Code/GameEngine/Source/Common/SkirmishBattleHonorsLoyalGames.cpp:
+# The real shape, from game/GameEngine/Source/Common/SkirmishBattleHonorsLoyalGames.cpp:
 # two markers naming one destination, twenty rows owned. Selecting rows by donor
 # FILE moved all twenty and deleted the file, leaving eighteen bodies whose ledger
 # rows named a path that no longer existed. The build caught it
@@ -297,7 +297,7 @@ UNMARKED = [f"?builtNuke{n:02d}@SkirmishBattleHonors@@QBE_NXZ" for n in range(18
 
 
 def partial_donor(tmp_path):
-    donor = "Code/GameEngine/Source/Common/SkirmishBattleHonorsLoyalGames.cpp"
+    donor = "game/GameEngine/Source/Common/SkirmishBattleHonorsLoyalGames.cpp"
     ledger = repo(tmp_path, {
         donor: sibling(MARKED[0], DEST, extra_marker=(MARKED[1], DEST)),
         MERGED: "// merged\n",
@@ -326,7 +326,7 @@ def test_only_the_rows_a_marker_names_move_and_the_donor_survives(tmp_path, caps
 
 def test_a_donor_whose_every_row_is_marked_is_still_deleted(tmp_path, capsys):
     """The fix must not make every donor immortal: one with nothing left goes."""
-    donor = "Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
+    donor = "game/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
     symbol = "?hasAnyUnits@TeamPrototype@@QBE_NXZ"
     ledger = repo(tmp_path, {donor: sibling(symbol, DEST), MERGED: "// merged\n"},
                   [(symbol, donor, b"\r\n")])
@@ -341,7 +341,7 @@ def test_a_donor_whose_every_row_is_marked_is_still_deleted(tmp_path, capsys):
 
 def test_plan_shows_the_marked_share_before_anyone_applies(tmp_path, capsys):
     """The count that would have prevented the incident, visible without a
-    hand-run `grep -c ',<donor>,' reverse/functions.csv`."""
+    hand-run `grep -c ',<donor>,' targets/game/reverse/functions.csv`."""
     donor, _ledger = partial_donor(tmp_path)
 
     assert run("--plan", DEST, "--only", donor, "--root", str(tmp_path)) == 0
@@ -358,7 +358,7 @@ def test_only_moves_and_deletes_exactly_the_named_files(tmp_path, capsys):
     """Five siblings, three named: a cluster is drained over several commits."""
     names = ["hasAnyUnits", "countBuildings", "hasAnyBuildFacility",
              "updateState", "teamAboutToBeDeleted"]
-    files = {f"Code/GameEngine/Source/Common/RTS/TeamPrototype_{n}.cpp": f"?{n}@TeamPrototype@@QBE_NXZ"
+    files = {f"game/GameEngine/Source/Common/RTS/TeamPrototype_{n}.cpp": f"?{n}@TeamPrototype@@QBE_NXZ"
              for n in names}
     sources = {rel: sibling(symbol, DEST) for rel, symbol in files.items()}
     chosen = list(files)[:3]
@@ -388,7 +388,7 @@ def test_only_moves_and_deletes_exactly_the_named_files(tmp_path, capsys):
 
 
 def test_the_merged_file_may_not_be_its_own_donor(tmp_path, capsys):
-    a = "Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
+    a = "game/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
     ledger = repo(tmp_path, {a: sibling("?hasAnyUnits@TeamPrototype@@QBE_NXZ", DEST)},
                   [("?hasAnyUnits@TeamPrototype@@QBE_NXZ", a, b"\r\n")])
     before = ledger.read_bytes()
@@ -406,8 +406,8 @@ def test_plan_flags_a_thunk_only_donor_whose_fold_would_delete_the_real_body(
     """A donor whose every row is ILT-sized holds no body. Folding it deletes the
     destination's readable body and leaves a stub -- a net loss the file count
     reports as progress, so --plan has to say so before anyone applies."""
-    thunk = "Code/GameEngine/Source/Common/RTS/BridgeIsPointOnBridgeThunk.cpp"
-    real = "Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
+    thunk = "game/GameEngine/Source/Common/RTS/BridgeIsPointOnBridgeThunk.cpp"
+    real = "game/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
     repo(tmp_path, {
         thunk: sibling("?isPointOnBridge@Bridge@@QBE_NPBUCoord3D@@@Z", DEST),
         real: sibling("?hasAnyUnits@TeamPrototype@@QBE_NXZ", DEST),
@@ -426,13 +426,13 @@ def test_plan_flags_a_thunk_only_donor_whose_fold_would_delete_the_real_body(
 
 def test_donors_with_different_cl_lines_are_refused(tmp_path, capsys):
     """The `// cl:` line is the TU's whole compile environment -- flags AND include
-    search path. BezierSegmentEvaluation builds against Code/GameEngine/Include and
+    search path. BezierSegmentEvaluation builds against game/GameEngine/Include and
     BezierSegment.cpp against the ZH reference tree; folding the first into the
     second resolved different headers and the body stopped reproducing retail
     (FAIL 1/68) from byte-identical source text. Only 19% of directories are
     flag-homogeneous, so this is the common case, not a corner."""
-    a = "Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
-    b = "Code/GameEngine/Source/Common/RTS/TeamPrototype_countBuildings.cpp"
+    a = "game/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
+    b = "game/GameEngine/Source/Common/RTS/TeamPrototype_countBuildings.cpp"
     ledger = repo(tmp_path, {
         a: "// cl: /DNDEBUG /MD /EHsc\n" + sibling("?hasAnyUnits@TeamPrototype@@QBE_NXZ", DEST),
         b: "// cl: /O2 /Ob0\n" + sibling("?countBuildings@TeamPrototype@@QAEHXZ", DEST),

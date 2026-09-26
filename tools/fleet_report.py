@@ -24,8 +24,8 @@ def published(rows):
     for row in rows:
         source = row.get("source", "")
         run = re.search(r"(?:^|\s)run=([A-Za-z0-9_-]+)(?:\s|$)", row.get("notes", ""))
-        if (not run or row.get("status") != "matched" or source.startswith("Code/gen_")
-                or not source.startswith("Code/") or not source.endswith((".cpp", ".c"))):
+        if (not run or row.get("status") != "matched" or source.startswith("game/gen_")
+                or not source.startswith("game/") or not source.endswith((".cpp", ".c"))):
             continue
         start, size = int(row["target_rva"], 16), int(row["target_size"])
         by_run.setdefault(run[1], []).append((start, start + size))
@@ -86,7 +86,7 @@ def main():
         return
     revision = subprocess.check_output(["git", "rev-parse", "--verify", a.ref + "^{commit}"],
                                        cwd=build.ROOT, text=True).strip()
-    ledger = subprocess.check_output(["git", "show", revision + ":reverse/functions.csv"],
+    ledger = subprocess.check_output(["git", "show", revision + ":targets/game/reverse/functions.csv"],
                                     cwd=build.ROOT).decode("utf-8")
     accepted = published(csv.DictReader(io.StringIO(ledger)))
     runs = []

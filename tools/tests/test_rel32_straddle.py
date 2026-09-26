@@ -73,7 +73,7 @@ def write_object(path):
 def make_row(size):
     return {"name": "uw_00bfa6c0", "target_rva": f"0x{TARGET_RVA:08X}",
             "target_size": str(size),
-            "source": "Code/GameEngine/Source/Common/RTS/PlayerTemplate.cpp",
+            "source": "game/GameEngine/Source/Common/RTS/PlayerTemplate.cpp",
             "status": "matched", "notes": "object-symbol=_straddle"}
 
 

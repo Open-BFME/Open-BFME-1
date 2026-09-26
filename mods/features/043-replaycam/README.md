@@ -90,7 +90,7 @@ parameter slot). So each line is a real refcounted `UnicodeString`, built by
 `UnicodeString::UnicodeString(const WideChar *)` at RVA `0x00888DE0` — the
 GameEngine one, in the same string TU as `AsciiString`'s literal ctor at
 `0x00C88BC0`, **not** the WWLib class of the same mangled name that
-`reverse/functions.csv` pins at RVA `0x00065410`. Handing it a static body would
+`targets/game/reverse/functions.csv` pins at RVA `0x00065410`. Handing it a static body would
 hand its destructor a static body to free.
 
 The card text is a printf format, so a stray `%` in it would be read as a

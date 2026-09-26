@@ -1,0 +1,128 @@
+// cl: /DNDEBUG /MD /EHs-c-
+// Open-BFME5: public four-arg FXList::doFXPos at 0x004280D0 (133B).
+// Same BFME FXList / FXNugget slice as FXListDoFXObjThunk.cpp: sentinel at
+// +4, play-even-if-shrouded at +0x10, nugget stop flag at +0xB0.  Cell-shroud
+// gates on the primary position; each nugget is asked isVisible(0, 0) before
+// the four-arg doFXPos virtual.  ret 0x10.
+
+typedef bool Bool;
+typedef int Int;
+typedef float Real;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
+struct Coord3D
+{
+	Real x;
+	Real y;
+	Real z;
+};
+
+class Matrix3D;
+
+enum CellShroudStatus
+{
+	CELLSHROUD_CLEAR,
+	CELLSHROUD_FOGGED,
+	CELLSHROUD_SHROUDED
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
+class Player
+{
+public:
+	Int getPlayerIndex() const { return m_playerIndex; }
+
+private:
+	char m_unknown[0x24];
+	Int m_playerIndex;
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
+class PlayerList
+{
+public:
+	Player *getLocalPlayer() const { return m_localPlayer; }
+
+private:
+	char m_unknown[0x0c];
+	Player *m_localPlayer;
+};
+
+extern PlayerList *ThePlayerList;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
+class PartitionManager
+{
+public:
+	CellShroudStatus getShroudStatusForPlayer(Int playerIndex, const Coord3D *position) const;
+};
+
+extern PartitionManager *TheShroudManager;
+
+class Object;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
+class FXNugget
+{
+public:
+	virtual void slot0() = 0;
+	virtual void doFXPos(const Coord3D *primary, const Matrix3D *primaryMtx, Real primarySpeed, const Coord3D *secondary) const = 0;
+	virtual void slot2() = 0;
+	virtual void slot3() = 0;
+	virtual Bool isVisible(const Object *primary, const Object *secondary) const = 0;
+
+private:
+	char m_shared[0xac];
+
+public:
+	Bool m_stopIfNuggetPlayed;
+};
+
+struct FXNuggetNode
+{
+	FXNuggetNode *next;
+	FXNuggetNode *prev;
+	FXNugget *value;
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
+class FXList
+{
+public:
+	virtual ~FXList();
+	void doFXPos(const Coord3D *primary, const Matrix3D *primaryMtx, Real primarySpeed, const Coord3D *secondary) const;
+
+private:
+	FXNuggetNode *m_nuggetSentinel;
+	char m_bfmeFields[8];
+	Bool m_playEvenIfShrouded;
+};
+
+// ?doFXPos@FXList@@QBEXPBUCoord3D@@PBVMatrix3D@@M0@Z
+void FXList::doFXPos(const Coord3D *primary, const Matrix3D *primaryMtx, Real primarySpeed, const Coord3D *secondary) const
+{
+	const FXList *self = this;
+	if (!m_playEvenIfShrouded && primary)
+	{
+		if (TheShroudManager->getShroudStatusForPlayer(
+			ThePlayerList->getLocalPlayer()->getPlayerIndex(), primary) != CELLSHROUD_CLEAR)
+			return;
+	}
+
+	FXNuggetNode *node = m_nuggetSentinel->next;
+	if (node != m_nuggetSentinel)
+	{
+		const Coord3D *secondaryPosition = secondary;
+		do
+		{
+			FXNugget *nugget = node->value;
+			if (nugget->isVisible(0, 0))
+			{
+				nugget->doFXPos(primary, primaryMtx, primarySpeed, secondaryPosition);
+				if (nugget->m_stopIfNuggetPlayed)
+					break;
+			}
+			node = node->next;
+		} while (node != self->m_nuggetSentinel);
+	}
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Explain unresolved REL32 callees and suggest reverse/symbols.csv pins.
+"""Explain unresolved REL32 callees and suggest targets/game/reverse/symbols.csv pins.
 
 When ./build.sh fails with "unresolved call(s): <symbol>", an aligned retail
 call site can supply a candidate pin. A source-shape mismatch cannot: object
@@ -16,9 +16,9 @@ Prove the callee's identity and ABI independently before pinning; byte matching
 and a known address alone do not prove a symbol's name.
 
 Usage:
-  python3 tools/decode_calls.py Code/GameEngine/Source/Common/foo.cpp                 # all ledger rows of the source
+  python3 tools/decode_calls.py game/GameEngine/Source/Common/foo.cpp                 # all ledger rows of the source
   python3 tools/decode_calls.py '?fn@Cls@@QAEXXZ'              # one function, source from its row
-  python3 tools/decode_calls.py '?fn@Cls@@QAEXXZ' --rva 0x00812340 --source Code/GameEngine/Source/Common/foo.cpp
+  python3 tools/decode_calls.py '?fn@Cls@@QAEXXZ' --rva 0x00812340 --source game/GameEngine/Source/Common/foo.cpp
                                                                # candidate without a ledger row
 """
 import argparse
@@ -162,9 +162,9 @@ def main():
         fail("Capstone is required to validate instruction boundaries; "
              "use the project's Python environment with capstone installed")
 
-    reverse_dir = build.ROOT / "reverse"
+    reverse_dir = build.ROOT / "targets/game/reverse"
     if args.root:
-        reverse_dir = args.root.resolve() / "reverse"
+        reverse_dir = args.root.resolve() / "targets/game/reverse"
         # build.py helpers read module globals; rebase just the ledgers so
         # load_symbol_map()/load_all_function_rows() see the test copy
         build.FUNCTIONS = reverse_dir / "functions.csv"

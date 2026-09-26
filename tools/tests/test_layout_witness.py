@@ -66,13 +66,13 @@ def test_reference_name_keeps_zh_paths_and_prefixes_generals():
 
 
 def test_ledger_reference_sources_are_the_rows_built_from_reference(monkeypatch, tmp_path):
-    (tmp_path / 'reverse').mkdir()
-    (tmp_path / 'reverse/functions.csv').write_text(
+    (tmp_path / 'targets/game/reverse').mkdir(parents=True)
+    (tmp_path / 'targets/game/reverse/functions.csv').write_text(
         'name,export_rva,target_rva,target_size,source,status,notes\n'
-        '?a@@YAXXZ,,0x1,1,reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/x.cpp,matched,\n'
-        '?b@@YAXXZ,,0x2,1,Code/GameEngine/Source/y.cpp,matched,\n', encoding='utf-8')
+        '?a@@YAXXZ,,0x1,1,inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/x.cpp,matched,\n'
+        '?b@@YAXXZ,,0x2,1,game/GameEngine/Source/y.cpp,matched,\n', encoding='utf-8')
     monkeypatch.setattr(build, 'ROOT', tmp_path)
-    assert lw.ledger_reference_sources() == {tmp_path / 'reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/x.cpp'}
+    assert lw.ledger_reference_sources() == {tmp_path / 'inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/x.cpp'}
 
 
 def _image():

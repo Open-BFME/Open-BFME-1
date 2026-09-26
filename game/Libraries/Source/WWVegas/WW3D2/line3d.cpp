@@ -1,0 +1,515 @@
+// cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/Wwutil /Igame/Libraries/Source/WWVegas/WWDownload /Igame/Libraries/Source/Compression /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
+#define Matrix4x4 Matrix4
+#include "winbase_shim.h"
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/*************************************************************************** 
+ ***    C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S     *** 
+ *************************************************************************** 
+ *                                                                         * 
+ *                 Project Name : G                                        * 
+ *                                                                         * 
+ *                     $Archive:: /Commando/Code/ww3d2/line3d.cpp         $* 
+ *                                                                         * 
+ *                      $Author:: Jani_p                                  $* 
+ *                                                                         * 
+ *                     $Modtime:: 7/05/01 4:15p                           $* 
+ *                                                                         * 
+ *                    $Revision:: 11                                      $* 
+ *                                                                         * 
+ *-------------------------------------------------------------------------* 
+ * Functions:                                                              * 
+ *   Line3DClass::Line3DClass -- Constructor                               * 
+ *   Line3DClass::Line3DClass -- Copy constructor.                         * 
+ *   Line3DClass::operator = -- assignment operator                        * 
+ *   Line3DClass::~Line3DClass -- Destructor.                              * 
+ *   Line3DClass::Clone -- Creates a clone of this Line3D                  * 
+ *   Line3DClass::Scale -- Scale object                                    * 
+ *   Line3DClass::Scale -- Scale object                                    * 
+ *   Line3DClass::Update_Cached_Bounding_Volumes -- update bounding vols   *
+ *   Line3DClass::Reset -- Reset line start and end points.                * 
+ *   Line3DClass::Reset -- Reset line start and end points, and line width.* 
+ *   Re_Color -- Reset the line color.                                     * 
+ *	  Set_Opacity -- Reset the line opacity.                                * 
+ *   Line3DClass::Render -- render the 3d line                             *
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#include "line3d.h"
+#include "vertmaterial.h"
+#include "shader.h"
+#include "wwdebug.h"
+#include "ww3d.h"
+class CameraClass;
+#include "rinfo.h"
+#include "dx8wrapper.h"
+#include "dx8vertexbuffer.h"
+#include "dx8indexbuffer.h"
+#include "dx8fvf.h"
+
+// Keep the retail out-of-line ShaderClass setter in this TU.  It is inline
+// in shader.h, but the retail object also exports the COMDAT body.
+void (ShaderClass::*bfmeSetAlphaTestAnchor)(ShaderClass::AlphaTestType) =
+	&ShaderClass::Set_Alpha_Test;
+
+// 12 Triangles for index buffer
+const unsigned short Indices[]=
+{
+	3,5,1,
+	7,5,3,
+	1,5,0,
+	5,4,0,
+	4,2,0,
+	4,6,2,
+	7,3,2,
+	6,7,2,
+	7,6,5,
+	5,6,4,
+	2,3,1,
+	2,1,0
+};
+
+
+/************************************************************************** 
+ * Line3DClass::Line3DClass -- Constructor                                * 
+ *                                                                        * 
+ * INPUT:	Vector3 start, end - start, end points of line (world coords).* 
+ *       	float width - width of line (in world units).                 * 
+ *       	float r, g, b - R, G, B components of line color.             * 
+ *       	float opacity - opacity of line.                              * 
+ *                                                                        * 
+ * OUTPUT:	none.                                                         * 
+ *                                                                        * 
+ * WARNINGS:                                                              * 
+ *                                                                        * 
+ * HISTORY:                                                               * 
+ *   01/15/1998 NH  : Created.                                            * 
+ *   04/21/1998 NH  : Ported to SR 1.3.                                   * 
+ *	  02/16/2001 HY  : Ported to DX8													  *
+ *========================================================================*/
+Line3DClass::Line3DClass (const Vector3 & start, const Vector3 & end,
+	float width, float r, float g, float b, float opacity) :
+	Shader(0x0010441b)
+{
+	Length = (end - start).Length();
+   Width = width;
+
+	// Create box model with origin at start point (X is major axis).	
+
+	// 8 Vertices	
+	float halfw = Width * 0.5f;
+
+	vert[0].X = 0.0f;
+	vert[0].Y = -halfw;
+	vert[0].Z = -halfw;
+	vert[1].X = 0.0f;
+	vert[1].Y = halfw;
+	vert[1].Z = -halfw;
+	vert[2].X = 0.0f;
+	vert[2].Y = -halfw;
+	vert[2].Z = halfw;
+	vert[3].X = 0.0f;
+	vert[3].Y = halfw;
+	vert[3].Z = halfw;
+	vert[4].X = Length;
+	vert[4].Y = -halfw;
+	vert[4].Z = -halfw;
+	vert[5].X = Length;
+	vert[5].Y = halfw;
+	vert[5].Z = -halfw;
+	vert[6].X = Length;
+	vert[6].Y = -halfw;
+	vert[6].Z = halfw;
+	vert[7].X = Length;
+	vert[7].Y = halfw;
+	vert[7].Z = halfw;
+	
+	Color.X=r;
+	Color.Y=g;
+	Color.Z=b;
+	Set_Opacity(opacity);
+
+	// Set box transform so that the origin is at the start point and it
+	// 'looks towards' the endpoint.
+	Matrix3D transform(true);
+	transform.Obj_Look_At(start, end, 0.0);
+	Set_Transform(transform);
+}
+
+
+/************************************************************************** 
+ * Line3DClass::Line3DClass -- Copy constructor.                          * 
+ *                                                                        * 
+ * INPUT:	const Line3DClass & src - source to copy from.                * 
+ *                                                                        * 
+ * OUTPUT:	none.                                                         * 
+ *                                                                        * 
+ * WARNINGS:                                                              * 
+ *                                                                        * 
+ * HISTORY:                                                               * 
+ *   01/15/1998 NH  : Created.                                            * 
+ *   04/21/1998 NH  : Ported to SR 1.3.                                   * 
+ *	  02/16/2001 HY  : Ported to DX8													  *
+ *========================================================================*/
+// ?Line3DClass::Line3DClass present-unmatched
+Line3DClass::Line3DClass(const Line3DClass & src) :
+	RenderObjClass(src),
+	Length(src.Length),
+   Width(src.Width),
+	Shader(src.Shader),
+	Color(src.Color),
+	SortLevel(0)
+{
+		for (int i=0; i<8; i++) vert[i]=src.vert[i];
+}
+
+
+/************************************************************************** 
+ * Line3DClass::operator = -- assignment operator                         * 
+ *                                                                        * 
+ * INPUT:	const Line3DClass & that - source to copy from.               * 
+ *                                                                        * 
+ * OUTPUT:	Line3DClass & - result of assignment.                         * 
+ *                                                                        * 
+ * WARNINGS:                                                              * 
+ *                                                                        * 
+ * HISTORY:                                                               * 
+ *   01/15/1998 NH  : Created.                                            * 
+ *   04/21/1998 NH  : Ported to SR 1.3.                                   *
+ *	  02/16/2001 HY  : Ported to DX8													  *
+ *========================================================================*/
+// ?Line3DClass::operator= present-unmatched
+Line3DClass & Line3DClass::operator = (const Line3DClass & that)
+{
+	// Naty: need to add MatInfo and remapper to do this 	Byon
+	WWASSERT(0);
+
+	RenderObjClass::operator = (that);
+
+	if (this != &that) {
+		Length = that.Length;
+      Width = that.Width;		
+		Shader=that.Shader;
+		Color=that.Color;
+		for (int i=0; i<8; i++)
+			vert[i]=that.vert[i];
+		SortLevel = that.SortLevel;
+	}
+
+	return * this;
+}
+
+
+/************************************************************************** 
+ * Line3DClass::~Line3DClass -- Destructor.                               * 
+ *                                                                        * 
+ * INPUT:	none.                                                         * 
+ *                                                                        * 
+ * OUTPUT:	none.                                                         * 
+ *                                                                        * 
+ * WARNINGS:                                                              * 
+ *                                                                        * 
+ * HISTORY:                                                               * 
+ *   01/15/1998 NH  : Created.                                            * 
+ *   04/21/1998 NH  : Ported to SR 1.3.                                   *
+ *	  02/16/2001 HY  : Ported to DX8													  *
+ *========================================================================*/
+// ?Line3DClass::~Line3DClass present-unmatched
+Line3DClass::~Line3DClass(void)
+{	
+}
+
+
+/************************************************************************** 
+ * Line3DClass::Clone -- Creates a clone of this Line3D                   * 
+ *                                                                        * 
+ * INPUT:	none.                                                         * 
+ *                                                                        * 
+ * OUTPUT:	RenderObjClass * - pointer to cloned object.                  * 
+ *                                                                        * 
+ * WARNINGS:                                                              * 
+ *                                                                        * 
+ * HISTORY:                                                               * 
+ *   01/15/1998 NH  : Created.                                            *
+ *========================================================================*/
+// ?Line3DClass::Clone present-unmatched
+RenderObjClass * Line3DClass::Clone(void) const
+{
+	return NEW_REF( Line3DClass, (*this));
+}
+
+/***********************************************************************************************
+ * Line3DClass::Render -- render the 3d line                                                   *
+ *                                                                                             *
+ * INPUT:                                                                                      *
+ *                                                                                             *
+ * OUTPUT:                                                                                     *
+ *                                                                                             *
+ * WARNINGS:                                                                                   *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   12/8/98    GTH : Created.                                                                 *
+ *	  02/16/2001 HY  : Ported to DX8													                       *
+ *=============================================================================================*/
+
+// ?Line3DClass::Render present-unmatched
+void Line3DClass::Render(RenderInfoClass & rinfo)
+{
+	// BFME: the byte-matched implementation is kept in the TU-local ABI
+	// candidate so this upstream stub remains available to the other slots.
+}
+
+/************************************************************************** 
+ * Line3DClass::Scale -- Scale object                                     * 
+ *                                                                        * 
+ * INPUT:	float scale - uniform scale factor.                           * 
+ *                                                                        * 
+ * OUTPUT:	none.                                                         * 
+ *                                                                        * 
+ * WARNINGS:                                                              * 
+ *                                                                        * 
+ * HISTORY:                                                               * 
+ *   01/27/1998 NH  : Created.                                            * 
+ *   04/21/1998 NH  : Ported to SR 1.3.                                   * 
+ *	  02/16/2001 HY  : Ported to DX8													  *
+ *========================================================================*/
+// ?Line3DClass::Scale present-unmatched
+void Line3DClass::Scale(float scale)
+{	
+	for (int i=0; i<8; i++) vert[i]*=scale;
+	Length *= scale;
+   Width *= scale;
+
+   Invalidate_Cached_Bounding_Volumes();
+
+   // Now update the object space bounding volumes of this object's container:
+   RenderObjClass *container = Get_Container();
+   if (container) container->Update_Obj_Space_Bounding_Volumes();
+}
+
+
+/************************************************************************** 
+ * Line3DClass::Scale -- Scale object                                     * 
+ *                                                                        * 
+ * INPUT:	float scalex, scaley, scalez - axis scale factors.            * 
+ *                                                                        * 
+ * OUTPUT:	none.                                                         * 
+ *                                                                        * 
+ * WARNINGS:                                                              * 
+ *                                                                        * 
+ * HISTORY:                                                               * 
+ *   01/27/1998 NH  : Created.                                            * 
+ *   04/21/1998 NH  : Ported to SR 1.3.                                   *
+ *	  02/16/2001 HY  : Ported to DX8													  *
+ *========================================================================*/
+// ?Line3DClass::Scale present-unmatched
+void Line3DClass::Scale(float scalex, float scaley, float scalez)
+{
+	// The line width is always the same in the y and z axes (the line
+	// approximates a cylinder).
+	Vector3 scale(scalex,scaley,scalez);
+	for (int i=0; i<8; i++) vert[i].Scale(scale);	
+	Length *= scalex;
+   Width *= scaley;
+
+   Invalidate_Cached_Bounding_Volumes();
+
+   // Now update the object space bounding volumes of this object's container:
+   RenderObjClass *container = Get_Container();
+   if (container) container->Update_Obj_Space_Bounding_Volumes();
+}
+
+
+void Line3DClass::Get_Obj_Space_Bounding_Sphere(SphereClass & sphere) const
+{
+	float half_l = Length * 0.5f;
+	sphere.Center.Set(half_l, 0.0f, 0.0f);
+	sphere.Radius = half_l;
+}
+
+
+void Line3DClass::Get_Obj_Space_Bounding_Box(AABoxClass & box) const
+{
+	float half_l = Length * 0.5f;
+	box.Center.Set(half_l, 0.0f, 0.0f);
+	box.Extent.Set(half_l, 0.0f, 0.0f);
+}
+
+/************************************************************************** 
+ * Line3DClass::Reset -- Reset line start and end points.                 * 
+ *                                                                        * 
+ * INPUT:                                                                 * 
+ *                                                                        * 
+ * OUTPUT:                                                                * 
+ *                                                                        * 
+ * WARNINGS:                                                              * 
+ *                                                                        * 
+ * HISTORY:                                                               * 
+ *   01/19/1998 NH  : Created.                                            * 
+ *   04/21/1998 NH  : Ported to SR 1.3.                                   * 
+ *========================================================================*/
+// Retail Reset dispatches Scale through vtable slot 90 (0x168), one slot
+// earlier than the BFME header's ordinary Line3DClass view.
+class RetailScaleDispatch
+{
+public:
+	virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03(); virtual void v04();
+	virtual void v05(); virtual void v06(); virtual void v07(); virtual void v08(); virtual void v09();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54();
+	virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59();
+	virtual void v60(); virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64();
+	virtual void v65(); virtual void v66(); virtual void v67(); virtual void v68(); virtual void v69();
+	virtual void v70(); virtual void v71(); virtual void v72(); virtual void v73(); virtual void v74();
+	virtual void v75(); virtual void v76(); virtual void v77(); virtual void v78(); virtual void v79();
+	virtual void v80(); virtual void v81(); virtual void v82(); virtual void v83(); virtual void v84();
+	virtual void v85(); virtual void v86(); virtual void v87(); virtual void v88(); virtual void v89();
+	virtual void Scale(float, float, float);
+};
+
+// ?Line3DClass::Reset present-unmatched
+void Line3DClass::Reset(const Vector3 & new_start, const Vector3 & new_end)
+{
+	// Adjust length of line:
+	float new_length = (new_end - new_start).Length();
+	if (new_length == 0) {
+		new_length = 0.001f;			// make sure we don't have a zero length BMG
+	}
+	((RetailScaleDispatch *)this)->Scale((new_length / Length), 1.0f, 1.0f);
+	Length = new_length;
+
+	// Adjust transform of line:
+	Matrix3D transform(true);
+	transform.Obj_Look_At(new_start, new_end, 0.0);
+	Set_Transform(transform);
+
+   Invalidate_Cached_Bounding_Volumes();
+
+   // Now update the object space bounding volumes of this object's container:
+   RenderObjClass *container = Get_Container();
+   if (container) container->Update_Obj_Space_Bounding_Volumes();
+}
+
+
+/************************************************************************** 
+ * Line3DClass::Reset -- Reset line start and end points, and line width. * 
+ *                                                                        * 
+ * INPUT:                                                                 * 
+ *                                                                        * 
+ * OUTPUT:                                                                * 
+ *                                                                        * 
+ * WARNINGS:                                                              * 
+ *                                                                        * 
+ * HISTORY:                                                               * 
+ *   01/19/1998 NH  : Created.                                            * 
+ *   04/21/1998 NH  : Ported to SR 1.3.                                   * 
+ *========================================================================*/
+void Line3DClass::Reset(const Vector3 & new_start, const Vector3 & new_end, float new_width)
+{
+	// Adjust length and width of line:
+	float new_length = (new_end - new_start).Length();
+	if (new_length == 0) {
+		new_length = 0.001f;			// make sure we don't have a zero length BMG
+	}
+   float width_scale = new_width / Width;
+	((RetailScaleDispatch *)this)->Scale((new_length / Length), width_scale, width_scale);
+	Length = new_length;
+   Width = new_width;
+
+	// Adjust transform of line:
+	Matrix3D transform(true);
+	transform.Obj_Look_At(new_start, new_end, 0.0);
+	Set_Transform(transform);
+   Matrix3D inv;
+	transform.Get_Orthogonal_Inverse(inv);
+#ifdef ALLOW_TEMPORARIES
+//   Vector3 test = inv * Vector3(new_end);
+#else
+//		Vector3 test;
+//		inv.mulVector3(new_end, test);
+#endif
+
+   Invalidate_Cached_Bounding_Volumes();
+
+   // Now update the object space bounding volumes of this object's container:
+   RenderObjClass *container = Get_Container();
+   if (container) container->Update_Obj_Space_Bounding_Volumes();
+}
+
+
+/************************************************************************** 
+ * Re_Color -- Reset the line color.                                      * 
+ *                                                                        * 
+ * INPUT:	float r, g, b - components of the new color.                  * 
+ *                                                                        * 
+ * OUTPUT:	none.                                                         * 
+ *                                                                        * 
+ * WARNINGS:                                                              * 
+ *                                                                        * 
+ * HISTORY:                                                               * 
+ *   01/26/1998 NH  : Created.                                            * 
+ *   04/21/1998 NH  : Ported to SR 1.3.                                   * 
+ *========================================================================*/
+// ?Line3DClass::Re_Color present-unmatched
+void Line3DClass::Re_Color(float r, float g, float b)
+{
+	Color=Vector4(r,g,b,Color.W);
+}
+
+
+/************************************************************************** 
+ * Set_Opacity -- Reset the line opacity.                                 * 
+ *                                                                        * 
+ * INPUT:	float opacity - new opacity.                                  * 
+ *                                                                        * 
+ * OUTPUT:	none.                                                         * 
+ *                                                                        * 
+ * WARNINGS:                                                              * 
+ *                                                                        * 
+ * HISTORY:                                                               * 
+ *   11/03/1998 NH  : Created.                                            * 
+ *========================================================================*/
+// ?Line3DClass::Set_Opacity present-unmatched
+void Line3DClass::Set_Opacity(float opacity)
+{
+	if (opacity < 1.0f)
+	{	Shader=ShaderClass::_PresetAlphaSolidShader;
+		Set_Sort_Level(1);
+	}
+	else
+	{	Shader=ShaderClass::_PresetOpaqueSolidShader;
+		Set_Sort_Level(SORT_LEVEL_NONE);
+	}
+	Color.W=opacity;
+}
+
+/*
+**
+*/
+// ?Line3DClass::Get_Num_Polys present-unmatched
+int Line3DClass::Get_Num_Polys(void) const
+{ 
+	return 12;
+}

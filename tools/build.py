@@ -23,10 +23,10 @@ from portable_lock import lock, unlock
 
 
 ROOT = Path(__file__).resolve().parents[1]
-MANIFEST = ROOT / "baselines" / "bfme1" / "workshop-vanilla-1.03" / "manifest.json"
-EXE = ROOT / "baselines" / "bfme1" / "workshop-vanilla-1.03" / "files" / "lotrbfme.exe"
-FUNCTIONS = ROOT / "reverse" / "functions.csv"
-SYMBOLS = ROOT / "reverse" / "symbols.csv"
+MANIFEST = ROOT / "inputs/baselines" / "bfme1" / "workshop-vanilla-1.03" / "manifest.json"
+EXE = ROOT / "inputs/baselines" / "bfme1" / "workshop-vanilla-1.03" / "files" / "lotrbfme.exe"
+FUNCTIONS = ROOT / "targets/game/reverse" / "functions.csv"
+SYMBOLS = ROOT / "targets/game/reverse" / "symbols.csv"
 BUILD_DIR = ROOT / "build" / "match"
 PATCH_DIR = ROOT / "build" / "patch"
 # A run that DIES leaves its marker behind, and that is the whole point: an
@@ -48,7 +48,7 @@ MIN_LIB_CONCRETE = 8
 
 def resolved(path):
     # Path.resolve() can hand back a Windows extended-length \\?\ path once the
-    # tree gets deep enough (Code/gen_small/*.cpp under a long checkout dir on
+    # tree gets deep enough (game/gen_small/*.cpp under a long checkout dir on
     # Python 3.14). ROOT never carries that prefix, so relative_to() rejects the
     # result and the gate dies in its last phase. Strip it back off.
     out = Path(path).resolve()
@@ -143,7 +143,7 @@ def extract_lib_members(rows):
 NOOP_EXE = PATCH_DIR / "lotrbfme.noop.exe"
 DEFAULT_VC71_ROOT = (
     ROOT
-    / "build"
+    / "inputs"
     / "toolchains"
     / "vs2003"
     / "Program Files"
@@ -509,7 +509,7 @@ def stlport_include_dir():
     """Directory of STLport 4.5.3 headers, or None. The game linked STLport, so
     files using std:: containers must compile against it to byte-match (MSVC's own
     STL emits different code). Prefer a vendored copy; fall back to an env var."""
-    candidates = [ROOT / "vendor" / "stlport"]
+    candidates = [ROOT / "inputs/vendor" / "stlport"]
     env_root = os.environ.get("STLPORT_ROOT")
     if env_root:
         candidates.append(Path(env_root))
@@ -522,12 +522,12 @@ def stlport_include_dir():
 def nbench_include_dir():
     """Directory of vendored nbench-byte 2.2.3 sources, or None.
 
-    Code/Libraries/Source/Benchmark/{nbench0,nbench1,emfloat}.cpp include the
+    game/Libraries/Source/Benchmark/{nbench0,nbench1,emfloat}.cpp include the
     upstream .c files by their original names; those live here, not next to
-    the wrappers. Scoped to Benchmark TUs the same way vendor/stlport is
+    the wrappers. Scoped to Benchmark TUs the same way inputs/vendor/stlport is
     scoped to // stlport files.
     """
-    path = ROOT / "vendor" / "nbench"
+    path = ROOT / "inputs/vendor" / "nbench"
     if (path / "nbench1.c").exists():
         return path
     return None
@@ -540,19 +540,19 @@ def source_needs_nbench(source):
         relative = resolved(source).relative_to(ROOT).as_posix()
     except ValueError:
         return False
-    return relative.startswith("Code/Libraries/Source/Benchmark/")
+    return relative.startswith("game/Libraries/Source/Benchmark/")
 
 
 # The vendored Zero Hour tree. Its whole value is being unmodified upstream, so
 # its files carry neither the `// stlport` marker nor a `// cl:` line that a
-# Code/ source uses to declare its build settings; a row sourced from here gets
+# game/ source uses to declare its build settings; a row sourced from here gets
 # its flags from the path instead. Both settings below are what the 420-TU sweep
 # compiled and matched with.
-ZH_REFERENCE_ROOT = ROOT / "reference" / "CnC_Generals_Zero_Hour" / "GeneralsMD" / "Code"
+ZH_REFERENCE_ROOT = ROOT / "inputs/reference" / "CnC_Generals_Zero_Hour" / "GeneralsMD" / "Code"
 # The base game beside it. BFME forked the SAGE engine before Zero Hour did, so
 # where the expansion's copy of a translation unit drifted, the base game's copy
 # is the one whose bodies still compile byte-true.
-GENERALS_REFERENCE_ROOT = ROOT / "reference" / "CnC_Generals_Zero_Hour" / "Generals" / "Code"
+GENERALS_REFERENCE_ROOT = ROOT / "inputs/reference" / "CnC_Generals_Zero_Hour" / "Generals" / "Code"
 _ZH_INCLUDE_PARTS = (
     "GameEngine/Include", "GameEngine/Source", "Libraries/Include",
     "Libraries/Source", "Libraries/Source/Compression",
@@ -564,7 +564,7 @@ _ZH_INCLUDE_PARTS = (
 
 
 def _reference_include_dirs(*roots):
-    return ["-I" + directory for directory in ["reference/shims/sweep"] + [
+    return ["-I" + directory for directory in ["inputs/reference/shims/sweep"] + [
         f"{root.relative_to(ROOT).as_posix()}/{part}"
         for root in roots for part in _ZH_INCLUDE_PARTS
     ]]
@@ -573,7 +573,7 @@ def _reference_include_dirs(*roots):
 _ZH_BASE_FLAGS = ["-DNDEBUG", "-DWIN32", "-D_WINDOWS", "-MD", "-EHsc"]
 _ZH_FLAGS = _ZH_BASE_FLAGS + _reference_include_dirs(ZH_REFERENCE_ROOT)
 # Base-game headers win; the Zero Hour tail is on the path only because
-# reference/shims/sweep was written against the expansion and includes headers
+# inputs/reference/shims/sweep was written against the expansion and includes headers
 # (Common/ObjectStatusTypes.h) the base game never shipped.
 _GENERALS_FLAGS = _ZH_BASE_FLAGS + _reference_include_dirs(
     GENERALS_REFERENCE_ROOT, ZH_REFERENCE_ROOT)
@@ -605,7 +605,8 @@ def source_needs_stlport(source):
         return not relative.startswith("Libraries/Source/WWVegas/")
     try:
         with Path(source).open("r", encoding="utf-8", errors="replace") as handle:
-            head = handle.read(2048)
+            # Long relocated // cl: paths can push the marker past 2 KiB.
+            head = handle.read(8192)
     except OSError:
         return False
     return "// stlport" in head
@@ -619,14 +620,14 @@ def _resolve_toolchain_include_flag(flag):
     Those aliases are not stable (and usually do not exist on the checkout's
     filesystem), while the portion below ``Vc7`` identifies the SDK root we
     need.  Keep ordinary project-relative ``/I`` flags untouched and only
-    repair paths explicitly rooted under ``build/toolchains/vs2003``.
+    repair paths explicitly rooted under ``inputs/toolchains/vs2003``.
     """
     if not flag.startswith(("-I", "/I")):
         return flag
 
     raw = flag[2:].replace("\\", "/")
     lower = raw.lower()
-    prefix = "build/toolchains/vs2003/"
+    prefix = "inputs/toolchains/vs2003/"
     marker = "/vc7/"
     if not lower.startswith(prefix) or marker not in lower:
         return flag
@@ -989,7 +990,7 @@ def is_scaffold_row(row):
     A gen-dump row claims no identity and no source, so every "is this address
     still open work?" question must answer yes over it. Tools that treat the
     ledger's address set as "done" go blind across the whole dump pass
-    otherwise -- reverse/reloc_names.csv is REGENERATED by the full gate, so a
+    otherwise -- targets/game/reverse/reloc_names.csv is REGENERATED by the full gate, so a
     dump row swallowing an address silently deletes a recovered name.
     """
     # The marker is the whole first token. Free text that merely begins with it,
@@ -1005,7 +1006,7 @@ def load_claim_rows(*, counting_dumps, matched_only):
     a dump does count: counting_dumps=True. "Do we have source for this?" is a
     work finder and a dump does not: counting_dumps=False, which is
     is_scaffold_row's rule and the only correct one. Answering by source path
-    instead hides the 349 gen-dump rows that live outside Code/gen_asm/.
+    instead hides the 349 gen-dump rows that live outside game/gen_asm/.
 
     matched_only mirrors check_csv's overlap rule: an unmatched row is a
     hypothesis about an address, not proof the ground is spoken for.
@@ -1068,7 +1069,7 @@ def load_symbol_map():
     # re-linked in place call the body directly. Both are legitimate, so a matched
     # function maps to [thunk, body] and the comparison picks whichever the target
     # actually used; anything else still fails the byte comparison loudly.
-    # reverse/symbols.csv holds callees we do not own source for yet (CRT helpers
+    # targets/game/reverse/symbols.csv holds callees we do not own source for yet (CRT helpers
     # like __ftol2) at their exact call-target address, plus specific incremental-
     # link thunks build_call_thunks does not auto-discover. It is ADDITIVE: each
     # pinned address becomes one more candidate, so a matched name and a hand-pinned
@@ -1114,9 +1115,9 @@ def load_symbol_map():
 # (e.g. the sweep-shim windows.h, or NetworkDefs.h pulled in by it). Off the
 # default path so they never change codegen for the 10k+ already-matched sources.
 _SWEEP_INCLUDE_DIRS = [
-    ROOT / "reference" / "shims" / "sweep",
-    ROOT / "reference" / "CnC_Generals_Zero_Hour" / "GeneralsMD" / "Code",
-    ROOT / "reference" / "CnC_Generals_Zero_Hour" / "GeneralsMD" / "Code" / "Include",
+    ROOT / "inputs/reference" / "shims" / "sweep",
+    ROOT / "inputs/reference" / "CnC_Generals_Zero_Hour" / "GeneralsMD" / "Code",
+    ROOT / "inputs/reference" / "CnC_Generals_Zero_Hour" / "GeneralsMD" / "Code" / "Include",
 ]
 
 
@@ -1862,8 +1863,8 @@ def compile_function(row, symbol_map, output, *, retain_compiled=False):
 
 
 REL32 = 0x0014
-GHIDRA_FUNCTIONS = ROOT / "reverse" / "ghidra_functions.csv"
-RELOC_NAMES = ROOT / "reverse" / "reloc_names.csv"
+GHIDRA_FUNCTIONS = ROOT / "targets/game/reverse" / "ghidra_functions.csv"
+RELOC_NAMES = ROOT / "targets/game/reverse" / "reloc_names.csv"
 # MSVC hashes the absolute source path into anonymous-namespace symbols, so the
 # same function carries a different token in every clone. Naming a retail
 # address after one would churn this file on each contributor's gate.
@@ -1883,7 +1884,7 @@ GEN_PLACEHOLDER_RE = re.compile(
     # The conversion lanes also mint ADDRESS-DERIVED names whose whole point
     # is to DISCLAIM identity: Gen<RVA>, gen<RVA>, Gen_<rva>, Rva<RVA>Thing.
     # Without this arm 2061 such names were being written into
-    # reverse/reloc_names.csv as identity=real -- the precise opposite of
+    # targets/game/reverse/reloc_names.csv as identity=real -- the precise opposite of
     # what the naming convention asserts. Eight hex digits with no ninth
     # keeps it from matching an ordinary identifier that merely starts "Gen".
     r"|(?:Gen|gen|Rva|rva)_?[0-9A-Fa-f]{8}(?![0-9A-Fa-f])")
@@ -2000,7 +2001,7 @@ def select_reloc_names(named):
 
 
 def write_reloc_names(patches):
-    """Regenerate reverse/reloc_names.csv from this gate's byte-true rows.
+    """Regenerate targets/game/reverse/reloc_names.csv from this gate's byte-true rows.
 
     Regenerated, never appended: it is derived output, and a row that stops
     being re-derivable must stop being published. There is deliberately no
@@ -2303,7 +2304,7 @@ def verify_functions(only=None, selected_rows=None):
             continue
         if patch["unresolved"]:
             calls = ", ".join(sorted(set(patch["unresolved"])))
-            print(f"    unresolved call(s): {calls} (add to reverse/symbols.csv)")
+            print(f"    unresolved call(s): {calls} (add to targets/game/reverse/symbols.csv)")
         print(f"    target:   {format_bytes(target)}")
         print(f"    compiled: {format_bytes(compiled)}")
         if patch["rel32"]:
@@ -2446,12 +2447,12 @@ def verify_dir32_consistency(rows):
     """Regression gate for the non-string DIR32s (globals/vtables/func-addrs) build.py masks. A symbol
     has one address, so every reference must resolve to the same base once the addend is subtracted
     (base = binary_addr - compiled_addend). A symbol with >1 base is a candidate hidden discrepancy.
-    Whitelist (reverse/dir32_consistency_whitelist.txt) holds the CURRENT known-legitimate cases
+    Whitelist (targets/game/reverse/dir32_consistency_whitelist.txt) holds the CURRENT known-legitimate cases
     (double-linked TUs CRC32_Table/_COLLISION_EPSILON; the investigated FX ctor/dtor vtable artifacts).
     Hand-written only: an absent whitelist is a hard failure listing the candidates, never an
     auto-written free pass, and any NEW inconsistency FAILS."""
     from collections import defaultdict
-    whitelist_path = ROOT / "reverse" / "dir32_consistency_whitelist.txt"
+    whitelist_path = ROOT / "targets/game/reverse" / "dir32_consistency_whitelist.txt"
     sym2base = defaultdict(set)
     for row in rows:
         obj = require_row_object(row)
@@ -2526,7 +2527,7 @@ UNMATCHED_MARKER_RE = re.compile(
 
 
 def verify_source_claims(only=None):
-    """Progress is matched rows, nothing else: every .cpp under Code/ must own at
+    """Progress is matched rows, nothing else: every .cpp under game/ must own at
     least one byte-verified matched row, and no marker may contradict the ledger
     (a symbol both matched and marked unmatched is a stale annotation lying about
     state). There is deliberately NO exception list: a source file nothing has
@@ -2554,11 +2555,11 @@ def verify_source_claims(only=None):
         # into the verification set.
         sources = []
     elif scoped and all(p.suffix.lower() == ".cpp" and p.is_file() for p in direct):
-        # the delta path names whole source files; walking all of Code/ and
+        # the delta path names whole source files; walking all of game/ and
         # relative_to() on 12k paths cost 3.7 s per add_match under the lock
         sources = sorted(set(direct))
     else:
-        sources = sorted((ROOT / "Code").rglob("*.cpp"))
+        sources = sorted((ROOT / "game").rglob("*.cpp"))
         if scoped:
             sources = [p for p in sources
                        if any(sel in p.relative_to(ROOT).as_posix() for sel in source_only)]

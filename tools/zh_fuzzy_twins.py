@@ -9,7 +9,7 @@ anonymous: no class, no layout lines in the brief, no source to start from.
 This tool compares SHAPE instead of bytes. Each body becomes its mnemonic
 stream (relocation slots zeroed first); a 4-gram index proposes candidates and
 difflib.SequenceMatcher scores the best few. It writes
-reverse/zh_fuzzy_twins.tsv, which tools/fleet/context_pack.py shows in a brief.
+targets/game/reverse/zh_fuzzy_twins.tsv, which tools/fleet/context_pack.py shows in a brief.
 
 Calibrated 2026-09-21 on 1,638 retail bodies already landed under the name of
 an unplaced ZH function (so the truth is known): the true twin scores a median
@@ -19,7 +19,7 @@ session a class to test and a source to start from. It is never identity
 evidence by itself -- AGENTS.md still requires a caller, vtable slot or literal
 before a real name is pinned.
 
-  python tools/zh_fuzzy_twins.py               # rewrite reverse/zh_fuzzy_twins.tsv
+  python tools/zh_fuzzy_twins.py               # rewrite targets/game/reverse/zh_fuzzy_twins.tsv
   python tools/zh_fuzzy_twins.py --calibrate   # precision table only
 
 Inputs are host-local build artefacts (build/zh_sweep/match.json and the ZH
@@ -35,7 +35,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
-OUT = ROOT / "reverse" / "zh_fuzzy_twins.tsv"
+OUT = ROOT / "targets/game/reverse" / "zh_fuzzy_twins.tsv"
 MIN_BYTES = 150
 MIN_INSTRUCTIONS = 25
 FLOOR = 0.60          # below this the top-1 answer is wrong more often than right

@@ -23,7 +23,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SWEEP = ROOT / "reference" / "shims" / "sweep"
+SWEEP = ROOT / "inputs/reference" / "shims" / "sweep"
 
 # (canonical committed file, alternate-case sibling, redirect line for the stub).
 # The redirect line reproduces how the original sources reach the canonical.

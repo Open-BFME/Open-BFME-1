@@ -1,0 +1,144 @@
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+
+// Open-BFME5: STLport vector<WeaponTemplateSet> reallocating insert, retail
+// 0x002E7AA0, 340 bytes. The name sat on the 5-byte incremental-link thunk at
+// 0x0001636F and the body it jumps to carried only a machine byte-dump row.
+//
+// The element is 84 bytes and trivially copied, so the size arithmetic is the
+// signed divide-by-84 magic multiply and each per-element copy is a 21-dword
+// rep movsd behind the placement-new null check. The byte count for the
+// allocator is an imul by 0x54 rather than a shift.
+//
+// This instantiation is a hybrid: the leading copy and the fill both inline,
+// but the tail move stays out of line through the ILT at 0x0003D5C8, whose body
+// at 0x002E2FD0 the ledger already names __uninitialized_copy over
+// WeaponTemplateSet. Retail hands that helper's empty dispatch tag the address
+// of its own trailing bool argument rather than spending a frame slot on it.
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/WeaponSet.h
+class WeaponTemplateSet
+{
+private:
+	unsigned char m_data[84];
+};
+
+inline void *__cdecl operator new(unsigned int, void *where)
+{
+	return where;
+}
+
+namespace _STL
+{
+void *__cdecl vectorLargeAllocate(unsigned int bytes);
+void *__cdecl vectorSmallAllocate(unsigned int bytes);
+void __cdecl vectorLargeDeallocate(void *block);
+void __cdecl vectorSmallDeallocate(void *block, unsigned int bytes);
+
+struct __false_type
+{
+};
+
+// The tail move is the one phase retail leaves out of line; it reaches
+// __uninitialized_copy at 0x002E2FD0 through the ILT at 0x0003D5C8, so the name
+// is declared apart from the _STL spelling that owns the real body.
+WeaponTemplateSet *__cdecl BfmeWeaponTemplateSetUninitializedCopy(
+	WeaponTemplateSet *first, WeaponTemplateSet *last, WeaponTemplateSet *result,
+	const __false_type &);
+
+template <class Type>
+class allocator {};
+
+template <class Type>
+__forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
+{
+	if (first != last)
+	{
+		do
+		{
+			new (result) Type(*first);
+			++first;
+			++result;
+		}
+		while (first != last);
+	}
+	return result;
+}
+
+template <class Type>
+__forceinline Type *uninitialized_fill_n(Type *result, unsigned int count, const Type &value)
+{
+	for (; count > 0; --count)
+	{
+		new (result) Type(value);
+		++result;
+	}
+	return result;
+}
+
+template <class Type, class Allocator>
+class vector
+{
+protected:
+	void _M_insert_overflow(Type *position, const Type &value,
+		const __false_type &, unsigned int fillLength, bool atEnd);
+
+	Type *_M_start;
+	Type *_M_finish;
+	Type *_M_end_of_storage;
+};
+
+template <class Type, class Allocator>
+void vector<Type, Allocator>::_M_insert_overflow(
+	Type *position, const Type &value, const __false_type &,
+	unsigned int fillLength, bool atEnd)
+{
+	unsigned int oldSize = (unsigned int)(_M_finish - _M_start);
+	const unsigned int &growth = oldSize < fillLength ? fillLength : oldSize;
+	unsigned int length = growth + oldSize;
+
+	Type *newStart;
+	if (length)
+	{
+		unsigned int bytes = length * sizeof(Type);
+		if (bytes > 128)
+			newStart = (Type *)vectorLargeAllocate(bytes);
+		else
+			newStart = (Type *)vectorSmallAllocate(bytes);
+	}
+	else
+	{
+		newStart = 0;
+	}
+
+	Type *newFinish = uninitialized_copy(_M_start, position, newStart);
+
+	if (fillLength == 1)
+	{
+		new (newFinish) Type(value);
+		++newFinish;
+	}
+	else
+	{
+		newFinish = uninitialized_fill_n(newFinish, fillLength, value);
+	}
+
+	if (!atEnd)
+		newFinish = BfmeWeaponTemplateSetUninitializedCopy(position, _M_finish, newFinish,
+			reinterpret_cast<const __false_type &>(atEnd));
+
+	if (_M_start)
+	{
+		unsigned int bytes = (unsigned int)(_M_end_of_storage - _M_start) * sizeof(Type);
+		if (bytes > 128)
+			vectorLargeDeallocate(_M_start);
+		else
+			vectorSmallDeallocate(_M_start, bytes);
+	}
+
+	_M_finish = newFinish;
+	_M_start = newStart;
+	_M_end_of_storage = newStart + length;
+}
+
+template class vector<WeaponTemplateSet, allocator<WeaponTemplateSet> >;
+}

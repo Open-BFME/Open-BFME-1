@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Find a source file in the flat Common/ directory without knowing its name.
 
-WHY THIS EXISTS. 6,546 .cpp files sit directly in Code/GameEngine/Source/Common/
+WHY THIS EXISTS. 6,546 .cpp files sit directly in game/GameEngine/Source/Common/
 and 80% are named after a hex address or an invented token, so the directory
 cannot be browsed and a filename cannot be guessed. Four mechanical fixes were
 measured and all fail:
@@ -37,10 +37,10 @@ from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-LEDGER = ROOT / "reverse/functions.csv"
-DUMPS = ("Code/GameEngine/Source/Common", "Code/gen_small", "Code/gen_asm",
-         "Code/GameEngine/Source/Common/Bfme",
-         "Code/GameEngine/Source/Common/SmallGaps")
+LEDGER = ROOT / "targets/game/reverse/functions.csv"
+DUMPS = ("game/GameEngine/Source/Common", "game/gen_small", "game/gen_asm",
+         "game/GameEngine/Source/Common/Bfme",
+         "game/GameEngine/Source/Common/SmallGaps")
 NEAR = 0x4000
 
 

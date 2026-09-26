@@ -9,28 +9,28 @@ reverted.
 | Lane | Work items | Evidence source | Ledger cost |
 |---|---|---|---|
 | T0-fields | 1,326 struct members at proven offsets | binary `FieldParse` × upstream `offsetof` | none (but full gate: they live in headers) |
-| T0-vocab | 4,267 functions (1,010,142 B) whose upstream body names every local | `reference/CnC_Generals_Zero_Hour` | none |
+| T0-vocab | 4,267 functions (1,010,142 B) whose upstream body names every local | `inputs/reference/CnC_Generals_Zero_Hour` | none |
 | T1-merge | 922 files → 177 TUs | `// readable body of …: DEST` comments | 1 row per moved fn |
 
 T2 is dropped. The `FieldParse` vote names 87 classes and effectively all of them
-are already declared under that name somewhere in `Code/` or `reference/shims/`;
+are already declared under that name somewhere in `game/` or `inputs/reference/shims/`;
 the vote confirms identities rather than discovering them. The 18,426 anonymous
 functions remain an open investigation, not a drain, and are out of scope.
 
-**The phases in `plans/` supersede this document.** It is the brainstorm; where
-the two disagree, `plans/` is what was validated.
+**The phases in `docs/plans/` supersede this document.** It is the brainstorm; where
+the two disagree, `docs/plans/` is what was validated.
 
 ## Architecture
 
 ```
-                    lotrbfme.exe                reference/CnC_Generals_Zero_Hour
+                    lotrbfme.exe                inputs/reference/CnC_Generals_Zero_Hour
                          │                                    │
               FieldParse tables                    offsetof(Class, m_member)
               (296, 4116 entries)                  + real function bodies
                          └──────────────┬─────────────────────┘
                                         │ join on the INI key string
                                         ▼
-                            tools/fieldnames.py  ──► reverse/field_names.csv
+                            tools/fieldnames.py  ──► targets/game/reverse/field_names.csv
                                         │                    (checked in, regenerable)
                     ┌───────────────────┼───────────────────┐
                     ▼                   ▼                   ▼
@@ -69,7 +69,7 @@ Kept here as a record so it is not re-proposed. The original sketch follows.
 ### Original sketch (do not implement)
 
 `.githooks/pre-commit:64` forces `./build.sh` (whole tree) for any `*.h` or
-`reference/shims/*` change. `tools/build.py:1348` takes a host-wide exclusive
+`inputs/reference/shims/*` change. `tools/build.py:1348` takes a host-wide exclusive
 lock whenever a build compiles more than 8 TUs.
 
 `build/match/*.deps.json` already records every TU's full include set from
@@ -166,7 +166,7 @@ its generator was deleted (`a4b1dde`), so it is not regenerable. This tool
 replaces it and goes further: 296 tables / 4,116 entries, joined against
 upstream `offsetof` to produce **member names**, which the doc lacks.
 
-Emits `reverse/field_names.csv`: `table_rva, ini_key, bfme_offset, upstream_class,
+Emits `targets/game/reverse/field_names.csv`: `table_rva, ini_key, bfme_offset, upstream_class,
 upstream_member, votes, margin`.
 
 **The offset always comes from the BFME binary and only the name from upstream.**
@@ -179,7 +179,7 @@ BFME moved fields; taking an upstream offset would silently corrupt layouts.
 - **RED** — assert the tool refuses to emit a row where the BFME offset is
   absent, rather than falling back to the upstream offset.
 - **GREEN** — `WeaponTemplate`: assert `AttackRange → +0x14 → m_attackRange`,
-  matching `reference/…/GameLogic/Object/Weapon.cpp:177`. Verified by hand
+  matching `inputs/reference/…/GameLogic/Object/Weapon.cpp:177`. Verified by hand
   during the audit.
 - **GREEN** — assert the class vote returns `GlobalData` 193v/7v and
   `WeaponTemplate` 49v/2v.
@@ -223,7 +223,7 @@ readability: Local 33.0 -> 33.4 (+0.40 pp), files 8827 -> 8807 (-20)
    `MemoryPool::freeBlock` because that name already covers nine functions of
    five sizes. Run `--check` before every push; never add to
    `pin_consistency_baseline.csv` to go green.
-4. **Edit `reverse/functions.csv` as bytes.** CRLF loss fails `check_csv`.
+4. **Edit `targets/game/reverse/functions.csv` as bytes.** CRLF loss fails `check_csv`.
 
 ## Order of work
 
@@ -232,5 +232,5 @@ readability: Local 33.0 -> 33.4 (+0.40 pp), files 8827 -> 8807 (-20)
 3. `fieldnames.py` → drain 1,326 fields, batched one header per commit.
 
 T0-vocab (4,267 functions) needs no tool: the evidence is the upstream body.
-Run it as an agent lane against `reverse/field_names.csv`-style worklists once
+Run it as an agent lane against `targets/game/reverse/field_names.csv`-style worklists once
 the metric exists to score it.

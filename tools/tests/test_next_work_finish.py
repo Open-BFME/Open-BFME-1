@@ -25,7 +25,7 @@ def world(tmp_path, monkeypatch):
     monkeypatch.setattr(re_log, "RE_ATTEMPTS", log)
     re_log._reset()
     rows = [{"name": SYM, "target_rva": f"0x{RVA:08X}", "target_size": "76",
-             "source": "Code/gen_asm/d_003492a0.asm", "status": "matched",
+             "source": "game/gen_asm/d_003492a0.asm", "status": "matched",
              "notes": "gen-dump"}]
     monkeypatch.setattr(build, "load_all_function_rows", lambda: rows)
     try:
@@ -94,7 +94,7 @@ def test_below_threshold_and_landed_rows_are_not_served(world):
     bank(tmp_path, "0.80")
     assert next_work.finish_candidates(0.9) == []
     bank(tmp_path, "0.99")
-    rows[0]["source"] = "Code/GameEngine/Source/Common/Node.cpp"
+    rows[0]["source"] = "game/GameEngine/Source/Common/Node.cpp"
     rows[0]["notes"] = "clean C++"
     assert next_work.finish_candidates(0.9) == []
 

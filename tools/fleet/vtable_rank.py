@@ -24,11 +24,11 @@ u = struct.Struct('<I').unpack_from
 refs = {u(raw, i)[0] for i in range(len(raw) - 4) if lo <= u(raw, i)[0] < hi}
 json.dump(sorted(refs), open(ROOT / 'build/rdata_refs.json', 'w'))
 fn = {}
-for r in csv.DictReader(open(ROOT / 'reverse/functions.csv', newline='', encoding='utf-8', errors='replace')):
+for r in csv.DictReader(open(ROOT / 'targets/game/reverse/functions.csv', newline='', encoding='utf-8', errors='replace')):
     a = (r['target_rva'] or '').lower()
     if a.startswith('0x'): fn[int(a, 16)] = r
 pins = collections.defaultdict(list)
-for l in open(ROOT / 'reverse/symbols.csv', encoding='utf-8', errors='replace'):
+for l in open(ROOT / 'targets/game/reverse/symbols.csv', encoding='utf-8', errors='replace'):
     p = l.split(',')
     if len(p) > 1 and p[1].startswith('0x'):
         try: pins[int(p[1], 16)].append(p[0])
@@ -54,7 +54,7 @@ for vt, slots in vts:
         if not r: continue
         src = r['source']
         if src.endswith('.asm'): dn += 1; db += int(r['target_size'] or 0); drv.append(s - base)
-        elif src.startswith('Code/gen_'): gn += 1
+        elif src.startswith('game/gen_'): gn += 1
         elif r['status'] == 'matched':
             ln += 1; k = klass(r['name'])
             if k and not k.startswith(SKIP): names[k] += 1

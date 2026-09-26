@@ -4,11 +4,11 @@
 Usage:  conversion_gate.py OLD NEW
         OLD/NEW are git revisions; NEW may be ":" for the staged index.
 
-Rule A: added lines under Code/ (outside Code/gen_small/) may not contain
-        __declspec(naked) or _emit/__emit. Code/gen_small/ is exempt only
+Rule A: added lines under game/ (outside game/gen_small/) may not contain
+        __declspec(naked) or _emit/__emit. game/gen_small/ is exempt only
         because it is the frozen output of the retired generators, never
         because a new dump is welcome there; a proven codegen blocker
-        (x87, SEH) belongs in Code/masm_dumps/*.asm. Eighteen fleet commits
+        (x87, SEH) belongs in game/masm_dumps/*.asm. Eighteen fleet commits
         titled "convert ... to exact C++" deleted real C++ bodies and added
         __emit thunks — byte-verification passes on those, so this is the
         only gate that can see them.
@@ -18,13 +18,13 @@ Rule B: a matched RVA that had at least one clean-C++ source in OLD must
         status changed) is legal and must be its own commit; repointing a
         live clean claim at a dump is never legal.
 
-Rule C: Code/gen_asm/ is machine output and stays that way. C1 every added
+Rule C: game/gen_asm/ is machine output and stays that way. C1 every added
         line there must match the grammar the retired generator emitted, so a
         lift of a NAMED function cannot be expressed in the directory at all; C2 every added
         ledger row pointing there is anonymous (?d_<rva>@@YAXXZ, notes
         gen-dump), so a dump can never squat an identity byte-verification
         cannot falsify; C3 a wave commit may not touch any other file under
-        Code/, so a deleted C++ body cannot ride inside a diff of 33,000
+        game/, so a deleted C++ body cannot ride inside a diff of 33,000
         unreadable `db` lines. Rule A needs no exemption here and gets none:
         a `db` dump matches neither NAKED_RE nor LIFT_RE, and source_kind
         scores a .asm file as assembly unconditionally, so the offence Rule A
@@ -41,6 +41,7 @@ from pathlib import Path
 
 from list_naked_candidates import NAKED_RE
 from progress import CPP_SUFFIXES, naked_cpp_rows
+import layout_history
 
 LIFT_RE = re.compile(r"\b__?emit\b")
 # A comment is prose, not a lift. The gate fired on a merge whose only `__emit`
@@ -60,7 +61,7 @@ def is_lift_line(line):
     """
     scanned = COMMENT_RE.sub(" ", line)
     return bool(NAKED_RE.search(scanned) or LIFT_RE.search(scanned))
-LEDGER = "reverse/functions.csv"
+LEDGER = "targets/game/reverse/functions.csv"
 
 
 def run(*argv):
@@ -73,9 +74,9 @@ def run(*argv):
 
 def added_lift_lines(old, new, lines=None):
     if lines is None:
-        lines = diff_lines(old, new, "Code/", ":(exclude)Code/gen_small/")
+        lines = diff_lines(old, new, "Code/", "game/", ":(exclude)game/gen_small/")
     # Authored code only. A ledger row may name a file in the vendored
-    # reference/ tree, and those rows sit outside this scan on purpose: nobody
+    # inputs/reference/ tree, and those rows sit outside this scan on purpose: nobody
     # authors that tree, nine of its files already contain __emit upstream, and
     # scanning it would fire on the next re-vendor rather than on a regression.
     # Rule B below reads whatever path a row names, so it covers them.
@@ -84,8 +85,8 @@ def added_lift_lines(old, new, lines=None):
         if line.startswith("+++ b/"):
             path = line[6:]
         elif line.startswith("+") and not line.startswith("+++"):
-            if path is None or not path.startswith("Code/") \
-                    or path.startswith("Code/gen_small/"):
+            if path is None or not path.startswith("game/") \
+                    or path.startswith("game/gen_small/"):
                 continue
             if is_lift_line(line):
                 first, count = bad.get(path, (line[1:].strip()[:80], 0))
@@ -93,7 +94,7 @@ def added_lift_lines(old, new, lines=None):
     return [(p, "%s  (%d such lines)" % (first, count)) for p, (first, count) in bad.items()]
 
 
-GEN_ASM = "Code/gen_asm/"
+GEN_ASM = "game/gen_asm/"
 # The generator's whole vocabulary. Anything else in a dump file is a hand edit.
 GEN_ASM_LINE_RE = re.compile(
     r"^(?:\.386|\.model flat|_TEXT SEGMENT|_TEXT ENDS|END|;.*|"
@@ -103,14 +104,14 @@ GEN_ASM_LINE_RE = re.compile(
 
 
 def diff_lines(old, new, *paths):
-    cmd = ["git", "diff", "--unified=0"]
+    cmd = ["git", "diff", "--unified=0", "--find-renames=1%"]
     cmd += ["--cached", old] if new == ":" else [old, new]
     return run(*cmd, "--", *paths).splitlines()
 
 
 def collect_diff_lines(old, new):
-    """Collect the shared Code/ledger diff used by Rules A and C."""
-    return diff_lines(old, new, "Code/", LEDGER)
+    """Collect the shared game/ledger diff used by Rules A and C."""
+    return diff_lines(old, new, "Code/", "game/", layout_history.OLD_LEDGER, LEDGER)
 
 
 def gen_asm_offences(old, new, lines=None):
@@ -118,8 +119,13 @@ def gen_asm_offences(old, new, lines=None):
     offences = []
     path = None
     dump_rows, other_code_edits = [], set()
+    old_ledger = layout_history.path_at(old, LEDGER, layout_history.OLD_LEDGER,
+                                         root=Path.cwd())
+    existing = {(r["name"], r["target_rva"], r["target_size"],
+                 layout_history.canonical_source(r["source"]), r["status"])
+                for r in csv.DictReader(io.StringIO(show(old, old_ledger)))}
     if lines is None:
-        lines = diff_lines(old, new, "Code/", LEDGER)
+        lines = diff_lines(old, new, "Code/", "game/", layout_history.OLD_LEDGER, LEDGER)
     for line in lines:
         if line.startswith("+++ b/"):
             path = line[6:]
@@ -139,8 +145,11 @@ def gen_asm_offences(old, new, lines=None):
                 continue
             fields = next(csv.reader([body]), [])
             if len(fields) >= 5 and fields[4].startswith(GEN_ASM):
+                if len(fields) >= 6 and (fields[0], fields[2], fields[3],
+                                          fields[4], fields[5]) in existing:
+                    continue
                 dump_rows.append(fields)
-        elif path.startswith("Code/"):
+        elif path.startswith("game/"):
             other_code_edits.add(path)
 
     for fields in dump_rows:
@@ -151,7 +160,7 @@ def gen_asm_offences(old, new, lines=None):
                             "an extent, never what the function is (expected %s)"
                             % (rva, name, expected))
         if not notes.lstrip().startswith("gen-dump"):
-            offences.append("C2 %s: a Code/gen_asm/ row must carry gen-dump "
+            offences.append("C2 %s: a game/gen_asm/ row must carry gen-dump "
                             "notes, or is_scaffold_row cannot see it" % rva)
     if dump_rows and other_code_edits:
         offences.append("C3 wave commit also edits %s — dumps-and-ledger only, "
@@ -184,14 +193,19 @@ def show(rev, path, allow_missing=False):
 
 def matched_by_rva(rev):
     rows = {}
-    for row in csv.DictReader(io.StringIO(show(rev, LEDGER))):
+    path = layout_history.path_at("" if rev == ":" else rev, LEDGER,
+                                  layout_history.OLD_LEDGER, root=Path.cwd())
+    for row in csv.DictReader(io.StringIO(show(rev, path))):
         if row.get("status") == "matched":
+            row["source"] = layout_history.canonical_source(row["source"])
             rows.setdefault(row["target_rva"], []).append(row)
     return rows
 
 
 def ledger_blob(rev):
-    spec = (":%s" if rev == ":" else rev + ":%s") % LEDGER
+    path = layout_history.path_at("" if rev == ":" else rev, LEDGER,
+                                  layout_history.OLD_LEDGER, root=Path.cwd())
+    spec = (":%s" if rev == ":" else rev + ":%s") % path
     return run("git", "rev-parse", spec).strip()
 
 
@@ -249,7 +263,7 @@ def main():
     if len(sys.argv) != 3:
         raise SystemExit(__doc__.strip().splitlines()[2].strip())
     old, new = sys.argv[1], sys.argv[2]
-    # Rule A and Rule C consume the same Code/ledger diff. Keep the complete
+    # Rule A and Rule C consume the same game/ledger diff. Keep the complete
     # diff in memory once, then let each rule apply its own path filter. Rule B
     # independently uses ledger_blob so its authoritative ledger-state check
     # remains valid for binary, rename, or otherwise unusual Git diffs.
@@ -257,12 +271,12 @@ def main():
     failed = False
     for path, line in added_lift_lines(old, new, collected):
         failed = True
-        print("conversion gate: %s adds a naked/__emit body outside Code/gen_small/:\n"
+        print("conversion gate: %s adds a naked/__emit body outside game/gen_small/:\n"
               "    %s" % (path, line), file=sys.stderr)
     if failed:
         print("A lift is not a conversion: it deletes the C++ this project exists to\n"
               "produce and moves progress.py C++ exact by +0. Convert to real C++, or\n"
-              "leave the .asm dump alone (codegen blockers: Code/masm_dumps/*.asm).",
+              "leave the .asm dump alone (codegen blockers: game/masm_dumps/*.asm).",
               file=sys.stderr)
     for offence in gen_asm_offences(old, new, collected):
         failed = True

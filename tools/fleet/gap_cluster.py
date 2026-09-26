@@ -27,7 +27,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 sys.path.insert(0, str(ROOT / "tools/fleet"))
 MODEL = os.environ.get("HUB_MODEL", "gpt-6-sol")
 EFFORT = os.environ.get("HUB_EFFORT", "medium")
-EXE = ROOT / "baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
+EXE = ROOT / "inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
 TEXT_START, TEXT_END = 0x1000, 0x1000 + 13049856
 
 GAP_BRIEF = """ROLE. You are the analyst for one UNCLAIMED region of retail .text: no ledger row covers it, so no seat has ever
@@ -50,7 +50,7 @@ DELIVERABLES, in this order, under build/gap_{start:08x}/:
 1. FUNCTIONS.csv with header rva,size,start_evidence,end_evidence,callers,vtable,class_hint: EVERY function in the gap
    with a proved start and end, in address order. class_hint only when a vtable install or a landed caller proves it;
    else empty. Gaps you cannot decode (jump tables, data, unreachable bytes) go in GAP.md with the reason.
-2. LAND what you can, largest first, natural C++ only: for each function write a source under an official Code/ path
+2. LAND what you can, largest first, natural C++ only: for each function write a source under an official game/ path
    (AGENTS.md 'File placement'), measure with python tools/probe.py SRC "MANGLED" 0xRVA, and when EXACT run
    python tools/add_match.py "MANGLED" 0xRVA SIZE SRC --notes "<evidence>" (a new row: nothing to replace). Opaque
    address-derived names where identity is not proved (Rva0XXXXXXXX tokens); no plausible guessed names.
@@ -61,7 +61,7 @@ DELIVERABLES, in this order, under build/gap_{start:08x}/:
    the region is (which class, which subsystem, from strings and vtables), the biggest obstacle, minutes per function.
 
 RULES. Never run git. No full gate, no whole-tree build, never launch the game. Do not edit tools/, docs/ or any
-reverse/*.csv by hand (add_match and re_log are the only ledger paths). Never add rows for bytes you did not decode.
+targets/game/reverse/*.csv by hand (add_match and re_log are the only ledger paths). Never add rows for bytes you did not decode.
 Stop at {cap} hours; FUNCTIONS.csv, an honest GAP.md and banked bodies are the result.
 """
 
@@ -78,7 +78,7 @@ FUNC_NOTE = ("GAP ANALYST PACK. An analyst session mapped the unclaimed region 0
 def gaps():
     data = EXE.read_bytes()
     iv = []
-    with open(ROOT / "reverse/functions.csv", newline="", encoding="utf-8", errors="replace") as fh:
+    with open(ROOT / "targets/game/reverse/functions.csv", newline="", encoding="utf-8", errors="replace") as fh:
         for r in csv.DictReader(fh):
             if r["status"] != "matched" or not r["target_rva"].lower().startswith("0x"):
                 continue
@@ -109,7 +109,7 @@ def gaps():
 
 def ghidra_inside(s, e):
     rows = []
-    with open(ROOT / "reverse/ghidra_functions.csv", newline="") as fh:
+    with open(ROOT / "targets/game/reverse/ghidra_functions.csv", newline="") as fh:
         for r in csv.DictReader(fh):
             a = int(r["rva"], 16)
             if s <= a < e:

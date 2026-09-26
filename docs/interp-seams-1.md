@@ -33,7 +33,7 @@ writes the authoritative `RenderObjClass` matrix during drawable rendering.
 
 ### Boundary and owner evidence
 
-`reverse/ghidra_functions.csv` records `0x006F3FC0` as `FUN_00af3fc0` with
+`targets/game/reverse/ghidra_functions.csv` records `0x006F3FC0` as `FUN_00af3fc0` with
 size `1178` (`0x49A`). Linear x86 decoding of the prologue and all reachable
 branches reaches the cleanup `ret` at RVA `0x006F445F`; that inclusive decode
 spans `0x4A0` bytes. This five-byte disagreement is a boundary/ledger issue,
@@ -41,7 +41,7 @@ not a reason to change the ledger in this worker report. The stale
 `docs/apt-ui.md` size `3600` is not supported by either the Ghidra row or the
 actual control flow.
 
-The direct code thunk in `reverse/functions.csv` is:
+The direct code thunk in `targets/game/reverse/functions.csv` is:
 
 ```text
 thunk RVA 0x000093EF / VA 0x004093EF
@@ -61,7 +61,7 @@ The method name `W3DDisplay::draw` is a semantic recovery, not a new ledger
 claim. The readable source has the same unusual sequence of
 `IsIconic`, `updateAverageFPS`, debug callback dispatch, first-view/camera
 work, `WW3D::Sync`, time throttling, statistics and render-helper work in
-`Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp:1700-2040`.
+`game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp:1700-2040`.
 The member layout used by the body is also the Display layout: the callback
 pointer is at `+0x2C`, as spelled by the local W3DDisplay class in
 `W3DDisplayDrawCurrentDebugDisplay.cpp:22-38`.
@@ -96,7 +96,7 @@ The matching branch callsites are:
 
 The constants and the `+0x2C` field match the debug-display callback member
 and the three-way callback shape in
-`Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayDrawCurrentDebugDisplay.cpp:40-69`.
+`game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayDrawCurrentDebugDisplay.cpp:40-69`.
 The timing body calls the branches before its view/clock work, so this is
 debug/statistics preparation, not evidence that the supplied `0x0043FCD8`
 pointer is `draw`.
@@ -360,7 +360,7 @@ slot-name conflict as OPEN.
 ### Proven render-call order
 
 The exact 44-byte body at RVA `0x0040DA30` / VA `0x0080DA30` is the current
-matched `Display::drawViews` loop in `reverse/functions.csv`. Its bytes load
+matched `Display::drawViews` loop in `targets/game/reverse/functions.csv`. Its bytes load
 `Display+0x18`, call each View at vtable `+0x178`, then follow the View link at
 `+0x23C`. It does not itself call `Begin_Render` or `End_Render`.
 

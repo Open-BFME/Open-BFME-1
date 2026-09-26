@@ -22,7 +22,7 @@ base = 0x400000
 tlo, thi, toff = text['rva'], text['rva'] + text['size'], text['raw_pointer']
 rlo, rhi, roff = rdata['rva'], rdata['rva'] + rdata['size'], rdata['raw_pointer']
 
-rows = list(csv.DictReader(open(ROOT / 'reverse/functions.csv', encoding='utf-8', errors='replace')))
+rows = list(csv.DictReader(open(ROOT / 'targets/game/reverse/functions.csv', encoding='utf-8', errors='replace')))
 ranges = []; dumps = {}; byrva = collections.defaultdict(list)
 for r in rows:
     try: rva = int(r['target_rva'], 16); sz = int(r['target_size'])
@@ -36,7 +36,7 @@ def owner(rva):
     if i >= 0 and ranges[i][0] <= rva < ranges[i][0] + ranges[i][1]: return ranges[i]
 PH = re.compile(r'\?[dbja]_[0-9a-f]{8}@@|^\$L\d+|^\$CHOKE')
 pins = collections.defaultdict(list)
-for r in csv.DictReader(open(ROOT / 'reverse/symbols.csv', encoding='utf-8', errors='replace')):
+for r in csv.DictReader(open(ROOT / 'targets/game/reverse/symbols.csv', encoding='utf-8', errors='replace')):
     try: pins[int(r['address'], 16)].append(r['name'])
     except: pass
 def real_names(rva):
@@ -208,7 +208,7 @@ print('DIS sample'); [print(' ', d) for d in DIS[:15]]
 # ---- header-probe pool: named real class, no vtable symbol held anywhere ----
 import subprocess
 hdr_classes = set()
-for p in (ROOT / 'Code').rglob('*.h'):
+for p in (ROOT / 'game').rglob('*.h'):
     try: txt = p.read_text(encoding='utf-8', errors='replace')
     except Exception: continue
     for m in re.finditer(r'^\s*(?:class|struct)\s+([A-Za-z_]\w*)\s*(?::|\{)', txt, re.M): hdr_classes.add(m.group(1))

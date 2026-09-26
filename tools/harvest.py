@@ -2,10 +2,10 @@
 """Compile a source file and byte-compare every function it emits against the binary,
 reporting which match, which need source reconciliation, and which call an unresolved
 symbol. Discovers candidate matches with zero per-function effort, then you paste the
-emitted rows into reverse/functions.csv.
+emitted rows into targets/game/reverse/functions.csv.
 
 Only functions present in the export table are addressable here (name -> address).
-Sizes come from reverse/ghidra_functions.csv when present (see tools/ghidra/README.md),
+Sizes come from targets/game/reverse/ghidra_functions.csv when present (see tools/ghidra/README.md),
 otherwise they are estimated from export-address gaps.
 
 Usage: python3 tools/harvest.py <source.cpp> [-I includedir ...]
@@ -26,7 +26,7 @@ def load_tables():
     export_rva = {}
     body_rva = {}
     bodies = set()
-    with (build.ROOT / "reverse" / "exports.csv").open(encoding="utf-8", newline="") as handle:
+    with (build.ROOT / "targets/game/reverse" / "exports.csv").open(encoding="utf-8", newline="") as handle:
         for row in csv.DictReader(handle):
             if row["kind"] != "code":
                 continue
@@ -41,7 +41,7 @@ def load_tables():
     auth_size = {row["name"]: int(row["target_size"]) for row in rows}
 
     ghidra_size = {}
-    inventory = build.ROOT / "reverse" / "ghidra_functions.csv"
+    inventory = build.ROOT / "targets/game/reverse" / "ghidra_functions.csv"
     if inventory.exists():
         with inventory.open(encoding="utf-8", newline="") as handle:
             ghidra_size = {int(r["rva"], 16): int(r["size"]) for r in csv.DictReader(handle)}
@@ -147,7 +147,7 @@ def main():
     for row in new_rows:
         print("  " + row)
     if unresolved:
-        print("  add to reverse/symbols.csv (address from Ghidra) to unblock: " + ", ".join(sorted(unresolved)))
+        print("  add to targets/game/reverse/symbols.csv (address from Ghidra) to unblock: " + ", ".join(sorted(unresolved)))
     if drift:
         print("  source drift, reconcile against the binary: " + ", ".join(drift))
 

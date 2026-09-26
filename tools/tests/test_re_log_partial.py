@@ -22,11 +22,11 @@ import re_log  # noqa: E402  (path insert must precede the import)
 def log(tmp_path, monkeypatch):
     """An empty log in a tmpdir, with the index reset around the test.
 
-    Laid out as <root>/reverse/re_attempts.log rather than bare in tmp_path:
+    Laid out as <root>/targets/game/reverse/re_attempts.log rather than bare in tmp_path:
     the stash token is written relative to the log's grandparent, so only this
-    shape exercises the `reverse/attempts/...` path the ledger actually carries.
+    shape exercises the `targets/game/reverse/attempts/...` path the ledger actually carries.
     """
-    path = tmp_path / "reverse" / "re_attempts.log"
+    path = tmp_path / "targets/game/reverse" / "re_attempts.log"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("", encoding="utf-8")
     monkeypatch.setattr(re_log, "RE_ATTEMPTS", path)
@@ -104,7 +104,7 @@ def test_stash_round_trips_through_its_header(log, tmp_path):
     assert "void Sym() { return; }" in text, "the body itself must survive"
 
     row = log.read_text(encoding="utf-8")
-    assert "score=0.92" in row and "stash=reverse/attempts/0x00401000.cpp" in row
+    assert "score=0.92" in row and "stash=targets/game/reverse/attempts/0x00401000.cpp" in row
 
 
 def test_stash_absent_reads_as_none(log):
@@ -156,7 +156,7 @@ def test_flags_come_as_a_pair(log, tmp_path):
 
 
 def test_stash_refused_on_any_other_status(log, tmp_path):
-    """A dead end has nothing to hand on; a landed body belongs in Code/."""
+    """A dead end has nothing to hand on; a landed body belongs in game/."""
     body = tmp_path / "attempt.cpp"
     body.write_text("void Sym() {}\n", encoding="utf-8")
     refusal = record(SYM, "0x00401000", "16", "no-match", "evidence",

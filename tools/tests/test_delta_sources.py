@@ -12,7 +12,7 @@ sys.path.insert(0, str(TOOLS))
 import delta_sources as delta
 
 
-def row(name, rva, source="Code/Callee.cpp", **changes):
+def row(name, rva, source="game/Callee.cpp", **changes):
     result = dict(name=name, target_rva=hex(rva), target_size="16",
                   status="matched", source=source, notes="")
     result.update(changes)
@@ -45,36 +45,36 @@ def selection(monkeypatch, tmp_path):
 
 
 def test_row_only_loss_selects_untouched_caller(selection):
-    callee, caller = row("lost", 0x1000), row("caller", 0x2000, "Code/Caller.cpp")
+    callee, caller = row("lost", 0x1000), row("caller", 0x2000, "game/Caller.cpp")
     selection([callee, caller], [caller], [(0x2000, 0x1000)],
-              {"Code/Caller.cpp": [(0x2000, "lost")]})
-    assert delta.function_delta_sources("old", "new") == ["Code/Caller.cpp"]
+              {"game/Caller.cpp": [(0x2000, "lost")]})
+    assert delta.function_delta_sources("old", "new") == ["game/Caller.cpp"]
 
 
 def test_another_name_at_same_address_does_not_preserve_candidate(selection):
     lost, retained = row("lost", 0x1000), row("retained", 0x1000)
-    caller = row("caller", 0x2000, "Code/Caller.cpp")
+    caller = row("caller", 0x2000, "game/Caller.cpp")
     selection([lost, retained, caller], [retained, caller], [(0x2000, 0x1000)],
-              {"Code/Caller.cpp": [(0x2000, "lost")]})
-    assert delta.function_delta_sources("old", "new") == ["Code/Caller.cpp"]
+              {"game/Caller.cpp": [(0x2000, "lost")]})
+    assert delta.function_delta_sources("old", "new") == ["game/Caller.cpp"]
 
 
 def test_only_one_of_two_lost_names_is_supplied_by_retained_pin(selection):
     a, b = row("a", 0x1000), row("b", 0x1000)
-    callers = [row("callerA", 0x2000, "Code/A.cpp"),
-               row("callerB", 0x2100, "Code/B.cpp")]
+    callers = [row("callerA", 0x2000, "game/A.cpp"),
+               row("callerB", 0x2100, "game/B.cpp")]
     selection([a, b, *callers], callers, [(0x2000, 0x1000), (0x2100, 0x1000)],
-              {"Code/A.cpp": [(0x2000, "a")], "Code/B.cpp": [(0x2100, "b")]},
+              {"game/A.cpp": [(0x2000, "a")], "game/B.cpp": [(0x2100, "b")]},
               pins={("a", 0x1000)})
-    assert delta.function_delta_sources("old", "new") == ["Code/B.cpp"]
+    assert delta.function_delta_sources("old", "new") == ["game/B.cpp"]
 
 
 def test_reordered_duplicate_name_loses_previous_effective_body(selection):
     a, b = row("CRC_Memory", 0x1000), row("CRC_Memory", 0x1100)
-    caller = row("caller", 0x2000, "Code/Caller.cpp")
+    caller = row("caller", 0x2000, "game/Caller.cpp")
     selection([a, b, caller], [b, a, caller], [(0x2000, 0x1100)],
-              {"Code/Caller.cpp": [(0x2000, "CRC_Memory")]})
-    assert delta.function_delta_sources("old", "new") == ["Code/Caller.cpp"]
+              {"game/Caller.cpp": [(0x2000, "CRC_Memory")]})
+    assert delta.function_delta_sources("old", "new") == ["game/Caller.cpp"]
 
 
 def test_pin_loss_uses_last_function_row_not_union():
@@ -96,15 +96,15 @@ def test_retained_thunk_pin_does_not_supply_body():
 
 def test_lost_ilt_selects_caller_while_other_body_survives(selection):
     callee = row("f", 0x1000)
-    callers = [row("a", 0x2000, "Code/A.cpp"), row("b", 0x2100, "Code/B.cpp")]
+    callers = [row("a", 0x2000, "game/A.cpp"), row("b", 0x2100, "game/B.cpp")]
     selection([callee, *callers], callers, [(0x2000, 0x1050), (0x2100, 0x1150)],
-              {"Code/A.cpp": [(0x2000, "f")], "Code/B.cpp": [(0x2100, "f")]},
+              {"game/A.cpp": [(0x2000, "f")], "game/B.cpp": [(0x2100, "f")]},
               pins={("f", 0x1100)}, thunks={0x1000: [0x1050], 0x1100: [0x1150]})
-    assert delta.function_delta_sources("old", "new") == ["Code/A.cpp"]
+    assert delta.function_delta_sources("old", "new") == ["game/A.cpp"]
 
 
 @pytest.mark.parametrize("changes", [dict(notes="new comment"), dict(status="unmatched"),
-                                      dict(source="Code/Moved.cpp"),
+                                      dict(source="game/Moved.cpp"),
                                       dict(target_rva="0x00001000"),
                                       dict(notes="object-symbol=other")])
 def test_metadata_changes_do_not_scan_callers(monkeypatch, changes):
@@ -119,28 +119,28 @@ def test_metadata_changes_do_not_scan_callers(monkeypatch, changes):
 
 def test_unmatched_rows_supply_candidates_but_do_not_own_callers(selection):
     callee = row("lost", 0x1000, status="unmatched")
-    caller = row("caller", 0x2000, "Code/Caller.cpp", status="unmatched")
+    caller = row("caller", 0x2000, "game/Caller.cpp", status="unmatched")
     assert delta.lost_candidates({("lost", 0x1000)}, set(), [callee], {}) == {}
     selection([callee, caller], [caller], [(0x2000, 0x1000)],
-              {"Code/Caller.cpp": [(0x2000, "lost")]})
+              {"game/Caller.cpp": [(0x2000, "lost")]})
     assert delta.function_delta_sources("old", "new") == []
 
 
 @pytest.mark.parametrize("current,relocation,expected", [
-    (False, "other", ["Code/Caller.cpp"]), (True, "other", []),
-    (True, "lost", ["Code/Caller.cpp"])])
+    (False, "other", ["game/Caller.cpp"]), (True, "other", []),
+    (True, "lost", ["game/Caller.cpp"])])
 def test_object_evidence_only_narrows_when_current(selection, current, relocation, expected):
-    callee, caller = row("lost", 0x1000), row("caller", 0x2000, "Code/Caller.cpp")
+    callee, caller = row("lost", 0x1000), row("caller", 0x2000, "game/Caller.cpp")
     selection([callee, caller], [caller], [(0x2000, 0x1000)],
-              {"Code/Caller.cpp": [(0x2000, relocation)]}, current=current)
+              {"game/Caller.cpp": [(0x2000, relocation)]}, current=current)
     assert delta.function_delta_sources("old", "new") == expected
 
 
 def test_missing_object_anchor_keeps_caller(selection, monkeypatch):
-    callee, caller = row("lost", 0x1000), row("caller", 0x2000, "Code/Caller.cpp")
+    callee, caller = row("lost", 0x1000), row("caller", 0x2000, "game/Caller.cpp")
     selection([callee, caller], [caller], [(0x2000, 0x1000)], {})
     monkeypatch.setattr(delta, "object_rel32", lambda obj: ({}, {}))
-    assert delta.function_delta_sources("old", "new") == ["Code/Caller.cpp"]
+    assert delta.function_delta_sources("old", "new") == ["game/Caller.cpp"]
 
 
 @pytest.mark.parametrize("state", ["missing", "missing-sidecar", "malformed",
@@ -169,17 +169,17 @@ def test_actual_object_freshness_check(tmp_path, monkeypatch, state):
     (0x2000, "64", 0x2000), (0x2010, "8", 0x2020)])
 def test_every_overlapping_owner_is_considered(selection, second_start, second_size, site):
     callee = row("lost", 0x1000)
-    a = row("a", 0x2000, "Code/A.cpp", target_size="64")
-    b = row("b", second_start, "Code/B.cpp", target_size=second_size)
+    a = row("a", 0x2000, "game/A.cpp", target_size="64")
+    b = row("b", second_start, "game/B.cpp", target_size=second_size)
     selection([callee, a, b], [a, b], [(site, 0x1000)],
-              {"Code/A.cpp": [(site, "lost")], "Code/B.cpp": [(site, "other")]})
-    assert delta.function_delta_sources("old", "new") == ["Code/A.cpp"]
+              {"game/A.cpp": [(site, "lost")], "game/B.cpp": [(site, "other")]})
+    assert delta.function_delta_sources("old", "new") == ["game/A.cpp"]
 
 
 def test_stale_tu_evidence_keeps_only_exact_affected_row(selection):
     callee = row("lost", 0x1000)
-    caller = row("caller", 0x2000, "Code/Shared.cpp")
-    sibling = row("unrelated", 0x2100, "Code/Shared.cpp")
+    caller = row("caller", 0x2000, "game/Shared.cpp")
+    sibling = row("unrelated", 0x2100, "game/Shared.cpp")
     selection([callee, caller, sibling], [caller, sibling], [(0x2000, 0x1000)],
               {}, current=False)
     assert delta.affected_row_indices({("lost", 0x1000)}, set(),
@@ -188,24 +188,24 @@ def test_stale_tu_evidence_keeps_only_exact_affected_row(selection):
 
 def test_current_tu_relocation_can_exclude_exact_caller_row(selection):
     callee = row("lost", 0x1000)
-    caller = row("caller", 0x2000, "Code/Shared.cpp")
-    sibling = row("unrelated", 0x2100, "Code/Shared.cpp")
+    caller = row("caller", 0x2000, "game/Shared.cpp")
+    sibling = row("unrelated", 0x2100, "game/Shared.cpp")
     selection([callee, caller, sibling], [caller, sibling], [(0x2000, 0x1000)],
-              {"Code/Shared.cpp": [(0x2000, "other")]}, current=True)
+              {"game/Shared.cpp": [(0x2000, "other")]}, current=True)
     assert delta.affected_row_indices({("lost", 0x1000)}, set(),
                                       [caller, sibling], "test") == []
 
 
 def test_delta_selector_pairs_source_check_with_exact_affected_row(selection, monkeypatch):
     callee = row("lost", 0x1000)
-    caller = row("caller", 0x2000, "Code/Shared.cpp")
-    sibling = row("unrelated", 0x2100, "Code/Shared.cpp")
+    caller = row("caller", 0x2000, "game/Shared.cpp")
+    sibling = row("unrelated", 0x2100, "game/Shared.cpp")
     old, new = [callee, caller, sibling], [caller, sibling]
     selection(old, new, [(0x2000, 0x1000)], {}, current=False)
     monkeypatch.setattr(delta, "dict_rows_at",
                         lambda spec: old if spec.startswith("old:") else new)
     assert delta.function_delta_selectors("old", "new") == [
-        "row:0x00002000:16:caller", "source:Code/Shared.cpp"]
+        "row:0x00002000:16:caller", "source:game/Shared.cpp"]
 
 
 @pytest.mark.parametrize("hook", ["pre-commit", "pre-push"])
@@ -213,8 +213,8 @@ def test_delta_selector_pairs_source_check_with_exact_affected_row(selection, mo
 @pytest.mark.parametrize("outcome", ["failure", "empty", "source", "many"])
 def test_hooks_check_selector_status_before_using_output(tmp_path, hook, mode, outcome):
     """Run the actual hooks; a failing selector emits valid partial output first."""
-    source = "Code/Caller With Space.cpp"
-    (tmp_path / "Code").mkdir()
+    source = "game/Caller With Space.cpp"
+    (tmp_path / "game").mkdir()
     (tmp_path / source).touch()
     bindir = tmp_path / "bin"
     bindir.mkdir()
@@ -225,8 +225,8 @@ if a[:2] == ["rev-parse", "--show-toplevel"]:
     print(os.environ["FIXTURE_ROOT"])
 elif a and a[0] == "diff":
     if "--name-only" in a and "--diff-filter=ACMRT" in a:
-        print("reverse/functions.csv")
-        if os.environ["SELECTOR_MODE"] == "pins": print("reverse/symbols.csv")
+        print("targets/game/reverse/functions.csv")
+        if os.environ["SELECTOR_MODE"] == "pins": print("targets/game/reverse/symbols.csv")
     elif "--quiet" in a:
         changed = "--cached" in a or "base" in a
         sys.exit(1 if changed else 0)
@@ -242,7 +242,7 @@ if sys.argv[1] == "tools/delta_sources.py":
                     print("row:0x%08X:16:?caller_%03d_%s@@YAXXZ" %
                           (0x1000 + index, index, "x" * 150))
             else:
-                print("source:Code/Caller With Space.cpp")
+                print("source:game/Caller With Space.cpp")
                 print("row:0x00001000:16:?caller@@YAXXZ")
         if outcome == "failure":
             print("selector fixture failed", file=sys.stderr)
@@ -285,7 +285,7 @@ printf '%s\\n' "$@" > "build-args-$n"
         assert result.returncode == 0, result.stderr
         if outcome == "source":
             assert set(chunks[0]) == {
-                "source:Code/Caller With Space.cpp",
+                "source:game/Caller With Space.cpp",
                 "row:0x00001000:16:?caller@@YAXXZ"}
         elif outcome == "many":
             assert len(chunks) > 1

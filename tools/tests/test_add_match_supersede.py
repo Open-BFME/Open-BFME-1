@@ -20,17 +20,17 @@ import add_match
 
 HEADER = "name,export_rva,target_rva,target_size,source,status,notes"
 DUMP = (
-    "?d_00abcd00@@YAXXZ,,0x00ABCD00,32,Code/gen_asm/d_00abcd00.asm,matched,"
+    "?d_00abcd00@@YAXXZ,,0x00ABCD00,32,game/gen_asm/d_00abcd00.asm,matched,"
     "gen-dump;ghidra=FUN_00eacd00"
 )
 REAL = "?realBody@Thing@@QAEXXZ"
-SOURCE_REL = "Code/GameEngine/Source/Common/Thing.cpp"
+SOURCE_REL = "game/GameEngine/Source/Common/Thing.cpp"
 
 
 def arrange(tmp_path, monkeypatch, *, gate, target_rva="0x00ABCD00", size="32",
             extra_args=(), scaffold=DUMP):
-    reverse = tmp_path / "reverse"
-    reverse.mkdir()
+    reverse = tmp_path / "targets/game/reverse"
+    reverse.mkdir(parents=True)
     source = tmp_path / SOURCE_REL
     source.parent.mkdir(parents=True)
     source.write_bytes(
@@ -82,7 +82,7 @@ def test_red_gate_restores_both_ledgers_and_source_exactly(tmp_path, monkeypatch
 
 @pytest.mark.parametrize("gate", [0, 1])
 def test_tgrid_replacement_keeps_transaction_and_tombstone(tmp_path, monkeypatch, gate):
-    scaffold = DUMP.replace("Code/gen_asm/d_00abcd00.asm", "Code/gen_small/tgrid_109.cpp").replace(
+    scaffold = DUMP.replace("game/gen_asm/d_00abcd00.asm", "game/gen_small/tgrid_109.cpp").replace(
         "gen-dump;ghidra=FUN_00eacd00", "gen-tgrid;template=vec_p16cd")
     functions, deleted, source = arrange(tmp_path, monkeypatch, gate=gate, scaffold=scaffold)
     before = functions.read_bytes(), deleted.read_bytes(), source.read_bytes()
@@ -99,11 +99,11 @@ def test_tgrid_replacement_keeps_transaction_and_tombstone(tmp_path, monkeypatch
 
 
 @pytest.mark.parametrize("gate", [0, 1])
-@pytest.mark.parametrize("source_path", ["Code/gen_small/fam_001.cpp",
-                                        "Code/gen_small/fun_002.cpp"])
+@pytest.mark.parametrize("source_path", ["game/gen_small/fam_001.cpp",
+                                        "game/gen_small/fun_002.cpp"])
 def test_gen_shim_replacement_keeps_transaction_and_tombstone(
         tmp_path, monkeypatch, gate, source_path):
-    scaffold = DUMP.replace("Code/gen_asm/d_00abcd00.asm", source_path).replace(
+    scaffold = DUMP.replace("game/gen_asm/d_00abcd00.asm", source_path).replace(
         "gen-dump;ghidra=FUN_00eacd00", "gen-shim;family=f265_b7a8aa")
     functions, deleted, source = arrange(tmp_path, monkeypatch, gate=gate, scaffold=scaffold)
     before = functions.read_bytes(), deleted.read_bytes(), source.read_bytes()
@@ -124,9 +124,9 @@ def test_real_identity_correction_requires_proof_and_is_transactional(
         tmp_path, monkeypatch, gate):
     old_name = "?apply@Rva00ABCD00@@QAEXXZ"
     old = DUMP.replace("?d_00abcd00@@YAXXZ", old_name).replace(
-        "Code/gen_asm/d_00abcd00.asm", "Code/GameEngine/Old.cpp").replace(
+        "game/gen_asm/d_00abcd00.asm", "game/GameEngine/Old.cpp").replace(
         "gen-dump;ghidra=FUN_00eacd00", "authored")
-    proof_rel = "reverse/identity_evidence/0x00abcd00.md"
+    proof_rel = "targets/game/reverse/identity_evidence/0x00abcd00.md"
     functions, deleted, source = arrange(
         tmp_path, monkeypatch, gate=gate, scaffold=old,
         extra_args=("--correct-identity", old_name,
@@ -150,9 +150,9 @@ def test_real_identity_correction_requires_proof_and_is_transactional(
 
 
 def test_real_identity_correction_rejects_wrong_old_name(tmp_path, monkeypatch):
-    old = DUMP.replace("Code/gen_asm/d_00abcd00.asm", "Code/GameEngine/Old.cpp").replace(
+    old = DUMP.replace("game/gen_asm/d_00abcd00.asm", "game/GameEngine/Old.cpp").replace(
         "gen-dump;ghidra=FUN_00eacd00", "authored")
-    proof_rel = "reverse/identity_evidence/0x00abcd00.md"
+    proof_rel = "targets/game/reverse/identity_evidence/0x00abcd00.md"
     functions, deleted, source = arrange(
         tmp_path, monkeypatch, gate=0, scaffold=old,
         extra_args=("--correct-identity", "?wrong@@YAXXZ",
@@ -169,12 +169,12 @@ def test_real_identity_correction_rejects_wrong_old_name(tmp_path, monkeypatch):
 def test_real_identity_correction_rejects_missing_evidence(tmp_path, monkeypatch):
     old_name = "?apply@Rva00ABCD00@@QAEXXZ"
     old = DUMP.replace("?d_00abcd00@@YAXXZ", old_name).replace(
-        "Code/gen_asm/d_00abcd00.asm", "Code/GameEngine/Old.cpp").replace(
+        "game/gen_asm/d_00abcd00.asm", "game/GameEngine/Old.cpp").replace(
         "gen-dump;ghidra=FUN_00eacd00", "authored")
     functions, deleted, source = arrange(
         tmp_path, monkeypatch, gate=0, scaffold=old,
         extra_args=("--correct-identity", old_name,
-                    "--identity-evidence", "reverse/identity_evidence/missing.md"))
+                    "--identity-evidence", "targets/game/reverse/identity_evidence/missing.md"))
     before = functions.read_bytes(), deleted.read_bytes(), source.read_bytes()
     with pytest.raises(SystemExit):
         add_match.main()
@@ -182,18 +182,18 @@ def test_real_identity_correction_rejects_missing_evidence(tmp_path, monkeypatch
 
 
 @pytest.mark.parametrize("notes,path", [
-    ("gen-tgrid;template=vec_p16cd", "Code/Real.cpp"),
-    ("gen-tgrid-other", "Code/gen_small/tgrid_109.cpp"),
-    ("gen-uw;parent=0x00123456", "Code/gen_small/uw_gen_001.cpp"),
-    ("authored", "Code/gen_small/tgrid_109.cpp"),
-    ("gen-shim;family=f265_b7a8aa", "Code/Real.cpp"),
-    ("gen-shim-other", "Code/gen_small/fam_001.cpp"),
-    ("gen-alias;family=f265_b7a8aa", "Code/gen_small/fam_001.cpp"),
-    ("gen-alias;object-symbol=?m@Gen_00383090@@QAEHXZ", "Code/gen_small/fun_002.cpp"),
+    ("gen-tgrid;template=vec_p16cd", "game/Real.cpp"),
+    ("gen-tgrid-other", "game/gen_small/tgrid_109.cpp"),
+    ("gen-uw;parent=0x00123456", "game/gen_small/uw_gen_001.cpp"),
+    ("authored", "game/gen_small/tgrid_109.cpp"),
+    ("gen-shim;family=f265_b7a8aa", "game/Real.cpp"),
+    ("gen-shim-other", "game/gen_small/fam_001.cpp"),
+    ("gen-alias;family=f265_b7a8aa", "game/gen_small/fam_001.cpp"),
+    ("gen-alias;object-symbol=?m@Gen_00383090@@QAEHXZ", "game/gen_small/fun_002.cpp"),
 ])
 def test_tgrid_support_does_not_admit_real_or_unwind_claims(
         tmp_path, monkeypatch, notes, path):
-    scaffold = DUMP.replace("Code/gen_asm/d_00abcd00.asm", path).replace(
+    scaffold = DUMP.replace("game/gen_asm/d_00abcd00.asm", path).replace(
         "gen-dump;ghidra=FUN_00eacd00", notes)
     functions, deleted, source = arrange(tmp_path, monkeypatch, gate=0, scaffold=scaffold)
     before = functions.read_bytes(), deleted.read_bytes(), source.read_bytes()
@@ -252,16 +252,16 @@ def test_no_verify_tombstone_does_not_claim_byte_verification(tmp_path, monkeypa
 ])
 def test_replace_existing_tombstones_only_when_the_identity_key_moves(
         tmp_path, monkeypatch, new_rva, expect_tombstone):
-    reverse = tmp_path / "reverse"
-    reverse.mkdir()
-    old_source = tmp_path / "Code" / "Old.cpp"
+    reverse = tmp_path / "targets/game/reverse"
+    reverse.mkdir(parents=True)
+    old_source = tmp_path / "game" / "Old.cpp"
     old_source.parent.mkdir()
     old_source.write_text("void oldBody() {}\n", encoding="utf-8")
-    new_source = tmp_path / "Code" / "New.cpp"
+    new_source = tmp_path / "game" / "New.cpp"
     new_source.write_text("void newBody() {}\n", encoding="utf-8")
     functions = reverse / "functions.csv"
     functions.write_bytes(
-        (f"{HEADER}\r\n{REAL},,0x00ABCD00,32,Code/Old.cpp,matched,old claim\r\n")
+        (f"{HEADER}\r\n{REAL},,0x00ABCD00,32,game/Old.cpp,matched,old claim\r\n")
         .encode("utf-8"))
     deleted = reverse / "deleted_rows.csv"
     deleted.write_bytes(b"name,target_rva,reason\n")
@@ -272,7 +272,7 @@ def test_replace_existing_tombstones_only_when_the_identity_key_moves(
         add_match.subprocess, "run",
         lambda command, *, cwd, env: SimpleNamespace(returncode=0))
     monkeypatch.setattr(sys, "argv", [
-        "add_match.py", REAL, new_rva, "32", "Code/New.cpp",
+        "add_match.py", REAL, new_rva, "32", "game/New.cpp",
         "--replace-existing", "--root", str(tmp_path),
     ])
 
@@ -288,7 +288,7 @@ def test_replace_existing_tombstones_only_when_the_identity_key_moves(
 def test_replace_existing_completes_a_truncated_lift_name(tmp_path, monkeypatch):
     # 36 named __emit lifts carry decorations like ?init@ShellGameLoadScreen@@;
     # the converter passes the full mangled name and must still find the row.
-    lift = ("?realBody@Thing@@,,0x00ABCD00,32,Code/GameEngine/Source/Common/ThingThunk.cpp,"
+    lift = ("?realBody@Thing@@,,0x00ABCD00,32,game/GameEngine/Source/Common/ThingThunk.cpp,"
             "matched,object-symbol=_bfme_Thing_realBody")
     functions, deleted, _source = arrange(tmp_path, monkeypatch, gate=0, scaffold=lift)
     monkeypatch.setattr(sys, "argv", [
@@ -303,7 +303,7 @@ def test_replace_existing_completes_a_truncated_lift_name(tmp_path, monkeypatch)
 
 
 def test_replace_existing_does_not_complete_a_name_at_another_address(tmp_path, monkeypatch):
-    lift = ("?realBody@Thing@@,,0x00ABCE00,32,Code/GameEngine/Source/Common/ThingThunk.cpp,"
+    lift = ("?realBody@Thing@@,,0x00ABCE00,32,game/GameEngine/Source/Common/ThingThunk.cpp,"
             "matched,")
     arrange(tmp_path, monkeypatch, gate=0, scaffold=lift)
     monkeypatch.setattr(sys, "argv", [

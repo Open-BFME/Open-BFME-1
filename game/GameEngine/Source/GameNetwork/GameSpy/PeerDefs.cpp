@@ -1,0 +1,718 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/asciistringsetoutofline /Iinputs/reference/shims/psplayerstats /Iinputs/reference/shims/peerdefs /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
+#define Matrix4x4 Matrix4  // BFME renamed it
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+// FILE: PeerDefs.cpp //////////////////////////////////////////////////////
+// Generals GameSpy Peer (chat) definitions
+// Author: Matthew D. Campbell, June 2002
+
+#define _BFME_RETAIL_TREE_INSERT_LAYOUT
+#define _BFME_RETAIL_PLAYER_INFO_LAYOUT
+#define __PLACEMENT_VEC_NEW_INLINE
+#include <map>
+#include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+#include <set>
+
+#include "Common/GameState.h"
+#include "Common/RandomValue.h"
+#include "Common/IgnorePreferences.h"
+#include "Common/CustomMatchPreferences.h"
+#include "Common/GameSpyMiscPreferences.h"
+#include "Common/Recorder.h"
+#include "Common/Player.h"
+#include "Common/PlayerList.h"
+#include "Common/PlayerTemplate.h"
+#include "GameClient/MapUtil.h"
+#include "GameClient/ShellHooks.h"
+#include "GameClient/GameText.h"
+#include "GameNetwork/GameSpy/LadderDefs.h"
+#include "GameNetwork/GameSpy/PeerDefsImplementation.h"
+#include "GameNetwork/GameSpy/BuddyThread.h"
+#include "GameNetwork/GameSpy/PeerThread.h"
+#include "GameNetwork/GameSpy/PingThread.h"
+#include "GameNetwork/GameSpy/PersistentStorageThread.h"
+#include "GameNetwork/GameSpy/GSConfig.h"
+#include "GameNetwork/GameSpyOverlay.h"
+#include "GameNetwork/RankPointValue.h"
+#include "GameLogic/GameLogic.h"
+#include "string_base.h"
+
+#ifdef _INTERNAL
+// for occasional debugging...
+//#pragma optimize("", off)
+//#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
+#endif
+
+GameSpyInfoInterface *TheGameSpyInfo = NULL;
+extern GameSpyStagingRoom *TheGameSpyGame = NULL;
+void deleteNotificationBox( void );
+
+// ??RAsciiComparator@@QBE_NVAsciiString@@0@Z present-unmatched
+bool AsciiComparator::operator()(AsciiString s1, AsciiString s2) const
+{
+	return stricmp(s1.str(), s2.str()) < 0;
+}
+
+GameSpyInfo::GameSpyInfo()
+{
+	reset();
+	TheGameSpyGame = &m_localStagingRoom;
+	m_isDisconAfterGameStart = FALSE;
+}
+
+GameSpyInfo::~GameSpyInfo()
+{
+	TheGameSpyGame = NULL;
+	reset();
+}
+
+// byte-exact reconstruction: game/GameEngine/Source/GameNetwork/GameSpy/PeerDefsGameSpyInfoReset.cpp
+// ?reset@GameSpyInfo@@UAEXXZ present-unmatched
+void GameSpyInfo::reset( void )
+{
+	m_sawFullGameList = FALSE;
+	m_isDisconAfterGameStart = FALSE;
+	m_currentGroupRoomID = 0;
+	clearGroupRoomList();
+	clearStagingRoomList();
+	m_localStagingRoomID = 0;
+	m_buddyRequestMap.clear();
+	m_buddyMap.clear();
+	m_buddyMessages.clear();
+	m_joinedStagingRoom = 0;
+	m_isHosting = false;
+	m_localStagingRoomID = 0;
+	m_localStagingRoom.reset();
+	m_gotGroupRoomList = false;
+	m_localName = "";
+	m_localProfileID = 0;
+	m_maxMessagesPerUpdate = 100;
+	
+	// Added By Sadullah Nader
+	// Initialization missing and needed
+	m_disallowAsainText = FALSE;
+	m_disallowNonAsianText = FALSE;
+	m_disconReason = 0;
+	m_localBaseName.clear();
+	m_localEmail.clear();
+	m_localPasswd.clear();
+	m_pingString.clear();
+	m_rawConfig.clear();
+	m_rawMotd.clear();
+	//
+
+	m_internalIP = m_externalIP = 0;
+
+	m_savedIgnoreMap.clear();
+	m_preorderPlayers.clear();
+
+	m_cachedLocalPlayerStats.reset();
+	
+	m_additionalDisconnects = -1;
+}
+
+Bool GameSpyInfo::didPlayerPreorder( Int profileID ) const
+{
+	std::set<Int>::const_iterator it = m_preorderPlayers.find(profileID);
+	return (it != m_preorderPlayers.end());
+}
+
+void GameSpyInfo::markPlayerAsPreorder( Int profileID )
+{
+	m_preorderPlayers.insert(profileID);
+}
+
+void GameSpyInfo::setLocalIPs(UnsignedInt internalIP, UnsignedInt externalIP)
+{
+	m_internalIP = internalIP;
+	m_externalIP = externalIP;
+}
+
+void GameSpyInfo::readAdditionalDisconnects( void )
+{
+	*reinterpret_cast<Int *>(reinterpret_cast<char *>(this) + 0x6f8) =
+		GetAdditionalDisconnectsFromUserFile(
+			*reinterpret_cast<Int *>(reinterpret_cast<char *>(this) + 0x70));
+	DEBUG_LOG(("GameSpyInfo::readAdditionalDisconnects() found %d disconnects.\n",
+		*reinterpret_cast<Int *>(reinterpret_cast<char *>(this) + 0x6f8)));
+}
+
+// ?getAdditionalDisconnects@GameSpyInfo@@UAEHXZ
+Int GameSpyInfo::getAdditionalDisconnects( void )
+{
+	DEBUG_LOG(("GameSpyInfo::getAdditionalDisconnects() would have returned %d.  Returning 0 instead.\n", m_additionalDisconnects));
+	return 0;
+}
+
+void GameSpyInfo::clearAdditionalDisconnects( void )
+{
+	*reinterpret_cast<Int *>(reinterpret_cast<char *>(this) + 0x6f8) = 0;
+}
+
+GameSpyInfoInterface* GameSpyInfoInterface::createNewGameSpyInfoInterface( void )
+{
+	return NEW GameSpyInfo;
+}
+
+Bool GameSpyInfo::amIHost( void )
+{
+	return *reinterpret_cast<const Bool *>(reinterpret_cast<const char *>(this) + 0x258);
+}
+
+GameSpyStagingRoom* GameSpyInfo::getCurrentStagingRoom( void )
+{
+	if (*reinterpret_cast<const Bool *>(reinterpret_cast<const char *>(this) + 0x258) ||
+		*reinterpret_cast<const Int *>(reinterpret_cast<const char *>(this) + 0x254))
+		return reinterpret_cast<GameSpyStagingRoom *>(reinterpret_cast<char *>(this) + 0x25c);
+
+	StagingRoomMap::iterator it = m_stagingRooms.find(
+		*reinterpret_cast<const Int *>(reinterpret_cast<const char *>(this) + 0x254));
+	if (it != m_stagingRooms.end())
+		return it->second;
+
+	return NULL;
+}
+
+// ?setGameOptions@GameSpyInfo@@UAEXXZ
+// Body in PeerDefs_setGameOptions.asm (exact 383B retail).
+
+// ?isBuddy@GameSpyInfo@@UAE_NH@Z
+Bool GameSpyInfo::isBuddy( Int id )
+{
+	return m_buddyMap.find(id) != m_buddyMap.end();
+}
+
+// Keep the BuddyInfoMap find COMDAT emitted for the retail STL body.
+BuddyInfoMap::iterator PeerDefs_force_BuddyInfoMapFind(BuddyInfoMap *map, Int id)
+{
+	return map->find(id);
+}
+
+// byte-exact reconstruction: game/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfoAddGroupRoomThunk.cpp
+// ?addGroupRoom@GameSpyInfo@@UAEXVGameSpyGroupRoom@@@Z present-unmatched
+void GameSpyInfo::addGroupRoom( GameSpyGroupRoom room )
+{
+	if (room.m_groupID == 0)
+	{
+		m_gotGroupRoomList = TRUE;
+
+		GroupRoomMap::iterator iter;
+
+		// figure out how many good strings we've got
+		std::vector<UnicodeString> names;
+		Int numRooms = 0;
+		for (iter = getGroupRoomList()->begin(); iter != getGroupRoomList()->end(); ++iter)
+		{
+			GameSpyGroupRoom room = iter->second;
+			if (room.m_groupID != TheGameSpyConfig->getQMChannel())
+			{
+				++numRooms;
+
+				AsciiString groupLabel;
+				groupLabel.format("GUI:%s", room.m_name.str());
+
+				Bool exists = FALSE;
+				UnicodeString groupName = TheGameText->fetch(groupLabel, &exists);
+				if (exists)
+				{
+					names.push_back(groupName);
+				}
+			}
+		}
+
+		if (!names.empty() && names.size() != numRooms)
+		{
+			// didn't get all names.  fix up
+			Int nameIndex = 0;
+			Int timesThrough = 1; // start with USA Lobby 1
+			for (iter = TheGameSpyInfo->getGroupRoomList()->begin(); iter != TheGameSpyInfo->getGroupRoomList()->end(); ++iter)
+			{
+				GameSpyGroupRoom room = iter->second;
+				if (room.m_groupID != TheGameSpyConfig->getQMChannel())
+				{
+					room.m_translatedName.format(L"%ls %d", names[nameIndex].str(), timesThrough);
+					nameIndex = (nameIndex+1)%names.size();
+					m_groupRooms[room.m_groupID] = room;
+					if (!nameIndex)
+					{
+						// we've looped through the name list already.  increment the timesThrough counter
+						++timesThrough;
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		DEBUG_LOG(("Adding group room %d (%s)\n", room.m_groupID, room.m_name.str()));
+		AsciiString groupLabel;
+		groupLabel.format("GUI:%s", room.m_name.str());
+		room.m_translatedName = TheGameText->fetch(groupLabel);
+		m_groupRooms[room.m_groupID] = room;
+		if ( !stricmp("quickmatch", room.m_name.str()) )
+		{
+			DEBUG_LOG(("Group room %d (%s) is the QuickMatch room\n", room.m_groupID, room.m_name.str()));
+			TheGameSpyConfig->setQMChannel(room.m_groupID);
+		}
+	}
+}
+
+// ?joinGroupRoom@GameSpyInfo@@UAEXH@Z present-unmatched
+void GameSpyInfo::joinGroupRoom( Int groupID )
+{
+	if (groupID > 0)
+	{
+		PeerRequest req;
+		req.peerRequestType = PeerRequest::PEERREQUEST_JOINGROUPROOM;
+		req.groupRoom.id = groupID;
+		TheGameSpyPeerMessageQueue->addRequest(req);
+		m_playerInfoMap.clear();
+	}
+}
+
+// ?leaveGroupRoom@GameSpyInfo@@UAEXXZ
+// Body in PeerDefs_leaveGroupRoom.asm (exact 188B retail @ 0x00634CE0).
+
+
+// byte-exact reconstruction: game/GameEngine/Source/Common/GameSpyInfo_joinBestGroupRoomMethodThunk.cpp
+// ?joinBestGroupRoom@GameSpyInfo@@UAEXXZ present-unmatched
+void GameSpyInfo::joinBestGroupRoom( void )
+{
+	if (m_currentGroupRoomID)
+	{
+		DEBUG_LOG(("Bailing from GameSpyInfo::joinBestGroupRoom() - we were already in a room\n"));
+		m_currentGroupRoomID = 0;
+		return;
+	}
+
+	if (m_groupRooms.size())
+	{
+		int minID = -1;
+		int minPlayers = 1000;
+		GroupRoomMap::iterator iter = m_groupRooms.begin();
+		while (iter != m_groupRooms.end())
+		{
+			GameSpyGroupRoom room = iter->second;
+			DEBUG_LOG(("Group room %d: %s (%d, %d, %d, %d)\n", room.m_groupID, room.m_name.str(), room.m_numWaiting, room.m_maxWaiting,
+				room.m_numGames, room.m_numPlaying));
+
+			if (TheGameSpyConfig->getQMChannel() != room.m_groupID && minPlayers > 25 && room.m_numWaiting < minPlayers)
+			{
+				minID = room.m_groupID;
+				minPlayers = room.m_numWaiting;
+			}
+
+			++iter;
+		}
+
+		if (minID > 0)
+		{
+			PeerRequest req;
+			req.peerRequestType = PeerRequest::PEERREQUEST_JOINGROUPROOM;
+			req.groupRoom.id = minID;
+			TheGameSpyPeerMessageQueue->addRequest(req);
+			m_playerInfoMap.clear();
+		}
+		else
+		{
+			GSMessageBoxOk(TheGameText->fetch("GUI:Error"), TheGameText->fetch("GUI:GSGroupRoomJoinFail"), NULL);
+		}
+	}
+	else
+	{
+		GSMessageBoxOk(TheGameText->fetch("GUI:Error"), TheGameText->fetch("GUI:GSGroupRoomJoinFail"), NULL);
+	}
+}
+
+// ?updatePlayerInfo@GameSpyInfo@@UAEXVPlayerInfo@@VAsciiString@@@Z present-unmatched
+void GameSpyInfo::updatePlayerInfo( PlayerInfo pi, AsciiString oldNick )
+{
+	if (!oldNick.isEmpty())
+		playerLeftGroupRoom(oldNick);
+
+	m_playerInfoMap[pi.m_name] = pi;
+
+	if (pi.m_preorder != 0)
+		markPlayerAsPreorder(pi.m_profileID);
+}
+
+// ?playerLeftGroupRoom@GameSpyInfo@@UAEXVAsciiString@@@Z present-unmatched
+void GameSpyInfo::playerLeftGroupRoom( AsciiString nick )
+{
+	PlayerInfoMap::iterator it = m_playerInfoMap.find(nick);
+	if (it != m_playerInfoMap.end())
+	{
+		m_playerInfoMap.erase(it);
+	}
+}
+
+void GameSpyInfo::clearStagingRoomList( void )
+{
+	Int numRoomsRemoved = 0;
+	m_sawFullGameList = FALSE;
+	m_stagingRoomsDirty = FALSE;
+	
+	StagingRoomMap::iterator it = m_stagingRooms.begin();
+	while (it != m_stagingRooms.end())
+	{
+		++numRoomsRemoved;
+
+		delete it->second;
+		m_stagingRooms.erase(it);
+		it = m_stagingRooms.begin();
+	}
+	if (numRoomsRemoved > 0)
+	{
+		//m_stagingRoomsDirty = true; // only consider ourselves dirty if we actually removed some games.
+	}
+}
+
+void GameSpyInfo::addStagingRoom( GameSpyStagingRoom room )
+{
+	removeStagingRoom(room);
+	GameSpyStagingRoom *newRoom = NEW GameSpyStagingRoom;
+	*newRoom = room;
+	newRoom->cleanUpSlotPointers();
+	m_stagingRooms[room.getID()] = newRoom;
+	m_stagingRoomsDirty = m_sawFullGameList;
+}
+
+// One vtable slot from home, and the slot is reachable -- but the fix is not,
+// for a reason that has nothing to do with this body. addStagingRoom is vtable
+// +0xA0 in BFME and +0x84 in the vendored interface, twenty-eight bytes of extra
+// virtuals ahead of it, and the argument handling including the by-value copy and
+// its unwind slot already matches. A forty-slot view class reaches +0xA0 and the
+// body then matches -- but DECLARING it renumbers the compiler-local $L labels in
+// this TU, and uw_00c40e10 and uw_00c40e8a are anchored on them: one fails the
+// byte compare and the other can no longer be told from two siblings. Any edit
+// that adds a declaration here pays that, so this body needs the funclet rows
+// re-anchored first, or a change that adds no declarations at all. Comments are
+// free; code is not.
+//
+// addStagingRoom is vtable +0xA0 in BFME and +0x84 in the vendored interface --
+// twenty-eight bytes of extra virtuals ahead of it. The argument handling,
+// including the by-value copy and its unwind slot, already matched; only the slot
+// moved. Declaring this view renumbers the compiler-local $L labels in this TU,
+// which is why uw_00c40e10 and uw_00c40e8a are re-anchored in the same commit.
+template <Int N>
+class BfmeStagingRoomSlots : public BfmeStagingRoomSlots<N - 1>
+{
+public:
+	virtual void unused(char (*)[N]) = 0;
+};
+
+template <>
+class BfmeStagingRoomSlots<0>
+{
+};
+
+class BfmeStagingRoomVTable : public BfmeStagingRoomSlots<40>
+{
+public:
+	virtual void addStagingRoom( GameSpyStagingRoom room ) = 0;	///< vtable +0xA0
+};
+
+void GameSpyInfo::updateStagingRoom( GameSpyStagingRoom room )
+{
+	((BfmeStagingRoomVTable *)this)->addStagingRoom(room);
+}
+
+void GameSpyInfo::removeStagingRoom( GameSpyStagingRoom room )
+{
+	StagingRoomMap::iterator it = m_stagingRooms.find(room.getID());
+	if (it != m_stagingRooms.end())
+	{
+		delete it->second;
+		m_stagingRooms.erase(it);
+
+		m_stagingRoomsDirty = m_sawFullGameList;
+	}
+}
+
+Bool GameSpyInfo::hasStagingRoomListChanged( void )
+{
+	Bool val = m_stagingRoomsDirty;
+	m_stagingRoomsDirty = false;
+	return val;
+}
+
+GameSpyStagingRoom* GameSpyInfo::findStagingRoomByID( Int id )
+{
+	StagingRoomMap::iterator it = m_stagingRooms.find(id);
+	if (it != m_stagingRooms.end())
+		return it->second;
+
+	return NULL;
+}
+
+// ?leaveStagingRoom@GameSpyInfo@@UAEXXZ present-unmatched
+void GameSpyInfo::leaveStagingRoom( void )
+{
+	m_localStagingRoomID = 0;
+	PeerRequest req;
+	req.peerRequestType = PeerRequest::PEERREQUEST_LEAVESTAGINGROOM;
+	TheGameSpyPeerMessageQueue->addRequest(req);
+	m_playerInfoMap.clear();
+	m_joinedStagingRoom = FALSE;
+	m_isHosting = FALSE;
+}
+
+// ?markAsStagingRoomHost@GameSpyInfo@@UAEXXZ
+// Body in PeerDefs_markAsStagingRoomHost.asm (exact 390B retail @ 0x006313F0).
+// Drift vote 0x00791B33 was misplaced (mid-function FPU). BFME body differs from ZH
+// (no useStats/oldFactionsOnly preserve; extra IP/port stores; field offsets 0x25c/0x254/0x258/0x6c4).
+
+// ?markAsStagingRoomJoiner@GameSpyInfo@@UAEXH@Z
+// Body in PeerDefs_markAsStagingRoomJoiner.asm (exact 322B retail).
+// Keep GameSpyStagingRoom setExeCRC/setIniCRC COMDATs in this TU (were only
+// referenced by the old C++ markAsStagingRoomJoiner body; 13B each matched).
+void PeerDefs_force_GameSpyStagingRoom_CRC(GameSpyStagingRoom *room, UnsignedInt exe, UnsignedInt ini)
+{
+	room->setExeCRC(exe);
+	room->setIniCRC(ini);
+}
+
+void GameSpyInfo::setMOTD( const AsciiString& motd )
+{
+	reinterpret_cast<StringBase<char> *>(reinterpret_cast<char *>(this) + 0x0c)->set(
+		*reinterpret_cast<const StringBase<char> *>(&motd));
+}
+
+const AsciiString& GameSpyInfo::getMOTD( void )
+{
+	return m_rawMotd;
+}
+
+void GameSpyInfo::setConfig( const AsciiString& config )
+{
+	reinterpret_cast<StringBase<char> *>(reinterpret_cast<char *>(this) + 0x10)->set(
+		*reinterpret_cast<const StringBase<char> *>(&config));
+}
+
+const AsciiString& GameSpyInfo::getConfig( void )
+{
+	return m_rawConfig;
+}
+
+// --------------------------------------------------------------
+// ?SetUpGameSpy@@YAXPBD0@Z
+// Body in PeerDefs_SetUpGameSpy.asm (exact 723B retail @ 0x006377D0).
+// Queue RVA 0x0063777A was inside createNewGameSpyInfoInterface; true start is SEH @ 0x006377D0.
+
+// ?TearDownGameSpy@@YAXXZ
+// Real C++ body in PeerDefs_TearDownGameSpy.cpp (607B retail @0x00633390).
+// It preserves the BFME GameSpyInfo slots+70/+14C and 0x1C4-byte stats value.
+
+
+void GameSpyInfo::addToIgnoreList( AsciiString nick )
+{
+	m_ignoreList.insert(nick);
+}
+
+void GameSpyInfo::removeFromIgnoreList( AsciiString nick )
+{
+	m_ignoreList.erase(nick);
+}
+
+Bool GameSpyInfo::isIgnored( AsciiString nick )
+{
+	return m_ignoreList.find(nick) != m_ignoreList.end();
+}
+
+IgnoreList GameSpyInfo::returnIgnoreList( void )
+{
+ return m_ignoreList;
+}
+
+void GameSpyInfo::addToSavedIgnoreList( Int profileID, AsciiString nick)
+{
+	m_savedIgnoreMap[profileID] = nick;
+	IgnorePreferences pref;
+	pref.setIgnore(nick, profileID, true);
+	pref.write();
+}
+
+// ?removeFromSavedIgnoreList@GameSpyInfo@@UAEXH@Z
+// Retail body is claimed from PeerDefs_removeFromSavedIgnoreList.asm; retain this
+// definition so this translation unit emits its matched map template helpers.
+// byte-exact reconstruction: game/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfoRemoveFromSavedIgnoreListThunk.cpp
+// ?removeFromSavedIgnoreList@GameSpyInfo@@UAEXH@Z present-unmatched
+// This one is NOT unblocked by the re-anchoring above, and the reason is worth
+// separating from it. The layout half is settled: retail's m_savedIgnoreMap has a
+// TWELVE-byte value type where the vendored header says AsciiString, so this
+// erase resolves to the generic 12-byte _Rb_tree instantiation at 0x006342A0
+// that game/gen_small/tgrid_119.cpp already owns rather than the AsciiString one
+// at 0x00224870 -- the same 91-byte body under a different template. A local
+// map<Int, 12-byte> view reaches it and the call site then compiles correctly.
+//
+// What stops it is that this erase is the ONLY expression in this TU that
+// instantiates the AsciiString-valued tree's _M_upper_bound, and that COMDAT is
+// a matched 38-byte row claimed from this file at 0x00222150. Switching the call
+// to the 12-byte instantiation stops it being emitted and the row dies with
+// "symbol not found in object". operator[] at addToSavedIgnoreList and find() at
+// isSavedIgnored do not instantiate it; only erase does.
+//
+// So landing this body trades one matched row for another and needs the 38-byte
+// row retired or rehomed first. That is a ledger decision, not a Tier 1 one.
+void GameSpyInfo::removeFromSavedIgnoreList( Int profileID )
+{
+	m_savedIgnoreMap.erase(profileID);
+	IgnorePreferences pref;
+	pref.setIgnore(AsciiString::TheEmptyString, profileID, false);
+	pref.write();
+}
+
+Bool GameSpyInfo::isSavedIgnored( Int profileID )
+{
+	return m_savedIgnoreMap.find(profileID) != m_savedIgnoreMap.end();
+}
+
+// ?returnSavedIgnoreList@GameSpyInfo@@UAE?AV?$map@HVAsciiString@@U?$less@H@_STL@@V?$allocator@U?$pair@$$CBHVAsciiString@@@_STL@@@3@@_STL@@XZ present-unmatched
+SavedIgnoreMap	GameSpyInfo::returnSavedIgnoreList( void )
+{
+	return m_savedIgnoreMap;
+}
+
+static Int grabHexInt(const char *s)
+{
+	char tmp[5] = "0xff";
+	tmp[2] = s[0];
+	tmp[3] = s[1];
+	Int b = strtol(tmp, NULL, 16);
+	return b;
+}
+
+// ?isIgnored@PlayerInfo@@QAE_NXZ present-unmatched
+Bool PlayerInfo::isIgnored( void )
+{
+	return (m_profileID)?TheGameSpyInfo->isSavedIgnored(m_profileID):TheGameSpyInfo->isIgnored(m_name);
+}
+
+// ?loadSavedIgnoreList@GameSpyInfo@@UAEXXZ
+// Body in PeerDefs_loadSavedIgnoreList.asm (exact 162B retail; SEH + field offsets).
+
+void GameSpyInfo::setDisallowAsianText( Bool val )
+{
+	*reinterpret_cast<Bool *>(reinterpret_cast<char *>(this) + 0x244) = val;
+}
+
+void GameSpyInfo::setDisallowNonAsianText( Bool val )
+{
+	*reinterpret_cast<Bool *>(reinterpret_cast<char *>(this) + 0x245) = val;
+}
+
+Bool GameSpyInfo::getDisallowAsianText( void )
+{
+	return *reinterpret_cast<const Bool *>(reinterpret_cast<const char *>(this) + 0x244);
+}
+Bool GameSpyInfo::getDisallowNonAsianText(void )
+{
+	return *reinterpret_cast<const Bool *>(reinterpret_cast<const char *>(this) + 0x245);
+}
+
+void GameSpyInfo::setMaxMessagesPerUpdate( Int num )
+{
+	m_maxMessagesPerUpdate = num;
+}
+
+Int GameSpyInfo::getMaxMessagesPerUpdate( void )
+{
+	return *reinterpret_cast<const Int *>(reinterpret_cast<const char *>(this) + 0x250);
+}
+
+/**This function is used to force an update of player's gamespy stats with an additional
+disconnection.  This is used upon starting a new game so that if user disconnects prior
+to finishing game, the disconnection stays on the server.  If he completes the game, we
+remove this extra disconnection inside of populatePlayerInfo() on the ScoreScreen.  This
+seems like the only secure way to handle this issue since users can abort the process
+before we can detect/log disconnections.*/
+// ?updateAdditionalGameSpyDisconnections@GameSpyInfo@@UAEXH@Z present-unmatched
+void GameSpyInfo::updateAdditionalGameSpyDisconnections(Int count)
+{
+	if (TheRecorder->isMultiplayer() && TheGameLogic->isInInternetGame() && TheGameSpyGame && TheGameSpyGame->getUseStats())
+	{	
+		Int localID = TheGameSpyInfo->getLocalProfileID();
+		PSPlayerStats stats = TheGameSpyPSMessageQueue->findPlayerStatsByID(localID);
+		
+		Player *player=ThePlayerList->getLocalPlayer();
+
+		Int ptIdx;
+		const PlayerTemplate *myTemplate = player->getPlayerTemplate();
+		DEBUG_LOG(("myTemplate = %X(%s)\n", myTemplate, myTemplate->getName().str()));
+		for (ptIdx = 0; ptIdx < ThePlayerTemplateStore->getPlayerTemplateCount(); ++ptIdx)
+		{
+			const PlayerTemplate *nthTemplate = ThePlayerTemplateStore->getNthPlayerTemplate(ptIdx);
+			DEBUG_LOG(("nthTemplate = %X(%s)\n", nthTemplate, nthTemplate->getName().str()));
+			if (nthTemplate == myTemplate)
+			{
+					break;
+			}
+		}
+
+		Bool anyAI = FALSE;
+		for (Int i=0; i<MAX_SLOTS; ++i)
+		{
+			const GameSlot *slot = TheGameInfo->getConstSlot(i);
+
+			if (slot->isAI())
+			{
+				anyAI = TRUE;
+			}
+		}
+
+		//Check for cases where we're not tracking stats.
+		if (anyAI || stats.id == 0 || myTemplate->isObserver() || player->getPlayerType() != PLAYER_HUMAN || player->isPlayerObserver())
+			return;
+
+		Int disCons=stats.discons[ptIdx];
+		disCons += count;
+		if (disCons < 0)
+		{	DEBUG_LOG(("updateAdditionalGameSpyDisconnections() - disconnection count below zero\n"));
+			return;	//something is wrong here
+		}
+		stats.discons[ptIdx] = disCons;	//add an additional disconnection to their stats.
+
+		//Add an additional disconnection to player stats.
+		PSRequest req;
+
+		req.requestType = PSRequest::PSREQUEST_UPDATEPLAYERSTATS;
+		req.email = TheGameSpyInfo->getLocalEmail().str();
+		req.nick = TheGameSpyInfo->getLocalBaseName().str();
+		req.password = TheGameSpyInfo->getLocalPassword().str();
+		req.player = stats;
+		req.addDesync = FALSE;
+		req.addDiscon = FALSE;
+		req.lastHouse = ptIdx;
+
+		TheGameSpyPSMessageQueue->addRequest(req);
+		TheGameSpyPSMessageQueue->trackPlayerStats(stats);
+
+		// force an update of our shtuff
+		PSResponse newResp;
+		newResp.responseType = PSResponse::PSRESPONSE_PLAYERSTATS;
+		newResp.player = stats;
+		TheGameSpyPSMessageQueue->addResponse(newResp);
+
+		// cache our stuff for easy reading next time
+   		GameSpyMiscPreferences mPref;
+   		mPref.setCachedStats(GameSpyPSMessageQueueInterface::formatPlayerKVPairs(stats).c_str());
+   		mPref.write();
+	}
+}

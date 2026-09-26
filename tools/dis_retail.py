@@ -15,14 +15,14 @@ except ImportError:
 rva = int(sys.argv[1], 16)
 size = int(sys.argv[2], 0) if len(sys.argv) > 2 else None
 names = {}
-for r in csv.DictReader(open(build.ROOT / 'reverse/functions.csv', newline='', encoding='utf-8', errors='replace')):
+for r in csv.DictReader(open(build.ROOT / 'targets/game/reverse/functions.csv', newline='', encoding='utf-8', errors='replace')):
     try: a = int(r['target_rva'], 16)
     except ValueError: continue
     names[a] = r['name']
     if size is None and a == rva: size = int(r['target_size'] or 0)
 if not size: sys.exit("size unknown: pass it")
 pins = {}
-for r in csv.reader(open(build.ROOT / 'reverse/symbols.csv', newline='', encoding='utf-8', errors='replace')):
+for r in csv.reader(open(build.ROOT / 'targets/game/reverse/symbols.csv', newline='', encoding='utf-8', errors='replace')):
     if len(r) > 1 and r[1].startswith('0x'):
         try: pins.setdefault(int(r[1], 16), r[0])
         except ValueError: pass

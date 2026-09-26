@@ -117,7 +117,7 @@ The source repository does not contain the retail loose UI data. The baseline
 folder contains the retail executables and manifest, but no loose BFME `.wnd`,
 `.apt`, `.big`, mapped-image, texture, font, or CSF set. The names below were
 initially recovered from source literals, executable strings, and
-`reverse/string_xrefs.tsv`; a read-only inspection of the user's BFME1
+`targets/game/reverse/string_xrefs.tsv`; a read-only inspection of the user's BFME1
 installation now supplies representative `.wnd`, `.ini`, and packaged APT
 contents. The source checkout still does not vendor those proprietary assets.
 

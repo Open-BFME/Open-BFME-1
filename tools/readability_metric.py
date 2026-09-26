@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Seven-axis readability index over the tracked C++ under Code/, cached per blob.
+"""Seven-axis readability index over the tracked C++ under game/, cached per blob.
 
 Six axes are the audit's; SrcIdent is the seventh and was added because the other
 six could not see the thing that actually happened to the tree. Each is a
@@ -27,7 +27,7 @@ from the original. Two of them were, and the fix differs by axis:
     the same argument holds for the same reason (staged_swaps, TOKEN_SWAP_BUDGET).
 
 Scope is the eight areas in ORDER, which is what the audit measured. The ALL row
-is their sum, NOT a walk of everything under Code/, so the table also prints how
+is their sum, NOT a walk of everything under game/, so the table also prints how
 many tracked sources sit outside them -- a total that silently swallowed a new
 top-level area would read as progress.
 
@@ -60,7 +60,7 @@ from pathlib import Path
 import ledger_io
 
 DEFAULT_ROOT = Path(__file__).resolve().parents[1]
-LEDGER = "reverse/functions.csv"
+LEDGER = "targets/game/reverse/functions.csv"
 LEDGER_COLUMNS = ["name", "export_rva", "target_rva", "target_size", "source",
                   "status", "notes"]
 # A cold cache means scanning every tracked source, which is minutes with no
@@ -78,14 +78,14 @@ SCAN_NOTICE_MIN = 100
 SRC_EXT = (".cpp", ".c", ".h", ".inl")
 TU_EXT = (".cpp", ".c")
 FLAT_AREAS = ("gen_asm", "gen_small", "masm_dumps", "stlport")
-ORDER = ["Code/GameEngine/Source/Common",
-         "Code/GameEngine/Source/GameLogic",
-         "Code/GameEngine/Source/GameClient",
-         "Code/GameEngine/Source/GameNetwork",
-         "Code/GameEngineDevice/Source/W3DDevice",
-         "Code/Libraries/Source/WWVegas",
-         "Code/gen_small",
-         "Code/gen_asm"]
+ORDER = ["game/GameEngine/Source/Common",
+         "game/GameEngine/Source/GameLogic",
+         "game/GameEngine/Source/GameClient",
+         "game/GameEngine/Source/GameNetwork",
+         "game/GameEngineDevice/Source/W3DDevice",
+         "game/Libraries/Source/WWVegas",
+         "game/gen_small",
+         "game/gen_asm"]
 AXES = ("Body", "Ident", "Types", "Iface", "Local", "SSoT", "SrcIdent")
 LEGEND = """Body     = % of lines that are C++, not raw __emit/__asm
 Ident    = % of functions whose LEDGER NAME is semantic, not address-derived
@@ -235,7 +235,7 @@ def add(counter, path, counts):
 
 
 def scan_ledger(raw):
-    """area -> {fns, fns_ph, ledger_files, solo_files} from reverse/functions.csv.
+    """area -> {fns, fns_ph, ledger_files, solo_files} from targets/game/reverse/functions.csv.
 
     Records come through ledger_io because the ledger mixes \\r\\r\\n, \\r\\n and
     bare \\n terminators and every naive split has silently dropped or invented
@@ -253,7 +253,7 @@ def scan_ledger(raw):
             fail(f"ledger row {number} has {len(row)} fields, expected "
                  f"{len(LEDGER_COLUMNS)}: {row[:3]}")
         source = row[source_at]
-        if not source.startswith("Code/"):
+        if not source.startswith("game/"):
             continue
         counter = areas[area(source)]
         counter["fns"] += 1
@@ -270,7 +270,7 @@ def scan_ledger(raw):
 def area(path):
     parts = path.split("/")
     if parts[1] in FLAT_AREAS:
-        return "Code/" + parts[1]
+        return "game/" + parts[1]
     return "/".join(parts[:4]) if len(parts) > 3 else "/".join(parts[:3])
 
 
@@ -369,7 +369,7 @@ def git(root, *args, stdin=None):
 
 
 def tracked_sources(root):
-    listing = git(root, "ls-files", "-z", "--", "Code").decode()
+    listing = git(root, "ls-files", "-z", "--", "game").decode()
     return [path for path in listing.split("\0") if path.endswith(SRC_EXT)]
 
 
@@ -412,9 +412,9 @@ def listed_blobs(root, revision):
     `<mode> <type> <blob>`, so the blob sits in a different column in each."""
     blobs = {}
     if revision is None:
-        listing = git(root, "ls-files", "-s", "-z", "--", "Code", LEDGER).decode()
+        listing = git(root, "ls-files", "-s", "-z", "--", "game", LEDGER).decode()
     else:
-        listing = git(root, "ls-tree", "-r", "-z", revision, "--", "Code", LEDGER).decode()
+        listing = git(root, "ls-tree", "-r", "-z", revision, "--", "game", LEDGER).decode()
     for record in listing.split("\0"):
         if not record:
             continue
@@ -534,7 +534,7 @@ def measure_blobs(root, revision, cache, blobs=None):
 # new source -- that is the gen_asm dump -> real C++ lane, which is the default
 # work and must not be touched. Exactly one renamed a row in place: 553094eb6,
 # ?dup_00217620 -> ??1CollideModule@@UAE@XZ. Over the last 800 commits touching
-# Code/, exactly one made a same-type same-extent pad rename inside one file. So four leaves both lanes daylight, while the sweeps this exists to stop --
+# game/, exactly one made a same-type same-extent pad rename inside one file. So four leaves both lanes daylight, while the sweeps this exists to stop --
 # 13,329 alias rows (+8.49 pp of Ident), 10,522 pad members (+18.72 pp of Types) --
 # would need thousands of commits, each of them gated and byte-verified.
 TOKEN_SWAP_BUDGET = 4
@@ -559,7 +559,7 @@ def staged_diff(root, only):
     """The staged change, one line per changed line. --only narrows it exactly as
     it narrows the trailer, so a partial commit is judged on what it carries."""
     return git(root, "diff", "--cached", "--unified=0", "--no-color", "HEAD",
-               "--", *(only or ["Code", LEDGER])).decode("utf-8", "replace")
+               "--", *(only or ["game", LEDGER])).decode("utf-8", "replace")
 
 
 def staged_swaps(diff):
@@ -641,7 +641,7 @@ def table(areas, tracked):
             continue
         measured += counter["files"]
         lines.append(row(name, axes(counter)))
-    lines += ["-" * len(head), row("ALL Code/", axes(totals(areas))), "",
+    lines += ["-" * len(head), row("ALL game/", axes(totals(areas))), "",
               f"{tracked - measured} of {tracked} tracked sources are outside the "
               f"measured areas and in no row above.", "", LEGEND]
     return "\n".join(lines)

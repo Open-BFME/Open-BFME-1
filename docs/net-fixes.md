@@ -44,7 +44,7 @@ called the owner `Connection::init`, borrowing the name from Zero Hour. The time
 which takes no arguments, calls nothing and returns `this`. A separate BFME
 peer-configuration routine at `0x00661E00` takes address, name and transport
 arguments; it should not be conflated with the timer constructor. The body is real C++
-at `Code/GameEngine/Source/GameNetwork/Connection.cpp`; until it was converted the
+at `game/GameEngine/Source/GameNetwork/Connection.cpp`; until it was converted the
 repo served it only as the byte dump `?d_006623a0@@YAXXZ`, which is why grepping
 for either name used to come up empty.
 
@@ -129,4 +129,4 @@ retransmissions rather than ten events a match.
 ---
 
 Evidence, corrections and the measurement traps behind all of this:
-`reverse/network_delay/FINDINGS.md`. Instrument: `docs/measuring.md`.
+`targets/game/reverse/network_delay/FINDINGS.md`. Instrument: `docs/measuring.md`.

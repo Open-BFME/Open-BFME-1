@@ -1,7 +1,7 @@
 // Ghidra headless script: export every recovered vtable and its slot -> function map.
 // Usage (after the binary has been analyzed once, see README.md):
 //   analyzeHeadless /tmp/bfme_ghidra bfme -process lotrbfme.exe -noanalysis \
-//     -scriptPath tools/ghidra -postScript export_vtables.java $PWD/reverse/vtables.tsv
+//     -scriptPath tools/ghidra -postScript export_vtables.java $PWD/targets/game/reverse/vtables.tsv
 //
 // Output (gitignored, derived): vtables.tsv with columns
 //   vtable_rva  label  slot  func_rva  func_name

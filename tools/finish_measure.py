@@ -160,7 +160,7 @@ def _row_identity(rva):
     """Read one row from a ledger snapshot, refreshing after any file change."""
     global _ROW_CACHE
     import eligibility
-    path = ROOT / "reverse/functions.csv"
+    path = ROOT / "targets/game/reverse/functions.csv"
     stat = path.stat()
     token = (str(path), stat.st_ino, stat.st_size, stat.st_mtime_ns)
     if _ROW_CACHE is None or _ROW_CACHE[0] != token:

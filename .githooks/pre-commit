@@ -20,7 +20,7 @@ fail() {
 # clones. Reflects the staged index, so a colliding add is caught before it lands.
 python3 tools/check_case_collisions.py || fail "case-only path collision (see above)"
 
-# A script under tools/ is neither a Code/ source nor a ledger file, so nothing
+# A script under tools/ is neither a game/ source nor a ledger file, so nothing
 # else in this hook looks at it: one with a syntax error commits cleanly and only
 # fails when somebody next runs it. That has happened. One parse per staged tool
 # costs nothing and closes it.
@@ -55,7 +55,7 @@ fi
 
 # Direction: conversions run asm -> C++, never the reverse. Byte-verification
 # cannot see this (an __emit lift of a retail dump is byte-true), so it gets
-# its own gate: no new naked/__emit bodies outside Code/gen_small/, and no
+# its own gate: no new naked/__emit bodies outside game/gen_small/, and no
 # clean-C++ ledger row repointed back at assembly.
 python3 tools/conversion_gate.py HEAD : || fail "conversion direction (see above)"
 # Historical names survive source moves and opaque owner renames.
@@ -68,7 +68,7 @@ python3 tools/name_regression.py HEAD : || fail "descriptive names regressed (se
 # A three-body edit must not ride on a whole-file line-ending rewrite (mixed-
 # terminator sources under core.autocrlf=true lose every CR on `git add`).
 python3 tools/eol_guard.py || fail "staged change rewrites line endings (see above)"
-# A deliberately deleted file may not come back by accident (reverse/retired_paths.txt).
+# A deliberately deleted file may not come back by accident (targets/game/reverse/retired_paths.txt).
 python3 tools/retired_guard.py --staged || fail "retired path re-added (see above)"
 
 # WorldBuilder has a separate image and ledger; verify it before the game-only
@@ -84,6 +84,23 @@ while IFS= read -r path; do
 done < "$target_sources_out"
 rm -f "$target_sources_out"
 
+# A repository-wide relocation makes every TU look edited to the per-body gate.
+# Check the exact path/ledger mapping, then byte-verify the whole game once.
+if migration_marker=$(python3 tools/layout_migration.py detect HEAD :) \
+   && [ "$migration_marker" = layout-migration ]; then
+    python3 tools/layout_migration.py check HEAD : || fail "layout mapping (see above)"
+    python3 tools/check_csv.py --staged || fail "ledger integrity (see above)"
+    python3 tools/pin_consistency.py --check || fail "pin consistency (see above)"
+    python3 tools/b_pin_check.py --staged || fail "b_<rva> pins (see above)"
+    python3 tools/identity_guard.py || fail "identity guard (see above)"
+    python3 tools/name_oracle.py --check --staged || fail "name oracle (see above)"
+    python3 tools/adopt_header.py --check --staged || fail "header adoption (see above)"
+    BUILD_POOL="${BUILD_POOL:-4}" python3 tools/gate_baseline.py --check \
+        || fail "full game gate after layout migration (see above)"
+    echo "PRE-COMMIT OK (complete layout and both targets verified)"
+    exit 0
+fi
+
 staged_sources=()
 staged_c_sources=()
 ledger_changed=0
@@ -94,49 +111,49 @@ attempts_changed=0
 while IFS= read -r path; do
     [ -z "${target_only_sources[$path]:-}" ] || continue
     case "$path" in
-        Code/Tools/WorldBuilder/*.h|Code/Tools/WorldBuilder/*.hpp|worldbuilder/*|reverse/worldbuilder/*) ;;
-        Code/*.cpp) staged_sources+=("$path") ;;
+        worldbuilder/*.h|worldbuilder/*.hpp|worldbuilder/*|targets/worldbuilder/*) ;;
+        game/*.cpp) staged_sources+=("$path") ;;
         # 216 C sources carry ledger rows (GameSpy, Lua). pre-push byte-verifies an
         # edited one; this hook only collected *.cpp, so such an edit left through
         # the early exit below with nothing verified. Kept apart from
         # staged_sources, whose other consumers parse C++.
-        Code/*.c) staged_c_sources+=("$path") ;;
-        reverse/pin_consistency_baseline.csv) baseline_changed=1 ;;
+        game/*.c) staged_c_sources+=("$path") ;;
+        targets/game/reverse/pin_consistency_baseline.csv) baseline_changed=1 ;;
         # symbols.csv gets its own flag as well as ledger_changed: a PIN
         # DELETION is byte-verified by a different query than a ledger row is,
         # and only this file can trigger it.
-        reverse/symbols.csv) ledger_changed=1; pins_changed=1 ;;
-        reverse/functions.csv) ledger_changed=1 ;;
+        targets/game/reverse/symbols.csv) ledger_changed=1; pins_changed=1 ;;
+        targets/game/reverse/functions.csv) ledger_changed=1 ;;
         # A stash-only commit changes no ledger and no source, so without this
         # it takes the early exit below and check_csv never validates the very
         # file it just added. It stays out of the byte-verify set: a banked
         # body is evidence, not a compiled source.
-        reverse/attempts/*) attempts_changed=1 ;;
+        targets/game/reverse/attempts/*) attempts_changed=1 ;;
         # A header or shim recompiles many TUs while changing NO ledger rows,
         # so the delta byte-verify below would prove nothing. Any such change
         # forces the full gate — this is exactly how a layout-shim experiment
         # could otherwise land a silent regression.
-        *.h|reference/shims/*) wide_change=1 ;;
+        *.h|inputs/reference/shims/*) wide_change=1 ;;
     esac
 done < <(git diff --cached --name-only --diff-filter=ACMRT)
 
-# Placement: game sources live only under Code/ at the official BFME path
-# (plus reference/shims/ for shim headers, reference/CnC_Generals_Zero_Hour/ for
+# Placement: game sources live only under game/ at the official BFME path
+# (plus inputs/reference/shims/ for shim headers, inputs/reference/CnC_Generals_Zero_Hour/ for
 # restoring vendored EA reference source, and tools/tests/ for fixtures).
 # No src/, no invented layouts, no sources at the repo root.
 #
-# mods/ is allowed too, and deliberately is NOT under Code/. It holds mod
+# mods/ is allowed too, and deliberately is NOT under game/. It holds mod
 # payloads that are patched into a copy of the retail image, never compiled
-# into the byte-exact rebuild -- keeping them out of Code/ is what stops a mod
+# into the byte-exact rebuild -- keeping them out of game/ is what stops a mod
 # from ever influencing the byte gate. They would fail this check as .asm
 # files, so the list names the tree explicitly rather than being bypassed.
 #
-# reverse/attempts/ is named for the same reason: a banked near-miss body is
+# targets/game/reverse/attempts/ is named for the same reason: a banked near-miss body is
 # evidence for the next agent, never a compiled source, so it must sit outside
-# Code/ where verify_source_claims would demand matched rows for it.
+# game/ where verify_source_claims would demand matched rows for it.
 while IFS= read -r path; do
     case "$path" in
-        Code/Tools/WorldBuilder/*|worldbuilder/Code/*|reverse/worldbuilder/attempts/*|Code/GameEngine/*|Code/GameEngineDevice/*|Code/Libraries/*|Code/gen_small/*|Code/gen_asm/*|Code/masm_dumps/*|reference/shims/*|reference/CnC_Generals_Zero_Hour/*|tools/tests/*|build/toolchains/*|mods/*|reverse/attempts/*) ;;
+        worldbuilder/*|targets/worldbuilder/reverse/attempts/*|game/GameEngine/*|game/GameEngineDevice/*|game/Libraries/*|game/gen_small/*|game/gen_asm/*|game/masm_dumps/*|inputs/reference/shims/*|inputs/reference/CnC_Generals_Zero_Hour/*|tools/tests/*|inputs/toolchains/*|mods/*|targets/game/reverse/attempts/*) ;;
         *) fail "source added outside official tree: $path — see AGENTS.md 'File placement'" ;;
     esac
 done < <(git diff --cached --name-only --diff-filter=A | grep -E '\.(cpp|c|h|hpp|asm)$' || true)
@@ -148,16 +165,16 @@ if [ "${#staged_sources[@]}" -eq 0 ] && [ "${#staged_c_sources[@]}" -eq 0 ] \
     exit 0
 fi
 
-# reverse/full_gate_baseline.txt is the set of rows already red on origin; it
+# targets/game/reverse/full_gate_baseline.txt is the set of rows already red on origin; it
 # may only shrink (tools/gate_baseline.py --validate). While the full gate is
 # red a header could never land, and the gate is red partly BECAUSE of header
 # fixes it refused (docs/full_gate_red.md), so the check is "no NEW red row",
 # not "no red row". A gate that dies before byte comparison still fails.
-if git diff --cached --quiet -- reverse/full_gate_baseline.txt; then :; else
+if git diff --cached --quiet -- targets/game/reverse/full_gate_baseline.txt; then :; else
     python3 tools/gate_baseline.py --validate || fail "full-gate baseline may only shrink (see above)"
 fi
 if [ "$wide_change" -ne 0 ]; then
-    echo "pre-commit: header/shim change — running FULL gate against reverse/full_gate_baseline.txt (no NEW red row allowed)" >&2
+    echo "pre-commit: header/shim change — running FULL gate against targets/game/reverse/full_gate_baseline.txt (no NEW red row allowed)" >&2
     BUILD_POOL="${BUILD_POOL:-4}" python3 tools/gate_baseline.py --check || fail "full gate after header/shim change: new red row(s) or the gate did not reach byte comparison (see above)"
 fi
 
@@ -169,7 +186,7 @@ for path in "${staged_sources[@]}" "${staged_c_sources[@]}"; do
         dirty+=("$path")
     fi
 done
-for ledger in reverse/functions.csv reverse/symbols.csv reverse/pin_consistency_baseline.csv; do
+for ledger in targets/game/reverse/functions.csv targets/game/reverse/symbols.csv targets/game/reverse/pin_consistency_baseline.csv; do
     if ! git diff --cached --quiet -- "$ledger" && ! git diff --quiet -- "$ledger"; then
         dirty+=("$ledger")
     fi
@@ -184,7 +201,7 @@ fi
 #    an immediate loud failure instead of someone else's red build later.
 python3 tools/check_csv.py --staged || fail "ledger integrity (see above)"
 
-# 1b) Identity, not bytes. reverse/symbols.csv is an ADDITIVE candidate list:
+# 1b) Identity, not bytes. targets/game/reverse/symbols.csv is an ADDITIVE candidate list:
 #     the REL32 resolver keeps the first pinned address that reproduces retail,
 #     so a pin naming the WRONG function still byte-matches and the delta build
 #     below proves nothing about it. Only the full gate ran this guard, and a
@@ -232,7 +249,7 @@ while IFS= read -r path; do
 done < "$delta_out"
 rm -f "$delta_out"
 
-# 3b) A reverse/symbols.csv pin DELETION changes no functions.csv row, so the
+# 3b) A targets/game/reverse/symbols.csv pin DELETION changes no functions.csv row, so the
 #     delta above is blind to it -- yet it re-points the REL32 resolver at a
 #     different ICF copy of the name and reddens rows in files this commit never
 #     touched. d27ae4b7b deleted 1,599 pins, byte-verified the two files it
@@ -276,7 +293,7 @@ if [ "${#verify_set[@]}" -ne 0 ]; then
     python3 - "$verify_input" > "$verify_removed" <<'PY' \
         || { rm -f "$verify_input" "$verify_removed"; fail "filtering claimed sources (see above)"; }
 import csv, os, sys
-claimed = {r["source"] for r in csv.DictReader(open("reverse/functions.csv"))
+claimed = {r["source"] for r in csv.DictReader(open("targets/game/reverse/functions.csv"))
            if r.get("status") == "matched"}
 with open(sys.argv[1], "rb") as stream:
     paths = stream.read().split(b"\0")[:-1]
@@ -305,7 +322,7 @@ python3 tools/identity_guard.py || fail "a byte-matching row now names the wrong
 # each member against the offset the ZH<->retail alignment witnesses.
 #
 # Promoted from shadow on measured evidence. Replaying the last 3,000 commits took
-# 2m36s: 1,139 touched Code/, 70 introduced a finding the baseline already held, and
+# 2m36s: 1,139 touched game/, 70 introduced a finding the baseline already held, and
 # exactly ONE would have been blocked -- cbedb732c, which put m_status at
 # WinInstanceData+0xC where the witness has m_style, with a getStatus() reading it.
 # A real defect, corrected by hand three commits later in bd878b1eb1; this would have
@@ -313,7 +330,7 @@ python3 tools/identity_guard.py || fail "a byte-matching row now names the wrong
 # the rate under 0.26%.
 #
 # A finding is still a QUESTION -- the witness is inferred and BFME forked the ZH
-# layout -- so it fails against reverse/name_oracle_baseline.csv, which may only
+# layout -- so it fails against targets/game/reverse/name_oracle_baseline.csv, which may only
 # shrink. Settle the disagreement; never add a line to go green.
 if [ "${#staged_sources[@]}" -ne 0 ]; then
     python3 tools/name_oracle.py --check --staged \
@@ -331,7 +348,7 @@ fi
 # between them, so it is not covered here. See docs/header_adoption.md.
 #
 # Never a dead end -- the fix is one command, and a shim the compiler will not take
-# is recorded in reverse/header_adopt_blocked.tsv and skipped from then on.
+# is recorded in targets/game/reverse/header_adopt_blocked.tsv and skipped from then on.
 if [ "${#staged_sources[@]}" -ne 0 ]; then
     python3 tools/adopt_header.py --check --staged \
         || fail "a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)"

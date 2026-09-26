@@ -12,7 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import add_match
 
 
-def row(notes, source="Code/gen_asm/d_00401000.asm"):
+def row(notes, source="game/gen_asm/d_00401000.asm"):
     return {"notes": notes, "source": source}
 
 
@@ -24,7 +24,7 @@ def test_bare_markers_are_placeholders():
 
 
 def test_free_text_that_begins_with_a_marker_is_a_real_claim():
-    real = "Code/GameEngine/Source/Common/GenUwm008A4B20.cpp"
+    real = "game/GameEngine/Source/Common/GenUwm008A4B20.cpp"
     assert not add_match.replaceable_scaffold(row("gen-dump conversion; 64-slot table", real))
     assert not add_match.replaceable_scaffold(row("gen-dump converted to address-derived name", real))
     assert not add_match.replaceable_scaffold(row("gen-thunked by hand", real))

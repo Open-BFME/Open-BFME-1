@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Keep the ledgers landable while nobody is watching.
 
-add_match refuses to land anything while reverse/functions.csv or
-reverse/symbols.csv is malformed. On 2026-09-03 two symbol rows with a
+add_match refuses to land anything while targets/game/reverse/functions.csv or
+targets/game/reverse/symbols.csv is malformed. On 2026-09-03 two symbol rows with a
 9-digit address stalled a 20-seat fleet for three hours between orchestrator
 cycles. This loop runs every --interval seconds, and under the ledger lock
 repairs the mechanical cases:
@@ -39,7 +39,7 @@ def row_checks_only():
 
 def idle_stashes():
     """Do not repair drafts while their worker still owns the address."""
-    files = list((ROOT / "reverse/attempts").glob("0x*.cpp"))
+    files = list((ROOT / "targets/game/reverse/attempts").glob("0x*.cpp"))
     if not files:
         return []
     import eligibility
@@ -54,7 +54,7 @@ def stash_headers():
     import datetime
     latest = {}
     try:
-        for l in open(ROOT / "reverse/re_attempts.log", encoding="utf-8", errors="replace"):
+        for l in open(ROOT / "targets/game/reverse/re_attempts.log", encoding="utf-8", errors="replace"):
             p = l.rstrip("\n").split("\t")
             if len(p) >= 5 and p[1].startswith("0x"):
                 latest[p[1].lower()] = p[4]
@@ -86,13 +86,13 @@ def stash_headers():
 
 def repair():
     env = dict(os.environ, HARVEST_HAS_LOCK="1")
-    with open(ROOT / "reverse/.add_match.lock", "a+") as h:
+    with open(ROOT / "targets/game/reverse/.add_match.lock", "a+") as h:
         portable_lock.lock(h, exclusive=True)
         fixed = 0
         hdr = stash_headers()
         if hdr:
             log(f"inserted {hdr} missing stash header(s)")
-        for name in ("reverse/symbols.csv", "reverse/functions.csv"):
+        for name in ("targets/game/reverse/symbols.csv", "targets/game/reverse/functions.csv"):
             p = ROOT / name
             raw = p.read_bytes()
             new = ADDR9.sub(lambda m: b",0x" + m.group(1) + b",", raw)

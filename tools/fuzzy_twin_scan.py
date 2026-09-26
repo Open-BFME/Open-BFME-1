@@ -40,13 +40,13 @@ def masked_body(rva, size):
     return mask(body(rva, size))
 
 landed=[]; dumps=[]; donor_rows={}
-with open('reverse/functions.csv', newline='', encoding='utf-8', errors='replace') as ledger:
+with open('targets/game/reverse/functions.csv', newline='', encoding='utf-8', errors='replace') as ledger:
     for r in csv.DictReader(ledger):
         try: rva=int(r['target_rva'],16); size=int(r['target_size'] or 0)
         except (ValueError, TypeError): continue
         src=r['source']
-        is_donor = (r.get('status') == 'matched' and src.startswith('Code/')
-                    and not src.startswith(('Code/gen_', 'Code/masm_dumps'))
+        is_donor = (r.get('status') == 'matched' and src.startswith('game/')
+                    and not src.startswith(('game/gen_', 'game/masm_dumps'))
                     and src.endswith(('.cpp', '.c')))
         # Feed the shared classifier every row in a donor TU, including small
         # rows: its single-row fallback must not mistake a mixed TU for a lift.

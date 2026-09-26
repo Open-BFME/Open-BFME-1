@@ -151,9 +151,9 @@ def candidate_row(args):
     rva = int(args.rva, 16)
     size = args.size
     if size is None:
-        ghidra = build.ROOT / "reverse" / "ghidra_functions.csv"
+        ghidra = build.ROOT / "targets/game/reverse" / "ghidra_functions.csv"
         if not ghidra.exists():
-            raise SystemExit("--size omitted and reverse/ghidra_functions.csv absent "
+            raise SystemExit("--size omitted and targets/game/reverse/ghidra_functions.csv absent "
                              "(generate it per tools/ghidra/README.md, or pass --size)")
         for line in ghidra.open():
             parts = line.split(",", 2)

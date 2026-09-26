@@ -24,9 +24,9 @@ The verified range is therefore:
 | Caller | `GameEngine::_bfme_updateNetworkAndLogic`, RVA `0x0006BAE0` | exact clean C++ already matched |
 | Virtual slot | `GameLogic` slot `+0x20` (index 8) | call at `0x0006BB86`; vtable entries point to VA `0x0043A9C7` |
 | ABI | virtual `thiscall`, one 32-bit phase argument | load at `0x0038DA47`; `ret 4` at `0x0038E25E` |
-| Current ledger owner | none for the body; only its ILT thunk is claimed | checked in `reverse/functions.csv` |
+| Current ledger owner | none for the body; only its ILT thunk is claimed | checked in `targets/game/reverse/functions.csv` |
 
-The `reverse/symbols.csv` label `?update@GameLogic@@UAEXXZ` describes the old
+The `targets/game/reverse/symbols.csv` label `?update@GameLogic@@UAEXXZ` describes the old
 parameterless Zero Hour signature. It cannot be the retail BFME ABI. Keep the
 name as comparison evidence until the correct BFME declaration is recovered.
 

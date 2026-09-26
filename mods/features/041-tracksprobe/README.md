@@ -9,7 +9,7 @@ Three retail minidumps sat unread in `~/.wine/.wine-with-marcell/drive_c/Program
 Files (x86)/BFME1/` — `DUMP-20241020-115238`, `-115537`, `-115755`, three
 crashes inside six minutes with a different pid each time, from a prefix whose
 `Network.ini` holds a multiplayer name. The `lotrbfme.exe` beside them is md5
-`34af1cd…`, byte-identical to `baselines/bfme1/workshop-vanilla-1.03`, so every
+`34af1cd…`, byte-identical to `inputs/baselines/bfme1/workshop-vanilla-1.03`, so every
 address in them lands on the ledger.
 
 All three are the same crash byte for byte, down to `esp`:

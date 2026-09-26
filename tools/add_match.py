@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Append ONE matched row to reverse/functions.csv, safely.
+"""Append ONE matched row to targets/game/reverse/functions.csv, safely.
 
 Hand-editing the ledger has repeatedly corrupted it (LF damage, wrong column
 counts, duplicate/overlapping claims). This tool is the safe path: it validates
@@ -62,9 +62,9 @@ def replaceable_scaffold(row):
         return True
     kind = notes.split(";", 1)[0]
     return ((kind == "gen-tgrid" and
-             re.fullmatch(r"Code/gen_small/tgrid_\d+\.cpp", row["source"]) is not None)
+             re.fullmatch(r"game/gen_small/tgrid_\d+\.cpp", row["source"]) is not None)
             or (kind == "gen-shim" and
-                re.fullmatch(r"Code/gen_small/(?:fam|fun)_\d+\.cpp", row["source"]) is not None))
+                re.fullmatch(r"game/gen_small/(?:fam|fun)_\d+\.cpp", row["source"]) is not None))
 
 
 def fail(*lines):
@@ -137,11 +137,11 @@ def strip_marker(source_path, name):
 
 
 def lookup_export_rva(root, name):
-    exports = root / "reverse" / "exports.csv"
+    exports = root / "targets/game/reverse" / "exports.csv"
     if not exports.exists():
         # exports.csv is generated (gitignored); its absence only costs the
         # optional export_rva column, so say so instead of silently omitting
-        print("add_match: note: reverse/exports.csv not present — export_rva left empty")
+        print("add_match: note: targets/game/reverse/exports.csv not present — export_rva left empty")
         return ""
     with exports.open(encoding="utf-8", newline="") as handle:
         for row in csv.DictReader(handle):
@@ -201,7 +201,7 @@ def remove_stash(rva, root):
     with it. tools/add_match_batch.py writes the ledger on its own and does NOT
     call this, so a batch landing leaves its stash for check_csv to flag.
     """
-    stash = Path(root) / "reverse" / "attempts" / f"0x{rva:08x}.cpp"
+    stash = Path(root) / "targets/game/reverse" / "attempts" / f"0x{rva:08x}.cpp"
     if stash.exists():
         stash.unlink()
         print(f"add_match: cleared banked attempt {stash.relative_to(Path(root)).as_posix()}")
@@ -298,7 +298,7 @@ def main():
                         help="with --replace-rva, retire this exact matched real-name claim "
                              "when independent evidence proves the replacement identity")
     parser.add_argument("--identity-evidence", metavar="PATH",
-                        help="reverse/identity_evidence/*.md proof required by "
+                        help="targets/game/reverse/identity_evidence/*.md proof required by "
                              "--correct-identity")
     parser.add_argument("--boundary-evidence",
                         help="with --replace-rva, permit a corrected target_size while "
@@ -347,16 +347,16 @@ def main():
     if args.identity_evidence:
         evidence_rel = Path(args.identity_evidence)
         if (evidence_rel.is_absolute() or ".." in evidence_rel.parts or
-                evidence_rel.parts[:2] != ("reverse", "identity_evidence") or
+                evidence_rel.parts[:4] != ("targets", "game", "reverse", "identity_evidence") or
                 evidence_rel.suffix != ".md"):
             fail("--identity-evidence must be a repo-relative "
-                 "reverse/identity_evidence/*.md path")
+                 "targets/game/reverse/identity_evidence/*.md path")
         evidence = root / evidence_rel
         if not evidence.is_file() or not evidence.read_text(encoding="utf-8").strip():
             fail(f"--identity-evidence {evidence_rel} is missing or empty")
         args.notes = f"identity-correction={evidence_rel.as_posix()};{args.notes}"
-    functions_csv = root / "reverse" / "functions.csv"
-    deleted_csv = root / "reverse" / "deleted_rows.csv"
+    functions_csv = root / "targets/game/reverse" / "functions.csv"
+    deleted_csv = root / "targets/game/reverse" / "deleted_rows.csv"
     if not functions_csv.exists():
         fail(f"no ledger at {functions_csv}")
 
@@ -394,7 +394,7 @@ def main():
     # Exclusive lock across validate->append->verify so concurrent agents cannot
     # interleave appends or double-claim, and so revert-on-failure cannot clobber
     # a row someone else appended meanwhile.
-    lock_file = (root / "reverse" / ".add_match.lock").open("a")
+    lock_file = (root / "targets/game/reverse" / ".add_match.lock").open("a")
     lock(lock_file, exclusive=True,
          wait_notice="add_match: waiting for ledger lock (another add_match is running)...")
 
@@ -425,8 +425,8 @@ def main():
             old = at_rva[0]
             if (old["name"] != args.correct_identity or old["name"] == name or
                     old["status"] != "matched" or
-                    not old["source"].startswith("Code/") or
-                    old["source"].startswith(("Code/gen_small/", "Code/gen_asm/")) or
+                    not old["source"].startswith("game/") or
+                    old["source"].startswith(("game/gen_small/", "game/gen_asm/")) or
                     replaceable_scaffold(old)):
                 fail(f"--correct-identity {args.correct_identity} does not name a "
                      f"matched real-source claim at 0x{old_rva:08X}")

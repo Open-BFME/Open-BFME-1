@@ -78,7 +78,7 @@ def _load():
         return
     _exe = open(build.EXE, 'rb').read(); _secs = build.pe_sections(_exe)
     _rows = {}
-    ledger_rows = list(csv.DictReader(open(ROOT / 'reverse/functions.csv', newline='', encoding='utf-8', errors='replace')))
+    ledger_rows = list(csv.DictReader(open(ROOT / 'targets/game/reverse/functions.csv', newline='', encoding='utf-8', errors='replace')))
     for r in ledger_rows:
         a = (r['target_rva'] or '')
         if a.startswith('0x'):
@@ -92,7 +92,7 @@ def _load():
         _rows.setdefault(int(r['target_rva'], 16), r)
     _starts = sorted(_rows)
     _pins = collections.defaultdict(list)
-    for l in open(ROOT / 'reverse/symbols.csv', encoding='utf-8', errors='replace'):
+    for l in open(ROOT / 'targets/game/reverse/symbols.csv', encoding='utf-8', errors='replace'):
         p = l.rstrip('\n').split(',')
         if len(p) > 1 and p[1].startswith('0x'):
             try:
@@ -110,7 +110,7 @@ def _load():
             if t0 is not None:
                 _thunks_of[t0].append(s0)
     _strings = collections.defaultdict(list)
-    sx = ROOT / 'reverse/string_xrefs.tsv'
+    sx = ROOT / 'targets/game/reverse/string_xrefs.tsv'
     if sx.exists():
         for l in open(sx, encoding='utf-8', errors='replace'):
             p = l.rstrip('\n').split('\t')
@@ -175,7 +175,7 @@ def eh_signatures(body, size):
     if re.search(rb"\x8b\xcc[\s\S]{0,24}\x89\x64\x24.", body):
         signs.append("by-value temporary (mov ecx,esp ... mov [esp+N],esp)")
         levers.append("by-value string arg: the string class must be `class AsciiString : private StringBase<char>` "
-                      "with INLINE forwarding ctor/dtor (reference/shims/stringinline/StringInline.h)")
+                      "with INLINE forwarding ctor/dtor (inputs/reference/shims/stringinline/StringInline.h)")
         levers.append("saved-esp displacement one slot off: keep the earlier argument LIVE past the temporary "
                       "(reference it in every expression) instead of copying it to a local")
     if b"\xc7\x44\x24" in body and re.search(rb"\xc7\x44\x24.\xff\xff\xff\xff", body):
@@ -191,13 +191,13 @@ def eh_signatures(body, size):
 
 _layouts = None
 def layout_lines(rva, vt_entry, limit=10):
-    """BFME offsets witnessed for the body's class (reverse/bfme_layouts.json,
+    """BFME offsets witnessed for the body's class (targets/game/reverse/bfme_layouts.json,
     built by tools/layout_witness.py): the members that MOVED from ZH, highest
     confidence first. The class comes from the vtable entry or the pinned name."""
     global _layouts
     if _layouts is None:
         try:
-            rows = json.load(open(ROOT / 'reverse/bfme_layouts.json', encoding='utf-8'))
+            rows = json.load(open(ROOT / 'targets/game/reverse/bfme_layouts.json', encoding='utf-8'))
         except OSError:
             rows = []
         _layouts = {}
@@ -234,7 +234,7 @@ def layout_lines(rva, vt_entry, limit=10):
 def name_of(rva):
     r = _rows.get(rva)
     real = [n for n, _ in _pins.get(rva, []) if not re.match(r'^\?(d_|b_|j_|dup_|gen)', n)]
-    if r and not r['source'].endswith('.asm') and not r['source'].startswith('Code/gen_'):
+    if r and not r['source'].endswith('.asm') and not r['source'].startswith('game/gen_'):
         return f"{r['name'][:70]} @ {r['source'].split('/')[-1]}"
     if real:
         return f"pinned {real[0][:70]} (still a dump)"
@@ -332,7 +332,7 @@ def pack(rva, max_items=8):
     for j in (i - 2, i - 1, i + 1, i + 2):
         if 0 <= j < len(_starts):
             n = _rows[_starts[j]]
-            if not n['source'].endswith('.asm') and not n['source'].startswith('Code/gen_'):
+            if not n['source'].endswith('.asm') and not n['source'].startswith('game/gen_'):
                 nb.append(f"0x{_starts[j]:08X} {n['name'][:50]} @ {n['source'].split('/')[-1]}")
     if nb:
         out.append("  landed neighbours: " + '; '.join(nb))
@@ -344,7 +344,7 @@ _twins = None
 
 
 def zh_twin_lines(rva):
-    """reverse/zh_fuzzy_twins.tsv: the compiled Zero Hour function whose SHAPE is
+    """targets/game/reverse/zh_fuzzy_twins.tsv: the compiled Zero Hour function whose SHAPE is
     closest to this body (tools/zh_fuzzy_twins.py). Exact-byte matching never
     placed it because BFME changed the code; the shape still names a class to
     test and a source to start from. A hypothesis, never identity evidence."""

@@ -32,7 +32,7 @@ candidate instruction-change  (confidence pattern only)
 """
 EXACT = "symbol   ?f@@YAXXZ\nsize     ours=90 retail=90  relocs=1\nresult   EXACT (modulo relocation slots)\n"
 WRONG_SIZE = "size     ours=1305 retail=1137  relocs=9\ndiffs    760 non-reloc byte(s); first at +12\n"
-BROKEN = "compile failed: reverse/attempts/0x00879f60.cpp\nfatal error C1083: Cannot open include file\n"
+BROKEN = "compile failed: targets/game/reverse/attempts/0x00879f60.cpp\nfatal error C1083: Cannot open include file\n"
 
 
 def test_probe_output_becomes_a_measurement():

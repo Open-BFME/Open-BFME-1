@@ -1,0 +1,147 @@
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+
+#include <vector>
+
+// Retail allocates this node out of STLport's node pool
+// (__node_alloc<true,0>::_M_allocate, 0x0082E540), not ::operator new.
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+class AsciiString
+{
+	void *m_data;
+public:
+	AsciiString() : m_data(0) {}
+	~AsciiString();
+	AsciiString &operator=(const AsciiString &source);
+	void set(const char *text, int length);
+};
+
+struct AsciiStringVectorLayout
+{
+	AsciiString *m_begin;
+	AsciiString *m_finish;
+	AsciiString *m_capacity;
+};
+
+class ZeroInt
+{
+	int m_value;
+public:
+	ZeroInt() : m_value(0) {}
+};
+
+static __forceinline void eraseAsciiStringRange(
+	AsciiStringVectorLayout &vector,
+	AsciiString *first,
+	AsciiString *last)
+{
+	AsciiString *source = last;
+	AsciiString *destination = first;
+	int count = vector.m_finish - last;
+	while (count > 0)
+	{
+		*destination = *source;
+		++source;
+		++destination;
+		--count;
+	}
+
+	AsciiString *oldFinish = vector.m_finish;
+	for (AsciiString *current = destination; current != oldFinish; ++current)
+		current->~AsciiString();
+	vector.m_finish = destination;
+}
+
+class ModuleDataTreeStandIn
+{
+	// upstream layout: inputs/vendor/stlport/stl/_tree.h
+	struct Node
+	{
+		unsigned char m_color;
+		unsigned char m_pad[3];
+		Node *m_parent;
+		Node *m_left;
+		Node *m_right;
+		unsigned char m_unused[0x10];
+	};
+
+	Node *m_header;
+	unsigned int m_count;
+	unsigned int m_reserved;
+public:
+	ModuleDataTreeStandIn()
+	{
+		m_header = 0;
+		m_header = (Node *)_STL::_Node_alloc::allocate(sizeof(Node));
+		m_count = 0;
+		m_header->m_color = 0;
+		m_header->m_parent = 0;
+		m_header->m_left = m_header;
+		m_header->m_right = m_header;
+	}
+	~ModuleDataTreeStandIn();
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
+class ModuleData
+{
+public:
+	virtual ~ModuleData() {}
+	unsigned int m_moduleTagNameKey;
+};
+
+class WanderAIUpdateModuleData : public ModuleData
+{
+public:
+	WanderAIUpdateModuleData();
+	virtual ~WanderAIUpdateModuleData();
+
+private:
+	ModuleDataTreeStandIn m_tree;
+	int *m_owned[2];
+	int m_delay;
+	int m_unknown20;
+	float m_distance;
+	bool m_flag28;
+	bool m_flag29;
+	unsigned char m_pad2a[2];
+	int m_unknown2c;
+	AsciiString m_name30;
+	int m_unknown34;
+	int m_unknown38;
+	int m_unknown3c;
+	bool m_flag40;
+	unsigned char m_pad41[3];
+	AsciiString m_machineName;
+	int m_unknown48;
+	float m_angle;
+	ZeroInt m_unknown50;
+	bool m_flag54;
+	unsigned char m_pad55[3];
+	std::vector<AsciiString> m_strings;
+};
+
+// ??0WanderAIUpdateModuleData@@QAE@XZ
+WanderAIUpdateModuleData::WanderAIUpdateModuleData()
+{
+	for (int i = 0; i < 2; ++i)
+		m_owned[i] = 0;
+	m_unknown20 = 0;
+	m_distance = 500.0f;
+	m_flag28 = false;
+	m_delay = 10;
+	m_flag29 = false;
+	m_unknown2c = 0;
+	m_unknown38 = 0;
+	m_unknown34 = 0;
+	m_unknown3c = 0;
+	m_flag40 = false;
+	m_unknown48 = 0;
+
+	AsciiStringVectorLayout &strings = *(AsciiStringVectorLayout *)&m_strings;
+	eraseAsciiStringRange(strings, strings.m_begin, strings.m_finish);
+	m_flag54 = false;
+	m_angle = 80.0f;
+	m_machineName.set("DefaultAttackPriority", 21);
+}

@@ -77,16 +77,16 @@ def test_many_blobs_use_one_process(tmp_path, monkeypatch):
 def test_attempt_validation_still_checks_committed_evidence(repo, monkeypatch,
                                                           body, claim, naked, expected):
     root, git = repo
-    bank = root / 'reverse/attempts/0x00001000.cpp'
+    bank = root / 'targets/game/reverse/attempts/0x00001000.cpp'
     bank.parent.mkdir(parents=True)
     bank.write_bytes(body)
-    ledger = root / 'reverse/functions.csv'
+    ledger = root / 'targets/game/reverse/functions.csv'
     ledger.write_bytes((check_csv.FUNCTIONS_HEADER + '\r\n' +
-                       ('fn,,0x00001000,1,Code/body.cpp,matched,\r\n' if claim else '')).encode())
-    source = root / 'Code/body.cpp'
+                       ('fn,,0x00001000,1,game/body.cpp,matched,\r\n' if claim else '')).encode())
+    source = root / 'game/body.cpp'
     source.parent.mkdir()
     source.write_text('__declspec(naked) void fn() {}' if naked else 'void fn() {}')
-    git('add', '--', 'reverse', 'Code/body.cpp')
+    git('add', '--', 'targets/game/reverse', 'game/body.cpp')
     # Staged gate must read the staged bank even if the disk copy is replaced.
     bank.write_bytes(b'unrelated unstaged text')
     monkeypatch.setattr(check_csv, 'FUNCTIONS', ledger)
@@ -104,22 +104,22 @@ def test_attempt_validation_still_checks_committed_evidence(repo, monkeypatch,
 def test_attempt_sources_use_index_and_deduplicate_shared_source(repo, monkeypatch,
                                                                 staged_naked):
     root, git = repo
-    attempts = root / 'reverse/attempts'
+    attempts = root / 'targets/game/reverse/attempts'
     attempts.mkdir(parents=True)
     bank_body = b'// fn\n// partial score=0.9 date=2026-09-04\n'
     for rva in ('0x00001000', '0x00002000'):
         (attempts / f'{rva}.cpp').write_bytes(bank_body)
 
-    ledger = root / 'reverse/functions.csv'
+    ledger = root / 'targets/game/reverse/functions.csv'
     ledger.write_bytes((check_csv.FUNCTIONS_HEADER + '\r\n' +
-                        'first,,0x00001000,1,Code/shared.cpp,matched,\r\n' +
-                        'second,,0x00002000,1,Code/shared.cpp,matched,\r\n').encode())
-    source = root / 'Code/shared.cpp'
+                        'first,,0x00001000,1,game/shared.cpp,matched,\r\n' +
+                        'second,,0x00002000,1,game/shared.cpp,matched,\r\n').encode())
+    source = root / 'game/shared.cpp'
     source.parent.mkdir()
     naked = '__declspec(naked) void fn() {}'
     real = 'void fn() {}'
     source.write_text(naked if staged_naked else real)
-    git('add', '--', 'reverse', 'Code/shared.cpp')
+    git('add', '--', 'targets/game/reverse', 'game/shared.cpp')
     source.write_text(real if staged_naked else naked)
 
     monkeypatch.setattr(check_csv, 'FUNCTIONS', ledger)

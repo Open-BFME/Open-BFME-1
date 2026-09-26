@@ -4,21 +4,21 @@ on:
   push:
     branches: [master]
     paths:
-      - 'Code/**'
-      - 'reference/shims/**'
-      - 'reverse/attempts/**'
-      - 'reverse/functions.csv'
-      - 'reverse/name_corrections.json'
+      - 'game/**'
+      - 'inputs/reference/shims/**'
+      - 'targets/game/reverse/attempts/**'
+      - 'targets/game/reverse/functions.csv'
+      - 'targets/game/reverse/name_corrections.json'
       - 'tools/name_regression.py'
       - 'tools/name_history.py'
       - '.github/workflows/name-regression.yml'
   pull_request:
     paths:
-      - 'Code/**'
-      - 'reference/shims/**'
-      - 'reverse/attempts/**'
-      - 'reverse/functions.csv'
-      - 'reverse/name_corrections.json'
+      - 'game/**'
+      - 'inputs/reference/shims/**'
+      - 'targets/game/reverse/attempts/**'
+      - 'targets/game/reverse/functions.csv'
+      - 'targets/game/reverse/name_corrections.json'
       - 'tools/name_regression.py'
       - 'tools/name_history.py'
       - '.github/workflows/name-regression.yml'

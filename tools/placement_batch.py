@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Move one batch from reverse/placement_queue.tsv, byte-gated, ledger repointed.
+"""Move one batch from targets/game/reverse/placement_queue.tsv, byte-gated, ledger repointed.
 
     python3 tools/placement_batch.py --count 80        # move, verify, report
     python3 tools/placement_batch.py --count 80 --commit
@@ -16,10 +16,10 @@ PRE-EXISTING REDS. A file already red at its original path is red after the move
 too, and the failure names the MOVED path, so it reads like the move's fault. They
 are returned, not diagnosed.
 
-STAGING. `git add -A Code/` sweeps in whatever else is dirty -- the `git add .`
+STAGING. `git add -A game/` sweeps in whatever else is dirty -- the `git add .`
 ban in AGENTS.md by another door. Only the batch's own paths are staged.
 
-THE LEDGER IS BYTES. reverse/functions.csv carries mixed line terminators and a
+THE LEDGER IS BYTES. targets/game/reverse/functions.csv carries mixed line terminators and a
 csv round-trip flattens them; check_csv rejects that. The source column is
 repointed by byte replacement, anchored on the surrounding commas so a path that
 is a prefix of another cannot be hit.
@@ -31,9 +31,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-QUEUE = ROOT / "reverse/placement_queue.tsv"
-LEDGER = ROOT / "reverse/functions.csv"
-BLOCKED = ROOT / "reverse/placement_blocked.tsv"
+QUEUE = ROOT / "targets/game/reverse/placement_queue.tsv"
+LEDGER = ROOT / "targets/game/reverse/functions.csv"
+BLOCKED = ROOT / "targets/game/reverse/placement_blocked.tsv"
 
 
 def git(*args, check=True):
@@ -110,15 +110,15 @@ def main():
         # A queue row names ONE SOURCE FILE. It has to be checked, because the
         # move below is `git mv`, and `git mv Code mods/Code` relocates the
         # entire 16,281-file source tree in one call -- which is exactly what a
-        # malformed row did on 2026-09-14, leaving the repo with no Code/ at all.
+        # malformed row did on 2026-09-14, leaving the repo with no game/ at all.
         # Nothing was committed, so it restored from HEAD, but the tool handed
         # the whole tree to one unchecked row and reported "moved 2".
         if not (ROOT / source).is_file() or not source.endswith((".cpp", ".h")):
             raise SystemExit(f"placement row 1 is not a source FILE: {source!r}. "
                              "A directory here moves the whole tree; refusing.")
-        if not target.startswith("Code/") or not target.endswith((".cpp", ".h")):
-            raise SystemExit(f"placement row 2 leaves Code/: {target!r}. "
-                             "Sources only ever move within Code/; refusing.")
+        if not target.startswith("game/") or not target.endswith((".cpp", ".h")):
+            raise SystemExit(f"placement row 2 leaves game/: {target!r}. "
+                             "Sources only ever move within game/; refusing.")
         (ROOT / target).parent.mkdir(parents=True, exist_ok=True)
         if git("mv", source, target, check=False).returncode:
             continue
@@ -165,7 +165,7 @@ def land(moved, rows):
     record the blocker so the rest of the batch can still land.
     """
     for _ in range(4):
-        git("add", "reverse/functions.csv", *[t for _, t in moved])
+        git("add", "targets/game/reverse/functions.csv", *[t for _, t in moved])
         if BLOCKED.exists():
             git("add", str(BLOCKED.relative_to(ROOT)))
         subject = f"Move {len(moved)} misplaced sources into their class's directory"

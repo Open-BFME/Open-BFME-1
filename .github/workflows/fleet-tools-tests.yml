@@ -39,7 +39,7 @@ jobs:
           # the ledgers are large; the tests build their own fixtures
           sparse-checkout: |
             tools
-            reverse/unlocked.txt
+            targets/game/reverse/unlocked.txt
             docs/shape_levers.md
             .github
           sparse-checkout-cone-mode: false

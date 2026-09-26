@@ -8,7 +8,7 @@ fleet_report.py. This picker clusters the open dump bodies whose LATEST
 verdict names a blocker, by family (tools/blockers.py), and hands the largest
 servable cluster to ONE stronger session. Family membership is a search hint,
 not proof of a shared prerequisite. When that session proves a lever, it lists
-only the bodies it applies to in reverse/unlocked.txt for ordinary lanes.
+only the bodies it applies to in targets/game/reverse/unlocked.txt for ordinary lanes.
 
   python tools/fleet/pick_blocker.py --report          # every family, counts and examples
   python tools/fleet/pick_blocker.py [N] [--family F] [--dry]
@@ -78,7 +78,7 @@ def main():
           f"details, banked stashes, and attempt histories for a concrete common cause. If one exists, test ONE lever "
           f"(a compiler flag, source idiom, class layout, or declaration) with probe.py on at least three distinct "
           f"bodies. Land only EXACT bodies with add_match.py. Append only bodies whose prerequisite the evidence shows "
-          f"has changed -- including ones outside this brief -- to reverse/unlocked.txt as `0x%08x {name}`, and record "
+          f"has changed -- including ones outside this brief -- to targets/game/reverse/unlocked.txt as `0x%08x {name}`, and record "
           f"the lever in docs/shape_levers.md. If no common cause exists, record a per-target blocked verdict with "
           f"blocker={name}/<specific difference> only for bodies actually investigated; leave untouched siblings alone. "
           f"Evidence so far: {examples}")

@@ -53,8 +53,8 @@ import ledger_io
 from portable_lock import lock, unlock
 
 DEFAULT_ROOT = Path(__file__).resolve().parents[1]
-LEDGER = "reverse/functions.csv"
-LOCK = "reverse/.add_match.lock"
+LEDGER = "targets/game/reverse/functions.csv"
+LOCK = "targets/game/reverse/.add_match.lock"
 LEDGER_COLUMNS = ["name", "export_rva", "target_rva", "target_size", "source",
                   "status", "notes"]
 SOURCE_AT = LEDGER_COLUMNS.index("source")
@@ -82,7 +82,7 @@ NAKED = re.compile(r"__declspec\s*\(\s*naked\s*\)|\b__emit\b|\b__asm\b")
 # The `// cl:` line is the TU's whole compile environment -- flags AND include
 # search path. Two files that disagree about it cannot share a translation unit,
 # whatever their bodies look like: BezierSegmentEvaluation builds against
-# Code/GameEngine/Include while BezierSegment.cpp builds against the ZH reference
+# game/GameEngine/Include while BezierSegment.cpp builds against the ZH reference
 # tree, so folding the first into the second resolved different headers and the
 # body stopped reproducing retail (FAIL 1/68) even though the source text was
 # identical. Only 19% of directories are flag-homogeneous, so this is the common
@@ -143,9 +143,9 @@ def scan(root):
     Walks the tree rather than asking git: a fixture root under tmp_path has the
     same cluster semantics as the real one, and the marker -- not the index -- is
     what defines membership."""
-    code = root / "Code"
+    code = root / "game"
     if not code.is_dir():
-        fail(f"no Code/ directory under {root}")
+        fail(f"no game/ directory under {root}")
     clusters, declared = {}, {}
     for parent, _dirs, names in os.walk(code):
         for name in sorted(names):
@@ -379,7 +379,7 @@ def do_plan(root, dest, only):
     # when they are not, --apply moves only the marked ones and keeps the donor,
     # and seeing "2 of 20" BEFORE applying is what tells you the file is a
     # partial donor rather than a whole one. Without it the only way to know was
-    # `grep -c ',<donor>,' reverse/functions.csv` by hand.
+    # `grep -c ',<donor>,' targets/game/reverse/functions.csv` by hand.
     for rel, own, count in zip(chosen, sets, lines):
         marked = [n for n in owned[rel] if claims(declared[rel], dest, n)]
         share = (f"{len(marked)} of {len(owned[rel])} row(s) marked for {dest}"

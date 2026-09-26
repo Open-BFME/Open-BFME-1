@@ -13,7 +13,7 @@ so it is dropped rather than guessed at. Nothing here reads a proposal file --
 the retail image and the two committed inventories are the only inputs.
 
   python3 tools/new_starts.py            # report only
-  python3 tools/new_starts.py --apply    # merge into reverse/ghidra_functions.csv
+  python3 tools/new_starts.py --apply    # merge into targets/game/reverse/ghidra_functions.csv
 """
 import argparse
 import bisect
@@ -25,7 +25,7 @@ from pathlib import Path
 import build
 
 ROOT = Path(__file__).resolve().parents[1]
-GHIDRA = ROOT / "reverse" / "ghidra_functions.csv"
+GHIDRA = ROOT / "targets/game/reverse" / "ghidra_functions.csv"
 IMAGE_BASE = 0x400000
 # A body may carry a lone int3 as a trap after a call that never returns, so a
 # single 0xCC does not end a function. Inter-function padding is a run.

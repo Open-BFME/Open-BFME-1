@@ -19,7 +19,7 @@ def git(repo, *args):
 
 
 def commit(repo, message):
-    git(repo, "add", "--", "Code", "reverse", "tools")
+    git(repo, "add", "--", "game", "targets/game/reverse", "tools")
     git(repo, "-c", "user.name=gate fixture", "-c",
         "user.email=gate@example.invalid", "commit", "-qm", message)
     return git(repo, "rev-parse", "HEAD")
@@ -29,23 +29,23 @@ def fixture_repo(tmp_path, kind):
     repo = tmp_path / kind
     repo.mkdir()
     git(repo, "init", "-q")
-    (repo / "Code").mkdir()
-    (repo / "reverse").mkdir()
-    (repo / "reverse/functions.csv").write_text(
+    (repo / "game").mkdir()
+    (repo / "targets/game/reverse").mkdir(parents=True)
+    (repo / "targets/game/reverse/functions.csv").write_text(
         "name,export_rva,target_rva,target_size,source,status,notes\n"
     )
     (repo / "tools").mkdir()
-    (repo / "Code/Existing.cpp").write_text("int existing() { return 1; }\n")
+    (repo / "game/Existing.cpp").write_text("int existing() { return 1; }\n")
     if kind == "asm-reversal":
-        (repo / "Code/Game.cpp").write_text("int f() { return 1; }\n")
-        (repo / "reverse/functions.csv").write_text(
+        (repo / "game/Game.cpp").write_text("int f() { return 1; }\n")
+        (repo / "targets/game/reverse/functions.csv").write_text(
             "name,export_rva,target_rva,target_size,source,status,notes\n"
-            "?f@@YAXXZ,,0x00401000,4,Code/Game.cpp,matched,\n"
+            "?f@@YAXXZ,,0x00401000,4,game/Game.cpp,matched,\n"
         )
     old = commit(repo, "old")
 
     if kind == "lift":
-        (repo / "Code/Lift.cpp").write_text(
+        (repo / "game/Lift.cpp").write_text(
             "__declspec(naked) void f() { __asm { __emit 0xC3 } }\n"
         )
     elif kind == "gen-asm-valid":
@@ -53,34 +53,34 @@ def fixture_repo(tmp_path, kind):
     elif kind == "gen-asm-invalid":
         write_gen_asm(repo, "    mov eax, 1\n")
     elif kind == "gen-small":
-        (repo / "Code/gen_small").mkdir()
-        (repo / "Code/gen_small/retired.cpp").write_text(
+        (repo / "game/gen_small").mkdir()
+        (repo / "game/gen_small/retired.cpp").write_text(
             "__declspec(naked) void retired() { __asm { __emit 0xC3 } }\n"
         )
     elif kind == "asm-reversal":
-        (repo / "Code/dump.asm").write_text("d_00401000 PROC\n    db 0C3h\nENDP\n")
-        (repo / "reverse/functions.csv").write_text(
+        (repo / "game/dump.asm").write_text("d_00401000 PROC\n    db 0C3h\nENDP\n")
+        (repo / "targets/game/reverse/functions.csv").write_text(
             "name,export_rva,target_rva,target_size,source,status,notes\n"
-            "?f@@YAXXZ,,0x00401000,4,Code/dump.asm,matched,\n"
+            "?f@@YAXXZ,,0x00401000,4,game/dump.asm,matched,\n"
         )
     elif kind == "pure-tool":
         (repo / "tools/helper.py").write_text("VALUE = 1\n")
     elif kind == "c3":
         write_gen_asm(repo, "    db 0C3h\n")
-        (repo / "reverse/functions.csv").write_text(
+        (repo / "targets/game/reverse/functions.csv").write_text(
             "name,export_rva,target_rva,target_size,source,status,notes\n"
             "?d_00401000@@YAXXZ,,0x00401000,1,"
-            "Code/gen_asm/d_00401000.asm,matched,gen-dump\n"
+            "game/gen_asm/d_00401000.asm,matched,gen-dump\n"
         )
-        (repo / "Code/Existing.cpp").write_text("int existing() { return 2; }\n")
+        (repo / "game/Existing.cpp").write_text("int existing() { return 2; }\n")
     else:
         raise AssertionError(kind)
     return repo, old, commit(repo, "new")
 
 
 def write_gen_asm(repo, body):
-    (repo / "Code/gen_asm").mkdir()
-    (repo / "Code/gen_asm/d_00401000.asm").write_text(
+    (repo / "game/gen_asm").mkdir()
+    (repo / "game/gen_asm/d_00401000.asm").write_text(
         ".386\n.model flat\n_TEXT SEGMENT\n"
         "public ?d_00401000@@YAXXZ\n"
         "?d_00401000@@YAXXZ PROC\n"

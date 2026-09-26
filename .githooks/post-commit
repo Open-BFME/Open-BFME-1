@@ -11,7 +11,7 @@ GIT_DIR="$(git rev-parse --git-dir)"
 [ -d "$GIT_DIR/rebase-merge" ] || [ -d "$GIT_DIR/rebase-apply" ] && exit 0
 
 if git diff-tree --no-commit-id --name-only -r HEAD 2>/dev/null \
-        | grep -qE '^reverse/(functions|symbols|deleted_rows)\.csv$|^Code/.*\.cpp$'; then
+        | grep -qE '^targets/game/reverse/(functions|symbols|deleted_rows)\.csv$|^game/.*\.cpp$'; then
     python3 tools/ledger_after_rewrite.py "post-commit" || true
 fi
 exit 0

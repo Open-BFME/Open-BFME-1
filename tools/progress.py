@@ -26,16 +26,17 @@ from functools import lru_cache
 from pathlib import Path
 
 import build
+import layout_history
 from gaps import padding_split
 from list_naked_candidates import NAKED_RE, block_bytes, symbol_comment
 
 ROOT = Path(__file__).resolve().parents[1]
-FUNCTIONS = "reverse/functions.csv"
+FUNCTIONS = "targets/game/reverse/functions.csv"
 CPP_SUFFIXES = {".c", ".cc", ".cpp", ".cxx"}
 ASM_SUFFIXES = {".asm", ".s"}
 # A prebuilt static library the game linked. On the code axis it counts with
 # assembly, not with clean C++: nobody wrote or ported these bytes, they are
-# matched against the shipped binary. On the identity axis vendor/ already
+# matched against the shipped binary. On the identity axis inputs/vendor/ already
 # routes it to the vendored lane.
 LIB_SUFFIXES = {".lib"}
 # Upstream libraries vendored into the tree. Reproducing their bytes is real
@@ -43,36 +44,36 @@ LIB_SUFFIXES = {".lib"}
 # lane instead of inflating the reverse-engineered figure. EA-authored
 # libraries (EAC, DirtySock, debug) are the game and stay out of this list.
 VENDORED_ROOTS = (
-    "Code/Libraries/Source/Compression/LZHCompress/",
-    "Code/Libraries/Source/Compression/ZLib/",
-    "Code/Libraries/Source/JPEG/",
-    "Code/Libraries/Source/LibPNG/",
-    "Code/Libraries/Source/Lua/",
-    "vendor/",
+    "game/Libraries/Source/Compression/LZHCompress/",
+    "game/Libraries/Source/Compression/ZLib/",
+    "game/Libraries/Source/JPEG/",
+    "game/Libraries/Source/LibPNG/",
+    "game/Libraries/Source/Lua/",
+    "inputs/vendor/",
     # Microsoft's static CRT, read straight out of the tracked MSVC 7.1
-    # toolchain rather than copied under vendor/. Same lane as vendor/d3dx9:
+    # toolchain rather than copied under inputs/vendor/. Same lane as inputs/vendor/d3dx9:
     # Microsoft compiled it, so it is not this game's identity.
-    "build/toolchains/",
+    "inputs/toolchains/",
     # EA's Zero Hour source, compiled verbatim out of the pristine reference
     # tree the project is forbidden to modify. A row sourced here was not
     # written from this game's disassembly -- it is another game's source that
     # happens to compile to the same bytes -- so it belongs beside the other
     # upstreams rather than in the reverse-engineered figure. (EA-authored
-    # libraries that BFME itself ships under Code/ are the game and stay out.)
-    "reference/CnC_Generals_Zero_Hour/",
+    # libraries that BFME itself ships under game/ are the game and stay out.)
+    "inputs/reference/CnC_Generals_Zero_Hour/",
 )
 # GameSpy's SDK is the one vendored library that cannot be routed by directory:
 # EA dropped its C sources straight into the game's own C++ directory, so
 # GameSpy/gp/gp.c sits beside this project's GameSpy/GSConfig.cpp. Extension is
 # the discriminator EA's layout leaves us -- every one of the 36 .c files under
 # this root carries the SDK's own banner, every .cpp beside them is this game's,
-# and Code/ holds no other .c outside VENDORED_ROOTS. Checked, not assumed:
+# and game/ holds no other .c outside VENDORED_ROOTS. Checked, not assumed:
 #   find Code -name '*.c' | grep -v <the vendored roots>   ->  empty
-VENDORED_C_ROOTS = ("Code/GameEngine/Source/GameNetwork/GameSpy/",)
+VENDORED_C_ROOTS = ("game/GameEngine/Source/GameNetwork/GameSpy/",)
 # Files a generator writes: one body per retail funclet, thunk or template
 # instance, with a synthetic name. Path and note are both checked so a
 # generator cannot move the recovered figure by omitting its own marker.
-GENERATED_ROOTS = ("Code/gen_small/", "Code/gen_asm/")
+GENERATED_ROOTS = ("game/gen_small/", "game/gen_asm/")
 GEN_NOTE_RE = re.compile(r"(?:^|;)\s*gen-[a-z]|identity=generated\b")
 # Provenance lanes, best evidence first. Overlapping claims on one byte resolve
 # to the earliest lane, so the lanes partition Total exact with no double count.
@@ -92,13 +93,7 @@ def _functions_text(ref):
     """Return the whole ledger as text for one repository state."""
     if ref is None:
         return (ROOT / FUNCTIONS).read_text(encoding="utf-8")
-    proc = subprocess.run(
-        ["git", "show", f"{ref}:{FUNCTIONS}"],
-        cwd=ROOT, capture_output=True, text=True,
-    )
-    if proc.returncode != 0:
-        raise SystemExit(f"cannot read {FUNCTIONS} at {ref}: {proc.stderr.strip()}")
-    return proc.stdout
+    return layout_history.read_at(ref, FUNCTIONS, layout_history.OLD_LEDGER).decode("utf-8")
 
 
 def matched_at(ref):
@@ -107,7 +102,7 @@ def matched_at(ref):
     for row in csv.DictReader(_functions_text(ref).splitlines()):
         if row["status"] == "matched":
             out[(row["name"], row["target_rva"])] = (
-                int(row["target_size"]), row["source"])
+                int(row["target_size"]), layout_history.canonical_source(row["source"]))
     return out
 
 
@@ -302,18 +297,18 @@ def naked_source_texts(matched, ref):
     }
     if ref is None:
         grep = subprocess.run(
-            ["git", "grep", "-l", "-E", ASM_MARKER_GREP, "--", "Code"],
+            ["git", "grep", "-l", "-E", ASM_MARKER_GREP, "--", "game"],
             cwd=ROOT, capture_output=True, text=True,
         )
         if grep.returncode not in (0, 1):
             raise SystemExit(f"cannot scan worktree naked sources: {grep.stderr.strip()}")
         paths = set(grep.stdout.splitlines()) & sources
         tracked = set(subprocess.run(
-            ["git", "ls-files", "-z", "--", "Code"], cwd=ROOT,
+            ["git", "ls-files", "-z", "--", "game"], cwd=ROOT,
             capture_output=True, check=True,
         ).stdout.decode(errors="replace").split("\0"))
         changed = set(subprocess.run(
-            ["git", "diff", "--name-only", "-z", "HEAD", "--", "Code"],
+            ["git", "diff", "--name-only", "-z", "HEAD", "--", "game"],
             cwd=ROOT, capture_output=True, check=True,
         ).stdout.decode(errors="replace").split("\0"))
         disk_paths = paths & (changed | (sources - tracked))
@@ -330,7 +325,7 @@ def naked_source_texts(matched, ref):
         return texts
 
     proc = subprocess.run(
-        ["git", "grep", "-l", "-E", ASM_MARKER_GREP, ref, "--", "Code"],
+        ["git", "grep", "-l", "-E", ASM_MARKER_GREP, ref, "--", "game"],
         cwd=ROOT, capture_output=True, text=True,
     )
     if proc.returncode not in (0, 1):
@@ -387,7 +382,7 @@ def source_lane(source, notes, naked):
       authored   C++ we wrote from the disassembly.
       vendored   upstream library source we compile (zlib, JPEG, Lua, STLport,
                  the MSVC CRT sources). Having zlib's source is having it.
-      generated  C++ a generator wrote (Code/gen_small/): EH funclets,
+      generated  C++ a generator wrote (game/gen_small/): EH funclets,
                  small thunks, template grids.
       library    a prebuilt .lib we attach (d3dx9, CRT). It links, so it is a
                  real way to reach 1:1, but there is no source in the tree.
@@ -531,7 +526,7 @@ def print_real_code(padding, denominator, old_stats, new_stats, old_split, new_s
 
 def marker_delta(ref1, ref2):
     """Net present-unmatched/absent-from-retail markers added between states."""
-    cmd = ["git", "diff", ref1] + ([ref2] if ref2 else []) + ["--", "Code"]
+    cmd = ["git", "diff", ref1] + ([ref2] if ref2 else []) + ["--", "game"]
     diff = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True).stdout
     added = removed = 0
     for line in diff.splitlines():

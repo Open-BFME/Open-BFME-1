@@ -27,18 +27,18 @@ SY_HEADER = b"name,address,notes\r\n"
 
 @pytest.fixture
 def ledger(tmp_path, monkeypatch):
-    """A throwaway repo root with the three ledger files and a Code/ tree."""
-    (tmp_path / "reverse").mkdir()
-    (tmp_path / "Code").mkdir()
-    (tmp_path / "reverse" / "deleted_rows.csv").write_bytes(b"name,target_rva,reason\r\n")
+    """A throwaway repo root with the three ledger files and a game/ tree."""
+    (tmp_path / "targets/game/reverse").mkdir(parents=True)
+    (tmp_path / "game").mkdir()
+    (tmp_path / "targets/game/reverse" / "deleted_rows.csv").write_bytes(b"name,target_rva,reason\r\n")
     monkeypatch.setattr(ledger_repair, "ROOT", tmp_path)
     monkeypatch.chdir(tmp_path)
     return tmp_path
 
 
 def write(root, functions=b"", symbols=b""):
-    (root / "reverse" / "functions.csv").write_bytes(FN_HEADER + functions)
-    (root / "reverse" / "symbols.csv").write_bytes(SY_HEADER + symbols)
+    (root / "targets/game/reverse" / "functions.csv").write_bytes(FN_HEADER + functions)
+    (root / "targets/game/reverse" / "symbols.csv").write_bytes(SY_HEADER + symbols)
 
 
 def rows(path):
@@ -50,29 +50,29 @@ def test_an_exact_duplicate_record_is_dropped_keeping_the_first(ledger):
     row = b"?a@@YAXXZ,0x00001000,note\r\n"
     write(ledger, symbols=row + row)
     ledger_repair.repair()
-    assert len(rows(ledger / "reverse" / "symbols.csv")) == 1
+    assert len(rows(ledger / "targets/game/reverse" / "symbols.csv")) == 1
 
 
 def test_a_row_naming_a_source_that_no_longer_exists_yields_to_one_that_does(ledger):
-    (ledger / "Code" / "Live.cpp").write_text("")
+    (ledger / "game" / "Live.cpp").write_text("")
     write(ledger, functions=(
-        b"?a@@YAXXZ,,0x00001000,8,Code/Gone.cpp,matched,\r\n"
-        b"?a@@YAXXZ,,0x00001000,8,Code/Live.cpp,matched,\r\n"))
+        b"?a@@YAXXZ,,0x00001000,8,game/Gone.cpp,matched,\r\n"
+        b"?a@@YAXXZ,,0x00001000,8,game/Live.cpp,matched,\r\n"))
     ledger_repair.repair()
-    kept = rows(ledger / "reverse" / "functions.csv")
-    assert [f[4] for f in kept] == ["Code/Live.cpp"]
+    kept = rows(ledger / "targets/game/reverse" / "functions.csv")
+    assert [f[4] for f in kept] == ["game/Live.cpp"]
 
 
 def test_a_tombstoned_row_that_came_back_is_dropped_again(ledger):
-    (ledger / "reverse" / "deleted_rows.csv").write_bytes(
+    (ledger / "targets/game/reverse" / "deleted_rows.csv").write_bytes(
         b"name,target_rva,reason\r\n?phantom@@YAXXZ,0x00002000,never shipped\r\n")
-    (ledger / "Code" / "Live.cpp").write_text("")
+    (ledger / "game" / "Live.cpp").write_text("")
     write(ledger, functions=(
-        b"?phantom@@YAXXZ,,0x00002000,8,Code/Live.cpp,matched,\r\n"
-        b"?real@@YAXXZ,,0x00003000,8,Code/Live.cpp,matched,\r\n"))
+        b"?phantom@@YAXXZ,,0x00002000,8,game/Live.cpp,matched,\r\n"
+        b"?real@@YAXXZ,,0x00003000,8,game/Live.cpp,matched,\r\n"))
     kept = None
     ledger_repair.repair()
-    kept = rows(ledger / "reverse" / "functions.csv")
+    kept = rows(ledger / "targets/game/reverse" / "functions.csv")
     assert [f[0] for f in kept] == ["?real@@YAXXZ"]
 
 
@@ -81,17 +81,17 @@ def test_a_lone_lf_in_a_crlf_symbols_file_is_normalised(ledger):
     and re-adds it on every rebase; that is how 4,172 pins became 8,784."""
     write(ledger, symbols=b"?a@@YAXXZ,0x00001000,a\r\n?b@@YAXXZ,0x00002000,b\n")
     ledger_repair.repair()
-    raw = (ledger / "reverse" / "symbols.csv").read_bytes()
+    raw = (ledger / "targets/game/reverse" / "symbols.csv").read_bytes()
     assert raw.count(b"\r\n") == 3 and raw.count(b"\n") == 3
 
 
 def test_functions_csv_keeps_its_mixed_terminators(ledger):
     """functions.csv legitimately mixes all three, so normalising it would
     rewrite the whole file and make every row look edited to conversion_gate."""
-    (ledger / "Code" / "Live.cpp").write_text("")
+    (ledger / "game" / "Live.cpp").write_text("")
     write(ledger, functions=(
-        b"?a@@YAXXZ,,0x00001000,8,Code/Live.cpp,matched,\r\n"
-        b"?b@@YAXXZ,,0x00002000,8,Code/Live.cpp,matched,\n"))
+        b"?a@@YAXXZ,,0x00001000,8,game/Live.cpp,matched,\r\n"
+        b"?b@@YAXXZ,,0x00002000,8,game/Live.cpp,matched,\n"))
     ledger_repair.repair()
-    raw = (ledger / "reverse" / "functions.csv").read_bytes()
+    raw = (ledger / "targets/game/reverse" / "functions.csv").read_bytes()
     assert b",matched,\n" in raw and b",matched,\r\n" in raw

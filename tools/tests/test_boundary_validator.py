@@ -94,7 +94,7 @@ def test_byte_verified_boundaries_are_not_refused():
     to skip work that was provably doable. Read live, not from a fixture: the
     ledger only grows, and this bound has to hold for the rows landing today."""
     boundaries = {}
-    with (ROOT / "reverse" / "functions.csv").open(newline="") as handle:
+    with (ROOT / "targets/game/reverse" / "functions.csv").open(newline="") as handle:
         for row in csv.DictReader(handle):
             if row["status"] != "matched" or not row["target_rva"]:
                 continue
@@ -122,7 +122,7 @@ def test_collision_collapse_serves_each_address_once():
     served once per name that drifted onto it."""
     rows = fixture("structural_queue.csv")
     queue = [{"function": row["function"], "candidate_rva": row["rva"],
-              "size": int(row["size"]), "source": "Code/fixture.cpp"}
+              "size": int(row["size"]), "source": "game/fixture.cpp"}
              for row in rows]
     addresses = {row["rva"] for row in rows}
     assert (len(queue), len(addresses)) == (3923, 1200), (len(queue), len(addresses))

@@ -38,9 +38,9 @@ NOTE = """UNCLAIMED BODIES. None of these addresses has a ledger row: no seat wa
 replace and no prior bank unless re_attempts.log says so. Each line gives the start evidence (a REL32 call/jmp target,
 a vtable slot, a data pointer, a Ghidra entry, or a prologue right after int3 padding) and an ESTIMATED extent to the
 next proved start; the real end is the ret/tail-jmp followed by int3 padding, which you must find yourself
-(capstone over baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe; file offset == RVA in .text). Never claim
+(capstone over inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe; file offset == RVA in .text). Never claim
 bytes you did not decode. IDENTITY: where the line names a vtable and class, the slot index maps to the virtual in
-declaration order of the class's Zero Hour header (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include);
+declaration order of the class's Zero Hour header (inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include);
 python tools/vtable_lookup.py 0xVT prints the landed siblings; python tools/fleet/context_pack.py 0xRVA prints callers,
 strings, layout witnesses; python tools/ghidra_decompile.py 0xRVA prints a control-flow DRAFT (names/types invented).
 If an MCP server named "ghidra" is available to you (tools decompile_function, disassemble, list_xrefs, search_strings,
@@ -48,12 +48,12 @@ read_bytes, gen_callgraph on binary_name "lotrbfme.exe"; addresses are VAs 0x4XX
 cross-references, string references and call graphs instead of grepping; its output is still a draft, never proof. A
 sibling's landed source is the best start. When identity is proved, use the real mangled name; otherwise opaque
 address-derived names (Rva0XXXXXXXX tokens), never plausible guesses. LAND when EXACT with python tools/add_match.py
-"MANGLED" 0xRVA SIZE Code/.../File.cpp --notes "<evidence>" (new row; AGENTS.md 'File placement'; a sibling's file is a
+"MANGLED" 0xRVA SIZE game/.../File.cpp --notes "<evidence>" (new row; AGENTS.md 'File placement'; a sibling's file is a
 fine home if every row it holds still verifies with bash build.sh FILE). Otherwise BANK: python tools/re_log.py record
 "MANGLED" 0xRVA SIZE partial "<evidence> t=<min>min model={model}-{effort}" --stash FILE --score MEASURED, MEASURED =
 max(0, 1 - (differing bytes + 2 x |ours - retail|) / SIZE). Measure with python tools/probe.py SRC "MANGLED" 0xRVA;
 structure first (prologue/frame, EH, call sequence), then registers. Natural C++ only: no naked, no __emit, no
-volatile shaping. Never run git. No full gate, never launch the game. Do not edit tools/ or docs/ or reverse/*.csv by
+volatile shaping. Never run git. No full gate, never launch the game. Do not edit tools/ or docs/ or targets/game/reverse/*.csv by
 hand. Hard cap {cap} hours; bank every body before you stop."""
 
 

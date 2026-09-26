@@ -13,7 +13,7 @@ import next_work
 SYM = "?updateAnimateWindow@ProcessAnimateWindowSlideFromTopFast@@UAE_NPAVAnimateWindow@@@Z"
 RVA = 0x00497140
 PRUNING = (
-    "Superseded by the ledger: this symbol is matched from Code/Thunk.cpp, "
+    "Superseded by the ledger: this symbol is matched from game/Thunk.cpp, "
     "a real source, so the standing 'no-match' verdict is stale. "
     "Recorded by the tree-wide pruning pass that cross-referenced every logged "
     "symbol against its current ledger SOURCE PATH -- matched from a real .cpp "
@@ -111,7 +111,7 @@ def test_later_refutation_can_close_an_actual_conversion(log):
 
 
 @pytest.mark.parametrize("evidence", [
-    "clean C++ compiled and matched from Code/Thunk.cpp",
+    "clean C++ compiled and matched from game/Thunk.cpp",
     "SOURCE PATH checked alongside actual compiled bytes",
     PRUNING.replace("Recorded by the tree-wide pruning pass", "Independently verified"),
     "Independent conversion supersedes the old attempt. " + PRUNING,
@@ -161,7 +161,7 @@ def test_naked_queue_counts_deferred_work_by_rva_after_name_change(log, placehol
     assert queue.drop_logged([candidate]) == ([candidate], 0)
     assert candidate["deferred_attempts"] == 2 + placeholder_rows
     if placeholder_rows == 0:
-        candidate.update(score=0, size=233, path="Code/gen_asm/test.asm", line=1)
+        candidate.update(score=0, size=233, path="game/gen_asm/test.asm", line=1)
         selected, meta = queue.select_candidate([candidate])
         assert selected is candidate
         assert meta["exhausted"] is True
@@ -207,7 +207,7 @@ def test_naked_queue_voided_refutation_does_not_retire_after_rename(log):
 def test_naked_queue_quick_look_remains_untried(log):
     log.write_text(row("blocked", "t=2min no named caller"))
     candidate = {"symbol": SYM, "rva": hex(RVA), "score": 0, "size": 233,
-                 "path": "Code/gen_asm/test.asm", "line": 1}
+                 "path": "game/gen_asm/test.asm", "line": 1}
     assert eligibility.attempt_counts().get(RVA, 0) == 0
     assert queue.drop_logged([candidate]) == ([candidate], 0)
     assert "deferred_attempts" not in candidate

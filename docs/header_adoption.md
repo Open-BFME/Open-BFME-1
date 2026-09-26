@@ -6,7 +6,7 @@ The tree has 533 headers against the original's 1,471, and the natural reading i
 that headers need writing. That reading is wrong, and it sent an earlier plan
 after 940 headers that did not need to exist.
 
-`Code/Libraries/Source/WWVegas/WWLib/ascii_string.h` is a complete, byte-evidenced
+`game/Libraries/Source/WWVegas/WWLib/ascii_string.h` is a complete, byte-evidenced
 `AsciiString` and has been all along. When this lane started, 45 translation units
 included it and **1,342 declared their own copy instead**. That is what makes the
 tree unnavigable: not that a type has no definition to jump to, but that it has a
@@ -107,7 +107,7 @@ still fail, because they declare methods the header lacks (`releaseBuffer`,
 `freeBytes`, `bfmeCompare1294`). Telling those apart from calls inside inline
 bodies means parsing C++ with regex; two attempts produced `arguments`, `ctor` and
 `return` as method names. Ask the compiler and record the answer in
-`reverse/header_adopt_blocked.tsv`, which is the exemption list.
+`targets/game/reverse/header_adopt_blocked.tsv`, which is the exemption list.
 
 **`StringBase` is a template in all 431 of its copies.** Replacing the class body
 alone leaves `template <typename T>` hanging over an `#include`. The shim pattern
@@ -156,7 +156,7 @@ oracle does **not** support applying that recipe as written:
 * `python3 tools/name_oracle.py --class UnicodeString --offset 0` reports
   `m_data` at confidence 1.00. `unicode_string.h` still spells the member
   `m_text`, and `python3 tools/name_oracle.py --check
-  Code/Libraries/Source/WWVegas/WWLib/unicode_string.h` reports one conflict.
+  game/Libraries/Source/WWVegas/WWLib/unicode_string.h` reports one conflict.
   This is a real disagreement to review, not a basis for renaming every
   `m_text` occurrence across both string classes.
 
@@ -168,7 +168,7 @@ ZH hint.
 
 This is a recorded evidence snapshot, not a current gate forecast. A staged
 header or shim runs the full gate. The hook compares its red rows against the
-shrink-only `reverse/full_gate_baseline.txt` via `tools/gate_baseline.py`; it
+shrink-only `targets/game/reverse/full_gate_baseline.txt` via `tools/gate_baseline.py`; it
 rejects new red rows and gate failures before byte comparison, while known red
 rows do not by themselves prohibit a header change. Commit `9c397c6e37` landed
 `Object` headers and moved 52 TUs on 2026-09-24, so the former claim that no

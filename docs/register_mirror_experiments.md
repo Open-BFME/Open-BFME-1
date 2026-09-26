@@ -86,7 +86,7 @@ interior=ESI):
 This exactly reproduces the mis-color the fleet already sees on
 `0x0021AC30` (`Owner::invoke`, our compile: this=edi/interior=esi; retail:
 this=esi). The "explicit self-local" and `shape_family_levers.py
---families register` attempts already recorded in `reverse/re_attempts.log`
+--families register` attempts already recorded in `targets/game/reverse/re_attempts.log`
 for that RVA are the same reversal this session also tried and also could
 not reverse — this session's contribution is pinning down that it is
 specifically the **2+ calls through an adjusted sub-object address** that
@@ -171,7 +171,7 @@ a register-lever problem, and further sessions should look for a MISSING
 call or field read in the current stashes rather than more register
 spellings.
 
-No new bodies landed. `reverse/re_attempts.log` is unchanged by this
+No new bodies landed. `targets/game/reverse/re_attempts.log` is unchanged by this
 session; this file documents scratch-only work in the untracked
 `build/regmirror/` directory.
 
@@ -265,7 +265,7 @@ reconstructed body at all.
 
 ### Applied to the two banked targets
 
-- `0x0021AC30` (`Owner::invoke`, `reverse/attempts/0x0021ac30.cpp`, score
+- `0x0021AC30` (`Owner::invoke`, `targets/game/reverse/attempts/0x0021ac30.cpp`, score
   0.77): body shape is exactly the probe4/probe7 `y2`/`t*`/`e*` case (this
   + interior called via `slot49`/`slot64`/`slot68`, no loop, no
   candidate for a real iteration) — none of this session's positive or
@@ -273,7 +273,7 @@ reconstructed body at all.
   harness stage; still banked at 0.77, no new probe.py run needed since no
   new lever applies.
 - `0x0027ACF0` (`AIUpdateInterface::...MoodTargetCheck`,
-  `reverse/attempts/0x0027acf0.cpp`, score 0.5): three-register case
+  `targets/game/reverse/attempts/0x0027acf0.cpp`, score 0.5): three-register case
   (retail this=EBX, ours=EDI), which is the same class `g1` models here,
   but g1 shows the third competing pointer just doesn't get cached at all
   rather than reproducing a three-way EBX/EDI/ESI split — this session's

@@ -5,7 +5,7 @@ choices.json is [{"before":"unique source text", "after":["alternative", ...]}].
 The unchanged source is always trial zero. Agents supply the hypotheses; this
 tool compiles their finite combinations and stops at a trial budget or plateau.
 Scores mask relocations and are NOT acceptance. Review the selected source,
-restore it at its intended Code/ path, then run the ordinary add_match gates.
+restore it at its intended game/ path, then run the ordinary add_match gates.
 """
 import argparse
 import hashlib
@@ -48,7 +48,7 @@ def variants(source, choices):
 
 
 def scratch_source(text, source):
-    # Preserve local quoted includes without editing an active Code/ source.
+    # Preserve local quoted includes without editing an active game/ source.
     # A final recompile at the intended path is mandatory (__FILE__, anonymous
     # namespace mangling and relative include chains may depend on that path).
     def include(match):

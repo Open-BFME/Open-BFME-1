@@ -35,9 +35,9 @@ def test_nothing_in_common_gives_no_answer():
 
 def test_table_round_trip(tmp_path):
     path = tmp_path / "twins.tsv"
-    path.write_text(twins.HEADER + "0x00747670\t202\t0.97\t0.41\t?setDrawOrg@WorldHeightMap@@QAE_NHH@Z\treference/x/WorldHeightMap.cpp\n"
+    path.write_text(twins.HEADER + "0x00747670\t202\t0.97\t0.41\t?setDrawOrg@WorldHeightMap@@QAE_NHH@Z\tinputs/reference/x/WorldHeightMap.cpp\n"
                     "not a row\n", encoding="utf-8")
     got = twins.load_twins(path)
     assert got == {0x00747670: dict(similarity=0.97, margin=0.41, symbol="?setDrawOrg@WorldHeightMap@@QAE_NHH@Z",
-                                     source="reference/x/WorldHeightMap.cpp")}
+                                     source="inputs/reference/x/WorldHeightMap.cpp")}
     assert twins.load_twins(tmp_path / "absent.tsv") == {}
