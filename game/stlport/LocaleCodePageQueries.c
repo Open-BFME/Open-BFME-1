@@ -419,3 +419,28 @@ char *Rva00850560(LocaleCodePageObject_0084EED0 *object)
         return locale_output_00850560;
     }
 }
+
+char *Rva0084E7B0LocaleName(LocaleCodePageObject_0084EED0 *object, char *buf)
+{
+    return __GetLocaleName(object->locale, object->codePage, buf);
+}
+
+char *Rva0084E7D0LocaleName(LocaleCodePageObject_0084EED0 *object, char *buf)
+{
+    return __GetLocaleName(object->locale, object->codePage, buf);
+}
+
+char *Rva0084E7F0LocaleName(LocaleCodePageObject_0084EED0 *object, char *buf)
+{
+    return __GetLocaleName(object->locale, object->codePage, buf);
+}
+
+char *Rva0084E810LocaleName(LocaleCodePageObject_0084EED0 *object, char *buf)
+{
+    return __GetLocaleName(object->locale, object->codePage, buf);
+}
+
+char *Rva0084E830LocaleName(LocaleCodePageObject_0084EED0 *object, char *buf)
+{
+    return __GetLocaleName(object->locale, object->codePage, buf);
+}
