@@ -22,6 +22,7 @@ class BfmeStrVKI
 {
 public:
 	void bfmeSetVKI(const char *s);
+	BfmeStrVKI &assignRva00891B50(const char *s);
 	BfmeHdrVKI *m_bfme00;
 };
 
@@ -41,4 +42,10 @@ void BfmeStrVKI::bfmeSetVKI(const char *s)
 	m_bfme00->m_bfme02 = (unsigned short)len;
 	m_bfme00->m_bfme06 = 0;
 	memcpy((char *)m_bfme00 + 8, s, len + 1);
+}
+
+BfmeStrVKI &BfmeStrVKI::assignRva00891B50(const char *s)
+{
+	bfmeSetVKI(s);
+	return *this;
 }
