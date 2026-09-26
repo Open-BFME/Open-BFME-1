@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "137d2ee31e67e67d8684a6cb6f7b4643c11d2c6eb2db7309cd18f0fca1f5dc22",
+  "symbol": "??0GarrisonContainModuleData@@QAE@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.5882,
+  "source": "// ??0GarrisonContainModuleData@@QAE@XZ\n// partial score=0.5882 date=2026-09-26\n// ??0GarrisonContainModuleData@@QAE@XZ\n// cl: /O2\n// Retail 0x0022F7E0..0x0022F879. The base call routes through ILT\n// 0x0000ED77 to the matched 0x002472D0 body; its semantic base name is\n// disputed, so this source uses an address-derived ABI view.\n// All 18 derived stores and the vtable address match. Remaining codegen:\n// retail loads 1.0f into ECX before eleven zero stores and preserves it for\n// two later fields; MSVC sinks the load to after the zero run in EAX.\nclass Rva002472D0Base\n{\npublic:\n    Rva002472D0Base();\nprivate:\n    unsigned char m_storage[0x2f4];\n};\n#pragma comment(linker, \"/alternatename:??0Rva002472D0Base@@QAE@XZ=?j_0000ed77@@YAXXZ\")\n\nclass GarrisonContainModuleData : public Rva002472D0Base\n{\npublic:\n    GarrisonContainModuleData();\nprivate:\n    unsigned char m_tail[0x48];\n};\n\n#define S32(off, value) (*(volatile unsigned int *)((unsigned char *)this + off) = (value))\nGarrisonContainModuleData::GarrisonContainModuleData()\n{\n    const unsigned int one = 0x3f800000u;\n    S32(0x2f4, 0);\n    S32(0x2f8, 0);\n    S32(0x2fc, 0);\n    S32(0x300, 0);\n    S32(0x304, 0);\n    S32(0x308, 0);\n    S32(0x30c, 0);\n    S32(0x310, 0);\n    S32(0x314, 0);\n    S32(0x318, 0);\n    S32(0x324, 0);\n    S32(0x000, 0x010ade98u);\n    S32(0x31c, one);\n    S32(0x320, 0x3ee66666u);\n    S32(0x328, 0x497423f0u);\n    S32(0x32c, 2);\n    S32(0x330, one);\n    S32(0x334, 0x3e99999au);\n    S32(0x338, 0x3ecccccd);\n}\n"
+}
