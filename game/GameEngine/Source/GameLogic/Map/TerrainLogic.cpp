@@ -346,7 +346,7 @@ m_bridgeInfo(theInfo)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// The Object-based overload remains an unmatched reference implementation.
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/BridgeObjectCtor.cpp
 Bridge::Bridge(Object *bridgeObj) 
 {
 
