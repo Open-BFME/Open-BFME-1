@@ -1,8 +1,6 @@
-// ?parseLivingWorldSoundRva0061C410@@YAXPAVINI@@@Z
-// partial score=0.99 date=2026-09-26
 // cl: /DNDEBUG /MD /EHsc /Igame/GameEngine/Include /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
 // stlport
-// Retail 0x0061C410 parses LivingWorldSound; its own diagnostic literal names the block.
+// Retail 0x0061C410 parses LivingWorldSound; its diagnostic literal names the block.
 #include "Common/INI/INI.h"
 #include "region.h"
 extern "C" void _ReadWriteBarrier(void);
@@ -30,6 +28,13 @@ public:
 	virtual void slot50(); virtual void slot54(); virtual void slot58(); virtual void slot5C();
 	virtual void slot60(); virtual void slot64(); virtual void slot68();
 	virtual BfmeAwakenLog *slot6C(int first, int second);
+};
+struct BfmeAwakenDebugEqualityVtable
+{
+	void *m_slots00[24];
+	void (__fastcall *slot60)(BfmeAwakenDebug *debug, BfmeAwakenDebugEqualityVtable *table);
+	void *m_slots64[2];
+	BfmeAwakenLog *(__fastcall *slot6C)(BfmeAwakenDebug *debug, int first, int second);
 };
 extern BfmeAwakenDebug *TheBfmeAwakenDebug;
 extern bool _bfme_debugReportingEnabled();
@@ -61,6 +66,16 @@ struct Rva0061C410Sound
 		if (_bfme_debugReportingEnabled()) { \
 			_bfme_debugRecordCallsite(1); \
 			TheBfmeAwakenDebug->slot60(); \
+			TheBfmeAwakenDebug->slot6C(0, 0)->slot38("LivingWorldSound ")->slot38(token)->slot38(MESSAGE)->slot4C(2); \
+		} \
+	} while (0)
+#define REPORT_SOUND_EQUALITY(MESSAGE) \
+	do { \
+		if (_bfme_debugReportingEnabled()) { \
+			_bfme_debugRecordCallsite(1); \
+			BfmeAwakenDebug *debug = TheBfmeAwakenDebug; \
+			BfmeAwakenDebugEqualityVtable *table = *(BfmeAwakenDebugEqualityVtable **)debug; \
+			table->slot60(debug, table); \
 			TheBfmeAwakenDebug->slot6C(0, 0)->slot38("LivingWorldSound ")->slot38(token)->slot38(MESSAGE)->slot4C(2); \
 		} \
 	} while (0)
@@ -104,7 +119,7 @@ void parseLivingWorldSoundRva0061C410(INI *ini)
 		sound->m_zoom.x_max = low;
 	}
 	else if (sound->m_zoom.x_min == sound->m_zoom.x_max)
-		REPORT_SOUND_ERROR(": ZoomRegionLow X: is equal to ZoomRegionHigh X:. This sound cannot play");
+		REPORT_SOUND_EQUALITY(": ZoomRegionLow X: is equal to ZoomRegionHigh X:. This sound cannot play");
 	if (sound->m_zoom.y_min > sound->m_zoom.y_max)
 	{
 		REPORT_SOUND_ERROR(": ZoomRegionLow Y: should be less than ZoomRegionHigh Y:");
@@ -117,5 +132,5 @@ void parseLivingWorldSoundRva0061C410(INI *ini)
 		sound->m_zoom.y_max = low;
 	}
 	else if (sound->m_zoom.y_min == sound->m_zoom.y_max)
-		REPORT_SOUND_ERROR(": ZoomRegionLow Y: is equal to ZoomRegionHigh Y:. This sound cannot play");
+		REPORT_SOUND_EQUALITY(": ZoomRegionLow Y: is equal to ZoomRegionHigh Y:. This sound cannot play");
 }
