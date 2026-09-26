@@ -4,9 +4,8 @@
 // policy bytes at scan-data offsets 0x20..0x22, unlike the Zero Hour callback.
 // Keep the predicate in this translation unit: VC7.1 passes its scan data in
 // EAX and candidate in EBX instead of using a public calling convention.
-#define _STLP_USE_NEWALLOC 1
-#define _STLP_NO_EXCEPTIONS 1
-#include <list>
+// The retail list append calls the out-of-line STLport allocator at 0x0082E540.
+// Its inline wrapper instead folds to the different global operator new.
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
@@ -82,7 +81,41 @@ public:
 
 extern GameLogic *TheGameLogic;
 
-typedef _STL::list<Object *> ObjectPointerList;
+namespace _STL
+{
+class __new_alloc
+{
+public:
+	static void *allocate(unsigned int bytes);
+};
+}
+
+struct AutoHealScanListNode
+{
+	AutoHealScanListNode *next;
+	AutoHealScanListNode *prev;
+	Object *value;
+};
+
+class ObjectPointerList
+{
+public:
+	void push_back(Object *object)
+	{
+		AutoHealScanListNode *head = m_node;
+		AutoHealScanListNode *node = (AutoHealScanListNode *)_STL::__new_alloc::allocate(12);
+		Object **value = &node->value;
+		if (value)
+			*value = object;
+		AutoHealScanListNode *prev = head->prev;
+		node->next = head;
+		node->prev = prev;
+		prev->next = node;
+		head->prev = node;
+	}
+
+	AutoHealScanListNode *m_node;
+};
 
 struct AutoHealPlayerScanHelper
 {
@@ -145,7 +178,6 @@ static Bool rva001EE670EligibleForAutoHeal(
 	return true;
 }
 
-// ?checkForAutoHeal@@YAHPAVObject@@PAX@Z present-unmatched
 int checkForAutoHeal(Object *testObj, void *userData)
 {
 	AutoHealPlayerScanHelper *helper = (AutoHealPlayerScanHelper *)userData;
