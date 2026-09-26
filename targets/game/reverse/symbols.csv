@@ -89175,3 +89175,5 @@ _gpDisconnect,0x008E9800,body 0x008E9800; Thread_Function 0x0063EB00 +0xB49 jump
 ??0CtorTargetR0015C7A0@@QAE@PAVStateMachine@@_N11PAVAttackExitConditionsInterface@@@Z,0x0000BF3C,local ABI call view for AIAttackState constructor from 0x0015C7A0; target=0x0017C910
 ?invoke@Rva00268CB0@@QAEXPAVObject@@@Z,0x00046C13,0x00263CA0 +0x46 ILT to 0x00268CB0; thiscall object-relative helper with Object argument ret4; previous destructor label conflicts with retail event/audio behavior
 ?dispatch@ObjectCreationList@@QAEXPBVObject@@0HH@Z,0x00002A59,0x00263CA0 +0x68 ILT to 0x001D67C0; thiscall vector dispatches four arguments via receiver slot 0x0C and ret 0x10
+?rva0071DF10@W3DShrubBuffer@@QAEXPAX@Z,0x0071DF10,address-derived shrub member; own buffer layout and matched doLighting calls prove owner; unused pointer arg and RET4; evidence=targets/game/reverse/identity_evidence/0071eec0.md
+_D3DXMatrixTranspose@8,0x009FAFBA,d3dx9.lib d3dxmath.obj exact public dispatch symbol; FF25 FastTable+0x94; independent matched initializer009FAF81 and scalar009FAFC0; evidence=targets/game/reverse/identity_evidence/0071eec0.md
