@@ -5188,5 +5188,35 @@
   "after_sha256": "6ce320ee9b32f1416264be95c5cfe6789eab7b41c9ed15eeb0af019d06faed63",
   "evidence": "docs/naming_evidence.md",
   "reason": "transitionTBA was a bank guess that no caller, vtable slot, string or ZH twin supports"
+ },
+ {
+  "old_path": "reverse/attempts/0x00491a40.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Gen_00491A40DisplayMethod.cpp",
+  "old_name": "AudioClientUpdate",
+  "new_name": "Rva005A00B0AudioClient",
+  "before_sha256": "861ddd0dd771ab5c4c05792f92ff0683e69e0cf006f74c5ba3c490a00b2ea288",
+  "after_sha256": "e435c40d8411501df51ed4b3068590bbb11756420261f8889e8ffe183d4ba906",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank class name with no evidence, replaced by the existing pinned spelling of TheAudioClientUpdate at 0x012ED668"
+ },
+ {
+  "old_path": "reverse/attempts/0x00491a40.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Gen_00491A40DisplayMethod.cpp",
+  "old_name": "m_flag",
+  "new_name": "m_byte1278",
+  "before_sha256": "861ddd0dd771ab5c4c05792f92ff0683e69e0cf006f74c5ba3c490a00b2ea288",
+  "after_sha256": "e435c40d8411501df51ed4b3068590bbb11756420261f8889e8ffe183d4ba906",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "name_oracle says GlobalData+0x1278 is unwitnessed"
+ },
+ {
+  "old_path": "reverse/attempts/0x00491a40.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Gen_00491A40DisplayMethod.cpp",
+  "old_name": "m_flag",
+  "new_name": "m_byte74",
+  "before_sha256": "861ddd0dd771ab5c4c05792f92ff0683e69e0cf006f74c5ba3c490a00b2ea288",
+  "after_sha256": "e435c40d8411501df51ed4b3068590bbb11756420261f8889e8ffe183d4ba906",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "name_oracle says GameLogic+0x74 is unwitnessed"
  }
 ]
