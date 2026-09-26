@@ -814,6 +814,109 @@ Int W3DShadowGeometry::initFromMesh(RenderObjClass *robj)
 	return TRUE;
 }
 
+extern const float BfmeZeroRange;
+
+// The BFME mesh stores ref-counted vertex/index arrays in its model.  Keep
+// this view local: the Zero Hour mesh and shadow-geometry layouts differ.
+Int W3DShadowGeometry::initFromMesh(RenderObjClass *robj, Int mesh_index,
+	W3DShadowGeometry *parent_geometry)
+{
+	struct MeshArrayView
+	{
+		void *m_vtable;
+		Int m_references;
+		char m_opaque[4];
+		const Vector3 *m_vertices;
+	};
+	struct MeshModelView
+	{
+		char m_beforeFlags[0x18];
+		unsigned int m_flags;
+		char m_beforePolygonCount[8];
+		Int m_polygonCount;
+		Int m_vertexCount;
+		MeshArrayView *m_indexArray;
+		MeshArrayView *m_vertexArray;
+	};
+	struct MeshRenderView
+	{
+		char m_beforeModel[0xc8];
+		MeshModelView *m_model;
+	};
+	struct ShadowMeshView
+	{
+		MeshArrayView *m_indexArray;
+		MeshArrayView *m_vertexArray;
+		const Vector3 *m_vertices;
+		Int m_meshRobjIndex;
+		char m_beforeUniqueVertices[4];
+		Int m_uniqueVertices;
+		Int m_vertexCount;
+		Int m_polygonCount;
+		UnsignedShort *m_parentVerts;
+		char m_beforeParentGeometry[8];
+		W3DShadowGeometry *m_parentGeometry;
+		Bool m_alpha;
+	};
+	struct ShadowGeometryView
+	{
+		char m_beforeMeshes[0x14];
+		ShadowMeshView m_meshList[MAX_SHADOW_CASTER_MESHES];
+	};
+
+	UnsignedShort vertParent[MAX_SHADOW_VOLUME_VERTS];
+	BfmeW3DShadowGeometryLayout *layout = (BfmeW3DShadowGeometryLayout *)this;
+	ShadowGeometryView *geometry = (ShadowGeometryView *)this;
+	ShadowMeshView *mesh = &geometry->m_meshList[layout->m_meshCount];
+	mesh->m_meshRobjIndex = mesh_index;
+	unsigned int flags = ((MeshRenderView *)robj)->m_model->m_flags;
+	if (!(flags & 0x1000))
+		return FALSE;
+	mesh->m_alpha = (flags >> 10) & 1;
+	MeshModelView *model = ((MeshRenderView *)robj)->m_model;
+	mesh->m_vertexCount = model->m_vertexCount;
+	MeshArrayView *vertexArray = model->m_vertexArray;
+	if (vertexArray != 0)
+		++vertexArray->m_references;
+	mesh->m_vertexArray = vertexArray;
+	mesh->m_vertices = mesh->m_vertexArray->m_vertices;
+	mesh->m_polygonCount = model->m_polygonCount;
+	++model->m_indexArray->m_references;
+	mesh->m_indexArray = model->m_indexArray;
+	if (mesh->m_vertexCount > MAX_SHADOW_VOLUME_VERTS)
+		return FALSE;
+
+	memset(vertParent, 0xff, sizeof(vertParent));
+	Int uniqueCount = mesh->m_vertexCount;
+	for (Int j = 0; j < mesh->m_vertexCount; ++j)
+	{
+		if (vertParent[j] != 0xffff)
+			continue;
+		const Vector3 *vertex = &mesh->m_vertices[j];
+		for (Int k = j + 1; k < mesh->m_vertexCount; ++k)
+		{
+			Vector3 delta(*vertex - mesh->m_vertices[k]);
+			if (delta.Length2() == BfmeZeroRange)
+			{
+				vertParent[k] = j;
+				--uniqueCount;
+			}
+		}
+		vertParent[j] = j;
+	}
+
+	mesh->m_parentVerts = NEW UnsignedShort[mesh->m_vertexCount];
+	memcpy(mesh->m_parentVerts, vertParent, sizeof(UnsignedShort) * mesh->m_vertexCount);
+	mesh->m_uniqueVertices = uniqueCount;
+	layout->m_numTotalsVerts += uniqueCount;
+	mesh->m_parentGeometry = parent_geometry;
+	if (((MeshRenderView *)robj)->m_model->m_flags & 0x400)
+		mesh->m_vertices = 0;
+	++layout->m_meshCount;
+	layout->m_numTotalsVerts += uniqueCount;
+	return TRUE;
+}
+
 Int W3DShadowGeometry::init(RenderObjClass *robj)
 {
 	return TRUE;
