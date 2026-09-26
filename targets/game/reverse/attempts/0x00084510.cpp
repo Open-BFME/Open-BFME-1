@@ -76,27 +76,23 @@
 // still needs real content, at which point the buffer's shape may turn out
 // to matter (e.g. if it's really several arrays MSVC coalesced).
 //
-// New lead for the NEXT diff (right after the chkstk fix): retail's prologue
-// pushes ebx, ebp, esi, edi (4 callee-saved regs) but this draft's compiled
-// output only pushes esi/edi (no ebp) at that point -- ebp is never used
-// because this draft has no real loop. ZH's constructor has a genuine
-// `for (i = 0; i < MAX_WATER_GRID_SETTINGS; i++) { ...12 stores...
-// m_vertexWaterAvailableMaps[i].clear(); }` block; a loop with that much
-// per-iteration work is a strong candidate for the compiler hoisting the
-// induction variable into a 4th callee-saved register (ebp) across the many
-// calls inside the loop body (AsciiString::clear() per iteration). Writing
-// that loop as a REAL for-loop (not unrolled stores) instead of flat
-// m_pad_XXXX blocks is the next thing to try, once MAX_WATER_GRID_SETTINGS
-// and the array's BFME offset/stride are confirmed from the disassembly.
+// Retail water loop at +0x068d..+0x06e6 is four iterations. It starts
+// edi at this+0xbc, writes 13 separate dwords at edi-0x10 through
+// edi+0xb0, calls the narrow-string release path with ecx=edi-0x20
+// (this+0x9c+i*4), then advances edi by four. The matching GeneralsMD
+// GlobalData constructor clears m_vertexWaterAvailableMaps[i] after those
+// 13 initializers; its inline clear() delegates to releaseBuffer().
+// This draft now includes that missing call, using the existing pinned
+// BFMERetailAsciiString releaseBuffer body at 0x00887940. No byte-match
+// result has been claimed for this change.
+//
+// Other loops, calls, BFME-specific scalar defaults and the large stack
+// frame remain unresolved; the original 0.2 score is not an updated score.
 //
 // NOT YET DONE (why this is a partial, not a landed body):
-//   - The ~230 plain scalar members between the destructible ones are
-//     represented as raw `unsigned char m_pad_XXXX[N]` blocks, not typed
-//     fields with retail's actual constants. build/stores2.txt (generated
-//     in this session, not carried in this commit) has every individual
-//     store already decoded to (offset, size, value) -- someone continuing
-//     this body should replay that table into typed members inside each pad
-//     run instead of re-disassembling.
+//   - Many BFME scalar members are named by offset and the initializer
+//     list is incomplete, notably retail-only stores before the water loop,
+//     the three lighting grids, and fields after the final default loop.
 //   - At least three call sites (+0x40f/+0x421 `RetailLayoutString::set`,
 //     +0xc72 `UnicodeString::set`) assign LITERAL STRING content to specific
 //     AsciiString/UnicodeString members -- these need the literal bytes read
@@ -104,9 +100,9 @@
 //   - GlobalData's own vtable store (`mov dword ptr [esi], 0x0107C68C` right
 //     after the SubsystemInterface base ctor call) has no pin yet; nothing
 //     in this file forces our compiled vtable to that literal.
-//   - A handful of trailing calls past +0xf60 (thunks 0x1b76b, 0xa984,
-//     0x2f923, an indirect call through edi, 0x3f508, and an __imp_ call
-//     through [0x1359000]) are not yet decoded.
+//   - Trailing calls through thunks 0x1b76b, 0xa984, 0x2f923 and 0x3f508,
+//     plus the indirect call through edi, still need genuine source paths.
+//     The import through [0x1359000] is GetDoubleClickTime.
 //
 // The size below is verified: SubsystemInterface (8) + the member list =
 // 0x1290, matching newOverride's own comment that `operator new` is handed
@@ -127,6 +123,7 @@ class BFMERetailAsciiString
 public:
 	BFMERetailAsciiString() : m_data(0) { }
 	~BFMERetailAsciiString();
+	void releaseBuffer(); // Retail AsciiString::clear() delegates to this pinned release path.
 
 	void *m_data;
 };
@@ -871,7 +868,7 @@ GlobalData::GlobalData()
 	m_8c = 0;  // TODO: non-constant register value, needs re-derivation
 	m_8d = 0;
 	m_c50 = 0;
-	for (unsigned int i = 0; i < 4; ++i)
+	for (int i = 0; i < 4; ++i)
 	{
 		m_vertexWaterHeightClampLow[i] = 0;
 		m_vertexWaterHeightClampHi[i] = 0;
@@ -886,6 +883,7 @@ GlobalData::GlobalData()
 		m_vertexWaterAttenuationB[i] = 0;
 		m_vertexWaterAttenuationC[i] = 0;
 		m_vertexWaterAttenuationRange[i] = 0;
+		m_strArr_9c[i].releaseBuffer();
 	}
 	m_180 = 0;
 	m_1f0 = 0;

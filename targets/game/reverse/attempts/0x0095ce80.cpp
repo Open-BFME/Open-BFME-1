@@ -1,6 +1,6 @@
 // ?RenderStreak@StreakRendererClass@@QAEXAAVRenderInfoClass@@ABVMatrix3D@@IPAVVector3@@PAVVector4@@PAMABVSphereClass@@PAI@Z
 // partial score=0.61 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -194,6 +194,28 @@ inline void StreakRendererClass::Reset_Line(void)
 #include "v3_rnd.h"
 #ifdef _INTERNAL
 #endif
+// BFME uses its FVF-indexed dynamic vertex-buffer access (FVF slot 5),
+// not the Generals dynamic_fvf_type access used by the upstream renderer.
+class BoxDynamicVBAccessClass
+{
+	const FVFInfoClass &FVFInfo;
+	unsigned int Type, FVF, Start;
+	unsigned short VertexCount, VertexBufferOffset;
+	class BoxVertexBufferClass *VertexBuffer;
+public:
+	BoxDynamicVBAccessClass(unsigned int type, unsigned int fvf, unsigned short count, unsigned int start);
+	~BoxDynamicVBAccessClass();
+	const FVFInfoClass &FVF_Info() const { return FVFInfo; }
+	class WriteLockClass
+	{
+		BoxDynamicVBAccessClass *DynamicVBAccess;
+		VertexFormatXYZNDUV2 *Vertices;
+	public:
+		WriteLockClass(BoxDynamicVBAccessClass *access);
+		~WriteLockClass();
+		VertexFormatXYZNDUV2 *Get_Formatted_Vertex_Array() { return Vertices; }
+	};
+};
 /* We have chunking logic which handles N segments at a time. To simplify the subdivision logic,
 ** we will ensure that N is a power of two and that N >= 2^MAX_STREAK_SUBDIV_LEVELS, so that the
 ** subdivision logic can be inside the chunking loop.
@@ -970,10 +992,16 @@ void StreakRendererClass::RenderStreak
 		/*
 		** Set color, opacity, vertex flags:
 		*/
-		bool sorting = (!Is_Sorting_Disabled()) && (Shader.Get_Dst_Blend_Func() != ShaderClass::DSTBLEND_ZERO && Shader.Get_Alpha_Test() == ShaderClass::ALPHATEST_DISABLE);
+		// BFME alpha-test occupies both bits 18 and 19; ZH's getter
+		// checks only bit 18 and can sort alpha-tested streaks.
+		bool sorting = !Is_Sorting_Disabled() &&
+			(reinterpret_cast<const unsigned int &>(Shader) & 0xe0u) != 0 &&
+			(reinterpret_cast<const unsigned int &>(Shader) & 0xc0000u) == 0;
 		ShaderClass shader = Shader;
-		shader.Set_Cull_Mode(ShaderClass::CULL_MODE_DISABLE);
-		shader.Set_Primary_Gradient(ShaderClass::GRADIENT_MODULATE);			
+		// Retail BFME clears culling at bit 20 and encodes primary
+		// gradient modulation as 6 in bits 10..12, unlike the ZH shader.
+		reinterpret_cast<unsigned int &>(shader) &= ~0x100400u;
+		reinterpret_cast<unsigned int &>(shader) |= 0x1800u;
 		VertexMaterialClass *mat;		
 		mat=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
 		DX8Wrapper::Set_Material(mat);
@@ -989,9 +1017,9 @@ void StreakRendererClass::RenderStreak
 		/*
 		** Render
 		*/		
-		DynamicVBAccessClass Verts((sorting?BUFFER_TYPE_DYNAMIC_SORTING:BUFFER_TYPE_DYNAMIC_DX8),dynamic_fvf_type,vnum);
+		BoxDynamicVBAccessClass Verts((sorting?BUFFER_TYPE_DYNAMIC_SORTING:BUFFER_TYPE_DYNAMIC_DX8),5,vnum,0);
 		{
-			DynamicVBAccessClass::WriteLockClass Lock(&Verts);
+			BoxDynamicVBAccessClass::WriteLockClass Lock(&Verts);
 			unsigned int i;
 			unsigned char *vb=(unsigned char*)Lock.Get_Formatted_Vertex_Array();			
 			const FVFInfoClass& fvfinfo=Verts.FVF_Info();			
@@ -1030,7 +1058,7 @@ void StreakRendererClass::RenderStreak
 			}
 		}
 		DX8Wrapper::Set_Index_Buffer(ib_access,0);
-		DX8Wrapper::Set_Vertex_Buffer(Verts);				
+		DX8Wrapper::Set_Vertex_Buffer(*reinterpret_cast<const DynamicVBAccessClass *>(&Verts));
 		BoxSetTexture(0,(TextureBaseClass *&)Texture);
 		DX8Wrapper::Set_Shader(shader);
 		if (sorting) 
