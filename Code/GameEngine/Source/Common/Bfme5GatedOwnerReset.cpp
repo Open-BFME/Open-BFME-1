@@ -7,7 +7,7 @@
 
 enum CommandSourceType
 {
-	COMMAND_SOURCE_SCRIPT = 2
+	CMD_FROM_AI = 2
 };
 
 enum ObjectStatusTypes
@@ -96,7 +96,7 @@ void Gen_002875C0::bfmeRun(void)
 			object->bfmePrepare(0x3F);
 			object->clearStatus(OBJECT_STATUS_RESET);
 			object->bfmeFinish(0x49);
-			object->m_bfmeAI->m_bfmeCommands.aiIdle(COMMAND_SOURCE_SCRIPT);
+			object->m_bfmeAI->m_bfmeCommands.aiIdle(CMD_FROM_AI);
 		}
 	}
 }

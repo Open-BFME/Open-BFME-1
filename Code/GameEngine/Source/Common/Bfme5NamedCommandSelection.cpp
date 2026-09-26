@@ -22,7 +22,7 @@ private:
 
 enum CommandSourceType
 {
-	COMMAND_SOURCE_SCRIPT = 2
+	CMD_FROM_AI = 2
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
@@ -114,7 +114,7 @@ void Gen_0028B360::bfmeSelect(const AsciiString &name)
 	}
 
 	if (m_bfmeSelected != 0 && object->m_bfmeAI != 0) {
-		object->m_bfmeAI->m_bfmeCommands.aiIdle(COMMAND_SOURCE_SCRIPT);
+		object->m_bfmeAI->m_bfmeCommands.aiIdle(CMD_FROM_AI);
 		m_bfmeReset.bfmeReset();
 		bfmeFinish(object, 1);
 	}

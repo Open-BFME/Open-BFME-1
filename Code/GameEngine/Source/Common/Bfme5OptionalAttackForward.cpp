@@ -2,7 +2,7 @@ class Object;
 
 enum CommandSourceType
 {
-	COMMAND_SOURCE_SCRIPT = 2
+	CMD_FROM_AI = 2
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
@@ -58,7 +58,7 @@ void Gen_0027FED0::bfmeRun(void *context, Object *object)
 	if (state->m_bfmeAI != 0) {
 		state->bfmeSet(info->m_bfmeValue, 1);
 		state->m_bfmeAI->m_bfmeCommands.aiAttackObject(
-			object, info->m_bfmeMode, COMMAND_SOURCE_SCRIPT);
+			object, info->m_bfmeMode, CMD_FROM_AI);
 
 		if (info->m_bfmeFirst != 0)
 			bfmeForward(info->m_bfmeFirst, context, state);

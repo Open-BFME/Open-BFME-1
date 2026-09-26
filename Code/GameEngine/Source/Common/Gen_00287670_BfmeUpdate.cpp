@@ -22,7 +22,7 @@ public:
 
 enum CommandSourceType
 {
-	COMMAND_SOURCE_SCRIPT = 2
+	CMD_FROM_AI = 2
 };
 
 class AICommandInterface
@@ -90,7 +90,7 @@ int Gen_00287670::bfmeUpdate(void)
 		owner->bfmePrepare(0x3F);
 		owner->clearStatus(OBJECT_STATUS_RESET);
 		owner->bfmeFinish(0x49);
-		owner->m_bfmeAI->m_bfmeCommands.aiIdle(COMMAND_SOURCE_SCRIPT);
+		owner->m_bfmeAI->m_bfmeCommands.aiIdle(CMD_FROM_AI);
 	}
 
 	return 11;
