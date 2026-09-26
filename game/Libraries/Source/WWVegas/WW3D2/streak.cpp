@@ -250,13 +250,14 @@ int StreakLineClass::Get_Num_Points(void)
 
 // Set object-space location for a given point.
 // NOTE: If given position beyond end of point list, do nothing.
-// ?Set_Point_Location@StreakLineClass@@ present-unmatched
 void StreakLineClass::Set_Point_Location(unsigned int point_idx, const Vector3 &location)
 {
-	if (point_idx < (unsigned int)PointLocations.Count()) {
-		PointLocations[point_idx] = location;
+	SimpleDynVecClass<Vector3> &point_locations =
+		*reinterpret_cast<SimpleDynVecClass<Vector3> *>(reinterpret_cast<char *>(this) + 0xD4);
+	if (point_idx < (unsigned int)point_locations.Count()) {
+		point_locations[point_idx] = location;
 	}
-	Invalidate_Cached_Bounding_Volumes();
+	*reinterpret_cast<unsigned int *>(reinterpret_cast<char *>(this) + 0x10) &= 0xFFFDFFFF;
 }
 
 // Get object-space location of a given point (if position beyond end of
@@ -401,11 +402,10 @@ void StreakLineClass::Set_Width(float width)
 	Invalidate_Cached_Bounding_Volumes();
 }
 
-// ?Set_Color@StreakLineClass@@ present-unmatched
 void StreakLineClass::Set_Color(const Vector3 &color)
 {
-	LineRenderer.Set_Color(color);
-	StreakRenderer.Set_Color(color);
+	reinterpret_cast<SegLineRendererClass *>(reinterpret_cast<char *>(&LineRenderer) + 0x34)->Set_Color(color);
+	reinterpret_cast<StreakRendererClass *>(reinterpret_cast<char *>(&StreakRenderer) + 0x38)->Set_Color(color);
 }
 
 // ?Set_Opacity@StreakLineClass@@ present-unmatched
