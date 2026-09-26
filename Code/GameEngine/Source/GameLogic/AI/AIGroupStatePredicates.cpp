@@ -185,20 +185,20 @@ private:
 Bool AIGroup::isIdle( void ) const
 {
 	Bool isIdle = true;
-	_STL::list<Object *>::const_iterator i;
-	for( i = m_memberList.begin(); i != m_memberList.end(); ++i )
+	_STL::list<Object *>::const_iterator memberIterator;
+	for( memberIterator = m_memberList.begin(); memberIterator != m_memberList.end(); ++memberIterator )
 	{
-		Object *obj = *i;
-		if (!obj) {
+		Object *memberObject = *memberIterator;
+		if (!memberObject) {
 			continue;
 		}
 
-		const AIUpdateInterface *ai = obj->getAIUpdateInterface();
-		if (!ai) {
+		const AIUpdateInterface *memberAIUpdate = memberObject->getAIUpdateInterface();
+		if (!memberAIUpdate) {
 			continue;
 		}
 
-		isIdle = ai->isIdle() || obj->isEffectivelyDead();
+		isIdle = memberAIUpdate->isIdle() || memberObject->isEffectivelyDead();
 		if( !isIdle )
 		{
 			return false;
@@ -211,20 +211,20 @@ Bool AIGroup::isIdle( void ) const
 Bool AIGroup::isBusy( void ) const
 {
 	Bool isBusy = true;
-	_STL::list<Object *>::const_iterator i;
-	for( i = m_memberList.begin(); i != m_memberList.end(); ++i )
+	_STL::list<Object *>::const_iterator memberIterator;
+	for( memberIterator = m_memberList.begin(); memberIterator != m_memberList.end(); ++memberIterator )
 	{
-		Object *obj = *i;
-		if (!obj) {
+		Object *memberObject = *memberIterator;
+		if (!memberObject) {
 			continue;
 		}
 
-		const AIUpdateInterface *ai = obj->getAIUpdateInterface();
-		if (!ai) {
+		const AIUpdateInterface *memberAIUpdate = memberObject->getAIUpdateInterface();
+		if (!memberAIUpdate) {
 			continue;
 		}
 
-		isBusy = ai->isBusy() && !obj->isEffectivelyDead();
+		isBusy = memberAIUpdate->isBusy() && !memberObject->isEffectivelyDead();
 		if( !isBusy )
 		{
 			return false;
@@ -238,15 +238,15 @@ Bool AIGroup::isBusy( void ) const
 Bool AIGroup::isGroupAiDead( void ) const
 {
 	Bool isDead = true;
-	_STL::list<Object *>::const_iterator i;
-	for( i = m_memberList.begin(); i != m_memberList.end(); ++i )
+	_STL::list<Object *>::const_iterator memberIterator;
+	for( memberIterator = m_memberList.begin(); memberIterator != m_memberList.end(); ++memberIterator )
 	{
-		Object *obj = *i;
-		if (!obj) {
+		Object *memberObject = *memberIterator;
+		if (!memberObject) {
 			continue;
 		}
 
-		isDead = (isDead && obj->isEffectivelyDead());
+		isDead = (isDead && memberObject->isEffectivelyDead());
 	}
 
 	return isDead;

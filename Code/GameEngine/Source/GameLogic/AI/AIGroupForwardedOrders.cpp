@@ -309,38 +309,38 @@ private:
 void AIGroup::groupTightenToPosition(const Coord3D *position, bool addWaypoint,
 		::CommandSourceType commandSource)
 {
-	SimpleObjectIterator *iter = new SimpleObjectIterator;
+	SimpleObjectIterator *memberDistanceIterator = new SimpleObjectIterator;
 
-	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
-			it != m_memberList;
-			it = it->m_bfmeNext)
+	for (BfmeListNodeBase *memberNode = m_memberList->m_bfmeNext;
+			memberNode != m_memberList;
+			memberNode = memberNode->m_bfmeNext)
 	{
-		Object *obj = ((BfmeMemberNode *)it)->m_bfmeValue;
+		Object *memberObject = ((BfmeMemberNode *)memberNode)->m_bfmeValue;
 		Coord3D unitPos;
-		unitPos.x = obj->getPosX();
-		unitPos.y = obj->getPosY();
+		unitPos.x = memberObject->getPosX();
+		unitPos.y = memberObject->getPosY();
 
-		if (obj->getDisabledMask() & 8)
+		if (memberObject->getDisabledMask() & 8)
 			continue;
-		if (obj->isKindOf(KINDOF_IMMOBILE))
+		if (memberObject->isKindOf(KINDOF_IMMOBILE))
 			continue;
-		if (obj->getAI() == 0)
+		if (memberObject->getAI() == 0)
 			continue;
 
 		float dx = unitPos.x - position->x;
 		float dy = unitPos.y - position->y;
-		iter->insert(obj, dx * dx + dy * dy);
+		memberDistanceIterator->insert(memberObject, dx * dx + dy * dy);
 	}
 
-	iter->sort(ITER_SORTED_NEAR_TO_FAR);
+	memberDistanceIterator->sort(ITER_SORTED_NEAR_TO_FAR);
 
-	for (Object *theUnit = iter->first(); theUnit; theUnit = iter->next())
+	for (Object *orderedMember = memberDistanceIterator->first(); orderedMember; orderedMember = memberDistanceIterator->next())
 	{
-		BfmeGroupAI *ai = theUnit->getAI();
+		BfmeGroupAI *memberAI = orderedMember->getAI();
 		if (!addWaypoint)
-			ai->m_bfmeCommands.aiTightenToPosition(position, commandSource);
+			memberAI->m_bfmeCommands.aiTightenToPosition(position, commandSource);
 		else
-			ai->m_bfmeCommands.aiFollowPathAppend(position, commandSource);
+			memberAI->m_bfmeCommands.aiFollowPathAppend(position, commandSource);
 	}
 }
 
@@ -354,14 +354,14 @@ void AIGroup::groupFollowWaypointPathAsTeam(const Waypoint *waypoint, ::CommandS
 
 	prepFollow(commandSource, 0);
 
-	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
-			it != m_memberList;
-			it = it->m_bfmeNext)
+	for (BfmeListNodeBase *memberNode = m_memberList->m_bfmeNext;
+			memberNode != m_memberList;
+			memberNode = memberNode->m_bfmeNext)
 	{
-		BfmeGroupAI *ai = ((BfmeMemberNode *)it)->m_bfmeValue->m_ai;
+		BfmeGroupAI *memberAI = ((BfmeMemberNode *)memberNode)->m_bfmeValue->m_ai;
 
-		if (ai)
-			ai->m_bfmeCommands.aiFollowWaypointPathAsTeam(waypoint, commandSource);
+		if (memberAI)
+			memberAI->m_bfmeCommands.aiFollowWaypointPathAsTeam(waypoint, commandSource);
 	}
 }
 
@@ -370,14 +370,14 @@ void AIGroup::groupFollowWaypointPathAsTeam(const Waypoint *waypoint, ::CommandS
 // matched aiHunt callee, ILT 0x0001C882 -> 0x000D88D0.
 void AIGroup::groupHunt(::CommandSourceType commandSource)
 {
-	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
-			it != m_memberList;
-			it = it->m_bfmeNext)
+	for (BfmeListNodeBase *memberNode = m_memberList->m_bfmeNext;
+			memberNode != m_memberList;
+			memberNode = memberNode->m_bfmeNext)
 	{
-		BfmeGroupAI *ai = ((BfmeMemberNode *)it)->m_bfmeValue->m_ai;
+		BfmeGroupAI *memberAI = ((BfmeMemberNode *)memberNode)->m_bfmeValue->m_ai;
 
-		if (ai)
-			ai->m_bfmeCommands.aiHunt(commandSource);
+		if (memberAI)
+			memberAI->m_bfmeCommands.aiHunt(commandSource);
 	}
 }
 
@@ -387,33 +387,33 @@ void AIGroup::groupHunt(::CommandSourceType commandSource)
 // a structure without an AI orders its passengers out through the contain module.
 void AIGroup::groupEvacuate(::CommandSourceType commandSource)
 {
-	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
-			it != m_memberList;
-			it = it->m_bfmeNext)
+	for (BfmeListNodeBase *memberNode = m_memberList->m_bfmeNext;
+			memberNode != m_memberList;
+			memberNode = memberNode->m_bfmeNext)
 	{
-		Object *obj = ((BfmeMemberNode *)it)->m_bfmeValue;
-		BfmeGroupAI *ai = obj->getAI();
-		if (ai)
+		Object *memberObject = ((BfmeMemberNode *)memberNode)->m_bfmeValue;
+		BfmeGroupAI *memberAI = memberObject->getAI();
+		if (memberAI)
 		{
-			if (obj->isKindOf(KINDOF_AIRCRAFT) && obj->isAirborneTarget())
+			if (memberObject->isKindOf(KINDOF_AIRCRAFT) && memberObject->isAirborneTarget())
 			{
-				Coord3D pos;
-				pos.set(((BfmeMemberNode *)it)->m_bfmeValue->getPosition());
+				Coord3D evacuationPosition;
+				evacuationPosition.set(((BfmeMemberNode *)memberNode)->m_bfmeValue->getPosition());
 				PathfindLayerEnum layerAtDest =
-						TheTerrainLogic->getHighestLayerForDestination(&pos, false);
-				pos.z = TheTerrainLogic->getLayerHeight(pos.x, pos.y, layerAtDest, 0, true);
-				ai->m_bfmeCommands.aiMoveToAndEvacuate(&pos, commandSource);
+						TheTerrainLogic->getHighestLayerForDestination(&evacuationPosition, false);
+				evacuationPosition.z = TheTerrainLogic->getLayerHeight(evacuationPosition.x, evacuationPosition.y, layerAtDest, 0, true);
+				memberAI->m_bfmeCommands.aiMoveToAndEvacuate(&evacuationPosition, commandSource);
 			}
 			else
 			{
-				ai->m_bfmeCommands.aiEvacuate(false, commandSource);
+				memberAI->m_bfmeCommands.aiEvacuate(false, commandSource);
 			}
 		}
-		else if (obj->isKindOf(KINDOF_STRUCTURE))
+		else if (memberObject->isKindOf(KINDOF_STRUCTURE))
 		{
-			ContainModuleInterface *contain = obj->getContain();
-			if (contain)
-				contain->orderAllPassengersToExit(commandSource);
+			ContainModuleInterface *containModule = memberObject->getContain();
+			if (containModule)
+				containModule->orderAllPassengersToExit(commandSource);
 		}
 	}
 }
@@ -425,14 +425,14 @@ void AIGroup::groupGuardPosition(const Coord3D *position, GuardMode mode,
 	if (!position)
 		return;
 
-	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
-			it != m_memberList;
-			it = it->m_bfmeNext)
+	for (BfmeListNodeBase *memberNode = m_memberList->m_bfmeNext;
+			memberNode != m_memberList;
+			memberNode = memberNode->m_bfmeNext)
 	{
-		BfmeGroupAI *ai = ((BfmeMemberNode *)it)->m_bfmeValue->m_ai;
+		BfmeGroupAI *memberAI = ((BfmeMemberNode *)memberNode)->m_bfmeValue->m_ai;
 
-		if (ai)
-			ai->m_bfmeCommands.aiGuardPosition(position, (::GuardMode)mode,
+		if (memberAI)
+			memberAI->m_bfmeCommands.aiGuardPosition(position, (::GuardMode)mode,
 					(::CommandSourceType)commandSource);
 	}
 }
@@ -447,14 +447,14 @@ void AIGroup::groupBfmeCommand44(const PolygonTrigger *polygon, int value,
 	if (!polygon)
 		return;
 
-	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
-			it != m_memberList;
-			it = it->m_bfmeNext)
+	for (BfmeListNodeBase *memberNode = m_memberList->m_bfmeNext;
+			memberNode != m_memberList;
+			memberNode = memberNode->m_bfmeNext)
 	{
-		BfmeGroupAI *ai = ((BfmeMemberNode *)it)->m_bfmeValue->m_ai;
+		BfmeGroupAI *memberAI = ((BfmeMemberNode *)memberNode)->m_bfmeValue->m_ai;
 
-		if (ai)
-			ai->m_bfmeCommands.aiBfmeCommand44(polygon, value, commandSource, position);
+		if (memberAI)
+			memberAI->m_bfmeCommands.aiBfmeCommand44(polygon, value, commandSource, position);
 	}
 }
 
@@ -463,23 +463,23 @@ void AIGroup::groupBfmeCommand44(const PolygonTrigger *polygon, int value,
 // It is not Zero Hour's groupIdle, which takes a CommandSourceType.
 void AIGroup::groupStealthIdle()
 {
-	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
-			it != m_memberList;
-			it = it->m_bfmeNext)
+	for (BfmeListNodeBase *memberNode = m_memberList->m_bfmeNext;
+			memberNode != m_memberList;
+			memberNode = memberNode->m_bfmeNext)
 	{
-		Object *obj = ((BfmeMemberNode *)it)->m_bfmeValue;
-		if (!obj)
+		Object *memberObject = ((BfmeMemberNode *)memberNode)->m_bfmeValue;
+		if (!memberObject)
 			continue;
 
-		BfmeGroupAI *ai = obj->m_ai;
+		BfmeGroupAI *memberAI = memberObject->m_ai;
 		static const NameKeyType key_StealthUpdate = NAMEKEY("StealthUpdate");
-		StealthUpdate *stealth = obj->findUpdateModule(key_StealthUpdate);
-		if (!stealth)
+		StealthUpdate *stealthUpdate = memberObject->findUpdateModule(key_StealthUpdate);
+		if (!stealthUpdate)
 			continue;
 
-		if (ai)
-			ai->m_bfmeCommands.aiIdle(CMD_FROM_AI);
-		stealth->update002AD250();
+		if (memberAI)
+			memberAI->m_bfmeCommands.aiIdle(CMD_FROM_AI);
+		stealthUpdate->update002AD250();
 	}
 }
 
@@ -491,56 +491,56 @@ void AIGroup::groupStealthIdle()
 // containing one of those units is not ready; all other paths return true.
 char AIGroup::isReady()
 {
-	BfmeListNodeBase *head = m_memberList;
-	BfmeListNodeBase *it = head->m_bfmeNext;
-	if (it != head)
+	BfmeListNodeBase *memberListHead = m_memberList;
+	BfmeListNodeBase *memberNode = memberListHead->m_bfmeNext;
+	if (memberNode != memberListHead)
 	{
 		for (;;)
 		{
-		Object *obj = ((BfmeMemberNode *)it)->m_bfmeValue;
-		unsigned char disabled = obj->getDisabledMask();
-		char remove = 0;
-		if (disabled & 8)
-			remove = 1;
-		BfmeGroupAI *ai = obj->m_ai;
-		if (ai == 0 || ai->m_curLocomotor == 0)
-			remove = 1;
+		Object *memberObject = ((BfmeMemberNode *)memberNode)->m_bfmeValue;
+		unsigned char disabledMask = memberObject->getDisabledMask();
+		char shouldRemoveMember = 0;
+		if (disabledMask & 8)
+			shouldRemoveMember = 1;
+		BfmeGroupAI *memberAI = memberObject->m_ai;
+		if (memberAI == 0 || memberAI->m_curLocomotor == 0)
+			shouldRemoveMember = 1;
 		else
 		{
-			const ThingTemplate *tmpl = obj->m_template;
-			const ThingTemplate *finalTemplate = tmpl;
-			if (tmpl != 0 && tmpl->m_nextOverride != 0)
+			const ThingTemplate *memberTemplate = memberObject->m_template;
+			const ThingTemplate *finalTemplate = memberTemplate;
+			if (memberTemplate != 0 && memberTemplate->m_nextOverride != 0)
 				finalTemplate =
-					(const ThingTemplate *)tmpl->m_nextOverride->getFinalOverride();
+					(const ThingTemplate *)memberTemplate->m_nextOverride->getFinalOverride();
 			if (finalTemplate->isKindOf(KINDOF_IMMOBILE))
-				remove = true;
+				shouldRemoveMember = true;
 		}
 
-		it = it->m_bfmeNext;
-		if (!remove)
+		memberNode = memberNode->m_bfmeNext;
+		if (!shouldRemoveMember)
 		{
-			if (it == head)
+			if (memberNode == memberListHead)
 				break;
 			continue;
 		}
 
-		BfmeListNodeBase *countIt = m_memberList->m_bfmeNext;
-		int count = 0;
-		if (countIt != m_memberList)
+		BfmeListNodeBase *countNode = m_memberList->m_bfmeNext;
+		int memberCount = 0;
+		if (countNode != m_memberList)
 		{
 			do
 			{
-				countIt = countIt->m_bfmeNext;
-				++count;
-			} while (countIt != m_memberList);
+				countNode = countNode->m_bfmeNext;
+				++memberCount;
+			} while (countNode != m_memberList);
 		}
-		if (count == 1)
+		if (memberCount == 1)
 			return 0;
 
-		obj->leaveGroup();
-		head = m_memberList;
-		it = head->m_bfmeNext;
-		if (it == head)
+		memberObject->leaveGroup();
+		memberListHead = m_memberList;
+		memberNode = memberListHead->m_bfmeNext;
+		if (memberNode == memberListHead)
 			break;
 		}
 	}

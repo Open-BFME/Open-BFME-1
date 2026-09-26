@@ -83,9 +83,9 @@ private:
 
 Bool AIGroup::isMember( Object *member )
 {
-	_STL::list<Object *>::iterator i = _STL::find( m_memberList.begin(), m_memberList.end(), member );
+	_STL::list<Object *>::iterator memberIterator = _STL::find( m_memberList.begin(), m_memberList.end(), member );
 
-	if (i == m_memberList.end())
+	if (memberIterator == m_memberList.end())
 		return false;
 
 	return true;
@@ -93,15 +93,15 @@ Bool AIGroup::isMember( Object *member )
 
 Bool AIGroup::containsAnyObjectsNotOwnedByPlayer( const Player *ownerPlayer )
 {
-	_STL::list<Object *>::iterator it;
+	_STL::list<Object *>::iterator memberIterator;
 
-	for (it = m_memberList.begin(); it != m_memberList.end(); ++it) {
-		Object *obj = (*it);
-		if (!obj) {
+	for (memberIterator = m_memberList.begin(); memberIterator != m_memberList.end(); ++memberIterator) {
+		Object *memberObject = (*memberIterator);
+		if (!memberObject) {
 			continue;
 		}
 
-		if (obj->getControllingPlayer() != ownerPlayer) {
+		if (memberObject->getControllingPlayer() != ownerPlayer) {
 			return true;
 		}
 	}
@@ -111,14 +111,14 @@ Bool AIGroup::containsAnyObjectsNotOwnedByPlayer( const Player *ownerPlayer )
 
 Bool AIGroup::remove( Object *member )
 {
-	_STL::list<Object *>::iterator i = _STL::find( m_memberList.begin(), m_memberList.end(), member );
+	_STL::list<Object *>::iterator memberIterator = _STL::find( m_memberList.begin(), m_memberList.end(), member );
 
 	// make sure object is actually in the group
-	if (i == m_memberList.end())
+	if (memberIterator == m_memberList.end())
 		return false;
 
 	// remove it
-	m_memberList.erase( i );
+	m_memberList.erase( memberIterator );
 	--m_memberListSize;
 
 	// tell object to forget about group
@@ -138,25 +138,25 @@ Bool AIGroup::remove( Object *member )
 
 Bool AIGroup::removeAnyObjectsNotOwnedByPlayer( const Player *ownerPlayer )
 {
-	_STL::list<Object *>::iterator it;
+	_STL::list<Object *>::iterator memberIterator;
 
-	for (it = m_memberList.begin(); it != m_memberList.end(); /* empty */) {
-		Object *obj = (*it);
-		if (!obj) {
+	for (memberIterator = m_memberList.begin(); memberIterator != m_memberList.end(); /* empty */) {
+		Object *memberObject = (*memberIterator);
+		if (!memberObject) {
 			continue;
 		}
 
-		if (obj->getControllingPlayer() != ownerPlayer) {
+		if (memberObject->getControllingPlayer() != ownerPlayer) {
 			// Advance the iterator first, its about to become invalid.
-			++it;
+			++memberIterator;
 
-			if (remove(obj)) {
+			if (remove(memberObject)) {
 				return true;
 			}
 			continue;
 		}
 
-		++it;
+		++memberIterator;
 	}
 
 	return false;

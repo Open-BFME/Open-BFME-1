@@ -193,7 +193,7 @@ private:
 void AIGroup::groupSell( CommandSourceType commandSource )
 {
 	_STL::list<Object *>::iterator i, thisIterator;
-	Object *obj;
+	Object *memberObject;
 
 	for( i = m_memberList.begin(); i != m_memberList.end(); /*empty*/ )
 	{
@@ -203,10 +203,10 @@ void AIGroup::groupSell( CommandSourceType commandSource )
 		++i;
 
 		// get object
-		obj = *thisIterator;
+		memberObject = *thisIterator;
 
 		// try to sell object
-		TheBuildAssistant->sellObject( obj );
+		TheBuildAssistant->sellObject( memberObject );
 
 	}  // end for, i
 
@@ -266,13 +266,13 @@ void AIGroup::groupDoCommandButtonAtObject( const CommandButton *commandButton, 
 
 void AIGroup::setAttitude( AttitudeType attitude )
 {
-	_STL::list<Object *>::iterator i;
-	for( i = m_memberList.begin(); i != m_memberList.end(); ++i )
+	_STL::list<Object *>::iterator memberIterator;
+	for( memberIterator = m_memberList.begin(); memberIterator != m_memberList.end(); ++memberIterator )
 	{
-		AIUpdateInterface *ai = (*i)->getAIUpdateInterface();
-		if (ai)
+		AIUpdateInterface *memberAIUpdate = (*memberIterator)->getAIUpdateInterface();
+		if (memberAIUpdate)
 		{
-			ai->setAttitude( attitude );
+			memberAIUpdate->setAttitude( attitude );
 		}
 	}
 }
@@ -287,10 +287,10 @@ void AIGroup::queueUpgrade( const UpgradeTemplate *upgrade, Bool bfmeFlag )
 	if (!upgrade)
 		return;
 
-	_STL::list<Object *>::iterator i;
-	for( i = m_memberList.begin(); i != m_memberList.end(); ++i )
+	_STL::list<Object *>::iterator memberIterator;
+	for( memberIterator = m_memberList.begin(); memberIterator != m_memberList.end(); ++memberIterator )
 	{
-		Object *thisMember = (*i);
+		Object *thisMember = (*memberIterator);
 		if( ! TheUpgradeCenter->canAffordUpgrade( thisMember->getControllingPlayer(), upgrade, bfmeFlag, false ) )
 		{
 			continue;
@@ -302,41 +302,41 @@ void AIGroup::queueUpgrade( const UpgradeTemplate *upgrade, Bool bfmeFlag )
 		}
 
 		// producer must have a production update
-		ProductionUpdateInterface *pu = thisMember->getProductionUpdateInterface();
-		if( pu == 0 )
+		ProductionUpdateInterface *productionUpdate = thisMember->getProductionUpdateInterface();
+		if( productionUpdate == 0 )
 			continue;
 
-		if ( pu->canQueueUpgrade( upgrade ) == CANMAKE_QUEUE_FULL )
+		if ( productionUpdate->canQueueUpgrade( upgrade ) == CANMAKE_QUEUE_FULL )
 			continue;
 
 		// queue the upgrade "research"
-		pu->queueUpgrade( upgrade, bfmeFlag );
+		productionUpdate->queueUpgrade( upgrade, bfmeFlag );
 	}
 }
 
 void AIGroup::groupSetEmoticon( const AsciiString &name, Int duration )
 {
-	_STL::list<Object *>::iterator i;
-	for( i = m_memberList.begin(); i != m_memberList.end(); ++i )
+	_STL::list<Object *>::iterator memberIterator;
+	for( memberIterator = m_memberList.begin(); memberIterator != m_memberList.end(); ++memberIterator )
 	{
-		Object *object = (*i);
-		Drawable *draw = object->getDrawable();
-		if( draw )
+		Object *memberObject = (*memberIterator);
+		Drawable *memberDrawable = memberObject->getDrawable();
+		if( memberDrawable )
 		{
-			draw->setEmoticon( name, duration );
+			memberDrawable->setEmoticon( name, duration );
 		}
 	}
 }
 
 void AIGroup::groupOverrideSpecialPowerDestination( SpecialPowerType specialPowerType, const Coord3D *destination, CommandSourceType commandSource )
 {
-	_STL::list<Object *>::iterator i;
-	for( i = m_memberList.begin(); i != m_memberList.end(); ++i )
+	_STL::list<Object *>::iterator memberIterator;
+	for( memberIterator = m_memberList.begin(); memberIterator != m_memberList.end(); ++memberIterator )
 	{
-		Object *object = (*i);
-		if( object )
+		Object *memberObject = (*memberIterator);
+		if( memberObject )
 		{
-			SpecialPowerUpdateInterface *spuInterface = object->findSpecialPowerWithOverridableDestinationActive( specialPowerType );
+			SpecialPowerUpdateInterface *spuInterface = memberObject->findSpecialPowerWithOverridableDestinationActive( specialPowerType );
 			if( spuInterface )
 			{
 				spuInterface->setSpecialPowerOverridableDestination( destination );

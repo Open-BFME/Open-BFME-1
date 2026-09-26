@@ -193,22 +193,22 @@ bool AIGroup::tryGroupSpecial(const Coord3D *position, int commandSource, int b,
 	if (isReady())
 	{
 		bool found = false;
-		_STL::list<Object *>::iterator i;
-		for (i = m_memberList.begin(); i != m_memberList.end(); ++i)
+		_STL::list<Object *>::iterator memberIterator;
+		for (memberIterator = m_memberList.begin(); memberIterator != m_memberList.end(); ++memberIterator)
 		{
-			Object *obj = *i;
-			if (obj == 0)
+			Object *memberObject = *memberIterator;
+			if (memberObject == 0)
 				continue;
-			BfmeAIUpdateInterface *ai = ((BfmeUpdateObject *)obj)->getAIUpdateInterface();
-			if (ai == 0)
+			BfmeAIUpdateInterface *memberAIUpdate = ((BfmeUpdateObject *)memberObject)->getAIUpdateInterface();
+			if (memberAIUpdate == 0)
 				continue;
-			Overridable *ovr = ai->m_override;
-			if (ovr)
+			Overridable *memberOverride = memberAIUpdate->m_override;
+			if (memberOverride)
 			{
-				if (ovr->m_nextOverride)
-					ovr = (Overridable *)ovr->m_nextOverride->getFinalOverride();
+				if (memberOverride->m_nextOverride)
+					memberOverride = (Overridable *)memberOverride->m_nextOverride->getFinalOverride();
 			}
-			if (ovr->m_field74)
+			if (memberOverride->m_field74)
 				found = true;
 		}
 
@@ -231,31 +231,31 @@ bool AIGroup::tryGroupSpecial(const Coord3D *position, int commandSource, int b,
 void AIGroup::groupAttackMoveToPosition(const Coord3D *position, int maxShotsToFire,
 	CommandSourceType commandSource)
 {
-	unsigned int count = m_memberList.size();
-	float countF = (float)count;
-	const Coord3D *dest = position;
-	CommandSourceType src = commandSource;
-	if (countF > 1.0f)
+	unsigned int memberCount = m_memberList.size();
+	float memberCountAsFloat = (float)memberCount;
+	const Coord3D *orderDestination = position;
+	CommandSourceType orderCommandSource = commandSource;
+	if (memberCountAsFloat > 1.0f)
 	{
-		TAiData *data = TheAI->getAiData();
-		if (data->m_bfmeB6 && src == CMD_FROM_PLAYER && data->m_bfmeB9)
+		TAiData *aiData = TheAI->getAiData();
+		if (aiData->m_bfmeB6 && orderCommandSource == CMD_FROM_PLAYER && aiData->m_bfmeB9)
 		{
-			if (tryGroupSpecial(dest, src, 1, src, 1))
+			if (tryGroupSpecial(orderDestination, orderCommandSource, 1, orderCommandSource, 1))
 				return;
 		}
 	}
 
-	_STL::list<Object *>::iterator i;
-	for (i = m_memberList.begin(); i != m_memberList.end(); ++i)
+	_STL::list<Object *>::iterator memberIterator;
+	for (memberIterator = m_memberList.begin(); memberIterator != m_memberList.end(); ++memberIterator)
 	{
-		Object *obj = *i;
-		BfmeGroupAI *ai = obj->getAI();
-		if (ai)
+		Object *memberObject = *memberIterator;
+		BfmeGroupAI *memberAI = memberObject->getAI();
+		if (memberAI)
 		{
-			if (obj->isAbleToAttack())
-				ai->m_commands.aiAttackMoveToPosition(dest, maxShotsToFire, src);
+			if (memberObject->isAbleToAttack())
+				memberAI->m_commands.aiAttackMoveToPosition(orderDestination, maxShotsToFire, orderCommandSource);
 			else
-				ai->m_commands.aiMoveToPosition(dest, src);
+				memberAI->m_commands.aiMoveToPosition(orderDestination, orderCommandSource);
 		}
 	}
 }
