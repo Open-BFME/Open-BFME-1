@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "81538208629e98525dee23e896a4a25cdfdb49ce93b230f0bf82ec4005cd61cf",
+  "symbol": "?d_009f55d0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.72,
+  "source": "// ?d_009f55d0@@YAXXZ\n// partial score=0.72 date=2026-09-26\n// cl: /DNDEBUG /MD /EHsc\nstruct S4SortElem24 { int m_key; int m_values[5]; };\nstruct S4Cmp009F4BF0 {\n bool operator()(const S4SortElem24 &a, const S4SortElem24 &b) const;\n};\nnamespace _STL {\ntemplate <class Iter, class Compare>\nvoid push_heap(Iter first, Iter last, Compare comp);\ntemplate <class Iter, class Distance, class Tp, class Compare>\nvoid __push_heap_aux(Iter first, Iter last, Compare comp, Distance *, Tp *)\n{\n push_heap(first, last, comp);\n}\ntemplate void __push_heap_aux<S4SortElem24 *, int, S4SortElem24, S4Cmp009F4BF0>(\n S4SortElem24 *, S4SortElem24 *, S4Cmp009F4BF0, int *, S4SortElem24 *);\n}\n"
+}
