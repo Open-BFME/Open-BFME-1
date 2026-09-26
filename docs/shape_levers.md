@@ -1423,3 +1423,16 @@ passes the strict per-source gate. Six such constructors/vector methods at
 283 bytes of ASM dumps with unchanged, compilable Zero Hour source. The
 0x0081C860 drawable-vector candidate is **not** claimable: its one retail
 callee is at 0x0081C6A0, whereas vendored C++ calls 0x009F4AA0.
+
+## Compiler switches are not the allocation lever (measured)
+
+When a near miss has `probe.py` shape 1.000 (same instructions once registers
+and constants are normalised) it is tempting to blame the build switches.
+Measured 2026-09-26 with `tools/flag_sweep.py` over the 113 banked near misses
+with shape >= 0.97 (39 of them allocation-only): every combination of
+`/O1 /O2 /Ox` x `/Ob0 /Ob1 /Ob2` x `/G5 /G6 /G7 /GB` x `/Oy /Oy-` was compiled,
+and **none reproduced retail for any body**. The best variant was always `/O2`
+with the file's existing inline level. Retail was built `/O2`; an allocation
+residue comes from the source (live ranges, temporaries, what is inlined into
+the body), not from the switches. `flag_sweep.py` takes ~6 s per body, so run
+it once to rule a switch out rather than spending a session on it.
