@@ -324,19 +324,27 @@ def naked_source_texts(matched, ref):
             texts[source] = (ROOT / source).read_bytes().decode("utf-8", errors="replace")
         return texts
 
+    # A state from before the 904cff16ec relocation keeps its sources under
+    # Code/. matched_at() already canonicalises the ledger's paths to game/, so
+    # scan both roots and key each text by its canonical path while reading the
+    # blob under the name it had at `ref`. Scanning only game/ found no lift in
+    # an old state, scored ~500 KB of __emit bodies as authored C++, and made
+    # every delta across the relocation 5 pp wrong.
     proc = subprocess.run(
-        ["git", "grep", "-l", "-E", ASM_MARKER_GREP, ref, "--", "game"],
+        ["git", "grep", "-l", "-E", ASM_MARKER_GREP, ref, "--", "game", "Code"],
         cwd=ROOT, capture_output=True, text=True,
     )
     if proc.returncode not in (0, 1):
         raise SystemExit(f"cannot scan naked sources at {ref}: {proc.stderr.strip()}")
     prefix = f"{ref}:"
-    paths = []
+    at_ref = {}
     for line in proc.stdout.splitlines():
         path = line[len(prefix):] if line.startswith(prefix) else line.split(":", 1)[-1]
-        if path in sources:
-            paths.append(path)
-    return _batch_git_texts(ref, sorted(paths))
+        canonical = layout_history.canonical_source(path)
+        if canonical in sources:
+            at_ref[path] = canonical
+    texts = _batch_git_texts(ref, sorted(at_ref))
+    return {at_ref[path]: text for path, text in texts.items()}
 
 
 def naked_cpp_rows_at(matched, ref):
