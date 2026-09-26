@@ -1,7 +1,6 @@
-// ?refreshCells@Rva006C23B0@@QAEXHHH@Z
-// partial score=0.3 date=2026-09-23
+// ?setShroudLevel@W3DRadar@@UAEXHHW4CellShroudStatus@@@Z
+// partial score=0.93 date=2026-09-26
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
-// Revised from the saved 0x006C23B0 body using the current matched helper contracts.
 
 class BfmeA1087;
 extern BfmeA1087 *g_bfmeA1087;
@@ -11,12 +10,15 @@ struct Rva006C23B0Grid
 	unsigned char pad00[0x10];
 	float cellWidth;
 	float cellHeight;
+	float getCellWidth() const { return cellWidth; }
+	float getCellHeight() const { return cellHeight; }
 };
 
-struct Rva006C23B0GlobalView
+struct BfmeA1087ShroudView
 {
 	unsigned char pad00[0x30b8];
 	Rva006C23B0Grid *grid;
+	Rva006C23B0Grid *getShroud() const { return grid; }
 };
 
 class Coord3D;
@@ -125,22 +127,22 @@ struct Rva006C23B0RadarPoint
 	int y;
 };
 
-class Rva006C23B0
+enum CellShroudStatus { CELLSHROUD_CLEAR = 0, CELLSHROUD_FOGGED = 1, CELLSHROUD_SHROUDED = 2 };
+
+class W3DRadar
 {
 public:
-	void refreshCells(int cellX, int cellY, int status);
+	virtual void setShroudLevel(int cellX, int cellY, CellShroudStatus status);
 
 private:
-	unsigned char pad00[0x1494];
+	unsigned char pad00[0x1490];
 	W3DRadarResetTexture texture;
 };
 
-void Rva006C23B0::refreshCells(int cellX, int cellY, int status)
+void W3DRadar::setShroudLevel(int cellX, int cellY, CellShroudStatus status)
 {
-	BfmeA1087 *global = g_bfmeA1087;
-	Rva006C23B0Grid *grid = 0;
-	if (global != 0)
-		grid = ((Rva006C23B0GlobalView *)global)->grid;
+	BfmeA1087ShroudView *terrain = (BfmeA1087ShroudView *)g_bfmeA1087;
+	Rva006C23B0Grid *grid = terrain ? terrain->getShroud() : 0;
 	if (grid == 0)
 		return;
 
@@ -148,10 +150,10 @@ void Rva006C23B0::refreshCells(int cellX, int cellY, int status)
 
 	W3DRadarResetSurface surface = texture.getSurfaceLevel();
 
-	int mapMinX = (int)(grid->cellWidth * (float)cellX);
-	int mapMinY = (int)(grid->cellHeight * (float)cellY);
-	int mapMaxX = (int)(grid->cellWidth * (float)(cellX + 1));
-	int mapMaxY = (int)(grid->cellHeight * (float)(cellY + 1));
+	int mapMinX = (int)(cellX * grid->getCellWidth());
+	int mapMinY = (int)(cellY * grid->getCellHeight());
+	int mapMaxX = (int)((cellX + 1) * grid->getCellWidth());
+	int mapMaxY = (int)((cellY + 1) * grid->getCellHeight());
 
 	Rva006C23B0WorldPoint world;
 	Rva006C23B0RadarPoint radar;
@@ -176,28 +178,25 @@ void Rva006C23B0::refreshCells(int cellX, int cellY, int status)
 	{
 		radarMinY = (int)(radarMinY * yRatio);
 		radarMaxY = (int)(radarMaxY * yRatio);
-		int north = ((BfmeThingGN *)&texture)->bfmeAskGN();
-		if (north < 0)
-		{
-			float correction = ((float)north + g_bfmeUint32Scale) *
-				((g_bfmeDefaultBU - yRatio) * g_bfmeK1253);
-			radarMinY = (int)(radarMinY + correction);
-			radarMaxY = (int)(radarMaxY + correction);
-		}
+		unsigned north = ((BfmeThingGN *)&texture)->bfmeAskGN();
+		float correction = ((float)north) *
+			((g_bfmeDefaultBU - yRatio) * g_bfmeK1253);
+		radarMinY = (int)(radarMinY + correction);
+		radarMaxY = (int)(radarMaxY + correction);
 	}
 
-	radarMinX = (int)(radarMinX * xRatio);
-	radarMaxX = (int)(radarMaxX * xRatio);
-	int east = ((BfmeThingEF *)&texture)->bfmeAskEF();
-	if (east < 0)
+	else
 	{
-		float correction = ((float)east + g_bfmeUint32Scale) *
+		radarMinX = (int)(radarMinX * xRatio);
+		radarMaxX = (int)(radarMaxX * xRatio);
+		unsigned east = ((BfmeThingEF *)&texture)->bfmeAskEF();
+		float correction = ((float)east) *
 			((g_bfmeDefaultBU - xRatio) * g_bfmeK1253);
 		radarMinX = (int)(radarMinX + correction);
 		radarMaxX = (int)(radarMaxX + correction);
-	}
 
-	unsigned char alpha;
+	}
+	unsigned char &alpha = *(unsigned char *)&status;
 	if (status == 2)
 		alpha = 0xff;
 	else
@@ -209,7 +208,7 @@ void Rva006C23B0::refreshCells(int cellX, int cellY, int status)
 		{
 			if (x < 0 || y < 0 || x >= 0x80 || y >= 0x80)
 				continue;
-			((SurfaceClass *)&surface)->rva008FCF40(x, y, alpha);
+			((SurfaceClass *)&surface)->rva008FCF40(x, y, status);
 		}
 	}
 
