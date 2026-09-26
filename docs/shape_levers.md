@@ -1413,3 +1413,13 @@ slot 104; its stream-source call takes four arguments at slot 100, `SetFVF` uses
 slot 89, and six-argument `DrawIndexedPrimitive` uses slot 82. Reusing the
 existing typed BFME virtual dispatch and matching those four signatures yields
 all 1,345 retail bytes and preserves the other 85 claims in the same TU.
+
+`zh_sweep.py land-multi` can identify byte-exact vendored C++ at multiple
+addresses without establishing which named template owns each copy. Preserve
+the uncertain identity as `?dup_<rva>@@YAXXZ`, pin `object-symbol=` to the
+compiled template, and replace each dump only after `add_match.py --replace-rva`
+passes the strict per-source gate. Six such constructors/vector methods at
+0x009F3A40, 0x0096A060, 0x0091A6F0, and 0x009181D0/1F0/210 now replace
+283 bytes of ASM dumps with unchanged, compilable Zero Hour source. The
+0x0081C860 drawable-vector candidate is **not** claimable: its one retail
+callee is at 0x0081C6A0, whereas vendored C++ calls 0x009F4AA0.
