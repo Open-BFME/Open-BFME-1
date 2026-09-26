@@ -21,6 +21,7 @@ class BfmeThingRE
 {
 public:
 	void bfmeRunRE();
+	void bfmeRva007EA4C0SetHolderByte(unsigned char value);
 	unsigned char m_bfmeHead[4];
 	BfmeHolderRE *m_bfmeHolder;
 };
@@ -31,4 +32,9 @@ void BfmeThingRE::bfmeRunRE()
 	if (holder->m_bfmeMaker == 0)
 		holder->m_bfmeMaker = bfmeMakeRE();
 	m_bfmeHolder->m_bfmeMaker->bfmeDoRE();
+}
+
+void BfmeThingRE::bfmeRva007EA4C0SetHolderByte(unsigned char value)
+{
+	m_bfmeHolder->m_bfmeHead[0x230] = value;
 }
