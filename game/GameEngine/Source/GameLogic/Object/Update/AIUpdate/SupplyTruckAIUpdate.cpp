@@ -74,6 +74,8 @@ public:
 #include "GameClient/Drawable.h"
 #include "GameClient/InGameUI.h"
 
+bool findPositionAround(const Coord3D *, const FindPositionOptions *, Coord3D *);
+
 #ifdef _INTERNAL
 // for occasional debugging...
 //#pragma optimize("", off)
@@ -230,6 +232,31 @@ public:
 	virtual void slot014() const = 0;
 	virtual Bool slot018() const = 0;
 };
+
+class Rva002C6DD0SupplyInterfaceView
+{
+public:
+	virtual Int getNumberBoxes() const = 0;
+	virtual void slot004() const = 0;
+	virtual void slot008() const = 0;
+	virtual void slot00c() const = 0;
+	virtual void slot010() const = 0;
+	virtual void slot014() const = 0;
+	virtual void slot018() const = 0;
+	virtual void slot01c() const = 0;
+	virtual void slot020() const = 0;
+	virtual void slot024() const = 0;
+	virtual void slot028() const = 0;
+	virtual void slot02c(Bool hasBoxes) const = 0;
+};
+
+class Rva002C6DD0PlayerView
+{
+public:
+	Object *findClosestByKindOf(Object *queryObject, BitFlags<0xC0> setMask, BitFlags<0xC0> clearMask);
+};
+
+#pragma comment(linker, "/alternatename:?findClosestByKindOf@Rva002C6DD0PlayerView@@QAEPAVObject@@PAV2@V?$BitFlags@$0MA@@@1@Z=?j_00003909@@YAXXZ")
 
 class Rva001565D0Sub
 {
@@ -775,7 +802,6 @@ StateReturnType SupplyTruckWantsToPickUpOrDeliverBoxesState::update()
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?onEnter@RegroupingState@@ present-unmatched
 StateReturnType RegroupingState::onEnter()
 {
 #ifdef DEBUG_SUPPLY_STATE
@@ -785,55 +811,59 @@ TheInGameUI->DEBUG_addFloatingText("entering regrouping state", getMachineOwner(
 	// failed to find a Warehouse).  My second choices is to go to a ConYard.  My last choice is just to 
 	// go to a friendly building.
 
-	Object* owner = getMachineOwner();
-	AIUpdateInterface* ownerAI = owner->getAIUpdateInterface();
+	void *machine = *reinterpret_cast<void **>(reinterpret_cast<unsigned char *>(this) + 0x1c);
+	Object *owner = *reinterpret_cast<Object **>(reinterpret_cast<unsigned char *>(machine) + 0x10);
+	Coord3D destination;
+	AIUpdateInterface *ownerAI = *reinterpret_cast<AIUpdateInterface **>(reinterpret_cast<unsigned char *>(owner) + 0x204);
 	Player* ownerPlayer = owner->getControllingPlayer();
 	if( !ownerPlayer || !ownerAI )
 		return STATE_FAILURE;
 
 	ownerAI->ignoreObstacle( NULL );
-	SupplyTruckAIInterface *update = owner->getAIUpdateInterface()->getSupplyTruckAIInterface();
+	Rva002C6CC0AIUpdateView *ownerAIView = reinterpret_cast<Rva002C6CC0AIUpdateView *>(
+		*reinterpret_cast<AIUpdateInterface **>(reinterpret_cast<unsigned char *>(owner) + 0x204));
+	Rva002C6DD0SupplyInterfaceView *update = reinterpret_cast<Rva002C6DD0SupplyInterfaceView *>(ownerAIView->getSupplyTruckAIInterface());
 	if( !update )
 	{
 		return STATE_FAILURE;
 	}
+	Bool hasBoxes = update->getNumberBoxes() > 0;
+	update->slot02c(hasBoxes);
 
-	Object *destinationObject = NULL;
-	
-	KindOfMaskType kindof;
-	KindOfMaskType kindofnot;
-	kindof.set(KINDOF_CASH_GENERATOR);
+	Object *destinationObject;
+
+	BitFlags<0xC0> kindof;
+	BitFlags<0xC0> kindofnot;
+	kindof.set(34);
 	kindofnot.clear();
 	// can't do best supply center of the player's resource brain, because that adds canTransfer checks.
-	destinationObject = ownerPlayer->findClosestByKindOf( owner, kindof, kindofnot );
-	if( !destinationObject )
-	{
-		kindof.clear();
-		kindof.set(KINDOF_COMMANDCENTER);
-		kindofnot.clear();
-		destinationObject = ownerPlayer->findClosestByKindOf( owner, kindof, kindofnot );
-	}
-	if( !destinationObject )
-	{
-		kindof.clear();
-		kindof.set( KINDOF_STRUCTURE );
-		kindofnot.clear();
-		destinationObject = ownerPlayer->findClosestByKindOf( owner, kindof, kindofnot );
-	}
-	if( !destinationObject )
-	{
-		return STATE_FAILURE;
-	}
+	destinationObject = reinterpret_cast<Rva002C6DD0PlayerView *>(ownerPlayer)->findClosestByKindOf( owner, kindof, kindofnot );
+	if (destinationObject)
+		goto found_destination;
 
-	if( ThePartitionManager->getDistanceSquared(owner, destinationObject, FROM_BOUNDINGSPHERE_2D) < REGROUP_SUCCESS_DISTANCE_SQUARED )
-		return STATE_CONTINUE; // Don't say Success so we don't spin the machine.  After one update we'll go back.
+	kindof.clear();
+	kindof.set(17);
+	kindofnot.clear();
+	destinationObject = reinterpret_cast<Rva002C6DD0PlayerView *>(ownerPlayer)->findClosestByKindOf( owner, kindof, kindofnot );
+	if (destinationObject)
+		goto found_destination;
+
+	kindof.clear();
+	kindof.set(7);
+	kindofnot.clear();
+	destinationObject = reinterpret_cast<Rva002C6DD0PlayerView *>(ownerPlayer)->findClosestByKindOf( owner, kindof, kindofnot );
+	if( !destinationObject )
+		return STATE_FAILURE;
+
+found_destination:
 	
-	Coord3D destination;
 	FindPositionOptions fpOptions;
 	fpOptions.minRadius = 0.0f;
 	fpOptions.maxRadius = 100.0f;
 
-	if( ! ThePartitionManager->findPositionAround( destinationObject->getPosition(), &fpOptions, &destination ) )
+	if( ! findPositionAround(
+		reinterpret_cast<const Coord3D *>(reinterpret_cast<const unsigned char *>(destinationObject) + 0x38),
+		&fpOptions, &destination ) )
 		return STATE_FAILURE;
 
 	ownerAI->aiMoveToPosition( &destination, CMD_FROM_AI );
