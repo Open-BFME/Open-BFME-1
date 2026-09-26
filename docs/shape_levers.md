@@ -1376,3 +1376,13 @@ relocation sites in the strict build. The owning constructor installs vtable
 four-argument dispatch ABI is confirmed; its method spelling is provisional.
 The 0x00268CB0 event/audio helper keeps an address-derived identity: the
 existing destructor ledger label conflicts with its `ret 4` and side effects.
+
+## Repoint a mixed-source inline constructor to its native TU (2026-09-26)
+
+`AsciiString::AsciiString()` at 0x00062030 is nine retail bytes. The older
+`ascii_string.cpp` emits this inline COMDAT but also contains unrelated naked
+bodies, so the progress classifier conservatively treated its ctor row as a
+dump. The existing `GameEngine/Source/Common/System/AsciiString.cpp` emits the
+same constructor through `AsciiString::TheEmptyString`; its compiled body is
+byte-identical. Repointing only the ctor row to that native TU preserves the
+remaining library claims and credits nine real C++ bytes without changing code.
