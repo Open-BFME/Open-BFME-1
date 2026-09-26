@@ -12711,7 +12711,6 @@ name,address,notes
 ?Rva009C3CF0@@YAXXZ,0x009C3CF0,codec spread-table loop low-range filler (MMX tier, both arrays); no ghidra boundary or identity yet
 ?Rva009C3D50@@YAXXZ,0x009C3D50,codec spread-table loop tail-range filler (MMX tier, array1); no ghidra boundary or identity yet
 ?Rva009C4450@@YAXXZ,0x009C4450,codec spread-table loop mid-range filler (MMX tier, array1); no ghidra boundary or identity yet
-?Rva009C4E90@@YAXXZ,0x009C4E90,codec spread-table slot filler (generic tier); no ghidra boundary or identity yet
 ?Rva009C5360@@YAXXZ,0x009C5360,codec spread-table slot filler (generic tier); no ghidra boundary or identity yet
 ?Rva009C5890@@YAXXZ,0x009C5890,codec spread-table loop tail-range filler (generic tier, both arrays); no ghidra boundary or identity yet
 ?Rva009C5D60@@YAXXZ,0x009C5D60,codec spread-table loop mid-range filler (generic tier, both arrays); no ghidra boundary or identity yet

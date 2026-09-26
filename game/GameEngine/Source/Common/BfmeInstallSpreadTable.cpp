@@ -66,7 +66,8 @@ extern void __cdecl Rva009A7040(void);
 extern void __cdecl Rva009C6A30(void);
 extern void __cdecl Rva009A7B00(void);
 extern void __cdecl Rva009A7300(void);
-extern void __cdecl Rva009C4E90(void);
+extern void __cdecl Rva009C4E90(short *work, unsigned char *output,
+	const unsigned char *source, const short *residual, int stride);
 extern void __cdecl Rva009C5360(void);
 extern void __cdecl Rva009C4DF0(short *work, unsigned char *dst,
 	const short *samples, int dstStride);
