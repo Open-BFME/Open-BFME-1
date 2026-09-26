@@ -71,21 +71,21 @@ private:
 
 void ThingTemplate::resolveNames()
 {
-	Int i, j;
-	for (i = 0; i < m_prereqInfo.size(); i++)
+	Int prerequisiteIndex, facilityIndex;
+	for (prerequisiteIndex = 0; prerequisiteIndex < m_prereqInfo.size(); prerequisiteIndex++)
 	{
-		m_prereqInfo[i].resolveNames();
+		m_prereqInfo[prerequisiteIndex].resolveNames();
 	}
 
-	const Int MAX_BF = 32;
-	const ThingTemplate *templates[MAX_BF];
-	for (i = 0; i < m_prereqInfo.size(); i++)
+	const Int maxBuildFacilities = 32;
+	const ThingTemplate *buildFacilities[maxBuildFacilities];
+	for (prerequisiteIndex = 0; prerequisiteIndex < m_prereqInfo.size(); prerequisiteIndex++)
 	{
-		Int templateCount = m_prereqInfo[i].getAllPossibleBuildFacilityTemplates(templates, MAX_BF);
-		for (j = 0; j < templateCount; j++)
+		Int facilityCount = m_prereqInfo[prerequisiteIndex].getAllPossibleBuildFacilityTemplates(buildFacilities, maxBuildFacilities);
+		for (facilityIndex = 0; facilityIndex < facilityCount; facilityIndex++)
 		{
-			if (templates[j])
-				const_cast<ThingTemplate *>(templates[j])->m_isBuildFacility = 1;
+			if (buildFacilities[facilityIndex])
+				const_cast<ThingTemplate *>(buildFacilities[facilityIndex])->m_isBuildFacility = 1;
 		}
 	}
 

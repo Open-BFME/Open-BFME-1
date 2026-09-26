@@ -41,19 +41,19 @@ private:
     Rva00137E80Map map;
 };
 
-const ThingTemplate *BfmeThingFactory::findTemplate(const AsciiString &name)
+const ThingTemplate *BfmeThingFactory::findTemplate(const AsciiString &templateName)
 {
-    Rva001366A0Node *node = map.find(name);
-    if (node)
-        return node->value;
+    Rva001366A0Node *templateNode = map.find(templateName);
+    if (templateNode)
+        return templateNode->value;
 
-    if (!strncmp(name.str(), "***TESTING", 10))
+    if (!strncmp(templateName.str(), "***TESTING", 10))
     {
-        ThingTemplate *tmplate = newTemplate(AsciiString("Un-namedTemplate"));
-        tmplate->initForLTA(name);
+        ThingTemplate *testTemplate = newTemplate(AsciiString("Un-namedTemplate"));
+        testTemplate->initForLTA(templateName);
         map.erase(AsciiString("Un-namedTemplate"));
-        map[name] = tmplate;
-        return findTemplate(name);
+        map[templateName] = testTemplate;
+        return findTemplate(templateName);
     }
     return 0;
 }

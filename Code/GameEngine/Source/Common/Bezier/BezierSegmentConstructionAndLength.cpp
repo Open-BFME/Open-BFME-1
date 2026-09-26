@@ -55,7 +55,7 @@ class BezierSegment
 
 	public:
 		BezierSegment();
-		BezierSegment(Coord3D cp[4]);
+		BezierSegment(Coord3D controlPoints[4]);
 
 		Real getApproximateLength(Real withinTolerance) const;
 		void splitSegmentAtT(Real tValue, BezierSegment &outSeg1, BezierSegment &outSeg2) const;
@@ -74,7 +74,7 @@ class Rva000B6D50BezierSegment
 											 Real x1, Real y1, Real z1,
 											 Real x2, Real y2, Real z2,
 											 Real x3, Real y3, Real z3);
-		Rva000B6D50BezierSegment(Real cp[12]);
+		Rva000B6D50BezierSegment(Real controlPointCoordinates[12]);
 		Rva000B6D50BezierSegment(const Coord3D& cp0, const Coord3D& cp1,
 											 const Coord3D& cp2, const Coord3D& cp3);
 };
@@ -94,17 +94,17 @@ struct BezierDifferenceVector
 //-------------------------------------------------------------------------------------------------
 BezierSegment::BezierSegment()
 { 
-	for(int i=0; i < 4; i++)
-		m_controlPoints[i].zero();
+	for(int controlPointIndex=0; controlPointIndex < 4; controlPointIndex++)
+		m_controlPoints[controlPointIndex].zero();
 }
 
 //-------------------------------------------------------------------------------------------------
-BezierSegment::BezierSegment(Coord3D cp[4])
+BezierSegment::BezierSegment(Coord3D controlPoints[4])
 {
-	m_controlPoints[0] = cp[0];
-	m_controlPoints[1] = cp[1];
-	m_controlPoints[2] = cp[2];
-	m_controlPoints[3] = cp[3];
+	m_controlPoints[0] = controlPoints[0];
+	m_controlPoints[1] = controlPoints[1];
+	m_controlPoints[2] = controlPoints[2];
+	m_controlPoints[3] = controlPoints[3];
 }
 
 Rva000B6D50BezierSegment::Rva000B6D50BezierSegment(Real x0, Real y0, Real z0,
@@ -129,23 +129,23 @@ Rva000B6D50BezierSegment::Rva000B6D50BezierSegment(Real x0, Real y0, Real z0,
 		m_controlPoints[3].z = z3;
 }
 
-Rva000B6D50BezierSegment::Rva000B6D50BezierSegment(Real cp[12])
+Rva000B6D50BezierSegment::Rva000B6D50BezierSegment(Real controlPointCoordinates[12])
 {
-		m_controlPoints[0].x = cp[0];
-		m_controlPoints[0].y = cp[1];
-		m_controlPoints[0].z = cp[2];
+		m_controlPoints[0].x = controlPointCoordinates[0];
+		m_controlPoints[0].y = controlPointCoordinates[1];
+		m_controlPoints[0].z = controlPointCoordinates[2];
 
-		m_controlPoints[1].x = cp[3];
-		m_controlPoints[1].y = cp[4];
-		m_controlPoints[1].z = cp[5];
+		m_controlPoints[1].x = controlPointCoordinates[3];
+		m_controlPoints[1].y = controlPointCoordinates[4];
+		m_controlPoints[1].z = controlPointCoordinates[5];
 
-		m_controlPoints[2].x = cp[6];
-		m_controlPoints[2].y = cp[7];
-		m_controlPoints[2].z = cp[8];
+		m_controlPoints[2].x = controlPointCoordinates[6];
+		m_controlPoints[2].y = controlPointCoordinates[7];
+		m_controlPoints[2].z = controlPointCoordinates[8];
 
-		m_controlPoints[3].x = cp[9];
-		m_controlPoints[3].y = cp[10];
-		m_controlPoints[3].z = cp[11];
+		m_controlPoints[3].x = controlPointCoordinates[9];
+		m_controlPoints[3].y = controlPointCoordinates[10];
+		m_controlPoints[3].z = controlPointCoordinates[11];
 }
 
 Rva000B6D50BezierSegment::Rva000B6D50BezierSegment(const Coord3D& cp0,
@@ -170,14 +170,14 @@ Real BezierSegment::getApproximateLength(Real withinTolerance) const
 
 	BezierDifferenceVector p0p3( m_controlPoints[3].x - m_controlPoints[0].x, m_controlPoints[3].y - m_controlPoints[0].y, m_controlPoints[3].z - m_controlPoints[0].z );
 
-	Real length0 = p0p3.length();
-	Real length1 = p0p1.length() + p1p2.length() + p2p3.length();
+	Real chordLength = p0p3.length();
+	Real controlPolygonLength = p0p1.length() + p1p2.length() + p2p3.length();
 
-	if ((length1 - length0) > withinTolerance) {
-		BezierSegment seg1, seg2;
-		splitSegmentAtT(0.5f, seg1, seg2);
-		return (seg1.getApproximateLength(withinTolerance) + seg2.getApproximateLength(withinTolerance));
+	if ((controlPolygonLength - chordLength) > withinTolerance) {
+		BezierSegment firstHalf, secondHalf;
+		splitSegmentAtT(0.5f, firstHalf, secondHalf);
+		return (firstHalf.getApproximateLength(withinTolerance) + secondHalf.getApproximateLength(withinTolerance));
 	}
 
-	return ((length0 + length1) / 2.0f);
+	return ((chordLength + controlPolygonLength) / 2.0f);
 }

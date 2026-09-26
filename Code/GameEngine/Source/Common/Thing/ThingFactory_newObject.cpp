@@ -108,7 +108,7 @@ public:
 class ThingFactory
 {
 public:
-	Object *newObject(const ThingTemplate *tmplate, Team *team,
+	Object *newObject(const ThingTemplate *thingTemplate, Team *team,
 		const ObjectStatusMaskType &statusBits, UnsignedInt extra);
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
@@ -122,51 +122,51 @@ extern unsigned char g_Va012EF1DC;
 extern GameLogic *TheGameLogic;
 extern CRCParameterCheck *TheCRCParameterCheck;
 
-Object *ThingFactory::newObject(const ThingTemplate *tmplate, Team *team,
+Object *ThingFactory::newObject(const ThingTemplate *thingTemplate, Team *team,
 	const ObjectStatusMaskType &statusBits, UnsignedInt extra)
 {
-	if (tmplate == 0)
+	if (thingTemplate == 0)
 		return 0;
 
 	if (g_Va012EF1DC)
 		Sleep(0);
 
-	const std::vector<AsciiString> &asv = tmplate->getBuildVariations();
-	if (!asv.empty())
+	const std::vector<AsciiString> &buildVariations = thingTemplate->getBuildVariations();
+	if (!buildVariations.empty())
 	{
-		int which = GetGameLogicRandomValue(0, asv.size() - 1,
+		int variationIndex = GetGameLogicRandomValue(0, buildVariations.size() - 1,
 			"F:\\bfme\\Code\\gameengine\\Source\\Common\\Thing\\ThingFactory.cpp",
 			0x184);
-		const ThingTemplate *replacement = findTemplate(asv[which]);
-		if (replacement != 0)
-			tmplate = replacement;
+		const ThingTemplate *variationTemplate = findTemplate(buildVariations[variationIndex]);
+		if (variationTemplate != 0)
+			thingTemplate = variationTemplate;
 	}
 
-	Object *obj = TheGameLogic->friend_createObject(
-		tmplate, statusBits, team, extra);
+	Object *createdObject = TheGameLogic->friend_createObject(
+		thingTemplate, statusBits, team, extra);
 
-	for (BehaviorModule **m = obj->m_behaviors; *m != 0; ++m)
+	for (BehaviorModule **behaviorModule = createdObject->m_behaviors; *behaviorModule != 0; ++behaviorModule)
 	{
 		if (g_Va012EF1DC)
 			Sleep(0);
-		CreateModuleInterface *create = (*m)->getCreate();
-		if (create != 0)
-			create->onCreate();
+		CreateModuleInterface *createModule = (*behaviorModule)->getCreate();
+		if (createModule != 0)
+			createModule->onCreate();
 	}
 
 	if (g_Va012EF1DC)
 		Sleep(0);
-	obj->initObject();
+	createdObject->initObject();
 
 	if (g_Va012EF1DC)
 		Sleep(0);
 	if (TheCRCParameterCheck != 0)
 	{
-		UnsignedInt id = obj->m_id;
-		const char *name = tmplate->m_name.str();
+		UnsignedInt objectID = createdObject->m_id;
+		const char *templateName = thingTemplate->m_name.str();
 		bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "newObj %s id %i",
-			name, id);
+			templateName, objectID);
 	}
 
-	return obj;
+	return createdObject;
 }

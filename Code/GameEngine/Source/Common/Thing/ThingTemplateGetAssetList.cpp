@@ -113,23 +113,23 @@ private:
 
 void ThingTemplate::GetAssetList(AssetList &assets, void *context) const
 {
-	BfmeModuleAssetListFunction collect =
+	BfmeModuleAssetListFunction collectModuleAssets =
 		(BfmeModuleAssetListFunction)j_0001d881;
-	collect((BfmeModuleInfo *)&m_behaviorModuleInfo, 0, &assets, context);
-	collect((BfmeModuleInfo *)&m_drawModuleInfo, 1, &assets, context);
-	collect((BfmeModuleInfo *)&m_clientUpdateModuleInfo, 2, &assets, context);
-	collect((BfmeModuleInfo *)&m_clientBehaviorModuleInfo, 3, &assets, context);
+	collectModuleAssets((BfmeModuleInfo *)&m_behaviorModuleInfo, 0, &assets, context);
+	collectModuleAssets((BfmeModuleInfo *)&m_drawModuleInfo, 1, &assets, context);
+	collectModuleAssets((BfmeModuleInfo *)&m_clientUpdateModuleInfo, 2, &assets, context);
+	collectModuleAssets((BfmeModuleInfo *)&m_clientBehaviorModuleInfo, 3, &assets, context);
 
 	if (m_shadowTextureName.isNotEmpty())
 		assets << (m_shadowTextureName + ".tga");
 
-	for (BfmeAssetBlock *block = m_assetBlocks.m_begin;
-		block != m_assetBlocks.m_end; ++block)
+	for (BfmeAssetBlock *assetBlock = m_assetBlocks.m_begin;
+		assetBlock != m_assetBlocks.m_end; ++assetBlock)
 	{
-		for (int i = 0; i < 4; ++i)
+		for (int targetIndex = 0; targetIndex < 4; ++targetIndex)
 		{
-			if (block->m_targets[i])
-				block->m_targets[i]->bfmeForward(&assets, context);
+			if (assetBlock->m_targets[targetIndex])
+				assetBlock->m_targets[targetIndex]->bfmeForward(&assets, context);
 		}
 	}
 

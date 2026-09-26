@@ -61,46 +61,46 @@ void BezFwdIterator::start(void)
 	if (mStepsDesired <= 1)
 		return;
 
-	float d	 = 1.0f / (mStepsDesired - 1);
-	float d2 = d * d;
-	float d3 = d * d2;
+	float parameterStep	 = 1.0f / (mStepsDesired - 1);
+	float parameterStepSquared = parameterStep * parameterStep;
+	float parameterStepCubed = parameterStep * parameterStepSquared;
 
-	D3DXVECTOR4 px(mBezSeg.m_controlPoints[0].x, mBezSeg.m_controlPoints[1].x, mBezSeg.m_controlPoints[2].x, mBezSeg.m_controlPoints[3].x);
-	D3DXVECTOR4 py(mBezSeg.m_controlPoints[0].y, mBezSeg.m_controlPoints[1].y, mBezSeg.m_controlPoints[2].y, mBezSeg.m_controlPoints[3].y);
-	D3DXVECTOR4 pz(mBezSeg.m_controlPoints[0].z, mBezSeg.m_controlPoints[1].z, mBezSeg.m_controlPoints[2].z, mBezSeg.m_controlPoints[3].z);
+	D3DXVECTOR4 xControlPoints(mBezSeg.m_controlPoints[0].x, mBezSeg.m_controlPoints[1].x, mBezSeg.m_controlPoints[2].x, mBezSeg.m_controlPoints[3].x);
+	D3DXVECTOR4 yControlPoints(mBezSeg.m_controlPoints[0].y, mBezSeg.m_controlPoints[1].y, mBezSeg.m_controlPoints[2].y, mBezSeg.m_controlPoints[3].y);
+	D3DXVECTOR4 zControlPoints(mBezSeg.m_controlPoints[0].z, mBezSeg.m_controlPoints[1].z, mBezSeg.m_controlPoints[2].z, mBezSeg.m_controlPoints[3].z);
 
-	D3DXVECTOR4 cVec[3];
-	D3DXVec4Transform(&cVec[0], &px, &BezierSegment::s_bezBasisMatrix);
-	D3DXVec4Transform(&cVec[1], &py, &BezierSegment::s_bezBasisMatrix);
-	D3DXVec4Transform(&cVec[2], &pz, &BezierSegment::s_bezBasisMatrix);
+	D3DXVECTOR4 polynomialCoefficients[3];
+	D3DXVec4Transform(&polynomialCoefficients[0], &xControlPoints, &BezierSegment::s_bezBasisMatrix);
+	D3DXVec4Transform(&polynomialCoefficients[1], &yControlPoints, &BezierSegment::s_bezBasisMatrix);
+	D3DXVec4Transform(&polynomialCoefficients[2], &zControlPoints, &BezierSegment::s_bezBasisMatrix);
 
 	mCurrPoint = mBezSeg.m_controlPoints[0];
 
-	int i = 3;
-	while (i--) {
-		float a = cVec[i].x;
-		float b = cVec[i].y;
-		float c = cVec[i].z;
+	int axisIndex = 3;
+	while (axisIndex--) {
+		float cubicCoefficient = polynomialCoefficients[axisIndex].x;
+		float quadraticCoefficient = polynomialCoefficients[axisIndex].y;
+		float linearCoefficient = polynomialCoefficients[axisIndex].z;
 
-		float *pD, *pDD, *pDDD;
+		float *firstDifference, *secondDifference, *thirdDifference;
 
-		if (i == 2) {
-			pD = &mDq.z;
-			pDD = &mDDq.z;
-			pDDD = &mDDDq.z;
-		} else if (i == 1) {
-			pD = &mDq.y;
-			pDD = &mDDq.y;
-			pDDD = &mDDDq.y;
-		} else if (i == 0) {
-			pD = &mDq.x;
-			pDD = &mDDq.x;
-			pDDD = &mDDDq.x;
+		if (axisIndex == 2) {
+			firstDifference = &mDq.z;
+			secondDifference = &mDDq.z;
+			thirdDifference = &mDDDq.z;
+		} else if (axisIndex == 1) {
+			firstDifference = &mDq.y;
+			secondDifference = &mDDq.y;
+			thirdDifference = &mDDDq.y;
+		} else if (axisIndex == 0) {
+			firstDifference = &mDq.x;
+			secondDifference = &mDDq.x;
+			thirdDifference = &mDDDq.x;
 		}
 
-		(*pD) = a * d3 + b * d2 + c * d;
-		(*pDD) = 6 * a * d3 + 2 * b * d2;
-		(*pDDD) = 6 * a * d3;
+		(*firstDifference) = cubicCoefficient * parameterStepCubed + quadraticCoefficient * parameterStepSquared + linearCoefficient * parameterStep;
+		(*secondDifference) = 6 * cubicCoefficient * parameterStepCubed + 2 * quadraticCoefficient * parameterStepSquared;
+		(*thirdDifference) = 6 * cubicCoefficient * parameterStepCubed;
 	}
 }
 

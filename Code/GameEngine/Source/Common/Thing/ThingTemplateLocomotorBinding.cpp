@@ -30,13 +30,13 @@ private:
 	LocomotorTemplateMap m_locomotorTemplateMap;
 
 public:
-	void bfmeResetANB(LocomotorSetType set, const LocomotorTemplate *templ);
+	void bfmeResetANB(LocomotorSetType setType, const LocomotorTemplate *locomotorTemplate);
 };
 
-void ThingTemplate::bfmeResetANB(LocomotorSetType set,
-	const LocomotorTemplate *templ)
+void ThingTemplate::bfmeResetANB(LocomotorSetType setType,
+	const LocomotorTemplate *locomotorTemplate)
 {
-	LocomotorTemplateVector &slot = m_locomotorTemplateMap[set];
-	slot.erase(slot.begin(), slot.end());
-	m_locomotorTemplateMap[set].push_back(templ);
+	LocomotorTemplateVector &setTemplates = m_locomotorTemplateMap[setType];
+	setTemplates.erase(setTemplates.begin(), setTemplates.end());
+	m_locomotorTemplateMap[setType].push_back(locomotorTemplate);
 }
