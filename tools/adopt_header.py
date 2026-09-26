@@ -46,6 +46,7 @@ import re
 import subprocess
 import sys
 from pathlib import Path
+from typing import NamedTuple
 
 ROOT = Path(__file__).resolve().parents[1]
 BLOCKED = ROOT / "reverse/header_adopt_blocked.tsv"
@@ -77,6 +78,17 @@ MEMBER = re.compile(r"^\s*[A-Za-z_][\w:<>*&\s]*?\b(m_\w+)\s*(\[[^\]]*\])?\s*;", 
 # carries the same one, so after the swap it would be stated twice.
 PROVENANCE = re.compile(r"^//\s*upstream layout:.*\n", re.M)
 TYPE_BODY = re.compile(r"^[ \t]*(?:class|struct)[ \t]+(\w+)\b[^{;]*\{", re.M)
+NON_CODE = re.compile(
+    r'R"|//(?:\\\r?\n|[^\n])*|/\*.*?(?:\*/|\Z)|'
+    r'"(?:\\.|[^"\\])*(?:"|\Z)|\'(?:\\.|[^\'\\])*(?:\'|\Z)', re.S)
+
+
+class Shim(NamedTuple):
+    start: int
+    end: int
+    body: str
+
+
 # The shim, with the `template <typename T>` line above it when there is one --
 # StringBase is a template in all 431 of its TU-local copies, and replacing the
 # class alone would leave that line hanging over an #include.
@@ -109,7 +121,7 @@ def headers():
         body = shim(path.read_text(encoding="utf-8", errors="replace"), name)
         if not body:
             continue
-        members = MEMBER.findall(body.group(1))
+        members = MEMBER.findall(body.body)
         # An ARRAY member is an opaque pad -- a claim about size, not about
         # fields -- so a shim matching one proves nothing. Any number of scalar
         # members is fine: blocker() makes the shim agree with this exact count,
@@ -122,8 +134,32 @@ def headers():
 
 
 def shim(text, name):
-    return re.search(rf"^[ \t]*(?:template[^\n]*\n)?[ \t]*class {name}\s*\{{(.*?)\n\}};\n",
-                     text, re.S | re.M)
+    def hide(match):
+        if match.group() == 'R"':
+            raise ValueError("header adoption does not support raw string literals")
+        return re.sub(r"[^\r\n]", " ", match.group())
+
+    # Preserve offsets while ignoring braces that cannot delimit a class.
+    code = NON_CODE.sub(hide, text)
+    head = re.search(rf"^[ \t]*(?P<declaration>(?:template[^\n]*\n\s*)?class {re.escape(name)}\s*\{{)",
+                     code, re.M)
+    if not head:
+        return None
+    if not head.group("declaration").startswith("template") and re.search(
+            r"\btemplate\s*<[^;{}]*>\s*$", code[:head.start("declaration")]):
+        return None  # Leaving an unsupported template prefix would corrupt the declaration.
+    depth = 1
+    for brace in re.compile(r"[{}]|^[ \t]*#", re.M).finditer(code, head.end()):
+        if brace.group().lstrip() == "#":
+            return None  # Conditional branches can describe incompatible class boundaries.
+        depth += 1 if brace.group() == "{" else -1
+        if depth == 0:
+            tail = re.match(r"[ \t]*;(?:[ \t]*\r?\n)?", text[brace.end():])
+            if tail:
+                return Shim(head.start("declaration"), brace.end() + tail.end(),
+                            text[head.end():brace.start()])
+            return None
+    return None
 
 
 @functools.lru_cache(maxsize=None)
@@ -164,8 +200,8 @@ def blocker(text, name, want_members, partial=False):
     """
     found = shim(text, name)
     if not found:
-        return "no local shim"
-    members = MEMBER.findall(found.group(1))
+        return "no complete supported local shim"
+    members = MEMBER.findall(found.body)
     if any(a for _, a in members):
         return "shim declares an array: an opaque pad, not fields"
     if len(members) > want_members or (not partial and len(members) != want_members):
@@ -190,7 +226,9 @@ def blocker(text, name, want_members, partial=False):
 
 def rewrite(text, name, include, incdir):
     found = shim(text, name)
-    head, tail = text[:found.start()], text[found.end():]
+    if not found:
+        raise ValueError(f"cannot locate a complete supported local {name} class")
+    head, tail = text[:found.start], text[found.end:]
     note = PROVENANCE.search(head, max(0, len(head) - 400))
     if note and not head[note.end():].strip():
         head = head[:note.start()]
@@ -410,9 +448,7 @@ def land(changed, rejected, kind, include):
                 f"local copy instead, which is why the type has no one definition to jump to.\n"
                 f"Only shims whose layout IS the header's are swapped -- an opaque pad or the\n"
                 f"four-field Counted heap block is a different claim and stays.\n\n"
-                f"Byte-verified: a swap that compiles to the same bytes is the same program.\n\n"
-                "Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>\n"
-                "Claude-Session: https://claude.ai/code/session_01Wh8KKNWW2pk7waNmmnzU6R\n")
+                f"Byte-verified: a swap that compiles to the same bytes is the same program.\n")
         done = subprocess.run(["git", "commit", "-q", "-F", "-"], cwd=ROOT,
                               input=body, text=True, capture_output=True)
         if not done.returncode:
