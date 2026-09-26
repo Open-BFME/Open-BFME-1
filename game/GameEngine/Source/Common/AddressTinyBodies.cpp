@@ -717,3 +717,15 @@ int Rva0039B880Body::body() const
 void Rva0042F280Noop()
 {
 }
+
+class Rva008F8E60SelfBody
+{
+public:
+	Rva008F8E60SelfBody *body();
+};
+
+// ?body@Rva008F8E60SelfBody@@QAEPAV1@XZ
+Rva008F8E60SelfBody *Rva008F8E60SelfBody::body()
+{
+	return this;
+}
