@@ -264,7 +264,7 @@ def totals(rows):
     values = {"editor": {"functions": 0, "bytes": 0}, "engine": {"functions": 0, "bytes": 0}}
     for row in rows:
         category = "editor" if row["source"].startswith(("Code/Tools/WorldBuilder/",
-                   "targets/worldbuilder/Code/Tools/WorldBuilder/")) else "engine"
+                   "worldbuilder/Code/Tools/WorldBuilder/")) else "engine"
         values[category]["functions"] += 1
         values[category]["bytes"] += number(row["target_size"])
     return values

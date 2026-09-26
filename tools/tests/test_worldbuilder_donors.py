@@ -14,7 +14,7 @@ import worldbuilder_donors as donors
 
 def fixture(tmp_path):
     target = SimpleNamespace(root=tmp_path, target_id="worldbuilder",
-        config_path=tmp_path / "targets/worldbuilder/target.json",
+        config_path=tmp_path / "worldbuilder/target.json",
         ledger_root=tmp_path / "reverse/worldbuilder", build_root=tmp_path / "build/worldbuilder",
         expected_sha256="a" * 64,
         exports=[SimpleNamespace(name="?method@Owner@@QAEXXZ", rva=0x1234, forwarder=None)],

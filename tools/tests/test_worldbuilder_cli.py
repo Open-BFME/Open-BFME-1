@@ -376,6 +376,6 @@ def test_progress_separates_editor_and_engine_bytes(target):
 
 
 def test_divergent_engine_source_is_not_labelled_shared(target):
-    result = wb.progress(target, [row(source="targets/worldbuilder/Code/GameEngine/Math.cpp")])
+    result = wb.progress(target, [row(source="worldbuilder/Code/GameEngine/Math.cpp")])
     assert result["engine"] == {"functions": 1, "bytes": 1}
     assert "shared_engine" not in result

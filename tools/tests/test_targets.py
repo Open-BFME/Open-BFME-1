@@ -45,7 +45,7 @@ def configure(root, target_id="worldbuilder", data=None):
         "build_root": "build/" + target_id,
         "profiles": {"size": {"flags": ["-O1"], "toolchain_includes": []}},
     }
-    path = root / "targets" / target_id / "target.json"
+    path = root / target_id / "target.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(config))
     return path, binary, config

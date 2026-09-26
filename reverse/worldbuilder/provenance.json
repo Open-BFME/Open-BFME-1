@@ -5,7 +5,7 @@
   "image_base": 4194304,
   "address_convention": "All address fields are RVAs; decoded immediate operands are VAs",
   "generator": "tools/worldbuilder_inventory.py",
-  "generator_sha256": "71177849a79b3c46b86d1b36aa8cd8914321f29ac9c85ad22997c97ad541eb38",
+  "generator_sha256": "d6063012b598d2bae7e915488956549c75bc076b66704f844c956833dc58974e",
   "text_hash_normalization": "CRLF-to-LF; binary fingerprints remain byte-exact",
   "ilt": {
     "start_rva": 4101,

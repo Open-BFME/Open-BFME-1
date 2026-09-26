@@ -11,16 +11,16 @@ import sys
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = "targets/worldbuilder/target.json"
+CONFIG = "worldbuilder/target.json"
 LEDGER = "reverse/worldbuilder/functions.csv"
-OWNED = ("Code/Tools/WorldBuilder/", "targets/worldbuilder/", "reverse/worldbuilder/")
+OWNED = ("Code/Tools/WorldBuilder/", "worldbuilder/", "reverse/worldbuilder/")
 CHECKERS = frozenset("tools/" + name + ".py" for name in (
     "target_hooks", "target_guard", "targets", "target_verify", "worldbuilder", "worldbuilder_inventory",
     "build", "coffar", "gen_case_shims", "portable_lock"))
 REQUIRED = {"name", "target_rva", "target_size", "status", "source", "profile", "evidence", "model"}
 HEADERS = {".h", ".hpp", ".hh", ".hxx", ".inl", ".inc"}
 SOURCE_SUFFIXES = {".c", ".cc", ".cpp", ".cxx", ".asm", ".s"}
-SOURCE_ROOTS = ("Code/Tools/WorldBuilder/", "targets/worldbuilder/Code/")
+SOURCE_ROOTS = ("Code/Tools/WorldBuilder/", "worldbuilder/Code/")
 DONOR_ROOT = "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/"
 
 
@@ -56,7 +56,7 @@ def _sources(root, snapshot, paths):
         source = row["source"]
         path = PurePosixPath(source)
         if ("\\" in source or ":" in source or ".." in path.parts or path.is_absolute()
-                or not source.startswith(("Code/", "targets/worldbuilder/Code/"))
+                or not source.startswith(("Code/", "worldbuilder/Code/"))
                 or path.suffix != ".cpp"):
             raise HookError(f"{LEDGER}:{line}: invalid source path {source!r}")
         if source not in paths:

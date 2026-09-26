@@ -207,7 +207,7 @@ def load_target(target_id, *, root=ROOT):
     if not isinstance(target_id, str) or not re.fullmatch(r"[a-z0-9][a-z0-9-]*", target_id):
         raise TargetError(f"invalid target ID: {target_id!r}")
     root = Path(root).resolve()
-    config_path = _under(root, f"targets/{target_id}/target.json", "target config")
+    config_path = _under(root, f"{target_id}/target.json", "target config")
     try:
         config = json.loads(config_path.read_text(encoding="utf-8"))
     except (OSError, ValueError) as error:

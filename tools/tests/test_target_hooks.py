@@ -56,7 +56,7 @@ rows = list(csv.DictReader(open('reverse/worldbuilder/functions.csv')))
 claimed = {row['source'] for row in rows}
 import subprocess
 owned = {path for path in subprocess.check_output(['git', 'ls-files'], text=True).splitlines()
-         if path.startswith(('Code/Tools/WorldBuilder/', 'targets/worldbuilder/Code/')) and path.endswith('.cpp')}
+         if path.startswith(('Code/Tools/WorldBuilder/', 'worldbuilder/Code/')) and path.endswith('.cpp')}
 if owned - claimed:
     raise SystemExit('unclaimed target source')
 if any('BAD' in pathlib.Path(path).read_text() for path in claimed):
@@ -66,7 +66,7 @@ if any('BAD' in pathlib.Path(path).read_text() for path in claimed):
     put(tmp_path, "image.exe", "fixture binary")
     put(tmp_path, "reverse/functions.csv", "source,status\n")
     ledger(tmp_path, [])
-    git(tmp_path, "add", "tools", "targets", "reverse", "image.exe")
+    git(tmp_path, "add", "tools", "worldbuilder", "reverse", "image.exe")
     git(tmp_path, "commit", "-qm", "fixture foundation")
     return tmp_path
 
@@ -349,7 +349,7 @@ def test_other_worker_untracked_translation_unit_does_not_block_landing(repo, su
 @pytest.mark.parametrize("suffix", ["cpp", "c", "cc", "cxx", "asm", "s"])
 def test_staged_unclaimed_translation_unit_is_rejected_from_snapshot(repo, suffix):
     add_source(repo)
-    path = f"targets/worldbuilder/Code/GameEngine/Unclaimed.{suffix}"
+    path = f"worldbuilder/Code/GameEngine/Unclaimed.{suffix}"
     put(repo, path, "unfinished work\n")
     git(repo, "add", path)
     with pytest.raises(H.HookError, match="Unclaimed"):
@@ -382,7 +382,7 @@ def test_additional_manifest_donor_is_a_snapshot_dependency(repo):
     assert not calls(repo)
 
 
-@pytest.mark.parametrize("path", ["targets/worldbuilder/references.json", "targets/worldbuilder/dependencies/mfc71.csv",
+@pytest.mark.parametrize("path", ["worldbuilder/references.json", "worldbuilder/dependencies/mfc71.csv",
                                   "reverse/worldbuilder/provenance.json"])
 def test_reference_and_dependency_metadata_are_snapshot_bound(repo, path):
     put(repo, path, "{}\n")

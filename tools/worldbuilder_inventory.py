@@ -328,7 +328,7 @@ def assertion_candidate(image):
             "Coord2D::Negate branch leaves proven extent")
     candidate = dict(id="Coord2D::Negate", name=name, readable_name="Coord2D::Negate", evidence="export",
                      target_rva=rva, target_size=size, export_rva=exported.rva, ilt_route_rvas=route,
-                     source="targets/worldbuilder/Code/Libraries/Source/Math/MathCoord2D.cpp",
+                     source="worldbuilder/Code/Libraries/Source/Math/MathCoord2D.cpp",
                      profile="engine-size", bytes_sha256=sha256(raw), donor_files=[],
                      boundary="named export, complete instructions, contained branches, RET then INT3",
                      callee_contract=callee_contract(image, instructions),

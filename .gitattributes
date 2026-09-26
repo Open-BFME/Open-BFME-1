@@ -29,5 +29,5 @@ reverse/worldbuilder/attempts.jsonl text eol=lf merge=union
 # Attempt hashes bind the exact saved source, including its line endings.
 reverse/worldbuilder/attempts/*.cpp -text
 reverse/worldbuilder/*.json text eol=lf
-targets/worldbuilder/**/*.json text eol=lf
-targets/worldbuilder/dependencies/*.csv text eol=lf
+worldbuilder/**/*.json text eol=lf
+worldbuilder/dependencies/*.csv text eol=lf

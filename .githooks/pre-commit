@@ -94,7 +94,7 @@ attempts_changed=0
 while IFS= read -r path; do
     [ -z "${target_only_sources[$path]:-}" ] || continue
     case "$path" in
-        Code/Tools/WorldBuilder/*.h|Code/Tools/WorldBuilder/*.hpp|targets/worldbuilder/*|reverse/worldbuilder/*) ;;
+        Code/Tools/WorldBuilder/*.h|Code/Tools/WorldBuilder/*.hpp|worldbuilder/*|reverse/worldbuilder/*) ;;
         Code/*.cpp) staged_sources+=("$path") ;;
         # 216 C sources carry ledger rows (GameSpy, Lua). pre-push byte-verifies an
         # edited one; this hook only collected *.cpp, so such an edit left through
@@ -136,7 +136,7 @@ done < <(git diff --cached --name-only --diff-filter=ACMRT)
 # Code/ where verify_source_claims would demand matched rows for it.
 while IFS= read -r path; do
     case "$path" in
-        Code/Tools/WorldBuilder/*|targets/worldbuilder/Code/*|reverse/worldbuilder/attempts/*|Code/GameEngine/*|Code/GameEngineDevice/*|Code/Libraries/*|Code/gen_small/*|Code/gen_asm/*|Code/masm_dumps/*|reference/shims/*|reference/CnC_Generals_Zero_Hour/*|tools/tests/*|build/toolchains/*|mods/*|reverse/attempts/*) ;;
+        Code/Tools/WorldBuilder/*|worldbuilder/Code/*|reverse/worldbuilder/attempts/*|Code/GameEngine/*|Code/GameEngineDevice/*|Code/Libraries/*|Code/gen_small/*|Code/gen_asm/*|Code/masm_dumps/*|reference/shims/*|reference/CnC_Generals_Zero_Hour/*|tools/tests/*|build/toolchains/*|mods/*|reverse/attempts/*) ;;
         *) fail "source added outside official tree: $path — see AGENTS.md 'File placement'" ;;
     esac
 done < <(git diff --cached --name-only --diff-filter=A | grep -E '\.(cpp|c|h|hpp|asm)$' || true)

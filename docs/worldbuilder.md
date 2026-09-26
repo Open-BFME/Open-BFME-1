@@ -21,7 +21,7 @@ not a fully rebuilt or runnable editor.
 
 ## Target and source ownership
 
-`targets/worldbuilder/target.json` selects the vanilla 1.03 WorldBuilder image
+`worldbuilder/target.json` selects the vanilla 1.03 WorldBuilder image
 and its SHA-256. A different image is an error, including images with similar
 addresses or export names. The target ledger is
 `reverse/worldbuilder/functions.csv`; generated runs live under ignored
@@ -30,7 +30,7 @@ addresses or export names. The target ledger is
 Editor sources belong in `Code/Tools/WorldBuilder/`. Independently verified
 engine implementations can reuse existing `Code/` sources. When WorldBuilder
 needs a different implementation, put it at the corresponding path beneath
-`targets/worldbuilder/Code/`. A game claim never implies a WorldBuilder claim.
+`worldbuilder/Code/`. A game claim never implies a WorldBuilder claim.
 Edits to a source claimed by both targets trigger both verification paths.
 
 The initial compiler profiles use the existing MSVC 7.1 toolchain
@@ -119,7 +119,7 @@ editor references include the vendoring revision and normalized file hashes;
 the original upstream revision is not known.
 
 MFC ordinal evidence and acquisition commands are documented in
-[`targets/worldbuilder/dependencies/README.md`](../targets/worldbuilder/dependencies/README.md).
+[`worldbuilder/dependencies/README.md`](../worldbuilder/dependencies/README.md).
 The small verified map is sufficient for normal compilation/verification;
 large dependency downloads are explicit. Unproven ordinals remain unsupported.
 
