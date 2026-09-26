@@ -1,18 +1,122 @@
 // ?updateVolumes@W3DVolumetricShadow@@IAEXM@Z
-// partial score=0.65 date=2026-09-26
-// Candidate compile in Code\GameEngineDevice\Source\W3DDevice\GameClient\Shadow\W3DVolumetricShadow.cpp; current body gives 822B vs 824B retail.
-// BFME's shadow geometry holds 0x34-byte mesh records and keeps the mesh
-// count beyond the Zero Hour geometry layout.
+// partial score=0.66 date=2026-09-26
+class Rva007BF3C0VisibilityView { public:
+virtual void slot_00(void);
+virtual void slot_01(void);
+virtual void slot_02(void);
+virtual void slot_03(void);
+virtual void slot_04(void);
+virtual void slot_05(void);
+virtual void slot_06(void);
+virtual void slot_07(void);
+virtual void slot_08(void);
+virtual void slot_09(void);
+virtual void slot_10(void);
+virtual void slot_11(void);
+virtual void slot_12(void);
+virtual void slot_13(void);
+virtual void slot_14(void);
+virtual void slot_15(void);
+virtual void slot_16(void);
+virtual void slot_17(void);
+virtual void slot_18(void);
+virtual void slot_19(void);
+virtual void Validate_Transform(void) const;
+virtual void slot_21(void);
+virtual void slot_22(void);
+virtual void slot_23(void);
+virtual void slot_24(void);
+virtual void slot_25(void);
+virtual void slot_26(void);
+virtual void slot_27(void);
+virtual void slot_28(void);
+virtual void slot_29(void);
+virtual void slot_30(void);
+virtual void slot_31(void);
+virtual void slot_32(void);
+virtual void slot_33(void);
+virtual void slot_34(void);
+virtual void slot_35(void);
+virtual void slot_36(void);
+virtual void slot_37(void);
+virtual void slot_38(void);
+virtual void slot_39(void);
+virtual void slot_40(void);
+virtual void slot_41(void);
+virtual void slot_42(void);
+virtual void slot_43(void);
+virtual void slot_44(void);
+virtual void slot_45(void);
+virtual void slot_46(void);
+virtual void slot_47(void);
+virtual void slot_48(void);
+virtual void slot_49(void);
+virtual void slot_50(void);
+virtual void slot_51(void);
+virtual void slot_52(void);
+virtual void slot_53(void);
+virtual void slot_54(void);
+virtual void slot_55(void);
+virtual void slot_56(void);
+virtual void slot_57(void);
+virtual void slot_58(void);
+virtual void slot_59(void);
+virtual void slot_60(void);
+virtual void slot_61(void);
+virtual void slot_62(void);
+virtual void slot_63(void);
+virtual void slot_64(void);
+virtual void slot_65(void);
+virtual void slot_66(void);
+virtual void slot_67(void);
+virtual void slot_68(void);
+virtual void slot_69(void);
+virtual void slot_70(void);
+virtual void slot_71(void);
+virtual void slot_72(void);
+virtual void slot_73(void);
+virtual void slot_74(void);
+virtual void slot_75(void);
+virtual void slot_76(void);
+virtual void slot_77(void);
+virtual void slot_78(void);
+virtual void slot_79(void);
+virtual void slot_80(void);
+virtual void slot_81(void);
+virtual void slot_82(void);
+virtual void slot_83(void);
+virtual void slot_84(void);
+virtual void slot_85(void);
+virtual void slot_86(void);
+virtual void slot_87(void);
+virtual void slot_88(void);
+virtual void slot_89(void);
+virtual void slot_90(void);
+virtual void slot_91(void);
+virtual void slot_92(void);
+virtual void slot_93(void);
+virtual void slot_94(void);
+virtual Int Is_Really_Visible(void);
+virtual Int Is_Not_Hidden_At_All(void);
+char m_prefix[0x14]; Matrix3D m_transform;
+const Matrix3D &Get_Transform(void) const { Validate_Transform(); return m_transform; }
+};
 struct BfmeUpdateGeometryMeshView
 {
-	unsigned char m_beforePoolSize[0x18];
-	Int m_poolSize;
-	unsigned char m_beforeMeshIndex[4];
+	unsigned char m_beforeMeshIndex[0xc];
 	Int m_meshRobjIndex;
-	unsigned char m_afterMeshIndex[0xc];
+	unsigned char m_beforePoolSize[8];
+	Int m_poolSize;
+	unsigned char m_afterPoolSize[0x14];
 	unsigned char m_needsDeformedVertices;
 };
 
+struct BfmeUpdateGeometryView {
+	unsigned char m_prefix[0x14];
+	BfmeUpdateGeometryMeshView m_meshList[160];
+	Int m_meshCount;
+	BfmeUpdateGeometryMeshView *getMesh(Int j) { return &m_meshList[j]; }
+};
 struct BfmeUpdateVolumeStateView
 {
 	unsigned char m_beforeVisibleState[0x44];
@@ -59,34 +163,30 @@ void W3DVolumetricShadow::updateVolumes(Real zoffset)
 {
 	BfmeVolumetricShadowUpdateLayout *shadow =
 		reinterpret_cast<BfmeVolumetricShadowUpdateLayout *>(this);
-	RenderObjClass *robj = shadow->m_robj;
 	Int i, j;
-	HLodClass *hlod = (HLodClass *)robj;
+	HLodClass *hlod = (HLodClass *)shadow->m_robj;
 	MeshClass *mesh;
 	static AABoxClass aaBox;
 	static SphereClass sphere;
 	Int meshIndex;
 
 	DEBUG_ASSERTCRASH(hlod != NULL, ("updateVolumes : hlod is NULL!"));
-	Bool parentVis = robj->Is_Really_Visible();
+	Bool parentVis = ((Rva007BF3C0VisibilityView *)shadow->m_robj)->Is_Really_Visible();
 	for (i = 0; i < MAX_SHADOW_LIGHTS; i++)
 	{
-		for (j = 0; j < reinterpret_cast<BfmeW3DShadowGeometryLayout *>(
-			shadow->m_geometry)->m_meshCount; j++)
+		for (j = 0; j < reinterpret_cast<BfmeUpdateGeometryView *>(shadow->m_geometry)->m_meshCount; j++)
 		{
-			BfmeUpdateGeometryMeshView *meshRecord =
-				reinterpret_cast<BfmeUpdateGeometryMeshView *>(
-					reinterpret_cast<unsigned char *>(shadow->m_geometry) + 0x14 + j * 0x34);
-			meshIndex = meshRecord->m_meshRobjIndex;
+			meshIndex = reinterpret_cast<BfmeUpdateGeometryView *>(shadow->m_geometry)->getMesh(j)->m_meshRobjIndex;
 			if (meshIndex >= 0)
-				mesh = (MeshClass *)hlod->Peek_Lod_Model(0, meshIndex);
+				mesh = (MeshClass *)((BfmeHLodRenderObjView *)hlod)->Peek_Lod_Model(0, meshIndex);
 			else
-				mesh = (MeshClass *)robj;
+				mesh = (MeshClass *)shadow->m_robj;
 			if (mesh)
 			{
-				if (!mesh->Is_Not_Hidden_At_All())
+				if (!((Rva007BF3C0VisibilityView *)mesh)->Is_Not_Hidden_At_All())
 					continue;
-				const Matrix3D *meshTransform = &mesh->Get_Transform();
+				BfmeUpdateGeometryMeshView *meshRecord = reinterpret_cast<BfmeUpdateGeometryView *>(shadow->m_geometry)->getMesh(j);
+				const Matrix3D *meshTransform = &((Rva007BF3C0VisibilityView *)mesh)->Get_Transform();
 				if (meshRecord->m_needsDeformedVertices &&
 					!((BfmeMeshRenderObjView *)mesh)->Class_ID())
 				{
@@ -105,7 +205,7 @@ void W3DVolumetricShadow::updateVolumes(Real zoffset)
 					*(Int *)((unsigned char *)shadow->m_shadowVolume[0][j] + 0x10) = 0;
 				}
 				updateMeshVolume(j, i, meshTransform, mesh->Get_Bounding_Box(),
-					robj->Get_Position().Z - zoffset);
+					shadow->m_robj->Get_Position().Z - zoffset);
 				if (shadow->m_shadowVolume[i][j])
 				{
 					BfmeUpdateVolumeStateView *volumeState =
@@ -117,13 +217,13 @@ void W3DVolumetricShadow::updateVolumes(Real zoffset)
 						else
 						{
 							sphere = shadow->m_shadowVolume[i][j]->getBoundingSphere();
-							sphere.Center += mesh->Get_Transform().Get_Translation();
+							sphere.Center += ((Rva007BF3C0VisibilityView *)mesh)->Get_Transform().Get_Translation();
 							CollisionMath::OverlapType result =
 								CollisionMath::Overlap_Test(*shadowCameraFrustum, sphere);
 							if (result == CollisionMath::OVERLAPPED)
 							{
 								aaBox = shadow->m_shadowVolume[i][j]->getBoundingBox();
-								aaBox.Translate(mesh->Get_Transform().Get_Translation());
+								aaBox.Translate(((Rva007BF3C0VisibilityView *)mesh)->Get_Transform().Get_Translation());
 								if (CollisionMath::Overlap_Test(*shadowCameraFrustum, aaBox) != CollisionMath::OUTSIDE)
 									volumeState->m_visibleState = Geometry::STATE_VISIBLE;
 								else
