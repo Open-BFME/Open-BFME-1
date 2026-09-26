@@ -99,3 +99,18 @@ __copy_float_and_fill<BfmeWchar, BfmeWideFloatFillIterator>(
 	ios_base::fmtflags, streamsize, BfmeWchar, BfmeWchar, BfmeWchar);
 
 } // namespace _STL
+
+// Address-derived wide copy adapters to the proven STLport __copy template.
+extern "C" _STL::BfmeWideFloatFillIterator __cdecl rva00845B90Copy(
+	const _STL::BfmeWchar *first, const _STL::BfmeWchar *last,
+	_STL::BfmeWideFloatFillIterator output)
+{
+	return _STL::copy(first, last, output);
+}
+
+extern "C" _STL::BfmeWideFloatFillIterator __cdecl rva00845BE0Copy(
+	const _STL::BfmeWchar *first, const _STL::BfmeWchar *last,
+	_STL::BfmeWideFloatFillIterator output)
+{
+	return _STL::copy(first, last, output);
+}

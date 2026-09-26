@@ -98,3 +98,19 @@ __copy_float_and_fill<char, BfmeNarrowFloatFillIterator>(
 	ios_base::fmtflags, streamsize, char, char, char);
 
 } // namespace _STL
+
+// Separate retail copy adapter with a by-value narrow output iterator.
+// No caller establishes a more specific identity for this 0x00845980 copy.
+extern "C" _STL::BfmeNarrowFloatFillIterator __cdecl rva00845980Copy(
+	const char *first, const char *last,
+	_STL::BfmeNarrowFloatFillIterator output)
+{
+	return _STL::copy(first, last, output);
+}
+
+extern "C" _STL::BfmeNarrowFloatFillIterator __cdecl rva00845B60Copy(
+	const char *first, const char *last,
+	_STL::BfmeNarrowFloatFillIterator output)
+{
+	return _STL::copy(first, last, output);
+}
