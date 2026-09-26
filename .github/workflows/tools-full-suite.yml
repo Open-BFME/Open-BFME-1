@@ -1,0 +1,42 @@
+name: Tools full test suite (nightly)
+
+# fleet-tools-tests.yml runs a hand-picked subset on every push. Everything else
+# in tools/tests ran only on whichever host happened to run it, and 37 failures
+# accumulated unnoticed (found and fixed 2026-09-25/26: stale expectations,
+# fixtures that assumed one OS, a test that leaked the real ledger into another,
+# and tools that drifted from a shared predicate). This runs the WHOLE suite on
+# a full checkout once a day and on demand, so drift surfaces within a day.
+# Tests that need Linux cgroup-v2 delegation or the Windows toolchain skip
+# themselves where the runner cannot provide them.
+
+on:
+  schedule:
+    - cron: '17 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tools-full-suite
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --quiet -r tools/requirements.txt
+      - name: Configure git identity for fixture repositories
+        run: |
+          git config --global user.name 'tools-full-suite'
+          git config --global user.email 'tools-full-suite@example.invalid'
+          git config --global init.defaultBranch master
+      - name: Full tools test suite
+        run: python -m pytest -q -p no:cacheprovider -rfE tools/tests
