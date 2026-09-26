@@ -5,7 +5,6 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 #include "ascii_string.h"
 #include "basetype.h"
-inline AsciiString::~AsciiString() { ((StringBase<char>*)this)->releaseBuffer(); }
 template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 template<> inline void StringBase<char>::clear() { releaseBuffer(); }
 enum NameKeyType { NAMEKEY_INVALID=0 };

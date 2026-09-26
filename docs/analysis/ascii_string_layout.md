@@ -162,12 +162,35 @@ than before, and the rest were already stale). Each now names the label that
 `build.read_funclet`, the gate's own re-identification, resolves to a unique
 body. Unreadable rows went from 920 to 900.
 
+While this landed, six TUs that other lanes were adding at the same time also
+defined the destructor locally: WOLBuddyOverlayUpdate.cpp,
+WOLBuddyResponses.cpp, ParameterGetUiText.cpp, TeamTemplateInfoConstructor.cpp,
+WOLBuddyControlSystem.cpp and WOLBuddyOverlayInit.cpp. They got the same edit
+(61 TUs in all), 23 more funclet pins were re-pinned, and every upstream-changed
+source verifies. A TU written against the old header that defines
+`AsciiString::~AsciiString` now fails to compile with C2084. The fix is to
+delete the definition.
+
 ## Still open
 
-The 32 bodies whose latest verdict cites this header (12.3 KB, scan below) are
-mostly near misses that mention the header in passing. Their recorded walls
-are register allocation, frame size or callee identity, not the string
-layout. What this change actually unblocks:
+Of the 32 bodies whose latest verdict cites this header (12.3 KB, scan below):
+
+* 0x00889090 is landed here.
+* 15 are already matched as clean C++. Their `partial`/`blocked` verdict is
+  older than the landing.
+* 13 are still `gen_asm`/`gen_small` dumps (0x00721380 1,557 B, 0x00390A50,
+  0x0078A7A0, 0x00514A40, 0x001AB600, 0x001B0E90, 0x0046C7D0, 0x004991D0,
+  0x0019B640, 0x002E5090, 0x004175F0, 0x00693EC0, 0x00462D40).
+* 0x00357FC0 is a naked lift.
+* 0x00888C10 and 0x00888BC0 are naked lifts in StringBase.cpp, which does
+  not read `ascii_string.h`, so this change does not reach them.
+
+Re-probed through the new header: 0x00721380's bank is unchanged at 1557/1557
+with 4 bytes of register allocation, shape 1.000 (retail loads `treeType` into
+EDI before `this` into EBX). 0x004175F0 comes out at 233/231 and 0x002E5090 at
+232/232 with 49 bytes and a global load it does not reproduce. None of these
+walls is the string layout. The verdicts name the header because the bodies
+include it. What this change actually unblocks:
 
 * by-value AsciiString call sites that needed an inline destructor
   (`eh-transposition`). A TU no longer has to define its own inline

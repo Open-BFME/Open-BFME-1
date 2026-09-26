@@ -20,10 +20,6 @@ template <> inline const unsigned short *StringBase<unsigned short>::str() const
 	return m_data ? m_data->data : (const unsigned short *)L"";
 }
 
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 inline UnicodeString::UnicodeString()
 {
 	m_text = 0;
