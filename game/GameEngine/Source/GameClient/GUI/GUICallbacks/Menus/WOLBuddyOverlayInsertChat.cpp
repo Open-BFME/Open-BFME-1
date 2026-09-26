@@ -21,10 +21,6 @@ typedef int GPProfile;
 template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 template <> inline const wchar_t *StringBase<wchar_t>::str() const { return m_data ? m_data->data : L""; }
 
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 
 inline UnicodeString::UnicodeString()
 {

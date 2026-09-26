@@ -14,7 +14,6 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common
 
 #include "ascii_string.h"
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 class Parameter
 {

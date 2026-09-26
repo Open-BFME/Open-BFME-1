@@ -10,10 +10,6 @@
 #include <vector>
 class Object;
 
-inline AsciiString::~AsciiString()
-{
-    ((StringBase<char> *)this)->releaseBuffer();
-}
 
 class UnicodeStringWK
 {

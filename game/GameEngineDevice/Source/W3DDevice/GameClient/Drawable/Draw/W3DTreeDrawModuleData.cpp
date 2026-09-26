@@ -8,10 +8,6 @@
 
 // Canonical bodies from ascii_string.cpp and string_base.cpp, visible here
 // to preserve retail's direct calls to StringBase<char>::releaseBuffer.
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 
 template <typename T> inline void StringBase<T>::clear()
 {

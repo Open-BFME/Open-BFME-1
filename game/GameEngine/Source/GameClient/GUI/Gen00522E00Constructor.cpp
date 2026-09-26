@@ -20,7 +20,6 @@
 
 #include "ascii_string.h"
 #include <vector>
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 class __single_inheritance Gen00522E00;
 typedef void (Gen00522E00::*Rva00522E00Callback)(int);

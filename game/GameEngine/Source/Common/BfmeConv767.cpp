@@ -11,10 +11,6 @@
 
 #include "ascii_string.h"
 
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 
 class BfmeSubDRE
 {

@@ -13,10 +13,6 @@
 typedef char CheckStringSize[(sizeof(AsciiString) == 4) ? 1 : -1];
 typedef char CheckListSize[(sizeof(_STL::list<AsciiString>) == 4) ? 1 : -1];
 typedef char CheckNodeSize[(sizeof(_STL::_List_node<AsciiString>) == 12) ? 1 : -1];
-inline AsciiString::~AsciiString()
-{
-    ((StringBase<char> *)this)->releaseBuffer();
-}
 class Rva00197930StringListOwner {
 public:
     void appendUnique(const AsciiString &name);

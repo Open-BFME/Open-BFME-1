@@ -23,27 +23,14 @@ void bfme_force_ascii_string_assign_emission(AsciiString &dst, const AsciiString
 }
 #pragma auto_inline(on)
 
-AsciiString::AsciiString(char c)
-{
-    ((StringBase<char> *)this)->StringBase<char>::StringBase(c);
-}
+AsciiString::AsciiString(char c) : StringBase<char>(c) {}
 
-AsciiString::AsciiString(const AsciiString &that, int start, int len)
-{
-    ((StringBase<char> *)this)->StringBase<char>::StringBase(*(const StringBase<char> *)&that, start, len);
-}
+AsciiString::AsciiString(const AsciiString &that, int start, int len) : StringBase<char>(that, start, len) {}
 
-AsciiString::AsciiString(const char *str, int len)
-{
-    ((StringBase<char> *)this)->StringBase<char>::StringBase(str, len);
-}
+AsciiString::AsciiString(const char *str, int len) : StringBase<char>(str, len) {}
 
-// Callers that expose this identical forwarding body emit an inline COMDAT.
-// Keep the canonical emission inline too so MSVC links one destructor.
-inline AsciiString::~AsciiString()
-{
-    ((StringBase<char> *)this)->releaseBuffer();
-}
+// ??1AsciiString (0x0005EE90) is the implicit destructor; the unwind actions
+// of the by-value operators below emit its COMDAT.
 
 AsciiString &AsciiString::operator=(char c)
 {

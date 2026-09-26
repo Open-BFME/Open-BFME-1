@@ -17,7 +17,6 @@
 #include <cstring>
 #include "ascii_string.h"
 #include "Common/UnicodeString.h"
-inline AsciiString::~AsciiString() { ((StringBase<char>*)this)->releaseBuffer(); }
 inline UnicodeString::~UnicodeString() { ((StringBase<wchar_t>*)this)->releaseBuffer(); }
 class Coord3D { public: float x,y,z; };
 struct ICoord2D { int x,y; };

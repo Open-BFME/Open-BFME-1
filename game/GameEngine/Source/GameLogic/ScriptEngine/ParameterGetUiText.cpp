@@ -26,7 +26,6 @@ extern "C" unsigned __cdecl strlen(const char *);
 
 template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 template<> inline bool StringBase<char>::isNotEmpty() const { return m_data && m_data->length != 0; }
-inline AsciiString::~AsciiString() { ((StringBase<char>*)this)->releaseBuffer(); }
 template<> inline void StringBase<char>::set(const char *s) { set(s,s ? (int)strlen(s) : 0); }
 
 class KindOfMaskType { public: static const char *getNameFromSingleBit(int); };

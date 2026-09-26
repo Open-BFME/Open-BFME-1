@@ -3,10 +3,6 @@
 #include "ascii_string.h"
 
 // Canonical ascii_string.cpp destructor body, visible for retail inlining.
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 
 class __single_inheritance FunctorTargetSingle
 {

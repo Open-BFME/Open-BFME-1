@@ -10,7 +10,6 @@
 #include "ascii_string.h"
 #include "Common/GameType.h"
 
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 struct Rva0025EF90SubjectResult {
     char prefix[0x114];
     unsigned int word114;

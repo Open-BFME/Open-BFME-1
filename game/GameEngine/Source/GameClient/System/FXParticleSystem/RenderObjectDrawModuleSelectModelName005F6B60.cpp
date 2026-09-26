@@ -13,10 +13,6 @@
 #include <string.h>
 #pragma intrinsic(strlen)
 
-inline AsciiString::~AsciiString()
-{
-    ((StringBase<char> *)this)->releaseBuffer();
-}
 
 template<> inline void StringBase<char>::concat(const char *str)
 {

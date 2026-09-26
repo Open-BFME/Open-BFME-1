@@ -8,7 +8,6 @@
 // By-value string copies target StringBase<char> at 0x00887B60, not the
 // misleading GameSpyGroupRoom alias printed by the historical ledger.
 #include "ascii_string.h"
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 typedef bool Bool;
 typedef int Int;

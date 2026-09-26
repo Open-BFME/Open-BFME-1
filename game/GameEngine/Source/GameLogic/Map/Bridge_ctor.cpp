@@ -13,7 +13,6 @@
 #include "coord2d.h"
 #include <bitset>
 
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->~StringBase<char>(); }
 inline Coord2D::Coord2D() {}
 inline Coord2D::~Coord2D() {}
 

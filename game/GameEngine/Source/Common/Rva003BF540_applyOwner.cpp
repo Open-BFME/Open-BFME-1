@@ -18,10 +18,6 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 inline UnicodeString::UnicodeString() { m_text = 0; }
 inline UnicodeString::~UnicodeString()
 {

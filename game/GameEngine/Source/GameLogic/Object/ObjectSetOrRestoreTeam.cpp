@@ -18,10 +18,6 @@ template <typename T> __declspec(noinline) bool StringBase<T>::isNotEmpty() cons
 {
     return !isEmpty();
 }
-inline AsciiString::~AsciiString()
-{
-    ((StringBase<char> *)this)->releaseBuffer();
-}
 typedef bool Bool;
 typedef int Int;
 class Object;

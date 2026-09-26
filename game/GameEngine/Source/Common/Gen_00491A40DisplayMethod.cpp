@@ -18,7 +18,6 @@ template <> inline bool StringBase<char>::isNotEmpty() const
 {
 	return !isEmpty();
 }
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 // Retail copies the by-value text with a direct StringBase<unsigned short>
 // copy-constructor call and destroys it with a direct releaseBuffer call, so

@@ -37,10 +37,6 @@ template <> inline const char *StringBase<char>::str() const
 	return m_data ? &m_data->data[0] : g_bfmeEmptyAscii;
 }
 
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 inline UnicodeString::UnicodeString() { m_text = 0; }
 inline UnicodeString::~UnicodeString()
 {

@@ -25,10 +25,6 @@
 // argument and both local strings.  Keep the canonical AsciiString layout and
 // make its destructor the same inline forwarder used by the recovered BFME
 // ScriptEngine reference-map twins.
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 
 // The named-object tail calls the matched StringBase<char>::compare body
 // through ILT 0x000220C5 (retail target 0x0005FEB0); calling the canonical

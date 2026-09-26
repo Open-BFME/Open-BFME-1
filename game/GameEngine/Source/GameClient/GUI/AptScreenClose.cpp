@@ -14,7 +14,6 @@
 #include <hash_map>
 #include <algorithm>
 #include "ascii_string.h"
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 namespace rts {
 template <class T> struct hash {

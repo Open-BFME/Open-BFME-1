@@ -4,7 +4,6 @@
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 #include "PreRTS.h"
 #include "Common/FileSystem.h"
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 // 0x00789010: global filesystem enumerates the owner's geometry files.
 // Owner identity is not established; retain its address-qualified name.

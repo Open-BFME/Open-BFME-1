@@ -8,10 +8,6 @@
 // through, so this is a __thiscall member that never reads this. Its direct
 // calls copy an AsciiString, join two AsciiStrings with the literal ".", then
 // release the temporary buffer.
-inline AsciiString::~AsciiString()
-{
-    ((StringBase<char> *)this)->releaseBuffer();
-}
 
 // Retail dispatches through the receiver's vtable at +0x7C. Neither the
 // receiver's class nor that slot's semantic name has independent evidence.

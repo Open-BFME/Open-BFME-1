@@ -4,7 +4,6 @@
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 #include "PreRTS.h"
 #include <vector>
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 class Rva0039E8D0Xfer
 {
 public:

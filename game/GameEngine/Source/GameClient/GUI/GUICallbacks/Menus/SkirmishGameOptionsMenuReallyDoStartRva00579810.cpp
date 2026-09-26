@@ -16,10 +16,6 @@
 #include "ascii_string.h"
 
 // BFME calls the StringBase<char> release body directly at scope exit.
-inline AsciiString::~AsciiString()
-{
-    ((StringBase<char> *)this)->releaseBuffer();
-}
 
 // Two Bools in BFME (ZH has one); the const spelling is the one the ledger pins
 // for body 0x00396B00, as Rva003855F0Transition.cpp already calls it.

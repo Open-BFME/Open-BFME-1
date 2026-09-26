@@ -13,7 +13,6 @@ extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(
 struct FieldParse;
 
 #include "ascii_string.h"
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 template <> inline void StringBase<char>::set(const char *text)
 { set(text, text ? (int)strlen(text) : 0); }
 

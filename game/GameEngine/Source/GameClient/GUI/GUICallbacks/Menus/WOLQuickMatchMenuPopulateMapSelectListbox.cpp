@@ -19,10 +19,6 @@ typedef int Int;
 typedef int Color;
 typedef bool Bool;
 
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 
 inline UnicodeString::UnicodeString()
 {

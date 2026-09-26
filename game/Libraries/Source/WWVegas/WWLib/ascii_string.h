@@ -7,40 +7,53 @@ extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int c
 
 class UnicodeString;
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString {
+// BFME's StringBase<char> default constructor is inline: its explicitly
+// instantiated COMDAT at 0x00061D90 (`mov eax,ecx; mov [eax],0; ret`) has no
+// direct caller in the retail image, and every AsciiString default
+// construction stores the zero in place. string_base.h keeps the member out of
+// line for StringBase.cpp's explicit instantiation, so specialize it here for
+// the AsciiString side. docs/analysis/ascii_string_layout.md has the evidence.
+template <>
+inline StringBase<char>::StringBase()
+{
+    m_data = 0;
+}
+
+// BFME's AsciiString is `class AsciiString : public StringBase<char>` and adds
+// no data: the retail copy, C-string and default constructors are the
+// StringBase<char> ones, and a constructor that runs code after the base is
+// built protects the base subobject with an EH state (0x00889090).
+// upstream (ZH, a standalone class): inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+class AsciiString : public StringBase<char> {
 public:
     // Retail inlines the default ctor (the entry ctor at 0x009A1390 zeroes
-    // m_text with a single store rather than calling out); ascii_string.cpp
+    // m_data with a single store rather than calling out); ascii_string.cpp
     // still emits the out-of-line COMDAT at 0x00062030 for its 10 callers.
-    AsciiString() { m_text = 0; }
+    AsciiString() {}
     AsciiString(char c);
-    // Inline for the same reason as the default ctor, and provably so: retail
-    // call sites that copy an AsciiString emit `call StringBase<char>::StringBase`
-    // directly rather than a call to this ctor, which only happens if the
-    // delegation is visible. It also changes how MSVC schedules the unwind-esp
-    // record for by-value AsciiString arguments (retail records esp before
-    // loading it into ecx), which is what several callers depend on to match.
-    AsciiString(const AsciiString &that)
-    {
-        ((StringBase<char> *)this)->StringBase<char>::StringBase(*(const StringBase<char> *)&that);
-    }
+    // Inline, and provably so: retail call sites that copy an AsciiString emit
+    // `call StringBase<char>::StringBase` directly rather than a call to this
+    // ctor. It also changes how MSVC schedules the unwind-esp record for
+    // by-value AsciiString arguments (retail records esp before loading it
+    // into ecx), which is what several callers depend on to match.
+    AsciiString(const AsciiString &that) : StringBase<char>(that) {}
     // Inline for the same reason, and by the same evidence: retail's
     // INI::loadSubsystemFiles (0x000BB310) builds its AsciiString temp with a
     // direct `call StringBase<char>::StringBase(const char *)`.
-    AsciiString(const char *str)
-    {
-        ((StringBase<char> *)this)->StringBase<char>::StringBase(str);
-    }
+    AsciiString(const char *str) : StringBase<char>(str) {}
     AsciiString(const char *str, int len);
     AsciiString(const AsciiString &that, int start, int len);
     AsciiString(const UnicodeString &that);
-    ~AsciiString();
+    // Inline and empty: ??1AsciiString (0x0005EE90) is a bare `jmp 0x00887940`,
+    // the base destructor body, and scope exits call 0x00887940 directly. An
+    // out-of-line declaration also transposes the EH saved-esp store at
+    // by-value call sites (docs/shape_levers.md row 2).
+    ~AsciiString() {}
     // Same story again: SubsystemInterfaceList::initSubsystem (0x009A20B0)
     // inlines setName and lands a direct `call StringBase<char>::set`.
     AsciiString &operator=(const AsciiString &that)
     {
-        ((StringBase<char> *)this)->set(*(const StringBase<char> *)&that);
+        StringBase<char>::set(that);
         return *this;
     }
     AsciiString &operator=(char c);
@@ -52,63 +65,58 @@ public:
     AsciiString &operator+=(const UnicodeString &that);
     void __cdecl format(AsciiString fmt, ...);
     void translate(const UnicodeString &that);
-    // BFME's AsciiString exposes StringBase<char>'s methods (they mangle
-    // @StringBase@D and are matched in string_base.cpp). Delegate so a caller
-    // inlines a `call StringBase<char>::method` to the matched implementation.
-    const char *str() const { return ((const StringBase<char>*)this)->str(); }
-    int getLength() const { return ((const StringBase<char>*)this)->getLength(); }
-    char getCharAt(int i) const { return ((const StringBase<char>*)this)->getCharAt(i); }
-    bool isEmpty() const { return ((const StringBase<char>*)this)->isEmpty(); }
-    bool isNotEmpty() const { return ((const StringBase<char>*)this)->isNotEmpty(); }
-    bool isNone() const { return ((const StringBase<char>*)this)->isNone(); }
-    bool isNotNone() const { return ((const StringBase<char>*)this)->isNotNone(); }
-    const char *reverseFind(char c) const { return ((const StringBase<char>*)this)->reverseFind(c); }
-    bool nextToken(AsciiString *tok, const char *delims=0) { return ((StringBase<char>*)this)->nextToken((StringBase<char>*)tok, delims); }
-    void clear() { ((StringBase<char>*)this)->clear(); }
-    void set(const char *s) { ((StringBase<char>*)this)->set(s); }
-    void set(const AsciiString &s) { ((StringBase<char>*)this)->set(*(const StringBase<char>*)&s); }
-    void concat(const char *s) { ((StringBase<char>*)this)->concat(s); }
-    void concat(char c) { ((StringBase<char>*)this)->concat(c); }
-    void concat(const AsciiString &s) { ((StringBase<char>*)this)->concat(*(const StringBase<char>*)&s); }
-    void toLower() { ((StringBase<char>*)this)->toLower(); }
-    void toUpper() { ((StringBase<char>*)this)->toUpper(); }
-    void trim() { ((StringBase<char>*)this)->trim(); }
-    void removeLastChar() { ((StringBase<char>*)this)->removeLastChar(); }
-    const char *find(char c) const { return ((const StringBase<char>*)this)->find(c); }
-    bool startsWith(const char *p) const { return ((const StringBase<char>*)this)->startsWith(p); }
-    bool startsWithNoCase(const char *p) const { return ((const StringBase<char>*)this)->startsWithNoCase(p); }
-    bool endsWith(const char *p) const { return ((const StringBase<char>*)this)->endsWith(p); }
-    bool endsWithNoCase(const char *p) const { return ((const StringBase<char>*)this)->endsWithNoCase(p); }
-    int compare(const char *p) const { return ((const StringBase<char>*)this)->compare(p); }
-    int compareNoCase(const char *p) const { return ((const StringBase<char>*)this)->compareNoCase(p); }
+    // StringBase<char>'s methods mangle @StringBase@D and are matched in
+    // StringBase.cpp. AsciiString's own overloads hide the base ones, so
+    // forward each to the matched implementation.
+    const char *str() const { return StringBase<char>::str(); }
+    int getLength() const { return StringBase<char>::getLength(); }
+    char getCharAt(int i) const { return StringBase<char>::getCharAt(i); }
+    bool isEmpty() const { return StringBase<char>::isEmpty(); }
+    bool isNotEmpty() const { return StringBase<char>::isNotEmpty(); }
+    bool isNone() const { return StringBase<char>::isNone(); }
+    bool isNotNone() const { return StringBase<char>::isNotNone(); }
+    const char *reverseFind(char c) const { return StringBase<char>::reverseFind(c); }
+    bool nextToken(AsciiString *tok, const char *delims=0) { return StringBase<char>::nextToken(tok, delims); }
+    void clear() { StringBase<char>::clear(); }
+    void set(const char *s) { StringBase<char>::set(s); }
+    void set(const AsciiString &s) { StringBase<char>::set(s); }
+    void concat(const char *s) { StringBase<char>::concat(s); }
+    void concat(char c) { StringBase<char>::concat(c); }
+    void concat(const AsciiString &s) { StringBase<char>::concat(s); }
+    void toLower() { StringBase<char>::toLower(); }
+    void toUpper() { StringBase<char>::toUpper(); }
+    void trim() { StringBase<char>::trim(); }
+    void removeLastChar() { StringBase<char>::removeLastChar(); }
+    const char *find(char c) const { return StringBase<char>::find(c); }
+    bool startsWith(const char *p) const { return StringBase<char>::startsWith(p); }
+    bool startsWithNoCase(const char *p) const { return StringBase<char>::startsWithNoCase(p); }
+    bool endsWith(const char *p) const { return StringBase<char>::endsWith(p); }
+    bool endsWithNoCase(const char *p) const { return StringBase<char>::endsWithNoCase(p); }
+    int compare(const char *p) const { return StringBase<char>::compare(p); }
+    int compareNoCase(const char *p) const { return StringBase<char>::compareNoCase(p); }
     // Real body rather than a delegation: retail inlines this comparison at every
-    // call site (there is no out-of-line call to 0x0005FEB0 anywhere in the image),
-    // and SubsystemLegend::findEntry (0x009A11A0) only matches with the repe cmpsb
-    // in line. StringBase<char>::compare keeps its own out-of-line COMDAT.
+    // AsciiString call site, and SubsystemLegend::findEntry (0x009A11A0) only
+    // matches with the repe cmpsb in line. StringBase<char>::compare keeps its own
+    // out-of-line COMDAT (0x0005FEB0), which the StringBase operator< calls.
     int compare(const AsciiString &s) const
     {
-        const StringBase<char> *self = (const StringBase<char> *)this;
-        const StringBase<char> *that = (const StringBase<char> *)&s;
-        int thatLen = that->m_data ? that->m_data->length : 0;
-        const char *thatData = that->m_data ? &that->m_data->data[0] : (const char *)"";
-        int thisLen = self->m_data ? self->m_data->length : 0;
-        const char *thisData = self->m_data ? &self->m_data->data[0] : (const char *)"";
+        int thatLen = s.m_data ? s.m_data->length : 0;
+        const char *thatData = s.m_data ? &s.m_data->data[0] : (const char *)"";
+        int thisLen = m_data ? m_data->length : 0;
+        const char *thisData = m_data ? &m_data->data[0] : (const char *)"";
         int n = thisLen < thatLen ? thisLen : thatLen;
         int c = memcmp(thisData, thatData, n);
         if (c != 0)
             return c;
         return thisLen - thatLen;
     }
-    int compareNoCase(const AsciiString &s) const { return ((const StringBase<char>*)this)->compareNoCase(*(const StringBase<char>*)&s); }
+    int compareNoCase(const AsciiString &s) const { return StringBase<char>::compareNoCase(s); }
 
     friend AsciiString operator+(AsciiString left, const char *right);
     friend AsciiString operator+(AsciiString left, const AsciiString &right);
     friend AsciiString operator+(AsciiString left, char right);
-
-private:
-    char *m_text;
 };
 
-inline bool operator==(const AsciiString &a, const AsciiString &b) { return *(const StringBase<char>*)&a == *(const StringBase<char>*)&b; }
-inline bool operator!=(const AsciiString &a, const AsciiString &b) { return *(const StringBase<char>*)&a != *(const StringBase<char>*)&b; }
-inline bool operator<(const AsciiString &a, const AsciiString &b) { return *(const StringBase<char>*)&a < *(const StringBase<char>*)&b; }
+inline bool operator==(const AsciiString &a, const AsciiString &b) { return (const StringBase<char> &)a == (const StringBase<char> &)b; }
+inline bool operator!=(const AsciiString &a, const AsciiString &b) { return (const StringBase<char> &)a != (const StringBase<char> &)b; }
+inline bool operator<(const AsciiString &a, const AsciiString &b) { return (const StringBase<char> &)a < (const StringBase<char> &)b; }

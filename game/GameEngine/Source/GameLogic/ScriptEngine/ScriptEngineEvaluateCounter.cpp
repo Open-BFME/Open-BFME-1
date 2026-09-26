@@ -5,7 +5,6 @@
 // The condition dispatcher and upstream counter comparison switch identify it;
 // matched evaluateFlag/evaluateTimer witness the BFME named-counter lookup.
 #include "ascii_string.h"
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 class Parameter
 {

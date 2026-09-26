@@ -12,10 +12,6 @@ inline const char *StringBase<char>::str() const
 	return m_data ? (const char *)m_data + 8 : "";
 }
 
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 
 class Rva002DECC0Owner
 {

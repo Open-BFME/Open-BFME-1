@@ -17,10 +17,6 @@
 	const Coord3D *getPosition(void) const { return &m_cachedPos; }
 #include "object.h"
 
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 
 typedef bool Bool;
 typedef unsigned short PlayerMaskType;

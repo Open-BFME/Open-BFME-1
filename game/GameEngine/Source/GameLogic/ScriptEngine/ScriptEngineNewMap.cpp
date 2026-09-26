@@ -22,7 +22,6 @@ enum ScienceType
 };
 
 #include "ascii_string.h"
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 #include "Common/LatchRestore.h"
 
 extern AsciiString KEYNAME(NameKeyType key);

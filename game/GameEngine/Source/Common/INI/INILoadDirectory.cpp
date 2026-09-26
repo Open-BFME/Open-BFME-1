@@ -19,7 +19,6 @@
 #include "Common/INIException.h"
 
 // Retail inlines these StringBase<char> accessors at every use in this body.
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 inline AsciiString &AsciiString::operator=(const char *s) { ((StringBase<char> *)this)->set(s); return *this; }
 template<> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
 template<> inline int StringBase<char>::getLength() const { return m_data ? m_data->length : 0; }

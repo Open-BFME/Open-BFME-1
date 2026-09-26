@@ -14,7 +14,6 @@
 
 #include "ascii_string.h"
 template<> inline bool StringBase<char>::isEmpty() const { return !m_data || m_data->length == 0; }
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 class Player;
 

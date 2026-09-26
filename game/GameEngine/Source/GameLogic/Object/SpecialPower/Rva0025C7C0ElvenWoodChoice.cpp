@@ -10,7 +10,6 @@
 #include "ascii_string.h"
 extern "C" unsigned int __cdecl strlen(const char *);
 #pragma intrinsic(strlen)
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 template<> inline bool StringBase<char>::isEmpty() const {
     return m_data==0 || m_data->length==0;
 }

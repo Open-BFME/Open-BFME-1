@@ -14,7 +14,6 @@
 
 template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 template <class T> inline void StringBase<T>::concat(T c) { concat(&c, 1); }
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 typedef int Int;
 

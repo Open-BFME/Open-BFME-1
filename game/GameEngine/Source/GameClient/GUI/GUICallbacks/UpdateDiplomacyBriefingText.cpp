@@ -11,10 +11,6 @@ template<> inline bool StringBase<char>::isEmpty() const
 {
 	return !m_data || m_data->length == 0;
 }
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 inline UnicodeString::UnicodeString(const wchar_t *text)
 {
 	((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(

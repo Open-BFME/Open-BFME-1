@@ -30,10 +30,6 @@ typedef int GPEnum;
 // matched StringBase declarations. These TU-local definitions keep the
 // retail's visible delegations at this call site (rather than exposing a
 // copied string implementation through a shared header).
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 
 inline UnicodeString::UnicodeString()
 {

@@ -10,10 +10,6 @@
 // Retail inlines the null-checked data pointer read at every str() site.
 template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 
 enum NameKeyType
 {

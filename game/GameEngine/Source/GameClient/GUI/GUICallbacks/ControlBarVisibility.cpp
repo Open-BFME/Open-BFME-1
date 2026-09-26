@@ -9,7 +9,6 @@
 #include "GameClient/GameWindow.h"
 #include "GameClient/GameWindowManager.h"
 
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 template <> inline const char *StringBase<char>::str() const {
     return m_data ? m_data->data : "";
 }

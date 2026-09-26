@@ -12,7 +12,6 @@
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #include <map>
 #include <utility>
-inline AsciiString::~AsciiString() { ((StringBase<char>*)this)->releaseBuffer(); }
 struct ScriptCounter
 {
 	int m_value;

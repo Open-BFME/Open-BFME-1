@@ -21,10 +21,6 @@ inline bool StringBase<char>::isEmpty() const
 	return m_data == 0 || m_data->length == 0;
 }
 
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 
 class BfmeScriptEngineSlashName
 {

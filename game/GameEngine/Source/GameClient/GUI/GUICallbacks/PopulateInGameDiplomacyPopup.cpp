@@ -225,10 +225,6 @@ extern VictoryConditionsInterface *TheVictoryConditions;
 
 void GadgetStaticTextSetText( GameWindow *window, UnicodeString text );
 
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 
 template<> inline const char *StringBase<char>::str() const
 {

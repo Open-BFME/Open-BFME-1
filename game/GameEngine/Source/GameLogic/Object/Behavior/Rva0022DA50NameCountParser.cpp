@@ -19,10 +19,6 @@ extern "C" unsigned int __cdecl strlen( const char *s );
 #pragma intrinsic( strlen )
 
 #include "ascii_string.h"
-inline AsciiString::~AsciiString()
-{
-    ((StringBase<char> *)this)->releaseBuffer();
-}
 typedef AsciiString RetailLayoutString;
 
 class INI

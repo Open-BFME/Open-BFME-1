@@ -19,10 +19,6 @@ typedef unsigned char UnsignedByte;
 
 // Retail calls StringBase<T>'s copy ctor and releaseBuffer directly, so the
 // string members this body needs are inline forwarders here.
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 
 inline UnicodeString::UnicodeString()
 {

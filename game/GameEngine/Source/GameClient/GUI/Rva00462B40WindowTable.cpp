@@ -14,7 +14,6 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 #include "ascii_string.h"
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 class GameWindow {
 public:

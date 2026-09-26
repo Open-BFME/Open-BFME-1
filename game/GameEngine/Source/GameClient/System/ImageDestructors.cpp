@@ -16,10 +16,6 @@ void __cdecl operator delete(void *block);
 
 #include "ascii_string.h"
 
-inline AsciiString::~AsciiString()
-{
-    ((StringBase<char> *)this)->releaseBuffer();
-}
 
 #include "../../../../Libraries/Source/WWVegas/WW3D2/texture.h"
 

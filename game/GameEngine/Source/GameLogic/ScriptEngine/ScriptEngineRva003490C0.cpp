@@ -3,7 +3,6 @@
 // matched ScriptEngine siblings prove the scope latch and field offsets.
 
 #include "ascii_string.h"
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 #include "LatchRestore.h"
 
 class Player;

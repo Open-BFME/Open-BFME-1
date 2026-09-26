@@ -59,6 +59,14 @@
 
 #include "ascii_string.h"
 
+// Retail's clear() destroys each element with an out-of-line call to
+// ??1AsciiString (0x0005EE90 through its ILT) rather than expanding the inline
+// destructor. MSVC does that only when the inliner stops exactly at the
+// destructor in the clear/erase/_Destroy chain: at the default depth it expands
+// it to the release body, at 6 it calls ??_GAsciiString(0) instead, and at 5
+// _Destroy itself stays out of line.
+#pragma inline_depth(7)
+
 struct S4Holder0046DBB0
 {
 	void take0046DBB0( const AsciiString &s );
