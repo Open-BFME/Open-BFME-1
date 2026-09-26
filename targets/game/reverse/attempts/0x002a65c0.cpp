@@ -1,10 +1,11 @@
 // ?d_002a65c0@@YAXXZ
-// partial score=0.22 date=2026-09-23
-// cl: /DNDEBUG /MD /EHsc
+// partial score=0.2473 date=2026-09-26
+// ?isWithinAbilityAbortRange@SpecialAbilityUpdate@@QAE_NXZ
+// hypothesis h1: preserve the retail position-only override path and explicit squared-range local
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
 
 typedef float Real;
 typedef int Int;
-typedef unsigned int UnsignedInt;
 typedef bool Bool;
 typedef int ObjectID;
 
@@ -113,9 +114,10 @@ private:
 // ?isWithinAbilityAbortRange@SpecialAbilityUpdate@@QAE_NXZ
 Bool SpecialAbilityUpdate::isWithinAbilityAbortRange()
 {
-	SpecialAbilityUpdateModuleData *data = m_moduleData;
+	const SpecialAbilityUpdateModuleData *data = getSpecialAbilityUpdateModuleData();
+	Real range = data->m_startAbilityRange;
 	const Real UNDERSIZE = BFME_OFFSET_DF;
-	Real range = __max(0.0f, data->m_startAbilityRange - UNDERSIZE);
+	range = __max(0.0f, range - UNDERSIZE);
 	const SpecialPowerTemplate *spTemplate = data->m_specialPowerTemplate;
 	const Object *self = getObject();
 
@@ -132,24 +134,25 @@ Bool SpecialAbilityUpdate::isWithinAbilityAbortRange()
 	{
 		fDistSquared = ((const BfmeGap951 *)self)->bfmeGapB951(
 			(const BfmePt951 *)&m_targetPos);
+
+		Overridable *override = spTemplate->m_nextOverride;
+		if (override)
+		{
+			if (override->m_nextOverride)
+				override = override->m_nextOverride->friend_getFinalOverride();
+			spTemplate = (const SpecialPowerTemplate *)override;
+		}
+
+		if (spTemplate->m_specialPowerType != 0x27)
+			fDistSquared -= *(const Real *)0x010c2d4c;
 	}
 	else
 	{
 		return true;
 	}
 
-	Overridable *override = spTemplate->m_nextOverride;
-	if (override)
-	{
-		if (override->m_nextOverride)
-			override = override->m_nextOverride->friend_getFinalOverride();
-		spTemplate = (const SpecialPowerTemplate *)override;
-	}
-
-	if (spTemplate->m_specialPowerType != 0x27)
-		fDistSquared -= *(const Real *)0x010c2d4c;
-
-	if (fDistSquared <= data->m_abilityAbortRange * data->m_abilityAbortRange)
+	Real fStartRangeSquared = data->m_abilityAbortRange * data->m_abilityAbortRange;
+	if (fDistSquared <= fStartRangeSquared)
 	{
 		if (range == BFME_ZERO && targetID != 0)
 			return self->bfmeIntersectsAtZeroAngle(target);
