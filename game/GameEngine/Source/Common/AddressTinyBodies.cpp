@@ -766,3 +766,11 @@ int Rva0083FE30VirtualForward::body()
 {
 	return slot4();
 }
+
+extern void *(__cdecl *Rva008C5D70Alloc)(unsigned int bytes);
+
+// ?Rva008BD010Alloc@@YAPAXI@Z
+void *Rva008BD010Alloc(unsigned bytes)
+{
+	return Rva008C5D70Alloc(bytes);
+}
