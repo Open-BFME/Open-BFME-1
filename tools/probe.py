@@ -206,6 +206,61 @@ def classify(ret_ins, our_ins, ret_b, our_b):
     return "register-mirror"
 
 
+# Register names that the allocator chooses. esp stays: a stack-pointer operand
+# is structure, not an allocation choice.
+_ALLOCATED = re.compile(r"\b(e?[abcd]x|[abcd][lh]|e?[sd]il?|e?bp|bpl)\b")
+_CONSTANT = re.compile(r"\b0x[0-9a-f]+\b|\b\d+\b")
+
+
+def shape_text(ins):
+    """An instruction with register choice and constants normalised away."""
+    return f"{ins.mnemonic} " + _CONSTANT.sub("N", _ALLOCATED.sub("R", ins.op_str))
+
+
+def shape_compare(retail_ins, our_ins):
+    """(score, opcodes) comparing instruction SHAPES, not bytes.
+
+    A byte score says little about a large body: one stack slot shifted by four
+    bytes touches most operands (postDraw 0x004469F0 read 0.26 while every
+    block up to the named-timer tail differed only in register and slot choice,
+    2026-09-26). With register names and constants normalised, the score is the
+    share of instructions that already have retail's form, and the first
+    non-equal opcode is the first STRUCTURAL divergence -- usually the thing
+    to work on first."""
+    import difflib
+    left = [shape_text(i) for i in retail_ins]
+    right = [shape_text(i) for i in our_ins]
+    matcher = difflib.SequenceMatcher(None, left, right, autojunk=False)
+    matched = sum(block.size for block in matcher.get_matching_blocks())
+    score = matched / max(len(left), len(right), 1)
+    return score, matcher.get_opcodes()
+
+
+def print_shape(retail_ins, our_ins, verbose, limit=12):
+    score, opcodes = shape_compare(retail_ins, our_ins)
+    changes = [op for op in opcodes if op[0] != "equal"]
+    if not changes:
+        print(f"shape    {score:.3f}  identical once registers and constants are normalised: "
+              "the residue is register/stack-slot ALLOCATION only")
+        return
+    tag, i1, i2, j1, j2 = changes[0]
+    at_r = f"+{retail_ins[i1].address:04x}" if i1 < len(retail_ins) else "end"
+    at_o = f"+{our_ins[j1].address:04x}" if j1 < len(our_ins) else "end"
+    print(f"shape    {score:.3f} of instructions match once registers/constants are normalised; "
+          f"{len(changes)} structural difference(s), first at retail {at_r} / ours {at_o} "
+          f"(--shape lists them)")
+    if not verbose:
+        return
+    for tag, i1, i2, j1, j2 in changes[:limit]:
+        print(f"  --- {tag}")
+        for ins in retail_ins[i1:i2]:
+            print(f"  R +{ins.address:04x}  {ins.mnemonic} {ins.op_str}")
+        for ins in our_ins[j1:j2]:
+            print(f"  O +{ins.address:04x}  {ins.mnemonic} {ins.op_str}")
+    if len(changes) > limit:
+        print(f"  ... {len(changes) - limit} more")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("source")
@@ -214,6 +269,8 @@ def main():
     ap.add_argument("--va", action="store_true", help="the address is a VA; subtract the 0x400000 image base")
     ap.add_argument("--size", type=int)
     ap.add_argument("--all", action="store_true", help="print the whole side-by-side, not just the divergence window")
+    ap.add_argument("--shape", action="store_true",
+                    help="list the structural differences left after normalising registers and constants")
     a = ap.parse_args()
 
     rva = int(a.rva, 16)
@@ -296,6 +353,7 @@ def main():
         print(f"evidence  +{r.address:04x}  retail: {r.mnemonic} {r.op_str:32}  ours: {o.mnemonic} {o.op_str}")
     if len(pairs) > 6:
         print(f"evidence  ... {len(pairs) - 6} more differing instruction(s)")
+    print_shape(ret_raw, our_raw, a.shape)
 
     def rows(ins):
         return [(i.address, " ".join(f"{b:02x}" for b in i.bytes), f"{i.mnemonic} {i.op_str}") for i in ins]
