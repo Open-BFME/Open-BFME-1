@@ -1,5 +1,5 @@
-// ?update@BezierProjectileBehavior@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.42 date=2026-09-04
+// ?d_001f0960@@YAXXZ
+// partial score=0.43 date=2026-09-26
 // cl: /DNDEBUG /DWIN32 /MD /O2 /Ob2 /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 // BezierProjectileBehavior::update, retail 0x001F0960 size 1733.
@@ -11,6 +11,10 @@
 // ZH twin is DumbProjectileBehavior::update; BFME adds a model-condition
 // burst, victim-aim path adjust via getAimPosition, and an extra pos at
 // Object+0x178.
+// Reconstructed the formerly fake WideGuard path: owner/default/object
+// PartitionFilter chain, spatial query, and condition update of nearby objects.
+// Probe is 1557/1733 bytes, frame 0x80 vs retail 0x6c, 1324 non-relocation
+// differences and 43 relocation-layout mismatches; source is NOT exact.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
@@ -181,14 +185,86 @@ public:
 	int bfmeCost() const;
 };
 
-class WideGuard
+struct WideResultEntry
 {
-public:
-	WideGuard();
-	~WideGuard();
+	Object *object;
+	int unknown;
 };
 
-void keepWideGuard(WideGuard *);
+struct WideResultData
+{
+	_STL::vector<WideResultEntry> entries;
+	WideResultEntry *cursor;
+	int references;
+};
+
+struct BfmeWideResult
+{
+	WideResultData *value;
+	~BfmeWideResult();
+};
+
+#pragma comment(linker, "/alternatename:??1BfmeWideResult@@QAE@XZ=?j_0002c471@@YAXXZ")
+
+class PartitionFilter
+{
+public:
+	PartitionFilter *link(PartitionFilter *);
+	volatile unsigned vptr;
+	PartitionFilter *next;
+};
+
+class ProjectileObjectFilter : public PartitionFilter
+{
+public:
+	ProjectileObjectFilter(Object *object)
+	{
+		next = 0;
+		vptr = 0x1085DD0;
+		data = object;
+	}
+	~ProjectileObjectFilter() { vptr = 0x1083B5C; }
+	Object *data;
+};
+
+class ProjectileDefaultFilter : public PartitionFilter
+{
+public:
+	ProjectileDefaultFilter()
+	{
+		next = 0;
+		vptr = 0x1083B80;
+	}
+	~ProjectileDefaultFilter() { vptr = 0x1083B5C; }
+};
+
+class ProjectileOwnerFilter : public PartitionFilter
+{
+public:
+	__declspec(noinline) ProjectileOwnerFilter(Object *object, int mode, bool flag);
+	~ProjectileOwnerFilter() { vptr = 0x1083B5C; }
+	Object *data;
+	int mode;
+	bool flag;
+};
+
+class ProjectileWideForward
+{
+public:
+	BfmeWideResult bfmeForwardWideC(int pos, int radius, int flags,
+		int filters, int include);
+};
+
+extern ProjectileWideForward *ThePartitionManager;
+
+ProjectileOwnerFilter::ProjectileOwnerFilter(Object *object, int mode, bool flag)
+{
+	next = 0;
+	vptr = 0x1085DC0;
+	data = object;
+	this->mode = mode;
+	this->flag = flag;
+}
 
 struct FlightPod
 {
@@ -281,8 +357,19 @@ UpdateSleepTime BezierProjectileBehavior::update()
 				pos.z = TheTerrainLogic->getGroundHeight(pos.x, pos.y, z);
 				TheTacticalView->addDebugIcon(&pos, 0xFFFF00FF, md->m_debugPlayer, z);
 			}
-			WideGuard wr;
-			keepWideGuard(&wr);
+			ProjectileObjectFilter objFilter(obj);
+			ProjectileDefaultFilter defaultFilter;
+			ProjectileOwnerFilter ownerFilter(obj, 7, false);
+			BfmeWideResult result = ThePartitionManager->bfmeForwardWideC(
+				(int)&m_flightPathEnd, md->m_debugPlayer, 1,
+				(int)ownerFilter.link(defaultFilter.link(&objFilter)), 1);
+			WideResultData *found = result.value;
+			while (found->cursor != found->entries.end())
+			{
+				Object *other = (found->cursor++)->object;
+				if (other && other != obj)
+					other->applySpecialModelCondition(md->m_modelCondition, 0, 1);
+			}
 		}
 	}
 

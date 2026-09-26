@@ -8,6 +8,11 @@
 // loaded after the six stores. ObjectFilter is the witnessed 8-byte field at
 // WeaponTemplate+0x4e8. Linear helper 0x001E49E0 is a proven custom ABI:
 // ecx=targets, eax=index, edi=source, esi=out (144B x87 sin/cos + ground).
+// Probe is 1137/1253 bytes, frame 0x24 vs retail 0x20, 867 non-relocation
+// differences and 21 relocation-layout mismatches. Target at +0x203 and
+// +0x227 passes the same stack region as aimed position and bonus: do not
+// "fix" the intentional alias. Reordering declarations or dropping the self
+// alias did not change compiler output.
 
 struct Coord3D
 {

@@ -7,6 +7,11 @@
 // +0x34.  The owner lookup, 304-bit clear mask, and condition-word update are
 // kept in this focused TU because the shared ZH WeaponSet header has a
 // different model-condition ABI.
+// Probe remains 214/214 bytes with 42 register-mirror differences: retail
+// this=EDI, owner=ESI; candidate this=ESI, owner=EDI. Exact GameLogic lookup
+// (0x0009A510) and clear-mask wrapper (0x001B6E60) did not change that.
+// Upstream landed releaseWeaponLock (0x001EBB40) by duplicating clear calls
+// across its branches; compare that source before reshaping this caller.
 
 typedef int Int;
 typedef bool Bool;
