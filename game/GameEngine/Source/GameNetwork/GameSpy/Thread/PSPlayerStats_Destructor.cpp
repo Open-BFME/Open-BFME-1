@@ -21,3 +21,36 @@ void Rva000A5150DestroyStats(PSPlayerStats *stats)
 {
 	stats->~PSPlayerStats();
 }
+
+// The BFME preorder reply appends 0x24 bytes to the ZH player-stats payload.
+// Preserve the ZH PSPlayerStats lifetime, with BFME's trailing response fields.
+struct Rva0065AFE0Response
+{
+	int responseType;
+	PSPlayerStats player;
+	char m_extension[0x24];
+	bool preorder;
+};
+
+struct Rva0065AFE0Thread
+{
+	char m_head[0x54];
+	int m_opCount0054;
+};
+
+void getPreorderCallback(int localid, int profileid, persisttype_t type,
+	int index, int success, int extra, char *data, int len, void *instance)
+{
+	Rva0065AFE0Thread *thread = static_cast<Rva0065AFE0Thread *>(instance);
+	if (!thread)
+		return;
+
+	--thread->m_opCount0054;
+	Rva0065AFE0Response response;
+	if (!success)
+		return;
+
+	response.responseType = PSResponse::PSRESPONSE_PREORDER;
+	response.preorder = data && strcmp(data, "\\preorder\\1") == 0;
+	TheGameSpyPSMessageQueue->addResponse(reinterpret_cast<const PSResponse &>(response));
+}
