@@ -5218,5 +5218,105 @@
   "after_sha256": "e435c40d8411501df51ed4b3068590bbb11756420261f8889e8ffe183d4ba906",
   "evidence": "docs/naming_evidence.md",
   "reason": "name_oracle says GameLogic+0x74 is unwitnessed"
+ },
+ {
+  "old_path": "reverse/attempts/0x00178140.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_onEnter.cpp",
+  "old_name": "at050",
+  "new_name": "m_field50",
+  "before_sha256": "60ac940043b409df606a8fd8abb3f588ed7532c3c1042842ebe8442cc4bdb5dd",
+  "after_sha256": "49c4dca53a39c0778db157be65925f1e0e9e3f3204d248bb33e70f4d0e7315b9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "offset tokens matching landed AIAttackMeleeEngageState_xfer.cpp"
+ },
+ {
+  "old_path": "reverse/attempts/0x00178140.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_onEnter.cpp",
+  "old_name": "at054",
+  "new_name": "m_field54",
+  "before_sha256": "60ac940043b409df606a8fd8abb3f588ed7532c3c1042842ebe8442cc4bdb5dd",
+  "after_sha256": "49c4dca53a39c0778db157be65925f1e0e9e3f3204d248bb33e70f4d0e7315b9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "offset tokens matching landed AIAttackMeleeEngageState_xfer.cpp"
+ },
+ {
+  "old_path": "reverse/attempts/0x00178140.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_onEnter.cpp",
+  "old_name": "at058",
+  "new_name": "m_field58",
+  "before_sha256": "60ac940043b409df606a8fd8abb3f588ed7532c3c1042842ebe8442cc4bdb5dd",
+  "after_sha256": "49c4dca53a39c0778db157be65925f1e0e9e3f3204d248bb33e70f4d0e7315b9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "offset tokens matching landed AIAttackMeleeEngageState_xfer.cpp"
+ },
+ {
+  "old_path": "reverse/attempts/0x00178140.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_onEnter.cpp",
+  "old_name": "at05c",
+  "new_name": "m_field5C",
+  "before_sha256": "60ac940043b409df606a8fd8abb3f588ed7532c3c1042842ebe8442cc4bdb5dd",
+  "after_sha256": "49c4dca53a39c0778db157be65925f1e0e9e3f3204d248bb33e70f4d0e7315b9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "offset tokens matching landed AIAttackMeleeEngageState_xfer.cpp"
+ },
+ {
+  "old_path": "reverse/attempts/0x00178140.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_onEnter.cpp",
+  "old_name": "at070",
+  "new_name": "m_field70",
+  "before_sha256": "60ac940043b409df606a8fd8abb3f588ed7532c3c1042842ebe8442cc4bdb5dd",
+  "after_sha256": "49c4dca53a39c0778db157be65925f1e0e9e3f3204d248bb33e70f4d0e7315b9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "offset tokens matching landed AIAttackMeleeEngageState_xfer.cpp"
+ },
+ {
+  "old_path": "reverse/attempts/0x00178140.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_onEnter.cpp",
+  "old_name": "at074",
+  "new_name": "m_field74",
+  "before_sha256": "60ac940043b409df606a8fd8abb3f588ed7532c3c1042842ebe8442cc4bdb5dd",
+  "after_sha256": "49c4dca53a39c0778db157be65925f1e0e9e3f3204d248bb33e70f4d0e7315b9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "offset tokens matching landed AIAttackMeleeEngageState_xfer.cpp"
+ },
+ {
+  "old_path": "reverse/attempts/0x00178140.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_onEnter.cpp",
+  "old_name": "at078",
+  "new_name": "m_field78",
+  "before_sha256": "60ac940043b409df606a8fd8abb3f588ed7532c3c1042842ebe8442cc4bdb5dd",
+  "after_sha256": "49c4dca53a39c0778db157be65925f1e0e9e3f3204d248bb33e70f4d0e7315b9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "offset tokens matching landed AIAttackMeleeEngageState_xfer.cpp"
+ },
+ {
+  "old_path": "reverse/attempts/0x00178140.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_onEnter.cpp",
+  "old_name": "at094",
+  "new_name": "m_field94",
+  "before_sha256": "60ac940043b409df606a8fd8abb3f588ed7532c3c1042842ebe8442cc4bdb5dd",
+  "after_sha256": "49c4dca53a39c0778db157be65925f1e0e9e3f3204d248bb33e70f4d0e7315b9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "unwitnessed offsets kept as offset tokens"
+ },
+ {
+  "old_path": "reverse/attempts/0x00178140.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_onEnter.cpp",
+  "old_name": "at208",
+  "new_name": "m_field208",
+  "before_sha256": "60ac940043b409df606a8fd8abb3f588ed7532c3c1042842ebe8442cc4bdb5dd",
+  "after_sha256": "49c4dca53a39c0778db157be65925f1e0e9e3f3204d248bb33e70f4d0e7315b9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "unwitnessed offsets kept as offset tokens"
+ },
+ {
+  "old_path": "reverse/attempts/0x00178140.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_onEnter.cpp",
+  "old_name": "at214",
+  "new_name": "m_field214",
+  "before_sha256": "60ac940043b409df606a8fd8abb3f588ed7532c3c1042842ebe8442cc4bdb5dd",
+  "after_sha256": "49c4dca53a39c0778db157be65925f1e0e9e3f3204d248bb33e70f4d0e7315b9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "unwitnessed offsets kept as offset tokens"
  }
 ]
