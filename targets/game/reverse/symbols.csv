@@ -174,6 +174,8 @@ name,address,notes
 ??$BfmeElementConstruct@URva0077CC10Element@@@_STL@@YAXPAURva0077CC10Element@@ABU1@@Z,0x000375CE,Open-BFME5 a callee of a vector push_back
 ??$BfmeElementConstruct@URva0081D280Element@@@_STL@@YAXPAURva0081D280Element@@ABU1@@Z,0x0081C8D0,Open-BFME5 a callee of a vector push_back
 ??$BfmeElementConstruct@VGen00252A50@@@_STL@@YAXPAVGen00252A50@@ABV1@@Z,0x0001EEE3,The construct thunk at 0x0001EEE3 calls the Gen00252A50 copy constructor at 0x00252A50.
+??$Rva00080110Find@U?$_List_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@_STL@@VAsciiString@@@_STL@@YA?AU?$_List_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@0@U10@0ABVAsciiString@@ABUinput_iterator_tag@0@@Z,0x00080110,Typed ASCII list-search call view; complete helper and aligned parseLadder calls verified; evidence=identity_evidence/0062ad50-ladder-parser.md
+??$Rva00080590Find@U?$_List_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@_STL@@VAsciiString@@@_STL@@YA?AU?$_List_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@0@U10@0ABVAsciiString@@@Z,0x00080590,Typed ASCII list-search call view; complete helper and aligned parseLadder calls verified; evidence=identity_evidence/0062ad50-ladder-parser.md
 ??$_Construct@GG@_STL@@YAXPAGABG@Z,0x0003B3E5,Open-BFME5 the value _Construct the tree _M_insert at 0x00667BA0 reaches
 ??$_Construct@U?$pair@$$CBGH@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBGH@0@ABU10@@Z,0x0002BCE2,Open-BFME5 ILT the UnsignedShort-to-Int _Rb_tree _M_insert at 0x0037B600 constructs the node value through
 ??$_Construct@U?$pair@$$CBGURva00667D40Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBGURva00667D40Value@@@0@ABU10@@Z,0x0002AB80,Open-BFME5 the value _Construct the tree _M_insert at 0x00667D40 reaches
@@ -79324,6 +79326,7 @@ name,address,notes
 ?call@Rva003E11E0@@QAEHPAVObject@@ABVLocomotorSet@@PBVCoord3D@@2@Z,0x003E11E0,RVA-derived call view; caller 0x003F6090+0x32A pushes four arguments and ECX; retail body uses ECX and returns EAX with ret16
 ?call@Rva003F4F70@@QAE_NPBUICoord2D@@HPAU2@PAX@Z,0x003F4F70,RVA-derived call view; matched 775-byte body; caller 0x003F6090+0x292 passes ECX and four stack arguments with AL and ret16
 ?call@Rva003F5340@@QAE_NPBUICoord2D@@HPAX@Z,0x003F5340,RVA-derived call view; matched 527-byte body; caller 0x003F6090+0x447 passes ECX and three stack arguments with AL and ret12
+?call@Rva004A9980@@QAEXXZ,0x004A9980,Address-derived observer-window setup target; full679B body uses no stack args and returns with ret; ControlBar init004A0F70+DDD passes this in ECX through ILT0000B0D7; semantic identity intentionally unclaimed
 ?call@Rva0054FF80@@QAEXAAVAsciiString@@0@Z,0x0054FF80,Address-derived receiver name. Caller at 0x005531D0 passes this in ECX and two AsciiString references. The target returns with ret 8
 ?call@Rva00648E30Peer@@QAE?AW4SerialAuthResult@@XZ,0x00648E30,register-convention call of doCDKeyAuthentication from Thread_Function 0x0064FB90 (peer in ECX)
 ?call@Rva007F6740Receiver@@QAEXPAXHHHHHHHHPB_JIPAPBDIHH@Z,0x007F6740,address-derived direct callee of the 0x00802910 fourteen-argument forwarder; array pointer/count types proved directly by JoinI64 and Join calls
@@ -86186,6 +86189,7 @@ name,address,notes
 ?rva00478ED0@GameWindow@@QAEXP6AXPAV1@@Z@Z,0x00004D04,body 0x00478ED0 (mov eax [esp+4]; mov [ecx+0x1F0] eax; ret 4 = thiscall 1 arg void); called from ControlBar::setControlCommand 0x0049EDE0+0x242 with ecx=esi GameWindow* button after push 0x0043D942; ILT 0x00004D04 jmp 0x00478ED0; address-derived name
 ?rva00479B80@Rva00479B80Window@@QAE?AVUnicodeString@@XZ,0x00007E82,REL32 pin from drawBorder 0x0078E570 (ILT to the 30-byte sret getter at 0x00479B80, receiver+0x30)
 ?rva0048B390@TransitionGroup@@QAEXPAX@Z,0x0048B390,address-derived TransitionGroup list-copy helper body; the verified existing ILT 0x0000BE97 is the compiler resolver candidate for the 0x0048B690 calls; campaign=luna36h-20260907;lane=files
+?rva0049ca90@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,0x0049CA90,Address-derived19B tooltip callback; ControlBar init stores VA0089CA90 through typed GameWindow::winSetTooltipFunc; body forwards first stack arg with zero to TheControlBar via ILT0003BCCD then bare ret; reference callback name conflicts so omitted
 ?rva004BD400@@YAXPAVGameWindow@@VUnicodeString@@@Z,0x0003A52B,ILT jmp to body 0x004BD400 (98B ends bare ret); called by GameWindowManager::gogoGadgetRadioButton 0x0047DEC0+0xD9 after pushing a by-value UnicodeString copy (StringBase<G> copy ctor 0x00888400) and the window then add esp 8 so cdecl void(GameWindow* UnicodeString); callee reads window at arg1 and releases the arg2 buffer; semantic name (Gadget*SetText) unproven so address token kept
 ?rva004CAF70@@YAXXZ,0x004CAF70,OnAccept null-global fallback actual body
 ?rva00511CC0@@YAXH@Z,0x00511CC0,CommandXlat witnessed call 0x5b0286; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
@@ -89219,7 +89223,3 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
-??$Rva00080110Find@U?$_List_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@_STL@@VAsciiString@@@_STL@@YA?AU?$_List_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@0@U10@0ABVAsciiString@@ABUinput_iterator_tag@0@@Z,0x00080110,Typed ASCII list-search call view; complete helper and aligned parseLadder calls verified; evidence=identity_evidence/0062ad50-ladder-parser.md
-??$Rva00080590Find@U?$_List_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@_STL@@VAsciiString@@@_STL@@YA?AU?$_List_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@0@U10@0ABVAsciiString@@@Z,0x00080590,Typed ASCII list-search call view; complete helper and aligned parseLadder calls verified; evidence=identity_evidence/0062ad50-ladder-parser.md
-?call@Rva004A9980@@QAEXXZ,0x004A9980,Address-derived observer-window setup target; full679B body uses no stack args and returns with ret; ControlBar init004A0F70+DDD passes this in ECX through ILT0000B0D7; semantic identity intentionally unclaimed
-?rva0049ca90@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,0x0049CA90,Address-derived19B tooltip callback; ControlBar init stores VA0089CA90 through typed GameWindow::winSetTooltipFunc; body forwards first stack arg with zero to TheControlBar via ILT0003BCCD then bare ret; reference callback name conflicts so omitted
