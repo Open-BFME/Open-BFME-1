@@ -32,11 +32,11 @@ Useful iteration tools:
   exact `./build.sh '<symbol>'` command. Add `--ranked --groups` for repeated byte patterns or
   `--all` for untracked functions.
 
-A new header earlier in the include search path can shadow a recorded dependency
-without invalidating its cached object. When checking such a change, force the
-affected TU with `BUILD_RECOMPILE_ONLY=game/path/to/file.cpp ./build.sh game/path/to/file.cpp`
-and confirm that it recompiles. Existing dependency hashes do not prove which
-header a fresh compiler would select; forcing a build does not fix that cache limitation.
+The object cache records the include search directories as well as the headers
+selected by the compiler. Adding a header earlier in the search path invalidates
+the cached object, even when the formerly selected header is unchanged. Older
+sidecars that used headers lack that evidence and cause a one-time recompile;
+header-free objects can still be reused when their command and source agree.
 
 The naked-candidate queue and `tools/audit_ret_arity.py` require the Python
 `capstone` package for caller-cleaned (`__cdecl`) identity checks. Install it

@@ -18,8 +18,6 @@ import argparse
 import bisect
 import csv
 import io
-import json
-import os
 import struct
 import subprocess
 import sys
@@ -169,24 +167,12 @@ def object_rel32(path):
 def object_is_current(source, obj):
     """True iff obj was compiled from exactly this source text and headers.
 
-    build.compile_is_current's test minus its compile-command arm, which calls
+    build.compile_is_current minus its compile-command arm, which calls
     winepath per source to rebuild the command line: 2 wine subprocesses per TU
     is not something a commit hook may do, and a stale wineserver hangs it
-    outright. Everything that decides which SYMBOL a relocation names — the
-    source and every header it pulled — is still hashed, and a `False` here only
-    ever KEEPS a source in the verify set.
+    outright. A missing or changed sidecar keeps the source in the verify set.
     """
-    sidecar = build._deps_sidecar(obj)
-    if not obj.exists() or not sidecar.exists():
-        return False
-    try:
-        meta = json.loads(sidecar.read_text())
-    except (OSError, ValueError):
-        return False
-    if meta.get("source") != build._hash_file(str(source)):
-        return False
-    return all(build._hash_file(dep if os.path.isabs(dep) else str(ROOT / dep)) == digest
-               for dep, digest in meta.get("deps", {}).items())
+    return build.compile_is_current(source, obj, check_command=False)
 
 
 def row_selector(row):

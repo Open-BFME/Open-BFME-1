@@ -51,27 +51,31 @@ def test_mapping_is_read_again_after_drive_changes(mapped_tree, tmp_path):
 
 
 def test_mapped_header_change_invalidates_a_cached_object(mapped_tree, monkeypatch):
-    _, source, header, _ = mapped_tree
-    output = source.with_suffix(".obj")
+    root, source, header, _ = mapped_tree
+    output = root / "Test.obj"
     output.write_bytes(b"compiled object")
     monkeypatch.setattr(build, "compiler_command", lambda *_: (["cl"], {}))
     monkeypatch.setattr(build, "_cmd_fingerprint", lambda *_: "command")
+    inventory = build.search_inventory(source, ["cl"], {})
     build._write_deps_sidecar(source, output, "command",
-                             r"Note: including file: X:\Projects\Game\game\Thing.h", True)
+                             r"Note: including file: X:\Projects\Game\game\Thing.h", True,
+                             ["cl"], {}, inventory, [])
     assert build.compile_is_current(source, output)
     header.write_text("#define VALUE 222\n")
     assert not build.compile_is_current(source, output)
 
 
 def test_drive_remapping_invalidates_existing_header_evidence(mapped_tree, tmp_path, monkeypatch):
-    _, source, _, devices = mapped_tree
-    output = source.with_suffix(".obj")
+    root, source, _, devices = mapped_tree
+    output = root / "Test.obj"
     output.write_bytes(b"compiled object")
     command, env = ["cl", "-IX:/Projects/Game/game"], {}
     monkeypatch.setattr(build, "compiler_command", lambda *_: (command, env))
     monkeypatch.setattr(build, "_portable", lambda value: value)
+    inventory = build.search_inventory(source, command, env)
     build._write_deps_sidecar(source, output, build._cmd_fingerprint(command, env),
-                             r"Note: including file: X:\Projects\Game\game\Thing.h", True)
+                             r"Note: including file: X:\Projects\Game\game\Thing.h", True,
+                             command, env, inventory, [])
     assert build.compile_is_current(source, output)
     other = tmp_path / "other"
     other.mkdir()
@@ -95,6 +99,9 @@ def test_unknown_or_drive_relative_paths_refuse_cache(mapped_tree, reported, cap
     output = source.with_suffix(".obj")
     output.write_bytes(b"compiled object")
     build._deps_sidecar(output).write_text('{"old": "metadata"}')
-    build._write_deps_sidecar(source, output, "command", "Note: including file: " + reported, True)
+    command, env = ["cl"], {}
+    inventory = build.search_inventory(source, command, env)
+    build._write_deps_sidecar(source, output, "command", "Note: including file: " + reported,
+                              True, command, env, inventory, [])
     assert not build._deps_sidecar(output).exists()
     assert "deps-cache: not caching" in capsys.readouterr().err

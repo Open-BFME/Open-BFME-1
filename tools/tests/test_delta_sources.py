@@ -143,19 +143,28 @@ def test_missing_object_anchor_keeps_caller(selection, monkeypatch):
     assert delta.function_delta_sources("old", "new") == ["game/Caller.cpp"]
 
 
-@pytest.mark.parametrize("state", ["missing", "missing-sidecar", "malformed",
+@pytest.mark.parametrize("state", ["missing", "missing-sidecar", "malformed", "legacy",
                                    "changed-source", "changed-header", "current"])
 def test_actual_object_freshness_check(tmp_path, monkeypatch, state):
-    source, header, obj = [tmp_path / name for name in ("a.cpp", "a.h", "a.obj")]
+    game = tmp_path / "game"
+    game.mkdir()
+    source, header = [game / name for name in ("a.cpp", "a.h")]
+    obj = tmp_path / "a.obj"
     source.write_text("source")
     header.write_text("header")
     sidecar = tmp_path / "a.deps.json"
+    monkeypatch.setattr(delta.build, "ROOT", tmp_path)
     monkeypatch.setattr(delta.build, "_deps_sidecar", lambda path: sidecar)
     if state != "missing":
         obj.touch()
     if state not in {"missing", "missing-sidecar"}:
-        sidecar.write_text(json.dumps({"source": delta.build._hash_file(str(source)),
-                                      "deps": {str(header): delta.build._hash_file(str(header))}}))
+        meta = {"version": 2, "source": delta.build._hash_file(str(source)),
+                "deps": {str(header): delta.build._hash_file(str(header))},
+                "inventory": delta.build.search_inventory(source, ["cl"], {}),
+                "search_roots": ["game"], "retry_dirs": []}
+        if state == "legacy":
+            del meta["version"]
+        sidecar.write_text(json.dumps(meta))
     if state == "malformed":
         sidecar.write_text("{")
     elif state == "changed-source":
@@ -163,6 +172,32 @@ def test_actual_object_freshness_check(tmp_path, monkeypatch, state):
     elif state == "changed-header":
         header.write_text("changed header")
     assert delta.object_is_current(source, obj) == (state == "current")
+
+
+def test_delta_rejects_object_shadowed_by_new_earlier_header(tmp_path, monkeypatch):
+    code = tmp_path / "game"
+    early = tmp_path / "early"
+    late = tmp_path / "late"
+    for path in (code, early, late):
+        path.mkdir()
+    source = code / "a.cpp"
+    source.write_text('#include "Thing.h"\n')
+    old = late / "Thing.h"
+    old.write_text("old")
+    obj = tmp_path / "a.obj"
+    obj.touch()
+    monkeypatch.setattr(delta.build, "ROOT", tmp_path)
+    sidecar = delta.build._deps_sidecar(obj)
+    sidecar.write_text(json.dumps({
+        "version": 2, "source": delta.build._hash_file(str(source)),
+        "deps": {str(old): delta.build._hash_file(str(old))},
+        "inventory": delta.build.search_inventory(source,
+                                                    ["cl", "-I" + str(early), "-I" + str(late)], {}),
+        "search_roots": ["early", "game", "late"], "retry_dirs": [],
+    }))
+    assert delta.object_is_current(source, obj)
+    (early / "Thing.h").write_text("new")
+    assert not delta.object_is_current(source, obj)
 
 
 @pytest.mark.parametrize("second_start,second_size,site", [
