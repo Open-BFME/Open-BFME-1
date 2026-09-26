@@ -519,7 +519,7 @@ static int io_seek (lua_State *L) {
   luaL_arg_check(L, op != -1, 2, "invalid mode");
   op = fseek(f, offset, mode[op]);
   if (op)
-    return pushresult(L, 0);  /* error */
+    return pushresult_close(L, 0);  /* BFME uses its fixed generic I/O error tuple. */
   else {
     lua_pushnumber(L, ftell(f));
     return 1;
