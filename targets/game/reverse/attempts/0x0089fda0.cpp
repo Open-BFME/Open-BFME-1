@@ -1,5 +1,5 @@
 // ?rva0089FDA0@EAStringC@@QAEAAV1@PBDH@Z
-// partial score=0.39 date=2026-09-23
+// partial score=0.4 date=2026-09-26
 // ?rva0089FDA0@EAStringC@@QAEAAV1@PBDH@Z
 // cl: /O2 /DNDEBUG /MD
 
@@ -81,11 +81,11 @@ EAStringC &EAStringC::rva0089FDA0(const char *source, int limit)
 		}
 	}
 
-	int sourceSize = scan - source;
 	int count = 0;
-	const char *text = source;
+	int sourceSize = scan - source;
 	if (sourceSize != 0)
 	{
+		const char *text = source;
 		do
 		{
 			if (*text++ == 0)
@@ -115,7 +115,7 @@ EAStringC &EAStringC::rva0089FDA0(const char *source, int limit)
 		newData->m_size = (unsigned short)newSize;
 		newData->m_hash = 0;
 		((char *)newData)[newSize + 8] = 0;
-		memcpy((char *)newData + 8, (char *)oldData + 8, oldSize);
+		memcpy((char *)newData + 8, (char *)oldData, oldSize);
 		if (--oldData->m_refCount == 0)
 			g_bfmeStringPool1284->free(oldData);
 	}
