@@ -9,9 +9,10 @@
 // Focused TU: same-TU esi-convention getVictimAntiMask (sibling of chooseBest).
 // Body is the BFME 4-slot UseWeaponAgainstTarget merge: anti-mask, garrison
 // range, kind abort, pitch, canAffect + KindOf-88, passenger and spawn.
-// Corrected five-argument ABI probes 1100/1065 bytes, 937 non-relocation
-// differences and 18 relocation-layout mismatches. Retail keeps victim in EBP;
-// this candidate gives EBP to WeaponSet. Removing the self alias did not help.
+// Direct victim-parameter references probe 1100/1065 bytes with 937
+// non-relocation differences and 18 relocation-layout mismatches: retail
+// initially keeps victim in EBP, then reuses EBP for the reverse-slot bound;
+// the candidate keeps WeaponSet in EBP. Removing the self alias did not help.
 
 enum WeaponSlotType
 {
@@ -244,13 +245,11 @@ CanAttackResult WeaponSet::getAbleToUseWeaponAgainstTarget(AbleToAttackType atta
 	const Object *source, const Object *victim, const Coord3D *pos,
 	CommandSourceType commandSource) const
 {
-	const Object *v = victim;
-	
 	int targetAntiMask;
-	if (v != 0)
+	if (victim != 0)
 	{
-		targetAntiMask = getVictimAntiMask(v);
-		pos = &v->m_position;
+		targetAntiMask = getVictimAntiMask(victim);
+		pos = &victim->m_position;
 	}
 	else
 	{
@@ -273,7 +272,7 @@ CanAttackResult WeaponSet::getAbleToUseWeaponAgainstTarget(AbleToAttackType atta
 			Object *out = 0;
 			if (contain->bfmeQueryOwner(source, &out))
 			{
-				if (out == 0 || (out != v && out->bfmeResolve(0) != v->bfmeResolve(0)))
+				if (out == 0 || (out != victim && out->bfmeResolve(0) != victim->bfmeResolve(0)))
 					return ATTACKRESULT_NOT_POSSIBLE;
 			}
 		}
@@ -306,10 +305,10 @@ CanAttackResult WeaponSet::getAbleToUseWeaponAgainstTarget(AbleToAttackType atta
 			Coord3D goalPos;
 			if (contain->calcBestGarrisonPosition(&goalPos, &targetPos))
 				withinAttackRange = (unsigned char)weapon->isSourceObjectWithGoalPositionWithinAttackRange(
-					source, &goalPos, v, &targetPos);
+					source, &goalPos, victim, &targetPos);
 		}
-		else if (v != 0)
-			withinAttackRange = (unsigned char)weapon->isWithinAttackRange(source, v, 0);
+		else if (victim != 0)
+			withinAttackRange = (unsigned char)weapon->isWithinAttackRange(source, victim, 0);
 		else
 			withinAttackRange = (unsigned char)weapon->isWithinAttackRange(
 				source, (const Coord3D *)commandSource, 0);
@@ -352,9 +351,9 @@ CanAttackResult WeaponSet::getAbleToUseWeaponAgainstTarget(AbleToAttackType atta
 	CanAttackResult okResult = (CanAttackResult)(2 + (withinAttackRange ? 1 : 0));
 	if ((this->m_totalAntiMask & targetAntiMask) == 0)
 		return ATTACKRESULT_INVALID_SHOT;
-	if (v == 0)
+	if (victim == 0)
 		return okResult;
-	if (!this->isAnyWithinTargetPitch(source, v))
+	if (!this->isAnyWithinTargetPitch(source, victim))
 		return ATTACKRESULT_INVALID_SHOT;
 
 	int first;
@@ -375,7 +374,7 @@ CanAttackResult WeaponSet::getAbleToUseWeaponAgainstTarget(AbleToAttackType atta
 		Weapon *weapon = this->m_weapons[i];
 		if (weapon == 0)
 			continue;
-		if (!weapon->bfmeCanAffect(source, v))
+		if (!weapon->bfmeCanAffect(source, victim))
 			continue;
 		int kindOff = (i + i * 2) << 3;
 		KindOfMask *mask = (KindOfMask *)((char *)this->m_curWeaponTemplateSet + 0x88 + kindOff);
@@ -385,7 +384,7 @@ CanAttackResult WeaponSet::getAbleToUseWeaponAgainstTarget(AbleToAttackType atta
 			if (mask->bits[b] != 0)
 				break;
 		}
-		if (b == 6 || v->isAnyKindOf(*mask))
+		if (b == 6 || victim->isAnyKindOf(*mask))
 			return okResult;
 	}
 
@@ -402,7 +401,7 @@ CanAttackResult WeaponSet::getAbleToUseWeaponAgainstTarget(AbleToAttackType atta
 				if (member->isAbleToAttack())
 				{
 					CanAttackResult result = member->getAbleToUseWeaponAgainstTarget(
-						attackType, v, pos, commandSource);
+						attackType, victim, pos, commandSource);
 					if (result == ATTACKRESULT_POSSIBLE || result == ATTACKRESULT_POSSIBLE_AFTER_MOVING)
 						return result;
 				}
@@ -414,7 +413,7 @@ CanAttackResult WeaponSet::getAbleToUseWeaponAgainstTarget(AbleToAttackType atta
 	if (spawn != 0)
 	{
 		CanAttackResult result = spawn->getCanAnySlavesUseWeaponAgainstTarget(
-			attackType, v, pos, commandSource);
+			attackType, victim, pos, commandSource);
 		if (result == ATTACKRESULT_POSSIBLE)
 		{
 			srcTmpl = effectiveTemplate(source);

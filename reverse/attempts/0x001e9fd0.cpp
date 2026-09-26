@@ -1,5 +1,5 @@
-// ?privateFireWeapon@Weapon@@QAE_NPBVObject@@PBUCoord3D@@0H1HHHPAH@Z
-// partial score=0.33 date=2026-09-17
+// ?d_001e9fd0@@YAXXZ
+// partial score=0.34 date=2026-09-26
 // cl: /DNDEBUG /MD /O2 /Ob2 /GX-
 // Open-BFME5: Weapon::privateFireWeapon, retail 0x001E9FD0 size 1253.
 // extraBonusFlags then source, then bitcast WeaponBonus ctor. Stub-only
@@ -8,11 +8,15 @@
 // loaded after the six stores. ObjectFilter is the witnessed 8-byte field at
 // WeaponTemplate+0x4e8. Linear helper 0x001E49E0 is a proven custom ABI:
 // ecx=targets, eax=index, edi=source, esi=out (144B x87 sin/cos + ground).
-// Probe is 1137/1253 bytes, frame 0x24 vs retail 0x20, 867 non-relocation
-// differences and 21 relocation-layout mismatches. Target at +0x203 and
-// +0x227 passes the same stack region as aimed position and bonus: do not
-// "fix" the intentional alias. Reordering declarations or dropping the self
-// alias did not change compiler output.
+// Probe is 1132/1253 bytes, frame 0x24 vs retail 0x20, 861 non-relocation
+// differences and 21 relocation-layout mismatches. The isolated helper
+// candidate probes 140/144 bytes but cannot model the retail compiler-private
+// EDI/ESI calling convention as an ordinary C++ function. Target at +0x203
+// and +0x227 aliases the aimed position and bonus in one stack region.
+// Reordering declarations or introducing a separate victim alias did not
+// correct the parent's prologue.
+
+#include <math.h>
 
 struct Coord3D
 {
@@ -58,6 +62,12 @@ public:
 	int getBarrelCount(int wslot) const;
 };
 
+class Matrix3D
+{
+public:
+	float Get_Z_Rotation() const;
+};
+
 class Object
 {
 public:
@@ -73,7 +83,7 @@ public:
 	virtual void _v09();
 	virtual Drawable *getDrawable() const;
 
-	char m_pad[0x38];
+	char m_pad[0x34];
 	Coord3D m_position;
 	char m_pad44[0x1FC - 0x44];
 	class FilterSink *m_filterSink;
@@ -114,7 +124,6 @@ class WeaponTemplate;
 class LinearTargets
 {
 public:
-	void aim(int index, const Object *source, Coord3D *out);
 	char *m_begin;
 	char *m_end;
 	char *m_cap;
@@ -220,6 +229,8 @@ extern float g_bfmeZeroCY;
 
 int GetGameLogicRandomValue(int low, int high, char *file, int line);
 
+#include "0x001e49e0.cpp"
+
 // ?privateFireWeapon@Weapon@@QAE_NPBVObject@@PBUCoord3D@@0H1HHHPAH@Z
 bool Weapon::privateFireWeapon(const Object *source, const Coord3D *sourcePos,
 	const Object *victim, int victimId, const Coord3D *victimPos,
@@ -290,7 +301,8 @@ bool Weapon::privateFireWeapon(const Object *source, const Coord3D *sourcePos,
 		int i = 0;
 		while (i < n)
 		{
-			self->m_template->m_linearTargets.aim((int)self->m_linearIndex, src, aimed);
+			rva001E49E0Aim(&self->m_template->m_linearTargets,
+				(int)self->m_linearIndex, src, aimed);
 			if (!self->m_template->m_linearGate || self->m_linearIndex)
 			{
 				self->m_template->fireWeaponTemplate(src, self->m_wslot, self->m_curBarrel,

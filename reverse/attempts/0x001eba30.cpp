@@ -1,5 +1,5 @@
-// ?setWeaponLock@WeaponSet@@QAE_NW4WeaponSlotType@@W4WeaponLockType@@@Z
-// partial score=0.92 date=2026-09-17
+// ?d_001eba30@@YAXXZ
+// partial score=0.93 date=2026-09-26
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME: WeaponSet::setWeaponLock, retail 0x001EBA30, 214 bytes.
 //
@@ -7,11 +7,15 @@
 // +0x34.  The owner lookup, 304-bit clear mask, and condition-word update are
 // kept in this focused TU because the shared ZH WeaponSet header has a
 // different model-condition ABI.
-// Probe remains 214/214 bytes with 42 register-mirror differences: retail
-// this=EDI, owner=ESI; candidate this=ESI, owner=EDI. Exact GameLogic lookup
-// (0x0009A510) and clear-mask wrapper (0x001B6E60) did not change that.
-// Upstream landed releaseWeaponLock (0x001EBB40) by duplicating clear calls
-// across its branches; compare that source before reshaping this caller.
+// Probe is 214/214 bytes with 32 non-relocation differences and aligned
+// relocations. Retail keeps this=EDI, owner=ESI; the candidate reverses them
+// and schedules the final condition-word update differently. Two compiler
+// read/write barriers preserve the exact five-byte entry shape; source-only
+// register aliases, direct notification, and a separate owner helper did not
+// fix allocation. No byte match has been established.
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 typedef int Int;
 typedef bool Bool;
@@ -110,8 +114,10 @@ public:
 
 Bool WeaponSet::setWeaponLock(WeaponSlotType weaponSlot, WeaponLockType lockType)
 {
+	_ReadWriteBarrier();
 	ObjectID objectID = *reinterpret_cast<const ObjectID *>(
 		reinterpret_cast<const char *>(this) + 0x34);
+	_ReadWriteBarrier();
 	union
 	{
 		void (*asVoid)();

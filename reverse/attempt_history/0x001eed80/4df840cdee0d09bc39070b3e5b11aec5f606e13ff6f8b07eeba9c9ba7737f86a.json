@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "4df840cdee0d09bc39070b3e5b11aec5f606e13ff6f8b07eeba9c9ba7737f86a",
+  "symbol": "?d_001eed80@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.26,
+  "source": "// ?d_001eed80@@YAXXZ\n// partial score=0.26 date=2026-09-26\n\n// checkForAutoHeal(Object *, void *) at retail 0x001EED80, 66 bytes.\n// The vendored callback declares void (?checkForAutoHeal@@YAXPAVObject@@PAX@Z),\n// but retail ends with MOV EAX,1 on both paths. BFME's player iterator treats\n// visitor EAX as a continue/stop result: the candidate therefore returns int\n// (?checkForAutoHeal@@YAHPAVObject@@PAX@Z), always continuing traversal.\n// Same-TU static predicate is included below. Retail passes scan data in EAX\n// and testObj in EBX without stack arguments. The callback candidate probes\n// 66/66 bytes with 44 non-relocation differences and two relocation-layout\n// mismatches; it pushes EDI and holds the scan data there instead of ESI.\n\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB\n// stlport\n#define _STLP_USE_NEWALLOC 1\n#define _STLP_NO_EXCEPTIONS 1\n\n#include \"0x001ee670.cpp\"\n\nint checkForAutoHeal(Object *testObj, void *userData)\n{\n\tAutoHealPlayerScanHelper *helper = (AutoHealPlayerScanHelper *)userData;\n\tif (rva001EE670EligibleForAutoHeal(helper, testObj))\n\t\thelper->m_objectList->push_back(testObj);\n\treturn 1;\n}\n"
+}

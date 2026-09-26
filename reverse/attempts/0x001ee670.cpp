@@ -1,17 +1,16 @@
-// ?rva001EE670EligibleForAutoHeal@@YA_NPAVObject@@PBUAutoHealPlayerScanHelper@@@Z
-// partial score=0.24 date=2026-09-26
+// ?d_001ee670@@YAXXZ
+// partial score=0.25 date=2026-09-26
 // Retail 0x001EE670, 223 bytes. Private same-TU helper of checkForAutoHeal:
-// the callback passes its scan-data pointer in EAX and the candidate Object in
-// EBX, without stack arguments. Compile this together with 0x001eed80.cpp;
-// that TU includes this file before defining the callback. This is a C++
-// candidate, not a byte-match claim.
-// Source: GameLogic/Object/Behavior/AutoHealBehavior.cpp, whose vendored
-// callback supplies the kind-of, ownership and health checks. The retail
-// function has three additional byte flags at helper+0x20..0x22; it does NOT
-// test the vendored m_forbiddenKindOf mask.
-// Probe through 0x001eed80.cpp: 226/223 bytes, 198 non-relocation byte
-// differences, five relocation-layout mismatches. The missing lever is the
-// compiler-private EAX/EBX argument convention, not an extra stack parameter.
+// the callback passes scan data in EAX and the candidate Object in EBX; there
+// are no stack arguments. The candidate probes 215/223 bytes with 180
+// non-relocation differences and six relocation-layout mismatches; it puts
+// the helper in EDI rather than retail's ESI. This is not a byte-match claim.
+// Source: GameLogic/Object/Behavior/AutoHealBehavior.cpp and the vendored
+// callback's kind-of, ownership and health checks. Retail has three additional
+// byte flags at helper+0x20..0x22; it does NOT test m_forbiddenKindOf.
+// Retail reloads both healer->body (+0x200) and the logic frame (+0x3c)
+// around its two virtual getLastDamageTimestamp calls. Retain the two source
+// expressions instead of caching values across a call that may mutate them.
 
 #include <list>
 
@@ -105,7 +104,7 @@ struct AutoHealPlayerScanHelper
 };
 
 static Bool rva001EE670EligibleForAutoHeal(
-	Object *testObj, const AutoHealPlayerScanHelper *helper)
+	const AutoHealPlayerScanHelper *helper, Object *testObj)
 {
 	if (helper->m_skipSelfForHealing && testObj == helper->m_theHealer)
 		return false;
@@ -122,10 +121,8 @@ static Bool rva001EE670EligibleForAutoHeal(
 
 		if (helper->m_bfmeFlag20)
 		{
-			BodyModuleInterface *body = healer->getBodyModule();
-			UnsignedInt frame = TheGameLogic->m_frame;
-			if (body->getLastDamageTimestamp() < frame &&
-				body->getLastDamageTimestamp() + 5 > frame)
+			if (healer->getBodyModule()->getLastDamageTimestamp() < TheGameLogic->m_frame &&
+				healer->getBodyModule()->getLastDamageTimestamp() + 5 > TheGameLogic->m_frame)
 				return false;
 		}
 	}

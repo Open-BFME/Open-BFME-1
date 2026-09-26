@@ -1,5 +1,5 @@
 // ?d_001f0960@@YAXXZ
-// partial score=0.43 date=2026-09-26
+// partial score=0.44 date=2026-09-26
 // cl: /DNDEBUG /DWIN32 /MD /O2 /Ob2 /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 // BezierProjectileBehavior::update, retail 0x001F0960 size 1733.
@@ -13,8 +13,8 @@
 // Object+0x178.
 // Reconstructed the formerly fake WideGuard path: owner/default/object
 // PartitionFilter chain, spatial query, and condition update of nearby objects.
-// Probe is 1557/1733 bytes, frame 0x80 vs retail 0x6c, 1324 non-relocation
-// differences and 43 relocation-layout mismatches; source is NOT exact.
+// Probe is 1549/1733 bytes, frame 0x80 vs retail 0x6c, 1301 non-relocation
+// differences and 42 relocation-layout mismatches; source is NOT exact.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
@@ -96,7 +96,7 @@ class Object : public Thing
 public:
 	Int getLayer() const;
 	void setLayer(PathfindLayerEnum layer);
-	void applySpecialModelCondition(Int a, const void *b, Int c);
+	void applySpecialModelCondition(Int condition, Object *source, Int enabled);
 	void applyOwnerNotify();
 
 	char m_pad04[0x38 - 4];
@@ -367,8 +367,10 @@ UpdateSleepTime BezierProjectileBehavior::update()
 			while (found->cursor != found->entries.end())
 			{
 				Object *other = (found->cursor++)->object;
-				if (other && other != obj)
-					other->applySpecialModelCondition(md->m_modelCondition, 0, 1);
+				if (!other)
+					break;
+				if (other != obj)
+					other->applySpecialModelCondition(md->m_modelCondition, obj, 1);
 			}
 		}
 	}
@@ -418,13 +420,19 @@ UpdateSleepTime BezierProjectileBehavior::update()
 			prevPos = begin[0];
 			prevPos.z -= tumble;
 		}
-		Coord3D curPos;
+		Vector3 curPos;
 		if (m_currentFlightPathStep < pathSize - 1)
-			curPos = begin[m_currentFlightPathStep + 1];
+		{
+			const Coord3D &next = begin[m_currentFlightPathStep + 1];
+			curPos.x = next.x;
+			curPos.y = next.y;
+			curPos.z = next.z;
+		}
 		else
 		{
-			curPos = *flightStep;
-			curPos.z -= tumble;
+			curPos.x = flightStep->x;
+			curPos.y = flightStep->y;
+			curPos.z = flightStep->z - tumble;
 		}
 		Vector3 curDir;
 		curDir.x = curPos.x - prevPos.x;
@@ -438,12 +446,11 @@ UpdateSleepTime BezierProjectileBehavior::update()
 			curDir.y *= inv;
 			curDir.z *= inv;
 		}
-		Vector3 pos;
-		pos.x = flightStep->x;
-		pos.y = flightStep->y;
-		pos.z = flightStep->z;
+		curPos.x = flightStep->x;
+		curPos.y = flightStep->y;
+		curPos.z = flightStep->z;
 		Matrix3D orientMtx;
-		orientMtx.buildTransformMatrix(pos, curDir);
+		orientMtx.buildTransformMatrix(curPos, curDir);
 		obj->setTransformMatrix(&orientMtx);
 	}
 	else
