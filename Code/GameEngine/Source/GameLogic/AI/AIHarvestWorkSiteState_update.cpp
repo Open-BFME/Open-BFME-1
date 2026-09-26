@@ -126,7 +126,7 @@ public:
 	RVA001601E0_AI_SLOT(080)
 	virtual Rva001601E0HarvestTarget *getHarvestTarget() = 0;
 	char m_pad[0x1cc - 4];
-	Rva001601E0Locomotor *m_locomotor;
+	Rva001601E0Locomotor *m_curLocomotor;
 };
 
 class Rva001601E0FlagWord
@@ -314,9 +314,9 @@ StateReturnType AIHarvestWorkSiteState::update()
 				return STATE_SUCCESS;
 			}
 
-			if (self->m_machine->m_owner->m_ai->m_locomotor != 0)
+			if (self->m_machine->m_owner->m_ai->m_curLocomotor != 0)
 			{
-				bfmeLocomotorAction(self->m_machine->m_owner->m_ai->m_locomotor,
+				bfmeLocomotorAction(self->m_machine->m_owner->m_ai->m_curLocomotor,
 					self->m_machine->m_owner, record, 0);
 			}
 		}

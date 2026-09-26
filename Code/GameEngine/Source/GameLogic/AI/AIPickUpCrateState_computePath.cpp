@@ -18,7 +18,7 @@ public:
 	char m_pad00[0x31e];
 	Bool m_waitingForPath;
 	char m_pad31f[7];
-	Bool m_pathRequested;
+	Bool m_isBlockedAndStuck;
 };
 
 struct Object
@@ -64,7 +64,7 @@ Bool AIPickUpCrateState::computePath()
 	}
 
 	AIUpdateInterface *ai = m_machine->m_owner->m_ai;
-	if (ai->m_pathRequested)
+	if (ai->m_isBlockedAndStuck)
 	{
 		int delay = m_delayCounter;
 		if (delay > 0)

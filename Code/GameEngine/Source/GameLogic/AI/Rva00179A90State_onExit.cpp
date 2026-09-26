@@ -34,7 +34,7 @@ public:
 	unsigned char m_pad00[0x194];
 	int m_field194;
 	unsigned char m_pad198[0x34];
-	Rva00179A90Locomotor *m_locomotor;
+	Rva00179A90Locomotor *m_curLocomotor;
 	unsigned char m_pad1d0[0x154];
 	unsigned char m_field324;
 	unsigned char m_field325;
@@ -92,7 +92,7 @@ void Rva00179A90State::onExit(StateExitType status)
 	Rva00179A90AI *ai = (Rva00179A90AI *)m_machine->m_owner->m_ai;
 	if (ai)
 	{
-		Rva00179A90Locomotor *locomotor = ai->m_locomotor;
+		Rva00179A90Locomotor *locomotor = ai->m_curLocomotor;
 		ai->m_field328 = 0;
 		if (locomotor)
 			locomotor->m_flags &= ~8u;

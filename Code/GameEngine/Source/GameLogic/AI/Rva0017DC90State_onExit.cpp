@@ -63,12 +63,12 @@ public:
 
 	Locomotor *getCurLocomotor() const
 	{
-		return m_locomotor;
+		return m_curLocomotor;
 	}
 
 private:
 	unsigned char m_unreconstructed[ 0x1cc ];
-	Locomotor *m_locomotor;
+	Locomotor *m_curLocomotor;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h

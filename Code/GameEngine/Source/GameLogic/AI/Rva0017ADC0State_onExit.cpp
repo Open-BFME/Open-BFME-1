@@ -26,7 +26,7 @@ class Rva0017ADC0AI
 public:
 	Rva0017ADC0Locomotor *getCurLocomotor() const
 	{
-		return m_locomotor;
+		return m_curLocomotor;
 	}
 
 	void clearCanPathThroughUnits()
@@ -36,7 +36,7 @@ public:
 
 private:
 	unsigned char m_pad00[0x1cc];
-	Rva0017ADC0Locomotor *m_locomotor;
+	Rva0017ADC0Locomotor *m_curLocomotor;
 	unsigned char m_pad1d0[0x158];
 	unsigned char m_canPathThroughUnits;
 };
