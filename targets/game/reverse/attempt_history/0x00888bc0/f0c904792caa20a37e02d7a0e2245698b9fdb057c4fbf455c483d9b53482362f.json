@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "f0c904792caa20a37e02d7a0e2245698b9fdb057c4fbf455c483d9b53482362f",
+  "symbol": "??0?$StringBase@D@@AAE@PBD@Z",
+  "score_kind": "author-estimate",
+  "score": 0.7222,
+  "source": "// ??0?$StringBase@D@@AAE@PBD@Z\n// partial score=0.7222 date=2026-09-26\n// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib\n#include <stddef.h>\n#define _DLL\n#include <string.h>\n#include \"string_base.h\"\n\ntemplate <>\nStringBase<char>::StringBase(const char *str)\n{\n    m_data = 0;\n    if (str) {\n        int len = (int)strlen(str);\n        if (m_data && str == &m_data->data[0])\n            return;\n        if (len)\n            ensureUniqueBufferOfSize(len, false, str, len, 0, 0);\n        else\n            releaseBuffer();\n    } else {\n        releaseBuffer();\n    }\n}\n"
+}
