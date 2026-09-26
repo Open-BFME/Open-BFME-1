@@ -1,10 +1,17 @@
-// ?getAbleToAttackSpecificObject@WeaponSet@@QBE?AW4CanAttackResult@@W4AbleToAttackType@@PBVObject@@1W4CommandSourceType@@W4WeaponSlotType@@@Z
-// partial score=0.48 date=2026-09-04
+// ?d_001ebeb0@@YAXXZ
+// partial score=0.49 date=2026-09-26
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: WeaponSet::getAbleToAttackSpecificObject, retail 0x001EBEB0 size 1065.
+// Retail 0x001EBEB0 (1065 bytes), five stack arguments: attack type, source,
+// victim, target position, command source. The four-argument Object wrapper
+// at 0x001BE310 forwards these, as does the eligibility body at 0x001EC8E0.
+// The existing relocation-derived AttackSpecificObject name for this body
+// conflicts with its observed position-pointer ABI; do not pin that name.
 // Focused TU: same-TU esi-convention getVictimAntiMask (sibling of chooseBest).
 // Body is the BFME 4-slot UseWeaponAgainstTarget merge: anti-mask, garrison
 // range, kind abort, pitch, canAffect + KindOf-88, passenger and spawn.
+// Corrected five-argument ABI probes 1100/1065 bytes, 937 non-relocation
+// differences and 18 relocation-layout mismatches. Retail keeps victim in EBP;
+// this candidate gives EBP to WeaponSet. Removing the self alias did not help.
 
 enum WeaponSlotType
 {
@@ -124,7 +131,7 @@ public:
 	virtual void slot04(); virtual void slot05();
 	virtual CanAttackResult getCanAnySlavesUseWeaponAgainstTarget(
 		AbleToAttackType attackType, const Object *victim, const Coord3D *pos,
-		WeaponSlotType specificSlot);
+		CommandSourceType commandSource);
 };
 
 class Weapon
@@ -150,8 +157,8 @@ public:
 	bool isAbleToAttack() const;
 	void *bfmeResolve(int unused) const;
 	SpawnBehaviorInterface *getSpawnBehaviorInterface() const;
-	CanAttackResult getAbleToAttackSpecificObject(AbleToAttackType attackType,
-		const Object *target, const Coord3D *pos, WeaponSlotType specificSlot) const;
+	CanAttackResult getAbleToUseWeaponAgainstTarget(AbleToAttackType attackType,
+		const Object *target, const Coord3D *pos, CommandSourceType commandSource) const;
 
 	char m_pad_08[0x38 - 8];
 	Coord3D m_position;
@@ -170,9 +177,9 @@ public:
 class WeaponSet
 {
 public:
-	CanAttackResult getAbleToAttackSpecificObject(AbleToAttackType attackType,
-		const Object *source, const Object *victim, CommandSourceType commandSource,
-		WeaponSlotType specificSlot) const;
+	CanAttackResult getAbleToUseWeaponAgainstTarget(AbleToAttackType attackType,
+		const Object *source, const Object *victim, const Coord3D *pos,
+		CommandSourceType commandSource) const;
 
 private:
 	bool isAnyWithinTargetPitch(const Object *source, const Object *victim) const;
@@ -229,15 +236,17 @@ static int getVictimAntiMask(const Object *victim)
 	return 2 + (victim->isKindOf((KindOfType)7) ? 0x100 : 0);
 }
 
-// ?getAbleToAttackSpecificObject@WeaponSet@@QBE?AW4CanAttackResult@@W4AbleToAttackType@@PBVObject@@1W4CommandSourceType@@W4WeaponSlotType@@@Z present-unmatched
-CanAttackResult WeaponSet::getAbleToAttackSpecificObject(AbleToAttackType attackType,
-	const Object *source, const Object *victim, CommandSourceType commandSource,
-	WeaponSlotType specificSlot) const
+// Position and command-source homes are distinct: the victim arm overwrites
+// the incoming position home with &victim->m_position. In the ground-target
+// range call retail instead passes the final argument as the position pointer;
+// preserve that observed call, without assuming the enums encode pointers.
+CanAttackResult WeaponSet::getAbleToUseWeaponAgainstTarget(AbleToAttackType attackType,
+	const Object *source, const Object *victim, const Coord3D *pos,
+	CommandSourceType commandSource) const
 {
 	const Object *v = victim;
-	const WeaponSet *self = this;
+	
 	int targetAntiMask;
-	const Coord3D *pos;
 	if (v != 0)
 	{
 		targetAntiMask = getVictimAntiMask(v);
@@ -246,7 +255,6 @@ CanAttackResult WeaponSet::getAbleToAttackSpecificObject(AbleToAttackType attack
 	else
 	{
 		targetAntiMask = 2;
-		pos = (const Coord3D *)commandSource;
 	}
 
 	Object *containedBy = source->m_containedBy;
@@ -274,14 +282,14 @@ CanAttackResult WeaponSet::getAbleToAttackSpecificObject(AbleToAttackType attack
 	unsigned char withinAttackRange = 0;
 	unsigned char hasAWeaponInRange = 0;
 	unsigned char hasAWeapon = 0;
-	Weapon **slot = (Weapon **)self->m_weapons;
+	Weapon **slot = (Weapon **)this->m_weapons;
 	for (int i = 0; i < 4; ++i, ++slot)
 	{
 		Weapon *weapon = *slot;
 		if (weapon == 0)
 			continue;
 		hasAWeapon = 1;
-		if ((self->m_totalAntiMask & targetAntiMask) == 0)
+		if ((this->m_totalAntiMask & targetAntiMask) == 0)
 			continue;
 		if ((source->m_flags94 & 0x10) != 0)
 		{
@@ -303,7 +311,8 @@ CanAttackResult WeaponSet::getAbleToAttackSpecificObject(AbleToAttackType attack
 		else if (v != 0)
 			withinAttackRange = (unsigned char)weapon->isWithinAttackRange(source, v, 0);
 		else
-			withinAttackRange = (unsigned char)weapon->isWithinAttackRange(source, pos, 0);
+			withinAttackRange = (unsigned char)weapon->isWithinAttackRange(
+				source, (const Coord3D *)commandSource, 0);
 		if (withinAttackRange)
 		{
 			hasAWeaponInRange = 1;
@@ -341,19 +350,19 @@ CanAttackResult WeaponSet::getAbleToAttackSpecificObject(AbleToAttackType attack
 		return ATTACKRESULT_INVALID_SHOT;
 
 	CanAttackResult okResult = (CanAttackResult)(2 + (withinAttackRange ? 1 : 0));
-	if ((self->m_totalAntiMask & targetAntiMask) == 0)
+	if ((this->m_totalAntiMask & targetAntiMask) == 0)
 		return ATTACKRESULT_INVALID_SHOT;
 	if (v == 0)
 		return okResult;
-	if (!self->isAnyWithinTargetPitch(source, v))
+	if (!this->isAnyWithinTargetPitch(source, v))
 		return ATTACKRESULT_INVALID_SHOT;
 
 	int first;
 	int last;
-	if (self->m_curWeaponLockedStatus != 0)
+	if (this->m_curWeaponLockedStatus != 0)
 	{
-		first = (int)self->m_curWeapon;
-		last = (int)self->m_curWeapon;
+		first = (int)this->m_curWeapon;
+		last = (int)this->m_curWeapon;
 	}
 	else
 	{
@@ -363,13 +372,13 @@ CanAttackResult WeaponSet::getAbleToAttackSpecificObject(AbleToAttackType attack
 
 	for (int i = first; i >= last; --i)
 	{
-		Weapon *weapon = self->m_weapons[i];
+		Weapon *weapon = this->m_weapons[i];
 		if (weapon == 0)
 			continue;
 		if (!weapon->bfmeCanAffect(source, v))
 			continue;
 		int kindOff = (i + i * 2) << 3;
-		KindOfMask *mask = (KindOfMask *)((char *)self->m_curWeaponTemplateSet + 0x88 + kindOff);
+		KindOfMask *mask = (KindOfMask *)((char *)this->m_curWeaponTemplateSet + 0x88 + kindOff);
 		int b = 0;
 		for (; b < 6; ++b)
 		{
@@ -392,8 +401,8 @@ CanAttackResult WeaponSet::getAbleToAttackSpecificObject(AbleToAttackType attack
 				Object *member = (Object *)node[2];
 				if (member->isAbleToAttack())
 				{
-					CanAttackResult result = member->getAbleToAttackSpecificObject(
-						attackType, v, pos, specificSlot);
+					CanAttackResult result = member->getAbleToUseWeaponAgainstTarget(
+						attackType, v, pos, commandSource);
 					if (result == ATTACKRESULT_POSSIBLE || result == ATTACKRESULT_POSSIBLE_AFTER_MOVING)
 						return result;
 				}
@@ -405,7 +414,7 @@ CanAttackResult WeaponSet::getAbleToAttackSpecificObject(AbleToAttackType attack
 	if (spawn != 0)
 	{
 		CanAttackResult result = spawn->getCanAnySlavesUseWeaponAgainstTarget(
-			attackType, v, pos, specificSlot);
+			attackType, v, pos, commandSource);
 		if (result == ATTACKRESULT_POSSIBLE)
 		{
 			srcTmpl = effectiveTemplate(source);

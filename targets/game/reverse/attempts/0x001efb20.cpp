@@ -1,13 +1,14 @@
-// ?bfmeNudge@Gen_001EFCE0@@QAEXPAVObject@@@Z
-// partial score=0.42 date=2026-09-04
+// ?d_001efb20@@YAXXZ
+// partial score=0.43 date=2026-09-26
 // cl: /DNDEBUG /MD /O2 /Ob2 /GX-
 // Open-BFME5: retail 0x001EFB20 size 356, dump d_001e7c30.
 // Same +0x44/+0x48 12-byte vector as Gen_001EFCE0::bfmeCost.
-// Probe last: 297 vs 356, frame 0x24 vs 0x1c, edi vs ebp for other,
-// finish-before-start, add/lea last-index. x87 spill of origin+delta
-// plus bfmeIntersects test Coord3D is the frame wall. Do not add a
-// third Coord3D local. Retail interleaves push ebx/esi inside the /6
-// magic and keeps ecx=this until after pick.
+// The retail loop updates its position in place, then backs up one step
+// after finding an unoccupied location (or exhausting the step limit).
+// The same 12-byte position occupies [esp+0x14..0x1f] throughout the loop.
+// Current probe: 297/356 bytes, 253 non-relocation byte differences, five
+// relocation-layout mismatches; local frame 0x18 versus retail 0x1c.
+// Explicit preheader n++/old-n loop variant worsened to 299 bytes; reverted.
 
 typedef float Real;
 typedef bool Bool;
@@ -61,7 +62,8 @@ void Gen_001EFCE0::bfmeNudge(Object *other)
 	if (!other)
 		return;
 
-	int last = (int)(m_finish - m_start) - 1;
+	Coord3D *begin = m_start;
+	int last = (int)(m_finish - begin) - 1;
 	int pick;
 	if ((unsigned)last >= (unsigned)m_index)
 		pick = m_index;
@@ -89,11 +91,10 @@ void Gen_001EFCE0::bfmeNudge(Object *other)
 	while (n <= 12)
 	{
 		n++;
-		Coord3D test;
-		test.x = pos.x + delta.x;
-		test.y = pos.y + delta.y;
-		test.z = pos.z + delta.z;
-		if (!src->m_geometryInfo.bfmeIntersects(test, thisAngle,
+		pos.x += delta.x;
+		pos.y += delta.y;
+		pos.z += delta.z;
+		if (!src->m_geometryInfo.bfmeIntersects(pos, thisAngle,
 			other->m_geometryInfo, other->m_position, other->m_orientation))
 			break;
 	}

@@ -5,6 +5,10 @@
 // Matched Object 3-arg wrapper at 0x001C77B0 calls ILT 0x291D6 -> this body.
 // Eligibility half then forwards through ILT 0x1A889 (UseWeapon-merge at 0x001EBEB0).
 // Function-local static NameKey "StealthUpdate" is what buys the SEH frame.
+// Candidate probes 1022/999 bytes, 749 non-relocation differences and 48
+// relocation-layout mismatches; static key initializer has sub esp,8 where
+// retail SEH uses push ecx. Declaring nameToKey throw() removed SEH and
+// worsened to 926/999 bytes, so that experiment was reverted.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
