@@ -1,5 +1,5 @@
 // ?getAircraftPath@Pathfinder@@QAEPAVPath@@PBVObject@@PBUCoord3D@@@Z
-// partial score=0.87 date=2026-09-20
+// partial score=0.88 date=2026-09-26
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // BFME Pathfinder::getAircraftPath, retail RVA 0x003EDC50.
 //
@@ -14,13 +14,8 @@ typedef float Real;
 
 struct Coord3D
 {
-	Coord3D &operator=(const Coord3D &other)
-	{
-		y = other.y;
-		x = other.x;
-		z = other.z;
-		return *this;
-	}
+	Coord3D() {}
+	Coord3D(const Coord3D &other) : x(other.x), y(other.y), z(other.z) {}
 
 	Real x;
 	Real y;
