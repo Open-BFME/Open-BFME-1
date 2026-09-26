@@ -1,5 +1,5 @@
 // ?IMECandidateTextAreaDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
-// partial score=0.466 date=2026-09-26
+// partial score=0.43 date=2026-09-26
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /DTRIAL_NO_BCOLOR /Iinputs/reference/shims/displaystring /Iinputs/reference/shims/displaystringmanager /Iinputs/reference/shims/stringbaseascii /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4
@@ -26,7 +26,7 @@ public:
 	{
 		((StringBase<wchar_t> *)this)->releaseBuffer();
 	}
-	void __cdecl format( UnicodeString fmt, ... );
+	void __cdecl format( const wchar_t *fmt, ... );
 	int getLength() const
 	{
 		return ((const StringBase<wchar_t> *)this)->getLength();
@@ -149,14 +149,8 @@ void IMECandidateTextAreaDraw( GameWindow *window, WinInstanceData *instData )
 		start.y = origin.y;
 		end.x = start.x + size.x;
 		end.y = start.y + size.y;
-		TheWindowManager->winOpenRect( 0xFFDA9650, borderWidth,
-			start.x, start.y, end.x, end.y );
-		start.x++;
-		start.y++;
-		end.x--;
-		end.y--;
-		TheWindowManager->winFillRect( black, 0,
-			start.x, start.y, end.x, end.y );
+		TheWindowManager->winOpenRect( black, borderWidth,
+											 start.x, start.y, end.x, end.y );
 	}
 
 	if( Dstring == NULL )
@@ -219,7 +213,7 @@ void IMECandidateTextAreaDraw( GameWindow *window, WinInstanceData *instData )
 	#endif
 		}
 
-		number.format( UnicodeString( L"%d:" ), i + ime->getIndexBase() );
+		number.format( L"%d:", i + ime->getIndexBase() );
 		Dstring->setText( number );
 		width = Dstring->getWidth();
 		Dstring->setColors( tcolor, black );
