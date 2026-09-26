@@ -70,6 +70,15 @@ class basic_streambuf
 public:
 	int sbumpc();
 };
+// MSVC 7.1 uses unsigned short for wchar_t in this project.
+typedef unsigned short WideChar;
+template <>
+class basic_streambuf<WideChar, char_traits<WideChar> >
+{
+public:
+	WideChar sbumpc();
+};
+
 
 template <class CharT, class Traits>
 class istreambuf_iterator
@@ -316,6 +325,13 @@ typedef istreambuf_iterator<char, char_traits<char> > NarrowTimeIterator;
 
 template const char *__get_formatted_time<NarrowTimeIterator, const char *>(
 	NarrowTimeIterator, NarrowTimeIterator,
+	const char *, const char *, const _Time_Info &,
+	ios_base::iostate &, tm *);
+
+typedef istreambuf_iterator<WideChar, char_traits<WideChar> > WideTimeIterator;
+
+template const char *__get_formatted_time<WideTimeIterator, const char *>(
+	WideTimeIterator, WideTimeIterator,
 	const char *, const char *, const _Time_Info &,
 	ios_base::iostate &, tm *);
 
