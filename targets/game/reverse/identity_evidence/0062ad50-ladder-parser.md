@@ -63,3 +63,21 @@ from StringBase.cpp and AsciiStringNative.cpp; no shared header was changed.
   rows and were never added to the ledger.
 * Pin consistency passed, including route derivation. Progress reports
   +3077 native C++ bytes; helper dependency credit is zero.
+
+## LadderList constructor sibling, 0062C020
+
+The 925-byte constructor is now native in `LadderListConstructor.cpp`, replacing
+its sole naked source. Complete extent is [0062C020,0062C3BD): RET at 0062C3BC,
+then INT3 padding. The EA LadderList constructor has the same three list
+members at 00/04/08, config virtual getter at slot34h, ladder section grammar,
+call to independently established parseLadder, and final loadLocalLadders call.
+The existing SetUpGameSpy call through the ILT also reaches this constructor;
+its old naked caller is supporting xref evidence, not independent source proof.
+
+Canonical string delegates make the first baseline exactly925 bytes with24
+register-operand differences in the first comparisons. The full comparison's
+`if (result != 0) return result; return myLen-len;` form resolves those bytes,
+retaining the same byte/length comparison semantics and complete helper body.
+Strict add_match gate passed1/1 with44 relocations; eight literal and three
+empty-string references are verified. There are no new pins. Existing legacy
+LadderDefs.cpp generated EH helper owners remain unchanged. Native gain925B.
