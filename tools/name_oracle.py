@@ -363,6 +363,7 @@ def scan(paths, staged, texts=None):
     this commit INTRODUCED from one it merely inherited.
     """
     wit = load_witness()
+    witnessed_owners = {owner for owner, _ in wit}
     tally = collections.Counter()
     todo, conflicts = [], []
     for path in sources(paths, staged):
@@ -375,12 +376,14 @@ def scan(paths, staged, texts=None):
         else:
             text = path.read_text(encoding="utf-8", errors="replace")
         for decl in DECL.finditer(text):
+            tally["declarations scanned"] += 1
             owner = decl.group(1)
             members, refused = outer_members(text, decl.end() - 1, bool(decl.group("base")))
             if refused:
                 # Counted, never silent: refusals are the safety property, so a drop
                 # in this number is the signal that the model started guessing.
                 tally["refused: " + refused.split(" '")[0]] += 1
+                tally["skipped witnessed declarations"] += owner in witnessed_owners
             for member, off, line, stated, span, is_array in members:
                 tally["members computed"] += 1
                 if stated is not None:
@@ -434,6 +437,19 @@ def scan(paths, staged, texts=None):
                 else:
                     conflicts.append(rec)
     return tally, todo, conflicts
+
+
+def print_coverage(tally):
+    reasons = [(reason.removeprefix("refused: "), count)
+               for reason, count in tally.items() if reason.startswith("refused: ")]
+    scanned = tally["declarations scanned"]
+    skipped = sum(count for _, count in reasons)
+    print(f"name_oracle coverage: {scanned} declarations scanned, "
+          f"{scanned - skipped} accepted, {skipped} skipped "
+          f"({tally['skipped witnessed declarations']} with class witnesses); "
+          f"{tally['members computed']} members computed")
+    for reason, count in sorted(reasons):
+        print(f"  skipped {count}: {reason}")
 
 
 def selfcheck(paths):
@@ -593,6 +609,7 @@ def main():
         # name. No judgement in any of these -- the answer is in the right column.
         print(f"name_oracle: {len(todo)} placeholder(s) the evidence can name "
               f"({len({key(t) for t in todo})} distinct)")
+        print_coverage(tally)
         for t in sorted(todo, key=lambda r: (r[2], r[3])):
             print(f"  {t[0]}:{t[1]}: {t[2]}+{t[3]:#x}  {t[4]}  ->  {t[5]}  ({t[7]})")
         if not args.apply:
@@ -665,6 +682,7 @@ def main():
           f"{tally['variant']} spelling variants, {len(todo)} nameable placeholders (--todo), "
           f"{len(findings)} conflicts ({len({key(f) for f in findings})} distinct), "
           f"{len(fresh)} not in the baseline")
+    print_coverage(tally)
     for f in fresh:
         print(f"  {f[0]}:{f[1]}: {f[2]}+{f[3]:#x} says {f[4]!r}, witness says {f[5]!r} "
               f"(confidence {f[6]:.2f}, {f[7]})")

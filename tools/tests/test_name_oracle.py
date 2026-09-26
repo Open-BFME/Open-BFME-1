@@ -15,6 +15,8 @@ decisions --selfcheck cannot see, because a refused struct never reaches it.
 import sys
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import name_oracle as N
 
@@ -257,3 +259,37 @@ def test_witnessed_offset_answers_without_a_hint(monkeypatch, capsys):
 def test_zh_members_reads_the_committed_dump():
     zh = N.zh_members("Money")
     assert zh[4] == ["m_money"] and "sizeof" not in sum(zh.values(), [])
+
+
+@pytest.mark.parametrize("mode, conflict, expected_code", [
+    ("--todo", False, 0), ("--check", False, 0),
+    ("--todo", True, 0), ("--check", True, 1),
+])
+def test_empty_todo_reports_skipped_witnessed_classes_without_changing_exit_status(
+        monkeypatch, capsys, tmp_path, mode, conflict, expected_code):
+    path = tmp_path / "source.cpp"
+    member = "m_wrongName" if conflict else "m_value"
+    path.write_text("struct Known : public Base {\n int m_unk04;\n};\n"
+                    "struct Unknown : public Base {\n int m_unk04;\n};\n"
+                    f"struct Computable {{\n int {member};\n}};\n")
+    monkeypatch.setattr(N, "ROOT", tmp_path)
+    monkeypatch.setattr(N, "load_witness", lambda: {
+        ("Known", 4): ("m_count", 1.0, "layout_witness"),
+        ("Computable", 0): ("m_value", 1.0, "layout_witness"),
+    })
+    monkeypatch.setattr(N, "read_baseline", lambda: set())
+    monkeypatch.setattr(sys, "argv", ["name_oracle.py", mode, str(path)])
+
+    assert N.main() == expected_code
+
+    output = capsys.readouterr()
+    if mode == "--todo":
+        assert output.out.splitlines()[0] == (
+            "name_oracle: 0 placeholder(s) the evidence can name (0 distinct)")
+    else:
+        assert f"{int(conflict)} conflicts ({int(conflict)} distinct)" in output.out
+        assert ("says 'm_wrongName'" in output.out) == conflict
+    assert "3 declarations scanned, 1 accepted, 2 skipped (1 with class witnesses)" in output.out
+    assert "1 members computed" in output.out
+    assert "skipped 2: base class of unknown size" in output.out
+    assert bool(output.err) == bool(expected_code)
