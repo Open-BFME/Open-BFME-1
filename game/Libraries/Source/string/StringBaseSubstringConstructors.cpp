@@ -8,3 +8,10 @@ StringBase<char>::StringBase(const StringBase<char> &src, int start, int len)
     m_data = 0;
     set(src, start, len);
 }
+
+template <>
+StringBase<wchar_t>::StringBase(const StringBase<wchar_t> &src, int start, int len)
+{
+    m_data = 0;
+    set(src, start, len);
+}
