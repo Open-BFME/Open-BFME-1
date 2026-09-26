@@ -29,3 +29,9 @@ void d_00891fa0(void)
     record.kind = 3;
     Rva00891FA0SendRecord(&record, 5);
 }
+
+void Rva00892150SetReady(int ready)
+{
+    g_rva00891FA0Ready = ready;
+    g_rva00891FA0Value = 0;
+}
