@@ -66,3 +66,13 @@ int Rva0065B350::handle(void *key, int status, const char *text, int, int)
     reinterpret_cast<Gen_00654130 *>(this)->bfmeErase(key);
     return 1;
 }
+
+// GameSpy's completion callback passes the map owner as its final argument.
+int bfmeLadderCountCompleted(int key, int status, char *text, __int64 timestamp, void *context)
+{
+    if (!context)
+        return 1;
+    return static_cast<Rva0065B350 *>(context)->handle(
+        reinterpret_cast<void *>(key), status, text,
+        reinterpret_cast<const int *>(&timestamp)[0], reinterpret_cast<const int *>(&timestamp)[1]);
+}
