@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "92b1fbff51ea3fb0b74368ad9811f9f27a0d7048c15bc7915a012a71c5e36958",
+  "symbol": "?d_0094c0a0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?d_0094c0a0@@YAXXZ\n// partial score=0.95 date=2026-09-26\n// cl: /O2 /Ob0\n\nnamespace _STL { struct _Rb_tree_node_base; }\nextern \"C\" _STL::_Rb_tree_node_base *__cdecl bfme_RbGlobalBoolDecrement_82B8E0(_STL::_Rb_tree_node_base *);\nclass Rva0094C0A0TreePrevValue\n{\n\t_STL::_Rb_tree_node_base *m_node;\npublic:\n\tvoid *value() const;\n};\nvoid *Rva0094C0A0TreePrevValue::value() const\n{\n\treturn reinterpret_cast<unsigned char *>(bfme_RbGlobalBoolDecrement_82B8E0(m_node)) + 0x10;\n}\n"
+}
