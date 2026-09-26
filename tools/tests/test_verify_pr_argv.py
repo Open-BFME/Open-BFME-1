@@ -13,11 +13,22 @@ SCRIPT = Path(__file__).resolve().parents[1] / "verify_pr.sh"
 
 @pytest.fixture
 def pr_runner(tmp_path):
+    # Directories the stubbed tools must be searched AFTER, ahead of the host PATH.
+    tool_dirs = []
     if os.name == "nt":
+        # Git for Windows' bin/bash.exe is a launcher that PREPENDS mingw64/bin
+        # and usr/bin to PATH, so the real git.exe shadowed the stub `git` and
+        # verify_pr.sh ran `git rev-parse` against the fixture directory
+        # ("fatal: not a git repository"). usr/bin/bash.exe is the MSYS shell
+        # itself and keeps PATH as given; usr/bin is appended explicitly for
+        # the coreutils the script needs.
         git = Path(shutil.which("git") or "")
-        candidates = [git.parent.parent / "bin/bash.exe",
-                      Path("C:/Program Files/Git/bin/bash.exe")]
-        bash = next((str(path) for path in candidates if path.is_file()), None)
+        roots = [parent for parent in git.parents if (parent / "usr/bin/bash.exe").is_file()]
+        roots.append(Path("C:/Program Files/Git"))
+        root_dir = next((r for r in roots if (r / "usr/bin/bash.exe").is_file()), None)
+        bash = str(root_dir / "usr/bin/bash.exe") if root_dir else None
+        if root_dir:
+            tool_dirs.append(str(root_dir / "usr/bin"))
     else:
         bash = shutil.which("bash")
     if not bash:
@@ -72,7 +83,13 @@ else:
     }
     for name, body in scripts.items():
         path = bindir / name
-        path.write_text(f"#!{sys.executable}\n" + body, encoding="utf-8")
+        # LF-only stdout, as the real tools/delta_sources.py does: Windows
+        # text-mode stdout ends every line in CR, `mapfile -t` keeps it, and
+        # the selector "source:<path>\r" names no file.
+        path.write_text(f"#!{sys.executable}\n"
+                        "import sys as _sys\n"
+                        "_sys.stdout.reconfigure(newline='\\n')\n"
+                        + body, encoding="utf-8")
         path.chmod(0o755)
 
     build = root / "build.sh"
@@ -89,7 +106,8 @@ if [ "$n" -eq "${FAIL_CHUNK:-0}" ]; then exit 23; fi
     build.chmod(0o755)
 
     def run(selector_count=240, name_length=140, fail_chunk=0):
-        env = dict(os.environ, PATH=f"{bindir}:{os.environ['PATH']}",
+        env = dict(os.environ, PATH=os.pathsep.join(
+                       [str(bindir), *tool_dirs, os.environ["PATH"]]),
                    FIXTURE_ROOT=str(root), SELECTOR_COUNT=str(selector_count),
                    NAME_LENGTH=str(name_length), FAIL_CHUNK=str(fail_chunk),
                    BUILD_POOL="6")
