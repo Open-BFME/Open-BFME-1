@@ -175,3 +175,8 @@ void Rva007F5B40( Rva007E8810Message *msg, Rva007F7980Browser *browser )
 		browser->m_listener->onSlot18( 0 );
 	}
 }
+
+void Rva007F79F0Callback( Rva007E8810Message *msg, Rva007F7980Browser *browser )
+{
+	browser->onRegionCount( msg );
+}
