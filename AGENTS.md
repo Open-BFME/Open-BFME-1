@@ -90,6 +90,11 @@ other `SegmentedLineClass::Set_Texture` where retail never calls it -- and both
 reported the invention as a missing pin. Both bodies had ZERO unpinned targets.
 A link failure against a real retail body almost always means you named a callee
 wrong, not that it needs a pin. Never add a pin on a seat's say-so.
+Under a callee whose name carries no signature (`?d_`, gen_asm, scaffold,
+lift) `callees.py` prints `inferred ABI:` from `tools/callee_protos.py` --
+convention, stack slots and result use, read from the callee's `ret N`, its
+callers' ecx loads and cleanup, and Ghidra (5 of 400 landed conventions wrong,
+arity 268/273). Declare the callee that way before blaming your own body.
 
 **Carry small dependency repairs with the body.** A narrowly blocked candidate
 does not automatically mean switch candidates. If the scoped gate fails only on

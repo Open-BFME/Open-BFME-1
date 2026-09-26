@@ -26,6 +26,9 @@ Exit status 3 and a WARNING line mean decoding did not reach the requested size,
 so the listing is incomplete.
 
 Read it BEFORE writing the body, but verify the callee contract independently.
+Under a callee whose name carries no real signature (placeholder, gen_asm dump,
+scaffold, lift) it prints the contract inferred from the retail bytes by
+tools/callee_protos.py: convention, stack slots and whether callers read eax.
 Generated dumps and thunks can have placeholder void signatures unrelated to
 the actual ABI. A ledger name is neither signature proof nor a symbols.csv pin.
 """
@@ -43,6 +46,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import build
+import callee_protos
 
 IMAGE_MAX = 0x1400000
 
@@ -173,6 +177,9 @@ def main():
             continue
         via = f" -> {resolved:#x}" if resolved != target else ""
         print(f"  {target:#x}{via}  x{hits}  {name or '*** UNNAMED IN FUNCTION LEDGER ***'}")
+        contract = callee_protos.describe(resolved)
+        if contract:
+            print(f"      {contract}")
 
     print(f"\n{len(counts)} distinct call target(s), {len(unpinned)} unnamed in function ledger")
     if unpinned:

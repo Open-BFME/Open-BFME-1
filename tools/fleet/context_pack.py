@@ -15,6 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'tools'))
 import build
+import callee_protos
 import capstone
 from portable_lock import lock
 
@@ -280,6 +281,9 @@ def pack(rva, max_items=8):
             if real is not None:
                 line += f"  => jmp 0x{real:08X} {name_of(real)}"
             out.append(line)
+            abi = callee_protos.describe(real if real is not None else tgt)
+            if abi:
+                out.append(f"      {abi}")
         if len(callees) > max_items:
             out.append(f"    ... {len(callees) - max_items} more distinct target(s) omitted; "
                        f"full inventory: python3 tools/callees.py 0x{rva:08X} {size}")
