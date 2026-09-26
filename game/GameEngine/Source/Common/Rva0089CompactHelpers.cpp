@@ -108,3 +108,68 @@ Rva00896360Handle::Rva00896360Handle(const Rva00896360Handle &other, int extra)
     }
     m_extra = extra;
 }
+
+struct Rva00899270Index
+{
+    int m_position;
+    int m_unused;
+    int *m_items;
+    int at(int offset) const;
+};
+int Rva00899270Index::at(int offset) const { return m_items[m_position - offset - 1]; }
+
+struct Rva0089C640Item
+{
+    int m_unused;
+    unsigned int m_flags;
+};
+struct Rva0089C640List
+{
+    int m_unused;
+    Rva0089C640Item *m_items;
+    unsigned int flag(int index) const;
+};
+unsigned int Rva0089C640List::flag(int index) const { return m_items[index].m_flags & 1; }
+
+struct Rva0089C660List
+{
+    int m_unused;
+    Rva0089C640Item *m_items;
+    unsigned int withoutFlag(int index) const;
+};
+unsigned int Rva0089C660List::withoutFlag(int index) const { return m_items[index].m_flags & ~1u; }
+
+struct Rva0089DBF0Fields
+{
+    unsigned short m_field00;
+    unsigned short m_field02;
+    unsigned short m_field04;
+};
+struct Rva0089DBF0View
+{
+    Rva0089DBF0Fields *m_data;
+    void setField02(unsigned short value);
+    unsigned int getField04() const;
+    void setField04(unsigned short value);
+    unsigned int getField00() const;
+};
+void Rva0089DBF0View::setField02(unsigned short value) { m_data->m_field02 = value; }
+unsigned int Rva0089DBF0View::getField04() const { return m_data->m_field04; }
+void Rva0089DBF0View::setField04(unsigned short value) { m_data->m_field04 = value; }
+unsigned int Rva0089DBF0View::getField00() const { return m_data->m_field00; }
+
+struct Rva0089DC40StringData
+{
+    unsigned short m_refs;
+};
+extern Rva0089DC40StringData g_bfmeDefaultString1284;
+struct Rva0089DC40String
+{
+    Rva0089DC40StringData *m_data;
+    Rva0089DC40String(int unused);
+};
+Rva0089DC40String::Rva0089DC40String(int)
+{
+    m_data = &g_bfmeDefaultString1284;
+    ++g_bfmeDefaultString1284.m_refs;
+}
