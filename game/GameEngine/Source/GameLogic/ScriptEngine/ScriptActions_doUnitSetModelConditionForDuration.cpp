@@ -1,6 +1,6 @@
 // cl: /O2 /DNDEBUG /DWIN32 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Retail action-template 434, UNIT_SET_MODELCONDITION_FOR_DURATION, RVA 0x002FABE0.
-// The final callee is retained under its decoded address because its owner is unresolved.
+// The final callee keeps its address token: Object::rva001D02C0 (0x001D02C0).
 
 extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);
 #pragma intrinsic(memcmp)
@@ -11,7 +11,14 @@ typedef bool Bool;
 typedef int Int;
 typedef float Real;
 
-class Object;
+// Landed body 0x001D02C0 (ObjectRva001D02C0.cpp), called through ILT 0x00049D73.
+class Object
+{
+public:
+	void rva001D02C0(Int condition, Int frames, Real percent);
+};
+
+#pragma comment(linker, "/alternatename:?rva001D02C0@Object@@QAEXHHM@Z=?j_00049d73@@YAXXZ")
 
 class ScriptEngine
 {
@@ -48,25 +55,17 @@ public:
 extern ScriptEngine *TheScriptEngine;
 extern "C" const char *bfmeGlobalTable12A6918[];
 
-class Rva001D02C0Object
-{
-public:
-	void callRva001D02C0(Int condition, Int frames, Int percent);
-};
-
-#pragma comment(linker, "/alternatename:?callRva001D02C0@Rva001D02C0Object@@QAEXHHH@Z=?j_00049d73@@YAXXZ")
-
 class ScriptActions
 {
 protected:
 	void doUnitSetModelConditionForDuration(
 		const AsciiString &unitName, const AsciiString &conditionName,
-		Real duration, Int percent);
+		Real duration, Real percent);
 };
 
 void ScriptActions::doUnitSetModelConditionForDuration(
 	const AsciiString &unitName, const AsciiString &conditionName,
-	Real duration, Int percent)
+	Real duration, Real percent)
 {
 	Object *unit = TheScriptEngine->getUnitNamed(unitName);
 	if (!unit)
@@ -87,6 +86,5 @@ void ScriptActions::doUnitSetModelConditionForDuration(
 	return;
 
 matched:
-	((Rva001D02C0Object *)unit)->callRva001D02C0(
-		condition, frames, percent);
+	unit->rva001D02C0(condition, frames, percent);
 }

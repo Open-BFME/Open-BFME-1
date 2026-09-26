@@ -79269,7 +79269,6 @@ name,address,notes
 ?callAt0025ED50@Rva0025EF90Owner@@QAEXXZ,0x0025ED50,caller0025EF90+20 viaILT4507F passes sameECX receiver no stackargs; full355B callee appends ObjectIDs into this+E8 list and ends RET0
 ?callAt002A9850@Rva0025EF90Owner@@QAEXXZ,0x002A9850,caller0025EF90+19 viaILT3FA30 passes liveECX receiver no stackargs; body RET0 at+516; neutral address-labelled method not legacy destructor identity
 ?callJ3775e@@YAPAXPBD@Z,0x0003775E,local cdecl adapter to Lua event lookup thunk
-?callRva001D02C0@Rva001D02C0Object@@QAEXHHH@Z,0x001D02C0,decoded thiscall helper ABI from target 0x002FABE0; call-site ILT 0x00049D73 is auto-discovered
 ?call_0002105d@AssaultTransportAIUpdateBase@@IAEXXZ,0x0002105D,unnamed body 0x002B4320 via ILT thunk
 ?call_00030887@Object@@QAEXH@Z,0x00030887,unnamed body 0x001C7E60 via ILT thunk
 ?call_002234A0@Rva0021B200ListOwner@@QAEXP6AXPAX0@Z0I@Z,0x002234A0,neutral body pin for 0x0021B200 continuation; retail ILT=0x0003D0D7 resolves to this body; campaign=luna36h-20260907;lane=shaders;model=gpt-5.6-luna

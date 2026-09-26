@@ -134,12 +134,12 @@ class ScriptActions
 protected:
 	void doTeamSetModelConditionForDuration(
 		const AsciiString &teamName, const AsciiString &conditionName,
-		Real duration, Int percent);
+		Real duration, Real percent);
 };
 
 void ScriptActions::doTeamSetModelConditionForDuration(
 	const AsciiString &teamName, const AsciiString &conditionName,
-	Real duration, Int percent)
+	Real duration, Real percent)
 {
 	Team *theTeam = TheScriptEngine->getTeamNamed(teamName, false);
 	if (!theTeam)

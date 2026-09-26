@@ -5728,5 +5728,15 @@
   "after_sha256": "c13f713f4295a7b3617fd892bd005c2dd9e990a31b91a81da34c990729d94a2a",
   "evidence": "targets/game/reverse/identity_evidence/0x008a51b0-unsigned-random.md",
   "reason": "Retail fild plus conditional +2^32 and unconditional 2^-32 scale refutes the banked signed float f; the reported pair is token alignment across that removed local while the matched factory declaration and call remain unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doUnitSetModelConditionForDuration.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doUnitSetModelConditionForDuration.cpp",
+  "old_name": "callRva001D02C0",
+  "new_name": "rva001D02C0",
+  "before_sha256": "7a025cc853c5cd575123d22d994f207590b52d6d3eae7cba0b54b6d66b5ac8b4",
+  "after_sha256": "447a48bd4b805c45fd6ad4a812699492f2921ad3c283355f93e5395657b1e3e7",
+  "evidence": "targets/game/reverse/identity_evidence/002fabe0.md",
+  "reason": "callRva001D02C0 was a TU-local HHH alias for the landed body 0x001D02C0 whose ledger identity is ?rva001D02C0@Object@@QAEXHHM@Z; the caller now binds that identity (its third argument is fmul'd at +0x72 so Real not Int)"
  }
 ]
