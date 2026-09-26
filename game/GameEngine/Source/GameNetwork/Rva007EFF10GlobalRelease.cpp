@@ -10,6 +10,21 @@ void Rva007EFF10GlobalRelease()
     if (object)
     {
         ((Rva007EFF10Release *)object)[2](object, 0);
+
+struct Rva007EFF10Callback
+{
+    void *m_padding[2];
+    void (__cdecl *m_release)(Rva007EFF10Callback *self, int code);
+};
+
+extern void *g_bfme929Ptr;
+
+void rva007EFF10Release()
+{
+    Rva007EFF10Callback *const callback = static_cast<Rva007EFF10Callback *>(g_bfme929Ptr);
+    if (callback)
+    {
+        callback->m_release(callback, 0);
         g_bfme929Ptr = 0;
     }
 }

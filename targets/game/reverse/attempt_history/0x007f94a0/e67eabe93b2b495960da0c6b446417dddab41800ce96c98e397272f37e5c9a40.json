@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e67eabe93b2b495960da0c6b446417dddab41800ce96c98e397272f37e5c9a40",
+  "symbol": "?d_007f94a0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.6,
+  "source": "// ?d_007f94a0@@YAXXZ\n// partial score=0.6 date=2026-09-26\nstruct Rva007F94A0Record\n{\n    void *m_key;\n    char m_rest[0x18];\n};\n\nclass Rva007F94A0Owner\n{\npublic:\n    Rva007F94A0Record *find(void *key);\nprivate:\n    char m_padding[0x28];\n    Rva007F94A0Record m_records[0x20];\n};\n\nRva007F94A0Record *Rva007F94A0Owner::find(void *key)\n{\n    Rva007F94A0Record *record = &m_records[0];\n    void **field = &record->m_key;\n    for (int i = 0; i < 0x20; ++i, ++record)\n    {\n        if (*field == key)\n            return record;\n        field = &record[1].m_key;\n    }\n    return 0;\n}\n"
+}
