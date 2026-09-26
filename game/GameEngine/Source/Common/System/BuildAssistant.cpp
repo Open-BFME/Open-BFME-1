@@ -649,7 +649,33 @@ static void checkSampleBuildLocation( const Coord3D *samplePoint, void *userData
 	* of where this object would be in the world.  The smaller the sample resolution param is
 	* the more samples will be taken across the footprint area */
 //-------------------------------------------------------------------------------------------------
-// ?iterateFootprint@BuildAssistant@@ present-unmatched
+// Retail GeometryInfo stores a vector of shapes; the imported predicate at
+// 0x0087E8D0 tests whether that vector contains precisely one box.
+class BfmeThingTemplateShadowSelector { public: bool usePluralShadowName() const; };
+class Rva0087E8D0Geometry
+{
+public:
+	__forceinline bool hasSingleBox() const
+	{
+		union { bool (BfmeThingTemplateShadowSelector::*emitter)() const;
+				bool (Rva0087E8D0Geometry::*predicate)() const; } call;
+		call.emitter = &BfmeThingTemplateShadowSelector::usePluralShadowName;
+		return (this->*call.predicate)();
+	}
+};
+class BfmeGeometryInfo { public: Real boxMinorRadius() const; Real boxMajorRadius() const; };
+
+// BFME's terrain ground-height virtual occupies slot +0x18 (not ZH's +0x14).
+class Rva000FC780TerrainLogic
+{
+public:
+	virtual void slot0(); virtual void slot1(); virtual void slot2();
+	virtual void slot3(); virtual void slot4(); virtual void slot5();
+	virtual Real getGroundHeight(Real x, Real y, Coord3D *normal = 0) const;
+};
+
+// Retail 0x000FC780 / 612 bytes; BuildAssistant::isLocationLegalToBuild calls
+// this iterator, and its Zero Hour twin matches the complete BFME body.
 void BuildAssistant::iterateFootprint( const ThingTemplate *build,
 																			 Real buildOrientation,
 																			 const Coord3D *worldPos,
@@ -676,29 +702,19 @@ void BuildAssistant::iterateFootprint( const ThingTemplate *build,
 	// get the bounding footprint rectangle for the geometry we're looking at
 	Real halfFootprintHeight, 
 			 halfFootprintWidth;
-	if( build->getTemplateGeometryInfo().getGeomType() == GEOMETRY_BOX )
+	const GeometryInfo &geometry = *reinterpret_cast<const GeometryInfo *>(reinterpret_cast<const char *>(build) + 0x60);
+	const Rva0087E8D0Geometry *geometrySelector = reinterpret_cast<const Rva0087E8D0Geometry *>(&geometry);
+	const BfmeGeometryInfo *geometryRadius = reinterpret_cast<const BfmeGeometryInfo *>(&geometry);
+	if (geometrySelector->hasSingleBox())
 	{
-
-		halfFootprintHeight = build->getTemplateGeometryInfo().getMinorRadius();
-		halfFootprintWidth = build->getTemplateGeometryInfo().getMajorRadius();
-
-	}  // end if
-	else if( build->getTemplateGeometryInfo().getGeomType() == GEOMETRY_SPHERE ||
-					 build->getTemplateGeometryInfo().getGeomType() == GEOMETRY_CYLINDER )
-	{
-
-		halfFootprintHeight = build->getTemplateGeometryInfo().getBoundingCircleRadius();
-		halfFootprintWidth = build->getTemplateGeometryInfo().getBoundingCircleRadius();
-
-	}  // end else if
+		halfFootprintHeight = geometryRadius->boxMinorRadius();
+		halfFootprintWidth = geometryRadius->boxMajorRadius();
+	}
 	else
 	{
-
-		DEBUG_ASSERTCRASH( 0, ("iterateFootprint: Undefined geometry '%d' for '%s'\n",
-											     build->getTemplateGeometryInfo().getGeomType(), build->getName().str()) );
-		return;
-
-	}  // end else
+		halfFootprintHeight = *(const Real *)(reinterpret_cast<const char *>(build) + 0x70);
+		halfFootprintWidth = *(const Real *)(reinterpret_cast<const char *>(build) + 0x70);
+	}
 
 	//
 	// start at a corner of the extent ... box geometries have a major radius down
@@ -729,12 +745,11 @@ void BuildAssistant::iterateFootprint( const ThingTemplate *build,
 				x = halfFootprintWidth;
 
 			// transform to world
-			v.Set( x, y, TheTerrainLogic->getGroundHeight( x, y ) );
+			v.Set( x, y, reinterpret_cast<const Rva000FC780TerrainLogic *>(TheTerrainLogic)->getGroundHeight( x, y ) );
 			transform.Transform_Vector( transform, v, &v );
 
 			// for circular geometries we must actually be within the circle
-			if( build->getTemplateGeometryInfo().getGeomType() == GEOMETRY_SPHERE || 
-					build->getTemplateGeometryInfo().getGeomType() == GEOMETRY_CYLINDER )
+			if (!geometrySelector->hasSingleBox())
 			{
 				Coord2D vector;
 
@@ -749,7 +764,7 @@ void BuildAssistant::iterateFootprint( const ThingTemplate *build,
 			Coord3D pos;
 			pos.x = v.X;
 			pos.y = v.Y;
-			pos.z = TheTerrainLogic->getGroundHeight( pos.x, pos.y );
+			pos.z = reinterpret_cast<const Rva000FC780TerrainLogic *>(TheTerrainLogic)->getGroundHeight( pos.x, pos.y );
 			func( &pos, funcUserData );
 
 		}  // end for x
