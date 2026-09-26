@@ -79310,6 +79310,7 @@ name,address,notes
 ?calcCostToBuild@UpgradeTemplate@@QBEHPAVPlayer@@PBVThingTemplate@@@Z,0x0003F8D7,ProductionUpdate queueUpgrade cost thunk
 ?calcFlightPath@BezierProjectileBehavior@@QAE_N_N@Z,0x00021BD9,ILT 0x00021BD9 -> 0x001EF5E0; BezierProjectileBehavior::projectileFireAtObjectOrPosition recalc path
 ?calcNumPrereqUnitsOwned@ProductionPrerequisite@@ABEHPBVPlayer@@QAH@Z,0x000379B1
+?calcPercent@@YA?AVUnicodeString@@ABUOverallStats@@HV1@@Z,0x0050B200,Generals WOLWelcomeMenu twin; updateOverallStats calls this helper six times at retail 0x0050B440
 ?calcPhysicsXformHoverOrWings@Drawable@@IAEXPBVLocomotor@@AAUPhysicsXformInfo@1@@Z,0x00020865,ILT thunk to the hover-or-wings physics transform helper
 ?calcPhysicsXformHoverOrWings@Drawable@@IAEXPBVLocomotor@@AAUPhysicsXformInfo@1@@Z,0x00410E10,body identity from Drawable.cpp:1708; matched calcPhysicsXform caller at 0x004213F0; ILT 0x00020865 resolves here
 ?calcPhysicsXformThrust@Drawable@@IAEXPBVLocomotor@@AAUPhysicsXformInfo@1@@Z,0x00027651,ILT thunk to the thrust physics transform helper

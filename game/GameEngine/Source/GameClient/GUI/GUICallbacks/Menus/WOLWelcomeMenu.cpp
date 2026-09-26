@@ -671,27 +671,9 @@ void HandleOverallStats( const char* szHTTPStats, unsigned len )
 } //HandleOverallStats
 
 
-//called only from WOLWelcomeMenuInit to set %win stats
-static void updateOverallStats(void)
-{
-	UnicodeString percStr;
-	AsciiString wndName;
-	GameWindow* pWin;
-
-	if( s_totalWinPercent <= 0 )
-		s_totalWinPercent = 1;  //prevent divide by zero
-
-	std::map<AsciiString,float>::iterator it;
-	for( it = s_winStats.begin();  it != s_winStats.end();  ++it )
-	{
-		int percent = REAL_TO_INT(100.0f * (it->second / s_totalWinPercent));
-		percStr.format( TheGameText->fetch("GUI:WinPercent"), percent );
-		wndName.format( "WOLWelcomeMenu.wnd:Percent%s", it->first.str() );
-		pWin = TheWindowManager->winGetWindowFromId( NULL, NAMEKEY(wndName) );
-		GadgetCheckBoxSetText( pWin, percStr );
-//x		DEBUG_LOG(("Initialized win percent: %s -> %s %f=%s\n", wndName.str(), it->first.str(), it->second, percStr.str() ));
-	} //for
-} //updateOverallStats
+// BFME retains the original Generals weekly/daily stats updater.
+// Its six-stat body is kept in WOLWelcomeOverallStats.cpp.
+void updateOverallStats(void);
 
 
 //-------------------------------------------------------------------------------------------------
