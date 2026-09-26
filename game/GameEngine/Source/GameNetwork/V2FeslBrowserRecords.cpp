@@ -170,3 +170,26 @@ void Rva007F7980Browser::onLobby( Rva007E8810Message *msg )
 	if( m_lobbyIndex >= m_lobbies.m_count )
 		m_listener->onLobbyCountDone( 0 );
 }
+
+// Three C callback entries are distinct retail bodies separated by INT3 bytes.
+// The old 49-byte generated claim incorrectly joined all three.
+void Rva007F6FA0BrowserRegionReply( Rva007E8810Message *msg, Rva007F7980Browser *browser )
+{
+	browser->onRegion( msg );
+}
+
+void Rva007F6FB0BrowserLobbyReply( Rva007E8810Message *msg, Rva007F7980Browser *browser )
+{
+	browser->onLobby( msg );
+}
+
+// The third entry calls the still-anonymous thiscall body at 0x007F65E0.
+// The message and constant one are its two stack arguments; the browser is ECX.
+extern void d_007f65e0( void );
+void Rva007F6FC0BrowserGameReply( Rva007E8810Message *msg, Rva007F7980Browser *browser )
+{
+	typedef void (Rva007F7980Browser::*GameReply)( Rva007E8810Message *, int );
+	union { void (*function)( void ); GameReply member; } reply;
+	reply.function = d_007f65e0;
+	(browser->*reply.member)( msg, 1 );
+}
