@@ -1388,9 +1388,9 @@ byte-identical. Repointing only the ctor row to that native TU preserves the
 remaining library claims and credits nine real C++ bytes without changing code.
 
 `Matrix4D::Set(float,...,float)` at 0x007E60B0 (116 B) was real C++ in
-`matrix4d.cpp`, but the same TU has a naked `Set(Coord3D,float)` overload. Moving
-only the 16-float definition to `Matrix4DSetNative.cpp` preserves all 26
-verified claims across the two TUs and makes those 116 compiled bytes count
-as source. Leave `Set(Coord3D)` alongside its `SetIdentity` definition:
-moving it separately prevents the compiler from inlining `SetIdentity` and
-changes its retail 80-byte body to 35 bytes.
+`matrix4d.cpp`, but that TU also has a naked `Set(Coord3D,float)` overload.
+Move the 16-float overload, `SetIdentity`, and `Set(Coord3D)` together:
+moving the Coord3D setter alone prevents MSVC from inlining `SetIdentity`
+and turns its retail 80-byte body into 35 bytes. All three methods now match
+116, 57, and 80 retail bytes; all 26 claims across both TUs verify; the two
+Set overloads contribute 196 source-backed bytes.
