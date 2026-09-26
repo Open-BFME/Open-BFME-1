@@ -5908,5 +5908,15 @@
   "after_sha256": "8c428c883ca3b347e3b7e9a138a67743e2be4f931eb23ea04ecc903b144afaf2",
   "evidence": "targets/game/reverse/identity_evidence/0039c260.md",
   "reason": "bfmeRunEUAe/BfmeSpecialPowerAllowanceStore rested only on an Open-BFME5 pin note; retail shows this is the LightPointSystem global 0x012F0FF8 (INI::parseLightPointLevel 0x0039CCF0 passes it to addLevel) so the method keeps the address token like its twin rva0039CB60; m_specialPowerState was the same unproven semantic for the +0x274 level-index store and becomes the offset token m_at274"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001dfc10.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/System/VictorySystemRva001DFC10.cpp",
+  "old_name": "bfmeNotifyObject",
+  "new_name": "rva001DFC10",
+  "before_sha256": "9e38326034c16b94380ae80943fd9a0e9fb6cbd4c98049f075ce35b0ef5209ff",
+  "after_sha256": "5614fac7da571fc8ddc6487ab2c2b3013a841e3b7e3b879efccb37b7351a41b9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank method name with no string vtable slot or matched named caller (only caller 0x001CEFC0 is itself ledger-misnamed); sole caller loads TheVictorySystem 0x012EF734 so owner is proven but method name is not"
  }
 ]
