@@ -1,17 +1,18 @@
 // cl: /DNDEBUG /MD /EHsc
 //
-// Open-BFME: CameraMarker scalar-deleting destructor at retail RVA 0x0045C870
-// (30 bytes). CameraMarkerList's exact find, remove, and clear paths establish
-// the owned node type and call its matched destructor through ILT 0x00028984.
-// This wrapper reproduces that destructor call followed by conditional delete.
+// Open-BFME: scalar-deleting destructor of the node in View's +0x80 marker
+// list, retail RVA 0x0045C870 (30 bytes). View's matched find, remove and clear
+// paths (reverse/identity_evidence/0045c9e0.md) establish the owned node type
+// and call its destructor through ILT 0x00028984. This wrapper reproduces that
+// destructor call followed by conditional delete.
 
-class CameraMarker
+class Rva0045C9E0CameraMarker
 {
 public:
-	~CameraMarker();
+	~Rva0045C9E0CameraMarker();
 };
 
-void forceCameraMarkerDelete(CameraMarker *marker)
+void forceRva0045C9E0CameraMarkerDelete(Rva0045C9E0CameraMarker *marker)
 {
 	delete marker;
 }

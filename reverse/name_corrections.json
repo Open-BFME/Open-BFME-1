@@ -5318,5 +5318,45 @@
   "after_sha256": "49c4dca53a39c0778db157be65925f1e0e9e3f3204d248bb33e70f4d0e7315b9",
   "evidence": "docs/naming_evidence.md",
   "reason": "unwitnessed offsets kept as offset tokens"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameClient/CameraMarkerDeletingDestructor.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/CameraMarkerDeletingDestructor.cpp",
+  "old_name": "CameraMarker",
+  "new_name": "Rva0045C9E0CameraMarker",
+  "before_sha256": "5dfdd423524d9c75339a294f66d1ba34f82513c40bedbde4a29e6031f12f8489",
+  "after_sha256": "5b9909e9a13826bea15f9646168df3bb19064d76ec845d481021ba8f7328521b",
+  "evidence": "reverse/identity_evidence/0045c9e0.md",
+  "reason": "CameraMarker was an invented owner-free type name (commit 60e33af821 dropped the address token); retail proves only that the node lives in View's +0x80 list and that doMoveCameraTo uses its +0x08 Coord3D as a camera target, so the node type keeps the address token of its matched lookup 0x0045C9E0, the name the ILT 0x00028984 destructor pin already carried"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameClient/CameraMarkerListFind.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/CameraMarkerListFind.cpp",
+  "old_name": "CameraMarker",
+  "new_name": "Rva0045C9E0CameraMarker",
+  "before_sha256": "1c0a8fc78bf8162b7e4d2a6dd37ef45b910f7a60f9834f57c8b0bbd25bed2953",
+  "after_sha256": "564b044d34d678ecb7467d2c33acce58c917f407f13c1a5198cf575830b34373",
+  "evidence": "reverse/identity_evidence/0045c9e0.md",
+  "reason": "CameraMarker was an invented owner-free type name (commit 60e33af821 dropped the address token); retail proves only that the node lives in View's +0x80 list and that doMoveCameraTo uses its +0x08 Coord3D as a camera target, so the node type keeps the address token of its matched lookup 0x0045C9E0, the name the ILT 0x00028984 destructor pin already carried"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameClient/GUI/CameraMarkerListReplace.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/CameraMarkerListReplace.cpp",
+  "old_name": "CameraMarker",
+  "new_name": "Rva0045C9E0CameraMarker",
+  "before_sha256": "0ee8efad3c341656aef4a6f7d41b13e015260efd2343fe731d7219b89fa00853",
+  "after_sha256": "8ecfb0852086f54ed98d2d116acd85a50a17fbf7a00dbeb1d0fb2169ee8065f9",
+  "evidence": "reverse/identity_evidence/0045c9e0.md",
+  "reason": "CameraMarker was an invented owner-free type name (commit 60e33af821 dropped the address token); retail proves only that the node lives in View's +0x80 list and that doMoveCameraTo uses its +0x08 Coord3D as a camera target, so the node type keeps the address token of its matched lookup 0x0045C9E0, the name the ILT 0x00028984 destructor pin already carried"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doMoveCameraTo.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doMoveCameraTo.cpp",
+  "old_name": "CameraMarker",
+  "new_name": "Rva0045C9E0CameraMarker",
+  "before_sha256": "e9d79fe6698dbb6cbfa2ddc4b7ef28ebeac4c3820ced2af458ec2bd0f2918184",
+  "after_sha256": "9e6286e6d24398ad7c5b57f5146ded547f4208875b208438c11750f3ca192fd1",
+  "evidence": "reverse/identity_evidence/0045c9e0.md",
+  "reason": "CameraMarker was an invented owner-free type name (commit 60e33af821 dropped the address token); retail proves only that the node lives in View's +0x80 list and that doMoveCameraTo uses its +0x08 Coord3D as a camera target, so the node type keeps the address token of its matched lookup 0x0045C9E0, the name the ILT 0x00028984 destructor pin already carried"
  }
 ]

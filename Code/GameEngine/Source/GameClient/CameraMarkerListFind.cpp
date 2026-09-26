@@ -1,16 +1,16 @@
 // cl: /DNDEBUG /DWIN32 /MD
 //
-// BFME's ScriptActions::doMoveCameraTo calls this lookup when resolving its
-// named camera marker.  The one caller supplies an AsciiString and the body
-// walks the marker list at +0x80, comparing each node's name case-sensitively.
+// View's marker list at +0x80: lookup, cleanup and unlink-by-name.
+// ScriptActions::doMoveCameraTo (0x002F24F0) calls findMarker0045C9E0 with ECX
+// = TheTacticalView, unadjusted, and the View constructor 0x0045B8C0 zeroes
+// +0x80 itself, so the list is a View member (reverse/identity_evidence/
+// 0045c9e0.md).  Nothing names these methods or the node type, so they keep
+// their addresses.
 //
-// CameraMarkerList and CameraMarker are descriptive, not recovered EA names --
-// what is proven is the role.  The matched caller is
-// ?doMoveCameraTo@ScriptActions@@IAEXABVAsciiString@@MMMM@Z at 0x002F24F0, and
-// this is not the waypoint lookup it uses upstream: BFME still has
-// ?getWaypointByName@TerrainLogic@@UAEPAVWaypoint@@VAsciiString@@@Z, matched at
-// 0x001AA900, so the camera resolves its target through a second, separate
-// named list that lives on the client side.
+// This is not the waypoint lookup upstream's doMoveCameraTo uses: BFME still
+// has ?getWaypointByName@TerrainLogic@@UAEPAVWaypoint@@VAsciiString@@@Z,
+// matched at 0x001AA900, so the camera resolves its target through a second,
+// separate named list that lives on the client side.
 
 typedef int Int;
 
@@ -53,47 +53,48 @@ inline bool operator==(const AsciiString &left, const AsciiString &right)
 	return left.compare(right) == 0;
 }
 
-struct CameraMarker
+struct Rva0045C9E0CameraMarker
 {
-	~CameraMarker();
+	~Rva0045C9E0CameraMarker();
 
-	CameraMarker *m_next;
+	Rva0045C9E0CameraMarker *m_next;
 	AsciiString m_name;
 };
 
-// ??1CameraMarker@@QAE@XZ present-unmatched -- the node destructor is real (its
-// ILT is pinned at 0x00028984 and clear() calls it), but no row here claims its
-// bytes; the definition stays because removing it changes clear()'s inlining.
-CameraMarker::~CameraMarker()
+// ??1Rva0045C9E0CameraMarker@@QAE@XZ present-unmatched -- the node destructor is
+// real (its ILT is pinned at 0x00028984 and clearMarkers0045C8A0() calls it), but
+// no row here claims its bytes; the definition stays because removing it changes
+// clearMarkers0045C8A0()'s inlining.
+Rva0045C9E0CameraMarker::~Rva0045C9E0CameraMarker()
 {
 }
 
-class CameraMarkerList
+class View
 {
 public:
-	void clear();
-	CameraMarker *find(const AsciiString &name) const;
-	void remove(CameraMarker *marker);
+	void clearMarkers0045C8A0();
+	Rva0045C9E0CameraMarker *findMarker0045C9E0(const AsciiString &name) const;
+	void removeMarker0045CA80(Rva0045C9E0CameraMarker *marker);
 
 private:
-	char m_unknown[0x80];
-	CameraMarker *m_markers;
+	char m_unknown[0x80];  // laid out in ViewConstructorBfme.cpp
+	Rva0045C9E0CameraMarker *m_markers;
 };
 
-void CameraMarkerList::clear()
+void View::clearMarkers0045C8A0()
 {
 	while (m_markers)
 	{
-		CameraMarker *marker = m_markers;
+		Rva0045C9E0CameraMarker *marker = m_markers;
 		m_markers = marker->m_next;
 		delete marker;
 	}
 }
 
-CameraMarker *CameraMarkerList::find(
+Rva0045C9E0CameraMarker *View::findMarker0045C9E0(
 	const AsciiString &name) const
 {
-	CameraMarker *marker = m_markers;
+	Rva0045C9E0CameraMarker *marker = m_markers;
 	while (marker)
 	{
 		if (marker->m_name == name)
@@ -103,14 +104,14 @@ CameraMarker *CameraMarkerList::find(
 	return 0;
 }
 
-void CameraMarkerList::remove(CameraMarker *marker)
+void View::removeMarker0045CA80(Rva0045C9E0CameraMarker *marker)
 {
-	CameraMarker **link = &m_markers;
+	Rva0045C9E0CameraMarker **link = &m_markers;
 	while (*link)
 	{
 		if ((*link)->m_name == marker->m_name)
 		{
-			CameraMarker *removed = *link;
+			Rva0045C9E0CameraMarker *removed = *link;
 			*link = removed->m_next;
 			delete removed;
 			return;

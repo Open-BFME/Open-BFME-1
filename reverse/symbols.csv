@@ -4927,7 +4927,6 @@ name,address,notes
 ??1ButtonFlashTransition@@MAE@XZ,0x0000BF32,vtable 0x00D0C604 slots name ButtonFlashTransition; protected complete destructor called by wrapper 0x0059AAD0
 ??1CDManagerInterface@@UAE@XZ,0x00101BA0,CDManagerInterface dtor body (called by ??_G @ 0x101BB0)
 ??1CRCParameterCheck@@UAE@XZ,0x00041BC3,ILT thunk to the exact CRCParameterCheck destructor at 0x000659E0
-??1CameraMarker@@QAE@XZ,0x00028984,BFME camera marker node destructor ILT called by CameraMarkerList::clear
 ??1CameraShakerClass@CameraShakeSystemClass@@UAE@XZ,0x0001E394,pinharvest x1 (thunk)
 ??1CameraShakerVolumeFXNugget@@MAE@XZ,0x000422AD,vtable 0x00CF3450 slots name CameraShakerVolumeFXNugget; protected complete destructor called by wrapper 0x00429940
 ??1Campaign@@UAE@XZ,0x00025220,authentic Campaign scalar-deleting wrapper callee ILT; routes to complete destructor body 0x005BC020
@@ -9297,7 +9296,7 @@ name,address,notes
 ??1Rva0042D170Member18@@QAE@XZ,0x000992A0,Descriptive 4-byte list owner shared with copy interface 2D49D/42D040; original helper type unresolved. Destructor call 42B608 -> 2CD31 resolves this complete cleanup body; frees 12-byte nodes and sentinel.
 ??1Rva00459D50Member@@QAE@XZ,0x0001A933,ILT thunk to the tgrid member destructor 0x00459D50 called by 0x007461B0
 ??1Rva0045C1B0Base@@UAE@XZ,0x0003732B,ILT thunk to the primary base destructor 0x0045C1B0 called at the end of 0x007461B0
-??1Rva0045C9E0CameraMarker@@QAE@XZ,0x00028984,BFME camera marker node destructor ILT called by list clear
+??1Rva0045C9E0CameraMarker@@QAE@XZ,0x00028984,destructor ILT of the node in View's +0x80 marker list; called by 0x0045C8A0 0x0045CA80 and 0x0045C870 (reverse/identity_evidence/0045c9e0.md)
 ??1Rva00469D20Value@@QAE@XZ,0x00014C68,address-derived value destructor alias for the erase cleanup call at retail 0x00469B10
 ??1Rva00469FC0Value@@QAE@XZ,0x00042C8F,address-derived value destructor alias for the erase cleanup call at retail 0x00469DB0
 ??1Rva0046AF20Value@@QAE@XZ,0x000335FA,erase at 0x0046AD10 calls the same pair-destructor ILT for the address-proven Rva0046AF20 value layout

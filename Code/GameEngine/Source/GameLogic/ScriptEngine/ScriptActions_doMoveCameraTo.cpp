@@ -3,8 +3,8 @@
 //
 // Zero Hour walks the waypoint list; BFME looks the name up twice instead --
 // TerrainLogic slot 31 by value (as ScriptActions_doSetupCamera.cpp does) and
-// the camera-marker lookup at 0x0045C9E0, reached through ILT 0x00036A43 with
-// ECX = TheTacticalView -- and prefers the marker's +0x08 Coord3D over the
+// View's own marker lookup at 0x0045C9E0, reached through ILT 0x00036A43 with
+// ECX = TheTacticalView, unadjusted -- and prefers the marker's +0x08 Coord3D over the
 // waypoint's +0x0C location. View slot 24 (+0x60) takes the marker pointer
 // where Zero Hour passes the stutter time.
 //
@@ -39,16 +39,10 @@ public:
 
 // Layout shared with Code/GameEngine/Source/GameClient/CameraMarkerListFind.cpp;
 // the Coord3D at +0x08 is what this body copies.
-struct CameraMarker
+struct Rva0045C9E0CameraMarker
 {
 	unsigned char m_pad00[0x08];
 	Coord3D m_coord08;
-};
-
-class CameraMarkerList
-{
-public:
-	CameraMarker *find(const AsciiString &name) const;
 };
 
 class TerrainLogic
@@ -88,8 +82,11 @@ public:
 	virtual void _v18() = 0; virtual void _v19() = 0;
 	virtual void _v20() = 0; virtual void _v21() = 0;
 	virtual void _v22() = 0; virtual void _v23() = 0;
-	virtual void moveCameraTo(const Coord3D *position, const CameraMarker *marker,
+	virtual void moveCameraTo(const Coord3D *position,
+		const Rva0045C9E0CameraMarker *marker,
 		Int milliseconds, Bool orient, Real easeIn, Real easeOut) = 0;
+
+	Rva0045C9E0CameraMarker *findMarker0045C9E0(const AsciiString &name) const;
 };
 
 extern TerrainLogic *TheTerrainLogic;
@@ -106,8 +103,7 @@ void ScriptActions::doMoveCameraTo(const AsciiString &waypoint, Real sec,
 	Real cameraStutterSec, Real easeIn, Real easeOut)
 {
 	Waypoint *way = TheTerrainLogic->getWaypointByName(waypoint);
-	CameraMarker *marker =
-		reinterpret_cast<const CameraMarkerList *>(TheTacticalView)->find(waypoint);
+	Rva0045C9E0CameraMarker *marker = TheTacticalView->findMarker0045C9E0(waypoint);
 	if (way != 0 || marker != 0)
 	{
 		Coord3D destination;
