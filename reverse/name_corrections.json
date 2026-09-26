@@ -5438,5 +5438,55 @@
   "after_sha256": "919790b38b87fb2e7918f0ffb85e12fb4ede1646680cb8b0c6cde80a448e0f66",
   "evidence": "docs/naming_evidence.md",
   "reason": "GameLogic+0x3c is only a ZH hint per name_oracle and the pinned global symbol types it GameLogicFrameSlice"
+ },
+ {
+  "old_path": "reverse/attempts/0x0021f5e0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain_addValidObjectsToGarrisonPoints.cpp",
+  "old_name": "BFME_FIRE_POINT_SLOT",
+  "new_name": "RVA0021F5E0_SLOTS",
+  "before_sha256": "e54ba14aea2f732f1e9f41478c6137c540167c1e073147604a391684c9eac380",
+  "after_sha256": "c1aeef413b557faf3550f69fa7ead3555d90e8566cb80fa9414a830df28604b9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "ledger rows name these methods on GarrisonContain; the fire-point vtable slots fold onto the ledger-named class, not a separate interface"
+ },
+ {
+  "old_path": "reverse/attempts/0x0021f5e0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain_addValidObjectsToGarrisonPoints.cpp",
+  "old_name": "BFME_FIRE_POINT_SLOT",
+  "new_name": "RVA0021F5E0_SLOTS_10",
+  "before_sha256": "e54ba14aea2f732f1e9f41478c6137c540167c1e073147604a391684c9eac380",
+  "after_sha256": "c1aeef413b557faf3550f69fa7ead3555d90e8566cb80fa9414a830df28604b9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "ledger rows name these methods on GarrisonContain; the fire-point vtable slots fold onto the ledger-named class, not a separate interface"
+ },
+ {
+  "old_path": "reverse/attempts/0x0021f5e0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain_addValidObjectsToGarrisonPoints.cpp",
+  "old_name": "BfmeAddValidOwnerCall",
+  "new_name": "Rva001E1770ByteField",
+  "before_sha256": "e54ba14aea2f732f1e9f41478c6137c540167c1e073147604a391684c9eac380",
+  "after_sha256": "c1aeef413b557faf3550f69fa7ead3555d90e8566cb80fa9414a830df28604b9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the ledger names body 0x001E1770 by address and nothing proves it is a leech-range accessor"
+ },
+ {
+  "old_path": "reverse/attempts/0x0021f5e0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain_addValidObjectsToGarrisonPoints.cpp",
+  "old_name": "BfmeGarrisonHordeContainInterface",
+  "new_name": "Rva0021F5E0Slot26Interface",
+  "before_sha256": "e54ba14aea2f732f1e9f41478c6137c540167c1e073147604a391684c9eac380",
+  "after_sha256": "c1aeef413b557faf3550f69fa7ead3555d90e8566cb80fa9414a830df28604b9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "no caller vtable or string proves the slot-26 interface is a HordeContain interface"
+ },
+ {
+  "old_path": "reverse/attempts/0x0021f5e0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain_addValidObjectsToGarrisonPoints.cpp",
+  "old_name": "m_template",
+  "new_name": "m_field04",
+  "before_sha256": "e54ba14aea2f732f1e9f41478c6137c540167c1e073147604a391684c9eac380",
+  "after_sha256": "c1aeef413b557faf3550f69fa7ead3555d90e8566cb80fa9414a830df28604b9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "Weapon+0x04 is not witnessed"
  }
 ]
