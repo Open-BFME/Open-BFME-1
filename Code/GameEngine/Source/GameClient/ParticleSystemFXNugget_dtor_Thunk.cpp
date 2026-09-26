@@ -2,6 +2,7 @@
 // Open-BFME5: ParticleSystemFXNugget destructor at 0x0042A1A0 (127B).
 // Member offsets match the landed ctor thunk: four AsciiString tails at
 // +0xB4, +0xFC, +0x104, +0x108, then the FXNugget base.
+// BFME FieldParse table 0x00CF2F80 names the extended tail fields.
 
 typedef float Real;
 typedef bool Bool;
@@ -67,21 +68,21 @@ private:
 	Bool m_orientToObject;
 	Bool m_attachToObject;
 	unsigned char m_padFA[2];
-	AsciiString m_bfmeNameFC;
+	AsciiString m_attachToBone;
 	Bool m_createAtGroundHeight;
 	Bool m_ricochet;
 	unsigned char m_pad102[2];
-	AsciiString m_bfmeName104;
-	AsciiString m_bfmeName108;
-	Bool m_useCallersRadius;
+	AsciiString m_createBoneOverride;
+	AsciiString m_targetBoneOverride;
+	Bool m_createBoneAtTarget;
 	unsigned char m_pad10D[3];
-	Real m_bfmeScale;
-	int m_bfmeIndex;
-	Bool m_bfmeFlag118;
-	Bool m_bfmeFlag119;
-	Bool m_bfmeFlag11A;
-	Bool m_bfmeFlag11B;
-	Coord3D m_bfmeOffset;
+	Real m_targetCoeff;
+	int m_systemLife;
+	Bool m_useTargetOffset;
+	Bool m_setTargetMatrix;
+	Bool m_onlyIfOnLand;
+	Bool m_onlyIfOnWater;
+	Coord3D m_targetOffset;
 };
 
 // ??1ParticleSystemFXNugget@@UAE@XZ

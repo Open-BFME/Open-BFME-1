@@ -53,7 +53,7 @@ public:
 	virtual ~ParticleSystemFXNugget();
 
 private:
-	// Retail proves these BFME-only tail offsets; neutral names avoid inventing semantics.
+	// BFME FieldParse table 0x00CF2F80 names the extended tail fields.
 	AsciiString m_name;
 	int m_count;
 	Coord3D m_offset;
@@ -66,21 +66,21 @@ private:
 	Bool m_orientToObject;
 	Bool m_attachToObject;
 	unsigned char m_padFA[2];
-	AsciiString m_bfmeNameFC;
+	AsciiString m_attachToBone;
 	Bool m_createAtGroundHeight;
 	Bool m_ricochet;
 	unsigned char m_pad102[2];
-	AsciiString m_bfmeName104;
-	AsciiString m_bfmeName108;
-	Bool m_useCallersRadius;
+	AsciiString m_createBoneOverride;
+	AsciiString m_targetBoneOverride;
+	Bool m_createBoneAtTarget;
 	unsigned char m_pad10D[3];
-	Real m_bfmeScale;
-	int m_bfmeIndex;
-	Bool m_bfmeFlag118;
-	Bool m_bfmeFlag119;
-	Bool m_bfmeFlag11A;
-	Bool m_bfmeFlag11B;
-	Coord3D m_bfmeOffset;
+	Real m_targetCoeff;
+	int m_systemLife;
+	Bool m_useTargetOffset;
+	Bool m_setTargetMatrix;
+	Bool m_onlyIfOnLand;
+	Bool m_onlyIfOnWater;
+	Coord3D m_targetOffset;
 };
 
 ParticleSystemFXNugget::ParticleSystemFXNugget()
@@ -95,14 +95,14 @@ ParticleSystemFXNugget::ParticleSystemFXNugget()
 	m_attachToObject = false;
 	m_createAtGroundHeight = false;
 	m_rotateX = m_rotateY = m_rotateZ = 0.0f;
-	m_useCallersRadius = false;
-	m_bfmeFlag118 = false;
-	m_bfmeOffset.x = m_bfmeOffset.y = m_bfmeOffset.z = 0.0f;
-	m_bfmeFlag119 = false;
-	m_bfmeFlag11A = false;
-	m_bfmeFlag11B = false;
+	m_createBoneAtTarget = false;
+	m_useTargetOffset = false;
+	m_targetOffset.x = m_targetOffset.y = m_targetOffset.z = 0.0f;
+	m_setTargetMatrix = false;
+	m_onlyIfOnLand = false;
+	m_onlyIfOnWater = false;
 	m_ricochet = false;
 	m_nuggetType = 8;
-	m_bfmeScale = 1.0f;
-	m_bfmeIndex = -1;
+	m_targetCoeff = 1.0f;
+	m_systemLife = -1;
 }
