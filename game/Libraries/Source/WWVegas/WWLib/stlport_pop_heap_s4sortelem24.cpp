@@ -37,3 +37,15 @@ template void __pop_heap<S4SortElem24 *, int, S4SortElem24, S4Cmp009F4BF0>(
     S4Cmp009F4BF0, int *);
 
 }
+
+void Rva009F5630(S4SortElem24 *first, S4SortElem24 *last,
+    S4SortElem24 *, S4Cmp009F4BF0 comp)
+{
+    _STL::__pop_heap(first, last - 1, last - 1, *(last - 1), comp, (int *)0);
+}
+
+void Rva009F5920(S4SortElem24 *first, S4SortElem24 *last,
+    S4Cmp009F4BF0 comp)
+{
+    _STL::__pop_heap(first, last - 1, last - 1, *(last - 1), comp, (int *)0);
+}

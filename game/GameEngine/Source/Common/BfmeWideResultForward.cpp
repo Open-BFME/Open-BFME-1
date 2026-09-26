@@ -41,6 +41,20 @@ public:
 	BfmeWideResult bfmeForwardWideC(int a, int b, int c, int d, int e);
 };
 
+class BfmeWideForward009F29A0
+{
+	char m_pad[0x0C];
+	BfmeWideResultSource *m_source;
+
+public:
+	BfmeWideResult forward009F29A0(int a, int b, int c);
+};
+
+BfmeWideResult BfmeWideForward009F29A0::forward009F29A0(int a, int b, int c)
+{
+	return m_source->bfmeMakeWideResult(0, 0, a, b, 0, c);
+}
+
 BfmeWideResult BfmeWideForwardA::bfmeForwardWideA(int a, int b, int c, int d)
 {
 	return m_source->bfmeMakeWideResult(a, b, 0, c, 0, d);
