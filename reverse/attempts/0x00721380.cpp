@@ -1,5 +1,5 @@
 // ?xfer@W3DShrubBuffer@@MAEXPAVXfer@@@Z
-// partial score=0.997 date=2026-09-26
+// partial score=0.99743 date=2026-09-26
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib
 // Near miss (1553 of 1557 B): after the type search retail reloads treeType into EDI before this into EBX.
 // Landing also needs a pin for the addTree dump 0x00720D10 and a method name for the copy 0x0071CD80.
@@ -18,45 +18,22 @@ typedef unsigned int UnsignedInt;
 
 extern "C" __declspec(dllimport) int __cdecl _memicmp(const void *buf1, const void *buf2, unsigned int count);
 
-struct BfmeAsciiStringData
+#include "ascii_string.h"
+
+template<> inline int StringBase<char>::getLength() const { return m_data ? m_data->length : 0; }
+template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
+
+inline Int compareNamesNoCase(const AsciiString &self, const AsciiString &other)
 {
-	UnsignedShort m_refCount;
-	UnsignedShort m_numCharsAllocated;
-	UnsignedShort m_len;
-	UnsignedShort m_pad;
-};
-
-class AsciiString
-{
-public:
-	AsciiString() : m_data(0) {}
-	AsciiString(const char *s);
-	~AsciiString();
-
-	AsciiString &operator=(const AsciiString &other) { set(other); return *this; }
-	void set(const AsciiString &other);
-
-	Int getLength(void) const { return m_data ? m_data->m_len : 0; }
-	const char *str(void) const { return m_data ? (const char *)(m_data + 1) : ""; }
-
-	Int compareNoCase(const AsciiString &other) const
-	{
-		Int lenOther = other.getLength();
-		const char *pOther = other.str();
-		Int lenThis = getLength();
-		const char *pThis = str();
-		Int shorter = lenThis < lenOther ? lenThis : lenOther;
-
-		Int diff = _memicmp(pThis, pOther, shorter);
-		if (diff != 0)
-			return diff;
-
-		return lenThis - lenOther;
-	}
-
-private:
-	BfmeAsciiStringData *m_data;
-};
+ Int lenOther = other.getLength();
+ const char *pOther = other.str();
+ Int lenThis = self.getLength();
+ const char *pThis = self.str();
+ Int shorter = lenThis < lenOther ? lenThis : lenOther;
+ Int diff = _memicmp(pThis,pOther,shorter);
+ if (diff != 0) return diff;
+ return lenThis-lenOther;
+}
 
 struct Coord2D
 {
@@ -251,7 +228,8 @@ class Gen_0071CD80
 {
 public:
 	Gen_0071CD80() {}
-	Gen_0071CD80 &copyFrom(const Gen_0071CD80 &other);
+	Gen_0071CD80(const Gen_0071CD80 &other);
+	void copyFrom(const Gen_0071CD80 &other) { this->Gen_0071CD80::Gen_0071CD80(other); }
 
 	Vector3 location;
 	Real scale;
@@ -388,8 +366,8 @@ void W3DShrubBuffer::xfer(Xfer *xfer)
 		if (xfer->IsLoading()) {
 			Int j;
 			for (j = 0; j < m_numTreeTypes; j++) {
-				if (m_treeTypes[j].m_data->m_modelName.compareNoCase(modelName) == 0 &&
-						m_treeTypes[j].m_data->m_textureName.compareNoCase(modelTexture) == 0) {
+				if (compareNamesNoCase(m_treeTypes[j].m_data->m_modelName,modelName) == 0 &&
+						compareNamesNoCase(m_treeTypes[j].m_data->m_textureName,modelTexture) == 0) {
 					treeType = j;
 					break;
 				}
