@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringbaseunicode /Iinputs/reference/shims/stringbaseascii /Iinputs/reference/shims/psplayerstats /Iinputs/reference/shims/nat /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringbaseunicode /Iinputs/reference/shims/stringbaseascii /Iinputs/reference/shims/psplayerstats /Iinputs/reference/shims/nat /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
@@ -2477,6 +2477,98 @@ static Bool initDone = false;
 UnsignedInt lastSlotlistTime = 0;
 UnsignedInt enterTime = 0;
 Bool initialAcceptEnable = FALSE;
+// BFME shifts the GameSpyInfo slots used by the setup-menu initializer.
+class BfmeWolInitInfo
+{
+public:
+	virtual ~BfmeWolInitInfo() = 0;
+	virtual void reset() = 0;
+	virtual void slot_008() = 0;
+	virtual void slot_00C() = 0;
+	virtual void slot_010() = 0;
+	virtual void slot_014() = 0;
+	virtual void slot_018() = 0;
+	virtual void slot_01C() = 0;
+	virtual void slot_020() = 0;
+	virtual void slot_024() = 0;
+	virtual void setCurrentGroupRoom( Int groupID ) = 0;
+	virtual void slot_02C() = 0;
+	virtual void slot_030() = 0;
+	virtual void slot_034() = 0;
+	virtual void slot_038() = 0;
+	virtual void slot_03C() = 0;
+	virtual void slot_040() = 0;
+	virtual void slot_044() = 0;
+	virtual void slot_048() = 0;
+	virtual void slot_04C() = 0;
+	virtual void slot_050() = 0;
+	virtual void slot_054() = 0;
+	virtual void slot_058() = 0;
+	virtual void slot_05C() = 0;
+	virtual void slot_060() = 0;
+	virtual void slot_064() = 0;
+	virtual void slot_068() = 0;
+	virtual void slot_06C() = 0;
+	virtual void slot_070() = 0;
+	virtual void slot_074() = 0;
+	virtual void slot_078() = 0;
+	virtual void slot_07C() = 0;
+	virtual void slot_080() = 0;
+	virtual void slot_084() = 0;
+	virtual void slot_088() = 0;
+	virtual void slot_08C() = 0;
+	virtual void slot_090() = 0;
+	virtual void slot_094() = 0;
+	virtual void slot_098() = 0;
+	virtual void slot_09C() = 0;
+	virtual void slot_0A0() = 0;
+	virtual void slot_0A4() = 0;
+	virtual void slot_0A8() = 0;
+	virtual void slot_0AC() = 0;
+	virtual void slot_0B0() = 0;
+	virtual void slot_0B4() = 0;
+	virtual void slot_0B8() = 0;
+	virtual void slot_0BC() = 0;
+	virtual Bool amIHost() = 0;
+	virtual GameSpyStagingRoom *getCurrentStagingRoom() = 0;
+	virtual void slot_0C8() = 0;
+	virtual void setGameOptions() = 0;
+	virtual void slot_0D0() = 0;
+	virtual void slot_0D4() = 0;
+	virtual void slot_0D8() = 0;
+	virtual void slot_0DC() = 0;
+	virtual void slot_0E0() = 0;
+	virtual void registerTextWindow( GameWindow *window ) = 0;
+	virtual void slot_0E8() = 0;
+	virtual void slot_0EC() = 0;
+	virtual void slot_0F0() = 0;
+	virtual void slot_0F4() = 0;
+	virtual void slot_0F8() = 0;
+	virtual void slot_0FC() = 0;
+	virtual void slot_100() = 0;
+	virtual void slot_104() = 0;
+	virtual void slot_108() = 0;
+	virtual void slot_10C() = 0;
+	virtual void slot_110() = 0;
+	virtual const AsciiString &getPingString() = 0;
+	virtual void slot_118() = 0;
+	virtual void slot_11C() = 0;
+	virtual void slot_120() = 0;
+	virtual void slot_124() = 0;
+	virtual void slot_128() = 0;
+	virtual void slot_12C() = 0;
+	virtual void slot_130() = 0;
+	virtual void slot_134() = 0;
+	virtual void slot_138() = 0;
+	virtual void slot_13C() = 0;
+	virtual void slot_140() = 0;
+	virtual void slot_144() = 0;
+	virtual void slot_148() = 0;
+	virtual void slot_14C() = 0;
+	virtual void slot_150() = 0;
+	virtual void slot_154() = 0;
+	virtual Bool isDisconnectedAfterGameStart( Int *reason ) const = 0;
+};
 //-------------------------------------------------------------------------------------------------
 /** Initialize the Lan Game Options Menu */
 //-------------------------------------------------------------------------------------------------
@@ -2488,7 +2580,7 @@ void WOLGameSetupMenuInit( WindowLayout *layout, void *userData )
 
 		// check if we were disconnected
 		Int disconReason;
-		if (TheGameSpyInfo->isDisconnectedAfterGameStart(&disconReason))
+		if (((BfmeWolInitInfo *)TheGameSpyInfo)->isDisconnectedAfterGameStart(&disconReason))
 		{
 			AsciiString disconMunkee;
 			disconMunkee.format("GUI:GSDisconReason%d", disconReason);
@@ -2497,7 +2589,7 @@ void WOLGameSetupMenuInit( WindowLayout *layout, void *userData )
 			body = TheGameText->fetch( disconMunkee );
 			GameSpyCloseAllOverlays();
 			GSMessageBoxOk( title, body );
-			TheGameSpyInfo->reset();
+			((BfmeWolInitInfo *)TheGameSpyInfo)->reset();
 			DEBUG_LOG(("WOLGameSetupMenuInit() - game was in progress, and we were disconnected, so pop immediate back to main menu\n"));
 			TheShell->popImmediate();
 			return;
@@ -2514,7 +2606,7 @@ void WOLGameSetupMenuInit( WindowLayout *layout, void *userData )
 		}
 		return;
 	}
-	TheGameSpyInfo->setCurrentGroupRoom(0);
+	((BfmeWolInitInfo *)TheGameSpyInfo)->setCurrentGroupRoom(0);
 
 	if (TheNAT != NULL) {
 		delete TheNAT;
@@ -2530,47 +2622,30 @@ void WOLGameSetupMenuInit( WindowLayout *layout, void *userData )
 	EnableSlotListUpdates(FALSE);
 	InitWOLGameGadgets();
 	EnableSlotListUpdates(TRUE);
-	TheGameSpyInfo->registerTextWindow(listboxGameSetupChat);
+	((BfmeWolInitInfo *)TheGameSpyInfo)->registerTextWindow(listboxGameSetupChat);
 
 	//The dialog needs to react differently depending on whether it's the host or not.
 	TheMapCache->updateCache();
-	GameSpyStagingRoom *game = TheGameSpyInfo->getCurrentStagingRoom();
+	GameSpyStagingRoom *game = ((BfmeWolInitInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
 	GameSpyGameSlot *hostSlot = game->getGameSpySlot(0);
 	hostSlot->setAccept();
-	if (TheGameSpyInfo->amIHost())
+	if (((BfmeWolInitInfo *)TheGameSpyInfo)->amIHost())
 	{
 		OptionPreferences natPref;
 		CustomMatchPreferences customPref;
 		hostSlot->setColor( customPref.getPreferredColor() );
 		hostSlot->setPlayerTemplate( customPref.getPreferredFaction() );
 		hostSlot->setNATBehavior((FirewallHelperClass::FirewallBehaviorType)natPref.getFirewallBehavior());
-		hostSlot->setPingString(TheGameSpyInfo->getPingString());
+		hostSlot->setPingString(((BfmeWolInitInfo *)TheGameSpyInfo)->getPingString());
 		game->setMap(customPref.getPreferredMap());
-
-		// Recorded stats games can never limit superweapons, limit armies, or have inflated starting cash.
-		// This should probably be enforced at the gamespy level as well, to prevent expoits.
-		Int isUsingStats = TheGameSpyGame->getUseStats();
-		game->setStartingCash( isUsingStats? TheMultiplayerSettings->getDefaultStartingMoney() : customPref.getStartingCash() );
-		game->setSuperweaponRestriction( isUsingStats? 0 : customPref.getSuperweaponRestricted() ? 1 : 0 );
-		if (isUsingStats)
-			game->setOldFactionsOnly( 0 );
-
-		//game->setOldFactionsOnly( customPref.getFactionsLimited() );
-    if ( game->oldFactionsOnly() )
-    {
-      // Make sure host follows the old factions only restrictions!
-      const PlayerTemplate *fac = ThePlayerTemplateStore->getNthPlayerTemplate(hostSlot->getPlayerTemplate());
-
-      if ( fac != NULL && !fac->isOldFaction() )
-      {
-        hostSlot->setPlayerTemplate( PLAYERTEMPLATE_RANDOM );
-      }
-    }
 
 		for (Int i=1; i<MAX_SLOTS; ++i)
 		{
 			GameSpyGameSlot *slot = game->getGameSpySlot(i);
-			slot->setState( SLOT_OPEN );
+			GameSlotConnectInfo connect;
+			connect.m_nat = (FirewallHelperClass::FirewallBehaviorType)0;
+			connect.m_port = 0;
+			slot->setState( SLOT_OPEN, UnicodeString::TheEmptyString, &connect );
 		}
 
 		AsciiString lowerMap = customPref.getPreferredMap();
@@ -2611,7 +2686,7 @@ void WOLGameSetupMenuInit( WindowLayout *layout, void *userData )
 		options.format("NAT=%d", natPref.getFirewallBehavior());
 		req.options = options.str();
 		TheGameSpyPeerMessageQueue->addRequest(req);
-		options.format("Ping=%s", TheGameSpyInfo->getPingString().str());
+		options.format("Ping=%s", ((BfmeWolInitInfo *)TheGameSpyInfo)->getPingString().str());
 		req.options = options.str();
 		TheGameSpyPeerMessageQueue->addRequest(req);
    
@@ -2633,8 +2708,6 @@ void WOLGameSetupMenuInit( WindowLayout *layout, void *userData )
 		buttonStart->winSetText(TheGameText->fetch("GUI:Accept"));
 		buttonStart->winEnable( FALSE );
 		buttonSelectMap->winEnable( FALSE );
-    checkBoxLimitSuperweapons->winEnable( FALSE ); // Can look but only host can touch
-    comboBoxStartingCash->winEnable( FALSE );      // Ditto
 		initialAcceptEnable = FALSE;
 	}
 
@@ -2646,7 +2719,7 @@ void WOLGameSetupMenuInit( WindowLayout *layout, void *userData )
 	GadgetTextEntrySetText(textEntryChat, UnicodeString::TheEmptyString);	
 
 	initDone = true;
-	TheGameSpyInfo->setGameOptions();
+	((BfmeWolInitInfo *)TheGameSpyInfo)->setGameOptions();
 	//TheShell->registerWithAnimateManager(parentWOLGameSetup, WIN_ANIMATION_SLIDE_TOP, TRUE);
 	WOLPositionStartSpots();
 
