@@ -1,6 +1,8 @@
 // ?postDraw@InGameUI@@UAEXXZ
-// partial score=0.26 date=2026-09-26
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// partial score=0.987715 date=2026-09-26
+// ?postDraw@InGameUI@@UAEXXZ
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
 // Retail ?postDraw@InGameUI@@UAEXXZ at 0x004469F0, 3333 bytes.
 //
 // Identity: InGameUI vtable 0x010F5B38 slot 75 (+0x12C, VA 0x010F5C64) holds
@@ -21,7 +23,6 @@ typedef unsigned char UnsignedByte;
 typedef int Color;
 typedef unsigned short WideChar;
 
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 inline UnicodeString::UnicodeString() { m_text = 0; }
 inline UnicodeString::UnicodeString(const wchar_t *s)
 {
@@ -32,11 +33,13 @@ inline UnicodeString::UnicodeString(const UnicodeString &that)
 	((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&that);
 }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
-template <class T> inline const T *StringBase<T>::str() const
-{
-	static const T empty = 0;
-	return m_data ? m_data->data : &empty;
-}
+template <> inline const char *StringBase<char>::str() const {return m_data?m_data->data:"";}
+template <> inline const unsigned short *StringBase<unsigned short>::str() const {return m_data?m_data->data:(const unsigned short*)L"";}
+
+#define _STLP_NO_EXCEPTIONS 1
+#include <hash_map>
+#include <map>
+#include <list>
 
 #define SLOT(n) virtual void slot##n() = 0;
 
@@ -102,7 +105,7 @@ public:
 	virtual Int getHeight() = 0;							///< +0x44
 };
 
-class SubsystemSlot7
+class Rva004469F0Slot7
 {
 public:
 	SLOT(0) SLOT(1) SLOT(2) SLOT(3) SLOT(4) SLOT(5) SLOT(6)
@@ -110,6 +113,7 @@ public:
 };
 
 struct ICoord2D { Int x, y; };
+struct Coord2D { Real x, y; };
 
 class LookAtTranslator
 {
@@ -125,13 +129,19 @@ public:
 	virtual UnicodeString fetch(const char *label, Bool *exists = 0) = 0;	///< +0x28
 };
 
-class GameLogic
-{
+class Object;
+typedef std::hash_map<Int,Object*,std::hash<Int>,std::equal_to<Int> > ObjectPtrHash;
+class GameLogic {
 public:
-	class Object *findObjectByID(Int id);
-	UnsignedByte pad[0x3c];
-	UnsignedInt m_frame;									///< +0x3C
-	UnsignedInt getFrame() { return m_frame; }
+ __declspec(noinline) Object *findObjectByID(Int id) {
+  if(id==0)return 0;
+  ObjectPtrHash::iterator it=m_objHash.find(id);
+  if(it==m_objHash.end())return 0;
+  return (*it).second;
+ }
+ UnsignedByte pad[0x3c]; UnsignedInt m_frame;
+ UnsignedInt getFrame(){return m_frame;}
+ UnsignedByte rva40[0xb0-0x40]; ObjectPtrHash m_objHash;
 };
 
 class SpecialPowerTemplate;
@@ -152,30 +162,28 @@ public:
 	UnsignedByte m_status;									///< +0x90
 };
 
-class Overridable
-{
+class Overridable {
 public:
-	Overridable *friend_getFinalOverride();
-	UnsignedByte pad[4];
-	Overridable *m_nextOverride;							///< +0x04
-	const Overridable *getFinalOverride() const
-	{
-		const Overridable *o = this;
-		if (m_nextOverride)
-		{
-			o = m_nextOverride;
-			if (o->m_nextOverride)
-				o = o->m_nextOverride->friend_getFinalOverride();
-		}
-		return o;
-	}
+ Overridable *friend_getFinalOverride() {
+  if(m_nextOverride) return m_nextOverride->friend_getFinalOverride();
+  return this;
+ }
+ const Overridable *friend_getFinalOverride() const {
+  if(m_nextOverride) return m_nextOverride->friend_getFinalOverride();
+  return this;
+ }
+ UnsignedByte pad[4]; Overridable *m_nextOverride;
 };
 
 class SpecialPowerTemplate : public Overridable
 {
 public:
 	UnsignedByte pad2[0x115 - 8];
-	Bool m_sharedNSync;										///< +0x115
+	Bool isSharedNSync() const {
+  const SpecialPowerTemplate *self=this;
+  return ((const SpecialPowerTemplate*)self->friend_getFinalOverride())->m_sharedNSync;
+ }
+ Bool m_sharedNSync;										///< +0x115
 };
 
 class SuperweaponInfo
@@ -210,10 +218,12 @@ struct NamedTimerInfo
 	Bool isCountdown;										///< +0x18
 };
 
+struct ScriptCounter { Int m_value; };
+
 class ScriptEngine
 {
 public:
-	Int *getCounter(AsciiString name);
+	ScriptCounter *getCounter(AsciiString name);
 };
 
 class GlobalLanguageData
@@ -243,36 +253,9 @@ inline Color GameMakeColor(UnsignedByte r, UnsignedByte g, UnsignedByte b, Unsig
 	return (a << 24) | (r << 16) | (g << 8) | b;
 }
 
-// STLport red-black and list nodes, as the loops walk them.
-struct RbNodeBase
-{
-	Int color;
-	RbNodeBase *parent;
-	RbNodeBase *left;
-	RbNodeBase *right;
-	static RbNodeBase *_M_increment(RbNodeBase *node);
-};
-struct ListNode
-{
-	ListNode *next;
-	ListNode *prev;
-	SuperweaponInfo *info;
-};
-struct SuperweaponMapNode : RbNodeBase
-{
-	AsciiString first;										///< +0x10
-	ListNode *second;										///< +0x14 list head
-};
-struct NamedTimerMapNode : RbNodeBase
-{
-	AsciiString first;										///< +0x10
-	NamedTimerInfo *second;									///< +0x14
-};
-struct SuperweaponMap
-{
-	RbNodeBase *header;
-	UnsignedByte pad[8];
-};
+typedef std::list<SuperweaponInfo*> SuperweaponList;
+typedef std::map<AsciiString,SuperweaponList> SuperweaponMap;
+typedef std::map<AsciiString,NamedTimerInfo*> NamedTimerMap;
 
 struct UIMessage
 {
@@ -288,13 +271,12 @@ public:
 	virtual void postDraw();
 
 	UnsignedByte pad0[0x8];
-	Bool m_superweaponsHidden;								///< +0x00C
+	Bool m_superweaponHiddenByScript;								///< +0x00C
 	UnsignedByte pad1[0x56c - 0xd];
 	UIMessage m_uiMessages[6];								///< +0x56C
 	SuperweaponMap m_superweapons[32];						///< +0x5CC
 
-	Real m_superweaponPositionX;							///< +0x74C
-	Real m_superweaponPositionY;							///< +0x750
+	Coord2D m_superweaponPosition;	///< +0x74C
 	Real m_superweaponFlashDuration;						///< +0x754
 	AsciiString m_superweaponNormalFont;					///< +0x758
 	Int m_superweaponNormalPointSize;						///< +0x75C
@@ -305,10 +287,8 @@ public:
 	UnsignedInt m_superweaponLastFlashFrame;				///< +0x770
 	Color m_superweaponFlashColor;							///< +0x774
 	Bool m_superweaponUsedFlashColor;						///< +0x778
-	RbNodeBase *m_namedTimers;								///< +0x77C header
-	UnsignedByte pad3[8];
-	Real m_namedTimerPositionX;								///< +0x788
-	Real m_namedTimerPositionY;								///< +0x78C
+	NamedTimerMap m_namedTimers;								///< +0x77C header
+	Coord2D m_namedTimerPosition;	///< +0x788
 	Bool m_namedTimerCentered;								///< +0x790
 	Real m_namedTimerFlashDuration;							///< +0x794
 	UnsignedInt m_namedTimerLastFlashFrame;					///< +0x798
@@ -323,29 +303,30 @@ public:
 	Int m_namedTimerReadyPointSize;							///< +0x7B8
 	Bool m_namedTimerReadyBold;								///< +0x7BC
 	UnsignedByte pad5[0x81c - 0x7bd];
-	SubsystemSlot7 *m_81C;									///< +0x81C
+	Rva004469F0Slot7 *m_81C;									///< +0x81C
 	UnsignedByte pad6[0x839 - 0x820];
 	Bool m_messagesOn;										///< +0x839
 	UnsignedByte pad7[0x844 - 0x83a];
-	Int m_messagePositionX;									///< +0x844
-	Int m_messagePositionY;									///< +0x848
+	ICoord2D m_messagePosition;	///< +0x844
 	UnsignedByte pad8[0x12bc - 0x84c];
 	Bool m_drawRMBScrollAnchor;								///< +0x12BC
 };
 
 void InGameUI::postDraw()
 {
+ Int startX,startY;
 	if (m_messagesOn)
 	{
 		Int i, x, y;
+		Color dropColor;
 		UnsignedByte r, g, b, a;
-		y = m_messagePositionY;
+		y = m_messagePosition.y;
 		for (i = 6 - 1; i >= 0; i--)
 		{
 			DisplayString *ds = m_uiMessages[i].displayString;
 			if (ds)
 			{
-				x = m_messagePositionX;
+				x = m_messagePosition.x;
 				if (x < 0)
 				{
 					Int width, height;
@@ -353,7 +334,8 @@ void InGameUI::postDraw()
 					x += TheDisplay->getWidth() - width;
 				}
 				GameGetColorComponents(m_uiMessages[i].color, &r, &g, &b, &a);
-				ds->setColors(m_uiMessages[i].color, GameMakeColor(0, 0, 0, a));
+				dropColor=GameMakeColor(0,0,0,a);
+				ds->setColors(m_uiMessages[i].color, dropColor);
 				ds->draw(x, y, 1, 1);
 				y += ds->getFont()->height;
 			}
@@ -362,22 +344,21 @@ void InGameUI::postDraw()
 
 	m_81C->slot7call();
 
-	if (TheBfmeGameLogic->getFrame() > 0 && !m_superweaponsHidden)
+	if (TheBfmeGameLogic->getFrame() > 0 && !m_superweaponHiddenByScript)
 	{
-		Int startX = (Int)(m_superweaponPositionX * TheDisplay->getWidth());
-		Int startY = (Int)(m_superweaponPositionY * TheDisplay->getHeight());
+		startX = (Int)(m_superweaponPosition.x * TheDisplay->getWidth());
+		startY = (Int)(m_superweaponPosition.y * TheDisplay->getHeight());
 		Int bottomMargin = (Int)((Real)TheTacticalView->getHeight() * 0.82f);
 		Bool marginExceeded = false;
 
 		for (Int i = 0; i < 32 && !marginExceeded; ++i)
 		{
-			for (RbNodeBase *mapIt = m_superweapons[i].header->left; mapIt != m_superweapons[i].header && !marginExceeded;
-				mapIt = RbNodeBase::_M_increment(mapIt))
+			for (SuperweaponMap::iterator mapIt=m_superweapons[i].begin(); mapIt!=m_superweapons[i].end() && !marginExceeded; ++mapIt)
 			{
-				AsciiString templateName = ((SuperweaponMapNode *)mapIt)->first;
-				for (ListNode *listIt = ((SuperweaponMapNode *)mapIt)->second->next; listIt != ((SuperweaponMapNode *)mapIt)->second; listIt = listIt->next)
+				AsciiString templateName = mapIt->first;
+				for (SuperweaponList::iterator listIt=mapIt->second.begin();listIt!=mapIt->second.end();++listIt)
 				{
-					SuperweaponInfo *info = listIt->info;
+					SuperweaponInfo *info = *listIt;
 					if (info && !info->m_hiddenByScript && !info->m_hiddenByScience)
 					{
 						if (startY >= bottomMargin)
@@ -446,7 +427,7 @@ void InGameUI::postDraw()
 
 						startY = (Int)(info->m_nameDisplayString->getFont()->height + (Real)startY);
 
-						if (((const SpecialPowerTemplate *)info->m_powerTemplate->getFinalOverride())->m_sharedNSync)
+						if (info->m_powerTemplate->isSharedNSync())
 							break;
 					}
 				}
@@ -456,20 +437,20 @@ void InGameUI::postDraw()
 
 	if (TheBfmeGameLogic->getFrame() > 0 && m_showNamedTimers)
 	{
-		Bool reverseXDir = !m_namedTimerCentered && m_namedTimerPositionX >= 0.5f;
-		Int startX = (Int)(m_namedTimerPositionX * TheDisplay->getWidth());
-		Int startY = (Int)(m_namedTimerPositionY * TheDisplay->getHeight());
-		for (RbNodeBase *mapIt = m_namedTimers->left; mapIt != m_namedTimers; mapIt = RbNodeBase::_M_increment(mapIt))
+		Bool reverseXDir = !m_namedTimerCentered && m_namedTimerPosition.x >= 0.5f;
+		startX = (Int)(m_namedTimerPosition.x * TheDisplay->getWidth());
+		startY = (Int)(m_namedTimerPosition.y * TheDisplay->getHeight());
+		for (NamedTimerMap::iterator mapIt=m_namedTimers.begin();mapIt!=m_namedTimers.end();++mapIt)
 		{
-			AsciiString timerName = ((NamedTimerMapNode *)mapIt)->first;
-			NamedTimerInfo *info = ((NamedTimerMapNode *)mapIt)->second;
+			AsciiString timerName = mapIt->first;
+			NamedTimerInfo *info = mapIt->second;
 			if (info)
 			{
 				UnicodeString line;
 				Int framesLeft = 0;
-				Int *counter = TheScriptEngine->getCounter(timerName);
+				ScriptCounter *counter = TheScriptEngine->getCounter(timerName);
 				if (counter)
-					framesLeft = *counter;
+					framesLeft = counter->m_value;
 				UnsignedInt readyFrame = TheBfmeGameLogic->getFrame();
 				if (framesLeft > 0)
 					readyFrame += framesLeft;
@@ -519,20 +500,23 @@ void InGameUI::postDraw()
 							m_namedTimerUsedFlashColor = !m_namedTimerUsedFlashColor;
 							m_namedTimerLastFlashFrame = TheBfmeGameLogic->getFrame();
 						}
-						if (m_namedTimerUsedFlashColor)
-							info->displayString->setColors(info->color, GameMakeColor(0, 0, 0, 255));
-						else
-							info->displayString->setColors(m_namedTimerFlashColor, GameMakeColor(0, 0, 0, 255));
-						info->displayString->draw(drawX, startY, 1, 1);
+                        info->displayString->setColors(m_namedTimerUsedFlashColor ? info->color : m_namedTimerFlashColor, GameMakeColor(0,0,0,255));
+                        info->displayString->draw(drawX,startY,1,1);
 					}
 					else
 					{
-						info->displayString->drawColored(drawX, startY, info->color, GameMakeColor(0, 0, 0, 255));
+						{
+						info->displayString->setColors(info->color, GameMakeColor(0, 0, 0, 255));
+						info->displayString->draw(drawX, startY, 1, 1);
+						}
 					}
 				}
 				else
 				{
-					info->displayString->drawColored(drawX, startY, info->color, GameMakeColor(0, 0, 0, 255));
+					{
+					info->displayString->setColors(info->color, GameMakeColor(0, 0, 0, 255));
+					info->displayString->draw(drawX, startY, 1, 1);
+					}
 				}
 				startY -= info->displayString->getFont()->height;
 			}

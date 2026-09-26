@@ -6118,5 +6118,15 @@
   "after_sha256": "8ac91bbdd1583ac2497c9531c57eccf5d23cd14de77a5563848b523e1c40be48",
   "evidence": "targets/game/reverse/identity_evidence/0062ad50-ladder-parser.md",
   "reason": "The old canonical AsciiString template pin routes to a UTF-16 search. This address-derived typed ASCII search view preserves find behavior; independently verified complete 130-byte loop and 46-byte wrapper establish the actual targets and ABI without renaming the existing claimed helpers."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004469f0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x004469f0.cpp",
+  "old_name": "SubsystemSlot7",
+  "new_name": "Rva004469F0Slot7",
+  "before_sha256": "f27ff04133bf43439f30c8b3d2498ac6a026e298a6b6f32138bd1dca6278fa79",
+  "after_sha256": "0f7dcb6664200617d18f43cac2a822ccb33ab5dcf297d3e4021696ab3bf455d9",
+  "evidence": "targets/game/reverse/identity_evidence/004469f0-postdraw-native.md",
+  "reason": "The bank had only a generic slot7 view, with no independent subsystem identity. Retail proves the receiver at InGameUI+81C and vslot1C only; retaining the owning body address makes that limitation explicit."
  }
 ]
