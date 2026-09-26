@@ -6128,5 +6128,15 @@
   "after_sha256": "0f7dcb6664200617d18f43cac2a822ccb33ab5dcf297d3e4021696ab3bf455d9",
   "evidence": "targets/game/reverse/identity_evidence/004469f0-postdraw-native.md",
   "reason": "The bank had only a generic slot7 view, with no independent subsystem identity. Retail proves the receiver at InGameUI+81C and vslot1C only; retaining the owning body address makes that limitation explicit."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002b32a0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x002b32a0.cpp",
+  "old_name": "AnimalPeriodicFilter",
+  "new_name": "Rva0025F2D0KindOfAnyFilter",
+  "before_sha256": "34be6b385390395add22c69fabe23510533e06353dcd7294e7dd4b577b788829",
+  "after_sha256": "c90da5ca59acd0eec078405bd30e9193fdf8dfd3ebf20365ba9154b359cb2fe0",
+  "evidence": "targets/game/reverse/identity_evidence/002B32A0-animal-update.md",
+  "reason": "Old bank used an invented generic AnimalPeriodicFilter with opaque layout. Retail VA010B243C is independently owned by the existing Rva0025F2D0KindOfAnyFilter pin, 61-byte copying constructor and native isAnyKindOf predicate; the replacement preserves that established opaque identity rather than inventing a semantic class."
  }
 ]

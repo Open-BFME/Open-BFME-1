@@ -1,18 +1,26 @@
 // ?update@AnimalAIUpdate@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.68 date=2026-09-02
-// cl: /DNDEBUG /MD /EHsc
+// partial score=0.3344272076372315 date=2026-09-26
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
+#include "coord3d.h"
+#include "string_base.h"
+template<>inline const char*StringBase<char>::str()const{return m_data?m_data->data:"";}
+#include "ascii_string.h"
+#include <math.h>
+inline Coord3D::Coord3D(){}
+inline Coord3D::Coord3D(const Coord3D&t){x=t.x;y=t.y;z=t.z;}
+inline Coord3D::~Coord3D(){}
+inline Coord3DBase&Coord3DBase::operator=(const Coord3DBase&t){struct Raw{unsigned x,y,z;};*(Raw*)this=*(const Raw*)&t;return *this;}
+inline Coord3D&Coord3D::operator=(const Coord3D&t){Coord3DBase*b=this;*b=t;return *this;}
+__forceinline Coord3D&Coord3D::Scale(float n){x*=n;y*=n;z*=n;return *this;}
+inline float Coord3D::GetLengthEstimate2D()const{float ax=(float)fabs(x),ay=(float)fabs(y);if(ax>ay)return ax+0.41421357f*ay;return ay+0.41421357f*ax;}
 
 // BFME-only AnimalAIUpdate::update.  There is no Zero Hour twin; the owning
-// file and behavior are identified by the retail CritterDesync literals.
+// secondary update-interface slot is installed by the independently named
+// constructor: primary object +0x10, vtable VA 0x010C5590, slot 0.
+// Bank only: unresolved frame/register scheduling remains. See the adjacent
+// identity_evidence/002B32A0-animal-update.md receipt before resuming.
 
 typedef unsigned int ObjectID;
-
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
 
 enum UpdateSleepTime
 {
@@ -24,23 +32,19 @@ enum CommandSourceType
 	CMD_FROM_AI = 2
 };
 
-class Object
-{
-public:
-	const Coord3D *getUnitDirectionVector2D() const;
-	float distanceSquaredTo(Object *other) const;
-};
-
-class AnimalTemplateView
-{
-public:
-	AnimalTemplateView *friend_getFinalOverride();
-};
-
+class Overridable{public:virtual ~Overridable();const Overridable*getFinalOverride()const;Overridable*m_nextOverride;};
+class ThingTemplate:public Overridable{public:char m_08[0x18];AsciiString m_name;const AsciiString&getName()const{return m_name;}};
+class Thing{public:virtual ~Thing();const ThingTemplate*m_template;const ThingTemplate*getTemplate()const{const ThingTemplate*t=m_template;if(!t)return 0;if(t->m_nextOverride)t=(const ThingTemplate*)t->m_nextOverride->getFinalOverride();return t;}const Coord3D*getUnitDirectionVector2D()const;};
+class Object:public Thing{};
+class BfmeSpotCN;class Gen_0016E370{public:float bfmeDistanceSquared(const BfmeSpotCN*)const;};
+class AICommandInterface{public:void aiIdle(CommandSourceType);void aiMoveToPosition(const Coord3D*,CommandSourceType);void aiBfmeCommand2E(Object*,CommandSourceType);};
+template<int N>class RvaAnimalSlots:public RvaAnimalSlots<N-1>{public:virtual void slot(char(*)[N]);};template<>class RvaAnimalSlots<0>{};
+class RvaAnimalPrimary:public RvaAnimalSlots<127>{public:virtual void rva1fc(int);};
 class AIUpdateInterface
 {
 public:
 	virtual UpdateSleepTime update();
+	unsigned getCurrentStateID()const;
 	void aiIdle(CommandSourceType source);
 	void aiMoveToPosition(const Coord3D *position, CommandSourceType source);
 };
@@ -48,7 +52,8 @@ public:
 class AnimalAIUpdateDestinationLayer
 {
 public:
-	unsigned char isReachableLayer(const Coord3D *position) const;
+	bool isReachableLayer(const Coord3D *position) const;
+	char m_00[8];Object*m_object;
 };
 
 class AnimalAIUpdate
@@ -74,58 +79,48 @@ public:
 	int getLayerForDestination(Object *object, const Coord3D *position);
 };
 
-class GameLogicFrameView
+class GameLogic
 {
 public:
 	unsigned char m_beforeFrame[0x3c];
 	unsigned int m_frame;
-	Object *findObjectByID(ObjectID id);
+	Object *findObjectByID(int id);
 };
 
+class PartitionFilter;
 class PartitionManager
 {
 public:
 	Object *getClosestObject(const Coord3D *position, float range,
-		int measureFrom, void *filters);
+		int measureFrom, PartitionFilter *filters);
 };
 
 extern TerrainLogic *TheTerrainLogic;
-extern GameLogicFrameView *TheGameLogic;
+extern GameLogic *TheGameLogic;
 extern PartitionManager *ThePartitionManager;
-extern "C" unsigned char bfmeRetailCritterDesyncFlag;
-extern "C" void *bfmeRetailCritterDesyncSink;
-extern "C" void __cdecl Gen0003A17A(void *sink, const char *format, ...);
+extern "C" unsigned char bfmeRetailCritterDesyncFlag;extern bool g_012F0239;
+class CRCParameterCheck{public:void __cdecl rva00065C80(const char*,...);};
+extern CRCParameterCheck *bfmeRetailCritterDesyncSink;
 extern int __cdecl GetGameLogicRandomValue(int low, int high, char *file, int line);
 extern float __cdecl Sin(float radians);
 extern float __cdecl Cos(float radians);
 
-// The retail periodic search owns two stack filters.  Keeping their lifetime
-// explicit preserves the function's EH frame while the filter predicates are
-// reconstructed.
-class AnimalPeriodicFilter
-{
-public:
-	AnimalPeriodicFilter(int a, int b, int c, int d, int e);
-	~AnimalPeriodicFilter();
-private:
-	unsigned char m_body[0x2c];
-};
+template<int N>class BitFlags{public:enum BogusInitType{kInit=0};BitFlags(BogusInitType,int);BitFlags(BogusInitType,int,int,int,int);unsigned m_bits[(N+31)/32];};
 
-class AnimalEmitterFilter
-{
-public:
-	AnimalEmitterFilter(void *moduleName, int key, int value);
-	~AnimalEmitterFilter();
-private:
-	unsigned char m_body[0x24];
-};
+extern "C" void*__cdecl memset(void*,int,unsigned);
+template<int N> __declspec(noinline) BitFlags<N>::BitFlags(BogusInitType,int a){memset(m_bits,0,sizeof(m_bits));m_bits[(unsigned)a>>5]|=1u<<((unsigned)a&31);}
+template<int N> __declspec(noinline) BitFlags<N>::BitFlags(BogusInitType,int a,int b,int c,int d){memset(m_bits,0,sizeof(m_bits));m_bits[(unsigned)a>>5]|=1u<<((unsigned)a&31);m_bits[(unsigned)b>>5]|=1u<<((unsigned)b&31);m_bits[(unsigned)c>>5]|=1u<<((unsigned)c&31);m_bits[(unsigned)d>>5]|=1u<<((unsigned)d&31);}
+typedef BitFlags<192> KindOfMaskType;extern const KindOfMaskType KINDOFMASK_NONE;
+class PartitionFilter{public:PartitionFilter():m_next(0){}virtual ~PartitionFilter(){}virtual bool allow(Object*)=0;virtual int getPlayerMask();PartitionFilter*link(PartitionFilter*);PartitionFilter*m_next;};
+class Rva0025F2D0KindOfAnyFilter:public PartitionFilter{public:__forceinline Rva0025F2D0KindOfAnyFilter(const KindOfMaskType&m):m_mask(m){}virtual ~Rva0025F2D0KindOfAnyFilter(){}virtual bool allow(Object*);KindOfMaskType m_mask;};
+class PartitionFilterRelationship:public PartitionFilter{public:PartitionFilterRelationship(Object*o,int f,bool b):m_object(o),m_flags(f),m_match(b){}virtual ~PartitionFilterRelationship(){}virtual bool allow(Object*);virtual int getPlayerMask();Object*m_object;int m_flags;bool m_match;};
+class PartitionFilterAcceptByKindOf:public PartitionFilter{public:PartitionFilterAcceptByKindOf(const KindOfMaskType&,const KindOfMaskType&);virtual ~PartitionFilterAcceptByKindOf(){}virtual bool allow(Object*);KindOfMaskType m_mustBeSet,m_mustBeClear;};
 
-extern void *TheNameKeyGenerator;
-
+inline bool AnimalAIUpdateDestinationLayer::isReachableLayer(const Coord3D*p)const{if(!p)return false;return TheTerrainLogic->getLayerForDestination(m_object,p)<=1;}
 static const char *const kAnimalSource =
 	"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\AIUpdate\\AnimalAIUpdate.cpp";
 
-static __forceinline AnimalAIUpdateModuleDataView *animalData(AnimalAIUpdate *self)
+static __forceinline const AnimalAIUpdateModuleDataView *animalData(AnimalAIUpdate *self)
 {
 	return *(AnimalAIUpdateModuleDataView **)((char *)self - 0x0c);
 }
@@ -145,17 +140,9 @@ static __forceinline ObjectID animalID(Object *object)
 	return *(ObjectID *)((char *)object + 0x74);
 }
 
-static __forceinline const char *animalDebugName(Object *object)
-{
-	AnimalTemplateView *record = *(AnimalTemplateView **)((char *)object + 4);
-	if (record != 0 && *(void **)((char *)record + 4) != 0)
-		record = record->friend_getFinalOverride();
-	if (record == 0)
-		return "";
-	char *text = *(char **)((char *)record + 0x20);
-	return text ? text + 8 : "";
-}
-
+static __forceinline const char *animalDebugName(Object*object){return object->getTemplate()->getName().str();}
+static __forceinline AICommandInterface*animalCommands(AnimalAIUpdate*self){return (AICommandInterface*)((char*)self+0x10);}
+static __forceinline RvaAnimalPrimary*animalPrimary(AnimalAIUpdate*self){return (RvaAnimalPrimary*)((char*)self-0x10);}
 static __forceinline Coord3D *originalPosition(AnimalAIUpdate *self)
 {
 	return (Coord3D *)((char *)self + 0x338);
@@ -179,13 +166,14 @@ static __forceinline unsigned char &returning(AnimalAIUpdate *self)
 static __forceinline void animalLog(const char *text)
 {
 	if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-		Gen0003A17A(bfmeRetailCritterDesyncSink, text);
+		bfmeRetailCritterDesyncSink->rva00065C80( text);
 }
 
 UpdateSleepTime AnimalAIUpdate::update()
 {
 	AnimalAIUpdate *self = this;
-	AnimalAIUpdateModuleDataView *data = animalData(self);
+	CRCParameterCheck*log;
+	const AnimalAIUpdateModuleDataView *data = animalData(self);
 	char *machine = *(char **)((char *)self + 0x20);
 	char *state = *(char **)(machine + 0x1c);
 	int stateID = state ? *(int *)(state + 4) : 999999;
@@ -196,8 +184,8 @@ UpdateSleepTime AnimalAIUpdate::update()
 	if (!processedOne(self))
 	{
 		*originalPosition(self) = *animalPosition(animal);
-		if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-			Gen0003A17A(bfmeRetailCritterDesyncSink,
+		if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+			log->rva00065C80(
 				"CritterDesync:  m_processedOne false - setting m_originalPos to %g,%g,%g",
 				originalPosition(self)->x, originalPosition(self)->y,
 				originalPosition(self)->z);
@@ -205,216 +193,206 @@ UpdateSleepTime AnimalAIUpdate::update()
 	}
 
 	Coord3D *position = animalPosition(animal);
-	if (TheTerrainLogic->getLayerForDestination(animal, position) > 1)
+	if (!((AnimalAIUpdateDestinationLayer*)((char*)self-0x10))->isReachableLayer(position))
 	{
-		if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-			Gen0003A17A(bfmeRetailCritterDesyncSink,
+		if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+			log->rva00065C80(
 				"CritterDesync:  animal %s is in a bad area, return to origin %g,%g,%g.",
-				animalDebugName(animal), originalPosition(self)->x, originalPosition(self)->y,
+				animal->getTemplate()->getName().str(), originalPosition(self)->x, originalPosition(self)->y,
 				originalPosition(self)->z);
-		((AIUpdateInterface *)self)->aiIdle(CMD_FROM_AI);
-		((AIUpdateInterface *)self)->aiMoveToPosition(originalPosition(self), CMD_FROM_AI);
+		animalCommands(self)->aiIdle(CMD_FROM_AI);
+		animalCommands(self)->aiMoveToPosition(originalPosition(self), CMD_FROM_AI);
+		animalPrimary(self)->rva1fc(0);
 		returning(self) = 1;
 		return UPDATE_SLEEP_NONE;
 	}
 
 	if (returning(self))
 	{
-		if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-			Gen0003A17A(bfmeRetailCritterDesyncSink,
+		if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+			log->rva00065C80(
 				"CritterDesync:  m_returning is true - animal %s is checking if we are near origin %g,%g,%g to stop.",
-				animalDebugName(animal), originalPosition(self)->x, originalPosition(self)->y,
+				animal->getTemplate()->getName().str(), originalPosition(self)->x, originalPosition(self)->y,
 				originalPosition(self)->z);
 
-		float dx = originalPosition(self)->x - position->x;
-		float dy = originalPosition(self)->y - position->y;
-		if (dx < 0.0f) dx = -dx;
-		if (dy < 0.0f) dy = -dy;
-		float minPart;
-		float maxPart;
-		if (dx < dy)
+		Coord3D delta=*originalPosition(self);delta.x-=position->x;delta.y-=position->y;
+		if(delta.GetLengthEstimate2D() < 10.0f)
 		{
-			minPart = dx;
-			maxPart = dy;
-		}
-		else
-		{
-			minPart = dy;
-			maxPart = dx;
-		}
-		if (maxPart + minPart * 0.41421357f <= 10.0f)
-		{
-			if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-				Gen0003A17A(bfmeRetailCritterDesyncSink,
+			if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+				log->rva00065C80(
 					"CritterDesync:  animal %s is finished returning to origin.",
-					animalDebugName(animal));
+					animal->getTemplate()->getName().str());
 			returning(self) = 0;
 		}
 		else
 		{
-			if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-				Gen0003A17A(bfmeRetailCritterDesyncSink,
+			if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+				log->rva00065C80(
 					"CritterDesync:  animal %s is NOT finished returning to origin.",
-					animalDebugName(animal));
+					animal->getTemplate()->getName().str());
 			return UPDATE_SLEEP_NONE;
 		}
 	}
 
 	if (TheGameLogic->m_frame % data->m_updateTimer == 0)
 	{
-		if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-			Gen0003A17A(bfmeRetailCritterDesyncSink,
+		if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+			log->rva00065C80(
 				"CritterDesync:  animal %s is doing periodic search for enemies.",
-				animalDebugName(animal));
+				animal->getTemplate()->getName().str());
 		Object *enemy;
 		{
-			AnimalPeriodicFilter enemyFilter(0, 8, 9, 10, 11);
-			enemy = ThePartitionManager->getClosestObject(position,
-				(float)data->m_fleeRange, 0, &enemyFilter);
+			Rva0025F2D0KindOfAnyFilter kindFilter(KindOfMaskType(KindOfMaskType::kInit, 8, 9, 10, 11));
+			PartitionFilterRelationship enemyFilter(animal,3,false);
+			enemy = ThePartitionManager->getClosestObject(animalPosition(animal),
+				(float)data->m_fleeRange, 0, enemyFilter.link(&kindFilter));
 		}
 		if (enemy && !(*(unsigned int *)((char *)enemy + 0x344) & 1))
 		{
 			ObjectID enemyID = animalID(enemy);
 			if (enemyID == scaringObjectID(self) &&
-				(stateID == 20 || stateID == 19))
+				(((const AIUpdateInterface*)((char*)self-0x10))->getCurrentStateID() == 20 || ((const AIUpdateInterface*)((char*)self-0x10))->getCurrentStateID() == 19))
 			{
-				if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-					Gen0003A17A(bfmeRetailCritterDesyncSink,
+				if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+					log->rva00065C80(
 						"CritterDesync:  animal %s(%d) sees SAME enemy %s(%d) to be scared of.",
-						animalDebugName(animal), animalID(animal), animalDebugName(enemy), enemyID);
+						animal->getTemplate()->getName().str(), animalID(animal), enemy->getTemplate()->getName().str(), enemyID);
 				return UPDATE_SLEEP_NONE;
 			}
 
-			if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-				Gen0003A17A(bfmeRetailCritterDesyncSink,
+			if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+				log->rva00065C80(
 					"CritterDesync:  animal %s(%d) found NEW enemy %s(%d) to be scared of RUNAWAYPANIC.",
-					animalDebugName(animal), animalID(animal), animalDebugName(enemy), enemyID);
+					animal->getTemplate()->getName().str(), animalID(animal), enemy->getTemplate()->getName().str(), enemyID);
 			*(float *)((char *)animal + 0x18c) = (float)data->m_fleeDistance;
 			Object *goal = TheGameLogic->findObjectByID(enemyID);
-			((AIUpdateInterface *)self)->aiMoveToPosition(animalPosition(goal), CMD_FROM_AI);
+			animalCommands(self)->aiBfmeCommand2E(goal, (CommandSourceType)1);
 			scaringObjectID(self) = enemyID;
-			if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-				Gen0003A17A(bfmeRetailCritterDesyncSink,
+			if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+				log->rva00065C80(
 					"CritterDesync:  animal %s(%d) blah-1",
-					animalDebugName(animal), animalID(animal));
+					animal->getTemplate()->getName().str(), animalID(animal));
 			return UPDATE_SLEEP_NONE;
 		}
 
+	}
+
 		if (stateID != 0)
 		{
-			if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-				Gen0003A17A(bfmeRetailCritterDesyncSink,
+			if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+				log->rva00065C80(
 					"CritterDesync:  animal %s(%d) is not idle, sleep.",
-					animalDebugName(animal), animalID(animal));
+					animal->getTemplate()->getName().str(), animalID(animal));
 			return UPDATE_SLEEP_NONE;
 		}
 		scaringObjectID(self) = 0;
 		if (GetGameLogicRandomValue(0, 100, (char *)kAnimalSource, 0x98)
 			< data->m_wanderPercentage)
 		{
-			if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-				Gen0003A17A(bfmeRetailCritterDesyncSink,
+			if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+				log->rva00065C80(
 					"CritterDesync:  animal %s(%d) dice roll suceeded for wanderpercentage",
-					animalDebugName(animal), animalID(animal));
-			AnimalEmitterFilter emitterFilter(TheNameKeyGenerator, 0x91, 0);
-			Object *emitter = ThePartitionManager->getClosestObject(position,
-				(float)data->m_fleeRange, 1, &emitterFilter);
+					animal->getTemplate()->getName().str(), animalID(animal));
+			Object*emitter;{PartitionFilterAcceptByKindOf emitterFilter(KindOfMaskType(KindOfMaskType::kInit,0x91),KINDOFMASK_NONE);
+			emitter = ThePartitionManager->getClosestObject(animalPosition(animal),
+				(float)data->m_fleeRange, 1, &emitterFilter);}
+			animalPrimary(self)->rva1fc(0);
 			if (emitter)
 			{
-				if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-					Gen0003A17A(bfmeRetailCritterDesyncSink,
+				if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+					log->rva00065C80(
 						"CritterDesync:  animal %s(%d) EMITTER CASE",
-						animalDebugName(animal), animalID(animal));
-				float radius = (float)data->m_maxWanderRadius;
-				if (animal->distanceSquaredTo(emitter) <= radius * radius)
+						animal->getTemplate()->getName().str(), animalID(animal));
+				int radius = data->m_maxWanderRadius;
+				if (((const Gen_0016E370*)animal)->bfmeDistanceSquared((const BfmeSpotCN*)emitter) > (float)(radius * radius))
 				{
-					if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-						Gen0003A17A(bfmeRetailCritterDesyncSink,
+					if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+						log->rva00065C80(
 							"CritterDesync:  animal %s(%d) moving to emitter at %g,%g,%g",
-							animalDebugName(animal), animalID(animal),
+							animal->getTemplate()->getName().str(), animalID(animal),
 							animalPosition(emitter)->x, animalPosition(emitter)->y,
 							animalPosition(emitter)->z);
-					((AIUpdateInterface *)self)->aiMoveToPosition(animalPosition(emitter), CMD_FROM_AI);
+					animalCommands(self)->aiMoveToPosition(animalPosition(emitter), CMD_FROM_AI);
 				}
 				else
 				{
-					if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-						Gen0003A17A(bfmeRetailCritterDesyncSink,
+					if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+						log->rva00065C80(
 							"CritterDesync:  animal %s(%d) wander to random location",
-							animalDebugName(animal), animalID(animal));
+							animal->getTemplate()->getName().str(), animalID(animal));
+					animal->getUnitDirectionVector2D();
 					Coord3D destination = *animal->getUnitDirectionVector2D();
-					int angle = GetGameLogicRandomValue(-15, 15, (char *)kAnimalSource, 0xba);
+					float angle = (float)GetGameLogicRandomValue(-15, 15, (char *)kAnimalSource, 0xba);
+					destination.x += Cos(angle);destination.y += Sin(angle);
 					float distance = (float)GetGameLogicRandomValue(0,
 						data->m_maxWanderDistance, (char *)kAnimalSource, 0xbd);
-					destination.x = position->x + Cos((float)angle) * distance;
-					destination.y = position->y + Sin((float)angle) * distance;
+					destination.Scale(distance);
+					destination.x += position->x;destination.y += position->y;
 					if (((AnimalAIUpdateDestinationLayer *)((char *)self - 0x10))->isReachableLayer(&destination))
 					{
-						if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-							Gen0003A17A(bfmeRetailCritterDesyncSink,
+						if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+							log->rva00065C80(
 								"CritterDesync:  animal %s(%d) wandering to dest %g,%g,%g",
-								animalDebugName(animal), animalID(animal),
+								animal->getTemplate()->getName().str(), animalID(animal),
 								destination.x, destination.y, destination.z);
-						((AIUpdateInterface *)self)->aiMoveToPosition(&destination, CMD_FROM_AI);
+						g_012F0239=true;animalCommands(self)->aiMoveToPosition(&destination, CMD_FROM_AI);g_012F0239=false;
 					}
 					else
 					{
-						if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-							Gen0003A17A(bfmeRetailCritterDesyncSink,
+						if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+							log->rva00065C80(
 								"CritterDesync:  animal %s(%d) CANNOT wander to dest %g,%g,%g",
-								animalDebugName(animal), animalID(animal),
+								animal->getTemplate()->getName().str(), animalID(animal),
 								destination.x, destination.y, destination.z);
 					}
 				}
 			}
 			else
 			{
-				if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-					Gen0003A17A(bfmeRetailCritterDesyncSink,
+				if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+					log->rva00065C80(
 						"CritterDesync:  animal %s(%d) NO EMITTER CASE",
-						animalDebugName(animal), animalID(animal));
-				float dx = originalPosition(self)->x - position->x;
-				float dy = originalPosition(self)->y - position->y;
-				float dz = originalPosition(self)->z - position->z;
-				float range2 = dx * dx + dy * dy + dz * dz;
-				float radius = (float)data->m_maxWanderRadius;
-				if (range2 > radius * radius)
+						animal->getTemplate()->getName().str(), animalID(animal));
+				Coord3D delta=*originalPosition(self);delta.x-=position->x;delta.y-=position->y;delta.z-=position->z;
+				if(delta.GetLengthEstimate() > (float)data->m_maxWanderRadius)
 				{
-					if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-						Gen0003A17A(bfmeRetailCritterDesyncSink,
+					if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+						log->rva00065C80(
 							"CritterDesync:  animal %s(%d) returning to m_originalPos %g,%g,%g",
-							animalDebugName(animal), animalID(animal),
+							animal->getTemplate()->getName().str(), animalID(animal),
 							originalPosition(self)->x, originalPosition(self)->y,
 							originalPosition(self)->z);
-					((AIUpdateInterface *)self)->aiMoveToPosition(originalPosition(self), CMD_FROM_AI);
+					animalCommands(self)->aiMoveToPosition(originalPosition(self), CMD_FROM_AI);
 				}
 				else
 				{
-					if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-						Gen0003A17A(bfmeRetailCritterDesyncSink,
+					if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+						log->rva00065C80(
 							"CritterDesync:  animal %s(%d) wandering to random spot",
-							animalDebugName(animal), animalID(animal));
+							animal->getTemplate()->getName().str(), animalID(animal));
+					animal->getUnitDirectionVector2D();
 					Coord3D destination = *animal->getUnitDirectionVector2D();
-					int angle = GetGameLogicRandomValue(-15, 15, (char *)kAnimalSource, 0xf2);
+					float angle = (float)GetGameLogicRandomValue(-15, 15, (char *)kAnimalSource, 0xf2);
+					destination.x += Cos(angle);destination.y += Sin(angle);
 					float distance = (float)GetGameLogicRandomValue(0,
 						data->m_maxWanderDistance, (char *)kAnimalSource, 0xf5);
-					destination.x = position->x + Cos((float)angle) * distance;
-					destination.y = position->y + Sin((float)angle) * distance;
+					destination.Scale(distance);
+					destination.x += position->x;destination.y += position->y;
 					if (((AnimalAIUpdateDestinationLayer *)((char *)self - 0x10))->isReachableLayer(&destination))
 					{
-						if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-							Gen0003A17A(bfmeRetailCritterDesyncSink,
+						if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+							log->rva00065C80(
 								"CritterDesync:  animal %s(%d) wandering to %g,%g,%g",
-								animalDebugName(animal), animalID(animal),
+								animal->getTemplate()->getName().str(), animalID(animal),
 								destination.x, destination.y, destination.z);
-						((AIUpdateInterface *)self)->aiMoveToPosition(&destination, CMD_FROM_AI);
+						animalCommands(self)->aiMoveToPosition(&destination, CMD_FROM_AI);
 					}
 					else
 					{
-						if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-							Gen0003A17A(bfmeRetailCritterDesyncSink,
+						if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+							log->rva00065C80(
 								"CritterDesync:  animal %s(%d) CANNOT wander to %g,%g,%g",
-								animalDebugName(animal), animalID(animal),
+								animal->getTemplate()->getName().str(), animalID(animal),
 								destination.x, destination.y, destination.z);
 					}
 				}
@@ -422,16 +400,15 @@ UpdateSleepTime AnimalAIUpdate::update()
 		}
 		else
 		{
-			if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-				Gen0003A17A(bfmeRetailCritterDesyncSink,
+			if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+				log->rva00065C80(
 					"CritterDesync:  animal %s(%d) dice roll failed.",
-					animalDebugName(animal), animalID(animal));
+					animal->getTemplate()->getName().str(), animalID(animal));
 		}
-	}
 
-	if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
-		Gen0003A17A(bfmeRetailCritterDesyncSink,
-			"CritterDesync:  animal %s(%d) finished update.", animalDebugName(animal), animalID(animal));
+	if (bfmeRetailCritterDesyncFlag && (log=bfmeRetailCritterDesyncSink))
+		log->rva00065C80(
+			"CritterDesync:  animal %s(%d) finished update.", animal->getTemplate()->getName().str(), animalID(animal));
 
 	return UPDATE_SLEEP_NONE;
 }
