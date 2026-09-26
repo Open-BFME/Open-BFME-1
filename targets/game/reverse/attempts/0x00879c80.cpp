@@ -1,5 +1,6 @@
 // ?MultiplyInternalFPF@@YAXPAUInternalFPF@@00@Z
 // partial score=0.9944827586206897 date=2026-09-22
+// cl: /O2 /GS /MD /GR- /EHsc- -Iinputs/vendor/nbench
 /*
 ** emfloat.c
 ** Source for emulated floating-point routines.

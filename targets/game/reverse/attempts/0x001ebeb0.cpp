@@ -1,5 +1,5 @@
 // ?d_001ebeb0@@YAXXZ
-// partial score=0.49 date=2026-09-26
+// partial score=0.50 date=2026-09-26
 // cl: /DNDEBUG /MD /EHsc
 // Retail 0x001EBEB0 (1065 bytes), five stack arguments: attack type, source,
 // victim, target position, command source. The four-argument Object wrapper
@@ -12,7 +12,9 @@
 // Direct victim-parameter references probe 1100/1065 bytes with 937
 // non-relocation differences and 18 relocation-layout mismatches: retail
 // initially keeps victim in EBP, then reuses EBP for the reverse-slot bound;
-// the candidate keeps WeaponSet in EBP. Removing the self alias did not help.
+// the candidate keeps WeaponSet in EBP. Comparing range <= 0.0f now
+// preserves the retail unordered-float branch but does not change these bytes.
+// Removing the self alias did not help.
 
 enum WeaponSlotType
 {
@@ -335,7 +337,7 @@ CanAttackResult WeaponSet::getAbleToUseWeaponAgainstTarget(AbleToAttackType atta
 			if (allowAbort)
 			{
 				if (source->m_ai == 0 || source->m_ai->m_range == 0
-					|| !(source->m_ai->m_range->bfmeRangeAgainst(source) > 0.0f))
+					|| source->m_ai->m_range->bfmeRangeAgainst(source) <= 0.0f)
 				{
 					if (hasAWeapon && !hasAWeaponInRange && attackType != (AbleToAttackType)4)
 						return ATTACKRESULT_INVALID_SHOT;

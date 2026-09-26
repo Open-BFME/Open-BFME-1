@@ -1,5 +1,5 @@
 // ?d_001e9fd0@@YAXXZ
-// partial score=0.34 date=2026-09-26
+// partial score=0.35 date=2026-09-26
 // cl: /DNDEBUG /MD /O2 /Ob2 /GX-
 // Open-BFME5: Weapon::privateFireWeapon, retail 0x001E9FD0 size 1253.
 // extraBonusFlags then source, then bitcast WeaponBonus ctor. Stub-only
@@ -8,13 +8,14 @@
 // loaded after the six stores. ObjectFilter is the witnessed 8-byte field at
 // WeaponTemplate+0x4e8. Linear helper 0x001E49E0 is a proven custom ABI:
 // ecx=targets, eax=index, edi=source, esi=out (144B x87 sin/cos + ground).
-// Probe is 1132/1253 bytes, frame 0x24 vs retail 0x20, 861 non-relocation
-// differences and 21 relocation-layout mismatches. The isolated helper
-// candidate probes 140/144 bytes but cannot model the retail compiler-private
-// EDI/ESI calling convention as an ordinary C++ function. Target at +0x203
-// and +0x227 aliases the aimed position and bonus in one stack region.
+// Current probe: 1140/1253 bytes, frame 0x24 vs retail 0x20, 863
+// non-relocation differences and 21 relocation-layout mismatches. All three
+// WeaponTemplate dispatches now use the BFME eleven-argument sourcePos and
+// victimId slots, rather than Zero Hour's ignoreRanges and inflict arguments;
+// retail +0x227/+0x234 aliases the aimed position and bonus stack region.
+// Linked linear helper 0x001E49E0 still needs its private EDI/ESI ABI.
 // Reordering declarations or introducing a separate victim alias did not
-// correct the parent's prologue.
+// correct the prologue.
 
 #include <math.h>
 
@@ -142,10 +143,10 @@ class WeaponTemplate
 public:
 	int getDelayBetweenShots(const WeaponBonus &bonus) const;
 	void fireWeaponTemplate(
-		const Object *source, int wslot, int barrel,
-		const Object *victim, const Coord3D *victimPos,
-		const WeaponBonus &bonus, int isDetonation, int ignoreRanges,
-		Weapon *weapon, int *projectileID, int inflict) const;
+		const Object *source, const Coord3D *sourcePos,
+		int wslot, int barrel, const Object *victim, int victimId,
+		const Coord3D *victimPos, const WeaponBonus &bonus,
+		int isDetonation, Weapon *weapon, int *projectileID);
 	void bfmeTellLO(Weapon *weapon, const Object *source,
 		const Object *victim, WeaponBonus *bonus);
 
@@ -305,9 +306,9 @@ bool Weapon::privateFireWeapon(const Object *source, const Coord3D *sourcePos,
 				(int)self->m_linearIndex, src, aimed);
 			if (!self->m_template->m_linearGate || self->m_linearIndex)
 			{
-				self->m_template->fireWeaponTemplate(src, self->m_wslot, self->m_curBarrel,
-					victim, aimed, bonus, isDetonation, ignoreRanges,
-					self, projectileID, 1);
+				self->m_template->fireWeaponTemplate(
+					src, sourcePos, self->m_wslot, self->m_curBarrel,
+					victim, victimId, aimed, bonus, isDetonation, self, projectileID);
 			}
 			int flag = ((int *)(self->m_template->m_linearTargets.m_begin
 				+ self->m_linearIndex * 12))[2];
@@ -339,15 +340,15 @@ bool Weapon::privateFireWeapon(const Object *source, const Coord3D *sourcePos,
 		aimed->z = TheTerrainLogic->getGroundHeight(aimed->x, aimed->y, 0);
 		self->m_scatterBegin[pick] = self->m_scatterEnd[-1];
 		--self->m_scatterEnd;
-		self->m_template->fireWeaponTemplate(src, self->m_wslot, self->m_curBarrel,
-			victim, aimed, bonus, isDetonation, ignoreRanges,
-			self, projectileID, 1);
+		self->m_template->fireWeaponTemplate(
+			src, sourcePos, self->m_wslot, self->m_curBarrel,
+			victim, victimId, aimed, bonus, isDetonation, self, projectileID);
 	}
 	else
 	{
-		self->m_template->fireWeaponTemplate(src, self->m_wslot, self->m_curBarrel,
-			victim, victimPos, bonus, isDetonation, ignoreRanges,
-			self, projectileID, 1);
+		self->m_template->fireWeaponTemplate(
+			src, sourcePos, self->m_wslot, self->m_curBarrel,
+			victim, victimId, victimPos, bonus, isDetonation, self, projectileID);
 	}
 
 	--self->m_ammoInClip;

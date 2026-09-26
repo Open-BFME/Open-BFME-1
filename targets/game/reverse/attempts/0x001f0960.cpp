@@ -1,5 +1,5 @@
 // ?d_001f0960@@YAXXZ
-// partial score=0.44 date=2026-09-26
+// partial score=0.45 date=2026-09-26
 // cl: /DNDEBUG /DWIN32 /MD /O2 /Ob2 /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 // BezierProjectileBehavior::update, retail 0x001F0960 size 1733.
@@ -13,8 +13,10 @@
 // Object+0x178.
 // Reconstructed the formerly fake WideGuard path: owner/default/object
 // PartitionFilter chain, spatial query, and condition update of nearby objects.
-// Probe is 1549/1733 bytes, frame 0x80 vs retail 0x6c, 1301 non-relocation
-// differences and 42 relocation-layout mismatches; source is NOT exact.
+// Current probe: 1569/1733 bytes, frame 0x80 vs retail 0x6c, 1324
+// non-relocation differences and 42 relocation-layout mismatches. The
+// independent aim-output local now copies from getAimPosition's returned
+// pointer, and x87 squared-sum order follows the retail arithmetic.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
@@ -380,13 +382,13 @@ UpdateSleepTime BezierProjectileBehavior::update()
 		Object *victim = TheBfmeGameLogic->findObjectByID(m_victimId);
 		if (victim)
 		{
-			Coord3D newVictimPos;
-			m_aimWeapon->getAimPosition(&newVictimPos, obj, victim, 1);
+			Coord3D aimOutput;
+			Coord3D newVictimPos = *m_aimWeapon->getAimPosition(&aimOutput, obj, victim, 1);
 			Coord3D delta;
 			delta.x = newVictimPos.x - m_flightPathEnd.x;
 			delta.y = newVictimPos.y - m_flightPathEnd.y;
 			delta.z = newVictimPos.z - m_flightPathEnd.z;
-			Real distVictimMovedSqr = delta.x * delta.x + delta.y * delta.y + delta.z * delta.z;
+			Real distVictimMovedSqr = delta.z * delta.z + delta.y * delta.y + delta.x * delta.x;
 			if (distVictimMovedSqr > g_bfmeScaleBK)
 			{
 				Real distVictimMoved = sqrtf(distVictimMovedSqr);
@@ -438,7 +440,7 @@ UpdateSleepTime BezierProjectileBehavior::update()
 		curDir.x = curPos.x - prevPos.x;
 		curDir.y = curPos.y - prevPos.y;
 		curDir.z = curPos.z - prevPos.z;
-		Real len2 = curDir.x * curDir.x + curDir.y * curDir.y + curDir.z * curDir.z;
+		Real len2 = curDir.x * curDir.x + curDir.z * curDir.z + curDir.y * curDir.y;
 		if (len2 != BfmeZeroRange)
 		{
 			Real inv = WWMath::Inv_Sqrt(len2);
