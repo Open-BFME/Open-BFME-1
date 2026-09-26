@@ -89468,3 +89468,5 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?bfmeRva0130A490Slot@@3VRva007F01F0@@A,0x0130A490,object receiving initializer at 0x00C6C8E0
 ?startPings@Rva00550500Target@@QAEXXZ,0x00550500,member ABI view of matched Rva00550500 startPings; retail 005512C1 reloads receiver ECX then 005512C3 calls ILT 00042B7C which jumps here; body ignores receiver and has no stack args
 ??1?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@3@@_STL@@QAE@XZ,0x00030BDE,route=0x00078060; MapUtil resetMap retail calls tree destructor via ILT through 0x00078450 and 0x0004A3AE
+??0Rva009F67EDCriticalSection@@QAE@XZ,0x009F67ED,address-derived ctor; 0x00C6E2F2 calls with object this in ECX and retail callee initializes Win32 critical section at +4 then returns this
+?rva00C715AARelease@@YAXXZ,0x00C715AA,address-derived callback registered by 0x00C6E2F2; retail 0x00C715AA invokes object teardown and Win32 DeleteCriticalSection for embedded section at +4

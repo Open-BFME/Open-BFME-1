@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "93c46e391202bcb3799287d7179e156e8c1c5c911deed3d6e69ce20a7e2be79c",
+  "symbol": "?d_00c6dd80@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?d_00c6dd80@@YAXXZ\n// partial score=0.99 date=2026-09-26\n// cl: /O2 /MD\n// The Vector2 vector's out-of-line constructor is reached through retail ILT 0x00049341.\n#include <new>\nclass Vector2;\n\nclass Rva0013B6A0Vector2\n{\npublic:\n    Rva0013B6A0Vector2(unsigned size, const Vector2 *array) throw();\nprivate:\n    void *m_words[6];\n};\n\nextern Rva0013B6A0Vector2 g_bfmeRva01341130Static;\nvoid bfmeForward_00C71020();\nextern \"C\" int __cdecl atexit(void (__cdecl *callback)());\n\nvoid bfmeRva00C6DD80Initialize()\n{\n    new (&g_bfmeRva01341130Static) Rva0013B6A0Vector2(0, 0);\n    atexit(bfmeForward_00C71020);\n}\n"
+}
