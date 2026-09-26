@@ -79,3 +79,28 @@ BFME_VECTOR_RELEASE( Rva002E4ED0, 0x54 );
 BFME_VECTOR_RELEASE( Rva002E7280, 0x54 );
 BFME_VECTOR_RELEASE( Rva00362090, 0x58 );
 BFME_VECTOR_RELEASE( Rva00760E50, 0x6C );
+struct Rva009A1CElem8 { char bytes[8]; };
+
+#define BFME_VECTOR_RELEASE8( NAME )                                            \
+	struct NAME                                                               \
+	{                                                                         \
+		char *m_start;                                                        \
+		char *m_finish;                                                       \
+		char *m_endOfStorage;                                                 \
+		void release();                                                       \
+	};                                                                        \
+	void NAME::release()                                                      \
+	{                                                                         \
+		char *start = m_start;                                                \
+		if ( start != 0 )                                                     \
+		{                                                                     \
+			int n = ((Rva009A1CElem8 *)m_endOfStorage - (Rva009A1CElem8 *)start) * 8; \
+			if ( (unsigned int)n > 128 )                                       \
+				::operator delete( start );                                   \
+			else                                                              \
+				Gen0082E5F0( start, n );                                      \
+		}                                                                     \
+	}
+
+BFME_VECTOR_RELEASE8( Rva009A1CA0 );
+BFME_VECTOR_RELEASE8( Rva009A1DE0 );
