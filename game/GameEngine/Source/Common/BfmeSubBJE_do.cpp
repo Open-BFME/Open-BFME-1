@@ -35,6 +35,7 @@ public:
 	virtual bool Resize(int newsize, const void *array = 0);
 
 	bool bfmeDoBJE(void *what);
+	int activeCount() const { return active_count; }
 
 private:
 	BfmeRef *vector;
@@ -61,4 +62,19 @@ bool BfmeSubBJE::bfmeDoBJE(void *what)
 	active_count = index + 1;
 	vector[index] = *(BfmeRef *)what;
 	return true;
+}
+
+struct Rva0096E9F0Owner
+{
+	char m_reserved[0xf4];
+	BfmeSubBJE m_sub;
+
+	int appendAndReturnIndex(void *value);
+};
+
+int Rva0096E9F0Owner::appendAndReturnIndex(void *value)
+{
+	int index = m_sub.activeCount();
+	m_sub.bfmeDoBJE(value);
+	return index;
 }
