@@ -264,11 +264,10 @@ struct Rva007371D0TreeType
 	Int m_field58;
 };
 
-// addTree's position, taken by value; the copy constructor makes retail build it in the argument slot.
+// addTree's position, taken by value and converted from the caller's Coord3D.
 struct Rva00736B60Coord
 {
 	Rva00736B60Coord(const Coord3D &c) : x(c.x), y(c.y), z(c.z) {}
-	Rva00736B60Coord(const Rva00736B60Coord &other) : x(other.x), y(other.y), z(other.z) {}
 
 	Real x, y, z;
 };
