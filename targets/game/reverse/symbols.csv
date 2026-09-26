@@ -89151,3 +89151,4 @@ _gpDisconnect,0x008E9800,body 0x008E9800; Thread_Function 0x0063EB00 +0xB49 jump
 ?addRadar@Rva000CBFA0Player@@QAEX_N@Z,0x000CBFA0,object-symbol alias of matched Player::addRadar body; retail Object::onDisabledEdge 0x001C3550 calls ILT 0x000179FE -> 0x000CBFA0 with thiscall bool and ret4
 ?Rva009C9AA0Target@@YAXXZ,0x009C9AA0,address-derived callable alias for the matched ArchivedDirectoryTree private find; the 0x009CA000 retail wrapper passes an AsciiString reference on stack with tree this in ECX
 ?Rva009C9B70Target@@YAXXZ,0x009C9B70,address-derived callable alias for matched ArchiveFileTree private find; 0x009CA040 and 0x009CA0F0 pass AsciiString reference on stack with tree this in ECX
+?Rva009C9CE0Target@@YAXXZ,0x009C9CE0,address-derived callable alias for matched tree private lower_bound; 0x009CA440 passes AsciiString reference on stack with tree this in ECX
