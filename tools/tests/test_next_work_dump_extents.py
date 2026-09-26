@@ -1,5 +1,6 @@
 """A compiled drift size must not truncate a current byte-true dump."""
 import csv
+import importlib
 from pathlib import Path
 import sys
 from types import SimpleNamespace
@@ -7,8 +8,19 @@ from types import SimpleNamespace
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import build
 import next_work
+
+
+def _build():
+    """The `build` module next_work will use, resolved at call time.
+
+    next_work does `import build` inside its functions, and sibling test files
+    load tools by path and REBIND sys.modules["build"] at collection time. A
+    module-level `import build` here then names a different object, the stub
+    never reaches next_work, and the real retail bytes are read instead: the
+    tests passed alone and failed in the suite.
+    """
+    return importlib.import_module("build")
 
 
 def ledger(tmp_path, monkeypatch, rows):
@@ -35,7 +47,7 @@ def test_missing_inventory_uses_current_dump_without_reweighting(tmp_path, monke
     ledger(tmp_path, monkeypatch, [{}])
     monkeypatch.setattr(next_work, "_ghidra_sizes", lambda: {})
     body = b"\x90" * 531 + b"\xc2\x04\x00"
-    monkeypatch.setattr(build, "read_target_bytes", lambda rva, size: body[:size])
+    monkeypatch.setattr(_build(), "read_target_bytes", lambda rva, size: body[:size])
     original = candidate()
     items, meta = next_work.collapse_and_validate([original])
     assert meta["served"] == 1
@@ -73,7 +85,7 @@ def test_ret_int3_carving_supersedes_stale_inventory_extent(tmp_path, monkeypatc
                              end_evidence="ret+int3", ghidra="FUN_00401400"))
     monkeypatch.setattr(next_work, "_ghidra_sizes", lambda: {0x1400: 525})
     body = b"\x90" * 531 + b"\xc2\x04\x00"
-    monkeypatch.setattr(build, "read_target_bytes", lambda rva, size: body[:size])
+    monkeypatch.setattr(_build(), "read_target_bytes", lambda rva, size: body[:size])
 
     items, _ = next_work.collapse_and_validate([candidate()])
 
@@ -98,7 +110,7 @@ def test_only_ret_int3_carvings_are_boundary_proof(tmp_path, monkeypatch):
 def test_inventory_disagreement_is_not_silently_overwritten(tmp_path, monkeypatch):
     ledger(tmp_path, monkeypatch, [{}])
     monkeypatch.setattr(next_work, "_ghidra_sizes", lambda: {0x1400: 540})
-    monkeypatch.setattr(build, "read_target_bytes", lambda rva, size: b"\x90" * size)
+    monkeypatch.setattr(_build(), "read_target_bytes", lambda rva, size: b"\x90" * size)
     items, _ = next_work.collapse_and_validate([candidate()])
     assert items[0]["extent"] == 540
     assert any("inventory 540B vs current dump 534B" in w for w in items[0]["warnings"])
@@ -112,7 +124,7 @@ def test_dump_does_not_override_positive_start_refutation(
         tmp_path, monkeypatch, sizes, fill, reason):
     ledger(tmp_path, monkeypatch, [{}])
     monkeypatch.setattr(next_work, "_ghidra_sizes", lambda: sizes)
-    monkeypatch.setattr(build, "read_target_bytes", lambda rva, size: fill * size)
+    monkeypatch.setattr(_build(), "read_target_bytes", lambda rva, size: fill * size)
     items, meta = next_work.collapse_and_validate([candidate()])
     assert not items
     assert meta["reasons"] == {"C1 " + reason: 1}
