@@ -514,45 +514,8 @@ void BridgeBehavior::onDie(const DamageInfo *)
 	*(UnsignedInt *)((unsigned char *)this + 0x45C) = TheGameLogic->getFrame();
 }
 
-// ?setScaffoldData@BridgeBehavior@@IAEXPAVObject@@PAM1PBUCoord3D@@22@Z
-void BridgeBehavior::setScaffoldData(Object *object, Real *angle, Real *sunkenHeight,
-	const Coord3D *risePosition, const Coord3D *buildPosition,
-	const Coord3D *bridgeCenter)
-{
-	if (object == 0 || angle == 0 || risePosition == 0 || buildPosition == 0)
-		return;
+// setScaffoldData is compiled with createScaffolding in BridgeBehaviorCreateScaffoldingThunk.cpp.
 
-	const unsigned char *moduleData = *(const unsigned char **)
-		((const unsigned char *)this + 0x04);
-	BridgeScaffoldBehaviorInterface *scaffold =
-		BridgeScaffoldBehavior::getBridgeScaffoldBehaviorInterfaceFromObject(object);
-
-	Real fudge = 8.0f;
-	Coord3D sunkenPosition;
-	sunkenPosition.x = risePosition->x;
-	sunkenPosition.y = risePosition->y;
-	sunkenPosition.z = risePosition->z - *sunkenHeight - fudge;
-	object->setPosition(&sunkenPosition);
-	scaffold->setPositions(&sunkenPosition, risePosition, buildPosition);
-	scaffold->setMotion(1);
-	((Thing *)object)->setOrientation(*angle);
-
-	Real lateralSpeed = *(const Real *)(moduleData + 0x08);
-	Coord3D buildToCenter;
-	Coord3D riseToCenter;
-	buildToCenter.x = buildPosition->x - risePosition->x;
-	buildToCenter.y = buildPosition->y - risePosition->y;
-	buildToCenter.z = buildPosition->z - risePosition->z;
-	riseToCenter.x = bridgeCenter->x - risePosition->x;
-	riseToCenter.y = bridgeCenter->y - risePosition->y;
-	riseToCenter.z = bridgeCenter->z - risePosition->z;
-	Real buildDistance = buildToCenter.length();
-	Real riseDistance = riseToCenter.length();
-	scaffold->setLateralSpeed(
-		lateralSpeed * (buildDistance / riseDistance));
-	Real verticalSpeed = *(const Real *)(moduleData + 0x0C);
-	scaffold->setVerticalSpeed(verticalSpeed);
-}
 
 // ?onDamage@BridgeBehavior@@UAEXPAVDamageInfo@@@Z
 void BridgeBehavior::onDamage(DamageInfo *damageInfo)
