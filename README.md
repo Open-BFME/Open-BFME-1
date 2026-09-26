@@ -51,7 +51,7 @@ The MSVC 7.1 toolchain and baseline executables are committed directly (plain gi
 
 ```bash
 ./tools/setup_hooks.sh   # enable the pre-commit byte-check (git won't do this from a clone)
-./build.sh               # verify every tracked function against retail   (build.cmd or .\build.ps1 on Windows, same arguments)
+./build.sh               # verify every tracked function against retail   (.\build.cmd on Windows, same arguments)
 ```
 
 On Linux, use WineHQ's Wine 11 (`winehq-stable`), not a distro package, with a

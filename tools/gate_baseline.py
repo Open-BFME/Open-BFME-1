@@ -48,14 +48,10 @@ def run_gate():
 
 
 def gate_command():
-    """build.sh is a shell script: Windows cannot CreateProcess it directly
-    (WinError 193), so run it under bash there."""
-    script = str(ROOT / "build.sh")
+    """Run the same Python gate directly on Windows, where build.sh is not executable."""
     if sys.platform.startswith("win"):
-        import shutil
-        bash = shutil.which("bash") or str(Path("C:/Program Files/Git/bin/bash.exe"))
-        return [bash, script]
-    return [script]
+        return [sys.executable, str(ROOT / "tools/build.py")]
+    return [str(ROOT / "build.sh")]
 
 
 def red_rows(output):
