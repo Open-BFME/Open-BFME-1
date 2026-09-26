@@ -1237,8 +1237,8 @@ WindowMsgHandledType GadgetListBoxInput( GameWindow *window, UnsignedInt msg,
 // GadgetListBoxMultiInput ====================================================
 /** Handle input for multiple selection list box */
 //=============================================================================
-// GadgetListBoxMultiInput exact retail body is emitted by
-// GadgetListBoxMultiInputThunk.cpp.
+// GadgetListBoxMultiInput native retail body is emitted by
+// GadgetListBoxMultiInput.cpp.
 WindowMsgHandledType GadgetListBoxMultiInput(GameWindow *, UnsignedInt, UnsignedInt, UnsignedInt);
 
 // GadgetListBoxSystem ========================================================
