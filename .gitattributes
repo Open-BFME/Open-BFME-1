@@ -26,6 +26,8 @@ reverse/re_attempts.log merge=union
 # Target ledgers remain independent; validation rejects overlapping appends.
 reverse/worldbuilder/functions.csv text eol=lf merge=union
 reverse/worldbuilder/attempts.jsonl text eol=lf merge=union
+# Attempt hashes bind the exact saved source, including its line endings.
+reverse/worldbuilder/attempts/*.cpp -text
 reverse/worldbuilder/*.json text eol=lf
 targets/worldbuilder/**/*.json text eol=lf
 targets/worldbuilder/dependencies/*.csv text eol=lf

@@ -15,6 +15,7 @@ if __name__ == "__main__":
 import argparse
 import csv
 import io
+import json
 import re
 import subprocess
 import sys
@@ -468,6 +469,25 @@ def check_attempts(spec, problems, *, functions_raw=None, sources_ok=None):
 ORPHAN_BASELINE = 1
 
 
+def worldbuilder_claims(spec, sources_ok):
+    import target_hooks
+
+    owned = {path for path in sources_ok if path.startswith(target_hooks.OWNED)}
+    if not owned:
+        return set()
+    if not {target_hooks.CONFIG, target_hooks.LEDGER} <= sources_ok:
+        raise ValueError("WorldBuilder sources require a target configuration and ledger")
+    if spec is not None:
+        # The target validator reads disk; it may exempt only this snapshot's claims.
+        snapshot = ":" if spec == "" else spec
+        sources = target_hooks._sources(ROOT, snapshot, sources_ok)
+        config = json.loads(read_ledger(ROOT / target_hooks.CONFIG, spec))
+        dependencies = owned | sources | target_hooks._donor_paths(ROOT, snapshot, sources_ok)
+        dependencies.add(config["image"]["path"])
+        target_hooks._clean(ROOT, snapshot, dependencies)
+    return target_hooks.validated_worldbuilder_sources(ROOT)
+
+
 def check_orphans(spec, problems, *, functions_raw=None, sources_ok=None):
     """Refuse a NEW Code/*.cpp that owns no matched row.
 
@@ -487,6 +507,10 @@ def check_orphans(spec, problems, *, functions_raw=None, sources_ok=None):
             claimed.add(row[4])
     if sources_ok is None:
         sources_ok = known_sources(spec)
+    try:
+        claimed.update(worldbuilder_claims(spec, sources_ok))
+    except (ValueError, OSError, KeyError, subprocess.CalledProcessError) as error:
+        problems.append(f"WorldBuilder source ownership is invalid: {error}")
     orphans = sorted(
         path for path in sources_ok
         if path.startswith("Code/") and path.endswith(".cpp")
