@@ -89198,3 +89198,4 @@ _D3DXMatrixTranspose@8,0x009FAFBA,d3dx9.lib d3dxmath.obj exact public dispatch s
 ?getScaffoldSupportObjectName@TerrainRoadType@@QAE?AVAsciiString@@XZ,0x001F28E0,BridgeBehavior createScaffolding +0xC7 via ILT 0x280BF; decoded 32B owning StringBase copy from this+0x24 hidden result ret4; TerrainRoads.h scaffold support getter independently names field
 _Rva008504C0,0x008504C0,STLport 4.5.3 short-date/time formatter; target 0x00847050 call +0x207 passes _Locale_time* and consumes char* return; source ABI decoded
 _Rva00850560,0x00850560,STLport 4.5.3 long-date/time formatter; target 0x00847050 call +0x26D passes _Locale_time* and consumes char* return; source ABI decoded
+??1?$_List_base@PAVTeamPrototype@@V?$allocator@PAVTeamPrototype@@@_STL@@@_STL@@QAE@XZ,0x000158AC,ILT thunk to the STLport list-base destructor body 0x000CF0B0; AIPlayer::selectTeamToBuild 0x00163220+0xFC destroys its candidate list<TeamPrototype*> through this ILT on the no-priority return
