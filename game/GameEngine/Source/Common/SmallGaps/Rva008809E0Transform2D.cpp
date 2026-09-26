@@ -1,6 +1,5 @@
-// ??0Rva008809E0Transform2D@@QAE@PBURva008809E0Vec2@@MHH@Z
-// partial score=0.85 date=2026-09-06
-#include <math.h>
+// Retail 0x008809E0 uses fsincos; MSVC does not fuse separate sin/cos calls.
+// The small x87 block is the proven codegen exception for this constructor.
 struct Rva008809E0Vec2 { float x; float y; };
 struct Rva008809E0Transform2D {
 	float m_x; float m_y;
@@ -13,13 +12,18 @@ Rva008809E0Transform2D::Rva008809E0Transform2D(const Rva008809E0Vec2* pos, float
 {
 	m_x = pos->x;
 	m_y = pos->y;
-	double rad = angle;
-	float c = (float)cos(rad);
-	angle = (float)sin(rad);
-	m_negSin = -angle;
+	float c;
+	float sine;
+	__asm {
+		fld angle
+		fsincos
+		fstp c
+		fstp sine
+	}
+	m_negSin = -sine;
 	m_a = a;
 	m_b = b;
 	m_cos = c;
-	m_sin = angle;
+	m_sin = sine;
 	m_cos2 = c;
 }
