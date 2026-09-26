@@ -43,3 +43,10 @@ void WW3D::Set_NPatches_Level( unsigned level )
 	if( NPatchesLevel > 1 && level == 1 ) TheDX8MeshRenderer->Invalidate( false );
 	NPatchesLevel = level;
 }
+
+// ?Rva008FD4A0InvalidateRenderer@@YA_NXZ
+bool Rva008FD4A0InvalidateRenderer()
+{
+	TheDX8MeshRenderer->Invalidate(false);
+	return true;
+}
