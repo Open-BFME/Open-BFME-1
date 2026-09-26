@@ -52,3 +52,33 @@ void QRAddErrorCallback(
 	response.peerResponseType = PeerResponse::PEERRESPONSE_FAILEDTOHOST;
 	TheGameSpyPeerMessageQueue->addResponse(response);
 }
+
+// BFME's ten-argument SDK callback accumulates two integer counters in the
+// owning thread, then publishes the completed pair as a peer response.
+struct Rva00646E10Owner
+{
+	char m_head[0x3dc];
+	unsigned int m_low03dc;
+	unsigned int m_high03e0;
+};
+
+void Rva00646E10CounterCallback(void *peer, void *a, void *b, int arg3, int arg4,
+	unsigned int highA, int arg6, unsigned int low, unsigned int highB,
+	Rva00646E10Owner *owner)
+{
+	if (!owner || !a)
+		return;
+	if (!b)
+	{
+		PeerResponse response;
+		*reinterpret_cast<unsigned int *>(response.m_bfmeBody + 0x108) = owner->m_low03dc;
+		*reinterpret_cast<unsigned int *>(response.m_bfmeBody + 0x10c) = owner->m_high03e0;
+		response.peerResponseType = 21;
+		TheGameSpyPeerMessageQueue->addResponse(response);
+	}
+	else
+	{
+		owner->m_low03dc += low;
+		owner->m_high03e0 += highA + highB;
+	}
+}
