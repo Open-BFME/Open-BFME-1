@@ -5368,5 +5368,15 @@
   "after_sha256": "40122b1d9bf79bbe2e0511f1e57904cceabb3eb5a1c55013f90e51272d2af8a1",
   "evidence": "docs/naming_evidence.md",
   "reason": "the body never reads the AsciiString at +0x1C so an offset name replaces the bank's unevidenced member name"
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "setShroudLevel",
+  "new_name": "rva006C2710",
+  "before_sha256": "f5f6a016abf4842b3757d99e859c84d758dfd8580d99a5c855e3c9799a2f31e9",
+  "after_sha256": "672b718a0950f4ec84de87a19658913ef0fbd06f44f031f782370f903b58a815",
+  "evidence": "reverse/identity_evidence/0x006c2710.md",
+  "reason": "caller pairing refutes vtable-position name: 0x001072F0 pairs this slot (W3DRadar vtable slot 11) with W3DDisplay::setShroudLevel30BC while sibling 0x001072A0 pairs slot 9 (0x006C23B0, the Zero Hour setShroudLevel body) with W3DDisplay::setShroudLevel; the byte parameter is a taint level, not a CellShroudStatus"
  }
 ]
