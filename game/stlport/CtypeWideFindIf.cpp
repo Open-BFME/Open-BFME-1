@@ -34,3 +34,9 @@ template const wchar_t *__find_if(
 #endif
 
 _STLP_END_NAMESPACE
+
+const wchar_t *Rva00840DA0(const wchar_t *first, const wchar_t *last,
+	_STL::_Ctype_w_is_mask predicate)
+{
+	return _STL::find_if(first, last, predicate);
+}

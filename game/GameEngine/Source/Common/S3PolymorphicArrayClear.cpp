@@ -97,5 +97,6 @@ S3_ARRAY_CLEAR( Rva00802A10, 128 )
 		return m_array + index;                                           \
 	}
 
+S3_ARRAY_LOOKUP( Rva00801550, 48 )
 S3_ARRAY_LOOKUP( Rva008015E0, 56 )
 S3_ARRAY_LOOKUP( Rva008029F0, 128 )

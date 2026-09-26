@@ -25,3 +25,9 @@ template const char *__find_if(
 	const random_access_iterator_tag &);
 
 _STLP_END_NAMESPACE
+
+const char *Rva00840D70(const char *first, const char *last,
+	_STL::unary_negate<_STL::_Ctype_c_is_mask> predicate)
+{
+	return _STL::find_if(first, last, predicate);
+}
