@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ae2b2a752e0b98f19184d549f4d07c7dbca8c63550c98adf5fc2e9c35b4a295a",
+  "symbol": "?Rva00841180Dispatch@@YAXPAD@Z",
+  "score_kind": "author-estimate",
+  "score": 0.6316,
+  "source": "// ?Rva00841180Dispatch@@YAXPAD@Z\n// partial score=0.6316 date=2026-09-26\n// cl: /DNDEBUG /MD /EHsc\n// RVA 0x00841180: adjust an object pointer by a stored offset and call slot zero.\nstruct Rva00841180Adjustment\n{\n    void *m_unknown;\n    int m_offset;\n};\n\nclass Rva00841180Target\n{\npublic:\n    virtual void invoke(int value) = 0;\n};\n\nvoid __cdecl Rva00841180Dispatch(char *object)\n{\n    Rva00841180Adjustment *adjustment =\n        *reinterpret_cast<Rva00841180Adjustment **>(object);\n    int offset = adjustment->m_offset;\n    Rva00841180Target *target =\n        reinterpret_cast<Rva00841180Target *>(object + offset);\n    target->invoke(0);\n}\n"
+}
