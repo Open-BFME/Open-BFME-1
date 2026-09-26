@@ -206,3 +206,16 @@ void ScriptEngine::_bfme_updateClientDebugFrame(void)
 
 	ClientCanAppContinue = true;
 }
+
+// Retail 0x003372D0 publishes the logic frame without the ScriptEngine mode gate.
+void __cdecl rva003372d0PublishFrame(void)
+{
+	if (TheScriptDebugWindowDLL)
+	{
+		_bfme_updateDebugWindowInputs();
+		typedef void (__cdecl *SetFrameNumberProc)(unsigned int frame);
+		FarProc proc = GetProcAddress(TheScriptDebugWindowDLL, "SetFrameNumber");
+		if (proc)
+			((SetFrameNumberProc)proc)(TheGameLogic->m_frame);
+	}
+}
