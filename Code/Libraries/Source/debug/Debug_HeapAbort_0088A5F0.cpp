@@ -8,19 +8,13 @@
 // 0x008896A0 makes), slot 0x60, slot 0x6C(0,0), then slot 0x38 with the
 // message and slot 0x4C(true) on the returned report object.
 //
-// The caller is captured through a stack slot the way the frame-pointer
-// idiom of 0x008896A0 does. The barrier keeps the store ahead of the global
-// load (docs/shape_levers.md, _ReadWriteBarrier store-order row, landed at
-// 0x009A45A0). The __assume states that a return address is never null
-// (docs/shape_levers.md, codepushbool 0x0099EF70 __assume precedent); it emits
-// no bytes and keeps the call temporaries in retail's EAX/EDX order.
+// The caller is captured with the inline `mov eax,[ebp+4]` idiom Zero Hour's
+// Debug::SkipNext uses (debug_debug.cpp: "we do need a valid frame pointer
+// here"), the same capture the landed _bfme_debugRecordCallsite at 0x008896A0
+// compiles; the asm block also forces the stack-slot store and reload retail
+// shows at +0x07 and +0x10.
 //
 // Slot and report-class names are offsets only; no identity is claimed.
-
-extern "C" void *_ReturnAddress(void);
-extern "C" void _ReadWriteBarrier(void);
-#pragma intrinsic(_ReturnAddress)
-#pragma intrinsic(_ReadWriteBarrier)
 
 class Rva0088A5F0Report
 {
@@ -54,11 +48,13 @@ extern BfmeAwakenDebug *TheBfmeAwakenDebug;
 // ?_heap_abort@@YAXXZ
 void __cdecl _heap_abort(void)
 {
-	void *returnAddress = _ReturnAddress();
-	void * volatile caller = returnAddress;
-	_ReadWriteBarrier();
-	TheBfmeAwakenDebug->slot5C(caller, 1);
-	__assume(returnAddress != 0);
+	unsigned returnAddress;
+	__asm
+	{
+		mov eax, [ebp + 4]
+		mov returnAddress, eax
+	}
+	TheBfmeAwakenDebug->slot5C(reinterpret_cast<void *>(returnAddress), 1);
 	TheBfmeAwakenDebug->slot60();
 	TheBfmeAwakenDebug->slot6C(0, 0)->slot38("Fatal heap error.")->slot4C(true);
 }
