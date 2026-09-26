@@ -709,3 +709,4 @@ Code/GameEngine/Source/GameLogic/Object/Behavior/GettingBuiltBehaviorModuleDataC
 Code/GameEngine/Source/Common/System/Recorder_updateRecord.cpp	AsciiString	build.sh exited 1
 Code/GameEngine/Source/GameLogic/AI/AIPlayerComputeCenterAndRadiusOfBase.cpp	AsciiString	Functions: FAIL 1/1
 Code/GameEngine/Source/GameClient/GUI/LoadScreenInit.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferXfer.cpp	AsciiString	build.sh exited 1
