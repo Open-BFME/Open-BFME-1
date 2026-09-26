@@ -89188,3 +89188,7 @@ _D3DXMatrixTranspose@8,0x009FAFBA,d3dx9.lib d3dxmath.obj exact public dispatch s
 ?findGoodBuildOrRepairPositionAndTarget@Rva002B8890DozerAIUpdate@@QAEPAVObject@@PAV2@0AAUCoord3D@@@Z,0x00004C4B,ILT jmp to body 0x002B8890 (row object-symbol); DozerAIUpdate newTask 0x002B8A00+0x100 calls with ecx=this-0x340 plus me/target/&position and no caller cleanup; body ret 0xC at +0x103/+0x120; ZH twin newTask calls findGoodBuildOrRepairPositionAndTarget(me target position) at the same point
 ?bfmeQueryWD@ControlBar@@QAEXPAVPlayer@@HPAPBVCommandButton@@PA_N22@Z,0x0001CDB9,pin: ILT jmp to body 0x004A09D0 (matched ControlBar::bfmeQueryWD row object-symbol); called from populatePurchaseScience 0x004A0B90+0x7f with ecx=this and 6 dword args; callee ret 0x18
 ?rva0089FDA0@EAStringC@@QAEAAV1@PBDH@Z,0x0089FDA0,retail 008A9E20 passes source and limit=1 with ECX string handle; complete 0089FDA0 returns this in EAX and ret8; address-derived identity
+??1Rva000D0310IntFourByteTree@@QAE@XZ,0x000D0310,Player destructor direct call; address-derived thiscall owner
+??1Rva000D0430IntFourByteTree@@QAE@XZ,0x000D0430,Player destructor direct call; address-derived thiscall owner
+??1Rva000D8250AsciiStringFourByteHash@@QAE@XZ,0x000D8250,Player destructor direct call; address-derived thiscall owner
+??1Rva000D8330AsciiStringFourByteHash@@QAE@XZ,0x000D8330,Player destructor direct call; address-derived thiscall owner
