@@ -1,48 +1,6 @@
-// ?updateGrid@Rva006D2730@@QAEXPAURva006D2730Rect@@PAX1@Z
-// partial score=0.2 date=2026-09-05
+// ?initializeTiles@Rva006D2730Owner@@QAEHHHPAVWorldHeightMap@@PAX@Z
+// partial score=0.97 date=2026-09-26
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// ?d_006d2730@@YAXXZ (Code/gen_asm/d_0069c4f0.asm), size 576.
-//
-// RVA-derived reconstruction, identity NOT proven. Neighbours 0x006D2660 /
-// 0x006D2690 (freeMapResources) / 0x006D33B0 / 0x006D3450 are all
-// HeightMapRenderObjClass, so `this` (edi) is believed to be that class;
-// offsets kept relative rather than merged into the real header per FILE
-// POLICY (never edit the tracked HeightMap.cpp/.h).
-//
-// Structural notes for the next worker:
-//   Args: (ptrArg @[esp+0x1c] orig-ebx, arg2 @[esp+0x24], arg3 @[esp+0x2c]).
-//   ptrArg is a rect/region-shaped object: +0x08 and +0x0c are ints, each
-//   rounded up (`(v+0xe) & ~0xf`) then >>4 -- a "cells covered, tile == 16
-//   units" computation, giving cols/rows.
-//   this+0x2ff4 is compared against ptrArg for a `sete` flag forwarded (with
-//   all 3 args and the this pointer) into still-dumped 0x0003a328 -- looks
-//   like a "mark dirty region, already-current?" call.
-//   this+0x30d8 is an array of 0xc4-byte records, this+0x30e0/0x30e4 the
-//   cached cols/rows, this+0x30dc a stashed pointer (freed via bfmeGet-style
-//   free at target 0x000225d4 then reallocated through ??_U operator
-//   new[](unsigned) when the cols*rows changed).  Each record is touched
-//   through two still-dumped helpers per (row,col): ctor-ish 0x0003a82d /
-//   0x0003902c and a setter 0x00047668(record, ptrArg).
-//   When the array is (re)grown, retail builds it via the compiler's array
-//   placement-new helper (??_L, target ArrayNewHelperBodyThunk.cpp) with a
-//   constructor function pointer pair (0x0002b9a4 ctor / 0x0004149d dtor),
-//   record size 0xc4; this strongly suggests the record is a class with a
-//   non-trivial ctor/dtor (matches the RoadSegment-family classes already
-//   landed elsewhere in this session -- worth comparing 0xc4 against
-//   RoadSegment's real sizeof once that class is available here).
-//   this+0x30d4 gets the final `operator new[](cols*2)` byte flag array-ish
-//   value; this+0x3174 is cleared to 0 at the very end.
-//
-// Not byte-matched: this is a compiling skeleton only, banked as partial.
-
-extern "C" void *__cdecl operator_new_dummy_unused(); // placeholder, unused
-
-struct Rva006D2730Rect
-{
-	unsigned char m_pad0[8];
-	int m_width;
-	int m_height;
-};
 
 extern void j_0003a328(void);
 extern void j_00014c5e(void);
@@ -50,156 +8,118 @@ extern void j_0003a82d(void);
 extern void j_00047668(void);
 extern void j_000225d4(void);
 extern void j_0003902c(void);
-extern void j_0002b9a4(void);
-extern void j_0004149d(void);
+extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
 
-typedef void *(__stdcall *Rva006D2730Alloc)(unsigned int);
+class WorldHeightMap
+{
+public:
+    char m_unreconstructed[8];
+    int m_xExtent;
+    int m_yExtent;
+};
+
+class W3DTerrainBackground
+{
+public:
+    W3DTerrainBackground();
+    ~W3DTerrainBackground();
+    void reset();
+    void setFlip(WorldHeightMap *map);
+    void allocateTerrainBuffers(WorldHeightMap *map, int x, int y, int width);
+private:
+    char m_body[0xc4];
+};
 
 class Rva006D2730Owner
 {
 public:
-	void free_(void);
-};
-
-union Rva006D2730Call5
-{
-	void (*free_function)(void);
-	int (Rva006D2730Owner::*member_function)(void *a, void *b, void *c, void *d, int flag);
-};
-
-union Rva006D2730Call1
-{
-	void (*free_function)(void);
-	void (Rva006D2730Owner::*member_function)(int cellCount);
-};
-
-union Rva006D2730Call2
-{
-	void (*free_function)(void);
-	void (Rva006D2730Owner::*member_function)(void *record, void *rect);
-};
-
-union Rva006D2730Call4
-{
-	void (*free_function)(void);
-	void (Rva006D2730Owner::*member_function)(void *record, void *rect, int row, int col);
-};
-
-class Rva006D2730
-{
-public:
-	void updateGrid(Rva006D2730Rect *rect, void *arg2, void *arg3);
-
+    int initializeTiles(int x, int y, WorldHeightMap *map, void *lights);
+    int freeMapResources();
 private:
-	unsigned char m_pad[0x2ff4];
-	void *m_dirtyRegion;
-	unsigned char m_pad2ff8[0x30d4 - 0x2ff8];
-	void *m_flagArray;
-	void *m_records;
-	void *m_recordsStash;
-	int m_cols;
-	int m_rows;
-	unsigned char m_pad30e8[0x3174 - 0x30e8];
-	char m_finalFlag;
+    char m_pad[0x2ff4];
+    WorldHeightMap *m_map;
+    char m_pad2[0x30d4 - 0x2ff8];
+    short *m_flagArray;
+    W3DTerrainBackground *m_tiles;
+    int m_numTiles;
+    int m_tilesWidth;
+    int m_tilesHeight;
+    char m_pad3[0x3174 - 0x30e8];
+    char m_finalFlag;
 };
 
-void Rva006D2730::updateGrid(Rva006D2730Rect *rect, void *arg2, void *arg3)
+union BaseCall {
+    void (*f)();
+    int (Rva006D2730Owner::*m)(int, int, WorldHeightMap *, void *);
+};
+union MapCall {
+    void (*f)();
+    void (WorldHeightMap::*m)();
+};
+union TileCall0 {
+    void (*f)();
+    void (W3DTerrainBackground::*m)();
+};
+union TileCall1 {
+    void (*f)();
+    void (W3DTerrainBackground::*m)(WorldHeightMap *);
+};
+union TileCall4 {
+    void (*f)();
+    void (W3DTerrainBackground::*m)(WorldHeightMap *, int, int, int);
+};
+union FreeCall {
+    void (*f)();
+    int (Rva006D2730Owner::*m)();
+};
+
+// ?initializeTiles@Rva006D2730Owner@@QAEHHHPAVWorldHeightMap@@PAX@Z
+int Rva006D2730Owner::initializeTiles(int x, int y, WorldHeightMap *map, void *lights)
 {
-	bool same = (rect == (Rva006D2730Rect *)m_dirtyRegion);
-
-	Rva006D2730Owner *owner = (Rva006D2730Owner *)this;
-
-	{
-		Rva006D2730Call5 call;
-		call.free_function = &j_0003a328;
-		(owner->*call.member_function)(arg3, rect, arg2, 0, same ? 1 : 0);
-	}
-
-	int w = ((rect->m_width + 0xe) & ~0xf) >> 4;
-	int h = ((rect->m_height + 0xe) & ~0xf) >> 4;
-	int cellCount = w * h;
-
-	{
-		Rva006D2730Call1 call;
-		call.free_function = &j_00014c5e;
-		(owner->*call.member_function)(cellCount);
-	}
-
-	bool needGrow = !(m_records != 0 && m_cols == h && m_rows == w);
-
-	if (!needGrow)
-	{
-		for (int col = 0; col < h; ++col)
-		{
-			for (int row = 0; row < w; ++row)
-			{
-				char *record = (char *)m_records + (h * row + col) * 0xc4;
-
-				{
-					Rva006D2730Call2 call;
-					call.free_function = &j_0003a82d;
-					(owner->*call.member_function)(record, rect);
-				}
-				{
-					Rva006D2730Call2 call;
-					call.free_function = &j_00047668;
-					(owner->*call.member_function)(record, rect);
-				}
-			}
-		}
-		return;
-	}
-
-	{
-		Rva006D2730Owner ownerAlias;
-		Rva006D2730Call5 call;
-		(void)call;
-	}
-
-	{
-		typedef void (Rva006D2730Owner::*FreeFn)(void);
-		union { void (*f)(void); FreeFn m; } u;
-		u.f = &j_000225d4;
-		(owner->*u.m)();
-	}
-
-	void *newRecords = (void *)new char[cellCount * 0xc4 + 4];
-	if (newRecords != 0)
-	{
-		*(void **)newRecords = owner;
-		void *payload = (char *)newRecords + 4;
-		extern void ArrayNewHelper(void *, unsigned, int, void (*)(void *), void (*)(void *));
-		ArrayNewHelper(payload, 0xc4, cellCount, (void (*)(void *))&j_0002b9a4, (void (*)(void *))&j_0004149d);
-		m_recordsStash = payload;
-	}
-
-	m_records = 0;
-	m_recordsStash = (void *)(unsigned int)cellCount;
-	m_cols = h;
-	m_rows = w;
-
-	if (h > 0 && w > 0)
-	{
-		for (int col2 = 0; col2 < h; ++col2)
-		{
-			for (int row2 = 0; row2 < w; ++row2)
-			{
-				char *record = (char *)m_records + (h * row2 + col2) * 0xc4;
-
-				{
-					Rva006D2730Call4 call;
-					call.free_function = &j_0003902c;
-					(owner->*call.member_function)(record, rect, col2, row2 << 4);
-				}
-				{
-					Rva006D2730Call2 call;
-					call.free_function = &j_00047668;
-					(owner->*call.member_function)(record, rect);
-				}
-			}
-		}
-	}
-
-	m_flagArray = (void *)new char[(unsigned int)(w) * 8];
-	m_finalFlag = 0;
+    BaseCall base;
+    base.f = &j_0003a328;
+    bool same = (map == m_map);
+    (this->*base.m)(x, y, map, lights);
+    int width = (map->m_xExtent + 14) / 16;
+    int height = (map->m_yExtent + 14) / 16;
+    int count = width * height;
+    MapCall clear;
+    clear.f = &j_00014c5e;
+    (map->*clear.m)();
+    if (same && m_tiles && m_tilesWidth == width && m_tilesHeight == height) {
+        for (int i = 0; i < m_tilesWidth; ++i) {
+            for (int j = 0; j < m_tilesHeight; ++j) {
+                W3DTerrainBackground *tile = m_tiles + j * m_tilesWidth + i;
+                TileCall0 reset;
+                reset.f = &j_0003a82d;
+                (tile->*reset.m)();
+                TileCall1 flip;
+                flip.f = &j_00047668;
+                (tile->*flip.m)(map);
+            }
+        }
+    } else {
+        FreeCall freeCall;
+        freeCall.f = &j_000225d4;
+        (this->*freeCall.m)();
+        m_tiles = new W3DTerrainBackground[count];
+        m_numTiles = count;
+        m_tilesWidth = width;
+        m_tilesHeight = height;
+        for (int i = 0; i < m_tilesWidth; ++i) {
+            for (int j = 0; j < m_tilesHeight; ++j) {
+                Sleep(0);
+                W3DTerrainBackground *tile = m_tiles + j * m_tilesWidth + i;
+                TileCall4 alloc;
+                alloc.f = &j_0003902c;
+                (tile->*alloc.m)(map, i * 16, j * 16, 16);
+                TileCall1 flip;
+                flip.f = &j_00047668;
+                (tile->*flip.m)(map);
+            }
+        }
+        m_flagArray = new short[count * 4];
+    }
+    m_finalFlag = 0;
+    return 0;
 }
