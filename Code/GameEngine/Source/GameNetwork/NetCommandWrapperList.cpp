@@ -167,11 +167,11 @@ NetCommandWrapperList::NetCommandWrapperList() {
 }
 
 NetCommandWrapperList::~NetCommandWrapperList() {
-	NetCommandWrapperListNode *temp;
+	NetCommandWrapperListNode *nextNode;
 	while (m_list != NULL) {
-		temp = m_list->m_next;
+		nextNode = m_list->m_next;
 		m_list->deleteInstance();
-		m_list = temp;
+		m_list = nextNode;
 	}
 }
 
@@ -180,45 +180,45 @@ void NetCommandWrapperList::init() {
 }
 
 void NetCommandWrapperList::reset() {
-	NetCommandWrapperListNode *temp;
+	NetCommandWrapperListNode *nextNode;
 	while (m_list != NULL) {
-		temp = m_list->m_next;
+		nextNode = m_list->m_next;
 		m_list->deleteInstance();
-		m_list = temp;
+		m_list = nextNode;
 	}
 }
 
 Int NetCommandWrapperList::getPercentComplete(UnsignedShort wrappedCommandID)
 {
-	NetCommandWrapperListNode *temp = m_list;
+	NetCommandWrapperListNode *matchingNode = m_list;
 
-	while ((temp != NULL) && (temp->getCommandID() != wrappedCommandID)) {
-		temp = temp->m_next;
+	while ((matchingNode != NULL) && (matchingNode->getCommandID() != wrappedCommandID)) {
+		matchingNode = matchingNode->m_next;
 	}
 
-	if (!temp)
+	if (!matchingNode)
 		return 0;
 
-	return temp->getPercentComplete();
+	return matchingNode->getPercentComplete();
 }
 
 void NetCommandWrapperList::processWrapper(NetCommandRef *ref) {
-	NetCommandWrapperListNode *temp = m_list;
+	NetCommandWrapperListNode *matchingNode = m_list;
 	// BFME de-pooled NetCommandRef: the command pointer is at +0, without
 	// the reference header's inherited pool/vtable field. This is getCommand().
 	NetWrapperCommandMsg *msg = *(NetWrapperCommandMsg **)ref;
 
-	while ((temp != NULL) && (temp->getCommandID() != msg->getWrappedCommandID())) {
-		temp = temp->m_next;
+	while ((matchingNode != NULL) && (matchingNode->getCommandID() != msg->getWrappedCommandID())) {
+		matchingNode = matchingNode->m_next;
 	}
 
-	if (temp == NULL) {
-		temp = newInstance(NetCommandWrapperListNode)(msg);
-		temp->m_next = m_list;
-		m_list = temp;
+	if (matchingNode == NULL) {
+		matchingNode = newInstance(NetCommandWrapperListNode)(msg);
+		matchingNode->m_next = m_list;
+		m_list = matchingNode;
 	}
 
-	temp->copyChunkData(msg);
+	matchingNode->copyChunkData(msg);
 }
 
 // byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetCommandWrapperList_getReadyCommands.cpp
@@ -255,25 +255,25 @@ void NetCommandWrapperList::removeFromList(NetCommandWrapperListNode *node) {
 		return;
 	}
 
-	NetCommandWrapperListNode *temp = m_list;
-	NetCommandWrapperListNode *prev = NULL;
+	NetCommandWrapperListNode *currentNode = m_list;
+	NetCommandWrapperListNode *previousNode = NULL;
 
-	while ((temp != NULL) && (temp->getCommandID() != node->getCommandID())) {
-		prev = temp;
-		temp = temp->m_next;
+	while ((currentNode != NULL) && (currentNode->getCommandID() != node->getCommandID())) {
+		previousNode = currentNode;
+		currentNode = currentNode->m_next;
 	}
 
-	if (temp == NULL) {
+	if (currentNode == NULL) {
 		return;
 	}
 
-	if (prev == NULL) {
-		m_list = temp->m_next;
-		temp->deleteInstance();
-		temp = NULL;
+	if (previousNode == NULL) {
+		m_list = currentNode->m_next;
+		currentNode->deleteInstance();
+		currentNode = NULL;
 	} else {
-		prev->m_next = temp->m_next;
-		temp->deleteInstance();
-		temp = NULL;
+		previousNode->m_next = currentNode->m_next;
+		currentNode->deleteInstance();
+		currentNode = NULL;
 	}
 }

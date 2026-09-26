@@ -129,24 +129,24 @@ NetCommandRef *Connection::processAck(NetCommandMsg *msg) {
 
 // ?processAck@Connection@@QAEPAVNetCommandRef@@GEI@Z
 NetCommandRef *Connection::processAck(UnsignedShort commandID, UnsignedByte originalPlayerID, UnsignedInt originalExecutionFrame) {
-	NetCommandRef *temp = m_netCommandList->getFirstMessage();
-	while ((temp != 0) && ((temp->getCommand()->m_id != commandID) ||
-		(temp->getCommand()->m_playerID != originalPlayerID) ||
-		(temp->getCommand()->m_executionFrame != originalExecutionFrame))) {
+	NetCommandRef *pendingCommandRef = m_netCommandList->getFirstMessage();
+	while ((pendingCommandRef != 0) && ((pendingCommandRef->getCommand()->m_id != commandID) ||
+		(pendingCommandRef->getCommand()->m_playerID != originalPlayerID) ||
+		(pendingCommandRef->getCommand()->m_executionFrame != originalExecutionFrame))) {
 
 		// cycle through the commands till we find the one we need to remove.
-		temp = temp->getNext();
+		pendingCommandRef = pendingCommandRef->getNext();
 	}
-	if (temp == 0) {
+	if (pendingCommandRef == 0) {
 		return 0;
 	}
 
-	Int index = temp->getCommand()->m_id % CONNECTION_LATENCY_HISTORY_LENGTH;
-	m_averageLatency -= ((Real)(m_latencies[index])) / CONNECTION_LATENCY_HISTORY_LENGTH;
-	Real lat = (Real)(timeGetTime() - temp->getTimeLastSent());
-	m_averageLatency += lat / CONNECTION_LATENCY_HISTORY_LENGTH;
-	m_latencies[index] = lat;
+	Int latencyHistoryIndex = pendingCommandRef->getCommand()->m_id % CONNECTION_LATENCY_HISTORY_LENGTH;
+	m_averageLatency -= ((Real)(m_latencies[latencyHistoryIndex])) / CONNECTION_LATENCY_HISTORY_LENGTH;
+	Real roundTripMilliseconds = (Real)(timeGetTime() - pendingCommandRef->getTimeLastSent());
+	m_averageLatency += roundTripMilliseconds / CONNECTION_LATENCY_HISTORY_LENGTH;
+	m_latencies[latencyHistoryIndex] = roundTripMilliseconds;
 
-	m_netCommandList->removeMessage(temp);
-	return temp;
+	m_netCommandList->removeMessage(pendingCommandRef);
+	return pendingCommandRef;
 }

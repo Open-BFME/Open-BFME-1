@@ -89,71 +89,71 @@ public:
 class NetPacket
 {
 protected:
-	static NetCommandMsg *readGameMessage(UnsignedByte *data, Int &i);
+	static NetCommandMsg *readGameMessage(UnsignedByte *packetData, Int &readOffset);
 	static void readGameMessageArgumentFromPacket(GameMessageArgumentDataType type,
 			NetGameCommandMsg *msg, UnsignedByte *data, Int &i, GameMessageType msgType);
 };
 
-NetCommandMsg *NetPacket::readGameMessage(UnsignedByte *data, Int &i)
+NetCommandMsg *NetPacket::readGameMessage(UnsignedByte *packetData, Int &readOffset)
 {
 	NetGameCommandMsg *msg = new NetGameCommandMsg;
 
 	// Get the GameMessage command type.
-	GameMessageType newType;
-	memcpy(&newType, data + i, sizeof(GameMessageType));
-	i += sizeof(GameMessageType);
+	GameMessageType messageType;
+	memcpy(&messageType, packetData + readOffset, sizeof(GameMessageType));
+	readOffset += sizeof(GameMessageType);
 
-	if ((newType <= 0) || (newType >= GAMEMESSAGE_TYPE_LIMIT)) {
+	if ((messageType <= 0) || (messageType >= GAMEMESSAGE_TYPE_LIMIT)) {
 		if (msg != NULL) {
 			delete msg;
 		}
 		return NULL;
 	}
 
-	msg->setGameMessageType(newType);
+	msg->setGameMessageType(messageType);
 
 	// Get the number of argument types
-	UnsignedByte numArgTypes = 0;
-	memcpy(&numArgTypes, data + i, sizeof(numArgTypes));
-	i += sizeof(numArgTypes);
+	UnsignedByte argumentTypeCount = 0;
+	memcpy(&argumentTypeCount, packetData + readOffset, sizeof(argumentTypeCount));
+	readOffset += sizeof(argumentTypeCount);
 
 	// Get the types and the number of arguments of those types.
 	Int totalArgCount = 0;
 	GameMessageParser *parser = new GameMessageParser;
-	for (Int j = 0; j < numArgTypes; ++j) {
-		UnsignedByte type = (UnsignedByte)ARGUMENTDATATYPE_UNKNOWN;
-		memcpy(&type, data + i, sizeof(type));
-		i += sizeof(type);
+	for (Int argumentTypeIndex = 0; argumentTypeIndex < argumentTypeCount; ++argumentTypeIndex) {
+		UnsignedByte argumentDataType = (UnsignedByte)ARGUMENTDATATYPE_UNKNOWN;
+		memcpy(&argumentDataType, packetData + readOffset, sizeof(argumentDataType));
+		readOffset += sizeof(argumentDataType);
 
-		UnsignedByte argCount = 0;
-		memcpy(&argCount, data + i, sizeof(argCount));
-		i += sizeof(argCount);
+		UnsignedByte argumentCountForType = 0;
+		memcpy(&argumentCountForType, packetData + readOffset, sizeof(argumentCountForType));
+		readOffset += sizeof(argumentCountForType);
 
-		parser->addArgType((GameMessageArgumentDataType)type, argCount);
-		totalArgCount += argCount;
+		parser->addArgType((GameMessageArgumentDataType)argumentDataType, argumentCountForType);
+		totalArgCount += argumentCountForType;
 	}
 
-	GameMessageParserArgumentType *parserArgType = parser->getFirstArgumentType();
-	GameMessageArgumentDataType lasttype = (GameMessageArgumentDataType)ARGUMENTDATATYPE_UNKNOWN;
-	Int argsLeftForType = 0;
-	if (parserArgType != NULL) {
-		lasttype = parserArgType->getType();
-		argsLeftForType = parserArgType->getArgCount();
+	GameMessageParserArgumentType *currentArgumentTypeNode = parser->getFirstArgumentType();
+	GameMessageArgumentDataType currentArgumentDataType = (GameMessageArgumentDataType)ARGUMENTDATATYPE_UNKNOWN;
+	Int remainingArgumentsOfType = 0;
+	if (currentArgumentTypeNode != NULL) {
+		currentArgumentDataType = currentArgumentTypeNode->getType();
+		remainingArgumentsOfType = currentArgumentTypeNode->getArgCount();
 	}
 
-	for (Int k = 0; k < totalArgCount; ++k) {
-		readGameMessageArgumentFromPacket(lasttype, msg, data, i, newType);
+	for (Int argumentIndex = 0; argumentIndex < totalArgCount; ++argumentIndex) {
+		readGameMessageArgumentFromPacket(currentArgumentDataType, msg, packetData, readOffset, messageType);
 
-		--argsLeftForType;
-		if (argsLeftForType == 0) {
-			if (parserArgType == NULL) {
+		--remainingArgumentsOfType;
+		if (remainingArgumentsOfType == 0) {
+			if (currentArgumentTypeNode == NULL) {
 				return NULL;
 			}
 
-			parserArgType = parserArgType->getNext();
-			if (parserArgType != NULL) {
-				argsLeftForType = parserArgType->getArgCount();
-				lasttype = parserArgType->getType();
+			currentArgumentTypeNode = currentArgumentTypeNode->getNext();
+			if (currentArgumentTypeNode != NULL) {
+				remainingArgumentsOfType = currentArgumentTypeNode->getArgCount();
+				currentArgumentDataType = currentArgumentTypeNode->getType();
 			}
 		}
 	}

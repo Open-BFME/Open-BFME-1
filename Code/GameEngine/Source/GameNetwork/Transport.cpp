@@ -261,68 +261,68 @@ Bool Transport::doRecv()
 
 Real Transport::getIncomingBytesPerSecond( void )
 {
-	Real val = 0.0;
-	for (int i=0; i<MAX_TRANSPORT_STATISTICS_SECONDS; ++i)
+	Real totalIncomingBytes = 0.0;
+	for (int sampleIndex=0; sampleIndex<MAX_TRANSPORT_STATISTICS_SECONDS; ++sampleIndex)
 	{
-		if (i != m_statisticsSlot)
-			val += m_incomingBytes[i];
+		if (sampleIndex != m_statisticsSlot)
+			totalIncomingBytes += m_incomingBytes[sampleIndex];
 	}
-	return val / (MAX_TRANSPORT_STATISTICS_SECONDS-1);
+	return totalIncomingBytes / (MAX_TRANSPORT_STATISTICS_SECONDS-1);
 }
 
 Real Transport::getIncomingPacketsPerSecond( void )
 {
-	Real val = 0.0;
-	for (int i=0; i<MAX_TRANSPORT_STATISTICS_SECONDS; ++i)
+	Real totalIncomingPackets = 0.0;
+	for (int sampleIndex=0; sampleIndex<MAX_TRANSPORT_STATISTICS_SECONDS; ++sampleIndex)
 	{
-		if (i != m_statisticsSlot)
-			val += m_incomingPackets[i];
+		if (sampleIndex != m_statisticsSlot)
+			totalIncomingPackets += m_incomingPackets[sampleIndex];
 	}
-	return val / (MAX_TRANSPORT_STATISTICS_SECONDS-1);
+	return totalIncomingPackets / (MAX_TRANSPORT_STATISTICS_SECONDS-1);
 }
 
 Real Transport::getOutgoingBytesPerSecond( void )
 {
-	Real val = 0.0;
-	for (int i=0; i<MAX_TRANSPORT_STATISTICS_SECONDS; ++i)
+	Real totalOutgoingBytes = 0.0;
+	for (int sampleIndex=0; sampleIndex<MAX_TRANSPORT_STATISTICS_SECONDS; ++sampleIndex)
 	{
-		if (i != m_statisticsSlot)
-			val += m_outgoingBytes[i];
+		if (sampleIndex != m_statisticsSlot)
+			totalOutgoingBytes += m_outgoingBytes[sampleIndex];
 	}
-	return val / (MAX_TRANSPORT_STATISTICS_SECONDS-1);
+	return totalOutgoingBytes / (MAX_TRANSPORT_STATISTICS_SECONDS-1);
 }
 
 Real Transport::getOutgoingPacketsPerSecond( void )
 {
-	Real val = 0.0;
-	for (int i=0; i<MAX_TRANSPORT_STATISTICS_SECONDS; ++i)
+	Real totalOutgoingPackets = 0.0;
+	for (int sampleIndex=0; sampleIndex<MAX_TRANSPORT_STATISTICS_SECONDS; ++sampleIndex)
 	{
-		if (i != m_statisticsSlot)
-			val += m_outgoingPackets[i];
+		if (sampleIndex != m_statisticsSlot)
+			totalOutgoingPackets += m_outgoingPackets[sampleIndex];
 	}
-	return val / (MAX_TRANSPORT_STATISTICS_SECONDS-1);
+	return totalOutgoingPackets / (MAX_TRANSPORT_STATISTICS_SECONDS-1);
 }
 
 Real Transport::getUnknownBytesPerSecond( void )
 {
-	Real val = 0.0;
-	for (int i=0; i<MAX_TRANSPORT_STATISTICS_SECONDS; ++i)
+	Real totalUnknownBytes = 0.0;
+	for (int sampleIndex=0; sampleIndex<MAX_TRANSPORT_STATISTICS_SECONDS; ++sampleIndex)
 	{
-		if (i != m_statisticsSlot)
-			val += m_unknownBytes[i];
+		if (sampleIndex != m_statisticsSlot)
+			totalUnknownBytes += m_unknownBytes[sampleIndex];
 	}
-	return val / (MAX_TRANSPORT_STATISTICS_SECONDS-1);
+	return totalUnknownBytes / (MAX_TRANSPORT_STATISTICS_SECONDS-1);
 }
 
 Real Transport::getUnknownPacketsPerSecond( void )
 {
-	Real val = 0.0;
-	for (int i=0; i<MAX_TRANSPORT_STATISTICS_SECONDS; ++i)
+	Real totalUnknownPackets = 0.0;
+	for (int sampleIndex=0; sampleIndex<MAX_TRANSPORT_STATISTICS_SECONDS; ++sampleIndex)
 	{
-		if (i != m_statisticsSlot)
-			val += m_unknownPackets[i];
+		if (sampleIndex != m_statisticsSlot)
+			totalUnknownPackets += m_unknownPackets[sampleIndex];
 	}
-	return val / (MAX_TRANSPORT_STATISTICS_SECONDS-1);
+	return totalUnknownPackets / (MAX_TRANSPORT_STATISTICS_SECONDS-1);
 }
 
 /**
