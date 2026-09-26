@@ -89490,3 +89490,5 @@ __Locale_d_fmt,0x0084ECA0,STLport time facet __get_date_order at 0x00845C10 dire
 ??0Rva009F4B30Proxy@@QAE@ABURva009F4B30Allocator@@I@Z,0x009F4B30,address-derived four-byte allocator proxy constructor; decoded retail stores second value parameter at receiver+0 and returns ret8; caller 0x009F52B0 supplies allocator reference and zero
 ?rva0029A150@PhysicsBehavior@@QAEEHM@Z,0x0029A150,address-derived Bezier helper; retail PhysicsBehavior caller 0x0029AB10 has ecx=this and pushes float strength then int option; callee reads floating argument at esp+8 and returns ret8 at 0x0029A4EF
 ?bfmeRva0083A2D0CopyWide@@YA?AV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@PBG0V12@ABUrandom_access_iterator_tag@2@PAH@Z,0x0083A2D0,retail 0x00846C30 calls duplicate wide STLport copy at 0x0083A2D0 identical 106-byte body to 0x00835EF0
+?bfmeRva0130CE50RegistrationHead@@3PAXA,0x0130CE50,registration head read and replaced by retail at 0x00C6B180
+?bfmeRva012B3C84RegistrationNext@@3PAXA,0x012B3C84,registration link written by retail at 0x00C6B180 and stored into head
