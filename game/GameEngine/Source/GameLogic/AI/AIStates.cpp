@@ -166,6 +166,14 @@ public:
 	Bool canEnterObject(const Object *obj, const Object *objectToEnter,
 		CommandSourceType commandSource, CanEnterType mode, Bool *full);
 };
+// The BFME-only enter-and-attack variant is installed as vtable 0x0109ACA8
+// by the self-naming AIEnterAndAttackState constructor at 0x001800A0.
+class AIEnterAndAttackState : public AIInternalMoveToState
+{
+public:
+	virtual StateReturnType update();
+};
+
 
 //----------------------------------------------------------------------------------------------------------
 // ??0AICommandParms@@QAE@W4AICommandType@@W4CommandSourceType@@@Z present-unmatched
@@ -8495,6 +8503,67 @@ StateReturnType AIEnterState::update()
 
 	return code;
 }
+// Vtable 0x0109ACA8 slot 6 dispatches here rather than AIEnterState::update.
+StateReturnType AIEnterAndAttackState::update()
+{
+	Object *obj = *(Object **)(*(char **)((char *)this + 0x1c) + 0x10);
+	Object *goal = (*(StateMachine **)((char *)this + 0x1c))->getGoalObject();
+	if (goal)
+	{
+		if (*(Object **)((char *)goal + 0x214) != NULL &&
+			goal->isAboveTerrain() && !obj->isAboveTerrain())
+			return STATE_FAILURE;
+
+		m_goalPosition = *(Coord3D *)((char *)goal + 0x38);
+		(*(AIUpdateInterface **)((char *)obj + 0x204))->friend_setGoalObject(goal);
+		if (!((BFMEActionManager *)TheActionManager)->canEnterObject(
+			obj, goal,
+			((BFMEAIUpdateCommandSource *)*(AIUpdateInterface **)((char *)obj + 0x204))->getLastCommandSource(),
+			CHECK_CAPACITY, NULL))
+		{
+			if (obj->getRelationship(goal) == ENEMIES && ((BFMEObjectAI *)obj)->getAI())
+			{
+				CanAttackResult result = TheActionManager->getCanAttackObject(
+					obj, goal,
+					((BFMEAIUpdateCommandSource *)((BFMEObjectAI *)obj)->getAI())->getLastCommandSource(),
+					ATTACK_NEW_TARGET);
+				if (result == ATTACKRESULT_POSSIBLE || result == ATTACKRESULT_POSSIBLE_AFTER_MOVING)
+				{
+					AIUpdateInterface *ai = *(AIUpdateInterface **)((char *)obj + 0x204);
+					ai->aiAttackObject(goal, NO_MAX_SHOTS_LIMIT,
+						((BFMEAIUpdateCommandSource *)ai)->getLastCommandSource());
+					return STATE_CONTINUE;
+				}
+				return STATE_FAILURE;
+			}
+			return STATE_FAILURE;
+		}
+
+		Object *machineOwner = *(Object **)(*(char **)((char *)this + 0x1c) + 0x10);
+		if ((*(UnsignedByte *)((char *)machineOwner + 0x1a4) & 8) != 0)
+			return STATE_SUCCESS;
+	}
+	else
+		return STATE_FAILURE;
+
+	StateReturnType code = AIInternalMoveToState::update();
+	if (code == STATE_SUCCESS && goal->isAboveTerrain() && !obj->isAboveTerrain())
+		code = STATE_CONTINUE;
+	if (code == STATE_SUCCESS)
+	{
+		Real dx = ((Coord3D *)((char *)obj + 0x38))->x - ((Coord3D *)((char *)goal + 0x38))->x;
+		Real dy = ((Coord3D *)((char *)obj + 0x38))->y - ((Coord3D *)((char *)goal + 0x38))->y;
+		Real radius = *(Real *)((char *)goal + 0xbc);
+		if (dx*dx + dy*dy < sqr(radius))
+		{
+			BFMEContainAdd *contain = *(BFMEContainAdd **)((char *)goal + 0x1fc);
+			if (contain)
+				contain->addToContain(obj);
+		}
+	}
+	return code;
+}
+
 
 //----------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------
