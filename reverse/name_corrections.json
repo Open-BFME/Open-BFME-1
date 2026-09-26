@@ -5488,5 +5488,15 @@
   "after_sha256": "c1aeef413b557faf3550f69fa7ead3555d90e8566cb80fa9414a830df28604b9",
   "evidence": "docs/naming_evidence.md",
   "reason": "Weapon+0x04 is not witnessed"
+ },
+ {
+  "old_path": "reverse/attempts/0x00184c80.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIAttackSquadStateOnEnter.cpp",
+  "old_name": "bfmeAttackEligibility",
+  "new_name": "rva0016B010",
+  "before_sha256": "d7cab2232bcf2b1309fcf9b7c5834b9cbab040abc3bf0f8fd8ed8f038c1394d5",
+  "after_sha256": "e3035f6facbd3d25cc476e2cacd7332b8fbdaaf43b63e9fd48a0d4ec952f0a44",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bfmeAttackEligibility was an invented eligibility-gate name from the banked stash with no supporting evidence; the already-landed rva0016B010 row (0x0016B010, same TU) keeps the AGENTS.md 3a address token for an unproven static-helper identity, and its mangled name ?rva0016B010@@YAEPAVObject@@@Z is load-bearing -- renaming the C++ identifier back to bfmeAttackEligibility breaks that already-verified row plus this callers own callee resolution, confirmed empirically with a scoped build."
  }
 ]
