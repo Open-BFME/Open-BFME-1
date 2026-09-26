@@ -1,5 +1,9 @@
 // ??1Rva0049DA40Object@@UAE@XZ
-// partial score=0.28 date=2026-09-21
+// partial score=0.97 date=2026-09-26
+// cl: /DNDEBUG /MD /EHsc
+extern "C" void _ReadWriteBarrier();
+#pragma intrinsic(_ReadWriteBarrier)
+// ??1Rva0049DA40Object@@UAE@XZ
 // Retail 0x0049DA40, 467 bytes (ledger carries a 464B scaffold; the real
 // boundary is the add esp,0x10 / ret at +0x1d2-+0x1d3, int3 padding after).
 // Reached only from the compiler-generated scalar-deleting-destructor thunk
@@ -14,9 +18,9 @@
 // SubsystemInterface::loadIniFilesFromLegend, so this derives from
 // SubsystemInterface) and then releases a long straight-line run of owned
 // interface pointers before chaining to the base destructor:
-//   +0x08, +0x0c, +0x10, +0x14, +0x2f0, +0x2f4: single-owner pointers, each
-//     deleted through their own vtable slot 0 with flag 1 (scalar deleting
-//     destructor) then cleared.
+//   +0x08, +0x0c, +0x10, +0x14, +0x2f0: scalar-deleting virtual destructors;
+//   +0x2f4: separately tracked final owning member (EH state 1), destroyed
+//     through its inline destructor and an independently witnessed funclet.
 //   +0x98, +0x278, +0xf8: pointers released through vtable slot 0x20 (no
 //     args) THEN deleted through vtable slot 4 with flag 1, then cleared.
 //   +0x2c (next at node+0x60) and +0x28 (next at node+0x14): singly linked
@@ -53,6 +57,11 @@ public:
 };
 
 extern GameWindowManager *TheWindowManager;
+static __forceinline void DestroyControlBarWindow(GameWindow *window)
+{
+	TheWindowManager->slot30(window);
+}
+
 
 // Single-owner pointer with a scalar deleting destructor at vtable slot 0.
 class SimpleOwned
@@ -60,6 +69,13 @@ class SimpleOwned
 public:
 	virtual void deletingDtor( unsigned int flags ) = 0;
 };
+// Destructor tracked as EH state 1; its unwind funclet receives this+0x2f4.
+struct OwnedMember
+{
+	SimpleOwned *pointer;
+	~OwnedMember() { if (pointer) pointer->deletingDtor(1); }
+};
+
 
 // Release()/deletingDtor() pair: slot 0x20 (index 8, no args) then slot 4
 // (index 1, flag 1).
@@ -81,7 +97,7 @@ public:
 class ListNodeA
 {
 public:
-	virtual void deletingDtor( unsigned int flags ) = 0;
+	virtual ~ListNodeA();
 	char m_pad[ 0x60 - 4 ];
 	ListNodeA *m_next;
 };
@@ -90,7 +106,7 @@ public:
 class ListNodeB
 {
 public:
-	virtual void deletingDtor( unsigned int flags ) = 0;
+	virtual ~ListNodeB();
 	char m_pad[ 0x14 - 4 ];
 	ListNodeB *m_next;
 };
@@ -112,8 +128,8 @@ public:
 	SimpleOwned *m_at10;                 // +0x10
 	SimpleOwned *m_at14;                 // +0x14
 	char m_pad_14_28[ 0x28 - 0x18 ];
-	ListNodeB *m_at28;                   // +0x28
-	ListNodeA *m_at2c;                   // +0x2c
+	ListNodeB *m_listHeadB;              // +0x28
+	ListNodeA *m_listHeadA;              // +0x2c
 	void *m_at30;                        // +0x30 (ControlBarSchemeManager*)
 	char m_pad_34_58[ 0x58 - 0x34 ];
 	GameWindow *m_at58;                  // +0x58
@@ -129,17 +145,21 @@ public:
 	ReleaseThenDelete *m_at278;          // +0x278
 	char m_pad_27c_2bc[ 0x2bc - 0x27c ];
 	void *m_at2bc;                       // +0x2bc
-	char m_pad_2c0_2f0[ 0x2f0 - 0x2c0 ];
+	char m_pad_2c0_2e8[ 0x2e8 - 0x2c0 ];
+	void *m_at2e8;                       // +0x2e8
+	char m_pad_2ec_2f0[ 0x2f0 - 0x2ec ];
 	SimpleOwned *m_at2f0;                // +0x2f0
-	SimpleOwned *m_at2f4;                // +0x2f4
+	OwnedMember m_at2f4;                 // +0x2f4
 };
 
 Rva0049DA40Object::~Rva0049DA40Object()
 {
 	if( m_at98 != 0 )
+	{
 		m_at98->release();
-	if( m_at98 != 0 )
-		m_at98->deletingDtor( 1 );
+		if( m_at98 != 0 )
+			m_at98->deletingDtor( 1 );
+	}
 	m_at98 = 0;
 	m_at2bc = 0;
 
@@ -173,51 +193,54 @@ Rva0049DA40Object::~Rva0049DA40Object()
 	}
 	m_at30 = 0;
 
-	for( ListNodeA *node = m_at2c; node != 0; )
+	while( m_listHeadA != 0 )
 	{
+		ListNodeA *node = m_listHeadA;
 		ListNodeA *next = node->m_next;
-		node->deletingDtor( 1 );
-		node = next;
-		m_at2c = node;
+		delete this->m_listHeadA;
+		m_listHeadA = next;
 	}
 
-	for( ListNodeB *node = m_at28; node != 0; )
+	while( m_listHeadB != 0 )
 	{
+		ListNodeB *node = m_listHeadB;
 		ListNodeB *next = node->m_next;
-		node->deletingDtor( 1 );
-		node = next;
-		m_at28 = node;
+		delete this->m_listHeadB;
+		m_listHeadB = next;
 	}
 
 	if( m_at278 != 0 )
+	{
 		m_at278->release();
-	if( m_at278 != 0 )
-		m_at278->deletingDtor( 1 );
-	m_at278 = 0;
+		if( m_at278 != 0 )
+			m_at278->deletingDtor( 1 );
+		m_at278 = 0;
+	}
+	_ReadWriteBarrier();
 
 	if( m_atf8 != 0 )
+	{
 		m_atf8->release();
-	if( m_atf8 != 0 )
-		m_atf8->deletingDtor( 1 );
-	m_atf8 = 0;
+		if( m_atf8 != 0 )
+			m_atf8->deletingDtor( 1 );
+		m_atf8 = 0;
+	}
 
 	for( int i = 0; i < 0x14; ++i )
 	{
 		GameWindow *w = m_at1a0[ i ];
 		m_at100[ i ] = 0;
 		m_at150[ i ] = 0;
-		TheWindowManager->slot30( w );
+		DestroyControlBarWindow( w );
 		m_at1a0[ i ] = 0;
 	}
 
 	TheWindowManager->slot30( m_at58 );
 	m_at58 = 0;
+	m_at2e8 = 0;
 
 	if( m_at2f0 != 0 )
 		m_at2f0->deletingDtor( 1 );
 	m_at2f0 = 0;
 
-	if( m_at2f4 != 0 )
-		m_at2f4->deletingDtor( 1 );
-	m_at2f4 = 0;
 }
