@@ -5898,5 +5898,15 @@
   "after_sha256": "3274ca7641daeb4ec258c6fb70183eb69cbc61ae0a2937aaa1c2c78962faa30c",
   "evidence": "docs/naming_evidence.md",
   "reason": "m_text/m_id named the +4 wide string and +8 int of the address-derived message class, which applyOwner 0x003BF190 never reads; name_oracle has no witnessed layout for it and m_id guessed the meaning of the 0x00383890 result, so they become offset tokens like the neighbouring m_at00"
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/SpecialPower/BfmeSpecialPowerAllowanceStore_bfmeRunEUAe.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/LightPointSystemRva0039C260.cpp",
+  "old_name": "bfmeRunEUAe",
+  "new_name": "rva0039C260",
+  "before_sha256": "01f51826f9ce40661e12171926e808df6131d8f473b451854bd19bb3279bfacc",
+  "after_sha256": "8c428c883ca3b347e3b7e9a138a67743e2be4f931eb23ea04ecc903b144afaf2",
+  "evidence": "targets/game/reverse/identity_evidence/0039c260.md",
+  "reason": "bfmeRunEUAe/BfmeSpecialPowerAllowanceStore rested only on an Open-BFME5 pin note; retail shows this is the LightPointSystem global 0x012F0FF8 (INI::parseLightPointLevel 0x0039CCF0 passes it to addLevel) so the method keeps the address token like its twin rva0039CB60; m_specialPowerState was the same unproven semantic for the +0x274 level-index store and becomes the offset token m_at274"
  }
 ]
