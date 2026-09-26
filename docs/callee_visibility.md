@@ -61,6 +61,11 @@ The centroid landed independently in `AIGroupCenter.cpp`: replacing raw list
 nodes with the real STLport list/iterator corrected its EBX/EBP assignment.
 That conversion demonstrates a separate type-context effect, not a successful
 application of the non-retention lever to `recompute`.
+The 67-byte caller at `0x0017DD40` calls `Object::setStatus` with an
+`ObjectStatusMaskType` mask. Exposing the authentic `noinline` helper body
+through `ObjectStatusBits.h`, while keeping auto-inlining disabled around the
+include, fixed the caller's final pointer-chain register bytes without changing
+the out-of-line call. `probe.py` and `add_match.py` verified the exact body.
 
 ## When to investigate it
 
