@@ -11,6 +11,15 @@ struct Rva0083ED40Stream {
 	char m_pad[0x58 - 0x18];
 	void* m_buffer;
 	void setState(int state);
+	void addState(int state);
+	__forceinline void clearState(int state)
+	{
+		if (!m_buffer)
+			state |= 1;
+		m_state = state;
+		if (m_exceptions & state)
+			g_call("ios failure", (char*)g_global + 0x40);
+	}
 };
 void Rva0083ED40Stream::setState(int state)
 {
@@ -19,4 +28,9 @@ void Rva0083ED40Stream::setState(int state)
 	m_state = state;
 	if (m_exceptions & state)
 		g_call("ios failure", (char*)g_global + 0x40);
+}
+
+void Rva0083ED40Stream::addState(int state)
+{
+	clearState(m_state | state);
 }
