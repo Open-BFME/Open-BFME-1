@@ -13,11 +13,13 @@
 // The other branch inlines the "not yet at a point" half of
 // putObjectAtBestGarrisonPoint for a bare victim position.
 //
-// Object::m_status (+0x90, witnessed) is a 96-bit STLport bitset: the byte
-// test at +0x94 mask 0x10 is test(36).  The +0x20 interface's slot 39
-// returns the same 12-byte mask by value (the frame reserves exactly 12
-// bytes for it) and the body tests bit 60, the bit Rva00225960ListDrain reads
-// from Object::m_status.
+// Object::m_status (+0x90, witnessed) is BitFlags<86> (matched
+// ?setStatus@Object@@QAEXABV?$BitFlags@$0FG@@@_N@Z at 0x001C7370): the byte
+// test at +0x94 mask 0x10 is test(36).  The +0x20 interface's slot 39 goes
+// through ILT 0x00027DFE to 0x00221A50, the opaque
+// ?getTriple@Rva221A50Inner@@QBE?AURva221A50Triple@@H@Z: it ignores its Int
+// argument and returns 12 bytes copied from module data +0x12C (unwitnessed).
+// The body tests bit 28 of the triple's second word (0x10000000).
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
@@ -57,7 +59,17 @@ private:
 	_STL::bitset<NUMBITS> m_bits;
 };
 
-typedef BitFlags<96> ObjectStatusMaskType;
+typedef BitFlags<86> ObjectStatusMaskType;
+
+// Opaque 12-byte value returned by 0x00221A50 (module data +0x12C).
+struct Rva221A50Triple
+{
+	unsigned long first;
+	unsigned long second;
+	unsigned long third;
+
+	unsigned long getSecond() const { return second; }
+};
 
 class AIUpdateInterface
 {
@@ -119,7 +131,7 @@ public:
 	RVA0021F5E0_SLOTS(30); RVA0021F5E0_SLOTS(31); RVA0021F5E0_SLOTS(32);
 	RVA0021F5E0_SLOTS(33); RVA0021F5E0_SLOTS(34); RVA0021F5E0_SLOTS(35);
 	RVA0021F5E0_SLOTS(36); RVA0021F5E0_SLOTS(37); RVA0021F5E0_SLOTS(38);
-	virtual ObjectStatusMaskType slot39(Object *obj) const;
+	virtual Rva221A50Triple slot39(Int index) const;
 };
 
 #undef RVA0021F5E0_SLOTS_10
@@ -212,7 +224,7 @@ void GarrisonContain::addValidObjectsToGarrisonPoints()
 						putObjectAtBestGarrisonPoint(nestedObject, victim, 0);
 					else if (victimPos != 0)
 						putObjectAtBestGarrisonPoint(nestedObject, 0, victimPos);
-					else if (!m_interface20.slot39(0).test(60))
+					else if ((m_interface20.slot39(0).getSecond() & 0x10000000) == 0)
 						putObjectAtBestGarrisonPoint(nestedObject, 0, nestedObject->getPosition());
 				}
 			}
