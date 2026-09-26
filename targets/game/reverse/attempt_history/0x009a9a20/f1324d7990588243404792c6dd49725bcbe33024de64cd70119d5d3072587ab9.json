@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "f1324d7990588243404792c6dd49725bcbe33024de64cd70119d5d3072587ab9",
+  "symbol": "?Rva009A9A20@@YAXPBEHIIPAEHII@Z",
+  "score_kind": "author-estimate",
+  "score": 0.69,
+  "source": "// ?Rva009A9A20@@YAXPBEHIIPAEHII@Z\n// partial score=0.69 date=2026-09-27\nvoid __cdecl Rva009A9A20(\n    const unsigned char *source, int sourcePitch, unsigned int step,\n    unsigned int sourceCount, unsigned char *destination, int destinationPitch,\n    unsigned int ratio, unsigned int outputCount)\n{\n    unsigned int sourceStep = (unsigned int)sourcePitch + (unsigned int)sourcePitch;\n    unsigned int output = (unsigned int)destinationPitch;\n    unsigned int limit = output * outputCount;\n    const unsigned char *topRow = source;\n    unsigned char *dest = destination;\n    *dest = *topRow;\n    if (output < limit) {\n        const unsigned char *middleRow = topRow + sourceStep;\n        do {\n            unsigned int top = topRow[0];\n            unsigned int center = middleRow[0];\n            unsigned int bottom = middleRow[sourceStep];\n            dest[output] = (unsigned char)((3 * (top + bottom) + 10 * center + 8) >> 4);\n            output += (unsigned int)destinationPitch;\n            topRow += sourceStep;\n            middleRow += sourceStep;\n        } while (output < limit);\n    }\n}\n"
+}
