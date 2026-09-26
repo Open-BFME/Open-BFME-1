@@ -506,8 +506,8 @@ void AudioEventRTS::advanceNextPlayPortion( void )
 					return;
 				}
 
-				Int soundCount = *(const Int *)(eventInfo + 0x84);
-				if (soundCount == 0 || soundCount == 3 || (*(const Byte *)(eventInfo + 0x3C) & 1) != 0) {
+				Int soundType = *(const Int *)(eventInfo + 0x84);
+				if (soundType == 0 || soundType == 3 || (*(const Byte *)(eventInfo + 0x3C) & 1) != 0) {
 					return;
 				}
 			}
@@ -527,9 +527,9 @@ void AudioEventRTS::advanceNextPlayPortion( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-void AudioEventRTS::setNextPlayPortion( PortionToPlay ptp )
+void AudioEventRTS::setNextPlayPortion( PortionToPlay nextPortion )
 {
-	m_portionToPlayNext = ptp;
+	m_portionToPlayNext = nextPortion;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -556,8 +556,8 @@ Bool AudioEventRTS::hasMoreLoops( void ) const
 		return TRUE;
 	}
 
-	Int soundCount = *(const Int *)(eventInfo + 0x84);
-	if (soundCount == 0 || soundCount == 3 || (*(const Byte *)(eventInfo + 0x3C) & 1) != 0) {
+	Int soundType = *(const Int *)(eventInfo + 0x84);
+	if (soundType == 0 || soundType == 3 || (*(const Byte *)(eventInfo + 0x3C) & 1) != 0) {
 		return TRUE;
 	}
 
@@ -565,7 +565,6 @@ Bool AudioEventRTS::hasMoreLoops( void ) const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setAudioEventInfo@AudioEventRTS@@ present-unmatched
 void AudioEventRTS::setAudioEventInfo( const AudioEventInfo *eventInfo ) const
 {
 	m_eventInfo = eventInfo;
@@ -676,9 +675,9 @@ DrawableID AudioEventRTS::getDrawableID( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-void AudioEventRTS::setTimeOfDay( TimeOfDay tod )
+void AudioEventRTS::setTimeOfDay( TimeOfDay timeOfDay )
 {
-	m_timeOfDay = tod;
+	m_timeOfDay = timeOfDay;
 }
 
 //-------------------------------------------------------------------------------------------------

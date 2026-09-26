@@ -9,19 +9,19 @@ extern "C" void _WriteBarrier();
 #pragma intrinsic(_WriteBarrier)
 struct WeightedSoundB2430 { void *name; unsigned weight; };
 struct WeightedSoundRangeB2430 { WeightedSoundB2430 *begin,*end,*capacity; };
-static __declspec(noinline) int bfmeWeightedChoiceB2430(unsigned count,const WeightedSoundRangeB2430*range,bool logical) {
- if (!(count>0)) return -1;
- unsigned value;
- if(logical) value=GetGameLogicRandomValue(0,count-1,"F:\\bfme\\Code\\gameengine\\Source\\Common\\Audio\\AudioEventRTS.cpp",55);
- else value=GetGameAudioRandomValue(0,count-1,"F:\\bfme\\Code\\gameengine\\Source\\Common\\Audio\\AudioEventRTS.cpp",59);
- WeightedSoundB2430 *it=range->begin;
- if(it!=range->end) { do {
-  if(value<it->weight) goto found;
-  value-=it->weight; ++it;
- } while(it!=range->end);
+static __declspec(noinline) int bfmeWeightedChoiceB2430(unsigned totalWeight,const WeightedSoundRangeB2430*range,bool useLogicRandom) {
+ if (!(totalWeight>0)) return -1;
+ unsigned remainingWeight;
+ if(useLogicRandom) remainingWeight=GetGameLogicRandomValue(0,totalWeight-1,"F:\\bfme\\Code\\gameengine\\Source\\Common\\Audio\\AudioEventRTS.cpp",55);
+ else remainingWeight=GetGameAudioRandomValue(0,totalWeight-1,"F:\\bfme\\Code\\gameengine\\Source\\Common\\Audio\\AudioEventRTS.cpp",59);
+ WeightedSoundB2430 *soundEntry=range->begin;
+ if(soundEntry!=range->end) { do {
+  if(remainingWeight<soundEntry->weight) goto found;
+  remainingWeight-=soundEntry->weight; ++soundEntry;
+ } while(soundEntry!=range->end);
  return 0; }
-found: if(it==range->end){_WriteBarrier();return 0;}
- return it-range->begin;
+found: if(soundEntry==range->end){_WriteBarrier();return 0;}
+ return soundEntry-range->begin;
 }
 // ?forceWeightedChoiceB2430@@YAHIPBUWeightedSoundRangeB2430@@_N@Z absent-from-retail
 // Absent-from-retail callsite to expose the static helper to MSVC optimization.

@@ -113,38 +113,38 @@ public:
 
 AsciiString AudioEventRTS::generateFilenamePrefix(AudioType audioTypeToPlay, bool localized)
 {
-	AsciiString retStr;
+	AsciiString filenamePrefix;
 
 	if (localized)
 	{
-		retStr.concat("lang\\", 5);
-		retStr.concatPeek(TheGlobalLanguageData->m_language);
-		retStr.concat("\\", 1);
+		filenamePrefix.concat("lang\\", 5);
+		filenamePrefix.concatPeek(TheGlobalLanguageData->m_language);
+		filenamePrefix.concat("\\", 1);
 	}
 
-	retStr.concatPeek(TheAudio->getAudioSettings()->m_audioRoot);
-	retStr.concat("\\", 1);
+	filenamePrefix.concatPeek(TheAudio->getAudioSettings()->m_audioRoot);
+	filenamePrefix.concat("\\", 1);
 
 	switch (audioTypeToPlay)
 	{
 	case AT_Music:
-		retStr.concat(TheAudio->getAudioSettings()->m_musicFolder);
+		filenamePrefix.concat(TheAudio->getAudioSettings()->m_musicFolder);
 		break;
 	case AT_Streaming:
-		retStr.concat(TheAudio->getAudioSettings()->m_streamingFolder);
+		filenamePrefix.concat(TheAudio->getAudioSettings()->m_streamingFolder);
 		break;
 	case AT_SoundEffect:
 	case AT_SoundEffectAlt:
 	{
 		const AsciiString &folder = TheAudio->getAudioSettings()->m_soundsFolder;
-		retStr.concatPeek(folder);
+		filenamePrefix.concatPeek(folder);
 		break;
 	}
 	case AT_AmbientStream:
-		retStr.concat(TheAudio->getAudioSettings()->m_ambientStreams);
+		filenamePrefix.concat(TheAudio->getAudioSettings()->m_ambientStreams);
 		break;
 	}
 
-	retStr.concat("\\", 1);
-	return retStr;
+	filenamePrefix.concat("\\", 1);
+	return filenamePrefix;
 }

@@ -33,22 +33,22 @@ public:
 
 void AudioEventTQ::bfmeSetNameTQ(BfmeStrTQ name)
 {
-	BfmeStrTQ &n = m_bfmeNameTQ;
+	BfmeStrTQ &currentName = m_bfmeNameTQ;
 
-	if (name.bfmeDiffersTQ(n))
+	if (name.bfmeDiffersTQ(currentName))
 	{
-		BfmeHandleTQ *h = m_bfmeHandleTQ;
+		BfmeHandleTQ *eventInfoHandle = m_bfmeHandleTQ;
 
-		if (h != 0)
+		if (eventInfoHandle != 0)
 		{
-			long r = BfmeDecTQ(&h->m_bfmeRefTQ);
+			long remainingRefs = BfmeDecTQ(&eventInfoHandle->m_bfmeRefTQ);
 
-			if (r <= 0 && m_bfmeHandleTQ != 0)
+			if (remainingRefs <= 0 && m_bfmeHandleTQ != 0)
 				m_bfmeHandleTQ->bfmeCloseTQ(1);
 
 			m_bfmeHandleTQ = 0;
 		}
 
-		n.bfmeSetTQ(name);
+		currentName.bfmeSetTQ(name);
 	}
 }

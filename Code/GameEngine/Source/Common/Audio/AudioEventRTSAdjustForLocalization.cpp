@@ -143,13 +143,13 @@ void Rva000B3730AudioEventRTS::adjustForLocalization(AsciiString &strToAdjust)
 	const char *start = string.m_data ? &string.m_data->data[0]
 										: g_bfmeEmptyAscii;
 	const StringHeader *data = string.m_data;
-	const char *p = start + (data ? data->length : 0);
-	for (; p != start; --p)
+	const char *cursor = start + (data ? data->length : 0);
+	for (; cursor != start; --cursor)
 	{
-		char seen = p[-1];
-		if (seen == '\\')
+		char previousCharacter = cursor[-1];
+		if (previousCharacter == '\\')
 		{
-			AsciiString filename( p - 1 );
+			AsciiString filename( cursor - 1 );
 			const AudioEventInfo *eventInfo = m_eventInfo;
 			const AudioType audioType = eventInfo->m_soundType;
 			strToAdjust = reinterpret_cast<AudioEventRTS *>(this)->generateFilenamePrefix(retainAudioType(audioType), true);

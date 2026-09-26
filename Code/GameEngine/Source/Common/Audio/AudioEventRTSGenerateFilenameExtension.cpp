@@ -105,11 +105,11 @@ public:
 // ?generateFilenameExtension@AudioEventRTS@@QAE?AVAsciiString@@W4AudioType@@@Z
 AsciiString AudioEventRTS::generateFilenameExtension(AudioType audioTypeToPlay)
 {
-	AsciiString retStr = AsciiString::TheEmptyString;
+	AsciiString filenameExtension = AsciiString::TheEmptyString;
 	if (audioTypeToPlay != AT_Music)
 	{
-		retStr.set(".", 1);
-		retStr.concat(TheAudio->getAudioSettings()->m_soundsExtension);
+		filenameExtension.set(".", 1);
+		filenameExtension.concat(TheAudio->getAudioSettings()->m_soundsExtension);
 	}
-	return retStr;
+	return filenameExtension;
 }

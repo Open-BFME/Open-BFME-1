@@ -52,28 +52,28 @@ class INIParseSoundsListShim {
 public: static void parse(INI* ini,void* instance,void* store,const void* userData);
 };
 void INIParseSoundsListShim::parse(INI* ini,void* instance,void* store,const void* userData) {
-    int* total = userData ? (int*)((char*)instance + ((const Rva000B1DF0Offset*)userData)->get()) : 0;
+    int* totalWeight = userData ? (int*)((char*)instance + ((const Rva000B1DF0Offset*)userData)->get()) : 0;
     _STL::vector<_STL::Rva000B19F0Element>* sounds = (_STL::vector<_STL::Rva000B19F0Element>*)store;
-    const char* c = ini->getNextTokenOrNull();
-    while(c) {
-        int len = strlen(c);
-        if(len) {
-            const char* end = c + len - 1;
-            while(end > c && isdigit(*end)) --end;
+    const char* token = ini->getNextTokenOrNull();
+    while(token) {
+        int tokenLength = strlen(token);
+        if(tokenLength) {
+            const char* end = token + tokenLength - 1;
+            while(end > token && isdigit(*end)) --end;
             AsciiString name;
             int weight;
             if(*end == ':') {
                 weight = atoi(++end);
-                if(weight < 1) throw INIException(3,"Weight of sound files must be >= 1. Sound '%s' for audio event '%s'", c, ((AsciiString*)((char*)instance + 8))->str());
-                name = AsciiString(c, end - c - 1);
+                if(weight < 1) throw INIException(3,"Weight of sound files must be >= 1. Sound '%s' for audio event '%s'", token, ((AsciiString*)((char*)instance + 8))->str());
+                name = AsciiString(token, end - token - 1);
             } else {
                 weight = 1000;
-                name = AsciiString(c,len);
+                name = AsciiString(token,tokenLength);
             }
-            if(name.isEmpty()) throw INIException(3,"Sound file has no file name. Sound '%s' for audio event '%s'",c,((AsciiString*)((char*)instance + 8))->str());
+            if(name.isEmpty()) throw INIException(3,"Sound file has no file name. Sound '%s' for audio event '%s'",token,((AsciiString*)((char*)instance + 8))->str());
             sounds->push_back(_STL::Rva000B19F0Element(name,weight));
-            if(total) *total += weight;
+            if(totalWeight) *totalWeight += weight;
         }
-        c = ini->getNextTokenOrNull();
+        token = ini->getNextTokenOrNull();
     }
 }

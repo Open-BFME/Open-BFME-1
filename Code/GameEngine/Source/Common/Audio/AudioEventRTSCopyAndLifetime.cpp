@@ -93,8 +93,8 @@ public:
 	AudioEventRTS(const AsciiString &eventName, ObjectID ownerID);
 	AudioEventRTS(const AsciiString &eventName, DrawableID drawableID);
 	AudioEventRTS(const AsciiString &eventName, LivingWorldID ownerID);
-	AudioEventRTS(const AsciiString &eventName, int extra);
-	AudioEventRTS(const AsciiString &eventName, const Coord3D *positionOfAudio, int extra);
+	AudioEventRTS(const AsciiString &eventName, int timeOfDay);
+	AudioEventRTS(const AsciiString &eventName, const Coord3D *positionOfAudio, int timeOfDay);
 	AudioEventRTS(const AudioEventRTS &right);
 	AudioEventRTS &operator=(const AudioEventRTS &right);
 	virtual ~AudioEventRTS();
@@ -323,18 +323,18 @@ AudioEventRTS::AudioEventRTS(const AsciiString &eventName, LivingWorldID ownerID
 }
 
 // ??0AudioEventRTS@@QAE@ABVAsciiString@@H@Z
-AudioEventRTS::AudioEventRTS(const AsciiString &eventName, int extra)
+AudioEventRTS::AudioEventRTS(const AsciiString &eventName, int timeOfDay)
 {
 	commonInit();
 
 	m_eventName = eventName;
 	m_eventInfo.clear();
 
-	m_timeOfDay = static_cast<unsigned int>(extra);
+	m_timeOfDay = static_cast<unsigned int>(timeOfDay);
 }
 
 // ??0AudioEventRTS@@QAE@ABVAsciiString@@PBUCoord3D@@H@Z
-AudioEventRTS::AudioEventRTS(const AsciiString &eventName, const Coord3D *positionOfAudio, int extra)
+AudioEventRTS::AudioEventRTS(const AsciiString &eventName, const Coord3D *positionOfAudio, int timeOfDay)
 {
 	commonInit();
 
@@ -344,7 +344,7 @@ AudioEventRTS::AudioEventRTS(const AsciiString &eventName, const Coord3D *positi
 	m_position = *positionOfAudio;
 	m_ownerType = 0;
 	m_shouldFade = 1;
-	m_timeOfDay = static_cast<unsigned int>(extra);
+	m_timeOfDay = static_cast<unsigned int>(timeOfDay);
 }
 
 // ?bfmeReset000B25B0@AudioEventRTS@@QAEXABVAsciiString@@@Z
