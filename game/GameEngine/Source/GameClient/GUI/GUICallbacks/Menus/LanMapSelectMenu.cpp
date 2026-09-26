@@ -75,7 +75,7 @@ static NameKeyType buttonMapStartPositionID[MAX_SLOTS] = { NAMEKEY_INVALID,NAMEK
 
 
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////////////////////////
-void positionStartSpots( AsciiString mapName, GameWindow *buttonMapStartPositions[], GameWindow *mapWindow);
+void positionStartSpots( AsciiString mapName, GameWindow *buttonMapStartPositions[], GameWindow *mapWindow, Bool onLoadScreen);
 static const char *layoutFilename = "LanGameOptionsMenu.wnd";
 static const char *parentName = "LanGameOptionsMenuParent";
 static const char *gadgetsToHide[] =
@@ -280,6 +280,66 @@ WindowMsgHandledType LanMapSelectMenuInput( GameWindow *window, UnsignedInt msg,
 //-------------------------------------------------------------------------------------------------
 /** MapSelect menu window system callback */
 //-------------------------------------------------------------------------------------------------
+class BfmeLanMapAPI
+{
+public:
+    virtual void slot00() = 0;
+    virtual void slot04() = 0;
+    virtual void slot08() = 0;
+    virtual void slot0C() = 0;
+    virtual void slot10() = 0;
+    virtual void slot14() = 0;
+    virtual void slot18() = 0;
+    virtual void slot1C() = 0;
+    virtual void slot20() = 0;
+    virtual void slot24() = 0;
+    virtual void slot28() = 0;
+    virtual void slot2C() = 0;
+    virtual void slot30() = 0;
+    virtual void slot34() = 0;
+    virtual void slot38() = 0;
+    virtual void slot3C() = 0;
+    virtual void slot40() = 0;
+    virtual void slot44() = 0;
+    virtual void slot48() = 0;
+    virtual void slot4C() = 0;
+    virtual void slot50() = 0;
+    virtual void slot54() = 0;
+    virtual void slot58() = 0;
+    virtual void slot5C() = 0;
+    virtual void slot60() = 0;
+    virtual void slot64() = 0;
+    virtual void slot68() = 0;
+    virtual void slot6C() = 0;
+    virtual void slot70() = 0;
+    virtual void slot74() = 0;
+    virtual void slot78() = 0;
+    virtual void slot7C() = 0;
+    virtual void slot80() = 0;
+    virtual void slot84() = 0;
+    virtual void slot88() = 0;
+    virtual void slot8C() = 0;
+    virtual void slot90() = 0;
+    virtual void slot94() = 0;
+    virtual void slot98() = 0;
+    virtual void slot9C() = 0;
+    virtual void slotA0() = 0;
+    virtual void slotA4() = 0;
+    virtual void slotA8() = 0;
+    virtual void slotAC() = 0;
+    virtual void slotB0() = 0;
+    virtual void slotB4() = 0;
+    virtual void slotB8() = 0;
+    virtual void slotBC() = 0;
+    virtual LANGameInfo *GetMyGame() = 0;
+};
+
+void resetLanSession(int mode);
+void j_00029cee();
+typedef Int (__cdecl *BfmePopulateRefFn)(GameWindow *, Bool, Bool, const AsciiString &);
+class BfmeVirtualLayoutTeardown { public: virtual void slot00() = 0; virtual void deletingDestructor(unsigned int) = 0; virtual void slot08() = 0; virtual void slot0C() = 0; virtual void slot10() = 0; virtual void slot14() = 0; virtual void slot18() = 0; virtual void slot1C() = 0; virtual void destroyWindows() = 0; };
+class BfmeLanMapGameInfo { public: virtual void slot00() = 0; virtual void slot04() = 0; virtual void slot08() = 0; virtual void slot0C() = 0; virtual void slot10() = 0; virtual void slot14() = 0; virtual void slot18() = 0; virtual void resetStartSpots() = 0; virtual void adjustSlotsForMap() = 0; };
+// ?LanMapSelectMenuSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
 WindowMsgHandledType LanMapSelectMenuSystem( GameWindow *window, UnsignedInt msg, 
 																				  WindowMsgData mData1, WindowMsgData mData2 )
 {
@@ -322,7 +382,7 @@ WindowMsgHandledType LanMapSelectMenuSystem( GameWindow *window, UnsignedInt msg
 		}  // end input
 
 		//---------------------------------------------------------------------------------------------
-		case GLM_DOUBLE_CLICKED:
+		case 0x4015:
 			{
 				GameWindow *control = (GameWindow *)mData1;
 				Int controlID = control->winGetWindowId();
@@ -351,7 +411,7 @@ WindowMsgHandledType LanMapSelectMenuSystem( GameWindow *window, UnsignedInt msg
 			{
 				if (TheMapCache)
 					TheMapCache->updateCache();
-				populateMapListbox( mapList, TRUE, TRUE, TheLAN->GetMyGame()->getMap() );
+				((BfmePopulateRefFn)&j_00029cee)( mapList, TRUE, TRUE, ((BfmeLanMapAPI *)TheLAN)->GetMyGame()->getMap() );
 				LANPreferences pref;
 				pref["UseSystemMapDir"] = "yes";
 				pref.write();
@@ -360,7 +420,7 @@ WindowMsgHandledType LanMapSelectMenuSystem( GameWindow *window, UnsignedInt msg
 			{
 				if (TheMapCache)
 					TheMapCache->updateCache();
-				populateMapListbox( mapList, FALSE, TRUE, TheLAN->GetMyGame()->getMap() );
+				((BfmePopulateRefFn)&j_00029cee)( mapList, FALSE, TRUE, ((BfmeLanMapAPI *)TheLAN)->GetMyGame()->getMap() );
 				LANPreferences pref;
 				pref["UseSystemMapDir"] = "no";
 				pref.write();
@@ -368,13 +428,13 @@ WindowMsgHandledType LanMapSelectMenuSystem( GameWindow *window, UnsignedInt msg
 			else if ( controlID == buttonBack )
 			{
 				
-				mapSelectLayout->destroyWindows();
-				mapSelectLayout->deleteInstance();
+				((BfmeVirtualLayoutTeardown *)mapSelectLayout)->destroyWindows();
+				if (mapSelectLayout) ((BfmeVirtualLayoutTeardown *)mapSelectLayout)->deletingDestructor(1);
 				mapSelectLayout = NULL;
 				// set the controls to NULL since they've been destroyed.
 				NullifyControls();
 				showLANGameOptionsUnderlyingGUIElements(TRUE);
-				PostToLanGameOptions( MAP_BACK );
+				resetLanSession( MAP_BACK );
 			}  // end if
 			else if ( controlID == buttonOK )
 			{
@@ -400,29 +460,30 @@ WindowMsgHandledType LanMapSelectMenuSystem( GameWindow *window, UnsignedInt msg
 						asciiMap = mapFname;
 					else
 						asciiMap.translate( map );
-					TheLAN->GetMyGame()->setMap( asciiMap );
+					((BfmeLanMapAPI *)TheLAN)->GetMyGame()->setMap( asciiMap );
 					asciiMap.toLower();
-					std::map<AsciiString, MapMetaData>::iterator it = TheMapCache->find(asciiMap);
-					if (it != TheMapCache->end())
+					MapCache *mapCache = TheMapCache;
+                    std::map<AsciiString, MapMetaData>::iterator it = mapCache->find(asciiMap);
+					if (it != mapCache->end())
 					{
-						TheLAN->GetMyGame()->getSlot(0)->setMapAvailability(true);
-						TheLAN->GetMyGame()->setMapCRC( it->second.m_CRC );
-						TheLAN->GetMyGame()->setMapSize( it->second.m_filesize );
+						((BfmeLanMapAPI *)TheLAN)->GetMyGame()->getSlot(0)->setMapAvailability(true);
+						((BfmeLanMapAPI *)TheLAN)->GetMyGame()->setMapCRC( it->second.m_CRC );
+						((BfmeLanMapAPI *)TheLAN)->GetMyGame()->setMapSize( it->second.m_filesize );
 
-						TheLAN->GetMyGame()->resetStartSpots();
-						TheLAN->GetMyGame()->adjustSlotsForMap(); // BGC- adjust the slots for the new map.
+						((BfmeLanMapGameInfo *)((BfmeLanMapAPI *)TheLAN)->GetMyGame())->resetStartSpots();
+						((BfmeLanMapGameInfo *)((BfmeLanMapAPI *)TheLAN)->GetMyGame())->adjustSlotsForMap(); // BGC- adjust the slots for the new map.
 					}
 
 					
-					mapSelectLayout->destroyWindows();
-					mapSelectLayout->deleteInstance();
+					((BfmeVirtualLayoutTeardown *)mapSelectLayout)->destroyWindows();
+					if (mapSelectLayout) ((BfmeVirtualLayoutTeardown *)mapSelectLayout)->deletingDestructor(1);
 					mapSelectLayout = NULL;
 
 					// set the controls to NULL since they've been destroyed.
 					NullifyControls();
 
 					showLANGameOptionsUnderlyingGUIElements(TRUE);
-					PostToLanGameOptions(SEND_GAME_OPTS);
+					resetLanSession(SEND_GAME_OPTS);
 
 				}  // end if
 			}  // end else if
@@ -431,7 +492,7 @@ WindowMsgHandledType LanMapSelectMenuSystem( GameWindow *window, UnsignedInt msg
 
 		}  // end selected
 
-		case GLM_SELECTED:
+		case 0x4014:
 			{
 				
 				GameWindow *control = (GameWindow *)mData1;
@@ -441,7 +502,7 @@ WindowMsgHandledType LanMapSelectMenuSystem( GameWindow *window, UnsignedInt msg
 					int rowSelected = mData2;
 					if( rowSelected < 0 )
 					{
-						positionStartSpots( AsciiString::TheEmptyString, buttonMapStartPosition, winMapPreview);
+						positionStartSpots( AsciiString::TheEmptyString, buttonMapStartPosition, winMapPreview, FALSE);
 //						winMapPreview->winClearStatus(WIN_STATUS_IMAGE);
 						break;
 					}
@@ -469,7 +530,7 @@ WindowMsgHandledType LanMapSelectMenuSystem( GameWindow *window, UnsignedInt msg
 					{
 						winMapPreview->winClearStatus(WIN_STATUS_IMAGE);
 					}
-					positionStartSpots( asciiMap, buttonMapStartPosition, winMapPreview);
+					positionStartSpots( asciiMap, buttonMapStartPosition, winMapPreview, FALSE);
 				}
 				break;
 			}
