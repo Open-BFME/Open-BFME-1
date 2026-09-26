@@ -735,3 +735,17 @@ unsigned char Rva008FD4B0AlwaysTrue()
 {
 	return 1;
 }
+
+class Rva008AB800OffsetGetter
+{
+	char m_pad[0x50];
+	int m_value;
+public:
+	int body() const;
+};
+
+// ?body@Rva008AB800OffsetGetter@@QBEHXZ
+int Rva008AB800OffsetGetter::body() const
+{
+	return m_value;
+}
