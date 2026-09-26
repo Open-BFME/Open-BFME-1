@@ -5648,5 +5648,55 @@
   "after_sha256": "377e0a32d6cb3e9480de02c8103df515b4d4e6c43de6cf2c702c02d844f2df3e",
   "evidence": "reverse/symbols.csv",
   "reason": "not a rename: the bank called the MSVC compiler intrinsic _WriteBarrier (no storage and no identity) before storing to literal 0x01356A7C; the landed body drops the no-op barrier and stores through the existing pin ?Rva009C0D10Src@@3PAGA at VA 0x01356A7C (reverse/symbols.csv; read by landed spreadTable.cpp); the token diff aligned the two by position"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ae650.cpp",
+  "new_path": "Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva006AE650.cpp",
+  "old_name": "BfmeLockTM",
+  "new_name": "Rva006AE650MutexGuard",
+  "before_sha256": "67dc5f5d0c1f486c09d14239ce058bedcd446c145ac398bf00ab93872b445e8f",
+  "after_sha256": "fa42f9bcb2888b6de7eaf7c88021f7ee70b7901999553ffb02ecb370c24fa9a4",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank name had no caller/vtable/string evidence; the address-token guard follows landed sibling MilesAudioManager guards (see landed 0x006A5E60/0x006AC030), per docs/naming_evidence.md"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ae650.cpp",
+  "new_path": "Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva006AE650.cpp",
+  "old_name": "InsertResult",
+  "new_name": "Rva006AE650MutexGuard",
+  "before_sha256": "67dc5f5d0c1f486c09d14239ce058bedcd446c145ac398bf00ab93872b445e8f",
+  "after_sha256": "fa42f9bcb2888b6de7eaf7c88021f7ee70b7901999553ffb02ecb370c24fa9a4",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "not a rename: the struct-layout heuristic paired the discarded bank's unrelated nested Rva006AEE00Tree::InsertResult helper (void* + bool, 2 members) with the new mutex guard purely because both are void*-then-1-byte shapes; the guard is a real RAII local with no relation to the bank's fictitious tree-insert API, and its address-token name follows landed sibling guards per docs/naming_evidence.md"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ae650.cpp",
+  "new_path": "Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva006AE650.cpp",
+  "old_name": "bfmeStepTM",
+  "new_name": "rva006A9CE0",
+  "before_sha256": "67dc5f5d0c1f486c09d14239ce058bedcd446c145ac398bf00ab93872b445e8f",
+  "after_sha256": "fa42f9bcb2888b6de7eaf7c88021f7ee70b7901999553ffb02ecb370c24fa9a4",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank name had no caller/vtable/string evidence and vslot 18 routes via ILT 0x000474AB to unnamed body 0x006A9CE0, so the address token is kept per docs/naming_evidence.md"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ae650.cpp",
+  "new_path": "Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva006AE650.cpp",
+  "old_name": "m_bfmeGapTM",
+  "new_name": "m_pad960",
+  "before_sha256": "67dc5f5d0c1f486c09d14239ce058bedcd446c145ac398bf00ab93872b445e8f",
+  "after_sha256": "fa42f9bcb2888b6de7eaf7c88021f7ee70b7901999553ffb02ecb370c24fa9a4",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank name (m_bfmeGapTM) was unevidenced filler; m_pad960 encodes the real retail starting offset (+0x960, after the mutex, up to the +0x998 sets) per the project's self-labelling pad-name convention, docs/naming_evidence.md"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ae650.cpp",
+  "new_path": "Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva006AE650.cpp",
+  "old_name": "m_bfmeHeadTM",
+  "new_name": "m_pad004",
+  "before_sha256": "67dc5f5d0c1f486c09d14239ce058bedcd446c145ac398bf00ab93872b445e8f",
+  "after_sha256": "fa42f9bcb2888b6de7eaf7c88021f7ee70b7901999553ffb02ecb370c24fa9a4",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank name (m_bfmeHeadTM) was unevidenced filler; m_pad004 encodes the real retail starting offset (+0x4, up to the +0x95C mutex) per the project's self-labelling pad-name convention, docs/naming_evidence.md"
  }
 ]
