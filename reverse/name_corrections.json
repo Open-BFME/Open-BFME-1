@@ -5418,5 +5418,15 @@
   "after_sha256": "ba78b7581d2ec62770eba828ead50691eb52ab04428036dced0ff3f5dd8a9ae3",
   "evidence": "docs/naming_evidence.md",
   "reason": "bank-invented Rva007E3B40Vp6Prefix composition wrapper (m_base member of type Gen_0081E480) had no evidence and contradicted the installed vtable 0x01128DA8, which is pinned to Rva007E3C20Vp6Stream and shared with the landed dtor 0x007E3C20; members moved into Rva007E3C20Vp6Stream with Gen_0081E480 as the real base class"
+ },
+ {
+  "old_path": "reverse/attempts/0x00940010.cpp",
+  "new_path": "Code/Libraries/Source/WWVegas/WW3D2/FontCharsClassDestructorBFME.cpp",
+  "old_name": "m_gap28",
+  "new_name": "m_dword28",
+  "before_sha256": "1340eaf339e6dde099b4078a4979a9b3c93d59a59c0f524c364ee2c06ede8497",
+  "after_sha256": "a8bd0752d39ae415362b036cbd7fb6e7f0043c3770a0a0cc664e8ab52ea2345e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "offset token for an unread member; converter renames field cites docs/naming_evidence.md"
  }
 ]
