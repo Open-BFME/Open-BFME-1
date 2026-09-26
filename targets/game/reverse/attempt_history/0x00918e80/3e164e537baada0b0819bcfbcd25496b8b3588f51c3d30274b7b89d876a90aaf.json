@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "3e164e537baada0b0819bcfbcd25496b8b3588f51c3d30274b7b89d876a90aaf",
+  "symbol": "?d_00918e80@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.88,
+  "source": "// ?d_00918e80@@YAXXZ\n// partial score=0.88 date=2026-09-26\n// cl: /O2 /Ob0\n\nclass Rva00918E80\n{\n\tunsigned char m_prefix[0x11c];\n\tvoid *m_first;\n\tunsigned char m_between[0x4c];\n\tvoid *m_second;\n\npublic:\n\tvoid setBoth(void *value);\n};\n\nvoid Rva00918E80::setBoth(void *value)\n{\n\tm_first = value;\n\tm_second = value;\n}\n"
+}
