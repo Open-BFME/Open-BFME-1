@@ -7078,5 +7078,15 @@
   "after_sha256": "e96d8f2a84ef600d2aa2e6edef46421b58b9ec0b5128d820b5ffedff5bfaf70a",
   "evidence": "targets/game/reverse/identity_evidence/integration-squash-name-pairings.md",
   "reason": "Rebase of the 0x007BAC10 landing over concurrent upstream shadow work paired unrelated types across the source and its retired bank; no identity changed."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0090f950.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0090f950.cpp",
+  "old_name": "DX8Wrapper",
+  "new_name": "Rva0090F460",
+  "before_sha256": "4b3594aec88814e2408447cdc86436f4d5e2cecbe99fef843cbd7ba91c0b28d5",
+  "after_sha256": "09d58d3ee61bb58bdd1898ee0e89442debef3375b19abe8840a64a8d240ca81f",
+  "evidence": "targets/game/reverse/identity_evidence/0x0090f950.md",
+  "reason": "Unrelated already-matched 0x0090F460 helper copied into bank; the older DX8Wrapper declaration was a local clamp carrier for opaque 0x0090F950 and was not renamed to the helper owner."
  }
 ]
