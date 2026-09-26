@@ -89400,3 +89400,68 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?bfmeRva012B90A0RegistrationNext@@3PAXA,0x012B90A0,registration node linked by retail at 0x00C6C330
 ?bfmeRva012B9110RegistrationNext@@3PAXA,0x012B9110,registration node linked by retail at 0x00C6C3B0
 ?bfmeRva012B91F4RegistrationNext@@3PAXA,0x012B91F4,registration node linked by retail at 0x00C6C3D0
+?bfmeRva012C3B38TagValue@@3HA,0x012C3B38,loaded as first argument of Rva007F0210 setter at 0x00C6D090
+?bfmeRva0130A938TagSlot@@3VRva007F0210@@A,0x0130A938,object receiving setter at 0x00C6D090
+?bfmeRva0130A908TagSlot@@3VRva007F0210@@A,0x0130A908,object receiving setter at 0x00C6D0B0
+?bfmeRva0130A9A4TagSlot@@3VRva007F0210@@A,0x0130A9A4,object receiving setter at 0x00C6D0D0
+?bfmeRva0130A920TagSlot@@3VRva007F0210@@A,0x0130A920,object receiving setter at 0x00C6D0F0
+?bfmeRva0130A8CCTagSlot@@3VRva007F0210@@A,0x0130A8CC,object receiving setter at 0x00C6D110
+?bfmeRva0130A878TagSlot@@3VRva007F0210@@A,0x0130A878,object receiving setter at 0x00C6D130
+?bfmeRva0130A854TagSlot@@3VRva007F0210@@A,0x0130A854,object receiving setter at 0x00C6D150
+?bfmeRva0130A914TagSlot@@3VRva007F0210@@A,0x0130A914,object receiving setter at 0x00C6D170
+?bfmeRva0130A95CTagSlot@@3VRva007F0210@@A,0x0130A95C,object receiving setter at 0x00C6D190
+?bfmeRva0130A92CTagSlot@@3VRva007F0210@@A,0x0130A92C,object receiving setter at 0x00C6D1B0
+?bfmeRva0130A884TagSlot@@3VRva007F0210@@A,0x0130A884,object receiving setter at 0x00C6D1D0
+?bfmeRva0130A950TagSlot@@3VRva007F0210@@A,0x0130A950,object receiving setter at 0x00C6D1F0
+?bfmeRva0130A980TagSlot@@3VRva007F0210@@A,0x0130A980,object receiving setter at 0x00C6D210
+?bfmeRva0130A8D8TagSlot@@3VRva007F0210@@A,0x0130A8D8,object receiving setter at 0x00C6D230
+?bfmeRva0130A944TagSlot@@3VRva007F0210@@A,0x0130A944,object receiving setter at 0x00C6D250
+?bfmeRva0130A890TagSlot@@3VRva007F0210@@A,0x0130A890,object receiving setter at 0x00C6D270
+?bfmeRva0130A8B4TagSlot@@3VRva007F0210@@A,0x0130A8B4,object receiving setter at 0x00C6D290
+?bfmeRva0130A8C0TagSlot@@3VRva007F0210@@A,0x0130A8C0,object receiving setter at 0x00C6D2B0
+?bfmeRva0130A998TagSlot@@3VRva007F0210@@A,0x0130A998,object receiving setter at 0x00C6D2D0
+?bfmeRva0130A974TagSlot@@3VRva007F0210@@A,0x0130A974,object receiving setter at 0x00C6D2F0
+?bfmeRva0130A860TagSlot@@3VRva007F0210@@A,0x0130A860,object receiving setter at 0x00C6D310
+?bfmeRva0130A8F0TagSlot@@3VRva007F0210@@A,0x0130A8F0,object receiving setter at 0x00C6D330
+?bfmeRva0130A86CTagSlot@@3VRva007F0210@@A,0x0130A86C,object receiving setter at 0x00C6D350
+?bfmeRva0130A8FCTagSlot@@3VRva007F0210@@A,0x0130A8FC,object receiving setter at 0x00C6D370
+?bfmeRva0130A8A8TagSlot@@3VRva007F0210@@A,0x0130A8A8,object receiving setter at 0x00C6D390
+?bfmeRva0130A9C8TagSlot@@3VRva007F0210@@A,0x0130A9C8,object receiving setter at 0x00C6D3C0
+?bfmeRva0130AA1CTagSlot@@3VRva007F0210@@A,0x0130AA1C,object receiving setter at 0x00C6D3E0
+?bfmeRva0130AAF4TagSlot@@3VRva007F0210@@A,0x0130AAF4,object receiving setter at 0x00C6D400
+?bfmeRva0130A9D4TagSlot@@3VRva007F0210@@A,0x0130A9D4,object receiving setter at 0x00C6D420
+?bfmeRva0130A9BCTagSlot@@3VRva007F0210@@A,0x0130A9BC,object receiving setter at 0x00C6D440
+?bfmeRva0130A9F8TagSlot@@3VRva007F0210@@A,0x0130A9F8,object receiving setter at 0x00C6D460
+?bfmeRva0130AB48TagSlot@@3VRva007F0210@@A,0x0130AB48,object receiving setter at 0x00C6D480
+?bfmeRva0130AAACTagSlot@@3VRva007F0210@@A,0x0130AAAC,object receiving setter at 0x00C6D4A0
+?bfmeRva0130AAA0TagSlot@@3VRva007F0210@@A,0x0130AAA0,object receiving setter at 0x00C6D4C0
+?bfmeRva0130AA58TagSlot@@3VRva007F0210@@A,0x0130AA58,object receiving setter at 0x00C6D4E0
+?bfmeRva0130AADCTagSlot@@3VRva007F0210@@A,0x0130AADC,object receiving setter at 0x00C6D500
+?bfmeRva0130AA28TagSlot@@3VRva007F0210@@A,0x0130AA28,object receiving setter at 0x00C6D520
+?bfmeRva0130AAB8TagSlot@@3VRva007F0210@@A,0x0130AAB8,object receiving setter at 0x00C6D540
+?bfmeRva0130AA10TagSlot@@3VRva007F0210@@A,0x0130AA10,object receiving setter at 0x00C6D560
+?bfmeRva0130AB3CTagSlot@@3VRva007F0210@@A,0x0130AB3C,object receiving setter at 0x00C6D580
+?bfmeRva0130AA4CTagSlot@@3VRva007F0210@@A,0x0130AA4C,object receiving setter at 0x00C6D5A0
+?bfmeRva0130AB30TagSlot@@3VRva007F0210@@A,0x0130AB30,object receiving setter at 0x00C6D5C0
+?bfmeRva0130AA34TagSlot@@3VRva007F0210@@A,0x0130AA34,object receiving setter at 0x00C6D5E0
+?bfmeRva0130AB18TagSlot@@3VRva007F0210@@A,0x0130AB18,object receiving setter at 0x00C6D600
+?bfmeRva0130AA64TagSlot@@3VRva007F0210@@A,0x0130AA64,object receiving setter at 0x00C6D620
+?bfmeRva0130AB00TagSlot@@3VRva007F0210@@A,0x0130AB00,object receiving setter at 0x00C6D640
+?bfmeRva0130AAC4TagSlot@@3VRva007F0210@@A,0x0130AAC4,object receiving setter at 0x00C6D660
+?bfmeRva0130AA94TagSlot@@3VRva007F0210@@A,0x0130AA94,object receiving setter at 0x00C6D680
+?bfmeRva0130AA04TagSlot@@3VRva007F0210@@A,0x0130AA04,object receiving setter at 0x00C6D6A0
+?bfmeRva0130AA88TagSlot@@3VRva007F0210@@A,0x0130AA88,object receiving setter at 0x00C6D6C0
+?bfmeRva0130AB0CTagSlot@@3VRva007F0210@@A,0x0130AB0C,object receiving setter at 0x00C6D6E0
+?bfmeRva0130AAE8TagSlot@@3VRva007F0210@@A,0x0130AAE8,object receiving setter at 0x00C6D700
+?bfmeRva0130AB24TagSlot@@3VRva007F0210@@A,0x0130AB24,object receiving setter at 0x00C6D720
+?bfmeRva0130AA7CTagSlot@@3VRva007F0210@@A,0x0130AA7C,object receiving setter at 0x00C6D740
+?bfmeRva0130A9ECTagSlot@@3VRva007F0210@@A,0x0130A9EC,object receiving setter at 0x00C6D760
+?bfmeRva0130AA40TagSlot@@3VRva007F0210@@A,0x0130AA40,object receiving setter at 0x00C6D780
+?bfmeRva0130AA70TagSlot@@3VRva007F0210@@A,0x0130AA70,object receiving setter at 0x00C6D7A0
+?bfmeRva0130AAD0TagSlot@@3VRva007F0210@@A,0x0130AAD0,object receiving setter at 0x00C6D7C0
+?bfmeRva0130A9B0TagSlot@@3VRva007F0210@@A,0x0130A9B0,object receiving setter at 0x00C6D7E0
+?bfmeRva0130A9E0TagSlot@@3VRva007F0210@@A,0x0130A9E0,object receiving setter at 0x00C6D800
+?bfmeRva012C3BC0TagValue@@3HA,0x012C3BC0,loaded as first argument of Rva007F0210 setter at 0x00C6D3C0
+?initialize@Rva007F01F0@@QAEXHH@Z,0x007F01F0,address-derived 25-byte two-argument initializer independently witnessed at 0x00C6C8E0
+?bfmeRva012C37F0Value@@3HA,0x012C37F0,loaded as first argument of Rva007F01F0 initializer at 0x00C6C8E0
+?bfmeRva0130A490Slot@@3VRva007F01F0@@A,0x0130A490,object receiving initializer at 0x00C6C8E0
