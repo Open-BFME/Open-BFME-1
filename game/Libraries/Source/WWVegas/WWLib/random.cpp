@@ -131,3 +131,23 @@ template int Pick_Random_Number<RandomClass>(RandomClass &, int, int);
 template int Pick_Random_Number<Random2Class>(Random2Class &, int, int);
 template int Pick_Random_Number<Random3Class>(Random3Class &, int, int);
 template int Pick_Random_Number<Random4Class>(Random4Class &, int, int);
+
+int RandomClass::operator()(int minval, int maxval)
+{
+	return Pick_Random_Number(*this, minval, maxval);
+}
+
+int Random2Class::operator()(int minval, int maxval)
+{
+	return Pick_Random_Number(*this, minval, maxval);
+}
+
+int Random3Class::operator()(int minval, int maxval)
+{
+	return Pick_Random_Number(*this, minval, maxval);
+}
+
+int Random4Class::operator()(int minval, int maxval)
+{
+	return Pick_Random_Number(*this, minval, maxval);
+}
