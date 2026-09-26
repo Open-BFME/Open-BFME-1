@@ -1,4 +1,208 @@
 // ?winProcessMouseEvent@GameWindowManager@@UAE?AW4WinInputReturnCode@@W4GameWindowMessage@@PAUICoord2D@@PAX@Z
+// partial score=0.3 date=2026-09-26
+// stlport
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stringbaseunicode /Iinputs/reference/shims/gamewindowlist /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// BFME GameWindow layout and virtual tooltip slots.
+#include "PreRTS.h"
+#include "GameClient/Mouse.h"
+
+#ifndef TRUE
+#define TRUE 1
+#define FALSE 0
+#endif
+
+typedef unsigned int UnsignedInt;
+typedef unsigned short UnsignedShort;
+typedef unsigned char UnsignedByte;
+typedef int Int;
+typedef float Real;
+typedef bool Bool;
+
+class DisplayString {
+public:
+  virtual ~DisplayString() = 0;
+  virtual void setText(UnicodeString) = 0;
+  virtual UnicodeString getText() = 0;
+  virtual Int getTextLength() = 0;
+};
+
+enum WinInputReturnCode { WIN_INPUT_NOT_USED = 0, WIN_INPUT_USED = 1 };
+enum WindowMsgHandledType { MSG_IGNORED = 0, MSG_HANDLED = 1 };
+enum GameWindowMessage {
+  GWM_NONE = 0, GWM_CREATE, GWM_DESTROY, GWM_ACTIVATE, GWM_ENABLE,
+  GWM_LEFT_DOWN, GWM_LEFT_UP, GWM_LEFT_DOUBLE, GWM_LEFT_DRAG,
+  GWM_MIDDLE_DOWN, GWM_MIDDLE_UP, GWM_MIDDLE_DOUBLE, GWM_MIDDLE_DRAG,
+  GWM_RIGHT_DOWN, GWM_RIGHT_UP, GWM_RIGHT_DOUBLE, GWM_RIGHT_DRAG,
+  GWM_MOUSE_ENTERING, GWM_MOUSE_LEAVING, GWM_MOUSE_WHEEL_UP,
+  GWM_MOUSE_WHEEL_DOWN, GWM_CHAR, GWM_SCRIPT_CREATE, GWM_INPUT_FOCUS,
+  GWM_MOUSE_POS, GWM_IME_CHAR, GWM_IME_STRING
+};
+
+enum {
+  WIN_STATUS_ACTIVE = 0x00000001,
+  WIN_STATUS_TOGGLE = 0x00000002,
+  WIN_STATUS_DRAGABLE = 0x00000004,
+  WIN_STATUS_ENABLED = 0x00000008,
+  WIN_STATUS_HIDDEN = 0x00000010,
+  WIN_STATUS_ABOVE = 0x00000020,
+  WIN_STATUS_BELOW = 0x00000040,
+  WIN_STATUS_NO_INPUT = 0x00000200,
+  GWS_COMBO_BOX = 0x00008000
+};
+
+class GameWindow;
+
+class WinInstanceData {
+public:
+  UnsignedInt m_id;
+  UnsignedInt m_state;
+  UnsignedInt m_style;
+  UnsignedInt m_status;
+  void *m_owner;
+  UnsignedByte m_padding[0x184];
+  Int m_tooltipDelay;
+  DisplayString *m_text;
+  DisplayString *m_tooltip;
+  UnsignedByte m_tail[8];
+
+  UnsignedInt getStyle() const { return m_style; }
+  Int getTooltipTextLength() const {
+    return m_tooltip ? m_tooltip->getTextLength() : 0;
+  }
+  UnicodeString getTooltipText() const;
+};
+
+class TooltipProxy {
+public:
+  operator Bool() const;
+  void operator()(GameWindow *, WinInstanceData *, UnsignedInt) const;
+};
+
+class GameWindow {
+public:
+  virtual void v00() = 0;
+  virtual void v01() = 0;
+  virtual void v02() = 0;
+  virtual void v03() = 0;
+  virtual void invokeTooltip(WinInstanceData *, UnsignedInt) = 0;
+  virtual void v05() = 0;
+  virtual void v06() = 0;
+  virtual void v07() = 0;
+  virtual void v08() = 0;
+  virtual Bool hasTooltip() = 0;
+
+  UnsignedInt m_bfmeAnchor;
+  UnsignedInt m_status;
+  ICoord2D m_size;
+  IRegion2D m_region;
+  Int m_cursorX;
+  Int m_cursorY;
+  void *m_userData;
+  WinInstanceData m_instData;
+  void *m_inputData;
+  void *m_bfmeInputExtra;
+  void *m_input;
+  void *m_extra;
+  void *m_inputCallback;
+  void *m_systemCallback;
+  void *m_drawCallback;
+  TooltipProxy m_tooltip;
+  void *m_callbackExtra;
+  UnsignedInt m_callbackExtra2;
+  GameWindow *m_next;
+  GameWindow *m_prev;
+  GameWindow *m_parent;
+  GameWindow *m_child;
+
+  GameWindow *winPointInChild(Int, Int, Bool = FALSE, Bool = FALSE);
+  GameWindow *winPointInAnyChild(Int, Int, Bool, Bool = FALSE);
+  Bool winPointInWindow(Int, Int);
+  GameWindow *winGetParent();
+  Bool winIsChild(GameWindow *);
+  Int winGetPosition(Int *, Int *);
+  Int winGetSize(Int *, Int *);
+  Int winSetPosition(Int, Int);
+  WinInstanceData *winGetInstanceData();
+};
+
+static GameWindow *tooltipOwner(const TooltipProxy *proxy) {
+  return (GameWindow *)((UnsignedByte *)proxy - 0x1ec);
+}
+
+TooltipProxy::operator Bool() const { return tooltipOwner(this)->hasTooltip(); }
+void TooltipProxy::operator()(GameWindow *, WinInstanceData *data, UnsignedInt coords) const {
+  tooltipOwner(this)->invokeTooltip(data, coords);
+}
+
+class ModalWindow {
+public:
+  virtual ~ModalWindow() = 0;
+  GameWindow *window;
+};
+
+class Display {
+public:
+  virtual void d00() = 0; virtual void d01() = 0; virtual void d02() = 0;
+  virtual void d03() = 0; virtual void d04() = 0; virtual void d05() = 0;
+  virtual void d06() = 0; virtual void d07() = 0; virtual void d08() = 0;
+  virtual void d09() = 0; virtual void d10() = 0;
+  virtual Int getWidth();
+  virtual Int getHeight();
+};
+extern Display *TheDisplay;
+
+#define DECL_MANAGER_SLOT(n) virtual void slot##n();
+class GameWindowManager {
+public:
+  DECL_MANAGER_SLOT(00) DECL_MANAGER_SLOT(01) DECL_MANAGER_SLOT(02)
+  DECL_MANAGER_SLOT(03) DECL_MANAGER_SLOT(04) DECL_MANAGER_SLOT(05)
+  DECL_MANAGER_SLOT(06) DECL_MANAGER_SLOT(07) DECL_MANAGER_SLOT(08)
+  DECL_MANAGER_SLOT(09) DECL_MANAGER_SLOT(10) DECL_MANAGER_SLOT(11)
+  DECL_MANAGER_SLOT(12) DECL_MANAGER_SLOT(13) DECL_MANAGER_SLOT(14)
+  DECL_MANAGER_SLOT(15) DECL_MANAGER_SLOT(16) DECL_MANAGER_SLOT(17)
+  DECL_MANAGER_SLOT(18) DECL_MANAGER_SLOT(19) DECL_MANAGER_SLOT(20)
+  DECL_MANAGER_SLOT(21) DECL_MANAGER_SLOT(22) DECL_MANAGER_SLOT(23)
+  DECL_MANAGER_SLOT(24) DECL_MANAGER_SLOT(25) DECL_MANAGER_SLOT(26)
+  DECL_MANAGER_SLOT(27) DECL_MANAGER_SLOT(28) DECL_MANAGER_SLOT(29)
+  DECL_MANAGER_SLOT(30) DECL_MANAGER_SLOT(31) DECL_MANAGER_SLOT(32)
+  DECL_MANAGER_SLOT(33) DECL_MANAGER_SLOT(34) DECL_MANAGER_SLOT(35)
+  DECL_MANAGER_SLOT(36) DECL_MANAGER_SLOT(37) DECL_MANAGER_SLOT(38)
+  DECL_MANAGER_SLOT(39) DECL_MANAGER_SLOT(40)
+  virtual WinInputReturnCode winProcessMouseEvent(GameWindowMessage, ICoord2D *, void *);
+  DECL_MANAGER_SLOT(42)
+  virtual GameWindow *winGetFocus();
+  virtual void winSetFocus(GameWindow *);
+  virtual void winSetGrabWindow(GameWindow *);
+  virtual GameWindow *winGetGrabWindow();
+  virtual void winSetLoneWindow(GameWindow *);
+  DECL_MANAGER_SLOT(48)
+  DECL_MANAGER_SLOT(49)
+  virtual Bool isHidden(GameWindow *);
+  DECL_MANAGER_SLOT(51)
+  DECL_MANAGER_SLOT(52)
+  virtual WindowMsgHandledType winSendSystemMsg(GameWindow *, UnsignedInt, UnsignedInt, UnsignedInt);
+  virtual WindowMsgHandledType winSendInputMsg(GameWindow *, UnsignedInt, UnsignedInt, UnsignedInt);
+
+  UnsignedByte m_base[4];
+  GameWindow *m_windowList;
+  GameWindow *m_windowTail;
+  GameWindow *m_destroyList;
+  GameWindow *m_currMouseRgn;
+  GameWindow *m_mouseCaptor;
+  GameWindow *m_keyboardFocus;
+  ModalWindow *m_modalHead;
+  GameWindow *m_grabWindow;
+  GameWindow *m_loneWindow;
+  UnsignedByte m_tail[8];
+  void *m_cursorBitmap;
+  UnsignedInt m_captureFlags;
+};
+#undef DECL_MANAGER_SLOT
+
+#define SHORTTOLONG(a, b) ((Int)(((UnsignedShort)(a) << 16) | (UnsignedShort)(b)))
+static Bool sendMousePosMessages = TRUE;
+
+// ?winProcessMouseEvent@GameWindowManager@@UAE?AW4WinInputReturnCode@@W4GameWindowMessage@@PAUICoord2D@@PAX@Z
 // partial score=0.52 date=2026-09-10
 WinInputReturnCode GameWindowManager::winProcessMouseEvent( GameWindowMessage msg,
 																														ICoord2D *mousePos,
@@ -14,7 +218,7 @@ WinInputReturnCode GameWindowManager::winProcessMouseEvent( GameWindowMessage ms
 	Bool clearGrabWindow = FALSE;
 
 	// pack mouse coords into one entity for message passing
-	packedMouseCoords = SHORTTOLONG( mousePos->x, mousePos->y );
+	packedMouseCoords = SHORTTOLONG( mousePos->y, mousePos->x );
 
 	// clear tooltip ... it will be reset if necessary
 	TheMouse->setCursorTooltip( UnicodeString::TheEmptyString );
@@ -183,105 +387,43 @@ WinInputReturnCode GameWindowManager::winProcessMouseEvent( GameWindowMessage ms
 				break them up into functions with parameters */
 
 				// search for top-level window which contains pointer
+				GameWindow *belowWindow = NULL;
+				GameWindow *normalWindow = NULL;
 				for( window = m_windowList; window; window = window->m_next )
 				{
-
-					if( BitTest( window->m_status, WIN_STATUS_ABOVE ) &&
-							!BitTest( window->m_status, WIN_STATUS_HIDDEN ) &&
+					if( !BitTest( window->m_status, WIN_STATUS_HIDDEN ) &&
+							window->m_callbackExtra2 == m_captureFlags &&
 							mousePos->x >= window->m_region.lo.x &&
 							mousePos->x <= window->m_region.hi.x &&
 							mousePos->y >= window->m_region.lo.y &&
-							mousePos->y <= window->m_region.hi.y)
+							mousePos->y <= window->m_region.hi.y )
 					{
-
-						childWindow = window->winPointInAnyChild( mousePos->x, mousePos->y, TRUE, TRUE );
-						if( toolTipWindow == NULL )
+						if( BitTest( window->m_status, WIN_STATUS_ABOVE ) )
+							break;
+						if( BitTest( window->m_status, WIN_STATUS_BELOW ) )
 						{
-							if( childWindow->m_tooltip || 
-									childWindow->m_instData.getTooltipTextLength() )
-							{
-								toolTipWindow = childWindow;
-							}
+							if( belowWindow == NULL )
+								belowWindow = window;
 						}
-						if( BitTest( window->m_status, WIN_STATUS_ENABLED ) )
-						{
-							// determine which child window the mouse is in
-							window = window->winPointInChild( mousePos->x, mousePos->y );
-							break;  // exit for
-						}
-						
-					}  // end if
-
-				}  // end for window
-
-				// check !above, below and hidden
+						else if( normalWindow == NULL )
+							normalWindow = window;
+					}
+				}
 				if( window == NULL )
+					window = normalWindow ? normalWindow : belowWindow;
+				if( window )
 				{
-
-					for( window = m_windowList; window; window = window->m_next )
+					childWindow = window->winPointInAnyChild( mousePos->x, mousePos->y, TRUE, TRUE );
+					if( toolTipWindow == NULL )
 					{
-
-						if( !BitTest( window->m_status, WIN_STATUS_ABOVE | 
-																						WIN_STATUS_BELOW | 
-																						WIN_STATUS_HIDDEN ) &&
-								mousePos->x >= window->m_region.lo.x &&
-								mousePos->x <= window->m_region.hi.x &&
-								mousePos->y >= window->m_region.lo.y &&
-								mousePos->y <= window->m_region.hi.y)
+						if( childWindow->m_tooltip ||
+								childWindow->m_instData.getTooltipTextLength() )
 						{
-
-							childWindow = window->winPointInAnyChild( mousePos->x, mousePos->y, TRUE, TRUE );
-							if( toolTipWindow == NULL )
-							{
-								if( childWindow->m_tooltip || 
-										childWindow->m_instData.getTooltipTextLength() )
-								{
-									toolTipWindow = childWindow;
-								}
-							}
-							if( BitTest( window->m_status, WIN_STATUS_ENABLED ))
-							{								
-								// determine which child window the mouse is in
-								window = window->winPointInChild( mousePos->x, mousePos->y );
-								break;  // exit for
-							}
+							toolTipWindow = childWindow;
 						}
 					}
-				}  // end if, window == NULL
-
-				// check below and !hidden
-				if( window == NULL )
-				{
-
-					for( window = m_windowList; window; window = window->m_next )
-					{
-
-						if( BitTest( window->m_status, WIN_STATUS_BELOW ) &&
-								!BitTest( window->m_status, WIN_STATUS_HIDDEN ) &&
-								mousePos->x >= window->m_region.lo.x &&
-								mousePos->x <= window->m_region.hi.x &&
-								mousePos->y >= window->m_region.lo.y &&
-								mousePos->y <= window->m_region.hi.y)
-						{
-
-							childWindow = window->winPointInAnyChild( mousePos->x, mousePos->y, TRUE, TRUE );
-							if( toolTipWindow == NULL )
-							{
-								if( childWindow->m_tooltip || 
-										childWindow->m_instData.getTooltipTextLength() )
-								{
-									toolTipWindow = childWindow;
-								}
-							}
-							if( BitTest( window->m_status, WIN_STATUS_ENABLED ))
-							{
-								// determine which child window the mouse is in
-								window = window->winPointInChild( mousePos->x, mousePos->y );
-								break;  // exit for
-							}
-						}
-					}
-				}  // end if
+					window = window->winPointInChild( mousePos->x, mousePos->y );
+				}
 
 			}  // end else, no modal head
 
