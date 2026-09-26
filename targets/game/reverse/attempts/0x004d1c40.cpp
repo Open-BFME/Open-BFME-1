@@ -1,5 +1,5 @@
-// ?d_004d1c40@@YAXXZ
-// partial score=0.41 date=2026-09-25
+// ?MapSelectMenuSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
+// partial score=0.43 date=2026-09-26
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
@@ -449,10 +449,12 @@ WindowMsgHandledType MapSelectMenuSystem( GameWindow *window, UnsignedInt msg,
 		{
 
 			// get ids for our children controls
-			buttonBack = TheNameKeyGenerator->nameToKey( AsciiString("MapSelectMenu.wnd:ButtonBack") );
+			AsciiString buttonName("MapSelectMenu.wnd:ButtonBack");
+			buttonBack = TheNameKeyGenerator->nameToKey(buttonName);
 			buttonOK = TheNameKeyGenerator->nameToKey( AsciiString("MapSelectMenu.wnd:ButtonOK") );
 			listboxMap = TheNameKeyGenerator->nameToKey( AsciiString("MapSelectMenu.wnd:ListboxMap") );
-			radioButtonEasyAI = TheNameKeyGenerator->nameToKey( AsciiString("MapSelectMenu.wnd:RadioButtonEasyAI") );
+			AsciiString radioButtonEasyAIName("MapSelectMenu.wnd:RadioButtonEasyAI");
+			radioButtonEasyAI = TheNameKeyGenerator->nameToKey(radioButtonEasyAIName);
 			radioButtonMediumAI = TheNameKeyGenerator->nameToKey( AsciiString("MapSelectMenu.wnd:RadioButtonMediumAI") );
 			radioButtonHardAI = TheNameKeyGenerator->nameToKey( AsciiString("MapSelectMenu.wnd:RadioButtonHardAI") );
 			break;
