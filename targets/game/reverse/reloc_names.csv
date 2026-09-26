@@ -909,7 +909,7 @@ _Rva0051D1E0Forward,0x0051D1E0,149,game/GameEngine/Source/Common/Rva0051D2A0Forw
 ??0BfmeOnlineProfileScreen@@QAE@PAX@Z,0x00557C00,1659,game/GameEngine/Source/GameClient/AptScreenFactories.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_00558f80@@UAE@XZ,0x005587F0,172,game/gen_small/dtors_006.cpp,reloc-derived;call-sites=1;identity=generated
 ?rva005588E0Ready@BfmeAptScreenOnlineQuickMatch@@QAE_NXZ,0x005588E0,259,game/GameEngine/Source/GameClient/BfmeAptScreenOnlineQuickMatchUpdate.cpp,reloc-derived;call-sites=1;identity=generated
-?rva00558A30Ready@BfmeAptScreenOnlineQuickMatch@@QAE_NXZ,0x00558A30,335,game/GameEngine/Source/GameClient/BfmeAptScreenOnlineQuickMatchUpdate.cpp,reloc-derived;call-sites=1;identity=generated;boundary=ret+0x14e-int3+0x14f
+?rva00558A30Ready@BfmeAptScreenOnlineQuickMatch@@QAE_NXZ,0x00558A30,335,game/GameEngine/Source/GameClient/BfmeAptScreenOnlineQuickMatchUpdate.cpp,reloc-derived;call-sites=1;identity=generated
 ??0S4Guarded0055BC20@@QAE@H@Z,0x00559400,755,game/GameEngine/Source/Common/S4GuardedNewWithOneArg.cpp,reloc-derived;call-sites=1;identity=real
 ?rva00559E60Ready@BfmeAptScreenOnlineQuickMatch@@QAE_NXZ,0x00559E60,787,game/GameEngine/Source/GameClient/BfmeAptScreenOnlineQuickMatchUpdate.cpp,reloc-derived;call-sites=1;identity=generated
 ?_bfme_sendStartQuickMatchRequest@BfmeAptScreenOnlineQuickMatch@@QAEXXZ,0x0055B200,1552,game/GameEngine/Source/GameClient/BfmeAptScreenOnlineQuickMatchUpdate.cpp,reloc-derived;call-sites=1;identity=real
@@ -1589,7 +1589,7 @@ _gpiCheckSocketConnect,0x008ECB40,181,game/GameEngine/Source/GameNetwork/GameSpy
 ??1Gen_dtor_00956240@@UAE@XZ,0x00956260,235,game/gen_small/dtors_009.cpp,reloc-derived;call-sites=1;identity=generated
 ?handle@Gen00958BF0@@QAEXXZ,0x00958BF0,70,game/GameEngine/Source/Common/R1GuardedReleaseHelpers.cpp,reloc-derived;call-sites=1;identity=generated
 ?Set_Texture@Rva0095C7A0SegLineRendererClass@@QAEXPAVTextureClass@@@Z,0x0095C7A0,47,game/Libraries/Source/WWVegas/WW3D2/streak.cpp,reloc-derived;call-sites=1;identity=generated
-?RenderStreak@StreakRendererClass@@QAEXAAVRenderInfoClass@@ABVMatrix3D@@IPAVVector3@@PAVVector4@@PAMABVSphereClass@@PAI@Z,0x0095CE80,12233,game/Libraries/Source/WWVegas/WW3D2/StreakLineRender.cpp,reloc-derived;call-sites=1;identity=real;boundary=ret32-at-0x0095FE46-followed-by-int3-through-0x0095FE4F
+?RenderStreak@StreakRendererClass@@QAEXAAVRenderInfoClass@@ABVMatrix3D@@IPAVVector3@@PAVVector4@@PAMABVSphereClass@@PAI@Z,0x0095CE80,12233,game/Libraries/Source/WWVegas/WW3D2/StreakLineRender.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_0096aca0@@UAE@XZ,0x0096A920,73,game/gen_small/dtors_009.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_0096ea40@@UAE@XZ,0x0096E900,45,game/gen_small/dtors_009.cpp,reloc-derived;call-sites=1;identity=generated
 ?read_shaders@MeshModelClass@@IAE_NAAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z,0x0096EB30,272,game/Libraries/Source/WWVegas/WW3D2/MeshModelClass_read_prelit_material_Thunk.cpp,reloc-derived;call-sites=1;identity=real
