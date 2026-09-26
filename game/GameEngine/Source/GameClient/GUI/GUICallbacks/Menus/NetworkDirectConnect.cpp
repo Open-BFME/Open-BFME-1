@@ -212,11 +212,14 @@ public:
 };
 
 
+// NetworkDirectConnectHost.cpp defines its own version before including this file.
+#ifndef BFME_HOST_DIRECT_CONNECT
 inline unsigned int bfmeUnicodeStringLength( const UnicodeString &value )
 {
 	const unsigned short *data = *(const unsigned short *const *)&value;
 	return data ? data[2] : 0;
 }
+#endif
 
 inline NameKeyType bfmeNameToKey( const AsciiString &value )
 {
@@ -252,10 +255,13 @@ inline UnicodeString::UnicodeString( const UnicodeString &stringSrc )
 		*(const StringBase<WideChar> *)&stringSrc );
 }
 
+// NetworkDirectConnectHost.cpp defines its own version before including this file.
+#ifndef BFME_HOST_DIRECT_CONNECT
 inline UnicodeString::UnicodeString( const WideChar *stringSrc )
 {
 	((StringBase<WideChar> *)this)->StringBase<WideChar>::StringBase( stringSrc );
 }
+#endif
 
 #ifdef _INTERNAL
 // for occasional debugging...
