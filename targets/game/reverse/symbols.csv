@@ -15265,6 +15265,7 @@ name,address,notes
 ?appendGoalPath@AIStateMachine@@QAEXPBUCoord3D@@@Z,0x00046A65,local codegen alias to the retail AIStateMachine goal-path append ILT
 ?appendIntegerArgument@GameMessage@@QAEXH@Z,0x00001370,GameMessage::appendIntegerArgument thunk
 ?appendLocationArgument@GameMessage@@QAEXABUCoord3D@@@Z,0x00037AD8,GameMessage::appendLocationArgument thunk
+?appendLocationArgument@GameMessage@@QAEXABVCoord3D@@@Z,0x00037AD8,class-tag spelling of matched struct-tag appendLocationArgument at the same body; CommandXlat class Coord3D view
 ?appendNode@Path@@QAEXPBUCoord3D@@W4PathfindLayerEnum@@@Z,0x0003833E,retail Path::appendNode ILT thunk (body 0x0016A4B0)
 ?appendNode@PathAppendNodeILT@@QAEXPBUCoord3D@@W4PathfindLayerEnum@@@Z,0x0003833E,Pathfinder::setDebugPath calls the retail appendNode ILT at 0x0003833E
 ?appendObjectIDArgument@GameMessage@@QAEXI@Z,0x0002BCEC,GameMessage::appendObjectIDArgument thunk

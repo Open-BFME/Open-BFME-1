@@ -12,7 +12,11 @@ class Coord3D { public: float x,y,z; };
 struct ICoord2D { int x,y; };
 struct IRegion2D { ICoord2D lo,hi; int width() const { return hi.x-lo.x; } int height() const { return hi.y-lo.y; } };
 class Drawable; class Object; class Player; class ThingTemplate; class CommandButton;
-class PickAndPlayInfo;
+class PickAndPlayInfo { public:
+ PickAndPlayInfo();
+ bool field00; char pad01[3]; Drawable* m_drawTarget; void* m_weaponSlot;
+ int m_specialPowerType; Coord3D m_position; void* field1c;
+};
 typedef _STL::list<Drawable*> DrawableList;
 union GameMessageArgumentType { int integer; unsigned drawableID; ICoord2D pixel; IRegion2D pixelRegion; Coord3D location; };
 class GameMessage { public:
@@ -21,6 +25,7 @@ class GameMessage { public:
  Type getType() const { return m_type; }
  const GameMessageArgumentType* getArgument(int) const;
  void appendBooleanArgument(bool); void appendObjectIDArgument(unsigned);
+ void appendLocationArgument(const struct Coord3D&);
 };
 enum GameMessageDisposition { KEEP_MESSAGE, DESTROY_MESSAGE };
 enum CommandEvaluateType { DO_COMMAND, DO_HINT, DO_EVALUATE };
@@ -660,6 +665,54 @@ static __declspec(noinline) int canAnyForceAttack(const DrawableList* allSelecte
   return canObjectForceAttack(obj,victim,pos);
  }
  return 0;
+}
+
+int CommandTranslator::evaluateForceAttack(Drawable* draw,const Coord3D* pos,CommandEvaluateType type)
+{
+ int retVal=0;
+ if(!draw && !pos) return retVal;
+ const DrawableList* allSelected=TheInGameUI->getAllSelectedDrawables();
+ if(draw) {
+  Object* obj=draw->getObject();
+  if(!obj) return retVal;
+  int result=canAnyForceAttack(allSelected,obj,pos);
+  if(result==3 || result==2) {
+   retVal=0x425;
+   if(type==DO_COMMAND) {
+    PickAndPlayInfo info;
+    info.m_drawTarget=draw;
+    pickAndPlayUnitVoiceResponse(allSelected,(GameMessage::Type)0x425,&info);
+    GameMessage* newMsg=TheMessageStream->appendMessage((GameMessage::Type)0x425);
+    newMsg->appendObjectIDArgument(obj->getID());
+    newMsg->appendLocationArgument(*pos);
+   } else if(type==DO_HINT) {
+    retVal=0x9b;
+    TheMessageStream->appendMessage((GameMessage::Type)0x9b);
+   }
+  } else if(result==1 && type==DO_HINT) {
+   retVal=0x9a;
+   TheMessageStream->appendMessage((GameMessage::Type)0x9a);
+  }
+ } else if(pos) {
+  int result=canAnyForceAttack(allSelected,0,pos);
+  if(result==3 || result==2) {
+   retVal=0x426;
+   if(type==DO_COMMAND) {
+    PickAndPlayInfo info;
+    info.m_position=*pos;
+    pickAndPlayUnitVoiceResponse(allSelected,(GameMessage::Type)0x426,&info);
+    GameMessage* newMsg=TheMessageStream->appendMessage((GameMessage::Type)0x426);
+    newMsg->appendLocationArgument(*pos);
+   } else if(type==DO_HINT) {
+    retVal=0x9c;
+    TheMessageStream->appendMessage((GameMessage::Type)0x9c);
+   }
+  } else if(result==1 && type==DO_HINT) {
+   retVal=0x9a;
+   TheMessageStream->appendMessage((GameMessage::Type)0x9a);
+  }
+ }
+ return retVal;
 }
 
 GameMessageDisposition CommandTranslator::translateGameMessage(const GameMessage* msg)
