@@ -64,9 +64,9 @@ public:
 	unsigned char m_clearDstTexture;
 	unsigned char m_borderShroudLevel;
 	unsigned char m_pad37;
-	unsigned char *m_38;
-	unsigned char *m_3c;
-	unsigned char m_40;
+	unsigned char *m_finalFogData;
+	unsigned char *m_currentFogData;
+	unsigned char m_trackDirtyCells;
 	unsigned char m_pad41[3];
 	_STL::set<int> m_dirty;
 };
@@ -85,8 +85,8 @@ void W3DShroud::collectDirtyCells()
 		}
 	}
 
-	unsigned char *a = m_3c;
-	unsigned char *b = m_38;
+	unsigned char *a = m_currentFogData;
+	unsigned char *b = m_finalFogData;
 	int cell;
 	int y = 0;
 	cell = 0;
@@ -98,5 +98,5 @@ void W3DShroud::collectDirtyCells()
 				m_dirty.insert(cell);
 		}
 	}
-	m_40 = 1;
+	m_trackDirtyCells = 1;
 }

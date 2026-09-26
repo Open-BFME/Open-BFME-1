@@ -186,7 +186,7 @@ private:
 	// BFME-only: the fog interpolation at 0x0071B840 walks just m_dirty while
 	// this is set and every cell otherwise, so setShroudLevel's insert is what
 	// keeps that walk complete. The constructor and 0x0071B770 both set it.
-	UnsignedByte m_40;
+	UnsignedByte m_trackDirtyCells;
 	UnsignedByte m_pad41[3];
 	_STL::set<int> m_dirty;             // +0x44
 };
@@ -210,7 +210,7 @@ W3DShroud::W3DShroud()
 	, m_borderShroudLevel(TheWritableGlobalData->m_shroudAlpha)
 	, m_finalFogData(0)
 	, m_currentFogData(0)
-	, m_40(1)
+	, m_trackDirtyCells(1)
 {
 }
 
@@ -277,7 +277,7 @@ void W3DShroud::setShroudLevel(int x, int y, UnsignedByte level, bool textureOnl
 		{
 			int cell = x + y * m_numCellsX;
 			m_finalFogData[cell] = level;
-			if (m_40)
+			if (m_trackDirtyCells)
 				m_dirty.insert(cell);
 		}
 
@@ -300,7 +300,7 @@ void W3DShroud::setShroudLevel(int x, int y, UnsignedByte level, bool textureOnl
 // never reads. Zero Hour W3DShroud.cpp:747 is the shape: the timeGetTime
 // static, the per-frame change clamped to 255 and a setShroudLevel(i, j, level,
 // TRUE) per changed cell. BFME halves the rate (VA 0x01120D58 holds 0.1275f,
-// ZH's 255/1000 is 0.255) and, while m_40 is set, walks only m_dirty, retiring
+// ZH's 255/1000 is 0.255) and, while m_trackDirtyCells is set, walks only m_dirty, retiring
 // cells that reached their final level after the walk.
 void W3DShroud::interpolateFogLevels(RECT *rect)
 {
@@ -317,7 +317,7 @@ void W3DShroud::interpolateFogLevels(RECT *rect)
 
 	UnsignedByte *finalLevel = m_finalFogData;
 	UnsignedByte *startLevel = m_currentFogData;
-	if (m_40)
+	if (m_trackDirtyCells)
 	{
 		int dirtyCount = (int)m_dirty.size();
 		int width = m_numCellsX;

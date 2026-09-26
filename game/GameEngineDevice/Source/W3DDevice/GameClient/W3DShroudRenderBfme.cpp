@@ -146,7 +146,7 @@ protected:
 	UnsignedByte m_pad37;
 	UnsignedByte *m_finalFogData;
 	UnsignedByte *m_currentFogData;
-	UnsignedByte m_40;
+	UnsignedByte m_trackDirtyCells;
 
 	void interpolateFogLevels(RECT *rect);
 	void fillBorderShroudData(UnsignedByte level, SurfaceClass *surface);
