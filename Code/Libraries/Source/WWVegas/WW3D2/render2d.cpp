@@ -578,7 +578,8 @@ void	Render2DClass::Add_Tri( const Vector2 & v0, const Vector2 & v1, const Vecto
 }
 
 // ?Add_Line@Render2DClass@@ present-unmatched
-void	Render2DClass::Add_Line( const Vector2 & a, const Vector2 & b, float width, unsigned long color )
+// Retail outline calls keep this overload out of line.
+__declspec(noinline) void	Render2DClass::Add_Line( const Vector2 & a, const Vector2 & b, float width, unsigned long color )
 {
 	Add_Line( a, b, width, RectClass( 0,0,1,1 ), color );
 }
@@ -644,15 +645,19 @@ void	Render2DClass::Add_Rect( const RectClass & rect, float border_width, uint32
 	return ;
 }
 
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/Render2DClassAddOutline.cpp
-// ?Add_Outline@Render2DClass@@ present-unmatched
-void	Render2DClass::Add_Outline( const RectClass & rect, float width, unsigned long color )
+void Render2DClass::Add_Outline(const RectClass &rect, float width, uint32 color)
 {
-	Add_Outline( rect, width, RectClass( 0,0,1,1 ), color );
+	Add_Line(Vector2(rect.Left + 1, rect.Bottom),
+		Vector2(rect.Left + 1, rect.Top + 1), width, color);
+	Add_Line(Vector2(rect.Left, rect.Top + 1),
+		Vector2(rect.Right - 1, rect.Top + 1), width, color);
+	Add_Line(Vector2(rect.Right, rect.Top),
+		Vector2(rect.Right, rect.Bottom - 1), width, color);
+	Add_Line(Vector2(rect.Right, rect.Bottom),
+		Vector2(rect.Left + 1, rect.Bottom), width, color);
 }
 
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/Render2DClassAddOutline.cpp
-// ?Add_Outline@Render2DClass@@ present-unmatched
+// ?Add_Outline@Render2DClass@@QAEXABVRectClass@@M0K@Z present-unmatched
 void	Render2DClass::Add_Outline( const RectClass & rect, float width, const RectClass & uv, unsigned long color )
 {
 	//
