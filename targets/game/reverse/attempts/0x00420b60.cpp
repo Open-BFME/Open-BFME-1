@@ -29,6 +29,10 @@
 //   * heights summed low index first.
 // Operand-order respellings of the corner products do not move the two
 // scheduling spots.
+// Scalar RHS locals for those two stores leave both loads in place (1743
+// bytes, 21 differences); grouping each corner behind a reference perturbs
+// the frame and earlier code (1731 bytes, 1010 differences). Neither is an
+// exact source-backed scheduling fix, so preserve the 1743-byte candidate.
 
 #include <vector>
 

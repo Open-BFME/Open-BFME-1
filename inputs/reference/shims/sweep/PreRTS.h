@@ -47,7 +47,7 @@ class STLSpecialAlloc;
 #include <sys/types.h>
 #include <time.h>
 
-#include "Lib/Basetype.h"
+#include "Lib/BaseType.h"
 #include "Common/STLTypedefs.h"
 #include "Common/Errors.h"
 #include "Common/Debug.h"

@@ -1362,3 +1362,17 @@ On 2026-09-24 this closed `Rva0015AAC0Owner::computeSize` (0x0015AAC0, 114 B,
 banked at 0.97 behind `#pragma optimize` and an int-typed float copy) and
 `Rva00233F30::rotatedOffset` (0x00233F30, 154 B, banked at 0.95 with a
 volatile). When the result type is unproven, give it an address-derived name.
+
+## Heal dispatch loads the recipient before the dispatch list (2026-09-26)
+
+`PlayerHealSpecialPower::doSpecialPowerAtObject` at 0x00263CA0 (544 B) had
+two differing register bytes: retail loaded the saved owner into EDX at +0x5D
+and pushed EDX at +0x67; the first reconstruction used EAX. Declaring
+`healOwner = getObject()` before the independent module-data dispatch-list
+lookup makes MSVC 7.1 use EDX without changing any other instruction.
+`PlayerHealSpecialPowerAtObject.cpp` then matched all 544 bytes and 19
+relocation sites in the strict build. The owning constructor installs vtable
+0x010B6390; this body is its slot 13. The 0x001D67C0 OCL vector helper's
+four-argument dispatch ABI is confirmed; its method spelling is provisional.
+The 0x00268CB0 event/audio helper keeps an address-derived identity: the
+existing destructor ledger label conflicts with its `ret 4` and side effects.

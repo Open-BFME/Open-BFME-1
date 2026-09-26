@@ -1,6 +1,6 @@
 // ?checkPathCost@Pathfinder@@IAEHPAVObject@@ABVLocomotorSet@@PBUCoord3D@@2@Z
 // partial score=0.995 date=2026-09-23
-// cl: /DNDEBUG /MD /ICode/GameEngine/Source/GameLogic/AI
+// cl: /DNDEBUG /MD /Igame/GameEngine/Source/GameLogic/AI
 // The landed movement predicate is included unchanged so VC7.1 sees that it
 // only reads the cell; calls still route to its retail ILT 0x0002B9E0.
 #pragma auto_inline(off)

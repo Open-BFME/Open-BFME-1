@@ -1,6 +1,6 @@
 // ?checkQueuedTeams@AIPlayer@@MAEXXZ
 // partial score=0.997 date=2026-09-17
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/objectdlink
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/objectdlink
 
 // BFME's AIPlayer::checkQueuedTeams, retail RVA 0x00161E20 (697 bytes).
 // The queue and prototype offsets are BFME witnesses; the Zero Hour twin is

@@ -1,6 +1,4 @@
-// ?doSpecialPowerAtObject@PlayerHealSpecialPower@@UAEXPAVObject@@I@Z
-// partial score=0.996 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // PlayerHealSpecialPower::doSpecialPowerAtObject, retail RVA 0x00263CA0.
 // stlport
 
@@ -23,6 +21,8 @@ class Player;
 class Object;
 class Thing;
 
+// The BFME module mask occupies six words. Zero Hour's KindOfMaskType is
+// smaller, but its by-reference Thing predicate reads the same leading words.
 struct Rva00263CA0KindOfMask
 {
 	UnsignedInt words[6];
@@ -45,8 +45,6 @@ class Object
 public:
 	Player *getControllingPlayer() const;
 	Relationship getRelationship(const Object *that) const;
-	Bool isAnyKindOf(const Rva00263CA0KindOfMask &mask) const;
-	Bool isKindOf(KindOfType type) const;
 
 	virtual void slot00() = 0;
 	virtual void slot04() = 0;
@@ -81,10 +79,12 @@ public:
 		const Object *secondary);
 };
 
+// BFME's OCL dispatch calls every nugget in its vector with four arguments;
+// the individual nugget implementations are not recovered here.
 class ObjectCreationList
 {
 public:
-	void create(const Object *primary, const Object *secondary,
+	void dispatch(const Object *primary, const Object *secondary,
 		Int first, Int second);
 };
 
@@ -129,16 +129,16 @@ struct Rva00263CA0ResultData
 	Int references;
 };
 
-struct Rva00263CA0WideResult
+struct BfmeWideResult
 {
 	Rva00263CA0ResultData *value;
 
-	Rva00263CA0WideResult(const Rva00263CA0WideResult &other)
+	BfmeWideResult(const BfmeWideResult &other)
 		: value(other.value)
 	{
 		++value->references;
 	}
-	~Rva00263CA0WideResult()
+	~BfmeWideResult()
 	{
 		if (--value->references == 0)
 			delete value;
@@ -157,7 +157,7 @@ struct Rva00263CA0WideResult
 class BfmeWideForwardC
 {
 public:
-	Rva00263CA0WideResult bfmeForwardWideC(int, int, int, int, int);
+	BfmeWideResult bfmeForwardWideC(int, int, int, int, int);
 };
 
 extern BfmeWideForwardC *ThePartitionManager;
@@ -169,7 +169,7 @@ struct PlayerHealSpecialPowerModuleData
 	Real m_healRadius;
 	Rva00263CA0KindOfMask m_healAffects;
 	FXList *m_healFX;
-	ObjectCreationList *m_healOCL;
+	ObjectCreationList *m_dispatchList;
 };
 
 class Module
@@ -239,14 +239,8 @@ public:
 	void invoke(Object *target);
 };
 
-#pragma comment(linker, "/alternatename:?invoke@Rva00268CB0@@QAEXPAVObject@@@Z=?j_00046c13@@YAXXZ")
-
-#pragma comment(linker, "/alternatename:?run@Rva00268CB0PlayerHealAction@@QAEXPAVObject@@@Z=?j_00046c13@@YAXXZ")
-#pragma comment(linker, "/alternatename:?create@ObjectCreationList@@QAEXPBVObject@@0HH@Z=?j_00002a59@@YAXXZ")
 #pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
 #pragma comment(linker, "/alternatename:?getRelationship@Object@@QBE?AW4Relationship@@PBV1@@Z=?j_0004a719@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isAnyKindOf@Object@@QBE_NABVRva00263CA0KindOfMask@@@Z=?j_0004250a@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isKindOf@Object@@QBE_NW4KindOfType@@@Z=?j_0003251f@@YAXXZ")
 
 class PlayerHealSpecialPower : public SpecialPowerModule
 {
@@ -269,12 +263,12 @@ void PlayerHealSpecialPower::doSpecialPowerAtObject(Object *target,
 	((Rva00268CB0 *)this)->invoke(target);
 	startPowerRecharge();
 
-	ObjectCreationList *healOCL = getModuleData()->m_healOCL;
 	Object *healOwner = getObject();
-	if (healOCL != 0)
-		healOCL->create(healOwner, target, 0, 0);
+	ObjectCreationList *dispatchList = getModuleData()->m_dispatchList;
+	if (dispatchList != 0)
+		dispatchList->dispatch(healOwner, target, 0, 0);
 
-	Rva00263CA0WideResult iterator =
+	BfmeWideResult iterator =
 		ThePartitionManager->bfmeForwardWideC(
 			(int)target,
 			*(Int *)&getModuleData()->m_healRadius, 0,
@@ -287,12 +281,12 @@ void PlayerHealSpecialPower::doSpecialPowerAtObject(Object *target,
 			continue;
 		if ((*(UnsignedByte *)((char *)other + 0x344) & 1) != 0)
 			continue;
-		if (!other->isAnyKindOf(
-			getModuleData()->m_healAffects))
+		if (!reinterpret_cast<const Thing *>(other)->isAnyKindOf(
+			*reinterpret_cast<const KindOfMaskType *>(&getModuleData()->m_healAffects)))
 			continue;
-		if (other->isKindOf((KindOfType)0x9a))
+		if (reinterpret_cast<const Thing *>(other)->isKindOf((KindOfType)0x9a))
 			continue;
-		if (other->isKindOf((KindOfType)7))
+		if (reinterpret_cast<const Thing *>(other)->isKindOf((KindOfType)7))
 		{
 			if (other->m_constructionPercent >= BfmeZeroRange)
 			{
