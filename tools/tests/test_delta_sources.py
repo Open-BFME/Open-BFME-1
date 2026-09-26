@@ -34,7 +34,8 @@ def selection(monkeypatch, tmp_path):
         monkeypatch.setattr(delta, "object_is_current", lambda source, obj: current)
 
         def object_rel32(obj):
-            source = str(obj.relative_to(tmp_path))
+            # Ledger sources are POSIX; str() of a Windows path uses backslashes.
+            source = obj.relative_to(tmp_path).as_posix()
             owners = [r for r in new if r["source"] == source]
             defined = {r["name"]: (1, int(r["target_rva"], 16)) for r in owners}
             return defined, {(1, site + 1): name
@@ -248,9 +249,12 @@ if sys.argv[1] == "tools/delta_sources.py":
             sys.exit(23)
 ''',
     }
+    # Real git and delta_sources.py print LF-only lines. A fake left on Windows
+    # text-mode stdout appends CR to every line, and no hook `case` then matches.
+    stdout_lf = 'import sys; sys.stdout.reconfigure(newline="\\n")\n'
     for name, body in scripts.items():
         path = bindir / name
-        path.write_text(f"#!{sys.executable}\n" + body)
+        path.write_text(f"#!{sys.executable}\n" + stdout_lf + body, newline="\n")
         path.chmod(0o755)
     build_script = tmp_path / "build.sh"
     build_script.write_text('''#!/bin/bash
@@ -259,9 +263,9 @@ if [ -f build-count ]; then read -r n < build-count; fi
 n=$((n + 1))
 printf '%s\\n' "$n" > build-count
 printf '%s\\n' "$@" > "build-args-$n"
-''')
+''', newline="\n")
     build_script.chmod(0o755)
-    env = dict(os.environ, PATH=f"{bindir}:{os.environ['PATH']}",
+    env = dict(os.environ, PATH=f"{bindir}{os.pathsep}{os.environ['PATH']}",
                FIXTURE_ROOT=str(tmp_path), SELECTOR_MODE=mode, SELECTOR_OUTCOME=outcome)
     if hook == "pre-push" and outcome == "many" and mode == "ordinary":
         pass
