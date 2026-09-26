@@ -39,6 +39,12 @@ public:
  void rva004C1B60(GameWindow *,void *);
  void bfmeShowDN(BfmeMsgDN *);
 };
+extern ControlBar *TheControlBar;
+class WinInstanceData;
+void commandButtonTooltip(GameWindow *window, WinInstanceData *, unsigned int)
+{
+ TheControlBar->rva004C1B60(window, 0);
+}
 void ControlBar::rva004C1B60(GameWindow *window,void *data)
 {
  if(!data) {
