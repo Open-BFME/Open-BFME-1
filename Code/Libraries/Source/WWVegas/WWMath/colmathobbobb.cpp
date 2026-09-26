@@ -65,20 +65,18 @@ static bool obb_intersect_box0_basis
 	int							axis_index
 )
 {
-	// ra = box0 projection onto the axis
-	// rb = box1 projection onto the axis
-	float ra =	context.Box0.Extent[axis_index];
-	float rb =	WWMath::Fabs(context.Box1.Extent[0]*context.AB[axis_index][0]) + 
+	float box0_projected_radius =	context.Box0.Extent[axis_index];
+	float box1_projected_radius =	WWMath::Fabs(context.Box1.Extent[0]*context.AB[axis_index][0]) +
 					WWMath::Fabs(context.Box1.Extent[1]*context.AB[axis_index][1]) + 
 					WWMath::Fabs(context.Box1.Extent[2]*context.AB[axis_index][2]);
-	float rsum = ra+rb;
+	float combined_projected_radius = box0_projected_radius+box1_projected_radius;
 
-	// u = projected distance between the box centers
-	float u = Vector3::Dot_Product(context.C,context.A[axis_index]);
+	float center_distance_projection = Vector3::Dot_Product(context.C,context.A[axis_index]);
 
 	// (gth) the epsilon here was not scaled to the length of the axis so it
 	// caused problems when the axis being tested became very small
-	return ((u /*+ WWMATH_EPSILON*/ > rsum) || (u /*- WWMATH_EPSILON*/ < -rsum));
+	return ((center_distance_projection /*+ WWMATH_EPSILON*/ > combined_projected_radius) ||
+		(center_distance_projection /*- WWMATH_EPSILON*/ < -combined_projected_radius));
 }
 
 static bool obb_intersect_box1_basis
@@ -87,36 +85,35 @@ static bool obb_intersect_box1_basis
 	int							axis_index
 )
 {
-	// ra = box0 projection onto the axis
-	// rb = box1 projection onto the axis
-	float ra =	WWMath::Fabs(context.Box0.Extent[0]*context.AB[0][axis_index]) + 
+	float box0_projected_radius =	WWMath::Fabs(context.Box0.Extent[0]*context.AB[0][axis_index]) +
 					WWMath::Fabs(context.Box0.Extent[1]*context.AB[1][axis_index]) + 
 					WWMath::Fabs(context.Box0.Extent[2]*context.AB[2][axis_index]);
-	float rb =	context.Box1.Extent[axis_index];
-	float rsum = ra+rb;
+	float box1_projected_radius =	context.Box1.Extent[axis_index];
+	float combined_projected_radius = box0_projected_radius+box1_projected_radius;
 
-	// u = projected distance between the box centers
-	float u = Vector3::Dot_Product(context.C,context.B[axis_index]);
+	float center_distance_projection = Vector3::Dot_Product(context.C,context.B[axis_index]);
 
 	// (gth) the epsilon here was not scaled to the length of the axis so it
 	// caused problems when the axis being tested became very small
-	return ((u /*+ WWMATH_EPSILON*/ > rsum) || (u /*- WWMATH_EPSILON*/ < -rsum));
+	return ((center_distance_projection /*+ WWMATH_EPSILON*/ > combined_projected_radius) ||
+		(center_distance_projection /*- WWMATH_EPSILON*/ < -combined_projected_radius));
 }
 
 static inline bool obb_intersect_axis
 (
 	ObbIntersectionStruct &	context,
 	const Vector3 &			axis,
-	float							ra,
-	float							rb
+	float							box0_projected_radius,
+	float							box1_projected_radius
 )
 {
-	float rsum = ra+rb;
-	float u = Vector3::Dot_Product(context.C,axis);
+	float combined_projected_radius = box0_projected_radius+box1_projected_radius;
+	float center_distance_projection = Vector3::Dot_Product(context.C,axis);
 
 	// (gth) the epsilon here was not scaled to the length of the axis so it
 	// caused problems when the axis being tested became very small
-	return ((u /*+ WWMATH_EPSILON*/ > rsum) || (u /*- WWMATH_EPSILON*/ < -rsum));
+	return ((center_distance_projection /*+ WWMATH_EPSILON*/ > combined_projected_radius) ||
+		(center_distance_projection /*- WWMATH_EPSILON*/ < -combined_projected_radius));
 }
 
 bool intersect_obb_obb
@@ -337,37 +334,37 @@ private:
 static inline bool obb_separation_test
 (
  	ObbCollisionStruct & context,
-	float ra,
-	float rb,
-	float u0,
-	float u1
+	float box0_projected_radius,
+	float box1_projected_radius,
+	float initial_center_projection,
+	float final_center_projection
 )
 {
-	float tmp;
-	float rsum = ra+rb;
+	float collision_fraction;
+	float combined_projected_radius = box0_projected_radius+box1_projected_radius;
 
-	if ( u0 + WWMATH_EPSILON > rsum ) { 
+	if ( initial_center_projection + WWMATH_EPSILON > combined_projected_radius ) {
 		context.StartBad = false; 
-		if ( u1 > rsum ) { 
+		if ( final_center_projection > combined_projected_radius ) {
 			context.MaxFrac = 1.0f; 
 			return true;
-		} else if (WWMath::Fabs(u1-u0) > 0.0f) {
-			tmp = (rsum-u0)/(u1-u0);
-			if ( tmp > context.MaxFrac ) {
-				context.MaxFrac = tmp; 
+		} else if (WWMath::Fabs(final_center_projection-initial_center_projection) > 0.0f) {
+			collision_fraction = (combined_projected_radius-initial_center_projection)/(final_center_projection-initial_center_projection);
+			if ( collision_fraction > context.MaxFrac ) {
+				context.MaxFrac = collision_fraction;
 				context.AxisId = context.TestAxisId;
 				context.Side = +1;
 			}
 		}
-	} else if ( u0 - WWMATH_EPSILON < -rsum ) {
+	} else if ( initial_center_projection - WWMATH_EPSILON < -combined_projected_radius ) {
 		context.StartBad = false;
-		if ( u1 < -rsum ) {
+		if ( final_center_projection < -combined_projected_radius ) {
 			context.MaxFrac = 1.0f; 
 			return true;
-		} else if (WWMath::Fabs(u1-u0) > 0.0f) {
-			tmp = (-rsum-u0)/(u1-u0);
-			if ( tmp > context.MaxFrac ) {
-				context.MaxFrac = tmp;
+		} else if (WWMath::Fabs(final_center_projection-initial_center_projection) > 0.0f) {
+			collision_fraction = (-combined_projected_radius-initial_center_projection)/(final_center_projection-initial_center_projection);
+			if ( collision_fraction > context.MaxFrac ) {
+				context.MaxFrac = collision_fraction;
 				context.AxisId = context.TestAxisId;
 				context.Side = -1;
 			} 

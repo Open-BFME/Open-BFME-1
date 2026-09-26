@@ -114,7 +114,7 @@ static BTCollisionStruct CollisionContext;
 
 static inline bool aabtri_separation_test
 (
-	float lp,float leb0,float leb1
+	float triangle_leading_edge,float box_leading_edge_start,float box_leading_edge_end
 )	
 {
 	/*
@@ -129,24 +129,24 @@ static inline bool aabtri_separation_test
 	**   - Else 
 	**     - Accept entire move since I'm not moving towards
 	*/
-	float eps = 0.0f;
-	if (lp - leb0 <= 0.0f) {
-		eps = COLLISION_EPSILON * CollisionContext.TestAxis.Length();	// trying to only compute epsilon if I have to
+	float separation_epsilon = 0.0f;
+	if (triangle_leading_edge - box_leading_edge_start <= 0.0f) {
+		separation_epsilon = COLLISION_EPSILON * CollisionContext.TestAxis.Length();	// trying to only compute epsilon if I have to
 	}
 
-	if (lp - leb0 > -eps) {
+	if (triangle_leading_edge - box_leading_edge_start > -separation_epsilon) {
 		CollisionContext.StartBad = false;
-		if (leb1 - leb0 > 0.0f) {
-			float frac = (lp-leb0)/(leb1-leb0);	
-			if (frac >= 1.0f) {
+		if (box_leading_edge_end - box_leading_edge_start > 0.0f) {
+			float collision_fraction = (triangle_leading_edge-box_leading_edge_start)/(box_leading_edge_end-box_leading_edge_start);
+			if (collision_fraction >= 1.0f) {
 				/* moving toward but not hitting triangle */ 
 				CollisionContext.AxisId = CollisionContext.TestAxisId;
 				CollisionContext.MaxFrac = 1.0f; 
 				return true;  
 			} else {
 				/* moving toward, hitting triangle */
-				if (frac > CollisionContext.MaxFrac) { 
-					CollisionContext.MaxFrac = frac; 
+				if (collision_fraction > CollisionContext.MaxFrac) {
+					CollisionContext.MaxFrac = collision_fraction;
 					CollisionContext.AxisId = CollisionContext.TestAxisId; 
 					CollisionContext.Side = CollisionContext.TestSide;
 					CollisionContext.Point = CollisionContext.TestPoint;
@@ -165,20 +165,20 @@ static inline bool aabtri_separation_test
 
 static inline bool aabtri_check_axis(void)
 {
-	float		dist;						// separation along the axis
-	float		axismove;				// size of the move along the axis.
-	float		leb0;						// initial coordinate of the leading edge of the box
-	float		leb1;						// final coordinate of the leading edge of the box
-	float		lp;						// leading edge of the polygon.
-	float		tmp;						// temporary
+	float		center_to_vertex0_projection;
+	float		movement_projection;
+	float		box_leading_edge_start;
+	float		box_leading_edge_end;
+	float		triangle_leading_edge;
+	float		edge_projection;
 
-	dist = Vector3::Dot_Product(CollisionContext.D,CollisionContext.TestAxis);
-	axismove = Vector3::Dot_Product(CollisionContext.Move,CollisionContext.TestAxis);
+	center_to_vertex0_projection = Vector3::Dot_Product(CollisionContext.D,CollisionContext.TestAxis);
+	movement_projection = Vector3::Dot_Product(CollisionContext.Move,CollisionContext.TestAxis);
 
 	// I want the axis centered at the box, pointing towards the triangle
-	if (dist < 0) {		
-		dist = -dist;
-		axismove = -axismove;
+	if (center_to_vertex0_projection < 0) {
+		center_to_vertex0_projection = -center_to_vertex0_projection;
+		movement_projection = -movement_projection;
 		CollisionContext.TestAxis = -CollisionContext.TestAxis;
 		CollisionContext.TestSide = -1.0f;
 	} else {
@@ -186,41 +186,41 @@ static inline bool aabtri_check_axis(void)
 	}
 
 	// compute coordinates of the leading edge of the box at t0 and t1
-	leb0 =	CollisionContext.Box->Extent.X * WWMath::Fabs(CollisionContext.TestAxis.X) +
+	box_leading_edge_start =	CollisionContext.Box->Extent.X * WWMath::Fabs(CollisionContext.TestAxis.X) +
 				CollisionContext.Box->Extent.Y * WWMath::Fabs(CollisionContext.TestAxis.Y) + 
 				CollisionContext.Box->Extent.Z * WWMath::Fabs(CollisionContext.TestAxis.Z);
-	leb1 = leb0 + axismove;
+	box_leading_edge_end = box_leading_edge_start + movement_projection;
 	
 	// compute coordinate of "leading edge of the triangle" relative to the box center.
-	lp = 0;
-	tmp = Vector3::Dot_Product(CollisionContext.E[0],CollisionContext.TestAxis); if (tmp < lp) lp = tmp;
-	tmp = Vector3::Dot_Product(CollisionContext.E[1],CollisionContext.TestAxis); if (tmp < lp) lp = tmp;
-	lp = dist + lp;	
+	triangle_leading_edge = 0;
+	edge_projection = Vector3::Dot_Product(CollisionContext.E[0],CollisionContext.TestAxis); if (edge_projection < triangle_leading_edge) triangle_leading_edge = edge_projection;
+	edge_projection = Vector3::Dot_Product(CollisionContext.E[1],CollisionContext.TestAxis); if (edge_projection < triangle_leading_edge) triangle_leading_edge = edge_projection;
+	triangle_leading_edge = center_to_vertex0_projection + triangle_leading_edge;
 
-	return aabtri_separation_test(/*CollisionContext,*/lp,leb0,leb1);
+	return aabtri_separation_test(/*CollisionContext,*/triangle_leading_edge,box_leading_edge_start,box_leading_edge_end);
 }
 
 
 static inline bool aabtri_check_cross_axis
 (
-	float						dp,
-	int						dpi,
-	float						leb0
+	float						edge_projection,
+	int						projected_vertex_index,
+	float						box_leading_edge_start
 )
 {
-	float		p0;						// distance from box center to vertex 0
-	float		axismove;				// size of the move along the axis.
-	float		leb1;						// final coordinate of the leading edge of the box
-	float		lp;						// leading edge of the polygon.
+	float		vertex0_projection;
+	float		movement_projection;
+	float		box_leading_edge_end;
+	float		triangle_leading_edge;
 
-	p0 = Vector3::Dot_Product(CollisionContext.D,CollisionContext.TestAxis);
-	axismove = Vector3::Dot_Product(CollisionContext.Move,CollisionContext.TestAxis);
+	vertex0_projection = Vector3::Dot_Product(CollisionContext.D,CollisionContext.TestAxis);
+	movement_projection = Vector3::Dot_Product(CollisionContext.Move,CollisionContext.TestAxis);
 
 	// I want the axis centered at the box, pointing towards the triangle
-	if (p0 < 0) {		
-		p0 = -p0;
-		axismove = -axismove;
-		dp = -dp;
+	if (vertex0_projection < 0) {
+		vertex0_projection = -vertex0_projection;
+		movement_projection = -movement_projection;
+		edge_projection = -edge_projection;
 		CollisionContext.TestAxis = -CollisionContext.TestAxis;
 		CollisionContext.TestSide = -1.0f;
 	} else {
@@ -228,14 +228,14 @@ static inline bool aabtri_check_cross_axis
 	}
 
 	// compute coordinates of the leading edge of the box at t1
-	leb1 = leb0 + axismove;
+	box_leading_edge_end = box_leading_edge_start + movement_projection;
 	
 	// compute coordinate of "leading edge of the triangle" relative to the box center.
-	lp = 0; CollisionContext.TestPoint = 0;
-	if (dp < 0) { lp = dp; CollisionContext.TestPoint = dpi; }
-	lp = p0 + lp;	
+	triangle_leading_edge = 0; CollisionContext.TestPoint = 0;
+	if (edge_projection < 0) { triangle_leading_edge = edge_projection; CollisionContext.TestPoint = projected_vertex_index; }
+	triangle_leading_edge = vertex0_projection + triangle_leading_edge;
 
-	return aabtri_separation_test(/*CollisionContext,*/lp,leb0,leb1);
+	return aabtri_separation_test(/*CollisionContext,*/triangle_leading_edge,box_leading_edge_start,box_leading_edge_end);
 }
 
 
