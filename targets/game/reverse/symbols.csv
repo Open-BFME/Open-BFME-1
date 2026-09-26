@@ -89258,3 +89258,5 @@ rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?handleLadderRankResponse@Rva0065B350@@QAEHPAXHPBDHH@Z,0x0065B100,rank HTTP callback 0x0065BCC0 calls +0x27 via ILT 0x0003EA59 with five args; map owner this in ECX
 ?handleXKResponse@Rva0065B350@@QAEHPAXHPBDHH@Z,0x0065B500,bfmeCbXK callback 0x0065BD00 calls +0x27 via ILT 0x00049BFC with five args; map owner this in ECX
+?rva0010ea60@Rva0010F100Receiver@@QAEXPAX0@Z,0x00036917,wrapper 0x0010F100 passes ECX and two stack arguments and target returns ret8
+?rva0010fe90@Rva00110790Receiver@@QAEXPAX0@Z,0x0001F546,wrapper 0x00110790 passes ECX and two stack arguments and target returns ret8
