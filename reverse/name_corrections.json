@@ -5378,5 +5378,15 @@
   "after_sha256": "672b718a0950f4ec84de87a19658913ef0fbd06f44f031f782370f903b58a815",
   "evidence": "reverse/identity_evidence/0x006c2710.md",
   "reason": "caller pairing refutes vtable-position name: 0x001072F0 pairs this slot (W3DRadar vtable slot 11) with W3DDisplay::setShroudLevel30BC while sibling 0x001072A0 pairs slot 9 (0x006C23B0, the Zero Hour setShroudLevel body) with W3DDisplay::setShroudLevel; the byte parameter is a taint level, not a CellShroudStatus"
+ },
+ {
+  "old_path": "reverse/attempts/0x0020bae0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp",
+  "old_name": "m_active",
+  "new_name": "m_pad4C",
+  "before_sha256": "ec21ce8a32673631ef10932d5cbfd9b0ce416c246bec827f7d2f83bdc278d058",
+  "after_sha256": "23206d547f84794159436305d2b85ef99b36a703b63ed3c380e7018ba3e3bf1c",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "body never reads SpawnBehavior+0x4C and BFME layout is unwitnessed there"
  }
 ]
