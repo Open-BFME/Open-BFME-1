@@ -29,11 +29,12 @@
 - Gate: 3,944 bytes versus retail 4,682; frame diverges at `+0x15` (`sub esp,0x9bc` retail versus `0x568` candidate), with the first non-relocation mismatch at `+0x17`.
 - Recipe: the ZH twin, BFME object-form ECX wrapper, GameLogic `+0x10c`, `psplayerstats`, PeerResponse `+0x330`, and all 61 direct callees were tried. The remaining blocker is broad GameSpy ABI and response-layout drift.
 
-## 0x00781660 — W3DTruckDraw::doDrawModule candidate
+## 0x00781660 — W3DTruckDraw::doDrawModule
 
 - Status: banked partial, not landed. Preferred source: `targets/game/reverse/attempts/0x00781660.cpp`.
-- Gate: 4,261 bytes versus retail 4,431; frame diverges at `+0x4`, then GlobalData is `+0xa80` in retail versus `+0x714` at `+0x16`, followed by BFME module/drawable offset drift at `+0x25`.
-- Recipe: vtable slot 9 and the truck constructor support this owner. The W3DTruckDraw twin and alternate W3DTankTruckDraw route were tried; the BFME eight-wheel, locomotor/AI, and render-layout expansion remains.
+- Result: complete 4,431-byte native body, 57 relocations, ten x87 operand differences in the first cab-rotation row; all later bytes and all 18 direct calls agree. No unresolved targets or new pins.
+- Identity: W3DTruckDraw factory/constructor and primary vtable slot 9 -> ILT 0x0001A041 -> this body. The matched 3,705-byte updateBones supplies the eight-wheel/cab/trailer layout.
+- Lever: compile the independently exact 17-byte Drawable::getWheelInfo beside the caller; its visible alias information fixes integer register allocation and body length. Move its existing source ownership only on landing. Full contract, rejected levers and strict receipts: `targets/game/reverse/attempt_support/0x00781660-20260926.md`.
 
 ## 0x004A4240 — ControlBar::getCommandAvailability candidate
 

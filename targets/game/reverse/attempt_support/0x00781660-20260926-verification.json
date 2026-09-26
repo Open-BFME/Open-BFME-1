@@ -1,0 +1,98 @@
+[
+  {
+    "name": "?doDrawModule@W3DTruckDraw@@UAEXPBVMatrix3D@@@Z",
+    "size": 4431,
+    "diffs": [
+      "0x22f",
+      "0x230",
+      "0x231",
+      "0x232",
+      "0x233",
+      "0x241",
+      "0x242",
+      "0x243",
+      "0x244",
+      "0x245"
+    ],
+    "unresolved": [],
+    "direct_calls": [
+      {
+        "symbol": "?method@Rva0077B3F0@@QAEXPBVMatrix3D@@@Z",
+        "encoded_rva": "0x38e15",
+        "count": 1
+      },
+      {
+        "symbol": "?isTimeFrozenDebug@ScriptEngine@@QAE_NXZ",
+        "encoded_rva": "0x3f23d",
+        "count": 1
+      },
+      {
+        "symbol": "?_bfme_isClientFrameFrozen@ScriptEngine@@QAE_NXZ",
+        "encoded_rva": "0x3783",
+        "count": 1
+      },
+      {
+        "symbol": "?get@BfmeScriptEngineFreezeExtra@@QBEEXZ",
+        "encoded_rva": "0x27318",
+        "count": 1
+      },
+      {
+        "symbol": "?updateBones@W3DTruckDraw@@IAEXXZ",
+        "encoded_rva": "0xdbd4",
+        "count": 1
+      },
+      {
+        "symbol": "?bfmeGetNonnegativePreferredLocomotorHeight@Object@@QBEMXZ",
+        "encoded_rva": "0x47c8",
+        "count": 1
+      },
+      {
+        "symbol": "?test@Rva000D3F10@@QAEHI@Z",
+        "encoded_rva": "0x3ab20",
+        "count": 1
+      },
+      {
+        "symbol": "?getWheelInfo@Drawable@@QBEPBUTWheelInfo@@XZ",
+        "encoded_rva": "0x392d9",
+        "count": 1
+      },
+      {
+        "symbol": "?bfmeGetPosFC@BfmeHostFC@@QAEXPAVBfmeVec3FC@@@Z",
+        "encoded_rva": "0x2c205",
+        "count": 1
+      },
+      {
+        "symbol": "?bfmeRelativeAngleTo@Thing@@QBEMPBUCoord3D@@@Z",
+        "encoded_rva": "0x49413",
+        "count": 1
+      },
+      {
+        "symbol": "?createEmitters@W3DTankTruckDraw@@IAEXXZ",
+        "encoded_rva": "0x1eccc",
+        "count": 1
+      },
+      {
+        "symbol": "?Make00001B18@@YAPAVParticleSystem@@XZ",
+        "encoded_rva": "0x1b18",
+        "count": 3
+      },
+      {
+        "symbol": "?stop@ParticleSystem@@QAEXXZ",
+        "encoded_rva": "0x13075",
+        "count": 3
+      },
+      {
+        "symbol": "?bfmeCheckRW@BfmeOwnerRW@@QAEHXZ",
+        "encoded_rva": "0x19ff1",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "?getWheelInfo@Drawable@@QBEPBUTWheelInfo@@XZ",
+    "size": 17,
+    "diffs": [],
+    "unresolved": [],
+    "direct_calls": []
+  }
+]
