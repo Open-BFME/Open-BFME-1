@@ -1377,7 +1377,7 @@ four-argument dispatch ABI is confirmed; its method spelling is provisional.
 The 0x00268CB0 event/audio helper keeps an address-derived identity: the
 existing destructor ledger label conflicts with its `ret 4` and side effects.
 
-## Repoint a mixed-source inline constructor to its native TU (2026-09-26)
+## Separate native bodies from unrelated naked overloads (2026-09-26)
 
 `AsciiString::AsciiString()` at 0x00062030 is nine retail bytes. The older
 `ascii_string.cpp` emits this inline COMDAT but also contains unrelated naked
@@ -1386,3 +1386,11 @@ dump. The existing `GameEngine/Source/Common/System/AsciiString.cpp` emits the
 same constructor through `AsciiString::TheEmptyString`; its compiled body is
 byte-identical. Repointing only the ctor row to that native TU preserves the
 remaining library claims and credits nine real C++ bytes without changing code.
+
+`Matrix4D::Set(float,...,float)` at 0x007E60B0 (116 B) was real C++ in
+`matrix4d.cpp`, but the same TU has a naked `Set(Coord3D,float)` overload. Moving
+only the 16-float definition to `Matrix4DSetNative.cpp` preserves all 26
+verified claims across the two TUs and makes those 116 compiled bytes count
+as source. Leave `Set(Coord3D)` alongside its `SetIdentity` definition:
+moving it separately prevents the compiler from inlining `SetIdentity` and
+changes its retail 80-byte body to 35 bytes.
