@@ -14,10 +14,17 @@ struct Rva0083ED40Stream {
 	void addState(int state);
 	void rva0083ED00(int exceptions);
 	void rva0083EDB0(int exceptions);
+	void *rva0083EFE0(void *buffer);
 	__forceinline void clearState(int state)
 	{
 		if (!m_buffer)
 			state |= 1;
+		m_state = state;
+		if (m_exceptions & state)
+			g_call("ios failure", (char*)g_global + 0x40);
+	}
+	__forceinline void applyState(int state)
+	{
 		m_state = state;
 		if (m_exceptions & state)
 			g_call("ios failure", (char*)g_global + 0x40);
@@ -47,4 +54,12 @@ void Rva0083ED40Stream::rva0083ED00(int exceptions)
 {
 	m_exceptions = exceptions;
 	clearState(m_state);
+}
+
+void *Rva0083ED40Stream::rva0083EFE0(void *buffer)
+{
+	void *old = m_buffer;
+	m_buffer = buffer;
+	applyState(buffer == 0);
+	return old;
 }
