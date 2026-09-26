@@ -117,6 +117,7 @@ class INI
 public:
 	static void parseMusicTrackDefinition(INI *ini);
 	static void parseDialogDefinition(INI *ini);
+	static void parseStreamedSoundDefinition(INI *ini);
 
 	const char *getNextToken(const char *separators = 0);
 	void initFromINI(void *what, const FieldParse *parseTable);
@@ -180,5 +181,32 @@ void INI::parseDialogDefinition(INI *ini)
 	}
 	audioInfo->m_audioName = name;
 	audioInfo->m_soundType = 1;
+	ini->initFromINI(audioInfo, (const FieldParse *)0x010813F8);
+}
+
+void INI::parseStreamedSoundDefinition(INI *ini)
+{
+	if (ini->getLoadType() == 2)
+		throw INIException(3, "You cannot define or override a StreamedSound in map.ini");
+
+	AsciiString name;
+	AudioEventInfoRef track;
+	const char *token = ini->getNextToken();
+	name.set(token);
+	track = TheAudio->newAudioEventInfo(name);
+
+	AudioInfoViewRva000B1B70 *const audioInfo = track.m_info;
+	if (!audioInfo)
+		return;
+
+	AudioEventInfoRef defaultInfo =
+		TheAudio->findAudioEventInfo(AsciiString("DefaultStreamedSound"));
+	if (defaultInfo.m_info != 0)
+	{
+		audioInfo->copyFrom(*defaultInfo.m_info);
+		audioInfo->m_type &= 0xfffffbff;
+	}
+	audioInfo->m_audioName = name;
+	audioInfo->m_soundType = 4;
 	ini->initFromINI(audioInfo, (const FieldParse *)0x010813F8);
 }
