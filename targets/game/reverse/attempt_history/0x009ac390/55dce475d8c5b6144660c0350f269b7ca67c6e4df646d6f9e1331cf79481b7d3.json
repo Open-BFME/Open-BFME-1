@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "55dce475d8c5b6144660c0350f269b7ca67c6e4df646d6f9e1331cf79481b7d3",
+  "symbol": "?d_009ac390@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.74,
+  "source": "// ?d_009ac390@@YAXXZ\n// partial score=0.74 date=2026-09-26\n// cl: /DNDEBUG /MD /EHsc\n// Arithmetic-range renormalization of a VP6 encoder bitstream.\nstruct Rva009AC390State\n{\n\tunsigned int m_code;\n\tunsigned int m_range;\n\tint m_unused08;\n\tint m_bitCount;\n\tint m_outputCount;\n\tunsigned char *m_output;\n};\n\nvoid rva009AC390RangeEncode(Rva009AC390State *state, int ignored, unsigned int probability)\n{\n\tunsigned int code = state->m_code;\n\tunsigned int range = state->m_range;\n\tint count = state->m_bitCount;\n\tunsigned int split = (((range - 1) * probability) >> 8) + 1;\n\trange -= split;\n\tcode += split;\n\twhile (range < 128)\n\t{\n\t\trange <<= 1;\n\t\tif ((int)code < 0)\n\t\t{\n\t\t\tint index = state->m_outputCount - 1;\n\t\t\twhile (index >= 0 && state->m_output[index] == 255)\n\t\t\t{\n\t\t\t\tstate->m_output[index] = 0;\n\t\t\t\t--index;\n\t\t\t}\n\t\t\t++state->m_output[index];\n\t\t}\n\t\tcode <<= 1;\n\t\tif (++count == 0)\n\t\t{\n\t\t\tstate->m_output[state->m_outputCount] = (unsigned char)(code >> 24);\n\t\t\t++state->m_outputCount;\n\t\t\tcount = -8;\n\t\t\tcode &= 0xffffff;\n\t\t}\n\t}\n\tstate->m_range = range;\n\tstate->m_code = code;\n\tstate->m_bitCount = count;\n}\n"
+}
