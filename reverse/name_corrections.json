@@ -5178,5 +5178,15 @@
   "after_sha256": "97339006139d91e94fa79bf6fc15aa8c66477edd66596339181b329f6e1cca96",
   "evidence": "reverse/identity_evidence/00538700.md",
   "reason": "the lift name was wrong on both method (vtable slot 5 and ZH labels say setPlayerStatus) and class (vtable 0x0111A394 belongs to the derived ctor 0x006709F0 not the base)"
+ },
+ {
+  "old_path": "reverse/attempts/0x007243a0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp",
+  "old_name": "transitionTBA",
+  "new_name": "rva007243A0",
+  "before_sha256": "4e46464213b605c631cf48badeba959dfde8adc9402413df609790dc492769ce",
+  "after_sha256": "6ce320ee9b32f1416264be95c5cfe6789eab7b41c9ed15eeb0af019d06faed63",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "transitionTBA was a bank guess that no caller, vtable slot, string or ZH twin supports"
  }
 ]
