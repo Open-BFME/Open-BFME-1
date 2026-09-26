@@ -51,7 +51,7 @@ inline void *__cdecl operator new(unsigned int, void *p) { return p; }
 struct Rva001F01D0Payload
 {
 	int value;
-	Rva001F01D0Payload(int v) { value = v; }
+	Rva001F01D0Payload(int objectID) { value = objectID; }
 };
 
 struct Rva001F01D0Node
@@ -82,12 +82,12 @@ void Rva001F01D0::fireAndRecord(Object *target)
 {
 	TheWeaponStore->createAndFireTempWeapon(m_template, &m_sourcePos, m_source, &target->m_position, m_extra);
 	int id = target->m_id;
-	Rva001F01D0Node *sent = m_sentinel;
+	Rva001F01D0Node *sentinel = m_sentinel;
 	Rva001F01D0Node *node = (Rva001F01D0Node *)_STL::__new_alloc::allocate(sizeof(Rva001F01D0Node));
 	new (&node->payload) Rva001F01D0Payload(id);
-	Rva001F01D0Node *prev = sent->prev;
-	node->next = sent;
+	Rva001F01D0Node *prev = sentinel->prev;
+	node->next = sentinel;
 	node->prev = prev;
 	prev->next = node;
-	sent->prev = node;
+	sentinel->prev = node;
 }

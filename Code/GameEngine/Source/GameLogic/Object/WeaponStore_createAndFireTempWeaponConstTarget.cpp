@@ -44,22 +44,22 @@ class WeaponStore
 {
 public:
 	Weapon *allocateNewWeapon(const WeaponTemplate *tmpl, WeaponSlotType slot) const;
-	void createAndFireTempWeapon(const WeaponTemplate *wt, const Object *source,
+	void createAndFireTempWeapon(const WeaponTemplate *weaponTemplate, const Object *source,
 		const Object *target);
 };
 
 extern WeaponStore *TheWeaponStore;
 
-void WeaponStore::createAndFireTempWeapon(const WeaponTemplate *wt,
+void WeaponStore::createAndFireTempWeapon(const WeaponTemplate *weaponTemplate,
 	const Object *source, const Object *target)
 {
-	if (wt == 0)
+	if (weaponTemplate == 0)
 		return;
-	Weapon *w = TheWeaponStore->allocateNewWeapon(wt, PRIMARY_WEAPON);
+	Weapon *temporaryWeapon = TheWeaponStore->allocateNewWeapon(weaponTemplate, PRIMARY_WEAPON);
 	if (source)
-		w->m_sourceId = source->m_id;
-	w->loadAmmoNow(source);
-	w->privateFireWeapon(source, &source->m_position, target, target->m_id,
+		temporaryWeapon->m_sourceId = source->m_id;
+	temporaryWeapon->loadAmmoNow(source);
+	temporaryWeapon->privateFireWeapon(source, &source->m_position, target, target->m_id,
 		0, 1, 1, 0, 0);
-	w->deleteInstance();
+	temporaryWeapon->deleteInstance();
 }

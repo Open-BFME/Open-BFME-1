@@ -62,49 +62,49 @@ class WeaponStore
 {
 public:
 	Weapon *allocateNewWeapon(const WeaponTemplate *tmpl, WeaponSlotType slot) const;
-	void createAndFireTempWeapon(const WeaponTemplate *wt, const Coord3D *sourcePos,
+	void createAndFireTempWeapon(const WeaponTemplate *weaponTemplate, const Coord3D *sourcePos,
 		const Object *source, const Coord3D *pos, int extra);
-	void createAndFireTempWeapon(const WeaponTemplate *wt, const Object *source, const Coord3D *pos);
-	void createAndFireTempWeapon(const WeaponTemplate *wt, const Object *source, Object *target);
+	void createAndFireTempWeapon(const WeaponTemplate *weaponTemplate, const Object *source, const Coord3D *pos);
+	void createAndFireTempWeapon(const WeaponTemplate *weaponTemplate, const Object *source, Object *target);
 };
 
 extern WeaponStore *TheWeaponStore;
 extern GameLogic *TheGameLogic;
 
-void WeaponStore::createAndFireTempWeapon(const WeaponTemplate *wt, const Coord3D *sourcePos,
+void WeaponStore::createAndFireTempWeapon(const WeaponTemplate *weaponTemplate, const Coord3D *sourcePos,
 	const Object *source, const Coord3D *pos, int extra)
 {
-	Weapon *w = TheWeaponStore->allocateNewWeapon(wt, PRIMARY_WEAPON);
+	Weapon *temporaryWeapon = TheWeaponStore->allocateNewWeapon(weaponTemplate, PRIMARY_WEAPON);
 	if (source)
-		w->m_sourceId = source->m_id;
-	w->loadAmmoNow(source);
-	w->privateFireWeapon(source, sourcePos, 0, 0, pos, 1, 0, extra, 0);
-	if (w)
-		w->deleteInstance();
+		temporaryWeapon->m_sourceId = source->m_id;
+	temporaryWeapon->loadAmmoNow(source);
+	temporaryWeapon->privateFireWeapon(source, sourcePos, 0, 0, pos, 1, 0, extra, 0);
+	if (temporaryWeapon)
+		temporaryWeapon->deleteInstance();
 }
 
-void WeaponStore::createAndFireTempWeapon(const WeaponTemplate *wt, const Object *source, const Coord3D *pos)
+void WeaponStore::createAndFireTempWeapon(const WeaponTemplate *weaponTemplate, const Object *source, const Coord3D *pos)
 {
-	if (wt == 0)
+	if (weaponTemplate == 0)
 		return;
-	Weapon *w = TheWeaponStore->allocateNewWeapon(wt, PRIMARY_WEAPON);
+	Weapon *temporaryWeapon = TheWeaponStore->allocateNewWeapon(weaponTemplate, PRIMARY_WEAPON);
 	if (source)
-		w->m_sourceId = source->m_id;
-	w->loadAmmoNow(source);
-	w->m_when = TheGameLogic->getFrame() + 1;
-	w->privateFireWeapon(source, &source->m_position, 0, 0, pos, 0, 0, 0, 0);
-	w->deleteInstance();
+		temporaryWeapon->m_sourceId = source->m_id;
+	temporaryWeapon->loadAmmoNow(source);
+	temporaryWeapon->m_when = TheGameLogic->getFrame() + 1;
+	temporaryWeapon->privateFireWeapon(source, &source->m_position, 0, 0, pos, 0, 0, 0, 0);
+	temporaryWeapon->deleteInstance();
 }
 
-void WeaponStore::createAndFireTempWeapon(const WeaponTemplate *wt, const Object *source, Object *target)
+void WeaponStore::createAndFireTempWeapon(const WeaponTemplate *weaponTemplate, const Object *source, Object *target)
 {
-	if (wt == 0)
+	if (weaponTemplate == 0)
 		return;
-	Weapon *w = TheWeaponStore->allocateNewWeapon(wt, PRIMARY_WEAPON);
+	Weapon *temporaryWeapon = TheWeaponStore->allocateNewWeapon(weaponTemplate, PRIMARY_WEAPON);
 	if (source)
-		w->m_sourceId = source->m_id;
-	w->loadAmmoNow(source);
-	w->m_when = TheGameLogic->getFrame() + 1;
-	w->privateFireWeapon(source, &source->m_position, target, target->m_id, 0, 0, 0, 0, 0);
-	w->deleteInstance();
+		temporaryWeapon->m_sourceId = source->m_id;
+	temporaryWeapon->loadAmmoNow(source);
+	temporaryWeapon->m_when = TheGameLogic->getFrame() + 1;
+	temporaryWeapon->privateFireWeapon(source, &source->m_position, target, target->m_id, 0, 0, 0, 0, 0);
+	temporaryWeapon->deleteInstance();
 }

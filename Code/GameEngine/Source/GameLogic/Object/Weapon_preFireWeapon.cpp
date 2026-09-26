@@ -155,34 +155,34 @@ void Weapon::preFireWeapon(const Object *source, const Object *victim,
 	WeaponBonus bonus;
 	computeBonus(source, 0, bonus);
 
-	WeaponTemplate *tmpl = m_template;
-	int extra = (int)(float)tmpl->m_timingExtra;
+	WeaponTemplate *weaponTemplate = m_template;
+	int timingExtra = (int)(float)weaponTemplate->m_timingExtra;
 	UnsignedInt now = TheGameLogic->getFrame();
-	if (m_whenPreAttackFinished + ((UnsignedInt)extra >> 1) <= now)
+	if (m_whenPreAttackFinished + ((UnsignedInt)timingExtra >> 1) <= now)
 	{
 		m_whenPreAttackFinished = now + delay;
-		extra = (int)(float)tmpl->m_timingExtra;
-		if (extra > 0)
-			m_lastFireFrame = TheGameLogic->getFrame() + extra + delay;
+		timingExtra = (int)(float)weaponTemplate->m_timingExtra;
+		if (timingExtra > 0)
+			m_lastFireFrame = TheGameLogic->getFrame() + timingExtra + delay;
 	}
 
-	if (tmpl->m_leechRangeWeapon)
+	if (weaponTemplate->m_leechRangeWeapon)
 	{
-		int leech = (int)((float)tmpl->m_preAttackDelay * bonus.m_field[4]);
-		int extra2 = (int)(float)tmpl->m_timingExtra;
-		m_leechWeaponRangeActive = TheGameLogic->getFrame() + leech + extra2;
+		int leechRangeDuration = (int)((float)weaponTemplate->m_preAttackDelay * bonus.m_field[4]);
+		int leechTimingExtra = (int)(float)weaponTemplate->m_timingExtra;
+		m_leechWeaponRangeActive = TheGameLogic->getFrame() + leechRangeDuration + leechTimingExtra;
 	}
 
-	tmpl->notifyPreFire(this, source, victim, position);
+	weaponTemplate->notifyPreFire(this, source, victim, position);
 
-	FXList *fx = tmpl->m_fireFX;
-	float speed = tmpl->m_weaponSpeed;
-	const Coord3D *posA = source->getDrawable()->getPosition();
-	const Matrix3D *mtx = source->getDrawable()->getTransformMatrix();
-	const Coord3D *posB = source->getDrawable()->getPosition();
-	if (fx)
+	FXList *fireFX = weaponTemplate->m_fireFX;
+	float weaponSpeed = weaponTemplate->m_weaponSpeed;
+	const Coord3D *secondaryFXPosition = source->getDrawable()->getPosition();
+	const Matrix3D *sourceTransform = source->getDrawable()->getTransformMatrix();
+	const Coord3D *primaryFXPosition = source->getDrawable()->getPosition();
+	if (fireFX)
 	{
-		if (!fx->isEmpty())
-			fx->doFXPos(posB, mtx, speed, posA);
+		if (!fireFX->isEmpty())
+			fireFX->doFXPos(primaryFXPosition, sourceTransform, weaponSpeed, secondaryFXPosition);
 	}
 }

@@ -53,12 +53,12 @@ class WeaponSet
 {
 public:
 	static ModelConditionFlags getModelConditionForWeaponSlot(
-		WeaponSlotType wslot, WeaponSetConditionType a);
+		WeaponSlotType wslot, WeaponSetConditionType weaponSetCondition);
 };
 
 // ?getModelConditionForWeaponSlot@WeaponSet@@SA?AV?$BitFlags@$0BEA@@@W4WeaponSlotType@@W4WeaponSetConditionType@@@Z
 ModelConditionFlags WeaponSet::getModelConditionForWeaponSlot(
-	WeaponSlotType wslot, WeaponSetConditionType a)
+	WeaponSlotType wslot, WeaponSetConditionType weaponSetCondition)
 {
 	static const ModelConditionFlagType Nothing[WEAPONSLOT_COUNT] =
 		{ MODELCONDITION_INVALID, MODELCONDITION_INVALID, MODELCONDITION_INVALID, (ModelConditionFlagType)0, (ModelConditionFlagType)0 };
@@ -79,16 +79,16 @@ ModelConditionFlags WeaponSet::getModelConditionForWeaponSlot(
 	static const ModelConditionFlagType ExtraReload[WEAPONSLOT_COUNT] =
 		{ (ModelConditionFlagType)42, (ModelConditionFlagType)48, (ModelConditionFlagType)54, (ModelConditionFlagType)0, (ModelConditionFlagType)0 };
 
-	WeaponSetConditionType cond = a;
+	WeaponSetConditionType condition = weaponSetCondition;
 	ModelConditionFlags flags = {};
-	ModelConditionFlagType f = Lookup[cond][wslot];
-	if (f != MODELCONDITION_INVALID)
-		flags.set(f);
-	if (cond != WSF_NONE)
+	ModelConditionFlagType modelConditionFlag = Lookup[condition][wslot];
+	if (modelConditionFlag != MODELCONDITION_INVALID)
+		flags.set(modelConditionFlag);
+	if (condition != WSF_NONE)
 		flags.set(Using[wslot]);
-	if (cond == WSF_FIRING || cond == WSF_UNUSED || cond == WSF_PREATTACK)
+	if (condition == WSF_FIRING || condition == WSF_UNUSED || condition == WSF_PREATTACK)
 		flags.set(ExtraBetween[wslot]);
-	if (cond == WSF_FIRING || cond == WSF_RELOADING)
+	if (condition == WSF_FIRING || condition == WSF_RELOADING)
 		flags.set(ExtraReload[wslot]);
 	return flags;
 }
