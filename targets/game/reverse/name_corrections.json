@@ -5718,5 +5718,15 @@
   "after_sha256": "b6d69d0c674bbe2c67a3869aa1b0ccc9a944f0c9985821a2384ae6de38a42008",
   "evidence": "docs/naming_evidence.md",
   "reason": "bank-only class name with no vtable/caller/string evidence for the entry type"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008a51b0.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/Rva008A51B0MathRandom.cpp",
+  "old_name": "f",
+  "new_name": "Rva008A4EA0MakeFloat",
+  "before_sha256": "dda5accb90046169126883b50fcda5be6495f2fbde2167291e995a0030698fc0",
+  "after_sha256": "c13f713f4295a7b3617fd892bd005c2dd9e990a31b91a81da34c990729d94a2a",
+  "evidence": "targets/game/reverse/identity_evidence/0x008a51b0-unsigned-random.md",
+  "reason": "Retail fild plus conditional +2^32 and unconditional 2^-32 scale refutes the banked signed float f; the reported pair is token alignment across that removed local while the matched factory declaration and call remain unchanged."
  }
 ]
