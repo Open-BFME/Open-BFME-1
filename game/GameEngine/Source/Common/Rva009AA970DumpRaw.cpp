@@ -36,3 +36,13 @@ void Rva009AA9E0DumpRaw(const Rva009AA9E0Info *info, const void *bytes, int inde
 	fwrite(bytes, info->m_length, 1, fp);
 	bfmeFreeUXB(fp);
 }
+
+// ?Rva009AAA40DumpRaw@@YAXPBDHPBXI@Z
+void Rva009AAA40DumpRaw(const char *prefix, int index, const void *bytes, unsigned length)
+{
+	char name[0x100];
+	sprintf(name, "%s%04d.raw", prefix, index);
+	void *fp = bfmeFopenVIF(name, "wb");
+	fwrite(bytes, length, 1, fp);
+	bfmeFreeUXB(fp);
+}
