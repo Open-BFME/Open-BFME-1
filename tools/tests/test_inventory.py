@@ -25,6 +25,12 @@ IMAGE_BASE = 0x400000
 
 
 def _load(name):
+    # Reuse a module another test file already imported. Re-executing build.py
+    # into sys.modules split its identity: next_work kept the old object while
+    # test_next_work_finish patched the new one, so its fixture ledger was
+    # ignored and the real ledger leaked in whenever this file ran first.
+    if name in sys.modules:
+        return sys.modules[name]
     spec = importlib.util.spec_from_file_location(name, TOOLS / f"{name}.py")
     module = importlib.util.module_from_spec(spec)
     sys.modules[name] = module
@@ -137,59 +143,75 @@ CLOSURE_SEEDS = "targets/game/reverse/game_end/seeds.json"
 #
 # If that cell rises again WITHOUT the closure growing, that is a real
 # regression and not this.
+#
+# REBASED 2026-09-26 after the layout reorganisation (904cff16ec) and admiraly's
+# two gen_asm carving commits (8c9b7ea723: 239 carved bodies, 290cb61bb2: 71
+# int3-delimited bodies) gave the census proven starts it used to skip. Over the
+# whole closure identified rose 1,923 -> 2,496 functions and anonymous fell
+# 763 -> 206; UNCLAIMED fell 92 -> 5. Three figures moved the wrong way and are
+# recorded rather than swallowed --
+#
+#     ("C_results", 0) anonymous  (0, 0)      -> (1, 2868)    0x00578160 newly bounded
+#     ("C_results", 0) identified (25, 33106) -> (24, 30314)  one identified body moved to tier 1
+#     ("C_results", 1) anonymous  (0, 0)      -> (3, 3970)    0x0055B200 / 0x0055A240 / an STL helper
+#
+# No name was lost: none of the three bodies ever carried a real pin (only
+# ?b_ gen-thunk pins); they were outside the census until their starts were
+# proven. Every other cell is re-armed at its current, better, figure.
 CLOSURE_BASELINE = {
     ("A_victory", 0): {
-        "UNCLAIMED": (0, 0), "ASM": (6, 2563), "SMALL": (0, 0), "LIB": (0, 0),
-        "CPP": (2, 169), "identified": (8, 2732), "anonymous": (0, 0)},
+        "UNCLAIMED": (0, 0), "ASM": (2, 1349), "SMALL": (0, 0), "LIB": (0, 0),
+        "CPP": (6, 1383), "identified": (8, 2732), "anonymous": (0, 0)},
     ("A_victory", 1): {
-        "UNCLAIMED": (3, 5715), "ASM": (23, 20748), "SMALL": (4, 75), "LIB": (6, 309),
-        "CPP": (31, 2877), "identified": (66, 29719), "anonymous": (1, 5)},
+        "UNCLAIMED": (1, 4125), "ASM": (13, 19431), "SMALL": (1, 8), "LIB": (7, 595),
+        "CPP": (46, 5583), "identified": (67, 29737), "anonymous": (1, 5)},
     ("A_victory", 2): {
-        "UNCLAIMED": (41, 30847), "ASM": (435, 160704), "SMALL": (56, 4606), "LIB": (48, 5547),
-        "CPP": (425, 37298), "identified": (568, 95831), "anonymous": (437, 143171)},
+        "UNCLAIMED": (2, 425), "ASM": (129, 109856), "SMALL": (44, 3984), "LIB": (71, 11394),
+        "CPP": (760, 114122), "identified": (891, 183928), "anonymous": (115, 55853)},
     ("B_script", 0): {
-        "UNCLAIMED": (0, 0), "ASM": (1, 290), "SMALL": (0, 0), "LIB": (0, 0),
-        "CPP": (4, 19630), "identified": (5, 19920), "anonymous": (0, 0)},
+        "UNCLAIMED": (0, 0), "ASM": (0, 0), "SMALL": (0, 0), "LIB": (0, 0),
+        "CPP": (5, 19920), "identified": (5, 19920), "anonymous": (0, 0)},
     ("B_script", 1): {
         "UNCLAIMED": (0, 0), "ASM": (2, 39766), "SMALL": (0, 0), "LIB": (1, 59),
         "CPP": (3, 194), "identified": (5, 39853), "anonymous": (1, 166)},
     ("B_script", 2): {
-        "UNCLAIMED": (0, 0), "ASM": (2, 380), "SMALL": (0, 0), "LIB": (0, 0),
-        "CPP": (9, 429), "identified": (8, 372), "anonymous": (3, 437)},
+        "UNCLAIMED": (0, 0), "ASM": (1, 320), "SMALL": (0, 0), "LIB": (0, 0),
+        "CPP": (10, 489), "identified": (10, 489), "anonymous": (1, 320)},
     ("C_results", 0): {
-        "UNCLAIMED": (3, 10871), "ASM": (15, 15995), "SMALL": (0, 0), "LIB": (0, 0),
-        "CPP": (7, 6240), "identified": (25, 33106), "anonymous": (0, 0)},
+        "UNCLAIMED": (0, 0), "ASM": (4, 8147), "SMALL": (0, 0), "LIB": (0, 0),
+        "CPP": (21, 25035), "identified": (24, 30314), "anonymous": (1, 2868)},
     ("C_results", 1): {
-        "UNCLAIMED": (3, 5314), "ASM": (73, 30652), "SMALL": (7, 483), "LIB": (13, 1158),
-        "CPP": (77, 14525), "identified": (173, 52132), "anonymous": (0, 0)},
+        "UNCLAIMED": (0, 0), "ASM": (20, 24502), "SMALL": (5, 338), "LIB": (17, 1968),
+        "CPP": (138, 37741), "identified": (177, 60579), "anonymous": (3, 3970)},
     ("C_results", 2): {
-        "UNCLAIMED": (9, 16283), "ASM": (132, 53537), "SMALL": (35, 3804), "LIB": (32, 4185),
-        "CPP": (162, 23043), "identified": (256, 52952), "anonymous": (114, 47900)},
+        "UNCLAIMED": (0, 0), "ASM": (34, 44696), "SMALL": (26, 3360), "LIB": (56, 7673),
+        "CPP": (254, 45236), "identified": (341, 81426), "anonymous": (29, 19539)},
     ("D_desync", 0): {
-        "UNCLAIMED": (0, 0), "ASM": (1, 501), "SMALL": (0, 0), "LIB": (0, 0),
-        "CPP": (1, 360), "identified": (2, 861), "anonymous": (0, 0)},
+        "UNCLAIMED": (0, 0), "ASM": (0, 0), "SMALL": (0, 0), "LIB": (0, 0),
+        "CPP": (2, 861), "identified": (2, 861), "anonymous": (0, 0)},
     ("D_desync", 1): {
-        "UNCLAIMED": (0, 0), "ASM": (5, 2345), "SMALL": (1, 8), "LIB": (0, 0),
-        "CPP": (6, 351), "identified": (10, 2683), "anonymous": (2, 21)},
+        "UNCLAIMED": (0, 0), "ASM": (1, 1473), "SMALL": (1, 8), "LIB": (0, 0),
+        "CPP": (10, 1223), "identified": (10, 2683), "anonymous": (2, 21)},
     ("D_desync", 2): {
-        "UNCLAIMED": (0, 0), "ASM": (15, 1903), "SMALL": (10, 1074), "LIB": (0, 0),
-        "CPP": (14, 821), "identified": (23, 2086), "anonymous": (16, 1712)},
+        "UNCLAIMED": (0, 0), "ASM": (2, 269), "SMALL": (10, 1074), "LIB": (1, 31),
+        "CPP": (26, 2424), "identified": (33, 3108), "anonymous": (6, 690)},
     ("E_leave", 0): {
-        "UNCLAIMED": (0, 0), "ASM": (23, 8470), "SMALL": (0, 0), "LIB": (0, 0),
-        "CPP": (20, 3950), "identified": (43, 12420), "anonymous": (0, 0)},
+        "UNCLAIMED": (0, 0), "ASM": (6, 3310), "SMALL": (0, 0), "LIB": (0, 0),
+        "CPP": (37, 9208), "identified": (43, 12518), "anonymous": (0, 0)},
     ("E_leave", 1): {
-        "UNCLAIMED": (1, 2094), "ASM": (50, 17344), "SMALL": (3, 64), "LIB": (1, 58),
-        "CPP": (151, 10516), "identified": (205, 29314), "anonymous": (1, 762)},
+        "UNCLAIMED": (0, 0), "ASM": (12, 7088), "SMALL": (1, 4), "LIB": (1, 58),
+        "CPP": (196, 23116), "identified": (210, 30266), "anonymous": (0, 0)},
     ("E_leave", 2): {
-        "UNCLAIMED": (17, 11195), "ASM": (148, 62286), "SMALL": (30, 3715), "LIB": (17, 4781),
-        "CPP": (329, 31136), "identified": (427, 76591), "anonymous": (114, 36522)},
+        "UNCLAIMED": (2, 1495), "ASM": (28, 31761), "SMALL": (22, 3243), "LIB": (24, 5973),
+        "CPP": (467, 72075), "identified": (509, 95113), "anonymous": (34, 19434)},
     ("F_engine_quit", 0): {
-        "UNCLAIMED": (0, 0), "ASM": (6, 13470), "SMALL": (0, 0), "LIB": (0, 0),
-        "CPP": (0, 0), "identified": (3, 12059), "anonymous": (3, 1411)},
+        "UNCLAIMED": (0, 0), "ASM": (2, 11837), "SMALL": (0, 0), "LIB": (0, 0),
+        "CPP": (4, 1633), "identified": (6, 13470), "anonymous": (0, 0)},
     ("F_engine_quit", 1): {
-        "UNCLAIMED": (15, 5232), "ASM": (65, 18550), "SMALL": (1, 3), "LIB": (5, 214),
-        "CPP": (81, 5124), "identified": (96, 9873), "anonymous": (71, 19250)},
+        "UNCLAIMED": (0, 0), "ASM": (16, 10640), "SMALL": (1, 3), "LIB": (5, 214),
+        "CPP": (146, 22952), "identified": (155, 25640), "anonymous": (13, 8169)},
 }
+
 REGRESSING = ("UNCLAIMED", "ASM", "SMALL", "anonymous")
 IMPROVING = ("CPP", "identified")
 
