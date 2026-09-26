@@ -97,14 +97,27 @@ is not a byte-match.
 
 ## 0x008BF100 — APT route-key registry initializer
 
-Status: banked partial; no exact clean-C++ reconstruction found.
+Status: banked partial, refreshed 2026-09-26; no exact clean-C++ reconstruction.
+Start from `targets/game/reverse/attempts/0x008bf100.cpp`, not the earlier 0.2615 bank.
+
+## Publication corrected to master
+
+This bank was first published as `c0409ae46dd306661857c38c5542dc2f4608e7dc`
+on `main`, based on `21d1669b178744fda0653049e22a8f0a7a083d88`.
+It was transferred to `master` on 2026-09-26 at the user's request, preserving
+that measured source and both immutable source archives. Current paths below
+use `targets/game/reverse/`; the unchanged source archive retains its original
+path comment. The original investigation used
+`4ba0bd9db8db94ad1cd0d69b256b72b96f55a506`, with local bank commit
+`c60bb1bfcacb008073710a0abd009536bb5564d6`. This remains research evidence,
+with no matched-function or pin changes.
 
 ### Callee table
 
 | Retail target | Count | Proven identity | Evidence |
 | --- | ---: | --- | --- |
 | `0x0089E680` | 178 | `?bfmeSetVKI@BfmeStrVKI@@QAEXPBD@Z` | `tools/callees.py 0x008BF100 18655`; every string block calls the same `thiscall` setter |
-| `0x008C5D70` through the IAT | 1 | `Rva008C5D70Alloc` | tail allocates `hashCount * 4` bytes for the hash array |
+| callback cell at VA `0x01337828` | 1 | `Rva008C5D70Alloc` | indirect cdecl allocation of `hashCount * 4` bytes; the historical symbol names a callback cell, not a call to the body at RVA `0x008C5D70` |
 | `0x00891B80` through EH cleanup funclets | 178 | `?release@Rva00891B80@@QAEXXZ` | retail cleanup funclets at `0x00C593C0` onward jump to the matched release body |
 
 The ledger currently carries the generated placeholder as a no-argument
@@ -128,31 +141,62 @@ that ABI correction is evidence, not a semantic name claim.
   distinct cleanup states/temporary stack slots. The final three operations
   allocate, zero, and publish the hash array and count.
 
-### Levers tried
+### Current checkpoint and remaining mismatch
 
-The best bank is the inline `BfmeStrVKI` model in
-`targets/game/reverse/attempts/0x008bf100.cpp`, compiled with `/O2 /DNDEBUG /DWIN32
-/D_WINDOWS /MD /EHsc`. It reproduces the literal order, the setter call
-contract, the two-slot default initialization, reference-count release, and
-hash-array tail, but emits a 16,229-byte body with an 8-byte scratch frame
-instead of retail's 18,655-byte body and 0x2c8 frame; the masked score is
-0.2615.
+VC7.1 13.10.3077 with `/O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc`
+emits 18,655 bytes and 1,080 relocations. The probe reports 15 non-relocation
+byte differences and one relocation-layout discrepancy. Its ranking score is
+`0.9991959260251944` (1 - 15/18655); this masked positional score is not
+relocation verification or an exact-match claim.
 
-The candidate evidence line records the attempted alternatives: direct
-implicit assignments; explicit temporaries; renamed exact `BfmeStrVKI`;
-named locals and pair walks; raw and aggregate `0x2c8` storage; an empty
-destructor frame; `/EHsc`, `/EHa`, `/EHs`, `/GX`, `/Ob1`, `/Og-`, `/O1`,
-`/Os`, `/Od`, `/Z7`; `volatile` members/destination; packed storage; a
-declaration-only constructor; explicit copy construction/assignment; an
-out-of-class forced-inline assignment; helper functions; derived/base
-classes; distinct template types; and temporary-return factories. None
-produced retail's unique cleanup-slot permutation. Do not add a pin or hand
-edit the generated dump; the next useful attack is a source-level ABI/lifetime
-shape supported by another matched APT string initializer.
+The residual is the first temporary cleanup. Retail stores the destination at
+`+0x9A`, resets the EH state at `+0x9F` using `[esp+0x2D8]`, decrements and
+compares the refcount, then saves EDI at `+0xAD`. Ours saves EDI at `+0x9A`,
+shifting those operations by one byte and using `[esp+0x2DC]`. Both streams
+realign at `+0xAE`. EDI's first working use is in the zeroing tail at `+0x48AB`.
+The compiler cause remains unresolved; do not patch the object or add pushes.
+
+Keep the corrected signed bound at table + `(0xB3 * 4)`, all 178 assignments
+from `__proto__` through `yMin`, the constant fallthrough switch, forced-inline
+assignment/destruction, and the release and initialization barriers. These
+source forms reproduce the frame and scheduling; they do not identify the
+original source. Every temporary still ends immediately after its assignment.
+
+Fresh COFF/retail inspection reproduces the 0x2C8 allocation, all 178 distinct
+temporary offsets in cleanup-state order, all 178 predecessors of -1, all 356
+state writes before decrement/comparison, and 178 direct setter calls without
+normal-path assignment/destructor helpers or runtime barrier calls. The tail
+starts at `+0x488F` and spans 80 bytes. All retail unwind actions reach the
+release at `0x00891B80`; the separate 22-byte destructor was independently
+compared with that retail body, including its pool operand at VA `0x01337A30`.
+Full relocation/string/global/import, EH-state-path and integration validation
+remain required after fixing the instruction shape. No source ownership,
+ledger or pin change is justified by this partial.
+
+### Reproduction and tested alternatives
+
+```sh
+python3 tools/probe.py targets/game/reverse/attempts/0x008bf100.cpp '?d_008bf100@@YAXH@Z' 0x008BF100 --size 18655 --all
+```
+
+The bank has no hard-coded listing path. For a listing, use a fresh scratch
+copy with unique `/FAcs /Fa<path>.asm` options; preserve existing checkpoints.
+The compact experiment index is
+`targets/game/reverse/attempt_history/0x008bf100/2026-09-26-index.md`. Full local sources,
+diffs, logs, objects and COFF measurements remain under
+`build/manual-008bf100/`, including `continue-20260926-033132/`.
+
+Many tail, helper, inheritance, scope, branch, intrinsic and compiler-option
+variants reproduce the identical 15-byte residue. Volatile refcount operations,
+named Boolean conditions, asynchronous EH and exposed setter definitions
+regress other requirements. The eight-assignment control reproduces the same
+barrier/EH-store/save-order interaction. Read each experiment's parent and
+fingerprint before retrying it; no attempted alternative improved the checkpoint.
 
 No rows were added to `targets/game/reverse/unlocked.txt`: this partial establishes the
 callee/layout hypothesis for this body, but does not land a shared shim or a
 byte-verified source body that would unlock a neighbour.
+
 ## 0x007CE290 - TerrainShader2Stage::set
 
 - Status: banked partial, not landed. The preferred source is `targets/game/reverse/attempts/0x007ce290.cpp`; the retail body is the anonymous `?d_007ce290@@YAXXZ` row in `game/gen_asm/d_007ccf50.asm`.
