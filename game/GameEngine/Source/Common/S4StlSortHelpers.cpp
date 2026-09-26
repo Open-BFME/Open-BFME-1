@@ -126,3 +126,32 @@ S4_PUSH_HEAP( 003408C0 )
 S4_PUSH_HEAP( 004529D0 )
 S4_PUSH_HEAP( 00452A50 )
 S4_PUSH_HEAP( 007534F0 )
+
+#define S4_POP_VALUE( NAME, COMP )                                             \
+	void NAME( S4SortElem8 *first, S4SortElem8 *last, S4SortElem8 *result,     \
+		S4SortElem8 value, COMP comp )                                          \
+	{                                                                          \
+		_STL::__pop_heap( first, last, result, value, comp, (int *)0 );        \
+	}
+
+S4_POP_VALUE( Rva009F3380, S4Cmp009F3400 )
+S4_POP_VALUE( Rva009F33C0, S4Cmp009F34B0 )
+
+#define S4_POP_AUX( NAME, COMP )                                               \
+	void NAME( S4SortElem8 *first, S4SortElem8 *last, COMP comp )              \
+	{                                                                          \
+		_STL::__pop_heap_aux( first, last, (S4SortElem8 *)0, comp );           \
+	}
+
+S4_POP_AUX( Rva009F3660, S4Cmp009F3400 )
+S4_POP_AUX( Rva009F36A0, S4Cmp009F34B0 )
+
+#define S4_POP_AUX_WITH_VALUE( NAME, COMP )                                    \
+	void NAME( S4SortElem8 *first, S4SortElem8 *last, S4SortElem8 *,           \
+		COMP comp )                                                            \
+	{                                                                          \
+		_STL::__pop_heap_aux( first, last, (S4SortElem8 *)0, comp );           \
+	}
+
+S4_POP_AUX_WITH_VALUE( Rva009F3520, S4Cmp009F3400 )
+S4_POP_AUX_WITH_VALUE( Rva009F3560, S4Cmp009F34B0 )
