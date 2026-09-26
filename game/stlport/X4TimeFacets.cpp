@@ -24,6 +24,24 @@
 #include <stl/_istream.h>
 #include "c_locale.h"
 
+struct T2TableOwner;
+extern void *t2_table_slot(T2TableOwner *, int);
+class Rva0084DE00Owner;
+class Rva0084DE10Owner;
+class Rva0084DE20Owner;
+extern void *Rva0084DE00(Rva0084DE00Owner *, int);
+extern void *Rva0084DE10(Rva0084DE10Owner *, int);
+extern void *Rva0084DE20(Rva0084DE20Owner *, int);
+extern "C" {
+char *Rva0084EED0(_Locale_time *);
+char *Rva0084EF00(_Locale_time *);
+char *Rva0084ED20Tail(_Locale_time *);
+char *Rva0084ECA0(_Locale_time *);
+char *Rva0084ECE0(_Locale_time *);
+char *Rva008504C0(_Locale_time *);
+char *Rva00850560(_Locale_time *);
+}
+
 _STLP_BEGIN_NAMESPACE
 
 char* _STLP_CALL
@@ -71,26 +89,30 @@ void _STLP_CALL _Init_timeinfo(_Time_Info& table) {
 void _STLP_CALL _Init_timeinfo(_Time_Info& table, _Locale_time * time) {
   int i;
   for (i = 0; i < 7; ++i)
-    copy_cstring(_Locale_abbrev_dayofweek(time)[i],
+    copy_cstring((const char *)::t2_table_slot(
+                     (T2TableOwner *)time, i),
 		 table._M_dayname[i]);
   for (i = 0; i < 7; ++i)
-    copy_cstring(_Locale_full_dayofweek(time)[i],
+    copy_cstring((const char *)::Rva0084DE20(
+                     (Rva0084DE20Owner *)time, i),
 		 table._M_dayname[i+7]); 
   for (i = 0; i < 12; ++i)
-    copy_cstring(_Locale_abbrev_monthname(time)[i],
+    copy_cstring((const char *)::Rva0084DE10(
+                     (Rva0084DE10Owner *)time, i),
 		 table._M_monthname[i]);
   for (i = 0; i < 12; ++i)
-    copy_cstring(_Locale_full_monthname(time)[i],
+    copy_cstring((const char *)::Rva0084DE00(
+                     (Rva0084DE00Owner *)time, i),
 		 table._M_monthname[i+12]);
-  copy_cstring(_Locale_am_str(time),
+  copy_cstring(::Rva0084EED0(time),
 		 table._M_am_pm[0]);
-  copy_cstring(_Locale_pm_str(time),
+  copy_cstring(::Rva0084EF00(time),
 	       table._M_am_pm[1]);
-  copy_cstring(_Locale_t_fmt(time), table._M_time_format);
-  copy_cstring(_Locale_d_fmt(time), table._M_date_format);
-  copy_cstring(_Locale_d_t_fmt(time), table._M_date_time_format);
-  copy_cstring(_Locale_long_d_fmt(time), table._M_long_date_format);
-  copy_cstring(_Locale_long_d_t_fmt(time), table._M_long_date_time_format);
+  copy_cstring(::Rva0084ED20Tail(time), table._M_time_format);
+  copy_cstring(::Rva0084ECA0(time), table._M_date_format);
+  copy_cstring(::Rva008504C0(time), table._M_date_time_format);
+  copy_cstring(::Rva0084ECE0(time), table._M_long_date_format);
+  copy_cstring(::Rva00850560(time), table._M_long_date_time_format);
 }
 
 inline char* __subformat(string format, char*& buf, 
