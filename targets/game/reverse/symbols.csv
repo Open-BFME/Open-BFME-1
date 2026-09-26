@@ -79356,6 +79356,7 @@ name,address,notes
 ?clearAllTrees@W3DShrubBuffer@@QAEXXZ,0x00045D72,ILT to 0x0071C7E0; terrain reset clears the +0x3098 shrub buffer through it
 ?clearAllBibs@W3DBibBuffer@@QAEXXZ,0x000404D0,ILT to 0x006D6AD0; terrain reset clears the +0x30A0 bib buffer through it
 ?rva006F9050@W3DFloorBuffer@@QAEXXZ,0x0003A5E4,ILT to 0x006F9050; terrain reset clears the +0x30A4 floor buffer through it
+?rva006DC970@Rva006DED60RoadBuffer@@QAEXPAX0@Z,0x0003C93E,caller 0x006CDD70 passes two stack pointers with ECX=+0x30B4 to this ILT; checked callee reaches 0x006DC970 and returns ret 8
 ?rva006DEB70@Rva006DED60RoadBuffer@@QAEXXZ,0x0003697B,ILT to 0x006DEB70; terrain reset (+0x30B4) and the road-buffer constructor call it
 ?clear@?$StringBase@D@@QAEXXZ,0x00887940,retail StringBase<char>::clear body (folds with releaseBuffer); SubsystemLegendEntry ctor calls it directly not via the 0x000680C0 thunk
 ?clear@?$_List_base@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAEXXZ,0x0002FB8A,ILT thunk to already-matched body 0x000CD120; TunnelTracker::onTunnelDestroyed m_containList.clear() call
