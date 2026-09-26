@@ -12,6 +12,7 @@ struct Rva0083ED40Stream {
 	void* m_buffer;
 	void setState(int state);
 	void addState(int state);
+	void rva0083EDB0(int exceptions);
 	__forceinline void clearState(int state)
 	{
 		if (!m_buffer)
@@ -33,4 +34,10 @@ void Rva0083ED40Stream::setState(int state)
 void Rva0083ED40Stream::addState(int state)
 {
 	clearState(m_state | state);
+}
+
+void Rva0083ED40Stream::rva0083EDB0(int exceptions)
+{
+	m_exceptions = exceptions;
+	clearState(m_state);
 }
