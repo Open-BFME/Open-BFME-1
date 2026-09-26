@@ -439,7 +439,7 @@ void positionStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[]
 void positionStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[], GameWindow *mapWindow, Bool onLoadScreen );
 extern void *g_bfmeA1023;
 extern char g_bfmeBuf1023[];
-extern void rva004CAF70( void );
+extern void lanUpdateSlotList004CAF70( void );
 struct BfmeObj935C;
 extern BfmeObj935C *g_bfme935GlobC;
 class Rva00516B50
@@ -1255,7 +1255,7 @@ void LanGameOptionsMenuInit( WindowLayout *layout, void *userData )
 		}
 
 		//GadgetTextEntrySetText(comboBoxPlayer[0], TheLAN->GetMyName());
-		rva004CAF70();
+		lanUpdateSlotList004CAF70();
 		d_004cc660();
 		start = 1; // leave my combo boxes usable
 		if (((BfmeInitVirtualLanApi *)TheLAN)->slot0CC())
@@ -1276,7 +1276,7 @@ void LanGameOptionsMenuInit( WindowLayout *layout, void *userData )
 			((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame()->setMapSize(mapSize); // of if we have the map
 		}
 		((BfmeInitVirtualLanApi *)TheLAN)->RequestHasMap();
-		rva004CAF70();
+		lanUpdateSlotList004CAF70();
 		d_004cc660();
 	}
 	for (Int i = start; i < MAX_SLOTS; ++i)
@@ -1311,7 +1311,7 @@ void LanGameOptionsMenuInit( WindowLayout *layout, void *userData )
 		((BfmeInitVirtualLanApi *)TheLAN)->_bfme_requestSerializedGameInfo(TRUE, &address);
 		((BfmeInitVirtualLanApi *)TheLAN)->RequestGameAnnounce();
 	}
-	rva004CAF70();
+	lanUpdateSlotList004CAF70();
 	if (g_bfmeA1023 != 0)
 		positionStartSpots(((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame(),
 			(GameWindow **)g_bfmeBuf1023, (GameWindow *)g_bfmeA1023, FALSE);
@@ -1863,7 +1863,7 @@ public:
 	char bfmeGo935B();
 };
 
-extern void rva004CAF70( void );
+extern void lanUpdateSlotList004CAF70( void );
 
 __forceinline LANGameInfo *bfmeStartPositionGetMyGame( BfmeStartPositionLANAPI *lan )
 {
@@ -1894,7 +1894,7 @@ static void rva004CB5E0Update( Int player )
 				( (BfmeStartPositionGameInfo *)myGame )->resetAccepted();
 				BfmeStartPositionAddress address;
 				( (BfmeStartPositionLANAPI *)TheLAN )->requestSerializedGameInfo( TRUE, &address );
-				rva004CAF70();
+				lanUpdateSlotList004CAF70();
 			}
 		}
 		else if ( AreSlotListUpdatesEnabled() )
@@ -1966,7 +1966,7 @@ static void rva004CB810StartPosition( Int player, Int startPos )
 				( (BfmeStartPositionGameInfo *)myGame )->resetAccepted();
 				BfmeStartPositionAddress address;
 				( (BfmeStartPositionLANAPI *)TheLAN )->requestSerializedGameInfo( TRUE, &address );
-				rva004CAF70();
+				lanUpdateSlotList004CAF70();
 			}
 		}
 		else if ( AreSlotListUpdatesEnabled() )

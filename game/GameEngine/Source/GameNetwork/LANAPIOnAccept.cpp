@@ -93,7 +93,7 @@ struct BfmeObj935C
 };
 
 extern BfmeObj935C *g_bfme935GlobC;    // retail data 0x012F4998
-extern void rva004CAF70(void);        // ILT 0x00039202 -> body 0x004CAF70
+extern void lanUpdateSlotList004CAF70(void);        // ILT 0x00039202 -> body 0x004CAF70
 
 // The only LANAPI fields needed here are the established +0x3D/+0x40 pair.
 // The virtual declarations preserve the retail call slots used by this body.
@@ -227,5 +227,5 @@ void LANAPI::OnAccept(BfmeNetAddress *from, UnsignedInt status)
 	if (global)
 		global->m_bfmeFlag = 1;
 	else
-		rva004CAF70();
+		lanUpdateSlotList004CAF70();
 }

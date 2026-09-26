@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD
-// Open-BFME5: the 125-byte guard/overlay callback at retail 0x004CAF70.
+// Open-BFME5: BFME's lanUpdateSlotList, the 125-byte guard/overlay callback at retail 0x004CAF70.
 //
 // The control-flow and object fast path are ordinary C++.  Retail's +0xC0
 // entries are cdecl vtable calls that retain the object in ECX; MSVC 7.1 has
@@ -29,7 +29,7 @@ extern void j_00022ab6(void);
 
 typedef char (*Rva004CAF70Gate)(void);
 
-void rva004CAF70(void)
+void lanUpdateSlotList004CAF70(void)
 {
 	if (((Rva004CAF70Gate)j_000056c8)() == 0)
 		return;

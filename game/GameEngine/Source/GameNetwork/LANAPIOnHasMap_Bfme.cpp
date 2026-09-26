@@ -203,7 +203,7 @@ extern MapCache *TheMapCache;
 extern GameTextInterface *TheGameText;
 extern BfmeObj935C *g_bfme935GlobC;
 extern Bool __cdecl WouldMapTransfer(GameInfo *game);
-extern void __cdecl rva004CAF70(void);
+extern void __cdecl lanUpdateSlotList004CAF70(void);
 
 inline const wchar_t *Rva00688CD0WideText(const UnicodeString &text)
 {
@@ -281,6 +281,6 @@ void LANAPI::OnHasMap(BfmeNetAddress *sender, Bool status)
 		if (g_bfme935GlobC != 0)
 			g_bfme935GlobC->m_rva00688CD0_26c = 1;
 		else
-			rva004CAF70();
+			lanUpdateSlotList004CAF70();
 	}
 }
