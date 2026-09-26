@@ -1,0 +1,5 @@
+# DynamicIBAccessClass::Get_Default_Index_Count at 0x0091CD70
+
+The retail 7-byte body is `mov ax, word ptr [0x012D7130]; ret`. `game/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.cpp` defines `DynamicIBAccessClass::Get_Default_Index_Count()` to return its 16-bit `_DynamicDX8IndexBufferSize`; `tools/probe.py` produces exactly these 7 bytes modulo its DIR32 relocation. The existing claim `?rva0091CD70Get@@YAGXZ` in `game/GameEngine/Source/Common/Rva0091CD70Get.cpp` models the same load under a placeholder global, not its owning method.
+
+The retail `SortingRendererClass::Flush_Sorting_Pool` at 0x00939FC0 has a REL32 relocation at +0x519 targeting 0x0091CD70. The corresponding C++ call at `sortingrenderer.cpp` uses `DynamicIBAccessClass::Get_Default_Index_Count()` to calculate its dynamic index-buffer allocation. Its exact candidate emits that decorated callee at the same relocation, independently fixing the getter's class, return width and callsite identity. Replace the placeholder claim with the real method; do not keep a second getter or duplicate global.
