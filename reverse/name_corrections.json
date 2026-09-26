@@ -5408,5 +5408,15 @@
   "after_sha256": "e0e125d7d829441d3dc825d4c16d001258412cbb386b82148a3eca7ce06f9ba9",
   "evidence": "docs/naming_evidence.md",
   "reason": "bank name bfmeSelectMap for 0x00528370 had no pin or evidence; address-derived name pinned at ILT 0x000430A9 with proven thiscall one-reference ABI"
+ },
+ {
+  "old_path": "reverse/attempts/0x007e3b40.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva007E3C20Vp6StreamCtor.cpp",
+  "old_name": "m_base",
+  "new_name": "Gen_0081E480",
+  "before_sha256": "c33110c6377b31d5046b8b18e03aa75561e0229292829f4f79dc1541e56ad96b",
+  "after_sha256": "ba78b7581d2ec62770eba828ead50691eb52ab04428036dced0ff3f5dd8a9ae3",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank-invented Rva007E3B40Vp6Prefix composition wrapper (m_base member of type Gen_0081E480) had no evidence and contradicted the installed vtable 0x01128DA8, which is pinned to Rva007E3C20Vp6Stream and shared with the landed dtor 0x007E3C20; members moved into Rva007E3C20Vp6Stream with Gen_0081E480 as the real base class"
  }
 ]
