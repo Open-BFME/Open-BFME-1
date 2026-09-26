@@ -89293,3 +89293,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?bfmeRva0083A2D0CopyWide@@YA?AV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@PBG0V12@ABUrandom_access_iterator_tag@2@PAH@Z,0x0083A2D0,retail 0x00846C30 calls duplicate wide STLport copy at 0x0083A2D0 identical 106-byte body to 0x00835EF0
 ?bfmeRva0130CE50RegistrationHead@@3PAXA,0x0130CE50,registration head read and replaced by retail at 0x00C6B180
 ?bfmeRva012B3C84RegistrationNext@@3PAXA,0x012B3C84,registration link written by retail at 0x00C6B180 and stored into head
+?bfmeRva012B3FCCRegistrationNext@@3PAXA,0x012B3FCC,registration link written by retail at 0x00C6B1A0 and stored into head
