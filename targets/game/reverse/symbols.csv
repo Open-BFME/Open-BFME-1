@@ -89199,3 +89199,10 @@ _D3DXMatrixTranspose@8,0x009FAFBA,d3dx9.lib d3dxmath.obj exact public dispatch s
 _Rva008504C0,0x008504C0,STLport 4.5.3 short-date/time formatter; target 0x00847050 call +0x207 passes _Locale_time* and consumes char* return; source ABI decoded
 _Rva00850560,0x00850560,STLport 4.5.3 long-date/time formatter; target 0x00847050 call +0x26D passes _Locale_time* and consumes char* return; source ABI decoded
 ??1?$_List_base@PAVTeamPrototype@@V?$allocator@PAVTeamPrototype@@@_STL@@@_STL@@QAE@XZ,0x000158AC,ILT thunk to the STLport list-base destructor body 0x000CF0B0; AIPlayer::selectTeamToBuild 0x00163220+0xFC destroys its candidate list<TeamPrototype*> through this ILT on the no-priority return
+?rva008F7390@ShroudManager@@QAEXPBURegion3D@@M@Z,0x008F7390,GameLogic::init +0x1BF calls it on TheShroudManager with a zeroed local Region3D and GlobalData+0x1BC; 8-byte body forwards this+0xC to 0x008FBAD0 which ends ret 8
+?rva008F7370@ShroudManager@@QAEXH@Z,0x008F7370,GameLogic::init +0x1D7 calls it on TheShroudManager with GlobalData+0xC6C; 8-byte body forwards this+0xC to 0x008F8C20 which ends ret 4
+?rva009F2650@PartitionManager@@QAEXH@Z,0x009F2650,GameLogic::init +0x1E4 calls it on ThePartitionManager with push 7; 8-byte body forwards this+0xC to 0x009F59D0 which ends ret 4
+?rva00880E20@BfmeTaintManager@@QAEXPBURegion3D@@M@Z,0x00880E20,GameLogic::init +0x200 calls it on TheTaintManager with the same Region3D and GlobalData+0x1BC; 8-byte body forwards this+0xC to 0x00881B10 which ends ret 8
+?rva009A2570@CollisionManager@@QAEXXZ,0x009A2570,GameLogic::init +0x172 calls it on TheCollisionManager with no arguments; 8-byte body forwards this+0xC to 0x009A2960
+?rva0019B030@BfmeTableERJ@@QAEXXZ,0x0019B030,GameLogic::init +0x300 calls ILT 0x00040381 with ecx=g_bfmeTableERJ and no arguments; body ends plain ret at +0x280
+?rva0019F500@BfmeTableERJ@@QAEXXZ,0x0019F500,GameLogic::init +0x30B calls ILT 0x000456BA with ecx=g_bfmeTableERJ and no arguments; body ends plain ret at +0x2BD
