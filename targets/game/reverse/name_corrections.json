@@ -5988,5 +5988,15 @@
   "after_sha256": "d99dc07dc2acd51b81fe9fbfc2f5954b5ebce4a5dca0bc01e5a99d1379425a04",
   "evidence": "targets/game/reverse/identity_evidence/0x00446550.md",
   "reason": "the lift name came from Open-BFME5 and is contradicted by the ABI (ret 8 with Bool plus Player*, and no return value, where the ZH method takes two by-value BitFlags<116> and returns Int) and by the slot: 59 is a BFME-only virtual that ZH has no counterpart for"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x009433a0.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WW3D2/Gen_00943CF0_Second.cpp",
+  "old_name": "padding",
+  "new_name": "m_unmodelled00",
+  "before_sha256": "bc31c378fb5ffc8adaed820d0063c08e570aba51deee047c9a5f2a85b52b9481",
+  "after_sha256": "8aabcd61fc22e049ba488dd7659673148de389c4b93ab96b08707bb04326debb",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "not read by this body and no witness"
  }
 ]
