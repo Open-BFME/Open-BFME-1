@@ -1887,7 +1887,12 @@ GEN_PLACEHOLDER_RE = re.compile(
     # targets/game/reverse/reloc_names.csv as identity=real -- the precise opposite of
     # what the naming convention asserts. Eight hex digits with no ninth
     # keeps it from matching an ordinary identifier that merely starts "Gen".
-    r"|(?:Gen|gen|Rva|rva)_?[0-9A-Fa-f]{8}(?![0-9A-Fa-f])")
+    # A capital A-F that opens a lower-case word is the suffix, not a ninth
+    # digit: a bare "no hex after" read Rva00526660Body, Rva001999C0Element,
+    # Rva0005FA90Factory and Gen003BB8F0Free as nine-digit runs and published
+    # them as identity=real, while the same shape ending Value or Pair was
+    # generated.
+    r"|(?:Gen|gen|Rva|rva)_?[0-9A-Fa-f]{8}(?![0-9a-f]|[A-F](?![a-z]))")
 # tools/zh_sweep.py names a row ?dup_<rva>@@YAXXZ when the bytes are proven by a
 # Zero Hour twin but the identity is not: the twin is one member of an ICF fold
 # and the reference TU's COMDAT it compiled is recorded in object-symbol= only

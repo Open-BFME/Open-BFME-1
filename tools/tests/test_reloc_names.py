@@ -258,8 +258,22 @@ def test_corrected_opaque_drawable_route_does_not_recover_an_identity():
     caller = call_row(0x00527200, thunk,
                       symbol="?forward@Rva0001C8D2Thunk@@QAEXHH@Z")
     rows = build.select_reloc_names(build.harvest_reloc_names([caller]))
-    assert len(rows) == 1 and int(rows[0]["target_rva"], 16) == body, rows
-    assert rows[0]["notes"].endswith("identity=generated"), rows
+    at_body = [row for row in rows if int(row["target_rva"], 16) == body]
+    if at_body:
+        assert len(rows) == 1 and len(at_body) == 1, rows
+        assert at_body[0]["notes"].endswith("identity=generated"), rows
+        return
+    # Since 454ea6ccdf the body itself is landed (?run@Rva00526660Body@@...), and
+    # select_reloc_names publishes nothing for an address the ledger already
+    # names. That is only safe while the landing keeps the address-derived
+    # name: a real name there would be exactly the identity this route may not
+    # recover.
+    assert rows == [], rows
+    names = [row["name"] for row in build.load_all_function_rows()
+             if int(row["target_rva"], 16) == body
+             and not build.is_scaffold_row(row)]
+    assert names, "0x00526660 is neither published nor claimed"
+    assert all(build.GEN_PLACEHOLDER_RE.search(name) for name in names), names
 
 
 def a_dup_claimed_function():
@@ -328,3 +342,15 @@ def test_a_dup_claimed_address_is_still_anonymous_to_the_harvest():
     assert build.select_reloc_names(build.harvest_reloc_names(
         [call_row(0x1000, claimed_body, symbol="?realName@SomeClass@@QAEXXZ")])) == []
     print(f"PASS 0x{body:X} is still nameable behind its dup_ row")
+
+
+def test_an_address_token_before_a_hex_letter_word_is_still_generated():
+    """The suffix after an address token can start with A-F. Rva00526660Body
+    used to read as nine hex digits and publish as identity=real while
+    Rva003525E0Pair was generated."""
+    for name in ("?run@Rva00526660Body@@QAEXHH@Z", "??0Rva003525E0Pair@@QAE@ABV0@@Z",
+                 "?Gen003BB8F0Free@@YAXPAX@Z", "?f@Rva001999C0Element@@QAEXXZ"):
+        assert build.GEN_PLACEHOLDER_RE.search(name), name
+    for name in ("?f@Gen0123456789@@QAEXXZ", "?f@Rva00526660BD@@QAEXXZ",
+                 "?GenerateDeadBeef@@YAXXZ"):
+        assert not build.GEN_PLACEHOLDER_RE.search(name), name
