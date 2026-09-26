@@ -11,6 +11,7 @@ on:
       - 'targets/game/reverse/name_corrections.json'
       - 'tools/name_regression.py'
       - 'tools/name_history.py'
+      - 'tools/layout_history.py'
       - '.github/workflows/name-regression.yml'
   pull_request:
     paths:
@@ -21,6 +22,7 @@ on:
       - 'targets/game/reverse/name_corrections.json'
       - 'tools/name_regression.py'
       - 'tools/name_history.py'
+      - 'tools/layout_history.py'
       - '.github/workflows/name-regression.yml'
 
 permissions:
@@ -40,6 +42,7 @@ jobs:
             tools/name_history.py
             tools/name_regression.py
             tools/name_oracle.py
+            tools/layout_history.py
           sparse-checkout-cone-mode: false
       - name: Check pushed commits
         if: github.event_name == 'push'

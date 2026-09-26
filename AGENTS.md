@@ -19,7 +19,8 @@ An explicit request or assigned lane overrides the queue:
    `tools\fleet\launch_fleet.cmd` for the fleet; any other script goes
    through `bash tools/x.sh`. Python is `python3` in Git Bash, `py -3` in
    PowerShell.
-1. `git pull --rebase origin master`
+1. `git pull --rebase origin master` (once per host: `python3 -m pip install -r
+   requirements.txt` -- the hooks need `pefile` and `capstone`)
 2. `python3 tools/check_csv.py` — repair ledger errors before other work
 3. `python3 tools/next_work.py` for identity and structural work; it explains
    its own tiers. **This is the default work.** Its first tier is `finish`:
