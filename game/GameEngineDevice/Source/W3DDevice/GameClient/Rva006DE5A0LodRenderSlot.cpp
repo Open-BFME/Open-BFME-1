@@ -1,14 +1,6 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringbaseascii /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringbaseascii /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWDebug
 #include "Common/AsciiString.h"
-
-class RenderObjClass
-{
-public:
-	virtual void rvaSlot0();
-	virtual void rvaSlot1();
-	virtual void rvaSlot2();
-	virtual int getClassId();
-};
+#include "rendobj.h"
 extern RenderObjClass *Create_Render_Obj(const char *name);
 struct BfmeR1025;
 extern char bfmeGo1025F(BfmeR1025 *);
@@ -73,7 +65,8 @@ int Rva006DE5A0LodRenderSlot::rva006DE5A0(AsciiString *name, Rva006DE5A0Input *r
 	RenderObjClass *obj = Create_Render_Obj(chosen.str());
 	if (!obj)
 		return 0;
-	if (obj->getClassId() == 25 || obj->getClassId() == 0)
+	if (obj->Class_ID() == RenderObjClass::CLASSID_HLOD
+		|| obj->Class_ID() == RenderObjClass::CLASSID_MESH)
 		m_entries[m_count].m_obj = obj;
 	m_entries[m_count].m_name.set(record->m_name);
 	m_entries[m_count].m_flag = record->m_flag;
