@@ -3459,18 +3459,37 @@ void W3DVolumetricShadow::updateMeshVolume(Int meshIndex, Int lightIndex, const 
 // vertex indices to the silhouette in the order they were specified in 
 // "visible" to assure that the constructed edge is in counter clockwise order
 // ============================================================================
-// ?addSilhouetteEdge@W3DVolumetricShadow@@IAEXHPAUPolyNeighbor@@0@Z present-unmatched
 void W3DVolumetricShadow::addSilhouetteEdge(Int meshIndex, PolyNeighbor *visible, PolyNeighbor *hidden )
 {
+	struct BFMEShadowGeometryMeshData
+	{
+		char m_beforePolygons[0xc];
+		const TriIndex *m_polygons;
+	};
+	struct BFMEShadowGeometryMeshView
+	{
+		BFMEShadowGeometryMeshData *m_mesh;
+		char m_afterMesh[0x1c];
+		UnsignedShort *m_parentVerts;
+		char m_afterParentVerts[0x10];
+	};
+	struct BFMEShadowGeometryView
+	{
+		char m_beforeMeshList[0x14];
+		BFMEShadowGeometryMeshView m_meshList[MAX_SHADOW_CASTER_MESHES];
+	};
+	struct BFMEVolumetricShadowView
+	{
+		char m_beforeGeometry[0x6c];
+		BFMEShadowGeometryView *m_geometry;
+	};
 	Int i;
 	Int neighborIndex = 0;
 	Short visibleIndexList[ 3 ];
 	Short edgeStart, edgeEnd;
-
-	W3DShadowGeometryMesh *geomMesh=m_geometry->getMesh(meshIndex);
-
-	// sanity
-	assert( visible && hidden );
+	BFMEVolumetricShadowView *shadow = (BFMEVolumetricShadowView *)this;
+	BFMEShadowGeometryView *geometry = shadow->m_geometry;
+	BFMEShadowGeometryMeshView *geomMesh = &geometry->m_meshList[meshIndex];
 
 	//
 	// which index in the neighbor list of "visible" refers to the 
@@ -3490,7 +3509,10 @@ void W3DVolumetricShadow::addSilhouetteEdge(Int meshIndex, PolyNeighbor *visible
 	}  // end for i
 
 	// get the three vertex indices of "visible"
-	geomMesh->GetPolygonIndex( visible->myIndex, visibleIndexList );
+	const TriIndex *poly = &geomMesh->m_mesh->m_polygons[visible->myIndex];
+	visibleIndexList[0] = geomMesh->m_parentVerts[poly->I];
+	visibleIndexList[1] = geomMesh->m_parentVerts[poly->J];
+	visibleIndexList[2] = geomMesh->m_parentVerts[poly->K];
 
 	//
 	// we know that 2 of the 3 vertex indices will be present in the edge.
