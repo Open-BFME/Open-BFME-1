@@ -1,6 +1,6 @@
 // ?getPlayerStructureBounds@AIPlayer@@SAXPAURegion2D@@H@Z
-// partial score=0.75 date=2026-09-04
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/objectdlink
+// partial score=0.78 date=2026-09-26
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/objectdlink
 //
 // AIPlayer::getPlayerStructureBounds, retail 0x00163C70, 537 bytes.
 // Named by the matched guardSupplyCenter call (two-arg BFME form; ZH's
@@ -114,7 +114,7 @@ public:
 class BfmeTeamInstanceIterator
 {
 public:
-	BfmeTeamInstanceIterator(Team *head) : m_cur(head) {}
+	BfmeTeamInstanceIterator(Team *head) : m_cur(head), m_unused(0) {}
 	bool done() const { return m_cur == 0; }
 	Team *cur() const { return m_cur; }
 	void advance()
@@ -124,6 +124,7 @@ public:
 	}
 private:
 	Team *m_cur;
+	Int m_unused;
 };
 
 class TeamPrototype
