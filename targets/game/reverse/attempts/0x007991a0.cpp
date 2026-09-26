@@ -1,6 +1,6 @@
 // ?W3DGadgetTextEntryImageDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
-// partial score=0.1686 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// partial score=0.89 date=2026-09-26
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
@@ -325,6 +325,25 @@ void W3DGadgetTextEntryDraw( GameWindow *window, WinInstanceData *instData )
 // W3DGadgetTextEntryImageDraw ================================================
 /** Draw horizontal slider with user supplied images */
 //=============================================================================
+class DisplayStringSizeView007991A0 { public:
+  virtual void slot0() = 0;
+  virtual void slot1() = 0;
+  virtual void slot2() = 0;
+  virtual void slot3() = 0;
+  virtual void slot4() = 0;
+  virtual void slot5() = 0;
+  virtual void slot6() = 0;
+  virtual void slot7() = 0;
+  virtual void slot8() = 0;
+  virtual void slot9() = 0;
+  virtual void slot10() = 0;
+  virtual void slot11() = 0;
+  virtual void slot12() = 0;
+  virtual void slot13() = 0;
+  virtual void slot14() = 0;
+  virtual void getSize(Int *width, Int *height) = 0;
+};
+extern void __cdecl drawTextEntryText(GameWindow *window, Color textColor, Color textBorder, Color compositeColor, Color compositeBorder, Int x, Int y);
 void W3DGadgetTextEntryImageDraw( GameWindow *window, WinInstanceData *instData )
 {
 	EntryData *e = (EntryData *)window->winGetUserData();
@@ -335,13 +354,12 @@ void W3DGadgetTextEntryImageDraw( GameWindow *window, WinInstanceData *instData 
 	Int xOffset, yOffset;
 	Int i;
 
+	// cancel unichar flag
+	*((Byte *)e + 0x15) = FALSE;
+
 	// get size and position of window
 	window->winGetScreenPosition( &origin.x, &origin.y );
 	window->winGetSize( &size.x, &size.y );
-	_ReadWriteBarrier();
-
-	// cancel unichar flag
-	e->receivedUnichar = FALSE;
 
 	// get image offset
 	xOffset = instData->m_imageOffset.x;
@@ -355,10 +373,10 @@ void W3DGadgetTextEntryImageDraw( GameWindow *window, WinInstanceData *instData 
 		textBorder				= window->winGetDisabledTextBorderColor();
 		compositeColor		= window->winGetDisabledTextColor();
 		compositeBorder		= window->winGetDisabledTextBorderColor();
-		leftImage					= GadgetTextEntryGetDisabledImageLeft( window );
-		rightImage				= GadgetTextEntryGetDisabledImageRight( window );
-		centerImage				= GadgetTextEntryGetDisabledImageCenter( window );
-		smallCenterImage	= GadgetTextEntryGetDisabledImageSmallCenter( window );
+		leftImage					= GadgetTextEntryGetDisabledImageLeft( (GameWindow *)((char *)window + 4) );
+		rightImage				= GadgetTextEntryGetDisabledImageRight( (GameWindow *)((char *)window + 4) );
+		centerImage				= GadgetTextEntryGetDisabledImageCenter( (GameWindow *)((char *)window + 4) );
+		smallCenterImage	= GadgetTextEntryGetDisabledImageSmallCenter( (GameWindow *)((char *)window + 4) );
 
 	}  // end if, disabled
 	else if( BitTest( instData->getState(), WIN_STATE_HILITED ) )
@@ -368,10 +386,10 @@ void W3DGadgetTextEntryImageDraw( GameWindow *window, WinInstanceData *instData 
 		textBorder				= window->winGetHiliteTextBorderColor();
 		compositeColor		= window->winGetIMECompositeTextColor();
 		compositeBorder		= window->winGetIMECompositeBorderColor();
-		leftImage					= GadgetTextEntryGetHiliteImageLeft( window );
-		rightImage				= GadgetTextEntryGetHiliteImageRight( window );
-		centerImage				= GadgetTextEntryGetHiliteImageCenter( window );
-		smallCenterImage	= GadgetTextEntryGetHiliteImageSmallCenter( window );
+		leftImage					= GadgetTextEntryGetHiliteImageLeft( (GameWindow *)((char *)window + 4) );
+		rightImage				= GadgetTextEntryGetHiliteImageRight( (GameWindow *)((char *)window + 4) );
+		centerImage				= GadgetTextEntryGetHiliteImageCenter( (GameWindow *)((char *)window + 4) );
+		smallCenterImage	= GadgetTextEntryGetHiliteImageSmallCenter( (GameWindow *)((char *)window + 4) );
 
 	}  // end else if, hilited
 	else
@@ -381,13 +399,15 @@ void W3DGadgetTextEntryImageDraw( GameWindow *window, WinInstanceData *instData 
 		textBorder				= window->winGetEnabledTextBorderColor();
 		compositeColor		= window->winGetIMECompositeTextColor();
 		compositeBorder		= window->winGetIMECompositeBorderColor();
-		leftImage					= GadgetTextEntryGetEnabledImageLeft( window );
-		rightImage				= GadgetTextEntryGetEnabledImageRight( window );
-		centerImage				= GadgetTextEntryGetEnabledImageCenter( window );
-		smallCenterImage	= GadgetTextEntryGetEnabledImageSmallCenter( window );
+		leftImage					= GadgetTextEntryGetEnabledImageLeft( (GameWindow *)((char *)window + 4) );
+		rightImage				= GadgetTextEntryGetEnabledImageRight( (GameWindow *)((char *)window + 4) );
+		centerImage				= GadgetTextEntryGetEnabledImageCenter( (GameWindow *)((char *)window + 4) );
+		smallCenterImage	= GadgetTextEntryGetEnabledImageSmallCenter( (GameWindow *)((char *)window + 4) );
 
 	}  // end else, just enabled
 
+	if (leftImage && rightImage)
+	{
 	// get image sizes for the ends
 	ICoord2D leftSize, rightSize;
 	leftSize.x = leftImage->getImageWidth();
@@ -457,21 +477,24 @@ void W3DGadgetTextEntryImageDraw( GameWindow *window, WinInstanceData *instData 
 	end.y = start.y + size.y;
 	TheWindowManager->winDrawImage(rightImage, start.x, start.y, end.x, end.y);
 
+	}
+
 	// draw the text
-	Int fontHeight = TheWindowManager->winFontHeight( instData->getFont() );
+	Int textWidth, fontHeight;
+	((DisplayStringSizeView007991A0 *)e->text)->getSize( &textWidth, &fontHeight );
 	Int startOffset = 5;
-	Int width;
+	volatile Int width;
 
 	width = size.x - (2 * startOffset);
 	start.x = origin.x + startOffset;  // offset a little bit into the entry
 		if( BitTest( window->winGetStatus(), WIN_STATUS_ONE_LINE ) )
-		start.y = size.y / 2 - fontHeight / 2;
+		start.y = size.y / 2 - (fontHeight + 1) / 2;
 	else
 		start.y = origin.y + startOffset;  // offset a little bit into the entry
 
 	// draw the edit text
-	drawTextEntryText( window, instData, textColor, textBorder, compositeColor, compositeBorder,
-										 start.x, start.y, width, fontHeight );
+	drawTextEntryText( window, textColor, textBorder, compositeColor, compositeBorder,
+										 start.x, start.y );
 
 	
 
