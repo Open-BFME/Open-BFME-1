@@ -793,3 +793,28 @@ unsigned short Rva0083FEB0WordLoad(const unsigned short *value)
 {
 	return *value;
 }
+
+class Rva008BD000Value
+{
+	char m_pad[0x4c];
+	int m_value;
+public:
+	virtual void slot0() = 0;
+	virtual void slot1() = 0;
+	virtual void slot2() = 0;
+	void clear() { m_value = 0; }
+};
+
+class Rva008BD000Owner
+{
+	Rva008BD000Value *m_value;
+public:
+	void body();
+};
+
+// ?body@Rva008BD000Owner@@QAEXXZ
+void Rva008BD000Owner::body()
+{
+	m_value->clear();
+	m_value->slot2();
+}
