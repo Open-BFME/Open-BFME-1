@@ -45,6 +45,47 @@
 #include "Common/StackDump.h"
 #include "Common/SubsystemInterface.h"
 
+extern "C" void _WriteBarrier(void);
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_WriteBarrier)
+#pragma intrinsic(_ReadWriteBarrier)
+
+_STLP_BEGIN_NAMESPACE
+
+// Keep this genuine read-only specialization visible to the parser so VC7.1
+// can preserve kvPairs.size() across its calls, while retaining the retail call.
+// RVA 00654BE0: canonical reverse find_if; thiscall with three arguments; ret 12.
+static __forceinline unsigned int BfmeFindLastNotOfNpos()
+{
+	_WriteBarrier();
+	return ~0U;
+}
+
+template <> __declspec(noinline)
+basic_string<char, char_traits<char>, allocator<char> >::size_type
+basic_string<char, char_traits<char>, allocator<char> >::find_last_not_of(
+	const char *s, size_type pos, size_type n) const
+{
+	typedef char CharType;
+	const size_type len = size();
+
+	if (len < 1)
+	{
+		_ReadWriteBarrier();
+		return npos;
+	}
+
+	const_iterator last = begin() + (min)(len - 1, pos) + 1;
+	const_reverse_iterator rlast = const_reverse_iterator(last);
+	const_reverse_iterator result = _STLP_STD::find_if(rlast, rend(),
+			_Not_within_traits<char_traits<char> >(
+				(const CharType *)s, (const CharType *)s + n));
+
+	return result != rend()
+		? (result.base() - 1) - begin()
+		: BfmeFindLastNotOfNpos();
+}
+
 // Retail's STLport leaves _String_base::_M_allocate_block's rejection path
 // empty -- a request for zero, or for more than max_size(), just leaves the
 // string unallocated. The vendored 4.5.3 copy calls _M_throw_length_error()
@@ -52,7 +93,6 @@
 // return-value copy of formatPlayerKVPairs below. Specialise the one
 // instantiation this file needs so it matches what shipped; the guard itself
 // is unchanged, so a rejected size still allocates nothing.
-_STLP_BEGIN_NAMESPACE
 template <> void _String_base<char, allocator<char> >::_M_allocate_block(size_t __n)
 {
 	if ((__n <= (max_size() + 1)) && (__n > 0))
@@ -1212,13 +1252,14 @@ void PSPlayerStats::reset( void )
 }
 
 //-------------------------------------------------------------------------
-#define CHECK(x) if (k == #x && generalMarker >= 0) { s.x[generalMarker] = atoi(v.c_str()); continue; }
+#define CHECK(x) if (k == #x && generalMarker >= 0) { bfme.x[generalMarker] = atoi(v.c_str()); continue; }
 
-// byte-exact reconstruction: game/GameEngine/Source/GameNetwork/GameSpy/Thread/GameSpyParsePlayerKVPairsThunk.cpp
-// ?parsePlayerKVPairs@GameSpyPSMessageQueueInterface@@ present-unmatched
+// BFME uses the same field layout as formatPlayerKVPairs below. The wire keys
+// include its side streaks and ladder history, rather than the ZH superweapons.
 PSPlayerStats GameSpyPSMessageQueueInterface::parsePlayerKVPairs( std::string kvPairs )
 {
 	PSPlayerStats s;
+	BfmePlayerStats &bfme = (BfmePlayerStats &)s;
 	kvPairs.append("\\");
 
 	Int offset = 0;
@@ -1261,7 +1302,6 @@ PSPlayerStats GameSpyPSMessageQueueInterface::parsePlayerKVPairs( std::string kv
 		CHECK(buildingsLost);
 		CHECK(buildingsBuilt);
 		CHECK(earnings);
-		CHECK(techCaptured);
 		CHECK(discons);
 		CHECK(desyncs);
 		CHECK(surrenders);
@@ -1274,125 +1314,136 @@ PSPlayerStats GameSpyPSMessageQueueInterface::parsePlayerKVPairs( std::string kv
 		CHECK(gamesOf8p);
 		CHECK(customGames);
 		CHECK(QMGames);
+		CHECK(currentWinStreaks);
+		CHECK(currentLossStreaks);
+		CHECK(worstLossStreaks);
+		CHECK(bestWinStreaks);
 		
 		if (k == "locale" && generalMarker < 0)
 		{
-			s.locale = atoi(v.c_str());
+			bfme.locale = atoi(v.c_str());
 			continue;
 		}
 
 		if (k == "random" && generalMarker < 0)
 		{
-			s.gamesAsRandom = atoi(v.c_str());
+			bfme.gamesAsRandom = atoi(v.c_str());
 			continue;
 		}
 
 		if (k == "options" && generalMarker < 0)
 		{
-			s.options = v;
+			bfme.options = v;
 			continue;
 		}
 
 		if (k == "systemSpec" && generalMarker < 0)
 		{
-			s.systemSpec = v;
+			bfme.systemSpec = v;
 			continue;
 		}
 
 		if (k == "fps" && generalMarker < 0)
 		{
-			s.lastFPS = atof(v.c_str());
+			bfme.lastFPS = atof(v.c_str());
 			continue;
 		}
 		
-		if (k == "lastGeneral" && generalMarker < 0)
+		if (k == "lastSide" && generalMarker < 0)
 		{
-			s.lastGeneral = atoi(v.c_str());
+			bfme.lastSide = atoi(v.c_str());
 			continue;
 		}
 		if (k == "genInRow" && generalMarker < 0)
 		{
-			s.gamesInRowWithLastGeneral = atoi(v.c_str());
-			continue;
-		}
-		if (k == "builtNuke" && generalMarker < 0)
-		{
-			s.builtNuke = atoi(v.c_str());
-			continue;
-		}
-		if (k == "builtSCUD" && generalMarker < 0)
-		{
-			s.builtSCUD = atoi(v.c_str());
-			continue;
-		}
-		if (k == "builtCannon" && generalMarker < 0)
-		{
-			s.builtParticleCannon = atoi(v.c_str());
+			bfme.gamesInRowWithLastSide = atoi(v.c_str());
 			continue;
 		}
 		if (k == "challenge" && generalMarker < 0)
 		{
-			s.challengeMedals = atoi(v.c_str());
+			bfme.challengeMedals = atoi(v.c_str());
 			continue;
 		}
 		if (k == "battle" && generalMarker < 0)
 		{
-			s.battleHonors = atoi(v.c_str());
+			bfme.battleHonors = atoi(v.c_str());
 			continue;
 		}
 
 		if (k == "WinRow" && generalMarker < 0)
 		{
-			s.winsInARow = atoi(v.c_str());
+			bfme.winsInARow = atoi(v.c_str());
 			continue;
 		}
 		if (k == "WinRowMax" && generalMarker < 0)
 		{
-			s.maxWinsInARow = atoi(v.c_str());
+			bfme.maxWinsInARow = atoi(v.c_str());
 			continue;
 		}
 
 		if (k == "LossRow" && generalMarker < 0)
 		{
-			s.lossesInARow = atoi(v.c_str());
+			bfme.lossesInARow = atoi(v.c_str());
 			continue;
 		}
 		if (k == "LossRowMax" && generalMarker < 0)
 		{
-			s.maxLossesInARow = atoi(v.c_str());
+			bfme.maxLossesInARow = atoi(v.c_str());
 			continue;
 		}
 
 		if (k == "DSRow" && generalMarker < 0)
 		{
-			s.desyncsInARow = atoi(v.c_str());
+			bfme.desyncsInARow = atoi(v.c_str());
 			continue;
 		}
 		if (k == "DSRowMax" && generalMarker < 0)
 		{
-			s.maxDesyncsInARow = atoi(v.c_str());
+			bfme.maxDesyncsInARow = atoi(v.c_str());
 			continue;
 		}
 
 		if (k == "DCRow" && generalMarker < 0)
 		{
-			s.disconsInARow = atoi(v.c_str());
+			bfme.disconsInARow = atoi(v.c_str());
 			continue;
 		}
 		if (k == "DCRowMax" && generalMarker < 0)
 		{
-			s.maxDisconsInARow = atoi(v.c_str());
+			bfme.maxDisconsInARow = atoi(v.c_str());
 			continue;
 		}
 
-		if (k == "ladderPort" && generalMarker < 0)
+		if (k == "best1v1LadderRank" && generalMarker < 0)
 		{
-			s.lastLadderPort = atoi(v.c_str());
+			bfme.best1v1LadderRank = atoi(v.c_str());
 			continue;
 		}
-		if (k == "ladderHost" && generalMarker < 0)
+		if (k == "best2v2LadderRank" && generalMarker < 0)
 		{
-			s.lastLadderHost = v;
+			bfme.best2v2LadderRank = atoi(v.c_str());
+			continue;
+		}
+
+		if (k == "lastLadderPlayed" && generalMarker < 0)
+		{
+			bfme.lastLadderPlayed = v;
+			continue;
+		}
+
+		if (k == "dateCreated" && generalMarker < 0)
+		{
+			bfme.dateCreated = v;
+			continue;
+		}
+		if (k == "gamesOn1_1_Ladder" && generalMarker < 0)
+		{
+			bfme.gamesOn1_1_Ladder = atoi(v.c_str());
+			continue;
+		}
+		if (k == "gamesOn2_2_Ladder" && generalMarker < 0)
+		{
+			bfme.gamesOn2_2_Ladder = atoi(v.c_str());
 			continue;
 		}
 
