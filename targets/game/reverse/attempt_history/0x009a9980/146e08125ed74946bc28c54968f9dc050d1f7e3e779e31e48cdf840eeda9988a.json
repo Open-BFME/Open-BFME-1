@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "146e08125ed74946bc28c54968f9dc050d1f7e3e779e31e48cdf840eeda9988a",
+  "symbol": "?Rva009A9980@@YAXPBEHIIPAEHII@Z",
+  "score_kind": "author-estimate",
+  "score": 0.69,
+  "source": "// ?Rva009A9980@@YAXPBEHIIPAEHII@Z\n// partial score=0.69 date=2026-09-27\nvoid __cdecl Rva009A9980(\n    const unsigned char *source, int sourcePitch, unsigned int step,\n    unsigned int sourceCount, unsigned char *destination, int destinationPitch,\n    unsigned int ratio, unsigned int outputCount)\n{\n    unsigned int denominator = ratio;\n    unsigned int halfRatio = denominator >> 1;\n    const unsigned char *sample = source;\n    unsigned char left = *sample;\n    sample += sourcePitch;\n    unsigned char *right = (unsigned char *)&ratio;\n    *right = *sample;\n    unsigned int total = destinationPitch * outputCount;\n    unsigned int output = 0;\n    unsigned int phase = 0;\n    if (total > 0) {\n        do {\n            destination[output] = (unsigned char)((left * (denominator - phase) + *right * phase + halfRatio) / denominator);\n            phase += step;\n            while (phase > denominator) {\n                left = *sample;\n                *right = sample[sourcePitch];\n                sample += sourcePitch;\n                phase -= denominator;\n            }\n            output += destinationPitch;\n        } while (output < total);\n    }\n}\n"
+}
