@@ -26,3 +26,13 @@ StringBase<char>::StringBase(const char *str, int len)
     else
         releaseBuffer();
 }
+
+template <>
+StringBase<wchar_t>::StringBase(const wchar_t *str, int len)
+{
+    m_data = 0;
+    if (len)
+        ensureUniqueBufferOfSize(len, false, str, len, 0, 0);
+    else
+        releaseBuffer();
+}
