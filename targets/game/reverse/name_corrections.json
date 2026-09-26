@@ -5968,5 +5968,15 @@
   "after_sha256": "e5a0f7cb86fe3d5e3037a6dcd47bd76d99af1da1c2965cac29e66a5985e8c888",
   "evidence": "docs/naming_evidence.md",
   "reason": "bank guess with no evidence; owner proven by matched W3DSnowManager::update 0x00725AC0 tail call via ILT 0x000092AF but no string/vtable/ZH twin names the method so the address token is kept"
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupPlayerInfo.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupPlayerInfoOverlaySystem.cpp",
+  "old_name": "BfmeStringLiteralBase",
+  "new_name": "Rva00627C40SetFlag",
+  "before_sha256": "b63ee2b997bb8cdbc9376eebed3b1e938ef3d22d64c6023d708e7c691a5f1eb6",
+  "after_sha256": "1ce3ed6e28e9ed1774b05574f9fb38ce82b551c2303d23b0cc2cd20b72ec126c",
+  "evidence": "targets/game/reverse/identity_evidence/0x004d99c0-false-donor-alignment.md",
+  "reason": "False donor/landed file-pair alignment: BfmeStringLiteralBase stays in PopupPlayerInfo.cpp for the unrelated PopulatePlayerInfoWindows argument shim; Rva00627C40SetFlag is the address-derived extern for the already-matched ReOpenPlayerInfo twin at 0x00627C40 in the new TU, not a rename."
  }
 ]
