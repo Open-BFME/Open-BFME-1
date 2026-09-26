@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
 // Open-BFME5: GODupBase's constructor, retail 0x001B0D20, 85 bytes. The body
 // carried only a machine byte-dump row; targets/game/reverse/reloc_names.csv holds the name
 // with identity=real.
@@ -28,7 +30,7 @@ public:
 	virtual void bfmeSlot0(void);
 
 private:
-	int m_bfmeState;
+	AsciiString m_name;
 };
 
 class GODupBase : public BfmeSnapshotBase, public SubsystemInterface

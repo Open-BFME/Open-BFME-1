@@ -108,7 +108,7 @@ public:
 	virtual void bfmeSlot0(void);
 
 private:
-	int m_bfmeState;
+	AsciiString m_name;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Recorder.h
