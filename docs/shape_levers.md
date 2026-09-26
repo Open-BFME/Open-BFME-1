@@ -21,6 +21,7 @@ a byte-exact landing on 2026-09-02. Each row states its own mechanism.
 | One ModRM/SIB byte: ours `[edi+edx]`, retail `[edx+edi]` | Add the pointer as an INTEGER on the right of the counter: `*(const char *)(i + (unsigned int)p)`. `p[i]`, `*(p+i)`, `i[p]` all give the other order. |
 | `mov ecx,esp` before `mov [esp+N],esp` (EH saved-esp) at a by-value string arg | The string class must be `class AsciiString : private StringBase<char>` with INLINE forwarding copy ctor/dtor to the base; use `inputs/reference/shims/stringinline/StringInline.h`. Out-of-line ctor/dtor on the string class itself transposes it on every flag. |
 | Scoped parser constructor remains 142/144 bytes versus retail 146, with the saved-`this` slot or EH state wrong despite matching registration calls | Model the receiver's real 12-byte registration base and put the temporary in its initializer: `: BfmeParserRegistrationVE(table, (AsciiString *)&AsciiString("chunk"), label ? label : &AsciiString::TheEmptyString)`. Use the existing `stringbaseascii/Common/AsciiString.h` shim; do not add a second string-base destructor or manually destroy a named local. The temporary ends after base initialization, before derived context/vptr stores. Matched witnesses: `Rva00450460ParserRegistrationCtor.cpp` (146 B), `Rva00352AB0ParserRegistrationCtor.cpp` (153 B with two extra fields), and `Rva0074A680ParserRegistrationCtor.cpp` (139 B with no extra field). Derive each literal, vptr and argument count independently; `registerParser` returns `UserParser*`, not `void*` or `void`. This is a receiver-initialization lifetime issue, distinct from the by-value string-argument row above. |
+| Scratch registers only (EAX/ECX/EDX), shape 1.000, and the mismatched temps after some point are all shifted one place along EAX→ECX→EDX (a vtable temp EDX where retail has EAX, a pushed load ECX where retail has EAX) | The cause is upstream. MSVC 7.1 hands scratch registers out round-robin, and a load pushed as a call argument only takes a turn when the source copies it first. Toggle the nearest pushed memory load ABOVE the first mismatch between `f(p->m)` and `T v = p->m; f(v)` (or the upstream accessor, e.g. `getObject()`). See "Scratch registers rotate" below: landed 0x00271630, 0x0021B310, 0x0029BDE0, 0x0024C420. |
 | Whole body one callee-saved register apart (esi/edi, esi/edx) | Register assignment follows local DEFINITION ORDER. Define locals in the order retail first materializes each value (`const T *q = s2; const T *p = s1;`). |
 | A large matrix consumer is byte-exact except two independent x87 products exchange their world/view elements (`world[0][0]*view[0][2]` versus `world[0][3]*view[3][2]`) | Keep the observed matrix-column dot product and read only `world[0][0]` through `*(const volatile float *)&world[0][0]` before its multiply. MSVC 7.1 then emits the retail product order without an extra instruction; swapping the terms in the expression did not change its schedule. At `SortingRendererClass::Flush_Sorting_Pool` (0x00939FC0), this removed the final four differing bytes of a 2,122-byte BFME renderer body. The matched 7-byte `DynamicIBAccessClass::Get_Default_Index_Count` callee at 0x0091CD70 resolves its otherwise-unpinned REL32, and all 37 canonical TU claims verify. |
 | A callback matches except its private helper uses EDI for scan data instead of retail's EAX-to-ESI handoff, and STLport list insertion calls global `operator new` rather than `__new_alloc::allocate` | Keep callback and helper in one translation unit. Do not cache the helper's healer pointer across checks; reload it for each virtual timestamp call, materialize the body receiver before the frame value, and use the status byte for the off-map test. At 0x001EE670 this restored the compiler-private EAX/EBX ABI and both timestamp sequences; `if (maxHealth <= health) return false; return true;` preserved the retail unordered-float branch. At 0x001EED80 use the existing direct 12-byte STLport list-node insertion pattern (`Bfme5ListSurgery.cpp`) so allocation binds to 0x0082E540 rather than global new. Both bodies byte-verified in `AutoHealBehavior_playerScan.cpp` (223 B and 66 B). |
@@ -1436,3 +1437,47 @@ with the file's existing inline level. Retail was built `/O2`; an allocation
 residue comes from the source (live ranges, temporaries, what is inlined into
 the body), not from the switches. `flag_sweep.py` takes ~6 s per body, so run
 it once to rule a switch out rather than spending a session on it.
+
+## Scratch registers rotate: toggle the pushed load upstream (measured 2026-09-26)
+
+MSVC 7.1 gives EAX, ECX and EDX to short-lived temporaries round-robin, in
+program order across the whole function. The pointer is not reset at calls
+or at block boundaries. A temp skips a register another value holds over its
+live range, so a vtable load skips ECX while ECX holds the receiver. A value
+that only feeds a `test`/`cmp` branch takes EAX without moving the pointer.
+The pointer counts code-generation temporaries, including ones a later fold
+removes (`p->m++` becomes `inc [eax]` and still moves it). Probe TUs,
+listings and the full experiment table are in
+`docs/analysis/allocation_residue.md`.
+
+So when a shape-1.000 bank misses only scratch registers, and every
+mismatched temp from some point on is shifted one place along
+EAX→ECX→EDX→EAX, respelling the mismatched instruction cannot work. The
+state was set earlier. The one lever that moves it without changing a byte
+is the spelling of a call argument loaded from memory:
+
+```cpp
+f(m_owner);                 // mov r,[esi+N]; push r -- no rotation step
+Object *o = m_owner; f(o);  // same two instructions -- one rotation step
+f(getOwner());              // inline accessor: same as the local
+```
+
+The effect is binary: `rot(rot(x))` gives the same code as `rot(x)`. Copying
+a parameter or a value loaded after the mismatch does nothing. Take the
+nearest pushed load above the first mismatch (other arguments of the same
+call count) and try the other spelling. Where Zero Hour writes an accessor,
+use it.
+
+| body | pushed load toggled | control (direct) |
+|---|---|---|
+| `AIUpdateInterface::privateMoveToObject` 0x00271630 (70 B) | `getObject()` into the ActionManager test; the `__fastcall` table adapter became unnecessary | 6 bytes (all three vtable temps) |
+| `Rva21B310RelationshipCapacity::accepts` 0x0021B310 (75 B) | `getOwner()` into `getRelationship`; the bank's `volatile` became unnecessary | 2 bytes |
+| `Gen0029BDE0::walk` 0x0029BDE0 (98 B) | local `key` into `isEquivalentTo` | 4 bytes |
+| `Rva0024C420Owner::notifyNested` 0x0024C420 (210 B) | local for the sibling argument `*(this-0x18)` | 2 bytes |
+
+This lever does not reach callee-saved swaps (ESI/EDI, EBX/EBP), stack-slot
+or SIB residues. It also does nothing when the mismatch is in the function's
+first statement (0x0020DF90), because there is no pushed load above it to
+toggle. The `__fastcall` dummy-EDX adapter (RegallocLever-2/3) is the same
+mechanism seen from the other side: its dummy argument is one more
+allocation.
