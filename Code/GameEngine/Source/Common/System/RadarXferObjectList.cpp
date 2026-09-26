@@ -276,8 +276,8 @@ protected:
 	RadarObject *m_localObjectList;
 	float m_field18;
 	float m_field1C;
-	float m_field20;
-	float m_field24;
+	float m_xSample;
+	float m_ySample;
 	RadarEvent m_event[MAX_RADAR_EVENTS];
 	Int m_nextFreeRadarEvent;
 	Int m_lastRadarEvent;
@@ -286,7 +286,7 @@ protected:
 	unsigned char m_pad1438[0x1454 - 0x1438];
 	unsigned char m_field1454[0x10];
 	Bool m_field1464;
-	UnsignedInt m_field1468;
+	UnsignedInt m_queueTerrainRefreshFrame;
 };
 
 struct RadarXferVersion : public XferVersion
@@ -350,13 +350,13 @@ void Radar::xfer( Xfer *xfer )
 
 	xfer->slot27( &m_field18 );
 	xfer->slot27( &m_field1C );
-	xfer->slot27( &m_field20 );
-	xfer->slot27( &m_field24 );
+	xfer->slot27( &m_xSample );
+	xfer->slot27( &m_ySample );
 
 	xfer->slot17( m_field1454 );
 	xfer->xferBool( &m_field1464 );
 	xfer->slot17( m_field1454 );
-	xfer->xferUnsignedInt( &m_field1468 );
+	xfer->xferUnsignedInt( &m_queueTerrainRefreshFrame );
 
 	if( version.m_currentVersion >= 2 )
 	{

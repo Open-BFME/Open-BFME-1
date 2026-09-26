@@ -10,10 +10,10 @@ public:
 
 private:
 	char m_unmodeled04[0x1468 - 4];
-	unsigned int m_reconstructTerrain;
+	unsigned int m_queueTerrainRefreshFrame;
 };
 
 void Radar::refreshTerrain(TerrainLogic *)
 {
-	m_reconstructTerrain = 0;
+	m_queueTerrainRefreshFrame = 0;
 }
