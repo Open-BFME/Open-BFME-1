@@ -1,6 +1,6 @@
 // ?method@Rva0091B750@@QAEXIABU_D3DCAPS8@@@Z
 // partial score=0.9167 date=2026-09-24
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/sweep
 // Retail RVA 0x0091B750; address-derived identity pending independent naming evidence.
 
 #include <d3d8.h>

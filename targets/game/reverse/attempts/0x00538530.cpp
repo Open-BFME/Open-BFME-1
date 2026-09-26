@@ -1,6 +1,6 @@
 // ?rva00538530@BfmeAptScreenOnlineCustomMatch@@QAEXXZ
 // partial score=0.93 date=2026-09-20
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline
 // stlport
 //
 // BfmeAptScreenOnlineCustomMatch ping labels, retail 0x00538530, 279 bytes.

@@ -1,6 +1,6 @@
 // ?calcPercent@@YA?AVUnicodeString@@ABUOverallStats@@HV1@@Z
 // partial score=0.27 date=2026-09-18
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringbaseunicode /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringbaseunicode /Igame/Libraries/Source/WWVegas/WWLib
 // Zero Hour Generals twin: WOLWelcomeMenu.cpp calcPercent.
 // The BFME static OverallStats objects are the three retail blocks at
 // 0x012F48CC, 0x012F48EC and 0x012F490C.

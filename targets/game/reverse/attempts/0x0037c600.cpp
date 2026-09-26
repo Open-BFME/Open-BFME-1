@@ -1,6 +1,6 @@
 // ?bfmeStop@BfmeStopF@@QAEXXZ
 // partial score=0.75 date=2026-09-14
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // BfmeStopF::bfmeStop — retail 0x0037C600 (508B). Called by the clear
 // bodies in Bfme5ClearsWithTails.cpp and Bfme5GuardedStopClear.cpp through
 // ILT 0x00015E2E.

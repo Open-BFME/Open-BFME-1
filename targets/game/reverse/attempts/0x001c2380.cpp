@@ -2,9 +2,9 @@
 // partial score=0.37 date=2026-09-22
 // Candidate for the multi-piece Object boundary distance body at 0x001C2380.
 // The owner and ABI are established from the caller and the adjacent Object helper.
-// cl: /O2 /Ob2 /G6 /FAsc /Fabuild/target-001c2380/Rva001C2380Distance.cod /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWDebug
+// cl: /O2 /Ob2 /G6 /FAsc /Fabuild/target-001c2380/Rva001C2380Distance.cod /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWDebug
 
-#include "../../Code/Libraries/Source/WWVegas/WWMath/matrix3d.h"
+#include "../../../../game/Libraries/Source/WWVegas/WWMath/matrix3d.h"
 
 typedef int Int;
 typedef float Real;

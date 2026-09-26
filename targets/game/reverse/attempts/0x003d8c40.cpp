@@ -3,7 +3,7 @@
 // "?bfmePickBridge@Pathfinder@@QAE_NABVVector3@@0PAV2@@Z"
 // Probe copy of the banked attempt, with the three retail callee contracts
 // declared under their actual classes.
-// cl: /DNDEBUG /MD /EHs-c- /Ireference/shims/pathfind /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHs-c- /Iinputs/reference/shims/pathfind /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 
 #include "vector3.h"
 

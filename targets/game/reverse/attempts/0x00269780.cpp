@@ -1,6 +1,6 @@
 // ?d_00269780@@YAXXZ
 // partial score=0.3729508197 date=2026-09-25
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Retail 0x00269780 consumes special-power target records from a result vector.
 
 #include "ascii_string.h"

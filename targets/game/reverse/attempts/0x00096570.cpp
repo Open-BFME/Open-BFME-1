@@ -1,6 +1,6 @@
 // ?solve@PartitionSolver@@QAEXXZ
 // partial score=0.86 date=2026-09-25
-// cl: /DNDEBUG /MD /EHsc /ICode/GameEngine/Include/Precompiled /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Source/Common /ICode/Libraries/Source/WWVegas/WWMath
+// cl: /DNDEBUG /MD /EHsc /Igame/GameEngine/Include/Precompiled /Igame/GameEngine/Source/Common/System /Igame/GameEngine/Source/Common /Igame/Libraries/Source/WWVegas/WWMath
 // stlport
 #include <algorithm>
 /*
@@ -57,7 +57,7 @@ Some info about partioning problems:
 #include "prerts.h"
 #include "coord.h"	// This must go first in EVERY cpp file int the GameEngine
 
-#include "../../Code/GameEngine/Source/GameLogic/AI/partition_solver.h"
+#include "../../../../game/GameEngine/Source/GameLogic/AI/partition_solver.h"
 
 static Bool greater_than(PairObjectIDAndUInt a, PairObjectIDAndUInt b)
 {

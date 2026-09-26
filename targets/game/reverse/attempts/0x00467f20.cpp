@@ -1,6 +1,6 @@
 // ?d_00467f20@@YAXXZ
 // partial score=0.682594 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Address-derived owner/member: caller 0x0046E850 reaches this body via an ILT
 // thunk. Retail accepts an index below twelve and operates on the APT string
 // stored at owner+0xA8+index*0x14.

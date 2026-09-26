@@ -1,6 +1,6 @@
 // ?d_006a28d0@@YAXXZ
 // partial score=0.48 date=2026-09-17
-// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
+// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline
 
 // Open-BFME5: AudioManager::xferAudioHandle, retail 0x006A28D0, 502 bytes.
 // The MilesAudioManager vtable at 0x0111C0C0 names this slot 82.  The three

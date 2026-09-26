@@ -1,6 +1,6 @@
 // ?build@Gen_00371340@@QAEPAVObject@@PAVThingTemplate@@HPAX@Z
 // partial score=0.92 date=2026-09-18
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // The three base-building actions:
 //
 //   0x002F16C0  doBuildBaseBuilding        action 383, BUILD_BASE_BUILDING

@@ -1,6 +1,6 @@
 // ?d_00462540@@YAXXZ
 // partial score=0.9 date=2026-09-10
-// cl: /DNDEBUG /DWIN32 /MD /Ireference/shims/stringinline /D_STLP_USE_STATIC_LIB /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /Iinputs/reference/shims/stringinline /D_STLP_USE_STATIC_LIB /EHsc
 // stlport
 //
 // Retail 0x00462540 is the STLport for_each operation reached by

@@ -1,6 +1,6 @@
 // ?d_002a4f90@@YAXXZ
 // partial score=0.31 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // BFME repair-state setter reconstructed from the ZH twin and retail offsets.
 
 #include "ascii_string.h"

@@ -1,6 +1,6 @@
 // ?d_00234e60@@YAXXZ
 // partial score=0.6 date=2026-09-23
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /Ireference/shims/stlp_nodealloc /Ireference/shims/sweep
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/GameEngine/Include/Precompiled /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep
 // stlport
 // Open-BFME: address-derived HordeContain formation refresh body, retail 0x00234E60.
 

@@ -2,7 +2,7 @@
 // partial score=0.84 date=2026-09-20
 // scratch only: BFME StringBase ABI view for GameTextManager::fetch.
 // Retail target: 0x00437F60, 622 bytes.  Not a production source.
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep
 // stlport
 
 typedef int Int;

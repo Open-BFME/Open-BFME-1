@@ -1,6 +1,6 @@
 // ?releaseSlot@Rva006A5080Owner@@QAEXPAURva006A5080Slot@@@Z
 // partial score=0.28719 date=2026-09-25
-// cl: /O2 /Ob2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Ireference/shims/stlp_nodealloc
+// cl: /O2 /Ob2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stlp_nodealloc
 // stlport
 // Scratch native reconstruction of retail 0x006A5080 (484 bytes). Owner and
 // slot names are address-derived; the caller passes a 64-byte slot in the

@@ -1,6 +1,6 @@
 // ?evaluateContextCommand@CommandTranslator@@AAE?AW4CommandEvaluateType@@PAVDrawable@@PBVCoord3D@@W42@@Z
 // partial score=0.8894457547169812 date=2026-09-23
-// cl: /O2 /Ob2 /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib /Ireference/shims/stringbaseunicode
+// cl: /O2 /Ob2 /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/stringbaseunicode
 // stlport
 // Ported from GeneralsMD/Code/GameEngine/Source/GameClient/MessageStream/CommandXlat.cpp.
 // Copyright 2025 Electronic Arts Inc.; GPL-3.0-or-later, as in the vendored source.

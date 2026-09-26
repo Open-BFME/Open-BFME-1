@@ -1,6 +1,6 @@
 // ?bfmeFlush15@SkirmishScreenState@@QAEXXZ
 // partial score=0.93 date=2026-09-20
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 #include "ascii_string.h"
 

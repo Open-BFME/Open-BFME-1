@@ -1,9 +1,9 @@
 // ?d_0073df50@@YAXXZ
 // partial score=0.66 date=2026-09-25
-// cl: /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Include /ICode/Libraries/Source /ICode/Libraries/Source/WWVegas/WWDebug /ICode/Libraries/Source/WWVegas/WWSaveLoad
-#include "../../Code/Libraries/Source/WWVegas/WWMath/sphere.h"
-#include "../../Code/Libraries/Source/WWVegas/WWMath/frustum.h"
-#include "../../Code/Libraries/Source/WWVegas/WWMath/colmath.h"
+// cl: /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Include /Igame/Libraries/Source /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad
+#include "../../../../game/Libraries/Source/WWVegas/WWMath/sphere.h"
+#include "../../../../game/Libraries/Source/WWVegas/WWMath/frustum.h"
+#include "../../../../game/Libraries/Source/WWVegas/WWMath/colmath.h"
 
 class CameraClass
 {

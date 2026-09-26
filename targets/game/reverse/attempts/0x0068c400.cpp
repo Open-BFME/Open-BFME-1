@@ -7,7 +7,7 @@
 // The ordered LANAPI dispatch table proves the request-join identity. The
 // packed join payload, extra CRC and BFME LAN layouts are carried by the
 // included BFME shim/source; the retail EH/string schedule is still open.
-#include "../../Code/GameEngine/Source/GameNetwork/lanapi.cpp"
+#include "../../../../game/GameEngine/Source/GameNetwork/lanapi.cpp"
 
 static __forceinline Int Rva0068C400FindOpenSlot(LANGameInfo *game, Bool canJoin)
 {

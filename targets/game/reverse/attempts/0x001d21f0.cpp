@@ -12,7 +12,7 @@ struct AsciiStringBuffer
 // Layout witness: the canonical Zero Hour-compatible declaration is used by
 // ObjectCommandButtons.cpp for this same command-set lookup path.  The local
 // buffer view above remains only for the retail length tests at +0/+4.
-#include "../../Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../../game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Overridable
 {

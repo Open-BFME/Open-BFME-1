@@ -1,6 +1,6 @@
 // ?Rva00510DC0@@YAXPAVUnicodeString@@PAVAsciiString@@HEI@Z
 // partial score=0.9738 date=2026-09-25
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringinline
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline
 // Tooltip display builder at 0x00510DC0 (382 B). Its only caller is
 // Mouse::drawTooltip (0x005A6090) through ILT 0x00033280, which passes the
 // tooltip text, font name, size, bold flag and packed ARGB colour. The body

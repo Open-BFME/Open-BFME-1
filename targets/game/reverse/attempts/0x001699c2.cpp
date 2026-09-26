@@ -1,6 +1,6 @@
 // ?recruitSpecificAITeam@AIPlayer@@UAEXPAVTeamPrototype@@M@Z
 // partial score=0.34 date=2026-09-24
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHa /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHa /Igame/Libraries/Source/WWVegas/WWLib
 // BFME reconstruction of AIPlayer::recruitSpecificAITeam.
 
 #include "string_base.h"

@@ -1,6 +1,6 @@
 // ?draw@W3DDisplay@@UAEXXZ
 // partial score=0.94 date=2026-09-24
-// cl: /DNDEBUG /MD /EHs-c- /Ireference/shims/sweep
+// cl: /DNDEBUG /MD /EHs-c- /Iinputs/reference/shims/sweep
 #include <windows.h>
 void * __cdecl operator new[](unsigned);
 void __cdecl operator delete[](void *);

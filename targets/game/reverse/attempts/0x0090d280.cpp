@@ -1,6 +1,6 @@
 // ?method@Rva0090D280@@QAEXXZ
 // partial score=0.5610632183908046 date=2026-09-23
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 // Retail 0090D280..0090D7AA, switch data 0090D7AC..0090D7EF.
 // Owner is address-derived: ctor 0090E470 installs VA 0113A668; slot 3.
 // BFME surface wrappers below have the retail one-pointer ABI, unlike ZH SurfaceClass.

@@ -1,6 +1,6 @@
 // ?evaluateSkirmishSuppliesWithinDistancePerimeter@ScriptConditions@@IAE_NPAVParameter@@000@Z
 // partial score=0.55 date=2026-09-10
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
 // The retail body inlines the parameter-mask and player-list calls.  Keep
 // those ABI edges explicit while recovering the surrounding condition in C++.
 #include "StringInline.h"

@@ -5,7 +5,7 @@
 // This TU intentionally keeps the owning class address-labelled.  The
 // resetBuildLists declaration below is the landed, independently matched
 // RVA 0x001988D0 contract; it is not a guessed method on this owner.
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringbaseascii/Common /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringbaseascii/Common /Igame/Libraries/Source/WWVegas/WWLib
 
 #include "AsciiString.h"
 

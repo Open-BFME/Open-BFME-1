@@ -3,7 +3,7 @@
 // ?DoXfer@GeometryInfo@@UAEXAAVXfer@@@Z
 // GeometryInfo vtable 0x01086138 slot 3; same table is installed by the matched constructors.
 // Element declaration follows the matched GeometryParseType and vector copy/fill helpers.
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include/Common /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/GameEngine/Source/Common/System /Igame/GameEngine/Include/Common /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 #include "snapshot.h"
 #include "xfer.h"
 #include "coord3d.h"

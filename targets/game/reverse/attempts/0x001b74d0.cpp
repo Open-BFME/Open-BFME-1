@@ -1,6 +1,6 @@
 // ?xferSelfAndCurLocoPtr@Rva001B74D0Owner@@QAEXPAVXfer@@PAPAX@Z
 // partial score=0.4393 date=2026-09-24
-// cl: /O2 /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /O2 /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 
 #include "ascii_string.h"

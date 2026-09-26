@@ -1,6 +1,6 @@
 // ?doTeamUseCommandButtonOnNearestEnemy@ScriptActions@@IAEXABVAsciiString@@0@Z
 // partial score=0.8 date=2026-09-09
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline
 // stlport
 // TEAM_USE_COMMANDBUTTON_ON_NEAREST_ENEMY_UNIT at retail RVA 0x002FB170.
 // The executeAction caller names this handler for

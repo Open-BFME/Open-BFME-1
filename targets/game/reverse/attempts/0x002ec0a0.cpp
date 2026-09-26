@@ -1,6 +1,6 @@
 // ?rva002EC0A0ParseTokenEventList@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z
 // partial score=0.22 date=2026-09-25
-// cl: /O2 /EHsc /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/GameEngine/Source/Common/System /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /O2 /EHsc /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Include /Igame/GameEngine/Include/Precompiled /Igame/GameEngine/Source/Common/System /Igame/Libraries/Source/WWVegas/WWLib
 // Retail 0x002EC0A0. Owner layout and helper contracts are read from retail.
 // stlport
 

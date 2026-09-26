@@ -1,6 +1,6 @@
 // ?update@WindowManager@@UAEXXZ
 // partial score=0.35 date=2026-09-10
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/campaignmanagerascii /Ireference/shims/stringbaseunicode /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/campaignmanagerascii /Iinputs/reference/shims/stringbaseunicode /Igame/Libraries/Source/WWVegas/WWLib
 //
 // WindowManager::update, retail RVA 0x0046E850 (813 bytes).
 //

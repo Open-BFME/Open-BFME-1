@@ -1,6 +1,6 @@
 // ?format_0046CF80@Rva0046CF80Owner@@QAEPADPBD@Z
 // partial score=0.65 date=2026-09-24
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringinline /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline /D_STLP_USE_STATIC_LIB
 // stlport
 //
 // WindowManager stores each player-color callback with the argument that the

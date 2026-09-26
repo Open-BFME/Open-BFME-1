@@ -1,6 +1,6 @@
 // ?xfer@MilesAudioManager@@UAEXPAVXfer@@@Z
 // partial score=0.52 date=2026-09-24
-// cl: /O2 /Ob1 /I. /ICode/Libraries/Source/WWVegas/WWLib /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB
+// cl: /O2 /Ob1 /I. /Igame/Libraries/Source/WWVegas/WWLib /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
 // MilesAudioManager::xfer at RVA 006B4D30, secondary interface this = complete +8.
@@ -11,8 +11,8 @@
 #include <vector>
 #include <list>
 #include <deque>
-#include "Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
-#include "reference/shims/stringbaseunicode/Common/UnicodeString.h"
+#include "../../../../game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../../inputs/reference/shims/stringbaseunicode/Common/UnicodeString.h"
 inline AsciiString::~AsciiString(){((StringBase<char>*)this)->releaseBuffer();}
 inline UnicodeString::~UnicodeString(){((StringBase<wchar_t>*)this)->releaseBuffer();}
 class Xfer;

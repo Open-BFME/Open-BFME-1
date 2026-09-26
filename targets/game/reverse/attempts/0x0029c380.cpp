@@ -1,6 +1,6 @@
 // ?d_0029c380@@YAXXZ
 // partial score=0.5675675676 date=2026-09-25
-// cl: /ICode/GameEngine/Source/GameLogic/Object
+// cl: /Igame/GameEngine/Source/GameLogic/Object
 class Rva000FA8B0Key;
 class Player;
 #define OBJECT_TU_MEMBERS Player *getControllingPlayer() const;

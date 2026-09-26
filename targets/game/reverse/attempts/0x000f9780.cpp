@@ -1,6 +1,6 @@
 // ?rvaCalcBuildProgress@Rva000F9780Owner@@QAEMH@Z
 // partial score=0.6 date=2026-09-21
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib
 
 // Retail 0x000F9780, 125 bytes, __thiscall taking one Int index and cleaning
 // 4 bytes (ret 4). Uses the SAME 0x60-byte record vector as the sibling

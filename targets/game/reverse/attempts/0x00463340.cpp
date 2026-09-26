@@ -1,6 +1,6 @@
 // ?bfmeStep1_004647E0@@YAXXZ
 // partial score=0.36 date=2026-09-22
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Scratch reconstruction for the ASM-backed S3 helper at retail RVA 0x00463340.
 
 class BFMERetailAsciiString

@@ -1,6 +1,6 @@
 // ?parseModuleName@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z
 // partial score=0.72 date=2026-09-09
-// cl: /DNDEBUG /MD /EHsc /Oy- /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Oy- /Igame/Libraries/Source/WWVegas/WWLib
 // BFME ThingTemplate::parseModuleName at retail RVA 0x001458A0.
 //
 // The callback is registered by ThingTemplate's Behavior/Body/Draw/

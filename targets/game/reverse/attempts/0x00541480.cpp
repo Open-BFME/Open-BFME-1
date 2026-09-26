@@ -1,6 +1,6 @@
 // ?d_00541480@@YAXXZ
 // partial score=0.224273268 date=2026-09-22
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // PARTIAL research draft, NOT a matched or behavior-complete implementation.
 // RVA 00541480, code extent 11593. See build/gap_00540910/GAP.md.

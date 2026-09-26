@@ -1,6 +1,6 @@
 // ?update@AIAttackState@@UAE?AW4StateReturnType@@XZ
 // partial score=0.22 date=2026-09-23
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 #include "ascii_string.h"
 
 typedef bool Bool;

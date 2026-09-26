@@ -1,6 +1,6 @@
 // ?doTeamGarrisonNearestBuilding@ScriptActions@@IAEXABVAsciiString@@@Z
 // partial score=0.58 date=2026-09-10
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringinline
 //
 // ScriptActions::doTeamGarrisonNearestBuilding, retail RVA 0x00302240.
 // The executeAction TEAM_GARRISON_NEAREST_BUILDING arm names this operation.

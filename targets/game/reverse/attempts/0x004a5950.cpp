@@ -1,6 +1,6 @@
 // ?updateContextCommand@ControlBar@@AAEXXZ
 // partial score=0.53 date=2026-09-18
-// cl: /DNDEBUG /MD /EHsc /Ireference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Include
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Include
 // Open-BFME: ControlBar::updateContextCommand, retail 0x004A5950 (959 bytes).
 //
 // The method is private in the vendored ControlBar.h.  Its caller is the

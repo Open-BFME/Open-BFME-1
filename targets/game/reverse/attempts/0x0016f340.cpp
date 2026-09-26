@@ -1,6 +1,6 @@
 // ?d_0016f340@@YAXXZ
 // partial score=0.357143 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath
 #include "coord3d.h"
 inline void Coord3D::set(const Coord3DBase *source)
 { x=source->x; y=source->y; z=source->z; }

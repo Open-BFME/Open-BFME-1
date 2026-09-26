@@ -1,6 +1,6 @@
 // ?updateObjectGlobal@Rva002E4030LuaHost@@QAEXPAURva002E32A0IdOwner@@@Z
 // partial score=0.95 date=2026-09-06
-// cl: /O2 /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/stringinline
+// cl: /O2 /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringinline
 
 // Lua object-global refresh at retail RVA 0x002E4030.
 // The host stores Lua state pointers at this+0x08 and this+0x0c and receives an Object pointer.

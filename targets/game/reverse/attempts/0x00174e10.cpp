@@ -1,6 +1,6 @@
 // ?d_00174e10@@YAXXZ
 // partial score=0.26021798365122617 date=2026-09-22
-// cl: /Ob1 /ICode/Libraries/Source/WWVegas/WWMath
+// cl: /Ob1 /Igame/Libraries/Source/WWVegas/WWMath
 // Retail RVA 00174E10, 734 bytes. Opaque state view: no class identity claim.
 // Full control flow from retail; hub contract docs/analysis/0x00172600.md.
 // Helpers 0016B010 and 00174CC0 are visible static C++ for compiler-private ABI.

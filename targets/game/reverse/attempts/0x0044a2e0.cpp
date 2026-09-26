@@ -1,6 +1,6 @@
 // ?rva0044a2e0@Rva00449790Owner@@QAEXXZ
 // partial score=0.92 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline
 // stlport
 // Address-derived reconstruction of the embedded BFME cursor-animation owner.
 // Retail 0x0044A2E0 (757 bytes), reached only through ILT 0x00045570 from

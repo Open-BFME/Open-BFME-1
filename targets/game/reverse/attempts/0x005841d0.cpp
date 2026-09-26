@@ -1,6 +1,6 @@
 // ?rva005841D0@BannerUI@@QAEHXZ
 // partial score=0.92 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/campaignmanagerascii /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/campaignmanagerascii /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 
 // FILE: BannerUIRva005841D0.cpp //////////////////////////////////////////////

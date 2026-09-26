@@ -1,6 +1,6 @@
 // ?bfmeStepBZ@BfmeOwnBZ@@QAEDXZ
 // partial score=0.32 date=2026-09-21
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline
 
 // Open-BFME5: BfmeOwnBZ::bfmeStepBZ, retail 0x002579D0, 529 bytes.
 //

@@ -2,7 +2,7 @@
 // partial score=0.15 date=2026-09-23
 // Retail 0x001752A0, 943 bytes. The owner remains address-derived.
 // The three-argument cdecl ABI is witnessed by callers 0x00177A90 and 0x00182F70.
-// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 
 #include <math.h>
 

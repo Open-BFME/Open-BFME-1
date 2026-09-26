@@ -1,6 +1,6 @@
 // ?call@Gen0002B7F6@@QAEXPAVExperienceLevelData@@PAVObject@@_N@Z
 // partial score=0.898 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Ireference/shims/stlp_nodealloc
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stlp_nodealloc
 // stlport
 // BFME ExperienceLevelSystem::update, retail 0x0037F4C0.  The pending list at
 // +0x1C holds ObjectID, level-data pointer and effect flag records.  Phase 5

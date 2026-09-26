@@ -1,6 +1,6 @@
 // ?release@DcPool@@QAEXPAX@Z
 // partial score=0.98 date=2026-09-02
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob0 /Ireference/shims/sweep
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob0 /Iinputs/reference/shims/sweep
 #include <windows.h>
 
 

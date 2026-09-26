@@ -5,7 +5,7 @@
 
 #include <string.h>
 #include <vector>
-#include "../../Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../../game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 extern const char Rva006A16B0Empty[];
 

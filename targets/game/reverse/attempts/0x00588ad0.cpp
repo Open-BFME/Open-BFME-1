@@ -1,6 +1,6 @@
 // ?select@Rva00588AD0Selection@@QAEXH@Z
 // partial score=0.26241135 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/GameEngine/Source/GameClient
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/GameEngine/Source/GameClient
 
 // The dump boundary and indexed record layout are known, but the owning class
 // is not. Keep the address in the type so this implementation makes no owner

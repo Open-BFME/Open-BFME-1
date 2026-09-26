@@ -1,6 +1,6 @@
 // ??0Rva000FB210Element@@QAE@PAVObject@@@Z
 // partial score=0.73 date=2026-09-23
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob2 /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x000FA1B0/350: constructor for the address-derived 96-byte
 // Rva000FB210Element record.  The matching copy constructor at 0x000F9FF0 proves

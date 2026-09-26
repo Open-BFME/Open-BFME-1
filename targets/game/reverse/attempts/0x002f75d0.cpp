@@ -2,7 +2,7 @@
 // partial score=0.95 date=2026-09-04
 // ?doTeamForceEmotion@ScriptActions@@IAEXPAVParameter@@W4EmotionType@@M@Z
 // partial score=0.95 date=2026-09-03
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringinline
 // Open-BFME: TEAM_FORCE_EMOTION at retail RVA 0x002F75D0.
 
 #include "StringInline.h"

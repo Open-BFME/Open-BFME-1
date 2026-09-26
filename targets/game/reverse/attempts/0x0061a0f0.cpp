@@ -1,6 +1,6 @@
 // ?dispatch@Rva0061A0F0Owner@@QAEXXZ
 // partial score=0.52112676 date=2026-09-25
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 #include "ascii_string.h"
 template <> inline int StringBase<char>::getLength() const { return m_data ? m_data->length : 0; }
 inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }

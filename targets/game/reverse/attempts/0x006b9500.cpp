@@ -9,7 +9,7 @@
 
 typedef unsigned int AudioHandle;
 
-#include "../../Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../../game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class AudioEventInfo
 {

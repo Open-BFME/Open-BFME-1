@@ -1,6 +1,6 @@
 // ?onEnter@GiantBirdGuardOuterState@@UAE?AW4StateReturnType@@XZ
 // partial score=0.9923809523809524 date=2026-09-24
-// cl: /DNDEBUG /MD /EHsc /D_STLP_NO_EXCEPTIONS /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// cl: /DNDEBUG /MD /EHsc /D_STLP_NO_EXCEPTIONS /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // Constructor 0x002C04D0 installs vtable 0x010C7C28. Slot 4 reaches this body through ILT 0x00040142. The complete destructor row identifies GiantBirdGuardOuterState.
 // ?onEnter@GiantBirdGuardOuterState@@UAE?AW4StateReturnType@@XZ
 

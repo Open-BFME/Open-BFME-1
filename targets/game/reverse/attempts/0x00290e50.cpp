@@ -2,7 +2,7 @@
 // partial score=0.7558479532163742 date=2026-09-23
 // ?update@EmotionTrackerUpdate@@UAE?AW4UpdateSleepTime@@XZ
 // Rebuilt from the banked body; measured probe evidence is in astra_R/PROGRESS.md.
-// cl: /DNDEBUG /MD /EHsc /I. /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /I. /Igame/Libraries/Source/WWVegas/WWLib
 //
 // EmotionTrackerUpdate::update, retail RVA 0x00290E50, 2052 bytes.
 //
@@ -442,7 +442,7 @@ private:
 };
 
 
-#include "Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../../game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
 inline AsciiString::~AsciiString() { ((StringBase<char>*)this)->releaseBuffer(); }
 class ThingTemplate;
 class BfmeThingFactory { public: const ThingTemplate *findTemplate(const AsciiString&); };

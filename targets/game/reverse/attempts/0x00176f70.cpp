@@ -1,6 +1,6 @@
 // ?onEnter@AIAttackMeleeApproachState@@UAE?AW4StateReturnType@@XZ
 // partial score=0.996 date=2026-09-24
-// cl: /Ob1 /ICode/Libraries/Source/WWVegas/WWMath
+// cl: /Ob1 /Igame/Libraries/Source/WWVegas/WWMath
 // AIAttackMeleeApproachState::onEnter, retail RVA 0x00176F70 (747 bytes).
 // Owner: vtable 0x0109A6C0 slot 4, its matched deleting destructor 0x00185450
 // and the matched AttackMeleeStateMachine constructor 0x00180EE0 that builds

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // partial score=0.55 date=2026-09-24
 // Caller 0x00441EBF supplies DisplayString in ECX, a UnicodeString record at
 // [ESP+4], and the line start in EBX; row identity remains address-derived.

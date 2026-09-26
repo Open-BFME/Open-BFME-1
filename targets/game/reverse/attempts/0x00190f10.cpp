@@ -1,6 +1,6 @@
 // ?rva00190f10@Rva00190F10Owner@@QAE_NPAXPAVRva00190F10Arg@@@Z
 // partial score=0.957 date=2026-09-24
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 // Retail 0x00190F10, 398 bytes.
 //

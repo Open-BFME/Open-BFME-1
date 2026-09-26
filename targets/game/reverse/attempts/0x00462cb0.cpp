@@ -1,6 +1,6 @@
 // ?Rva00462CB0@@YAXPBD@Z
 // partial score=0.9 date=2026-09-08
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc /Iinputs/reference/shims/stringinline
 // stlport
 
 // Retail 0x00462CB0 prepares the mode-check callback and walks the shared table.

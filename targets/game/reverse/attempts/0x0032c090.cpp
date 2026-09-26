@@ -1,6 +1,6 @@
 // ?bfmeAreaBody@ScriptConditions@@IAE_NPAVParameter@@00@Z
 // partial score=0.312857 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/objectdlink
 //
 // BFME ScriptConditions area-body recovery. The named sibling bfmeAreaGate
 // (0x0032C400, matched) calls this body through ILT 0x0000C586 as
@@ -10,7 +10,7 @@
 // containment and the dead-bit test sit between the fourth and fifth tests.
 
 #include "ObjectDlinkPmf.h"
-#include "../Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../../game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 typedef bool Bool;
 typedef int Int;

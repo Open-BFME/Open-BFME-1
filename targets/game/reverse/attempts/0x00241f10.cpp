@@ -1,6 +1,6 @@
 // ?d_00241f10@@YAXXZ
 // partial score=0.42 date=2026-09-23
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWMath
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Include/Precompiled /Igame/Libraries/Source/WWVegas/WWMath
 #define _STLP_USE_STATIC_LIB 1
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1

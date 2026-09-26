@@ -1,6 +1,6 @@
 // ?rva006EBC30@W3DDisplay@@QAEXH@Z
 // partial score=0.86 date=2026-09-10
-// cl: /O2 /EHsc /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /O2 /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 
 // Retail 0x006EBC30 is the complete 192-byte body in slot 37 of the
 // W3DDisplay vtable at 0x0111EDD0.  W3DGameClient::setTimeOfDay reaches that

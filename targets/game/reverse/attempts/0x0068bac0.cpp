@@ -1,6 +1,6 @@
 // ?Rva0068BAC0@LANAPI@@QAEXPAULANMessage@@PAUBfmeNetAddress@@_N@Z
 // partial score=0.58 date=2026-09-24
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
 // Reconstructed opaque LANAPI-family body at retail 0x0068BAC0.
 
 #include "StringInline.h"

@@ -2,10 +2,10 @@
 // partial score=0.66 date=2026-09-25
 // ?placeNetworkBuildingsForPlayer@@YAXHPBVGameSlot@@PAVPlayer@@PBVPlayerTemplate@@@Z
 // Experiment: same-TU static-helper visibility, direct waypoint fields and BFME constants.
-// cl: /D_STLP_USE_STATIC_LIB /Ireference/shims/stringbaseascii /Ireference/shims/multiplayer /Ireference/shims/sweep /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringbaseascii /Iinputs/reference/shims/multiplayer /Iinputs/reference/shims/sweep /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 #define placeNetworkBuildingsForPlayer placeNetworkBuildingsForPlayer_original
-#include "../../Code/GameEngine/Source/GameLogic/System/GameLogic.cpp"
+#include "../../../../game/GameEngine/Source/GameLogic/System/GameLogic.cpp"
 #undef placeNetworkBuildingsForPlayer
 
 extern const float Rva0107533C;

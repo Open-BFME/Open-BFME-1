@@ -1,6 +1,6 @@
 // ?disconnectedCallback@@YAXPAXPBD0@Z
 // partial score=0.72 date=2026-09-10
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Oy /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Oy /Iinputs/reference/shims/stringinline
 // stlport
 //
 // TU-local reconstruction of the callback installed in the disconnected slot

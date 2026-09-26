@@ -1,6 +1,6 @@
 // ?d_00436960@@YAXXZ
 // partial score=0.85 date=2026-09-26
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x00436C40, 660 bytes through the int3 run at +0x294; Ghidra split it
 // at the null-file exit (+0x55).  GameTextManager::initMapStringFile (0x00438D50)

@@ -1,4 +1,4 @@
-// cl: /O2 /GR- /DNDEBUG /DWIN32 /MD /EHsc- /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWDebug
+// cl: /O2 /GR- /DNDEBUG /DWIN32 /MD /EHsc- /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWDebug
 // partial score=0.35 date=2026-09-17
 //
 // BFME retail 0x001B8400, reached through the proven

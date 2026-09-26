@@ -1,6 +1,6 @@
 // ?rva0083DD0@GlobalData@@QBE?AVAsciiString@@XZ
 // partial score=0.25 date=2026-09-21
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x00083DD0, 401 bytes. Reached from W3DDisplay::saveScreenShot only
 // through the pinned thunk 0x00036D9A (symbols.csv:

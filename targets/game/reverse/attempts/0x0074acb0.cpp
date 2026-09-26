@@ -4,7 +4,7 @@
 // Retail 0x0074ACB0, 1511 bytes.  The boundary is the RET 8 at +0x5E4;
 // INT3 padding begins at +0x5E7.  The receiver layout and parser contracts
 // below are limited to fields and callees witnessed in this body.
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringbaseascii/Common /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringbaseascii/Common /Igame/Libraries/Source/WWVegas/WWLib
 
 #include "AsciiString.h"
 

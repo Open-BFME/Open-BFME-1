@@ -1,6 +1,6 @@
 // ?method@Rva0023F670@@QAE_NXZ
 // partial score=0.1574 date=2026-09-24
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /DBFME_STLP_NODE_ALLOC /Ireference/shims/stlp_nodealloc /Ireference/shims/sweep
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep
 // stlport
 
 #define _STLP_NO_EXCEPTIONS 1

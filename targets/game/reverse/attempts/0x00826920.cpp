@@ -1,6 +1,6 @@
 // ?decompress@LZHLDecompressor@@QAEHPAEPAIPBE1@Z
 // partial score=0.5 date=2026-09-25
-// cl: /DNDEBUG /MD -ICode/Libraries/Source/Compression/LZHCompress/CompLibHeader -ICode/Libraries/Source/Compression/LZHCompress/CompLibSource
+// cl: /DNDEBUG /MD -Igame/Libraries/Source/Compression/LZHCompress/CompLibHeader -Igame/Libraries/Source/Compression/LZHCompress/CompLibSource
 /* LZH-Light 1.0 (Sergey Ignatchenko, 1998) -- upstream C++ source, verbatim
    from github.com/TheSuperHackers/lzhl-1.0 commit dfd96e2, EXCEPT for comments:
    this block and the `present-unmatched` markers below it. Not one line of code

@@ -1,6 +1,6 @@
 // ?Rva00515810@BfmeAptScreenInGameChat@@QAEXXZ
 // partial score=0.95 date=2026-09-18
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline
 // stlport
 //
 // BfmeAptScreenInGameChat::Rva00515810, retail 0x00515810, 1166 bytes.

@@ -5,7 +5,7 @@
 // Identity is proven by the DEPLOY_SIEGE_NEAR_TEAM action table arm and its
 // ILT caller.  This file is intentionally outside Code/ and is not a ledger
 // claim.
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 
 #define _STLP_USE_STATIC_LIB 1

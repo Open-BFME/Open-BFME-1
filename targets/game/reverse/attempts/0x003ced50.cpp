@@ -1,7 +1,7 @@
 // ??0LargeGroupAudioMap@@QAE@VAsciiStringVZ@@@Z
 // partial score=0.55 date=2026-09-08
 // LargeGroupAudioMap constructor, retail 0x003CED50.
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
 
 #include "StringInline.h"
 

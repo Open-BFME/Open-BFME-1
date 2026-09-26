@@ -3,7 +3,7 @@
 // ?bfmeStepE05B0@Pathfinder@@QAE_NPAVObject@@PAUICoord2D@@@Z
 // Retail 0x003E05B0, 715 bytes. Incoming ABI: Pathfinder* in ECX, Object*
 // then a callback-state view beginning with ICoord2D on the stack; ret 8.
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Ireference/shims/pathfind /ICode/GameEngine/Source/GameLogic/Object /ICode/GameEngine/Source/Common/Thing /ICode/GameEngine/Include /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Iinputs/reference/shims/pathfind /Igame/GameEngine/Source/GameLogic/Object /Igame/GameEngine/Source/Common/Thing /Igame/GameEngine/Include /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 
 typedef int Int;
@@ -16,13 +16,13 @@ enum CrushSquishTestType { CRUSH_SQUISH_INVALID = 0 };
 
 #define THING_TU_MEMBERS \
 	Bool isKindOf(KindOfType kind) const;
-#include "../Code/GameEngine/Source/Common/Thing/thing.h"
+#include "../../../../game/GameEngine/Source/Common/Thing/thing.h"
 
 #define OBJECT_TU_MEMBERS \
 	Bool bfmeIsComputerControlled() const; \
 	Bool canCrushOrSquish(Object *other, CrushSquishTestType test) const; \
 	Relationship getRelationship(const Object *other) const;
-#include "../Code/GameEngine/Source/GameLogic/Object/object.h"
+#include "../../../../game/GameEngine/Source/GameLogic/Object/object.h"
 
 struct ICoord2D { Int x, y; };
 

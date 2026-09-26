@@ -45,7 +45,7 @@
 // residue is this register-choice gap. compiled 1047B vs target 1065B (18B short, unchanged).
 // t=35min model=claude-sonnet-5 score=0.45
 
-// cl: /DNDEBUG /MD /EHs-c- /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHs-c- /Igame/GameEngine/Source/Common/System /Igame/GameEngine/Include /Igame/GameEngine/Include/Precompiled /Igame/Libraries/Source/WWVegas/WWLib
 // WWDownload Download.cpp CDownload::DownloadFile.
 
 #include "PreRTS.h"

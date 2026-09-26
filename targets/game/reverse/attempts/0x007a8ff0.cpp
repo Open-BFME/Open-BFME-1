@@ -44,7 +44,7 @@
 
 #define Matrix4x4 Matrix4
 #define __PLACEMENT_VEC_NEW_INLINE
-#include "../../Code/Libraries/Source/WWVegas/WW3D2/texture.h"
+#include "../../../../game/Libraries/Source/WWVegas/WW3D2/texture.h"
 #include "dx8wrapper.h"
 #include "dx8caps.h"
 #include "dx8indexbuffer.h"

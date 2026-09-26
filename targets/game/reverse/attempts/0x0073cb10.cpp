@@ -1,6 +1,6 @@
 // ?moveAlongWaypointPath@W3DView@@AAEXH@Z
 // partial score=0.27 date=2026-09-22
-// cl: /DNDEBUG /MD /EHs-c- /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib
 // BFME W3DView::moveAlongWaypointPath, retail 0x0073CB10.
 //
 // The owner is proved by the named updateCameraMovements caller, the adjacent

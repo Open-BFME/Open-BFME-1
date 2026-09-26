@@ -1,6 +1,6 @@
 // ?sendSpecial@AIGroup@@QAEXPBUCoord3D@@HHHH@Z
 // partial score=0.3793 date=2026-09-24
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
 // stlport
 // AIGroup::sendSpecial, 00157BE0: caller tryGroupSpecial -> ILT 0001A6B3.
 // Stack args: command source, mode, low-byte snap flag, low-byte formation flag.

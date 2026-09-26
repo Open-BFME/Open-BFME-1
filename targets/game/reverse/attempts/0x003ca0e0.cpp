@@ -1,6 +1,6 @@
 // ?d_003ca0e0@@YAXXZ
 // partial score=0.37 date=2026-09-23
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 #include "ascii_string.h"
 

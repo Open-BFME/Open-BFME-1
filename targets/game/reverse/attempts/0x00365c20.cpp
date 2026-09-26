@@ -1,6 +1,6 @@
 // ?method@Rva00365C20Owner@@QAEXABURva00365C20SourceRecord@@HHURva00365C20Payload6@@HABURva00365C20Tail@@@Z
 // partial score=0.5245 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 
 #include <vector>

@@ -1,6 +1,6 @@
 // ?loadTreesInVertexAndIndexBuffers@W3DTreeBuffer@@IAEXPAV?$RefMultiListIterator@VRenderObjClass@@@@@Z
 // partial score=0.9540334855403348 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWDebug /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWSaveLoad /Ireference/shims/sweep
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/shims/sweep
 // BFME tree vertex/index loading, RVA 0x00734CB0, full decoded size 3285.
 // Derived from EA GeneralsMD W3DTreeBuffer.cpp, with retail-only layouts and
 // per-tree transforms. Work in progress: all unfamiliar fields retain offsets.

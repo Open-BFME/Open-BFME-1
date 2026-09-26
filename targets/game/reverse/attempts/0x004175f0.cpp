@@ -1,6 +1,6 @@
 // ?rva004175F0@ThingTemplate@@QBE?AVAudioEventInfoRef@@H@Z
 // partial score=0.96 date=2026-09-25
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // ThingTemplate selector-driven audio-event info accessor at retail RVA 0x004175F0.
 //
 // Owner: `this` is handed unchanged to ThingTemplate's sound lookup (ILT 0x0000286A

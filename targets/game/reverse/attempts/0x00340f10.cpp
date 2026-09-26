@@ -1,6 +1,6 @@
 // ?applyNamed@ScriptEngine@@QAEXPAX0@Z
 // partial score=0.2 date=2026-09-23
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /Ireference/shims/scriptenginevtable /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/scriptenginevtable /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
 
 #include "ascii_string.h"
 inline AsciiString::~AsciiString()

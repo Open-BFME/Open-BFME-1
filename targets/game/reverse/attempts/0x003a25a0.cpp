@@ -1,6 +1,6 @@
 // ??0Rva003A35A0Element@@QAE@PBVWaypoint@@@Z
 // partial score=0.14 date=2026-09-21
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
 //
 // A second constructor for the 184-byte Rva003A35A0Element already pinned
 // by RvaVectorInsertOverflowOutOfLineCopy.cpp's vector<T>::_M_insert_overflow

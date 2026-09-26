@@ -1,6 +1,6 @@
 // ?applyModelCondition_002FDEF0@@YAXPAVObject@@H_N@Z
 // partial score=0.45 date=2026-09-12
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/objectdlink /Iinputs/reference/shims/stringinline
 
 // Retail outlines the shared UNIT/TEAM_SET_MODELCONDITION update once at
 // 0x002FDEF0 (pinned as applyModelCondition_002FDEF0 in reverse/symbols.csv).

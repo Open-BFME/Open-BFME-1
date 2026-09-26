@@ -1,6 +1,6 @@
 // ?openArchiveFile@Win32BIGFileSystem@@UAEPAVArchiveFile@@PBD@Z
 // partial score=0.91 date=2026-09-19
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /Ireference/shims/sweep
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/sweep
 //
 // Win32BIGFileSystem::openArchiveFile, retail 0x009CC710, 832 bytes -- vtable
 // slot 2 of 0x01143B40.

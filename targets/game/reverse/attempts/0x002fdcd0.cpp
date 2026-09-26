@@ -1,6 +1,6 @@
 // ?d_002fdcd0@@YAXXZ
 // partial score=0.55 date=2026-09-07
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringinline
 // NAMED_USE_COMMANDBUTTON_ON_NEAREST_OBJECTTYPE, executeAction template 429.
 // Retail RVA 0x002FDCD0, 173 bytes.  The action registration and the sole
 // retail executeAction caller identify this as the named-unit/object-type

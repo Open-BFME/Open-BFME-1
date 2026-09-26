@@ -6,8 +6,8 @@ typedef int Int;
 typedef float Real;
 typedef bool Bool;
 
-#include "../Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
-#include "../reference/shims/iniexception/Common/INIException.h"
+#include "../../../../game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../../inputs/reference/shims/iniexception/Common/INIException.h"
 #include <new>
 #include <vector>
 
@@ -15,7 +15,7 @@ extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
 #define __PRERTS_H__
-#include "../Code/Libraries/Source/WWVegas/WWMath/coord.h"
+#include "../../../../game/Libraries/Source/WWVegas/WWMath/coord.h"
 #undef __PRERTS_H__
 
 extern "C" int __cdecl strcmp(const char *, const char *);

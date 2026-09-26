@@ -1,11 +1,11 @@
 // ?d_00182f70@@YAXXZ
 // partial score=0.3785004516711834 date=2026-09-21
-// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc /ICode/GameEngine/Include/Precompiled
+// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc /Igame/GameEngine/Include/Precompiled
 // Retail 00182F70: ECX receiver, no incoming stack arguments, AL result.
 // Complete 1107-byte boundary ends at 001833C2; no EH frame.
 // Opaque owner retained: old structural method names contradict one another.
 // Hub/remover contracts: docs/analysis/0x003e9720.md.
-#include "../../Code/Libraries/Source/WWVegas/WWMath/coord.h"
+#include "../../../../game/Libraries/Source/WWVegas/WWMath/coord.h"
 
 struct Object00182F70;
 struct AI00182F70;

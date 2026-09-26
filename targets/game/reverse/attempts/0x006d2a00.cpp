@@ -1,6 +1,6 @@
 // ?updateCenter@HeightMapRenderObjClass@@UAEXPAVCameraClass@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z
 // partial score=0.9138104838709677 date=2026-09-23
-// cl: /DNDEBUG /MD /EHs-c- /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 #include "vector3.h"
 // Identity: ctor RVA006D1C80 installs VA0111DC88; slot135 routes
 // through ILT RVA000155DC to this body. Ret8 at RVA006D31BD: 1984 bytes.

@@ -1,7 +1,7 @@
 // ?rva0032C990@ScriptConditions@@IAE_NPAUParameter@@00@Z
 // partial score=0.625 date=2026-09-25
 // stlport
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/objectdlink /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/objectdlink /Igame/Libraries/Source/WWVegas/WWLib
 // Retail RVA 0x0032C990 (288 bytes), dispatcher-proven thiscall member.
 // Parameters: player mask, minimum count, upgrade name. Three nested loops
 // visit player prototypes, live Team instances, and Object team members.

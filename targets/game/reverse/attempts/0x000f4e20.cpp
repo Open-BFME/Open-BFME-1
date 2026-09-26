@@ -1,6 +1,6 @@
 // ?isIdle@Team@@QBE_NXZ
 // partial score=0.98 date=2026-09-07
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/objectdlink
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/objectdlink
 
 typedef bool Bool;
 

@@ -1,6 +1,6 @@
 // ?d_0076dcc0@@YAXXZ
 // partial score=0.1 date=2026-09-23
-// cl: /MD /EHsc /Ireference/shims/stringinline
+// cl: /MD /EHsc /Iinputs/reference/shims/stringinline
 // stlport
 
 #include "StringInline.h"

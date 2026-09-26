@@ -1,7 +1,7 @@
 // ?Rva002E5090ScriptLogMessage@@YAXPBD@Z
 // partial score=0.79 date=2026-09-23
 // ?Rva002E5090ScriptLogMessage@@YAXPBD@Z
-// cl: /O2 /DNDEBUG /MD /EHs-c- /Ob1 /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /O2 /DNDEBUG /MD /EHs-c- /Ob1 /Igame/Libraries/Source/WWVegas/WWLib
 #define private public
 #include "ascii_string.h"
 #undef private

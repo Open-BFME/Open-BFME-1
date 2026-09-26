@@ -1,6 +1,6 @@
 // ?writeCacheINI@MapCache@@AAEX_N@Z
 // partial score=0.82 date=2026-09-24
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ivendor/stlport /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/vendor/stlport /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?writeCacheINI@MapCache@@AAEX_N@Z: Code/GameEngine/Source/GameClient/MapUtil.cpp
 //
 // Retail 0x004550C0, 1814 bytes. BFME extends ZH's writer: isScenarioMP,

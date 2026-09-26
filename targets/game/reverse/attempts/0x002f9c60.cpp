@@ -5,7 +5,7 @@
 // ScriptActions_findClosestObject.cpp) and calls the landed
 // ScriptActions::findClosestObject / BfmeApplierBH::bfmeAddBH.  Two ScriptEngine
 // vtable slots (+0x44, +0x50) are still unproven; kept as address-derived slots.
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Igame
 
 typedef bool Bool;
 typedef int Int;

@@ -1,6 +1,6 @@
 // ?rva00246490@Rva00246490HordeContainInterface@@QAEXPAVObject@@@Z
 // partial score=0.86 date=2026-09-22
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWMath
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Include/Precompiled /Igame/Libraries/Source/WWVegas/WWMath
 // stlport
 // Retail 0x00246490: HordeContain +0xE4 interface vtable 0x010AED58 slot 91
 // (ILT 0x00033B81; the AODHordeContain table 0x010AE230 and 0x010B07E0 inherit

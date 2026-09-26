@@ -1,7 +1,7 @@
 // ?d_001fd780@@YAXXZ
 // partial score=0.98 date=2026-09-25
 // Partial reconstruction for retail RVA 0x001FD780 (381 bytes).
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib
 // Vtable 0x010A40C4 slot 1, constructor 0x001FC580, and the
 // GateProxyBehavior lookup prove GateOpenAndCloseBehavior::onObjectCreated.
 // The prior draft models the adjustment for the secondary base before

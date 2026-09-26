@@ -1,6 +1,6 @@
 // ?init@Player@@QAEXPBVPlayerTemplate@@@Z
 // partial score=0.2 date=2026-09-19
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep
 //
 // BFME body conversion for 0x000DA610.  The retail boundary is 2056 bytes:
 // the SEH frame starts at +0x00 and the contiguous end is `ret 4` at +0x805.

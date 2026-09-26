@@ -3,7 +3,7 @@
 // Address-qualified reconstruction of retail 0x0041A2E0. This does not claim
 // Drawable::flashAsSelected, which is already assigned to 0x0076E4F0.
 #include <list>
-#include "../../Code/Libraries/Source/WWVegas/WWMath/color.h"
+#include "../../../../game/Libraries/Source/WWVegas/WWMath/color.h"
 
 typedef unsigned int UnsignedInt;
 enum KindOfType { RvaSelectionHordeKind = 0x6c };

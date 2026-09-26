@@ -1,6 +1,6 @@
 // ?StackWalk@DebugStackwalk@@SAHAAVSignature@1@PAU_CONTEXT@@_N@Z
 // partial score=0.55 date=2026-09-24
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -31,7 +31,7 @@
 //
 // Stack walker
 //////////////////////////////////////////////////////////////////////////////
-#include "../../Code/Libraries/Source/WWVegas/WWDebug/_pch.h"
+#include "../../../../game/Libraries/Source/WWVegas/WWDebug/_pch.h"
 #include "dbghelp.h"
 
 extern "C" __declspec(dllimport) BOOL WINAPI ReadProcessMemory(
@@ -58,7 +58,7 @@ struct BfmeWalkStorage
 // Definitions to allow run-time linking to the dbghelp.dll functions.
 
 #define DBGHELP(name,ret,par) typedef ret (WINAPI *name##Type) par;
-#include "../../Code/Libraries/Source/WWVegas/WWDebug/debug_stack.inl"
+#include "../../../../game/Libraries/Source/WWVegas/WWDebug/debug_stack.inl"
 #undef DBGHELP
 
 #define DBGHELP(name,ret,par) name##Type _##name;
@@ -66,7 +66,7 @@ static union
 {
   struct  
   {
-#include "../../Code/Libraries/Source/WWVegas/WWDebug/debug_stack.inl"
+#include "../../../../game/Libraries/Source/WWVegas/WWDebug/debug_stack.inl"
   };
   unsigned funcPtr[1];
 } gDbg;
@@ -75,7 +75,7 @@ static union
 #define DBGHELP(name,ret,par) #name,
 static char const *DebughelpFunctionNames[] =
 {
-#include "../../Code/Libraries/Source/WWVegas/WWDebug/debug_stack.inl"
+#include "../../../../game/Libraries/Source/WWVegas/WWDebug/debug_stack.inl"
 	NULL
 };
 #undef DBGHELP

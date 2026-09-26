@@ -1,6 +1,6 @@
 // ?doPlayerForceEmotion@ScriptActions@@IAEXPAVParameter@@W4EmotionType@@M@Z
 // partial score=0.85 date=2026-09-11
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline
 // stlport
 // Open-BFME: PLAYER_FORCE_EMOTION at retail RVA 0x002F7670.
 

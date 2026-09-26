@@ -1,6 +1,6 @@
 // ?reset@ScriptEngine@@UAEXXZ
 // partial score=0.6200623700623701 date=2026-09-23
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 //
 // ScriptEngine::reset, retail 0x00348430, 1924 bytes.

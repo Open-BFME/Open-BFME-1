@@ -1,6 +1,6 @@
 // ?inGameTailA0@W3DInGameUI@@UAEXXZ
 // partial score=0.6 date=2026-09-24
-// cl: /DNDEBUG /MD /EHsc /ICode/GameEngine/Include/Precompiled
+// cl: /DNDEBUG /MD /EHsc /Igame/GameEngine/Include/Precompiled
 #include "PreRTS.h"
 
 typedef unsigned char byte;

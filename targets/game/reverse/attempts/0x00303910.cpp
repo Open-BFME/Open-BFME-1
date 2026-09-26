@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/stringinline /Ireference/shims/objectdlink
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringinline /Iinputs/reference/shims/objectdlink
 // partial score=0.94 date=2026-09-08
 // TEAM_REPAIR_NEREST scans a team for the most damaged eligible object, then
 // sends every eligible member of the named repair team to that object.

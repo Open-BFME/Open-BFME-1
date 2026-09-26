@@ -1,6 +1,6 @@
 // ?populateCommand@ControlBar@@IAEXPAVObject@@_N@Z
 // partial score=0.443881245474294 date=2026-09-24
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /I. /ICode/Libraries/Source/WWVegas/WWLib /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /I. /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // stlport
 // ControlBar::populateCommand, RVA 004A5E30, 1381 bytes through ret8 at 004A6392.
 // Identity: matched ControlBar::switchToContext at 0049E780, command arm
@@ -8,7 +8,7 @@
 // Raw contracts from tools/callees.py; offsets witnessed in astra_R/LAYOUTS.md.
 #define __PLACEMENT_VEC_NEW_INLINE
 #include <vector>
-#include "Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../../game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
 inline AsciiString::~AsciiString(){((StringBase<char>*)this)->releaseBuffer();}
 template<class T> inline void StringBase<T>::clear(){releaseBuffer();}
 

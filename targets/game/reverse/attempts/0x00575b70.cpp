@@ -3,7 +3,7 @@
 // BFME ScoreScreen single-player population candidate.
 // The helper declarations follow the decoded retail calls and existing shims.
 // This file is an untracked probe candidate until byte verification succeeds.
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringinline /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline /Igame/Libraries/Source/WWVegas/WWLib
 
 typedef char Bool;
 

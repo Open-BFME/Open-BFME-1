@@ -1,6 +1,6 @@
 // ?update@MemberGoals002440E0@@QAEXPAVMember002440E0@@@Z
 // partial score=0.24498692240627729 date=2026-09-21
-// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/GameEngine/Include/Precompiled
+// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Include/Precompiled
 // stlport
 // Retail 002440E0, 1147 bytes, adjusted ECX receiver and ret4.
 // Hub contract from docs/analysis/0x003e9720.md; no EH frame.
@@ -11,7 +11,7 @@
 #include <map>
 #include <vector>
 #include <algorithm>
-#include "../../Code/Libraries/Source/WWVegas/WWMath/coord.h"
+#include "../../../../game/Libraries/Source/WWVegas/WWMath/coord.h"
 
 class Member002440E0;
 template<int N> class Slots002440E0:public Slots002440E0<N-1> {public: virtual void unused(char(*)[N])=0;};

@@ -1,7 +1,7 @@
 // ?doLocomotor@AIUpdateInterface@@MAE?AW4UpdateSleepTime@@XZ
 // partial score=0.9745557350565428 date=2026-09-23
 // stlport
-// cl: /DNDEBUG /MD /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWMath
+// cl: /DNDEBUG /MD /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWMath
 // Candidate only. Retail 002768A0. Identity: AIUpdateInterface table
 // 010BA8A8 slot 133 -> ILT 00048D88 -> this body. Slots 134/135 are
 // makeStateMachine/getTreatAsAircraftForLocoDistToGoal, in ZH declaration order.

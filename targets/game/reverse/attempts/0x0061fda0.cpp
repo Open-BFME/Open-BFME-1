@@ -15,8 +15,8 @@
 // padded16-bit representation remain a hypothesis; its old bank name is
 // retained, not re-proven. Do not promote this view on byte similarity alone.
 
-#include "Code/GameEngine/Source/Common/System/xfer.h"
-#include "reference/shims/stringinline/StringInline.h"
+#include "../../../../game/GameEngine/Source/Common/System/xfer.h"
+#include "../../../../inputs/reference/shims/stringinline/StringInline.h"
 
 typedef int Int;
 typedef unsigned int UnsignedInt;

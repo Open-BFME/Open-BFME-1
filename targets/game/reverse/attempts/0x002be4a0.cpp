@@ -1,6 +1,6 @@
 // ?d_002be4a0@@YAXXZ
 // partial score=0.17 date=2026-09-25
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Ireference/shims/stringinline
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Iinputs/reference/shims/stringinline
 
 #define _STLP_NO_EXCEPTIONS 1
 #include "../../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"

@@ -1,7 +1,7 @@
 // ?parseSidesDataChunk@Rva0019BE80SidesList@@QAE_NAAVDataChunkInput@@PAUDataChunkInfo@@@Z
 // partial score=0.8254 date=2026-09-24
 // ?parseSidesDataChunk@Rva0019BE80SidesList@@QAE_NAAVDataChunkInput@@PAUDataChunkInfo@@@Z
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
 // Retail 0x0019BF40: SidesList's DataChunk parse callback -- the BFME variant
 // of ZH SidesList::ParseSidesDataChunk (reference/CnC_Generals_Zero_Hour/
 // GeneralsMD/Code/GameEngine/Source/GameLogic/Map/SidesList.cpp:243-319).

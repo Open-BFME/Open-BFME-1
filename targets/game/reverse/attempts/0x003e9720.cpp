@@ -1,7 +1,7 @@
 // ?d_003e9720@@YAXXZ
 // partial score=0.5095785440613028 date=2026-09-21
 // Compile symbol: ?updateGoal@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@W4PathfindLayerEnum@@PBDH@Z
-// cl: /DNDEBUG /MD /EHsc /ICode/GameEngine/Include/Precompiled
+// cl: /DNDEBUG /MD /EHsc /Igame/GameEngine/Include/Precompiled
 //
 // Retail 0x003E9720: Pathfinder::updateGoal(Object *, Coord3D const *,
 // PathfindLayerEnum, char const *, int).  The five-argument identity is
@@ -11,7 +11,7 @@
 // Retail: aligned ESP, 0x34 local allocation, saved EBX/ESI/EDI, ret 0x14; no EH.
 // This complete reconstruction is partial; see PROGRESS.md for measured bytes.
 
-#include "../../Code/Libraries/Source/WWVegas/WWMath/coord.h"
+#include "../../../../game/Libraries/Source/WWVegas/WWMath/coord.h"
 
 enum PathfindLayerEnum
 {

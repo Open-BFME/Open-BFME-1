@@ -1,6 +1,6 @@
 // ?d_005409a0@@YAXXZ
 // partial score=0.744154676 date=2026-09-22
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // Partial natural C++ reconstruction. RVA 005409A0, 2224 bytes.
 // Opaque views describe observed offsets; unresolved declarations are NOT pins.

@@ -3,7 +3,7 @@
 // Retail 0x0034F160: BFME's by-value team lookup with the create flag.
 // The slot, reference map and team context offsets are established by landed
 // ScriptEngine callers, vtable evidence and the adjacent reference-map body.
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib
 
 #include "ascii_string.h"
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT

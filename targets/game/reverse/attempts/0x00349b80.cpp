@@ -1,6 +1,6 @@
 // ?xfer@ScriptEngine@@MAEXPAVXfer@@@Z
 // partial score=0.52 date=2026-09-24
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/Libraries/Source/WWVegas/WWLib /ICode/GameEngine/Source/Common
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Source/Common
 // stlport
 // Natural reconstruction of 00349B80..0034B2E8 (5993 bytes, ret 4 then INT3).
 // This entry receives the Snapshot-adjusted this pointer (full ScriptEngine +8).

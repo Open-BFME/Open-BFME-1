@@ -1,6 +1,6 @@
 // ?parseTarget@Rva0014C8E0@@SAXPAVINI@@PAX1PBX@Z
 // partial score=0.974489796 date=2026-09-21
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME: the Target field parser of the AI AttackPriority block, retail
 // 0x0014C8E0, 196 bytes.

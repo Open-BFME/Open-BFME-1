@@ -1,7 +1,7 @@
 // ?rva00284E70ParseExpLevelDraw@@YAXPAVINI@@PAX1PBX@Z
 // partial score=0.4 date=2026-09-23
 // ?rva00284E70ParseExpLevelDraw@@YAXPAVINI@@PAX1PBX@Z
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Oi /D_STLP_USE_STATIC_LIB /Ireference/shims/iniexception
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Oi /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/iniexception
 // stlport
 
 #include <vector>

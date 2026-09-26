@@ -1,6 +1,6 @@
 // ??0Rva001812B0AIHordeMachine@@QAE@PAVObject@@PAVAIAttackState@@VAsciiString@@@Z
 // partial score=0.31 date=2026-09-23
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
 
 #include "StringInline.h"
 

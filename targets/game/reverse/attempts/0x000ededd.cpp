@@ -4,7 +4,7 @@
 // partial score=0.95 date=2026-09-04
 // ?affectedByUpgrade@Team@@QBE_NPBVUpgradeTemplate@@@Z
 // partial score=0.95 date=2026-09-04
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/objectdlink
 // Open-BFME5: Team::affectedByUpgrade, retail 0x000EDEDD, 119 bytes.
 // Sibling of Team::giveUpgrade 0xED9D0. Same Object DLINK + contain/+0x1FC
 // UpgradeSink/+0x68 path; sink predicate at +0xA4; Object::affectedByUpgrade

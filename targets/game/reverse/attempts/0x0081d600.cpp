@@ -2,7 +2,7 @@
 // partial score=0.95 date=2026-09-25
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /FAsc /Fabuild/subtitle_line_table.cod
 
-#include "../../Code/GameEngine/Include/GameClient/Video.h"
+#include "../../../../game/GameEngine/Include/GameClient/Video.h"
 #include <float.h>
 
 class INI

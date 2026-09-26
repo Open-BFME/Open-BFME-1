@@ -1,6 +1,6 @@
 // ?rva00380EE0@ExperienceLevelSystem@@QAEHPAVObject@@_N@Z
 // partial score=0.84 date=2026-09-10
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x00380EE0, 284 bytes.  The existing ExperienceTracker
 // addExperiencePoints body at 0x001B28C0 loads TheExperienceLevelSystem and

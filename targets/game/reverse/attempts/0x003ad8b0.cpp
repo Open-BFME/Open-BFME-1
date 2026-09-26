@@ -1,6 +1,6 @@
 // ?j_0001eb9b@Glo012F1024Item@@QAEXXZ
 // partial score=0.52 date=2026-09-12
-// cl: /DNDEBUG /MD /EHsc /Oy /Ireference/shims/stringinline
+// cl: /DNDEBUG /MD /EHsc /Oy /Iinputs/reference/shims/stringinline
 // ?j_0001eb9b@Glo012F1024Item@@QAEXXZ
 // Walks 0x30-byte records at +0x20 and dispatches addItem plus the
 // living-world triple-string call. Getters stay out of line (ILT aliases)

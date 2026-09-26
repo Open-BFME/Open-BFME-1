@@ -1,7 +1,7 @@
 // ?refreshPlayerTeamControl@SkirmishScreenState@@QAEXH@Z
 // partial score=0.45 date=2026-09-18
 // ?refreshPlayerTeamControl@SkirmishScreenState@@QAEXH@Z
-// cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ivendor/stlport /ICode/Libraries/Source/WWVegas/WWLib /Ireference/shims/stringbaseascii /Ireference/shims/stringbaseunicode
+// cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/vendor/stlport /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/stringbaseascii /Iinputs/reference/shims/stringbaseunicode
 // stlport
 //
 // Retail 0x005294F0.  The matched refreshAllPlayerControls and

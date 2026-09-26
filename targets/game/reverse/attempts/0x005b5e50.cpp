@@ -1,6 +1,6 @@
 // ?translate@Rva005B5E50@@UAEHPBVRva005B5E50Message@@@Z
 // partial score=0.9987868985038415 date=2026-09-23
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringbaseunicode /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringbaseunicode /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
 // Candidate for 005B5E50. Address-qualified owner because the existing
 // LookAtTranslator semantic pin refers to an incompatible event-buffer body.
 // This body's 0110DE48 slot zero, ctor005B5470, bookmark literal and complete

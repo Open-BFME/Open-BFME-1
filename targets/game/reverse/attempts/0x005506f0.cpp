@@ -1,6 +1,6 @@
 // ?_bfme_populateCountryList@BfmeAptScreenOnlineLogin@@QAEXXZ
 // partial score=0.78 date=2026-09-10
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /DBFME_STLP_NODE_ALLOC /D_STLP_USE_STATIC_LIB /Ireference/shims/stlp_nodealloc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /DBFME_STLP_NODE_ALLOC /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stlp_nodealloc
 // Complete typed candidate retained after the retail control-flow and ABI
 // reconstruction.  The source-order lever moved selectedRow before the map
 // and changed the loop to i < 0x25; the remaining mismatch is compiler local

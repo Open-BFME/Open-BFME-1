@@ -4,7 +4,7 @@
 // are established from retail offsets, not from those spellings.
 // Retail RVA 003E5640 /379. Corrected bank: template reads are not Player reads;
 // native 12-byte query copy is 48 -> 28; AI getter is null guarded.
-// cl: /DNDEBUG /MD /ICode/GameEngine/Source/GameLogic/Object /ICode/GameEngine/Source/Common/Thing
+// cl: /DNDEBUG /MD /Igame/GameEngine/Source/GameLogic/Object /Igame/GameEngine/Source/Common/Thing
 class AIUpdateInterface { public: int getIgnoredObstacleID(); };
 #define OBJECT_TU_MEMBERS bool bfmeIsComputerControlled() const; const ThingTemplate *getTemplate() const;
 #include "object.h"

@@ -1,6 +1,6 @@
 // ?update@Rva003A4FD0State@@QAEXPAX@Z
 // partial score=0.54545455 date=2026-09-25
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 #include "ascii_string.h"
 inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 struct Coord3D { float x, y, z; };

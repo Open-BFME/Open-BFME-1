@@ -1,6 +1,6 @@
 // ?Rva005337E0@BfmeAptScreenOnlineChat@@QAEXXZ
 // partial score=0.72 date=2026-09-17
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 //
 // Retail RVA 0x005337E0, 1382 bytes.  The ILT caller in OnlineChat's

@@ -1,6 +1,6 @@
 // ?d_0016bd60@@YAXXZ
 // partial score=0.4 date=2026-09-22
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Retail RVA 0x0016BD60, 475 bytes. The vtable slot and ComputePath21 literal prove the owner.
 // The target-only state members retain offsets because no layout witness names them.
 

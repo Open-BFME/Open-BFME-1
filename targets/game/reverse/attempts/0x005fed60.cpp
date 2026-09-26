@@ -9,7 +9,7 @@
 // X again. The getPosition ABI uses the reference struct Coord3D, not the
 // different nontrivial class Coord3D header. 712/758 bytes, 441 differences;
 // the null-first resolver form was neutral. No codegen barriers or asm.
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 
 #include "Lib/BaseType.h"
 #include <math.h>

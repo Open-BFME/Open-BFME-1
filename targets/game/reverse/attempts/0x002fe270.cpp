@@ -1,6 +1,6 @@
 // ?doTeamGiveNearestTeamUpgrade@ScriptActions@@IAEXPAVParameter@@@Z
 // partial score=0.96 date=2026-09-19
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink /Ireference/shims/stringinline /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/objectdlink /Iinputs/reference/shims/stringinline /Igame/Libraries/Source/WWVegas/WWLib
 // TEAM_GIVE_NEAREST_TEAM_UPGRADE, retail RVA 0x002FE270.
 // The action resolves the source team, then gives its upgrade to the nearest
 // eligible member of another team owned by the source object's player.

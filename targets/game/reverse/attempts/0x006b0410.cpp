@@ -2,7 +2,7 @@
 // partial score=0.272093 date=2026-09-25
 // Draft for retail 0x006B0410, the audio-provider refresh called by the
 // landed Rva006B0630Owner::rva006B0410(unsigned char).
-// cl: /O2 /Ob2 /DBFME_STLP_NODE_ALLOC /Ireference/shims/stlp_nodealloc /D_STLP_USE_STATIC_LIB /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /O2 /Ob2 /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stlp_nodealloc /D_STLP_USE_STATIC_LIB /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // stlport
 #include <list>
 

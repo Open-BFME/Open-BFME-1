@@ -1,6 +1,6 @@
 // ?xfer@W3DGhostObjectManager@@MAEXPAVXfer@@@Z
 // partial score=0.99 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc /FAsc /Fabuild/luna5-006bdc10.cod /ICode/GameEngine/Source/Common/System
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc /FAsc /Fabuild/luna5-006bdc10.cod /Igame/GameEngine/Source/Common/System
 // stlport
 
 typedef unsigned int UnsignedInt;

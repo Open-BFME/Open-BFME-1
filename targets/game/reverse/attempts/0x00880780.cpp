@@ -1,6 +1,6 @@
 // ?d_00880780@@YAXXZ
 // partial score=0.39 date=2026-09-23
-// cl: /O2 /GR- /EHsc- /G6 /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /O2 /GR- /EHsc- /G6 /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME: address-derived GeometryOther callback, retail 0x00880780.
 

@@ -1,7 +1,7 @@
 // ?d_00591640@@YAXXZ
 // partial score=0.84 date=2026-09-18
 // ??1Rva00591640GameClient68@@QAE@XZ
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringinline /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline /D_STLP_USE_STATIC_LIB
 // stlport
 
 #include <hash_map>

@@ -1,6 +1,6 @@
 // ?d_0041bac0@@YAXXZ
 // partial score=0.286331 date=2026-09-24
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
 // Address-qualified reconstruction of retail 0x0041BAC0. Its receiver is the
 // vslot+0x28 subobject passed by Pathfinder::updateAt003FA5B0. The receiver
 // offsets below are from the retail body; no BFME owner/member identity is

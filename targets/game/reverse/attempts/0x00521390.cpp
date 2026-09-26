@@ -1,6 +1,6 @@
 // ?rva00521390@AptMapPreview@@QAEXPAVMapMetaData@@@Z
 // partial score=0.43 date=2026-09-21
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Include
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Include
 // AptMapPreview callbacks and teardown share this observed 0x40-byte layout.
 // Constructor 0x00520670 writes through +0x3C; the enclosing setup constructor
 // places its next member at preview+0x40. Unknown fields remain raw storage.

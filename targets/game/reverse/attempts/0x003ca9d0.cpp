@@ -1,6 +1,6 @@
 // ?drop@Gen003C8A50@@QAEXPAVGen003C8A50Result@@@Z
 // partial score=0.955 date=2026-09-20
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // PROGRESS 2026-09-20 (opus): 657B/396-diff -> 673B(size-exact)/30-diff.
 // Closed the 16-byte gap and the "second notification EDX/EAX + omitted stack

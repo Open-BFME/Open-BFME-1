@@ -1,6 +1,6 @@
 // ?d_00283df0@@YAXXZ
 // partial score=0.3 date=2026-09-24
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Oi /Ireference/shims/iniexception /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Oi /Iinputs/reference/shims/iniexception /Iinputs/reference/shims/stringinline
 template <typename T> class StringBase
 {
 public:

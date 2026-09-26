@@ -1,6 +1,6 @@
 // ?rotateCameraOneFrame@W3DView@@AAEXXZ
 // partial score=0.56 date=2026-09-11
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
 // BFME W3DView::rotateCameraOneFrame, retail 0x00743860 (676 bytes).
 //
 // The matched W3DView::updateCameraMovements body at 0x00744530 calls this

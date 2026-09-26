@@ -1,6 +1,6 @@
 // ?d_000eded0@@YAXXZ
 // partial score=0.93 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/objectdlink
 // Retail RVA 0x000EDED0, 132 bytes through the int3 run at +0x84 (Ghidra split
 // it at the null-argument exit, +0x0D).  ScriptActions::doTeamGiveTeamUpgrade
 // calls it through ILT 0x00018449 on the destination team with the upgrade:

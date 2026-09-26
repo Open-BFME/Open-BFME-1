@@ -1,6 +1,6 @@
 // ?d_00689170@@YAXXZ
 // partial score=0.99 date=2026-09-11
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
 // The two BFME-only LANAPI receive handlers that answer a peer by slot.
 //
 // _bfme_handleHasMap_0068ACF0 (retail 0x0068ACF0) and

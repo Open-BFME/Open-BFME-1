@@ -1,6 +1,6 @@
 // ?doSkirmishCommandButtonOnMostValuable@ScriptActions@@IAEXABVAsciiString@@0M_N@Z
 // partial score=0.55 date=2026-09-10
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline
 // stlport
 // Clean C++ recovery of ScriptActions::doSkirmishCommandButtonOnMostValuable.
 // Retail boundary: 0x002FF770, 795 bytes.  The executeAction

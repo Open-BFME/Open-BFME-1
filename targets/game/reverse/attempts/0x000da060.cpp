@@ -1,6 +1,6 @@
 // ?d_000da060@@YAXXZ
 // partial score=0.4 date=2026-09-24
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 
 #define _STLP_NO_EXCEPTIONS 1

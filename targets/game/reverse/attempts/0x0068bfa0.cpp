@@ -2,7 +2,7 @@
 // partial score=0.92 date=2026-09-21
 // ?d_0068bfa0@@YAXXZ
 // partial: every retail instruction reproduced in order; frame is one slot too big
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
 
 // BFME LANAPI::handleGameStart, retail 0x0068BFA0, 285 bytes.
 //

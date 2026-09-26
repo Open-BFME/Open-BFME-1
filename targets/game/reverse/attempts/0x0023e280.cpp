@@ -5,7 +5,7 @@
 // ?parseHordeContainUnitTypePos@@YAXPAVINI@@PAX1PBX@Z
 // partial score=0.97 date=2026-09-03
 // ?parseBannerCarrierPosition@@YAXPAVINI@@PAX1PBX@Z
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Oi /Ireference/shims/iniexception
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Oi /Iinputs/reference/shims/iniexception
 // stlport
 // Open-BFME5: BannerCarrierPosition field parser, retail 0x0023E280.
 

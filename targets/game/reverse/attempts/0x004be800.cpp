@@ -2,7 +2,7 @@
 // partial score=0.238506 date=2026-09-25
 // cl: /DNDEBUG /MD /EHsc
 
-#include "../Code/Libraries/Source/WWVegas/WWLib/unicode_string.h"
+#include "../../../../game/Libraries/Source/WWVegas/WWLib/unicode_string.h"
 typedef unsigned short WideChar;
 typedef unsigned int UnsignedInt;
 inline UnicodeString::UnicodeString(const UnicodeString &s)

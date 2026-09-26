@@ -1,6 +1,6 @@
 // ?addFreeEdge@Rva007BAC10Owner@@QAEXHPAUPolyNeighbor@@PBF@Z
 // partial score=0.09 date=2026-09-21
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
 
 // Neighbour 0x007BD430 (Rva007BD430BuildPolygonNeighbors.cpp) establishes this
 // TU-local PolygonHolder/TriIndex/NeighborEdge/PolyNeighbor layout for the W3D

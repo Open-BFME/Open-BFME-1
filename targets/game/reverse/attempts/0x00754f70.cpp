@@ -1,6 +1,6 @@
 // ??0Rva00754F70Owner@@QAE@XZ
 // partial score=0.81 date=2026-09-22
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline
 // stlport
 // Open-BFME7: default constructor zero-initializing nine int members and one
 // embedded STLport list<12-byte record>, retail 0x00754F70, 102 bytes.  The

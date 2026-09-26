@@ -1,6 +1,6 @@
 // ?rva004CD5F0@GameInfo@@QBEEHH@Z
 // partial score=0.24 date=2026-09-21
-// cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWLib
 // Retail 0x004CD5F0, 157 bytes. A GameInfo helper (calls getMap()/getConstSlot()
 // on its own `this`) that checks whether a given map-cache player-position
 // record at MapMetaData+0x54 (see MapMetaData_assign.cpp / the +0x54

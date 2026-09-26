@@ -12,7 +12,7 @@
 // deliberately scoped to this reconstruction: their offsets are witnessed by
 // the retail stores, while their semantic owners are not.
 
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath
 
 #include "coord3d.h"
 #include <string.h>

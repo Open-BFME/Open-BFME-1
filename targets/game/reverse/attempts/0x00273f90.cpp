@@ -1,6 +1,6 @@
 // ?d_00273f90@@YAXXZ
 // partial score=0.335877862595 date=2026-09-25
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // Retail 00273F90, 917 bytes. The update flow parallels ZH AIUpdate.cpp:1009.
 // Opaque owner retained: caller metadata alone is not an identity witness.
 // Hub ABI/layout witnesses: docs/analysis/0x003e9720.md.

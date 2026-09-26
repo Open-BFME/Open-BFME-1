@@ -1,6 +1,6 @@
 // ?xfer@AttributeModifierPoolUpdate@@MAEXPAVXfer@@@Z
 // partial score=0.88 date=2026-09-12
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline /ICode/GameEngine/Source
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline /Igame/GameEngine/Source
 // stlport
 
 // AttributeModifierPoolUpdate::xfer, retail RVA 0x0036AA80.

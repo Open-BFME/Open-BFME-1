@@ -1,6 +1,6 @@
 // ?d_001d88c0@@YAXXZ
 // partial score=0.15140845070422537 date=2026-09-22
-// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath /FAsc /Fabuild/hub_001d88c0/body.cod
+// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /FAsc /Fabuild/hub_001d88c0/body.cod
 // stlport
 // Complete source reconstruction of retail RVA 0x001D88C0, 2556 bytes.
 // This is an experiment, not a matched source. See ANALYSIS.md and PROGRESS.md.

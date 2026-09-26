@@ -1,6 +1,6 @@
 // ?rva00552aa0@BfmeAptScreenOnlineLogin@@QAEHPAXI00@Z
 // partial score=0.22 date=2026-09-22
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 #include "ascii_string.h"
 #include "unicode_string.h"

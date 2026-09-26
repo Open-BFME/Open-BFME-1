@@ -1,6 +1,6 @@
 // ?d_003e8e10@@YAXXZ
 // partial score=0.546976241900648 date=2026-09-21
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/pathfind
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/pathfind
 // Astra round 2: retail RVA 0x003E8E10, independently bounded at 1852 bytes.
 // PARTIAL ONLY: R091 shape is 1859 bytes, 825 masked byte differences,
 // score 0.546976241900648. It reserves EC instead of retail E8.

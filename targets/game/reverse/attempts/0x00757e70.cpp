@@ -1,6 +1,6 @@
 // ??0W3DLaserDraw@@QAE@PAVThing@@PBVModuleData@@@Z
 // partial score=0.9 date=2026-09-14
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 // BFME retail 0x00757E70: W3DLaserDraw::W3DLaserDraw.
 // The shipped BFME class is larger than the Zero Hour reference header --

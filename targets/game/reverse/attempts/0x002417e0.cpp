@@ -1,6 +1,6 @@
 // ?d_002417e0@@YAXXZ
 // partial score=0.2767552828902522 date=2026-09-22
-// cl: /DNDEBUG /MD /EHsc /G7 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// cl: /DNDEBUG /MD /EHsc /G7 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // Complete retail control-flow reconstruction: RVA 002417E0, 1467 bytes.
 // See ANALYSIS.md. Names with an address/offset are deliberately opaque.
 // Entry: ECX=receiver, (Object*, const Coord3D*, float), ret 12, no EH.

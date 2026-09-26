@@ -1,6 +1,6 @@
 // ?doRemoveCommandBarButton@ScriptActions@@IAEXABVAsciiString@@0@Z
 // partial score=0.78 date=2026-09-07
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringinline
 // Clean C++ recovery of REMOVE_COMMANDBAR_BUTTON.
 // Retail RVA 0x002FC570 (463 bytes); executeAction's
 // COMMANDBAR_REMOVE_BUTTON_OBJECTTYPE arm names this body.  BFME removes

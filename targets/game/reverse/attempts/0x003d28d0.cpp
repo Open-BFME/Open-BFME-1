@@ -1,6 +1,6 @@
 // ?d_003d28d0@@YAXXZ
 // partial score=0.6 date=2026-09-23
-// cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/GameEngine/Include/Precompiled
+// cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Include/Precompiled
 // stlport
 
 #include "PreRTS.h"

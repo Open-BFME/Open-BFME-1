@@ -1,6 +1,6 @@
 // ?friend_moveVehicleToPos@AIGroup@@AAE_NPBUCoord3D@@W4CommandSourceType@@@Z
 // partial score=0.5843949044585988 date=2026-09-23
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
 // stlport
 // AIGroup 0x00158A40: Zero Hour algorithm with BFME instruction witnesses.
 #define _STLP_NO_EXCEPTIONS 1

@@ -5,7 +5,7 @@
 // filename plus a second context pointer, while the semantic owner is not
 // established independently.  The parser, stream, map and metadata views
 // below are limited to the fields and ABIs witnessed by this body.
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringbaseascii/Common /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringbaseascii/Common /Igame/Libraries/Source/WWVegas/WWLib
 
 #include <string.h>
 #include <new>

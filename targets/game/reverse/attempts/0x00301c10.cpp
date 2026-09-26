@@ -1,6 +1,6 @@
 // ?doTeamGuard@ScriptActions@@IAEXABVAsciiString@@@Z
 // partial score=0.995 date=2026-09-09
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/objectdlink /Iinputs/reference/shims/stringinline
 // The TEAM_GUARD arm at executeAction 0x00303BF0 calls this body at retail
 // RVA 0x00301C10. It walks the team's Object list and issues one guard order
 // for each eligible member.

@@ -4,7 +4,7 @@
 // Hypothesis: the byte flags are passed as direct one-byte value objects.
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 
-#include "../../Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../../game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 struct Rva003C1EE0Pair
 {

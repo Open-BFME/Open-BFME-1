@@ -1,6 +1,6 @@
 // ?d_008fbd00@@YAXXZ
 // partial score=0.2 date=2026-09-22
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /D_STLP_NO_EXCEPTIONS /Ireference/shims/stlp_nodealloc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /D_STLP_NO_EXCEPTIONS /Iinputs/reference/shims/stlp_nodealloc
 // stlport
 // Retail coordinate search at 0x008FBD00.
 

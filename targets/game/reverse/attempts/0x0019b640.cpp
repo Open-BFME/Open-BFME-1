@@ -1,6 +1,6 @@
 // ?d_0019b640@@YAXXZ
 // partial score=0.15 date=2026-09-24
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 #include "ascii_string.h"
 #include <vector>

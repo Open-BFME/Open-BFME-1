@@ -1,6 +1,6 @@
 // ?d_005fb530@@YAXXZ
 // partial score=0.4 date=2026-09-22
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /ICode/Libraries/Source/WWVegas/WWMath /ICode/GameEngine/Source/Common/System
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWMath /Igame/GameEngine/Source/Common/System
 // Retail layout: the primary module view is 0x1c bytes and the emission info
 // starts at +0x1c with two Coord3D records followed by nine random variables.
 
