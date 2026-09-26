@@ -89294,3 +89294,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?bfmeRva0130CE50RegistrationHead@@3PAXA,0x0130CE50,registration head read and replaced by retail at 0x00C6B180
 ?bfmeRva012B3C84RegistrationNext@@3PAXA,0x012B3C84,registration link written by retail at 0x00C6B180 and stored into head
 ?bfmeRva012B3FCCRegistrationNext@@3PAXA,0x012B3FCC,registration link written by retail at 0x00C6B1A0 and stored into head
+?bfmeRva012B4120RegistrationNext@@3PAXA,0x012B4120,registration link written by retail at 0x00C6B1C0 and stored into head
