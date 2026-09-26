@@ -4,7 +4,7 @@
 // array, then an opaque helper and bfmeRun_009A75E0 run in tail position.
 
 extern void d_009a8430();
-extern void d_009a5aa0();
+void __cdecl Rva009A5AA0InstallFilter(void *, void *, void *, int);
 void bfmeRun_009A75E0(void);
 
 extern void __cdecl bfmeQueryCpuTierFlags(int *pTierA, int *pTierB, int *pTierC);
@@ -12,7 +12,6 @@ extern void __cdecl initBlocksRva009B3EC0(void *self);
 extern void __cdecl initBlocksRva009B3E40(void *self);
 
 typedef int (__cdecl *Fn009A8430)();
-typedef void (__cdecl *Fn009A5AA0)(void *, void *, void *, int);
 
 static int *const g_013571E0 = (int *)0x013571E0;
 static int *const g_0134C6D8 = (int *)0x0134C6D8;
@@ -70,6 +69,6 @@ void Rva009A4D00Init(void)
 	for (const short *src = g_01141D08; (int)src < (int)g_01141D88; ++src, ++dst)
 		*dst = *src / 2 + 2;
 
-	reinterpret_cast<Fn009A5AA0>(d_009a5aa0)(g_0134C6D8, g_0134C6D8, g_0134C6D8, 7);
+	Rva009A5AA0InstallFilter(g_0134C6D8, g_0134C6D8, g_0134C6D8, 7);
 	bfmeRun_009A75E0();
 }
