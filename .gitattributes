@@ -21,6 +21,10 @@ targets/game/reverse/symbols.csv merge=union
 # flight at exactly the moment the escape hatch is needed.
 targets/game/reverse/deleted_rows.csv merge=union
 targets/game/reverse/re_attempts.log merge=union
+# A JSON list cannot union-merge; tools/merge_json_list.py merges it as a set of
+# entries (registered by tools/setup_hooks.sh; unregistered clones fall back to
+# an ordinary text merge).
+targets/game/reverse/name_corrections.json merge=jsonlist
 # so it deliberately gets no union merge.
 
 # Target ledgers remain independent; validation rejects overlapping appends.

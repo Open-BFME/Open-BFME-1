@@ -16,6 +16,10 @@ git branch --set-upstream-to=origin/master master 2>/dev/null \
     || echo "note: no origin/master yet; set upstream after first fetch"
 git config pull.rebase true
 git config core.editor true
+# name_corrections.json is a JSON list every rename landing appends to; this
+# driver merges it as a set of entries instead of stopping the rebase.
+git config merge.jsonlist.name "JSON list ledger (tools/merge_json_list.py)"
+git config merge.jsonlist.driver "python3 tools/merge_json_list.py %O %A %B"
 
 echo "core.hooksPath=$(git config --get core.hooksPath)"
 echo "upstream=$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null || echo unset)"
