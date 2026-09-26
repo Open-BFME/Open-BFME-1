@@ -59,3 +59,9 @@ ServiceHubImpl *createServiceHubImpl(void *a, void *b, void *c, void *d, void *e
 	}
 	g_Va0130A588 = 0;
 }
+
+ServiceHubImpl *Rva007EB170(void *a, void *b, void *c, void *d, void *e, void *f)
+{
+	void *raw = Gen007F0130(0x2B0);
+	return raw ? new (raw) ServiceHubImpl(a, b, c, d, e, f) : 0;
+}
