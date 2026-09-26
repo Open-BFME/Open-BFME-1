@@ -1,14 +1,13 @@
-// ?d_00590480@@YAXXZ
-// partial score=0.62 date=2026-09-17
+// ?rva00590480@Rva00590480GameClient@@QAEXXZ
+// partial score=0.622 date=2026-09-26
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-//
-// Retail 0x00590480 (498 B).  The caller at 0x00598950 is the proven
-// GameClient::update vtable slot and passes its GameClient this pointer in
-// ECX.  The method name below remains address-qualified; only the owner and
-// the fields used by the body are established by the caller and neighbours.
+// stlport
 
 typedef int Int;
 typedef bool Bool;
+
+#include <algorithm>
+#include <stl/_iterator_base.h>
 
 extern "C" long __ftol2( double value );
 extern "C" __declspec(dllimport) void *__cdecl memmove(
@@ -53,26 +52,18 @@ public:
 	static void go( void );
 };
 
-class Rva004A0B20ControlBar
+class Rva004A0B20
 {
 public:
-	Bool classify( Rva00589320Player *player, Int index );
+	Bool method( Rva00589320Player *player, Int index );
 };
 
-#pragma comment( linker, "/alternatename:?classify@Rva004A0B20ControlBar@@QAE_NPAVRva00589320Player@@H@Z=?j_00030ad0@@YAXXZ" )
+#pragma comment( linker, "/alternatename:?method@Rva004A0B20@@QAE_NPAVRva00589320Player@@H@Z=?j_00030ad0@@YAXXZ" )
 
-#define RVA00590480_CONTROL_BAR (*(Rva004A0B20ControlBar **)0x012F33F8)
+#define RVA00590480_CONTROL_BAR (*(Rva004A0B20 **)0x012F33F8)
 
 namespace _STL
 {
-struct random_access_iterator_tag
-{
-};
-
-template <class Iterator, class Value>
-Iterator __find( Iterator first, Iterator last, const Value &value,
-	const random_access_iterator_tag &tag );
-
 template <>
 char *__find<char *, char>( char *first, char *last, const char &value,
 	const random_access_iterator_tag &tag );
@@ -115,16 +106,13 @@ void Rva00590480GameClient::rva00590480( void )
 		m_rank5C = playerRank;
 	}
 
-	if ( (m_flags58 & 1) != 0 )
+	if ( (m_flags58 & 1) == 0 || player->m_points264 != m_points60 )
 	{
-		if ( player->m_points264 != m_points60 )
+		Int points = player->m_points264;
+		if ( bfmeSetRankYX( points ) != 0 )
 		{
-			Int points = player->m_points264;
-			if ( bfmeSetRankYX( points ) != 0 )
-			{
-				m_flags58 |= 1;
-				m_points60 = player->m_points264;
-			}
+			m_flags58 |= 1;
+			m_points60 = player->m_points264;
 		}
 	}
 
@@ -154,13 +142,13 @@ void Rva00590480GameClient::rva00590480( void )
 	unsigned char buttonState[ 12 ];
 	Int index = 0;
 	for ( index = 0; index < 12; ++index )
-		buttonState[ index ] = RVA00590480_CONTROL_BAR->classify( player, index );
+		buttonState[ index ] = RVA00590480_CONTROL_BAR->method( player, index );
 
 	if ( m_palantirReady4C4 == (unsigned char)zero )
 	{
 		for ( index = 0; index < 12; ++index )
 		{
-			if ( buttonState[ index ] == (unsigned char)zero &&
+			if ( buttonState[ index ] != (unsigned char)zero &&
 				m_palantir4B8[ index ] == (unsigned char)zero )
 			{
 				m_palantirReady4C4 = 1;
@@ -179,7 +167,7 @@ void Rva00590480GameClient::rva00590480( void )
 			char *found = _STL::__find(
 				(char *)buttonState, (char *)buttonState + 12,
 				searchValue, tag );
-			if ( found == (char *)buttonState )
+			if ( found == (char *)buttonState + 12 )
 				m_palantirReady4C4 = 0;
 		}
 		else
