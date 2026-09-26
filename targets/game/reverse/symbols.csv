@@ -78287,7 +78287,6 @@ name,address,notes
 ?bfmeRunEUAc@BfmeItemEUA@@QAEXPAX@Z,0x00043676,pin
 ?bfmeRunEUAd@BfmeItemEUA@@QAEXPAX@Z,0x0000B66D,pin
 ?bfmeRunEUAe@BfmeItemEUA@@QAEXPAX@Z,0x0004101A,pin
-?bfmeRunEUAe@BfmeSpecialPowerAllowanceStore@@QAEXPAVBfmePlayerSpecialPowerState@@PAX@Z,0x00045039,BfmeItemEUA callback E at 0x000C9930 forwards its state and context to the global allowance store
 ?bfmeRunEYE@BfmeNodeEYE@@QAEXXZ,0x00031FCF,pin
 ?bfmeRunEZA@BfmeItemEZA@@QAEXXZ,0x0001BF40,pin
 ?bfmeRunEZF@BfmeGlobEZF@@QAEXXZ,0x00009EC1,pin
@@ -89173,3 +89172,4 @@ _gpDisconnect,0x008E9800,body 0x008E9800; Thread_Function 0x0063EB00 +0xB49 jump
 ?g_bfmeAttackMoveThreshold001885B0@@3MB,0x00C9B3FC,retail float 6400 at update 0x001885B0+0x022B
 ?findClosestByKindOf@Rva002C6DD0PlayerView@@QAEPAVObject@@PAV2@V?$BitFlags@$0MA@@@1@Z,0x000CFC30,TU-local ABI view proven by 3 target call sites and the canonical 192-bit Player body
 ?at@Rva0068D3E0Arr@@QAEPAURva0068D3E0Slot@@H@Z,0x000234D4,route=0x0068D3E0; caller 0x0068CF00 sites 0x0068D099 and 0x0068D0C1; ret 4 checked slot at +0x58 stride 0x68
+?rva0039C260@LightPointSystem@@QAEXPAVBfmeUniqueIntegerStoreC8C0@@PAX@Z,0x00045039,ILT to 0x0039C260; BfmeItemEUA::bfmeRunEUAe at 0x000C9930 forwards its +0x274 store and context to the LightPointSystem global at 0x012F0FF8 (loaded by INI::parseLightPointLevel 0x0039CCF0)

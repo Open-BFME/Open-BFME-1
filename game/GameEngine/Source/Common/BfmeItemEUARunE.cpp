@@ -1,18 +1,21 @@
 // cl: /DNDEBUG /MD /EHsc
 
-class BfmePlayerSpecialPowerState
+// The global at 0x012F0FF8 is the LightPointSystem (see
+// LightPointSystemRva0039C260.cpp); +0x274 is the level-index store its
+// rva0039CB60/rva0039C260 pair adds to and erases from.
+class BfmeUniqueIntegerStoreC8C0
 {
 private:
 	unsigned int m_unmodelled_00;
 };
 
-class BfmeSpecialPowerAllowanceStore
+class LightPointSystem
 {
 public:
-	void bfmeRunEUAe(BfmePlayerSpecialPowerState *state, void *context);
+	void rva0039C260(BfmeUniqueIntegerStoreC8C0 *indices, void *context);
 };
 
-extern BfmeSpecialPowerAllowanceStore *TheBfmeSpecialPowerAllowanceStore;
+extern LightPointSystem *g_bfmeSinkBRB;
 
 class BfmeItemEUA
 {
@@ -21,13 +24,13 @@ public:
 
 private:
 	unsigned char m_unmodelled_000[0x274];
-	BfmePlayerSpecialPowerState m_specialPowerState;
+	BfmeUniqueIntegerStoreC8C0 m_at274;
 };
 
 void BfmeItemEUA::bfmeRunEUAe(void *context)
 {
-	if (TheBfmeSpecialPowerAllowanceStore)
+	if (g_bfmeSinkBRB)
 	{
-		TheBfmeSpecialPowerAllowanceStore->bfmeRunEUAe(&m_specialPowerState, context);
+		g_bfmeSinkBRB->rva0039C260(&m_at274, context);
 	}
 }

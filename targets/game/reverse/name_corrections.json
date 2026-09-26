@@ -5788,5 +5788,75 @@
   "after_sha256": "d65a04ef0a003a7b1733702500d8f8e8fbc82786b53b8b62d30695b664881f1e",
   "evidence": "targets/game/reverse/identity_evidence/006b0850.md",
   "reason": "xferMap was a caller-side label invented in 924dde8a67 with no identity evidence; the body is one of the STL-container xfer helpers whose source name is unrecovered so it keeps the address token like its landed siblings (AGENTS.md 3a)"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeItemEUARunE.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeItemEUARunE.cpp",
+  "old_name": "bfmeRunEUAe",
+  "new_name": "rva0039C260",
+  "before_sha256": "99af542c34b8529fe2657edcd9f215c7398fc844a77a26d6fd4cdb14a13538e6",
+  "after_sha256": "d7a71ef44626fb873995e6cea94d3ca9f036137fdd53366d214630ad6f5e07ab",
+  "evidence": "targets/game/reverse/identity_evidence/0039c260.md",
+  "reason": "bfmeRunEUAe/BfmeSpecialPowerAllowanceStore rested only on an Open-BFME5 pin note; retail shows this is the LightPointSystem global 0x012F0FF8 (INI::parseLightPointLevel 0x0039CCF0 passes it to addLevel) so the method keeps the address token like its twin rva0039CB60; m_specialPowerState was the same unproven semantic for the +0x274 level-index store and becomes the offset token m_at274"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeItemEUARunE.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeItemEUARunE.cpp",
+  "old_name": "m_specialPowerState",
+  "new_name": "m_at274",
+  "before_sha256": "99af542c34b8529fe2657edcd9f215c7398fc844a77a26d6fd4cdb14a13538e6",
+  "after_sha256": "d7a71ef44626fb873995e6cea94d3ca9f036137fdd53366d214630ad6f5e07ab",
+  "evidence": "targets/game/reverse/identity_evidence/0039c260.md",
+  "reason": "bfmeRunEUAe/BfmeSpecialPowerAllowanceStore rested only on an Open-BFME5 pin note; retail shows this is the LightPointSystem global 0x012F0FF8 (INI::parseLightPointLevel 0x0039CCF0 passes it to addLevel) so the method keeps the address token like its twin rva0039CB60; m_specialPowerState was the same unproven semantic for the +0x274 level-index store and becomes the offset token m_at274"
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/SpecialPower/BfmeSpecialPowerAllowanceStore_bfmeRunEUAe.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/LightPointSystemRva0039C260.cpp",
+  "old_name": "bfmeRunEUAe",
+  "new_name": "rva0039C260",
+  "before_sha256": "b6d69d0c674bbe2c67a3869aa1b0ccc9a944f0c9985821a2384ae6de38a42008",
+  "after_sha256": "1007d9726f00173650c4653e6b820311807cdb24c2986682fa64043fe848d86e",
+  "evidence": "targets/game/reverse/identity_evidence/0039c260.md",
+  "reason": "bfmeRunEUAe/BfmeSpecialPowerAllowanceStore rested only on an Open-BFME5 pin note; retail shows this is the LightPointSystem global 0x012F0FF8 (INI::parseLightPointLevel 0x0039CCF0 passes it to addLevel) so the method keeps the address token like its twin rva0039CB60; m_specialPowerState was the same unproven semantic for the +0x274 level-index store and becomes the offset token m_at274"
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "bfmeRunEUAe",
+  "new_name": "rva0039C260",
+  "before_sha256": "ca99eda099bfd05a8d19addec2e1e956a4de8c74d407e7f0d87b4226db333592",
+  "after_sha256": "16ac7fdc2d73ac34f3abeca84299969298136c73ffef298390653d099052f31a",
+  "evidence": "targets/game/reverse/identity_evidence/0039c260.md",
+  "reason": "bfmeRunEUAe/BfmeSpecialPowerAllowanceStore rested only on an Open-BFME5 pin note; retail shows this is the LightPointSystem global 0x012F0FF8 (INI::parseLightPointLevel 0x0039CCF0 passes it to addLevel) so the method keeps the address token like its twin rva0039CB60; m_specialPowerState was the same unproven semantic for the +0x274 level-index store and becomes the offset token m_at274"
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/SpecialPower/BfmeSpecialPowerAllowanceStore_bfmeRunEUAe.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/LightPointSystemRva0039C260.cpp",
+  "old_name": "bfmeRunEUAe",
+  "new_name": "rva0039C260",
+  "before_sha256": "01f51826f9ce40661e12171926e808df6131d8f473b451854bd19bb3279bfacc",
+  "after_sha256": "1007d9726f00173650c4653e6b820311807cdb24c2986682fa64043fe848d86e",
+  "evidence": "targets/game/reverse/identity_evidence/0039c260.md",
+  "reason": "bfmeRunEUAe/BfmeSpecialPowerAllowanceStore rested only on an Open-BFME5 pin note; retail shows this is the LightPointSystem global 0x012F0FF8 (INI::parseLightPointLevel 0x0039CCF0 passes it to addLevel) so the method keeps the address token like its twin rva0039CB60; m_specialPowerState was the same unproven semantic for the +0x274 level-index store and becomes the offset token m_at274"
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "bfmeRunEUAe",
+  "new_name": "rva0039C260",
+  "before_sha256": "220d12116dd73fedd40c65d841a2d21f614010846c718eb86e8b1540ba4080a5",
+  "after_sha256": "e7119cdef3f61086673ec0365952d3f1357b73eb03d44dc201539632618b5db2",
+  "evidence": "targets/game/reverse/identity_evidence/0039c260.md",
+  "reason": "bfmeRunEUAe/BfmeSpecialPowerAllowanceStore rested only on an Open-BFME5 pin note; retail shows this is the LightPointSystem global 0x012F0FF8 (INI::parseLightPointLevel 0x0039CCF0 passes it to addLevel) so the method keeps the address token like its twin rva0039CB60; m_specialPowerState was the same unproven semantic for the +0x274 level-index store and becomes the offset token m_at274"
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/SpecialPower/BfmeSpecialPowerAllowanceStore_bfmeRunEUAe.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/LightPointSystemRva0039C260.cpp",
+  "old_name": "bfmeRunEUAe",
+  "new_name": "rva0039C260",
+  "before_sha256": "01f51826f9ce40661e12171926e808df6131d8f473b451854bd19bb3279bfacc",
+  "after_sha256": "db53b73a8a0029f83c1e8c63eeeb224645b7fef26c9109e72b7518bd18141dd6",
+  "evidence": "targets/game/reverse/identity_evidence/0039c260.md",
+  "reason": "bfmeRunEUAe/BfmeSpecialPowerAllowanceStore rested only on an Open-BFME5 pin note; retail shows this is the LightPointSystem global 0x012F0FF8 (INI::parseLightPointLevel 0x0039CCF0 passes it to addLevel) so the method keeps the address token like its twin rva0039CB60; m_specialPowerState was the same unproven semantic for the +0x274 level-index store and becomes the offset token m_at274"
  }
 ]
