@@ -26,11 +26,11 @@ public:
 
 private:
 	char m_bfmeHead[0x20];
-	UnsignedInt m_bfmeTargetFrame;				// +0x20
+	UnsignedInt m_nextCreationFrame;				// +0x20
 };
 
 // ?getRemainingFrames@OCLUpdate@@QAEIXZ
 UnsignedInt OCLUpdate::getRemainingFrames(void)
 {
-	return m_bfmeTargetFrame - TheGameLogic->m_bfmeFrame;
+	return m_nextCreationFrame - TheGameLogic->m_bfmeFrame;
 }
