@@ -191,7 +191,7 @@ def test_land_rejects_path_traversal(target, source):
 
 
 def test_game_ledger_schema_cannot_be_used(target):
-    target.ledger_path.write_text("name,export_rva,target_rva,target_size,source,status,notes\n")
+    target.ledger_path.write_bytes(b"name,export_rva,target_rva,target_size,source,status,notes\n")
     with pytest.raises(ValueError, match="expected header"):
         target_verify.read_rows(target)
 

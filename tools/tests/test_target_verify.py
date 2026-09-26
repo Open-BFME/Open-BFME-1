@@ -74,7 +74,7 @@ def test_read_rows_requires_exact_schema_and_lf(target):
     target.ledger_path.write_bytes((",".join(verify.LEDGER_FIELDS) + "\r\n").encode())
     with pytest.raises(verify.TargetVerificationError, match="LF"):
         verify.read_rows(target)
-    target.ledger_path.write_text("name,target_rva\n")
+    target.ledger_path.write_bytes(b"name,target_rva\n")   # bytes: text mode is CRLF on Windows
     with pytest.raises(verify.TargetVerificationError, match="expected header"):
         verify.read_rows(target)
 

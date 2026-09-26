@@ -52,7 +52,7 @@ def repo(tmp_path, monkeypatch):
         writer.writerow(dict(name=("_First", "_Second")[n], target_rva=hex(0x1000 + n),
                              target_size="1", status="matched", source=source, profile="editor-size",
                              evidence="export", model="fixture"))
-    target_ledger.write_text(out.getvalue())
+    target_ledger.write_text(out.getvalue(), newline="")   # the target ledger must be LF
     game_files = {"FUNCTIONS": ("functions.csv", check_csv.FUNCTIONS_HEADER),
                   "SYMBOLS": ("symbols.csv", check_csv.SYMBOLS_HEADER),
                   "DELETED": ("deleted_rows.csv", "name,target_rva,reason")}
@@ -93,7 +93,7 @@ def test_invalid_target_ledger_cannot_exempt_sources(repo, damage):
     elif damage == "bad-schema":
         ledger.write_text("source,status\n")
     else:
-        ledger.write_text(ledger.read_text().replace("_First", "_Invented"))
+        ledger.write_text(ledger.read_text().replace("_First", "_Invented"), newline="")
     git("add", "--", LEDGER)
     problems = []
     assert check_csv.check_orphans(None, problems) == 0
@@ -104,7 +104,7 @@ def test_invalid_target_ledger_cannot_exempt_sources(repo, damage):
 def test_snapshot_cannot_borrow_different_working_tree_claims(repo, spec):
     root, _ = repo
     ledger = root / LEDGER
-    ledger.write_text(ledger.read_text().replace("_First", "_Invented"))
+    ledger.write_text(ledger.read_text().replace("_First", "_Invented"), newline="")
     problems = []
     assert check_csv.check_orphans(spec, problems) == 0
     assert any("verification inputs differ" in problem for problem in problems)
