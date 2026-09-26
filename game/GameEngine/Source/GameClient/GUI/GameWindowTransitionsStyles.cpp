@@ -190,55 +190,6 @@ void FlashTransition::reverse( void )
 
 }
 
-// ?draw@FlashTransition@@UAEXXZ present-unmatched
-void FlashTransition::draw( void )
-{
-	switch (m_drawState) 
-	{
-		case FLASHTRANSITION_FADE_IN_1:
-		{
-			TheDisplay->drawOpenRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, 1, GameMakeColor(255, 255, 255,100));
-			TheDisplay->drawFillRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, GameMakeColor(255, 255, 255, 33));
-		}
-		break;
-		case FLASHTRANSITION_FADE_IN_2:
-		{
-			TheDisplay->drawOpenRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, 1, GameMakeColor(255, 255, 255,150));
-			TheDisplay->drawFillRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, GameMakeColor(255, 255, 255, 66));
-		}
-		break;
-		case FLASHTRANSITION_FADE_IN_3:
-		{
-			TheDisplay->drawOpenRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, 1, GameMakeColor(255, 255, 255,200));
-			TheDisplay->drawFillRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, GameMakeColor(255, 255, 255, 99));
-		}
-		break;
-		case FLASHTRANSITION_FADE_TO_BACKGROUND_1:
-		{
-			TheDisplay->drawOpenRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, 1, GameMakeColor(255, 255, 255,250));
-			TheDisplay->drawFillRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, GameMakeColor(255, 255, 255, 75));
-		}
-		break;
-		case FLASHTRANSITION_FADE_TO_BACKGROUND_2:
-		{
-			TheDisplay->drawOpenRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, 1, GameMakeColor(255, 255, 255,250));
-			TheDisplay->drawFillRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, GameMakeColor(255, 255, 255,50));
-		}
-		break;
-		case FLASHTRANSITION_FADE_TO_BACKGROUND_3:
-		{
-			TheDisplay->drawOpenRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, 1, GameMakeColor(255, 255, 255,250));
-			TheDisplay->drawFillRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, GameMakeColor(255, 255, 255, 25));
-		}
-		break;
-		case FLASHTRANSITION_FADE_TO_BACKGROUND_4:
-		{
-			TheDisplay->drawOpenRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, 1, GameMakeColor(255, 255, 255,250));
-			TheDisplay->drawFillRect(m_pos.x+1, m_pos.y+1,m_size.x-2, m_size.y, GameMakeColor(255, 255, 255, 10));
-		}
-		break;
-	}
-}
 	
 void FlashTransition::skip( void )
 {
