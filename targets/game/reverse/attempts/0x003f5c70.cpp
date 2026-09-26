@@ -1,6 +1,6 @@
 // ?rva003f5c70@Pathfinder@@QAEEPAVObject@@PAXPAUCoord3D@@@Z
-// partial score=0.68 date=2026-09-25
-// cl: /O2 /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath
+// partial score=0.95 date=2026-09-26
+// cl: /O2 /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath
 
 typedef int Int;
 typedef unsigned char Bool;
@@ -9,6 +9,7 @@ typedef float Real;
 struct Coord3D
 {
 	Real x, y, z;
+	void set(const Coord3D *a) { x = a->x; y = a->y; z = a->z; }
 };
 
 struct ICoord2D
@@ -123,7 +124,7 @@ Bool Pathfinder::rva003f5c70(Object *obj, void *arg3, Coord3D *dest)
 	{
 		Coord3D adjusted;
 		getRadiusAndCenter(object, (Int &)adjusted.x, center);
-		adjusted = *dest;
+		adjusted.set(dest);
 		if (!center)
 		{
 			adjusted.x += 5.0f;
@@ -132,11 +133,9 @@ Bool Pathfinder::rva003f5c70(Object *obj, void *arg3, Coord3D *dest)
 		worldToCell(&adjusted, &cell);
 	}
 
-	TerrainLogic *terrainLogic = TheTerrainLogic;
-	PathfindLayerEnum layer = terrainLogic->getLayerForDestination(object,
-		dest);
 	Rva003E6200Info info(this, object, arg3, dest,
-		terrainLogic->getLayerHeight(dest->x, dest->y, layer, 0, true));
+		TheTerrainLogic->getLayerHeight(dest->x, dest->y,
+			TheTerrainLogic->getLayerForDestination(object, dest), 0, true));
 	{
 		ICoord2D found;
 		if (((Rva003F55E0 *)this)->call(&cell, 200, &found, &info))
