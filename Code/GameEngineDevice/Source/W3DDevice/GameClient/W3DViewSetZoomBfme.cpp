@@ -35,9 +35,9 @@ private:
 	unsigned char m_padding0045[0x1DC - 0x45];
 	unsigned char m_rotatingCamera;
 	unsigned char m_padding01DD[0x204 - 0x1DD];
-	unsigned char m_zoomingCamera;
+	unsigned char m_doingCameraUpdate;
 	unsigned char m_padding0205[0x228 - 0x205];
-	unsigned char m_pitchingCamera;
+	unsigned char m_doingZoomCamera;
 	unsigned char m_padding0229[0x27C - 0x229];
 	unsigned char m_cameraMovementAlternate;
 	unsigned char m_cameraMovementFinished;
@@ -59,9 +59,9 @@ void W3DView::setZoom(Real zoom)
 		return;
 	if (m_rotatingCamera)
 		return;
-	if (m_zoomingCamera)
+	if (m_doingCameraUpdate)
 		return;
-	if (m_pitchingCamera)
+	if (m_doingZoomCamera)
 		return;
 	if (m_cameraMovementFinished)
 		return;
@@ -78,8 +78,8 @@ void W3DView::setZoom(Real zoom)
 	}
 
 	m_rotatingCamera = 0;
-	m_zoomingCamera = 0;
-	m_pitchingCamera = 0;
+	m_doingCameraUpdate = 0;
+	m_doingZoomCamera = 0;
 	m_cameraMovementAlternate = 0;
 	m_cameraMovementFinished = 0;
 	m_cameraHasMovedSinceRequest = 0;

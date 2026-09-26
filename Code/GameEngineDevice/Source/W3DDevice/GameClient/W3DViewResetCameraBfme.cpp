@@ -100,9 +100,9 @@ private:
 	char m_padding1AC[0x1DC - 0x1AC];
 	Bool m_rotatingCamera;
 	char m_padding1DD[0x204 - 0x1DD];
-	Bool m_zoomingCamera;
+	Bool m_doingCameraUpdate;
 	char m_padding205[0x228 - 0x205];
-	Bool m_pitchingCamera;
+	Bool m_doingZoomCamera;
 	char m_padding229[0x27C - 0x229];
 	Bool m_cameraMovementAlternate;
 	Bool m_cameraMovementFinished;
@@ -138,8 +138,8 @@ void W3DView::resetCamera(const Coord3D *location, Int milliseconds,
 	buildCameraTransform(&m_cameraTransform);
 	m_cameraMovementMode = 0;
 	m_rotatingCamera = false;
-	m_zoomingCamera = false;
-	m_pitchingCamera = false;
+	m_doingCameraUpdate = false;
+	m_doingZoomCamera = false;
 	m_cameraMovementFinished = false;
 	m_cameraMovementAlternate = false;
 	m_cameraMovedOnWaypointPath = false;
