@@ -348,141 +348,141 @@ public:
 class NetPacket
 {
 protected:
-	static NetCommandMsg *readFrameMessage(UnsignedByte *data, Int &i);
-	static NetCommandMsg *readRouterFallbackMessage(UnsignedByte *data, Int &i);
-	static NetCommandMsg *readFileMessage(UnsignedByte *data, Int &i);
-	static NetCommandMsg *readFileAnnounceMessage(UnsignedByte *data, Int &i);
-	static NetCommandMsg *readRequestPlayerLeaveMessage(UnsignedByte *data, Int &i);
-	static NetCommandMsg *readAckBothMessage(UnsignedByte *data, Int &i);
-	static NetCommandMsg *readAckStage1Message(UnsignedByte *data, Int &i);
-	static NetCommandMsg *readAckStage2Message(UnsignedByte *data, Int &i);
+	static NetCommandMsg *readFrameMessage(UnsignedByte *packetData, Int &readOffset);
+	static NetCommandMsg *readRouterFallbackMessage(UnsignedByte *packetData, Int &readOffset);
+	static NetCommandMsg *readFileMessage(UnsignedByte *packetData, Int &readOffset);
+	static NetCommandMsg *readFileAnnounceMessage(UnsignedByte *packetData, Int &readOffset);
+	static NetCommandMsg *readRequestPlayerLeaveMessage(UnsignedByte *packetData, Int &readOffset);
+	static NetCommandMsg *readAckBothMessage(UnsignedByte *packetData, Int &readOffset);
+	static NetCommandMsg *readAckStage1Message(UnsignedByte *packetData, Int &readOffset);
+	static NetCommandMsg *readAckStage2Message(UnsignedByte *packetData, Int &readOffset);
 	static NetCommandMsg *readKeepAliveMessage(UnsignedByte *data, Int &i);
 	static NetCommandMsg *readDisconnectKeepAliveMessage(UnsignedByte *data, Int &i);
-	static NetCommandMsg *readProgressMessage(UnsignedByte *data, Int &i);
+	static NetCommandMsg *readProgressMessage(UnsignedByte *packetData, Int &readOffset);
 	static NetCommandMsg *readLoadCompleteMessage(UnsignedByte *data, Int &i);
 	static NetCommandMsg *readTimeOutGameStartMessage(UnsignedByte *data, Int &i);
-	static NetCommandMsg *readDisconnectFrameMessage(UnsignedByte *data, Int &i);
-	static NetCommandMsg *readDisconnectScreenOffMessage(UnsignedByte *data, Int &i);
-	static NetCommandMsg *readInformPlayerLeaveFrameMessage(UnsignedByte *data, Int &i);
-	static NetCommandMsg *readRequestFrameDataMessage(UnsignedByte *data, Int &i);
+	static NetCommandMsg *readDisconnectFrameMessage(UnsignedByte *packetData, Int &readOffset);
+	static NetCommandMsg *readDisconnectScreenOffMessage(UnsignedByte *packetData, Int &readOffset);
+	static NetCommandMsg *readInformPlayerLeaveFrameMessage(UnsignedByte *packetData, Int &readOffset);
+	static NetCommandMsg *readRequestFrameDataMessage(UnsignedByte *packetData, Int &readOffset);
 };
 
-NetCommandMsg *NetPacket::readFrameMessage(UnsignedByte *data, Int &i)
+NetCommandMsg *NetPacket::readFrameMessage(UnsignedByte *packetData, Int &readOffset)
 {
 	NetFrameCommandMsg *msg = new NetFrameCommandMsg;
 
 	UnsignedInt frame = 0;
-	memcpy(&frame, data + i, sizeof(frame));
-	i += sizeof(frame);
+	memcpy(&frame, packetData + readOffset, sizeof(frame));
+	readOffset += sizeof(frame);
 	msg->m_frame = frame;
 
 	UnsignedInt field20 = 0;
-	memcpy(&field20, data + i, sizeof(field20));
-	i += sizeof(field20);
+	memcpy(&field20, packetData + readOffset, sizeof(field20));
+	readOffset += sizeof(field20);
 	msg->m_field20 = field20;
 
 	UnsignedInt commandCount = 0;
-	memcpy(&commandCount, data + i, sizeof(commandCount));
-	i += sizeof(commandCount);
+	memcpy(&commandCount, packetData + readOffset, sizeof(commandCount));
+	readOffset += sizeof(commandCount);
 	msg->m_commandCount = commandCount;
 
 	return msg;
 }
 
-NetCommandMsg *NetPacket::readRouterFallbackMessage(UnsignedByte *data, Int &i)
+NetCommandMsg *NetPacket::readRouterFallbackMessage(UnsignedByte *packetData, Int &readOffset)
 {
 	BFMENetRouterFallbackCommandMsg *msg = new BFMENetRouterFallbackCommandMsg;
-	Int players[MAX_SLOTS];
+	Int playerOrder[MAX_SLOTS];
 
 	for (Int slot = 0; slot < MAX_SLOTS; ++slot) {
-		players[slot] = data[i];
-		++i;
+		playerOrder[slot] = packetData[readOffset];
+		++readOffset;
 	}
-	msg->setPlayerOrder(players);
+	msg->setPlayerOrder(playerOrder);
 
 	return msg;
 }
 
-NetCommandMsg *NetPacket::readRequestPlayerLeaveMessage(UnsignedByte *data, Int &i)
+NetCommandMsg *NetPacket::readRequestPlayerLeaveMessage(UnsignedByte *packetData, Int &readOffset)
 {
 	BFMENetRequestPlayerLeaveCommandMsg *msg = new BFMENetRequestPlayerLeaveCommandMsg;
 
 	Int playerID = 0;
-	memcpy(&playerID, data + i, sizeof(playerID));
-	i += sizeof(playerID);
+	memcpy(&playerID, packetData + readOffset, sizeof(playerID));
+	readOffset += sizeof(playerID);
 	msg->setRequestedPlayerID(playerID);
 
 	return msg;
 }
 
-NetCommandMsg *NetPacket::readAckBothMessage(UnsignedByte *data, Int &i)
+NetCommandMsg *NetPacket::readAckBothMessage(UnsignedByte *packetData, Int &readOffset)
 {
 	NetAckBothCommandMsg *msg = new NetAckBothCommandMsg;
 
-	UnsignedShort cmdID = 0;
-	memcpy(&cmdID, data + i, sizeof(UnsignedShort));
-	i += sizeof(UnsignedShort);
-	msg->setCommandID(cmdID);
+	UnsignedShort commandID = 0;
+	memcpy(&commandID, packetData + readOffset, sizeof(UnsignedShort));
+	readOffset += sizeof(UnsignedShort);
+	msg->setCommandID(commandID);
 
-	UnsignedByte origPlayerID = 0;
-	memcpy(&origPlayerID, data + i, sizeof(UnsignedByte));
-	i += sizeof(UnsignedByte);
-	msg->setOriginalPlayerID(origPlayerID);
+	UnsignedByte originalPlayerID = 0;
+	memcpy(&originalPlayerID, packetData + readOffset, sizeof(UnsignedByte));
+	readOffset += sizeof(UnsignedByte);
+	msg->setOriginalPlayerID(originalPlayerID);
 
 	// BFME-only, and written through the field rather than a setter -- there is
 	// no setOriginalExecutionFrame anywhere in the image.
-	UnsignedInt origExecFrame = 0;
-	memcpy(&origExecFrame, data + i, sizeof(origExecFrame));
-	i += sizeof(origExecFrame);
-	msg->m_originalExecutionFrame = origExecFrame;
+	UnsignedInt originalExecutionFrame = 0;
+	memcpy(&originalExecutionFrame, packetData + readOffset, sizeof(originalExecutionFrame));
+	readOffset += sizeof(originalExecutionFrame);
+	msg->m_originalExecutionFrame = originalExecutionFrame;
 
 	return msg;
 }
 
-NetCommandMsg *NetPacket::readAckStage1Message(UnsignedByte *data, Int &i)
+NetCommandMsg *NetPacket::readAckStage1Message(UnsignedByte *packetData, Int &readOffset)
 {
 	NetAckStage1CommandMsg *msg = new NetAckStage1CommandMsg;
 
-	UnsignedShort cmdID = 0;
-	memcpy(&cmdID, data + i, sizeof(UnsignedShort));
-	i += sizeof(UnsignedShort);
-	msg->setCommandID(cmdID);
+	UnsignedShort commandID = 0;
+	memcpy(&commandID, packetData + readOffset, sizeof(UnsignedShort));
+	readOffset += sizeof(UnsignedShort);
+	msg->setCommandID(commandID);
 
-	UnsignedByte origPlayerID = 0;
-	memcpy(&origPlayerID, data + i, sizeof(UnsignedByte));
-	i += sizeof(UnsignedByte);
-	msg->setOriginalPlayerID(origPlayerID);
+	UnsignedByte originalPlayerID = 0;
+	memcpy(&originalPlayerID, packetData + readOffset, sizeof(UnsignedByte));
+	readOffset += sizeof(UnsignedByte);
+	msg->setOriginalPlayerID(originalPlayerID);
 
 	// BFME-only, and written through the field rather than a setter -- there is
 	// no setOriginalExecutionFrame anywhere in the image.
-	UnsignedInt origExecFrame = 0;
-	memcpy(&origExecFrame, data + i, sizeof(origExecFrame));
-	i += sizeof(origExecFrame);
-	msg->m_originalExecutionFrame = origExecFrame;
+	UnsignedInt originalExecutionFrame = 0;
+	memcpy(&originalExecutionFrame, packetData + readOffset, sizeof(originalExecutionFrame));
+	readOffset += sizeof(originalExecutionFrame);
+	msg->m_originalExecutionFrame = originalExecutionFrame;
 
 	return msg;
 }
 
-NetCommandMsg *NetPacket::readAckStage2Message(UnsignedByte *data, Int &i)
+NetCommandMsg *NetPacket::readAckStage2Message(UnsignedByte *packetData, Int &readOffset)
 {
 	NetAckStage2CommandMsg *msg = new NetAckStage2CommandMsg;
 
-	UnsignedShort cmdID = 0;
-	memcpy(&cmdID, data + i, sizeof(UnsignedShort));
-	i += sizeof(UnsignedShort);
-	msg->setCommandID(cmdID);
+	UnsignedShort commandID = 0;
+	memcpy(&commandID, packetData + readOffset, sizeof(UnsignedShort));
+	readOffset += sizeof(UnsignedShort);
+	msg->setCommandID(commandID);
 
-	UnsignedByte origPlayerID = 0;
-	memcpy(&origPlayerID, data + i, sizeof(UnsignedByte));
-	i += sizeof(UnsignedByte);
-	msg->setOriginalPlayerID(origPlayerID);
+	UnsignedByte originalPlayerID = 0;
+	memcpy(&originalPlayerID, packetData + readOffset, sizeof(UnsignedByte));
+	readOffset += sizeof(UnsignedByte);
+	msg->setOriginalPlayerID(originalPlayerID);
 
 	// BFME-only, and written through the field rather than a setter -- there is
 	// no setOriginalExecutionFrame anywhere in the image.
-	UnsignedInt origExecFrame = 0;
-	memcpy(&origExecFrame, data + i, sizeof(origExecFrame));
-	i += sizeof(origExecFrame);
-	msg->m_originalExecutionFrame = origExecFrame;
+	UnsignedInt originalExecutionFrame = 0;
+	memcpy(&originalExecutionFrame, packetData + readOffset, sizeof(originalExecutionFrame));
+	readOffset += sizeof(originalExecutionFrame);
+	msg->m_originalExecutionFrame = originalExecutionFrame;
 
 	return msg;
 }
@@ -501,13 +501,13 @@ NetCommandMsg *NetPacket::readDisconnectKeepAliveMessage(UnsignedByte *data, Int
 	return msg;
 }
 
-NetCommandMsg *NetPacket::readProgressMessage(UnsignedByte *data, Int &i)
+NetCommandMsg *NetPacket::readProgressMessage(UnsignedByte *packetData, Int &readOffset)
 {
 	NetProgressCommandMsg *msg = new NetProgressCommandMsg;
 
 	UnsignedByte percentage = 0;
-	memcpy(&percentage, data + i, sizeof(UnsignedByte));
-	i += sizeof(UnsignedByte);
+	memcpy(&percentage, packetData + readOffset, sizeof(UnsignedByte));
+	readOffset += sizeof(UnsignedByte);
 	msg->setPercentage(percentage);
 
 	return msg;
@@ -530,111 +530,111 @@ NetCommandMsg *NetPacket::readTimeOutGameStartMessage(UnsignedByte *data, Int &i
 	return msg;
 }
 
-NetCommandMsg *NetPacket::readDisconnectFrameMessage(UnsignedByte *data, Int &i)
+NetCommandMsg *NetPacket::readDisconnectFrameMessage(UnsignedByte *packetData, Int &readOffset)
 {
 	NetDisconnectFrameCommandMsg *msg = new NetDisconnectFrameCommandMsg;
 
 	UnsignedInt disconnectFrame = 0;
-	memcpy(&disconnectFrame, data + i, sizeof(disconnectFrame));
-	i += sizeof(disconnectFrame);
+	memcpy(&disconnectFrame, packetData + readOffset, sizeof(disconnectFrame));
+	readOffset += sizeof(disconnectFrame);
 	msg->setDisconnectFrame(disconnectFrame);
 
 	return msg;
 }
 
-NetCommandMsg *NetPacket::readDisconnectScreenOffMessage(UnsignedByte *data, Int &i)
+NetCommandMsg *NetPacket::readDisconnectScreenOffMessage(UnsignedByte *packetData, Int &readOffset)
 {
 	NetDisconnectScreenOffCommandMsg *msg = new NetDisconnectScreenOffCommandMsg;
 
 	UnsignedInt newFrame = 0;
-	memcpy(&newFrame, data + i, sizeof(newFrame));
-	i += sizeof(newFrame);
+	memcpy(&newFrame, packetData + readOffset, sizeof(newFrame));
+	readOffset += sizeof(newFrame);
 	msg->setNewFrame(newFrame);
 
 	return msg;
 }
 
-NetCommandMsg *NetPacket::readInformPlayerLeaveFrameMessage(UnsignedByte *data, Int &i)
+NetCommandMsg *NetPacket::readInformPlayerLeaveFrameMessage(UnsignedByte *packetData, Int &readOffset)
 {
 	BFMENetInformPlayerLeaveFrameCommandMsg *msg = new BFMENetInformPlayerLeaveFrameCommandMsg;
 	Int playerID = 0;
-	memcpy(&playerID, data + i, sizeof(playerID));
-	i += sizeof(playerID);
+	memcpy(&playerID, packetData + readOffset, sizeof(playerID));
+	readOffset += sizeof(playerID);
 	msg->setLeavingPlayerID(playerID);
 	UnsignedInt leaveFrame = 0;
-	memcpy(&leaveFrame, data + i, sizeof(leaveFrame));
-	i += sizeof(leaveFrame);
+	memcpy(&leaveFrame, packetData + readOffset, sizeof(leaveFrame));
+	readOffset += sizeof(leaveFrame);
 	msg->setLeaveFrame(leaveFrame);
 	return msg;
 }
 
-NetCommandMsg *NetPacket::readRequestFrameDataMessage(UnsignedByte *data, Int &i)
+NetCommandMsg *NetPacket::readRequestFrameDataMessage(UnsignedByte *packetData, Int &readOffset)
 {
 	BFMENetRequestFrameDataCommandMsg *msg = new BFMENetRequestFrameDataCommandMsg;
 	UnsignedInt firstFrame = 0;
-	memcpy(&firstFrame, data + i, sizeof(firstFrame));
-	i += sizeof(firstFrame);
+	memcpy(&firstFrame, packetData + readOffset, sizeof(firstFrame));
+	readOffset += sizeof(firstFrame);
 	msg->setFirstFrame(firstFrame);
 	UnsignedInt lastFrame = 0;
-	memcpy(&lastFrame, data + i, sizeof(lastFrame));
-	i += sizeof(lastFrame);
+	memcpy(&lastFrame, packetData + readOffset, sizeof(lastFrame));
+	readOffset += sizeof(lastFrame);
 	msg->setLastFrame(lastFrame);
 	return msg;
 }
 
 // The filename arrives in its portable form and NUL-terminated, so both file
 // readers copy it out byte by byte before anything else.
-NetCommandMsg *NetPacket::readFileMessage(UnsignedByte *data, Int &i)
+NetCommandMsg *NetPacket::readFileMessage(UnsignedByte *packetData, Int &readOffset)
 {
 	NetFileCommandMsg *msg = new NetFileCommandMsg;
 	char filename[260];
-	char *c = filename;
+	char *filenameCursor = filename;
 
-	while (data[i] != 0) {
-		*c = data[i];
-		++c;
-		++i;
+	while (packetData[readOffset] != 0) {
+		*filenameCursor = packetData[readOffset];
+		++filenameCursor;
+		++readOffset;
 	}
-	*c = 0;
-	++i;
+	*filenameCursor = 0;
+	++readOffset;
 	msg->setPortableFilename(AsciiString(filename));
 
 	UnsignedInt dataLength = 0;
-	memcpy(&dataLength, data + i, sizeof(dataLength));
-	i += sizeof(dataLength);
+	memcpy(&dataLength, packetData + readOffset, sizeof(dataLength));
+	readOffset += sizeof(dataLength);
 
-	UnsignedByte *buf = new UnsignedByte[dataLength];
-	memcpy(buf, data + i, dataLength);
-	i += dataLength;
+	UnsignedByte *fileData = new UnsignedByte[dataLength];
+	memcpy(fileData, packetData + readOffset, dataLength);
+	readOffset += dataLength;
 
-	msg->setFileData(buf, dataLength);
+	msg->setFileData(fileData, dataLength);
 
 	return msg;
 }
 
-NetCommandMsg *NetPacket::readFileAnnounceMessage(UnsignedByte *data, Int &i)
+NetCommandMsg *NetPacket::readFileAnnounceMessage(UnsignedByte *packetData, Int &readOffset)
 {
 	NetFileAnnounceCommandMsg *msg = new NetFileAnnounceCommandMsg;
 	char filename[260];
-	char *c = filename;
+	char *filenameCursor = filename;
 
-	while (data[i] != 0) {
-		*c = data[i];
-		++c;
-		++i;
+	while (packetData[readOffset] != 0) {
+		*filenameCursor = packetData[readOffset];
+		++filenameCursor;
+		++readOffset;
 	}
-	*c = 0;
-	++i;
+	*filenameCursor = 0;
+	++readOffset;
 	msg->setPortableFilename(AsciiString(filename));
 
 	UnsignedShort fileID = 0;
-	memcpy(&fileID, data + i, sizeof(fileID));
-	i += sizeof(fileID);
+	memcpy(&fileID, packetData + readOffset, sizeof(fileID));
+	readOffset += sizeof(fileID);
 	msg->setFileID(fileID);
 
 	UnsignedByte playerMask = 0;
-	memcpy(&playerMask, data + i, sizeof(playerMask));
-	i += sizeof(playerMask);
+	memcpy(&playerMask, packetData + readOffset, sizeof(playerMask));
+	readOffset += sizeof(playerMask);
 	msg->setPlayerMask(playerMask);
 
 	return msg;

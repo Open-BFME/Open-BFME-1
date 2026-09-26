@@ -69,7 +69,7 @@ void Rva00677590(UnsignedByte *buffer, Rva00677590Ref *ref);
 class NetPacket
 {
 protected:
-	static void FillBufferWithCommand(UnsignedByte *buffer, NetCommandRef *ref);
+	static void FillBufferWithCommand(UnsignedByte *buffer, NetCommandRef *commandRef);
 	static void FillBufferWithGameCommand(UnsignedByte *buffer, NetCommandRef *ref);
 	static void FillBufferWithAckCommand(UnsignedByte *buffer, NetCommandRef *ref);
 	static void FillBufferWithFrameCommand(UnsignedByte *buffer, NetCommandRef *ref);
@@ -93,112 +93,112 @@ protected:
 };
 
 // ?FillBufferWithCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z
-void NetPacket::FillBufferWithCommand(UnsignedByte *buffer, NetCommandRef *ref)
+void NetPacket::FillBufferWithCommand(UnsignedByte *buffer, NetCommandRef *commandRef)
 {
-	NetCommandMsg *msg = ref->getCommand();
+	NetCommandMsg *commandMessage = commandRef->getCommand();
 
-	switch (msg->getNetCommandType())
+	switch (commandMessage->getNetCommandType())
 	{
 		case NETCOMMANDTYPE_GAMECOMMAND:
-			FillBufferWithGameCommand(buffer, ref);
+			FillBufferWithGameCommand(buffer, commandRef);
 			break;
 
 		case NETCOMMANDTYPE_ACKSTAGE1:
 		case NETCOMMANDTYPE_ACKSTAGE2:
 		case NETCOMMANDTYPE_ACKBOTH:
-			FillBufferWithAckCommand(buffer, ref);
+			FillBufferWithAckCommand(buffer, commandRef);
 			break;
 
 		case NETCOMMANDTYPE_FRAMEINFO:
-			FillBufferWithFrameCommand(buffer, ref);
+			FillBufferWithFrameCommand(buffer, commandRef);
 			break;
 
 		case NETCOMMANDTYPE_ROUTERFALLBACK:
-			FillBufferWithRouterFallbackCommand(buffer, ref);
+			FillBufferWithRouterFallbackCommand(buffer, commandRef);
 			break;
 
 		case NETCOMMANDTYPE_PLAYERLEAVE:
-			FillBufferWithPlayerLeaveCommand(buffer, ref);
+			FillBufferWithPlayerLeaveCommand(buffer, commandRef);
 			break;
 
 		case NETCOMMANDTYPE_DESTROYPLAYER:
-			FillBufferWithDestroyPlayerCommand(buffer, ref);
+			FillBufferWithDestroyPlayerCommand(buffer, commandRef);
 			break;
 
 		case NETCOMMANDTYPE_KEEPALIVE:
-			FillBufferWithKeepAliveCommand(buffer, ref);
+			FillBufferWithKeepAliveCommand(buffer, commandRef);
 			break;
 
 		case NETCOMMANDTYPE_DISCONNECTKEEPALIVE:
-			FillBufferWithDisconnectKeepAliveCommand(buffer, ref);
+			FillBufferWithDisconnectKeepAliveCommand(buffer, commandRef);
 			break;
 
 		case NETCOMMANDTYPE_DISCONNECTPLAYER:
-			Rva00677280(buffer, (Rva00677280Ref *)ref);
+			Rva00677280(buffer, (Rva00677280Ref *)commandRef);
 			break;
 
 		case NETCOMMANDTYPE_DISCONNECTCHAT:
-			FillBufferWithDisconnectChatCommand(buffer, ref);
+			FillBufferWithDisconnectChatCommand(buffer, commandRef);
 			break;
 
 		case NETCOMMANDTYPE_DISCONNECTVOTE:
-			Rva006772F0(buffer, (Rva006772F0Ref *)ref);
+			Rva006772F0(buffer, (Rva006772F0Ref *)commandRef);
 			break;
 
 		case NETCOMMANDTYPE_CHAT:
-			FillBufferWithChatCommand(buffer, ref);
+			FillBufferWithChatCommand(buffer, commandRef);
 			break;
 
 		case NETCOMMANDTYPE_PROGRESS:
-			FillBufferWithProgressMessage(buffer, ref);
+			FillBufferWithProgressMessage(buffer, commandRef);
 			break;
 
 		case NETCOMMANDTYPE_LOADCOMPLETE:
-			FillBufferWithLoadCompleteMessage(buffer, ref);
+			FillBufferWithLoadCompleteMessage(buffer, commandRef);
 			break;
 
 		case NETCOMMANDTYPE_TIMEOUTSTART:
-			FillBufferWithTimeOutGameStartMessage(buffer, ref);
+			FillBufferWithTimeOutGameStartMessage(buffer, commandRef);
 			break;
 
 		case NETCOMMANDTYPE_FILE:
-			FillBufferWithFileMessage(buffer, ref);
+			FillBufferWithFileMessage(buffer, commandRef);
 			break;
 
 		case NETCOMMANDTYPE_FILEANNOUNCE:
-			FillBufferWithFileAnnounceMessage(buffer, ref);
+			FillBufferWithFileAnnounceMessage(buffer, commandRef);
 			break;
 
 		case NETCOMMANDTYPE_FILEPROGRESS:
-			Rva00677450(buffer, (Rva00677450Ref *)ref);
+			Rva00677450(buffer, (Rva00677450Ref *)commandRef);
 			break;
 
 		case NETCOMMANDTYPE_DISCONNECTFRAME:
-			FillBufferWithDisconnectFrameMessage(buffer, ref);
+			FillBufferWithDisconnectFrameMessage(buffer, commandRef);
 			break;
 
 		case NETCOMMANDTYPE_INFORMPLAYERLEAVEFRAME:
-			Rva006774C0(buffer, (Rva006774C0Ref *)ref);
+			Rva006774C0(buffer, (Rva006774C0Ref *)commandRef);
 			break;
 
 		case NETCOMMANDTYPE_REQUESTPLAYERLEAVE:
-			FillBufferWithRequestPlayerLeaveCommand(buffer, ref);
+			FillBufferWithRequestPlayerLeaveCommand(buffer, commandRef);
 			break;
 
 		case NETCOMMANDTYPE_REQUESTFRAMEDATA:
-			Rva00677590(buffer, (Rva00677590Ref *)ref);
+			Rva00677590(buffer, (Rva00677590Ref *)commandRef);
 			break;
 
 		case NETCOMMANDTYPE_DISCONNECTSCREENOFF:
-			FillBufferWithDisconnectScreenOffMessage(buffer, ref);
+			FillBufferWithDisconnectScreenOffMessage(buffer, commandRef);
 			break;
 
 		case NETCOMMANDTYPE_REQUEST_GAMESPY_STATS_AUTHKEY:
-			FillBufferWithRequestGameSpyStatsAuthKeyCommand(buffer, ref);
+			FillBufferWithRequestGameSpyStatsAuthKeyCommand(buffer, commandRef);
 			break;
 
 		case NETCOMMANDTYPE_GAMESPY_STATS_AUTHKEY:
-			FillBufferWithGameSpyStatsAuthKeyCommand(buffer, ref);
+			FillBufferWithGameSpyStatsAuthKeyCommand(buffer, commandRef);
 			break;
 	}
 }

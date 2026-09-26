@@ -80,48 +80,48 @@ public:
 class NetPacket
 {
 protected:
-	static NetCommandMsg *readChatMessage(UnsignedByte *data, Int &i);
-	static NetCommandMsg *readDisconnectChatMessage(UnsignedByte *data, Int &i);
+	static NetCommandMsg *readChatMessage(UnsignedByte *packetData, Int &readOffset);
+	static NetCommandMsg *readDisconnectChatMessage(UnsignedByte *packetData, Int &readOffset);
 };
 
-NetCommandMsg *NetPacket::readChatMessage(UnsignedByte *data, Int &i)
+NetCommandMsg *NetPacket::readChatMessage(UnsignedByte *packetData, Int &readOffset)
 {
 	NetChatCommandMsg *msg = new NetChatCommandMsg;
 
-	UnsignedShort text[256];
-	UnsignedByte length;
+	UnsignedShort textBuffer[256];
+	UnsignedByte textLength;
 	Int playerMask;
-	memcpy(&length, data + i, sizeof(UnsignedByte));
-	++i;
-	memcpy(text, data + i, length * sizeof(UnsignedShort));
-	i += length * sizeof(UnsignedShort);
-	text[length] = 0;
-	memcpy(&playerMask, data + i, sizeof(Int));
-	i += sizeof(Int);
+	memcpy(&textLength, packetData + readOffset, sizeof(UnsignedByte));
+	++readOffset;
+	memcpy(textBuffer, packetData + readOffset, textLength * sizeof(UnsignedShort));
+	readOffset += textLength * sizeof(UnsignedShort);
+	textBuffer[textLength] = 0;
+	memcpy(&playerMask, packetData + readOffset, sizeof(Int));
+	readOffset += sizeof(Int);
 
-	UnicodeString unitext;
-	unitext.set(text);
+	UnicodeString messageText;
+	messageText.set(textBuffer);
 
-	msg->setText(unitext);
+	msg->setText(messageText);
 	msg->setPlayerMask(playerMask);
 	return msg;
 }
 
-NetCommandMsg *NetPacket::readDisconnectChatMessage(UnsignedByte *data, Int &i)
+NetCommandMsg *NetPacket::readDisconnectChatMessage(UnsignedByte *packetData, Int &readOffset)
 {
 	NetDisconnectChatCommandMsg *msg = new NetDisconnectChatCommandMsg;
 
-	UnsignedShort text[256];
-	UnsignedByte length;
-	memcpy(&length, data + i, sizeof(UnsignedByte));
-	++i;
-	memcpy(text, data + i, length * sizeof(UnsignedShort));
-	i += length * sizeof(UnsignedShort);
-	text[length] = 0;
+	UnsignedShort textBuffer[256];
+	UnsignedByte textLength;
+	memcpy(&textLength, packetData + readOffset, sizeof(UnsignedByte));
+	++readOffset;
+	memcpy(textBuffer, packetData + readOffset, textLength * sizeof(UnsignedShort));
+	readOffset += textLength * sizeof(UnsignedShort);
+	textBuffer[textLength] = 0;
 
-	UnicodeString unitext;
-	unitext.set(text);
+	UnicodeString messageText;
+	messageText.set(textBuffer);
 
-	msg->setText(unitext);
+	msg->setText(messageText);
 	return msg;
 }

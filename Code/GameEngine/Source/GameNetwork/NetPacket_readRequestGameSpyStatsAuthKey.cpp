@@ -42,52 +42,52 @@ public:
 class NetPacket
 {
 protected:
-	static NetCommandMsg *readRequestGameSpyStatsAuthKeyMessage(UnsignedByte *data, Int &i);
-	static NetCommandMsg *readGameSpyStatsAuthKeyMessage(UnsignedByte *data, Int &i);
+	static NetCommandMsg *readRequestGameSpyStatsAuthKeyMessage(UnsignedByte *packetData, Int &readOffset);
+	static NetCommandMsg *readGameSpyStatsAuthKeyMessage(UnsignedByte *packetData, Int &readOffset);
 };
 
-NetCommandMsg *NetPacket::readRequestGameSpyStatsAuthKeyMessage(UnsignedByte *data, Int &i)
+NetCommandMsg *NetPacket::readRequestGameSpyStatsAuthKeyMessage(UnsignedByte *packetData, Int &readOffset)
 {
 	BFMENetRequestGameSpyStatsAuthKeyCommandMsg *msg = new BFMENetRequestGameSpyStatsAuthKeyCommandMsg;
-	char filename[256];
-	char *c = filename;
+	char textBuffer[256];
+	char *textCursor = textBuffer;
 
-	while (data[i] != 0) {
-		*c = data[i];
-		++c;
-		++i;
+	while (packetData[readOffset] != 0) {
+		*textCursor = packetData[readOffset];
+		++textCursor;
+		++readOffset;
 	}
-	*c = 0;
-	++i;
-	msg->setText1C(AsciiString(filename));
+	*textCursor = 0;
+	++readOffset;
+	msg->setText1C(AsciiString(textBuffer));
 	return msg;
 }
 
-NetCommandMsg *NetPacket::readGameSpyStatsAuthKeyMessage(UnsignedByte *data, Int &i)
+NetCommandMsg *NetPacket::readGameSpyStatsAuthKeyMessage(UnsignedByte *packetData, Int &readOffset)
 {
 	BFMENetGameSpyStatsAuthKeyCommandMsg *msg =
 		new BFMENetGameSpyStatsAuthKeyCommandMsg;
-	char text[256];
-	char *c = text;
+	char textBuffer[256];
+	char *textCursor = textBuffer;
 
-	while (data[i] != 0) {
-		*c = data[i];
-		++c;
-		++i;
+	while (packetData[readOffset] != 0) {
+		*textCursor = packetData[readOffset];
+		++textCursor;
+		++readOffset;
 	}
-	*c = 0;
-	++i;
-	msg->setText1C(AsciiString(text));
+	*textCursor = 0;
+	++readOffset;
+	msg->setText1C(AsciiString(textBuffer));
 
-	c = text;
-	while (data[i] != 0) {
-		*c = data[i];
-		++c;
-		++i;
+	textCursor = textBuffer;
+	while (packetData[readOffset] != 0) {
+		*textCursor = packetData[readOffset];
+		++textCursor;
+		++readOffset;
 	}
-	*c = 0;
-	++i;
-	msg->setText20(AsciiString(text));
+	*textCursor = 0;
+	++readOffset;
+	msg->setText20(AsciiString(textBuffer));
 
 	return msg;
 }
