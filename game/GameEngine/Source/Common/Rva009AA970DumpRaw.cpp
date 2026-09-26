@@ -46,3 +46,17 @@ void Rva009AAA40DumpRaw(const char *prefix, int index, const void *bytes, unsign
 	fwrite(bytes, length, 1, fp);
 	bfmeFreeUXB(fp);
 }
+
+// ?Rva009AAAA0DumpRawLoop@@YAXPBDH0IIH@Z
+void Rva009AAAA0DumpRawLoop(const char *prefix, int index, const char *bytes,
+	unsigned stride, unsigned length, int count)
+{
+	char name[0x100];
+	sprintf(name, "%s%04d.raw", prefix, index);
+	void *fp = bfmeFopenVIF(name, "wb");
+	for (int i = 0; i < count; ++i) {
+		fwrite(bytes, length, 1, fp);
+		bytes += stride;
+	}
+	bfmeFreeUXB(fp);
+}
