@@ -5698,5 +5698,15 @@
   "after_sha256": "fa42f9bcb2888b6de7eaf7c88021f7ee70b7901999553ffb02ecb370c24fa9a4",
   "evidence": "docs/naming_evidence.md",
   "reason": "bank name (m_bfmeHeadTM) was unevidenced filler; m_pad004 encodes the real retail starting offset (+0x4, up to the +0x95C mutex) per the project's self-labelling pad-name convention, docs/naming_evidence.md"
+ },
+ {
+  "old_path": "reverse/attempts/0x0039c260.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/SpecialPower/BfmeSpecialPowerAllowanceStore_bfmeRunEUAe.cpp",
+  "old_name": "BfmeAllowanceEntry",
+  "new_name": "Rva0039C260Entry",
+  "before_sha256": "d4899d2663b41e2a26282df410f7cdfaabfbdd6e076a94da417fae83b509fa6b",
+  "after_sha256": "b6d69d0c674bbe2c67a3869aa1b0ccc9a944f0c9985821a2384ae6de38a42008",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank-only class name with no vtable/caller/string evidence for the entry type"
  }
 ]
