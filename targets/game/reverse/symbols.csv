@@ -89192,3 +89192,4 @@ _D3DXMatrixTranspose@8,0x009FAFBA,d3dx9.lib d3dxmath.obj exact public dispatch s
 ??1Rva000D0430IntFourByteTree@@QAE@XZ,0x000D0430,Player destructor direct call; address-derived thiscall owner
 ??1Rva000D8250AsciiStringFourByteHash@@QAE@XZ,0x000D8250,Player destructor direct call; address-derived thiscall owner
 ??1Rva000D8330AsciiStringFourByteHash@@QAE@XZ,0x000D8330,Player destructor direct call; address-derived thiscall owner
+?rva00734CB0@W3DTreeBuffer@@QAEXPAX@Z,0x00734CB0,3285B native body reads tree buffer fields +4 +54 +2A7CB7 +2A7CB4 and calls matched W3DTreeBuffer doLighting 732700 twice; RET4 with unused stack pointer; typed ABI and independent ctor layout evidence targets/game/reverse/identity_evidence/00737b70.md
