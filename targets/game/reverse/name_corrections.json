@@ -6028,5 +6028,25 @@
   "after_sha256": "af7607425d485fb68f019e51303518e915ec55866fde9256ebc7bedad725d175",
   "evidence": "targets/game/reverse/attempt_support/0x00911020-20260926.md",
   "reason": "The old level identifier is an Apply local float initialized with parentheses, not a function. The parser pairs it with the new TU-local device-slot adapter; no identity was renamed. Evidence includes the precise old declaration."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00271630.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfacePrivateCommands.cpp",
+  "before_sha256": "5c1f6713ca04b0a0115e94300759e62fa7306e957ef35c4bb5137c163e47d6c1",
+  "after_sha256": "2b3418d6768185f1a0d6d3e25c01a148c8393333adb9a79d67d8c972344f6dd5",
+  "evidence": "targets/game/reverse/identity_evidence/0x00271630-action-test.md",
+  "old_name": "canEnterObject",
+  "new_name": "rva000C4080",
+  "reason": "Retail 0x00271630 calls ILT 0x00012B57 to the 113-byte body 0x000C4080 (ret 0xC, three stack arguments); canEnterObject is the pinned five-argument body 0x000C5440, and without ICF one body has one identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00271630.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfacePrivateCommands.cpp",
+  "before_sha256": "5c1f6713ca04b0a0115e94300759e62fa7306e957ef35c4bb5137c163e47d6c1",
+  "after_sha256": "2b3418d6768185f1a0d6d3e25c01a148c8393333adb9a79d67d8c972344f6dd5",
+  "evidence": "targets/game/reverse/identity_evidence/0x00271630-action-test.md",
+  "old_name": "m_bfmePad34",
+  "new_name": "m_unmodelled_34",
+  "reason": "Both are padding names for the same unmodelled +0x34..+0x48 range of AIUpdateInterface; the class home TU already models it as m_unmodelled_34."
  }
 ]

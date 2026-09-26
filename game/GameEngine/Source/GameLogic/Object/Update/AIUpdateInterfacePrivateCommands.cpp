@@ -307,6 +307,10 @@ class BFMEActionManager
 public:
 	Bool canEnterObject(const Object *, const Object *, CommandSourceType,
 		CanEnterType, Bool *);
+	// Body 0x000C4080 (113 B, ret 0xC), reached through ILT 0x00012B57. A
+	// three-argument object/object/source test distinct from the five-argument
+	// canEnterObject above; its name is not evidenced, so it keeps the address.
+	Bool rva000C4080(const Object *, const Object *, CommandSourceType);
 };
 
 extern BFMEActionManager *TheActionManager;
@@ -426,6 +430,12 @@ protected:
 	virtual void privateGuardAreaFromPosition(const PolygonTrigger *area, GuardMode guardMode,
 		CommandSourceType commandSource, const Coord3D *position);
 	virtual void privateGuardRetaliate(Object *victim, const Coord3D *position, Int maxShotsToFire, CommandSourceType commandSource);
+	// Declared last so no slot above moves; nothing in this TU dispatches it.
+	virtual void privateMoveToObject(Object *obj, CommandSourceType commandSource);
+
+	// Zero Hour's ObjectModule accessor. privateMoveToObject reads the owner
+	// through it, and that is not cosmetic: see the body.
+	Object *getObject() const { return m_object; }
 
 	void playMoveVoiceResponse(const Coord3D *position);
 	void playAttackVoiceResponse(Object *victim);
@@ -481,6 +491,23 @@ protected:
 	unsigned char m_unmodelled_327[0x32B - 0x327];
 	unsigned char m_isAiDead;					// +0x32B
 };
+
+// Retail 0x00271630. BFME gates Zero Hour's move-to-object order on a
+// three-argument ActionManager test, then drives the state machine as
+// upstream does. The owner is read through getObject(), as upstream writes it:
+// reading m_object directly compiles to the same load but hands the three
+// vtable temporaries EDX, EAX, EDX where retail has EAX, EDX, EAX (MSVC 7.1
+// assigns scratch registers round-robin and the inlined accessor's return
+// value is one more step; docs/shape_levers.md, "Scratch registers rotate").
+void AIUpdateInterface::privateMoveToObject(Object *obj, CommandSourceType commandSource)
+{
+	if (!TheActionManager->rva000C4080(getObject(), obj, commandSource))
+		return;
+	m_stateMachine->clear();
+	m_stateMachine->setGoalObject(obj);
+	m_lastCommandSource = commandSource;
+	m_stateMachine->setState((StateID)0x3c);
+}
 
 // Retail 0x00271690. The object enter command first gives horde containers a
 // direct enter callback, then uses the ordinary AI enter state.
