@@ -53,8 +53,11 @@
 #include "statistics.h"
 #include <wwprofile.h>
 #include <algorithm>
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 extern unsigned char *BfmeCurrentCaps;
+extern unsigned int g_bfmeHalfBX;
 
 // Retail Flush uses the BFME dynamic vertex-buffer access ABI.
 class BoxDynamicVBAccessClass
@@ -744,7 +747,74 @@ void SortingRendererClass::Flush_Sorting_Pool()
 // ----------------------------------------------------------------------------
 
 // ?Flush@SortingRendererClass@@SAXXZ
-// Body in sortingrenderer_Flush.asm (exact 2531B retail).
+class BfmeSortingStateRelease : DX8Wrapper {
+public:
+	static __forceinline void release()
+	{
+		if (render_state.index_buffer)
+			render_state.index_buffer->Release_Engine_Ref();
+		for (int i = 0; i < MAX_VERTEX_STREAMS; ++i)
+			if (render_state.vertex_buffers[i])
+				render_state.vertex_buffers[i]->Release_Engine_Ref();
+		for (int i = 0; i < MAX_VERTEX_STREAMS; ++i)
+			if (render_state.vertex_buffers[i]) {
+				render_state.vertex_buffers[i]->Release_Ref();
+				render_state.vertex_buffers[i] = 0;
+			}
+		if (render_state.index_buffer) {
+			render_state.index_buffer->Release_Ref();
+			render_state.index_buffer = 0;
+		}
+		_ReadWriteBarrier();
+		if (render_state.material) {
+			render_state.material->Release_Ref();
+			render_state.material = 0;
+		}
+		for (int i = 0; i < MAX_TEXTURE_STAGES; ++i)
+			if (render_state.Textures[i]) {
+				render_state.Textures[i]->Release_Ref();
+				render_state.Textures[i] = 0;
+			}
+	}
+};
+void SortingRendererClass::Flush()
+{
+	Matrix4x4 old_view;
+	Matrix4x4 old_world;
+	DX8Wrapper::Get_Transform(D3DTS_VIEW,old_view);
+	DX8Wrapper::Get_Transform(D3DTS_WORLD,old_world);
+
+	while (SortingNodeStruct* state=sorted_list.Head()) {
+		state->Remove();
+
+		if ((state->sorting_state.index_buffer_type==BUFFER_TYPE_SORTING || state->sorting_state.index_buffer_type==BUFFER_TYPE_DYNAMIC_SORTING) &&
+			(state->sorting_state.vertex_buffer_types[0]==BUFFER_TYPE_SORTING || state->sorting_state.vertex_buffer_types[0]==BUFFER_TYPE_DYNAMIC_SORTING)) {
+			if (state->polygon_count + overlapping_polygon_count >= g_bfmeHalfBX)
+				continue;
+			Insert_To_Sorting_Pool(state);
+		}
+		else {
+			DX8Wrapper::Set_Render_State(reinterpret_cast<const RenderStateStruct &>(state->sorting_state));
+			DX8Wrapper::Draw_Triangles(state->start_index,state->polygon_count,state->min_vertex_index,state->vertex_count);
+			BfmeSortingStateRelease::release();
+			Release_Refs(state);
+			clean_list.Add_Head(state);
+		}
+	}
+
+	bool old_enable=DX8Wrapper::_Is_Triangle_Draw_Enabled();
+	DX8Wrapper::_Enable_Triangle_Draw(_EnableTriangleDraw);
+	Flush_Sorting_Pool();
+	DX8Wrapper::_Enable_Triangle_Draw(old_enable);
+
+	DX8Wrapper::Set_Index_Buffer(0,0);
+	DX8Wrapper::Set_Vertex_Buffer(0);
+	total_sorting_vertices=0;
+	DynamicIBAccessClass::_Reset(false);
+	DynamicVBAccessClass::_Reset(false);
+	DX8Wrapper::Set_Transform(D3DTS_VIEW,old_view);
+	DX8Wrapper::Set_Transform(D3DTS_WORLD,old_world);
+}
 
 // ----------------------------------------------------------------------------
 
