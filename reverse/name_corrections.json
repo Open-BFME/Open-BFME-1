@@ -5358,5 +5358,15 @@
   "after_sha256": "9e6286e6d24398ad7c5b57f5146ded547f4208875b208438c11750f3ca192fd1",
   "evidence": "reverse/identity_evidence/0045c9e0.md",
   "reason": "CameraMarker was an invented owner-free type name (commit 60e33af821 dropped the address token); retail proves only that the node lives in View's +0x80 list and that doMoveCameraTo uses its +0x08 Coord3D as a camera target, so the node type keeps the address token of its matched lookup 0x0045C9E0, the name the ILT 0x00028984 destructor pin already carried"
+ },
+ {
+  "old_path": "reverse/attempts/0x0087e650.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/GeometryInfoRva0087E650.cpp",
+  "old_name": "m_name",
+  "new_name": "m_unmodelled1C",
+  "before_sha256": "1dfbf6cec8895e2da68b519bedce286096c051f121947153e8cc0026d1689a60",
+  "after_sha256": "40122b1d9bf79bbe2e0511f1e57904cceabb3eb5a1c55013f90e51272d2af8a1",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the body never reads the AsciiString at +0x1C so an offset name replaces the bank's unevidenced member name"
  }
 ]
