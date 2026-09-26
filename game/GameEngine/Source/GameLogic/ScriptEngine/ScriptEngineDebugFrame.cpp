@@ -219,3 +219,19 @@ void __cdecl rva003372d0PublishFrame(void)
 			((SetFrameNumberProc)proc)(TheGameLogic->m_frame);
 	}
 }
+
+// Retail 0x00337280 publishes the client frame through its frame-query slot.
+void __cdecl rva00337280PublishClientFrame(void)
+{
+	if (TheScriptDebugWindowDLL)
+	{
+		_bfme_updateDebugWindowInputs();
+		typedef void (__cdecl *SetFrameNumberProc)(unsigned int frame);
+		FarProc proc = GetProcAddress(TheScriptDebugWindowDLL, "SetFrameNumber");
+		if (proc)
+		{
+			unsigned int frame = TheGameClient->getFrame();
+			((SetFrameNumberProc)proc)(frame);
+		}
+	}
+}
