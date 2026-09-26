@@ -16,3 +16,16 @@ void StringBase<char>::format_va(const char *fmt, char *args)
     else
         releaseBuffer();
 }
+
+template <>
+void StringBase<wchar_t>::format_va(const wchar_t *fmt, char *args)
+{
+    wchar_t buffer[8192];
+    int len = vswprintf(buffer, 8192, fmt, args);
+    if (m_data && buffer == &m_data->data[0])
+        return;
+    if (len)
+        ensureUniqueBufferOfSize(len, false, buffer, len, 0, 0);
+    else
+        releaseBuffer();
+}
