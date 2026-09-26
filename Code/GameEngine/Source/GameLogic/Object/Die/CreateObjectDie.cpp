@@ -35,14 +35,32 @@
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #define DEFINE_OBJECT_STATUS_NAMES
-#include "GameLogic/Module/AIUpdate.h"
 #include "Common/ThingFactory.h"
 #include "Common/Xfer.h"
-#include "GameLogic/GameLogic.h"
 #include "GameLogic/Module/CreateObjectDie.h"
 #include "GameLogic/Object.h"
-#include "GameLogic/ObjectCreationList.h"
-#include "GameLogic/Module/BodyModule.h"
+// BFME keeps these helpers out of line; the GeneralsMD headers inline the
+// lookup and give createInternal a different return type.
+class GameLogic
+{
+public:
+	Object *findObjectByID( int id );
+};
+extern GameLogic *TheGameLogic;
+
+class ObjectCreationList
+{
+public:
+	void createInternal( const Object *primary, const Object *secondary, UnsignedInt lifetimeFrames ) const;
+};
+
+// BFME's CreateObjectDie module data stores its OCL at +0x34.
+struct BfmeCreateObjectDieModuleDataView
+{
+	unsigned char m_unreconstructed[0x34];
+	const ObjectCreationList *m_ocl;
+};
+
 
 #ifdef _INTERNAL
 // for occasional debugging...
@@ -103,65 +121,28 @@ CreateObjectDie::~CreateObjectDie( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-/** The die callback. */
+// Retail RVA 0x00254900 is CreateObjectDie's DieModuleInterface slot 0
+// (table 0x010B2A60). BFME checks m_ocl at moduleData+0x34 before looking up
+// the damage dealer; its body has no TransferPreviousHealth extension.
 //-------------------------------------------------------------------------------------------------
-// ?onDie@CreateObjectDie@@ present-unmatched
 void CreateObjectDie::onDie( const DamageInfo * damageInfo )
 {
-	const CreateObjectDieModuleData *data = getCreateObjectDieModuleData();
 	if (!isDieApplicable(damageInfo))
 		return;
 
-	Object *damageDealer = TheGameLogic->findObjectByID( damageInfo->in.m_sourceID );
+	const BfmeCreateObjectDieModuleDataView *data =
+		(const BfmeCreateObjectDieModuleDataView *)getModuleData();
+	const ObjectCreationList *ocl = data->m_ocl;
+	if (ocl == NULL)
+		return;
 
-	Object *newObject = ObjectCreationList::create( data->m_ocl, getObject(), damageDealer );
-
-	//If we're transferring previous health, we're transfering the last known
-	//health before we died. In the case of the sneak attack tunnel network, it
-	//is killed after the lifetime update expires.
-	if( newObject && data->m_transferPreviousHealth )
-	{
-		//Convert old health to new health.
-		Object *oldObject = getObject();
-		BodyModuleInterface *oldBody = oldObject->getBodyModule();
-		BodyModuleInterface *newBody = newObject->getBodyModule();
-		if( oldBody && newBody )
-		{
-			//First transfer subdual damage
-			DamageInfo damInfo;
-			Real subdualDamageAmount = oldBody->getCurrentSubdualDamageAmount();
-			if( subdualDamageAmount > 0.0f )
-			{
-				damInfo.in.m_amount = subdualDamageAmount;
-				damInfo.in.m_damageType = DAMAGE_SUBDUAL_UNRESISTABLE;
-				damInfo.in.m_sourceID = INVALID_ID;
-				newBody->attemptDamage( &damInfo );				
-			}
-
-			//Now transfer the previous health from the old object to the new.
-			damInfo.in.m_amount = oldBody->getMaxHealth() - oldBody->getPreviousHealth();
-			damInfo.in.m_damageType = DAMAGE_UNRESISTABLE;
-			damInfo.in.m_sourceID = oldBody->getLastDamageInfo()->in.m_sourceID;
-			if( damInfo.in.m_amount > 0.0f )
-			{
-				newBody->attemptDamage( &damInfo );
-			}
-
-		}
-
-		//Transfer attackers.
-		for( Object *obj = TheGameLogic->getFirstObject(); obj; obj = obj->getNextObject() )
-		{
-			AIUpdateInterface* ai = obj->getAI();
-			if (!ai)
-				continue;
-
-			ai->transferAttack( oldObject->getID(), newObject->getID() );
-		}
-	}
-
-	
-}  // end onDie
+	// This interface override's this+8 is the ObjectModule object slot
+	// ([entry this-8]); volatile preserves retail's reload after the lookup.
+	ocl->createInternal(
+		*(Object * volatile *)((char *)this + 8),
+		TheGameLogic->findObjectByID( damageInfo->in.m_sourceID ),
+		0 );
+}
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */
