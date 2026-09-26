@@ -1,17 +1,11 @@
-// ?d_001ee670@@YAXXZ
-// partial score=0.25 date=2026-09-26
-// Retail 0x001EE670, 223 bytes. Private same-TU helper of checkForAutoHeal:
-// the callback passes scan data in EAX and the candidate Object in EBX; there
-// are no stack arguments. The candidate probes 215/223 bytes with 180
-// non-relocation differences and six relocation-layout mismatches; it puts
-// the helper in EDI rather than retail's ESI. This is not a byte-match claim.
-// Source: GameLogic/Object/Behavior/AutoHealBehavior.cpp and the vendored
-// callback's kind-of, ownership and health checks. Retail has three additional
-// byte flags at helper+0x20..0x22; it does NOT test m_forbiddenKindOf.
-// Retail reloads both healer->body (+0x200) and the logic frame (+0x3c)
-// around its two virtual getLastDamageTimestamp calls. Retain the two source
-// expressions instead of caching values across a call that may mutate them.
-
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+// BFME's player-wide auto-heal scan uses a 24-byte kind-of mask and three
+// policy bytes at scan-data offsets 0x20..0x22, unlike the Zero Hour callback.
+// Keep the predicate in this translation unit: VC7.1 passes its scan data in
+// EAX and candidate in EBX instead of using a public calling convention.
+#define _STLP_USE_NEWALLOC 1
+#define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
 typedef bool Bool;
@@ -22,8 +16,9 @@ class Object;
 class Player;
 
 template <int N>
-struct BitFlags
+class BitFlags
 {
+public:
 	UnsignedInt m_bits[6];
 };
 
@@ -39,8 +34,6 @@ public:
 	Object *getCurrentVictim() const;
 };
 
-// BFME BodyModuleInterface slots +0x10/+0x18/+0x40, independently witnessed
-// by ObjectDamageAndWeapons.cpp and AutoHealBehavior_pulseHealObject.cpp.
 class BodyModuleInterface
 {
 public:
@@ -68,16 +61,16 @@ class Object : public Thing
 public:
 	Player *getControllingPlayer() const;
 	Bool isEffectivelyDead() const { return (m_status & 1) != 0; }
-	Bool isOffMap() const { return (m_status & 8) != 0; }
+	Bool isOffMap() const { return (reinterpret_cast<const unsigned char *>(&m_status)[0] & 8) != 0; }
 	BodyModuleInterface *getBodyModule() const { return m_body; }
 	AIUpdateInterface *getAIUpdateInterface() const { return m_ai; }
 
 private:
 	unsigned char m_pad000[0x200];
-	BodyModuleInterface *m_body;             // +0x200
-	AIUpdateInterface *m_ai;                 // +0x204
+	BodyModuleInterface *m_body;
+	AIUpdateInterface *m_ai;
 	unsigned char m_pad208[0x344 - 0x208];
-	UnsignedInt m_status;                    // +0x344, dead/off-map bits
+	UnsignedInt m_status;
 };
 
 class GameLogic
@@ -91,46 +84,52 @@ extern GameLogic *TheGameLogic;
 
 typedef _STL::list<Object *> ObjectPointerList;
 
-// The retail caller copies 24 bytes of kind-of mask into +0x00 and places its
-// healer, list and three module-data bools at +0x18/+0x1C/+0x20..+0x22.
 struct AutoHealPlayerScanHelper
 {
 	BitFlags<69> m_kindOfToTest;
 	Object *m_theHealer;
 	ObjectPointerList *m_objectList;
-	Bool m_bfmeFlag20; // healer not recently damaged (within five logic frames)
-	Bool m_bfmeFlag21; // healer AI must have no current victim
+	Bool m_bfmeFlag20;
+	Bool m_bfmeFlag21;
 	Bool m_skipSelfForHealing;
 };
 
+// ?rva001EE670EligibleForAutoHeal@@YA_NPBUAutoHealPlayerScanHelper@@PAVObject@@@Z
 static Bool rva001EE670EligibleForAutoHeal(
 	const AutoHealPlayerScanHelper *helper, Object *testObj)
 {
 	if (helper->m_skipSelfForHealing && testObj == helper->m_theHealer)
 		return false;
 
-	Object *healer = helper->m_theHealer;
-	if (healer)
+	if (helper->m_theHealer)
 	{
 		if (helper->m_bfmeFlag21)
 		{
-			AIUpdateInterface *ai = healer->getAIUpdateInterface();
+			AIUpdateInterface *ai = helper->m_theHealer->getAIUpdateInterface();
 			if (ai && ai->getCurrentVictim())
 				return false;
 		}
 
 		if (helper->m_bfmeFlag20)
 		{
-			if (healer->getBodyModule()->getLastDamageTimestamp() < TheGameLogic->m_frame &&
-				healer->getBodyModule()->getLastDamageTimestamp() + 5 > TheGameLogic->m_frame)
-				return false;
+			Object *healer = helper->m_theHealer;
+			BodyModuleInterface *body = healer->getBodyModule();
+			UnsignedInt frame = TheGameLogic->m_frame;
+			if (body->getLastDamageTimestamp() < frame)
+			{
+				Object *laterHealer = helper->m_theHealer;
+				BodyModuleInterface *laterBody = laterHealer->getBodyModule();
+				UnsignedInt laterFrame = TheGameLogic->m_frame;
+				if (laterBody->getLastDamageTimestamp() + 5 > laterFrame)
+					return false;
+			}
 		}
 	}
 
 	if (testObj->isEffectivelyDead())
 		return false;
 
-	Player *owner = healer->getControllingPlayer();
+	Player *owner = helper->m_theHealer->getControllingPlayer();
 	if (testObj->getControllingPlayer() != owner)
 		return false;
 
@@ -140,5 +139,17 @@ static Bool rva001EE670EligibleForAutoHeal(
 		return false;
 
 	BodyModuleInterface *body = testObj->getBodyModule();
-	return body->getHealth() < body->getMaxHealth();
+	Real health = body->getHealth();
+	if (body->getMaxHealth() <= health)
+		return false;
+	return true;
+}
+
+// ?checkForAutoHeal@@YAHPAVObject@@PAX@Z present-unmatched
+int checkForAutoHeal(Object *testObj, void *userData)
+{
+	AutoHealPlayerScanHelper *helper = (AutoHealPlayerScanHelper *)userData;
+	if (rva001EE670EligibleForAutoHeal(helper, testObj))
+		helper->m_objectList->push_back(testObj);
+	return 1;
 }
