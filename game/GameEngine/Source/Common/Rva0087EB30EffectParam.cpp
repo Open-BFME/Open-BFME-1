@@ -1,5 +1,6 @@
-// ??0Rva0087EB30EffectParam@@QAE@HHMMPBURva0087EB30Vec3@@@Z
-// partial score=0.9 date=2026-09-06
+// cl: /O2 /MD
+// BFME 0x0087EB30: 0x21-byte parameter record constructor; name preserves
+// the address because the record's original class identity is not proved.
 struct Rva0087EB30Vec3 { float x; float y; float z; };
 struct Rva0087EB30EffectParam {
 	int m_type;
@@ -12,11 +13,9 @@ struct Rva0087EB30EffectParam {
 	Rva0087EB30EffectParam(int type, int index, float valueA, float valueB, const Rva0087EB30Vec3* pos);
 };
 Rva0087EB30EffectParam::Rva0087EB30EffectParam(int type, int index, float valueA, float valueB, const Rva0087EB30Vec3* pos)
+	: m_type(type), m_index(index), m_valueA(valueA),
+	  m_value(type == 2 ? valueB : valueA)
 {
-	m_index = index;
-	m_type = type;
-	m_valueA = valueA;
-	m_value = (type == 2) ? valueB : valueA;
 	m_pos.x = pos->x;
 	m_pos.y = pos->y;
 	m_pos.z = pos->z;
