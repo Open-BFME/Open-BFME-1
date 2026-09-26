@@ -5498,5 +5498,25 @@
   "after_sha256": "e3035f6facbd3d25cc476e2cacd7332b8fbdaaf43b63e9fd48a0d4ec952f0a44",
   "evidence": "docs/naming_evidence.md",
   "reason": "bfmeAttackEligibility was an invented eligibility-gate name from the banked stash with no supporting evidence; the already-landed rva0016B010 row (0x0016B010, same TU) keeps the AGENTS.md 3a address token for an unproven static-helper identity, and its mangled name ?rva0016B010@@YAEPAVObject@@@Z is load-bearing -- renaming the C++ identifier back to bfmeAttackEligibility breaks that already-verified row plus this callers own callee resolution, confirmed empirically with a scoped build."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShrubBuffer.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShrubBufferRva00720D10.cpp",
+  "old_name": "Vector3",
+  "new_name": "Rva00720D10Data",
+  "before_sha256": "275bcae0713bca1b8dd7ce0247b81bfe7dcafbdc24cbedae1aeffd4b2748be41",
+  "after_sha256": "7b3329efa218f7e0e5bd374b0a1d0c087ebf78924474853c4da23782790b16c3",
+  "evidence": "reverse/identity_evidence/00720d10.md",
+  "reason": "False whole-TU pairing caused by moving only the unchanged-name getPartitionBucket row. Vector3 and doLighting remain unchanged in the retained original source; Rva00720D10Data and rva00720D10 retain the existing bank identities of a separate append body."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShrubBuffer.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShrubBufferRva00720D10.cpp",
+  "old_name": "doLighting",
+  "new_name": "rva00720D10",
+  "before_sha256": "275bcae0713bca1b8dd7ce0247b81bfe7dcafbdc24cbedae1aeffd4b2748be41",
+  "after_sha256": "7b3329efa218f7e0e5bd374b0a1d0c087ebf78924474853c4da23782790b16c3",
+  "evidence": "reverse/identity_evidence/00720d10.md",
+  "reason": "False whole-TU pairing caused by moving only the unchanged-name getPartitionBucket row. Vector3 and doLighting remain unchanged in the retained original source; Rva00720D10Data and rva00720D10 retain the existing bank identities of a separate append body."
  }
 ]
