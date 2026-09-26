@@ -15,6 +15,7 @@ class BfmeN1242
 {
 public:
 	void bfmePut1242(int i, BfmeE1242 *e);
+	unsigned bfmeIsTagged(int i) const;
 	char m_bfmePad00[0x20];
 	BfmeE1242 **m_bfme20;
 };
@@ -32,4 +33,10 @@ void BfmeN1242::bfmePut1242(int i, BfmeE1242 *e)
 			reinterpret_cast<unsigned int>(e) | 1u);
 	else
 		m_bfme20[i] = e;
+}
+
+// ?bfmeIsTagged@BfmeN1242@@QBEIH@Z
+unsigned BfmeN1242::bfmeIsTagged(int i) const
+{
+	return reinterpret_cast<unsigned>(m_bfme20[i]) & 1u;
 }
