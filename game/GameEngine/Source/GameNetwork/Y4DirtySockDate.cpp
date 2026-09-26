@@ -26,6 +26,8 @@ struct Rva007FF700Date
 
 	Rva007FF700Date();
 	int setDay( int day );
+	int setMonth( int month );
+	int setYear( int year );
 };
 
 /* The ordinary rule, and the bytes show all three tests: divisible by four,
@@ -105,4 +107,24 @@ int Rva007FF700Date::setDay( int day )
 
 	m_day = day;
 	return 0;
+}
+
+int Rva007FF700Date::setMonth( int month )
+{
+	if ( month > 0 && month < 13 )
+	{
+		m_month = month;
+		return 0;
+	}
+	return -1;
+}
+
+int Rva007FF700Date::setYear( int year )
+{
+	if ( year >= 1900 )
+	{
+		m_year = year;
+		return 0;
+	}
+	return -3;
 }
