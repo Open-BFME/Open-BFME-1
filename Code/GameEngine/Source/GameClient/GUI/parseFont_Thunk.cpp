@@ -48,40 +48,40 @@ static Int scanInt(const char *source, Int &val)
 }
 
 // ?parseFont@@YA_NPADPAVWinInstanceData@@0PAX@Z
-Bool __cdecl parseFont(char *, WinInstanceData *instData, char *buffer, void *)
+Bool __cdecl parseFont(char *, WinInstanceData *instanceData, char *buffer, void *)
 {
-	char *c, *ptr;
-	char *seps = " ,\n\r\t";
-	char *stringSeps = ":,\n\r\t\"";
+	char *fieldToken, *quoteCursor;
+	char *fieldDelimiters = " ,\n\r\t";
+	char *quotedNameDelimiters = ":,\n\r\t\"";
 	char fontName[256];
-	Int fontSize;
-	Int fontBold;
+	Int pointSize;
+	Int boldFlag;
 
 	// "NAME"
-	c = strtok(buffer, seps);
-	ptr = buffer;
-	while (*ptr != '"')
-		ptr++;
-	ptr++;
-	c = strtok(ptr, stringSeps);
-	strcpy(fontName, c);
+	fieldToken = strtok(buffer, fieldDelimiters);
+	quoteCursor = buffer;
+	while (*quoteCursor != '"')
+		quoteCursor++;
+	quoteCursor++;
+	fieldToken = strtok(quoteCursor, quotedNameDelimiters);
+	strcpy(fontName, fieldToken);
 
 	// "SIZE"
-	c = strtok(NULL, seps);
-	c = strtok(NULL, seps);
-	scanInt(c, fontSize);
+	fieldToken = strtok(NULL, fieldDelimiters);
+	fieldToken = strtok(NULL, fieldDelimiters);
+	scanInt(fieldToken, pointSize);
 
 	// "BOLD"
-	c = strtok(NULL, seps);
-	c = strtok(NULL, seps);
-	scanInt(c, fontBold);
+	fieldToken = strtok(NULL, fieldDelimiters);
+	fieldToken = strtok(NULL, fieldDelimiters);
+	scanInt(fieldToken, boldFlag);
 
 	if (TheFontLibrary)
 	{
-		GameFont *font;
-		font = TheFontLibrary->getFont(AsciiString(fontName), fontSize, fontBold);
-		if (font)
-			instData->m_font = font;
+		GameFont *resolvedFont;
+		resolvedFont = TheFontLibrary->getFont(AsciiString(fontName), pointSize, boldFlag);
+		if (resolvedFont)
+			instanceData->m_font = resolvedFont;
 	}
 
 	return true;

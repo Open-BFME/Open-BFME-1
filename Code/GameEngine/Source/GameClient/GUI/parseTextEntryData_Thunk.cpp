@@ -28,48 +28,48 @@ static Int scanBool(const char *source, Bool &val)
 	return ret;
 }
 
-static Int scanShort(const char *source, Short &val)
+static Int scanShort(const char *source, Short &value)
 {
-	Int temp = 0;
-	Int ret = sscanf(source, "%d", &temp);
-	val = (Short)temp;
-	return ret;
+	Int parsedInteger = 0;
+	Int conversionCount = sscanf(source, "%d", &parsedInteger);
+	value = (Short)parsedInteger;
+	return conversionCount;
 }
 
 // ?parseTextEntryData@@YA_NPADPAVWinInstanceData@@0PAX@Z
-bool __cdecl parseTextEntryData(char *, WinInstanceData *, char *buffer, void *data)
+bool __cdecl parseTextEntryData(char *, WinInstanceData *, char *buffer, void *rawEntryData)
 {
-	EntryData *entryData = (EntryData *)data;
-	char *c;
-	char *seps = " :,\n\r\t";
+	EntryData *entryData = (EntryData *)rawEntryData;
+	char *fieldToken;
+	char *fieldDelimiters = " :,\n\r\t";
 
-	c = strtok(buffer, seps);
-	c = strtok(0, seps);
-	scanShort(c, entryData->maxTextLen);
+	fieldToken = strtok(buffer, fieldDelimiters);
+	fieldToken = strtok(0, fieldDelimiters);
+	scanShort(fieldToken, entryData->maxTextLen);
 
-	c = strtok(0, seps);
-	c = strtok(0, seps);
-	scanBool(c, entryData->secretText);
+	fieldToken = strtok(0, fieldDelimiters);
+	fieldToken = strtok(0, fieldDelimiters);
+	scanBool(fieldToken, entryData->secretText);
 
 	entryData->flags = 0;
-	c = strtok(0, seps);
-	c = strtok(0, seps);
+	fieldToken = strtok(0, fieldDelimiters);
+	fieldToken = strtok(0, fieldDelimiters);
 	Bool numericalOnly;
-	scanBool(c, numericalOnly);
+	scanBool(fieldToken, numericalOnly);
 	if (numericalOnly)
 		entryData->flags |= 0x20;
 
-	c = strtok(0, seps);
-	c = strtok(0, seps);
+	fieldToken = strtok(0, fieldDelimiters);
+	fieldToken = strtok(0, fieldDelimiters);
 	Bool alphaNumericalOnly;
-	scanBool(c, alphaNumericalOnly);
+	scanBool(fieldToken, alphaNumericalOnly);
 	if (alphaNumericalOnly)
 		entryData->flags |= 0x40;
 
-	c = strtok(0, seps);
-	c = strtok(0, seps);
+	fieldToken = strtok(0, fieldDelimiters);
+	fieldToken = strtok(0, fieldDelimiters);
 	Bool asciiOnly;
-	scanBool(c, asciiOnly);
+	scanBool(fieldToken, asciiOnly);
 	if (asciiOnly)
 		entryData->flags |= 0x10;
 

@@ -121,42 +121,42 @@ static GameWindow *peekWindow( void )
 	* if present */
 //=============================================================================
 // ?parseScreenRect@@YA_NPAH000@Z
-Bool parseScreenRect( Int *x, Int *y, Int *width, Int *height )
+Bool parseScreenRect( Int *windowX, Int *windowY, Int *width, Int *height )
 {
-	GameWindow *parent = peekWindow();
+	GameWindow *parentWindow = peekWindow();
 	IRegion2D screenRegion;
-	ICoord2D createRes;  // creation resolution
-	char *seps = " ,:=\n\r\t";
-	char *c;
+	ICoord2D creationResolution;  // creation resolution
+	char *delimiters = " ,:=\n\r\t";
+	char *fieldToken;
 
-	c = strtok( NULL, seps );  // UPPERLEFT token
-	c = strtok( NULL, seps );  // x position
-	scanInt( c, screenRegion.lo.x );
-	c = strtok( NULL, seps );  // y posotion
-	scanInt( c, screenRegion.lo.y );
+	fieldToken = strtok( NULL, delimiters );  // UPPERLEFT token
+	fieldToken = strtok( NULL, delimiters );  // x position
+	scanInt( fieldToken, screenRegion.lo.x );
+	fieldToken = strtok( NULL, delimiters );  // y posotion
+	scanInt( fieldToken, screenRegion.lo.y );
 
-	c = strtok( NULL, seps );  // BOTTOMRIGHT token
-	c = strtok( NULL, seps );  // x position
-	scanInt( c, screenRegion.hi.x );
-	c = strtok( NULL, seps );  // y posotion
-	scanInt( c, screenRegion.hi.y );
+	fieldToken = strtok( NULL, delimiters );  // BOTTOMRIGHT token
+	fieldToken = strtok( NULL, delimiters );  // x position
+	scanInt( fieldToken, screenRegion.hi.x );
+	fieldToken = strtok( NULL, delimiters );  // y posotion
+	scanInt( fieldToken, screenRegion.hi.y );
 
-	c = strtok( NULL, seps );  // CREATIONRESOLUTION token
-	c = strtok( NULL, seps );  // x creation resolution
-	scanInt( c, createRes.x );
-	c = strtok( NULL, seps );  // y creation resolution
-	scanInt( c, createRes.y );
+	fieldToken = strtok( NULL, delimiters );  // CREATIONRESOLUTION token
+	fieldToken = strtok( NULL, delimiters );  // x creation resolution
+	scanInt( fieldToken, creationResolution.x );
+	fieldToken = strtok( NULL, delimiters );  // y creation resolution
+	scanInt( fieldToken, creationResolution.y );
 
 	//
 	// shrink or expand the screen region by the ratio of the current
 	// resolution divided by the creation resolution
 	//
-	Real xScale = (Real)TheDisplay->getWidth() / (Real)createRes.x;
-	Real yScale = (Real)TheDisplay->getHeight() / (Real)createRes.y;
-	screenRegion.lo.x = (Int)((Real)screenRegion.lo.x * xScale);
-	screenRegion.lo.y = (Int)((Real)screenRegion.lo.y * yScale);
-	screenRegion.hi.x = (Int)((Real)screenRegion.hi.x * xScale);
-	screenRegion.hi.y = (Int)((Real)screenRegion.hi.y * yScale);
+	Real horizontalScale = (Real)TheDisplay->getWidth() / (Real)creationResolution.x;
+	Real verticalScale = (Real)TheDisplay->getHeight() / (Real)creationResolution.y;
+	screenRegion.lo.x = (Int)((Real)screenRegion.lo.x * horizontalScale);
+	screenRegion.lo.y = (Int)((Real)screenRegion.lo.y * verticalScale);
+	screenRegion.hi.x = (Int)((Real)screenRegion.hi.x * horizontalScale);
+	screenRegion.hi.y = (Int)((Real)screenRegion.hi.y * verticalScale);
 
 	//
 	// given the screen region upper left compute the upper left that we
@@ -164,23 +164,23 @@ Bool parseScreenRect( Int *x, Int *y, Int *width, Int *height )
 	// is relative to the parent client area, if no parent is present
 	// we're talking about the screen
 	//
-	if( parent )
+	if( parentWindow )
 	{
-		ICoord2D parentScreenPos;
+		ICoord2D parentScreenPosition;
 
 		// get parent position on screen
-		parent->winGetScreenPosition( &parentScreenPos.x, &parentScreenPos.y );
+		parentWindow->winGetScreenPosition( &parentScreenPosition.x, &parentScreenPosition.y );
 
 		// save x and y with parent position as relative (0,0) location
-		*x = screenRegion.lo.x - parentScreenPos.x;
-		*y = screenRegion.lo.y - parentScreenPos.y;
+		*windowX = screenRegion.lo.x - parentScreenPosition.x;
+		*windowY = screenRegion.lo.y - parentScreenPosition.y;
 
 	}  // end if
 	else
 	{
 
-		*x = screenRegion.lo.x;
-		*y = screenRegion.lo.y;
+		*windowX = screenRegion.lo.x;
+		*windowY = screenRegion.lo.y;
 
 	}  // end else
 

@@ -18,12 +18,12 @@ struct ComboBoxData
 	unsigned int flags;
 };
 
-static Int scanBool(const char *source, Bool &val)
+static Int scanBool(const char *source, Bool &value)
 {
-	Int temp = 0;
-	Int ret = sscanf(source, "%d", &temp);
-	val = (Bool)temp;
-	return ret;
+	Int parsedInteger = 0;
+	Int conversionCount = sscanf(source, "%d", &parsedInteger);
+	value = (Bool)parsedInteger;
+	return conversionCount;
 }
 
 static Int scanInt(const char *source, Int &val)
@@ -32,36 +32,36 @@ static Int scanInt(const char *source, Int &val)
 }
 
 // ?parseComboBoxData@@YA_NPADPAVWinInstanceData@@0PAX@Z
-bool __cdecl parseComboBoxData(char *, WinInstanceData *, char *buffer, void *data)
+bool __cdecl parseComboBoxData(char *, WinInstanceData *, char *buffer, void *rawComboData)
 {
-	ComboBoxData *comboData = (ComboBoxData *)data;
-	char *c;
-	char *seps = " :,\n\r\t";
+	ComboBoxData *comboData = (ComboBoxData *)rawComboData;
+	char *fieldToken;
+	char *fieldDelimiters = " :,\n\r\t";
 
-	c = strtok(buffer, seps);
-	c = strtok(0, seps);
-	scanBool(c, comboData->isEditable);
+	fieldToken = strtok(buffer, fieldDelimiters);
+	fieldToken = strtok(0, fieldDelimiters);
+	scanBool(fieldToken, comboData->isEditable);
 
-	c = strtok(0, seps);
-	c = strtok(0, seps);
-	scanInt(c, comboData->maxChars);
+	fieldToken = strtok(0, fieldDelimiters);
+	fieldToken = strtok(0, fieldDelimiters);
+	scanInt(fieldToken, comboData->maxChars);
 
-	c = strtok(0, seps);
-	c = strtok(0, seps);
-	scanInt(c, comboData->maxDisplay);
+	fieldToken = strtok(0, fieldDelimiters);
+	fieldToken = strtok(0, fieldDelimiters);
+	scanInt(fieldToken, comboData->maxDisplay);
 
 	comboData->flags = 0;
-	c = strtok(0, seps);
-	c = strtok(0, seps);
+	fieldToken = strtok(0, fieldDelimiters);
+	fieldToken = strtok(0, fieldDelimiters);
 	Bool asciiOnly;
-	scanBool(c, asciiOnly);
+	scanBool(fieldToken, asciiOnly);
 	if (asciiOnly)
 		comboData->flags |= 0x10;
 
-	c = strtok(0, seps);
-	c = strtok(0, seps);
+	fieldToken = strtok(0, fieldDelimiters);
+	fieldToken = strtok(0, fieldDelimiters);
 	Bool lettersAndNumbersOnly;
-	scanBool(c, lettersAndNumbersOnly);
+	scanBool(fieldToken, lettersAndNumbersOnly);
 	if (lettersAndNumbersOnly)
 		comboData->flags |= 0x40;
 
