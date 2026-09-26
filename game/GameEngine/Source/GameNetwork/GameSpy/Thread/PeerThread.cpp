@@ -32,6 +32,7 @@
 // the game.
 // Author: Matthew D. Campbell, June 2002
 
+#define _STLP_USE_STATIC_LIB 1
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "Common/Registry.h"
@@ -2143,6 +2144,12 @@ static void getPlayerProfileIDCallback(PEER peer,  PEERBool success,  const char
 	}
 }
 
+// BFME's PSRequest contains nine more words than the ZH header's request.
+struct BFMEPSRequest : PSRequest
+{
+	char m_bfmeExtension[0x2c];
+};
+
 static void stagingRoomPlayerEnum( PEER peer, PEERBool success, RoomType roomType, int index, const char * nick, int flags, void * param )
 {
 	DEBUG_LOG(("Enum: success=%d, index=%d, nick=%s, flags=%d\n", success, index, nick, flags));
@@ -2154,18 +2161,18 @@ static void stagingRoomPlayerEnum( PEER peer, PEERBool success, RoomType roomTyp
 	DEBUG_ASSERTCRASH(id != 0, ("Failed to fetch player ID!"));
 
 	PeerResponse *resp = (PeerResponse *)param;
-	if (flags & PEER_FLAG_OP)
+	if (flags & 0x20)
 	{
 		resp->joinStagingRoom.isHostPresent = TRUE;
 	}
 	if (index < MAX_SLOTS)
 	{
-		resp->stagingRoomPlayerNames[index] = nick;
+		resp->stagingRoomPlayerNames[index].assign(nick, nick + strlen(nick));
 	}
 
 	if (id)
 	{
-		PSRequest req;
+		BFMEPSRequest req;
 		req.requestType = PSRequest::PSREQUEST_READPLAYERSTATS;
 		req.player.id = id;
 		TheGameSpyPSMessageQueue->addRequest(req);
