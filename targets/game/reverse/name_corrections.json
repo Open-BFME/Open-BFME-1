@@ -6138,5 +6138,25 @@
   "after_sha256": "c90da5ca59acd0eec078405bd30e9193fdf8dfd3ebf20365ba9154b359cb2fe0",
   "evidence": "targets/game/reverse/identity_evidence/002B32A0-animal-update.md",
   "reason": "Old bank used an invented generic AnimalPeriodicFilter with opaque layout. Retail VA010B243C is independently owned by the existing Rva0025F2D0KindOfAnyFilter pin, 61-byte copying constructor and native isAnyKindOf predicate; the replacement preserves that established opaque identity rather than inventing a semantic class."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005674f0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/Rva005674F0Profile.cpp",
+  "old_name": "BfmeConsumerED",
+  "new_name": "Rva005674F0Profile",
+  "before_sha256": "c18bf2fe05e4c58756b62d74f2ad0fdc0c5edf8088908857a276c74552de9f92",
+  "after_sha256": "6bd8749caf5591c39b2cb1db969cb32c01a263ca9fc693a5445710123a499b2f",
+  "evidence": "docs/analysis/profile_stats_005674f0.md",
+  "reason": "BfmeConsumerED is an old opaque Bfme<Role><Suffix> view used in a matched caller, not a semantic class identity. The caller proves receiver and argument ABI but no owning class name; the native owner keeps RVA005674F0 as required for that unresolved identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005674f0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/Rva005674F0Profile.cpp",
+  "old_name": "getWins",
+  "new_name": "rva0009c6f0",
+  "before_sha256": "c18bf2fe05e4c58756b62d74f2ad0fdc0c5edf8088908857a276c74552de9f92",
+  "after_sha256": "6bd8749caf5591c39b2cb1db969cb32c01a263ca9fc693a5445710123a499b2f",
+  "evidence": "docs/analysis/profile_stats_005674f0.md",
+  "reason": "The bank declared a nonexistent no-argument getWins overload. The aligned retail call routes through ILT000344CD to independently native SkirmishBattleHonors::rva0009c6f0 at0009C6F0; the existing per-faction getWins at0009C650 is a different overload and is retained."
  }
 ]
