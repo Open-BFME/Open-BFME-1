@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "af9ce384e9da73d1cb76deb491490f3f965bfc87374307960801f622fa525d4f",
+  "symbol": "?d_008abfe0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.8554,
+  "source": "// ?d_008abfe0@@YAXXZ\n// partial score=0.8554 date=2026-09-26\n// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\nextern \"C\" int __cdecl memcmp(const void *, const void *, unsigned int);\n#pragma intrinsic(memcmp)\n\nstruct Rva008AC020StringData\n{\n\tunsigned short m_refs;\n\tunsigned short m_length;\n\tunsigned int m_flags;\n\tchar m_text[1];\n};\n\nclass Rva008AC020String\n{\npublic:\n\tbool rva008AC020(const Rva008AC020String *other) const;\n\nprivate:\n\tRva008AC020StringData *m_data;\n\t__forceinline bool equals(const Rva008AC020String *other) const\n\t{\n\t\tRva008AC020StringData *left = m_data;\n\t\tRva008AC020StringData *right = other->m_data;\n\t\tunsigned int length = left->m_length;\n\t\tunsigned int otherLength = right->m_length;\n\t\tif (length != otherLength)\n\t\t\treturn false;\n\t\tif (left == right)\n\t\t\treturn true;\n\t\treturn memcmp(left->m_text, right->m_text, length) == 0;\n\t}\n};\n\nbool Rva008AC020String::rva008AC020(const Rva008AC020String *other) const\n{\n\treturn !equals(other);\n}\n"
+}
