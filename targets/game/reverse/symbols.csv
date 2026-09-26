@@ -89175,3 +89175,4 @@ _gpDisconnect,0x008E9800,body 0x008E9800; Thread_Function 0x0063EB00 +0xB49 jump
 ?_M_insert_overflow@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@IAEXPAPAVObject@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001F6CC,ScriptActions 0x002FFB60 +0xDF pointer vector overflow through ILT to 0x0018B700
 ?g_bfmeAttackMoveThreshold001885B0@@3MB,0x00C9B3FC,retail float 6400 at update 0x001885B0+0x022B
 ?findClosestByKindOf@Rva002C6DD0PlayerView@@QAEPAVObject@@PAV2@V?$BitFlags@$0MA@@@1@Z,0x000CFC30,TU-local ABI view proven by 3 target call sites and the canonical 192-bit Player body
+?at@Rva0068D3E0Arr@@QAEPAURva0068D3E0Slot@@H@Z,0x000234D4,route=0x0068D3E0; caller 0x0068CF00 sites 0x0068D099 and 0x0068D0C1; ret 4 checked slot at +0x58 stride 0x68
