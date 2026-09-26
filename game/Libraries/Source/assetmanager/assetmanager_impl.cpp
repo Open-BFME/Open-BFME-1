@@ -97,6 +97,7 @@ public:
 class Q1Receiver0134FAAC
 {
 public:
+	void m009EC960(void *value);
 	void m009EC970(int which);
 	void m009EC9A0(int which);
 	void m009ECA30(int value);
@@ -117,6 +118,11 @@ private:
 	bool m_flag1;
 	bool m_flag2;
 };
+
+// 0x009EC960: the receiver accepts one argument and returns without work.
+void Q1Receiver0134FAAC::m009EC960(void *)
+{
+}
 
 void Q1Receiver0134FAAC::m009EC970(int which)
 {

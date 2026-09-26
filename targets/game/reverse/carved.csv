@@ -1,6 +1,5 @@
 rva,size,start_evidence,callers,end_evidence,ghidra
 0x00001F96,5,ghidra-start,0,jmp-tail,~ConcreteModuleTemplate<FXParticleSystem::ModuleTag<5;char_const*_const_FXParticleSystem::BOX_EMISSION_VOLUME_MODULE_KEY;char_const*_const_FXParticleSystem::BOX_EMISSION_VOLUME_MODULE_NAME;FXParticleSystem::BoxEmissionVolumeModule;FXParticleSystem::BoxEmissionVolumeModuleTemplate;FXParticleSystem::DefaultParticleModule<5>;FXParticleSystem::DefaultParticleModuleTemplate<5>_>_>
-0x000616E0,13,rel32-call/jmp,1,ret+int3,
 0x0007AC77,131,rel32-call/jmp,1,ret+int3,
 0x001020D0,242,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_005020d0
 0x001E23B0,1,rel32-call/jmp,1,ret+int3,
