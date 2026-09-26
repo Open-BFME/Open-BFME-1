@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "2e9bb46507edafdc5b9b2819e22aa2823db08aaf14138d2f6104799d61bd4f73",
+  "symbol": "?d_009a3ff0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?d_009a3ff0@@YAXXZ\n// partial score=0.9 date=2026-09-26\n// stlport\n// This wrapper forwards the iterator result of the state-id tree lookup.\n#define _BFME_RETAIL_TREE_INSERT_LAYOUT\n#include <map>\n\nclass State;\ntypedef _STL::pair<const unsigned int, State *> Rva009A3FF0Pair;\ntypedef _STL::_Rb_tree<unsigned int, Rva009A3FF0Pair,\n\t_STL::_Select1st<Rva009A3FF0Pair>, _STL::less<unsigned int>,\n\t_STL::allocator<Rva009A3FF0Pair> > Rva009A3FF0TreeBase;\n\nclass Rva009A3FF0Tree : public Rva009A3FF0TreeBase\n{\npublic:\n\titerator findAt9A3FF0(const unsigned int &id);\n};\n\nRva009A3FF0Tree::iterator Rva009A3FF0Tree::findAt9A3FF0(const unsigned int &id)\n{\n\treturn find(id);\n}\n"
+}
