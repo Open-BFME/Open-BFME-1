@@ -5168,5 +5168,15 @@
   "after_sha256": "400ff250b4674338a31426a37e6c745a3078f753279e138bcdc8e96c8e4e611c",
   "evidence": "reverse/identity_evidence/003c9670.md",
   "reason": "the 0x58-byte object built by the LivingWorldRegionCampaign block parser 0x003C9B60 holds the 0xF4-byte LivingWorldRegion objects at +0x30 (field table 0x010EDC48 Region parser 0x003C9980), so it cannot itself be LivingWorldRegion; no string, vtable or caller names it, so its class takes the address token; ConqueredEffectEvenglow parses at offset 0 with its key as userData so +0x2C is not that field"
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "EstablishConnectionsMenu",
+  "new_name": "Rva006709F0",
+  "before_sha256": "e790304a5d14426ced5b6b13f9a64e796906f96afd9e29e12a73401240f4be7c",
+  "after_sha256": "97339006139d91e94fa79bf6fc15aa8c66477edd66596339181b329f6e1cca96",
+  "evidence": "reverse/identity_evidence/00538700.md",
+  "reason": "the lift name was wrong on both method (vtable slot 5 and ZH labels say setPlayerStatus) and class (vtable 0x0111A394 belongs to the derived ctor 0x006709F0 not the base)"
  }
 ]
