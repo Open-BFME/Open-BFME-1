@@ -138,6 +138,7 @@ void chatSetChannelPasswordA(void *chat, const char *channel, int enable,
 	const char *password);
 void chatSendRawA(void *chat, const char *command);
 void chatRetryWithNickA(void *chat, const char *nick);
+void Rva00860380(void *chat, int sessionKey, const char *nick, const char *secondNick);
 piPlayer *piGetPlayer(PEER peer, const char *nick);
 typedef void (*piEnumRoomPlayersCallback)(PEER peer, int roomType,
 	piPlayer *player, int index, void *param);
@@ -1602,6 +1603,14 @@ void peerRetryWithNickA(PEER peer, const char *nick)
 	chatRetryWithNickA(connection->chat, nick);
 }
 
+void Rva008571E0RegisterNick(PEER peer, int sessionKey, const char *nick,
+	const char *secondNick)
+{
+	piConnection *connection = (piConnection *)peer;
+	if (connection->connecting)
+		Rva00860380(connection->chat, sessionKey, nick, secondNick);
+}
+
 typedef struct piEnumPlayersData
 {
 	peerEnumPlayersCallback callback;
@@ -1771,4 +1780,11 @@ void peerAuthenticateCDKey(PEER peer, const char *cdkey, void *callback,
 		if (connection->shutdown && connection->callbackDepth == 0)
 			peerShutdown(peer);
 	}
+}
+
+void Rva00858100StopAutoMatchIfTitled(PEER peer)
+{
+	piConnection *connection = (piConnection *)peer;
+	if (connection->title[0] && connection->connected)
+		piStopAutoMatch(peer);
 }

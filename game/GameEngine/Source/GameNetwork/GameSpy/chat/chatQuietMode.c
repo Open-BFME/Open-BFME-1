@@ -16,7 +16,7 @@ typedef struct ciConnection
 
 void ciSocketSendf(void *socket, const char *format, ...);
 void ciClearAllUsers(CHAT chat);
-void ciSetQuietModeEnumJoinedChannelsA(void);
+int ciAddUNQUIETFilter(CHAT chat, const char *channel);
 void ciEnumJoinedChannels(CHAT chat, void *callback, void *param);
 int ciAddLISTFilter(CHAT chat, void *callbackEach, void *callbackAll,
 	void *param);
@@ -34,6 +34,11 @@ void bfmeCiThinkFromEsi(int ID);
 void msleep(unsigned int milliseconds);
 int ciCheckFiltersForID(CHAT chat, int ID);
 int ciCheckCallbacksForID(CHAT chat, int ID);
+
+void ciSetQuietModeEnumJoinedChannelsA(CHAT chat, void *unused, const char *channel)
+{
+	ciAddUNQUIETFilter(chat, channel);
+}
 
 static int ciCheckForID(CHAT chat, int ID)
 {
