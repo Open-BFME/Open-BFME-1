@@ -27,3 +27,10 @@ void __cdecl bfmeAdvanceCounter8C5700(void *, BfmeCallback8C5700 *payload)
 	value->bfmeStepCBC(value->m_counter->m_count + 1);
 	value->m_counter->m_flags &= ~0x02000000u;
 }
+
+void __cdecl bfmeRetreatCounter8C5730(void *, BfmeCallback8C5700 *payload)
+{
+	BfmeThingCBC *value = payload->m_value;
+	value->bfmeStepCBC(value->m_counter->m_count - 1);
+	value->m_counter->m_flags &= ~0x02000000u;
+}
