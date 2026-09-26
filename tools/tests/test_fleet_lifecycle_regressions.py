@@ -55,6 +55,7 @@ def release_legacy_after_stop(root, run, reason="test operator stop"):
 
 
 def test_failed_and_filtered_selections_never_own_rvas(tmp_path):
+    require_cgroup_v2()
     ledger(tmp_path, (0x1000, 8), (0x2000, 8), (0x3000, 8))
     log(tmp_path, "01:00 seat pick selected 0x00001000 0x00002000 0x00003000\n")
     # A brief generator may fail or filter two of three selected RVAs. There
@@ -74,6 +75,7 @@ def test_failed_and_filtered_selections_never_own_rvas(tmp_path):
 
 
 def test_multi_target_completion_releases_all_and_cools_only_touched(tmp_path):
+    require_cgroup_v2()
     ledger(tmp_path, (0x1000, 8), (0x2000, 8))
     command = [sys.executable, "-c",
                f"import sys; sys.path.insert(0, {str(Path(fleet_run.__file__).parent)!r}); "
@@ -87,6 +89,7 @@ def test_multi_target_completion_releases_all_and_cools_only_touched(tmp_path):
 
 
 def test_stale_brief_and_claim_conflict_never_launch(tmp_path):
+    require_cgroup_v2()
     ledger(tmp_path, (0x1000, 8))
     path = brief(tmp_path, (0x1000, 8))
     started = tmp_path / "started"
@@ -106,6 +109,7 @@ def test_stale_brief_and_claim_conflict_never_launch(tmp_path):
 
 
 def test_concurrent_runner_processes_launch_only_one_owner(tmp_path):
+    require_cgroup_v2()
     ledger(tmp_path, (0x1000, 8))
     path = brief(tmp_path, (0x1000, 8))
     launched = tmp_path / "launched.txt"
@@ -442,6 +446,7 @@ def test_bootstrap_sanitizes_startup_environment_until_cgroup_attach(tmp_path, m
 
 
 def test_missing_worker_executable_releases_empty_claim_without_ghost(tmp_path):
+    require_cgroup_v2()
     ledger(tmp_path, (0x1000, 8))
     with pytest.raises(FileNotFoundError, match="worker executable not found"):
         fleet_run.execute(tmp_path, brief(tmp_path, (0x1000, 8)),

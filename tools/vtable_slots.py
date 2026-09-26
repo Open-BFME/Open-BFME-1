@@ -14,6 +14,7 @@ import re, csv, collections, sys, struct, bisect, json
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'tools')); import build as B
+import eligibility
 
 data = B.EXE.read_bytes(); secs = {s['name']: s for s in B.pe_sections(data)}
 text, rdata = secs['.text'], secs['.rdata']
@@ -28,7 +29,7 @@ for r in rows:
     except: continue
     if r['status'] != 'matched': continue
     ranges.append((rva, sz, r['name'], r['source'])); byrva[rva].append(r)
-    if r['source'].startswith('Code/gen_asm/'): dumps[rva] = sz
+    if eligibility.is_dump_row(r): dumps[rva] = sz
 ranges.sort(); starts = [x[0] for x in ranges]
 def owner(rva):
     i = bisect.bisect_right(starts, rva) - 1

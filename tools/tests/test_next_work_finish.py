@@ -54,8 +54,8 @@ def test_served_from_stash_with_score(world):
     assert got[0]["score"] == 0.95 and got[0]["function"] == SYM
     assert got[0]["latest_verdict"] == "partial"
     assert shlex.split(got[0]["command"]) == [
-        sys.executable, "tools/finish_measure.py", "--one", f"0x{RVA:08X}",
-        str(tmp_path / "attempts" / f"0x{RVA:08x}.cpp")]
+        Path(sys.executable).as_posix(), "tools/finish_measure.py", "--one", f"0x{RVA:08X}",
+        (tmp_path / "attempts" / f"0x{RVA:08x}.cpp").as_posix()]
 
 
 def test_later_deferral_does_not_hide_the_stash(world):
@@ -77,8 +77,8 @@ def test_finish_start_command_does_not_probe_an_unverified_header_symbol(world):
     assert candidate["function"] == label
     assert candidate["symbol"] == "?dup_00354c10@@YAXXZ"
     assert shlex.split(candidate["command"]) == [
-        sys.executable, "tools/finish_measure.py", "--one", f"0x{RVA:08X}",
-        str(tmp_path / "attempts" / f"0x{RVA:08x}.cpp")]
+        Path(sys.executable).as_posix(), "tools/finish_measure.py", "--one", f"0x{RVA:08X}",
+        (tmp_path / "attempts" / f"0x{RVA:08x}.cpp").as_posix()]
 
 
 def test_later_dead_end_retires_the_address(world):

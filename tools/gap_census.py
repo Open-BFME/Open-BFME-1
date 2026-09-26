@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 import build
+import eligibility
 
 img = open(build.EXE, "rb").read()
 secs = {s["name"]: s for s in build.pe_sections(img)}
@@ -24,7 +25,7 @@ with open(ROOT / "reverse/functions.csv", newline="", encoding="utf-8", errors="
         if r["status"] != "matched" or not r["target_rva"].lower().startswith("0x"):
             continue
         s = int(r["target_rva"], 16); n = int(r["target_size"] or 0)
-        rows.append((s, s + n, r["source"], r["name"]))
+        rows.append((s, s + n, r["source"], r["name"], eligibility.is_dump_row(r)))
 rows.sort()
 starts = [r[0] for r in rows]
 def row_at(rva):
@@ -32,9 +33,9 @@ def row_at(rva):
     if i >= 0 and rows[i][0] <= rva < rows[i][1]:
         return rows[i]
     return None
-def is_dump(row): return row and (row[2].startswith("Code/gen_asm/") or row[2].endswith(".asm"))
+def is_dump(row): return bool(row) and row[4]
 merged = []
-for s, e, _, _ in rows:
+for s, e, *_ in rows:
     if merged and s <= merged[-1][1]: merged[-1][1] = max(merged[-1][1], e)
     else: merged.append([s, e])
 gaps = []; prev = T0

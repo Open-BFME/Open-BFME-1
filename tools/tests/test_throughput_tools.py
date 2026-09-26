@@ -18,6 +18,18 @@ import probe
 import re_log
 import shape_search
 import source_donors
+import fleet_cgroup
+
+
+def require_cgroup_v2():
+    """fleet_run.execute contains every worker in a delegated cgroup-v2 unit
+    (afea6de317); hosts that cannot create one (Windows, GitHub runners) skip."""
+    import uuid
+    try:
+        unit = fleet_cgroup.CgroupV2Unit.create("test-" + uuid.uuid4().hex)
+    except fleet_cgroup.ContainmentUnavailable as error:
+        pytest.skip(f"host does not delegate writable cgroup-v2 units: {error}")
+    unit.remove()
 
 
 def open_ledger(root, *targets):
@@ -185,6 +197,7 @@ def test_claims_are_all_or_nothing_and_owner_release_is_scoped(tmp_path):
 
 
 def test_real_worker_exit_status_run_env_and_old_logs_survive(tmp_path):
+    require_cgroup_v2()
     open_ledger(tmp_path, (0x1000, 8))
     brief_path = tmp_path / "brief.txt"
     brief_path.write_text("TARGETS:\n- 0x00001000 8B foo\n")
@@ -205,6 +218,7 @@ def test_real_worker_exit_status_run_env_and_old_logs_survive(tmp_path):
 
 
 def test_missing_executable_releases_claim_and_records_failure(tmp_path):
+    require_cgroup_v2()
     open_ledger(tmp_path, (0x1000, 8))
     brief_path = tmp_path / "brief.txt"
     brief_path.write_text("- 0x00001000 8B foo\n")

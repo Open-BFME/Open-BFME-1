@@ -10,6 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2 if Path(__file__).resolve().parent.name == "fleet" else 1]
 sys.path.insert(0, str(ROOT / "tools"))
 import portable_lock
+import build
 BS = chr(92).encode()
 with open(ROOT / "reverse/.add_match.lock", "a+") as h:
     if not os.environ.get("HARVEST_HAS_LOCK"):
@@ -46,7 +47,8 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
     victims = []
     def keep(f):
         f = [norm(x) for x in f]
-        if len(f) >= 6 and f[0].startswith("?d_") and f[4].startswith("Code/gen_asm/") and f[2].upper() in real:
+        if (len(f) >= 7 and f[0].startswith("?d_") and build.is_scaffold_row({"notes": f[6]})
+                and f[2].upper() in real):
             victims.append((f[0], f[2])); return False
         return True
     new, dropped = ledger_io.rewrite(raw, keep)

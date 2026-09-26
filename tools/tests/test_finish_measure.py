@@ -118,7 +118,7 @@ def test_one_prints_the_measured_symbol_not_the_stale_stash_header(tmp_path, mon
     assert "Diagnostic only" in output
     command = next(line.removeprefix("probe: ") for line in output.splitlines()
                    if line.startswith("probe: "))
-    assert shlex.split(command) == [sys.executable, "tools/probe.py", str(path), actual, "0x00000010"]
+    assert shlex.split(command) == [Path(sys.executable).as_posix(), "tools/probe.py", str(path), actual, "0x00000010"]
 
 
 def test_one_rejects_a_stash_changed_during_measurement(tmp_path, monkeypatch, capsys):

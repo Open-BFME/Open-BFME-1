@@ -226,6 +226,8 @@ def test_empty_cleanup_is_bound_to_the_named_run(tmp_path):
 
 
 def test_release_write_failure_is_not_misclassified_as_blocked(tmp_path):
+    if not sys.platform.startswith("linux"):
+        pytest.skip("BlockedBootstrap is Linux-only (it refuses to start elsewhere)")
     marker = tmp_path / "executed"
     bootstrap = BlockedBootstrap(
         [sys.executable, "-c", f"open({str(marker)!r}, 'w').write('yes')"],

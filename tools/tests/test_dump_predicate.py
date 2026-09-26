@@ -153,6 +153,10 @@ ALLOWED = {
                       "gen_uw, which AGENTS.md forbids hand-editing. The note cannot say "
                       "this: both lanes spell it `gen-dump`, so the lane is the path",
     "struct_match.py": "same lane restriction as family_scan.py, for the same reason",
+    "next_work.py": "proven_dump_extents trusts `bounds=high` only from the gen_asm lane "
+                    "the retired dump generator measured; test_next_work_dump_extents "
+                    "pins that a gen-dump;bounds=high note under any other path is not "
+                    "boundary evidence",
 }
 
 
