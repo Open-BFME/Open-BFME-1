@@ -89298,3 +89298,5 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?bfmeRva012B42E4RegistrationNext@@3PAXA,0x012B42E4,registration link written by retail at 0x00C6B1E0 and stored into head
 ?g_bfmeRva0130BCACStatic@@3VRva00848AB0@@A,0x0130BCAC,static object constructor receiver 0x00C6D880 and destructor forwarder 0x00C70C80 both reference same global
 ?bfmeRva012B438CRegistrationNext@@3PAXA,0x012B438C,registration link written by retail at 0x00C6B200 and stored into head
+?bfmeRva012A7460RegistrationNext@@3PAXA,0x012A7460,registration link written by retail at 0x00C6A950 and stored into head
+?bfmeRva012A746CRegistrationNext@@3PAXA,0x012A746C,registration link written by retail at 0x00C6A970 and stored into head
