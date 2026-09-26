@@ -1,21 +1,11 @@
 // ?update@AIFearState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.592 date=2026-09-23
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWMath
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/GameEngine/Include/Precompiled /Igame/Libraries/Source/WWVegas/WWMath
 // AIFearState::update, retail RVA 0x00173FB0 (402 bytes).
-// The constructor, its vtable, and the matched onEnter body establish the class and slot.
-
-#include "coord3d.h"
 
 typedef bool Bool;
 typedef float Real;
 typedef unsigned int UnsignedInt;
-
-inline void Coord3D::set(const Coord3DBase *that)
-{
-	y = that->y;
-	x = that->x;
-	z = that->z;
-}
+struct Coord3D { Real x, y, z; };
 
 enum StateReturnType
 {
@@ -53,7 +43,7 @@ public:
 	virtual void slot1f0() = 0;
 	virtual void slot1f4() = 0;
 	virtual void slot1f8() = 0;
-	virtual void chooseLocomotorSet(UnsignedInt set) = 0;
+	virtual Bool chooseLocomotorSet(UnsignedInt set) = 0;
 };
 
 struct Rva00173FB0ConfigView
@@ -225,9 +215,9 @@ StateReturnType AIFearState::update()
 		Rva00173FB0PathView *path = ai->m_path;
 		if (path != 0 && !ai->m_flag31e)
 		{
-			const Coord3DBase *position =
-				(const Coord3DBase *)((const unsigned char *)path->m_field08 + 0x0c);
-			m_goalPosition.set(position);
+			const Coord3D *position =
+				(const Coord3D *)((const unsigned char *)path->m_field08 + 0x0c);
+			m_goalPosition = *(const Coord3D *)position;
 
 			if (Glo012F0239 && TheCRCParameterCheck)
 				((CritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
@@ -245,7 +235,7 @@ StateReturnType AIFearState::update()
 		{
 			ai->slot1e8();
 			((Rva0026F110 *)ai)->set();
-			ai->m_field180.set(&m_goalPosition);
+			ai->m_field180 = m_goalPosition;
 			ai->m_flag31d = false;
 		}
 
@@ -257,11 +247,14 @@ StateReturnType AIFearState::update()
 		}
 		else
 		{
+			Rva00173FB0ConfigView *config = ai->m_field04;
+			int high = config->m_field34;
+			int low = config->m_field38;
 			UnsignedInt frame = ((Rva00173FB0FrameView *)TheGameLogic)->m_field3c;
 			m_field5c = frame + GetGameLogicRandomValue(
-				(int)ai->m_field04->m_field38,
-				ai->m_field04->m_field34,
-				"F:\bfme\Code\gameengine\Source\GameLogic\Ai\AIStates.cpp",
+				low,
+				high,
+				"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp",
 				3509);
 		}
 	}
