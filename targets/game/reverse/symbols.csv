@@ -79878,6 +79878,7 @@ name,address,notes
 ?d_0032c680@@YAXXZ,0x0032C680,Address-only compatibility for matched Rva0032D720Dispatcher condition176; ILT6537 routes to body32C680; implementation now ScriptConditionsRva0032C680.cpp
 ?d_003c9470@@YAXXZ,0x00033EBA,additive: retail call target of the red row ?updateStatus@Rva003C9530Owner@@QAE_NPAVRva003C9530Key@@PAV?$BitFlags@$0CN@@@@Z
 ?d_003f9140@@YAXXZ,0x003F9140,address-derived tail callee used by Rva003D5780
+?d_0062ea60@@YAXXZ,0x0062EA60,Address-only compatibility for withdrawn dump; native Rva0062EA60StartOnline body; matched configCallback calls it at two sites; no semantic identity claim
 ?d_006ccdb0@@YAXXZ,0x0001F2FD,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006D23C0 calls; autopin
 ?d_00732960@@YAXXZ,0x00732960,"the extern void d_<rva>(void) idiom names its own target, and the call site casts it through a member-function-pointer union, so no other row supplies this REL32; the address is the declaration"
 ?d_0073a9b0@@YAXXZ,0x0073A9B0,additive: retail call target of the red row ?setZoomToDefault@W3DView@@QAEXXZ
