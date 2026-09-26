@@ -74,6 +74,12 @@ public:
 	Bool handle(GenItem *item, Bool *foundNormal, Bool *foundAddOrSub);
 };
 
+class Gen000140D8
+{
+public:
+	Bool handle(GenItem *item, Bool *foundNormal, Bool *foundAddOrSub);
+};
+
 template <int NUMBITS>
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
@@ -105,6 +111,29 @@ void BitFlags<17>::parse(INI *ini, AsciiString *description)
 		}
 
 		if (!((Gen00049A2B *)this)->handle((GenItem *)token, &foundNormal, &foundAddOrSub))
+			break;
+	}
+}
+
+template <>
+void BitFlags<117>::parse(INI *ini, AsciiString *description)
+{
+	if (description)
+		description->clear();
+
+	Bool foundNormal = false;
+	Bool foundAddOrSub = false;
+
+	for (const char *token = ini->getNextTokenOrNull(); token != 0; token = ini->getNextTokenOrNull())
+	{
+		if (description)
+		{
+			if (description->isNotEmpty())
+				description->concat(" ", 1);
+			description->concat(token);
+		}
+
+		if (!((Gen000140D8 *)this)->handle((GenItem *)token, &foundNormal, &foundAddOrSub))
 			break;
 	}
 }
