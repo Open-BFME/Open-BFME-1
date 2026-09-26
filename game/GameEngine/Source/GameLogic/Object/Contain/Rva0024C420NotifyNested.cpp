@@ -1,6 +1,12 @@
-// ?notifyNested@Rva0024C420Owner@@QAEXPAX@Z
-// partial score=0.99 date=2026-09-24
-// ?notifyNested@Rva0024C420Owner@@QAEXPAX@Z
+// Retail 0x0024C420 (210 B). Copies the contained-object list, runs the
+// owner's virtual prepare(), then hands every contained object's nested
+// result (contain slot 26) the owner word at this-0x18 and the argument.
+//
+// The owner word is copied into a local before the notify call. Passing it
+// directly compiles to the same mov/push, but the argument load then comes
+// out in EDX where retail has EAX: MSVC 7.1 hands out scratch registers
+// round-robin, and only the copied form takes a step for the pushed owner
+// (docs/shape_levers.md, "Scratch registers rotate").
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 #include <list>
@@ -74,6 +80,9 @@ void Rva0024C420Owner::notifyNested(void *arg)
 		Rva0024C420ContainVtable *table = *(Rva0024C420ContainVtable **)contain;
 		result = table->getResult(contain);
 		if (result != 0)
-			result->notify(*(void **)((char *)this - 0x18), arg);
+		{
+			void *owner = *(void **)((char *)this - 0x18);
+			result->notify(owner, arg);
+		}
 	}
 }
