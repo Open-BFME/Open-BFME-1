@@ -10,10 +10,12 @@
 // WHAT THE BYTES SHOW.  The horizontal and vertical offsets from the Coord3D
 // at +0x30 to the one at +0x24 give two angles.  The first matrix is an
 // identity Matrix3 rotated about Y by atan2(-dz, dist), post-multiplied by a
-// Z rotation of the planar heading minus pi/2; the second is the zero-filled
-// bss Matrix3 at VA 0x012D6A28 rotated about Y by atan2(dz, dist) and a Z
-// rotation of that heading minus another pi.  Each product goes to the
-// thiscall callee at 0x0061D4D0 on the pointers at +0x18 and +0x20 when set.
+// Z rotation of the planar heading minus pi/2; the second copies WWMath's
+// Matrix3::Identity (initialised .data at VA 0x012D6A28, the first of
+// matrix3.cpp's ten constants in declaration order), rotates it about Y by
+// atan2(dz, dist) and pairs it with a Z rotation of that heading minus
+// another pi.  Each product goes to the thiscall callee at 0x0061D4D0 on
+// the pointers at +0x18 and +0x20 when set.
 //
 // SHAPE.  The frame layout needs both Coord3D temporaries (the first one's
 // dead x/y stores let the second share its slot), the two block-scoped
@@ -29,10 +31,6 @@ class U4Target0060C2C0
 public:
 	void hand( void *payload );
 };
-
-// Zero-initialised bss Matrix3 at VA 0x012D6A28; this body is its only
-// referencing code.
-extern Matrix3 g_Rva00ED6A28Matrix;
 
 class LivingWorldEyeTower
 {
@@ -71,7 +69,7 @@ void LivingWorldEyeTower::rva0060C620()
 	}
 	{
 		Real pitch2 = (Real)atan2(dz, dist);
-		Matrix3 rotY = g_Rva00ED6A28Matrix;
+		Matrix3 rotY = Matrix3::Identity;
 		rotY.Rotate_Y(pitch2);
 		yaw -= 3.1415927f;
 		Matrix3 rotZ = Create_Z_Rotation_Matrix3(yaw);
