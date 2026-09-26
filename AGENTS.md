@@ -7,6 +7,10 @@ history, one `git show` away.
 
 ## Work selection
 
+WorldBuilder assignments use `python3 tools/worldbuilder.py next` and
+[`docs/worldbuilder.md`](docs/worldbuilder.md). Their source ownership, ledger,
+verification and fleet claims are independent of the game workflow below.
+
 An explicit request or assigned lane overrides the queue:
 
 0. On Windows, never invoke a `.sh` file directly from PowerShell or cmd

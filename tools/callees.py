@@ -29,6 +29,10 @@ Read it BEFORE writing the body, but verify the callee contract independently.
 Generated dumps and thunks can have placeholder void signatures unrelated to
 the actual ABI. A ledger name is neither signature proof nor a symbols.csv pin.
 """
+if __name__ == "__main__":
+    from target_guard import require_game_cli
+    require_game_cli("callees.py")
+
 import argparse
 import collections
 import csv

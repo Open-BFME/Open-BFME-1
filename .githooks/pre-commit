@@ -4,6 +4,9 @@
 # the outgoing delta again. Never bypass this hook.
 set -euo pipefail
 
+# Publication verifies every affected target; worker selection must not redirect its checks.
+unset BFME_TARGET BFME_TARGET_SHA256
+
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 
@@ -68,6 +71,19 @@ python3 tools/eol_guard.py || fail "staged change rewrites line endings (see abo
 # A deliberately deleted file may not come back by accident (reverse/retired_paths.txt).
 python3 tools/retired_guard.py --staged || fail "retired path re-added (see above)"
 
+# WorldBuilder has a separate image and ledger; verify it before the game-only
+# early exit, then keep its exclusive sources out of the game's source parser.
+git cat-file -e :tools/target_hooks.py && git diff --quiet -- tools/target_hooks.py \
+    || fail "target checker differs from staged snapshot; stage or revert its edits"
+target_sources_out=$(mktemp)
+python3 tools/target_hooks.py --staged --exclusive-output "$target_sources_out" \
+    || { rm -f "$target_sources_out"; fail "WorldBuilder target verification (see above)"; }
+declare -A target_only_sources=()
+while IFS= read -r path; do
+    [ -z "$path" ] || target_only_sources["$path"]=1
+done < "$target_sources_out"
+rm -f "$target_sources_out"
+
 staged_sources=()
 staged_c_sources=()
 ledger_changed=0
@@ -76,7 +92,9 @@ wide_change=0
 baseline_changed=0
 attempts_changed=0
 while IFS= read -r path; do
+    [ -z "${target_only_sources[$path]:-}" ] || continue
     case "$path" in
+        Code/Tools/WorldBuilder/*.h|Code/Tools/WorldBuilder/*.hpp|targets/worldbuilder/*|reverse/worldbuilder/*) ;;
         Code/*.cpp) staged_sources+=("$path") ;;
         # 216 C sources carry ledger rows (GameSpy, Lua). pre-push byte-verifies an
         # edited one; this hook only collected *.cpp, so such an edit left through
@@ -118,7 +136,7 @@ done < <(git diff --cached --name-only --diff-filter=ACMRT)
 # Code/ where verify_source_claims would demand matched rows for it.
 while IFS= read -r path; do
     case "$path" in
-        Code/GameEngine/*|Code/GameEngineDevice/*|Code/Libraries/*|Code/gen_small/*|Code/gen_asm/*|Code/masm_dumps/*|reference/shims/*|reference/CnC_Generals_Zero_Hour/*|tools/tests/*|build/toolchains/*|mods/*|reverse/attempts/*) ;;
+        Code/Tools/WorldBuilder/*|targets/worldbuilder/Code/*|reverse/worldbuilder/attempts/*|Code/GameEngine/*|Code/GameEngineDevice/*|Code/Libraries/*|Code/gen_small/*|Code/gen_asm/*|Code/masm_dumps/*|reference/shims/*|reference/CnC_Generals_Zero_Hour/*|tools/tests/*|build/toolchains/*|mods/*|reverse/attempts/*) ;;
         *) fail "source added outside official tree: $path — see AGENTS.md 'File placement'" ;;
     esac
 done < <(git diff --cached --name-only --diff-filter=A | grep -E '\.(cpp|c|h|hpp|asm)$' || true)

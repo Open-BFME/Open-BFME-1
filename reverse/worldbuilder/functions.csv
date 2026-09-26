@@ -1,0 +1,6 @@
+name,target_rva,target_size,status,source,profile,evidence,model
+?OnUpdateShowGrid@CWorldBuilderView@@IAEXPAVCCmdUI@@@Z,0x00104431,51,matched,Code/Tools/WorldBuilder/src/WorldBuilderView.cpp,editor-size,mfc:CWorldBuilderView::OnUpdateShowGrid,gpt-6
+??6@YAAAVDebug@@AAV0@ABURegion3D@@@Z,0x1bfac,47,matched,Code/Libraries/Source/WWVegas/WWMath/region.cpp,engine-size,export,gpt-6
+??6@YAAAVDebug@@AAV0@ABUIRegion3D@@@Z,0x1bfe6,47,matched,Code/Libraries/Source/WWVegas/WWMath/region.cpp,engine-size,export,gpt-6
+??6@YAAAVDebug@@AAV0@ABURealRange@@@Z,0x1bd2e,78,matched,Code/Libraries/Source/WWVegas/WWMath/region.cpp,engine-size,export,gpt-6
+??9IRegion2D@@QBE_NABU0@@Z,0x1b024,17,matched,Code/Libraries/Source/WWVegas/WWMath/region.cpp,engine-size,export,gpt-6

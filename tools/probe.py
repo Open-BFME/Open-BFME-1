@@ -18,6 +18,10 @@ the first divergence, and a SYMPTOM -> LEVER line keyed to docs/shape_levers.md:
 
 Size defaults to retail's ledger row for the RVA when one exists.
 """
+if __name__ == "__main__":
+    from target_guard import require_game_cli
+    require_game_cli("probe.py")
+
 import argparse
 import bisect
 import csv

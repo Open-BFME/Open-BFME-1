@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path, PurePosixPath
 import re
+import struct
 from types import MappingProxyType
 from typing import Mapping
 
@@ -55,6 +56,36 @@ class Relocation:
     type: int
 
 
+def initial_ilt_map(image_bytes, text):
+    """Recognize only the padded, contiguous initial MSVC incremental-link table.
+
+    An E9 outside this table can be a real tail-call function. Routing through
+    it would erase that function's identity and attribute its caller to a callee.
+    """
+    size = min(text.virtual_size, text.raw_size)
+    raw = image_bytes[text.raw_offset:text.raw_offset + size]
+    if len(raw) < 10 or raw[:6] != b"\xCC" * 5 + b"\xE9":
+        return MappingProxyType({})
+    offset, thunks = 5, {}
+    while offset < len(raw) and raw[offset] == 0xE9:
+        if offset + 5 > len(raw):
+            raise TargetError("initial ILT ends inside a jump instruction")
+        rva = text.rva + offset
+        target = rva + 5 + struct.unpack_from("<i", raw, offset + 1)[0]
+        if not text.rva <= target < text.rva + size:
+            raise TargetError(f"initial ILT entry 0x{rva:X} jumps outside file-backed .text")
+        thunks[rva] = target
+        offset += 5
+    if len(thunks) < 2:
+        return MappingProxyType({})
+    padding_end = max(offset + 3, (offset + 15) & ~15)
+    if padding_end > len(raw) or raw[offset:padding_end] != b"\xCC" * (padding_end - offset):
+        raise TargetError("initial ILT has no int3 padding through the next 16-byte boundary")
+    if any(text.rva + 5 <= target < text.rva + offset for target in thunks.values()):
+        raise TargetError("initial ILT points back inside its own table")
+    return MappingProxyType(thunks)
+
+
 @dataclass(frozen=True, slots=True)
 class Target:
     target_id: str
@@ -71,6 +102,7 @@ class Target:
     exports: tuple[Export, ...] = field(repr=False)
     imports: tuple[Import, ...] = field(repr=False)
     relocations: tuple[Relocation, ...] = field(repr=False)
+    ilt_thunks: Mapping[int, int] = field(repr=False)
 
     @property
     def ledger_path(self):
@@ -85,6 +117,17 @@ class Target:
 
     def verify_hash(self):
         return _verified_image(self.image_path, self.expected_sha256)
+
+    def follow_ilt(self, rva):
+        return self.ilt_thunks.get(rva, rva)
+
+    @property
+    def ilt_provenance(self):
+        if not self.ilt_thunks:
+            return None
+        start, end = min(self.ilt_thunks), max(self.ilt_thunks) + 5
+        return {"start_rva": start, "end_rva": end, "entry_count": len(self.ilt_thunks),
+                "sha256": hashlib.sha256(self.read_rva(start, end - start)).hexdigest()}
 
     def section_for_rva(self, rva):
         if not isinstance(rva, int) or rva < 0:
@@ -220,7 +263,10 @@ def load_target(target_id, *, root=ROOT):
         pe.close()
     except (pefile.PEFormatError, UnicodeError, IndexError) as error:
         raise TargetError(f"{target_id}: invalid PE image: {error}") from error
+    texts = [section for section in sections if section.name == ".text"]
+    if len(texts) != 1:
+        raise TargetError(f"{target_id}: expected exactly one .text section")
     target = Target(target_id, root, config_path, image_path, expected, ledger_root, build_root,
-                    profiles, image_base, sections, data, exports, imports, relocations)
-    target.text_section
+                    profiles, image_base, sections, data, exports, imports, relocations,
+                    initial_ilt_map(data, texts[0]))
     return target

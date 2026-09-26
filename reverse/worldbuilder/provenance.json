@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "target_id": "worldbuilder",
+  "binary_sha256": "5be8adf1807f7ba38acd598d89685e231eb90b8808b0650770557191a3b8192f",
+  "image_base": 4194304,
+  "address_convention": "All address fields are RVAs; decoded immediate operands are VAs",
+  "generator": "tools/worldbuilder_inventory.py",
+  "generator_sha256": "71177849a79b3c46b86d1b36aa8cd8914321f29ac9c85ad22997c97ad541eb38",
+  "text_hash_normalization": "CRLF-to-LF; binary fingerprints remain byte-exact",
+  "ilt": {
+    "start_rva": 4101,
+    "end_rva": 44706,
+    "entry_count": 8121,
+    "sha256": "48a992527a7404d5a994195412ec8227f5465acf326be2aa411e7007bacefced"
+  },
+  "donor": {
+    "path": "reference/CnC_Generals_Zero_Hour",
+    "import_commit": "4d091bbeec43fcdf420241849233bf444bbe355e",
+    "upstream_revision": null,
+    "upstream_revision_status": "not recorded by the vendoring commit or bundled README",
+    "files": [
+      {
+        "path": "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/include/MainFrm.h",
+        "sha256": "79db279fa843dbb25c7faa69a97d575a34e2c22e4435cc6476eaa4194d6374b6"
+      },
+      {
+        "path": "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/include/WBFrameWnd.h",
+        "sha256": "d268590c149961c37bcd969b214fc42a9467c0220296b5f5090b97aac74d0b55"
+      },
+      {
+        "path": "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/include/WorldBuilderDoc.h",
+        "sha256": "9ec80837862a493abf0ccb17b056ac81061cb65b808448f11d607231405b8efb"
+      },
+      {
+        "path": "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/include/WorldBuilderView.h",
+        "sha256": "29124a2fd0226bb5e2144873004b2629344b3fd412a4f7dc079a8e6bdac6f45f"
+      },
+      {
+        "path": "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/include/wbview3d.h",
+        "sha256": "50a964f2e7159bc57ff49ecf88e3f60354fb4bceb35c7da50989de6524084618"
+      },
+      {
+        "path": "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/res/resource.h",
+        "sha256": "1b84f69fc3de4c136c9cfc58b3fe1c092e710d465af0ae809973a02be22582e1"
+      },
+      {
+        "path": "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/src/MainFrm.cpp",
+        "sha256": "2810e5b0ece2f9c65940583c5211766e618d05aae7fb66176ee53163f565f72f"
+      },
+      {
+        "path": "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/src/WBFrameWnd.cpp",
+        "sha256": "67500fe381c3209e2cf831c923020bcb6ed7b6686ce1f568cc42bfbb7402cca2"
+      },
+      {
+        "path": "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/src/WorldBuilderDoc.cpp",
+        "sha256": "bd5dc6fcfc925f86cca509a4a19cf77b2a27986c564a148c894586e69fa77b32"
+      },
+      {
+        "path": "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/src/WorldBuilderView.cpp",
+        "sha256": "f0c284c028b64b799c8aed07a44e0e5cd6cc713ee799b59272137467b68354ff"
+      },
+      {
+        "path": "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/src/wbview3d.cpp",
+        "sha256": "15d9c7c909d98c6c6728fe2a53caee460223ec50090809692c17ef6f6c888f09"
+      }
+    ]
+  },
+  "mfc_schema": {
+    "version": "MFC 7.1 x86 _AFXDLL",
+    "runtime_class_bytes": 28,
+    "message_map_bytes": 8,
+    "message_entry_bytes": 24,
+    "get_message_map_vtable_offset": 48
+  },
+  "game_reference": {
+    "target": "bfme1-game",
+    "binary_sha256": "c1a907c44b84df129c1f18dc7365ea25ba438f9b8f39a374b86ed852936ff0a9"
+  }
+}

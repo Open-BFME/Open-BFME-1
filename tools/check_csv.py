@@ -8,6 +8,10 @@ ledgers. Run it before committing, after every merge/rebase, and in hooks.
 
 Exit 0: both ledgers clean. Exit 1: every problem printed with the fix.
 """
+if __name__ == "__main__":
+    from target_guard import require_game_cli
+    require_game_cli("check_csv.py")
+
 import argparse
 import csv
 import io

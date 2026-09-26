@@ -22,6 +22,10 @@ supported path for replacing a 5-byte MASM thunk claim with the clean C++ body
 it jumps to, and for replacing gen-tgrid template placeholders at their exact
 range; the original row is restored if the new claim does not byte-verify.
 """
+if __name__ == "__main__":
+    from target_guard import require_game_cli
+    require_game_cli("add_match.py")
+
 import argparse
 import csv
 import io

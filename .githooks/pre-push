@@ -4,6 +4,9 @@
 # — never the full gate.
 set -euo pipefail
 
+# Publication verifies every affected target; worker selection must not redirect its checks.
+unset BFME_TARGET BFME_TARGET_SHA256
+
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 
@@ -29,8 +32,17 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
     else
         base="$(git merge-base "$local_sha" origin/master 2>/dev/null || true)"
     fi
+    git cat-file -e "$local_sha:tools/target_hooks.py" && git diff --quiet "$local_sha" -- tools/target_hooks.py \
+        || fail "target checker differs from pushed snapshot; commit or revert its edits"
+    if [ -n "$base" ]; then
+        python3 tools/target_hooks.py --range "$base" "$local_sha" \
+            || fail "WorldBuilder target verification (see above)"
+    else
+        python3 tools/target_hooks.py --ref "$local_sha" \
+            || fail "WorldBuilder target verification (see above)"
+    fi
     if [ -z "$base" ]; then
-        echo "pre-push: no known remote base; static ledger check only" >&2
+        echo "pre-push: no known remote base; game static ledger check only" >&2
         continue
     fi
 

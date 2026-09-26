@@ -9,6 +9,9 @@
 # previous branch on failure.
 set -euo pipefail
 
+# Publication verifies every affected target; worker selection must not redirect its checks.
+unset BFME_TARGET BFME_TARGET_SHA256
+
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 
@@ -28,6 +31,13 @@ if ! python3 tools/check_csv.py; then
 fi
 
 base="$(git merge-base HEAD origin/master)"
+
+if ! git diff --quiet HEAD -- tools/target_hooks.py \
+   || ! python3 tools/target_hooks.py --range "$base" HEAD; then
+    echo "PR #$pr FAILED WorldBuilder target verification" >&2
+    restore
+    exit 1
+fi
 
 # PR commits were made under the contributor's hooks, or none: re-run the
 # conversion-direction gate over the whole PR range before spending build time.

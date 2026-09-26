@@ -22,3 +22,10 @@ reverse/symbols.csv merge=union
 reverse/deleted_rows.csv merge=union
 reverse/re_attempts.log merge=union
 # so it deliberately gets no union merge.
+
+# Target ledgers remain independent; validation rejects overlapping appends.
+reverse/worldbuilder/functions.csv text eol=lf merge=union
+reverse/worldbuilder/attempts.jsonl text eol=lf merge=union
+reverse/worldbuilder/*.json text eol=lf
+targets/worldbuilder/**/*.json text eol=lf
+targets/worldbuilder/dependencies/*.csv text eol=lf

@@ -151,3 +151,42 @@ def test_selected_target_and_profile_are_immutable(tmp_path):
         target.profiles["size"] = None
     with pytest.raises(FrozenInstanceError):
         target.profiles["size"].flags = ("-O2",)
+
+
+def ilt_image():
+    body = bytearray(b"\xCC" * 0x100)
+    for offset, destination in ((5, 0x1040), (10, 0x1050), (0x40, 0x1060)):
+        struct.pack_into("<Bi", body, offset, 0xE9, destination - (0x1000 + offset + 5))
+    body[0x50] = body[0x60] = 0xC3
+    return image(bytes(body), virtual_size=0x100)
+
+
+def test_ilt_routing_preserves_real_tailcall_wrapper(tmp_path):
+    configure(tmp_path, data=ilt_image())
+    target = load_target("worldbuilder", root=tmp_path)
+    assert dict(target.ilt_thunks) == {0x1005: 0x1040, 0x100A: 0x1050}
+    assert target.follow_ilt(0x1005) == 0x1040
+    assert target.follow_ilt(0x1040) == 0x1040
+    assert target.ilt_provenance == {
+        "start_rva": 0x1005, "end_rva": 0x100F, "entry_count": 2,
+        "sha256": hashlib.sha256(target.read_rva(0x1005, 10)).hexdigest()}
+
+
+@pytest.mark.parametrize("mutation", ["padding", "outside", "recursive"])
+def test_malformed_initial_table_is_rejected(tmp_path, mutation):
+    data = bytearray(ilt_image())
+    if mutation == "padding":
+        data[0x210] = 0xC3
+    else:
+        destination = 0x5000 if mutation == "outside" else 0x100A
+        struct.pack_into("<i", data, 0x206, destination - 0x100A)
+    configure(tmp_path, data=bytes(data))
+    with pytest.raises(TargetError, match="initial ILT"):
+        load_target("worldbuilder", root=tmp_path)
+
+
+def test_plain_e9_function_without_table_witness_is_not_routed(tmp_path):
+    configure(tmp_path, data=image(b"\xE9\x05\0\0\0\xCC\xCC\xCC"))
+    target = load_target("worldbuilder", root=tmp_path)
+    assert target.follow_ilt(0x1000) == 0x1000
+    assert target.ilt_provenance is None

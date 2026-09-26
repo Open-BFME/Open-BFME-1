@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+if __name__ == "__main__":
+    from target_guard import require_game_cli
+    require_game_cli("build.py")
+
 import concurrent.futures
 import csv
 import functools
@@ -2558,6 +2562,11 @@ def verify_source_claims(only=None):
         if scoped:
             sources = [p for p in sources
                        if any(sel in p.relative_to(ROOT).as_posix() for sel in source_only)]
+    if any(path.relative_to(ROOT).as_posix() not in matched_by_source for path in sources):
+        from target_hooks import validated_worldbuilder_sources
+        target_sources = validated_worldbuilder_sources(ROOT)
+        sources = [path for path in sources if path.relative_to(ROOT).as_posix() in matched_by_source
+                   or path.relative_to(ROOT).as_posix() not in target_sources]
     for path in sources:
         rel = path.relative_to(ROOT).as_posix()
         text = path.read_text(encoding="utf-8", errors="replace")

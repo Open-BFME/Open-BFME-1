@@ -1,0 +1,23 @@
+{
+  "references": {
+    "bfme1": {
+      "ledger_content": {
+        "sha256": "b90fcfe647722435bfbbaab35e6388c7eba0e57bed54faba8efbab638331f997",
+        "size": 26155790
+      },
+      "ledger_git_blob_sha1": "5f4c1a058cdc3d6ab10089951d1b5302506e3b75",
+      "repository": "Open-BFME/Open-BFME-1",
+      "revision": "91752becb2cc621c42590cd93f2b961d28e92647"
+    },
+    "bfme2": {
+      "ledger_content": {
+        "sha256": "a1d13ebecf09bd3876513dacb0a0b7ab8949418aac7b1e6958a32297c22b9e81",
+        "size": 5965317
+      },
+      "ledger_git_blob_sha1": "07e4b4d1d7e1a1f85cc665722c65c6e8f89dbb87",
+      "repository": "Open-BFME/Open-BFME-2",
+      "revision": "eac9c61f23feb6e243e7156529a407e07d302e27"
+    }
+  },
+  "schema_version": 1
+}

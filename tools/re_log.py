@@ -36,6 +36,10 @@ way to take back a row — an address typed rather than measured stayed live
 forever, and the follow-up row could only ask a human to disregard it. `void`
 is the one status that retracts rather than decides; see VOID_STATUS.
 """
+if __name__ == "__main__":
+    from target_guard import require_game_cli
+    require_game_cli("re_log.py")
+
 import re
 import hashlib
 import json

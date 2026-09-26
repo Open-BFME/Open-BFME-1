@@ -17,6 +17,10 @@ Then launch it with the engine of your choice, e.g.
 
 Read-only. Writes nothing but stdout.
 """
+if __name__ == "__main__":
+    from target_guard import require_game_cli
+    require_game_cli("brief.py")
+
 import argparse
 import csv
 import json

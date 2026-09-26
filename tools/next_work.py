@@ -20,6 +20,10 @@ Usage:
 
 Exit codes: 0 ok, 1 missing/bad inputs, 2 ledger corrupt.
 """
+if __name__ == "__main__":
+    from target_guard import require_game_cli
+    require_game_cli("next_work.py")
+
 import argparse
 import ast
 import bisect

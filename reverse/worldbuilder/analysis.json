@@ -1,0 +1,617 @@
+{
+  "schema_version": 1,
+  "target_id": "worldbuilder",
+  "binary_sha256": "5be8adf1807f7ba38acd598d89685e231eb90b8808b0650770557191a3b8192f",
+  "address_convention": "All address fields are RVAs; range endpoints are inclusive",
+  "producer": {
+    "program_sha256": "5be8adf1807f7ba38acd598d89685e231eb90b8808b0650770557191a3b8192f",
+    "ghidra_version": "12.1.2",
+    "java_version": "21.0.12.1",
+    "language": "x86:LE:32:default",
+    "compiler_spec": "windows",
+    "functions": "73178",
+    "call_rows": "370826",
+    "string_reference_rows": "80472"
+  },
+  "artifacts": [
+    {
+      "path": "build/worldbuilder-inventory/ghidra_functions.csv",
+      "sha256": "00d88a8b6d7ea5c602b7127966a5ec77d3a042dacf7e79c3d281a22c35c855ff"
+    },
+    {
+      "path": "build/worldbuilder-inventory/string_xrefs.tsv",
+      "sha256": "114c41f034b7cc3f55a2f02eb175e9aafd22d6f3c707c0f28516529d7ebc7315"
+    },
+    {
+      "path": "build/worldbuilder-inventory/function_ranges.tsv",
+      "sha256": "84c2079bf77bbe1c2650b1bd2adb3b31226999a7f079eb8e791ea06f8ee61a44"
+    },
+    {
+      "path": "build/worldbuilder-inventory/calls.tsv",
+      "sha256": "e010887afb581292dcc2c5756b33ff1e6b7c28ae09d76fb6c2896e43703cf61a"
+    },
+    {
+      "path": "build/worldbuilder-inventory/string_references.tsv",
+      "sha256": "fd71966fe2751e2485c0c055215a7e3a0b7ed6ce87d6986821b6e300801f20bc"
+    },
+    {
+      "path": "build/worldbuilder-inventory/analysis_metadata.tsv",
+      "sha256": "18e0b13e2145d5a39cd6045ad122d41df5993d3651be0990a67892cfcb8be887"
+    }
+  ],
+  "provenance": {
+    "scripts": {
+      "tools/ghidra/list_functions.java": "046d71a543fc7704dfad138d3e76dff0bfdeb0194edcc3f7755d9632f32741b2",
+      "tools/ghidra/list_string_xrefs.java": "48d28cbf60d8db105e9e82ec859a31708f017291e0119f0fb7a8c76d358ee994",
+      "tools/ghidra/worldbuilder_analysis.java": "9064dcba6271118774d02e5a783eadef5ffcbd873a81ab905102740e741239a3"
+    },
+    "auditor": "tools/worldbuilder_analysis.py",
+    "auditor_sha256": "f4dfe2ceb70198ca2e34d7c7a7fa83a5622dac7b2c7c08c1861e4ab0e82b7dc8",
+    "ghidra_properties_sha256": "6ba9b5d945b4fd09e71a2eaceb18cb40f63b3a8ecf3f4059d6ec8af9d5d25133",
+    "text_hash_normalization": "CRLF-to-LF",
+    "analysis_settings": "default analyzers; -max-cpu 2 -analysisTimeoutPerFile 1200"
+  },
+  "reproduce": {
+    "fresh": "python3 tools/worldbuilder_analysis.py --analyze --ghidra <installation>",
+    "reuse": "python3 tools/worldbuilder_analysis.py --export --ghidra <installation>",
+    "check": "python3 tools/worldbuilder_analysis.py --check"
+  },
+  "counts": {
+    "functions": 73178,
+    "sum_owned_address_counts_not_coverage": 9021843,
+    "noncontiguous_functions": 535,
+    "call_rows": 370826,
+    "unresolved_call_rows": 115906,
+    "resolved_call_rows": 254920,
+    "string_reference_rows": 80472
+  },
+  "boundary_samples": [
+    {
+      "candidate_id": "CWorldBuilderView::OnShowGrid",
+      "entry_rva": 1065950,
+      "proven_size": 67,
+      "proof": "message-map entry, complete instructions, contained branches, RET then INT3",
+      "ghidra": {
+        "owned_bytes": 67,
+        "ranges": [
+          [
+            1065950,
+            1066016
+          ]
+        ]
+      },
+      "verdict": "exact_contiguous"
+    },
+    {
+      "candidate_id": "CWorldBuilderView::OnUpdateShowGrid",
+      "entry_rva": 1066033,
+      "proven_size": 51,
+      "proof": "message-map entry, complete instructions, contained branches, RET then INT3",
+      "ghidra": null,
+      "verdict": "missing_function_start"
+    },
+    {
+      "candidate_id": "CWorldBuilderView::OnViewShowtexture",
+      "entry_rva": 1066096,
+      "proven_size": 67,
+      "proof": "message-map entry, complete instructions, contained branches, RET then INT3",
+      "ghidra": {
+        "owned_bytes": 67,
+        "ranges": [
+          [
+            1066096,
+            1066162
+          ]
+        ]
+      },
+      "verdict": "exact_contiguous"
+    },
+    {
+      "candidate_id": "CWorldBuilderView::OnUpdateViewShowtexture",
+      "entry_rva": 1066179,
+      "proven_size": 28,
+      "proof": "message-map entry, complete instructions, contained branches, RET then INT3",
+      "ghidra": null,
+      "verdict": "missing_function_start"
+    },
+    {
+      "candidate_id": "CMainFrame::OnViewBrushfeedback",
+      "entry_rva": 467633,
+      "proven_size": 60,
+      "proof": "message-map entry, complete instructions, contained branches, RET then INT3",
+      "ghidra": null,
+      "verdict": "missing_function_start"
+    },
+    {
+      "candidate_id": "CMainFrame::OnUpdateViewBrushfeedback",
+      "entry_rva": 467708,
+      "proven_size": 24,
+      "proof": "message-map entry, complete instructions, contained branches, RET then INT3",
+      "ghidra": null,
+      "verdict": "missing_function_start"
+    },
+    {
+      "candidate_id": "CWorldBuilderDoc::OnEditLinkCenters",
+      "entry_rva": 1020960,
+      "proven_size": 11,
+      "proof": "message-map entry, complete instructions, contained branches, RET then INT3",
+      "ghidra": null,
+      "verdict": "missing_function_start"
+    },
+    {
+      "candidate_id": "CWorldBuilderDoc::OnUpdateEditLinkCenters",
+      "entry_rva": 1020973,
+      "proven_size": 25,
+      "proof": "message-map entry, complete instructions, contained branches, RET then INT3",
+      "ghidra": null,
+      "verdict": "missing_function_start"
+    },
+    {
+      "candidate_id": "CWB3dFrameWnd::OnUpdateWindowPreview1024x768",
+      "entry_rva": 836710,
+      "proven_size": 44,
+      "proof": "message-map entry, complete instructions, contained branches, RET then INT3",
+      "ghidra": null,
+      "verdict": "missing_function_start"
+    },
+    {
+      "candidate_id": "CWB3dFrameWnd::OnUpdateWindowPreview640x480",
+      "entry_rva": 836882,
+      "proven_size": 44,
+      "proof": "message-map entry, complete instructions, contained branches, RET then INT3",
+      "ghidra": null,
+      "verdict": "missing_function_start"
+    },
+    {
+      "candidate_id": "WbView3d::OnUpdateViewShowwireframe",
+      "entry_rva": 873075,
+      "proven_size": 28,
+      "proof": "message-map entry, complete instructions, contained branches, RET then INT3",
+      "ghidra": null,
+      "verdict": "missing_function_start"
+    },
+    {
+      "candidate_id": "WbView3d::OnUpdateViewShowentire3dmap",
+      "entry_rva": 873256,
+      "proven_size": 28,
+      "proof": "message-map entry, complete instructions, contained branches, RET then INT3",
+      "ghidra": null,
+      "verdict": "missing_function_start"
+    }
+  ],
+  "noncontiguous_examples": [
+    {
+      "entry_rva": 115158,
+      "owned_bytes": 59,
+      "range_count": 2,
+      "ranges": [
+        [
+          115158,
+          115201
+        ],
+        [
+          115233,
+          115247
+        ]
+      ],
+      "verdict": "unverified; owned count must not be used as a contiguous size"
+    },
+    {
+      "entry_rva": 347580,
+      "owned_bytes": 239,
+      "range_count": 2,
+      "ranges": [
+        [
+          347580,
+          347690
+        ],
+        [
+          348531,
+          348658
+        ]
+      ],
+      "verdict": "unverified; owned count must not be used as a contiguous size"
+    },
+    {
+      "entry_rva": 374436,
+      "owned_bytes": 502,
+      "range_count": 3,
+      "ranges": [
+        [
+          374436,
+          374605
+        ],
+        [
+          375180,
+          375412
+        ],
+        [
+          378395,
+          378493
+        ]
+      ],
+      "verdict": "unverified; owned count must not be used as a contiguous size"
+    },
+    {
+      "entry_rva": 406074,
+      "owned_bytes": 882,
+      "range_count": 2,
+      "ranges": [
+        [
+          406074,
+          406165
+        ],
+        [
+          406228,
+          407017
+        ]
+      ],
+      "verdict": "unverified; owned count must not be used as a contiguous size"
+    },
+    {
+      "entry_rva": 407317,
+      "owned_bytes": 523,
+      "range_count": 2,
+      "ranges": [
+        [
+          407317,
+          407375
+        ],
+        [
+          408011,
+          408474
+        ]
+      ],
+      "verdict": "unverified; owned count must not be used as a contiguous size"
+    }
+  ],
+  "call_samples": [
+    {
+      "instruction_rva": 467649,
+      "candidate_id": "CMainFrame::OnViewBrushfeedback",
+      "evidence": {
+        "instruction_rva": 467649,
+        "operands": "0x7e0eb6",
+        "entry_rva": 8261302,
+        "target_rva": 8261302,
+        "ilt_route_rvas": [],
+        "import": {
+          "iat_rva": 17328484,
+          "dll": "MFC71.DLL",
+          "name": null,
+          "ordinal": 1084
+        }
+      }
+    },
+    {
+      "instruction_rva": 467665,
+      "candidate_id": "CMainFrame::OnViewBrushfeedback",
+      "evidence": {
+        "instruction_rva": 467665,
+        "operands": "0x7e0eb6",
+        "entry_rva": 8261302,
+        "target_rva": 8261302,
+        "ilt_route_rvas": [],
+        "import": {
+          "iat_rva": 17328484,
+          "dll": "MFC71.DLL",
+          "name": null,
+          "ordinal": 1084
+        }
+      }
+    },
+    {
+      "instruction_rva": 467687,
+      "candidate_id": "CMainFrame::OnViewBrushfeedback",
+      "evidence": {
+        "instruction_rva": 467687,
+        "operands": "0x7e0ec8",
+        "entry_rva": 8261320,
+        "target_rva": 8261320,
+        "ilt_route_rvas": [],
+        "import": {
+          "iat_rva": 17328472,
+          "dll": "MFC71.DLL",
+          "name": null,
+          "ordinal": 6305
+        }
+      }
+    },
+    {
+      "instruction_rva": 467726,
+      "candidate_id": "CMainFrame::OnUpdateViewBrushfeedback",
+      "evidence": {
+        "instruction_rva": 467726,
+        "operands": "dword ptr [eax + 4]"
+      }
+    },
+    {
+      "instruction_rva": 836748,
+      "candidate_id": "CWB3dFrameWnd::OnUpdateWindowPreview1024x768",
+      "evidence": {
+        "instruction_rva": 836748,
+        "operands": "dword ptr [edx + 4]"
+      }
+    },
+    {
+      "instruction_rva": 836920,
+      "candidate_id": "CWB3dFrameWnd::OnUpdateWindowPreview640x480",
+      "evidence": {
+        "instruction_rva": 836920,
+        "operands": "dword ptr [edx + 4]"
+      }
+    },
+    {
+      "instruction_rva": 873096,
+      "candidate_id": "WbView3d::OnUpdateViewShowwireframe",
+      "evidence": {
+        "instruction_rva": 873096,
+        "operands": "dword ptr [edx + 4]"
+      }
+    },
+    {
+      "instruction_rva": 873277,
+      "candidate_id": "WbView3d::OnUpdateViewShowentire3dmap",
+      "evidence": {
+        "instruction_rva": 873277,
+        "operands": "dword ptr [edx + 4]"
+      }
+    },
+    {
+      "instruction_rva": 1020991,
+      "candidate_id": "CWorldBuilderDoc::OnUpdateEditLinkCenters",
+      "evidence": {
+        "instruction_rva": 1020991,
+        "operands": "dword ptr [edx + 4]"
+      }
+    },
+    {
+      "instruction_rva": 1065968,
+      "candidate_id": "CWorldBuilderView::OnShowGrid",
+      "evidence": {
+        "instruction_rva": 1065968,
+        "operands": "0x7e0eb6",
+        "entry_rva": 8261302,
+        "target_rva": 8261302,
+        "ilt_route_rvas": [],
+        "import": {
+          "iat_rva": 17328484,
+          "dll": "MFC71.DLL",
+          "name": null,
+          "ordinal": 1084
+        }
+      },
+      "ghidra": [
+        {
+          "instruction_rva": "0x001043F0",
+          "caller_rva": "0x001043DE",
+          "target_rva": "0x007E0EB6",
+          "flow_type": "UNCONDITIONAL_CALL"
+        }
+      ]
+    },
+    {
+      "instruction_rva": 1065996,
+      "candidate_id": "CWorldBuilderView::OnShowGrid",
+      "evidence": {
+        "instruction_rva": 1065996,
+        "operands": "0x7e0ec8",
+        "entry_rva": 8261320,
+        "target_rva": 8261320,
+        "ilt_route_rvas": [],
+        "import": {
+          "iat_rva": 17328472,
+          "dll": "MFC71.DLL",
+          "name": null,
+          "ordinal": 6305
+        }
+      },
+      "ghidra": [
+        {
+          "instruction_rva": "0x0010440C",
+          "caller_rva": "0x001043DE",
+          "target_rva": "0x007E0EC8",
+          "flow_type": "UNCONDITIONAL_CALL"
+        }
+      ]
+    },
+    {
+      "instruction_rva": 1066008,
+      "candidate_id": "CWorldBuilderView::OnShowGrid",
+      "evidence": {
+        "instruction_rva": 1066008,
+        "operands": "dword ptr [0x14872fc]",
+        "import": {
+          "iat_rva": 17330940,
+          "dll": "USER32.dll",
+          "name": "InvalidateRect",
+          "ordinal": null
+        }
+      },
+      "ghidra": [
+        {
+          "instruction_rva": "0x00104418",
+          "caller_rva": "0x001043DE",
+          "target_rva": "",
+          "flow_type": "COMPUTED_CALL"
+        }
+      ]
+    },
+    {
+      "instruction_rva": 1066057,
+      "candidate_id": "CWorldBuilderView::OnUpdateShowGrid",
+      "evidence": {
+        "instruction_rva": 1066057,
+        "operands": "dword ptr [eax + 4]"
+      }
+    },
+    {
+      "instruction_rva": 1066077,
+      "candidate_id": "CWorldBuilderView::OnUpdateShowGrid",
+      "evidence": {
+        "instruction_rva": 1066077,
+        "operands": "dword ptr [eax]"
+      }
+    },
+    {
+      "instruction_rva": 1066114,
+      "candidate_id": "CWorldBuilderView::OnViewShowtexture",
+      "evidence": {
+        "instruction_rva": 1066114,
+        "operands": "0x7e0eb6",
+        "entry_rva": 8261302,
+        "target_rva": 8261302,
+        "ilt_route_rvas": [],
+        "import": {
+          "iat_rva": 17328484,
+          "dll": "MFC71.DLL",
+          "name": null,
+          "ordinal": 1084
+        }
+      },
+      "ghidra": [
+        {
+          "instruction_rva": "0x00104482",
+          "caller_rva": "0x00104470",
+          "target_rva": "0x007E0EB6",
+          "flow_type": "UNCONDITIONAL_CALL"
+        }
+      ]
+    },
+    {
+      "instruction_rva": 1066142,
+      "candidate_id": "CWorldBuilderView::OnViewShowtexture",
+      "evidence": {
+        "instruction_rva": 1066142,
+        "operands": "0x7e0ec8",
+        "entry_rva": 8261320,
+        "target_rva": 8261320,
+        "ilt_route_rvas": [],
+        "import": {
+          "iat_rva": 17328472,
+          "dll": "MFC71.DLL",
+          "name": null,
+          "ordinal": 6305
+        }
+      },
+      "ghidra": [
+        {
+          "instruction_rva": "0x0010449E",
+          "caller_rva": "0x00104470",
+          "target_rva": "0x007E0EC8",
+          "flow_type": "UNCONDITIONAL_CALL"
+        }
+      ]
+    },
+    {
+      "instruction_rva": 1066154,
+      "candidate_id": "CWorldBuilderView::OnViewShowtexture",
+      "evidence": {
+        "instruction_rva": 1066154,
+        "operands": "dword ptr [0x14872fc]",
+        "import": {
+          "iat_rva": 17330940,
+          "dll": "USER32.dll",
+          "name": "InvalidateRect",
+          "ordinal": null
+        }
+      },
+      "ghidra": [
+        {
+          "instruction_rva": "0x001044AA",
+          "caller_rva": "0x00104470",
+          "target_rva": "",
+          "flow_type": "COMPUTED_CALL"
+        }
+      ]
+    },
+    {
+      "instruction_rva": 1066200,
+      "candidate_id": "CWorldBuilderView::OnUpdateViewShowtexture",
+      "evidence": {
+        "instruction_rva": 1066200,
+        "operands": "dword ptr [edx + 4]"
+      }
+    }
+  ],
+  "string_reference_samples": [
+    {
+      "candidate_id": "CWorldBuilderView::OnShowGrid",
+      "evidence": {
+        "operand_rva": 1065985,
+        "string_rva": 13614508,
+        "value": "ShowGrid"
+      },
+      "ghidra": {
+        "string_rva": "0x00CFBDAC",
+        "reference_rva": "0x00104400",
+        "function_rva": "0x001043DE",
+        "value": "ShowGrid"
+      }
+    },
+    {
+      "candidate_id": "CWorldBuilderView::OnShowGrid",
+      "evidence": {
+        "operand_rva": 1065990,
+        "string_rva": 13529760,
+        "value": "MainFrame"
+      },
+      "ghidra": {
+        "string_rva": "0x00CE72A0",
+        "reference_rva": "0x00104405",
+        "function_rva": "0x001043DE",
+        "value": "MainFrame"
+      }
+    },
+    {
+      "candidate_id": "CWorldBuilderView::OnViewShowtexture",
+      "evidence": {
+        "operand_rva": 1066131,
+        "string_rva": 13614492,
+        "value": "ShowTexture"
+      },
+      "ghidra": {
+        "string_rva": "0x00CFBD9C",
+        "reference_rva": "0x00104492",
+        "function_rva": "0x00104470",
+        "value": "ShowTexture"
+      }
+    },
+    {
+      "candidate_id": "CWorldBuilderView::OnViewShowtexture",
+      "evidence": {
+        "operand_rva": 1066136,
+        "string_rva": 13529760,
+        "value": "MainFrame"
+      },
+      "ghidra": {
+        "string_rva": "0x00CE72A0",
+        "reference_rva": "0x00104497",
+        "function_rva": "0x00104470",
+        "value": "MainFrame"
+      }
+    },
+    {
+      "candidate_id": "CMainFrame::OnViewBrushfeedback",
+      "evidence": {
+        "operand_rva": 467676,
+        "string_rva": 13529788,
+        "value": "ShowBrushFeedback"
+      }
+    },
+    {
+      "candidate_id": "CMainFrame::OnViewBrushfeedback",
+      "evidence": {
+        "operand_rva": 467683,
+        "string_rva": 13529760,
+        "value": "MainFrame"
+      }
+    }
+  ],
+  "limitations": [
+    "Ghidra names are analysis labels, not independently established identities.",
+    "Owned ranges, even contiguous ones, are candidates for boundary verification, not byte-match claims.",
+    "Indirect call rows without destinations remain unresolved; no destinations are invented.",
+    "Samples are deliberately selected MFC handlers; their detection rate is not a whole-binary accuracy estimate."
+  ]
+}

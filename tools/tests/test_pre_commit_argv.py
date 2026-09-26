@@ -49,7 +49,7 @@ git() {
             [ -z "${STAGED_SOURCE:-}" ] || printf '%s\n' "$STAGED_SOURCE"
             ;;
         'diff --cached --name-only --diff-filter=ACMR') return 0 ;;
-        'cat-file -e :tools/name_regression.py'|'cat-file -e :tools/name_oracle.py') return 0 ;;
+        'cat-file -e :tools/target_hooks.py'|'cat-file -e :tools/name_regression.py'|'cat-file -e :tools/name_oracle.py') return 0 ;;
         'diff --quiet -- tools/name_regression.py'|'diff --quiet -- tools/name_oracle.py') return 0 ;;
         'diff --cached --quiet -- reverse/functions.csv') return 1 ;;
         'diff --cached --quiet -- reverse/symbols.csv'|'diff --cached --quiet -- reverse/pin_consistency_baseline.csv') return 0 ;;
@@ -71,7 +71,7 @@ python3() {
         tools/delta_sources.py) cat deltas ;;
         tools/find_declared_unmatched.py|tools/adopt_header.py|tools/name_oracle.py|tools/name_regression.py|tools/retired_guard.py) return 0 ;;
         tools/check_case_collisions.py|tools/conversion_gate.py|tools/check_csv.py|tools/pin_consistency.py|tools/identity_guard.py|tools/gate_baseline.py) return 0 ;;
-        tools/eol_guard.py|tools/b_pin_check.py) return 0 ;;
+        tools/target_hooks.py|tools/eol_guard.py|tools/b_pin_check.py) return 0 ;;
         *) printf 'unexpected Python test invocation: %s\n' "$*" >&2; return 93 ;;
     esac
 }

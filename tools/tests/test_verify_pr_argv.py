@@ -58,7 +58,7 @@ if sys.argv[1:] != ["pr", "checkout", "123"]:
 ''',
         "python3": '''import os, sys
 a = sys.argv[1:]
-if a[:1] == ["tools/check_csv.py"] or a[:1] == ["tools/conversion_gate.py"]:
+if a[:1] in (["tools/check_csv.py"], ["tools/conversion_gate.py"], ["tools/target_hooks.py"]):
     pass
 elif a[:1] == ["tools/delta_sources.py"]:
     print("source:Code/Caller With Space/claim.cpp")
