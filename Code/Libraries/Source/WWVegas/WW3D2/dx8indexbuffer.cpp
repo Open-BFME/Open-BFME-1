@@ -609,29 +609,26 @@ void DynamicIBAccessClass::Allocate_DX8_Dynamic_Buffer()
 	IndexBufferOffset=_DynamicDX8IndexBufferOffset;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/DynamicIBAccessClass_Allocate_Sorting_Dynamic_BufferMethodThunk.cpp
-// ?Allocate_Sorting_Dynamic_Buffer@DynamicIBAccessClass@@QAEXXZ present-unmatched
 void DynamicIBAccessClass::Allocate_Sorting_Dynamic_Buffer()
 {
-	WWMEMLOG(MEM_RENDERER);
-	WWASSERT(!_DynamicSortingIndexArrayInUse);
-	_DynamicSortingIndexArrayInUse=true;
+    _DynamicSortingIndexArrayInUse = true;
 
-	unsigned new_index_count=_DynamicSortingIndexArrayOffset+IndexCount;
-	WWASSERT(new_index_count<65536);
-	if (new_index_count>_DynamicSortingIndexArraySize) {
-		REF_PTR_RELEASE(_DynamicSortingIndexArray);
-		_DynamicSortingIndexArraySize=new_index_count;
-		if (_DynamicSortingIndexArraySize<DEFAULT_IB_SIZE) _DynamicSortingIndexArraySize=DEFAULT_IB_SIZE;
-	}
+    unsigned new_index_count = _DynamicSortingIndexArrayOffset + IndexCount;
+    if (new_index_count > _DynamicSortingIndexArraySize) {
+        REF_PTR_RELEASE(_DynamicSortingIndexArray);
+        _DynamicSortingIndexArraySize = new_index_count;
+        if (_DynamicSortingIndexArraySize < DEFAULT_IB_SIZE) {
+            _DynamicSortingIndexArraySize = DEFAULT_IB_SIZE;
+        }
+    }
 
-	if (!_DynamicSortingIndexArray) {
-		_DynamicSortingIndexArray=NEW_REF(SortingIndexBufferClass,(_DynamicSortingIndexArraySize));
-		_DynamicSortingIndexArrayOffset=0;
-	}
+    if (!_DynamicSortingIndexArray) {
+        _DynamicSortingIndexArray = new SortingIndexBufferClass(_DynamicSortingIndexArraySize);
+        _DynamicSortingIndexArrayOffset = 0;
+    }
 
-	REF_PTR_SET(IndexBuffer,_DynamicSortingIndexArray);
-	IndexBufferOffset=_DynamicSortingIndexArrayOffset;
+    REF_PTR_SET(IndexBuffer, _DynamicSortingIndexArray);
+    IndexBufferOffset = _DynamicSortingIndexArrayOffset;
 }
 
 void DynamicIBAccessClass::_Reset(bool frame_changed)

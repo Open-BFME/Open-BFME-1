@@ -1534,7 +1534,7 @@ _gpiCheckSocketConnect,0x008ECB40,181,Code/GameEngine/Source/GameNetwork/GameSpy
 ??1Gen_dtor_0091d7d0@@UAE@XZ,0x0091CE10,51,Code/gen_small/dtors_009.cpp,reloc-derived;call-sites=1;identity=generated
 ??0AppendLockClass@IndexBufferClass@@QAE@PAV1@II@Z,0x0091CF70,166,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_0091d910@@UAE@XZ,0x0091D1F0,128,Code/gen_small/dtors_009.cpp,reloc-derived;call-sites=1;identity=generated
-??0SortingIndexBufferClass@@QAE@G@Z,0x0091D270,130,Code/GameEngine/Source/Common/DynamicIBAccessClass_Allocate_Sorting_Dynamic_BufferMethodThunk.cpp,reloc-derived;call-sites=1;identity=real
+??0SortingIndexBufferClass@@QAE@G@Z,0x0091D270,130,Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_0091d930@@UAE@XZ,0x0091D300,74,Code/gen_small/dtors_009.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_0091f2b0@@UAE@XZ,0x0091DD20,78,Code/gen_small/dtors_009.cpp,reloc-derived;call-sites=1;identity=generated
 ??0AppendLockClass@VertexBufferClass@@QAE@PAV1@IIH@Z,0x0091DE90,179,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,reloc-derived;call-sites=5;identity=real
