@@ -11,7 +11,7 @@ public:
 	class Player *getControllingPlayer() const;
 
 	char m_pad[0x1FC];
-	BfmeVirt48 *m_virt;
+	BfmeVirt48 *m_contain;
 };
 
 class BfmeVirt48
@@ -70,7 +70,7 @@ void Gen_0022F130::bfmeRemove(Object *obj, void *extra)
 {
 	if (obj == 0)
 		return;
-	BfmeVirt48 *v = (*(Object **)((char *)this - 0x18))->m_virt;
+	BfmeVirt48 *v = (*(Object **)((char *)this - 0x18))->m_contain;
 	if (v != 0)
 		v->notify(obj);
 	obj->onRemovedFrom(*(Object **)((char *)this - 0x18));

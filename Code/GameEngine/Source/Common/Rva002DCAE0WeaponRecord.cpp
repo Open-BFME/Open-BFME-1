@@ -27,7 +27,7 @@ class Object
 {
 public:
     unsigned char m_gap00[0x1fc];
-    class Rva002DCAE0Module *m_module;
+    class Rva002DCAE0Module *m_contain;
 };
 
 class Rva002DCAE0Module
@@ -161,7 +161,7 @@ void Rva002DCBA0::rva002DCAE0Slot5(void *record, Thing *thing)
         (thingForRecord->m_flags98 & 4) == 0)
         return;
 
-    Rva002DCAE0Module *module = found->m_module;
+    Rva002DCAE0Module *module = found->m_contain;
     if (m_flag58 && module != 0 && module->slot33(thingForRecord, 1))
     {
         module->slot34(thingForRecord);

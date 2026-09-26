@@ -85,10 +85,7 @@ OBBoxClass+0x0|m_unreconstructed_00|Basis,Code/Libraries/Source/WWVegas/WW3D2/AA
 OCLSpecialPowerModuleData+0x210|m_upgradeBegin|m_upgradeOCL,Code/GameEngine/Source/GameLogic/Object/SpecialPower/OCLSpecialPowerFindOCL.cpp,34,1.00,field_names
 OCLUpdate+0x20|m_bfmeTargetFrame|m_nextCreationFrame,Code/GameEngine/Source/GameLogic/Object/Update/OCLUpdate_getRemainingFrames.cpp,30,1.00,layout_witness
 Object+0x1a4|m_disabled|m_disabledMask,Code/GameEngine/Source/GameLogic/Object/ObjectDoCommandButtonAtObject.cpp,134,1.00,layout_witness
-Object+0x1a4|m_gate|m_disabledMask,Code/GameEngine/Source/Common/Rva0026B230Collect.cpp,91,1.00,layout_witness
 Object+0x1fc|m_ammoProvider|m_contain,Code/GameEngine/Source/GameLogic/Object/Weapon_getRemainingAmmo.cpp,47,1.00,layout_witness
-Object+0x1fc|m_module|m_contain,Code/GameEngine/Source/Common/Rva002DCAE0WeaponRecord.cpp,31,1.00,layout_witness
-Object+0x1fc|m_virt|m_contain,Code/GameEngine/Source/Common/Rva0022F130Remove.cpp,15,1.00,layout_witness
 Object+0x344|m_bfmeConditionA|m_privateStatus,Code/GameEngine/Source/Common/Gen_00287670_BfmeUpdate.cpp,61,1.00,layout_witness
 Object+0x344|m_deadFlags|m_privateStatus,Code/GameEngine/Source/GameLogic/AI/AIGuardRetaliateReturnState_update.cpp,91,1.00,layout_witness
 Object+0x344|m_deadFlags|m_privateStatus,Code/GameEngine/Source/GameLogic/AI/AIMoveAndEvacuateState.cpp,91,1.00,layout_witness
@@ -135,7 +132,6 @@ PathNode+0x8|m_nextOptimized|m_nextOpti,Code/GameEngine/Source/GameLogic/AI/Path
 PathNode+0x8|m_nextOptimized|m_nextOpti,Code/GameEngine/Source/GameLogic/AI/PathComputeFlightDistToGoal.cpp,42,1.00,layout_witness
 PathNode+0x8|m_nextOptimized|m_nextOpti,Code/GameEngine/Source/GameLogic/AI/PathDebugInsertion.cpp,37,1.00,layout_witness
 PathfindZoneManager+0x23624|m_bfmeBlocks|m_blockOfZoneBlocks,Code/GameEngine/Source/GameLogic/AI/PathfindZoneManager_freeBlocks.cpp,43,1.00,layout_witness
-Player+0x24|m_playerRefreshTag|m_playerIndex,Code/GameEngine/Source/Common/RTS/PlayerListSetLocalPlayer.cpp,78,1.00,layout_witness
 Player+0x288|m_bfmeObjectList|m_playerTeamPrototypes,Code/GameEngine/Source/Common/RTS/PlayerObjectWalk.cpp,150,1.00,layout_witness
 Player+0x4|m_template|m_playerTemplate,Code/GameEngine/Source/Common/Thing/GettingBuiltBehaviorRva001FF360.cpp,93,1.00,layout_witness
 PlayerList+0x14|m_neutralPlayer|m_players,Code/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions.cpp,214,1.00,layout_witness

@@ -87,7 +87,7 @@ public:
 	void *unidentified_001BFE20() const;
 
 	char m_prefix[0x1A4];
-	int m_gate;
+	int m_disabledMask;
 };
 
 class Rva0026B230Dispatcher
@@ -99,7 +99,7 @@ public:
 void Rva0026B230Dispatcher::run(int)
 {
 	Object *object = *(Object **)((char *)this - 8);
-	if (object->m_gate != 0)
+	if (object->m_disabledMask != 0)
 		return;
 
 	Player *player = (Player *)object->unidentified_001BFE20();

@@ -74,7 +74,7 @@ public:
 	void init( const PlayerTemplate *pt );
 
 	unsigned char m_unreconstructed_00[0x24];
-	Int m_playerRefreshTag;									///< +0x24, handed to the shroud manager
+	Int m_playerIndex;									///< +0x24, handed to the shroud manager
 };
 
 // The ledger's names for the two callbacks; see the header comment. The first
@@ -144,7 +144,7 @@ void PlayerList::setLocalPlayer( Player *player )
 	}
 
 	if (TheShroudManager)
-		TheShroudManager->m_008F7380(player->m_playerRefreshTag, d_001072a0);
+		TheShroudManager->m_008F7380(player->m_playerIndex, d_001072a0);
 
 	if (g_012ED5C0)
 		g_012ED5C0->m_00880E10(d_001072f0);
