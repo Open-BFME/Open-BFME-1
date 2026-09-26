@@ -355,8 +355,8 @@ def test_dump_pass_moved_zero_recovered_bytes():
 
 
 def test_readme_headline_is_a_recovered_figure():
-    """The first percentage the README's Status section quotes is its headline
-    claim, and it may never exceed what the tool calls recovered source.
+    """The percentage on the README's progress badge is its headline claim, and
+    it may never exceed what the tool calls recovered source.
 
     Upper bound only, for the same reason as the test below: contributors land
     functions continuously, so a README that lags is fine and a README that
@@ -369,7 +369,10 @@ def test_readme_headline_is_a_recovered_figure():
     rebuilds = float(line.split("(")[1].split("%")[0])
 
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
-    assert readme.index("docs/progress.svg") < readme.index("## Status")
+    # The badge IS the headline. 111a1fd697 deleted the "## Status" section this
+    # line used to be ordered against and left the badge as the README's only
+    # progress claim, so what must hold is that the README still shows it.
+    assert "docs/progress.svg" in readme, "README no longer shows the progress badge"
     svg = (ROOT / "docs/progress.svg").read_text(encoding="utf-8")
     headline = float(re.search(r"(\d+\.\d+)%", svg).group(1))
     assert headline <= rebuilds + 0.005, (
