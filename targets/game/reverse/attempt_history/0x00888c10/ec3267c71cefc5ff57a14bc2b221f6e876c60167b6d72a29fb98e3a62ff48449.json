@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ec3267c71cefc5ff57a14bc2b221f6e876c60167b6d72a29fb98e3a62ff48449",
+  "symbol": "?set@?$StringBase@D@@QAEXABV1@HH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.4965,
+  "source": "// ?set@?$StringBase@D@@QAEXABV1@HH@Z\n// partial score=0.4965 date=2026-09-26\n// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib\n#include <stddef.h>\n#include \"string_base.h\"\nextern const char g_bfmeEmptyAscii[];\n\ntemplate <>\nvoid StringBase<char>::set(const StringBase<char> &src, int start, int len)\n{\n    int end = start + len;\n    if (end >= 0)\n    {\n        int srcLen = src.m_data ? src.m_data->length : 0;\n        if (start < srcLen)\n        {\n            if (start < 0)\n            {\n                len = end;\n                start = 0;\n            }\n            if (start + len >= (src.m_data ? src.m_data->length : 0))\n                len = (src.m_data ? src.m_data->length : 0) - start;\n            const char *data = src.m_data ? &src.m_data->data[0] : g_bfmeEmptyAscii;\n            data += start;\n            if (m_data && data == &m_data->data[0])\n                return;\n            if (len)\n            {\n                ensureUniqueBufferOfSize(len, false, data, len, 0, 0);\n                return;\n            }\n        }\n    }\n    releaseBuffer();\n}\n"
+}
