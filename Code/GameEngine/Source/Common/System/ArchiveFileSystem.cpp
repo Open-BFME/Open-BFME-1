@@ -161,21 +161,21 @@ __forceinline void bfmeClearArchivedDirectory( ArchivedDirectoryInfo &directory 
 // "\\/" literals in the body are this function's two nextToken calls.
 Bool ArchiveFileSystem::doesFileExist(const Char *filename) const
 {
-	AsciiString path = filename;
-	path.toLower();
-	AsciiString token;
+	AsciiString remainingPath = filename;
+	remainingPath.toLower();
+	AsciiString pathComponent;
 
-	const ArchivedDirectoryInfo *dirInfo = &m_rootDirectory;
+	const ArchivedDirectoryInfo *directoryInfo = &m_rootDirectory;
 
-	path.nextToken(&token, "\\/");
+	remainingPath.nextToken(&pathComponent, "\\/");
 
-	while (!bfmeFind(token, '.') || bfmeFind(path, '.'))
+	while (!bfmeFind(pathComponent, '.') || bfmeFind(remainingPath, '.'))
 	{
-		ArchivedDirectoryInfoMap::const_iterator tempiter = dirInfo->m_directories.find(token);
-		if (tempiter != dirInfo->m_directories.end()) 
+		ArchivedDirectoryInfoMap::const_iterator directoryIt = directoryInfo->m_directories.find(pathComponent);
+		if (directoryIt != directoryInfo->m_directories.end())
 		{
-			dirInfo = &tempiter->second;
-			path.nextToken(&token, "\\/");
+			directoryInfo = &directoryIt->second;
+			remainingPath.nextToken(&pathComponent, "\\/");
 		}
 		else
 		{
@@ -184,8 +184,8 @@ Bool ArchiveFileSystem::doesFileExist(const Char *filename) const
 		}
 	}
 
-	// token is the filename, and dirInfo is the directory that this file is in.
-	if (dirInfo->m_files.find(token) == dirInfo->m_files.end()) {
+	// pathComponent is the filename, and directoryInfo is the directory that this file is in.
+	if (directoryInfo->m_files.find(pathComponent) == directoryInfo->m_files.end()) {
 		return FALSE;
 	}
 	return TRUE;
@@ -262,14 +262,14 @@ ArchiveFileSystem::ArchiveFileSystem()
 
 ArchiveFileSystem::~ArchiveFileSystem() 
 {
-	ArchiveFileMap::iterator iter = m_archiveFileMap.begin();
-	while (iter != m_archiveFileMap.end()) {
-		ArchiveFile *file = iter->second;
-		if (file != NULL) {
-			delete file;
-			file = NULL;
+	ArchiveFileMap::iterator archiveIt = m_archiveFileMap.begin();
+	while (archiveIt != m_archiveFileMap.end()) {
+		ArchiveFile *archiveFile = archiveIt->second;
+		if (archiveFile != NULL) {
+			delete archiveFile;
+			archiveFile = NULL;
 		}
-		iter++;
+		archiveIt++;
 	}
 }
 
@@ -438,10 +438,10 @@ Bool ArchiveFileSystem::getFileInfo(const AsciiString& filename, FileInfo *fileI
 	}
 
 	AsciiString archiveFilename = getArchiveFilenameForFile(filename);
-	ArchiveFileMap::const_iterator it = m_archiveFileMap.find(archiveFilename);
-	if (it != m_archiveFileMap.end())
+	ArchiveFileMap::const_iterator archiveIt = m_archiveFileMap.find(archiveFilename);
+	if (archiveIt != m_archiveFileMap.end())
 	{
-		return it->second->getFileInfo(filename, fileInfo);
+		return archiveIt->second->getFileInfo(filename, fileInfo);
 	}
 	else
 	{
@@ -464,49 +464,49 @@ Bool ArchiveFileSystem::getFileInfo(const AsciiString& filename, FileInfo *fileI
 // twice for TheEmptyString.
 AsciiString ArchiveFileSystem::getArchiveFilenameForFile(const AsciiString& filename) const
 {
-	AsciiString path;
-	path = filename;
-	path.toLower();
-	AsciiString token;
-	AsciiString debugpath;
+	AsciiString remainingPath;
+	remainingPath = filename;
+	remainingPath.toLower();
+	AsciiString pathComponent;
+	AsciiString traversedPath;
 
-	const ArchivedDirectoryInfo *dirInfo = &m_rootDirectory;
+	const ArchivedDirectoryInfo *directoryInfo = &m_rootDirectory;
 
-	path.nextToken(&token, "\\/");
+	remainingPath.nextToken(&pathComponent, "\\/");
 
-	while (!bfmeFind(token, '.') || bfmeFind(path, '.')) {
+	while (!bfmeFind(pathComponent, '.') || bfmeFind(remainingPath, '.')) {
 
-		ArchivedDirectoryInfoMap::const_iterator it = dirInfo->m_directories.find(token);
-		if (it != dirInfo->m_directories.end())
+		ArchivedDirectoryInfoMap::const_iterator directoryIt = directoryInfo->m_directories.find(pathComponent);
+		if (directoryIt != directoryInfo->m_directories.end())
 		{
-			dirInfo = &it->second;
+			directoryInfo = &directoryIt->second;
 		}
 		else
 		{
 			// the directory doesn't exist, so return NULL
 
 			// dump the directories;
-			//DEBUG_LOG(("directory %s not found in %s in archive file system\n", token.str(), debugpath.str()));
-			//DEBUG_LOG(("directories in %s in archive file system are:\n", debugpath.str()));
-			//ArchivedDirectoryInfoMap::const_iterator it = dirInfo->m_directories.begin();
-			//while (it != dirInfo->m_directories.end()) {
-			//	DEBUG_LOG(("\t%s\n", it->second.m_directoryName.str()));
-			//	it++;
+			//DEBUG_LOG(("directory %s not found in %s in archive file system\n", pathComponent.str(), traversedPath.str()));
+			//DEBUG_LOG(("directories in %s in archive file system are:\n", traversedPath.str()));
+			//ArchivedDirectoryInfoMap::const_iterator directoryIt = directoryInfo->m_directories.begin();
+			//while (directoryIt != directoryInfo->m_directories.end()) {
+			//	DEBUG_LOG(("\t%s\n", directoryIt->second.m_directoryName.str()));
+			//	directoryIt++;
 			//}
 			//DEBUG_LOG(("end of directory list.\n"));
 			return AsciiString::TheEmptyString;
 		}
 
-		bfmeConcat(debugpath, token);
-		bfmeConcat(debugpath, '\\');
+		bfmeConcat(traversedPath, pathComponent);
+		bfmeConcat(traversedPath, '\\');
 
-		path.nextToken(&token, "\\/");
+		remainingPath.nextToken(&pathComponent, "\\/");
 	}
 
-	ArchivedFileLocationMap::const_iterator it = dirInfo->m_files.find(token);
-	if (it != dirInfo->m_files.end())
+	ArchivedFileLocationMap::const_iterator fileLocationIt = directoryInfo->m_files.find(pathComponent);
+	if (fileLocationIt != directoryInfo->m_files.end())
 	{
-		return it->second;
+		return fileLocationIt->second;
 	}
 	else
 	{
@@ -517,9 +517,9 @@ AsciiString ArchiveFileSystem::getArchiveFilenameForFile(const AsciiString& file
 
 void ArchiveFileSystem::getFileListInDirectory(const AsciiString& currentDirectory, const AsciiString& originalDirectory, const AsciiString& searchName, FilenameList &filenameList, Bool searchSubdirectories) const
 {
-	ArchiveFileMap::const_iterator it = m_archiveFileMap.begin();
-	while (it != m_archiveFileMap.end()) {
-		it->second->getFileListInDirectory(currentDirectory, originalDirectory, searchName, filenameList, searchSubdirectories);
-		it++;
+	ArchiveFileMap::const_iterator archiveIt = m_archiveFileMap.begin();
+	while (archiveIt != m_archiveFileMap.end()) {
+		archiveIt->second->getFileListInDirectory(currentDirectory, originalDirectory, searchName, filenameList, searchSubdirectories);
+		archiveIt++;
 	}
 }

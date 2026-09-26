@@ -135,9 +135,9 @@ public:
 // ?getFileInfo@Win32BIGFile@@UBE_NABVAsciiString@@PAUFileInfo@@@Z
 Bool Win32BIGFile::getFileInfo( const AsciiString &filename, FileInfo *fileInfo ) const
 {
-	const ArchivedFileInfo *tempFileInfo = getArchivedFileInfo( filename );
+	const ArchivedFileInfo *archivedFileInfo = getArchivedFileInfo( filename );
 
-	if( tempFileInfo == 0 )
+	if( archivedFileInfo == 0 )
 	{
 		return false;
 	}
@@ -146,9 +146,9 @@ Bool Win32BIGFile::getFileInfo( const AsciiString &filename, FileInfo *fileInfo 
 
 	// The size cannot exceed a .big's own, so the high word is always zero.
 	fileInfo->sizeHigh = 0;
-	fileInfo->sizeLow = tempFileInfo->m_size;
+	fileInfo->sizeLow = archivedFileInfo->m_size;
 
-	m_file->seek( tempFileInfo->m_offset, File::START );
+	m_file->seek( archivedFileInfo->m_offset, File::START );
 
 	CompressionHeader header;
 	if( m_file->read( &header, sizeof( header ) ) == sizeof( header ) )
@@ -160,14 +160,14 @@ Bool Win32BIGFile::getFileInfo( const AsciiString &filename, FileInfo *fileInfo 
 			// hand-unrolled spelling of the same value -- including the one that
 			// parenthesises the halves exactly the way the target computes them --
 			// schedules the third byte's load early and loses the pairing.
-			Int size = 0;
-			for( Int i = 0; i < 4; i++ )
+			Int uncompressedSize = 0;
+			for( Int sizeByteIndex = 0; sizeByteIndex < 4; sizeByteIndex++ )
 			{
-				size = (size << 8) | header.size[i];
+				uncompressedSize = (uncompressedSize << 8) | header.size[sizeByteIndex];
 			}
-			if( size > 0 )
+			if( uncompressedSize > 0 )
 			{
-				fileInfo->sizeLow = size;
+				fileInfo->sizeLow = uncompressedSize;
 			}
 		}
 	}

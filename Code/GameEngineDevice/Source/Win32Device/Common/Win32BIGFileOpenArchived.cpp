@@ -4,7 +4,7 @@
 // the two-argument one in Win32BIGFileOpen.cpp forwards to with two zeros.
 //
 // The extra pair is an offset bias and a length override: the entry is read from
-// m_offset + offset for `size` bytes, and a zero size means "the whole entry".
+// m_offset + entryOffset for `lengthOverride` bytes, and a zero override means "the whole entry".
 // The two-argument form therefore reads the entry exactly as Zero Hour's single
 // openFile does, which is why the forward can pass zeros.
 //
@@ -137,46 +137,46 @@ protected:
 class Win32BIGFile : public ArchiveFile
 {
 public:
-	virtual File *openFile( const Char *filename, Int access, Int offset, Int size );
+	virtual File *openFile( const Char *filename, Int access, Int entryOffset, Int lengthOverride );
 };
 
 // ?openFile@Win32BIGFile@@UAEPAVFile@@PBDHHH@Z
-File *Win32BIGFile::openFile( const Char *filename, Int access, Int offset, Int size )
+File *Win32BIGFile::openFile( const Char *filename, Int access, Int entryOffset, Int lengthOverride )
 {
 	setNameAndPath( AsciiString( filename ) );
 
-	const ArchivedFileInfo *fileInfo = getArchivedFileInfo( AsciiString( filename ) );
+	const ArchivedFileInfo *archivedFileInfo = getArchivedFileInfo( AsciiString( filename ) );
 
-	if( fileInfo == 0 )
+	if( archivedFileInfo == 0 )
 	{
 		return 0;
 	}
 
-	RAMFile *ramFile;
+	RAMFile *entryFile;
 
 	if( access & File::STREAMING )
 	{
-		ramFile = new StreamingArchiveFile;
+		entryFile = new StreamingArchiveFile;
 	}
 	else
 	{
-		ramFile = new RAMFile;
+		entryFile = new RAMFile;
 	}
 
-	ramFile->deleteOnClose();
+	entryFile->deleteOnClose();
 
 	m_file->lock();
 
-	Int length = size;
-	if( length == 0 )
+	Int readLength = lengthOverride;
+	if( readLength == 0 )
 	{
-		length = fileInfo->m_size;
+		readLength = archivedFileInfo->m_size;
 	}
 
-	if( ramFile->openFromArchive( m_file, fileInfo->m_filename, fileInfo->m_offset + offset, length ) == false )
+	if( entryFile->openFromArchive( m_file, archivedFileInfo->m_filename, archivedFileInfo->m_offset + entryOffset, readLength ) == false )
 	{
 		m_file->unlock();
-		ramFile->close();
+		entryFile->close();
 		return 0;
 	}
 
@@ -184,17 +184,17 @@ File *Win32BIGFile::openFile( const Char *filename, Int access, Int offset, Int 
 
 	if( (access & File::WRITE) == 0 )
 	{
-		return ramFile;
+		return entryFile;
 	}
 
 	// Whoever asked for write access gets a copy on the local disk instead.
 	File *localFile = TheLocalFileSystem->openFile( filename, access );
 	if( localFile != 0 )
 	{
-		ramFile->copyDataToFile( localFile );
+		entryFile->copyDataToFile( localFile );
 	}
 
-	ramFile->close();
+	entryFile->close();
 
 	return localFile;
 }

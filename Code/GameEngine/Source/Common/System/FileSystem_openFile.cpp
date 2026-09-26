@@ -49,9 +49,9 @@
 
 // IAT form of sprintf: call dword ptr [__imp__sprintf]
 extern "C" int (__cdecl *__imp__sprintf)(char *, const char *, ...);
-static inline int do_sprintf(char *b, const char *f, const char *a, const char *c)
+static inline int do_sprintf(char *destination, const char *format, const char *pathPrefix, const char *filename)
 {
-	return (*__imp__sprintf)(b, f, a, c);
+	return (*__imp__sprintf)(destination, format, pathPrefix, filename);
 }
 
 class File;
@@ -139,22 +139,22 @@ public:
 // ?openFile@FileSystem@@QAEPAVFile@@PBDH@Z
 File *FileSystem::openFile( const char *filename, int access )
 {
-	char buf[0x200];
+	char languagePath[0x200];
 	File *file = NULL;
 
-	do_sprintf( buf, "%s\\%s", byte_134CA48, filename );
+	do_sprintf( languagePath, "%s\\%s", byte_134CA48, filename );
 
 	if( byte_134CB50[0] )
 	{
-		BFMERetailAsciiString path( byte_134CB50 );
-		path.concat( filename );
-		file = TheLocalFileSystem->openFile( path.str(), access );
+		BFMERetailAsciiString modPath( byte_134CB50 );
+		modPath.concat( filename );
+		file = TheLocalFileSystem->openFile( modPath.str(), access );
 	}
 
 	if( !byte_134CB4C && file == NULL && TheArchiveFileSystem )
 	{
 		if( !(access & 8) )
-			file = TheArchiveFileSystem->openFile( buf, access );
+			file = TheArchiveFileSystem->openFile( languagePath, access );
 		if( file == NULL )
 			file = TheArchiveFileSystem->openFile( filename, access );
 	}
@@ -162,7 +162,7 @@ File *FileSystem::openFile( const char *filename, int access )
 	if( TheLocalFileSystem && file == NULL )
 	{
 		if( !(access & 2) )
-			file = TheLocalFileSystem->openFile( buf, access );
+			file = TheLocalFileSystem->openFile( languagePath, access );
 		if( file == NULL )
 			file = TheLocalFileSystem->openFile( filename, access );
 	}
@@ -171,9 +171,9 @@ File *FileSystem::openFile( const char *filename, int access )
 	{
 		if( !(access & 8) )
 		{
-			File *f = TheArchiveFileSystem->openFile( buf, access );
-			if( f != NULL )
-				return f;
+			File *localizedArchiveFile = TheArchiveFileSystem->openFile( languagePath, access );
+			if( localizedArchiveFile != NULL )
+				return localizedArchiveFile;
 		}
 		return TheArchiveFileSystem->openFile( filename, access );
 	}
@@ -190,22 +190,22 @@ File *FileSystem::openFile( const char *filename, int access )
 // treats size 0 as "the whole entry"; the two-arg forwarders pass zeros.
 File *FileSystem::openFile( const char *filename, int access, int offset, int size )
 {
-	char buf[0x200];
+	char languagePath[0x200];
 	File *file = NULL;
 
-	do_sprintf( buf, "%s\\%s", byte_134CA48, filename );
+	do_sprintf( languagePath, "%s\\%s", byte_134CA48, filename );
 
 	if( byte_134CB50[0] )
 	{
-		BFMERetailAsciiString path( byte_134CB50 );
-		path.concat( filename );
-		file = TheLocalFileSystem->openFile( path.str(), access, offset, size );
+		BFMERetailAsciiString modPath( byte_134CB50 );
+		modPath.concat( filename );
+		file = TheLocalFileSystem->openFile( modPath.str(), access, offset, size );
 	}
 
 	if( !byte_134CB4C && file == NULL && TheArchiveFileSystem )
 	{
 		if( !(access & 8) )
-			file = TheArchiveFileSystem->openFile( buf, access, offset, size );
+			file = TheArchiveFileSystem->openFile( languagePath, access, offset, size );
 		if( file == NULL )
 			file = TheArchiveFileSystem->openFile( filename, access, offset, size );
 	}
@@ -213,7 +213,7 @@ File *FileSystem::openFile( const char *filename, int access, int offset, int si
 	if( TheLocalFileSystem && file == NULL )
 	{
 		if( !(access & 2) )
-			file = TheLocalFileSystem->openFile( buf, access, offset, size );
+			file = TheLocalFileSystem->openFile( languagePath, access, offset, size );
 		if( file == NULL )
 			file = TheLocalFileSystem->openFile( filename, access, offset, size );
 	}
@@ -224,9 +224,9 @@ File *FileSystem::openFile( const char *filename, int access, int offset, int si
 	{
 		if( !(access & 8) )
 		{
-			File *f = TheArchiveFileSystem->openFile( buf, access, offset, size );
-			if( f != NULL )
-				return f;
+			File *localizedArchiveFile = TheArchiveFileSystem->openFile( languagePath, access, offset, size );
+			if( localizedArchiveFile != NULL )
+				return localizedArchiveFile;
 		}
 		return TheArchiveFileSystem->openFile( filename, access, offset, size );
 	}
