@@ -26,7 +26,7 @@ class AABTreeClass
 public:
 	struct CullNodeStruct;
 	char m_bfmePad[0xc];
-	CullNodeStruct *m_bfmeRoot;
+	CullNodeStruct *Nodes;
 private:
 	bool Cast_Ray_Recursive(CullNodeStruct *n, RayCollisionTestClass &r);
 	friend class BfmeThing911B;
@@ -45,7 +45,7 @@ void BfmeThing911B::bfmeGo911B(void *a)
 {
 	AABTreeClass *s = m_bfmeSub;
 	if (s) {
-		s->Cast_Ray_Recursive(s->m_bfmeRoot, *(RayCollisionTestClass *)a);
+		s->Cast_Ray_Recursive(s->Nodes, *(RayCollisionTestClass *)a);
 		return;
 	}
 	bfmeElse911B(a);
