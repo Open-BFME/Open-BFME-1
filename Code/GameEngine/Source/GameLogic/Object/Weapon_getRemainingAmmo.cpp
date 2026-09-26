@@ -40,10 +40,10 @@ public:
 class Object
 {
 public:
-	BfmeAmmoProvider *getAmmoProvider() const { return m_ammoProvider; }
+	BfmeAmmoProvider *getAmmoProvider() const { return m_contain; }
 
 	char m_padding[0x1fc];
-	BfmeAmmoProvider *m_ammoProvider;
+	BfmeAmmoProvider *m_contain;
 };
 
 class GameLogic

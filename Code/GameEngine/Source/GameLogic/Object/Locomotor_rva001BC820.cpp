@@ -80,7 +80,7 @@ public:
 	Bool layersCompatible(const Coord3D *pos) const;
 
 	char m_pad000[0x140];
-	BfmeOwnerJC *m_owner;
+	BfmeOwnerJC *m_path;
 };
 
 class Rva001BC820Blocker
@@ -232,7 +232,7 @@ void Rva001BC820Locomotor::locoUpdate_moveTowardsPosition(Object *obj,
 	BfmeOwnerJC *owner;
 	if (obj->m_ai)
 	{
-		owner = obj->m_ai->m_owner;
+		owner = obj->m_ai->m_path;
 	}
 	else
 	{
@@ -293,7 +293,7 @@ void Rva001BC820Locomotor::locoUpdate_moveTowardsPosition(Object *obj,
 	BfmeOwnerJC *tail;
 	if (obj->m_ai)
 	{
-		tail = obj->m_ai->m_owner;
+		tail = obj->m_ai->m_path;
 	}
 	else
 	{

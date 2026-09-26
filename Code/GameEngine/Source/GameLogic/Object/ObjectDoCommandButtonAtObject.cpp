@@ -130,7 +130,7 @@ public:
 
 private:
 	char m_unmodelled004[0x1A0];
-	int m_disabled;
+	int m_disabledMask;
 	char m_unmodelled1A8[0x5C];
 	AIUpdateInterface *m_ai;
 	char m_unmodelled208[0x164];
@@ -140,7 +140,7 @@ private:
 void Object::doCommandButtonAtObject(const CommandButton *commandButton, Object *object,
 	CommandSourceType source, Bool playVoiceResponse)
 {
-	if (m_disabled)
+	if (m_disabledMask)
 		return;
 
 	if (playVoiceResponse && getDrawable() && commandButton &&
