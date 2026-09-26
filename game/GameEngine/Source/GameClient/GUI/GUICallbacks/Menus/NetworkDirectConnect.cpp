@@ -55,9 +55,186 @@
 #include "GameClient/Shell.h"
 #include "GameClient/GameWindowTransitions.h"
 
-#include "GameNetwork/IPEnumeration.h"
-#include "GameNetwork/LANAPI.h"
+#ifndef _IPENUMERATION_H_
+#define _IPENUMERATION_H_
+class EnumeratedIP
+{
+public:
+	UnsignedInt getIP() const { return m_IP; }
+	EnumeratedIP *getNext() const { return m_next; }
+private:
+	AsciiString m_IPstring;
+	UnsignedInt m_IP;
+	EnumeratedIP *m_next;
+};
+class IPEnumeration
+{
+public:
+	IPEnumeration();
+	~IPEnumeration();
+	EnumeratedIP *getAddresses();
+private:
+	EnumeratedIP *m_IPlist;
+	Bool m_isWinsockInitialized;
+};
+#endif
+
+#ifndef _LANAPI_H_
+#define _LANAPI_H_
+static const Int g_lanPlayerNameLength = 12;
+class LANAPI
+{
+public:
+	LANAPI();
+	virtual ~LANAPI();
+	virtual void init();
+	virtual void slot2();
+	virtual void slot3();
+	virtual void reset();
+	virtual void slot5();
+	virtual void slot6();
+	virtual void slot7();
+	virtual void slot8();
+	virtual void slot9();
+	virtual void slot10();
+	virtual void slot11();
+	virtual void slot12();
+	virtual void slot13();
+	virtual void slot14();
+	virtual void slot15();
+	virtual void slot16();
+	virtual void slot17();
+	virtual void slot18();
+	virtual void slot19();
+	virtual void slot20();
+	virtual void slot21();
+	virtual void RequestGameCreate(UnicodeString gameName, Bool isDirectConnect);
+	virtual void slot23();
+	virtual void RequestSetName(UnicodeString newName);
+	virtual void RequestLobbyLeave(Bool forced);
+	virtual void slot26();
+	virtual void slot27();
+	virtual void slot28();
+	virtual void slot29();
+	virtual void slot30();
+	virtual void slot31();
+	virtual void slot32();
+	virtual void slot33();
+	virtual void slot34();
+	virtual void slot35();
+	virtual void slot36();
+	virtual void slot37();
+	virtual void slot38();
+	virtual void slot39();
+	virtual void slot40();
+	virtual void slot41();
+	virtual void slot42();
+	virtual void slot43();
+	virtual void slot44();
+	virtual Bool SetLocalIP(UnsignedInt ip);
+	virtual void slot46();
+	virtual void slot47();
+	virtual void slot48();
+	virtual void slot49();
+	virtual void slot50();
+	virtual void slot51();
+	virtual void slot52();
+	virtual void slot53();
+	virtual void slot54();
+	virtual UnsignedInt GetLocalIP();
+	void RequestGameJoinDirectConnect(UnsignedInt ip);
+private:
+	unsigned char m_storage[0x64];
+};
+extern LANAPI *TheLAN;
+#endif
+
 #include "GameNetwork/LANAPICallbacks.h"
+class BfmeLanCallView
+{
+public:
+	virtual void slot0() = 0;
+	virtual void slot1() = 0;
+	virtual void slot2() = 0;
+	virtual void slot3() = 0;
+	virtual void slot4() = 0;
+	virtual void slot5() = 0;
+	virtual void slot6() = 0;
+	virtual void slot7() = 0;
+	virtual void slot8() = 0;
+	virtual void slot9() = 0;
+	virtual void slot10() = 0;
+	virtual void slot11() = 0;
+	virtual void slot12() = 0;
+	virtual void slot13() = 0;
+	virtual void slot14() = 0;
+	virtual void slot15() = 0;
+	virtual void slot16() = 0;
+	virtual void slot17() = 0;
+	virtual void slot18() = 0;
+	virtual void slot19() = 0;
+	virtual void slot20() = 0;
+	virtual void slot21() = 0;
+	virtual void slot22() = 0;
+	virtual void slot23() = 0;
+	virtual void slot24() = 0;
+	virtual void RequestLobbyLeave(Bool forced) = 0;
+	virtual void slot26() = 0;
+	virtual void slot27() = 0;
+	virtual void slot28() = 0;
+	virtual void slot29() = 0;
+	virtual void slot30() = 0;
+	virtual void slot31() = 0;
+	virtual void slot32() = 0;
+	virtual void slot33() = 0;
+	virtual void slot34() = 0;
+	virtual void slot35() = 0;
+	virtual void slot36() = 0;
+	virtual void slot37() = 0;
+	virtual void slot38() = 0;
+	virtual void slot39() = 0;
+	virtual void slot40() = 0;
+	virtual void slot41() = 0;
+	virtual void slot42() = 0;
+	virtual void slot43() = 0;
+	virtual void slot44() = 0;
+	virtual Bool SetLocalIP(UnsignedInt ip) = 0;
+	virtual void slot46() = 0;
+	virtual void slot47() = 0;
+	virtual void slot48() = 0;
+	virtual void slot49() = 0;
+	virtual void slot50() = 0;
+	virtual void slot51() = 0;
+	virtual void slot52() = 0;
+	virtual void slot53() = 0;
+	virtual void slot54() = 0;
+	virtual UnsignedInt *getRva00685630Address() = 0;
+};
+
+
+inline unsigned int bfmeUnicodeStringLength( const UnicodeString &value )
+{
+	const unsigned short *data = *(const unsigned short *const *)&value;
+	return data ? data[2] : 0;
+}
+
+inline NameKeyType bfmeNameToKey( const AsciiString &value )
+{
+	const char *header = *(const char *const *)&value;
+	const char *text = header ? header + 8 : "";
+	return TheNameKeyGenerator->nameToKey(text);
+}
+
+class BfmeLayoutCallView
+{
+public:
+	virtual void slot0() = 0;
+	virtual void slot4() = 0;
+	virtual void slot8() = 0;
+	virtual void slotC() = 0;
+	virtual void hide(Bool immediate) = 0;
+	virtual void bringForward() = 0;
+};
 
 // UnicodeString is StringBase<WideChar>, and retail inlined its one-line
 // forwarders away: the call sites below encode ?set@?$StringBase@G@@QAEXABV1@@Z
@@ -73,6 +250,11 @@ inline UnicodeString::UnicodeString( const UnicodeString &stringSrc )
 {
 	((StringBase<WideChar> *)this)->StringBase<WideChar>::StringBase(
 		*(const StringBase<WideChar> *)&stringSrc );
+}
+
+inline UnicodeString::UnicodeString( const WideChar *stringSrc )
+{
+	((StringBase<WideChar> *)this)->StringBase<WideChar>::StringBase( stringSrc );
 }
 
 #ifdef _INTERNAL
@@ -319,12 +501,12 @@ void NetworkDirectConnectInit( WindowLayout *layout, void *userData )
 	buttonPushed = false;
 	isShuttingDown = false;
 	TheShell->showShellMap(TRUE);
-	buttonBackID = TheNameKeyGenerator->nameToKey( AsciiString( "NetworkDirectConnect.wnd:ButtonBack" ) );
-	buttonHostID = TheNameKeyGenerator->nameToKey( AsciiString( "NetworkDirectConnect.wnd:ButtonHost" ) );
-	buttonJoinID = TheNameKeyGenerator->nameToKey( AsciiString( "NetworkDirectConnect.wnd:ButtonJoin" ) );
-	editPlayerNameID = TheNameKeyGenerator->nameToKey( AsciiString( "NetworkDirectConnect.wnd:EditPlayerName" ) );
-	comboboxRemoteIPID = TheNameKeyGenerator->nameToKey( AsciiString( "NetworkDirectConnect.wnd:ComboboxRemoteIP" ) );
-	staticLocalIPID = TheNameKeyGenerator->nameToKey( AsciiString( "NetworkDirectConnect.wnd:StaticLocalIP" ) );
+	buttonBackID = bfmeNameToKey( AsciiString( "NetworkDirectConnect.wnd:ButtonBack" ) );
+	buttonHostID = bfmeNameToKey( AsciiString( "NetworkDirectConnect.wnd:ButtonHost" ) );
+	buttonJoinID = bfmeNameToKey( AsciiString( "NetworkDirectConnect.wnd:ButtonJoin" ) );
+	editPlayerNameID = bfmeNameToKey( AsciiString( "NetworkDirectConnect.wnd:EditPlayerName" ) );
+	comboboxRemoteIPID = bfmeNameToKey( AsciiString( "NetworkDirectConnect.wnd:ComboboxRemoteIP" ) );
+	staticLocalIPID = bfmeNameToKey( AsciiString( "NetworkDirectConnect.wnd:StaticLocalIP" ) );
 
 	buttonBack = TheWindowManager->winGetWindowFromId( NULL,  buttonBackID);
 	buttonHost = TheWindowManager->winGetWindowFromId( NULL,	buttonHostID);
@@ -342,7 +524,7 @@ void NetworkDirectConnectInit( WindowLayout *layout, void *userData )
 	UnicodeString name;
 	name = userprefs.getUserName();
 
-	if (name.getLength() == 0)
+	if (bfmeUnicodeStringLength(name) == 0)
 	{
 		name = TheGameText->fetch("GUI:Player");
 	}
@@ -395,16 +577,16 @@ void NetworkDirectConnectInit( WindowLayout *layout, void *userData )
 	}
 
 	#ifdef BFME_HOST_DIRECT_CONNECT
-	UnsignedInt ip = *TheLAN->GetLocalIP();
+	UnsignedInt ip = *((BfmeLanCallView *)TheLAN)->getRva00685630Address();
 	#else
-	UnsignedInt ip = TheLAN->GetLocalIP();
+	UnsignedInt ip = *((BfmeLanCallView *)TheLAN)->getRva00685630Address();
 	#endif
-	ipstr.format(L"%d.%d.%d.%d", ip >> 24, (ip & 0xff0000) >> 16, (ip & 0xff00) >> 8, ip & 0xff);
+	ipstr.format(UnicodeString(L"%d.%d.%d.%d"), ip >> 24, (ip & 0xff0000) >> 16, (ip & 0xff00) >> 8, ip & 0xff);
 	GadgetStaticTextSetText(staticLocalIP, ipstr);
 
 	TheLAN->RequestLobbyLeave(true);
-	layout->hide(FALSE);
-	layout->bringForward();
+	((BfmeLayoutCallView *)layout)->hide(FALSE);
+	((BfmeLayoutCallView *)layout)->bringForward();
 	TheTransitionHandler->setGroup("NetworkDirectConnectFade");
 
 
