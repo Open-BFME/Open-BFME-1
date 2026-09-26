@@ -211,6 +211,20 @@ template class vector<Rva00774090Element, allocator<Rva00774090Element> >;
 template class vector<Rva0081D280Element, allocator<Rva0081D280Element> >;
 }
 
+Rva0081D280Element *Rva0081C940(
+	Rva0081D280Element *first, Rva0081D280Element *last,
+	Rva0081D280Element *result)
+{
+	return _STL::uninitialized_copy(first, last, result);
+}
+
+Rva0081D280Element *Rva0081C970(
+	Rva0081D280Element *result, unsigned int count,
+	const Rva0081D280Element &value)
+{
+	return _STL::uninitialized_fill_n(result, count, value);
+}
+
 
 
 
