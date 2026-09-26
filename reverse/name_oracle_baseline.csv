@@ -1,6 +1,5 @@
 finding,file,line,confidence,source
 AABTreeClass+0xc|m_bfmeRoot|Nodes,Code/GameEngine/Source/Common/BfmeConv911.cpp,30,1.00,layout_witness
-AIUpdateInterface+0x140|m_curLocomotor|m_path,Code/GameEngine/Source/GameLogic/AI/Rva00173B20State_update.cpp,16,1.00,layout_witness
 AIUpdateInterface+0x140|m_owner|m_path,Code/GameEngine/Source/GameLogic/Object/Locomotor_rva001BC820.cpp,84,1.00,layout_witness
 AIUpdateInterface+0x1cc|m_locomotor|m_curLocomotor,Code/GameEngine/Source/GameLogic/AI/Rva0017DC90State_onExit.cpp,72,1.00,layout_witness
 AIUpdateInterface+0x1fc|m_nextMoodCheckTime|m_repulsor2,Code/GameEngine/Source/GameLogic/AI/Rva0018D4F0TurretStateUpdate.cpp,20,1.00,layout_witness

@@ -42,7 +42,7 @@ typedef unsigned short PlayerMaskType;
 
 enum CommandSourceType
 {
-	CMD_FROM_SCRIPT = 2
+	CMD_FROM_AI = 2
 };
 
 struct Coord3D
@@ -268,6 +268,6 @@ Bool Rva003273A0SpecialPowerAction::execute(Parameter *playerParameter,
 
 	Coord3D position;
 	return TheActionManager->canDoSpecialPowerAtLocation((const Object *)source,
-		bfmeGetEstimateTeamPosition(team, &position), CMD_FROM_SCRIPT, power,
+		bfmeGetEstimateTeamPosition(team, &position), CMD_FROM_AI, power,
 		0, 0, true);
 }

@@ -20,7 +20,7 @@ enum ObjectEnterExitType
 
 enum CommandSourceType
 {
-	CMD_FROM_AI = 0
+	CMD_FROM_PLAYER = 0
 };
 
 enum CanEnterType

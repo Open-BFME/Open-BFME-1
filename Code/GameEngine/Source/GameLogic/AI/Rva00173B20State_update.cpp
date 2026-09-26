@@ -12,7 +12,7 @@ enum StateReturnType
 struct AIUpdateInterface
 {
 	char m_unknown[0x140];
-	void *m_curLocomotor;
+	void *m_path;
 	char m_gap144[0x31e - 0x144];
 	unsigned char m_waitingForPath;
 };
@@ -60,7 +60,7 @@ StateReturnType Rva00173B20State::update()
 	{
 		Rva00173B20Object *obj = m_machine->m_owner;
 		AIUpdateInterface *ai = obj->m_ai;
-		if (ai->m_curLocomotor && !ai->m_waitingForPath)
+		if (ai->m_path && !ai->m_waitingForPath)
 		{
 			if (g_012F0239 && g_012ED4FC)
 				((Rva00173B20CritterDesyncLog)j_0003a17a)(g_012ED4FC,

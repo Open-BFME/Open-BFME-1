@@ -28,7 +28,7 @@
 typedef bool Bool;
 typedef int Int;
 
-enum CommandSourceType { CMD_FROM_PLAYER = 0, CMD_FROM_AI, CMD_FROM_SCRIPT };
+enum CommandSourceType { CMD_FROM_PLAYER = 0, CMD_FROM_SCRIPT, CMD_FROM_AI };
 
 // KINDOF_STRUCTURE is 7 in the retail enum: the isKindOf call site pushes 7.
 enum KindOfType

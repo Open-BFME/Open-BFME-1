@@ -102,8 +102,8 @@ public:
 enum CommandSourceType
 {
 	CMD_FROM_PLAYER = 0,
-	CMD_FROM_AI = 1,
-	CMD_FROM_SCRIPT = 2
+	CMD_FROM_SCRIPT = 1,
+	CMD_FROM_AI = 2
 };
 
 enum CanEnterType
@@ -151,7 +151,7 @@ unsigned char Gen_001DCF50::canEnter(Object *target)
 			{
 				if (contain->query08())
 				{
-					if (TheActionManager->canEnterObject(m_obj, obj, CMD_FROM_SCRIPT, CHECK_CAPACITY, 0))
+					if (TheActionManager->canEnterObject(m_obj, obj, CMD_FROM_AI, CHECK_CAPACITY, 0))
 					{
 						if (m_flag)
 							return true;
