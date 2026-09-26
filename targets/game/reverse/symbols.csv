@@ -89300,3 +89300,13 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?bfmeRva012B438CRegistrationNext@@3PAXA,0x012B438C,registration link written by retail at 0x00C6B200 and stored into head
 ?bfmeRva012A7460RegistrationNext@@3PAXA,0x012A7460,registration link written by retail at 0x00C6A950 and stored into head
 ?bfmeRva012A746CRegistrationNext@@3PAXA,0x012A746C,registration link written by retail at 0x00C6A970 and stored into head
+?bfmeRva012A7478RegistrationNext@@3PAXA,0x012A7478,registration node linked by retail at 0x00C6A990
+?bfmeRva012A7484RegistrationNext@@3PAXA,0x012A7484,registration node linked by retail at 0x00C6A9B0
+?bfmeRva012A7490RegistrationNext@@3PAXA,0x012A7490,registration node linked by retail at 0x00C6A9D0
+?bfmeRva012A749CRegistrationNext@@3PAXA,0x012A749C,registration node linked by retail at 0x00C6A9F0
+?bfmeRva012A74A8RegistrationNext@@3PAXA,0x012A74A8,registration node linked by retail at 0x00C6AA10
+?bfmeRva012A7BBCRegistrationNext@@3PAXA,0x012A7BBC,registration node linked by retail at 0x00C6AA90
+?bfmeRva012A829CRegistrationNext@@3PAXA,0x012A829C,registration node linked by retail at 0x00C6AAE0
+?bfmeRva012A82A8RegistrationNext@@3PAXA,0x012A82A8,registration node linked by retail at 0x00C6AB00
+?bfmeRva012A82B4RegistrationNext@@3PAXA,0x012A82B4,registration node linked by retail at 0x00C6AB20
+?bfmeRva012B4398RegistrationNext@@3PAXA,0x012B4398,registration node linked by retail at 0x00C6B220
