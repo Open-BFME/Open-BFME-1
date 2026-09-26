@@ -5978,5 +5978,15 @@
   "after_sha256": "1ce3ed6e28e9ed1774b05574f9fb38ce82b551c2303d23b0cc2cd20b72ec126c",
   "evidence": "targets/game/reverse/identity_evidence/0x004d99c0-false-donor-alignment.md",
   "reason": "False donor/landed file-pair alignment: BfmeStringLiteralBase stays in PopupPlayerInfo.cpp for the unrelated PopulatePlayerInfoWindows argument shim; Rva00627C40SetFlag is the address-derived extern for the already-matched ReOpenPlayerInfo twin at 0x00627C40 in the new TU, not a rename."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "selectAllUnitsByTypeAcrossMap",
+  "new_name": "rva00446550",
+  "before_sha256": "8618e8b43120949d85e5bf133c4ed6ce0cf0b3fa6e8ef174f169b0f312bad687",
+  "after_sha256": "d99dc07dc2acd51b81fe9fbfc2f5954b5ebce4a5dca0bc01e5a99d1379425a04",
+  "evidence": "targets/game/reverse/identity_evidence/0x00446550.md",
+  "reason": "the lift name came from Open-BFME5 and is contradicted by the ABI (ret 8 with Bool plus Player*, and no return value, where the ZH method takes two by-value BitFlags<116> and returns Int) and by the slot: 59 is a BFME-only virtual that ZH has no counterpart for"
  }
 ]
