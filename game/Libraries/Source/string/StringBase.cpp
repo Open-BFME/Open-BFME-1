@@ -443,47 +443,6 @@ __declspec(naked) StringBase<char>::StringBase(const StringBase<char> &src, int 
     }
 }
 
-__declspec(naked) StringBase<char>::StringBase(char c)
-{
-    __asm {
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x50
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x6a
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x63
-        __emit 0xee
-        __emit 0xff
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
 __declspec(naked) StringBase<char>::StringBase(const char *str)
 {
     __asm {
