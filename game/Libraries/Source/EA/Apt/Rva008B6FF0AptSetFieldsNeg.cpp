@@ -64,3 +64,13 @@ AptValue* aptSetFieldNeg008B71C0(Rva008B6D70Obj* self, int argc)
 	self->refreshNeg(self->m_extra, self->m_rect, -self->m_context);
 	return Rva008B6D70MakeValue(0);
 }
+
+// Same negative refresh path, using the first integer in the extra block.
+AptValue* aptSetFieldNeg008B7210(Rva008B6D70Obj* self, int argc)
+{
+	if (argc < 1)
+		return g_bfmeFallbackDB;
+	*(int*)((char*)self + 0x40) = g_bfmeArr1233[g_bfmeCount1233 - 1]->toInteger();
+	self->refreshNeg(self->m_extra, self->m_rect, -self->m_context);
+	return Rva008B6D70MakeValue(0);
+}
