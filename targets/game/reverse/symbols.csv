@@ -89263,3 +89263,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 __Locale_d_fmt,0x0084ECA0,STLport time facet __get_date_order at 0x00845C10 directly calls retail locale date-format accessor; independently 0x0084ECA0 calls GetLocaleInfoA index 0x1f for date format
 ?rva006DC970@Rva006DC970Buffer@@QAEXPAX0@Z,0x006DC970,address-derived opaque terrain buffer body reached via ILT 0x0003C93E from 0x006CDD70; retail thiscall accepts two pointer-sized arguments and ends ret8
 ?Flush_Sorting_Pool@SortingRendererClass@@CAXXZ,0x00939FC0,matched Flush caller retail 0x0093B031 and same TU ZH SortingRenderer source sequence; pinned real BFME callee
+?Rva007EB710Global@@3PAVRva007EB710Object@@A,0x0130A5A0,Address-derived release global loaded and cleared by retail 0x007EB710
