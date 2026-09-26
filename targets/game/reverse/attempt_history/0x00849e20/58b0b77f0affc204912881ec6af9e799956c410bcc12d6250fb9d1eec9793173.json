@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "58b0b77f0affc204912881ec6af9e799956c410bcc12d6250fb9d1eec9793173",
+  "symbol": "?rva00849E20DecodeFlags@@YAII@Z",
+  "score_kind": "author-estimate",
+  "score": 0.5902,
+  "source": "// ?rva00849E20DecodeFlags@@YAII@Z\n// partial score=0.5902 date=2026-09-26\n// ?rva00849E20DecodeFlags@@YAII@Z\n// 0x00849E20: low two bits select 8/16/24 or pass through the input;\n// every case then promotes bit 3 to bit 0 and bit 15 to bit 2.\n// A volatile read keeps the retail stack reload in the pass-through case.\nunsigned int __cdecl rva00849E20DecodeFlags(unsigned int p)\n{\n    unsigned int result;\n    switch (p & 3)\n    {\n    case 0:\n        result = 8;\n        break;\n    case 1:\n        result = 0x10;\n        break;\n    case 2:\n        result = 0x18;\n        break;\n    default:\n        result = *(volatile unsigned int *)&p;\n        break;\n    }\n\n    if (p & 8)\n        result |= 1;\n    if (p & 0x8000)\n        result |= 4;\n    return result;\n}\n"
+}

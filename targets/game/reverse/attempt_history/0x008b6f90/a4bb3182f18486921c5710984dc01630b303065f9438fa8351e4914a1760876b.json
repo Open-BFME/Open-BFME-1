@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "a4bb3182f18486921c5710984dc01630b303065f9438fa8351e4914a1760876b",
+  "symbol": "?aptSetRectField008B6F90@@YAPAVAptValue@@PAURva008B6D70Obj@@H@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9452,
+  "source": "// ?aptSetRectField008B6F90@@YAPAVAptValue@@PAURva008B6D70Obj@@H@Z\n// partial score=0.9452 date=2026-09-26\n// 0x008B6F90: retain the retail context-load/store order.\nextern \"C\" void _ReadWriteBarrier(void);\n#pragma intrinsic(_ReadWriteBarrier)\n// cl: /DNDEBUG /MD /EHsc\nclass AptValue { public: int toInteger(); };\nextern AptValue* g_bfmeFallbackDB;\nextern AptValue** g_bfmeArr1233;\nextern int g_bfmeCount1233;\nstruct Rva008B6D70Obj {\n\tchar m_pad0[0x20];\n\tchar m_rect[0x20];\n\tchar m_extra[0x20];\n\tvoid* m_context;\n\tvoid refresh(void* rect, void* extra, void* context);\n};\nAptValue* __cdecl Rva008B6D70MakeValue(int value);\nAptValue* aptSetRectField008B6F90(Rva008B6D70Obj* self, int argc)\n{\n\tif (argc < 1)\n\t\treturn g_bfmeFallbackDB;\n\tint* field = (int*)self->m_rect;\n\tint value = g_bfmeArr1233[g_bfmeCount1233 - 1]->toInteger();\n\tvoid *context = self->m_context;\n\t_ReadWriteBarrier();\n\t*field = value;\n\t_ReadWriteBarrier();\n\tself->refresh(field, self->m_extra, context);\n\treturn Rva008B6D70MakeValue(0);\n}\n"
+}
