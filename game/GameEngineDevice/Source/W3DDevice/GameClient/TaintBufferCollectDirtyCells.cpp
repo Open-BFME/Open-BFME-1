@@ -63,7 +63,7 @@ public:
 	int m_numMaxVisibleCellsY;
 	float m_cellWidth;
 	float m_cellHeight;
-	void *m_shroudData;
+	void *m_taintData;
 	TexHandle m_dstTexture;
 	void *m_20;
 	void *m_24;
