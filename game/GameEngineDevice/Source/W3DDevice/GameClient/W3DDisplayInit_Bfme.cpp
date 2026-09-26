@@ -51,7 +51,7 @@ public:
     static bool Init(void *,char * = 0,bool = false);
     static bool Shutdown();
     static void Set_Texture_Reduction(int,int);
-    static WW3DErrorType Set_Render_Device(int,int,int,int,int,bool,bool,bool);
+    static bool Set_Render_Device(int,int,int,int,int,bool,bool,bool);
     static void Set_Prelit_Mode(PrelitModeEnum v) { Rva012D6D80=v; }
     static void Set_Collision_Box_Display_Mask(int);
     static void Enable_Static_Sort_Lists(bool v) { Rva0133F42D=v; }
@@ -182,12 +182,12 @@ void W3DDisplay::init(void)
     d->slot34(32);
     {
         Rva006ED5B0Guard guard;
-        if ((unsigned char)WW3D::Set_Render_Device(0,d->slot2c(),d->slot30(),d->slot38(),d->slot40(),true,false,true)!=1) {
+        if (WW3D::Set_Render_Device(0,d->slot2c(),d->slot30(),d->slot38(),d->slot40(),true,false,true)!=1) {
             rvaF<unsigned>(TheWritableGlobalData,0x2c)=800;
             rvaF<unsigned>(TheWritableGlobalData,0x30)=600;
             d->slot24(rvaF<unsigned>(TheGlobalData,0x2c));
             d->slot28(rvaF<unsigned>(TheGlobalData,0x30));
-            if ((unsigned char)WW3D::Set_Render_Device(0,d->slot2c(),d->slot30(),d->slot38(),d->slot40(),true,false,true)!=1) {
+            if (WW3D::Set_Render_Device(0,d->slot2c(),d->slot30(),d->slot38(),d->slot40(),true,false,true)!=1) {
                 WW3D::Shutdown(); WWMath::Shutdown(); throw (unsigned)0xdead0007;
             }
         }

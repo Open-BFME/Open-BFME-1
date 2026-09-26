@@ -62,7 +62,7 @@ class WW3D
 public:
 	static bool Is_Initted(void) { return IsInitted; }
 	static int Get_Render_Device(void);
-	static WW3DErrorType Set_Render_Device(int dev = -1, int resx = -1, int resy = -1, int bits = -1, int windowed = -1, bool resize_window = false, bool reset_device = false, bool restore_assets = true);
+	static bool Set_Render_Device(int dev = -1, int resx = -1, int resy = -1, int bits = -1, int windowed = -1, bool resize_window = false, bool reset_device = false, bool restore_assets = true);
 	static void _Invalidate_Textures();
 
 private:
@@ -95,7 +95,7 @@ void Reset_D3D_Device(bool active)
 		if (active)
 		{
 			// switch back to desired mode when user alt-tabs back into game
-			if (WW3D_ERROR_OK != (char)WW3D::Set_Render_Device(WW3D::Get_Render_Device(), TheDisplay->getWidth(), TheDisplay->getHeight(), TheDisplay->getBitDepth(), TheDisplay->getWindowed(), true, true))
+			if (WW3D::Set_Render_Device(WW3D::Get_Render_Device(), TheDisplay->getWidth(), TheDisplay->getHeight(), TheDisplay->getBitDepth(), TheDisplay->getWindowed(), true, true))
 			{
 				BfmeOsVersionInfo osvi;
 				osvi.dwOSVersionInfoSize = sizeof(BfmeOsVersionInfo);
