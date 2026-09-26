@@ -27,7 +27,7 @@ void _Construct(T1 *destination, const T2 &source);
 typedef pair<const unsigned int, Rva0094CCF0Value> Rva0094CCF0Pair;
 
 template <>
-void _Construct(Rva0094CCF0Pair *destination,
+__declspec(noinline) void _Construct(Rva0094CCF0Pair *destination,
 	const Rva0094CCF0Pair &source)
 {
 	if (destination != 0)
@@ -45,4 +45,19 @@ void _Construct(Rva0094CCF0Pair *destination,
 	}
 }
 
+}
+
+namespace _STL
+{
+struct __new_alloc
+{
+	static void *allocate(unsigned int bytes);
+};
+}
+
+void *__stdcall rva0094C880AllocatePair(const _STL::Rva0094CCF0Pair &source)
+{
+	char *node = (char *)_STL::__new_alloc::allocate(36);
+	_STL::_Construct((_STL::Rva0094CCF0Pair *)(node + 16), source);
+	return node;
 }
