@@ -2815,7 +2815,7 @@ void TerrainLogic::changeWaterHeightOverTime( const WaterHandle *water,
 // ------------------------------------------------------------------------------------------------
 /** Find the axis aligned bounding region around a water table */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogicFindAxisAlignedBoundingRectThunk.cpp
+// byte-exact BFME reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogicFindAxisAlignedBoundingRect.cpp
 // ?findAxisAlignedBoundingRect@TerrainLogic@@IAEXPBVWaterHandle@@PAURegion3D@@@Z present-unmatched
 void TerrainLogic::findAxisAlignedBoundingRect( const WaterHandle *water, Region3D *region )
 {
