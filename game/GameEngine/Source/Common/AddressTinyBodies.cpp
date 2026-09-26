@@ -774,3 +774,16 @@ void *Rva008BD010Alloc(unsigned bytes)
 {
 	return Rva008C5D70Alloc(bytes);
 }
+
+class Rva00891AB0IndirectWord
+{
+	char *m_value;
+public:
+	unsigned body() const;
+};
+
+// ?body@Rva00891AB0IndirectWord@@QBEIXZ
+unsigned Rva00891AB0IndirectWord::body() const
+{
+	return *reinterpret_cast<const unsigned short *>(m_value + 2);
+}
