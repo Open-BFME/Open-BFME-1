@@ -298,6 +298,80 @@ public:
 	virtual Int getLocalSlotNum( void ) = 0;
 };
 
+class BfmeTargetLanApi
+{
+public:
+	virtual void slot000() = 0;
+	virtual void slot004() = 0;
+	virtual void slot008() = 0;
+	virtual void slot00C() = 0;
+	virtual void slot010() = 0;
+	virtual void slot014() = 0;
+	virtual void slot018() = 0;
+	virtual void slot01C() = 0;
+	virtual void slot020() = 0;
+	virtual void slot024() = 0;
+	virtual void slot028() = 0;
+	virtual void slot02C() = 0;
+	virtual void slot030() = 0;
+	virtual void slot034() = 0;
+	virtual void slot038() = 0;
+	virtual void slot03C() = 0;
+	virtual void slot040() = 0;
+	virtual void slot044() = 0;
+	virtual void slot048() = 0;
+	virtual void slot04C() = 0;
+	virtual void slot050() = 0;
+	virtual void slot054() = 0;
+	virtual void slot058() = 0;
+	virtual void slot05C() = 0;
+	virtual void slot060() = 0;
+	virtual void slot064() = 0;
+	virtual void slot068() = 0;
+	virtual void slot06C() = 0;
+	virtual void slot070() = 0;
+	virtual void slot074() = 0;
+	virtual void slot078() = 0;
+	virtual void slot07C() = 0;
+	virtual void slot080() = 0;
+	virtual void slot084() = 0;
+	virtual void slot088() = 0;
+	virtual void slot08C() = 0;
+	virtual void slot090() = 0;
+	virtual void slot094() = 0;
+	virtual void slot098() = 0;
+	virtual void slot09C() = 0;
+	virtual void slot0A0() = 0;
+	virtual void slot0A4() = 0;
+	virtual void slot0A8() = 0;
+	virtual void slot0AC() = 0;
+	virtual void slot0B0() = 0;
+	virtual void slot0B4() = 0;
+	virtual void slot0B8() = 0;
+	virtual void slot0BC() = 0;
+	virtual LANGameInfo *GetMyGame( void ) = 0;
+};
+
+struct BfmeTargetMapMetaData
+{
+	void *m_displayName;
+};
+
+static __forceinline const unsigned short *BfmeTargetUnicodeString(
+	const UnicodeString &string)
+{
+	void *data = *(void *const *)&string;
+	return data ? (const unsigned short *)((const char *)data + 8)
+				: (const unsigned short *)0x0107388C;
+}
+
+static __forceinline const char *BfmeTargetAsciiString(
+	const AsciiString &string)
+{
+	void *data = *(void *const *)&string;
+	return data ? (const char *)data + 8 : (const char *)0x0107388B;
+}
+
 // The generic GameInfo path uses the same BFME virtual slots as LANGameInfo,
 // but the const view is a distinct type in this translation unit.  BFME moved
 // amIHost and getLocalSlotNum to slots 4 and 5; the vendored header's direct
@@ -366,6 +440,14 @@ void positionStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[]
 extern void *g_bfmeA1023;
 extern char g_bfmeBuf1023[];
 extern void rva004CAF70( void );
+struct BfmeObj935C;
+extern BfmeObj935C *g_bfme935GlobC;
+class Rva00516B50
+{
+public:
+	void apply( void );
+};
+extern void bfmeGo1023F( void );
 void d_004cc660( void );
 void LanPositionStartSpots( void )
 {
@@ -1930,4 +2012,40 @@ static void rva004CB810StartPosition( Int player, Int startPos )
 void rva004CB810ProbeCaller( Int player, Int startPos )
 {
 	rva004CB810StartPosition( player, startPos );
+}
+
+void d_004cc660( void )
+{
+	LANGameInfo *theGame = ((BfmeTargetLanApi *)TheLAN)->GetMyGame();
+	UnicodeString mapDisplayName;
+	if (theGame && AreSlotListUpdatesEnabled())
+	{
+		const GameSlot *localSlot = theGame->getConstSlot(
+			((BfmeVirtualLanGameInfo *)theGame)->getLocalSlotNum());
+		const MapMetaData *mapData = TheMapCache->findMap(
+			((BfmeTargetLanApi *)TheLAN)->GetMyGame()->getMap());
+		if (mapData && localSlot && localSlot->hasMap())
+		{
+			mapDisplayName.format(UnicodeString(L"%ls"),
+				BfmeTargetUnicodeString(*(const UnicodeString *)&
+					((const BfmeTargetMapMetaData *)mapData)->m_displayName));
+		}
+		else
+		{
+			AsciiString s = ((BfmeTargetLanApi *)TheLAN)->GetMyGame()->getMap();
+			if (s.reverseFind('\\'))
+				s = s.reverseFind('\\') + 1;
+			mapDisplayName.format(UnicodeString(L"%hs"),
+				BfmeTargetAsciiString(s));
+		}
+		UnicodeString old = GadgetStaticTextGetText(textEntryMapDisplay);
+		if (old.compare(mapDisplayName) != 0)
+		{
+			if (g_bfme935GlobC)
+				((Rva00516B50 *)g_bfme935GlobC)->apply();
+			else
+				bfmeGo1023F();
+		}
+		GadgetStaticTextSetText(textEntryMapDisplay, mapDisplayName);
+	}
 }
