@@ -5128,5 +5128,45 @@
   "after_sha256": "ca570a540db0d2ba92da58c38ad32e289f5343edee0d2f9212bb0209d692e073",
   "evidence": "reverse/identity_evidence/lan-game-options-menu-callees.md",
   "reason": "Retail calls ILT 0x0001C9D6 from LanGameOptionsMenuInit and that thunk targets body 0x004CC660. The matched body is named d_004cc660 and a probe shows updateGameOptions compiles to a different size."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/LivingWorld/INILivingWorldRegionCampaign.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/INILivingWorldRegionCampaign.cpp",
+  "old_name": "LivingWorldRegion",
+  "new_name": "Rva003C9670",
+  "before_sha256": "835371022962d2fbb5cd8fb44ff12b8ab44f34787b761a418b78586f2f6eb3e0",
+  "after_sha256": "36ea47b2456596fb767a77a16d2fc31708601eaf84ba1b5b26fdc3b8af134e16",
+  "evidence": "reverse/identity_evidence/003c9670.md",
+  "reason": "the 0x58-byte object built by the LivingWorldRegionCampaign block parser 0x003C9B60 holds the 0xF4-byte LivingWorldRegion objects at +0x30 (field table 0x010EDC48 Region parser 0x003C9980), so it cannot itself be LivingWorldRegion; no string, vtable or caller names it, so its class takes the address token; ConqueredEffectEvenglow parses at offset 0 with its key as userData so +0x2C is not that field"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/LivingWorld/LivingWorldRegionCtor.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/Rva003C9670Ctor.cpp",
+  "old_name": "LivingWorldRegion",
+  "new_name": "Rva003C9670",
+  "before_sha256": "0ed98390ceb5ca5d7a30fe54f717da35e197423a45956d20fb7811a471ada413",
+  "after_sha256": "89f8ebb67e1c8770368f64b4af9081296e4524a2cddb0d07f4e5c7ab4b805b58",
+  "evidence": "reverse/identity_evidence/003c9670.md",
+  "reason": "the 0x58-byte object built by the LivingWorldRegionCampaign block parser 0x003C9B60 holds the 0xF4-byte LivingWorldRegion objects at +0x30 (field table 0x010EDC48 Region parser 0x003C9980), so it cannot itself be LivingWorldRegion; no string, vtable or caller names it, so its class takes the address token; ConqueredEffectEvenglow parses at offset 0 with its key as userData so +0x2C is not that field"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/LivingWorld/LivingWorldRegionCtor.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/Rva003C9670Ctor.cpp",
+  "old_name": "m_conqueredEffectEvenglow",
+  "new_name": "m_string2C",
+  "before_sha256": "0ed98390ceb5ca5d7a30fe54f717da35e197423a45956d20fb7811a471ada413",
+  "after_sha256": "89f8ebb67e1c8770368f64b4af9081296e4524a2cddb0d07f4e5c7ab4b805b58",
+  "evidence": "reverse/identity_evidence/003c9670.md",
+  "reason": "the 0x58-byte object built by the LivingWorldRegionCampaign block parser 0x003C9B60 holds the 0xF4-byte LivingWorldRegion objects at +0x30 (field table 0x010EDC48 Region parser 0x003C9980), so it cannot itself be LivingWorldRegion; no string, vtable or caller names it, so its class takes the address token; ConqueredEffectEvenglow parses at offset 0 with its key as userData so +0x2C is not that field"
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "LivingWorldRegion",
+  "new_name": "Rva003C9670",
+  "before_sha256": "2296e02736ec59ba372bd71663ca1d02b97e37e101a824e71c0f868236a56a51",
+  "after_sha256": "400ff250b4674338a31426a37e6c745a3078f753279e138bcdc8e96c8e4e611c",
+  "evidence": "reverse/identity_evidence/003c9670.md",
+  "reason": "the 0x58-byte object built by the LivingWorldRegionCampaign block parser 0x003C9B60 holds the 0xF4-byte LivingWorldRegion objects at +0x30 (field table 0x010EDC48 Region parser 0x003C9980), so it cannot itself be LivingWorldRegion; no string, vtable or caller names it, so its class takes the address token; ConqueredEffectEvenglow parses at offset 0 with its key as userData so +0x2C is not that field"
  }
 ]
