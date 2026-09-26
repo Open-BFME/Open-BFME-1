@@ -64,6 +64,7 @@ class BfmeC1050
 public:
 	void bfmeGo1050C(int a, int b, int c, int d, int e);
 	void bfmeGo1050D(int a, int b, int c, int d);
+	void bfmeGo009F26D0(int a, int b, int c, int d);
 
 	char m_bfmePad[0xc];
 	BfmeP1050 *m_bfmeP;
@@ -79,6 +80,11 @@ void BfmeC1050::bfmeGo1050C(int a, int b, int c, int d, int e)
 void BfmeC1050::bfmeGo1050D(int a, int b, int c, int d)
 {
 	m_bfmeP->bfmeFwd1050(a, b, 0, c, d);
+}
+
+void BfmeC1050::bfmeGo009F26D0(int a, int b, int c, int d)
+{
+	m_bfmeP->bfmeFwd1050(a, c, b, d, 0);
 }
 
 extern "C" void *bfmeVft1050F[];
