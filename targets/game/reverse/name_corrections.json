@@ -6098,5 +6098,15 @@
   "after_sha256": "27a968340c2e0923627426644bf6f5e7d8285a916a137767c38097f8138bc6b5",
   "evidence": "targets/game/reverse/identity_evidence/0x001a4630.md",
   "reason": "Owner class TerrainLogic was a guess in the bank; no caller, vtable slot, literal or twin proves it, so the exact landing keeps an address-derived owner."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006d2730.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTiles006D2730.cpp",
+  "old_name": "m_yExtent",
+  "new_name": "m_at0C",
+  "before_sha256": "9143a5795191da4604687150f71a1adc24cc922e27f9bb28ac503da49fd87a4b",
+  "after_sha256": "3a24619db0dd4da9480f1986a1ce33b4257b690837ecccf6ef876d7fd4c82f8c",
+  "evidence": "targets/game/reverse/identity_evidence/0x006d2730.md",
+  "reason": "m_yExtent was invented with m_xExtent, which the WorldHeightMap layout witness refutes (+0x08 is m_width); +0x0C is unwitnessed, so it is named by offset."
  }
 ]

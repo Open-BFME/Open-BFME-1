@@ -1,5 +1,5 @@
 // ?xfer@W3DGhostObject@@MAEXPAVXfer@@@Z
-// partial score=0.97 date=2026-09-26
+// partial score=0.9892984542211652 date=2026-09-26
 // cl: /O2 /Ob2 /GR- /EHsc /MD /DNDEBUG /DWIN32 /D_WINDOWS
 // ?xfer@W3DGhostObject@@MAEXPAVXfer@@@Z
 #include <string.h>
@@ -180,13 +180,13 @@ void W3DGhostObject::xfer(Xfer *xfer)
         versionStorage.version.version = 1;
         versionStorage.version.currentVersion = 1;
         xfer->xferVersion(&versionStorage.version);
-    }
     friend_xferObjectID(xfer, &m_drawableInfo.objectID);
     xfer->xferInt(&m_drawableInfo.flags);
     UnsignedInt drawableID = m_drawableInfo.drawable ? ((Drawable *)m_drawableInfo.drawable)->getID() : 0;
     BfmeParticleSystemXferHandle(*xfer, &drawableID);
     if (xfer->isLoading())
         m_drawableInfo.drawable = TheGameClient->findDrawableByID(drawableID);
+    }
 
     {
     UnsignedByte count;
