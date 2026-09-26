@@ -5918,5 +5918,35 @@
   "after_sha256": "5614fac7da571fc8ddc6487ab2c2b3013a841e3b7e3b879efccb37b7351a41b9",
   "evidence": "docs/naming_evidence.md",
   "reason": "bank method name with no string vtable slot or matched named caller (only caller 0x001CEFC0 is itself ledger-misnamed); sole caller loads TheVictorySystem 0x012EF734 so owner is proven but method name is not"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00569720.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/BfmeAptScreenQuitMenuDestructor.cpp",
+  "old_name": "m_flag2c",
+  "new_name": "m_byte2C",
+  "before_sha256": "2c7a8bf600574740320cf80142af0cf128c77a81807dae758df0f79cf3a9f0a2",
+  "after_sha256": "d91f804094aef0773f209f7a23a6ef447a55c1e23e19a1e0e1c204acec830a85",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "offset token kept and only respelled"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00569720.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/BfmeAptScreenQuitMenuDestructor.cpp",
+  "old_name": "m_flag2d",
+  "new_name": "m_byte2D",
+  "before_sha256": "2c7a8bf600574740320cf80142af0cf128c77a81807dae758df0f79cf3a9f0a2",
+  "after_sha256": "d91f804094aef0773f209f7a23a6ef447a55c1e23e19a1e0e1c204acec830a85",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "offset token kept and only respelled"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00569720.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/BfmeAptScreenQuitMenuDestructor.cpp",
+  "old_name": "m_localPlayerIndex",
+  "new_name": "m_unmodelled3C",
+  "before_sha256": "2c7a8bf600574740320cf80142af0cf128c77a81807dae758df0f79cf3a9f0a2",
+  "after_sha256": "d91f804094aef0773f209f7a23a6ef447a55c1e23e19a1e0e1c204acec830a85",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank name with no witness (name_oracle has only a ZH hint m_frame at GameLogic+0x3C)"
  }
 ]
