@@ -1,6 +1,8 @@
-// ??1Rva007EB2C0Object@@UAE@XZ
-// partial score=0.88 date=2026-09-06
-// ??1Rva007EB2C0Object@@UAE@XZ
+// 0x007EB2C0: reset the global object and release its guarded resources.
+// The barrier preserves retail's store-before-flag-read instruction order.
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 class T_007ea120
 {
@@ -30,12 +32,13 @@ public:
 Rva007EB2C0Object::~Rva007EB2C0Object()
 {
 	if (g_Va0130A588.m_obj)
+	{
 		g_Va0130A588.m_obj->m();
-
-	if (g_Va0130A588.m_obj)
-		g_Va0130A588.m_obj->vslot0(1);
-
-	g_Va0130A588.m_obj = 0;
+		if (g_Va0130A588.m_obj)
+			g_Va0130A588.m_obj->vslot0(1);
+		g_Va0130A588.m_obj = 0;
+	}
+	_ReadWriteBarrier();
 
 	if (g_Va0130A588.m_flagD)
 		Rva007EB830Release();
