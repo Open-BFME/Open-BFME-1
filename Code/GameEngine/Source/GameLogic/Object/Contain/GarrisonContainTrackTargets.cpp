@@ -130,7 +130,7 @@ protected:
     void trackTargets();
     int findClosestFreeGarrisonPointIndex(int conditionIndex,
                                           const Coord3D *targetPosition);
-    void removeObjectFromGarrisonPoint(Object *object, int index);
+    void removeObjectFromGarrisonPoint(Object *occupant, int pointIndex);
     void putObjectAtGarrisonPoint(Object *object, ObjectID targetID,
                                   int conditionIndex, int index);
 
@@ -147,31 +147,31 @@ private:
 };
 
 // ?removeObjectFromGarrisonPoint@GarrisonContain@@IAEXPAVObject@@H@Z
-void GarrisonContain::removeObjectFromGarrisonPoint(Object *object, int index)
+void GarrisonContain::removeObjectFromGarrisonPoint(Object *occupant, int pointIndex)
 {
-    if (!object)
+    if (!occupant)
         return;
 
-    if (index == -1)
+    if (pointIndex == -1)
     {
-        for (int i = 0; i < 40; ++i)
+        for (int candidateIndex = 0; candidateIndex < 40; ++candidateIndex)
         {
-            if (m_garrisonPointData[i].objectID == object->getID())
-                removeObjectFromGarrisonPoint(object, i);
+            if (m_garrisonPointData[candidateIndex].objectID == occupant->getID())
+                removeObjectFromGarrisonPoint(occupant, candidateIndex);
         }
         return;
     }
 
-    if (index < 0 || index >= 40)
+    if (pointIndex < 0 || pointIndex >= 40)
         return;
 
-    m_garrisonPointData[index].objectID = INVALID_OBJECT_ID;
-    m_garrisonPointData[index].targetID = INVALID_OBJECT_ID;
-    m_garrisonPointData[index].placeFrame = 0;
-    m_garrisonPointData[index].lastEffectFrame = 0;
+    m_garrisonPointData[pointIndex].objectID = INVALID_OBJECT_ID;
+    m_garrisonPointData[pointIndex].targetID = INVALID_OBJECT_ID;
+    m_garrisonPointData[pointIndex].placeFrame = 0;
+    m_garrisonPointData[pointIndex].lastEffectFrame = 0;
     --m_garrisonPointsInUse;
 
-    object->setPosition(m_object->getPosition());
+    occupant->setPosition(m_object->getPosition());
 }
 
 // ?findClosestFreeGarrisonPointIndex@GarrisonContain@@IAEHHPBUCoord3D@@@Z
@@ -190,26 +190,26 @@ int GarrisonContain::findClosestFreeGarrisonPointIndex(
         targetPosition->y == objectPosition->y &&
         targetPosition->z == objectPosition->z)
     {
-        for (int i = 0; i < 40; ++i)
+        for (int freePointIndex = 0; freePointIndex < 40; ++freePointIndex)
         {
-            if (m_garrisonPointData[i].objectID == INVALID_OBJECT_ID)
-                return i;
+            if (m_garrisonPointData[freePointIndex].objectID == INVALID_OBJECT_ID)
+                return freePointIndex;
         }
         return conditionIndex;
     }
 
     int closestIndex = -1;
-    float closestDistance = FLT_MAX;
-    for (int i = 0; i < pointCount; ++i)
+    float closestDistanceSquared = FLT_MAX;
+    for (int candidatePointIndex = 0; candidatePointIndex < pointCount; ++candidatePointIndex)
     {
-        if (m_garrisonPointData[i].objectID == INVALID_OBJECT_ID)
+        if (m_garrisonPointData[candidatePointIndex].objectID == INVALID_OBJECT_ID)
         {
-            const float distance = calcDistanceSquared(
-                *targetPosition, m_garrisonPoints[conditionIndex][i]);
-            if (distance < closestDistance)
+            const float distanceSquared = calcDistanceSquared(
+                *targetPosition, m_garrisonPoints[conditionIndex][candidatePointIndex]);
+            if (distanceSquared < closestDistanceSquared)
             {
-                closestDistance = distance;
-                closestIndex = i;
+                closestDistanceSquared = distanceSquared;
+                closestIndex = candidatePointIndex;
             }
         }
     }
@@ -228,40 +228,40 @@ void GarrisonContain::trackTargets()
         case 3: conditionIndex = 2; break;
     }
 
-    for (ContainedNode *iterator = m_containedItems->next;
-         iterator != m_containedItems;
-         iterator = iterator->next)
+    for (ContainedNode *containedNode = m_containedItems->next;
+         containedNode != m_containedItems;
+         containedNode = containedNode->next)
     {
-        Object *const object = iterator->object;
-        const int currentIndex = getObjectGarrisonPointIndex(object->getID());
+        Object *const occupant = containedNode->object;
+        const int currentIndex = getObjectGarrisonPointIndex(occupant->getID());
         if (currentIndex == -1)
             continue;
 
-        AIUpdateInterface *const ai = object->getAIUpdateInterface();
-        if (!ai)
+        AIUpdateInterface *const aiUpdate = occupant->getAIUpdateInterface();
+        if (!aiUpdate)
             continue;
 
-        Object *const victim = ai->getCurrentVictim();
-        const Coord3D *victimPosition = ai->getCurrentVictimPos();
+        Object *const victim = aiUpdate->getCurrentVictim();
+        const Coord3D *victimPosition = aiUpdate->getCurrentVictimPos();
         if (!victim && !victimPosition)
             continue;
         if (victim)
             victimPosition = victim->getPosition();
 
-        const Coord3D *const objectPosition = object->getPosition();
+        const Coord3D *const objectPosition = occupant->getPosition();
         const int newIndex = findClosestFreeGarrisonPointIndex(
             conditionIndex, victimPosition);
         if (newIndex == -1)
             continue;
 
-        const float currentDistance = calcDistanceSquared(
+        const float currentDistanceSquared = calcDistanceSquared(
             *victimPosition, *objectPosition);
-        const float newDistance = calcDistanceSquared(
+        const float newDistanceSquared = calcDistanceSquared(
             *victimPosition, m_garrisonPoints[conditionIndex][newIndex]);
-        if (newDistance < currentDistance)
+        if (newDistanceSquared < currentDistanceSquared)
         {
-            removeObjectFromGarrisonPoint(object, currentIndex);
-            putObjectAtGarrisonPoint(object,
+            removeObjectFromGarrisonPoint(occupant, currentIndex);
+            putObjectAtGarrisonPoint(occupant,
                                      victim ? victim->getID() : INVALID_OBJECT_ID,
                                      conditionIndex, newIndex);
         }

@@ -96,37 +96,37 @@ private:
 
 void GarrisonContain::redeployOccupants()
 {
-	Rva0021F850Link *head = m_listHead;
-	Rva0021F850Link *p = head->m_next;
-	unsigned int n = 0;
+	Rva0021F850Link *containListHead = m_listHead;
+	Rva0021F850Link *containedNode = containListHead->m_next;
+	unsigned int containedCount = 0;
 
-	if (p != head)
+	if (containedNode != containListHead)
 	{
 		do
 		{
-			p = p->m_next;
-			++n;
+			containedNode = containedNode->m_next;
+			++containedCount;
 		}
-		while (p != head);
+		while (containedNode != containListHead);
 
-		if (n > 0)
+		if (containedCount > 0)
 			m_owner->setModelConditionState(RVA0021F850_GARRISONED);
 	}
 
-	Rva0021F850Entry tmp[40];
-	for (Int i = 0; i < 40; ++i)
-		tmp[i] = m_entries[i];
+	Rva0021F850Entry previousEntries[40];
+	for (Int snapshotIndex = 0; snapshotIndex < 40; ++snapshotIndex)
+		previousEntries[snapshotIndex] = m_entries[snapshotIndex];
 
 	removeInvalidObjectsFromGarrisonPoints();
 	addValidObjectsToGarrisonPoints();
 
-	for (Int j = 0; j < 40; ++j)
+	for (Int previousIndex = 0; previousIndex < 40; ++previousIndex)
 	{
-		if (tmp[j].m_key != 0)
+		if (previousEntries[previousIndex].m_key != 0)
 		{
-			Int k = bfmeMapEntry(tmp[j].m_key);
-			if (k != -1)
-				m_entries[k].m_08 = tmp[j].m_08;
+			Int currentIndex = bfmeMapEntry(previousEntries[previousIndex].m_key);
+			if (currentIndex != -1)
+				m_entries[currentIndex].m_08 = previousEntries[previousIndex].m_08;
 		}
 	}
 }

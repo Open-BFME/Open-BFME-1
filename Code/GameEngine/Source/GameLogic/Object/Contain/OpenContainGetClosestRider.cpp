@@ -56,33 +56,33 @@ public:
 class OpenContain
 {
 public:
-	virtual Object *getClosestRider(Object *object);
+	virtual Object *getClosestRider(Object *referenceObject);
 };
 
-Object *OpenContain::getClosestRider(Object *object)
+Object *OpenContain::getClosestRider(Object *referenceObject)
 {
-	Real closestDistance = 1000000.0f;
-	Object *closest = 0;
+	Real closestDistanceSquared = 1000000.0f;
+	Object *closestRider = 0;
 	const BFMEOpenContainSlotShim *contain =
 		(const BFMEOpenContainSlotShim *)((const char *)this + 0x20);
 	const ContainedItemsList *riders = contain->getContainedItemsList();
 
-	for (ContainedItemsList::const_iterator it = riders->begin(); it != riders->end(); ++it)
+	for (ContainedItemsList::const_iterator riderIt = riders->begin(); riderIt != riders->end(); ++riderIt)
 	{
-		Object *rider = *it;
-		if (rider != object)
+		Object *rider = *riderIt;
+		if (rider != referenceObject)
 		{
 			Coord3D riderPos = *rider->getPosition();
-			Real dx = riderPos.x - object->getPosition()->x;
-			Real dy = riderPos.y - object->getPosition()->y;
-			Real distance = dx * dx + dy * dy;
-			if (distance < closestDistance)
+			Real dx = riderPos.x - referenceObject->getPosition()->x;
+			Real dy = riderPos.y - referenceObject->getPosition()->y;
+			Real distanceSquared = dx * dx + dy * dy;
+			if (distanceSquared < closestDistanceSquared)
 			{
-				closest = rider;
-				closestDistance = distance;
+				closestRider = rider;
+				closestDistanceSquared = distanceSquared;
 			}
 		}
 	}
 
-	return closest;
+	return closestRider;
 }

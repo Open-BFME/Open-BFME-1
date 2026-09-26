@@ -182,57 +182,57 @@ void GarrisonContain::addValidObjectsToGarrisonPoints()
 	if (containList.empty())
 		return;
 
-	for (ContainedItemsList::const_iterator it = containList.begin(); it != containList.end(); ++it)
+	for (ContainedItemsList::const_iterator containedObjectIt = containList.begin(); containedObjectIt != containList.end(); ++containedObjectIt)
 	{
-		Object *obj = *it;
-		if (obj->testStatus(36))
+		Object *containedObject = *containedObjectIt;
+		if (containedObject->testStatus(36))
 			continue;
 
-		ContainModuleInterface *contain = obj->getContain();
+		ContainModuleInterface *contain = containedObject->getContain();
 		if (contain != 0)
 		{
-			Rva0021F5E0Slot26Interface *view = contain->slot26();
-			if (view == 0)
+			Rva0021F5E0Slot26Interface *containedListProvider = contain->slot26();
+			if (containedListProvider == 0)
 				continue;
 
-			ContainedItemsList listed(view->slot59());
-			for (ContainedItemsList::iterator listIt = listed.begin(); listIt != listed.end(); ++listIt)
+			ContainedItemsList nestedObjects(containedListProvider->slot59());
+			for (ContainedItemsList::iterator nestedObjectIt = nestedObjects.begin(); nestedObjectIt != nestedObjects.end(); ++nestedObjectIt)
 			{
-				Object *entry = *listIt;
-				Weapon *weapon = entry->getCurrentWeapon();
+				Object *nestedObject = *nestedObjectIt;
+				Weapon *weapon = nestedObject->getCurrentWeapon();
 				if (weapon == 0 || weapon->getField04()->get() != 0)
 					continue;
 
-				AIUpdateInterface *ai = entry->getAIUpdateInterface();
-				if (ai != 0)
+				AIUpdateInterface *aiUpdate = nestedObject->getAIUpdateInterface();
+				if (aiUpdate != 0)
 				{
-					Object *victim = ai->getCurrentVictim();
-					const Coord3D *victimPos = ai->getCurrentVictimPos();
+					Object *victim = aiUpdate->getCurrentVictim();
+					const Coord3D *victimPos = aiUpdate->getCurrentVictimPos();
 					if (victim != 0)
-						putObjectAtBestGarrisonPoint(entry, victim, 0);
+						putObjectAtBestGarrisonPoint(nestedObject, victim, 0);
 					else if (victimPos != 0)
-						putObjectAtBestGarrisonPoint(entry, 0, victimPos);
+						putObjectAtBestGarrisonPoint(nestedObject, 0, victimPos);
 					else if (!m_interface20.slot39(0).test(60))
-						putObjectAtBestGarrisonPoint(entry, 0, entry->getPosition());
+						putObjectAtBestGarrisonPoint(nestedObject, 0, nestedObject->getPosition());
 				}
 			}
 			continue;
 		}
 
-		AIUpdateInterface *ai = obj->getAIUpdateInterface();
-		if (ai == 0)
+		AIUpdateInterface *aiUpdate = containedObject->getAIUpdateInterface();
+		if (aiUpdate == 0)
 			continue;
 
-		Object *victim = ai->getCurrentVictim();
-		const Coord3D *victimPos = ai->getCurrentVictimPos();
+		Object *victim = aiUpdate->getCurrentVictim();
+		const Coord3D *victimPos = aiUpdate->getCurrentVictimPos();
 		if (victim != 0)
-			putObjectAtBestGarrisonPoint(obj, victim, 0);
-		else if (victimPos != 0 && getObjectGarrisonPointIndex(obj->getID()) == -1)
+			putObjectAtBestGarrisonPoint(containedObject, victim, 0);
+		else if (victimPos != 0 && getObjectGarrisonPointIndex(containedObject->getID()) == -1)
 		{
 			Int conditionIndex = findConditionIndex();
 			Int pointIndex = findClosestFreeGarrisonPointIndex(conditionIndex, victimPos);
 			if (pointIndex != -1)
-				putObjectAtGarrisonPoint(obj, INVALID_ID, conditionIndex, pointIndex);
+				putObjectAtGarrisonPoint(containedObject, INVALID_ID, conditionIndex, pointIndex);
 		}
 	}
 }

@@ -68,24 +68,24 @@ public:
 class Rva0024BE00Owner
 {
 public:
-	Object *findClosest(const Rva0024BE00Coord *pos);
+	Object *findClosest(const Rva0024BE00Coord *searchPosition);
 
 private:
 	char m_pad[0x18];
 	_STL::list<Object *> m_objects;
 };
 
-Object *Rva0024BE00Owner::findClosest(const Rva0024BE00Coord *pos)
+Object *Rva0024BE00Owner::findClosest(const Rva0024BE00Coord *searchPosition)
 {
-	_STL::list<Object *> objects(m_objects);
-	_STL::list<Object *> found;
-	Object *best = 0;
+	_STL::list<Object *> containerObjects(m_objects);
+	_STL::list<Object *> containedObjects;
+	Object *closestObject = 0;
 	float bestDistSqr = 3.402823466e+38F;
 
-    for (_STL::list<Object *>::iterator objectIt = objects.begin();
-         objectIt != objects.end(); ++objectIt)
+    for (_STL::list<Object *>::iterator containerIt = containerObjects.begin();
+         containerIt != containerObjects.end(); ++containerIt)
 	{
-		Rva0024BE00Contain *contain = (*objectIt)->m_contain;
+		Rva0024BE00Contain *contain = (*containerIt)->m_contain;
 		if (contain == 0)
 			continue;
 
@@ -93,26 +93,26 @@ Object *Rva0024BE00Owner::findClosest(const Rva0024BE00Coord *pos)
 		if (result == 0)
 			continue;
 
-		found = *result->getVal();
+		containedObjects = *result->getVal();
 
-        for (_STL::list<Object *>::iterator valueIt = found.begin();
-             valueIt != found.end(); ++valueIt)
+        for (_STL::list<Object *>::iterator containedObjectIt = containedObjects.begin();
+             containedObjectIt != containedObjects.end(); ++containedObjectIt)
 			{
-				Object *item = *valueIt;
-				if (item->getKind()->bfmeKindCQE() == 1)
+				Object *candidateObject = *containedObjectIt;
+				if (candidateObject->getKind()->bfmeKindCQE() == 1)
 					continue;
 
-				Rva0024BE00Coord difference = *pos;
-                difference.sub(item->getPosition());
+				Rva0024BE00Coord difference = *searchPosition;
+                difference.sub(candidateObject->getPosition());
                 difference.z = 0.0f;
                 float distSqr = difference.lengthSqr();
-                if (!best || bestDistSqr > distSqr)
+                if (!closestObject || bestDistSqr > distSqr)
 				{
 					bestDistSqr = distSqr;
-					best = item;
+					closestObject = candidateObject;
 				}
 			}
 		}
 
-	return best;
+	return closestObject;
 }

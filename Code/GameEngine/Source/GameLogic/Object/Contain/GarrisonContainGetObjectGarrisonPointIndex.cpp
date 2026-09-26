@@ -111,42 +111,42 @@ Int GarrisonContain::getObjectGarrisonPointIndex(ObjectID objectID)
 	if (objectID == INVALID_ID)
 		return -1;
 
-	Object *object = TheGameLogic->findObjectByID(objectID);
-	if (object == 0)
+	Object *queriedObject = TheGameLogic->findObjectByID(objectID);
+	if (queriedObject == 0)
 		return -1;
 
-	Int i = 0;
-	GarrisonPointData *point = m_garrisonPointData;
-	for (; i < 40; ++i, ++point)
+	Int pointIndex = 0;
+	GarrisonPointData *garrisonPoint = m_garrisonPointData;
+	for (; pointIndex < 40; ++pointIndex, ++garrisonPoint)
 	{
-		ObjectContainModuleInterface *contain = object->m_contain;
+		ObjectContainModuleInterface *contain = queriedObject->m_contain;
 		if (contain != 0)
 		{
 			HordeContainInterface *hordeContain =
 				contain->getHordeContainInterface();
 			if (hordeContain != 0)
 			{
-				ContainedItemsList list(hordeContain->getContainList());
+				ContainedItemsList hordeMembers(hordeContain->getContainList());
 
-				for (ContainedItemsList::const_iterator it = list.begin();
-					it != list.end();
-					++it)
+				for (ContainedItemsList::const_iterator memberIt = hordeMembers.begin();
+					memberIt != hordeMembers.end();
+					++memberIt)
 				{
-					Object *containedObject = *it;
+					Object *containedObject = *memberIt;
 					ObjectID containedID = containedObject->getID();
-					for (Int j = 0; j < 40; ++j)
+					for (Int memberPointIndex = 0; memberPointIndex < 40; ++memberPointIndex)
 					{
-						if (m_garrisonPointData[j].objectID == containedID)
+						if (m_garrisonPointData[memberPointIndex].objectID == containedID)
 						{
-							return j;
+							return memberPointIndex;
 						}
 					}
 				}
 			}
 		}
-		else if (point->objectID == objectID)
+		else if (garrisonPoint->objectID == objectID)
 		{
-			return i;
+			return pointIndex;
 		}
 	}
 

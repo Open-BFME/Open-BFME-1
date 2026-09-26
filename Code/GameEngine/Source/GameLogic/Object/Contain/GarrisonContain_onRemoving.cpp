@@ -287,33 +287,33 @@ public:
 extern const Real BfmeZeroRange;
 
 // ?onRemoving@GarrisonContain@@UAEXPAVObject@@@Z
-void GarrisonContain::onRemoving(Object *object)
+void GarrisonContain::onRemoving(Object *removedObject)
 {
-	OpenContain::onRemoving(object);
+	OpenContain::onRemoving(removedObject);
 
-	if (object != 0)
+	if (removedObject != 0)
 	{
-		Int index = 0;
-		BfmeGarrisonPointData *point =
+		Int pointIndex = 0;
+		BfmeGarrisonPointData *garrisonPoint =
 			 reinterpret_cast<BfmeGarrisonPointView *>(this)->m_points;
-		for (; index < 40; ++index, ++point)
+		for (; pointIndex < 40; ++pointIndex, ++garrisonPoint)
 		{
-			if (point->m_object == object->getID())
+			if (garrisonPoint->m_object == removedObject->getID())
 			{
 				reinterpret_cast<GarrisonContain *>(
 					reinterpret_cast<unsigned char *>(this) - 0x20)
-					->removeObjectFromGarrisonPoint(object, index);
+					->removeObjectFromGarrisonPoint(removedObject, pointIndex);
 			}
 		}
 	}
 
 	BfmeObjectFlagsView *objectFlags =
-		reinterpret_cast<BfmeObjectFlagsView *>(object);
+		reinterpret_cast<BfmeObjectFlagsView *>(removedObject);
 	const UnsignedInt flags = objectFlags->m_flags & ~1U;
 	objectFlags->m_flags = flags;
-	object->clearDisabled(DISABLED_HELD);
+	removedObject->clearDisabled(DISABLED_HELD);
 
-	object->setStatus(ObjectStatusMaskType(ObjectStatusMaskType::kInit, 57), false);
+	removedObject->setStatus(ObjectStatusMaskType(ObjectStatusMaskType::kInit, 57), false);
 
 	if (getContainCount(false) == 0)
 	{
@@ -333,42 +333,42 @@ void GarrisonContain::onRemoving(Object *object)
 			ObjectStatusMaskType(ObjectStatusMaskType::kInit, 1), false);
 		*reinterpret_cast<Bool *>(reinterpret_cast<unsigned char *>(this) + 0x995) = false;
 
-		BfmeObjectModelCondition *model =
+		BfmeObjectModelCondition *ownerModelCondition =
 			reinterpret_cast<BfmeObjectModelCondition *>(
 				reinterpret_cast<BfmeGarrisonOwnerLink *>(
 					reinterpret_cast<unsigned char *>(this) - 0x18)->m_object);
-		if ((model->m_conditionFlags & 0x400) != 0)
+		if ((ownerModelCondition->m_conditionFlags & 0x400) != 0)
 		{
-			model->m_conditionFlags &= ~0x400U;
-			model->notifyModelConditionChanged();
+			ownerModelCondition->m_conditionFlags &= ~0x400U;
+			ownerModelCondition->notifyModelConditionChanged();
 		}
 	}
 	else
 	{
-		const UnsignedInt count = getContainCount(false);
-		if (getStealthUnitsContained() != count)
+		const UnsignedInt containedCount = getContainCount(false);
+		if (getStealthUnitsContained() != containedCount)
 			*reinterpret_cast<Bool *>(reinterpret_cast<unsigned char *>(this) + 0x995) = false;
 	}
 
-	const UnsignedInt frame = TheBfmeGameLogic->m_frame;
+	const UnsignedInt currentFrame = TheBfmeGameLogic->m_frame;
 	const BfmeThingTemplateView *thingTemplate =
-		reinterpret_cast<BfmeObjectTemplateLink *>(object)->m_template;
+		reinterpret_cast<BfmeObjectTemplateLink *>(removedObject)->m_template;
 	if (thingTemplate != 0 && thingTemplate->m_override != 0)
 		thingTemplate = reinterpret_cast<const BfmeThingTemplateView *>(
 			thingTemplate->m_override->getFinalOverride());
-	const UnsignedInt delay = reinterpret_cast<const BfmeObjectOverrideLayout *>(
+	const UnsignedInt occlusionDelay = reinterpret_cast<const BfmeObjectOverrideLayout *>(
 		thingTemplate)->m_occlusionDelay;
-	reinterpret_cast<BfmeObjectFrameView *>(object)->m_safeOcclusionFrame = frame + delay;
+	reinterpret_cast<BfmeObjectFrameView *>(removedObject)->m_safeOcclusionFrame = currentFrame + occlusionDelay;
 
 	recalcApparentControllingPlayer();
 
 	if ((reinterpret_cast<Rva00221540 *>(
 		reinterpret_cast<unsigned char *>(this) - 0x20)->isReady() & 0xff) != 0)
 	{
-		BfmeBodyModule *body = reinterpret_cast<BfmeObjectBodyLink *>(
+		BfmeBodyModule *ownerBody = reinterpret_cast<BfmeObjectBodyLink *>(
 			reinterpret_cast<unsigned char *>(reinterpret_cast<BfmeGarrisonOwnerLink *>(
 			reinterpret_cast<unsigned char *>(this) - 0x18)->m_object))->m_body;
-		if (body->getHealth() <= BfmeZeroRange)
-			reinterpret_cast<GameLogic *>(TheBfmeGameLogic)->destroyObject(object);
+		if (ownerBody->getHealth() <= BfmeZeroRange)
+			reinterpret_cast<GameLogic *>(TheBfmeGameLogic)->destroyObject(removedObject);
 	}
 }
