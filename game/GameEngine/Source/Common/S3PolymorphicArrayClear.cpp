@@ -75,3 +75,27 @@ S3_ARRAY_CLEAR( Rva007F6C60, 64 )
 S3_ARRAY_CLEAR( Rva00801570, 48 )
 S3_ARRAY_CLEAR( Rva00801600, 56 )
 S3_ARRAY_CLEAR( Rva00802A10, 128 )
+
+#define S3_ARRAY_LOOKUP( NAME, SIZE )                                     \
+	class NAME##Elem                                                      \
+	{                                                                     \
+	public:                                                               \
+		virtual void step( int flags );                                   \
+		char m_pad[ SIZE - 4 ];                                           \
+	};                                                                    \
+	class NAME                                                            \
+	{                                                                     \
+	public:                                                               \
+		NAME##Elem *at( int index );                                      \
+		NAME##Elem *m_array;                                              \
+		int m_count;                                                      \
+	};                                                                    \
+	NAME##Elem *NAME::at( int index )                                     \
+	{                                                                     \
+		if ( index >= m_count )                                            \
+			return 0;                                                     \
+		return m_array + index;                                           \
+	}
+
+S3_ARRAY_LOOKUP( Rva008015E0, 56 )
+S3_ARRAY_LOOKUP( Rva008029F0, 128 )
