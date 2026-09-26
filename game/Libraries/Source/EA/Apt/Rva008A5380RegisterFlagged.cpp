@@ -29,3 +29,21 @@ AptValue* aptRegisterFlagged008A5380(void* self, int argc)
 	done:
 	return g_bfmeFallbackDB;
 }
+
+// RVA 0x008A5440: the adjacent callback uses the holder table at +0x924.
+AptValue* aptRegisterFlagged008A5440(void* self, int argc)
+{
+	if (argc != 1)
+		goto done;
+	{
+		Rva008A5380Value* v = (Rva008A5380Value*)g_bfmeArr1233[g_bfmeCount1233 - 1];
+		int flags = v->m_flags;
+		if (!(flags & 0x8000))
+			goto done;
+		char* table = Rva008A5380Holder + 0x924;
+		if (!((Rva008A4BD0*)table)->has((int)v))
+			((BfmePtrTable64_008A4B20*)table)->add((BfmeRef008A4B20*)v);
+	}
+	done:
+	return g_bfmeFallbackDB;
+}
