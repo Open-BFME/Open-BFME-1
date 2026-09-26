@@ -787,3 +787,9 @@ unsigned Rva00891AB0IndirectWord::body() const
 {
 	return *reinterpret_cast<const unsigned short *>(m_value + 2);
 }
+
+// ?Rva0083FEB0WordLoad@@YAGPBG@Z
+unsigned short Rva0083FEB0WordLoad(const unsigned short *value)
+{
+	return *value;
+}
