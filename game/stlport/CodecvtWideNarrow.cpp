@@ -67,3 +67,33 @@ int codecvt_wide_char::do_in(mbstate_t &,
 }
 
 }
+
+char *rva00843FB0CopyWideBytes(
+	const unsigned short *first, const unsigned short *last, char *out)
+{
+	return _STL::copy(first, last, out);
+}
+
+char *rva00844010CopyWideBytes(
+	const unsigned short *first, const unsigned short *last, char *out)
+{
+	return _STL::copy(first, last, out);
+}
+
+char *rva00844070CopyWideBytes(
+	const unsigned short *first, const unsigned short *last, char *out)
+{
+	return _STL::copy(first, last, out);
+}
+
+unsigned short *rva00844040WidenSignedChars(
+	const char *first, const char *last, unsigned short *out)
+{
+	return _STL::copy(first, last, out);
+}
+
+unsigned short *rva008440A0WidenSignedChars(
+	const char *first, const char *last, unsigned short *out)
+{
+	return _STL::copy(first, last, out);
+}
