@@ -4,9 +4,10 @@
 // Retail 0x006B0850 (414 bytes): transfers an AsciiString -> float map.
 // Identity: the body's only string literals are "std::map" (0x0111C360, the
 // xferTypeName argument) and "Map must be empty on load" (0x0111C340); its one
-// caller is Rva006ABC60::xfer (0x006B0CB0) through ILT 0x000149D4, pinned as
-// ?xferMap@@YAXPAVXfer@@PAX@Z. The sibling set transfer at 0x006AC930 is
-// xferTree.cpp. The load path indexes the map through its operator[] at
+// caller is Rva006ABC60::xfer (0x006B0CB0) through ILT 0x000149D4. It is one
+// of a family of STL-container xfer helpers whose source name is unrecovered,
+// so the name keeps the address token. The sibling set transfer at 0x006AC930
+// is xferTree.cpp. The load path indexes the map through its operator[] at
 // 0x006AF6D0 (ILT 0x0000D9D1), matched in RvaMapAsciiStringQuad006AF6D0.cpp,
 // whose comparator stays opaque.
 
@@ -95,8 +96,8 @@ extern int g_guardTargetTypeThrowInfo;
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
 
-// ?xferMap@@YAPAVXfer@@PAV1@PAX@Z
-Xfer *xferMap(Xfer *xfer, void *rawMap)
+// ?Rva006B0850XferAsciiStringRealMap@@YAPAVXfer@@PAV1@PAX@Z
+Xfer *Rva006B0850XferAsciiStringRealMap(Xfer *xfer, void *rawMap)
 {
 	Rva006AF6D0Map *map = (Rva006AF6D0Map *)rawMap;
 	XferVersion version(1);

@@ -87180,7 +87180,6 @@ name,address,notes
 ?xferInteger_44FD0@@YAXAAVXfer@@AAH@Z,0x00044FD0,FX particle system update integer xfer thunk
 ?xferInteger_4570F@@YAXAAVXfer@@AAH@Z,0x0004570F,FX particle system ParticleSystemInfo integer xfer thunk
 ?xferInteger_48851@@YAXAAVXfer@@AAH@Z,0x00048851,FX particle system wind integer xfer thunk
-?xferMap@@YAXPAVXfer@@PAX@Z,0x000149D4,Rva006ABC60 xfer map helper call through the existing STL xfer thunk
 ?xferObjectID0010C3C0@@YAXPAVXfer@@PAI@Z,0x0000C9B4,"Previously reviewed10C3C025B helper: ObjectID literal,width4,virtual90; correctedunsignedObjectID pointer"
 ?xferRandomVariable@@YAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0003EE32,H1 GameClientRandomVariable xfer helper (thunk; body 0x0010C4D0) ??? pinned, ideally matched in game_client_random_variable.cpp
 ?xferRandomVariable_4570F@@YAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0004570F,FX particle system render-object random-variable xfer thunk

@@ -5738,5 +5738,55 @@
   "after_sha256": "447a48bd4b805c45fd6ad4a812699492f2921ad3c283355f93e5395657b1e3e7",
   "evidence": "targets/game/reverse/identity_evidence/002fabe0.md",
   "reason": "callRva001D02C0 was a TU-local HHH alias for the landed body 0x001D02C0 whose ledger identity is ?rva001D02C0@Object@@QAEXHHM@Z; the caller now binds that identity (its third argument is fmul'd at +0x72 so Real not Int)"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva006ABC60Xfer.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva006ABC60Xfer.cpp",
+  "old_name": "xferMap",
+  "new_name": "Rva006B0850XferAsciiStringRealMap",
+  "before_sha256": "7e59dc5f705193aeec2bc40db1fcd31e8c07b2b001e03766849613ae25375827",
+  "after_sha256": "a99d7d94092277f285bbc074799bb0241102d7bcd5d565501a009ad37aa2c7f4",
+  "evidence": "targets/game/reverse/identity_evidence/006b0850.md",
+  "reason": "xferMap was a caller-side label invented in 924dde8a67 with no identity evidence; the body is one of the STL-container xfer helpers whose source name is unrecovered so it keeps the address token like its landed siblings (AGENTS.md 3a)"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/System/XferMapAsciiStringReal.cpp",
+  "new_path": "game/GameEngine/Source/Common/System/XferMapAsciiStringReal.cpp",
+  "old_name": "xferMap",
+  "new_name": "Rva006B0850XferAsciiStringRealMap",
+  "before_sha256": "b248596f14dd5ab8e80c11cce6b345911b38d9c0d209c777379b312034d03655",
+  "after_sha256": "3607d3df9a037273184d0bdeb6e57b5d4b06098525b1f5fd3006aa6d471b5b3d",
+  "evidence": "targets/game/reverse/identity_evidence/006b0850.md",
+  "reason": "xferMap was a caller-side label invented in 924dde8a67 with no identity evidence; the body is one of the STL-container xfer helpers whose source name is unrecovered so it keeps the address token like its landed siblings (AGENTS.md 3a)"
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "xferMap",
+  "new_name": "Rva006B0850XferAsciiStringRealMap",
+  "before_sha256": "9c75bb1dfd2fa40f0a68608c27b3441a608e30e7c16e03405a2bc21234830e76",
+  "after_sha256": "9cd066316f3019d98b78be4241d3cedb3a7ce5bd550d7c3a66a1a3ea19c13fe3",
+  "evidence": "targets/game/reverse/identity_evidence/006b0850.md",
+  "reason": "xferMap was a caller-side label invented in 924dde8a67 with no identity evidence; the body is one of the STL-container xfer helpers whose source name is unrecovered so it keeps the address token like its landed siblings (AGENTS.md 3a)"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/System/XferMapAsciiStringReal.cpp",
+  "new_path": "game/GameEngine/Source/Common/System/XferMapAsciiStringReal.cpp",
+  "old_name": "xferMap",
+  "new_name": "Rva006B0850XferAsciiStringRealMap",
+  "before_sha256": "b1570e450b407ad9aa233b833a73de60ce551825bcbe8b7d681f51658d4739cb",
+  "after_sha256": "892e9f8da59fec871ed2623d6200e60ee7b2e551df33fb8dee55d4c22d35a65f",
+  "evidence": "targets/game/reverse/identity_evidence/006b0850.md",
+  "reason": "xferMap was a caller-side label invented in 924dde8a67 with no identity evidence; the body is one of the STL-container xfer helpers whose source name is unrecovered so it keeps the address token like its landed siblings (AGENTS.md 3a)"
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "xferMap",
+  "new_name": "Rva006B0850XferAsciiStringRealMap",
+  "before_sha256": "6737857f6403e80b8fce968153689a87eba43ed518000999659a1838a1c65b36",
+  "after_sha256": "d65a04ef0a003a7b1733702500d8f8e8fbc82786b53b8b62d30695b664881f1e",
+  "evidence": "targets/game/reverse/identity_evidence/006b0850.md",
+  "reason": "xferMap was a caller-side label invented in 924dde8a67 with no identity evidence; the body is one of the STL-container xfer helpers whose source name is unrecovered so it keeps the address token like its landed siblings (AGENTS.md 3a)"
  }
 ]

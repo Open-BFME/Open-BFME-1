@@ -51,10 +51,10 @@ public:
 };
 
 extern void __cdecl xferTree(Xfer *xfer, void *tree);
-extern void __cdecl xferMap(Xfer *xfer, void *map);
+extern Xfer *__cdecl Rva006B0850XferAsciiStringRealMap(Xfer *xfer, void *map);
 
 #pragma comment(linker, "/alternatename:?xferTree@@YAXPAVXfer@@PAX@Z=?j_00003544@@YAXXZ")
-#pragma comment(linker, "/alternatename:?xferMap@@YAXPAVXfer@@PAX@Z=?j_000149d4@@YAXXZ")
+#pragma comment(linker, "/alternatename:?Rva006B0850XferAsciiStringRealMap@@YAPAVXfer@@PAV1@PAX@Z=?j_000149d4@@YAXXZ")
 
 class Rva006ABC60
 {
@@ -109,7 +109,7 @@ void Rva006ABC60::xfer(Xfer *xfer)
 		xfer->xferReal(&record.m_tail4);
 		xfer->xferReal(&record.m_tail5);
 	}
-	xferMap(xfer, record.m_map);
+	Rva006B0850XferAsciiStringRealMap(xfer, record.m_map);
 
 	for (int i = 0; i < 6; ++i)
 		for (int j = 0; j < 2; ++j)
