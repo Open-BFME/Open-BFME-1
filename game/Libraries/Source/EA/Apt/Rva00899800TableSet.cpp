@@ -1,7 +1,5 @@
 // ?rva00899800@@YAPAVAptValue@@PAXH@Z
-// partial score=0.82 date=2026-09-27
-// ?rva00899800@@YAPAVAptValue@@PAXH@Z
-// Retail RVA 0x00899800, 748 bytes; identity remains address-derived.
+// Retail 0x00899800 (748 B): Apt native (name, value) that erases or stores the name in the lazily built table at 0x01337A28.
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 typedef unsigned int UnsignedInt;
@@ -44,8 +42,27 @@ extern void *(__cdecl *Rva008C5D70Alloc)(UnsignedInt bytes);
 class AptValue
 {
 public:
+	Bool isUndefined() const
+	{
+		return ((m_flags >> 15) & 1) == 0;
+	}
+	Bool isString() const
+	{
+		UnsignedInt type = m_flags & 0x3f;
+		return (type == 1 || type == 42) && !isUndefined();
+	}
+
 	void *m_vtable;
-	UnsignedInt m_flags;
+	union
+	{
+		UnsignedInt m_flags;
+		struct
+		{
+			UnsignedInt m_type : 6;
+			UnsignedInt m_bits : 9;
+			UnsignedInt m_pooled : 1;
+		};
+	};
 	void *m_payload08;
 	char m_padding0c[0x14];
 	AptValue *m_indirect;
@@ -54,8 +71,10 @@ public:
 
 extern AptValue **g_bfmeArr1233;
 extern int g_stack01338748;
-extern void d_00898d20(void);
-extern void d_00898d40(void);
+extern void *g_Rva01337A28Index;
+class BfmeS1238;
+extern int Rva00898D20Get();
+extern BfmeS1238 *Rva00898D40At(void *unused, int index);
 extern void __cdecl bfmeAppend(int, int, int);
 extern "C" void (*TheBfmeFree)(void *, UnsignedInt);
 
@@ -69,7 +88,13 @@ struct BfmeStateNode
 	virtual Bool slot05();
 };
 
-class Rva0089C860State
+// Retail unwind state 0 pushes 16 and the allocation, then calls the 0x008976D0 thunk.
+struct Gen_uws16_008976d0
+{
+	static void operator delete(void *object, unsigned int bytes);
+};
+
+class Rva0089C860State : public Gen_uws16_008976d0
 {
 public:
 	Rva0089C860State(int value) { initialize(value); }
@@ -78,10 +103,6 @@ public:
 	static void *operator new(unsigned int bytes)
 	{
 		return Rva008C5D70Alloc(bytes);
-	}
-	static void operator delete(void *object, unsigned int bytes)
-	{
-		TheBfmeFree(object, bytes);
 	}
 	int m_value;
 	int m_flags;
@@ -175,36 +196,31 @@ AptValue *rva00899800(void *, int argc)
 		return (AptValue *)Rva00899800Boolean::createFalse();
 
 	AptValue *top = g_bfmeArr1233[g_stack01338748 - 1];
-	if ((top->m_flags & 0x3f) != 1 &&
-		((top->m_flags & 0x3f) != 0x2a ||
-			((top->m_flags >> 15) & 1) != 0))
+	if (!(top->m_flags & 0x8000) || !top->isString())
 		return (AptValue *)Rva00899800Boolean::createFalse();
 
-	Rva0089C860State *table =
-		*(Rva0089C860State **)(void *)0x01337A28;
+	Rva0089C860State *table = (Rva0089C860State *)g_Rva01337A28Index;
 	AptValue *under = g_bfmeArr1233[g_stack01338748 - 2];
 	if (table == 0)
 	{
-		table = new Rva0089C860State(8);
-		if (table == 0)
-			return (AptValue *)Rva00899800Boolean::createFalse();
-		*(Rva0089C860State **)(void *)0x01337A28 = table;
-		bfmeAppend((int)table, (int)&d_00898d20, (int)&d_00898d40);
-		table = *(Rva0089C860State **)(void *)0x01337A28;
+		g_Rva01337A28Index = new Rva0089C860State(8);
+		bfmeAppend((int)g_Rva01337A28Index, (int)&Rva00898D20Get,
+			(int)&Rva00898D40At);
+		table = (Rva0089C860State *)g_Rva01337A28Index;
 	}
 
-	if ((under->m_flags & 0x3f) == 3)
+	if (under->m_type == 3)
 	{
 		AptValue *key = top;
-		if ((key->m_flags & 0x3f) != 1)
+		if (key->m_type != 1)
 			key = key->m_indirect;
 		((BfmeLookup1279 *)table)->bfmeErase1279(
 			*(BfmeKey1279 *)&key->m_payload08);
 	}
 	else
 	{
-		AptValue *key = under;
-		if ((key->m_flags & 0x3f) != 1)
+		AptValue *key = top;
+		if (key->m_type != 1)
 			key = key->m_indirect;
 		((Rva8D0D80Table *)table)->add(
 			(Rva8D0D80String *)&key->m_payload08,
