@@ -11,7 +11,7 @@ sys.path.insert(0, 'tools')
 import build
 
 want = sys.argv[1]
-data = open('inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe', 'rb').read()
+data = build.EXE.read_bytes()
 
 for r in csv.DictReader(open('targets/game/reverse/functions.csv', newline='')):
     if r['status'] != 'matched':

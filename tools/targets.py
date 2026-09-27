@@ -207,12 +207,16 @@ def _name(value):
     return value.decode("ascii") if value is not None else None
 
 
+BASELINES = {"game": ("inputs/baselines/bfme1/retail-1.03-unpacked", "lotrbfme.exe"),
+             "worldbuilder": ("inputs/baselines/bfme1/workshop-vanilla-1.03", "worldbuilder.exe")}
+
+
 def load_target(target_id, *, root=ROOT):
-    image_names = {"game": "lotrbfme.exe", "worldbuilder": "worldbuilder.exe"}
-    if not isinstance(target_id, str) or target_id not in image_names:
+    if not isinstance(target_id, str) or target_id not in BASELINES:
         raise TargetError(f"invalid target ID: {target_id!r}")
+    baseline, image_file = BASELINES[target_id]
     root = Path(root).resolve()
-    manifest_path = _under(root, "inputs/baselines/bfme1/workshop-vanilla-1.03/manifest.json", "baseline manifest")
+    manifest_path = _under(root, baseline + "/manifest.json", "baseline manifest")
     try:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     except (OSError, ValueError) as error:
@@ -220,14 +224,14 @@ def load_target(target_id, *, root=ROOT):
     if (not isinstance(manifest, dict) or type(manifest.get("schema_version")) is not int
             or manifest["schema_version"] != 1 or not isinstance(manifest.get("files"), list)):
         raise TargetError(f"{manifest_path}: invalid baseline manifest")
-    image_name = "files/" + image_names[target_id]
+    image_name = "files/" + image_file
     entries = [entry for entry in manifest["files"] if isinstance(entry, dict) and entry.get("path") == image_name]
     if len(entries) != 1:
         raise TargetError(f"{manifest_path}: expected one {image_name} entry")
     expected = entries[0].get("sha256")
     if not isinstance(expected, str) or not re.fullmatch(r"[0-9a-f]{64}", expected):
         raise TargetError(f"{manifest_path}: {image_name} needs a lowercase SHA-256")
-    image_path = _under(root, "inputs/baselines/bfme1/workshop-vanilla-1.03/" + image_name, "image path")
+    image_path = _under(root, baseline + "/" + image_name, "image path")
     ledger_root = _under(root, f"targets/{target_id}/reverse", "ledger root")
     build_root = _under(root, f"build/{target_id}", "build root")
     for label, path, expected_path in (("ledger root", ledger_root, root / "targets" / target_id / "reverse"),

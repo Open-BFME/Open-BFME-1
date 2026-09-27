@@ -46,7 +46,7 @@ from pathlib import Path
 import build
 import progress
 
-EXE = 'inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe'
+EXE = build.EXE
 ANON = re.compile(r'^\?[dj]i?_[0-9a-f]{8}@@YAXXZ$')
 IMAGE_BASE = 0x400000
 CALL = re.compile(rb'[\xe8\xe9]')

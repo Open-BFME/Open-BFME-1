@@ -45,7 +45,7 @@ LPVOID CopyProtect::s_protectedData = NULL;
 static const char* const LAUNCHER_GUID =
 	"46EB79F1-5924-4375-AE1E-1C3C36C7AC4D"; // BFME launcher GUID (retail string; ZH had the Generals MP Test one)
 static const char* const protectGUID =
-	"6096561D-8A70-48ed-9FF8-18552419E50D"; // Generals Multiplayer Test Protect GUID
+	"CA5F8EE2-0630-4ef3-BD73-D71F832CD25F"; // BFME protect GUID (retail string; ZH had the Generals MP Test one)
 
 /*
 static const char* const LAUNCHER_GUID =
@@ -95,7 +95,6 @@ Bool CopyProtect::isLauncherRunning(void)
 }
 
 // ---------------------------------------------------------------------------
-// ?notifyLauncher@CopyProtect@@SA_NXZ present-unmatched
 Bool CopyProtect::notifyLauncher(void)
 {
 	DEBUG_LOG(("COPYPROTECTION - Notify launcher\n"));
@@ -201,7 +200,6 @@ void CopyProtect::checkForMessage(UINT message, LPARAM lParam)
 }
 
 // ---------------------------------------------------------------------------
-// ?validate@CopyProtect@@SA_NXZ present-unmatched
 Bool CopyProtect::validate(void)
 {
 	DEBUG_LOG(("COPYPROTECTION - Validating\n"));
@@ -210,7 +208,7 @@ Bool CopyProtect::validate(void)
 	if (s_protectedData != NULL)
 	{
 		return (strcmp((const char*)s_protectedData,
-			"Play the \"Command & Conquer: Generals\" Multiplayer Test.") == 0);
+			"B966C0E5-16AC-4ebd-90AC-D7A8C8976040") == 0);
 	}
 
 #if defined(_DEBUG) || defined(_INTERNAL)

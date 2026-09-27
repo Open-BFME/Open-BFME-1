@@ -518,8 +518,8 @@ public ?d_0009bdf0@@YAXXZ
     db 58h, 68h, 0F8h, 0FFh, 85h, 0C0h, 8Dh, 4Ch, 24h, 0Ch, 0Fh, 95h, 44h, 24h, 0Ah, 0E8h
     db 2Ch, 0C3h, 7Eh, 00h, 8Bh, 0Dh, 44h, 0D6h, 2Eh, 01h, 0E8h, 0BCh, 0F8h, 0F7h, 0FFh, 8Bh
     db 74h, 24h, 5Ch, 8Bh, 0Dh, 0C8h, 0D5h, 2Eh, 01h, 3Bh, 0F0h, 8Bh, 81h, 0D0h, 0Bh, 00h
-    db 00h, 50h, 50h, 0Fh, 95h, 44h, 24h, 13h, 0E8h, 29h, 5Bh, 0F6h, 0FFh, 90h, 90h, 90h
-    db 90h, 83h, 0C4h, 08h, 31h, 0C0h, 90h, 90h, 90h, 84h, 0DBh, 5Bh, 75h, 14h, 8Ah, 4Ch
+    db 00h, 50h, 50h, 0Fh, 95h, 44h, 24h, 13h, 0E8h, 29h, 5Bh, 0F6h, 0FFh, 8Bh, 54h, 24h
+    db 68h, 83h, 0C4h, 08h, 3Bh, 0D0h, 0Fh, 95h, 0C0h, 84h, 0DBh, 5Bh, 75h, 14h, 8Ah, 4Ch
     db 24h, 06h, 84h, 0C9h, 75h, 0Ch, 8Ah, 4Ch, 24h, 07h, 84h, 0C9h, 75h, 04h, 84h, 0C0h
     db 74h, 02h, 0B0h, 01h, 8Bh, 0Dh, 0C8h, 0D5h, 2Eh, 01h, 8Bh, 0B1h, 0C8h, 0Bh, 00h, 00h
     db 8Bh, 54h, 24h, 60h, 3Bh, 0D6h, 0Fh, 95h, 0C1h, 84h, 0C0h, 75h, 37h, 84h, 0C9h, 75h

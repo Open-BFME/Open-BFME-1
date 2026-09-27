@@ -24,7 +24,7 @@ pass several RVAs at once. The output is a DRAFT of control flow, call order and
 and types are invented; decompiled C is never byte-match proof and never identity evidence (AGENTS.md).
 
 ## Regenerate (≈3 min)
-Run from the repo root; replace `$EXE` with `inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe`:
+Run from the repo root; replace `$EXE` with `inputs/baselines/bfme1/retail-1.03-unpacked/files/lotrbfme.exe`:
 
     analyzeHeadless /tmp/bfme_ghidra bfme -import $EXE -overwrite \
         -scriptPath tools/ghidra -postScript list_functions.java $PWD/targets/game/reverse/ghidra_functions.csv
@@ -82,7 +82,7 @@ $env:PATH = "$env:JAVA_HOME\bin;$env:PATH"
 New-Item -ItemType Directory -Force "$root\build\toolchains\bfme_ghidra"
 & "$root\build\toolchains\ghidra_12.1.2_PUBLIC\support\analyzeHeadless.bat" `
     "$root\build\toolchains\bfme_ghidra" bfme `
-    -import "$root\baselines\bfme1\workshop-vanilla-1.03\files\lotrbfme.exe" -overwrite `
+    -import "$root\inputs\baselines\bfme1\retail-1.03-unpacked\files\lotrbfme.exe" -overwrite `
     -scriptPath "$root\tools\ghidra" -postScript list_functions.java `
     "$root\reverse\ghidra_functions.csv"
 ```

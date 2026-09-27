@@ -9,7 +9,7 @@ import sys
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from targets import TargetError, load_target
+from targets import BASELINES, TargetError, load_target
 
 
 def image(body=b"\xC3", virtual_size=0x20, image_base=0x400000):
@@ -33,8 +33,8 @@ def image(body=b"\xC3", virtual_size=0x20, image_base=0x400000):
 
 def configure(root, target_id="worldbuilder", data=None):
     data = image() if data is None else data
-    name = {"game": "lotrbfme.exe", "worldbuilder": "worldbuilder.exe"}[target_id]
-    path = root / "inputs/baselines/bfme1/workshop-vanilla-1.03/manifest.json"
+    baseline, name = BASELINES[target_id]
+    path = root / baseline / "manifest.json"
     binary = path.parent / "files" / name
     binary.parent.mkdir(parents=True, exist_ok=True)
     binary.write_bytes(data)

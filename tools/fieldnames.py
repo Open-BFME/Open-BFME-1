@@ -51,7 +51,7 @@ import sys
 from pathlib import Path
 
 DEFAULT_ROOT = Path(__file__).resolve().parents[1]
-BINARY = "inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
+BINARY = "inputs/baselines/bfme1/retail-1.03-unpacked/files/lotrbfme.exe"
 UPSTREAM = "inputs/reference/CnC_Generals_Zero_Hour"
 OUT = "targets/game/reverse/field_names.csv"
 COLUMNS = ["table_rva", "ini_key", "bfme_offset", "upstream_class",

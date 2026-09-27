@@ -23,7 +23,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-EXE = ROOT / "inputs/baselines" / "bfme1" / "workshop-vanilla-1.03" / "files" / "lotrbfme.exe"
+EXE = ROOT / "inputs/baselines" / "bfme1" / "retail-1.03-unpacked" / "files" / "lotrbfme.exe"
 
 # Calling-convention letter -> who cleans the stack. A parsed __cdecl signature
 # is the one caller-cleaned case whose cleanup is still known: it must end in

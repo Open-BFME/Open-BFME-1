@@ -23,7 +23,7 @@ def padding_split(chunk):
 
 
 def main():
-    data = open('inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe', 'rb').read()
+    data = open('inputs/baselines/bfme1/retail-1.03-unpacked/files/lotrbfme.exe', 'rb').read()
     TEXT_START = 0x1000
     TEXT_END = 0x1000 + 13049856
 

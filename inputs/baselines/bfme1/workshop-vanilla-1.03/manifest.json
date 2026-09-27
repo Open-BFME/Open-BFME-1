@@ -5,7 +5,8 @@
   "files": [
     {
       "path": "files/lotrbfme.exe",
-      "role": "primary_reverse_engineering_target",
+      "role": "mods_runtime_base",
+      "note": "Cracked: withmorten's 2022 SafeDisc release plus the workshop's launcher and copy-protection patches, so it runs without the launcher. The byte-matching reference is bfme1.retail-1.03-unpacked, whose manifest lists every patch.",
       "size": 16433152,
       "md5": "34af1cded478f6f48b333db0b8d5f6d9",
       "sha256": "c1a907c44b84df129c1f18dc7365ea25ba438f9b8f39a374b86ed852936ff0a9",

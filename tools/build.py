@@ -23,8 +23,8 @@ from portable_lock import lock, unlock
 
 
 ROOT = Path(__file__).resolve().parents[1]
-MANIFEST = ROOT / "inputs/baselines" / "bfme1" / "workshop-vanilla-1.03" / "manifest.json"
-EXE = ROOT / "inputs/baselines" / "bfme1" / "workshop-vanilla-1.03" / "files" / "lotrbfme.exe"
+MANIFEST = ROOT / "inputs/baselines" / "bfme1" / "retail-1.03-unpacked" / "manifest.json"
+EXE = ROOT / "inputs/baselines" / "bfme1" / "retail-1.03-unpacked" / "files" / "lotrbfme.exe"
 FUNCTIONS = ROOT / "targets/game/reverse" / "functions.csv"
 SYMBOLS = ROOT / "targets/game/reverse" / "symbols.csv"
 BUILD_DIR = ROOT / "build" / "match"

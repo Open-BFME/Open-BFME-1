@@ -27,7 +27,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 sys.path.insert(0, str(ROOT / "tools/fleet"))
 MODEL = os.environ.get("HUB_MODEL", "gpt-6-sol")
 EFFORT = os.environ.get("HUB_EFFORT", "medium")
-EXE = ROOT / "inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
+EXE = ROOT / "inputs/baselines/bfme1/retail-1.03-unpacked/files/lotrbfme.exe"
 TEXT_START, TEXT_END = 0x1000, 0x1000 + 13049856
 
 GAP_BRIEF = """ROLE. You are the analyst for one UNCLAIMED region of retail .text: no ledger row covers it, so no seat has ever

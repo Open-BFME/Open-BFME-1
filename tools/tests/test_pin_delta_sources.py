@@ -22,7 +22,7 @@ import pytest
 
 TOOLS = Path(__file__).resolve().parents[1]
 ROOT = TOOLS.parent
-EXE = ROOT / "inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
+EXE = ROOT / "inputs/baselines/bfme1/retail-1.03-unpacked/files/lotrbfme.exe"
 
 OLD, NEW = "d27ae4b7b~1", "d27ae4b7b"
 CONVERTED = ["game/Libraries/Source/WWVegas/WW3D2/BoxDynamicVBAccess_AllocateDX8.cpp",

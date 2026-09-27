@@ -29,7 +29,7 @@ TEXT_RVA = 0x1000
 TEXT_SIZE = 0x400
 RDATA_RVA = 0x2000
 HEADERS = 0x400
-BINARY = "inputs/baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
+BINARY = "inputs/baselines/bfme1/retail-1.03-unpacked/files/lotrbfme.exe"
 OUT = "targets/game/reverse/field_names.csv"
 
 fieldnames = importlib.util.module_from_spec(

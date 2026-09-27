@@ -713,7 +713,7 @@ public ?d_004e1450@@YAXXZ
     db 55h, 2Bh, 0F7h, 8Bh, 0C6h, 3Bh, 0C5h, 75h, 4Dh, 8Bh, 0Dh, 44h, 0D6h, 2Eh, 01h, 0E8h
     db 37h, 9Eh, 0B3h, 0FFh, 39h, 84h, 24h, 9Ch, 00h, 00h, 00h, 75h, 39h, 0A1h, 0C8h, 0D5h
     db 2Eh, 01h, 8Bh, 80h, 0D0h, 0Bh, 00h, 00h, 50h, 50h, 0E8h, 0A7h, 00h, 0B2h, 0FFh, 8Bh
-    db 8Ch, 24h, 0A8h, 00h, 00h, 00h, 83h, 0C4h, 08h, 3Bh, 0C8h, 90h, 90h, 8Bh, 15h, 0C8h
+    db 8Ch, 24h, 0A8h, 00h, 00h, 00h, 83h, 0C4h, 08h, 3Bh, 0C8h, 75h, 19h, 8Bh, 15h, 0C8h
     db 0D5h, 2Eh, 01h, 8Bh, 8Ch, 24h, 0A4h, 00h, 00h, 00h, 3Bh, 8Ah, 0C8h, 0Bh, 00h, 00h
     db 75h, 04h, 0B3h, 01h, 0EBh, 02h, 32h, 0DBh, 0F6h, 44h, 24h, 1Ch, 01h, 0C7h, 84h, 24h
     db 30h, 03h, 00h, 00h, 0Ch, 00h, 00h, 00h, 74h, 14h, 8Bh, 44h, 24h, 1Ch, 83h, 0E0h

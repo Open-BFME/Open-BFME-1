@@ -1,0 +1,923 @@
+{
+  "schema_version": 1,
+  "id": "bfme1.retail-1.03-unpacked",
+  "name": "BFME1 1.03 game.dat, SafeDisc-unpacked, crack patches reverted",
+  "files": [
+    {
+      "path": "files/lotrbfme.exe",
+      "role": "primary_reverse_engineering_target",
+      "size": 16433152,
+      "md5": "e437437a9f85b523f3a22641078c5082",
+      "sha256": "1fbdc0ced8f283732c094c4f0804ce8dc1e3e3675b720bcab066c94fed964e75",
+      "pe": {
+        "machine": "i386",
+        "linker_version": "7.10",
+        "timestamp_utc": "2005-11-29T01:15:52Z",
+        "entry_point_rva": "0x009F72C4",
+        "image_base": "0x00400000",
+        "section_alignment": 4096,
+        "file_alignment": 4096,
+        "sections": 7
+      }
+    }
+  ],
+  "provenance": {
+    "unpack": {
+      "author": "withmorten",
+      "file": "RTS.exe",
+      "size": 16424960,
+      "md5": "514d3fc924bec4f35be09af39fc5db58",
+      "sha256": "61604b527867366b1263431ca1d9d28320e25144619fb87bc4e2d9742a2a2ca2",
+      "shared": "by withmorten on the project Discord, 2026-09-27",
+      "release_thread": "https://www.gamereplays.org/community/BFME1_SafeDisc_unpacked_+_patched-t1060667.html"
+    },
+    "built_from": "bfme1.workshop-vanilla-1.03 files/lotrbfme.exe (md5 34af1cded478f6f48b333db0b8d5f6d9)",
+    "method": "The workshop image with every reverted_patches range restored to the unpack's bytes and the PE checksum recomputed. Everything else is the workshop image: withmorten's SafeDisc repairs, the workshop icon and the section layout."
+  },
+  "reverted_patches": [
+    {
+      "rva": "0x00060598",
+      "size": 18,
+      "function": "WinMain 0x004600F0",
+      "source": "workshop",
+      "what": "isLauncherRunning call swapped for Win32CDManager::createDrive (thunk 0x00433AD2); both launcher checks forced to pass",
+      "original": "e8b735fdff3ac37409e8cc29faff3ac37525",
+      "cracked": "e83535fdff3ac3eb00e8cc29faff3ac3eb25"
+    },
+    {
+      "rva": "0x0007A4E7",
+      "size": 1,
+      "function": "GameEngine::init",
+      "source": "workshop",
+      "what": "je->jmp: never sets the flag when the lotrb.sec string is not lotrsec.big",
+      "original": "74",
+      "cracked": "eb"
+    },
+    {
+      "rva": "0x0010211F",
+      "size": 153,
+      "function": "CopyProtect::notifyLauncher",
+      "source": "workshop",
+      "what": "four branches forced",
+      "original": "751750ff15308f3501ffd33bc772e25f5e5d32c05b83c41cc356ff150c8f350156ff15cc8c3501ffd38bf081c610270000ffd33bc677d8bfefbe0000eb038d49006a0157576a008d4c242051ff154490350185c07406397c241474186a00ff15308f3501ffd33bc676d75f5e5d32c05b83c41cc38b54241c6a006a006a006a00681f000f0052ff15908e350185c0a350d82e010f8476ffffff",
+      "cracked": "eb1750ff15308f3501ffd33bc772e25f5e5d32c05b83c41cc356ff150c8f350156ff15cc8c3501ffd38bf081c610270000ffd33bc677d8bfefbe0000eb038d49006a0157576a008d4c242051ff154490350185c0eb00397c2414eb186a00ff15308f3501ffd33bc676d75f5e5d32c05b83c41cc38b54241c6a006a006a006a00681f000f0052ff15908e350185c0a350d82e01eb0490909090"
+    },
+    {
+      "rva": "0x00102249",
+      "size": 26,
+      "function": "CopyProtect::validate",
+      "source": "workshop",
+      "what": "forced to return true",
+      "original": "74155733c0bfd4620801b925000000f3a65f0f94c05ec332c05e",
+      "cracked": "eb155733c0bfd4620801b925000000f3a65f0f94c05ec3b0015e"
+    },
+    {
+      "rva": "0x000853C7",
+      "size": 162,
+      "function": "GlobalData::GlobalData",
+      "source": "withmorten-2022",
+      "what": "exe CRC loop replaced by hard-coded gamenoDRM.dat CRC 0x560A4FE9",
+      "original": "6804010000c686c40b0000018d542448899ec80b000052c786d00b0000ae6f4b2553c786d40b0000ffffffff895c241cff15c08d35018b0d48cb34016a418d44244850e8513494008bf83bfb74548b1768000001008d84244c010000508bcfff520c3bc37e358d49008b4c241051508d94245001000052e84155f8ff83c40c68000001008d8c244c010000894424148b07518bcfff500c3bc37fce8b178bcfff5208",
+      "cracked": "c686c40b000001899ec80b0000c786d00b0000ae6f4b25c786d40b0000ffffffffc7442410e94f0a56e9740000009090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090"
+    },
+    {
+      "rva": "0x0009BECD",
+      "size": 12,
+      "function": "RecorderClass::testVersionPlayback",
+      "source": "withmorten-2022",
+      "what": "exe CRC compare removed",
+      "original": "8b54246883c4083bd00f95c0",
+      "cracked": "9090909083c40831c0909090"
+    },
+    {
+      "rva": "0x004E195B",
+      "size": 2,
+      "function": "PopulateReplayFileListbox",
+      "source": "withmorten-2022",
+      "what": "replay exe CRC jne nopped",
+      "original": "7519",
+      "cracked": "9090"
+    },
+    {
+      "rva": "0x0056F849",
+      "size": 2,
+      "function": "replay body 0x0096F1F0",
+      "source": "withmorten-2022",
+      "what": "replay exe CRC jne nopped",
+      "original": "7519",
+      "cracked": "9090"
+    }
+  ],
+  "no_ground_truth": [
+    {
+      "rva": "0x0005D550",
+      "size": 30,
+      "what": "SafeDisc-damaged stub with no caller; withmorten filled it with int3"
+    },
+    {
+      "rva": "0x0005D580",
+      "size": 16,
+      "what": "SafeDisc-damaged stub with no caller; withmorten filled it with int3"
+    },
+    {
+      "rva": "0x00061720",
+      "size": 381,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x00061900",
+      "size": 381,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x00061F00",
+      "size": 240,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0006CDF0",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0006CFD0",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0006D1D0",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0006D3B0",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0006D5C0",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0006D7A0",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0006D990",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0006DB70",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0006EF90",
+      "size": 235,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0006F0D0",
+      "size": 240,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0006F200",
+      "size": 235,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0006F330",
+      "size": 240,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x00097970",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x00097B50",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x00098C80",
+      "size": 240,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x00384340",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x00384520",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x00384720",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x00384900",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x003859B0",
+      "size": 240,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x00385AE0",
+      "size": 240,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x003C6580",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x003C6760",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x003C6950",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x003C6B30",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x003C7780",
+      "size": 240,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x003C78B0",
+      "size": 240,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x00523650",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x00523830",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x00523A30",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x00523C10",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x00523E20",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x00524000",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x005241F0",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x005243D0",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x00525450",
+      "size": 241,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x00525590",
+      "size": 246,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x005256D0",
+      "size": 241,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x00525800",
+      "size": 246,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x00549020",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x00549200",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x00549400",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x005495E0",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x005497E0",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x005499C0",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x00549BC0",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x00549DA0",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x00549FF0",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0054A1D0",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0054A3C0",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0054A5A0",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0054A790",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0054A970",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0054AB60",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0054AD40",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0054AF30",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0054B110",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0054B320",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0054B500",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0054BCA0",
+      "size": 241,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0054BDD0",
+      "size": 235,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0054BF00",
+      "size": 235,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0054C030",
+      "size": 241,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0054C170",
+      "size": 246,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0054C2B0",
+      "size": 235,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0054C3E0",
+      "size": 240,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0054C510",
+      "size": 240,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0054C640",
+      "size": 246,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0054C780",
+      "size": 240,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0056AE50",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0056B030",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0056B230",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0056B410",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0056B620",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0056B800",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0056B9F0",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0056BBD0",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0056C3F0",
+      "size": 241,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0056C530",
+      "size": 246,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0056C670",
+      "size": 241,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0056C7A0",
+      "size": 246,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0058A080",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0058A260",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0058A450",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0058A630",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0058A840",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0058AA20",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x0058C6C0",
+      "size": 235,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0058C7F0",
+      "size": 240,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x0058C920",
+      "size": 240,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x00618F90",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x00619170",
+      "size": 381,
+      "what": "safedisc-stripped body; only prologue and closing marker/epilogue survive, int3 between"
+    },
+    {
+      "rva": "0x00619540",
+      "size": 235,
+      "what": "safedisc-stripped body; the bytes here are withmorten's NASM rebuild"
+    },
+    {
+      "rva": "0x00EBC388",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBC50C",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBC690",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBC814",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBC998",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBCB1C",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBCCA0",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBCE24",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBCFA8",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBD12C",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBD2B0",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBD434",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBD5B8",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBD73C",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBD8C0",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBDA44",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBDBC8",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBDD4C",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBDED0",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBE054",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBE1D8",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBE35C",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBE4E0",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBE664",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBE7E8",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBE96C",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBEAF0",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBEC74",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBEDF8",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBEF7C",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBF100",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBF284",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBF408",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBF58C",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBF710",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBF894",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBFA18",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBFB9C",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBFD20",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EBFEA4",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC0028",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC01AC",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC0330",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC04B4",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC0638",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC07BC",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC0940",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC0AC4",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC0C48",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC0DCC",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC0F50",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC10D4",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC1258",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC13DC",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC1560",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC16E4",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC1868",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC19EC",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC1B70",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC1CF4",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC1E78",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC1FFC",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC2180",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    },
+    {
+      "rva": "0x00EC2304",
+      "size": 64,
+      "what": "SafeDisc trigger array; values from withmorten's crack (rotwk/WorldBuilder copies)"
+    }
+  ]
+}
