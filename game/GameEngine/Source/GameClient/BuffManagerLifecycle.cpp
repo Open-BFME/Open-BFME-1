@@ -10,11 +10,13 @@ private:
 	char m_retailLayout[0x44];
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
-class SubsystemInterface
+// The base table these destructors restore last is 0x01073744, Snapshot's
+// (??0Snapshot at 0x0006B180 installs it); SubsystemInterface's is 0x01141640.
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
+class Snapshot
 {
 public:
-	virtual ~SubsystemInterface() {}
+	virtual ~Snapshot() {}
 };
 
 class BuffManager;
@@ -28,7 +30,7 @@ public:
 
 extern BuffManagerRegistry *TheGameClientClientUpdate;
 
-class BuffManager : public SubsystemInterface
+class BuffManager : public Snapshot
 {
 public:
 	BuffManager(int mode);
