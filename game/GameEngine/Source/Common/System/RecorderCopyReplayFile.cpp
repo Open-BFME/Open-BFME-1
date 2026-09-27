@@ -1,6 +1,6 @@
-// ?dup_00099E10@@YA_NPAVAsciiString@@0PAVUnicodeString@@@Z
-// partial score=0.862 date=2026-09-27
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc
+// Retail 0x00099E10, 927 bytes: copies a replay from the replay directory to a named or the
+// next free numbered replay file, writing the given title in place of the stored replay name.
 #include <string.h>
 
 struct _iobuf;
@@ -127,34 +127,26 @@ Bool dup_00099E10(AsciiString *src, AsciiString *dst, UnicodeString *title)
 	if (in == 0)
 		return false;
 	FILE *out = fopen(dstPath.str(), "wb");
-	if (out == 0) {
-		fclose(in);
+	if (out == 0)
 		return false;
-	}
 	Int seekRes = fseek(in, 0, 0);
 	char buf[0x10000];
 	UnsignedInt got = fread(buf, 1, 0x25, in);
 	UnsignedInt put = fwrite(buf, 1, 0x25, out);
 	if (seekRes != 0 || got < 0x25 || put < 0x25)
 		return false;
-	{
-		(void)readUnicodeString(in);
-		fwprintf(out, L"%ws", title->str());
-		fputwc(0, out);
-		while (true) {
-			UnsignedInt n = fread(buf, 1, 0x10000, in);
-			UnsignedInt w = fwrite(buf, 1, n, out);
-			if (n != 0x10000) {
-				if (w == n) {
-					fclose(in);
-					fclose(out);
-					return true;
-				}
-				break;
-			}
-			if (w != n)
-				break;
-		}
-	}
-	return false;
+	UnicodeString name = readUnicodeString(in);
+	fwprintf(out, L"%ws", title->str());
+	fputwc(0, out);
+	UnsignedInt n;
+	UnsignedInt w;
+	do {
+		n = fread(buf, 1, 0x10000, in);
+		w = fwrite(buf, 1, n, out);
+	} while (n == 0x10000 && w == n);
+	if (n != w)
+		return false;
+	fclose(in);
+	fclose(out);
+	return true;
 }
