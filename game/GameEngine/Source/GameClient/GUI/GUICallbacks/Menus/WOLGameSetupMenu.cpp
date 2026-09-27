@@ -1130,9 +1130,9 @@ public:
 	virtual void slot040() = 0;
 	virtual void slot044() = 0;
 	virtual void slot048() = 0;
-	virtual void slot04C() = 0;
+	virtual PlayerInfo *findPlayerName( const char *name ) = 0;
 	virtual void slot050() = 0;
-	virtual void slot054() = 0;
+	virtual BuddyInfoMap *getBuddyMap() = 0;
 	virtual void slot058() = 0;
 	virtual void slot05C() = 0;
 	virtual void slot060() = 0;
@@ -1181,6 +1181,36 @@ public:
 	virtual void slot10C() = 0;
 	virtual void slot110() = 0;
 	virtual const AsciiString &getPingString() = 0;
+};
+
+class BfmeWolPlayerTemplateView
+{
+public:
+	char pad000[0x8];
+	AsciiString m_side;
+};
+
+// BFME PSPlayerStats map order, as landed for Rva004DBE80Stats in PopupPlayerInfo_populate.cpp.
+struct BfmeWolPlayerStatsView
+{
+	Int id;                             // +0x000
+	PerGeneralMap wins;                 // +0x004
+	PerGeneralMap losses;               // +0x010
+	PerGeneralMap currentWinStreaks;    // +0x01c
+	PerGeneralMap currentLossStreaks;   // +0x028
+	PerGeneralMap worstLossStreaks;     // +0x034
+	PerGeneralMap bestWinStreaks;       // +0x040
+	PerGeneralMap games;                // +0x04c
+	PerGeneralMap duration;             // +0x058
+	PerGeneralMap unitsKilled;          // +0x064
+	PerGeneralMap unitsLost;            // +0x070
+	PerGeneralMap unitsBuilt;           // +0x07c
+	PerGeneralMap buildingsKilled;      // +0x088
+	PerGeneralMap buildingsLost;        // +0x094
+	PerGeneralMap buildingsBuilt;       // +0x0a0
+	PerGeneralMap earnings;             // +0x0ac
+	PerGeneralMap discons;              // +0x0b8
+	PerGeneralMap desyncs;              // +0x0c4
 };
 
 class BfmeWOLGameSpyStagingRoom
@@ -1570,7 +1600,8 @@ static void savePlayerInfo( void )
 
 // Tooltips -------------------------------------------------------------------------------
 
-static void playerTooltip(GameWindow *window,
+// Retail playerTooltip; WOLLobbyMenu's static playerTooltip already holds that decoration.
+static void rva004F2410PlayerTooltip(GameWindow *window,
 													WinInstanceData *instData,
 													UnsignedInt mouse)
 {
@@ -1589,7 +1620,8 @@ static void playerTooltip(GameWindow *window,
 		return;
 	}
 
-	GameSpyStagingRoom *game = TheGameSpyInfo->getCurrentStagingRoom();
+	GameSpyStagingRoom *game =
+		((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
 	if (!game)
 	{
 		TheMouse->setCursorTooltip( UnicodeString::TheEmptyString, -1, NULL, 1.5f );
@@ -1616,13 +1648,11 @@ static void playerTooltip(GameWindow *window,
 
 	AsciiString aName;
 	aName.translate(uName);
-	PlayerInfoMap::iterator pmIt = TheGameSpyInfo->getPlayerInfoMap()->find(aName);
-	if (pmIt == TheGameSpyInfo->getPlayerInfoMap()->end())
+	PlayerInfo *player =
+		((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->findPlayerName( aName.str() );
+	if (player)
 	{
-		TheMouse->setCursorTooltip( uName, -1, NULL, 1.5f );
-		return;
-	}
-	Int profileID = pmIt->second.m_profileID;
+	Int profileID = player->m_profileID;
 
 	PSPlayerStats stats = TheGameSpyPSMessageQueue->findPlayerStatsByID(profileID);
 	if (stats.id == 0)
@@ -1638,27 +1668,28 @@ static void playerTooltip(GameWindow *window,
 	UnicodeString	playerInfo;
 	Int totalWins = 0, totalLosses = 0, totalDiscons = 0;
 	PerGeneralMap::iterator it;
+	BfmeWolPlayerStatsView &statsView = *(BfmeWolPlayerStatsView *)&stats;
 
-	for (it = stats.wins.begin(); it != stats.wins.end(); ++it)
+	for (it = statsView.wins.begin(); it != statsView.wins.end(); ++it)
 	{
 		totalWins += it->second;
 	}
-	for (it = stats.losses.begin(); it != stats.losses.end(); ++it)
+	for (it = statsView.losses.begin(); it != statsView.losses.end(); ++it)
 	{
 		totalLosses += it->second;
 	}
-	for (it = stats.discons.begin(); it != stats.discons.end(); ++it)
+	for (it = statsView.discons.begin(); it != statsView.discons.end(); ++it)
 	{
 		totalDiscons += it->second;
 	}
-	for (it = stats.desyncs.begin(); it != stats.desyncs.end(); ++it)
+	for (it = statsView.desyncs.begin(); it != statsView.desyncs.end(); ++it)
 	{
 		totalDiscons += it->second;
 	}
 	UnicodeString favoriteSide;
 	Int numGames = 0;
 	Int favorite = 0;
-	for(it = stats.games.begin(); it != stats.games.end(); ++it)
+	for(it = statsView.games.begin(); it != statsView.games.end(); ++it)
 	{
 		if(it->second >= numGames)
 		{
@@ -1676,42 +1707,48 @@ static void playerTooltip(GameWindow *window,
 		if (fac)
 		{
 			AsciiString side;
-			side.format("SIDE:%s", fac->getSide().str());
+			side.format("SIDE:%s",
+				((const BfmeWolPlayerTemplateView *)fac)->m_side.str());
 
 			favoriteSide = TheGameText->fetch(side);
 		}
 	}
 
 	playerInfo.format(TheGameText->fetch("TOOLTIP:StagingPlayerInfo"),
-		TheGameText->fetch(localeIdentifier).str(),
+		BfmeStartUnicodeString(TheGameText->fetch(localeIdentifier)),
 		slot->getPingAsInt(),
 		totalWins, totalLosses, totalDiscons,
-		favoriteSide.str());
+		BfmeStartUnicodeString(favoriteSide));
 
 	UnicodeString tooltip = UnicodeString::TheEmptyString;
 	if (isLocalPlayer)
 	{
-		tooltip.format(TheGameText->fetch("TOOLTIP:LocalPlayer"), uName.str());
+		tooltip.format(TheGameText->fetch("TOOLTIP:LocalPlayer"),
+			BfmeStartUnicodeString(uName));
 	}
 	else
 	{
 		// not us
-		if (TheGameSpyInfo->getBuddyMap()->find(profileID) != TheGameSpyInfo->getBuddyMap()->end())
+		if (((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getBuddyMap()->find(profileID) !=
+			((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getBuddyMap()->end())
 		{
 			// buddy
-			tooltip.format(TheGameText->fetch("TOOLTIP:BuddyPlayer"), uName.str());
+			tooltip.format(TheGameText->fetch("TOOLTIP:BuddyPlayer"),
+				BfmeStartUnicodeString(uName));
 		}
 		else
 		{
 			if (profileID)
 			{
 				// non-buddy profiled player
-				tooltip.format(TheGameText->fetch("TOOLTIP:ProfiledPlayer"), uName.str());
+				tooltip.format(TheGameText->fetch("TOOLTIP:ProfiledPlayer"),
+					BfmeStartUnicodeString(uName));
 			}
 			else
 			{
 				// non-profiled player
-				tooltip.format(TheGameText->fetch("TOOLTIP:GenericPlayer"), uName.str());
+				tooltip.format(TheGameText->fetch("TOOLTIP:GenericPlayer"),
+					BfmeStartUnicodeString(uName));
 			}
 		}
 	}
@@ -1719,6 +1756,12 @@ static void playerTooltip(GameWindow *window,
 	tooltip.concat(playerInfo);
 
 	TheMouse->setCursorTooltip( tooltip, -1, NULL, 1.5f ); // the text and width are the only params used.  the others are the default values.
+	}
+	else
+	{
+		TheMouse->setCursorTooltip( uName, -1, NULL, 1.5f );
+		return;
+	}
 }
 
 void gameAcceptTooltip(GameWindow *window, WinInstanceData *instData, UnsignedInt mouse)
@@ -2399,12 +2442,12 @@ void InitWOLGameGadgets( void )
 		comboBoxPlayerID[i] = TheNameKeyGenerator->nameToKey( tmpString );
 		comboBoxPlayer[i] = TheWindowManager->winGetWindowFromId( parentWOLGameSetup, comboBoxPlayerID[i] );
 		GadgetComboBoxReset(comboBoxPlayer[i]);
-		comboBoxPlayer[i]->winSetTooltipFunc(playerTooltip);
+		comboBoxPlayer[i]->winSetTooltipFunc(rva004F2410PlayerTooltip);
 
 		tmpString.format("GameSpyGameOptionsMenu.wnd:StaticTextPlayer%d", i);
 		staticTextPlayerID[i] = TheNameKeyGenerator->nameToKey( tmpString );
 		staticTextPlayer[i] = TheWindowManager->winGetWindowFromId( parentWOLGameSetup, staticTextPlayerID[i] );
-		staticTextPlayer[i]->winSetTooltipFunc(playerTooltip);
+		staticTextPlayer[i]->winSetTooltipFunc(rva004F2410PlayerTooltip);
 		if (((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->amIHost())
 			staticTextPlayer[i]->winHide(TRUE);
 

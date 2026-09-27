@@ -7458,5 +7458,15 @@
   "after_sha256": "3bb54bbd72acd86ab35fefdd8d7b26b21a388c1292f88657de33edd656609a2b",
   "evidence": "targets/game/reverse/identity_evidence/0x004577c0-local-type-names.md",
   "reason": "The earlier bank copied a StringBase template into its source. The revised source uses the AsciiString shim's StringBase<char> for endsWithNoCase and keeps Rva004577C0StringView only for the raw fields read by this body."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLGameSetupMenu.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLGameSetupMenu.cpp",
+  "old_name": "playerTooltip",
+  "new_name": "rva004F2410PlayerTooltip",
+  "before_sha256": "4b4d89765210532903039c13cef9d79b29f0e7da4dca307e6c7e3250712b1354",
+  "after_sha256": "ac7e086140d0aa259c8c7d86fa9d9f5b1d0a77a751ce03b1efc21968a3ed2464",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "The ledger already matches ?playerTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z at 0x004FA800 (the file-static tooltip of WOLLobbyMenuUpdate.cpp), and one symbol cannot sit at two addresses; the name follows the matched sibling rva004CB220PlayerTooltip."
  }
 ]
