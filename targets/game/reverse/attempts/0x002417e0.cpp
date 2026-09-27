@@ -1,15 +1,22 @@
 // ?d_002417e0@@YAXXZ
-// partial score=0.2767552828902522 date=2026-09-22
+// partial score=0.2972 date=2026-09-27
+
 // cl: /DNDEBUG /MD /EHsc /G7 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
-// Complete retail control-flow reconstruction: RVA 002417E0, 1467 bytes.
-// See ANALYSIS.md. Names with an address/offset are deliberately opaque.
-// Entry: ECX=receiver, (Object*, const Coord3D*, float), ret 12, no EH.
-// Retail frame: sub esp,64h; saves EBX EBP ESI EDI. No artificial padding.
-// Partial: 1465/1467 B, 1057 masked positional differences, score
-// 0.2767552828902522. /G7 and the two zero-code barrier kinds are measured
-// shape hypotheses, not claims about the original source or compiler flags.
-// Every call/branch is represented; instruction order/local slot allocation
-// remain non-exact. See build/hub_002417e0/ANALYSIS.md and PROGRESS.md.
+
+// Retail ends with ret 12 at +0x5B8, and int3 bytes begin at +0x5BB.
+
+// The retail function allocates 0x64 bytes and saves four registers.
+
+// The separate Coord3D delta scopes let MSVC reuse local slots. This draft
+// allocates 0x58 bytes and compiles to 1459 bytes, eight bytes short of retail.
+
+// probe.py counts 1015 byte differences outside relocation operands and matches
+// 0.861 of instructions after register and constant normalization.
+
+// Callers establish thiscall with three stack arguments but do not name the
+// owner or method, so this body keeps RVA 002417E0 in its type name.
+
+// The file docs/analysis/0x002417e0.md records the retail calls and stack map.
 #include "Lib/BaseType.h"
 extern "C" void _WriteBarrier();
 extern "C" void _ReadWriteBarrier();
@@ -234,7 +241,6 @@ public:
 // ?body@Rva002417E0@@QAEXPAURva002417E0Object@@PBUCoord3D@@M@Z
 void Rva002417E0::body(Rva002417E0Object *member,const Coord3D *destination,float orientation)
 {
-    Coord3D delta;
     Thing *memberAI=member->ai204;
     const Coord3D *memberPosition=&member->position;
     Rva002417E0Object *owner=object08;
@@ -263,10 +269,14 @@ void Rva002417E0::body(Rva002417E0Object *member,const Coord3D *destination,floa
         if (member->word09C>=0 && member->word09C==pair0A4.x && member->word0A0==pair0A4.y)
             dest=member->position;
     }
-    delta.x=dest.x-oldPosition.x;
-    delta.y=dest.y-oldPosition.y;
-    delta.z=0.0f;
-    float distance=CALL(Float0,&delta,j_0002fe0f)();
+    float distance;
+    {
+        Coord3D delta;
+        delta.x=dest.x-oldPosition.x;
+        delta.y=dest.y-oldPosition.y;
+        delta.z=0.0f;
+        distance=CALL(Float0,&delta,j_0002fe0f)();
+    }
     float adjustedDistance=distance;
     if (ownerAI->path140) {
         Rva003FD7D0Point36 point;
@@ -354,9 +364,12 @@ void Rva002417E0::body(Rva002417E0Object *member,const Coord3D *destination,floa
         flag0E8=true;
         if (!flag1FC && CALL(Bool0,ownerAI,j_00044774)())
             CALL(VoidPtr,rva012EF214->pathfinder,j_00015d02)(member);
-        delta=dest;
-        if (flag204) memberAI->slot1D8(&delta);
-        else memberAI->slot1DC(&delta);
+        {
+            Coord3D delta;
+            delta=dest;
+            if (flag204) memberAI->slot1D8(&delta);
+            else memberAI->slot1DC(&delta);
+        }
         CALL(VoidFloat,memberAI,j_0000ebab)(adjustedDistance);
         if (!(member->word114&0x10000000)) {
             member->word114|=0x10000000;
