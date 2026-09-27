@@ -1,4 +1,7 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC
+// stlport
+#include <algorithm>
+#include <vector>
 //
 // AptOnlineQuickMatch::InitGadgets callback, retail 0x00558FB0 (244 bytes).
 // The selector strings are the five OnlineQuickMatch gadget names in BFME's
@@ -44,6 +47,74 @@ public:
 
 extern GameWindowManager *TheWindowManager;
 extern void gadgetComboBoxReset(GameWindow *window);
+void j_0003600c(void);
+
+struct Q4Sort00483F70
+{
+	void *m_state;
+	bool operator()(int, int) const;
+};
+
+namespace _STL
+{
+template <class RandomAccessIter, class Tp, class Size, class Compare>
+void __introsort_loop(RandomAccessIter, RandomAccessIter, Tp *, Size, Compare);
+}
+
+typedef bool (__cdecl *RefreshLayoutScalarCompare)(int, int);
+template void _STL::__insertion_sort<int *, RefreshLayoutScalarCompare>(
+	int *, int *, RefreshLayoutScalarCompare);
+
+void __cdecl bfmeSortZV(int *, int *, int *, char (__cdecl *)(int, int));
+
+void GameWindowManager::refreshLayout(void *layout)
+{
+	std::vector<GameWindow *> children;
+	GameWindow **childList = (GameWindow **)((char *)layout + 0x204);
+
+	for (GameWindow *child = *childList; child != 0;
+		child = *(GameWindow **)((char *)child + 0x1f8))
+	{
+		children.push_back(child);
+	}
+
+	int *first = (int *)children.begin();
+	int *last = (int *)children.end();
+	if (first != last)
+	{
+		int n = last - first;
+		int depth;
+		for (depth = 0; n != 1; n >>= 1)
+			++depth;
+		Q4Sort00483F70 compare = { (void *)j_0003600c };
+		_STL::__introsort_loop<int *, int, int, Q4Sort00483F70>(
+			first, last, (int *)0, depth * 2, compare);
+		if (last - first > 16)
+		{
+			_STL::__insertion_sort<int *, RefreshLayoutScalarCompare>(
+				first, first + 16,
+				(RefreshLayoutScalarCompare)j_0003600c);
+			bfmeSortZV(first + 16, last, 0,
+				(char (__cdecl *)(int, int))j_0003600c);
+		}
+		else
+			_STL::__insertion_sort<int *, RefreshLayoutScalarCompare>(
+				first, last, (RefreshLayoutScalarCompare)j_0003600c);
+	}
+
+	GameWindow **link = childList;
+	GameWindow *previous = 0;
+	for (std::vector<GameWindow *>::iterator it = children.begin();
+		it != children.end(); ++it)
+	{
+		GameWindow *child = *it;
+		*link = child;
+		*(GameWindow **)((char *)child + 0x1fc) = previous;
+		previous = *link;
+		link = (GameWindow **)((char *)previous + 0x1f8);
+	}
+	*link = 0;
+}
 
 #pragma comment(linker, "/alternatename:?refreshLayout@GameWindowManager@@QAEXPAX@Z=?j_000412c2@@YAXXZ")
 #pragma comment(linker, "/alternatename:?gadgetComboBoxReset@@YAXPAVGameWindow@@@Z=?j_00007004@@YAXXZ")
