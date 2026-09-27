@@ -85039,6 +85039,7 @@ name,address,notes
 ?measure@BfmeSlot1173@@QAEXPAVRva007F5010Player@@@Z,0x008023B0,neutral slot measure sibling; target 0x00802550 direct-calls 0x008023B0 with the matched Player-record layout; campaign=luna36h-20260907;lane=netpacket
 ?measure@Rva00801EC0Owner@@QAEXPAVRva007FBEF0GameRecord@@@Z,0x00801740,jabba demangler measure sibling of fill 0x801EC0
 ?measure@Rva00802550Owner@@QAEXPAVRva007FBEF0GameRecord@@@Z,0x008023B0,demangler fill 0x802550 measure sibling pin
+?measurePair@Rva003C1EE0Owner@@QAEXPAV?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@PAURva003C1EE0Pair@@@Z,0x000231D7,ILT to body 0x003BEF70: thiscall on the 0x003C1EE0 owner (ecx kept as this and its +0x28 manager read) with two stack args; reads begin/end of a four-byte-element vector and writes two floats; called once from 0x003C1EE0
 ?messageBoxHidden@Gen00522E00@@QAEXH@Z,0x00044198,route=0x00522830; typed callback address in00522E00; matched method takes unused int and bound complete receiver
 ?messageBoxHiding@Gen00522E00@@QAEXH@Z,0x0002C381,route=0x005224C0; typed callback address in00522E00; matched method takes unused int and bound complete receiver
 ?messageBoxShowing@Gen00522E00@@QAEXH@Z,0x00038465,route=0x00522420; typed callback address in00522E00; matched method takes unused int and bound complete receiver
