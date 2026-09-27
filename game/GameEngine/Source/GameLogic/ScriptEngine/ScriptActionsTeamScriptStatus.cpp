@@ -136,8 +136,8 @@ public:
 extern ScriptEngine *TheScriptEngine;
 // Retail calls this address (0x002EFB20) with two explicit stack args and
 // cleans the stack itself afterward, unlike the thiscall bfmeSet1026 its two
-// siblings use -- see FlammableUpdate_getModuleNameKey_Thunk.cpp for the same
-// address under its currently-matched (unproven, gen-dump) name.
+// siblings use -- see Object/Update/Rva002EFB20Helper.cpp for the body, which
+// is a cdecl helper of its own and not a FlammableUpdate method.
 extern "C" void __cdecl bfmeCall_002efb20(void *obj, Bool flag);
 
 class ScriptActions

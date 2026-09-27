@@ -7498,5 +7498,15 @@
   "after_sha256": "7c5c0c25684648e2e0dfb170a8330758f3035c0bcfa2c4cb02fd32f9f3c7c85f",
   "evidence": "targets/game/reverse/identity_evidence/0x007a4b40_bank_types.md",
   "reason": "Bank-local invented type names; the bank now uses the Rva0079E560* names of the layouts already landed on master."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "FlammableUpdate",
+  "new_name": "Rva002EFB20",
+  "before_sha256": "d810c0b65318bd1f7ab5339e1fe5d3a1b27e6efb948ca468a166be9f2dc02a10",
+  "after_sha256": "69c446cf128486af619ad863fa5b8b12f43de275fbc1170a53a808bfa6d72061",
+  "evidence": "targets/game/reverse/identity_evidence/002efb20-helper-not-getModuleNameKey.md",
+  "reason": "0x002EFB20: the FlammableUpdate getModuleNameKey lift name is refuted (see targets/game/reverse/identity_evidence/002efb20-helper-not-getModuleNameKey.md)"
  }
 ]
