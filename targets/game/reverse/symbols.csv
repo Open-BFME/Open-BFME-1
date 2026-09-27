@@ -89240,3 +89240,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??0?$VectorClass@URendererDataStruct@Render2DSentenceClass@@@@QAE@HPBURendererDataStruct@Render2DSentenceClass@@@Z,0x0093DBB0,Render2DSentenceClass ctor 0x00940BF0 calls it for Renderers (third vector member at +0x34); its ??_L element ctor 0x0093D1E0 zeroes only +4 and element dtor 0x0005DC00 destroys the surface handle at +4 - a RendererDataStruct shape; _ENUM_VALUE and AddInfoStruct start with a StringClass
+??0?$VectorClass@VRva0113C8ACElem@@@@QAE@HPBVRva0113C8ACElem@@@Z,0x00933D30,Render2DClass ctor 0x00937060 calls it at +0x65 for its batch vector at +0x34 (vtable 0x0113C8AC); the ??_L element is 0x74 bytes and its ctor 0x00933A40 only nulls a released pointer at +0 - not ZH ProxyClass (0x34 bytes; StringClass first)

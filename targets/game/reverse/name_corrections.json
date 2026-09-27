@@ -6968,5 +6968,15 @@
   "after_sha256": "175b7a84d49ac079c2890f1017ab17c3bfeef8be4c98fd20853ce8354efd1403",
   "evidence": "targets/game/reverse/identity_evidence/002c1150-pickup-crate-subclass-ctor.md",
   "reason": "0x002C1150 installs its own vtable 0x010C7D30, which has its own deleting destructor and overrides slots 4-6. AIPickUpCrateState's table is 0x010960D0, and its constructor is 0x0015CD70. The subclass writes the inherited +0x50 counter before its vtable, as a derived constructor does. It sits among the GiantBird states and its class name is not recovered."
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WW3D2/Render2DClassConstructor.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WW3D2/Render2DClassConstructor.cpp",
+  "old_name": "ProxyClass",
+  "new_name": "Rva0113C8ACElem",
+  "before_sha256": "741dba5bf1df461005a043ff4f948746ec6008c79def43923c72ba33ab3cb653",
+  "after_sha256": "dad3d5e007e348aeeb73870d0e2bd7e47a141aab1635763de47453a31d5fa239",
+  "evidence": "targets/game/reverse/identity_evidence/00937060-render2d-batch-element.md",
+  "reason": "The batch vector element at Render2DClass +0x34 is 0x74 bytes, and its ??_L element constructor 0x00933A40 only nulls +0. Zero Hour ProxyClass is 0x34 bytes and opens with a StringClass. ProxyClass was a padded guess, and retail names no replacement, so the element keeps its vector vtable address 0x0113C8AC."
  }
 ]

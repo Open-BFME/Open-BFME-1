@@ -29,31 +29,11 @@ public:
 	int GrowthStep;
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.h
-class StringClass
-{
-public:
-	StringClass() : Buffer(0) {}
-	char *Buffer;
-};
-
-class Matrix3D
-{
-public:
-	float Row[3][4];
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/proxy.h
-class ProxyClass
-{
-public:
-	ProxyClass();
-	~ProxyClass();
-
-	StringClass Name;
-	Matrix3D Transform;
-	unsigned char UnreconstructedTail[0x74 - 0x34];
-};
+// The batch element is 0x74 bytes, and its constructor (0x00933A40) only nulls a
+// released pointer at +0. That rules out Zero Hour's 0x34-byte ProxyClass, which
+// opens with a StringClass. Its real type is unknown, so it is named by its
+// vector's vtable.
+class Rva0113C8ACElem;
 
 template<class T>
 class VectorClass
@@ -127,7 +107,7 @@ private:
 	Vector2 CoordinateOffset;
 	Render2DRawArray ArrayA;
 	Render2DRawArray ArrayB;
-	DynamicVectorClass<ProxyClass> Batches;
+	DynamicVectorClass<Rva0113C8ACElem> Batches;
 	TextureRef Texture;
 	int CurrentBatch;
 	bool IsDirty;
