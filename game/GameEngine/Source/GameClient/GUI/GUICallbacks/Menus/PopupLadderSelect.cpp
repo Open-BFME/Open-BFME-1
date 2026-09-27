@@ -693,6 +693,31 @@ static __forceinline void closeRightClickMenu(GameWindow *win)
 void RCGameDetailsMenuInit( WindowLayout *layout, void *userData )
 {
 }
+// Opaque owner for retail 0x004D79E0 (34 B): GameWindow in ECX on entry,
+// winGetLayout, null check, destroyWindows (slot 8), virtual deleting
+// destructor (slot 1, arg 1). No named caller names it; identity stays at
+// the address token.
+// ?Rva004D79E0@Rva004D79E0Owner@@QAEXXZ
+class Rva004D79E0Owner
+{
+public:
+	void Rva004D79E0();
+};
+void Rva004D79E0Owner::Rva004D79E0()
+{
+	GameWindow *win = (GameWindow *)this;
+	if(!win)
+		return;
+	{
+		Rva004D8440WindowLayout *winLay =
+			(Rva004D8440WindowLayout *)win->winGetLayout();
+		if(!winLay)
+			return;
+		winLay->destroyWindows();
+		winLay->deleteInstance();
+		winLay = NULL;
+	}
+}
 
 // ?RCGameDetailsMenuSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
 WindowMsgHandledType RCGameDetailsMenuSystem( GameWindow *window, UnsignedInt msg, WindowMsgData mData1, WindowMsgData mData2 )
