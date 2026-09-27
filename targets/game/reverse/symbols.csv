@@ -81999,6 +81999,7 @@ name,address,notes
 ?g_bfmeWhatBKG@@3PAXA,0x00EC3BB8,pin
 ?g_bfmeWindowManager@@3PAVBfmeWindowManager@@A,0x012ED5C4,Open-BFME5 window manager read by 0x0028B810
 ?g_bfmeWindowManagerERC@@3PAVBfmeWindowManagerERC@@A,0x00EF1B40,pin
+?g_bfmeWolKey012F43D0@@3W4NameKeyType@@A,0x012F43D0,address-derived NameKeyType global read and written by InitWOLGameGadgets and WOLGameSetupMenuSystem
 ?g_bfmeWordFormat@@3QBDB,0x011442A8,address-derived word format string from the DIR32 operand at retail 0x009D93C0
 ?g_bfmeWords1228@@3PAUBfmeW1228@@A,0x00ED5DCC,pin
 ?g_bfmeWords1229@@3PAUBfmeW1229@@A,0x00ED52A8,pin
@@ -82761,6 +82762,7 @@ name,address,notes
 ?getFormationMovementSpeed@BfmeAIUpdateInterface@@QAEMPAVBfmeUpdateObject@@@Z,0x000230AB,ILT thunk used by AOD formation update
 ?getFormationMovementStep@BfmeAIUpdateInterface@@QAEMPAVBfmeUpdateObject@@@Z,0x00024F7D,ILT thunk used by AOD formation update
 ?getFrameCommandList@ConnectionManager@@QAEPAVNetCommandList@@I@Z,0x00663450,ZH twin: new NetCommandList(0x10 bytes ctor 0x00672EA0) reset 0x006731A0; per FrameDataManager at +0x120E4 appendList(0x00673580) of getFrameCommandList 0x006706A0 then resetFrame(frame-FRAMES_TO_KEEP;TRUE) 0x006706D0 with FRAMES_TO_KEEP global 0x012BA08C=0x41; sole caller Network frame tick 0x00682AB6; ILT 0x0001EF5B
+?getGameName@BfmeWolGameNameView@@QAE?AVUnicodeString@@XZ,0x0002C7B4,ABI view for the BFME +0x418 staging-room wide-string accessor used by InitWOLGameGadgets
 ?getGameName@GameSpyStagingRoom@@QAE?AVUnicodeString@@XZ,0x0002C7B4,ILT of staging-room wide string at +0x418 used by CustomMatch 0x0053B980
 ?getGameSpySlot@GameSpyStagingRoom@@QAEPAVGameSpyGameSlot@@H@Z,0x000061D6,ICF alias: this thunk chains to the GameInfo::getSlot body at 0x0061E8B0; the slot accessors compile to the same bytes
 ?getGoalObject@BfmeOutOfWeaponRangeStateMachine@@QAEPAVBfmeOutOfWeaponRangeObject@@XZ,0x0000E570,outOfWeaponRangeObject retail goal-object thunk

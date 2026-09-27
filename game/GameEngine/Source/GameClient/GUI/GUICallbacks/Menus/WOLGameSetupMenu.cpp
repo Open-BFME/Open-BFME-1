@@ -1090,6 +1090,14 @@ typedef char BfmeWolPlayerStatsSize[sizeof(PSPlayerStats) == 0x1c4 ? 1 : -1];
 //-------------------------------------------------------------------------------------------------
 class GameSpyStagingRoom;
 
+class BfmeWolGameNameView
+{
+public:
+	UnicodeString getGameName();
+};
+
+#pragma comment(linker, "/alternatename:?getGameName@BfmeWolGameNameView@@QAE?AVUnicodeString@@XZ=?j_0002c7b4@@YAXXZ")
+
 // BFME clears the menu's retail state block through the already matched
 // 0x004F0970 body (the 0x0001B095 incremental-link thunk).
 void bfmeClearStateVJ( void );
@@ -1228,6 +1236,16 @@ public:
 	virtual Int getLocalSlotNum() = 0;
 };
 
+class BfmeWolAllowObserversView
+{
+private:
+	unsigned char m_prefix[0x429];
+	Bool m_allowObservers;
+
+public:
+	Bool getAllowObservers() const { return m_allowObservers; }
+};
+
 // GameInfo's BFME vtable has two leading slots that are absent from the
 // vendored NAT shim. That puts resetAccepted at +0x18 in this callback's
 // retail body. Keep this view local; the normal GameInfo type remains useful
@@ -1268,6 +1286,24 @@ static __forceinline const unsigned short *BfmeStartUnicodeString( const Unicode
 	return data ? (const unsigned short *)((const char *)data + 8)
 	            : (const unsigned short *)0x0107388C;
 }
+
+// The menu's literal temporaries call the retail StringBase constructor and
+// releaseBuffer body directly; AsciiString's inline constructor adds a shim.
+class BFMERetailAsciiString
+{
+public:
+	BFMERetailAsciiString( const char *text );
+	~BFMERetailAsciiString() { releaseBuffer(); }
+
+	__forceinline const char *str() const
+	{
+		return m_text ? m_text + 8 : (const char *)0x0107388B;
+	}
+
+	private:
+	void releaseBuffer();
+	char *m_text;
+};
 
 struct BfmeStartMapMetaDataView
 {
@@ -1725,6 +1761,8 @@ void pingTooltip(GameWindow *window, WinInstanceData *instData, UnsignedInt mous
 //external declarations of the Gadgets the callbacks can use
 GameWindow *listboxGameSetupChat = NULL;
 NameKeyType listboxGameSetupChatID = NAMEKEY_INVALID;
+extern int g_bfmeState06VJ;
+NameKeyType g_bfmeWolKey012F43D0 = NAMEKEY_INVALID;
 
 // BFME color-map header +30 and cached count +3C are independently
 // witnessed by the native275B color-name lookup and name_oracle.
@@ -2265,30 +2303,64 @@ void WOLDisplaySlotList( void )
 //-------------------------------------------------------------------------------------------------
 void InitWOLGameGadgets( void )
 {
-	GameSpyStagingRoom *theGameInfo = TheGameSpyInfo->getCurrentStagingRoom();
-	pingImages[0] = TheMappedImageCollection->findImageByName("Ping03");
-	pingImages[1] = TheMappedImageCollection->findImageByName("Ping02");
-	pingImages[2] = TheMappedImageCollection->findImageByName("Ping01");
+	GameInfo *theGameInfo = ((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
+	{
+		BFMERetailAsciiString text( "Ping03" );
+		pingImages[0] = TheMappedImageCollection->findImageByName(*(const AsciiString *)&text);
+	}
+	{
+		BFMERetailAsciiString text( "Ping02" );
+		pingImages[1] = TheMappedImageCollection->findImageByName(*(const AsciiString *)&text);
+	}
+	{
+		BFMERetailAsciiString text( "Ping01" );
+		pingImages[2] = TheMappedImageCollection->findImageByName(*(const AsciiString *)&text);
+	}
 	DEBUG_ASSERTCRASH(pingImages[0], ("Can't find ping image!"));
 	DEBUG_ASSERTCRASH(pingImages[1], ("Can't find ping image!"));
 	DEBUG_ASSERTCRASH(pingImages[2], ("Can't find ping image!"));
 
 	//Initialize the gadget IDs
-	parentWOLGameSetupID = TheNameKeyGenerator->nameToKey( AsciiString( "GameSpyGameOptionsMenu.wnd:GameSpyGameOptionsMenuParent" ) );
-	buttonBackID = TheNameKeyGenerator->nameToKey( AsciiString( "GameSpyGameOptionsMenu.wnd:ButtonBack" ) );
-	buttonStartID = TheNameKeyGenerator->nameToKey( AsciiString( "GameSpyGameOptionsMenu.wnd:ButtonStart" ) );
-	textEntryChatID = TheNameKeyGenerator->nameToKey( AsciiString( "GameSpyGameOptionsMenu.wnd:TextEntryChat" ) );
-	textEntryMapDisplayID = TheNameKeyGenerator->nameToKey( AsciiString( "GameSpyGameOptionsMenu.wnd:TextEntryMapDisplay" ) );
-	listboxGameSetupChatID = TheNameKeyGenerator->nameToKey( AsciiString( "GameSpyGameOptionsMenu.wnd:ListboxChatWindowGameSpyGameSetup" ) );
-	buttonEmoteID = TheNameKeyGenerator->nameToKey( AsciiString( "GameSpyGameOptionsMenu.wnd:ButtonEmote" ) );
-	buttonSelectMapID = TheNameKeyGenerator->nameToKey( AsciiString( "GameSpyGameOptionsMenu.wnd:ButtonSelectMap" ) );
-	checkBoxUseStatsID = TheNameKeyGenerator->nameToKey( AsciiString( "GameSpyGameOptionsMenu.wnd:CheckBoxUseStats" ) );
-	windowMapID = TheNameKeyGenerator->nameToKey( AsciiString( "GameSpyGameOptionsMenu.wnd:MapWindow" ) );
-  checkBoxLimitSuperweaponsID = TheNameKeyGenerator->nameToKey(AsciiString("GameSpyGameOptionsMenu.wnd:CheckboxLimitSuperweapons"));
-  comboBoxStartingCashID = TheNameKeyGenerator->nameToKey(AsciiString("GameSpyGameOptionsMenu.wnd:ComboBoxStartingCash"));
-  checkBoxLimitArmiesID = TheNameKeyGenerator->nameToKey(AsciiString("GameSpyGameOptionsMenu.wnd:CheckBoxLimitArmies"));
-	windowMapSelectMapID = TheNameKeyGenerator->nameToKey(AsciiString("WOLMapSelectMenu.wnd:WinMapPreview"));
-
+	{
+		BFMERetailAsciiString text( "GameSpyGameOptionsMenu.wnd:GameSpyGameOptionsMenuParent" );
+		parentWOLGameSetupID = TheNameKeyGenerator->nameToKey( text.str() );
+	}
+	{
+		BFMERetailAsciiString text( "GameSpyGameOptionsMenu.wnd:ButtonBack" );
+		buttonBackID = TheNameKeyGenerator->nameToKey( text.str() );
+	}
+	{
+		BFMERetailAsciiString text( "GameSpyGameOptionsMenu.wnd:ButtonStart" );
+		buttonStartID = TheNameKeyGenerator->nameToKey( text.str() );
+	}
+	{
+		BFMERetailAsciiString text( "GameSpyGameOptionsMenu.wnd:TextEntryChat" );
+		textEntryChatID = TheNameKeyGenerator->nameToKey( text.str() );
+	}
+	{
+		BFMERetailAsciiString text( "GameSpyGameOptionsMenu.wnd:TextEntryMapDisplay" );
+		textEntryMapDisplayID = TheNameKeyGenerator->nameToKey( text.str() );
+	}
+	{
+		BFMERetailAsciiString text( "GameSpyGameOptionsMenu.wnd:ListboxChatWindowGameSpyGameSetup" );
+		listboxGameSetupChatID = TheNameKeyGenerator->nameToKey( text.str() );
+	}
+	{
+		BFMERetailAsciiString text( "GameSpyGameOptionsMenu.wnd:ButtonEmote" );
+		buttonEmoteID = TheNameKeyGenerator->nameToKey( text.str() );
+	}
+	{
+		BFMERetailAsciiString text( "GameSpyGameOptionsMenu.wnd:ButtonSelectMap" );
+		buttonSelectMapID = TheNameKeyGenerator->nameToKey( text.str() );
+	}
+	{
+		BFMERetailAsciiString text( "GameSpyGameOptionsMenu.wnd:MapWindow" );
+		windowMapID = TheNameKeyGenerator->nameToKey( text.str() );
+	}
+	{
+		BFMERetailAsciiString text( "WOLMapSelectMenu.wnd:WinMapPreview" );
+		checkBoxUseStatsID = TheNameKeyGenerator->nameToKey( text.str() );
+	}
 	NameKeyType staticTextTitleID = NAMEKEY("GameSpyGameOptionsMenu.wnd:StaticTextGameName");
 
 	// Initialize the pointers to our gadgets
@@ -2298,56 +2370,20 @@ void InitWOLGameGadgets( void )
 	checkBoxUseStats = TheWindowManager->winGetWindowFromId( parentWOLGameSetup, checkBoxUseStatsID );
 	buttonStart = TheWindowManager->winGetWindowFromId( parentWOLGameSetup,buttonStartID  );
 	buttonBack = TheWindowManager->winGetWindowFromId( parentWOLGameSetup,  buttonBackID);
-	listboxGameSetupChat = TheWindowManager->winGetWindowFromId( parentWOLGameSetup, listboxGameSetupChatID );
+	*(GameWindow **)&g_bfmeState06VJ = TheWindowManager->winGetWindowFromId( parentWOLGameSetup, g_bfmeWolKey012F43D0 );
 	textEntryChat = TheWindowManager->winGetWindowFromId( parentWOLGameSetup, textEntryChatID );
 	textEntryMapDisplay = TheWindowManager->winGetWindowFromId( parentWOLGameSetup, textEntryMapDisplayID );
-	windowMap = TheWindowManager->winGetWindowFromId( parentWOLGameSetup,windowMapID  );
-  DEBUG_ASSERTCRASH(windowMap, ("Could not find the parentWOLGameSetup.wnd:MapWindow" ));
-
-  checkBoxLimitSuperweapons = TheWindowManager->winGetWindowFromId( parentWOLGameSetup, checkBoxLimitSuperweaponsID );
-  DEBUG_ASSERTCRASH(windowMap, ("Could not find the GameSpyGameOptionsMenu.wnd:CheckboxLimitSuperweapons" ));
-  comboBoxStartingCash = TheWindowManager->winGetWindowFromId( parentWOLGameSetup, comboBoxStartingCashID );
-  DEBUG_ASSERTCRASH(windowMap, ("Could not find the GameSpyGameOptionsMenu.wnd:ComboBoxStartingCash" ));
-  PopulateStartingCashComboBox( comboBoxStartingCash, TheGameSpyGame );
-  checkBoxLimitArmies = TheWindowManager->winGetWindowFromId( parentWOLGameSetup, checkBoxLimitArmiesID );
-  DEBUG_ASSERTCRASH(windowMap, ("Could not find the GameSpyGameOptionsMenu.wnd:CheckBoxLimitArmies" ));
-
-  // Limit Armies can ONLY be set in the Host Game window (PopupHostGame.wnd)
-  checkBoxLimitArmies->winEnable( false );
-  // Ditto use stats
-  checkBoxUseStats->winEnable( false );
-	Int isUsingStats = TheGameSpyGame->getUseStats();
-  GadgetCheckBoxSetChecked(checkBoxUseStats, isUsingStats );
-  checkBoxUseStats->winSetTooltip( TheGameText->fetch( isUsingStats ? "TOOLTIP:UseStatsOn" : "TOOLTIP:UseStatsOff" ) );
-
-  if ( !TheGameSpyGame->amIHost() )
-  {
-    checkBoxLimitSuperweapons->winEnable( false );
-    comboBoxStartingCash->winEnable( false );
-		NameKeyType labelID = TheNameKeyGenerator->nameToKey(AsciiString("GameSpyGameOptionsMenu.wnd:StartingCashLabel"));
-		TheWindowManager->winGetWindowFromId(parentWOLGameSetup, labelID)->winEnable( FALSE );
-  }
-
-	if (isUsingStats)
-	{
-		// Recorded stats games can never limit superweapons, limit armies, or have inflated starting cash.
-		// This should probably be enforced at the gamespy level as well, to prevent expoits.
-		checkBoxLimitSuperweapons->winEnable( FALSE );
-		comboBoxStartingCash->winEnable( FALSE );
-		checkBoxLimitArmies->winEnable( FALSE );
-		NameKeyType labelID = TheNameKeyGenerator->nameToKey(AsciiString("GameSpyGameOptionsMenu.wnd:StartingCashLabel"));
-		TheWindowManager->winGetWindowFromId(parentWOLGameSetup, labelID)->winEnable( FALSE );
-	}
 
 	//Added By Sadullah Nader
 	//Tooltip Function set 
-	windowMap->winSetTooltipFunc(MapSelectorTooltip);
+	textEntryMapDisplay->winSetTooltipFunc(MapSelectorTooltip);
 	//
 	
 	GameWindow *staticTextTitle = TheWindowManager->winGetWindowFromId( parentWOLGameSetup, staticTextTitleID );
 	if (staticTextTitle)
 	{
-		GadgetStaticTextSetText(staticTextTitle, TheGameSpyGame->getGameName());
+		GadgetStaticTextSetText(staticTextTitle,
+			((BfmeWolGameNameView *)TheGameSpyGame)->getGameName());
 	}
 
 	if (!theGameInfo)
@@ -2369,13 +2405,13 @@ void InitWOLGameGadgets( void )
 		staticTextPlayerID[i] = TheNameKeyGenerator->nameToKey( tmpString );
 		staticTextPlayer[i] = TheWindowManager->winGetWindowFromId( parentWOLGameSetup, staticTextPlayerID[i] );
 		staticTextPlayer[i]->winSetTooltipFunc(playerTooltip);
-		if (TheGameSpyInfo->amIHost())
+		if (((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->amIHost())
 			staticTextPlayer[i]->winHide(TRUE);
 
-		if(i==0 && TheGameSpyInfo->amIHost())
+		if(i==0 && ((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->amIHost())
 		{
 			UnicodeString uName;
-			uName.translate(TheGameSpyInfo->getLocalName());
+			uName.translate(((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getLocalName());
 			GadgetComboBoxAddEntry(comboBoxPlayer[i],uName,GameSpyColor[GSCOLOR_PLAYER_OWNER]);
 			GadgetComboBoxSetSelectedPos(comboBoxPlayer[0],0);
 		}
@@ -2400,11 +2436,8 @@ void InitWOLGameGadgets( void )
 		comboBoxPlayerTemplateID[i] = TheNameKeyGenerator->nameToKey( tmpString );
 		comboBoxPlayerTemplate[i] = TheWindowManager->winGetWindowFromId( parentWOLGameSetup, comboBoxPlayerTemplateID[i] );
 		DEBUG_ASSERTCRASH(comboBoxPlayerTemplate[i], ("Could not find the comboBoxPlayerTemplate[%d]",i ));
-		PopulatePlayerTemplateComboBox(i, comboBoxPlayerTemplate, theGameInfo, theGameInfo->getAllowObservers() );
-
-		// add tooltips to the player template combobox and listbox
-		comboBoxPlayerTemplate[i]->winSetTooltipFunc(playerTemplateComboBoxTooltip);
-		GadgetComboBoxGetListBox(comboBoxPlayerTemplate[i])->winSetTooltipFunc(playerTemplateListBoxTooltip);
+		PopulatePlayerTemplateComboBox(i, comboBoxPlayerTemplate, theGameInfo,
+			((BfmeWolAllowObserversView *)theGameInfo)->getAllowObservers() );
 
 		tmpString.format("GameSpyGameOptionsMenu.wnd:ComboBoxTeam%d", i);
 		comboBoxTeamID[i] = TheNameKeyGenerator->nameToKey( tmpString );
