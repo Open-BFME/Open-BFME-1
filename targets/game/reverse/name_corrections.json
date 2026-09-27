@@ -7278,5 +7278,25 @@
   "after_sha256": "1142d38f6a86bb6943d3898617c1ae886292cbd1312ee460e5eae5a819187d00",
   "evidence": "targets/game/reverse/identity_evidence/gamewindowparse_split.md",
   "reason": "Split artefact: GameWindowParse is still declared and used in the new file; Gen_004791e0 is the existing ledger name of the separate getter the body calls."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008fa4b0.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeOwnerCDECount.cpp",
+  "old_name": "m_isSmall",
+  "new_name": "m_04",
+  "before_sha256": "286c5a093028216b44e46d5d8cdc60bf423f0bd11defe3a8285099a7c1560d52",
+  "after_sha256": "ef992c6b9d6e2cf33d2f1b9a6bb7c633af4e25f96094cf6909f2c1ca79963a1b",
+  "evidence": "targets/game/reverse/identity_evidence/0x008fa4b0.md",
+  "reason": "Unwitnessed guesses in the bank (name_oracle: no witness at GeometryInfo+0x0/+0x4; ZH hints m_type at +0x4); the exact landing names them by offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008fa4b0.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeOwnerCDECount.cpp",
+  "old_name": "m_vtable",
+  "new_name": "m_00",
+  "before_sha256": "286c5a093028216b44e46d5d8cdc60bf423f0bd11defe3a8285099a7c1560d52",
+  "after_sha256": "ef992c6b9d6e2cf33d2f1b9a6bb7c633af4e25f96094cf6909f2c1ca79963a1b",
+  "evidence": "targets/game/reverse/identity_evidence/0x008fa4b0.md",
+  "reason": "Unwitnessed guesses in the bank (name_oracle: no witness at GeometryInfo+0x0/+0x4; ZH hints m_type at +0x4); the exact landing names them by offset."
  }
 ]
