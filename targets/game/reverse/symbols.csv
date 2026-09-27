@@ -89529,3 +89529,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 _compareValues008B90F0,0x008B90F0,retail 008B91F0 calls +0x82 and +0x122; callee dereferences two cdecl tagged-value arguments and returns signed lexical comparison in EAX at +0xec
 ?apply@Rva001CE3F0@@QAEXXZ,0x001CE3F0,retail call at 0x000FEE78 loads ECX=Object and pushes no args; thunk decoded E9 to body 0x001CE3F0; body retains ECX in ESI and returns C3 at 0x001CE4E9; address qualified void thiscall; model=gpt-6-astra
 ??0AsciiStringAI@@QAE@ABVAsciiString@@@Z,0x000416AF,ILT thunk of the AsciiString copy COMDAT 0x0005EE50 that the score-screen provider 0x005731E0 calls to build its by-value lookup key from an AsciiString member
+?d_0036ef70Method@Rva0036EF70Owner@@QAE?AW4NameKeyType@@XZ,0x0036EF70,opaque thiscall helper; caller 0x00374F20 passes ECX and uses EAX as map key; ILT 0x0003F0BC reaches this body
