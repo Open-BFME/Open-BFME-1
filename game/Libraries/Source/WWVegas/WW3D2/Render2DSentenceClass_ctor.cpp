@@ -75,12 +75,6 @@ protected:
 	int m_growthStep;
 };
 
-class EnumParameterClass
-{
-public:
-	struct _ENUM_VALUE;
-};
-
 struct BfmeItemDC;
 
 class BfmeThingDC
@@ -133,13 +127,14 @@ class Render2DSentenceClass
 {
 public:
 	struct PendingSurfaceStruct;
+	struct RendererDataStruct;
 
 	Render2DSentenceClass();
 	virtual void Reset();
 
 	DynamicVectorClassWide<TextureStatisticsStructWide> m_sentenceData;
 	DynamicVectorClass<PendingSurfaceStruct> m_pendingSurfaces;
-	DynamicVectorClass<EnumParameterClass::_ENUM_VALUE> m_renderers;
+	DynamicVectorClass<RendererDataStruct> m_renderers;
 
 	void *m_font;
 	Zero2 m_baseLocation;
