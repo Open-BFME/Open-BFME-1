@@ -7508,5 +7508,35 @@
   "after_sha256": "69c446cf128486af619ad863fa5b8b12f43de275fbc1170a53a808bfa6d72061",
   "evidence": "targets/game/reverse/identity_evidence/002efb20-helper-not-getModuleNameKey.md",
   "reason": "0x002EFB20: the FlammableUpdate getModuleNameKey lift name is refuted (see targets/game/reverse/identity_evidence/002efb20-helper-not-getModuleNameKey.md)"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00508c80.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchPopulateLadder.cpp",
+  "old_name": "BfmeQuickMatchLadderPanel",
+  "new_name": "Rva005082D0Owner",
+  "before_sha256": "1da12ee0289d94eb3c10adb5d2fb14a35ea709bc160a1245ff1287c829508579",
+  "after_sha256": "758dd8c5345168ae77bf3afaaf954c79d8830e3ee7d2baa271e5749b5d5f7688",
+  "evidence": "targets/game/reverse/identity_evidence/0x00508c80_names.md",
+  "reason": "Invented bank names with no ledger row, pin or ZH header; the landing uses address-derived names."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00508c80.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchPopulateLadder.cpp",
+  "old_name": "GameSpyProfileDispatch00508C80",
+  "new_name": "Rva00508C80GameSpyInfo",
+  "before_sha256": "1da12ee0289d94eb3c10adb5d2fb14a35ea709bc160a1245ff1287c829508579",
+  "after_sha256": "758dd8c5345168ae77bf3afaaf954c79d8830e3ee7d2baa271e5749b5d5f7688",
+  "evidence": "targets/game/reverse/identity_evidence/0x00508c80_names.md",
+  "reason": "Invented bank names with no ledger row, pin or ZH header; the landing uses address-derived names."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00508c80.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchPopulateLadder.cpp",
+  "old_name": "getLadderInfo",
+  "new_name": "rva00508C80LadderInfo",
+  "before_sha256": "1da12ee0289d94eb3c10adb5d2fb14a35ea709bc160a1245ff1287c829508579",
+  "after_sha256": "758dd8c5345168ae77bf3afaaf954c79d8830e3ee7d2baa271e5749b5d5f7688",
+  "evidence": "targets/game/reverse/identity_evidence/0x00508c80_names.md",
+  "reason": "Invented bank names with no ledger row, pin or ZH header; the landing uses address-derived names."
  }
 ]
