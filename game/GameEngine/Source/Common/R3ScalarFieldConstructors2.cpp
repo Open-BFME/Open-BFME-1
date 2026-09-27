@@ -1,4 +1,4 @@
-// Twenty-two more constructors of the shape proved in
+// Twenty-one more constructors of the shape proved in
 // R3ScalarFieldConstructors.cpp: `mov eax,ecx` / a zero register / a run of
 // immediate-to-member stores / `ret`.  Two mnemonic families land here (the
 // seven-store group anchored at 0x000C33E0 and the eight-store group anchored
@@ -32,7 +32,6 @@
 // a zeroed dword is an int or a pointer, and where each object really ends.
 
 extern int Gen01083E78;
-extern int Gen01096518;
 extern int Gen01096964;
 extern int Gen010A31A0;
 extern int Gen010C74D4;
@@ -82,8 +81,9 @@ Rva000D1930::Rva000D1930()
 	m_18 = 0;
 }
 
-// Same body as Rva002BBBB0 apart from the stored address.  Different address
-// at the same site means a different type, so these stay two classes.
+// Same body as GuardRetaliateExitConditions' constructor (0x0015EA80,
+// AIGuardRetaliate.cpp) apart from the stored address.  Different address at
+// the same site means a different type.
 #define BFME_ADDR_THEN_OUT_OF_ORDER_ZEROS( NAME, GLOBAL )                 \
 	class NAME                                                            \
 	{                                                                     \
@@ -103,7 +103,6 @@ Rva000D1930::Rva000D1930()
 		m_10 = 0;                                                         \
 	}
 
-BFME_ADDR_THEN_OUT_OF_ORDER_ZEROS( Rva0015EA80, Gen01096518 )
 BFME_ADDR_THEN_OUT_OF_ORDER_ZEROS( Rva002BBBB0, Gen010C74D4 )
 
 class Rva001611A0

@@ -39,11 +39,13 @@ private:
 	char m_stateData[ 0x20 ];
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIGuard.h
-class ExitConditions
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIGuardRetaliate.h
+// The member's vtable is 0x01096518, whose slot 0 is
+// GuardRetaliateExitConditions::shouldExit, not ExitConditions' 0x01096084.
+class GuardRetaliateExitConditions
 {
 public:
-	ExitConditions() :
+	GuardRetaliateExitConditions() :
 		m_conditionsToConsider( 0 ),
 		m_attackGiveUpFrame( 0 ),
 		m_radiusSqr( 0.0f )
@@ -60,9 +62,9 @@ private:
 	unsigned int m_attackGiveUpFrame;
 };
 
-// address-derived: exit-conditions block matching GuardRetaliateExitConditions
-// (same fields/size as ExitConditions), plus two trailing pointer-sized
-// members -- one more than ZH's declared AIGuardRetaliateAttackAggressorState.
+// address-derived: a GuardRetaliateExitConditions block plus two trailing
+// pointer-sized members -- one more than ZH's declared
+// AIGuardRetaliateAttackAggressorState.
 class Rva0015F070GuardState : public State
 {
 public:
@@ -70,7 +72,7 @@ public:
 	virtual bool isAttack() const;
 
 private:
-	ExitConditions m_exitConditions;
+	GuardRetaliateExitConditions m_exitConditions;
 	void *m_attackState;
 	void *m_field44;
 };
