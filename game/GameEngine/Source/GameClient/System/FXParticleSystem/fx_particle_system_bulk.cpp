@@ -84,26 +84,26 @@ public:
 	virtual ~basic_ostream();
 };
 
-template <class CharT, class Traits>
-class basic_filebuf : public basic_streambuf<CharT, Traits>
+template <class CharT, class Traits, class Alloc>
+class basic_stringbuf : public basic_streambuf<CharT, Traits>
 {
 public:
-	basic_filebuf(int mode);
-	virtual ~basic_filebuf();
+	basic_stringbuf(int mode);
+	virtual ~basic_stringbuf();
 
 private:
 	char padding_[0x68];
 };
 
-template <class CharT, class Traits>
-class basic_ofstream : public basic_ostream<CharT, Traits>
+template <class CharT, class Traits, class Alloc>
+class basic_ostringstream : public basic_ostream<CharT, Traits>
 {
 public:
-	basic_ofstream(int mode);
-	virtual ~basic_ofstream();
+	basic_ostringstream(int mode);
+	virtual ~basic_ostringstream();
 
 private:
-	basic_filebuf<CharT, Traits> buf_;
+	basic_stringbuf<CharT, Traits, Alloc> buf_;
 };
 
 }
@@ -10477,7 +10477,7 @@ void BoxEmissionVolumeModuleTemplate::writeINI(File &file, unsigned int flags) c
 
     reinterpret_cast<BaseWriteFunction>(b_005f8b40)(this, &file, &flags);
 
-    _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
+    _STL::basic_ostringstream<char, _STL::char_traits<char>, _STL::allocator<char> > stream(0x10);
     U1ByteFlagged *isHollowSetting = (U1ByteFlagged *)((unsigned char *)this + 0x0c);
     if (isHollowSetting->m_flag)
         u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x01113a7c, isHollowSetting);
@@ -10510,7 +10510,7 @@ void CylinderEmissionVolumeModuleTemplate::writeINI(File &file, unsigned int fla
 
     reinterpret_cast<BaseWriteFunction>(b_005f8b40)(this, &file, &flags);
 
-    _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
+    _STL::basic_ostringstream<char, _STL::char_traits<char>, _STL::allocator<char> > stream(0x10);
     U1ByteFlagged *isHollowSetting = (U1ByteFlagged *)((unsigned char *)this + 0x0c);
     if (isHollowSetting->m_flag)
         u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x01113a7c, isHollowSetting);
@@ -10545,7 +10545,7 @@ void CylindricalEmissionVelocityModuleTemplate::writeINI(File &file, unsigned in
 
     FXParticleSystem::Rva005F8FC0WriteVelocityHeader(this, &file, &flags);
 
-    _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
+    _STL::basic_ostringstream<char, _STL::char_traits<char>, _STL::allocator<char> > stream(0x10);
     U1Pair *radial = (U1Pair *)((unsigned char *)this + 0x0c);
     if (radial->m_x != BfmeZeroRange || radial->m_y != BfmeZeroRange)
         u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x010fa90c, radial);
@@ -10570,7 +10570,7 @@ void LifeEventModuleTemplate::writeINI(File &file, unsigned int flags) const
 
     reinterpret_cast<BaseWriteFunction>(::Rva005FCB60WriteBase)(this, &file, &flags);
 
-    _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
+    _STL::basic_ostringstream<char, _STL::char_traits<char>, _STL::allocator<char> > stream(0x10);
     u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114440,
         (U1Pair *)((unsigned char *)this + 0x14));
     u1Do_005C71F0((void *)&stream, (void *)flags, (void *)0x01114434,
@@ -10595,7 +10595,7 @@ void LightningDrawModuleTemplate::writeINI(File &file, unsigned int flags) const
 
     writeDrawTemplateBase(this, file, &flags);
 
-    _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
+    _STL::basic_ostringstream<char, _STL::char_traits<char>, _STL::allocator<char> > stream(0x10);
     U1Pair *offsetX = (U1Pair *)((unsigned char *)this + 0x0c);
     if (offsetX->m_x != BfmeZeroRange || offsetX->m_y != BfmeZeroRange)
         u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011136d8, offsetX);
@@ -10632,7 +10632,7 @@ void LightningEmissionModuleTemplate::writeINI(File &file, unsigned int flags) c
 
     reinterpret_cast<BaseWriteFunction>(b_005f8b40)(this, &file, &flags);
 
-    _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
+    _STL::basic_ostringstream<char, _STL::char_traits<char>, _STL::allocator<char> > stream(0x10);
     float *startPoint = (float *)((unsigned char *)this + 0x10);
     if (startPoint[0] != BfmeZeroRange || startPoint[1] != BfmeZeroRange ||
         startPoint[2] != BfmeZeroRange)
@@ -10695,7 +10695,7 @@ void LineEmissionVolumeModuleTemplate::writeINI(File &file, unsigned int flags) 
 
     reinterpret_cast<BaseWriteFunction>(b_005f8b40)(this, &file, &flags);
 
-    _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
+    _STL::basic_ostringstream<char, _STL::char_traits<char>, _STL::allocator<char> > stream(0x10);
     U1ByteFlagged *isHollowSetting = (U1ByteFlagged *)((unsigned char *)this + 0x0c);
     if (isHollowSetting->m_flag)
         u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x01113a7c, isHollowSetting);
@@ -10726,7 +10726,7 @@ void OrthoEmissionVelocityModuleTemplate::writeINI(File &file, unsigned int flag
 
     FXParticleSystem::Rva005F8FC0WriteVelocityHeader(this, &file, &flags);
 
-    _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
+    _STL::basic_ostringstream<char, _STL::char_traits<char>, _STL::allocator<char> > stream(0x10);
     U1Pair *xComponent = (U1Pair *)((unsigned char *)this + 0x0c);
     if (xComponent->m_x != BfmeZeroRange || xComponent->m_y != BfmeZeroRange)
         u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01089284, xComponent);
@@ -10755,7 +10755,7 @@ void OutwardEmissionVelocityModuleTemplate::writeINI(File &file, unsigned int fl
 
     FXParticleSystem::Rva005F8FC0WriteVelocityHeader(this, &file, &flags);
 
-    _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
+    _STL::basic_ostringstream<char, _STL::char_traits<char>, _STL::allocator<char> > stream(0x10);
     U1Pair *speed = (U1Pair *)((unsigned char *)this + 0x0c);
     if (speed->m_x != BfmeZeroRange || speed->m_y != BfmeZeroRange)
         u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x0109d84c, speed);
@@ -12355,7 +12355,7 @@ void PointEmissionVolumeModuleTemplate::writeINI(File &file, unsigned int flags)
 
     reinterpret_cast<BaseWriteFunction>(b_005f8b40)(this, &file, &flags);
 
-    _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
+    _STL::basic_ostringstream<char, _STL::char_traits<char>, _STL::allocator<char> > stream(0x10);
     U1ByteFlagged *isHollowSetting = (U1ByteFlagged *)((unsigned char *)this + 0x0c);
     if (isHollowSetting->m_flag)
         u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x01113a7c, isHollowSetting);
@@ -12382,7 +12382,7 @@ void RenderObjectDrawModuleTemplate::writeINI(File &file, unsigned int flags) co
 
     writeDrawTemplateBase(this, file, &flags);
 
-    _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
+    _STL::basic_ostringstream<char, _STL::char_traits<char>, _STL::allocator<char> > stream(0x10);
     U1ByteFlagged *multiRenderObjects = (U1ByteFlagged *)((unsigned char *)this + 0x14);
     if (multiRenderObjects->m_flag)
         u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x01113894, multiRenderObjects);
@@ -12465,7 +12465,7 @@ void RenderObjectUpdateModuleTemplate::writeINI(File &file, unsigned int flags) 
 
     reinterpret_cast<BaseWriteFunction>(b_005fff00)(this, &file, &flags);
 
-    _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
+    _STL::basic_ostringstream<char, _STL::char_traits<char>, _STL::allocator<char> > stream(0x10);
     U1Pair *startSizeX = (U1Pair *)((unsigned char *)this + 0x0c);
     if (startSizeX->m_x != BfmeZeroRange || startSizeX->m_y != BfmeZeroRange)
         u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114a90, startSizeX);
@@ -12535,7 +12535,7 @@ void SphereEmissionVolumeModuleTemplate::writeINI(File &file, unsigned int flags
 
     reinterpret_cast<BaseWriteFunction>(b_005f8b40)(this, &file, &flags);
 
-    _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
+    _STL::basic_ostringstream<char, _STL::char_traits<char>, _STL::allocator<char> > stream(0x10);
     U1ByteFlagged *isHollowSetting = (U1ByteFlagged *)((unsigned char *)this + 0x0c);
     if (isHollowSetting->m_flag)
         u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x01113a7c, isHollowSetting);
@@ -12560,7 +12560,7 @@ void SphericalEmissionVelocityModuleTemplate::writeINI(File &file, unsigned int 
 
     FXParticleSystem::Rva005F8FC0WriteVelocityHeader(this, &file, &flags);
 
-    _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
+    _STL::basic_ostringstream<char, _STL::char_traits<char>, _STL::allocator<char> > stream(0x10);
     U1Pair *speed = (U1Pair *)((unsigned char *)this + 0x0c);
     if (speed->m_x != BfmeZeroRange || speed->m_y != BfmeZeroRange)
         u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x0109d84c, speed);
@@ -12588,7 +12588,7 @@ void TerrainCollisionModuleTemplate::writeINI(File &file, unsigned int flags) co
 
     reinterpret_cast<BaseWriteFunction>(::Rva005FCB60WriteBase)(this, &file, &flags);
 
-    _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
+    _STL::basic_ostringstream<char, _STL::char_traits<char>, _STL::allocator<char> > stream(0x10);
     u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114504,
         (U1Pair *)((unsigned char *)this + 0x14));
     u1Do_005C71F0((void *)&stream, (void *)flags, (void *)0x01114434,

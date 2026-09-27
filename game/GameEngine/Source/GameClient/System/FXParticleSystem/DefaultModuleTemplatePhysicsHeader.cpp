@@ -80,32 +80,32 @@ public:
 	virtual ~basic_ostream();
 };
 
-template <class CharT, class Traits>
-class basic_filebuf : public basic_streambuf<CharT, Traits>
+template <class CharT, class Traits, class Alloc>
+class basic_stringbuf : public basic_streambuf<CharT, Traits>
 {
 public:
-	basic_filebuf(int mode);
-	virtual ~basic_filebuf();
+	basic_stringbuf(int mode);
+	virtual ~basic_stringbuf();
 
 private:
 	char padding_[0x68];
 };
 
-template <class CharT, class Traits>
-class basic_ofstream : public basic_ostream<CharT, Traits>
+template <class CharT, class Traits, class Alloc>
+class basic_ostringstream : public basic_ostream<CharT, Traits>
 {
 public:
-	basic_ofstream(int mode);
-	virtual ~basic_ofstream();
+	basic_ostringstream(int mode);
+	virtual ~basic_ostringstream();
 
 private:
-	basic_filebuf<CharT, Traits> buf_;
+	basic_stringbuf<CharT, Traits, Alloc> buf_;
 };
 }
 
 typedef _STL::basic_string<char, _STL::char_traits<char>, _STL::allocator<char> >
 	StreamText;
-typedef _STL::basic_ofstream<char, _STL::char_traits<char> > OutputStream;
+typedef _STL::basic_ostringstream<char, _STL::char_traits<char>, _STL::allocator<char> > OutputStream;
 
 class File
 {

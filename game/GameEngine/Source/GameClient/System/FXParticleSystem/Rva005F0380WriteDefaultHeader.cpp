@@ -46,25 +46,25 @@ public:
 	basic_ostream(basic_streambuf<C, T> *);
 	virtual ~basic_ostream();
 };
-template <class C, class T> class basic_filebuf : public basic_streambuf<C, T> {
+template <class C, class T, class A> class basic_stringbuf : public basic_streambuf<C, T> {
 public:
-	basic_filebuf(int);
-	virtual ~basic_filebuf();
+	basic_stringbuf(int);
+	virtual ~basic_stringbuf();
 private:
 	char padding_[0x68];
 };
-template <class C, class T> class basic_ofstream : public basic_ostream<C, T> {
+template <class C, class T, class A> class basic_ostringstream : public basic_ostream<C, T> {
 public:
-	basic_ofstream(int);
-	virtual ~basic_ofstream();
+	basic_ostringstream(int);
+	virtual ~basic_ostringstream();
 private:
-	basic_filebuf<C, T> buf_;
+	basic_stringbuf<C, T, A> buf_;
 };
 }
 
 typedef _STL::basic_string<char, _STL::char_traits<char>, _STL::allocator<char> >
 	StreamText;
-typedef _STL::basic_ofstream<char, _STL::char_traits<char> > OutputStream;
+typedef _STL::basic_ostringstream<char, _STL::char_traits<char>, _STL::allocator<char> > OutputStream;
 
 class StreamTextAccessor { public: StreamText getText(); };
 class StreamWriter {

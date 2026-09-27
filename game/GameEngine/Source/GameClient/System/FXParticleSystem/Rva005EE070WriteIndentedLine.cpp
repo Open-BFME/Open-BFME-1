@@ -67,24 +67,24 @@ public:
     virtual ~basic_ostream();
 };
 
-template <class CharT, class Traits>
-class basic_filebuf : public basic_streambuf<CharT, Traits> {
+template <class CharT, class Traits, class Alloc>
+class basic_stringbuf : public basic_streambuf<CharT, Traits> {
 public:
-    basic_filebuf(int mode);
-    virtual ~basic_filebuf();
+    basic_stringbuf(int mode);
+    virtual ~basic_stringbuf();
 
 private:
     char padding_[0x68];
 };
 
-template <class CharT, class Traits>
-class basic_ofstream : public basic_ostream<CharT, Traits> {
+template <class CharT, class Traits, class Alloc>
+class basic_ostringstream : public basic_ostream<CharT, Traits> {
 public:
-    basic_ofstream(int);
-    virtual ~basic_ofstream();
+    basic_ostringstream(int);
+    virtual ~basic_ostringstream();
 
 private:
-    basic_filebuf<CharT, Traits> buf_;
+    basic_stringbuf<CharT, Traits, Alloc> buf_;
 };
 
 }
@@ -123,7 +123,7 @@ __forceinline void writeStreamText(File &file,
 
 // ?Rva005EE070WriteIndentedLine@@YAXPBDPAVFile@@PAI@Z
 void Rva005EE070WriteIndentedLine(const char *text, File *file, unsigned int *indent) {
-    _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
+    _STL::basic_ostringstream<char, _STL::char_traits<char>, _STL::allocator<char> > stream(0x10);
 
     for (unsigned int i = *indent; i > 0; --i)
         reinterpret_cast<StreamWriter *>(&stream)->indent(0x20);

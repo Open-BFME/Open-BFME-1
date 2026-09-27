@@ -2139,8 +2139,6 @@ name,address,notes
 ??0?$_Vector_base@VRva003BA660Record@@V?$allocator@VRva003BA660Record@@@_STL@@@_STL@@QAE@IABV?$allocator@VRva003BA660Record@@@1@@Z,0x0004628B,route=0x003A7CE0;retail vector copy 0x003ABB80 calls this exact base constructor
 ??0?$_Vector_base@VRva003BABE0Record@@V?$allocator@VRva003BABE0Record@@@_STL@@@_STL@@QAE@IABV?$allocator@VRva003BABE0Record@@@1@@Z,0x0002428A,vector base constructor call target from retail 0x003AB9F0 and the proven 36-byte record copy
 ??0?$_Vector_base@VRva00762170@@V?$allocator@VRva00762170@@@_STL@@@_STL@@QAE@IABV?$allocator@VRva00762170@@@1@@Z,0x00018845,The 0x0076A690 vector copy call constructs its three-pointer base with the proven count and allocator ABI from Gen_00760CA0 at 0x00760CA0.
-??0?$basic_filebuf@DV?$char_traits@D@_STL@@@_STL@@QAE@H@Z,0x0002B409,ILT thunk called by the FX particle system basic_ofstream(int mode) ctor 0x005CC3F0 with (mode|out)
-??0?$basic_filebuf@DV?$char_traits@D@_STL@@@_STL@@QAE@PBDH@Z,0x0004A958,ILT thunk (to 0x0093C660) called by the LobbyUtils.cpp basic_ifstream(const char*,int) ctor 0x0053FB00 with (name, mode|in)
 ??0?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAE@ABV01@@Z,0x0001CB11
 ??0?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAE@XZ,0x0004048A,map<unsigned int std::string>::operator[] default-value construction through the retail ILT
 ??0?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@_STL@@QAE@ABV01@@Z,0x0003050D,T2 lane: ILT thunk to 0x004FB220 (unsigned-short basic_string copy ctor); paired with the char ctor thunk 0x0001CB11 -> 0x004FB1B0
@@ -4273,10 +4271,9 @@ name,address,notes
 ??1?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@PAVTeamPrototype@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVTeamPrototype@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVTeamPrototype@@@_STL@@@3@@_STL@@QAE@XZ,0x009F5970,TeamFactory destructor map delete body
 ??1?$_Rb_tree@W4ScienceType@@U?$pair@$$CBW4ScienceType@@_N@_STL@@U?$_Select1st@U?$pair@$$CBW4ScienceType@@_N@_STL@@@3@U?$less@W4ScienceType@@@3@V?$allocator@U?$pair@$$CBW4ScienceType@@_N@_STL@@@3@@_STL@@QAE@XZ,0x000E74C0,E8040 destroys its temporary STLport map through the verified ILT 0x0001D462; E74C0 is the matching retail tree destructor body; campaign=luna36h-20260907;lane=expand36;model=gpt-5.6-luna-max
 ??1?$_Vector_base@PAVScienceInfo@@V?$allocator@PAVScienceInfo@@@_STL@@@_STL@@QAE@XZ,0x00066C30,folded body: the ScienceInfo* specialisation compiled /O2 /D_STLP_USE_STATIC_LIB probes EXACT at this address; called by vector<ScienceInfo *>::_M_fill_assign 0x0082EF90 through ILT 0x00031647
-??1?$basic_filebuf@DV?$char_traits@D@_STL@@@_STL@@UAE@XZ,0x00044459,default alpha writer inlined ofstream member teardown ILT
 ??1?$basic_ios@DV?$char_traits@D@_STL@@@_STL@@UAE@XZ,0x00538210,STLport 4.5.3 narrow basic_ios destructor; typed constructor and vtable prove identity
 ??1?$basic_ios@GV?$char_traits@G@_STL@@@_STL@@UAE@XZ,0x0083F810,STLport 4.5.3 wide basic_ios destructor; typed constructor and vtable prove identity
-??1?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@UAE@XZ,0x005C7180,FX particle system stream cleanup ABI alias for the retail virtual-base destructor
+??1?$basic_ostringstream@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@UAE@XZ,0x005C7180,ostringstream-level destructor the FX writeINI sources call: stores 0x0110FCAC; the table the basic_ostringstream(openmode) ctor 0x005CC3F0 installs
 ??1?$basic_streambuf@DV?$char_traits@D@_STL@@@_STL@@UAE@XZ,0x0083FB50,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in game/stlport/X4Filebuf.cpp
 ??1?$basic_streambuf@GV?$char_traits@G@_STL@@@_STL@@UAE@XZ,0x0083FEC0,STLport 4.5.3 wide basic_streambuf destructor; adjacent constructor and vtable prove identity
 ??1?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAE@XZ,0x000A5120,retail 0x0083C210 SEH state protects the copied narrow grouping string and cleanup ILT 0x0001642D reaches this folded three-pointer STLport deallocation body;campaign=luna36h-20260907;lane=expand10;model=gpt-5.6-sol-ultra
