@@ -51,7 +51,8 @@ extern unsigned char cantConnectBeforeOnline;
 extern unsigned char mustDownloadPatch;
 extern unsigned char showOnlineShellFlag;
 extern std::list<QueuedDownload> queuedDownloads;
-extern WindowManager *TheWindowManager;
+// BFME's Apt window manager (0x012F19E8), not the game's TheWindowManager (0x012F1B40).
+extern WindowManager *g_theWindowManager;
 extern Rva0051D690 *g_rva012F49B4;
 extern GameTextInterface *TheGameText;
 extern ScriptEngine *TheScriptEngine;
@@ -82,8 +83,8 @@ void Rva0062EA60StartOnline()
 
     if (cantConnectBeforeOnline || queuedDownloads.size())
     {
-        if (TheWindowManager)
-            TheWindowManager->bfme_hideBackground(false);
+        if (g_theWindowManager)
+            g_theWindowManager->bfme_hideBackground(false);
         if (g_rva012F49B4)
             g_rva012F49B4->apply();
         if (cantConnectBeforeOnline)

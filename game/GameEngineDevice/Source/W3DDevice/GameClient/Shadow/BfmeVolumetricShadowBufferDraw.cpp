@@ -51,12 +51,10 @@ public:
 	unsigned m_caps;
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/shader.h
-class ShaderClass
-{
-public:
-	static ShaderClass _PresetOpaqueShader;
-};
+class ShaderClass;
+// Not _PresetOpaqueShader: retail records the shadow buffer's own shader at 0x012BBF14
+// (bits 0x00101823; Opaque's are 0x0011581B), the one setupRenderState sets.
+extern ShaderClass Rva012BBF14Shader;
 
 namespace Debug_Statistics
 {
@@ -108,7 +106,7 @@ void BfmeVolumetricShadowBufferLocks::drawAndRelease(int frontFace)
 	unsigned int polygonCount = (30000 - m_indexCapacity) / 3;
 	int vertexCount = 30000 - m_vertexCapacity;
 	reinterpret_cast<BfmeRecordStatistics>(&d_009373a0)(polygonCount * 2, vertexCount * 2,
-		reinterpret_cast<const Debug_Statistics::ShaderClass &>(ShaderClass::_PresetOpaqueShader));
+		reinterpret_cast<const Debug_Statistics::ShaderClass &>(Rva012BBF14Shader));
 
 	IDirect3DDevice9 *device = TheD3DDevice;
 	if (!(TheW3DRadarFormatCaps->m_caps & 0x100)) {

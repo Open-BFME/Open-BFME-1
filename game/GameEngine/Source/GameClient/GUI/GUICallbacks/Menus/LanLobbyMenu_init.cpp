@@ -122,7 +122,9 @@ static UnicodeString defaultName;
 
 static Bool Rva012F3D51;
 
-extern void playerTooltip(GameWindow *, WinInstanceData *, UnsignedInt);
+// The LAN lobby's own static player tooltip, not WOLLobbyMenu's playerTooltip: retail
+// installs 0x004CE850, still an unconverted dump.
+void d_004ce850( void );
 // Retail 0x004CFA24..0x004CFA29 and 0x004CFC76..0x004CFC83.
 // The reference WindowLayout declares these virtual methods as nonvirtual.
 class Rva004CF440WindowLayout {
@@ -242,7 +244,7 @@ void LanLobbyMenuInit( WindowLayout *layout, void *userData )
 	listboxChatWindow = TheWindowManager->winGetWindowFromId( NULL, listboxChatWindowID );
 	listboxGames = TheWindowManager->winGetWindowFromId( NULL, listboxGamesID );
 	staticTextGameInfo = TheWindowManager->winGetWindowFromId( NULL, staticTextGameInfoID );
-	listboxPlayers->winSetTooltipFunc(playerTooltip);
+	listboxPlayers->winSetTooltipFunc((GameWinTooltipFunc)d_004ce850);
 
 	// Show Menu
 	((Rva004CF440WindowLayout *)layout)->hide( FALSE );

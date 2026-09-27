@@ -122,6 +122,9 @@ struct Rva006C9270GlobalData
 extern char g_bfmeD1072;
 extern void *g_quitMenuLayout;
 extern GameWindowManager *TheWindowManager;
+// The quit-menu hand-off goes to BFME's Apt window manager (0x012F19E8), not TheWindowManager.
+class WindowManager;
+extern WindowManager *g_theWindowManager;
 extern Display *TheDisplay;
 extern Rva005A00B0AudioClient *TheAudioClientUpdate;
 extern Rva006C9270GlobalData *TheWritableGlobalData;
@@ -260,6 +263,6 @@ void BfmeAptScreenOptions::_bfme_cancel( const char * )
 
 	if( g_quitMenuLayout != 0 )
 	{
-		( (Rva00465B80 *)TheWindowManager )->apply();
+		( (Rva00465B80 *)g_theWindowManager )->apply();
 	}
 }

@@ -282,7 +282,8 @@ enum GameSpyColors
 	GSCOLOR_PLAYER_NORMAL = 6,
 	GSCOLOR_PLAYER_OWNER = 7,
 	GSCOLOR_PLAYER_BUDDY = 8,
-	GSCOLOR_PLAYER_IGNORED = 9,
+	// BFME inserted two colours before IGNORED; retail indexes slot 11, as WOLBuddyControlSystem.cpp does.
+	GSCOLOR_PLAYER_IGNORED = 11,
 };
 
 extern Int GadgetListBoxGetNumEntries(GameWindow *listbox);

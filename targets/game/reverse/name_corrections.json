@@ -6838,5 +6838,85 @@
   "after_sha256": "ef7ccac78a4a59dedba98e22319f57d4886429a72f2091b4e9df11aaa370054c",
   "evidence": "targets/game/reverse/identity_evidence/004f5d10-setup-system-native.md",
   "reason": "Only the System callback call site changes to the existing matched465B cdecl by-value UnicodeString owner at004F1FF0. The old descriptive helper definition remains in the TU; this does not rename or discard a proven identity and avoids minting a second semantic pin for the already-owned target."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva009C6390BinkMmx.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva009C6390BinkMmx.cpp",
+  "old_name": "g_bfmeBinkRound",
+  "new_name": "Rva012D88D0Round",
+  "before_sha256": "fc9be38e354627bc053e1906383055a2d5f75653bf17f91a6e0b792e9f65be6d",
+  "after_sha256": "eb26840230c95ca65e18eeff67f4caa94d51ae7311571b1a8064ad0410757691",
+  "evidence": "targets/game/reverse/identity_evidence/dir32-wrong-reference-names.md",
+  "reason": "Retail's MMX paddw/paddsw operand is VA 0x012D88D0 (already Rva012D88D0Round in 12 rows); g_bfmeBinkRound is the SSE table at 0x012D8C00."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva009C66F0BinkMmx.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva009C66F0BinkMmx.cpp",
+  "old_name": "g_bfmeBinkRound",
+  "new_name": "Rva012D88D0Round",
+  "before_sha256": "41b7c4610c371f3b31496a635a0b2a467a30d0c2d0d1f12c0da0d00fff185b42",
+  "after_sha256": "e4492c1b94d638fd55dfe4abae93ca93e370bb3bfa884a29527ff6b3757d6e97",
+  "evidence": "targets/game/reverse/identity_evidence/dir32-wrong-reference-names.md",
+  "reason": "Retail's MMX paddw/paddsw operand is VA 0x012D88D0 (already Rva012D88D0Round in 12 rows); g_bfmeBinkRound is the SSE table at 0x012D8C00."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva009C6780BinkMmx.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva009C6780BinkMmx.cpp",
+  "old_name": "g_bfmeBinkRound",
+  "new_name": "Rva012D88D0Round",
+  "before_sha256": "c91839690d6ffa0a8832fdc246543449a32ed07f4a3fc781c37c43af603a5245",
+  "after_sha256": "9a8b301cae39363beb4d64f19c6cec14c78698df20210bb1f7dd3d15ea2dc2c7",
+  "evidence": "targets/game/reverse/identity_evidence/dir32-wrong-reference-names.md",
+  "reason": "Retail's MMX paddw/paddsw operand is VA 0x012D88D0 (already Rva012D88D0Round in 12 rows); g_bfmeBinkRound is the SSE table at 0x012D8C00."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanLobbyMenu_init.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanLobbyMenu_init.cpp",
+  "old_name": "playerTooltip",
+  "new_name": "d_004ce850",
+  "before_sha256": "c1792329e26174d966f633a6cca99055bf4f8b1ab166fff9af2e01ed461aca9a",
+  "after_sha256": "ea5758717bb100fd5a185827be811f57443b55c0e05008b7b5c55d657d22cc73",
+  "evidence": "targets/game/reverse/identity_evidence/dir32-wrong-reference-names.md",
+  "reason": "LanLobbyMenuInit installs VA 0x008CE850, the LAN lobby's own tooltip (dump d_004ce850); playerTooltip is WOLLobbyMenu's body at 0x004FA800."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/OptionGroup.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/OptionGroup.cpp",
+  "old_name": "INI",
+  "new_name": "Rva000940F0",
+  "before_sha256": "9039a4765467334cc0963b64219e4ef1b01c4b5956979086fd73817f7dc44011",
+  "after_sha256": "872448bac5be1110474a1aea8c421dfcd1a3c80c038735a5e4a2d66b451e0985",
+  "evidence": "targets/game/reverse/identity_evidence/dir32-wrong-reference-names.md",
+  "reason": "parseOptionGroup's table entries are ILT thunks to the named-definition parsers at 0x000940F0/0x000941D0/0x00094300/0x00094470, not INI's scalar parsers."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/OptionGroup.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/OptionGroup.cpp",
+  "old_name": "INI",
+  "new_name": "Rva000941D0",
+  "before_sha256": "9039a4765467334cc0963b64219e4ef1b01c4b5956979086fd73817f7dc44011",
+  "after_sha256": "872448bac5be1110474a1aea8c421dfcd1a3c80c038735a5e4a2d66b451e0985",
+  "evidence": "targets/game/reverse/identity_evidence/dir32-wrong-reference-names.md",
+  "reason": "parseOptionGroup's table entries are ILT thunks to the named-definition parsers at 0x000940F0/0x000941D0/0x00094300/0x00094470, not INI's scalar parsers."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/OptionGroup.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/OptionGroup.cpp",
+  "old_name": "INI",
+  "new_name": "Rva00094300",
+  "before_sha256": "9039a4765467334cc0963b64219e4ef1b01c4b5956979086fd73817f7dc44011",
+  "after_sha256": "872448bac5be1110474a1aea8c421dfcd1a3c80c038735a5e4a2d66b451e0985",
+  "evidence": "targets/game/reverse/identity_evidence/dir32-wrong-reference-names.md",
+  "reason": "parseOptionGroup's table entries are ILT thunks to the named-definition parsers at 0x000940F0/0x000941D0/0x00094300/0x00094470, not INI's scalar parsers."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/OptionGroup.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/OptionGroup.cpp",
+  "old_name": "INI",
+  "new_name": "Rva00094470",
+  "before_sha256": "9039a4765467334cc0963b64219e4ef1b01c4b5956979086fd73817f7dc44011",
+  "after_sha256": "872448bac5be1110474a1aea8c421dfcd1a3c80c038735a5e4a2d66b451e0985",
+  "evidence": "targets/game/reverse/identity_evidence/dir32-wrong-reference-names.md",
+  "reason": "parseOptionGroup's table entries are ILT thunks to the named-definition parsers at 0x000940F0/0x000941D0/0x00094300/0x00094470, not INI's scalar parsers."
  }
 ]

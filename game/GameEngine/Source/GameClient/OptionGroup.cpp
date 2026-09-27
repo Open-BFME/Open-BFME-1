@@ -8,16 +8,21 @@
 //   Bool  Int  String  Real
 //
 // So an OptionGroup body is a list of typed values rather than a fixed set of
-// named settings, which is why the table has to be constructed per call. The
-// four parse procs are stored as data, not called, so they are DIR32 slots the
-// verifier fills in from the target; the four tokens are real string literals
-// and are string-ref verified.
+// named settings, which is why the table has to be constructed per call. Each
+// entry reads a name and then its value, so the procs are the named-definition
+// parsers at 0x000940F0/0x000941D0/0x00094300/0x00094470 (retail's table
+// reaches them through their ILT thunks), not INI's scalar parsers.
 //
 // The two globals have no recoverable names. The first is an AsciiString holding
 // the group name for the duration of the parse -- set on entry, cleared to ""
 // on exit -- and the second is the object the values are parsed into.
 #include "PreRTS.h"
 #include "Common/INI.h"
+
+class Rva000940F0 { public: static void parseDefinition( INI *ini, void *instance, void *store, const void *userData ); };
+class Rva000941D0 { public: static void parseDefinition( INI *ini, void *instance, void *store, const void *userData ); };
+class Rva00094300 { public: static void parseDefinition( INI *ini, void *instance, void *store, const void *userData ); };
+class Rva00094470 { public: static void parseDefinition( INI *ini, void *instance, void *store, const void *userData ); };
 
 extern AsciiString TheOptionGroupName;		// 0x012ED60C
 extern void *TheOptionGroupTarget;			// 0x012ED604
@@ -28,11 +33,11 @@ void parseOptionGroup( INI *ini )
 
 	const FieldParse myFieldParse[] =
 	{
-		{ "Bool",		INI::parseBool,			NULL, 0 },
-		{ "Int",		INI::parseInt,			NULL, 0 },
-		{ "String",		INI::parseAsciiString,	NULL, 0 },
-		{ "Real",		INI::parseReal,			NULL, 0 },
-		{ NULL,			NULL,					NULL, 0 }
+		{ "Bool",		Rva000940F0::parseDefinition,	NULL, 0 },
+		{ "Int",		Rva000941D0::parseDefinition,	NULL, 0 },
+		{ "String",		Rva00094300::parseDefinition,	NULL, 0 },
+		{ "Real",		Rva00094470::parseDefinition,	NULL, 0 },
+		{ NULL,			NULL,								NULL, 0 }
 	};
 
 	ini->initFromINI( TheOptionGroupTarget, myFieldParse );

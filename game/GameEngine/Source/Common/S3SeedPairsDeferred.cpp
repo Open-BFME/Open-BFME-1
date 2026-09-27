@@ -85,6 +85,10 @@ public:
 	void bfmeSendAXB(BfmeSrcAXB *src, BfmeFlagsAXB *flags);
 };
 
+// The accept hand-over registers with the audio manager: retail reads TheAudio (0x012ED668) here.
+class AudioManager;
+extern AudioManager *TheAudio;
+
 class BfmeAcceptManager
 {
 public:
@@ -177,9 +181,9 @@ void BfmeSubAccept_0002C41C::bfmeAccept(BfmeSeedTarget *target)
 	target->bfmeSeed(&pair);
 
 	if (target->bfmeSlot2())
-		accepted = !g_mgr12EF1D8
+		accepted = !TheAudio
 			? false
-			: reinterpret_cast<BfmeAcceptManager *>(g_mgr12EF1D8)->bfmeCheck(m_bfmeField);
+			: reinterpret_cast<BfmeAcceptManager *>(TheAudio)->bfmeCheck(m_bfmeField);
 	target->bfmeTakeAt8C((void *)&accepted);
 
 	void *item = m_bfmeField;
@@ -187,8 +191,8 @@ void BfmeSubAccept_0002C41C::bfmeAccept(BfmeSeedTarget *target)
 	reinterpret_cast<BfmeThingAXB *>(this)->bfmeSendAXB(
 		reinterpret_cast<BfmeSrcAXB *>(target), reinterpret_cast<BfmeFlagsAXB *>(&pair));
 
-	if (accepted && target->bfmeSlot1() && g_mgr12EF1D8)
-		m_bfmeField = reinterpret_cast<BfmeAcceptManager *>(g_mgr12EF1D8)->bfmeRegister(this, item);
+	if (accepted && target->bfmeSlot1() && TheAudio)
+		m_bfmeField = reinterpret_cast<BfmeAcceptManager *>(TheAudio)->bfmeRegister(this, item);
 }
 
 void bfmeHandOver_0000240A(BfmeSeedTarget *target, void *item);		// ILT 0x0000240A

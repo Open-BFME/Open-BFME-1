@@ -148,7 +148,8 @@ struct Rva00367E30Logic
 extern Rva00367E30Logic *TheBfmeGameLogic;
 class GameSpyInfo;
 extern GameSpyInfo *TheGameSpyInfo;
-extern char g_bfmeD1072;
+// Retail reads 0x012F4AD0 here, the byte ShowOptions stores beside g_bfmeD1072 (0x012F4AD1).
+extern unsigned char g_optByte12F4AD0;
 extern void *g_quitMenuLayout;
 struct Rva006C9270GlobalData
 {
@@ -240,7 +241,7 @@ void BfmeAptScreenOptions::_bfme_save(const char *)
     // Standard and network pages share graphics and audio preferences.
     if (field258 == 2 || field258 == 3)
     {
-        if (g_bfmeD1072)
+        if (g_optByte12F4AD0)
         {
             if (field288)
             {
@@ -303,7 +304,7 @@ void BfmeAptScreenOptions::_bfme_save(const char *)
                     Rva0007E5F0OptionPreferencesClear(&options);
             }
         }
-        if (g_bfmeD1072 && field284 &&
+        if (g_optByte12F4AD0 && field284 &&
             (TheBfmeGameLogic->field10C == 8 || TheBfmeGameLogic->field10C == 4) && !TheGameSpyInfo)
         {
             GadgetComboBoxGetSelectedPos(field284, &index);

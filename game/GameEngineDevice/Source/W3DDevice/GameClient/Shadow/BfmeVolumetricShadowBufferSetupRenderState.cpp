@@ -13,6 +13,8 @@
 class VertexBufferClass;
 class IndexBufferClass;
 
+static inline int decrementRef(int *p) { return --*p; }
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.h
 class VertexMaterialClass
 {
@@ -21,27 +23,22 @@ public:
 	int refs;
 	enum PresetType { PRELIT_DIFFUSE = 0 };
 	static VertexMaterialClass *Get_Preset(PresetType preset);
-	void ReleaseGlobalRef();
+	void ReleaseGlobalRef()
+	{
+		decrementRef(&refs);
+		if (refs == 0)
+			Delete_This();
+	}
 };
 
 extern VertexMaterialClass *ScreenMaterial;      // 0x1340EC4 -- shared model global
 extern unsigned TheBoxTextureDirtyMask;          // 0x133F49C -- shared model global
 
-static inline int decrementRef(int *p) { return --*p; }
+class ShaderClass;
 
-void VertexMaterialClass::ReleaseGlobalRef()
-{
-	decrementRef(&refs);
-	if (refs == 0)
-		Delete_This();
-}
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/shader.h
-class ShaderClass
-{
-public:
-	static ShaderClass _PresetOpaqueShader;
-};
+// Not _PresetOpaqueShader: retail passes the shadow buffer's own shader at 0x012BBF14
+// (bits 0x00101823; Opaque's are 0x0011581B), as the draw path does.
+extern ShaderClass Rva012BBF14Shader;
 
 class DX8Wrapper
 {
@@ -89,7 +86,7 @@ void BfmeVolumetricShadowBufferLocks::setupRenderState()
 			vmat->Delete_This();
 	}
 
-	DX8Wrapper::Set_Shader(ShaderClass::_PresetOpaqueShader);
+	DX8Wrapper::Set_Shader(Rva012BBF14Shader);
 	DX8Wrapper::Set_Vertex_Buffer(m_vertexBuffer, 0);
 	DX8Wrapper::Set_Index_Buffer(m_indexBuffer, 0);
 

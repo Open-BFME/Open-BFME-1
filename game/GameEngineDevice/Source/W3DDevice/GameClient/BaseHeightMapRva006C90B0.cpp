@@ -92,7 +92,8 @@ void BaseHeightMapRenderObjClass::rva006C90B0(void)
 		return;
 	}
 
-	DX8Wrapper::Set_Shader(ShaderClass::_PresetAlphaShader);
+	// Retail passes 0x012D6E18, the preset after Alpha in shader.cpp's declaration order.
+	DX8Wrapper::Set_Shader(ShaderClass::_PresetMultiplicativeShader);
 	DX8Wrapper::Set_Index_Buffer(m_buffer2FDC, 0);
 	DX8Wrapper::Set_Vertex_Buffer(m_buffer2FD8, 0);
 	BoxSetTexture(0, (TextureBaseClass *&)m_treeBuffer->bfmeGet());

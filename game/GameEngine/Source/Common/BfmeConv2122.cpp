@@ -12,7 +12,7 @@ extern "C"
 	__declspec(dllimport) unsigned long __stdcall GetCurrentThreadId(void);
 	__declspec(dllimport) int __stdcall EnumThreadWindows(unsigned long id, int (__stdcall *fn)(void *, long), long param);
 	__declspec(dllimport) long __stdcall GetWindowLongA(void *hwnd, int index);
-	__declspec(dllimport) int __stdcall GetClientRect(void *hwnd, BfmeRectAAS *rect);
+	__declspec(dllimport) int __stdcall GetWindowRect(void *hwnd, BfmeRectAAS *rect);
 }
 
 int __stdcall EnumThreadWndProc(void *hwnd, long param);
@@ -47,7 +47,7 @@ bool BfmeHostAAS::bfmeProbeAAS()
 
 	BfmeRectAAS r;
 
-	if (GetClientRect(found, &r) != 0)
+	if (GetWindowRect(found, &r) != 0)
 	{
 		if (r.m_bfmeRightAAS - r.m_bfmeLeftAAS < r.m_bfmeBottomAAS - r.m_bfmeTopAAS)
 			m_bfme9F49AAS = 1;

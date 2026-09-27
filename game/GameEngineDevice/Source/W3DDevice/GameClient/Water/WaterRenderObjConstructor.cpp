@@ -9,9 +9,9 @@
 // 0x12417a8) gives every destructible sub-object in declaration order --
 // RenderObjClass base @+4, three BfmeHandleCX handles @+0xe4/+0x24c/+0x2a8
 // (all sharing ??1BfmeHandleCX@@QAE@XZ), an inlined STL list sentinel
-// @+0x2ac, a single AsciiString @+0x2c8, a 5-element UnicodeString array
-// @+0x2cc (elements .set() from the global ?Rva01336E50Str@@3URva002E5FF0Str@@A
-// string right after construction) and a 6-element WaterRenderObjClass::Setting
+// @+0x2ac, a single AsciiString @+0x2c8, a 5-element AsciiString array
+// @+0x2cc (elements .set() from the empty AsciiString at 0x01336E50
+// right after construction) and a 6-element WaterRenderObjClass::Setting
 // array @+0x2e0 (cleanup reuses the already-matched ??1Setting dtor). The
 // three vftable stores (own @+0, RenderObjClass override @+4, the
 // MultiListObjectClass override folded into RenderObjClass's own multiple
@@ -162,30 +162,11 @@ public:
 	~BfmeSkyStringWR(void) { }
 };
 
-// Minimal TU-local UnicodeString: the ctor/dtor bodies are trivial enough to
-// ICF-fold with the already-matched BFMERetailAsciiString ctor/dtor (0x00017BD9
-// / 0x0000D828), and set() is declared-only so the linker resolves the call to
-// the already-landed ?set@UnicodeString@@QAEXABV1@@Z body (0x00887C90,
-// game/Libraries/Source/WWVegas/WWLib/string_base.cpp) instead of emitting a
-// fresh StringBase<wchar_t>::set instantiation from the shared shim header
-// (which folds to a DIFFERENT retail address, 0x00888530).
-class UnicodeString
-{
-public:
-	UnicodeString(void) { m_text = 0; }
-	~UnicodeString(void);
-
-	void set(const UnicodeString &that);
-
-private:
-	void *m_text;
-};
-
-// Retail 0x01336E50 -- already pinned under two other type tags
-// (Rva0036CA00Str / Rva002E5FF0Str) by other converted bodies; this file
-// reuses the same address as a real UnicodeString, matching the ?set@UnicodeString@@
-// call retail makes with it as the argument.
-extern UnicodeString Rva01336E50Str;
+// The five name slots are AsciiStrings: retail's eh vector iterators get the
+// AsciiString ctor/dtor (thunks 0x00417BD9/0x0040D828) and each slot is set from
+// the empty AsciiString at 0x01336E50 through StringBase<char>::set (0x00887C90).
+#include "ascii_string.h"
+extern const AsciiString Rva01336E50EmptyString;
 
 // m_at2ac's element type just needs to be a 4-byte node payload with a
 // TRIVIAL (implicit) destructor -- retail's inlined list::clear() at the tail
@@ -313,7 +294,7 @@ public:
 	unsigned char				m_2c4;				// +0x2c4
 	unsigned char				m_2c5;				// +0x2c5
 	BfmeSkyStringWR			m_sky;				// +0x2c8
-	UnicodeString				m_names[5];			// +0x2cc
+	AsciiString					m_names[5];			// +0x2cc
 	Setting						m_settings[6];		// +0x2e0
 	int							m_400;				// +0x400
 	unsigned char				m_zeroBlock2[0x11c];	// +0x404 .. +0x520
@@ -357,11 +338,11 @@ WaterRenderObjClass::WaterRenderObjClass(void) :
 	memset(&m_zeroBlock1[0], 0, 0x80);
 	memset(&m_zeroBlock1[0x80], 0, 0x80);
 
-	UnicodeString *namePtr = m_names;
+	AsciiString *namePtr = m_names;
 	int nameCount = 5;
 	while (nameCount--)
 	{
-		namePtr->set(Rva01336E50Str);
+		namePtr->set(Rva01336E50EmptyString);
 		++namePtr;
 	}
 

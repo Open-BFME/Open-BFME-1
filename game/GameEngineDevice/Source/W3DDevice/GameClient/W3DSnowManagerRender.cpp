@@ -13,6 +13,10 @@
 #include "rendobj.h"
 #include "shader.h"
 #include "dx8wrapper.h"
+
+// Not _PresetAlphaShader: retail passes its own statically initialised shader at 0x012BAFA8
+// (bits 0x000198B7; Alpha's are 0x001198B3). Nothing else in retail references it.
+extern ShaderClass Rva012BAFA8Shader;
 #include "coord3d.h"
 
 class Overridable {
@@ -168,7 +172,7 @@ void W3DSnowManager::render(RenderInfoClass &rinfo) {
     int dimY=(int)((float)(map->height-border)*10.0f);
     m_heightTraveled=m_velocity*m_time;
     m_snowCeiling=m_boxDimensions;
-    DX8Wrapper::Set_Shader(ShaderClass::_PresetAlphaShader);
+    DX8Wrapper::Set_Shader(Rva012BAFA8Shader);
     VertexMaterialClass *material=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
     DX8Wrapper::Set_Material(material);
     REF_PTR_RELEASE(material);

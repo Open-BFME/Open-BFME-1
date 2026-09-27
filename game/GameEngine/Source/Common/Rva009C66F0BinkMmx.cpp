@@ -4,7 +4,8 @@
 // weight table as Rva009C6780BinkMmx, but filters the low and high four-pixel
 // groups from each source row separately.
 
-extern const unsigned short g_bfmeBinkRound[8];
+// The MMX paths round with the 64-bit table at 0x012D88D0; g_bfmeBinkRound is the SSE one.
+extern const unsigned short Rva012D88D0Round[4];	// retail 0x012D88D0
 
 // ?rva009C66F0BinkMmx@@YAXPBXPAXHHHH0@Z
 void __cdecl rva009C66F0BinkMmx(const void *source, void *destination,
@@ -31,7 +32,7 @@ void __cdecl rva009C66F0BinkMmx(const void *source, void *destination,
 		punpcklbw mm5, mm0
 		pmullw mm5, mm2
 		paddw mm3, mm5
-		paddw mm3, g_bfmeBinkRound
+		paddw mm3, Rva012D88D0Round
 		psraw mm3, 7
 		packuswb mm3, mm0
 		movd dword ptr [edi], mm3
@@ -44,7 +45,7 @@ void __cdecl rva009C66F0BinkMmx(const void *source, void *destination,
 		punpcklbw mm5, mm0
 		pmullw mm5, mm2
 		paddw mm3, mm5
-		paddw mm3, g_bfmeBinkRound
+		paddw mm3, Rva012D88D0Round
 		psraw mm3, 7
 		packuswb mm3, mm0
 		movd dword ptr [edi + 4], mm3

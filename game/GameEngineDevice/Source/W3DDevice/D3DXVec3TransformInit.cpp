@@ -22,8 +22,9 @@ typedef D3DXVECTOR4 *(__stdcall *D3DXVec3TransformFunction)(D3DXVECTOR4 *,
 
 struct D3DXFASTTABLE
 {
+	// Vec2Transform, Vec3Transform, Vec4Transform sit in slots 0, 1, 2 (see D3DXVec4TransformInit.cpp).
+	unsigned int vec2Transform;
 	D3DXVec3TransformFunction vec3Transform;
-	unsigned int reserved[2];
 };
 
 extern D3DXFASTTABLE g_D3DXFastTable;

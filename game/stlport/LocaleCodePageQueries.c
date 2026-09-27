@@ -298,25 +298,30 @@ char *Rva0084EF00(LocaleCodePageObject_0084EED0 *object)
     }
 }
 
+/* Each query owns its static buffer in retail; the 0x104-byte date formats do not share the 9-byte AM/PM ones. */
 extern char *__cdecl Rva0084DE40Tail(char *buffer);
+
+extern char locale_buffer_0084ECA0[];
 
 char *Rva0084ECA0(LocaleCodePageObject_0084EED0 *object)
 {
     LCID locale = object->locale;
-    GetLocaleInfoA(locale, 0x1f, locale_buffer_0084EED0, 0x104);
+    GetLocaleInfoA(locale, 0x1f, locale_buffer_0084ECA0, 0x104);
     {
-        char *buffer = locale_buffer_0084EED0;
+        char *buffer = locale_buffer_0084ECA0;
         __ConvertFromACP(buffer, 0x50, object->codePage);
         return Rva0084DE40Tail(buffer);
     }
 }
 
+extern char locale_buffer_0084ECE0[];
+
 char *Rva0084ECE0(LocaleCodePageObject_0084EED0 *object)
 {
     LCID locale = object->locale;
-    GetLocaleInfoA(locale, 0x20, locale_buffer_0084EF00, 0x104);
+    GetLocaleInfoA(locale, 0x20, locale_buffer_0084ECE0, 0x104);
     {
-        char *buffer = locale_buffer_0084EF00;
+        char *buffer = locale_buffer_0084ECE0;
         __ConvertFromACP(buffer, 0x50, object->codePage);
         return Rva0084DE40Tail(buffer);
     }
