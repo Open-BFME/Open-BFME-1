@@ -2703,9 +2703,14 @@ def verify_dir32_consistency(rows):
         local_static = {symbol["name"] for symbol in symbols
                         if symbol["section"] > 0 and
                         symbol["storage"] == COFF_STORAGE_STATIC}
+        object_symbol = ledger_object_symbol(row)
         try:
-            body, relocs = read_object_symbol_bytes(
-                obj, ledger_object_symbol(row), tsz)
+            if is_funclet_row(row, object_symbol):
+                # $L pins renumber on any edit to the TU; read the body the byte
+                # verifier compared, not the neighbouring funclet the stale label names.
+                body, relocs, _ = read_funclet(row, object_symbol, obj, target)
+            else:
+                body, relocs = read_object_symbol_bytes(obj, object_symbol, tsz)
         except ValueError:
             continue
         for off, rtype, sym in relocs:
