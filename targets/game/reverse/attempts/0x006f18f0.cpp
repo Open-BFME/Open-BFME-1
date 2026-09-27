@@ -1,5 +1,5 @@
-// ?rva006F21B0@W3DDisplay@@UAEXPBVImage@@MMMMHH@Z
-// partial score=0.862540192926045 date=2026-09-26
+// ?rva006F18F0@@YA?AVBFMEWaterTrackTextureHandle@@PBVImage@@@Z
+// partial score=1.0 date=2026-09-26
 // Full native helper371B is exact modulo21 independently audited relocations.
 // D4 renderer1312/1312B,171 differing positional bytes; no game-source claim.
 // ABI recovered by static-helper visibility; native Add_Tri visibility restores frame58.
