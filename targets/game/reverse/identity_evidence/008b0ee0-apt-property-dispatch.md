@@ -8,6 +8,43 @@ shape is approximately 0.892; it is diagnostic only. The stack frame now
 matches retail's `sub esp, 1Ch`. No production source, pin, baseline, or
 function-ledger ownership was changed.
 
+## Corrected cleanup alternative (2026-09-27)
+
+**The preferred bank still has incorrect empty deallocation stubs.** Resume
+from the [corrected immutable alternative](../attempt_history/0x008b0ee0/ba16d5160f1e1d9a2f18d7b7974bd92af3f1cc28f73ccc53570f71a0c444b64b.json)
+instead. Its identical score intentionally leaves the preferred pointer unchanged;
+this is an exception-cleanup correction, not a native-coverage claim.
+
+Fresh `tools/eh_info.py 0x008B0EE0` decodes 35 retail unwind states. Seven
+allocation failures push size 16 and call 00891A80; 26 push size 36 and call
+00897670. The remaining two actions release a string through 00891B80.
+The source now declares `Rva008A9B00::operator delete(void *, unsigned)`
+using its existing, independently witnessed 00891A80 pin. `BfmeA1029` inherits
+the empty layout-only `Rva00897670HeaderedDelete` view and its existing sized
+operator, already matched in `HeaderedDeleteOperators.cpp`. The unused empty
+base delete was removed; no additional main-function cleanup is emitted.
+
+Both before and corrected drafts were freshly compiled. The 7,110 main bytes
+are identical, SHA-256
+`e5e783c91968f961448a5fa9a6a17911a663b545238a9f350bc55d89b7e13157`.
+All 476 relocation sites, kinds and targets agree after resolving renumbered
+local compiler labels to their unchanged offsets. The original 5,076 masked
+differences, 52-byte extent penalty and score `0.28399888299357723` remain.
+
+The corrected compiler unwind map has all 35 predecessor entries equal to
+retail. Each action is instruction-exact after resolving its single call or
+jump: seven 15-byte sized-string deletes, 26 15-byte headered deletes and two
+8-byte string-release actions. The visible 22-byte string release also equals
+00891B80 after resolving the existing pool global to VA 01337A30. These
+checks establish the cleanup contracts without asserting that the unfinished
+main body or all its exception behavior is exact. No funclet, function,
+coverage, pin or baseline claim was added.
+
+The [state-by-state receipt](008b0ee0-cleanup-audit.json) preserves each
+predecessor, cleanup RVA and resolved target. Reproduction scratch is
+`build/apt7162-cleanup/`: `before.cpp`, `corrected.cpp`, their probe receipts,
+`retail-eh.txt`, and `audit.py`.
+
 ## Boundary and identity evidence
 
 Read-only Ghidra was run against the independently SHA-256-verified identical
