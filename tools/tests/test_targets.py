@@ -125,10 +125,11 @@ def test_manifest_cannot_select_another_image(tmp_path):
 
 def test_target_state_cannot_redirect_to_game_ledgers(tmp_path):
     configure(tmp_path)
-    reverse = tmp_path / "targets/worldbuilder"
-    reverse.mkdir(parents=True)
+    game = tmp_path / "targets/game/reverse"
+    game.mkdir(parents=True)
+    (tmp_path / "targets/worldbuilder").mkdir(parents=True)
     try:
-        (reverse / "targets/game/reverse").symlink_to(reverse, target_is_directory=True)
+        (tmp_path / "targets/worldbuilder/reverse").symlink_to(game, target_is_directory=True)
     except OSError:
         pytest.skip("symlink creation unavailable on this host")
     with pytest.raises(TargetError, match="must not redirect through a symlink"):

@@ -243,9 +243,11 @@ def test_delta_selector_pairs_source_check_with_exact_affected_row(selection, mo
         "row:0x00002000:16:caller", "source:game/Shared.cpp"]
 
 
-@pytest.mark.parametrize("hook", ["pre-commit", "pre-push"])
-@pytest.mark.parametrize("mode", ["ordinary", "pins"])
-@pytest.mark.parametrize("outcome", ["failure", "empty", "source", "many"])
+@pytest.mark.parametrize("hook,mode,outcome", [
+    (hook, mode, outcome) for hook in ("pre-commit", "pre-push") for mode in ("ordinary", "pins")
+    for outcome in ("failure", "empty", "source", "many")
+    # only the pre-push chunker splits a many-selector argv
+    if outcome != "many" or (hook, mode) == ("pre-push", "ordinary")])
 def test_hooks_check_selector_status_before_using_output(tmp_path, hook, mode, outcome):
     """Run the actual hooks; a failing selector emits valid partial output first."""
     source = "game/Caller With Space.cpp"
@@ -302,10 +304,6 @@ printf '%s\\n' "$@" > "build-args-$n"
     build_script.chmod(0o755)
     env = dict(os.environ, PATH=f"{bindir}{os.pathsep}{os.environ['PATH']}",
                FIXTURE_ROOT=str(tmp_path), SELECTOR_MODE=mode, SELECTOR_OUTCOME=outcome)
-    if hook == "pre-push" and outcome == "many" and mode == "ordinary":
-        pass
-    elif outcome == "many":
-        pytest.skip("many-selector argv exercise targets the pre-push chunker")
     result = subprocess.run(["bash", str(TOOLS.parent / ".githooks" / hook)],
                             input="refs/heads/test local refs/heads/test base\n",
                             text=True, capture_output=True, env=env)
