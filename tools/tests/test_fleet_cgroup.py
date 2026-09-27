@@ -61,6 +61,10 @@ def test_bootstrap_cannot_exec_until_assigned_and_detached_descendant_keeps_unit
         code = bootstrap.child.wait(timeout=5)
         assert code == 7
         assert marker.read_text() == "started"
+        # The worker exits without waiting for its child to start Python, so give the child time to write its pid.
+        deadline = time.monotonic() + 5
+        while not descendant_pid.exists() and time.monotonic() < deadline:
+            time.sleep(0.01)
         assert descendant_pid.exists()
         # The direct process is gone, but the setsid child remains in this unit.
         assert unit.populated() is True
