@@ -1,6 +1,6 @@
-// ?d_0056e980@@YAXXZ
-// partial score=0.77 date=2026-09-24
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// ??0BfmeAptScreenSaveLoad@@QAE@PAX@Z
+// partial score=0.912 date=2026-09-27
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /FAsc /Fabuild/saveload_ctorbase2_static.cod
 // stlport
 #include <list>
 #include <vector>
@@ -825,8 +825,46 @@ typedef _STL::list<Z1Elem0056D960,
 	_STL::allocator<Z1Elem0056D960> > BfmeSaveLoadSlotList;
 
 // SaveLoad.apt, retail 0x00104DC0, object 0x288 bytes.
+class __declspec( novtable ) BfmeAptScreenSaveLoadConstructorBase
+	: public _bfme_AptGameWindow
+{
+public:
+	__forceinline BfmeAptScreenSaveLoadConstructorBase( void *context )
+		: _bfme_AptGameWindow( context )
+	{
+		*(const void ***)this = BfmeAptScreenSaveLoadVftable;
+		*(const void ***)( (char *)this + 0x218 ) =
+			BfmeAptScreenSaveLoadSecondaryVftable;
+		m_field258 = 0;
+		m_field25C = 0;
+		m_field264 = 0;
+		m_field268 = 0;
+		m_field26C = 0;
+		m_field270 = 0;
+		m_field274 = 0;
+		m_field278 = false;
+		m_field27C = 0;
+		m_field280 = false;
+		_ReadWriteBarrier();
+	}
+
+protected:
+	int m_field258;
+	int m_field25C;
+	bool m_field260;
+	int m_field264;
+	int m_field268;
+	int m_field26C;
+	int m_field270;
+	int m_field274;
+	bool m_field278;
+	int m_field27C;
+	bool m_field280;
+};
+
 class __declspec( novtable ) __multiple_inheritance BfmeAptScreenSaveLoad
-	: public _bfme_AptGameWindow, public BfmeAptFunctorMarker
+	: public BfmeAptScreenSaveLoadConstructorBase,
+	  public BfmeAptFunctorMarker
 {
 public:
 	BfmeAptScreenSaveLoad( void *context );
@@ -845,40 +883,13 @@ public:
 	void _bfme_provide( const char *selector, void *value, bool setting );
 
 private:
-	int m_field258;
-	int m_field25C;
-	bool m_field260;
-	int m_field264;
-	int m_field268;
-	int m_field26C;
-	int m_field270;
-	int m_field274;
-	bool m_field278;
-	int m_field27C;
-	bool m_field280;
 	BfmeSaveLoadSlotList m_field284;
 };
 
 BfmeAptScreenSaveLoad::BfmeAptScreenSaveLoad( void *context )
-	: _bfme_AptGameWindow( context )
+	: BfmeAptScreenSaveLoadConstructorBase( context )
 {
-	*(const void ***)( (char *)this ) = BfmeAptScreenSaveLoadVftable;
-	*(const void ***)( (char *)this + 0x218 ) =
-		BfmeAptScreenSaveLoadSecondaryVftable;
-	m_field258 = 0;
-	m_field25C = 0;
-	m_field264 = 0;
-	m_field268 = 0;
-	m_field26C = 0;
-	m_field270 = 0;
-	m_field274 = 0;
-	m_field278 = false;
-		m_field27C = 0;
-		m_field280 = false;
-		_ReadWriteBarrier();
-
-
-		if( g_bfmeReadyAG == 0 )
+	if( g_bfmeReadyAG == 0 )
 	{
 		g_bfmeReadyAG = this;
 		BfmeSaveLoadAptRegistry *registry =
