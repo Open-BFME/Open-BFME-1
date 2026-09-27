@@ -265,34 +265,44 @@ def push(tree, tries=20):
     return f"not pushed after {tries} attempts (lost every race with other pushers)"
 
 
+def original_commit(tree):
+    """The seat's own "reverse:" commit as first made, before any rebase.
+
+    Rebasing it through union merge is what corrupted round 3's ledgers, and
+    each later rebase or repair commit carries other contributors' rows; the
+    first commit against its own parent is the seat's clean delta."""
+    log = git(tree, "reflog", "--format=%H %gs").stdout.splitlines()
+    firsts = [line.split(" ", 1)[0] for line in log if " commit: reverse:" in f" {line.split(' ', 1)[1]}"]
+    return firsts[-1] if firsts else None
+
+
 def harvest(seat):
-    """Commit and push one finished seat. Returns a problem string, or None."""
+    """Commit a finished seat and replay its delta onto master. Problem or None."""
+    import seat_replay
+
     tree = Path(seat["worktree"])
-    rows = landed_rows(tree)
-    changed = git(tree, "status", "--short", "--untracked-files=all").stdout.splitlines()
-    paths = [line[3:].split(" -> ")[-1] for line in changed if not line[3:].startswith("build/")]
-    if not paths:
-        # Committed on an earlier harvest whose push failed: push, do not skip.
-        git(tree, "fetch", "-q", "origin", "master")
-        if git(tree, "merge-base", "--is-ancestor", "HEAD", "origin/master").returncode == 0:
+    commit = original_commit(tree)
+    if commit is None:
+        rows = landed_rows(tree)
+        changed = git(tree, "status", "--short", "--untracked-files=all").stdout.splitlines()
+        paths = [line[3:].split(" -> ")[-1] for line in changed if not line[3:].startswith("build/")]
+        if not paths:
             return "nothing to harvest"
-        problem = push(tree)
-        if problem is None:
-            print(f"{seat['id']}: pushed {git(tree, 'log', '--oneline', '-1').stdout.strip()}")
-        return problem
-    for path in paths:
-        git(tree, "add", "-A", "--", path)
-    total = sum(size for _, _, size in rows)
-    subject = f"reverse: {len(rows)} bodies from {Path(seat['label']).name} ({total:,} B), {seat['model']} seat"
-    body = "\n".join(f"  {rva} {size:5} B {name}" for name, rva, size in sorted(rows, key=lambda r: r[1]))
-    commit = git(tree, "commit", "-q", "-m", subject, "-m",
-                 f"{seat['model']} ({seat['effort']}) fresh-file seat {seat['id']}, landed byte-exact:\n{body}",
-                 "-m", "Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>")
-    if commit.returncode:
-        return "commit refused by the hooks:\n" + (commit.stdout + commit.stderr)[-2500:]
-    problem = push(tree)
+        for path in paths:
+            git(tree, "add", "-A", "--", path)
+        total = sum(size for _, _, size in rows)
+        subject = f"reverse: {len(rows)} bodies from {Path(seat['label']).name} ({total:,} B), {seat['model']} seat"
+        body = "\n".join(f"  {rva} {size:5} B {name}" for name, rva, size in sorted(rows, key=lambda r: r[1]))
+        made = git(tree, "commit", "-q", "-m", subject, "-m",
+                   f"{seat['model']} ({seat['effort']}) fresh-file seat {seat['id']}, landed byte-exact:\n{body}",
+                   "-m", "Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>")
+        if made.returncode:
+            return "commit refused by the hooks:\n" + (made.stdout + made.stderr)[-2500:]
+        commit = git(tree, "rev-parse", "HEAD").stdout.strip()
+    replay = seat_replay.replay_tree()
+    problem = seat_replay.replay(tree, commit, replay)
     if problem is None:
-        print(f"{seat['id']}: pushed {git(tree, 'log', '--oneline', '-1').stdout.strip()}")
+        print(f"{seat['id']}: pushed {git(replay, 'log', '--oneline', '-1').stdout.strip()}")
     return problem
 
 
