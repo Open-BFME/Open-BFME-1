@@ -79518,6 +79518,8 @@ name,address,notes
 ?call2@BfmeTargetF63@@QAEXPAX@Z,0x00002A59,pin
 ?call@ArmorMapHelperShim@@QBE_NABV?$BitFlags@$0L@@@0@Z,0x00140740,incremental-link thunk target through a TU-local forwarding shim
 ?call@BfmeObj412@@QAEXPAX0@Z,0x00049A80,pin
+?call@BfmeRva004A4240CommandAvailabilityView@@QBEHPBVCommandButton@@PAVGameWindow@@PAVObject@@PAM_N@Z,0x000414D4,ILT to 0x004A4240; thiscall RET 0x14 with five arguments; stores 1.0f through arg4 and reads CommandButton+0x10 of arg1; caller 0x004A96FE
+?call@BfmeRva004A5950ControlBarContextCommandView@@QAEXXZ,0x0003672D,ILT to 0x004A5950; ControlBar::updateContextMultiSelect calls this ILT at 0x004A9631 with ECX=this and no stack arguments; result unused
 ?call@BfmeTargetF5F@@QAEXPAX@Z,0x000160D1,pin
 ?call@Gen0000C4F0@@QAEXPAVY1ForEachArg@@@Z,0x0000C4F0,element callee of the 0x003D0FE0 for-each loop reached via incremental-link thunk; address-derived name
 ?call@Gen0000D84B@@QAEXXZ,0x0000D84B,element callee of the 0x003CFC60 for-each loop reached via incremental-link thunk; address-derived name

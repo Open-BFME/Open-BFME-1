@@ -92,7 +92,6 @@ class ControlBar;
 // Existing ledger symbols. Both calls take only the receiver in ECX and no
 // stack arguments; this one-argument fastcall view has the same machine ABI.
 // RVA 004A3163 -> ILT 00023E5C -> dump 004A9620 (multi-select update).
-void d_004a9620();
 // RVA 004A31C9 -> ILT 00014B28 -> 004AEC80 -> 0000238D -> 004A2500,
 // the landed ControlBar::evaluateContextUI body. Keep the witnessed route.
 void j_00014b28();
@@ -117,6 +116,7 @@ protected:
 	void populateSpecialPowerShortcut(Player *player);
 public:
 	void repopulateBuildTooltipLayout();
+	void updateContextMultiSelect();
 protected:
 	void updateContextPurchaseScience();
 	void updateContextStructureInventory();
@@ -190,7 +190,7 @@ void ControlBar::update()
 		repopulateBuildTooltipLayout();
 	}
 	if (m_currContext == 7) {
-		((Rva004A2F80ReceiverCall)d_004a9620)(this);
+		updateContextMultiSelect();
 		return;
 	}
 	if (!m_currentSelectedDrawable || !m_currentSelectedDrawable->m_object) {
