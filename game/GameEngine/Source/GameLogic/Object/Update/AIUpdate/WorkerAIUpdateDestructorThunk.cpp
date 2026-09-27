@@ -6,7 +6,8 @@
 // base views preserve those boundaries while leaving the ZH header untouched.
 // The first base is the out-of-line BFME destructor at 0x0001c774; the other
 // interface tails are empty in this destructor and only contribute their
-// vptr stores.
+// vptr stores. They carry the constructor's names for the same subobjects,
+// which install the same tables.
 
 class Rva0001C774FlatBase
 {
@@ -15,6 +16,36 @@ public:
 
 private:
 	unsigned char m_pad[0x08];
+};
+
+class AIUpdateTail0
+{
+public:
+	virtual void marker();
+};
+
+class AIUpdateTail1
+{
+public:
+	virtual void marker();
+
+private:
+	unsigned char m_pad[0x0c];
+};
+
+class AIUpdateTail2
+{
+public:
+	virtual void marker();
+};
+
+class AIUpdateTail3
+{
+public:
+	virtual void marker();
+
+private:
+	unsigned char m_pad[0x318];
 };
 
 class BfmeWorkerInterfaceTail0
@@ -27,39 +58,9 @@ class BfmeWorkerInterfaceTail1
 {
 public:
 	virtual void marker();
-
-private:
-	unsigned char m_pad[0x0c];
 };
 
 class BfmeWorkerInterfaceTail2
-{
-public:
-	virtual void marker();
-};
-
-class BfmeWorkerInterfaceTail3
-{
-public:
-	virtual void marker();
-
-private:
-	unsigned char m_pad[0x318];
-};
-
-class BfmeWorkerInterfaceTail4
-{
-public:
-	virtual void marker();
-};
-
-class BfmeWorkerInterfaceTail5
-{
-public:
-	virtual void marker();
-};
-
-class BfmeWorkerInterfaceTail6
 {
 public:
 	virtual void marker();
@@ -114,13 +115,13 @@ private:
 
 class WorkerAIUpdate
 	: public Rva0001C774FlatBase,
+	  public AIUpdateTail0,
+	  public AIUpdateTail1,
+	  public AIUpdateTail2,
+	  public AIUpdateTail3,
 	  public BfmeWorkerInterfaceTail0,
 	  public BfmeWorkerInterfaceTail1,
-	  public BfmeWorkerInterfaceTail2,
-	  public BfmeWorkerInterfaceTail3,
-	  public BfmeWorkerInterfaceTail4,
-	  public BfmeWorkerInterfaceTail5,
-	  public BfmeWorkerInterfaceTail6
+	  public BfmeWorkerInterfaceTail2
 {
 public:
 	virtual ~WorkerAIUpdate();
