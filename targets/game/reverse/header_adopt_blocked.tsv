@@ -723,3 +723,4 @@ game/GameEngine/Source/Common/System/GeometryShapeCopyBackward.cpp	StringBase	Fu
 game/GameEngine/Source/GameLogic/ScriptEngine/AttackPriorityInfoXfer.cpp	AsciiString	game\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
 game/GameEngine/Source/GameClient/SuperweaponInfoCtor.cpp	AsciiString	x:\Projects\Open-BFME-1 Claude\build\wt\mine\game\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
 game/GameEngine/Source/Common/System/SaveGame/GameStateMap_embedInUseMap.cpp	AsciiString	Functions: FAIL 1/1
+game/GameEngine/Source/GameLogic/Object/Behavior/RunOffMapBehaviorModuleDataCtor.cpp	UnicodeString	game\GameEngine\Source\GameLogic\Object\Behavior\RunOffMapBehaviorModuleDataCtor.cpp(61) : error C2039: 'set' : is not a member of 'UnicodeString'

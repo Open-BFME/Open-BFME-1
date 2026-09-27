@@ -89578,3 +89578,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?locoQuery@Rva002C12E0Locomotor@@QAEEPAXM00@Z,0x001BBC50,address-derived locomotor query; thiscall ret 0x10 with object/float/two pointers and byte result in AL; body target of ILT 0x00001032
 ?locoUpdate2@Rva002C12E0Locomotor@@QAEXPAX0@Z,0x001BCE20,address-derived locomotor update; thiscall ret 8 with object and pointer; body target of ILT 0x0000E52A
 ?locoUpdate1@Rva002C12E0Locomotor@@QAEXPAX@Z,0x001B80D0,address-derived locomotor update; thiscall ret 4 with object pointer; body target of ILT 0x00002121
+??$_Construct@U?$pair@$$CBW4NameKeyType@@M@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBW4NameKeyType@@M@0@ABU10@@Z,0x0002487A,ILT thunk the NameKeyType-float tree _M_copy at 0x00567200 calls to build the pair in the freshly allocated 0x18 node; jmp 0x0007CD50

@@ -25,6 +25,15 @@ inline const unsigned short *StringBase<unsigned short>::str() const
     return m_data ? &m_data->data[0] : (const unsigned short *)L"";
 }
 
+// StringBase<char>::str() lives out of line in StringBase.cpp; retail inlines
+// it in operator+= below (the m_data test falling back to the shared narrow
+// "" at 0x0107388B), same as it inlines the wide one for the ctor.
+template <>
+inline const char *StringBase<char>::str() const
+{
+    return m_data ? m_data->data : "";
+}
+
 // 0x00889090: the base StringBase<char> is built first (inline, one zero
 // store) and is protected by an EH state while format() runs -- retail's
 // unwind funclet at 0x00C56930 destroys it through ??1?$StringBase@D@@AAE@XZ.
@@ -33,82 +42,14 @@ AsciiString::AsciiString(const UnicodeString &that)
     format(AsciiString("%ls"), that.str());
 }
 
-__declspec(naked) AsciiString &AsciiString::operator+=(const UnicodeString &that)
+// 0x00889140: the same shape as the converting constructor above, on an
+// already-built AsciiString: this->str() first, then the wide argument, into
+// the "%s%ls" format string at 0x0113302C. The `this` the body returns is
+// never re-zeroed (no `mov [esi],0`), so this is the append overload rather
+// than a second converting constructor.
+AsciiString &AsciiString::operator+=(const UnicodeString &that)
 {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x00
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x74
-        __emit 0x05
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x05
-        __emit 0xb8
-        __emit 0x8c
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x50
-        __emit 0x8b
-        __emit 0x06
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x05
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x05
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x50
-        __emit 0x51
-        __emit 0x89
-        __emit 0x64
-        __emit 0x24
-        __emit 0x14
-        __emit 0x8b
-        __emit 0xcc
-        __emit 0x68
-        __emit 0x2c
-        __emit 0x30
-        __emit 0x13
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x46
-        __emit 0xfa
-        __emit 0xff
-        __emit 0xff
-        __emit 0x56
-        __emit 0xe8
-        __emit 0x70
-        __emit 0xfe
-        __emit 0xff
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    format(AsciiString("%s%ls"), str(), that.str());
+    return *this;
 }
 
