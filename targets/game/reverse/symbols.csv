@@ -23015,6 +23015,7 @@ name,address,notes
 ?b_000fc640@@YAXXZ,0x000FC640,gen-thunk body
 ?b_000fc6a0@@YAXXZ,0x000FC6A0,gen-thunk body
 ?b_000fc6e0@@YAXXZ,0x000FC6E0,gen-thunk body
+??0Matrix3D@@QAE@XZ,0x000458EF,static Matrix3D vector-constructor callback literal 0x004458EF in target body
 ?b_000fc6f0@@YAXXZ,0x000FC6F0,gen-thunk body
 ?b_000fc720@@YAXXZ,0x000FC720,gen-thunk body
 ?b_000fc750@@YAXXZ,0x000FC750,gen-thunk body
@@ -72604,6 +72605,7 @@ name,address,notes
 ?b_00765b00@@YAXXZ,0x00765B00,gen-thunk body
 ?b_00765b70@@YAXXZ,0x00765B70,gen-thunk body
 ?b_00765dc0@@YAXXZ,0x00765DC0,gen-thunk body
+?findByCondition@RvaModuleData@@QBEPBURvaModelConditionInfo@@ABV?$BitFlags@$0HF@@@@Z,0x0000CE5F,decoded target REL32 ILT 0x0000CE5F to body 0x00765DC0; __thiscall one stack argument and pointer result
 ?b_00765fb0@@YAXXZ,0x00765FB0,gen-thunk body
 ?b_00766a70@@YAXXZ,0x00766A70,gen-thunk body
 ?b_00766aa0@@YAXXZ,0x00766AA0,gen-thunk body
@@ -72844,6 +72846,7 @@ name,address,notes
 ?b_00774a60@@YAXXZ,0x00774A60,gen-thunk body
 ?b_00774a90@@YAXXZ,0x00774A90,gen-thunk body
 ?b_00774aa0@@YAXXZ,0x00774AA0,gen-thunk body
+?validateStuff@RvaModelConditionInfo@@QBEXPAXMABURvaVector@@PBU1@1@Z,0x00006E92,decoded target REL32 ILT 0x00006E92 to body 0x00774AA0; __thiscall five stack arguments and unused result
 ?b_00774b60@@YAXXZ,0x00774B60,gen-thunk body
 ?b_00774d40@@YAXXZ,0x00774D40,gen-thunk body
 ?b_007751a0@@YAXXZ,0x007751A0,gen-thunk body
@@ -77682,6 +77685,7 @@ name,address,notes
 ?bfmeLookupAI@BfmeTableAI@@QAE?AVAsciiStringAI@@V2@@Z,0x00047992,Open-BFME5 the table lookup the numbered key at 0x00573580 forwards to
 ?bfmeLookupB@@YAHPAX@Z,0x000052CC,Open-BFME5 ILT the bit setter at 0x001C4020 looks up through
 ?bfmeLookupBI@@YGPAVBfmeThingBI@@H@Z,0x00005024,Open-BFME5 the key lookup the name-for-key at 0x007696B0 makes
+?findBestInfo@RvaModuleData@@QBEPBURvaModelConditionInfo@@ABV?$BitFlags@$0HF@@@@Z,0x00005024,decoded target REL32 ILT 0x00005024 to body 0x00765B70; __thiscall one stack argument and pointer result
 ?bfmeLookupBN@BfmeOtherBN@@QAEPAXABVAsciiStringBN@@@Z,0x00028560,Open-BFME5 the second lookup the resolve at 0x002DE300 makes
 ?bfmeLookupC@@YAHPAX@Z,0x00031246,Open-BFME5 ILT the bit setter at 0x0020EC60 looks up through
 ?bfmeLookupEBA@@YAPAVBfmeRecEBA@@PAVBfmeUStrEBA@@@Z,0x00035B43,pin lookup for BfmeConv2017
@@ -82954,6 +82958,8 @@ name,address,notes
 ?getPristineBonePositions@BFMEDrawableBoneQuery@@QBEHPBDHPAUCoord3D@@PAVMatrix3D@@HH@Z,0x0002319B,BFME Drawable::getPristineBonePositions 6-arg (ret 0x18); thunk to 0x413850
 ?getPristineBonePositions@Drawable@@QBEHPBDHPAUCoord3D@@PAVMatrix3D@@HH@Z,0x0002319B,BFME 6-arg getPristineBonePositions (true body 0x413850)
 ?getPristineBonePositionsForConditionState@W3DModelDraw@@UBEHABV?$BitFlags@$0HF@@@PBDHPAUCoord3D@@PAVMatrix3D@@H@Z,0x00775760,vtable-slot ??_7W3DModelDraw@@6B@ slot 3 anchors=8
+?tmpMtx@?5??getPristineBonePositionsForConditionState@Rva00775760@@QBEHABV?$BitFlags@$0HF@@@PBDHPAUCoord3D@@PAVMatrix3D@@HPAH@Z@4PAV5@A,0x01305A80,target static Matrix3D[64] buffer referenced by DIR32 at 0x007757FF
+?$S1@?5??getPristineBonePositionsForConditionState@Rva00775760@@QBEHABV?$BitFlags@$0HF@@@PBDHPAUCoord3D@@PAVMatrix3D@@HPAH@Z@4IA,0x013068E8,target static initialization guard referenced by DIR32 at 0x007757E0
 ?getPristineMapName@GameState@@QAE?AVAsciiString@@XZ,0x0000F52E,ZH GameState twin identifies the by-value pristine map getter
 ?getProductionTimeChangePercent@Player@@QBEMABVAsciiString@@@Z,0x000DA030,ThingTemplate calcTimeToBuild actual Player receiver and AsciiString name reference at ThingTemplate+20; body queries player map+1D8 and returns result float+8 or zero; BFME reference ABI
 ?getProductionUpdateInterface@Object@@QAEPAVProductionUpdateInterface@@XZ,0x00003B52,Open-BFME5 ILT thunk to the body matched at 0x001BF570; ?queueUpgrade@AIGroup@@QAEXPBVUpgradeTemplate@@_N@Z at 0x00151170 reaches it through this thunk
@@ -87754,6 +87760,7 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 __UCS2ToUTF8ConversionLengthOnly,0x0085C3D0,vendored=gamespy-2004
 __UTF8ToUCS2ConversionLengthOnly,0x0085C370,vendored=gamespy-2004
 ___CxxFrameHandler,0x009F6DD6,__CxxFrameHandler import thunk; every __ehhandler$ stub jmps here
+__ehhandler$?getPristineBonePositionsForConditionState@Rva00775760@@QBEHABV?$BitFlags@$0HF@@@PBDHPAUCoord3D@@PAVMatrix3D@@HPAH@Z,0x00C4FD0E,SEH handler from eh_info.py target frame at 0x00775760
 ___GetLCIDFromName,0x0084F020,STLport 4.5.3 __GetLCIDFromName; edx/ebx private-convention callee of __TranslateToSystem
 ___GetLocaleName,0x0084E350,STLport 4.5.3 Win32 locale name formatter called by _Locale_common_default
 ___ParseLocaleString,0x0084E0C0,STLport 4.5.3 __ParseLocaleString; eax-in private-convention callee of __GetLCIDFromName
