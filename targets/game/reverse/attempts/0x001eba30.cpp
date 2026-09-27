@@ -134,6 +134,7 @@ Bool WeaponSet::setWeaponLock(WeaponSlotType weaponSlot, WeaponLockType lockType
 			WeaponLockType permanent = LOCKED_PERMANENTLY;
 			if (lockType == permanent)
 			{
+				m_curWeapon = weaponSlot;
 				m_curWeaponLockedStatus = permanent;
 			}
 			else if (lockType == LOCKED_TEMPORARILY &&
