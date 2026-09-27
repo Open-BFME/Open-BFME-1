@@ -6,37 +6,32 @@
 static unsigned short *skipSepsW(unsigned short *p, const unsigned short *seps);
 static unsigned short *skipNonSepsW(unsigned short *p, const unsigned short *seps);
 
-class StringBaseSkipHostW
+#include <string.h>
+#include "string_base.h"
+
+// StringBase<wchar_t>::nextToken (retail 0x008889B0) lives here, beside the
+// file-static helpers, because only a caller in the same translation unit
+// gets their private register convention.
+bool StringBase<wchar_t>::nextToken(StringBase<wchar_t> *tok, const wchar_t *seps)
 {
-public:
-	struct Header
-	{
-		int ref_count;
-		unsigned short length;
-		unsigned short capacity;
-		unsigned short data[1];
-	};
-
-	Header *m_data;
-
-	bool nextToken(StringBaseSkipHostW *tok, const unsigned short *seps);
-};
-
-bool StringBaseSkipHostW::nextToken(StringBaseSkipHostW *tok, const unsigned short *seps)
-{
-	Header *data = m_data;
-	if (data == 0)
+	if (m_data == 0 || m_data->length == 0 || tok == this)
 		return false;
-	if (data->length == 0)
-		return false;
-	if (tok == this)
-		return false;
-	static const unsigned short kDefault[] = { ' ', '\n', '\r', '\t', 0 };
 	if (seps == 0)
-		seps = kDefault;
-	unsigned short *start = skipSepsW(data->data, seps);
-	unsigned short *end = skipNonSepsW(start, seps);
-	return end > start;
+		seps = L" \n\r\t";
+	wchar_t *start = skipSepsW(&m_data->data[0], seps);
+	wchar_t *end = skipNonSepsW(start, seps);
+	if (end > start)
+	{
+		int len = end - start;
+		wchar_t *tmp = tok->getBufferForRead(len);
+		memcpy(tmp, start, len * sizeof(wchar_t));
+		tmp[len] = 0;
+		set(end, (m_data ? m_data->length : 0) - (int)(end - &m_data->data[0]));
+		return true;
+	}
+	releaseBuffer();
+	tok->releaseBuffer();
+	return false;
 }
 
 static unsigned short *skipSepsW(unsigned short *p, const unsigned short *seps)
