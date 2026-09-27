@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e81ae42358252d1a77baeec18bad0418c7eccec5424799f01fce548e9418adab",
+  "symbol": "?bfmeGo96@BfmeObj96@@QAE_NHHPAX0H@Z",
+  "score_kind": "author-estimate",
+  "score": 0.82,
+  "source": "// ?bfmeGo96@BfmeObj96@@QAE_NHHPAX0H@Z\n// partial score=0.82 date=2026-09-02\n// cl: /O2 /Ob0 /G6\n\nclass BfmeHold96\n{\npublic:\n\tvirtual void virt0(int);\n\tchar m_04[4];\n\tint m_08;\n\tint m_0C;\n};\n\nclass BfmeG96\n{\npublic:\n\tBfmeHold96 *make(void *a2, void *a3);\n};\n\nclass BfmeG96b\n{\npublic:\n\tchar m_00[0x3C];\n\tint m_3C;\n};\n\nextern BfmeG96 *g_bfmeG96;\nextern BfmeG96b *g_bfmeG96b;\n\nclass BfmeObj96\n{\npublic:\n\tbool bfmeGo96(int a0, int a1, void *a2, void *a3, int a4);\n\tchar m_00[4];\n\tchar m_04;\n\tchar m_05[3];\n\tint m_08;\n\tint m_0C;\n\tint m_10;\n\tint m_14;\n\tBfmeHold96 *m_18;\n\tvoid *m_1C;\n};\n\nbool BfmeObj96::bfmeGo96(int a0, int a1, void *a2, void *a3, int a4)\n{\n\tint k = a0;\n\tvoid *p = a2;\n\tvoid *q = a3;\n\tif (k >= 6 || k < 1 || !p || !q)\n\t{\n\t\tm_04 = 0;\n\t\treturn 0;\n\t}\n\tif (!m_18)\n\t{\n\t\tm_08 = k;\n\t\tm_0C = a1;\n\t\tm_1C = p;\n\t\tm_18 = g_bfmeG96->make(p, q);\n\t}\n\telse if (p != m_1C)\n\t{\n\t\tint s08 = m_18->m_08;\n\t\tint s0C = m_18->m_0C;\n\t\tm_18->virt0(1);\n\t\tm_18 = 0;\n\t\tm_08 = k;\n\t\tm_0C = a1;\n\t\tm_1C = p;\n\t\tm_18 = g_bfmeG96->make(p, q);\n\t\tif (m_18)\n\t\t{\n\t\t\tm_18->m_08 = s08;\n\t\t\tm_18->m_0C = s0C;\n\t\t}\n\t}\n\tif (!m_18)\n\t{\n\t\tm_04 = 0;\n\t\treturn 0;\n\t}\n\tm_10 = a4;\n\tm_04 = 1;\n\tm_14 = g_bfmeG96b->m_3C + a4;\n\treturn 1;\n}\n"
+}
