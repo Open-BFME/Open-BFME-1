@@ -1,5 +1,5 @@
 // ?_bfme_sendStartQuickMatchRequest@BfmeAptScreenOnlineQuickMatch@@QAEXXZ
-// partial score=0.30 date=2026-09-24
+// partial score=0.64 date=2026-09-27
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 
@@ -14,7 +14,32 @@
 #include "GameNetwork/GameSpy/LadderDefs.h"
 #include "GameNetwork/GameSpy/PeerDefs.h"
 #include "GameNetwork/GameSpy/PersistentStorageDefs.h"
-#include "GameNetwork/GameSpy/PersistentStorageThread.h"
+
+class PSPlayerStats
+{
+public:
+	PSPlayerStats(const PSPlayerStats &other);
+	~PSPlayerStats();
+
+	unsigned char m_bfmeData[0x1c4];
+};
+typedef char PSPlayerStatsSizeCheck[(sizeof(PSPlayerStats) == 0x1c4) ? 1 : -1];
+
+class GameSpyPSMessageQueueInterface
+{
+public:
+	virtual ~GameSpyPSMessageQueueInterface() {}
+	virtual void startThread() = 0;
+	virtual void endThread() = 0;
+	virtual Bool isThreadRunning() = 0;
+	virtual void addRequest(const void *request) = 0;
+	virtual Bool getRequest(void *request) = 0;
+	virtual void addResponse(const void *response) = 0;
+	virtual Bool getResponse(void *response) = 0;
+	virtual void trackPlayerStats(PSPlayerStats stats) = 0;
+	virtual PSPlayerStats findPlayerStatsByID(Int id) = 0;
+};
+extern GameSpyPSMessageQueueInterface *TheGameSpyPSMessageQueue;
 
 extern Int CalculateRank( const PSPlayerStats &stats );
 static Int maxPingEntries;
@@ -146,10 +171,14 @@ void BfmeAptScreenOnlineQuickMatch::_bfme_sendStartQuickMatchRequest()
 			{
 				const PlayerTemplate *playerTemplate =
 					ThePlayerTemplateStore->getNthPlayerTemplate( index );
-				if ( playerTemplate != 0 && playerTemplate->getSide() == *it )
+				if ( playerTemplate != 0 )
 				{
-					request.QM.side = index;
-					break;
+					AsciiString templateSide = playerTemplate->getSide();
+					if ( templateSide == *it )
+					{
+						request.QM.side = index;
+						break;
+					}
 				}
 			}
 		}
@@ -178,8 +207,8 @@ void BfmeAptScreenOnlineQuickMatch::_bfme_sendStartQuickMatchRequest()
 	strncpy( request.QM.pings, TheGameSpyInfo->getPingString().str(), 17 );
 	request.QM.pings[16] = 0;
 	request.QM.botID = TheGameSpyConfig->getQMBotID();
-	request.QM.roomID = TheGameSpyConfig->getQMChannel();
 	request.QM.exeCRC = TheWritableGlobalData->m_exeCRC;
+	request.QM.roomID = TheGameSpyConfig->getQMChannel();
 	request.QM.iniCRC = TheWritableGlobalData->m_iniCRC;
 	TheGameSpyPeerMessageQueue->addRequest( request );
 
