@@ -195,3 +195,18 @@ void Rva008BD000Body::body()
 	m_target->m_value50 = 0;
 	m_target->slot2();
 }
+
+// 0x008FD4A0: invalidate the mesh renderer without the full flush, report true
+class DX8MeshRendererClass
+{
+public:
+	void Invalidate(bool shutdown);
+};
+extern DX8MeshRendererClass *TheDX8MeshRenderer;
+
+// ?Rva008FD4A0InvalidateMeshes@@YA_NXZ
+bool Rva008FD4A0InvalidateMeshes()
+{
+	TheDX8MeshRenderer->Invalidate(false);
+	return true;
+}
