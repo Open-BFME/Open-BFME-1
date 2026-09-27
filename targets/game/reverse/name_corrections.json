@@ -7308,5 +7308,95 @@
   "after_sha256": "d6ee8396210b6734405b7769e8702b99db9dc53654dbc93f60ae444eb58c8c4c",
   "evidence": "targets/game/reverse/functions.csv",
   "reason": "Retail's waypoint lookups in this body call 0x00388820, whose matched ledger row defines ?Rva00388820_FindWaypointByName@@YAPAVWaypoint@@VAsciiString@@@Z in Rva00388820FindWaypointByName.cpp; the bank's findNamedWaypoint was a local stand-in for that call, so the landed source names the matched function."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000e27a0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x000e27a0.cpp",
+  "old_name": "BFMERetailAsciiString",
+  "new_name": "Rva000E27A0StringView",
+  "before_sha256": "ccee789ef45e02286114632a8fb77a4ef6b931f330fa7bb5bfd2e8109d63afd1",
+  "after_sha256": "48a548b6cd1b38b6a1f090ae5a99c9c24ced723f393db39a8b07e533420a4181",
+  "evidence": "targets/game/reverse/identity_evidence/0x000e27a0-name-correction.md",
+  "reason": "The body calls StringBase@D releaseBuffer. It does not identify this local shim as a retail BFMERetailAsciiString type."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000e27a0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x000e27a0.cpp",
+  "old_name": "BfmeMap60",
+  "new_name": "Rva000E27A0Object060",
+  "before_sha256": "ccee789ef45e02286114632a8fb77a4ef6b931f330fa7bb5bfd2e8109d63afd1",
+  "after_sha256": "48a548b6cd1b38b6a1f090ae5a99c9c24ced723f393db39a8b07e533420a4181",
+  "evidence": "targets/game/reverse/identity_evidence/0x000e27a0-name-correction.md",
+  "reason": "ILT 0x32B5 resolves to unnamed body 0xD0310. The call proves cleanup at +0x60 and gives no BfmeMap60 class identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000e27a0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x000e27a0.cpp",
+  "old_name": "BfmeMap6C",
+  "new_name": "Rva000E27A0Object06C",
+  "before_sha256": "ccee789ef45e02286114632a8fb77a4ef6b931f330fa7bb5bfd2e8109d63afd1",
+  "after_sha256": "48a548b6cd1b38b6a1f090ae5a99c9c24ced723f393db39a8b07e533420a4181",
+  "evidence": "targets/game/reverse/identity_evidence/0x000e27a0-name-correction.md",
+  "reason": "ILT 0x32227 resolves to unnamed body 0xD8250. The call proves cleanup at +0x6C and gives no BfmeMap6C class identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000e27a0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x000e27a0.cpp",
+  "old_name": "BfmeMap80",
+  "new_name": "Rva000E27A0Object080",
+  "before_sha256": "ccee789ef45e02286114632a8fb77a4ef6b931f330fa7bb5bfd2e8109d63afd1",
+  "after_sha256": "48a548b6cd1b38b6a1f090ae5a99c9c24ced723f393db39a8b07e533420a4181",
+  "evidence": "targets/game/reverse/identity_evidence/0x000e27a0-name-correction.md",
+  "reason": "ILT 0x2AC20 resolves to unnamed body 0xD0430. The call proves cleanup at +0x80 and gives no BfmeMap80 class identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000e27a0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x000e27a0.cpp",
+  "old_name": "BfmeMapE8",
+  "new_name": "Rva000E27A0Object0E8",
+  "before_sha256": "ccee789ef45e02286114632a8fb77a4ef6b931f330fa7bb5bfd2e8109d63afd1",
+  "after_sha256": "48a548b6cd1b38b6a1f090ae5a99c9c24ced723f393db39a8b07e533420a4181",
+  "evidence": "targets/game/reverse/identity_evidence/0x000e27a0-name-correction.md",
+  "reason": "ILT 0x26AB2 carries conflicting destructor pins. The calls prove cleanup at +0xE8 and +0xF4, not a BfmeMapE8 class identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000e27a0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x000e27a0.cpp",
+  "old_name": "BfmeRGBColor",
+  "new_name": "Rva000E27A0ColorStorage",
+  "before_sha256": "ccee789ef45e02286114632a8fb77a4ef6b931f330fa7bb5bfd2e8109d63afd1",
+  "after_sha256": "48a548b6cd1b38b6a1f090ae5a99c9c24ced723f393db39a8b07e533420a4181",
+  "evidence": "targets/game/reverse/identity_evidence/0x000e27a0-name-correction.md",
+  "reason": "The field at +0x28 contains three floats. No retail symbol or name witness identifies it as BfmeRGBColor."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000e27a0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x000e27a0.cpp",
+  "old_name": "BfmeSoundEvent",
+  "new_name": "Rva000E27A0SoundSlot",
+  "before_sha256": "ccee789ef45e02286114632a8fb77a4ef6b931f330fa7bb5bfd2e8109d63afd1",
+  "after_sha256": "48a548b6cd1b38b6a1f090ae5a99c9c24ced723f393db39a8b07e533420a4181",
+  "evidence": "targets/game/reverse/identity_evidence/0x000e27a0-name-correction.md",
+  "reason": "The cleanup decrements an object pointer and calls through its vtable. No evidence identifies this local wrapper as BfmeSoundEvent."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000e27a0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x000e27a0.cpp",
+  "old_name": "BfmeSoundObject",
+  "new_name": "Rva000E27A0SoundRef",
+  "before_sha256": "ccee789ef45e02286114632a8fb77a4ef6b931f330fa7bb5bfd2e8109d63afd1",
+  "after_sha256": "48a548b6cd1b38b6a1f090ae5a99c9c24ced723f393db39a8b07e533420a4181",
+  "evidence": "targets/game/reverse/identity_evidence/0x000e27a0-name-correction.md",
+  "reason": "The pointer cleanup shows reference counting and virtual deletion. No evidence identifies its local view as BfmeSoundObject."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000e27a0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x000e27a0.cpp",
+  "old_name": "BfmeStringBase",
+  "new_name": "Rva000E27A0StringBase",
+  "before_sha256": "ccee789ef45e02286114632a8fb77a4ef6b931f330fa7bb5bfd2e8109d63afd1",
+  "after_sha256": "48a548b6cd1b38b6a1f090ae5a99c9c24ced723f393db39a8b07e533420a4181",
+  "evidence": "targets/game/reverse/identity_evidence/0x000e27a0-name-correction.md",
+  "reason": "The body redirects wide-string cleanup to StringBase@G. BfmeStringBase appears only as the old local shim name."
  }
 ]
