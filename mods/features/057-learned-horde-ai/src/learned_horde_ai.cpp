@@ -147,35 +147,118 @@ struct HordeStats {
     int members;
 };
 
-// A horde's member objects point back to the horde through Object+0x214.
-// Aggregate rather than trusting the horde object's own Body module so the
-// observation reflects the actual battalions the player sees fighting.
-static HordeStats horde_stats(void *first, void *horde) {
-    float total_health = 0.0f;
-    int members = 0;
+enum {
+    MAX_CACHED_HORDES = 256,
+    MAX_CACHED_TARGETS = 512,
+    TARGET_IS_HORDE = 1,
+    TARGET_IS_STRUCTURE = 2
+};
+
+struct HordeCacheEntry {
+    void *horde;
+    float total_health;
+    int members;
+};
+
+struct TargetCacheEntry {
+    void *object;
+    float health;
+    unsigned char kind;
+};
+
+static UInt s_cache_frame = 0xffffffffu;
+static void *s_cache_first_object;
+static HordeCacheEntry s_horde_cache[MAX_CACHED_HORDES];
+static TargetCacheEntry s_target_cache[MAX_CACHED_TARGETS];
+static int s_horde_cache_count;
+static int s_target_cache_count;
+
+static HordeCacheEntry *find_horde_cache(void *horde) {
+    for (int i = 0; i < s_horde_cache_count; ++i) {
+        if (s_horde_cache[i].horde == horde)
+            return &s_horde_cache[i];
+    }
+    return 0;
+}
+
+static HordeCacheEntry *find_or_add_horde_cache(void *horde) {
+    HordeCacheEntry *entry = find_horde_cache(horde);
+    if (entry)
+        return entry;
+    if (s_horde_cache_count >= MAX_CACHED_HORDES)
+        return 0;
+
+    entry = &s_horde_cache[s_horde_cache_count++];
+    entry->horde = horde;
+    entry->total_health = 0.0f;
+    entry->members = 0;
+    return entry;
+}
+
+// Build once per learned-policy tick, regardless of how many hordes are
+// updated. This is the important scaling boundary: inference is per horde,
+// full-world classification is not.
+static void build_tactical_cache(void *first, UInt frame) {
+    if (s_cache_frame == frame && s_cache_first_object == first)
+        return;
+
+    s_cache_frame = frame;
+    s_cache_first_object = first;
+    s_horde_cache_count = 0;
+    s_target_cache_count = 0;
 
     for (void *object = first; object; object = next_object(object)) {
-        if (object == horde) continue;
-        if (ptr_at(object, OBJECT_OUTER) != horde) continue;
+        const int is_horde =
+            c_is_kind_of(object, 0, KINDOF_HORDE) != 0;
+        const int is_structure =
+            c_is_kind_of(object, 0, KINDOF_STRUCTURE) != 0;
+
+        if ((is_horde || is_structure) &&
+            s_target_cache_count < MAX_CACHED_TARGETS)
+        {
+            TargetCacheEntry *target =
+                &s_target_cache[s_target_cache_count++];
+            target->object = object;
+            target->kind = (unsigned char)(
+                (is_horde ? TARGET_IS_HORDE : 0) |
+                (is_structure ? TARGET_IS_STRUCTURE : 0));
+            target->health = is_structure ? health_ratio(object) : 0.0f;
+        }
+
+        void *outer = ptr_at(object, OBJECT_OUTER);
+        if (!outer || outer == object)
+            continue;
+        if (!c_is_kind_of(outer, 0, KINDOF_HORDE))
+            continue;
 
         const float hp = health_ratio(object);
-        if (hp <= 0.001f) continue;
-        total_health += hp;
-        ++members;
+        if (hp <= 0.001f)
+            continue;
+
+        HordeCacheEntry *entry = find_or_add_horde_cache(outer);
+        if (!entry)
+            continue;
+        entry->total_health += hp;
+        ++entry->members;
+    }
+}
+
+static HordeStats horde_stats(void *horde) {
+    HordeStats out;
+    HordeCacheEntry *entry = find_horde_cache(horde);
+
+    if (entry && entry->members > 0) {
+        out.health = entry->total_health / (float)entry->members;
+        out.power = clamp_power((float)entry->members * 0.10f);
+        out.members = entry->members;
+        return out;
     }
 
-    HordeStats out;
-    if (members > 0) {
-        out.health = total_health / (float)members;
-        out.power = clamp_power((float)members * 0.10f);
-        out.members = members;
-    } else {
-        // Fallback for unusual horde implementations where members are not
-        // exposed through OBJECT_OUTER.
-        out.health = health_ratio(horde);
-        out.power = 0.10f;
-        out.members = out.health > 0.001f ? 1 : 0;
-    }
+    // Fallback for unusual horde implementations where member->outer is not
+    // available through the standard Object field.
+    out.health = health_ratio(horde);
+    out.power = 0.10f;
+    out.members = out.health > 0.001f ? 1 : 0;
     return out;
 }
 
@@ -200,7 +283,7 @@ struct TacticalTargets {
 };
 
 static TacticalTargets find_targets(
-    void *first, void *own_horde, int player_index)
+    void *own_horde, int player_index)
 {
     TacticalTargets out;
     out.nearest = 0;
@@ -223,49 +306,49 @@ static TacticalTargets find_targets(
     float weakest_d2 = 0.0f;
     float structure_d2 = 0.0f;
 
-    for (void *object = first; object; object = next_object(object)) {
-        if (object == own_horde) continue;
+    for (int i = 0; i < s_target_cache_count; ++i) {
+        TargetCacheEntry *cached = &s_target_cache[i];
+        void *object = cached->object;
+
+        if (object == own_horde)
+            continue;
         if (c_get_relationship(own_horde, 0, object) != RELATIONSHIP_ENEMIES)
             continue;
-
-        const int is_horde =
-            c_is_kind_of(object, 0, KINDOF_HORDE) != 0;
-        const int is_structure =
-            c_is_kind_of(object, 0, KINDOF_STRUCTURE) != 0;
-        if (!is_horde && !is_structure) continue;
-        if (!visible_to_player(object, player_index)) continue;
+        if (!visible_to_player(object, player_index))
+            continue;
 
         const float d2 = distance_squared(origin, position_of(object));
 
-        if (is_horde) {
-            HordeStats enemy = horde_stats(first, object);
-            if (enemy.members <= 0 || enemy.health <= 0.001f) continue;
+        if (cached->kind & TARGET_IS_HORDE) {
+            HordeStats enemy = horde_stats(object);
+            if (enemy.members > 0 && enemy.health > 0.001f) {
+                ++out.visible_hordes;
 
-            ++out.visible_hordes;
+                if (!out.nearest || d2 < nearest_d2) {
+                    out.nearest = object;
+                    nearest_d2 = d2;
+                    out.nearest_hp = enemy.health;
+                    out.nearest_distance = normalised_distance(d2);
+                    out.nearest_threat = enemy.power;
+                }
 
-            if (!out.nearest || d2 < nearest_d2) {
-                out.nearest = object;
-                nearest_d2 = d2;
-                out.nearest_hp = enemy.health;
-                out.nearest_distance = normalised_distance(d2);
-                out.nearest_threat = enemy.power;
-            }
-
-            if (!out.weakest ||
-                enemy.health < out.weakest_hp ||
-                (enemy.health == out.weakest_hp && d2 < weakest_d2))
-            {
-                out.weakest = object;
-                weakest_d2 = d2;
-                out.weakest_hp = enemy.health;
-                out.weakest_distance = normalised_distance(d2);
-                out.weakest_threat = enemy.power;
+                if (!out.weakest ||
+                    enemy.health < out.weakest_hp ||
+                    (enemy.health == out.weakest_hp && d2 < weakest_d2))
+                {
+                    out.weakest = object;
+                    weakest_d2 = d2;
+                    out.weakest_hp = enemy.health;
+                    out.weakest_distance = normalised_distance(d2);
+                    out.weakest_threat = enemy.power;
+                }
             }
         }
 
-        if (is_structure) {
-            const float hp = health_ratio(object);
-            if (hp <= 0.001f) continue;
+        if (cached->kind & TARGET_IS_STRUCTURE) {
+            const float hp = cached->health;
+            if (hp <= 0.001f)
+                continue;
 
             ++out.visible_structures;
             if (!out.structure || d2 < structure_d2) {
@@ -274,8 +357,8 @@ static TacticalTargets find_targets(
                 out.structure_hp = hp;
                 out.structure_distance = normalised_distance(d2);
 
-                // Coarse initial proxy. A later BFME-trained policy should use
-                // actual defensive/weapon observations.
+                // Coarse bootstrap proxy. BFME telemetry should replace this
+                // with actual weapons/defence observations.
                 out.structure_threat = 0.35f + hp * 0.45f;
             }
         }
@@ -422,11 +505,13 @@ extern "C" __declspec(dllexport) void __cdecl learned_horde_ai_tick(
     void *first = ptr_at(logic, GL_FIRST_OBJECT);
     if (!first) return;
 
-    HordeStats own = horde_stats(first, horde);
+    build_tactical_cache(first, frame);
+
+    HordeStats own = horde_stats(horde);
     if (own.members <= 0) return;
 
     TacticalTargets targets =
-        find_targets(first, horde, player_index);
+        find_targets(horde, player_index);
 
     float obs[POLICY_OBS];
     obs[0] = own.health;
