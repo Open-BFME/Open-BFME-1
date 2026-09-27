@@ -1,4 +1,4 @@
-# Experimental AC fix
+# AC fix (live tested, opt-in)
 
 This feature addresses two reasons melee horde members stop attacking an enemy
 horde while that enemy attacks a structure. It remains opt-in and is absent from
@@ -53,8 +53,17 @@ bypass and the conditional hook produced identical command, damage, and member
 state records for frames 400–623. The replay is a local diagnostic artifact;
 it is not included in this repository.
 
+The revised build was then tested in a live two-client AC match. The player
+reported that the Uruks kept attacking as intended. In the recorded interval,
+the Uruk horde received one player attack order at frame 2543 and no further
+player order through frame 2661; its members dealt 20 recorded hits to the
+Soldiers during that interval. Both clients used the same executable and
+reported zero dropped trace events. This validates the reported AC scenario
+in a live match, as well as the offline replay above.
+
 The compiled-hook tests verify the detours and their return to the original
-instructions. The replay demonstrates this encounter, not every map, unit, or
-formation. Allowing an ordered horde member to path independently may change
-formation movement in other horde-versus-horde fights. A live two-client test
-of this exact build and broader combat tests are required before shipping it.
+instructions. The live test and replay cover the reported AC encounter, not
+every map, unit, or formation. Allowing an ordered horde member to path
+independently may change formation movement in other horde-versus-horde fights;
+those effects have not yet been tested. That broader check remains before
+shipping this opt-in feature in the repository bundle.
