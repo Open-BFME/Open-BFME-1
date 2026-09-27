@@ -89247,3 +89247,8 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?check@BfmePathfinderMethods@@QAE_NPBVObject@@PBUCoord3D@@PBVWeapon@@H@Z,0x00032B46,ILT-only ABI view; update 0x00184D50 pushes owner goal-position weapon and zero; resolved body 0x003F5E20
 ?checkForCrateToPickup@BfmeAIUpdateMethods@@QAEPAVObject@@XZ,0x000265A8,ILT-only ABI view; update 0x00184D50 calls on AIUpdateInterface and tests returned Object; resolved body 0x00272F70
 ?isKindOf@BfmeThingMethods@@QBE_NH@Z,0x0003251F,ILT-only ABI view; update 0x00184D50 calls on goal with three distinct kind values; resolved body 0x000A2CF0
+?Rva009B65F0Update@@YAXPAEE@Z,0x009B65F0,Address-derived helper; caller 009ABFC0 at 009ABFF9 passes context and zero-extended byte; callee reads context and ends plain RET 009B673A
+?Rva009AB530BuildProbabilityTables@@YAXPAE_N@Z,0x009AB530,Address-derived bank identity; caller 009ABFC0 at 009AC109 pushes context and flag byte; callee tests byte argument and ends RET 009AB75B
+?Rva009B60E0BuildTree@@YAXPAI0H@Z,0x009B60E0,Address-derived prefix tree builder; 009AB320 at 009AB36F pushes output and weights and count; independent full body reads all three stack args and RET at 009B6298
+?Rva009A4E50Configure@@YAXPAXIH@Z,0x009A4E50,Address-derived configuration switch; caller 009A89C0 at 009A89D5 passes context and selector 1 and value; callee reads all three cdecl stack args and dispatches selector
+?Rva009A86F0Allocate@@YAHPAX@Z,0x009A86F0,Address-derived buffer allocator; caller 009A89C0 at 009A8B96 pushes context and tests EAX; callee allocates buffers via 009A5970 and returns zero or one with plain RET
