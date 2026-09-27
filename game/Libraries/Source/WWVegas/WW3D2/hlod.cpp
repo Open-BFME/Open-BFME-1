@@ -1110,7 +1110,7 @@ HLodClass::HLodClass(const char * name,RenderObjClass ** lods,int count) :
  *   1/26/00    gth : Created.                                                                 *
  *=============================================================================================*/
 // Retail calls the plain Create_Render_Obj(name) free function here, not the
-// WW3DAssetManager singleton method; see Create_Render_Obj_plain.cpp (0x008FF290).
+// WW3DAssetManager singleton method; see Create_Render_Obj.cpp (0x008FF290).
 RenderObjClass *Create_Render_Obj(const char *name);
 
 // ?HLodClass::HLodClass present-unmatched
