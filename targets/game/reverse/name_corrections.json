@@ -7398,5 +7398,15 @@
   "after_sha256": "48a548b6cd1b38b6a1f090ae5a99c9c24ced723f393db39a8b07e533420a4181",
   "evidence": "targets/game/reverse/identity_evidence/0x000e27a0-name-correction.md",
   "reason": "The body redirects wide-string cleanup to StringBase@G. BfmeStringBase appears only as the old local shim name."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "User",
+  "new_name": "Rva0078CFB0SentenceHolder",
+  "before_sha256": "a035edb01bf5eb847361bb57fff2c5b26f79a5a0717af86151c13d27297bdb50",
+  "after_sha256": "e5e35c2d0aa9fbdb4e9663d3b773aa771f7206c45cb416bebf77779fd07a7576",
+  "evidence": "targets/game/reverse/identity_evidence/0078cfb0-not-user.md",
+  "reason": "0x0078CFB0/0x0078D240 destroy a Render2DSentenceClass at +4 (dtor 0x009409F0, identity_evidence/009409f0-render2dsentence-dtor.md), not User's UnicodeString; the User identity rested on the misnamed releaseBuffer lift, and no evidence yet names the real class, so the rows carry the address-derived Rva0078CFB0SentenceHolder."
  }
 ]
