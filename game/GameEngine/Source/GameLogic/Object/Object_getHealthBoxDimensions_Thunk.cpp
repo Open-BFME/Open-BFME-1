@@ -1,181 +1,82 @@
+// ?getHealthBoxDimensions@Object@@QBE_NAAM0@Z
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// The matched Drawable::drawIconUI caller reaches this method through ILT 0x00042AFF.
+//
+// The previous 166-byte row began 0x44 bytes into this method. Retail
+// returns at RVA 0x001C9F07, ending the corrected 234-byte extent.
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object {
+typedef float Real;
+typedef bool Bool;
+
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+
+// Declared, never defined here: the body is matched at 0x00487A80 from
+// Code/GameEngine/Source/Common/INI/INIWater.cpp.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
+class Overridable
+{
 public:
-	bool getHealthBoxDimensions(float &, float &) const;
+	const Overridable *getFinalOverride() const;	///< pinned ILT 0x000022BB -> 0x00487A80
+	void *m_vtable;								///< retail this+0x00
+	const Overridable *m_nextOverride;				///< retail this+0x04
 };
 
-// ?getHealthBoxDimensions@Object@@QBE_NAAM0@Z
-__declspec(naked) bool Object::getHealthBoxDimensions(float &, float &) const
+// Address-derived layout view for the object reached from the +0x04 field.
+class BfmeObjectView_001c9e20 : public Overridable
 {
-	__asm {
-		__emit 0x85
-		__emit 0xc9
-		__emit 0x74
-		__emit 0x05
-		__emit 0xe8
-		__emit 0x4e
-		__emit 0x84
-		__emit 0xe3
-		__emit 0xff
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x75
-		__emit 0x08
-		__emit 0xd9
-		__emit 0x05
-		__emit 0x6c
-		__emit 0xb4
-		__emit 0x09
-		__emit 0x01
-		__emit 0xeb
-		__emit 0x19
-		__emit 0x8b
-		__emit 0x46
-		__emit 0x04
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x0c
-		__emit 0x8b
-		__emit 0x48
-		__emit 0x04
-		__emit 0x85
-		__emit 0xc9
-		__emit 0x74
-		__emit 0x05
-		__emit 0xe8
-		__emit 0x2f
-		__emit 0x84
-		__emit 0xe3
-		__emit 0xff
-		__emit 0xd9
-		__emit 0x80
-		__emit 0x10
-		__emit 0x04
-		__emit 0x00
-		__emit 0x00
-		__emit 0xd8
-		__emit 0x8e
-		__emit 0xbc
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xd9
-		__emit 0x05
-		__emit 0x28
-		__emit 0xa0
-		__emit 0x09
-		__emit 0x01
-		__emit 0xd8
-		__emit 0xd9
-		__emit 0xdf
-		__emit 0xe0
-		__emit 0xf6
-		__emit 0xc4
-		__emit 0x05
-		__emit 0x7b
-		__emit 0x1d
-		__emit 0xd9
-		__emit 0xc0
-		__emit 0xd9
-		__emit 0x05
-		__emit 0xe0
-		__emit 0x77
-		__emit 0x09
-		__emit 0x01
-		__emit 0xd8
-		__emit 0xd9
-		__emit 0xdf
-		__emit 0xe0
-		__emit 0xdd
-		__emit 0xd8
-		__emit 0xf6
-		__emit 0xc4
-		__emit 0x41
-		__emit 0x75
-		__emit 0x0a
-		__emit 0xdd
-		__emit 0xd8
-		__emit 0xd9
-		__emit 0x05
-		__emit 0xe0
-		__emit 0x77
-		__emit 0x09
-		__emit 0x01
-		__emit 0xeb
-		__emit 0x17
-		__emit 0xd9
-		__emit 0x05
-		__emit 0x28
-		__emit 0xa0
-		__emit 0x09
-		__emit 0x01
-		__emit 0xd8
-		__emit 0xd9
-		__emit 0xdf
-		__emit 0xe0
-		__emit 0xf6
-		__emit 0xc4
-		__emit 0x05
-		__emit 0x7a
-		__emit 0x08
-		__emit 0xdd
-		__emit 0xd8
-		__emit 0xd9
-		__emit 0x05
-		__emit 0x28
-		__emit 0xa0
-		__emit 0x09
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x54
-		__emit 0x24
-		__emit 0x08
-		__emit 0xdc
-		__emit 0xc0
-		__emit 0xd9
-		__emit 0x05
-		__emit 0xe0
-		__emit 0x77
-		__emit 0x09
-		__emit 0x01
-		__emit 0xc7
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x40
-		__emit 0x40
-		__emit 0xd8
-		__emit 0xd9
-		__emit 0xdf
-		__emit 0xe0
-		__emit 0xf6
-		__emit 0xc4
-		__emit 0x41
-		__emit 0x75
-		__emit 0x08
-		__emit 0xdd
-		__emit 0xd8
-		__emit 0xd9
-		__emit 0x05
-		__emit 0xe0
-		__emit 0x77
-		__emit 0x09
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xd9
-		__emit 0x18
-		__emit 0xb0
-		__emit 0x01
-		__emit 0x5e
-		__emit 0xc2
-		__emit 0x08
-		__emit 0x00
+public:
+	unsigned char m_unreconstructed_08[0xcc - 8];
+	unsigned int m_unreconstructed_0cc;					///< retail this+0xcc
+	unsigned char m_unreconstructed_d0[0x410 - 0xd0];
+	Real m_unreconstructed_410;					///< retail this+0x410
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
+class Object
+{
+public:
+	Bool getHealthBoxDimensions(Real &healthBoxHeight, Real &healthBoxWidth) const;
+
+	unsigned char m_unreconstructed_00[4];
+	const BfmeObjectView_001c9e20 *m_unreconstructed_004;	///< retail this+0x04
+	unsigned char m_unreconstructed_08[0xbc - 8];
+	Real m_unreconstructed_0bc;								///< retail this+0xbc
+};
+
+// Every use site walks the override chain independently (mirrors the retail
+// call pattern: three separate one-inlined-level expansions, not one shared
+// local), so this stays a small helper called at each site rather than a
+// cached variable.
+static const BfmeObjectView_001c9e20 *bfmeFinalOverrideView_001c9e20(const Object *obj)
+{
+	const BfmeObjectView_001c9e20 *d = obj->m_unreconstructed_004;
+	if (d == 0)
+		return d;
+	return reinterpret_cast<const BfmeObjectView_001c9e20 *>(d->m_nextOverride
+		? d->m_nextOverride->getFinalOverride()
+		: d);
+}
+
+// ?getHealthBoxDimensions@Object@@QBE_NAAM0@Z
+Bool Object::getHealthBoxDimensions(Real &healthBoxHeight, Real &healthBoxWidth) const
+{
+	if ((bfmeFinalOverrideView_001c9e20(this)->m_unreconstructed_0cc & 0x8000) != 0)
+	{
+		healthBoxHeight = 0;
+		healthBoxWidth = 0;
+		return false;
 	}
+
+	Real baseValue;
+	if (!bfmeFinalOverrideView_001c9e20(this))
+		baseValue = 1.5f;
+	else
+		baseValue = bfmeFinalOverrideView_001c9e20(this)->m_unreconstructed_410;
+
+	Real size = MAX(20.0f, MIN(150.0f, baseValue * m_unreconstructed_0bc));
+
+	healthBoxHeight = 3.0f;
+	healthBoxWidth = MAX(20.0f, size * 2.0f);
+	return true;
 }

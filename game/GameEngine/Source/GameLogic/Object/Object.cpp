@@ -3862,7 +3862,7 @@ void Object::getHealthBoxPosition(Coord3D& pos) const
 //IT WOULD PROBABLY BE WISE TO MOVE ALL THE HARD-CODED DEFAULTS BELOW
 //INTO A NEW Drawable::getHealthBox..() WHICH USES GEOM0INFO, MODEL DATA, INI DATA, ETC.
 // ?getHealthBoxDimensions@Object@@QBE_NAAM0@Z
-// Body in Object_getHealthBoxDimensions.asm (exact 166B retail).
+// Object_getHealthBoxDimensions_Thunk.cpp contains the clean C++ body.
 
 
 //-------------------------------------------------------------------------------------------------
