@@ -102,7 +102,10 @@ static const ModelConditionFlagType theWaitingToCloseFlags[DOOR_COUNT_MAX] =
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/ProductionUpdateModuleDataCtorThunk.cpp
+// The upstream copy, kept for reading only, and NOT the retail body: retail's
+// constructor is 159 bytes and reaches members at +0x30 .. +0x44 that this shared
+// header does not declare. The landed body is
+// game/GameEngine/Source/GameLogic/Object/Update/ProductionUpdateModuleDataCtor.cpp.
 // ??0ProductionUpdateModuleData@@ present-unmatched
 ProductionUpdateModuleData::ProductionUpdateModuleData( void )
 {
