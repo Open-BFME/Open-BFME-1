@@ -1,64 +1,38 @@
 // ?loadUserMaps@MapCache@@AAE_NXZ
-// partial score=0.56 date=2026-09-15
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Oy- /D_STLP_USE_STATIC_LIB
+// partial score=0.9 date=2026-09-27
+// ?loadUserMaps@MapCache@@AAE_NXZ
+// updateCache and getDefaultMap call the ILT thunk at 0x00028FF1, which routes
+// to this body at 0x004577C0.
+// MapUtil.h supplies MapCache. Address-named views model its retail GlobalData
+// flag and File vtable slot. The BFME INI view matches the 0x848-byte local and
+// four-argument load call.
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/campaignmanagerascii /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // stlport
 
 #include <string.h>
 #include <map>
 #include <set>
+#define _OPERATOR_NEW_DEFINED_
+#define __INI_H_
+#define __PLACEMENT_VEC_NEW_INLINE
+#include "Common/AsciiString.h"
+#include "GameClient/MapUtil.h"
+#include "Common/FileSystem.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-#define FALSE false
-#define TRUE true
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
-template <typename T>
-class StringBase
+struct Rva004577C0StringData
 {
-	friend class AsciiString;
-
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-public:
-	void toLower();
-	void removeLastChar();
-	bool startsWithNoCase(const T *text, int length) const;
-	bool endsWithNoCase(const T *text, int length) const;
-	void set(const StringBase<T> &other);
-
-	struct Data
-	{
-		Int m_refCount;
-		unsigned short m_length;
-		unsigned short m_capacity;
-		T m_text[1];
-	};
-	Data *m_data;
+	int m_refCount;
+	unsigned short m_length;
+	unsigned short m_capacity;
+	char m_text[1];
 };
 
-class AsciiString : private StringBase<char>
+class Rva004577C0StringView
 {
 public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-
-	AsciiString &operator=(const AsciiString &other)
-	{
-		StringBase<char>::set(other);
-		return *this;
-	}
-
-	void __cdecl format(AsciiString fmt, ...);
-	void toLower() { StringBase<char>::toLower(); }
-	void removeLastChar() { StringBase<char>::removeLastChar(); }
-
 	const char *str() const
 	{
 		return m_data ? m_data->m_text : "";
@@ -82,68 +56,29 @@ public:
 		return 0;
 	}
 
-	bool endsWithNoCase(const char *text) const
-	{
-		return StringBase<char>::endsWithNoCase(text, 0);
-	}
-
-	bool operator<(const AsciiString &other) const;
-	int compareNoCase(const AsciiString &other) const;
+	Rva004577C0StringData *m_data;
 };
 
-namespace rts
+inline bool rvaAsciiStringEndsWithNoCase(const AsciiString &value,
+	const char *text)
 {
-template <typename T>
-struct less_than_nocase
-{
-	bool operator()(const T &left, const T &right) const
-	{
-		return left.compareNoCase(right) < 0;
-	}
-};
+	return ((const StringBase<char> &)value).endsWithNoCase(text,
+		text ? (Int)strlen(text) : 0);
 }
 
-struct MapMetaData
+struct Rva004577C0GlobalData
 {
-	char opaque[252];
+	char m_prefix[0xb7d];
+	Bool m_buildMapCache;
 };
 
-struct FileInfo
-{
-	Int sizeHigh;
-	Int sizeLow;
-	Int timestampHigh;
-	Int timestampLow;
-};
-
-class File
+class Rva004577C0FileView
 {
 public:
 	virtual void unknown00();
 	virtual void unknown04();
 	virtual void close();
 };
-
-class FileSystem
-{
-public:
-	File *openFile(const char *filename, Int access);
-	Bool getFileInfo(const AsciiString &filename, FileInfo *fileInfo) const;
-	void getFileListInDirectory(const AsciiString &directory,
-		const AsciiString &searchName, void *filenameList,
-		Bool searchSubdirectories) const;
-};
-
-extern FileSystem *TheFileSystem;
-
-class GlobalData
-{
-public:
-	char m_prefix[0xb7d];
-	bool m_buildMapCache;
-};
-
-extern GlobalData *TheWritableGlobalData;
 
 class INI
 {
@@ -153,46 +88,16 @@ public:
 	void load(AsciiString filename, Int loadType, Int reload, void *xfer);
 
 private:
-	char m_storage[0x844];
+	char m_storage[0x848];
 };
 
-class BfmeStrEBC
-{
-public:
-	void *m_bfmeDataEBC;
-};
-
-extern void __stdcall bfmeListAllEBC(const BfmeStrEBC &a,
-	const BfmeStrEBC &b, void *out, Int flag);
-
-typedef std::set<AsciiString, rts::less_than_nocase<AsciiString> > FilenameList;
-typedef FilenameList::iterator FilenameListIter;
-
-class MapCache : public std::map<AsciiString, MapMetaData>
-{
-public:
-	AsciiString getMapDir() const;
-	AsciiString getUserMapDir() const;
-	AsciiString getMapExtension() const;
-
-private:
-	Bool loadUserMaps();
-	Bool clearUnseenMaps(AsciiString dirName);
-	Bool addMap(AsciiString dirName, AsciiString fname,
-		FileInfo *fileInfo, Bool isOfficial);
-
-	static const char * const m_mapCacheName;
-	std::map<AsciiString, Bool> m_seen;
-	std::set<AsciiString> m_allowedMaps;
-};
-
-const char * const MapCache::m_mapCacheName = "MapCache.ini";
-static char *mapExtension = ".map";
+static const char * const mapCacheIniName = "MapCache.ini";
+static const char * const mapExtension = ".map";
 
 Bool MapCache::loadUserMaps()
 {
 	AsciiString mapDir;
-	if (TheWritableGlobalData->m_buildMapCache)
+	if (((Rva004577C0GlobalData *)TheWritableGlobalData)->m_buildMapCache)
 	{
 		mapDir = getMapDir();
 	}
@@ -202,8 +107,9 @@ Bool MapCache::loadUserMaps()
 
 		INI ini;
 		AsciiString fname;
-		fname.format(AsciiString("%s\\%s"), mapDir.str(), m_mapCacheName);
-		File *fp = TheFileSystem->openFile(fname.str(), 1);
+		fname.format(AsciiString("%s\\%s"), ((const Rva004577C0StringView &)mapDir).str(), mapCacheIniName);
+		Rva004577C0FileView *fp = (Rva004577C0FileView *)TheFileSystem->openFile(
+			((const Rva004577C0StringView &)fname).str(), 1);
 		if (fp)
 		{
 			fp->close();
@@ -227,14 +133,14 @@ Bool MapCache::loadUserMaps()
 
 	FilenameListIter iter;
 	FilenameList filenameList;
-	Bool parsedAMap = FALSE;
 	AsciiString toplevelPattern;
-	toplevelPattern.format(AsciiString("%s\\"), mapDir.str());
+	toplevelPattern.format(AsciiString("%s\\"), ((const Rva004577C0StringView &)mapDir).str());
+	Bool parsedAMap = FALSE;
 	AsciiString filenamepattern;
-	filenamepattern.format(AsciiString("*.%s"), getMapExtension().str());
+	filenamepattern.format(AsciiString("*.%s"), ((const Rva004577C0StringView &)getMapExtension()).str());
 
 	TheFileSystem->getFileListInDirectory(toplevelPattern, filenamepattern,
-		&filenameList, TRUE);
+		filenameList, TRUE);
 
 	iter = filenameList.begin();
 	while (iter != filenameList.end())
@@ -244,7 +150,7 @@ Bool MapCache::loadUserMaps()
 		tempfilename = (*iter);
 		tempfilename.toLower();
 
-		const char *s = tempfilename.reverseFind('\\');
+		const char *s = ((const Rva004577C0StringView &)tempfilename).reverseFind('\\');
 		if (!s)
 		{
 		}
@@ -252,14 +158,14 @@ Bool MapCache::loadUserMaps()
 		{
 			AsciiString endingStr;
 			AsciiString fname = s + 1;
-			for (Int i = 0; i < strlen(mapExtension); ++i)
+			for (Int i = 0; i < 4; ++i)
 				fname.removeLastChar();
 
-			endingStr.format(AsciiString("%s\\%s%s"), fname.str(),
-				fname.str(), mapExtension);
+			endingStr.format(AsciiString("%s\\%s%s"), ((const Rva004577C0StringView &)fname).str(),
+				((const Rva004577C0StringView &)fname).str(), mapExtension);
 
 			Bool skipMap = FALSE;
-			if (TheWritableGlobalData->m_buildMapCache)
+			if (((Rva004577C0GlobalData *)TheWritableGlobalData)->m_buildMapCache)
 			{
 				std::set<AsciiString>::const_iterator sit = m_allowedMaps.find(fname);
 				if (m_allowedMaps.size() != 0 && sit == m_allowedMaps.end())
@@ -270,7 +176,8 @@ Bool MapCache::loadUserMaps()
 
 			if (!skipMap)
 			{
-				if (!tempfilename.endsWithNoCase(endingStr.str()))
+				if (!rvaAsciiStringEndsWithNoCase(tempfilename,
+					((const Rva004577C0StringView &)endingStr).str()))
 				{
 				}
 				else
@@ -278,7 +185,7 @@ Bool MapCache::loadUserMaps()
 					if (TheFileSystem->getFileInfo(tempfilename, &fileInfo))
 					{
 						char funk[260];
-						strcpy(funk, tempfilename.str());
+						strcpy(funk, ((const Rva004577C0StringView &)tempfilename).str());
 						char *filenameptr = funk;
 						char *tempchar = funk;
 						while (*tempchar != 0)
@@ -290,9 +197,12 @@ Bool MapCache::loadUserMaps()
 							++tempchar;
 						}
 
-						m_seen[tempfilename] = TRUE;
-						parsedAMap |= addMap(mapDir, *iter, &fileInfo,
-							TheWritableGlobalData->m_buildMapCache);
+						if (strlen(filenameptr) < 0x50)
+						{
+							m_seen[tempfilename] = TRUE;
+							parsedAMap |= addMap(mapDir, *iter, &fileInfo,
+								((Rva004577C0GlobalData *)TheWritableGlobalData)->m_buildMapCache);
+						}
 					}
 				}
 			}

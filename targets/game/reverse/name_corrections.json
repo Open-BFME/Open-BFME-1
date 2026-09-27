@@ -7408,5 +7408,55 @@
   "after_sha256": "e5e35c2d0aa9fbdb4e9663d3b773aa771f7206c45cb416bebf77779fd07a7576",
   "evidence": "targets/game/reverse/identity_evidence/0078cfb0-not-user.md",
   "reason": "0x0078CFB0/0x0078D240 destroy a Render2DSentenceClass at +4 (dtor 0x009409F0, identity_evidence/009409f0-render2dsentence-dtor.md), not User's UnicodeString; the User identity rested on the misnamed releaseBuffer lift, and no evidence yet names the real class, so the rows carry the address-derived Rva0078CFB0SentenceHolder."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004577c0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x004577c0.cpp",
+  "old_name": "BfmeStrEBC",
+  "new_name": "Rva004577C0StringView",
+  "before_sha256": "e28f1b80afbcee8e8902e7cafbb51e278db174624be1dff87ee72545eacfd2bd",
+  "after_sha256": "3bb54bbd72acd86ab35fefdd8d7b26b21a388c1292f88657de33edd656609a2b",
+  "evidence": "targets/game/reverse/identity_evidence/0x004577c0-local-type-names.md",
+  "reason": "The earlier bank used a one-pointer BfmeStrEBC shim for the file-list call. The revised source uses the existing FileSystem and MapUtil declarations for FilenameList and getFileListInDirectory. The address-derived string view describes only string bytes and does not claim an EBC identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004577c0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x004577c0.cpp",
+  "old_name": "Data",
+  "new_name": "Rva004577C0StringData",
+  "before_sha256": "e28f1b80afbcee8e8902e7cafbb51e278db174624be1dff87ee72545eacfd2bd",
+  "after_sha256": "3bb54bbd72acd86ab35fefdd8d7b26b21a388c1292f88657de33edd656609a2b",
+  "evidence": "targets/game/reverse/identity_evidence/0x004577c0-local-type-names.md",
+  "reason": "The earlier bank nested Data inside its copied StringBase declaration. The revised source uses the AsciiString shim's StringBase<char> and keeps Rva004577C0StringData only for the pointer, length, and text bytes read by this body."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004577c0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x004577c0.cpp",
+  "old_name": "File",
+  "new_name": "Rva004577C0FileView",
+  "before_sha256": "e28f1b80afbcee8e8902e7cafbb51e278db174624be1dff87ee72545eacfd2bd",
+  "after_sha256": "3bb54bbd72acd86ab35fefdd8d7b26b21a388c1292f88657de33edd656609a2b",
+  "evidence": "targets/game/reverse/identity_evidence/0x004577c0-local-type-names.md",
+  "reason": "The earlier bank placed close after two unnamed virtual methods. Retail proves only the close call through object offset +0x8. Rva004577C0FileView keeps that slot and makes no claim about the full File vtable."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004577c0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x004577c0.cpp",
+  "old_name": "GlobalData",
+  "new_name": "Rva004577C0GlobalData",
+  "before_sha256": "e28f1b80afbcee8e8902e7cafbb51e278db174624be1dff87ee72545eacfd2bd",
+  "after_sha256": "3bb54bbd72acd86ab35fefdd8d7b26b21a388c1292f88657de33edd656609a2b",
+  "evidence": "targets/game/reverse/identity_evidence/0x004577c0-local-type-names.md",
+  "reason": "The earlier bank named m_buildMapCache at offset +0xB7D, but name_oracle reports that BFME and Zero Hour do not witness a GlobalData member at this offset. Rva004577C0GlobalData keeps the address token and describes only the byte retail reads."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004577c0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x004577c0.cpp",
+  "old_name": "StringBase",
+  "new_name": "Rva004577C0StringView",
+  "before_sha256": "e28f1b80afbcee8e8902e7cafbb51e278db174624be1dff87ee72545eacfd2bd",
+  "after_sha256": "3bb54bbd72acd86ab35fefdd8d7b26b21a388c1292f88657de33edd656609a2b",
+  "evidence": "targets/game/reverse/identity_evidence/0x004577c0-local-type-names.md",
+  "reason": "The earlier bank copied a StringBase template into its source. The revised source uses the AsciiString shim's StringBase<char> for endsWithNoCase and keeps Rva004577C0StringView only for the raw fields read by this body."
  }
 ]
