@@ -59,3 +59,7 @@ A run that exits non-zero inside `FLEET_ABORT_SECONDS` having touched nothing
 is recorded `status: "aborted"` and cools nothing. On 2026-09-18 a usage limit
 produced 2,680 such runs in a day on one host; they had 1,796 bodies on
 cooldown when the fleet stopped, against 375 from real sessions.
+
+For bounded workers across OpenCode Go models, see the
+[OpenCode router](../../docs/opencode_router.md). It adds routing, cooldowns and
+handoffs while reusing this fleet's claims and containment.
