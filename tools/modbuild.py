@@ -750,9 +750,9 @@ FEATURES = {"020-gameresult": build_gameresult,
             # nothing outside retail's own idle band there. Replay-only.
             # See mods/features/043-replaycam/README.md.
             "043-replaycam": build_replaycam,
-            # Failed hypothesis: bypass the melee target gate for a battalion
-            # with a structure attack goal. Behavior is unverified; see the README.
-            "051-structure-melee-gate": build_structure_melee_gate,
+            # Live two-client AC retest confirmed that structure attackers can
+            # be targeted again; this replaces 051 at its four hook sites.
+            "055-ac-attack-view": build_ac_attack_view,
             }
 # Features that ship a DATA file as well as code, as (archive path under the
 # game root, module in the feature directory exposing build(src, dst)).
@@ -774,7 +774,7 @@ UNSHIPPED = {
     "052-meleeprobe": (build_meleeprobe, "bounded AC diagnostic; replaces 051 hooks and includes its fix"),
     "053-melee-retry": (build_meleeprobe, "experimental AC planning retry with diagnostics; replaces 051/052"),
     "054-melee-target-goal": (build_melee_target_goal, "experimental targeted enemy goal reservation handling; replaces 051/052/053"),
-    "055-ac-attack-view": (build_ac_attack_view, "AC attack-view fix awaiting focused replay and live validation; replaces 051/052/053/054"),
+    "051-structure-melee-gate": (build_structure_melee_gate, "superseded AC melee-gate hypothesis; replaced by 055"),
     "030-netlatprobe": (build_netlatprobe, "an instrument: it writes tens of lines a second"),
     "036-fpsprobe-timing": (build_fpsprobe_timing,
                             "the probe without the backbuffer readback, for "

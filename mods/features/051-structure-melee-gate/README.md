@@ -6,8 +6,8 @@ its intended in-game effect has **not** been verified, and the reported attempt
 did not fix the issue. The feature name describes the gate this attempt targeted;
 the attempted gameplay result remains unverified.
 
-Ships in `mods/dist/lotrbfme.exe`. `python3 tools/modbuild.py --dist` builds
-that executable from every feature in `FEATURES`, and this one is on the list.
+Superseded by the live-tested 055 attack-view fix. This hypothesis remains
+available for isolated builds but is no longer in `mods/dist/lotrbfme.exe`.
 
 ## Observed retail behavior
 

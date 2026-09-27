@@ -10,14 +10,14 @@
   },
   "output": {
     "path": "mods/dist/lotrbfme.exe",
-    "sha256": "764ad7447b3b19dcb65cc427fbea9dfc60a106cd519c35310ab5161a3d169860",
+    "sha256": "aed961f3695cf27d0f7127f85ec915ced85350847c8c65220f7653bcb2fd38aa",
     "size": 16498688
   },
   "cave": {
     "section": ".bfmemod",
     "rva": "0x01016000",
     "size": "0x10000",
-    "used": 4503
+    "used": 5032
   },
   "features": [
     {
@@ -29,24 +29,40 @@
       "target_rva": "0x0006BA44"
     },
     {
-      "name": "051-structure-melee-gate",
+      "name": "055-ac-attack-view",
       "target_rva": "0x00175979"
     },
     {
-      "name": "051-structure-melee-gate",
+      "name": "055-ac-attack-view",
       "target_rva": "0x0017597E"
     },
     {
-      "name": "051-structure-melee-gate",
+      "name": "055-ac-attack-view",
       "target_rva": "0x00175AF0"
     },
     {
-      "name": "051-structure-melee-gate",
+      "name": "055-ac-attack-view",
       "target_rva": "0x00175AF5"
     },
     {
       "name": "020-gameresult",
       "target_rva": "0x0035F920"
+    },
+    {
+      "name": "055-ac-attack-view",
+      "target_rva": "0x003E4505"
+    },
+    {
+      "name": "055-ac-attack-view",
+      "target_rva": "0x003E4564"
+    },
+    {
+      "name": "055-ac-attack-view",
+      "target_rva": "0x003E4BE5"
+    },
+    {
+      "name": "055-ac-attack-view",
+      "target_rva": "0x003E4C5B"
     },
     {
       "name": "043-replaycam",

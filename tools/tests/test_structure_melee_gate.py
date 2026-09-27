@@ -51,9 +51,9 @@ def built():
         yield PE(out)
 
 
-def test_structure_melee_gate_is_registered_in_the_shipped_feature_set():
-    assert "051-structure-melee-gate" in modbuild.FEATURES
-    assert "051-structure-melee-gate" not in modbuild.UNSHIPPED
+def test_structure_melee_gate_is_superseded_by_attack_view_fix():
+    assert "055-ac-attack-view" in modbuild.FEATURES
+    assert "051-structure-melee-gate" in modbuild.UNSHIPPED
 
 
 def test_structure_melee_gate_payload_has_no_unresolved_runtime_symbols():
