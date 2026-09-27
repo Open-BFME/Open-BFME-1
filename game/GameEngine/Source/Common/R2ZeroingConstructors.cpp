@@ -1,4 +1,4 @@
-// Thirty-five tiny __thiscall constructors, all one shape:
+// Thirty-four tiny __thiscall constructors, all one shape:
 //
 //     mov eax,ecx / xor ecx,ecx / <four or five member stores> / ret
 //
@@ -10,7 +10,7 @@
 // for a byte), so the compiler saw two or more zero initialisers.
 //
 // THE STORE ORDER IS SOURCE ORDER.  MSVC 7.1 emits member initialisation in
-// the order it is written, and four of the thirty-five prove it by NOT being
+// the order it is written, and four of the thirty-four prove it by NOT being
 // in ascending offset order: 0x0015C490 stores +4 before +0, 0x00670130 stores
 // +8 before +4 before +0, 0x00740940 stores +0xC first, and 0x007D3580 stores
 // its +0 pointer LAST.  Each is transcribed in the order retail emits.
@@ -48,7 +48,6 @@ extern int R2Data011289D4;
 extern int R2Data01128A2C;
 extern int R2Data0109608C;
 extern int R2Data0109F0F4;
-extern int R2Data010E1F3C;
 extern int R2Data010EC784;
 extern int R2Data010F0540;
 extern int R2Data010F0FA0;
@@ -476,25 +475,6 @@ public:
 Rva001D5F00::Rva001D5F00()
 {
 	m_at00 = &R2Data0109F0F4;
-	m_at04 = 0;
-	m_at08 = 0;
-	m_at0C = 0;
-	m_at10 = 0;
-}
-
-class Rva00322050
-{
-public:
-	void * m_at00;
-	int m_at04;
-	int m_at08;
-	int m_at0C;
-	int m_at10;
-	Rva00322050();
-};
-Rva00322050::Rva00322050()
-{
-	m_at00 = &R2Data010E1F3C;
 	m_at04 = 0;
 	m_at08 = 0;
 	m_at0C = 0;
