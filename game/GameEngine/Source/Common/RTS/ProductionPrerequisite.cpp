@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/shims/stringbaseunicode /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -53,6 +53,24 @@
 #include "GameLogic/Object.h"
 #include "GameClient/Drawable.h"
 #include "GameClient/GameText.h"
+
+class UpgradeTemplate;
+
+// BFME appends this vector after the two vectors in the Generals header. The
+// field name and +0x18 placement are witnessed by ProductionPrerequisiteIsSatisfied.cpp
+// and ParsePrerequisiteUpgradeThunk.cpp; this view keeps the reference header intact.
+struct Rva000E4BE0UpgradeVectorView
+{
+	unsigned char prefix[0x18];
+	std::vector<UpgradeTemplate *> m_prereqUpgrades;
+};
+
+// The retail UnicodeString shim calls StringBase::concat with an explicit
+// wcslen result. Keep that call shape at the append sites in this body.
+static __forceinline void appendWideText(UnicodeString &destination, const wchar_t *text)
+{
+	((StringBase<wchar_t> *)&destination)->concat(text, (Int)wcslen(text));
+}
 
 #ifdef _INTERNAL
 // for occasional debugging...
@@ -235,8 +253,7 @@ void ProductionPrerequisite::addUnitPrereq( const std::vector<AsciiString>& unit
 //-------------------------------------------------------------------------------------------------
 // returns an asciistring which is a list of all the prerequisites
 // not satisfied yet
-// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/ProductionPrerequisiteGetRequiresListThunk.cpp
-// ?getRequiresList@ProductionPrerequisite@@QBE?AVUnicodeString@@PBVPlayer@@@Z present-unmatched
+// ?getRequiresList@ProductionPrerequisite@@QBE?AVUnicodeString@@PBVPlayer@@@Z
 UnicodeString ProductionPrerequisite::getRequiresList(const Player *player) const
 {
 
@@ -284,9 +301,9 @@ UnicodeString ProductionPrerequisite::getRequiresList(const Player *player) cons
 			{
 				unit = m_prereqUnits[i-1].unit;
 				unitName = unit->getDisplayName();
-				unitName.concat( L" " );
+				appendWideText(unitName, L" " );
 				unitName.concat(TheGameText->fetch("CONTROLBAR:OrRequirement", NULL));
-				unitName.concat( L" " );
+				appendWideText(unitName, L" " );
 				requiresList.concat(unitName);
 			}
 
@@ -303,7 +320,7 @@ UnicodeString ProductionPrerequisite::getRequiresList(const Player *player) cons
 			if (firstRequirement)
 				firstRequirement = false;
 			else
-				unitName.concat(L"\n");
+				appendWideText(unitName, L"\n");
 
 			// add it to the list
 			requiresList.concat(unitName);
@@ -322,9 +339,28 @@ UnicodeString ProductionPrerequisite::getRequiresList(const Player *player) cons
 		if (firstRequirement) {
 			firstRequirement = false;
 		} else {
-			unitName.concat(L"\n");
+			appendWideText(unitName, L"\n");
 		}
 		requiresList.concat(TheGameText->fetch("CONTROLBAR:GeneralsPromotion", NULL));
+	}
+
+	Bool hasUpgrades = TRUE;
+	const UpgradeTemplate *upgrade;
+	const Rva000E4BE0UpgradeVectorView *upgradeView =
+		reinterpret_cast<const Rva000E4BE0UpgradeVectorView *>(this);
+	for (i = 0; i < upgradeView->m_prereqUpgrades.size(); i++)
+	{
+		upgrade = upgradeView->m_prereqUpgrades[i];
+		if (!const_cast<Player *>(player)->hasUpgradeComplete(upgrade))
+			hasUpgrades = FALSE;
+	}
+	if (hasUpgrades == FALSE)
+	{
+		if (firstRequirement)
+			firstRequirement = false;
+		else
+			appendWideText(unitName, L"\n");
+		requiresList.concat(TheGameText->fetch("CONTROLBAR:UpgradeRequired", NULL));
 	}
 
 	// return final list
