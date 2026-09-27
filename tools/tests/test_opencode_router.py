@@ -194,6 +194,8 @@ class RouterTests(unittest.TestCase):
         self.assertEqual(e.result(0)['kind'],'quota')
         self.assertEqual(r.classify({'type':'provider.no-route'}),'unavailable')
         self.assertEqual(r.classify({'message':'This Go model requires Global regions'}),'unavailable')
+        self.assertEqual(r.classify({'type':'provider.invalid-request', 'status':400,
+            'message':'This Go model trains on request data. Allow paid endpoints that train on request data in your workspace Privacy settings to use it.'}),'unavailable')
 
     def test_retries_and_escalation_are_bounded(self):
         self.c.update(retries=3,reasoning_after=1,escalation_after=2)

@@ -192,7 +192,7 @@ def classify(error):
     if re.search(r'\b429\b|rate.?limit|quota|usage.limit|usage.*exceed|limit.*reached', text):
         return 'quota'
     if re.search(r'provider.no-route|model.?not.?found|model unavailable|global regions|'
-                 r'unsupported.model|\b401\b|\b403\b|authentication|api.key|insufficient.balance', text):
+                 r'privacy settings|trains on request data|unsupported.model|\b401\b|\b403\b|authentication|api.key|insufficient.balance', text):
         return 'unavailable'
     return 'failure'
 
