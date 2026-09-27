@@ -89242,8 +89242,6 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
-?PushButtonImageDrawThree@@YAXPAVGameWindow@@H@Z,0x0004B457,ButtonFlashTransition::draw at 0x0059B140 calls ILT 0x0004B457 ten times with GameWindow* and 255; thunk targets matched helper 0x0059ABC0 and ZH authored draw proves signature
-?drawFillRect@Display@@QAEXMMMMH@Z,0x00013FA2,ButtonFlashTransition::draw at 0x0059B140 calls ILT 0x00013FA2 five times with Display this and four floats plus packed color; ZH authored draw proves signature
 ?peerGetPlayerProfileID@@YAXPAXPBDP6AX0H1H0@Z0H@Z,0x00858F80,retail 0x006494B0 direct call to matched SDK peerGetPlayerProfileIDA with five pushed arguments and same callback ABI
 ?check@BfmePathfinderMethods@@QAE_NPBVObject@@PBUCoord3D@@PBVWeapon@@H@Z,0x00032B46,ILT-only ABI view; update 0x00184D50 pushes owner goal-position weapon and zero; resolved body 0x003F5E20
 ?checkForCrateToPickup@BfmeAIUpdateMethods@@QAEPAVObject@@XZ,0x000265A8,ILT-only ABI view; update 0x00184D50 calls on AIUpdateInterface and tests returned Object; resolved body 0x00272F70
