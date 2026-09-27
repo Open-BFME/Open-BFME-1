@@ -80168,7 +80168,6 @@ name,address,notes
 ?drawEmoticon@Drawable@@AAEXXZ,0x0003D3E8,BFME drawIconUI member ILT
 ?drawEnthusiastic@Drawable@@AAEXXZ,0x00038BAE,BFME drawIconUI member ILT
 ?drawFillRect@Display@@QAEXMMMMH@Z,0x00013FA2,ButtonFlashTransition::draw at 0x0059B140 calls ILT 0x00013FA2 five times with Display this and four floats plus packed color; ZH authored draw proves signature
-?drawFillRect@Display@@QAEXMMMMH@Z,0x00013FA2,FlashTransition::draw at 0x0059CBF0 calls ILT 0x00013FA2 for each filled rectangle; ILT routes to 0x004336F0 whose wrapper invokes Display virtual slot 0xC0 with four floats and a color as in DrawableRegionRenderA.cpp
 ?drawForeground@ControlBarSchemeManager@@QAEXUICoord2D@@@Z,0x00012099,Caller-backed W3DCommandBarForegroundDraw at0079CD60; root decoded ILT and checked reference implementation
 ?drawHealing@Drawable@@AAEXXZ,0x0003D514,BFME drawIconUI member ILT
 ?drawHealthBar@Drawable@@AAEXXZ,0x00005BD7,BFME drawIconUI member ILT
