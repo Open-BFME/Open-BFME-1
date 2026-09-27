@@ -1,5 +1,5 @@
 // ?Rva009AC420@@YAXPAURva009AC240State@@II@Z
-// partial score=0.7209 date=2026-09-26
+// partial score=0.94 date=2026-09-27
 // cl: /DNDEBUG /MD /EHsc
 struct Rva009AC240State
 {
@@ -16,7 +16,7 @@ void __cdecl Rva009AC420(Rva009AC240State *state, unsigned int, unsigned int pro
     while (bound < 128)
     {
         bound <<= 1;
-        if ((int)code < 0)
+        if ((code & 0x80000000) != 0)
         {
             int i = state->m_words[4] - 1;
             while (i >= 0 && ((unsigned char *)state->m_pointer)[i] == 255)
@@ -29,10 +29,9 @@ void __cdecl Rva009AC420(Rva009AC240State *state, unsigned int, unsigned int pro
         code <<= 1;
         if (++count == 0)
         {
-            volatile int &index = state->m_words[4];
-            ((unsigned char *)state->m_pointer)[index] = (unsigned char)(code >> 24);
+            ((unsigned char *)state->m_pointer)[state->m_words[4]] = (unsigned char)(code >> 24);
             count = -8;
-            ++index;
+            ++state->m_words[4];
             code &= 0xffffff;
         }
     }
