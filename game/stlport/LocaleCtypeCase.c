@@ -132,5 +132,35 @@ int _Locale_strcmp(_Locale_collate_t *lcol,
     return (result == 2) ? 0 : (result == 1) ? -1 : 1;
 }
 
+// OPAQUE: 0x0084EBC0 (224 B). IDENTITY IS NOT RECOVERED: no caller,
+// string or vtable names the holder, so the name is derived from its own
+// address. Same-TU STLport _Locale_strcmp twin above, proved slot by slot:
+// the arg-1 object pointer arrives first in ebx (mov ebx,[esp+0x18]) with
+// the LCID at +0 and the code-page text at +4; the inline
+// GetLocaleInfoA(LOCALE_IDEFAULTANSICODEPAGE)/atoi pair with the
+// LOCALE_IDEFAULTCODEPAGE fallback computes the default, and equality with
+// atoi([ebx+4]) takes the single LCMapStringA(..., 0x400, ...) direct map.
+// Else __GetDefaultCP + __ConvertToCP convert src into a malloced buffer,
+// LCMapStringA maps that buffer, and the buffer is freed. The destination
+// pair precedes the source pair in the argument list (retail reads dest at
+// [esp+0x2c] before src at [esp+0x34]). Probed EXACT (modulo relocations).
+//
+// _dup_0084EBC0
+int dup_0084EBC0(_Locale_collate_t *lcol, char *s2, bfme_size_t n2,
+    const char *s1, bfme_size_t n1)
+{
+    int result;
+    if (__GetDefaultCP(lcol->lcid) == atoi(lcol->cp)) {
+        result = LCMapStringA(lcol->lcid, 0x400, s1, (int)n1, s2, (int)n2);
+    } else {
+        char *buf1;
+        bfme_size_t size1;
+        buf1 = __ConvertToCP(atoi(lcol->cp), __GetDefaultCP(lcol->lcid), s1, n1, &size1);
+        result = LCMapStringA(lcol->lcid, 0x400, buf1, (int)size1, s2, (int)n2);
+        free(buf1);
+    }
+    return result;
+}
+
 int KeepDefaultCPA(LCID lcid) { return __GetDefaultCP(lcid); }
 int KeepDefaultCPB(LCID lcid) { return __GetDefaultCP(lcid) + 1; }
