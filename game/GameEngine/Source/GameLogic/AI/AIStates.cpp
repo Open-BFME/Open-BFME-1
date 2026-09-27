@@ -147,6 +147,12 @@ public:
 		return *(AIUpdateInterface **)((char *)this + 0x204);
 	}
 };
+class BfmePursuePlayer
+{
+public:
+	unsigned char m_padding000[0x2c];
+	PlayerType m_playerType;
+};
 
 class BFMEContainAdd : public BFMEVirtualSlots<34>
 {
@@ -1667,31 +1673,6 @@ void AIIdleState::xfer( Xfer *xfer )
 void AIIdleState::loadPostProcess( void )
 {
 }  // end loadPostProcess
-//----------------------------------------------------------------------------------------------
-/**
- * Stake out our space.
- */
-DECLARE_PERF_TIMER(AIIdleState)
-// ?onEnter@AIIdleState@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType AIIdleState::onEnter()
-{
-	USE_PERF_TIMER(AIIdleState)
-	Object *obj = getMachineOwner();
-	AIUpdateInterface *ai = obj->getAI();
-
-	// We could possibly not have ai here if we were constructed this frame. Strange but true. :-<
-	if (ai) 
-		ai->resetNextMoodCheckTime();
-
-	m_inited = true;
-
-	// reset the idle countdown so that we don't do expensive checks too often,
-	// randomized so we avoid spikes
-	m_initialSleepOffset = (UnsignedShort)GameLogicRandomValue(0, IDLE_COUNTDOWN_DELAY);
-
-	// never sleep at the start, since we have to do checkGoalPos first time thru
-	return STATE_CONTINUE;
-}
 
 class BfmeIdleAIUpdate : public BFMEVirtualSlots<96>
 {
@@ -4854,84 +4835,137 @@ void AIAttackPursueTargetState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //----------------------------------------------------------------------------------------------------------
-// ?onEnter@AIAttackPursueTargetState@@UAE?AW4StateReturnType@@XZ present-unmatched
+// Retail ThingTemplate's final-override link is at +4 and kind mask at +0xC8.
+class BfmePursueOverridable
+{
+public:
+	virtual ~BfmePursueOverridable();
+	BfmePursueOverridable *m_nextOverride;
+};
+typedef const BfmePursueOverridable *(__fastcall *BfmePursueGetFinalOverride)(
+	const BfmePursueOverridable *);
+extern void j_000022bb(void);
+
+class BfmePursueThingTemplate : public BfmePursueOverridable
+{
+public:
+	Bool isKindOf(KindOfType kind) const
+	{
+		return (m_kindof[(UnsignedInt)kind >> 5] & (1 << ((UnsignedInt)kind & 31))) != 0;
+	}
+
+private:
+	unsigned char pad008[0xC8 - 0x08];
+	UnsignedInt m_kindof[3];
+};
+
+class BfmePursueThing
+{
+public:
+	const BfmePursueThingTemplate *getTemplate() const
+	{
+		const BfmePursueThingTemplate *tmpl = m_template;
+		if (tmpl == 0)
+			return 0;
+		if (tmpl->m_nextOverride)
+			tmpl = (const BfmePursueThingTemplate *)
+				((BfmePursueGetFinalOverride)j_000022bb)(tmpl->m_nextOverride);
+		return tmpl;
+	}
+
+private:
+	virtual ~BfmePursueThing();
+	const BfmePursueThingTemplate *m_template;
+};
+
+class BfmeOutOfWeaponRangeObject;
+Bool __cdecl rva0014ca60(BfmeOutOfWeaponRangeObject *, BfmeOutOfWeaponRangeObject *);
+
+struct BfmePursueStateMachineSlot38 : BFMEVirtualSlots<14>
+{
+	virtual void slot38(void *) = 0;
+};
+
+struct BfmePursueComputePath : BFMEVirtualSlots<17>
+{
+	virtual Bool computePath() = 0;
+};
+
+struct BfmePursueStateFields
+{
+	unsigned char pad000[0x1c];
+	BfmeMoveStateMachineFields *m_machine;
+	unsigned char pad020[0x2c];
+	unsigned char m_adjustDestinations;
+	unsigned char pad04d[3];
+	Coord3D m_prevVictimPos;
+	int m_approachTimestamp;
+	unsigned char m_follow;
+	unsigned char m_isAttackingObject;
+	unsigned char m_stopIfInRange;
+	unsigned char m_isInitialApproach;
+	Bool m_isForceAttacking;
+};
+
 StateReturnType AIAttackPursueTargetState::onEnter()
 {
-	// contained by AIAttackState, so no separate timer
-	// If we return STATE_SUCCESS or STATE_FAILURE, we proceed to AIAttackApproachTargetState.
-	Object* source = getMachineOwner();
-	AIUpdateInterface* ai = source->getAI();	 
+	BfmePursueStateFields *self = (BfmePursueStateFields *)this;
+	StateMachine *machine = (StateMachine *)self->m_machine;
+	Object *source = self->m_machine->m_owner;
+	AIUpdateInterface *ai = ((BFMEObjectAI *)source)->getAI();
+	Object *victim = 0;
 
-	if (source->isKindOf(KINDOF_PROJECTILE))
-	{
-		//CRCDEBUG_LOG(("AIAttackPursueTargetState::onEnter() - is a projectile for object %d (%s)\n", getMachineOwner()->getID(), getMachineOwner()->getTemplate()->getName().str()));
-		return STATE_SUCCESS;	 // Projectiles go directly to AIAttackApproachTargetState.
-	}
-
-	if (getMachine()->isGoalObjectDestroyed()) 
-	{
-		//CRCDEBUG_LOG(("AIAttackPursueTargetState::onEnter() - goal object is destroyed for object %d (%s)\n", getMachineOwner()->getID(), getMachineOwner()->getTemplate()->getName().str()));
-		return STATE_SUCCESS; // Already killed victim.
-	}
-	if (!m_isAttackingObject)	{
-		//CRCDEBUG_LOG(("AIAttackPursueTargetState::onEnter() - not attacking for object %d (%s)\n", getMachineOwner()->getID(), getMachineOwner()->getTemplate()->getName().str()));
-		return STATE_SUCCESS; // only pursue objects - positions don't move.
-	}
-
-	setAdjustsDestination(false);
-
-	// Check here:  If we are a player, and we got to this state via an ai command (ie we auto-acquired), 
-	// we don't want to chase the unit. 
-	// Kris (July 2003): If we are retaliating... don't succeed out!
-	if( ai->getCurrentStateID() != AI_GUARD_RETALIATE )
-	{
-		if (source->getControllingPlayer()->getPlayerType() == PLAYER_HUMAN) 
-		{
-			if (ai->getLastCommandSource() == CMD_FROM_AI) 
-			{
-				return STATE_SUCCESS;
-
-			}
-		}
-	}
-
-	m_prevVictimPos.x = 0.0f;
-	m_prevVictimPos.y = 0.0f;
-	m_prevVictimPos.z = 0.0f;
-
-	m_approachTimestamp = -MIN_RECOMPUTE_TIME;
-
-	// See if we're close enough.
-	Object *victim = getMachineGoalObject();
-	if (victim) {	
-		Weapon* weapon = source->getCurrentWeapon();
-		if (!weapon) 
-		{
-			return STATE_FAILURE;
-		}
-		if (!canPursue(source, weapon, victim) ) 
-		{
-			//CRCDEBUG_LOG(("AIAttackPursueTargetState::onEnter() - can't pursue for object %d (%s)\n", getMachineOwner()->getID(), getMachineOwner()->getTemplate()->getName().str()));
-			return STATE_SUCCESS;
-		}
-	}	else {
-		//CRCDEBUG_LOG(("AIAttackPursueTargetState::onEnter() - no victim for object %d (%s)\n", getMachineOwner()->getID(), getMachineOwner()->getTemplate()->getName().str()));
-		return STATE_SUCCESS; // gotta have a victim.
-	}
-	// If we have a turret, start aiming.
-	WhichTurretType tur = ai->getWhichTurretForCurWeapon();
-	if (tur != TURRET_INVALID)
-	{
-		ai->setTurretTargetObject(tur, victim, m_isForceAttacking);
-	} else {
-		//CRCDEBUG_LOG(("AIAttackPursueTargetState::onEnter() - no turret for object %d (%s)\n", getMachineOwner()->getID(), getMachineOwner()->getTemplate()->getName().str()));
-		return STATE_SUCCESS; // we only pursue with turrets, as non-turreted weapons can't fire on the run.
-	}
-
-	// find a good spot to shoot from
-	if (computePath() == false)
+	if (((BfmePursueThing *)source)->getTemplate()->isKindOf((KindOfType)25))
+		return STATE_SUCCESS;
+	if (machine->isGoalObjectDestroyed())
+		return STATE_SUCCESS;
+	if (!self->m_isAttackingObject)
 		return STATE_SUCCESS;
 
+	if (((*(const unsigned char *)((const char *)source + 0x98)) & 8) ||
+		*(const unsigned char *)((const char *)ai + 0x33a))
+	{
+		Object *victim = ((StateMachine *)self->m_machine)->getGoalObject();
+		if (rva0014ca60((BfmeOutOfWeaponRangeObject *)source,
+				(BfmeOutOfWeaponRangeObject *)victim))
+			return STATE_SUCCESS;
+		((BfmePursueStateMachineSlot38 *)self->m_machine)->slot38(0);
+		return STATE_FAILURE;
+	}
+
+	if (g_012F0239 && g_012ED4FC != victim)
+		((BfmeCritterDesyncLog)j_0003a17a)(g_012ED4FC,
+			"CritterDesync: setAdjustDestination(FALSE) 27");
+	self->m_adjustDestinations = 0;
+
+	if (((BfmePursuePlayer *)source->getControllingPlayer())->m_playerType == PLAYER_HUMAN &&
+		((BFMEAIUpdateCommandSource *)ai)->getLastCommandSource() == CMD_FROM_AI &&
+		*(const unsigned char *)((const char *)source + 0x1f5) == 0)
+		return STATE_SUCCESS;
+
+	self->m_prevVictimPos.x = 0.0f;
+	self->m_prevVictimPos.y = 0.0f;
+	self->m_prevVictimPos.z = 0.0f;
+	self->m_approachTimestamp = -5;
+
+	victim = ((StateMachine *)self->m_machine)->getGoalObject();
+	if (!victim)
+		return STATE_SUCCESS;
+	Weapon *weapon = source->getCurrentWeapon();
+	if (!weapon)
+		return STATE_FAILURE;
+	if (!canPursue(source, weapon, victim))
+		return STATE_SUCCESS;
+
+	WhichTurretType turret = ai->getWhichTurretForCurWeapon();
+	if (turret == TURRET_INVALID)
+		return STATE_SUCCESS;
+	ai->setTurretTargetObject(turret, victim, self->m_isForceAttacking);
+	if (g_012F0239 && g_012ED4FC)
+		((BfmeCritterDesyncLog)j_0003a17a)(g_012ED4FC,
+			"CritterDesync: ComputePath13");
+	if (!((BfmePursueComputePath *)this)->computePath())
+		return STATE_SUCCESS;
 	return AIInternalMoveToState::onEnter();
 }
 
