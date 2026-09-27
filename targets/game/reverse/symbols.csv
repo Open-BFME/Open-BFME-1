@@ -9195,7 +9195,6 @@ name,address,notes
 ??1RiderChangeContainModuleDataMemberD@@QAE@XZ,0x00026F35,Open-BFME5 pin
 ??1RiderChangeContainModuleDataMemberE@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1RiderChangeContainModuleDataMemberF@@QAE@XZ,0x0001A401,Open-BFME5 pin
-??1RoadType@@QAE@XZ,0x00018FCF,exact retail rel32 target of ??_ERoadType@@QAEPAXI@Z; the same row's already-matching DIR32 push of 0x00418FCF names this address as the per-element destructor
 ??1RopeInfo@ChinookCombatDropState@@QAE@XZ,0x0003D041,Open-BFME5 ILT fronts unclaimed 8-byte body 0x00191910; called by the _Destroy range loop over that element type
 ??1RotateTextureMapperClass@@UAE@XZ,0x00967080,constructor 0x00964A70 installs vtable 0x0113E3F0 whose slot 1 (+4) is deleting wrapper 0x00967060; that wrapper directly calls this scalar body
 ??1RousingSpeechUpdateModuleData@@UAE@XZ,0x0001CCA1,destructor ILT used by the RousingSpeechUpdateModuleData scalar-deleting destructor
