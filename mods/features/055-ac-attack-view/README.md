@@ -1,19 +1,12 @@
-# AC fix (live tested, opt-in)
+# AC fix
 
-**Players who want the AC fix need `055-ac-attack-view` only.** It keeps melee
-horde members attacking an enemy horde while that enemy attacks a structure.
-It is not yet included in the repository's standard `mods/dist/` bundle.
+This keeps melee horde members attacking an enemy horde while that enemy attacks a structure.
 
 Build the player executable from the repository root:
 
 ```sh
 python3 tools/modbuild.py --only 055-ac-attack-view -o build/ac-fix.exe
 ```
-
-Both players in a multiplayer match must run the same executable. The separate
-[`056-ac-transition-trace`](../056-ac-transition-trace/README.md) feature is
-optional developer logging; it is not required for the fix.
-
 ## How it fixes AC
 
 The observed AC encounter had two failure paths. First, the melee target search
