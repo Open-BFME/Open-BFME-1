@@ -6258,5 +6258,155 @@
   "after_sha256": "ab03e38b4717028853e1d46c60012ca13f6a4efb8826665107baab6d7c4eafba",
   "evidence": "targets/game/reverse/identity_evidence/00566ec0-profile-family.md",
   "reason": "Retail main screen0057DA50 constructs this distinct28B object at+390; its own vtable0110A314 and singleton012F4B3C differ from main-screen0110AFE0/012F4B54. The embedded ctor506/dtor300/deleting30 and singleton are corrected together to an address-derived owner; all three native bodies remain exact."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00578160.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/AptScoreScreenConstructor.cpp",
+  "old_name": "FunctorBinding",
+  "new_name": "Rva00572D10FunctorHolder",
+  "before_sha256": "fddcf706a2fc8a199f7d729ea3aaa3089119dba5e1d2bf0e9e8be26ebe5d3376",
+  "after_sha256": "80b12cb74b80e15fbd43b51b219ab52da406ab302ec7b32b715fdbbd2980a881",
+  "evidence": "targets/game/reverse/identity_evidence/00578160-score-screen-constructor.md",
+  "reason": "Token-alignment artifact: FunctorBinding remains a distinct 16-byte binding; Rva00572D10FunctorHolder is the independently witnessed owning holder, not a replacement name for the binding."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00578160.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/AptScoreScreenConstructor.cpp",
+  "old_name": "RawVecBuffer",
+  "new_name": "Rva00578160Fields278",
+  "before_sha256": "fddcf706a2fc8a199f7d729ea3aaa3089119dba5e1d2bf0e9e8be26ebe5d3376",
+  "after_sha256": "80b12cb74b80e15fbd43b51b219ab52da406ab302ec7b32b715fdbbd2980a881",
+  "evidence": "targets/game/reverse/identity_evidence/00578160-score-screen-constructor.md",
+  "reason": "Old raw storage at +2E8 is refuted by the independently authored 002CBEF0 bitvector cleanup and replaced with native vector<bool>; the detector aligns it with unrelated five-field storage at +278."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00578160.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/AptScoreScreenConstructor.cpp",
+  "old_name": "ScoreInitWrapper",
+  "new_name": "Rva00571780FunctorWrapper",
+  "before_sha256": "fddcf706a2fc8a199f7d729ea3aaa3089119dba5e1d2bf0e9e8be26ebe5d3376",
+  "after_sha256": "80b12cb74b80e15fbd43b51b219ab52da406ab302ec7b32b715fdbbd2980a881",
+  "evidence": "targets/game/reverse/identity_evidence/00578160-score-screen-constructor.md",
+  "reason": "Token-alignment artifact: the init wrapper is Rva005717D0FunctorWrapper, proven by its independent constructor; the aligned Rva00571780FunctorWrapper is the distinct provider wrapper."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00578160.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/AptScoreScreenConstructor.cpp",
+  "old_name": "ScoreProviderHolder",
+  "new_name": "Rva00572D10FunctorHolder",
+  "before_sha256": "fddcf706a2fc8a199f7d729ea3aaa3089119dba5e1d2bf0e9e8be26ebe5d3376",
+  "after_sha256": "80b12cb74b80e15fbd43b51b219ab52da406ab302ec7b32b715fdbbd2980a881",
+  "evidence": "targets/game/reverse/identity_evidence/00578160-score-screen-constructor.md",
+  "reason": "Existing holder destructor 00572D10 and wrapper constructor 00571780 establish this owning family and ABI; the old bank did not establish a semantic class identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00578160.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/AptScoreScreenConstructor.cpp",
+  "old_name": "ScoreProviderWrapper",
+  "new_name": "Rva00571780FunctorWrapper",
+  "before_sha256": "fddcf706a2fc8a199f7d729ea3aaa3089119dba5e1d2bf0e9e8be26ebe5d3376",
+  "after_sha256": "80b12cb74b80e15fbd43b51b219ab52da406ab302ec7b32b715fdbbd2980a881",
+  "evidence": "targets/game/reverse/identity_evidence/00578160-score-screen-constructor.md",
+  "reason": "Independent existing 49-byte constructor 00571780 supplies the wrapper identity, layout and vtable 0110A964; the provisional ScoreProviderWrapper type name was not independently witnessed."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00578160.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/AptScoreScreenConstructor.cpp",
+  "old_name": "ScoreRegistryWindow",
+  "new_name": "Rva00464ED0RegistryView",
+  "before_sha256": "fddcf706a2fc8a199f7d729ea3aaa3089119dba5e1d2bf0e9e8be26ebe5d3376",
+  "after_sha256": "80b12cb74b80e15fbd43b51b219ab52da406ab302ec7b32b715fdbbd2980a881",
+  "evidence": "targets/game/reverse/identity_evidence/00578160-score-screen-constructor.md",
+  "reason": "The registry adapter uses independently witnessed 00464ED0 and AptScreenShow ILT/owned-argument contracts; no evidence establishes the old bank type name. Its additional alignment with Rva00572D80FunctorHolder is an artifact: the init holder and registry view are distinct types."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00578160.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/AptScoreScreenConstructor.cpp",
+  "old_name": "ScoreRegistryWindow",
+  "new_name": "Rva00572D80FunctorHolder",
+  "before_sha256": "fddcf706a2fc8a199f7d729ea3aaa3089119dba5e1d2bf0e9e8be26ebe5d3376",
+  "after_sha256": "80b12cb74b80e15fbd43b51b219ab52da406ab302ec7b32b715fdbbd2980a881",
+  "evidence": "targets/game/reverse/identity_evidence/00578160-score-screen-constructor.md",
+  "reason": "The registry adapter uses independently witnessed 00464ED0 and AptScreenShow ILT/owned-argument contracts; no evidence establishes the old bank type name. Its additional alignment with Rva00572D80FunctorHolder is an artifact: the init holder and registry view are distinct types."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00578160.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/AptScoreScreenConstructor.cpp",
+  "old_name": "ScoreScreenFiveFields",
+  "new_name": "Rva00578160Fields278",
+  "before_sha256": "fddcf706a2fc8a199f7d729ea3aaa3089119dba5e1d2bf0e9e8be26ebe5d3376",
+  "after_sha256": "80b12cb74b80e15fbd43b51b219ab52da406ab302ec7b32b715fdbbd2980a881",
+  "evidence": "targets/game/reverse/identity_evidence/00578160-score-screen-constructor.md",
+  "reason": "Five integers at +278..+288 are witnessed by the constructor and provider 005702B0; no original semantic type name is established, so this storage view keeps its address and offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00578160.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/AptScoreScreenConstructor.cpp",
+  "old_name": "ScoreScreenZeroBlock",
+  "new_name": "Rva00578160Fields294",
+  "before_sha256": "fddcf706a2fc8a199f7d729ea3aaa3089119dba5e1d2bf0e9e8be26ebe5d3376",
+  "after_sha256": "80b12cb74b80e15fbd43b51b219ab52da406ab302ec7b32b715fdbbd2980a881",
+  "evidence": "targets/game/reverse/identity_evidence/00578160-score-screen-constructor.md",
+  "reason": "The constructor zeroes 84 bytes at +294; no original semantic type name is established, so this storage view keeps its address and offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00578160.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/AptScoreScreenConstructor.cpp",
+  "old_name": "m_end",
+  "new_name": "m_slot288",
+  "before_sha256": "fddcf706a2fc8a199f7d729ea3aaa3089119dba5e1d2bf0e9e8be26ebe5d3376",
+  "after_sha256": "80b12cb74b80e15fbd43b51b219ab52da406ab302ec7b32b715fdbbd2980a881",
+  "evidence": "targets/game/reverse/identity_evidence/00578160-score-screen-constructor.md",
+  "reason": "Token-alignment artifact: the old RawVecBuffer end at +2F8 disappears into the independently proven native vector<bool>; m_slot288 is a distinct screen scalar at +288."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00578160.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/AptScoreScreenConstructor.cpp",
+  "old_name": "m_start",
+  "new_name": "m_slot278",
+  "before_sha256": "fddcf706a2fc8a199f7d729ea3aaa3089119dba5e1d2bf0e9e8be26ebe5d3376",
+  "after_sha256": "80b12cb74b80e15fbd43b51b219ab52da406ab302ec7b32b715fdbbd2980a881",
+  "evidence": "targets/game/reverse/identity_evidence/00578160-score-screen-constructor.md",
+  "reason": "Token-alignment artifact: the old RawVecBuffer start at +2E8 disappears into the independently proven native vector<bool>; m_slot278 is a distinct screen scalar at +278."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00578160.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/AptScoreScreenConstructor.cpp",
+  "old_name": "m_vftable",
+  "new_name": "m_ptr",
+  "before_sha256": "fddcf706a2fc8a199f7d729ea3aaa3089119dba5e1d2bf0e9e8be26ebe5d3376",
+  "after_sha256": "80b12cb74b80e15fbd43b51b219ab52da406ab302ec7b32b715fdbbd2980a881",
+  "evidence": "targets/game/reverse/identity_evidence/00578160-score-screen-constructor.md",
+  "reason": "Token-alignment artifact: native virtual bases replace the old manually represented vptr; m_ptr is a distinct owning holder pointer proven by 00572D10/00572D80."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00578160.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/AptScoreScreenConstructor.cpp",
+  "old_name": "m_zero04",
+  "new_name": "m_slot27c",
+  "before_sha256": "fddcf706a2fc8a199f7d729ea3aaa3089119dba5e1d2bf0e9e8be26ebe5d3376",
+  "after_sha256": "80b12cb74b80e15fbd43b51b219ab52da406ab302ec7b32b715fdbbd2980a881",
+  "evidence": "targets/game/reverse/identity_evidence/00578160-score-screen-constructor.md",
+  "reason": "Token-alignment artifact: the old manually represented base word +4 is unrelated to the screen scalar at +27C; native base declarations replace the raw-vptr representation."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00578160.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/AptScoreScreenConstructor.cpp",
+  "old_name": "m_zero08",
+  "new_name": "m_slot280",
+  "before_sha256": "fddcf706a2fc8a199f7d729ea3aaa3089119dba5e1d2bf0e9e8be26ebe5d3376",
+  "after_sha256": "80b12cb74b80e15fbd43b51b219ab52da406ab302ec7b32b715fdbbd2980a881",
+  "evidence": "targets/game/reverse/identity_evidence/00578160-score-screen-constructor.md",
+  "reason": "Token-alignment artifact: the old manually represented base word +8 is unrelated to the screen scalar at +280; native base declarations replace the raw-vptr representation."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00578160.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/AptScoreScreenConstructor.cpp",
+  "old_name": "m_zero0c",
+  "new_name": "m_slot284",
+  "before_sha256": "fddcf706a2fc8a199f7d729ea3aaa3089119dba5e1d2bf0e9e8be26ebe5d3376",
+  "after_sha256": "80b12cb74b80e15fbd43b51b219ab52da406ab302ec7b32b715fdbbd2980a881",
+  "evidence": "targets/game/reverse/identity_evidence/00578160-score-screen-constructor.md",
+  "reason": "Token-alignment artifact: the old manually represented base word +C is unrelated to the screen scalar at +284; native base declarations replace the raw-vptr representation."
  }
 ]
