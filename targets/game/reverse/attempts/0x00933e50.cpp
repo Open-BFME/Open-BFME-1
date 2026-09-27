@@ -1,15 +1,16 @@
 // ?Render@Render2DClass@@QAEXXZ
-// partial score=0.681886 date=2026-09-26
+// partial score=0.7116625310173698 date=2026-09-27
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /I. /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Oy
 // Partial Render2DClass::Render at RVA 0x00933E50, extent 2015 bytes.
 // Identity: matched Render2DSentenceClass::Render calls this body.
 // BFME constructor independently places vertices/indices at +0x14/+0x24 and
 // texture at +0x4c; the later reference Render2D header has a different layout.
-// Native body is 2011 bytes. The remaining differences are two omitted MOVs
-// in the memcpy expansions and register scheduling in the shader calculation.
-// The first 0x474 bytes and the restore/cleanup tail align exactly, apart from
-// jump distances/relocations. The end-of-expression texture temporary is needed
-// for the correct 0x10c exception frame. This is evidence, not a byte-match claim.
+// Native body is 2013 bytes versus 2015 retail. Explicit byte-count locals
+// retain one additional copy-expansion MOV; shader scheduling still differs.
+// Positional masked score is 1434/2015, with 579 mismatched overlapping bytes
+// and two absent bytes. Normalized instruction shape is 0.983, not acceptance.
+// Frame and complete control flow remain intact. Earlier 2011-byte bank is
+// preserved in attempt_history. No new callee pins are required by this draft.
 // stlport
 #define Matrix4x4 Matrix4
 #include "winbase_shim.h"
@@ -103,9 +104,13 @@ void Render2DClass::Render()
  DynamicIBAccessClass ib(BUFFER_TYPE_DYNAMIC_DX8,self->Indices.Count());
  {
   BoxDynamicVBAccessClass::WriteLockClass vertices(&vb);
-  memcpy(vertices.Get_Formatted_Vertex_Array(),self->Vertices.Data,self->Vertices.Count()*44);
+  int vertexCount = self->Vertices.Count();
+  unsigned vertexBytes = vertexCount * 44;
+  memcpy(vertices.Get_Formatted_Vertex_Array(),self->Vertices.Data,vertexBytes);
   DynamicIBAccessClass::WriteLockClass indices(&ib);
-  memcpy(indices.Get_Index_Array(),self->Indices.Data,self->Indices.Count()*2);
+  int indexCount = self->Indices.Count();
+  unsigned indexBytes = indexCount * 2;
+  memcpy(indices.Get_Index_Array(),self->Indices.Data,indexBytes);
  }
  DX8Wrapper::Set_Vertex_Buffer(*reinterpret_cast<DynamicVBAccessClass *>(&vb));
  DX8Wrapper::Set_Index_Buffer(ib,0);
