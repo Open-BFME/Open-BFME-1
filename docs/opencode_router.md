@@ -150,7 +150,7 @@ The separate JSON configuration contains all model IDs and policy knobs:
 Quota errors do not spend the reasoning-failure budget. Structured error events
 are classified by status/type/message; text *discussing* quotas is not an error.
 A model in cooldown is skipped immediately while other jobs/models proceed.
-Expired cooldowns permit another request. If every eligible model is unavailable,
+Expired model cooldowns permit another request only when the shared account gate also allows it. If every eligible model is unavailable,
 the queue waits until recovery or the scheduler duration expires. Bounded attempt
 counts prevent endless retry cycles. No model is removed permanently by an outage.
 Regional restrictions and authentication/model-not-found errors are availability
@@ -189,7 +189,8 @@ Kimi K2.7 Code (30). Cooldowns, concurrency and retry budgets still apply;
 increase a bounded retry budget explicitly if a valuable task warrants climbing
 further. An explicit `run/submit escalation` is the parent's authorization for
 costlier reasoning; describe prior failures/potential gain in the task file.
-An explicit `--model` remains an intentional override, including for bulk.
+An explicit `--model` overrides tier preferences, including for bulk, but never
+bypasses the shared budget gate.
 
 Models without dashboard calibration (LongCat, MiMo Pro, DeepSeek Pro, Kimi K3,
 Grok, GLM-5.3 and Qwen Max) are retained but disabled. To enable one, verify its
@@ -226,10 +227,150 @@ asserted successes. Rates are exploratory, not automatic routing inputs. Do not
 sum the same integrated byte gain across redundant attempts. Worker success is
 still a self-report; exact matches and useful investigations require parent review.
 
-The current public Go docs still describe **per-model** dollar limits; a shared
-account budget has not been verified. Regardless of limit topology, this policy
-optimizes economical progress, not quota consumption. There is no supported
-remaining-Go-allowance endpoint verified here; keep response-driven cooldowns.
+### Shared Go budget
+
+The router enforces the **account-wide** Go allowance before new assignments,
+including explicit `--model` requests. A quota on one model pauses every metered
+Go model; it never assumes other models have independent usable allowances.
+Active useful workers are not stopped merely because pacing changes.
+
+Discovery on 2026-09-27 found the official upstream implementation of
+[`GET https://opencode.ai/zen/go/v1/usage`](https://github.com/anomalyco/opencode/blob/b471c2b4495747353af768fbf2e0790c9d820ce2/packages/console/app/src/routes/zen/go/v1/usage.ts).
+Its bearer-authenticated response is:
+
+```json
+{"usage": {
+  "rolling": {"status": "ok", "percent": 63, "resetsAt": "2026-09-27T18:00:00Z"},
+  "weekly": {"status": "ok", "percent": 28, "resetsAt": "2026-09-28T00:00:00Z"},
+  "monthly": {"status": "ok", "percent": 11, "resetsAt": "2026-10-15T00:00:00Z"}
+}}
+```
+
+This is an illustrative fixture, not this account's measurements. The route is
+verified in provider source (including its migrated-Console proxy), not advertised
+as a separately versioned usage contract in the public Go guide. The installed
+CLI is v2.0.18. Its `stats --cost --json` and local database describe local
+sessions, not account entitlement. No CLI command for the three Go meters was
+found. The source route supplies the same subscription counters used by the
+console; no dashboard rendering, scraping, LLM or inference request is involved.
+The read-only smoke request with the installed Console OAuth credential returned
+HTTP 403. Successful live authentication with a Go key remains to be verified
+locally; failures stay visible and never create fabricated usage values.
+
+The documented [Console Usage API](https://opencode.ai/v2/docs/console/usage/)
+exports workspace CSV using a service-account key. It reports charges, not these
+three Go entitlement meters. Export ranges start at UTC midnight; treating them
+as Go rolling windows would be wrong. The member Budgets API is also not the Go
+subscription. Neither is used to invent remaining allowance. Provider-specific
+per-model included-dollar tables are not independent routing budgets.
+
+#### Local authentication and paid-overage protection
+
+1. In the **same workspace as the workers**, obtain the Go API key through the
+   Go console. Set `OPENCODE_GO_USAGE_API_KEY` in the scheduler's environment
+   through your local secret manager or a private environment file. Do not put
+   the key in a command-line argument, repository, router JSON, or task prompt.
+   This monitor does not need a separate Console usage-export service account.
+2. Keep **Use balance disabled** in the Go console. Keep automatic balance
+   reload/top-up disabled too. The [Go guide](https://opencode.ai/docs/go/)
+   documents balance fallback after limits; the
+   [Zen guide](https://opencode.ai/docs/en/zen/) documents automatic reload.
+3. Preserve the existing local `go_overage_disabled: true` acknowledgment only
+   after verifying that account setting. The sample remains false. The meters
+   endpoint does **not** expose Use balance, and the router cannot verify or
+   turn it off. The server-side setting is essential even for in-flight workers.
+
+The monitor sends only a bounded GET to the fixed HTTPS URL. Redirects are
+rejected. It never changes billing, purchases credits, switches accounts, calls
+paid inference or logs response bodies/credentials. The monitoring variable is
+removed from worker environments. OpenCode retains its existing inference
+credentials. All launches still require explicit Go IDs and the existing
+provider allowlist; no free model, including Space Bunny Free, is enabled.
+
+Without the monitoring variable, the router remains usable: submissions persist,
+status reports `credentials_missing`, and economical jobs run one at a time.
+Unknown-cost or expensive models wait. Add calibrated `relative_cost` metadata
+for old configurations if economical models cannot yet be identified. Credentials
+must identify the same account across orchestrators; the endpoint does not return
+an account identifier with which to validate that association automatically.
+
+#### Values, cache and policy
+
+`percent`, `status`, and `resetsAt` are **provider-supplied** for each window.
+Remaining percent is calculated as `100 - percent`, inheriting provider rounding;
+it is not a finer-grained entitlement. Age, freshness, and pacing mode are local
+calculations. Actual billed dollars/model and per-task Go depletion are not
+returned by this endpoint. Recent per-model USD and existing success/byte metrics
+remain **local estimates**, grouped by model + variant + category + tier, with
+missing cost coverage explicit. They never decide whether the account is empty.
+There is no speculative allocation of simultaneous account usage to one worker.
+
+`go_budget` is an optional object; these are its defaults:
+
+```json
+{
+  "refresh_seconds": 300,
+  "stale_seconds": 900,
+  "timeout_seconds": 10,
+  "normal_remaining": 70,
+  "economical_remaining": 30,
+  "restricted_remaining": 10,
+  "economical_max_cost": 2,
+  "restricted_cheap_failures": 3
+}
+```
+
+There was no published rate limit for the Go usage route in the inspected source.
+Five-minute refreshes are shared through a SQLite lease under the router state
+root; simultaneous clients do not each poll. Numeric or HTTP-date Retry-After extends the
+interval. Cached `budget`/`status` calls do not query OpenCode. Fleet refresh runs
+in a background thread so monitoring cannot delay supervision. Failures preserve
+the previous observation and expose `refresh_failed`; data becomes stale at 15
+minutes, on clock rollback, or when a reported reset timestamp is reached. Stale
+values remain labeled as such. No reset timestamp ever causes a local refill.
+The provider's calendar/anchor rules are deliberately not reimplemented.
+
+| 5h remaining | New metered assignments |
+| --- | --- |
+| >70% | Existing economical/evidence-based selection |
+| 30–70% | Cheap pool first; expensive work requires escalation and `--budget-justification` |
+| 10–<30% | Cheap ordinary workers; expensive escalation additionally requires structured failures from 3 distinct economical models |
+| >0–<10% | One economical worker; every task requires `--budget-justification` describing expected verified gain |
+| 0% or any provider window exhausted | Queue all metered work until a fresh successful usage GET confirms recovery |
+| Missing/stale data | One economical worker; suppress expensive and unknown-cost models |
+
+Economical means calibrated `relative_cost <= 2` and not escalation-only; names
+never imply price. Prior model failures, effectiveness, variants, reservations,
+cooldowns and retry evidence remain in force. A free model may later be explicitly
+configured with `metered: false` plus nonempty `unmetered_evidence` documenting
+its verified entitlement; it bypasses the shared Go gate, but keeps other routing
+checks. All existing models default to metered. A zero local cost does not prove
+that a model is free.
+
+Inference quota/rate-limit errors override cached values immediately and durably;
+even a response already in flight before that error cannot clear it. They retain
+the existing separate availability retry accounting and preserve queued work.
+There is no blind inference probe for recovery. If credentials are missing after
+a quota error, configure them and wait for a fresh successful meter check.
+An HTTP 429 from the **monitoring GET** itself is an API polling failure, not
+proof of account allowance exhaustion. Idle exhausted scheduling sleeps between
+checks; it does not cycle through models or consume attempts.
+
+```sh
+# Compact cached JSON for frequent orchestrator calls (no network):
+python3 tools/opencode_router.py --config build/opencode-router.json budget
+# Request a read-only refresh if due; still respects the shared interval:
+python3 tools/opencode_router.py --config build/opencode-router.json budget --refresh
+# Full human-readable status:
+python3 tools/opencode_router.py --config build/opencode-router.json status
+```
+
+Compact status includes meters, freshness/source, quota latch, active model +
+variant, the first 20 queued jobs and total queue count, budget restrictions for
+ordinary work, and last-24h local estimated costs with task classes. Deferred jobs
+keep `budget.*` machine-readable reasons in their notes. `run` also returns the
+reason and budget snapshot if its waiting duration expires. Useful tasks may
+continue to be submitted; budget deferral does not spend task retries.
 
 #### Updating active installations
 
@@ -239,8 +380,12 @@ fields into your local config, preserving credentials-free local settings and
 `go_overage_disabled`. Schedulers load config once: apply after the current
 scheduler finishes; do not interrupt useful workers merely to reload policy.
 Queues choose models at dispatch and need no state rewrite. Explicit queued
-`--model` requests remain overrides and must be reviewed separately. The new
-measurement table is additive; old writers and old attempt records still work.
+`--model` requests obey the new shared budget gate. The measurement table and nullable/defaulted job metadata are additive; old writers
+and old attempt records still work. The usage cache is a separate `go-budget.sqlite`
+in the shared router state directory. Old running scheduler processes retain their
+old code and cannot enforce the new gate: let useful work finish, then start the
+next scheduler with the updated executable. Separate clones must share `--state`
+for one account, just as they must share concurrency limits.
 
 ### Reasoning variants
 
@@ -311,7 +456,7 @@ A structured variant rejection removes that choice for the job's later attempts;
 the next eligible model uses its own supported fallback. If necessary, retry
 without a suffix. These errors use the existing availability retry bound, without
 counting as failed reconstruction or cooling down the entire model. Quota errors
-still use the existing model cooldown/failover path. Providers never change here.
+still record the existing model cooldown and additionally latch shared exhaustion. Providers never change here.
 
 ### Agent steps and running fleets
 
@@ -326,7 +471,7 @@ No step budget is changed by this feature. Per-tier step budgets could later
 bound unproductive exploration and encourage a final handoff before timeout,
 but should be measured separately from variant choice.
 
-Existing CLI commands and model selection are unchanged. State gains one nullable
+Existing CLI commands remain available; shared budget checks now constrain model selection. State gains one nullable
 attempt column under the existing short initialization lock. Old attempts remain
 `variant: null` (default/unknown); measurements and statistics are preserved.
 Old schedulers can continue inserting their explicit columns. New schedulers
@@ -370,17 +515,17 @@ model assertions; preserve the named gate/probe report.
 Run focused tests with:
 
 ```sh
-python3 -m unittest discover -s tools/tests -p test_opencode_router.py -v
+python3 -m unittest discover -s tools/tests -p 'test_opencode*.py' -v
 ```
 
 Tests use a fake CLI with real subprocesses and the repository's cgroup helpers;
-they require delegation like production. They cover quota failover, cooldown,
+they require delegation like production. They cover account quota deferral/recovery, cooldown,
 retry bounds/promotion, handoff, concurrency, duplicate/overlapping work, shell
 metacharacters, protocol failures, detached children, scheduler SIGKILL with a
 surviving timeout supervisor, Ctrl-C, and state-loss refusal.
 Variant tests additionally cover per-tier/per-model selection, unsupported choices,
 catalog outages, old-state migration with concurrent readers, legacy writers,
-quota failover, promotion, argument construction and grouped statistics.
+quota deferral/recovery, promotion, argument construction and grouped statistics.
 
 Verified 2026-09-27 against OpenCode v2.0.18: CLI help, stdin task input, JSONL
 text/error events, explicit models, configuration injection, and public catalog.
@@ -388,17 +533,12 @@ All 20 configured IDs were present in the Go catalog. Real concurrent router
 smokes succeeded on `opencode-go/mimo-v2.6-flash` and
 `opencode-go/glm-5.3-flash`; `opencode-go/deepseek-v4.1-flash` returned a regional
 availability restriction. No large fleet or intentional real quota exhaustion
-was run. Simulated 429 tests prove failover without consuming an account limit.
+was run. Simulated 429 tests now prove shared deferral and meter-confirmed recovery without consuming an account limit.
 The variant extension also passed tiny real router runs on
 `opencode-go/gpt-6-luna#high` (reasoning) and
 `opencode-go/glm-5.3-flash#low` (bulk), with both selected variants independently
 confirmed through OpenCode's `session.get` API. These are invocation checks,
 not evidence that either configuration is better at BFME reconstruction.
-
-Supported Go docs expose usage in the console; `stats` reports historical local
-usage, not remaining Go allowance. No reliable supported remaining-quota endpoint
-was found in CLI help or the published v2 API, so the router uses actual failures
-and cooldowns rather than estimating remaining tokens or scraping private state.
 
 Primary references: [Go IDs, limits and paid-overage setting](https://opencode.ai/v2/docs/console/go),
 [v2 API](https://opencode.ai/v2/docs/api),
@@ -408,7 +548,13 @@ Variant syntax and provider semantics: [models](https://opencode.ai/v2/docs/mode
 Step behavior: [agents](https://opencode.ai/v2/docs/agents),
 [runner source](https://github.com/anomalyco/opencode/blob/dev/packages/core/src/session/runner/llm.ts).
 
-Economics validation (2026-09-27): 38 focused tests passed, including simulated
-quota failover with cost-aware routing and variants. A one-request real smoke
+Prior economics validation (before shared pacing): 38 focused tests passed,
+including the former per-model failover behavior, now superseded by shared deferral. A one-request real smoke
 selected Muse `#medium` and returned `provider.quota` (429, Go usage limit
 exceeded); no further quota probing or large fleet was launched.
+
+Shared-budget validation: 56 focused tests cover parsing, all threshold edges,
+missing credentials, stale/cache failures, source timestamps and timezone edges,
+quota races/recovery, explicit overrides, free-model evidence, and existing
+variant/cost/containment behavior. The monitoring smoke uses status only; no
+new inference or deliberate allowance consumption is required.

@@ -270,5 +270,14 @@
   "variant_discovery": true,
   "cost_aware": true,
   "cheap_failures_before_escalation": 2,
-  "cost_basis": "Coarse dashboard-informed preference weights, 2026-09-27; not USD/job. Unmeasured models disabled pending parent calibration."
+  "cost_basis": "Coarse dashboard-informed preference weights, 2026-09-27; not USD/job. Unmeasured models disabled pending parent calibration.",
+  "go_budget": {
+    "refresh_seconds": 300,
+    "stale_seconds": 900,
+    "normal_remaining": 70,
+    "economical_remaining": 30,
+    "restricted_remaining": 10,
+    "economical_max_cost": 2,
+    "restricted_cheap_failures": 3
+  }
 }

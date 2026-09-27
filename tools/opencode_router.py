@@ -13,11 +13,13 @@ import sqlite3
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 import uuid
 
 import fleet_run
 import fleet_cgroup
+import opencode_go_budget as go_budget
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = ROOT / 'tools/opencode_router/go.json'
@@ -68,6 +70,7 @@ def config(path):
         raise ValueError('cost_aware must be a boolean')
     if type(c.get('cheap_failures_before_escalation', 2)) is not int or c.get('cheap_failures_before_escalation', 2) < 2:
         raise ValueError('cheap_failures_before_escalation must be an integer >= 2')
+    go_budget.config(c)
     seen = set()
     if type(c.get('variant_discovery', True)) is not bool:
         raise ValueError('variant_discovery must be a boolean')
@@ -88,6 +91,10 @@ def config(path):
                 raise ValueError(f'{field} must be positive and finite')
         if type(m.get('escalation_only', False)) is not bool:
             raise ValueError('escalation_only must be a boolean')
+        if type(m.get('metered', True)) is not bool:
+            raise ValueError('metered must be boolean')
+        if not m.get('metered', True) and (not isinstance(m.get('unmetered_evidence'), str) or not m['unmetered_evidence'].strip()):
+            raise ValueError('metered=false requires explicit unmetered_evidence')
         variants = m.get('variants')
         if 'variants' in m and (not isinstance(variants, list) or
                 any(not isinstance(v, str) or not VARIANT_ID.fullmatch(v) for v in variants) or
@@ -128,6 +135,8 @@ def connect(state):
             if 'variant' not in {r['name'] for r in db.execute('PRAGMA table_info(attempts)')}:
                 db.execute('ALTER TABLE attempts ADD COLUMN variant TEXT')
                 db.commit()
+            if 'budget_justification' not in {r['name'] for r in db.execute('PRAGMA table_info(jobs)')}:
+                db.execute("ALTER TABLE jobs ADD COLUMN budget_justification TEXT NOT NULL DEFAULT ''")
             db.execute('CREATE TABLE IF NOT EXISTS economic_measurements ('
                        'attempt TEXT PRIMARY KEY, bytes_gained INTEGER, useful_investigation INTEGER)')
             db.commit()
@@ -169,17 +178,18 @@ def target_key(target, task):
     return target.strip()
 
 
-def enqueue(state, category, task, target=None, cwd=None, model=None, redundant=False):
+def enqueue(state, category, task, target=None, cwd=None, model=None, redundant=False, budget_justification=''):
     job = uuid.uuid4().hex[:16]
     with database(state) as db:
         db.execute('INSERT INTO jobs (id,target,task,category,tier,cwd,model,redundant,status,created) '
                    'VALUES (?,?,?,?,?,?,?,?,?,?)',
                    (job, target_key(target, task), task, category, category,
                     str(Path(cwd).resolve()) if cwd else None, model, redundant, 'queued', time.time()))
+        db.execute('UPDATE jobs SET budget_justification=? WHERE id=?', (budget_justification, job))
     return job
 
 
-def choose(c, job, active, model_state, history, now):
+def choose(c, job, active, model_state, history, now, budget=None):
     """Optional cost-first policy; legacy configurations retain their selection."""
     economic = c.get('cost_aware', False)
     cheap_ids = {m['id'] for m in c['models'] if not m.get('escalation_only', m['tier'] == 'escalation')}
@@ -214,6 +224,13 @@ def choose(c, job, active, model_state, history, now):
             if m.get('escalation_only', m['tier'] == 'escalation') and not (
                     job['tier'] == 'escalation' and justified):
                 continue
+        if budget:
+            if go_budget.reason(m, job, budget, c, failed):
+                continue
+            cap = budget.get('max_metered_workers')
+            metered_active = sum(active.get(x['id'], 0) for x in c['models'] if x.get('metered', True))
+            if m.get('metered', True) and cap is not None and metered_active >= cap:
+                continue
         s = model_state.get(mid, {})
         slots = m['concurrency'] - (m['reserve'] if job['tier'] != 'escalation' else 0)
         if s.get('cooldown', 0) > now or active.get(mid, 0) >= slots:
@@ -228,6 +245,9 @@ def choose(c, job, active, model_state, history, now):
             failures = sum(h.get('status') == 'failure' and h['model'] == mid for h in history)
             score = (failures, m.get('relative_cost', 1) / m.get('effectiveness', 1),
                      active.get(mid, 0) / m['concurrency'], s.get('dispatched', 0) / m['weight'], mid)
+        if budget and budget['pacing_mode'] != 'normal':
+            score = (not go_budget.economical(m, c), *score) if economic else (
+                not go_budget.economical(m, c), tried, m.get('relative_cost', float('inf')), *score)
         candidates.append((score, m))
     return min(candidates, key=lambda x: x[0])[1] if candidates else None
 
@@ -236,6 +256,7 @@ def worker_env(model, cwd):
     env = dict(os.environ)
     # OpenCode run resolves its location from PWD before process.cwd(). Popen
     # cwd alone leaves the parent shell PWD intact and selects the wrong tree.
+    env.pop(go_budget.TOKEN_ENV, None)  # monitoring secret never enters a worker
     env['PWD'] = str(Path(cwd).resolve())
     # Avoid inherited route/simulation overrides. Never supply or log credentials.
     for key in ('OPENCODE_ROUTE', 'OPENCODE_SIMULATE', 'OPENCODE_CONFIG_CONTENT'):
@@ -410,6 +431,11 @@ def finish(state, c, attempt, result, now=None):
         a = db.execute('SELECT * FROM attempts WHERE id=?', (attempt,)).fetchone()
         if not a or a['status'] != 'running':
             return
+        if kind == 'quota':
+            try:
+                go_budget.quota(state, c, now)
+            except (OSError, ValueError, TypeError, KeyError, OverflowError, sqlite3.Error):
+                pass  # durable attempt below also latches account exhaustion
         result = dict(result)
         result['routing_cost'] = json.loads(a['result'] or '{}').get('routing_cost')
         j = db.execute('SELECT * FROM jobs WHERE id=?', (a['job'],)).fetchone()
@@ -535,9 +561,17 @@ def fleet(root, state, c, duration, workers=None, until=None):
                 db.execute('INSERT OR IGNORE INTO models(id) VALUES (?)', (m['id'],))
         recover(state, c, claims)
         running = {}
+        monitor = None
+        next_monitor_check = 0
         interrupted = False
         try:
             while time.monotonic() < end:
+                if time.monotonic() >= next_monitor_check and (monitor is None or not monitor.is_alive()):
+                    # Network IO never delays worker supervision; the cache lease also
+                    # serializes concurrent status refreshes and other orchestrators.
+                    monitor = threading.Thread(target=refresh_budget, args=(state, c), daemon=True)
+                    monitor.start()
+                    next_monitor_check = time.monotonic() + 10
                 for aid, run in list(running.items()):
                     run['events'].drain(run['reader'])
                     child = run['child']
@@ -573,6 +607,7 @@ def fleet(root, state, c, duration, workers=None, until=None):
                     held = [dict(a) for a in db.execute(
                         "SELECT * FROM attempts WHERE status='needs_review'")
                         if fleet_run.cgroup_state(a['cgroup'], 'router-' + a['id']) is not False]
+                budget = budget_snapshot(state, c)
                 for job in jobs:
                     if len(running) + len(held) >= workers:
                         break
@@ -583,8 +618,13 @@ def fleet(root, state, c, duration, workers=None, until=None):
                     active = {}
                     for r in [*running.values(), *held]:
                         active[r['model']] = active.get(r['model'], 0) + 1
-                    model = choose(c, job, active, ms, history, time.time())
+                    model = choose(c, job, active, ms, history, time.time(), budget)
                     if not model:
+                        unconstrained = choose(c, job, active, ms, history, time.time())
+                        if unconstrained:
+                            note = go_budget.reason(unconstrained, job, budget, c) or 'budget.metered_concurrency'
+                            with database(state) as db:
+                                db.execute('UPDATE jobs SET note=? WHERE id=? AND note<>?', (note, job['id'], note))
                         continue
                     variant = choose_variant(model, job['tier'], capabilities, history)
                     selection = model_selection(model['id'], variant)
@@ -648,7 +688,7 @@ def fleet(root, state, c, duration, workers=None, until=None):
                             raise
                 if not jobs and not running:
                     break
-                time.sleep(.1)
+                time.sleep(.1 if running else 2)
         except KeyboardInterrupt:
             interrupted = True
         finally:
@@ -670,6 +710,48 @@ def fleet(root, state, c, duration, workers=None, until=None):
                 finally:
                     run['reader'].close()
         return not interrupted
+
+
+def refresh_budget(state, c):
+    try:
+        return go_budget.refresh(state, c)
+    except (OSError, ValueError, TypeError, KeyError, OverflowError, sqlite3.Error):
+        return False  # cached snapshot ages conservatively; never stop supervision
+
+
+def budget_snapshot(state, c):
+    budget = go_budget.snapshot(state, c)
+    with database(state) as db:
+        quota_at = db.execute("SELECT MAX(ended) FROM attempts WHERE status='quota'").fetchone()[0]
+    if quota_at is not None and (budget['observed_at'] is None or budget['observed_at'] <= quota_at):
+        budget.update(exhausted=True, pacing_mode='exhausted', quota_error_at=quota_at)
+    return budget
+
+
+def compact_status(state, c):
+    budget = budget_snapshot(state, c)
+    with database(state) as db:
+        active = [dict(a) for a in db.execute("SELECT id,job,model,variant,status FROM attempts WHERE status IN ('running','needs_review')")]
+        queued = [dict(j) for j in db.execute("SELECT id,note FROM jobs WHERE status='queued' ORDER BY created LIMIT 20")]
+        count = db.execute("SELECT COUNT(*) FROM jobs WHERE status='queued'").fetchone()[0]
+        recent = {}
+        for a in db.execute('SELECT a.model,a.variant,a.tier,a.result,j.category FROM attempts a JOIN jobs j ON j.id=a.job WHERE a.started>=?', (time.time()-86400,)):
+            cost = json.loads(a['result'] or '{}').get('reported_cost_usd')
+            key = (a['model'], a['variant'], a['category'], a['tier'])
+            row = recent.setdefault(key, dict(model=a['model'], variant=a['variant'], category=a['category'], tier=a['tier'], attempts=0, costed_attempts=0, estimated_usd=0))
+            row['attempts'] += 1
+            if cost is not None:
+                row['estimated_usd'] += cost
+                row['costed_attempts'] += 1
+    for row in recent.values():
+        if not row['costed_attempts']:
+            row['estimated_usd'] = None
+    ordinary = {'tier': 'bulk', 'budget_justification': ''}
+    disabled = {m['id']: why for m in c['models'] if m['enabled']
+                if (why := go_budget.reason(m, ordinary, budget, c))}
+    return dict(go_budget=budget, active_workers=active, queued_count=count, queued=queued,
+                budget_disabled_for_ordinary_work=disabled, recent_model_usage=list(recent.values()),
+                recent_usage_basis='local estimated USD, last 24h attempts; not Go allowance')
 
 
 def status(state, c):
@@ -732,11 +814,18 @@ def status(state, c):
     for j in jobs:
         last = next((a for a in reversed(attempts) if a['job'] == j['id']), {})
         j.update(model=last.get('model'), variant=last.get('variant'))
-    return {'models': models, 'jobs': jobs, 'attempts': attempts, 'measurements': measures,
+    return {**compact_status(state, c), 'models': models, 'jobs': jobs, 'attempts': attempts, 'measurements': measures,
             'configurations': list(configurations.values())}
 
 
 def print_status(data):
+    b = data['go_budget']
+    print(f"OpenCode Go: {b['pacing_mode']}; stale={b['stale']}; age={b['age_seconds']}s; error={b['error']}")
+    print('Source: ' + b['source'])
+    for name in ('5h', 'weekly', 'monthly'):
+        w = b['windows'].get(name)
+        print(f"  {name}: " + (f"provider used={w['used_percent']}%, remaining={w['remaining_percent']}% (complement), resets={w['resets_at']}" if w else 'unknown'))
+    print('Budget restrictions: ' + json.dumps(data['budget_disabled_for_ordinary_work']))
     print('MODEL                                     ON  ACTIVE  OK  FAIL  QUOTA  UNAVAIL  COOLDOWN')
     for m in data['models']:
         print(f"{m['id']:41} {str(m['enabled']):5} {m['active']:3}/{m['concurrency']:<3} "
@@ -810,12 +899,15 @@ def main(argv=None):
         s.add_argument('--target', help='canonical RVA or shared target key')
         s.add_argument('--cwd', type=Path, help='exclusive workspace; default retained detached worktree')
         s.add_argument('--model', help='explicit Go model override, including scarce models')
+        s.add_argument('--budget-justification', default='', help='expected verified gain / valuable blocker; required under low budget pressure')
         s.add_argument('--redundant', action='store_true')
         s.add_argument('--duration', type=fleet_run.parse_duration, default=3600)
     s = sub.add_parser('fleet')
     s.add_argument('--workers', type=int)
     s.add_argument('--duration', type=fleet_run.parse_duration, default=3600)
     s = sub.add_parser('status'); s.add_argument('--json', action='store_true')
+    s = sub.add_parser('budget', help='compact cached JSON status; no inference')
+    s.add_argument('--refresh', action='store_true', help='refresh if due; respects shared polling interval')
     sub.add_parser('discover')
     s = sub.add_parser('resume'); s.add_argument('job')
     s = sub.add_parser('show'); s.add_argument('job')
@@ -841,6 +933,11 @@ def main(argv=None):
         p.error('duration must be positive and finite')
     if getattr(args, 'workers', None) is not None and args.workers <= 0:
         p.error('workers must be positive')
+    if args.command == 'budget':
+        if args.refresh:
+            refresh_budget(state, c)
+        print(json.dumps(compact_status(state, c)))
+        return 0
     if args.command == 'discover':
         print(json.dumps(discover(c, root), indent=2)); return 0
     if args.command in ('status', 'show'):
@@ -917,7 +1014,7 @@ def main(argv=None):
         p.error('task must contain 1..200000 bytes')
     if args.command == 'run':
         execution_ready(c)
-    job = enqueue(state, args.category, task, args.target, args.cwd, args.model, args.redundant)
+    job = enqueue(state, args.category, task, args.target, args.cwd, args.model, args.redundant, args.budget_justification)
     print(json.dumps({'job': job, 'state': str(state)}), flush=True)
     if args.command == 'submit':
         return 0
@@ -930,7 +1027,10 @@ def main(argv=None):
         if row['status'] in TERMINAL:
             print(json.dumps(row)); return 0 if row['status'] == 'completed' else 1
         time.sleep(.2)
-    print(json.dumps({'job': job, 'status': 'pending', 'note': 'duration reached; resume with fleet'}))
+    with database(state) as db:
+        note = db.execute('SELECT note FROM jobs WHERE id=?', (job,)).fetchone()[0]
+    print(json.dumps({'job': job, 'status': 'pending', 'reason': note or 'duration_reached',
+                      'note': 'resume with fleet', 'go_budget': budget_snapshot(state, c)}))
     return 2
 
 

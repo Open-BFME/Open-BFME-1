@@ -14,6 +14,7 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import opencode_router as r
+from test_opencode_go_budget import payload
 
 FAKE = '''#!/usr/bin/env python3
 import json,os,sys,time,subprocess
@@ -63,6 +64,9 @@ class RouterTests(unittest.TestCase):
         self.c.update(cost_aware=False, opencode=str(self.fake), go_overage_disabled=True, timeout=3,
                       cooldown=.3, failure_cooldown=.05, workers=3, variant_discovery=False)
         self.c['models'] = [self.model('one'), self.model('two'), self.model('strong','escalation')]
+        with r.go_budget.database(self.state) as db:
+            r.go_budget.write(db, dict(windows=r.go_budget.parse_usage(payload(reset=time.time()+10000)),
+                observed_at=time.time(), next_refresh=time.time()+10000))
         with r.database(self.state) as db:
             db.execute('INSERT INTO settings VALUES (?,?)', ('claims_root', str(self.root)))
 
@@ -81,12 +85,25 @@ class RouterTests(unittest.TestCase):
     def run_fleet(self, duration=5):
         return r.fleet(self.root, self.state, self.c, duration)
 
+    def recover_usage(self):
+        with r.go_budget.database(self.state) as db:
+            cache = r.go_budget.read(db)
+            cache['next_refresh'] = 0
+            r.go_budget.write(db, cache)
+        with patch.dict(os.environ, {r.go_budget.TOKEN_ENV: 'fixture'}):
+            r.go_budget.refresh(self.state, self.c, fetcher=lambda *_: r.go_budget.parse_usage(payload(reset=time.time()+10000)))
+        with r.database(self.state) as db:
+            db.execute("UPDATE models SET cooldown=? WHERE id='opencode-go/quota'", (time.time()+300,))
+
     def test_economic_fleet_quota_variant_and_snapshot(self):
         self.c.update(cost_aware=True)
         self.c['models']=[self.model('quota',relative_cost=1,variants=['low','high']),
                           self.model('two',relative_cost=2,variants=['medium','high']),
                           self.model('strong','escalation',relative_cost=10,escalation_only=True)]
         self.job('arbitrary $(do-not-execute) `text`')
+        self.run_fleet(1)
+        self.assertEqual(len(self.rows('attempts')), 1)
+        self.recover_usage()
         self.run_fleet()
         attempts=self.rows('attempts')
         self.assertEqual([a['status'] for a in attempts],['quota','success'])
@@ -125,12 +142,16 @@ class RouterTests(unittest.TestCase):
         self.assertEqual(r.choose(self.c,j,{},s,[],9)['id'],'opencode-go/two')
         self.assertEqual(r.choose(self.c,j,{},s,[],10)['id'],'opencode-go/one')
 
-    def test_quota_failover_does_not_consume_reasoning_budget(self):
+    def test_account_quota_defers_without_consuming_reasoning_budget(self):
         self.c['models'][0]['id']='opencode-go/quota'
         job=self.job()
         started=time.monotonic()
-        self.run_fleet()
+        self.run_fleet(1)
         self.assertLess(time.monotonic()-started,3)
+        self.assertEqual([a['status'] for a in self.rows('attempts')],['quota'])
+        self.assertEqual(self.rows('jobs')[0]['status'],'queued')
+        self.recover_usage()
+        self.run_fleet()
         attempts=self.rows('attempts')
         self.assertEqual([a['status'] for a in attempts],['quota','success'])
         j=self.rows('jobs')[0]
@@ -141,11 +162,11 @@ class RouterTests(unittest.TestCase):
         self.c['models']=[self.model('quota')]
         self.c.update(cooldown=.2,availability_retries=2)
         self.job()
-        self.run_fleet()
+        self.run_fleet(1)
+        self.run_fleet(1)
         attempts=self.rows('attempts')
-        self.assertEqual(len(attempts),2)
-        self.assertGreaterEqual(attempts[1]['started']-attempts[0]['ended'],.2)
-        self.assertEqual(self.rows('jobs')[0]['status'],'failed')
+        self.assertEqual(len(attempts),1)
+        self.assertEqual(self.rows('jobs')[0]['status'],'queued')
         self.assertEqual(self.rows('jobs')[0]['failures'],0)
 
     def test_oversized_protocol_and_partial_lines(self):
@@ -255,7 +276,9 @@ class RouterTests(unittest.TestCase):
 
     def test_variant_quota_failover(self):
         self.c['models']=[self.model('quota',variants=['low']),self.model('two',variants=['medium'])]
-        self.job();self.run_fleet()
+        self.job();self.run_fleet(1)
+        self.recover_usage()
+        self.run_fleet()
         attempts=self.rows('attempts')
         self.assertEqual([a['status'] for a in attempts],['quota','success'])
         self.assertEqual([a['variant'] for a in attempts],['low','medium'])
@@ -417,11 +440,13 @@ class RouterTests(unittest.TestCase):
             self.assertTrue(held)
             with r.scheduler_lock(self.state) as second:self.assertFalse(second)
         self.job(target='0x00001234')
-        unit, record_path, record = r.claim_job(self.root, {'target':'0x00001234','redundant':False}, 'legacy', 10)
+        legacy = 'legacy-' + r.uuid.uuid4().hex
+        unit, record_path, record = r.claim_job(self.root, {'target':'0x00001234','redundant':False}, legacy, 10)
+        self.addCleanup(unit.remove)
         self.run_fleet(duration=.2)
         self.assertEqual(self.rows('attempts'),[])
         self.assertIn('legacy',self.rows('jobs')[0]['note'])
-        r.release_attempt(self.root,'legacy',unit,record_path,record)
+        r.release_attempt(self.root,legacy,unit,record_path,record)
         unit.remove()
         self.run_fleet()
         self.assertEqual(self.rows('jobs')[0]['status'],'completed')
