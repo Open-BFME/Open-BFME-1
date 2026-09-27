@@ -418,7 +418,7 @@ class GlobalData
 {
 public:
 	char unknown[0xCB4];
-	unsigned int networkRunAheadSlack;
+	unsigned int m_networkRunAheadSlack;
 	char unknownCB8[0xF4];
 	Bool commandIDFiltering; // retail flag at +0xDAC; INI key not recovered here
 };
@@ -974,7 +974,7 @@ Bool BFMEConnectionManager::hasPacketRouterFrameStall()
 		return false;
 
 	unsigned int frame = TheGameLogic->frame;
-	unsigned int slack = frame > 5 ? TheWritableGlobalData->networkRunAheadSlack : 3;
+	unsigned int slack = frame > 5 ? TheWritableGlobalData->m_networkRunAheadSlack : 3;
 	int slot = 0;
 	Connection **connectionSlot = m_connections;
 	for (; slot < 8; ++slot, ++connectionSlot) {
@@ -1002,7 +1002,7 @@ void BFMEConnectionManager::processRequestFrameDataCommand(void *command)
 	unsigned int endFrame = msg->getLastFrame();
 	if (endFrame < startFrame)
 		return;
-	unsigned int slack = TheWritableGlobalData->networkRunAheadSlack;
+	unsigned int slack = TheWritableGlobalData->m_networkRunAheadSlack;
 	unsigned int currentFrame = TheGameLogic->getFrame();
 	if (endFrame + slack < currentFrame)
 		return;
@@ -1066,7 +1066,7 @@ int BFMEConnectionManager::getFrameHeadroom()
 
 // Command type 8 handler. Records the sender's announced frame in the
 // per-player latest-frame array at this+0x12060 when it is within
-// NetworkKeepAliveDelay of our own, then -- if that frame is still ahead of us
+// NetworkRunAheadSlack of our own, then -- if that frame is still ahead of us
 // and the leaving player is not us -- allocates a 0x24-byte command type 9
 // (REQUESTFRAMEDATA), stamps the range [currentFrame+1, announcedFrame] into its
 // two payload dwords at +0x1C and +0x20, and sends it back to the sender alone.
@@ -1077,7 +1077,7 @@ void BFMEConnectionManager::processInformPlayerLeaveFrameCommand(void *command)
 		return;
 	unsigned int leaveFrame = msg->getLeaveFrame();
 	unsigned short leavingPlayer = msg->getLeavingPlayerID();
-	if (leaveFrame < TheGameLogic->getFrame() + TheWritableGlobalData->networkRunAheadSlack)
+	if (leaveFrame < TheGameLogic->getFrame() + TheWritableGlobalData->m_networkRunAheadSlack)
 	{
 		if (msg->getPlayerID() < 8)
 			m_playerLatestFrame[msg->getPlayerID()] = frameMaximum(leaveFrame, m_playerLatestFrame[msg->getPlayerID()]);
@@ -1954,7 +1954,7 @@ void BFMEConnectionManager::relayCommand(void *ref)
 
 	if (msg->getExecutionFrame() == (unsigned int)-1)
 		msg->setExecutionFrame(TheGameLogic->frame);
-	if (msg->getExecutionFrame() + TheWritableGlobalData->networkRunAheadSlack < TheGameLogic->frame)
+	if (msg->getExecutionFrame() + TheWritableGlobalData->m_networkRunAheadSlack < TheGameLogic->frame)
 		return;
 
 	unsigned int relay = commandRef->relay;
@@ -3498,7 +3498,7 @@ void BFMEConnectionManager::processAckCommand(void *command)
 // Starts a player's departure. Marks that player's FrameDataManager at
 // this+0x120E4 with setQuitFrame, skipping managers already reporting
 // getIsQuitting, and builds and sends the follow-up command directly to the
-// affected peers. NetworkKeepAliveDelay from TheGlobalData +0xCB4 bounds how far
+// affected peers. NetworkRunAheadSlack from TheGlobalData +0xCB4 bounds how far
 // ahead the quit frame may be placed.
 __declspec(naked) void BFMEConnectionManager::beginPlayerLeave(void *msg)
 {

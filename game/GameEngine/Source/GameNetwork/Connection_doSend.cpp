@@ -74,7 +74,7 @@ public:
 class GlobalData {
 public:
     char pad[0xcb4];
-    unsigned networkRunAheadSlack;
+    unsigned m_networkRunAheadSlack;
 };
 
 class GameLogic {
@@ -167,7 +167,7 @@ unsigned Connection::doSend(bool throttle)
 
                         // The command has already entered this packet. Old acknowledged
                         // command retries are retired using the configured frame slack.
-                        if (frame != -1 && frame + TheGlobalData->networkRunAheadSlack < TheGameLogic->frame) {
+                        if (frame != -1 && frame + TheGlobalData->m_networkRunAheadSlack < TheGameLogic->frame) {
                             commands->removeMessage(msg);
                             delete msg;
                         }
