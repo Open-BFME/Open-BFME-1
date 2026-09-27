@@ -75621,6 +75621,7 @@ name,address,notes
 ?bfmeAsyncGethostbyname@@YAHPAD@Z,0x0002E118,HTTPThinkWrapper BFME async DNS call through the retail incremental-link thunk
 ?bfmeAt1079@BfmeL1079@@QAEPAVBfmeM1079@@H@Z,0x0001EC18,pin
 ?bfmeAt1238B@BfmeS1238@@QAEPAV1@H@Z,0x0089CC30,pin
+?size@Rva008AC190Node@@QAEHXZ,0x008AC190,address-derived size helper: complete recursive decode returns node size in EAX; target 0x008AC460 consumes the result at 11 aligned call sites
 ?bfmeAt1238C@BfmeU1238@@QAEPAVBfmeS1238@@H@Z,0x008BD1D0,pin
 ?bfmeAt@BfmeThingEFE@@QAEMH@Z,0x0001FEEC,ExperienceTracker scalar-table helpers call this retail BfmeThingEFE lookup through its ILT
 ?bfmeAtEQV@BfmeMapEQV@@QAEPAPAVBfmeItemEQV@@PAX@Z,0x000059B6,pin
