@@ -722,3 +722,4 @@ game/GameEngine/Source/Common/RTS/TeamFactory_findTeamPrototypeByName_Thunk.cpp	
 game/GameEngine/Source/Common/System/GeometryShapeCopyBackward.cpp	StringBase	Functions: FAIL 1/1; at +0x5c adoption emits StringBase<char>::operator= call 0x008881B0, retail calls 0x00887C90 (StringBase<char>::set alias)
 game/GameEngine/Source/GameLogic/ScriptEngine/AttackPriorityInfoXfer.cpp	AsciiString	game\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
 game/GameEngine/Source/GameClient/SuperweaponInfoCtor.cpp	AsciiString	x:\Projects\Open-BFME-1 Claude\build\wt\mine\game\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+game/GameEngine/Source/Common/System/SaveGame/GameStateMap_embedInUseMap.cpp	AsciiString	Functions: FAIL 1/1
