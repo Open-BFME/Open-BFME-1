@@ -1,7 +1,10 @@
-// ??0Rva009E12B0Table@@QAE@H@Z
-// partial score=0.91 date=2026-09-26
+// cl: /O2 /MD
+// Retail 0x009E12B0: initialize the two 256-entry tables and scalar flags.
+// The native owner is unknown, so the address stays in the class identity.
 extern "C" void* __cdecl memset(void*, int, unsigned int);
 #pragma intrinsic(memset)
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 struct Rva009E12B0Pair { int m_a; int m_b; Rva009E12B0Pair() : m_a(0), m_b(0) {} };
 struct Rva009E12B0Table {
 	int m_owner;
@@ -17,9 +20,10 @@ struct Rva009E12B0Table {
 Rva009E12B0Table::Rva009E12B0Table(int owner)
 	: m_owner(owner), m_4(0), m_8(0)
 {
-	volatile Rva009E12B0Table *tail = this;
-	tail->m_flag = false;
-	tail->m_c10 = 0;
+	m_flag = false;
+	m_c10 = 0;
+	// Preserve the two flag stores before the zeroing loop's EAX setup.
+	_ReadWriteBarrier();
 	memset(m_table, 0, 0x400);
 	memset(m_pairs, 0, 0x800);
 	m_c14 = 0;
