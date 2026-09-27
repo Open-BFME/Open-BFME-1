@@ -194,6 +194,9 @@ class RouterTests(unittest.TestCase):
         with patch.object(r.subprocess, 'run', side_effect=respond(json.dumps(response))) as call:
             self.assertEqual(r.discover_variants(self.c,self.root), {'opencode-go/one':['low','high'],'opencode-go/two':[]})
             self.assertEqual(call.call_args.args[0], [str(self.fake),'api','model.list'])
+            startup=json.loads(call.call_args.kwargs['env']['OPENCODE_CONFIG_CONTENT'])
+            self.assertFalse(startup['warming'])
+            self.assertIn({'action':'provider.use','resource':'*','effect':'deny'},startup['experimental']['policies'])
         for data in ['{"data":[]}', 'not json', '{"data":[{"providerID":"opencode-go","id":"one","variants":[{}]}]}']:
             with patch.object(r.subprocess,'run',side_effect=respond(data)):
                 self.assertEqual(r.discover_variants(self.c,self.root), {})

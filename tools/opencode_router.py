@@ -210,7 +210,7 @@ def worker_env(model, cwd):
 
 def discover_variants(c, root):
     """Read the location's catalog; never infer capabilities from model names."""
-    if not c.get('variant_discovery', True):
+    if not c.get('variant_discovery', True) or not c['models']:
         return {}
     try:
         # A standalone server often returns a pre-plugin empty snapshot in v2.
@@ -219,7 +219,7 @@ def discover_variants(c, root):
         # temporary file also avoids retaining provider settings in router state.
         with tempfile.TemporaryFile(mode='w+', encoding='utf-8') as output:
             subprocess.run([c['opencode'], 'api', 'model.list'], cwd=root,
-                           env={**os.environ, 'PWD': str(Path(root).resolve())},
+                           env=worker_env(c['models'][0]['id'], root),
                            stdout=output, stderr=subprocess.DEVNULL, timeout=10, check=True)
             output.seek(0)
             data = json.load(output)['data']
