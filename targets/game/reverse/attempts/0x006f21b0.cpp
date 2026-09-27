@@ -1,64 +1,34 @@
 // ?rva006F21B0@W3DDisplay@@UAEXPBVImage@@MMMMHH@Z
-// partial score=0.64 date=2026-09-10
-// Retail RVA 0x006F21B0, complete 1285-byte body.
-//
-// The body is the W3DDisplay vtable slot 53 entry (vtable VA 0x0111EDD0,
-// +0xD4).  The original method spelling is not established by a named
-// caller, so the source and ledger retain an address-derived method name.
-// The slot ABI is independently established by the GUI display declaration:
-// Image*, four Real coordinates, Color, and an image-mode Int.  The renderer
-// calls below use the already matched Render2D and TextureClass ABIs; the
-// image helper is retained as an address-derived declaration because its body
-// is a separate retail function.
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// partial score=0.98 date=2026-09-26
+// Corrected behavioral bank; not a verified caller ABI.
+// Complete extent: RVA006F21B0, 1312B = 1285B code + 3B alignment + 24B switch table.
+// Restores both clipping branches, UV+14, one-word handle, and all six mode entries.
+// score=0.98 is normalized code-only instruction agreement (343/350), NOT bytes.
+// Native1396B vs retail1312B; frame88 vs58 and Image helper cleanup remain unresolved.
+// See targets/game/reverse/identity_evidence/006f21b0-corrected-render-bank.md.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug
 
+#include <stdlib.h>
 typedef int Int;
-typedef unsigned int UnsignedInt;
+typedef unsigned long UnsignedInt;
 typedef float Real;
 
-struct BfmeV1207
-{
-	BfmeV1207(Real x, Real y) : X(x), Y(y) {}
-	Real X;
-	Real Y;
-};
-
-struct BfmeFloatRect
-{
-	BfmeFloatRect(Real left, Real top, Real right, Real bottom)
-		: Left(left), Top(top), Right(right), Bottom(bottom) {}
-
-	Real Left;
-	Real Top;
-	Real Right;
-	Real Bottom;
-};
-
-class TextureClass
-{
-public:
-	virtual void unused00();
-	unsigned short m_referenceCount;
-	unsigned short m_unmodelled_06;
-
-	void Add_Ref()
-	{
-		++m_referenceCount;
-	}
-	void Release_Ref();
-};
+#include "rect.h"
+#include "texture.h"
 
 struct BfmeImageTexture
 {
-	TextureClass *texture;
+ TextureClass *texture;
+ ~BfmeImageTexture(){if(texture)texture->Release_Ref();}
 };
 
-// Only the fields and helper ABI witnessed by 0x006F21B0 are named.  The
-// helper returns the image's texture wrapper and writes a second owned
-// texture reference through its out parameter.
+// Image UV starts at +14 and status at +30.
+// The result is one owned pointer. Its native declaration below is still an
+// EXPERIMENT: retail uses ECX=this, a stack result pointer, and caller cleanup;
+// MSVC member sret instead assumes callee cleanup. Do not pin this declaration.
 class Image
 {
-	unsigned char m_unmodelled_04[0x10];
+	unsigned char m_unmodelled_04[0x14];
 
 public:
 	Real m_uvLeft;
@@ -68,7 +38,7 @@ public:
 	unsigned char m_unmodelled_24[0x0C];
 	unsigned char m_flags;
 
-	void *rva006F18F0(void **releasedTexture);
+	BfmeImageTexture rva006F18F0();
 };
 
 class Render2DClass
@@ -81,7 +51,10 @@ private:
 	unsigned char m_texturingEnabled;
 
 public:
-	void Add_Quad(const BfmeFloatRect &screen, const BfmeFloatRect &uv,
+	
+ void Add_Tri(const Vector2&,const Vector2&,const Vector2&,const Vector2&,const Vector2&,const Vector2&,UnsignedInt);
+
+ void Add_Quad(const RectClass &screen, const RectClass &uv,
 		UnsignedInt color0, UnsignedInt color1, UnsignedInt color2,
 		UnsignedInt color3);
 
@@ -95,34 +68,22 @@ public:
 		m_texturingEnabled = 1;
 	}
 
-	void setTexture(TextureClass *texture)
-	{
-		if (texture == m_texture)
-			return;
+ void setTexture(const BfmeImageTexture &handle)
+ {
+  if(handle.texture == m_texture) return;
+  if(handle.texture) handle.texture->Add_Ref();
+  if(m_texture) m_texture->Release_Ref();
+  m_texture = handle.texture;
+  m_texturePresent = -(handle.texture != 0);
+ }
 
-		if (texture)
-			texture->Add_Ref();
-		if (m_texture)
-			m_texture->Release_Ref();
-
-		m_texture = texture;
-		m_texturePresent = texture != 0;
-	}
-};
-
-class BfmeA1207 : public Render2DClass
-{
-public:
-	void bfmeDo1207(const BfmeV1207 &a1, const BfmeV1207 &a2,
-		const BfmeV1207 &a3, const BfmeV1207 &a4,
-		const BfmeV1207 &a5, const BfmeV1207 &a6, Int color);
 };
 
 class W3DDisplay
 {
 private:
 	unsigned char m_unmodelled_04[0x160];
-	BfmeA1207 *m_render2D;
+	Render2DClass *m_render2D;
 	Int m_clipLeft;
 	Int m_clipTop;
 	Int m_clipRight;
@@ -134,7 +95,7 @@ public:
 		Real endX, Real endY, Int color, Int mode);
 };
 
-// ?rva006F21B0@W3DDisplay@@UAEXPBVImage@@MMMMHI@Z
+// ?rva006F21B0@W3DDisplay@@UAEXPBVImage@@MMMMHH@Z
 void W3DDisplay::rva006F21B0(const Image *image, Real startX, Real startY,
 	Real endX, Real endY, Int color, Int mode)
 {
@@ -143,82 +104,131 @@ void W3DDisplay::rva006F21B0(const Image *image, Real startX, Real startY,
 
 	m_render2D->enableTexturing();
 	switch (mode) {
-	case 0:
+	case 1:
 		m_render2D->setMode(3);
 		break;
-	case 1:
+	case 3:
 		m_render2D->setMode(1);
 		break;
-	case 2:
+	case 0:
 		m_render2D->setMode(0);
 		break;
-	case 3:
+	case 4:
 		m_render2D->setMode(4);
 		break;
-	case 4:
+	case 5:
 		m_render2D->setMode(6);
 		break;
+	case 2:
+		goto afterMode;
 	default:
-		break;
+		goto afterMode;
 	}
 
-	void *releasedTexture = 0;
-	BfmeImageTexture *imageTexture = static_cast<BfmeImageTexture *>(
-		const_cast<Image *>(image)->rva006F18F0(&releasedTexture));
-	m_render2D->setTexture(imageTexture->texture);
-	if (releasedTexture)
-		static_cast<TextureClass *>(releasedTexture)->Release_Ref();
+afterMode:
+	m_render2D->setTexture(
+		const_cast<Image *>(image)->rva006F18F0());
 
-	BfmeFloatRect screen(startX, startY, endX, endY);
-	BfmeFloatRect uv(image->m_uvLeft, image->m_uvTop,
+	RectClass screen(startX, startY, endX, endY);
+	RectClass uv(image->m_uvLeft, image->m_uvTop,
 		image->m_uvRight, image->m_uvBottom);
 
-	if (m_isClippedEnabled) {
-		if (endX <= static_cast<Real>(m_clipLeft) ||
-			endY <= static_cast<Real>(m_clipTop))
-			return;
+	if (m_isClippedEnabled)
+	{	//need to clip this quad to clip rectangle
 
-		if (startX < static_cast<Real>(m_clipLeft)) {
-			Real percent = (static_cast<Real>(m_clipLeft) - startX) /
-				(endX - startX);
-			screen.Left = static_cast<Real>(m_clipLeft);
-			uv.Left += (uv.Right - uv.Left) * percent;
-		}
-		if (endX > static_cast<Real>(m_clipRight)) {
-			Real percent = (static_cast<Real>(m_clipRight) - startX) /
-				(endX - startX);
-			screen.Right = static_cast<Real>(m_clipRight);
-			uv.Right = uv.Left + (uv.Right - uv.Left) * percent;
-		}
-		if (startY < static_cast<Real>(m_clipTop)) {
-			Real percent = (static_cast<Real>(m_clipTop) - startY) /
-				(endY - startY);
-			screen.Top = static_cast<Real>(m_clipTop);
-			uv.Top += (uv.Bottom - uv.Top) * percent;
-		}
-		if (endY > static_cast<Real>(m_clipBottom)) {
-			Real percent = (static_cast<Real>(m_clipBottom) - startY) /
-				(endY - startY);
-			screen.Bottom = static_cast<Real>(m_clipBottom);
-			uv.Bottom = uv.Top + (uv.Bottom - uv.Top) * percent;
+		//
+		//	Check for completely clipped
+		//
+		if (	endX <= m_clipLeft ||
+				endY <= m_clipTop)
+		{
+			return;	//nothing to render
+		} else {
+			RectClass clipped_rect;
+			RectClass clipped_uv;
+
+			if( (image->m_flags & 1) )
+			{
+
+	
+				//
+				//	Clip the polygons to the specified area
+				//
+				
+				clipped_rect.Left		= __max (screen.Left, m_clipLeft);
+				clipped_rect.Right	= __min (screen.Right, m_clipRight);
+				clipped_rect.Top		= __max (screen.Top, m_clipTop);
+				clipped_rect.Bottom	= __min (screen.Bottom, m_clipBottom);
+
+				//
+				//	Clip the texture to the specified area
+				//
+				
+				float percent				= ((clipped_rect.Left - screen.Left) / screen.Width ());
+				clipped_uv.Top		= uv.Top + (uv.Height () * percent);
+
+				percent						= ((clipped_rect.Right - screen.Left) / screen.Width ());
+				clipped_uv.Bottom	= uv.Top + (uv.Height () * percent);
+
+				percent						= ((clipped_rect.Top - screen.Top) / screen.Height ());
+				clipped_uv.Right	= uv.Right - (uv.Width () * percent);
+
+				percent						= ((clipped_rect.Bottom - screen.Top) / screen.Height ());
+				clipped_uv.Left		= uv.Right - (uv.Width () * percent);
+			}
+			else
+
+			{
+			
+				//
+				//	Clip the polygons to the specified area
+				//
+				
+				clipped_rect.Left		= __max (screen.Left, m_clipLeft);
+				clipped_rect.Right	= __min (screen.Right, m_clipRight);
+				clipped_rect.Top		= __max (screen.Top, m_clipTop);
+				clipped_rect.Bottom	= __min (screen.Bottom, m_clipBottom);
+
+				//
+				//	Clip the texture to the specified area
+				//
+				
+				float percent				= ((clipped_rect.Left - screen.Left) / screen.Width ());
+				clipped_uv.Left		= uv.Left + (uv.Width () * percent);
+
+				percent						= ((clipped_rect.Right - screen.Left) / screen.Width ());
+				clipped_uv.Right	= uv.Left + (uv.Width () * percent);
+
+				percent						= ((clipped_rect.Top - screen.Top) / screen.Height ());
+				clipped_uv.Top		= uv.Top + (uv.Height () * percent);
+
+				percent						= ((clipped_rect.Bottom - screen.Top) / screen.Height ());
+				clipped_uv.Bottom	= uv.Top + (uv.Height () * percent);
+			}
+
+			//
+			//	Use the clipped rectangles to render
+			//
+			screen = clipped_rect;
+			uv		= clipped_uv;
 		}
 	}
 
 	if (image->m_flags & 1) {
-		m_render2D->bfmeDo1207(
-			BfmeV1207(screen.Left, screen.Top),
-			BfmeV1207(screen.Left, screen.Bottom),
-			BfmeV1207(screen.Right, screen.Top),
-			BfmeV1207(uv.Right, uv.Top),
-			BfmeV1207(uv.Left, uv.Top),
-			BfmeV1207(uv.Right, uv.Bottom), color);
-		m_render2D->bfmeDo1207(
-			BfmeV1207(screen.Right, screen.Bottom),
-			BfmeV1207(screen.Right, screen.Top),
-			BfmeV1207(screen.Left, screen.Bottom),
-			BfmeV1207(uv.Left, uv.Bottom),
-			BfmeV1207(uv.Right, uv.Bottom),
-			BfmeV1207(uv.Left, uv.Top), color);
+		m_render2D->Add_Tri(
+			Vector2(screen.Left, screen.Top),
+			Vector2(screen.Left, screen.Bottom),
+			Vector2(screen.Right, screen.Top),
+			Vector2(uv.Right, uv.Top),
+			Vector2(uv.Left, uv.Top),
+			Vector2(uv.Right, uv.Bottom), color);
+		m_render2D->Add_Tri(
+			Vector2(screen.Right, screen.Bottom),
+			Vector2(screen.Right, screen.Top),
+			Vector2(screen.Left, screen.Bottom),
+			Vector2(uv.Left, uv.Bottom),
+			Vector2(uv.Right, uv.Bottom),
+			Vector2(uv.Left, uv.Top), color);
 	} else {
 		m_render2D->Add_Quad(screen, uv, color, color, color, color);
 	}
