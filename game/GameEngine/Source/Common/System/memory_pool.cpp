@@ -1257,188 +1257,43 @@ __declspec(naked) void MemoryPool::_Init()
     }
 }
 
-__declspec(naked) void MemoryPool::_VerifyIntegrity()
+// Retail export 0x00882D50, full 187-byte extent through the final ret.
+// Three walks over the allocator's block tables; +4 links and +0xc payload
+// agree with the landed Rva00882580Block::check helper.
+class Rva00882580Block
 {
-    __asm {
-        __emit 0xa1
-        __emit 0x10
-        __emit 0x4d
-        __emit 0x2d
-        __emit 0x01
-        __emit 0x56
-        __emit 0x57
-        __emit 0x33
-        __emit 0xff
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x76
-        __emit 0x44
-        __emit 0x8d
-        __emit 0x49
-        __emit 0x00
-        __emit 0xa1
-        __emit 0xd0
-        __emit 0xe9
-        __emit 0x30
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x34
-        __emit 0xb8
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x74
-        __emit 0x2b
-        __emit 0x8d
-        __emit 0x64
-        __emit 0x24
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x09
-        __emit 0xf8
-        __emit 0xff
-        __emit 0xff
-        __emit 0xa0
-        __emit 0xf9
-        __emit 0xe9
-        __emit 0x30
-        __emit 0x01
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x10
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x0c
-        __emit 0x51
-        __emit 0x6a
-        __emit 0xff
-        __emit 0xb9
-        __emit 0x10
-        __emit 0xea
-        __emit 0x30
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x40
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x76
-        __emit 0x04
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x75
-        __emit 0xd9
-        __emit 0xa1
-        __emit 0x10
-        __emit 0x4d
-        __emit 0x2d
-        __emit 0x01
-        __emit 0x47
-        __emit 0x3b
-        __emit 0xf8
-        __emit 0x72
-        __emit 0xbf
-        __emit 0xa1
-        __emit 0x04
-        __emit 0xea
-        __emit 0x30
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x22
-        __emit 0x33
-        __emit 0xf6
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x76
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0x15
-        __emit 0xcc
-        __emit 0xe9
-        __emit 0x30
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x0c
-        __emit 0xb2
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0a
-        __emit 0xe8
-        __emit 0xbe
-        __emit 0xf7
-        __emit 0xff
-        __emit 0xff
-        __emit 0xa1
-        __emit 0x04
-        __emit 0xea
-        __emit 0x30
-        __emit 0x01
-        __emit 0x46
-        __emit 0x3b
-        __emit 0xf0
-        __emit 0x72
-        __emit 0xe4
-        __emit 0xa1
-        __emit 0x10
-        __emit 0x4d
-        __emit 0x2d
-        __emit 0x01
-        __emit 0x33
-        __emit 0xff
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x76
-        __emit 0x31
-        __emit 0xeb
-        __emit 0x07
-        __emit 0x8d
-        __emit 0xa4
-        __emit 0x24
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xa1
-        __emit 0xd4
-        __emit 0xe9
-        __emit 0x30
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x34
-        __emit 0xb8
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x74
-        __emit 0x12
-        __emit 0x8d
-        __emit 0x64
-        __emit 0x24
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x89
-        __emit 0xf7
-        __emit 0xff
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x76
-        __emit 0x04
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x75
-        __emit 0xf2
-        __emit 0xa1
-        __emit 0x10
-        __emit 0x4d
-        __emit 0x2d
-        __emit 0x01
-        __emit 0x47
+public:
+    unsigned char check();
+};
+extern unsigned int g_rva00883040Count;
+
+void MemoryPool::_VerifyIntegrity()
+{
+    unsigned int i;
+    for (i = 0; i < g_rva00883040Count; ++i) {
+        Rva00882580Block *block = (*(Rva00882580Block ***)0x0130E9D0)[i];
+        while (block) {
+            block->check();
+            if (*(unsigned char *)0x0130E9F9)
+                ((Rva008838F0Owner *)0x0130EA10)->isValidBlock(-1, (char *)block + 0x0c);
+            block = *(Rva00882580Block **)((char *)block + 4);
+        }
+    }
+    unsigned int count = *(unsigned int *)0x0130EA04;
+    if (count) {
+        for (unsigned int j = 0; j < count; ++j) {
+            Rva00882580Block *block = (*(Rva00882580Block ***)0x0130E9CC)[j];
+            if (block) {
+                block->check();
+                count = *(unsigned int *)0x0130EA04;
+            }
+        }
+    }
+    for (i = 0; i < g_rva00883040Count; ++i) {
+        Rva00882580Block *block = (*(Rva00882580Block ***)0x0130E9D4)[i];
+        while (block) {
+            block->check();
+            block = *(Rva00882580Block **)((char *)block + 4);
+        }
     }
 }
