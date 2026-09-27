@@ -89,8 +89,30 @@ def seats():
     return json.loads(path.read_text(encoding="utf-8")) if path.exists() else []
 
 
-def save_seats(items):
-    (state_dir() / "seats.json").write_text(json.dumps(items, indent=1), encoding="utf-8")
+def update_seats(change):
+    """Load, change and save seats.json under one lock. A harvest takes an hour;
+    one that loaded the list at its start and saved it at its end erased every
+    seat launched meanwhile (2026-09-27: round 3 vanished and round 4 re-served
+    its bodies), so every write re-reads the file it modifies."""
+    sys.path.insert(0, str(ROOT / "tools"))
+    from portable_lock import lock
+
+    path = state_dir() / "seats.json"
+    with (state_dir() / "seats.lock").open("a+b") as handle:
+        lock(handle, exclusive=True)
+        items = json.loads(path.read_text(encoding="utf-8")) if path.exists() else []
+        change(items)
+        tmp = path.with_suffix(".tmp")
+        tmp.write_text(json.dumps(items, indent=1), encoding="utf-8")
+        os.replace(tmp, path)
+
+
+def mark_harvested(seat_id):
+    def change(items):
+        for seat in items:
+            if seat["id"] == seat_id:
+                seat["harvested"] = True
+    update_seats(change)
 
 
 def finished(seat):
@@ -150,7 +172,6 @@ def launch(groups, hours):
         raise SystemExit("astra_seats: needs Git Bash (for `timeout`) and the codex CLI on PATH")
     base = main_root()
     subprocess.run(["git", "fetch", "-q", "origin", "master"], cwd=base, check=True)
-    items = seats()
     stamp = datetime.datetime.now().strftime("%Y%m%dT%H%M%S")
     for i, (label, rvas) in enumerate(groups):
         seat_id = f"{stamp}_{i}"
@@ -176,11 +197,11 @@ def launch(groups, hours):
         subprocess.Popen([bash, "-c", script], cwd=worktree, stdin=subprocess.DEVNULL,
                          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, creationflags=flags,
                          start_new_session=os.name != "nt")
-        items.append({"id": seat_id, "label": label, "rvas": [f"0x{r:08X}" for r in rvas],
-                      "worktree": str(worktree), "log": str(log), "model": MODEL, "effort": EFFORT,
-                      "started": stamp, "hours": hours})
+        record = {"id": seat_id, "label": label, "rvas": [f"0x{r:08X}" for r in rvas],
+                  "worktree": str(worktree), "log": str(log), "model": MODEL, "effort": EFFORT,
+                  "started": stamp, "hours": hours}
+        update_seats(lambda items: items.append(record))
         print(f"seat {seat_id}: {label}: {' '.join(f'0x{r:08X}' for r in rvas)}")
-    save_seats(items)
 
 
 def status():
@@ -270,23 +291,17 @@ def main(argv=None):
     if args.action == "status":
         return status()
     if args.action == "harvest":
-        items = seats()
-        for seat in items:
+        for seat in seats():
             if seat.get("harvested") or not finished(seat) or (args.seat and seat["id"] != args.seat):
                 continue
             problem = harvest(seat)
             if problem and problem != "nothing to harvest":
                 print(f"{seat['id']}: NEEDS REVIEW -- {problem}")
                 continue
-            seat["harvested"] = True
-        save_seats(items)
+            mark_harvested(seat["id"])
         return 0
     if args.action == "harvested":
-        items = seats()
-        for seat in items:
-            if seat["id"] == args.seat:
-                seat["harvested"] = True
-        save_seats(items)
+        mark_harvested(args.seat)
         return 0
     groups = pick(args.count, args.lifts)
     if args.action == "pick":
