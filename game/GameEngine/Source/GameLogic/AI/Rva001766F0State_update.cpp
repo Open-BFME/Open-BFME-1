@@ -1,11 +1,7 @@
-// ?d_001766f0@@YAXXZ
-// partial score=0.65 date=2026-09-10
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
-// Retail 0x001766F0: the pre-firing attack move-state update.  The state keeps
-// the victim it locked on to by id, decides whether the current goal is ahead
-// of the owner, and drives the weapon through its pre-attack status before
-// delegating to the internal move update.
+// Retail 0x001766F0 (657 bytes): pre-firing attack move-state update; owner class unproven, so address-derived.
+// Keeps the victim by id, tests whether the goal is ahead, drives pre-attack weapon status, then runs the base move update.
 
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
@@ -192,16 +188,17 @@ public:
 	Object *m_owner;                                   // retail this+0x10
 };
 
-extern UnsignedByte g_012F0239;
-extern void *g_012ED4FC;
-extern void j_0003a17a();
+class CRCParameterCheck;
 
-typedef void (__cdecl *Rva001766F0CritterDesyncLog)(void *, const char *);
+extern Bool Glo012F0239;
+extern CRCParameterCheck *TheCRCParameterCheck;
+extern "C" void __cdecl bfmeRetailCritterDesyncLog(
+	CRCParameterCheck *check, const char *format, ...);
 
 static void rva001766F0_log(const char *message)
 {
-	if (g_012F0239 && g_012ED4FC)
-		((Rva001766F0CritterDesyncLog)j_0003a17a)(g_012ED4FC, message);
+	if (Glo012F0239 && TheCRCParameterCheck)
+		bfmeRetailCritterDesyncLog(TheCRCParameterCheck, message);
 }
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
@@ -255,9 +252,15 @@ StateReturnType Rva001766F0State::update()
 	if (goal && goal != previous)
 	{
 		const Coord3D *forward = ((Thing *)source)->getUnitDirectionVector2D();
-		Real dx = goal->m_position.x - source->m_position.x;
-		Real dy = goal->m_position.y - source->m_position.y;
-		if (dy * forward->y + dx * forward->x > BfmeZeroRange)
+		Coord3D forwardVector;
+		forwardVector.x = forward->x;
+		forwardVector.y = forward->y;
+		Coord3D delta;
+		delta.x = goal->m_position.x;
+		delta.y = goal->m_position.y;
+		delta.x -= source->m_position.x;
+		delta.y -= source->m_position.y;
+		if (delta.x * forwardVector.x + delta.y * forwardVector.y > BfmeZeroRange)
 			goalIsAhead = true;
 	}
 
@@ -276,10 +279,14 @@ StateReturnType Rva001766F0State::update()
 			{
 				if (goalIsAhead)
 				{
-					if (goal != previous)
+					if (goal == previous)
+					{
+						m_isPreFiring = false;
+					}
+					else
 					{
 						radius = source->m_radius;
-						if (radius * radius > source->getDistanceSquared(goal))
+						if (source->getDistanceSquared(goal) < radius * radius)
 						{
 							ai->friend_setGoalObject(victim);
 							source->setFiringConditionForCurrentWeapon();
@@ -289,10 +296,6 @@ StateReturnType Rva001766F0State::update()
 						{
 							m_isPreFiring = false;
 						}
-					}
-					else
-					{
-						m_isPreFiring = false;
 					}
 				}
 			}
@@ -318,10 +321,9 @@ StateReturnType Rva001766F0State::update()
 	if (victim->queryRva001CAEE0(((BfmeObjectCall *)source)->getControllingPlayer()))
 		return STATE_FAILURE;
 
-	AIUpdateInterface *sourceAI = source->m_ai;
-	((BfmeAIUpdateVictimThunk *)sourceAI)->clearCurrentVictim(victim);
+	((BfmeAIUpdateVictimThunk *)ai)->clearCurrentVictim(victim);
 
-	if (!sourceAI->m_path
+	if (!ai->m_path
 		&& ((BfmeOutOfWeaponRangeWeapon *)weapon)->isWithinAttackRange(
 			(const BfmeOutOfWeaponRangeObject *)source,
 			(const BfmeOutOfWeaponRangeObject *)victim, 0))
@@ -335,14 +337,15 @@ StateReturnType Rva001766F0State::update()
 		return STATE_FAILURE;
 
 	StateReturnType code = AIInternalMoveToState::update();
-	if (code == STATE_CONTINUE)
-		return STATE_CONTINUE;
-
-	if (code == STATE_SUCCESS && previous)
+	if (code != STATE_CONTINUE)
 	{
-		m_machine->bfmeNotifyVictim(previous);
-		sourceAI->friend_setGoalObject(previous);
+		if (code == STATE_SUCCESS && previous)
+		{
+			m_machine->bfmeNotifyVictim(previous);
+			ai->friend_setGoalObject(previous);
+		}
+		return STATE_SUCCESS;
 	}
 
-	return STATE_SUCCESS;
+	return STATE_CONTINUE;
 }
