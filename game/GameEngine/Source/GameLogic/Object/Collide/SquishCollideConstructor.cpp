@@ -25,6 +25,15 @@ private:
 	unsigned char m_data[8];
 };
 
+// +0x0C holds BehaviorModuleInterface's own 41-slot table (0x0109C9D0) and
+// +0x10 CollideModuleInterface's own six-slot one (0x010A1DE4).
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
+class BehaviorModuleInterface
+{
+public:
+	virtual void behaviorModuleInterfaceAnchor();
+};
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CollideModule.h
 class CollideModuleInterface
 {
@@ -32,16 +41,10 @@ public:
 	virtual void collideModuleInterfaceAnchor();
 };
 
-class ModuleInterface
-{
-public:
-	virtual void moduleInterfaceAnchor();
-};
-
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CollideModule.h
 class CollideModule : public BehaviorModule,
-	public CollideModuleInterface,
-	public ModuleInterface
+	public BehaviorModuleInterface,
+	public CollideModuleInterface
 {
 public:
 	CollideModule( Thing *thing, const ModuleData *moduleData )
