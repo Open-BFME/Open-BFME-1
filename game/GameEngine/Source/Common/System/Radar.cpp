@@ -376,36 +376,15 @@ void RadarObject::loadPostProcess( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/RadarCtorThunk.cpp
-// ??0Radar@@QAE@XZ present-unmatched
-Radar::Radar( void )
-{
-
-	m_radarWindow = NULL;
-	m_objectList = NULL;
-	m_localObjectList = NULL;
-	m_radarHidden = false;
-	m_radarForceOn = false;
-	m_terrainAverageZ = 0.0f;
-	m_waterAverageZ = 0.0f;
-	m_xSample = 0.0f;
-	m_ySample = 0.0f;
-	m_mapExtent.lo.x = 0.0f;
-	m_mapExtent.lo.y = 0.0f;
-	m_mapExtent.lo.z = 0.0f;
-	m_mapExtent.hi.x = 0.0f;
-	m_mapExtent.hi.y = 0.0f;
-	m_mapExtent.hi.z = 0.0f;
-	m_queueTerrainRefreshFrame = 0;
-
-	// clear the radar events
-	clearAllEvents();
-
-}  // end Radar
-
+// ??0Radar@@QAE@XZ is the real body in game/GameEngine/Source/Common/System/RadarConstructor.cpp:
+// BFME's member offsets differ from this TU's shimmed Radar (m_radarForceOn at
+// +0x09, not +0x0D) and the event ring is a 64-element array of a class type
+// with an out-of-line ctor/dtor, which is what the constructor's
+// `eh vector constructor iterator' call is. Defining it here as well would
+// collide on ??0Radar@@QAE@XZ, so the declaration below stands alone.
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/RadarDestructorThunk.cpp
+// byte-exact reconstruction: game/GameEngine/Source/Common/System/RadarDestructorThunk.cpp
 // ??1Radar@@UAE@XZ present-unmatched
 Radar::~Radar( void )
 {
