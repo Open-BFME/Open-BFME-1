@@ -72,7 +72,9 @@ python3 tools/opencode_router.py --config build/opencode-router.json status --js
 `fleet` processes the queue until empty or its duration expires. It accepts new
 submissions while running; it is not an idle daemon. `--workers` may lower the
 configured global cap. Duration expiry stops active workers and requeues them
-within the retry budget; it does not abandon unbounded background work.
+within the retry budget; it does not abandon unbounded background work. An
+optional host-CPU admission limit can lower dispatch concurrency on a saturated
+machine; it never stops a running worker (see below).
 
 Task files avoid shell quoting problems and argv size limits. The router uses
 argument arrays and feeds task text on stdin, never through a shell. For actual
@@ -417,6 +419,133 @@ in the shared router state directory. Old running scheduler processes retain the
 old code and cannot enforce the new gate: let useful work finish, then start the
 next scheduler with the updated executable. Separate clones must share `--state`
 for one account, just as they must share concurrency limits.
+
+### Optional host CPU admission
+
+The fleet loads its worker count once and dispatches up to `min(--workers,
+workers)`. `cpu_admission` adds a **rolling, hysteretic admission limit** at or
+below that cap, so a host that is actually saturated backs off new dispatch
+instead of queueing work behind a machine that cannot run it. It is **off
+unless `cpu_admission.enabled` is true**, and while off no host CPU is read at
+all: `config()` validates the block, `control()` returns `None`, and the fleet
+behaves exactly as before.
+
+```json
+{
+  "cpu_admission": {
+    "enabled": true,
+    "grow_below": 0.9,
+    "shrink_at": 0.98,
+    "samples": 4,
+    "grow_samples": 3,
+    "shrink_samples": 2,
+    "grow_step": 1,
+    "shrink_step": 2,
+    "min_admission": 1,
+    "max_admission": null,
+    "interval_seconds": 5.0
+  }
+}
+```
+
+| Rolling mean of the last `samples` windows | Admission limit |
+| --- | --- |
+| below `grow_below` for `grow_samples` consecutive windows | `+grow_step`, up to the ceiling |
+| at or above `shrink_at` for `shrink_samples` consecutive windows | `-shrink_step`, down to `min_admission` |
+| between the thresholds, or neither sustained | held |
+
+The shrink default is larger than the growth default, so the fleet gives
+concurrency back faster than it takes it, and a host hovering at the threshold
+does not oscillate. The configured cap is a hard ceiling: the limit **starts**
+there, so a fleet that is not saturated is unaffected, and growth only recovers
+slots a sustained saturation removed. `max_admission` lowers that ceiling
+deliberately for a host that should never run the full cap. The effective bound
+at dispatch is `min(--workers, workers, admission limit)`.
+
+**A lower limit never stops a running worker.** It only delays the next
+launch; in-flight workers drain naturally and finish. The limit is applied
+before model selection and never overrides anything else: per-model concurrency
+and `reserve`, cooldowns, cost-aware selection, retry budgets, the shared Go
+budget and the account-wide quota gate all keep their existing force. An
+admission limit of 1 still runs work; it does not stall the fleet.
+
+Host CPU is the kernel's `/proc/stat` aggregate line, first eight jiffy
+counters. `guest`/`guest_nice` are **excluded** because the kernel already
+counts guest time inside `user`/`nice` and including them would double count;
+`iowait` counts as idle (waiting for IO is not compute pressure); `steal` counts
+as busy. A counter reset, a malformed line or an unreadable `/proc/stat` is
+reported as an explicit `supported: false` with the reason, and never throttles
+and never claims CPU control it does not have. Sampling needs two readings, so
+the first window is a baseline, not a measurement.
+
+**Two scales, both named.** `cpu_percent` is a true 0..100 percentage.
+`window_mean` is the 0..1 *fraction* over the rolling window, because that is
+the scale `grow_below` and `shrink_at` are compared against; the thresholds in
+the configuration are fractions too. `0.9` as a threshold and `90.0` as a
+reported percentage are the same line on the same graph.
+
+The limit is published to a separate `cpu-admission.sqlite` in the shared state
+directory -- exactly as the Go budget cache is, and with no router schema change
+-- so any client sees the current value:
+
+```sh
+python3 tools/opencode_router.py --config build/opencode-router.json status \
+  | grep 'Host CPU admission'
+python3 tools/opencode_router.py --config build/opencode-router.json budget \
+  | python3 -c 'import json,sys; print(json.load(sys.stdin)["cpu_admission"])'
+```
+
+`status` and the compact `budget` JSON both carry a `cpu_admission` object:
+`cpu_percent`, `window_mean`, `admission_limit`, `admission_maximum`, `cap`,
+`controlling`, `state`, `stale`, `age_seconds` and the `reason` when nothing is
+controlling. Each attempt additionally records the limit, the CPU reading and
+the monitoring `error` that admitted it, so a dispatch can be explained after
+the fact -- including a dispatch that happened while the monitor was broken.
+
+**The status read is genuinely read-only.** It opens the cache `mode=ro` with a
+short bounded lock wait, so it cannot create the state directory, the file or
+the table, cannot take a write lock, and cannot stall behind a scheduler that is
+mid-publish. A state directory with nothing published yields
+`state: unpublished` and creates nothing; a read-only cache file is still
+readable; a scheduler holding the lock is reported as `cache_busy`. Every field
+in the cache is type- and range-checked on the way out, so a hand-edited or
+truncated row is reported as `cache_invalid` instead of being multiplied,
+compared or printed.
+
+**Control is only claimed when it is real.** `controlling` is true only for
+`state: controlling`, which requires a readable report, a fresh
+`observed_at`, `supported: true` and no monitoring error. Every other condition
+is named rather than inferred:
+
+| `state` | meaning |
+| --- | --- |
+| `disabled` | `cpu_admission.enabled` is false; the cap is the only limit |
+| `unpublished` | enabled, but no scheduler has published a reading yet |
+| `controlling` | fresh, supported, no error: the admission limit is live |
+| `unsupported` | this host does not report a measurable CPU aggregate; the limit stays at the cap |
+| `stale` | the last reading is older than 3 intervals, or timestamped in the future |
+| `error` | the report could not be read or validated, or the last monitoring tick failed |
+
+A fresh-looking number from a host that cannot be measured is `unsupported`, not
+control, and the numbers are still readable so the last known state is visible.
+
+**A monitoring failure is reported, not swallowed.** The scheduler catches
+everything CPU monitoring can raise, because host CPU measurement must never
+stop dispatch or worker supervision. Silence would be its own lie, so the
+controller records `monitoring_error` (with the exception in `error_detail`),
+publishes it like any other report, and the status view shows `state: error`
+with `controlling: false` until a working sample clears it. The limit is not
+revoked and no worker is touched: a blind monitor never throttles.
+
+Like every other option, this is read once at scheduler start. An old running
+scheduler keeps its fixed cap and cannot enforce the limit: let useful work
+finish, then start the next scheduler with the updated executable. The
+`cpu-admission.sqlite` file is additive; deleting it only loses the published
+reading until the next scheduler writes one. During a mixed-code window a
+scheduler older than the percent scale publishes 0..1 where a current reader
+expects 0..100, so the human line can read low or absurdly high; the admission
+limit, `supported`, `stale` and `controlling` are unaffected. Restart the
+scheduler to settle the scale.
 
 ### Zen routes and free-model validation
 

@@ -20,6 +20,7 @@ import uuid
 import fleet_run
 import fleet_cgroup
 import opencode_go_budget as go_budget
+import opencode_cpu_admission as cpu_admission
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = ROOT / 'tools/opencode_router/go.json'
@@ -78,6 +79,7 @@ def config(path):
     if type(c.get('cheap_failures_before_escalation', 2)) is not int or c.get('cheap_failures_before_escalation', 2) < 2:
         raise ValueError('cheap_failures_before_escalation must be an integer >= 2')
     go_budget.config(c)
+    cpu_admission.config(c)  # optional host CPU admission; no measurement while off
     seen = set()
     if type(c.get('variant_discovery', True)) is not bool:
         raise ValueError('variant_discovery must be a boolean')
@@ -478,7 +480,10 @@ def finish(state, c, attempt, result, now=None):
             except (OSError, ValueError, TypeError, KeyError, OverflowError, sqlite3.Error):
                 pass  # durable attempt below also latches account exhaustion
         result = dict(result)
-        result['routing_cost'] = json.loads(a['result'] or '{}').get('routing_cost')
+        # Keep the launch-time routing evidence; the worker's result has none.
+        recorded = json.loads(a['result'] or '{}')
+        result['routing_cost'] = recorded.get('routing_cost')
+        result['admission'] = recorded.get('admission')
         j = db.execute('SELECT * FROM jobs WHERE id=?', (a['job'],)).fetchone()
         interrupted = kind == INTERRUPTED
         # An interrupted attempt is recorded for audit but spends no quota: a
@@ -609,12 +614,27 @@ def fleet(root, state, c, duration, workers=None, until=None):
             for m in c['models']:
                 db.execute('INSERT OR IGNORE INTO models(id) VALUES (?)', (m['id'],))
         recover(state, c, claims)
+        # Optional host-CPU admission: a limit at or below the cap, never a kill.
+        cpu = cpu_admission.control(state, c, workers)
         running = {}
         monitor = None
         next_monitor_check = 0
         interrupted = False
         try:
             while time.monotonic() < end:
+                if cpu is not None:
+                    # Host CPU monitoring never stops dispatch or worker
+                    # supervision, so every failure is caught. It is not
+                    # swallowed: the controller records an explicit
+                    # monitoring_error and publishes it, because a status view
+                    # that kept reporting healthy numbers after the monitor
+                    # broke would be claiming control the fleet does not have.
+                    try:
+                        cpu.poll()
+                        if cpu.dirty:
+                            cpu.publish(state)
+                    except Exception as exc:  # noqa: BLE001 - dispatch must continue
+                        cpu.fault(state, exc)
                 if time.monotonic() >= next_monitor_check and (monitor is None or not monitor.is_alive()):
                     # Network IO never delays worker supervision; the cache lease also
                     # serializes concurrent status refreshes and other orchestrators.
@@ -658,8 +678,11 @@ def fleet(root, state, c, duration, workers=None, until=None):
                         "SELECT * FROM attempts WHERE status='needs_review'")
                         if fleet_run.cgroup_state(a['cgroup'], 'router-' + a['id']) is not False]
                 budget = budget_snapshot(state, c)
+                # Admission bounds NEW dispatch only. A lower limit than the number
+                # of running workers delays the next launch; it never stops one.
+                limit = min(workers, cpu.limit) if cpu is not None else workers
                 for job in jobs:
-                    if len(running) + len(held) >= workers:
+                    if len(running) + len(held) >= limit:
                         break
                     if job['cwd'] and any(workspaces_overlap(j['cwd'], job['cwd']) for j in all_active):
                         continue
@@ -705,7 +728,12 @@ def fleet(root, state, c, duration, workers=None, until=None):
                             db.execute('UPDATE attempts SET result=? WHERE id=?',
                                        (json.dumps({'routing_cost': {'relative_cost': model.get('relative_cost'),
                                            'effectiveness': model.get('effectiveness', 1),
-                                           'cost_aware': c.get('cost_aware', False)}}), aid))
+                                           'cost_aware': c.get('cost_aware', False)},
+                                           # error travels with the reading, so a dispatch
+                                           # under a broken monitor is explainable too
+                                           'admission': {'limit': limit, 'cpu_percent': cpu.cpu_percent,
+                                                         'error': cpu.error}
+                                           if cpu is not None else None}), aid))
                             db.execute("UPDATE jobs SET status='running',note='' WHERE id=?", (job['id'],))
                             db.execute('UPDATE models SET dispatched=dispatched+1 WHERE id=?', (model['id'],))
                         with (directory / 'prompt.txt').open('rb') as inp, (directory / 'events.jsonl').open('wb') as out, \
@@ -807,7 +835,8 @@ def compact_status(state, c):
                 if (why := go_budget.reason(m, ordinary, budget, c))}
     return dict(go_budget=budget, active_workers=active, queued_count=count, queued=queued,
                 budget_disabled_for_ordinary_work=disabled, recent_model_usage=list(recent.values()),
-                recent_usage_basis='local estimated USD, last 24h attempts; not Go allowance')
+                recent_usage_basis='local estimated USD, last 24h attempts; not Go allowance',
+                cpu_admission=cpu_admission.snapshot(state, c))
 
 
 def status(state, c):
@@ -838,6 +867,7 @@ def status(state, c):
         result = json.loads(a['result'] or '{}')
         a['reported_cost_usd'] = result.get('reported_cost_usd')
         a['routing_cost'] = result.get('routing_cost')
+        a['admission'] = result.get('admission')
         a['economic_measurement'] = economic_measures.get(a['id'])
         a['duration_seconds'] = round((a['ended'] or time.time()) - a['started'], 2)
         key = (a['model'].split('#')[0], a['variant'], a['category'], a['tier'])
@@ -884,6 +914,17 @@ def print_status(data):
         w = b['windows'].get(name)
         print(f"  {name}: " + (f"provider used={w['used_percent']}%, remaining={w['remaining_percent']}% (complement), resets={w['resets_at']}" if w else 'unknown'))
     print('Budget restrictions: ' + json.dumps(data['budget_disabled_for_ordinary_work']))
+    a = data['cpu_admission']
+    if a['enabled']:
+        # state, not supported, says whether the fleet is really under CPU
+        # control: a fresh-looking number from a host that cannot be measured
+        # is not control.
+        print(f"Host CPU admission: {a['state']}; "
+              f"admission_limit={a['admission_limit']} of cap={a['cap']}; "
+              f"cpu={'unknown' if a['cpu_percent'] is None else format(a['cpu_percent'], '.1f') + '%'}; "
+              f"controlling={a['controlling']} ({a['reason'] or 'fresh observation'})")
+    else:
+        print(f"Host CPU admission: off; the fleet uses its configured worker cap ({a['cap']})")
     print('MODEL                                     ON  ACTIVE  OK  FAIL  INTR  QUOTA  UNAVAIL  COOLDOWN')
     for m in data['models']:
         print(f"{m['id']:41} {str(m['enabled']):5} {m['active']:3}/{m['concurrency']:<3} "
