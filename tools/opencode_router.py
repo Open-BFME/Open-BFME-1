@@ -12,6 +12,7 @@ import signal
 import sqlite3
 import subprocess
 import sys
+import tempfile
 import time
 import uuid
 
@@ -23,6 +24,12 @@ DEFAULT_CONFIG = ROOT / 'tools/opencode_router/go.json'
 TIERS = ('bulk', 'reasoning', 'escalation')
 TERMINAL = ('completed', 'failed', 'cancelled', 'needs_review')
 MODEL_ID = re.compile(r'opencode-go/[a-z0-9][a-z0-9._-]*(?:#[a-z0-9._-]+)?\Z')
+VARIANT_ID = re.compile(r'[a-z0-9][a-z0-9._-]*\Z')
+VARIANT_ORDER = {
+    'bulk': ('medium', 'low', 'minimal', 'none'),
+    'reasoning': ('high', 'medium', 'low', 'minimal', 'none'),
+    'escalation': ('max', 'xhigh', 'high', 'medium', 'low', 'minimal', 'none'),
+}
 SCHEMA = '''
 CREATE TABLE IF NOT EXISTS jobs (
  id TEXT PRIMARY KEY, target TEXT, task TEXT, category TEXT, tier TEXT,
@@ -32,7 +39,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS target_owner ON jobs(target)
  WHERE redundant=0 AND status IN ('queued','running','needs_review');
 CREATE TABLE IF NOT EXISTS attempts (
  id TEXT PRIMARY KEY, job TEXT, model TEXT, tier TEXT, status TEXT, started REAL,
- ended REAL, pid INTEGER, result TEXT, directory TEXT, cgroup TEXT);
+ ended REAL, pid INTEGER, result TEXT, directory TEXT, cgroup TEXT, variant TEXT);
 CREATE TABLE IF NOT EXISTS models (
  id TEXT PRIMARY KEY, cooldown REAL DEFAULT 0, reason TEXT DEFAULT '', dispatched INTEGER DEFAULT 0);
 CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT);
@@ -58,6 +65,8 @@ def config(path):
     if c['escalation_after'] < c['reasoning_after']:
         raise ValueError('escalation_after must be >= reasoning_after')
     seen = set()
+    if type(c.get('variant_discovery', True)) is not bool:
+        raise ValueError('variant_discovery must be a boolean')
     for m in c['models']:
         if not MODEL_ID.fullmatch(m['id']) or m['id'] in seen:
             raise ValueError('model IDs must be unique explicit opencode-go IDs')
@@ -70,6 +79,16 @@ def config(path):
             raise ValueError('reserve must be between zero and concurrency')
         if not isinstance(m['weight'], (int, float)) or not math.isfinite(m['weight']) or m['weight'] <= 0:
             raise ValueError('weight must be positive and finite')
+        variants = m.get('variants')
+        if 'variants' in m and (not isinstance(variants, list) or
+                any(not isinstance(v, str) or not VARIANT_ID.fullmatch(v) for v in variants) or
+                len(variants) != len(set(variants))):
+            raise ValueError('variants must be a list of unique variant IDs')
+        preferences = m.get('variant_preferences', {})
+        if not isinstance(preferences, dict) or any(k not in TIERS or
+                (v is not None and (not isinstance(v, str) or not VARIANT_ID.fullmatch(v)))
+                for k, v in preferences.items()):
+            raise ValueError('variant_preferences maps task classes to variant IDs or null')
     return c
 
 
@@ -95,6 +114,11 @@ def connect(state):
                 db.execute('INSERT OR REPLACE INTO settings VALUES (?,?)', ('identity', identity))
                 db.commit()
                 marker.write_text(identity)
+            # Additive and serialized with old clients' existing init.lock. Old
+            # schedulers insert explicit columns and safely leave this NULL.
+            if 'variant' not in {r['name'] for r in db.execute('PRAGMA table_info(attempts)')}:
+                db.execute('ALTER TABLE attempts ADD COLUMN variant TEXT')
+                db.commit()
             return db
         except BaseException:
             db.close()
@@ -184,6 +208,53 @@ def worker_env(model, cwd):
     return env
 
 
+def discover_variants(c, root):
+    """Read the location's catalog; never infer capabilities from model names."""
+    if not c.get('variant_discovery', True):
+        return {}
+    try:
+        # A standalone server often returns a pre-plugin empty snapshot in v2.
+        # The ordinary read-only API uses the settled background service.
+        # v2.0.18 can truncate a large catalog when stdout is a pipe. A private
+        # temporary file also avoids retaining provider settings in router state.
+        with tempfile.TemporaryFile(mode='w+', encoding='utf-8') as output:
+            subprocess.run([c['opencode'], 'api', 'model.list'], cwd=root,
+                           env={**os.environ, 'PWD': str(Path(root).resolve())},
+                           stdout=output, stderr=subprocess.DEVNULL, timeout=10, check=True)
+            output.seek(0)
+            data = json.load(output)['data']
+        caps = {}
+        for m in data:
+            if m.get('providerID') != 'opencode-go' or not isinstance(m.get('variants'), list):
+                continue
+            mid = 'opencode-go/' + m['id']
+            variants = [v['id'] for v in m['variants']]
+            if MODEL_ID.fullmatch(mid) and all(isinstance(v, str) and VARIANT_ID.fullmatch(v) for v in variants):
+                caps[mid] = variants
+        return caps
+    except (OSError, subprocess.SubprocessError, ValueError, KeyError, TypeError, AttributeError):
+        return {}  # A catalog outage must not disable otherwise working models.
+
+
+def choose_variant(model, tier, capabilities, history=()):
+    base, _, pinned = model['id'].partition('#')
+    supported = capabilities.get(base, model.get('variants', [pinned] if pinned else []))
+    if 'variants' in model:
+        supported = [v for v in supported if v in model['variants']]
+    rejected = {a.get('variant') for a in history
+                if a['model'] == model['id'] and a['status'] == 'variant_unavailable'}
+    supported = set(supported) - rejected
+    preferences = model.get('variant_preferences', {})
+    preferred = preferences.get(tier, pinned or VARIANT_ORDER[tier][0])
+    if preferred is None:  # Explicitly keep OpenCode's default.
+        return None
+    return next((v for v in (preferred, *VARIANT_ORDER[tier]) if v in supported), None)
+
+
+def model_selection(model, variant):
+    return model.split('#')[0] + ('#' + variant if variant else '')
+
+
 def classify(error):
     """Only classify transport/error events, never the worker's task prose."""
     text = json.dumps(error).lower()
@@ -191,6 +262,11 @@ def classify(error):
         return 'timeout'
     if re.search(r'\b429\b|rate.?limit|quota|usage.limit|usage.*exceed|limit.*reached', text):
         return 'quota'
+    if re.search(r'variant.{0,120}(unavailable|unsupported|unknown|not.found)|'
+                 r'(unsupported|unknown|invalid).{0,80}variant|'
+                 r'reasoning[_ .-]?effort.{0,80}(unsupported|invalid|not.supported)|'
+                 r'(unsupported|invalid|not.supported).{0,80}reasoning[_ .-]?effort', text):
+        return 'variant_unavailable'
     if re.search(r'provider.no-route|model.?not.?found|model unavailable|global regions|'
                  r'privacy settings|trains on request data|unsupported.model|\b401\b|\b403\b|authentication|api.key|insufficient.balance', text):
         return 'unavailable'
@@ -259,7 +335,7 @@ def prompt_for(job, history):
         report = r.get('report')
         if isinstance(report, dict) and len(json.dumps(report)) > 5000:
             report = {k: json.dumps(v)[:500] for k,v in list(report.items())[:10]}
-        summaries.append({'model': h['model'], 'tier': h['tier'], 'status': h['status'],
+        summaries.append({'model': h['model'], 'variant': h.get('variant'), 'tier': h['tier'], 'status': h['status'],
                           'artifacts': h['directory'], 'report': report,
                           'errors': r.get('errors'), 'text_tail': r.get('text_tail', '')[-1800:]})
     return ('You are a bounded worker for a parent agent. Work only on the assigned task in this '
@@ -285,7 +361,7 @@ def finish(state, c, attempt, result, now=None):
             return
         j = db.execute('SELECT * FROM jobs WHERE id=?', (a['job'],)).fetchone()
         failures = j['failures'] + (kind in ('failure', 'timeout', 'interrupted', 'output_limit'))
-        availability = j['availability_failures'] + (kind in ('quota', 'unavailable'))
+        availability = j['availability_failures'] + (kind in ('quota', 'unavailable', 'variant_unavailable'))
         tier = j['tier']
         if failures >= c['escalation_after']:
             tier = 'escalation'
@@ -303,7 +379,7 @@ def finish(state, c, attempt, result, now=None):
         db.execute('UPDATE jobs SET status=?,failures=?,availability_failures=?,tier=?,note=? WHERE id=?',
                    (status, failures, availability, tier, kind, j['id']))
         delay = c['cooldown'] if kind in ('quota', 'unavailable') else c['failure_cooldown']
-        if kind != 'success':
+        if kind not in ('success', 'variant_unavailable'):
             db.execute('UPDATE models SET cooldown=MAX(cooldown,?),reason=? WHERE id=?',
                        (now + delay, kind, a['model']))
 
@@ -399,6 +475,7 @@ def fleet(root, state, c, duration, workers=None, until=None):
         if not locked:
             return None
         execution_ready(c)
+        capabilities = discover_variants(c, root)
         with database(state) as db:
             claims = Path(db.execute("SELECT value FROM settings WHERE key='claims_root'").fetchone()[0])
             for m in c['models']:
@@ -456,6 +533,8 @@ def fleet(root, state, c, duration, workers=None, until=None):
                     model = choose(c, job, active, ms, history, time.time())
                     if not model:
                         continue
+                    variant = choose_variant(model, job['tier'], capabilities, history)
+                    selection = model_selection(model['id'], variant)
                     aid = uuid.uuid4().hex[:16]
                     try:
                         unit, record_path, record = claim_job(claims, job, aid, c['timeout'])
@@ -472,8 +551,8 @@ def fleet(root, state, c, duration, workers=None, until=None):
                         (directory / 'prompt.txt').write_text(prompt)
                         # Stdin prevents option injection and argv size limits.
                         with database(state) as db:
-                            db.execute('INSERT INTO attempts (id,job,model,tier,status,started,directory,cgroup) VALUES (?,?,?,?,?,?,?,?)',
-                                       (aid, job['id'], model['id'], job['tier'], 'running', time.time(), str(directory), str(unit.path)))
+                            db.execute('INSERT INTO attempts (id,job,model,tier,status,started,directory,cgroup,variant) VALUES (?,?,?,?,?,?,?,?,?)',
+                                       (aid, job['id'], model['id'], job['tier'], 'running', time.time(), str(directory), str(unit.path), variant))
                             db.execute("UPDATE jobs SET status='running',note='' WHERE id=?", (job['id'],))
                             db.execute('UPDATE models SET dispatched=dispatched+1 WHERE id=?', (model['id'],))
                         with (directory / 'prompt.txt').open('rb') as inp, (directory / 'events.jsonl').open('wb') as out, \
@@ -482,7 +561,7 @@ def fleet(root, state, c, duration, workers=None, until=None):
                                 [sys.executable, str(Path(__file__).resolve()), '_watch',
                                  str(c['timeout']), str(unit.path), c['opencode'],
                                  'run', '--standalone', '--auto', '--format', 'json',
-                                 '--model', model['id']], cwd=cwd, env=worker_env(model['id'], cwd),
+                                 '--model', selection], cwd=cwd, env=worker_env(selection, cwd),
                                 stdin=inp, stdout=out, stderr=err)
                             child = bootstrap.child
                         running[aid] = {'child': child, 'reader': (directory / 'events.jsonl').open(errors='replace'),
@@ -554,7 +633,31 @@ def status(state, c):
                        'quota_events': sum(a['status'] == 'quota' for a in rows),
                        'unavailable_events': sum(a['status'] == 'unavailable' for a in rows),
                        'duration_seconds': round(sum((a['ended'] - a['started']) for a in rows if a['ended']), 2)})
-    return {'models': models, 'jobs': jobs, 'attempts': attempts, 'measurements': measures}
+    configurations = {}
+    categories = {j['id']: j['category'] for j in jobs}
+    measurements = {m['attempt']: m for m in measures}
+    for a in attempts:
+        a['category'] = categories[a['job']]
+        a['duration_seconds'] = round((a['ended'] or time.time()) - a['started'], 2)
+        key = (a['model'], a['variant'], a['category'], a['tier'])
+        row = configurations.setdefault(key, dict(zip(('model','variant','category','tier'), key),
+            attempts=0, successes=0, task_failures=0, quota_events=0, variant_errors=0,
+            duration_seconds=0, measured_attempts=0, exact_matches=0))
+        row['attempts'] += 1
+        row['successes'] += a['status'] == 'success'
+        row['task_failures'] += a['status'] in ('failure','timeout','interrupted','output_limit')
+        row['quota_events'] += a['status'] == 'quota'
+        row['variant_errors'] += a['status'] == 'variant_unavailable'
+        if a['ended']:
+            row['duration_seconds'] = round(row['duration_seconds'] + a['duration_seconds'], 2)
+        measurement = measurements.get(a['id'])
+        row['measured_attempts'] += measurement is not None
+        row['exact_matches'] += bool(measurement and measurement['exact_match'] == 1)
+    for j in jobs:
+        last = next((a for a in reversed(attempts) if a['job'] == j['id']), {})
+        j.update(model=last.get('model'), variant=last.get('variant'))
+    return {'models': models, 'jobs': jobs, 'attempts': attempts, 'measurements': measures,
+            'configurations': list(configurations.values())}
 
 
 def print_status(data):
@@ -569,10 +672,18 @@ def print_status(data):
     print('Retries: ' + str(sum(max(0, sum(a['job']==j['id'] for a in data['attempts'])-1)
                                 for j in data['jobs'])))
     for j in data['jobs']:
-        print(f"{j['id']} {j['status']:12} {j['category']} -> {j['tier']} {j['target']} {j['note']}")
+        selection = model_selection(j['model'], j['variant']) if j['model'] else '-'
+        print(f"{j['id']} {j['status']:12} {j['category']} -> {j['tier']} {j['target']} {selection} {j['note']}")
+    if data['configurations']:
+        print('Model + variant statistics (default/unknown for old or unqualified attempts):')
+        for row in data['configurations']:
+            print(f"  {row['model']}#{row['variant'] or 'default/unknown'} {row['category']} -> {row['tier']}: "
+                  f"{row['successes']}/{row['attempts']} success, {row['task_failures']} task failures, "
+                  f"{row['duration_seconds']}s, {row['exact_matches']} verified exact "
+                  f"({row['measured_attempts']} measured)")
 
 
-def discover(c):
+def discover(c, root=ROOT):
     # Catalog is metadata, never an inference request. IDs are not guessed from labels.
     from urllib.request import Request, urlopen
     url = 'https://opencode.ai/zen/go/v1/models'
@@ -581,9 +692,15 @@ def discover(c):
         ids = {f"opencode-go/{m['id']}" for m in json.load(response)['data']}
     local = subprocess.run([c['opencode'], 'models', '--standalone'], text=True, capture_output=True, timeout=30)
     listed = set(re.findall(r'opencode-go/[a-z0-9._-]+', local.stdout))
+    capabilities = discover_variants(c, root)
     return {'catalog': url, 'checked': time.time(), 'local_catalog_empty': not bool(listed),
+            'variant_catalog_available': bool(capabilities),
             'models': [{'id': m['id'], 'in_go_catalog': m['id'].split('#')[0] in ids,
-                        'listed_locally': m['id'].split('#')[0] in listed} for m in c['models']]}
+                        'listed_locally': m['id'].split('#')[0] in listed,
+                        'variants': capabilities.get(m['id'].split('#')[0], m.get('variants')),
+                        'variant_source': 'runtime' if m['id'].split('#')[0] in capabilities else 'config/unknown',
+                        'selected_variants': {t: choose_variant(m, t, capabilities) for t in TIERS}}
+                       for m in c['models']]}
 
 
 def watch(timeout, cgroup, command):
@@ -646,7 +763,7 @@ def main(argv=None):
     if getattr(args, 'workers', None) is not None and args.workers <= 0:
         p.error('workers must be positive')
     if args.command == 'discover':
-        print(json.dumps(discover(c), indent=2)); return 0
+        print(json.dumps(discover(c, root), indent=2)); return 0
     if args.command in ('status', 'show'):
         data = status(state, c)
         if args.command == 'show':

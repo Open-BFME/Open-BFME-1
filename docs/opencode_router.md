@@ -161,13 +161,101 @@ failures, distinct from 429/usage limits and unsuccessful task work.
 To add/change models, run `discover`, copy exact catalog IDs into the local JSON,
 set tier/limits/weights, and use a harmless explicit-model smoke task. Removed
 models fail availability checks cleanly. The public catalog establishes valid IDs,
-not access for a particular account. On the tested v2 installation `models` and
-`api model.list` returned empty lists even while explicit Go inference worked;
-`discover` reports that honestly and does not disable valid public-catalog IDs.
+not access for a particular account. Fresh standalone catalog requests can return
+empty snapshots before plugins settle. This does not disable public-catalog IDs.
+
+### Reasoning variants
+
+OpenCode **v2.0.18** selects variants with `--model provider/model#variant`.
+There is no separate `--variant` flag in this version. After the existing model
+selection, the router chooses a supported variant using the job's **current tier**:
+
+| Tier | Preference, in order |
+| --- | --- |
+| bulk | medium, low, minimal, none |
+| reasoning | high, medium, low, minimal, none |
+| escalation | max, xhigh, high, medium, low, minimal, none |
+
+Only names in the model's capabilities are eligible. If none fit, omit the suffix
+and keep OpenCode's default behavior; bulk does not automatically select max just
+because it is the only listed variant. A model's per-tier preference overrides
+the first choice; an unsupported preference falls through to the table.
+
+`variant_discovery` defaults to `true`. Once per scheduler invocation, the router
+reads the location-scoped `opencode api model.list` snapshot from the background
+service (the CLI may start that service). It makes no inference request. Only Go
+model IDs and variant names are retained in memory. The catalog is read through
+a private temporary file because v2.0.18 can truncate large JSON output to pipes.
+No database transaction is held during discovery; it times out after 10 seconds.
+An empty/malformed snapshot, unavailable CLI, or API failure uses configured
+capabilities instead. Missing metadata means the existing unqualified launch.
+
+Optional fields on an individual model entry:
+
+```json
+{
+  "variants": ["low", "medium", "high", "xhigh"],
+  "variant_preferences": {
+    "bulk": "medium",
+    "reasoning": "high",
+    "escalation": "xhigh"
+  }
+}
+```
+
+Add these fields to the existing entry alongside its ID, tier and limits.
+`variants` supplies fallback capabilities and, when discovery works, restricts
+the runtime list by intersection. An empty array disables explicit variants.
+A preference of `null` keeps the unqualified model for that tier. Set global
+`variant_discovery: false` to use only explicit capabilities. Preferences alone
+never assert support. Existing IDs containing `#variant` remain accepted as an
+explicit preference/capability when runtime metadata is absent.
+
+Run `discover` to inspect current capabilities and effective choices. The example
+Go config avoids copying catalog metadata; its MiniMax M3 override maps bulk to
+`none` and reasoning/escalation to `thinking`, its provider-specific names.
+Observed catalog examples on 2026-09-27:
+
+| Model | Bulk / reasoning / escalation |
+| --- | --- |
+| Muse Spark 1.3 Contributor | medium / high / xhigh |
+| GPT 6 Luna | medium / high / max |
+| GLM-5.3-Flash | low / high / max |
+| Qwen3.8 Flash | medium / medium / xhigh |
+| MiMo V2.6 Flash, Kimi K2.7 Code | default / default / default (no listed variants) |
+
+Catalog capability is not account access or proof of equivalent reasoning budgets
+across providers. No variant outcome changes model weights automatically.
+
+A structured variant rejection removes that choice for the job's later attempts;
+the next eligible model uses its own supported fallback. If necessary, retry
+without a suffix. These errors use the existing availability retry bound, without
+counting as failed reconstruction or cooling down the entire model. Quota errors
+still use the existing model cooldown/failover path. Providers never change here.
+
+### Agent steps and running fleets
+
+Reasoning effort and agent iterations are independent. The router sets no agent
+`steps` limit. The inspected build agent also has no configured limit. OpenCode's
+runner applies its step ceiling only when `steps` is present; otherwise a turn
+continues until completion, interruption, or another limit. Router wall-time and
+output limits still apply. At a configured final step, OpenCode disables tools
+and requests a text summary; new user input resets the allowance.
+
+No step budget is changed by this feature. Per-tier step budgets could later
+bound unproductive exploration and encourage a final handoff before timeout,
+but should be measured separately from variant choice.
+
+Existing CLI commands and model selection are unchanged. State gains one nullable
+attempt column under the existing short initialization lock. Old attempts remain
+`variant: null` (default/unknown); measurements and statistics are preserved.
+Old schedulers can continue inserting their explicit columns. New schedulers
+discover variants at startup; running workers keep their launch settings. There
+is no need to stop other fleets or reset state to deploy this change.
 
 ## Evidence and performance records
 
-Every attempt preserves `prompt.txt`, raw `events.jsonl`, `stderr.txt`, model,
+Every attempt preserves `prompt.txt`, raw `events.jsonl`, `stderr.txt`, model, variant,
 category/tier, start/end time, exit status, session ID, workspace and outcome.
 Workers emit a final `ROUTER_RESULT` JSON line with approaches, files touched,
 compiler/test results, remaining differences, disproved hypotheses and discoveries.
@@ -175,7 +263,12 @@ The next attempt receives that structured history plus artifact paths and text
 excerpts, including when a crash prevents a structured report. Malformed/missing
 reports never become successes merely because OpenCode exited zero.
 
-`status --json` exports jobs, attempts, model counts/durations and measurements.
+`status --json` exports jobs, attempts, model counts/durations and measurements,
+plus `configurations` grouped by model + selected variant + original category +
+current tier. These include success/failure counts, duration, variant rejections
+and parent-verified exact-match counts. Attempt records expose `duration_seconds`;
+`show JOB_ID` includes variant history. Unqualified/old attempts are not claimed
+to have used a particular provider reasoning effort.
 Join attempts by job and start time to examine retries, promotion, source and
 destination model, and per-category success. These data support later tuning;
 there is no claim that initial weights predict BFME performance.
@@ -205,6 +298,9 @@ they require delegation like production. They cover quota failover, cooldown,
 retry bounds/promotion, handoff, concurrency, duplicate/overlapping work, shell
 metacharacters, protocol failures, detached children, scheduler SIGKILL with a
 surviving timeout supervisor, Ctrl-C, and state-loss refusal.
+Variant tests additionally cover per-tier/per-model selection, unsupported choices,
+catalog outages, old-state migration with concurrent readers, legacy writers,
+quota failover, promotion, argument construction and grouped statistics.
 
 Verified 2026-09-27 against OpenCode v2.0.18: CLI help, stdin task input, JSONL
 text/error events, explicit models, configuration injection, and public catalog.
@@ -213,6 +309,11 @@ smokes succeeded on `opencode-go/mimo-v2.6-flash` and
 `opencode-go/glm-5.3-flash`; `opencode-go/deepseek-v4.1-flash` returned a regional
 availability restriction. No large fleet or intentional real quota exhaustion
 was run. Simulated 429 tests prove failover without consuming an account limit.
+The variant extension also passed tiny real router runs on
+`opencode-go/gpt-6-luna#high` (reasoning) and
+`opencode-go/glm-5.3-flash#low` (bulk), with both selected variants independently
+confirmed through OpenCode's `session.get` API. These are invocation checks,
+not evidence that either configuration is better at BFME reconstruction.
 
 Supported Go docs expose usage in the console; `stats` reports historical local
 usage, not remaining Go allowance. No reliable supported remaining-quota endpoint
@@ -223,3 +324,6 @@ Primary references: [Go IDs, limits and paid-overage setting](https://opencode.a
 [v2 API](https://opencode.ai/v2/docs/api),
 [provider policies](https://opencode.ai/v2/docs/policies),
 [configuration](https://opencode.ai/v2/docs/config).
+Variant syntax and provider semantics: [models](https://opencode.ai/v2/docs/models).
+Step behavior: [agents](https://opencode.ai/v2/docs/agents),
+[runner source](https://github.com/anomalyco/opencode/blob/dev/packages/core/src/session/runner/llm.ts).

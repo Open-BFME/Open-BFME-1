@@ -22,6 +22,8 @@ if '--version' in sys.argv:
  print('opencode v2.0.18'); sys.exit()
 assert os.environ.get('PWD') == str(Path.cwd()), 'OpenCode location would use wrong PWD'
 model=sys.argv[sys.argv.index('--model')+1]
+Path('selected-model.txt').write_text(model)
+base=model.split('#')[0]
 prompt=sys.stdin.read()
 Path('received.txt').write_text(prompt)
 print(json.dumps({'type':'step_start','sessionID':'fixture-session'}),flush=True)
@@ -29,7 +31,9 @@ if 'DETACH' in prompt:
  child=subprocess.Popen([sys.executable,'-c','import time;time.sleep(30)'],start_new_session=True)
  Path('detached.pid').write_text(str(child.pid))
 if 'SLOW' in prompt: time.sleep(20)
-if model.endswith('/quota'):
+if 'BADVARIANT' in prompt and model.endswith('#medium'):
+ print(json.dumps({'type':'error','error':{'type':'model.variant-unavailable','message':'Variant unavailable for '+model}}),flush=True)
+elif base.endswith('/quota'):
  print(json.dumps({'type':'error','error':{'status':429,'message':'usage limit reached'}}),flush=True)
  time.sleep(20) # router must interrupt internal retries immediately
 elif 'FAIL_FIRST' in prompt and '"model":' not in prompt:
@@ -57,7 +61,7 @@ class RouterTests(unittest.TestCase):
         self.fake.chmod(0o755)
         self.c = r.config(r.DEFAULT_CONFIG)
         self.c.update(opencode=str(self.fake), go_overage_disabled=True, timeout=3,
-                      cooldown=.3, failure_cooldown=.05, workers=3)
+                      cooldown=.3, failure_cooldown=.05, workers=3, variant_discovery=False)
         self.c['models'] = [self.model('one'), self.model('two'), self.model('strong','escalation')]
         with r.database(self.state) as db:
             db.execute('INSERT INTO settings VALUES (?,?)', ('claims_root', str(self.root)))
@@ -142,6 +146,144 @@ class RouterTests(unittest.TestCase):
         prompt=(Path(a[1]['directory'])/'prompt.txt').read_text()
         for evidence in ['change register lifetime','+0x20 eax/ecx','callee ABI proven',a[0]['directory']]:
             self.assertIn(evidence,prompt)
+
+    def test_variants_by_task_class_and_model(self):
+        model = self.model('one')
+        caps = {model['id']: ['minimal','low','medium','high','xhigh','max']}
+        for tier, expected in [('bulk','medium'), ('reasoning','high'), ('escalation','max')]:
+            self.assertEqual(r.choose_variant(model, tier, caps), expected)
+        model['variant_preferences'] = {'bulk':'low', 'escalation':'xhigh'}
+        self.assertEqual(r.choose_variant(model, 'bulk', caps), 'low')
+        self.assertEqual(r.choose_variant(model, 'escalation', caps), 'xhigh')
+        caps[model['id']] = ['low','high']
+        self.assertEqual(r.choose_variant(model, 'bulk', caps), 'low')
+        self.assertEqual(r.choose_variant(model, 'escalation', caps), 'high')
+        caps[model['id']] = ['medium','high']
+        self.assertEqual(r.choose_variant(model, 'bulk', caps), 'medium')
+        self.assertEqual(r.choose_variant(model, 'escalation', caps), 'high')
+
+    def test_variant_metadata_fallback_and_provider_names(self):
+        model = self.model('one')
+        self.assertIsNone(r.choose_variant(model, 'escalation', {}))
+        model.update(variants=['low','high'], variant_preferences={'bulk':'medium'})
+        self.assertEqual(r.choose_variant(model, 'bulk', {}), 'low')
+        self.assertIsNone(r.choose_variant(model, 'escalation', {model['id']: []}))
+        model.update(variants=['none','thinking'], variant_preferences={'reasoning':'thinking','bulk':None})
+        self.assertEqual(r.choose_variant(model, 'reasoning', {}), 'thinking')
+        self.assertIsNone(r.choose_variant(model, 'bulk', {}))
+        model.pop('variants');model.pop('variant_preferences')
+        self.assertIsNone(r.choose_variant(model, 'bulk', {model['id']: ['max']}))
+        model['id'] += '#high'
+        self.assertEqual(r.choose_variant(model, 'bulk', {}), 'high')
+        self.assertEqual(r.model_selection(model['id'], 'low'), 'opencode-go/one#low')
+
+    def test_runtime_variant_catalog_and_outage(self):
+        self.c['variant_discovery'] = True
+        response = {'data': [
+            {'providerID':'opencode-go','id':'one','variants':[{'id':'low'},{'id':'high'}]},
+            {'providerID':'opencode-go','id':'two','variants':[]},
+            {'providerID':'paid','id':'other','variants':[{'id':'max'}]},
+        ], 'padding': 'x' * 300000}  # Larger than the observed CLI pipe truncation.
+        def respond(data):
+            def run(*args, **kwargs):
+                kwargs['stdout'].write(data)
+                return subprocess.CompletedProcess([],0)
+            return run
+        with patch.object(r.subprocess, 'run', side_effect=respond(json.dumps(response))) as call:
+            self.assertEqual(r.discover_variants(self.c,self.root), {'opencode-go/one':['low','high'],'opencode-go/two':[]})
+            self.assertEqual(call.call_args.args[0], [str(self.fake),'api','model.list'])
+        for data in ['{"data":[]}', 'not json', '{"data":[{"providerID":"opencode-go","id":"one","variants":[{}]}]}']:
+            with patch.object(r.subprocess,'run',side_effect=respond(data)):
+                self.assertEqual(r.discover_variants(self.c,self.root), {})
+        with patch.object(r.subprocess,'run',side_effect=subprocess.TimeoutExpired('opencode',10)):
+            self.assertEqual(r.discover_variants(self.c,self.root), {})
+
+    def test_variant_launch_promotion_and_statistics(self):
+        for m in self.c['models']:m['variants']=['low','medium','high','max']
+        self.c['reasoning_after'] = 1
+        job = self.job('FAIL_FIRST')
+        self.run_fleet()
+        attempts = self.rows('attempts')
+        self.assertEqual([a['variant'] for a in attempts], ['medium','high'])
+        self.assertEqual([a['tier'] for a in attempts], ['bulk','reasoning'])
+        data = r.status(self.state,self.c)
+        self.assertEqual(data['jobs'][0]['variant'], 'high')
+        self.assertEqual(data['attempts'][0]['category'], 'bulk')
+        self.assertGreater(data['attempts'][0]['duration_seconds'],0)
+        self.assertEqual(len(data['configurations']),2)
+        cwd=Path(self.rows('jobs')[0]['cwd'])
+        self.assertEqual((cwd/'selected-model.txt').read_text(),r.model_selection(attempts[1]['model'],'high'))
+        self.assertIn('"variant": "medium"',(cwd/'received.txt').read_text())
+        import io
+        from contextlib import redirect_stdout
+        out=io.StringIO()
+        with redirect_stdout(out):r.print_status(data)
+        self.assertIn('#high',out.getvalue())
+        self.assertIn('#medium',out.getvalue())
+        self.c.update(escalation_after=1)
+        self.job('FAIL_FIRST second')
+        self.run_fleet()
+        self.assertEqual(self.rows('attempts')[-1]['variant'],'max')
+
+    def test_variant_quota_failover(self):
+        self.c['models']=[self.model('quota',variants=['low']),self.model('two',variants=['medium'])]
+        self.job();self.run_fleet()
+        attempts=self.rows('attempts')
+        self.assertEqual([a['status'] for a in attempts],['quota','success'])
+        self.assertEqual([a['variant'] for a in attempts],['low','medium'])
+
+    def test_rejected_variant_falls_back_without_task_failure(self):
+        self.c['models']=[self.model('one',variants=['medium','low'])]
+        self.job('BADVARIANT');self.run_fleet()
+        attempts=self.rows('attempts')
+        self.assertEqual([a['status'] for a in attempts],['variant_unavailable','success'])
+        self.assertEqual([a['variant'] for a in attempts],['medium','low'])
+        self.assertEqual(self.rows('jobs')[0]['failures'],0)
+        self.assertEqual(self.rows('jobs')[0]['availability_failures'],1)
+        self.assertEqual(self.rows('models')[0]['cooldown'],0)
+        self.c['models'][0]['variants']=['medium']
+        self.job('BADVARIANT default');self.run_fleet()
+        self.assertIsNone(self.rows('attempts')[-1]['variant'])
+        self.assertEqual(self.rows('attempts')[-1]['status'],'success')
+
+    def test_old_state_and_config_compatibility(self):
+        self.job();self.run_fleet()
+        original=self.rows('attempts')[0]
+        with r.database(self.state) as db:
+            db.execute('INSERT INTO measurements VALUES (?,?,?,?,?,?)',(original['id'],1,.2,3,'verified fixture',time.time()))
+            db.execute('ALTER TABLE attempts DROP COLUMN variant')
+        marker=(self.state/'identity').read_text()
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            snapshots=list(pool.map(lambda _:r.status(self.state,self.c),range(8)))
+        for data in snapshots:
+            self.assertIsNone(data['attempts'][0]['variant'])
+            self.assertEqual(data['measurements'][0]['iterations'],3)
+            self.assertEqual(data['configurations'][0]['exact_matches'],1)
+        self.assertEqual((self.state/'identity').read_text(),marker)
+        old=copy.deepcopy(self.c);old.pop('variant_discovery')
+        path=self.root/'old.json';path.write_text(json.dumps(old))
+        self.assertEqual(r.config(path)['models'],old['models'])
+        # An old process can still insert its explicit set of attempt columns.
+        with r.database(self.state) as db:
+            db.execute('INSERT INTO attempts(id,job,model,tier,status,started) VALUES (?,?,?,?,?,?)',
+                       ('old-process',original['job'],original['model'],'bulk','running',time.time()))
+        self.assertIsNone(self.rows('attempts')[-1]['variant'])
+
+    def test_invalid_variant_configuration(self):
+        path=self.root/'invalid.json'
+        for value in [['low','low'],['bad#variant'],['$(touch PWNED)'],42,[None],None]:
+            c=copy.deepcopy(self.c);c['models'][0]['variants']=value
+            path.write_text(json.dumps(c))
+            with self.assertRaises(ValueError):r.config(path)
+        c=copy.deepcopy(self.c);c['models'][0]['variant_preferences']={'bulk':'--model paid/other'}
+        path.write_text(json.dumps(c))
+        with self.assertRaises(ValueError):r.config(path)
+
+    def test_variant_error_classification_preserves_quota_priority(self):
+        self.assertEqual(r.classify({'status':400,'message':'Variant unavailable for opencode-go/one: max'}),'variant_unavailable')
+        self.assertEqual(r.classify({'status':400,'message':'Unsupported value reasoning_effort: xhigh'}),'variant_unavailable')
+        self.assertEqual(r.classify({'status':429,'message':'Variant unavailable: rate limit reached'}),'quota')
 
     def test_concurrency_and_workspace_exclusion(self):
         for _ in range(4): self.job(redundant=True)
