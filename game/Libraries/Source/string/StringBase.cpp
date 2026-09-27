@@ -1,3 +1,4 @@
+// cl: /DNDEBUG /MD /EHs-c-
 // readable body of ??1AIUpdateModuleData@@: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 // readable body of ??4AudioEventRTS@@: game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp
 // readable body of ?format_va@AsciiString@@: game/GameEngine/Source/Common/System/AsciiString.cpp
@@ -63,6 +64,109 @@ struct Rva0005DC70Flags
 };
 int __cdecl Rva0005DC70CompareWideLengths(const wchar_t *a, int aLen, const wchar_t *b, int bLen, Rva0005DC70Flags flags);
 extern const char g_bfmeEmptyUnicode[];
+
+
+// Per-character-type buffer lock. Retail guards each instantiation's shared
+// buffers with its own critical-section singleton: 0x008876E0 for char and
+// 0x008877A0 for wchar_t, both matched as standalone getters in
+// Common/Rva008876E0Singletons.cpp and inlined into every user here.
+extern "C" __declspec(dllimport) void __stdcall Rva01358E4CInit(void *body);
+extern "C" __declspec(dllimport) void __stdcall Rva01358D0CReset(void *body);
+struct BfmeLockTEA;
+extern "C" __declspec(dllimport) void __stdcall bfmeEnterTEA(BfmeLockTEA *lock);
+extern "C" __declspec(dllimport) void __stdcall bfmeLeaveTEA(BfmeLockTEA *lock);
+extern "C" __declspec(dllimport) void __cdecl bfmeFree1035(void *p);
+
+class Rva008877A0Type
+{
+public:
+	char m_pad0[0x18];
+	bool m_flag18;
+
+	Rva008877A0Type()
+	{
+		m_flag18 = true;
+		Rva01358E4CInit(this);
+	}
+	~Rva008877A0Type()
+	{
+		Rva01358D0CReset(this);
+		m_flag18 = false;
+	}
+};
+
+class Rva008876E0Type
+{
+public:
+	char m_pad0[0x18];
+	bool m_flag18;
+
+	Rva008876E0Type()
+	{
+		m_flag18 = true;
+		Rva01358E4CInit(this);
+	}
+	~Rva008876E0Type()
+	{
+		Rva01358D0CReset(this);
+		m_flag18 = false;
+	}
+};
+
+inline void *getRva008877A0Singleton()
+{
+	static Rva008877A0Type obj;
+	return &obj;
+}
+
+inline void *getRva008876E0Singleton()
+{
+	static Rva008876E0Type obj;
+	return &obj;
+}
+
+template <typename T> struct StringBaseLock;
+template <> struct StringBaseLock<char>
+{
+	typedef Rva008876E0Type Type;
+	static Type *get() { return (Type *)getRva008876E0Singleton(); }
+};
+template <> struct StringBaseLock<wchar_t>
+{
+	typedef Rva008877A0Type Type;
+	static Type *get() { return (Type *)getRva008877A0Singleton(); }
+};
+
+template <typename L>
+class StringBaseScopedLock
+{
+public:
+	StringBaseScopedLock(L *lock) : m_lock(lock)
+	{
+		if (m_lock->m_flag18)
+			bfmeEnterTEA((BfmeLockTEA *)m_lock);
+	}
+	~StringBaseScopedLock()
+	{
+		if (m_lock->m_flag18)
+			bfmeLeaveTEA((BfmeLockTEA *)m_lock);
+	}
+
+private:
+	L *m_lock;
+};
+
+template <typename T>
+void StringBase<T>::releaseBuffer()
+{
+	StringBaseScopedLock<typename StringBaseLock<T>::Type> lock(StringBaseLock<T>::get());
+	if (m_data)
+	{
+		if (--m_data->ref_count == 0)
+			bfmeFree1035(m_data);
+		m_data = 0;
+	}
+}
 
 
 template <typename T>
@@ -2329,286 +2433,6 @@ __declspec(naked) bool StringBase<wchar_t>::nextToken(StringBase<wchar_t> *out, 
         __emit 0xc2
         __emit 0x08
         __emit 0x00
-    }
-}
-
-__declspec(naked) void StringBase<char>::releaseBuffer()
-{
-    __asm {
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x8a
-        __emit 0x0d
-        __emit 0x2c
-        __emit 0x6e
-        __emit 0x33
-        __emit 0x01
-        __emit 0xb8
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x84
-        __emit 0xc8
-        __emit 0x75
-        __emit 0x2b
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x2c
-        __emit 0x6e
-        __emit 0x33
-        __emit 0x01
-        __emit 0x0b
-        __emit 0xc8
-        __emit 0x68
-        __emit 0x10
-        __emit 0x6e
-        __emit 0x33
-        __emit 0x01
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x2c
-        __emit 0x6e
-        __emit 0x33
-        __emit 0x01
-        __emit 0xa2
-        __emit 0x28
-        __emit 0x6e
-        __emit 0x33
-        __emit 0x01
-        __emit 0xff
-        __emit 0x15
-        __emit 0x4c
-        __emit 0x8e
-        __emit 0x35
-        __emit 0x01
-        __emit 0x68
-        __emit 0xe0
-        __emit 0x0e
-        __emit 0x07
-        __emit 0x01
-        __emit 0xe8
-        __emit 0xac
-        __emit 0xf4
-        __emit 0x16
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xa0
-        __emit 0x28
-        __emit 0x6e
-        __emit 0x33
-        __emit 0x01
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x0b
-        __emit 0x68
-        __emit 0x10
-        __emit 0x6e
-        __emit 0x33
-        __emit 0x01
-        __emit 0xff
-        __emit 0x15
-        __emit 0x18
-        __emit 0x8d
-        __emit 0x35
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x06
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x19
-        __emit 0xff
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x06
-        __emit 0x83
-        __emit 0x38
-        __emit 0x00
-        __emit 0x75
-        __emit 0x0a
-        __emit 0x50
-        __emit 0xff
-        __emit 0x15
-        __emit 0xd4
-        __emit 0x93
-        __emit 0x35
-        __emit 0x01
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xa0
-        __emit 0x28
-        __emit 0x6e
-        __emit 0x33
-        __emit 0x01
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x5e
-        __emit 0x74
-        __emit 0x0b
-        __emit 0x68
-        __emit 0x10
-        __emit 0x6e
-        __emit 0x33
-        __emit 0x01
-        __emit 0xff
-        __emit 0x15
-        __emit 0x74
-        __emit 0x8e
-        __emit 0x35
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-__declspec(naked) void StringBase<wchar_t>::releaseBuffer()
-{
-    __asm {
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x8a
-        __emit 0x0d
-        __emit 0x4c
-        __emit 0x6e
-        __emit 0x33
-        __emit 0x01
-        __emit 0xb8
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x84
-        __emit 0xc8
-        __emit 0x75
-        __emit 0x2b
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x4c
-        __emit 0x6e
-        __emit 0x33
-        __emit 0x01
-        __emit 0x0b
-        __emit 0xc8
-        __emit 0x68
-        __emit 0x30
-        __emit 0x6e
-        __emit 0x33
-        __emit 0x01
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x4c
-        __emit 0x6e
-        __emit 0x33
-        __emit 0x01
-        __emit 0xa2
-        __emit 0x48
-        __emit 0x6e
-        __emit 0x33
-        __emit 0x01
-        __emit 0xff
-        __emit 0x15
-        __emit 0x4c
-        __emit 0x8e
-        __emit 0x35
-        __emit 0x01
-        __emit 0x68
-        __emit 0xc0
-        __emit 0x0e
-        __emit 0x07
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x1c
-        __emit 0xec
-        __emit 0x16
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xa0
-        __emit 0x48
-        __emit 0x6e
-        __emit 0x33
-        __emit 0x01
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x0b
-        __emit 0x68
-        __emit 0x30
-        __emit 0x6e
-        __emit 0x33
-        __emit 0x01
-        __emit 0xff
-        __emit 0x15
-        __emit 0x18
-        __emit 0x8d
-        __emit 0x35
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x06
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x19
-        __emit 0xff
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x06
-        __emit 0x83
-        __emit 0x38
-        __emit 0x00
-        __emit 0x75
-        __emit 0x0a
-        __emit 0x50
-        __emit 0xff
-        __emit 0x15
-        __emit 0xd4
-        __emit 0x93
-        __emit 0x35
-        __emit 0x01
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xa0
-        __emit 0x48
-        __emit 0x6e
-        __emit 0x33
-        __emit 0x01
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x5e
-        __emit 0x74
-        __emit 0x0b
-        __emit 0x68
-        __emit 0x30
-        __emit 0x6e
-        __emit 0x33
-        __emit 0x01
-        __emit 0xff
-        __emit 0x15
-        __emit 0x74
-        __emit 0x8e
-        __emit 0x35
-        __emit 0x01
-        __emit 0xc3
     }
 }
 
