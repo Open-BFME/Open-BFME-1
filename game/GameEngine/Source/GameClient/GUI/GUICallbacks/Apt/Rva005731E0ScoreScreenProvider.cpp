@@ -1,11 +1,10 @@
-// ?rva005731E0@BfmeAptScreenScoreScreen@@QAEXHPAD_N@Z
-// partial score=0.93 date=2026-09-27
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // Score-screen provider callback, retail 0x005731E0, 734 bytes.
 
 #include <string.h>
 #include <vector>
+#include "ascii_string.h"
 
 struct StringHeader
 {
@@ -15,56 +14,55 @@ struct StringHeader
 	char data[ 1 ];
 };
 
-template <typename T>
-class StringBase
-{
-protected:
-	StringBase() : m_data( 0 ) {}
-	StringBase( const StringBase<T> &other );
-	~StringBase();
-	StringHeader *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString( const AsciiString &other );
-	~AsciiString() {}
-	AsciiString &operator=( const char *text );
-
-	StringHeader *rawData() const
-	{
-		return m_data;
-	}
-
-	const char *str() const;
-};
-
 extern char Rva006A16B0Empty[];
 
-const char *AsciiString::str() const
+template <> inline const char *StringBase<char>::str() const
 {
 	return m_data ? &m_data->data[ 0 ] : Rva006A16B0Empty;
 }
 
-class AsciiStringAI : public StringBase<char>
+// ?nullStringAI@@YAXXZ absent-from-retail
+void nullStringAI();
+
+// The lookup's value type: an AsciiString view whose copy is the call at +0x278.
+class AsciiStringAI : public AsciiString
 {
 public:
+	AsciiStringAI( const AsciiString &other )
+		: AsciiString( other ) {}
 	AsciiStringAI( const AsciiStringAI &other )
-		: StringBase<char>( other ) {}
+		: AsciiString( other ) {}
 	~AsciiStringAI() {}
 
 	StringHeader *rawDataAI() const
 	{
-		return m_data;
+		return *(StringHeader *const *)this;
+	}
+
+	int getLengthAI() const
+	{
+		return rawDataAI() ? rawDataAI()->length : 0;
+	}
+
+	const char *strAI() const
+	{
+		return rawDataAI() ? peekAI() : Rva006A16B0Empty;
+	}
+
+	// Retail keeps an unwind state for the lookup result with no store, so a
+	// possibly-throwing call was inlined away; this null check reproduces it.
+	char *peekAI() const
+	{
+		if( rawDataAI() == 0 )
+			nullStringAI();
+		return &rawDataAI()->data[ 0 ];
 	}
 };
 
 class BfmeTableAI
 {
 public:
-	AsciiStringAI bfmeLookupAI( AsciiStringAI key ) throw();
+	AsciiStringAI bfmeLookupAI( AsciiStringAI key );
 };
 
 struct BfmeScoreScreenPlayerRow
@@ -196,15 +194,9 @@ void BfmeAptScreenScoreScreen::rva005731E0(
 			m_s320 = output;
 		else
 		{
-			AsciiStringAI result = ((BfmeTableAI *)this)->bfmeLookupAI(
-				(const AsciiStringAI &)AsciiString( m_s320 ) );
-			StringHeader *data = result.rawDataAI();
-			const char *text;
-			if( data != 0 && data->length < 0xff )
-				text = data->data;
-			else
-				text = Rva006A16B0Empty;
-			strcpy( output, text );
+			AsciiStringAI result = ((BfmeTableAI *)this)->bfmeLookupAI( m_s320 );
+			if( result.getLengthAI() < 0xff )
+				strcpy( output, result.strAI() );
 		}
 	}
 }
