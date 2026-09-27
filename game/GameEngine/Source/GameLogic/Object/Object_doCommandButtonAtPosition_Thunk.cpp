@@ -3,7 +3,7 @@
 
 class CommandButton;
 struct Coord3D;
-enum CommandSourceType {};
+#include "../command_source_type.h"
 class Object { public: void doCommandButtonAtPosition(CommandButton const *, Coord3D const *, CommandSourceType); };
 // ?doCommandButtonAtPosition@Object@@QAEXPBVCommandButton@@PBUCoord3D@@W4CommandSourceType@@@Z
 __declspec(naked) void Object::doCommandButtonAtPosition(CommandButton const *, Coord3D const *, CommandSourceType)

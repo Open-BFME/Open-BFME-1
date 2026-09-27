@@ -17,7 +17,7 @@
 struct Coord3D;
 
 enum GuardMode { BFME_GUARD_MODE_NORMAL };
-enum CommandSourceType { BFME_COMMAND_SOURCE_PLAYER };
+#include "../GameLogic/command_source_type.h"
 
 struct BfmeListNodeBase
 {
