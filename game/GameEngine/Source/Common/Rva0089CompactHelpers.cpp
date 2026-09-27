@@ -173,3 +173,24 @@ Rva0089DC40String::Rva0089DC40String(int)
     m_data = &g_bfmeDefaultString1284;
     ++g_bfmeDefaultString1284.m_refs;
 }
+
+struct Rva00892850Handle
+{
+    unsigned short m_refs;
+};
+class Rva00892850Owner
+{
+public:
+    Rva00892850Handle *m_handle;
+    void *m_extra;
+    Rva00892850Owner *attach( Rva00892850Handle **src, void *extra );
+};
+// ?attach@Rva00892850Owner@@QAEPAV1@PAPAURva00892850Handle@@PAX@Z
+Rva00892850Owner *Rva00892850Owner::attach( Rva00892850Handle **src, void *extra )
+{
+    Rva00892850Handle *incoming = *src;
+    m_handle = incoming;
+    ++incoming->m_refs;
+    m_extra = extra;
+    return this;
+}
