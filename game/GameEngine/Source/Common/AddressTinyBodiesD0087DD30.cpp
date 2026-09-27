@@ -74,3 +74,19 @@ Rva0087EB80Record::Rva0087EB80Record()
 	  m_zero10(0), m_zero14(0), m_zero18(0), m_zero1C(0), m_flag20(true)
 {
 }
+
+// 0x008811E0: two dwords and a byte flag, returns this
+class Rva008811E0Pair
+{
+public:
+	Rva008811E0Pair(int a, int b, bool flag);
+
+	int m_a;
+	int m_b;
+	bool m_flag;
+};
+
+// ??0Rva008811E0Pair@@QAE@HH_N@Z
+Rva008811E0Pair::Rva008811E0Pair(int a, int b, bool flag) : m_a(a), m_b(b), m_flag(flag)
+{
+}
