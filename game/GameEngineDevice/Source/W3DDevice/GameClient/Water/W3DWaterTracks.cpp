@@ -1,7 +1,9 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/asciistring8outofline /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 // readable body of ?Set_Transform@DX8Wrapper@@SAXW4_D3DTRANSFORMSTATETYPE@@ABVMatrix3D@@@Z: game/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 #define Matrix4x4 Matrix4  // BFME renamed it
+#define BFME_STLP_NODE_ALLOC
+#define _BFME_RETAIL_TREE_INSERT_LAYOUT
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -1151,95 +1153,159 @@ WaterTracksObj *WaterTracksRenderSystem::findTrack(Vector2 &start, Vector2 &end,
 // ?saveTracks@WaterTracksRenderSystem@@QAEXXZ
 // Body in W3DWaterTracks_saveTracks.asm (exact 251B retail).
 
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WWLib/MiscThunkGroup.cpp
-// ?loadTracks@WaterTracksRenderSystem@@QAEXXZ present-unmatched
-void WaterTracksRenderSystem::loadTracks(void)
+// BFME loadTracks: the map name comes from TerrainLogic vtable slot 0x44 and wave
+// textures are reported through an asset set when FirstUpdateSubsystem exists.
+class BFMETerrainLogic
 {
+public:
+	virtual void slot00() = 0; virtual void slot01() = 0;
+	virtual void slot02() = 0; virtual void slot03() = 0;
+	virtual void slot04() = 0; virtual void slot05() = 0;
+	virtual void slot06() = 0; virtual void slot07() = 0;
+	virtual void slot08() = 0; virtual void slot09() = 0;
+	virtual void slot10() = 0; virtual void slot11() = 0;
+	virtual void slot12() = 0; virtual void slot13() = 0;
+	virtual void slot14() = 0; virtual void slot15() = 0;
+	virtual void slot16() = 0;
+	virtual AsciiString getSourceFilename() = 0;
+};
 
-	if (!TheTerrainLogic)
+extern const char Rva010896AC[];	// ".wak", the suffix loadTracks copies inline
+extern void *bfmeGoEMEb(void *);
+extern void Rva009EBAC0(int);
+#define FirstUpdateSubsystem (*(void **)0x0134FAA0)
+
+struct Rva001408C0Target;
+typedef Rva001408C0Target *Rva001408C0Key;
+typedef _STL::set<Rva001408C0Key, _STL::less<Rva001408C0Key>,
+	_STL::allocator<Rva001408C0Key> > Rva001408C0Set;
+
+struct Rva001408C0LocalSet
+{
+	Rva001408C0Set m_set;
+	int m_zero;
+	bool m_one;
+
+	Rva001408C0LocalSet() : m_zero(0), m_one(true) {}
+};
+
+// BFME File vtable as the retail calls use it (+0x08 close, +0x0c read, +0x14 seek, +0x38 convertToRAMFile).
+class LoadTracksFile007AC7E0
+{
+public:
+	enum seekMode { START, CURRENT, END };
+
+	virtual ~LoadTracksFile007AC7E0();
+	virtual bool open(const char *filename, int access);
+	virtual void close(void);
+	virtual int read(void *buffer, int bytes);
+	virtual int write(const void *buffer, int bytes);
+	virtual int seek(int bytes, int mode);
+	virtual void nextLine(char *buffer, int bytes);
+	virtual bool scanInt(int &value);
+	virtual bool scanReal(float &value);
+	virtual bool scanString(AsciiString &value);
+	virtual bool print(const char *format, ...);
+	virtual int size(void);
+	virtual int position(void);
+	virtual char *readEntireAndClose(void);
+	virtual LoadTracksFile007AC7E0 *convertToRAMFile(void);
+	virtual void lock(void);
+	virtual void unlock(void);
+};
+
+// Retail reaches this body through the ILT forwarder in MiscThunkGroup.cpp under this shim name.
+class WaterTracksRenderSystemLoadTracksShim : public WaterTracksRenderSystem
+{
+public:
+	void loadTracks(void);
+};
+
+// WaterTracksObj::m_flipU at +0xac, written from the shim outside WaterTracksObj's friend list.
+struct WaterTracksObjFlip007AC7E0
+{
+	char m_beforeFlipU[0xac];
+	Real m_flipU;
+};
+
+static const char *bfmeSourceFilename(const AsciiString &fileName)
+{
+	const char *data = *(const char **)&fileName;
+	return data ? data + 8 : (const char *)0x0107388B;
+}
+
+void WaterTracksRenderSystemLoadTracksShim::loadTracks(void)
+{
+	BFMETerrainLogic *terrain = (BFMETerrainLogic *)TheTerrainLogic;
+	if (!terrain)
 		return;
 
-	AsciiString fileName=TheTerrainLogic->getSourceFilename();
+	AsciiString fileName = terrain->getSourceFilename();
 	char path[256];
 
-	strcpy(path,fileName.str());
-	Int len=strlen(path);
+	strcpy(path, bfmeSourceFilename(fileName));
+	Int len = strlen(path);
+	strcpy(path + len - 4, ".wak");
 
-	strcpy(path+len-4,".wak");
-
-	File *file = TheFileSystem->openFile(path, File::READ | File::BINARY);
+	LoadTracksFile007AC7E0 *file = (LoadTracksFile007AC7E0 *)TheFileSystem->openFile(path, File::READ | File::BINARY);
 	WaterTracksObj *umod;
-	Int trackCount=0;
-	Int flipU=0;
-	Vector2 startPos,endPos;
+	Int trackCount = 0;
+	Int flipU = 0;
+	Vector2 startPos, endPos;
 	waveType wtype;
+	Rva001408C0LocalSet assets;
 
 	if (file)
 	{
-		file->seek(-4,File::END);
-		file->read(&trackCount,sizeof(trackCount));
-		file->seek(0, File::START);
-		for (Int i=0; i<trackCount; i++)
+		file = file->convertToRAMFile();
+		file->seek(-4, LoadTracksFile007AC7E0::END);
+		file->read(&trackCount, sizeof(trackCount));
+		file->seek(0, LoadTracksFile007AC7E0::START);
+		for (Int i = 0; i < trackCount; i++)
 		{
 		tryagain:
-			file->read(&startPos,sizeof(startPos));
-			file->read(&endPos,sizeof(endPos));
-			file->read(&wtype,sizeof(wtype));
-			//Check if this track already exists.
-			if (findTrack(startPos,endPos,wtype))
-			{	i++;
+			file->read(&startPos, sizeof(startPos));
+			file->read(&endPos, sizeof(endPos));
+			file->read(&wtype, sizeof(wtype));
+			if (findTrack(startPos, endPos, wtype))
+			{
+				i++;
 				goto tryagain;
 			}
 
-			umod=TheWaterTracksRenderSystem->bindTrack(wtype);
+			umod = TheWaterTracksRenderSystem->bindTrack(wtype);
 			if (umod)
-			{	//umod->init(1.5f*MAP_XY_FACTOR,Vector2(0,0),Vector2(1,1),"wave256.tga");
-				flipU ^= 1;	//toggle flip state
-				umod->init(waveTypeInfo[wtype].m_finalHeight,waveTypeInfo[wtype].m_finalWidth,startPos,endPos,waveTypeInfo[wtype].m_textureName,0);
-				umod->m_flipU=flipU;
-
-				if (waveTypeInfo[wtype].m_secondWaveTimeOffset)	//check if we need a second wave to follow
+			{
+				flipU ^= 1;
+				umod->init(waveTypeInfo[wtype].m_finalHeight,
+					waveTypeInfo[wtype].m_finalWidth, startPos, endPos,
+					waveTypeInfo[wtype].m_textureName, 0);
+				if (waveTypeInfo[wtype].m_textureName)
 				{
-					umod=TheWaterTracksRenderSystem->bindTrack(wtype);
+					if (assets.m_set.insert((Rva001408C0Key)bfmeGoEMEb(
+						waveTypeInfo[wtype].m_textureName)).second)
+						assets.m_one = true;
+				}
+				((WaterTracksObjFlip007AC7E0 *)umod)->m_flipU = flipU;
+
+				if (waveTypeInfo[wtype].m_secondWaveTimeOffset)
+				{
+					umod = TheWaterTracksRenderSystem->bindTrack(wtype);
 					if (umod)
 					{
-						umod->init(waveTypeInfo[wtype].m_finalHeight,waveTypeInfo[wtype].m_finalWidth,startPos,endPos,waveTypeInfo[wtype].m_textureName,waveTypeInfo[wtype].m_secondWaveTimeOffset);
-						umod->m_flipU = !flipU;
+						umod->init(waveTypeInfo[wtype].m_finalHeight,
+							waveTypeInfo[wtype].m_finalWidth, startPos, endPos,
+							waveTypeInfo[wtype].m_textureName,
+							waveTypeInfo[wtype].m_secondWaveTimeOffset);
+						((WaterTracksObjFlip007AC7E0 *)umod)->m_flipU = !flipU;
 					}
 				}
 			}
 		}
 		file->close();
 	}
-
-#if 0	//Obsolete code used before there was another editor to place waves.
-	//Look for all waypoints that start with "waveStart_"
-	for (Waypoint *way = TheTerrainLogic->getFirstWaypoint(); way; way = way->getNext())
-	{
-		if (way->getName().startsWith("waveStart_") && way->getNumLinks() == 1)
-		{
-			Waypoint *nextWay = way->getLink(0);
-			Coord3D startPos = *way->getLocation();
-			Coord3D endPos = *nextWay->getLocation();
-
-			//initialize surface layer (1)
-			WaterTracksObj *umod=TheWaterTracksRenderSystem->bindTrack(1);
-			if (umod)
-			{
-				umod->init(DEFAULT_FINAL_WAVE_HEIGHT,DEFAULT_FINAL_WAVE_WIDTH,Vector2(startPos.x,startPos.y),Vector2(endPos.x,endPos.y),"wave1.tga",0);
-			}
-/*
-			//initialize foam layer (0)
-			umod=TheWaterTracksRenderSystem->bindTrack(0);
-			if (umod)
-			{
-				umod->init(2.5f*MAP_XY_FACTOR,5.0f*MAP_XY_FACTOR,Vector2(startPos.x,startPos.y),Vector2(endPos.x,endPos.y),"wave2.tga");
-//				umod->m_fadeMs += 1500;	//take extra 500 ms to fade out wave.
-//				umod->m_retreatFrac = 1.0f;	//don't move wave back after it hits final position.
-			}*/
-		}
-	}
-#endif
+	if (FirstUpdateSubsystem)
+		Rva009EBAC0((int)&assets);
 }
 
 /**@todo: this is a quick hack for adding/removing/testing breaking waves inside the client.
