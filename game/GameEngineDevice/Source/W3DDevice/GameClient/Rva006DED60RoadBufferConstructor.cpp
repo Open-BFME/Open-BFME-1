@@ -4,9 +4,6 @@
 // constructor allocates this 0x110-byte object for its road buffer, and the
 // reset path calls the matching road-buffer cleanup at 0x00706E60.
 
-// stlport
-#include <set>
-
 class Rva006DED60RoadRef
 {
 public:
@@ -18,7 +15,18 @@ public:
 	unsigned char m_flag;
 };
 
-typedef _STL::_Rb_tree<int, int, _STL::_Identity<int>, _STL::less<int>, _STL::allocator<int> > Rva006DED60RoadSet;
+// Not _Rb_tree<int>: retail's element destructor ILT 0x00029B9F reaches a 5-byte
+// set-wrapper jump (0x006DEA70) to tree destructor 0x006DE840, while every
+// std::set<Int> in the ZH-derived callers destroys through 0x00032FD3.
+class Rva006DED60RoadSet
+{
+public:
+	Rva006DED60RoadSet();
+	~Rva006DED60RoadSet();
+
+private:
+	unsigned int m_data[3];
+};
 
 class RefCountClass
 {

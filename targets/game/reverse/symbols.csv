@@ -4515,7 +4515,6 @@ name,address,notes
 ??1AIBackAwayAndCowerState@@MAE@XZ,0x000061CC,vtable 0x00C97AF8 slots name AIBackAwayAndCowerState; protected complete destructor called by wrapper 0x0017F540
 ??1AIBackAwayState@@MAE@XZ,0x0004915C,exact constructor 0x001804B0 and dedicated vtable 0x0109AE00 establish the protected complete destructor called by wrapper 0x00185890; chain reaches exact AIInternalMoveToState
 ??1AIBusyState@@MAE@XZ,0x00002D60,exact constructor 0x00170FC0 and dedicated vtable 0x01097AA0 establish the protected complete destructor called by wrapper 0x0017F310
-??1AICowerState@@MAE@XZ,0x00007E0A,constructor 0x001744C0 and dedicated vtable 0x010991D0 establish the protected complete destructor called by wrapper 0x00182320
 ??1AIDeadState@@MAE@XZ,0x00047B9F,AIDeadState complete destructor ILT called by scalar wrapper 0x0017FF50; thunk reaches the State base destructor body through 0x0017FF80
 ??1AIDockAdvancePositionState@@MAE@XZ,0x00016F31,vtable 0x00C95C68 slots name AIDockAdvancePositionState; protected complete destructor called by wrapper 0x0014F4D0
 ??1AIDockMachine@@MAE@XZ,0x0000B7C6,protected complete destructor ILT called by scalar wrapper 0x0014F120; exact constructor 0x0014F7C0 installs dedicated vtable 0x01095A38
@@ -4567,6 +4566,7 @@ name,address,notes
 ??1AITNGuardMachine@@MAE@XZ,0x0003D4C9,protected complete destructor ILT called by scalar wrapper 0x00189E10; exact constructor 0x0018AFB0 installs dedicated vtable 0x0109B4B0
 ??1AITNGuardOuterState@@MAE@XZ,0x000321A0,vtable 0x00C9B650 slots name AITNGuardOuterState; protected complete destructor called by wrapper 0x0018AF70
 ??1AITunnelNetworkGuardState@@MAE@XZ,0x00002D97,exact constructor 0x001717B0 and dedicated vtable 0x010982B8 establish the protected complete destructor called by wrapper 0x00180290
+??1AIUncontrollableCower@@MAE@XZ,0x00007E0A,destructor ILT called by the AIUncontrollableCower scalar-deleting destructor 0x00182320 (slot 0 of vtable 0x010991D0)
 ??1AIUpdateInterface@@UAE@XZ,0x0001C774,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x0027EF60
 ??1AIUpdateModuleData@@UAE@XZ,0x00887940
 ??1AIWaitState@@MAE@XZ,0x00023CF9,exact constructor 0x001711F0 and dedicated vtable 0x01097CD8 establish the protected complete destructor called by wrapper 0x0017FE60
@@ -4579,7 +4579,6 @@ name,address,notes
 ??1ActAsDozerState@@UAE@XZ,0x0003C943,constructor-installed vtable 0x010CA428 first slot reaches deleting wrapper 0x002C9BC0; wrapper directly calls this scalar-destructor ILT thunk
 ??1ActAsSupplyTruckState@@UAE@XZ,0x0003CCB8,constructor-installed vtable 0x010CA490 first slot reaches deleting wrapper 0x002C9C00; wrapper directly calls this scalar-destructor ILT thunk
 ??1ActiveBody@@UAE@XZ,0x00017EEA,derived body destructors tail-call the ActiveBody destructor
-??1ActiveCategoryStackClass@@UAE@XZ,0x0002A08B,pinharvest x1 (thunk)
 ??1AimWeaponBehavior@@MAE@XZ,0x00045C5A,vtable 0x00CA1A24 slots name AimWeaponBehavior; protected complete destructor called by wrapper 0x001ED090
 ??1AimWeaponBehaviorModuleData@@MAE@XZ,0x00039397,exact constructor 0x001ECEF0 and dedicated vtable 0x00CA1848 establish the protected complete destructor called by wrapper 0x001ED120
 ??1Anim2D@@MAE@XZ,0x00004DBD,authentic protected Anim2D scalar-deleting wrapper callee ILT; routes to matched complete destructor body 0x005BA670
@@ -5108,7 +5107,6 @@ name,address,notes
 ??1FellBeastSwoopPower@@MAE@XZ,0x00039BCB,destructor ILT to 0x0025CFA0
 ??1FeslEchoMessage@@QAE@XZ,0x007E86C0,FESL message buffer destructor
 ??1File@@UAE@XZ,0x009CB8C0,called by the File scalar deleting destructor
-??1FileInfoStruct@MixFileCreator@@QAE@XZ,0x00013D40,pinharvest x1 (thunk)
 ??1FilePipe@@UAE@XZ,0x009E7DC0
 ??1FileStraw@@UAE@XZ,0x009E1C50
 ??1FireSpreadUpdate@@MAE@XZ,0x00031AA7,vtable 0x00CBEBD4 slots name FireSpreadUpdate; protected complete destructor called by wrapper 0x00292810
@@ -5126,7 +5124,6 @@ name,address,notes
 ??1FloatingTextData@@UAE@XZ,0x0001661C,authentic FloatingTextData scalar-deleting wrapper callee ILT; resolves to the matched complete destructor at 0x0043F550
 ??1FontCharsClass@@UAE@XZ,0x00940010,WW3D FontCharsClass destructor; matched constructor identity at 0x00940610 and shared vtable 0x0113CE8C prove this complex cleanup body
 ??1FoundationAIUpdate@@UAE@XZ,0x0000E791,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x002B9D60
-??1FrameData@@QAE@XZ,0x0002A08B,pinharvest x1 (thunk)
 ??1FreeLifeBody@@UAE@XZ,0x00017EA4,destructor ILT to 0x002132B0
 ??1FreezingRainSpecialPower@@MAE@XZ,0x0001AC99,destructor ILT to 0x0025D5E0
 ??1FreezingRainSpecialPowerModuleData@@UAE@XZ,0x0004770D,route=0x00258730; ctor vtable 0x010B5128 slot zero reaches scalar deleting destructor 0x0025D8F0 which calls this empty derived-destructor chain
@@ -8919,8 +8916,6 @@ name,address,notes
 ??1LockWeaponCreateModuleData@@MAE@XZ,0x00031DEF,exact constructor 0x0024FE00 and dedicated vtable 0x00CB1950 establish the protected complete destructor called by wrapper 0x0024FE20
 ??1LocomotorSetUpgrade@@MAE@XZ,0x00020BE4,vtable 0x00CCD0BC slots name LocomotorSetUpgrade; protected complete destructor called by wrapper 0x002D6260
 ??1LocomotorTemplate@@MAE@XZ,0x0003296B,exact constructor 0x001B52C0 and dedicated vtable 0x00C9DE9C establish the protected complete destructor called by wrapper 0x001B60B0
-??1LogicalDecalClass@MultiFixedPoolDecalSystemClass@@QAE@XZ,0x0002A08B,pinharvest x1 (thunk)
-??1LogicalDecalClass@MultiFixedPoolDecalSystemClass@@QAE@XZ,0x0003CC2C,"pinharvest x1 (thunk); re-added after d27ae4b7b, one-name-one-body clean"
 ??1LuaScriptEngine@@UAE@XZ,0x0000AC22,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x002EB5C0
 ??1LwsAudioEventRTS@@QAE@XZ,0x00026F35,LivingWorldSound helper AudioEventRTS destructor ILT
 ??1MainMenuMediumScaleUpTransition@@MAE@XZ,0x00029D4D,vtable 0x00D0C994 slots name MainMenuMediumScaleUpTransition; protected complete destructor called by wrapper 0x0059E260
@@ -9022,8 +9017,6 @@ name,address,notes
 ??1NetProgressCommandMsg@@UAE@XZ,0x00003E04,constructor 0x00673D60 and dedicated vtable 0x0111A53C establish identity
 ??1NoString@@QAE@XZ,0x0002349D,ILT thunk to the missing-string node destructor walked by GameTextManager::deinit
 ??1Node@?$SList@VTagBlockIndex@@@@QAE@XZ,0x009ED2F0,Open-BFME5 SList TagBlockIndex node destructor
-??1NodeCompressedMotionStruct@@QAE@XZ,0x0002A08B,pinharvest x1 (thunk)
-??1NodeMotionStruct@@QAE@XZ,0x0002F03B,pinharvest x1 (thunk)
 ??1Nugget@ModuleInfo@@QAE@XZ,0x000165B3,site-decoded x1 (thunk)
 ??1Nugget@Rva001417F0ModuleInfo@@QAE@XZ,0x0003B589,Open-BFME5 pin: Nugget destructor called directly from Rva001417F0ModuleInfo::clearModuleInfo at 0x001417F0 (already pinned virtual UAE at this address is a mis-shaped guess; this call site is a direct non-virtual dtor call)
 ??1Null3DObjClass@@UAE@XZ,0x00972980,authentic Null3DObjClass complete destructor thunk to RenderObjClass; matched constructors and vtable 0x0113E87C prove identity
@@ -9097,7 +9090,6 @@ name,address,notes
 ??1PathVector@@QAE@XZ,0x0000DE68,local vector view alias to the retail Coord3D vector destructor ILT
 ??1Payload@DeliverPayloadNugget@@QAE@XZ,0x0004B10A,rel32 pin for exact-ambiguous landing
 ??1PeerRequest@@QAE@XZ,0x00016BD5,ILT of PeerRequest dtor used by 0x0053AB90
-??1PendingSurfaceStruct@Render2DSentenceClass@@QAE@XZ,0x00001F96,hit-decoded x7 (thunk)
 ??1PhysicsBehavior@@UAE@XZ,0x000087D8,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x0029AA30
 ??1PhysicsBehaviorModuleData@@MAE@XZ,0x00041425,exact constructor 0x0029A090 and dedicated vtable 0x00CC0910 establish the protected complete destructor called by wrapper 0x0029A610
 ??1PingRequest@@QAE@XZ,0x00027C00,pinharvest x1 (thunk)
@@ -9681,7 +9673,6 @@ name,address,notes
 ??1StringBaseYW@@IAE@XZ,0x00887940,pin
 ??1StringBaseZA@@IAE@XZ,0x00887940,pin
 ??1StringClass@@QAE@XZ,0x009DB7A0,RenderDeviceDescClass string-member destructor calls; ICF with StringClass::Free_String
-??1StringInfo@@QAE@XZ,0x00013101,pinharvest x1 (thunk)
 ??1StructureBody@@UAE@XZ,0x00040D40,destructor ILT to 0x00214B50
 ??1StructureBodyModuleData@@UAE@XZ,0x0000A781,public complete destructor ILT called by scalar wrapper 0x00129460; exact constructor 0x001293C0 installs dedicated vtable 0x0108ED20
 ??1StructureCollapseFXVector@@QAE@XZ,0x00022D3B,Open-BFME5 StructureCollapse FX vector destructor thunk
@@ -9749,7 +9740,6 @@ name,address,notes
 ??1TeamInQueue@@MAE@XZ,0x0002C1B5,vtable 0x00C96940 slots name TeamInQueue; protected complete destructor called by wrapper 0x00161260
 ??1TeamPrototype@@MAE@XZ,0x00023641,route=0x000F6E40; actual TeamPrototype scalar wrapper F7580 calls canonical protected complete destructor through this ILT; campaign=36h-20260908-1018
 ??1TeamRelationMap@@UAE@XZ,0x00003661,ILT to the matched TeamRelationMap destructor at RVA 0x000F21C0
-??1TeamsInfo@@QAE@XZ,0x00008CBA,pinharvest x1 (thunk)
 ??1TemporarilyDefectUpdate@@MAE@XZ,0x000356C0,vtable 0x00CC4DCC slots name TemporarilyDefectUpdate; protected complete destructor called by wrapper 0x002B0C30
 ??1TensileFormationUpdateMember@@QAE@XZ,0x0003D2C1,TensileFormationUpdate member destructor call target
 ??1TerrainTracksRenderObjClass@@UAE@XZ,0x00017774,route=0x0072F110; scalar deleting destructor retail call targets the matched TerrainTracksRenderObjClass destructor through this ILT
@@ -10359,7 +10349,7 @@ name,address,notes
 ??_7AIAttackThenIdleStateMachine@@6B@,0x010976F8,exact constructor 0x00184A40 installs this dedicated vtable; slot zero ILT 0x0003CEE3 reaches scalar wrapper 0x0016F310
 ??_7AIBackAwayAndCowerState@@6B@,0x00C97AF8,vtable whose slots name AIBackAwayAndCowerState
 ??_7AIBusyState@@6B@,0x01097AA0,exact constructor 0x00170FC0 installs this dedicated vtable
-??_7AICowerState@@6B@,0x010991D0,constructor 0x001744C0 installs this dedicated vtable; exact onEnter and onExit plus literal name corroborate identity
+??_7AICowerState@@6B@,0x01098408,constructor 0x00171930 installs this vtable and its class-name slot 2 (0x00171970) returns the literal AICowerState; 0x010991D0 is AIUncontrollableCower's table (slot 2 0x00174500 returns that name)
 ??_7AIDeadState@@6B@,0x01097EA0,exact constructor 0x001713C0 installs this dedicated vtable
 ??_7AIDockAdvancePositionState@@6B@,0x00C95C68,vtable whose slots name AIDockAdvancePositionState
 ??_7AIDockMachine@@6B@,0x01095A38,exact constructor 0x0014F7C0 installs this dedicated vtable; slot zero ILT 0x00041BA5 reaches scalar wrapper 0x0014F120
@@ -11127,7 +11117,6 @@ name,address,notes
 ??_GAIBackAwayAndCowerState@@MAEPAXI@Z,0x00014CF9,vtable 0x00C97AF8 slot zero routes through this ILT to scalar wrapper 0x0017F540
 ??_GAIBackAwayState@@MAEPAXI@Z,0x00025E19,dedicated vtable 0x0109AE00 slot zero routes to scalar wrapper 0x00185890
 ??_GAIBusyState@@MAEPAXI@Z,0x0004897D,dedicated vtable 0x01097AA0 slot zero routes through this ILT to scalar wrapper 0x0017F310
-??_GAICowerState@@MAEPAXI@Z,0x0000C38D,dedicated vtable 0x010991D0 slot zero routes to scalar wrapper 0x00182320
 ??_GAIDeadState@@MAEPAXI@Z,0x00042B04,dedicated vtable 0x01097EA0 slot zero routes through this ILT to scalar wrapper 0x0017FF50
 ??_GAIDockAdvancePositionState@@MAEPAXI@Z,0x0004B3D0,vtable 0x00C95C68 slot zero routes through this ILT to scalar wrapper 0x0014F4D0
 ??_GAIDockMoveToEntryState@@MAEPAXI@Z,0x00036476,vtable 0x00C95CC0 slot zero routes through this ILT to scalar wrapper 0x0014F550
@@ -33493,6 +33482,7 @@ name,address,notes
 ?b_002282b0@@YAXXZ,0x002282B0,gen-thunk body
 ?b_00228310@@YAXXZ,0x00228310,gen-thunk body
 ?b_00228410@@YAXXZ,0x00228410,gen-thunk body
+?b_002284a0@@YAXXZ,0x002284A0,ILT 0x00019772 target; address-named callee of ?j_00019772@@YAXXZ
 ?b_002284d0@@YAXXZ,0x002284D0,gen-thunk body
 ?b_002289f0@@YAXXZ,0x002289F0,gen-thunk body
 ?b_00228f10@@YAXXZ,0x00228F10,gen-thunk body
@@ -61015,6 +61005,7 @@ name,address,notes
 ?b_005d7450@@YAXXZ,0x005D7450,gen-thunk body
 ?b_005d7480@@YAXXZ,0x005D7480,gen-thunk body
 ?b_005d74f0@@YAXXZ,0x005D74F0,gen-thunk body
+?b_005d7520@@YAXXZ,0x005D7520,ILT 0x0002A08B target; address-named callee of ?j_0002a08b@@YAXXZ
 ?b_005d7560@@YAXXZ,0x005D7560,gen-thunk body
 ?b_005d7590@@YAXXZ,0x005D7590,gen-thunk body
 ?b_005d75d0@@YAXXZ,0x005D75D0,gen-thunk body
@@ -79251,7 +79242,6 @@ name,address,notes
 ?broadcast@U1Tail_005C4190@@QAEXPAX0@Z,0x005C4190,tail broadcast target of the optional-head chain rows; address-derived name
 ?broadcast@U1Tail_005C97A0@@QAEXPAX0@Z,0x005C97A0,tail broadcast target of the optional-head chain rows; address-derived name
 ?bucketNumber@Rva006AEE00Hashtable@@QBEIABV?$StringBase@D@@I@Z,0x0004004D,Rva006AEE00::init hash-table bucket callee at retail 0x0004004D
-?build@ActiveBodyModuleDataBuildFieldParseShim@@SAXAAVMultiIniFieldParse@@@Z,0x002284A0,ActiveBodyModuleData buildFieldParse incremental-link thunk target through a TU-local forwarding shim
 ?build@BroadcastStealthUpdateModuleDataBuildFieldParseShim@@SAXAAVMultiIniFieldParse@@@Z,0x00289800,BroadcastStealthUpdateModuleData buildFieldParse incremental-link thunk target through a TU-local forwarding shim
 ?build@Gen003BD7D0Node@@QAEPAVGen003BD8D0Built@@PAVGen003BD8D0Arg@@HH@Z,0x003A3E90,three-argument member called on the lookup result by 0x003BD8D0; address-derived name
 ?build@Gen003BD7D0Node@@QAEPAVGen003BD8D0Built@@XZ,0x003A3E90,niladic member called on the lookup result by Rva003BF540::act at 0x003BD8D0; canonical c3 body leaves the following consume arguments on the stack
@@ -79261,8 +79251,6 @@ name,address,notes
 ?build@W3DRadarBuildTerrainTextureShim@@QAEXPAVTerrainLogic@@@Z,0x006C39D0,W3DRadar buildTerrainTexture incremental-link thunk target through a TU-local forwarding shim
 ?buildBuffer@W3DVolumetricShadow@@QAEXXZ,0x0003A396,render helper ILT
 ?buildCameraTransform@W3DView@@AAEXPAVMatrix3D@@@Z,0x00741D30,BFME W3DView helper body 0x00741D30 via ILT 0x0000A8DF
-?buildFieldParse@AIUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00019772,pinharvest x1 (thunk)
-?buildFieldParse@ActiveBodyModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00019772,ILT thunk; real body 0x6284A0
 ?buildFieldParse@CostModifierUpgradeModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x002D4B00,Parent direct body identity from CostModifierUpgrade registry12F1B6 and factory11DA50 field-parser pointer VA437222 whose ILT37222 targets this body; existing RVA-qualified field parser is the same physical function
 ?buildFieldParse@DockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00004052,RailedTransportDockUpdateModuleData base builder ILT to 0x002CAB10
 ?buildFieldParse@Gen00004052@@SAXAAVWideMulti@@@Z,0x00004052,base-class buildFieldParse reached via incremental-link thunk; address-derived name retained for remaining WideBuildFieldParse rows
@@ -79288,7 +79276,6 @@ name,address,notes
 ?buildFieldParse@Rva0013E170@@SAXAAVMultiIniFieldParse@@@Z,0x00030F8F,ILT to body 0x0013E170; call 0x00139DBA push &local MultiIniFieldParse caller pops 4 = cdecl static; body adds two FieldParse tables via MultiIniFieldParse::add and ret; address-derived owner
 ?buildFieldParse@SupplyCenterDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0000CBFD,unique ILT to 0x002CF0C0
 ?buildFieldParse@SupplyWarehouseDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0001AAE6,unique ILT to 0x002CF680
-?buildFieldParse@W3DModelDrawModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00022584,ILT thunk that the five ModelDraw builders call; real body 0x0077D380 named by the W3DScriptedModelDraw module data factory at 0x006BF0C0
 ?buildMasks@Rva006083A0SoundUpgrade@@QAEXPAI0@Z,0x0000F187,ILT for the existing 0x00608090 upgrade-mask builder
 ?buildObjects001D88C0@ObjectCreation001DA4B0@@QAE?AV?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@PBVCoord3D@@PBXMPAVObject@@H@Z,0x001D88C0,opaque hub ABI from aligned 001DA4B0 and landed 001D8850 callers plus hub vector copy return and ret24; ECX owner hidden vector result position matrix float source lifetime; docs/analysis/0x001d88c0.md; resolver derives ILT 0001B57C
 ?buildPairsAt00261CC0@Rva00261F40Owner@@QAEXPAV?$vector@URva00261E40InputEntry@@V?$allocator@URva00261E40InputEntry@@@_STL@@@_STL@@PAVRva00261F40Subject@@PAV?$vector@U?$pair@MPAV?$vector@PAVRva00261F40Subject@@V?$allocator@PAVRva00261F40Subject@@@_STL@@@_STL@@@_STL@@V?$allocator@U?$pair@MPAV?$vector@PAVRva00261F40Subject@@V?$allocator@PAVRva00261F40Subject@@@_STL@@@_STL@@@_STL@@@2@@3@@Z,0x00261CC0,caller00261E40+3D viaILT2A036 preserves incoming ownerECX; full298B RET12 reads16B inputentries and subjectXY at38/3C; writes pair<float pointer-vector*> sorted bydistance; neutral member identity
@@ -80029,7 +80016,6 @@ name,address,notes
 ?destroy@HashTemplateEntryDestructorShim@@QAEXXZ,0x005D5760,destructor incremental-link thunk target through a TU-local forwarding shim
 ?destroy@ICoord2DVectorDestructorShim@_STL@@QAEXXZ,0x000A5120,destructor incremental-link thunk target through a TU-local forwarding shim
 ?destroy@ModelConditionInfoHideShowSubObjInfoDestructorShim@@QAEXXZ,0x00339930,ModelConditionInfo::HideShowSubObjInfo dtor incremental-link thunk target through a TU-local forwarding shim
-?destroy@MultiFixedPoolDecalSystemClassLogicalDecalClassDestructorShim@@QAEXXZ,0x005D7520,MultiFixedPoolDecalSystemClass::LogicalDecalClass dtor incremental-link thunk target through a TU-local forwarding shim
 ?destroy@NameKeyObjectCreationPairDestructorShim@_STL@@QAEXXZ,0x00654BA0,destructor incremental-link thunk target through a TU-local forwarding shim
 ?destroy@ParticleSystem@@QAEXXZ,0x0000E525,Open-BFME5 ILT; ?destroyParticleSystemByID@ParticleSystemManager@@QAEXW4ParticleSystemID@@@Z at 0x005C3C10 calls it on the system it looked up
 ?destroy@ParticleSystemManagerDestroyByIDShim@@QAEXW4ParticleSystemID@@@Z,0x005C3C10,ParticleSystemManager destroyParticleSystemByID incremental-link thunk target through a TU-local forwarding shim

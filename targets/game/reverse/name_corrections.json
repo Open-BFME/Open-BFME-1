@@ -7098,5 +7098,45 @@
   "after_sha256": "0f2210cb9345d0d6143549847287286bafcd719f7899dd2ed4da2c7120883499",
   "evidence": "targets/game/reverse/identity_evidence/0x008a51b0.md",
   "reason": "False token alignment pairs a removed local float f with the already bank-declared and unchanged Apt float factory helper; the direct expression byte-matches."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Body/ActiveBodyModuleDataBuildFieldParseThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/Rva00248F00BuildFieldParse.cpp",
+  "old_name": "ActiveBodyModuleData",
+  "new_name": "Rva00248F00",
+  "before_sha256": "2753824c183736e3e735b7897add0e132989084f25679d64e009e41211cc517e",
+  "after_sha256": "f8719c499858e4344273256024a0483c9f58187f3701df1df64e0bc5dc82c8b7",
+  "evidence": "targets/game/reverse/identity_evidence/0002a08b-00019772-ilt-thunks.md",
+  "reason": "Git pairs the deleted ILT shim source with this new builder. The shim filed ILT 0x00019772 as ActiveBodyModuleData::buildFieldParse, but 0x00019772 jumps to 0x002284A0, the builder the OpenContain-registered factory 0x001159E0 passes (ContainMax table plus DieMuxData at +8). The ActiveBody-registered factory 0x0011F420 passes ILT 0x00012355. The ILT is now ?j_00019772@@YAXXZ, and the 0x00248F00 builder calls it as the address-derived Gen00019772."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Body/ActiveBodyModuleDataBuildFieldParseThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/Rva00248F00BuildFieldParse.cpp",
+  "old_name": "ActiveBodyModuleDataBuildFieldParseShim",
+  "new_name": "Gen00019772",
+  "before_sha256": "2753824c183736e3e735b7897add0e132989084f25679d64e009e41211cc517e",
+  "after_sha256": "f8719c499858e4344273256024a0483c9f58187f3701df1df64e0bc5dc82c8b7",
+  "evidence": "targets/game/reverse/identity_evidence/0002a08b-00019772-ilt-thunks.md",
+  "reason": "Git pairs the deleted ILT shim source with this new builder. The shim filed ILT 0x00019772 as ActiveBodyModuleData::buildFieldParse, but 0x00019772 jumps to 0x002284A0, the builder the OpenContain-registered factory 0x001159E0 passes (ContainMax table plus DieMuxData at +8). The ActiveBody-registered factory 0x0011F420 passes ILT 0x00012355. The ILT is now ?j_00019772@@YAXXZ, and the 0x00248F00 builder calls it as the address-derived Gen00019772."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Body/ActiveBodyModuleDataBuildFieldParseThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/Rva00248F00BuildFieldParse.cpp",
+  "old_name": "ActiveBodyModuleDataBuildFieldParseShim",
+  "new_name": "Rva00248F00",
+  "before_sha256": "2753824c183736e3e735b7897add0e132989084f25679d64e009e41211cc517e",
+  "after_sha256": "f8719c499858e4344273256024a0483c9f58187f3701df1df64e0bc5dc82c8b7",
+  "evidence": "targets/game/reverse/identity_evidence/0002a08b-00019772-ilt-thunks.md",
+  "reason": "Git pairs the deleted ILT shim source with this new builder. The shim filed ILT 0x00019772 as ActiveBodyModuleData::buildFieldParse, but 0x00019772 jumps to 0x002284A0, the builder the OpenContain-registered factory 0x001159E0 passes (ContainMax table plus DieMuxData at +8). The ActiveBody-registered factory 0x0011F420 passes ILT 0x00012355. The ILT is now ?j_00019772@@YAXXZ, and the 0x00248F00 builder calls it as the address-derived Gen00019772."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "buildFieldParse",
+  "new_name": "j_00019772",
+  "before_sha256": "5fa7fe82387ba345ad5e9e93666b83115b44254c201561bf6c5c248149b1b3ce",
+  "after_sha256": "f62703593e64a35ee30b72dc6ebe25663850f59656cb65d22ac2af565a63f7ea",
+  "evidence": "targets/game/reverse/identity_evidence/0002a08b-00019772-ilt-thunks.md",
+  "reason": "The 5-byte row at 0x00019772 is an incremental-link thunk to OpenContain's builder 0x002284A0, not ActiveBodyModuleData::buildFieldParse (the ActiveBody factory 0x0011F420 passes ILT 0x00012355). An ILT row is claimed by address as ?j_00019772@@YAXXZ."
  }
 ]

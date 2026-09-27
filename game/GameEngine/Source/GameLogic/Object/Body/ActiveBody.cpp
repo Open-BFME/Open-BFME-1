@@ -148,7 +148,7 @@ ActiveBodyModuleData::ActiveBodyModuleData()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Body/ActiveBodyModuleDataBuildFieldParseThunk.cpp
+// byte-exact reconstruction: game/GameEngine/Source/Common/MidTableRegisterForwarders.cpp (?Rva00211A30, reached through ILT 0x00012355)
 // ?buildFieldParse@ActiveBodyModuleData@@ present-unmatched
 void ActiveBodyModuleData::buildFieldParse(MultiIniFieldParse& p) 
 {
