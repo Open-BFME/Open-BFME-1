@@ -31,3 +31,17 @@ int Rva0084D8D0WideToByte(Rva0084D890CodePage *locale, unsigned short character)
         return 0xffff;
     return (signed char)converted;
 }
+
+typedef struct Rva0084D7F0Locale
+{
+    unsigned long lcid;
+    unsigned long codePage;
+} Rva0084D7F0Locale;
+__declspec(dllimport) int __stdcall LCMapStringW(unsigned long, unsigned long, const unsigned short *, int, unsigned short *, int);
+
+unsigned short __cdecl Rva0084D7F0(Rva0084D7F0Locale *locale, int character)
+{
+    unsigned short converted;
+    LCMapStringW(locale->lcid, 0x200, (const unsigned short *)&character, 1, &converted, 1);
+    return converted;
+}
