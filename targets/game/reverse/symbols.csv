@@ -15462,8 +15462,6 @@ name,address,notes
 ?assign@ParticleSystemTemplateInfoAssignShim@FXParticleSystem@@QAEXPBX@Z,0x000387C6,ParticleSystemTemplate base-info assignment thunk used through a TU-local layout shim
 ?assign@ParticleSystemTemplateTailAssignShim@FXParticleSystem@@QAEXPBX@Z,0x0004A232,ParticleSystemTemplate tail assignment thunk used through a TU-local layout shim
 ?assign@PlayerTemplateAssignShim@@QAEAAVPlayerTemplate@@ABV2@@Z,0x000E32D0,PlayerTemplate assignment incremental-link thunk target through a TU-local forwarding shim
-?assign@PrimitiveAnimationChannelFloatAssignShim@@QAEABV1@ABV1@@Z,0x000A4B60,PrimitiveAnimationChannelClass float assignment incremental-link thunk target through a TU-local forwarding shim
-?assign@PrimitiveAnimationChannelVector3AssignShim@@QAEABV1@ABV1@@Z,0x00439140,PrimitiveAnimationChannelClass Vector3 assignment incremental-link thunk target through a TU-local forwarding shim
 ?assign@Q2FlagOwner@@QAEXH@Z,0x00416FA0,void __thiscall setter taking one index; both arms of every row of the 34-byte queried-index assignment family (Q2QueriedIndexAssignments.cpp) call this one body; address-derived name; identity not recovered
 ?assign@ReferencePointerAssignmentThunk@@QAEPAU1@PBU1@@Z,0x005226A0,ReferencePointerAssignmentThunk assignment body identified by the adjacent reference-pointer helper and matching generated alias rows
 ?assign@RenderObjectDrawTemplateAssignShim@FXParticleSystem@@QAEXPBX@Z,0x00007E14,RenderObjectDrawModuleTemplate assignment thunk used through a TU-local layout shim
