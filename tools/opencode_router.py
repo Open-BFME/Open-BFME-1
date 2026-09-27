@@ -393,6 +393,8 @@ class Events:
                         report = value
                 except ValueError:
                     pass
+        if any(classify(error) == 'quota' for error in self.errors):
+            forced = 'quota' if forced not in ('needs_review', 'cancelled') else forced
         kind = forced or (classify(self.errors[-1]) if self.errors else
                           ('success' if code == 0 and report and report['outcome'] == 'success' else 'failure'))
         return {'kind': kind, 'exit_code': code, 'session': self.session,
@@ -579,7 +581,8 @@ def fleet(root, state, c, duration, workers=None, until=None):
                     forced = ('output_limit' if run['events'].oversized or (Path(run['directory']) / 'events.jsonl').stat().st_size
                               + (Path(run['directory']) / 'stderr.txt').stat().st_size > c.get('max_output_bytes', 33554432) else None)
                     if run['events'].errors:
-                        forced = classify(run['events'].errors[-1])
+                        forced = ('quota' if any(classify(e) == 'quota' for e in run['events'].errors)
+                                  else classify(run['events'].errors[-1]))
                     if time.monotonic() - run['started'] >= c['timeout']:
                         forced = forced or 'timeout'
                     if code is None and not forced:

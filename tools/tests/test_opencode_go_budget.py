@@ -196,6 +196,13 @@ class BudgetTests(unittest.TestCase):
         history=[dict(model=self.cheap['id'],status='failure',result='{}')]
         self.assertNotEqual(self.select(s,history=history)['id'],self.cheap['id'])
 
+    def test_later_transport_error_cannot_hide_provider_quota(self):
+        events=r.Events()
+        events.feed(json.dumps({'type':'error','error':{'status':429}}))
+        events.feed(json.dumps({'type':'error','error':{'message':'connection closed'}}))
+        self.assertEqual(events.result(1)['kind'],'quota')
+        self.assertEqual(events.result(1,'timeout')['kind'],'quota')
+
     def test_finish_quota_preserves_job_no_task_failure(self):
         jid=r.enqueue(self.state,'bulk','task')
         with r.database(self.state) as db:

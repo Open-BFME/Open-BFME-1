@@ -553,7 +553,7 @@ including the former per-model failover behavior, now superseded by shared defer
 selected Muse `#medium` and returned `provider.quota` (429, Go usage limit
 exceeded); no further quota probing or large fleet was launched.
 
-Shared-budget validation: 56 focused tests cover parsing, all threshold edges,
+Shared-budget validation: 57 focused tests cover parsing, all threshold edges,
 missing credentials, stale/cache failures, source timestamps and timezone edges,
 quota races/recovery, explicit overrides, free-model evidence, and existing
 variant/cost/containment behavior. The monitoring smoke uses status only; no
