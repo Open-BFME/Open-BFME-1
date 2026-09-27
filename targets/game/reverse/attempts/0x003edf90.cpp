@@ -1,14 +1,15 @@
 // ?slowDoesPathExist@Pathfinder@@QAE_NPAVObject@@PBUCoord3D@@1W4ObjectID@@@Z
-// partial score=0.25 date=2026-09-15
+// partial score=0.27 date=2026-09-27
 // cl: /DNDEBUG /MD /EHsc
 //
-// Retail 0x003EDF90 (631 bytes) is a BFME extension of the quick terrain
-// connectivity check.  The old slowDoesPathExist row points at this body, but
-// its fourth argument is not ObjectID: retail treats it as a nullable pointer
-// to a movement profile and, when it is null, takes the embedded profile from
-// Object::AIUpdateInterface at +0x1a8.  The existing callers all pass zero, so
-// this deliberately uses an address-derived name until a non-zero caller gives
-// the function a canonical source identity.
+// Retail 0x003EDF90 (631 bytes) checks whether an object can reach a target
+// zone. The matched ScriptConditions callers name it
+// Pathfinder::slowDoesPathExist.
+// Its fourth stack slot uses the ObjectID ABI in those callers, but retail reads
+// a nonzero value as a LocomotorSet pointer. The callers we checked pass zero,
+// so the method uses the default set at AIUpdateInterface +0x1A8.
+// At +0x268, the method calls BfmeAttackQuery::validMovement through ILT
+// 0x0002F798 with the object, both zone IDs, and the optional set.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -131,6 +132,13 @@ private:
 	char m_equivalencies[9 * 24];
 };
 
+class BfmeAttackQuery
+{
+public:
+	bool validMovement(Int layer, Int fromZone, zoneStorageType toZone,
+		const void *extra);
+};
+
 class Pathfinder
 {
 public:
@@ -138,9 +146,6 @@ public:
 	PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y);
 	bool validMovementPosition(const Coord3D *position,
 		PathfindLayerEnum layer, Int acceptableSurfaces, Object *object);
-	bool bfmeZoneTransition(Object *object, zoneStorageType fromZone,
-		zoneStorageType toZone, const BfmeLocomotorSet *locomotorSet);
-
 	bool slowDoesPathExist(Object *object, const Coord3D *from,
 		const Coord3D *to, ObjectID ignoreObject);
 
@@ -157,7 +162,7 @@ bool Pathfinder::slowDoesPathExist(Object *object,
 		return true;
 
 	AIUpdateInterface *ai = object->m_ai;
-	if (ai == 0 && ignoreObject == 0)
+	if (ai == 0 && *(volatile UnsignedInt *)&ignoreObject == 0)
 		return false;
 
 	const BfmeLocomotorSet *selected = (const BfmeLocomotorSet *)(UnsignedInt)ignoreObject;
@@ -222,9 +227,11 @@ bool Pathfinder::slowDoesPathExist(Object *object,
 	}
 
 	if (!validMovementPosition(to, destinationLayer,
-		selected->m_acceptableSurfaces, object))
+		profile.acceptableSurfaces, object))
 		return false;
 	if (parentZone == goalZone)
 		return true;
-	return bfmeZoneTransition(object, parentZone, goalZone, (const BfmeLocomotorSet *)(UnsignedInt)ignoreObject);
+	return reinterpret_cast<BfmeAttackQuery *>(this)->validMovement(
+		(Int)(UnsignedInt)object, (Int)parentZone, goalZone,
+		(const void *)(UnsignedInt)ignoreObject);
 }

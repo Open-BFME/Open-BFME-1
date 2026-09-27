@@ -1,5 +1,5 @@
 // ?rva0084AF80OpenLog@Rva0084AF80Owner@@QAEXPBDH@Z
-// partial score=0.9 date=2026-09-06
+// partial score=0.89 date=2026-09-27
 // ?rva0084AF80OpenLog@Rva0084AF80Owner@@QAEXPBDH@Z
 // Address-derived: byte-identical sibling of 0x0084ADA0 (opens a different
 // sub-filebuf, at this+0xc+0x24 instead of +0x54); see that TU's history for

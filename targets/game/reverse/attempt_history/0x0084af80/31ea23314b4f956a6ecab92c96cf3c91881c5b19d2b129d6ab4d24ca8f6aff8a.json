@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "31ea23314b4f956a6ecab92c96cf3c91881c5b19d2b129d6ab4d24ca8f6aff8a",
+  "symbol": "?rva0084AF80OpenLog@Rva0084AF80Owner@@QAEXPBDH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.89,
+  "source": "// ?rva0084AF80OpenLog@Rva0084AF80Owner@@QAEXPBDH@Z\n// partial score=0.89 date=2026-09-27\n// ?rva0084AF80OpenLog@Rva0084AF80Owner@@QAEXPBDH@Z\n// Address-derived: byte-identical sibling of 0x0084ADA0 (opens a different\n// sub-filebuf, at this+0xc+0x24 instead of +0x54); see that TU's history for\n// the register-colour wall in the vbtable-disp flag-update block.\nnamespace _STL\n{\n\tclass _Filebuf_base\n\t{\n\tpublic:\n\t\tbool _M_open(const char *name, int mode, long protection);\n\t};\n}\n\nvoid process();\n\nclass Rva0084AF80Owner\n{\npublic:\n\tunsigned char m_pad0[0xc];\n\tunsigned char m_filebuf[0x24 + 4];\n\n\tvoid rva0084AF80OpenLog(const char *name, int mode);\n};\n\nvoid Rva0084AF80Owner::rva0084AF80OpenLog(const char *name, int mode)\n{\n\t_STL::_Filebuf_base *fbBase = (_STL::_Filebuf_base *)(m_filebuf);\n\t_STL::_Filebuf_base *fb = (_STL::_Filebuf_base *)((char *)fbBase + 0x24);\n\tbool opened = fb->_M_open(name, mode, 0x80);\n\tvoid *result = opened ? (void *)fbBase : 0;\n\tif (!result)\n\t{\n\t\tvoid *vbtable = *(void **)this;\n\t\tchar *base = (char *)this + *(int *)((char *)vbtable + 4);\n\t\tint flags = *(int *)(base + 8);\n\t\tint other = *(int *)(base + 0x58);\n\t\tflags |= 4;\n\t\tif (other == 0)\n\t\t\tflags |= 1;\n\t\tbool doProcess = (*(int *)(base + 0x14) & flags) != 0;\n\t\t*(int *)(base + 8) = flags;\n\t\tif (doProcess)\n\t\t\tprocess();\n\t}\n}\n"
+}
