@@ -28,9 +28,14 @@ the two percentages together.
   data (string pointer tables, nested structures). Needs attribution work
   before it can be assigned.
 - **outside this measure** -- `.idata` (falls out of linking with the right
-  libraries), `.rsrc` (copy from retail), STLPORT_, and a 737 KB unnamed
-  trailing section that is most likely copy protection and cannot be
-  recompiled: the 1:1 target must decide whether it is in scope.
+  libraries), `.rsrc` (copy from retail), STLPORT_, and the 737 KB unnamed
+  trailing section: the base relocation table with its name and
+  data-directory entry stripped (3,174 page blocks, 284,870 HIGHLOW fixups,
+  zero-padded), which a link with relocations regenerates.
+
+The 64 SafeDisc trigger arrays in `.data` (0x00EBC388 onward) are still
+counted but have no ground truth; the baseline manifest lists them under
+`no_ground_truth`.
 
 ## Limits
 

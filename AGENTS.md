@@ -200,6 +200,11 @@ record `blocked`.
 
 ## Placement and integrity
 
+- **The game baseline is `inputs/baselines/bfme1/retail-1.03-unpacked`** (since 2026-09-27):
+  withmorten's SafeDisc unpack, with the crack patches the old workshop exe carried reverted.
+  Its manifest lists each one. A verdict that blames a patched baseline predates the switch.
+  Addresses under its `no_ground_truth` are SafeDisc-stripped, and `eligibility.py` retires them.
+  Mods still build from the workshop exe, because it runs without the launcher.
 - Game source under `game/`; MASM dumps in `game/masm_dumps/`; scratch
   untracked under `build/`. Banked attempts (`targets/game/reverse/attempts/<rva>.cpp`) are
   evidence, never progress: nothing compiles them, `add_match` deletes one on
