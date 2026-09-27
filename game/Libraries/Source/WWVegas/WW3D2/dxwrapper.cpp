@@ -4001,7 +4001,6 @@ const char* DX8Wrapper::Get_DX8_Render_State_Name(D3DRENDERSTATETYPE state)
 	}
 }
 
-// ?Get_DX8_Texture_Stage_State_Name@DX8Wrapper@@ present-unmatched
 const char* DX8Wrapper::Get_DX8_Texture_Stage_State_Name(D3DTEXTURESTAGESTATETYPE state)
 {
 	switch (state) {
@@ -4016,19 +4015,9 @@ const char* DX8Wrapper::Get_DX8_Texture_Stage_State_Name(D3DTEXTURESTAGESTATETYP
 	case D3DTSS_BUMPENVMAT10              : return "D3DTSS_BUMPENVMAT10";
 	case D3DTSS_BUMPENVMAT11              : return "D3DTSS_BUMPENVMAT11";
 	case D3DTSS_TEXCOORDINDEX             : return "D3DTSS_TEXCOORDINDEX";
-	case D3DTSS_ADDRESSU                  : return "D3DTSS_ADDRESSU";
-	case D3DTSS_ADDRESSV                  : return "D3DTSS_ADDRESSV";
-	case D3DTSS_BORDERCOLOR               : return "D3DTSS_BORDERCOLOR";
-	case D3DTSS_MAGFILTER                 : return "D3DTSS_MAGFILTER";
-	case D3DTSS_MINFILTER                 : return "D3DTSS_MINFILTER";
-	case D3DTSS_MIPFILTER                 : return "D3DTSS_MIPFILTER";
-	case D3DTSS_MIPMAPLODBIAS             : return "D3DTSS_MIPMAPLODBIAS";
-	case D3DTSS_MAXMIPLEVEL               : return "D3DTSS_MAXMIPLEVEL";
-	case D3DTSS_MAXANISOTROPY             : return "D3DTSS_MAXANISOTROPY";
 	case D3DTSS_BUMPENVLSCALE             : return "D3DTSS_BUMPENVLSCALE";
 	case D3DTSS_BUMPENVLOFFSET            : return "D3DTSS_BUMPENVLOFFSET";
 	case D3DTSS_TEXTURETRANSFORMFLAGS     : return "D3DTSS_TEXTURETRANSFORMFLAGS";
-	case D3DTSS_ADDRESSW                  : return "D3DTSS_ADDRESSW";
 	case D3DTSS_COLORARG0                 : return "D3DTSS_COLORARG0";
 	case D3DTSS_ALPHAARG0                 : return "D3DTSS_ALPHAARG0";
 	case D3DTSS_RESULTARG                 : return "D3DTSS_RESULTARG";
