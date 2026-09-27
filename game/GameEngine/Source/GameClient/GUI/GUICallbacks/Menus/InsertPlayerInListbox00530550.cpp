@@ -1,9 +1,6 @@
-// ?d_00530550@@YAXXZ
-// partial score=0.73 date=2026-09-27
-// Retail 0x00530550 is the BFME lobby row helper with stats-derived rank data.
-// Its owner remains address-derived because the retail symbol table has only a thunk.
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
+// Retail 0x00530550, ZH insertPlayerInListbox twin; owner address-derived (one caller 0x005337E0 via ILT 0x00019141).
 
 #include <map>
 #include <string>
@@ -19,18 +16,6 @@ inline const T &rva00530550Min(const T &left, const T &right)
 {
 	return left < right ? left : right;
 }
-
-template <typename T>
-class Rva00530550StringBase
-{
-protected:
-	Rva00530550StringBase() : m_data(0) {}
-	Rva00530550StringBase(const Rva00530550StringBase &other);
-	~Rva00530550StringBase();
-	void releaseBuffer();
-
-	void *m_data;
-};
 
 class AsciiString
 {
@@ -48,15 +33,24 @@ private:
 	void releaseBuffer();
 };
 
-class UnicodeString : private Rva00530550StringBase<unsigned short>
+#include "string_base.h"
+#include "unicode_string.h"
+
+inline UnicodeString::UnicodeString()
 {
-public:
-	UnicodeString() : Rva00530550StringBase<unsigned short>() {}
-	UnicodeString(const UnicodeString &other)
-		: Rva00530550StringBase<unsigned short>(other) {}
-	~UnicodeString() {}
-	void translate(const AsciiString &text);
-};
+	m_text = 0;
+}
+
+inline UnicodeString::UnicodeString(const UnicodeString &that)
+{
+	((StringBase<wchar_t> *)this)->StringBase<wchar_t>::StringBase(
+		*(const StringBase<wchar_t> *)&that);
+}
+
+inline UnicodeString::~UnicodeString()
+{
+	((StringBase<wchar_t> *)this)->releaseBuffer();
+}
 
 class GameWindow
 {
@@ -200,7 +194,8 @@ public:
 
 extern GameSpyInfo *TheGameSpyInfo;
 extern MappedImageCollection *TheMappedImageCollection;
-extern GameSpyPSMessageQueueInterface *g_bfmeQueueEUG;
+class BfmeQueueEUG;
+extern BfmeQueueEUG *g_bfmeQueueEUG;
 
 extern Int GadgetListBoxGetColumnWidth(GameWindow *listbox, Int column);
 extern Int GadgetListBoxAddEntryImage(GameWindow *listbox, const Image *image,
@@ -241,7 +236,7 @@ Int insertPlayerInListbox(GameWindow *listbox, const PlayerInfo &info, Int color
 	Int width = preorderImg ? preorderImg->m_imageWidth : 10;
 	Int oldWidth = width;
 	UnicodeString uStr;
-	volatile Int imageMarker = 1;
+	Int imageMarker = 1;
 	uStr.translate(player.m_baseName);
 	width = rva00530550Min(GadgetListBoxGetColumnWidth(listbox, 0), oldWidth);
 	Int height = width;
@@ -253,23 +248,24 @@ Int insertPlayerInListbox(GameWindow *listbox, const PlayerInfo &info, Int color
 
 	Int side;
 	Int rank;
-	PSPlayerStats stats = g_bfmeQueueEUG->findPlayerStatsByID(player.m_profileID);
+	PSPlayerStats stats = reinterpret_cast<GameSpyPSMessageQueueInterface *>(
+		g_bfmeQueueEUG)->findPlayerStatsByID(player.m_profileID);
 	side = bfmePickBestRankSide(reinterpret_cast<Gen_uw_00025c1b *>(&stats));
 	rank = bfmeBandChecked(bfmeRankPointsFromStats(
 		reinterpret_cast<Gen_uw_00025c1b *>(&stats), side));
 
 	Int index = GadgetListBoxAddEntryImage(
 		listbox, preorderImg, -1, 0, width, height, true, -1);
-	if (rank != 0)
+	if (stats.id != 0)
 	{
 		const Image *sideImg = reinterpret_cast<const Image *>(
-			bfmeLookupDL(TheMappedImageCollection, side));
+			bfmeLookupDL(reinterpret_cast<void *>(rank), side));
 		GadgetListBoxAddEntryImage(
 			listbox, sideImg, index, 1, width, height, true, -1);
 	}
 	GadgetListBoxAddEntryText(listbox, uStr, color, index, 2, true);
-	GadgetListBoxSetItemData(listbox, *(void **)&uStr, index, 1);
-	GadgetListBoxSetItemData(listbox, (void *)player.m_profileID, index, 0);
+	GadgetListBoxSetItemData(listbox, reinterpret_cast<void *>(imageMarker), index, 1);
+	GadgetListBoxSetItemData(listbox, reinterpret_cast<void *>(player.m_profileID), index, 0);
 	return index;
 }
 }
