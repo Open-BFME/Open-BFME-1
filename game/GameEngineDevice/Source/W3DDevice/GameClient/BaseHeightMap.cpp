@@ -3418,6 +3418,8 @@ private:
 Int BaseHeightMapRenderObjClass::getStaticDiffuse(Int x, Int y)
 { 	
 	#define BFME_STATIC_DIFFUSE_MAP ((BfmeStaticDiffuseWorldHeightMap *)m_map)
+	// BFME scales heights by MAP_XY_FACTOR/256; Zero Hour's MAP_HEIGHT_SCALE divides by 16
+	#define BFME_HEIGHT_SCALE (MAP_XY_FACTOR/256.0f)
 
 	if (x<0) x = 0;
 	if (y<0) y = 0;
@@ -3457,8 +3459,8 @@ Int BaseHeightMapRenderObjClass::getStaticDiffuse(Int x, Int y)
 	}
 
 	//top-left sample
-	l2r.Set(2*MAP_XY_FACTOR,0,MAP_HEIGHT_SCALE*(BFME_STATIC_DIFFUSE_MAP->getHeight(up1, y) - BFME_STATIC_DIFFUSE_MAP->getHeight(un0, y)));
-	n2f.Set(0,2*MAP_XY_FACTOR,MAP_HEIGHT_SCALE*(BFME_STATIC_DIFFUSE_MAP->getHeight(x, vp1) - BFME_STATIC_DIFFUSE_MAP->getHeight(x, vn0)));
+	l2r.Set(2*MAP_XY_FACTOR,0,BFME_HEIGHT_SCALE*(BFME_STATIC_DIFFUSE_MAP->getHeight(up1, y) - BFME_STATIC_DIFFUSE_MAP->getHeight(un0, y)));
+	n2f.Set(0,2*MAP_XY_FACTOR,BFME_HEIGHT_SCALE*(BFME_STATIC_DIFFUSE_MAP->getHeight(x, vp1) - BFME_STATIC_DIFFUSE_MAP->getHeight(x, vn0)));
 	
 	Vector3::Normalized_Cross_Product(l2r,n2f, &normalAtTexel);
 
@@ -3466,7 +3468,7 @@ Int BaseHeightMapRenderObjClass::getStaticDiffuse(Int x, Int y)
 	vertex.x=ADJUST_FROM_INDEX_TO_REAL(x);
 	vertex.y=ADJUST_FROM_INDEX_TO_REAL(y);
 
-	vertex.z=  ((float)BFME_STATIC_DIFFUSE_MAP->getHeight(x,y))*MAP_HEIGHT_SCALE;
+	vertex.z=  ((float)BFME_STATIC_DIFFUSE_MAP->getHeight(x,y))*BFME_HEIGHT_SCALE;
 	vertex.u1=0;
 	vertex.v1=0;
 	vertex.u2=1;
@@ -3485,6 +3487,7 @@ Int BaseHeightMapRenderObjClass::getStaticDiffuse(Int x, Int y)
 	}
 	return vertex.diffuse;
 	#undef BFME_STATIC_DIFFUSE_MAP
+	#undef BFME_HEIGHT_SCALE
 }
 
 //=============================================================================

@@ -291,7 +291,7 @@ void ScriptActions::doTeamEmoticon(
 	}
 
 	team->getTeamAsAIGroup(group);
-	Int frames = (Int)(duration * 30.0f);
+	Int frames = (Int)(duration * 5.0f);  // BFME's logic runs 5 frames per second; Zero Hour ran 30
 	group->groupSetEmoticon(emoticonName, frames);
 }
 

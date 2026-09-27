@@ -9435,7 +9435,7 @@ void InGameUI::addWorldAnimation( Anim2DTemplate *animTemplate,
 
 	// assign all data
 	wad->m_anim = anim;
-	wad->m_expireFrame = TheGameLogic->getFrame() + (durationInSeconds * LOGICFRAMES_PER_SECOND);
+	wad->m_expireFrame = TheGameLogic->getFrame() + (durationInSeconds * 5.0f);  // BFME's logic runs 5 frames per second; Zero Hour ran 30
 	wad->m_options = options;
 	wad->m_worldPos = *pos;
 	wad->m_zRisePerSecond = zRisePerSecond;

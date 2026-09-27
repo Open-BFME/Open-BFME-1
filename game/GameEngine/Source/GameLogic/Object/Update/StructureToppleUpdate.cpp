@@ -315,7 +315,7 @@ void StructureToppleUpdate::beginStructureTopple(const DamageInfo *damageInfo)
 			if (bfmeStructureToppleRandom(0, 2,
 				(char *)"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\StructureToppleUpdate.cpp",
 				145) < 1)
-				toppleAngle += 2 * 3.14159265359f;
+				toppleAngle += 3.14159265359f;  // retail flips the direction half the time; 2*pi would be a no-op
 			toppleAngle = bfmeStructureToppleNormalizeAngle(toppleAngle);
 		}
 		else if (attacker == 0)

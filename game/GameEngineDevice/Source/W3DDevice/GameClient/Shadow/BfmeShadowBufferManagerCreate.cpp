@@ -212,7 +212,7 @@ BfmeVolumetricShadowBufferOwner *BfmeShadowBufferManager007C3260::createShadow(
 		new BfmeVolumetricShadowBufferOwner(&m_shadowList, resource);
 
 	if (shadowInfo->m_sizeX != 0.0f)
-		shadow->m_shadowLengthScale = tan(shadowInfo->m_sizeX / 180.0f * 3.14159265358979323846f);
+		shadow->m_shadowLengthScale = tan(shadowInfo->m_sizeX * (180.0f / 3.14159265358979323846f));  // retail scales by 180/pi here, not pi/180
 
 	if (!draw || !draw->isKindOf(KindOfType(2)))
 		shadow->m_extraExtrusionPadding = 0.1f;

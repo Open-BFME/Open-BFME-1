@@ -893,7 +893,6 @@ ScriptActions::~ScriptActions()
 //-------------------------------------------------------------------------------------------------
 /** Init */
 //-------------------------------------------------------------------------------------------------
-// ?init@ScriptActions@@UAEXXZ present-unmatched
 void ScriptActions::init( void )
 {
 
@@ -7473,7 +7472,7 @@ void ScriptActions::doOverrideHulkLifetime( Real seconds )
 	else
 	{
 		// Convert real seconds into frames.
-		Int frames = (Int)(seconds * LOGICFRAMES_PER_SECOND);
+		Int frames = (Int)(seconds * 5.0f);  // BFME's logic runs 5 frames per second; Zero Hour ran 30
 		((BfmeGameLogicScriptFields *)TheGameLogic)->m_scriptHulkMaxLifetimeOverride = frames;
 	}
 }

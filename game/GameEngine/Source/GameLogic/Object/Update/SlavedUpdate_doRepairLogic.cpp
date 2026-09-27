@@ -182,7 +182,7 @@ void SlavedUpdate::doRepairLogic()
         BodyModuleInterface *body = master->m_body;
         if (body)
         {
-            Real amount = data->m_repairRatePerSecond / 30.0f;
+            Real amount = data->m_repairRatePerSecond / 5.0f;  // BFME's logic runs 5 frames per second; Zero Hour ran 30
             DamageInfo healing;
             healing.m_amount = amount;
             healing.m_damageType = 7;

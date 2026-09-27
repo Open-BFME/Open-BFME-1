@@ -26,13 +26,13 @@ void Radar::createPlayerEvent( Player *player, const Coord3D *world,
 
 	Real darkScale = -0.75f;
 	color[ 1 ] = color[ 0 ];
-	color[ 1 ].red -= (Int)( color[ 0 ].red * darkScale );
+	color[ 1 ].red += (Int)( color[ 0 ].red * darkScale );
 	if( color[ 1 ].red < 0 )
 		color[ 1 ].red = 0;
-	color[ 1 ].green -= (Int)( color[ 0 ].green * darkScale );
+	color[ 1 ].green += (Int)( color[ 0 ].green * darkScale );
 	if( color[ 1 ].green < 0 )
 		color[ 1 ].green = 0;
-	color[ 1 ].blue -= (Int)( color[ 0 ].blue * darkScale );
+	color[ 1 ].blue += (Int)( color[ 0 ].blue * darkScale );
 	if( color[ 1 ].blue < 0 )
 		color[ 1 ].blue = 0;
 

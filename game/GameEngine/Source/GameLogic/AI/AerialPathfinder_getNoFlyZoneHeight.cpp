@@ -51,7 +51,7 @@ Real AerialPathfinder::getNoFlyZoneHeight(Real worldX, Real worldY)
 	NoFlyQueryState state;
 
 	if (m_noFlyZones.empty())
-		return -9999.0f;
+		return 0.0f;
 
 	_STL::list<NoFlyZone>::iterator it = m_noFlyZones.begin();
 	state.height = -9999.0f;

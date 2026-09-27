@@ -179,7 +179,7 @@ void ScriptEngine::setTimer(ScriptAction *action,
 				2244);
 		}
 		counter->m_value = bfmeSetTimerFloatToLong(
-			(float)ceil((double)(value * 30.0f)));
+			(float)ceil((double)(value * 5.0f)));  // BFME's logic runs 5 frames per second; Zero Hour ran 30
 		counter->m_isMillisecondTimer = true;
 	}
 	else
@@ -222,7 +222,7 @@ void ScriptEngine::adjustTimer(ScriptAction *action,
 		if (!add)
 			value = -value;
 		counter->m_value += bfmeTimerFloatToLong(
-			(float)ceil((double)(value * 30.0f)));
+			(float)ceil((double)(value * 5.0f)));  // BFME's logic runs 5 frames per second; Zero Hour ran 30
 	}
 	else
 	{

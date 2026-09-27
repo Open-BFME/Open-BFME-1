@@ -129,7 +129,7 @@ void ScriptEngine::Rva00345a50(ScriptAction *action, Int random,
 		else
 			value = action->getParameter(1)->getReal();
 		counter->m_value = rva00345a50FloatToLong(
-			(float)ceil((double)(value * 30.0f)));
+			(float)ceil((double)(value * 5.0f)));  // BFME's logic runs 5 frames per second; Zero Hour ran 30
 		counter->m_isMillisecondTimer = true;
 		return;
 	}

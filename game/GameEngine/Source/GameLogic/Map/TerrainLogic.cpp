@@ -2801,7 +2801,7 @@ void TerrainLogic::changeWaterHeightOverTime( const WaterHandle *water,
 	// add the entry into the array of water to update
 	waterUpdate->entries[ waterUpdate->count ].waterTable = water;
 	waterUpdate->entries[ waterUpdate->count ].changePerFrame = (finalHeight - currentHeight) /
-																												 (LOGICFRAMES_PER_SECOND * transitionTimeInSeconds);
+																												 (5.0f * transitionTimeInSeconds);  // BFME's logic runs 5 frames per second; Zero Hour ran 30
 	waterUpdate->entries[ waterUpdate->count ].targetHeight = finalHeight;
 	waterUpdate->entries[ waterUpdate->count ].damageAmount = damageAmount;
 	waterUpdate->entries[ waterUpdate->count ].currentHeight = currentHeight;

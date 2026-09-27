@@ -93,8 +93,9 @@ __declspec(noinline) void Rva001A4630TerrainRecordQuery::queryPointImplAt001A463
 	if (y < bounds.lo.y) y = bounds.lo.y;
 	if (x > bounds.hi.x) x = bounds.hi.x;
 	if (y > bounds.hi.y) y = bounds.hi.y;
-	Int xIndex = REAL_TO_INT_FLOOR(((x - bounds.lo.x) / (bounds.hi.x - bounds.lo.x)) * (100 - 0.1f));
-	Int yIndex = REAL_TO_INT_FLOOR(((y - bounds.lo.y) / (bounds.hi.y - bounds.lo.y)) * (100 - 0.1f));
+	// Retail scales by 49.9, a 50-cell grid; Zero Hour's grid was 100 cells (99.9).
+	Int xIndex = REAL_TO_INT_FLOOR(((x - bounds.lo.x) / (bounds.hi.x - bounds.lo.x)) * (50 - 0.1f));
+	Int yIndex = REAL_TO_INT_FLOOR(((y - bounds.lo.y) / (bounds.hi.y - bounds.lo.y)) * (50 - 0.1f));
 
 	x = position->x + radius;
 	y = position->y + radius;
@@ -102,8 +103,8 @@ __declspec(noinline) void Rva001A4630TerrainRecordQuery::queryPointImplAt001A463
 	if (y < bounds.lo.y) y = bounds.lo.y;
 	if (x > bounds.hi.x) x = bounds.hi.x;
 	if (y > bounds.hi.y) y = bounds.hi.y;
-	Int xMax = REAL_TO_INT_CEIL(((x - bounds.lo.x) / (bounds.hi.x - bounds.lo.x)) * (100 - 0.1f));
-	Int yMax = REAL_TO_INT_CEIL(((y - bounds.lo.y) / (bounds.hi.y - bounds.lo.y)) * (100 - 0.1f));
+	Int xMax = REAL_TO_INT_CEIL(((x - bounds.lo.x) / (bounds.hi.x - bounds.lo.x)) * (50 - 0.1f));
+	Int yMax = REAL_TO_INT_CEIL(((y - bounds.lo.y) / (bounds.hi.y - bounds.lo.y)) * (50 - 0.1f));
 
 	for (Int i = xIndex; i < xMax; ++i)
 	{

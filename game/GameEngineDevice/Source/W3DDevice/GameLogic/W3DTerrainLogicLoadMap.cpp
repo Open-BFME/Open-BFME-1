@@ -10,7 +10,7 @@ typedef int Int;
 typedef float Real;
 typedef unsigned short UnsignedShort;
 
-#define MAP_HEIGHT_SCALE (0.625f)
+#define MAP_HEIGHT_SCALE (10.0f/256.0f)  // BFME: MAP_XY_FACTOR/256; Zero Hour divided by 16
 
 struct Gen_t_006bea40_p8pod
 {

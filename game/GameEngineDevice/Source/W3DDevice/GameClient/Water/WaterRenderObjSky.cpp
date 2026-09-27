@@ -118,8 +118,8 @@ void WaterRenderObjClass::renderSky(void)
 	m_uOffset = m_uOffset - (Real)((Int)m_uOffset);
 	m_vOffset = m_vOffset - (Real)((Int)m_vOffset);
 
-	fu = m_uOffset + (384.0f * 2.0f) * setting->skyTexelsPerUnit;
-	fv = m_vOffset + (384.0f * 2.0f) * setting->skyTexelsPerUnit;
+	fu = m_uOffset + (3840.0f * 2.0f) * setting->skyTexelsPerUnit;
+	fv = m_vOffset + (3840.0f * 2.0f) * setting->skyTexelsPerUnit;
 
 	VertexMaterialClass *vmat = VertexMaterialClass::Get_Preset(
 		VertexMaterialClass::PRELIT_DIFFUSE);

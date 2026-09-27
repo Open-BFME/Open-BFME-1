@@ -122,9 +122,10 @@ void Rva001A55E0GridVisitByte::visit(const Coord3D *position, Real radius,
 	if (x > bounds.hi.x) x = bounds.hi.x;
 	if (y > bounds.hi.y) y = bounds.hi.y;
 	Real xRatio = (x - bounds.lo.x) / (bounds.hi.x - bounds.lo.x);
-	int xMin = REAL_TO_INT_FLOOR(xRatio * (100 - 0.1f));
+	// Retail scales by 49.9, a 50-cell grid; Zero Hour's grid was 100 cells (99.9).
+	int xMin = REAL_TO_INT_FLOOR(xRatio * (50 - 0.1f));
 	Real yRatio = (y - bounds.lo.y) / (bounds.hi.y - bounds.lo.y);
-	int yMin = REAL_TO_INT_FLOOR(yRatio * (100 - 0.1f));
+	int yMin = REAL_TO_INT_FLOOR(yRatio * (50 - 0.1f));
 
 	x = position->x + radius;
 	y = position->y + radius;
@@ -133,9 +134,9 @@ void Rva001A55E0GridVisitByte::visit(const Coord3D *position, Real radius,
 	if (x > bounds.hi.x) x = bounds.hi.x;
 	if (y > bounds.hi.y) y = bounds.hi.y;
 	Real xMaxRatio = (x - bounds.lo.x) / (bounds.hi.x - bounds.lo.x);
-	int xMax = REAL_TO_INT_CEIL(xMaxRatio * (100 - 0.1f));
+	int xMax = REAL_TO_INT_CEIL(xMaxRatio * (50 - 0.1f));
 	Real yMaxRatio = (y - bounds.lo.y) / (bounds.hi.y - bounds.lo.y);
-	int yMax = REAL_TO_INT_CEIL(yMaxRatio * (100 - 0.1f));
+	int yMax = REAL_TO_INT_CEIL(yMaxRatio * (50 - 0.1f));
 
 	for (int xIndex = xMin; xIndex < xMax; ++xIndex)
 	{

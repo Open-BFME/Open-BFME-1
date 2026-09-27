@@ -9,7 +9,7 @@ typedef bool Bool;
 typedef unsigned short UnsignedShort;
 
 #define MAP_XY_FACTOR (10.0f)
-#define MAP_HEIGHT_SCALE (0.625f)
+#define MAP_HEIGHT_SCALE (MAP_XY_FACTOR/256.0f)  // BFME; Zero Hour divided by 16
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/WorldHeightMap.h
 class WorldHeightMap

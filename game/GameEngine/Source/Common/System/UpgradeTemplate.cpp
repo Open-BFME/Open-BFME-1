@@ -139,5 +139,5 @@ void UpgradeTemplate::cacheButtonImage()
 // ?calcTimeToBuild@UpgradeTemplate@@QBEHPAVPlayer@@@Z
 int UpgradeTemplate::calcTimeToBuild(Player *) const
 {
-	return m_buildTime * 30.0f;
+	return m_buildTime * 5.0f;  // BFME's logic runs 5 frames per second; Zero Hour ran 30
 }

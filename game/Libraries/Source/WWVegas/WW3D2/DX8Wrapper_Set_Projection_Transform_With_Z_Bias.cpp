@@ -46,7 +46,7 @@ void DX8Wrapper::Set_Projection_Transform_With_Z_Bias(
 		tmp = ProjectionMatrix;
 		float tmp_zbias = ZBias;
 		tmp[3][2] -= (znear * zfar / (zfar - znear)) *
-			(tmp_zbias * (1.0f / 16.0f));
+			(tmp_zbias * (1.0f / 1600.0f));
 		D3DDevice->vtable->SetTransform(
 			D3DDevice, 3, reinterpret_cast<void *>(&tmp));
 	}

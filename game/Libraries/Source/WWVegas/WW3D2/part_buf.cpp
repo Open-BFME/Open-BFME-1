@@ -3412,7 +3412,7 @@ float ParticleBufferClass::Get_Texture_Tile_Factor(void) const
 	if (LineRenderer != NULL) {
 		return LineRenderer->Get_Texture_Tile_Factor();
 	} 
-	return 1.0f;
+	return 0.0f;
 }
 
 Vector2 ParticleBufferClass::Get_UV_Offset_Rate(void) const
