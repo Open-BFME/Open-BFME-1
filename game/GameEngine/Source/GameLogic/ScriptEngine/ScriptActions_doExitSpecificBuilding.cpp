@@ -14,10 +14,7 @@ enum KindOfType
 	KINDOF_STRUCTURE = 7
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_SCRIPT = 1
-};
+#include "../command_source_type.h"
 
 class Object;
 

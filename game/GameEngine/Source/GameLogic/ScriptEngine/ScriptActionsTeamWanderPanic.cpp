@@ -165,10 +165,7 @@ public:
 
 #undef BFME_TERRAIN_SLOT
 
-enum CommandSourceType
-{
-	CMD_FROM_SCRIPT = 1
-};
+#include "../command_source_type.h"
 
 class AICommandInterface
 {

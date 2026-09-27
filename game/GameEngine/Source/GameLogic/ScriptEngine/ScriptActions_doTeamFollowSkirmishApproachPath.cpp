@@ -113,10 +113,7 @@ public:
 
 class Waypoint;
 
-enum CommandSourceType
-{
-	CMD_FROM_SCRIPT = 1
-};
+#include "../command_source_type.h"
 
 #define callMemberFunction(object, ptrToMember) ((object).*(ptrToMember))
 

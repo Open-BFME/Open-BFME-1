@@ -40,10 +40,7 @@ typedef bool Bool;
 typedef int Int;
 typedef unsigned short PlayerMaskType;
 
-enum CommandSourceType
-{
-	CMD_FROM_AI = 2
-};
+#include "../command_source_type.h"
 
 struct Coord3D
 {

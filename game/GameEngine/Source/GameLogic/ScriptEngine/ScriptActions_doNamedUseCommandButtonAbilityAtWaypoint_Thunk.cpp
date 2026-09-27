@@ -166,11 +166,7 @@ public:
 	const CommandSet *findCommandSet(const AsciiString &name);
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT = 1
-};
+#include "../command_source_type.h"
 
 class Object
 {

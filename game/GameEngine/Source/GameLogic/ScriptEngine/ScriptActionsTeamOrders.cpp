@@ -26,11 +26,7 @@ class Object;
 class PolygonTrigger;
 class Team;
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT = 1
-};
+#include "../command_source_type.h"
 
 const int NO_MAX_SHOTS_LIMIT = 0x7fffffff;
 

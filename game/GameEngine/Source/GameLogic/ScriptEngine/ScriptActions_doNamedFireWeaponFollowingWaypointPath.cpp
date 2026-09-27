@@ -14,11 +14,7 @@ class Object;
 class Weapon;
 class Waypoint;
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT = 1
-};
+#include "../command_source_type.h"
 
 class AICommandInterface
 {

@@ -8,11 +8,7 @@ typedef bool Bool;
 typedef int Int;
 typedef float Real;
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT = 1
-};
+#include "../command_source_type.h"
 
 class BfmeStringArgBase
 {

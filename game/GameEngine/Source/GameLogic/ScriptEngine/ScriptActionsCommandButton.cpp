@@ -30,11 +30,7 @@ class Object;
 class Team;
 struct Coord3D;
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT = 1
-};
+#include "../command_source_type.h"
 
 enum GUICommandType
 {

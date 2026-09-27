@@ -45,11 +45,7 @@ struct Coord3D
 	Real z;
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT = 1
-};
+#include "../command_source_type.h"
 
 enum AllowPlayerRelationship
 {

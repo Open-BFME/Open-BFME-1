@@ -26,7 +26,7 @@ enum EmotionType
 };
 
 enum GuardMode { GUARDMODE_NORMAL = 0 };
-enum CommandSourceType { CMD_FROM_SCRIPT = 1 };
+#include "../command_source_type.h"
 
 struct Coord3D { Real x, y, z; };
 
