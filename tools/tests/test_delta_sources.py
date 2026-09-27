@@ -266,11 +266,16 @@ elif a and a[0] == "diff":
         print("targets/game/reverse/functions.csv")
         if os.environ["SELECTOR_MODE"] == "pins": print("targets/game/reverse/symbols.csv")
     elif "--quiet" in a:
-        changed = "--cached" in a or "base" in a
+        wide = {"*.h", "*.hpp", "inputs/reference/shims/*", "inputs/toolchains/*"}
+        changed = "--cached" in a or ("base" in a and not wide.intersection(a))
         sys.exit(1 if changed else 0)
 ''',
         "python3": '''import os, sys
-if sys.argv[1] == "tools/delta_sources.py":
+if sys.argv[1] == "tools/verification_cache.py":
+    if sys.argv[2] == "prepare":
+        path = sys.argv[sys.argv.index("--selectors-file") + 1]
+        print(open(path).read(), end="")
+elif sys.argv[1] == "tools/delta_sources.py":
     mode = "pins" if "--pins" in sys.argv else "ordinary"
     if mode == os.environ["SELECTOR_MODE"]:
         outcome = os.environ["SELECTOR_OUTCOME"]

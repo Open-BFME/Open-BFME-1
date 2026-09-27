@@ -16,6 +16,7 @@ fail() {
 }
 
 refs="$(cat || true)"
+remote_name="${1:-origin}"
 
 ZERO=0000000000000000000000000000000000000000
 
@@ -26,15 +27,36 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
     case "${_remote_ref:-}" in refs/claims/*) continue ;; esac
     [ "$local_sha" = "$ZERO" ] && continue   # deleting a remote ref
 
+    # The SHA on stdin is the destination tip advertised by THIS push
+    # negotiation.  Never substitute a possibly stale origin/master here: an
+    # ordinary non-fast-forward race must be reported before any expensive
+    # checker or compiler starts.  If that advertised object is not local,
+    # fetch the actual destination ref and refuse when it moved while we were
+    # establishing the base.  A missing object is uncertainty, not permission
+    # to validate against a different tree.
+    git cat-file -e "$local_sha^{commit}" 2>/dev/null \
+        || fail "local pushed commit $local_sha is unavailable"
+    base=""
+    if [ "$remote_sha" != "$ZERO" ]; then
+        if ! git cat-file -e "$remote_sha^{commit}" 2>/dev/null; then
+            if ! git fetch --no-tags "$remote_name" "$_remote_ref"; then
+                fail "PUSH RACE: cannot inspect destination $_remote_ref at $remote_sha; retry"
+            fi
+            fetched="$(git rev-parse FETCH_HEAD^{commit} 2>/dev/null || true)"
+            [ "$fetched" = "$remote_sha" ] \
+                || fail "PUSH RACE: destination $_remote_ref advanced before verification; retry"
+            git cat-file -e "$remote_sha^{commit}" 2>/dev/null \
+                || fail "PUSH RACE: destination tip $remote_sha is unavailable; retry"
+        fi
+        git merge-base --is-ancestor "$remote_sha" "$local_sha" \
+            || fail "PUSH RACE: destination $_remote_ref at $remote_sha is not an ancestor of $local_sha; rebase and retry (validation not run)"
+        base="$remote_sha"
+    fi
+
     python3 tools/check_csv.py --ref "$local_sha" || fail "ledger integrity at $local_sha (see above)"
     # identity_guard runs at commit time; a commit rebased past a lowered baseline needs this.
     python3 tools/one_identity.py --check-ref "$local_sha" || fail "second real name on one body at $local_sha (see above)"
 
-    if [ "$remote_sha" != "$ZERO" ] && git cat-file -e "$remote_sha" 2>/dev/null; then
-        base="$remote_sha"
-    else
-        base="$(git merge-base "$local_sha" origin/master 2>/dev/null || true)"
-    fi
     git cat-file -e "$local_sha:tools/target_hooks.py" && git diff --quiet "$local_sha" -- tools/target_hooks.py \
         || fail "target checker differs from pushed snapshot; commit or revert its edits"
     if [ -n "$base" ]; then
@@ -89,6 +111,32 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
     python3 tools/pin_consistency.py --assert-shrink-only "$base" --at "$local_sha" \
         || fail "pin_consistency_baseline.csv grew across the outgoing range (see above)"
     python3 tools/b_pin_check.py --ref "$local_sha" || fail "a b_<rva> call lost its pin at $local_sha (see above)"
+
+    # A header/shim or compiler-toolchain change can affect rows whose ledger
+    # claims do not move.  The commit hook normally forces the full gate for
+    # these, but --no-verify and old clones must not turn that into a push-hook
+    # bypass.  Keep the full gate authoritative for this wide dependency class;
+    # ordinary functions.csv edits remain selectively cacheable below.
+    wide_change=0
+    if ! git diff --quiet "$base" "$local_sha" -- \
+            '*.h' '*.hpp' 'inputs/reference/shims/*' 'inputs/toolchains/*'; then
+        wide_change=1
+    fi
+    if [ "$wide_change" -ne 0 ]; then
+        wide_empty=$(mktemp)
+        wide_manifest=$(mktemp)
+        : > "$wide_empty"
+        python3 tools/verification_cache.py prepare --commit "$local_sha" \
+            --selectors-file "$wide_empty" --manifest "$wide_manifest" \
+            > /dev/null \
+            || { rm -f "$wide_empty" "$wide_manifest"; \
+                 fail "wide verification evidence preparation (see above)"; }
+        rm -f "$wide_empty" "$wide_manifest"
+        BUILD_POOL="${BUILD_POOL:-4}" python3 tools/gate_baseline.py --check \
+            || fail "full gate after header/toolchain change (see above)"
+        echo "PRE-PUSH OK (full gate after wide dependency change)"
+        continue
+    fi
 
     delta_out=$(mktemp)
     python3 tools/delta_sources.py --range "$base" "$local_sha" --selectors > "$delta_out" \
@@ -188,10 +236,22 @@ PY
         seen_verify["$s"]=1
         verify+=("$s")
     done
-    # Bound actual command length, not just selector count: exact row selectors
-    # include the mangled name in addition to the paired source path, and long
-    # outgoing ranges can otherwise exceed Windows' command-line limit.
+    # Reuse only successful row evidence whose content fingerprint still holds.
+    # Source selectors are retained on every invocation for the cheap source
+    # claim check; only exact rows with valid receipts leave the compiler list.
+    # The helper refuses a dirty relevant worktree, so build.sh cannot verify a
+    # different tree from the pushed commit.
     if [ "${#verify[@]}" -ne 0 ]; then
+        selector_in=$(mktemp)
+        selector_out=$(mktemp)
+        cache_manifest=$(mktemp)
+        printf '%s\n' "${verify[@]}" > "$selector_in"
+        python3 tools/verification_cache.py prepare \
+            --commit "$local_sha" --selectors-file "$selector_in" \
+            --manifest "$cache_manifest" > "$selector_out" \
+            || { rm -f "$selector_in" "$selector_out" "$cache_manifest"; \
+                 fail "verification evidence preparation (see above)"; }
+        mapfile -t verify < "$selector_out"
         measure_verify_argument() {
             local LC_ALL=C
             verify_argument_bytes=$((2 * ${#1} + 3))
@@ -216,6 +276,10 @@ PY
             BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${verify_chunk[@]}" \
                 || fail "byte-verify of outgoing sources/rows (see above)"
         fi
+        python3 tools/verification_cache.py record --manifest "$cache_manifest" \
+            || { rm -f "$selector_in" "$selector_out" "$cache_manifest"; \
+                 fail "verification evidence recording (see above)"; }
+        rm -f "$selector_in" "$selector_out" "$cache_manifest"
     fi
     echo "PRE-PUSH OK (${#verify[@]} outgoing verification selector(s) checked)"
 done <<< "$refs"

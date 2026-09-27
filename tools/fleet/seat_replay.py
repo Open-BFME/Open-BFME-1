@@ -30,6 +30,7 @@ import json
 import subprocess
 import sys
 import tempfile
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -39,7 +40,7 @@ sys.path.insert(0, str(ROOT / "tools" / "fleet"))
 LEDGERS = ("targets/game/reverse/functions.csv", "targets/game/reverse/symbols.csv",
            "targets/game/reverse/deleted_rows.csv", "targets/game/reverse/re_attempts.log")
 JSON_LISTS = ("targets/game/reverse/name_corrections.json",)
-RACES = ("fetch first", "non-fast-forward", "cannot lock ref", "stale info")
+RACES = ("PUSH RACE", "fetch first", "non-fast-forward", "cannot lock ref", "stale info")
 
 
 def git(cwd, *args, check=False, text=True):
@@ -286,7 +287,7 @@ def replay(repo, commit, tree, tries=20, correct=None):
 def _replay(repo, commit, tree, tries, correct):
     delta = seat_delta(repo, commit)
     message = git(repo, "log", "-1", "--format=%B", commit).stdout
-    for _ in range(tries):
+    for attempt in range(tries):
         git(tree, "fetch", "-q", "origin", "master", check=True)
         git(tree, "reset", "-q", "--hard", "origin/master", check=True)
         problem = apply_delta(tree, delta)
@@ -323,6 +324,8 @@ def _replay(repo, commit, tree, tries, correct):
         moved = git(tree, "rev-parse", "origin/master").stdout.strip() != base
         if not moved and not any(k in pushed.stdout + pushed.stderr for k in RACES):
             return "push refused:\n" + (pushed.stdout + pushed.stderr)[-2500:]
+        if attempt + 1 < tries:
+            time.sleep(min(2 ** attempt, 8))
     return f"not pushed after {tries} replays"
 
 

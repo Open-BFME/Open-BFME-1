@@ -36,6 +36,7 @@ import os
 import shutil
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -298,8 +299,10 @@ def push(tree, tries=20):
         # The pre-push checks take minutes and master moves meanwhile: a
         # non-fast-forward or ref-lock race is retried, anything else is real.
         text = pushed.stdout + pushed.stderr
-        if not any(k in text for k in ("fetch first", "non-fast-forward", "cannot lock ref", "stale info")):
+        if not any(k in text for k in ("PUSH RACE", "fetch first", "non-fast-forward", "cannot lock ref", "stale info")):
             return "push refused:\n" + text[-2500:]
+        if _ + 1 < tries:
+            time.sleep(min(2 ** _, 8))
     return f"not pushed after {tries} attempts (lost every race with other pushers)"
 
 

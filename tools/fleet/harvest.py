@@ -8,7 +8,7 @@ checkout's HEAD to the pushed commit, refreshing only files whose working copy
 still equals the old commit (untouched by anyone in flight). If workers advance
 the ledgers during network work, preserve their edits and defer local sync.
 """
-import csv, os, re, subprocess, sys
+import csv, os, re, subprocess, sys, time
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2 if Path(__file__).resolve().parent.name == "fleet" else 1]
 sys.path.insert(0, str(ROOT / "tools"))
@@ -33,6 +33,13 @@ def run(*cmd, cwd=ROOT, check=True, cap=False):
 
 def out(*cmd, cwd=ROOT):
     return subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, check=True).stdout.strip()
+
+
+def push_raced(result):
+    """Whether a failed push was an ordinary destination race."""
+    text = (result.stdout or "") + (result.stderr or "")
+    return any(marker in text for marker in
+               ("PUSH RACE", "fetch first", "non-fast-forward", "cannot lock ref", "stale info"))
 
 def show(rev, f):
     return subprocess.run(["git", "show", f"{rev}:{f}"], cwd=ROOT, capture_output=True).stdout
@@ -494,10 +501,20 @@ with open(ROOT / "targets/game/reverse/.add_match.lock", "a+") as h:
             # Retain the per-host checkpoint so the next harvest updates an
             # existing ref instead of repeating the slow branch-creation push.
         else:
-            rc = run("git", "push", "origin", f"{new}:master", cwd=WT, check=False).returncode
+            pushed = run("git", "push", "origin", f"{new}:master", cwd=WT, check=False)
+            rc = pushed.returncode
+            # A hook validation failure is not a reason to loop blindly.  The
+            # hook names an early stale-base race; server-side non-fast-forward
+            # is the other ordinary race.  Everything else is a real gate
+            # failure and remains visible for a human to fix.
+            if rc and not push_raced(pushed):
+                hands("harvest: push validation failed; hands needed\n" +
+                      (pushed.stdout + pushed.stderr)[-2500:])
         if not rc:
             break
         print(f"harvest: push raced another lane (attempt {attempt + 1}); rebasing again", flush=True)
+        if attempt + 1 < 5:
+            time.sleep(min(2 ** attempt, 8))
     else:
         sys.exit("harvest: push rejected 5 times (raced another lane); rerun")
 
