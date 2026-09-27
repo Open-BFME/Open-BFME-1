@@ -232,7 +232,7 @@ def landed_rows(tree):
     return out
 
 
-def push(tree, tries=8):
+def push(tree, tries=20):
     """pull --rebase and push HEAD:master until the remote has it. After every
     rebase, union merge may have resurrected tombstoned rows (two deletions in
     one hunk keep both sides); drop them in place and commit before pushing."""
@@ -251,11 +251,18 @@ def push(tree, tries=8):
                          "-m", "\n".join(l for l in dropped.splitlines() if "dropped" in l)[:3000])
             if commit.returncode:
                 return "merge-repair commit refused:\n" + (commit.stdout + commit.stderr)[-1500:]
-        if git(tree, "push", "-q", "origin", "HEAD:master").returncode == 0:
+        pushed = git(tree, "push", "-q", "origin", "HEAD:master")
+        if pushed.returncode == 0:
             git(tree, "fetch", "-q", "origin", "master")
             if git(tree, "merge-base", "--is-ancestor", "HEAD", "origin/master").returncode == 0:
                 return None
-    return f"not pushed after {tries} attempts"
+            continue
+        # The pre-push checks take minutes and master moves meanwhile: a
+        # non-fast-forward or ref-lock race is retried, anything else is real.
+        text = pushed.stdout + pushed.stderr
+        if not any(k in text for k in ("fetch first", "non-fast-forward", "cannot lock ref", "stale info")):
+            return "push refused:\n" + text[-2500:]
+    return f"not pushed after {tries} attempts (lost every race with other pushers)"
 
 
 def harvest(seat):
