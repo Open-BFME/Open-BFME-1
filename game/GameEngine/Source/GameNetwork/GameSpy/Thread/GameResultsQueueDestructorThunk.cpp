@@ -1,14 +1,16 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// GameSpyBuddyMessageQueue's destructor (0x0063D0F0) and the two deleting
+// destructors: its own (0x0063E170, slot 0 of its table 0x01118E70) and its
+// interface's (0x0063A700, slot 0 of the base table 0x01118E04).
 
 extern "C" void _ReadWriteBarrier();
 #pragma intrinsic(_ReadWriteBarrier)
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/GameResultsThread.h
-class GameResultsInterface
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/BuddyThread.h
+class GameSpyBuddyMessageQueueInterface
 {
 public:
-	virtual ~GameResultsInterface() {}
+	virtual ~GameSpyBuddyMessageQueueInterface() {}
 };
 
 class GameResultsMutex { public: ~GameResultsMutex(); private: void *m_data[2]; };
@@ -40,10 +42,10 @@ public:
 	void shutdown();
 };
 
-class GameResultsQueue : public GameResultsInterface
+class GameSpyBuddyMessageQueue : public GameSpyBuddyMessageQueueInterface
 {
 public:
-	virtual ~GameResultsQueue();
+	virtual ~GameSpyBuddyMessageQueue();
 
 private:
 	GameResultsMutex m_requestMutex;
@@ -55,7 +57,7 @@ private:
 	GameResultsThreadAuxHolder m_aux;
 };
 
-GameResultsQueue::~GameResultsQueue()
+GameSpyBuddyMessageQueue::~GameSpyBuddyMessageQueue()
 {
 	if (m_worker)
 	{
