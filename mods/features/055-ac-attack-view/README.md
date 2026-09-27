@@ -2,7 +2,9 @@
 
 **AC is still reproducible.** This patch improved one part of the reported
 attack-cancel behavior, but the requester reviewing the live-test video saw
-rear Uruks give up when the player clicked the target again. It is opt-in for
+rear Uruks give up despite their controller issuing no new order. The reviewer
+associated this with a second click in the video; the clicked object is not
+documented. This patch is opt-in for
 investigation and is **not** in `mods/dist/lotrbfme.exe`. This repository does
 not control Arena deployment; Arena's reported package includes only the
 network-delay fix. Build this patch separately with
@@ -23,8 +25,8 @@ these Soldiers, so the searches ignored their reservations. A target absent
 from both search results cannot be selected by the later melee code.
 
 This is a target-discovery failure. It does not explain every reason a unit may
-cancel or abandon an attack, especially the rear-unit behavior seen after a
-second click in the live-test video.
+cancel or abandon an attack, especially the rear Uruks disengaging without a
+new order from their controller in the live-test video.
 
 ## What the code does
 
@@ -62,7 +64,9 @@ candidate rule above.
   This demonstrates improved target discovery for that encounter.
 - The initial live two-client test appeared successful. The original requester
   subsequently reviewed its video and reported that **rear Uruks still cancel
-  or give up immediately after a re-click**. We treat this as an unresolved
+  or give up without a new order from their controller**. The reviewer tied
+  this to a second click in the video, but the clicked object has not been
+  identified. We treat this as an unresolved
   part of AC, not a successful full fix.
 - `tools/tests/test_ac_attack_view_hook.py` and
   `tools/tests/test_ac_predicate_gate.py` verify the compiled hooks and their
@@ -70,6 +74,6 @@ candidate rule above.
   gameplay safety or prove the remaining cancellation is fixed.
 
 The next investigation needs a recording or logs that identify each Uruk's
-order, target, attack state and reason for leaving it at the re-click. The
+order, target, attack state and reason for leaving it around that click. The
 current patch has no chat or combat logging. It remains opt-in until the
 remaining behavior is explained and retested.
