@@ -1,10 +1,12 @@
-// ?d_0057e9a0@@YAXXZ
-// partial score=0.305 date=2026-09-27
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /FAsc /Fabuild/Rva0057E9A0.exp11.cod
-// The callback identity remains address-derived; its owner layout is witnessed by landed neighbours.
+// ?handleMessage@Rva0057E9A0Screen@@QAEHHPAX0@Z
+// partial score=0.964 date=2026-09-27
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// Owner identity stays address-derived; 24 non-reloc diffs remain, all eax/ecx/edx/esi choices.
 
 #include "ascii_string.h"
 #include "unicode_string.h"
+
+template<> int StringBase<unsigned short>::compare( const StringBase<unsigned short> &str ) const throw();
 
 inline UnicodeString::UnicodeString( const UnicodeString &value )
 {
@@ -28,7 +30,7 @@ class Rva0057E9A0State
 public:
 	virtual void slot00();
 	char m_unmodelled[ 0x128 ];
-	void dispatch( int message, void *argument, void *data );
+	int dispatch( int message, void *argument, void *data );
 };
 
 class SkirmishPreferences
@@ -38,7 +40,7 @@ public:
 	virtual void slot1();
 	virtual bool load();
 	virtual bool write();
-	UnicodeString getUserName() throw();
+	UnicodeString getUserName();
 	char m_unmodelled[ 0x14 ];
 };
 
@@ -140,30 +142,27 @@ private:
 // ?handleMessage@Rva0057E9A0Screen@@QAEHHPAX0@Z
 int Rva0057E9A0Screen::handleMessage( int message, void *argument, void *data )
 {
-	defaultHandler( message, argument, data );
+	int result = defaultHandler( message, argument, data );
 
 	if( Rva00579160TheCurrent != 0 )
-	{
-		m_state.dispatch( message, argument, data );
-		switch( message )
-		{
-		case 0x4025:
-		{
-			if( argument != m_playerProfile )
-				goto success;
+		result = m_state.dispatch( message, argument, data );
 
+	switch( message )
+	{
+	case 0x4025:
+		if( argument == m_playerProfile )
+		{
 			UnicodeString selected = GadgetComboBoxGetText( m_playerProfile );
-			if( selected.compare( TheGameText->fetch( "APT:NewProfile" ) ) != 0 )
+			if( selected.compare( TheGameText->fetch( "APT:NewProfile" ) ) == 0 )
 			{
 				m_mode = 2;
 				TheWindowManager->winSetFocus( m_createPersonaEntry );
 				GadgetTextEntrySetText( m_createPersonaEntry, BFMEUnicodeEmptyString );
 				g_theWindowManager->unidentified_00015235(
 					m_movie, "PopUpPersona", 0, 0, 0, 0, 0, 0 );
-				goto success;
+				break;
 			}
-
-			if( selected.compare( TheGameText->fetch( "APT:DeleteProfile" ) ) != 0 )
+			if( selected.compare( TheGameText->fetch( "APT:DeleteProfile" ) ) == 0 )
 			{
 				m_mode = 3;
 				TheWindowManager->winSetFocus( m_createPersonaEntry );
@@ -171,34 +170,30 @@ int Rva0057E9A0Screen::handleMessage( int message, void *argument, void *data )
 					m_movie, "PopUpRemove", 0, 0, 0, 0, 0, 0 );
 				AsciiString name( "APT:RemoveEntryName" );
 				g_theWindowManager->bfme_setAptText( name, m_preferences.getUserName() );
-			goto success;
+				break;
 			}
-
 			if( selected.compare( m_preferences.getUserName() ) != 0 )
 			{
 				( (Gen0009FBB0Owner *)&m_preferences )->Rva0009FBB0( selected );
 				m_preferences.write();
 				reloadHonors();
+				break;
 			}
-			goto success;
 		}
+		break;
 
-		case 0x4030:
-			if( argument != m_createPersonaEntry )
-				return 0;
+	case 0x4030:
+		if( argument == m_createPersonaEntry )
 		{
 			if( data == 0 )
 				personaAccept( 0 );
-			goto success;
+			break;
 		}
+		return 0;
 
-		default:
-			return 0;
-		}
+	default:
+		return result;
 	}
 
-	return 0;
-
-success:
 	return 1;
 }
