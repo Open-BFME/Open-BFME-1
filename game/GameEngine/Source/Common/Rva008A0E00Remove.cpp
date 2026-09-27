@@ -121,3 +121,28 @@ Rva008A0ED0Owner *Rva008A0ED0Owner::init()
 	memset( m_entries, 0, sizeof( m_entries ) );
 	return this;
 }
+
+class Rva008A0D80Entry
+{
+public:
+	virtual void notify();
+};
+
+class Rva008A0D80Owner
+{
+public:
+	void append( Rva008A0D80Entry *entry );
+
+private:
+	int m_count;
+	int m_pad;
+	Rva008A0D80Entry **m_table;
+};
+
+// ?append@Rva008A0D80Owner@@QAEXPAVRva008A0D80Entry@@@Z
+void Rva008A0D80Owner::append( Rva008A0D80Entry *entry )
+{
+	m_table[m_count] = entry;
+	++m_count;
+	entry->notify();
+}
