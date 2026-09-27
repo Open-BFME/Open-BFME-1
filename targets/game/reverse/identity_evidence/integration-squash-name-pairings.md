@@ -22,8 +22,3 @@ name with a placeholder in the unrelated file. Neither is an identity change:
   helper was a bank-local scaffold name. The pairing with the unrelated
   `targets/game/reverse/attempts/0x0078b4f0.cpp` bank (`rva0078B4F0`, a separate
   address-derived near-miss at 0x0078B4F0) is not a rename.
-- Rebasing the 0x007BAC10 landing over concurrent upstream shadow work paired
-  the upstream view types in `W3DVolumetricShadow.cpp` (`BFMEVolumetricShadowView`,
-  `BFMEShadowGeometryMeshView`, `BFMEShadowGeometry`, `W3DShadowGeometryMesh`)
-  with the retired bank's address-derived `Rva007BAC10Owner`/`Rva007BAC10Mesh`.
-  The source keeps its descriptive types; only the bank changes. No identity changed.
