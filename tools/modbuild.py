@@ -455,6 +455,37 @@ def build_structure_melee_gate(pe, feature_dir, probe=False):
     ), probe=probe)
 
 
+# Every span is checked before patching: several sites sit immediately before
+# a short branch that must remain in retail, or before a live x87 calculation.
+MELEEPROBE_HOOKS = (
+    (0x001758F0, "meleeprobe_enter_state", ("ecx",), "83ec0c538bd9"),
+    (0x00175A80, "meleeprobe_update_state", ("ecx",), "5153558be9"),
+    (STRUCTURE_MELEE_ONENTER_CALL, "meleeprobe_enter_before", ("ebp", "esi", "ebx"), "e8efabeaff"),
+    (STRUCTURE_MELEE_ONENTER_RESTORE, "meleeprobe_enter_after", ("eax",), "83c40884c0"),
+    (STRUCTURE_MELEE_UPDATE_CALL, "meleeprobe_update_before", ("ebx", "edi", "ebp"), "e878aaeaff"),
+    (STRUCTURE_MELEE_UPDATE_RESTORE, "meleeprobe_update_after", ("eax",), "83c40884c0"),
+    (0x00175A0F, "meleeprobe_begin", ("ebp", "esi", "ebx"), "8b17568bcf"),
+    (0x00175B34, "meleeprobe_update_target", ("ebx", "edi", "ebp"), "8b16578bce"),
+    (0x00175AC5, "meleeprobe_stealth_fail", ("ebx", "edi", "ebp"), "5f5db8feffffff"),
+    (0x00175AFC, "meleeprobe_update_fail", ("ebx", "edi", "ebp"), "5e5f5db8feffffff"),
+    (0x00175B16, "meleeprobe_ready", ("ebx", "edi", "ebp"), "a198082f01"),
+    (0x00175B26, "meleeprobe_not_ready", ("ebx", "edi", "ebp"), "8b1598082f01"),
+    (0x00175985, "meleeprobe_enter_fail", ("ebp", "esi", "ebx"), "5f5e5db8feffffff"),
+    (0x001759C4, "meleeprobe_distance", ("ebp", "esi", "ebx"), "568bcde821e3ecff"),
+    (TARGET_LOOPBODY, "meleeprobe_loop", (), "8b038bcbc745fc00000000"),
+)
+
+
+def build_meleeprobe(pe, feature_dir, probe=False):
+    for target, name, args, expected in MELEEPROBE_HOOKS:
+        expected_bytes = bytes.fromhex(expected)
+        if pe.read(target, len(expected_bytes)) != expected_bytes:
+            raise SystemExit(f"meleeprobe retail span changed at 0x{target:08X}; "
+                             "052 owns 051's hooks and cannot stack with it")
+    return build_feature(pe, feature_dir / "src/meleeprobe.cpp", "meleeprobe_loop",
+                         tuple(hook[:3] for hook in MELEEPROBE_HOOKS), probe=probe)
+
+
 def build_uiprobe(pe, feature_dir, probe=False):
     # Shares 039-replayctl's hook address; build it with --only.
     return build_feature(pe, feature_dir / "src/uiprobe.cpp", "uiprobe_frame", (
@@ -650,6 +681,7 @@ DATA = {
 # candidate has not earned a place in it until the spike measuring it is green.
 # Promote one into FEATURES when it has.
 UNSHIPPED = {
+    "052-meleeprobe": (build_meleeprobe, "bounded AC diagnostic; replaces 051 hooks and includes its fix"),
     "030-netlatprobe": (build_netlatprobe, "an instrument: it writes tens of lines a second"),
     "036-fpsprobe-timing": (build_fpsprobe_timing,
                             "the probe without the backbuffer readback, for "
