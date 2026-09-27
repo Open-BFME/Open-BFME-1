@@ -6418,5 +6418,45 @@
   "after_sha256": "33b800f49c57342a5c81932b94dc719821cb75c6210d26f5c696f88203f5eb38",
   "evidence": "targets/game/reverse/identity_evidence/00766aa0-geometry-recovery.md",
   "reason": "False declaration-order pairing: BfmeVec3 is replaced by canonical Vector3 from vector3.h, while the new Rva00766AA0RenderSlots is the unrelated independently proved render-object vtable view for pointer-returning slot14. No established vector identity was made opaque."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GameWindowManagerScriptCreateGadget.cpp",
+  "old_name": "ComboBoxData",
+  "new_name": "Rva00486B10ComboData",
+  "before_sha256": "ba58995952d905fd290e44c04b75bdedc355a29b25c19f0ce5a18bae0f7f93c6",
+  "after_sha256": "72df6de4823e431c423f4315e7205b601ab21f7449edd0162e6365c6c2f5ea3c",
+  "evidence": "targets/game/reverse/identity_evidence/0x00486b10.md",
+  "reason": "Split artefact: the old names still appear 25 times in GameWindowManagerScript.cpp; only the naked createGadget lift left it, and the new TU uses offset-named local layouts for the fields createGadget touches."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GameWindowManagerScriptCreateGadget.cpp",
+  "old_name": "EntryData",
+  "new_name": "Rva00486B10EntryData",
+  "before_sha256": "ba58995952d905fd290e44c04b75bdedc355a29b25c19f0ce5a18bae0f7f93c6",
+  "after_sha256": "72df6de4823e431c423f4315e7205b601ab21f7449edd0162e6365c6c2f5ea3c",
+  "evidence": "targets/game/reverse/identity_evidence/0x00486b10.md",
+  "reason": "Split artefact: the old names still appear 25 times in GameWindowManagerScript.cpp; only the naked createGadget lift left it, and the new TU uses offset-named local layouts for the fields createGadget touches."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GameWindowManagerScriptCreateGadget.cpp",
+  "old_name": "ListboxData",
+  "new_name": "Rva00486B10ListData",
+  "before_sha256": "ba58995952d905fd290e44c04b75bdedc355a29b25c19f0ce5a18bae0f7f93c6",
+  "after_sha256": "72df6de4823e431c423f4315e7205b601ab21f7449edd0162e6365c6c2f5ea3c",
+  "evidence": "targets/game/reverse/identity_evidence/0x00486b10.md",
+  "reason": "Split artefact: the old names still appear 25 times in GameWindowManagerScript.cpp; only the naked createGadget lift left it, and the new TU uses offset-named local layouts for the fields createGadget touches."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GameWindowManagerScriptCreateGadget.cpp",
+  "old_name": "if",
+  "new_name": "Rva00485460CopyDrawData",
+  "before_sha256": "ba58995952d905fd290e44c04b75bdedc355a29b25c19f0ce5a18bae0f7f93c6",
+  "after_sha256": "72df6de4823e431c423f4315e7205b601ab21f7449edd0162e6365c6c2f5ea3c",
+  "evidence": "targets/game/reverse/identity_evidence/0x00486b10.md",
+  "reason": "Tokenizer pairing of a keyword with a new local helper; no identifier was renamed."
  }
 ]
