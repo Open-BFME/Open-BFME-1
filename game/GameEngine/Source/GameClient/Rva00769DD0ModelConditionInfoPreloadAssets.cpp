@@ -1,8 +1,7 @@
-// ?preloadAssets@Rva00769DD0ModelConditionInfo@@QAEXPAVAssetList@@PAXW4Rva00769DD0Mode@@_N@Z
-// partial score=0.99 date=2026-09-27
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
-// Open-BFME: address-derived ModelConditionInfo asset preload body.
+// Open-BFME: address-derived ModelConditionInfo asset preload body at retail 0x00769DD0.
+// Its only caller, 0x007710F0, passes (AssetList at +0x134, context, mode, zero-extended bool).
 
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #include <set>
@@ -148,22 +147,25 @@ private:
 	AsciiString m_unknownBC;
 };
 
-// The caller's first saved slot is reused for each temporary string.
+// ?preloadAssets@Rva00769DD0ModelConditionInfo@@QAEXPAVAssetList@@PAXW4Rva00769DD0Mode@@_N@Z
+// Mode 0 and 1 add the "L" suffix and mode 2 the "M" suffix; separate case bodies keep retail's sub/dec dispatch.
 void Rva00769DD0ModelConditionInfo::preloadAssets(AssetList *assets, void *context,
 	Rva00769DD0Mode mode, bool extra)
 {
 	for (AsciiString *it = m_modelNames.m_start; it != m_modelNames.m_finish; ++it)
 	{
 		AsciiString current(*it);
-		int zero = 0;
-		int adjusted = mode - zero;
-		if (adjusted == zero || !--adjusted)
+		switch (mode)
 		{
+		case RVA00769DD0_MODE_LOW:
 			current.concat("L", 1);
-		}
-		else if (!--adjusted)
-		{
+			break;
+		case RVA00769DD0_MODE_MEDIUM:
+			current.concat("L", 1);
+			break;
+		case RVA00769DD0_MODE_HIGH:
 			current.concat("M", 1);
+			break;
 		}
 
 		if (!Render_Obj_Exists(current.str()))
