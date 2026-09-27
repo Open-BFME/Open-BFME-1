@@ -6198,5 +6198,65 @@
   "after_sha256": "0c4e4469d3bce652c0c2870c18dfc7a35daeedf1029bd3763474c3a3e05c28f4",
   "evidence": "docs/analysis/skirmish_constructor_0057da50.md",
   "reason": "The old bank guessed a screen-specific holder class. Retail constructor0057C970 independently establishes a four-byte owning handle built from a16-byte callback binding; no class identity is proved. The address-derived holder retains the reference-counted copy contract and correct registration ABI."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/BfmeAptScreenSkirmishDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/Rva00566EC0ProfileDestructor.cpp",
+  "old_name": "BfmeAptScreenSkirmish",
+  "new_name": "Rva00566EC0Profile",
+  "before_sha256": "696f471315d5e72e0e0fce3a5b1bd3fdf0ef874abc873e5acd3684dd01dd79d7",
+  "after_sha256": "761cc39beccf19295cbdb17018760c31c647d3d4d89fa8650f0dbe33e4e56fce",
+  "evidence": "targets/game/reverse/identity_evidence/00566ec0-profile-family.md",
+  "reason": "Retail main screen0057DA50 constructs this distinct28B object at+390; its own vtable0110A314 and singleton012F4B3C differ from main-screen0110AFE0/012F4B54. The embedded ctor506/dtor300/deleting30 and singleton are corrected together to an address-derived owner; all three native bodies remain exact."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/BfmeAptScreenSkirmishDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/Rva00566EC0ProfileDestructor.cpp",
+  "old_name": "TheBfmeSkirmishOptionsSlot",
+  "new_name": "Rva012F4B3CProfile",
+  "before_sha256": "696f471315d5e72e0e0fce3a5b1bd3fdf0ef874abc873e5acd3684dd01dd79d7",
+  "after_sha256": "761cc39beccf19295cbdb17018760c31c647d3d4d89fa8650f0dbe33e4e56fce",
+  "evidence": "targets/game/reverse/identity_evidence/00566ec0-profile-family.md",
+  "reason": "Retail main screen0057DA50 constructs this distinct28B object at+390; its own vtable0110A314 and singleton012F4B3C differ from main-screen0110AFE0/012F4B54. The embedded ctor506/dtor300/deleting30 and singleton are corrected together to an address-derived owner; all three native bodies remain exact."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/BfmeAptScreenSkirmishOptionsConstructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/Rva00566EC0ProfileConstructor.cpp",
+  "old_name": "BfmeAptScreenSkirmish",
+  "new_name": "Rva00566EC0Profile",
+  "before_sha256": "8a3d165ee84b5b9f1bf51502fd33727550418576a0523d524465093df1c91999",
+  "after_sha256": "f188a407f5b688a5f8882f2e416bf66bc7eda44198f32e93217560dadc439fa6",
+  "evidence": "targets/game/reverse/identity_evidence/00566ec0-profile-family.md",
+  "reason": "Retail main screen0057DA50 constructs this distinct28B object at+390; its own vtable0110A314 and singleton012F4B3C differ from main-screen0110AFE0/012F4B54. The embedded ctor506/dtor300/deleting30 and singleton are corrected together to an address-derived owner; all three native bodies remain exact."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/BfmeAptScreenSkirmishOptionsConstructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/Rva00566EC0ProfileDestructor.cpp",
+  "old_name": "BfmeAptScreenSkirmish",
+  "new_name": "Rva00566EC0Profile",
+  "before_sha256": "8a3d165ee84b5b9f1bf51502fd33727550418576a0523d524465093df1c91999",
+  "after_sha256": "761cc39beccf19295cbdb17018760c31c647d3d4d89fa8650f0dbe33e4e56fce",
+  "evidence": "targets/game/reverse/identity_evidence/00566ec0-profile-family.md",
+  "reason": "Retail main screen0057DA50 constructs this distinct28B object at+390; its own vtable0110A314 and singleton012F4B3C differ from main-screen0110AFE0/012F4B54. The embedded ctor506/dtor300/deleting30 and singleton are corrected together to an address-derived owner; all three native bodies remain exact."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "BfmeAptScreenSkirmish",
+  "new_name": "Rva00566EC0Profile",
+  "before_sha256": "5d13afa1967685bd14b18f890667ab20226bac84bbc140e634cf295e9bea98df",
+  "after_sha256": "a791d9808ecda49cf4ad003dbae9261aa9b41008d7736cb283497006d32eac36",
+  "evidence": "targets/game/reverse/identity_evidence/00566ec0-profile-family.md",
+  "reason": "Retail main screen0057DA50 constructs this distinct28B object at+390; its own vtable0110A314 and singleton012F4B3C differ from main-screen0110AFE0/012F4B54. The embedded ctor506/dtor300/deleting30 and singleton are corrected together to an address-derived owner; all three native bodies remain exact."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "BfmeAptScreenSkirmish",
+  "new_name": "Rva00566EC0Profile",
+  "before_sha256": "7ee8da7d39fa46120e19ee9c87b2ee9212ba6d7e60336dbdeee921182d7507d6",
+  "after_sha256": "ab03e38b4717028853e1d46c60012ca13f6a4efb8826665107baab6d7c4eafba",
+  "evidence": "targets/game/reverse/identity_evidence/00566ec0-profile-family.md",
+  "reason": "Retail main screen0057DA50 constructs this distinct28B object at+390; its own vtable0110A314 and singleton012F4B3C differ from main-screen0110AFE0/012F4B54. The embedded ctor506/dtor300/deleting30 and singleton are corrected together to an address-derived owner; all three native bodies remain exact."
  }
 ]

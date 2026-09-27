@@ -60,15 +60,17 @@ the two spurious temporary unwind-state stores. No shared header changes.
 
 ## Existing naming conflict
 
-The separate 506-byte constructor at 00566EC0 is currently called
-BfmeAptScreenSkirmish() by its legacy source, but it constructs the 28-byte
-embedded object at this+390, with vtable 0110A314 and singleton 012F4B3C. The
-full screen uses singleton 012F4B54. These are distinct types. Its constructor,
-300-byte destructor at 005668C0, deleting destructor at 00566AE0 and singleton
-pin form a separate identity-repair family. This source uses an address-derived
-view and the existing verified constructor ILT; it does not propagate the
-legacy member name or add a guessed pin. The actual full-screen identity here
-is independently proved by its matched factory caller.
+The separate 506-byte constructor at 00566EC0 constructs a 28-byte object
+embedded at this+390, with vtable0110A314 and singleton012F4B3C. The full
+screen uses singleton012F4B54 and distinct vtable views. Its legacy full-screen
+class label has now been repaired across the constructor, 300-byte destructor,
+30-byte deleting destructor and singleton pin to Rva00566EC0Profile. The native
+virtual destructor naturally emits the deleting wrapper; the old force-delete
+probe is removed. The main constructor continues to use its verified
+address-derived member view and existing constructor ILT. See
+[the lifecycle identity proof](../../targets/game/reverse/identity_evidence/00566ec0-profile-family.md).
+The actual full-screen identity remains independently proved by its matched
+factory caller.
 
 ## Verification
 

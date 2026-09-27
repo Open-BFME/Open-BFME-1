@@ -12944,7 +12944,7 @@ name,address,notes
 ?TheBfmeOnlineLogin@@3PAVBfmeAptScreenOnlineLogin@@A,0x012F4AAC,OnlineLogin singleton pointer cleared by destructor
 ?TheBfmeOnlineProfileSlot@@3PAVBfmeOnlineProfileScreen@@A,0x012F4AB4,OnlineProfile singleton pointer cleared by destructor 0x00553EE0
 ?TheBfmeReleaseOwner@@3PAVRva007ADB80Owner@@A,0x01306DE8,GenAlpha::h00024D2A releaseReferences target
-?TheBfmeSkirmishOptionsSlot@@3PAVBfmeAptScreenSkirmish@@A,0x012F4B3C,Skirmish game-options screen singleton pointer cleared by destructor 0x005668C0
+?Rva012F4B3CProfile@@3PAVRva00566EC0Profile@@A,0x012F4B3C,Address-derived singleton for the distinct 28B embedded object; ctor00566EC0/dtor005668C0 test and store this VA; identity_evidence/00566ec0-profile-family.md
 ?TheBfmeSpyXE@@3PAVBfmeSpyXE@@A,0x00EF7194
 ?TheBfmeViewZT@@3PAVBfmeViewZT@@A,0x00EF1600
 ?TheBridgeBehaviorPool@?1??getClassMemoryPool@BridgeBehavior@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF774,pool-glue cascade static (back-solved)
@@ -88175,7 +88175,7 @@ _bfmeRetailCritterDesyncLog,0x0003A17A,Open-BFME6 BFME desync trace logger (cdec
 _bfmeRva0036CFD0Callback,0x0002DC95,"Root disassembled full query36FF70/524 and callback36CFD0/145: callback returns full EAX0/1, caller tests EAX after two cdecl arguments. Corrected callback from bool to int, added typed address-derived symbol instead of casting a generated no-arg thunk, and corrected query pin signature. Root inspected Radar108520/152: two stack args, explicit AL0/1, ret8; corrected void to bool return. Replaced hardcoded CastleBehavior string address with real literal. Full286B target, all22 relocation sites, literal and secondary-object offsets independently verified; no emitted vtable."
 _bfmeScanYA,0x009F6FA6
 _bfmeSearch1155,0x0082F1A0,pin
-_bfmeSkirmishOptionsVft,0x0110A314,BfmeAptScreenSkirmish own vtable installed by destructor 0x005668C0; slots gen-dtor 0x00566AE0/0x00566AA0 and functor thunk 0x00566A90, no recovered class identity so pinned as opaque data
+_bfmeSkirmishOptionsVft,0x0110A314,Opaque vtable of Rva00566EC0Profile; ctor00566EC0 and dtor005668C0 install it; deleting slot00566AE0; distinct from full-screen0057DA50 views
 _bfmeStep1211A,0x008D0B00,pin
 _bfmeStep1211B,0x008CD130,pin
 _bfmeStep1212A,0x008D0F10,pin
