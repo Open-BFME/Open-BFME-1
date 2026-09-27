@@ -96,6 +96,8 @@ repository's **HEAD**. Uncommitted parent changes are not copied. All retries
 reuse that job's workspace, so failed source experiments remain available.
 `--cwd /absolute/prepared/worktree` uses a parent-prepared workspace instead.
 The scheduler serializes overlapping workspace paths, even for redundant jobs.
+It sets both the process cwd and `PWD`: OpenCode run uses the latter to choose
+its session location, so changing cwd alone does not isolate linked worktrees.
 It never deletes worktrees or worker artifacts; remove reviewed worktrees using
 normal Git worktree commands when finished.
 

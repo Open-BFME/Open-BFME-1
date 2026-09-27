@@ -20,6 +20,7 @@ import json,os,sys,time,subprocess
 from pathlib import Path
 if '--version' in sys.argv:
  print('opencode v2.0.18'); sys.exit()
+assert os.environ.get('PWD') == str(Path.cwd()), 'OpenCode location would use wrong PWD'
 model=sys.argv[sys.argv.index('--model')+1]
 prompt=sys.stdin.read()
 Path('received.txt').write_text(prompt)
@@ -178,7 +179,8 @@ class RouterTests(unittest.TestCase):
         path=self.root/'bad.json';path.write_text(json.dumps(c))
         with self.assertRaises(ValueError):r.config(path)
         with self.assertRaises(ValueError):r.execution_ready({**self.c,'go_overage_disabled':False})
-        env=r.worker_env('opencode-go/one')
+        env=r.worker_env('opencode-go/one', j['cwd'])
+        self.assertEqual(env['PWD'], j['cwd'])
         self.assertIn('provider.use',env['OPENCODE_CONFIG_CONTENT'])
 
     def test_parser_fails_closed_and_ignores_quota_prose(self):

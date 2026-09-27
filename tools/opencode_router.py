@@ -165,8 +165,11 @@ def choose(c, job, active, model_state, history, now):
     return min(candidates, key=lambda x: x[0])[1] if candidates else None
 
 
-def worker_env(model):
+def worker_env(model, cwd):
     env = dict(os.environ)
+    # OpenCode run resolves its location from PWD before process.cwd(). Popen
+    # cwd alone leaves the parent shell PWD intact and selects the wrong tree.
+    env['PWD'] = str(Path(cwd).resolve())
     # Avoid inherited route/simulation overrides. Never supply or log credentials.
     for key in ('OPENCODE_ROUTE', 'OPENCODE_SIMULATE', 'OPENCODE_CONFIG_CONTENT'):
         env.pop(key, None)
@@ -464,7 +467,8 @@ def fleet(root, state, c, duration, workers=None, until=None):
                     directory.mkdir(parents=True)
                     try:
                         cwd = prepare_workspace(root, state, job)
-                        prompt = prompt_for(job, history)
+                        prompt = ('Assigned workspace: ' + str(cwd) + '\nRun every tool in this directory.\n'
+                                  + prompt_for(job, history))
                         (directory / 'prompt.txt').write_text(prompt)
                         # Stdin prevents option injection and argv size limits.
                         with database(state) as db:
@@ -478,7 +482,7 @@ def fleet(root, state, c, duration, workers=None, until=None):
                                 [sys.executable, str(Path(__file__).resolve()), '_watch',
                                  str(c['timeout']), str(unit.path), c['opencode'],
                                  'run', '--standalone', '--auto', '--format', 'json',
-                                 '--model', model['id']], cwd=cwd, env=worker_env(model['id']),
+                                 '--model', model['id']], cwd=cwd, env=worker_env(model['id'], cwd),
                                 stdin=inp, stdout=out, stderr=err)
                             child = bootstrap.child
                         running[aid] = {'child': child, 'reader': (directory / 'events.jsonl').open(errors='replace'),
