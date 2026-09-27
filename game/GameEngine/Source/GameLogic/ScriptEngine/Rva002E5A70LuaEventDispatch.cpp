@@ -1,7 +1,7 @@
-// ?dispatch@Rva002E5A70Call@@QAEXPAXPAVObject@@00@Z
-// partial score=0.875 date=2026-09-27
-// cl: /DNDEBUG /MD /EHsc /Igame /D_STLP_USE_STATIC_LIB
-#include "Libraries/Source/WWVegas/WWLib/ascii_string.h"
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// Retail 0x002E5A70: Lua event callback reached from Rva002E0E30RecordDispatch
+// through ILT 0x000122A6. Owner and method identity are unproven: address-derived names.
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Object;
 struct lua_State;
@@ -39,7 +39,6 @@ public:
 
 extern GameLogic *TheBfmeGameLogic;
 
-
 class Rva002E5A70Call
 {
 public:
@@ -47,6 +46,8 @@ public:
         void *argument3);
 };
 
+// Arguments are 24-byte records: float at +8, bool at +0xc, object id at
+// +0x10, kind tag at +0x18 (1 float, 2 bool, 3 object id, else end).
 void Rva002E5A70Call::dispatch(void *recordData, Object *object,
     void *argument2, void *argument3)
 {
@@ -79,9 +80,9 @@ void Rva002E5A70Call::dispatch(void *recordData, Object *object,
     {
         AsciiString error;
         if (lua_type(*(lua_State **)((char *)this + 8), 1) == 1)
-            error = (const char *)0x010CF7A8;
+            error = " is not defined.";
         else
-            error = (const char *)0x010CF78C;
+            error = " is not a lua function.";
         return;
     }
 
@@ -93,52 +94,52 @@ void Rva002E5A70Call::dispatch(void *recordData, Object *object,
         (const Rva002E32A0IdOwner *)argument2);
 
     char *argumentBytes = (char *)argument3;
-    int i = 0;
     int argumentCount = 2;
-    for (; i < 3; ++i)
+    for (int i = 0; i < 3; ++i)
     {
         char *argument = argumentBytes + i * 24;
-        int value;
         switch (*(int *)(argument + 24))
         {
         case 1:
+            bfmeGo1039E((BfmeQ1039 *)*(lua_State **)((char *)this + 8),
+                (int)*(float *)(argument + 8));
+            ++argumentCount;
+            break;
+        case 2:
         {
-            Object *resolved = TheBfmeGameLogic->findObjectByID(
-                *(int *)(argument + 16));
+            bool flag = *(bool *)(argument + 12);
+            bfmeGo1039E((BfmeQ1039 *)*(lua_State **)((char *)this + 8),
+                flag != 0);
+            ++argumentCount;
+            break;
+        }
+        case 3:
+        {
+            int objectID = *(int *)(argument + 16);
+            Object *resolved = TheBfmeGameLogic->findObjectByID(objectID);
             ((Rva002E42C0Owner *)this)->rva002E42C0(
                 *(lua_State **)((char *)this + 8),
                 (const Rva002E32A0IdOwner *)resolved);
-            goto nextArgument;
+            ++argumentCount;
+            break;
         }
-        case 2:
-            value = *(unsigned char *)(argument + 12) != 0;
-            break;
-        case 3:
-            value = (int)*(float *)(argument + 8);
-            break;
         default:
             i = 3;
-            continue;
+            break;
         }
-        bfmeGo1039E((BfmeQ1039 *)
-            *(lua_State **)((char *)this + 8), value);
-nextArgument:
-        ++argumentCount;
     }
 
     if (hasEventName)
-    {
         g_activeObj12F0610 = *(lua_State **)((char *)this + 8);
-        ++*(int *)((char *)this + 0xb0);
-        lua_call(*(lua_State **)((char *)this + 8), argumentCount, 0);
-        lua_settop(*(lua_State **)((char *)this + 8), top);
-        --*(int *)((char *)this + 0xb0);
-    }
+    ++*(int *)((char *)this + 0xb0);
+    lua_call(*(lua_State **)((char *)this + 8), argumentCount, 0);
+    lua_settop(*(lua_State **)((char *)this + 8), top);
+    --*(int *)((char *)this + 0xb0);
 
     if (g_activeObj12F0610 != 0 &&
         *(int *)((char *)this + 0xb0) == 0)
     {
-        bfmePrintTGD((const char *)0x010CF754);
+        bfmePrintTGD("Stepping out of LUA function - step disabled.\n");
         g_activeObj12F0610 = 0;
     }
 }
