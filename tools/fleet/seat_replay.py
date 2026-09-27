@@ -108,18 +108,82 @@ def seat_delta(repo, commit):
     return delta
 
 
+FUNCTIONS = "targets/game/reverse/functions.csv"
+
+
+def landed_upstream(tree, delta):
+    """Bodies someone else landed while the seat worked: {rva: (name, source)}.
+
+    A seat replaces a dump row at R with its own row. When master no longer
+    holds that dump row and another row claims R, the body is taken: replaying
+    the seat's row would put a second identity on R (one_identity.surplus) and
+    its new source file may collide with the winner's (2026-09-27: 0x003CA480
+    landed upstream at the same path while a seat was converting it)."""
+    entry = next((e for e in delta["files"] if e["path"] == FUNCTIONS), None)
+    if not entry:
+        return {}
+    master = blob(tree, "HEAD", FUNCTIONS) or b""
+    have = {p for p, _ in records(master)}
+    claimed = {}
+    for payload, _ in records(master):
+        row = fields(payload)
+        if len(row) > 4 and row[2].startswith("0x"):
+            claimed.setdefault(int(row[2], 16), []).append(row[0])
+    removed_at = {}
+    for payload in entry["removed"]:
+        row = fields(payload)
+        if len(row) > 4 and row[2].startswith("0x"):
+            removed_at.setdefault(int(row[2], 16), []).append(payload)
+    taken = {}
+    for payload, _ in entry["added"]:
+        row = fields(payload)
+        if len(row) <= 4 or not row[2].startswith("0x"):
+            continue
+        rva = int(row[2], 16)
+        gone = removed_at.get(rva) and not any(p in have for p in removed_at[rva])
+        if gone and any(name != row[0] for name in claimed.get(rva, [])):
+            taken[rva] = (row[0], row[4])
+    return taken
+
+
+def fields(payload):
+    import ledger_io
+    return ledger_io.fields(payload)
+
+
 def apply_delta(tree, delta):
     """Apply onto the commit checked out in `tree`; returns a problem or None.
 
     Every "current" version is read from that commit's blob, not the working
     file: under core.autocrlf the working copy is CRLF while every blob delta
-    was computed on LF, and merge-file then sees every line as changed."""
+    was computed on LF, and merge-file then sees every line as changed.
+    Bodies someone else landed meanwhile are skipped (delta["skipped"])."""
     import merge_json_list
+    taken = landed_upstream(tree, delta)
+    delta["skipped"] = taken
+    kept_sources = set()
+    for entry in delta["files"]:
+        if entry["path"] == FUNCTIONS:
+            for payload, _ in entry["added"]:
+                row = fields(payload)
+                if len(row) > 4 and row[2].startswith("0x") and int(row[2], 16) not in taken:
+                    kept_sources.add(row[4])
+    lost_sources = {source for _, source in taken.values()} - kept_sources
     for entry in delta["files"]:
         path = tree / entry["path"]
         current = blob(tree, "HEAD", entry["path"])
         if entry["kind"] == "ledger":
-            path.write_bytes(apply_records(current or b"", entry["removed"], entry["added"]))
+            added = entry["added"]
+            if entry["path"] == FUNCTIONS and taken:
+                added = [(p, t) for p, t in added
+                         if not (len(fields(p)) > 4 and fields(p)[2].startswith("0x")
+                                 and int(fields(p)[2], 16) in taken)]
+            path.write_bytes(apply_records(current or b"", entry["removed"], added))
+        elif entry["kind"] == "file" and entry["path"] in lost_sources:
+            continue                         # the winner's file (or none) stays as master has it
+        elif entry["kind"] == "file" and entry["status"] == "A" and current is not None \
+                and current != entry["theirs"]:
+            return f"{entry['path']}: the seat added it but master now has a different file there"
         elif entry["kind"] == "json":
             ours = current or b"[]\n"
             base = json.loads(entry["base"] or b"[]")
@@ -160,6 +224,8 @@ def replay(repo, commit, tree, tries=20):
         problem = apply_delta(tree, delta)
         if problem:
             return problem
+        for rva, (name, source) in sorted(delta["skipped"].items()):
+            print(f"  skipped 0x{rva:08X} {name}: landed upstream meanwhile (seat source {source})")
         if git(tree, "diff", "--cached", "--quiet").returncode == 0:
             return None                      # master already holds every change
         made = subprocess.run(["git", "commit", "-q", "-F", "-"], cwd=tree, input=message,
