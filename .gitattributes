@@ -8,11 +8,13 @@ inputs/toolchains/vs2003/** -text
 # normalization would corrupt it.
 mods/dist/** -text
 
-# Append-mostly ledgers written concurrently by many agents. The built-in union
-# merge driver combines both sides' added lines instead of emitting conflict
-# markers, so parallel row appends never conflict. Run tools/dedup_csv.py after
-# a merge if the full build reports a duplicate/overlap (two agents claimed one
-# shared COMDAT address).
+# Append-mostly ledgers written concurrently by many agents. Union merge
+# combines both sides' added lines instead of emitting conflict markers, so
+# parallel row appends never conflict. git's built-in union also brings back
+# rows one side deleted or edited, so clones register tools/merge_rows.py under
+# the name `union` (tools/setup_hooks.sh, .githooks/pre-commit) to remove them;
+# a clone without it still gets plain union, never a conflict. Two agents
+# claiming one shared COMDAT address is an identity question, not a merge one.
 targets/game/reverse/functions.csv merge=union
 targets/game/reverse/symbols.csv merge=union
 # The counterweight to functions.csv being union-merged: a deletion there is

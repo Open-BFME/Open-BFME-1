@@ -15,6 +15,14 @@ fail() {
     exit 1
 }
 
+# Clones set up before tools/merge_rows.py existed never rerun setup_hooks.sh;
+# this is how they pick up the union driver (.gitattributes says why).
+union_driver="python3 tools/merge_rows.py %O %A %B %P"
+if [ "$(git config --get merge.union.driver || true)" != "$union_driver" ]; then
+    git config merge.union.driver "$union_driver"
+    echo "pre-commit: registered tools/merge_rows.py as this clone's union merge driver" >&2
+fi
+
 # No two tracked paths may differ only in case — such a pair cannot check out on
 # Windows/macOS (case-insensitive FS), silently dropping a file and breaking those
 # clones. Reflects the staged index, so a colliding add is caught before it lands.
