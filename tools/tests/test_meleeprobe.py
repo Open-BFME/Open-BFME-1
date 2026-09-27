@@ -51,6 +51,8 @@ def test_instrument_is_unshipped_and_shares_the_four_fix_sites():
     assert hooks[0x175B16] == ("meleeprobe_ready", ("ebx", "edi", "ebp", "esi"))
     assert hooks[0x238D10] == ("meleeprobe_plan_enter", ("stack:0", "stack:2", "stack:5", "stack:6"))
     assert hooks[0x244455] == ("meleeprobe_plan_complete", ("eax", "edi", "esi"))
+    assert hooks[0x3DF331] == ("meleeprobe_cell_begin", ("ebx", "edx"))
+    assert hooks[0x3DF390] == ("meleeprobe_cell_data", ("esi",))
     assert hooks[0x667238] == hooks[0x6671A1] == ("meleeprobe_chat", ("esi", "eax", "ebp"))
     assert hooks[0x277780] == ("meleeprobe_command", ("ecx", "stack:0"))
 

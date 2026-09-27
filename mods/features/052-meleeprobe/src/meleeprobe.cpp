@@ -5,10 +5,15 @@
 #ifndef BFME_AC_RETRY
 #define BFME_AC_RETRY 0
 #endif
-#if BFME_AC_RETRY
-#define PROBE_VARIANT "053-melee-retry-v2"
+#ifndef BFME_AC_TARGET_GOAL
+#define BFME_AC_TARGET_GOAL 0
+#endif
+#if BFME_AC_TARGET_GOAL
+#define PROBE_VARIANT "054-melee-target-goal-v2"
+#elif BFME_AC_RETRY
+#define PROBE_VARIANT "053-melee-retry-v4"
 #else
-#define PROBE_VARIANT "052-meleeprobe-v3"
+#define PROBE_VARIANT "052-meleeprobe-v5"
 #endif
 
 struct FILE;
@@ -84,10 +89,10 @@ static int output() {
         unsigned freq[2] = {0, 0};
         c_qpf(freq);
         checked(c_fprintf(s_file,
-            "{\"ev\":\"startup\",\"schema\":3,\"probe\":\"%s\","
-            "\"run\":\"%s\",\"build\":\"%s\",\"pid\":%u,\"fix_enabled\":1,\"retry_enabled\":%u,"
+            "{\"ev\":\"startup\",\"schema\":4,\"probe\":\"%s\","
+            "\"run\":\"%s\",\"build\":\"%s\",\"pid\":%u,\"fix_enabled\":1,\"retry_enabled\":%u,\"target_goal_enabled\":%u,"
             "\"qfreqlo\":%u,\"qfreqhi\":%u,\"max_combat_events_per_frame\":256,\"max_chat_code_units\":512}\n",
-            PROBE_VARIANT, s_run, build, c_pid(), (unsigned)BFME_AC_RETRY, freq[0], freq[1]));
+            PROBE_VARIANT, s_run, build, c_pid(), (unsigned)BFME_AC_RETRY, (unsigned)BFME_AC_TARGET_GOAL, freq[0], freq[1]));
         checked(c_fflush(s_file));
     }
     return s_file && !s_failed;
@@ -226,6 +231,12 @@ extern "C" __declspec(dllexport) void __cdecl meleeprobe_damage_result(void *vic
         word(info, 0x50), word(info, 0x54), (unsigned)*((unsigned char *)info + 0x58)));
 }
 
+#if BFME_AC_TARGET_GOAL
+enum GoalGuard {
+    GOAL_SCOPE, GOAL_INFO, GOAL_NO_LOGIC, GOAL_KIND, GOAL_STRUCTURE, GOAL_STATE,
+    GOAL_RELATIONSHIP, GOAL_LOOKUP, GOAL_MEMBERSHIP, GOAL_GUARD_COUNT
+};
+#endif
 struct PlannerTrace {
     void *member, *target, *retryOut;
     unsigned memberId, targetId, arg7, serial, active;
@@ -233,9 +244,26 @@ struct PlannerTrace {
     unsigned candidates, distancePasses, layerFirst, layerLast, layerChanges;
     unsigned pointQueries, pointRejected, passedPoint, passedLine, chosen;
     unsigned point[3], firstRejected[3], pointPending, firstRejectedPresent;
+    unsigned cellSeen, cellDataPresent, cellRejected, cell, cellFlags, cellInfo;
+    unsigned cellUnitsPresent, cellGoalId, cellPosId, cellObstacleId;
+    int cellX, cellY;
+    unsigned goalChecks, goalOverrides, goalFirstId, goalLastId;
+#if BFME_AC_TARGET_GOAL
+    unsigned goalReject[GOAL_GUARD_COUNT];
+    unsigned goalKindSeen, goalKindFirst, goalStateSeen, goalStateVtableFirst, goalStateIdFirst;
+    unsigned goalRelationshipSeen, goalOwnerSeen, goalOwnerFirstId, goalOwnerContainerFirstId;
+    int goalRelationshipFirst, goalStateAttackingFirst;
+#endif
 };
 static PlannerTrace s_plan;
 static unsigned s_plan_calls, s_plan_overwritten;
+
+static void reset_cell(void) {
+    s_plan.cellSeen = s_plan.cellDataPresent = s_plan.cellRejected = 0;
+    s_plan.cell = s_plan.cellFlags = s_plan.cellInfo = 0;
+    s_plan.cellUnitsPresent = s_plan.cellGoalId = s_plan.cellPosId = s_plan.cellObstacleId = 0;
+    s_plan.cellX = s_plan.cellY = 0;
+}
 
 extern "C" __declspec(dllexport) void __cdecl meleeprobe_plan_enter(
     void *member, void *target, void *retryOut, unsigned arg7) {
@@ -254,6 +282,17 @@ extern "C" __declspec(dllexport) void __cdecl meleeprobe_plan_enter(
     s_plan.pointQueries = s_plan.pointRejected = 0;
     s_plan.passedPoint = s_plan.passedLine = s_plan.chosen = 0;
     s_plan.pointPending = s_plan.firstRejectedPresent = 0;
+    s_plan.goalChecks = s_plan.goalOverrides = s_plan.goalFirstId = s_plan.goalLastId = 0;
+#if BFME_AC_TARGET_GOAL
+    for (unsigned i = 0; i < GOAL_GUARD_COUNT; ++i) s_plan.goalReject[i] = 0;
+    s_plan.goalKindSeen = s_plan.goalKindFirst = s_plan.goalStateSeen = 0;
+    s_plan.goalStateVtableFirst = s_plan.goalStateIdFirst = 0;
+    s_plan.goalRelationshipSeen = s_plan.goalOwnerSeen = s_plan.goalOwnerFirstId = 0;
+    s_plan.goalOwnerContainerFirstId = 0;
+    s_plan.goalRelationshipFirst = 0;
+    s_plan.goalStateAttackingFirst = -1;
+#endif
+    reset_cell();
 }
 extern "C" __declspec(dllexport) void __cdecl meleeprobe_plan_candidate(void) {
     if (s_plan.active) ++s_plan.candidates;
@@ -271,6 +310,95 @@ extern "C" __declspec(dllexport) void __cdecl meleeprobe_plan_point(void *coord)
     s_plan.point[1] = word(coord, 4);
     s_plan.point[2] = word(coord, 8);
     s_plan.pointPending = coord != 0;
+    if (!s_plan.firstRejectedPresent) reset_cell();
+}
+static int tracing_cell(void) {
+    return s_plan.active && s_plan.pointPending && !s_plan.firstRejectedPresent;
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_cell_begin(unsigned y, unsigned x) {
+    if (!tracing_cell()) return;
+    reset_cell();
+    s_plan.cellSeen = 1;
+    s_plan.cellX = (int)x;
+    s_plan.cellY = (int)y;
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_cell_data(void *cell) {
+    if (!tracing_cell()) return;
+    s_plan.cellDataPresent = cell != 0;
+    s_plan.cell = (unsigned)cell;
+    s_plan.cellFlags = word(cell, 0x0C);
+    s_plan.cellInfo = word(cell, 0);
+    s_plan.cellUnitsPresent = (s_plan.cellFlags & 0x38) && s_plan.cellInfo;
+    s_plan.cellGoalId = s_plan.cellPosId = s_plan.cellObstacleId = 0;
+    if (s_plan.cellUnitsPresent) {
+        s_plan.cellGoalId = word((void *)s_plan.cellInfo, 0x14);
+        s_plan.cellPosId = word((void *)s_plan.cellInfo, 0x18);
+    }
+    if ((s_plan.cellFlags & 7) == 4 && s_plan.cellInfo)
+        s_plan.cellObstacleId = word((void *)s_plan.cellInfo, 0x20);
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_cell_reject(void) {
+    if (tracing_cell()) s_plan.cellRejected = 1;
+}
+#if BFME_AC_TARGET_GOAL
+static unsigned reject_goal(GoalGuard guard, unsigned originalGoalId) {
+    ++s_plan.goalReject[guard];
+    return originalGoalId;
+}
+#endif
+extern "C" __declspec(dllexport) unsigned __cdecl meleeprobe_target_goal(
+    unsigned originalGoalId, void *cellInfo, void *queryObject) {
+#if BFME_AC_TARGET_GOAL
+    if (!s_plan.active) return originalGoalId;
+    if (!s_plan.pointPending || !queryObject || queryObject != s_plan.member || !s_plan.target)
+        return reject_goal(GOAL_SCOPE, originalGoalId);
+    ++s_plan.goalChecks;
+    if (!originalGoalId || originalGoalId == s_plan.memberId || !cellInfo ||
+        word(cellInfo, 0x14) != originalGoalId || word(cellInfo, 0x18) != 0)
+        return reject_goal(GOAL_INFO, originalGoalId);
+    if (!game_logic) return reject_goal(GOAL_NO_LOGIC, originalGoalId);
+    unsigned kind = c_is_kind_of(s_plan.target, 0, 0x6C);
+    if (!s_plan.goalKindSeen) { s_plan.goalKindSeen = 1; s_plan.goalKindFirst = kind; }
+    if (!kind) return reject_goal(GOAL_KIND, originalGoalId);
+    if (!has_structure_attack_goal(s_plan.target)) return reject_goal(GOAL_STRUCTURE, originalGoalId);
+    void *targetAi = read_pointer_field(s_plan.target, OBJECT_AI);
+    void *targetMachine = targetAi ? read_pointer_field(targetAi, AI_STATE_MACHINE) : 0;
+    void *targetState = targetMachine ? read_pointer_field(targetMachine, 0x1C) : 0;
+    unsigned stateVtable = word(targetState, 0);
+    int attackingObject = stateVtable == 0x0109A0C8 ?
+        (int)*((unsigned char *)targetState + 0x45) : -1;
+    if (!s_plan.goalStateSeen) {
+        s_plan.goalStateSeen = 1;
+        s_plan.goalStateVtableFirst = stateVtable;
+        s_plan.goalStateIdFirst = word(targetState, 4);
+        s_plan.goalStateAttackingFirst = attackingObject;
+    }
+    if (stateVtable != 0x0109A0C8 || word(targetState, 4) != 50 || attackingObject == 0)
+        return reject_goal(GOAL_STATE, originalGoalId);
+    typedef int (__fastcall *Relationship)(void *, void *, void *);
+    int relationship = ((Relationship)0x005C7950)(queryObject,0,s_plan.target);
+    if (!s_plan.goalRelationshipSeen) {
+        s_plan.goalRelationshipSeen = 1; s_plan.goalRelationshipFirst = relationship;
+    }
+    if (relationship != 0) return reject_goal(GOAL_RELATIONSHIP, originalGoalId);
+    typedef void *(__fastcall *FindObject)(void *, void *, unsigned);
+    void *owner = ((FindObject)0x0049A510)(game_logic,0,originalGoalId);
+    if (!owner) return reject_goal(GOAL_LOOKUP, originalGoalId);
+    void *container = read_pointer_field(owner, 0x214);
+    if (!s_plan.goalOwnerSeen) {
+        s_plan.goalOwnerSeen = 1; s_plan.goalOwnerFirstId = object_id(owner);
+        s_plan.goalOwnerContainerFirstId = object_id(container);
+    }
+    if (container != s_plan.target) return reject_goal(GOAL_MEMBERSHIP, originalGoalId);
+    if (!s_plan.goalOverrides) s_plan.goalFirstId = originalGoalId;
+    ++s_plan.goalOverrides;
+    s_plan.goalLastId = originalGoalId;
+    return 0;
+#else
+    (void)cellInfo;
+    (void)queryObject;
+    return originalGoalId;
+#endif
 }
 extern "C" __declspec(dllexport) void __cdecl meleeprobe_plan_point_result(unsigned result) {
     if (!s_plan.active) return;
@@ -307,7 +435,10 @@ extern "C" __declspec(dllexport) void __cdecl meleeprobe_plan_complete(unsigned 
         "\"layer_first\":%u,\"layer_last\":%u,\"layer_changes\":%u,"
         "\"point_queries\":%u,\"point_rejected\":%u,\"passed_point\":%u,\"passed_line\":%u,\"chosen\":%u,"
         "\"first_rejected_present\":%u,\"first_rejected_x_bits\":%u,\"first_rejected_y_bits\":%u,\"first_rejected_z_bits\":%u,"
-        "\"slot\":%u,\"slot_raw_phase_before\":%u,\"slot_raw_10_before\":%u,\"slot_retry_until_before\":%u}\n",
+        "\"first_rejected_cell_captured\":%u,\"cell_seen\":%u,\"cell_x\":%d,\"cell_y\":%d,"
+        "\"cell_data_present\":%u,\"cell\":%u,\"cell_flags\":%u,\"cell_info\":%u,"
+        "\"cell_units_present\":%u,\"cell_goal_unit_id\":%u,\"cell_pos_unit_id\":%u,\"cell_obstacle_id\":%u,"
+        "\"goal_checks\":%u,\"goal_override_count\":%u,\"goal_override_first_id\":%u,\"goal_override_last_id\":%u,\"slot\":%u,\"slot_raw_phase_before\":%u,\"slot_raw_10_before\":%u,\"slot_retry_until_before\":%u",
         s_plan.serial, s_plan.startFrame, paired, s_plan_overwritten,
         member, object_id(member), s_plan.member, s_plan.memberId, s_plan.target, s_plan.targetId,
         s_plan.arg7, result & 255, (unsigned)(paired && s_plan.retryOut != 0),
@@ -316,7 +447,27 @@ extern "C" __declspec(dllexport) void __cdecl meleeprobe_plan_complete(unsigned 
         s_plan.pointQueries, s_plan.pointRejected, s_plan.passedPoint, s_plan.passedLine, s_plan.chosen,
         s_plan.firstRejectedPresent, s_plan.firstRejectedPresent ? s_plan.firstRejected[0] : 0,
         s_plan.firstRejectedPresent ? s_plan.firstRejected[1] : 0, s_plan.firstRejectedPresent ? s_plan.firstRejected[2] : 0,
+        (unsigned)(s_plan.firstRejectedPresent && s_plan.cellRejected), s_plan.cellSeen,
+        s_plan.cellX, s_plan.cellY, s_plan.cellDataPresent, s_plan.cell, s_plan.cellFlags, s_plan.cellInfo,
+        s_plan.cellUnitsPresent, s_plan.cellGoalId, s_plan.cellPosId, s_plan.cellObstacleId,
+        s_plan.goalChecks, s_plan.goalOverrides, s_plan.goalFirstId, s_plan.goalLastId,
         slot, word(slot, 0), slot ? (unsigned)*((unsigned char *)slot + 0x10) : 0, word(slot, 0x14)));
+#if BFME_AC_TARGET_GOAL
+    checked(c_fprintf(s_file,
+        ",\"goal_rejections\":{\"scope\":%u,\"info\":%u,\"no_logic\":%u,\"kind\":%u,\"structure_goal\":%u,"
+        "\"state\":%u,\"relationship\":%u,\"lookup\":%u,\"membership\":%u},"
+        "\"goal_kind_observed\":%u,\"goal_kind_first\":%u,\"goal_state_observed\":%u,"
+        "\"goal_target_state_vtable_first\":%u,\"goal_target_state_id_first\":%u,\"goal_target_attacking_object_first\":%d,"
+        "\"goal_relationship_observed\":%u,\"goal_relationship_first\":%d,\"goal_owner_observed\":%u,"
+        "\"goal_owner_id_first\":%u,\"goal_owner_container_id_first\":%u",
+        s_plan.goalReject[GOAL_SCOPE], s_plan.goalReject[GOAL_INFO], s_plan.goalReject[GOAL_NO_LOGIC],
+        s_plan.goalReject[GOAL_KIND], s_plan.goalReject[GOAL_STRUCTURE], s_plan.goalReject[GOAL_STATE],
+        s_plan.goalReject[GOAL_RELATIONSHIP], s_plan.goalReject[GOAL_LOOKUP], s_plan.goalReject[GOAL_MEMBERSHIP],
+        s_plan.goalKindSeen, s_plan.goalKindFirst, s_plan.goalStateSeen,
+        s_plan.goalStateVtableFirst, s_plan.goalStateIdFirst, s_plan.goalStateAttackingFirst, s_plan.goalRelationshipSeen,
+        s_plan.goalRelationshipFirst, s_plan.goalOwnerSeen, s_plan.goalOwnerFirstId, s_plan.goalOwnerContainerFirstId));
+#endif
+    checked(c_fprintf(s_file, "}\n"));
 }
 
 extern "C" __declspec(dllexport) void __cdecl meleeprobe_enter_before(void *a, void *t, void *s) { before(a,t,s); }

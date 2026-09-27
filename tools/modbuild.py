@@ -351,7 +351,8 @@ def build_feature(pe, source, entry, hooks, probe=False, defines=()):
     `hooks` is (target rva, exported name, shim arguments) per detour, or a
     fourth element to make the detour a conditional replacement: the payload
     returns non-zero to swallow the call and `ret` that many argument bytes
-    instead of running the function. See PE.shim."""
+    instead of running the function. A fifth element opts into replacing EAX
+    with the payload's return value. See PE.shim."""
     with tempfile.TemporaryDirectory() as tmp:
         stem = Path(source).stem
         obj = compile_payload(source, Path(tmp) / f"{stem}.obj", probe=probe,
@@ -371,9 +372,11 @@ def build_feature(pe, source, entry, hooks, probe=False, defines=()):
     for hook in hooks:
         target, name, args = hook[0], hook[1], hook[2]
         swallow_ret = hook[3] if len(hook) > 3 else None
+        replace_eax = hook[4] if len(hook) > 4 else False
         if name not in entries:
             raise SystemExit(f"{Path(source).name} exports {sorted(entries)}, not {name}")
-        start = pe.detour_call(target, entries[name], args=args, swallow_ret=swallow_ret)
+        start = pe.detour_call(target, entries[name], args=args,
+                               swallow_ret=swallow_ret, replace_eax=replace_eax)
         detours.append(dict(target=target, entry=name, code_rva=start,
                             code_len=pe.cave_rva + pe.cave_used - start))
     return dict(code_rva=rva, code_len=len(blob), detours=detours)
@@ -470,6 +473,9 @@ MELEEPROBE_HOOKS = (
     (0x002390AD, "meleeprobe_plan_distance_pass", ("eax",), "8b8c248c000000"),
     (0x0023910A, "meleeprobe_plan_point", ("edx",), "e86daadfff"),
     (0x0023910F, "meleeprobe_plan_point_result", ("eax",), "84c00f8555010000"),
+    (0x003DF331, "meleeprobe_cell_begin", ("ebx", "edx"), "3b55140f8c92010000"),
+    (0x003DF390, "meleeprobe_cell_data", ("esi",), "8b460c8bd0"),
+    (0x003DF4CC, "meleeprobe_cell_reject", (), "5f5e5d32c0"),
     (0x0023926C, "meleeprobe_plan_passed_point", (), "8a44241184c0"),
     (0x0023929B, "meleeprobe_plan_passed_line", (), "d9442440d85c243c"),
     (0x002392AA, "meleeprobe_plan_chosen", (), "d944244c8b442420"),
@@ -492,14 +498,26 @@ MELEEPROBE_HOOKS = (
 )
 
 
-def build_meleeprobe(pe, feature_dir, probe=False):
-    for target, name, args, expected in MELEEPROBE_HOOKS:
+TARGET_GOAL_HOOK = (0x003DF445, "meleeprobe_target_goal",
+                    ("eax", "esi", "stack_offset:0x3c"), "8b0d98082f01")
+
+
+def build_meleeprobe(pe, feature_dir, probe=False, target_goal=False):
+    checked_hooks = MELEEPROBE_HOOKS + ((TARGET_GOAL_HOOK,) if target_goal else ())
+    for target, name, args, expected in checked_hooks:
         expected_bytes = bytes.fromhex(expected)
         if pe.read(target, len(expected_bytes)) != expected_bytes:
             raise SystemExit(f"meleeprobe retail span changed at 0x{target:08X}; "
                              "AC instruments cannot stack with 051 or each other")
+    hooks = tuple(hook[:3] for hook in MELEEPROBE_HOOKS)
+    if target_goal:
+        hooks += (TARGET_GOAL_HOOK[:3] + (None, True),)
     return build_feature(pe, feature_dir / "src/meleeprobe.cpp", "meleeprobe_loop",
-                         tuple(hook[:3] for hook in MELEEPROBE_HOOKS), probe=probe)
+                         hooks, probe=probe)
+
+
+def build_melee_target_goal(pe, feature_dir, probe=False):
+    return build_meleeprobe(pe, feature_dir, probe=probe, target_goal=True)
 
 
 def build_uiprobe(pe, feature_dir, probe=False):
@@ -699,6 +717,7 @@ DATA = {
 UNSHIPPED = {
     "052-meleeprobe": (build_meleeprobe, "bounded AC diagnostic; replaces 051 hooks and includes its fix"),
     "053-melee-retry": (build_meleeprobe, "experimental AC planning retry with diagnostics; replaces 051/052"),
+    "054-melee-target-goal": (build_melee_target_goal, "experimental targeted enemy goal reservation handling; replaces 051/052/053"),
     "030-netlatprobe": (build_netlatprobe, "an instrument: it writes tens of lines a second"),
     "036-fpsprobe-timing": (build_fpsprobe_timing,
                             "the probe without the backbuffer readback, for "

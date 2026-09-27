@@ -9,6 +9,16 @@ damage gap (last Uruk damage at 445, next at 589). The cooldown and wait timeout
 are therefore insufficient explanations; investigate member planning failures.
 Keep this variant unshipped as the recorded experiment.
 
+Offline replay with 052v4 diagnostics reproduced the same 1,301 commands and
+179 damage records through frame 739. During the damage gap, 67 member-planning
+calls failed because every queried destination was rejected. Their first rejected
+cells were 35 Soldier goal reservations with no position occupant, 24 cells
+occupied/reserved by another Uruk, and eight slaughterhouse obstacles. These are
+one sampled rejection per failed call, not all rejected cells. The next bounded
+hypothesis is whether empty goal reservations belonging to the attacked horde
+should prevent melee positioning; physical occupants and building obstacles
+still need their existing checks. No such behavior change is included here.
+
 This unshipped variant adds one planning retry at an existing melee readiness
 timeout. It includes the current 051 bypass and all [052 diagnostics](../052-meleeprobe/README.md).
 Build every shipped feature except 051, plus 053. Both LAN clients must use

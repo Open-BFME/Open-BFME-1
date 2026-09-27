@@ -1,4 +1,4 @@
-# AC melee diagnostic v3
+# AC melee diagnostic v5
 
 This unshipped instrument replaces the four hooks owned by
 `051-structure-melee-gate`. It includes that feature's source directly and runs
@@ -18,8 +18,10 @@ Set these variables in each Wine process before launch:
 
 A missing variable, failed open, write or flush produces a visible error dialog
 and an OutputDebugString message. The fix continues to run after capture fails.
-The startup line identifies schema 3, probe version, process, run, enabled fix,
-clock frequency and event limits. Loop heartbeats work in menus and during stalls; each includes
+The startup line identifies schema 4, probe version, process, run, enabled fix,
+clock frequency and event limits. `target_goal_enabled` identifies the separate
+[054 reservation experiment](../054-melee-target-goal/README.md); 052 and 053
+leave it disabled. Loop heartbeats work in menus and during stalls; each includes
 cumulative predicate-call, emitted-event and dropped-event counts. Captures are
 buffered and flushed when the observed logic frame changes, or once a second if
 it does not. A crash can lose the current frame's buffered combat records.
@@ -135,6 +137,25 @@ unpaired or overwritten captures; retry-out memory is read only for a paired
 completion. Planner hooks only read game memory and count visits. They share the
 combat cap, and no planner decision or retry deadline is changed by 052.
 
+For the first rejected point query, three destination-check hooks capture the
+last cell examined: `0x003df331` records the loop's x/y cell coordinates and clears
+previous cell data, `0x003df390` records the non-null cell and raw flags, and the
+shared false exit at `0x003df4cc` marks the rejected cell. They run only while a
+planner point query is active, stop after its first rejection, and add fields to
+the existing `melee_plan` record instead of logging global pathfinder traffic.
+`first_rejected_cell_captured`, `cell_seen`, and `cell_data_present` distinguish
+available evidence; a bounds failure or missing cell can have no cell data.
+
+Cell info `+0x14` goal-unit ID and `+0x18` position-unit ID are witnessed by
+matched `PathfindCell_setGoalUnit` / `PathfindCell_setPosUnit`. These fields are
+read only when flags `&0x38` indicate unit occupancy and the info pointer exists.
+`PathfindCell_setTypeAsObstacle` witnesses terrain type 4 and its obstacle ID at
+info `+0x20`; that ID is read only for type 4 with an info pointer. Terrain types
+5/6 and bit 21 remain raw. The captured unit IDs describe occupancy and the
+obstacle ID describes the recorded obstacle; the common false-exit hook does not
+identify which conditional branch rejected the cell. No object lookup or extra
+game call is performed by these hooks.
+
 The separate unshipped `053-melee-retry` variant includes this source with
 `BFME_AC_RETRY=1`; 052 leaves that behavior disabled. Its startup reports the
 variant and `retry_enabled`. At a not-ready timeout against a structure-attacking
@@ -147,7 +168,7 @@ ran. Failed readiness preserves the existing timeout. Before/after snapshots
 and force-byte/readiness/deadline values document what happened.
 
 The user reproduced AC with the 053 retry experiment, so it is not an AC fix.
-The timeout-recovery hypothesis did not explain that reproduction; 052v3 is the
+The timeout-recovery hypothesis did not explain that reproduction; 052v5 is the
 diagnostic control for the next capture. The successful recovery path subsequently reaches
 the original update call too, so formation planning cadence is a regression risk
 to check in normal melee, movement and building attacks. Both LAN seats must use

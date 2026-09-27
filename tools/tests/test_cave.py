@@ -19,7 +19,10 @@ They are asserted against the real retail image rather than a synthetic PE:
 the alignment bug in particular only appears at a cave offset that is not a
 multiple of four, which is a property of real allocation, not of a fixture.
 """
+import platform
+import shutil
 import struct
+import subprocess
 import sys
 from pathlib import Path
 
@@ -154,6 +157,52 @@ def test_the_default_shim_is_the_one_the_shipped_feature_was_built_on(pe):
     assert pe.shim(0x11223344, 0x10000000) == bytes.fromhex("609cfc51e83b33220183c4049d61")
 
 
+@pytest.mark.parametrize("args,swallow_ret,expected", [
+    ((), None, "609cfce83c33220183c4009d61"),
+    (("ecx", "stack:0", "esi"), None, "609cfc56ff74242c51e83633220183c40c9d61"),
+    (("ecx", "stack:0"), 0, "6a00609cfcff74242c51e83533220183c408894424249d615885c07401c3"),
+    (("ecx",), 8, "6a00609cfc51e83933220183c404894424249d615885c07403c20800"),
+])
+def test_existing_shim_modes_keep_their_bytes(pe, args, swallow_ret, expected):
+    assert pe.shim(0x11223344, 0x10000000, args=args, swallow_ret=swallow_ret,
+                   replace_eax=False) == bytes.fromhex(expected)
+
+
+@pytest.mark.parametrize("args", [(), ("ecx",), ("ecx", "stack:0", "esi")])
+def test_return_override_updates_saved_eax_after_argument_cleanup(pe, args):
+    shim = pe.shim(0x11223344, pe.image_base + pe.next_rva(), args=args,
+                   replace_eax=True)
+    ins = _disasm(pe, pe.alloc(shim), len(shim))
+    call = next(n for n, i in enumerate(ins) if i.mnemonic == "call")
+    cleanup, store, flags, registers = ins[call + 1:]
+    assert cleanup.mnemonic == "add"
+    popped = int(cleanup.op_str.split(",")[1], 0)
+    assert popped == 4 * len(args)
+    assert (store.mnemonic, store.op_str) == ("mov", "dword ptr [esp + 0x20], eax")
+    pushed = sum({"pushal": 32, "pushfd": 4, "push": 4}.get(i.mnemonic, 0)
+                 for i in ins[:call])
+    displacement = int(store.op_str.split("+")[1].split("]")[0], 0)
+    assert displacement - pushed + popped == -4
+    assert [flags.mnemonic, registers.mnemonic] == ["popfd", "popal"]
+
+
+@pytest.mark.parametrize("swallow_ret", [0, 8])
+def test_return_override_refuses_conditional_replacement(pe, swallow_ret):
+    with pytest.raises(CaveError, match="replace_eax cannot be combined with swallow_ret"):
+        pe.detour_call(UPDATE, 0x11223344, swallow_ret=swallow_ret, replace_eax=True)
+
+
+def test_detour_can_resume_with_payload_eax(pe):
+    entry = pe.image_base + pe.alloc(b"\xc3")
+    pe.alloc(b"\xaa" * 313)
+    start = pe.detour_call(UPDATE, entry, args=(), replace_eax=True)
+    ins = _disasm(pe, start, 32)
+    call = next(n for n, i in enumerate(ins) if i.mnemonic == "call")
+    assert int(ins[call].op_str, 16) == entry
+    assert ins[call + 2].bytes == bytes.fromhex("89442420")
+    assert [i.mnemonic for i in ins[call + 3:call + 7]] == ["popfd", "popal", "push", "push"]
+
+
 def test_a_stack_argument_reaches_the_target_s_own_argument(pe):
     """The shim gets a register; a thiscall's explicit arguments are on the
     stack, so reaching one is arithmetic against an esp that pushad, pushfd and
@@ -166,14 +215,136 @@ def test_a_stack_argument_reaches_the_target_s_own_argument(pe):
         ins = _disasm(pe, pe.alloc(pe.shim(0x11223344, pe.image_base + pe.next_rva(),
                                            args=args)), 32)
         moved = -36                                  # pushad (32) + pushfd (4)
-        for i in ins:
+        checked = 0
+        for i in ins[3:]:
             if i.mnemonic != "push":
                 break
             if i.op_str.startswith("dword ptr [esp"):
                 disp = int(i.op_str.split("+")[1].strip(" ]"), 16)
                 assert moved + disp == 4 + 4 * index, \
                     f"{args}: stack:{index} resolves to entry_esp+{moved + disp}"
+                checked += 1
             moved -= 4
+        assert checked == 1
+
+
+@pytest.mark.parametrize("args", [("stack_offset:0x3c",),
+                                  ("stack_offset:0x3c", "ecx", "esi")])
+@pytest.mark.parametrize("swallow_ret", [None, 0])
+def test_raw_stack_offset_is_relative_to_the_interrupted_esp(pe, args, swallow_ret):
+    shim = pe.shim(0x11223344, pe.image_base + pe.next_rva(), args=args,
+                   swallow_ret=swallow_ret)
+    depth = 0
+    checked = 0
+    for ins in _disasm(pe, pe.alloc(shim), len(shim)):
+        if ins.mnemonic == "call":
+            break
+        if ins.mnemonic == "pushal":
+            depth += 32
+        elif ins.mnemonic == "pushfd":
+            depth += 4
+        elif ins.mnemonic == "push":
+            if ins.op_str.startswith("dword ptr [esp"):
+                disp = int(ins.op_str.split("+")[1].strip(" ]"), 0)
+                assert disp - depth == 0x3c
+                checked += 1
+            depth += 4
+    assert checked == 1
+
+
+@pytest.mark.parametrize("args,reason", [
+    (("stack_offset:-1",), "non-negative"),
+    (("stack_offset:0x5c",), "out of one-byte reach"),
+    (("stack_offset:0x58", "ecx"), "out of one-byte reach"),
+])
+def test_unencodable_raw_stack_offset_is_refused(pe, args, reason):
+    with pytest.raises(CaveError, match=reason):
+        pe.shim(0x11223344, 0x10000000, args=args)
+
+
+@pytest.mark.skipif(sys.platform != "linux" or platform.machine() not in
+                    ("x86_64", "i386", "i686") or not shutil.which("as") or
+                    not shutil.which("ld"), reason="native i386 assembler/linker required")
+@pytest.mark.parametrize("replace_eax", [False, True])
+@pytest.mark.parametrize("args", [(), ("ecx", "stack:0", "esi"),
+                                  ("ecx", "stack_offset:4", "esi")])
+def test_native_shim_preserves_state_and_passes_arguments(pe, tmp_path, replace_eax, args):
+    shim = pe.shim(0x100, 0, args=args, replace_eax=replace_eax)
+    registers = ("eax", "ebx", "ecx", "edx", "ebp", "esi", "edi")
+    fields = [f"actual_{r}" for r in registers] + [
+        "before_esp", "after_esp", "before_flags", "after_flags", "callback_flags",
+        "arg0", "arg1", "arg2", "canary"]
+    setup = "\n".join(f"movl ${0x11111111 * (n + 1)}, %{r}"
+                      for n, r in enumerate(registers))
+    capture = "\n".join(f"movl %{r}, actual_{r}" for r in registers)
+    clobber = "\n".join(f"movl $0xdeadbeef, %{r}" for r in registers)
+    arguments = "\n".join(f"movl {4 + 4 * n}(%esp), %eax\nmovl %eax, arg{n}"
+                          for n in range(len(args)))
+    source = tmp_path / "shim.s"
+    source.write_text(f"""
+.section .text
+.global _start
+_start:
+    pushl $0x11223344
+    {setup}
+    pushl $0xcd7
+    popfl
+    movl %esp, before_esp
+    pushfl
+    popl before_flags
+    call shim
+    {capture}
+    movl %esp, after_esp
+    pushfl
+    popl after_flags
+    cld
+    movl (%esp), %eax
+    movl %eax, canary
+    movl $4, %eax
+    movl $1, %ebx
+    movl $results, %ecx
+    movl $results_end-results, %edx
+    int $0x80
+    movl $1, %eax
+    xorl %ebx, %ebx
+    int $0x80
+shim:
+    .byte {','.join(str(b) for b in shim)}
+    ret
+.org shim+0x100, 0x90
+callback:
+    pushfl
+    popl callback_flags
+    {arguments}
+    {clobber}
+    xorl %eax, %eax
+    std
+    movl $0x12345600, %eax
+    ret
+.section .data
+results:
+{chr(10).join(f'{field}: .long 0' for field in fields)}
+results_end:
+.section .note.GNU-stack,"",@progbits
+""")
+    obj = tmp_path / "shim.o"
+    executable = tmp_path / "shim"
+    subprocess.run(["as", "--32", "-o", str(obj), str(source)], check=True,
+                   capture_output=True, timeout=10)
+    subprocess.run(["ld", "-m", "elf_i386", "-o", str(executable), str(obj)],
+                   check=True, capture_output=True, timeout=10)
+    result = subprocess.run([str(executable)], check=True, capture_output=True, timeout=5)
+    observed = dict(zip(fields, struct.unpack("<16I", result.stdout)))
+    for n, register in enumerate(registers):
+        expected = 0x12345600 if replace_eax and register == "eax" else 0x11111111 * (n + 1)
+        assert observed[f"actual_{register}"] == expected
+    assert observed["before_esp"] == observed["after_esp"]
+    assert observed["before_flags"] == observed["after_flags"]
+    assert observed["before_flags"] & 0x400
+    assert observed["callback_flags"] & 0x400 == 0
+    assert observed["canary"] == 0x11223344
+    if args:
+        assert [observed[f"arg{n}"] for n in range(3)] == [0x33333333, 0x11223344, 0x66666666]
 
 
 def test_the_shim_pops_exactly_what_it_pushed(pe):

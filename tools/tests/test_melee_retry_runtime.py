@@ -17,7 +17,9 @@ HARNESS = r'''
 #define __cdecl __attribute__((cdecl))
 #define __stdcall __attribute__((stdcall))
 #define __fastcall __attribute__((fastcall))
-#if RETRY_VARIANT
+#if RETRY_VARIANT == 2
+#include "mods/features/054-melee-target-goal/src/meleeprobe.cpp"
+#elif RETRY_VARIANT
 #include "mods/features/053-melee-retry/src/meleeprobe.cpp"
 #else
 #include "mods/features/052-meleeprobe/src/meleeprobe.cpp"
@@ -29,8 +31,11 @@ static unsigned char hordeStorage[0x400], vtable[0x140];
 static void *horde = hordeStorage + 0xAC;
 static unsigned updateCalls, readyCalls, callOrder, readyResult, writeCalls;
 static unsigned loggerFailures, debugFailures;
-static unsigned plannerRecord[32], plannerRecords;
+static unsigned plannerRecord[48], plannerRecords;
 static int wrongCall, writeFails, structureKind = 1;
+static int targetHorde = 1, relationship;
+static void *lookupResult = outer;
+static unsigned relationshipCalls, lookupCalls;
 
 static void setword(void *base, int offset, unsigned value) {
     *(unsigned *)((char *)base + offset) = value;
@@ -42,7 +47,18 @@ static void *__fastcall mock_goal(void *m, void *) {
     return m == machine ? structure : 0;
 }
 static int __fastcall mock_kind(void *goal, void *, int kind) {
+    if (kind == 0x6C) return goal == target && targetHorde;
     return goal == structure && kind == 7 && structureKind;
+}
+static int __fastcall mock_relationship(void *member, void *, void *goal) {
+    ++relationshipCalls;
+    if (member != attacker || goal != target) wrongCall = 1;
+    return relationship;
+}
+static void *__fastcall mock_lookup(void *game, void *, unsigned id) {
+    ++lookupCalls;
+    if (game != logic || id != 77) wrongCall = 1;
+    return lookupResult;
 }
 static void __fastcall mock_update(void *h, void *, void *t) {
     ++updateCalls;
@@ -64,7 +80,7 @@ static int __cdecl mock_print(FILE *, const char *format, ...) {
     if (!prefix[i]) {
         __builtin_va_list args;
         __builtin_va_start(args, format);
-        for (i = 0; i < 32; ++i) plannerRecord[i] = __builtin_va_arg(args, unsigned);
+        for (i = 0; i < 48; ++i) plannerRecord[i] = __builtin_va_arg(args, unsigned);
         __builtin_va_end(args);
         ++plannerRecords;
     }
@@ -155,6 +171,159 @@ static int planner_case(unsigned scenario) {
     return 0;
 }
 
+static int ignored_cells() {
+    unsigned char saved[sizeof(s_plan)];
+    for (unsigned i = 0; i < sizeof(s_plan); ++i) saved[i] = ((unsigned char *)&s_plan)[i];
+    meleeprobe_cell_begin(123, 456);
+    meleeprobe_cell_data((void *)1);
+    meleeprobe_cell_reject();
+    for (unsigned i = 0; i < sizeof(s_plan); ++i)
+        if (saved[i] != ((unsigned char *)&s_plan)[i]) return 30;
+    return 0;
+}
+static int cell_case(unsigned scenario) {
+    unsigned point[3] = {1, 2, 3};
+    unsigned cell[4] = {0, 0, 0, 0x3C}, info[9] = {0};
+    cell[0] = (unsigned)info;
+    info[5] = 0xAABBCCDD; info[6] = 0x11223344; info[8] = 0x55667788;
+    if (ignored_cells()) return 31;
+    meleeprobe_plan_enter(attacker, target, 0, 0);
+    if (ignored_cells()) return 32;
+    meleeprobe_plan_point(point);
+    meleeprobe_cell_begin(3, 4);
+    meleeprobe_cell_data(cell);
+    if (s_plan.cellGoalId != info[5] || s_plan.cellPosId != info[6] ||
+        s_plan.cellObstacleId != info[8]) return 33;
+    if (scenario == 18 || scenario == 19) {
+        if (scenario == 18) meleeprobe_cell_begin(7, ~0u);
+        else meleeprobe_cell_data(0);
+        meleeprobe_cell_reject();
+        meleeprobe_plan_point_result(0);
+        meleeprobe_plan_complete(0, attacker, 0);
+        if (plannerRecord[28] != 1 || plannerRecord[29] != 1) return 34;
+        if (scenario == 18 && (plannerRecord[30] != ~0u || plannerRecord[31] != 7)) return 35;
+        for (unsigned i = 32; i <= 39; ++i)
+            if (plannerRecord[i]) return 36;
+    } else if (scenario == 20) {
+        cell[0] = 1; cell[3] = 0;
+        meleeprobe_cell_data(cell);
+        if (s_plan.cellUnitsPresent || s_plan.cellGoalId || s_plan.cellPosId ||
+            s_plan.cellObstacleId) return 37;
+        cell[0] = 0; cell[3] = 0x3C;
+        meleeprobe_cell_data(cell);
+        if (s_plan.cellUnitsPresent || s_plan.cellGoalId || s_plan.cellPosId ||
+            s_plan.cellObstacleId) return 38;
+        cell[0] = (unsigned)info; cell[3] = 4;
+        meleeprobe_cell_data(cell);
+        if (s_plan.cellUnitsPresent || s_plan.cellGoalId || s_plan.cellPosId ||
+            s_plan.cellObstacleId != info[8]) return 39;
+        cell[3] = 8;
+        meleeprobe_cell_data(cell);
+        if (!s_plan.cellUnitsPresent || s_plan.cellGoalId != info[5] ||
+            s_plan.cellPosId != info[6] || s_plan.cellObstacleId) return 40;
+        meleeprobe_plan_point_result(1);
+        meleeprobe_plan_point(point);
+        if (s_plan.cellSeen || s_plan.cellDataPresent || s_plan.cellRejected ||
+            s_plan.cell || s_plan.cellFlags || s_plan.cellInfo || s_plan.cellUnitsPresent ||
+            s_plan.cellGoalId || s_plan.cellPosId || s_plan.cellObstacleId ||
+            s_plan.cellX || s_plan.cellY) return 44;
+    } else {
+        meleeprobe_cell_reject();
+        meleeprobe_plan_point_result(0);
+        if (ignored_cells()) return 41;
+        meleeprobe_plan_point(point);
+        if (ignored_cells()) return 42;
+        meleeprobe_plan_complete(0, attacker, 0);
+        if (plannerRecord[37] != info[5] || plannerRecord[38] != info[6] ||
+            plannerRecord[39] != info[8]) return 43;
+    }
+    return 0;
+}
+
+static int target_goal_case(unsigned scenario) {
+    unsigned point[3] = {1, 2, 3}, info[9] = {0}, id = 77, expected = 77;
+    void *query = attacker, *cellInfo = info;
+    setword(attacker, 0x74, 123);
+    setptr(outer, 0x214, target);
+    setptr(machine, 0x1C, state);
+    setword(state, 0, 0x0109A0C8);
+    setword(state, 4, 50);
+    state[0x45] = 1;
+    info[5] = id;
+    meleeprobe_plan_enter(attacker, target, 0, 0);
+    meleeprobe_plan_point(point);
+    switch (scenario) {
+    case 22: expected = 0; break;
+    case 23: s_plan.active = 0; cellInfo = (void *)1; break;
+    case 24: s_plan.pointPending = 0; cellInfo = (void *)1; break;
+    case 25: query = target; cellInfo = (void *)1; break;
+    case 26: query = 0; cellInfo = (void *)1; break;
+    case 27: s_plan.target = 0; cellInfo = (void *)1; break;
+    case 28: id = expected = 0; cellInfo = (void *)1; break;
+    case 29: id = expected = 123; cellInfo = (void *)1; break;
+    case 30: cellInfo = 0; break;
+    case 31: info[5] = 88; break;
+    case 32: info[6] = 88; break;
+    case 33: targetHorde = 0; break;
+    case 34: structureKind = 0; break;
+    case 35: relationship = 1; break;
+    case 36: relationship = 2; break;
+    case 37: game_logic = 0; break;
+    case 38: lookupResult = 0; break;
+    case 39: setptr(outer, 0x214, attacker); break;
+    case 40: s_frame_events = 256; expected = 0; break;
+    case 41: s_failed = 1; expected = 0; break;
+    case 42:
+        meleeprobe_plan_point_result(0);
+        meleeprobe_plan_point(point);
+        expected = 0; break;
+    case 43: setptr(target, OBJECT_AI, 0); break;
+    case 44: setword(state, 0, 0x12345678); break;
+    case 45:
+        setptr(target, OBJECT_AI, 0);
+        setptr(target, OBJECT_OUTER, structure);
+        setptr(structure, OBJECT_AI, ai);
+        break;
+    case 46: setptr(machine, 0x1C, 0); break;
+    case 47: writeFails = 1; head("write-failure"); expected = 0; break;
+    case 48: setword(state, 4, 51); break;
+    case 49: setword(state, 4, 12); break;
+    case 50: state[0x45] = 0; break;
+    default: return 50;
+    }
+#if RETRY_VARIANT != 2
+    expected = id;
+#endif
+    unsigned char *regions[] = {attacker, target, outer, ai, machine, structure, state, logic,
+                               (unsigned char *)info};
+    unsigned sizes[] = {sizeof(attacker), sizeof(target), sizeof(outer), sizeof(ai),
+                        sizeof(machine), sizeof(structure), sizeof(state), sizeof(logic), sizeof(info)};
+    unsigned char saved[9][0x400];
+    for (unsigned i = 0; i < 9; ++i)
+        for (unsigned j = 0; j < sizes[i]; ++j) saved[i][j] = regions[i][j];
+    void *originalLogic = game_logic;
+    unsigned result = meleeprobe_target_goal(id, cellInfo, query);
+    if (result != expected || wrongCall) return 51;
+    for (unsigned i = 0; i < 9; ++i)
+        for (unsigned j = 0; j < sizes[i]; ++j)
+            if (saved[i][j] != regions[i][j]) return 52;
+    if (game_logic != originalLogic) return 53;
+    unsigned overridden = id != 0 && expected == 0;
+    if (s_plan.goalOverrides != overridden ||
+        s_plan.goalFirstId != (overridden ? id : 0) ||
+        s_plan.goalLastId != (overridden ? id : 0)) return 54;
+#if RETRY_VARIANT != 2
+    if (relationshipCalls || lookupCalls || s_plan.goalChecks) return 55;
+#else
+    if (scenario >= 48 && scenario <= 50 &&
+        (s_plan.goalReject[GOAL_STATE] != 1 || !s_plan.goalStateSeen ||
+         s_plan.goalStateVtableFirst != 0x0109A0C8 ||
+         s_plan.goalStateIdFirst != word(state, 4) ||
+         s_plan.goalStateAttackingFirst != state[0x45] || relationshipCalls || lookupCalls)) return 56;
+#endif
+    return 0;
+}
+
 extern "C" int run(int argc, char **argv) {
     if (argc != 2) return 90;
     unsigned scenario = 0;
@@ -165,6 +334,8 @@ extern "C" int run(int argc, char **argv) {
     jump(0x004A2CF0, (void *)mock_kind);
     jump(0x006440E0, (void *)mock_update);
     jump(0x006439F0, (void *)mock_ready);
+    jump(0x005C7950, (void *)mock_relationship);
+    jump(0x0049A510, (void *)mock_lookup);
     *(FPrintf *)0x013593C0 = mock_print;
     *(QueryCounter *)0x01358EB4 = mock_counter;
     *(DebugString *)0x01358EA8 = mock_debug;
@@ -183,6 +354,8 @@ extern "C" int run(int argc, char **argv) {
     s_file = (FILE *)1;
     s_run = "runtime-test";
     if (scenario >= 14 && scenario <= 17) return planner_case(scenario);
+    if (scenario >= 18 && scenario <= 21) return cell_case(scenario);
+    if (scenario >= 22 && scenario <= 50) return target_goal_case(scenario);
     readyResult = 0xABCD01;
     unsigned expectedAttempts = 1, expectedDeadline = 115;
     void *passedTarget = target;
@@ -263,7 +436,7 @@ def recovery(tmp_path_factory):
     source = tmp / "recovery.cpp"
     source.write_text(HARNESS)
     binaries = {}
-    for enabled in (0, 1):
+    for enabled in (0, 1, 2):
         binary = tmp / f"recovery-{enabled}"
         compiled = subprocess.run([
             compiler, "-std=c++98", "-m32", "-O2", "-nostdlib", "-fno-pie", "-no-pie",
@@ -299,4 +472,34 @@ def test_diagnostic_control_never_calls_recovery_or_changes_deadline(recovery):
 ])
 def test_diagnostic_capture_safety(recovery, enabled, scenario):
     result = subprocess.run([str(recovery[enabled]), str(scenario)], capture_output=True, timeout=5)
+    assert result.returncode == 0, f"harness assertion {result.returncode}; {result.stderr!r}"
+
+
+@pytest.mark.parametrize("enabled", (0, 1), ids=["diagnostic", "retry"])
+@pytest.mark.parametrize("scenario", range(18, 22), ids=[
+    "bounds-rejection-clears-previous-occupancy", "null-cell-clears-previous-occupancy",
+    "info-union-reads-require-flags-and-pointer", "callbacks-respect-query-lifetime",
+])
+def test_cell_capture_safety(recovery, enabled, scenario):
+    result = subprocess.run([str(recovery[enabled]), str(scenario)], capture_output=True, timeout=5)
+    assert result.returncode == 0, f"harness assertion {result.returncode}; {result.stderr!r}"
+
+
+@pytest.mark.parametrize("scenario", range(22, 51), ids=[
+    "eligible-target-reservation", "inactive", "outside-point-query", "different-query-object",
+    "null-query-object", "null-target", "empty-goal", "self-reservation", "null-cell-info",
+    "goal-id-mismatch", "physical-occupant", "building-target", "non-structure-order",
+    "neutral-target", "allied-target", "missing-game-logic", "missing-reservation-owner",
+    "other-horde-reservation", "logging-capped", "logging-failed", "first-rejection-already-captured",
+    "missing-target-ai", "non-attack-state", "only-outer-has-structure-goal", "missing-target-state",
+    "logging-write-failure", "forced-attack-state-51", "follow-state-12", "not-attacking-object",
+])
+def test_target_goal_exception_policy_and_memory_safety(recovery, scenario):
+    result = subprocess.run([str(recovery[2]), str(scenario)], capture_output=True, timeout=5)
+    assert result.returncode == 0, f"harness assertion {result.returncode}; {result.stderr!r}"
+
+
+@pytest.mark.parametrize("enabled", (0, 1), ids=["diagnostic", "retry"])
+def test_target_goal_exception_is_disabled_in_comparison_variants(recovery, enabled):
+    result = subprocess.run([str(recovery[enabled]), "22"], capture_output=True, timeout=5)
     assert result.returncode == 0, f"harness assertion {result.returncode}; {result.stderr!r}"

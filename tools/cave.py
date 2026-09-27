@@ -220,7 +220,7 @@ class PE:
         return start
 
     # --- the shim ------------------------------------------------------
-    def shim(self, entry_va, at_va, args=("ecx",), swallow_ret=None):
+    def shim(self, entry_va, at_va, args=("ecx",), swallow_ret=None, replace_eax=False):
         """The overlay's only machine code: save everything, call `entry_va`,
         put everything back.
 
@@ -237,6 +237,12 @@ class PE:
         the only way to reach one: the shim gets a register, and a thiscall's
         explicit arguments are on the stack. It is meaningful ONLY when the hook
         sits at the function's entry, before the body has pushed anything.
+        "stack_offset:N" reads a dword at the hook's original ESP + N, for
+        mid-function hooks whose stack layout is known at that exact instruction.
+
+        `replace_eax` carries the payload's return value into the resumed code
+        while preserving every other register and the original flags. It cannot
+        be combined with `swallow_ret`, whose return value controls a branch.
 
         `swallow_ret` turns the detour into a CONDITIONAL REPLACEMENT: the
         payload returns non-zero to say "I handled this", and the shim returns
@@ -256,6 +262,8 @@ class PE:
         one .cpp file, and hand-maintaining it per feature is how the two blobs
         this replaced both grew their own copy of the same mistake.
         """
+        if replace_eax and swallow_ret is not None:
+            raise CaveError("replace_eax cannot be combined with swallow_ret")
         body = bytearray()
         if swallow_ret is not None:
             body += bytes([0x6A, 0x00])            # push 0 -- the verdict slot
@@ -264,22 +272,29 @@ class PE:
         for name in reversed(args):   # cdecl: the last argument is pushed first
             if name in PUSH_REG:
                 body.append(PUSH_REG[name])
-            elif name.startswith("stack:"):
-                index = int(name[len("stack:"):])
-                # The target has pushed nothing yet, so its argument `index` sits
-                # above the return address at the entry esp -- which is what
-                # pushad/pushfd and this shim's own pushes now sit below.
-                disp = SAVED_BYTES + 4 * pushed + 4 + 4 * index
+            elif name.startswith(("stack:", "stack_offset:")):
+                if name.startswith("stack:"):
+                    index = int(name[len("stack:"):])
+                    # At function entry, the return address precedes argument zero.
+                    offset = 4 + 4 * index
+                else:
+                    offset = int(name[len("stack_offset:"):], 0)
+                    if offset < 0:
+                        raise CaveError("stack offset must be non-negative")
+                disp = SAVED_BYTES + 4 * pushed + offset
                 if swallow_ret is not None:
                     disp += 4                      # the verdict slot sits below
                 if disp > 0x7F:
-                    raise CaveError(f"stack argument {index} is out of one-byte reach")
+                    raise CaveError(f"shim argument {name!r} is out of one-byte reach")
                 body += bytes([0xFF, 0x74, 0x24, disp])   # push dword ptr [esp+disp]
             else:
                 raise CaveError(f"unknown shim argument {name!r}")
             pushed += 1
         body += bytes([CALL_REL32]) + struct.pack("<i", entry_va - (at_va + len(body) + 5))
         body += bytes([0x83, 0xC4, 4 * len(args)])  # cdecl: the caller pops
+        if replace_eax:
+            # popad must restore the callback result instead of the interrupted EAX.
+            body += bytes([0x89, 0x44, 0x24, SAVED_BYTES - 4])  # mov [esp+32], eax
         if swallow_ret is not None:
             # Stash the verdict in the slot before popfd/popad destroy eax, then
             # read it back once the target's registers are restored.
@@ -292,7 +307,8 @@ class PE:
             body += bytes([0x74, len(ret)]) + ret            # jz over it; else return
         return bytes(body)
 
-    def detour_call(self, target_rva, entry_va, args=("ecx",), swallow_ret=None):
+    def detour_call(self, target_rva, entry_va, args=("ecx",), swallow_ret=None,
+                    replace_eax=False):
         """Detour `target_rva` through a generated shim into `entry_va`.
 
         The shim's `call` is relative, so it has to be emitted for the address
@@ -300,7 +316,8 @@ class PE:
         and refuses the blob if the two ever disagree."""
         return self.detour(target_rva,
                            payload=self.shim(entry_va, self.image_base + self.next_rva(),
-                                             args=args, swallow_ret=swallow_ret))
+                                             args=args, swallow_ret=swallow_ret,
+                                             replace_eax=replace_eax))
 
     def save(self, out):
         out = Path(out)
