@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Reproduce WorldBuilder identity evidence; inventories are never match claims."""
 import argparse
+import bisect
+import copy
 from collections import Counter
 import hashlib
 import json
@@ -57,6 +59,7 @@ class Image:
         self.text = target.text_section
         self.text_bytes = target.read_rva(self.text.rva, min(self.text.raw_size, self.text.virtual_size))
         self.highlow = {r.rva for r in target.relocations if r.type == 3}
+        self.highlow_sorted = sorted(self.highlow)
         self.md = Cs(CS_ARCH_X86, CS_MODE_32)
 
     def read(self, rva, size):
@@ -304,15 +307,29 @@ def editor_candidates(image, maps):
                                target_rva=rva, target_size=size, bytes_sha256=sha256(raw),
                                boundary="message-map entry, complete instructions, contained branches, RET then INT3",
                                chain={k: v for k, v in owner.items() if k != "entries"}, message_entry=entry,
-                               highlow_operand_rvas=sorted(x for x in image.highlow if rva <= x < rva + size),
+                               highlow_operand_rvas=image.highlow_sorted[bisect.bisect_left(image.highlow_sorted, rva):
+                                                                        bisect.bisect_left(image.highlow_sorted, rva + size)],
                                string_witnesses=strings, callee_contract=callee_contract(image, instructions)))
         candidates[-1]["packet_sha256"] = sha256(json.dumps(candidates[-1], sort_keys=True, separators=(",", ":")).encode())
     return candidates
 
 
+_CANDIDATES = {}
+
+
 def extract_editor_candidates(target):
-    image = Image(target)
-    return editor_candidates(image, message_maps(image, runtime_classes(image)))
+    """Every MFC message-map candidate in the target image.
+
+    A pure function of the loaded (immutable) target, so one process computes
+    it once: validate_mfc_identity asks per ledger row, and check_csv's
+    WorldBuilder pass rebuilt the whole list six times (~9 s). Each caller gets
+    its own deep copy, so no caller can alter another's view."""
+    key = id(target)
+    cached = _CANDIDATES.get(key)
+    if cached is None or cached[0] is not target:
+        image = Image(target)
+        cached = _CANDIDATES[key] = (target, editor_candidates(image, message_maps(image, runtime_classes(image))))
+    return copy.deepcopy(cached[1])
 
 
 def assertion_candidate(image):

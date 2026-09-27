@@ -191,15 +191,65 @@ def show(rev, path, allow_missing=False):
     return proc.stdout
 
 
-def matched_by_rva(rev):
-    rows = {}
+def ledger_text(rev):
     path = layout_history.path_at("" if rev == ":" else rev, LEDGER,
                                   layout_history.OLD_LEDGER, root=Path.cwd())
-    for row in csv.DictReader(io.StringIO(show(rev, path))):
+    return show(rev, path)
+
+
+def matched_by_rva(text):
+    rows = {}
+    for row in csv.DictReader(io.StringIO(text)):
         if row.get("status") == "matched":
             row["source"] = layout_history.canonical_source(row["source"])
             rows.setdefault(row["target_rva"], []).append(row)
     return rows
+
+
+def _rva_field(line):
+    if '"' in line:
+        fields = next(csv.reader([line]), [])
+    else:
+        fields = line.split(",", 3)
+    return fields[2] if len(fields) > 2 else None
+
+
+def scoped_rows(old_text, new_text):
+    """matched_by_rva for both revisions, restricted to what can matter.
+
+    An address's source set can only differ between revisions if one of its
+    ledger lines differs, so only those addresses are parsed in full, plus
+    (lazily, via the returned callable) every row of the sources they involve
+    for the naked-body proof. Parsing both whole 170k-row ledgers was ~9 s of
+    every push. Line-scoping is exact while each record is one line; a line
+    with an odd number of quotes (a record that may span lines) keeps the full
+    parse. Returns (old_rows, new_rows, rows_for_sources) or None to fall back.
+    """
+    lines = []
+    for text in (old_text, new_text):
+        split = re.findall(r"[^\n]*\n|[^\n]+$", text)
+        if any(line.count('"') % 2 for line in split):
+            return None
+        lines.append(split)
+    old_lines, new_lines = lines
+    if not old_lines or not new_lines or old_lines[0] != new_lines[0]:
+        return None
+    header = old_lines[0]
+    changed_lines = set(old_lines[1:]) ^ set(new_lines[1:])
+    candidates = {_rva_field(line) for line in changed_lines}
+
+    def parse(selected):
+        return matched_by_rva(header + "".join(selected))
+
+    old_rows = parse([l for l in old_lines[1:] if _rva_field(l) in candidates])
+    new_rows = parse([l for l in new_lines[1:] if _rva_field(l) in candidates])
+
+    def rows_for_sources(which, sources):
+        names = {Path(s).name for s in sources}
+        body = old_lines if which == "old" else new_lines
+        return parse([l for l in body[1:] if any(n in l for n in names)])
+
+    return old_rows, new_rows, rows_for_sources
 
 
 def ledger_blob(rev):
@@ -235,7 +285,13 @@ def naked_keys(rev, all_rows, sources):
 def clean_coverage_lost(old, new):
     if ledger_blob(old) == ledger_blob(new):
         return []
-    old_rows, new_rows = matched_by_rva(old), matched_by_rva(new)
+    old_text, new_text = ledger_text(old), ledger_text(new)
+    scoped = scoped_rows(old_text, new_text)
+    if scoped is None:
+        old_rows, new_rows = matched_by_rva(old_text), matched_by_rva(new_text)
+        rows_for_sources = lambda which, _sources: old_rows if which == "old" else new_rows
+    else:
+        old_rows, new_rows, rows_for_sources = scoped
     changed = [rva for rva, rows in new_rows.items()
                if rva in old_rows and
                {r["source"] for r in old_rows[rva]} != {r["source"] for r in rows}]
@@ -248,8 +304,10 @@ def clean_coverage_lost(old, new):
                        and r["source"] not in missing
                        and (r["name"], r["target_rva"]) not in naked})
 
-    old_naked, old_missing = naked_keys(old, old_rows, {r["source"] for rva in changed for r in old_rows[rva]})
-    new_naked, new_missing = naked_keys(new, new_rows, {r["source"] for rva in changed for r in new_rows[rva]})
+    old_sources = {r["source"] for rva in changed for r in old_rows[rva]}
+    new_sources = {r["source"] for rva in changed for r in new_rows[rva]}
+    old_naked, old_missing = naked_keys(old, rows_for_sources("old", old_sources), old_sources)
+    new_naked, new_missing = naked_keys(new, rows_for_sources("new", new_sources), new_sources)
     lost = []
     for rva in changed:
         before = clean_sources(rva, old_rows, old_naked, old_missing)

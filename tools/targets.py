@@ -211,6 +211,46 @@ BASELINES = {"game": ("inputs/baselines/bfme1/retail-1.03-unpacked", "lotrbfme.e
              "worldbuilder": ("inputs/baselines/bfme1/workshop-vanilla-1.03", "worldbuilder.exe")}
 
 
+
+def _base_relocations(pe):
+    """The base relocation table as Relocation tuples, walked exactly as
+    pefile's parse_image_base_relocation_list does (same reads, same stopping
+    rules) but unpacking each block's words in one struct call. pefile builds a
+    Structure object per entry: ~400k of them, 12 s of every check_csv run."""
+    directory = pe.OPTIONAL_HEADER.DATA_DIRECTORY[5]
+    if not directory.VirtualAddress:
+        return ()
+    size_of_image = pe.OPTIONAL_HEADER.SizeOfImage
+    rva, end = directory.VirtualAddress, directory.VirtualAddress + directory.Size
+    out = []
+    while rva < end:
+        try:
+            header = pe.get_data(rva, 8)
+            pe.get_offset_from_rva(rva)
+        except pefile.PEFormatError:
+            break
+        if len(header) < 8:
+            break
+        page, block_size = struct.unpack("<II", header)
+        if page > size_of_image or block_size > size_of_image:
+            break
+        try:
+            words = pe.get_data(rva + 8, block_size - 8)
+            pe.get_offset_from_rva(rva + 8)
+        except pefile.PEFormatError:
+            words = b""
+        seen = set()
+        for (word,) in struct.iter_unpack("<H", words[:len(words) & ~1]):
+            key = (word & 0x0FFF, word >> 12)
+            if key in seen:
+                break
+            seen.add(key)
+            out.append(Relocation(page + key[0], key[1]))
+        if not block_size:
+            break
+        rva += block_size
+    return tuple(out)
+
 def load_target(target_id, *, root=ROOT):
     if not isinstance(target_id, str) or target_id not in BASELINES:
         raise TargetError(f"invalid target ID: {target_id!r}")
@@ -248,12 +288,15 @@ def load_target(target_id, *, root=ROOT):
         pe = pefile.PE(data=data, fast_load=True)
         if pe.FILE_HEADER.Machine != 0x14C or pe.OPTIONAL_HEADER.Magic != 0x10B:
             raise TargetError(f"{target_id}: only x86 PE32 targets are supported")
-        pe.parse_data_directories(directories=[0, 1, 5])
-        for index, attribute in ((0, "DIRECTORY_ENTRY_EXPORT"), (1, "DIRECTORY_ENTRY_IMPORT"),
-                                 (5, "DIRECTORY_ENTRY_BASERELOC")):
+        pe.parse_data_directories(directories=[0, 1])
+        for index, attribute in ((0, "DIRECTORY_ENTRY_EXPORT"), (1, "DIRECTORY_ENTRY_IMPORT")):
             directory = pe.OPTIONAL_HEADER.DATA_DIRECTORY[index]
             if directory.Size and directory.VirtualAddress and not hasattr(pe, attribute):
                 raise TargetError(f"{target_id}: cannot parse PE directory {index}")
+        relocations = _base_relocations(pe)
+        directory = pe.OPTIONAL_HEADER.DATA_DIRECTORY[5]
+        if directory.Size and directory.VirtualAddress and not relocations:
+            raise TargetError(f"{target_id}: cannot parse PE directory 5")
         sections = tuple(Section(_name(section.Name.rstrip(b"\0")), section.VirtualAddress,
                                  section.Misc_VirtualSize, section.SizeOfRawData,
                                  section.PointerToRawData, section.Characteristics)
@@ -269,8 +312,6 @@ def load_target(target_id, *, root=ROOT):
         imports = tuple(Import(_name(dll.dll), _name(symbol.name), symbol.ordinal,
                                symbol.address - pe.OPTIONAL_HEADER.ImageBase)
                         for dll in getattr(pe, "DIRECTORY_ENTRY_IMPORT", ()) for symbol in dll.imports)
-        relocations = tuple(Relocation(entry.rva, entry.type)
-                            for block in getattr(pe, "DIRECTORY_ENTRY_BASERELOC", ()) for entry in block.entries)
         image_base = pe.OPTIONAL_HEADER.ImageBase
         pe.close()
     except (pefile.PEFormatError, UnicodeError, IndexError) as error:
