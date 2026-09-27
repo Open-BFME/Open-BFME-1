@@ -6408,5 +6408,15 @@
   "after_sha256": "80b12cb74b80e15fbd43b51b219ab52da406ab302ec7b32b715fdbbd2980a881",
   "evidence": "targets/game/reverse/identity_evidence/00578160-score-screen-constructor.md",
   "reason": "Token-alignment artifact: the old manually represented base word +C is unrelated to the screen scalar at +284; native base declarations replace the raw-vptr representation."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00766aa0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00766aa0.cpp",
+  "old_name": "BfmeVec3",
+  "new_name": "Rva00766AA0RenderSlots",
+  "before_sha256": "01ec140b59ce999946230bef6aedcf3fb4c35e0ebe3880affb9c13a4bccf379f",
+  "after_sha256": "33b800f49c57342a5c81932b94dc719821cb75c6210d26f5c696f88203f5eb38",
+  "evidence": "targets/game/reverse/identity_evidence/00766aa0-geometry-recovery.md",
+  "reason": "False declaration-order pairing: BfmeVec3 is replaced by canonical Vector3 from vector3.h, while the new Rva00766AA0RenderSlots is the unrelated independently proved render-object vtable view for pointer-returning slot14. No established vector identity was made opaque."
  }
 ]
