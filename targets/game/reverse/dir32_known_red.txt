@@ -1,9 +1,5 @@
 # DIR32 symbols that resolve to more than one retail address and are not in
 # dir32_consistency_whitelist.txt. Shrink-only (tools/gate_baseline.py). One symbol per line.
-??0UnicodeString@@QAE@XZ
-??1?$list@USnapshotBlock@GameState@@V?$allocator@USnapshotBlock@GameState@@@_STL@@@_STL@@QAE@XZ
-??1RoadType@@QAE@XZ
-??1UnicodeString@@QAE@XZ
 ??_7?$DynamicVectorClass@K@@6B@
 ??_7?$DynamicVectorClass@PAULegacyMaterialClass@MeshLoadContextClass@@@@6B@
 ??_7?$DynamicVectorClass@PAVFontCharsBuffer@@@@6B@
@@ -60,24 +56,6 @@
 ??_7WorkerAIUpdate@@6BBfmeWorkerInterfaceTail2@@@
 ??_8?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@7B@
 ??_8?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@7B@
-?GameSpyColor@@3PAHA
-?TheWindowManager@@3PAVGameWindowManager@@A
-?TheWindowManager@@3PAVWindowManager@@A
-?_PresetAlphaShader@ShaderClass@@2V1@A
-?_PresetOpaqueShader@ShaderClass@@2V1@A
 ?buildFieldParse@StatusBitsUpgradeModuleData@@SAXAAVMultiIniFieldParse@@@Z
 ?g_AIIdleStateVTable@@3HA
 ?g_AIPickUpCrateStateVTable@@3HA
-?g_D3DXFastTable@@3UD3DXFASTTABLE@@A
-?g_bfmeBinkRound@@3QBGB
-?g_bfmeD1072@@3DA
-?g_mgr12EF1D8@@3PAVBfmeMgrF1D@@A
-?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z
-?parseBool@INI@@SAXPAV1@PAX1PBX@Z
-?parseInt@INI@@SAXPAV1@PAX1PBX@Z
-?parseReal@INI@@SAXPAV1@PAX1PBX@Z
-?playerTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z
-_IID_ID3DXSkinInfo
-__imp__GetClientRect@8
-_locale_buffer_0084EED0
-_locale_buffer_0084EF00
