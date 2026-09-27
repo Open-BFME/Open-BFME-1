@@ -58,6 +58,7 @@ def _stub_gate(monkeypatch, red=()):
     monkeypatch.setattr(build, "verify_functions", check("functions", ["patch"]))
     monkeypatch.setattr(build, "load_function_rows", lambda: [])
     monkeypatch.setattr(build, "verify_string_refs", check("string-refs"))
+    monkeypatch.setattr(build, "verify_constant_refs", check("constant-refs"))
     monkeypatch.setattr(build, "verify_dir32_consistency", check("dir32"))
     monkeypatch.setattr(build, "verify_source_claims", check("source-claims"))
     monkeypatch.setattr(build, "verify_noop_patch", check("noop"))
@@ -78,7 +79,7 @@ def test_a_red_check_cannot_silence_the_checks_behind_it(monkeypatch, capsys):
     assert "pins" in calls, (
         "the pin guard did not run behind a red DIR32 — this is the defect that "
         "made a landed guard a no-op on master for two days")
-    for late in ("string-refs", "source-claims", "noop"):
+    for late in ("string-refs", "constant-refs", "source-claims", "noop"):
         assert late in calls, f"{late} was skipped by an earlier failure"
 
     out = capsys.readouterr().out

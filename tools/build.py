@@ -2643,6 +2643,46 @@ def verify_string_refs(rows):
     print(f"String-ref verify: OK ({checked} literals + {empty_ok} empty-string refs verified, 0 unverified/skipped)")
 
 
+def verify_constant_refs(rows):
+    """VERIFY every DIR32 relocation to a compiler float constant (__real@<hex>): the bytes retail
+    loads must be the value the source compiled. compile_function masks the address, so a wrong
+    literal -- Zero Hour's 30 logic frames where BFME runs 5, 99.9 where retail has 49.9 -- matched
+    byte for byte until this read 41 of them back out of the image."""
+    mismatches = []
+    checked = 0
+    for row in rows:
+        obj = require_row_object(row)
+        target_rva = int(row["target_rva"], 16)
+        target_size = int(row["target_size"])
+        try:
+            fn_bytes, relocs = read_object_symbol_bytes(obj, ledger_object_symbol(row), target_size)
+        except ValueError:
+            continue
+        target = None
+        for offset, rtype, sym in relocs:
+            if rtype != 0x0006 or not sym.startswith("__real@") or offset + 4 > min(target_size, len(fn_bytes)):
+                continue
+            if target is None:
+                target = read_target_bytes(target_rva, target_size)
+            value = bytes.fromhex(sym[len("__real@"):])[::-1]
+            base = (struct.unpack_from("<I", target, offset)[0]
+                    - struct.unpack_from("<I", fn_bytes, offset)[0]) & 0xFFFFFFFF
+            try:
+                held = read_target_bytes(base - 0x400000, len(value))
+            except ValueError:
+                held = b""
+            if held == value:
+                checked += 1
+            else:
+                mismatches.append((row["name"], sym, base, held))
+    if mismatches:
+        print(f"Constant-ref verify: FAIL {len(mismatches)} mismatch(es) (source constant != the value retail loads)")
+        for name, sym, base, held in mismatches[:12]:
+            print(f"    {name}: {sym}, but retail 0x{base:08X} holds {held.hex() or '<outside the image>'}")
+        raise SystemExit(1)
+    print(f"Constant-ref verify: OK ({checked} float constants verified)")
+
+
 def verify_dir32_consistency(rows):
     """Regression gate for the non-string DIR32s (globals/vtables/func-addrs) build.py masks. A symbol
     has one address, so every reference must resolve to the same base once the addend is subtracted
@@ -2830,6 +2870,7 @@ def main(only=None):
         # DIR32) — three wrong-twin claims survived per-file verification and
         # reached master before the full gate caught them.
         verify_string_refs(function_rows)
+        verify_constant_refs(function_rows)
         return
     print("Full verification")
     # Identity, not bytes: verify_functions proves each row's bytes, and a
@@ -2877,6 +2918,7 @@ def main(only=None):
     patches = run("functions", verify_functions)
     rows = load_function_rows()
     run("string-refs", lambda: verify_string_refs(rows))
+    run("constant-refs", lambda: verify_constant_refs(rows))
     run("dir32 consistency", lambda: verify_dir32_consistency(rows))
     run("pin consistency", pin_consistency.verify)
     run("source claims", verify_source_claims)
