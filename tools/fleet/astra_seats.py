@@ -18,9 +18,15 @@ lands. BFME_MODEL is exported so re_log and add_match attribute every verdict.
   python3 tools/fleet/astra_seats.py pick 5 [--lifts]     # show what would be served
   python3 tools/fleet/astra_seats.py launch 5 [--lifts]   # worktrees + briefs + codex
   python3 tools/fleet/astra_seats.py status               # running/done, what each landed
+  python3 tools/fleet/astra_seats.py harvest              # commit + push every finished seat
 
 State lives in <main checkout>/build/astra_seats/ so every worktree sees the
 same claims; a seat's bodies are not served again while it is listed there.
+`harvest` stages everything a finished seat changed outside build/, commits it
+through the normal hooks, and pushes with a rebase loop that drops tombstoned
+rows a union merge resurrects (dedup_csv --tombstoned-only). A commit the hooks
+refuse -- a name regression needing evidence, a gate failure -- is printed as
+NEEDS REVIEW and left staged for the operator.
 """
 import argparse
 import collections
@@ -189,15 +195,92 @@ def status():
               f"{len(landed)}{' ' + ', '.join(landed) if landed else ''}")
 
 
+def git(tree, *args, check=False):
+    return subprocess.run(["git", *args], cwd=tree, capture_output=True, text=True, check=check)
+
+
+def landed_rows(tree):
+    """New functions.csv rows in the seat's working tree, as `name @ rva (size B)`."""
+    diff = git(tree, "diff", "HEAD", "--", "targets/game/reverse/functions.csv").stdout
+    out = []
+    for line in diff.splitlines():
+        if line.startswith("+") and not line.startswith("+++"):
+            fields = line[1:].split(",")
+            if len(fields) > 4 and fields[2].startswith("0x"):
+                out.append((fields[0], fields[2], int(fields[3] or 0)))
+    return out
+
+
+def push(tree, tries=8):
+    """pull --rebase and push HEAD:master until the remote has it. After every
+    rebase, union merge may have resurrected tombstoned rows (two deletions in
+    one hunk keep both sides); drop them in place and commit before pushing."""
+    for _ in range(tries):
+        if git(tree, "pull", "-q", "--rebase", "origin", "master").returncode:
+            state = git(tree, "status").stdout
+            if "rebase in progress" in state:
+                git(tree, "rebase", "--abort")
+                return f"rebase conflict (aborted): {git(tree, 'diff', '--name-only', '--diff-filter=U').stdout.strip()}"
+        dropped = subprocess.run([sys.executable, "tools/dedup_csv.py", "--tombstoned-only"], cwd=tree,
+                                 capture_output=True, text=True).stdout
+        if git(tree, "status", "--short", "targets/game/reverse/functions.csv").stdout.strip():
+            git(tree, "add", "targets/game/reverse/functions.csv")
+            commit = git(tree, "commit", "-q", "-m", "ledger: drop tombstoned rows a union merge resurrected",
+                         "-m", dropped.strip())
+            if commit.returncode:
+                return "tombstone fix-up commit refused:\n" + (commit.stdout + commit.stderr)[-1500:]
+        if git(tree, "push", "-q", "origin", "HEAD:master").returncode == 0:
+            git(tree, "fetch", "-q", "origin", "master")
+            if git(tree, "merge-base", "--is-ancestor", "HEAD", "origin/master").returncode == 0:
+                return None
+    return f"not pushed after {tries} attempts"
+
+
+def harvest(seat):
+    """Commit and push one finished seat. Returns a problem string, or None."""
+    tree = Path(seat["worktree"])
+    rows = landed_rows(tree)
+    changed = git(tree, "status", "--short", "--untracked-files=all").stdout.splitlines()
+    paths = [line[3:].split(" -> ")[-1] for line in changed if not line[3:].startswith("build/")]
+    if not paths:
+        return "nothing to harvest"
+    for path in paths:
+        git(tree, "add", "-A", "--", path)
+    total = sum(size for _, _, size in rows)
+    subject = f"reverse: {len(rows)} bodies from {Path(seat['label']).name} ({total:,} B), {seat['model']} seat"
+    body = "\n".join(f"  {rva} {size:5} B {name}" for name, rva, size in sorted(rows, key=lambda r: r[1]))
+    commit = git(tree, "commit", "-q", "-m", subject, "-m",
+                 f"{seat['model']} ({seat['effort']}) fresh-file seat {seat['id']}, landed byte-exact:\n{body}",
+                 "-m", "Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>")
+    if commit.returncode:
+        return "commit refused by the hooks:\n" + (commit.stdout + commit.stderr)[-2500:]
+    problem = push(tree)
+    if problem is None:
+        print(f"{seat['id']}: pushed {git(tree, 'log', '--oneline', '-1').stdout.strip()}")
+    return problem
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("action", choices=["pick", "launch", "status", "harvested"])
+    ap.add_argument("action", choices=["pick", "launch", "status", "harvest", "harvested"])
     ap.add_argument("count", nargs="?", type=int, default=4)
     ap.add_argument("--lifts", action="store_true", help="add one seat on servable named lifts")
     ap.add_argument("--seat", help="harvested: mark this seat id as reviewed, releasing its bodies")
     args = ap.parse_args(argv)
     if args.action == "status":
         return status()
+    if args.action == "harvest":
+        items = seats()
+        for seat in items:
+            if seat.get("harvested") or not finished(seat) or (args.seat and seat["id"] != args.seat):
+                continue
+            problem = harvest(seat)
+            if problem and problem != "nothing to harvest":
+                print(f"{seat['id']}: NEEDS REVIEW -- {problem}")
+                continue
+            seat["harvested"] = True
+        save_seats(items)
+        return 0
     if args.action == "harvested":
         items = seats()
         for seat in items:

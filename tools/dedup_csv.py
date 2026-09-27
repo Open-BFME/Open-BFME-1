@@ -129,6 +129,27 @@ def dedup_symbols(path):
     return len(body), len(unique)
 
 
+def drop_tombstoned_in_place(path, drop):
+    """Delete only the functions.csv lines whose (name, rva) is tombstoned, byte
+    for byte: no re-sort, no newline normalisation. A full dedup reorders
+    thousands of rows, and name_regression then pairs unrelated files."""
+    keep, dropped = [], []
+    for line in path.read_bytes().split(b"\n"):
+        fields = next(csv.reader([line.decode("utf-8", errors="replace").rstrip("\r")]), [])
+        try:
+            key = (fields[0], int(fields[2], 16))
+        except (IndexError, ValueError):
+            keep.append(line)
+            continue
+        if key in drop:
+            dropped.append(key)
+        else:
+            keep.append(line)
+    if dropped:
+        ledger_io.atomic_write_bytes(path, b"\n".join(keep))
+    return dropped
+
+
 def main(argv=None):
     # Parse before any reads or writes: historically even --help silently
     # normalized both live ledgers and reordered thousands of unrelated rows.
@@ -137,7 +158,17 @@ def main(argv=None):
                         help="also drop functions.csv rows whose (name, rva) targets/game/reverse/deleted_rows.csv "
                              "tombstones -- the rows a union merge resurrects during a rebase or "
                              "cherry-pick, which skip the pre-commit hook")
+    parser.add_argument("--tombstoned-only", action="store_true",
+                        help="ONLY drop tombstoned functions.csv lines, in place; no dedup, no re-sort")
     args = parser.parse_args(argv)
+    if args.tombstoned_only:
+        import check_csv
+        dropped = drop_tombstoned_in_place(ROOT / "targets/game/reverse" / "functions.csv",
+                                           frozenset(check_csv.tombstones()))
+        for name, rva in dropped:
+            print(f"functions.csv: dropped tombstoned {name} @ 0x{rva:08X}")
+        print(f"functions.csv: {len(dropped)} tombstoned line(s) dropped in place")
+        return
     drop = frozenset()
     if args.drop_tombstoned:
         import check_csv
