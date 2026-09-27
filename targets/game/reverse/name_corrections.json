@@ -6508,5 +6508,45 @@
   "after_sha256": "d7555d002e5d95ae322415943fd436dea624627cb598f7587eb01ada3579eb7b",
   "evidence": "targets/game/reverse/identity_evidence/00575b70-score-single-player.md",
   "reason": "Replace an unproved bank-only method spelling with the existing native/ledger CampaignManager::rva003BF580 independently reached through retail ILT000459DA."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0050a470.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenuSystem.cpp",
+  "old_name": "m_isMatching",
+  "new_name": "m_rva218",
+  "before_sha256": "b1a0f97217e1bca0f0402b9e9b9500182754cc569d89d226b07b3424c95f8fed",
+  "after_sha256": "9494825b63384ef37ff307c85058c168ef7597edc0360400316794d82ca946e5",
+  "evidence": "targets/game/reverse/identity_evidence/0050a470-quickmatch-system.md",
+  "reason": "Independent setter bodies00505530/50 store selection values at224/21C and the caller gates max-ping/max-disconnect gadget events with218/220; inherited matching/stopping/map labels are unsupported and contradict these actual field uses."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0050a470.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenuSystem.cpp",
+  "old_name": "m_matchingLevel",
+  "new_name": "m_rva21C",
+  "before_sha256": "b1a0f97217e1bca0f0402b9e9b9500182754cc569d89d226b07b3424c95f8fed",
+  "after_sha256": "9494825b63384ef37ff307c85058c168ef7597edc0360400316794d82ca946e5",
+  "evidence": "targets/game/reverse/identity_evidence/0050a470-quickmatch-system.md",
+  "reason": "Independent setter bodies00505530/50 store selection values at224/21C and the caller gates max-ping/max-disconnect gadget events with218/220; inherited matching/stopping/map labels are unsupported and contradict these actual field uses."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0050a470.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenuSystem.cpp",
+  "old_name": "m_isStopping",
+  "new_name": "m_rva220",
+  "before_sha256": "b1a0f97217e1bca0f0402b9e9b9500182754cc569d89d226b07b3424c95f8fed",
+  "after_sha256": "9494825b63384ef37ff307c85058c168ef7597edc0360400316794d82ca946e5",
+  "evidence": "targets/game/reverse/identity_evidence/0050a470-quickmatch-system.md",
+  "reason": "Independent setter bodies00505530/50 store selection values at224/21C and the caller gates max-ping/max-disconnect gadget events with218/220; inherited matching/stopping/map labels are unsupported and contradict these actual field uses."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0050a470.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenuSystem.cpp",
+  "old_name": "m_selectedMap",
+  "new_name": "m_rva224",
+  "before_sha256": "b1a0f97217e1bca0f0402b9e9b9500182754cc569d89d226b07b3424c95f8fed",
+  "after_sha256": "9494825b63384ef37ff307c85058c168ef7597edc0360400316794d82ca946e5",
+  "evidence": "targets/game/reverse/identity_evidence/0050a470-quickmatch-system.md",
+  "reason": "Independent setter bodies00505530/50 store selection values at224/21C and the caller gates max-ping/max-disconnect gadget events with218/220; inherited matching/stopping/map labels are unsupported and contradict these actual field uses."
  }
 ]
