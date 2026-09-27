@@ -12319,6 +12319,7 @@ name,address,notes
 ?PopulateQMLadderListBox@@YAXPAVGameWindow@@@Z,0x00028317,proven by the populateLadderListBox call site
 ?PopulateQMLadderListBox@BfmeAptScreenQuickMatchMenu@@QAEXPAVGameWindow@@@Z,0x00508660,ZH WOLQuickMatchMenu.cpp:398 PopulateQMLadderListBox(GameWindow* win) as a method of the 0x2b0-byte QuickMatchMenu APT object (ctor 0x00505830 vtable 0x0110401C whose slots +4/+8 are WOLQuickMatchMenuInput/System; created by createAptScreenQuickMatchMenu 0x001051C0): this+0x244 (comboBoxLadder) guard; isPopulatingLadderBox 0x012F4814 = 1..0; QuickMatchPreferences; GadgetListBoxReset(win) GUI:NoLadder entry; std::set<const LadderInfo*> usedLadders (insert_unique 0x004D4CC0); TheLadderList->findLadder(pref.getLastLadderAddr() getLastLadderPort()) 0x0062A560; LadderPreferences::loadProfile(localProfile) 0x000AE0A0 recent ladders; BFME adds the getSpecialLadders/getStandardLadders loops; GadgetListBoxSetSelected; ILT 0x0003CAD3; sole caller 0x005091BF (the menu init)
 ?PopulateReplayFileListbox@@YAXPAVGameWindow@@@Z,0x000394AA
+?PushButtonImageDrawThree@@YAXPAVGameWindow@@H@Z,0x0004B457,ButtonFlashTransition::draw at 0x0059B140 calls ILT 0x0004B457 ten times with GameWindow* and 255; thunk targets matched helper 0x0059ABC0 and ZH authored draw proves signature
 ?Put@Base64Pipe@@UAEHPBXH@Z,0x009E7990
 ?Put_String@INIClass@@QAE_NPBD00@Z,0x009E3BD0
 ?Put_To@Pipe@@UAEXPAV1@@Z,0x009E7900
@@ -14306,9 +14307,6 @@ name,address,notes
 ?_M_insert_overflow@?$vector@PAVLocomotor@@V?$allocator@PAVLocomotor@@@_STL@@@_STL@@IAEXPAPAVLocomotor@@ABQAV3@ABU__true_type@2@I_N@Z,0x0003CE8E,ILT to the 0x001B7810 body; LocomotorSet::addLocomotor 0x001BAD80 +0x46 m_locomotors.push_back overflow call with identical argument pushes; 0x001B7810 is a 265-byte member of the pointer-vector _M_insert_overflow family whose ScienceInfo instantiation is matched at 0x000E77E0
 ?_M_insert_overflow@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@IAEXPAPAVObject@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001F6CC,ScriptActions 0x002FFB60 +0xDF pointer vector overflow through ILT to 0x0018B700
 ?_M_insert_overflow@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@IAEXPAPAVObject@@ABQAV3@ABU__true_type@2@I_N@Z,0x000486BC,ILT thunk used by call site
-?clientSafeQuickDoesPathExist@Pathfinder@@QAE_NPAVObject@@PBVCoord3D@@1H@Z,0x0004A327,AISkirmishPlayer checkBridges vtable slot13 calls this pathfinder method with Object pointer unit and two coordinates plus zero; ILT routes 0x003EDF90 RET16
-?findBrokenBridge@Pathfinder@@QAEHPBXPBVCoord3D@@1@Z,0x0001DFE8,AISkirmishPlayer checkBridges vtable slot13 calls this pathfinder method with locomotor set and two coordinates and returns broken bridge ID in EAX; ILT routes 0x003D96A0
-?isAboveTerrain@Thing@@QBE_NXZ,0x00004386,AIEnterAndAttackState update 0x00189460 +0x129 and +0x134 calls the terrain-height predicate through ILT; target 0x000C3F00 compares getHeightAboveTerrain against zero
 ?_M_insert_overflow@?$vector@PAVObjectCreationNugget@@V?$allocator@PAVObjectCreationNugget@@@_STL@@@_STL@@IAEXPAPAVObjectCreationNugget@@ABQAV3@ABU__true_type@2@I_N@Z,0x0002B6E8
 ?_M_insert_overflow@?$vector@PAVObjectTypes@@V?$allocator@PAVObjectTypes@@@_STL@@@_STL@@IAEXPAPAVObjectTypes@@ABQAV3@ABU__true_type@2@I_N@Z,0x0000D6FC,ScriptEngine::doObjectTypeListMaintenance at retail 0x0034E370 uses the ObjectTypes pointer-vector overflow ILT
 ?_M_insert_overflow@?$vector@PAVRva00144100Item@@V?$allocator@PAVRva00144100Item@@@_STL@@@_STL@@IAEXPAPAVRva00144100Item@@ABQAV3@ABU__true_type@2@I_N@Z,0x00004F8E,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00144100 calls; autopin
@@ -79635,6 +79633,7 @@ name,address,notes
 ?clearTwoVec@Rva003C1A50@@QAEXXZ,0x0001B333,ILT to clear body 0x003C0F70; callee of 0x003C1A50
 ?clearWaypointQueue@AIUpdateInterface@@QAEXXZ,0x0000C4B9,AIUpdateInterface clearWaypointQueue ILT used by assigned ScriptActions face bodies
 ?clearWinList@@YAXAAV?$list@PAVAnimateWindow@@V?$allocator@PAVAnimateWindow@@@_STL@@@_STL@@@Z,0x0045D660,file-local static; retail takes list head in edi
+?clientSafeQuickDoesPathExist@Pathfinder@@QAE_NPAVObject@@PBVCoord3D@@1H@Z,0x0004A327,AISkirmishPlayer checkBridges vtable slot13 calls this pathfinder method with Object pointer unit and two coordinates plus zero; ILT routes 0x003EDF90 RET16
 ?clone_materials@MeshModelClass@@IAEXABV1@@Z,0x0096DDC0,REL32 target of MeshModelClass copy ctor at 0x0094ED42
 ?close@File@@UAEXXZ,0x000309CC,pinharvest x1 (thunk)
 ?close@GameWindow@@QAEX_N@Z,0x00027F2A,GameWindow close call from IMEManager closeCandidateList
@@ -80167,6 +80166,7 @@ name,address,notes
 ?drawDisabled@Drawable@@AAEXXZ,0x00038AAA,BFME drawIconUI member ILT
 ?drawEmoticon@Drawable@@AAEXXZ,0x0003D3E8,BFME drawIconUI member ILT
 ?drawEnthusiastic@Drawable@@AAEXXZ,0x00038BAE,BFME drawIconUI member ILT
+?drawFillRect@Display@@QAEXMMMMH@Z,0x00013FA2,ButtonFlashTransition::draw at 0x0059B140 calls ILT 0x00013FA2 five times with Display this and four floats plus packed color; ZH authored draw proves signature
 ?drawForeground@ControlBarSchemeManager@@QAEXUICoord2D@@@Z,0x00012099,Caller-backed W3DCommandBarForegroundDraw at0079CD60; root decoded ILT and checked reference implementation
 ?drawHealing@Drawable@@AAEXXZ,0x0003D514,BFME drawIconUI member ILT
 ?drawHealthBar@Drawable@@AAEXXZ,0x00005BD7,BFME drawIconUI member ILT
@@ -80605,6 +80605,7 @@ name,address,notes
 ?findBestInfoSlow@WeaponFindBestInfoSlowShim@@QBEPBVWeaponTemplateSet@@ABV?$vector@VWeaponTemplateSet@@V?$allocator@VWeaponTemplateSet@@@_STL@@@_STL@@ABV?$BitFlags@$0BB@@@@Z,0x00144000,incremental-link thunk target through a TU-local forwarding shim
 ?findBestSupplyWarehouse@ResourceGatheringManager@@QAEPAVObject@@PAV2@@Z,0x00015960,WorkerAIUpdate::gainOneBox call site resolves through the retail ILT thunk
 ?findBridge@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z,0x00034D8D,walks the list at collection+0x0c; identical 246-byte body to findRoad which walks +0x08. Called by the Bridge block
+?findBrokenBridge@Pathfinder@@QAEHPBXPBVCoord3D@@1@Z,0x0001DFE8,AISkirmishPlayer checkBridges vtable slot13 calls this pathfinder method with locomotor set and two coordinates and returns broken bridge ID in EAX; ILT routes 0x003D96A0
 ?findByKey@BfmeLivingWorldCampaignManager@@QAEPAVBfmeLwcmFindResult@@PAX@Z,0x0000D422,Open-BFME5 ILT to 0x003B4590; callee of 0x003B8260
 ?findByNameA@BfmeNamedContainer0033c340@@QAEPAVBfmeNamedItem0033c340@@ABVAsciiString@@@Z,0x000323F8,"Lead verified359D40: name probe table+0C, equality, returns stored pointer+4 or null; ret4"
 ?findByNameB@BfmeNamedContainer0033c340@@QAEPAVBfmeNamedItem0033c340@@ABVAsciiString@@@Z,0x0000A592,"Lead verified359DC0: name probe table+2C, equality, returns stored pointer+4 or null; ret4"
@@ -84598,6 +84599,7 @@ name,address,notes
 ?invokeAtLevel@GenActionSink@@QAEPAEHPBDH0HHHH@Z,0x00015235,"Lead traced204B4675F0: rejects level>=12 unsigned, formats /_level%d, invokesAPT893410, returns global result byte pointer"
 ?isAbleToAttack@Object@@QBE_NXZ,0x00001FD7,ILT thunk pin from PartitionFilterRepulsor::allow packet 001ddb10 (target body 0x001C9C10)
 ?isAbleToBeToppled@ToppleUpdate@@QBE_NXZ,0x0000678A
+?isAboveTerrain@Thing@@QBE_NXZ,0x00004386,AIEnterAndAttackState update 0x00189460 +0x129 and +0x134 calls the terrain-height predicate through ILT; target 0x000C3F00 compares getHeightAboveTerrain against zero
 ?isActive@BfmeCondition@@QAE_NXZ,0x0002760B,ILT thunk used by the 0x00235320 linked condition scan
 ?isAnyKindOf@BfmeKindOfTester@@QBE_NABVBfmeKindOfMask@@@Z,0x00132AE0,alias of the Thing BitFlags<116> spelling ledgered at the same body; Object.cpp reaches it through a view class because the reference KindOfMaskType is four dwords, not six
 ?isAnyKindOf@Thing@@QBE_NABUKindOfMask@@@Z,0x0004250A,KindOfMask struct ILT used by WeaponSet::chooseBestWeaponForTarget
@@ -87941,7 +87943,6 @@ __imp__BfmeMemMove,0x0135945C,dllimport IAT for wide string insert_aux Traits::m
 __imp__EnterCriticalSection@4,0x00F58D18,retail KERNEL32 import pointer
 __imp__EnumThreadWindows@12,0x01358FDC,Open-BFME5 USER32 EnumThreadWindows import the 0x0088A520 window probe calls
 __imp__GetCPInfo@8,0x01358D50,retail KERNEL32 GetCPInfo import pointer
-__imp__GetClientRect@8,0x0135901C,Open-BFME5 USER32 GetClientRect import the 0x0088A520 window probe calls
 __imp__GetCurrentThreadId@0,0x01358D7C,Open-BFME5 KERNEL32 GetCurrentThreadId import the 0x0088A520 window probe calls
 __imp__GetDateFormatA@24,0x01358D80,Open-BFME5 retail GetDateFormatA import pointer
 __imp__GetDateFormatW@24,0x01358D84,Open-BFME5 retail GetDateFormatW import pointer
@@ -87953,6 +87954,7 @@ __imp__GetTimeFormatA@24,0x01358E10,Open-BFME5 retail GetTimeFormatA import poin
 __imp__GetTimeFormatW@24,0x01358E14,Open-BFME5 retail GetTimeFormatW import pointer
 __imp__GetVersionExA@4,0x01358E20,Open-BFME5 retail GetVersionExA import pointer
 __imp__GetWindowLongA@8,0x01359018,Open-BFME5 USER32 GetWindowLongA import the 0x0088A520 window probe calls
+__imp__GetWindowRect@8,0x0135901C,USER32 GetWindowRect import slot (imports.csv) the 0x0088A520 window probe calls
 __imp__InterlockedIncrement@4,0x01358E5C,Open-BFME5 retail InterlockedIncrement import pointer
 __imp__LeaveCriticalSection@4,0x00F58E74,retail KERNEL32 import pointer
 __imp__MultiByteToWideChar@24,0x01358EA0,retail IAT slot for MultiByteToWideChar
@@ -89240,5 +89242,3 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
-?PushButtonImageDrawThree@@YAXPAVGameWindow@@H@Z,0x0004B457,ButtonFlashTransition::draw at 0x0059B140 calls ILT 0x0004B457 ten times with GameWindow* and 255; thunk targets matched helper 0x0059ABC0 and ZH authored draw proves signature
-?drawFillRect@Display@@QAEXMMMMH@Z,0x00013FA2,ButtonFlashTransition::draw at 0x0059B140 calls ILT 0x00013FA2 five times with Display this and four floats plus packed color; ZH authored draw proves signature
