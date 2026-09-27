@@ -277,7 +277,6 @@ Money LANPreferences::getStartingCash(void) const
   return money;
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LANPreferencesSetStartingCashThunk.cpp
 // ?setStartingCash@LANPreferences@@ present-unmatched
 void LANPreferences::setStartingCash( const Money & startingCash )
 {
@@ -702,6 +701,63 @@ WindowMsgHandledType LanLobbyMenuInput( GameWindow *window, UnsignedInt msg,
 //-------------------------------------------------------------------------------------------------
 /** Lan Lobby menu window system callback */
 //-------------------------------------------------------------------------------------------------
+// BFME callback identity: FunctionLexicon VA 0x012A9504 -> ILT 0x00041CC2 -> RVA 0x004CEC00.
+// The two join paths pass a zeroed dword/word aggregate by reference.
+struct LanAddress004CEC00 { unsigned int field00; unsigned short field04; LanAddress004CEC00() : field00(0), field04(0) {} };
+class LanDispatch004CEC00 {
+public:
+ virtual ~LanDispatch004CEC00();
+virtual void slot01();
+virtual void slot02();
+virtual void slot03();
+virtual void slot04();
+virtual void slot05();
+virtual void slot06();
+virtual void slot07();
+virtual void slot08();
+virtual void slot09();
+virtual void slot0a();
+virtual void RequestGameJoin(LANGameInfo *, const LanAddress004CEC00 &);
+virtual void slot0c();
+virtual void slot0d();
+virtual void slot0e();
+virtual void slot0f();
+virtual void RequestChat(UnicodeString, int);
+virtual void slot11();
+virtual void slot12();
+virtual void slot13();
+virtual void slot14();
+virtual void slot15();
+virtual void RequestGameCreate(UnicodeString, bool);
+virtual void slot17();
+virtual void RequestSetName(UnicodeString);
+virtual void RequestLobbyLeave(bool);
+virtual void slot1a();
+virtual void slot1b();
+virtual void slot1c();
+virtual void slot1d();
+virtual void slot1e();
+virtual void slot1f();
+virtual void slot20();
+virtual void slot21();
+virtual void slot22();
+virtual void slot23();
+virtual void slot24();
+virtual void slot25();
+virtual void slot26();
+virtual void slot27();
+virtual void slot28();
+virtual void slot29();
+virtual void slot2a();
+virtual LANGameInfo *LookupGameByListOffset(int);
+};
+
+template <typename T> inline bool StringBase<T>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
+template <typename T> inline int StringBase<T>::getLength() const { return m_data ? m_data->length : 0; }
+template <typename T> inline const T *StringBase<T>::str() const { static const T TheNullChr=0; return m_data ? m_data->data : &TheNullChr; }
+template <typename T> inline T StringBase<T>::getCharAt(int i) const { return m_data ? m_data->data[i] : 0; }
+
+void Rva004C8B40GameInfoWindowRefresh(GameInfo *, UnicodeString);
 WindowMsgHandledType LanLobbyMenuSystem( GameWindow *window, UnsignedInt msg, 
 														 WindowMsgData mData1, WindowMsgData mData2 )
 {
@@ -731,7 +787,7 @@ WindowMsgHandledType LanLobbyMenuSystem( GameWindow *window, UnsignedInt msg,
 
 				return MSG_HANDLED;
 			}//case GWM_INPUT_FOCUS:
-		case GLM_DOUBLE_CLICKED:
+		case 0x4015:
 			{
 				if (LANbuttonPushed)
 					break;
@@ -743,16 +799,16 @@ WindowMsgHandledType LanLobbyMenuSystem( GameWindow *window, UnsignedInt msg,
 				
 					if (rowSelected >= 0)
 					{
-						LANGameInfo * theGame = TheLAN->LookupGameByListOffset(rowSelected);
+						LANGameInfo * theGame = ((LanDispatch004CEC00 *)TheLAN)->LookupGameByListOffset(rowSelected);
 						if (theGame)
 						{
-							TheLAN->RequestGameJoin(theGame);
+							((LanDispatch004CEC00 *)TheLAN)->RequestGameJoin(theGame, LanAddress004CEC00());
 						}
 					}
 				}
 				break;
 			}
-		case GLM_SELECTED:
+		case 0x4014:
 			{
 				if (LANbuttonPushed)
 					break;
@@ -766,9 +822,9 @@ WindowMsgHandledType LanLobbyMenuSystem( GameWindow *window, UnsignedInt msg,
 						HideGameInfoWindow(TRUE);
 						break;
 					}
-					LANGameInfo * theGame = TheLAN->LookupGameByListOffset(rowSelected);
+					LANGameInfo * theGame = ((LanDispatch004CEC00 *)TheLAN)->LookupGameByListOffset(rowSelected);
 					if (theGame)
-						RefreshGameInfoWindow(theGame, theGame->getName());
+						Rva004C8B40GameInfoWindowRefresh(theGame, theGame->getName());
 					else
 						HideGameInfoWindow(TRUE);
 
@@ -795,14 +851,14 @@ WindowMsgHandledType LanLobbyMenuSystem( GameWindow *window, UnsignedInt msg,
 				} //if ( controlID == buttonBack )
 				else if ( controlID == buttonHostID )
 				{
-					TheLAN->RequestGameCreate( UnicodeString(L""), FALSE);
+					((LanDispatch004CEC00 *)TheLAN)->RequestGameCreate( UnicodeString(L""), FALSE);
 					
 				}//else if ( controlID == buttonHostID )
 				else if ( controlID == buttonClearID )
 				{
 					GadgetTextEntrySetText(textEntryPlayerName, UnicodeString::TheEmptyString);
 					TheWindowManager->winSendSystemMsg( window, 
-																						GEM_UPDATE_TEXT,
+																						0x4031,
 																						(WindowMsgData)textEntryPlayerName, 
 																						0 );
 
@@ -817,10 +873,10 @@ WindowMsgHandledType LanLobbyMenuSystem( GameWindow *window, UnsignedInt msg,
 
 					if (rowSelected >= 0)
 					{
-						LANGameInfo * theGame = TheLAN->LookupGameByListOffset(rowSelected);
+						LANGameInfo * theGame = ((LanDispatch004CEC00 *)TheLAN)->LookupGameByListOffset(rowSelected);
 						if (theGame)
 						{
-							TheLAN->RequestGameJoin(theGame);
+							((LanDispatch004CEC00 *)TheLAN)->RequestGameJoin(theGame, LanAddress004CEC00());
 						}
 					}
 					else
@@ -839,20 +895,20 @@ WindowMsgHandledType LanLobbyMenuSystem( GameWindow *window, UnsignedInt msg,
 					txtInput.trim();
 					// Echo the user's input to the chat window
 					if (!txtInput.isEmpty()) {
-//						TheLAN->RequestChat(txtInput, LANAPIInterface::LANCHAT_EMOTE);
-						TheLAN->RequestChat(txtInput, LANAPIInterface::LANCHAT_NORMAL);
+//						((LanDispatch004CEC00 *)TheLAN)->RequestChat(txtInput, LANAPIInterface::LANCHAT_EMOTE);
+						((LanDispatch004CEC00 *)TheLAN)->RequestChat(txtInput, LANAPIInterface::LANCHAT_NORMAL);
 					}
 				} //if ( controlID == buttonEmote )
 				else if (controlID == buttonDirectConnectID)
 				{
-					TheLAN->RequestLobbyLeave( false );
+					((LanDispatch004CEC00 *)TheLAN)->RequestLobbyLeave( false );
 					TheShell->push(AsciiString("Menus/NetworkDirectConnect.wnd"));
 				}
 				
 				break;
 			}// case GBM_SELECTED:
 	
-		case GEM_UPDATE_TEXT:
+		case 0x4031:
 			{
 				if (LANbuttonPushed)
 					break;
@@ -877,21 +933,21 @@ WindowMsgHandledType LanLobbyMenuSystem( GameWindow *window, UnsignedInt msg,
 					while (txtInput.getLength() > g_lanPlayerNameLength)
 						txtInput.removeLastChar();
 					
-					if (!txtInput.isEmpty() && txtInput.getCharAt(txtInput.getLength()-1) == L',')
+					if (!txtInput.isEmpty() && ((const StringBase<wchar_t> *)&txtInput)->getCharAt(txtInput.getLength()-1) == L',')
 						txtInput.removeLastChar(); // we use , for strtok's so we can't allow them in names.  :(
 
-					if (!txtInput.isEmpty() && txtInput.getCharAt(txtInput.getLength()-1) == L':')
+					if (!txtInput.isEmpty() && ((const StringBase<wchar_t> *)&txtInput)->getCharAt(txtInput.getLength()-1) == L':')
 						txtInput.removeLastChar(); // we use : for strtok's so we can't allow them in names.  :(
 
-					if (!txtInput.isEmpty() && txtInput.getCharAt(txtInput.getLength()-1) == L';')
+					if (!txtInput.isEmpty() && ((const StringBase<wchar_t> *)&txtInput)->getCharAt(txtInput.getLength()-1) == L';')
 						txtInput.removeLastChar(); // we use ; for strtok's so we can't allow them in names.  :(
 
 					// send it over the network
 					if (!txtInput.isEmpty())
-						TheLAN->RequestSetName(txtInput);
+						((LanDispatch004CEC00 *)TheLAN)->RequestSetName(txtInput);
 					else
 						{
-							TheLAN->RequestSetName(defaultName);
+							((LanDispatch004CEC00 *)TheLAN)->RequestSetName(defaultName);
 						}
 
 					// Put the whitespace-free version in the box
@@ -899,8 +955,8 @@ WindowMsgHandledType LanLobbyMenuSystem( GameWindow *window, UnsignedInt msg,
 
 				}// if ( controlID == textEntryPlayerNameID )
 				break;
-			}//case GEM_UPDATE_TEXT:
-		case GEM_EDIT_DONE:
+			}//case 0x4031:
+		case 0x4030:
 			{
 				if (LANbuttonPushed)
 					break;
@@ -917,12 +973,12 @@ WindowMsgHandledType LanLobbyMenuSystem( GameWindow *window, UnsignedInt msg,
 					// Clear the text entry line
 					GadgetTextEntrySetText(textEntryChat, UnicodeString::TheEmptyString);
 					// Clean up the text (remove leading/trailing chars, etc)
-					while (!txtInput.isEmpty() && iswspace(txtInput.getCharAt(0)))
+					while (!txtInput.isEmpty() && iswspace(((const StringBase<wchar_t> *)&txtInput)->getCharAt(0)))
 						txtInput = UnicodeString(txtInput.str()+1);
 
 					// Echo the user's input to the chat window
 					if (!txtInput.isEmpty())
-						TheLAN->RequestChat(txtInput, LANAPIInterface::LANCHAT_NORMAL);
+						((LanDispatch004CEC00 *)TheLAN)->RequestChat(txtInput, LANAPIInterface::LANCHAT_NORMAL);
 
 				}// if ( controlID == textEntryChatID )
 				/*
@@ -936,7 +992,7 @@ WindowMsgHandledType LanLobbyMenuSystem( GameWindow *window, UnsignedInt msg,
 
 					// send it over the network
 					if (!txtInput.isEmpty())
-						TheLAN->RequestSetName(txtInput);
+						((LanDispatch004CEC00 *)TheLAN)->RequestSetName(txtInput);
 
 					// Put the whitespace-free version in the box
 					GadgetTextEntrySetText( textEntryPlayerName, txtInput );

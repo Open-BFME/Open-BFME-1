@@ -6978,5 +6978,25 @@
   "after_sha256": "dad3d5e007e348aeeb73870d0e2bd7e47a141aab1635763de47453a31d5fa239",
   "evidence": "targets/game/reverse/identity_evidence/00937060-render2d-batch-element.md",
   "reason": "The batch vector element at Render2DClass +0x34 is 0x74 bytes, and its ??_L element constructor 0x00933A40 only nulls +0. Zero Hour ProxyClass is 0x34 bytes and opens with a StringClass. ProxyClass was a padded guess, and retail names no replacement, so the element keeps its vector vtable address 0x0113C8AC."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanLobbyMenu.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanLobbyMenu.cpp",
+  "old_name": "RefreshGameInfoWindow",
+  "new_name": "Rva004C8B40GameInfoWindowRefresh",
+  "before_sha256": "1301304d1b51934dfb9efd42197b728eab560c912d505811f9b9611cd94c4bb4",
+  "after_sha256": "a7249c1b104c37ba7af9b1d376cce01dd65efe1907736984d2c4ff5e5f2d2b73",
+  "evidence": "targets/game/reverse/identity_evidence/004c8b40_callee_spelling.md",
+  "reason": "RefreshGameInfoWindow had no ledger row or pin; the called body 0x004C8B40 is landed as Rva004C8B40GameInfoWindowRefresh, which the exact LanLobbyMenuSystem landing now calls."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "WorldHeightMap",
+  "new_name": "Rva0074A680ParserRegistration",
+  "before_sha256": "9e4af1ec839a17484503ac3e06cb8874679e3d834f71e7389d958cc57d12bd21",
+  "after_sha256": "243a4df7ea78430106b7c5f3e6a0cdcf121771add7976ee083975e3fd0b00fa3",
+  "evidence": "targets/game/reverse/identity_evidence/00747ff0_global_lighting_parser.md",
+  "reason": "0x00747FF0 is slot 1 of the GlobalLighting parser-registration vtable (0x01121B30) installed by the landed ctor at 0x0074A680; it reads two stack arguments and ends RET 8, so it is that object's virtual thiscall, not a WorldHeightMap static."
  }
 ]
