@@ -1,16 +1,5 @@
-// ?Rva00510DC0@@YAXPAVUnicodeString@@PAVAsciiString@@HEI@Z
-// partial score=0.9738 date=2026-09-25
+// ShowToolTip helper; Mouse::drawTooltip reaches this body through ILT 0x00033280.
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline
-// Tooltip display builder at 0x00510DC0 (382 B). Its only caller is
-// Mouse::drawTooltip (0x005A6090) through ILT 0x00033280, which passes the
-// tooltip text, font name, size, bold flag and packed ARGB colour. The body
-// frees the previous display string through 0x00510C10, builds a new one
-// from the font library, measures it and sends "ShowToolTip" with the
-// formatted position through WindowManager::_bfme_callAptFunction.
-//
-// Display-string slots +0x04/+0x18/+0x1C are named from the Zero Hour
-// DisplayString vtable (setText/setFont/getFont); +0x10 of the returned
-// font is Zero Hour GameFont::height. Every other slot keeps its offset.
 #include "StringInline.h"
 
 typedef unsigned int UnsignedInt;
@@ -49,11 +38,11 @@ public:
 	virtual void slot18();
 	virtual void slot1C();
 	virtual void slot20();
-	virtual Rva00510DC0DisplayView *slot24();
+	virtual Rva00510DC0DisplayView *newDisplayString();
 };
 
-// The global at 0x012F19E8 is the pinned g_theWindowManager; the level
-// builder at 0x004675F0 is its pinned _bfme_callAptFunction.
+// The pinned global is g_theWindowManager; its 0x004675F0 builder is
+// WindowManager::_bfme_callAptFunction.
 class WindowManager
 {
 public:
@@ -73,6 +62,7 @@ public:
 	GameFont *getFont(AsciiString *face, float size, unsigned char style);
 };
 
+
 extern void bfmeGo995B(void);
 extern "C" __declspec(dllimport) int __cdecl _snprintf(
 	char *, unsigned int, const char *, ...);
@@ -85,6 +75,8 @@ extern int Rva00510DC0DisplayWidth;
 extern int Rva00510DC0DisplayHeight;
 extern int g_bfmeVal995B;
 
+extern "C" void _ReadWriteBarrier();
+#pragma intrinsic(_ReadWriteBarrier)
 void Rva00510DC0(UnicodeString *text, AsciiString *face, int size,
 	unsigned char style, unsigned int color)
 {
@@ -94,12 +86,14 @@ void Rva00510DC0(UnicodeString *text, AsciiString *face, int size,
 
 	float *dimensions = g_theWindowManager->slot28();
 	float minScale = (dimensions[0] < dimensions[1]) ? dimensions[0] : dimensions[1];
+	float scaledSize = size * minScale;
+	_ReadWriteBarrier();
 	GameFont *font = Rva00510DC0FontLibraryGlobal->getFont(
-		face, size * minScale, style);
+		face, scaledSize, style);
 	if (font == 0)
 		return;
 
-	display = Rva00510DC0DisplayManagerGlobal->slot24();
+	display = Rva00510DC0DisplayManagerGlobal->newDisplayString();
 	Rva00510DC0Display = display;
 	display->setFont(font);
 	Rva00510DC0Display->setText(*text);
@@ -116,6 +110,9 @@ void Rva00510DC0(UnicodeString *text, AsciiString *face, int size,
 		0.5f);
 	_snprintf(yText, 16, "%g",
 		(float)(Rva00510DC0DisplayHeight + height) / dimensions[1]);
+	char *xTextArg = xText;
+	char *yTextArg = yText;
+	_ReadWriteBarrier();
 	g_theWindowManager->_bfme_callAptFunction(g_bfmeVal995B,
-		"ShowToolTip", 2, xText, yText, 0, 0, 0);
+		"ShowToolTip", 2, xTextArg, yTextArg, 0, 0, 0);
 }

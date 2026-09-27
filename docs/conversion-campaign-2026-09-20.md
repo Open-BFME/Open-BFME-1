@@ -491,3 +491,13 @@ verdicts consumed the five-verdict cap on bodies that later landed); run
 three or four seats so a usage window lasts; and re-rank the picker when a
 pool stops yielding — the same bodies re-served to a fresh seat almost never
 land, while an unserved pool does.
+## Verified continuation
+
+Converted 0x00510DC0 (382 B) to `Rva00510DC0` in
+`game/GameEngine/Source/GameClient/Input/Rva00510DC0ShowToolTip.cpp`.
+`Mouse::drawTooltip` reaches it through ILT 0x00033280 with the matching
+five-argument ABI; the `ShowToolTip` string xref corroborates the helper
+identity. The exact body uses the inline `UnicodeString` forwarding shim and
+compiler barriers to preserve retail argument scheduling. `add_match.py
+--replace-rva` passed the scoped build: 1/1 function byte-verified and all
+three string references verified.
