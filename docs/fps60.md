@@ -164,11 +164,11 @@ loop against a measured 30. Resolve that before building against the branch.
 python3 tools/modbuild.py --only 020-gameresult --only 036-fpsprobe \
                           --only 038-fpsrender -o build/mods/arm.exe
 python3 -m pytest tools/tests/test_fps60.py tools/tests/test_fpsprobe.py
-python3 tools/fpsmeter.py --phases build/fps/<run>/phases.json build/fps/<run>/P1.jsonl
-python3 tools/fpssmooth.py <run> --phase walk     # pacing and staleness
 ```
 
-`tools/fpssmooth.py` reports the animation clock and calls anything under 0.80
+The capture readers `tools/fpsmeter.py` and `tools/fpssmooth.py` were removed on
+2026-09-27 as unused; `git log --diff-filter=D -- tools/fpssmooth.py` finds them.
+The smoothness reader reported the animation clock and called anything under 0.80
 struggling — healthy captures read 0.984–1.009, starved ones 0.104–0.105, and it
 returns UNKNOWN rather than a verdict for a capture with no clock. Watch that,
 not the frame rate: starving a client halves the present rate and divides the

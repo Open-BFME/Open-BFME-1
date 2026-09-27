@@ -144,15 +144,12 @@ BY_PATH = re.compile(
 # Placement questions, not claim questions: each of these asks WHERE a dump was
 # written, and is allowed to read the directory to answer it.
 ALLOWED = {
-    "gen_dump.py": "retracts the rows it wrote into that directory: its own bookkeeping",
     "conversion_gate.py": "enforces that a gen_asm row carries gen-dump notes, which is "
                           "the invariant is_scaffold_row rests on",
-    "wave_accounting.py": "splits an already-classified dump lane into genasm and naked",
     "family_scan.py": "scopes its family search to the gen_asm lane on purpose -- the 312 "
                       "gen-dump rows under game/gen_small/ are owned by gen_small and "
                       "gen_uw, which AGENTS.md forbids hand-editing. The note cannot say "
                       "this: both lanes spell it `gen-dump`, so the lane is the path",
-    "struct_match.py": "same lane restriction as family_scan.py, for the same reason",
     "next_work.py": "proven_dump_extents trusts `bounds=high` only from the gen_asm lane "
                     "the retired dump generator measured; test_next_work_dump_extents "
                     "pins that a gen-dump;bounds=high note under any other path is not "

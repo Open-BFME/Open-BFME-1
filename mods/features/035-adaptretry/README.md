@@ -93,7 +93,7 @@ set by the retry interval, not by the link — so a constant does not degrade as
 RTT rises, which is the whole premise of "no single value serves the range".
 
 Retail is the arm that fails here: it cannot hold the engine's 5 Hz at this RTT
-(4.60 router, 5.53 guest catching up), and `tools/netlat.py --preflight`
+(4.60 router, 5.53 guest catching up), and the latency analysis
 rejects its capture for exactly that reason while passing the 400 ms arm.
 
 So the two blockers below were never the reason not to build this. **The reason

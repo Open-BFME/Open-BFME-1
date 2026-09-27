@@ -16,18 +16,12 @@ report smoothness that is not there:
   * the D3D device global and the two vtable slots that identify it. A mistyped
     global would hash whatever else lives at that address and still produce
     plausible-looking numbers;
-  * the reader's ability to tell a really-redrawn frame from a repeated one.
-    That is the whole measurement, and it is asserted against synthetic captures
-    with a known answer -- the offline half of the two calibration controls;
   * that a --dist build refuses to carry it. It reads the backbuffer back off
     the GPU; mods/dist is what every ladder player runs.
 """
-import json
 import shutil
-import struct
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 import pytest
@@ -171,117 +165,3 @@ def test_dist_refuses_to_ship_the_instrument():
                        cwd=ROOT, capture_output=True, text=True)
     assert r.returncode != 0
     assert "refusing --dist" in r.stdout + r.stderr
-
-
-# ---- the reader: the offline half of the calibration controls ------------
-sys.path.insert(0, str(ROOT / "tools"))
-import fpsmeter  # noqa: E402
-
-TILES = 192
-
-
-def capture(path, kind, bursts=6, live_tiles=(100, 101), period_ms=16.7):
-    """A synthetic capture with a known answer.
-
-    "moving"   every present redraws: the live tiles differ every frame, which
-               is what a build that really interpolates produces.
-    "stepped"  every second present is a pixel-identical repeat: the loop ran
-               at the higher rate and the screen did not. This is the exact
-               failure the original spike gate would have passed.
-    """
-    freq = 10_000_000
-    lines = [json.dumps(dict(ev="open", qfreqlo=freq & 0xFFFFFFFF, qfreqhi=freq >> 32,
-                             w=800, h=600, fmt=22, bpp=4, cols=16, rows=12,
-                             cellw=50, cellh=50, burst=8, periodms=2000))]
-    seq = present = 0
-    t = 0.0
-    for b in range(bursts):
-        for i in range(8):
-            tiles = [1000 + n for n in range(TILES)]
-            for n in live_tiles:
-                step = seq if kind == "moving" else seq // 2
-                tiles[n] = 5000 + step
-            q = int(t * freq / 1000.0)
-            lines.append(json.dumps(dict(ev="frame", qlo=q & 0xFFFFFFFF, qhi=q >> 32,
-                                         ms=int(t), seq=seq, present=present,
-                                         f=b, cf=seq, live=1, tiles=tiles)))
-            seq += 1
-            present += 1
-            t += period_ms
-        t += 2000.0
-        present += 3          # presents the burst did not sample
-    Path(path).write_text("\n".join(lines) + "\n")
-    return path
-
-
-def test_a_really_redrawn_frame_reads_as_live(tmp_path):
-    cap = fpsmeter.load(capture(tmp_path / "moving.jsonl", "moving"))
-    fpsmeter.clock(cap)
-    rates, npairs = fpsmeter.tiles(cap)
-    assert npairs == 6 * 7, npairs        # 7 consecutive pairs per 8-frame burst
-    assert rates[100] == 0.0 and rates[101] == 0.0
-    live = fpsmeter.classify(rates)[1]
-    assert set(live) == {100, 101}
-
-
-def test_a_repeated_frame_reads_as_stepped(tmp_path):
-    """The positive control: the loop is at 60 Hz and the screen is at 30."""
-    cap = fpsmeter.load(capture(tmp_path / "stepped.jsonl", "stepped"))
-    fpsmeter.clock(cap)
-    rates, _ = fpsmeter.tiles(cap)
-    assert 0.4 <= rates[100] <= 0.6, rates[100]
-    static, live, stepped = fpsmeter.classify(rates)
-    assert set(stepped) == {100, 101}, "a repeated frame must not read as live"
-    assert 100 not in live and 100 not in static
-
-
-def test_pairs_never_span_a_burst_gap(tmp_path):
-    """Two seconds of real motion between two samples is not a duplicate.
-
-    Without the present-counter test the last frame of one burst and the first
-    of the next would be compared, which manufactures whichever answer the
-    scene happened to give.
-    """
-    cap = fpsmeter.load(capture(tmp_path / "moving.jsonl", "moving"))
-    fpsmeter.clock(cap)
-    for a, b, dt in fpsmeter.pairs(cap):
-        assert b["present"] == a["present"] + 1
-        assert dt < fpsmeter.BURST_GAP_MS
-
-
-def test_preflight_refuses_a_stopped_capture(tmp_path, capsys):
-    p = capture(tmp_path / "stopped.jsonl", "moving")
-    with open(p, "a") as f:
-        f.write(json.dumps(dict(ev="stop", why="backbuffer is multisampled",
-                                hr=0)) + "\n")
-    assert fpsmeter.preflight([fpsmeter.load(p)]) == 1
-    out = capsys.readouterr().out
-    assert "REFUSED" in out and "multisampled" in out
-
-
-def test_preflight_accepts_a_good_capture(tmp_path, capsys):
-    p = capture(tmp_path / "ok.jsonl", "moving")
-    assert fpsmeter.preflight([fpsmeter.load(p)]) == 0
-    assert "ok " in capsys.readouterr().out
-
-
-def test_present_cadence_is_read_from_the_clock(tmp_path):
-    cap = fpsmeter.load(capture(tmp_path / "fast.jsonl", "moving", period_ms=16.7))
-    fpsmeter.clock(cap)
-    dts = [dt for _, _, dt in fpsmeter.pairs(cap)]
-    assert abs(fpsmeter.pct(dts, 50) - 16.7) < 0.1
-
-
-def test_a_tile_count_change_is_refused(tmp_path):
-    """A capture whose samples disagree on the grid is not silently truncated."""
-    p = tmp_path / "ragged.jsonl"
-    capture(p, "moving")
-    lines = p.read_text().splitlines()
-    e = json.loads(lines[3])
-    e["tiles"] = e["tiles"][:10]
-    lines[3] = json.dumps(e)
-    p.write_text("\n".join(lines) + "\n")
-    cap = fpsmeter.load(p)
-    fpsmeter.clock(cap)
-    with pytest.raises(SystemExit, match="tiles"):
-        fpsmeter.tiles(cap)

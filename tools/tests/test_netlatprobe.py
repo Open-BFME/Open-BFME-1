@@ -14,7 +14,7 @@ disassembly, not the source, can settle:
     wrong dword;
   * the addresses the payload reads the engine through. A mistyped global is
     invisible in the source and produces a file full of -1s at best;
-  * the record schema, which tools/netlat.py parses by name;
+  * the record schema, whose field names measured files are keyed on;
   * that a --dist build refuses to carry it. mods/dist is what every ladder
     player runs, and this writes tens of lines a second.
 """
@@ -77,7 +77,7 @@ GLOBALS = {
     0x01358EB8: "QueryPerformanceFrequency's IAT slot",
 }
 
-# tools/netlat.py parses by these names; measured files are keyed on them.
+# Measured files are keyed on these names.
 SCHEMA = [
     '{"ev":"%s","qlo":%u,"qhi":%u,"f":%d,"c":%d,"slot":%d,"router":%d',
     ',"type":%u,"msg":%u,"list":%u,"owner":%u',

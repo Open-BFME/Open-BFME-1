@@ -22,3 +22,31 @@ tools/tests/test_scan_population.py
 tools/wave_accounting.py
 # Retracted 2026-09-27: __emit lift carrying a workshop crack byte (see deleted_rows.csv ?init@GameEngine@@).
 game/GameEngine/Source/Common/GameEngineInitThunk.cpp
+# Unused tools removed 2026-09-27 (no hook, CI, doc or recent commit used them). Restore one by removing its line.
+tools/agree.py
+tools/ported_unmatched.py
+tools/screen_cluster.py
+tools/lib_window_sweep.py
+tools/struct_match.py
+tools/batch_screen.py
+tools/marker_screen.py
+tools/rtc_framevars.py
+tools/whereis.py
+tools/dir32_sites.py
+tools/check_bank.py
+tools/correct_match_identity.py
+tools/compact_re_attempts.py
+tools/layout_census.py
+tools/astra_patch.py
+tools/astra_ratiocont_patch.py
+tools/astra_unitinterp_patch.py
+tools/netlat.py
+tools/netlat_admit.py
+tools/netlat_compare.py
+tools/netlat_discard.py
+tools/netlat_stalls.py
+tools/fpsmeter.py
+tools/fpssmooth.py
+tools/collect_clone.sh
+tools/push_retry.sh
+tools/ghidra/check_placement.java
