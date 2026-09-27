@@ -111,3 +111,12 @@ def test_a_body_landed_upstream_meanwhile_is_skipped_not_doubled(tmp_path):
                                    + b"?mine2@@YAXXZ,,0x00000002,8,two.cpp,matched,\r\n")
     assert (repo / "one.cpp").read_text() == "theirs\n"
     assert (repo / "two.cpp").read_text() == "mine\n"
+
+
+def test_a_same_name_landing_upstream_is_also_taken(tmp_path, monkeypatch):
+    delta = {"files": [{"path": R.FUNCTIONS, "kind": "ledger",
+                        "removed": {b"?d_1@@YAXXZ,,0x00000001,8,d.asm,matched,": 1},
+                        "added": [(b"?f@@YAXXZ,,0x00000001,8,mine.cpp,matched,seat", b"\r\n")]}]}
+    master = HEAD + b"?f@@YAXXZ,,0x00000001,8,theirs.cpp,matched,upstream\r\n"
+    monkeypatch.setattr(R, "blob", lambda tree, rev, path: master if path == R.FUNCTIONS else None)
+    assert R.landed_upstream(tmp_path, delta) == {1: ("?f@@YAXXZ", "mine.cpp")}

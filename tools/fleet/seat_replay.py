@@ -141,7 +141,8 @@ def landed_upstream(tree, delta):
             continue
         rva = int(row[2], 16)
         gone = removed_at.get(rva) and not any(p in have for p in removed_at[rva])
-        if gone and any(name != row[0] for name in claimed.get(rva, [])):
+        # any claim counts: upstream may have landed the SAME name (0x003CA480)
+        if gone and claimed.get(rva):
             taken[rva] = (row[0], row[4])
     return taken
 
@@ -211,6 +212,18 @@ def apply_delta(tree, delta):
                 return f"{entry['path']}: edited upstream too and the edits conflict; merge by hand"
             path.write_bytes(merged.stdout)
         git(tree, "add", "-A", "--", entry["path"])
+    # A body the replay lands must not leave a banked attempt behind: someone
+    # may have banked one on master after the seat started (check_csv refuses
+    # a stash beside real C++; add_match deletes it when it lands).
+    for entry in delta["files"]:
+        if entry["path"] != FUNCTIONS:
+            continue
+        for payload, _ in entry["added"]:
+            row = fields(payload)
+            if len(row) > 4 and row[2].startswith("0x") and int(row[2], 16) not in taken:
+                stash = f"targets/game/reverse/attempts/0x{int(row[2], 16):08x}.cpp"
+                if blob(tree, "HEAD", stash) is not None:
+                    git(tree, "rm", "-q", "--", stash)
     return None
 
 
@@ -269,6 +282,9 @@ def _replay(repo, commit, tree, tries, correct):
                               capture_output=True, text=True)
         if made.returncode:
             return "commit refused by the hooks:\n" + (made.stdout + made.stderr)[-2500:]
+        # Files were written from LF blobs; under autocrlf the checkout form
+        # differs, and pre-push refuses a working file that differs from HEAD.
+        git(tree, "reset", "-q", "--hard", "HEAD")
         pushed = git(tree, "push", "-q", "origin", "HEAD:master")
         if pushed.returncode == 0:
             return None
