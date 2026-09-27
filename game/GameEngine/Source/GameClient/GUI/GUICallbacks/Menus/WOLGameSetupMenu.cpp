@@ -1129,7 +1129,7 @@ public:
 	virtual void slot05C() = 0;
 	virtual void slot060() = 0;
 	virtual void slot064() = 0;
-	virtual void slot068() = 0;
+	virtual AsciiString getLocalName() = 0;
 	virtual void slot06C() = 0;
 	virtual void slot070() = 0;
 	virtual void slot074() = 0;
@@ -1726,6 +1726,14 @@ void pingTooltip(GameWindow *window, WinInstanceData *instData, UnsignedInt mous
 GameWindow *listboxGameSetupChat = NULL;
 NameKeyType listboxGameSetupChatID = NAMEKEY_INVALID;
 
+// BFME color-map header +30 and cached count +3C are independently
+// witnessed by the native275B color-name lookup and name_oracle.
+struct BfmeWolColorSettings {
+ unsigned char unknown000[0x30];
+ MultiplayerColorList m_colorList;
+ Int m_numColors;
+ Int getNumColors() { if (m_numColors == 0) m_numColors = m_colorList.size(); return m_numColors; }
+};
 static void handleColorSelection(int index)
 {
 	GameWindow *combo = comboBoxColor[index];
@@ -1733,7 +1741,7 @@ static void handleColorSelection(int index)
 	GadgetComboBoxGetSelectedPos(combo, &selIndex);
 	color = (Int)GadgetComboBoxGetItemData(combo, selIndex);
 
-	GameInfo *myGame = TheGameSpyInfo->getCurrentStagingRoom();
+	GameInfo *myGame = ((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
 
 	if (myGame)
 	{
@@ -1741,7 +1749,7 @@ static void handleColorSelection(int index)
 		if (color == slot->getColor())
 			return;
 
-		if (color >= -1 && color < TheMultiplayerSettings->getNumColors())
+		if (color >= -1 && color < ((BfmeWolColorSettings *)TheMultiplayerSettings)->getNumColors())
 		{
 			Bool colorAvailable = TRUE;
 			if(color != -1 )
@@ -1762,16 +1770,16 @@ static void handleColorSelection(int index)
 
 		slot->setColor(color);
 
-		if (TheGameSpyInfo->amIHost())
+		if (((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->amIHost())
 		{
 			// send around a new slotlist
-			TheGameSpyInfo->setGameOptions();
+			((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->setGameOptions();
 			WOLDisplaySlotList();
 		}
 		else
 		{
 			// request the color from the host
-			if (!slot->isPlayer(TheGameSpyInfo->getLocalName()))
+			if (!slot->isPlayer(((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getLocalName()))
 				return;
 
 			AsciiString options;
@@ -1782,8 +1790,8 @@ static void handleColorSelection(int index)
 			req.peerRequestType = PeerRequest::PEERREQUEST_UTMPLAYER;
 			req.UTM.isStagingRoom = TRUE;
 			req.id = "REQ/";
-			req.nick = hostName.str();
-			req.options = options.str();
+			req.nick = BfmeStartAsciiString(hostName);
+			req.options = BfmeStartAsciiString(options);
 			TheGameSpyPeerMessageQueue->addRequest(req);
 		}
 	}
