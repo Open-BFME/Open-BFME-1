@@ -1,5 +1,5 @@
 // ?Rva00303670@ScriptActions@@IAEXABVAsciiString@@M@Z
-// partial score=0.62 date=2026-09-26
+// partial score=0.68 date=2026-09-27
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringinline
 // stlport
 
@@ -74,6 +74,7 @@ class Overridable
 {
 public:
 	const Overridable *getFinalOverride() const;
+	void *m_vptr;
 	Overridable *m_nextOverride;
 };
 
@@ -103,7 +104,7 @@ class BfmeObjectDlinkBase
 {
 public:
 	Object *dlink_next_TeamMemberList() const;
-	BfmeOverride<ThingTemplate> m_template;
+	ThingTemplate *m_template;
 };
 
 class BfmeObjectVtbl
@@ -154,7 +155,8 @@ class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
 public:
 	const ThingTemplate *getTemplate() const
 	{
-		return m_template.operator->();
+		return m_template == 0 ? m_template : m_template->m_nextOverride ?
+			(const ThingTemplate *)m_template->m_nextOverride->getFinalOverride() : m_template;
 	}
 
 	unsigned char m_pad_70[0x194];
@@ -352,7 +354,7 @@ void ScriptActions::Rva00303670(const AsciiString &teamName, Real radius)
 			(int)PartitionFilterPlayerAffiliation(
 				team->getControllingPlayer(), 2, true).link(
 					filterAddress(PartitionFilterAcceptByKindOf(
-						KindOfMaskType(KindOfMaskType::kInit, 39),
+						KindOfMaskType(KindOfMaskType::kInit, 7),
 						KINDOFMASK_NONE))), 1);
 
 	while (Object *candidate = result.next())
@@ -365,8 +367,10 @@ void ScriptActions::Rva00303670(const AsciiString &teamName, Real radius)
 			while (!members.done())
 			{
 				Object *member = members.cur();
-				const ThingTemplate *thing = member->getTemplate();
-				if (thing && (thing->m_flagsC8 & 0x4000) != 0)
+				const ThingTemplate *thing = member->m_template;
+				if (thing && thing->m_nextOverride)
+					thing = (const ThingTemplate *)thing->m_nextOverride->getFinalOverride();
+				if ((thing->m_flagsC8 & 0x4000) != 0)
 				{
 					BfmeAIUpdateView *ai = member->m_ai;
 					if (ai)
