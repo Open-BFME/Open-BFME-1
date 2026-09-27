@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Train the tiny learned-horde tactical policy and export C++ weights.
 
-This is a bootstrap simulator, not BFME itself. It trains from consequences
-(reward), not from expert labels. The runtime adapter then executes the learned
-policy inside BFME's HordeAIUpdate path.
+This is a bootstrap tactical simulator, not BFME itself. It produces reward
+outcomes for possible horde actions, trains a tiny network to approximate those
+action values, and exports the resulting Q-policy into the CRT-free BFME
+runtime. There are no replay labels, expert actions, or language models here.
 """
 
 from __future__ import annotations
@@ -43,85 +44,104 @@ def _rand(n: int, lo: float, hi: float, device: torch.device) -> torch.Tensor:
 def sample_balanced(
     batch: int, device: torch.device
 ) -> tuple[torch.Tensor, torch.Tensor]:
-    """Generate balanced tactical situations.
+    """Generate five deliberately different tactical situation families.
 
-    mode:
-      0 nearest visible horde is the best fight
-      1 weakest visible horde is the best finish
-      2 visible structure is the best value target
-      3 retreat is best because the horde is overmatched
-      4 no visible target -> HOLD is the only valid tactical action
+    The family id is used only for diagnostics. Training never receives it as
+    an action label.
 
-    The second return value is only a diagnostic scenario id. It is NOT used as
-    a supervised label during training.
+      0: nearest visible horde is the attractive engagement
+      1: a wounded visible horde is worth finishing
+      2: a weakly defended visible structure is the best value
+      3: the horde is wounded/outmatched and should preserve itself
+      4: no enemy is currently visible
     """
     mode = torch.randint(0, 5, (batch,), device=device)
     x = torch.zeros(batch, OBS, device=device)
 
-    # Own horde.
-    x[:, 0] = _rand(batch, 0.35, 1.0, device)   # average health
-    x[:, 1] = _rand(batch, 0.25, 1.2, device)  # coarse combat power
+    # Generic state before the scenario-family overrides.
+    x[:, 0] = _rand(batch, 0.40, 1.00, device)  # own average health
+    x[:, 1] = _rand(batch, 0.30, 1.20, device)  # own coarse power
 
-    # Nearest enemy horde.
-    x[:, 2] = _rand(batch, 0.2, 1.0, device)   # health
-    x[:, 3] = _rand(batch, 0.05, 0.8, device)  # distance
-    x[:, 4] = _rand(batch, 0.15, 1.2, device)  # threat/power
+    x[:, 2] = _rand(batch, 0.30, 0.90, device)  # nearest horde health
+    x[:, 3] = _rand(batch, 0.10, 0.80, device)  # nearest horde distance
+    x[:, 4] = _rand(batch, 0.20, 1.00, device)  # nearest horde threat
 
-    # Weakest visible enemy horde.
-    x[:, 5] = _rand(batch, 0.08, 0.75, device)
-    x[:, 6] = _rand(batch, 0.08, 0.95, device)
-    x[:, 7] = _rand(batch, 0.10, 1.0, device)
+    x[:, 5] = _rand(batch, 0.10, 0.70, device)  # weakest horde health
+    x[:, 6] = _rand(batch, 0.10, 0.90, device)  # weakest horde distance
+    x[:, 7] = _rand(batch, 0.20, 0.90, device)  # weakest horde threat
 
-    # Nearest visible enemy structure.
-    x[:, 8] = _rand(batch, 0.12, 1.0, device)
-    x[:, 9] = _rand(batch, 0.10, 0.95, device)
-    x[:, 10] = _rand(batch, 0.15, 0.85, device)
-    x[:, 11] = 1.0  # structure present
+    x[:, 8] = _rand(batch, 0.20, 0.95, device)  # structure health
+    x[:, 9] = _rand(batch, 0.10, 0.90, device)  # structure distance
+    x[:, 10] = _rand(batch, 0.10, 0.80, device) # structure threat
+    x[:, 11] = 1.0                              # structure present
 
-    # Visible counts, normalized like the BFME runtime.
-    x[:, 12] = _rand(batch, 0.35, 0.85, device)
-    x[:, 13] = _rand(batch, 0.20, 0.70, device)
+    # Same normalization used by the BFME runtime.
+    x[:, 12] = _rand(batch, 0.35, 0.85, device) # visible horde count / 6
+    x[:, 13] = _rand(batch, 0.20, 0.70, device) # visible structure count / 5
+    x[:, 14] = 0.0                              # reserved memory feature
+    x[:, 15] = 1.0                              # bias / presence constant
 
-    # Reserved temporal-memory feature and constant bias.
-    x[:, 14] = 0.0
-    x[:, 15] = 1.0
-
-    # Family 0: healthy/strong, nearest enemy is exposed.
+    # 0: nearest horde is close, relatively safe, and useful to engage.
     m = mode == 0
-    x[m, 0] = _rand(int(m.sum()), 0.68, 1.0, device)
-    x[m, 1] = _rand(int(m.sum()), 0.65, 1.2, device)
-    x[m, 2] = _rand(int(m.sum()), 0.45, 0.9, device)
-    x[m, 3] = _rand(int(m.sum()), 0.05, 0.30, device)
-    x[m, 4] = _rand(int(m.sum()), 0.15, 0.50, device)
-    x[m, 5] = _rand(int(m.sum()), 0.35, 0.70, device)
-    x[m, 6] = _rand(int(m.sum()), 0.55, 0.95, device)
+    n = int(m.sum())
+    x[m, 0] = _rand(n, 0.80, 1.00, device)
+    x[m, 1] = _rand(n, 0.80, 1.20, device)
+    x[m, 2] = _rand(n, 0.40, 0.70, device)
+    x[m, 3] = _rand(n, 0.05, 0.20, device)
+    x[m, 4] = _rand(n, 0.15, 0.35, device)
+    x[m, 5] = _rand(n, 0.25, 0.40, device)
+    x[m, 6] = _rand(n, 0.75, 0.95, device)
+    x[m, 7] = _rand(n, 0.70, 1.00, device)
+    x[m, 8] = _rand(n, 0.80, 1.00, device)
+    x[m, 9] = _rand(n, 0.70, 0.95, device)
+    x[m, 10] = _rand(n, 0.65, 0.85, device)
 
-    # Family 1: a damaged horde is worth finishing.
+    # 1: weakest horde is genuinely finishable; alternatives are expensive.
     m = mode == 1
-    x[m, 0] = _rand(int(m.sum()), 0.55, 1.0, device)
-    x[m, 5] = _rand(int(m.sum()), 0.05, 0.24, device)
-    x[m, 6] = _rand(int(m.sum()), 0.12, 0.55, device)
-    x[m, 7] = _rand(int(m.sum()), 0.10, 0.45, device)
-    x[m, 2] = _rand(int(m.sum()), 0.50, 0.95, device)
+    n = int(m.sum())
+    x[m, 0] = _rand(n, 0.70, 1.00, device)
+    x[m, 1] = _rand(n, 0.70, 1.20, device)
+    x[m, 2] = _rand(n, 0.70, 0.95, device)
+    x[m, 3] = _rand(n, 0.15, 0.35, device)
+    x[m, 4] = _rand(n, 0.70, 1.00, device)
+    x[m, 5] = _rand(n, 0.05, 0.20, device)
+    x[m, 6] = _rand(n, 0.20, 0.45, device)
+    x[m, 7] = _rand(n, 0.10, 0.35, device)
+    x[m, 8] = _rand(n, 0.75, 1.00, device)
+    x[m, 9] = _rand(n, 0.65, 0.95, device)
+    x[m, 10] = _rand(n, 0.60, 0.85, device)
 
-    # Family 2: undefended/valuable structure opportunity.
+    # 2: structure opportunity; enemy hordes are worse engagements.
     m = mode == 2
-    x[m, 0] = _rand(int(m.sum()), 0.62, 1.0, device)
-    x[m, 8] = _rand(int(m.sum()), 0.15, 0.55, device)
-    x[m, 9] = _rand(int(m.sum()), 0.08, 0.42, device)
-    x[m, 10] = _rand(int(m.sum()), 0.05, 0.28, device)
-    x[m, 4] = _rand(int(m.sum()), 0.48, 1.0, device)
-    x[m, 7] = _rand(int(m.sum()), 0.42, 0.9, device)
+    n = int(m.sum())
+    x[m, 0] = _rand(n, 0.75, 1.00, device)
+    x[m, 1] = _rand(n, 0.80, 1.20, device)
+    x[m, 2] = _rand(n, 0.60, 0.90, device)
+    x[m, 3] = _rand(n, 0.40, 0.70, device)
+    x[m, 4] = _rand(n, 0.70, 1.00, device)
+    x[m, 5] = _rand(n, 0.30, 0.50, device)
+    x[m, 6] = _rand(n, 0.60, 0.90, device)
+    x[m, 7] = _rand(n, 0.50, 0.80, device)
+    x[m, 8] = _rand(n, 0.15, 0.45, device)
+    x[m, 9] = _rand(n, 0.10, 0.30, device)
+    x[m, 10] = _rand(n, 0.05, 0.25, device)
 
-    # Family 3: wounded and outmatched -> preserve the horde.
+    # 3: wounded, low-power horde facing close high-threat enemies.
     m = mode == 3
-    x[m, 0] = _rand(int(m.sum()), 0.08, 0.38, device)
-    x[m, 1] = _rand(int(m.sum()), 0.18, 0.55, device)
-    x[m, 3] = _rand(int(m.sum()), 0.05, 0.34, device)
-    x[m, 4] = _rand(int(m.sum()), 0.72, 1.2, device)
-    x[m, 7] = _rand(int(m.sum()), 0.55, 1.0, device)
+    n = int(m.sum())
+    x[m, 0] = _rand(n, 0.10, 0.35, device)
+    x[m, 1] = _rand(n, 0.20, 0.50, device)
+    x[m, 2] = _rand(n, 0.70, 1.00, device)
+    x[m, 3] = _rand(n, 0.05, 0.25, device)
+    x[m, 4] = _rand(n, 0.90, 1.20, device)
+    x[m, 5] = _rand(n, 0.35, 0.60, device)
+    x[m, 6] = _rand(n, 0.15, 0.35, device)
+    x[m, 7] = _rand(n, 0.70, 1.00, device)
+    x[m, 8] = _rand(n, 0.60, 0.90, device)
+    x[m, 9] = _rand(n, 0.40, 0.80, device)
+    x[m, 10] = _rand(n, 0.60, 0.85, device)
 
-    # Family 4: nothing currently visible. Action masking leaves HOLD.
+    # 4: no currently visible enemy. Masking removes every target action.
     m = mode == 4
     x[m, 11] = 0.0
     x[m, 12] = 0.0
@@ -132,10 +152,11 @@ def sample_balanced(
 
 
 def reward_matrix(x: torch.Tensor) -> torch.Tensor:
-    """Consequence model used by the bootstrap simulator.
+    """Score the consequences of each tactical action.
 
-    No action is declared "correct". Each action receives a scalar outcome and
-    training maximizes expected reward.
+    The network is not told a hand-authored action. It is shown state -> reward
+    values and learns to approximate those values. In real BFME training these
+    synthetic values are intended to be replaced by observed match outcomes.
     """
     hp = x[:, 0]
     own = x[:, 1]
@@ -143,48 +164,44 @@ def reward_matrix(x: torch.Tensor) -> torch.Tensor:
     nh, nd, nt = x[:, 2], x[:, 3], x[:, 4]
     wh, wd, wt = x[:, 5], x[:, 6], x[:, 7]
     sh, sd, st = x[:, 8], x[:, 9], x[:, 10]
-    has_structure = x[:, 11]
-    visible_hordes = x[:, 12]
 
-    n_present = (visible_hordes > 0).float()
-    w_present = n_present
-    s_present = (has_structure > 0).float()
+    horde_present = (x[:, 12] > 0).float()
+    structure_present = (x[:, 11] > 0).float()
 
-    # Approximate immediate damage/value opportunity from strength and distance.
-    nearest_damage = own * (1.0 - 0.65 * nd) * n_present
-    weakest_damage = own * (1.0 - 0.55 * wd) * w_present
-    structure_damage = own * (1.0 - 0.50 * sd) * s_present
-
-    r_hold = (
-        0.30 * (visible_hordes <= 0).float()
-        - 0.45 * n_present
-        - 0.20 * w_present
+    r_hold = torch.where(
+        horde_present > 0,
+        torch.full_like(horde_present, -0.70),
+        torch.full_like(horde_present, 0.70),
     )
 
-    r_nearest = (
-        nearest_damage
-        - 0.90 * n_present * nt * (1.30 - hp)
-        + 0.45 * (nearest_damage >= nh).float()
+    r_nearest = horde_present * (
+        1.00 * (1.0 - nd)
+        + 0.70 * (1.0 - nh)
+        + 0.60 * own
+        - 1.20 * nt * (1.20 - hp)
     )
 
-    r_weakest = (
-        weakest_damage
-        - 0.80 * w_present * wt * (1.30 - hp)
-        + 0.75 * (weakest_damage >= wh).float()
+    r_weakest = horde_present * (
+        0.80 * (1.0 - wd)
+        + 1.20 * (1.0 - wh)
+        + 0.50 * own
+        - 1.00 * wt * (1.20 - hp)
     )
 
-    r_structure = (
-        structure_damage
-        + 0.40 * (1.0 - sh) * s_present
-        - 1.10 * s_present * st * (1.35 - hp)
-        + 0.80 * (structure_damage >= sh).float() * s_present
+    r_structure = structure_present * (
+        1.10 * (1.0 - sd)
+        + 1.00 * (1.0 - sh)
+        + 0.60 * own
+        - 1.30 * st * (1.30 - hp)
     )
 
-    danger = n_present * nt + 0.65 * w_present * wt
-    r_retreat = (
-        1.40 * danger * (1.15 - hp)
-        - 0.25 * hp
-        - 0.18 * (nd > 0.70).float()
+    danger = torch.maximum(nt, wt)
+    r_retreat = horde_present * (
+        1.80 * (1.0 - hp)
+        + 1.00 * danger
+        - 0.90 * own
+        + 0.40 * (1.0 - nd)
+        - 0.40
     )
 
     return torch.stack(
@@ -204,12 +221,8 @@ def valid_action_mask(x: torch.Tensor) -> torch.Tensor:
     return mask
 
 
-def mask_logits(logits: torch.Tensor, x: torch.Tensor) -> torch.Tensor:
-    return logits.masked_fill(~valid_action_mask(x), -1.0e9)
-
-
-def masked_rewards(reward: torch.Tensor, x: torch.Tensor) -> torch.Tensor:
-    return reward.masked_fill(~valid_action_mask(x), -1.0e9)
+def mask_values(values: torch.Tensor, x: torch.Tensor) -> torch.Tensor:
+    return values.masked_fill(~valid_action_mask(x), -1.0e9)
 
 
 def format_values(values: torch.Tensor, per_line: int = 8) -> str:
@@ -223,7 +236,7 @@ def format_values(values: torch.Tensor, per_line: int = 8) -> str:
 
 def write_header(model: Policy, path: Path) -> None:
     text = f"""// Generated by train.py. Do not hand-edit.
-// 16 -> 8 ReLU -> 5 logits.
+// 16 -> 8 ReLU -> 5 action values.
 // Actions: 0 HOLD, 1 ATTACK_NEAREST, 2 ATTACK_WEAKEST, 3 ATTACK_STRUCTURE, 4 RETREAT.
 #pragma once
 enum {{ POLICY_OBS = {OBS}, POLICY_HIDDEN = {HIDDEN}, POLICY_ACTIONS = {ACTIONS} }};
@@ -246,30 +259,30 @@ static const float POLICY_B2[{ACTIONS}] = {{
 
 @torch.no_grad()
 def evaluate(model: Policy, device: torch.device, samples: int) -> None:
-    x, mode = sample_balanced(samples, device)
-    rewards = reward_matrix(x)
-    optimal = masked_rewards(rewards, x).argmax(dim=1)
-    predicted = mask_logits(model(x), x).argmax(dim=1)
+    x, family = sample_balanced(samples, device)
+    rewards = mask_values(reward_matrix(x), x)
+    predicted = mask_values(model(x), x).argmax(dim=1)
+    optimal = rewards.argmax(dim=1)
 
-    accuracy = (predicted == optimal).float().mean().item()
-    print(f"held-out best-reward agreement: {accuracy * 100:.2f}%")
+    agreement = (predicted == optimal).float().mean().item()
+    print(f"held-out best-reward agreement: {agreement * 100:.2f}%")
 
     names = ["hold", "nearest", "weakest", "structure", "retreat"]
-    for family in range(5):
-        m = mode == family
+    for scenario in range(5):
+        m = family == scenario
         counts = torch.bincount(predicted[m], minlength=ACTIONS).cpu().tolist()
         total = max(1, int(m.sum()))
-        percentages = [100.0 * n / total for n in counts]
         summary = ", ".join(
-            f"{names[i]}={percentages[i]:.1f}%" for i in range(ACTIONS)
+            f"{names[action]}={100.0 * counts[action] / total:.1f}%"
+            for action in range(ACTIONS)
         )
-        print(f"scenario family {family}: {summary}")
+        print(f"scenario family {scenario}: {summary}")
 
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--steps", type=int, default=1200)
-    ap.add_argument("--batch", type=int, default=1000)
+    ap.add_argument("--steps", type=int, default=800)
+    ap.add_argument("--batch", type=int, default=2000)
     ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--eval-samples", type=int, default=10000)
     ap.add_argument(
@@ -282,30 +295,24 @@ def main() -> None:
     torch.manual_seed(args.seed)
     device = torch.device("cpu")
     model = Policy().to(device)
-    optimizer = torch.optim.Adam(model.parameters(), lr=5.0e-3)
+    optimizer = torch.optim.Adam(model.parameters(), lr=3.0e-3)
 
+    # A contextual-bandit/Q bootstrap: learn the value each action receives
+    # under the consequence model, then choose argmax at runtime.
     for step in range(args.steps):
         x, _ = sample_balanced(args.batch, device)
         rewards = reward_matrix(x)
+        predicted_values = model(x)
+        loss = torch.mean((predicted_values - rewards) ** 2)
 
-        logits = mask_logits(model(x), x)
-        probabilities = torch.softmax(logits, dim=1)
-
-        expected_reward = (probabilities * rewards).sum(dim=1).mean()
-        entropy = -(
-            probabilities * torch.log(probabilities.clamp_min(1.0e-9))
-        ).sum(dim=1).mean()
-
-        loss = -expected_reward - 0.006 * entropy
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
 
-        if step % 200 == 0 or step + 1 == args.steps:
+        if step % 100 == 0 or step + 1 == args.steps:
             print(
                 f"step {step + 1:4d}/{args.steps}: "
-                f"reward={expected_reward.item():.4f} "
-                f"entropy={entropy.item():.4f}"
+                f"q_mse={loss.item():.6f}"
             )
 
     evaluate(model, device, args.eval_samples)
