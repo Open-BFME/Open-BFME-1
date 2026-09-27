@@ -1,13 +1,7 @@
-// ??0Rva000FB210Element@@QAE@PAVObject@@@Z
-// partial score=0.73 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib
-//
-// Retail 0x000FA1B0/350: constructor for the address-derived 96-byte
-// Rva000FB210Element record.  The matching copy constructor at 0x000F9FF0 proves
-// the member order, canonical AsciiString lifetime, the six-word block at
-// +0x14, and the Gen_000F9C60 subobject at +0x44.  The parent at 0x000FB2E0
-// passes its first argument unchanged; this body reads that argument as an
-// Object* at +0x210, +0x224, and +0x374.
+// Retail 0x000FA1B0/350: builds a 96-byte Rva000FB210Element from an Object*
+// (caller 0x000FB2E0, copy constructor 0x000F9FF0). The inline accessors are
+// load-bearing: they set VC7.1's scratch and EBX/EBP register assignment.
 
 #include "ascii_string.h"
 
@@ -61,6 +55,8 @@ public:
 };
 
 #pragma comment(linker, "/alternatename:??0Gen_000F9C60@@QAE@ABV0@@Z=?j_0003ed92@@YAXXZ")
+// Retail unwind state 1 destroys +0x44 through the AudioEventRTS destructor ILT 0x0002671F.
+#pragma comment(linker, "/alternatename:??1Gen_000F9C60@@QAE@XZ=?forward@Rva0002671FAudioEventRTSDestructorThunk@@QAEXXZ")
 
 struct Rva000F9FF0Block14
 {
@@ -76,6 +72,11 @@ class Rva000FB210Element;
 class Object;
 class ThingTemplate;
 
+extern void j_00004345();
+extern void j_0001c65c();
+extern void j_00021aee();
+extern void j_000347e3();
+
 enum NameKeyType
 {
 	Rva000FA1B0InvalidNameKey = 0
@@ -88,6 +89,7 @@ public:
 };
 
 extern NameKeyGenerator *TheNameKeyGenerator;
+extern const AsciiString Rva01336E50EmptyString;
 
 #pragma comment(linker, "/alternatename:?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z=?j_0003add7@@YAXXZ")
 
@@ -116,19 +118,38 @@ public:
 	virtual void rva0000002C() = 0;
 	virtual int rva00000030() = 0;
 
-	int rva002A22E0();
-	int rva002A23B0();
-	ThingTemplate *rva002A1B20();
+	// Thiscall bodies reached through ILTs 0x00004345, 0x0001C65C and 0x00021AEE.
+	int rva002A22E0()
+	{
+		union { void (*entry)(); int (Module::*member)(); } call;
+		call.entry = j_00004345;
+		return (this->*call.member)();
+	}
+	int rva002A23B0()
+	{
+		union { void (*entry)(); int (Module::*member)(); } call;
+		call.entry = j_0001c65c;
+		return (this->*call.member)();
+	}
+	ThingTemplate *rva002A1B20()
+	{
+		union { void (*entry)(); ThingTemplate *(Module::*member)(); } call;
+		call.entry = j_00021aee;
+		return (this->*call.member)();
+	}
 };
-
-#pragma comment(linker, "/alternatename:?rva002A22E0@Module@@QAEHXZ=?j_00004345@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva002A23B0@Module@@QAEHXZ=?j_0001c65c@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva002A1B20@Module@@QAEPAVThingTemplate@@XZ=?j_00021aee@@YAXXZ")
 
 class Rva000F9FF0ExperienceTracker
 {
 public:
-	int rva001B2070() const;
+	// Thiscall body 0x001B2070 reached through ILT 0x000347E3.
+	int rva001B2070() const
+	{
+		union { void (*entry)(); int (Rva000F9FF0ExperienceTracker::*member)() const; } call;
+		call.entry = j_000347e3;
+		return (this->*call.member)();
+	}
+	int getF0c() const { return m_f0c; }
 
 	unsigned char m_pad000[0x0c];
 	int m_f0c;
@@ -136,7 +157,6 @@ public:
 	int m_f28;
 };
 
-#pragma comment(linker, "/alternatename:?rva001B2070@Rva000F9FF0ExperienceTracker@@QBEHXZ=?j_000347e3@@YAXXZ")
 
 class ThingTemplate
 {
@@ -151,15 +171,21 @@ class Object
 {
 public:
 	Module *findModule(NameKeyType key) const;
+	Rva000F9FF0ExperienceTracker *getExperienceTracker() const { return m_experienceTracker; }
+	int getF370() const { return m_f370; }
 
+	// The null path writes 0 into the result temporary before the join (xor eax, eax).
 	const ThingTemplate *getFinalTemplate() const
 	{
 		const ThingTemplate *thingTemplate = m_template;
-		return !thingTemplate ? 0 :
-			(thingTemplate->m_override
-				? reinterpret_cast<const ThingTemplate *>(
-					thingTemplate->m_override->getFinalOverride())
-				: thingTemplate);
+		const ThingTemplate *result;
+		if (!thingTemplate)
+			result = 0;
+		else if (thingTemplate->m_override)
+			result = reinterpret_cast<const ThingTemplate *>(thingTemplate->m_override->getFinalOverride());
+		else
+			result = thingTemplate;
+		return result;
 	}
 
 	unsigned char m_vtable[4];
@@ -195,20 +221,19 @@ public:
 	Gen_000F9C60 m_gen44;
 };
 
-// ??0Rva000F9FF0@@QAE@PAVObject@@@Z
 Rva000FB210Element::Rva000FB210Element(Object *object)
 	: m_name(),
 	  m_f04(0),
-	  m_f08(object->m_experienceTracker->m_f0c),
-	  m_f0c(object->m_experienceTracker->m_f28),
-	  m_f10(object->m_experienceTracker->rva001B2070()),
+	  m_f08(object->getExperienceTracker()->getF0c()),
+	  m_f0c(object->getExperienceTracker()->m_f28),
+	  m_f10(object->getExperienceTracker()->rva001B2070()),
 	  m_block14(object->m_completedUpgrades),
 	  m_f2c(0),
 	  m_f30(-1),
 	  m_f34(0),
 	  m_f38(1),
 	  m_f3c(0),
-	  m_f40(object->m_f370),
+	  m_f40(object->getF370()),
 	  m_gen44(object->m_gen374)
 {
 	const ThingTemplate *thingTemplate = object->getFinalTemplate();
@@ -222,7 +247,5 @@ Rva000FB210Element::Rva000FB210Element(Object *object)
 		m_f34 = module->rva002A23B0();
 		thingTemplate = module->rva002A1B20();
 	}
-	m_name.set(thingTemplate != 0
-		? thingTemplate->m_name
-		: *reinterpret_cast<const AsciiString *>(0x01336E50));
+	m_name.set(thingTemplate != 0 ? thingTemplate->m_name : Rva01336E50EmptyString);
 }
