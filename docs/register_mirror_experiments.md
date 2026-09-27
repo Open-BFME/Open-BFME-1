@@ -141,11 +141,11 @@ thing to try reproducing next.
   `TheAI->m_pathfinder`, the vtable-slot-128 cast) but none of them is an
   adjusted `this+N` sub-object called 2+ times, so Finding 3 doesn't
   directly predict it. Not reproduced this session.
-- `0x0024E990`: EBP/EBX swap between two ordinary locals (a long-lived
-  name-address pointer and a short-lived argument pointer), not an
-  ESI/EDI pair and not `this`-related at all — this is very likely the
-  liveness-duration class the existing shape_levers.md rule already
-  targets, just still unresolved; out of scope for this session's harness.
+- `0x0024E990`: EBP/EBX swap between the name-address and argument pointers was
+  not explained by the liveness-duration model tested here. A later C++ body
+  landed by factoring both `Object::getControllingPlayer` calls through one
+  `static __forceinline` accessor; direct calls retained the mirror. See
+  `Rva0024E990.cpp` and `docs/shape_levers.md` for the measured lever.
 - `0x001A6370`: the residue is described as an ECX/EDX, EAX/ECX
   scratch-register swap inside a delta computation, not a callee-saved
   letter mirror — a different symptom class entirely (more likely related

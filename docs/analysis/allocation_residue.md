@@ -75,7 +75,7 @@ instructions, `c` calls crossed, `L` inside a loop):
 | 0x0023c4d0 | 217 | 80 | 14 | callee-saved+scratch | edx/esi and eax/ecx over +004a..+0082, in a loop |
 | **0x0024c420** | 210 | 72 | 6 | scratch | eax->edx stackload +00b0 u1 s3 — **landed** |
 | 0x0023cdd0 | 184 | 74 | 16 | scratch | cyclic +1 over +007e..+00ac (eax->ecx, ecx->edx, edx->eax) |
-| 0x0024e990 | 163 | 53 | 26 | callee-saved | ebp/ebx swap: lea +001b, stackload +002f, two call results |
+| **0x0024e990** | 163 | 53 | 26 | callee-saved | EBP/EBX swap: lea +001b, stackload +002f, two call results — **landed** with a shared inline controlling-player accessor |
 | 0x0048d460 | 159 | 70 | 24 | callee-saved | esi/edi swap between two call results |
 | 0x0023d850 | 147 | 49 | 5 | scratch | ecx->eax load +0065 u1 s2 L1 |
 | 0x0083f1c0 | 132 | 48 | 5 | scratch | edx->ecx load +0065, add +006b |
@@ -187,13 +187,16 @@ Not established. The toggles did not move any of the six callee-saved bodies.
 | 0x0021B310 | 75 | `Rva21B310RelationshipCapacity::accepts` | `getOwner()` for the pushed owner; `volatile` removed | 970ee2da7b |
 | 0x0029BDE0 | 98 | `Gen0029BDE0::walk` | local `key` before `isEquivalentTo` | 7332c5679e |
 | 0x0024C420 | 210 | `Rva0024C420Owner::notifyNested` | local `owner` for the sibling pushed argument | 4178f79620 |
+| 0x0024E990 | 163 | `Rva0024E990Owner::rva0024e990` | shared inline controlling-player accessor resolved the EBP/EBX mirror | 535989c58 |
 
 ## What it does not solve
 
-- **Callee-saved swaps** (6 bodies, plus 3 mixed). ESI/EDI/EBX/EBP are
+- **Callee-saved swaps** (5 bodies, plus 3 mixed). ESI/EDI/EBX/EBP are
   chosen by a different mechanism: priority by live range across calls, with
   the adjusted-`this` and loop-pointer triggers already documented in
-  `register_mirror_experiments.md`. No toggle moved one.
+  `register_mirror_experiments.md`. The generic mirror toggles still leave
+  these five and the mixed cases unresolved; 0x0024e990 was a target-specific
+  exception, landed with an inline controlling-player accessor.
 - **Stack slots** (6 plus 4 mixed) and **SIB order** (4 plus 2 mixed) are
   separate residues with their own `shape_levers.md` sections.
 - **No upstream site.** 0x0020DF90 mismatches right after its first

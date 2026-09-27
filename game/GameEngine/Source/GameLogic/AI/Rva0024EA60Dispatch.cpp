@@ -1,10 +1,15 @@
 // cl: /DNDEBUG /MD /O2 /Ob2
 // Retail 0x0024EA60: ECX receiver and one pointer argument, ret 4.
-// The old Pathfinder name resolved both calls to unrelated routines. Keep
-// the owner address-derived and preserve the two actual retail routes.
-// 0x0002F8DD is the five-byte forwarding entry to generated body 0x0024E990.
+// The first route forwards the receiver and argument to the byte-verified
+// C++ helper at 0x0024E990; the second remains the distinct ILT 0x00041506.
 
-extern void d_0024e990();
+class Object;
+class Rva0024E990Owner
+{
+public:
+    void rva0024e990(Object *other);
+};
+
 extern void j_00041506();
 
 class Rva0002F8DD
@@ -15,10 +20,8 @@ public:
 
 void Rva0002F8DD::forward(void *argument)
 {
-    typedef void (Rva0002F8DD::*Call)(void *);
-    union { void (*raw)(); Call member; } call;
-    call.raw = d_0024e990;
-    (this->*call.member)(argument);
+    reinterpret_cast<Rva0024E990Owner *>(this)->rva0024e990(
+        reinterpret_cast<Object *>(argument));
 }
 
 class Rva0024EA60
