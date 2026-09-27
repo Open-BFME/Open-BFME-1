@@ -8,7 +8,9 @@ This check also catches a regression hidden by a later restoration in the same
 push, and can run in CI when a contributor has not installed the local hooks.
 """
 import argparse
+import os
 import subprocess
+from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
 import name_regression
@@ -23,14 +25,27 @@ def git(root, *args):
     ).stdout.strip()
 
 
+def _check_commit(args):
+    root, commit = args
+    parent = git(root, 'rev-parse', f'{commit}^')
+    return name_regression.check(root, parent, commit)
+
+
 def check(root, old, new):
     base = git(root, 'merge-base', old, new)
     commits = git(root, 'rev-list', '--reverse', '--topo-order', f'{base}..{new}').splitlines()
+    # Commits are checked independently. Separate processes (not threads) so
+    # the Python-side token/diff work uses every core; map() preserves commit
+    # order, so the report is identical to a sequential run.
+    jobs = [(root, commit) for commit in commits]
+    if len(jobs) <= 1:
+        results = [_check_commit(job) for job in jobs]
+    else:
+        with ProcessPoolExecutor(max_workers=min(len(jobs), os.cpu_count() or 1)) as pool:
+            results = list(pool.map(_check_commit, jobs, chunksize=4))
     findings = []
     accepted = 0
-    for commit in commits:
-        parent = git(root, 'rev-parse', f'{commit}^')
-        current, count = name_regression.check(root, parent, commit)
+    for commit, (current, count) in zip(commits, results):
         findings.extend((commit, finding) for finding in current)
         accepted += count
     return commits, findings, accepted

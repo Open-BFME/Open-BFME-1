@@ -2360,11 +2360,25 @@ def select_function_rows(selectors, rows):
                     f"exact row selector {selector!r} matched {count} matched ledger rows; "
                     "expected exactly one")
 
+    # Classify broad selectors once. Evaluating selector_matches_row for every
+    # (selector, row) pair re-parsed and re-resolved each selector per ledger
+    # row: a push verifying a few hundred sources did ~10^8 checks. The result
+    # is identical: complete source paths match by equality, everything else
+    # keeps the legacy substring match on source or name.
     exact_set = set(exact_rows)
+    broad_sources = set()
+    fuzzy = []
+    for selector in broad:
+        source = complete_source_selector(selector)
+        if source is not None:
+            broad_sources.add(source)
+        else:
+            fuzzy.append(selector)
     return [row for row in rows if
             (row.get("status") == "matched"
              and (int(row["target_rva"], 16), int(row["target_size"]), row["name"]) in exact_set)
-            or any(selector_matches_row(selector, row) for selector in broad)]
+            or row["source"] in broad_sources
+            or any(selector in row["source"] or selector in row["name"] for selector in fuzzy)]
 
 
 def verify_functions(only=None, selected_rows=None):
@@ -2804,17 +2818,21 @@ def verify_source_claims(only=None):
         # relative_to() on 12k paths cost 3.7 s per add_match under the lock
         sources = sorted(set(direct))
     else:
-        sources = sorted((ROOT / "game").rglob("*.cpp"))
+        # Relativize each path once. Filtering inside the any() re-ran
+        # relative_to() per (file, selector) pair: a push naming a few hundred
+        # sources over ~20k files spent ~25 minutes in pathlib alone.
+        rels = [(p, p.relative_to(ROOT).as_posix()) for p in sorted((ROOT / "game").rglob("*.cpp"))]
         if scoped:
-            sources = [p for p in sources
-                       if any(sel in p.relative_to(ROOT).as_posix() for sel in source_only)]
-    if any(path.relative_to(ROOT).as_posix() not in matched_by_source for path in sources):
+            rels = [(p, rel) for p, rel in rels if any(sel in rel for sel in source_only)]
+        sources = [p for p, _ in rels]
+    rel_of = {p: p.relative_to(ROOT).as_posix() for p in sources}
+    if any(rel_of[path] not in matched_by_source for path in sources):
         from target_hooks import validated_worldbuilder_sources
         target_sources = validated_worldbuilder_sources(ROOT)
-        sources = [path for path in sources if path.relative_to(ROOT).as_posix() in matched_by_source
-                   or path.relative_to(ROOT).as_posix() not in target_sources]
+        sources = [path for path in sources if rel_of[path] in matched_by_source
+                   or rel_of[path] not in target_sources]
     for path in sources:
-        rel = path.relative_to(ROOT).as_posix()
+        rel = rel_of[path]
         text = path.read_text(encoding="utf-8", errors="replace")
         for label in UNMATCHED_MARKER_RE.findall(text):
             # a marker on a symbol matched from ANOTHER file is correct bookkeeping

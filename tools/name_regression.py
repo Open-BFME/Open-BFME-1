@@ -381,6 +381,22 @@ def pairs(root, old, new):
     # Read only changed ledger rows, never the complete ledger. These link
     # semantic filenames and functions whose source carries no address token.
     delta = ledger_diff(root, old, new)
+    # Prefetch every blob the loops below ask for in one framed `git cat-file
+    # --batch` per ref. Reading them one by one spawned two git processes per
+    # file, and a range touching a few thousand ledger rows spent minutes in
+    # process startup alone. The lookups themselves are unchanged.
+    def prefetch(ref, wanted):
+        missing = {p for p in wanted if (ref, p) not in snapshots}
+        snapshots.update({(ref, p): v for p, v in read_many(root, ref, missing).items()})
+    delta_paths = {old: set(), new: set()}
+    for line in delta.splitlines():
+        if not line.startswith(('+', '-')) or line.startswith(('+++', '---')):
+            continue
+        row = next(csv.reader([line[1:]]), [])
+        if len(row) >= 6 and source(row[4]):
+            delta_paths[new if line[0] == '+' else old].add(row[4])
+    prefetch(old, delta_paths[old])
+    prefetch(new, delta_paths[new])
     for line in delta.splitlines():
         if not line.startswith(('+', '-')) or line.startswith(('+++', '---')):
             continue
@@ -401,6 +417,12 @@ def pairs(root, old, new):
     # too; deletion and git's rename similarity heuristic are not prerequisites.
     old_banks = set(git(root, 'ls-tree', '-r', '--name-only', old, '--',
                         'reverse/attempts/', 'targets/game/reverse/attempts/').splitlines())
+    wanted_banks = set()
+    for path in right:
+        for rva in ids.get(path, ()):
+            bank = f'targets/game/reverse/attempts/0x{rva:08x}.cpp'
+            wanted_banks.add(bank if bank in old_banks else 'reverse/' + bank[len('targets/game/reverse/') :])
+    prefetch(old, wanted_banks & old_banks)
     for path in list(right):
         for rva in ids.get(path, ()):
             bank = f'targets/game/reverse/attempts/0x{rva:08x}.cpp'
@@ -421,6 +443,7 @@ def pairs(root, old, new):
                 left[names[0]] = before
                 right[names[1]] = after
                 linked.add(tuple(names))
+    prefetch(new, {a for a in left if a.startswith('game/')})
     by_rva = defaultdict(set)
     for path in right:
         for rva in ids.get(path, ()):
