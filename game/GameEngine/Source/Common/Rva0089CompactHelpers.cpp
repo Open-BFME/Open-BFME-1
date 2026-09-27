@@ -194,3 +194,43 @@ Rva00892850Owner *Rva00892850Owner::attach( Rva00892850Handle **src, void *extra
     m_extra = extra;
     return this;
 }
+
+struct Rva0088D960Inner
+{
+	int m_value;
+};
+class Rva0088D960Owner
+{
+public:
+	Rva0088D960Owner *set( Rva0088D960Inner *src );
+
+private:
+	char m_pad[0x9F44];
+	int m_copy;
+};
+// ?set@Rva0088D960Owner@@QAEPAV1@PAURva0088D960Inner@@@Z
+Rva0088D960Owner *Rva0088D960Owner::set( Rva0088D960Inner *src )
+{
+	m_copy = src->m_value;
+	return this;
+}
+
+struct Rva0088D990Inner
+{
+	unsigned char m_value;
+};
+class Rva0088D990Owner
+{
+public:
+	Rva0088D990Owner *set( Rva0088D990Inner *src );
+
+private:
+	char m_pad[0x9F48];
+	unsigned char m_copy;
+};
+// ?set@Rva0088D990Owner@@QAEPAV1@PAURva0088D990Inner@@@Z
+Rva0088D990Owner *Rva0088D990Owner::set( Rva0088D990Inner *src )
+{
+	m_copy = src->m_value;
+	return this;
+}
