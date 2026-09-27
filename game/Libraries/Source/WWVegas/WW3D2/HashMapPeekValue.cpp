@@ -16,3 +16,17 @@ void *PeekHashMapValue008FF850(int key)
 		return 0;
 	return (*it).second;
 }
+
+// This wrapper exposes the tree's iterator returned by the native map lookup.
+class Rva008FF7C0Find
+{
+	HashMap008FF850 m_map;
+
+public:
+	HashIter008FF850 find(const int &key);
+};
+
+HashIter008FF850 Rva008FF7C0Find::find(const int &key)
+{
+	return m_map.find(key);
+}

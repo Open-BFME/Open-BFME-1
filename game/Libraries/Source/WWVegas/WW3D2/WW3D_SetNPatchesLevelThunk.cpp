@@ -33,6 +33,8 @@ class WW3D
 {
 public:
 	static void Set_NPatches_Level( unsigned level );
+	static bool IsSortingEnabled;
+	static void Enable_Sorting(bool enabled);
 };
 
 void WW3D::Set_NPatches_Level( unsigned level )
@@ -49,4 +51,10 @@ bool Rva008FD4A0InvalidateRenderer()
 {
 	TheDX8MeshRenderer->Invalidate(false);
 	return true;
+}
+
+void WW3D::Enable_Sorting(bool enabled)
+{
+	IsSortingEnabled = enabled;
+	TheDX8MeshRenderer->Invalidate(false);
 }
