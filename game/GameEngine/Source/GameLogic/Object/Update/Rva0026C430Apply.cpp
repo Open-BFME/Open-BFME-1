@@ -54,10 +54,7 @@ public:
 	SpecialPowerTemplate *m_specialPowerTemplate;
 };
 
-enum CommandSourceType
-{
-	COMMAND_SOURCE_AI = 2
-};
+#include "../../command_source_type.h"
 
 class SpecialPowerModuleInterface
 {
@@ -252,7 +249,7 @@ void Rva0026C430Owner::apply(Object *object)
 	if ((unsigned char)object->bfmeHasSignificantPreferredLocomotorHeight() != 0 ||
 		ai->isAttacking())
 	{
-		ai->aiIdle(COMMAND_SOURCE_AI);
+		ai->aiIdle(CMD_FROM_AI);
 	}
 
 	m_lastFrame = TheBfmeGameLogic->m_frame;

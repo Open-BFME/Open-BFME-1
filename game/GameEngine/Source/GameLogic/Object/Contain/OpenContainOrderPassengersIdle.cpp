@@ -3,10 +3,7 @@
 // Zero Hour OpenContain::orderAllPassengersToIdle expressed against BFME's
 // adjusted contain interface and Object AI layout.
 
-enum CommandSourceType
-{
-	CMD_SOURCE_NONE = 0
-};
+#include "../../command_source_type.h"
 
 class Object;
 

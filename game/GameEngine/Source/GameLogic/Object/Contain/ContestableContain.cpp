@@ -21,10 +21,7 @@ enum AbleToAttackType
 	CONTEST_ATTACK_TYPE = 8
 };
 
-enum CommandSourceType
-{
-	CONTEST_COMMAND_SOURCE = 2
-};
+#include "../../command_source_type.h"
 
 enum CanAttackResult
 {
@@ -173,7 +170,7 @@ void ContestableContain::updateObject(Object *object, Bool contesting)
 	{
 		if (able && object->getAbleToAttackSpecificObject(
 			CONTEST_ATTACK_TYPE, old,
-			CONTEST_COMMAND_SOURCE) ==
+			CMD_FROM_AI) ==
 			CONTEST_ATTACK_RESULT_POSSIBLE)
 			return;
 
@@ -198,7 +195,7 @@ void ContestableContain::updateObject(Object *object, Bool contesting)
 			entry->second.m_count < owner->m_contestLimit &&
 			object->getAbleToAttackSpecificObject(
 				CONTEST_ATTACK_TYPE, *it,
-				CONTEST_COMMAND_SOURCE) ==
+				CMD_FROM_AI) ==
 				CONTEST_ATTACK_RESULT_POSSIBLE)
 		{
 			best = *it;

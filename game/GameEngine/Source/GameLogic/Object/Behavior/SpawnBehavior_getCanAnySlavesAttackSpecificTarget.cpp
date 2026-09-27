@@ -10,7 +10,7 @@ typedef bool Bool;
 typedef int ObjectID;
 
 enum AbleToAttackType { ATTACK_TYPE_DUMMY };
-enum CommandSourceType { COMMAND_SOURCE_DUMMY };
+#include "../../command_source_type.h"
 enum CanAttackResult
 {
 	ATTACKRESULT_NOT_POSSIBLE = 0,

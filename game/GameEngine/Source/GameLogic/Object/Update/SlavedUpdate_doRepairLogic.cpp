@@ -37,7 +37,7 @@ public:
     }
 };
 
-enum CommandSourceType { COMMAND_SOURCE_AI = 2 };
+#include "../../command_source_type.h"
 
 class AICommandInterface
 {
@@ -174,7 +174,7 @@ void SlavedUpdate::doRepairLogic()
         Coord3D pos;
         pos.set(master->getPosition());
         pos.z += getRepairAltitude(data);
-        ai->m_commands.aiMoveToPosition(&pos, COMMAND_SOURCE_AI);
+        ai->m_commands.aiMoveToPosition(&pos, CMD_FROM_AI);
         if (!m_framesToWait) setRepairState(REPAIRSTATE_READY);
     }
     if (closeEnough && m_repairing)

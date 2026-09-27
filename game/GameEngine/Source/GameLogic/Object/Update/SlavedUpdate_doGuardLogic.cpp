@@ -48,10 +48,7 @@ public:
     Weapon *getCurrentWeapon(WeaponSlotType *slot);
 };
 
-enum CommandSourceType
-{
-    COMMAND_SOURCE_2 = 2
-};
+#include "../../command_source_type.h"
 
 class AICommandInterface
 {
@@ -146,6 +143,6 @@ void SlavedUpdate::doGuardLogic(Coord3D *pinnedPosition)
             maxShotsToFire = weapon->m_maxShotsToFire;
 
         ai->m_commands.aiAttackMoveToPosition(
-            pinnedPosition, maxShotsToFire, COMMAND_SOURCE_2);
+            pinnedPosition, maxShotsToFire, CMD_FROM_AI);
     }
 }

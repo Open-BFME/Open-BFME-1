@@ -8,7 +8,7 @@
 typedef int ObjectID;
 
 enum AbleToAttackType { ATTACK_TYPE_DUMMY };
-enum CommandSourceType { COMMAND_SOURCE_DUMMY };
+#include "../../command_source_type.h"
 enum WeaponSlotType { WEAPON_SLOT_DUMMY };
 enum CanAttackResult { ATTACK_RESULT_DUMMY };
 

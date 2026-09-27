@@ -16,7 +16,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
-enum CommandSourceType { BFME_COMMAND_SOURCE_PLAYER };
+#include "../command_source_type.h"
 
 class Object;
 

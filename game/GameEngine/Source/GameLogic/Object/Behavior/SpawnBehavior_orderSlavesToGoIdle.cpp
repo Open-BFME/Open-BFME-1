@@ -9,10 +9,7 @@
 typedef bool Bool;
 typedef int ObjectID;
 
-enum CommandSourceType
-{
-	COMMAND_SOURCE_AI = 2
-};
+#include "../../command_source_type.h"
 
 class Object;
 

@@ -39,12 +39,7 @@ private:
 	ScoreKeeper m_scoreKeeper;
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT = 1,
-	RETAIL_COMMAND_SOURCE_2 = 2
-};
+#include "../command_source_type.h"
 
 // The interface is declaration-only: retail calls the nonvirtual helper through
 // the embedded command interface at AIUpdateInterface+0x20.
@@ -144,7 +139,7 @@ void Object::onCapture(Player *oldOwner, Player *newOwner)
 		reinterpret_cast<BfmeObjectOnCaptureFields *>(this);
 
 	if (fields->m_ai != 0 && oldOwner != newOwner)
-		fields->m_ai->m_commandInterface.aiIdle(RETAIL_COMMAND_SOURCE_2);
+		fields->m_ai->m_commandInterface.aiIdle(CMD_FROM_AI);
 
 	newOwner->getScoreKeeper()->addObjectCaptured(this);
 

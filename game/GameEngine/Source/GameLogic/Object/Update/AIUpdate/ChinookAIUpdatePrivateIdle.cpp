@@ -4,10 +4,7 @@
 // against the retail layouts: the rider list accessor is virtual at +0x104,
 // the owning Object is at adjusted-this-0x18, and Object keeps its AI at +0x204.
 
-enum CommandSourceType
-{
-	CMD_SOURCE_NONE = 0
-};
+#include "../../../command_source_type.h"
 
 class Object;
 

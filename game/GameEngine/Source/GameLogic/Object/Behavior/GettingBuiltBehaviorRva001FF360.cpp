@@ -29,10 +29,7 @@ class Object;
 class Team;
 class ThingTemplate;
 
-enum CommandSourceType
-{
-	COMMANDSOURCE_RVA_2 = 2
-};
+#include "../../command_source_type.h"
 
 struct Coord3D
 {
@@ -359,9 +356,9 @@ void GettingBuiltBehavior::rva001FF360(Object *other)
 	if (ai != 0)
 	{
 		if (object->testStatus(2))
-			ai->m_commands.aiResumeConstruction(object, COMMANDSOURCE_RVA_2);
+			ai->m_commands.aiResumeConstruction(object, CMD_FROM_AI);
 		else
-			ai->m_commands.aiRepair(object, COMMANDSOURCE_RVA_2);
+			ai->m_commands.aiRepair(object, CMD_FROM_AI);
 	}
 
 	Gen_00410d20 *drawable = worker->rvaSlot10();

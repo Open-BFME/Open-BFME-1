@@ -48,10 +48,7 @@ public:
 	Int getLayer() const;
 };
 
-enum CommandSourceType
-{
-	BFME_COMMAND_FROM_AI = 2
-};
+#include "../../command_source_type.h"
 
 class AICommandInterface
 {
@@ -131,7 +128,7 @@ void OpenContain::scatterToNearbyPosition( Object *rider )
 
 		ai->ignoreObstacle( theContainer );
 		reinterpret_cast<AICommandInterface *>(reinterpret_cast<char *>(ai) + 0x20)->aiMoveToPosition(
-			&pos, BFME_COMMAND_FROM_AI );
+			&pos, CMD_FROM_AI );
 	}
 	else
 	{

@@ -28,7 +28,7 @@ class Player;
 // Only needed so the constructor below mangles as retail does; no value in
 // either is read by any body here.
 enum AbleToAttackType { ATTACK_TYPE_UNRECONSTRUCTED };
-enum CommandSourceType { COMMAND_SOURCE_UNRECONSTRUCTED };
+#include "../command_source_type.h"
 
 bool PointInsideArea2D(const Coord3D *pt, const Coord3D *area, int numPoints);
 

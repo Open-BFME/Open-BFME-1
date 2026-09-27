@@ -14,10 +14,7 @@ typedef unsigned int UnsignedInt;
 
 class Object;
 
-enum CommandSourceType
-{
-	Rva00243C40CommandSourceAI = 2
-};
+#include "../../command_source_type.h"
 
 class AICommandInterface
 {
@@ -176,7 +173,7 @@ void Rva00243C40HordeContainInterface::rva00243c40(
 				AICommandInterface *commands =
 					(AICommandInterface *)((char *)ai + 0x20);
 				(commands->*call.asMember)(victim, 0x7fffffff,
-					Rva00243C40CommandSourceAI);
+					CMD_FROM_AI);
 			}
 		}
 		else if (!ai->slot99())

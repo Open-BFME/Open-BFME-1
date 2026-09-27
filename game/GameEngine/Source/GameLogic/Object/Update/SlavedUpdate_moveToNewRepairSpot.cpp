@@ -25,10 +25,7 @@ enum WeaponSlotType
     WEAPON_SLOT_CURRENT = 0
 };
 
-enum CommandSourceType
-{
-    COMMAND_SOURCE_AI = 2
-};
+#include "../../command_source_type.h"
 
 enum LocomotorSetType
 {
@@ -334,7 +331,7 @@ void SlavedUpdate::moveToNewRepairSpot()
             ai->chooseLocomotorSet(LOCOMOTORSET_PANIC);
             ai->getCurLocomotor()->setUltraAccurate(true);
             ai->m_commands.aiMoveToPosition(
-                &m_guardPointOffset, COMMAND_SOURCE_AI);
+                &m_guardPointOffset, CMD_FROM_AI);
 
             Locomotor *locomotor = ai->getCurLocomotor();
             if (locomotor)
