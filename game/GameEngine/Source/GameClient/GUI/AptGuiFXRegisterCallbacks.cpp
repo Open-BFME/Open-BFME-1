@@ -101,7 +101,7 @@ public:
 
 extern WindowManager *g_theWindowManager;
 extern int g_guiFxWindowHandle;
-extern AsciiString g_guiFxFile;
+AsciiString g_guiFxFile( "GuiFX.apt" );
 extern unsigned char g_guiFxLoaded;
 extern void construct00510AC0();
 
