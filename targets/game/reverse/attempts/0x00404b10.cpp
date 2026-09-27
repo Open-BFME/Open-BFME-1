@@ -1,9 +1,24 @@
 // ?d_00404b10@@YAXXZ
-// partial score=0.55 date=2026-09-02
-// Reconstruct the BFME-only incremental zone-equivalency pass.  Zero Hour has
-// one set of six tables; BFME performs the same work for twelve movement
-// profiles and keeps union-list heads/links beside every table.
-
+// partial score=0.07603614833 date=2026-09-26
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+// Full BFME body [0x00404B10,0x00405799), 3209 bytes. Native reconstruction, NOT matched.
+// Measurement: 3269B vs 3209B; 2965 positional masked differences; 22 shifted
+// relocations; frame 38 vs 34. Masked same-position fraction=244/3209=.076036148.
+// Normalized instruction shape=.907 is NOT a byte-match score.
+// Fresh Ghidra and retail recover the tree branch absent in the original bank.
+// Cell zone is +0xA, flags +0xC; cells are 16B and layers are 0x44B.
+// PathfindZoneManagerConstructor independently witnesses the three 12x6 tables
+// at +2329C/+233BC/+234DC and the 52B-node tree at +235FC. The node payload
+// is a packed pair at +10 followed by two 16B property records (+14/+24).
+// The original bank swapped grid axes and dropped the sixth merge argument.
+// Retail makes twenty cdecl calls through 0002B648 to native 00403C90/107:
+// args source,target,equivalency,heads,next,maxZone; ADD ESP,18. Callee ignores
+// maxZone, as the assert-only sizeOfZE argument does in the Zero Hour twin.
+// The alias below uses the existing ILT symbol and makes no speculative pin.
+// The other direct target is STLport _Rb_global<bool>::_M_increment at 0082B870.
+// Existing bank names are retained; newly recovered node records keep the RVA.
+#include <map>
 typedef unsigned short zoneStorageType;
 
 struct BfmeZoneRegion
@@ -18,9 +33,11 @@ struct BfmeZoneCell
 {
 	void *info;
 	unsigned int unused4;
+	unsigned short rva008;
 	zoneStorageType zone;
-	unsigned short unusedA;
 	unsigned int flags;
+    bool flag20Set() const { return (flags >> 20) & 1; }
+    bool flag21Set() const { return (flags >> 21) & 1; }
 };
 
 struct BfmeZoneLayer
@@ -32,13 +49,29 @@ struct BfmeZoneLayer
 
 void bfmeResolveZones(int sourceZone, int targetZone,
 	zoneStorageType *zoneEquivalency, zoneStorageType *zoneListHeads,
-	zoneStorageType *zoneListNext);
+	zoneStorageType *zoneListNext, unsigned int sizeOfZones);
+#pragma comment(linker, "/alternatename:?bfmeResolveZones@@YAXHHPAG00I@Z=?j_0002b648@@YAXXZ")
 
-// The retail switch is maintained by the pathfinder update scheduler.  It is
-// deliberately TU-local until its owning field is identified from a caller.
-bool g_bfmeUseIncrementalZoneObjects;
+// Retail tests this bool at VA 0x012B4D2C before choosing grid or tree traversal.
+// Its semantic name is unproved; no symbol pin is added for this bank.
+extern bool g_rva012B4D2CUseZonePairs;
 
-#pragma pack(push, 1)
+struct Rva00404B10CellProperties
+{
+    unsigned short type;
+    unsigned short padding;
+    unsigned int layer;
+    unsigned int connectLayer;
+    bool flag20;
+    bool flag21;
+    unsigned short profileLayer;
+};
+struct Rva00404B10ZoneEdge : public _STL::_Rb_tree_node_base
+{
+    unsigned int zonePair;
+    Rva00404B10CellProperties source;
+    Rva00404B10CellProperties target;
+};
 class PathfindZoneManager
 {
 public:
@@ -51,37 +84,30 @@ private:
 	zoneStorageType *m_zoneEquivalency[12][6];
 	zoneStorageType *m_zoneListHeads[12][6];
 	zoneStorageType *m_zoneListNext[12][6];
-	void *m_incrementalObjects;
-	unsigned int m_scanWidth;
-	unsigned int m_scanHeight;
-	void *m_currentIncrementalObject;
+	_STL::_Rb_tree_node_base *m_incrementalObjects;
+	unsigned int m_pairCount;
+	unsigned int m_compare;
+	Rva00404B10ZoneEdge *m_currentIncrementalObject;
 };
-#pragma pack(pop)
 
-static bool sameProfileLayer(unsigned int a, unsigned int b, int layer)
-{
-	if (layer <= 0)
-		return true;
-	return (((a >> 22) & 3) > (unsigned int)layer) ==
-		(((b >> 22) & 3) > (unsigned int)layer);
-}
 
-static bool sameProfileCell(unsigned int a, unsigned int b,
-	int layer, bool crusher, bool terrainOnly)
+static bool sameProfileCell(const BfmeZoneCell &a, const BfmeZoneCell &b,
+    int layer, bool flag20, bool flag21)
 {
-	if (!sameProfileLayer(a, b, layer))
-		return false;
-	if (crusher && (((a >> 20) ^ (b >> 20)) & 1))
-		return false;
-	if (terrainOnly && (((a >> 21) ^ (b >> 21)) & 1))
-		return false;
-	return true;
+    bool same = true;
+    if (layer > 0 && ((int)((a.flags >> 22) & 3) > layer) !=
+        ((int)((b.flags >> 22) & 3) > layer)) same = false;
+    if (flag20 && (a.flag20Set() != b.flag20Set())) same = false;
+    if (flag21 && (a.flag21Set() != b.flag21Set())) same = false;
+    return same;
 }
 
 static unsigned int substituteZero(unsigned int value, unsigned int replacement)
 {
-	value &= 7;
-	return value ? value : replacement;
+	unsigned int type = value & 7;
+    unsigned int result = replacement;
+    if(type != 0) result = type;
+    return result;
 }
 
 void PathfindZoneManager::bfmeBuildProfileZones(BfmeZoneCell **map,
@@ -105,172 +131,228 @@ void PathfindZoneManager::bfmeBuildProfileZones(BfmeZoneCell **map,
 			}
 		}
 		m_currentIncrementalObject =
-			*(void **)((unsigned char *)m_incrementalObjects + 8);
+			(Rva00404B10ZoneEdge *)m_incrementalObjects->_M_left;
 	}
 
-	unsigned int firstObject = m_scanWidth * (unsigned int)startPercent / 100;
-	unsigned int lastObject = m_scanWidth * (unsigned int)endPercent / 100;
-	int width = bounds.hiX - bounds.loX + 1;
-	int firstX = bounds.loX + width * startPercent / 100;
-	int lastX = bounds.loX + width * endPercent / 100;
+	int firstObject = m_pairCount * (unsigned int)startPercent / 100;
+	int lastObject = m_pairCount * (unsigned int)endPercent / 100;
+	int width = bounds.hiY - bounds.loY + 1;
+	int firstY = bounds.loY + width * startPercent / 100;
+	int lastY = bounds.loY + width * endPercent / 100;
 
 	for (int profile = 0; profile < 12; ++profile)
 	{
 		int layer = profile % 3;
-		int profileFlags = profile / 3;
-		bool crusher = (profileFlags & 1) != 0;
-		bool terrainOnly = ((profileFlags >> 1) & 1) != 0;
+		unsigned int profileFlags = profile / 3;
+		bool flag20 = (profileFlags & 1) != 0;
+		bool flag21 = ((profileFlags >> 1) & 1) != 0;
 
-		if (!g_bfmeUseIncrementalZoneObjects)
-		{
-			for (int x = firstX; x < lastX; ++x)
+        if (g_rva012B4D2CUseZonePairs)
+        {
+
+            for (int y = firstY; y < lastY; ++y)
+                for (int x = bounds.loX; x <= bounds.hiX; ++x)
+                {
+                    BfmeZoneCell &cell = map[x][y];
+                    int connectLayer = (cell.flags >> 12) & 0x3f;
+                    if (connectLayer >= 2 && connectLayer <= 15 && (cell.flags & 7) == 0)
+                        bfmeResolveZones(cell.zone, layers[connectLayer].zone,
+                            m_zoneEquivalency[profile][0], m_zoneListHeads[profile][0],
+                            m_zoneListNext[profile][0], m_maxZone);
+                }
+            Rva00404B10ZoneEdge *edge = m_currentIncrementalObject;
+            for (int index = firstObject; index < lastObject; ++index)
+            {
+                unsigned int zonePair = edge->zonePair;
+                unsigned short sourceZone = (unsigned short)(zonePair >> 16);
+                unsigned short targetZone = (unsigned short)zonePair;
+                if ((layer <= 0 || ((int)edge->source.profileLayer > layer) ==
+                                   ((int)edge->target.profileLayer > layer)) &&
+                    (!flag20 || edge->source.flag20 == edge->target.flag20) &&
+                    (!flag21 || edge->source.flag21 == edge->target.flag21))
+                {
+                    {
+                    int sourceType = 1;
+                    if (edge->source.type != 0) sourceType = edge->source.type;
+                    int targetType;
+                    if (edge->target.type == 0) targetType = 1;
+                    else targetType = edge->target.type;
+                    if (sourceType == targetType &&
+                        edge->source.layer == edge->target.layer)
+                        bfmeResolveZones(sourceZone,targetZone,m_zoneEquivalency[profile][2],
+                            m_zoneListHeads[profile][2],m_zoneListNext[profile][2],m_maxZone);
+                    }
+                    {
+                    int sourceType = 3;
+                    if (edge->source.type != 0) sourceType = edge->source.type;
+                    int targetType;
+                    if (edge->target.type == 0) targetType = 3;
+                    else targetType = edge->target.type;
+                    if (sourceType == targetType &&
+                        edge->source.layer == edge->target.layer)
+                        bfmeResolveZones(sourceZone,targetZone,m_zoneEquivalency[profile][3],
+                            m_zoneListHeads[profile][3],m_zoneListNext[profile][3],m_maxZone);
+                    }
+                    {
+                    int sourceType = 2;
+                    if (edge->source.type != 0) sourceType = edge->source.type;
+                    int targetType;
+                    if (edge->target.type == 0) targetType = 2;
+                    else targetType = edge->target.type;
+                    if (sourceType == targetType &&
+                        edge->source.layer == edge->target.layer)
+                        bfmeResolveZones(sourceZone,targetZone,m_zoneEquivalency[profile][1],
+                            m_zoneListHeads[profile][1],m_zoneListNext[profile][1],m_maxZone);
+                    }
+                    {
+                    int sourceType = 4;
+                    if (edge->source.type != 0) sourceType = edge->source.type;
+                    int targetType;
+                    if (edge->target.type == 0) targetType = 4;
+                    else targetType = edge->target.type;
+                    if (sourceType == targetType &&
+                        edge->source.layer == edge->target.layer)
+                        bfmeResolveZones(sourceZone,targetZone,m_zoneEquivalency[profile][4],
+                            m_zoneListHeads[profile][4],m_zoneListNext[profile][4],m_maxZone);
+                    }
+                    if ((edge->source.type == 2) == (edge->target.type == 2))
+                        bfmeResolveZones(sourceZone,targetZone,m_zoneEquivalency[profile][5],
+                            m_zoneListHeads[profile][5],m_zoneListNext[profile][5],m_maxZone);
+                    if (edge->source.type == edge->target.type &&
+                        (edge->source.layer == edge->target.layer ||
+                         edge->source.layer == edge->target.connectLayer ||
+                         edge->source.connectLayer == edge->target.layer ||
+                         (edge->source.connectLayer == 16 && edge->target.connectLayer == 16)))
+                        bfmeResolveZones(sourceZone,targetZone,m_zoneEquivalency[profile][0],
+                            m_zoneListHeads[profile][0],m_zoneListNext[profile][0],m_maxZone);
+                }
+                edge = (Rva00404B10ZoneEdge *)_STL::_Rb_global<bool>::_M_increment(edge);
+            }
+            if (profile == 11) m_currentIncrementalObject = edge;
+        }
+        else
+        {
+
+			for (int y = firstY; y < lastY; ++y)
 			{
-				for (int y = bounds.loY; y <= bounds.hiY; ++y)
+				for (int x = bounds.loX; x <= bounds.hiX; ++x)
 				{
-					BfmeZoneCell &cell = map[y][x];
-					unsigned int bits = cell.flags;
-					unsigned int connectLayer = (bits >> 12) & 0x3f;
+					BfmeZoneCell &cell = map[x][y];
+					int connectLayer = (cell.flags >> 12) & 0x3f;
 					if (connectLayer >= 2 && connectLayer <= 15 &&
-						(bits & 7) == 0)
+						(cell.flags & 7) == 0)
 					{
 						bfmeResolveZones(cell.zone, layers[connectLayer].zone,
 							m_zoneEquivalency[profile][0],
 							m_zoneListHeads[profile][0],
-							m_zoneListNext[profile][0]);
+							m_zoneListNext[profile][0], m_maxZone);
 					}
 
-					if (y <= bounds.loY)
+					int cellZone = cell.zone;
+					if (x <= bounds.loX)
 						goto check_left_cell;
 					{
-					BfmeZoneCell &other = map[y - 1][x];
-					if (cell.zone == other.zone ||
-						!sameProfileCell(bits, other.flags, layer,
-							crusher, terrainOnly))
+					int otherZone = map[x - 1][y].zone;
+					if (cellZone == otherZone ||
+						!sameProfileCell(cell, map[x - 1][y], layer,
+							flag20, flag21))
 						goto check_left_cell;
 
-					unsigned int otherBits = other.flags;
-					if (substituteZero(bits, 1) == substituteZero(otherBits, 1) &&
-						((bits ^ otherBits) & 0xfc0) == 0)
-						bfmeResolveZones(cell.zone, other.zone,
+					if (substituteZero(cell.flags, 1) == substituteZero(map[x - 1][y].flags, 1) &&
+						((cell.flags ^ map[x - 1][y].flags) & 0xfc0) == 0)
+						bfmeResolveZones(cellZone, otherZone,
 							m_zoneEquivalency[profile][2],
 							m_zoneListHeads[profile][2],
-							m_zoneListNext[profile][2]);
+							m_zoneListNext[profile][2], m_maxZone);
 
-					if (substituteZero(bits, 3) == substituteZero(otherBits, 3) &&
-						((bits ^ otherBits) & 0xfc0) == 0)
-						bfmeResolveZones(cell.zone, other.zone,
+					if (substituteZero(cell.flags, 3) == substituteZero(map[x - 1][y].flags, 3) &&
+						((cell.flags ^ map[x - 1][y].flags) & 0xfc0) == 0)
+						bfmeResolveZones(cellZone, otherZone,
 							m_zoneEquivalency[profile][3],
 							m_zoneListHeads[profile][3],
-							m_zoneListNext[profile][3]);
+							m_zoneListNext[profile][3], m_maxZone);
 
-					if (substituteZero(bits, 2) == substituteZero(otherBits, 2) &&
-						((bits ^ otherBits) & 0xfc0) == 0)
-						bfmeResolveZones(cell.zone, other.zone,
+					if (substituteZero(cell.flags, 2) == substituteZero(map[x - 1][y].flags, 2) &&
+						((cell.flags ^ map[x - 1][y].flags) & 0xfc0) == 0)
+						bfmeResolveZones(cellZone, otherZone,
 							m_zoneEquivalency[profile][1],
 							m_zoneListHeads[profile][1],
-							m_zoneListNext[profile][1]);
+							m_zoneListNext[profile][1], m_maxZone);
 
-					if (substituteZero(bits, 4) == substituteZero(otherBits, 4) &&
-						((bits ^ otherBits) & 0xfc0) == 0)
-						bfmeResolveZones(cell.zone, other.zone,
+					if (substituteZero(cell.flags, 4) == substituteZero(map[x - 1][y].flags, 4) &&
+						((cell.flags ^ map[x - 1][y].flags) & 0xfc0) == 0)
+						bfmeResolveZones(cellZone, otherZone,
 							m_zoneEquivalency[profile][4],
 							m_zoneListHeads[profile][4],
-							m_zoneListNext[profile][4]);
+							m_zoneListNext[profile][4], m_maxZone);
 
-					if (((bits & 7) == 2) == ((otherBits & 7) == 2))
-						bfmeResolveZones(cell.zone, other.zone,
+					if (((cell.flags & 7) == 2) == ((map[x - 1][y].flags & 7) == 2))
+						bfmeResolveZones(cellZone, otherZone,
 							m_zoneEquivalency[profile][5],
 							m_zoneListHeads[profile][5],
-							m_zoneListNext[profile][5]);
+							m_zoneListNext[profile][5], m_maxZone);
 
-					unsigned int cellType = (bits >> 6) & 0x3f;
-					unsigned int otherType = (otherBits >> 6) & 0x3f;
-					unsigned int cellConnect = (bits >> 12) & 0x3f;
-					unsigned int otherConnect = (otherBits >> 12) & 0x3f;
-					if (((bits ^ otherBits) & 7) == 0 &&
-						(cellType == otherType || cellType == otherConnect ||
-						 cellConnect == otherType ||
-						 (cellConnect == 16 && otherConnect == 16)))
-						bfmeResolveZones(cell.zone, other.zone,
+					if (((cell.flags ^ map[x - 1][y].flags) & 7) == 0 &&
+                        (((cell.flags >> 6) & 0x3f) == ((map[x - 1][y].flags >> 6) & 0x3f) ||
+                         ((cell.flags >> 6) & 0x3f) == ((map[x - 1][y].flags >> 12) & 0x3f) ||
+                         ((cell.flags >> 12) & 0x3f) == ((map[x - 1][y].flags >> 6) & 0x3f) ||
+                         (((cell.flags >> 12) & 0x3f) == 16 && ((map[x - 1][y].flags >> 12) & 0x3f) == 16)))
+						bfmeResolveZones(cellZone, otherZone,
 							m_zoneEquivalency[profile][0],
 							m_zoneListHeads[profile][0],
-							m_zoneListNext[profile][0]);
+							m_zoneListNext[profile][0], m_maxZone);
 					}
 
 				check_left_cell:
-					if (x <= bounds.loX)
+					if (y <= bounds.loY)
 						continue;
-					BfmeZoneCell &left = map[y][x - 1];
-					if (cell.zone == left.zone ||
-						!sameProfileCell(bits, left.flags, layer,
-							crusher, terrainOnly))
+					int leftZone = map[x][y - 1].zone;
+					if (cellZone == leftZone ||
+						!sameProfileCell(cell, map[x][y - 1], layer,
+							flag20, flag21))
 						continue;
 
-					unsigned int leftBits = left.flags;
-					if (substituteZero(bits, 1) == substituteZero(leftBits, 1) &&
-						((bits ^ leftBits) & 0xfc0) == 0)
-						bfmeResolveZones(cell.zone, left.zone,
+					if (substituteZero(cell.flags, 1) == substituteZero(map[x][y - 1].flags, 1) &&
+						((cell.flags ^ map[x][y - 1].flags) & 0xfc0) == 0)
+						bfmeResolveZones(cellZone, leftZone,
 							m_zoneEquivalency[profile][2],
 							m_zoneListHeads[profile][2],
-							m_zoneListNext[profile][2]);
-					if (substituteZero(bits, 3) == substituteZero(leftBits, 3) &&
-						((bits ^ leftBits) & 0xfc0) == 0)
-						bfmeResolveZones(cell.zone, left.zone,
+							m_zoneListNext[profile][2], m_maxZone);
+					if (substituteZero(cell.flags, 3) == substituteZero(map[x][y - 1].flags, 3) &&
+						((cell.flags ^ map[x][y - 1].flags) & 0xfc0) == 0)
+						bfmeResolveZones(cellZone, leftZone,
 							m_zoneEquivalency[profile][3],
 							m_zoneListHeads[profile][3],
-							m_zoneListNext[profile][3]);
-					if (substituteZero(bits, 2) == substituteZero(leftBits, 2) &&
-						((bits ^ leftBits) & 0xfc0) == 0)
-						bfmeResolveZones(cell.zone, left.zone,
+							m_zoneListNext[profile][3], m_maxZone);
+					if (substituteZero(cell.flags, 2) == substituteZero(map[x][y - 1].flags, 2) &&
+						((cell.flags ^ map[x][y - 1].flags) & 0xfc0) == 0)
+						bfmeResolveZones(cellZone, leftZone,
 							m_zoneEquivalency[profile][1],
 							m_zoneListHeads[profile][1],
-							m_zoneListNext[profile][1]);
-					if (substituteZero(bits, 4) == substituteZero(leftBits, 4) &&
-						((bits ^ leftBits) & 0xfc0) == 0)
-						bfmeResolveZones(cell.zone, left.zone,
+							m_zoneListNext[profile][1], m_maxZone);
+					if (substituteZero(cell.flags, 4) == substituteZero(map[x][y - 1].flags, 4) &&
+						((cell.flags ^ map[x][y - 1].flags) & 0xfc0) == 0)
+						bfmeResolveZones(cellZone, leftZone,
 							m_zoneEquivalency[profile][4],
 							m_zoneListHeads[profile][4],
-							m_zoneListNext[profile][4]);
-					if (((bits & 7) == 2) == ((leftBits & 7) == 2))
-						bfmeResolveZones(cell.zone, left.zone,
+							m_zoneListNext[profile][4], m_maxZone);
+					if (((cell.flags & 7) == 2) == ((map[x][y - 1].flags & 7) == 2))
+						bfmeResolveZones(cellZone, leftZone,
 							m_zoneEquivalency[profile][5],
 							m_zoneListHeads[profile][5],
-							m_zoneListNext[profile][5]);
+							m_zoneListNext[profile][5], m_maxZone);
 
-					unsigned int cellType = (bits >> 6) & 0x3f;
-					unsigned int otherType = (leftBits >> 6) & 0x3f;
-					unsigned int cellConnect = (bits >> 12) & 0x3f;
-					unsigned int otherConnect = (leftBits >> 12) & 0x3f;
-					if (((bits ^ leftBits) & 7) == 0 &&
-						(cellType == otherType || cellType == otherConnect ||
-						 cellConnect == otherType ||
-						 (cellConnect == 16 && otherConnect == 16)))
-						bfmeResolveZones(cell.zone, left.zone,
+					if (((cell.flags ^ map[x][y - 1].flags) & 7) == 0 &&
+                        (((cell.flags >> 6) & 0x3f) == ((map[x][y - 1].flags >> 6) & 0x3f) ||
+                         ((cell.flags >> 6) & 0x3f) == ((map[x][y - 1].flags >> 12) & 0x3f) ||
+                         ((cell.flags >> 12) & 0x3f) == ((map[x][y - 1].flags >> 6) & 0x3f) ||
+                         (((cell.flags >> 12) & 0x3f) == 16 && ((map[x][y - 1].flags >> 12) & 0x3f) == 16)))
+						bfmeResolveZones(cellZone, leftZone,
 							m_zoneEquivalency[profile][0],
 							m_zoneListHeads[profile][0],
-							m_zoneListNext[profile][0]);
+							m_zoneListNext[profile][0], m_maxZone);
 				}
 			}
-		}
-		else
-		{
-			// The alternate path consumes a scheduler-owned object list.  Its
-			// cell/layer bridge pass is identical and provides the established
-			// profile-table side effects while that list layout is identified.
-			for (int x = firstX; x < lastX; ++x)
-				for (int y = bounds.loY; y <= bounds.hiY; ++y)
-				{
-					BfmeZoneCell &cell = map[y][x];
-					unsigned int connectLayer = (cell.flags >> 12) & 0x3f;
-					if (connectLayer >= 2 && connectLayer <= 15 &&
-						(cell.flags & 7) == 0)
-						bfmeResolveZones(cell.zone, layers[connectLayer].zone,
-							m_zoneEquivalency[profile][0],
-							m_zoneListHeads[profile][0],
-							m_zoneListNext[profile][0]);
-				}
-			(void)firstObject;
-			(void)lastObject;
-		}
+		        }
 	}
 }
