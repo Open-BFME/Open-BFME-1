@@ -1,7 +1,7 @@
 # BFME 1 Source Code
 <img width="1000" height="125" alt="image" src="https://github.com/user-attachments/assets/d4ac956a-5221-42a6-aaf0-b0c0e41f6b8a" />
 
-Goal: Source code that rebuilds BFME 1's executable byte-for-byte, and game modernization improvements that you've only seen in your dreams.
+Goal: reach 100% independently rebuilt byte parity with BFME 1's retail executable outside explicitly declared `no_ground_truth` ranges, while pursuing game-modernization improvements.
 
 [Join our Discord to participate!](https://discord.gg/wCvA2XqPUT)
 
