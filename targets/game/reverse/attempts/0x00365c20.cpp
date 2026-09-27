@@ -1,5 +1,5 @@
 // ?method@Rva00365C20Owner@@QAEXABURva00365C20SourceRecord@@HHURva00365C20Payload6@@HABURva00365C20Tail@@@Z
-// partial score=0.5245 date=2026-09-25
+// partial score=0.6793 date=2026-09-27
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 
@@ -15,6 +15,11 @@ struct Rva00365C20Payload6
 	int m_0c;
 	int m_10;
 	int m_14;
+};
+
+struct Rva00365C20ThreeWords
+{
+	int value[ 3 ];
 };
 
 struct Rva00365C20Tail
@@ -56,7 +61,7 @@ public:
 	int m_08;
 	int m_0c;
 	Rva00365C20Payload6 m_10;
-	char m_28[ 0x0c ];
+	Rva00365C20ThreeWords m_28;
 	int m_34;
 	unsigned char m_38;
 	unsigned char m_39;
@@ -130,7 +135,8 @@ void Rva00365C20Owner::method( const Rva00365C20SourceRecord &source00,
 	reinterpret_cast<StringBase<unsigned short> &>( record.m_78 ).set(
 		reinterpret_cast<const StringBase<unsigned short> &>( source44.m_14 ) );
 	record.m_4c.set( source44.m_18 );
+	record.m_28 = Rva00365C20ThreeWords();
+	record.m_34 = 1;
 	((Gen00365520 &)m_playerArmies[ index ]).bfmeAppend(
 		(const P6Elem00365520 *)&record );
 }
-
