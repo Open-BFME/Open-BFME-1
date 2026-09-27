@@ -1,216 +1,116 @@
 // cl: /DNDEBUG /MD /EHsc
+// Retail 0x00127AD0 .. 0x00127B99 (202 B): the default constructor of
+// RubbleRiseUpdateModuleData.
+//
+// Identity is witnessed, not inherited from the lift name:
+//  - the MATCHED caller ?friend_newModuleData@RubbleRiseUpdate@@SAPAVModuleData@@PAV@Z
+//    (0x00127BD0, game/GameEngine/Source/GameLogic/Object/Update/
+//    RubbleRiseUpdateFriendNewModuleDataThunk.cpp) does `operator new(0xD4)`
+//    and runs this constructor on the result, so the class and the 0xD4 size
+//    are both fixed by matched code;
+//  - this body installs vtable 0x0108EAF8, whose slot zero routes to the
+//    MATCHED scalar deleting destructor ??_GRubbleRiseUpdateModuleData@@UAEPAXI@Z
+//    at 0x00128BA0;
+//  - the MATCHED buildFieldParse (0x002A4190) names the field roles below:
+//    its FieldParse table (built at 0x010C2AB0) binds the INI keys
+//    MinRubbleRiseDelay/MaxRubbleRiseDelay/MinBurstDelay/MaxBurstDelay/
+//    RubbleRiseDamping/RubbleHeight/MaxShudder/BigBurstFrequency to offsets
+//    0x34/0x38/0x3c/0x40/0x48/0x4c/0x50/0x44, and its
+//    `p.add(DieMuxData::getFieldParse(), 8)` is the DieMux sub-object at +8
+//    that this body constructs.
 
-class RubbleRiseUpdateModuleData
+// Retail calls this ctor's DieMux-role constructor with ecx = this + 8; its
+// body is the matched DieMuxData constructor at 0x002551A0, reached through
+// the 5-byte thunk pinned at 0x000071E4, and it fills 0x2C bytes.
+class Rva002551A0DieMuxData
 {
 public:
-    RubbleRiseUpdateModuleData();
+	Rva002551A0DieMuxData();
+
+private:
+	unsigned char m_pad[0x2c];
 };
 
-__declspec(naked) RubbleRiseUpdateModuleData::RubbleRiseUpdateModuleData()
+// Retail fills both 4-element arrays through the EH vector constructor
+// iterator, which takes one construction and one destruction proc per
+// element.  Every element is 0x0C bytes.  The procs are out-of-line bodies
+// with no recovered identity, so the two element types carry the address of
+// their constructor: 0x00127AB0 (m_a) and 0x00127AC0 (m_b).
+class Rva00127AB0Element
 {
-    __asm {
-        _emit 6Ah
-        _emit 0FFh
-        _emit 68h
-        _emit 0Eh
-        _emit 1Ch
-        _emit 00h
-        _emit 01h
-        _emit 64h
-        _emit 0A1h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 50h
-        _emit 64h
-        _emit 89h
-        _emit 25h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 51h
-        _emit 53h
-        _emit 56h
-        _emit 8Bh
-        _emit 0F1h
-        _emit 57h
-        _emit 89h
-        _emit 74h
-        _emit 24h
-        _emit 0Ch
-        _emit 33h
-        _emit 0FFh
-        _emit 8Dh
-        _emit 4Eh
-        _emit 08h
-        _emit 89h
-        _emit 7Ch
-        _emit 24h
-        _emit 18h
-        _emit 0C7h
-        _emit 06h
-        _emit 0F8h
-        _emit 0EAh
-        _emit 08h
-        _emit 01h
-        _emit 0E8h
-        _emit 0E1h
-        _emit 0F6h
-        _emit 0EDh
-        _emit 0FFh
-        _emit 68h
-        _emit 3Bh
-        _emit 2Dh
-        _emit 42h
-        _emit 00h
-        _emit 68h
-        _emit 0B1h
-        _emit 7Dh
-        _emit 44h
-        _emit 00h
-        _emit 6Ah
-        _emit 04h
-        _emit 6Ah
-        _emit 0Ch
-        _emit 8Dh
-        _emit 46h
-        _emit 54h
-        _emit 50h
-        _emit 0E8h
-        _emit 0CAh
-        _emit 0F3h
-        _emit 8Ch
-        _emit 00h
-        _emit 68h
-        _emit 77h
-        _emit 74h
-        _emit 41h
-        _emit 00h
-        _emit 68h
-        _emit 5Ch
-        _emit 47h
-        _emit 43h
-        _emit 00h
-        _emit 6Ah
-        _emit 04h
-        _emit 6Ah
-        _emit 0Ch
-        _emit 8Dh
-        _emit 8Eh
-        _emit 84h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 0BBh
-        _emit 01h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 51h
-        _emit 88h
-        _emit 5Ch
-        _emit 24h
-        _emit 2Ch
-        _emit 0E8h
-        _emit 0A7h
-        _emit 0F3h
-        _emit 8Ch
-        _emit 00h
-        _emit 8Bh
-        _emit 4Ch
-        _emit 24h
-        _emit 10h
-        _emit 89h
-        _emit 7Eh
-        _emit 34h
-        _emit 89h
-        _emit 7Eh
-        _emit 38h
-        _emit 89h
-        _emit 7Eh
-        _emit 50h
-        _emit 89h
-        _emit 7Eh
-        _emit 48h
-        _emit 89h
-        _emit 7Eh
-        _emit 4Ch
-        _emit 89h
-        _emit 7Eh
-        _emit 44h
-        _emit 0C7h
-        _emit 46h
-        _emit 3Ch
-        _emit 0Fh
-        _emit 27h
-        _emit 00h
-        _emit 00h
-        _emit 89h
-        _emit 9Eh
-        _emit 0B4h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 89h
-        _emit 9Eh
-        _emit 0C4h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 89h
-        _emit 9Eh
-        _emit 0B8h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 89h
-        _emit 9Eh
-        _emit 0C8h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 89h
-        _emit 9Eh
-        _emit 0BCh
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 89h
-        _emit 9Eh
-        _emit 0CCh
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 89h
-        _emit 9Eh
-        _emit 0C0h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 89h
-        _emit 9Eh
-        _emit 0D0h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 5Fh
-        _emit 8Bh
-        _emit 0C6h
-        _emit 5Eh
-        _emit 5Bh
-        _emit 64h
-        _emit 89h
-        _emit 0Dh
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 83h
-        _emit 0C4h
-        _emit 10h
-        _emit 0C3h
-    }
-}
+public:
+	Rva00127AB0Element();
+	~Rva00127AB0Element();
 
+private:
+	unsigned char m_pad[0x0c];
+};
+
+class Rva00127AC0Element
+{
+public:
+	Rva00127AC0Element();
+	~Rva00127AC0Element();
+
+private:
+	unsigned char m_pad[0x0c];
+};
+
+// The destructor at 0x00128BD0 stores 0x01073744 (??_7BfmeBase@@6B@) into
+// *this before returning, so the immediate base is polymorphic and 8 bytes
+// wide; its own ctor emits nothing and this one installs the vtable.
+class RubbleRiseUpdateModuleDataBase
+{
+public:
+	virtual ~RubbleRiseUpdateModuleDataBase() {}
+
+private:
+	unsigned char m_pad[4];
+};
+
+class RubbleRiseUpdateModuleData : public RubbleRiseUpdateModuleDataBase
+{
+public:
+	RubbleRiseUpdateModuleData();
+	virtual ~RubbleRiseUpdateModuleData();
+
+private:
+	Rva002551A0DieMuxData m_dieMux;			// 0x08
+	unsigned long m_minRubbleRiseDelay;		// 0x34, "MinRubbleRiseDelay"
+	unsigned long m_maxRubbleRiseDelay;		// 0x38, "MaxRubbleRiseDelay"
+	unsigned long m_minBurstDelay;			// 0x3c, "MinBurstDelay"
+	unsigned long m_maxBurstDelay;			// 0x40, "MaxBurstDelay"
+	int m_bigBurstFrequency;					// 0x44, "BigBurstFrequency"
+	float m_rubbleRiseDamping;				// 0x48, "RubbleRiseDamping"
+	float m_rubbleHeight;					// 0x4c, "RubbleHeight"
+	float m_maxShudder;						// 0x50, "MaxShudder"
+	Rva00127AB0Element m_a[4];				// 0x54
+	Rva00127AC0Element m_b[4];				// 0x84
+	unsigned long m_dwordB4[4];				// 0xb4, initialised to 1
+	unsigned long m_dwordC4[4];				// 0xc4, initialised to 1
+};
+
+// ??0RubbleRiseUpdateModuleData@@QAE@XZ
+//
+// The assignment order below is retail's, not the field order: 0x34, 0x38,
+// 0x50, 0x48, 0x4c, 0x44, then the 0x270f at 0x3c, then the two 4-element
+// runs.  The two tail runs are ONE loop over two separate arrays, which is
+// what makes retail emit the pairs interleaved (0xb4, 0xc4, 0xb8, 0xc8,
+// 0xbc, 0xcc, 0xc0, 0xd0) with the constant 1 materialised once in ebx;
+// declared as one [4][2] array the unrolled stores come out ascending
+// instead, which is the only byte difference that shape makes.
+RubbleRiseUpdateModuleData::RubbleRiseUpdateModuleData()
+{
+	m_minRubbleRiseDelay = 0;
+	m_maxRubbleRiseDelay = 0;
+	m_maxShudder = 0.0f;
+	m_rubbleRiseDamping = 0.0f;
+	m_rubbleHeight = 0.0f;
+	m_bigBurstFrequency = 0;
+	m_minBurstDelay = 9999;
+	unsigned long i;
+	for (i = 0; i < 4; i++) {
+		m_dwordB4[i] = 1;
+		m_dwordC4[i] = 1;
+	}
+}
