@@ -52,7 +52,7 @@ struct CoordVector001DA4B0
 };
 
 enum AICommandType { AICMD_MOVE_TO_POSITION = 0 };
-enum CommandSourceType { CMD_FROM_PLAYER = 0 };
+#include "../command_source_type.h"
 class Object;
 struct AICommandParms
 {

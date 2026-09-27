@@ -50,7 +50,7 @@ class CommandButton;
 class Player;
 struct Coord3D;
 
-enum CommandSourceType { CMD_FROM_PLAYER = 0 };
+#include "../command_source_type.h"
 enum AttitudeType {};
 enum SpecialPowerType { SPECIAL_INVALID = 0 };
 enum UpgradeType { UPGRADE_TYPE_PLAYER = 0, UPGRADE_TYPE_OBJECT = 1 };

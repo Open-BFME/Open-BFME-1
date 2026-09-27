@@ -8,10 +8,7 @@ typedef int Int;
 typedef bool Bool;
 typedef int ObjectID;
 
-enum CommandSourceType
-{
-	CMD_FROM_AI = 2
-};
+#include "../command_source_type.h"
 
 enum Relationship
 {

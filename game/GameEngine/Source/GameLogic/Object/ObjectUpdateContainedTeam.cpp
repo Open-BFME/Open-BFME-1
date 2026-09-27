@@ -12,12 +12,7 @@ class Object;
 
 // Upstream enum layout:
 // inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT,
-	CMD_FROM_AI
-};
+#include "../command_source_type.h"
 
 // Upstream STLport list node layout for ContainedItemsList<Object *>.
 struct ContainedItemNode

@@ -15,12 +15,7 @@
 // already names aiMoveToObject(Object *, CommandSourceType). State ids 0x38
 // and 0x0F are left numeric: BFME's AIStateType numbering is not witnessed.
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT = 1,
-	CMD_FROM_AI = 2
-};
+#include "../command_source_type.h"
 
 typedef unsigned int StateID;
 enum { INVALID_STATE_ID = 999999 };

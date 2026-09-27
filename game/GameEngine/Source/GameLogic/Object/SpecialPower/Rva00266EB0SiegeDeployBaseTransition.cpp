@@ -14,12 +14,7 @@ typedef unsigned int UnsignedInt;
 enum ObjectStatusTypes { OBJECT_STATUS_PLACEHOLDER };
 enum DisabledType { DISABLED_PLACEHOLDER };
 enum AttitudeType { ATTITUDE_PLACEHOLDER };
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT = 1,
-	CMD_FROM_AI = 2
-};
+#include "../../command_source_type.h"
 
 class ModelConditionFlags
 {

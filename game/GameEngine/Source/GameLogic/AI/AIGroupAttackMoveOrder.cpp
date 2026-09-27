@@ -39,10 +39,7 @@ struct Coord3D
 	float z;
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0
-};
+#include "../command_source_type.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable

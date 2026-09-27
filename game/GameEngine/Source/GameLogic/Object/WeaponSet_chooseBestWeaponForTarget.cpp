@@ -24,10 +24,7 @@ enum WeaponSlotType
 	PRIMARY_WEAPON = 0
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0
-};
+#include "../command_source_type.h"
 
 enum KindOfType
 {

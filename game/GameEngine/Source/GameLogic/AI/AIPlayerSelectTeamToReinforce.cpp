@@ -41,7 +41,7 @@ typedef float Real;
 
 extern const AsciiString Rva01336E50EmptyString;
 
-enum CommandSourceType { CMD_FROM_PLAYER = 0, CMD_FROM_SCRIPT = 1, CMD_FROM_AI = 2 };
+#include "../command_source_type.h"
 enum { MAX_UNIT_TYPES = 7 };
 
 struct Coord3D

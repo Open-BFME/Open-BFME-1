@@ -6,10 +6,7 @@
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0
-};
+#include "../command_source_type.h"
 
 class SpecialPowerTemplate;
 

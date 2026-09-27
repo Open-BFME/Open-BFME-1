@@ -1,8 +1,8 @@
 #pragma once
 
-// The global command-source enum and values follow the shipped GameCommon declaration.
+// PLAYER=0, SCRIPT=1 and AI=2 have independent BFME evidence; values 3-4 follow Zero Hour.
 // inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
-// BFME AIUpdateInterfacePrivateIdle.cpp also declares this sequence.
+// Historical BFME declaration: e02bb973f0:game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfacePrivateIdle.cpp
 enum CommandSourceType
 {
     CMD_FROM_PLAYER = 0,

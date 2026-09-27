@@ -36,12 +36,7 @@ enum SpecialPowerType
 	SPECIAL_HARVEST = 0x73						// index 115
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT = 1,
-	CMD_FROM_AI = 2
-};
+#include "../../command_source_type.h"
 
 class Object;
 class Player;

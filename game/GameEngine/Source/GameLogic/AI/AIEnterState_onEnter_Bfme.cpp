@@ -18,10 +18,7 @@ enum ObjectEnterExitType
 	WANTS_TO_ENTER = 0
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0
-};
+#include "../command_source_type.h"
 
 enum CanEnterType
 {

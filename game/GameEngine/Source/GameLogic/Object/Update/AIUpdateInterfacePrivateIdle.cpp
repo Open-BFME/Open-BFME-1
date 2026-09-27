@@ -12,14 +12,7 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef int ObjectID;
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT,
-	CMD_FROM_AI,
-	CMD_FROM_DOZER,
-	CMD_DEFAULT_SWITCH_WEAPON
-};
+#include "../../command_source_type.h"
 
 typedef UnsignedInt StateID;
 enum { BFME_AI_IDLE = 0 };
