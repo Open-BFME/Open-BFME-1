@@ -112,3 +112,47 @@ method `CampaignManager::rva003BF580`, reached by decoded ILT `000459DA`.
 The old spelling was never a proved symbol for the target. No established
 function or class identity is discarded by these five correction records;
 each record is limited to the exact old/new source hashes.
+
+## Follow-up: exact frame, complete extent, and canonical helper bodies
+
+The GPT-6 follow-up begins from the complete bank and agent B's direct
+`__copy(end(), end(), begin(), ...)` experiment. Holding the actual returned
+iterator in a named local before assigning `_M_finish` improves the body to
+**3,413 / 3,413 bytes**, with the correct **0x50-byte frame**, **1,643 masked
+byte differences**, and **1,770 / 3,413 = 0.518605332552 positional agreement**.
+The separate normalized instruction shape is **0.979**, with 19 structural
+differences. Both metrics remain far from an accepted byte match.
+
+The three typed singleton loads are independently witnessed at VA `012ED748`
+(players), `012ED5C8` (writable global data), and `012F1028` (Living World).
+The last is named **TheLivingWorldLogic** by the GameEngine initialization tag
+and its existing `CampaignManager*` pin. `TheCampaignManager` is instead
+pinned to `012F4CB0`; the original raw macro's name must not become an extern
+identity claim for `012F1028`.
+
+Two further ordinary helper definitions reproduce their complete retail
+bodies with relocation masking. `00388BE0` is a **33-byte** GameLogic wrapper:
+it adjusts the receiver to `this+170`, passes its hidden vector return buffer
+to ILT `00031507`, and returns that buffer with `RET 4`. That ILT reaches the
+independently authored **340-byte** `00364E70` collection method, which filters
+58-byte player-army records by their mode word at `+20` and returns an owned
+vector of pointers. It is not a simple copy of a vector at GameLogic `+170`.
+The bank now expresses that actual nested collection call.
+
+The **158-byte** numbered lookup `00573580` formats `"%d"` into a canonical
+AsciiString and passes it by value to ILT `00047992` / `00572A60`, forwarding
+the hidden string result. Its native definition exactly reproduces all 158
+bytes; visibility does not change the main body. These helpers, along with
+the previously proved 49-byte getter and 112-byte append, are already owned
+and add **zero** native coverage.
+
+Bounded follow-up probes covered the genuine copy-result lifetime, distinct
+or shared end iterators, native erase/copy wrappers, an explicit complete
+noinline bit-copy definition, real score/hero record types, native sort and
+an inlined score-total helper. None improved the selected body further.
+Five unresolved main declarations remain the same supported dependency
+spellings listed above (six call sites because number is called twice).
+No symbols pins or game-source claims were added. Scratch receipts are in
+`build/four-hour-score`; the complete measured body is banked with the exact
+frame and extent, while remaining local-slot allocation, registers and
+iterator materialization are explicitly unresolved.

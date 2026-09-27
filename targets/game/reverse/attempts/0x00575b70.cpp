@@ -1,22 +1,20 @@
 // ?_bfme_populateSinglePlayer@BfmeAptScreenScoreScreen@@QAEXXZ
-// partial score=0.3773806035745678 date=2026-09-27
+// partial score=0.518605332552007 date=2026-09-27
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringbaseunicode /Igame/Libraries/Source/WWVegas/WWLib /D_STLP_USE_STATIC_LIB
 // stlport
 // Complete native ScoreScreen single-player population; NOT byte matched.
-// Retail extent00575B70..005768C5:3413B. Matched _bfme_showScoreScreen
-// reaches it via ILT0003D08C. The original .35 bank had six invented helpers
-// and omitted hero-vector and region-list behavior; this body replaces them.
-// Fresh Ghidra, decoded calls and constructor00578160 prove vector<bool>+2E8,
-// army vector return00388BE0, B4 army stride, hero flag+39 and template+D0 bit.
-// Main3397B:2109 masked positional differences plus16 missing bytes;
-// byte score1288/3413=.377380603575; normalized shape.975 is NOT a match score.
-// Frame54 vs50 and bit-iterator/EH/register scheduling remain. Five address-
-// evidenced callee declarations still need resolver ownership, not speculation.
-// The native49B score-record getter and112B list insertion below match their
-// entire instruction shapes independently. The record is UnicodeString+2ints;
-// receiver owns list<record> at+C0 and appends at end. Both helpers were
-// already owned and contribute ZERO coverage. They introduce no symbols pins.
-// See identity_evidence/00575b70-score-single-player.md for bounds/contracts.
+// Retail00575B70..005768C5 is3413B. Matched opener reaches ILT0003D08C.
+// Follow-up GPT-6: full3413B; frame50 exactly; 1643 masked differences,
+// positional agreement1770/3413=.518605332552, separate from .979 normalized
+// instruction shape. A genuine named __copy result fixes the bit-vector
+// frame/return lifetime. Extern global012F1028 is TheLivingWorldLogic;
+// TheCampaignManager is independently pinned at a different012F4CB0 slot.
+// Canonical body definitions independently reproduce the already-owned33B
+// GameLogic wrapper,158B numbered lookup,49B score record getter and112B list
+// append. They add no coverage. Five main dependency spellings still need
+// supported resolver ownership before landing; no speculative pins were added.
+// See identity_evidence/00575b70-score-single-player.md for full provenance,
+// value-return/callee proofs and the bounded unsuccessful lifetime variants.
 #define _STLP_NO_EXCEPTIONS 1
 #include "ascii_string.h"
 #include <wchar.h>
@@ -39,8 +37,9 @@ inline const unsigned short *StringBase<unsigned short>::str() const {
 namespace _STL {
 template <> __forceinline void vector<bool>::clear() {
   iterator last = end();
-  this->_M_finish =
-      __copy(last, last, begin(), random_access_iterator_tag(), (ptrdiff_t *)0);
+  iterator result = __copy(last, end(), begin(), random_access_iterator_tag(),
+                           (ptrdiff_t *)0);
+  this->_M_finish = result;
 }
 } // namespace _STL
 inline UnicodeString::~UnicodeString() {
@@ -83,10 +82,21 @@ struct LivingWorldPlayerArmy {
   _STL::vector<LivingWorldArmy> field30;
 };
 typedef _STL::vector<LivingWorldPlayerArmy *> ArmyVector;
+extern void j_00031507();
+class Rva00364E70Owner {
+public:
+  ArmyVector collect() {
+    typedef ArmyVector (Rva00364E70Owner::*M)();
+    return (this->*retailMethod<M>(j_00031507))();
+  }
+};
 class GameLogic {
 public:
-  ArmyVector rva00388BE0();
+  __declspec(noinline) ArmyVector rva00388BE0();
+  char pad[0x170];
+  Rva00364E70Owner field170;
 };
+ArmyVector GameLogic::rva00388BE0() { return field170.collect(); }
 class BfmeThingFactory {};
 class Image;
 struct Rva00575B70Template {
@@ -162,10 +172,20 @@ class Rva003BDF70Owner {
 public:
   int combinedSpanCount();
 };
+extern void j_00047992();
 class Rva00573580Lookup {
 public:
-  AsciiString number(int);
+  __declspec(noinline) AsciiString number(int);
+  AsciiString lookup(AsciiString key) {
+    typedef AsciiString (Rva00573580Lookup::*M)(AsciiString);
+    return (this->*retailMethod<M>(j_00047992))(key);
+  }
 };
+AsciiString Rva00573580Lookup::number(int n) {
+  AsciiString key;
+  key.format(AsciiString("%d"), n);
+  return lookup(key);
+}
 struct Rva00575B70Region {
   char field00[0x10];
   AsciiString field10;
@@ -207,9 +227,9 @@ struct GlobalDataView {
       field123c;
   int field1240, field1244, field1248, field124c, field1250;
 };
-#define ThePlayers (*(PlayerListView **)0x012ed748)
-#define TheWritableGlobalData (*(GlobalDataView **)0x012ed5c8)
-#define TheCampaignManager (*(CampaignManager **)0x012f1028)
+extern PlayerListView *ThePlayers;
+extern GlobalDataView *TheWritableGlobalData;
+extern CampaignManager *TheLivingWorldLogic;
 extern GameLogic *TheGameLogic;
 extern BfmeThingFactory *TheThingFactory;
 extern WindowManager *g_theWindowManager;
@@ -267,23 +287,24 @@ void BfmeAptScreenScoreScreen::_bfme_populateSinglePlayer() {
     field278 += battle[1];
     battle += 3;
   } while (--left);
-  if (!TheCampaignManager)
+  if (!TheLivingWorldLogic)
     return;
   field304 = 0;
   for (int objective = 0;
        objective <
-       ((Rva003BDF70Owner *)TheCampaignManager)->combinedSpanCount();
+       ((Rva003BDF70Owner *)TheLivingWorldLogic)->combinedSpanCount();
        ++objective) {
-    if (!TheCampaignManager->isMissionObjectiveEligible(objective))
+    if (!TheLivingWorldLogic->isMissionObjectiveEligible(objective))
       continue;
-    if (!TheCampaignManager->isMissionObjectiveIndexed(objective))
+    if (!TheLivingWorldLogic->isMissionObjectiveIndexed(objective))
       continue;
     field308[field304] =
-        TheCampaignManager->isMissionObjectiveComplete(objective);
+        TheLivingWorldLogic->isMissionObjectiveComplete(objective);
     AsciiString key;
     key.format(AsciiString("APT:objective%d"), field304 + 1);
     g_theWindowManager->bfme_setAptText(
-        key, TheGameText->fetch(TheCampaignManager->rva003BF580(objective), 0));
+        key,
+        TheGameText->fetch(TheLivingWorldLogic->rva003BF580(objective), 0));
     ++field304;
   }
   field27c =
@@ -357,14 +378,14 @@ void BfmeAptScreenScoreScreen::_bfme_populateSinglePlayer() {
                                       combined);
   field300 = *(AsciiString *)(player + 0x28);
   field288 = 0;
-  CampaignManager *campaign = TheCampaignManager;
+  CampaignManager *campaign = TheLivingWorldLogic;
   if (!campaign)
     return;
   AsciiString regionName = campaign->field30;
   typedef Rva00575B70Region *(LivingWorldRegionManager::*RegionM)(
       const AsciiString &);
   Rva00575B70Region *region =
-      (TheCampaignManager->field28->*retailMethod<RegionM>(j_0002bf0d))(
+      (TheLivingWorldLogic->field28->*retailMethod<RegionM>(j_0002bf0d))(
           regionName);
   if (!region)
     return;
@@ -398,7 +419,7 @@ void BfmeAptScreenScoreScreen::_bfme_populateSinglePlayer() {
   }
   ((Rva000E92B0Owner *)score)
       ->setWideString(TheGameText->fetch(region->field10, 0));
-  ((Rva003C0E60Owner *)TheCampaignManager)
+  ((Rva003C0E60Owner *)TheLivingWorldLogic)
       ->insert(((Rva000E95A0Owner *)score)->value());
   int regionIndex = 1;
   {
