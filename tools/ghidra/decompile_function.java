@@ -24,6 +24,12 @@ public class decompile_function extends GhidraScript {
             if (function == null) {
                 function = getFunctionContaining(address);
                 if (function == null) {
+                    // Auto-analysis missed this entry; create it in memory only
+                    // (the script does not save the project).
+                    disassemble(address);
+                    function = createFunction(address, null);
+                }
+                if (function == null) {
                     println("RVA " + raw + ": no Ghidra function contains " + address);
                     continue;
                 }
