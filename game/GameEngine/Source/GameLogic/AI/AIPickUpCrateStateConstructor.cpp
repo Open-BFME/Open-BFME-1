@@ -4,10 +4,10 @@
 
 class StateMachine;
 
-// Retail's AIPickUpCrateState constructor is reached through the
-// 0x000464E8 ILT.  Its vtable at 0x010C7D30 contains the established
-// AIPickUpCrateState name, onEnter, update, and computePath slots.  BFME writes
-// the state-specific delay counter before installing that final vtable.
+// Retail's AIPickUpCrateState constructor is 0x0015CD70, reached through the
+// 0x00018B92 ILT. Its vtable 0x010960D0 holds ??_GAIPickUpCrateState,
+// AIPickUpCrateState::onEnter and AIPickUpCrateState::update. AIStateMachine
+// and the attack-move state machines inline this same sequence.
 class Rva0014F280StateBase
 {
 public:
@@ -27,11 +27,10 @@ private:
 	volatile int m_delayCounter;
 };
 
-// ??0AIPickUpCrateState@@QAE@PAVStateMachine@@@Z
 AIPickUpCrateState::AIPickUpCrateState( StateMachine *machine )
 	: Rva0014F280StateBase( machine,
 		AsciiString( "AIAttackPickUpCrateState" ) )
 {
-	m_delayCounter = 0;
 	m_vftable = &g_AIPickUpCrateStateVTable;
+	m_delayCounter = 0;
 }

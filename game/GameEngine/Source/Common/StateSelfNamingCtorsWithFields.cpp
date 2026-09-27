@@ -1,5 +1,5 @@
 // cl: /Igame/Libraries/Source/WWVegas/WWLib
-// 26 more constructors of the family landed in StateSelfNamingCtors.cpp --
+// 25 more constructors of the family landed in StateSelfNamingCtors.cpp --
 // same prologue, same `StringBase<char>` temporary built from a state-name
 // literal, same base constructor taking (machine, name) -- differing only in
 // what each one initialises after the base returns:
@@ -95,21 +95,6 @@ Rva0014F710State::Rva0014F710State( void *machine )
 	: Rva000A19E0StateBase( machine, AsciiString( "AIDockProcessDockState" ) ),
 	  m_field0( 0x0 ),
 	  m_field1( 0x0 )
-{
-}
-
-class Rva0015CD70State : public AIInternalMoveToState
-{
-public:
-	Rva0015CD70State( void *machine );
-
-	char m_gap0[ 0x4C ];
-	int m_field0;
-};
-
-Rva0015CD70State::Rva0015CD70State( void *machine )
-	: AIInternalMoveToState( machine, AsciiString( "AIAttackPickUpCrateState" ) ),
-	  m_field0( 0x0 )
 {
 }
 

@@ -6938,5 +6938,35 @@
   "after_sha256": "9426d0358a8439c393cd0b6381772cb49a017661d9bea35cbcc6be26cb53d98b",
   "evidence": "targets/game/reverse/identity_evidence/00180320-face-state-ctor.md",
   "reason": "0x00180320 installs 0x0109AD20, which is AIFaceState's vtable: its name slot returns AIFaceState, its update slot is AIFaceState::update, and AIStateMachine builds its face states 0x24/0x25/0x3B as 0x30-byte objects on it. AIIdleState's own table is 0x010985B0 and its constructor is 0x001720D0. The face constructor's second parameter is a three-valued dword whose type the bytes do not give, so its class name keeps the address."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AIPickUpCrateStateConstructor.cpp",
+  "new_path": "game/GameEngine/Source/Common/StateSelfNamingCtorsWithFields.cpp",
+  "old_name": "AIPickUpCrateState",
+  "new_name": "Rva0014F420State",
+  "before_sha256": "bc654e6c745244cd795b529a60872e56f291cea9ecf8cd236b06241c4c6d2338",
+  "after_sha256": "72536fdefa627b7125bac0bf34244f20db17866d0a83cb6b7f9571414ab72e16",
+  "evidence": "targets/game/reverse/identity_evidence/0015cd70-ai-pick-up-crate-state-ctor.md",
+  "reason": "Pairing artifact. The two files meet only at 0x0015CD70: the opaque Rva0015CD70State row leaves StateSelfNamingCtorsWithFields.cpp when the AIPickUpCrateState constructor moves onto that body in AIPickUpCrateStateConstructor.cpp. No AIPickUpCrateState identifier became Rva0014F420State, and that class is unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AIPickUpCrateStateConstructor.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva002C1150PickUpCrateStateCtor.cpp",
+  "old_name": "AIPickUpCrateState",
+  "new_name": "Rva002C1150PickUpCrateState",
+  "before_sha256": "bc654e6c745244cd795b529a60872e56f291cea9ecf8cd236b06241c4c6d2338",
+  "after_sha256": "663326078776ccf8976d6e912c208d62d3299a237d5ecaada170cd6e71ccd980",
+  "evidence": "targets/game/reverse/identity_evidence/002c1150-pickup-crate-subclass-ctor.md",
+  "reason": "0x002C1150 installs its own vtable 0x010C7D30, which has its own deleting destructor and overrides slots 4-6. AIPickUpCrateState's table is 0x010960D0, and its constructor is 0x0015CD70. The subclass writes the inherited +0x50 counter before its vtable, as a derived constructor does. It sits among the GiantBird states and its class name is not recovered."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "AIPickUpCrateState",
+  "new_name": "Rva002C1150PickUpCrateState",
+  "before_sha256": "339a07fb520b43c8ab947dfd732d31bafb7b967c695c643ff70cc5546c354cc0",
+  "after_sha256": "175b7a84d49ac079c2890f1017ab17c3bfeef8be4c98fd20853ce8354efd1403",
+  "evidence": "targets/game/reverse/identity_evidence/002c1150-pickup-crate-subclass-ctor.md",
+  "reason": "0x002C1150 installs its own vtable 0x010C7D30, which has its own deleting destructor and overrides slots 4-6. AIPickUpCrateState's table is 0x010960D0, and its constructor is 0x0015CD70. The subclass writes the inherited +0x50 counter before its vtable, as a derived constructor does. It sits among the GiantBird states and its class name is not recovered."
  }
 ]
