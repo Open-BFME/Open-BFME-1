@@ -7138,5 +7138,75 @@
   "after_sha256": "f62703593e64a35ee30b72dc6ebe25663850f59656cb65d22ac2af565a63f7ea",
   "evidence": "targets/game/reverse/identity_evidence/0002a08b-00019772-ilt-thunks.md",
   "reason": "The 5-byte row at 0x00019772 is an incremental-link thunk to OpenContain's builder 0x002284A0, not ActiveBodyModuleData::buildFieldParse (the ActiveBody factory 0x0011F420 passes ILT 0x00012355). An ILT row is claimed by address as ?j_00019772@@YAXXZ."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/U1SmallStateProbes.cpp",
+  "new_path": "game/stlport/Rva00845410OstreambufIteratorCtors.cpp",
+  "old_name": "U1Carrier_00845870",
+  "new_name": "Rva00845410Stream",
+  "before_sha256": "08a268b3379bd8c6a057aea48636a59ab4c29bcddc346050153de84c7e9b750e",
+  "after_sha256": "c2a91b2d91ac155099178c1c6c6086f2b07d3a14a0901241d48045afb451e75d",
+  "evidence": "targets/game/reverse/identity_evidence/0x008450e0-00845890-stlport-iterator-identities.md",
+  "reason": "The old carrier was a layout-only adapter for the retired 0x00845xx U1Probe shapes. Rva00845410Stream is an address-derived adapter for the separate stream-constructor signature; no retail owner identity moved."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/U1SmallStateProbes.cpp",
+  "new_path": "game/stlport/Rva00845410OstreambufIteratorCtors.cpp",
+  "old_name": "U1Holder_005C1C20",
+  "new_name": "Rva00845410Stream",
+  "before_sha256": "08a268b3379bd8c6a057aea48636a59ab4c29bcddc346050153de84c7e9b750e",
+  "after_sha256": "c2a91b2d91ac155099178c1c6c6086f2b07d3a14a0901241d48045afb451e75d",
+  "evidence": "targets/game/reverse/identity_evidence/0x008450e0-00845890-stlport-iterator-identities.md",
+  "reason": "U1Holder_005C1C20 remains the local holder for the distinct 0x005C1C20 empty-test row. The address-derived stream adapter belongs to separate 0x00845870/0x00845890 constructor rows."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/U1SmallStateProbes.cpp",
+  "new_path": "game/stlport/Rva00845410OstreambufIteratorCtors.cpp",
+  "old_name": "U1Probe_005C0DE0",
+  "new_name": "Rva00845410OutIter",
+  "before_sha256": "08a268b3379bd8c6a057aea48636a59ab4c29bcddc346050153de84c7e9b750e",
+  "after_sha256": "c2a91b2d91ac155099178c1c6c6086f2b07d3a14a0901241d48045afb451e75d",
+  "evidence": "targets/game/reverse/identity_evidence/0x008450e0-00845890-stlport-iterator-identities.md",
+  "reason": "U1Probe_005C0DE0 remains a separate 19-byte row at 0x005C0DE0. Its short pointer/null-flag shape matches 0x00845410, but retail keeps the addresses distinct and has no identical-code folding; the new name retains the target RVA."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/U1SmallStateProbes.cpp",
+  "new_path": "game/stlport/Rva00845410OstreambufIteratorCtors.cpp",
+  "old_name": "U1Probe_005C0E00",
+  "new_name": "Rva00845870OutIter",
+  "before_sha256": "08a268b3379bd8c6a057aea48636a59ab4c29bcddc346050153de84c7e9b750e",
+  "after_sha256": "c2a91b2d91ac155099178c1c6c6086f2b07d3a14a0901241d48045afb451e75d",
+  "evidence": "targets/game/reverse/identity_evidence/0x008450e0-00845890-stlport-iterator-identities.md",
+  "reason": "U1Probe_005C0E00 remains a separate 11-byte member getter. The 28-byte 0x00845870 body is a stream constructor at a different retail boundary; shared short patterns do not transfer its identity."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/U1SmallStateProbes.cpp",
+  "new_path": "game/stlport/Rva00845410OstreambufIteratorCtors.cpp",
+  "old_name": "U1Probe_00845890",
+  "new_name": "Rva00845890OutIter",
+  "before_sha256": "08a268b3379bd8c6a057aea48636a59ab4c29bcddc346050153de84c7e9b750e",
+  "after_sha256": "c2a91b2d91ac155099178c1c6c6086f2b07d3a14a0901241d48045afb451e75d",
+  "evidence": "targets/game/reverse/identity_evidence/0x008450e0-00845890-stlport-iterator-identities.md",
+  "reason": "The old U1Probe was only a layout shape for the 0x00845890 bytes. The identity evidence records the stream-constructor behavior and keeps the address-derived Rva name because callers do not establish a concrete owner type."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/U1SmallStateProbes.cpp",
+  "new_path": "game/stlport/Rva00845410OstreambufIteratorCtors.cpp",
+  "old_name": "U1PtrFlagged_005C0FB0",
+  "new_name": "Rva00845410Stream",
+  "before_sha256": "08a268b3379bd8c6a057aea48636a59ab4c29bcddc346050153de84c7e9b750e",
+  "after_sha256": "c2a91b2d91ac155099178c1c6c6086f2b07d3a14a0901241d48045afb451e75d",
+  "evidence": "targets/game/reverse/identity_evidence/0x008450e0-00845890-stlport-iterator-identities.md",
+  "reason": "U1PtrFlagged_005C0FB0 remains the separate 0x005C0FB0 helper type. The Rva stream adapter is a different address-derived type used by the 0x00845870/0x00845890 constructors."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/U1SmallStateProbes.cpp",
+  "new_path": "game/stlport/Rva00845410OstreambufIteratorCtors.cpp",
+  "old_name": "isAbsent",
+  "new_name": "Rva00845870OutIter",
+  "before_sha256": "08a268b3379bd8c6a057aea48636a59ab4c29bcddc346050153de84c7e9b750e",
+  "after_sha256": "c2a91b2d91ac155099178c1c6c6086f2b07d3a14a0901241d48045afb451e75d",
+  "evidence": "targets/game/reverse/identity_evidence/0x008450e0-00845890-stlport-iterator-identities.md",
+  "reason": "isAbsent remains the distinct getter in U1Probe_005C0E00 at 0x005C0E00. It is not the separately bounded stream constructor at 0x00845870; the evidence distinguishes the addresses and signatures."
  }
 ]
