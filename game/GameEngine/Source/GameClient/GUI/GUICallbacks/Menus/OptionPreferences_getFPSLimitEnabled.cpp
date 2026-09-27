@@ -63,7 +63,7 @@ class GlobalData
 {
 public:
 	unsigned char m_unreconstructed_00[0x1E];
-	bool m_fpsLimitEnabled;					///< retail this+0x1E
+	bool m_useFpsLimit;					///< retail this+0x1E
 	unsigned char m_unreconstructed_1F[0x70 - 0x1F];
 	bool m_buildingOcclusionEnabled;					///< retail this+0x70
 };
@@ -92,7 +92,7 @@ bool OptionPreferences::getFPSLimitEnabled(void)
 	}
 
 	if (it == m_prefs.end())
-		return TheWritableGlobalData->m_fpsLimitEnabled;
+		return TheWritableGlobalData->m_useFpsLimit;
 
 	if (_strcmpi(it->m_value.str(), "yes") == 0)
 	{

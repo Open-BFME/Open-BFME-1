@@ -59,7 +59,7 @@ class GlobalData
 {
 public:
 	unsigned char m_unreconstructed_00[0x68];
-	int m_textureReduction;								///< retail this+0x68
+	int m_textureReductionFactor;								///< retail this+0x68
 };
 
 extern GlobalData *TheWritableGlobalData;				///< retail [0x012ED5C8]
@@ -89,7 +89,7 @@ int OptionPreferences::getTextureReduction(void)
 	{
 		// Two is the least-reduced setting, so the stored level maps onto a
 		// percentage; the 0.5f is the rounding term ahead of the truncation.
-		value = (int)((2 - TheWritableGlobalData->m_textureReduction) * 50.0f + 0.5f);
+		value = (int)((2 - TheWritableGlobalData->m_textureReductionFactor) * 50.0f + 0.5f);
 	}
 	else
 	{
