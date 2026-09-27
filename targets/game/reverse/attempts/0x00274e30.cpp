@@ -1,10 +1,12 @@
 // ?computePath@AIUpdateInterface@@QAE_NPAVPathfindServicesInterface@@PAUCoord3D@@@Z
-// partial score=0.56 date=2026-09-12
-// cl: /DNDEBUG /MD /EHsc
+// partial score=0.5552995391705069 date=2026-09-26
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 struct Coord3D { Coord3D(){} Coord3D(const Coord3D& c):x(c.x),y(c.y),z(c.z){} Coord3D&operator=(const Coord3D&c){x=c.x;y=c.y;z=c.z;return *this;} float x,y,z; };
-struct Region3D{Coord3D lo,hi; __forceinline bool isInRegionNoZ(const Coord3D*p)const{return p->x>=lo.x&&p->x<=hi.x&&p->y>=lo.y&&p->y<=hi.y;}};
+struct Region3D{Coord3D lo,hi; bool isInRegionNoZ(const Coord3D*p)const{return lo.x<p->x&&p->x<hi.x&&lo.y<p->y&&p->y<hi.y;}};
 enum PathfindLayerEnum{LAYER_GROUND=1};enum CommandSourceType{CMD_FROM_AI=2};enum UpdateSleepTime{SLEEP5=5};enum KindOfType{NO_COLLIDE=30,BFME108=108,BFME124=124,BFME138=138};
-class AsciiString {public: const char*str()const{return data?data+8:"";} char*data;};
+#include "string_base.h"
+template<>inline const char*StringBase<char>::str()const{return m_data?m_data->data:"";}
+#include "ascii_string.h"
 class Overridable {public:const Overridable*getFinalOverride()const;char prefix[4];const Overridable*next;};
 class ThingTemplate:public Overridable {public:char pad08[0x20-8];AsciiString name;char pad24[0x4b1-0x24];bool moveAllies;};
 class Thing{public:
@@ -19,7 +21,7 @@ class Object:public Thing{public:
 };
 class Locomotor{public:bool isUltraAccurate()const{return(flags>>6)&1;}char prefix[0x40];unsigned flags;};
 struct LocomotorSet {char prefix[16];unsigned surfaces;char pad14[4];AsciiString name;};
-struct PathInfo {float distance;Coord3D position;PathfindLayerEnum layer;int pad14[3];int portal;};
+struct PathInfo {float distance;Coord3D position;float m_real10[3];PathfindLayerEnum layer;int portal;};
 class Path{public:void computePoint(Object*,Locomotor*,PathInfo*,bool);void updateLastNode(const Coord3D*);char prefix[0xd];bool blockedByAlly;};
 class PathfindServicesInterface{public:
  virtual Path*findPath(Object*,LocomotorSet&,const Coord3D*,const Coord3D*);
@@ -28,7 +30,7 @@ class PathfindServicesInterface{public:
  virtual Path*patchPath(Object*,LocomotorSet&,Path*,bool);
 };
 class Pathfinder{public:
- int isLinePassable(Object*,int,PathfindLayerEnum,const Coord3D*,const Coord3D*,int,int,int);
+ bool isLinePassable(Object*,int,PathfindLayerEnum,const Coord3D*,const Coord3D*,int,int,int);
  bool validMovementPosition(const Coord3D*,PathfindLayerEnum,unsigned,Object*);
  void snapPosition(Object*,Coord3D*);
  bool moveAllies(Object*,Path*,bool);
@@ -41,7 +43,7 @@ class TerrainLogic{public:
  PathfindLayerEnum getLayerForDestination(Object*,const Coord3D*);
 };extern TerrainLogic*TheTerrainLogic;
 struct GameLogic {char prefix[0x3c];unsigned frame;};extern GameLogic*TheBfmeGameLogic;
-extern unsigned char g_012F0239;extern void*g_012ED4FC;extern void j_0003a17a();
+extern bool g_012F0239;extern void*g_012ED4FC;extern void j_0003a17a();
 typedef void(__cdecl*DebugLog)(void*,const char*,...);
 #define LOG(s) ((DebugLog)j_0003a17a)(g_012ED4FC,s)
 #define TRACE(s) if(g_012F0239&&g_012ED4FC){LOG(s);}
