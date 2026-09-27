@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "1e4fa0ed4d799b6ca35d407c3caae207843962e1df42edf1e2cfb2b03c23a9f8",
-  "symbol": "??0Rva008809E0Transform2D@@QAE@PBURva008809E0Vec2@@MHH@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ??0Rva008809E0Transform2D@@QAE@PBURva008809E0Vec2@@MHH@Z\n// partial score=0.85 date=2026-09-06\n#include <math.h>\nstruct Rva008809E0Vec2 { float x; float y; };\nstruct Rva008809E0Transform2D {\n\tfloat m_x; float m_y;\n\tfloat m_cos; float m_sin;\n\tfloat m_negSin; float m_cos2;\n\tint m_a; int m_b;\n\tRva008809E0Transform2D(const Rva008809E0Vec2* pos, float angle, int a, int b);\n};\nRva008809E0Transform2D::Rva008809E0Transform2D(const Rva008809E0Vec2* pos, float angle, int a, int b)\n{\n\tm_x = pos->x;\n\tm_y = pos->y;\n\tdouble rad = angle;\n\tfloat c = (float)cos(rad);\n\tangle = (float)sin(rad);\n\tm_negSin = -angle;\n\tm_a = a;\n\tm_b = b;\n\tm_cos = c;\n\tm_sin = angle;\n\tm_cos2 = c;\n}\n"
-}

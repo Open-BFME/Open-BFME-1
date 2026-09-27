@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "9ff10f496cde97c9eb62e2de3eff648e84d1862ae794eb02f735f89296f2be61",
-  "symbol": "?bfmeDropZM@BfmeHostZM@@QAEXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.95,
-  "source": "// ?bfmeDropZM@BfmeHostZM@@QAEXXZ\n// partial score=0.95 date=2026-09-08\nvoid __cdecl operator delete(void *p);\n\nclass BfmeChildZM\n{\npublic:\n\tvoid bfmeReleaseZM();\n};\n\nclass BfmeHostZM\n{\npublic:\n\tvoid bfmeDropZM();\n\n\tunsigned char m_bfmeHeadZM[0x18];\n\tBfmeChildZM *m_bfme18ZM;\n\tint m_bfme1CZM;\n\tint m_bfme20ZM;\n\tint m_bfme24ZM;\n\tfloat m_bfme28ZM;\n\tint m_bfme2CZM;\n\tint m_bfme30ZM;\n};\n\nvoid BfmeHostZM::bfmeDropZM()\n{\n\tBfmeChildZM *p = m_bfme18ZM;\n\n\tif (!p)\n\t\treturn;\n\n\tp->bfmeReleaseZM();\n\t::operator delete(p);\n\n\tm_bfme18ZM = 0;\n\tm_bfme1CZM = 0;\n\tm_bfme20ZM = 0;\n\tm_bfme24ZM = 0;\n\tm_bfme28ZM = 10.0f;\n\tm_bfme2CZM = 0;\n\tm_bfme30ZM = 0;\n}\n"
-}

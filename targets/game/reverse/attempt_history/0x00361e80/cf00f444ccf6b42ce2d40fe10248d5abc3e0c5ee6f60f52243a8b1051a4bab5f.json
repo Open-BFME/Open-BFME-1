@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "cf00f444ccf6b42ce2d40fe10248d5abc3e0c5ee6f60f52243a8b1051a4bab5f",
-  "symbol": "?d_00361e80@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.95,
-  "source": "// ?d_00361e80@@YAXXZ\n// partial score=0.95 date=2026-09-08\nstruct Rva002E5FF0Str\n{\n\tRva002E5FF0Str(const Rva002E5FF0Str &other);\n\t~Rva002E5FF0Str();\n\n\tvoid *m_bfmeDataEAS;\n};\n\nextern Rva002E5FF0Str Rva01336E50Str;\n\nclass BfmeElemEAS\n{\npublic:\n\tRva002E5FF0Str bfmeNameEAS();\n\n\tunsigned char m_bfmeBodyEAS[0x58];\n};\n\nclass BfmeVecEAS\n{\npublic:\n\tRva002E5FF0Str bfmeGetEAS(int index);\n\n\tunsigned char m_bfmeHeadEAS[0x18];\n\tBfmeElemEAS *m_bfmeBeginEAS;\n\tBfmeElemEAS *m_bfmeEndEAS;\n};\n\nRva002E5FF0Str BfmeVecEAS::bfmeGetEAS(int index)\n{\n\tif (index < 0 ||\n\t\t(unsigned int)index >= (unsigned int)(m_bfmeEndEAS - m_bfmeBeginEAS))\n\t\treturn Rva01336E50Str;\n\n\treturn m_bfmeBeginEAS[index].bfmeNameEAS();\n}\n"
-}

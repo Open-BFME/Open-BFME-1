@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "503e350fa38a07513ebc272038a9be26a35efc275db2ef3359985c198e307c36",
-  "symbol": "?bfmeSetTimeCG@BfmeHostCG@@QAEXI@Z",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?bfmeSetTimeCG@BfmeHostCG@@QAEXI@Z\n// partial score=0.9 date=2026-09-07\n// 60/63. Shape, both call sites, the 0x3fffffff sentinel and the shared final\n// ret all match. The gap is a register choice with a size consequence: retail\n// puts the sub pointer in EDX (`mov edx,[ecx+8]`), which leaves it short of\n// scratch registers in the subtract arm and forces a shrink-wrapped\n// `push esi / mov esi,[TheBfmeGameLogic] / sub eax,[esi+0x3c] / pop esi`.\n// MSVC reuses ECX for the sub (it already holds `this`, which dies), so edx\n// stays free and the save/restore disappears -- 3 bytes short.\n// Tried: naming the logic global in a local inside the arm. No change.\n// To crack this, find a spelling that keeps `this` live past the m_8 load so\n// ecx cannot be recycled.\nclass BfmeSubCG\n{\npublic:\n\tunsigned char m_bfmeHeadCG[0x90];\n\tunsigned char m_bfmeFlagsCG;\n};\n\nstruct Rva00367E30Logic\n{\n\tunsigned char m_bfmeHeadCG[0x3c];\n\tunsigned int m_bfmeFrameCG;\n};\n\nextern Rva00367E30Logic *TheBfmeGameLogic;\n\nextern \"C\" void __stdcall bfmeApplyCG(BfmeSubCG *sub, unsigned int when);\n\nclass BfmeHostCG\n{\npublic:\n\tvoid bfmeSetTimeCG(unsigned int when);\n\n\tunsigned char m_bfmeHeadCG[8];\n\tBfmeSubCG *m_bfmeSubCG;\n};\n\nvoid BfmeHostCG::bfmeSetTimeCG(unsigned int when)\n{\n\tBfmeSubCG *sub = m_bfmeSubCG;\n\n\tif ((sub->m_bfmeFlagsCG & 1) == 0)\n\t{\n\t\tif (when != 0 && when != 0x3fffffff)\n\t\t\tbfmeApplyCG(sub, when - TheBfmeGameLogic->m_bfmeFrameCG);\n\t\telse\n\t\t\tbfmeApplyCG(sub, 0x3fffffff);\n\t}\n}\n"
-}

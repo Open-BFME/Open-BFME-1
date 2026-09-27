@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "0e5e162ae7787d61f2f0758b2738c9326e455c6deaf2c9696be2e72ecdcd5923",
-  "symbol": "?bfmeAddAK@BfmeListAK@@QAEXPAX0@Z",
-  "score_kind": "author-estimate",
-  "score": 0.75,
-  "source": "// ?bfmeAddAK@BfmeListAK@@QAEXPAX0@Z\n// partial score=0.75 date=2026-09-08\n// Best clean reconstruction: key lookup followed by STLport vector insertion.\n// The compiler still allocates this/value/key differently from retail.\nstruct BfmeVectorRawAK\n{\n\tvoid **m_bfmeBeginAK;\n\tvoid **m_bfmeEndAK;\n\tvoid **m_bfmeCapAK;\n};\n\nclass BfmeNodeAK\n{\npublic:\n\t_STL::vector<void *> m_bfmeValuesAK;\n\tvoid *m_bfmeKeyAK;\n\tBfmeNodeAK *m_bfmeNextAK;\n};\n\nclass BfmeListAK\n{\npublic:\n\tvoid bfmeAddAK(void *key, void *value)\n\t{\n\t\tBfmeNodeAK *n = m_bfmeRootAK;\n\t\tm_bfmeHeadAK = n;\n\t\twhile (n != 0) {\n\t\t\tif (n->m_bfmeKeyAK == key)\n\t\t\t\tbreak;\n\t\t\tn = n->m_bfmeNextAK;\n\t\t}\n\t\tif (n != 0) {\n\t\t\tn->m_bfmeValuesAK.push_back(value);\n\t\t\treturn;\n\t\t}\n\t\tn = (BfmeNodeAK *)::operator new(0x14);\n\t\tBfmeVectorRawAK *values = (BfmeVectorRawAK *)n;\n\t\tvalues->m_bfmeBeginAK = 0;\n\t\tvalues->m_bfmeEndAK = 0;\n\t\tvalues->m_bfmeCapAK = 0;\n\t\tn->m_bfmeKeyAK = key;\n\t\tn->m_bfmeNextAK = 0;\n\t\tn->m_bfmeValuesAK.push_back(value);\n\t\tn->m_bfmeNextAK = m_bfmeRootAK;\n\t\tm_bfmeRootAK = n;\n\t}\n\n\tBfmeNodeAK *m_bfmeHeadAK;\n\tBfmeNodeAK *m_bfmeRootAK;\n};\n"
-}

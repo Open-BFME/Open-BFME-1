@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "dbb64bdde757b8c6fce176599c2f8a69f16189202ae983193a989403001ab9ef",
-  "symbol": "?rva0081c920@@YAPAUBfmeElemVIA@@PAU1@00@Z",
-  "score_kind": "author-estimate",
-  "score": 0.55,
-  "source": "// ?rva0081c920@@YAPAUBfmeElemVIA@@PAU1@00@Z\n// partial score=0.55 date=2026-09-06\n// ?rva0081c920@@YAPAUBfmeElemVIA@@PAU1@00@Z\n\nstruct BfmeElemVIA;\n\nextern BfmeElemVIA *__cdecl bfmeCopyVIA(BfmeElemVIA *first, BfmeElemVIA *last, BfmeElemVIA *dest);\n\nBfmeElemVIA *__cdecl rva0081c920(BfmeElemVIA *first, BfmeElemVIA *last, BfmeElemVIA *dest)\n{\n\tvolatile char temp[12];\n\ttemp[7] = 0;\n\treturn bfmeCopyVIA(first, last, dest);\n}\n"
-}

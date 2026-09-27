@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "369f09e49322190a301ee4870d67c13f39b27f6e40351bcb27507802c64e81e6",
-  "symbol": "?d_00479290@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?d_00479290@@YAXXZ\n// partial score=0.9 date=2026-09-07\n// 67/67 exact size; every instruction present, only the ORDER of the argument\n// loads relative to the receiver selection differs -- the [[argument-shuttle-register]]\n// preload-depth shape. Retail reads a3 at offset 0 (before any push), pushes it,\n// then interleaves the a2/a1 loads and pushes AROUND `mov ecx,[esi+4]` / `test`;\n// MSVC does the whole `m_bfmeAXX ? : m_bfmeBXX` selection first and only then\n// loads and pushes. Both the named-local form and the inline ternary\n// `(m_bfmeAXX != 0 ? m_bfmeAXX : m_bfmeBXX)->bfmeHandleXX(...)` give the same\n// MSVC order; /G7 does not move it either.\n// Everything else is settled: receiver select on m4 falling back to m8, virtual\n// slot 2 with (a1, a2, a3), then `if (a1 == 2 && m_bfmeBXX) { m_bfmeBXX->+0x1dc\n// = m_bfmeAXX; m_bfmeBXX = 0; }`.\nclass BfmeTargetXX\n{\npublic:\n\tvirtual void bfmeV0XX();\n\tvirtual void bfmeV1XX();\n\tvirtual void bfmeHandleXX(int a1, void *a2, void *a3);\n\n\tunsigned char m_bfmeHeadXX[0x1d8];\n\tBfmeTargetXX *m_bfmeBackXX;\n};\n\nclass BfmeOwnerXX\n{\npublic:\n\tvoid bfmeRouteXX(int a1, void *a2, void *a3);\n\n\tunsigned char m_bfmeStartXX[4];\n\tBfmeTargetXX *m_bfmeAXX;\n\tBfmeTargetXX *m_bfmeBXX;\n};\n\nvoid BfmeOwnerXX::bfmeRouteXX(int a1, void *a2, void *a3)\n{\n\tBfmeTargetXX *target = m_bfmeAXX;\n\n\tif (target == 0)\n\t\ttarget = m_bfmeBXX;\n\n\ttarget->bfmeHandleXX(a1, a2, a3);\n\n\tif (a1 == 2 && m_bfmeBXX != 0)\n\t{\n\t\tm_bfmeBXX->m_bfmeBackXX = m_bfmeAXX;\n\t\tm_bfmeBXX = 0;\n\t}\n}\n"
-}

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "e06201ae4745d271df959f2aa5a8bb97d3a0207eaf14135ffc88afdd69556287",
-  "symbol": "?d_0017eb90@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?d_0017eb90@@YAXXZ\n// partial score=0.9 date=2026-09-08\nclass BfmeStateEAM\n{\npublic:\n\tunsigned char m_bfmeHeadEAM[0x333];\n\tchar m_bfmeAEAM;\n\tchar m_bfmeBEAM;\n};\n\nclass BfmeObjEAM\n{\npublic:\n\tvoid bfmeClearEAM(int mode);\n\tvoid bfmeStopEAM(int mode);\n\tvoid bfmeNotifyEAM();\n\tvoid bfmeFinishEAM(int mode, int flag);\n\n\tunsigned char m_bfmeHeadEAM[0x11c];\n\tint m_bfmeFlagsEAM;\n\tunsigned char m_bfmePadEAM[0xe4];\n\tBfmeStateEAM *m_bfmeStateEAM;\n};\n\nclass BfmeOwnerEAM\n{\npublic:\n\tunsigned char m_bfmeHeadEAM[0x10];\n\tBfmeObjEAM *m_bfmeObjEAM;\n};\n\nclass BfmeHostEAM\n{\npublic:\n\tvoid bfmeResetEAM(int unused);\n\n\tunsigned char m_bfmeHeadEAM[0x1c];\n\tBfmeOwnerEAM *m_bfmeOwnerEAM;\n};\n\nvoid BfmeHostEAM::bfmeResetEAM(int unused)\n{\n\tBfmeObjEAM *obj = m_bfmeOwnerEAM->m_bfmeObjEAM;\n\n\tif (obj == 0)\n\t\treturn;\n\n\tBfmeStateEAM *state = obj->m_bfmeStateEAM;\n\n\tif (state == 0)\n\t\treturn;\n\n\tobj->bfmeClearEAM(0x38);\n\tobj->bfmeStopEAM(8);\n\n\tstate->m_bfmeAEAM = 0;\n\tstate->m_bfmeBEAM = 0;\n\n\tint flags = obj->m_bfmeFlagsEAM;\n\n\tif ((flags & 0x10000000) == 0)\n\t{\n\t\tobj->m_bfmeFlagsEAM = flags | 0x10000000;\n\n\t\tobj->bfmeNotifyEAM();\n\t}\n\n\tobj->bfmeFinishEAM(8, 0);\n}\n"
-}

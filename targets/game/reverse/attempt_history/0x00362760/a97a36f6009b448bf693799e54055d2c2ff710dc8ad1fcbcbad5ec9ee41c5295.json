@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "a97a36f6009b448bf693799e54055d2c2ff710dc8ad1fcbcbad5ec9ee41c5295",
-  "symbol": "?d_00362760@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.8,
-  "source": "// ?d_00362760@@YAXXZ\n// partial score=0.8 date=2026-09-06\n// 59 bytes from MSVC against retail's 62. The whole magic-division block is\n// byte-exact -- `m_end - m_begin` on an 0x58-byte element type produces\n// retail's 0x2e8ba2e9 / sar 4 / shr 31 / add sequence for free, and the\n// `jae` needs the unsigned cast on both sides of the bound check.\n// Residue: retail saves esi at entry and keeps `this` there; MSVC shrink-wraps\n// the push past the first guard and puts `this` in eax. Tried an early-return\n// pair, a single && chain (signed and unsigned), a named self local and a\n// named begin local; the push always shrink-wraps.\nclass BfmeElemBX\n{\npublic:\n\tvoid bfmeApplyBX(void *value);\n\n\tunsigned char m_bfmeHeadBX[0x58];\n};\n\nclass BfmeOwnBX\n{\npublic:\n\tvoid bfmeAtBX(int index, void *value);\n\n\tunsigned char m_bfmeHeadBX[0x18];\n\tBfmeElemBX *m_bfmeBeginBX;\n\tBfmeElemBX *m_bfmeEndBX;\n};\n\nvoid BfmeOwnBX::bfmeAtBX(int index, void *value)\n{\n\tif (index < 0)\n\t\treturn;\n\n\tif ((unsigned int)index >= (unsigned int)(m_bfmeEndBX - m_bfmeBeginBX))\n\t\treturn;\n\n\tm_bfmeBeginBX[index].bfmeApplyBX(value);\n}\n"
-}

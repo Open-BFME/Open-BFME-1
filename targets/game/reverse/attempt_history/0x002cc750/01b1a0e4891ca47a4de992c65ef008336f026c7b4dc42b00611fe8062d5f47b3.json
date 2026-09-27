@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "01b1a0e4891ca47a4de992c65ef008336f026c7b4dc42b00611fe8062d5f47b3",
-  "symbol": "?d_002cc750@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.95,
-  "source": "// ?d_002cc750@@YAXXZ\n// partial score=0.95 date=2026-09-08\nclass BfmeObjGB\n{\npublic:\n\tvoid bfmeNotifyGB();\n\n\tunsigned char m_bfmeHeadGB[0x118];\n\tvolatile unsigned int m_bfmeFlagsGB;\n};\n\n__forceinline void bfmeApplyGB(BfmeObjGB *o)\n{\n\tunsigned int f = o->m_bfmeFlagsGB;\n\n\tif ((f & 0x20000) != 0 || (f & 0x40000) == 0)\n\t{\n\t\tunsigned int a = o->m_bfmeFlagsGB & 0xfffdffff;\n\t\tunsigned int b = a | 0x40000;\n\n\t\to->m_bfmeFlagsGB = a;\n\t\to->m_bfmeFlagsGB = b;\n\n\t\to->bfmeNotifyGB();\n\t}\n}\n\nclass BfmeHostGB\n{\npublic:\n\tvoid bfmeMarkGB(BfmeObjGB *other);\n};\n\nvoid BfmeHostGB::bfmeMarkGB(BfmeObjGB *other)\n{\n\tbfmeApplyGB(*(BfmeObjGB **)((char *)this - 0x18));\n\tbfmeApplyGB(other);\n}\n"
-}

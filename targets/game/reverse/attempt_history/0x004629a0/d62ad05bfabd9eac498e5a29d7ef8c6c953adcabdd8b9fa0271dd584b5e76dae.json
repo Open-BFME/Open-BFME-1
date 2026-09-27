@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "d62ad05bfabd9eac498e5a29d7ef8c6c953adcabdd8b9fa0271dd584b5e76dae",
-  "symbol": "?_bfme_closeAptScreen@@YAXABVAsciiString@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.4,
-  "source": "// ?_bfme_closeAptScreen@@YAXABVAsciiString@@@Z\n// partial score=0.4 date=2026-09-03\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringinline\n// ?_bfme_closeAptScreen@@YAXABVAsciiString@@@Z\n// Retail 0x004629A0, 97 bytes. Copies the name, builds a hashtable iterator\n// against the global at 0x012F19A4 via begin() at ILT 0x0001BDC9, hands both\n// to 0x00462540, then thiscall-searches the WindowManager at 0x012F1990\n// (ILT 0x0000F547 -> 0x00461040).\n\n#include \"StringInline.h\"\n\nstruct HtIterator\n{\n\tvoid *node;\n\tvoid *table;\n};\n\nclass NameTable\n{\npublic:\n\tHtIterator begin();\n};\n\nclass WindowManager\n{\npublic:\n\tvoid findScreen( const AsciiString &name );\n};\n\nvoid eraseScreen( HtIterator it, AsciiString name );\n\nNameTable *const g_nameTable = (NameTable *)0x012F19A4;\nWindowManager *const g_windowManager = (WindowManager *)0x012F1990;\n\n// ?_bfme_closeAptScreen@@YAXABVAsciiString@@@Z present-unmatched\nvoid _bfme_closeAptScreen( const AsciiString &name )\n{\n\teraseScreen( g_nameTable->begin(), name );\n\tg_windowManager->findScreen( name );\n}\n"
-}

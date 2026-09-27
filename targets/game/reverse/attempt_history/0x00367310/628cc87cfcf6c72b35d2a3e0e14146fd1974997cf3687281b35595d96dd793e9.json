@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "628cc87cfcf6c72b35d2a3e0e14146fd1974997cf3687281b35595d96dd793e9",
-  "symbol": "?bfmeStartRT@BfmeOwnerRT@@QAEXXZ (identity unknown)",
-  "score_kind": "author-estimate",
-  "score": 0.95,
-  "source": "// ?bfmeStartRT@BfmeOwnerRT@@QAEXXZ (identity unknown)\n// partial score=0.95 date=2026-09-07\n// 25/25 bytes; 4 instructions differ, all from one scheduling choice.\n// retail  push 0 / lea eax,[ecx+3ch] / push eax / mov [ecx+20h],4 / call\n// ours    mov [ecx+20h],4 / push 0 / add ecx,3ch / push ecx / call\n// MSVC emits the state store first (source order) and, `this` being dead\n// afterwards, computes the argument with `add ecx` instead of `lea eax`.\n// Retail keeps `this` live because its store comes after the address.\n// Tried: hoisting the argument address into a local before the store (MSVC\n// sinks the lea back past it).\nstruct BfmeDataRT\n{\n\tunsigned char m_bfmeRawRT[4];\n};\n\nvoid __stdcall bfmeBeginRT(BfmeDataRT *data, int flag);\n\nclass BfmeOwnerRT\n{\npublic:\n\tvoid bfmeStartRT(void);\n\n\tunsigned char m_bfmeHeadRT[0x20];\n\tint m_bfmeStateRT;\n\tunsigned char m_bfmeGapRT[0x18];\n\tBfmeDataRT m_bfmeDataRT;\n};\n\nvoid BfmeOwnerRT::bfmeStartRT(void)\n{\n\tif (m_bfmeStateRT == 3)\n\t{\n\t\tBfmeDataRT *data = &m_bfmeDataRT;\n\n\t\tm_bfmeStateRT = 4;\n\t\tbfmeBeginRT(data, 0);\n\t}\n}\n"
-}

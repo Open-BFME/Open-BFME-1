@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "d5c32d60560b7a61df876bd5a75cdbe0248f6fffcdac98f03f0cb43a21a3e4f6",
-  "symbol": "?d_001b49e0@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.6,
-  "source": "// ?d_001b49e0@@YAXXZ\n// partial score=0.6 date=2026-09-07\n// 30/44 bytes. Member offsets and the assignment ORDER are established:\n// m_70 = source->x, m_90 = source->w, m_80 = source->y, and the two floats are\n// read as float-typed expressions (retail uses fld/fld + fxch + two fstp; a\n// struct-copy spelling turns the whole thing into integer moves, 50 bytes).\n// What is NOT modelled: retail keeps a 12-byte local frame (`sub esp,0ch` /\n// `add esp,0ch`) and one dead store `mov [esp+8],eax` of the third value, plus\n// a spare `mov edx,eax`. That is exactly the 14-byte gap. Three separate\n// locals (float x, float y, float/int w) are promoted away by MSVC, whether\n// the third is int or float. Something forces the frame in the original --\n// likely a temporary this model does not capture.\nstruct BfmeVecLV\n{\n\tfloat m_bfmeXLV;\n\tfloat m_bfmeYLV;\n\tfloat m_bfmeWLV;\n};\n\nclass BfmeOwnerLV\n{\npublic:\n\tvoid bfmeSetLV(const BfmeVecLV *source);\n\n\tunsigned char m_bfmeHeadLV[0x70];\n\tfloat m_bfmeALV;\n\tunsigned char m_bfmeGapLV[0xc];\n\tfloat m_bfmeBLV;\n\tunsigned char m_bfmeTailLV[0xc];\n\tfloat m_bfmeCLV;\n};\n\nvoid BfmeOwnerLV::bfmeSetLV(const BfmeVecLV *source)\n{\n\tfloat x = source->m_bfmeXLV;\n\tfloat y = source->m_bfmeYLV;\n\tfloat w = source->m_bfmeWLV;\n\n\tm_bfmeALV = x;\n\tm_bfmeCLV = w;\n\tm_bfmeBLV = y;\n}\n"
-}

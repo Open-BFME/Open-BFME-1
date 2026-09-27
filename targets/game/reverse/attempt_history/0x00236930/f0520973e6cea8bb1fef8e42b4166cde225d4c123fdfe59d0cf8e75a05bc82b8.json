@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "f0520973e6cea8bb1fef8e42b4166cde225d4c123fdfe59d0cf8e75a05bc82b8",
-  "symbol": "?d_00236930@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.71,
-  "source": "// ?d_00236930@@YAXXZ\n// partial score=0.71 date=2026-09-02\n// cl: /DNDEBUG /MD /EHsc\n// stlport\n\n#include <new>\n#include <stdlib.h>\n\nclass INI\n{\npublic:\n\tconst char *getNextTokenOrNull(const char *text);\n\nprivate:\n\tunsigned char m_pad00[0x414];\n\tconst char *m_text;\n\n\tfriend void bfmeParseIntList(INI *ini, struct BfmeIntList *values);\n};\n\nstruct BfmeIntNode\n{\n\tBfmeIntNode *m_next;\n\tBfmeIntNode *m_previous;\n\tint m_value;\n};\n\nstruct BfmeIntList\n{\n\tBfmeIntNode *m_header;\n\n\tvoid pushBack(int value);\n};\n\nvoid *bfmeAlloc1046(int size);\n\ninline void BfmeIntList::pushBack(int value)\n{\n\tBfmeIntNode *header = m_header;\n\tBfmeIntNode *node = static_cast<BfmeIntNode *>(bfmeAlloc1046(sizeof(BfmeIntNode)));\n\tnew (&node->m_value) int(value);\n\tBfmeIntNode *previous = header->m_previous;\n\tnode->m_previous = previous;\n\tnode->m_next = header;\n\tprevious->m_next = node;\n\theader->m_previous = node;\n}\n\nvoid bfmeParseIntList(INI *ini, BfmeIntList *values)\n{\n\tINI *iniLocal = ini;\n\tconst char *token = iniLocal->getNextTokenOrNull(iniLocal->m_text);\n\tif (token != 0)\n\t{\n\t\tBfmeIntList *valuesLocal = values;\n\t\tdo\n\t\t{\n\t\t\tvaluesLocal->pushBack(atoi(token));\n\t\t\ttoken = iniLocal->getNextTokenOrNull(iniLocal->m_text);\n\t\t} while (token != 0);\n\t}\n}\n"
-}

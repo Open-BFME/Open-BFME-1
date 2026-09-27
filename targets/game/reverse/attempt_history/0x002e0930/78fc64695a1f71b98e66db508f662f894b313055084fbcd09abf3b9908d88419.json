@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "78fc64695a1f71b98e66db508f662f894b313055084fbcd09abf3b9908d88419",
-  "symbol": "??0BfmeListZH@@QAE@PAX0@Z",
-  "score_kind": "author-estimate",
-  "score": 0.94,
-  "source": "// ??0BfmeListZH@@QAE@PAX0@Z\n// partial score=0.94 date=2026-09-08\nnamespace _STL { class __new_alloc { public: static void *allocate(unsigned int n); }; }\nstruct BfmeNodeZH { BfmeNodeZH *m_bfmeNextZH; BfmeNodeZH *m_bfmePrevZH; void *m_bfmeValZH; };\nclass BfmeListZH\n{\npublic:\n\tBfmeListZH(void *a, void *b);\n\tvoid *m_bfme00ZH;\n\tvoid *m_bfme04ZH;\n\tBfmeNodeZH *m_bfme08ZH;\n};\nBfmeListZH::BfmeListZH(void *a, void *b)\n{\n\tm_bfme00ZH = a;\n\tm_bfme04ZH = b;\n\tm_bfme08ZH = 0;\n\tBfmeNodeZH *n = (BfmeNodeZH *)_STL::__new_alloc::allocate(12);\n\tn->m_bfmeNextZH = n;\n\tn->m_bfmePrevZH = n;\n\tm_bfme08ZH = n;\n}\n"
-}

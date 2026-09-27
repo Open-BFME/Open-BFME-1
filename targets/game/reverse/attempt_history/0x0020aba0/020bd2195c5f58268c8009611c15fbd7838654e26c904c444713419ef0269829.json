@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "020bd2195c5f58268c8009611c15fbd7838654e26c904c444713419ef0269829",
-  "symbol": "?d_0020aba0@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.95,
-  "source": "// ?d_0020aba0@@YAXXZ\n// partial score=0.95 date=2026-09-08\nclass BfmeTmplEP\n{\npublic:\n\tconst BfmeTmplEP *bfmeFinalEP() const;\n\n\tvoid *m_bfmeVfEP;\n\tBfmeTmplEP *m_bfmeOverEP;\n};\n\nclass BfmeCtxEP;\n\nclass BfmeMatchEP\n{\npublic:\n\tchar bfmeMatchEP(void *key);\n};\n\nclass BfmePosEP\n{\npublic:\n\tfloat m_bfmeXEP;\n\tfloat m_bfmeYEP;\n};\n\nclass BfmeThingEP\n{\npublic:\n\tvoid *m_bfmeHeadEP;\n\tBfmeTmplEP *m_bfmeTmplEP;\n\tunsigned char m_bfmePad0EP[0x30];\n\tBfmePosEP m_bfmePosEP;\n\tunsigned char m_bfmePad1EP[0x38];\n\tint m_bfmeFlagEP;\n};\n\nclass BfmeCtxEP\n{\npublic:\n\tvoid *m_bfmeKeyEP;\n\tBfmeThingEP *m_bfmeRefEP;\n\tBfmeThingEP *m_bfmeBestEP;\n\tfloat m_bfmeDistEP;\n};\n\n__forceinline const BfmeTmplEP *bfmeResolveEP(BfmeTmplEP *p)\n{\n\tif (p == 0)\n\t\treturn 0;\n\n\tif (p->m_bfmeOverEP != 0)\n\t\treturn p->m_bfmeOverEP->bfmeFinalEP();\n\n\treturn p;\n}\n\nint bfmeConsiderEP(BfmeThingEP *thing, BfmeCtxEP *ctx)\n{\n\tif (((BfmeMatchEP *)bfmeResolveEP(thing->m_bfmeTmplEP))->bfmeMatchEP(ctx->m_bfmeKeyEP) && thing->m_bfmeFlagEP == 0)\n\t{\n\t\tBfmeThingEP *best = ctx->m_bfmeRefEP;\n\n\t\tBfmePosEP &bp = best->m_bfmePosEP;\n\n\t\tfloat dx = thing->m_bfmePosEP.m_bfmeXEP - bp.m_bfmeXEP;\n\t\tfloat dy = thing->m_bfmePosEP.m_bfmeYEP - bp.m_bfmeYEP;\n\t\tfloat d2 = dx * dx + dy * dy;\n\n\t\tif (d2 < ctx->m_bfmeDistEP)\n\t\t{\n\t\t\tctx->m_bfmeBestEP = thing;\n\t\t\tctx->m_bfmeDistEP = d2;\n\t\t}\n\t}\n\n\treturn 1;\n}\n"
-}

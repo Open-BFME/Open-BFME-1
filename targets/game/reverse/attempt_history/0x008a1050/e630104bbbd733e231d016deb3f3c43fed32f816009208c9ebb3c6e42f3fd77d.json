@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "e630104bbbd733e231d016deb3f3c43fed32f816009208c9ebb3c6e42f3fd77d",
-  "symbol": "?findNamedSlot@Rva008A1050Owner@@QAEHPBD@Z",
-  "score_kind": "author-estimate",
-  "score": 0.4,
-  "source": "// ?findNamedSlot@Rva008A1050Owner@@QAEHPBD@Z\n// partial score=0.4 date=2026-09-06\n// ?findNamedSlot@Rva008A1050Owner@@QAEHPBD@Z\nstruct Rva008A1050Entry { const char* m_name; int m_index; };\n\nstruct Rva008A1050Table\n{\n\tunsigned char m_pad0[0x18];\n\tint* m_values;\n\tunsigned char m_pad1[0x30 - 0x1c];\n\tint m_count;\n\tRva008A1050Entry* m_entries;\n};\n\nstruct Rva008A1050Owner\n{\n\tunsigned char m_pad0[0x10];\n\tRva008A1050Table* m_table;\n\n\tint findNamedSlot(const char* name);\n};\n\nint Rva008A1050Owner::findNamedSlot(const char* name)\n{\n\tRva008A1050Table* t = m_table;\n\tint count = t->m_count;\n\tif (count <= 0)\n\t\treturn 0;\n\n\tRva008A1050Entry* e = t->m_entries;\n\tfor (int i = 0; i < count; ++i, ++e) {\n\t\tconst char* a = name;\n\t\tconst char* b = e->m_name;\n\t\tbool match = true;\n\t\tfor (;;) {\n\t\t\tchar ca = *a;\n\t\t\tchar cb = *b;\n\t\t\tif (ca != cb) { match = false; break; }\n\t\t\tif (ca == 0) break;\n\t\t\t++a; ++b;\n\t\t}\n\t\tif (match)\n\t\t\treturn t->m_values[e->m_index];\n\t}\n\treturn 0;\n}\n"
-}

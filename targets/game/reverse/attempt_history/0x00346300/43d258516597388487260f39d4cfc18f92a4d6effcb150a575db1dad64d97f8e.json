@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "43d258516597388487260f39d4cfc18f92a4d6effcb150a575db1dad64d97f8e",
-  "symbol": "?dispatchByKind@@YG_NPAURva00346300Item@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?dispatchByKind@@YG_NPAURva00346300Item@@@Z\n// partial score=0.85 date=2026-09-06\nstruct Rva00346300Item { int m_0; unsigned int m_kind; };\nstruct Rva00346300Handler {\n\tvirtual void s0(); virtual void s1(); virtual void s2(); virtual void s3(); virtual void s4(); virtual void s5();\n\tvirtual void s6(); virtual void s7(); virtual void s8();\n\tvirtual bool handle(Rva00346300Item* item);\n};\nextern Rva00346300Handler* Rva00346300TheHandler;\nbool __stdcall Rva00346300Kind1(Rva00346300Item* item);\nbool __stdcall Rva00346300Kind2(Rva00346300Item* item);\nbool __stdcall Rva00346300Kind4(Rva00346300Item* item);\nbool __stdcall dispatchByKind(Rva00346300Item* item)\n{\n\tswitch (item->m_kind) {\n\tcase 0:\n\t\treturn false;\n\tcase 1:\n\t\treturn Rva00346300Kind1(item);\n\tcase 2:\n\t\treturn Rva00346300Kind2(item);\n\tcase 3:\n\t\treturn true;\n\tcase 4:\n\t\treturn Rva00346300Kind4(item);\n\tdefault:\n\t\treturn Rva00346300TheHandler->handle(item);\n\t}\n}\n"
-}

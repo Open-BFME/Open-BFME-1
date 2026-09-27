@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "05a4670f7f0ee2e36ae7d90fc5cbc2d37e71864e3248751e08a27ff0d09f6a74",
-  "symbol": "?link@Gen0060BB60@@QAEXPAUGen0060BB60Node@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.86,
-  "source": "// ?link@Gen0060BB60@@QAEXPAUGen0060BB60Node@@@Z\r\n// partial score=0.86 date=2026-09-02\r\n// cl: /DNDEBUG /MD /EHsc\r\n\r\nclass Gen0060BB60Owner;\r\n\r\nstruct Gen0060BB60Node\r\n{\r\n\tGen0060BB60Owner *m_owner;\r\n\tGen0060BB60Node *m_prev;\r\n\tGen0060BB60Node *m_next;\r\n};\r\n\r\nclass Gen0060BB60Owner\r\n{\r\nprivate:\r\n\tchar m_pad00[0x98];\r\n\tGen0060BB60Node *m_head;\r\n\tGen0060BB60Node *m_tail;\r\n\r\n\tfriend class Gen0060BB60;\r\n};\r\n\r\nclass Gen0060BB60\r\n{\r\npublic:\r\n\tvoid link(Gen0060BB60Node *node);\r\n\r\nprivate:\r\n\tchar m_pad00[0x160];\r\n\tGen0060BB60Owner *m_owner;\r\n};\r\n\r\n// ?link@Gen0060BB60@@QAEXPAUGen0060BB60Node@@@Z\r\nvoid Gen0060BB60::link(Gen0060BB60Node *node)\r\n{\r\n\tGen0060BB60Owner *owner = m_owner;\r\n\t{\r\n\t\tGen0060BB60Node * volatile unused = 0;\r\n\t}\r\n\tnode->m_owner = owner;\r\n\tif (owner != 0)\r\n\t{\r\n\t\tnode->m_prev = owner->m_tail;\r\n\t\tnode->m_next = 0;\r\n\t\towner->m_tail = node;\r\n\t\tif (node->m_prev != 0)\r\n\t\t\tnode->m_prev->m_next = node;\r\n\t\telse\r\n\t\t\towner->m_head = node;\r\n\t}\r\n\telse\r\n\t{\r\n\t\tnode->m_next = 0;\r\n\t\tnode->m_prev = 0;\r\n\t}\r\n}\r\n"
-}

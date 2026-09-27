@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "cdfb821249584b5cda14d3e895aea61f037c21d2b734971bc9da96fede7e9837",
-  "symbol": "?bfmeWriteXZ@@YAPAVStreamWriter@@PAV1@PAUBfmeVecXZ@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.98,
-  "source": "// ?bfmeWriteXZ@@YAPAVStreamWriter@@PAV1@PAUBfmeVecXZ@@@Z\n// partial score=0.98 date=2026-09-08\n// pin needed: ?bfmePutXZ@StreamWriter@@QAEXH@Z,0x0002408C\nclass StreamWriter\n{\npublic:\n\tvoid bfmePutXZ(int ch);\n};\n\nstruct BfmeVecXZ\n{\n\tunsigned char m_bfmeHeadXZ[4];\n\tfloat m_bfme04XZ;\n\tfloat m_bfme08XZ;\n};\n\nStreamWriter *formatReal(StreamWriter *w, double v);\n\nStreamWriter *bfmeWriteXZ(StreamWriter *w, BfmeVecXZ *v)\n{\n\tfloat x = v->m_bfme04XZ;\n\tfloat y = v->m_bfme08XZ;\n\tStreamWriter *out;\n\n\tout = formatReal(w, x);\n\tout->bfmePutXZ(0x20);\n\tformatReal(out, y);\n\n\treturn w;\n}\n"
-}

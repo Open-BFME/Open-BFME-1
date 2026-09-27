@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "e3284f8357e52e1c1697eb5aed7d58c19f0b059fdd2d5e2d806f4ab661fd36c1",
-  "symbol": "?d_00571df0@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?d_00571df0@@YAXXZ\n// partial score=0.85 date=2026-09-07\n// 70 bytes against retail's 76; structure is settled. A flag guard, a\n// two-byte \"0\" written through the buffer (a single word store, so the source\n// is a 16-bit store or an inlined one-char strcpy), an empty-range test, an\n// unsigned bound check against (end - begin) over 8-byte pairs, then sprintf\n// through the dllimport pointer with g_aptPalantirNumberFormat.\n// Residue: retail keeps the buffer parameter in edx for the whole body (no\n// call intervenes so a scratch register is safe) and uses esi only for the\n// range end; MSVC parks the buffer in esi and pushes it at the top, which\n// also moves the shrink-wrapped exit.\nextern \"C\" __declspec(dllimport) int __cdecl sprintf(char *buffer, const char *format, ...);\n\nextern char g_aptPalantirNumberFormat[];\n\nclass BfmePairCY\n{\npublic:\n\tint m_bfmeFirstCY;\n\tint m_bfmeSecondCY;\n};\n\nclass BfmeOwnCY\n{\npublic:\n\tvoid bfmeFormatCY(int index, char *buffer, char flag);\n\n\tunsigned char m_bfmeHeadCY[0x264];\n\tBfmePairCY *m_bfmeBeginCY;\n\tBfmePairCY *m_bfmeEndCY;\n};\n\nvoid BfmeOwnCY::bfmeFormatCY(int index, char *buffer, char flag)\n{\n\tif (flag)\n\t\treturn;\n\n\t*(unsigned short *)buffer = 0x30;\n\n\tif (m_bfmeBeginCY == m_bfmeEndCY)\n\t\treturn;\n\n\tif ((unsigned int)index >= (unsigned int)(m_bfmeEndCY - m_bfmeBeginCY))\n\t\treturn;\n\n\tsprintf(buffer, g_aptPalantirNumberFormat, m_bfmeBeginCY[index].m_bfmeFirstCY);\n}\n"
-}

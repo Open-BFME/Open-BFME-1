@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "576ca67c6de2ce40676b6bcd728a7f45aaec4078d7911a0584030fa8b945944b",
-  "symbol": "?d_004945e0@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.98,
-  "source": "// ?d_004945e0@@YAXXZ\n// partial score=0.98 date=2026-09-08\nextern \"C\" void *bfmeVftEAJ[];\n\nclass SubsystemInterface\n{\npublic:\n\tSubsystemInterface();\n\n\tvoid *volatile m_bfmeVftEAJ;\n\tint m_bfmeBaseEAJ;\n};\n\nclass BfmeOwnedEAJ : public SubsystemInterface\n{\npublic:\n\tBfmeOwnedEAJ(void *param);\n\n\tint m_bfmeAEAJ;\n\tint m_bfmeBEAJ;\n\tint m_bfmeCEAJ;\n\tint m_bfmeDEAJ;\n\tint m_bfmeEEAJ;\n\tint m_bfmeFEAJ;\n\tchar m_bfmeFlagsEAJ;\n\tunsigned char m_bfmePadEAJ[3];\n\tint m_bfmeGEAJ;\n\tint m_bfmeHEAJ;\n\tint m_bfmeIEAJ;\n\tvoid *m_bfmeParamEAJ;\n\tint m_bfmeJEAJ;\n};\n\nBfmeOwnedEAJ::BfmeOwnedEAJ(void *param)\n{\n\tm_bfmeFlagsEAJ = (char)(*(volatile char *)&m_bfmeFlagsEAJ & 0xf8);\n\n\tm_bfmeAEAJ = 0;\n\tm_bfmeFEAJ = 0;\n\tm_bfmeHEAJ = 0;\n\tm_bfmeIEAJ = 0;\n\tm_bfmeJEAJ = 0;\n\tm_bfmeBEAJ = 0;\n\tm_bfmeCEAJ = 0;\n\tm_bfmeDEAJ = 0;\n\tm_bfmeEEAJ = 0;\n\n\tm_bfmeVftEAJ = bfmeVftEAJ;\n\n\tm_bfmeGEAJ = -1;\n\tm_bfmeParamEAJ = param;\n}\n"
-}

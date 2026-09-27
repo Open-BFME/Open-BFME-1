@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "68485516d2388c505f442d92674e9e765d96784c5117d2845c1d8254695192fc",
-  "symbol": "?d_004186e0@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?d_004186e0@@YAXXZ\n// partial score=0.9 date=2026-09-08\nstruct BfmeQueryD\n{\n\tint m_bfmeAD;\n\tint m_bfmeBD;\n\tint m_bfmeCD;\n\tint m_bfmeDD;\n\tint m_bfmeED;\n\tint m_bfmeFD;\n};\n\nstruct Rva00367E30Logic\n{\n\tunsigned char m_bfmeHeadD[0x114];\n\tchar m_bfmeFlagD;\n};\n\nextern Rva00367E30Logic *TheBfmeGameLogic;\n\nchar __stdcall bfmeTestD(BfmeQueryD *query);\n\nclass BfmeDrawableD\n{\npublic:\n\tvoid bfmeSetIndicatorD(unsigned int color);\n\tvoid bfmeApplyD(bool flag);\n\n\tunsigned char m_bfmeHeadD[0xfc];\n\tvoid *m_bfmeThingD;\n\tunsigned char m_bfmePadD[0x2c0];\n\tunsigned int m_bfmeColorD;\n};\n\nvoid BfmeDrawableD::bfmeSetIndicatorD(unsigned int color)\n{\n\tm_bfmeColorD = color;\n\n\tbool flag;\n\n\tif (TheBfmeGameLogic->m_bfmeFlagD != 0)\n\t{\n\t\tflag = true;\n\t}\n\telse if (m_bfmeThingD == 0)\n\t{\n\t\tflag = false;\n\t}\n\telse\n\t{\n\t\tBfmeQueryD query;\n\n\t\tquery.m_bfmeAD = 0;\n\t\tquery.m_bfmeBD = 0;\n\t\tquery.m_bfmeCD = 0;\n\t\tquery.m_bfmeDD = 0x800000;\n\t\tquery.m_bfmeED = 0;\n\t\tquery.m_bfmeFD = 0x80000;\n\n\t\tflag = bfmeTestD(&query) != 0;\n\t}\n\n\tbfmeApplyD(flag);\n}\n"
-}

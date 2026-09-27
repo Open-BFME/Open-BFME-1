@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "dbe9617451f14aea79f1493b025bfcebe570082b3ed6946fbe88d8f25ebf8cdc",
-  "symbol": "?d_0035ac30@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.97,
-  "source": "// ?d_0035ac30@@YAXXZ\n// partial score=0.97 date=2026-09-08\nclass BfmeNodeEAQ\n{\npublic:\n\t~BfmeNodeEAQ();\n\n\tBfmeNodeEAQ *m_bfmeNextEAQ;\n};\n\nclass BfmeElemEAQ\n{\npublic:\n\t~BfmeElemEAQ();\n\n\tunsigned char m_bfmeHeadEAQ[0x10];\n\tBfmeNodeEAQ *m_bfmeListEAQ;\n};\n\nclass BfmeVecEAQ\n{\npublic:\n\tBfmeElemEAQ *m_bfmeBeginEAQ;\n\tBfmeElemEAQ *m_bfmeEndEAQ;\n};\n\nvoid bfmeClearEAQ(BfmeVecEAQ *v)\n{\n\twhile (v->m_bfmeBeginEAQ != v->m_bfmeEndEAQ)\n\t{\n\t\tBfmeElemEAQ *e = v->m_bfmeEndEAQ - 1;\n\n\t\twhile (e->m_bfmeListEAQ != 0)\n\t\t{\n\t\t\tBfmeNodeEAQ *n = e->m_bfmeListEAQ;\n\n\t\t\tif (n != 0)\n\t\t\t{\n\t\t\t\te->m_bfmeListEAQ = n->m_bfmeNextEAQ;\n\n\t\t\t\tdelete n;\n\t\t\t}\n\t\t}\n\n\t\tv->m_bfmeEndEAQ = v->m_bfmeEndEAQ - 1;\n\n\t\tv->m_bfmeEndEAQ->~BfmeElemEAQ();\n\t}\n}\n"
-}

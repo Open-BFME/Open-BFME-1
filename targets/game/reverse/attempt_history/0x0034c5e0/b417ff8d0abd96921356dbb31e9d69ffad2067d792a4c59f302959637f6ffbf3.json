@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "b417ff8d0abd96921356dbb31e9d69ffad2067d792a4c59f302959637f6ffbf3",
-  "symbol": "??0BfmeOwnCB@@QAE@XZ (identity unknown)",
-  "score_kind": "author-estimate",
-  "score": 0.88,
-  "source": "// ??0BfmeOwnCB@@QAE@XZ (identity unknown)\n// partial score=0.88 date=2026-09-06\n// 74/84 at exact size. This is a CONSTRUCTOR, not a destructor: it returns\n// this and its unwind states count UP (0 then 1) as sub-objects are built.\n// Everything is modelled -- the pinned vftable, a 4-byte member at +4 whose\n// ctor zeroes it, an 8-byte member at +8 whose ctor writes {1, 0}, and a body\n// call to releaseBuffer on the member at +4.\n// Residue: retail writes each unwind state BEFORE the member it protects and\n// stores `this` into the frame slot first; MSVC writes the state AFTER the\n// member is built and sinks the this-slot store past the vftable store. Tried\n// an explicit member-init list on the owner, init lists inside both members,\n// and throw() on both member ctors -- identical ten-line permutation each time.\nclass BfmeStrCB\n{\npublic:\n\tBfmeStrCB(void) throw() { m_bfmeDataCB = 0; }\n\t~BfmeStrCB();\n\n\tvoid bfmeClearCB(void);\n\n\tint m_bfmeDataCB;\n};\n\nclass BfmeFlagsCB\n{\npublic:\n\tBfmeFlagsCB(void) throw()\n\t{\n\t\tm_bfmeACB = 1;\n\t\tm_bfmeBCB = 0;\n\t}\n\t~BfmeFlagsCB();\n\n\tint m_bfmeACB;\n\tint m_bfmeBCB;\n};\n\nclass BfmeOwnCB\n{\npublic:\n\tBfmeOwnCB(void);\n\tvirtual void bfmePureCB(void) = 0;\n\n\tBfmeStrCB m_bfmeStrCB;\n\tBfmeFlagsCB m_bfmeFlagsCB;\n};\n\nBfmeOwnCB::BfmeOwnCB(void)\n{\n\tm_bfmeStrCB.bfmeClearCB();\n}\n"
-}

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "6d207be6d211e7e00b9c29af2d0ac62f8293f17287d045913157a383e46b622c",
-  "symbol": "?bfmeBlendRowsFB@@YAXPBEPAEHHHHPBT__m128i@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.7,
-  "source": "// ?bfmeBlendRowsFB@@YAXPBEPAEHHHHPBT__m128i@@@Z\n// partial score=0.70 date=2026-09-08\n#include <emmintrin.h>\n\nextern \"C\" const __m128i g_bfmeRoundFB;\n\nvoid bfmeBlendRowsFB(const unsigned char *src, unsigned char *dst, int srcPitch,\n\tint unused, int rows, int dstPitch, const __m128i *w)\n{\n\t__m128i w0 = w[0];\n\t__m128i w1 = w[1];\n\t__m128i zero = _mm_setzero_si128();\n\n\tdo\n\t{\n\t\t_mm_storeu_si128((__m128i *)dst,\n\t\t\t_mm_srai_epi16(\n\t\t\t\t_mm_add_epi16(\n\t\t\t\t\t_mm_add_epi16(\n\t\t\t\t\t\t_mm_mullo_epi16(_mm_unpacklo_epi8(_mm_loadu_si128((const __m128i *)src), zero), w0),\n\t\t\t\t\t\t_mm_mullo_epi16(_mm_unpacklo_epi8(_mm_loadu_si128((const __m128i *)(src + srcPitch)), zero), w1)),\n\t\t\t\t\tg_bfmeRoundFB),\n\t\t\t\t7));\n\n\t\tsrc += srcPitch;\n\t\tdst += dstPitch;\n\t}\n\twhile (--rows);\n}\n"
-}

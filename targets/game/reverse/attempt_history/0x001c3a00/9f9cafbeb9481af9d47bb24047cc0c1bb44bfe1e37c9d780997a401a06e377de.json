@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "9f9cafbeb9481af9d47bb24047cc0c1bb44bfe1e37c9d780997a401a06e377de",
-  "symbol": "?getEntryOrDefault@Rva001C3A00Owner@@QAEPAURva001C3A00Entry@@H@Z",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?getEntryOrDefault@Rva001C3A00Owner@@QAEPAURva001C3A00Entry@@H@Z\n// partial score=0.9 date=2026-09-06\nstruct Rva001C3A00Entry { char m_body[0x5c]; };\nstruct Rva001C3A00Vector { Rva001C3A00Entry* m_begin; Rva001C3A00Entry* m_end; int size() const { return m_end - m_begin; } };\nstruct Rva001C3A00Owner {\n\tchar m_pad[0xac];\n\tRva001C3A00Entry m_default;\n\tchar m_pad2[0x10c - 0xac - 0x5c];\n\tRva001C3A00Vector* m_entries;\n\tRva001C3A00Entry* getEntryOrDefault(int index);\n};\nRva001C3A00Entry* Rva001C3A00Owner::getEntryOrDefault(int index)\n{\n\tif (index >= 0) {\n\t\tRva001C3A00Vector* v = m_entries;\n\t\tif ((unsigned int)index < (unsigned int)(v->m_end - v->m_begin))\n\t\t\treturn v->m_begin + index;\n\t}\n\treturn &m_default;\n}\n"
-}

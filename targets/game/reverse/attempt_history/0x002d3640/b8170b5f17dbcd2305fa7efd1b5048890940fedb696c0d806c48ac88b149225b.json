@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "b8170b5f17dbcd2305fa7efd1b5048890940fedb696c0d806c48ac88b149225b",
-  "symbol": "??0W3DOverlordTankDrawModuleData@@QAE@XZ",
-  "score_kind": "author-estimate",
-  "score": 0.93,
-  "source": "// ??0W3DOverlordTankDrawModuleData@@QAE@XZ\r\n// partial score=0.93 date=2026-08-31\r\n// cl: /DNDEBUG /MD /EHsc\r\n// Focused clean-C++ reconstruction of the retail BFME module-data layout.\r\n\r\nclass OTD_BaseModuleData\r\n{\r\npublic:\r\n\tOTD_BaseModuleData();\r\n\t~OTD_BaseModuleData();\r\n\r\nprivate:\r\n\tunsigned char m_data[0x68];\r\n};\r\n\r\nclass OTD_CleanupBase\r\n{\r\npublic:\r\n\tOTD_CleanupBase() {}\r\n\t~OTD_CleanupBase();\r\n};\r\n\r\nclass OTD_InnerData\r\n{\r\npublic:\r\n\tOTD_InnerData() : m_unknown00(0), m_enabled(true) {}\r\n\t~OTD_InnerData();\r\n\r\nprivate:\r\n\tunsigned int m_unknown00;\r\n\tbool m_enabled;\r\n\tunsigned char m_pad05[3];\r\n\tOTD_BaseModuleData m_baseData;\r\n};\r\n\r\nclass OTD_DieMuxData\r\n{\r\npublic:\r\n\tOTD_DieMuxData();\r\n\t~OTD_DieMuxData();\r\n};\r\n\r\nclass W3DOverlordTankDrawModuleData : public OTD_CleanupBase\r\n{\r\npublic:\r\n\tW3DOverlordTankDrawModuleData();\r\n\tvirtual void moduleDataAnchor();\r\n\r\nprivate:\r\n\tunsigned int m_unknown04;\r\n\tunsigned int m_unknown08;\r\n\tOTD_InnerData m_innerData;\r\n\tOTD_DieMuxData m_dieMuxData;\r\n};\r\n\r\nW3DOverlordTankDrawModuleData::W3DOverlordTankDrawModuleData()\r\n\t: m_unknown08(0)\r\n{\r\n}\r\n"
-}

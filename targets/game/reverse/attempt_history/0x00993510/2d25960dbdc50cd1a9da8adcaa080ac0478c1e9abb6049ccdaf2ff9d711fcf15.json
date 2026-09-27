@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "2d25960dbdc50cd1a9da8adcaa080ac0478c1e9abb6049ccdaf2ff9d711fcf15",
-  "symbol": "?d_00993510@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?d_00993510@@YAXXZ\n// partial score=0.85 date=2026-09-08\nstruct lua_State;\n\nextern \"C\" void *__cdecl lua_touserdata(lua_State *L, int index);\nextern \"C\" void __cdecl lua_settop(lua_State *L, int index);\nextern \"C\" const char *__cdecl luaL_check_lstr(lua_State *L, int narg, int *len);\n\n__declspec(dllimport) void *__cdecl bfmeFopenVIF(const char *name, const char *mode);\n\nint __cdecl bfmeAttachVIF(void *handle, int mode);\n\nint __cdecl bfmeLuaAppendVIF(lua_State *L)\n{\n\tvoid *handle = lua_touserdata(L, -1);\n\n\tlua_settop(L, -2);\n\n\tvoid *file = bfmeFopenVIF(luaL_check_lstr(L, 1, 0), \"a\");\n\n\treturn bfmeAttachVIF(handle, 1);\n}\n"
-}

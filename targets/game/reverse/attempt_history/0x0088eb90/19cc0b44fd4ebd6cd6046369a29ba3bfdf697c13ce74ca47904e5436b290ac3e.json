@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "19cc0b44fd4ebd6cd6046369a29ba3bfdf697c13ce74ca47904e5436b290ac3e",
-  "symbol": "?DebugReAllocMemory@@YAPAXPAXI@Z",
-  "score_kind": "author-estimate",
-  "score": 0.87,
-  "source": "// ?DebugReAllocMemory@@YAPAXPAXI@Z\n// partial score=0.87 date=2026-09-08\n// Probed with /D_INTERNAL: 174 bytes versus retail's 188. The allocator\n// control flow matches, but DCRASH_RELEASE expands to a different debug\n// call sequence and changes the branch offsets.\n\n#include \"_pch.h\"\n\nvoid *DebugReAllocMemory(void *oldPtr, unsigned newSize)\n{\n  if (!oldPtr)\n    return newSize ? DebugAllocMemory(newSize) : 0;\n\n  if (!newSize)\n  {\n    GlobalFree((HGLOBAL)oldPtr);\n    return 0;\n  }\n\n  HGLOBAL h = GlobalReAlloc((HGLOBAL)oldPtr, newSize, 0);\n  if (!h)\n  {\n    h = GlobalAlloc(GMEM_FIXED, newSize);\n    if (!h)\n      DCRASH_RELEASE(\"Debug mem realloc failed\");\n    unsigned oldSize = GlobalSize((HGLOBAL)oldPtr);\n    memcpy((void *)h, oldPtr, oldSize < newSize ? oldSize : newSize);\n    GlobalFree((HGLOBAL)oldPtr);\n  }\n\n  return (void *)h;\n}\n"
-}

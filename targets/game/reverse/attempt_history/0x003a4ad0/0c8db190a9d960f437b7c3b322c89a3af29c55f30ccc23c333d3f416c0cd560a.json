@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "0c8db190a9d960f437b7c3b322c89a3af29c55f30ccc23c333d3f416c0cd560a",
-  "symbol": "?registerAll@Rva003A4AD0Owner@@QAEXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?registerAll@Rva003A4AD0Owner@@QAEXXZ\n// partial score=0.9 date=2026-09-06\nstruct Rva003A4AD0Item { char m_pad[0xa4]; int m_key; };\nstruct Rva003A4AD0Game { char m_pad[0x168]; char m_slot[1]; void registerKey(int key, int flag); };\nextern Rva003A4AD0Game* g_bfmeGameCW;\nvoid __stdcall Rva003A4AD0Reset(void* slot, int a, int b);\nstruct Rva003A4AD0Owner {\n\tchar m_pad[0x48];\n\tRva003A4AD0Item** m_begin;\n\tRva003A4AD0Item** m_end;\n\tunsigned int size() const { return m_end - m_begin; }\n\tvoid registerAll();\n};\nvoid Rva003A4AD0Owner::registerAll()\n{\n\tRva003A4AD0Reset(g_bfmeGameCW->m_slot, 0, 0);\n\tfor (unsigned int i = 0; i < size(); ++i)\n\t\tg_bfmeGameCW->registerKey(m_begin[i]->m_key, 0);\n}\n"
-}

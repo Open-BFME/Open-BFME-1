@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "4b4d62f709288267068610c0c8e0c718a5a2b8bb5eba34fae579f7906e58e38b",
-  "symbol": "?bfmeGetNameXX@BfmeHolderXX@@QAE?AVBFMERetailAsciiString@@H@Z",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?bfmeGetNameXX@BfmeHolderXX@@QAE?AVBFMERetailAsciiString@@H@Z\n// partial score=0.9 date=2026-09-08\nclass BFMERetailAsciiString\n{\npublic:\n\tBFMERetailAsciiString() { m_data = 0; }\n\tBFMERetailAsciiString(const char *s);\n\t~BFMERetailAsciiString();\n\nprivate:\n\tvoid *m_data;\n};\n\nclass BfmeItemXX\n{\npublic:\n\tvirtual void bfmeVt0XX();\n\tvirtual void bfmeVt1XX();\n\tvirtual const char *bfmeNameXX();\n};\n\nclass BfmeElemXX\n{\npublic:\n\tBfmeItemXX *m_bfmeItemXX;\n\tunsigned char m_bfmeGapXX[0x18];\n};\n\nclass BfmeOwnerXX\n{\npublic:\n\tvoid bfmeRefreshXX();\n};\n\nextern int g_Va012F8064;\n\nclass BfmeHolderXX\n{\npublic:\n\tBFMERetailAsciiString bfmeGetNameXX(int i);\n\n\tunsigned char m_bfmeGapXX[0x90];\n\tint m_bfmeStampXX;\n\tunsigned char m_bfmeGap2XX[0x3c];\n\tBfmeElemXX m_bfmeArrXX[3];\n};\n\nBFMERetailAsciiString BfmeHolderXX::bfmeGetNameXX(int i)\n{\n\tBfmeOwnerXX *owner = (BfmeOwnerXX *)((char *)this - 0xc);\n\n\tif (g_Va012F8064 != m_bfmeStampXX)\n\t\towner->bfmeRefreshXX();\n\n\tif (i >= 0 && i < 3)\n\t{\n\t\tif (m_bfmeArrXX[i].m_bfmeItemXX != 0)\n\t\t\treturn BFMERetailAsciiString(m_bfmeArrXX[i].m_bfmeItemXX->bfmeNameXX());\n\t}\n\n\treturn BFMERetailAsciiString();\n}\n"
-}

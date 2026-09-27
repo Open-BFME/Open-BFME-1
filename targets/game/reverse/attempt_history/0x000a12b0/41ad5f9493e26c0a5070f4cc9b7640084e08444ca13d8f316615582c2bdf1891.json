@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "41ad5f9493e26c0a5070f4cc9b7640084e08444ca13d8f316615582c2bdf1891",
-  "symbol": "?bfmeTakeABC@BfmeHolderABC@@QAEXUBfmeIterABB@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.84,
-  "source": "// ?bfmeTakeABC@BfmeHolderABC@@QAEXUBfmeIterABB@@@Z\n// partial score=0.84 date=2026-09-08\nstruct BfmeNodeABB\n{\n\tunsigned char m_bfmeHeadABB[0x14];\n\tvoid *m_bfme14ABB;\n};\n\nstruct BfmeIterABB\n{\n\tBfmeNodeABB *m_bfmeNodeABB;\n};\n\nclass BfmeSubABB\n{\npublic:\n\tvoid bfmeRangeABB(BfmeIterABB *first, BfmeIterABB *last);\n\n\tBfmeNodeABB *m_bfmeHeadABB;\n};\n\nBfmeNodeABB *__stdcall bfmeDiagABB(BfmeIterABB *it, const void *desc);\n\nextern void *const g_bfmeDescABB;\n\nclass BfmeHolderABC\n{\npublic:\n\tvoid bfmeTakeABC(BfmeIterABB last);\n\n\tunsigned char m_bfmeHeadHABC[4];\n\tBfmeSubABB m_bfme04ABC;\n\tunsigned char m_bfmeGapABC[0x18 - 8];\n\tBfmeNodeABB *m_bfme18ABC;\n};\n\nvoid BfmeHolderABC::bfmeTakeABC(BfmeIterABB last)\n{\n\tBfmeIterABB first;\n\n\tm_bfme04ABC.bfmeRangeABB(&first, &last);\n\n\tif (first.m_bfmeNodeABB == m_bfme04ABC.m_bfmeHeadABB)\n\t{\n\t\tlast.m_bfmeNodeABB = (BfmeNodeABB *)0xdead0003;\n\t\tbfmeDiagABB(&last, &g_bfmeDescABB);\n\t}\n\n\tm_bfme18ABC = last.m_bfmeNodeABB;\n}\n"
-}

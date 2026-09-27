@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "15354881a1479beb8973ee9a3105ea2b4fddd9a7fb9d34d63dde5c4f16dea1a5",
-  "symbol": "?rva0087F180ParseHeight@@YAXPAVINI@@PAXPAVRva0087F180Owner@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?rva0087F180ParseHeight@@YAXPAVINI@@PAXPAVRva0087F180Owner@@@Z\n// partial score=0.85 date=2026-09-06\n// ?rva0087F180ParseHeight@@YAXPAVINI@@PAXPAVRva0087F180Owner@@@Z\n// Address-derived: an INI-style field parser. If the owner's dynamic array\n// (36-byte elements, [m_arrStart, m_arrEnd)) is non-empty, parses a real\n// token from the INI reader (arg0) and stores it into the last element's\n// offset-4 field (m_arrEnd - 0x20), then calls the already-named callee at\n// 0x0087EE60 (thiscall, no args) and bfmeApplyEB on the owner.\nclass INI\n{\npublic:\n\tconst char *getNextToken(const char *seps = 0);\n\tstatic float scanReal(const char *token);\n};\n\nclass BfmeObjEB;\nextern void bfmeApplyEB(BfmeObjEB *obj);\n\nextern void d_0087ee60();\n\nclass Rva0087F180Owner\n{\npublic:\n\tunsigned char m_pad0[0x2c];\n\tchar *m_arrStart;\n\tchar *m_arrEnd;\n};\n\nvoid rva0087F180ParseHeight(INI *ini, void *store, Rva0087F180Owner *owner)\n{\n\tint count = (int)(owner->m_arrEnd - owner->m_arrStart) / 36;\n\tif (count != 0)\n\t{\n\t\tconst char *token = ini->getNextToken(0);\n\t\tfloat value = INI::scanReal(token);\n\t\t*(float *)(owner->m_arrEnd - 0x20) = value;\n\t}\n\n\ttypedef void (Rva0087F180Owner::*BoundsFn)();\n\tunion { void (*raw)(); BoundsFn member; } fn;\n\tfn.raw = d_0087ee60;\n\t(owner->*fn.member)();\n\n\tbfmeApplyEB((BfmeObjEB *)owner);\n}\n"
-}

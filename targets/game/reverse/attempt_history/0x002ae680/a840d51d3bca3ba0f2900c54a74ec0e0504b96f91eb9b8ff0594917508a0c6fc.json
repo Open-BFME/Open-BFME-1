@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "a840d51d3bca3ba0f2900c54a74ec0e0504b96f91eb9b8ff0594917508a0c6fc",
-  "symbol": "?getCollapseHeight@StructureCollapseRetailLayout@@QAEMXZ",
-  "score_kind": "author-estimate",
-  "score": 0.98,
-  "source": "// ?getCollapseHeight@StructureCollapseRetailLayout@@QAEMXZ\n// partial score=0.98 date=2026-09-08\nclass BfmeGeomTH\n{\npublic:\n\tfloat bfmeMaxHeightTH() const;\n};\n\nclass BfmeTmplTH\n{\npublic:\n\tconst BfmeTmplTH *bfmeFinalTH() const;\n\n\tconst BfmeTmplTH *bfmeResolveTH() const\n\t{\n\t\tif (this == 0)\n\t\t\treturn 0;\n\n\t\tif (m_bfmeOverTH == 0)\n\t\t\treturn this;\n\n\t\treturn m_bfmeOverTH->bfmeFinalTH();\n\t}\n\n\tvoid *m_bfmeVfTH;\n\tBfmeTmplTH *m_bfmeOverTH;\n\tunsigned char m_bfmePadTH[0x58];\n\tBfmeGeomTH m_bfmeGeomTH;\n};\n\nclass BfmeOwnerTH\n{\npublic:\n\tvoid *m_bfmeHeadTH;\n\tBfmeTmplTH *m_bfmeTmplTH;\n};\n\nclass BfmeObjTH\n{\npublic:\n\tunsigned char m_bfmeHeadTH[0xf4];\n\tfloat m_bfmeHeightTH;\n};\n\nclass BfmeHolderTH\n{\npublic:\n\tfloat bfmeCollapseHeightTH() const;\n\n\tvoid *m_bfmeVfTH;\n\tBfmeObjTH *m_bfmeObjTH;\n\tBfmeOwnerTH *m_bfmeOwnerTH;\n};\n\n__forceinline const BfmeTmplTH *bfmeResolveTH(BfmeTmplTH *volatile *pp)\n{\n\tBfmeTmplTH *o = *pp;\n\n\tif (o == 0)\n\t\treturn 0;\n\n\tif (o->m_bfmeOverTH == 0)\n\t\treturn o;\n\n\treturn o->m_bfmeOverTH->bfmeFinalTH();\n}\n\nfloat BfmeHolderTH::bfmeCollapseHeightTH() const\n{\n\tBfmeObjTH *o = m_bfmeObjTH;\n\n\tif (bfmeResolveTH((BfmeTmplTH *volatile *)&m_bfmeOwnerTH->m_bfmeTmplTH)->m_bfmeGeomTH.bfmeMaxHeightTH() < o->m_bfmeHeightTH)\n\t\treturn m_bfmeObjTH->m_bfmeHeightTH;\n\n\treturn bfmeResolveTH((BfmeTmplTH *volatile *)&m_bfmeOwnerTH->m_bfmeTmplTH)->m_bfmeGeomTH.bfmeMaxHeightTH();\n}\n"
-}

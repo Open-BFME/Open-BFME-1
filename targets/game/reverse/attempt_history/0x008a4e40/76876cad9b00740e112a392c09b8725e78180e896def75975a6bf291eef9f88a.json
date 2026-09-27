@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "76876cad9b00740e112a392c09b8725e78180e896def75975a6bf291eef9f88a",
-  "symbol": "?aptRound@@YAPAVAptValue@@PAXH@Z",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?aptRound@@YAPAVAptValue@@PAXH@Z\n// partial score=0.9 date=2026-09-06\n// cl: /DNDEBUG /MD /EHsc\nclass AptValue { public: float toNumber(); };\nextern AptValue* g_bfmeFallbackDB;\nextern AptValue** g_bfmeArr1233;\nextern int g_bfmeCount1233;\nextern const float BfmeZeroRange;\nextern const float g_bfmeK1253;\nAptValue* __cdecl Rva008B6D70MakeValue(int value);\nAptValue* aptRound(void* self, int argc)\n{\n\tif (argc <= 0)\n\t\treturn g_bfmeFallbackDB;\n\tfloat d = g_bfmeArr1233[g_bfmeCount1233 - 1]->toNumber();\n\tif (d > BfmeZeroRange)\n\t\treturn Rva008B6D70MakeValue((int)(d + g_bfmeK1253));\n\treturn Rva008B6D70MakeValue((int)(d - g_bfmeK1253));\n}\n"
-}

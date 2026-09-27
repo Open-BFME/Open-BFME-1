@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "fdd3c74626bb7c657e426791e217e2fa60e627ae013eaedcf6f1b30bd55ba2d8",
-  "symbol": "??1Rva007EB2C0Object@@UAE@XZ",
-  "score_kind": "author-estimate",
-  "score": 0.88,
-  "source": "// ??1Rva007EB2C0Object@@UAE@XZ\n// partial score=0.88 date=2026-09-06\n// ??1Rva007EB2C0Object@@UAE@XZ\n\nclass T_007ea120\n{\npublic:\n\tvirtual void vslot0(int value);\n\tvoid m(void);\n};\n\nstruct Rva0130A588State\n{\n\tT_007ea120 *m_obj;\n\tchar m_flagC;\n\tchar m_flagD;\n};\n\nextern Rva0130A588State g_Va0130A588;\n\nextern void Rva007EB830Release(void);\nextern void Rva007F0060(void);\n\nclass Rva007EB2C0Object\n{\npublic:\n\tvirtual ~Rva007EB2C0Object();\n};\n\nRva007EB2C0Object::~Rva007EB2C0Object()\n{\n\tif (g_Va0130A588.m_obj)\n\t\tg_Va0130A588.m_obj->m();\n\n\tif (g_Va0130A588.m_obj)\n\t\tg_Va0130A588.m_obj->vslot0(1);\n\n\tg_Va0130A588.m_obj = 0;\n\n\tif (g_Va0130A588.m_flagD)\n\t\tRva007EB830Release();\n\n\tif (g_Va0130A588.m_flagC)\n\t\tRva007F0060();\n}\n"
-}

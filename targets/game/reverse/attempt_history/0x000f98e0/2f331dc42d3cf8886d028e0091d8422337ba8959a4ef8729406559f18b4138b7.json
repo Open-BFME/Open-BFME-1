@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "2f331dc42d3cf8886d028e0091d8422337ba8959a4ef8729406559f18b4138b7",
-  "symbol": "?bfmeCall942D@BfmeSub942D@@QAEPAXPAX@Z",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?bfmeCall942D@BfmeSub942D@@QAEPAXPAX@Z\n// partial score=0.9 date=2026-09-07\nclass BfmeMgrF1D\n{\npublic:\n\tvoid *registerObj(void *field);\n};\n\nextern BfmeMgrF1D *g_mgr12EF1D8;\n\nclass BfmeSub942D\n{\npublic:\n\tvoid *bfmeCall942D(void *a);\n\nprivate:\n\tstruct BfmeElem942D\n\t{\n\t\tchar m_bfmePad942D[0x60];\n\t};\n\n\tchar m_bfmePad942D[4];\n\tBfmeElem942D *volatile m_bfmeBegin942D;\n\tBfmeElem942D *volatile m_bfmeEnd942D;\n};\n\nvoid *BfmeSub942D::bfmeCall942D(void *a)\n{\n\tint index = (int)a;\n\tif ((unsigned int)index >= (unsigned int)(m_bfmeEnd942D - m_bfmeBegin942D))\n\t\treturn 0;\n\treturn g_mgr12EF1D8->registerObj(m_bfmeBegin942D + index);\n}\n"
-}

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "f1b251dc118b814c22efe01e82fc7d8274dfa7ff16634156dccef03a1fc00fbe",
-  "symbol": "?notifyFlagged@Rva003BD960Owner@@QAEXH@Z",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?notifyFlagged@Rva003BD960Owner@@QAEXH@Z\n// partial score=0.9 date=2026-09-06\nstruct Rva003BD960Item { char m_pad[0x1e]; bool m_flag; void notify(int value); };\nstruct Rva003BD960Owner {\n\tchar m_pad[0xc];\n\tRva003BD960Item** m_begin;\n\tRva003BD960Item** m_end;\n\tunsigned int size() const { return m_end - m_begin; }\n\tvoid notifyFlagged(int value);\n};\nvoid Rva003BD960Owner::notifyFlagged(int value)\n{\n\tfor (unsigned int i = 0; i < size(); ++i) {\n\t\tif (m_begin[i]->m_flag)\n\t\t\tm_begin[i]->notify(value);\n\t}\n}\n"
-}

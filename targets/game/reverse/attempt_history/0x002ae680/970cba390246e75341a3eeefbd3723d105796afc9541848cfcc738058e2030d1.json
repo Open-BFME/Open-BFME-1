@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "970cba390246e75341a3eeefbd3723d105796afc9541848cfcc738058e2030d1",
-  "symbol": "?d_002ae680@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.8,
-  "source": "// ?d_002ae680@@YAXXZ\n// partial score=0.8 date=2026-09-08\nclass GeometryInfo\n{\npublic:\n\tfloat getMaxHeightAbovePosition() const;\n\n\tunsigned char m_bfmeBodySC[0x10];\n};\n\nclass BfmeSubSC;\nclass BfmeThingSC;\n\nBfmeThingSC *__fastcall bfmeResolveSC(BfmeSubSC *sub);\n\nclass BfmeThingSC\n{\npublic:\n\tint m_bfmeHeadSC;\n\tBfmeSubSC *m_bfmeSubSC;\n\tunsigned char m_bfmePadSC[0x58];\n\tGeometryInfo m_bfmeGeomSC;\n};\n\nclass BfmeListSC\n{\npublic:\n\tint m_bfmeHeadSC;\n\tBfmeThingSC *m_bfmeThingSC;\n};\n\nclass BfmeOwnerSC\n{\npublic:\n\tunsigned char m_bfmeHeadSC[0xf4];\n\tfloat m_bfmeHeightSC;\n};\n\nclass BfmeHostSC\n{\npublic:\n\tfloat bfmeCollapseHeightSC();\n\n\tint m_bfmeHeadSC;\n\tBfmeOwnerSC *m_bfmeOwnerSC;\n\tBfmeListSC *m_bfmeListSC;\n};\n\n__forceinline float bfmeGeomHeightSC(BfmeListSC *list)\n{\n\tBfmeThingSC *t = list->m_bfmeThingSC;\n\n\tif (t != 0 && t->m_bfmeSubSC != 0)\n\t\tt = bfmeResolveSC(t->m_bfmeSubSC);\n\n\treturn t->m_bfmeGeomSC.getMaxHeightAbovePosition();\n}\n\nfloat BfmeHostSC::bfmeCollapseHeightSC()\n{\n\tif (bfmeGeomHeightSC(m_bfmeListSC) < m_bfmeOwnerSC->m_bfmeHeightSC)\n\t\treturn m_bfmeOwnerSC->m_bfmeHeightSC;\n\n\treturn bfmeGeomHeightSC(m_bfmeListSC);\n}\n"
-}

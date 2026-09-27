@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "9521935dddcafe7c2c76bd1449462a20ed0d941c73a65bd8e5cbff206db25a76",
-  "symbol": "??0BfmeOwnCU@@QAE@XZ (identity unknown)",
-  "score_kind": "author-estimate",
-  "score": 0.88,
-  "source": "// ??0BfmeOwnCU@@QAE@XZ (identity unknown)\n// partial score=0.88 date=2026-09-07\n// 89 bytes against retail's 87. Structure recovered: a destructible head\n// member of three zeroed ints, a self-pointer at +0xc, and a two-element\n// array member at +0x10 constructed through the vector-constructor iterator\n// ??_L@YGXPAXIHP6EX0@Z1@Z with size 4 and count 2.\n// The head member's destructor is what creates the SEH frame -- without it\n// MSVC emits 45 bytes and no frame at all (same diagnostic as 0x00754F70).\n// Residue: retail reuses the zeroing eax for `lea eax,[esi+0x10]` once the\n// three zero stores are done, so it needs no extra register; MSVC keeps eax\n// live and saves edi for the array address, costing the two bytes.\nclass BfmeElemCU\n{\npublic:\n\tBfmeElemCU(void);\n\t~BfmeElemCU();\n\n\tint m_bfmeDataCU;\n};\n\nclass BfmeHeadCU\n{\npublic:\n\tBfmeHeadCU(void)\n\t{\n\t\tm_bfmeACU = 0;\n\t\tm_bfmeBCU = 0;\n\t\tm_bfmeCCU = 0;\n\t}\n\t~BfmeHeadCU();\n\n\tint m_bfmeACU;\n\tint m_bfmeBCU;\n\tint m_bfmeCCU;\n};\n\nclass BfmeOwnCU\n{\npublic:\n\tBfmeOwnCU(void);\n\n\tBfmeHeadCU m_bfmeHeadCU;\n\tBfmeElemCU *m_bfmeItemsCU;\n\tBfmeElemCU m_bfmeArrayCU[2];\n};\n\nBfmeOwnCU::BfmeOwnCU(void)\n{\n\tm_bfmeItemsCU = m_bfmeArrayCU;\n}\n"
-}

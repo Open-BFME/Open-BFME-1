@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "a26ed2e3af5189f62519d405741f9265c28b565da1d65cff77c898783baf7a41",
-  "symbol": "?erase@Rva0069DCE0Owner@@QAEPAURva0069DCE0Elem@@PAU2@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.8,
-  "source": "// ?erase@Rva0069DCE0Owner@@QAEPAURva0069DCE0Elem@@PAU2@@Z\n// partial score=0.8 date=2026-09-06\n// ?erase@Rva0069DCE0Owner@@QAEPAURva0069DCE0Elem@@PAU2@@Z\n// Address-derived: vector-style erase(position) for 8-byte elements -- shift\n// everything after position down by one slot, shrink the end pointer, return\n// position.\nstruct Rva0069DCE0Elem\n{\n\tint a;\n\tint b;\n};\n\nstruct Rva0069DCE0Owner\n{\n\tRva0069DCE0Elem* m_begin;\n\tRva0069DCE0Elem* m_end;\n\n\tRva0069DCE0Elem* erase(Rva0069DCE0Elem* position);\n};\n\nRva0069DCE0Elem* Rva0069DCE0Owner::erase(Rva0069DCE0Elem* position)\n{\n\tRva0069DCE0Elem* next = position + 1;\n\tif (next != m_end)\n\t{\n\t\tint count = (int)(m_end - next);\n\t\tif (count > 0)\n\t\t{\n\t\t\tchar* p = (char*)position;\n\t\t\tdo\n\t\t\t{\n\t\t\t\t*(int*)(p + 0) = *(int*)(p + 8);\n\t\t\t\t*(int*)(p + 4) = *(int*)(p + 0xc);\n\t\t\t\tp += 8;\n\t\t\t} while (--count);\n\t\t}\n\t}\n\t--m_end;\n\treturn position;\n}\n"
-}

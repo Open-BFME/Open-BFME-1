@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "0dc92bb1c5bb637776cad21c3748014b4423981338cf31e3e2910d387351c785",
-  "symbol": "?bfmeLimitAdjusted@Gen_003BDD60@@QAEHXZ",
-  "score_kind": "author-estimate",
-  "score": 0.72,
-  "source": "// ?bfmeLimitAdjusted@Gen_003BDD60@@QAEHXZ\n// partial score=0.72 date=2026-09-06\n// ?bfmeLimitAdjusted@Gen_003BDD60@@QAEHXZ\n// cl: /O2 /DNDEBUG /MD /EHsc\n\nclass BfmeSwitchDR\n{\npublic:\n\tchar m_bfmeHead[0x1C];\n\tbool m_bfmeUseHigh;\n};\n\nclass BfmeBaseDS\n{\npublic:\n\tchar m_bfmeHead[0xE70];\n\tint m_bfmeLow;\n\tint m_bfmeHigh;\n\tchar m_bfmeGap[0x40];\n\tint m_bfmeLowLarge;\n\tint m_bfmeHighLarge;\n};\n\nclass Gen_003BDD60Child\n{\npublic:\n\tchar m_bfmeHead[0x38];\n\tint m_bfmeValue;\n};\n\nclass Gen_003BDD60\n{\npublic:\n\tint bfmeLimitAdjusted(void);\n\nprivate:\n\tchar m_bfmeHead[0x28];\n\tGen_003BDD60Child *m_bfmeChild;\n};\n\nextern BfmeSwitchDR *g_bfmeSwitchDR;\nextern BfmeBaseDS *g_bfmeBaseDS;\n\nint Gen_003BDD60::bfmeLimitAdjusted(void)\n{\n\tGen_003BDD60Child *child = m_bfmeChild;\n\tif (child == 0)\n\t\treturn 0;\n\n\tBfmeSwitchDR *state = g_bfmeSwitchDR;\n\tint high = state != 0 ? state->m_bfmeUseHigh : 0;\n\tint limit;\n\tint offset;\n\tBfmeBaseDS *base;\n\tif (state != 0 && high != 0)\n\t{\n\t\tbase = g_bfmeBaseDS;\n\t\tlimit = base->m_bfmeHighLarge;\n\t\toffset = base->m_bfmeHigh;\n\t}\n\telse\n\t{\n\t\tbase = g_bfmeBaseDS;\n\t\tlimit = base->m_bfmeLowLarge;\n\t\toffset = base->m_bfmeLow;\n\t}\n\tif (state == 0)\n\t\treturn 0;\n\n\tint difference = limit - offset;\n\tint value = child->m_bfmeValue;\n\t*(volatile int *)&difference = difference;\n\t*(volatile int *)&value = value;\n\tint *result = &value;\n\tif (value < difference)\n\t\tresult = &difference;\n\treturn *result;\n}\n"
-}

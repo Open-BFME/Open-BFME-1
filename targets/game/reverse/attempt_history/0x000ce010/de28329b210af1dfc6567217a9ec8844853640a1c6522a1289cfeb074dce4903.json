@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "de28329b210af1dfc6567217a9ec8844853640a1c6522a1289cfeb074dce4903",
-  "symbol": "?d_000ce010@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.97,
-  "source": "// ?d_000ce010@@YAXXZ\n// partial score=0.97 date=2026-09-08\nclass BfmeItemEAK\n{\npublic:\n\tchar bfmeTestEAK(void *a, void *b);\n};\n\nclass BfmeNodeEAK\n{\npublic:\n\tBfmeNodeEAK *m_bfmeNextEAK;\n\tint m_bfmePadEAK;\n\tBfmeItemEAK *m_bfmeItemEAK;\n};\n\nclass BfmeHostEAK\n{\npublic:\n\tchar bfmeAnyEAK(void *a, void *b);\n\n\tunsigned char m_bfmeHeadEAK[0x288];\n\tBfmeNodeEAK *m_bfmeListEAK;\n};\n\nchar BfmeHostEAK::bfmeAnyEAK(void *a, void *b)\n{\n\tBfmeNodeEAK *node = m_bfmeListEAK->m_bfmeNextEAK;\n\n\twhile (node != m_bfmeListEAK)\n\t{\n\t\tif (node->m_bfmeItemEAK->bfmeTestEAK(a, b))\n\t\t\treturn 1;\n\n\t\tnode = node->m_bfmeNextEAK;\n\t}\n\n\treturn 0;\n}\n"
-}

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "eb5d554037f43f58a2cbe35c7666bcd6109e9674f44f4f01b571505aca4d779f",
-  "symbol": "?bfmeResetLB@@YAXPAX@Z (identity unknown)",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?bfmeResetLB@@YAXPAX@Z (identity unknown)\n// partial score=0.85 date=2026-09-07\n// 63/62 bytes -- one OVER. The whole structure matches: a static map object\n// addressed by immediate (`mov ecx,offset g_bfmeMapLB`), a find returning a\n// pointer-to-slot that is dereferenced, the `and byte ptr [eax+20h],0fch` and\n// the zero store, and an erase taking the same &key.\n// The two `mov [esp+0ch],esi` self-stores of the parameter into its own home\n// slot need the volatile-self-store idiom (see volatile-home-slot-store), and\n// both are present here -- but MSVC then RELOADS the parameter for each store\n// (`mov eax,[esp+4]` / `mov edx,[esp+4]`) instead of caching it in esi across\n// the body the way retail does, which costs the byte.\n// Tried: one self-store only (56 bytes, both reload sites gone), and caching\n// the value in a plain local first (72 bytes -- the local takes its own slot).\nclass BfmeEntryLB\n{\npublic:\n\tunsigned char m_bfmeHeadLB[8];\n\tint m_bfmeCountLB;\n\tunsigned char m_bfmeGapLB[0x14];\n\tunsigned char m_bfmeFlagsLB;\n};\n\nclass BfmeMapLB\n{\npublic:\n\tBfmeEntryLB **bfmeFindLB(void **key);\n\tvoid bfmeEraseLB(void **key);\n};\n\nextern BfmeMapLB g_bfmeMapLB;\n\nvoid __cdecl bfmeResetLB(void *key)\n{\n\t*(void *volatile *)&key = key;\n\n\tBfmeEntryLB *entry = *g_bfmeMapLB.bfmeFindLB(&key);\n\n\tif (entry != 0)\n\t{\n\t\tentry->m_bfmeFlagsLB &= 0xfc;\n\t\tentry->m_bfmeCountLB = 0;\n\n\t\t*(void *volatile *)&key = key;\n\n\t\tg_bfmeMapLB.bfmeEraseLB(&key);\n\t}\n}\n"
-}

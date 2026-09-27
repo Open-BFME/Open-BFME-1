@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "be0253fa12eb4154b9175e1b8b0e2ab2f9a89c4c98c3e699ae148c3c9e136d25",
-  "symbol": "?d_002e7690@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.75,
-  "source": "// ?d_002e7690@@YAXXZ\n// partial score=0.75 date=2026-09-07\n// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n// The Lua binding returns the configured value for a named script flag.\n\nstruct lua_State;\n\nextern \"C\" int lua_gettop(lua_State *state);\nextern \"C\" const char *lua_tostring(lua_State *state, int index);\nextern \"C\" void lua_pushnumber(lua_State *state, double value);\nextern \"C\" void lua_pushnil(lua_State *state);\n\nint bfmeLookup_001c62b0(void *name);\n\nclass LuaScriptEngine;\nextern LuaScriptEngine *TheLuaScriptEngine;\nextern double g_bfmeSubB3;\n\ntypedef bool Bool;\n\n// ?Rva002E7690LuaValueLookup@@YAHPAUlua_State@@@Z\nint Rva002E7690LuaValueLookup(lua_State *state)\n{\n\tvoid *field78 = *(void **)((char *)TheLuaScriptEngine + 0x78);\n\tif (field78)\n\t{\n\t\tunsigned *esiBase = *(unsigned **)((char *)field78 + 0xc);\n\t\tif (esiBase)\n\t\t{\n\t\t\tif (lua_gettop(state) > 0)\n\t\t\t{\n\t\t\t\tconst char *name = lua_tostring(state, 1);\n\t\t\t\tint idx = bfmeLookup_001c62b0((void *)name);\n\t\t\t\tif (idx != -1)\n\t\t\t\t{\n\t\t\t\t\tBool bit =\n\t\t\t\t\t\t(esiBase[((unsigned)idx >> 5) + (0x250 / 4)] &\n\t\t\t\t\t\t(1u << (idx & 0x1f))) != 0;\n\t\t\t\t\tif (bit)\n\t\t\t\t\t{\n\t\t\t\t\t\tlua_pushnumber(state, g_bfmeSubB3);\n\t\t\t\t\t\treturn 1;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n\tlua_pushnil(state);\n\treturn 1;\n}\n"
-}

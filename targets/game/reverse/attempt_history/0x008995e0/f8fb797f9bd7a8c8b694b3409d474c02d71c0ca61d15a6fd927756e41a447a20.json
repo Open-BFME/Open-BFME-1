@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "f8fb797f9bd7a8c8b694b3409d474c02d71c0ca61d15a6fd927756e41a447a20",
-  "symbol": "??0Rva008995E0Value@@QAE@_N@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ??0Rva008995E0Value@@QAE@_N@Z\n// partial score=0.85 date=2026-09-06\n// cl: /DNDEBUG /MD /EHsc\n// Open-BFME7: Apt script value constructor (101 B): base sets the type bits\n// and registers the value in the idle-hook pool when there is room (else\n// clears the pooled bit) then the derived class stores its payload.\nstruct Rva008995E0Pool { int m_capacity; int m_count; struct Rva008995E0Base** m_items; };\nextern Rva008995E0Pool* Rva008995E0IdleHook;\nstruct Rva008995E0Base {\n\tvirtual ~Rva008995E0Base();\n\tunsigned int m_flags;\n\tRva008995E0Base(unsigned int typeBits)\n\t{\n\t\tunsigned int flags = (m_flags & 0xF0008005) | typeBits;\n\t\tm_flags = flags;\n\t\tRva008995E0Pool* pool = Rva008995E0IdleHook;\n\t\tint capacity = pool->m_capacity;\n\t\tint* count = &pool->m_count;\n\t\tif (*count < capacity) {\n\t\t\tpool->m_items[*count] = this;\n\t\t\t(*count)++;\n\t\t} else {\n\t\t\tm_flags = flags & 0xBFFFFFFF;\n\t\t}\n\t}\n};\nstruct Rva008995E0Value : Rva008995E0Base {\n\tbool m_value;\n\tRva008995E0Value(bool value);\n};\nRva008995E0Value::Rva008995E0Value(bool value)\n\t: Rva008995E0Base(0x40008005), m_value(value)\n{\n}\n"
-}

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "8eb8855178ca1bbf0d7dbc9eb48ce9eaea65a3d431fd365967702900073e2ba2",
-  "symbol": "?d_00467510@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.97,
-  "source": "// ?d_00467510@@YAXXZ\n// partial score=0.97 date=2026-09-07\nclass BfmeStrECT\n{\npublic:\n\tBfmeStrECT(const char *text);\n\tBfmeStrECT(const BfmeStrECT &other) { m_bfmeDataECT = other.m_bfmeDataECT; }\n\t~BfmeStrECT();\n\n\tvoid *m_bfmeDataECT;\n};\n\nclass BfmeHostECT\n{\npublic:\n\tvirtual void bfmeSlot00ECT();\n\tvirtual void bfmeSlot01ECT();\n\tvirtual void bfmeSlot02ECT();\n\tvirtual void bfmeSlot03ECT();\n\tvirtual void bfmeSlot04ECT();\n\tvirtual void bfmeSlot05ECT();\n\tvirtual void bfmeSlot06ECT();\n\tvirtual void bfmeSlot07ECT();\n\tvirtual void bfmeSlot08ECT();\n\tvirtual void bfmeSlot09ECT();\n\tvirtual void bfmeSlot10ECT();\n\tvirtual void bfmeSlot11ECT();\n\tvirtual void bfmeSlot12ECT();\n\tvirtual void bfmeSlot13ECT();\n\tvirtual void bfmeSlot14ECT();\n\tvirtual void *bfmeLoadECT(BfmeStrECT dir, BfmeStrECT file, int a, int b, int c);\n\n\tvoid bfmeInitECT();\n\n\tunsigned char m_bfmeHeadECT[0x1bc];\n\tvoid *m_bfmeResultECT;\n};\n\nvoid BfmeHostECT::bfmeInitECT()\n{\n\tm_bfmeResultECT = bfmeLoadECT(BfmeStrECT(\"Apt\\\\\"), BfmeStrECT(\"Background.apt\"), 1, 0, -1);\n}\n"
-}

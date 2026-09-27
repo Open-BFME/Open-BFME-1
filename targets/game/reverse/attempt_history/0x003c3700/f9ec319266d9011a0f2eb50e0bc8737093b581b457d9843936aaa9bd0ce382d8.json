@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "f9ec319266d9011a0f2eb50e0bc8737093b581b457d9843936aaa9bd0ce382d8",
-  "symbol": "?bfmeDoXY@@YGXPAX@Z (identity unknown)",
-  "score_kind": "author-estimate",
-  "score": 0.97,
-  "source": "// ?bfmeDoXY@@YGXPAX@Z (identity unknown)\n// partial score=0.97 date=2026-09-07\n// 28/28 bytes; TWO instructions differ and only by register name: retail holds\n// the target in edx (mov edx,[esp+8] / push edx), MSVC in ecx.\n// The shape is settled: a 2-byte struct built in a push-ecx local with two\n// byte stores, read back as a dword and pushed by value, then a __stdcall with\n// (target, pair). Naming the target in a local first changes nothing.\n// Lone ecx/edx scratch flip -- see the ecx-edx-flip note; toolchain, not source.\nstruct BfmePairXY\n{\n\tchar m_bfmeFirstXY;\n\tchar m_bfmeSecondXY;\n};\n\nvoid __stdcall bfmeSendXY(void *target, BfmePairXY pair);\n\nvoid __stdcall bfmeDoXY(void *target)\n{\n\tBfmePairXY pair;\n\n\tpair.m_bfmeFirstXY = 1;\n\tpair.m_bfmeSecondXY = 0;\n\n\tbfmeSendXY(target, pair);\n}\n"
-}

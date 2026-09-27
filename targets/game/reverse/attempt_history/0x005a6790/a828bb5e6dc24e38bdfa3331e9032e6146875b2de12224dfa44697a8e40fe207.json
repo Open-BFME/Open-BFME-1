@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "a828bb5e6dc24e38bdfa3331e9032e6146875b2de12224dfa44697a8e40fe207",
-  "symbol": "?bfmeSetCursorCE@BfmeHostCE@@QAEPAXPAX@Z",
-  "score_kind": "author-estimate",
-  "score": 0.97,
-  "source": "// ?bfmeSetCursorCE@BfmeHostCE@@QAEPAXPAX@Z\n// partial score=0.97 date=2026-09-07\n// 60/60 at exact size. Only the two scratch registers in the final virtual call\n// are swapped: retail holds the argument in edx and the vftable in eax, MSVC the\n// reverse (4 modrm bytes). Hoisting the argument into a local and hoisting the\n// receiver global into a local both leave it unchanged -- same wall as\n// [[chain-middle-link-flip]].\nstruct Rva00579160Manager\n{\n\tchar bfmeCheckCE();\n};\n\nextern Rva00579160Manager *Rva00579160TheManager;\n\nstruct Rva005A63D0Mouse\n{\n\tvirtual void bfmeSlot00CE();\n\tvirtual void bfmeSlot01CE();\n\tvirtual void bfmeSlot02CE();\n\tvirtual void bfmeSlot03CE();\n\tvirtual void bfmeSlot04CE();\n\tvirtual void bfmeSlot05CE();\n\tvirtual void bfmeSlot06CE();\n\tvirtual void bfmeSlot07CE();\n\tvirtual void bfmeSlot08CE();\n\tvirtual void bfmeSlot09CE();\n\tvirtual void bfmeSlot10CE();\n\tvirtual void bfmeSlot11CE();\n\tvirtual void bfmeSlot12CE();\n\tvirtual void bfmeSlot13CE();\n\tvirtual void bfmeApplyCE(void *cursor);\n};\n\nextern Rva005A63D0Mouse *TheMouse;\n\nclass BfmeHostCE\n{\npublic:\n\tvoid *bfmeSetCursorCE(void *cursor);\n\n\tunsigned char m_bfmeHeadCE[0x1ec];\n\tvoid *m_bfmeCursorCE;\n};\n\nvoid *BfmeHostCE::bfmeSetCursorCE(void *cursor)\n{\n\tvoid *old = m_bfmeCursorCE;\n\n\tm_bfmeCursorCE = cursor;\n\n\tif (Rva00579160TheManager->bfmeCheckCE() != 0)\n\t\tTheMouse->bfmeApplyCE(m_bfmeCursorCE);\n\n\treturn old;\n}\n"
-}

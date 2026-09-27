@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "1859cdec4808ac34b19b771432baad2af190b89f6fa72810cebc2fa0dbffce4c",
-  "symbol": "?bfmeApplyESP@@YAXPBD0@Z",
-  "score_kind": "author-estimate",
-  "score": 0.74,
-  "source": "// ?bfmeApplyESP@@YAXPBD0@Z\n// partial score=0.74 date=2026-09-08\n\nstruct BfmeHdrESP\n{\n\tunsigned short m_refCount;\n\tunsigned short m_length;\n\tunsigned short m_capacity;\n\tunsigned short m_flags;\n};\n\nstruct BfmeStringPoolESP\n{\n\tvoid *m_unused;\n\tvoid (__cdecl *free)(void *);\n};\n\nextern BfmeStringPoolESP *g_bfmeStringPool1284;\nextern unsigned char g_bfmeFlagESP;\n\nclass BfmeStrVKI\n{\npublic:\n\tBfmeStrVKI(const char *text);\n\n\tvoid bfmeSetVKI(const char *text);\n\tBfmeStrVKI *operator&()\n\t{\n\t\treturn this;\n\t}\n\n\t~BfmeStrVKI()\n\t{\n\t\tBfmeHdrESP *data = m_data;\n\t\tif (--data->m_refCount == 0)\n\t\t\tg_bfmeStringPool1284->free(data);\n\t}\n\n\tBfmeHdrESP *m_data;\n};\n\nclass Rva00896AF0Tracker\n{\npublic:\n\tvoid rva00896AF0(BfmeStrVKI *input, BfmeStrVKI text);\n};\n\nextern Rva00896AF0Tracker *g_bfmeTracker4310;\n\nvoid bfmeApplyESP(const char *first, const char *second)\n{\n\tg_bfmeTracker4310->rva00896AF0(\n\t\t&(g_bfmeFlagESP = 0, BfmeStrVKI(first)), BfmeStrVKI(second));\n}\n"
-}

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "d15430e4a7ab18931efbcb30095147a2f4e09d1eb73ce5d5e0abadef5482b48d",
-  "symbol": "?notEquals@Rva001C2920Vec3@@QBE_NPBU1@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?notEquals@Rva001C2920Vec3@@QBE_NPBU1@@Z\n// partial score=0.85 date=2026-09-06\n// ?notEquals@Rva001C2920Vec3@@QBE_NPBU1@@Z\n// Address-derived: compare 3 consecutive ints against another instance's 3\n// ints, returning true if any differ. Same shape family as 0x001C2870 (10\n// ints) -- see that stash for the bool-normalisation tail this reconstruction\n// cannot force (retail wraps each `return` in a redundant\n// xor-ecx/test-al/sete-cl/mov-al,cl idiom this cl folds away for 0/1\n// literals).\nstruct Rva001C2920Vec3\n{\n\tint v[3];\n\n\tbool notEquals(const Rva001C2920Vec3* other) const;\n};\n\nbool Rva001C2920Vec3::notEquals(const Rva001C2920Vec3* other) const\n{\n\tfor (unsigned i = 0; i < 3; ++i)\n\t{\n\t\tif (v[i] != other->v[i])\n\t\t\treturn true;\n\t}\n\treturn false;\n}\n"
-}

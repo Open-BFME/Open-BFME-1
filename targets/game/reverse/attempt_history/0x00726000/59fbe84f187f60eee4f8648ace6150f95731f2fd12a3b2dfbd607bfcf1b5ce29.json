@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "59fbe84f187f60eee4f8648ace6150f95731f2fd12a3b2dfbd607bfcf1b5ce29",
-  "symbol": "??0W3DStatusCircle@@QAE@XZ",
-  "score_kind": "author-estimate",
-  "score": 0.94,
-  "source": "// ??0W3DStatusCircle@@QAE@XZ\n// partial score=0.94 date=2026-09-08\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\r\n// readable body of ??0W3DStatusCircle@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DStatusCircle.cpp\n\nextern \"C\" void _ReadWriteBarrier();\n#pragma intrinsic(_ReadWriteBarrier)\n\r\nclass RenderObjClass\n{\npublic:\n    RenderObjClass();\n};\n\n// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DStatusCircle.h\nclass W3DStatusCircle : public RenderObjClass\n{\r\npublic:\r\n    W3DStatusCircle();\r\n};\r\n\r\n// ??0W3DStatusCircle@@QAE@XZ\r\nW3DStatusCircle::W3DStatusCircle()\n{\n\tunsigned char *self = (unsigned char *)this;\n\tunsigned int negative_one = 0xbf800000;\n\tunsigned int zero = 0;\n\n\t*(unsigned int *)(self + 0xc8) = zero;\n\t*(unsigned int *)(self + 0xcc) = zero;\n\t*(unsigned int *)(self + 0xd8) = zero;\n\t_ReadWriteBarrier();\n\t*(unsigned int *)(self + 0x00) = 0x01121018;\n\t*(unsigned int *)(self + 0x08) = 0x01121010;\n\t*(unsigned int *)(self + 0xd0) = negative_one;\n\t*(unsigned int *)(self + 0xd4) = negative_one;\n\t*(unsigned int *)(self + 0xdc) = 0x0010441b;\n\t_ReadWriteBarrier();\n\t*(unsigned int *)(self + 0xe0) = zero;\n\t*(unsigned int *)(self + 0xe4) = zero;\n\t*(unsigned int *)(self + 0xe8) = zero;\n}\n"
-}

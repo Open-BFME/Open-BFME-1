@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "a66d87c6d33f5799965c2fbfa8fb3d45f28e2aee89838bb7a20712630ce188fb",
-  "symbol": "?d_003d0190@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.96,
-  "source": "// ?d_003d0190@@YAXXZ\n// partial score=0.96 date=2026-09-07\n// 70/70 bytes; 9 of 27 instructions differ, by register naming and by where\n// `lea edi,[ecx+30h]` lands (retail after the by-value byte is read, ours\n// right after the first member load).\n// Settled: the search callee is __cdecl with FIVE arguments -- (begin, end,\n// &key, a one-byte by-value comparator, 0) -- and that comparator is a 1-byte\n// struct built in the `push ecx` slot with `mov byte ptr [esp+0ch],0` and then\n// pushed as a whole dword; begin and end must be hoisted into locals so the\n// end is still live for `cmp eax,esi` after the call; and the insert is a\n// method on the EMBEDDED vector at this+30h taking (found, &key).\n// Tried: swapping the begin/end declaration order (same 9).\nstruct BfmeCmpRQ\n{\n\tchar m_bfmeRawRQ;\n};\n\nvoid ** __cdecl bfmeLowerRQ(void **begin, void **end, void **key, BfmeCmpRQ compare, int spare);\n\nclass BfmeVecRQ\n{\npublic:\n\tvoid bfmeInsertRQ(void **where, void **key);\n\n\tvoid **m_bfmeBeginRQ;\n\tvoid **m_bfmeEndRQ;\n};\n\nclass BfmeOwnerRQ\n{\npublic:\n\tvoid bfmeEnsureRQ(void *key);\n\n\tunsigned char m_bfmeHeadRQ[0x30];\n\tBfmeVecRQ m_bfmeVecRQ;\n};\n\nvoid BfmeOwnerRQ::bfmeEnsureRQ(void *key)\n{\n\tvoid **begin = m_bfmeVecRQ.m_bfmeBeginRQ;\n\tvoid **end = m_bfmeVecRQ.m_bfmeEndRQ;\n\tBfmeCmpRQ compare;\n\n\tcompare.m_bfmeRawRQ = 0;\n\n\tvoid **found = bfmeLowerRQ(begin, end, &key, compare, 0);\n\n\tif (found == end || *found != key)\n\t\tm_bfmeVecRQ.bfmeInsertRQ(found, &key);\n}\n"
-}

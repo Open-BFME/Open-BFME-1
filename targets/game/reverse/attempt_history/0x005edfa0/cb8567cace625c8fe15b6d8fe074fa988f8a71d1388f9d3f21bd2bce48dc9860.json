@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "cb8567cace625c8fe15b6d8fe074fa988f8a71d1388f9d3f21bd2bce48dc9860",
-  "symbol": "?d_005edfa0@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.95,
-  "source": "// ?d_005edfa0@@YAXXZ\n// partial score=0.95 date=2026-09-08\nextern \"C\" void *bfmeVft1EVL[];\nextern \"C\" void *bfmeVft2EVL[];\nextern \"C\" void *bfmeVft3EVL[];\nextern \"C\" void *bfmeVft4EVL[];\nextern \"C\" void *bfmeVft5EVL[];\nextern \"C\" void *bfmeVft6EVL[];\nextern \"C\" void *bfmeVft7EVL[];\nextern \"C\" void *bfmeVft8EVL[];\nextern \"C\" void *bfmeVft9EVL[];\nextern \"C\" void *bfmeVft10EVL[];\n\nclass BfmeBaseEVL\n{\npublic:\n\tvoid bfmeInitBaseEVL(BfmeBaseEVL *src);\n\n\tunsigned char m_bfmeBodyEVL[0xc];\n};\n\nclass BfmeSubEVL\n{\npublic:\n\tvoid bfmeInitSubEVL(BfmeSubEVL *src);\n\n\tvoid *m_bfmeVftDEVL;\n\tunsigned char m_bfmeBodySEVL[0xc];\n};\n\nclass BfmeHostEVL\n{\npublic:\n\tBfmeHostEVL(BfmeHostEVL *other);\n\n\tvoid *m_bfmeVftAEVL;\n\tBfmeBaseEVL m_bfmeBaseEVL;\n\tvolatile int m_bfmeValueEVL;\n\tvoid *volatile m_bfmeVftBEVL;\n\tvoid *volatile m_bfmeVftCEVL;\n\tBfmeSubEVL m_bfmeSubEVL;\n};\n\nBfmeHostEVL::BfmeHostEVL(BfmeHostEVL *other)\n{\n\tm_bfmeVftAEVL = bfmeVft1EVL;\n\tm_bfmeBaseEVL.bfmeInitBaseEVL(&other->m_bfmeBaseEVL);\n\n\tm_bfmeValueEVL = other->m_bfmeValueEVL;\n\n\tm_bfmeVftBEVL = bfmeVft2EVL;\n\tm_bfmeVftCEVL = bfmeVft3EVL;\n\n\tm_bfmeVftAEVL = bfmeVft4EVL;\n\tm_bfmeVftBEVL = bfmeVft5EVL;\n\tm_bfmeVftCEVL = bfmeVft6EVL;\n\n\tm_bfmeSubEVL.bfmeInitSubEVL(&other->m_bfmeSubEVL);\n\n\tm_bfmeVftAEVL = bfmeVft7EVL;\n\tm_bfmeVftBEVL = bfmeVft8EVL;\n\tm_bfmeVftCEVL = bfmeVft9EVL;\n\n\tm_bfmeSubEVL.m_bfmeVftDEVL = bfmeVft10EVL;\n}\n"
-}

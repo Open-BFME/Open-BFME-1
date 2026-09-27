@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "60a80a21eec4ea083b3f2a0b0a91ba46003cf5c281b01888cfe75a56db5a7700",
-  "symbol": "?Rva009B62A0ExpandTable@@YAXPBIPAG@Z",
-  "score_kind": "author-estimate",
-  "score": 0.98,
-  "source": "// ?Rva009B62A0ExpandTable@@YAXPBIPAG@Z\n// partial score=0.98 date=2026-09-06\n// Retail VP6 Huffman lookup expansion at 0x009B62A0.\n\nvoid Rva009B62A0ExpandTable(const unsigned *tree, unsigned short *output)\n{\n\tunsigned value;\n\tint index = 0;\n\tint prefix;\n\tint bit;\n\n\tdo {\n\t\tprefix = 0;\n\t\tvalue &= 0xffffff00;\n\t\tbit = 6;\n\t\tdo {\n\t\t\t++prefix;\n\t\t\t--bit;\n\t\t\tint branch = index >> bit;\n\t\t\tvalue >>= 1;\n\t\t\tvalue &= 0x7f;\n\t\t\tif (branch & 1)\n\t\t\t\tvalue = tree[value * 3 + 1];\n\t\t\telse\n\t\t\t\tvalue = tree[value * 3];\n\t\t} while ((value & 1) == 0 && bit > 0);\n\n\t\tunsigned result = (value >> 1) & 0x7f;\n\t\tunsigned low = value & 1;\n\t\tresult = (result | (prefix << 11)) << 1;\n\t\tresult |= low;\n\t\toutput[index] = (unsigned short)result;\n\t\t++index;\n\t} while (index < 64);\n}\n"
-}

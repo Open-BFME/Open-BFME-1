@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "803d60118167e9924132b7e69fb405e0bdf2db800cd81f8eb5bfb3f8218f9fe5",
-  "symbol": "?d_0063b090@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.97,
-  "source": "// ?d_0063b090@@YAXXZ\n// partial score=0.97 date=2026-09-08\nstruct BfmeMsgGA\n{\n\tint m_bfmeTypeGA;\n\tint m_bfmePad0GA;\n\tint m_bfmeAGA;\n\tint m_bfmePad1GA;\n\tint m_bfmeBGA;\n\tunsigned char m_bfmePad2GA[0x80];\n\tint m_bfmeCGA;\n\tunsigned char m_bfmePad3GA[0x864 - 0x98];\n};\n\nclass GameSpyBuddyMessageQueueInterface\n{\npublic:\n\tvirtual void bfmeSlot0GA();\n\tvirtual void bfmeSlot1GA();\n\tvirtual void bfmeSlot2GA();\n\tvirtual void bfmeSlot3GA();\n\tvirtual void bfmeSlot4GA();\n\tvirtual void bfmeSlot5GA();\n\tvirtual void bfmeSlot6GA();\n\tvirtual void bfmeSlot7GA();\n\tvirtual void bfmeAddGA(BfmeMsgGA *m);\n};\n\nextern GameSpyBuddyMessageQueueInterface *TheGameSpyBuddyMessageQueue;\nextern unsigned char g_bfmeFlagAGA;\nextern unsigned char g_bfmeFlagBGA;\n\nvoid __stdcall bfmeOnEventGA(int code, void *p2, const int *p3)\n{\n\tif (code != 0)\n\t{\n\t\tif (code == 4)\n\t\t\tg_bfmeFlagAGA = 1;\n\n\t\treturn;\n\t}\n\n\tif (p3 != 0 && *p3 == -204)\n\t{\n\t\tBfmeMsgGA m;\n\n\t\tm.m_bfmeTypeGA = 6;\n\t\tm.m_bfmeCGA = 1;\n\t\tg_bfmeFlagBGA = 1;\n\t\tm.m_bfmeAGA = 4;\n\t\tm.m_bfmeBGA = 6;\n\t\tg_bfmeFlagAGA = 0;\n\n\t\tTheGameSpyBuddyMessageQueue->bfmeAddGA(&m);\n\t}\n}\n"
-}

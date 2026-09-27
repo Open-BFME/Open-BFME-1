@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "8a510d942e6ea64189cbddbd46c299cbab158b8b855653004f3fa7190bbdb2e3",
-  "symbol": "?bfmeCheck2XO@BfmeOwnerXO@@QAEDPAVObject@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.97,
-  "source": "// ?bfmeCheck2XO@BfmeOwnerXO@@QAEDPAVObject@@@Z\n// partial score=0.97 date=2026-09-08\nclass LocomotorOverridable\n{\npublic:\n\tLocomotorOverridable *friend_getFinalOverride();\n\n\tunsigned char m_bfmeHeadXO[4];\n\tLocomotorOverridable *m_bfme04XO;\n\tunsigned char m_bfmeMidXO[0xc0];\n\tunsigned char m_bfmeC8XO;\n};\n\nclass Object\n{\npublic:\n\tint getLayer() const;\n\n\tunsigned char m_bfmeHeadXO[4];\n\tLocomotorOverridable *m_bfme04XO;\n};\n\nclass BfmeOwnerXO\n{\npublic:\n\tchar bfmeCheck2XO(Object *obj);\n\n\tunsigned char m_bfmeHeadXO[0x2c];\n\tint m_bfme2CXO;\n};\n\nstatic __forceinline LocomotorOverridable *bfmeFinalXO(LocomotorOverridable *p)\n{\n\tif (p == 0)\n\t\treturn 0;\n\n\tif (p->m_bfme04XO == 0)\n\t\treturn p;\n\n\treturn p->m_bfme04XO->friend_getFinalOverride();\n}\n\nchar bfmeCheckXO(Object *obj)\n{\n\tif (obj == 0)\n\t\treturn 0;\n\telse if ((bfmeFinalXO(obj->m_bfme04XO)->m_bfmeC8XO & 4) != 0)\n\t\treturn 0;\n\telse\n\t\treturn obj->getLayer() == 1;\n}\n\nchar BfmeOwnerXO::bfmeCheck2XO(Object *obj)\n{\n\tif (m_bfme2CXO != 1)\n\t\treturn 0;\n\n\tif (obj != 0 && (bfmeFinalXO(obj->m_bfme04XO)->m_bfmeC8XO & 4) == 0 && obj->getLayer() == 1)\n\t\treturn 1;\n\n\treturn 0;\n}\n"
-}

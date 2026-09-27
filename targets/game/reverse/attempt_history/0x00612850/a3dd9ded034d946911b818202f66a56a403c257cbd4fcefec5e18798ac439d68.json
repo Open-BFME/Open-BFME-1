@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "a3dd9ded034d946911b818202f66a56a403c257cbd4fcefec5e18798ac439d68",
-  "symbol": "?bfmeFindPV@BfmeMapPV@@QAEPAXPAX@Z (identity unknown)",
-  "score_kind": "author-estimate",
-  "score": 0.95,
-  "source": "// ?bfmeFindPV@BfmeMapPV@@QAEPAXPAX@Z (identity unknown)\n// partial score=0.95 date=2026-09-07\n// 57/57 bytes; every instruction matches. The only difference is where the\n// shared `xor eax,eax; pop ecx; ret 4` block sits: retail puts it immediately\n// after the null guard (`test eax,eax; jne body`) so the guard falls THROUGH\n// into it and the not-found case jumps BACKWARD to it; MSVC lays the body out\n// first and puts the block at the end.\n// Settled: the table is an embedded member at this+27ch (lea, not a pointer),\n// the lookup takes &found and &key -- &key being the parameter's own home slot\n// -- and the result is compared against the table's first member.\n// 0x006128A0 is the 57-byte twin of this body and will need the same fix.\nclass BfmeNodePV\n{\npublic:\n\tunsigned char m_bfmeHeadPV[0x14];\n\tvoid *m_bfmeValuePV;\n};\n\nclass BfmeTablePV\n{\npublic:\n\tvoid bfmeLookupPV(BfmeNodePV **found, void **key);\n\n\tBfmeNodePV *m_bfmeEndPV;\n};\n\nclass BfmeMapPV\n{\npublic:\n\tvoid *bfmeFindPV(void *key);\n\n\tunsigned char m_bfmeHeadPV[0x27c];\n\tBfmeTablePV m_bfmeTablePV;\n};\n\nvoid *BfmeMapPV::bfmeFindPV(void *key)\n{\n\tif (!key)\n\t\treturn 0;\n\n\tBfmeNodePV *found;\n\n\tm_bfmeTablePV.bfmeLookupPV(&found, &key);\n\n\tif (found == m_bfmeTablePV.m_bfmeEndPV)\n\t\treturn 0;\n\n\treturn found->m_bfmeValuePV;\n}\n"
-}

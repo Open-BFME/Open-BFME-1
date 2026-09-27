@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "87a51c240c4c217dd08c47a9ad2bbece1a84a41028ddf48a907f0b910c8c61fd",
-  "symbol": "??0BfmeThingIB@@QAE@XZ",
-  "score_kind": "author-estimate",
-  "score": 0.75,
-  "source": "// ??0BfmeThingIB@@QAE@XZ\n// partial score=0.75 date=2026-09-08\nextern \"C\" void *bfmeVftIB[];\n\nclass BfmeSixIB\n{\npublic:\n\tvoid bfmeClearIB()\n\t{\n\t\tm_bfmeA0IB = 0;\n\t\tm_bfmeA1IB = 0;\n\t\tm_bfmeA2IB = 0;\n\t\tm_bfmeA3IB = 0;\n\t\tm_bfmeA4IB = 0;\n\t\tm_bfmeA5IB = 0;\n\t}\n\n\tint m_bfmeA0IB;\n\tint m_bfmeA1IB;\n\tint m_bfmeA2IB;\n\tint m_bfmeA3IB;\n\tint m_bfmeA4IB;\n\tint m_bfmeA5IB;\n};\n\nclass BfmeBaseIB\n{\npublic:\n\tBfmeBaseIB();\n\n\tvoid *volatile m_bfmeVftIB;\n\tunsigned char m_bfmeGapIB[0x54];\n};\n\nclass BfmeThingIB : public BfmeBaseIB\n{\npublic:\n\tBfmeThingIB();\n\n\tint m_bfme58IB;\n\tint m_bfme5cIB;\n\tfloat m_bfme60IB;\n\tfloat m_bfme64IB;\n\tchar m_bfme68IB;\n\tunsigned char m_bfmePadIB[3];\n\tint m_bfme6cIB;\n\tint m_bfme70IB;\n\tint m_bfme74IB;\n\tint m_bfme78IB;\n\tint m_bfme7cIB;\n\tint m_bfme80IB;\n\tint m_bfme84IB;\n\tint m_bfme88IB;\n\tBfmeSixIB m_bfme8cIB;\n};\n\nBfmeThingIB::BfmeThingIB()\n{\n\tm_bfmeVftIB = bfmeVftIB;\n\tm_bfme7cIB = 0;\n\tm_bfme80IB = 0;\n\tm_bfme84IB = 0;\n\n\tBfmeSixIB *p = &m_bfme8cIB;\n\tBfmeSixIB *q = p;\n\n\tq->bfmeClearIB();\n\n\tm_bfme58IB = 0;\n\tm_bfme68IB = 1;\n\tm_bfme5cIB = 0;\n\tm_bfme60IB = 3.14159274f;\n\tm_bfme64IB = -1.0f;\n\tm_bfme6cIB = 0;\n\tm_bfme70IB = 0x16;\n\tm_bfme74IB = 0;\n\tm_bfme78IB = 0xf;\n\tm_bfme88IB = 0;\n\n\tp->bfmeClearIB();\n}\n"
-}

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "1c06dfd3ebd732e1599135bfd9ae6159e4348474bace81a9dcfa012c851e9761",
-  "symbol": "?bfmeAtEndZJ@BfmeRangeZJ@@QBE_NI@Z",
-  "score_kind": "author-estimate",
-  "score": 0.95,
-  "source": "// ?bfmeAtEndZJ@BfmeRangeZJ@@QBE_NI@Z\n// partial score=0.95 date=2026-09-08\nstruct BfmeRbNodeZJ;\n\nBfmeRbNodeZJ *rbDecrement(void *p);\n\nstruct BfmeRbNodeZJ\n{\n\tunsigned char m_bfmeHeadZJ[0x28];\n\tunsigned int m_bfme28ZJ;\n};\n\nclass BfmeRangeZJ\n{\npublic:\n\tbool bfmeAtEndZJ(unsigned int v) const;\n\n\tvoid *m_bfme00ZJ;\n\tvoid *m_bfme04ZJ;\n};\n\nbool BfmeRangeZJ::bfmeAtEndZJ(unsigned int v) const\n{\n\tif (!m_bfme04ZJ)\n\t\treturn true;\n\n\tunsigned int e = rbDecrement(m_bfme00ZJ)->m_bfme28ZJ;\n\n\treturn e < v;\n}\n"
-}

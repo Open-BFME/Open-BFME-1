@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "09ef0b65efbd5260a287709cb262b7667d5472984493138a40183291db943d18",
-  "symbol": "?aptForwardTyped008ACEA0@@YAPAVAptValue@@PAXH@Z",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?aptForwardTyped008ACEA0@@YAPAVAptValue@@PAXH@Z\n// partial score=0.9 date=2026-09-06\n// cl: /DNDEBUG /MD /EHsc\nclass AptValue;\nclass Rva8CCCE0Value;\nextern AptValue* g_bfmeFallbackDB;\nvoid rva8CCCE0ResolveValue(void* a, void* b, Rva8CCCE0Value* c, Rva8CCCE0Value** out);\nstruct Rva008ACEA0Sink { void accept(Rva8CCCE0Value* value); };\nstruct Rva008ACEA0Holder { char m_pad[0x50]; char m_sinkBody[0x24]; Rva008ACEA0Sink m_sink; };\nstruct Rva008ACEA0Link { char m_pad[0x4c]; Rva008ACEA0Holder* m_holder; };\nclass Rva8CCCE0Value { public: int m_0; unsigned int m_type : 6; unsigned int m_mid : 9; unsigned int m_owned : 1; unsigned int m_rest : 16; char m_pad[0x4c - 8]; Rva008ACEA0Link* m_link; };\nAptValue* aptForwardTyped008ACEA0(void* self, int argc)\n{\n\tRva8CCCE0Value* value = 0;\n\trva8CCCE0ResolveValue(self, 0, (Rva8CCCE0Value*)self, &value);\n\tif (value) {\n\t\tint type = value->m_type;\n\t\tif (type >= 0xc && type <= 0x13 && value->m_owned)\n\t\t\tvalue->m_link->m_holder->m_sink.accept(value);\n\t}\n\treturn g_bfmeFallbackDB;\n}\n"
-}

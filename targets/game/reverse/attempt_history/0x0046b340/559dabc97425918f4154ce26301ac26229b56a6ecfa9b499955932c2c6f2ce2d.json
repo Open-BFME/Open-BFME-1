@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "559dabc97425918f4154ce26301ac26229b56a6ecfa9b499955932c2c6f2ce2d",
-  "symbol": "?unidentified_0002e9a1@WindowManager@@QAEXH@Z",
-  "score_kind": "author-estimate",
-  "score": 0.95,
-  "source": "// ?unidentified_0002e9a1@WindowManager@@QAEXH@Z\n// partial score=0.95 date=2026-09-07\n// cl: /DNDEBUG /MD /EHsc\n\nnamespace _STL\n{\nstruct __false_type\n{\n};\n\ntemplate <class Type>\nclass allocator\n{\n};\n\ntemplate <class Type, class Allocator>\nclass vector\n{\npublic:\n\tType *_M_start;\n\tType *_M_finish;\n\tType *_M_end_of_storage;\n\n\tvoid _M_insert_overflow( Type *position, const Type &value,\n\t\tconst __false_type &, unsigned int fillLength, bool atEnd );\n\n\n\n};\n}\n\nclass WindowManager\n{\npublic:\n\tvoid unidentified_0002e9a1( int value );\n\nprivate:\n\tchar m_bfmePrefix[ 0x198 ];\n\t_STL::vector< int, _STL::allocator< int > > m_bfmeValues;\n\tbool m_bfmeValuesChanged;\n};\n\nvoid WindowManager::unidentified_0002e9a1( int value )\n{\n\t_STL::vector< int, _STL::allocator< int > > &values = m_bfmeValues;\n\n\tif ( values._M_finish != values._M_end_of_storage )\n\t{\n\t\tif ( values._M_finish )\n\t\t\t*values._M_finish = value;\n\t\t++values._M_finish;\n\t}\n\telse\n\t{\n\t\tvalues._M_insert_overflow( values._M_finish, value,\n\t\t\treinterpret_cast<const _STL::__false_type &>( value ), 1, true );\n\t}\n\tm_bfmeValuesChanged = true;\n}\n"
-}

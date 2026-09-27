@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "930f3eb4ef4f9e31b93cebb905accef53b97ae048fca01b49614bc2dc9529895",
-  "symbol": "?bfmeSortFQ@@YAXPAVBfmeElemFQ@@0PAX@Z",
-  "score_kind": "author-estimate",
-  "score": 0.93,
-  "source": "// ?bfmeSortFQ@@YAXPAVBfmeElemFQ@@0PAX@Z\n// partial score=0.93 date=2026-09-08\nclass BfmeElemFQ\n{\npublic:\n\tunsigned char m_bfmeHeadFQ[12];\n};\n\ntypedef void *BfmeCmpFQ;\n\nvoid bfmeIntroFQ(BfmeElemFQ *first, BfmeElemFQ *last, BfmeElemFQ *v, int depth, BfmeCmpFQ cmp);\nvoid bfmeFinalFQ(BfmeElemFQ *first, BfmeElemFQ *last, BfmeCmpFQ cmp);\n\nvoid bfmeSortFQ(BfmeElemFQ *first, BfmeElemFQ *last, BfmeCmpFQ cmp)\n{\n\tif (first != last)\n\t{\n\t\tint n = (int)(last - first);\n\t\tint lg = 0;\n\n\t\tif (n != 1)\n\t\t{\n\t\t\tdo\n\t\t\t{\n\t\t\t\tn >>= 1;\n\t\t\t\t++lg;\n\t\t\t}\n\t\t\twhile (n != 1);\n\t\t}\n\n\t\tbfmeIntroFQ(first, last, 0, lg + lg, cmp);\n\t\tbfmeFinalFQ(first, last, cmp);\n\t}\n}\n"
-}

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "a8af512be0bd12cbb0f3f8e8454b695f1ff004a9befa696237f3db180507c970",
-  "symbol": "?rva008CB260AppendToken@@YAXPAURva008CB260Target@@PAURva008CB260Reader@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.8,
-  "source": "// ?rva008CB260AppendToken@@YAXPAURva008CB260Target@@PAURva008CB260Reader@@@Z\n// partial score=0.8 date=2026-09-06\n// ?rva008CB260AppendToken@@YAXPAURva008CB260Target@@PAURva008CB260Reader@@@Z\n// Address-derived reconstruction: read one char from *reader->m_pos (post-\n// incrementing the cursor), look it up through the already-dumped helper at\n// 0x008A11E0 (cdecl, one int arg, returns a node pointer), append the node to\n// target's array/count pair, then either return (if bit 30 of the node's\n// flags word is set) or tail-dispatch the node's first virtual function.\nstruct Rva008CB260Reader\n{\n\tchar* m_pos;\n};\n\nstruct Rva008CB260Node\n{\n\tvirtual void invoke();\n\tunsigned m_flagsLow : 30;\n\tunsigned m_kind : 2;\n};\n\nstruct Rva008CB260Target\n{\n\tint m_count;\n\tvoid* m_pad4;\n\tRva008CB260Node** m_items;\n};\n\nextern void d_008a11e0();\n\nvoid rva008CB260AppendToken(Rva008CB260Target* target, Rva008CB260Reader* reader)\n{\n\ttypedef Rva008CB260Node* (__cdecl *LookupFunction)(int);\n\n\tchar c = *reader->m_pos;\n\treader->m_pos = reader->m_pos + 1;\n\n\tRva008CB260Node* node = reinterpret_cast<LookupFunction>(d_008a11e0)(c);\n\n\ttarget->m_items[target->m_count] = node;\n\ttarget->m_count = target->m_count + 1;\n\n\tif (node->m_kind & 1)\n\t\treturn;\n\n\tnode->invoke();\n}\n"
-}

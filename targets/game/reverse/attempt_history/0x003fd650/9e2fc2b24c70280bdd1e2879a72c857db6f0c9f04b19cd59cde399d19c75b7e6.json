@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "9e2fc2b24c70280bdd1e2879a72c857db6f0c9f04b19cd59cde399d19c75b7e6",
-  "symbol": "?angleBetween@@YAMPBURva003FD650Vec3@@0@Z",
-  "score_kind": "author-estimate",
-  "score": 0.95,
-  "source": "// ?angleBetween@@YAMPBURva003FD650Vec3@@0@Z\n// partial score=0.95 date=2026-09-06\nextern \"C\" float __cdecl acosf(float);\nstruct Rva003FD650Vec3 { float x; float y; float z; };\nextern const float Rva003FD650One;\nextern const float Rva003FD650MinusOne;\nextern const float Rva003FD650One2;\nextern const float Rva003FD650Zero;\nfloat angleBetween(const Rva003FD650Vec3* a, const Rva003FD650Vec3* b)\n{\n\tfloat dot = a->z * b->z + a->y * b->y + a->x * b->x;\n\tif (dot > Rva003FD650One)\n\t\treturn Rva003FD650Zero;\n\tif (dot < Rva003FD650MinusOne)\n\t\tdot = -1.0f;\n\telse if (!(dot < Rva003FD650One2))\n\t\treturn Rva003FD650Zero;\n\treturn acosf(dot);\n}\n"
-}

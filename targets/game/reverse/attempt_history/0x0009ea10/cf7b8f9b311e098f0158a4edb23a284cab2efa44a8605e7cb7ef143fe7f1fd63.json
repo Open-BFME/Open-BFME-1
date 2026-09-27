@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "cf7b8f9b311e098f0158a4edb23a284cab2efa44a8605e7cb7ef143fe7f1fd63",
-  "symbol": "?write@SkirmishBattleHonors@@UAE_NXZ",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?write@SkirmishBattleHonors@@UAE_NXZ\n// partial score=0.9 date=2026-09-08\n// stlport\n\n#include \"PreRTS.h\"\n#include \"Common/QuotedPrintable.h\"\n#include \"Common/UserPreferences.h\"\n\nclass SkirmishBattleHonors : public UserPreferences\n{\npublic:\n\tvirtual Bool write( void );\n};\n\nclass GameSlot\n{\npublic:\n\tInt getColor( void ) const\n\t{\n\t\treturn *( (const Int *)((const char *)this + 0x0c) );\n\t}\n\n\tInt getPlayerTemplate( void ) const\n\t{\n\t\treturn *( (const Int *)((const char *)this + 0x14) );\n\t}\n\n\tUnicodeString getName( void ) const;\n};\n\nclass GameInfo\n{\npublic:\n\tconst GameSlot *getConstSlot( Int slotNum ) const;\n\tAsciiString getMap( void ) const;\n};\n\nextern GameInfo *TheSkirmishGameInfo;\n\nBool SkirmishBattleHonors::write( void )\n{\n\tif( TheSkirmishGameInfo )\n\t{\n\t\tAsciiString tmp;\n\n\t\ttmp.format( \"%d\", TheSkirmishGameInfo->getConstSlot( 0 )->getColor() );\n\t\t( *this )[\"Color\"] = tmp;\n\n\t\ttmp.format( \"%d\", TheSkirmishGameInfo->getConstSlot( 0 )->getPlayerTemplate() );\n\t\t( *this )[\"PlayerTemplate\"] = tmp;\n\n\t\t( *this )[\"Map\"] = TheSkirmishGameInfo->getMap();\n\t\t( *this )[\"UserName\"] = UnicodeStringToQuotedPrintable(\n\t\t\tTheSkirmishGameInfo->getConstSlot( 0 )->getName() );\n\n\t\treturn UserPreferences::write();\n\t}\n}\n"
-}

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "6236e219639d3a347087c38124e2894c20ce2290e6734fc88fddbfadcd77b2ea",
-  "symbol": "?d_001a3280@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.95,
-  "source": "// ?d_001a3280@@YAXXZ\n// partial score=0.95 date=2026-09-08\nstruct Coord3D\n{\n\tfloat x;\n\tfloat y;\n\tfloat z;\n};\n\nclass BfmePathEZ\n{\npublic:\n\tchar bfmeCheckAEZ(void *obj, const Coord3D *from, const Coord3D *to, int flags);\n\tchar bfmeCheckBEZ(const Coord3D *from, const Coord3D *to);\n};\n\nclass AI\n{\npublic:\n\tunsigned char m_bfmeHeadEZ[0xc];\n\tBfmePathEZ *m_bfmePathEZ;\n};\n\nextern AI *TheAI;\n\nclass BfmeObjEZ\n{\npublic:\n\tunsigned char m_bfmeHeadEZ[0x38];\n\tCoord3D m_bfmePosEZ;\n};\n\nclass BfmeNodeEZ\n{\npublic:\n\tCoord3D m_bfmePosEZ;\n\tint m_bfmeTagEZ;\n};\n\nclass BfmeVec2EZ\n{\npublic:\n\tfloat x;\n\tfloat y;\n};\n\nclass BfmeHostEZ\n{\npublic:\n\tvoid bfmeConsiderEZ(BfmeNodeEZ *n, const BfmeVec2EZ *p);\n\n\tCoord3D m_bfmePosEZ;\n\tint m_bfmeTagEZ;\n\tfloat m_bfmeBestEZ;\n\tBfmeNodeEZ *m_bfmeNodeEZ;\n\tBfmeObjEZ *m_bfmeObjEZ;\n};\n\nvoid BfmeHostEZ::bfmeConsiderEZ(BfmeNodeEZ *n, const BfmeVec2EZ *p)\n{\n\tfloat py = *(const volatile float *)&p->y;\n\tfloat px = *(const volatile float *)&p->x;\n\tvolatile float dx = px - n->m_bfmePosEZ.x;\n\tfloat dy = py - n->m_bfmePosEZ.y;\n\tfloat d2 = dy * dy + dx * dx;\n\n\tif (m_bfmeTagEZ != 0 && d2 >= m_bfmeBestEZ)\n\t\treturn;\n\n\tBfmeObjEZ *o = m_bfmeObjEZ;\n\n\tif (!TheAI->m_bfmePathEZ->bfmeCheckAEZ(o, &o->m_bfmePosEZ, &n->m_bfmePosEZ, 0))\n\t\treturn;\n\n\tif (!TheAI->m_bfmePathEZ->bfmeCheckBEZ(&m_bfmeObjEZ->m_bfmePosEZ, &n->m_bfmePosEZ))\n\t\treturn;\n\n\tm_bfmeTagEZ = n->m_bfmeTagEZ;\n\tm_bfmePosEZ = n->m_bfmePosEZ;\n\tm_bfmeBestEZ = d2;\n\tm_bfmeNodeEZ = n;\n}\n"
-}

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "36b3c363c2cf7b5e4901d05b917a6f2408d0d5cc12397ca68f50dc0511c6ab69",
-  "symbol": "?bfmeUpdateBD@Rva000BD610Host@@QAEXXZ (identity unknown)",
-  "score_kind": "author-estimate",
-  "score": 0.75,
-  "source": "// ?bfmeUpdateBD@Rva000BD610Host@@QAEXXZ (identity unknown)\n// partial score=0.75 date=2026-09-08\n// Clean reconstruction of the 34-byte helper call at retail 0x000BD610.\n// The callee is a method on the context stored at host+8; the result replaces\n// host+0x0c.  The one-byte local is passed by address and the final argument is\n// the literal zero visible in the retail push sequence.\nclass Rva000BD610Context\n{\npublic:\n\tint bfmeUpdateBD(int first, int second, char *flag, int value);\n};\n\nclass Rva000BD610Host\n{\npublic:\n\tvoid bfmeUpdateBD();\n\n\tunsigned char m_prefix[8];\n\tRva000BD610Context *m_context;\n\tint m_result;\n};\n\nvoid Rva000BD610Host::bfmeUpdateBD()\n{\n\tchar flag;\n\tm_result = m_context->bfmeUpdateBD(m_result, m_result, &flag, 0);\n}\n"
-}

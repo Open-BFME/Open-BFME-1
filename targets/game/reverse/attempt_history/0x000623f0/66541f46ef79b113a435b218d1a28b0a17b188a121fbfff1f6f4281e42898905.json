@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "66541f46ef79b113a435b218d1a28b0a17b188a121fbfff1f6f4281e42898905",
-  "symbol": "?bfmeCmdDI@@YAHPAPADH@Z",
-  "score_kind": "author-estimate",
-  "score": 0.97,
-  "source": "// ?bfmeCmdDI@@YAHPAPADH@Z\n// partial score=0.97 date=2026-09-07\n// 152/151. Byte-for-byte the same body as 0x00062330 with a different global\n// UnicodeString (0x012F08A8 instead of 0x012F08A4), and the SAME single-byte\n// residue: retail takes the second TheWritableGlobalData read in EAX for the\n// 5-byte `a1` encoding, MSVC picks edx. See reverse/attempts/0x00062330.cpp for\n// the two levers this body still needs (bound const-ref temporary, positive\n// argc guard) -- both are already applied below.\nclass BFMERetailAsciiString\n{\npublic:\n\tBFMERetailAsciiString(const char *text);\n\n\t~BFMERetailAsciiString() { releaseBuffer(); }\n\n\tvoid *m_bfmeBufDI;\n\nprivate:\n\tvoid releaseBuffer();\n};\n\nclass UnicodeString\n{\npublic:\n\tvoid setDI(const BFMERetailAsciiString &text);\n\n\tvoid *m_bfmeBufDI;\n};\n\nextern UnicodeString g_bfmeTargetDI;\nextern bool g_aiTargetDispatchSuppressed;\n\nstruct Rva006C9270GlobalData\n{\n\tunsigned char m_bfmeHeadDI[0x29];\n\tunsigned char m_bfmeFlagDI;\n\tunsigned char m_bfmeMidDI[0xb8a];\n\tunsigned char m_bfmeOtherDI;\n};\n\nextern Rva006C9270GlobalData *TheWritableGlobalData;\n\nint __cdecl bfmeCmdDI(char **argv, int argc)\n{\n\tif (argc >= 2)\n\t{\n\t\t{\n\t\t\tconst BFMERetailAsciiString &text = BFMERetailAsciiString(argv[1]);\n\n\t\t\tg_bfmeTargetDI.setDI(text);\n\t\t}\n\n\t\tg_aiTargetDispatchSuppressed = true;\n\t\tTheWritableGlobalData->m_bfmeFlagDI = 1;\n\t\tTheWritableGlobalData->m_bfmeOtherDI = 0;\n\n\t\treturn 2;\n\t}\n\n\treturn 1;\n}\n"
-}

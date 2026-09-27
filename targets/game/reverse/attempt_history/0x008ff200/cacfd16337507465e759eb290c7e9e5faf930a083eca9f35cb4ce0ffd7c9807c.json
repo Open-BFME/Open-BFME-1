@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "cacfd16337507465e759eb290c7e9e5faf930a083eca9f35cb4ce0ffd7c9807c",
-  "symbol": "q4-hidden-return-refholder",
-  "score_kind": "author-estimate",
-  "score": 0.75,
-  "source": "// q4-hidden-return-refholder\n// partial score=0.75 date=2026-09-07\n// cl: /DNDEBUG /MD /EHsc\n// Scratch reconstruction for the unresolved hidden-return/refholder body at\n// retail RVA 0x008FF200.  The by-value parameter and inline lifetime model\n// reproduce 141/141 bytes except for the entry EH-state placement.\n\nclass BfmePrototypeFF\n{\npublic:\n\tvoid Release_Ref(void);\n};\n\nclass BfmeHandleFF\n{\npublic:\n\tBfmeHandleFF(void) : m_ptr(0) {}\n\tBfmeHandleFF(void *prototype);\n\t~BfmeHandleFF(void)\n\t{\n\t\tif (m_ptr != 0)\n\t\t\tm_ptr->Release_Ref();\n\t}\n\n\tBfmePrototypeFF *m_ptr;\n};\n\nvoid *__cdecl Find_Prototype_FF(BfmeHandleFF *slot,\n\tBfmePrototypeFF *prototype);\n\nBfmeHandleFF __cdecl probeLookup008FF200(BfmeHandleFF prototype)\n{\n\tif (prototype.m_ptr == 0)\n\t\treturn BfmeHandleFF();\n\n\tvoid *found = Find_Prototype_FF(&prototype, prototype.m_ptr);\n\treturn BfmeHandleFF(found);\n}\n"
-}

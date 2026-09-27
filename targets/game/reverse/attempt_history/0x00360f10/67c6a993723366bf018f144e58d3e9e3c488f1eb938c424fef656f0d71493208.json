@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "67c6a993723366bf018f144e58d3e9e3c488f1eb938c424fef656f0d71493208",
-  "symbol": "?sumInactive@Rva00360F10Owner@@QAEHXZ",
-  "score_kind": "author-estimate",
-  "score": 0.8,
-  "source": "// ?sumInactive@Rva00360F10Owner@@QAEHXZ\n// partial score=0.8 date=2026-09-06\nstruct Rva00360F10Elem { char m_pad[0x34]; int m_value; bool m_active; char m_pad2[0xb4 - 0x39]; };\nstruct Rva00360F10Owner {\n\tchar m_pad[0x30];\n\tRva00360F10Elem* m_begin;\n\tRva00360F10Elem* m_end;\n\tunsigned int size() const { return m_end - m_begin; }\n\tint sumInactive();\n};\nint Rva00360F10Owner::sumInactive()\n{\n\tint sum = 0;\n\tfor (unsigned int i = 0; i < size(); ++i) {\n\t\tif (!m_begin[i].m_active)\n\t\t\tsum += m_begin[i].m_value;\n\t}\n\treturn sum;\n}\n"
-}

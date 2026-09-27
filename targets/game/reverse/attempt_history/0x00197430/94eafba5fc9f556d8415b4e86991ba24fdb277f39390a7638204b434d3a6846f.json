@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "94eafba5fc9f556d8415b4e86991ba24fdb277f39390a7638204b434d3a6846f",
-  "symbol": "?rva00197430PairLess@@YA_NPBURva00197430Pair@@0@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?rva00197430PairLess@@YA_NPBURva00197430Pair@@0@Z\n// partial score=0.85 date=2026-09-06\n// ?rva00197430PairLess@@YA_NPBURva00197430Pair@@0@Z\n// Address-derived: classic std::pair<AsciiString,AsciiString>::operator<\n// shape -- compare first fields both ways, then break ties on the second\n// field, all through the already-pinned AsciiString::compare thunk at\n// 0x000220C5.\nclass AsciiString\n{\npublic:\n\tint compare(const AsciiString& other) const;\n\nprivate:\n\tvoid* m_data;\n};\n\nstruct Rva00197430Pair\n{\n\tAsciiString first;\n\tAsciiString second;\n};\n\nbool rva00197430PairLess(const Rva00197430Pair* a, const Rva00197430Pair* b)\n{\n\tif (a->first.compare(b->first) < 0)\n\t\tgoto isLess;\n\tif (b->first.compare(a->first) < 0)\n\t\tgoto notLess;\n\tif (a->second.compare(b->second) < 0)\n\t\tgoto isLess;\n\tgoto notLess;\nisLess:\n\treturn true;\nnotLess:\n\treturn false;\n}\n"
-}

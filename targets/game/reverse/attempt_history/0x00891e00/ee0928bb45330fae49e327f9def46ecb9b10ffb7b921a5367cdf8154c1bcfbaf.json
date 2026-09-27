@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "ee0928bb45330fae49e327f9def46ecb9b10ffb7b921a5367cdf8154c1bcfbaf",
-  "symbol": "?rva00891E00ReleaseChain@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?rva00891E00ReleaseChain@@YAXXZ\n// partial score=0.9 date=2026-09-06\n// ?rva00891E00ReleaseChain@@YAXXZ\n// Straight-line teardown sequence: twelve unconditional calls to already-named\n// (or already-dumped) release/globals-teardown routines, no branching, no args.\nextern void rva008B8B80ReleaseAll();\nextern void d_008b61d0();\nextern void rva008A4630ReleaseGlobals();\nextern void rva008A47B0ReleaseGlobals();\nextern void bfmeGo1062B();\nextern void rva008A48D0ReleaseGlobals();\nextern void bfmeGo1083A();\nextern void bfmeGo1082C();\nextern void bfmeGo1082B();\nextern void rva008B2BD0ReleaseGlobals();\nextern void d_008acac0();\nextern void rva008A98B0ReleaseAll();\nextern void Rva008A4AA0Invoke();\n\nvoid rva00891E00ReleaseChain()\n{\n\trva008B8B80ReleaseAll();\n\td_008b61d0();\n\trva008A4630ReleaseGlobals();\n\trva008A47B0ReleaseGlobals();\n\tbfmeGo1062B();\n\trva008A48D0ReleaseGlobals();\n\tbfmeGo1083A();\n\tbfmeGo1082C();\n\tbfmeGo1082B();\n\trva008B2BD0ReleaseGlobals();\n\td_008acac0();\n\trva008A98B0ReleaseAll();\n\tRva008A4AA0Invoke();\n}\n"
-}

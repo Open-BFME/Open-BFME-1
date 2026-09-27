@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "481f6c9b7603146db296a10e9e10ea69d4521590b221a59de29599ec53b0e2ca",
-  "symbol": "?Set_Render_Device@WW3D@@SA?AW4WW3DErrorType@@HHHHH_N00@Z",
-  "score_kind": "author-estimate",
-  "score": 0.94,
-  "source": "// ?Set_Render_Device@WW3D@@SA?AW4WW3DErrorType@@HHHHH_N00@Z\n// partial score=0.94 date=2026-09-08\n// Authentic WW3D wrapper semantics. This matches the entire call setup and target;\n// only the final bool-to-enum normalization differs: retail `test al; setne al`,\n// while MSVC emits either `movzx eax,al` or `neg/sbb/neg` for this return type.\nWW3DErrorType WW3D::Set_Render_Device(int dev, int width, int height, int bits,\n\tint windowed, bool resize_window, bool reset_device, bool restore_assets)\n{\n\tbool success = DX8Wrapper::Set_Render_Device(dev, width, height, bits, windowed,\n\t\tresize_window, reset_device, restore_assets);\n\tif (success) {\n\t\treturn WW3D_ERROR_GENERIC;\n\t} else {\n\t\treturn WW3D_ERROR_OK;\n\t}\n}\n"
-}

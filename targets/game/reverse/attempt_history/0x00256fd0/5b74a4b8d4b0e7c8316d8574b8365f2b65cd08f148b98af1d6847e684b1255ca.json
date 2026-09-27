@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "5b74a4b8d4b0e7c8316d8574b8365f2b65cd08f148b98af1d6847e684b1255ca",
-  "symbol": "?framesUntilNext@Rva00256FD0Owner@@QAEHXZ",
-  "score_kind": "author-estimate",
-  "score": 0.7,
-  "source": "// ?framesUntilNext@Rva00256FD0Owner@@QAEHXZ\n// partial score=0.7 date=2026-09-06\nstruct Rva00256FD0Logic { char m_pad[0x3c]; unsigned int m_frame; };\nextern Rva00256FD0Logic* TheBfmeGameLogic;\nstruct Rva00256FD0Link { Rva00256FD0Link* m_next; Rva00256FD0Link* m_prev; int m_id; unsigned int m_frame; };\nstruct Rva00256FD0Owner {\n\tchar m_pad[0x20];\n\tRva00256FD0Link* m_head;\n\tint framesUntilNext();\n};\nint Rva00256FD0Owner::framesUntilNext()\n{\n\tunsigned int frame = TheBfmeGameLogic->m_frame;\n\tunsigned int best = 0;\n\tfor (Rva00256FD0Link* n = m_head->m_next; n != m_head; n = n->m_next) {\n\t\tint id = n->m_id;\n\t\tunsigned int f = n->m_frame;\n\t\tif (f < best || best == 0)\n\t\t\tbest = f;\n\t}\n\tif (best == 0)\n\t\treturn 0x3fffffff;\n\tint delta = best - frame;\n\tif (delta > 0)\n\t\treturn delta;\n\treturn 1;\n}\n"
-}

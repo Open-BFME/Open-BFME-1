@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "c8ed723b7836ee00e2ad9fc890f56e3f8e53554ad08e418c542af7f33419e791",
-  "symbol": "?bfmeInsertZO@BfmeIterZO@@QAEXPBUBfmeValZO@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.96,
-  "source": "// ?bfmeInsertZO@BfmeIterZO@@QAEXPBUBfmeValZO@@@Z\n// partial score=0.96 date=2026-09-08\nnamespace _STL\n{\n\nclass __new_alloc\n{\npublic:\n\tstatic void *allocate(unsigned int n);\n};\n\n}\n\ninline void *operator new(unsigned int, void *p)\n{\n\treturn p;\n}\n\nstruct BfmeValZO\n{\n\tBfmeValZO(const BfmeValZO &o) : m_bfmeAZO(o.m_bfmeAZO), m_bfmeBZO(o.m_bfmeBZO) {}\n\n\tvoid *m_bfmeAZO;\n\tvoid *m_bfmeBZO;\n};\n\nstruct BfmeNodeZO\n{\n\tBfmeNodeZO *m_bfmePrevZO;\n\tBfmeNodeZO *m_bfmeNextZO;\n\tBfmeValZO m_bfmeValZO;\n};\n\nclass BfmeIterZO\n{\npublic:\n\tvoid bfmeInsertZO(const BfmeValZO *v);\n\n\tBfmeNodeZO **m_bfme00ZO;\n};\n\nvoid BfmeIterZO::bfmeInsertZO(const BfmeValZO *v)\n{\n\tBfmeNodeZO *at = *m_bfme00ZO;\n\tBfmeNodeZO *n = (BfmeNodeZO *)_STL::__new_alloc::allocate(16);\n\n\tnew (&n->m_bfmeValZO) BfmeValZO(*v);\n\n\tBfmeNodeZO *nx = at->m_bfmeNextZO;\n\n\tn->m_bfmePrevZO = at;\n\tn->m_bfmeNextZO = nx;\n\tnx->m_bfmePrevZO = n;\n\tat->m_bfmeNextZO = n;\n}\n"
-}

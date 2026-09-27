@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "45ff551f5b0104b279035b3d1de0b34623dcdd6e11c1463c49ec861c4667a2c3",
-  "symbol": "?clearChainAndStats@Rva000CE400Owner@@QAEXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.8,
-  "source": "// ?clearChainAndStats@Rva000CE400Owner@@QAEXXZ\n// partial score=0.8 date=2026-09-06\nstruct Rva000CE400Node { virtual ~Rva000CE400Node(); int m_4; int m_8; Rva000CE400Node* m_next; };\nstruct Rva000CE400Stats { int m_0; int m_4; int m_8; int m_c; int m_10; int m_14; };\nstruct Rva000CE400Owner {\n\tchar m_pad[0x54];\n\tRva000CE400Node* m_head;\n\tchar m_pad2[0x74 - 0x58];\n\tRva000CE400Stats m_statsA;\n\tRva000CE400Stats m_statsB;\n\tvoid clearChainAndStats();\n};\nvoid Rva000CE400Owner::clearChainAndStats()\n{\n\twhile (m_head) {\n\t\tRva000CE400Node* next = m_head->m_next;\n\t\tdelete m_head;\n\t\tm_head = next;\n\t}\n\tm_statsA.m_0 = 0; m_statsA.m_4 = 0; m_statsA.m_8 = 0; m_statsA.m_c = 0; m_statsA.m_10 = 0; m_statsA.m_14 = 0;\n\tm_statsB.m_0 = 0; m_statsB.m_4 = 0; m_statsB.m_8 = 0; m_statsB.m_c = 0; m_statsB.m_10 = 0; m_statsB.m_14 = 0;\n}\n"
-}

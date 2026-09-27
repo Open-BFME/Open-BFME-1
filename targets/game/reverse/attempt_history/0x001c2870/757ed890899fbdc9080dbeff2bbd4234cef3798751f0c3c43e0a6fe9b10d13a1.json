@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "757ed890899fbdc9080dbeff2bbd4234cef3798751f0c3c43e0a6fe9b10d13a1",
-  "symbol": "?notEquals@Rva001C2870Arr@@QBE_NPBU1@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?notEquals@Rva001C2870Arr@@QBE_NPBU1@@Z\n// partial score=0.85 date=2026-09-06\n// ?notEquals@Rva001C2870Arr@@QBE_NPBU1@@Z\n// Address-derived: compare 10 consecutive ints against another instance's 10\n// ints, returning true if any differ.\nstruct Rva001C2870Arr\n{\n\tint v[10];\n\n\tbool notEquals(const Rva001C2870Arr* other) const;\n};\n\nbool Rva001C2870Arr::notEquals(const Rva001C2870Arr* other) const\n{\n\tfor (unsigned i = 0; i < 10; ++i)\n\t{\n\t\tif (v[i] != other->v[i])\n\t\t\treturn !!1;\n\t}\n\treturn !!0;\n}\n"
-}

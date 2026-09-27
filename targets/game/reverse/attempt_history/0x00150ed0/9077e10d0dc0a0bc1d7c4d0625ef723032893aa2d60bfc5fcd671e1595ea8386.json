@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "9077e10d0dc0a0bc1d7c4d0625ef723032893aa2d60bfc5fcd671e1595ea8386",
-  "symbol": "?bfmeNotifyYF@BfmeHostYF@@QAEXHH@Z",
-  "score_kind": "author-estimate",
-  "score": 0.98,
-  "source": "// ?bfmeNotifyYF@BfmeHostYF@@QAEXHH@Z\n// partial score=0.98 date=2026-09-08\nstruct RvaC4390Interface\n{\n\tvirtual void bfmeDoYF(int a, int b) = 0;\n};\n\nclass RvaC4390First\n{\npublic:\n\tRvaC4390Interface *getInterface();\n};\n\nstruct BfmeNodeYF\n{\n\tBfmeNodeYF *volatile m_bfmeNextYF;\n\tunsigned char m_bfmePadYF[4];\n\tRvaC4390First *m_bfme08YF;\n};\n\nclass BfmeListYF\n{\npublic:\n\tbool empty() const { return m_bfmeNodeYF->m_bfmeNextYF == m_bfmeNodeYF; }\n\tRvaC4390First *front() const { return m_bfmeNodeYF->m_bfmeNextYF->m_bfme08YF; }\n\n\tBfmeNodeYF *m_bfmeNodeYF;\n};\n\nclass BfmeHostYF\n{\npublic:\n\tvoid bfmeNotifyYF(int a, int b);\n\n\tunsigned char m_bfmeHeadYF[4];\n\tBfmeListYF m_bfme04YF;\n};\n\nvoid BfmeHostYF::bfmeNotifyYF(int a, int b)\n{\n\tif (m_bfme04YF.empty())\n\t\treturn;\n\n\tRvaC4390Interface *iface = m_bfme04YF.front()->getInterface();\n\n\tif (iface == 0)\n\t\treturn;\n\n\tiface->bfmeDoYF(a, b);\n}\n"
-}

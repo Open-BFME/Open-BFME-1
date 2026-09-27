@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "c8fbc6da93d83c8fc242a50cfa0710d90b144e57fb67bd5ceb2a4a712c13effb",
-  "symbol": "?getSlave@ParticleSystem@@QAE?AVParticleSystemHandle@@XZ",
-  "score_kind": "author-estimate",
-  "score": 0.82,
-  "source": "// ?getSlave@ParticleSystem@@QAE?AVParticleSystemHandle@@XZ\n// partial score=0.82 date=2026-09-08\n// cl: /DNDEBUG /MD /EHsc\n// Open-BFME: ParticleSystem::getSlave, retail 0x0060BB60 (78 bytes).\n// The matched ILT at 0x00029208 proves the member identity.  A returned\n// ParticleSystemHandle joins the pointee's intrusive tracking-pointer list.\n\nclass ParticleSystem;\n\nclass ParticleSystemHandle\n{\npublic:\n\tParticleSystemHandle(const ParticleSystemHandle &other);\n\t~ParticleSystemHandle();\n\nprivate:\n\tfriend class ParticleSystem;\n\tParticleSystem *m_system;\n\tParticleSystemHandle *m_previous;\n\tParticleSystemHandle *m_next;\n};\n\nclass ParticleSystem\n{\npublic:\n\tParticleSystemHandle getSlave();\n\nprivate:\n\tfriend class ParticleSystemHandle;\n\tunsigned char m_unmodelled_000[0x98];\n\tParticleSystemHandle *m_firstHandle;\n\tParticleSystemHandle *m_lastHandle;\n\tunsigned char m_unmodelled_0A0[0xC0];\n\tParticleSystemHandle m_slaveSystem;\n};\n\nParticleSystemHandle::ParticleSystemHandle(const ParticleSystemHandle &other)\n\t: m_system(other.m_system)\n{\n\tif (m_system)\n\t{\n\t\tm_previous = m_system->m_lastHandle;\n\t\tm_next = 0;\n\t\tm_system->m_lastHandle = this;\n\t\tif (m_previous)\n\t\t\tm_previous->m_next = this;\n\t\telse\n\t\t\tm_system->m_firstHandle = this;\n\t}\n\telse\n\t{\n\t\tm_previous = 0;\n\t\tm_next = 0;\n\t}\n}\n\nParticleSystemHandle ParticleSystem::getSlave()\n{\n\treturn m_slaveSystem;\n}\n"
-}

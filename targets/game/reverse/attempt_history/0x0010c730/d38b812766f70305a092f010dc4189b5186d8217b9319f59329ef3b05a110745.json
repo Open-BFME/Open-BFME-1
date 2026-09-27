@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "d38b812766f70305a092f010dc4189b5186d8217b9319f59329ef3b05a110745",
-  "symbol": "?BfmeParticleSystemXferMatrix@@YAXAAVXfer@@PAX@Z",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?BfmeParticleSystemXferMatrix@@YAXAAVXfer@@PAX@Z\n// partial score=0.9 date=2026-09-06\n// cl: /DNDEBUG /MD /EHsc /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include/Common /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib\n\n#include \"xfer.h\"\n#include \"matrix3d.h\"\n\nstruct BfmeMatrix3DLayout\n{\n\tVector4 row[ 3 ];\n};\n\n// ?BfmeParticleSystemXferMatrix@@YAXAAVXfer@@PAX@Z\nvoid BfmeParticleSystemXferMatrix( Xfer &xfer, void *value )\n{\n\tBfmeMatrix3DLayout *matrix = (BfmeMatrix3DLayout *)value;\n\txfer == matrix->row[ 0 ].X == matrix->row[ 0 ].Y == matrix->row[ 0 ].Z == matrix->row[ 0 ].W\n\t\t== matrix->row[ 1 ].X == matrix->row[ 1 ].Y == matrix->row[ 1 ].Z == matrix->row[ 1 ].W\n\t\t== matrix->row[ 2 ].X == matrix->row[ 2 ].Y == matrix->row[ 2 ].Z == matrix->row[ 2 ].W;\n}\n"
-}

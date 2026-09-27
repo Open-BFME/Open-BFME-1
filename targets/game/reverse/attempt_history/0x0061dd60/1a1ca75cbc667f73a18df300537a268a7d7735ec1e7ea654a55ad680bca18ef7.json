@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "1a1ca75cbc667f73a18df300537a268a7d7735ec1e7ea654a55ad680bca18ef7",
-  "symbol": "?applyField@BfmeApplyFieldHolder@@QAEXABVRva0060FD30Base@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.92,
-  "source": "// ?applyField@BfmeApplyFieldHolder@@QAEXABVRva0060FD30Base@@@Z\n// partial score=0.92 date=2026-09-04\n// ?applyField@BfmeApplyFieldHolder@@QAEXABVRva0060FD30Base@@@Z\n// partial score=0.92 date=2026-09-02\n// cl: /DNDEBUG /MD /EHsc\n\nclass Gen00001B18;\nGen00001B18 *Make00001B18(void);\n\nclass Rva0060FD30Base\n{\npublic:\n\tRva0060FD30Base(const Rva0060FD30Base &other);\n\tunsigned char *m_ptr;\n\tunsigned char m_rest[8];\n\n\tGen00001B18 *operator->() const\n\t{\n\t\tif (!m_ptr)\n\t\t\treturn Make00001B18();\n\t\treturn (Gen00001B18 *)m_ptr;\n\t}\n};\n\nclass Gen00001B18\n{\npublic:\n\tunsigned char m_beforeAc[0xac];\n\tunsigned int m_fieldAc;\n};\n\nGen00001B18 *Make00001B18(void);\n\nclass BfmeApplyFieldHolder\n{\npublic:\n\tvoid applyField(const Rva0060FD30Base &src);\n\nprivate:\n\tunsigned char m_before[0x14];\n\tRva0060FD30Base m_obj;\n\tunsigned int m_field20;\n};\n\nvoid BfmeApplyFieldHolder::applyField(const Rva0060FD30Base &src)\n{\n\tif (src.m_ptr)\n\t{\n\t\tm_obj.Rva0060FD30Base::Rva0060FD30Base(src);\n\t\tm_field20 = m_obj->m_fieldAc;\n\t}\n}\n"
-}

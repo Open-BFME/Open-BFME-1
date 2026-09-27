@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "a97d73f3a4a1d64dd74e08de67467f62563c631cf0838ba28e1ff3d4fc49597a",
-  "symbol": "?bfmeCountXL@BfmeHostXL@@QAEHPAVBfmeCheckFH@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.97,
-  "source": "// ?bfmeCountXL@BfmeHostXL@@QAEHPAVBfmeCheckFH@@@Z\n// partial score=0.97 date=2026-09-08\nclass BfmeCheckFH\n{\npublic:\n\tchar bfmeCheckFH(void *p);\n};\n\nstruct BfmeNodeXL\n{\n\tunsigned char m_bfmeHeadXL[4];\n\tint m_bfme04XL;\n\tvoid *m_bfme08XL;\n};\n\nclass BfmeHostXL\n{\npublic:\n\tint bfmeCountXL(BfmeCheckFH *chk);\n\n\tvirtual void bfmeVH0() = 0;\n\tvirtual void bfmeVH1() = 0;\n\tvirtual void bfmeVH2() = 0;\n\tvirtual void bfmeVH3() = 0;\n\tvirtual void bfmeVH4() = 0;\n\tvirtual void bfmeVH5() = 0;\n\tvirtual void bfmeVH6() = 0;\n\tvirtual void bfmeVH7() = 0;\n\tvirtual void bfmeVH8() = 0;\n\tvirtual void bfmeVH9() = 0;\n\tvirtual void bfmeVH10() = 0;\n\tvirtual void bfmeVH11() = 0;\n\tvirtual void bfmeVH12() = 0;\n\tvirtual void bfmeVH13() = 0;\n\tvirtual void bfmeVH14() = 0;\n\tvirtual void bfmeVH15() = 0;\n\tvirtual void bfmeVH16() = 0;\n\tvirtual void bfmeVH17() = 0;\n\tvirtual BfmeNodeXL *bfmeFirstXL() = 0;\n\tvirtual BfmeNodeXL *bfmeNextXL(BfmeNodeXL *p) = 0;\n};\n\nint BfmeHostXL::bfmeCountXL(BfmeCheckFH *chk)\n{\n\tint n = 0;\n\tBfmeNodeXL *p = bfmeFirstXL();\n\n\twhile (p)\n\t{\n\t\tif (p->m_bfme04XL == 1 && chk->bfmeCheckFH(p->m_bfme08XL))\n\t\t\tn++;\n\n\t\tp = bfmeNextXL(p);\n\t}\n\n\treturn n;\n}\n"
-}

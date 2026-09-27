@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "514e80870ff3ff136a9b03d524fdc750a67ddc4dc352c8cf2fa749430cb794b3",
-  "symbol": "?setPositiveValue@Rva00918DD0Owner@@QAEXM@Z",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?setPositiveValue@Rva00918DD0Owner@@QAEXM@Z\n// partial score=0.9 date=2026-09-06\nextern const float BfmeZeroRange;\nstruct Rva00918DD0Owner {\n\tchar m_pad[0x10];\n\tunsigned int m_flags;\n\tchar m_pad2[0x10c - 0x14];\n\tfloat m_first;\n\tchar m_pad3[0x15c - 0x110];\n\tfloat m_second;\n\tvoid setPositiveValue(float value);\n};\nvoid Rva00918DD0Owner::setPositiveValue(float value)\n{\n\tm_first = (value > BfmeZeroRange) ? value : BfmeZeroRange;\n\tif (value > BfmeZeroRange) {\n\t\tm_second = value;\n\t\tm_flags &= ~0x20000;\n\t} else {\n\t\tm_second = BfmeZeroRange;\n\t\tm_flags &= ~0x20000;\n\t}\n}\n"
-}

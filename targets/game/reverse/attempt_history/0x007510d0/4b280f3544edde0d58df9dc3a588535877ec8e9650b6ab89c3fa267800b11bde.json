@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "4b280f3544edde0d58df9dc3a588535877ec8e9650b6ab89c3fa267800b11bde",
-  "symbol": "?d_007510d0@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.88,
-  "source": "// ?d_007510d0@@YAXXZ\n// partial score=0.88 date=2026-09-08\nextern \"C\" void *bfmeVft1TJ[];\nextern \"C\" void *bfmeVftTJ[];\n\nclass BfmeItemTJ\n{\npublic:\n\tvirtual void bfmeDestroyTJ();\n\n\tint m_bfmeRefTJ;\n};\n\nclass BfmeGlobPB\n{\npublic:\n\tvirtual void bfmeSlot00TJ();\n\tvirtual void bfmeSlot01TJ();\n\tvirtual void bfmeSlot02TJ();\n\tvirtual void bfmeDetachTJ(BfmeItemTJ *item);\n};\n\nclass BfmeGlobQE;\n\nextern BfmeGlobQE *g_bfmeGlobQE;\nextern BfmeGlobPB *g_bfmeGlobPB;\n\nvoid __stdcall bfmeReleaseTJ(void *item);\n\nclass BfmeBase2TJ\n{\npublic:\n\t~BfmeBase2TJ();\n\n\tvoid *volatile m_bfmeVftTJ;\n\tunsigned char m_bfmeHeadTJ[8];\n};\n\nclass BfmeBase1TJ : public BfmeBase2TJ\n{\npublic:\n\t__forceinline ~BfmeBase1TJ() { m_bfmeVftTJ = bfmeVftTJ; }\n};\n\nclass BfmeHostTJ : public BfmeBase1TJ\n{\npublic:\n\t~BfmeHostTJ();\n\n\tBfmeItemTJ *m_bfmeItemTJ;\n\tvoid *m_bfmeOtherTJ;\n};\n\nBfmeHostTJ::~BfmeHostTJ()\n{\n\tm_bfmeVftTJ = bfmeVft1TJ;\n\n\tif (g_bfmeGlobQE != 0 && m_bfmeOtherTJ != 0)\n\t{\n\t\tbfmeReleaseTJ(m_bfmeOtherTJ);\n\n\t\tm_bfmeOtherTJ = 0;\n\t}\n\n\tif (m_bfmeItemTJ != 0)\n\t{\n\t\tg_bfmeGlobPB->bfmeDetachTJ(m_bfmeItemTJ);\n\n\t\tif (m_bfmeItemTJ != 0)\n\t\t{\n\t\t\tif (--m_bfmeItemTJ->m_bfmeRefTJ == 0)\n\t\t\t\tm_bfmeItemTJ->bfmeDestroyTJ();\n\t\t}\n\n\t\tm_bfmeItemTJ = 0;\n\t}\n}\n"
-}

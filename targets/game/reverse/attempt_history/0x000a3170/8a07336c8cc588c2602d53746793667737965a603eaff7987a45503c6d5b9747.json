@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "8a07336c8cc588c2602d53746793667737965a603eaff7987a45503c6d5b9747",
-  "symbol": "?bfmeMatchCC@@YADPAVBfmeThingCC@@0@Z",
-  "score_kind": "author-estimate",
-  "score": 0.96,
-  "source": "// ?bfmeMatchCC@@YADPAVBfmeThingCC@@0@Z\n// partial score=0.96 date=2026-09-07\n// 61/61 at exact size. Every instruction matches, including the\n// xor edx,edx / sete dl / mov al,dl char tail ([[mask-not-less-than-zero]]'s\n// sibling idiom) and the rank local shared between the `< 0` test and the\n// compare. The ONLY difference is where MSVC puts the shared `return 1` block:\n// retail emits it INLINE between the two guards and the body (both guards jump\n// forward a few bytes to it); MSVC sinks it past the body.\n// Same residue class as 0x006128F0 -- see [[guard-polarity-places-blocks]] and\n// that stash. Both spellings give byte-identical output here:\n//   if (r == 0 || b == r) return 1;  <body>\n//   if (r != 0 && b != r) { <body> }  return 1;\nclass BfmeThingCC\n{\npublic:\n\tvirtual void bfmeSlot00CC();\n\tvirtual void bfmeSlot01CC();\n\tvirtual void bfmeSlot02CC();\n\tvirtual void bfmeSlot03CC();\n\tvirtual void bfmeSlot04CC();\n\tvirtual void *bfmeKeyCC();\n\n\tBfmeThingCC *bfmeResolveCC(void *key);\n\n\tunsigned char m_bfmeHeadCC[0x14];\n\tint m_bfmeRankCC;\n};\n\nchar __cdecl bfmeMatchCC(BfmeThingCC *a, BfmeThingCC *b)\n{\n\tBfmeThingCC *r = a->bfmeResolveCC(a->bfmeKeyCC());\n\n\tif (r == 0 || b == r)\n\t\treturn 1;\n\n\tint rank = b->m_bfmeRankCC;\n\n\tif (rank < 0)\n\t\treturn 0;\n\n\treturn rank == r->m_bfmeRankCC ? 1 : 0;\n}\n"
-}

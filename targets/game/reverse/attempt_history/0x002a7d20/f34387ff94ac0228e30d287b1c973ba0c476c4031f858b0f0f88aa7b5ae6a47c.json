@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "f34387ff94ac0228e30d287b1c973ba0c476c4031f858b0f0f88aa7b5ae6a47c",
-  "symbol": "?bfmeGetXS@BfmeHostXS@@QAEHXZ",
-  "score_kind": "author-estimate",
-  "score": 0.94,
-  "source": "// ?bfmeGetXS@BfmeHostXS@@QAEHXZ\n// partial score=0.94 date=2026-09-08\n// pins needed (CRLF):\n//   ?bfmeFindDrawXS@Rva00367E30Logic@@QAEPAVDrawable@@PAX@Z,0x0001F253\n//   ?bfmeChainXS@BfmeOverXS@@QAEPAV1@XZ,0x00048C61\nclass BfmeOverXS\n{\npublic:\n\tBfmeOverXS *bfmeChainXS();\n\n\tunsigned char m_bfmeHeadXS[4];\n\tBfmeOverXS *m_bfme04XS;\n\tunsigned char m_bfmeMidXS[0xc];\n\tint m_bfme14XS;\n};\n\nclass Drawable\n{\npublic:\n\tbool isKindOf(int kind) const;\n};\n\nstruct Rva00367E30Logic\n{\n\tDrawable *bfmeFindDrawXS(void *id);\n};\n\nextern Rva00367E30Logic *TheBfmeGameLogic;\n\nclass BfmeSubXS\n{\npublic:\n\tunsigned char m_bfmeHeadXS[0x1d8];\n\tBfmeOverXS *m_bfme1D8XS;\n\tunsigned char m_bfmeMidXS[0x30];\n\tint m_bfme20CXS;\n};\n\nclass BfmeHostXS\n{\npublic:\n\tint bfmeGetXS();\n\n\tunsigned char m_bfmeHeadXS[4];\n\tBfmeSubXS *m_bfme04XS;\n\tunsigned char m_bfmeMidXS[0xa4];\n\tvoid *m_bfmeACXS;\n};\n\nint BfmeHostXS::bfmeGetXS()\n{\n\tBfmeSubXS *sub = m_bfme04XS;\n\tBfmeOverXS *base = sub->m_bfme1D8XS;\n\tDrawable *obj = TheBfmeGameLogic->bfmeFindDrawXS(m_bfmeACXS);\n\tBfmeOverXS *q = base->m_bfme04XS;\n\n\tif (q != 0)\n\t{\n\t\tif (q->m_bfme04XS != 0)\n\t\t\tq = q->m_bfme04XS->bfmeChainXS();\n\n\t\tbase = q;\n\t}\n\n\n\tif (base->m_bfme14XS != 0x27)\n\t\treturn sub->m_bfme20CXS;\n\n\tif (obj != 0)\n\t{\n\t\tif (obj->isKindOf(6))\n\t\t\treturn sub->m_bfme20CXS;\n\n\t\tif (obj->isKindOf(0x62))\n\t\t\treturn sub->m_bfme20CXS;\n\n\t\treturn 0;\n\t}\n\n\treturn sub->m_bfme20CXS;\n}\n"
-}

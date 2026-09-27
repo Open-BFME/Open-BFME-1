@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "a2a8b0bc3b9d551e9055e96e3a55968c1f1424334c5472a410749065087d3545",
-  "symbol": "?parseLastEntryReal@@YAXPAVINI@@PAX1PBX@Z",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?parseLastEntryReal@@YAXPAVINI@@PAX1PBX@Z\n// partial score=0.9 date=2026-09-06\nclass INI {\npublic:\n\tconst char* getNextToken(const char* seps);\n\tstatic float scanReal(const char* token);\n};\nstruct Rva0087F1D0Entry { int m_0; int m_4; float m_value; char m_rest[36 - 12]; };\nstruct Rva0087F1D0Owner {\n\tchar m_pad[0x2c];\n\tRva0087F1D0Entry* m_begin;\n\tRva0087F1D0Entry* m_end;\n\tint size() const { return m_end - m_begin; }\n\tvoid finish();\n};\nvoid parseLastEntryReal(INI* ini, void* instance, void* store, const void* userData)\n{\n\tRva0087F1D0Owner* owner = (Rva0087F1D0Owner*)store;\n\tif (owner->size() != 0) {\n\t\tRva0087F1D0Entry* last = owner->m_end - 1;\n\t\tlast->m_value = INI::scanReal(ini->getNextToken(0));\n\t}\n\towner->finish();\n}\n"
-}

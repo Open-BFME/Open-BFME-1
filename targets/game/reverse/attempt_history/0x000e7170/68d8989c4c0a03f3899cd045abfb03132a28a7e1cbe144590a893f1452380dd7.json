@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "68d8989c4c0a03f3899cd045abfb03132a28a7e1cbe144590a893f1452380dd7",
-  "symbol": "?bfmePruneAM@BfmeOwnerAM@@QAEXXZ (identity unknown)",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?bfmePruneAM@BfmeOwnerAM@@QAEXXZ (identity unknown)\n// partial score=0.9 date=2026-09-07\n// Byte-for-byte identical to 0x000EB7B0 -- the same prune loop emitted twice.\n// Use reverse/attempts/0x000eb7b0.cpp verbatim; the residue is the same 2-byte\n// pre-header (retail materialises m_bfmeEndAJ into eax) plus a callee-saved\n// permutation.\n"
-}

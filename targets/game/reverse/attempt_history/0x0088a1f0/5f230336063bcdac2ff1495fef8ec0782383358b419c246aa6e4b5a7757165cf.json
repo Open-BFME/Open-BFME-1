@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "5f230336063bcdac2ff1495fef8ec0782383358b419c246aa6e4b5a7757165cf",
-  "symbol": "?broadcast@Rva0088A1F0Owner@@QAEXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.82,
-  "source": "// ?broadcast@Rva0088A1F0Owner@@QAEXXZ\n// partial score=0.82 date=2026-09-06\n// ?broadcast@Rva0088A1F0Owner@@QAEXXZ\n// Address-derived: walk the singly-linked list at this->m_c, and for each\n// node whose interface pointer (m_10) is non-null, call vtable slot 3 with\n// (this->m_9cf4, &this->m_9cf8, 0) then vtable slot 4 with no args.\nstruct Rva0088A1F0Iface\n{\n\tvirtual void s0();\n\tvirtual void s1();\n\tvirtual void s2();\n\tvirtual void call3(void* a1, void* a2, void* a3);\n\tvirtual void call4();\n};\n\nstruct Rva0088A1F0Node\n{\n\tRva0088A1F0Node* m_next;\n\tunsigned char m_pad4[0x10 - 4];\n\tRva0088A1F0Iface* m_10;\n};\n\nstruct Rva0088A1F0Owner\n{\n\tunsigned char m_pad0[0xc];\n\tRva0088A1F0Node* m_c;\n\tunsigned char m_pad10[0x9cf4 - 0x10];\n\tvoid* m_9cf4;\n\tunsigned char m_9cf8[4];\n\n\tvoid broadcast();\n};\n\nvoid Rva0088A1F0Owner::broadcast()\n{\n\tfor (Rva0088A1F0Node* n = m_c; n; n = n->m_next)\n\t{\n\t\tRva0088A1F0Iface* iface = n->m_10;\n\t\tif (iface)\n\t\t{\n\t\t\tiface->call3(m_9cf4, m_9cf8, 0);\n\t\t\tn->m_10->call4();\n\t\t}\n\t}\n}\n"
-}

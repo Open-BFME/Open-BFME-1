@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "4026a17c59ba5b02661bce0181b585a0029f0c6394393013f226b71c59b36e4b",
-  "symbol": "??$__insertion_sort@PAHURva00453A80Cmp@@@_STL@@YAXPAH0URva00453A80Cmp@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ??$__insertion_sort@PAHURva00453A80Cmp@@@_STL@@YAXPAH0URva00453A80Cmp@@@Z\n// partial score=0.9 date=2026-09-06\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB\n// stlport\n// Open-BFME7: STLport __insertion_sort over int with a stateful comparator\n// (112 B gap at 0x00453A80 claimed by its shape: inline __linear_insert with\n// copy_backward as memmove and the out-of-line __unguarded_linear_insert).\n#define _STLP_NO_EXCEPTIONS 1\n#include <algorithm>\nstruct Rva00453A80Cmp\n{\n\tvoid* m_state;\n\tbool operator()(int left, int right) const;\n};\ntemplate void _STL::__insertion_sort<int*, Rva00453A80Cmp>(int*, int*, Rva00453A80Cmp);\n"
-}

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "7b1114c736facc40b1ddac8e34329c5311985716c108f3b86d5a816a988bcdc0",
-  "symbol": "?bfmeLookupAAL@@YADPAUBfmeHostAAL@@PAX@Z",
-  "score_kind": "author-estimate",
-  "score": 0.78,
-  "source": "// ?bfmeLookupAAL@@YADPAUBfmeHostAAL@@PAX@Z\n// partial score=0.78 date=2026-09-08\nclass BfmeCheckAAL\n{\npublic:\n\tint bfmeCheckAAL(void *key);\n};\n\nclass BfmeVecAAL\n{\npublic:\n\tint bfmeFindAAL(void *key);\n\n\tint *m_bfmeBeginAAL;\n\tint *m_bfmeEndAAL;\n\tunsigned char m_bfmeGapAAL[4];\n};\n\nstruct BfmeHostAAL\n{\n\tunsigned char m_bfmeHeadAAL[0x2c];\n\tBfmeVecAAL m_bfme2CAAL;\n\tchar *m_bfme38AAL;\n};\n\nchar bfmeLookupAAL(BfmeHostAAL *host, void *key);\n\nchar bfmeLookupAAL(BfmeHostAAL *host, void *key)\n{\n\tBfmeVecAAL *v = &host->m_bfme2CAAL;\n\tint idx = v->bfmeFindAAL(key);\n\n\tif ((unsigned int)idx >= (unsigned int)(v->m_bfmeEndAAL - v->m_bfmeBeginAAL))\n\t\treturn 1;\n\n\tint rec = v->m_bfmeBeginAAL[idx];\n\tchar *recs = *(char **)((char *)v + 0xc);\n\tint off = rec * 20;\n\n\tif (((BfmeCheckAAL *)(recs + off + 8))->bfmeCheckAAL(key) != 0)\n\t\treturn 1;\n\n\tif (rec == -1)\n\t\treturn 1;\n\n\treturn host->m_bfme38AAL[off + 0xc];\n}\n"
-}

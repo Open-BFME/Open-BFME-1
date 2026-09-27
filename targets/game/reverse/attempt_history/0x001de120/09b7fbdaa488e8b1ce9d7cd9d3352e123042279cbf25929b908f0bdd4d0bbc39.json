@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "09b7fbdaa488e8b1ce9d7cd9d3352e123042279cbf25929b908f0bdd4d0bbc39",
-  "symbol": "?d_001de120@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?d_001de120@@YAXXZ\n// partial score=0.85 date=2026-09-07\n// 81/89 bytes. Exact twin of 0x001DE0B0 with the two parameters swapped: this\n// one reads arg2 first and subtracts arg1's key from it (a reversed\n// comparator). Same source, same 8-byte residue -- two sites of the\n// `add eax,4` + `mov eax,[eax]` base adjust that MSVC folds to\n// `mov eax,[eax+4]`. See reverse/attempts/0x001de0b0.cpp for what has been\n// ruled out; solving it there lands both bodies.\nclass BfmeThingPE;\n\nclass BfmeInnerPE\n{\npublic:\n\tBfmeThingPE *bfmeResolvePE(void);\n};\n\nclass BfmeThingPE\n{\npublic:\n\tint m_bfmeSparePE;\n\tBfmeInnerPE *m_bfmeInnerPE;\n\tunsigned char m_bfmeGapPE[0x472];\n\tunsigned short m_bfmeKeyPE;\n};\n\nclass BfmeEntryPE\n{\npublic:\n\tint m_bfmeSparePE;\n\tBfmeThingPE *m_bfmeThingPE;\n};\n\nclass BfmeHolderPE\n{\npublic:\n\tunsigned char m_bfmeHeadPE[8];\n\tBfmeEntryPE *m_bfmeEntryPE;\n};\n\nfloat __cdecl bfmeComparePE(BfmeHolderPE *second, BfmeHolderPE *first)\n{\n\tBfmeThingPE *firstThing = first->m_bfmeEntryPE->m_bfmeThingPE;\n\n\tif (firstThing && firstThing->m_bfmeInnerPE)\n\t\tfirstThing = firstThing->m_bfmeInnerPE->bfmeResolvePE();\n\n\tBfmeThingPE *secondThing = second->m_bfmeEntryPE->m_bfmeThingPE;\n\n\tif (secondThing && secondThing->m_bfmeInnerPE)\n\t\tsecondThing = secondThing->m_bfmeInnerPE->bfmeResolvePE();\n\n\treturn (float)(firstThing->m_bfmeKeyPE - secondThing->m_bfmeKeyPE);\n}\n"
-}

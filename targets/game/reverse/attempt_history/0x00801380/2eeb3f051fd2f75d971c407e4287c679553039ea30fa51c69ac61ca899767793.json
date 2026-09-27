@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "2eeb3f051fd2f75d971c407e4287c679553039ea30fa51c69ac61ca899767793",
-  "symbol": "?d_00801380@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.95,
-  "source": "// ?d_00801380@@YAXXZ\n// partial score=0.95 date=2026-09-07\n// 51/51 bytes; 6 of 17 instructions differ, by register and argument-evaluation\n// order only.\n// Settled: the table guard, the -1 sentinel test written POSITIVELY\n// (`if (index != -1) return m_table[index]; return 0;` so the shared xor lands\n// last), the member re-read for the indexed load, and the set address written\n// INLINE in the call -- hoisting it into a local turns retail's\n// `lea edx,[ecx+2b0h]` into `add eax,2b0h` and loses a byte.\n// Residue: retail evaluates the first argument (the set address) before\n// loading the key, MSVC loads the key first (right-to-left), and the table\n// register comes out edx instead of ecx. Naming the holder pointer is much\n// worse (16 diffs).\nstruct BfmeSetNH\n{\n\tunsigned char m_bfmeRawNH[4];\n};\n\nclass BfmeHolderNH\n{\npublic:\n\tunsigned char m_bfmeHeadNH[0x2b0];\n\tBfmeSetNH m_bfmeSetNH;\n};\n\nint __stdcall bfmeFindNH(BfmeSetNH *set, void *key);\n\nclass BfmeOwnerNH\n{\npublic:\n\tvoid *bfmeGetNH(void *key);\n\n\tint m_bfmeSpareNH;\n\tBfmeHolderNH *m_bfmeHolderNH;\n\tunsigned char m_bfmeGapNH[0x30];\n\tvoid **m_bfmeTableNH;\n};\n\nvoid *BfmeOwnerNH::bfmeGetNH(void *key)\n{\n\tif (m_bfmeTableNH == 0)\n\t\treturn 0;\n\n\tint index = bfmeFindNH(&m_bfmeHolderNH->m_bfmeSetNH, key);\n\n\tif (index != -1)\n\t\treturn m_bfmeTableNH[index];\n\n\treturn 0;\n}\n"
-}

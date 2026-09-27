@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "7d9aa81363069f6229daf5702feecdcc29e506df361e96cc9cc304caa67057a2",
-  "symbol": "?bfmeStopJR@BfmeThingJR@@QAEHXZ",
-  "score_kind": "author-estimate",
-  "score": 0.99,
-  "source": "// ?bfmeStopJR@BfmeThingJR@@QAEHXZ\n// partial score=0.99 date=2026-09-08\nclass BfmeXJR\n{\npublic:\n\tvirtual void bfmeVt0JR();\n\tvirtual void bfmeVt1JR();\n\tvirtual void bfmeVt2JR();\n\tvirtual void bfmeVt3JR();\n\tvirtual void bfmeVt4JR();\n\tvirtual void bfmeStopXJR(int a);\n};\n\nclass BfmeThingJR\n{\npublic:\n\tint bfmeStopJR();\n\tint bfmeFinishJR(int a);\n\n\tunsigned char m_bfmeHeadJR[0x18];\n\tint m_bfme18JR;\n\tBfmeXJR *m_bfme1cJR;\n\tint m_bfme20JR;\n\tint m_bfme24JR;\n\tint m_bfme28JR;\n\tint m_bfme2cJR;\n\tint m_bfme30JR;\n\tint m_bfme34JR;\n\tint m_bfme38JR;\n\tint m_bfme3cJR;\n\tchar m_bfme40JR;\n\tchar m_bfme41JR;\n\tunsigned char m_bfmePadJR[2];\n};\n\nint BfmeThingJR::bfmeStopJR()\n{\n\tif (m_bfme40JR != 0)\n\t\treturn -2;\n\n\tif (m_bfme41JR == 0)\n\t\treturn -2;\n\n\tint a;\n\tBfmeXJR *x = m_bfme1cJR;\n\n\tif (x != 0)\n\t\tx->bfmeStopXJR(1);\n\n\ta = m_bfme18JR;\n\n\tm_bfme1cJR = 0;\n\tm_bfme20JR = 0;\n\tm_bfme24JR = 0;\n\tm_bfme28JR = 0;\n\tm_bfme2cJR = 0;\n\tm_bfme30JR = 0;\n\tm_bfme34JR = 0;\n\tm_bfme38JR = 0;\n\tm_bfme3cJR = 0;\n\n\treturn bfmeFinishJR(a);\n}\n"
-}

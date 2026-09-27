@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "573104e55c398b17ab81843074e1f2e3b8ba30fad3adc4cac1f88bf5cc4890b2",
-  "symbol": "?d_00b00260@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.96,
-  "source": "// ?d_00b00260@@YAXXZ\n// partial score=0.96 date=2026-09-08\n// cl: /DNDEBUG /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep\n\n#include \"vector3.h\"\n#include \"matrix3d.h\"\n\nclass Rva00B00260MatrixView : public Matrix3D\n{\npublic:\n\tstatic __forceinline void rotateArray(Vector3 *out, const Vector3 *in,\n\t\tconst Matrix3D &matrix, int count)\n\t{\n\t\tconst Rva00B00260MatrixView &m =\n\t\t\t(const Rva00B00260MatrixView &)matrix;\n\t\twhile (count--)\n\t\t{\n\t\t\tfloat row0z = m.Row[0][2] * in->Z;\n\t\t\tout->X = row0z + m.Row[0][1] * in->Y + m.Row[0][0] * in->X;\n\t\t\tout->Y = (m.Row[1][0] * in->X + m.Row[1][1] * in->Y + m.Row[1][2] * in->Z);\n\t\t\tout->Z = (m.Row[2][0] * in->X + m.Row[2][1] * in->Y + m.Row[2][2] * in->Z);\n\t\t\t++in;\n\t\t\t++out;\n\t\t}\n\t}\n};\n\nvoid rva00B00260RotateVec3Array(Vector3 *out, const Vector3 *in,\n\tconst Matrix3D &mtx, int count)\n{\n\tint n = count;\n\tVector3 *d = out;\n\tconst Vector3 *s = in;\n\n\tif (n <= 0)\n\t\treturn;\n\n\tRva00B00260MatrixView::rotateArray(d, s, mtx, n);\n}\n"
-}

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "f529b245b4455c33ace6f51f8fd921a9139e5e42381217fc9d302abebc763b51",
-  "symbol": "?bfmeAtXM@BfmeHostXM@@QAE?AVBfmeNameXM@@H@Z",
-  "score_kind": "author-estimate",
-  "score": 0.96,
-  "source": "// ?bfmeAtXM@BfmeHostXM@@QAE?AVBfmeNameXM@@H@Z\n// partial score=0.96 date=2026-09-08\n// TRIPLET: 0x00361E00 0x00361E80 0x00361F00 are byte-identical in shape\n// pins needed (CRLF):\n//   ??0BfmeNameXM@@QAE@ABV0@@Z,0x00887B60\n//   ?bfmeGetXM@BfmeArmyXM@@QAE?AVBfmeNameXM@@XZ,0x0004B470\n//   ?g_bfmeDefaultXM@@3VBfmeNameXM@@A,0x01336E50\nclass BfmeNameXM\n{\npublic:\n\tBfmeNameXM(const BfmeNameXM &o);\n\t~BfmeNameXM();\n\n\tvoid *m_bfmeDataXM;\n};\n\nclass BfmeArmyXM\n{\npublic:\n\tBfmeNameXM bfmeGetXM();\n\n\tunsigned char m_bfmeHeadXM[0x58];\n};\n\nextern BfmeNameXM g_bfmeDefaultXM;\n\nclass BfmeHostXM\n{\npublic:\n\tBfmeNameXM bfmeAtXM(int index);\n\n\tunsigned char m_bfmeHeadXM[0x18];\n\tBfmeArmyXM *m_bfmeBeginXM;\n\tBfmeArmyXM *m_bfmeEndXM;\n};\n\nBfmeNameXM BfmeHostXM::bfmeAtXM(int index)\n{\n\tif (index >= 0 && (unsigned int)index < (unsigned int)(m_bfmeEndXM - m_bfmeBeginXM))\n\t\treturn m_bfmeBeginXM[index].bfmeGetXM();\n\n\treturn g_bfmeDefaultXM;\n}\n"
-}

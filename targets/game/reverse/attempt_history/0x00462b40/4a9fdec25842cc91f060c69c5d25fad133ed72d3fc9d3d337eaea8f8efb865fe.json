@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "4a9fdec25842cc91f060c69c5d25fad133ed72d3fc9d3d337eaea8f8efb865fe",
-  "symbol": "?bfmeFinish991@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?bfmeFinish991@@YAXXZ\n// partial score=0.9 date=2026-09-07\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB\n// stlport\n\n#include <hash_map>\n\nclass AsciiString\n{\nprivate:\n\tvoid *m_data;\n};\n\nclass GameWindow\n{\npublic:\n\tbool winIsHidden();\n\tvoid winHide(bool hide);\n\tvoid winSetStatus(unsigned int status);\n};\n\nstruct WindowRecord\n{\n\tchar m_pad00[16];\n\tGameWindow *m_window;\n\tchar m_pad14[16];\n\tbool m_hidden;\n};\n\nnamespace rts\n{\ntemplate <class T> struct hash\n{\n\tunsigned int operator()(T value) const;\n};\n}\n\nstruct Rva00461360Value\n{\n\tAsciiString m_key;\n\tWindowRecord m_mapped;\n};\n\nstruct Rva00461360ExtractKey\n{\n\tconst AsciiString &operator()(const Rva00461360Value &value) const\n\t{\n\t\treturn value.m_key;\n\t}\n};\n\ntypedef _STL::hashtable<Rva00461360Value, AsciiString, rts::hash<AsciiString>,\n\tRva00461360ExtractKey, _STL::equal_to<AsciiString>,\n\t_STL::allocator<Rva00461360Value> > WindowTable;\n\nWindowTable *const g_windowTable = (WindowTable *)0x012F19A4;\n\n// ?bfmeFinish991@@YAXXZ\nvoid bfmeFinish991()\n{\n\tWindowTable *table = g_windowTable;\n\tfor (WindowTable::iterator it = table->begin(); it._M_cur != 0; it++)\n\t{\n\t\tif (!it->m_mapped.m_hidden)\n\t\t{\n\t\t\tGameWindow *window = it->m_mapped.m_window;\n\t\t\tif (window && !window->winIsHidden())\n\t\t\t{\n\t\t\t\twindow->winHide(true);\n\t\t\t\twindow->winSetStatus(0x10000000);\n\t\t\t}\n\t\t}\n\t}\n}\n"
-}

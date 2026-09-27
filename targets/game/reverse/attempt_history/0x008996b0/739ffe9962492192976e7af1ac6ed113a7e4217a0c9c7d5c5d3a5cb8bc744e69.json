@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "739ffe9962492192976e7af1ac6ed113a7e4217a0c9c7d5c5d3a5cb8bc744e69",
-  "symbol": "?bfmeAcquireFS@@YAPAURva008D2A30Node@@D@Z",
-  "score_kind": "author-estimate",
-  "score": 0.88,
-  "source": "// ?bfmeAcquireFS@@YAPAURva008D2A30Node@@D@Z\n// partial score=0.88 date=2026-09-08\nextern \"C\" void *bfmeVftAFS[];\nextern \"C\" void *bfmeVftBFS[];\n\nstruct Rva008D2A30Node\n{\n\tvoid *m_bfmeVfFS;\n\tunsigned int m_bfmeFlagsFS;\n\n\tunion\n\t{\n\t\tRva008D2A30Node *m_bfmeNextFS;\n\t\tchar m_bfmeKindFS;\n\t};\n};\n\nstruct Rva00899560Pool\n{\n\tint m_bfmeCapFS;\n\tint m_bfmeCountFS;\n\tRva008D2A30Node **m_bfmeItemsFS;\n};\n\nextern Rva008D2A30Node *Rva008D2A30Head;\nextern Rva00899560Pool *g_rva8CD130IdleHook;\nextern void *(*Rva008C5D70Alloc)(unsigned int n);\n\n__forceinline void bfmeRegisterFS(Rva008D2A30Node *n)\n{\n\tRva00899560Pool *p = g_rva8CD130IdleHook;\n\tint count = p->m_bfmeCountFS;\n\tint cap = p->m_bfmeCapFS;\n\n\tif (count >= cap)\n\t{\n\t\tn->m_bfmeFlagsFS &= 0xbfffffff;\n\t}\n\telse\n\t{\n\t\tp->m_bfmeItemsFS[count] = n;\n\t\tp->m_bfmeCountFS = count + 1;\n\t}\n}\n\nRva008D2A30Node *bfmeAcquireFS(char k)\n{\n\tRva008D2A30Node *n = Rva008D2A30Head;\n\n\tif (n != 0)\n\t{\n\t\tRva008D2A30Head = n->m_bfmeNextFS;\n\n\t\tbfmeRegisterFS(n);\n\n\t\tn->m_bfmeKindFS = k;\n\n\t\treturn n;\n\t}\n\n\tn = (Rva008D2A30Node *)Rva008C5D70Alloc(12);\n\n\tif (n == 0)\n\t\treturn 0;\n\n\tn->m_bfmeVfFS = bfmeVftAFS;\n\tn->m_bfmeFlagsFS = (n->m_bfmeFlagsFS & 0xf0008005) | 0x40008005;\n\n\tbfmeRegisterFS(n);\n\n\tn->m_bfmeVfFS = bfmeVftBFS;\n\tn->m_bfmeKindFS = k;\n\n\treturn n;\n}\n"
-}

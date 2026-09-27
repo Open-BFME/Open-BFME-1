@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "69f5de090b2d792224bb95a52bf12f72db33fc551b9bbf0e00c4c471845c6f9b",
-  "symbol": "?d_0068d990@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.95,
-  "source": "// ?d_0068d990@@YAXXZ\n// partial score=0.95 date=2026-09-08\nunsigned char *bfmeReadByteFL(unsigned char *src, unsigned char *dst, unsigned char *limit)\n{\n\tif (limit != 0)\n\t{\n\t\tif (src > limit)\n\t\t\treturn src;\n\n\t\tif (src + 1 > limit)\n\t\t\treturn src;\n\t}\n\n\t*dst = *src;\n\n\treturn src + 1;\n}\n"
-}

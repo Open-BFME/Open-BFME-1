@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "55433f1eed243802193bb8a92859f7e7e3d6906358895f52f9dc5ae7ddaed82e",
-  "symbol": "?bfmeWantsFA@BfmeHostFA@@QAE_NXZ",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?bfmeWantsFA@BfmeHostFA@@QAE_NXZ\n// partial score=0.85 date=2026-09-08\nextern void *TheScriptDebugWindowDLL;\nextern bool g_bfmeDebugAFA;\nextern bool g_bfmeDebugBFA;\n\nclass BfmeHostFA\n{\npublic:\n\tbool bfmeWantsFA();\n\n\tunsigned char m_bfmeHeadFA[0x17638];\n\tbool m_bfmeFlagFA;\n};\n\nbool BfmeHostFA::bfmeWantsFA()\n{\n\treturn (m_bfmeFlagFA && TheScriptDebugWindowDLL != 0 && g_bfmeDebugAFA == false)\n\t\t|| (!m_bfmeFlagFA && TheScriptDebugWindowDLL != 0 && g_bfmeDebugBFA == false);\n}\n"
-}

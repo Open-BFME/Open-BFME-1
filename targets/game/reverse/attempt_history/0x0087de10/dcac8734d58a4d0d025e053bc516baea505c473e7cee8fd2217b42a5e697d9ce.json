@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "dcac8734d58a4d0d025e053bc516baea505c473e7cee8fd2217b42a5e697d9ce",
-  "symbol": "?rva0087DE10ParseBoolGate@@YAXPAVINI@@PAXPAURva0087DE10Info@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.8,
-  "source": "// ?rva0087DE10ParseBoolGate@@YAXPAVINI@@PAXPAURva0087DE10Info@@@Z\n// partial score=0.8 date=2026-09-06\n// ?rva0087DE10ParseBoolGate@@YGXPAXPAX0@Z\n// Address-derived: only call the already-named INI::parseBool if at least one\n// 13-byte stride remains between info->m_2c and info->m_30, parsing from\n// info->m_30-4.\nclass INI;\n\nclass INI\n{\npublic:\n\tstatic void parseBool(INI* ini, void* instance, void* store, const void* userData);\n};\n\nstruct Rva0087DE10Info\n{\n\tunsigned char m_pad[0x2c];\n\tint m_2c;\n\tint m_30;\n};\n\nvoid rva0087DE10ParseBoolGate(INI* a, void* b, Rva0087DE10Info* info)\n{\n\tint count = (info->m_30 - info->m_2c) / 36;\n\tif (count != 0)\n\t\tINI::parseBool(a, b, (void*)(info->m_30 - 4), 0);\n}\n"
-}

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "03e4719844a827246f40d150d426a2620285c55b01a9e333be8fe1eedce538e3",
-  "symbol": "?bfmeForwardZI@BfmeHostZI@@QAEXPAX0@Z",
-  "score_kind": "author-estimate",
-  "score": 0.93,
-  "source": "// ?bfmeForwardZI@BfmeHostZI@@QAEXPAX0@Z\n// partial score=0.93 date=2026-09-08\nstruct RvaC4390Interface\n{\n\tvirtual void bfmeApplyZI(void *a, void *b);\n};\n\nstruct RvaC4390First\n{\n\tRvaC4390Interface *getInterface();\n};\n\nstruct BfmeNodeZI\n{\n\tBfmeNodeZI *volatile m_bfmeNextZI;\n\tunsigned char m_bfmeGapZI[4];\n\tRvaC4390First *m_bfme08ZI;\n};\n\nclass BfmeHostZI\n{\npublic:\n\tvoid bfmeForwardZI(void *a, void *b);\n\n\tunsigned char m_bfmeHeadZI[4];\n\tBfmeNodeZI *m_bfme04ZI;\n};\n\nvoid BfmeHostZI::bfmeForwardZI(void *a, void *b)\n{\n\tBfmeNodeZI *p = m_bfme04ZI;\n\n\tif (p->m_bfmeNextZI == p)\n\t\treturn;\n\n\tBfmeNodeZI *n = p->m_bfmeNextZI;\n\tRvaC4390Interface *t = n->m_bfme08ZI->getInterface();\n\n\tif (!t)\n\t\treturn;\n\n\tt->bfmeApplyZI(a, b);\n}\n"
-}

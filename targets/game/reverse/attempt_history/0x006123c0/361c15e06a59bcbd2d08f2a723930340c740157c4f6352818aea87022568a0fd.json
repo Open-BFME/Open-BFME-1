@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "361c15e06a59bcbd2d08f2a723930340c740157c4f6352818aea87022568a0fd",
-  "symbol": "?bfmeFindFD@BfmeHostFD@@QAEHI@Z",
-  "score_kind": "author-estimate",
-  "score": 0.92,
-  "source": "// ?bfmeFindFD@BfmeHostFD@@QAEHI@Z\n// partial score=0.92 date=2026-09-08\nclass BfmeNodeFD\n{\npublic:\n\tBfmeNodeFD *m_bfmeNextFD;\n\tunsigned int m_bfmeKeyFD;\n\tint m_bfmeValFD;\n};\n\nclass BfmeHostFD\n{\npublic:\n\tint bfmeFindFD(unsigned int key);\n\n\tunsigned char m_bfmeHeadFD[0x214];\n\tBfmeNodeFD **volatile m_bfmeBeginFD;\n\tBfmeNodeFD **m_bfmeEndFD;\n};\n\nint BfmeHostFD::bfmeFindFD(unsigned int key)\n{\n\tunsigned int n = (unsigned int)(m_bfmeEndFD - m_bfmeBeginFD);\n\tBfmeNodeFD *p = m_bfmeBeginFD[key % n];\n\n\twhile (p != 0 && p->m_bfmeKeyFD != key)\n\t\tp = p->m_bfmeNextFD;\n\n\tif (p == 0)\n\t\treturn 0;\n\n\treturn p->m_bfmeValFD;\n}\n"
-}

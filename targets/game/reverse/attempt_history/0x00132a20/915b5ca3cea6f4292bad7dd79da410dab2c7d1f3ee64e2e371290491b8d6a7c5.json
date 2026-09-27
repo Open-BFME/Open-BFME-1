@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "915b5ca3cea6f4292bad7dd79da410dab2c7d1f3ee64e2e371290491b8d6a7c5",
-  "symbol": "?bfmeAnyFE@BfmeFlagsFE@@QBEDABV1@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.93,
-  "source": "// ?bfmeAnyFE@BfmeFlagsFE@@QBEDABV1@@Z\n// partial score=0.93 date=2026-09-08\nclass BfmeFlagsFE\n{\npublic:\n\tchar bfmeAnyFE(const BfmeFlagsFE &other) const;\n\n\tunsigned int m_bfmeBitsFE[6];\n};\n\nchar BfmeFlagsFE::bfmeAnyFE(const BfmeFlagsFE &other) const\n{\n\tunsigned int t[6];\n\n\tt[0] = other.m_bfmeBitsFE[0] & m_bfmeBitsFE[0];\n\tt[1] = other.m_bfmeBitsFE[1] & m_bfmeBitsFE[1];\n\tt[2] = other.m_bfmeBitsFE[2] & m_bfmeBitsFE[2];\n\tt[3] = other.m_bfmeBitsFE[3] & m_bfmeBitsFE[3];\n\tt[4] = other.m_bfmeBitsFE[4] & m_bfmeBitsFE[4];\n\tt[5] = other.m_bfmeBitsFE[5] & m_bfmeBitsFE[5];\n\n\tfor (unsigned int i = 0; i < 6; ++i)\n\t{\n\t\tif (t[i] != 0)\n\t\t\treturn 1;\n\t}\n\n\treturn 0;\n}\n"
-}

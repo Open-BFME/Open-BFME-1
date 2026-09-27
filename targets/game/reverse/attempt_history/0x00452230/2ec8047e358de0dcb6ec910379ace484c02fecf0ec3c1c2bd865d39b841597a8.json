@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "2ec8047e358de0dcb6ec910379ace484c02fecf0ec3c1c2bd865d39b841597a8",
-  "symbol": "?bfmeInsertJM@BfmeListJM@@QAEXPAVBfmeValJM@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.95,
-  "source": "// ?bfmeInsertJM@BfmeListJM@@QAEXPAVBfmeValJM@@@Z\n// partial score=0.95 date=2026-09-08\nnamespace _STL\n{\n\nclass __new_alloc\n{\npublic:\n\tstatic void *allocate(unsigned int n);\n};\n\n}\n\nclass BfmeValJM\n{\npublic:\n\tint m_bfmeAJM;\n\tint m_bfmeBJM;\n};\n\nclass BfmeNodeJM\n{\npublic:\n\tBfmeNodeJM *m_bfmePrevJM;\n\tBfmeNodeJM *m_bfmeNextJM;\n\tBfmeValJM m_bfmeValJM;\n};\n\nclass BfmeListJM\n{\npublic:\n\tvoid bfmeInsertJM(BfmeValJM *v);\n\n\tBfmeNodeJM *m_bfmeNodeJM;\n};\n\nvoid BfmeListJM::bfmeInsertJM(BfmeValJM *v)\n{\n\tBfmeNodeJM *e = m_bfmeNodeJM->m_bfmePrevJM;\n\tBfmeNodeJM *n = (BfmeNodeJM *)_STL::__new_alloc::allocate(16);\n\tBfmeValJM *p = &n->m_bfmeValJM;\n\n\tif (p != 0)\n\t{\n\t\tp->m_bfmeAJM = v->m_bfmeAJM;\n\t\tp->m_bfmeBJM = v->m_bfmeBJM;\n\t}\n\n\tBfmeNodeJM *nx = e->m_bfmeNextJM;\n\n\tn->m_bfmePrevJM = e;\n\tn->m_bfmeNextJM = nx;\n\tnx->m_bfmePrevJM = n;\n\te->m_bfmeNextJM = n;\n}\n"
-}

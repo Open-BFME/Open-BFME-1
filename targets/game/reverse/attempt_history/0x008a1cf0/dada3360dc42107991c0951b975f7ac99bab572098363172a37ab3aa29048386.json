@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "dada3360dc42107991c0951b975f7ac99bab572098363172a37ab3aa29048386",
-  "symbol": "?d_008a1cf0@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.92,
-  "source": "// ?d_008a1cf0@@YAXXZ\n// partial score=0.92 date=2026-09-08\nextern \"C\" int strcmp(const char *a, const char *b);\n\n#pragma intrinsic(strcmp)\n\nclass BfmeItemFJ\n{\npublic:\n\tconst char *m_bfmeNameFJ;\n\tint m_bfmeValueFJ;\n};\n\nclass BfmeGroupFJ\n{\npublic:\n\tunsigned char m_bfmeHeadFJ[0x30];\n\tint m_bfmeCountFJ;\n\tBfmeItemFJ *m_bfmeItemsFJ;\n};\n\nclass BfmeOwnerFJ\n{\npublic:\n\tunsigned char m_bfmeHeadFJ[0x10];\n\tBfmeGroupFJ *m_bfmeGroupFJ;\n};\n\nclass BfmeSlotFJ\n{\npublic:\n\tvoid *m_bfmeHeadFJ;\n\tconst char *m_bfmeNameFJ;\n\tunsigned char m_bfmeGapFJ[4];\n\tBfmeOwnerFJ *m_bfmeOwnerFJ;\n};\n\nclass BfmeHostFJ\n{\npublic:\n\tint bfmeLookupFJ(int idx);\n\n\tunsigned char m_bfmeHeadFJ[0x24];\n\tBfmeSlotFJ *m_bfmeTableFJ;\n};\n\nint BfmeHostFJ::bfmeLookupFJ(int idx)\n{\n\tBfmeSlotFJ *s = &m_bfmeTableFJ[idx];\n\tBfmeGroupFJ *g = s->m_bfmeOwnerFJ->m_bfmeGroupFJ;\n\tint n = g->m_bfmeCountFJ;\n\n\tif (n > 0)\n\t{\n\t\tBfmeItemFJ *items = g->m_bfmeItemsFJ;\n\t\tconst char *name = s->m_bfmeNameFJ;\n\t\tint i = 0;\n\n\t\tdo\n\t\t{\n\t\t\tif (strcmp(name, items[i].m_bfmeNameFJ) == 0)\n\t\t\t\treturn items[i].m_bfmeValueFJ;\n\n\t\t\t++i;\n\t\t}\n\t\twhile (i < n);\n\t}\n\n\treturn -1;\n}\n"
-}

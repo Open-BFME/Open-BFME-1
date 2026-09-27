@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "108087e1d9f561e152c6b43ec8924680103287abed72e19623364529f15911a8",
-  "symbol": "?d_0025ddb0@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?d_0025ddb0@@YAXXZ\n// partial score=0.9 date=2026-09-07\n// 72/77 bytes. Structure and every guard match; the gap is the mixed-width\n// exits, the same class as 0x001C9980.\n// Retail has FOUR exits and they do not merge because two are 8-bit and two\n// are 32-bit: after the bool-returning check call it reuses al for `return 0`\n// (no instruction at all) and writes `mov al,1`; after the pointer-returning\n// lookup it writes `xor eax,eax` and `mov eax,1`. Declaring the check callee\n// `bool` is necessary but not sufficient -- MSVC still emits `xor eax,eax`\n// and `mov eax,1` in the first region.\n// Tried: a `char` return (65 bytes, all four exits 8-bit) and nesting the tail\n// so the return-1 blocks merge (67). The int return with four separate early\n// returns, kept here, is the closest at 72.\nclass BfmeUnitXR\n{\npublic:\n\tunsigned char m_bfmeHeadXR[0x344];\n\tunsigned char m_bfmeFlagsXR;\n};\n\nstruct Rva00367E30Logic\n{\n\tBfmeUnitXR *bfmeFindXR(void *key);\n};\n\nextern Rva00367E30Logic *TheBfmeGameLogic;\n\nclass BfmeOwnerXR\n{\npublic:\n\tint bfmeAllowXR(void *item);\n\tbool bfmeCheckXR(void *item);\n\n\tunsigned char m_bfmeHeadXR[0x8c];\n\tvoid *m_bfmeKeyXR;\n};\n\nint BfmeOwnerXR::bfmeAllowXR(void *item)\n{\n\tif (!bfmeCheckXR(item))\n\t\treturn 0;\n\n\tvoid *key = m_bfmeKeyXR;\n\n\tif (key == 0)\n\t\treturn 1;\n\n\tBfmeUnitXR *unit = TheBfmeGameLogic->bfmeFindXR(key);\n\n\tif (unit == 0)\n\t\treturn 1;\n\n\tif (unit->m_bfmeFlagsXR & 1)\n\t\treturn 1;\n\n\treturn 0;\n}\n"
-}

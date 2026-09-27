@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "9818613b02e1b216e9d4da12a9be3071a266833b4593b91dc4a3ee05be03f3aa",
-  "symbol": "??0AsciiString@@QAE@ABVUnicodeString@@@Z",
-  "score_kind": "author-estimate",
-  "score": 1.0,
-  "source": "// ??0AsciiString@@QAE@ABVUnicodeString@@@Z\n// partial score=1.0 date=2026-09-26\n// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib\n#include <wchar.h>\n#include \"string_base.h\"\n\ntemplate <>\ninline StringBase<char>::StringBase()\n{\n    m_data = 0;\n}\n\nclass UnicodeString\n{\npublic:\n    struct Header\n    {\n        int refs;\n        unsigned short length;\n        unsigned short capacity;\n        wchar_t data[1];\n    };\n    Header *m_data;\n    const wchar_t *str() const { return m_data ? &m_data->data[0] : L\"\"; }\n};\n\nclass AsciiString : public StringBase<char>\n{\npublic:\n    AsciiString(const char *str) : StringBase<char>(str) {}\n    AsciiString(const UnicodeString &str);\n    ~AsciiString();\n    void __cdecl format(AsciiString fmt, ...);\n};\n\nAsciiString::AsciiString(const UnicodeString &str) : StringBase<char>()\n{\n    format(AsciiString(\"%ls\"), str.str());\n}\n"
-}

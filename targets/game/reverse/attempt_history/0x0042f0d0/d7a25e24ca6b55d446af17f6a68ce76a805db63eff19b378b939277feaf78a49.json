@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "d7a25e24ca6b55d446af17f6a68ce76a805db63eff19b378b939277feaf78a49",
-  "symbol": "?bfmeCheckCT@@YGDVBFMERetailAsciiString@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?bfmeCheckCT@@YGDVBFMERetailAsciiString@@@Z\n// partial score=0.85 date=2026-09-07\n// 94/106. The logic is right -- a by-value AsciiString parameter, a null test\n// on its buffer, a `cmp word ptr [eax+4],0` length test, char return, and the\n// destructor running on every path under the SEH frame.\n// Retail DUPLICATES the destructor + epilogue into two blocks, one per return\n// value (`xor al,al` at +0x35, `mov al,1` at +0x5b), each with its own\n// releaseBuffer call and fs:[0] restore. MSVC merges them: one releaseBuffer,\n// one epilogue, and a conditional al. That merge is the whole 12-byte gap.\n// Same decision as 0x0061DD60 and 0x00457090 -- see\n// [[zero-materialisation-is-unstable]]'s neighbours; no flag reaches it\n// (/Ot /Og /Gy /Ob0 /Oy- were swept on 0x00457090).\nstruct BfmeBufCT\n{\n\tunsigned char m_bfmeHeadCT[4];\n\tunsigned short m_bfmeLenCT;\n};\n\nclass BFMERetailAsciiString\n{\npublic:\n\t~BFMERetailAsciiString() { releaseBufferCT(); }\n\n\tvoid releaseBufferCT();\n\n\tBfmeBufCT *m_bfmeBufCT;\n};\n\nchar __stdcall bfmeCheckCT(BFMERetailAsciiString text)\n{\n\tif (text.m_bfmeBufCT == 0)\n\t\treturn 0;\n\n\tif (text.m_bfmeBufCT->m_bfmeLenCT == 0)\n\t\treturn 0;\n\n\treturn 1;\n}\n"
-}

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "1e8ad5590b3b7ef0956a6afbaed5d69fa318a4f0b5a3ded86946fb8e2a1c19b9",
-  "symbol": "?bfmeSetZN@BfmeHostZN@@QAEXI@Z",
-  "score_kind": "author-estimate",
-  "score": 0.93,
-  "source": "// ?bfmeSetZN@BfmeHostZN@@QAEXI@Z\n// partial score=0.93 date=2026-09-08\nclass BfmeOwnerVNI\n{\npublic:\n\tvoid bfmeApply1VNI();\n};\n\nclass BfmeHostZN : public BfmeOwnerVNI\n{\npublic:\n\tvoid bfmeSetZN(unsigned int bit);\n\n\tunsigned char m_bfmeHeadZN[0x110];\n\tunsigned int m_bfmeBitsZN[8];\n};\n\nvoid BfmeHostZN::bfmeSetZN(unsigned int bit)\n{\n\tunsigned int i = bit >> 5;\n\tunsigned int m = 1 << (bit & 0x1f);\n\tunsigned int c = m_bfmeBitsZN[i];\n\n\tif (m & c)\n\t\treturn;\n\n\tm_bfmeBitsZN[i] = c | m;\n\tbfmeApply1VNI();\n}\n"
-}

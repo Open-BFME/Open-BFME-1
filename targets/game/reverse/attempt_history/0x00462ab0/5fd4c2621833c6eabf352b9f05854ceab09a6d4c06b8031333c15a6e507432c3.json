@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "5fd4c2621833c6eabf352b9f05854ceab09a6d4c06b8031333c15a6e507432c3",
-  "symbol": "?bfmeWalkGE@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.72,
-  "source": "// ?bfmeWalkGE@@YAXXZ\n// partial score=0.72 date=2026-09-08\nextern char *g_bfmeTwoSJA;\n\nclass BfmeNodeGE\n{\npublic:\n\tBfmeNodeGE *volatile m_bfmeNextGE;\n\tint m_bfmeKeyGE;\n\tunsigned char m_bfmeGapGE[0x24];\n\tvolatile char m_bfmeFlagGE;\n};\n\nclass BfmeVecGE\n{\npublic:\n\tint bfmeIndexGE(int *key, int n);\n\n\tunsigned char m_bfmeHeadGE[4];\n\tint m_bfmeBeginGE;\n\tint m_bfmeEndGE;\n};\n\nclass BfmePairGE\n{\npublic:\n\tBfmeNodeGE *m_bfmeNodeGE;\n\tBfmeVecGE *m_bfmeVecGE;\n};\n\nclass BfmeSrcGE\n{\npublic:\n\tBfmePairGE bfmeFirstGE();\n};\n\nvoid bfmeWalkGE()\n{\n\tBfmePairGE it = ((BfmeSrcGE *)&g_bfmeTwoSJA)->bfmeFirstGE();\n\tBfmeNodeGE *p = it.m_bfmeNodeGE;\n\n\tif (p != 0)\n\t{\n\t\tBfmeVecGE *v = it.m_bfmeVecGE;\n\n\t\tdo\n\t\t{\n\t\t\tp->m_bfmeFlagGE = 0;\n\n\t\t\tBfmeNodeGE *q = p->m_bfmeNextGE;\n\n\t\t\tif (q != 0)\n\t\t\t{\n\t\t\t\tp = q;\n\t\t\t\tcontinue;\n\t\t\t}\n\n\t\t\tint n = (v->m_bfmeEndGE - v->m_bfmeBeginGE) >> 2;\n\t\t\tint *key = &p->m_bfmeKeyGE;\n\t\t\tint i = v->bfmeIndexGE(key, n);\n\t\t\tint m = (v->m_bfmeEndGE - v->m_bfmeBeginGE) >> 2;\n\n\t\t\tp = 0;\n\n\t\t\twhile ((unsigned int)++i < (unsigned int)m && (p = ((BfmeNodeGE **)*(volatile int *)&v->m_bfmeBeginGE)[i]) == 0)\n\t\t\t\t;\n\t\t}\n\t\twhile (p != 0);\n\t}\n}\n"
-}

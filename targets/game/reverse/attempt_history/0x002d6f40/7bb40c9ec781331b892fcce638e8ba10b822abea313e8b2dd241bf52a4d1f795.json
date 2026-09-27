@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "7bb40c9ec781331b892fcce638e8ba10b822abea313e8b2dd241bf52a4d1f795",
-  "symbol": "?bfmeNoneFI@BfmeFlagsFI@@QBE_NABV1@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?bfmeNoneFI@BfmeFlagsFI@@QBE_NABV1@@Z\n// partial score=0.90 date=2026-09-08\nclass BfmeFlagsFI\n{\npublic:\n\t__forceinline bool bfmeAnyFI(const BfmeFlagsFI &other) const\n\t{\n\t\tunsigned int t[6];\n\n\t\tt[0] = m_bfmeBitsFI[0] & other.m_bfmeBitsFI[0];\n\t\tt[1] = m_bfmeBitsFI[1] & other.m_bfmeBitsFI[1];\n\t\tt[2] = m_bfmeBitsFI[2] & other.m_bfmeBitsFI[2];\n\t\tt[3] = m_bfmeBitsFI[3] & other.m_bfmeBitsFI[3];\n\t\tt[4] = m_bfmeBitsFI[4] & other.m_bfmeBitsFI[4];\n\t\tt[5] = m_bfmeBitsFI[5] & other.m_bfmeBitsFI[5];\n\n\t\tfor (unsigned int i = 0; i < 6; ++i)\n\t\t{\n\t\t\tif (t[i] != 0)\n\t\t\t\treturn true;\n\t\t}\n\n\t\treturn false;\n\t}\n\n\tbool bfmeNoneFI(const BfmeFlagsFI &other) const;\n\n\tunsigned int m_bfmeBitsFI[6];\n};\n\nbool BfmeFlagsFI::bfmeNoneFI(const BfmeFlagsFI &other) const\n{\n\treturn bfmeAnyFI(other) == false;\n}\n"
-}

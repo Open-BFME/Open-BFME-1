@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "f45fd9088f4a04a0f183ac02c9cba7ac9df65084f87bfe9cdab2ad31985c3765",
-  "symbol": "?bfmeResetXV@BfmeHostXV@@QAEXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.98,
-  "source": "// ?bfmeResetXV@BfmeHostXV@@QAEXXZ\n// partial score=0.98 date=2026-09-08\n// pin needed: ??1BfmeElemXV@@QAE@XZ,0x0000CA68\nclass BfmeElemXV\n{\npublic:\n\t~BfmeElemXV();\n};\n\nclass BfmeHostXV\n{\npublic:\n\tvoid bfmeResetXV();\n\n\tunsigned char m_bfmeHeadXV[0x18];\n\tBfmeElemXV *m_bfme18XV;\n\tint m_bfme1CXV;\n\tint m_bfme20XV;\n\tint m_bfme24XV;\n\tfloat m_bfme28XV;\n\tint m_bfme2CXV;\n\tint m_bfme30XV;\n};\n\nvoid BfmeHostXV::bfmeResetXV()\n{\n\tif (m_bfme18XV)\n\t{\n\t\tdelete m_bfme18XV;\n\n\t\tm_bfme18XV = 0;\n\t\tm_bfme1CXV = 0;\n\t\tm_bfme20XV = 0;\n\t\tm_bfme24XV = 0;\n\t\tm_bfme28XV = 10.0f;\n\t\tm_bfme2CXV = 0;\n\t\tm_bfme30XV = 0;\n\t}\n}\n"
-}

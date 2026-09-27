@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "f02c4b794499884e6d76c1ec25f8a96c28f02adf79ac0ae99ce2715397c8e1c8",
-  "symbol": "?End_Render@WW3D@@SA?AW4WW3DErrorType@@_N@Z",
-  "score_kind": "author-estimate",
-  "score": 0.95,
-  "source": "// ?End_Render@WW3D@@SA?AW4WW3DErrorType@@_N@Z\n// partial score=0.95 date=2026-09-08\n// Authentic upstream body. With the active WW3D headers this matches 62/65 bytes;\n// the sole residue is the final enum ABI return: retail `mov al,1; ret`, MSVC emits\n// `mov eax,1; ret`. All calls, globals, branches, and the 65-byte boundary match.\nWW3DErrorType WW3D::End_Render(bool flip_frame)\n{\n\tif (!IsInitted) {\n\t\treturn WW3D_ERROR_GENERIC;\n\t}\n\n\tSortingRendererClass::Flush();\n\tIsRendering = false;\n\tDX8Wrapper::End_Scene(flip_frame);\n\tFrameCount++;\n\tDebug_Statistics::End_Statistics();\n\tActivate_Snapshot(false);\n\tDX8Wrapper::Invalidate_Cached_Render_States();\n\treturn WW3D_ERROR_GENERIC;\n}\n"
-}

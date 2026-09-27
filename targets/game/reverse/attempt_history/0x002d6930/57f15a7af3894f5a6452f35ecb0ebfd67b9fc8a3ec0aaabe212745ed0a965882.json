@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "57f15a7af3894f5a6452f35ecb0ebfd67b9fc8a3ec0aaabe212745ed0a965882",
-  "symbol": "?bfmeApplyAAN@BfmeHookAAN@@QAEXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.93,
-  "source": "// ?bfmeApplyAAN@BfmeHookAAN@@QAEXXZ\n// partial score=0.93 date=2026-09-08\ntemplate <int N>\nclass BitFlags\n{\npublic:\n\tBitFlags()\n\t{\n\t\tfor (int i = 0; i < 10; ++i)\n\t\t\tm_bfmeBitsAAN[i] = 0;\n\t}\n\n\tbool bfmeAnyAAN() const\n\t{\n\t\tfor (int i = 0; i < 10; ++i)\n\t\t\tif (m_bfmeBitsAAN[i] != 0)\n\t\t\t\treturn true;\n\n\t\treturn false;\n\t}\n\n\tint m_bfmeBitsAAN[10];\n};\n\nclass Object\n{\npublic:\n\tvoid clearAndSetModelConditionFlags(const BitFlags<320> &clear, const BitFlags<320> &set);\n};\n\nstruct BfmeOwnerAAN\n{\n\tunsigned char m_bfmeHeadAAN[0x70];\n\tBitFlags<320> m_bfmeClearAAN;\n\tBitFlags<320> m_bfmeSetAAN;\n};\n\nclass BfmeHookAAN\n{\npublic:\n\tvoid bfmeApplyAAN();\n};\n\nvoid BfmeHookAAN::bfmeApplyAAN()\n{\n\tBfmeOwnerAAN *o = *(BfmeOwnerAAN **)((char *)this - 0xc);\n\tObject *obj = *(Object **)((char *)this - 8);\n\n\tif (o->m_bfmeSetAAN.bfmeAnyAAN())\n\t\tobj->clearAndSetModelConditionFlags(BitFlags<320>(), o->m_bfmeSetAAN);\n\n\tif (o->m_bfmeClearAAN.bfmeAnyAAN())\n\t\tobj->clearAndSetModelConditionFlags(o->m_bfmeClearAAN, BitFlags<320>());\n}\n"
-}

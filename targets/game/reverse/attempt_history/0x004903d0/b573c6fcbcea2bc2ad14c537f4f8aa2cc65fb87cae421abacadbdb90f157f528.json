@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "b573c6fcbcea2bc2ad14c537f4f8aa2cc65fb87cae421abacadbdb90f157f528",
-  "symbol": "?d_004903d0@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.95,
-  "source": "// ?d_004903d0@@YAXXZ\n// partial score=0.95 date=2026-09-07\n// 59/61 bytes. Frame, guard, the span computation into the pushed-ecx local,\n// __ftol2, the `+ low` and the virtual call through slot 1 all match.\n// Residue: retail loads BOTH ints and then multiplies --\n//   fild [span]; fild [value]; fmul [k]; fmulp st(1)\n// -- while MSVC folds one into an integer multiply:\n//   fld [k]; fimul [value]; ... fimul [span]\n// Explicit `(float)` casts on both operands change nothing (they fold away).\n// /Op does produce `fild` for the value but pays for it with precision-\n// rounding stores (fstp/fmul through memory), 75 bytes. /G7 is 80, /Ot no\n// change. fimul-selection residue.\nextern volatile float g_01076C24;\n\nclass BfmeTargetMK\n{\npublic:\n\tvirtual void bfmeV0MK(void);\n\tvirtual void bfmeApplyMK(int value);\n};\n\nclass BfmeSliderMK\n{\npublic:\n\tvoid bfmeSetMK(int value);\n\n\tint m_bfmeSpareMK;\n\tBfmeTargetMK *m_bfmeTargetMK;\n\tint m_bfmeLowMK;\n\tint m_bfmeHighMK;\n};\n\nvoid BfmeSliderMK::bfmeSetMK(int value)\n{\n\tBfmeTargetMK *target = m_bfmeTargetMK;\n\n\tif (target)\n\t{\n\t\tint low = m_bfmeLowMK;\n\t\tint span = m_bfmeHighMK - low;\n\n\t\ttarget->bfmeApplyMK(low + (int)((float)span * ((float)value * g_01076C24)));\n\t}\n}\n"
-}

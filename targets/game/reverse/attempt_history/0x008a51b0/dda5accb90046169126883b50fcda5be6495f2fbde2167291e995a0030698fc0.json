@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "dda5accb90046169126883b50fcda5be6495f2fbde2167291e995a0030698fc0",
-  "symbol": "?aptMathRandom@@YAPAVAptValue@@PAXH@Z",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?aptMathRandom@@YAPAVAptValue@@PAXH@Z\n// partial score=0.9 date=2026-09-06\nclass AptValue;\nextern const float Rva008A51B0RandomScale;\nunsigned int __cdecl bfmeNext1221();\nAptValue* __cdecl Rva008A4EA0MakeFloat(float value);\nAptValue* aptMathRandom(void* self, int argc)\n{\n\tint r = (int)bfmeNext1221();\n\tfloat f = (float)r;\n\tif (r < 0)\n\t\tf = f * Rva008A51B0RandomScale;\n\treturn Rva008A4EA0MakeFloat(f);\n}\n"
-}

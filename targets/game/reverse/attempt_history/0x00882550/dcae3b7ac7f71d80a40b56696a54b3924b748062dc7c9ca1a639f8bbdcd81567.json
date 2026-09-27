@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "dcae3b7ac7f71d80a40b56696a54b3924b748062dc7c9ca1a639f8bbdcd81567",
-  "symbol": "?setUsed@Rva00882550Buffer@@QAEXH@Z",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?setUsed@Rva00882550Buffer@@QAEXH@Z\n// partial score=0.9 date=2026-09-06\n// 42/42 B, 10 diff bytes: retail loads the guard-word global before storing m_used (load hoisted above an unrelated store); cast-call of the ?d_ dump body emits the direct call.\nextern int Rva00882550GuardWords;\nvoid __cdecl d_008823e0();\ntypedef void (__cdecl* Rva00882550Fill)(void* dst, int pattern, int bytes);\nstruct Rva00882550Buffer {\n\tint m_0; int m_4;\n\tint m_used;\n\tchar m_bytes[1];\n\tvoid setUsed(int used);\n};\nvoid Rva00882550Buffer::setUsed(int used)\n{\n\tm_used = used;\n\tif (Rva00882550GuardWords)\n\t\t((Rva00882550Fill)d_008823e0)(m_bytes + used, 0xbadf00d, Rva00882550GuardWords * 4);\n}\n"
-}

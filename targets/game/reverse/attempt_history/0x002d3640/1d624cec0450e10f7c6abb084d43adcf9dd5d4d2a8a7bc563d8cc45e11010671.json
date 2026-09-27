@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "1d624cec0450e10f7c6abb084d43adcf9dd5d4d2a8a7bc563d8cc45e11010671",
-  "symbol": "??0W3DOverlordTankDrawModuleData@@QAE@XZ",
-  "score_kind": "author-estimate",
-  "score": 0.95,
-  "source": "// ??0W3DOverlordTankDrawModuleData@@QAE@XZ\n// partial score=0.95 date=2026-09-08\n// cl: /DNDEBUG /MD /EHsc\n\n// Open-BFME5: W3DOverlordTankDrawModuleData default construction. The Zero\n// Hour source body is empty; BFME's inherited data layout constructs the\n// upgrade and die-mux blocks after initializing the reference fields.\n\nclass Snapshot\n{\npublic:\n\tvirtual ~Snapshot() {}\n};\n\nclass ThingRef\n{\npublic:\n\tThingRef() : m_ptr(0) {}\n\t__declspec(nothrow) ~ThingRef();\n\nprivate:\n\tvoid *m_ptr;\n};\n\nclass UpgradeModuleDataSub\n{\npublic:\n\tUpgradeModuleDataSub();\n\t~UpgradeModuleDataSub();\n\nprivate:\n\tunsigned char m_data[0x68];\n};\n\nclass Rva002551A0DieMuxData\n{\npublic:\n\tRva002551A0DieMuxData();\n\t~Rva002551A0DieMuxData();\n\nprivate:\n\tunsigned char m_data[0x2c];\n};\n\nclass W3DOverlordTankDrawModuleData : public Snapshot\n{\npublic:\n\tW3DOverlordTankDrawModuleData();\n\tvirtual ~W3DOverlordTankDrawModuleData();\n\nprivate:\n\tunsigned char m_gap04[4];\n\tThingRef m_ref;\n\tunsigned int m_value0c;\n\tbool m_enabled;\n\tunsigned char m_gap11[3];\n\tUpgradeModuleDataSub m_upgradeData;\n\tRva002551A0DieMuxData m_dieMuxData;\n};\n\n// ??0W3DOverlordTankDrawModuleData@@QAE@XZ\nW3DOverlordTankDrawModuleData::W3DOverlordTankDrawModuleData()\n\t: m_value0c(0),\n\t  m_enabled(true)\n{\n}\n"
-}

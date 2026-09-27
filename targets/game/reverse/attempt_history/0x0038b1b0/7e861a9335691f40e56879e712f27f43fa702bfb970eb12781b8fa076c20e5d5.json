@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "7e861a9335691f40e56879e712f27f43fa702bfb970eb12781b8fa076c20e5d5",
-  "symbol": "?sendObjectCreated@GameLogic@@QAEXPAVObject@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.98,
-  "source": "// ?sendObjectCreated@GameLogic@@QAEXPAVObject@@@Z\n// partial score=0.98 date=2026-09-07\n// Near-match for GameLogic::sendObjectCreated, retail 0x0038B1B0, 207 bytes.\n\nclass Object;\nclass Drawable;\nclass ThingTemplate;\nclass DelayedLuaEventList;\n\nextern int GetGameLogicRandomValue(int low, int high, char *file, int line);\n\nclass GameLogic\n{\npublic:\n\tvoid sendObjectCreated(Object *obj);\n};\n\nclass BfmeOwnerBR\n{\npublic:\n\tvoid bfmeGo939B(int index, Object *object, DelayedLuaEventList *events);\n};\n\nextern BfmeOwnerBR *g_bfmeOwnerBR;\n\nvoid GameLogic::sendObjectCreated(Object *obj)\n{\n\tint drawableID = GetGameLogicRandomValue(1, 999, __FILE__, __LINE__);\n\tint status = 0;\n\tif ((reinterpret_cast<const unsigned int *>(obj)[0x94 / 4] & 0x400000) != 0)\n\t\tstatus = 0x20;\n\n\tconst ThingTemplate *thing = reinterpret_cast<const ThingTemplate * const *>(obj)[1];\n\tif (thing)\n\t\tthing = thing;\n\n\tDrawable *draw = reinterpret_cast<Drawable *(*)(const ThingTemplate *, int, int)>(0)(thing, status, drawableID);\n\t(void)draw;\n\n\tDelayedLuaEventList events;\n\tg_bfmeOwnerBR->bfmeGo939B(0xc, obj, &events);\n}\n"
-}

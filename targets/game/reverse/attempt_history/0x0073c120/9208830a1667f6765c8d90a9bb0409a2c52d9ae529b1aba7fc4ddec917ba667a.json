@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "9208830a1667f6765c8d90a9bb0409a2c52d9ae529b1aba7fc4ddec917ba667a",
-  "symbol": "?syncTimers@Rva0073C120Owner@@QAEXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?syncTimers@Rva0073C120Owner@@QAEXXZ\n// partial score=0.9 date=2026-09-06\nstruct Rva0073C120Owner {\n\tchar m_pad[0x28];\n\tfloat m_time;\n\tchar m_pad2[0x1c8 - 0x2c];\n\tbool m_running;\n\tchar m_pad3[3];\n\tfloat m_current;\n\tfloat m_start;\n\tchar m_pad4[0x1dc - 0x1d4];\n\tbool m_enabled;\n\tchar m_pad5[0x16e8 - 0x1dd];\n\tint m_seed;\n\tint m_slots[1];\n\tchar m_pad6[0x22f0 - 0x16f0];\n\tint m_slotCount;\n\tchar m_pad7[0x2354 - 0x22f4];\n\tint m_mode;\n\tvoid syncTimers();\n};\nvoid Rva0073C120Owner::syncTimers()\n{\n\tif (m_enabled) {\n\t\tif (m_running) {\n\t\t\tm_current = 0.0f;\n\t\t} else {\n\t\t\tm_current = m_start = m_time;\n\t\t}\n\t}\n\tif (m_mode != 1)\n\t\treturn;\n\tif (m_slotCount <= 0)\n\t\treturn;\n\tfor (int i = 0; i < m_slotCount; ++i)\n\t\tm_slots[i] = m_seed;\n}\n"
-}

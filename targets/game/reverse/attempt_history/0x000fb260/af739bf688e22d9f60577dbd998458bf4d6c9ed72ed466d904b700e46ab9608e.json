@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "af739bf688e22d9f60577dbd998458bf4d6c9ed72ed466d904b700e46ab9608e",
-  "symbol": "?d_000fb260@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.91,
-  "source": "// ?d_000fb260@@YAXXZ\n// partial score=0.91 date=2026-09-06\n// 83/91 at exact size. SEH constructor: pinned vftable, a 12-byte member at\n// +4 zeroed by its own ctor (one unwind state), the parameter stored at +0x10,\n// then a two-argument call on that member with its own first two fields.\n// Naming the member in a `BfmeSubCC *sub = &m_bfmeSubCC;` local is what makes\n// MSVC read the arguments late through ecx instead of hoisting one through\n// esi (seven diffs down to three).\n// Residue: retail emits `mov [esp+4], esi` -- the EH this-slot store -- AFTER\n// the first two member stores; MSVC emits it before them. Same residue as\n// 0x0034C5E0; SEH *destructors* do not show it (0x004762D0 was exact).\nclass BfmeSubCC\n{\npublic:\n\tBfmeSubCC(void)\n\t{\n\t\tm_bfmeACC = 0;\n\t\tm_bfmeBCC = 0;\n\t\tm_bfmeCCC = 0;\n\t}\n\t~BfmeSubCC();\n\n\tvoid bfmeInitCC(int first, int second);\n\n\tint m_bfmeACC;\n\tint m_bfmeBCC;\n\tint m_bfmeCCC;\n};\n\nclass BfmeOwnCC\n{\npublic:\n\tBfmeOwnCC(void *value);\n\tvirtual void bfmePureCC(void) = 0;\n\n\tBfmeSubCC m_bfmeSubCC;\n\tvoid *m_bfmeValueCC;\n};\n\nBfmeOwnCC::BfmeOwnCC(void *value)\n{\n\tm_bfmeValueCC = value;\n\n\tBfmeSubCC *sub = &m_bfmeSubCC;\n\n\tsub->bfmeInitCC(sub->m_bfmeACC, sub->m_bfmeBCC);\n}\n"
-}

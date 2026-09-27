@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "9e9129740fdaa3bee1bef5655b91a27d176a4596808c744fb0789c27c6d99307",
-  "symbol": "?bfmeTickJE@BfmeSelfJE@@QAEXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.6,
-  "source": "// ?bfmeTickJE@BfmeSelfJE@@QAEXXZ\n// partial score=0.6 date=2026-09-08\nclass BfmeBlobJE\n{\npublic:\n\tBfmeBlobJE()\n\t{\n\t\tm_bfmeF0JE = 0;\n\t\tm_bfmeF1JE = 0;\n\t\tm_bfmeF2JE = 0;\n\t\tm_bfmeF3JE = 0;\n\t\tm_bfmeF4JE = 0;\n\t\tm_bfmeF5JE = 0;\n\t\tm_bfmeF6JE = 0;\n\t\tm_bfmeF7JE = 0;\n\t\tm_bfmeF8JE = 0;\n\t\tm_bfmeF9JE = 0;\n\t}\n\n\tint m_bfmeF0JE;\n\tint m_bfmeF1JE;\n\tint m_bfmeF2JE;\n\tint m_bfmeF3JE;\n\tint m_bfmeF4JE;\n\tint m_bfmeF5JE;\n\tint m_bfmeF6JE;\n\tint m_bfmeF7JE;\n\tint m_bfmeF8JE;\n\tint m_bfmeF9JE;\n};\n\nclass BfmeHostJE\n{\npublic:\n\tvoid bfmeRunJE(void *a, void *b);\n};\n\nclass BfmeDataJE\n{\npublic:\n\tunsigned char m_bfmeHeadJE[0x70];\n\tint m_bfmeArrBJE[10];\n\tint m_bfmeArrAJE[10];\n};\n\nclass BfmeSelfJE\n{\npublic:\n\tvoid bfmeTickJE();\n};\n\nvoid BfmeSelfJE::bfmeTickJE()\n{\n\tBfmeDataJE *d = *(BfmeDataJE **)((char *)this - 0xc);\n\tBfmeHostJE *h = *(BfmeHostJE **)((char *)this - 8);\n\n\t{\n\t\tint *a = d->m_bfmeArrAJE;\n\t\tunsigned int i = 0;\n\t\tint *p = a;\n\n\t\tfor (;;)\n\t\t{\n\t\t\tif (*(volatile int *)p != 0)\n\t\t\t{\n\t\t\t\tBfmeBlobJE b;\n\n\t\t\t\th->bfmeRunJE(a, &b);\n\t\t\t\tbreak;\n\t\t\t}\n\n\t\t\t++i;\n\t\t\t++p;\n\n\t\t\tif (i >= 10)\n\t\t\t\tbreak;\n\t\t}\n\t}\n\n\t{\n\t\tint *a = d->m_bfmeArrBJE;\n\t\tunsigned int i = 0;\n\t\tint *p = a;\n\n\t\tfor (;;)\n\t\t{\n\t\t\tif (*(volatile int *)p != 0)\n\t\t\t{\n\t\t\t\tBfmeBlobJE b;\n\n\t\t\t\th->bfmeRunJE(&b, a);\n\t\t\t\tbreak;\n\t\t\t}\n\n\t\t\t++i;\n\t\t\t++p;\n\n\t\t\tif (i >= 10)\n\t\t\t\tbreak;\n\t\t}\n\t}\n}\n"
-}

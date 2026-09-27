@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "7ad0188509a067b01e20d0f185a76634e91382a4622a630beda8082bc1dbcc53",
-  "symbol": "??4BfmeRefXI@@QAEAAV0@ABV0@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.97,
-  "source": "// ??4BfmeRefXI@@QAEAAV0@ABV0@@Z\n// partial score=0.97 date=2026-09-08\n// pin needed: ?bfmeAssignXI@BfmeSubXI@@QAEXABV1@@Z,0x0000FF29\nclass BfmeObjXI\n{\npublic:\n\tvirtual void bfmeReleaseXI(int deleting) = 0;\n\tvirtual BfmeObjXI *bfmeAddRefXI() = 0;\n};\n\nclass BfmeSubXI\n{\npublic:\n\tvoid bfmeAssignXI(const BfmeSubXI &o);\n\n\tunsigned char m_bfmeHeadXI[4];\n};\n\nclass BfmeRefXI\n{\npublic:\n\tBfmeRefXI &operator=(const BfmeRefXI &o);\n\n\tBfmeObjXI *m_bfmePtrXI;\n\tBfmeSubXI m_bfme04XI;\n};\n\nBfmeRefXI &BfmeRefXI::operator=(const BfmeRefXI &o)\n{\n\tBfmeObjXI *n;\n\n\tif (o.m_bfmePtrXI)\n\t\tn = o.m_bfmePtrXI->bfmeAddRefXI();\n\telse\n\t\tn = 0;\n\n\tif (m_bfmePtrXI)\n\t\tm_bfmePtrXI->bfmeReleaseXI(1);\n\n\tm_bfmePtrXI = n;\n\tm_bfme04XI.bfmeAssignXI(o.m_bfme04XI);\n\n\treturn *this;\n}\n"
-}

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "5fd1650f910e444ce291fae8cf04f2f7ca0fb36f5d1db58814bbae572943c696",
-  "symbol": "?rva008B9020PopCache@@YAPAXPAURva008B9020Owner@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.7,
-  "source": "// ?rva008B9020PopCache@@YAPAXPAURva008B9020Owner@@@Z\n// partial score=0.7 date=2026-09-06\n// ?rva008B9020PopCache@@YAPAXPAURva008B9020Owner@@@Z\n// Address-derived: pops the last entry of obj's cache array (m_arr/m_count)\n// when obj's flag word (m_flags) has type tag 0x16 and bit 15 set, returning\n// the tag-stripped element (or the global fallback g_bfmeFallbackDB if the\n// element was zero after stripping, or if the index computation is out of\n// range, or if the guard conditions fail). Always writes the new count and\n// clears the popped slot.\nclass AptValue;\nextern AptValue *g_bfmeFallbackDB;\n\nstruct Rva008B9020Owner\n{\n\tunsigned char m_pad0[4];\n\tunsigned int m_flags;\n\tunsigned char m_pad1[0x20 - 8];\n\tvoid **m_arr;\n\tunsigned char m_pad2[4];\n\tint m_count;\n};\n\nvoid *rva008B9020PopCache(Rva008B9020Owner *obj)\n{\n\tvoid *result = g_bfmeFallbackDB;\n\tunsigned int flags = obj->m_flags;\n\tif ((flags & 0x3f) == 0x16)\n\t{\n\t\tunsigned char bit = (unsigned char)(flags >> 15);\n\t\tbit = ~bit;\n\t\tif (bit & 1)\n\t\t\treturn result;\n\n\t\tint count = obj->m_count;\n\t\tif (count <= 0)\n\t\t\treturn result;\n\n\t\tint lastIndex = count - 1;\n\t\tif (lastIndex >= 0 && lastIndex < count)\n\t\t{\n\t\t\tvoid *elem = obj->m_arr[lastIndex];\n\t\t\tunsigned int masked = (unsigned int)elem & ~1u;\n\t\t\tif (masked != 0)\n\t\t\t\tresult = (void *)masked;\n\t\t}\n\n\t\tobj->m_count = lastIndex;\n\t\tobj->m_arr[lastIndex] = 0;\n\t}\n\treturn result;\n}\n"
-}

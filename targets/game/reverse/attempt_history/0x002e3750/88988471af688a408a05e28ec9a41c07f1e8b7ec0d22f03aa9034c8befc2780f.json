@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "88988471af688a408a05e28ec9a41c07f1e8b7ec0d22f03aa9034c8befc2780f",
-  "symbol": "?Rva002E3750SetModule@@YADDPBD@Z",
-  "score_kind": "author-estimate",
-  "score": 0.99,
-  "source": "// ?Rva002E3750SetModule@@YADDPBD@Z\n// partial score=0.99 date=2026-09-08\n// The Lua ShowModule and HideModule callbacks share this module-name helper.\n\nclass BFMERetailAsciiString\n{\npublic:\n\tBFMERetailAsciiString(const char *text);\n\t~BFMERetailAsciiString()\n\t{\n\t\treleaseBuffer();\n\t}\n\nprivate:\n\tvoid releaseBuffer();\n\tchar *m_data;\n};\n\nstruct BfmeStrAE\n{\n\tchar *m_bfmeDataAE;\n};\n\nclass BfmeOwnerAE\n{\npublic:\n\tchar bfmeSetAE(BfmeStrAE *name, char on);\n};\n\nstruct BfmeTargetBR\n{\n\tchar m_bfmePad[0x0c];\n\tBfmeOwnerAE *m_bfmeOwner;\n};\n\nstruct BfmeOwnerBR\n{\n\tchar m_bfmePad[0x78];\n\tBfmeTargetBR *m_bfmeTarget;\n};\n\nextern BfmeOwnerBR *g_bfmeOwnerBR;\n\n// ?Rva002E3750SetModule@@YADDPBD@Z\nchar Rva002E3750SetModule(char on, const char *text)\n{\n\tif (g_bfmeOwnerBR->m_bfmeTarget != 0) {\n\t\tconst BfmeTargetBR *target = g_bfmeOwnerBR->m_bfmeTarget;\n\t\tconst char *nameText = text;\n\t\tBfmeOwnerAE *owner = target->m_bfmeOwner;\n\t\tBFMERetailAsciiString name(nameText);\n\t\tif (owner != 0)\n\t\t\treturn owner->bfmeSetAE((BfmeStrAE *)&name, on == 0);\n\t}\n\treturn 0;\n}\n"
-}

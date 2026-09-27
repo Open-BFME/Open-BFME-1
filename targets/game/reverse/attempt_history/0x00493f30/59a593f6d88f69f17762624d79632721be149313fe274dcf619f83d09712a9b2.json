@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "59a593f6d88f69f17762624d79632721be149313fe274dcf619f83d09712a9b2",
-  "symbol": "?updateState@Rva00493F30TransitionState@@QAE_NXZ",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?updateState@Rva00493F30TransitionState@@QAE_NXZ\n// partial score=0.9 date=2026-09-04\n// cl: /DNDEBUG /DWIN32 /MD /EHsc\n\ntypedef bool Bool;\n\nclass Rva00493F30Controller\n{\npublic:\n\tvirtual void f0(); virtual void f1(); virtual void f2(); virtual void f3();\n\tvirtual void begin(void);\n\tvirtual void update(void);\n};\n\nclass Rva00493F30TransitionState\n{\npublic:\n\tBool updateState(void);\n\tvoid finishTransition(void);\nprivate:\n\tunsigned char m_padding0[8];\n\tunsigned int m_flags;\n\tunsigned char m_padding1[0x20c];\n\tRva00493F30Controller m_controller;\n\tunsigned char m_padding2[0x1c];\n\tunsigned int m_mode;\n\tunsigned char m_padding3[0x14];\n\tvolatile unsigned int m_previousFlags;\n};\n\nBool Rva00493F30TransitionState::updateState(void)\n{\n\tconst unsigned int previousFlags = m_previousFlags;\n\tconst unsigned int transitionFlag = 0x10;\n\tif ((previousFlags & transitionFlag) == 0)\n\t{\n\t\tif ((*(unsigned char *)&m_flags & transitionFlag) != 0 && (m_mode & 1) != 0)\n\t\t\tm_controller.begin();\n\t}\n\telse if ((*(unsigned char *)&m_flags & transitionFlag) == 0)\n\t{\n\t\tfinishTransition();\n\t}\n\tm_previousFlags = m_flags;\n\tif ((m_mode & 1) != 0)\n\t\tm_controller.update();\n\treturn true;\n}\n"
-}

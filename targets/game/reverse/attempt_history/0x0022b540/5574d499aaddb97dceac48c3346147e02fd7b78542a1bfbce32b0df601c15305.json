@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "5574d499aaddb97dceac48c3346147e02fd7b78542a1bfbce32b0df601c15305",
-  "symbol": "?clearList@Rva0022B540Owner@@QAEXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.35,
-  "source": "// ?clearList@Rva0022B540Owner@@QAEXXZ\n// partial score=0.35 date=2026-09-06\n// ?clearList@Rva0022B540Owner@@QAEXXZ\n\nnamespace _STL {\n\ntemplate<int a, int b> class __node_alloc\n{\npublic:\n\tstatic void _M_deallocate(void *p, unsigned int n);\n};\n\n}\n\nstruct Rva0022B540Node { Rva0022B540Node* m_next; Rva0022B540Node* m_prev; void* m_data; };\nstruct Rva0022B540Obj { unsigned char m_pad[0x214]; int m_flag214; };\nstruct Rva0022B540Logic { void deregister(void* obj); };\n\nextern \"C\" void j_0002a05e();\nextern Rva0022B540Logic* TheBfmeGameLogic0022B540;\n\nstruct Rva0022B540Owner\n{\n\tunsigned char m_pad0[0xe4];\n\tRva0022B540Node* m_list;\n\n\tvoid clearList();\n};\n\nvoid Rva0022B540Owner::clearList()\n{\n\ttypedef void (Rva0022B540Owner::*Fn)();\n\tunion { void (*raw)(); Fn member; } fn;\n\tfn.raw = j_0002a05e;\n\t(this->*fn.member)();\n\n\tRva0022B540Node* node = m_list->m_next;\n\n\twhile (node != m_list) {\n\t\tRva0022B540Obj* obj = (Rva0022B540Obj*)node->m_data;\n\t\tRva0022B540Node* next = node->m_next;\n\t\tobj->m_flag214 = 0;\n\t\tTheBfmeGameLogic0022B540->deregister(obj);\n\n\t\t_STL::__node_alloc<1, 0>::_M_deallocate(node, 0xc);\n\t\tnode = next;\n\t}\n\n\tm_list->m_next = m_list;\n\tm_list->m_prev = m_list;\n}\n"
-}

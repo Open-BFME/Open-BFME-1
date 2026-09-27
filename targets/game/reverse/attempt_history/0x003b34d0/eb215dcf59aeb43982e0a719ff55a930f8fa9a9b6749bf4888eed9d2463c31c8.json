@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "eb215dcf59aeb43982e0a719ff55a930f8fa9a9b6749bf4888eed9d2463c31c8",
-  "symbol": "??$__copy_backward@PAUGen_t_003b3cf0_p128pod@@PAU1@H@_STL@@YAPAUGen_t_003b3cf0_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z",
-  "score_kind": "author-estimate",
-  "score": 0.8,
-  "source": "// ??$__copy_backward@PAUGen_t_003b3cf0_p128pod@@PAU1@H@_STL@@YAPAUGen_t_003b3cf0_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z\n// partial score=0.8 date=2026-09-06\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS\n// stlport\n\nclass UnicodeString\n{\npublic:\n\tvoid set( const UnicodeString &that );\nprivate:\n\tvoid *m_buffer;\n};\n\nstruct Gen_t_003b3cf0_p128pod\n{\n\tint m_unused0;\n\tUnicodeString m_a;\n\tUnicodeString m_b;\n\tUnicodeString m_c;\n\tchar m_flag;\n\n\tGen_t_003b3cf0_p128pod &operator=( const Gen_t_003b3cf0_p128pod &that )\n\t{\n\t\tm_a.set( that.m_a );\n\t\tm_b.set( that.m_b );\n\t\tm_c.set( that.m_c );\n\t\tm_flag = that.m_flag;\n\t\treturn *this;\n\t}\n};\n\nnamespace _STL\n{\nstruct random_access_iterator_tag\n{\n};\n\ntemplate <class InputIterator, class OutputIterator, class Distance>\nOutputIterator __copy_backward( InputIterator first, InputIterator last,\n\tOutputIterator result, const random_access_iterator_tag &, Distance * )\n{\n\tfor( Distance count = last - first; count > 0; --count )\n\t{\n\t\t--last;\n\t\t--result;\n\t\t*result = *last;\n\t}\n\treturn result;\n}\n\ntemplate Gen_t_003b3cf0_p128pod *__copy_backward<\n\tGen_t_003b3cf0_p128pod *, Gen_t_003b3cf0_p128pod *, int>(\n\tGen_t_003b3cf0_p128pod *, Gen_t_003b3cf0_p128pod *,\n\tGen_t_003b3cf0_p128pod *, const random_access_iterator_tag &, int * );\n}\n"
-}

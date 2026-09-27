@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "caef112a8d89439f6b3e37b2a8bcee1bc9f0aeb9aa80e6d50b8926d68b6e0336",
-  "symbol": "?bfmeTickYN@BfmeHostYN@@QAEHXZ",
-  "score_kind": "author-estimate",
-  "score": 0.95,
-  "source": "// ?bfmeTickYN@BfmeHostYN@@QAEHXZ\n// partial score=0.95 date=2026-09-08\nclass AIUpdateInterface\n{\npublic:\n\tvoid notifyModelConditionChanged();\n\n\tunsigned char m_bfmeHeadYN[0x118];\n\tvolatile unsigned int m_bfme118YN;\n};\n\nstruct Rva00367E30Logic\n{\n\tunsigned char m_bfmeHeadYN[0x3c];\n\tunsigned int m_bfme3CYN;\n};\n\nextern Rva00367E30Logic *TheBfmeGameLogic;\n\nclass BfmeHostYN\n{\npublic:\n\tint bfmeTickYN();\n\n\tunsigned char m_bfmeHeadYN[0x10];\n\tunsigned int m_bfme10YN;\n\tchar m_bfme14YN;\n};\n\nint BfmeHostYN::bfmeTickYN()\n{\n\tunsigned int when = m_bfme10YN;\n\n\tif (when == 0)\n\t\treturn 1;\n\n\tif (m_bfme14YN == 1)\n\t\treturn 1;\n\n\tif (TheBfmeGameLogic->m_bfme3CYN <= when)\n\t\treturn 1;\n\n\tm_bfme14YN = 1;\n\tm_bfme10YN = 0;\n\n\tAIUpdateInterface *o = *(AIUpdateInterface **)((char *)this - 8);\n\tunsigned int f = o->m_bfme118YN;\n\n\tif ((f & 0x400) == 0 && (f & 0x800) != 0)\n\t\treturn 1;\n\n\tunsigned int g = o->m_bfme118YN & ~0x400;\n\tunsigned int h = g | 0x800;\n\n\to->m_bfme118YN = g;\n\to->m_bfme118YN = h;\n\to->notifyModelConditionChanged();\n\n\treturn 1;\n}\n"
-}

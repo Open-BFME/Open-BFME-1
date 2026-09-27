@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "2af7c300b32b699b428062cf3ccde252813d0867c93e7b8c10854d0efa35e991",
-  "symbol": "?d_008958d0@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.94,
-  "source": "// ?d_008958d0@@YAXXZ\n// partial score=0.94 date=2026-09-08\nextern \"C\" int memcmp(const void *a, const void *b, unsigned int n);\n\n#pragma intrinsic(memcmp)\n\nclass BfmeStrFH\n{\npublic:\n\tunsigned char m_bfmeHeadFH[2];\n\tunsigned short m_bfmeLenFH;\n\tunsigned char m_bfmeGapFH[4];\n\tchar m_bfmeDataFH[1];\n};\n\nclass BfmeObjFH\n{\npublic:\n\tint m_bfmeRefFH;\n\tBfmeStrFH *m_bfmeKeyFH;\n};\n\nclass BfmeNodeFH\n{\npublic:\n\tBfmeObjFH *m_bfmeObjFH;\n\tBfmeNodeFH *m_bfmeNextFH;\n};\n\n__forceinline BfmeStrFH *bfmeLoadFH(BfmeStrFH *volatile *pp)\n{\n\treturn *pp;\n}\n\nclass BfmeHostFH\n{\npublic:\n\tvoid bfmeFindFH(BfmeObjFH **out, BfmeStrFH **key);\n\n\tBfmeNodeFH *m_bfmeHeadFH;\n};\n\nvoid BfmeHostFH::bfmeFindFH(BfmeObjFH **out, BfmeStrFH **key)\n{\n\tBfmeNodeFH *n = m_bfmeHeadFH;\n\tvolatile int r = 0;\n\n\tif (n != 0)\n\t{\n\t\tBfmeStrFH *k = *key;\n\t\tint len = k->m_bfmeLenFH;\n\n\t\tdo\n\t\t{\n\t\t\tBfmeStrFH *s = bfmeLoadFH(&n->m_bfmeObjFH->m_bfmeKeyFH);\n\n\t\t\tif (len == s->m_bfmeLenFH)\n\t\t\t{\n\t\t\t\tif (k == s || memcmp(k->m_bfmeDataFH, s->m_bfmeDataFH, len) == 0)\n\t\t\t\t{\n\t\t\t\t\tBfmeObjFH *o = n->m_bfmeObjFH;\n\n\t\t\t\t\t*out = o;\n\n\t\t\t\t\tif (o != 0)\n\t\t\t\t\t\t++o->m_bfmeRefFH;\n\n\t\t\t\t\treturn;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\tn = n->m_bfmeNextFH;\n\t\t}\n\t\twhile (n != 0);\n\t}\n\n\t*out = 0;\n}\n"
-}
