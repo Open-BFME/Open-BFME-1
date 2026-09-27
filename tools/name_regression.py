@@ -26,13 +26,20 @@ import layout_history
 ROOT = Path(__file__).resolve().parents[1]
 CORRECTIONS = 'targets/game/reverse/name_corrections.json'
 SOURCE = ('.cpp', '.cc', '.cxx', '.c', '.h', '.hh', '.hpp', '.hxx')
-TOKEN = re.compile(r'//[^\n]*|/\*.*?\*/|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|[A-Za-z_]\w*|0[xX][0-9a-fA-F]+|\d+|[^\s]', re.S)
+# The MSVC inline-assembly emission directive, in both spellings, is a
+# compiler directive and not a name an author chose. Reading it as an
+# identifier lets a lifted `_emit 0E9h` body align the directive against a
+# member of the native body that replaced it and report the directive as
+# renamed. `0E9h` is a MASM literal, not C++, so the trailing `h` is part of
+# the literal too: without that alternative the tokenizer split it into an
+# identifier and reported it against a member the same way.
+TOKEN = re.compile(r'//[^\n]*|/\*.*?\*/|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|[A-Za-z_]\w*|0[xX][0-9a-fA-F]+|\d+[0-9A-Fa-f]*[hH]|\d+|[^\s]', re.S)
 IDENT = re.compile(r'^[A-Za-z_]\w*$')
 OPAQUE = re.compile(
     r'^(?:Rva[0-9a-f]{8}|(?:d|dup|j|sub|FUN)_[0-9a-f]{8}|'
     r'Gen_?[0-9a-f]{8}|Gen_t_[0-9a-f]{8}|'
     r'(?:rva|func|fn)_?[0-9a-f]{8})', re.I)
-KEYWORDS = set('void bool char short int long float double signed unsigned const volatile static extern class struct public private protected return true false nullptr typedef typename auto Bool Byte Short UnsignedByte UnsignedShort WideChar Int UnsignedInt UnsignedInt32 Real Int64 UnsignedInt64'.split())
+KEYWORDS = set('void bool char short int long float double signed unsigned const volatile static extern class struct public private protected return true false nullptr typedef typename auto Bool Byte Short UnsignedByte UnsignedShort WideChar Int UnsignedInt UnsignedInt32 Real Int64 UnsignedInt64 _emit __emit'.split())
 ADDRESS = re.compile(r'(?:rva|0x|(?:^|_)\s*)([0-9a-f]{8})(?![0-9a-f])', re.I)
 
 
@@ -203,7 +210,38 @@ def layouts(text):
     return result
 
 
-def regressions(before, after):
+def _shapes(found):
+    return {owner: {off: value[1:] for off, value in fields.items()}
+            for owner, fields in found.items()}
+
+
+def _demonstrable_carrier(owner, retained):
+    """Whether `owner` demonstrably left its file and can have become a target.
+
+    A type that is still declared in the NEW snapshot of its own file did not
+    move: another file merely borrowed its layout, so pairing the two invents a
+    rename -- and a member rename -- for a type that never left.  That is the
+    only evidence that positively identifies a non-carrier, and the caller
+    collects it from the new snapshot of the paired path, not from the text
+    being compared.
+
+    A shared layout is otherwise not evidence either way.  When an edit drops
+    several old types at once and the new file carries one of their layouts,
+    which one moved is undecidable here; suppressing the pairings because the
+    layout is ambiguous would discard the genuine rename instead, which is the
+    one defect a regression gate must not make.  Every candidate is therefore
+    reported, and an evidence-backed correction in
+    targets/game/reverse/name_corrections.json closes a false one.
+    """
+    return owner not in retained
+
+
+def regressions(before, after, retained=frozenset()):
+    """Report descriptive names `after` replaced with placeholders.
+
+    `retained` names the types still declared in the new snapshot of
+    `before`'s own file; they did not move, so their layout is not a carrier.
+    """
     found = set()
     old, new = tokens(before), tokens(after)
     if old == new:
@@ -245,18 +283,20 @@ def regressions(before, after):
                     found.add((x, y))
     found.update(_function_declaration_regressions(old, new))
     left, right = layouts(before), layouts(after)
+    left_shapes, right_shapes = _shapes(left), _shapes(right)
     for owner, members in left.items():
+        shape = left_shapes[owner]
         if owner in right:
             candidates = [owner]
         else:
-            shape = {off: value[1:] for off, value in members.items()}
-            candidates = [name for name, fields in right.items()
-                          if name not in left
-                          if {off: value[1:] for off, value in fields.items()} == shape]
+            candidates = [name for name, other in right_shapes.items()
+                          if name not in left and other == shape]
             # Removing a local type during header adoption does not rename it
             # to an unrelated, already-present type with the same layout.
             # Never pick arbitrarily between two identical carrier layouts.
             if len(candidates) != 1:
+                continue
+            if not _demonstrable_carrier(owner, retained):
                 continue
         target = candidates[0]
         if downgrade(owner, target):
@@ -347,7 +387,13 @@ def source(path):
             path.endswith(SOURCE))
 
 
-def pairs(root, old, new):
+def pairs(root, old, new, retained=None):
+    """Return the (old path, new path, before, after) texts to compare.
+
+    `retained` is an optional dict, filled in with the type names each old
+    path still declares in the new snapshot; `regressions` needs them to tell a
+    moved type from one that stayed behind.
+    """
     args = diff_args(old, new)
     changes = []
     fields = git(root, 'diff', '--name-status', '-z', '-M1%', *args).split('\0')
@@ -458,7 +504,31 @@ def pairs(root, old, new):
         if a.startswith('game/') and snapshot(new, a) == left[a]:
             continue
         linked.update((a, b) for b in targets)
+    if retained is not None:
+        retained.update(retained_types(root, new, right, left))
     return [(a, b, left[a], right[b]) for a, b in sorted(linked)]
+
+
+def retained_types(root, new, right, paths):
+    """Type names each paired OLD path still declares in the NEW snapshot.
+
+    A type still declared in its own file did not move into the file it is
+    being compared with, so its layout is not a carrier there.  This is the
+    only positive evidence available at the pairing boundary: the two texts
+    handed to `regressions` are different files, and only the new snapshot of
+    the OLD path says which types stayed behind.  Only measured definitions count: comments, literals and forward declarations
+    cannot prove that a layout stayed behind. Only `game/` is read; a banked
+    attempt body is stale evidence, not a definition that survived.
+    """
+    wanted = {path for path in paths if path.startswith('game/')}
+    texts = {path: right[path] for path in wanted if path in right}
+    missing = wanted - set(texts)
+    if missing:
+        texts.update({path: text for path, text
+                      in read_many(root, new, missing).items()
+                      if text is not None})
+    return {path: frozenset(layouts(text))
+            for path, text in texts.items()}
 
 
 def _symbol_names(symbol):
@@ -525,10 +595,11 @@ def check(root, old, new):
         raise ValueError(f'{CORRECTIONS} must contain a list')
     findings = []
     accepted = 0
+    retained = {}
     candidates = [
         Finding(a, b, x, y, digest(before), digest(after))
-        for a, b, before, after in pairs(root, old, new)
-        for x, y in regressions(before, after)
+        for a, b, before, after in pairs(root, old, new, retained)
+        for x, y in regressions(before, after, retained.get(a, frozenset()))
     ]
     candidates.extend(ledger_symbol_regressions(root, old, new))
     for finding in candidates:

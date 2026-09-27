@@ -368,6 +368,21 @@ It checks aligned identifier substitutions and unambiguous layouts that
 A semantic rename supported by better evidence remains permitted. Do not replace
 an established name with an opaque name merely to land a matching body.
 
+A removed type is paired with a new type only when the new snapshot of its OWN
+file no longer declares it, so a type that merely lends its layout to another
+file is not reported as renamed. That is the only positive evidence available at
+the pairing boundary, because the two texts compared are different files. A
+layout shared by several old types is otherwise not evidence either way, so every
+candidate is still reported and a correction closes the false one. An in-place
+rename, where the type is declared on both sides, is never gated on this.
+
+`_emit`/`__emit` and a MASM literal such as `0E9h` are a compiler directive and
+a literal, not descriptive names. Reading them as identifiers made a lifted
+`__emit` body report the directive as renamed into the offset member of the
+native C++ that replaced it; a reconstruction range needed a correction entry for
+it. Exempting the directive alone is not a blanket exemption: real names beside
+it are still checked.
+
 To replace a matched real-name ledger row whose identity independent evidence
 refutes, use `tools/add_match.py` with `--replace-rva <rva>`,
 `--correct-identity <old-name>`, and `--identity-evidence` pointing to a

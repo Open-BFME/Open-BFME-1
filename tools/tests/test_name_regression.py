@@ -82,6 +82,126 @@ def test_new_owner_with_same_layout_still_reports_name_regression():
         ('StringBase', 'Rva0050F8B0FunctorHolder'), ('m_data', 'm_ptr')}
 
 
+def test_renamed_type_is_detected_beside_a_retained_type_of_the_same_shape():
+    # One file loses a type whose members are renamed to offsets and keeps an
+    # unrelated type of the identical layout. The survivor is not a carrier,
+    # and it must not hide the rename that really happened.
+    retained = 'class Unchanged { int m_count; int m_total; };\n'
+    assert set(N.regressions('class MovedType { int m_alpha; int m_beta; };\n' + retained,
+                            'class Rva00123456 { int m_field0; int m_field4; };\n' + retained)) == {
+        ('MovedType', 'Rva00123456'), ('m_alpha', 'm_field0'), ('m_beta', 'm_field4')}
+    # A single removed type is the same case without the surviving sibling.
+    assert set(N.regressions('class MovedType { int m_alpha; int m_beta; };',
+                            'class Rva00123456 { int m_field0; int m_field4; };')) == {
+        ('MovedType', 'Rva00123456'), ('m_alpha', 'm_field0'), ('m_beta', 'm_field4')}
+
+
+def test_retained_set_does_not_exempt_an_in_place_rename():
+    # The retained set names types that stayed in their OWN file, so it is only
+    # consulted when the type left. Gating the in-place branch on it too would
+    # silently drop the common rename-in-the-same-file case.
+    before = 'class MovedType { int m_alpha; int m_beta; };\nclass Kept { int m_count; };\n'
+    after = 'class Rva00123456 { int m_field0; int m_field4; };\nclass Kept { int m_count; };\n'
+    assert set(N.regressions(before, after, {'Kept'})) == {
+        ('MovedType', 'Rva00123456'), ('m_alpha', 'm_field0'), ('m_beta', 'm_field4')}
+
+
+def test_shared_layout_does_not_suppress_a_genuine_rename():
+    # Two removed types share the new layout, so the layout alone cannot say
+    # which one moved. Reporting both keeps the real rename reachable; a
+    # documented correction closes the false one.
+    before = ('class MovedType { int m_alpha; int m_beta; };\n'
+              'class Dropped { int m_count; int m_total; };\n')
+    after = 'class Rva00123456 { int m_field0; int m_field4; };\n'
+    findings = set(N.regressions(before, after))
+    assert {('MovedType', 'Rva00123456'), ('m_alpha', 'm_field0'),
+            ('m_beta', 'm_field4')} <= findings
+    # The member-name tiebreak the old carrier check relied on is not evidence
+    # of anything when the new type renamed its own members to offsets.
+    assert {('Dropped', 'Rva00123456'), ('m_count', 'm_field0')} <= findings
+
+
+# The real incident: 0x001246F0 moved out of Bfme5NodeMakers.cpp, whose
+# 12-byte Bfme5RefNode stayed behind and whose own 12-byte Bfme5ParseNode12
+# disappeared with it. See
+# targets/game/reverse/identity_evidence/00125ce0-spawnunit-module-data-ctor.md.
+MAKERS = 'game/GameEngine/Source/Common/Bfme5NodeMakers.cpp'
+OATHBREAKERS = ('game/GameEngine/Source/GameLogic/Object/Behavior/'
+                'OathbreakersFadeAwayBehaviorFriendNewModuleDataThunk.cpp')
+MAKERS_BEFORE = '''\
+void * __cdecl operator new(unsigned int n);
+
+extern void *g_bfme5RefVtable;
+
+struct Bfme5RefNode
+{
+\tvoid *m_bfmeVptr;
+\tint m_bfmeRefCount;
+\tint m_bfmePad;
+};
+
+struct Bfme5ParseNode12
+{
+\tvoid *m_bfmeVptr;
+\tint m_bfme04;
+\tint m_bfme08;
+};
+
+void * __cdecl bfme5MakeParseNodeC(INI *ini)
+{
+\tBfme5ParseNode12 *q = (Bfme5ParseNode12 *)operator new(12);
+\treturn q;
+}
+'''
+MAKERS_AFTER = MAKERS_BEFORE[:MAKERS_BEFORE.index('struct Bfme5ParseNode12')]
+OATHBREAKERS_AFTER = '''\
+void * __cdecl operator new(unsigned int);
+
+class OathbreakersFadeAwayBehaviorModuleData
+{
+public:
+\tvoid *m_bfmeVptr;
+\tint m_bfme04;
+\tint m_bfme08;
+};
+
+void * __cdecl bfme5MakeParseNodeC(INI *ini)
+{
+\tOathbreakersFadeAwayBehaviorModuleData *q =
+\t\t(OathbreakersFadeAwayBehaviorModuleData *)operator new(0x0c);
+\treturn q;
+}
+'''
+
+
+def test_type_kept_in_its_own_file_is_not_a_carrier_for_the_new_file():
+    # Without the new snapshot of the old path the shared 12-byte layout pairs
+    # the untouched reference-counted node with the moved record, which is the
+    # false association the correction file has to close today.
+    assert set(N.regressions(MAKERS_BEFORE, OATHBREAKERS_AFTER)) == {
+        ('m_bfmePad', 'm_bfme08'), ('m_bfmeRefCount', 'm_bfme04')}
+    assert N.regressions(MAKERS_BEFORE, OATHBREAKERS_AFTER,
+                         {'Bfme5RefNode'}) == []
+
+
+def test_spawn_parse_record_move_is_silent_at_the_pairing_boundary(repo):
+    put(repo, MAKERS, MAKERS_BEFORE)
+    put(repo, 'targets/game/reverse/functions.csv',
+        f'?bfme5MakeParseNodeC@@YAXXPAVINI@@@Z,,0x001246F0,57,{MAKERS},matched,evidence\n')
+    commit(repo)
+    put(repo, MAKERS, MAKERS_AFTER)
+    put(repo, OATHBREAKERS, OATHBREAKERS_AFTER)
+    put(repo, 'targets/game/reverse/functions.csv',
+        f'?bfme5MakeParseNodeC@@YAXXPAVINI@@@Z,,0x001246F0,57,{OATHBREAKERS},matched,evidence\n')
+
+    assert N.check(repo, 'HEAD', ':') == ([], 0)
+    # The boundary is what settles it: the old file still declares the node.
+    retained = {}
+    paired = N.pairs(repo, 'HEAD', ':', retained)
+    assert retained[MAKERS] == {'Bfme5RefNode'}
+    assert (MAKERS, OATHBREAKERS) in {(a, b) for a, b, _, _ in paired}
+
+
 def test_pushed_history_catches_a_regression_restored_later(repo):
     put(repo, BANK, BEFORE)
     old = commit(repo)
@@ -656,3 +776,120 @@ def test_qualified_definition_return_type_change():
     assert ('calculateScore', 'Rva00123456') in N.regressions(
         'void Owner::calculateScore() {}',
         'static int Owner::Rva00123456() { return 0; }')
+
+
+# A lifted `_emit 055h` body replaced by native C++: the tokens of the MASM
+# block are not names, and the offset members of the body that replaced it are
+# not what they were renamed from. Reduced from
+# game/GameEngineDevice/Source/W3DDevice/GameClient/Add_Prototype_Impl.cpp
+# against game/GameEngine/Source/Common/BfmeConv2153.cpp, which reported
+# `_emit -> m_f140` and `h -> m_at14`.
+EMIT_LIFT = '''\
+__declspec(naked) void AssetRegistry::Add_Prototype_Impl(void * /*proto*/)
+\t\t_emit 055h
+\t\t_emit 08Dh
+\t\t_emit 04Ch
+\t\t_emit 09Ah
+\t\t_emit 0EEh
+'''
+EMIT_NATIVE = ''.join(f'\tunsigned int m_at{offset:X};\n'
+                      for offset in range(0x0FC, 0x118, 4))
+
+
+def test_asm_emit_directive_and_masm_literal_are_not_renamed_members():
+    assert N.regressions(EMIT_LIFT, EMIT_NATIVE) == []
+
+
+def test_asm_emit_directive_is_a_directive_not_a_name():
+    # `_emit` is an MSVC intrinsic, so nothing in this tree can declare it and
+    # it is a compiler directive, not a descriptive name to preserve.
+    assert '_emit' in N.KEYWORDS and '__emit' in N.KEYWORDS
+    assert not N.opaque('_emit')
+    # A MASM literal is one literal; its `h` suffix is not an identifier.
+    assert N.tokens('_emit 08Dh') == ['_emit', '08Dh']
+
+
+def test_asm_emit_exemption_does_not_exempt_the_names_around_it():
+    before = '__declspec(naked) void calculateScore() { __asm { _emit 0C3h } }\n'
+    after = '__declspec(naked) void Rva00123456() { __asm { _emit 0C3h } }\n'
+    assert ('calculateScore', 'Rva00123456') in N.regressions(before, after)
+    members = 'class Known { int m_counter; };\nclass Rva00123456 { int m_field0; };\n'
+    assert ('m_counter', 'm_field0') in N.regressions(members, members.replace('m_counter', 'm_field0'))
+
+
+# The same false positive from the reconstruction of the 0x001F72D0 constructor,
+# which is what needed a name_corrections.json entry to be pushed: deleting
+# .../ClearanceTestingSlowDeathBehaviorModuleDataCtorThunk.cpp into
+# .../ClearanceTestingSlowDeathBehaviorModuleDataConstructor.cpp reported the
+# assembly directive as renamed into the float it initializes,
+# `_emit -> m_f210`. Reduced from that range, keeping the class the directive
+# aligned against; the whole `regressions` result was exactly that one pair.
+CTOR_LIFT = '''\
+class ClearanceTestingSlowDeathBehaviorModuleData
+{
+public:
+	ClearanceTestingSlowDeathBehaviorModuleData();
+};
+
+__declspec(naked) ClearanceTestingSlowDeathBehaviorModuleData::ClearanceTestingSlowDeathBehaviorModuleData()
+{
+	__asm {
+		_emit 6Ah
+		_emit 0FFh
+		_emit 0A1h
+		_emit 0CDh
+	}
+}
+'''
+
+CTOR_NATIVE = '''\
+class Rva001F72D0FloatPair
+{
+public:
+	float m_f210;
+
+private:
+	float m_f214;
+};
+
+class ClearanceTestingSlowDeathBehaviorModuleData
+{
+public:
+	ClearanceTestingSlowDeathBehaviorModuleData();
+
+private:
+	Rva001F72D0FloatPair m_pair210;
+	Rva001F72D0FloatPair m_pair218;
+};
+
+ClearanceTestingSlowDeathBehaviorModuleData::ClearanceTestingSlowDeathBehaviorModuleData()
+	: m_pair210(),
+	  m_pair218()
+{
+	m_pair210.m_f210 = 20.0f;
+}
+'''
+
+
+def test_emit_directive_is_not_renamed_into_the_member_it_initializes():
+    assert N.regressions(CTOR_LIFT, CTOR_NATIVE) == []
+    # The member the directive used to align against is an offset name in its
+    # own right, so the pairing was reported only because `_emit` read as a
+    # descriptive identifier; nothing else in the range was lost.
+    assert N.opaque('m_f210')
+
+
+@pytest.mark.parametrize("text", [
+    "// class StillHere { int m_count; };\n",
+    'const char *description = "class StillHere { int m_count; };";\n',
+    "class StillHere;\n",
+])
+def test_prose_and_forward_declarations_do_not_prove_retained_layout(tmp_path, text):
+    path = 'game/example.cpp'
+    assert N.retained_types(tmp_path, ':', {path: text}, [path])[path] == frozenset()
+
+
+def test_only_actual_layout_definitions_are_retained(tmp_path):
+    path = 'game/example.cpp'
+    text = 'class Forward; // class Comment {};\nclass Actual { int m_count; };'
+    assert N.retained_types(tmp_path, ':', {path: text}, [path])[path] == {'Actual'}
