@@ -83,12 +83,12 @@ types are unidentified — only that there are exactly two and they precede
 
 ## The latency probe
 
-`030-netlatprobe` instruments the wire; `tools/netlat.py` reads it. UNSHIPPED —
+`030-netlatprobe` instruments the wire. Its reader, `tools/netlat.py`, was removed on
+2026-09-27 as unused (`git log --diff-filter=D -- tools/netlat.py`). UNSHIPPED —
 it writes tens of lines a second and `--dist` refuses it.
 
 ```bash
 python3 tools/modbuild.py --only 020-gameresult --only 030-netlatprobe -o build/mods/probe.exe
-python3 tools/netlat.py --preflight run1/*.jsonl
 ```
 
 Each client appends JSONL to `%APPDATA%\My Battle for Middle-earth
@@ -110,7 +110,8 @@ argument (`cave.py`'s `args=("ecx","stack:0")`).
 
 ## The frame probe
 
-`036-fpsprobe` hashes the backbuffer and `tools/fpsmeter.py` reads it. UNSHIPPED
+`036-fpsprobe` hashes the backbuffer. Its reader, `tools/fpsmeter.py`, was removed with
+netlat.py and can be restored the same way. UNSHIPPED
 — it reads pixels back off the GPU. Hook address, cell grid, burst schedule and
 the two calibration controls: `mods/features/036-fpsprobe/README.md`. What it
 then measured: `docs/fps60.md`. Three traps from it generalise:
