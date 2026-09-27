@@ -331,16 +331,11 @@ def main():
     ap.add_argument("exe")
     ap.add_argument("-o", "--output", required=True)
     ap.add_argument("--size", type=lambda v: int(v, 0), default=0x10000)
-    ap.add_argument("--nop-detour", type=lambda v: int(v, 0), action="append",
-                    default=[], help="RVA to detour with an empty payload (identity)")
     a = ap.parse_args()
 
     pe = PE(a.exe)
     rva = pe.add_cave(a.size)
     print(f"cave .bfmemod at RVA 0x{rva:08X} size 0x{pe.cave_size:X}")
-    for t in a.nop_detour:
-        c = pe.detour(t)
-        print(f"  detour 0x{t:08X} -> cave 0x{c:08X} (identity)")
     p = pe.save(a.output)
     print(f"wrote {p} ({len(pe.data):,} bytes)")
 

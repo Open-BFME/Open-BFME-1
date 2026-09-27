@@ -828,7 +828,6 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--baseline", default=BASELINE)
     ap.add_argument("-o", "--output", default=OUT)
-    ap.add_argument("--cave-size", type=lambda v: int(v, 0), default=0x10000)
     ap.add_argument("--dist", action="store_true",
                     help="also write mods/dist/ (the tracked, shippable build)")
     ap.add_argument("--probe", action="store_true",
@@ -838,7 +837,7 @@ def main():
     a = ap.parse_args()
 
     pe = PE(a.baseline)
-    pe.add_cave(a.cave_size)
+    pe.add_cave(0x10000)
     bus = reserve_mod_bus(pe)
     print(f"cave .bfmemod @ RVA 0x{pe.cave_rva:08X} size 0x{pe.cave_size:X}")
     print(f"  mod bus @ RVA 0x{bus:08X} (VA 0x{pe.image_base + bus:08X}), "

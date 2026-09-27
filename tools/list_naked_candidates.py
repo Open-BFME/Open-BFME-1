@@ -29,6 +29,8 @@ _spec.loader.exec_module(audit_ret_arity)
 NAKED_RE = re.compile(r"__declspec\s*\(\s*naked\s*\)")
 EMIT_RE = re.compile(r"__emit\s+0x([0-9a-fA-F]{1,2})")
 RE_ATTEMPTS = build.ROOT / "targets/game/reverse" / "re_attempts.log"
+# Land rates peak at 128-255 B and the dump waves ran to 511 B; the old 160 B cap hid most of the fuel.
+MAX_BYTES = 512
 
 
 def logged_no_match(paths):
@@ -447,10 +449,6 @@ def main():
                         help="with --ranked, group repeated naked byte patterns")
     parser.add_argument("--limit", type=int, default=30,
                         help="max items/groups with --ranked (default 30)")
-    parser.add_argument("--max-bytes", type=int, default=512,
-                        help="serve naked bodies up to this size (measured land "
-                             "rates peak at 128-255B and the dump waves ran to "
-                             "511B; the old 160 default hid most of the fuel)")
     parser.add_argument("--shard", type=parse_shard, metavar="INDEX/COUNT",
                         help="stable zero-based partition for concurrent workers")
     parser.add_argument("--exclude-file", action="append", type=Path, default=[],
@@ -464,7 +462,7 @@ def main():
         parser.error("--groups requires --ranked")
 
     row_by_source, rows_by_name = collect_rows()
-    body_index = matched_body_index(row_by_source, args.max_bytes)
+    body_index = matched_body_index(row_by_source, MAX_BYTES)
     files = []
     for raw in args.paths:
         path = build.ROOT / raw
@@ -488,7 +486,7 @@ def main():
             source_rows = row_by_source.get(rel, [])
             unmatched = sum(1 for row in source_rows if row["status"] != "matched")
             for symbol, data, start, end in asm_proc_blocks(lines):
-                if not data or len(data) > args.max_bytes:
+                if not data or len(data) > MAX_BYTES:
                     continue
                 own = [row for row in rows_by_name.get(symbol, [])
                        if row["source"] == rel]
@@ -514,7 +512,7 @@ def main():
             if not NAKED_RE.search(line):
                 continue
             data, end = block_bytes(lines, index)
-            if not data or len(data) > args.max_bytes:
+            if not data or len(data) > MAX_BYTES:
                 continue
             sig = signature(lines, index)
             symbol = symbol_comment(lines, index)

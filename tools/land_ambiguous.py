@@ -25,7 +25,6 @@ ROOT = build.ROOT
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--report", default="targets/game/reverse/zh_sweep/drift_report.csv")
-    ap.add_argument("--src-dir", default="game")
     args = ap.parse_args()
 
     # The Ghidra inventory is gitignored, so a fresh clone does not have it and
@@ -61,10 +60,10 @@ def main():
     emitted_total = 0
     for cpp_name, rows in sorted(by_source.items()):
         # drift report stores bare basenames (often lowercased); resolve under game/
-        src = ROOT / args.src_dir / cpp_name
+        src = ROOT / "game" / cpp_name
         if not src.exists():
             want = Path(cpp_name).name.lower()
-            hits = [h for h in (ROOT / args.src_dir).rglob("*.cpp") if h.name.lower() == want]
+            hits = [h for h in (ROOT / "game").rglob("*.cpp") if h.name.lower() == want]
             src = hits[0] if hits else src
         if not src.exists():
             print(f"{cpp_name}: missing source — skipped")

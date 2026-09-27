@@ -194,7 +194,6 @@ def main(argv=None):
     ap.add_argument("action", choices=["pick", "launch", "status", "harvested"])
     ap.add_argument("count", nargs="?", type=int, default=4)
     ap.add_argument("--lifts", action="store_true", help="add one seat on servable named lifts")
-    ap.add_argument("--hours", type=float, default=2.0)
     ap.add_argument("--seat", help="harvested: mark this seat id as reviewed, releasing its bodies")
     args = ap.parse_args(argv)
     if args.action == "status":
@@ -211,7 +210,7 @@ def main(argv=None):
         for label, rvas in groups:
             print(f"{label}: {' '.join(f'0x{r:08X}' for r in rvas)}")
         return 0
-    launch(groups, args.hours)
+    launch(groups, 2.0)
     return 0
 
 

@@ -343,7 +343,7 @@ def prefer_call_derived_identities(candidates, identity_rows, matched_sources):
     return kept, conflicts
 
 
-def structural_candidates(claimed, claimed_names, claimed_ranges, big=False):
+def structural_candidates(claimed, claimed_names, claimed_ranges):
     """The manual-RE tier: drifted functions whose source exists but whose code
     shape differs (class structural / register-swap). Workflow: docs/structural.md."""
     _, rows = read_csv(DRIFT, "python3 tools/drift_classify.py")
@@ -395,14 +395,8 @@ def structural_candidates(claimed, claimed_names, claimed_ranges, big=False):
                     "command": (f"python3 tools/explain_mismatch.py '{name}' "
                                 f"--rva {crva_hex} --size {row['size']} "
                                 f"--source {source}")})
-    if big:
-        # byte-yield mode: biggest functions first (still gated by alignment)
-        out.sort(key=lambda c: (-c["size"],
-                                -c["aligned_pct"], c["function"]))
-    else:
-        # highest alignment first (closest to matching), small before big at equal alignment
-        out.sort(key=lambda c: (-c["aligned_pct"],
-                                c["size"], c["function"]))
+    # highest alignment first (closest to matching), small before big at equal alignment
+    out.sort(key=lambda c: (-c["aligned_pct"], c["size"], c["function"]))
     return out
 
 
@@ -1461,8 +1455,6 @@ def main():
                          f"(default {FINISH_COOLDOWN_DAYS}; 0 = no cooldown)")
     ap.add_argument("--shard", type=parse_shard, metavar="INDEX/COUNT",
                     help="stable zero-based partition for concurrent workers")
-    ap.add_argument("--big", action="store_true",
-                    help="sort structural candidates by size (byte yield) instead of alignment")
     ap.add_argument("--include-logged", action="store_true",
                     help="keep candidates already recorded no-match in "
                          "targets/game/reverse/re_attempts.log (they are dropped by default)")
@@ -1487,8 +1479,7 @@ def main():
                 matched_sources.add(row["source"])
             if row.get("target_size"):
                 claimed_ranges.append((start, start + int(row["target_size"])))
-    structural = (structural_candidates(claimed, claimed_names, claimed_ranges,
-                                        big=args.big)
+    structural = (structural_candidates(claimed, claimed_names, claimed_ranges)
                   if args.tier not in ("named", "harvest", "ghidra", "anchored", "carved")
                   else [])
     finish = (finish_candidates(args.min_score, args.max_attempts, args.cooldown_days)

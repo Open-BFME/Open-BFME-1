@@ -174,7 +174,6 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("selector", help="Decorated symbol substring or source path substring; "
                         "with --rva, the EXACT decorated symbol")
-    parser.add_argument("--context", type=int, default=24, help="bytes around the first difference")
     parser.add_argument("--rva", help="explain an unmatched candidate believed to live at this "
                         "target RVA (drift_report candidate_rva); needs --source")
     parser.add_argument("--size", type=int, help="candidate size (default: ghidra inventory)")
@@ -205,8 +204,8 @@ def main():
         print("OK: bytes match")
         return
 
-    start = max(0, offset - args.context)
-    end = min(max(len(target), len(compiled)), offset + args.context)
+    start = max(0, offset - 24)
+    end = min(max(len(target), len(compiled)), offset + 24)
     print(f"first diff: +0x{offset:X} at RVA 0x{target_rva + offset:08X}")
     if offset < len(target):
         print(f"  target byte:   {target[offset]:02x}")
