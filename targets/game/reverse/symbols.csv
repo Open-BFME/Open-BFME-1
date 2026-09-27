@@ -89487,3 +89487,5 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?rva00225960@Rva00225960Owner@@QAEXXZ,0x0001727E,route=0x00225960;retail 0x0022BFF0 call +0x10 via 0x0022CDB0 and 0x0002ECC1
 ?rva00225960@Rva00225960Owner@@QAEXXZ,0x0004098F,route=0x00225960;retail 0x0024A900 call +0x10 via 0x0024B8D0 and 0x0001727E
 ?xfer@PackedFlags0020ECA0@@QAEXPAVXfer@@@Z,0x0020ECA0,address-derived existing dup body;0x0020F000 call +0x44 via 0x00045DA4;thiscall ret4 and 11-bit packed Xfer slot 0x24 witnessed
+?notify00108A60@Radar@@QAEXPBVObject@@@Z,0x00108A60,ABI view of existing bfmeGoEZF body; full37B target reads Object argument+38 and calls108520 with event3 then49D320 on global12F33F8; RET4; receiver independently witnessed as TheRadar by419F00 radar-event sibling and41EBD0+2C5
+?nearest004182A0@Object@@QAEPAV1@XZ,0x004182A0,Full271B thiscall niladic body builds filter chain and returns partition nearest-object result from9F26A0 with receiver position+38; RET0 and EAX preserved after final call; both419F00 callers pass Object and consume returned position+38
