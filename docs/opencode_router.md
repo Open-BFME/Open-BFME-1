@@ -173,13 +173,15 @@ selection, the router chooses a supported variant using the job's **current tier
 | Tier | Preference, in order |
 | --- | --- |
 | bulk | medium, low, minimal, none |
-| reasoning | high, medium, low, minimal, none |
-| escalation | max, xhigh, high, medium, low, minimal, none |
+| reasoning | high, medium, low, minimal |
+| escalation | max, xhigh, high, medium, low, minimal |
 
 Only names in the model's capabilities are eligible. If none fit, omit the suffix
 and keep OpenCode's default behavior; bulk does not automatically select max just
 because it is the only listed variant. A model's per-tier preference overrides
 the first choice; an unsupported preference falls through to the table.
+Reasoning/escalation do not fall back to explicit `none`: when stronger levels
+have provider-specific names, keep the default until an override supplies one.
 
 `variant_discovery` defaults to `true`. Once per scheduler invocation, the router
 reads the location-scoped `opencode api model.list` snapshot from the background

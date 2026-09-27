@@ -27,8 +27,8 @@ MODEL_ID = re.compile(r'opencode-go/[a-z0-9][a-z0-9._-]*(?:#[a-z0-9._-]+)?\Z')
 VARIANT_ID = re.compile(r'[a-z0-9][a-z0-9._-]*\Z')
 VARIANT_ORDER = {
     'bulk': ('medium', 'low', 'minimal', 'none'),
-    'reasoning': ('high', 'medium', 'low', 'minimal', 'none'),
-    'escalation': ('max', 'xhigh', 'high', 'medium', 'low', 'minimal', 'none'),
+    'reasoning': ('high', 'medium', 'low', 'minimal'),
+    'escalation': ('max', 'xhigh', 'high', 'medium', 'low', 'minimal'),
 }
 SCHEMA = '''
 CREATE TABLE IF NOT EXISTS jobs (

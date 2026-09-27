@@ -172,6 +172,8 @@ class RouterTests(unittest.TestCase):
         self.assertEqual(r.choose_variant(model, 'reasoning', {}), 'thinking')
         self.assertIsNone(r.choose_variant(model, 'bulk', {}))
         model.pop('variants');model.pop('variant_preferences')
+        for tier in ('reasoning','escalation'):
+            self.assertIsNone(r.choose_variant(model, tier, {model['id']: ['none','thinking']}))
         self.assertIsNone(r.choose_variant(model, 'bulk', {model['id']: ['max']}))
         model['id'] += '#high'
         self.assertEqual(r.choose_variant(model, 'bulk', {}), 'high')
