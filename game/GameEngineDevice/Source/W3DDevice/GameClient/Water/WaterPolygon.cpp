@@ -117,6 +117,7 @@ public:
 	Rva007A1230ArrayOwner(void *source);
 	virtual ~Rva007A1230ArrayOwner(void);
 	void setTexture(const AsciiString &name, WaterTextureIndex index);
+	void rva007A4D40(void *source);
 
 private:
 	void releaseOwnedState(void);
@@ -142,17 +143,6 @@ private:
 
 typedef char WaterPolygonSize[(sizeof(Rva007A1230ArrayOwner) == 0x80) ? 1 : -1];
 
-// The initializer is still a generic dump row.  Keep its call target named by
-// that existing row until the adjacent body is converted; the cast supplies
-// the recovered thiscall/one-argument ABI without inventing a second address.
-extern void d_007a4d40(void);
-
-// VC7.1 reserves __thiscall in a free-function-pointer typedef.  A fastcall
-// cast with the source duplicated gives the same ECX object and stack argument
-// while leaving the otherwise-unused EDX copy harmless at the target.
-typedef void (__fastcall *WaterPolygonInitializeCall)(
-	Rva007A1230ArrayOwner *, void *, void *);
-
 Rva007A1230ArrayOwner::Rva007A1230ArrayOwner(void *source)
 	: m_flag04(0), m_field08(0)
 {
@@ -164,7 +154,7 @@ Rva007A1230ArrayOwner::Rva007A1230ArrayOwner(void *source)
 	m_value5c = 0;
 	m_value60 = 0;
 	m_boundsValid = 0;
-	((WaterPolygonInitializeCall)d_007a4d40)(this, source, source);
+	rva007A4D40(source);
 }
 
 Rva007A1230ArrayOwner::~Rva007A1230ArrayOwner()
