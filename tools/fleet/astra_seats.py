@@ -265,7 +265,14 @@ def harvest(seat):
     changed = git(tree, "status", "--short", "--untracked-files=all").stdout.splitlines()
     paths = [line[3:].split(" -> ")[-1] for line in changed if not line[3:].startswith("build/")]
     if not paths:
-        return "nothing to harvest"
+        # Committed on an earlier harvest whose push failed: push, do not skip.
+        git(tree, "fetch", "-q", "origin", "master")
+        if git(tree, "merge-base", "--is-ancestor", "HEAD", "origin/master").returncode == 0:
+            return "nothing to harvest"
+        problem = push(tree)
+        if problem is None:
+            print(f"{seat['id']}: pushed {git(tree, 'log', '--oneline', '-1').stdout.strip()}")
+        return problem
     for path in paths:
         git(tree, "add", "-A", "--", path)
     total = sum(size for _, _, size in rows)
