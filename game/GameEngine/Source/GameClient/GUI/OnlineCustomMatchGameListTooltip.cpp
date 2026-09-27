@@ -1,8 +1,6 @@
-// ?customMatchGameListTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z
-// partial score=0.95 date=2026-09-27
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// BfmeAptScreenOnlineCustomMatch::customMatchGameListTooltip, retail 0x0053A280, 634 bytes.
-// Identity: callback installed by the landed OnlineCustomMatch onInitGadget body.
+// GameList tooltip callback of Apt OnlineCustomMatch, retail 0x0053A280, 634 bytes.
+// Installed by the landed onInitGadget body (0x0053A710) through winSetTooltipFunc.
 
 typedef int Int;
 typedef bool Bool;
@@ -68,7 +66,7 @@ public:
 
 class WinInstanceData;
 class GameWindow;
-class RGBColor;
+struct RGBColor;
 
 class Mouse
 {
@@ -172,43 +170,49 @@ void customMatchGameListTooltip( GameWindow *window, WinInstanceData *, Unsigned
 	if ( row == -1 )
 		return;
 
-	if ( column == 0 )
+	GameSpyStagingRoom *room;
 	{
-		if ( (Int)GadgetListBoxGetItemData( window, row, 1 ) != 1 )
-			return;
-		TheMouse->setCursorTooltip( TheGameText->fetch( "TOOLTIP:PasswordIcon" ), -1, 0, 1.0f );
-		return;
-	}
-
-	StagingRoomMap *rooms = TheGameSpyInfo->getStagingRoomList();
-	StagingRoomMapIterator it = rooms->find(
-		(Int)GadgetListBoxGetItemData( window, row, 0 ) );
-	StagingRoomMapNode *header = rooms->header;
-	if ( it.node == header )
-		return;
-
-	GameSpyStagingRoom *room = it.node->room;
-	UnicodeString tooltip;
-	for ( Int i = 0; i < 8; ++i )
-	{
-		GameSlot *slot = room->getSlot( i );
-		if ( !slot->isHuman() )
-			continue;
-
-		if ( !tooltip.isEmpty() )
-			tooltip += L"\n";
-		tooltip += slot->getName();
-
-		AsciiString player;
-		player.translate( slot->getName() );
-		PlayerInfo *info = TheGameSpyInfo->findPlayerName( player.str() );
-		if ( info )
+		if ( column == 0 )
 		{
-			UnicodeString rating;
-			rating.format( UnicodeString( L" (%d/%d)" ), info->wins, info->losses );
-			tooltip += rating;
+			if ( (Int)GadgetListBoxGetItemData( window, row, 1 ) != 1 )
+				return;
+			TheMouse->setCursorTooltip( TheGameText->fetch( "TOOLTIP:PasswordIcon" ), -1, 0, 1.0f );
+			return;
 		}
-	}
 
-	TheMouse->setCursorTooltip( tooltip, -1, 0, 1.0f );
+		StagingRoomMap *rooms = TheGameSpyInfo->getStagingRoomList();
+		Int gameID = (Int)GadgetListBoxGetItemData( window, row, 0 );
+		StagingRoomMapIterator it = rooms->find( gameID );
+		StagingRoomMapNode *header = rooms->header;
+		if ( it.node == header )
+			return;
+		room = it.node->room;
+	}
+	{
+		UnicodeString tooltip;
+		for ( Int i = 0; i < 8; ++i )
+		{
+			GameSlot *slot = room->getSlot( i );
+			if ( !slot->isHuman() )
+				continue;
+
+			if ( !tooltip.isEmpty() )
+				tooltip += L"\n";
+			tooltip += slot->getName();
+
+			AsciiString player;
+			player.translate( slot->getName() );
+			PlayerInfo *info = TheGameSpyInfo->findPlayerName( player.str() );
+			if ( info )
+			{
+				UnicodeString rating;
+				rating.format( UnicodeString( L" (%d/%d)" ), info->wins, info->losses );
+				tooltip += rating;
+			}
+		}
+
+		TheMouse->setCursorTooltip( tooltip, -1, 0, 1.0f );
+	}
+	// Dead address-taken local: VC7.1 packs retail's frame slots only with it present.
+	{ Int unused = 0; Int *ref = &unused; (void)ref; }
 }
