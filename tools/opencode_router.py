@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = ROOT / 'tools/opencode_router/go.json'
 TIERS = ('bulk', 'reasoning', 'escalation')
 TERMINAL = ('completed', 'failed', 'cancelled', 'needs_review')
-MODEL_ID = re.compile(r'opencode-go/[a-z0-9][a-z0-9._-]*(?:#[a-z0-9._-]+)?\Z')
+MODEL_ID = re.compile(r'(?:opencode-go|opencode)/[a-z0-9][a-z0-9._-]*(?:#[a-z0-9._-]+)?\Z')
 VARIANT_ID = re.compile(r'[a-z0-9][a-z0-9._-]*\Z')
 VARIANT_ORDER = {
     'bulk': ('medium', 'low', 'minimal', 'none'),
@@ -76,7 +76,7 @@ def config(path):
         raise ValueError('variant_discovery must be a boolean')
     for m in c['models']:
         if not MODEL_ID.fullmatch(m['id']) or m['id'] in seen:
-            raise ValueError('model IDs must be unique explicit opencode-go IDs')
+            raise ValueError('model IDs must be unique explicit opencode-go or opencode IDs')
         seen.add(m['id'])
         if m['tier'] not in TIERS or type(m['enabled']) is not bool:
             raise ValueError('invalid model tier/enabled')
@@ -95,6 +95,8 @@ def config(path):
             raise ValueError('metered must be boolean')
         if not m.get('metered', True) and (not isinstance(m.get('unmetered_evidence'), str) or not m['unmetered_evidence'].strip()):
             raise ValueError('metered=false requires explicit unmetered_evidence')
+        if m['id'].startswith('opencode/') and m['enabled'] and m.get('metered', True):
+            raise ValueError('paid or unverified Zen models must remain disabled')
         variants = m.get('variants')
         if 'variants' in m and (not isinstance(variants, list) or
                 any(not isinstance(v, str) or not VARIANT_ID.fullmatch(v) for v in variants) or
@@ -212,7 +214,10 @@ def choose(c, job, active, model_state, history, now, budget=None):
     candidates = []
     for m in c['models']:
         mid = m['id']
-        if not m['enabled'] or (job['model'] and mid != job['model']):
+        if mid.startswith('opencode/') and mid.split('#')[0] not in c.get('_verified_free_zen', set()):
+            continue
+        if not m['enabled'] or (job['model'] and mid != job['model'] and
+                                mid != job['model'].split('#')[0]):
             continue
         if not job['model']:
             # Reasoning may use bulk; escalation may use any tier, strong first.
@@ -265,16 +270,40 @@ def worker_env(model, cwd):
         'model': model, 'warming': False,
         'experimental': {'policies': [
             {'action': 'provider.use', 'resource': '*', 'effect': 'deny'},
-            {'action': 'provider.use', 'resource': 'opencode-go', 'effect': 'allow'},
+            {'action': 'provider.use', 'resource': model.split('/')[0], 'effect': 'allow'},
             {'action': 'permission', 'resource': 'subagent:*', 'effect': 'deny'},
             {'action': 'permission', 'resource': 'shell:git *', 'effect': 'deny'},
         ]}})
     return env
 
 
+def catalog_env(c, root):
+    env = worker_env(c['models'][0]['id'], root)
+    policy = json.loads(env['OPENCODE_CONFIG_CONTENT'])
+    for provider in ('opencode-go', 'opencode'):
+        policy['experimental']['policies'].append(
+            {'action': 'provider.use', 'resource': provider, 'effect': 'allow'})
+    env['OPENCODE_CONFIG_CONTENT'] = json.dumps(policy)
+    return env
+
+
+def zero_catalog_cost(cost):
+    # All bands and all declared price fields must be explicitly numeric zero.
+    def zero(value):
+        if isinstance(value, dict):
+            return bool(value) and all(zero(v) for v in value.values())
+        return type(value) in (int, float) and value == 0
+    return isinstance(cost, list) and bool(cost) and all(
+        isinstance(band, dict) and {'input', 'output', 'cache'} <= band.keys() and
+        isinstance(band['cache'], dict) and {'read', 'write'} <= band['cache'].keys() and
+        zero(band) for band in cost)
+
+
 def discover_variants(c, root):
     """Read the location's catalog; never infer capabilities from model names."""
-    if not c.get('variant_discovery', True) or not c['models']:
+    needs_zen = any(m['enabled'] and m['id'].startswith('opencode/') for m in c['models'])
+    c['_verified_free_zen'] = []
+    if (not c.get('variant_discovery', True) and not needs_zen) or not c['models']:
         return {}
     try:
         # A standalone server often returns a pre-plugin empty snapshot in v2.
@@ -283,21 +312,24 @@ def discover_variants(c, root):
         # temporary file also avoids retaining provider settings in router state.
         with tempfile.TemporaryFile(mode='w+', encoding='utf-8') as output:
             subprocess.run([c['opencode'], 'api', 'model.list'], cwd=root,
-                           env=worker_env(c['models'][0]['id'], root),
+                           env=catalog_env(c, root),
                            stdout=output, stderr=subprocess.DEVNULL, timeout=10, check=True)
             output.seek(0)
             data = json.load(output)['data']
         caps = {}
         for m in data:
-            if m.get('providerID') != 'opencode-go' or not isinstance(m.get('variants'), list):
+            if m.get('providerID') not in ('opencode-go', 'opencode') or not isinstance(m.get('variants'), list):
                 continue
-            mid = 'opencode-go/' + m['id']
+            mid = m['providerID'] + '/' + m['id']
+            if m['providerID'] == 'opencode' and m.get('enabled') is True and zero_catalog_cost(m.get('cost')):
+                c['_verified_free_zen'].append(mid)
             variants = [v['id'] for v in m['variants']]
             if MODEL_ID.fullmatch(mid) and all(isinstance(v, str) and VARIANT_ID.fullmatch(v) for v in variants):
                 caps[mid] = variants
         return caps
     except (OSError, subprocess.SubprocessError, ValueError, KeyError, TypeError, AttributeError):
-        return {}  # A catalog outage must not disable otherwise working models.
+        c['_verified_free_zen'] = []
+        return {}  # Go keeps configured variants; Zen fails closed on unknown pricing.
 
 
 def choose_variant(model, tier, capabilities, history=()):
@@ -433,7 +465,7 @@ def finish(state, c, attempt, result, now=None):
         a = db.execute('SELECT * FROM attempts WHERE id=?', (attempt,)).fetchone()
         if not a or a['status'] != 'running':
             return
-        if kind == 'quota':
+        if kind == 'quota' and a['model'].startswith('opencode-go/'):
             try:
                 go_budget.quota(state, c, now)
             except (OSError, ValueError, TypeError, KeyError, OverflowError, sqlite3.Error):
@@ -624,12 +656,18 @@ def fleet(root, state, c, duration, workers=None, until=None):
                     model = choose(c, job, active, ms, history, time.time(), budget)
                     if not model:
                         unconstrained = choose(c, job, active, ms, history, time.time())
-                        if unconstrained:
-                            note = go_budget.reason(unconstrained, job, budget, c) or 'budget.metered_concurrency'
+                        if unconstrained or (job['model'] or '').startswith('opencode/'):
+                            note = (go_budget.reason(unconstrained, job, budget, c) or 'budget.metered_concurrency'
+                                    if unconstrained else 'routing.zen_free_unverified_or_unavailable')
                             with database(state) as db:
                                 db.execute('UPDATE jobs SET note=? WHERE id=? AND note<>?', (note, job['id'], note))
                         continue
-                    variant = choose_variant(model, job['tier'], capabilities, history)
+                    requested = (job['model'] or '').partition('#')[2] if job['model'] != model['id'] else ''
+                    if requested and requested not in capabilities.get(model['id'], model.get('variants', [])):
+                        with database(state) as db:
+                            db.execute('UPDATE jobs SET note=? WHERE id=?', ('routing.requested_variant_unavailable', job['id']))
+                        continue
+                    variant = requested or choose_variant(model, job['tier'], capabilities, history)
                     selection = model_selection(model['id'], variant)
                     aid = uuid.uuid4().hex[:16]
                     try:
@@ -725,7 +763,7 @@ def refresh_budget(state, c):
 def budget_snapshot(state, c):
     budget = go_budget.snapshot(state, c)
     with database(state) as db:
-        quota_at = db.execute("SELECT MAX(ended) FROM attempts WHERE status='quota'").fetchone()[0]
+        quota_at = db.execute("SELECT MAX(ended) FROM attempts WHERE status='quota' AND model LIKE 'opencode-go/%'").fetchone()[0]
     if quota_at is not None and (budget['observed_at'] is None or budget['observed_at'] <= quota_at):
         budget.update(exhausted=True, pacing_mode='exhausted', quota_error_at=quota_at)
     return budget
@@ -855,17 +893,25 @@ def print_status(data):
 def discover(c, root=ROOT):
     # Catalog is metadata, never an inference request. IDs are not guessed from labels.
     from urllib.request import Request, urlopen
-    url = 'https://opencode.ai/zen/go/v1/models'
-    request = Request(url, headers={'User-Agent': 'curl/8 bfme-opencode-router/1'})
-    with urlopen(request, timeout=20) as response:
-        ids = {f"opencode-go/{m['id']}" for m in json.load(response)['data']}
-    local = subprocess.run([c['opencode'], 'models', '--standalone'], text=True, capture_output=True, timeout=30)
-    listed = set(re.findall(r'opencode-go/[a-z0-9._-]+', local.stdout))
+    urls = {'opencode-go': 'https://opencode.ai/zen/go/v1/models',
+            'opencode': 'https://opencode.ai/zen/v1/models'}
+    ids, errors = set(), {}
+    for provider, url in urls.items():
+        try:
+            request = Request(url, headers={'User-Agent': 'curl/8 bfme-opencode-router/1'})
+            with urlopen(request, timeout=20) as response:
+                ids.update(f"{provider}/{m['id']}" for m in json.load(response)['data'])
+        except (OSError, ValueError, KeyError, TypeError):
+            errors[provider] = 'catalog_unavailable'
     capabilities = discover_variants(c, root)
-    return {'catalog': url, 'checked': time.time(), 'local_catalog_empty': not bool(listed),
+    return {'catalog': urls['opencode-go'], 'catalogs': urls, 'catalog_errors': errors,
+            'catalog_models': sorted(ids), 'checked': time.time(),
+            'local_catalog_empty': not bool(capabilities),
             'variant_catalog_available': bool(capabilities),
-            'models': [{'id': m['id'], 'in_go_catalog': m['id'].split('#')[0] in ids,
-                        'listed_locally': m['id'].split('#')[0] in listed,
+            'models': [{'id': m['id'], 'in_go_catalog': m['id'].startswith('opencode-go/') and m['id'].split('#')[0] in ids,
+                        'in_catalog': m['id'].split('#')[0] in ids,
+                        'listed_locally': m['id'].split('#')[0] in capabilities,
+                        'zen_free_verified': m['id'].split('#')[0] in c.get('_verified_free_zen', set()),
                         'variants': capabilities.get(m['id'].split('#')[0], m.get('variants')),
                         'variant_source': 'runtime' if m['id'].split('#')[0] in capabilities else 'config/unknown',
                         'selected_variants': {t: choose_variant(m, t, capabilities) for t in TIERS}}
@@ -901,7 +947,7 @@ def main(argv=None):
         s.add_argument('--task-file', type=Path)
         s.add_argument('--target', help='canonical RVA or shared target key')
         s.add_argument('--cwd', type=Path, help='exclusive workspace; default retained detached worktree')
-        s.add_argument('--model', help='explicit Go model override, including scarce models')
+        s.add_argument('--model', help='explicit configured Go or verified-free Zen model override')
         s.add_argument('--budget-justification', default='', help='expected verified gain / valuable blocker; required under low budget pressure')
         s.add_argument('--redundant', action='store_true')
         s.add_argument('--duration', type=fleet_run.parse_duration, default=3600)
@@ -1010,8 +1056,11 @@ def main(argv=None):
         return 0 if fleet(root, state, c, args.duration, args.workers) else 2
     if bool(args.task) == bool(args.task_file):
         p.error('provide task text or --task-file, exactly one')
-    if args.model and args.model not in {m['id'] for m in c['models'] if m['enabled']}:
-        p.error('explicit model must be enabled in configuration')
+    if args.model:
+        base, _, variant = args.model.partition('#')
+        if not any(m['enabled'] and (m['id'] == args.model or
+                   (m['id'] == base and variant in m.get('variants', []))) for m in c['models']):
+            p.error('explicit model and variant must be enabled in configuration')
     task = args.task_file.read_text() if args.task_file else args.task
     if not task.strip() or len(task.encode()) > 200000:
         p.error('task must contain 1..200000 bytes')

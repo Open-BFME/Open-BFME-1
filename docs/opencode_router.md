@@ -1,4 +1,4 @@
-# OpenCode Go worker router
+# OpenCode Go / free Zen worker router
 
 `tools/opencode_router.py` is a standard-library scheduler for bounded tasks
 assigned by Codex, Claude, or a human. It does not select RE candidates or
@@ -29,7 +29,7 @@ Windows users need a Linux/WSL environment with delegation.
 
 The example acknowledgment is deliberately false. No credential belongs in
 router configuration. OpenCode reads its existing credentials. Only explicit
-`opencode-go/…` IDs are accepted; every invocation passes `--model`. An injected
+`opencode-go/…` and verified-free `opencode/…` IDs are accepted; every invocation passes `--model`. An injected
 OpenCode policy denies other providers and nested subagents. Policies also deny
 Git tool commands; the worker prompt assigns VCS responsibility to the parent.
 OpenCode policies are not an OS sandbox against hostile code, and Console
@@ -195,7 +195,8 @@ bypasses the shared budget gate.
 Models without dashboard calibration (LongCat, MiMo Pro, DeepSeek Pro, Kimi K3,
 Grok, GLM-5.3 and Qwen Max) are retained but disabled. To enable one, verify its
 cost, assign `relative_cost`, keep `escalation_only: true`, and enable it.
-All invocations remain restricted to Go; none can select a paid provider.
+Go work stays on Go. Zen work is restricted to runtime-verified free models;
+paid Zen entries cannot be enabled under the current billing policy.
 
 Bulk retains low/medium reasoning, reasoning prefers high, and the example now
 prefers **high** for escalation before provider-specific fallback. MiniMax keeps
@@ -284,8 +285,9 @@ The monitor sends only a bounded GET to the fixed HTTPS URL. Redirects are
 rejected. It never changes billing, purchases credits, switches accounts, calls
 paid inference or logs response bodies/credentials. The monitoring variable is
 removed from worker environments. OpenCode retains its existing inference
-credentials. All launches still require explicit Go IDs and the existing
-provider allowlist; no free model, including Space Bunny Free, is enabled.
+credentials. All launches require an explicit configured ID and allow only its selected
+provider. Following the explicit Zen request, Space Bunny Free is enabled on
+Zen with recorded zero-price evidence; its Go route remains disabled.
 
 Without the monitoring variable, the router remains usable: submissions persist,
 status reports `credentials_missing`, and economical jobs run one at a time.
@@ -344,10 +346,10 @@ never imply price. Prior model failures, effectiveness, variants, reservations,
 cooldowns and retry evidence remain in force. A free model may later be explicitly
 configured with `metered: false` plus nonempty `unmetered_evidence` documenting
 its verified entitlement; it bypasses the shared Go gate, but keeps other routing
-checks. All existing models default to metered. A zero local cost does not prove
+checks. Models without an explicit declaration default to metered. A zero local cost does not prove
 that a model is free.
 
-Inference quota/rate-limit errors override cached values immediately and durably;
+Go inference quota/rate-limit errors override cached values immediately and durably;
 even a response already in flight before that error cannot clear it. They retain
 the existing separate availability retry accounting and preserve queued work.
 There is no blind inference probe for recovery. If credentials are missing after
@@ -386,6 +388,50 @@ in the shared router state directory. Old running scheduler processes retain the
 old code and cannot enforce the new gate: let useful work finish, then start the
 next scheduler with the updated executable. Separate clones must share `--state`
 for one account, just as they must share concurrency limits.
+
+### Zen routes and free-model validation
+
+The explicit 2026-09-27 Zen request adds all **82 model IDs** from the public
+`https://opencode.ai/zen/v1/models` catalog to the configuration. Catalog presence
+proves an ID exists, not that it is free or available to this account. The 81
+entries without runtime zero-price verification are registered but disabled.
+Enabling a metered Zen entry is rejected by configuration validation; this is not
+an authorization to spend a paid balance.
+
+`opencode/space-bunny-free` is enabled and explicitly `metered: false`. OpenCode's
+runtime `model.list` advertises zero input, output, cache-read and cache-write
+prices and five reasoning variants: **low, medium, high, xhigh, max**. The router
+rechecks enabled Zen pricing at scheduler startup, even if variant discovery is
+disabled. Missing, malformed, nonzero, or unavailable price metadata blocks Zen
+assignments. A free-looking name alone never establishes free billing. Do not
+change local provider endpoints; these checks assume the trusted OpenCode catalog.
+
+Each worker's provider policy allows only its selected provider. There is no
+switch to paid Zen on Go exhaustion. Explicit free Zen work can proceed while Go
+is exhausted; a quota/funds error on Zen cools down that model without falsely
+marking the separate Go account exhausted. Existing Go quota events still block
+metered Go workers.
+
+```sh
+python3 tools/opencode_router.py --config build/opencode-router.json run bulk \
+  --model opencode/space-bunny-free#low 'Your bounded task'
+```
+
+All five declared suffixes can be requested using the same syntax. They share
+one configured concurrency pool; they are not five independent model budgets.
+An explicit unavailable variant is deferred with
+`routing.requested_variant_unavailable`, rather than silently changing effort.
+Default preferences are medium for bulk and high for reasoning/escalation. The
+relative routing weight is a provisional preference, not a price or proof of
+BFME quality. Existing parent-verified progress metrics continue to apply.
+
+A one-shot, tools-denied test of `opencode/space-bunny-free#low` succeeded with
+`SPACE_BUNNY_OK` and local reported cost zero. The Go version previously returned
+HTTP 402; these are distinct provider routes. This smoke establishes connectivity,
+not reconstruction quality. The main queue was not run as part of the test.
+Zen regression coverage includes catalog registration, missing/nonzero price
+rejection, all five explicit variants sharing capacity, provider isolation, and
+independent Go/Zen quota handling.
 
 ### Reasoning variants
 
@@ -432,7 +478,8 @@ Add these fields to the existing entry alongside its ID, tier and limits.
 `variants` supplies fallback capabilities and, when discovery works, restricts
 the runtime list by intersection. An empty array disables explicit variants.
 A preference of `null` keeps the unqualified model for that tier. Set global
-`variant_discovery: false` to use only explicit capabilities. Preferences alone
+`variant_discovery: false` to use only explicit Go capabilities. Enabled Zen
+models still require a runtime catalog check for their free pricing. Preferences alone
 never assert support. Existing IDs containing `#variant` remain accepted as an
 explicit preference/capability when runtime metadata is absent.
 

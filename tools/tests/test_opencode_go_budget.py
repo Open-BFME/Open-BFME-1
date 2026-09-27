@@ -147,9 +147,9 @@ class BudgetTests(unittest.TestCase):
         self.assertFalse(s['exhausted']); self.assertEqual(s['next_refresh'],2200)
         self.assertEqual(s['error'],'usage_http_429')
 
-    def test_unmetered_requires_evidence_and_does_not_enable_free_models(self):
-        self.assertTrue(all(m.get('metered',True) for m in self.c['models']))
-        self.assertFalse(any('bunny' in m['id'] and m['enabled'] for m in self.c['models']))
+    def test_unmetered_requires_evidence_and_does_not_enable_go_free_models(self):
+        self.assertTrue(all(m.get('metered',True) for m in self.c['models'] if m['id'].startswith('opencode-go/')))
+        self.assertFalse(any('bunny' in m['id'] and m['enabled'] for m in self.c['models'] if m['id'].startswith('opencode-go/')))
         m=copy.deepcopy(self.cheap); m.update(metered=False,unmetered_evidence='fixture verified provider contract')
         self.c['models']=[m]
         self.assertEqual(self.select(self.seed(100)),m)
