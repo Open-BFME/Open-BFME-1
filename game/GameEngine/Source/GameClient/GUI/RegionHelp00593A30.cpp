@@ -3,7 +3,8 @@
 // The opaque region offsets below are directly witnessed loads, not guessed
 // CommandButton layout. Its image accessor is called through the existing pin.
 // appendBonus00591A60 has a private ESI accumulator ABI and must stay in this TU;
-// its entire 195-byte body independently matches retail, but is not claimed here.
+// MSVC optimizes the file-static helper and its four callers together; keeping
+// this definition here reproduces the ESI parameter and exact 195-byte body.
 // stlport
 // cl: /Igame/Libraries/Source/WWVegas/WWLib /D_STLP_USE_STATIC_LIB
 #include <set>
