@@ -375,6 +375,21 @@ BFME_SMALL_VPTR_CTOR( Rva00499F00SingleStore )
 BFME_SMALL_VPTR_CTOR( Rva004B2250SingleStore )
 BFME_SMALL_VPTR_CTOR( Rva004C1310SingleStore )
 
+// mov eax,ecx / xor ecx,ecx / mov [eax],<vftable> / mov [eax+4],ecx /
+// mov [eax+8],ecx / ret -- a constructor seating a vftable and zeroing two
+// trailing members. IDENTITY IS NOT RECOVERED: the table at 0x0113CBAC is
+// witnessed only by the scalar deleting destructor seated there, so the name
+// keeps its address token.
+class Rva00938BA0Triple
+{
+public:
+	Rva00938BA0Triple();
+	virtual void anchor();
+	int m_4;
+	int m_8;
+};
+Rva00938BA0Triple::Rva00938BA0Triple() : m_4(0), m_8(0) {}
+
 // mov eax,[esp+4] / mov [eax],<immediate> / ret 4 -- a small integer stored
 // through a pointer argument which is also left in eax as the result; callee
 // cleanup with `this` never touched, so __stdcall.
