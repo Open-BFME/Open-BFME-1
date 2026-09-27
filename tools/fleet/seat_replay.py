@@ -311,10 +311,17 @@ def _replay(repo, commit, tree, tries, correct):
         # Files were written from LF blobs; under autocrlf the checkout form
         # differs, and pre-push refuses a working file that differs from HEAD.
         git(tree, "reset", "-q", "--hard", "HEAD")
+        base = git(tree, "rev-parse", "HEAD^").stdout.strip()
         pushed = git(tree, "push", "-q", "origin", "HEAD:master")
         if pushed.returncode == 0:
             return None
-        if not any(k in pushed.stdout + pushed.stderr for k in RACES):
+        # Decide by what happened, not by the error text: when master moved past
+        # the base we replayed onto, it was a race even if the pre-push hook
+        # diffed against the newer tip and reported someone else's landing as
+        # our "conversion direction" regression (2026-09-27, two seats).
+        git(tree, "fetch", "-q", "origin", "master")
+        moved = git(tree, "rev-parse", "origin/master").stdout.strip() != base
+        if not moved and not any(k in pushed.stdout + pushed.stderr for k in RACES):
             return "push refused:\n" + (pushed.stdout + pushed.stderr)[-2500:]
     return f"not pushed after {tries} replays"
 
