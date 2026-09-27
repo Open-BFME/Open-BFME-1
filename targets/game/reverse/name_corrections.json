@@ -7298,5 +7298,15 @@
   "after_sha256": "ef992c6b9d6e2cf33d2f1b9a6bb7c633af4e25f96094cf6909f2c1ca79963a1b",
   "evidence": "targets/game/reverse/identity_evidence/0x008fa4b0.md",
   "reason": "Unwitnessed guesses in the bank (name_oracle: no witness at GeometryInfo+0x0/+0x4; ZH hints m_type at +0x4); the exact landing names them by offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0038a9f0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/System/NetworkBuildingPlacement0038A9F0.cpp",
+  "old_name": "findNamedWaypoint",
+  "new_name": "Rva00388820_FindWaypointByName",
+  "before_sha256": "b9c7c1d71a16b69c9a7442dc12269b0a2ea5f114a00a239e55366e7a7885b644",
+  "after_sha256": "d6ee8396210b6734405b7769e8702b99db9dc53654dbc93f60ae444eb58c8c4c",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "Retail's waypoint lookups in this body call 0x00388820, whose matched ledger row defines ?Rva00388820_FindWaypointByName@@YAPAVWaypoint@@VAsciiString@@@Z in Rva00388820FindWaypointByName.cpp; the bank's findNamedWaypoint was a local stand-in for that call, so the landed source names the matched function."
  }
 ]
