@@ -2,13 +2,14 @@
 //
 // Open-BFME5: the two-string constructor at retail 0x00491580, 119 bytes.
 //
-// Both table stores are the compiler's own vfptr initialisation -- the base's
-// and then this class's -- which is what puts each member receiver ahead of
-// its pushed argument.
+// Both table stores are the compiler's own vfptr initialisation -- the
+// linked-object base's (0x010F9AD8) and then this class's -- which is what puts
+// each member receiver ahead of its pushed argument. The direct base's own
+// table (0x010F9AF0) is a dead store between them.
 
-class Rva00490470;
+class Rva00490350Base;
 
-extern Rva00490470 *g_bfmeListVX;				// retail 0x012F3350
+extern Rva00490350Base *g_bfmeListVX;			// retail 0x012F3350
 
 class AsciiStringVX
 {
@@ -76,10 +77,10 @@ public:
 extern GameLogic *TheBfmeGameLogic;
 extern Display *TheDisplay;
 
-class Rva00490470
+class Rva00490350Base
 {
 public:
-	__forceinline Rva00490470(void)
+	__forceinline Rva00490350Base(void)
 	{
 		m_bfmeNext = g_bfmeListVX;
 
@@ -89,11 +90,18 @@ public:
 		m_bfmeArmed = true;
 	}
 
-	virtual ~Rva00490470(void);
+	virtual ~Rva00490350Base(void);
 
-	Rva00490470 *m_bfmeNext;					// +0x04
+	Rva00490350Base *m_bfmeNext;				// +0x04
 	int m_bfmeCount;					// +0x08
 	bool m_bfmeArmed;					// +0x0C
+};
+
+// Its destructor is 0x00490470, which ~Gen_00491580 (0x00491620) ends by calling.
+class Rva00490470 : public Rva00490350Base
+{
+public:
+	virtual ~Rva00490470(void);
 };
 
 class Gen_00491580 : public Rva00490470
