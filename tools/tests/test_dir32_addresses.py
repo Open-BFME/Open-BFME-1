@@ -48,17 +48,36 @@ def test_whitelisted_and_out_of_image_bases_are_not_this_checks_business(monkeyp
            whitelist={"__imp__memmove"})
 
 
-def test_the_recorder_keeps_only_single_in_image_addresses(monkeypatch, tmp_path):
-    out = tmp_path / "dir32_addresses.csv"
-    monkeypatch.setattr(build, "DIR32_ADDRESSES", out)
+def test_the_full_gate_proposes_new_names_and_never_rewrites_the_record(monkeypatch, tmp_path, capsys):
+    """The full gate runs in other agents' commit hooks; a tracked file it rewrote would sit
+    uncommitted in their trees."""
+    recorded, proposal = tmp_path / "dir32_addresses.csv", tmp_path / "build" / "dir32_addresses.csv"
+    recorded.write_text("name,va\n?one@@3HA,0x012B9200\n")
+    monkeypatch.setattr(build, "DIR32_ADDRESSES", recorded)
+    monkeypatch.setattr(build, "DIR32_PROPOSAL", proposal)
     monkeypatch.setattr(build, "ROOT", tmp_path)
     monkeypatch.setattr(build, "retail_va_span", lambda: (0x400000, 0x1416000))
-    build.write_dir32_addresses({"?one@@3HA": {0x012B9200}, "?two@@3HA": {0x1000, 0x2000 + 0x400000},
-                                 "?wl@@3HA": {0x012B9300}, "?null@@3HA": {0}}, {"?wl@@3HA"})
-    assert out.read_text() == "name,va\n?one@@3HA,0x012B9200\n"
-    mtime = out.stat().st_mtime_ns
-    build.write_dir32_addresses({"?one@@3HA": {0x012B9200}}, set())
-    assert out.stat().st_mtime_ns == mtime
+    build.propose_dir32_addresses({"?one@@3HA": {0x012B9200}, "?wl@@3HA": {0x012B9300}}, {"?wl@@3HA"})
+    assert not proposal.exists()
+    build.propose_dir32_addresses({"?one@@3HA": {0x012B9200}, "?two@@3HA": {0x1000, 0x402000},
+                                   "?null@@3HA": {0}, "?new@@3HA": {0x012B9400}}, set())
+    assert proposal.read_text() == "name,va\n?new@@3HA,0x012B9400\n?one@@3HA,0x012B9200\n"
+    assert recorded.read_text() == "name,va\n?one@@3HA,0x012B9200\n"
+    assert "1 symbol(s) not yet recorded, 0 no longer referenced" in capsys.readouterr().out
+
+
+def test_the_full_gate_fails_a_symbol_every_reference_moved_together(monkeypatch, tmp_path, capsys):
+    """A header edit can move all of a symbol's references at once; they agree with each other."""
+    whitelist = tmp_path / "whitelist.txt"
+    whitelist.write_text("")
+    monkeypatch.setattr(build, "DIR32_WHITELIST", whitelist)
+    monkeypatch.setattr(build, "ROOT", tmp_path)
+    monkeypatch.setattr(build, "dir32_references", lambda rows: iter(
+        [(ROW, 0x1F3, "?GameSpyColor@@3PAHA", 0x012B9208), (ROW, 0x2A0, "?GameSpyColor@@3PAHA", 0x012B9208)]))
+    monkeypatch.setattr(build, "read_dir32_addresses", lambda: {"?GameSpyColor@@3PAHA": 0x012B9200})
+    with pytest.raises(SystemExit):
+        build.verify_dir32_consistency([ROW])
+    assert "(0x012B9200 is the one dir32_addresses.csv records)" in capsys.readouterr().out
 
 
 class _Image:

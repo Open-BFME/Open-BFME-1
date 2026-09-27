@@ -29,6 +29,7 @@ FUNCTIONS = ROOT / "targets/game/reverse" / "functions.csv"
 SYMBOLS = ROOT / "targets/game/reverse" / "symbols.csv"
 DIR32_WHITELIST = ROOT / "targets/game/reverse" / "dir32_consistency_whitelist.txt"
 DIR32_ADDRESSES = ROOT / "targets/game/reverse" / "dir32_addresses.csv"
+DIR32_PROPOSAL = ROOT / "build" / "dir32_addresses.csv"
 BUILD_DIR = ROOT / "build" / "match"
 PATCH_DIR = ROOT / "build" / "patch"
 # A run that DIES leaves its marker behind, and that is the whole point: an
@@ -2764,24 +2765,30 @@ def in_retail_image(va):
 
 def read_dir32_addresses():
     if not DIR32_ADDRESSES.exists():
-        raise SystemExit(f"DIR32 addresses: {DIR32_ADDRESSES.relative_to(ROOT)} is missing; "
-                         "the full gate (./build.sh with no arguments) writes it")
+        raise SystemExit(f"DIR32 addresses: {DIR32_ADDRESSES.relative_to(ROOT)} is missing; it is "
+                         "tracked, so restore it from git")
     with DIR32_ADDRESSES.open(newline="") as handle:
         return {row["name"]: int(row["va"], 16) for row in csv.DictReader(handle)}
 
 
-def write_dir32_addresses(sym2base, whitelist):
-    """Record the one address every matched reference gives each DIR32 symbol, for
-    verify_dir32_addresses. Only the full gate calls this: a scoped run sees a handful
-    of rows and would publish that handful as the whole set."""
-    lines = ["name,va\n"] + [
-        f"{sym},0x{base:08X}\n" for sym, bases in sorted(sym2base.items())
-        if sym not in whitelist and len(bases) == 1 and in_retail_image(base := next(iter(bases)))]
-    text = "".join(lines)
-    if not DIR32_ADDRESSES.exists() or DIR32_ADDRESSES.read_text() != text:
-        DIR32_ADDRESSES.write_text(text)
-        print(f"DIR32 addresses: rewrote {DIR32_ADDRESSES.relative_to(ROOT)} "
-              f"({len(lines) - 1} symbols) -- commit it")
+def propose_dir32_addresses(sym2base, whitelist):
+    """Offer the one address every matched reference gives each DIR32 symbol as the next
+    dir32_addresses.csv. The full gate runs inside other agents' commit hooks, where a
+    rewritten tracked file is left uncommitted in their tree and autostashed on every
+    rebase, so the refresh goes under build/ for someone to commit. Only the full gate
+    calls this: a scoped run sees a handful of rows and would offer that handful as the
+    whole set."""
+    proposed = {sym: base for sym, bases in sym2base.items()
+                if sym not in whitelist and len(bases) == 1 and in_retail_image(base := next(iter(bases)))}
+    recorded = read_dir32_addresses()
+    if proposed == recorded:
+        return
+    DIR32_PROPOSAL.parent.mkdir(parents=True, exist_ok=True)
+    DIR32_PROPOSAL.write_text("name,va\n" + "".join(
+        f"{sym},0x{base:08X}\n" for sym, base in sorted(proposed.items())))
+    print(f"DIR32 addresses: {len(proposed.keys() - recorded.keys())} symbol(s) not yet recorded, "
+          f"{len(recorded.keys() - proposed.keys())} no longer referenced. With the gate green, record "
+          f"them: cp {DIR32_PROPOSAL.relative_to(ROOT)} {DIR32_ADDRESSES.relative_to(ROOT)}")
 
 
 def verify_dir32_addresses(rows):
@@ -2833,6 +2840,11 @@ def verify_dir32_consistency(rows):
     sym2base = defaultdict(set)
     for _row, _offset, sym, base in dir32_references(rows):
         sym2base[sym].add(base)
+    # The record counts as one more reference: a header edit can move every reference
+    # to a symbol at once, which agrees with itself and would otherwise pass.
+    recorded = read_dir32_addresses()
+    for sym in sym2base.keys() & recorded.keys():
+        sym2base[sym].add(recorded[sym])
     inconsistent = sorted(s for s, b in sym2base.items() if len(b) > 1)
     if not whitelist_path.exists():
         # NOT self-seeding. Auto-writing this file is how 18 entries got in
@@ -2858,11 +2870,12 @@ def verify_dir32_consistency(rows):
             f"{s}\t{','.join(hex(b) for b in sorted(sym2base[s]))}\n" for s in new))
         print(f"DIR32 consistency: FAIL {len(new)} NEW inconsistent symbol(s) (candidate hidden bug — same symbol, multiple addresses)")
         for s in new[:12]:
-            print(f"    {s}: bases {[hex(b) for b in sorted(sym2base[s])]}")
+            print(f"    {s}: bases {[hex(b) for b in sorted(sym2base[s])]}"
+                  + (f" (0x{recorded[s]:08X} is the one {DIR32_ADDRESSES.name} records)" if s in recorded else ""))
         print(f"    ... all {len(new)} with their bases: {report.relative_to(ROOT)}")
         raise SystemExit(1)
     print(f"DIR32 consistency: OK ({len(sym2base)} symbols; {len(inconsistent)} whitelisted, 0 new)")
-    write_dir32_addresses(sym2base, whitelist)
+    propose_dir32_addresses(sym2base, whitelist)
 
 
 UNMATCHED_MARKER_RE = re.compile(
