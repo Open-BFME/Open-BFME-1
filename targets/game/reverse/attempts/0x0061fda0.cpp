@@ -1,5 +1,5 @@
 // ?xfer@SkirmishGameInfo@@MAEXPAVXfer@@@Z
-// partial score=0.7203 date=2026-09-21
+// partial score=0.81 date=2026-09-27
 // ?xfer@SkirmishGameInfo@@MAEXPAVXfer@@@Z
 // cl: /DNDEBUG /MD /EHsc /I.
 
@@ -10,10 +10,10 @@
 // The landed GameInfo copy constructor proves the map-name member at+3C;
 // the old bank mislabeled it Money and hid the call behind a union cast.
 // Snapshot is the secondary subobject at+58, proven by00619720.
-// NOT MATCHED:899B;252 nonreloc differences. Frame40 now agrees; ESI/EDI
-// roles and EH saved-ESP home differ. The+38 field's semantic identity and
-// padded16-bit representation remain a hypothesis; its old bank name is
-// retained, not re-proven. Do not promote this view on byte similarity alone.
+// NOT MATCHED:901B;169 nonreloc differences. The wrapper-preserving ushort
+// view is the closest structural trial, but the ESI/EDI roles and the
+// contiguous local-slot run still differ. The+38 field identity remains a
+// hypothesis; retain the address-derived wrapper until independent evidence.
 
 #include "../../../../game/GameEngine/Source/Common/System/xfer.h"
 #include "../../../../inputs/reference/shims/stringinline/StringInline.h"
@@ -192,10 +192,10 @@ void SkirmishGameInfo::xfer(Xfer *xfer)
 
 	UnsignedInt localIP = m_localIP;
 	*xfer == localIP;
-	UnsignedInt restriction = m_superweaponRestriction;
-	*xfer == *(UnsignedShort *)&restriction;
+	UnsignedShort restriction = m_superweaponRestriction;
+	*xfer == restriction;
 	m_localIP = localIP;
-	m_superweaponRestriction = (UnsignedShort)restriction;
+	m_superweaponRestriction = restriction;
 
 	xferMapName(xfer, &m_mapName);
 
