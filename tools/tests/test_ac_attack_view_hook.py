@@ -45,3 +45,27 @@ def test_focused_ac_image_preserves_view_search_and_melee_calls():
         assert int(instructions[12].op_str, 16) == (
             built.image_base + rva + 4 + int.from_bytes(expected[3:4], "little", signed=True))
         assert int(instructions[14].op_str, 16) == built.image_base + rva + len(expected)
+
+
+def test_member_path_hook_uses_callback_result_for_retail_range_branch():
+    image = os.environ.get("BFME_AC_ATTACK_VIEW_TEST_EXE")
+    if not image:
+        pytest.skip("supply BFME_AC_ATTACK_VIEW_TEST_EXE")
+    built, retail = PE(image), PE(modbuild.BASELINE)
+    rva = 0x00178305
+    assert retail.read(rva, 10) == bytes.fromhex("84c0742a399f14020000")
+    patch = built.read(rva, 5)
+    assert patch[0] == 0xE9
+    shim = rva + 5 + struct.unpack("<i", patch[1:])[0]
+    md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+    instructions = list(md.disasm(built.read(shim, 72), built.image_base + shim))
+    assert [i.mnemonic for i in instructions[:3]] == ["pushal", "pushfd", "cld"]
+    assert [i.op_str for i in instructions[3:6]] == ["edi", "esi", "eax"]
+    assert [(i.mnemonic, i.op_str) for i in instructions[7:12]] == [
+        ("add", "esp, 0xc"), ("mov", "dword ptr [esp + 0x20], eax"),
+        ("popfd", ""), ("popal", ""), ("test", "al, al")]
+    assert instructions[12].mnemonic == "je"
+    assert int(instructions[12].op_str, 16) == built.image_base + 0x00178333
+    assert instructions[13].mnemonic == "cmp"
+    assert instructions[14].mnemonic == "jmp"
+    assert int(instructions[14].op_str, 16) == built.image_base + 0x0017830F

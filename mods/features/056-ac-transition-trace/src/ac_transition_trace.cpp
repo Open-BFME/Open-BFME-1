@@ -267,6 +267,45 @@ extern "C" __declspec(dllexport) void __cdecl ac_trace_transition(void *machine,
         word(ai, 0x40), word(ai, 0x140),
         previous, word(previous, 4), word(previous, 0), next, word(next, 4), word(next, 0)));
 }
+extern "C" __declspec(dllexport) void __cdecl ac_trace_reacquire_throttle(void *state) {
+    void *machine = read_pointer_field(state, 0x1C);
+    void *owner = read_pointer_field(machine, 0x10);
+    if (!watched_member(object_id(owner)) || !head("reacquire_throttle")) return;
+    checked(c_fprintf(s_file,
+        ",\"member_id\":%u,\"goal_id\":%u,\"last_acquire_frame\":%u}\n",
+        object_id(owner), word(machine, 0x20), word(state, 0x24)));
+}
+extern "C" __declspec(dllexport) void __cdecl ac_trace_reacquire_fail(void *state, void *owner) {
+    if (!watched_member(object_id(owner)) || !head("reacquire_fail")) return;
+    void *machine = read_pointer_field(state, 0x1C);
+    checked(c_fprintf(s_file,
+        ",\"member_id\":%u,\"goal_id\":%u,\"last_acquire_frame\":%u,"
+        "\"owner_status_94\":%u,\"owner_field_214\":%u,\"machine_present\":%u}\n",
+        object_id(owner), word(machine, 0x20), word(state, 0x24),
+        word(owner, 0x94), word(owner, 0x214), (unsigned)(machine != 0)));
+}
+extern "C" __declspec(dllexport) void __cdecl ac_trace_engage_enter_fail(
+    void *state, void *owner) {
+    if (!watched_member(object_id(owner)) || !head("engage_enter_fail")) return;
+    void *machine = read_pointer_field(state, 0x1C);
+    void *goal = machine ? c_get_goal_object(machine, 0) : 0;
+    checked(c_fprintf(s_file,
+        ",\"member_id\":%u,\"goal_id\":%u,\"goal_object_id\":%u,"
+        "\"owner_status_94\":%u,\"owner_contained_by_id\":%u,"
+        "\"owner_path\":%u}\n",
+        object_id(owner), word(machine, 0x20), object_id(goal),
+        word(owner, 0x94), object_id(read_pointer_field(owner, 0x214)),
+        word(read_pointer_field(owner, OBJECT_AI), 0x140)));
+}
+extern "C" __declspec(dllexport) void __cdecl ac_trace_engage_horde_range_refusal(
+    void *state, void *owner) {
+    if (!watched_member(object_id(owner)) || !head("engage_horde_range_refusal")) return;
+    void *machine = read_pointer_field(state, 0x1C);
+    checked(c_fprintf(s_file,
+        ",\"member_id\":%u,\"goal_id\":%u,\"containing_horde_id\":%u}\n",
+        object_id(owner), word(machine, 0x20),
+        object_id(read_pointer_field(owner, 0x214))));
+}
 extern "C" __declspec(dllexport) void __cdecl ac_trace_damage_result(void *victim, void *info) {
     if (!head("damage_result")) return;
     checked(c_fprintf(s_file,

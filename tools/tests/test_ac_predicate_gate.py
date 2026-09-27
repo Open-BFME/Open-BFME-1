@@ -51,7 +51,7 @@ def built():
         yield PE(out)
 
 
-def test_partial_ac_patch_and_trace_stay_out_of_dist():
+def test_experimental_ac_patch_and_trace_stay_out_of_dist():
     for feature in ("055-ac-attack-view", "056-ac-transition-trace"):
         assert feature in modbuild.UNSHIPPED
         assert feature not in modbuild.FEATURES

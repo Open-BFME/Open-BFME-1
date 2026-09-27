@@ -476,6 +476,10 @@ def build_ac_attack_view(pe, feature_dir, probe=False):
     hooks = checked_structure_melee_hooks(pe) + tuple(
         (hook[0], "ac_attack_view_goal", hook[1], None, False, True)
         for hook in TARGET_VIEW_GOAL_HOOKS)
+    target, expected = 0x00178305, bytes.fromhex("84c0742a399f14020000")
+    if pe.read(target, len(expected)) != expected:
+        raise SystemExit(f"attack-view melee span changed at 0x{target:08X}")
+    hooks += ((target, "ac_allow_ordered_horde_member_path", ("eax", "esi", "edi"), None, True),)
     return build_feature(pe, feature_dir / "src/ac_attack_view.cpp", "ac_attack_view_goal",
                          hooks, probe=probe)
 
@@ -487,6 +491,10 @@ AC_TRANSITION_TRACE_HOOKS = (
     (0x006671A1, "ac_trace_chat", ("esi", "eax", "ebp"), "505189642444"),
     (0x00277780, "ac_trace_command", ("ecx", "stack:0"), "558be9c7858401000000000000"),
     (0x000A13D9, "ac_trace_transition", ("esi", "edi"), "85ff897e1c"),
+    (0x0017DDCB, "ac_trace_reacquire_throttle", ("edi",), "b8feffffff"),
+    (0x0017DFB2, "ac_trace_reacquire_fail", ("edi", "esi"), "8b4c247c5e"),
+    (0x00178311, "ac_trace_engage_horde_range_refusal", ("esi", "edi"), "536a1c8bcf"),
+    (0x0017831B, "ac_trace_engage_enter_fail", ("esi", "edi"), "5d5b5fb8feffffff"),
     (0x001D04B0, "ac_trace_damage_result", ("esi", "edi"), "f6864403000001"),
     (0x00238D10, "ac_trace_plan_enter", ("stack:0", "stack:2", "stack:5", "stack:6"), "81ec0c010000"),
     (0x0023900A, "ac_trace_plan_candidate", (), "db4424188b84242c010000"),
