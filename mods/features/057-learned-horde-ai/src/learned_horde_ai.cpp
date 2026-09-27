@@ -48,7 +48,7 @@ enum {
     AI_COMMAND_INTERFACE = 0x20,
 
     POLICY_PERIOD_FRAMES = 6,
-    NO_MAX_SHOTS_LIMIT = -1
+    NO_MAX_SHOTS_LIMIT = 0x7fffffff
 };
 
 enum PolicyAction {
