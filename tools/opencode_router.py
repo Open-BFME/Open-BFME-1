@@ -639,7 +639,7 @@ def status(state, c):
     for a in attempts:
         a['category'] = categories[a['job']]
         a['duration_seconds'] = round((a['ended'] or time.time()) - a['started'], 2)
-        key = (a['model'], a['variant'], a['category'], a['tier'])
+        key = (a['model'].split('#')[0], a['variant'], a['category'], a['tier'])
         row = configurations.setdefault(key, dict(zip(('model','variant','category','tier'), key),
             attempts=0, successes=0, task_failures=0, quota_events=0, variant_errors=0,
             duration_seconds=0, measured_attempts=0, exact_matches=0))

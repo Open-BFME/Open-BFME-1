@@ -237,6 +237,14 @@ class RouterTests(unittest.TestCase):
         self.assertEqual([a['status'] for a in attempts],['quota','success'])
         self.assertEqual([a['variant'] for a in attempts],['low','medium'])
 
+    def test_legacy_pinned_model_statistics(self):
+        self.c['models']=[self.model('one#high')]
+        self.job();self.run_fleet()
+        data=r.status(self.state,self.c)
+        self.assertEqual(data['attempts'][0]['model'],'opencode-go/one#high')
+        self.assertEqual(data['configurations'][0]['model'],'opencode-go/one')
+        self.assertEqual(data['configurations'][0]['variant'],'high')
+
     def test_rejected_variant_falls_back_without_task_failure(self):
         self.c['models']=[self.model('one',variants=['medium','low'])]
         self.job('BADVARIANT');self.run_fleet()
