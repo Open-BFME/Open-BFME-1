@@ -173,7 +173,28 @@ def pick(count, lifts=False, lo=200, hi=1200, budget=5000, max_bodies=8):
     return out
 
 
-def launch(groups, hours):
+BIG_NOTE = """BIG-BODY SEAT ({model}, {effort}, hard cap {hours} hours). Each body below is 1.2-8 KB and has never been
+attempted. Large bodies are where half the remaining bytes are, and where sessions fail by chasing bytes before
+the structure is right. Method, in order: (1) python3 tools/callees.py and context_pack.py, then decompile with
+GhidraSQL and write the WHOLE body first -- every call in retail order, every branch, the right prologue, frame size
+and EH states; (2) only then work the first divergence with probe.py --shape; (3) a body that is not exact within
+the cap is BANKED with re_log.py partial --stash --score (a complete 0.9 body is worth far more to the next seat than
+nothing). Siblings in the same file share layouts: land or bank the most tractable one first.
+""" + NOTE.split("\n", 3)[3]
+
+
+def fresh_checkout():
+    """pick() reads this checkout's ledger; a stale one re-serves landed bodies
+    (2026-09-27: a seat was served four lifts landed hours earlier)."""
+    subprocess.run(["git", "fetch", "-q", "origin", "master"], cwd=ROOT, check=True)
+    head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
+    tip = subprocess.run(["git", "rev-parse", "origin/master"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
+    if head != tip:
+        raise SystemExit(f"astra_seats: this checkout is at {head[:10]} but origin/master is {tip[:10]}; "
+                         f"run `git pull --rebase origin master` here first (pick() reads the local ledger)")
+
+
+def launch(groups, hours, note_template=None):
     bash = shutil.which("bash")
     if not bash or not shutil.which("codex"):
         raise SystemExit("astra_seats: needs Git Bash (for `timeout`) and the codex CLI on PATH")
@@ -198,7 +219,7 @@ def launch(groups, hours):
         work = state_dir() / seat_id
         work.mkdir()
         (worktree / "build" / "astra_seat").mkdir(parents=True, exist_ok=True)
-        note = NOTE.format(model=MODEL, effort=EFFORT, hours=hours)
+        note = (note_template or NOTE).format(model=MODEL, effort=EFFORT, hours=hours)
         brief = work / "brief.txt"
         with brief.open("w", encoding="utf-8") as handle:
             subprocess.run([sys.executable, str(worktree / "tools/brief.py"), "--rvas", *[f"0x{r:08X}" for r in rvas],
@@ -333,6 +354,8 @@ def main(argv=None):
     ap.add_argument("action", choices=["pick", "launch", "status", "harvest", "harvested"])
     ap.add_argument("count", nargs="?", type=int, default=4)
     ap.add_argument("--lifts", action="store_true", help="add one seat on servable named lifts")
+    ap.add_argument("--big", action="store_true",
+                    help="serve never-attempted bodies of 1.2-8 KB, 1-3 per seat, 3 h cap (half the remaining bytes)")
     ap.add_argument("--seat", help="harvested: mark this seat id as reviewed, releasing its bodies")
     ap.add_argument("--correct", nargs=2, metavar=("EVIDENCE", "REASON"),
                     help="harvest --seat ID: document the renames name_regression reports, citing EVIDENCE "
@@ -353,12 +376,19 @@ def main(argv=None):
     if args.action == "harvested":
         mark_harvested(args.seat)
         return 0
-    groups = pick(args.count, args.lifts)
+    fresh_checkout()
+    if args.big:
+        groups = pick(args.count, args.lifts, lo=1200, hi=8000, budget=8000, max_bodies=3)
+    else:
+        groups = pick(args.count, args.lifts)
     if args.action == "pick":
         for label, rvas in groups:
             print(f"{label}: {' '.join(f'0x{r:08X}' for r in rvas)}")
         return 0
-    launch(groups, 2.0)
+    if args.big:
+        launch(groups, 3.0, BIG_NOTE)
+    else:
+        launch(groups, 2.0)
     return 0
 
 
