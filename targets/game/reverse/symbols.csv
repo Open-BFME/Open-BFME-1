@@ -12595,6 +12595,7 @@ name,address,notes
 ?Rva007FD920Send@@YAHPAXPBDHH1H@Z,0x007FD920,Y2 lane: C++ spelling of the send converted as _Rva007FD920 in Y4DirtySockSocket.c
 ?Rva007FDA50Recv@@YAHPAXPADHH1PAH@Z,0x007FDA50,Y2 lane: C++ spelling of the receive converted as _Rva007FDA50 in Y4DirtySockSocket.c
 ?Rva007FDB60SocketInfo@@YAXPAXH0H@Z,0x007FDB60,Y2 DirtySock lane: address-derived; the socket query 0x008053C0 calls with the selector 0x62696E64 (bind) and a 0x10-byte buffer
+?Rva007FDB60SocketInfo@@YAHPAXH0H@Z,0x007FDB60,Y2 target 0x00804920 tests EAX from the stat query; complete callee decode establishes an int return
 ?Rva007FDE80SetCallback@@YAHPAXHI00@Z,0x007FDE80,Y2 lane: C++ spelling of the socket callback setter converted as _Rva007FDE80 in Y4DirtySockSocket.c
 ?Rva007FDEE0@@YAHXZ,0x007FDEE0,Y2 lane: C++ spelling of the address-translator self test converted as _Rva007FDEE0 in Y4DirtySockSocket.c; NetConnStatus returns its result for the addr selector
 ?Rva007FDFF0Connect@@YAPAXPBDH@Z,0x007FDFF0,Y2 DirtySock lane: address-derived; 0x008046E0 stores its result in the http record and passes it a 30 timeout
