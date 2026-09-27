@@ -1406,7 +1406,7 @@ void INI::parseInGameUIDefinition( INI* ini )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/InGameUIConstructorThunk.cpp
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/InGameUIConstructor.cpp
 // ??0InGameUI@@QAE@XZ present-unmatched
 InGameUI::InGameUI()
 {
