@@ -1,5 +1,6 @@
 // ?drawImageCore@W3DDisplay@@UAEXPAVImage@@MMMMH@Z
-// partial score=0.82 date=2026-09-10
+// partial score=0.98 date=2026-09-27
+// 384/384 with 7 non-reloc bytes at +0x64..+0x72: the texture-slot stores (same residue as 0x006EB000).
 // cl: /DNDEBUG /MD /EHsc
 
 typedef int Int;
@@ -152,9 +153,9 @@ void W3DDisplay::drawImageCore(Image *image, Real x0, Real y0,
 			++(*textureRef)->m_refCount;
 		if (render->m_texture)
 			render->m_texture->Release_Ref();
-		render->m_texture = *textureRef;
-		render->m_textureSet = render->m_texture ?
-			(UnsignedInt)-1 : 0;
+		TextureClass *tex = *textureRef;
+		render->m_textureSet = tex ? (UnsignedInt)-1 : 0;
+		render->m_texture = tex;
 	}
 
 	Real imageRatio;
@@ -172,9 +173,8 @@ void W3DDisplay::drawImageCore(Image *image, Real x0, Real y0,
 		imageRatio - textureScale);
 
 	Real opacity = image->m_20;
-	Int alpha = (color >> 24) & 0xff;
-	color = (color & 0x00ffffff) |
-		((Int)(opacity * (Real)alpha) << 24);
+	Int c0 = (color & 0x00ffffff) | ((Int)(opacity * (Real)(UnsignedInt)((color >> 24) & 0xff)) << 24);
+	Int c1 = (color & 0x00ffffff) | ((Int)(opacity * (Real)(UnsignedInt)((color >> 24) & 0xff)) << 24);
 	RectClass screen(x0, y0, x1, y1);
-	m_render2D->Add_Quad(screen, uv, color, color, color, color);
+	m_render2D->Add_Quad(screen, uv, c0, c0, c1, c1);
 }
