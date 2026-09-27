@@ -775,8 +775,8 @@ void WaterRenderObjClass::ReleaseResources(void)
 //-------------------------------------------------------------------------------------------------
 /** (Re)allocates all W3D assets after a reset.. */
 //-------------------------------------------------------------------------------------------------
-// ?ReAcquireResources@WaterRenderObjClass@@QAEXXZ exact retail body is emitted by
-// W3DWaterReAcquireResourcesThunk.cpp.
+// ?ReAcquireResources@WaterRenderObjClass@@QAEXXZ is a real C++ body in
+// Water/WaterRenderObjReAcquireResources.cpp.
 void WaterRenderObjClass::load(void)
 {
 	if (m_waterTrackSystem)
