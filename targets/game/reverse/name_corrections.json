@@ -7558,5 +7558,25 @@
   "after_sha256": "c43d1017ce7dbaa4ffc5e46eca4739c49da460cd392a5c9425ff9f93ca372010",
   "evidence": "targets/game/reverse/identity_evidence/00125ce0-spawnunit-module-data-ctor.md",
   "reason": "Cross-file matching confuses unchanged Bfme5RefNode with moved Bfme5ParseNode12; source and retail registry/vtable/store evidence establish distinct types. Preserve actual moved members m_bfme04 and m_bfme08; unchanged reference-counted members are not being renamed."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008b3c40.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/NativeProperties008B3C40.cpp",
+  "old_name": "BfmeA1029",
+  "new_name": "Rva00899FC0",
+  "before_sha256": "a9b5015cfd34a90e6c6a90aa5f8f893b3b1f9d0d1abea00f444be72043d440d7",
+  "after_sha256": "106ab6ad06f91e47fb2ab595a57b1d5ff36b91dc7e2142d4bb1659ef22363213",
+  "evidence": "targets/game/reverse/identity_evidence/008b3c40_placeholder_names.md",
+  "reason": "Placeholder-to-placeholder: the landing spells the types as the landed callee code does."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008b3c40.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/NativeProperties008B3C40.cpp",
+  "old_name": "Rva8CD130Value",
+  "new_name": "Rva00899560Value",
+  "before_sha256": "a9b5015cfd34a90e6c6a90aa5f8f893b3b1f9d0d1abea00f444be72043d440d7",
+  "after_sha256": "106ab6ad06f91e47fb2ab595a57b1d5ff36b91dc7e2142d4bb1659ef22363213",
+  "evidence": "targets/game/reverse/identity_evidence/008b3c40_placeholder_names.md",
+  "reason": "Placeholder-to-placeholder: the landing spells the types as the landed callee code does."
  }
 ]
