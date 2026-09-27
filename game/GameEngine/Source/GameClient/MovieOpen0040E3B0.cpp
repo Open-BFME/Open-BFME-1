@@ -18,6 +18,7 @@ public:
  bool isFinished();
  void setGroup(AsciiString,bool);
 };
+class Rva004893C0ByteSetter {public: void set();};
 extern GameWindowTransitionsHandler *Transitions0040E3B0;
 class Rva00382960 {
 public:
@@ -25,7 +26,6 @@ public:
  ~Rva00382960() { if(Transitions0040E3B0) ((Glo00EF3330*)Transitions0040E3B0)->h00489410(); }
 };
 extern "C" unsigned __stdcall bfme_timeGetTime();
-class Rva004893C0ByteSetter {public: void set();};
 struct MovieStream0040E3B0 {
  virtual void v00();
  virtual void v01();
@@ -161,7 +161,6 @@ struct MovieOpen0040E3B0 {
  char bytese8[0x20]; bool field108; char bytes109[3]; int field10c;
  bool open(AsciiString name,int flags,int a,int b);
  bool update0040E680(bool);
- void setRate0040E680(float r) {stream34->rate(r);}
  bool play0040F780(AsciiString,bool,int);
 };
 class DebugStream00409E20
@@ -368,7 +367,7 @@ bool MovieOpen0040E3B0::update0040E680(bool skip) {
   if(flags38&0x400000) {
    float rate=stream34->getRate()+0.05f;
    if(rate>1.0f) {rate=1.0f; field50=1;}
-   setRate0040E680(rate);
+   stream34->rate(rate);
   } else if(Transitions0040E3B0->isFinished()) {
    field50=1;
    Transitions0040E3B0->reset();
@@ -377,7 +376,7 @@ bool MovieOpen0040E3B0::update0040E680(bool skip) {
  case 1:
   if((unsigned)stream34->current()>=(unsigned)field54 || skip) {
    field50=3;
-   if(flags38&0x200000) field50=2;
+   if(flags38&0x200000) {field50=2;}
    else if(flags38&0x20) {
     field50=2;
     Transitions0040E3B0->setGroup(AsciiString("FadeInGameMovie"),false);
@@ -396,9 +395,9 @@ bool MovieOpen0040E3B0::update0040E680(bool skip) {
   if(flags38&0x200000) {
    if(field10c<=0) {
     float rate=stream34->getRate()-0.05f;
-    if(rate<0.0f) {rate=0.0f; finished=true;}
-    setRate0040E680(rate);
-   } else --field10c;
+    if(rate<0.0f) {rate=0.0f;finished=true;}
+    stream34->rate(rate);
+   } else {--field10c; break;}
   } else if(Transitions0040E3B0->isFinished()) finished=true;
   if(finished) { if(skip || finished0040E680(stream34)) done=true; }
   break;
