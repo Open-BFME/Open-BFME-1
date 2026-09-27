@@ -1,5 +1,6 @@
 """Deterministic router tests; fake CLI launches real processes, never inference."""
 import copy
+import io
 import json
 import os
 from pathlib import Path
@@ -489,8 +490,17 @@ class RouterTests(unittest.TestCase):
                 time.sleep(.05)
             else:self.fail('watchdog did not contain worker after scheduler crash')
             r.recover(self.state,self.c,self.root)
-            self.assertEqual(self.rows('jobs')[0]['status'],'failed')
+            # A crash is not a task failure: the verified-empty attempt is recorded
+            # as interrupted and the job returns to the queue, spending no quota.
+            job=self.rows('jobs')[0]
+            self.assertEqual((job['status'],job['failures'],job['note']),('queued',0,'interrupted'))
+            self.assertEqual(self.rows('attempts')[0]['status'],'interrupted')
             self.assertEqual(len(self.rows('attempts')),1)
+            # The requeued job really runs again, and a genuine timeout does retire it.
+            self.run_fleet()
+            job=self.rows('jobs')[0]
+            self.assertEqual((job['status'],job['failures']),('failed',1))
+            self.assertEqual([a['status'] for a in self.rows('attempts')],['interrupted','timeout'])
         finally:
             if scheduler.poll() is None:scheduler.kill();scheduler.wait()
             scheduler.stderr.close()
@@ -613,5 +623,182 @@ class EconomicsTests(unittest.TestCase):
             self.assertEqual(row['exact_matches_per_reported_usd'],2)
             self.assertEqual(row['bytes_gained_per_reported_usd'],374)
             self.assertEqual(row['useful_investigations_per_reported_usd'],2)
+
+
+class LifecycleAccountingTests(unittest.TestCase):
+    """A scheduler interruption is lifecycle, never evidence against model or task.
+
+    Exercises finish()/recover()/status() directly, so it needs no cgroup v2, no
+    CLI and no inference.
+    """
+
+    def setUp(self):
+        self.c = r.config(r.DEFAULT_CONFIG)
+        self.c.update(retries=1, reasoning_after=1, escalation_after=2,
+                      availability_retries=2, cooldown=300, failure_cooldown=30,
+                      cost_aware=False)
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.state = Path(self.tmp.name) / 'state'
+        self.claims = Path(self.tmp.name) / 'claims'
+        self.model = self.c['models'][0]['id']
+
+    def job(self, target=None):
+        return r.enqueue(self.state, 'bulk', 'fixture ' + str(target), target=target)
+
+    def rows(self, table):
+        with r.database(self.state) as db:
+            return [dict(row) for row in db.execute('SELECT * FROM ' + table)]
+
+    def attempt(self, job, model=None):
+        model = model or self.model
+        aid = 'attempt-%d' % len(self.rows('attempts'))
+        with r.database(self.state) as db:
+            db.execute('INSERT OR IGNORE INTO models(id) VALUES (?)', (model,))
+            db.execute("INSERT INTO attempts (id,job,model,tier,status,started,directory,cgroup) "
+                       "VALUES (?,?,?,'bulk','running',0,?,'/fixture/never-created')",
+                       (aid, job, model, str(self.tmp.name)))
+        return aid
+
+    def finish(self, aid, kind):
+        r.finish(self.state, self.c, aid, {'kind': kind}, now=1000.0)
+
+    def lost_attempt(self, job):
+        """A 'running' attempt left behind by a scheduler that never returned."""
+        with r.database(self.state) as db:
+            db.execute('INSERT OR IGNORE INTO models(id) VALUES (?)', (self.model,))
+            db.execute("INSERT INTO attempts (id,job,model,tier,status,started,directory,cgroup) "
+                       "VALUES ('lost',?,?,'bulk','running',0,?,'/fixture/never-created')",
+                       (job, self.model, str(self.tmp.name)))
+    def test_interruptions_requeue_without_spending_quota(self):
+        job = self.job()
+        for _ in range(3):
+            self.finish(self.attempt(job), r.INTERRUPTED)
+            j = self.rows('jobs')[0]
+            self.assertEqual((j['status'], j['failures'], j['availability_failures'], j['tier']),
+                             ('queued', 0, 0, 'bulk'))
+        # No model is blamed: no cooldown, no reason.
+        self.assertEqual((self.rows('models')[0]['cooldown'], self.rows('models')[0]['reason']), (0, ''))
+        self.assertEqual([a['status'] for a in self.rows('attempts')], [r.INTERRUPTED] * 3)
+        self.assertTrue(all(a['ended'] == 1000.0 for a in self.rows('attempts')))
+        # The first genuine failure is the first to spend anything.
+        self.finish(self.attempt(job), 'failure')
+        j = self.rows('jobs')[0]
+        self.assertEqual((j['status'], j['failures'], j['tier']), ('queued', 1, 'reasoning'))
+        self.assertEqual(self.rows('models')[0]['cooldown'], 1030.0)
+        self.assertEqual(self.rows('models')[0]['reason'], 'failure')
+        self.assertEqual([a['status'] for a in self.rows('attempts')],
+                         [r.INTERRUPTED] * 3 + ['failure'])
+
+    def test_interruptions_alone_never_exhaust_escalation_or_retries(self):
+        # The demonstrated defect: three interruptions terminally failed a job and
+        # promoted its tier, so one real failure then escalated it immediately.
+        job = self.job()
+        for _ in range(6):
+            self.finish(self.attempt(job), r.INTERRUPTED)
+        j = self.rows('jobs')[0]
+        self.assertEqual((j['status'], j['failures'], j['tier']), ('queued', 0, 'bulk'))
+        self.finish(self.attempt(job), 'failure')
+        j = self.rows('jobs')[0]
+        self.assertEqual((j['status'], j['failures'], j['tier']), ('queued', 1, 'reasoning'))
+        self.finish(self.attempt(job), 'failure')
+        j = self.rows('jobs')[0]
+        self.assertEqual((j['status'], j['failures'], j['tier']), ('failed', 2, 'escalation'))
+
+    def test_interruption_preserves_tier_after_threshold_change(self):
+        job = self.job()
+        with r.database(self.state) as db:
+            db.execute('UPDATE jobs SET failures=1 WHERE id=?', (job,))
+        self.c['escalation_after'] = 1
+        self.finish(self.attempt(job), r.INTERRUPTED)
+        j = self.rows('jobs')[0]
+        self.assertEqual((j['status'], j['failures'], j['tier']), ('queued', 1, 'bulk'))
+
+    def test_timeout_and_output_limit_still_spend_the_failure_budget(self):
+        job = self.job()
+        for kind in (r.INTERRUPTED, 'timeout', r.INTERRUPTED, 'output_limit'):
+            self.finish(self.attempt(job), kind)
+        j = self.rows('jobs')[0]
+        self.assertEqual((j['status'], j['failures'], j['tier']), ('failed', 2, 'escalation'))
+        self.assertEqual(j['availability_failures'], 0)
+        self.assertEqual([a['status'] for a in self.rows('attempts')],
+                         [r.INTERRUPTED, 'timeout', r.INTERRUPTED, 'output_limit'])
+        # An interruption never resurrects a job that already reached a terminal state.
+        self.finish(self.attempt(job), r.INTERRUPTED)
+        self.assertEqual(self.rows('jobs')[0]['status'], 'failed')
+
+    def test_availability_kinds_spend_only_availability_budget(self):
+        job = self.job()
+        for kind in (r.INTERRUPTED, 'quota', r.INTERRUPTED, 'unavailable', 'variant_unavailable'):
+            self.finish(self.attempt(job), kind)
+        j = self.rows('jobs')[0]
+        self.assertEqual((j['status'], j['failures'], j['availability_failures'], j['tier']),
+                         ('failed', 0, 3, 'bulk'))
+        # variant_unavailable costs no cooldown: it only stops that variant being reused.
+        self.assertEqual(self.rows('models')[0]['cooldown'], 1300.0)
+        self.assertEqual(self.rows('models')[0]['reason'], 'unavailable')
+
+    def test_needs_review_and_cancellation_stay_terminal(self):
+        reviewed = self.job(target='0x1234')
+        self.finish(self.attempt(reviewed), 'needs_review')
+        j = self.rows('jobs')[0]
+        self.assertEqual((j['status'], j['failures']), ('needs_review', 0))
+        # needs_review retains ownership, so the model is still held back.
+        self.assertEqual(self.rows('models')[0]['cooldown'], 1030.0)
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.job(target='0x1234')
+        self.finish(self.attempt(self.job(target='0x5678')), 'cancelled')
+        j = self.rows('jobs')[1]
+        self.assertEqual((j['status'], j['failures']), ('cancelled', 0))
+
+    def test_restart_recovery_requeues_verified_empty_attempts(self):
+        job = self.job(target='0x1234')
+        self.lost_attempt(job)
+        (self.claims / 'build').mkdir(parents=True)  # a claims database, as a prior scheduler left
+        r.fleet_run.connect(self.claims).close()
+        with patch.object(r.fleet_run, 'cgroup_state', return_value=False):
+            r.recover(self.state, self.c, self.claims)
+        j = self.rows('jobs')[0]
+        self.assertEqual((j['status'], j['failures'], j['note']), ('queued', 0, r.INTERRUPTED))
+        self.assertEqual(self.rows('attempts')[0]['status'], r.INTERRUPTED)
+        self.assertEqual(self.rows('models')[0]['cooldown'], 0)
+        # Requeued under the same job id, so it still owns the exclusive target.
+        self.assertEqual(self.rows('jobs')[0]['id'], job)
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.job(target='0x1234')
+
+    def test_restart_recovery_retains_unknown_containment(self):
+        job = self.job(target='0x1234')
+        self.lost_attempt(job)
+        with patch.object(r.fleet_run, 'cgroup_state', return_value=True):
+            r.recover(self.state, self.c, self.claims)
+        j = self.rows('jobs')[0]
+        self.assertEqual((j['status'], j['failures'], j['note']), ('needs_review', 0, 'needs_review'))
+        # recover() finishes at wall time, so the cooldown is a real timestamp.
+        self.assertGreater(self.rows('models')[0]['cooldown'], time.time())
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.job(target='0x1234')
+
+    def test_finish_is_idempotent_for_interruptions(self):
+        aid = self.attempt(self.job())
+        self.finish(aid, r.INTERRUPTED)
+        self.finish(aid, 'failure')  # a repeated finish is ignored, as for any kind
+        j = self.rows('jobs')[0]
+        self.assertEqual((j['status'], j['failures']), ('queued', 0))
+        self.assertEqual(self.rows('attempts')[0]['status'], r.INTERRUPTED)
+
+    def test_status_separates_interruptions_from_task_failures(self):
+        job = self.job()
+        for kind in (r.INTERRUPTED, 'failure', r.INTERRUPTED, 'timeout'):
+            self.finish(self.attempt(job), kind)
+        data = r.status(self.state, self.c)
+        m = next(m for m in data['models'] if m['id'] == self.model)
+        self.assertEqual((m['task_failures'], m['interruptions']), (2, 2))
+        row = data['configurations'][0]
+        self.assertEqual((row['attempts'], row['task_failures'], row['interruptions']), (4, 2, 2))
+        self.assertEqual(len(data['attempts']), 4)
+        with patch.object(r.sys, 'stdout', io.StringIO()):
+            r.print_status(data)
+
 
 if __name__=='__main__':unittest.main()

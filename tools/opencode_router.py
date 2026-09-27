@@ -25,6 +25,13 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = ROOT / 'tools/opencode_router/go.json'
 TIERS = ('bulk', 'reasoning', 'escalation')
 TERMINAL = ('completed', 'failed', 'cancelled', 'needs_review')
+# A scheduler interruption is ordinary lifecycle, not evidence against a model or
+# a task: duration expiry, an operator stop, and a restart that verified empty
+# containment all reuse this kind. It spends no failure/availability budget, does
+# not promote the tier, and sets no model cooldown.
+INTERRUPTED = 'interrupted'
+TASK_FAILURES = ('failure', 'timeout', 'output_limit')
+AVAILABILITY_FAILURES = ('quota', 'unavailable', 'variant_unavailable')
 MODEL_ID = re.compile(r'(?:opencode-go|opencode)/[a-z0-9][a-z0-9._-]*(?:#[a-z0-9._-]+)?\Z')
 VARIANT_ID = re.compile(r'[a-z0-9][a-z0-9._-]*\Z')
 VARIANT_ORDER = {
@@ -473,26 +480,34 @@ def finish(state, c, attempt, result, now=None):
         result = dict(result)
         result['routing_cost'] = json.loads(a['result'] or '{}').get('routing_cost')
         j = db.execute('SELECT * FROM jobs WHERE id=?', (a['job'],)).fetchone()
-        failures = j['failures'] + (kind in ('failure', 'timeout', 'interrupted', 'output_limit'))
-        availability = j['availability_failures'] + (kind in ('quota', 'unavailable', 'variant_unavailable'))
+        interrupted = kind == INTERRUPTED
+        # An interrupted attempt is recorded for audit but spends no quota: a
+        # crash-looping scheduler must not terminally retire a job, promote its
+        # tier, or cool down a model that reported nothing.
+        failures = j['failures'] + (kind in TASK_FAILURES)
+        availability = j['availability_failures'] + (kind in AVAILABILITY_FAILURES)
         tier = j['tier']
-        if failures >= c['escalation_after']:
-            tier = 'escalation'
-        elif failures >= c['reasoning_after'] and tier == 'bulk':
-            tier = 'reasoning'
+        if not interrupted:
+            if failures >= c['escalation_after']:
+                tier = 'escalation'
+            elif failures >= c['reasoning_after'] and tier == 'bulk':
+                tier = 'reasoning'
         status = 'queued'
         if kind == 'success':
             status = 'completed'
         elif kind in ('cancelled', 'needs_review'):
             status = kind
-        elif failures > c['retries'] or availability >= c['availability_retries']:
+        elif not interrupted and (failures > c['retries'] or
+                                  availability >= c['availability_retries']):
             status = 'failed'
+        elif interrupted and j['status'] in TERMINAL:
+            status = j['status']  # never resurrect a job the parent finished
         db.execute('UPDATE attempts SET status=?,ended=?,result=? WHERE id=?',
                    (kind, now, json.dumps(result), attempt))
         db.execute('UPDATE jobs SET status=?,failures=?,availability_failures=?,tier=?,note=? WHERE id=?',
                    (status, failures, availability, tier, kind, j['id']))
         delay = c['cooldown'] if kind in ('quota', 'unavailable') else c['failure_cooldown']
-        if kind not in ('success', 'variant_unavailable'):
+        if kind not in ('success', 'variant_unavailable', INTERRUPTED):
             db.execute('UPDATE models SET cooldown=MAX(cooldown,?),reason=? WHERE id=?',
                        (now + delay, kind, a['model']))
 
@@ -567,7 +582,7 @@ def recover(state, c, claims):
                 fleet_run.release(claims, 'router-' + a['id'], 'restart verified empty cgroup')
             except fleet_run.ClaimConflict:
                 empty = False
-        finish(state, c, a['id'], events.result(None, 'interrupted' if empty else 'needs_review'))
+        finish(state, c, a['id'], events.result(None, INTERRUPTED if empty else 'needs_review'))
         if empty:
             fleet_cgroup.remove_empty_cgroup(a['cgroup'], 'router-' + a['id'])
 
@@ -743,7 +758,7 @@ def fleet(root, state, c, duration, workers=None, until=None):
                     run['child'].wait(timeout=5)
                     release_attempt(claims, aid, run['unit'], run['record_path'], run['record'])
                     run['events'].drain(run['reader'], final=True)
-                    finish(state, c, aid, run['events'].result(run['child'].returncode, 'interrupted'))
+                    finish(state, c, aid, run['events'].result(run['child'].returncode, INTERRUPTED))
                     run['unit'].remove()
                 except (OSError, RuntimeError, TimeoutError, subprocess.TimeoutExpired) as exc:
                     finish(state, c, aid, {'kind': 'needs_review', 'error': str(exc)})
@@ -810,7 +825,8 @@ def status(state, c):
                        'active': sum(a['status'] == 'running' or (a['status'] == 'needs_review' and
                                      fleet_run.cgroup_state(a['cgroup'], 'router-' + a['id']) is not False) for a in rows),
                        'successes': sum(a['status'] == 'success' for a in rows),
-                       'task_failures': sum(a['status'] in ('failure','timeout','interrupted','output_limit') for a in rows),
+                       'task_failures': sum(a['status'] in TASK_FAILURES for a in rows),
+                       'interruptions': sum(a['status'] == INTERRUPTED for a in rows),
                        'quota_events': sum(a['status'] == 'quota' for a in rows),
                        'unavailable_events': sum(a['status'] == 'unavailable' for a in rows),
                        'duration_seconds': round(sum((a['ended'] - a['started']) for a in rows if a['ended']), 2)})
@@ -826,13 +842,14 @@ def status(state, c):
         a['duration_seconds'] = round((a['ended'] or time.time()) - a['started'], 2)
         key = (a['model'].split('#')[0], a['variant'], a['category'], a['tier'])
         row = configurations.setdefault(key, dict(zip(('model','variant','category','tier'), key),
-            attempts=0, successes=0, task_failures=0, quota_events=0, variant_errors=0,
+            attempts=0, successes=0, task_failures=0, interruptions=0, quota_events=0, variant_errors=0,
             duration_seconds=0, measured_attempts=0, exact_matches=0,
             reported_cost_usd=0, costed_attempts=0, costed_successes=0,
             costed_exact_matches=0, costed_bytes_gained=0, costed_useful_investigations=0))
         row['attempts'] += 1
         row['successes'] += a['status'] == 'success'
-        row['task_failures'] += a['status'] in ('failure','timeout','interrupted','output_limit')
+        row['task_failures'] += a['status'] in TASK_FAILURES
+        row['interruptions'] += a['status'] == INTERRUPTED
         row['quota_events'] += a['status'] == 'quota'
         row['variant_errors'] += a['status'] == 'variant_unavailable'
         if a['ended']:
@@ -867,10 +884,10 @@ def print_status(data):
         w = b['windows'].get(name)
         print(f"  {name}: " + (f"provider used={w['used_percent']}%, remaining={w['remaining_percent']}% (complement), resets={w['resets_at']}" if w else 'unknown'))
     print('Budget restrictions: ' + json.dumps(data['budget_disabled_for_ordinary_work']))
-    print('MODEL                                     ON  ACTIVE  OK  FAIL  QUOTA  UNAVAIL  COOLDOWN')
+    print('MODEL                                     ON  ACTIVE  OK  FAIL  INTR  QUOTA  UNAVAIL  COOLDOWN')
     for m in data['models']:
         print(f"{m['id']:41} {str(m['enabled']):5} {m['active']:3}/{m['concurrency']:<3} "
-              f"{m['successes']:3} {m['task_failures']:5} {m['quota_events']:6} "
+              f"{m['successes']:3} {m['task_failures']:5} {m['interruptions']:5} {m['quota_events']:6} "
               f"{m['unavailable_events']:8} {m['cooldown_seconds']:7}s {m.get('reason','')}")
     counts = {s: sum(j['status'] == s for j in data['jobs'])
               for s in ('queued','running',*TERMINAL)}
@@ -885,6 +902,7 @@ def print_status(data):
         for row in data['configurations']:
             print(f"  {row['model']}#{row['variant'] or 'default/unknown'} {row['category']} -> {row['tier']}: "
                   f"{row['successes']}/{row['attempts']} success, {row['task_failures']} task failures, "
+                  f"{row['interruptions']} scheduler interruptions, "
                   f"{row['duration_seconds']}s, {row['exact_matches']} verified exact "
                   f"({row['measured_attempts']} measured), local estimated ${row['reported_cost_usd']:.6f} "
                   f"({row['costed_attempts']}/{row['attempts']} cost coverage)")

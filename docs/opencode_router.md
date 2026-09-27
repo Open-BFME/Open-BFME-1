@@ -123,6 +123,33 @@ releases ownership before requeueing. Unknown/missing containment requires
 operator investigation, never automatic duplicate execution. `cancel JOB_ID`
 works for queued/finished jobs while the scheduler is stopped.
 
+**Interruption spends nothing.** An interrupted attempt — scheduler duration
+expiry, operator stop, or a restart that verified empty containment — is
+recorded for audit, but it is not evidence against a model or a task. It does
+not increment `failures` or `availability_failures`, does not promote the job's
+tier, and sets no model cooldown, so repeated restarts can neither terminally
+retire a job nor escalate model selection. The job returns to `queued` under the
+same ID and keeps its target/workspace ownership; an interruption arriving for
+an already terminal job never resurrects it. Only `failure`, `timeout` and
+`output_limit` spend the task-failure budget (`retries`, `reasoning_after`,
+`escalation_after`) and the `failure_cooldown`; `quota`, `unavailable` and
+`variant_unavailable` spend only the availability budget. `status` reports
+`interruptions` separately from `task_failures` per model and per
+model+variant+class, so historical rows are reclassified at read time and no
+stored counter is rewritten. `needs_review` and `cancelled` remain terminal and
+still hold the model back, because ownership of the worker is unresolved.
+
+Because interruption is free, a crash-looping scheduler requeues a job forever.
+That is deliberate — an unbounded retry loop must not be mistaken for task
+evidence — and the bound, if ever wanted, belongs in operator policy
+(`cancel JOB_ID`), not in the accounting.
+
+A restart records `interrupted` for every attempt whose containment it verified
+empty, even when the surviving transcript contains a timeout or transport error
+from before the crash. That lost accounting is deliberate: the scheduler that
+observed the event is gone, and a requeue costs only a redispatch. A timeout
+observed by a live scheduler is still counted as a timeout.
+
 Legacy fleet interoperability uses the claims root saved on first invocation.
 If the legacy fleet runs in a different checkout, pass `--claims-root PATH` on
 first use. Existing coordination state is validated by `fleet_run`; the router
@@ -143,6 +170,8 @@ The separate JSON configuration contains all model IDs and policy knobs:
   cap (default 15 minutes / 32 MiB).
 - `retries`: task retries after the initial attempt. `reasoning_after` and
   `escalation_after`: task failures before promotion (defaults 2 and 3).
+  Only `failure`, `timeout` and `output_limit` count here; a scheduler
+  interruption is lifecycle, not a task failure (see Lifecycle).
 - `availability_retries`: separate quota/unavailable retry bound (default 20).
 - `cooldown`: seconds before reconsidering quota/unavailable models (default 300).
 - `failure_cooldown`: brief cooldown for genuine worker failures (default 20).
