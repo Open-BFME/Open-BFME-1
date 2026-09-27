@@ -7588,5 +7588,55 @@
   "after_sha256": "b977782235f3d1ecbcbb12d668365bddbb61887ae912fc7311849cb08c71ce09",
   "evidence": "targets/game/reverse/identity_evidence/001f72d0-constructor-names.md",
   "reason": "Assembler _emit directive is not a descriptive member; native offset fields replace raw byte syntax without renaming an established identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0053e870.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0053e870.cpp",
+  "old_name": "joinSelectedStagingRoom",
+  "new_name": "rva0053E870",
+  "before_sha256": "ba41baa55879f8c025452ea74a078d5d442500daf3702e2464351b389d12b343",
+  "after_sha256": "5623e730c03da3ff15ffe9ac0c547b47819e250331e55a7076c5d50a0f4d09f9",
+  "evidence": "targets/game/reverse/identity_evidence/0x0053e870-name-correction.md",
+  "reason": "The matched BFME caller provides only ILT 0x00017481, and the selector scan found no selector for this body. The old name came from a Zero Hour analogy, so the method keeps its address."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0053e870.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0053e870.cpp",
+  "old_name": "m_clear1C4",
+  "new_name": "m_field1C4",
+  "before_sha256": "ba41baa55879f8c025452ea74a078d5d442500daf3702e2464351b389d12b343",
+  "after_sha256": "5623e730c03da3ff15ffe9ac0c547b47819e250331e55a7076c5d50a0f4d09f9",
+  "evidence": "targets/game/reverse/identity_evidence/0x0053e870-name-correction.md",
+  "reason": "The body stores zero to +0x1C4, but that operation does not establish the field's intended name. The bank keeps the offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0053e870.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0053e870.cpp",
+  "old_name": "m_host",
+  "new_name": "m_field34",
+  "before_sha256": "ba41baa55879f8c025452ea74a078d5d442500daf3702e2464351b389d12b343",
+  "after_sha256": "5623e730c03da3ff15ffe9ac0c547b47819e250331e55a7076c5d50a0f4d09f9",
+  "evidence": "targets/game/reverse/identity_evidence/0x0053e870-name-correction.md",
+  "reason": "The body reads +0x34 as an AptMovieHost pointer, but no matched declaration establishes the member name. An older unverified attempt uses m_host at this offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0053e870.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0053e870.cpp",
+  "old_name": "m_joinToken",
+  "new_name": "m_field1BC",
+  "before_sha256": "ba41baa55879f8c025452ea74a078d5d442500daf3702e2464351b389d12b343",
+  "after_sha256": "5623e730c03da3ff15ffe9ac0c547b47819e250331e55a7076c5d50a0f4d09f9",
+  "evidence": "targets/game/reverse/identity_evidence/0x0053e870-name-correction.md",
+  "reason": "The body sets +0x1BC to -1, but no matched caller or field table establishes that it stores a join token. The bank keeps the offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0053e870.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0053e870.cpp",
+  "old_name": "m_joining",
+  "new_name": "m_field1B4",
+  "before_sha256": "ba41baa55879f8c025452ea74a078d5d442500daf3702e2464351b389d12b343",
+  "after_sha256": "5623e730c03da3ff15ffe9ac0c547b47819e250331e55a7076c5d50a0f4d09f9",
+  "evidence": "targets/game/reverse/identity_evidence/0x0053e870-name-correction.md",
+  "reason": "The body checks and sets a byte at +0x1B4, which suggests a busy flag but does not prove the member's name. The bank keeps the offset."
  }
 ]

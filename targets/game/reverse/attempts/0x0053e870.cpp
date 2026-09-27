@@ -1,11 +1,10 @@
-// ?joinSelectedStagingRoom@BfmeAptScreenOnlineCustomMatch@@QAEXXZ
-// partial score=0.62 date=2026-09-20
+// ?rva0053E870@BfmeAptScreenOnlineCustomMatch@@QAEXXZ
+// partial score=0.684 date=2026-09-27
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-//
-// BfmeAptScreenOnlineCustomMatch::joinSelectedStagingRoom, retail 0x0053E870,
-// 1090 bytes. Apt ZH WOLLobbyMenu.cpp buttonJoin twin: listbox at +0x18C,
-// CRC trio through Rva0009B4B0 / GlobalData +0xBC8/+0xBD0/+0xBD4, unknown
-// ladder, reported-full, EnterPassword CallChild, else PeerRequest type 0xB.
+// ?rva0053E870@BfmeAptScreenOnlineCustomMatch@@QAEXXZ
+// The caller at 0x00544E40 reaches this body through ILT 0x00017481.
+// This body calls the matched applyPreferredGameNamePassword method on the
+// same receiver, so the class is known and the method name stays address-derived.
 
 template <typename T> struct StringData
 {
@@ -236,34 +235,34 @@ typedef char RoomLayoutCheck[ (int)&( (GameSpyStagingRoom *)0 )->m_ladderPort ==
 class BfmeAptScreenOnlineCustomMatch
 {
 public:
-	void joinSelectedStagingRoom();
+	void rva0053E870();
 	void applyPreferredGameNamePassword( bool fromPrefs );
 
 private:
 	unsigned char m_head[ 0x34 ];
-	AptMovieHost *m_host;
+	AptMovieHost *m_field34;
 	unsigned char m_mid[ 0x188 - 0x38 ];
 	int m_state;
 	GameWindow *m_gameList;
 	unsigned char m_gap[ 0x1B4 - 0x190 ];
-	unsigned char m_joining;
+	unsigned char m_field1B4;
 	unsigned char m_pad1B5[ 3 ];
 	unsigned char m_gap1B8[ 0x1BC - 0x1B8 ];
-	int m_joinToken;
+	int m_field1BC;
 	unsigned char m_gap1C0[ 0x1C4 - 0x1C0 ];
-	int m_clear1C4;
+	int m_field1C4;
 	unsigned char m_gap1C8[ 0x1CC - 0x1C8 ];
 	int m_selectedID;
 };
 
-void BfmeAptScreenOnlineCustomMatch::joinSelectedStagingRoom()
+void BfmeAptScreenOnlineCustomMatch::rva0053E870()
 {
 	int selected = 0;
-	if( m_joining )
+	if( m_field1B4 )
 		return;
 
 	m_state = 1;
-	m_clear1C4 = 0;
+	m_field1C4 = 0;
 	GadgetListBoxGetSelected( m_gameList, &selected );
 	if( selected < 0 )
 	{
@@ -340,11 +339,11 @@ void BfmeAptScreenOnlineCustomMatch::joinSelectedStagingRoom()
 		return;
 	}
 
-	m_joining = 1;
-	m_joinToken = -1;
+	m_field1B4 = 1;
+	m_field1BC = -1;
 	if( room->m_hasPassword )
 	{
-		void *movie = m_host->m_movie;
+		void *movie = m_field34->m_movie;
 		m_selectedID = selected;
 		g_theWindowManager->add( movie, "CallChild", 1,
 			"EnterPassword", 0, 0, 0, 0 );

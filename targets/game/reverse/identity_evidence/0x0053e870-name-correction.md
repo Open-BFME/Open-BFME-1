@@ -1,0 +1,9 @@
+# Identity evidence for 0x0053E870
+
+The earlier bank called this method `joinSelectedStagingRoom` because it resembled the Zero Hour `WOLLobbyMenu::buttonJoin` method. That resemblance does not prove the BFME 1 method name. The matched caller in `game/GameEngine/Source/GameClient/GUI/OnlineStateUpdate00544E40.cpp` calls ILT thunk `j_00017481` in state 9, and that thunk reaches RVA `0x0053E870` without naming the method. I scanned retail Apt constructors for selector strings paired with ILT thunks. The scan found `JoinGame` at RVA `0x00537A90` and found no selector for RVA `0x0053E870`. The body calls the matched `applyPreferredGameNamePassword` method on the same receiver, which proves the `BfmeAptScreenOnlineCustomMatch` class but not this method's name. The bank now uses the address-derived method name `rva0053E870`.
+
+The earlier bank named fields at offsets `+0x34`, `+0x1B4`, `+0x1BC`, and `+0x1C4` as `m_host`, `m_joining`, `m_joinToken`, and `m_clear1C4`. The body suggests those meanings, but no matched declaration or field table establishes them, and `tools/name_oracle.py --class BfmeAptScreenOnlineCustomMatch` reports no witnessed layout. An older unverified attempt also calls the `+0x34` field `m_host`, but that source does not prove its name. The bank now keeps these fields under their offset names.
+
+The related initializer in `game/GameEngine/Source/GameClient/GUI/OnlineCustomMatchOnInitGadget.cpp` declares `m_gameList` at `+0x18C` and assigns it when the gadget name is `GameList`. The bank retains that supported field name.
+
+The bank retains `m_state` at `+0x188` because the matched caller reads it as a state and switches on its values. The bank retains `m_selectedID` at `+0x1CC` because `OnlineCustomMatchFindStagingRoom.cpp` uses that field to find the selected staging room.
