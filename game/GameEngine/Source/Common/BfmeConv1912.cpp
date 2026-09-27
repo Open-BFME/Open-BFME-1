@@ -1,3 +1,8 @@
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame
+// stlport
+#include <bitset>
+#include "Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
 class BfmeAgentBH;
 
 struct BfmeInfoBH
@@ -5,6 +10,71 @@ struct BfmeInfoBH
 	unsigned char m_bfmeFlagBH;
 	unsigned char m_bfmeLevelBH;
 };
+
+struct __declspec(align(4)) BfmeSubTwoVersionBH
+{
+	unsigned char version;
+	unsigned char current;
+};
+
+struct BfmeSubTwoExceptionBH
+{
+	char *text;
+	int tag;
+};
+
+class Xfer
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual bool save() = 0;
+	virtual void slot03() = 0;
+	virtual bool crc() = 0;
+	virtual void slot05() = 0;
+	virtual void slot06() = 0;
+	virtual void slot07() = 0;
+	virtual void slot08() = 0;
+	virtual void xferUser(void *data, int size) = 0;
+	virtual void version(BfmeSubTwoVersionBH *value) = 0;
+	virtual void slot11() = 0;
+	virtual void slot12() = 0;
+	virtual void slot13() = 0;
+	virtual void slot14() = 0;
+	virtual void slot15() = 0;
+	virtual void slot16() = 0;
+	virtual void slot17() = 0;
+	virtual void slot18() = 0;
+	virtual void slot19() = 0;
+	virtual void slot20() = 0;
+	virtual void slot21() = 0;
+	virtual void slot22() = 0;
+	virtual void slot23() = 0;
+	virtual void slot24() = 0;
+	virtual void slot25() = 0;
+	virtual void text(AsciiString *value) = 0;
+	virtual void slot27() = 0;
+	virtual void slot28() = 0;
+	virtual void slot29() = 0;
+	virtual void integer(int *value) = 0;
+};
+
+template <int NUMBITS>
+class BitFlags
+{
+public:
+	_STL::bitset<NUMBITS> m_bits;
+	void xfer(Xfer *xfer);
+};
+
+extern unsigned char g_bfmeTableDH[];
+extern const char *const Rva00209130StatusNames[];
+extern const char Rva006A16B0Empty[];
+extern int __cdecl bfmeLookup_001c6340(void *name);
+extern "C" BfmeSubTwoExceptionBH *__cdecl bfmeFormatText(
+	BfmeSubTwoExceptionBH *exception, int reserved, const char *format, ...);
+extern void __declspec(noreturn) __stdcall _CxxThrowException(
+	void *exception, void *throwInfo);
 
 class BfmeAgentBH
 {
@@ -79,6 +149,62 @@ public:
 	unsigned char m_bfmeSlotDBH;
 	unsigned char m_bfmeStateBH;
 };
+
+void BfmeSubTwoBH::bfmeSaveBH(BfmeAgentBH *ag)
+{
+	Xfer *xfer = reinterpret_cast<Xfer *>(ag);
+	BfmeSubTwoVersionBH version;
+	version.version = 1;
+	version.current = 1;
+	xfer->version(&version);
+
+	if (xfer->crc())
+	{
+		reinterpret_cast<BitFlags<86> *>(this)->xfer(xfer);
+		return;
+	}
+
+	_STL::bitset<86> *bits = reinterpret_cast<_STL::bitset<86> *>(this);
+	if (xfer->save())
+	{
+		int count = bits->count();
+		xfer->integer(&count);
+		for (int i = 0; i < 86; ++i)
+		{
+			if (bits->_Unchecked_test(i) && Rva00209130StatusNames[i])
+			{
+				AsciiString name(Rva00209130StatusNames[i]);
+				xfer->text(&name);
+				--count;
+			}
+		}
+	}
+	else
+	{
+		bits->reset();
+		int count;
+		xfer->integer(&count);
+		AsciiString name;
+		for (int i = 0; i < count; ++i)
+		{
+			xfer->text(&name);
+			const char *value = *reinterpret_cast<const char *const *>(&name);
+			if (value != 0)
+				value += 8;
+			else
+				value = Rva006A16B0Empty;
+
+			int bit = bfmeLookup_001c6340(const_cast<char *>(value));
+			if (bit < 0)
+			{
+				BfmeSubTwoExceptionBH exception;
+				bfmeFormatText(&exception, 0, 0);
+				_CxxThrowException(&exception, reinterpret_cast<void *>(0x011DFE5C));
+			}
+			bits->_Unchecked_set(bit);
+		}
+	}
+}
 
 void BfmeHostBH::bfmeSaveBH(BfmeAgentBH *ag)
 {
