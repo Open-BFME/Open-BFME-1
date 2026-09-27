@@ -60,7 +60,7 @@ class RouterTests(unittest.TestCase):
         self.fake.write_text(FAKE)
         self.fake.chmod(0o755)
         self.c = r.config(r.DEFAULT_CONFIG)
-        self.c.update(opencode=str(self.fake), go_overage_disabled=True, timeout=3,
+        self.c.update(cost_aware=False, opencode=str(self.fake), go_overage_disabled=True, timeout=3,
                       cooldown=.3, failure_cooldown=.05, workers=3, variant_discovery=False)
         self.c['models'] = [self.model('one'), self.model('two'), self.model('strong','escalation')]
         with r.database(self.state) as db:
@@ -80,6 +80,29 @@ class RouterTests(unittest.TestCase):
 
     def run_fleet(self, duration=5):
         return r.fleet(self.root, self.state, self.c, duration)
+
+    def test_economic_fleet_quota_variant_and_snapshot(self):
+        self.c.update(cost_aware=True)
+        self.c['models']=[self.model('quota',relative_cost=1,variants=['low','high']),
+                          self.model('two',relative_cost=2,variants=['medium','high']),
+                          self.model('strong','escalation',relative_cost=10,escalation_only=True)]
+        self.job('arbitrary $(do-not-execute) `text`')
+        self.run_fleet()
+        attempts=self.rows('attempts')
+        self.assertEqual([a['status'] for a in attempts],['quota','success'])
+        self.assertEqual([a['variant'] for a in attempts],['low','medium'])
+        self.assertEqual(json.loads(attempts[1]['result'])['routing_cost']['relative_cost'],2)
+
+    def test_economic_retry_handoff_and_high_reasoning(self):
+        self.c.update(cost_aware=True,reasoning_after=1)
+        self.c['models']=[self.model('one',relative_cost=1,variants=['medium','high']),
+                          self.model('two',relative_cost=2,variants=['medium','high'])]
+        self.job('FAIL_FIRST')
+        self.run_fleet()
+        attempts=self.rows('attempts')
+        self.assertEqual([a['model'] for a in attempts],['opencode-go/one','opencode-go/two'])
+        self.assertEqual([a['variant'] for a in attempts],['medium','high'])
+        self.assertIn('callee ABI proven',(Path(attempts[1]['directory'])/'prompt.txt').read_text())
 
     def test_reserved_models_and_explicit_override(self):
         j = dict(model=None, tier='bulk')
@@ -470,5 +493,100 @@ class RouterTests(unittest.TestCase):
             scheduler.stderr.close()
 
 
+
+
+
+class EconomicsTests(unittest.TestCase):
+    def setUp(self):
+        self.c = r.config(r.DEFAULT_CONFIG)
+        self.j = dict(model=None, tier='bulk', category='bulk')
+        self.pool = [m for m in self.c['models'] if not m['escalation_only']]
+
+    def select(self, **kw):
+        return r.choose(self.c, self.j, kw.get('active', {}), kw.get('states', {}), kw.get('history', []), 100)
+
+    def failure(self, model, status='failure', evidence=True):
+        return dict(model=model['id'], status=status, result=json.dumps({'report':
+            {'outcome':'failure','approaches':['proven failed shape']} if evidence else None}))
+
+    def test_cost_order_and_bulk_exclusion(self):
+        expected=['muse-spark-1.3-contributor','deepseek-v4.1-flash','mimo-v2.6-flash',
+                  'gpt-6-luna','qwen3.8-flash','deepseek-v4-flash']
+        active={}
+        for name in expected:
+            m=self.select(active=active)
+            self.assertEqual(m['id'], 'opencode-go/'+name)
+            active[m['id']]=m['concurrency']
+        self.assertIsNone(self.select(active=active))
+
+    def test_quota_failover_recovery_no_expensive_unlock(self):
+        states={m['id']:dict(cooldown=101) for m in self.pool}
+        self.assertIsNone(self.select(states=states, history=[self.failure(m,'quota') for m in self.pool]))
+        states[self.pool[1]['id']]['cooldown']=100
+        self.assertEqual(self.select(states=states)['id'],self.pool[1]['id'])
+
+    def test_escalation_requires_real_evidence_and_two_models(self):
+        self.j['tier']='escalation'
+        states={m['id']:dict(cooldown=101) for m in self.pool}
+        for status in ('quota','interrupted','timeout','unavailable'):
+            self.assertIsNone(self.select(states=states,history=[self.failure(m,status) for m in self.pool]))
+        self.assertIsNone(self.select(states=states,history=[self.failure(self.pool[0])]*4))
+        self.assertIsNone(self.select(states=states,history=[self.failure(m,evidence=False) for m in self.pool]))
+        history=[self.failure(m) for m in self.pool[:2]]
+        self.assertEqual(self.select(states=states,history=history)['id'],'opencode-go/glm-5.3-flash')
+
+    def test_parent_escalation_and_cost_ladder(self):
+        self.j.update(category='escalation',tier='escalation')
+        # Still use untried inexpensive workers before spending more.
+        self.assertEqual(self.select()['id'],self.pool[0]['id'])
+        history=[self.failure(m) for m in self.pool]
+        self.assertEqual(self.select(history=history)['id'],'opencode-go/glm-5.3-flash')
+        self.j.update(category='bulk',tier='bulk',model='opencode-go/kimi-k2.6')
+        self.assertEqual(self.select()['id'],self.j['model'])
+
+    def test_effectiveness_and_variant_are_separate_controls(self):
+        m=self.pool[1];m['effectiveness']=2
+        self.assertEqual(self.select()['id'],m['id'])
+        caps={m['id']:['low','high','max']}
+        self.assertEqual(r.choose_variant(m,'bulk',caps),'low')
+        self.assertEqual(r.choose_variant(m,'reasoning',caps),'high')
+        self.assertEqual(r.choose_variant(m,'escalation',caps),'high')
+        m['variant_preferences']['escalation']='max'
+        self.assertEqual(r.choose_variant(m,'escalation',caps),'max')
+
+    def test_cost_events_deduplicate_and_unknown_is_not_free(self):
+        e=r.Events()
+        self.assertIsNone(e.result(0)['reported_cost_usd'])
+        for cost in (.2,.3):
+            e.feed(json.dumps(dict(type='step_finish',part=dict(id='one',cost=cost))))
+        e.feed(json.dumps(dict(type='step_finish',part=dict(id='two',cost=.1))))
+        e.feed(json.dumps(dict(type='step_finish',part=dict(id='bad',cost=-1))))
+        self.assertAlmostEqual(e.result(0)['reported_cost_usd'],.4)
+        self.assertEqual(e.result(0)['costed_steps'],2)
+
+    def test_old_config_and_unknown_cost(self):
+        for m in self.c['models']:
+            m.pop('relative_cost',None)
+        self.assertIsNone(self.select())
+        self.c.pop('cost_aware')
+        self.assertIsNotNone(self.select())
+
+    def test_old_state_and_economic_measurement(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            state=Path(tmp)
+            job=r.enqueue(state,'bulk','task')
+            with r.database(state) as db:
+                db.execute('INSERT INTO attempts (id,job,model,tier,status,started,ended,result) VALUES (?,?,?,?,?,?,?,?)',
+                    ('old',job,self.pool[0]['id'],'bulk','success',1,2,'{}'))
+                db.execute('INSERT INTO attempts (id,job,model,tier,status,started,ended,result,variant) VALUES (?,?,?,?,?,?,?,?,?)',
+                    ('new',job,self.pool[0]['id'],'bulk','success',2,3,json.dumps({'reported_cost_usd':.5}),'medium'))
+                db.execute('INSERT INTO measurements VALUES (?,?,?,?,?,?)',('new',1,None,None,'verified',3))
+                db.execute('INSERT INTO economic_measurements VALUES (?,?,?)',('new',187,1))
+            x=r.status(state,self.c)
+            self.assertIsNone(x['attempts'][0]['reported_cost_usd'])
+            row=next(v for v in x['configurations'] if v['variant']=='medium')
+            self.assertEqual(row['exact_matches_per_reported_usd'],2)
+            self.assertEqual(row['bytes_gained_per_reported_usd'],374)
+            self.assertEqual(row['useful_investigations_per_reported_usd'],2)
 
 if __name__=='__main__':unittest.main()

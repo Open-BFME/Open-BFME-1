@@ -64,6 +64,10 @@ def config(path):
         raise ValueError('retries must be a nonnegative integer')
     if c['escalation_after'] < c['reasoning_after']:
         raise ValueError('escalation_after must be >= reasoning_after')
+    if type(c.get('cost_aware', False)) is not bool:
+        raise ValueError('cost_aware must be a boolean')
+    if type(c.get('cheap_failures_before_escalation', 2)) is not int or c.get('cheap_failures_before_escalation', 2) < 2:
+        raise ValueError('cheap_failures_before_escalation must be an integer >= 2')
     seen = set()
     if type(c.get('variant_discovery', True)) is not bool:
         raise ValueError('variant_discovery must be a boolean')
@@ -79,6 +83,11 @@ def config(path):
             raise ValueError('reserve must be between zero and concurrency')
         if not isinstance(m['weight'], (int, float)) or not math.isfinite(m['weight']) or m['weight'] <= 0:
             raise ValueError('weight must be positive and finite')
+        for field in ('relative_cost', 'effectiveness'):
+            if field in m and (type(m[field]) not in (int, float) or not math.isfinite(m[field]) or m[field] <= 0):
+                raise ValueError(f'{field} must be positive and finite')
+        if type(m.get('escalation_only', False)) is not bool:
+            raise ValueError('escalation_only must be a boolean')
         variants = m.get('variants')
         if 'variants' in m and (not isinstance(variants, list) or
                 any(not isinstance(v, str) or not VARIANT_ID.fullmatch(v) for v in variants) or
@@ -119,6 +128,9 @@ def connect(state):
             if 'variant' not in {r['name'] for r in db.execute('PRAGMA table_info(attempts)')}:
                 db.execute('ALTER TABLE attempts ADD COLUMN variant TEXT')
                 db.commit()
+            db.execute('CREATE TABLE IF NOT EXISTS economic_measurements ('
+                       'attempt TEXT PRIMARY KEY, bytes_gained INTEGER, useful_investigation INTEGER)')
+            db.commit()
             return db
         except BaseException:
             db.close()
@@ -168,7 +180,25 @@ def enqueue(state, category, task, target=None, cwd=None, model=None, redundant=
 
 
 def choose(c, job, active, model_state, history, now):
-    """Spread first across idle quotas, then by weighted historical dispatches."""
+    """Optional cost-first policy; legacy configurations retain their selection."""
+    economic = c.get('cost_aware', False)
+    cheap_ids = {m['id'] for m in c['models'] if not m.get('escalation_only', m['tier'] == 'escalation')}
+    # Only completed task failures with a structured handoff justify spending
+    # more. Transport errors, timeouts and scheduler interruptions do not.
+    failed = set()
+    for h in history:
+        if h.get('status') != 'failure':
+            continue
+        try:
+            report = json.loads(h.get('result') or '{}').get('report')
+        except (ValueError, TypeError):
+            continue
+        if isinstance(report, dict) and report.get('outcome') == 'failure' and any(
+                report.get(k) for k in ('approaches', 'compiler_test_results', 'discoveries',
+                                      'remaining_byte_differences', 'hypotheses_disproved')):
+            failed.add(h['model'])
+    justified = (job.get('category') == 'escalation' or
+                 len(failed & cheap_ids) >= c.get('cheap_failures_before_escalation', 2))
     candidates = []
     for m in c['models']:
         mid = m['id']
@@ -178,14 +208,27 @@ def choose(c, job, active, model_state, history, now):
             # Reasoning may use bulk; escalation may use any tier, strong first.
             if m['tier'] == 'escalation' and job['tier'] != 'escalation':
                 continue
+        if economic and not job['model']:
+            if 'relative_cost' not in m:
+                continue  # Unknown cost requires an explicit parent choice.
+            if m.get('escalation_only', m['tier'] == 'escalation') and not (
+                    job['tier'] == 'escalation' and justified):
+                continue
         s = model_state.get(mid, {})
         slots = m['concurrency'] - (m['reserve'] if job['tier'] != 'escalation' else 0)
         if s.get('cooldown', 0) > now or active.get(mid, 0) >= slots:
             continue
         tried = sum(1 for h in history if h['model'] == mid)
         tier_distance = abs(TIERS.index(job['tier']) - TIERS.index(m['tier']))
-        candidates.append(((tried, tier_distance, active.get(mid, 0) / m['concurrency'],
-                            s.get('dispatched', 0) / m['weight'], mid), m))
+        score = (tried, tier_distance, active.get(mid, 0) / m['concurrency'],
+                 s.get('dispatched', 0) / m['weight'], mid)
+        if economic:
+            # Try other plausible models after genuine task failures. Quota
+            # recovery is governed by cooldown, not a permanent cost penalty.
+            failures = sum(h.get('status') == 'failure' and h['model'] == mid for h in history)
+            score = (failures, m.get('relative_cost', 1) / m.get('effectiveness', 1),
+                     active.get(mid, 0) / m['concurrency'], s.get('dispatched', 0) / m['weight'], mid)
+        candidates.append((score, m))
     return min(candidates, key=lambda x: x[0])[1] if candidates else None
 
 
@@ -279,6 +322,7 @@ class Events:
         self.errors = []
         self.session = None
         self.oversized = False
+        self.costs = {}
 
     def feed(self, line):
         try:
@@ -288,6 +332,12 @@ class Events:
         if not isinstance(event, dict):
             return
         self.session = event.get('sessionID', self.session)
+        if event.get('type') == 'step_finish':
+            part = event.get('part', {})
+            if isinstance(part, dict):
+                cost, key = part.get('cost'), part.get('id')
+                if isinstance(key, str) and type(cost) in (int, float) and math.isfinite(cost) and cost >= 0:
+                    self.costs[key] = cost
         if event.get('type') == 'error':
             self.errors.append(event.get('error', {}))
         if event.get('type') == 'text':
@@ -325,7 +375,8 @@ class Events:
         kind = forced or (classify(self.errors[-1]) if self.errors else
                           ('success' if code == 0 and report and report['outcome'] == 'success' else 'failure'))
         return {'kind': kind, 'exit_code': code, 'session': self.session,
-                'report': report, 'errors': self.errors[-3:], 'text_tail': self.text[-6000:]}
+                'reported_cost_usd': sum(self.costs.values()) if self.costs else None,
+                'costed_steps': len(self.costs), 'report': report, 'errors': self.errors[-3:], 'text_tail': self.text[-6000:]}
 
 
 def prompt_for(job, history):
@@ -359,6 +410,8 @@ def finish(state, c, attempt, result, now=None):
         a = db.execute('SELECT * FROM attempts WHERE id=?', (attempt,)).fetchone()
         if not a or a['status'] != 'running':
             return
+        result = dict(result)
+        result['routing_cost'] = json.loads(a['result'] or '{}').get('routing_cost')
         j = db.execute('SELECT * FROM jobs WHERE id=?', (a['job'],)).fetchone()
         failures = j['failures'] + (kind in ('failure', 'timeout', 'interrupted', 'output_limit'))
         availability = j['availability_failures'] + (kind in ('quota', 'unavailable', 'variant_unavailable'))
@@ -553,6 +606,10 @@ def fleet(root, state, c, duration, workers=None, until=None):
                         with database(state) as db:
                             db.execute('INSERT INTO attempts (id,job,model,tier,status,started,directory,cgroup,variant) VALUES (?,?,?,?,?,?,?,?,?)',
                                        (aid, job['id'], model['id'], job['tier'], 'running', time.time(), str(directory), str(unit.path), variant))
+                            db.execute('UPDATE attempts SET result=? WHERE id=?',
+                                       (json.dumps({'routing_cost': {'relative_cost': model.get('relative_cost'),
+                                           'effectiveness': model.get('effectiveness', 1),
+                                           'cost_aware': c.get('cost_aware', False)}}), aid))
                             db.execute("UPDATE jobs SET status='running',note='' WHERE id=?", (job['id'],))
                             db.execute('UPDATE models SET dispatched=dispatched+1 WHERE id=?', (model['id'],))
                         with (directory / 'prompt.txt').open('rb') as inp, (directory / 'events.jsonl').open('wb') as out, \
@@ -621,6 +678,7 @@ def status(state, c):
         attempts = [dict(r) for r in db.execute('SELECT * FROM attempts ORDER BY started')]
         states = {r['id']: dict(r) for r in db.execute('SELECT * FROM models')}
         measures = [dict(r) for r in db.execute('SELECT * FROM measurements')]
+        economic_measures = {r['attempt']: dict(r) for r in db.execute('SELECT * FROM economic_measurements')}
     models = []
     for m in c['models']:
         rows = [a for a in attempts if a['model'] == m['id']]
@@ -638,11 +696,17 @@ def status(state, c):
     measurements = {m['attempt']: m for m in measures}
     for a in attempts:
         a['category'] = categories[a['job']]
+        result = json.loads(a['result'] or '{}')
+        a['reported_cost_usd'] = result.get('reported_cost_usd')
+        a['routing_cost'] = result.get('routing_cost')
+        a['economic_measurement'] = economic_measures.get(a['id'])
         a['duration_seconds'] = round((a['ended'] or time.time()) - a['started'], 2)
         key = (a['model'].split('#')[0], a['variant'], a['category'], a['tier'])
         row = configurations.setdefault(key, dict(zip(('model','variant','category','tier'), key),
             attempts=0, successes=0, task_failures=0, quota_events=0, variant_errors=0,
-            duration_seconds=0, measured_attempts=0, exact_matches=0))
+            duration_seconds=0, measured_attempts=0, exact_matches=0,
+            reported_cost_usd=0, costed_attempts=0, costed_successes=0,
+            costed_exact_matches=0, costed_bytes_gained=0, costed_useful_investigations=0))
         row['attempts'] += 1
         row['successes'] += a['status'] == 'success'
         row['task_failures'] += a['status'] in ('failure','timeout','interrupted','output_limit')
@@ -653,6 +717,18 @@ def status(state, c):
         measurement = measurements.get(a['id'])
         row['measured_attempts'] += measurement is not None
         row['exact_matches'] += bool(measurement and measurement['exact_match'] == 1)
+        if a['reported_cost_usd'] is not None:
+            row['reported_cost_usd'] += a['reported_cost_usd']
+            row['costed_attempts'] += 1
+            row['costed_successes'] += a['status'] == 'success'
+            row['costed_exact_matches'] += bool(measurement and measurement['exact_match'] == 1)
+            em = economic_measures.get(a['id'], {})
+            row['costed_bytes_gained'] += em.get('bytes_gained') or 0
+            row['costed_useful_investigations'] += em.get('useful_investigation') == 1
+    for row in configurations.values():
+        cost = row['reported_cost_usd']
+        for metric in ('successes', 'exact_matches', 'bytes_gained', 'useful_investigations'):
+            row[metric + '_per_reported_usd'] = row['costed_' + metric] / cost if cost else None
     for j in jobs:
         last = next((a for a in reversed(attempts) if a['job'] == j['id']), {})
         j.update(model=last.get('model'), variant=last.get('variant'))
@@ -680,7 +756,8 @@ def print_status(data):
             print(f"  {row['model']}#{row['variant'] or 'default/unknown'} {row['category']} -> {row['tier']}: "
                   f"{row['successes']}/{row['attempts']} success, {row['task_failures']} task failures, "
                   f"{row['duration_seconds']}s, {row['exact_matches']} verified exact "
-                  f"({row['measured_attempts']} measured)")
+                  f"({row['measured_attempts']} measured), local estimated ${row['reported_cost_usd']:.6f} "
+                  f"({row['costed_attempts']}/{row['attempts']} cost coverage)")
 
 
 def discover(c, root=ROOT):
@@ -745,6 +822,8 @@ def main(argv=None):
     s = sub.add_parser('cancel'); s.add_argument('job')
     s = sub.add_parser('measure')
     s.add_argument('attempt'); s.add_argument('--exact-match', choices=('yes','no'))
+    s.add_argument('--bytes-gained', type=int)
+    s.add_argument('--useful-investigation', choices=('yes', 'no'))
     s.add_argument('--improvement', type=float); s.add_argument('--iterations', type=int)
     s.add_argument('--evidence', required=True, help='parent-verified gate/report path or command and result')
     args = p.parse_args(argv)
@@ -782,9 +861,19 @@ def main(argv=None):
         with database(state) as db:
             if not db.execute('SELECT 1 FROM attempts WHERE id=? AND ended IS NOT NULL', (args.attempt,)).fetchone():
                 p.error('measurement requires a finished attempt')
-            db.execute('INSERT OR REPLACE INTO measurements VALUES (?,?,?,?,?,?)',
+            db.execute('INSERT INTO measurements VALUES (?,?,?,?,?,?) ON CONFLICT(attempt) DO UPDATE SET '
+                       'exact_match=COALESCE(excluded.exact_match,exact_match), '
+                       'improvement=COALESCE(excluded.improvement,improvement), '
+                       'iterations=COALESCE(excluded.iterations,iterations), '
+                       'evidence=excluded.evidence,recorded=excluded.recorded',
                        (args.attempt, None if args.exact_match is None else args.exact_match == 'yes',
                         args.improvement, args.iterations, args.evidence, time.time()))
+            if args.bytes_gained is not None or args.useful_investigation is not None:
+                db.execute('INSERT INTO economic_measurements VALUES (?,?,?) ON CONFLICT(attempt) '
+                           'DO UPDATE SET bytes_gained=COALESCE(excluded.bytes_gained,bytes_gained), '
+                           'useful_investigation=COALESCE(excluded.useful_investigation,useful_investigation)',
+                           (args.attempt, args.bytes_gained, None if args.useful_investigation is None
+                            else args.useful_investigation == 'yes'))
         return 0
     if args.command == 'resume':
         with scheduler_lock(state) as locked:

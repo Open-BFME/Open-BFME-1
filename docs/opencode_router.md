@@ -135,11 +135,9 @@ The separate JSON configuration contains all model IDs and policy knobs:
 
 - `workers`, per-model `concurrency`: total and individual concurrent caps.
 - `enabled`: disable a model without changing code.
-- `tier`: bulk, reasoning, or escalation. Bulk favors bulk models; additional
-  capable models can fill in. Reasoning favors its tier. Scarce escalation
-  models are excluded from other tiers unless explicitly selected.
-- `weight`: relative share within a tier, using dispatch counts. Idle capacity
-  and avoiding already attempted models take priority over weighted history.
+- `tier`: bulk, reasoning, or escalation; escalation models are reserved.
+- `weight`: dispatch share among otherwise tied models. Old configurations without
+  `cost_aware` retain the original tier/idle-capacity/weighted-dispatch ordering.
 - `reserve`: concurrent slots reserved for escalation (not guessed token quota).
 - `timeout`, `max_output_bytes`: per-attempt wall time and combined stdout/stderr
   cap (default 15 minutes / 32 MiB).
@@ -163,6 +161,86 @@ set tier/limits/weights, and use a harmless explicit-model smoke task. Removed
 models fail availability checks cleanly. The public catalog establishes valid IDs,
 not access for a particular account. Fresh standalone catalog requests can return
 empty snapshots before plugins settle. This does not disable public-catalog IDs.
+
+### Cost-first Go policy
+
+The shipped config enables `cost_aware`. Routine bulk **and reasoning** use Muse
+Spark 1.3 Contributor, DeepSeek V4.1 Flash, MiMo V2.6 Flash, GPT-6 Luna and
+Qwen3.8 Flash, with DeepSeek V4 Flash secondary. Spare capacity on a more
+expensive model is not a reason to assign it routine work.
+
+`relative_cost` is a coarse, configurable preference weight, **not dollars per
+job**. Initial weights reflect the parent's 2026-09-27 dashboard observations
+and preferred pool. Request lengths/cache hits vary; the small sample does not
+establish model quality. `effectiveness` defaults to 1; parents may calibrate it
+from substantial verified BFME evidence later. Selection tries alternatives to
+models with task failures, then minimizes `relative_cost / effectiveness`;
+concurrency and dispatch `weight` break ties. No automatic optimizer is enabled.
+Missing cost metadata excludes a model from automatic cost-aware routing.
+
+`escalation_only` prevents ordinary bulk/reasoning assignments. Automatic access
+requires an escalation-tier job and structured task-failure handoffs from at
+least `cheap_failures_before_escalation` distinct economical models (default 2).
+Quota/availability errors, interruptions, timeouts, repeated failures of just
+one model, and failures without evidence do not unlock expensive workers.
+Cheap untried models are still preferred. The configured escalation ladder is
+GLM-5.3 Flash (4), Qwen3.7 Plus (6), MiniMax M3 (8), Kimi K2.6 (20), then
+Kimi K2.7 Code (30). Cooldowns, concurrency and retry budgets still apply;
+increase a bounded retry budget explicitly if a valuable task warrants climbing
+further. An explicit `run/submit escalation` is the parent's authorization for
+costlier reasoning; describe prior failures/potential gain in the task file.
+An explicit `--model` remains an intentional override, including for bulk.
+
+Models without dashboard calibration (LongCat, MiMo Pro, DeepSeek Pro, Kimi K3,
+Grok, GLM-5.3 and Qwen Max) are retained but disabled. To enable one, verify its
+cost, assign `relative_cost`, keep `escalation_only: true`, and enable it.
+All invocations remain restricted to Go; none can select a paid provider.
+
+Bulk retains low/medium reasoning, reasoning prefers high, and the example now
+prefers **high** for escalation before provider-specific fallback. MiniMax keeps
+`thinking`; models with no variants keep their defaults. Parents can explicitly
+set xhigh/max for a justified blocker. Cost selection never bypasses capability
+checks.
+
+OpenCode v2.0.18 exposes historical costs through
+`opencode stats --days 0 --models --cost --json` and JSONL
+`step_finish.part.cost`. The router sums distinct step IDs per attempt into
+`reported_cost_usd`, with `costed_steps`; absent data is null, never assumed free.
+These are **local estimates**, not remaining Go allowance or an authoritative
+account charge. Interrupted streams can omit final usage. Status groups costs
+and outcomes by model + variant + category + tier and reports cost coverage.
+Old attempts remain unknown rather than being repriced using today's weights.
+Routing weights are snapshotted into each new attempt's result.
+
+Attach verified outcomes with the existing measurement command:
+
+```sh
+python3 tools/opencode_router.py measure ATTEMPT_ID --exact-match yes \
+  --bytes-gained 187 --useful-investigation yes --evidence 'scoped gate report'
+```
+
+Byte gain is a signed net change, distinct from fractional `--improvement`.
+`status --json` includes success/exact-match/byte-gain/useful-investigation rates
+per reported USD over cost-bearing attempts only; missing measurements are not
+asserted successes. Rates are exploratory, not automatic routing inputs. Do not
+sum the same integrated byte gain across redundant attempts. Worker success is
+still a self-report; exact matches and useful investigations require parent review.
+
+The current public Go docs still describe **per-model** dollar limits; a shared
+account budget has not been verified. Regardless of limit topology, this policy
+optimizes economical progress, not quota consumption. There is no supported
+remaining-Go-allowance endpoint verified here; keep response-driven cooldowns.
+
+#### Updating active installations
+
+Old configurations lacking `cost_aware` retain their previous behavior. Copy the
+new `models`, `cost_aware`, `cheap_failures_before_escalation` and `cost_basis`
+fields into your local config, preserving credentials-free local settings and
+`go_overage_disabled`. Schedulers load config once: apply after the current
+scheduler finishes; do not interrupt useful workers merely to reload policy.
+Queues choose models at dispatch and need no state rewrite. Explicit queued
+`--model` requests remain overrides and must be reviewed separately. The new
+measurement table is additive; old writers and old attempt records still work.
 
 ### Reasoning variants
 
@@ -220,9 +298,9 @@ Observed catalog examples on 2026-09-27:
 
 | Model | Bulk / reasoning / escalation |
 | --- | --- |
-| Muse Spark 1.3 Contributor | medium / high / xhigh |
-| GPT 6 Luna | medium / high / max |
-| GLM-5.3-Flash | low / high / max |
+| Muse Spark 1.3 Contributor | medium / high / high |
+| GPT 6 Luna | medium / high / high |
+| GLM-5.3-Flash | low / high / high |
 | Qwen3.8 Flash | medium / medium / xhigh |
 | MiMo V2.6 Flash, Kimi K2.7 Code | default / default / default (no listed variants) |
 
@@ -329,3 +407,8 @@ Primary references: [Go IDs, limits and paid-overage setting](https://opencode.a
 Variant syntax and provider semantics: [models](https://opencode.ai/v2/docs/models).
 Step behavior: [agents](https://opencode.ai/v2/docs/agents),
 [runner source](https://github.com/anomalyco/opencode/blob/dev/packages/core/src/session/runner/llm.ts).
+
+Economics validation (2026-09-27): 38 focused tests passed, including simulated
+quota failover with cost-aware routing and variants. A one-request real smoke
+selected Muse `#medium` and returned `provider.quota` (429, Go usage limit
+exceeded); no further quota probing or large fleet was launched.
