@@ -108,11 +108,17 @@ def update_seats(change):
 
 
 def mark_harvested(seat_id):
+    released = []
+
     def change(items):
         for seat in items:
             if seat["id"] == seat_id:
                 seat["harvested"] = True
+                released.extend(seat["rvas"])
     update_seats(change)
+    if released:
+        import claims
+        claims.release(released)             # landed or recorded: free them for everyone
 
 
 def finished(seat):
@@ -131,7 +137,8 @@ def pick(count, lifts=False, lo=200, hi=1200, budget=5000, max_bodies=8):
     rows = eligibility.load_rows()
     latest = eligibility.latest_verdicts()
     attempts = eligibility.attempt_counts()
-    busy = claimed()
+    # our own seats (seats.json) plus every live claim on origin (tools/claims.py)
+    busy = claimed() | {int(r, 16) for r in eligibility.busy_rvas()}
     fresh = [r for r in eligibility.open_dumps(rows, latest, min_size=lo, max_size=hi)
              if not attempts.get(eligibility.rva_of(r)) and eligibility.rva_of(r) not in busy]
     by_file = collections.defaultdict(list)
@@ -173,8 +180,18 @@ def launch(groups, hours):
     base = main_root()
     subprocess.run(["git", "fetch", "-q", "origin", "master"], cwd=base, check=True)
     stamp = datetime.datetime.now().strftime("%Y%m%dT%H%M%S")
+    import claims
     for i, (label, rvas) in enumerate(groups):
         seat_id = f"{stamp}_{i}"
+        # Claim on origin before any work: a body another host claimed since
+        # pick() ran is dropped, never converted twice.
+        got, refused = claims.claim(rvas, note=f"astra seat {seat_id}")
+        if refused:
+            print(f"seat {seat_id}: {len(refused)} body(ies) claimed elsewhere, dropped: "
+                  + " ".join(f"0x{r:08X}" for r in refused))
+            rvas = [r for r in rvas if r not in set(refused)]
+            if not rvas:
+                continue
         worktree = base / "build" / f"wt_seat_{seat_id}"
         subprocess.run(["git", "worktree", "add", "-q", "--detach", str(worktree), "origin/master"],
                        cwd=base, check=True)

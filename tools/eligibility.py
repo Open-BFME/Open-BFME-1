@@ -35,6 +35,7 @@ import functools
 import hashlib
 import json
 import datetime
+import os
 import re
 import time
 from pathlib import Path
@@ -484,7 +485,8 @@ def servable(root=None, hours=48):
 
 
 def busy_rvas(root=None, seats_log=None):
-    """Live run leases plus unreconciled legacy log assignments."""
+    """Live run leases, unreconciled legacy log assignments, and live shared
+    claims on origin (tools/claims.py; BFME_CLAIMS=off skips them)."""
     root = root or ROOT
     import fleet_run
     busy = set(fleet_run.active_rvas(root))
@@ -495,6 +497,11 @@ def busy_rvas(root=None, seats_log=None):
                 busy.add(f"0x{int(token, 16):08x}")
             except ValueError:
                 continue
+    # Claims other hosts and contributors hold on origin (tools/claims.py):
+    # the leases above are local to this checkout and nobody else sees them.
+    if os.environ.get("BFME_CLAIMS", "on") != "off":
+        import claims
+        busy |= {f"0x{rva:08x}" for rva in claims.active()}
     return busy
 
 

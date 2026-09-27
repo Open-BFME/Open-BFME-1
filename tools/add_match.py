@@ -585,6 +585,14 @@ def main():
              "marker strip REVERTED; nothing was changed")
     print("add_match: verified OK — row is live")
     remove_stash(rva, args.root)
+    # The body is landed, whoever claimed it: free the shared claim on origin
+    # (tools/claims.py). Advisory -- an unreachable origin just lets it expire.
+    if os.environ.get("BFME_CLAIMS", "on") != "off":
+        try:
+            import claims
+            claims.release([rva], force=True)
+        except Exception:  # noqa: BLE001
+            pass
 
 
 if __name__ == "__main__":

@@ -774,6 +774,15 @@ def execute(root, brief, legacy_log, engine, seat, command):
         save_record()
         claim(root, run, targets, cgroup_path=str(unit.path), expires_at=lease_expires)
         claimed = True
+        # The lease above is local to this checkout; also claim the targets on
+        # origin so other hosts' pickers skip them (tools/claims.py). Advisory:
+        # a network failure never stops the run.
+        try:
+            import claims
+            record["shared_claims"] = claims.claim([rva for rva, _ in targets],
+                                                   who=f"fleet:{run}", note=f"{engine} seat {seat}")[0]
+        except Exception as error:  # noqa: BLE001
+            record["shared_claims_error"] = str(error)
         validate_targets(root, targets)
         record["status"] = "running"
         save_record()
@@ -923,6 +932,12 @@ def execute(root, brief, legacy_log, engine, seat, command):
         # that evidence before the DB row is removed; then remove only our unit.
         if claimed and empty:
             release(root, run, "contained worker unit empty")
+            if record.get("shared_claims"):
+                try:
+                    import claims
+                    claims.release(record["shared_claims"], who=f"fleet:{run}")
+                except Exception:  # noqa: BLE001 -- claims expire on their own
+                    pass
         if empty:
             unit.remove()
 

@@ -191,6 +191,10 @@ def apply_delta(tree, delta):
             merged = merge_json_list.merge(base, json.loads(ours), json.loads(entry["theirs"] or b"[]"))
             path.write_bytes(merge_json_list.render(merged, ours))
         elif entry["status"] == "D":
+            if current is not None and current != entry["base"]:
+                # upstream edited a file the seat deleted (a lift file other
+                # rows may now live in): deleting it would drop their edit
+                return f"{entry['path']}: the seat deleted it but master has edited it since"
             if path.exists():
                 path.unlink()
         elif entry["status"] == "A" or current is None:
@@ -278,7 +282,13 @@ def _replay(repo, commit, tree, tries, correct):
             print(f"  documented {add_corrections(tree, *correct)} name correction(s)")
         if git(tree, "diff", "--cached", "--quiet").returncode == 0:
             return None                      # master already holds every change
-        made = subprocess.run(["git", "commit", "-q", "-F", "-"], cwd=tree, input=message,
+        text = message
+        if delta["skipped"]:
+            # the seat's own message counts every body it converted; say which
+            # ones this commit does NOT carry because they landed upstream first
+            text = message.rstrip("\n") + "\n\nSkipped, landed upstream while the seat worked:\n" + "\n".join(
+                f"  0x{rva:08X} {name}" for rva, (name, _) in sorted(delta["skipped"].items())) + "\n"
+        made = subprocess.run(["git", "commit", "-q", "-F", "-"], cwd=tree, input=text,
                               capture_output=True, text=True)
         if made.returncode:
             return "commit refused by the hooks:\n" + (made.stdout + made.stderr)[-2500:]

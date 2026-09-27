@@ -120,3 +120,25 @@ def test_a_same_name_landing_upstream_is_also_taken(tmp_path, monkeypatch):
     master = HEAD + b"?f@@YAXXZ,,0x00000001,8,theirs.cpp,matched,upstream\r\n"
     monkeypatch.setattr(R, "blob", lambda tree, rev, path: master if path == R.FUNCTIONS else None)
     assert R.landed_upstream(tmp_path, delta) == {1: ("?f@@YAXXZ", "mine.cpp")}
+
+
+def test_a_file_the_seat_deleted_but_master_edited_is_a_conflict(tmp_path):
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _git(repo, "init", "-q", "-b", "master")
+    _git(repo, "config", "user.email", "t@example.com")
+    _git(repo, "config", "user.name", "t")
+    _git(repo, "config", "core.autocrlf", "false")
+    (repo / "lift.cpp").write_text("naked\n")
+    _git(repo, "add", ".")
+    _git(repo, "commit", "-qm", "base")
+    base = _git(repo, "rev-parse", "HEAD").strip()
+    _git(repo, "rm", "-q", "lift.cpp")
+    _git(repo, "commit", "-qm", "seat")
+    seat = _git(repo, "rev-parse", "HEAD").strip()
+    _git(repo, "checkout", "-q", base)
+    (repo / "lift.cpp").write_text("naked\nsomeone else's new body\n")
+    _git(repo, "commit", "-qam", "master moved")
+    problem = R.apply_delta(repo, R.seat_delta(repo, seat))
+    assert problem and "master has edited it since" in problem
+    assert (repo / "lift.cpp").exists()
