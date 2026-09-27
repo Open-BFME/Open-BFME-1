@@ -1,5 +1,5 @@
-// ?d_004b5530@@YAXXZ
-// partial score=0.55 date=2026-09-25
+// ?GadgetHorizontalSliderSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
+// partial score=0.56 date=2026-09-27
 // Candidate reconstruction for retail RVA 0x004B5530.
 // Identity is supported by BFME callback registration and the ZH twin.
 // Keep this trial untracked until the byte probe proves it.
@@ -30,9 +30,9 @@ WindowMsgHandledType GadgetHorizontalSliderSystem( GameWindow *window, UnsignedI
 
         case GGM_LEFT_DRAG:
         {
-            GameWindow *child = window->winGetChild();
-            Int x, y, delta;
             Int mousex = mData2 & 0xFFFF;
+            Int x, y, delta;
+            GameWindow *child = window->winGetChild();
 
             window->winGetScreenPosition( &x, &y );
             child->winGetSize( &childSize.x, &childSize.y );
