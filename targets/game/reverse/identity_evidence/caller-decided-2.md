@@ -51,7 +51,7 @@ Retail was linked without identical-COMDAT folding, so each body has one identit
 | `0x007AEDA0` | `??0W3DShadowTextureManager@@QAE@XZ` | 1 | `??0W3DShadowGeometryManager@@QAE@XZ` |
 | `0x00852130` | `?initFromINIMultiProc@INI@@QAEXPAXP6AXAAVMultiIniFieldParse@@@Z@Z` | 252 | `??0AssistedTargetingUpdateModuleData@@QAE@XZ`<br>`??0BoneFXDamageModuleData@@QAE@XZ`<br>`??0BridgeTowerBehaviorModuleData@@QAE@XZ`<br>`??0DefaultProductionExitUpdateModuleData@@QAE@XZ`<br>`??0DieModuleModuleData@@QAE@XZ`<br>`??0FireWeaponCollideModuleData@@QAE@XZ`<br>`??0RadiusDecalUpdateModuleData@@QAE@XZ`<br>`??0SlavedUpdateModuleData@@QAE@XZ`<br>`??0TemporarilyDefectUpdateModuleData@@QAE@XZ` |
 | `0x00888930` | `?format_va@?$StringBase@G@@QAEXPBGPAD@Z` | 4 | `?format_va@AsciiString@@QAEXPBDPAD@Z`<br>`?format_va@UnicodeString@@QAEXPBGPAD@Z` |
-| `0x00890F10` | `??1DebugCmdInterfaceDebug@@UAE@XZ` | 1 | `??1DebugIOCon@@UAE@XZ`<br>`??1DebugIONet@@UAE@XZ` |
+| `0x00890F10` | `??1DebugIOCon@@UAE@XZ` (overturned: `00890f10-debug-io-con-dtor.md`) | 1 | `??1DebugCmdInterfaceDebug@@UAE@XZ`<br>`??1DebugIONet@@UAE@XZ` |
 | `0x008D9000` | `?Set@Matrix3x3@@QAEXABVMatrix3D@@@Z` | 2 | `?Set@Matrix3@@QAEXABVMatrix4@@@Z` |
 | `0x008D9150` | `??4Matrix3@@QAEAAV0@ABVMatrix3D@@@Z` | 1 | `??0Matrix3@@QAE@ABVMatrix3D@@@Z` |
 | `0x008E2170` | `?Get_Next_Collected_Object_Internal@CullSystemClass@@IAEPAVCullableClass@@PAV2@@Z` | 2 | `?nextProduction@ProductionUpdate@@UBEPBVProductionEntry@@PBV2@@Z` |
