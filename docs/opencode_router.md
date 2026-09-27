@@ -525,6 +525,32 @@ Old schedulers can continue inserting their explicit columns. New schedulers
 discover variants at startup; running workers keep their launch settings. There
 is no need to stop other fleets or reset state to deploy this change.
 
+## Reviewing and integrating a job
+
+`tools/router_integrate.py` is the parent step the router leaves open. It trusts
+nothing a worker reported:
+
+```sh
+python3 tools/router_integrate.py review JOB_ID      # exit 0 only if a target landed and nothing needs a human
+python3 tools/router_integrate.py integrate JOB_ID --dry-run
+python3 tools/router_integrate.py integrate JOB_ID --push --measure
+```
+
+`review` diffs the workspace against its base (staged work included, so a worker
+that ran `git add` is still seen), runs the scoped gate on every touched source
+in the workspace, and flags renamed rows, new inline asm/naked code, lifts left
+behind and mutating git commands. `integrate` ports the work onto a clean
+detached worktree at `origin/master` (`build/wt/integrate`): source edits as a
+3-way patch, new files copied, deletions applied, ledger rows moved line by line
+with their CRLF endings so concurrent upstream rows survive. It then runs
+`check_csv`, the scoped gates again on the new base, and an ordinary commit so
+the hooks run the full verification. A hook request for
+`tools/adopt_header.py --fix-staged` is applied once; a name regression is never
+documented automatically -- read the worker's identity evidence and record the
+correction yourself (`docs/naming_evidence.md`). `--push` rebases and retries
+pushes; `--measure` records the verified result on the job's last attempt.
+Neither command modifies or deletes the job workspace.
+
 ## Evidence and performance records
 
 Every attempt preserves `prompt.txt`, raw `events.jsonl`, `stderr.txt`, model, variant,
