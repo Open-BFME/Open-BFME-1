@@ -1,0 +1,25 @@
+# Native BuddyThreadClass::errorCallback, 0063D210 / 2720 bytes
+
+This replaces the naked byte lift parked as `dup_0063D210`. The independent identity proof in [0063d210.md](0063d210.md) remains valid: matched callbackWrapper 0063EA60 dispatches CALLBACK_ERROR through ILT0000BEE2 to this body. Constructor0063C4F0 installs BuddyThreadClass's vtable01118E60; its Thread_Function slot reaches0063EB00, which is a separate, already native request loop. This body is the GP error callback, with ECX=this and two stack arguments, RET8.
+
+The actual GameSpy SDK gp/gp.h supplies GPConnection=void*, GPErrorArg, GPResult, GPErrorCode and GPEnum. Consequently the truthful C++ method takes void** plus GPErrorArg*: `?errorCallback@BuddyThreadClass@@QAEXPAPAXPAUGPErrorArg@@@Z`. The existing five-byte callback thunk and its independently pinned forwarding shim retain their historical class-GPConnection pointer view. That argument is unused here, the stack contract is identical, and no new symbol pin or thunk identity is needed. The existing shim pin to0063D210 passed pin_consistency before the change.
+
+## Complete extent and direct contracts
+
+Code is0063D210..0063DC6E (2654 bytes), ending in RET8. The following two bytes are alignment, and two eight-entry switch tables occupy0063DC70..0063DCAF. INT3 padding begins0063DCB0. The full native claim is therefore **2720 bytes**, 66 beyond the old code-only lift. No other ledger row overlaps that tail. Both the former2654-byte prefix and the full2720-byte body independently pass strict resolution with zero differences and zero unresolved names. The identity replacement is first verified at the existing2654-byte extent; the same row is then extended through the already verified switch tables using add_match's normal replacement path. Only the final2720-byte row is committed.
+
+The two REL32 calls are the independently authored PeerRequest constructor004D51B0 (220 bytes, no stack arguments) and destructor004D52D0 (555 bytes, no stack arguments), through existing ILTs000171FC/00016BD5. Both use thiscall and the proved194-byte PeerRequest object. The other calls are imported strncpy and existing virtual queue methods: Buddy addResponse at+20 and Peer addRequest at+18. Their receivers are the independently named globals012F71B4 and012F71C8. There are205 relocations in the full object, including string references and both local switch tables; strict relocation and literal verification cover them. No new vtable, function-pointer pin, or opaque callee is introduced.
+
+## Layout and BFME behavior
+
+BuddyThreadClass fields agree with the independently matched constructor, worker and callbacks: connecting51, connected52, profile54, lastErrorCode58, deleting5C. The native response is864 bytes, independently witnessed by the response deque copy stride and native worker. This particular error payload has type0, result8, opaque0C, errorCode10, errorString14, fatal94; the rest remains opaque. The old generic BuddyResponse shim's union start is not used for this BFME payload. Compile-time assertions enforce both request and response extents.
+
+The routine records the error code, formats the SDK result/error names, and queues fatal errors except bad-nick102 and bad-email103. Forced-disconnect6 produces response kind6 rather than ordinary disconnect kind1. BFME includes GP_NEWUSER_UNIQUENICK_INUSE204 in the switch;203 is absent. It first copies the SDK's error text and then overwrites that text with its formatted error-code label, exactly as retail. It clears connection flags and, when deleting, submits Peer logout request kind1 and clears deleting.
+
+The original resultString diagnostic switch and DEBUG_LOG statements are retained from BuddyThread.cpp, using the real Common/Debug.h. In release, the compiler eliminates that formatting's runtime work. Removing its source nevertheless changes register allocation: early EBX preservation disappears and the surviving switch becomes nonmatching. Restoring this genuine diagnostic source reproduces every byte; no dummy storage, volatile barrier, emitted bytes, assembly, or fictitious call is added.
+
+## Verification
+
+Model GPT-6; fresh pass reached exact in about12 minutes after reading the previous attempt and independent identity receipt. Earlier2653-byte attempt had no saved source available. Fresh read-only Ghidra output, SDK declarations, original callback source and the landed request/response layout supplied the starting evidence. Final native body:2720/2720,2 REL32 calls,205 relocations,0 unresolved,0 differences. The exact result survives formatting, canonical Debug.h and restored diagnostics. Normal add_match, commit and publication gates provide the final tracked-source receipts.
+
+Scratch evidence: build/four-hour-buddy-error/{ghidra/0x0063d210.c,retail.asm,callees-code.txt,pin-existing.txt,strict-clean.txt,strict-code-only.txt,probe-original-diagnostics.txt}. Earlier SDK/body/lifetime probes are retained there. The obsolete naked BuddyThreadFunctionThunk.cpp is deleted; the independent five-byte legacy callback thunk is retained.
