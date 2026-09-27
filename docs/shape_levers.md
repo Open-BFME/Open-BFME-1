@@ -1506,3 +1506,16 @@ first statement (0x0020DF90), because there is no pushed load above it to
 toggle. The `__fastcall` dummy-EDX adapter (RegallocLever-2/3) is the same
 mechanism seen from the other side: its dummy argument is one more
 allocation.
+
+## BFME FXListDie callback uses a compact ABI view
+
+The 143-byte retail `FXListDie::onDie` at `0x002554C0` is identified by vtable
+`0x010B2F10` slot 0 and constructor `0x00255360`. Retail reads module data from
+`this - 0x0c`, the owner from `this - 0x08`, and the FX/orientation fields at
+module-data offsets `0x34`/`0x38`; the upstream module-data class has a different
+layout. Keep this BFME view local to the reconstructed TU.
+
+For exact codegen, retain the module-data pointer before checking the volatile
+default-FX field, then inline the blocked check and direct object/position FX
+calls through the recovered thunks. The body passed scoped `add_match.py` byte
+verification.
