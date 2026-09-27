@@ -158,13 +158,21 @@ CLOSURE_SEEDS = "targets/game/reverse/game_end/seeds.json"
 # No name was lost: none of the three bodies ever carried a real pin (only
 # ?b_ gen-thunk pins); they were outside the census until their starts were
 # proven. Every other cell is re-armed at its current, better, figure.
+#
+# REBASED 2026-09-27 after a56ecb688b retracted the GameEngine::init __emit lift
+# (0x00079060, 7123 B). It copied a workshop crack byte and could not follow the
+# retail-1.03-unpacked baseline. That one body moved, only in A_victory tier 1:
+#
+#     ("A_victory", 1) identified (67, 29737) -> (66, 22614)
+#     ("A_victory", 1) UNCLAIMED  (1, 4125)   -> (2, 10814)   the same body, now unclaimed
+#     ("A_victory", 1) anonymous  (1, 5)      -> (2, 6694)
 CLOSURE_BASELINE = {
     ("A_victory", 0): {
         "UNCLAIMED": (0, 0), "ASM": (2, 1349), "SMALL": (0, 0), "LIB": (0, 0),
         "CPP": (6, 1383), "identified": (8, 2732), "anonymous": (0, 0)},
     ("A_victory", 1): {
-        "UNCLAIMED": (1, 4125), "ASM": (13, 19431), "SMALL": (1, 8), "LIB": (7, 595),
-        "CPP": (46, 5583), "identified": (67, 29737), "anonymous": (1, 5)},
+        "UNCLAIMED": (2, 10814), "ASM": (12, 12308), "SMALL": (1, 8), "LIB": (7, 595),
+        "CPP": (46, 5583), "identified": (66, 22614), "anonymous": (2, 6694)},
     ("A_victory", 2): {
         "UNCLAIMED": (2, 425), "ASM": (129, 109856), "SMALL": (44, 3984), "LIB": (71, 11394),
         "CPP": (760, 114122), "identified": (891, 183928), "anonymous": (115, 55853)},
