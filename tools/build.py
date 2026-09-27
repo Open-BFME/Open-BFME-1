@@ -866,8 +866,13 @@ def _include_search_roots(source, command, env):
             return None
         roots.add(Path(host))
     if source_needs_stlport(source):
-        # STLport's MSVC native-header macros search ../include from each /I root.
-        roots.update(root.parent for root in tuple(roots))
+        # STLport's native-header macros expand to <../include/HEADER>
+        # (_STLP_NATIVE_INCLUDE_PATH in stl/_config.h) and
+        # _include_escapes_search_roots admits no ".." inside HEADER, so a root R
+        # adds exactly one searched directory: R/../include. Inventorying all of
+        # R's parent instead walked the directory holding the clone whenever R
+        # was the repo root (/I.), i.e. every sibling checkout and project.
+        roots.update(root.parent / "include" for root in tuple(roots))
     return sorted(roots, key=str)
 
 
@@ -876,6 +881,10 @@ def _directory_inventory(root):
         raise error
 
     directories = []
+    if not os.path.lexists(root):
+        # The compiler finds nothing here, and a directory created here later
+        # changes this digest, so absence is a reusable inventory entry.
+        return "absent"
     if not root.is_dir():
         return None
     try:

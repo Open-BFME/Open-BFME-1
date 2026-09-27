@@ -135,6 +135,25 @@ def test_stlport_native_macro_accepts_one_parent_only(tmp_path, monkeypatch):
     assert build._include_escapes_search_roots(header, True)
 
 
+def test_stlport_root_watches_its_native_include_not_its_whole_parent(tmp_path, monkeypatch):
+    source, output, _, original, command, env = _fixture(tmp_path, monkeypatch)
+    root = build.ROOT
+    command.append("-I" + str(root))  # /I. makes the checkout itself a root
+    monkeypatch.setattr(build, "source_needs_stlport", lambda _: True)
+    build._write_deps_sidecar(source, output, "command",
+                              "Note: including file: " + str(original), True,
+                              command, env, build.search_inventory(source, command, env), [])
+    assert build.compile_is_current(source, output)
+    # A sibling of the checkout is outside every searched directory.
+    (root.parent / "sibling-checkout").mkdir()
+    (root.parent / "sibling-checkout" / "algorithm").write_text("// unrelated\n")
+    assert build.compile_is_current(source, output)
+    # <../include/HEADER> from the /I. root lands here.
+    (root.parent / "include").mkdir()
+    (root.parent / "include" / "algorithm").write_text("// native shadow\n")
+    assert not build.compile_is_current(source, output)
+
+
 def test_batch_inventory_detects_edit_after_memoized_check(tmp_path, monkeypatch):
     source, _, early, _, command, env = _fixture(tmp_path, monkeypatch)
     cache = {}
