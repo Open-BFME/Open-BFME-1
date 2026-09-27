@@ -1,404 +1,431 @@
 // ?_bfme_populateSinglePlayer@BfmeAptScreenScoreScreen@@QAEXXZ
-// partial score=0.35 date=2026-09-20
-// BFME ScoreScreen single-player population candidate.
-// The helper declarations follow the decoded retail calls and existing shims.
-// This file is an untracked probe candidate until byte verification succeeds.
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline /Igame/Libraries/Source/WWVegas/WWLib
+// partial score=0.3773806035745678 date=2026-09-27
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringbaseunicode /Igame/Libraries/Source/WWVegas/WWLib /D_STLP_USE_STATIC_LIB
+// stlport
+// Complete native ScoreScreen single-player population; NOT byte matched.
+// Retail extent00575B70..005768C5:3413B. Matched _bfme_showScoreScreen
+// reaches it via ILT0003D08C. The original .35 bank had six invented helpers
+// and omitted hero-vector and region-list behavior; this body replaces them.
+// Fresh Ghidra, decoded calls and constructor00578160 prove vector<bool>+2E8,
+// army vector return00388BE0, B4 army stride, hero flag+39 and template+D0 bit.
+// Main3397B:2109 masked positional differences plus16 missing bytes;
+// byte score1288/3413=.377380603575; normalized shape.975 is NOT a match score.
+// Frame54 vs50 and bit-iterator/EH/register scheduling remain. Five address-
+// evidenced callee declarations still need resolver ownership, not speculation.
+// The native49B score-record getter and112B list insertion below match their
+// entire instruction shapes independently. The record is UnicodeString+2ints;
+// receiver owns list<record> at+C0 and appends at end. Both helpers were
+// already owned and contribute ZERO coverage. They introduce no symbols pins.
+// See identity_evidence/00575b70-score-single-player.md for bounds/contracts.
+#define _STLP_NO_EXCEPTIONS 1
+#include "ascii_string.h"
+#include <wchar.h>
+template <>
+inline void StringBase<unsigned short>::set(const unsigned short *s) {
+  set(s, wcslen(s));
+}
+template <> inline int StringBase<unsigned short>::getLength() const {
+  return m_data ? m_data->length : 0;
+}
+template <>
+inline const unsigned short *StringBase<unsigned short>::str() const {
+  static const unsigned short TheNullChr = 0;
+  return m_data ? m_data->data : &TheNullChr;
+}
+#include "Common/UnicodeString.h"
+#include <algorithm>
+#include <list>
+#include <vector>
+namespace _STL {
+template <> __forceinline void vector<bool>::clear() {
+  iterator last = end();
+  this->_M_finish =
+      __copy(last, last, begin(), random_access_iterator_tag(), (ptrdiff_t *)0);
+}
+} // namespace _STL
+inline UnicodeString::~UnicodeString() {
+  ((StringBase<wchar_t> *)this)->releaseBuffer();
+}
+extern void j_00028560();
+extern void j_00047e38();
+extern void j_0002bf0d();
+extern void j_0001681a();
+extern void j_000045d4();
+extern void j_0003cb37();
+extern void j_0000a2db();
+template <class M> __forceinline M retailMethod(void (*raw)()) {
+  union {
+    void (*entry)();
+    M method;
+  } f;
+  f.entry = raw;
+  return f.method;
+}
+struct LivingWorldArmy {
+  char field00[0x0c];
+  int field0c;
+  char field10[0x29];
+  bool field39;
+  char field3a[2];
+  int field3c;
+  int field40;
+  int field44;
+  char field48[4];
+  AsciiString field4c;
+  char field50[0x28];
+  UnicodeString field78;
+  char field7c[0x38];
 
-typedef char Bool;
-
-template <typename T> class StringBase
-{
-    friend class AsciiString;
-    friend class UnicodeString;
-
-private:
-    StringBase() : m_data( 0 ) {}
-    StringBase( const T *text );
-    StringBase( const StringBase<T> &other );
-    ~StringBase();
-    void *m_data;
+  AsciiString getName() const;
 };
-
-class AsciiString : private StringBase<char>
-{
+struct LivingWorldPlayerArmy {
+  char field00[0x30];
+  _STL::vector<LivingWorldArmy> field30;
+};
+typedef _STL::vector<LivingWorldPlayerArmy *> ArmyVector;
+class GameLogic {
 public:
-    AsciiString() : StringBase<char>() {}
-    AsciiString( const char *text ) : StringBase<char>( text ) {}
-    AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-    ~AsciiString() {}
-    void __cdecl format( AsciiString format, ... );
+  ArmyVector rva00388BE0();
 };
-
-class UnicodeString : private StringBase<unsigned short>
-{
+class BfmeThingFactory {};
+class Image;
+struct Rva00575B70Template {
+  char field00[0xd0];
+  unsigned int fieldd0;
+  char fieldd4[0x3fc];
+  int field4d0;
+  const Image *portrait() const {
+    typedef const Image *(Rva00575B70Template::*M)() const;
+    return (this->*retailMethod<M>(j_00047e38))();
+  }
+};
+struct S4SortElem12 {
+  int m_bfmeKey;
+  union {
+    int m_bfmeFirst;
+    bool flag;
+  };
+  const Image *m_bfmeSecond;
+};
+struct S4Cmp00574DF0 {
+  void *m_bfmeState;
+  bool operator()(const S4SortElem12 &a, const S4SortElem12 &b) const {
+    return a.m_bfmeKey < b.m_bfmeKey;
+  }
+};
+struct Rva000E95A0Value {
+  UnicodeString field00;
+  int field04, field08;
+};
+class ScoreKeeper {
 public:
-    UnicodeString() : StringBase<unsigned short>() {}
-    UnicodeString( const unsigned short *text ) : StringBase<unsigned short>( text ) {}
-    UnicodeString( const UnicodeString &other ) : StringBase<unsigned short>( other ) {}
-    ~UnicodeString() {}
-    void translate( const AsciiString &text );
-    void set( const UnicodeString &text );
-    void set( const unsigned short *text, int length );
-    void concat( const unsigned short *text, int length );
+  int getTotalUnitsDestroyed();
+  int getTotalBuildingsDestroyed();
+  int getTimeTakenScore();
+  int countMissionObjectives(int *);
+  int calculateScore();
+  int getVictoryType();
 };
-
-class GameTextInterface
-{
+class Rva000E95A0Owner {
 public:
-    virtual void v00();
-    virtual void v01();
-    virtual void v02();
-    virtual void v03();
-    virtual void v04();
-    virtual void v05();
-    virtual void v06();
-    virtual void v07();
-    virtual void v08();
-    virtual UnicodeString fetch( AsciiString text, Bool *exists = 0 );
+  __declspec(noinline) Rva000E95A0Value value();
+  char field00[0x2e8];
+  Rva000E95A0Value field2e8;
 };
-
-class WindowManager
-{
+Rva000E95A0Value Rva000E95A0Owner::value() { return field2e8; }
+class Rva000E92B0Owner {
 public:
-    void bfme_setAptText( const AsciiString &name, const UnicodeString &text );
+  void setWideString(UnicodeString);
 };
-
-class BfmeThingBIF
-{
+class Rva003C0E60Owner {
 public:
-    void bfmeGoBIF( void *what, void *out );
+  __declspec(noinline) void insert(Rva000E95A0Value);
+  char field00[0xc0];
+  _STL::list<Rva000E95A0Value> fieldc0;
 };
-
-class BfmeTableAI
-{
+void Rva003C0E60Owner::insert(Rva000E95A0Value value) {
+  fieldc0.push_back(value);
+}
+class LivingWorldRegionManager {};
+class CampaignManager {
 public:
-    AsciiString bfmeNumberedAI( int number );
+  char field00[0x28];
+  LivingWorldRegionManager *field28;
+  int field2c;
+  AsciiString field30;
+  unsigned char isMissionObjectiveEligible(int);
+  unsigned char isMissionObjectiveIndexed(int);
+  unsigned char isMissionObjectiveComplete(int);
+  AsciiString rva003BF580(int);
 };
-
-class ScoreKeeper
-{
+class Rva003BDF70Owner {
 public:
-    int getTotalUnitsDestroyed();
-    int getTotalBuildingsDestroyed();
-    int getTimeTakenScore();
-    int countMissionObjectives( int *completed );
-    int calculateScore();
-    int computeFirst();
-    int computeSecond();
+  int combinedSpanCount();
 };
-
-class CampaignManager
-{
+class Rva00573580Lookup {
 public:
-    int getMissionObjectiveCount();
-    Bool isMissionObjectiveEligible( int index );
-    Bool isMissionObjectiveIndexed( int index );
-    Bool isMissionObjectiveComplete( int index );
-    AsciiString objectiveName( int index );
+  AsciiString number(int);
 };
-
-class Registry
-{
+struct Rva00575B70Region {
+  char field00[0x10];
+  AsciiString field10;
+  char field14[0x64];
+  int field78, field7c, field80;
+  const Image *image() const {
+    typedef const Image *(Rva00575B70Region::*M)() const;
+    return (this->*retailMethod<M>(j_0000a2db))();
+  }
+};
+class WindowManager {
 public:
-    void *findTemplate( AsciiString name );
+  void bfme_setAptText(const AsciiString &, const UnicodeString &);
+  __forceinline void image(const AsciiString &key, const Image *image) {
+    typedef void (WindowManager::*M)(const AsciiString &, const Image *);
+    (this->*retailMethod<M>(j_0001681a))(key, image);
+  }
 };
-
-class LivingWorldArmy
-{
+class GameTextInterface {
 public:
-    AsciiString getName() const;
+  virtual void slot00() = 0;
+  virtual void slot04() = 0;
+  virtual void slot08() = 0;
+  virtual void slot0c() = 0;
+  virtual void slot10() = 0;
+  virtual void slot14() = 0;
+  virtual void slot18() = 0;
+  virtual void slot1c() = 0;
+  virtual void slot20() = 0;
+  virtual UnicodeString fetch(AsciiString, bool *) = 0;
 };
-
-class ThingTemplatePortraitShim
-{
-public:
-    const void *getSelectedPortraitImage() const;
+struct PlayerListView {
+  char field00[0xc];
+  char *field0c;
 };
-
-class GroupRoom
-{
-public:
-    GroupRoom( const GroupRoom &other );
+struct GlobalDataView {
+  char field00[0x1224];
+  int field1224, field1228, field122c, field1230, field1234, field1238,
+      field123c;
+  int field1240, field1244, field1248, field124c, field1250;
 };
-
-class RegionManager
-{
-public:
-    void *findRegion( const AsciiString &name );
-};
-
-class BfmeAptScreenScoreScreen : public BfmeTableAI
-{
-public:
-    void _bfme_populateSinglePlayer();
-    void _bfme_setScoreRegionBonus( int *index, const AsciiString &label, int value );
-    void _bfme_setTerritoryBonus( int group, int kind, int value );
-
-private:
-    char m_unmodelled[ 0x334 ];
-};
-
-struct PlayerListView
-{
-    char pad[ 0xc ];
-    char *local;
-};
-
-struct GlobalDataView
-{
-    char pad1224[ 0x1224 ];
-    int w1224;
-    int w1228;
-    int w122c;
-    int w1230;
-    int w1234;
-    int w1238;
-    int w123c;
-    int w1240;
-    int w1244;
-    int w1248;
-    int w124c;
-    int w1250;
-};
-
-struct LocalListView
-{
-    char *begin;
-    char *end;
-    char *unused;
-};
-
-struct BitVectorView
-{
-    unsigned int *words;
-    unsigned int *end;
-    unsigned int bit;
-};
-
-extern WindowManager *g_theWindowManager;
-extern GameTextInterface *TheGameText;
-extern PlayerListView *ThePlayers;
-extern GlobalDataView *TheWritableGlobalData;
-extern CampaignManager *TheCampaignManager;
-extern char *TheBfmeGameLogic;
-extern Registry *TheRegistry;
-extern BfmeThingBIF *TheManager;
-
 #define ThePlayers (*(PlayerListView **)0x012ed748)
 #define TheWritableGlobalData (*(GlobalDataView **)0x012ed5c8)
 #define TheCampaignManager (*(CampaignManager **)0x012f1028)
-#define TheBfmeGameLogic (*(char **)0x012f0898)
-#define TheRegistry (*(Registry **)0x012ef1d8)
-#define TheManager (*(BfmeThingBIF **)0x012f19e8)
-
-extern "C" unsigned int __cdecl bfmeLenVGI( const unsigned short *text );
-extern "C" void __cdecl copyBits( void *first, void *last, void *out );
-extern "C" void __cdecl buildRows( void *first, void *last, int shift, void *out, void *player );
-extern "C" void __cdecl sortRows( void *first, void *last, void *compare );
-extern "C" void __cdecl copyRow( void *out, void *first, void *last, void *source );
-extern "C" void __cdecl initLocalList( void *list );
-extern "C" void __cdecl appendPortrait( void *list, void *prev, void *value, void *out, int one, int two );
-
-void BfmeAptScreenScoreScreen::_bfme_populateSinglePlayer()
-{
-    char *self = (char *)this;
-    register char *player = 0;
-    PlayerListView *players;
-    register char *score = 0;
-    register int *battle;
-    int zero = 0;
-
-    *(int *)( self + 0x25c ) = zero;
-    players = ThePlayers;
-    if( players != 0 )
-        player = players->local;
-    if( player != 0 )
-        score = player + 0x348;
-    if( score == 0 )
-        return;
-
-    *(int *)( self + 0x294 ) = *(int *)( score + 0x8c );
-    battle = (int *)( self + 0x298 );
-    *(int *)( self + 0x298 ) = TheWritableGlobalData->w1224;
-    *(int *)( self + 0x2a0 ) = ((ScoreKeeper *)score)->getTotalUnitsDestroyed();
-    *(int *)( self + 0x2a4 ) = TheWritableGlobalData->w1228;
-    *(int *)( self + 0x2ac ) = *(int *)( score + 0x114 );
-    *(int *)( self + 0x2b0 ) = TheWritableGlobalData->w122c;
-    *(int *)( self + 0x2dc ) = ((ScoreKeeper *)score)->getTotalBuildingsDestroyed();
-    *(int *)( self + 0x2e0 ) = TheWritableGlobalData->w1230;
-    *(int *)( self + 0x2b8 ) = *(int *)( score + 0x124 );
-    *(int *)( self + 0x2bc ) = TheWritableGlobalData->w1244;
-    *(int *)( self + 0x2c4 ) = *(int *)( score + 4 );
-    *(int *)( self + 0x2c8 ) = TheWritableGlobalData->w1240;
-    *(int *)( self + 0x2d0 ) = ((ScoreKeeper *)score)->getTimeTakenScore();
-    *(int *)( self + 0x2d4 ) = 1;
-
-    *(int *)( self + 0x278 ) = 0;
-    for( int i = 0; i < 7; ++i )
-    {
-        battle[2] = battle[0] * battle[1];
-        *(int *)( self + 0x278 ) += battle[2];
-        battle += 3;
+extern GameLogic *TheGameLogic;
+extern BfmeThingFactory *TheThingFactory;
+extern WindowManager *g_theWindowManager;
+extern GameTextInterface *TheGameText;
+class BfmeAptScreenScoreScreen {
+public:
+  void _bfme_populateSinglePlayer();
+  void _bfme_setScoreRegionBonus(int *, const AsciiString &, int);
+  __forceinline void rva00573C20(int group, int kind, int value) {
+    typedef void (BfmeAptScreenScoreScreen::*M)(int, int, int);
+    (this->*retailMethod<M>(j_0003cb37))(group, kind, value);
+  }
+  char field00[0x25c];
+  int field25c;
+  char field260[0x18];
+  int field278, field27c, field280, field284, field288, field28c, field290;
+  int field294[21];
+  _STL::vector<bool> field2e8;
+  int field2fc;
+  AsciiString field300;
+  int field304;
+  unsigned char field308[8];
+};
+#define SCORE(N) (*(int *)(score + (N)))
+void BfmeAptScreenScoreScreen::_bfme_populateSinglePlayer() {
+  field25c = 0;
+  char *player = 0;
+  if (ThePlayers)
+    player = ThePlayers->field0c;
+  char *score = 0;
+  if (player)
+    score = player + 0x348;
+  if (!score)
+    return;
+  ScoreKeeper *keeper = (ScoreKeeper *)score;
+  field294[0] = SCORE(0x8c);
+  int *battle = field294 + 1;
+  *battle = TheWritableGlobalData->field1224;
+  field294[3] = keeper->getTotalUnitsDestroyed();
+  field294[4] = TheWritableGlobalData->field1228;
+  field294[6] = SCORE(0x114);
+  field294[7] = TheWritableGlobalData->field122c;
+  field294[18] = keeper->getTotalBuildingsDestroyed();
+  field294[19] = TheWritableGlobalData->field1230;
+  field294[9] = SCORE(0x124);
+  field294[10] = TheWritableGlobalData->field1244;
+  field294[12] = SCORE(4);
+  field294[13] = TheWritableGlobalData->field1240;
+  field294[15] = keeper->getTimeTakenScore();
+  field294[16] = 1;
+  field278 = 0;
+  int left = 7;
+  do {
+    battle[1] = battle[-1] * battle[0];
+    field278 += battle[1];
+    battle += 3;
+  } while (--left);
+  if (!TheCampaignManager)
+    return;
+  field304 = 0;
+  for (int objective = 0;
+       objective <
+       ((Rva003BDF70Owner *)TheCampaignManager)->combinedSpanCount();
+       ++objective) {
+    if (!TheCampaignManager->isMissionObjectiveEligible(objective))
+      continue;
+    if (!TheCampaignManager->isMissionObjectiveIndexed(objective))
+      continue;
+    field308[field304] =
+        TheCampaignManager->isMissionObjectiveComplete(objective);
+    AsciiString key;
+    key.format(AsciiString("APT:objective%d"), field304 + 1);
+    g_theWindowManager->bfme_setAptText(
+        key, TheGameText->fetch(TheCampaignManager->rva003BF580(objective), 0));
+    ++field304;
+  }
+  field27c =
+      keeper->countMissionObjectives(0) * TheWritableGlobalData->field123c;
+  if (!TheGameLogic || !TheThingFactory)
+    return;
+  _STL::vector<S4SortElem12> heroes;
+  ArmyVector armies = TheGameLogic->rva00388BE0();
+  for (unsigned i = 0; i < armies.size(); ++i) {
+    LivingWorldPlayerArmy *army = armies[i];
+    if (!army)
+      return;
+    _STL::vector<LivingWorldArmy> &records = army->field30;
+    for (unsigned j = 0; j < records.size(); ++j) {
+      typedef const Rva00575B70Template *(BfmeThingFactory::*M)(
+          const AsciiString &);
+      const Rva00575B70Template *object =
+          (TheThingFactory->*retailMethod<M>(j_00028560))(records[j].getName());
+      if (object && (object->fieldd0 & 0x02000000)) {
+        S4SortElem12 hero;
+        hero.m_bfmeKey = object->field4d0;
+        hero.flag = records[j].field39;
+        hero.m_bfmeSecond = object->portrait();
+        heroes.push_back(hero);
+      }
     }
-
-    CampaignManager *campaign = TheCampaignManager;
-    if( campaign == 0 )
-        return;
-
-    *(int *)( self + 0x304 ) = 0;
-    int objectives = campaign->getMissionObjectiveCount();
-    for( int objective = 0; objective < objectives; ++objective )
-    {
-        if( !campaign->isMissionObjectiveEligible( objective ) )
-            continue;
-        if( !campaign->isMissionObjectiveIndexed( objective ) )
-            continue;
-
-        int row = *(int *)( self + 0x304 );
-        *(unsigned char *)( self + 0x308 + row ) =
-            campaign->isMissionObjectiveComplete( objective );
-
-        AsciiString key;
-        key.format( (AsciiString)"APT:objective%d", row + 1 );
-        AsciiString label = campaign->objectiveName( objective );
-        UnicodeString text = TheGameText->fetch( label );
-        g_theWindowManager->bfme_setAptText( key, text );
-        *(int *)( self + 0x304 ) = row + 1;
-    }
-
-    *(int *)( self + 0x27c ) =
-        ((ScoreKeeper *)score)->countMissionObjectives( 0 ) *
-        TheWritableGlobalData->w123c;
-
-    if( TheBfmeGameLogic == 0 || TheRegistry == 0 )
-        return;
-
-    {
-    LocalListView list = { 0, 0, 0 };
-    initLocalList( &list );
-    unsigned int count = (unsigned int)( list.end - list.begin ) / 4;
-    unsigned int pos = 0;
-    void *out = 0;
-    void *outEnd = 0;
-    void *last = 0;
-    while( pos < count )
-    {
-        char *entry = ((char **)list.begin)[pos];
-        if( entry != 0 )
-        {
-            int frame = *(int *)( entry + 0x34 ) - *(int *)( entry + 0x30 );
-            int index = frame / 0x80;
-            AsciiString name = ((LivingWorldArmy *)( *(char **)( entry + 0x30 ) + index ))->getName();
-            void *templateObject = TheRegistry->findTemplate( name );
-            if( templateObject != 0 && (*(unsigned int *)( (char *)templateObject + 0xd0 ) & 0x02000000) != 0 )
-            {
-                void *portrait = (void *)((ThingTemplatePortraitShim *)templateObject)->getSelectedPortraitImage();
-                int selected = *(int *)( (char *)templateObject + 0x4d0 );
-                unsigned char image = *(unsigned char *)( *(char **)( entry + 0x30 ) + 0x39 );
-                if( last != 0 )
-                {
-                    *(int *)last = selected;
-                    *(int *)( (char *)last + 4 ) = image;
-                    *(int *)( (char *)last + 8 ) = (int)portrait;
-                    last = (char *)last + 0xc;
-                    outEnd = last;
-                }
-                else
-                {
-                    appendPortrait( &list, last, portrait, &out, 1, 1 );
-                    last = outEnd;
-                }
-            }
-        }
-        ++pos;
-    }
-
-    if( out != 0 )
-    {
-        unsigned int rows = (unsigned int)(((char *)outEnd - (char *)out) / 12);
-        if( rows != 0 )
-        {
-            sortRows( out, outEnd, this );
-            buildRows( out, outEnd, (int)( rows * 2 ), &list, player );
-            if( rows > 0x10 )
-                copyRow( out, outEnd, &list, score );
-        }
-    }
-    }
-
-    BitVectorView *bits = (BitVectorView *)( self + 0x2e8 );
-    BitVectorView sourceBits = { bits->words, bits->end, bits->bit };
-    copyBits( &sourceBits, bits, bits );
-    unsigned int upgrades = 0;
-    if( bits->words != 0 )
-    {
-        unsigned int *word = bits->words;
-        unsigned int *end = bits->end;
-        while( word != end )
-        {
-            unsigned int value = *word++;
-            for( unsigned int bit = 0; bit < 32; ++bit )
-                if( ( value & ( 1U << bit ) ) != 0 )
-                    ++upgrades;
-        }
-    }
-    *(int *)( score + 0x11c ) = upgrades;
-
-    int heroValue = TheWritableGlobalData->w1234 * (int)upgrades;
-    *(int *)( self + 0x280 ) = heroValue;
-    {
-    UnicodeString heroText;
-    heroText.translate( ((BfmeTableAI *)this)->bfmeNumberedAI( TheWritableGlobalData->w1234 ) );
-    heroText.set( (const unsigned short *)L"x ", 2 );
-    AsciiString heroLabel( "APT:HeroPointsIncrement" );
-    g_theWindowManager->bfme_setAptText( heroLabel, heroText );
-    }
-
-    *(int *)( self + 0x2fc ) = *(int *)( score + 0x120 );
-    int unitValue = TheWritableGlobalData->w1238 * *(int *)( score + 0x120 );
-    *(int *)( self + 0x284 ) = unitValue;
-    {
-    UnicodeString unitText;
-    unitText.translate( ((BfmeTableAI *)this)->bfmeNumberedAI( TheWritableGlobalData->w1238 ) );
-    unitText.set( (const unsigned short *)L"x ", 2 );
-    AsciiString unitLabel( "APT:UnitPointsIncrement" );
-    g_theWindowManager->bfme_setAptText( unitLabel, unitText );
-    }
-
-    ((UnicodeString *)( self + 0x300 ))->set(
-        *(const UnicodeString *)( player + 0x28 ) );
-    *(int *)( self + 0x288 ) = 0;
-    if( TheCampaignManager != 0 )
-    {
-        for( int region = 0; region < 4; ++region )
-        {
-            AsciiString army( "LW:RegionBonusArmy" );
-            AsciiString legendary( "LW:RegionLegendaryBonus" );
-            AsciiString resource( "LW:RegionBonusResource" );
-            TheManager->bfmeGoBIF( &army, &region );
-            TheManager->bfmeGoBIF( &legendary, &region );
-            TheManager->bfmeGoBIF( &resource, &region );
-        }
-    }
-
-    int scoreRegion = 0;
-    AsciiString armyLabel( "Result/Infos/ScoreMap/Picture/Image" );
-    _bfme_setScoreRegionBonus( &scoreRegion, armyLabel, *(int *)( score + 0x12c ) );
-    AsciiString legendaryLabel( "SubMenus/TerritoryBonus/TerritoryMap/TerritoryMap/Picture/Image" );
-    _bfme_setScoreRegionBonus( &scoreRegion, legendaryLabel, *(int *)( score + 0x134 ) );
-    AsciiString resourceLabel( "APT:ScoreMapName" );
-    _bfme_setScoreRegionBonus( &scoreRegion, resourceLabel, *(int *)( score + 0x130 ) );
-
-    _bfme_setTerritoryBonus( 0, 0, *(int *)( score + 0x12c ) );
-    _bfme_setTerritoryBonus( 0, 1, TheWritableGlobalData->w1248 );
-    _bfme_setTerritoryBonus( 0, 2, TheWritableGlobalData->w1248 * *(int *)( score + 0x12c ) );
-    _bfme_setTerritoryBonus( 1, 0, *(int *)( score + 0x134 ) );
-    _bfme_setTerritoryBonus( 1, 1, TheWritableGlobalData->w1250 );
-    _bfme_setTerritoryBonus( 1, 2, TheWritableGlobalData->w1250 * *(int *)( score + 0x134 ) );
-    _bfme_setTerritoryBonus( 2, 0, *(int *)( score + 0x130 ) );
-    _bfme_setTerritoryBonus( 2, 1, TheWritableGlobalData->w124c );
-    _bfme_setTerritoryBonus( 2, 2, TheWritableGlobalData->w124c * *(int *)( score + 0x130 ) );
-    *(int *)( self + 0x288 ) = ((ScoreKeeper *)score)->computeFirst();
-    *(int *)( self + 0x28c ) = ((ScoreKeeper *)score)->computeSecond();
+  }
+  S4Cmp00574DF0 cmp;
+  if (heroes.begin() != heroes.end()) {
+    _STL::__introsort_loop(heroes.begin(), heroes.end(), (S4SortElem12 *)0,
+                           _STL::__lg(heroes.end() - heroes.begin()) * 2, cmp);
+    if (heroes.end() - heroes.begin() > 16) {
+      _STL::__insertion_sort(heroes.begin(), heroes.begin() + 16, cmp);
+      _STL::__unguarded_insertion_sort(heroes.begin() + 16, heroes.end(), cmp);
+    } else
+      _STL::__insertion_sort(heroes.begin(), heroes.end(), cmp);
+  }
+  field2e8.clear();
+  unsigned upgrades = 0;
+  for (unsigned index = 0; index < heroes.size(); ++index) {
+    S4SortElem12 *hero = &heroes[index];
+    AsciiString key;
+    key.format(
+        AsciiString(
+            "SubMenus/HeroVeterancy/HeroSelection/HeroSelection%d/icon/Image"),
+        field2e8.size() + 1);
+    g_theWindowManager->image(key, hero->m_bfmeSecond);
+    if (hero->flag)
+      ++upgrades;
+    field2e8.push_back(hero->flag);
+  }
+  SCORE(0x11c) = upgrades;
+  field280 = TheWritableGlobalData->field1234 * upgrades;
+  UnicodeString numberText;
+  UnicodeString combined;
+  numberText.translate(
+      ((Rva00573580Lookup *)this)->number(TheWritableGlobalData->field1234));
+  combined.set(L"x ");
+  ((StringBase<wchar_t> *)&combined)
+      ->concat(numberText.str(), numberText.getLength());
+  g_theWindowManager->bfme_setAptText(AsciiString("APT:HeroPointsIncrement"),
+                                      combined);
+  field2fc = SCORE(0x120);
+  field284 = TheWritableGlobalData->field1238 * field2fc;
+  numberText.translate(
+      ((Rva00573580Lookup *)this)->number(TheWritableGlobalData->field1238));
+  combined.set(L"x ");
+  ((StringBase<wchar_t> *)&combined)
+      ->concat(numberText.str(), numberText.getLength());
+  g_theWindowManager->bfme_setAptText(AsciiString("APT:UnitPointsIncrement"),
+                                      combined);
+  field300 = *(AsciiString *)(player + 0x28);
+  field288 = 0;
+  CampaignManager *campaign = TheCampaignManager;
+  if (!campaign)
+    return;
+  AsciiString regionName = campaign->field30;
+  typedef Rva00575B70Region *(LivingWorldRegionManager::*RegionM)(
+      const AsciiString &);
+  Rva00575B70Region *region =
+      (TheCampaignManager->field28->*retailMethod<RegionM>(j_0002bf0d))(
+          regionName);
+  if (!region)
+    return;
+  typedef void (ScoreKeeper::*SetM)(int, int, int);
+  (keeper->*retailMethod<SetM>(j_000045d4))(region->field78, region->field7c,
+                                            region->field80);
+  int value = SCORE(0x12c);
+  rva00573C20(0, 0, value);
+  rva00573C20(0, 1, TheWritableGlobalData->field1248);
+  int product = TheWritableGlobalData->field1248 * value;
+  rva00573C20(0, 2, product);
+  field288 += product;
+  value = SCORE(0x134);
+  rva00573C20(1, 0, value);
+  rva00573C20(1, 1, TheWritableGlobalData->field1250);
+  product = TheWritableGlobalData->field1250 * value;
+  rva00573C20(1, 2, product);
+  field288 += product;
+  value = SCORE(0x130);
+  rva00573C20(2, 0, value);
+  rva00573C20(2, 1, TheWritableGlobalData->field124c);
+  product = TheWritableGlobalData->field124c * value;
+  rva00573C20(2, 2, product);
+  field288 += product;
+  field28c = keeper->calculateScore();
+  field290 = keeper->getVictoryType();
+  {
+    AsciiString key("APT:ScoreMapName");
+    g_theWindowManager->bfme_setAptText(key,
+                                        TheGameText->fetch(region->field10, 0));
+  }
+  ((Rva000E92B0Owner *)score)
+      ->setWideString(TheGameText->fetch(region->field10, 0));
+  ((Rva003C0E60Owner *)TheCampaignManager)
+      ->insert(((Rva000E95A0Owner *)score)->value());
+  int regionIndex = 1;
+  {
+    AsciiString key("LW:RegionBonusArmy");
+    _bfme_setScoreRegionBonus(&regionIndex, key, SCORE(0x12c));
+  }
+  {
+    AsciiString key("LW:RegionLegendaryBonus");
+    _bfme_setScoreRegionBonus(&regionIndex, key, SCORE(0x134));
+  }
+  {
+    AsciiString key("LW:RegionBonusResource");
+    _bfme_setScoreRegionBonus(&regionIndex, key, SCORE(0x130));
+  }
+  for (int i = regionIndex; i <= 3; ++i) {
+    AsciiString empty("");
+    AsciiString key;
+    key.format(AsciiString("APT:ScoreRegionBonus%d"), i);
+    g_theWindowManager->bfme_setAptText(key, UnicodeString(L""));
+  }
+  {
+    AsciiString key("Result/Infos/ScoreMap/Picture/Image");
+    g_theWindowManager->image(key, region->image());
+  }
+  {
+    AsciiString key(
+        "SubMenus/TerritoryBonus/TerritoryMap/TerritoryMap/Picture/Image");
+    g_theWindowManager->image(key, region->image());
+  }
 }

@@ -6458,5 +6458,55 @@
   "after_sha256": "72df6de4823e431c423f4315e7205b601ab21f7449edd0162e6365c6c2f5ea3c",
   "evidence": "targets/game/reverse/identity_evidence/0x00486b10.md",
   "reason": "Tokenizer pairing of a keyword with a new local helper; no identifier was renamed."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00575b70.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00575b70.cpp",
+  "old_name": "BfmeTableAI",
+  "new_name": "Rva000E95A0Value",
+  "before_sha256": "b9cbdcd39a392aec8dd0a25cf6c50f0556674477b05f5d4b2f70f7b6eea6b20a",
+  "after_sha256": "d7555d002e5d95ae322415943fd436dea624627cb598f7587eb01ada3579eb7b",
+  "evidence": "targets/game/reverse/identity_evidence/00575b70-score-single-player.md",
+  "reason": "False declaration-order pairing: the newly proved12B score-record return is unrelated to the old guessed table receiver; full getter49B and list receiver112B independently prove the record."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00575b70.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00575b70.cpp",
+  "old_name": "BfmeTableAI",
+  "new_name": "Rva00573580Lookup",
+  "before_sha256": "b9cbdcd39a392aec8dd0a25cf6c50f0556674477b05f5d4b2f70f7b6eea6b20a",
+  "after_sha256": "d7555d002e5d95ae322415943fd436dea624627cb598f7587eb01ada3579eb7b",
+  "evidence": "targets/game/reverse/identity_evidence/00575b70-score-single-player.md",
+  "reason": "Old guessed table class has no identity witness. The decoded00573580 number-string helper has a proven hidden return ABI; its address-derived owner preserves evidence without claiming a table identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00575b70.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00575b70.cpp",
+  "old_name": "LivingWorldArmy",
+  "new_name": "Rva00573580Lookup",
+  "before_sha256": "b9cbdcd39a392aec8dd0a25cf6c50f0556674477b05f5d4b2f70f7b6eea6b20a",
+  "after_sha256": "d7555d002e5d95ae322415943fd436dea624627cb598f7587eb01ada3579eb7b",
+  "evidence": "targets/game/reverse/identity_evidence/00575b70-score-single-player.md",
+  "reason": "False declaration-order pairing: LivingWorldArmy remains named and retains its independently witnessedB4 layout. The number helper view is unrelated."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00575b70.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00575b70.cpp",
+  "old_name": "Registry",
+  "new_name": "Rva003BDF70Owner",
+  "before_sha256": "b9cbdcd39a392aec8dd0a25cf6c50f0556674477b05f5d4b2f70f7b6eea6b20a",
+  "after_sha256": "d7555d002e5d95ae322415943fd436dea624627cb598f7587eb01ada3579eb7b",
+  "evidence": "targets/game/reverse/identity_evidence/00575b70-score-single-player.md",
+  "reason": "False declaration-order pairing: the old guessed registry lookup is replaced by the evidenced factory const-reference call at00137E80. The existing objective span-count owner003BDF70 is unrelated."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00575b70.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00575b70.cpp",
+  "old_name": "objectiveName",
+  "new_name": "rva003BF580",
+  "before_sha256": "b9cbdcd39a392aec8dd0a25cf6c50f0556674477b05f5d4b2f70f7b6eea6b20a",
+  "after_sha256": "d7555d002e5d95ae322415943fd436dea624627cb598f7587eb01ada3579eb7b",
+  "evidence": "targets/game/reverse/identity_evidence/00575b70-score-single-player.md",
+  "reason": "Replace an unproved bank-only method spelling with the existing native/ledger CampaignManager::rva003BF580 independently reached through retail ILT000459DA."
  }
 ]
