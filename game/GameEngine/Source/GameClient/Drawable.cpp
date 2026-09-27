@@ -1816,265 +1816,153 @@ void Drawable::calcPhysicsXformHoverOrWings( const Locomotor *locomotor, Physics
 }
 
 //-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ?calcPhysicsXformTreads@Drawable@@IAEXPBVLocomotor@@AAUPhysicsXformInfo@1@@Z present-unmatched
-void Drawable::calcPhysicsXformTreads( const Locomotor *locomotor, PhysicsXformInfo& info )
+struct Rva004143F0LocomotorTemplateView : Overridable
 {
-	if (m_locoInfo == NULL)
-		m_locoInfo = newInstance(DrawableLocoInfo);
+	char m_pad0084[0x84 - sizeof(Overridable)];
+	Real m_accelPitchLimit;
+	Real m_bounceKick;
+	Real m_pitchStiffness;
+	Real m_rollStiffness;
+	Real m_pitchDamping;
+	Real m_rollDamping;
+	Real m_pitchByZVelCoef;
+	char m_pad00A0[4];
+	Real m_forwardVelCoef;
+	Real m_lateralVelCoef;
+	Real m_forwardAccelCoef;
+	Real m_lateralAccelCoef;
+	Real m_uniformAxialDamping;
+	Real m_turnPivotOffset;
+	Int m_airborneTargetingHeight;
+	Real m_closeEnoughDist;
+	Bool m_isCloseEnoughDist3D;
+	Real m_ultraAccurateSlideIntoPlaceFactor;
+	Bool m_locomotorWorksWhenDead;
+	Bool m_allowMotiveForceWhileAirborne;
+	Bool m_apply2DFrictionWhenAirborne;
+	Bool m_downhillOnly;
+	Bool m_stickToGround;
+	char m_pad00D1[3];
+	Bool m_canMoveBackward;
+	char m_pad00D5[3];
+	Bool m_hasSuspension;
+	char m_pad00D9[3];
+	Real m_maximumWheelExtension;
+	Real m_maximumWheelCompression;
+	Real m_wheelTurnAngle;
+	char m_pad00E8[4];
+	Real m_wanderWidthFactor;
+	Real m_wanderLengthFactor;
+	Real m_wanderAboutPointRadius;
+	char m_pad00F8[8];
+	Real m_rudderCorrectionDegree;
+	Real m_rudderCorrectionRate;
+	Real m_elevatorCorrectionDegree;
+	Real m_elevatorCorrectionRate;
+	Real m_field110;
+	Real m_field114;
+};
 
-	const Real OVERLAP_SHRINK_FACTOR = 0.8f;
-	const Real FLATTENED_OBJECT_HEIGHT = 0.5f;
-	const Real LEAVE_OVERLAP_PITCH_KICK = PI/128;
-	const Real OVERLAP_ROUGH_VIBRATION_FACTOR = 5.0f;
-	const Real MAX_ROUGH_VIBRATION = 0.5f;
-	const Real ACCEL_PITCH_LIMIT = locomotor->getAccelPitchLimit();
-	const Real DECEL_PITCH_LIMIT = locomotor->getDecelPitchLimit();
-	const Real PITCH_STIFFNESS = locomotor->getPitchStiffness();
-	const Real ROLL_STIFFNESS =  locomotor->getRollStiffness();
-	const Real PITCH_DAMPING = locomotor->getPitchDamping();
-	const Real ROLL_DAMPING = locomotor->getRollDamping();
-	const Real FORWARD_ACCEL_COEFF = locomotor->getForwardAccelCoef();	
-	const Real LATERAL_ACCEL_COEFF = locomotor->getLateralAccelCoef();	
-	const Real UNIFORM_AXIAL_DAMPING = locomotor->getUniformAxialDamping();	
+struct Rva004143F0LocomotorView
+{
+	void *m_vtable;
+	OVERRIDE<Rva004143F0LocomotorTemplateView> m_template;
+	Real getAccelPitchLimit() const { return m_template->m_accelPitchLimit; }
+	Real getPitchStiffness() const { return m_template->m_pitchStiffness; }
+	Real getRollStiffness() const { return m_template->m_rollStiffness; }
+	Real getPitchDamping() const { return m_template->m_pitchDamping; }
+	Real getRollDamping() const { return m_template->m_rollDamping; }
+	Real getUniformAxialDamping() const { return m_template->m_uniformAxialDamping; }
+	Real getRudderCorrectionDegree() const { return m_template->m_rudderCorrectionDegree; }
+	Real getRudderCorrectionRate() const { return m_template->m_rudderCorrectionRate; }
+	Real getElevatorCorrectionDegree() const { return m_template->m_elevatorCorrectionDegree; }
+	Real getElevatorCorrectionRate() const { return m_template->m_elevatorCorrectionRate; }
+	Real field110() const { return m_template->m_field110; }
+	Real field114() const { return m_template->m_field114; }
+};
 
-	// get object from logic
-	Object *obj = getObject();
-	if (obj == NULL)
+// BFME layout witnesses place Drawable::m_object at +0xFC and
+// Drawable::m_locoInfo at +0x138.  The retail body accesses only those fields.
+struct Rva004143F0DrawableView
+{
+	char pad00[0xFC];
+	Object *object;
+	char pad100[0x38];
+	DrawableLocoInfo *locoInfo;
+};
+
+void Drawable::calcPhysicsXformTreads(const Locomotor *locomotor, PhysicsXformInfo &info)
+{
+	Rva004143F0DrawableView *self = reinterpret_cast<Rva004143F0DrawableView *>(this);
+	DrawableLocoInfo *&locoInfo = self->locoInfo;
+	if (locoInfo == NULL)
+		locoInfo = newInstance(DrawableLocoInfo);
+
+	const Rva004143F0LocomotorView *locoView = reinterpret_cast<const Rva004143F0LocomotorView *>(locomotor);
+	const Real accelPitchLimit = locoView->getAccelPitchLimit();
+	const Real pitchStiffness = locoView->getPitchStiffness();
+	const Real rollStiffness = locoView->getRollStiffness();
+	const Real pitchDamping = locoView->getPitchDamping();
+	const Real rollDamping = locoView->getRollDamping();
+	const Real uniformAxialDamping = locoView->getUniformAxialDamping();
+
+	Object *obj = self->object;
+	if (obj == NULL || *reinterpret_cast<void **>(reinterpret_cast<char *>(obj) + 0x204) == NULL)
 		return;
 
-	AIUpdateInterface *ai = obj->getAIUpdateInterface();
-	if (ai == NULL)
-		return ;
+	locoInfo->m_pitchRate = (-pitchStiffness * locoInfo->m_pitch) + (-pitchDamping * locoInfo->m_pitchRate) + locoInfo->m_pitchRate;
+	locoInfo->m_rollRate = (-rollStiffness * locoInfo->m_roll) + (-rollDamping * locoInfo->m_rollRate) + locoInfo->m_rollRate;
 
-	// get object physics state
-	PhysicsBehavior *physics = obj->getPhysics();
-	if (physics == NULL)
-		return;
-
-	// get our position and direction vector
-	const Coord3D *pos = getPosition();
-	const Coord3D *dir = getUnitDirectionVector2D();
-	const Coord3D *accel = physics->getAcceleration();
-	const Coord3D *vel = physics->getVelocity();
-
-	// compute perpendicular (2d)
-	Coord3D perp;
-	perp.x = -dir->y;
-	perp.y = dir->x;
-	perp.z = 0.0f;
-
-	// find pitch and roll of terrain under chassis
-	Coord3D normal;
-/*	Real hheight = */ TheTerrainLogic->getLayerHeight( pos->x, pos->y, obj->getLayer(), &normal );
-
-	// override surface normal if we are overlapping another object - crushing it
-	Real overlapZ = 0.0f;
-
-	// get object we are currently overlapping, if any
-	Object* overlapped = TheGameLogic->findObjectByID(physics->getCurrentOverlap());
-	if (overlapped && overlapped->isKindOf(KINDOF_SHRUBBERY)) {
-		overlapped = NULL; // We just smash through shrubbery.  jba.
-	}
-
-	if (overlapped)
+	if ((reinterpret_cast<const UnsignedByte *>(obj)[0x344] & 1) == 0)
 	{
-		const Coord3D *overPos = overlapped->getPosition();
-		Real dx = overPos->x - pos->x;
-		Real dy = overPos->y - pos->y;
-		Real centerDistSqr = sqr(dx) + sqr(dy);
+		locoInfo->m_pitch += locoInfo->m_pitchRate * uniformAxialDamping;
+		locoInfo->m_roll += locoInfo->m_rollRate * uniformAxialDamping;
 
-		// compute maximum distance between objects, if their edges just touched
-		Real ourSize = getDrawableGeometryInfo().getBoundingCircleRadius();
-		Real otherSize = overlapped->getGeometryInfo().getBoundingCircleRadius();
-		Real maxCenterDist = otherSize + ourSize;
-
-		// shrink the overlap distance a bit to avoid floating
-		maxCenterDist *= OVERLAP_SHRINK_FACTOR;
-		if (centerDistSqr < sqr(maxCenterDist))
-		{
-			Real centerDist = sqrtf(centerDistSqr);
-			Real amount = 1.0f - centerDist/maxCenterDist;
-			if (amount < 0.0f)
-				amount = 0.0f;
-			else if (amount > 1.0f)
-				amount = 1.0f;
-
-			// rough vibrations proportional to speed when we drive over something
-			Real rough = (vel->x*vel->x + vel->y*vel->y) * OVERLAP_ROUGH_VIBRATION_FACTOR;
-			if (rough > MAX_ROUGH_VIBRATION)
-				rough = MAX_ROUGH_VIBRATION;
-			
-			Real height = overlapped->getGeometryInfo().getMaxHeightAbovePosition();
-
-			// do not "go up" flattened crushed things
-			Bool flat = false;
-			if (overlapped->isKindOf(KINDOF_LOW_OVERLAPPABLE) ||
-					overlapped->isKindOf(KINDOF_INFANTRY) ||
-					(overlapped->getBodyModule()->getFrontCrushed() && overlapped->getBodyModule()->getBackCrushed()))
-			{
-				flat = true;
-				height = FLATTENED_OBJECT_HEIGHT;
-			}
-
-			if (amount < FLATTENED_OBJECT_HEIGHT && flat == false)
-			{
-				overlapZ = height * 2.0f * amount;
-
-				// compute vector along "surface"
-				// not proportional to actual geometry to avoid overlay steep inclines, etc
-				Coord3D v;
-				v.x = dx/centerDist;
-				v.y = dy/centerDist;
-				v.z = 0.2f;		// 0.25
-
-				Coord3D up;
-				up.x = GameClientRandomValueReal( -rough, rough );
-				up.y = GameClientRandomValueReal( -rough, rough );
-				up.z = 1.0f;
-				up.normalize();
-
-				Coord3D prp;
-				prp.crossProduct( &v, &up, &prp );
-				normal.crossProduct( &prp, &v, &normal );
-
-				// compute unit normal
-				normal.normalize();
-			}
-			else
-			{
-				// sitting on top of object
-				overlapZ = height;
-
-				normal.x = GameClientRandomValueReal( -rough, rough );
-				normal.y = GameClientRandomValueReal( -rough, rough );
-				normal.z = 1.0f;
-				normal.normalize();
-			}
-		}
+		locoInfo->m_accelerationPitchRate =
+			(-pitchStiffness * locoInfo->m_accelerationPitch) + (-pitchDamping * locoInfo->m_accelerationPitchRate) + locoInfo->m_accelerationPitchRate;
+		locoInfo->m_accelerationPitch += locoInfo->m_accelerationPitchRate;
+		locoInfo->m_accelerationRollRate =
+			(-rollStiffness * locoInfo->m_accelerationRoll) + (-rollDamping * locoInfo->m_accelerationRollRate) + locoInfo->m_accelerationRollRate;
+		locoInfo->m_accelerationRoll += locoInfo->m_accelerationRollRate;
 	}
-	else	// no overlap this frame
+	else
 	{
-		// if we had an overlap last frame, and we're now in the air, give a
-		// kick to the pitch for effect
-		if (physics->getPreviousOverlap() != INVALID_ID && m_locoInfo->m_overlapZ > 0.0f)
-			m_locoInfo->m_pitchRate += LEAVE_OVERLAP_PITCH_KICK;
+		locoInfo->m_accelerationPitch *= 0.5f;
+		if (fabs(locoInfo->m_accelerationPitch) < 0.0001f)
+			locoInfo->m_accelerationPitch = 0.0f;
+		locoInfo->m_accelerationRoll *= 0.5f;
+		if (fabs(locoInfo->m_accelerationRoll) < 0.0001f)
+			locoInfo->m_accelerationRoll = 0.0f;
 	}
 
+	info.m_totalPitch = locoInfo->m_accelerationPitch + locoInfo->m_pitch;
+	info.m_totalRoll = locoInfo->m_accelerationRoll + locoInfo->m_roll;
 
+	if (locoInfo->m_accelerationPitch > accelPitchLimit)
+		locoInfo->m_accelerationPitch = accelPitchLimit;
+	else if (locoInfo->m_accelerationPitch < -accelPitchLimit)
+		locoInfo->m_accelerationPitch = -accelPitchLimit;
+	if (locoInfo->m_accelerationRoll > accelPitchLimit)
+		locoInfo->m_accelerationRoll = accelPitchLimit;
+	else if (locoInfo->m_accelerationRoll < -accelPitchLimit)
+		locoInfo->m_accelerationRoll = -accelPitchLimit;
 
-	Real dot = normal.x * dir->x + normal.y * dir->y;
-	Real groundPitch = dot * (PI/2.0f);
-
-	dot = normal.x * perp.x + normal.y * perp.y;
-	Real groundRoll = dot * (PI/2.0f);
-
-	// process chassis suspension dynamics - damp back towards groundPitch
-
-	// the ground can only push back if we're touching it
-	if (overlapped || m_locoInfo->m_overlapZ <= 0.0f)
+	if ((reinterpret_cast<const UnsignedByte *>(obj)[0x344] & 1) == 0)
 	{
-		m_locoInfo->m_pitchRate += ((-PITCH_STIFFNESS * (m_locoInfo->m_pitch - groundPitch)) + (-PITCH_DAMPING * m_locoInfo->m_pitchRate));		// spring/damper
-		if (m_locoInfo->m_pitchRate > 0.0f)
-			m_locoInfo->m_pitchRate *= 0.5f;
-
-		m_locoInfo->m_rollRate += ((-ROLL_STIFFNESS * (m_locoInfo->m_roll - groundRoll)) + (-ROLL_DAMPING * m_locoInfo->m_rollRate));		// spring/damper
+		const Real rudderDegree = locoView->getRudderCorrectionDegree();
+		const Real rudderRate = locoView->getRudderCorrectionRate();
+		const Real elevatorDegree = locoView->getElevatorCorrectionDegree();
+		const Real elevatorRate = locoView->getElevatorCorrectionRate();
+		const Real field110 = locoView->field110();
+		const Real field114 = locoView->field114();
+		info.m_totalYaw = rudderDegree * sin(locoInfo->m_yawModulator += rudderRate);
+		info.m_totalPitch += elevatorDegree * cos(locoInfo->m_pitchModulator += elevatorRate);
+		info.m_totalRoll += field110 * cos(locoInfo->m_pitchModulator += field114);
 	}
 
-	m_locoInfo->m_pitch += m_locoInfo->m_pitchRate * UNIFORM_AXIAL_DAMPING;
-	m_locoInfo->m_roll += m_locoInfo->m_rollRate   * UNIFORM_AXIAL_DAMPING;
-
-	// process chassis recoil dynamics - damp back towards zero
-
-	m_locoInfo->m_accelerationPitchRate += ((-PITCH_STIFFNESS * (m_locoInfo->m_accelerationPitch)) + (-PITCH_DAMPING * m_locoInfo->m_accelerationPitchRate));		// spring/damper
-	m_locoInfo->m_accelerationPitch += m_locoInfo->m_accelerationPitchRate;
-
-	m_locoInfo->m_accelerationRollRate += ((-ROLL_STIFFNESS * m_locoInfo->m_accelerationRoll) + (-ROLL_DAMPING * m_locoInfo->m_accelerationRollRate));		// spring/damper
-	m_locoInfo->m_accelerationRoll += m_locoInfo->m_accelerationRollRate;
-
-	// compute total pitch and roll of tank
-	info.m_totalPitch = m_locoInfo->m_pitch + m_locoInfo->m_accelerationPitch;
-	info.m_totalRoll = m_locoInfo->m_roll + m_locoInfo->m_accelerationRoll;
-
-	if (physics->isMotive()) 
-	{
-		// cause the chassis to pitch & roll in reaction to acceleration/deceleration
-		Real forwardAccel = dir->x * accel->x + dir->y * accel->y;
-		m_locoInfo->m_accelerationPitchRate += -(FORWARD_ACCEL_COEFF * forwardAccel);
-
-		Real lateralAccel = -dir->y * accel->x + dir->x * accel->y;
-		m_locoInfo->m_accelerationRollRate += -(LATERAL_ACCEL_COEFF * lateralAccel);
-	}
-
-#ifdef RECOIL_FROM_BEING_DAMAGED
-	// recoil from being hit
-	/// @todo Recoil needs to be based on sane damage amounts (MSB)
-	const DamageInfo *damageInfo = obj->getBodyModule()->getLastDamageInfo();
-	if (damageInfo)
-	{
-		if (obj->getBodyModule()->getLastDamageTimestamp() > m_lastDamageTimestamp && damageInfo->in.m_amount > RECOIL_DAMAGE)
-		{
-			Object *attacker = TheGameLogic->getObject( damageInfo->in.m_sourceID );
-			if (attacker)
-			{
-				Coord3D to;
-				ThePartitionManager->getVectorTo( obj, attacker, FROM_CENTER_2D, &to );
-
-				to.normalize();
-
-				Real forward = dir->x * to.x + dir->y * to.y;
-				Real lateral = perp.x * to.x + perp.y * to.y;
-
-				Real recoil = PI/16.0f * GameClientRandomValueReal( 0.5f, 1.0f );
-			
-				m_locoInfo->m_accelerationPitchRate -= recoil * forward;
-				m_locoInfo->m_accelerationRollRate -= recoil * lateral;
-			}
-
-			m_lastDamageTimestamp = obj->getBodyModule()->getLastDamageTimestamp();
-		}
-	}
-#endif
-
-	// limit recoil pitch and roll
-
-	if (m_locoInfo->m_accelerationPitch > DECEL_PITCH_LIMIT)
-		m_locoInfo->m_accelerationPitch = DECEL_PITCH_LIMIT;
-	else if (m_locoInfo->m_accelerationPitch < -ACCEL_PITCH_LIMIT)
-		m_locoInfo->m_accelerationPitch = -ACCEL_PITCH_LIMIT;
-
-	if (m_locoInfo->m_accelerationRoll > DECEL_PITCH_LIMIT)
-		m_locoInfo->m_accelerationRoll = DECEL_PITCH_LIMIT;
-	else if (m_locoInfo->m_accelerationRoll < -ACCEL_PITCH_LIMIT)
-		m_locoInfo->m_accelerationRoll = -ACCEL_PITCH_LIMIT;
-
-	// adjust z
-	if (overlapZ > m_locoInfo->m_overlapZ)
-	{
-		m_locoInfo->m_overlapZ = overlapZ;
-		/// @todo Z needs to accelerate/decelerate, not be directly set (MSB)
-		// m_locoInfo->m_overlapZ += 0.4f;
-		m_locoInfo->m_overlapZVel = 0.0f;
-	}
-	
-	Real ztmp = m_locoInfo->m_overlapZ/2.0f;
-
-	// do fake Z physics
-	if (m_locoInfo->m_overlapZ > 0.0f)
-	{
-		m_locoInfo->m_overlapZVel -= 0.2f;
-		m_locoInfo->m_overlapZ += m_locoInfo->m_overlapZVel;
-	}
-
-	if (m_locoInfo->m_overlapZ <= 0.0f)
-	{
-		m_locoInfo->m_overlapZ = 0.0f;
-		m_locoInfo->m_overlapZVel = 0.0f; 
-	}
-	info.m_totalZ = ztmp;
+	info.m_totalZ = 0.0f;
 }
 
-//-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // C++ body in DrawablePhysicsXformWheels.cpp.
 
