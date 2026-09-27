@@ -10385,7 +10385,7 @@ name,address,notes
 ??_7AIHarvestMachine@@6B@,0x01096650,exact constructor 0x0015FE90 installs this dedicated vtable; slot zero ILT 0x00014EC5 reaches scalar wrapper 0x0015FA60
 ??_7AIHarvestPrepareSiteState@@6B@,0x00C96770,vtable whose slots name AIHarvestPrepareSiteState
 ??_7AIHuntState@@6B@,0x00C98330,vtable whose slots name AIHuntState
-??_7AIIdleState@@6B@,0x0109AD20,exact constructor 0x00180320 installs this dedicated vtable
+??_7AIIdleState@@6B@,0x010985B0,constructor 0x001720D0 installs this vtable - its name slot returns AIIdleState and slot 6 is AIIdleState::update (0x0109AD20 is AIFaceState)
 ??_7AIMoveAndDeleteState@@6B@,0x0109AAD8,exact constructor 0x0017FD70 installs this dedicated vtable
 ??_7AIMoveAndEvacuateState@@6B@,0x0109AA60,exact constructor 0x0017FD10 installs this dedicated vtable
 ??_7AIMoveAndTightenState@@6B@,0x0109A2F0,exact constructors 0x0017F390 and 0x0017F3F0 install this dedicated vtable; the second is the shipped const-char-name overload

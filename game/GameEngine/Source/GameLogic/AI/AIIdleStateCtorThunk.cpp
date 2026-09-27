@@ -1,6 +1,12 @@
-// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/shims/campaignmanagerascii /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// Retail 0x001720D0 installs 0x010985B0, AIIdleState's vtable: its name slot
+// returns "AIIdleState", slot 6 is AIIdleState::update and slot 7 returns true.
+// The face-state constructor at 0x00180320 also passes "AIIdleState", so the
+// state name alone does not identify this class.
 
-#include "Common/AsciiString.h"
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
+#include "ascii_string.h"
 
 class StateMachine;
 
@@ -8,18 +14,12 @@ class StateMachine;
 class State
 {
 public:
-	State(StateMachine *machine, AsciiString name);
+	State( StateMachine *machine, AsciiString name );
 
-protected:
-	int *volatile m_vftable;
-	unsigned char m_head[0x20];
+	virtual void stateAnchor();
 };
 
-extern int g_AIIdleStateVTable;
-
 // upstream source and layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
-// BFME retains the targeting mode and one cleared word after the three fields
-// shared with the later Generals version; the retail constructor proves both.
 class AIIdleState : public State
 {
 public:
@@ -29,24 +29,20 @@ public:
 		DO_NOT_LOOK_FOR_TARGETS
 	};
 
-	AIIdleState(StateMachine *machine, AIIdleTargetingType targetingType);
+	AIIdleState( StateMachine *machine, AIIdleTargetingType shouldLookForTargets );
 
 private:
+	char m_stateBaseTail[ 0x20 ];
 	unsigned short m_initialSleepOffset;
 	bool m_shouldLookForTargets;
 	bool m_inited;
-	AIIdleTargetingType m_targetingType;
-	bool m_bfmeIdleState2C;
 };
 
-// ??0AIIdleState@@QAE@PAVStateMachine@@W4AIIdleTargetingType@0@@Z
-AIIdleState::AIIdleState(StateMachine *machine, AIIdleTargetingType targetingType) :
-	State(machine, "AIIdleState")
+// upstream source: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
+AIIdleState::AIIdleState( StateMachine *machine, AIIdleTargetingType shouldLookForTargets ) :
+	State( machine, AsciiString( "AIIdleState" ) ),
+	m_shouldLookForTargets( shouldLookForTargets == LOOK_FOR_TARGETS )
 {
 	m_inited = false;
-	m_bfmeIdleState2C = false;
-	m_shouldLookForTargets = true;
 	m_initialSleepOffset = 0xFFFF;
-	m_vftable = &g_AIIdleStateVTable;
-	m_targetingType = targetingType;
 }

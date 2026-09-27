@@ -105,17 +105,23 @@ AIGiantBirdFollowThruState::AIGiantBirdFollowThruState( void *machine, bool enab
 }
 
 // Declared only: retail keeps this ctor out of line at 0x001720D0 (matched,
-// Rva001720D0AIIdleLikeStateCtor.cpp) and calls it rather than inlining it.
-class Rva001720D0AIIdleLikeState : public Rva000A19E0StateBase
+// AIIdleStateCtorThunk.cpp) and calls it rather than inlining it.
+class AIIdleState : public Rva000A19E0StateBase
 {
 public:
-	Rva001720D0AIIdleLikeState( void *machine, int targetingType );
+	enum AIIdleTargetingType
+	{
+		LOOK_FOR_TARGETS,
+		DO_NOT_LOOK_FOR_TARGETS
+	};
+
+	AIIdleState( StateMachine *machine, AIIdleTargetingType shouldLookForTargets );
 
 private:
 	char m_stateBaseTail[ 0x20 ];
-	unsigned short m_rva001720D0_024;
-	bool m_rva001720D0_026;
-	bool m_rva001720D0_027;
+	unsigned short m_initialSleepOffset;
+	bool m_shouldLookForTargets;
+	bool m_inited;
 };
 
 class AIAttackSwoopThenIdleStateMachine : public StateMachine
@@ -128,7 +134,7 @@ public:
 // Retail 0x006BF49A preserves incoming this in ESI; 0x006BF4D3 installs
 // 0x010C7460 into [ESI]. Later [EDI] stores belong to separately allocated states.
 // retail RVA 0x002BF480, 472B. Identity: this constructor installs vtable
-// 0x010C7460 and defines the Swoop/Attack/FollowThru/Idle-like states whose
+// 0x010C7460 and defines the Swoop/Attack/FollowThru/Idle states whose
 // own ctors are matched at 0x002BE230/0x002BE400/0x002BEC00/0x001720D0; the
 // factories at 0x002BFA80 and 0x002C0370 (Rva002BFA80Factory/Rva002C0370Factory
 // ::createAttackMachine) and GiantBirdAttackMoveToState's ctor already declare
@@ -146,6 +152,6 @@ AIAttackSwoopThenIdleStateMachine::AIAttackSwoopThenIdleStateMachine( void *owne
 	AIGiantBirdFollowThruState *followThru = new AIGiantBirdFollowThruState( this, false );
 	defineState( 1013, (State *)followThru, 0, 0, 0 );
 
-	Rva001720D0AIIdleLikeState *idle = new Rva001720D0AIIdleLikeState( this, 1 );
+	AIIdleState *idle = new AIIdleState( this, AIIdleState::DO_NOT_LOOK_FOR_TARGETS );
 	defineState( 0, (State *)idle, 0, 0, 0 );
 }

@@ -6918,5 +6918,25 @@
   "after_sha256": "872448bac5be1110474a1aea8c421dfcd1a3c80c038735a5e4a2d66b451e0985",
   "evidence": "targets/game/reverse/identity_evidence/dir32-wrong-reference-names.md",
   "reason": "parseOptionGroup's table entries are ILT thunks to the named-definition parsers at 0x000940F0/0x000941D0/0x00094300/0x00094470, not INI's scalar parsers."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AIIdleStateCtorThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva00180320AIFaceStateCtor.cpp",
+  "old_name": "AIIdleState",
+  "new_name": "Rva00180320AIFaceState",
+  "before_sha256": "d00b86fcf344c174585fe328d4df4ef16da6a92fcda3c29e5610f32563299029",
+  "after_sha256": "bcd519f8c2abbc934b7005cd036bf9b52e015fcc12e132579e0e30bf8af4b42d",
+  "evidence": "targets/game/reverse/identity_evidence/00180320-face-state-ctor.md",
+  "reason": "0x00180320 installs 0x0109AD20, which is AIFaceState's vtable: its name slot returns AIFaceState, its update slot is AIFaceState::update, and AIStateMachine builds its face states 0x24/0x25/0x3B as 0x30-byte objects on it. AIIdleState's own table is 0x010985B0 and its constructor is 0x001720D0. The face constructor's second parameter is a three-valued dword whose type the bytes do not give, so its class name keeps the address."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "AIIdleState",
+  "new_name": "Rva00180320AIFaceState",
+  "before_sha256": "eafd83683569f22ca3bca07887c1cfd8336996e764904c869ddd3ee9ee5a974e",
+  "after_sha256": "9426d0358a8439c393cd0b6381772cb49a017661d9bea35cbcc6be26cb53d98b",
+  "evidence": "targets/game/reverse/identity_evidence/00180320-face-state-ctor.md",
+  "reason": "0x00180320 installs 0x0109AD20, which is AIFaceState's vtable: its name slot returns AIFaceState, its update slot is AIFaceState::update, and AIStateMachine builds its face states 0x24/0x25/0x3B as 0x30-byte objects on it. AIIdleState's own table is 0x010985B0 and its constructor is 0x001720D0. The face constructor's second parameter is a three-valued dword whose type the bytes do not give, so its class name keeps the address."
  }
 ]
