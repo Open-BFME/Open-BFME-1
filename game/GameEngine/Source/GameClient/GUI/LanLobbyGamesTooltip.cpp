@@ -1,8 +1,6 @@
-// ?Rva00518150LanLobbyTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z
-// partial score=0.99 date=2026-09-27
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// LAN custom-games list tooltip callback, retail RVA 0x00518150, 402 bytes.
-// Identity is established by BfmeAptScreenLanLobby_onInitGadget.cpp.
+// LAN custom-games list tooltip callback, retail 0x00518150, 402 bytes.
+// Installed by BfmeAptScreenLanLobby_onInitGadget.cpp through winSetTooltipFunc.
 
 typedef int Int;
 typedef bool Bool;
@@ -121,6 +119,16 @@ public:
 
 extern Mouse *TheMouse;
 
+// Retail folds this lookup into its caller; the single null test it leaves
+// is what lets the empty-tooltip returns share one tail.
+// ?lookupListedLanGame@@YAPAVLANGameInfo@@PAV1@@Z absent-from-retail
+inline LANGameInfo *lookupListedLanGame(LANGameInfo *game)
+{
+	if (((Rva00685200 *)TheLAN)->has((Rva00685200Node *)game))
+		return game;
+	return 0;
+}
+
 void Rva00518150LanLobbyTooltip(GameWindow *window, WinInstanceData *,
 	unsigned int mouse)
 {
@@ -135,12 +143,8 @@ void Rva00518150LanLobbyTooltip(GameWindow *window, WinInstanceData *,
 		return;
 	}
 
-	LANGameInfo *game = (LANGameInfo *)GadgetListBoxGetItemData(window, row, 0);
-	if (!((Rva00685200 *)TheLAN)->has((Rva00685200Node *)game))
-	{
-		TheMouse->setCursorTooltip(UnicodeString::TheEmptyString, -1, 0, 1.0f);
-		return;
-	}
+	LANGameInfo *game = lookupListedLanGame(
+		(LANGameInfo *)GadgetListBoxGetItemData(window, row, 0));
 	if (game == 0)
 	{
 		TheMouse->setCursorTooltip(UnicodeString::TheEmptyString, -1, 0, 1.0f);
@@ -155,7 +159,7 @@ void Rva00518150LanLobbyTooltip(GameWindow *window, WinInstanceData *,
 		{
 			if (tooltip.getLength() != 0)
 				tooltip += reinterpret_cast<const WideChar *>(0x01084C10);
-					appendLanTooltipName(tooltip, slot->getName());
+			appendLanTooltipName(tooltip, slot->getName());
 		}
 	}
 	TheMouse->setCursorTooltip(tooltip, -1, 0, 1.0f);
