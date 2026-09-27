@@ -1,9 +1,12 @@
 // Address-derived identity; this is the block-integrity helper called by
 // MemoryPool::_VerifyIntegrity at 0x00882D50.
-// cl: /O2 /DNDEBUG /MD
+// cl: /O2 /DNDEBUG /MD /Oa
 
 unsigned char bfmeAllSame(
 	const unsigned int *data, unsigned int value, unsigned int bytes);
+extern void __cdecl memset32(void *ptr, int value, unsigned int bytesToFill);
+// Address-derived guard-word count global at 0x0130EA00.
+extern int Rva0130EA00GuardWords;
 
 class Rva008838F0Owner
 {
@@ -15,6 +18,7 @@ class Rva00882580Block
 {
 public:
 	unsigned char check(void);
+	void setUsed(int used);
 
 private:
 	void *m_field00;
@@ -57,4 +61,11 @@ report:
 		((Rva008838F0Owner *)0x0130EA10)->rva008836F0(
 			(unsigned char *)this + 0x0c, diagnostic, 0x1000);
 	return 1;
+}
+
+void Rva00882580Block::setUsed(int used)
+{
+	m_size08 = used;
+	if (Rva0130EA00GuardWords)
+		memset32((char *)this + used + 0x0c, 0x0BADF00D, Rva0130EA00GuardWords * 4);
 }
