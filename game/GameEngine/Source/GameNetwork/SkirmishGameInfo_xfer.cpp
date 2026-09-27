@@ -1,41 +1,29 @@
-// ?d_0061f930@@YAXXZ
-// partial score=0.83 date=2026-09-22
-// cl: /DNDEBUG /MD /EHsc
-// BFME SkirmishGameInfo::xfer reconstruction at retail 0x0061F930.
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// BFME SkirmishGameInfo::xfer at retail 0x0061F930 (901 bytes).
+// Derived from Zero Hour GameInfo.cpp, Copyright 2025 Electronic Arts Inc., GPL-3.0-or-later.
+
+#include "ascii_string.h"
+#include "unicode_string.h"
+
+// ??0UnicodeString@@QAE@ABV0@@Z absent-from-retail
+inline UnicodeString::UnicodeString(const UnicodeString &other)
+{
+    ((StringBase<unsigned short> *)this)
+        ->StringBase<unsigned short>::StringBase(
+            *(const StringBase<unsigned short> *)&other);
+}
+
+// ??1UnicodeString@@QAE@XZ absent-from-retail
+inline UnicodeString::~UnicodeString()
+{
+    ((StringBase<unsigned short> *)this)->releaseBuffer();
+}
 
 typedef unsigned char UnsignedByte;
 typedef unsigned short UnsignedShort;
 typedef unsigned int UnsignedInt;
 typedef int Int;
 typedef bool Bool;
-
-template <typename T> class StringBase
-{
-    friend class AsciiString;
-    friend class UnicodeString;
-
-private:
-    StringBase() : m_data(0) {}
-    StringBase(const StringBase<T> &other);
-    ~StringBase();
-
-    void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-    AsciiString() : StringBase<char>() {}
-};
-
-class UnicodeString : private StringBase<unsigned short>
-{
-public:
-    UnicodeString() : StringBase<unsigned short>() {}
-    UnicodeString(const UnicodeString &other)
-        : StringBase<unsigned short>(other) {}
-    ~UnicodeString() {}
-};
 
 struct BfmeXferVersion
 {
@@ -94,8 +82,12 @@ enum SlotState
     SLOT_PLAYER
 };
 
+// Retail builds the loop's zeroed argument and the tail's IP/port pair as
+// 8-byte objects that share one stack slot.
 struct GameSlotConnectInfo
 {
+    GameSlotConnectInfo() : m_unused(0), m_port(0) {}
+    GameSlotConnectInfo(UnsignedInt ip, UnsignedShort port) : m_unused(ip), m_port(port) {}
     Int m_unused;
     UnsignedShort m_port;
 };
@@ -249,7 +241,7 @@ void SkirmishGameInfo::xfer(Xfer *xfer)
 
             if (xfer->getXferMode())
             {
-                GameSlotConnectInfo connectInfo = { 0, 0 };
+                GameSlotConnectInfo connectInfo;
                 m_slot[slot]->setState((SlotState)state, name, &connectInfo);
                 if (isAccepted)
                     m_slot[slot]->setAccept();
@@ -263,18 +255,16 @@ void SkirmishGameInfo::xfer(Xfer *xfer)
                 m_slot[slot]->setPlayerTemplate(playerTemplate);
             }
         }
+        UnsignedInt localIP = m_localIP;
+        xfer->xferUnsignedInt(&localIP);
+        UnsignedShort extra38 = (UnsignedShort)m_extra38;
+        xfer->xferUnsignedShort(&extra38);
+        // Retail writes GameInfo+0x34 and +0x38 back as one 8-byte pair copy.
+        *(GameSlotConnectInfo *)&m_localIP = GameSlotConnectInfo(localIP, extra38);
+        xferMapName(xfer, &m_mapName);
+        xfer->xferUnsignedInt(&m_mapCRC);
+        xfer->xferUnsignedInt(&m_mapSize);
+        xfer->xferInt(&m_mapMask);
+        xfer->xferInt(&m_seed);
     }
-
-    UnsignedInt localIP = m_localIP;
-    xfer->xferUnsignedInt(&localIP);
-    UnsignedShort extra38 = (UnsignedShort)m_extra38;
-    xfer->xferUnsignedShort(&extra38);
-    m_localIP = localIP;
-    volatile UnsignedShort extra38Copy = extra38;
-    m_extra38 = extra38Copy;
-    xferMapName(xfer, &m_mapName);
-    xfer->xferUnsignedInt(&m_mapCRC);
-    xfer->xferUnsignedInt(&m_mapSize);
-    xfer->xferInt(&m_mapMask);
-    xfer->xferInt(&m_seed);
 }
