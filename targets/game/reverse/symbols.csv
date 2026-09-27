@@ -89580,3 +89580,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?locoUpdate1@Rva002C12E0Locomotor@@QAEXPAX@Z,0x001B80D0,address-derived locomotor update; thiscall ret 4 with object pointer; body target of ILT 0x00002121
 ??$_Construct@U?$pair@$$CBW4NameKeyType@@M@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBW4NameKeyType@@M@0@ABU10@@Z,0x0002487A,ILT thunk the NameKeyType-float tree _M_copy at 0x00567200 calls to build the pair in the freshly allocated 0x18 node; jmp 0x0007CD50
 ?Rva0074ACB0Load@WorldHeightMap@@AAEXAAVDataChunkInput@@_N@Z,0x0074ACB0,stream-ctor load helper; body is the matched ?d_0074acb0 gen-dump; ABI from call site ecx=this then DataChunkInput& and bool result unused
+?rva006A56A0@Rva006A56A0@@QAEXHHH@Z,0x006A56A0,Retail call target at RVA 0x006A56A0 returns with ret 0x0C after three stack arguments. Caller 0x006A5870 sets ECX and pushes three stack arguments. EAX is unused.
