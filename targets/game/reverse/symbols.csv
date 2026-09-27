@@ -89224,3 +89224,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?Rva0130EA00GuardWords@@3HA,0x0130EA00,address-derived global alias for the 32-bit guard-word count read by 0x00882550 and block checker 0x00882580
+?rva0072B580@W3DTerrainBackground@@IAEXPAGHHHH0AAH@Z,0x0072B580,BFME seven-argument fillVBRecursive twin; W3DTerrainBackground::doTesselatedUpdate 0x0072C7F0 calls it twice via ILT 0x0000FA29 (ecx=this; ib 0 0 0 width ndx &count)
+?rva0074C4F0@WorldHeightMap@@QAE?AVShroudTexture@@HHHHH@Z,0x0074C4F0,getFlatTexture twin returning an owning texture handle via hidden result; doTesselatedUpdate 0x0072C7F0 calls it via ILT 0x00045F66 (ecx=m_map; x y width 16 format)
