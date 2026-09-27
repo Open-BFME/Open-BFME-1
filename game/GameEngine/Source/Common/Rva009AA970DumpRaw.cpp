@@ -60,3 +60,15 @@ void Rva009AAAA0DumpRawLoop(const char *prefix, int index, const char *bytes,
 	}
 	bfmeFreeUXB(fp);
 }
+
+// ?Rva009AAB40AppendRaw@@YAXPBD0IIH@Z
+void Rva009AAB40AppendRaw(const char *filename, const char *bytes,
+	unsigned stride, unsigned length, int count)
+{
+	void *fp = bfmeFopenVIF(filename, "ab");
+	for (int i = 0; i < count; ++i) {
+		fwrite(bytes, length, 1, fp);
+		bytes += stride;
+	}
+	bfmeFreeUXB(fp);
+}

@@ -20,3 +20,14 @@ Bool GameLODManager::isReallyLowMHz() const
 {
     return m_cpuFreq < m_reallyLowMHz;
 }
+
+extern GameLODManager *TheGameLODManager;
+
+// ?Rva00752E10ClampLod@@YAHXZ
+int Rva00752E10ClampLod()
+{
+	int value = *reinterpret_cast<const int *>(reinterpret_cast<const char *>(TheGameLODManager) + 0x170c) - 1;
+	if (value < 0) return 0;
+	if (value > 2) return 2;
+	return value;
+}
