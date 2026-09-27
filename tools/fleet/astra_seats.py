@@ -271,12 +271,17 @@ def original_commit(tree):
     Rebasing it through union merge is what corrupted round 3's ledgers, and
     each later rebase or repair commit carries other contributors' rows; the
     first commit against its own parent is the seat's clean delta."""
-    log = git(tree, "reflog", "--format=%H %gs").stdout.splitlines()
-    firsts = [line.split(" ", 1)[0] for line in log if " commit: reverse:" in f" {line.split(' ', 1)[1]}"]
-    return firsts[-1] if firsts else None
+    # The newest commit/amend the seat itself made; rebases log as
+    # "rebase (pick)"/"pull --rebase" and never match, so an operator amend
+    # (evidence for a name correction) is picked up and a rebase never is.
+    for line in git(tree, "reflog", "--format=%H %gs").stdout.splitlines():
+        sha, _, subject = line.partition(" ")
+        if subject.startswith(("commit: reverse:", "commit (amend): reverse:")):
+            return sha
+    return None
 
 
-def harvest(seat):
+def harvest(seat, correct=None):
     """Commit a finished seat and replay its delta onto master. Problem or None."""
     import seat_replay
 
@@ -300,7 +305,7 @@ def harvest(seat):
             return "commit refused by the hooks:\n" + (made.stdout + made.stderr)[-2500:]
         commit = git(tree, "rev-parse", "HEAD").stdout.strip()
     replay = seat_replay.replay_tree()
-    problem = seat_replay.replay(tree, commit, replay)
+    problem = seat_replay.replay(tree, commit, replay, correct=correct)
     if problem is None:
         print(f"{seat['id']}: pushed {git(replay, 'log', '--oneline', '-1').stdout.strip()}")
     return problem
@@ -312,6 +317,9 @@ def main(argv=None):
     ap.add_argument("count", nargs="?", type=int, default=4)
     ap.add_argument("--lifts", action="store_true", help="add one seat on servable named lifts")
     ap.add_argument("--seat", help="harvested: mark this seat id as reviewed, releasing its bodies")
+    ap.add_argument("--correct", nargs=2, metavar=("EVIDENCE", "REASON"),
+                    help="harvest --seat ID: document the renames name_regression reports, citing EVIDENCE "
+                         "(a tracked file in the seat commit) -- only after reviewing them")
     args = ap.parse_args(argv)
     if args.action == "status":
         return status()
@@ -319,7 +327,7 @@ def main(argv=None):
         for seat in seats():
             if seat.get("harvested") or not finished(seat) or (args.seat and seat["id"] != args.seat):
                 continue
-            problem = harvest(seat)
+            problem = harvest(seat, tuple(args.correct) if args.correct else None)
             if problem and problem != "nothing to harvest":
                 print(f"{seat['id']}: NEEDS REVIEW -- {problem}")
                 continue

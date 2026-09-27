@@ -214,8 +214,34 @@ def apply_delta(tree, delta):
     return None
 
 
-def replay(repo, commit, tree, tries=20):
-    """Push `commit`'s delta from `repo` as a fresh commit on origin/master, via `tree`."""
+def add_corrections(tree, evidence, reason):
+    """Document every name_regression finding of the staged replay with the
+    operator's evidence file (which must be part of the replayed change).
+    Findings exist only against CURRENT master, so they are computed here."""
+    import dataclasses
+    import name_regression
+    findings, _ = name_regression.check(tree.resolve(), "HEAD", ":")
+    if not findings:
+        return 0
+    path = tree / JSON_LISTS[0]
+    raw = path.read_bytes()
+    data = json.loads(raw)
+    for finding in findings:
+        entry = dataclasses.asdict(finding)
+        entry.update(evidence=evidence, reason=reason)
+        data.append(entry)
+    newline = "\r\n" if b"\r\n" in raw else "\n"
+    path.write_bytes((json.dumps(data, indent=1, ensure_ascii=False).replace("\n", newline) + newline)
+                     .encode("utf-8"))
+    git(tree, "add", "--", JSON_LISTS[0])
+    return len(findings)
+
+
+def replay(repo, commit, tree, tries=20, correct=None):
+    """Push `commit`'s delta from `repo` as a fresh commit on origin/master, via `tree`.
+
+    correct=(evidence, reason): document the renames name_regression reports
+    against current master, citing that evidence (reviewed by the operator)."""
     delta = seat_delta(repo, commit)
     message = git(repo, "log", "-1", "--format=%B", commit).stdout
     for _ in range(tries):
@@ -226,6 +252,8 @@ def replay(repo, commit, tree, tries=20):
             return problem
         for rva, (name, source) in sorted(delta["skipped"].items()):
             print(f"  skipped 0x{rva:08X} {name}: landed upstream meanwhile (seat source {source})")
+        if correct:
+            print(f"  documented {add_corrections(tree, *correct)} name correction(s)")
         if git(tree, "diff", "--cached", "--quiet").returncode == 0:
             return None                      # master already holds every change
         made = subprocess.run(["git", "commit", "-q", "-F", "-"], cwd=tree, input=message,
@@ -256,8 +284,10 @@ def main(argv=None):
     ap.add_argument("repo", type=Path)
     ap.add_argument("commit")
     ap.add_argument("--tries", type=int, default=20)
+    ap.add_argument("--correct", nargs=2, metavar=("EVIDENCE", "REASON"))
     args = ap.parse_args(argv)
-    problem = replay(args.repo, args.commit, replay_tree(), args.tries)
+    problem = replay(args.repo, args.commit, replay_tree(), args.tries,
+                     correct=tuple(args.correct) if args.correct else None)
     if problem:
         print(problem)
         return 1
