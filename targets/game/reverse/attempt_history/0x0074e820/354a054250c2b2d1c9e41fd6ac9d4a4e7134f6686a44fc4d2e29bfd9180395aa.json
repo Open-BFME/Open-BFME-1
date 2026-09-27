@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "354a054250c2b2d1c9e41fd6ac9d4a4e7134f6686a44fc4d2e29bfd9180395aa",
+  "symbol": "?forwardEmptyRequest@BfmeRequestOwner@@QAEXH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.68,
+  "source": "// ?forwardEmptyRequest@BfmeRequestOwner@@QAEXH@Z\n// partial score=0.68 date=2026-09-02\n// cl: /O2\n\n// Open-BFME5: build an all-zero nine-dword request record and forward it by\n// value together with the caller's request selector.\n\nstruct BfmeNineWordRequest\n{\n\t__forceinline BfmeNineWordRequest()\n\t{\n\t\tm_firstFlag = 0;\n\t\tm_secondFlag = 0;\n\t\tm_mode = 0;\n\t\tm_words[0] = 0;\n\t\tm_words[1] = 0;\n\t\tm_words[2] = 0;\n\t\tm_words[3] = 0;\n\t\tm_words[4] = 0;\n\t\tm_words[5] = 0;\n\t\tm_words[6] = 0;\n\t\tm_words[7] = 0;\n\t}\n\n\tint m_words[8];\n\tunsigned char m_firstFlag;\n\tunsigned char m_secondFlag;\n\tunsigned short m_mode;\n};\n\nclass BfmeRequestOwner\n{\npublic:\n\tvoid forwardEmptyRequest(int selector);\n\tvoid forwardRequest(int selector, BfmeNineWordRequest request);\n};\n\nvoid BfmeRequestOwner::forwardEmptyRequest(int selector)\n{\n\tBfmeRequestOwner *self = this;\n\tBfmeNineWordRequest request;\n\tself->forwardRequest(selector, request);\n}\n"
+}

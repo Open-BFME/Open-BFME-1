@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "1ff6cbea88f2af5f84520c259315f7ed77695ac2ac6701413e796f8771031b6e",
+  "symbol": "?bfmeCallDUL@@YGXPAXPBX@Z",
+  "score_kind": "author-estimate",
+  "score": 0.667,
+  "source": "// ?bfmeCallDUL@@YGXPAXPBX@Z\n// partial score=0.667 date=2026-09-27\n// cl: /DNDEBUG /MD /EHsc\n// The ILT pin at 0x0001D467 names this body bfmeCallDUL, and five callers pass Ping strings from BfmeConv785.cpp.\n// The matched constructor at 0x0058BED0 takes an integer and allocates a 24-byte object. This draft passes the temporary string object's address as that value.\n// The probe measured 133 bytes against retail's 170, with 65 non-relocation differences and four misaligned relocation sites.\n\nclass BFMERetailAsciiString\n{\npublic:\n\tBFMERetailAsciiString(const char *text);\n\t~BFMERetailAsciiString() { releaseBuffer(); }\nprivate:\n\tvoid releaseBuffer();\n\tchar *m_data;\n};\n\nclass Rva0058BF70Base\n{\npublic:\n\tRva0058BF70Base() : m_value(0) {}\n\tvirtual ~Rva0058BF70Base() {}\n\tvirtual void slot1();\n\tvirtual void slot2();\nprotected:\n\tint m_value;\n};\n\nclass Rva0058BF70Owner : public Rva0058BF70Base\n{\npublic:\n\tRva0058BF70Owner(int value);\n\tvirtual ~Rva0058BF70Owner();\nprivate:\n\tbool m_released;\n\tchar m_pad09[3];\n\tvoid *m_block;\n\tint m_tail0;\n\tint m_tail1;\n};\n\nvoid __stdcall bfmeCallDUL(void *other, const void *what)\n{\n\tnew Rva0058BF70Owner((int)&BFMERetailAsciiString((const char *)what));\n}\n"
+}
