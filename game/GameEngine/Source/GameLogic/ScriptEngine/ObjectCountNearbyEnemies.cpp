@@ -1,9 +1,8 @@
-// ?ObjectCountNearbyEnemies@@YAHPAUlua_State@@@Z
-// partial score=0.55 date=2026-09-25
-// ?ObjectCountNearbyEnemies@@YAHPAUlua_State@@@Z
-// scratch experiment: order filter construction before float radius materialization
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
+// Retail RVA 0x002E8130, 449 bytes. The Lua registration at 0x002EC990
+// binds ILT 0x0003D1FE to this callback as ObjectCountNearbyEnemies.
+
 #define _STLP_USE_STATIC_LIB 1
 #define _STLP_NO_EXCEPTIONS 1
 #define BFME_STLP_NODE_ALLOC 1
@@ -69,33 +68,25 @@ struct BfmeWideResult {
   ~BfmeWideResult() { if (--value->references == 0) delete value; }
 };
 class BfmeWideForwardC {
-public: BfmeWideResult bfmeForwardWideC(int, int, int, int, int);
+public: BfmeWideResult bfmeForwardWideC(int, float, int, int, int);
 };
 extern BfmeWideForwardC *ThePartitionManager;
 
-inline BfmeWideResult Rva002E8130Forward(BfmeWideForwardC *manager,
-    int position, int filter, int radius)
-{
-  union { float real; int bits; } radiusWord;
-  return manager->bfmeForwardWideC(
-      position, (radiusWord.real = (float)radius, radiusWord.bits),
-      0, filter, 1);
-}
-
+// ?ObjectCountNearbyEnemies@@YAHPAUlua_State@@@Z
 int ObjectCountNearbyEnemies(lua_State *state) {
   unsigned objectID = Rva00990030Lookup(state, 1);
   if (!objectID && lua_type(state, 1) != 1) {
     lua_pushnil(state);
     return 0;
   }
-  volatile int radius = (int)lua_tonumber(state, 2);
+  int radius = (int)lua_tonumber(state, 2);
   Object *object = TheGameLogic->findObjectByID((int)objectID);
   if (object != 0) {
-    BfmeWideResult iterator = Rva002E8130Forward(ThePartitionManager,
-        (int)((char *)object + 0x38),
+    BfmeWideResult iterator = ThePartitionManager->bfmeForwardWideC(
+        (int)&object->m_position, (float)radius, 0,
         (int)PartitionFilterRelationship(object, 1, false).link(
             Rva0025ED50RootFilter().link(&Rva0025ED50ObjectFilter(object))),
-        radius);
+        1);
     Rva009F39F0Payload *payload = iterator.value;
     int count = payload->entries.size();
     lua_pushnumber(state, (double)count);
