@@ -29,10 +29,7 @@ enum Relationship
 	ALLIES = 2
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0
-};
+#include "../../GameLogic/command_source_type.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing

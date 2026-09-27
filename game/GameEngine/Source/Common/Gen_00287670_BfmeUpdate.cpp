@@ -20,10 +20,7 @@ public:
 	virtual void bfmeReset(int value);
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_AI = 2
-};
+#include "../GameLogic/command_source_type.h"
 
 class AICommandInterface
 {

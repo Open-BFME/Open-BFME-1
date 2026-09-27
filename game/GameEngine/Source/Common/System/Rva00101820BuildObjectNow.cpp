@@ -13,10 +13,7 @@ typedef unsigned int UnsignedInt;
 typedef unsigned char UnsignedByte;
 typedef bool Bool;
 
-enum CommandSourceType
-{
-	CMD_FROM_AI = 2
-};
+#include "../../GameLogic/command_source_type.h"
 
 enum KindOfType
 {

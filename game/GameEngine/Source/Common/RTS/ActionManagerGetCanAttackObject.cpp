@@ -13,10 +13,7 @@ enum KindOfType
 	KINDOF_SPAWNS_ARE_THE_WEAPONS = 83
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0
-};
+#include "../../GameLogic/command_source_type.h"
 
 enum AbleToAttackType
 {

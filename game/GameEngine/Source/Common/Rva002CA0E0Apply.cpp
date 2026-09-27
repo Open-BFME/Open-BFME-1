@@ -1,10 +1,7 @@
 // ?apply@Rva002CA0E0@@QAEXXZ
 // cl: /O2 /Ob0
 
-enum CommandSourceType
-{
-	CMD_FROM_AI = 2
-};
+#include "../GameLogic/command_source_type.h"
 
 class AICommandInterface
 {

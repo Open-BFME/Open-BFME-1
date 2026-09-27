@@ -16,10 +16,7 @@ enum Relationship
 	ENEMIES = 2
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_SCRIPT = 1
-};
+#include "../../GameLogic/command_source_type.h"
 
 enum ObjectShroudStatus
 {

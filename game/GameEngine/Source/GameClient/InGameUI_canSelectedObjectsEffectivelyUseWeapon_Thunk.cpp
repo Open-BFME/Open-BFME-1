@@ -11,10 +11,7 @@ typedef bool Bool;
 struct Coord3D;
 class Object;
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0
-};
+#include "../GameLogic/command_source_type.h"
 
 enum WeaponSlotType
 {

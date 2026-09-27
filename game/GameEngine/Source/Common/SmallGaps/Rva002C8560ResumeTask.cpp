@@ -8,7 +8,7 @@
 // from inputs/reference/CnC_Generals_Zero_Hour). This RVA is a distinct unclaimed twin of that body
 // (different address, no ledger row), so it is landed address-derived per the GAP naming policy.
 class Object;
-enum CommandSourceType { CMD_FROM_PLAYER = 0 };
+#include "../../GameLogic/command_source_type.h"
 
 class BFMEActionManager;
 extern BFMEActionManager* TheActionManager;

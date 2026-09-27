@@ -45,7 +45,7 @@ public:
  unsigned getOptions() const { return m_options; }
  const SpecialPowerTemplate *getSpecialPowerTemplate() const { return m_specialPower; }
 };
-enum CommandSourceType { CMD_FROM_PLAYER = 0 };
+#include "../GameLogic/command_source_type.h"
 class ActionManager { public:
  bool canDoSpecialPower(const Object *,const SpecialPowerTemplate *,CommandSourceType,unsigned,bool=true);
  bool canDoSpecialPowerAtObject(const Object *,const Object *,CommandSourceType,const SpecialPowerTemplate *,unsigned,bool=true);

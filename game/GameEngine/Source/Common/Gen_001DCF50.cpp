@@ -99,12 +99,7 @@ public:
 	bool isNonFactionStructure() const;
 #include "../GameLogic/Object/object.h"
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT = 1,
-	CMD_FROM_AI = 2
-};
+#include "../GameLogic/command_source_type.h"
 
 enum CanEnterType
 {

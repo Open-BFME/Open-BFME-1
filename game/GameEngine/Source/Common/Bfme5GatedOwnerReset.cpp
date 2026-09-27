@@ -5,10 +5,7 @@
 	virtual void PREFIX##6(void); virtual void PREFIX##7(void); \
 	virtual void PREFIX##8(void); virtual void PREFIX##9(void)
 
-enum CommandSourceType
-{
-	CMD_FROM_AI = 2
-};
+#include "../GameLogic/command_source_type.h"
 
 enum ObjectStatusTypes
 {

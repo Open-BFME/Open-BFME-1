@@ -33,12 +33,7 @@ enum KindOfType
 	KINDOF_NOT_SELLABLE = 153		///< retail KindOf name table entry 153
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT,
-	CMD_FROM_AI
-};
+#include "../../GameLogic/command_source_type.h"
 
 typedef unsigned short PlayerMaskType;
 const PlayerMaskType PLAYERMASK_ALL = 0xffff;
