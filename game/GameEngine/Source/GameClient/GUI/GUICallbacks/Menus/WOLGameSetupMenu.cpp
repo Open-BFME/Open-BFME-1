@@ -3980,308 +3980,405 @@ static Int getFirstSelectablePlayer(const GameInfo *game)
 //-------------------------------------------------------------------------------------------------
 /** WOL Game Options menu window system callback */
 //-------------------------------------------------------------------------------------------------
-WindowMsgHandledType WOLGameSetupMenuSystem( GameWindow *window, UnsignedInt msg, 
-														 WindowMsgData mData1, WindowMsgData mData2 )
-{
-	UnicodeString txtInput;
-	static buttonCommunicatorID = NAMEKEY_INVALID;
-	switch( msg )
-	{
-		//-------------------------------------------------------------------------------------------------	
-		case GWM_CREATE:
-			{
-				buttonCommunicatorID = NAMEKEY("GameSpyGameOptionsMenu.wnd:ButtonCommunicator");
-				break;
-			} // case GWM_DESTROY:
-		//-------------------------------------------------------------------------------------------------
-		case GWM_DESTROY:
-			{
-				break;
-			} // case GWM_DESTROY:
-		//-------------------------------------------------------------------------------------------------
-		case GWM_INPUT_FOCUS:
-			{	
-				// if we're givin the opportunity to take the keyboard focus we must say we want it
-				if( mData1 == TRUE )
-					*(Bool *)mData2 = TRUE;
+template <> inline bool StringBase<unsigned short>::isEmpty() const {
+  return m_data == 0 || m_data->length == 0;
+}
+extern Bool Rva004F1FF0HandleSlashCommands(UnicodeString);
+// BFME virtual slots independently witnessed in this callback and the
+// already matched initializer/update siblings.
+class BfmeWolSystemInfo {
+public:
+  virtual ~BfmeWolSystemInfo() = 0;
+  virtual void reset() = 0;
+  virtual void slot_008() = 0;
+  virtual void slot_00C() = 0;
+  virtual void slot_010() = 0;
+  virtual void slot_014() = 0;
+  virtual void slot_018() = 0;
+  virtual void slot_01C() = 0;
+  virtual void slot_020() = 0;
+  virtual void slot_024() = 0;
+  virtual void slot_028() = 0;
+  virtual void slot_02C() = 0;
+  virtual void slot_030() = 0;
+  virtual void slot_034() = 0;
+  virtual void slot_038() = 0;
+  virtual void slot_03C() = 0;
+  virtual void
+  updatePlayerInfo(PlayerInfo pi,
+                   AsciiString oldNick = AsciiString::TheEmptyString) = 0;
+  virtual void playerLeftGroupRoom(AsciiString nick) = 0;
+  virtual PlayerInfoMap *getPlayerInfoMap() = 0;
+  virtual void slot_04C() = 0;
+  virtual void slot_050() = 0;
+  virtual void slot_054() = 0;
+  virtual void slot_058() = 0;
+  virtual void slot_05C() = 0;
+  virtual void slot_060() = 0;
+  virtual void slot_064() = 0;
+  virtual void slot_068() = 0;
+  virtual void slot_06C() = 0;
+  virtual void slot_070() = 0;
+  virtual void slot_074() = 0;
+  virtual void slot_078() = 0;
+  virtual void slot_07C() = 0;
+  virtual void slot_080() = 0;
+  virtual void slot_084() = 0;
+  virtual void slot_088() = 0;
+  virtual void slot_08C() = 0;
+  virtual void slot_090() = 0;
+  virtual void slot_094() = 0;
+  virtual void slot_098() = 0;
+  virtual void slot_09C() = 0;
+  virtual void slot_0A0() = 0;
+  virtual void slot_0A4() = 0;
+  virtual void slot_0A8() = 0;
+  virtual void slot_0AC() = 0;
+  virtual void leaveStagingRoom() = 0;
+  virtual void slot_0B4() = 0;
+  virtual void slot_0B8() = 0;
+  virtual void slot_0BC() = 0;
+  virtual Bool amIHost() = 0;
+  virtual GameSpyStagingRoom *getCurrentStagingRoom() = 0;
+  virtual void slot_0C8() = 0;
+  virtual void setGameOptions() = 0;
+  virtual void slot_0D0() = 0;
+  virtual void slot_0D4() = 0;
+  virtual void slot_0D8() = 0;
+  virtual void slot_0DC() = 0;
+  virtual void slot_0E0() = 0;
+  virtual void slot_0E4() = 0;
+  virtual void slot_0E8() = 0;
+  virtual Int addText(UnicodeString message, Color c, GameWindow *win) = 0;
+  virtual void addChat(AsciiString nick, Int profileID, UnicodeString msg,
+                       Bool isPublic, Bool isAction, GameWindow *win) = 0;
+  virtual void slot_0F4() = 0;
+  virtual void sendChat(UnicodeString, Bool, GameWindow *) = 0;
+  virtual void slot_0FC() = 0;
+  virtual void slot_100() = 0;
+  virtual void slot_104() = 0;
+  virtual void slot_108() = 0;
+  virtual void slot_10C() = 0;
+  virtual void slot_110() = 0;
+  virtual void slot_114() = 0;
+  virtual void slot_118() = 0;
+  virtual void slot_11C() = 0;
+  virtual void slot_120() = 0;
+  virtual void slot_124() = 0;
+  virtual void slot_128() = 0;
+  virtual void slot_12C() = 0;
+  virtual void slot_130() = 0;
+  virtual void slot_134() = 0;
+  virtual void slot_138() = 0;
+  virtual void slot_13C() = 0;
+  virtual void slot_140() = 0;
+  virtual void slot_144() = 0;
+  virtual void slot_148() = 0;
+  virtual void slot_14C() = 0;
+  virtual void slot_150() = 0;
+  virtual void slot_154() = 0;
+  virtual Bool isDisconnectedAfterGameStart(Int *reason) const = 0;
+  virtual void markAsDisconnectedAfterGameStart(Int reason) = 0;
+  virtual void slot_160() = 0;
+  virtual void slot_164() = 0;
+  virtual void slot_168() = 0;
+  virtual Int getMaxMessagesPerUpdate() = 0;
+};
 
-				return MSG_HANDLED;
-			}//case GWM_INPUT_FOCUS:
-		//-------------------------------------------------------------------------------------------------
-		case GCM_SELECTED:
-			{
-				if (!initDone)
-					break;
-				if (buttonPushed)
-					break;
-				GameWindow *control = (GameWindow *)mData1;
-				Int controlID = control->winGetWindowId();
-        if ( controlID == comboBoxStartingCashID )
-        {
-          handleStartingCashSelection();
+struct BfmeWolSystemGameInfo {
+  char unknown000[0x429];
+  Bool value429;
+};
+// Retail keeps separate default connection temporaries alive through each
+// setState full expression. Their layout is the same eight-byte connection
+// record used by the native setup update.
+struct BfmeWolSystemConnection : GameSlotConnectInfo {
+  BfmeWolSystemConnection() {
+    m_nat = (FirewallHelperClass::FirewallBehaviorType)0;
+    m_port = 0;
+  }
+};
+class BfmeWolSystemLayout {
+public:
+  virtual void runInit(void *data = NULL) = 0;
+  virtual ~BfmeWolSystemLayout();
+  virtual void slot08() = 0;
+  virtual void slot0C() = 0;
+  virtual void hide(Bool) = 0;
+  virtual void bringForward() = 0;
+  virtual void slot18() = 0;
+  virtual void slot1C() = 0;
+  virtual void destroyWindows() = 0;
+};
+WindowMsgHandledType WOLGameSetupMenuSystem(GameWindow *window, UnsignedInt msg,
+                                            WindowMsgData mData1,
+                                            WindowMsgData mData2) {
+  UnicodeString txtInput;
+  static buttonCommunicatorID = NAMEKEY_INVALID;
+  switch (msg) {
+  //-------------------------------------------------------------------------------------------------
+  case GWM_CREATE: {
+    buttonCommunicatorID =
+        NAMEKEY("GameSpyGameOptionsMenu.wnd:ButtonCommunicator");
+    break;
+  } // case GWM_DESTROY:
+  //-------------------------------------------------------------------------------------------------
+  case GWM_DESTROY: {
+    break;
+  } // case GWM_DESTROY:
+  //-------------------------------------------------------------------------------------------------
+  case GWM_INPUT_FOCUS: {
+    // if we're givin the opportunity to take the keyboard focus we must say we
+    // want it
+    if (mData1 == TRUE)
+      *(Bool *)mData2 = TRUE;
+
+    return MSG_HANDLED;
+  } // case GWM_INPUT_FOCUS:
+  //-------------------------------------------------------------------------------------------------
+  case GCM_SELECTED: {
+    if (!initDone)
+      break;
+    if (buttonPushed)
+      break;
+    GameWindow *control = (GameWindow *)mData1;
+    Int controlID = control->winGetWindowId();
+    {
+      GameSpyStagingRoom *myGame =
+          ((BfmeWolSystemInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
+      for (Int i = 0; i < MAX_SLOTS; i++) {
+        if (controlID == comboBoxColorID[i]) {
+          handleColorSelection(i);
+        } else if (controlID == comboBoxPlayerTemplateID[i]) {
+          handlePlayerTemplateSelection(i);
+        } else if (controlID == comboBoxTeamID[i]) {
+          handleTeamSelection(i);
+        } else if (controlID == comboBoxPlayerID[i] &&
+                   ((BfmeWolSystemInfo *)TheGameSpyInfo)->amIHost()) {
+          // We don't have anything that'll happen if we click on ourselves
+          if (i == myGame->getLocalSlotNum())
+            break;
+          // Get
+          Int pos = -1;
+          GadgetComboBoxGetSelectedPos(comboBoxPlayer[i], &pos);
+          if (pos != SLOT_PLAYER && pos >= 0) {
+            if (myGame->getSlot(i)->getState() == SLOT_PLAYER) {
+              PeerRequest req;
+              req.peerRequestType = PeerRequest::PEERREQUEST_UTMPLAYER;
+              req.UTM.isStagingRoom = TRUE;
+              AsciiString aName;
+              aName.translate(myGame->getSlot(i)->getName());
+              req.nick = aName.str();
+              req.id = "KICK/";
+              req.options = "true";
+              TheGameSpyPeerMessageQueue->addRequest(req);
+
+              UnicodeString name = myGame->getSlot(i)->getName();
+              myGame->getSlot(i)->setState(SlotState(pos),
+                                           UnicodeString::TheEmptyString,
+                                           &BfmeWolSystemConnection());
+              myGame->resetAccepted();
+              ((BfmeWolSystemInfo *)TheGameSpyInfo)->setGameOptions();
+              WOLDisplaySlotList();
+              // TheLAN->OnPlayerLeave(name);
+            } else if (myGame->getSlot(i)->getState() != pos) {
+              Bool wasAI = (myGame->getSlot(i)->isAI());
+              myGame->getSlot(i)->setState(SlotState(pos),
+                                           UnicodeString::TheEmptyString,
+                                           &BfmeWolSystemConnection());
+              Bool isAI = (myGame->getSlot(i)->isAI());
+              myGame->resetAccepted();
+              if (wasAI ^ isAI)
+                PopulatePlayerTemplateComboBox(
+                    i, comboBoxPlayerTemplate, myGame,
+                    wasAI && ((const BfmeWolSystemGameInfo *)myGame)->value429);
+              ((BfmeWolSystemInfo *)TheGameSpyInfo)->setGameOptions();
+              WOLDisplaySlotList();
+            }
+          }
+          break;
         }
-        else
-        {
-				  GameSpyStagingRoom *myGame = TheGameSpyInfo->getCurrentStagingRoom();
-				  for (Int i = 0; i < MAX_SLOTS; i++)
-				  {
-					  if (controlID == comboBoxColorID[i])
-					  {
-						  handleColorSelection(i);
-					  }
-					  else if (controlID == comboBoxPlayerTemplateID[i])
-					  {
-						  handlePlayerTemplateSelection(i);
-					  }
-					  else if (controlID == comboBoxTeamID[i])
-					  {
-						  handleTeamSelection(i);
-					  }
-					  else if( controlID == comboBoxPlayerID[i] && TheGameSpyInfo->amIHost() )
-					  {
-						  // We don't have anything that'll happen if we click on ourselves
-						  if(i == myGame->getLocalSlotNum())
-						   break;
-						  // Get
-						  Int pos = -1;
-						  GadgetComboBoxGetSelectedPos(comboBoxPlayer[i], &pos);
-						  if( pos != SLOT_PLAYER && pos >= 0)
-						  {
-							  if( myGame->getSlot(i)->getState() == SLOT_PLAYER )
-							  {
-								  PeerRequest req;
-								  req.peerRequestType = PeerRequest::PEERREQUEST_UTMPLAYER;
-								  req.UTM.isStagingRoom = TRUE;
-								  AsciiString aName;
-								  aName.translate(myGame->getSlot(i)->getName());
-								  req.nick = aName.str();
-								  req.id = "KICK/";
-								  req.options = "true";
-								  TheGameSpyPeerMessageQueue->addRequest(req);
+      }
+    }
+  } // The retail selection message deliberately falls through to button
+    // handling.
+  //-------------------------------------------------------------------------------------------------
+  case GBM_SELECTED: {
+    if (buttonPushed)
+      break;
 
-								  UnicodeString name = myGame->getSlot(i)->getName();
-								  myGame->getSlot(i)->setState(SlotState(pos));
-								  myGame->resetAccepted();
-								  TheGameSpyInfo->setGameOptions();
-								  WOLDisplaySlotList();
-								  //TheLAN->OnPlayerLeave(name);
-							  }
-							  else if( myGame->getSlot(i)->getState() != pos )
-							  {
-								  Bool wasAI = (myGame->getSlot(i)->isAI());
-								  myGame->getSlot(i)->setState(SlotState(pos));
-								  Bool isAI = (myGame->getSlot(i)->isAI());
-								  myGame->resetAccepted();
-								  if (wasAI ^ isAI)
-									  PopulatePlayerTemplateComboBox(i, comboBoxPlayerTemplate, myGame, wasAI && myGame->getAllowObservers());
-								  TheGameSpyInfo->setGameOptions();
-								  WOLDisplaySlotList();
-							  }
-						  }
-						  break;
-					  }
-				  }
+    GameWindow *control = (GameWindow *)mData1;
+    Int controlID = control->winGetWindowId();
+    static buttonCommunicatorID =
+        NAMEKEY("GameSpyGameOptionsMenu.wnd:ButtonCommunicator");
+    if (controlID == buttonBackID) {
+      savePlayerInfo();
+      if (WOLMapSelectLayout) {
+        ((BfmeWolSystemLayout *)WOLMapSelectLayout)->destroyWindows();
+        delete ((BfmeWolSystemLayout *)WOLMapSelectLayout);
+        WOLMapSelectLayout = NULL;
+      }
+
+      ((BfmeWolSystemInfo *)TheGameSpyInfo)->getCurrentStagingRoom()->reset();
+      // peerLeaveRoom(TheGameSpyChat->getPeer(), StagingRoom, NULL);
+      ((BfmeWolSystemInfo *)TheGameSpyInfo)->leaveStagingRoom();
+      buttonPushed = true;
+      nextScreen = "Menus/WOLCustomLobby.wnd";
+      TheShell->pop();
+
+    } // if ( controlID == buttonBack )
+    else if (controlID == buttonCommunicatorID) {
+      GameSpyToggleOverlay(GSOVERLAY_BUDDY);
+
+    } else if (controlID == buttonEmoteID) {
+      // read the user's input
+      txtInput.set(GadgetTextEntryGetText(textEntryChat));
+      // Clear the text entry line
+      GadgetTextEntrySetText(textEntryChat, UnicodeString::TheEmptyString);
+      // Clean up the text (remove leading/trailing chars, etc)
+      txtInput.trim();
+      // Echo the user's input to the chat window
+      if (!txtInput.isEmpty())
+        ((BfmeWolSystemInfo *)TheGameSpyInfo)
+            ->sendChat(txtInput, FALSE,
+                       NULL); // 'emote' button is now carriage-return
+    } // if ( controlID == buttonEmote )
+    else if (controlID == buttonSelectMapID) {
+      WOLMapSelectLayout =
+          TheWindowManager->winCreateLayout("Menus/WOLMapSelectMenu.wnd");
+      ((BfmeWolSystemLayout *)WOLMapSelectLayout)->runInit();
+      ((BfmeVirtualHideLayout *)WOLMapSelectLayout)->hide(FALSE);
+      ((BfmeWolSystemLayout *)WOLMapSelectLayout)->bringForward();
+    } else if (controlID == buttonStartID) {
+      savePlayerInfo();
+      if (((BfmeWolSystemInfo *)TheGameSpyInfo)->amIHost()) {
+        StartPressed();
+      } else {
+        // I'm the Client... send an accept message to the host.
+        GameSlot *localSlot =
+            ((BfmeWolSystemInfo *)TheGameSpyInfo)
+                ->getCurrentStagingRoom()
+                ->getSlot(((BfmeWolSystemInfo *)TheGameSpyInfo)
+                              ->getCurrentStagingRoom()
+                              ->getLocalSlotNum());
+        if (localSlot) {
+          localSlot->setAccept();
         }
-        break;
-			}// case GCM_SELECTED:
-		//-------------------------------------------------------------------------------------------------
-		case GBM_SELECTED:
-			{
-				if (buttonPushed)
-					break;
+        UnicodeString hostName = ((BfmeWolSystemInfo *)TheGameSpyInfo)
+                                     ->getCurrentStagingRoom()
+                                     ->getSlot(0)
+                                     ->getName();
+        AsciiString asciiName;
+        asciiName.translate(hostName);
+        PeerRequest req;
+        req.peerRequestType = PeerRequest::PEERREQUEST_UTMPLAYER;
+        req.UTM.isStagingRoom = TRUE;
+        req.id = "accept";
+        req.nick = asciiName.str();
+        req.options = "true";
+        TheGameSpyPeerMessageQueue->addRequest(req);
+        // peerSetReady( PEER, PEERTrue );
+        WOLDisplaySlotList();
+      }
+    }
 
-				GameWindow *control = (GameWindow *)mData1;
-				Int controlID = control->winGetWindowId();
-				static buttonCommunicatorID = NAMEKEY("GameSpyGameOptionsMenu.wnd:ButtonCommunicator");
-				if ( controlID == buttonBackID )
-				{
-					savePlayerInfo();
-					if( WOLMapSelectLayout )
-					{
-						WOLMapSelectLayout->destroyWindows();
-						WOLMapSelectLayout->deleteInstance();
-						WOLMapSelectLayout = NULL;
-					}
-
-					TheGameSpyInfo->getCurrentStagingRoom()->reset();
-					//peerLeaveRoom(TheGameSpyChat->getPeer(), StagingRoom, NULL);
-					TheGameSpyInfo->leaveStagingRoom();
-					buttonPushed = true;
-					nextScreen = "Menus/WOLCustomLobby.wnd";
-					TheShell->pop();
-
-				} //if ( controlID == buttonBack )
-				else if ( controlID == buttonCommunicatorID )
-				{
-					GameSpyToggleOverlay( GSOVERLAY_BUDDY );
-
-				}
-				else if ( controlID == buttonEmoteID )
-				{
-					// read the user's input
-					txtInput.set(GadgetTextEntryGetText( textEntryChat ));
-					// Clear the text entry line
-					GadgetTextEntrySetText(textEntryChat, UnicodeString::TheEmptyString);
-					// Clean up the text (remove leading/trailing chars, etc)
-					txtInput.trim();
-					// Echo the user's input to the chat window
-					if (!txtInput.isEmpty())
-						TheGameSpyInfo->sendChat(txtInput, FALSE, NULL); // 'emote' button is now carriage-return
-				} //if ( controlID == buttonEmote )
-				else if ( controlID == buttonSelectMapID )
-				{
-					WOLMapSelectLayout = TheWindowManager->winCreateLayout( "Menus/WOLMapSelectMenu.wnd" );
-					WOLMapSelectLayout->runInit();
-					WOLMapSelectLayout->hide( FALSE );
-					WOLMapSelectLayout->bringForward();
-				}
-				else if ( controlID == buttonStartID )
-				{
-					savePlayerInfo();
-					if (TheGameSpyInfo->amIHost())
-					{
-						StartPressed();
-					}
-					else
-					{
-						//I'm the Client... send an accept message to the host.
-						GameSlot *localSlot = TheGameSpyInfo->getCurrentStagingRoom()->getSlot(TheGameSpyInfo->getCurrentStagingRoom()->getLocalSlotNum());
-						if (localSlot)
-						{
-							localSlot->setAccept();
-						}
-						UnicodeString hostName = TheGameSpyInfo->getCurrentStagingRoom()->getSlot(0)->getName();
-						AsciiString asciiName;
-						asciiName.translate(hostName);
-						PeerRequest req;
-						req.peerRequestType = PeerRequest::PEERREQUEST_UTMPLAYER;
-						req.UTM.isStagingRoom = TRUE;
-						req.id = "accept";
-						req.nick = asciiName.str();
-						req.options = "true";
-						TheGameSpyPeerMessageQueue->addRequest(req);
-						//peerSetReady( PEER, PEERTrue );
-						WOLDisplaySlotList();
-					}
-				}
-        else if ( controlID == checkBoxLimitSuperweaponsID )
-        {
-          handleLimitSuperweaponsClick();
+    else {
+      for (Int i = 0; i < MAX_SLOTS; i++) {
+        if (controlID == buttonMapStartPositionID[i]) {
+          GameSpyStagingRoom *game =
+              ((BfmeWolSystemInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
+          Int playerIdxInPos = -1;
+          for (Int j = 0; j < MAX_SLOTS; ++j) {
+            GameSpyGameSlot *slot = game->getGameSpySlot(j);
+            if (slot && slot->getStartPos() == i) {
+              playerIdxInPos = j;
+              break;
+            }
+          }
+          if (playerIdxInPos >= 0) {
+            GameSpyGameSlot *slot = game->getGameSpySlot(playerIdxInPos);
+            if (playerIdxInPos == game->getLocalSlotNum() ||
+                (game->amIHost() && slot && slot->isAI())) {
+              // it's one of my type.  Try to change it.
+              Int nextPlayer = getNextSelectablePlayer(playerIdxInPos + 1);
+              handleStartPositionSelection(playerIdxInPos, -1);
+              if (nextPlayer >= 0) {
+                handleStartPositionSelection(nextPlayer, i);
+              }
+            }
+          } else {
+            // nobody in the slot - put us in
+            Int nextPlayer = getNextSelectablePlayer(0);
+            if (nextPlayer < 0)
+              nextPlayer = getFirstSelectablePlayer(game);
+            handleStartPositionSelection(nextPlayer, i);
+          }
         }
-				else
-				{
-					for (Int i = 0; i < MAX_SLOTS; i++)
-					{
-						if (controlID == buttonMapStartPositionID[i])
-						{
-							GameSpyStagingRoom *game = TheGameSpyInfo->getCurrentStagingRoom();
-							Int playerIdxInPos = -1;
-							for (Int j=0; j<MAX_SLOTS; ++j)
-							{
-								GameSpyGameSlot *slot = game->getGameSpySlot(j);
-								if (slot && slot->getStartPos() == i)
-								{
-									playerIdxInPos = j;
-									break;
-								}
-							}
-							if (playerIdxInPos >= 0)
-							{
-								GameSpyGameSlot *slot = game->getGameSpySlot(playerIdxInPos);
-								if (playerIdxInPos == game->getLocalSlotNum() || (game->amIHost() && slot && slot->isAI()))
-								{
-									// it's one of my type.  Try to change it.
-									Int nextPlayer = getNextSelectablePlayer(playerIdxInPos+1);
-									handleStartPositionSelection(playerIdxInPos, -1);
-									if (nextPlayer >= 0)
-									{
-										handleStartPositionSelection(nextPlayer, i);
-									}
-								}
-							}
-							else
-							{
-								// nobody in the slot - put us in
-								Int nextPlayer = getNextSelectablePlayer(0);
-								if (nextPlayer < 0)
-									nextPlayer = getFirstSelectablePlayer(game);
-								handleStartPositionSelection(nextPlayer, i);
-							}
-						}
-					}
-				}
+      }
+    }
 
+    break;
+  } // case GBM_SELECTED:
+  //-------------------------------------------------------------------------------------------------
+  case GBM_SELECTED_RIGHT: {
+    if (buttonPushed)
+      break;
 
-				break;
-			}// case GBM_SELECTED:
-		//-------------------------------------------------------------------------------------------------
-		case GBM_SELECTED_RIGHT:
-   		{
-   			if (buttonPushed)
-   				break;
-   
-   			GameWindow *control = (GameWindow *)mData1;
-				Int controlID = control->winGetWindowId();
-				for (Int i = 0; i < MAX_SLOTS; i++)
-				{
-					if (controlID == buttonMapStartPositionID[i])
-					{
-						GameSpyStagingRoom *game = TheGameSpyInfo->getCurrentStagingRoom();
-						Int playerIdxInPos = -1;
-						for (Int j=0; j<MAX_SLOTS; ++j)
-						{
-							GameSpyGameSlot *slot = game->getGameSpySlot(j);
-							if (slot && slot->getStartPos() == i)
-							{
-								playerIdxInPos = j;
-								break;
-							}
-						}
-						if (playerIdxInPos >= 0)
-						{
-							GameSpyGameSlot *slot = game->getGameSpySlot(playerIdxInPos);
-							if (playerIdxInPos == game->getLocalSlotNum() || (game->amIHost() && slot && slot->isAI()))
-							{
-								// it's one of my type.  Remove it.
-								handleStartPositionSelection(playerIdxInPos, -1);
-							}
-						}
-					}
-				}
-				break;
-			}
+    GameWindow *control = (GameWindow *)mData1;
+    Int controlID = control->winGetWindowId();
+    for (Int i = 0; i < MAX_SLOTS; i++) {
+      if (controlID == buttonMapStartPositionID[i]) {
+        GameSpyStagingRoom *game =
+            ((BfmeWolSystemInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
+        Int playerIdxInPos = -1;
+        for (Int j = 0; j < MAX_SLOTS; ++j) {
+          GameSpyGameSlot *slot = game->getGameSpySlot(j);
+          if (slot && slot->getStartPos() == i) {
+            playerIdxInPos = j;
+            break;
+          }
+        }
+        if (playerIdxInPos >= 0) {
+          GameSpyGameSlot *slot = game->getGameSpySlot(playerIdxInPos);
+          if (playerIdxInPos == game->getLocalSlotNum() ||
+              (game->amIHost() && slot && slot->isAI())) {
+            // it's one of my type.  Remove it.
+            handleStartPositionSelection(playerIdxInPos, -1);
+          }
+        }
+      }
+    }
+    break;
+  }
 
-		//-------------------------------------------------------------------------------------------------
-		case GEM_EDIT_DONE:
-			{
-				GameWindow *control = (GameWindow *)mData1;
-				Int controlID = control->winGetWindowId();
-				// Take the user's input and echo it into the chat window as well as
-				// send it to the other clients on the lan
-				if ( controlID == textEntryChatID )
-				{
-					
-					// read the user's input
-					txtInput.set(GadgetTextEntryGetText( textEntryChat ));
-					// Clear the text entry line
-					GadgetTextEntrySetText(textEntryChat, UnicodeString::TheEmptyString);
-					// Clean up the text (remove leading/trailing chars, etc)
-					txtInput.trim();
-					// Echo the user's input to the chat window
-					if (!txtInput.isEmpty())
-					{
-						if (!handleGameSetupSlashCommands(txtInput))
-						{
-							TheGameSpyInfo->sendChat(txtInput, false, NULL);
-						}
-					}
+  //-------------------------------------------------------------------------------------------------
+  case GEM_EDIT_DONE: {
+    GameWindow *control = (GameWindow *)mData1;
+    Int controlID = control->winGetWindowId();
+    // Take the user's input and echo it into the chat window as well as
+    // send it to the other clients on the lan
+    if (controlID == textEntryChatID) {
 
-				}// if ( controlID == textEntryChatID )
-				break;
-			}
-		//-------------------------------------------------------------------------------------------------
-		default:
-			return MSG_IGNORED;
-	}//Switch
-	return MSG_HANDLED;
-}//WindowMsgHandledType WOLGameSetupMenuSystem( GameWindow *window, UnsignedInt msg, 
+      // read the user's input
+      txtInput.set(GadgetTextEntryGetText(textEntryChat));
+      // Clear the text entry line
+      GadgetTextEntrySetText(textEntryChat, UnicodeString::TheEmptyString);
+      // Clean up the text (remove leading/trailing chars, etc)
+      txtInput.trim();
+      // Echo the user's input to the chat window
+      if (!txtInput.isEmpty()) {
+        if (!Rva004F1FF0HandleSlashCommands(txtInput)) {
+          ((BfmeWolSystemInfo *)TheGameSpyInfo)
+              ->sendChat(txtInput, false, NULL);
+        }
+      }
+
+    } // if ( controlID == textEntryChatID )
+    break;
+  }
+  //-------------------------------------------------------------------------------------------------
+  default:
+    return MSG_IGNORED;
+  } // Switch
+  return MSG_HANDLED;
+}

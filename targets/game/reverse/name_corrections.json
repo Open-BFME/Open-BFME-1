@@ -6828,5 +6828,15 @@
   "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
   "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
   "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLGameSetupMenu.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLGameSetupMenu.cpp",
+  "old_name": "handleGameSetupSlashCommands",
+  "new_name": "Rva004F1FF0HandleSlashCommands",
+  "before_sha256": "e883f2d531594b38459d7194c2dc06749f37f357e1b50d0476c9a4c8e08aab83",
+  "after_sha256": "ef7ccac78a4a59dedba98e22319f57d4886429a72f2091b4e9df11aaa370054c",
+  "evidence": "targets/game/reverse/identity_evidence/004f5d10-setup-system-native.md",
+  "reason": "Only the System callback call site changes to the existing matched465B cdecl by-value UnicodeString owner at004F1FF0. The old descriptive helper definition remains in the TU; this does not rename or discard a proven identity and avoids minting a second semantic pin for the already-owned target."
  }
 ]
