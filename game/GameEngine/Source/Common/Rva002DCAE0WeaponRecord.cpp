@@ -14,19 +14,94 @@ enum KindOfType
     RvaKindOfTypeRetail8D = 0x8d
 };
 
+typedef unsigned int ObjectID;
+
+struct Coord3D
+{
+    float x;
+    float y;
+    float z;
+};
+
+struct BFMEDamageInfoInput
+{
+    unsigned char m_unreconstructed00[8];
+    ObjectID m_sourceID;
+    unsigned short m_sourcePlayerMask;
+    unsigned char m_unreconstructed0e[0x24 - 0x0e];
+};
+
+struct BFMEDamageInfo
+{
+    BFMEDamageInfo();
+
+    BFMEDamageInfoInput in;
+    float m_distance24;
+    unsigned char m_unreconstructed28[4];
+    ObjectID m_sourceObjectID2c;
+    Coord3D m_delta30;
+    int m_unreconstructed3c;
+    int m_unreconstructed40;
+    int m_unreconstructed44;
+    int m_unreconstructed48;
+    unsigned char m_unreconstructed4c[0x5c - 0x4c];
+};
+
+class Player
+{
+public:
+    unsigned char m_unreconstructed00[0x24];
+    int m_playerIndex;
+};
+
+extern "C" float fabs(float value);
+extern "C" float sqrt(float value);
+#pragma intrinsic(fabs, sqrt)
+
+extern const float BfmeZeroRange;
+extern const float Rva0109BF40ZeroRange;
+
 class Thing
 {
 public:
+    virtual void slot00() = 0;
+    virtual void slot01() = 0;
+    virtual void slot02() = 0;
+    virtual void slot03() = 0;
+    virtual void slot04() = 0;
+    virtual void slot05() = 0;
+    virtual void slot06() = 0;
+    virtual void slot07() = 0;
+    virtual void slot08() = 0;
+    virtual void slot09() = 0;
+    virtual void slot10() = 0;
+    virtual void slot11() = 0;
+    virtual void slot12() = 0;
+    virtual void attemptDamage(BFMEDamageInfo *damageInfo) = 0;
+
     bool isKindOf(KindOfType kind) const;
 
-    unsigned char m_gap00[0x98];
+    unsigned char m_gap04[0x38 - 4];
+    Coord3D m_cachedPos;
+    unsigned char m_gap44[0x98 - 0x44];
     unsigned char m_flags98;
 };
+
+class Rva002DCAE0Module;
 
 class Object
 {
 public:
-    unsigned char m_gap00[0x1fc];
+    virtual void slot00() = 0;
+    Player *getControllingPlayer() const;
+
+    unsigned char m_gap04[0x38 - 4];
+    float m_unreconstructed38;
+    float m_unreconstructed3c;
+    float m_unreconstructed40;
+    unsigned char m_gap44[0x74 - 0x44];
+    ObjectID m_id;
+    unsigned char m_gap78[0x1fc - 0x78];
     class Rva002DCAE0Module *m_contain;
 };
 
@@ -116,8 +191,18 @@ public:
     int m_value5C;
     int m_value60;
     int m_value64;
-    int m_value68;
-    float m_value6C;
+    union
+    {
+        int m_value68Bits;
+        float m_value68;
+    };
+    union
+    {
+        float m_value6C;
+        int m_value6CBits;
+    };
+
+    void rva002DC8B0Apply(Object *found, Thing *thing);
 };
 
 extern void j_000229fd(void);
@@ -137,6 +222,55 @@ Rva002DCBA0::Rva002DCBA0()
     m_value68 = 0;
     m_flag58 = 1;
     m_value6C = 1.0f;
+}
+
+void Rva002DCBA0::rva002DC8B0Apply(Object *found, Thing *thing)
+{
+    register Rva002DCBA0 *owner = this;
+    register Object *source = found;
+    register Thing *victim = thing;
+    Coord3D delta;
+    BFMEDamageInfo damageInfo;
+
+    delta.x = victim->m_cachedPos.x;
+    delta.y = victim->m_cachedPos.y;
+    damageInfo.m_unreconstructed3c = owner->m_value5C;
+    delta.z = victim->m_cachedPos.z;
+    delta.x -= source->m_unreconstructed38;
+    delta.y -= source->m_unreconstructed3c;
+    delta.z -= source->m_unreconstructed40;
+
+    if (fabs(delta.x) < Rva0109BF40ZeroRange &&
+        fabs(delta.y) < Rva0109BF40ZeroRange &&
+        fabs(delta.z) < Rva0109BF40ZeroRange)
+        delta.z = 1.0f;
+
+    damageInfo.m_delta30 = delta;
+    damageInfo.m_unreconstructed40 = owner->m_value60;
+    damageInfo.m_unreconstructed44 = owner->m_value64;
+    damageInfo.m_unreconstructed48 = owner->m_value6CBits;
+
+    if (owner->m_value68 > BfmeZeroRange)
+    {
+        damageInfo.m_distance24 =
+            sqrt(delta.z * delta.z + delta.y * delta.y + delta.x * delta.x) /
+            owner->m_value68;
+    }
+
+    damageInfo.m_sourceObjectID2c = source->m_id;
+    Player *player = source->getControllingPlayer();
+    if (player != 0)
+    {
+        player = source->getControllingPlayer();
+        damageInfo.in.m_sourcePlayerMask =
+            (unsigned short)(1 << player->m_playerIndex);
+    }
+
+    damageInfo.in.m_sourceID = source->m_id;
+    player = source->getControllingPlayer();
+    damageInfo.in.m_sourcePlayerMask =
+        (unsigned short)(1 << player->m_playerIndex);
+    victim->attemptDamage(&damageInfo);
 }
 
 void Rva002DCBA0::rva002DCAE0Slot5(void *record, Thing *thing)
