@@ -13,10 +13,7 @@ enum DozerTask
 	DOZER_TASK_INVALID = -1
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_AI = 2
-};
+#include "../../../command_source_type.h"
 
 class AICommandInterface
 {

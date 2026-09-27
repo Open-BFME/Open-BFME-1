@@ -6,10 +6,7 @@ enum StateReturnType
 	STATE_FAILURE = -2
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_AI = 2
-};
+#include "../../../command_source_type.h"
 
 class Object;
 class Player;

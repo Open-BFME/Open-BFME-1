@@ -79,10 +79,7 @@ public:
 	unsigned char m_carrier[4];
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_AI = 2
-};
+#include "../command_source_type.h"
 
 class AICommandInterface
 {

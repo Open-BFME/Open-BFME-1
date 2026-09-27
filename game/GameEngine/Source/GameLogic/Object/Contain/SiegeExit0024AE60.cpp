@@ -26,7 +26,7 @@ enum NameKeyType { Key0024AE60Invalid=0 };
 enum PathfindLayerEnum { Layer0024AE60_11=17 };
 enum KindOfType { Kind0024AE60_5C=92, Kind0024AE60_6C=108 };
 enum ObjectStatusTypes { Status0024AE60_3B=59 };
-enum CommandSourceType { CMD_FROM_AI=2 };
+#include "../../command_source_type.h"
 class NameKeyGenerator { public: NameKeyType nameToKey(const char *); };
 extern NameKeyGenerator *TheNameKeyGenerator;
 class Rva2225E0Filter { public: bool accepts(Object *,Player *); };

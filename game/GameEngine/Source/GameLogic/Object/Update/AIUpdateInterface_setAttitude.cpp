@@ -12,10 +12,7 @@ enum AttitudeType
 	ATTITUDE_BFME_CLEAR = -3
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_AI = 2
-};
+#include "../../command_source_type.h"
 
 class Object;
 class AINotify;

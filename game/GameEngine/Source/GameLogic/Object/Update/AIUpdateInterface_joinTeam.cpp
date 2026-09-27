@@ -9,10 +9,7 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef unsigned int ObjectID;
 
-enum CommandSourceType
-{
-    CMD_FROM_AI = 2
-};
+#include "../../command_source_type.h"
 
 enum StateID
 {

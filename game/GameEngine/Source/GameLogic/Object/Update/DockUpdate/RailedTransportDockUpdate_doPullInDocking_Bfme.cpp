@@ -3,10 +3,7 @@
 typedef float Real;
 typedef unsigned int ObjectID;
 
-enum CommandSourceType
-{
-	CMD_FROM_AI = 2
-};
+#include "../../../command_source_type.h"
 
 struct Coord3D
 {

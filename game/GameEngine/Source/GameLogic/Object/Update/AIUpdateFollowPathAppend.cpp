@@ -11,7 +11,7 @@
 #include <vector>
 
 typedef bool Bool;
-enum CommandSourceType { CMD_FROM_PLAYER, CMD_FROM_SCRIPT };
+#include "../../command_source_type.h"
 struct Coord3D { Coord3D(){} Coord3D(const Coord3D&c):x(c.x),y(c.y),z(c.z){} float x,y,z; };
 class Object;
 struct State { int getID() const { return id; } char prefix[4]; int id; };

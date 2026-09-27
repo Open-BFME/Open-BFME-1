@@ -42,12 +42,7 @@ enum ExitDoorType
 	DOOR_1 = 0
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT = 1,
-	CMD_FROM_AI = 2
-};
+#include "../../../command_source_type.h"
 
 class Thing
 {

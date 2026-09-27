@@ -12,10 +12,7 @@ enum KindOfType
 	KINDOF_PROJECTILE = 0x19
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0
-};
+#include "../../command_source_type.h"
 
 enum GuardMode
 {

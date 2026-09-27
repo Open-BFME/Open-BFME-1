@@ -23,7 +23,7 @@ typedef Int ObjectID;
 enum { INVALID_ID = 0 };
 enum DamageType { DAMAGE_UNRESISTABLE = 8 };
 enum DeathType { DEATH_NORMAL = 0 };
-enum CommandSourceType { CMD_FROM_AI = 2 };
+#include "../../../command_source_type.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyTruckAIUpdate.h
 class SupplyTruckAIInterface

@@ -72,10 +72,7 @@ inline const T &max( const T &left, const T &right )
 	return left > right ? left : right;
 }
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0
-};
+#include "../../command_source_type.h"
 
 enum KindOfType
 {

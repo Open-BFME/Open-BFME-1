@@ -28,7 +28,7 @@ class Team;
 class HordeContainInterface;
 
 enum ExitDoorType { DOOR_1 = 0 };
-enum CommandSourceType { CMD_FROM_PLAYER = 0, CMD_FROM_SCRIPT = 1, CMD_FROM_AI = 2 };
+#include "../../../command_source_type.h"
 enum KindOfType { KINDOF_HORDE = 0x6C, KINDOF_VEHICLE = 0x09 };
 enum DisabledType { DISABLED_HELD = 3 };
 

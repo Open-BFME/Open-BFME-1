@@ -6,7 +6,7 @@ template<class T>class OVERRIDE {const T*p;public:const T*operator*()const {if(!
 class AsciiString {public:char*data;const char*str()const{return data?data+8:"";}};
 enum KindOfType {KINDOF_BRIDGE=22};
 class ThingTemplate:public Overridable {public:char pad08[0x18];AsciiString name;char pad24[0xa4];unsigned kindOf[3];bool isKindOf(KindOfType i)const{return (kindOf[(unsigned)i>>5]&(1u<<((unsigned)i&31)))!=0;}const AsciiString&getName()const{return name;}};
-enum CommandSourceType {CMD_FROM_AI=2}; class AICommandInterface {public:void aiIdle(CommandSourceType);};
+#include "../../../command_source_type.h" class AICommandInterface {public:void aiIdle(CommandSourceType);};
 class AIUpdateInterface {public:bool isPathAvailable(const Coord3D*)const;};
 class Object {public:
  virtual ~Object(); OVERRIDE<ThingTemplate> m_template;char pad08[0x30];Coord3D position;char pad44[0x30];unsigned id;char pad78[0x18c];AIUpdateInterface*ai;

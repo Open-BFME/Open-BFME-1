@@ -22,7 +22,7 @@ typedef float Real;
 #define MAX_TRANSPORT_SLOTS 10
 #define NO_MAX_SHOTS_LIMIT 0x7fffffff
 class Object;
-enum CommandSourceType { CMD_FROM_PLAYER=0, CMD_FROM_AI=2 };
+#include "../../../command_source_type.h"
 enum UpdateSleepTime { UPDATE_SLEEP_NONE=1, UPDATE_SLEEP_FOREVER=0x3fffffff };
 enum AIStateType { AI_ENTER=15, AI_ATTACK_MOVE_TO=33 };
 enum ObjectStatusTypes { OBJECT_STATUS_IS_ATTACKING=22 };

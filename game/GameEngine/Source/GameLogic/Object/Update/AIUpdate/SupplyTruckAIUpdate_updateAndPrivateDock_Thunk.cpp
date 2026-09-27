@@ -24,10 +24,7 @@ class Object;
 
 typedef unsigned int ObjectID;
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0							///< retail: test edi,edi
-};
+#include "../../../command_source_type.h"
 
 enum UpdateSleepTime
 {

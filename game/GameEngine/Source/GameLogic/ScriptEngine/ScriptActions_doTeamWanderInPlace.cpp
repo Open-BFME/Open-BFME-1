@@ -164,10 +164,7 @@ public:
 extern ScriptEngine *TheScriptEngine;
 extern AI *TheAI;
 
-enum CommandSourceType
-{
-	CMD_FROM_SCRIPT = 1
-};
+#include "../command_source_type.h"
 
 class AICommandInterface
 {

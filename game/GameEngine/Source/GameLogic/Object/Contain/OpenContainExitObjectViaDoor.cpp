@@ -27,10 +27,7 @@ enum ExitDoorType
 	DOOR_1 = 0
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_AI = 2
-};
+#include "../../command_source_type.h"
 
 enum KindOfType
 {

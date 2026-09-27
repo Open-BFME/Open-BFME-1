@@ -42,13 +42,7 @@ public:
 
 // AICommandInterface subobject reached at ai+0x20; aiGetHealed is a direct (non-virtual)
 // call at a fixed retail address.
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT = 1,
-	CMD_FROM_AI			= 2,
-	CMD_FROM_DOZER	= 3
-};
+#include "../../command_source_type.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface

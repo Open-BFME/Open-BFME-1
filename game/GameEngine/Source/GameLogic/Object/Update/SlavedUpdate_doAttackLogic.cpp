@@ -59,10 +59,7 @@ struct Coord3D
     void normalize();
 };
 
-enum CommandSourceType
-{
-    CMD_FROM_AI = 2
-};
+#include "../../command_source_type.h"
 
 class Object;
 class Team;
