@@ -142,3 +142,11 @@ def test_a_file_the_seat_deleted_but_master_edited_is_a_conflict(tmp_path):
     problem = R.apply_delta(repo, R.seat_delta(repo, seat))
     assert problem and "master has edited it since" in problem
     assert (repo / "lift.cpp").exists()
+
+
+def test_a_better_bank_on_master_is_kept():
+    better = "// ?f@@YAXXZ" + chr(10) + "// partial score=0.97 date=2026-09-27" + chr(10)
+    worse = "// ?f@@YAXXZ" + chr(10) + "// partial score=0.925 date=2026-09-27" + chr(10)
+    assert R.bank_score(better.encode()) == 0.97
+    assert R.bank_score(worse.encode()) < R.bank_score(better.encode())
+    assert R.bank_score(b"no header") == 0.0

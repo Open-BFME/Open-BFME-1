@@ -109,6 +109,19 @@ def seat_delta(repo, commit):
 
 
 FUNCTIONS = "targets/game/reverse/functions.csv"
+ATTEMPTS = "targets/game/reverse/attempts/"
+
+
+def bank_score(raw):
+    """The `score=` a banked attempt's header records (0 when absent). A seat's
+    bank must not overwrite a better one someone banked on master meanwhile
+    (2026-09-27: a 0.925 bank replaced TheThag's 0.97 at 0x008879D0)."""
+    import re
+    m = re.search(rb"score=([0-9.]+)", (raw or b"")[:400])
+    try:
+        return float(m.group(1).rstrip(b".")) if m else 0.0
+    except ValueError:
+        return 0.0
 
 
 def landed_upstream(tree, delta):
@@ -182,6 +195,9 @@ def apply_delta(tree, delta):
             path.write_bytes(apply_records(current or b"", entry["removed"], added))
         elif entry["kind"] == "file" and entry["path"] in lost_sources:
             continue                         # the winner's file (or none) stays as master has it
+        elif entry["kind"] == "file" and entry["path"].startswith(ATTEMPTS) and current is not None \
+                and entry["status"] != "D" and bank_score(current) >= bank_score(entry["theirs"]):
+            continue                         # someone banked a better (or equal) attempt meanwhile
         elif entry["kind"] == "file" and entry["status"] == "A" and current is not None \
                 and current != entry["theirs"]:
             return f"{entry['path']}: the seat added it but master now has a different file there"
