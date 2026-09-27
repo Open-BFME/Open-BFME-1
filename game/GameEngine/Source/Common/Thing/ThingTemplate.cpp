@@ -1341,7 +1341,7 @@ void ThingTemplate::resolveNames()
 
 //=============================================================================
 #ifdef LOAD_TEST_ASSETS
-// byte-exact reconstruction: game/GameEngine/Source/Common/Thing/ThingTemplateInitForLTAThunk.cpp
+// byte-exact reconstruction: game/GameEngine/Source/Common/Thing/ThingTemplateInitForLTA.cpp
 // ?initForLTA@ThingTemplate@@QAEXABVAsciiString@@@Z present-unmatched
 void ThingTemplate::initForLTA(const AsciiString& name)
 {
