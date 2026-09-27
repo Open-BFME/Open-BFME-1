@@ -1,7 +1,6 @@
-// ?xfer@W3DPropBuffer@@MAEXPAVXfer@@@Z
-// partial score=0.941 date=2026-09-27
 // cl: /DNDEBUG /MD
-// ?xfer@W3DPropBuffer@@MAEXPAVXfer@@@Z
+// W3DPropBuffer::xfer, retail 0x007032A0 (vtable 0x011209D8 slot 3).
+// BFME uses a different Xfer virtual order from the shared source headers.
 
 typedef int Int;
 typedef float Real;
@@ -73,6 +72,14 @@ struct Vector3
 	Real Z;
 
 	Vector3(Real x, Real y, Real z) : X(x), Y(y), Z(z) {}
+
+	Vector3 &operator=(const Vector3 &v)
+	{
+		X = v.X;
+		Y = v.Y;
+		Z = v.Z;
+		return *this;
+	}
 
 	Vector3 &operator+=(const Vector3 &other)
 	{
@@ -310,13 +317,16 @@ private:
 
 RenderObjClass *Create_Render_Obj(const char *name);
 
+// ?xfer@W3DPropBuffer@@MAEXPAVXfer@@@Z
 void W3DPropBuffer::xfer(Xfer *xfer)
 {
 	if (xfer->isCRC())
 		return;
 
-	XferVersion version = 1;
-	xfer->xferVersion(&version);
+	{
+		XferVersion version = 1;
+		xfer->xferVersion(&version);
+	}
 
 	xfer->xferInt(&m_numPropTypes);
 	Int i;
@@ -349,22 +359,22 @@ void W3DPropBuffer::xfer(Xfer *xfer)
 
 		if (xfer->isLoading()) {
 			m_props[i].ss = 0;
-			if (m_props[i].propType >= 0 && m_props[i].propType <= m_numPropTypes) {
-				RenderObjClass *source = m_propTypes[m_props[i].propType].m_robj;
-				if (source) {
-					m_props[i].m_robj = source->Clone();
-					m_props[i].m_robj->Set_Transform(transform);
-					m_props[i].m_robj->Set_ObjectScale(scale);
-				} else {
-					m_props[i].m_robj = 0;
-				}
-				m_props[i].bounds = m_propTypes[m_props[i].propType].m_bounds;
-			} else {
+			RenderObjClass *source;
+			if (m_props[i].propType < 0 || m_props[i].propType > m_numPropTypes ||
+				(source = m_propTypes[m_props[i].propType].m_robj) == 0) {
 				m_props[i].m_robj = 0;
+			} else {
+				m_props[i].m_robj = source->Clone();
+				m_props[i].m_robj->Set_Transform(transform);
+				m_props[i].m_robj->Set_ObjectScale(scale);
+			}
+			if (m_props[i].propType < 0 || m_props[i].propType > m_numPropTypes) {
 				m_props[i].bounds.Center.X = 0.0f;
 				m_props[i].bounds.Center.Y = 0.0f;
 				m_props[i].bounds.Center.Z = 0.0f;
-				m_props[i].bounds.Radius = 1.0f;
+				m_props[i].bounds.Radius = 0.0f;
+			} else {
+				m_props[i].bounds = m_propTypes[m_props[i].propType].m_bounds;
 			}
 			m_props[i].bounds.Center += Vector3(m_props[i].location.x,
 				m_props[i].location.y, m_props[i].location.z);
