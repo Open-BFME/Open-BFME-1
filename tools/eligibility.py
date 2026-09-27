@@ -17,6 +17,9 @@ Rules (Claude/Astra consensus, 2026-09-15; see docs/baseline-2026-09-15.md):
     and counts once lift_lane.py has proven its extent (is_lift_row).
   * a DEAD-END verdict retires the address: no-match, refuted, ... are
     findings about the BOUNDARY (tools/re_log.DEAD_END_STATUSES).
+  * so does an address inside the baseline manifest's `no_ground_truth`
+    ranges: SafeDisc stripped those bodies, so the bytes there are not
+    compiler output and no source can ever reproduce the original.
   * a DEFERRAL never retires: blocked/attempted/abandoned/partial say a
     session failed, not that the address is wrong.
   * a banked STASH outlives a later deferral: the body is the evidence.
@@ -126,8 +129,21 @@ def latest_verdicts(path=None):
     return {rva: fields[3] for rva, fields in re_log.latest_records(path).items()}
 
 
+@functools.lru_cache(maxsize=1)
+def _no_ground_truth():
+    spans = sorted((int(e["rva"], 16), int(e["rva"], 16) + e["size"])
+                   for e in json.loads(build.MANIFEST.read_text(encoding="utf-8"))["no_ground_truth"])
+    return [start for start, _ in spans], spans
+
+
+def no_ground_truth(rva):
+    starts, spans = _no_ground_truth()
+    i = bisect.bisect_right(starts, rva) - 1
+    return i >= 0 and rva < spans[i][1]
+
+
 def retired(rva, latest):
-    return latest.get(rva) in re_log.DEAD_END_STATUSES
+    return latest.get(rva) in re_log.DEAD_END_STATUSES or no_ground_truth(rva)
 
 
 def deferred(rva, latest):

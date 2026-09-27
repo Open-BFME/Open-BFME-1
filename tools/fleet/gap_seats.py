@@ -158,7 +158,7 @@ def main():
             rva, size, ev = int(r["rva"], 16), int(r["size"]), r["evidence"].split("|")
             if not (a.min_b <= size <= a.max_b) or rva in rows or f"0x{rva:08x}" in busy:
                 continue
-            if attempts.get(rva, 0) >= eligibility.ATTEMPT_CAP:
+            if attempts.get(rva, 0) >= eligibility.ATTEMPT_CAP or eligibility.no_ground_truth(rva):
                 continue
             s = slots.get(rva)
             known = s is not None and not s["cls"].startswith(("Rva", "Gen_", "Bfme", "PAV", "PBU", "T2", "K", "_STL"))
