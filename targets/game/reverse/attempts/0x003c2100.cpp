@@ -1,9 +1,443 @@
-// ?d_003c2100@@YAXXZ
-// partial score=0.32 date=2026-09-23
-// ?process@Rva003C2100Owner@@QAEXPAURva003C2100Record@@@Z
-// Retail 0x003C2100: LivingWorld record-range processing body.
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
-// stlport
+// ?Rva003C2100@LivingWorldLogic@@QAEXPAVLivingWorldRegion@@@Z
+// partial score=0.345 date=2026-09-27
+// ?rva003C3850@LivingWorldLogic@@QAE_NPAVLivingWorldRegion@@@Z
+// cl: /DNDEBUG /MD /EHsc
+// Retail 0x003C3850: selects a LivingWorldLogic region (+0x28 manager, +0x30 name, +0x84 objective vector).
+// Callers 0x003C3AE0 and 0x005B4380 reach it through ILT 0x00044DF5; the second tests the bool result.
+// The method name is not recoverable, so it keeps the body address.
+
+template <typename T>
+class StringBase
+{
+	friend class AsciiString;
+
+protected:
+	struct Header
+	{
+		int m_refCount;
+		unsigned short m_length;
+		unsigned short m_capacity;
+		T m_text[1];
+	};
+
+	StringBase() : m_data(0) {}
+	~StringBase() { releaseBuffer(); }
+
+public:
+	void set(const StringBase<T> &other);
+
+private:
+	StringBase(const StringBase<T> &other);
+	void releaseBuffer();
+
+protected:
+	Header *m_data;
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+	AsciiString() : StringBase<char>() {}
+	AsciiString(const AsciiString &other)
+		: StringBase<char>(other)
+	{
+	}
+	~AsciiString() {}
+
+	void set(const AsciiString &other)
+	{
+		((StringBase<char> *)this)->set(
+			*(const StringBase<char> *)&other);
+	}
+
+	bool hasText() const
+	{
+		return m_data != 0 && m_data->m_length != 0;
+	}
+};
+
+struct Rva003C2100Items
+{
+	AsciiString *m_begin;
+	AsciiString *m_finish;
+	AsciiString *m_end;
+
+	unsigned int size() const { return (unsigned int)(m_finish - m_begin); }
+	AsciiString *begin() const { return m_begin; }
+	AsciiString *end() const { return m_finish; }
+};
+
+struct Rva003C2100ItemRange
+{
+	AsciiString *m_begin;
+	AsciiString *m_finish;
+};
+
+struct BfmePairESA
+{
+	int m_first;
+	int m_second;
+};
+
+typedef BfmePairESA Rva003C3850Pair;
+
+class BfmeStrESA : public AsciiString
+{
+public:
+	BfmeStrESA() : AsciiString() {}
+	~BfmeStrESA() {}
+};
+
+namespace Gen003C2EE0Stl
+{
+	template <typename T>
+	class allocator
+	{
+	};
+
+	template <typename T, typename Allocator>
+	class vector
+	{
+	public:
+		T *m_begin;
+		T *m_finish;
+		T *m_end;
+
+		void resize(unsigned int count, T value);
+	};
+}
+
+typedef Gen003C2EE0Stl::vector<unsigned short,
+	Gen003C2EE0Stl::allocator<unsigned short> > Rva003C3850Vector;
+
+struct Rva003C3850IntRange
+{
+	int *m_begin;
+	int *m_finish;
+
+	unsigned int size() const
+	{
+		return (unsigned int)(m_finish - m_begin);
+	}
+};
+
+struct Rva003C3850VisibleValue
+{
+	unsigned char m_value;
+	unsigned char m_padding;
+
+	Rva003C3850VisibleValue()
+		: m_value(1), m_padding(0)
+	{
+	}
+};
+
+class LivingWorldRegion
+{
+	public:
+	char m_unmodelled00[4];
+	AsciiString m_name;
+	char m_unmodelled08[0x4c];
+	Rva003C3850IntRange m_firstRange;
+	char m_unmodelled5c[4];
+	Rva003C3850IntRange m_secondRange;
+	char m_unmodelled68[0x6c];
+	Rva003C2100Items m_items;
+
+	unsigned int missionObjectiveCount() const
+	{
+		return m_firstRange.size() + m_secondRange.size();
+	}
+
+};
+
+class LivingWorldRegionManager
+{
+public:
+	void *m_vtable;
+	void *m_regions;
+	LivingWorldRegion *m_selectedRegion;
+	int m_unmodelled0C;
+	bool m_enabled;
+};
+
+class ClientSubsystem
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02();
+	virtual void slot03(); virtual void slot04(); virtual void slot05();
+	virtual void slot06(); virtual void slot07(); virtual void slot08();
+	virtual void slot09(); virtual void slot10(); virtual void slot11();
+	virtual void slot12(); virtual void slot13(); virtual void slot14();
+	virtual void slot15(); virtual void slot16(); virtual void slot17();
+	virtual void slot18(); virtual void slot19(); virtual void slot20();
+	virtual void slot21(); virtual void slot22(); virtual void slot23();
+	virtual void slot24(); virtual void slot25(); virtual void slot26();
+	virtual void slot27(); virtual void slot28(); virtual void slot29();
+	virtual void slot30(); virtual void slot31(); virtual void slot32();
+	virtual void slot33(); virtual void slot34(); virtual void slot35();
+	virtual void slot36(); virtual void slot37(); virtual void slot38();
+	virtual void slot39(); virtual void slot40(); virtual void slot41();
+	virtual void slot42(); virtual void slot43(); virtual void slot44();
+	virtual void slot45(); virtual void slot46(); virtual void slot47();
+	virtual void slot48(); virtual void slot49(); virtual void slot50();
+	virtual void slot51(); virtual void slot52(); virtual void slot53();
+	virtual void slot54(); virtual void slot55(); virtual void slot56();
+	virtual void slot57(); virtual void slot58(); virtual void slot59();
+	virtual void slot60(); virtual void slot61(); virtual void slot62();
+	virtual void slot63(); virtual void slot64(); virtual void slot65();
+	virtual void slot66(); virtual void slot67(); virtual void slot68();
+	virtual void slot69(); virtual void slot70(); virtual void slot71();
+	virtual void slot72(); virtual void slot73(); virtual void slot74();
+	virtual void slot75(); virtual void slot76(); virtual void slot77();
+	virtual void slot78(); virtual void slot79(); virtual void slot80();
+	virtual void slot81(); virtual void slot82(); virtual void slot83();
+	virtual void slot84(); virtual void slot85(); virtual void slot86();
+	virtual void slot87(); virtual void slot88(); virtual void slot89();
+	virtual void slot90(); virtual void slot91(); virtual void slot92();
+	virtual void slot93(); virtual void slot94();
+};
+
+class InGameUI
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02();
+	virtual void slot03(); virtual void slot04(); virtual void slot05();
+	virtual void slot06(); virtual void slot07(); virtual void slot08();
+	virtual void slot09(); virtual void slot10(); virtual void slot11();
+	virtual void slot12(); virtual void slot13(); virtual void slot14();
+	virtual void slot15(); virtual void slot16(); virtual void slot17();
+	virtual void slot18(); virtual void slot19(); virtual void slot20();
+	virtual void slot21(); virtual void slot22(); virtual void slot23();
+};
+
+class Keyboard
+{
+public:
+	bool isShift();
+};
+
+class GlobalData
+{
+public:
+	char m_padding00[0x90];
+	unsigned char m_flag90;
+};
+
+class GameLogic
+{
+};
+
+class Rva003C3850LookupOwner
+{
+};
+
+class Gen_00609320
+{
+};
+
+class CampaignManager
+{
+};
+
+class Rva003C1A50
+{
+public:
+	void clearTwoVec();
+};
+
+class BfmeHostESA
+{
+public:
+	void bfmeGetESA(BfmeStrESA *out, BfmePairESA *range);
+};
+
+class Rva003855C0
+{
+public:
+	void reset();
+};
+
+class Rva003BFB20
+{
+public:
+	void run(int value);
+};
+
+class Rva003C0110Owner
+{
+public:
+	struct Rva003C0110ElementResult;
+	Rva003C0110ElementResult *findByName(StringBase<char> *key);
+};
+
+class Rva006092D0State
+{
+public:
+	void rva00609360(void *source);
+};
+
+class Gen003C73A0Item
+{
+};
+
+class Gen003C73A0Owner
+{
+public:
+	void *m_vtable;
+	void *m_regions;
+	LivingWorldRegion *m_selectedRegion;
+	int m_unmodelled0C;
+	bool m_enabled;
+	void *m_unmodelled14;
+	void *m_unmodelled18;
+
+	bool containsOrEmpty(Gen003C73A0Item *item) const;
+};
+
+class LivingWorldLogicPrimaryBase
+{
+public:
+	virtual void slot00();
+	char m_unmodelled04[0x24];
+};
+
+class LivingWorldLogic
+	: public LivingWorldLogicPrimaryBase
+{
+public:
+	bool rva003C3850(LivingWorldRegion *record);
+	void Rva003C2100(LivingWorldRegion *record);
+	Gen003C73A0Owner *getRegionManager() const { return m_regionManager; }
+
+private:
+	Gen003C73A0Owner *m_regionManager;
+	char m_unmodelled2C[4];
+	AsciiString m_currentRegionName;
+	char m_unmodelled34[0x50];
+	Rva003C3850Vector m_missionObjectiveStates;
+};
+
+extern void j_0001b333();
+extern void j_000299ce();
+extern void j_000295d7();
+extern void j_000495da();
+extern void j_0001d8c7();
+extern void j_00035ff3();
+extern void j_000156b3();
+extern void j_0003a4a4();
+extern void j_000475a5();
+extern void j_00032a56();
+extern void j_00002e46();
+extern void j_000012e4();
+
+extern ClientSubsystem *TheAudioClientUpdate;
+extern InGameUI *TheInGameUI;
+extern GameLogic *TheBfmeGameLogic;
+extern Keyboard *TheKeyboard;
+extern GlobalData *TheWritableGlobalData;
+extern CampaignManager *TheLivingWorldLogic;
+extern Gen_00609320 *g_bfmeStateDF;
+extern const AsciiString Rva01336E50EmptyString;
+#define Rva01336E50Empty Rva01336E50EmptyString
+
+typedef void (LivingWorldLogic::*ClearObjectiveVectors)();
+typedef void (Rva003C3850Vector::*ResizeObjectiveVector)(unsigned int, unsigned short);
+typedef void (GameLogic::*ApplyCQ)(AsciiString, Rva003C3850Pair *);
+typedef bool (Keyboard::*IsShift)();
+typedef void (LivingWorldLogic::*RecordAction)(LivingWorldRegion *);
+typedef bool (LivingWorldRegionManager::*ContainsRecord)(LivingWorldRegion *);
+typedef Rva003C3850LookupOwner *(LivingWorldLogic::*FindRecord)(AsciiString *);
+typedef void (LivingWorldRegion::*SetRecordName)(const AsciiString *);
+typedef void (Gen_00609320::*UpdateState)(void *);
+
+bool LivingWorldLogic::rva003C3850(LivingWorldRegion * const record)
+{
+	LivingWorldLogic *owner = this;
+	LivingWorldRegion *value = record;
+
+	if (value != 0)
+	{
+		TheAudioClientUpdate->slot94();
+
+		owner->m_currentRegionName.set(value->m_name);
+		TheInGameUI->slot23();
+
+		((Rva003C1A50 *)owner)->clearTwoVec();
+
+		unsigned int count = value->missionObjectiveCount();
+		Rva003C3850VisibleValue initialValue;
+
+		m_missionObjectiveStates.resize(count, *(unsigned short *)&initialValue);
+
+		unsigned short *stateEnd = m_missionObjectiveStates.m_finish;
+		unsigned short *state = m_missionObjectiveStates.m_begin;
+		Rva003C3850VisibleValue visible;
+		while (state != stateEnd)
+		{
+			*state = *(unsigned short *)&visible;
+			++state;
+		}
+
+		Rva003C3850Pair range;
+		AsciiString text;
+		((BfmeHostESA *)owner)->bfmeGetESA((BfmeStrESA *)&text, &range);
+
+		((Rva003855C0 *)TheBfmeGameLogic)->reset();
+
+		if (text.hasText())
+		{
+			union
+			{
+				void (*raw)();
+				ApplyCQ member;
+			} apply;
+			apply.raw = ::j_0001d8c7;
+			(TheBfmeGameLogic->*apply.member)(text, &range);
+		}
+
+		union
+		{
+			void (*raw)();
+			RecordAction member;
+		} action;
+		action.raw = ::j_00035ff3;
+		(owner->*action.member)(value);
+
+		if (TheKeyboard->isShift() && TheWritableGlobalData->m_flag90 != 0)
+		{
+			((Rva003BFB20 *)owner)->run((int)value);
+			return true;
+		}
+
+		if (!owner->m_regionManager->containsOrEmpty((Gen003C73A0Item *)value))
+		{
+			owner->m_currentRegionName.set(Rva01336E50Empty);
+			return false;
+		}
+
+		Rva003C0110Owner::Rva003C0110ElementResult *found =
+			((Rva003C0110Owner *)owner)->findByName((StringBase<char> *)&text);
+
+		union
+		{
+			void (*raw)();
+			SetRecordName member;
+		} setName;
+		setName.raw = ::j_00002e46;
+		if (found != 0)
+			(value->*setName.member)((AsciiString *)((char *)found + 0x40));
+		else
+			(value->*setName.member)(&Rva01336E50Empty);
+
+		owner->getRegionManager()->m_selectedRegion = value;
+		owner->getRegionManager()->m_enabled = false;
+
+		((Rva006092D0State *)g_bfmeStateDF)->rva00609360((char *)TheLivingWorldLogic + 0x20);
+		return true;
+	}
+	return false;
+}
 
 extern void j_000012f3(void);
 extern void j_00032a56(void);
@@ -12,8 +446,6 @@ extern void j_00006fb9(void);
 extern void j_0004958a(void);
 extern void j_000191e1(void);
 
-#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
-
 class Rva003C2100NameString
 {
 public:
@@ -21,101 +453,35 @@ public:
 	{
 		((AsciiString *)this)->~AsciiString();
 	}
-
 	void *m_data;
-};
-
-#define _M_insert_overflow j_00007e96
-#include <vector>
-#undef _M_insert_overflow
-
-struct Rva003C2100Pair
-{
-	float m_x;
-	float m_y;
-};
-
-struct Rva003C2100Record
-{
-	char m_pad00[0xD4];
-	_STL::vector<AsciiString> m_items;
 };
 
 class Rva003C2100CallOwner
 {
 };
-
+typedef Rva003C3850Pair Rva003C2100Pair;
 struct Gen003BD8D0Built;
 
-class Rva003C2100Owner
-{
-public:
-	void process(Rva003C2100Record *record);
-
-private:
-	char m_pad00[0x28];
-	void *m_manager;
-};
-
-struct Rva00367E30Logic
-{
-};
-
-extern Rva00367E30Logic *TheBfmeGameLogic;
-
-typedef bool (Rva003C2100CallOwner::*Rva003C2100Filter)(
-	AsciiString *, AsciiString *);
-typedef void *(Rva003C2100CallOwner::*Rva003C2100Find)(
-	AsciiString *);
+typedef bool (Rva003C2100CallOwner::*Rva003C2100Filter)(AsciiString *, AsciiString *);
+typedef void *(Rva003C2100CallOwner::*Rva003C2100Find)(AsciiString *);
 typedef Gen003BD8D0Built *(Rva003C2100CallOwner::*Rva003C2100Build)(void);
-typedef int (Rva003C2100CallOwner::*Rva003C2100Select)(
-	void *, Gen003BD8D0Built *, Rva003C2100Pair *);
-typedef Rva003C2100NameString *(Rva003C2100CallOwner::*Rva003C2100Copy)(
-	Rva003C2100NameString *);
-typedef void (Rva003C2100CallOwner::*Rva003C2100Dispatch)(
-	Rva003C2100NameString *, int, Rva003C2100Pair *, bool);
+typedef int (Rva003C2100CallOwner::*Rva003C2100Select)(void *, Gen003BD8D0Built *, Rva003C2100Pair *);
+typedef Rva003C2100NameString *(Rva003C2100CallOwner::*Rva003C2100Copy)(Rva003C2100NameString *);
+typedef void (Rva003C2100CallOwner::*Rva003C2100Dispatch)(Rva003C2100NameString *, int, Rva003C2100Pair *, bool);
 
-union Rva003C2100FilterCall
-{
-	void (*asFunction)(void);
-	Rva003C2100Filter asMember;
-};
+union Rva003C2100FilterCall { void (*asFunction)(void); Rva003C2100Filter asMember; };
+union Rva003C2100FindCall { void (*asFunction)(void); Rva003C2100Find asMember; };
+union Rva003C2100BuildCall { void (*asFunction)(void); Rva003C2100Build asMember; };
+union Rva003C2100SelectCall { void (*asFunction)(void); Rva003C2100Select asMember; };
+union Rva003C2100CopyCall { void (*asFunction)(void); Rva003C2100Copy asMember; };
+union Rva003C2100DispatchCall { void (*asFunction)(void); Rva003C2100Dispatch asMember; };
 
-union Rva003C2100FindCall
+void LivingWorldLogic::Rva003C2100(LivingWorldRegion *record)
 {
-	void (*asFunction)(void);
-	Rva003C2100Find asMember;
-};
-
-union Rva003C2100BuildCall
-{
-	void (*asFunction)(void);
-	Rva003C2100Build asMember;
-};
-
-union Rva003C2100SelectCall
-{
-	void (*asFunction)(void);
-	Rva003C2100Select asMember;
-};
-
-union Rva003C2100CopyCall
-{
-	void (*asFunction)(void);
-	Rva003C2100Copy asMember;
-};
-
-union Rva003C2100DispatchCall
-{
-	void (*asFunction)(void);
-	Rva003C2100Dispatch asMember;
-};
-
-void Rva003C2100Owner::process(Rva003C2100Record *record)
-{
+	Rva003C2100ItemRange range = {
+		record->m_items.begin(), record->m_items.end() };
+	unsigned int count = (unsigned int)(range.m_finish - range.m_begin);
 	Rva003C2100CallOwner *owner = (Rva003C2100CallOwner *)this;
-	unsigned int index = 0;
-	unsigned int count = (unsigned int)record->m_items.size();
 	Rva003C2100FilterCall filter;
 	Rva003C2100FindCall find;
 	Rva003C2100BuildCall build;
@@ -128,14 +494,17 @@ void Rva003C2100Owner::process(Rva003C2100Record *record)
 	select.asFunction = j_00006fb9;
 	copy.asFunction = j_0004958a;
 	dispatch.asFunction = j_000191e1;
-	while (index < count)
+	if (count != 0)
 	{
+		unsigned int index = 0;
+		do
+		{
 		AsciiString filtered;
 		bool useFiltered = (owner->*filter.asMember)(
-			&record->m_items[index], &filtered);
+			record->m_items.begin() + index, &filtered);
 		void *key = useFiltered
 			? (void *)&filtered
-			: (void *)&record->m_items[index];
+			: (void *)(record->m_items.begin() + index);
 		void *result = (owner->*find.asMember)(
 			(AsciiString *)key);
 		if (result != 0)
@@ -148,14 +517,16 @@ void Rva003C2100Owner::process(Rva003C2100Record *record)
 			if (selected != -1)
 			{
 				Rva003C2100NameString name;
+				Rva003C2100NameString *copied =
+					(found->*copy.asMember)(&name);
 				Rva003C2100CallOwner *logic =
 					(Rva003C2100CallOwner *)TheBfmeGameLogic;
 				(logic->*dispatch.asMember)(
-					(found->*copy.asMember)(&name),
-					selected, &pair, useFiltered);
+					copied, selected, &pair, useFiltered);
 			}
 		}
 		++index;
 		count = (unsigned int)record->m_items.size();
+		} while (index < count);
 	}
 }

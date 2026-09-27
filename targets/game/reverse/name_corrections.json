@@ -7638,5 +7638,15 @@
   "after_sha256": "5623e730c03da3ff15ffe9ac0c547b47819e250331e55a7076c5d50a0f4d09f9",
   "evidence": "targets/game/reverse/identity_evidence/0x0053e870-name-correction.md",
   "reason": "The body checks and sets a byte at +0x1B4, which suggests a busy flag but does not prove the member's name. The bank keeps the offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003c2100.cpp",
+  "new_path": "targets/game/reverse/attempts/0x003c2100.cpp",
+  "old_name": "process",
+  "new_name": "Rva003C2100",
+  "before_sha256": "2a1fa2e2862d461e4c1d32ff3a0e7c87327fe41a51235c56915e0d33c8004cee",
+  "after_sha256": "384565d5ce6bfea79cb9f9664f9d9384cf5867be29a4d4fc341e390642244491",
+  "evidence": "targets/game/reverse/identity_evidence/003c2100-callback-identity.md",
+  "reason": "The matched caller types this callback on LivingWorldLogic and gives it a LivingWorldRegion* argument. The old bank names another owner and record type, so its full method identity conflicts with the matched call. The caller does not give the method a semantic name, so the replacement keeps the body address."
  }
 ]
