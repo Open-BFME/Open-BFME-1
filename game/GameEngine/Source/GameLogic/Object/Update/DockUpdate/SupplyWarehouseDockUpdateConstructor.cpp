@@ -40,17 +40,21 @@ struct SupplyWarehouseDockUpdateModuleData
 	int m_startingBoxes;				// +0x10
 };
 
+// The +0x0C table is the 41-slot BehaviorModuleInterface one and +0x10 the
+// two-slot UpdateModuleInterface one [update, getDisabledTypesToProcess],
+// as the destructor names them.
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
+class BehaviorModuleInterface
+{
+public:
+	virtual void behaviorModuleInterfaceAnchor();
+};
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModuleInterface
 {
 public:
 	virtual void updateModuleInterfaceAnchor();
-};
-
-class ModuleInterface
-{
-public:
-	virtual void moduleInterfaceAnchor();
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
@@ -62,8 +66,8 @@ public:
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public BehaviorModule,
-	public UpdateModuleInterface,
-	public ModuleInterface
+	public BehaviorModuleInterface,
+	public UpdateModuleInterface
 {
 private:
 	// The three module bases reach +0x14; the dock interface pointer is at
