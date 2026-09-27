@@ -89568,3 +89568,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?Rva0093DCE0Target@@YAXXZ,0x0093DCE0,narrow-key tree find callable alias for matched 0x0093DCE0 private find; 0x0093E820 passes UnsignedShort reference on stack with tree this in ECX
+?g_pool009DBEB0@@3VObjectPool@@A,0x0134ECD4,MultiListNodeClass pool object freed by dup_009dbf40
