@@ -1,155 +1,78 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
 
-class LargeGroupAudioUpdateModuleData
+// Open-BFME5: LargeGroupAudioUpdateModuleData default constructor, retail
+// 0x002971F0, 142 bytes.
+//
+// IDENTITY.  The class name is carried by the matched copy constructor at
+// 0x002972B0, the matched destructor at 0x00297390 and the matched
+// scalar-deleting destructor at 0x00297410, and by the vtable this body
+// installs, 0x010BFA60, which those three and nothing else writes.  The single
+// caller, ?friend_newModuleData@LargeGroupAudioUpdate@@SAPAVModuleData
+// (0x0011C280, which reaches this body through ILT 0x0001A98D), constructs it
+// as a ModuleData.
+//
+// LAYOUT, from the matched copy constructor: the base's only stored state is
+// +0x04, the key map sits at +0x08 and the three trailing scalars at +0x14,
+// +0x18 and +0x1C (a dword, a dword and a word).
+//
+// The +0x14 scalar is ceil() of the eight bytes of .rdata at 0x010BFA50, passed
+// through the MSVCR71.dll ceil import at 0x01359394 and truncated by __ftol2.
+// Nothing in the evidence names that constant, so the body quotes the address
+// and no name is invented for it.
+
+#define _BFME_RETAIL_TREE_INSERT_LAYOUT
+#include <set>
+
+// This pinned IAT slot is MSVCR71.dll!ceil (0x01359394).
+extern "C" __declspec(dllimport) double __cdecl ceil(double value);
+
+class LargeGroupAudioKeyMap
 {
 public:
-    LargeGroupAudioUpdateModuleData();
+	LargeGroupAudioKeyMap();
+	LargeGroupAudioKeyMap(const LargeGroupAudioKeyMap &other);
+	~LargeGroupAudioKeyMap();
+
+private:
+	void *m_wordsBegin;
+	void *m_wordsEnd;
+	void *m_wordsCapacity;
 };
 
-__declspec(naked) LargeGroupAudioUpdateModuleData::LargeGroupAudioUpdateModuleData()
+class LargeGroupAudioUpdateModuleDataBase
 {
-    __asm {
-        _emit 6Ah
-        _emit 0FFh
-        _emit 68h
-        _emit 03h
-        _emit 1Eh
-        _emit 01h
-        _emit 01h
-        _emit 64h
-        _emit 0A1h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 50h
-        _emit 64h
-        _emit 89h
-        _emit 25h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 83h
-        _emit 0ECh
-        _emit 10h
-        _emit 56h
-        _emit 8Bh
-        _emit 0F1h
-        _emit 89h
-        _emit 74h
-        _emit 24h
-        _emit 08h
-        _emit 8Dh
-        _emit 4Eh
-        _emit 08h
-        _emit 0C7h
-        _emit 44h
-        _emit 24h
-        _emit 1Ch
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 0C7h
-        _emit 06h
-        _emit 60h
-        _emit 0FAh
-        _emit 0Bh
-        _emit 01h
-        _emit 0E8h
-        _emit 29h
-        _emit 76h
-        _emit 0D8h
-        _emit 0FFh
-        _emit 0DDh
-        _emit 05h
-        _emit 50h
-        _emit 0FAh
-        _emit 0Bh
-        _emit 01h
-        _emit 83h
-        _emit 0ECh
-        _emit 08h
-        _emit 0DDh
-        _emit 1Ch
-        _emit 24h
-        _emit 0C6h
-        _emit 44h
-        _emit 24h
-        _emit 24h
-        _emit 01h
-        _emit 0FFh
-        _emit 15h
-        _emit 94h
-        _emit 93h
-        _emit 35h
-        _emit 01h
-        _emit 83h
-        _emit 0C4h
-        _emit 08h
-        _emit 0E8h
-        _emit 0F4h
-        _emit 0FBh
-        _emit 75h
-        _emit 00h
-        _emit 89h
-        _emit 46h
-        _emit 14h
-        _emit 8Dh
-        _emit 44h
-        _emit 24h
-        _emit 04h
-        _emit 50h
-        _emit 8Dh
-        _emit 4Ch
-        _emit 24h
-        _emit 10h
-        _emit 51h
-        _emit 0B9h
-        _emit 0A0h
-        _emit 0FFh
-        _emit 2Eh
-        _emit 01h
-        _emit 0C7h
-        _emit 46h
-        _emit 18h
-        _emit 01h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 66h
-        _emit 0C7h
-        _emit 46h
-        _emit 1Ch
-        _emit 01h
-        _emit 00h
-        _emit 89h
-        _emit 74h
-        _emit 24h
-        _emit 0Ch
-        _emit 0E8h
-        _emit 16h
-        _emit 45h
-        _emit 0DAh
-        _emit 0FFh
-        _emit 8Bh
-        _emit 4Ch
-        _emit 24h
-        _emit 14h
-        _emit 8Bh
-        _emit 0C6h
-        _emit 5Eh
-        _emit 64h
-        _emit 89h
-        _emit 0Dh
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 83h
-        _emit 0C4h
-        _emit 1Ch
-        _emit 0C3h
-    }
+public:
+	virtual ~LargeGroupAudioUpdateModuleDataBase() {}
+
+private:
+	unsigned int m_baseValue;
+};
+
+struct Rva00296ED0Target;
+typedef Rva00296ED0Target *Rva00296ED0Key;
+typedef _STL::_Rb_tree<Rva00296ED0Key, Rva00296ED0Key,
+	_STL::_Identity<Rva00296ED0Key>, _STL::less<Rva00296ED0Key>,
+	_STL::allocator<Rva00296ED0Key> > Rva00296ED0Tree;
+
+class LargeGroupAudioUpdateModuleData : public LargeGroupAudioUpdateModuleDataBase
+{
+public:
+	LargeGroupAudioUpdateModuleData();
+
+private:
+	LargeGroupAudioKeyMap m_keys;
+	int m_b;
+	int m_a;
+	unsigned short m_enabled;
+};
+
+// ??0LargeGroupAudioUpdateModuleData@@QAE@XZ
+LargeGroupAudioUpdateModuleData::LargeGroupAudioUpdateModuleData() :
+	m_keys(),
+	m_b((int)ceil(*(const double *)0x010BFA50)),
+	m_a(1),
+	m_enabled(1)
+{
+	((Rva00296ED0Tree *)0x012EFFA0)->insert_unique((Rva00296ED0Key)this);
 }

@@ -364,6 +364,9 @@ def main(argv=None):
     if args.action == "status":
         return status()
     if args.action == "harvest":
+        # corrections and replays use THIS checkout's name_regression/hooks
+        # logic; a stale one computes corrections the current hooks reject
+        fresh_checkout()
         for seat in seats():
             if seat.get("harvested") or not finished(seat) or (args.seat and seat["id"] != args.seat):
                 continue
