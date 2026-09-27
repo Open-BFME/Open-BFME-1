@@ -135,3 +135,79 @@ int TerrainTiles006D2730::initializeTiles(int x, int y, WorldHeightMap *map, voi
     m_finalFlag = 0;
     return 0;
 }
+
+// ?rva006D2480@Rva006D2480Owner@@QAEXPAVRenderInfoClass@@_N1PAH222@Z
+// RVA 0x006D2480: 249-byte tile-state scan with conditional render (ret 0x1c).
+// The three pushed call arguments are the first three stack slots (info,
+// second, flag); the max slots are the last four. The emit call dispatches
+// through the 0x000085F8 ILT to the matched W3DTerrainBackground::rva0072DC30
+// (RenderInfoClass &, Bool, Bool) at 0x0072DC30.
+class RenderInfoClass;
+typedef bool Bool;
+class Rva006D2480Tile
+{
+public:
+	void rva0072DC30(RenderInfoClass &, Bool, Bool);
+	int m_state;
+	char m_pad[0x50];
+	float m_54;
+	char m_tail[0xc4 - 0x58];
+};
+extern void j_000085f8(void);
+union Rva006D2480Call {
+	void (*f)();
+	void (Rva006D2480Tile::*m)(RenderInfoClass &, Bool, Bool);
+};
+class Rva006D2480Owner
+{
+public:
+	void rva006D2480(RenderInfoClass *info, Bool second, Bool flag, int *maxX, int *maxA, int *maxY, int *maxB);
+private:
+	char m_pad[0x30d8];
+	Rva006D2480Tile *m_tiles;
+	int m_limit;
+	int m_width;
+	int m_height;
+	char m_pad2[0x30f8 - 0x30e8];
+	unsigned char m_flag;
+	char m_pad3[3];
+	int m_count;
+	float m_heightF;
+};
+void Rva006D2480Owner::rva006D2480(RenderInfoClass *info, Bool second, Bool flag, int *maxX, int *maxA, int *maxY, int *maxB)
+{
+	int x = 0;
+	int xOff = 0;
+	if (m_width <= 0)
+		return;
+	for (; x < m_width; ++x, xOff += 0x10)
+	{
+		int y = 0;
+		if (y >= m_height)
+			continue;
+		int yOff = 0;
+		do
+		{
+			Rva006D2480Tile *tile = m_tiles + y * m_width + x;
+			if (tile->m_state != 2)
+			{
+				if (m_flag == 0 || m_count >= m_limit || !(m_heightF < tile->m_54))
+				{
+					Rva006D2480Call emit;
+					emit.f = &j_000085f8;
+					(tile->*emit.m)(*info, second, flag);
+					if (xOff < *maxX)
+						*maxX = xOff;
+					if (yOff < *maxY)
+						*maxY = yOff;
+					if (xOff + 0x10 > *maxA)
+						*maxA = xOff + 0x10;
+					if (yOff + 0x10 > *maxB)
+						*maxB = yOff + 0x10;
+				}
+			}
+			++y;
+			yOff += 0x10;
+		} while (y < m_height);
+	}
+}
