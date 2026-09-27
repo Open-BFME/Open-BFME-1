@@ -1,5 +1,5 @@
-// ?d_00913af0@@YAXXZ
-// partial score=0.5148169668797211 date=2026-09-27
+// ?rva00913AF0@PointGroupClass@@QAEXH_N@Z
+// C++ reconstruction of the point-buffer submit routine at retail 0x00913AF0.
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/Wwutil /Igame/Libraries/Source/WWVegas/WWDownload /Igame/Libraries/Source/Compression /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
 #define Matrix4x4 Matrix4
 #include "sharebuf.h"
@@ -14,6 +14,7 @@
 #include "vertmaterial.h"
 #include "dx8indexbuffer.h"
 #include "dx8vertexbuffer.h"
+#include "sortingrenderer.h"
 extern VectorClass<Vector3> VertexLoc;
 extern VectorClass<Vector2> VertexUV;
 extern VectorClass<Vector4> VertexDiffuse;
@@ -44,30 +45,30 @@ private:
 };
 class BoxDynamicVBAccessClass
 {
-	const FVFInfoClass & FVFInfo;
-	unsigned Type;
-	unsigned FVF;
-	unsigned Start;
-	unsigned short VertexCount;
-	unsigned short VertexBufferOffset;
-	class BoxVertexBufferClass * VertexBuffer;
+ const FVFInfoClass & FVFInfo;
+ unsigned Type;
+ unsigned FVF;
+ unsigned Start;
+ unsigned short VertexCount;
+ unsigned short VertexBufferOffset;
+ class BoxVertexBufferClass * VertexBuffer;
 
 public:
-	BoxDynamicVBAccessClass(unsigned type,unsigned fvf,unsigned short vertex_count,unsigned buffer);
-	~BoxDynamicVBAccessClass();
+ BoxDynamicVBAccessClass(unsigned type,unsigned fvf,unsigned short vertex_count,unsigned buffer);
+ ~BoxDynamicVBAccessClass();
 
-	const FVFInfoClass & FVF_Info() const { return FVFInfo; }
+ const FVFInfoClass & FVF_Info() const { return FVFInfo; }
 
-	class WriteLockClass
-	{
-		BoxDynamicVBAccessClass *DynamicVBAccess;
-		VertexFormatXYZNDUV2 *Vertices;
+ class WriteLockClass
+ {
+  BoxDynamicVBAccessClass *DynamicVBAccess;
+  VertexFormatXYZNDUV2 *Vertices;
 
-	public:
-		WriteLockClass(BoxDynamicVBAccessClass *vb_access);
-		~WriteLockClass();
-		VertexFormatXYZNDUV2 *Get_Formatted_Vertex_Array() { return Vertices; }
-	};
+ public:
+  WriteLockClass(BoxDynamicVBAccessClass *vb_access);
+  ~WriteLockClass();
+  VertexFormatXYZNDUV2 *Get_Formatted_Vertex_Array() { return Vertices; }
+ };
 };
 
 extern void BoxSetTexture(unsigned stage,TextureBaseClass *& texture);
@@ -77,77 +78,74 @@ struct Rva0093B340Center
  float X, Y, Z;
  Rva0093B340Center() : X(0.0f), Y(0.0f), Z(0.0f) {}
 };
-extern "C" void bfme_SortingRenderer_InsertTriangles_93B340(const Rva0093B340Center &, unsigned short, unsigned short, unsigned short, unsigned short);
 static __forceinline void InsertPointTriangles(unsigned short a, unsigned short b, unsigned short c, unsigned short d)
 {
  Rva0093B340Center center;
- bfme_SortingRenderer_InsertTriangles_93B340(center,a,b,c,d);
+ SortingRendererClass::Insert_Triangles(
+  *reinterpret_cast<const SphereClass*>(&center),a,b,c,d);
 }
 
-// CMOV branch donor: the independently matched 328-byte Clamp_Color at
-// 0x0090F310 (DX8WrapperClampColor.cpp). Its 94-byte CMOV branch starts at
-// 0x0090F3FA. Native component statements retain retail's unrolled fallback.
-// VC7.1 uses branches for the equivalent native integer clamp; the submit
-// algorithm below remains C++ and uses the canonical x87 color pack helper.
+// Clamp_Color at 0x0090F310 uses CMOV for each component. VC7.1 does not
+// produce that branch from equivalent native integer C++; retain a native
+// fallback for CPUs without CMOV.
 static __forceinline void ClampPointColor(Vector4 &color)
 {
-	if (!CPUDetectClass::Has_CMOV_Instruction())
-	{
-		color.X = color.X <= 0.0f ? 0.0f : (color.X > 1.0f ? 1.0f : color.X);
-		color.Y = color.Y <= 0.0f ? 0.0f : (color.Y > 1.0f ? 1.0f : color.Y);
-		color.Z = color.Z <= 0.0f ? 0.0f : (color.Z > 1.0f ? 1.0f : color.Z);
-		color.W = color.W <= 0.0f ? 0.0f : (color.W > 1.0f ? 1.0f : color.W);
-		return;
-	}
+ if (!CPUDetectClass::Has_CMOV_Instruction())
+ {
+  color.X = color.X <= 0.0f ? 0.0f : (color.X > 1.0f ? 1.0f : color.X);
+  color.Y = color.Y <= 0.0f ? 0.0f : (color.Y > 1.0f ? 1.0f : color.Y);
+  color.Z = color.Z <= 0.0f ? 0.0f : (color.Z > 1.0f ? 1.0f : color.Z);
+  color.W = color.W <= 0.0f ? 0.0f : (color.W > 1.0f ? 1.0f : color.W);
+  return;
+ }
 
-	__asm
-	{
-		mov	esi,dword ptr color
+ __asm
+ {
+  mov esi,dword ptr color
 
-		mov edx,0x3f800000
+  mov edx,0x3f800000
 
-		mov edi,dword ptr[esi]
-		mov ebx,edi
-		sar edi,31
-		not edi
-		and edi,ebx
-		cmp edi,edx
-		cmovnb edi,edx
-		mov dword ptr[esi],edi
+  mov edi,dword ptr[esi]
+  mov ebx,edi
+  sar edi,31
+  not edi
+  and edi,ebx
+  cmp edi,edx
+  cmovnb edi,edx
+  mov dword ptr[esi],edi
 
-		mov edi,dword ptr[esi+4]
-		mov ebx,edi
-		sar edi,31
-		not edi
-		and edi,ebx
-		cmp edi,edx
-		cmovnb edi,edx
-		mov dword ptr[esi+4],edi
+  mov edi,dword ptr[esi+4]
+  mov ebx,edi
+  sar edi,31
+  not edi
+  and edi,ebx
+  cmp edi,edx
+  cmovnb edi,edx
+  mov dword ptr[esi+4],edi
 
-		mov edi,dword ptr[esi+8]
-		mov ebx,edi
-		sar edi,31
-		not edi
-		and edi,ebx
-		cmp edi,edx
-		cmovnb edi,edx
-		mov dword ptr[esi+8],edi
+  mov edi,dword ptr[esi+8]
+  mov ebx,edi
+  sar edi,31
+  not edi
+  and edi,ebx
+  cmp edi,edx
+  cmovnb edi,edx
+  mov dword ptr[esi+8],edi
 
-		mov edi,dword ptr[esi+12]
-		mov ebx,edi
-		sar edi,31
-		not edi
-		and edi,ebx
-		cmp edi,edx
-		cmovnb edi,edx
-		mov dword ptr[esi+12],edi
-	}
+  mov edi,dword ptr[esi+12]
+  mov ebx,edi
+  sar edi,31
+  not edi
+  and edi,ebx
+  cmp edi,edx
+  cmovnb edi,edx
+  mov dword ptr[esi+12],edi
+ }
 }
 
-static __forceinline unsigned ConvertPointColor(const Vector4 &color){
- Vector4 clamped_color=color;
- ClampPointColor(clamped_color);
- return DX8Wrapper::Convert_Color(reinterpret_cast<const Vector3&>(clamped_color),clamped_color[3]);
+static __forceinline unsigned ConvertPointColor(Vector4 color){
+ ClampPointColor(color);
+ return DX8Wrapper::Convert_Color(reinterpret_cast<const Vector3&>(color),color[3]);
 }
 void PointGroupClass::rva00913AF0(int vnum,bool no_diffuse){
  Matrix4 world,view;
