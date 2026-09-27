@@ -6548,5 +6548,85 @@
   "after_sha256": "9494825b63384ef37ff307c85058c168ef7597edc0360400316794d82ca946e5",
   "evidence": "targets/game/reverse/identity_evidence/0050a470-quickmatch-system.md",
   "reason": "Independent setter bodies00505530/50 store selection values at224/21C and the caller gates max-ping/max-disconnect gadget events with218/220; inherited matching/stopping/map labels are unsupported and contradict these actual field uses."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005091f0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenuInitGadgets.cpp",
+  "old_name": "m_isMatching",
+  "new_name": "m_rva218",
+  "before_sha256": "9d7f2d15deb3cf7106c924145f8a5e4a9c68e51c55a7f233b9117bc1e873d63f",
+  "after_sha256": "891f83c357a4fe08af670c34680a4cc6ad6d294dd727951b29e0be343820d399",
+  "evidence": "targets/game/reverse/identity_evidence/005091f0-quickmatch-init.md",
+  "reason": "Independent sibling setters and the retail gadget-initialization guard prove selection/callback fields at218/21C/220/224; inherited matching/stopping/map labels are unsupported."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005091f0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenuInitGadgets.cpp",
+  "old_name": "m_matchingLevel",
+  "new_name": "m_rva21C",
+  "before_sha256": "9d7f2d15deb3cf7106c924145f8a5e4a9c68e51c55a7f233b9117bc1e873d63f",
+  "after_sha256": "891f83c357a4fe08af670c34680a4cc6ad6d294dd727951b29e0be343820d399",
+  "evidence": "targets/game/reverse/identity_evidence/005091f0-quickmatch-init.md",
+  "reason": "Independent sibling setters and the retail gadget-initialization guard prove selection/callback fields at218/21C/220/224; inherited matching/stopping/map labels are unsupported."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005091f0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenuInitGadgets.cpp",
+  "old_name": "m_isStopping",
+  "new_name": "m_rva220",
+  "before_sha256": "9d7f2d15deb3cf7106c924145f8a5e4a9c68e51c55a7f233b9117bc1e873d63f",
+  "after_sha256": "891f83c357a4fe08af670c34680a4cc6ad6d294dd727951b29e0be343820d399",
+  "evidence": "targets/game/reverse/identity_evidence/005091f0-quickmatch-init.md",
+  "reason": "Independent sibling setters and the retail gadget-initialization guard prove selection/callback fields at218/21C/220/224; inherited matching/stopping/map labels are unsupported."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005091f0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenuInitGadgets.cpp",
+  "old_name": "m_selectedMap",
+  "new_name": "m_rva224",
+  "before_sha256": "9d7f2d15deb3cf7106c924145f8a5e4a9c68e51c55a7f233b9117bc1e873d63f",
+  "after_sha256": "891f83c357a4fe08af670c34680a4cc6ad6d294dd727951b29e0be343820d399",
+  "evidence": "targets/game/reverse/identity_evidence/005091f0-quickmatch-init.md",
+  "reason": "Independent sibling setters and the retail gadget-initialization guard prove selection/callback fields at218/21C/220/224; inherited matching/stopping/map labels are unsupported."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005091f0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenuInitGadgets.cpp",
+  "old_name": "BfmeThingEGD",
+  "new_name": "Rva00477DA0WindowLookup",
+  "before_sha256": "9d7f2d15deb3cf7106c924145f8a5e4a9c68e51c55a7f233b9117bc1e873d63f",
+  "after_sha256": "891f83c357a4fe08af670c34680a4cc6ad6d294dd727951b29e0be343820d399",
+  "evidence": "targets/game/reverse/identity_evidence/005091f0-quickmatch-init.md",
+  "reason": "Independent477DA0 body is a pointer-return lookup member with oneNameKeyType argument; oldBfmeThingEGD void contract is not retained as identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005091f0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenuInitGadgets.cpp",
+  "old_name": "_bfme_initGadgets",
+  "new_name": "rva005091F0InitGadgets",
+  "before_sha256": "9d7f2d15deb3cf7106c924145f8a5e4a9c68e51c55a7f233b9117bc1e873d63f",
+  "after_sha256": "891f83c357a4fe08af670c34680a4cc6ad6d294dd727951b29e0be343820d399",
+  "evidence": "targets/game/reverse/identity_evidence/005091f0-quickmatch-init.md",
+  "reason": "Operation and menu owner are proven; exact originalBFME member spelling is not, so the address remains in the method name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005091f0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenuInitGadgets.cpp",
+  "old_name": "setGroup",
+  "new_name": "j_00017567",
+  "before_sha256": "9d7f2d15deb3cf7106c924145f8a5e4a9c68e51c55a7f233b9117bc1e873d63f",
+  "after_sha256": "891f83c357a4fe08af670c34680a4cc6ad6d294dd727951b29e0be343820d399",
+  "evidence": "targets/game/reverse/identity_evidence/005091f0-quickmatch-init.md",
+  "reason": "Heuristic declaration alignment is not an identity equivalence: transition setGroup remains unchanged through its canonical header;17567 is the independently decoded window lookup route."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005091f0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenuInitGadgets.cpp",
+  "old_name": "slot0",
+  "new_name": "rva005091F0InitGadgets",
+  "before_sha256": "9d7f2d15deb3cf7106c924145f8a5e4a9c68e51c55a7f233b9117bc1e873d63f",
+  "after_sha256": "891f83c357a4fe08af670c34680a4cc6ad6d294dd727951b29e0be343820d399",
+  "evidence": "targets/game/reverse/identity_evidence/005091f0-quickmatch-init.md",
+  "reason": "Heuristic declaration alignment is not an identity equivalence: unused interface slot remains opaque; the new address-labelled initializer names the actual body."
  }
 ]
