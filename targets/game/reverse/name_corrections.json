@@ -7648,5 +7648,15 @@
   "after_sha256": "384565d5ce6bfea79cb9f9664f9d9384cf5867be29a4d4fc341e390642244491",
   "evidence": "targets/game/reverse/identity_evidence/003c2100-callback-identity.md",
   "reason": "The matched caller types this callback on LivingWorldLogic and gives it a LivingWorldRegion* argument. The old bank names another owner and record type, so its full method identity conflicts with the matched call. The caller does not give the method a semantic name, so the replacement keeps the body address."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00170228.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/VectorObjectIdAssignment.cpp",
+  "old_name": "ScienceType",
+  "new_name": "Rva00170200Elem",
+  "before_sha256": "b8b6aebfe29ca055d6983b8a30ad30a7510bc35343308bac6edc573dea1f09dd",
+  "after_sha256": "661458e72445708de52747e58d3b9cd79b2f8d5d80a8294658abacf454f7c67a",
+  "evidence": "targets/game/reverse/identity_evidence/0x170200_vector_p4_operator_assign.md",
+  "reason": "The bank reused an unproved ScienceType identity from a lift starting inside the function. Typed callers at the true170200 entry establish only an object-id-sized element; independent extent and ABI proof preserves an address-derived type."
  }
 ]
