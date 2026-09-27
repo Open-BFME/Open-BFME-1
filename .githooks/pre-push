@@ -21,6 +21,9 @@ ZERO=0000000000000000000000000000000000000000
 
 while read -r _local_ref local_sha _remote_ref remote_sha; do
     [ -z "${local_sha:-}" ] && continue
+    # Shared body claims (tools/claims.py) are parentless marker commits with an
+    # empty tree, not code: there is no ledger or source in them to verify.
+    case "${_remote_ref:-}" in refs/claims/*) continue ;; esac
     [ "$local_sha" = "$ZERO" ] && continue   # deleting a remote ref
 
     python3 tools/check_csv.py --ref "$local_sha" || fail "ledger integrity at $local_sha (see above)"

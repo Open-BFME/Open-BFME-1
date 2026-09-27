@@ -48,7 +48,13 @@ REMOTE = os.environ.get("BFME_CLAIM_REMOTE", "origin")
 
 
 def _git(*args, cwd=None, input_text=None, timeout=60):
-    return subprocess.run(["git", *args], cwd=cwd or ROOT, capture_output=True, text=True,
+    cwd = cwd or ROOT
+    hooks = Path(cwd) / ".githooks"
+    # Run THIS checkout's hooks, not whatever core.hooksPath points at: a host
+    # whose hooksPath names an older checkout would run a pre-push that tries
+    # to verify a claim marker as if it were code. The hooks still run.
+    extra = ["-c", f"core.hooksPath={hooks.as_posix()}"] if args[:1] == ("push",) and hooks.is_dir() else []
+    return subprocess.run(["git", *extra, *args], cwd=cwd, capture_output=True, text=True,
                           input=input_text, timeout=timeout)
 
 
