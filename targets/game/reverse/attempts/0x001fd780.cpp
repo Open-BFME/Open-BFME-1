@@ -1,33 +1,24 @@
 // ?d_001fd780@@YAXXZ
-// partial score=0.98 date=2026-09-25
-// Partial reconstruction for retail RVA 0x001FD780 (381 bytes).
+// partial score=0.98 date=2026-09-27
+// This source reconstructs retail RVA 0x001FD780 across 381 bytes.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib
-// Vtable 0x010A40C4 slot 1, constructor 0x001FC580, and the
-// GateProxyBehavior lookup prove GateOpenAndCloseBehavior::onObjectCreated.
-// The prior draft models the adjustment for the secondary base before
-// update(bool).
-//
-// This TU deliberately uses the canonical WWLib AsciiString/StringBase view.
-// The target's local is default-constructed, filled by StringBase::set at
-// 0x00887C90, and released at scope exit through releaseBuffer 0x00887940.
-// No physical copy-constructor call occurs in this body; the canonical copy
-// constructor remains available for real by-value callers but is not invented
-// here.
+// Vtable slot 1 at 0x010A40C4 and constructor 0x001FC580 identify
+// GateOpenAndCloseBehavior::onObjectCreated. The body adjusts Module pointers
+// back by four bytes to reach GateOpenAndCloseBehavior.
+// This source uses the canonical AsciiString and StringBase definitions.
+// The local candidateName starts empty. StringBase::set at 0x00887C90 copies
+// the candidate object name, and scope cleanup releases its buffer through
+// StringBase::releaseBuffer at 0x00887940.
+// The body does not call the AsciiString copy constructor. The compare
+// specializations below copy the implementation from StringBase.cpp.
 
 #include "ascii_string.h"
 
-// The canonical header declares this destructor out of line.  Retail's local
-// cleanup is the native StringBase<char>::releaseBuffer body, not an unknown
-// AsciiString helper, so expose that exact inherited operation here.
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
-
-// Native definitions from Code/Libraries/Source/string/StringBase.cpp.  The
-// real source keeps these in the same TU as the StringBase implementation;
-// forcing the two narrow overloads inline here lets this scratch caller use
-// that implementation without hand-copying a second compare into AsciiString.
+// The ascii_string.h header defines an empty AsciiString destructor. The
+// compiler calls StringBase<char>::~StringBase during scope cleanup.
+// These compare specializations follow the definitions in StringBase.cpp.
+// Inline definitions let this source call them without another AsciiString
+// comparison implementation.
 template <>
 __forceinline int StringBase<char>::compare(const StringBase<char> &str) const
 {
