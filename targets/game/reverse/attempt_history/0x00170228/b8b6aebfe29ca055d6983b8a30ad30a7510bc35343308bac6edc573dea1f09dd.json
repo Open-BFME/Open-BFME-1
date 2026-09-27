@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "b8b6aebfe29ca055d6983b8a30ad30a7510bc35343308bac6edc573dea1f09dd",
+  "symbol": "??4?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ??4?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z\n// partial score=0.97 date=2026-09-27\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS\n// stlport\n// Partial stash for 0x00170228 (vector<ScienceType>::operator=): probe proved\n// `template class _STL::vector<ScienceType>` over `enum ScienceType\n// {SCIENCE_INVALID=0}` (the ParsePrerequisiteScienceThunk.cpp spelling) is\n// instruction-EXACT 261B/6-relocs at the CORRECTED extent 0x00170200/261B\n// (lift_extents.csv: start 0x00170200 is 16-aligned after int3; the ledger's\n// 0x00170228/221B starts 40B inside the body). Remaining for a landing:\n// boundary retraction to 0x00170200/261B plus TU-local alias decls binding the\n// STL-spelled helpers to retail bfmeMake_0016FF30 (0x16FF30), tg_0016f680\n// (0x16F680), tg_000cd160 (0xCD160) and the node-alloc pair, per the\n// ArmorTemplateSetVectorInsertOverflowBody.cpp pattern.\n\n#include <vector>\n\nenum ScienceType\n{\n\tSCIENCE_INVALID = 0\n};\n\ntemplate class _STL::vector<ScienceType>;\n"
+}
