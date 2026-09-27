@@ -352,7 +352,8 @@ def build_feature(pe, source, entry, hooks, probe=False, defines=()):
     fourth element to make the detour a conditional replacement: the payload
     returns non-zero to swallow the call and `ret` that many argument bytes
     instead of running the function. A fifth element opts into replacing EAX
-    with the payload's return value. See PE.shim."""
+    with the payload's return value. A sixth element selects ECX instead.
+    See PE.shim."""
     with tempfile.TemporaryDirectory() as tmp:
         stem = Path(source).stem
         obj = compile_payload(source, Path(tmp) / f"{stem}.obj", probe=probe,
@@ -373,10 +374,12 @@ def build_feature(pe, source, entry, hooks, probe=False, defines=()):
         target, name, args = hook[0], hook[1], hook[2]
         swallow_ret = hook[3] if len(hook) > 3 else None
         replace_eax = hook[4] if len(hook) > 4 else False
+        replace_ecx = hook[5] if len(hook) > 5 else False
         if name not in entries:
             raise SystemExit(f"{Path(source).name} exports {sorted(entries)}, not {name}")
         start = pe.detour_call(target, entries[name], args=args,
-                               swallow_ret=swallow_ret, replace_eax=replace_eax)
+                               swallow_ret=swallow_ret, replace_eax=replace_eax,
+                               replace_ecx=replace_ecx)
         detours.append(dict(target=target, entry=name, code_rva=start,
                             code_len=pe.cave_rva + pe.cave_used - start))
     return dict(code_rva=rva, code_len=len(blob), detours=detours)
@@ -434,7 +437,7 @@ def build_tracksfix(pe, feature_dir, probe=False):
     ), probe=probe)
 
 
-def build_structure_melee_gate(pe, feature_dir, probe=False):
+def checked_structure_melee_hooks(pe):
     """Arm the predicate's own skip bit around its two wait-state calls.
 
     A wrong image must fail here, before a jmp is written over something that
@@ -450,12 +453,18 @@ def build_structure_melee_gate(pe, feature_dir, probe=False):
             raise SystemExit(
                 f"0x{call:08X} is not the retail call to "
                 f"bfmeMeleeHordeTargetInvalid followed by add esp, 8 / test al")
-    return build_feature(pe, feature_dir / "src/structure_melee_gate.cpp", "setPredicateSkipForStructureAttack", (
+    return (
         (STRUCTURE_MELEE_ONENTER_CALL, "setPredicateSkipForStructureAttack", ("esi",)),
         (STRUCTURE_MELEE_ONENTER_RESTORE, "restorePredicateSkipAfterStructureAttackCheck", ()),
         (STRUCTURE_MELEE_UPDATE_CALL, "setPredicateSkipForStructureAttack", ("edi",)),
         (STRUCTURE_MELEE_UPDATE_RESTORE, "restorePredicateSkipAfterStructureAttackCheck", ()),
-    ), probe=probe)
+    )
+
+
+def build_structure_melee_gate(pe, feature_dir, probe=False):
+    return build_feature(pe, feature_dir / "src/structure_melee_gate.cpp",
+                         "setPredicateSkipForStructureAttack",
+                         checked_structure_melee_hooks(pe), probe=probe)
 
 
 # Every span is checked before patching: several sites sit immediately before
@@ -500,10 +509,42 @@ MELEEPROBE_HOOKS = (
 
 TARGET_GOAL_HOOK = (0x003DF445, "meleeprobe_target_goal",
                     ("eax", "esi", "stack_offset:0x3c"), "8b0d98082f01")
+TARGET_ACQUIRE_HOOKS = (
+    (0x0024432E, "meleeprobe_acquire_enter", ("edi", "esi"), "e875a1dcff"),
+    (0x001CC12A, "meleeprobe_acquire_selected",
+     ("ebp", "stack_offset:0x10", "stack_offset:0x24", "edi"), "8b74241085f6"),
+    (0x001CC149, "meleeprobe_acquire_dispatch", ("ebp", "esi"), "8b4500568bcd"),
+)
+TARGET_CANDIDATE_HOOKS = (
+    (0x001CBFE4, "meleeprobe_candidate_query", ("ebp", "eax"), "8b0d98082f01"),
+    (0x001CBFF0, "meleeprobe_candidate_resolved", ("ebp", "eax"), "8bf085f60f8415010000"),
+    (0x001CC0B9, "meleeprobe_candidate_enemy", ("ebp", "esi"), "8b0d14f22e01"),
+    (0x001CC0FE, "meleeprobe_candidate_final", ("ebp", "esi", "eax"), "84c089742410"),
+)
+TARGET_FIRST_HOOKS = (
+    (0x001CBF24, "meleeprobe_first_query", ("ebp", "edx"), "8b0d98082f01"),
+    (0x001CBF36, "meleeprobe_first_valid", ("ebp", "esi"), "f6864403000001"),
+    (0x001CBF61, "meleeprobe_first_enemy", ("ebp", "esi"), "6a078bcee8b565e6ff"),
+    (0x001CBF9D, "meleeprobe_first_slot",
+     ("ebp", "stack_offset:0x10", "esi"), "3bfb0f8c7bffffff"),
+)
+TARGET_VIEW_GOAL_HOOKS = (
+    (0x003E4BE5, "meleeprobe_view_goal",
+     ("ecx", "eax", "stack_offset:0x38"), "85c9750b85c0"),
+    (0x003E4C5B, "meleeprobe_view_goal",
+     ("ecx", "eax", "stack_offset:0x38"), "85c9750b85c0"),
+    (0x003E4505, "meleeprobe_view_goal",
+     ("ecx", "eax", "stack_offset:0x34"), "85c9742a8b442434"),
+    (0x003E4564, "meleeprobe_view_goal",
+     ("ecx", "eax", "stack_offset:0x34"), "85c974268b442434"),
+)
 
 
 def build_meleeprobe(pe, feature_dir, probe=False, target_goal=False):
-    checked_hooks = MELEEPROBE_HOOKS + ((TARGET_GOAL_HOOK,) if target_goal else ())
+    checked_hooks = MELEEPROBE_HOOKS + (
+        (TARGET_GOAL_HOOK,) + TARGET_ACQUIRE_HOOKS + TARGET_CANDIDATE_HOOKS
+        + TARGET_FIRST_HOOKS + TARGET_VIEW_GOAL_HOOKS
+        if target_goal else ())
     for target, name, args, expected in checked_hooks:
         expected_bytes = bytes.fromhex(expected)
         if pe.read(target, len(expected_bytes)) != expected_bytes:
@@ -512,12 +553,27 @@ def build_meleeprobe(pe, feature_dir, probe=False, target_goal=False):
     hooks = tuple(hook[:3] for hook in MELEEPROBE_HOOKS)
     if target_goal:
         hooks += (TARGET_GOAL_HOOK[:3] + (None, True),)
+        hooks += tuple(hook[:3] for hook in TARGET_ACQUIRE_HOOKS)
+        hooks += tuple(hook[:3] for hook in TARGET_CANDIDATE_HOOKS)
+        hooks += tuple(hook[:3] for hook in TARGET_FIRST_HOOKS)
+        hooks += tuple(hook[:3] + (None, False, True) for hook in TARGET_VIEW_GOAL_HOOKS)
     return build_feature(pe, feature_dir / "src/meleeprobe.cpp", "meleeprobe_loop",
                          hooks, probe=probe)
 
 
 def build_melee_target_goal(pe, feature_dir, probe=False):
     return build_meleeprobe(pe, feature_dir, probe=probe, target_goal=True)
+
+
+def build_ac_attack_view(pe, feature_dir, probe=False):
+    for target, _, _, expected in TARGET_VIEW_GOAL_HOOKS:
+        if pe.read(target, len(bytes.fromhex(expected))) != bytes.fromhex(expected):
+            raise SystemExit(f"attack-view retail span changed at 0x{target:08X}")
+    hooks = checked_structure_melee_hooks(pe) + tuple(
+        (hook[0], "ac_attack_view_goal", hook[2], None, False, True)
+        for hook in TARGET_VIEW_GOAL_HOOKS)
+    return build_feature(pe, feature_dir / "src/ac_attack_view.cpp", "ac_attack_view_goal",
+                         hooks, probe=probe)
 
 
 def build_uiprobe(pe, feature_dir, probe=False):
@@ -718,6 +774,7 @@ UNSHIPPED = {
     "052-meleeprobe": (build_meleeprobe, "bounded AC diagnostic; replaces 051 hooks and includes its fix"),
     "053-melee-retry": (build_meleeprobe, "experimental AC planning retry with diagnostics; replaces 051/052"),
     "054-melee-target-goal": (build_melee_target_goal, "experimental targeted enemy goal reservation handling; replaces 051/052/053"),
+    "055-ac-attack-view": (build_ac_attack_view, "AC attack-view fix awaiting focused replay and live validation; replaces 051/052/053/054"),
     "030-netlatprobe": (build_netlatprobe, "an instrument: it writes tens of lines a second"),
     "036-fpsprobe-timing": (build_fpsprobe_timing,
                             "the probe without the backbuffer readback, for "

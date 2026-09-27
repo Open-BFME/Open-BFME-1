@@ -1,11 +1,41 @@
 # Experimental target-horde goal reservation exception
 
-Unshipped. Replay testing leaves AC unresolved. This variant keeps the failed
-053 retry experiment as its comparison baseline and adds one narrower
-destination-check exception. It includes all 052 diagnostics. Build every shipped feature except
-051, plus 054; both LAN clients must use the same executable. Do not stack 051,
-052, 053 and 054. Startup identifies `054-melee-target-goal-v2`, `retry_enabled:1` and
-`target_goal_enabled:1`.
+Unshipped diagnostic variant. The original target-goal placement exception
+did not fix AC. Version 10 disabled both that exception and the 053 retry,
+then added the attack-view goal-reservation rule documented in
+`../055-ac-attack-view/README.md`. It includes all 052 diagnostics. Build every
+shipped feature except 051, plus 054. Do not stack 051–055. Startup identifies
+`054-melee-target-goal-v11`, `retry_enabled:0`, `target_goal_enabled:1` and
+`view_goal_enabled:1`; the target-goal hook observes but no longer overrides.
+
+Version 6 records three diagnostic events around member target acquisition:
+`target_acquire_enter`, `target_acquire_selected`, and `target_acquire_dispatch`.
+They record whether a phase-3 member selects a candidate and reaches the final
+virtual dispatch. They do not change the reservation exception or attack orders.
+The first diagnostic build crashed when the selection was null; version 4 logs
+that normal null result without dereferencing it.
+Version 5 also records the nearby candidate ID, resolved Object, enemy-filter
+pass, and final selection flag. These events identify where the candidate is
+lost; they do not alter any filter.
+Version 8 records the earlier nearby-object search and raw member/candidate
+position bits, because version 5 showed that the later search omitted all four
+structure-attacking Soldiers.
+Version 6's first-search hook replaced an instruction entered by a native
+branch and crashed. The hook now sits at the next branch-safe instruction; the
+image test checks direct branches into every acquisition hook span.
+Version 8 also records horde-member positions in the periodic snapshots so
+the two attack-view searches can be compared with actual unit separation.
+
+Version 9 made empty-position attack-view cells expose a goal-reservation ID
+when its owner belonged to an enemy horde in the normal structure-attack state.
+All four previously protected Soldiers received damage in the replay, though
+the old retry and placement exceptions were still enabled. Version 10 disabled
+both old experiments. Uruks then damaged Soldiers 616–619 starting at frames
+461, 461, 463, and 465. Its capture reached frame 1051 with zero dropped
+records. Version 11 compiles the same rule from the shared source used by 055;
+its command, damage, target-dispatch and view-override records match version 10
+through frame 800, including damage to all four previously protected Soldiers.
+The version 11 capture reached frame 883 with zero dropped records.
 
 ## Replay result
 
@@ -19,6 +49,22 @@ therefore did not fix the observed protection of the structure attackers.
 
 Evidence: `build/ac-offline-20260927/analysis-054-v2.md`. The capture had zero
 dropped records; the compared events matched the 053 control before frame 452.
+
+In the version 4 replay, all command, damage, planner and state-transition
+records matched version 2 through frame 800. During frames 446–588, Uruks
+reached the selection join 101 times. Ninety-eight selected no candidate; the
+other three selected Soldier 615, who was already fighting. They never selected
+Soldiers 616–619, who kept attacking the structure.
+
+In version 5, the later search queried 338 objects for Uruks in frames 446–588:
+three queries found Soldier 615, 287 found friendly Uruks, and 48 found the
+slaughterhouse. It did not query Soldiers 616–619. The earlier search is the
+remaining unobserved source of potential targets.
+
+Version 7 found only four entries in that earlier search during the same
+interval, all friendly Uruks. Neither search returned Soldiers 616–619. Its
+command, damage, planner, state-transition and target-selection records matched
+version 5 through frame 800, with zero dropped events.
 
 ## Evidence and hypothesis
 

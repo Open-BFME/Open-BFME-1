@@ -164,6 +164,7 @@ class PE:
         Raises on any relative form this does not explicitly handle."""
         out = bytearray()
         cur_src = src_rva
+        stolen_end = src_rva + sum(ins.size for ins in insns)
         for ins in insns:
             raw = bytes(ins.bytes)
             op = raw[0]
@@ -171,7 +172,14 @@ class PE:
                 target = cur_src + ins.size + struct.unpack_from("<i", raw, 1)[0]
                 new_from = dst_rva + len(out)
                 out += bytes([op]) + struct.pack("<i", target - (new_from + 5))
-            elif 0x70 <= op <= 0x7F or op in (0xEB, 0xE3):
+            elif 0x70 <= op <= 0x7F:          # jcc rel8 -> jcc rel32
+                target = cur_src + ins.size + struct.unpack_from("<b", raw, 1)[0]
+                if src_rva <= target < stolen_end:
+                    raise CaveError(f"short branch at 0x{cur_src:X} targets the stolen span")
+                new_from = dst_rva + len(out)
+                out += bytes([0x0F, 0x80 | (op & 0x0F)]) + struct.pack(
+                    "<i", target - (new_from + 6))
+            elif op in (0xEB, 0xE3):
                 raise CaveError(
                     f"short relative branch {ins.mnemonic} at 0x{cur_src:X} in the "
                     f"stolen prologue; pick a different hook address")
@@ -220,7 +228,8 @@ class PE:
         return start
 
     # --- the shim ------------------------------------------------------
-    def shim(self, entry_va, at_va, args=("ecx",), swallow_ret=None, replace_eax=False):
+    def shim(self, entry_va, at_va, args=("ecx",), swallow_ret=None,
+             replace_eax=False, replace_ecx=False):
         """The overlay's only machine code: save everything, call `entry_va`,
         put everything back.
 
@@ -240,7 +249,7 @@ class PE:
         "stack_offset:N" reads a dword at the hook's original ESP + N, for
         mid-function hooks whose stack layout is known at that exact instruction.
 
-        `replace_eax` carries the payload's return value into the resumed code
+        `replace_eax` or `replace_ecx` carries the payload's return value into the resumed code
         while preserving every other register and the original flags. It cannot
         be combined with `swallow_ret`, whose return value controls a branch.
 
@@ -262,8 +271,10 @@ class PE:
         one .cpp file, and hand-maintaining it per feature is how the two blobs
         this replaced both grew their own copy of the same mistake.
         """
-        if replace_eax and swallow_ret is not None:
-            raise CaveError("replace_eax cannot be combined with swallow_ret")
+        if (replace_eax or replace_ecx) and swallow_ret is not None:
+            raise CaveError("register replacement cannot be combined with swallow_ret")
+        if replace_eax and replace_ecx:
+            raise CaveError("replace_eax and replace_ecx are mutually exclusive")
         body = bytearray()
         if swallow_ret is not None:
             body += bytes([0x6A, 0x00])            # push 0 -- the verdict slot
@@ -295,6 +306,8 @@ class PE:
         if replace_eax:
             # popad must restore the callback result instead of the interrupted EAX.
             body += bytes([0x89, 0x44, 0x24, SAVED_BYTES - 4])  # mov [esp+32], eax
+        if replace_ecx:
+            body += bytes([0x89, 0x44, 0x24, 28])  # mov [esp+28], eax
         if swallow_ret is not None:
             # Stash the verdict in the slot before popfd/popad destroy eax, then
             # read it back once the target's registers are restored.
@@ -308,7 +321,7 @@ class PE:
         return bytes(body)
 
     def detour_call(self, target_rva, entry_va, args=("ecx",), swallow_ret=None,
-                    replace_eax=False):
+                    replace_eax=False, replace_ecx=False):
         """Detour `target_rva` through a generated shim into `entry_va`.
 
         The shim's `call` is relative, so it has to be emitted for the address
@@ -317,7 +330,8 @@ class PE:
         return self.detour(target_rva,
                            payload=self.shim(entry_va, self.image_base + self.next_rva(),
                                              args=args, swallow_ret=swallow_ret,
-                                             replace_eax=replace_eax))
+                                             replace_eax=replace_eax,
+                                             replace_ecx=replace_ecx))
 
     def save(self, out):
         out = Path(out)

@@ -188,8 +188,20 @@ def test_return_override_updates_saved_eax_after_argument_cleanup(pe, args):
 
 @pytest.mark.parametrize("swallow_ret", [0, 8])
 def test_return_override_refuses_conditional_replacement(pe, swallow_ret):
-    with pytest.raises(CaveError, match="replace_eax cannot be combined with swallow_ret"):
+    with pytest.raises(CaveError, match="register replacement cannot be combined with swallow_ret"):
         pe.detour_call(UPDATE, 0x11223344, swallow_ret=swallow_ret, replace_eax=True)
+    with pytest.raises(CaveError, match="register replacement cannot be combined with swallow_ret"):
+        pe.detour_call(UPDATE, 0x11223344, swallow_ret=swallow_ret, replace_ecx=True)
+
+
+def test_return_override_updates_saved_ecx(pe):
+    shim = pe.shim(0x11223344, pe.image_base + pe.next_rva(),
+                   args=("ecx", "eax"), replace_ecx=True)
+    ins = _disasm(pe, pe.alloc(shim), len(shim))
+    call = next(n for n, i in enumerate(ins) if i.mnemonic == "call")
+    assert [(i.mnemonic, i.op_str) for i in ins[call + 1:]] == [
+        ("add", "esp, 8"), ("mov", "dword ptr [esp + 0x1c], eax"),
+        ("popfd", ""), ("popal", "")]
 
 
 def test_detour_can_resume_with_payload_eax(pe):
@@ -265,11 +277,12 @@ def test_unencodable_raw_stack_offset_is_refused(pe, args, reason):
 @pytest.mark.skipif(sys.platform != "linux" or platform.machine() not in
                     ("x86_64", "i386", "i686") or not shutil.which("as") or
                     not shutil.which("ld"), reason="native i386 assembler/linker required")
-@pytest.mark.parametrize("replace_eax", [False, True])
+@pytest.mark.parametrize("replace_eax,replace_ecx", [(False, False), (True, False), (False, True)])
 @pytest.mark.parametrize("args", [(), ("ecx", "stack:0", "esi"),
                                   ("ecx", "stack_offset:4", "esi")])
-def test_native_shim_preserves_state_and_passes_arguments(pe, tmp_path, replace_eax, args):
-    shim = pe.shim(0x100, 0, args=args, replace_eax=replace_eax)
+def test_native_shim_preserves_state_and_passes_arguments(pe, tmp_path, replace_eax, replace_ecx, args):
+    shim = pe.shim(0x100, 0, args=args, replace_eax=replace_eax,
+                   replace_ecx=replace_ecx)
     registers = ("eax", "ebx", "ecx", "edx", "ebp", "esi", "edi")
     fields = [f"actual_{r}" for r in registers] + [
         "before_esp", "after_esp", "before_flags", "after_flags", "callback_flags",
@@ -336,7 +349,9 @@ results_end:
     result = subprocess.run([str(executable)], check=True, capture_output=True, timeout=5)
     observed = dict(zip(fields, struct.unpack("<16I", result.stdout)))
     for n, register in enumerate(registers):
-        expected = 0x12345600 if replace_eax and register == "eax" else 0x11111111 * (n + 1)
+        expected = (0x12345600 if ((replace_eax and register == "eax") or
+                                  (replace_ecx and register == "ecx"))
+                    else 0x11111111 * (n + 1))
         assert observed[f"actual_{register}"] == expected
     assert observed["before_esp"] == observed["after_esp"]
     assert observed["before_flags"] == observed["after_flags"]
@@ -413,6 +428,22 @@ def test_short_branch_in_the_prologue_is_refused_not_mangled(pe):
     scratch = pe.next_rva()
     pe.alloc(bytes([0xEB, 0x02, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90]))
     with pytest.raises(CaveError, match="short relative branch"):
+        pe.detour(scratch)
+
+
+def test_short_conditional_branch_is_expanded_and_keeps_original_target(pe):
+    scratch = pe.next_rva()
+    pe.alloc(bytes([0x75, 0x05, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90]))
+    start = pe.detour(scratch)
+    moved = _disasm(pe, start, 8)[0]
+    assert moved.mnemonic == "jne"
+    assert int(moved.op_str, 16) == pe.image_base + scratch + 7
+
+
+def test_short_conditional_branch_into_stolen_span_is_refused(pe):
+    scratch = pe.next_rva()
+    pe.alloc(bytes([0x75, 0x01, 0x90, 0x90, 0x90, 0x90]))
+    with pytest.raises(CaveError, match="targets the stolen span"):
         pe.detour(scratch)
 
 

@@ -8,8 +8,14 @@
 #ifndef BFME_AC_TARGET_GOAL
 #define BFME_AC_TARGET_GOAL 0
 #endif
+#ifndef BFME_AC_VIEW_GOAL
+#define BFME_AC_VIEW_GOAL 0
+#endif
+#ifndef BFME_AC_GOAL_BEHAVIOR
+#define BFME_AC_GOAL_BEHAVIOR BFME_AC_TARGET_GOAL
+#endif
 #if BFME_AC_TARGET_GOAL
-#define PROBE_VARIANT "054-melee-target-goal-v2"
+#define PROBE_VARIANT "054-melee-target-goal-v11"
 #elif BFME_AC_RETRY
 #define PROBE_VARIANT "053-melee-retry-v4"
 #else
@@ -36,6 +42,9 @@ typedef int (__stdcall *MessageBox)(void *, const char *, const char *, unsigned
 #define c_debug (*(DebugString *)0x01358EA8)
 #define c_message (*(MessageBox *)0x0135903C)
 #define game_logic (*(void **)0x012F0898)
+#if BFME_AC_VIEW_GOAL
+#include "../../055-ac-attack-view/src/view_goal.h"
+#endif
 
 static FILE *s_file;
 static int s_opened, s_failed;
@@ -43,6 +52,11 @@ static unsigned s_seq, s_calls, s_events, s_dropped, s_frame_events, s_chat_even
 static unsigned s_last_tick, s_loops;
 static int s_last_frame = -2;
 static const char *s_run;
+#if BFME_AC_VIEW_GOAL
+static unsigned s_view_empty_position, s_view_goal_seen, s_view_owner_found;
+static unsigned s_view_horde_found, s_view_structure_goal, s_view_state_ok;
+static unsigned s_view_enemy, s_view_overrides;
+#endif
 
 static unsigned word(void *p, int offset) {
     return p ? *(unsigned *)((unsigned char *)p + offset) : 0;
@@ -90,9 +104,10 @@ static int output() {
         c_qpf(freq);
         checked(c_fprintf(s_file,
             "{\"ev\":\"startup\",\"schema\":4,\"probe\":\"%s\","
-            "\"run\":\"%s\",\"build\":\"%s\",\"pid\":%u,\"fix_enabled\":1,\"retry_enabled\":%u,\"target_goal_enabled\":%u,"
+            "\"run\":\"%s\",\"build\":\"%s\",\"pid\":%u,\"fix_enabled\":1,\"retry_enabled\":%u,\"target_goal_enabled\":%u,\"view_goal_enabled\":%u,"
             "\"qfreqlo\":%u,\"qfreqhi\":%u,\"max_combat_events_per_frame\":256,\"max_chat_code_units\":512}\n",
-            PROBE_VARIANT, s_run, build, c_pid(), (unsigned)BFME_AC_RETRY, (unsigned)BFME_AC_TARGET_GOAL, freq[0], freq[1]));
+            PROBE_VARIANT, s_run, build, c_pid(), (unsigned)BFME_AC_RETRY,
+            (unsigned)BFME_AC_TARGET_GOAL, (unsigned)BFME_AC_VIEW_GOAL, freq[0], freq[1]));
         checked(c_fflush(s_file));
     }
     return s_file && !s_failed;
@@ -209,6 +224,119 @@ static int melee_state(void *state) {
     unsigned vtable = word(state, 0);
     return vtable == 0x0109A540 || vtable == 0x01097B68 || vtable == 0x01097BE0;
 }
+#if BFME_AC_VIEW_GOAL
+extern "C" __declspec(dllexport) unsigned __cdecl meleeprobe_view_goal(
+    unsigned positionId, void *cellInfo, void *attacker) {
+    unsigned stage;
+    unsigned candidateId = ac_attack_view_candidate(positionId, cellInfo, attacker, &stage);
+    if (stage >= 1) ++s_view_empty_position;
+    if (stage >= 2) ++s_view_goal_seen;
+    if (stage >= 3) ++s_view_owner_found;
+    if (stage >= 4) ++s_view_horde_found;
+    if (stage >= 5) ++s_view_structure_goal;
+    if (stage >= 6) ++s_view_state_ok;
+    if (stage < 7) return candidateId;
+    ++s_view_enemy;
+    ++s_view_overrides;
+    if (head("view_goal_override")) {
+        checked(c_fprintf(s_file,
+            ",\"attacker_id\":%u,\"candidate_id\":%u}\n",
+            object_id(attacker), candidateId));
+    }
+    return candidateId;
+}
+#endif
+#if BFME_AC_TARGET_GOAL
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_first_query(
+    void *member, unsigned candidateId) {
+    if (!head("first_candidate_query")) return;
+    checked(c_fprintf(s_file,
+        ",\"member_id\":%u,\"candidate_id\":%u}\n",
+        object_id(member), candidateId));
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_first_valid(
+    void *member, void *candidate) {
+    if (!head("first_candidate_valid")) return;
+    checked(c_fprintf(s_file,
+        ",\"member_id\":%u,\"candidate_id\":%u,"
+        "\"member_x_bits\":%u,\"member_y_bits\":%u,"
+        "\"candidate_x_bits\":%u,\"candidate_y_bits\":%u}\n",
+        object_id(member), object_id(candidate), word(member, 0x38), word(member, 0x3C),
+        word(candidate, 0x38), word(candidate, 0x3C)));
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_first_enemy(
+    void *member, void *candidate) {
+    if (!head("first_candidate_enemy")) return;
+    checked(c_fprintf(s_file,
+        ",\"member_id\":%u,\"candidate_id\":%u}\n",
+        object_id(member), object_id(candidate)));
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_first_slot(
+    void *member, void *candidate, void *considered) {
+    if (!head("first_candidate_slot")) return;
+    checked(c_fprintf(s_file,
+        ",\"member_id\":%u,\"candidate_id\":%u,\"considered_id\":%u}\n",
+        object_id(member), object_id(candidate), object_id(considered)));
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_candidate_query(
+    void *member, unsigned candidateId) {
+    if (!head("candidate_query")) return;
+    checked(c_fprintf(s_file,
+        ",\"member_id\":%u,\"candidate_id\":%u}\n",
+        object_id(member), candidateId));
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_candidate_resolved(
+    void *member, void *candidate) {
+    if (!head("candidate_resolved")) return;
+    void *container = candidate ? read_pointer_field(candidate, 0x214) : 0;
+    void *module = candidate ? read_pointer_field(candidate, 0x208) : 0;
+    checked(c_fprintf(s_file,
+        ",\"member_id\":%u,\"candidate_id\":%u,\"candidate_container_id\":%u,"
+        "\"effectively_dead\":%u,\"module_present\":%u,\"module_byte_5c\":%u}\n",
+        object_id(member), object_id(candidate), object_id(container),
+        word(candidate, 0x344) & 1, (unsigned)(module != 0),
+        module ? (unsigned)*((unsigned char *)module + 0x5C) : 0));
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_candidate_enemy(
+    void *member, void *candidate) {
+    if (!head("candidate_enemy")) return;
+    checked(c_fprintf(s_file,
+        ",\"member_id\":%u,\"candidate_id\":%u}\n",
+        object_id(member), object_id(candidate)));
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_candidate_final(
+    void *member, void *candidate, unsigned rawResult) {
+    if (!head("candidate_final")) return;
+    checked(c_fprintf(s_file,
+        ",\"member_id\":%u,\"candidate_id\":%u,\"flag_al\":%u}\n",
+        object_id(member), object_id(candidate), rawResult & 255));
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_acquire_enter(void *member, void *slot) {
+    if (!head("target_acquire_enter")) return;
+    void *container = read_pointer_field(member, 0x214);
+    checked(c_fprintf(s_file,
+        ",\"member_id\":%u,\"container_id\":%u,\"slot\":%u,\"slot_phase\":%u}\n",
+        object_id(member), object_id(container), slot, word(slot, 0)));
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_acquire_selected(
+    void *member, void *candidate, unsigned nearbyCount, void *slot64Result) {
+    if (!head("target_acquire_selected")) return;
+    void *container = read_pointer_field(member, 0x214);
+    void *candidateContainer = candidate ? read_pointer_field(candidate, 0x214) : 0;
+    checked(c_fprintf(s_file,
+        ",\"member_id\":%u,\"container_id\":%u,\"candidate_id\":%u,"
+        "\"candidate_container_id\":%u,\"nearby_count\":%u,\"slot64_result\":%u}\n",
+        object_id(member), object_id(container), object_id(candidate),
+        object_id(candidateContainer), nearbyCount, slot64Result));
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_acquire_dispatch(
+    void *member, void *candidate) {
+    if (!head("target_acquire_dispatch")) return;
+    checked(c_fprintf(s_file,
+        ",\"member_id\":%u,\"candidate_id\":%u}\n",
+        object_id(member), object_id(candidate)));
+}
+#endif
 extern "C" __declspec(dllexport) void __cdecl meleeprobe_transition(void *machine, void *next) {
     void *previous = read_pointer_field(machine, 0x1C);
     // Another branch of this machine reuses the numeric state IDs.
@@ -340,7 +468,7 @@ extern "C" __declspec(dllexport) void __cdecl meleeprobe_cell_data(void *cell) {
 extern "C" __declspec(dllexport) void __cdecl meleeprobe_cell_reject(void) {
     if (tracing_cell()) s_plan.cellRejected = 1;
 }
-#if BFME_AC_TARGET_GOAL
+#if BFME_AC_GOAL_BEHAVIOR
 static unsigned reject_goal(GoalGuard guard, unsigned originalGoalId) {
     ++s_plan.goalReject[guard];
     return originalGoalId;
@@ -348,7 +476,7 @@ static unsigned reject_goal(GoalGuard guard, unsigned originalGoalId) {
 #endif
 extern "C" __declspec(dllexport) unsigned __cdecl meleeprobe_target_goal(
     unsigned originalGoalId, void *cellInfo, void *queryObject) {
-#if BFME_AC_TARGET_GOAL
+#if BFME_AC_GOAL_BEHAVIOR
     if (!s_plan.active) return originalGoalId;
     if (!s_plan.pointPending || !queryObject || queryObject != s_plan.member || !s_plan.target)
         return reject_goal(GOAL_SCOPE, originalGoalId);
@@ -495,8 +623,10 @@ static void readiness_snapshot(const char *stage, void *a, void *t, void *s, voi
     if (!head("readiness_snapshot")) return;
     wait_context(a,t,s);
     int supported = supported_horde(horde);
-    checked(c_fprintf(s_file, ",\"stage\":\"%s\",\"horde\":%u,\"interface_supported\":%d",
-        stage, horde, supported));
+    checked(c_fprintf(s_file,
+        ",\"stage\":\"%s\",\"horde\":%u,\"interface_supported\":%d,"
+        "\"target_x_bits\":%u,\"target_y_bits\":%u",
+        stage, horde, supported, word(t, 0x38), word(t, 0x3C)));
     if (!supported) { checked(c_fprintf(s_file, "}\n")); return; }
     unsigned begin = word(horde, 0xF4), end = word(horde, 0xF8);
     int valid = end >= begin && (end - begin) % 0x1C == 0 && (begin || end == 0);
@@ -524,9 +654,11 @@ static void readiness_snapshot(const char *stage, void *a, void *t, void *s, voi
         void *state = machine ? read_pointer_field(machine, 0x1C) : 0;
         checked(c_fprintf(s_file,
             "%s{\"member\":%u,\"member_id\":%u,\"ai\":%u,\"victim_id\":%u,"
-            "\"state\":%u,\"state_vtable\":%u,\"state_id\":%u,\"goal_id\":%u,\"path\":%u,\"raw_ai_1d8\":%u}",
+            "\"state\":%u,\"state_vtable\":%u,\"state_id\":%u,\"goal_id\":%u,\"path\":%u,\"raw_ai_1d8\":%u,"
+            "\"x_bits\":%u,\"y_bits\":%u}",
             i ? "," : "", member, object_id(member), ai, word(ai, 0x40),
-            state, word(state, 0), word(state, 4), word(machine, 0x20), word(ai, 0x140), word(ai, 0x1D8)));
+            state, word(state, 0), word(state, 4), word(machine, 0x20), word(ai, 0x140), word(ai, 0x1D8),
+            word(member, 0x38), word(member, 0x3C)));
         node = read_pointer_field(node, 0);
     }
     checked(c_fprintf(s_file,
@@ -596,8 +728,20 @@ extern "C" __declspec(dllexport) void __cdecl meleeprobe_loop(void) {
         // Flush at a new logic frame; the wall heartbeat also works in menus or stalls.
         checked(c_fprintf(s_file,
             "{\"ev\":\"heartbeat\",\"run\":\"%s\",\"f\":%d,\"tick\":%u,"
-            "\"loops\":%u,\"predicate_calls\":%u,\"events\":%u,\"dropped\":%u,\"chat_events\":%u}\n",
-            s_run, f, tick, s_loops, s_calls, s_events, s_dropped, s_chat_events));
+            "\"loops\":%u,\"predicate_calls\":%u,\"events\":%u,\"dropped\":%u,\"chat_events\":%u"
+#if BFME_AC_VIEW_GOAL
+            ",\"view_empty_position\":%u,\"view_goal_seen\":%u,\"view_owner_found\":%u,"
+            "\"view_horde_found\":%u,\"view_structure_goal\":%u,\"view_state_ok\":%u,"
+            "\"view_enemy\":%u,\"view_overrides\":%u"
+#endif
+            "}\n",
+            s_run, f, tick, s_loops, s_calls, s_events, s_dropped, s_chat_events
+#if BFME_AC_VIEW_GOAL
+            , s_view_empty_position, s_view_goal_seen, s_view_owner_found,
+            s_view_horde_found, s_view_structure_goal, s_view_state_ok,
+            s_view_enemy, s_view_overrides
+#endif
+            ));
         checked(c_fflush(s_file));
         s_frame_events = 0;
         s_last_frame = f;
