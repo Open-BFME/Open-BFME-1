@@ -4,9 +4,10 @@
 #
 # The ??_7 ctor-vs-dtor family (FX modules + MemoryPoolObject) is ONE phenomenon: retail
 # destructors inline the base-chain dtor, whose final vptr store targets the BASE-most vtable
-# (0x1073744 = the real ??_7MemoryPoolObject@@6B@), while our shallower reconstructions
-# reference the class's own vtable. Latent (patching masks with original bytes; drop-in stays
-# byte-identical); root fix = reconstruct the MemoryPoolObject base-dtor inlining.
+# (0x1073744 is Snapshot's vtable: a deleting dtor plus crc/xfer/loadPostProcess, and 63 rows
+# name it ??_7Snapshot@@6B@), while our shallower reconstructions reference the class's own
+# vtable. These are misnamed stores, not a retail fact: model the Snapshot base as the
+# ModuleData destructors now do (677d478058) and drop the entry.
 ??_7DefaultAlphaModuleInfo@FXParticleSystem@@6B@
 ??_7DefaultColorModuleInfo@FXParticleSystem@@6B@
 ??_7DefaultDrawModuleInfo@FXParticleSystem@@6B@
@@ -35,33 +36,15 @@ __imp__closesocket@4
 # Float-constant COMDAT: 1.0f is emitted per-TU; retail keeps two copies. Same
 # class as _COLLISION_EPSILON above.
 __real@3f800000
-# File-scope static `parentPopup` exists independently in two GameSpy popup TUs;
-# same symbol name in each obj, genuinely two variables in retail.
-_parentPopup
-# File-scope static `_parent` exists independently in the download-menu and popup-replay
-# TUs (both zero-initialized); same symbol name, genuinely two variables in retail.
-_parent
-# File-scope static `parentID` exists independently in multiple GUI/GameSpy TUs;
-# exact matched references resolve to the retail variables at 0x12F3F5C and 0x12F7120.
-_parentID
 # BitFlags<0xHF>::s_bitNameList materializes per-TU with different initializer arrays
 # (drawable.cpp's TAUNT/CHEER/HERO_CHEER/POINT list at 0xea687c; modelconditionupgrade.cpp's
 # CINEMA/HUD list at 0xec51bc). Both are retail-true references from byte-matched functions —
 # same class of per-TU static as _Table@CRC / __real@3f800000 above.
 ?s_bitNameList@?$BitFlags@$0HF@@@0PAPBDA
-#
-# WOL menu file-statics: WOLLoginMenu.cpp and WOLLobbyMenu.cpp each define their own
-# static buttonBack/buttonBackID/buttonPushed globals (same names, distinct retail
-# addresses per TU: 0x12f46xx vs 0x12f48xx). Both byte-verified; name-based check
-# cannot distinguish file-statics across TUs.
-_buttonBack
-_buttonBackID
-_buttonPushed
 # hanim.cpp's HAnimComboDataClass* vector TUs are linked twice in retail: one copy's
 # code lives at file 0x96xxxx with vtables at 0x113e690/0x113e6a8, the other at file
 # 0x97xxxx with vtables at 0x113eae0/0x113eb10. Contents differ (each points at its own
 # copy's functions) — same doubly-linked-TU class as _Table@CRC, not a hidden bug.
-??_7?$DynamicVectorClass@PAVHAnimComboDataClass@@@@6B@
 ??_7?$VectorClass@PAVHAnimComboDataClass@@@@6B@
 ??_7?$MultiListClass@VDX8FVFCategoryContainer@@@@6B@
 ??_7?$MultiListClass@VDX8TextureCategoryClass@@@@6B@
@@ -92,26 +75,11 @@ _buttonPushed
 ??_7?$VectorClass@PAVTextureClass@@@@6B@
 ??_7?$VectorClass@PAVVertexMaterialClass@@@@6B@
 ??_7?$VectorClass@UWeightInfoStruct@NamedPivotMapClass@@@@6B@
-??_7?$VectorClass@VVector2@@@@6B@
-??_7?$VectorClass@VVector4@@@@6B@
-??_7DrawableIconInfo@@6B@
 ??_7FileFactoryClass@@6B@
-??_7FontLibrary@@6B@
 ??_7HAnimManagerIterator@@6B@
-??_7NetCommandList@@6B@
 ??_7PlayerTemplateStore@@6B@
-??_7SimpleObjectIterator@@6B@
 ??_7Surface@@6B@
 ??_7W3DShadowGeometryManagerIterator@@6B@
-_buttonCancel
-_buttonCancelID
-_buttonOkID
-_gadgetsToHide
-_layoutFilename
-_parentName
-_perPlayerGadgetsToHide
-_textEntryPassword
-_buttonOk
 
 # Additional template vtables retained at multiple retail link sites. The
 # matched functions resolve to the copy linked with their originating TU.
@@ -127,7 +95,6 @@ _buttonOk
 # template instantiations; each reference is from a byte-matched function.
 ?DISABLEDMASK_ALL@@3V?$BitFlags@$0N@@@A
 ?s_bitNameList@?$BitFlags@$0CG@@@0PAPBDA
-_theGameLogicSeed
 
 # Texture-filter lookup arrays use element-address relocations. Subtracting
 # the object addend leaves one apparent base per referenced array element.
@@ -146,11 +113,6 @@ __imp__ceil
 # BitFlags<0x2D>::s_bitNameList is materialized per TU: Object.cpp and Weapon.cpp
 # reference distinct retail initializer arrays, like the whitelisted 0x0F case.
 ?s_bitNameList@?$BitFlags@$0CN@@@0PAPBDA
-# W3DShaderManager.cpp is linked in two retail regions; its five-pointer filter
-# arrays are consecutive at 0x12F9CCC and 0x12F9CE0, and exact Ghidra boundaries
-# confirm the matched functions that reference each copy.
-_W3DFilters
-
 # Global singleton pointers / file-scope statics materialized at multiple retail
 # addresses. FiringTracker.cpp's newly-matched getModuleNameKey/getClassMemoryPool
 # references several of these; each reference is from a byte-matched function.
@@ -215,9 +177,7 @@ _W3DFilters
 # f(arg){ TheX->method(arg); } is a shape shared by many wrappers, and this one
 # passes a GameWindow* to something that takes a const char*. Its real name is
 # not recoverable from the image, which is why nothing is repointed here.
-?TheFXListStore@@3PAVFXListStore@@A
 ?TheNullChr@?1??str@UnicodeString@@QBEPBGXZ@4GB
-_m_boundaries
 #
 # __real@3c8efa35 is pi/180, and BFME compiles INI in two translation units:
 # ?parseAngleReal@INI@@ lives in the parser TU at
@@ -226,36 +186,10 @@ _m_boundaries
 # correct. It only became visible when parseAngularVelocityReal was repointed off
 # its 5-byte ILT thunk (which carried no relocations) onto its real body.
 __real@3c8efa35
-#
-# _staticTextStatus is two unrelated file-scope statics that happen to share a
-# name: DownloadMenu.cpp's single GameWindow* at 0x12F399C (referenced by the
-# matched DownloadMenuInit, DownloadMenuShutdown and
-# DownloadManagerMunkee::OnStatusUpdate) and Diplomacy.cpp's GameWindow*
-# [MAX_SLOTS] array at 0x12F3818 (referenced by the matched
-# releaseWindowPointers). Internal linkage means retail allocates each its own
-# storage, so two bases is correct, not a discrepancy. Surfaced on the first
-# full gate after both TUs had rows referencing it.
-_staticTextStatus
 # These four symbols are duplicate COMDAT/template or CRT artifacts exposed by
 # the source-backed DX8 texture-category render-task body; their retail refs
 # intentionally resolve to distinct TU-local bases.
-??_7?$SimpleDynVecClass@PAV?$MultiListClass@VDX8FVFCategoryContainer@@@@@@6B@
 ?CompactLog@CPUDetectClass@@0VStringClass@@A
-_$E10
-_$E8
-# _$E2 is the same compiler-generated EH-label family as the two above: 96
-# objects emit it, and retail resolves it to a .text base (0x0403A2B) in one
-# and a .rdata base (0x0106FD20) in another. It is not new work - it was
-# unreachable while ArchiveFileSystem.cpp failed to compile, because the gate
-# dies before the DIR32 phase. None of the three TUs using the
-# archivefilesystem_nosubsystem shim emit it, so restoring that compile did
-# not cause it; it only made it visible again.
-_$E2
-
-# DX8Caps is linked at two retail sites; its file-scope CapsWorkString and
-# static initializer resolve to the corresponding duplicate globals.
-_CapsWorkString
-
 # DynamicVectorClass<ResolutionDescClass>'s vtable exists TWICE in retail, which is
 # the doubly-linked-TU case rather than a wrong claim. 0x113A388 is the direct copy --
 # slot 1 is ??8?$VectorClass@VResolutionDescClass@@@@UBE_NABV0@@Z and slot 4 is
@@ -273,7 +207,6 @@ _CapsWorkString
 # the original investigated FX ctor/dtor artifacts.
 ??1BoneFXElement@@QAE@XZ
 ??1RubbleRiseElement@@QAE@XZ
-??1StructureCollapseElement@@QAE@XZ
 ??_7ActiveCategoryStackClass@@6B@
 ??_7DeletionUpdateModuleData@@6B@
 ??_7DieModuleData@@6B@
@@ -282,10 +215,6 @@ _CapsWorkString
 ??_7OCLUpdateModuleData@@6B@
 ??_7SpawnPointProductionExitUpdateModuleData@@6B@
 ??_7SupplyCenterProductionExitUpdateModuleData@@6B@
-??_7UpgradeModuleData@@6B@
-??_7VideoPlayer@@6B@
-?TheW3DVolumetricShadowManager@@3PAVW3DVolumetricShadowManager@@A
-_LOGICFRAMES_PER_MSEC_REAL
 
 # EnterCriticalSection/LeaveCriticalSection are imported through two IAT slots in
 # retail (two import descriptors), exactly like memmove/closesocket above:
@@ -358,55 +287,6 @@ __real@30000000
 ??_7ModuleInterface@@6B@
 ??_7UpdateModuleInterface@@6B@
 
-# D3DX9 file-local statics. Every symbol below is IMAGE_SYM_CLASS_STATIC in the
-# inputs/vendor/d3dx9/d3dx9.lib member that defines it, so it has no external linkage
-# and "one symbol, one address" was never true of it — the same reason the check
-# already skips $L labels and __ehhandler$ stubs, just under a real name.
-#
-# Two shapes, both verified from the archive's symbol tables:
-#   - defined STATIC in several members at once (AMDSSE_two in d3dxvec2.obj and
-#     d3dxvec3.obj; _x_rgcbTypeSizes in eight X-file loader objects), so the
-#     linker keeps one copy per member and each member references its own;
-#   - defined STATIC once in D3DX's embedded zlib AND again in the game's own
-#     copy at game/Libraries/Source/Compression/ZLib (trees.c declares
-#     `local ct_data static_ltree[]`). Both zlibs are linked, so each table
-#     exists twice — the doubly-linked TU case this file already documents.
-#
-# None is a function, and a misplaced row could not hide here: it would have
-# failed the byte comparison in verify_functions first.
-
-?start_input_pass@D3DX@@YGXPAUjpeg_decompress_struct@1@@Z
-AMDSSE_two
-_base_dist
-_base_length
-_bl_order
-_border
-_configuration_table
-_cpdext
-_cpdist
-_cplens
-_cplext
-_extend_offset
-_extend_test
-_extra_dbits
-_extra_lbits
-_flPi
-_iAbsMask
-_simdExpBias
-_simdExpMask
-_simdExpMin
-_simdImplicitMask
-_simdMantMask
-_simdSignMask
-_static_bl_desc
-_static_d_desc
-_static_dtree
-_static_l_desc
-_static_ltree
-_x_rgcbTypeSizes
-_x_rgdwTexCoordSize
-_x_rgszSemanticString
-
 # ErrorCode's throw-info is emitted per TU as a COMDAT and retail kept two of
 # them: ini.cpp's three parse* bodies resolve __TI1?AW4ErrorCode@@ to 0x11E0004
 # and INI_stl.cpp's MultiIniFieldParse::add resolves it to 0x12454C0. Both
@@ -416,23 +296,6 @@ _x_rgszSemanticString
 # visible when MultiIniFieldParse::add moved off its naked dump onto INI_stl.cpp.
 __TI1?AW4ErrorCode@@
 
-# zlib and libpng are each linked twice in retail, so their file-static tables
-# exist at two addresses and DIR32 references legitimately resolve to either.
-# Same case as ?_Table@CRC@@0PAKA above. Checked rather than assumed: the four
-# inflate tables are byte-identical at both addresses for at least 256 bytes
-#   _fixed_bl 0x12C5E68 / 0x12E4EC0    _fixed_bd 0x12C5E6C / 0x12E4EC4
-#   _fixed_tl 0x12C5E70 / 0x12E4EC8    _fixed_td 0x12C6E70 / 0x12E5EC8
-# and the png chunk names are identical at both copies: png_IHDR 0x11511FC /
-# 0x1159360, png_IEND 0x115120C / 0x1159370, png_PLTE 0x1151214 / 0x1159378 -
-# the same +0x8164 delta throughout, which is the second libpng link site.
-_fixed_bl
-_fixed_bd
-_fixed_tl
-_fixed_td
-_png_IEND
-_png_IHDR
-_png_PLTE
-
 # Tenth member of the FX ctor-vs-dtor family the header above describes: the
 # destructor in fx_particle_system.cpp resolves this to 0x1073744, which that
 # header identifies as the real ??_7MemoryPoolObject@@6B@, while a newly landed
@@ -440,50 +303,6 @@ _png_PLTE
 # FXParticleSystem siblings are already listed; this one only became visible when
 # that thunk landed.
 ??_7RenderObjectUpdateModuleInfo@FXParticleSystem@@6B@
-
-# `static Bool isShuttingDown` is declared independently by every shell-menu TU
-# (SinglePlayerMenu.cpp line 61, WOLLoginMenu.cpp line 84, and the ZH reference
-# has both), so internal linkage gives each its own retail storage. Both
-# referencing bodies are byte-matched and each writes exactly one byte:
-# SinglePlayerMenuShutdown (0x004E94F0) does `mov byte [0x12F41AC],1` and
-# WOLLoginMenuShutdown (0x004FFB10) does `mov byte [0x12F4680],1` right beside
-# `mov byte [0x12F4720],0`. 0x12F46xx/0x12F47xx is the same WOLLoginMenu.cpp
-# static block the _buttonBack/_buttonPushed entries above already document.
-# Same class as _parentID and _staticTextStatus: a name-based check cannot tell
-# file statics apart across TUs. Surfaced when SinglePlayerMenuShutdown landed
-# in b94028866; before that only the WOL TU referenced the name.
-_isShuttingDown
-
-# Four more file statics that exist independently in two menu TUs each -- the
-# same class as _parentID, _staticTextStatus and _isShuttingDown above. A
-# name-based check cannot tell file statics apart across objects.
-#   _isOverlayActive          PopupPlayerInfo.cpp 0x12F4014 / WOLBuddyOverlay.cpp 0x12F4230
-#   _mapList                  LanMapSelectMenu.cpp 0x12F3DFC / WOLMapSelectMenu.cpp 0x12F4768
-#   _winMapPreview            LanMapSelectMenu.cpp 0x12F3E00 / WOLMapSelectMenu.cpp 0x12F4758
-#   _buttonMapStartPosition   LanMapSelectMenu.cpp 0x12F3E0C / WOLMapSelectMenu.cpp 0x12F476C
-# Surfaced when GameSpyPlayerInfoOverlayShutdown, WOLBuddyOverlayShutdown and
-# WOLMapSelectMenuShutdown landed; before that only one TU of each pair
-# referenced the name.
-_isOverlayActive
-_mapList
-_winMapPreview
-_buttonMapStartPosition
-
-# Three more of the same: file statics with one name and one variable per menu
-# object. Surfaced when the WOL score-screen Inits landed; the Input callbacks
-# had already been claiming the names from their own TUs.
-#   _buttonDisconnect     WOLStatusMenu.cpp 0x12F3EE0 / WOLCustomScoreScreen.cpp 0x12F42B4 / WOLQMScoreScreen.cpp 0x12F47EC
-#   _buttonDisconnectID   WOLStatusMenu.cpp 0x12F3EDC / WOLCustomScoreScreen.cpp 0x12F42A8 / WOLQMScoreScreen.cpp 0x12F47E0
-#   _buttonLobby          WOLCustomScoreScreen.cpp 0x12F42B8 / WOLWelcomeMenu.cpp 0x12F4878
-_buttonDisconnect
-_buttonDisconnectID
-_buttonLobby
-
-# One more of the same: `buttonBackKey` is a file static in both PopupReplay.cpp
-# (0x12F404C) and PopupSaveLoad.cpp (0x12F4080), one variable in each object.
-# Surfaced when SaveLoadMenuInit and SaveLoadMenuFullScreenInit landed; before
-# that only PopupReplayInput referenced the name.
-_buttonBackKey
 
 # dx8renderer.cpp is linked twice in retail, the same doubly-linked-TU class as
 # the five MultiListClass instantiations already listed above. One copy's code is
