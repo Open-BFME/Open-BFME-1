@@ -89474,3 +89474,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?Rva00627A20Enabled@@3EA,0x012F70A4,Address-derived callback enable flag cleared before retail 0x00627A20 invokes shutdown callback
 ?Rva00627A20Callback@@3P6AXXZA,0x012F70AC,Address-derived callback pointer called indirectly by retail 0x00627A20 and cleared afterward
 ?Rva007EB820BoundCallback@@YAXXZ,0x007EB820,Address-derived callback bound by the retail logger constructor at 0x007EB850; callback at 0x007EB820 is a distinct stub
+?rva0073a050@Rva00739C70State@@QAE_NIIIIII@Z,0x0002D5AB,address-derived six-argument state helper alias; decoded call at 0x0073A350 and complete helper body at 0x0073A050 prove target and bool ABI; forwards through ILT 0x0002D5AB
