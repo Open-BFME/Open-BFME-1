@@ -89,6 +89,9 @@ public:
 	void checkEdges( int xOffset, int yOffset, int width,
 		bool *top, bool *right, bool *bottom, bool *left );
 
+	int rva00729BF0( int xOffset, int yOffset, int width,
+		bool *corner0, bool *corner1, bool *corner2, bool *corner3 );
+
 private:
 	Byte m_opaque00[0x40];
 	int m_xOrigin;
@@ -172,4 +175,43 @@ bool Rva00729570Terrain::advanceRight( ICoord2D &right, int xOffset,
 			return true;
 	}
 	return false;
+}
+
+int Rva00729D30Terrain::rva00729BF0(int xOffset, int yOffset, int width, bool *corner0, bool *corner1, bool *corner2, bool *corner3)
+{
+	int xOrigin = m_xOrigin;
+	Rva00729300BitPlane *map = m_map;
+	int limitX = map->m_width - 1;
+	int limitY = map->m_height - 1;
+	int minX = xOrigin + xOffset;
+	int minY = m_yOrigin + yOffset;
+	int maxX = xOffset + width;
+	if (m_xOrigin + maxX > limitX)
+		maxX = limitX - m_xOrigin;
+	register int maxY = yOffset + width;
+	if (m_yOrigin + maxY > limitY)
+		maxY = limitY - m_yOrigin;
+	int count = 0;
+	*corner0 = *corner1 = *corner2 = *corner3 = false;
+	if (!m_map->test(minX, minY))
+	{
+		*corner0 = true;
+		++count;
+	}
+	if (!m_map->test(m_xOrigin + maxX, minY))
+	{
+		*corner1 = true;
+		++count;
+	}
+	if (!m_map->test(minX, m_yOrigin + maxY))
+	{
+		*corner2 = true;
+		++count;
+	}
+	if (!m_map->test(m_xOrigin + maxX, m_yOrigin + maxY))
+	{
+		*corner3 = true;
+		++count;
+	}
+	return count;
 }
