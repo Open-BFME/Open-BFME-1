@@ -112,6 +112,14 @@ evidence before moving on.
 
 Finish or revert each body before the next.
 
+**Claim a body before you start it.** `python3 tools/claims.py claim 0xRVA`; if it
+says "held by someone else", take another body. Claims are shared refs on origin
+(`refs/claims/0xRVA`, not branches: keep pushing to master as always), expire after 4 h,
+and every picker that uses `eligibility.busy_rvas()` already skips claimed bodies.
+`add_match` releases the claim when you land; if you bank, block or abandon the body,
+run `python3 tools/claims.py release 0xRVA`. On 2026-09-27 three bodies were converted
+twice in one day because no lane could see another's work in progress.
+
 ## Work the file, not the row
 
 `next_work.py` lists every other queued candidate in the same source file.
