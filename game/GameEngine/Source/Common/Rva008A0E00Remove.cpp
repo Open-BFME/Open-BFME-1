@@ -67,3 +67,57 @@ found:
 	record->m_value = 0;
 	return 1;
 }
+
+#include <string.h>
+
+class Rva008A0EB0Owner
+{
+public:
+	void reset();
+	Rva008A0EB0Owner *init();
+
+private:
+	int m_count;
+	void *m_entries[0x200];
+};
+
+// ?reset@Rva008A0EB0Owner@@QAEXXZ
+void Rva008A0EB0Owner::reset()
+{
+	m_count = 0;
+	memset( m_entries, 0, sizeof( m_entries ) );
+}
+
+// ?init@Rva008A0EB0Owner@@QAEPAV1@XZ
+Rva008A0EB0Owner *Rva008A0EB0Owner::init()
+{
+	m_count = 0;
+	memset( m_entries, 0, sizeof( m_entries ) );
+	return this;
+}
+
+class Rva008A0ED0Owner
+{
+public:
+	void reset();
+	Rva008A0ED0Owner *init();
+
+private:
+	int m_count;
+	void *m_entries[0x40];
+};
+
+// ?reset@Rva008A0ED0Owner@@QAEXXZ
+void Rva008A0ED0Owner::reset()
+{
+	m_count = 0;
+	memset( m_entries, 0, sizeof( m_entries ) );
+}
+
+// ?init@Rva008A0ED0Owner@@QAEPAV1@XZ
+Rva008A0ED0Owner *Rva008A0ED0Owner::init()
+{
+	m_count = 0;
+	memset( m_entries, 0, sizeof( m_entries ) );
+	return this;
+}
