@@ -15,7 +15,7 @@
 #define BFME_AC_GOAL_BEHAVIOR BFME_AC_TARGET_GOAL
 #endif
 #if BFME_AC_TARGET_GOAL
-#define PROBE_VARIANT "054-melee-target-goal-v11"
+#define PROBE_VARIANT "054-melee-target-goal-v13"
 #elif BFME_AC_RETRY
 #define PROBE_VARIANT "053-melee-retry-v4"
 #else
@@ -240,8 +240,8 @@ extern "C" __declspec(dllexport) unsigned __cdecl meleeprobe_view_goal(
     ++s_view_overrides;
     if (head("view_goal_override")) {
         checked(c_fprintf(s_file,
-            ",\"attacker_id\":%u,\"candidate_id\":%u}\n",
-            object_id(attacker), candidateId));
+            ",\"attacker_id\":%u,\"candidate_id\":%u,\"obstacle_id\":%u}\n",
+            object_id(attacker), candidateId, word(cellInfo, 0x20)));
     }
     return candidateId;
 }

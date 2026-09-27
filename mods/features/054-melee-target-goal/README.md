@@ -5,7 +5,7 @@ did not fix AC. Version 10 disabled both that exception and the 053 retry,
 then added the attack-view goal-reservation rule documented in
 `../055-ac-attack-view/README.md`. It includes all 052 diagnostics. Build every
 shipped feature except 051, plus 054. Do not stack 051–055. Startup identifies
-`054-melee-target-goal-v11`, `retry_enabled:0`, `target_goal_enabled:1` and
+`054-melee-target-goal-v13`, `retry_enabled:0`, `target_goal_enabled:1` and
 `view_goal_enabled:1`; the target-goal hook observes but no longer overrides.
 
 Version 6 records three diagnostic events around member target acquisition:
@@ -36,6 +36,11 @@ records. Version 11 compiles the same rule from the shared source used by 055;
 its command, damage, target-dispatch and view-override records match version 10
 through frame 800, including damage to all four previously protected Soldiers.
 The version 11 capture reached frame 883 with zero dropped records.
+Version 12 also logged obstacle IDs at each view override: all 840 in the AC
+encounter were zero. Version 13 requires that ID to be zero before exposing
+the goal owner, leaving an obstacle candidate to native search when both share
+a cell. Through frame 800, version 13 matched version 12's command, damage,
+target-dispatch, and view-override records exactly, with zero dropped records.
 
 ## Replay result
 

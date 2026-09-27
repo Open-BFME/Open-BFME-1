@@ -11,7 +11,7 @@ one search, obstacle ID), while the missing Soldiers occupied goal reservations
 at cell-info `+0x14` with no position ID.
 
 At the four cell-search sites, the callback exposes a goal-reservation ID only
-when the native position ID is empty, its owner is a member of an enemy horde,
+when the native position and obstacle IDs are empty, its owner is a member of an enemy horde,
 and that horde is in the normal object-attack state with a structure goal.
 The original search still handles duplicate suppression, its 16-candidate cap,
 and all later target filters. The callback never edits pathfinder cell memory.
@@ -24,3 +24,10 @@ The 054v10 capture reached frame 1051 with zero dropped records. The
 shared-source 054v11 replay produced the same command, damage, dispatch, and
 view-override records through frame 800, and likewise had zero dropped
 records through frame 883. Live two-client validation remains.
+
+A later diagnostic replay recorded obstacle ID zero on all 840 overrides in
+the AC encounter. The shared rule now requires that ID to be zero, preserving
+the native obstacle candidate when one shares a cell with a reservation.
+The guarded diagnostic build reproduced the same 840 overrides, 239 damage
+records, and 47 target dispatches through frame 800. Its capture reached
+frame 841 with zero dropped records.

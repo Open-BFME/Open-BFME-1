@@ -11,7 +11,9 @@ static unsigned ac_attack_view_candidate(unsigned positionId, void *cellInfo,
     if (positionId || !cellInfo || !attacker || !game_logic) return positionId;
     if (stage) *stage = 1;
     unsigned goalId = ac_view_word(cellInfo, 0x14);
-    if (!goalId || goalId == ac_view_word(attacker, 0x74)) return positionId;
+    // Keep native obstacle candidates visible when both IDs share a cell.
+    if (!goalId || ac_view_word(cellInfo, 0x20) ||
+        goalId == ac_view_word(attacker, 0x74)) return positionId;
     if (stage) *stage = 2;
     typedef void *(__fastcall *FindObject)(void *, void *, unsigned);
     void *owner = ((FindObject)0x0049A510)(game_logic, 0, goalId);
