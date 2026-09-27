@@ -167,3 +167,31 @@ void *Rva008BD010Alloc(unsigned int size)
 {
 	return Rva008C5D70Alloc(size);
 }
+
+// 0x008BD000: clear +0x50 of the owned object, then tail-call its slot 2
+class Rva008BD000Target
+{
+public:
+	virtual void slot0();
+	virtual void slot1();
+	virtual void slot2();
+
+	char m_pad[0x4C];
+	int m_value50;
+};
+
+class Rva008BD000Body
+{
+public:
+	void body();
+
+private:
+	Rva008BD000Target *m_target;
+};
+
+// ?body@Rva008BD000Body@@QAEXXZ
+void Rva008BD000Body::body()
+{
+	m_target->m_value50 = 0;
+	m_target->slot2();
+}
