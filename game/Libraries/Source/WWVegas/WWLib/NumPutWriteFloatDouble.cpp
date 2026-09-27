@@ -20,10 +20,10 @@ extern "C" __declspec(dllimport) int __cdecl _finite(double);
 
 void __cdecl _Stl_put_inf_nan(char *, double, int);
 
-void __cdecl BfmeFormatFloatScientific(char *, const char *, int, int,
-	double, ios_base::fmtflags, int, bool);
+void __cdecl __format_float_scientific(char *, const char *, int, int,
+	bool, int, int, bool);
 
-void __cdecl BfmeFormatFloatFixed(string &, const char *, int, int, bool,
+void __cdecl __format_float_fixed(string &, const char *, int, int, bool,
 	ios_base::fmtflags, int, bool);
 
 template <class Float>
@@ -43,12 +43,12 @@ static inline void bfmeFormatFloat(string &buffer, const char *digits,
 		switch (flags & ios_base::floatfield)
 		{
 		case ios_base::scientific:
-			BfmeFormatFloatScientific(staticBuffer, digits, decimal, negative,
-				(double)value, flags, precision, isLong);
+			__format_float_scientific(staticBuffer, digits, decimal, negative,
+				value == 0, flags, precision, isLong);
 			buffer = staticBuffer;
 			break;
 		case ios_base::fixed:
-			BfmeFormatFloatFixed(buffer, digits, decimal, negative, true,
+			__format_float_fixed(buffer, digits, decimal, negative, true,
 				flags, precision, isLong);
 			break;
 		default:
@@ -76,14 +76,14 @@ static inline void bfmeFormatFloat(string &buffer, const char *digits,
 			if (decimal < -3 || decimal > precision)
 			{
 				precision = significant - 1;
-				BfmeFormatFloatScientific(staticBuffer, digits, decimal,
-					negative, (double)value, flags, precision, isLong);
+				__format_float_scientific(staticBuffer, digits, decimal,
+					negative, value == 0, flags, precision, isLong);
 				buffer = staticBuffer;
 			}
 			else
 			{
 				precision = significant - decimal;
-				BfmeFormatFloatFixed(buffer, digits, decimal, negative, true,
+				__format_float_fixed(buffer, digits, decimal, negative, true,
 					flags, precision, isLong);
 			}
 			break;
