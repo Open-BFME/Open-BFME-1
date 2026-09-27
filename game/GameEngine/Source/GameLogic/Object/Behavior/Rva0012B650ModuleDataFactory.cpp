@@ -23,10 +23,10 @@
 // the outer class cannot also be that class and one of the two names is wrong.
 // The constructor of this very class at 0x0012B580 was landed under an
 // address-derived name on the same evidence, so this follows it.  Note also that
-// ?friend_newModuleData@StatusBitsUpgrade@@SAPAVModuleData@@PAVINI@@@Z currently
-// sits on 0x00118020 as an ICF alias of DozerAIUpdate's factory and claims no
-// bytes of its own; if the conflict above is ever resolved, this body is where
-// that name belongs.
+// ?friend_newModuleData@StatusBitsUpgrade@@SAPAVModuleData@@PAVINI@@@Z claims no
+// body: its ICF alias on 0x00118020 passed ILT 0x00017283 (0x002B65E0), not this
+// proc, and was retired; if the conflict above is ever resolved, this body is
+// where that name belongs.
 
 #include <string.h>
 
