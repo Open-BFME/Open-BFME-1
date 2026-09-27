@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // StringBase<T> case and trim operations. Retail inlines the templated
 // ensureUniqueBufferOfSize into each of them, so they live apart from
-// StringBase.cpp, whose explicit (still lifted) specialisations of that
-// helper would force an out-of-line call instead.
+// StringBase.cpp, whose out-of-line instantiations of that helper would
+// force a call instead.
 #include "../WWVegas/WWLib/string_base.h"
 #include <stdlib.h>
 #include <string.h>
@@ -66,6 +66,20 @@ void StringBase<char>::removeLastChar()
     }
 }
 
+
+template <>
+void StringBase<char>::toLower()
+{
+    if (m_data) {
+        ensureUniqueBufferOfSize(m_data->length, true, 0, 0, 0, 0);
+        char *p = m_data->data;
+        char *end = p + m_data->length;
+        while (p != end) {
+            *p = (char)tolower(*p);
+            ++p;
+        }
+    }
+}
 
 template <>
 void StringBase<char>::toUpper()
