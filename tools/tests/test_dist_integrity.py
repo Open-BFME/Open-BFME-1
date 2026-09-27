@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""`mods/dist` is the artifact every ladder player would run. Verify it.
+"""Verify this repository's distributable mod artifact at `mods/dist`.
 
 Nothing checked this. `--dist` guarded only against UNSHIPPED feature names, so
 `--only X --dist` quietly rewrote the shipped executable with a build carrying

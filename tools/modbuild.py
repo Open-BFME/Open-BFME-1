@@ -654,9 +654,6 @@ FEATURES = {"020-gameresult": build_gameresult,
             # nothing outside retail's own idle band there. Replay-only.
             # See mods/features/043-replaycam/README.md.
             "043-replaycam": build_replaycam,
-            # Live two-client AC retest confirmed that structure attackers can
-            # be targeted again; the predicate hooks remain part of that build.
-            "055-ac-attack-view": build_ac_attack_view,
             }
 # Features that ship a DATA file as well as code, as (archive path under the
 # game root, module in the feature directory exposing build(src, dst)).
@@ -670,11 +667,13 @@ DATA = {
 }
 
 
-# Selected only by name, and refused by --dist. mods/dist is the artifact
-# every ladder player runs: an instrument writes tens of lines a second, and a
-# candidate has not earned a place in it until the spike measuring it is green.
+# Selected only by name, and refused by --dist. An instrument writes tens of
+# lines a second, and a candidate has not earned a place in the repository's
+# distributable build until its gameplay test is green.
 # Promote one into FEATURES when it has.
 UNSHIPPED = {
+    "055-ac-attack-view": (build_ac_attack_view,
+                           "partial AC mitigation; rear Uruks still give up after a re-click"),
     "030-netlatprobe": (build_netlatprobe, "an instrument: it writes tens of lines a second"),
     "036-fpsprobe-timing": (build_fpsprobe_timing,
                             "the probe without the backbuffer readback, for "
@@ -819,7 +818,7 @@ def main():
             if name in UNSHIPPED:
                 raise SystemExit(
                     f"refusing --dist with {name}: {UNSHIPPED[name][1]}. mods/dist "
-                    f"is what every ladder player runs. Build it to its own path with "
+                    f"is the repository's distributable build. Build it to its own path with "
                     f"-o instead, and promote it into FEATURES when it has earned it.")
     for name in names:
         fn = FEATURES.get(name) or (UNSHIPPED[name][0] if name in UNSHIPPED else None)

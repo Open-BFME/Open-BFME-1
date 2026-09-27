@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check the predicate hooks retained in the shipped AC fix."""
+"""Check the predicate hooks retained in the partial AC patch."""
 import shutil
 import struct
 import subprocess
@@ -51,8 +51,9 @@ def built():
         yield PE(out)
 
 
-def test_predicate_gate_is_part_of_the_shipped_attack_view_fix():
-    assert "055-ac-attack-view" in modbuild.FEATURES
+def test_partial_ac_patch_stays_out_of_dist():
+    assert "055-ac-attack-view" in modbuild.UNSHIPPED
+    assert "055-ac-attack-view" not in modbuild.FEATURES
 
 
 def test_attack_view_payload_has_no_unresolved_runtime_symbols():

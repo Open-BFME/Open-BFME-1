@@ -85,9 +85,10 @@ with its bug restored.
 
 ## Instruments are not features
 
-`FEATURES` ships; `INSTRUMENTS` measures. `030-netlatprobe` writes tens of lines a
-second, so it is selected only by name and `--dist` refuses to carry one —
-`mods/dist` is what every ladder player runs. See `docs/measuring.md`.
+`FEATURES` is the repository's distributable set; `UNSHIPPED` contains opt-in
+experiments and diagnostics. `030-netlatprobe` writes tens of lines a second,
+so `--dist` refuses it. Arena deployment is a separate choice; see
+`docs/measuring.md` for the test measurements.
 
 A hook that needs the target's own argument uses `detour_call(..., args=("ecx",
 "stack:0"))`: a thiscall's `this` arrives in ecx and its arguments do not, and
