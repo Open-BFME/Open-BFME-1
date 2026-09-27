@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "a7ff03d2dcda1713ce313aba648d2eb7016668804f5099e0f7c47e267f2ca1b3",
+  "symbol": "?Rva009C6360@@YAXPBF0PAI@Z",
+  "score_kind": "author-estimate",
+  "score": 0.74,
+  "source": "// ?Rva009C6360@@YAXPBF0PAI@Z\n// partial score=0.74 date=2026-09-27\n// cl: /DNDEBUG /MD /EHsc\nvoid __cdecl Rva009C6360(const short *first, const short *second, unsigned int *output)\n{\n    const volatile short *secondPointer = second;\n    const volatile short *firstPointer = first;\n    int secondValue = *secondPointer;\n    int firstValue = *firstPointer;\n    int value = (firstValue * secondValue + 15) >> 5;\n    unsigned int low = (unsigned short)value;\n    unsigned int fill = (low << 16) | low;\n    __asm\n    {\n        mov edi, output\n        mov ecx, 32\n        mov eax, fill\n        rep stosd\n    }\n}\n"
+}
