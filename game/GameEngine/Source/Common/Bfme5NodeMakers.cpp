@@ -175,16 +175,20 @@ public:
 	void initFromINIMultiProc(void *p, void (__cdecl *proc)(MultiIniFieldParse &));
 };
 
-// Three DISTINCT vtables, one per factory. They shared a single name until
+// Two DISTINCT vtables, one per factory. They shared a single name until
 // the DIR32 check caught it resolving to three addresses -- one name
 // asserting three globals are one object, which failed the gate tree-wide.
+// (A third, g_bfmeRva0108D748ParseVtable, was here: the DIR32 table is keyed
+// on that recorded name, so the extern moved to the TU that actually stores
+// through it -- OathbreakersFadeAwayBehavior::friend_newModuleData, whose
+// registration-chain identity owns 0x001246F0.  See
+// game/GameEngine/Source/GameLogic/Object/Behavior/OathbreakersFadeAwayBehaviorFriendNewModuleDataThunk.cpp.)
 // Named after their own RVAs, following this file's Rva<hex> convention for
 // something whose identity is not yet known: the name claims an address and
 // nothing more. (g_bfme5RefVtable below is genuinely shared -- one base,
 // two references -- and is deliberately left as one name.)
 extern void *g_bfmeRva0108B1B8ParseVtable;
 extern void *g_bfmeRva0108D638ParseVtable;
-extern void *g_bfmeRva0108D748ParseVtable;
 void __cdecl bfme5ParseProcA(MultiIniFieldParse &m);
 void __cdecl bfme5ParseProcB(MultiIniFieldParse &m);
 
@@ -260,30 +264,8 @@ char Bfme5BridgeList::bfmeAnyBridgeAt(const Coord3D *p)
 	return 0;
 }
 
-struct Bfme5ParseNode12
-{
-	void *m_bfmeVptr;
-	int m_bfme04;
-	int m_bfme08;
-};
-
-void __cdecl bfme5ParseProcC(MultiIniFieldParse &m);
-
-void * __cdecl bfme5MakeParseNodeC(INI *ini)
-{
-	Bfme5ParseNode12 *q = (Bfme5ParseNode12 *)operator new(12);
-	Bfme5ParseNode12 *p;
-
-	if (q) {
-		q->m_bfmeVptr = &g_bfmeRva0108D748ParseVtable;
-		q->m_bfme08 = 1;
-		p = q;
-	} else {
-		p = 0;
-	}
-
-	if (ini)
-		ini->initFromINIMultiProc(p, bfme5ParseProcC);
-
-	return p;
-}
+// bfme5MakeParseNodeC used to live here, at 0x001246F0.  It is gone: the body
+// is OathbreakersFadeAwayBehavior::friend_newModuleData, reached only through
+// the "OathbreakersFadeAwayBehavior" module registration's data-factory slot
+// 0x00442078, and its only INI field is the float "FadeOutTime".  The body
+// moved to that class's own TU; see the note on the externs above.

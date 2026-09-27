@@ -8356,7 +8356,6 @@ name,va
 ?bannerAptOnInitialized@@YAXXZ,0x00411B0D
 ?bfme5ParseProcA@@YAXAAVMultiIniFieldParse@@@Z,0x0041CCF1
 ?bfme5ParseProcB@@YAXAAVMultiIniFieldParse@@@Z,0x00405097
-?bfme5ParseProcC@@YAXAAVMultiIniFieldParse@@@Z,0x0042AEF5
 ?bfmeAddPack8Mmx@@YAXPBX0PAXH@Z,0x00DC6ED0
 ?bfmeAddPack8MmxRow@@YAXPAX0PBX1H@Z,0x00DC6C60
 ?bfmeAddPack8Sse@@YAXPAX0PBX1H@Z,0x00DC7710
@@ -13422,7 +13421,7 @@ _ModelConditionUpgradeFieldParse,0x0043B41C
 _ModuleTemplate_vtbl0,0x01073758
 _MoneyCrateCollideFieldParse,0x0042BAEE
 _MonsterDockUpdateFieldParse,0x0041C008
-_OathbreakersFadeAwayBehaviorFieldParse,0x0040A727
+_OathbreakersFadeAwayBehaviorFieldParse,0x0042AEF5
 _ObjectCreationUpgradeFieldParse,0x00409D59
 _ObjectDefectionHelper_vtbl0,0x0109E574
 _ObjectDefectionHelper_vtbl0C,0x0109E4B0

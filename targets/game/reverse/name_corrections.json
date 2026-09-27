@@ -7538,5 +7538,25 @@
   "after_sha256": "758dd8c5345168ae77bf3afaaf954c79d8830e3ee7d2baa271e5749b5d5f7688",
   "evidence": "targets/game/reverse/identity_evidence/0x00508c80_names.md",
   "reason": "Invented bank names with no ledger row, pin or ZH header; the landing uses address-derived names."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Bfme5NodeMakers.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Behavior/OathbreakersFadeAwayBehaviorFriendNewModuleDataThunk.cpp",
+  "old_name": "m_bfmePad",
+  "new_name": "m_bfme08",
+  "before_sha256": "e03981abeab2d58de8511fc1b3d3988daaa299d2ed238fb45ad8a32a3027620e",
+  "after_sha256": "c43d1017ce7dbaa4ffc5e46eca4739c49da460cd392a5c9425ff9f93ca372010",
+  "evidence": "targets/game/reverse/identity_evidence/00125ce0-spawnunit-module-data-ctor.md",
+  "reason": "Cross-file matching confuses unchanged Bfme5RefNode with moved Bfme5ParseNode12; source and retail registry/vtable/store evidence establish distinct types. Preserve actual moved members m_bfme04 and m_bfme08; unchanged reference-counted members are not being renamed."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Bfme5NodeMakers.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Behavior/OathbreakersFadeAwayBehaviorFriendNewModuleDataThunk.cpp",
+  "old_name": "m_bfmeRefCount",
+  "new_name": "m_bfme04",
+  "before_sha256": "e03981abeab2d58de8511fc1b3d3988daaa299d2ed238fb45ad8a32a3027620e",
+  "after_sha256": "c43d1017ce7dbaa4ffc5e46eca4739c49da460cd392a5c9425ff9f93ca372010",
+  "evidence": "targets/game/reverse/identity_evidence/00125ce0-spawnunit-module-data-ctor.md",
+  "reason": "Cross-file matching confuses unchanged Bfme5RefNode with moved Bfme5ParseNode12; source and retail registry/vtable/store evidence establish distinct types. Preserve actual moved members m_bfme04 and m_bfme08; unchanged reference-counted members are not being renamed."
  }
 ]
