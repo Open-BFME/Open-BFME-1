@@ -227,10 +227,8 @@ void GameEngine::setFramesPerSecondLimit( Int fps )
 /** -----------------------------------------------------------------------------------------------
  * Initialize the game engine by initializing the GameLogic and GameClient.
  */
-// byte-exact reconstruction: game/GameEngine/Source/Common/GameEngineInitThunk.cpp
 // ?init@GameEngine@@ present-unmatched
 void GameEngine::init( void ) {} /// @todo: I changed this to take argc & argv so we can parse those after the GDF is loaded.  We need to rethink this immediately as it is a nasty hack
-// byte-exact reconstruction: game/GameEngine/Source/Common/GameEngineInitThunk.cpp
 // ?init@GameEngine@@ present-unmatched
 void GameEngine::init( int argc, char *argv[] )
 {
