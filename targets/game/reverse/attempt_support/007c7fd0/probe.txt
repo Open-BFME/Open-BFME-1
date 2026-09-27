@@ -1,0 +1,47 @@
+0088:fixme:seh:WerSetFlags (2) stub
+0088:fixme:heap:RtlSetHeapInformation HEAP_INFORMATION_CLASS 1 not implemented!
+00cc:fixme:ntdll:NtQuerySystemInformation info_class SYSTEM_PERFORMANCE_INFORMATION
+00cc:fixme:seh:WerSetFlags (2) stub
+00cc:fixme:heap:RtlSetHeapInformation HEAP_INFORMATION_CLASS 1 not implemented!
+deps-cache: not caching targets/game/reverse/attempts/0x007c7fd0.cpp — ['(macro or parent-traversing include has unknown search roots)']
+compile  compiled new experiment
+history  2 prior experiment(s) with this instruction/relocation result
+symbol   ?set@FlatTerrainShaderPixelShader@@UAEHH@Z
+size     ours=12153 retail=12130  relocs=912
+diffs    6361 non-reloc byte(s); first at +48
+layout   682 relocation site(s) do not align with retail operands; raw disassembly preserved
+candidate relocation-layout-drift  (confidence pattern only; verify against the evidence below)
+lever     object relocations no longer identify the same retail operands; use the raw instruction evidence to fix layout before diagnosing register or literal changes
+evidence  +002e  retail: je 0x1734                            ours: je 0x1739
+evidence  +0035  retail: jne 0x2f42                            ours: jne 0x2f59
+evidence  +0449  retail: lea ecx, [esp + 0x84]                 ours: lea ecx, [esp + 0x88]
+evidence  +047c  retail: mov ecx, dword ptr [esp + 0x84]       ours: mov ecx, dword ptr [esp + 0x88]
+evidence  +06fa  retail: jne 0xd9e                             ours: jne 0xd98
+evidence  +07b2  retail: mov dword ptr [esp + 0x344], 0x1e     ours: mov dword ptr [esp + 0x344], 0x1d
+evidence  ... 926 more differing instruction(s)
+shape    0.995 of instructions match once registers/constants are normalised; 21 structural difference(s), first at retail +1460 / ours +145a (--shape lists them)
+
+retail                                       | ours
+  001b 8b 84 24 30 03 00 00 mov eax, dword ptr [esp + 0x330] | 001b 8b 84 24 30 03 00 00 mov eax, dword ptr [esp + 0x330]
+  0022 53                   push ebx         | 0022 53                   push ebx
+  0023 55                   push ebp         | 0023 55                   push ebp
+  0024 56                   push esi         | 0024 56                   push esi
+  0025 57                   push edi         | 0025 57                   push edi
+  0026 33 ff                xor edi, edi     | 0026 33 ff                xor edi, edi
+  0028 2b c7                sub eax, edi     | 0028 2b c7                sub eax, edi
+  002a 89 4c 24 10          mov dword ptr [esp + 0x10], ecx | 002a 89 4c 24 10          mov dword ptr [esp + 0x10], ecx
+!!002e 0f 84 00 17 00 00    je 0x1734        | 002e 0f 84 05 17 00 00    je 0x1739
+  0034 48                   dec eax          | 0034 48                   dec eax
+!!0035 0f 85 07 2f 00 00    jne 0x2f42       | 0035 0f 85 1e 2f 00 00    jne 0x2f59
+!!003b a1 34 05 34 01       mov eax, dword ptr [0x1340534] | 003b a1 00 00 00 00       mov eax, dword ptr [0]
+  0040 8b 08                mov ecx, dword ptr [eax] | 0040 8b 08                mov ecx, dword ptr [eax]
+  0042 57                   push edi         | 0042 57                   push edi
+  0043 50                   push eax         | 0043 50                   push eax
+  0044 33 f6                xor esi, esi     | 0044 33 f6                xor esi, esi
+  0046 ff 91 ac 01 00 00    call dword ptr [ecx + 0x1ac] | 0046 ff 91 ac 01 00 00    call dword ptr [ecx + 0x1ac]
+!!004c a1 34 05 34 01       mov eax, dword ptr [0x1340534] | 004c a1 00 00 00 00       mov eax, dword ptr [0]
+  0051 8b 10                mov edx, dword ptr [eax] | 0051 8b 10                mov edx, dword ptr [eax]
+  0053 6a 03                push 3           | 0053 6a 03                push 3
+  0055 6a 01                push 1           | 0055 6a 01                push 1
+  0057 57                   push edi         | 0057 57                   push edi
+  0058 50                   push eax         | 0058 50                   push eax
