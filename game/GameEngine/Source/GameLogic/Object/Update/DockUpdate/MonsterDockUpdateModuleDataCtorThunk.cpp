@@ -3,8 +3,17 @@
 
 #include "../../../../../Include/GameLogic/Rva0039D550.h"
 
+// The destructor's only vtable store is Snapshot's (0x01073744): the
+// DockUpdateModuleData store dies against the inlined ~Snapshot.
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
+class Snapshot
+{
+public:
+	virtual ~Snapshot() {}
+};
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DockUpdate.h
-class DockUpdateModuleData
+class DockUpdateModuleData : public Snapshot
 {
 public:
 	DockUpdateModuleData();
