@@ -284,8 +284,8 @@ void W3DGadgetHorizontalSliderImageDrawB( GameWindow *window,
 	{
 		highlightSquare					= *(const Image **)((unsigned char *)window + 0x120);
 		ICoord2D backgroundStart, backgroundEnd;
-		backgroundStart.x = origin.x - (highlightSquare->getImageWidth() * xMulti)/2;
 		backgroundStart.y = origin.y + (highlightSquare->getImageHeight() *yMulti)/3;
+		backgroundStart.x = origin.x - (highlightSquare->getImageWidth() * xMulti)/2;
 		backgroundEnd.y = backgroundStart.y + highlightSquare->getImageHeight()* yMulti;
 		backgroundEnd.x = backgroundStart.x + highlightSquare->getImageWidth() * xMulti;
 
