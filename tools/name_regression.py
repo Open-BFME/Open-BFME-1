@@ -139,10 +139,17 @@ def _function_declarations(values):
     return declarations
 
 
+@lru_cache(maxsize=8)
+def _token_opcodes(old, new):
+    # regressions() and _equal_token_alignment() align the same token lists;
+    # without autojunk this is quadratic in repeated tokens (an __emit lift is
+    # thousands of them), so compute it once per pair.
+    return tuple(difflib.SequenceMatcher(None, old, new, autojunk=False).get_opcodes())
+
+
 def _equal_token_alignment(old, new):
     alignment = {}
-    for tag, a, b, c, d in difflib.SequenceMatcher(
-            None, old, new, autojunk=False).get_opcodes():
+    for tag, a, b, c, d in _token_opcodes(tuple(old), tuple(new)):
         if tag == 'equal':
             alignment.update({a + offset: c + offset for offset in range(b - a)})
     return alignment
@@ -257,7 +264,7 @@ def regressions(before, after, retained=frozenset()):
                         set(namespace_definition.findall(old_text)))
     # Exact token alignment handles functions, locals and declarations even
     # when the surrounding class is not sizeable. Comments cannot preserve a name.
-    for tag, a, b, c, d in difflib.SequenceMatcher(None, old, new, autojunk=False).get_opcodes():
+    for tag, a, b, c, d in _token_opcodes(tuple(old), tuple(new)):
         if tag == 'replace' and b - a == d - c:
             for offset, (x, y) in enumerate(zip(old[a:b], new[c:d])):
                 old_pos, new_pos = a + offset, c + offset

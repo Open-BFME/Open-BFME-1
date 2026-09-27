@@ -109,8 +109,10 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 
 
 def fetch(token, timeout):
+    # Cloudflare answers the default Python-urllib agent with 403 error 1010.
     request = urllib.request.Request(URL, headers={'Authorization': 'Bearer '+token,
-                                                   'Accept': 'application/json'})
+                                                   'Accept': 'application/json',
+                                                   'User-Agent': 'open-bfme-opencode-router/1'})
     with urllib.request.build_opener(NoRedirect).open(request, timeout=timeout) as response:
         raw = response.read(65537)
         if len(raw) > 65536:
