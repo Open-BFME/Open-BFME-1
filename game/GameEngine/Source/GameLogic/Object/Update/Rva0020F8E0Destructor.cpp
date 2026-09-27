@@ -3,7 +3,7 @@
 // Destructor lifted from its MASM dump to C++, retail 0x0020F8E0, 178 bytes.
 //
 // Fuzzy twin of PhysicsBehaviorDestructors.cpp (0x0029AA30, 172 B): same
-// UpdateModule chain shape (a class-specific vptr at +0x00/+0x0C/+0x10, a
+// three-vptr chain shape (a class-specific vptr at +0x00/+0x0C/+0x10, a
 // single std::vector<12-byte-POD> member torn down inline, then the same
 // three vptrs re-installed -- the shared BehaviorModule/PB_Iface1 constants
 // 0x0109CB5C/0x0109CA98 at +0x00/+0x0C match the twin exactly, only the
@@ -43,28 +43,31 @@ public:
 	virtual ~BehaviorModule() {}
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
-class UpdateModule : public BehaviorModule, public Rva0020F8E0_Iface2
+// The +0x10 table stored after the vector teardown, 0x010A7418, is not
+// UpdateModule's (0x0109CBAC): it is installed by 0x0020E4A0, the out-of-line
+// copy of the base constructor that ActiveBody's factory-called constructor
+// (0x00211A50) inlines, m_damageScalar = 1.0f at +0x14 included. Its slot 26 is
+// BodyModule::applyDamageScalar (0x0020DC50), which scales that +0x14 float.
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
+class BodyModule : public BehaviorModule, public Rva0020F8E0_Iface2
 {
 public:
-	virtual ~UpdateModule() {}
+	virtual ~BodyModule() {}
 
 private:
-	unsigned int m_f14;
-	int m_f18;
-	int m_f1c;
+	float m_damageScalar;
 };
 
 struct Gen_p12pod { int a[3]; };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ActiveBody.h
-class Rva0020F8E0Owner : public UpdateModule
+class Rva0020F8E0Owner : public BodyModule
 {
 public:
 	virtual ~Rva0020F8E0Owner();
 
 private:
-	unsigned char m_unreconstructed_20[0xa0];
+	unsigned char m_unreconstructed_18[0xa8];
 	std::vector<Gen_p12pod> m_vector;			///< retail this+0xC0
 };
 
