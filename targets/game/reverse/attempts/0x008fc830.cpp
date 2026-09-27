@@ -1,5 +1,5 @@
 // ?clear@W3DRadarResetSurface@@QAEXI@Z
-// partial score=0.95 date=2026-09-25
+// partial score=0.96 date=2026-09-27
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // ?clear@W3DRadarResetSurface@@QAEXI@Z
 // BFME W3DRadarResetSurface::clear body at retail RVA 0x008FC830 (508 bytes).
@@ -154,7 +154,8 @@ void W3DRadarResetSurface::clear(UnsignedInt color)
 		::memset(&locked, 0, sizeof(locked));
 		BFME_Surface_ErrorCode(reinterpret_cast<BfmeSurfaceResource *>(m_surface)->LockRect(&locked, NULL, 0));
 
-		UnsignedInt fill = static_cast<UnsignedByte>(color) ? 0xff : 0;
+		bool colorByte = static_cast<UnsignedByte>(color) != 0;
+		UnsignedInt fill = colorByte ? 0xff : 0;
 		unsigned char *memory = static_cast<unsigned char *>(locked.bits);
 		UnsignedInt i;
 		if (size == 0 && (description.Format == static_cast<WW3DFormat>(0x31545844) ||
@@ -165,7 +166,7 @@ void W3DRadarResetSurface::clear(UnsignedInt color)
 		{
 			size = locked.pitch;
 			i = description.Height >> 2;
-			if (static_cast<UnsignedByte>(color))
+			if (colorByte)
 			{
 				char pattern[8];
 				Int copy_count = size >> 3;
@@ -179,14 +180,7 @@ void W3DRadarResetSurface::clear(UnsignedInt color)
 				pattern[7] = 0x55;
 				for (; i > 0; --i)
 				{
-					if (copy_count > 0)
-					{
-						*reinterpret_cast<UnsignedInt *>(memory) =
-							*reinterpret_cast<UnsignedInt *>(pattern);
-						*reinterpret_cast<UnsignedInt *>(memory + 4) =
-							*reinterpret_cast<UnsignedInt *>(pattern + 4);
-						::memcpy(memory + 8, memory, (copy_count * 8 - 5) & ~3U);
-					}
+for (int j=0;j<copy_count;++j) { ((unsigned __int64 *)memory)[j]=*((unsigned __int64 *)pattern); }
 					memory += locked.pitch;
 				}
 				goto unlock;
