@@ -20,15 +20,26 @@ protected:
 	Object *m_object;
 };
 class BehaviorModuleInterface { public: virtual void slot(); };
-class LargeGroupBonusIface2 { public: virtual void slot(); };
+class UpdateModuleInterface { public: virtual void slot(); };
 
-class BehaviorModule : public ObjectModule,
-	public BehaviorModuleInterface, public LargeGroupBonusIface2
+class BehaviorModule : public ObjectModule, public BehaviorModuleInterface
 {
 public:
 	BehaviorModule(Thing *thing, const ModuleData *data)
-		: ObjectModule(thing, data), m_value14(0), m_value18(-1), m_value1c(-1) {}
+		: ObjectModule(thing, data) {}
 	virtual ~BehaviorModule();
+};
+
+// The inlined base is UpdateModule, not BehaviorModule: retail stores the three
+// tables that ??0UpdateModule (0x001B2FB0) installs, and the unwind action for
+// this base calls ~UpdateModule (0x001B2B10).
+class UpdateModule : public BehaviorModule, public UpdateModuleInterface
+{
+public:
+	UpdateModule(Thing *thing, const ModuleData *data)
+		: BehaviorModule(thing, data), m_value14(0), m_value18(-1), m_value1c(-1) {}
+	virtual ~UpdateModule();
+	void setWakeFrame(Object *, unsigned int);
 private:
 	unsigned int m_value14;
 	int m_value18;
@@ -45,13 +56,7 @@ private:
 	unsigned char m_pad[3];
 };
 
-class UpdateModule
-{
-public:
-	void setWakeFrame(Object *, unsigned int);
-};
-
-class BroadcastStealthUpdate : public BehaviorModule,
+class BroadcastStealthUpdate : public UpdateModule,
 	public SpyVisionUpgradeMux
 {
 public:
@@ -67,8 +72,8 @@ private:
 // ??0BroadcastStealthUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
 BroadcastStealthUpdate::BroadcastStealthUpdate(
 	Thing *thing, const ModuleData *data)
-	: BehaviorModule(thing, data), SpyVisionUpgradeMux()
+	: UpdateModule(thing, data), SpyVisionUpgradeMux()
 {
-	((UpdateModule *)this)->setWakeFrame(m_object, 0x3fffffff);
+	setWakeFrame(m_object, 0x3fffffff);
 	m_broadcastObjectCount = m_broadcastObjects.size();
 }
