@@ -6998,5 +6998,15 @@
   "after_sha256": "243a4df7ea78430106b7c5f3e6a0cdcf121771add7976ee083975e3fd0b00fa3",
   "evidence": "targets/game/reverse/identity_evidence/00747ff0_global_lighting_parser.md",
   "reason": "0x00747FF0 is slot 1 of the GlobalLighting parser-registration vtable (0x01121B30) installed by the landed ctor at 0x0074A680; it reads two stack arguments and ends RET 8, so it is that object's virtual thiscall, not a WorldHeightMap static."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008a78d0.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/Rva008A78D0GetOrCreateDefault.cpp",
+  "old_name": "BfmeA1029",
+  "new_name": "Rva00899FC0",
+  "before_sha256": "9a33f7a711721b91a1c9f713d713b54341cc36e49bb26f0ef698d3b39b45e6f6",
+  "after_sha256": "08f719f0b9b3c8d49e92e49945613ca34fc5edc69ee1473b36c8a33625e9e043",
+  "evidence": "targets/game/reverse/identity_evidence/008a7b00-keyboard-properties.md",
+  "reason": "The 31-byte body at 0x00899FC0 that the bank called BfmeA1029::bfmeGo1029A is the constructor pinned as ??0Rva00899FC0@@QAE@H@Z, whose ABI the cited evidence establishes from its eight aligned call sites; Rva008A7B00KeyboardProperties.cpp already uses that name, so the landed source follows it."
  }
 ]
