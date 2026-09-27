@@ -126,3 +126,36 @@ sys.exit(int(sys.argv[2]))
     assert acknowledged.exists()
     assert captured == forwarded.getvalue() == (
         "Compile: started\ncompiler diagnostic\nFunctions: OK 1/1\nfinal partial line")
+
+
+GATE_RED_DIR32 = GATE_OK_SHAPE + "\nFULL GATE: FAIL — 3 red: functions, dir32 consistency, no-op patch (unrunnable)\n"
+DIR32_REPORT = "??_7A@@6B@\t0x1,0x2\n??_7B@@6B@\t0x3,0x4\n"
+KNOWN_ROWS = ["??1Bar@@QAE@XZ (game/Libraries/Source/WWVegas/WWLib/bar.cpp)",
+              "?foo@@YAXXZ (game/GameEngine/Source/Common/Foo.cpp)"]
+
+
+def test_known_dir32_symbols_pass_and_a_new_one_fails():
+    assert run(gb.check, GATE_RED_DIR32, KNOWN_ROWS, ["??_7A@@6B@", "??_7B@@6B@"], DIR32_REPORT)[0] == 0
+    code, out = run(gb.check, GATE_RED_DIR32, KNOWN_ROWS, ["??_7A@@6B@"], DIR32_REPORT)
+    assert code == 1 and "NEW DIR32 ??_7B@@6B@" in out
+
+
+def test_a_fixed_dir32_symbol_is_named_for_removal():
+    code, out = run(gb.check, GATE_RED_DIR32, KNOWN_ROWS, ["??_7A@@6B@", "??_7B@@6B@", "??_7C@@6B@"], DIR32_REPORT)
+    assert code == 0 and "now consistent" in out and "??_7C@@6B@" in out
+
+
+def test_red_dir32_without_its_report_fails_closed():
+    code, out = run(gb.check, GATE_RED_DIR32, KNOWN_ROWS, [], None)
+    assert code == 1 and "was not written" in out
+
+
+def test_a_red_check_with_no_known_list_fails():
+    gate = GATE_OK_SHAPE + "\nFULL GATE: FAIL — 2 red: functions, source claims\n"
+    code, out = run(gb.check, gate, KNOWN_ROWS, [], None)
+    assert code == 1 and "source claims" in out
+
+
+def test_the_noop_patch_is_only_excused_while_functions_are_red():
+    gate = "Functions: OK 5/5\n\nFULL GATE: FAIL — 1 red: no-op patch (unrunnable)\n"
+    assert run(gb.check, gate, [], [], None)[0] == 1

@@ -29,9 +29,16 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 BASELINE = ROOT / "targets/game/reverse" / "full_gate_baseline.txt"
+DIR32_BASELINE = ROOT / "targets/game/reverse" / "dir32_known_red.txt"
+DIR32_REPORT = ROOT / "build" / "dir32_inconsistent.txt"
 FAIL_RE = re.compile(r"^  FAIL (?P<name>.+) \((?P<source>[^()]*)\)$")
 FUNCTIONS_RE = re.compile(r"^Functions: (OK|FAIL) ")
+FULL_GATE_RE = re.compile(r"^FULL GATE: FAIL \S+ \d+ red: (?P<checks>.+)$")
 HEADER = "# full-gate red rows, shrink-only (tools/gate_baseline.py). One 'name (source)' per line.\n"
+DIR32_HEADER = ("# DIR32 symbols that resolve to more than one retail address and are not in\n"
+                "# dir32_consistency_whitelist.txt. Shrink-only (tools/gate_baseline.py). One symbol per line.\n")
+# The no-op patch cannot run while any function row is red; every other check has no known-red list.
+TOLERATED_CHECKS = {"functions", "dir32 consistency", "no-op patch (unrunnable)"}
 
 
 def run_gate():
@@ -83,7 +90,19 @@ def compare(now, baseline):
     return sorted(now_set - base_set), sorted(base_set - now_set)
 
 
-def check(output, baseline):
+def red_checks(output):
+    line = next((line for line in reversed(output.splitlines()) if line.startswith("FULL GATE: ")), "")
+    m = FULL_GATE_RE.match(line)
+    return m.group("checks").split(", ") if m else []
+
+
+def dir32_symbols(report_text):
+    return sorted({line.split("\t", 1)[0] for line in report_text.splitlines() if line.strip()})
+
+
+def check(output, baseline, dir32_baseline=None, dir32_report=None):
+    """dir32_report is the gate's own dir32_inconsistent.txt text, or None when the
+    gate did not write one. dir32_baseline None skips the DIR32 comparison."""
     now = red_rows(output)
     if now is None:
         print("gate_baseline: the gate died before byte comparison; nothing is proven")
@@ -110,12 +129,36 @@ def check(output, baseline):
         print("  now green (remove from targets/game/reverse/full_gate_baseline.txt in the fixing commit): " + row)
     print(f"gate_baseline: function failure rows: {len(now)} red now, {len(baseline)} in baseline, "
           f"{len(new)} NEW, {len(fixed)} fixed")
-    return 1 if new else 0
+    failed = bool(new)
+    checks = red_checks(output)
+    untracked = [c for c in checks if c not in TOLERATED_CHECKS
+                 or (c == "no-op patch (unrunnable)" and "functions" not in checks)]
+    if untracked:
+        print("gate_baseline: red with no known-red list: " + ", ".join(untracked))
+        failed = True
+    if dir32_baseline is not None:
+        if "dir32 consistency" in checks and dir32_report is None:
+            print(f"gate_baseline: DIR32 consistency is red but {DIR32_REPORT.relative_to(ROOT).as_posix()} was not written")
+            return 1
+        dir32_now = dir32_symbols(dir32_report) if "dir32 consistency" in checks else []
+        new32, fixed32 = compare(dir32_now, dir32_baseline)
+        for symbol in new32:
+            print("  NEW DIR32 " + symbol)
+        for symbol in fixed32:
+            print(f"  now consistent (remove from {DIR32_BASELINE.relative_to(ROOT).as_posix()} in the fixing commit): " + symbol)
+        print(f"gate_baseline: DIR32 symbols: {len(dir32_now)} inconsistent now, {len(dir32_baseline)} known, "
+              f"{len(new32)} NEW, {len(fixed32)} fixed")
+        failed = failed or bool(new32)
+    return 1 if failed else 0
 
 
 def validate_staged():
+    return max(validate_file(BASELINE), validate_file(DIR32_BASELINE))
+
+
+def validate_file(path):
     """The staged baseline may only shrink relative to HEAD's copy."""
-    rel = BASELINE.relative_to(ROOT).as_posix()
+    rel = path.relative_to(ROOT).as_posix()
     head = subprocess.run(["git", "show", f"HEAD:{rel}"], cwd=ROOT, capture_output=True, text=True)
     staged = subprocess.run(["git", "show", f":{rel}"], cwd=ROOT, capture_output=True, text=True)
     if staged.returncode:
@@ -130,6 +173,13 @@ def validate_staged():
             print("  + " + row)
         return 1
     return 0
+
+
+def read_dir32_report(output):
+    """The report build.py writes when DIR32 consistency fails; None when the gate did not fail it."""
+    if "dir32 consistency" not in red_checks(output) or not DIR32_REPORT.exists():
+        return None
+    return DIR32_REPORT.read_text(encoding="utf-8")
 
 
 def main():
@@ -151,9 +201,12 @@ def main():
             print("\n".join(output.splitlines()[-15:]), file=sys.stderr)
             sys.exit(2)
         write_baseline(now)
-        print(f"gate_baseline: recorded {len(now)} red row(s) to {BASELINE.relative_to(ROOT).as_posix()}")
+        dir32_now = dir32_symbols(read_dir32_report(output) or "")
+        DIR32_BASELINE.write_text(DIR32_HEADER + "".join(s + "\n" for s in dir32_now), encoding="utf-8")
+        print(f"gate_baseline: recorded {len(now)} red row(s) to {BASELINE.relative_to(ROOT).as_posix()} "
+              f"and {len(dir32_now)} DIR32 symbol(s) to {DIR32_BASELINE.relative_to(ROOT).as_posix()}")
         sys.exit(0)
-    sys.exit(check(output, load_baseline()))
+    sys.exit(check(output, load_baseline(), load_baseline(DIR32_BASELINE) or [], read_dir32_report(output)))
 
 
 if __name__ == "__main__":
