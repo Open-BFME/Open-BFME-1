@@ -68,3 +68,19 @@ int ciGetUserMode(CHAT chat, const char *channel, const char *user)
 
 	return chatUser->mode;
 }
+
+typedef enum
+{
+	Rva00861700False,
+	Rva00861700True
+} Rva00861700Bool;
+
+Rva00861700Bool Rva00861700(CHAT chat, const char *channel, const char *user, int *mode)
+{
+	int got;
+	if (*(int *)chat == 0)
+		return Rva00861700False;
+	got = ciGetUserMode(chat, channel, user);
+	*mode = got;
+	return got != -1;
+}
