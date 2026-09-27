@@ -1,7 +1,6 @@
-// ?addDirect@Rva00443910OwnerDirect@@QAEXPAVAnim2DTemplate@@PBURva00443910Coord@@HMM@Z
-// partial score=0.97 date=2026-09-27
-// ?rva00443910@Rva00443910Owner@@QAEXPAVAnim2DTemplate@@PBURva00443910Coord@@HMM@Z
-// Retail 0x00443910, address-derived owner. The receiver is witnessed by the caller.
+// Retail 0x00443910 (522 B) and its value constructor 0x0043BBC0 (39 B); owners are address-derived.
+// The constructor's body must be visible here: with only a declaration the caller either gains an
+// EH state (no throw()) or merges the allocation's null path (throw()), neither of which retail has.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/asciistringsetoutofline /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 
@@ -20,6 +19,8 @@ class Anim2D
 public:
 	Anim2D(Anim2DTemplate *, Anim2DCollection *);
 	char m_storage[0x2c];
+	Int m_tail2c;
+	Int m_tail30;
 };
 
 struct Rva00443910Coord
@@ -46,7 +47,7 @@ public:
 	virtual void slot18(); virtual void slot19(); virtual void slot20();
 	virtual void slot21(); virtual void slot22(); virtual void slot23();
 	virtual void slot24(); virtual void slot25();
-	virtual Int getFrame();
+	virtual UnsignedInt getFrame();
 };
 
 class WWMath
@@ -80,7 +81,7 @@ struct Rva00443910GlobalDataDirect
 class Rva0043BBC0
 {
 public:
-	Rva0043BBC0() throw();
+	Rva0043BBC0();
 	Int m_anim;
 	Real m_x;
 	Real m_y;
@@ -92,14 +93,22 @@ public:
 	Int m_randomFrame;
 };
 
-class Anim2DDirect
+// @??0Rva0043BBC0@@QAE@XZ 0x0043BBC0
+Rva0043BBC0::Rva0043BBC0()
 {
-public:
-	Anim2DDirect(Anim2DTemplate *, Anim2DCollection *);
-	char m_storage[0x2c];
-	Int m_tail2c;
-	Int m_tail30;
-};
+	m_anim = 0;
+	m_x = 0;
+	m_y = 0;
+	m_expireFrame = 0;
+	m_xVelocity = 0;
+	m_yVelocity = 0;
+	m_zVelocity = 1.0f;
+	m_options = 0;
+	m_randomFrame = 0x20;
+}
+
+// Retail allocates 0x34 bytes and calls the Anim2D constructor itself.
+typedef Anim2D Anim2DDirect;
 
 struct Rva00443910RandomPair
 {
@@ -119,6 +128,7 @@ private:
 
 extern Int GetGameClientRandomValue(Int, Int, char *, Int);
 
+// @?addDirect@Rva00443910OwnerDirect@@QAEXPAVAnim2DTemplate@@PBURva00443910Coord@@HMM@Z 0x00443910
 void Rva00443910OwnerDirect::addDirect(Anim2DTemplate *animTemplate,
 	const Rva00443910Coord *position, Int options, Real duration,
 	Real zRisePerSecond)
@@ -137,8 +147,7 @@ void Rva00443910OwnerDirect::addDirect(Anim2DTemplate *animTemplate,
 	if (value != 0)
 	{
 	value->m_anim = (Int)anim;
-	UnsignedInt frame = TheGameClient->getFrame();
-	value->m_expireFrame = (Int)(frame + duration * *(const Real *)0x01075344);
+	value->m_expireFrame = (Int)(TheGameClient->getFrame() + duration * *(const Real *)0x01075344);
 	value->m_options = options;
 	value->m_x = pos->m_x;
 	value->m_y = pos->m_y;

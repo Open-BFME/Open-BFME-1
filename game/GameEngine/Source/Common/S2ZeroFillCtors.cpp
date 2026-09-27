@@ -1,4 +1,4 @@
-// Six __thiscall constructors that write nothing but constants into their own
+// Four __thiscall constructors that write nothing but constants into their own
 // members, with no base and no call:
 //
 //     mov eax,ecx / xor ecx,ecx / <stores through eax> / ret
@@ -10,15 +10,14 @@
 // is a four-byte member, `mov byte ptr` a one-byte one, so the bool members are
 // readable straight off the encoding.
 //
-// STORE ORDER IS SOURCE ORDER, AND ONE ROW PROVES IT.  0x0043BBC0 writes +0x1C
-// (3F800000h, i.e. 1.0f) BEFORE +0x10, then +0x20 last; a member-initialiser
-// list would have been reordered into declaration order, so that constructor's
-// body assigns its members in the order written here.  Where the order is
-// already ascending the bytes cannot tell a body from an initialiser list, and
-// the body form is used throughout for consistency.
+// STORE ORDER IS SOURCE ORDER.  Where the order is already ascending the bytes
+// cannot tell a body from an initialiser list, and the body form is used
+// throughout for consistency.  The sibling 0x0043BBC0, whose out-of-order
+// stores prove the body form, lives beside its caller in
+// GameClient/Rva00443910OwnerDirect.cpp.
 //
 // ONE ROW HAS A VPTR: 0x001B7450 opens `mov dword ptr [eax],<VFTABLE>` before
-// any member store, which is where MSVC always puts it.  The other five open
+// any member store, which is where MSVC always puts it.  The other three open
 // with a plain zero store at +0, so their offset 0 is a member.
 //
 // IDENTITY IS NOT RECOVERED.  Names are address-derived.  A dword zero cannot
@@ -51,35 +50,6 @@ Rva001B7450::Rva001B7450()
 	m_f = 0;
 	m_g = 0;
 	m_h = 0;
-}
-
-class Rva0043BBC0
-{
-public:
-	Rva0043BBC0();
-	int m_00;
-	int m_04;
-	int m_08;
-	int m_0C;
-	float m_10;
-	int m_14;
-	int m_18;
-	float m_1C;
-	int m_20;
-};
-
-// @??0Rva0043BBC0@@QAE@XZ 0x0043BBC0
-Rva0043BBC0::Rva0043BBC0()
-{
-	m_00 = 0;
-	m_04 = 0;
-	m_08 = 0;
-	m_0C = 0;
-	m_14 = 0;
-	m_18 = 0;
-	m_1C = 1.0f;
-	m_10 = 0.0f;
-	m_20 = 0x20;
 }
 
 class Rva005886E0
