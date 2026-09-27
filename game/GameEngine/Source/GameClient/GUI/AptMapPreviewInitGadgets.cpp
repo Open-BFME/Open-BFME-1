@@ -28,10 +28,10 @@ public:
     unsigned int m_refCount;
 };
 
-class Rva00525A30FunctorSingleWrapper : public FunctorSingleWrapperHead
+class Rva00520AB0FunctorSingleWrapper : public FunctorSingleWrapperHead
 {
 public:
-    Rva00525A30FunctorSingleWrapper( const FunctorBindingSingle &binding )
+    Rva00520AB0FunctorSingleWrapper( const FunctorBindingSingle &binding )
         : m_binding( binding ) {}
 
     FunctorBindingSingle m_binding;
@@ -42,7 +42,7 @@ class Rva0050F840FunctorHolder
 public:
     Rva0050F840FunctorHolder( FunctorBindingSingle binding )
     {
-        m_ptr = new Rva00525A30FunctorSingleWrapper( binding );
+        m_ptr = new Rva00520AB0FunctorSingleWrapper( binding );
         if( m_ptr != 0 )
             m_ptr->m_refCount++;
     }
@@ -53,7 +53,7 @@ public:
     ~Rva0050F840FunctorHolder() {}
 
 private:
-    Rva00525A30FunctorSingleWrapper *m_ptr;
+    Rva00520AB0FunctorSingleWrapper *m_ptr;
 };
 
 class AptMapPreviewFunctorWrapper : public FunctorSingleWrapperHead

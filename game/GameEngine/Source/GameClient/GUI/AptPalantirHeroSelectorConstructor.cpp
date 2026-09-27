@@ -82,9 +82,13 @@ public:
 class Rva0050F8B0FunctorHolder
 {
 public:
-	Rva0050F8B0FunctorHolder( FunctorBindingSingle binding )
+	// The wrapper type is the caller's: retail's per-hero callbacks allocate
+	// Rva0058D070's (table 0x0110BCB8), the select-all button Rva0058D030's
+	// (0x0110BCAC), both into this one holder. The pointer only selects it.
+	template <class Wrapper>
+	Rva0050F8B0FunctorHolder( FunctorBindingSingle binding, Wrapper * )
 	{
-		m_ptr = new Rva0058D070FunctorSingleWrapper( binding );
+		m_ptr = new Wrapper( binding );
 		if( m_ptr != 0 )
 			m_ptr->m_refCount++;
 	}
@@ -195,13 +199,15 @@ AptPalantirHeroSelector::AptPalantirHeroSelector()
 		name.format( "Palantir/HeroSelectUI/Hero%d/", index + 1 );
 		g_theWindowManager->bfmeBindRva004650F0( *(const AsciiString *)&name,
 			Rva0050F8B0FunctorHolder(
-				FunctorBindingSingle( rawFunctorMethod( index ), self ) ) );
+				FunctorBindingSingle( rawFunctorMethod( index ), self ),
+				(Rva0058D070FunctorSingleWrapper *)0 ) );
 	}
 
 	{
 		BFMERetailAsciiString name( "Palantir/HeroSelectUI/SelectAllHeroesBttn/" );
 		g_theWindowManager->bfmeBindRva004650F0( *(const AsciiString *)&name,
 			Rva0050F8B0FunctorHolder(
-				FunctorBindingSingle( rawFunctorMethod( 0x0041CFDF ), self ) ) );
+				FunctorBindingSingle( rawFunctorMethod( 0x0041CFDF ), self ),
+				(Rva0058D030FunctorSingleWrapper *)0 ) );
 	}
 }
