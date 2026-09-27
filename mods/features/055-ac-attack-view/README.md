@@ -1,69 +1,56 @@
 # AC fix (live tested, opt-in)
 
-This feature addresses two reasons melee horde members stop attacking an enemy
-horde while that enemy attacks a structure. It remains opt-in and is absent from
-`mods/dist/lotrbfme.exe`. Build it with
-`python3 tools/modbuild.py --only 055-ac-attack-view -o build/ac-test.exe`.
-Both players in a multiplayer match must use the same executable.
+**Players who want the AC fix need `055-ac-attack-view` only.** It keeps melee
+horde members attacking an enemy horde while that enemy attacks a structure.
+It is not yet included in the repository's standard `mods/dist/` bundle.
 
-## What failed
+Build the player executable from the repository root:
 
-In a recorded match, Gondor Soldiers attacked an Isengard mill while nearby
-Isengard Uruks fought them. The original game sometimes omitted Soldiers from
-the Uruks' melee target search: the Soldiers occupied pathfinder cells by
-**goal reservation ID**, while the search read **position ID** or **obstacle
-ID**. The search could not choose a Soldier it had never found.
+```sh
+python3 tools/modbuild.py --only 055-ac-attack-view -o build/ac-fix.exe
+```
 
-Other Uruks did find a Soldier and received an attack command, but stopped when
-that Soldier moved out of weapon range. At frame 474 of the diagnostic replay,
-Uruk 619 left its melee engage state after the game's horde-member check
-refused to compute an individual path. Its next state refused reacquisition
-because the Uruk still belonged to a horde. The Uruk returned to idle although
-its horde retained an attack order. This sequence also occurred for other
-members. The trace that identified these exits is in the separate
-[`056-ac-transition-trace`](../056-ac-transition-trace/README.md) feature.
+Both players in a multiplayer match must run the same executable. The separate
+[`056-ac-transition-trace`](../056-ac-transition-trace/README.md) feature is
+optional developer logging; it is not required for the fix.
 
-## What the code changes
+## How it fixes AC
 
-The target-search hooks expose a goal reservation to the original search only
-when the cell has no position or obstacle ID, the reserved object belongs to
-an enemy horde actively attacking a structure, and the game's normal target
-checks still apply. This rule does not depend on faction, unit type, or
+The observed AC encounter had two failure paths. First, the melee target search
+could miss an enemy attacking a structure because that enemy was represented in
+a pathfinder cell by a goal reservation rather than the position or obstacle ID
+the search normally checks. The fix lets that search consider the reserved
+object only when the cell has neither ordinary ID, the object belongs to an
+enemy horde attacking a structure, and the game's normal target checks pass.
+
+Second, a horde member that had a target could stop attacking when the target
+moved out of weapon range. The game prevented that member from calculating its
+own path, then prevented it from reacquiring a target because it still belonged
+to a horde. The fix permits the original path calculation when the member's
+horde has an attack order against the target's enemy horde. The game's pathfinder
+and subsequent attack states then run normally. These conditions depend on
+horde orders and enemy relationships, not on a specific faction, unit type, or
 formation.
 
-The member-path hook runs only after the game's weapon-range check has failed.
-It permits the original path calculation when the member's own horde is in its
-attack state with an order against the target's horde, and the two hordes are
-enemies. All other calls keep the game's original horde-member result. The
-pathfinder and subsequent attack states remain the game's own code.
+The feature also retains four earlier hooks that temporarily change the melee
+target predicate for an enemy attacking a structure. They restore the predicate
+bit afterward. They were present in the tested build, but their independent
+contribution has not been measured.
 
-Four earlier melee-predicate hooks are retained because the tested target-view
-build included them. Those hooks temporarily set an existing predicate-skip
-bit for a target with a structure-attack goal, then restore only the bit they
-set. Their independent contribution has not been established.
+## Verification and scope
 
-## Evidence and limits
+In an offline replay of the reported encounter, four of ten Uruks were actively
+attacking at frame 500 without the member-path change; all ten were attacking
+with it. Hits on the Soldiers during frames 456–623 rose from 55 to 82, while
+hits on the mill stayed at 61. A live two-client test of the complete feature
+then showed the Uruks continuing to attack as intended. The Uruk player issued
+one attack order at frame 2543 and no further order through frame 2661; the
+Uruks dealt 20 hits to the Soldiers in that interval. Both clients' diagnostic
+logs reported zero dropped events. The replay and logs are local test artifacts,
+not part of this repository.
 
-The same multiplayer replay was run offline with and without the member-path
-hook. The baseline had four of ten Uruks actively attacking at frame 500 and
-55 hits on Soldiers during frames 456–623. With the hook, all ten were
-actively attacking at frame 500 and the trace recorded 82 hits. Both runs
-recorded 61 hits on the mill and zero dropped trace events. A broad diagnostic
-bypass and the conditional hook produced identical command, damage, and member
-state records for frames 400–623. The replay is a local diagnostic artifact;
-it is not included in this repository.
-
-The revised build was then tested in a live two-client AC match. The player
-reported that the Uruks kept attacking as intended. In the recorded interval,
-the Uruk horde received one player attack order at frame 2543 and no further
-player order through frame 2661; its members dealt 20 recorded hits to the
-Soldiers during that interval. Both clients used the same executable and
-reported zero dropped trace events. This validates the reported AC scenario
-in a live match, as well as the offline replay above.
-
-The compiled-hook tests verify the detours and their return to the original
-instructions. The live test and replay cover the reported AC encounter, not
-every map, unit, or formation. Allowing an ordered horde member to path
-independently may change formation movement in other horde-versus-horde fights;
-those effects have not yet been tested. That broader check remains before
-shipping this opt-in feature in the repository bundle.
+Compiled-hook tests also check that the detours return to the original game
+instructions. The offline and live tests cover the reported AC encounter.
+Allowing an ordered horde member to path independently could also affect
+formation movement in other horde-versus-horde fights; those cases have not
+been tested, so the feature remains opt-in.

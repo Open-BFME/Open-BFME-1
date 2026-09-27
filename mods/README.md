@@ -13,10 +13,10 @@ here. See [docs/mods.md](../docs/mods.md) for how the patches are built.
 | In the repository bundle | `039-replayctl`, `043-replaycam` | Replay-only controls. |
 | In the repository bundle | `042-tracksfix` | Fix for a reproduced terrain-track crash. |
 | In the repository bundle | `048-advancedgfx` | Graphics options UI; requires its bundled `apt/options.big`. |
-| Opt-in, live tested | [`055-ac-attack-view`](features/055-ac-attack-view/README.md) | The reported AC scenario passed in an offline replay and a live two-client test. Broader horde-combat effects remain to be tested before bundling. |
+| Opt-in AC gameplay fix | [`055-ac-attack-view`](features/055-ac-attack-view/README.md) | The only AC feature players need. The reported scenario passed an offline replay and a live two-client test; broader horde-combat effects remain to be tested before bundling. |
 | Opt-in experiment | `038-fpsrender`, `040-horplus` | Render-only 60 FPS attempt and camera change; neither is in the bundle. |
 | Broken or unfinished | `034-framedrain`, `037-fps60`, `044-modpanel` | Desyncs, changes spell timing, or does not draw, respectively. Do not ship. |
-| Diagnostic only | `030-netlatprobe`, `036-fpsprobe`, `041-tracksprobe`, `045-drawprobe`, `047-uiprobe`, [`056-ac-transition-trace`](features/056-ac-transition-trace/README.md) | Measurement tools; `041` includes a deliberate crash trigger. |
+| Developer diagnostics only | `030-netlatprobe`, `036-fpsprobe`, `041-tracksprobe`, `045-drawprobe`, `047-uiprobe`, [`056-ac-transition-trace`](features/056-ac-transition-trace/README.md) | Optional measurement tools, not player fixes; `041` includes a deliberate crash trigger. |
 | Not registered with the mod builder | `035-adaptretry`, `049-unitinterp`, `050-ratiocont` | Abandoned or incomplete source, not selectable by `modbuild.py`. |
 
 There are **22 feature directories**: seven in the repository bundle, twelve

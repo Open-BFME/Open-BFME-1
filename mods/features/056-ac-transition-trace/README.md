@@ -1,8 +1,12 @@
-# AC transition trace (diagnostic only)
+# AC transition trace (developer diagnostics only)
 
-This instrument records the decisions around members of a melee horde stopping attacks. It does
-not change attack selection, orders, or state transitions. It is opt-in and
-absent from `mods/dist/`. To test the current partial AC patch with the trace:
+**Players do not need this feature to fix AC.** Use
+[`055-ac-attack-view`](../055-ac-attack-view/README.md) by itself for the
+gameplay fix. This instrument records the decisions around melee horde members
+stopping attacks. It does not change attack selection, orders, or state
+transitions. It is opt-in and absent from `mods/dist/`.
+
+To diagnose AC while running the gameplay fix:
 
 ```sh
 python3 tools/modbuild.py --only 055-ac-attack-view \

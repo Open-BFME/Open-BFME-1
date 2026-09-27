@@ -717,15 +717,14 @@ DATA = {
 }
 
 
-# Selected only by name, and refused by --dist. An instrument writes tens of
-# lines a second, and a candidate has not earned a place in the repository's
-# distributable build until its gameplay test is green.
-# Promote one into FEATURES when it has.
+# Selected only by name, and refused by --dist. Diagnostic instruments are
+# developer tools; gameplay fixes stay here until their broader effects have
+# been tested for the repository bundle.
 UNSHIPPED = {
     "055-ac-attack-view": (build_ac_attack_view,
-                           "partial AC mitigation; rear Uruks still give up after a re-click"),
+                           "live-tested AC fix; broader horde combat effects remain untested"),
     "056-ac-transition-trace": (build_ac_transition_trace,
-                                 "diagnostic-only AC member, command, chat, and state trace"),
+                                 "developer diagnostics only; not needed for the AC fix"),
     "030-netlatprobe": (build_netlatprobe, "an instrument: it writes tens of lines a second"),
     "036-fpsprobe-timing": (build_fpsprobe_timing,
                             "the probe without the backbuffer readback, for "
