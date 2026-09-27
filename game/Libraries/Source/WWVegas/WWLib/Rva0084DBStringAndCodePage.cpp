@@ -40,3 +40,11 @@ bool Rva0084D860IsSingleByte(const Rva0084D860CodePage *owner)
     GetCPInfo(owner->codePage, &info);
     return info.MaxCharSize == 1;
 }
+
+unsigned int Rva0084D820(const Rva0084D860CodePage *owner)
+{
+    Rva0084D860CpInfo info;
+    if (GetCPInfo(owner->codePage, &info))
+        return info.MaxCharSize;
+    return 0;
+}
