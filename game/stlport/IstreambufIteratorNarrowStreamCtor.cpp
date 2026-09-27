@@ -8,3 +8,7 @@
 #include <istream>
 
 template _STL::istreambuf_iterator<char, _STL::char_traits<char> >::istreambuf_iterator(_STL::basic_istream<char, _STL::char_traits<char> > &);
+
+// Wide twin, retail 0x008450E0: _M_c is a wchar_t, so _M_eof/_M_have_c sit
+// at +6/+7 instead of the narrow +5/+6.
+template _STL::istreambuf_iterator<wchar_t, _STL::char_traits<wchar_t> >::istreambuf_iterator(_STL::basic_istream<wchar_t, _STL::char_traits<wchar_t> > &);
