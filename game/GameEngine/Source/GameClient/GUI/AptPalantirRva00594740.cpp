@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // AptPalantir::rva00594740, retail 0x00594740 (724 B, ret 4), plus the two
 // static helpers VC7.1 compiled beside it with a private register ABI:
 // 0x005946A0 (63 B, list in EAX, result slot in EBX) and 0x005946F0 (63 B,
@@ -24,6 +24,8 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 #include <math.h>
+#include <map>
+// stlport
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -320,4 +322,62 @@ void AptPalantir::rva00594740(Object *object)
 		Rva00563E30::go();
 		byte_0 = false;
 	}
+}
+
+class Image;
+class Open2Template143730;
+const Image *Open2SelectPortrait143730(const Open2Template143730 *,const Open2Template143730 *);
+class BfmeHostERH { public: int bfmeGoERH(); };
+class Player;
+class Team { public: Player *getControllingPlayer() const; };
+class ImageCollection { public: const Image *findImageByName(const AsciiString &); };
+extern ImageCollection *TheMappedImageCollection;
+// RVA 0x00596D40: one stack Object argument and ret 4; no receiver read.
+// The shared private-ABI iterator helpers above and matching portrait chooser
+// call establish the selected-drawable family. Unknown authentic function name.
+// Object+0x23C=m_team is witnessed; Player+0x28 is an AsciiString map key here.
+const Image *__stdcall selectPortrait00596D40(Object *object)
+{
+ const Image *image;
+ if(object) {
+  const ThingTemplate *t=(const ThingTemplate*)((BfmeHostERH*)object)->bfmeGoERH();
+  if(!t) t=((Thing*)object)->getTemplate();
+  if(!t) return 0;
+  image=Open2SelectPortrait143730((const Open2Template143730*)t,(const Open2Template143730*)object);
+ } else {
+ image=0;
+ const DrawableList *list=TheInGameUI->getAllSelectedDrawables();
+ DrawableList::const_iterator it=rva005946a0(list);
+ if(it!=list->end()) {
+  Object *first=(*it)->getObject();
+  image=Open2SelectPortrait143730((const Open2Template143730*)((Thing*)first)->getTemplate(),(const Open2Template143730*)first);
+  if(image) {
+   while((it=rva005946f0(list,it))!=list->end()) {
+    Object *next=(*it)->getObject();
+    const Image *other=Open2SelectPortrait143730((const Open2Template143730*)((Thing*)next)->getTemplate(),(const Open2Template143730*)next);
+    if(other!=image) { image=0; break; }
+   }
+
+  }
+ }
+ if(!image) {
+ static AsciiString multi("MultiPortrait");
+ static std::map<AsciiString,AsciiString> factions;
+ if(factions.empty()) {
+  factions[AsciiString("Mordor")]="UPMordor_Army";
+  factions[AsciiString("Gondor")]="UPGondor_Army";
+  factions[AsciiString("Isengard")]="UPIsengard_Army";
+  factions[AsciiString("Rohan")]="UPRohan_Army";
+ }
+ if(list->begin()!=list->end()) {
+  Object *first=(*list->begin())->getObject();
+  Player *player=(*(Team**)((char*)first+0x23c))->getControllingPlayer();
+  const AsciiString &side=*(AsciiString*)((char*)player+0x28);
+  std::map<AsciiString,AsciiString>::iterator f=factions.find(side);
+  if(f==factions.end()) image=TheMappedImageCollection->findImageByName(multi);
+  else image=TheMappedImageCollection->findImageByName(f->second);
+ }
+ }
+ }
+ return image;
 }
