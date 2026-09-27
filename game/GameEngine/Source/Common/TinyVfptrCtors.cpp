@@ -1,4 +1,4 @@
-// One hundred and forty-six 9-byte __thiscall bodies of the single shape
+// One hundred and forty-five 9-byte __thiscall bodies of the single shape
 //
 //     mov eax,ecx / mov dword ptr [eax],<DIR32> / ret
 //
@@ -12,7 +12,7 @@
 // takes a DIR32 site's four bytes from retail, so the address each ctor stores
 // is not evidence and is not reconstructed here -- what these rows prove is the
 // SHAPE (copy this, store one relocated dword, return this), together with the
-// fact that all 146 addresses are distinct.
+// fact that all 145 addresses are distinct.
 //
 // IDENTITY IS NOT RECOVERED.  Every class name is derived from the retail RVA
 // of its constructor; the virtual member is declared and never defined, which
@@ -52,7 +52,6 @@ BFME_VFPTR_CTOR( Rva00122F80 )
 BFME_VFPTR_CTOR( Rva00123E20 )
 BFME_VFPTR_CTOR( Rva00124580 )
 BFME_VFPTR_CTOR( Rva0015B740 )
-BFME_VFPTR_CTOR( Rva0016CA20 )
 BFME_VFPTR_CTOR( Rva001B2A90 )
 BFME_VFPTR_CTOR( Rva001B2B00 )
 BFME_VFPTR_CTOR( Rva001B3A10 )
