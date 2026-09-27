@@ -596,355 +596,39 @@ void StringBase<T>::ensureUniqueBufferOfSize(int newLen, bool keepData, const T 
 }
 
 
-__declspec(naked) char *StringBase<char>::getBufferForRead(int len)
+// Retail 00887BE0/00888480 allocates a fresh buffer when capacity or
+// uniqueness is insufficient, then sets the requested length and terminator.
+// Allocation includes the eight-byte header and rounds to a four-byte boundary.
+// The bound failure throws int(1), matching retail ThrowInfo VA 012454C0.
+// Volatile initialization preserves the retail header-store order before
+// releaseBuffer; it does not change the Header layout or sharing contract.
+template <typename T>
+T *StringBase<T>::getBufferForRead(int len)
 {
-    __asm {
-        __emit 0x53
-        __emit 0x55
-        __emit 0x8b
-        __emit 0xe9
-        __emit 0x8b
-        __emit 0x45
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x33
-        __emit 0xdb
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x74
-        __emit 0x17
-        __emit 0x0f
-        __emit 0xb7
-        __emit 0x50
-        __emit 0x06
-        __emit 0x3b
-        __emit 0xd1
-        __emit 0x7e
-        __emit 0x0f
-        __emit 0x83
-        __emit 0x38
-        __emit 0x01
-        __emit 0x75
-        __emit 0x0a
-        __emit 0x0f
-        __emit 0xb7
-        __emit 0x50
-        __emit 0x04
-        __emit 0x88
-        __emit 0x5c
-        __emit 0x02
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x64
-        __emit 0x8d
-        __emit 0x41
-        __emit 0x09
-        __emit 0x3d
-        __emit 0xff
-        __emit 0x7f
-        __emit 0x00
-        __emit 0x00
-        __emit 0x7e
-        __emit 0x17
-        __emit 0x68
-        __emit 0xc0
-        __emit 0x54
-        __emit 0x24
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x50
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xd7
-        __emit 0xf0
-        __emit 0x16
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x03
-        __emit 0x99
-        __emit 0x56
-        __emit 0x83
-        __emit 0xe2
-        __emit 0x03
-        __emit 0x03
-        __emit 0xc2
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0xc1
-        __emit 0xfe
-        __emit 0x02
-        __emit 0x57
-        __emit 0xc1
-        __emit 0xe6
-        __emit 0x02
-        __emit 0x56
-        __emit 0xff
-        __emit 0x15
-        __emit 0x4c
-        __emit 0x94
-        __emit 0x35
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xf8
-        __emit 0x83
-        __emit 0xc6
-        __emit 0xf8
-        __emit 0xc7
-        __emit 0x07
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x66
-        __emit 0x89
-        __emit 0x77
-        __emit 0x06
-        __emit 0x66
-        __emit 0x89
-        __emit 0x5f
-        __emit 0x04
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x8b
-        __emit 0xcd
-        __emit 0x88
-        __emit 0x5f
-        __emit 0x08
-        __emit 0xe8
-        __emit 0xdd
-        __emit 0xfc
-        __emit 0xff
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x89
-        __emit 0x7d
-        __emit 0x00
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x8b
-        __emit 0x45
-        __emit 0x00
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x74
-        __emit 0x0b
-        __emit 0x66
-        __emit 0x89
-        __emit 0x48
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x55
-        __emit 0x00
-        __emit 0x88
-        __emit 0x5c
-        __emit 0x0a
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x45
-        __emit 0x00
-        __emit 0x5d
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x5b
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-__declspec(naked) wchar_t *StringBase<wchar_t>::getBufferForRead(int len)
-{
-    __asm {
-        __emit 0x53
-        __emit 0x8b
-        __emit 0xd9
-        __emit 0x8b
-        __emit 0x03
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x55
-        __emit 0x33
-        __emit 0xed
-        __emit 0x3b
-        __emit 0xc5
-        __emit 0x74
-        __emit 0x18
-        __emit 0x0f
-        __emit 0xb7
-        __emit 0x50
-        __emit 0x06
-        __emit 0x3b
-        __emit 0xd1
-        __emit 0x7e
-        __emit 0x10
-        __emit 0x83
-        __emit 0x38
-        __emit 0x01
-        __emit 0x75
-        __emit 0x0b
-        __emit 0x0f
-        __emit 0xb7
-        __emit 0x50
-        __emit 0x04
-        __emit 0x66
-        __emit 0x89
-        __emit 0x6c
-        __emit 0x50
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x67
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x09
-        __emit 0x0a
-        __emit 0x3d
-        __emit 0xff
-        __emit 0x7f
-        __emit 0x00
-        __emit 0x00
-        __emit 0x7e
-        __emit 0x17
-        __emit 0x68
-        __emit 0xc0
-        __emit 0x54
-        __emit 0x24
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x50
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x36
-        __emit 0xe8
-        __emit 0x16
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x03
-        __emit 0x99
-        __emit 0x56
-        __emit 0x83
-        __emit 0xe2
-        __emit 0x03
-        __emit 0x03
-        __emit 0xc2
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0xc1
-        __emit 0xfe
-        __emit 0x02
-        __emit 0x57
-        __emit 0xc1
-        __emit 0xe6
-        __emit 0x02
-        __emit 0x56
-        __emit 0xff
-        __emit 0x15
-        __emit 0x4c
-        __emit 0x94
-        __emit 0x35
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xf8
-        __emit 0x83
-        __emit 0xc6
-        __emit 0xf8
-        __emit 0xd1
-        __emit 0xee
-        __emit 0xc7
-        __emit 0x07
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x66
-        __emit 0x89
-        __emit 0x77
-        __emit 0x06
-        __emit 0x66
-        __emit 0x89
-        __emit 0x6f
-        __emit 0x04
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x8b
-        __emit 0xcb
-        __emit 0x66
-        __emit 0x89
-        __emit 0x6f
-        __emit 0x08
-        __emit 0xe8
-        __emit 0xc9
-        __emit 0xfc
-        __emit 0xff
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x89
-        __emit 0x3b
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x8b
-        __emit 0x03
-        __emit 0x3b
-        __emit 0xc5
-        __emit 0x74
-        __emit 0x0b
-        __emit 0x66
-        __emit 0x89
-        __emit 0x48
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x13
-        __emit 0x66
-        __emit 0x89
-        __emit 0x6c
-        __emit 0x4a
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x03
-        __emit 0x5d
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x5b
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+	if (m_data == 0 || m_data->capacity <= len || m_data->ref_count != 1)
+	{
+		int bytes = (len + 1) * (int)sizeof(T) + 8;
+		if (bytes > 32767)
+			throw 1;
+		bytes = ((bytes + 3) / 4) * 4;
+		Header *data = (Header *)malloc(bytes);
+		((volatile int *)&data->ref_count)[0] = 1;
+		((volatile unsigned short *)&data->capacity)[0] = (unsigned short)((bytes - 8) / sizeof(T));
+		((volatile unsigned short *)&data->length)[0] = 0;
+		((volatile T *)&data->data[0])[0] = 0;
+		releaseBuffer();
+		m_data = data;
+	}
+	else
+	{
+		m_data->data[m_data->length] = 0;
+	}
+	if (m_data)
+	{
+		m_data->length = (unsigned short)len;
+		m_data->data[len] = 0;
+	}
+	return &m_data->data[0];
 }
 
 
