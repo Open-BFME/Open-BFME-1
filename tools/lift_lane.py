@@ -43,7 +43,6 @@ import build
 
 ROOT = Path(__file__).resolve().parents[1]
 ZH_ROOT = ROOT / "inputs/reference" / "CnC_Generals_Zero_Hour"
-READABLE_RE = re.compile(r"^//\s*readable (?:ZH )?body(?: of \S+)?:\s*(\S+)", re.M)
 
 _LIFTS = None
 
@@ -536,14 +535,28 @@ def zh_twin(name):
     return bool(m) and m.group(1) in free
 
 
-def readable_home(source):
-    """The TU a lift file's header names as the readable body's home, if any."""
+HOME_RE = re.compile(r"^//\s*readable (?:ZH )?body(?: of (\S+?))?:\s*(\S+)", re.M)
+
+
+def readable_home(source, name=None):
+    """The TU a lift file's header names as THIS symbol's readable home, if any.
+
+    A lift file lists one `// readable body of <symbol prefix>: <path>` line per
+    symbol it has a home for. Returning the first one for every lift in the
+    file sent a 2026-09-27 seat to write six StringBase<T> methods into
+    AIUpdate.cpp (the first line was ??1AIUpdateModuleData's home). A line
+    counts only when its label prefixes `name`; an unlabelled line (`// readable
+    body: <path>`) covers the whole file; otherwise there is no home."""
     try:
         text = (ROOT / source).read_text(encoding="utf-8", errors="replace")
     except OSError:
         return ""
-    m = READABLE_RE.search(text[:2000])
-    return m.group(1) if m else ""
+    lines = HOME_RE.findall(text[:4000])
+    for label, path in lines:
+        if label and name and name.startswith(label):
+            return path
+    unlabelled = [path for label, path in lines if not label]
+    return unlabelled[0] if unlabelled else ""
 
 
 def main(argv=None):
@@ -587,7 +600,7 @@ def main(argv=None):
     items.sort(key=lambda v: (not twins[id(v[0])], -int(v[0]["target_size"])))
     for row, problems, correction in items[:args.limit]:
         rva = eligibility.rva_of(row)
-        home = readable_home(row["source"])
+        home = readable_home(row["source"], row["name"])
         print(f"{int(row['target_size']):6}B {row['target_rva']} {'ZH ' if twins[id(row)] else '   '}"
               f"verdicts={counts.get(rva, 0)} {row['name']}")
         print(f"         lift: {row['source']}" + (f"  readable: {home}" if home else ""))

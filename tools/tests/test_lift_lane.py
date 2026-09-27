@@ -166,3 +166,21 @@ def test_ledger_edges_hide_only_the_row_being_judged():
     assert 0x1010 in ends and 0x1020 not in ends
     assert ledger.claimed(0x1008, 0x1012, (0x1010, 0x10))
     assert not ledger.claimed(0x1010, 0x1020, (0x1010, 0x10))
+
+
+def test_readable_home_is_per_symbol(tmp_path, monkeypatch):
+    lift = tmp_path / "StringBase.cpp"
+    lift.write_text("// readable body of ??1AIUpdateModuleData@@: game/AIUpdate.cpp\n"
+                    "// readable body of ?format_va@AsciiString@@: game/AsciiString.cpp\n"
+                    "__declspec(naked) void f() {}\n")
+    monkeypatch.setattr(lift_lane, "ROOT", tmp_path)
+    assert lift_lane.readable_home("StringBase.cpp", "?format_va@AsciiString@@QAAXPBDPAD@Z") == "game/AsciiString.cpp"
+    # a symbol no line names has no home -- never the file's first line
+    assert lift_lane.readable_home("StringBase.cpp", "?toLower@?$StringBase@D@@QAEXXZ") == ""
+
+
+def test_an_unlabelled_readable_home_covers_the_file(tmp_path, monkeypatch):
+    lift = tmp_path / "X.cpp"
+    lift.write_text("// readable body: game/Home.cpp\n")
+    monkeypatch.setattr(lift_lane, "ROOT", tmp_path)
+    assert lift_lane.readable_home("X.cpp", "?anything@@YAXXZ") == "game/Home.cpp"

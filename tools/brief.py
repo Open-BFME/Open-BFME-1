@@ -197,7 +197,7 @@ def lift_lines(r):
     if not eligibility.is_lift_row(r):
         return []
     import lift_lane
-    home = lift_lane.readable_home(r["source"])
+    home = lift_lane.readable_home(r["source"], r["name"])
     lines = [f"    LIFT: {r['source']} is a naked __emit copy of retail under this name, so it scores as a dump. "
              f"Write the real body in {home or 'the class TU its Zero Hour home suggests'}, land it with "
              f"`python3 tools/add_match.py NAME 0xSTART SIZE SOURCE --replace-existing --model MODEL`, and delete the naked "
