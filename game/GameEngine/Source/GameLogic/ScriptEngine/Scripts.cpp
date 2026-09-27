@@ -602,7 +602,7 @@ void ScriptList::deleteGroup(ScriptGroup *pGrp)
 *	Input: DataChunkInput 
 *		
 */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptList_ParseScriptsDataChunk_Thunk.cpp
+// 0x0035BFB0 is NOT this function: it is the PlayerScriptsList registration's parse slot, a thiscall with two args, landed as ?bfmeReadScripts_0035BFB0@Rva00352810ParserRegistration@@QAE_NAAVDataChunkInput@@ABVAsciiString@@@Z in game/GameEngine/Source/Common/Rva00352810ParserRegistrationCtor.cpp (see targets/game/reverse/identity_evidence/0035bfb0-parse-scripts-name.md). It is the BFME shape of this function minus the statics and the cleanup loop, so this transcription stays present-unmatched.
 // ?ParseScriptsDataChunk@ScriptList@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z present-unmatched
 Bool ScriptList::ParseScriptsDataChunk(DataChunkInput &file, DataChunkInfo *info, void *userData)
 {

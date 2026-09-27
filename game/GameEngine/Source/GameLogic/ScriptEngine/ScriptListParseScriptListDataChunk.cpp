@@ -2,8 +2,11 @@
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringbaseascii/Common /Igame/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x0035BE10 (321 B). Reached as the "ScriptList" parser callback
-// registered by ScriptList::ParseScriptsDataChunk (landed,
-// ScriptList_ParseScriptsDataChunk_Thunk.cpp, 0x0035BFB0), matching the ZH
+// registered by the PlayerScriptsList registration's parse slot (landed as
+// ?bfmeReadScripts_0035BFB0@Rva00352810ParserRegistration@@QAE_NAAVDataChunkInput@@ABVAsciiString@@@Z
+// in game/GameEngine/Source/Common/Rva00352810ParserRegistrationCtor.cpp,
+// 0x0035BFB0, whose callback operand is the SafeDisc-stripped ILT slot
+// 0x00404877), matching the ZH
 // twin inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/
 // GameLogic/ScriptEngine/Scripts.cpp ScriptList::ParseScriptListDataChunk:
 // bounds-check the read-info slot count, allocate a ScriptList, register

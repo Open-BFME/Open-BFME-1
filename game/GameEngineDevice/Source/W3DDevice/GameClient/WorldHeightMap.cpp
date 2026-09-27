@@ -153,7 +153,11 @@ MapObject::MapObject(Coord3D loc, AsciiString name, Real angle, Int flags, const
 }	
 
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/MapObjectDestructorThunk.cpp
+// Zero Hour donor reconstruction, kept because the inline setShadowObj body it
+// is the only user of (matched at 0x00087470) is emitted here. Retail's
+// byte-matched body for this symbol -- the one with m_nextMapObject at +0x04 --
+// is MapObjectDestructor.cpp; like the constructor, both TUs define the symbol
+// and the linker folds the pair.
 // ??1MapObject@@MAE@XZ present-unmatched
 MapObject::~MapObject(void)
 {

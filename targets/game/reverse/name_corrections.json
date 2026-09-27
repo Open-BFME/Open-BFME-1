@@ -7658,5 +7658,15 @@
   "after_sha256": "661458e72445708de52747e58d3b9cd79b2f8d5d80a8294658abacf454f7c67a",
   "evidence": "targets/game/reverse/identity_evidence/0x170200_vector_p4_operator_assign.md",
   "reason": "The bank reused an unproved ScienceType identity from a lift starting inside the function. Typed callers at the true170200 entry establish only an object-id-sized element; independent extent and ABI proof preserves an address-derived type."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "ScriptList",
+  "new_name": "Rva00352810ParserRegistration",
+  "before_sha256": "e1f8a38d91e43136fd3ab3690ad70ac28f0593e9611e401f68c2e244c42ef70f",
+  "after_sha256": "7e716a6b22a58f7bfadc364357abab5557df334fcd2c75943771719733210611",
+  "evidence": "targets/game/reverse/identity_evidence/0035bfb0-parse-scripts-name.md",
+  "reason": "The lift name is __cdecl with three arguments (ret 12); retail 0x0035BFB0 is thiscall and returns with ret 8, and it is reached only through slot 1 of vtable 0x010E8538 installed by the matched parser-registration constructor 0x00352810. The owning class keeps the address-derived name of that constructor."
  }
 ]
