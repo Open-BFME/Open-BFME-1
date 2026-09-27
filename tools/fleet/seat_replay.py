@@ -242,6 +242,15 @@ def replay(repo, commit, tree, tries=20, correct=None):
 
     correct=(evidence, reason): document the renames name_regression reports
     against current master, citing that evidence (reviewed by the operator)."""
+    # One replay worktree serves every harvest; two resetting it at once would
+    # commit each other's half-applied deltas.
+    from portable_lock import lock
+    with (Path(tree).parent / "wt_replay.lock").open("a+b") as handle:
+        lock(handle, exclusive=True, wait_notice="seat_replay: waiting for another harvest")
+        return _replay(repo, commit, tree, tries, correct)
+
+
+def _replay(repo, commit, tree, tries, correct):
     delta = seat_delta(repo, commit)
     message = git(repo, "log", "-1", "--format=%B", commit).stdout
     for _ in range(tries):
