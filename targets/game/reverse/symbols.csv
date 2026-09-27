@@ -12594,8 +12594,8 @@ name,address,notes
 ?Rva007FD510Bind@@YAHPAXPBXH@Z,0x007FD510,Y2 lane: C++ spelling of the bind wrapper converted as _Rva007FD510 in Y4DirtySockSocket.c
 ?Rva007FD920Send@@YAHPAXPBDHH1H@Z,0x007FD920,Y2 lane: C++ spelling of the send converted as _Rva007FD920 in Y4DirtySockSocket.c
 ?Rva007FDA50Recv@@YAHPAXPADHH1PAH@Z,0x007FDA50,Y2 lane: C++ spelling of the receive converted as _Rva007FDA50 in Y4DirtySockSocket.c
-?Rva007FDB60SocketInfo@@YAXPAXH0H@Z,0x007FDB60,Y2 DirtySock lane: address-derived; the socket query 0x008053C0 calls with the selector 0x62696E64 (bind) and a 0x10-byte buffer
 ?Rva007FDB60SocketInfo@@YAHPAXH0H@Z,0x007FDB60,Y2 target 0x00804920 tests EAX from the stat query; complete callee decode establishes an int return
+?Rva007FDB60SocketInfo@@YAXPAXH0H@Z,0x007FDB60,Y2 DirtySock lane: address-derived; the socket query 0x008053C0 calls with the selector 0x62696E64 (bind) and a 0x10-byte buffer
 ?Rva007FDE80SetCallback@@YAHPAXHI00@Z,0x007FDE80,Y2 lane: C++ spelling of the socket callback setter converted as _Rva007FDE80 in Y4DirtySockSocket.c
 ?Rva007FDEE0@@YAHXZ,0x007FDEE0,Y2 lane: C++ spelling of the address-translator self test converted as _Rva007FDEE0 in Y4DirtySockSocket.c; NetConnStatus returns its result for the addr selector
 ?Rva007FDFF0Connect@@YAPAXPBDH@Z,0x007FDFF0,Y2 DirtySock lane: address-derived; 0x008046E0 stores its result in the http record and passes it a 30 timeout
@@ -12720,6 +12720,7 @@ name,address,notes
 ?Rva0096CF60ClearPassBit@MeshMatDescClass@@QAEXXZ,0x0096CF60,MeshMatDescClass member called by MeshModelClass::post_process 0x0096E750 on DefMatDesc and AlternateMatDesc; clears bit 0x100000 on the description and each pass entry
 ?Rva00990030Lookup@@YAIPAUlua_State@@H@Z,0x00990030,"Reviewed Lua stack16B value slots, State top0/base10 and cdecl index argument; corrected typed lua_State* alias for existing extraction helper"
 ?Rva00990210Lookup@@YAIPAUlua_State@@H@Z,0x00990210,"Reviewed Lua stack16B value slots, State top0/base10 and cdecl index argument; corrected typed lua_State* alias for existing extraction helper"
+?Rva009A4E50Configure@@YAXPAXIH@Z,0x009A4E50,Address-derived configuration switch; caller 009A89C0 at 009A89D5 passes context and selector 1 and value; callee reads all three cdecl stack args and dispatches selector
 ?Rva009A7030@@YAXXZ,0x009A7030,codec spread-table slot filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A7040@@YAXXZ,0x009A7040,codec spread-table slot filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A7300@@YAXXZ,0x009A7300,codec spread-table slot filler (generic tier); no ghidra boundary or identity yet
@@ -12727,6 +12728,7 @@ name,address,notes
 ?Rva009A7950@@YAXPAHPAGHHHHPBH@Z,0x009A7950,VP6 four-tap filter callee of Rva009A79D0/Rva009A7FE0Vp6Filter; unclaimed and blocked in re_attempts.log
 ?Rva009A7B00@@YAXXZ,0x009A7B00,codec spread-table slot filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A8110@@YAXXZ,0x009A8110,codec spread-table slot filler (generic tier); no ghidra boundary or identity yet
+?Rva009A86F0Allocate@@YAHPAX@Z,0x009A86F0,Address-derived buffer allocator; caller 009A89C0 at 009A8B96 pushes context and tests EAX; callee allocates buffers via 009A5970 and returns zero or one with plain RET
 ?Rva009A91D0@@YAXXZ,0x009A91D0,codec dispatch outlier slot filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A92D0@@YAXXZ,0x009A92D0,codec dispatch slot7 filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A9370@@YAXXZ,0x009A9370,codec dispatch slot6 filler (generic tier); no ghidra boundary or identity yet
@@ -12734,6 +12736,7 @@ name,address,notes
 ?Rva009A9660@@YAXXZ,0x009A9660,codec dispatch slot18 filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A9720@@YAXXZ,0x009A9720,codec dispatch slot12 filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A9920@@YAXXZ,0x009A9920,codec dispatch slot4 filler (generic tier); no ghidra boundary or identity yet
+?Rva009AB530BuildProbabilityTables@@YAXPAE_N@Z,0x009AB530,Address-derived bank identity; caller 009ABFC0 at 009AC109 pushes context and flag byte; callee tests byte argument and ends RET 009AB75B
 ?Rva009ACBA0SetupBounding@@YAPAHPAURva009ACC40State@@H@Z,0x009ACBA0,callee pin for the codec selector wrapper
 ?Rva009ACF90@@YAXXZ,0x009ACF90,codec dispatch slot10 filler (generic tier); no ghidra boundary or identity yet
 ?Rva009ADAA0@@YAXPAURva009AF200Context@@PAE1IIHPBI@Z,0x009ADAA0,BFME plane family pointer-to-integer-table ABI; edgecallee9ADAA0 dereferences seventh argument indexed by ctx+0xC
@@ -12745,6 +12748,8 @@ name,address,notes
 ?Rva009B4600DecodeBool@@YAHPAXH@Z,0x009B4600,Open-BFME5 second instance of the arithmetic decoder bool landed byte-exact at 0x009B4800; 114 bytes with the same state layout as the normalizer at 0x009B4680; callee of the token tree at 0x009B50F0 and the probability loader at 0x009B65F0; address-derived name
 ?Rva009B4680Normalize@@YAHPAURva009B4680State@@@Z,0x009B4680,address-derived name; 93-byte call-free binary arithmetic decoder normalization step
 ?Rva009B5530Prepare@@YAXPAURva009B5830State@@PAXH@Z,0x009B5530,typed cdecl declaration; incoming state coefficients block proven by fullcallee768B and caller9B5830
+?Rva009B60E0BuildTree@@YAXPAI0H@Z,0x009B60E0,Address-derived prefix tree builder; 009AB320 at 009AB36F pushes output and weights and count; independent full body reads all three stack args and RET at 009B6298
+?Rva009B65F0Update@@YAXPAEE@Z,0x009B65F0,Address-derived helper; caller 009ABFC0 at 009ABFF9 passes context and zero-extended byte; callee reads context and ends plain RET 009B673A
 ?Rva009B6740BuildTable@@YAXPAE@Z,0x009B6740,same-file VP6 table-builder target called by the exact Rva009B6A30LoadTables conversion; builder body remains pending
 ?Rva009B6BB0@@YAXXZ,0x009B6BB0,codec dispatch slot19 filler (generic tier); no ghidra boundary or identity yet
 ?Rva009B6D40@@YAXXZ,0x009B6D40,codec dispatch slot1 filler (SSE and MMX tiers); no ghidra boundary or identity yet
@@ -79380,6 +79385,7 @@ name,address,notes
 ?chatSystemColor@@3HB,0x00EBA0D4,Const LAN chat color; imageVA12BA0D4 rawFFFFFFFF; canonical LANAPICallbacks constColor
 ?check@AssistedTargetingObjectShim@@QAE_NXZ,0x00001FD7,AssistedTargetingUpdate isFreeToAssist first object predicate shim
 ?check@AssistedTargetingResultShim@@QAEHXZ,0x0000978C,AssistedTargetingUpdate isFreeToAssist result predicate shim
+?check@BfmePathfinderMethods@@QAE_NPBVObject@@PBUCoord3D@@PBVWeapon@@H@Z,0x00032B46,ILT-only ABI view; update 0x00184D50 pushes owner goal-position weapon and zero; resolved body 0x003F5E20
 ?check@BfmeRvaBA90Member@@QAE_NH@Z,0x0004A74B,assigned body helper for Rva0024BA90
 ?check@BfmeRvaCDB0Member@@QAE_NH@Z,0x0004A74B,assigned body helper for Rva0024CDB0
 ?check@Gen00003B1B@@QAE_NH@Z,0x00003B1B,stop question asked by 0x003D08F0 reached via incremental-link thunk; address-derived name
@@ -79393,6 +79399,7 @@ name,address,notes
 ?checkDestination@Pathfinder@@QAE_NPBVObject@@HHW4PathfindLayerEnum@@H_N@Z,0x00027C96,ILT to the matched checkDestination body at 0x003DD7A0; reached from the adjust cascade at 0x003DEAB0
 ?checkForAdjust@Pathfinder@@QAEEPAVObject@@ABVLocomotorSet@@EHHHHEPAUCoord3D@@PBU4@MPAPAVPathfindCell@@H@Z,0x003F0F40,BFME 13-arg checkForAdjust; arg11 originalZ is float (fld at +0xC9 and +0x39B); arg13 onlyIfLayer is int (dword load at +0x2F1); TightenPathCallbackInfo caller verified
 ?checkForAdjust@Pathfinder@@QAE_NPAVObject@@PBVLocomotorSet@@_NHHHPAUCoord3D@@2@Z,0x00018BE7,ILT to the 8-arg BFME checkForAdjust body at 0x003D6210; ZH iRadius/center/groupDest params are gone; called twice by the adjust cascade at 0x003DEAB0
+?checkForCrateToPickup@BfmeAIUpdateMethods@@QAEPAVObject@@XZ,0x000265A8,ILT-only ABI view; update 0x00184D50 calls on AIUpdateInterface and tests returned Object; resolved body 0x00272F70
 ?checkForDrag@Mouse@@IAEXXZ,0x005A4370,Full109B matched helper; processMouseEvent5A46FC via3EB80; threebuttondrag predicates and ECX preserved; canonicalMouse body verified
 ?checkForTarget@Pathfinder@@QAE_NPBVObject@@HHPBVWeapon@@0PBUCoord3D@@H_NPAU4@@Z,0x0004864E,ILT to 0x003ECF90; callee of Rva003EEB50::run
 ?checkHeight@Rva002BCB60Owner@@QAEEXZ,0x002BC310,parent raw ILT and complete selector call-site ABI verified; actual body target
@@ -79426,6 +79433,7 @@ name,address,notes
 ?cleanup@Rva00785FD0Item@@QAEXXZ,0x00049062,ILT to claimed 0x00785300 queue-element cleanup
 ?cleanupRva0003A4AE@Gen0003A4AE@@QAEXXZ,0x0003A4AE,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00470360 calls; autopin
 ?clear@?$StringBase@D@@QAEXXZ,0x00887940,retail StringBase<char>::clear body (folds with releaseBuffer); SubsystemLegendEntry ctor calls it directly not via the 0x000680C0 thunk
+?clear@?$_List_base@HV?$allocator@H@_STL@@@_STL@@QAEXXZ,0x0020AB20, call at 0x0020C2C6; decoded 49B list clear; native STLport emitter byte-exact; integer list proven by xferListInt at 0x0020BED0
 ?clear@?$_List_base@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAEXXZ,0x0002FB8A,ILT thunk to already-matched body 0x000CD120; TunnelTracker::onTunnelDestroyed m_containList.clear() call
 ?clear@?$_List_base@UBfmeFontEntry@@V?$allocator@UBfmeFontEntry@@@_STL@@@_STL@@QAEXXZ,0x0001A8AC,GlobalLanguage local-font list clear through retail incremental-link thunk
 ?clear@?$_List_base@UBridgeFXInfo@@V?$allocator@UBridgeFXInfo@@@_STL@@@_STL@@QAEXXZ,0x0001E9ED,Open-BFME5 BridgeFXInfo STLPort list clear body
@@ -82839,6 +82847,7 @@ name,address,notes
 ?getMoodMatrixActionAdjustment@AIUpdateInterface@@QBEIW4MoodMatrixAction@@@Z,0x0002B30F,AI idle mood adjustment thunk
 ?getMoodMatrixValue@AIUpdateInterface@@QBEIXZ,0x0001BB3F,AIUpdate retail caller and pristine mood-filter body identify ILT to 0x00279780
 ?getMostValuableLocation@BfmeShroudManagerHuntView@@QAEXHHPAUCoord3D@@@Z,0x008F7450,retail forwarder called by Player::setUnitsShouldHunt at 0x000D8C60
+?getMultiLogicalBonePosition@Object@@QBEHPBDHPAVCoord3D@@PAVMatrix3D@@_NH@Z,0x001BFAC0,canonical coord3d.h class-key ABI spelling of existing struct-key Object method; ILT 000107AD decoded; matched body Object_bfmeGetMultiLogicalBonePosition.cpp; six slots ret24
 ?getNATPortAllocationScheme@FirewallHelperClass@@AAEHHPAG0AA_N1@Z,0x00012F3F
 ?getNATPortAllocationScheme@FirewallHelperClassGetNATPortAllocationSchemeShim@@QAEHHPAG0AA_N1@Z,0x0066E870,FirewallHelperClass incremental-link thunk target through a TU-local forwarding shim
 ?getName00518BF0@GameSlot@@QBE?AVRva00518BF0Name@@XZ,0x003879C0,caller518BF0 via3A20B; independent body copies four-byte UTF16 name fromGameSlot+28 using888400 into hidden result pointer and returns it ret4; address-derived result-lifetime view
@@ -84644,6 +84653,7 @@ name,address,notes
 ?isIntroMoviePlaying@GameLogic@@QAE_NXZ,0x000349FA,ShowDiplomacy retail call at 0x004C3E1A through ILT
 ?isKindOf@BFMEActionThing@@QBE_NH@Z,0x0003251F,BFME Thing kind helper ILT decoded from ActionManager::canGetHealedAt
 ?isKindOf@BfmeOutOfWeaponRangeObject@@QBE_NW4KindOfType@@@Z,0x0003251F,outOfWeaponRangeObject retail kind test thunk
+?isKindOf@BfmeThingMethods@@QBE_NH@Z,0x0003251F,ILT-only ABI view; update 0x00184D50 calls on goal with three distinct kind values; resolved body 0x000A2CF0
 ?isKindOf@Drawable@@QBE_NH@Z,0x0003251F,addShadow Drawable type check via retail ILT
 ?isKindOf@Thing@@QBE_NW4KindOfType@@@Z,0x0003251F,REL32 pin from TunnelTracker::updateNemesis @0xF90D0
 ?isKindOfMulti@Thing@@QBE_NABV?$BitFlags@$0HO@@@0@Z,0x0003DCCB,ILT to Thing::isKindOfMulti 0x00132B20; Team::hasAnyBuildings BitFlags at 0x000F4A70 calls it
@@ -85295,6 +85305,7 @@ name,address,notes
 ?parseWeaponBonusSet@WeaponBonusSet@@QAEXPAVINI@@@Z,0x00019BC8
 ?parseWeaponTemplate@INI@@SAXPAV1@PAX1PBX@Z,0x0000CBDF
 ?peerAuthenticateCDKey@@YAXPAXPBDP6AX0H10@Z0H@Z,0x008585F0,GameSpy peerMain CD key wrapper target
+?peerGetPlayerProfileID@@YAXPAXPBDP6AX0H1H0@Z0H@Z,0x00858F80,retail 0x006494B0 direct call to matched SDK peerGetPlayerProfileIDA with five pushed arguments and same callback ABI
 ?peerParseQuery@@YAHPAXPADHPAUsockaddr@@@Z,0x00857570
 ?perform@Gen002DF780@@QAEXXZ,0x002DF780,address-derived callee of the 12-byte this-returning forwarder family; target read from the REL32 at its call sites
 ?perform@Gen00351260@@QAEXXZ,0x00351260,address-derived callee of the 12-byte this-returning forwarder family; target read from the REL32 at its call sites
@@ -86949,6 +86960,7 @@ name,address,notes
 ?test@Rva003BF540@@QAE_NXZ,0x003BEAF0,niladic predicate read by the mirrored-flag update at 0x003BF540; address-derived name
 ?test@Rva004891C0@@QBE_NXZ,0x004891C0,CommandXlat witnessed call 0x5b034d; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
 ?test@Rva0074CDD0@@QAE_NHH@Z,0x0074CDD0,address-derived triangle-flip predicate; independent 271B callee reads map receiver and two coordinate args then returns AL and ret8; unlike cached-bit ZH getFlipState; caller +1A7 via ILT 32E66
+?test@WordBitTest000D2F40@@QBE_NI@Z,0x000D2F40,decoded ILT 0000666D and complete 37B body; unsigned index selects dword index>>5 and mask 1<<(index&31); normalized bool EAX; thiscall ret4; calls at 00200592 and 0020067D
 ?testForAll@?$BitFlags@$0MA@@@QBE_NABV1@@Z,0x00031F8E,UpgradeMux::wouldUpgrade activation-mask helper thunk
 ?testForAny@?$BitFlags@$0MA@@@QBE_NABV1@@Z,0x00002D29,UpgradeMux::wouldUpgrade activation-mask any-helper thunk
 ?testForAny@ObjectStatusMaskType@@QBE_NABV1@@Z,0x000316FB,ILT to 0x00216600 BitFlags testForAny used by StealthUpdate hintDetectableWhileUnstealthed
@@ -89243,15 +89255,3 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
-?peerGetPlayerProfileID@@YAXPAXPBDP6AX0H1H0@Z0H@Z,0x00858F80,retail 0x006494B0 direct call to matched SDK peerGetPlayerProfileIDA with five pushed arguments and same callback ABI
-?check@BfmePathfinderMethods@@QAE_NPBVObject@@PBUCoord3D@@PBVWeapon@@H@Z,0x00032B46,ILT-only ABI view; update 0x00184D50 pushes owner goal-position weapon and zero; resolved body 0x003F5E20
-?checkForCrateToPickup@BfmeAIUpdateMethods@@QAEPAVObject@@XZ,0x000265A8,ILT-only ABI view; update 0x00184D50 calls on AIUpdateInterface and tests returned Object; resolved body 0x00272F70
-?isKindOf@BfmeThingMethods@@QBE_NH@Z,0x0003251F,ILT-only ABI view; update 0x00184D50 calls on goal with three distinct kind values; resolved body 0x000A2CF0
-?Rva009B65F0Update@@YAXPAEE@Z,0x009B65F0,Address-derived helper; caller 009ABFC0 at 009ABFF9 passes context and zero-extended byte; callee reads context and ends plain RET 009B673A
-?Rva009AB530BuildProbabilityTables@@YAXPAE_N@Z,0x009AB530,Address-derived bank identity; caller 009ABFC0 at 009AC109 pushes context and flag byte; callee tests byte argument and ends RET 009AB75B
-?Rva009B60E0BuildTree@@YAXPAI0H@Z,0x009B60E0,Address-derived prefix tree builder; 009AB320 at 009AB36F pushes output and weights and count; independent full body reads all three stack args and RET at 009B6298
-?Rva009A4E50Configure@@YAXPAXIH@Z,0x009A4E50,Address-derived configuration switch; caller 009A89C0 at 009A89D5 passes context and selector 1 and value; callee reads all three cdecl stack args and dispatches selector
-?Rva009A86F0Allocate@@YAHPAX@Z,0x009A86F0,Address-derived buffer allocator; caller 009A89C0 at 009A8B96 pushes context and tests EAX; callee allocates buffers via 009A5970 and returns zero or one with plain RET
-?clear@?$_List_base@HV?$allocator@H@_STL@@@_STL@@QAEXXZ,0x0020AB20, call at 0x0020C2C6; decoded 49B list clear; native STLport emitter byte-exact; integer list proven by xferListInt at 0x0020BED0
-?getMultiLogicalBonePosition@Object@@QBEHPBDHPAVCoord3D@@PAVMatrix3D@@_NH@Z,0x001BFAC0,canonical coord3d.h class-key ABI spelling of existing struct-key Object method; ILT 000107AD decoded; matched body Object_bfmeGetMultiLogicalBonePosition.cpp; six slots ret24
-?test@WordBitTest000D2F40@@QBE_NI@Z,0x000D2F40,decoded ILT 0000666D and complete 37B body; unsigned index selects dword index>>5 and mask 1<<(index&31); normalized bool EAX; thiscall ret4; calls at 00200592 and 0020067D
