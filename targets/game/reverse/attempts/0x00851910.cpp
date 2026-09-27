@@ -1,5 +1,5 @@
 // ?initFromINIMulti@INI@@QAEXPAXABVMultiIniFieldParse@@@Z
-// partial score=0.979 date=2026-09-27
+// partial score=0.987 date=2026-09-27
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ob1 /Iinputs/reference/shims/ini_parser /Iinputs/reference/shims/ini_inline /Iinputs/reference/shims/ini /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 #include "PreRTS.h"
@@ -73,7 +73,8 @@ void INI::initFromINIMulti(void *what, const MultiIniFieldParse& parseTableList)
 						((const Gen_009CBC90 *)&m_lines)->bfmeAt(m_lineNum), INI::getFilename().str(), field, m_curBlockStart));
 					const char *token = field;
 					const char *message = e.mFailureMessage;
-					throw INIException(e.m_argCount,
+					Int argCount = e.m_argCount;
+					throw INIException(argCount,
 						"%s\n\nError parsing field '%s' in block '%s' in file '%s', line %i.\n",
 						message, token, m_curBlockStart, INI::getFilename().str(),
 						((const Gen_009CBC90 *)&m_lines)->bfmeAt(m_lineNum));
