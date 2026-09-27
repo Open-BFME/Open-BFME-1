@@ -27,7 +27,7 @@ reference sources live in `inputs/`; mods remain in `mods/`.
 * [ ] Better crash logs
 * [ ] 60/120 FPS
 * [ ] Multi CPU
-* [ ] AC fix
+* [x] [AC fix](mods/features/055-ac-attack-view/README.md) (live-tested for the reported structure-attack case)
 * [ ] World builder Source Code
 * [ ] 16 player maps
 

@@ -28,7 +28,7 @@ def test_focused_ac_image_preserves_view_search_and_melee_calls():
         assert [ins.mnemonic for ins in instructions[:3]] == ["pushal", "pushfd", "cld"]
         assert [ins.op_str for ins in instructions[3:3 + len(args)]] == list(reversed(args))
 
-    for rva, _, args, expected_hex in modbuild.TARGET_VIEW_GOAL_HOOKS:
+    for rva, args, expected_hex in modbuild.TARGET_VIEW_GOAL_HOOKS:
         expected = bytes.fromhex(expected_hex)
         assert retail.read(rva, len(expected)) == expected
         patch = built.read(rva, 5)

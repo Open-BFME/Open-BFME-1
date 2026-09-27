@@ -1,4 +1,4 @@
-#include "../../051-structure-melee-gate/src/structure_melee_gate.cpp"
+#include "predicate_gate.h"
 
 #define game_logic (*(void **)0x012F0898)
 #include "view_goal.h"

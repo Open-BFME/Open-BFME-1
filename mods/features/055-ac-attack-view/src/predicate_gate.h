@@ -1,28 +1,5 @@
-// 051-structure-melee-gate — attempted bypass for melee attacks against a structure-
-// attacking battalion. The in-game result has not been verified.
-//
-// PATCH HYPOTHESIS. Retail behavior and the unverified attempt are documented
-// in mods/features/051-structure-melee-gate/README.md.
-// bfmeMeleeHordeTargetInvalid (0x00175820) returns 0 immediately when bit 0
-// of the byte at Object+0x344 is set, before it looks at facing. Otherwise a
-// slow target whose back is toward the attacker is invalid, and
-// AIAttackMeleeHordeWaitState returns -2. The machine at 0x001812B0 treats
-// that as failure and bounces approach -> wait -> path-wait forever, so
-// beginMelee / updateMeleeTarget never run. A battalion facing a building
-// holds that condition for the whole order. A unit that is running does not:
-// its goal is not a structure, and this hook leaves it alone.
-//
-// WHY THIS SHAPE. The shim cave.py generates restores every register, so the
-// payload cannot clear al and have test al see it. The predicate already has
-// the exit, the same way flush already had the list guard 042-tracksfix
-// borrows. Set the bit for the duration of the call, put it back before
-// test al. Do not change the predicate itself: approach onEnter uses a
-// "not invalid" result to leave the attack machine when melee is already
-// ready.
-//
-// No loader and no CRT. Fixed-base image, so the absolute calls below are
-// safe. MSVC 7.1 has no __thiscall; the fastcall edx is the unused one.
-
+// The predicate hook alone did not fix AC; keep it here because the live-tested
+// build paired it with attack-view correction.
 typedef int Int;
 
 typedef void *(__fastcall *GetGoalObject)(void *machine, void *edx);

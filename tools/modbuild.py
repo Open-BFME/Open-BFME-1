@@ -66,12 +66,12 @@ TARGET_DISCARD = 0x006620A4
 TARGET_REPLAYFRAME = 0x0006B910
 # TerrainTracksRenderObjClassSystem::flush
 TARGET_TRACKSFLUSH = 0x0072FEB0
-# 051-structure-melee-gate. These two calls to bfmeMeleeHordeTargetInvalid inside
+# 055-ac-attack-view. These two calls to bfmeMeleeHordeTargetInvalid inside
 # AIAttackMeleeHordeWaitState::onEnter / ::update, and the `add esp, 8` /
 # `test al` that follows each of them. The call is where the predicate-skip
 # bit is set; the add/test is where it is restored, before the je. Five
 # bytes at the second site is exactly those two instructions, so the short
-# je stays in the retail body. See mods/features/051-structure-melee-gate/README.md.
+# je stays in the retail body. See mods/features/055-ac-attack-view/README.md.
 STRUCTURE_MELEE_ONENTER_CALL = 0x00175979
 STRUCTURE_MELEE_ONENTER_RESTORE = 0x0017597E
 STRUCTURE_MELEE_UPDATE_CALL = 0x00175AF0
@@ -447,7 +447,7 @@ def checked_structure_melee_hooks(pe):
             (STRUCTURE_MELEE_UPDATE_CALL, STRUCTURE_MELEE_UPDATE_RESTORE)):
         if restore != call + 5:
             raise SystemExit(
-                f"structure-melee-gate restore 0x{restore:08X} is not the instruction after "
+                f"AC predicate restore 0x{restore:08X} is not the instruction after "
                 f"the call at 0x{call:08X}")
         if pe.read(call, 1) != b"\xE8" or pe.read(restore, 5) != STRUCTURE_MELEE_AFTER_CALL:
             raise SystemExit(
@@ -461,116 +461,20 @@ def checked_structure_melee_hooks(pe):
     )
 
 
-def build_structure_melee_gate(pe, feature_dir, probe=False):
-    return build_feature(pe, feature_dir / "src/structure_melee_gate.cpp",
-                         "setPredicateSkipForStructureAttack",
-                         checked_structure_melee_hooks(pe), probe=probe)
-
-
-# Every span is checked before patching: several sites sit immediately before
-# a short branch that must remain in retail, or before a live x87 calculation.
-MELEEPROBE_HOOKS = (
-    # Both local send and received CHAT reach processChat; these sites are
-    # after delivery filtering, with the rendered UTF-16 line still in eax.
-    (0x00667238, "meleeprobe_chat", ("esi", "eax", "ebp"), "505189642444"),
-    (0x006671A1, "meleeprobe_chat", ("esi", "eax", "ebp"), "505189642444"),
-    (0x00277780, "meleeprobe_command", ("ecx", "stack:0"), "558be9c7858401000000000000"),
-    (0x000A13D9, "meleeprobe_transition", ("esi", "edi"), "85ff897e1c"),
-    (0x001D04B0, "meleeprobe_damage_result", ("esi", "edi"), "f6864403000001"),
-    (0x00238D10, "meleeprobe_plan_enter", ("stack:0", "stack:2", "stack:5", "stack:6"), "81ec0c010000"),
-    (0x0023900A, "meleeprobe_plan_candidate", (), "db4424188b84242c010000"),
-    (0x002390AD, "meleeprobe_plan_distance_pass", ("eax",), "8b8c248c000000"),
-    (0x0023910A, "meleeprobe_plan_point", ("edx",), "e86daadfff"),
-    (0x0023910F, "meleeprobe_plan_point_result", ("eax",), "84c00f8555010000"),
-    (0x003DF331, "meleeprobe_cell_begin", ("ebx", "edx"), "3b55140f8c92010000"),
-    (0x003DF390, "meleeprobe_cell_data", ("esi",), "8b460c8bd0"),
-    (0x003DF4CC, "meleeprobe_cell_reject", (), "5f5e5d32c0"),
-    (0x0023926C, "meleeprobe_plan_passed_point", (), "8a44241184c0"),
-    (0x0023929B, "meleeprobe_plan_passed_line", (), "d9442440d85c243c"),
-    (0x002392AA, "meleeprobe_plan_chosen", (), "d944244c8b442420"),
-    (0x00244455, "meleeprobe_plan_complete", ("eax", "edi", "esi"), "8b4c242485c9"),
-    (0x001758F0, "meleeprobe_enter_state", ("ecx",), "83ec0c538bd9"),
-    (0x00175A80, "meleeprobe_update_state", ("ecx",), "5153558be9"),
-    (STRUCTURE_MELEE_ONENTER_CALL, "meleeprobe_enter_before", ("ebp", "esi", "ebx"), "e8efabeaff"),
-    (STRUCTURE_MELEE_ONENTER_RESTORE, "meleeprobe_enter_after", ("eax",), "83c40884c0"),
-    (STRUCTURE_MELEE_UPDATE_CALL, "meleeprobe_update_before", ("ebx", "edi", "ebp"), "e878aaeaff"),
-    (STRUCTURE_MELEE_UPDATE_RESTORE, "meleeprobe_update_after", ("eax",), "83c40884c0"),
-    (0x00175A0F, "meleeprobe_begin", ("ebp", "esi", "ebx"), "8b17568bcf"),
-    (0x00175B34, "meleeprobe_update_target", ("ebx", "edi", "ebp"), "8b16578bce"),
-    (0x00175AC5, "meleeprobe_stealth_fail", ("ebx", "edi", "ebp"), "5f5db8feffffff"),
-    (0x00175AFC, "meleeprobe_update_fail", ("ebx", "edi", "ebp"), "5e5f5db8feffffff"),
-    (0x00175B16, "meleeprobe_ready", ("ebx", "edi", "ebp", "esi"), "a198082f01"),
-    (0x00175B26, "meleeprobe_not_ready", ("ebx", "edi", "ebp", "esi"), "8b1598082f01"),
-    (0x00175985, "meleeprobe_enter_fail", ("ebp", "esi", "ebx"), "5f5e5db8feffffff"),
-    (0x001759C4, "meleeprobe_distance", ("ebp", "esi", "ebx"), "568bcde821e3ecff"),
-    (TARGET_LOOPBODY, "meleeprobe_loop", (), "8b038bcbc745fc00000000"),
-)
-
-
-TARGET_GOAL_HOOK = (0x003DF445, "meleeprobe_target_goal",
-                    ("eax", "esi", "stack_offset:0x3c"), "8b0d98082f01")
-TARGET_ACQUIRE_HOOKS = (
-    (0x0024432E, "meleeprobe_acquire_enter", ("edi", "esi"), "e875a1dcff"),
-    (0x001CC12A, "meleeprobe_acquire_selected",
-     ("ebp", "stack_offset:0x10", "stack_offset:0x24", "edi"), "8b74241085f6"),
-    (0x001CC149, "meleeprobe_acquire_dispatch", ("ebp", "esi"), "8b4500568bcd"),
-)
-TARGET_CANDIDATE_HOOKS = (
-    (0x001CBFE4, "meleeprobe_candidate_query", ("ebp", "eax"), "8b0d98082f01"),
-    (0x001CBFF0, "meleeprobe_candidate_resolved", ("ebp", "eax"), "8bf085f60f8415010000"),
-    (0x001CC0B9, "meleeprobe_candidate_enemy", ("ebp", "esi"), "8b0d14f22e01"),
-    (0x001CC0FE, "meleeprobe_candidate_final", ("ebp", "esi", "eax"), "84c089742410"),
-)
-TARGET_FIRST_HOOKS = (
-    (0x001CBF24, "meleeprobe_first_query", ("ebp", "edx"), "8b0d98082f01"),
-    (0x001CBF36, "meleeprobe_first_valid", ("ebp", "esi"), "f6864403000001"),
-    (0x001CBF61, "meleeprobe_first_enemy", ("ebp", "esi"), "6a078bcee8b565e6ff"),
-    (0x001CBF9D, "meleeprobe_first_slot",
-     ("ebp", "stack_offset:0x10", "esi"), "3bfb0f8c7bffffff"),
-)
 TARGET_VIEW_GOAL_HOOKS = (
-    (0x003E4BE5, "meleeprobe_view_goal",
-     ("ecx", "eax", "stack_offset:0x38"), "85c9750b85c0"),
-    (0x003E4C5B, "meleeprobe_view_goal",
-     ("ecx", "eax", "stack_offset:0x38"), "85c9750b85c0"),
-    (0x003E4505, "meleeprobe_view_goal",
-     ("ecx", "eax", "stack_offset:0x34"), "85c9742a8b442434"),
-    (0x003E4564, "meleeprobe_view_goal",
-     ("ecx", "eax", "stack_offset:0x34"), "85c974268b442434"),
+    (0x003E4BE5, ("ecx", "eax", "stack_offset:0x38"), "85c9750b85c0"),
+    (0x003E4C5B, ("ecx", "eax", "stack_offset:0x38"), "85c9750b85c0"),
+    (0x003E4505, ("ecx", "eax", "stack_offset:0x34"), "85c9742a8b442434"),
+    (0x003E4564, ("ecx", "eax", "stack_offset:0x34"), "85c974268b442434"),
 )
-
-
-def build_meleeprobe(pe, feature_dir, probe=False, target_goal=False):
-    checked_hooks = MELEEPROBE_HOOKS + (
-        (TARGET_GOAL_HOOK,) + TARGET_ACQUIRE_HOOKS + TARGET_CANDIDATE_HOOKS
-        + TARGET_FIRST_HOOKS + TARGET_VIEW_GOAL_HOOKS
-        if target_goal else ())
-    for target, name, args, expected in checked_hooks:
-        expected_bytes = bytes.fromhex(expected)
-        if pe.read(target, len(expected_bytes)) != expected_bytes:
-            raise SystemExit(f"meleeprobe retail span changed at 0x{target:08X}; "
-                             "AC instruments cannot stack with 051 or each other")
-    hooks = tuple(hook[:3] for hook in MELEEPROBE_HOOKS)
-    if target_goal:
-        hooks += (TARGET_GOAL_HOOK[:3] + (None, True),)
-        hooks += tuple(hook[:3] for hook in TARGET_ACQUIRE_HOOKS)
-        hooks += tuple(hook[:3] for hook in TARGET_CANDIDATE_HOOKS)
-        hooks += tuple(hook[:3] for hook in TARGET_FIRST_HOOKS)
-        hooks += tuple(hook[:3] + (None, False, True) for hook in TARGET_VIEW_GOAL_HOOKS)
-    return build_feature(pe, feature_dir / "src/meleeprobe.cpp", "meleeprobe_loop",
-                         hooks, probe=probe)
-
-
-def build_melee_target_goal(pe, feature_dir, probe=False):
-    return build_meleeprobe(pe, feature_dir, probe=probe, target_goal=True)
 
 
 def build_ac_attack_view(pe, feature_dir, probe=False):
-    for target, _, _, expected in TARGET_VIEW_GOAL_HOOKS:
+    for target, _, expected in TARGET_VIEW_GOAL_HOOKS:
         if pe.read(target, len(bytes.fromhex(expected))) != bytes.fromhex(expected):
             raise SystemExit(f"attack-view retail span changed at 0x{target:08X}")
     hooks = checked_structure_melee_hooks(pe) + tuple(
-        (hook[0], "ac_attack_view_goal", hook[2], None, False, True)
+        (hook[0], "ac_attack_view_goal", hook[1], None, False, True)
         for hook in TARGET_VIEW_GOAL_HOOKS)
     return build_feature(pe, feature_dir / "src/ac_attack_view.cpp", "ac_attack_view_goal",
                          hooks, probe=probe)
@@ -751,7 +655,7 @@ FEATURES = {"020-gameresult": build_gameresult,
             # See mods/features/043-replaycam/README.md.
             "043-replaycam": build_replaycam,
             # Live two-client AC retest confirmed that structure attackers can
-            # be targeted again; this replaces 051 at its four hook sites.
+            # be targeted again; the predicate hooks remain part of that build.
             "055-ac-attack-view": build_ac_attack_view,
             }
 # Features that ship a DATA file as well as code, as (archive path under the
@@ -771,10 +675,6 @@ DATA = {
 # candidate has not earned a place in it until the spike measuring it is green.
 # Promote one into FEATURES when it has.
 UNSHIPPED = {
-    "052-meleeprobe": (build_meleeprobe, "bounded AC diagnostic; replaces 051 hooks and includes its fix"),
-    "053-melee-retry": (build_meleeprobe, "experimental AC planning retry with diagnostics; replaces 051/052"),
-    "054-melee-target-goal": (build_melee_target_goal, "experimental targeted enemy goal reservation handling; replaces 051/052/053"),
-    "051-structure-melee-gate": (build_structure_melee_gate, "superseded AC melee-gate hypothesis; replaced by 055"),
     "030-netlatprobe": (build_netlatprobe, "an instrument: it writes tens of lines a second"),
     "036-fpsprobe-timing": (build_fpsprobe_timing,
                             "the probe without the backbuffer readback, for "

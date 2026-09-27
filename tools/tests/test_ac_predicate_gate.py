@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Structural checks for the attempted structure melee gate; no gameplay claim."""
+"""Check the predicate hooks retained in the shipped AC fix."""
 import shutil
 import struct
 import subprocess
@@ -42,25 +42,24 @@ def _md():
 @pytest.fixture(scope="module")
 def built():
     with tempfile.TemporaryDirectory() as tmp:
-        out = Path(tmp) / "structure-melee-gate.exe"
+        out = Path(tmp) / "ac-attack-view.exe"
         result = subprocess.run(
-            [sys.executable, str(ROOT / "tools/modbuild.py"), "--only", "051-structure-melee-gate",
+            [sys.executable, str(ROOT / "tools/modbuild.py"), "--only", "055-ac-attack-view",
              "-o", str(out)],
             capture_output=True, text=True, cwd=ROOT)
         assert result.returncode == 0, result.stderr or result.stdout
         yield PE(out)
 
 
-def test_structure_melee_gate_is_superseded_by_attack_view_fix():
+def test_predicate_gate_is_part_of_the_shipped_attack_view_fix():
     assert "055-ac-attack-view" in modbuild.FEATURES
-    assert "051-structure-melee-gate" in modbuild.UNSHIPPED
 
 
-def test_structure_melee_gate_payload_has_no_unresolved_runtime_symbols():
+def test_attack_view_payload_has_no_unresolved_runtime_symbols():
     with tempfile.TemporaryDirectory() as tmp:
         obj = modbuild.compile_payload(
-            ROOT / "mods/features/051-structure-melee-gate/src/structure_melee_gate.cpp",
-            Path(tmp) / "structure_melee_gate.obj")
+            ROOT / "mods/features/055-ac-attack-view/src/ac_attack_view.cpp",
+            Path(tmp) / "ac_attack_view.obj")
         assert modbuild.undefined_externals(obj) == []
 
 
