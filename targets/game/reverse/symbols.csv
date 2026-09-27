@@ -10499,7 +10499,7 @@ name,address,notes
 ??_7CivilianSpawnCollide@@6B@,0x00CAA21C,vtable whose slots name CivilianSpawnCollide
 ??_7ClickReactionBehavior@@6B@,0x00CA33CC,vtable whose slots name ClickReactionBehavior
 ??_7ClickReactionBehaviorModuleData@@6B@,0x00CA4A10,exact constructor 0x002001A0 installs this dedicated vtable
-??_7ClientUpdateModule@@6B@,0x01115210,exact constructor 0x00602ED0 installs this vtable; slot zero ILT 0x00045A7A reaches scalar wrapper 0x00602FF0
+??_7ClientUpdateModule@@6B@,0x011151DC,abstract ClientUpdateModule table: clientUpdate (slot 10) is pure; ~LaserUpdate 0x00603820 restores it last; 0x01115210 is AnimatedParticleSysBoneClientUpdate's (its factory 0x00121A70 calls ctor 0x00602ED0 which installs it)
 ??_7CloudBreakSpecialPowerModuleData@@6B@,0x010B3CD8,exact constructor 0x002592A0 installs this dedicated vtable; slot zero ILT 0x0003D861 reaches scalar wrapper 0x002592F0
 ??_7CombineHordeSpecialPowerModuleData@@6B@,0x010B3EC8,exact constructor 0x002598A0 installs this dedicated vtable; slot zero ILT 0x0002A072 reaches scalar wrapper 0x002598D0
 ??_7CommandButton@@6B@,0x010FB5DC,dedicated CommandButton vtable installed by exact constructor 0x0049BBF0 and restored by destructor 0x0049C020
