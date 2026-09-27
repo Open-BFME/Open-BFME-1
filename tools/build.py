@@ -501,6 +501,11 @@ def wine_path(path):
         if winepath is None:
             raise SystemExit("winepath not found. Install Wine to run MSVC 7.1 on this host.")
         converted = subprocess.check_output([winepath, "-w", key], text=True).strip()
+        # winepath has exited 0 with no output; cached, that empty path reached link.exe as a bare
+        # "/OUT:" and failed a mod build with LNK1146, nowhere near the cause.
+        if not re.match(r"^[A-Za-z]:\\", converted):
+            raise SystemExit(f"winepath -w {key} returned {converted!r}, not a Windows path; "
+                             "rerun, and check whether another process was restarting Wine")
         _WINE_PATH_CACHE[key] = converted
         return converted
 
