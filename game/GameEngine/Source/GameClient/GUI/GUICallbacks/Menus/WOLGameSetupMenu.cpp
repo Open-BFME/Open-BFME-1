@@ -1858,7 +1858,7 @@ static void handlePlayerTemplateSelection(int index)
 
 static void handleStartPositionSelection(Int player, int startPos)
 {
-	GameSpyStagingRoom *myGame = TheGameSpyInfo->getCurrentStagingRoom();
+	GameSpyStagingRoom *myGame = ((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
 	
 	if (myGame)
 	{
@@ -1894,7 +1894,7 @@ static void handleStartPositionSelection(Int player, int startPos)
 		{
 			// send around a new slotlist
 			myGame->resetAccepted();
-			TheGameSpyInfo->setGameOptions();
+			((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->setGameOptions();
 			WOLDisplaySlotList();
 		}
 		else
@@ -1911,8 +1911,8 @@ static void handleStartPositionSelection(Int player, int startPos)
 				req.peerRequestType = PeerRequest::PEERREQUEST_UTMPLAYER;
 				req.UTM.isStagingRoom = TRUE;
 				req.id = "REQ/";
-				req.nick = hostName.str();
-				req.options = options.str();
+				req.nick = BfmeStartAsciiString(hostName);
+				req.options = BfmeStartAsciiString(options);
 				TheGameSpyPeerMessageQueue->addRequest(req);
 
 			}
