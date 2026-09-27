@@ -7268,5 +7268,15 @@
   "after_sha256": "5111608b9b14abf80d8cc70e8386750a21a0f5f6fdb1bf33056ea4e50bf24cde",
   "evidence": "targets/game/reverse/identity_evidence/integration-squash-name-pairings.md",
   "reason": "Integration range paired a retired bank's scaffold name with an unrelated address-derived type in another file; no identity changed."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GameWindowManagerScriptParseWindow.cpp",
+  "old_name": "GameWindowParse",
+  "new_name": "Gen_004791e0",
+  "before_sha256": "eaddf0b364bd5168d88d930775264bced7a3a147a17ef346e17d98c713e66b90",
+  "after_sha256": "1142d38f6a86bb6943d3898617c1ae886292cbd1312ee460e5eae5a819187d00",
+  "evidence": "targets/game/reverse/identity_evidence/gamewindowparse_split.md",
+  "reason": "Split artefact: GameWindowParse is still declared and used in the new file; Gen_004791e0 is the existing ledger name of the separate getter the body calls."
  }
 ]
