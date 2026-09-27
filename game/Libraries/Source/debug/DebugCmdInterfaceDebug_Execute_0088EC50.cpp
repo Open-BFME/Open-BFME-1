@@ -1,57 +1,177 @@
-// ?Execute@DebugCmdInterfaceDebug@@UAE_NAAVDebug@@PBDW4CommandMode@DebugCmdInterface@@IPBQBD@Z
-// partial score=0.047004608294930875 date=2026-09-22
-/*
-**	Command & Conquer Generals Zero Hour(tm)
-**	Copyright 2025 Electronic Arts Inc.
-**
-**	This program is free software: you can redistribute it and/or modify
-**	it under the terms of the GNU General Public License as published by
-**	the Free Software Foundation, either version 3 of the License, or
-**	(at your option) any later version.
-**
-**	This program is distributed in the hope that it will be useful,
-**	but WITHOUT ANY WARRANTY; without even the implied warranty of
-**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-**	GNU General Public License for more details.
-**
-**	You should have received a copy of the GNU General Public License
-**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+// cl: /DNDEBUG /MD /EHs-c- /Oy-
+// BFME DebugCmdInterfaceDebug::Execute (0x0088EC50), vtable 0x01133100 slot 1.
+// Zero Hour twin: debug_cmd.cpp.  BFME's 'debug' command group adds the
+// skipstackwalk, windowed, fulldump and errors switches, lists asserts and
+// crashes separately, and runs on the polymorphic BFME Debug layout
+// (operator<<(int) and operator<<(const char *) are virtual slots 13/14).
 
-/////////////////////////////////////////////////////////////////////////EA-V1
-// $File: //depot/GeneralsMD/Staging/code/Libraries/Source/debug/debug_cmd.cpp $
-// $Author: mhoffe $
-// $Revision: #1 $
-// $DateTime: 2003/07/03 11:55:26 $
-//
-// ©2003 Electronic Arts
-//
-// Debug command group 'debug'
-//////////////////////////////////////////////////////////////////////////////
-#include "../WWVegas/WWDebug/debug.h"
-#include <windows.h>
 #include <string.h>
-#include "../WWVegas/WWDebug/internal.h"
-#include "../WWVegas/WWDebug/internal_io.h"
-#include "../WWVegas/WWDebug/internal_except.h"
-#include <process.h>
+#include <stdlib.h>
 
-bool DebugCmdInterfaceDebug::Execute(class Debug& dbg, const char *cmd, 
-                                     CommandMode cmdmode, unsigned argn, 
+extern "C" __declspec(dllimport) int __cdecl wsprintfA(char *, const char *, ...);
+
+void DebugFreeMemory(void *ptr);
+
+class Debug;
+
+class DebugIOInterface
+{
+public:
+    virtual void pad00(void);
+    virtual void pad01(void);
+    virtual void pad02(void);
+    virtual void pad03(void);
+    virtual void pad04(void);
+    virtual void Execute(class Debug &dbg, const char *cmd, bool structuredCmd,
+                         unsigned argn, const char * const * argv);
+    virtual void Delete(void);
+};
+
+class DebugCmdInterface
+{
+public:
+    enum CommandMode
+    {
+        Normal,
+        Structured
+    };
+
+    virtual void Delete(void)=0;
+    virtual bool Execute(class Debug &dbg, const char *cmd, CommandMode cmdmode,
+                         unsigned argn, const char * const * argv)=0;
+};
+
+class DebugCmdInterfaceDebug: public DebugCmdInterface
+{
+public:
+    virtual void Delete(void);
+    virtual bool Execute(class Debug &dbg, const char *cmd, CommandMode cmdmode,
+                         unsigned argn, const char * const * argv);
+};
+
+class Debug
+{
+    friend class DebugCmdInterfaceDebug;
+
+public:
+    virtual ~Debug(void);
+    virtual void pad01(void);
+    virtual void pad02(void);
+    virtual void pad03(void);
+    virtual void pad04(void);
+    virtual void pad05(void);
+    virtual void pad06(void);
+    virtual void pad07(void);
+    virtual void pad08(void);
+    virtual void pad09(void);
+    virtual void pad10(void);
+    virtual void pad11(void);
+    virtual void pad12(void);
+    virtual Debug &operator<<(const char *str);
+    virtual Debug &operator<<(int val);
+
+    static bool SimpleMatch(const char *str, const char *pattern);
+
+private:
+    enum
+    {
+        FrameTypeAssert = 1,
+        FrameTypeCheck = 2,
+        FrameTypeLog = 4
+    };
+
+    enum
+    {
+        Unknown = 0,
+        Skip = 1
+    };
+
+    enum
+    {
+        FRAME_HASH_SIZE = 10007
+    };
+
+    struct FrameHashEntry
+    {
+        FrameHashEntry *next;
+        unsigned frameAddr;
+        unsigned frameType;
+        const char *fileOrGroup;
+        int line;
+        int hits;
+        int status;
+    };
+
+    struct IOFactoryListEntry
+    {
+        IOFactoryListEntry *next;
+        const char *ioID;
+        const char *descr;
+        DebugIOInterface *(*factory)(void);
+        DebugIOInterface *io;
+    };
+
+    struct CmdInterfaceListEntry
+    {
+        CmdInterfaceListEntry *next;
+        const char *group;
+        DebugCmdInterface *cmdif;
+    };
+
+    struct KnownLogGroupList
+    {
+        KnownLogGroupList *next;
+        const char *nameGroup;
+        const char *descr;
+    };
+
+    struct PatternListEntry
+    {
+        PatternListEntry *next;
+        unsigned frameTypes;
+        bool isActive;
+        char *pattern;
+    };
+
+    unsigned char m_pad04[0x08];
+    IOFactoryListEntry *firstIOFactory;
+    CmdInterfaceListEntry *firstCmdGroup;
+    unsigned char m_pad14[0x04];
+    FrameHashEntry *frameHash[FRAME_HASH_SIZE];
+    unsigned char m_pad9C74[0x0C];
+    KnownLogGroupList *firstLogGroup;
+    unsigned char m_pad9C84[0x17C];
+    PatternListEntry *firstPatternEntry;
+    PatternListEntry *lastPatternEntry;
+    unsigned char m_pad9E08[0x64];
+    bool alwaysFlush;
+    bool skipStackWalk;
+    bool timeStamp;
+    unsigned char m_pad9E6F[0xDA];
+    signed char m_isWindowed;
+    bool fullDump;
+    bool errorLog;
+
+    void AddPatternEntry(unsigned types, bool isActive, const char *pattern);
+};
+
+// ?Execute@DebugCmdInterfaceDebug@@UAE_NAAVDebug@@PBDW4CommandMode@DebugCmdInterface@@IPBQBD@Z
+bool DebugCmdInterfaceDebug::Execute(class Debug& dbg, const char *cmd,
+                                     CommandMode cmdmode, unsigned argn,
                                      const char * const * argv)
 {
   // just for convenience...
-  bool normalMode=cmdmode==CommandMode::Normal;
+  bool normalMode=cmdmode==Normal;
 
   if (!strcmp(cmd,"help"))
   {
     if (!normalMode)
       return true;
-    
+
     if (!argn)
     {
       dbg << "debug group help:\n"
-             "  list, io, alwaysflush, timestamp, exit, clear, add, view\n";
+             "  list, io, alwaysflush, skipstackwalk, timestamp, exit, clear, add, view, windowed, fulldump, errors\n";
       return true;
     }
     else if (!strcmp(argv[0],"list"))
@@ -64,14 +184,14 @@ bool DebugCmdInterfaceDebug::Execute(class Debug& dbg, const char *cmd,
              "- g: command groups\n"
              "- l: log groups (only those encountered yet)\n"
              "- d: log groups with descriptions (only those that have descriptions)\n"
-             "- a: asserts/crashes (only those hit yet)\n"
-             "- c: checks (only those failed yet)\n"
+             "- a: asserts (only those hit yet)\n"
+             "- c: crashes (only those failed yet)\n"
              "\n"
              "If a pattern is specified only items matching\n"
              "that pattern are shown. A pattern can contain\n"
              "any character, letter, or a wildcard '*'.\n"
              "\n"
-             "Please note that assert, crashes, and check items have\n"
+             "Please note that assert and crash items have\n"
              "their line number appended to the current file name,\n"
              "e.g. debug.cpp(13).\n";
       return true;
@@ -102,6 +222,13 @@ bool DebugCmdInterfaceDebug::Execute(class Debug& dbg, const char *cmd,
              "the log file (default: off).\n";
       return true;
     }
+    else if (!strcmp(argv[0],"skipstackwalk"))
+    {
+      dbg << "skipstackwalk [ (+|-) ]\n\n"
+             "Enables/disables stack walk feature\n"
+             "the log file (default: off).\n";
+      return true;
+    }
     else if (!strcmp(argv[0],"timestamp"))
     {
       dbg << "timestamp [ (+|-) ]\n\n"
@@ -118,7 +245,7 @@ bool DebugCmdInterfaceDebug::Execute(class Debug& dbg, const char *cmd,
     {
       dbg << "clear (l|a|c)\n\n"
              "Clears the given inclusion/exclusion list\n"
-             "(l=logs, a=asserts/crashes, c=checks).\n";
+             "(l=logs, a=asserts, c=crashes).\n";
       return true;
     }
     else if (!strcmp(argv[0],"add"))
@@ -126,8 +253,8 @@ bool DebugCmdInterfaceDebug::Execute(class Debug& dbg, const char *cmd,
       dbg << "add (l|a|c) (+|-) <pattern>\n"
              "\n"
              "Adds a pattern to the given list (l=logs, \n"
-             "a=asserts/crashes, c=checks). By default all\n"
-             "asserts, crashes, and checks are active, all logs\n"
+             "a=asserts, c=crashes). By default all\n"
+             "asserts and crashes are active, all logs\n"
              "inactive. Each item is then checked \n"
              "against all pattern in the respective\n"
              "list. If a match is found the active/inactive\n"
@@ -140,7 +267,26 @@ bool DebugCmdInterfaceDebug::Execute(class Debug& dbg, const char *cmd,
     {
       dbg << "view [ (l|a|c) ]\n\n"
              "Shows the active pattern for the given list\n"
-             "(l=logs, a=asserts/crashes, c=checks).\n";
+             "(l=logs, a=asserts, c=crashes).\n";
+      return true;
+    }
+    else if (!strcmp(argv[0],"windowed"))
+    {
+      dbg << "windowed [ (+|-) ]\n\n"
+             "Enables/disables windowed mode thus overriding any\n"
+             "auto-detected status.\n";
+      return true;
+    }
+    else if (!strcmp(argv[0],"fulldump"))
+    {
+      dbg << "fulldump [ (+|-) ]\n\n"
+             "Enables/disables full memory dumps on crash (default: off).\n";
+      return true;
+    }
+    else if (!strcmp(argv[0],"errors"))
+    {
+      dbg << "errors [ (+|-) ]\n\n"
+             "Enables/disables extra logging of DERRORs into errors.txt (default: on).\n";
       return true;
     }
     return false;
@@ -180,7 +326,7 @@ bool DebugCmdInterfaceDebug::Execute(class Debug& dbg, const char *cmd,
       case 'c':
         {
           if (normalMode)
-            dbg << (*argv[0]=='a'?"Asserts/Crashes:\n":"Checks:\n");
+            dbg << (*argv[0]=='a'?"Asserts:\n":"Crashes:\n");
           unsigned mask=*argv[0]=='a'?Debug::FrameTypeAssert:Debug::FrameTypeCheck;
           for (unsigned k=0;k<Debug::FRAME_HASH_SIZE;k++)
           {
@@ -190,7 +336,7 @@ bool DebugCmdInterfaceDebug::Execute(class Debug& dbg, const char *cmd,
                 continue;
 
               char help[256];
-              wsprintf(help,"%s(%i)",cur->fileOrGroup,cur->line);
+              wsprintfA(help,"%s(%i)",cur->fileOrGroup,cur->line);
               if (Debug::SimpleMatch(help,pattern))
               {
                 dbg << help << " (" << cur->hits << " hits)";
@@ -234,7 +380,8 @@ bool DebugCmdInterfaceDebug::Execute(class Debug& dbg, const char *cmd,
       // regular I/O command
 
       // find I/O class
-      for (Debug::IOFactoryListEntry *cur=dbg.firstIOFactory;cur;cur=cur->next)
+      Debug::IOFactoryListEntry *cur;
+      for (cur=dbg.firstIOFactory;cur;cur=cur->next)
         if (!strcmp(argv[0],cur->ioID))
           break;
       if (!cur)
@@ -271,7 +418,7 @@ bool DebugCmdInterfaceDebug::Execute(class Debug& dbg, const char *cmd,
           return true;
         }
       }
-      
+
       // now pass along I/O command
       if (!cur->io)
       {
@@ -296,6 +443,22 @@ bool DebugCmdInterfaceDebug::Execute(class Debug& dbg, const char *cmd,
       dbg << "Always flush: " << (dbg.alwaysFlush?"on":"off");
     else
       dbg << (dbg.alwaysFlush?"1":"0");
+
+    return true;
+  }
+  if (!strcmp(cmd,"skipStackWalk")||!strcmp(cmd,"skipstackwalk"))
+  {
+    if (argn)
+    {
+      if (*argv[0]=='+')
+        dbg.skipStackWalk=true;
+      if (*argv[0]=='-')
+        dbg.skipStackWalk=false;
+    }
+    if (normalMode)
+      dbg << "Skip Stack Walk: " << (dbg.skipStackWalk?"on":"off");
+    else
+      dbg << (dbg.skipStackWalk?"1":"0");
 
     return true;
   }
@@ -364,7 +527,8 @@ bool DebugCmdInterfaceDebug::Execute(class Debug& dbg, const char *cmd,
       // must fixup lastPatternEntry now
       if (dbg.firstPatternEntry)
       {
-        for (Debug::PatternListEntry *cur=dbg.firstPatternEntry;cur->next;cur=cur->next);
+        Debug::PatternListEntry *cur;
+        for (cur=dbg.firstPatternEntry;cur->next;cur=cur->next);
         dbg.lastPatternEntry=cur;
       }
       else
@@ -404,6 +568,54 @@ bool DebugCmdInterfaceDebug::Execute(class Debug& dbg, const char *cmd,
         for (Debug::FrameHashEntry *cur=dbg.frameHash[k];cur;cur=cur->next)
           cur->status=Debug::Unknown;
     }
+    return true;
+  }
+  if (!strcmp(cmd,"windowed"))
+  {
+    if (argn)
+    {
+      if (*argv[0]=='+')
+        dbg.m_isWindowed=1;
+      if (*argv[0]=='-')
+        dbg.m_isWindowed=-1;
+    }
+    if (normalMode)
+      dbg << "Windowed: " << (dbg.m_isWindowed>0?"yes":dbg.m_isWindowed<0?"no":"unknown");
+    else
+      dbg << (dbg.m_isWindowed?"1":"0");
+
+    return true;
+  }
+  if (!strcmp(cmd,"fulldump"))
+  {
+    if (argn)
+    {
+      if (*argv[0]=='+')
+        dbg.fullDump=true;
+      if (*argv[0]=='-')
+        dbg.fullDump=false;
+    }
+    if (normalMode)
+      dbg << "Full memory dump: " << (dbg.fullDump?"on":"off");
+    else
+      dbg << (dbg.fullDump?"1":"0");
+
+    return true;
+  }
+  if (!strcmp(cmd,"errors"))
+  {
+    if (argn)
+    {
+      if (*argv[0]=='+')
+        dbg.errorLog=true;
+      if (*argv[0]=='-')
+        dbg.errorLog=false;
+    }
+    if (normalMode)
+      dbg << "Extra error log: " << (dbg.errorLog?"on":"off");
+    else
+      dbg << (dbg.errorLog?"1":"0");
+
     return true;
   }
 
