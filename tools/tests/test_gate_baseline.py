@@ -50,6 +50,24 @@ def test_check_passes_known_reds_and_fails_new_ones():
     assert code == 0 and "now green" in out and "?foo@@YAXXZ" in out
 
 
+def test_unchanged_function_failures_report_other_full_gate_failures():
+    transcript = (GATE_OK_SHAPE +
+                  "No-op patch: FAIL not run — verify_functions did not produce a patch set\n"
+                  "FULL GATE: FAIL — 3 red: functions, dir32 consistency, no-op patch (unrunnable)\n")
+    baseline = gb.red_rows(GATE_OK_SHAPE)
+    code, out = run(gb.check, transcript, baseline)
+    assert code == 0
+    assert "function failure rows: 2 red now, 2 in baseline, 0 NEW" in out
+    assert "does not establish that all checks passed" in out
+    assert "raw FULL GATE: FAIL — 3 red: functions, dir32 consistency, no-op patch (unrunnable)" in out
+
+    worse = transcript.replace("Functions:", "  FAIL ?new@@YAXXZ (game/X.cpp)\nFunctions:")
+    code, out = run(gb.check, worse, baseline)
+    assert code == 1
+    assert "NEW RED ?new@@YAXXZ (game/X.cpp)" in out
+    assert "raw FULL GATE: FAIL" in out
+
+
 def test_dead_gate_never_passes_or_records(tmp_path):
     code, _ = run(gb.check, GATE_DIED, [])
     assert code == 2

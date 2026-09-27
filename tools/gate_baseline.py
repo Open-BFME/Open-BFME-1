@@ -89,21 +89,26 @@ def check(output, baseline):
         print("gate_baseline: the gate died before byte comparison; nothing is proven")
         print("\n".join(output.splitlines()[-15:]), file=sys.stderr)
         return 2
+    full_gate = next((line for line in reversed(output.splitlines())
+                      if line.startswith("FULL GATE: ")), None)
+    if full_gate and full_gate.startswith("FULL GATE: FAIL"):
+        print("gate_baseline: function failure row comparison does not establish that all checks passed; "
+              f"raw {full_gate}")
     if baseline is None:
         if now:
-            print(f"gate_baseline: no baseline recorded and {len(now)} red row(s); "
+            print(f"gate_baseline: no baseline recorded and {len(now)} function failure row(s); "
                   "run --record on a known revision first, or fix them")
             for row in now:
                 print("  RED " + row)
             return 1
-        print("gate_baseline: 0 red rows")
+        print("gate_baseline: 0 function failure rows")
         return 0
     new, fixed = compare(now, baseline)
     for row in new:
         print("  NEW RED " + row)
     for row in fixed:
         print("  now green (remove from targets/game/reverse/full_gate_baseline.txt in the fixing commit): " + row)
-    print(f"gate_baseline: {len(now)} red now, {len(baseline)} in baseline, "
+    print(f"gate_baseline: function failure rows: {len(now)} red now, {len(baseline)} in baseline, "
           f"{len(new)} NEW, {len(fixed)} fixed")
     return 1 if new else 0
 
