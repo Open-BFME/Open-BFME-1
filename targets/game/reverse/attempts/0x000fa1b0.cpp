@@ -222,8 +222,7 @@ Rva000FB210Element::Rva000FB210Element(Object *object)
 		m_f34 = module->rva002A23B0();
 		thingTemplate = module->rva002A1B20();
 	}
-	if (thingTemplate != 0)
-		m_name.set(thingTemplate->m_name);
-	else
-		m_name.set(*reinterpret_cast<const AsciiString *>(0x01336E50));
+	m_name.set(thingTemplate != 0
+		? thingTemplate->m_name
+		: *reinterpret_cast<const AsciiString *>(0x01336E50));
 }
