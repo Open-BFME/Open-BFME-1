@@ -25,3 +25,17 @@ def test_nothing_tombstoned_leaves_the_file_untouched(tmp_path):
     before = ledger.stat().st_mtime_ns
     assert dedup_csv.drop_tombstoned_in_place(ledger, {("?b@@YAXXZ", 0x100)}) == []
     assert ledger.stat().st_mtime_ns == before
+
+
+def test_merge_repair_drops_tombstones_and_exact_duplicates_only(tmp_path):
+    ledger = tmp_path / "functions.csv"
+    ledger.write_bytes(b"name,export_rva,target_rva,target_size,source,status,notes\r\n"
+                       b"?a@@YAXXZ,,0x00000100,8,a.cpp,matched,\r\r\n"
+                       b"?d_00000200@@YAXXZ,,0x00000200,8,d.asm,matched,\r\n"
+                       b"?b@@YAXXZ,,0x00000300,8,b.cpp,matched,\r\n"
+                       b"?a@@YAXXZ,,0x00000100,8,a.cpp,matched,\r\n")
+    dropped = dedup_csv.merge_repair(ledger, {("?d_00000200@@YAXXZ", 0x200)})
+    assert dropped == ["tombstoned ?d_00000200@@YAXXZ", "duplicate ?a@@YAXXZ"]
+    assert ledger.read_bytes() == (b"name,export_rva,target_rva,target_size,source,status,notes\r\n"
+                                   b"?a@@YAXXZ,,0x00000100,8,a.cpp,matched,\r\r\n"
+                                   b"?b@@YAXXZ,,0x00000300,8,b.cpp,matched,\r\n")

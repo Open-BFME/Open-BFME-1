@@ -150,6 +150,42 @@ def drop_tombstoned_in_place(path, drop):
     return dropped
 
 
+def merge_repair(path, drop=frozenset()):
+    """After a rebase: drop tombstoned rows and exact duplicate records (same
+    fields; the first copy stays where it is). Union merge duplicates a row
+    whose twin differs only in its terminator (\\r\\n vs \\r\\r\\n), and resurrects
+    deletions that met in one hunk. Terminators and order are preserved
+    (ledger_io.rewrite), so the repair is a pure deletion."""
+    raw = path.read_bytes()
+    seen, dropped = set(), []
+
+    def keep(row):
+        key = tuple(row)
+        if row and len(row) > 2 and (row[0], _rva(row)) in drop:
+            dropped.append(f"tombstoned {row[0]}")
+            return False
+        if key in seen and key:
+            dropped.append(f"duplicate {row[0]}")
+            return False
+        seen.add(key)
+        return True
+
+    data, count = ledger_io.rewrite(raw, keep)
+    if count:
+        ledger_io.atomic_write_bytes(path, data)
+    return dropped
+
+
+def _rva(row):
+    for value in row[1:3]:
+        if value.startswith("0x"):
+            try:
+                return int(value, 16)
+            except ValueError:
+                return None
+    return None
+
+
 def main(argv=None):
     # Parse before any reads or writes: historically even --help silently
     # normalized both live ledgers and reordered thousands of unrelated rows.
@@ -160,7 +196,19 @@ def main(argv=None):
                              "cherry-pick, which skip the pre-commit hook")
     parser.add_argument("--tombstoned-only", action="store_true",
                         help="ONLY drop tombstoned functions.csv lines, in place; no dedup, no re-sort")
+    parser.add_argument("--merge-repair", action="store_true",
+                        help="after a rebase: drop tombstoned functions.csv rows and exact duplicate "
+                             "records in both ledgers, in place; no re-sort")
     args = parser.parse_args(argv)
+    if args.merge_repair:
+        import check_csv
+        drop = frozenset(check_csv.tombstones())
+        for name in ("functions.csv", "symbols.csv"):
+            dropped = merge_repair(ROOT / "targets/game/reverse" / name, drop if name == "functions.csv" else frozenset())
+            for what in dropped:
+                print(f"{name}: dropped {what}")
+            print(f"{name}: {len(dropped)} record(s) dropped in place")
+        return
     if args.tombstoned_only:
         import check_csv
         dropped = drop_tombstoned_in_place(ROOT / "targets/game/reverse" / "functions.csv",

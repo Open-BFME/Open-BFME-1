@@ -24,7 +24,7 @@ State lives in <main checkout>/build/astra_seats/ so every worktree sees the
 same claims; a seat's bodies are not served again while it is listed there.
 `harvest` stages everything a finished seat changed outside build/, commits it
 through the normal hooks, and pushes with a rebase loop that drops tombstoned
-rows a union merge resurrects (dedup_csv --tombstoned-only). A commit the hooks
+records a union merge duplicates or resurrects (dedup_csv --merge-repair). A commit the hooks
 refuse -- a name regression needing evidence, a gate failure -- is printed as
 NEEDS REVIEW and left staged for the operator.
 """
@@ -242,14 +242,15 @@ def push(tree, tries=8):
             if "rebase in progress" in state:
                 git(tree, "rebase", "--abort")
                 return f"rebase conflict (aborted): {git(tree, 'diff', '--name-only', '--diff-filter=U').stdout.strip()}"
-        dropped = subprocess.run([sys.executable, "tools/dedup_csv.py", "--tombstoned-only"], cwd=tree,
+        dropped = subprocess.run([sys.executable, "tools/dedup_csv.py", "--merge-repair"], cwd=tree,
                                  capture_output=True, text=True).stdout
-        if git(tree, "status", "--short", "targets/game/reverse/functions.csv").stdout.strip():
-            git(tree, "add", "targets/game/reverse/functions.csv")
-            commit = git(tree, "commit", "-q", "-m", "ledger: drop tombstoned rows a union merge resurrected",
-                         "-m", dropped.strip())
+        ledgers = ["targets/game/reverse/functions.csv", "targets/game/reverse/symbols.csv"]
+        if git(tree, "status", "--short", *ledgers).stdout.strip():
+            git(tree, "add", *ledgers)
+            commit = git(tree, "commit", "-q", "-m", "ledger: drop records a union merge duplicated or resurrected",
+                         "-m", "\n".join(l for l in dropped.splitlines() if "dropped" in l)[:3000])
             if commit.returncode:
-                return "tombstone fix-up commit refused:\n" + (commit.stdout + commit.stderr)[-1500:]
+                return "merge-repair commit refused:\n" + (commit.stdout + commit.stderr)[-1500:]
         if git(tree, "push", "-q", "origin", "HEAD:master").returncode == 0:
             git(tree, "fetch", "-q", "origin", "master")
             if git(tree, "merge-base", "--is-ancestor", "HEAD", "origin/master").returncode == 0:
