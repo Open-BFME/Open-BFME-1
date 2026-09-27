@@ -1,14 +1,7 @@
 // ?d_00794790@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
-// partial score=0.84 date=2026-09-09
+// Retail 0x00794790 (719 bytes), reached from W3DGadgetPushButtonImageDraw when bfmeGoEBNb(window) holds.
+// Draws a top, a vertically tiled centre and a bottom image; the Zero Hour DrawThree body with the axes swapped.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
-// BFME special push-button image callback, retail 0x00794790 (719 bytes).
-//
-// The current W3DPushButtonImageDraw dispatch names this helper as the first
-// branch after bfmeGoEBNb(window), and the retail range is independently
-// bounded by its complete prologue and the ret at +0x2ce.  This is the
-// address-derived BFME helper selected by that named caller; it is not being
-// given the standard ImageDrawOne/ImageDrawThree identity.  The ABI slice is
-// TU-local so the common GameWindow headers remain unchanged.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -17,10 +10,12 @@ typedef int Color;
 
 class Image;
 
+// BFME ICoord2D has a user-declared empty constructor (retail ??0ICoord2D@@QAE@XZ).
 struct ICoord2D
 {
 	Int x;
 	Int y;
+	ICoord2D() {}
 };
 
 struct IRegion2D
@@ -29,8 +24,7 @@ struct IRegion2D
 	ICoord2D hi;
 };
 
-// The BFME retail image width consumed by this body is the field at +0x28.
-// The object is otherwise intentionally opaque.
+// Image height at +0x28; the rest of Image stays opaque.
 inline Int imageHeight(const Image *image)
 {
 	return *(const Int *)((const unsigned char *)image + 0x28);
@@ -266,7 +260,9 @@ void d_00794790(GameWindow *window, WinInstanceData *instData)
 		TheWindowManager->winDrawImage(topImage, start.x, start.y,
 			end.x, end.y);
 
+		start.x = origin.x + xOffset;
 		start.y = end.y;
+		end.x = origin.x + size.x;
 		end.y = origin.y + size.y;
 		TheWindowManager->winDrawImage(bottomImage, start.x, start.y,
 			end.x, end.y);
@@ -277,9 +273,9 @@ void d_00794790(GameWindow *window, WinInstanceData *instData)
 		start.x = origin.x + xOffset;
 		start.y = topEnd.y;
 		end.x = start.x + size.x + xOffset;
-		end.y = start.y + imageHeight(centerImage);
 		for (i = 0; i < pieces; i++)
 		{
+			end.y = start.y + imageHeight(centerImage);
 			TheWindowManager->winDrawImage(centerImage, start.x, start.y,
 				end.x, end.y);
 			start.y += imageHeight(centerImage);
@@ -294,6 +290,7 @@ void d_00794790(GameWindow *window, WinInstanceData *instData)
 		if (centerHeight > 0)
 		{
 			TheDisplay->setClipRegion(&reg);
+			end.y = start.y + imageHeight(centerImage);
 			TheWindowManager->winDrawImage(centerImage, start.x, start.y,
 				end.x, end.y);
 			TheDisplay->enableClipping(0);
