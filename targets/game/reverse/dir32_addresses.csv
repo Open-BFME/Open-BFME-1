@@ -7553,11 +7553,11 @@ name,va
 ?TheKey_objectUnsellable@@3VStaticNameKey@@B,0x012A7820
 ?TheKey_originalOwner@@3VStaticNameKey@@B,0x012A7778
 ?TheKey_playerAllies@@3VStaticNameKey@@A,0x012A7948
-?TheKey_playerAllies@@3VStaticNameKey@@B,0x012A7940
+?TheKey_playerAllies@@3VStaticNameKey@@B,0x012A7948
 ?TheKey_playerColor@@3VStaticNameKey@@B,0x012A7958
 ?TheKey_playerDisplayName@@3VStaticNameKey@@B,0x012A7930
 ?TheKey_playerEnemies@@3VStaticNameKey@@A,0x012A7940
-?TheKey_playerEnemies@@3VStaticNameKey@@B,0x012A7948
+?TheKey_playerEnemies@@3VStaticNameKey@@B,0x012A7940
 ?TheKey_playerFaction@@3VStaticNameKey@@B,0x012A7938
 ?TheKey_playerIsHuman@@3VStaticNameKey@@A,0x012A7920
 ?TheKey_playerIsHuman@@3VStaticNameKey@@B,0x012A7920
