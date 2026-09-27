@@ -84,10 +84,10 @@ public:
 
 void bfmeDrawFilterUV(int, int, Coord2D *);
 
-class W3DShaderManagerStartRenderToTextureShim
+class W3DShaderManager
 {
 public:
-	static void start();
+	static void startRenderToTexture();
 	static bool m_renderingToTexture;
 	static IDirect3DSurface8 *m_newRenderSurface, *m_oldDepthSurface;
 	static int m_currentFilter;
@@ -100,7 +100,7 @@ union Scratch
 	ShaderClass shader;
 };
 
-void W3DShaderManagerStartRenderToTextureShim::start()
+void W3DShaderManager::startRenderToTexture()
 {
 	Scratch slot;
 	Coord2D *dims = &slot.dims;
