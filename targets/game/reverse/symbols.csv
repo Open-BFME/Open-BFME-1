@@ -89509,3 +89509,6 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?extractNugget007656B0@@YAXPBUFxNugget007764E0@@PAURva0076CEE0Element@@@Z,0x007656B0,Address-qualified cdecl extractor; caller 007767BB via ILT 00007987 passes nugget then 36-byte output record; callee copies embedded string atB4 and writes destination fields00..20; plain ret with caller cleanup; evidence=targets/game/reverse/identity_evidence/007764e0.md
 ??0PartitionFilterValidCommandButtonTarget@@QAE@PAVObject@@PBVCommandButton@@_NW4CommandSourceType@@@Z,0x0003A5AD,2FBC90+202 decoded call ILT to1ED510; ctor independently exact46B; vtable010A1A5C and ZH PartitionManager.h source button match commandSource layout
 ??1TextureStatisticsStructWide@@QAE@XZ,0x00018FCF,sentence-data element destructor; ILT thunk to the 0x0005DBF0 surface-tail body; instantiation proven by the VectorClassWide vtable at 0x0113CE0C
+?erase@Rva008314E0String@@QAEPADPAD0@Z,0x00007C1B,erase range ILT thunk called by 0x008314E0 (thiscall 2 args ret 8 returns first)
+?insertRange@Rva008314E0String@@QAEXPAD00ABUBfmeRangeTag@@@Z,0x00830410,forward insert range called twice by 0x008314E0 (thiscall 4 args ret 0x10)
+?replaceBase@Rva008314E0String@@QAEAAV1@PAD000ABUBfmeRangeTag@@@Z,0x00830DE0,forward replace called by 0x008314E0 (thiscall 5 args ret 0x14 returns this)
