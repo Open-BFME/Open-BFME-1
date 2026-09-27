@@ -12,6 +12,7 @@
 // _DLL before the CRT headers reproduces that dllimport linkage.
 #define _DLL
 #include <string.h>
+#include <ctype.h>
 
 class DebugStringOutputShim
 {
@@ -3597,184 +3598,6 @@ __declspec(naked) void StringBase<wchar_t>::toUpper()
     }
 }
 
-__declspec(naked) void StringBase<char>::trim()
-{
-    __asm {
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xf9
-        __emit 0x8b
-        __emit 0x07
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x0f
-        __emit 0x84
-        __emit 0x9d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x53
-        __emit 0x8b
-        __emit 0x1d
-        __emit 0x20
-        __emit 0x94
-        __emit 0x35
-        __emit 0x01
-        __emit 0x56
-        __emit 0x8d
-        __emit 0x70
-        __emit 0x08
-        __emit 0x8a
-        __emit 0x06
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x17
-        __emit 0x8b
-        __emit 0xff
-        __emit 0x0f
-        __emit 0xbe
-        __emit 0xc0
-        __emit 0x50
-        __emit 0xff
-        __emit 0xd3
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x08
-        __emit 0x8a
-        __emit 0x46
-        __emit 0x01
-        __emit 0x46
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x75
-        __emit 0xeb
-        __emit 0x8b
-        __emit 0x07
-        __emit 0x8d
-        __emit 0x48
-        __emit 0x08
-        __emit 0x3b
-        __emit 0xf1
-        __emit 0x74
-        __emit 0x2d
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x06
-        __emit 0x0f
-        __emit 0xb7
-        __emit 0x48
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x2b
-        __emit 0xc6
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x08
-        __emit 0x08
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0x74
-        __emit 0x10
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x50
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x50
-        __emit 0xe8
-        __emit 0xcc
-        __emit 0xec
-        __emit 0xff
-        __emit 0xff
-        __emit 0xeb
-        __emit 0x05
-        __emit 0xe8
-        __emit 0x35
-        __emit 0xec
-        __emit 0xff
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x07
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x37
-        __emit 0x0f
-        __emit 0xb7
-        __emit 0x70
-        __emit 0x04
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x7e
-        __emit 0x2f
-        __emit 0x8d
-        __emit 0xa4
-        __emit 0x24
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x07
-        __emit 0x4e
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x07
-        __emit 0x0f
-        __emit 0xbe
-        __emit 0x44
-        __emit 0x30
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x0f
-        __emit 0xbe
-        __emit 0xd0
-        __emit 0x52
-        __emit 0xff
-        __emit 0xd3
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x0b
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xe8
-        __emit 0x3c
-        __emit 0xf2
-        __emit 0xff
-        __emit 0xff
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x7f
-        __emit 0xd8
-        __emit 0x5e
-        __emit 0x5b
-        __emit 0x5f
-        __emit 0xc3
-    }
-}
-
 
 
 
@@ -3867,6 +3690,37 @@ template <typename T>
 void StringBase<T>::set(T c)
 {
     set(&c, 1);
+}
+
+void StringBase<char>::trim()
+{
+	if (m_data)
+	{
+		// strip leading white space
+		char *c = peek();
+		while (*c && isspace(*c))
+			++c;
+		if (c != peek())
+		{
+			int len = getLength() - (int)(c - peek());
+			if (len != 0)
+				ensureUniqueBufferOfSize(len, false, c, len, 0, 0);
+			else
+				releaseBuffer();
+		}
+
+		// clip trailing white space
+		if (m_data)
+		{
+			for (int index = m_data->length; index > 0; )
+			{
+				--index;
+				if (!isspace(getCharAt(index)))
+					break;
+				removeLastChar();
+			}
+		}
+	}
 }
 
 template class StringBase<char>;
