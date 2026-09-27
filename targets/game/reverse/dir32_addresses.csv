@@ -308,7 +308,6 @@ name,va
 ??1?$MultiListClass@VDX8TextureCategoryClass@@@@UAE@XZ,0x00D46070
 ??1?$RefCountPtr@VTextureClass@@@@QAE@XZ,0x00430652
 ??1?$RefMultiListClass@VRenderObjClass@@@@UAE@XZ,0x004319DF
-??1?$_Rb_tree@HHU?$_Identity@H@_STL@@U?$less@H@2@V?$allocator@H@2@@_STL@@QAE@XZ,0x00429B9F
 ??1?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAE@XZ,0x0041642D
 ??1?$deque@UGen_t_009edfe0_p12cd@@V?$allocator@UGen_t_009edfe0_p12cd@@@_STL@@@_STL@@QAE@XZ,0x00DEDFE0
 ??1?$list@HV?$allocator@H@_STL@@@_STL@@QAE@XZ,0x0042DFA6

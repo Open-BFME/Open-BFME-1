@@ -59,3 +59,43 @@ def test_the_recorder_keeps_only_single_in_image_addresses(monkeypatch, tmp_path
     mtime = out.stat().st_mtime_ns
     build.write_dir32_addresses({"?one@@3HA": {0x012B9200}}, set())
     assert out.stat().st_mtime_ns == mtime
+
+
+class _Image:
+    """resolve() as pin_consistency.Image does: follow a jump stub to its body."""
+    def __init__(self, stubs):
+        self.stubs = stubs
+
+    def resolve(self, rva):
+        return self.stubs.get(rva, rva), [rva]
+
+
+class _Scanner:
+    def __init__(self, stubs):
+        self.image = _Image(stubs)
+
+
+def _pins(monkeypatch, pins, recorded, stubs=None):
+    import pin_consistency
+    # Patch the build module pin_consistency holds: another suite may have re-imported build.
+    monkeypatch.setattr(pin_consistency.build, "read_dir32_addresses", lambda: dict(recorded))
+    monkeypatch.setattr(pin_consistency.build, "read_dir32_whitelist", lambda: set())
+    monkeypatch.setattr(pin_consistency, "load_pins", lambda: pins)
+    pin_consistency.verify_dir32_pins(_Scanner(stubs or {}))
+
+
+def test_pins_agree_in_rva_or_va_form_or_through_a_stub(monkeypatch, capsys):
+    _pins(monkeypatch,
+          {"?GameSpyColor@@3PAHA": [0x00EB9200, 0x012B9200],     # RVA and VA forms
+           "??1Thing@@QAE@XZ": [0x00887940]},                     # the body its ILT reaches
+          {"?GameSpyColor@@3PAHA": 0x012B9200, "??1Thing@@QAE@XZ": 0x0040D828},
+          stubs={0x0000D828: 0x00887940})
+    assert "DIR32 pins: OK (3 pin(s)" in capsys.readouterr().out
+
+
+def test_a_pin_on_another_import_slot_fails(monkeypatch, capsys):
+    """The GetClientRect pin sat on GetWindowRect's IAT slot to force a wrong call."""
+    with pytest.raises(SystemExit):
+        _pins(monkeypatch, {"__imp__GetClientRect@8": [0x0135901C]},
+              {"__imp__GetClientRect@8": 0x01358FEC})
+    assert "pinned 0x0135901C, matched references use 0x01358FEC" in capsys.readouterr().out

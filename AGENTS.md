@@ -125,6 +125,10 @@ shared header edit costs a full gate: edit every dependent body, pay once.
 1. Make the smallest source and ledger change for one function.
 2. `./build.sh <file-or-symbol>`. If a command returns a process or session ID,
    poll it; never launch a duplicate build.
+   `DIR32 addresses: FAIL` means a global, array slot, vtable or function
+   pointer in your body lands somewhere other than where all other matched code
+   puts that name (`targets/game/reverse/dir32_addresses.csv`). The byte-match
+   masks addresses and cannot see it: fix the reference, not the file.
 3. Stage explicit paths only: `git add <specific-paths>`, never `git add .`.
    Check every new ledger source is tracked.
    A source with mixed line endings loses every CR under `core.autocrlf=true`

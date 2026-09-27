@@ -999,9 +999,41 @@ def verify_import_pins(exe=None, symbols=None):
     print(f"CRT import pins: OK ({len(results)} guarded pins)")
 
 
+def verify_dir32_pins(scanner):
+    """A pin must agree with the address byte-verified code gives the same name.
+
+    build.py masks DIR32 operands, so a pin that names the wrong global or vtable
+    still reproduces retail; dir32_addresses.csv records where matched references
+    put each name. Most pins are RVAs, some are written as VAs, so either reading
+    passes, and code addresses are compared after following jump stubs.
+    """
+    recorded = build.read_dir32_addresses()
+    whitelist = build.read_dir32_whitelist()
+    wrong, checked = [], 0
+    for name, pins in load_pins().items():
+        va = recorded.get(name)
+        if va is None or name in whitelist:
+            continue
+        want = scanner.image.resolve(va - 0x400000)[0]
+        for pin in pins:
+            checked += 1
+            readings = [pin] + ([pin - 0x400000] if pin >= 0x400000 else [])
+            if not any(scanner.image.resolve(rva)[0] == want for rva in readings):
+                wrong.append((name, pin, va))
+    if wrong:
+        print(f"DIR32 pins: FAIL {len(wrong)} pin(s) put a name somewhere matched code does not")
+        for name, pin, va in wrong[:12]:
+            print(f"    {name}: pinned 0x{pin:08X}, matched references use 0x{va:08X}")
+        print(f"    Fix the pin in {shown(build.SYMBOLS)}, or the code if it is the code that is wrong "
+              f"(then correct {shown(build.DIR32_ADDRESSES)} in the same commit).")
+        raise SystemExit(1)
+    print(f"DIR32 pins: OK ({checked} pin(s) agree with {shown(build.DIR32_ADDRESSES)})")
+
+
 def verify(path=BASELINE):
     """The gate entry point. Prints its own verdict; raises SystemExit on failure."""
-    violations, stats = Scanner().scan()
+    scanner = Scanner()
+    violations, stats = scanner.scan()
     new, stale = check(violations, path)
     if new:
         print(f"Pin consistency: FAIL {len(new)} NEW inconsistent symbol(s) "
@@ -1022,6 +1054,7 @@ def verify(path=BASELINE):
           f"{stats['names']}; {len(violations)} baselined, 0 new, 0 stale; "
           f"{stats['routes']} route= row(s) re-derived from the image)")
     verify_import_pins()
+    verify_dir32_pins(scanner)
 
 
 def main(argv=None):
