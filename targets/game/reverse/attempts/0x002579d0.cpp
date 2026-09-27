@@ -1,6 +1,6 @@
 // ?bfmeStepBZ@BfmeOwnBZ@@QAEDXZ
-// partial score=0.32 date=2026-09-21
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline
+// partial score=0.39 date=2026-09-26
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringinline
 
 // Open-BFME5: BfmeOwnBZ::bfmeStepBZ, retail 0x002579D0, 529 bytes.
 //
@@ -150,8 +150,8 @@ public:
 // ?bfmeStepBZ@BfmeOwnBZ@@QAEDXZ
 char BfmeOwnBZ::bfmeStepBZ()
 {
-	register BfmeCfgBZ *cfg = m_bfmeCfgBZ;
 	Object *source = m_bfmeSourceBZ;
+	BfmeCfgBZ *cfg = m_bfmeCfgBZ;
 
 	if (m_bfmeIndexBZ >= cfg->m_field25c)
 	{
@@ -173,7 +173,6 @@ char BfmeOwnBZ::bfmeStepBZ()
 		BfmeListBZ *head = m_bfmeListBZ;
 		if (head->m_bfmeNextBZ == head)
 		{
-			target = 0;
 			break;
 		}
 
@@ -221,19 +220,16 @@ fireWeapon:
 				return 1;
 			}
 
-			float jx = GetGameLogicRandomValueReal(
+			Coord3D pos;
+			pos.x = GetGameLogicRandomValueReal(
 				m_bfmePosXBZ - cfg->m_bfmeJitterBZ,
 				m_bfmePosXBZ + cfg->m_bfmeJitterBZ,
 				"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\ArrowStormUpdate.cpp", 0xd9);
-			float jy = GetGameLogicRandomValueReal(
+			pos.y = GetGameLogicRandomValueReal(
 				m_bfmePosYBZ - cfg->m_bfmeJitterBZ,
 				m_bfmePosYBZ + cfg->m_bfmeJitterBZ,
 				"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\ArrowStormUpdate.cpp", 0xda);
-
-			Coord3D pos;
-			pos.x = jx;
-			pos.y = jy;
-			pos.z = TheTerrainLogic->vf6(jx, jy, target);
+			pos.z = TheTerrainLogic->vf6(pos.x, pos.y, target);
 
 			TheWeaponStore->createAndFireTempWeapon(wt, source, &pos);
 

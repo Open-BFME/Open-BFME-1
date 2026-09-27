@@ -13,8 +13,9 @@
 // first player's ScoreKeeper object count and the second player's
 // ScoreKeeper destroyed-by count (both already landed, ScoreKeeper at
 // +0x348 of Player). The count field is reset to 0 and the name string
-// released. No caller-provable owner class or field names exist beyond
-// what this body itself proves, so they are address-derived.
+// released. The primary-vtable caller at 0x0024ED40 is SlaughterHordeContain and
+// passes this through unchanged in ECX, with the Object* as its stack argument.
+// The helper's exact method name remains address-derived.
 
 class Player;
 class ThingTemplate;
