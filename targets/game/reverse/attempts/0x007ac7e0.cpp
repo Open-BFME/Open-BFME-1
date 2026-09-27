@@ -1,6 +1,8 @@
 // ?loadTracks@WaterTracksRenderSystemLoadTracksShim@@QAEXXZ
-// partial score=0.417391304348 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/asciistring8outofline /Iinputs/reference/shims/terrainlogic /Iinputs/reference/shims/water /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// partial score=0.954 date=2026-09-27
+// model=gpt-5.6-luna
+// hypothesis: current BFME layout and static STL linkage plus a wtype copy preserve the retail call shape
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/asciistring8outofline /Iinputs/reference/shims/terrainlogic /Iinputs/reference/shims/water /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
@@ -19,6 +21,8 @@
 #include <set>
 #include <stdio.h>
 #include <string.h>
+
+extern const char Rva010896AC[];
 
 class BFMETerrainLogic
 {
@@ -134,8 +138,10 @@ void WaterTracksRenderSystemLoadTracksShim::loadTracks(void)
 
 	strcpy(path, bfmeSourceFilename(fileName));
 	int len = strlen(path);
+	char *wakSuffix = path + len - 4;
+	*(int *)wakSuffix = *(const int *)Rva010896AC;
 	FileSystem *fileSystem = TheFileSystem;
-	strcpy(path + len - 4, ".wak");
+	wakSuffix[4] = Rva010896AC[4];
 
 	File *file = fileSystem->openFile(path, File::READ | File::BINARY);
 	WaterTracksObj *umod = 0;
@@ -143,6 +149,7 @@ void WaterTracksRenderSystemLoadTracksShim::loadTracks(void)
 	volatile int flipU = 0;
 	Vector2 startPos, endPos;
 	waveType wtype;
+	waveType trackType;
 	Rva001408C0LocalSet assets;
 
 	if (file)
@@ -157,13 +164,14 @@ void WaterTracksRenderSystemLoadTracksShim::loadTracks(void)
 			file->read(&startPos, sizeof(startPos));
 			file->read(&endPos, sizeof(endPos));
 			file->read(&wtype, sizeof(wtype));
-			if (self->findTrack(startPos, endPos, wtype))
+			trackType = wtype;
+			if (self->findTrack(startPos, endPos, trackType))
 			{
 				i++;
 				goto tryagain;
 			}
 
-			umod = TheWaterTracksRenderSystem->bindTrack(wtype);
+			umod = TheWaterTracksRenderSystem->bindTrack(trackType);
 			if (umod)
 			{
 				flipU ^= 1;
