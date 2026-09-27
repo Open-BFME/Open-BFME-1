@@ -298,6 +298,27 @@ char *Rva0084EF00(LocaleCodePageObject_0084EED0 *object)
     }
 }
 
+/* Retail 0084EF30 builds a time format in the static buffer at VA 0130C128.
+ * Convert the locale separator from the ACP before inserting it between fields. */
+extern char locale_format_0084EF30[];
+
+char *Rva0084EF30(LocaleCodePageObject_0084EED0 *object)
+{
+    LCID locale = object->locale;
+    char separator[4];
+    GetLocaleInfoA(locale, 0x1e, separator, 4);
+    __ConvertFromACP(separator, 4, object->codePage);
+    {
+        char *format = locale_format_0084EF30;
+        strcpy(format, "%H");
+        strcat(format, separator);
+        strcat(format, "%M");
+        strcat(format, separator);
+        strcat(format, "%S %p");
+        return format;
+    }
+}
+
 /* Each query owns its static buffer in retail; the 0x104-byte date formats do not share the 9-byte AM/PM ones. */
 extern char *__cdecl Rva0084DE40Tail(char *buffer);
 
