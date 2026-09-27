@@ -89280,3 +89280,5 @@ __Locale_d_fmt,0x0084ECA0,STLport time facet __get_date_order at 0x00845C10 dire
 ?transition00409610@BuffEntry00409E20@@QAE_NHHPAX0H@Z,0x00409610,retail 0x00409EFD via ILT 0xFE8E; ECX entry receiver and five stack slots ending ret 20; AL bool result; opaque address identity
 ?create001B0E90@EffectFactory0040A260@@QAEPAUSnapshot0040A260@@PBVThingTemplate@@PAX@Z,0x001B0E90,retail caller 0x0040A3EF via ILT 0x397FC; two pointer stack args ret 8 and EAX object result; opaque address identity
 ?update0040E680@MovieOpen0040E3B0@@QAE_N_N@Z,0x0040E680,retail 0x0040F918 via ILT 0x3B44E; shared movie receiver; bool stack argument read low byte and AL return with ret4; address-derived identity
+?initializeRva0078C070@Rva00785FD0Renderer@@QAEXXZ,0x0078C070,receiver ECX witnessed by 0x00782F30 via ILT 0x0002DE57 and body stores at ECX+8 and ECX+0xD4; tail ILT 0x00008D4B preserves thiscall zero stack args
+?refreshRva00215650@BfmeOwnFCB@@QAEXXZ,0x00215650,ECX base receiver at 0x00215943 via ILT 0x00032C54; same +8 Object and +0xE4 ID as bfmeAfterFCB; complete body ends RET at 0x0021576A
