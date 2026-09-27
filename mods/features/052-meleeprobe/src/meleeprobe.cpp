@@ -1,5 +1,15 @@
 // Diagnostic wrapper keeps the attempted fix's behavior in one source file.
 #include "../../051-structure-melee-gate/src/structure_melee_gate.cpp"
+#include "chat_json.h"
+
+#ifndef BFME_AC_RETRY
+#define BFME_AC_RETRY 0
+#endif
+#if BFME_AC_RETRY
+#define PROBE_VARIANT "053-melee-retry-v2"
+#else
+#define PROBE_VARIANT "052-meleeprobe-v3"
+#endif
 
 struct FILE;
 typedef FILE *(__cdecl *FOpen)(const char *, const char *);
@@ -24,7 +34,7 @@ typedef int (__stdcall *MessageBox)(void *, const char *, const char *, unsigned
 
 static FILE *s_file;
 static int s_opened, s_failed;
-static unsigned s_seq, s_calls, s_events, s_dropped, s_frame_events;
+static unsigned s_seq, s_calls, s_events, s_dropped, s_frame_events, s_chat_events;
 static unsigned s_last_tick, s_loops;
 static int s_last_frame = -2;
 static const char *s_run;
@@ -74,18 +84,20 @@ static int output() {
         unsigned freq[2] = {0, 0};
         c_qpf(freq);
         checked(c_fprintf(s_file,
-            "{\"ev\":\"startup\",\"schema\":1,\"probe\":\"052-meleeprobe-v1\","
-            "\"run\":\"%s\",\"build\":\"%s\",\"pid\":%u,\"fix_enabled\":1,"
-            "\"qfreqlo\":%u,\"qfreqhi\":%u,\"max_events_per_frame\":256}\n",
-            s_run, build, c_pid(), freq[0], freq[1]));
+            "{\"ev\":\"startup\",\"schema\":3,\"probe\":\"%s\","
+            "\"run\":\"%s\",\"build\":\"%s\",\"pid\":%u,\"fix_enabled\":1,\"retry_enabled\":%u,"
+            "\"qfreqlo\":%u,\"qfreqhi\":%u,\"max_combat_events_per_frame\":256,\"max_chat_code_units\":512}\n",
+            PROBE_VARIANT, s_run, build, c_pid(), (unsigned)BFME_AC_RETRY, freq[0], freq[1]));
         checked(c_fflush(s_file));
     }
     return s_file && !s_failed;
 }
-static int head(const char *event) {
+static int head(const char *event, int marker = 0) {
     if (!output()) return 0;
-    if (s_frame_events >= 256) { ++s_dropped; return 0; }
-    ++s_frame_events;
+    if (!marker) {
+        if (s_frame_events >= 256) { ++s_dropped; return 0; }
+        ++s_frame_events;
+    }
     ++s_events;
     unsigned counter[2] = {0, 0};
     c_qpc(counter);
@@ -93,6 +105,30 @@ static int head(const char *event) {
         "{\"ev\":\"%s\",\"run\":\"%s\",\"seq\":%u,\"f\":%d,\"qlo\":%u,\"qhi\":%u",
         event, s_run, ++s_seq, frame(), counter[0], counter[1]));
     return !s_failed;
+}
+
+static void chat_text(const char *key, const unsigned short *text) {
+    static ProbeChatText escaped;
+    escape_chat_text(text, escaped);
+    checked(c_fprintf(s_file,
+        ",\"%s\":\"%s\",\"%s_code_units\":%u,\"%s_truncated\":%u",
+        key, escaped.text, key, escaped.codeUnits, key, escaped.truncated));
+}
+
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_chat(
+    void *message, const unsigned short *displayed, void *manager) {
+    // Delivered chat must survive a saturated combat interval and a subsequent crash.
+    if (!head("chat", 1)) return;
+    ++s_chat_events;
+    void *data = read_pointer_field(message, 0x1C);
+    const unsigned short *raw = data ? (const unsigned short *)((char *)data + 8) : 0;
+    checked(c_fprintf(s_file,
+        ",\"sender_slot\":%u,\"recipient_mask\":%u,\"local_slot\":%u",
+        word(message, 0x0C), word(message, 0x20), word(manager, 0x12028)));
+    chat_text("text", raw);
+    chat_text("displayed_text", displayed);
+    checked(c_fprintf(s_file, "}\n"));
+    checked(c_fflush(s_file));
 }
 
 struct Check {
@@ -149,6 +185,140 @@ static void event(const char *name, void *attacker, void *target, void *state) {
     checked(c_fprintf(s_file, "}\n"));
 }
 
+
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_command(void *commandInterface, void *parms) {
+    unsigned command = word(parms, 0);
+    if (command != 0 && command != 5 && command != 0x0B && command != 0x0C &&
+        command != 0x0E && command != 0x0F) return;
+    if (!head("command_dispatch")) return;
+    void *owner = read_pointer_field(commandInterface, -0x18);
+    void *machine = read_pointer_field(commandInterface, 0x10);
+    void *target = read_pointer_field(parms, 0x14);
+    checked(c_fprintf(s_file,
+        ",\"owner\":%u,\"owner_id\":%u,\"machine\":%u,\"command\":%u,\"source\":%u,"
+        "\"target\":%u,\"target_id\":%u,\"position_x_bits\":%u,\"position_y_bits\":%u,\"position_z_bits\":%u}\n",
+        owner, object_id(owner), machine, command, word(parms, 4),
+        target, (command == 0x0B || command == 0x0C) ? object_id(target) : 0, word(parms, 8), word(parms, 0x0C), word(parms, 0x10)));
+}
+static int melee_state(void *state) {
+    unsigned vtable = word(state, 0);
+    return vtable == 0x0109A540 || vtable == 0x01097B68 || vtable == 0x01097BE0;
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_transition(void *machine, void *next) {
+    void *previous = read_pointer_field(machine, 0x1C);
+    // Another branch of this machine reuses the numeric state IDs.
+    if (!melee_state(previous) && !melee_state(next)) return;
+    if (!head("state_transition")) return;
+    void *owner = read_pointer_field(machine, 0x10);
+    checked(c_fprintf(s_file,
+        ",\"owner\":%u,\"owner_id\":%u,\"machine\":%u,\"goal_id\":%u,"
+        "\"previous_state\":%u,\"previous_state_id\":%u,\"previous_state_vtable\":%u,"
+        "\"next_state\":%u,\"next_state_id\":%u,\"next_state_vtable\":%u}\n",
+        owner, object_id(owner), machine, word(machine, 0x20),
+        previous, word(previous, 4), word(previous, 0), next, word(next, 4), word(next, 0)));
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_damage_result(void *victim, void *info) {
+    if (!head("damage_result")) return;
+    checked(c_fprintf(s_file,
+        ",\"victim\":%u,\"victim_id\":%u,\"body\":%u,\"source_id\":%u,"
+        "\"actual_damage_bits\":%u,\"clipped_damage_bits\":%u,\"no_effect\":%u}\n",
+        victim, object_id(victim), word(victim, 0x200), word(info, 8),
+        word(info, 0x50), word(info, 0x54), (unsigned)*((unsigned char *)info + 0x58)));
+}
+
+struct PlannerTrace {
+    void *member, *target, *retryOut;
+    unsigned memberId, targetId, arg7, serial, active;
+    int startFrame;
+    unsigned candidates, distancePasses, layerFirst, layerLast, layerChanges;
+    unsigned pointQueries, pointRejected, passedPoint, passedLine, chosen;
+    unsigned point[3], firstRejected[3], pointPending, firstRejectedPresent;
+};
+static PlannerTrace s_plan;
+static unsigned s_plan_calls, s_plan_overwritten;
+
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_plan_enter(
+    void *member, void *target, void *retryOut, unsigned arg7) {
+    if (s_plan.active) ++s_plan_overwritten;
+    s_plan.member = member;
+    s_plan.target = target;
+    s_plan.retryOut = retryOut;
+    s_plan.memberId = object_id(member);
+    s_plan.targetId = object_id(target);
+    s_plan.arg7 = arg7 & 255;
+    s_plan.serial = ++s_plan_calls;
+    s_plan.startFrame = frame();
+    s_plan.active = 1;
+    s_plan.candidates = s_plan.distancePasses = s_plan.layerChanges = 0;
+    s_plan.layerFirst = s_plan.layerLast = 0;
+    s_plan.pointQueries = s_plan.pointRejected = 0;
+    s_plan.passedPoint = s_plan.passedLine = s_plan.chosen = 0;
+    s_plan.pointPending = s_plan.firstRejectedPresent = 0;
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_plan_candidate(void) {
+    if (s_plan.active) ++s_plan.candidates;
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_plan_distance_pass(unsigned layer) {
+    if (!s_plan.active) return;
+    if (!s_plan.distancePasses) s_plan.layerFirst = layer;
+    else if (s_plan.layerLast != layer) ++s_plan.layerChanges;
+    s_plan.layerLast = layer;
+    ++s_plan.distancePasses;
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_plan_point(void *coord) {
+    if (!s_plan.active) return;
+    s_plan.point[0] = word(coord, 0);
+    s_plan.point[1] = word(coord, 4);
+    s_plan.point[2] = word(coord, 8);
+    s_plan.pointPending = coord != 0;
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_plan_point_result(unsigned result) {
+    if (!s_plan.active) return;
+    ++s_plan.pointQueries;
+    if (!(result & 255)) {
+        ++s_plan.pointRejected;
+        if (!s_plan.firstRejectedPresent && s_plan.pointPending) {
+            s_plan.firstRejected[0] = s_plan.point[0];
+            s_plan.firstRejected[1] = s_plan.point[1];
+            s_plan.firstRejected[2] = s_plan.point[2];
+            s_plan.firstRejectedPresent = 1;
+        }
+    }
+    s_plan.pointPending = 0;
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_plan_passed_point(void) {
+    if (s_plan.active) ++s_plan.passedPoint;
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_plan_passed_line(void) {
+    if (s_plan.active) ++s_plan.passedLine;
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_plan_chosen(void) {
+    if (s_plan.active) ++s_plan.chosen;
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_plan_complete(unsigned result, void *member, void *slot) {
+    unsigned paired = s_plan.active && s_plan.member == member;
+    s_plan.active = 0;
+    if (!head("melee_plan")) return;
+    checked(c_fprintf(s_file,
+        ",\"call\":%u,\"start_frame\":%d,\"paired\":%u,\"overwritten_total\":%u,"
+        "\"member\":%u,\"member_id\":%u,\"entry_member\":%u,\"entry_member_id\":%u,"
+        "\"target\":%u,\"target_id\":%u,\"arg7_low_byte\":%u,\"result_al\":%u,"
+        "\"retry_out_present\":%u,\"retry_out\":%u,\"candidates\":%u,\"distance_passes\":%u,"
+        "\"layer_first\":%u,\"layer_last\":%u,\"layer_changes\":%u,"
+        "\"point_queries\":%u,\"point_rejected\":%u,\"passed_point\":%u,\"passed_line\":%u,\"chosen\":%u,"
+        "\"first_rejected_present\":%u,\"first_rejected_x_bits\":%u,\"first_rejected_y_bits\":%u,\"first_rejected_z_bits\":%u,"
+        "\"slot\":%u,\"slot_raw_phase_before\":%u,\"slot_raw_10_before\":%u,\"slot_retry_until_before\":%u}\n",
+        s_plan.serial, s_plan.startFrame, paired, s_plan_overwritten,
+        member, object_id(member), s_plan.member, s_plan.memberId, s_plan.target, s_plan.targetId,
+        s_plan.arg7, result & 255, (unsigned)(paired && s_plan.retryOut != 0),
+        paired && s_plan.retryOut ? word(s_plan.retryOut, 0) : 0,
+        s_plan.candidates, s_plan.distancePasses, s_plan.layerFirst, s_plan.layerLast, s_plan.layerChanges,
+        s_plan.pointQueries, s_plan.pointRejected, s_plan.passedPoint, s_plan.passedLine, s_plan.chosen,
+        s_plan.firstRejectedPresent, s_plan.firstRejectedPresent ? s_plan.firstRejected[0] : 0,
+        s_plan.firstRejectedPresent ? s_plan.firstRejected[1] : 0, s_plan.firstRejectedPresent ? s_plan.firstRejected[2] : 0,
+        slot, word(slot, 0), slot ? (unsigned)*((unsigned char *)slot + 0x10) : 0, word(slot, 0x14)));
+}
+
 extern "C" __declspec(dllexport) void __cdecl meleeprobe_enter_before(void *a, void *t, void *s) { before(a,t,s); }
 extern "C" __declspec(dllexport) void __cdecl meleeprobe_update_before(void *a, void *t, void *s) { before(a,t,s); }
 extern "C" __declspec(dllexport) void __cdecl meleeprobe_enter_after(unsigned result) { after("enter_predicate",result); }
@@ -157,8 +327,97 @@ extern "C" __declspec(dllexport) void __cdecl meleeprobe_begin(void *a, void *t,
 extern "C" __declspec(dllexport) void __cdecl meleeprobe_update_target(void *a, void *t, void *s) { event("update_melee_target_call",a,t,s); }
 extern "C" __declspec(dllexport) void __cdecl meleeprobe_stealth_fail(void *a, void *t, void *s) { event("update_stealth_fail",a,t,s); }
 extern "C" __declspec(dllexport) void __cdecl meleeprobe_update_fail(void *a, void *t, void *s) { event("update_fail_minus2",a,t,s); }
-extern "C" __declspec(dllexport) void __cdecl meleeprobe_ready(void *a, void *t, void *s) { event("update_ready",a,t,s); }
-extern "C" __declspec(dllexport) void __cdecl meleeprobe_not_ready(void *a, void *t, void *s) { event("update_not_ready",a,t,s); }
+static int supported_horde(void *horde) {
+    void *vtable = horde ? read_pointer_field(horde, 0) : 0;
+    return word(vtable, 0x11C) == 0x0042BE6D && word(vtable, 0x124) == 0x0042B5B7;
+}
+static unsigned byte(void *p, int offset) {
+    return p ? *((unsigned char *)p + offset) : 0;
+}
+static void wait_context(void *a, void *t, void *s) {
+    checked(c_fprintf(s_file,
+        ",\"attacker\":%u,\"attacker_id\":%u,\"target\":%u,\"target_id\":%u,"
+        "\"state\":%u,\"machine\":%u,\"wait_until\":%u",
+        a, object_id(a), t, object_id(t), s, word(s, 0x1C), word(s, 0x24)));
+}
+static void readiness_snapshot(const char *stage, void *a, void *t, void *s, void *horde) {
+    if (!head("readiness_snapshot")) return;
+    wait_context(a,t,s);
+    int supported = supported_horde(horde);
+    checked(c_fprintf(s_file, ",\"stage\":\"%s\",\"horde\":%u,\"interface_supported\":%d",
+        stage, horde, supported));
+    if (!supported) { checked(c_fprintf(s_file, "}\n")); return; }
+    unsigned begin = word(horde, 0xF4), end = word(horde, 0xF8);
+    int valid = end >= begin && (end - begin) % 0x1C == 0 && (begin || end == 0);
+    unsigned total = valid ? (end - begin) / 0x1C : 0;
+    checked(c_fprintf(s_file,
+        ",\"cached_target_id\":%u,\"cache_until\":%u,\"raw_4\":%u,\"raw_5\":%u,"
+        "\"raw_118\":%u,\"raw_119\":%u,\"slots_begin\":%u,\"slots_end\":%u,"
+        "\"slots_valid\":%d,\"slots_total\":%u,\"slots_truncated\":%u,\"slots\":[",
+        word(horde, 0x100), word(horde, 0x104), byte(horde, 4), byte(horde, 5),
+        byte(horde, 0x118), byte(horde, 0x119), begin, end, valid, total, (unsigned)(total > 32)));
+    unsigned i;
+    for (i = 0; i < total && i < 32; ++i) {
+        void *slot = (void *)(begin + i * 0x1C);
+        checked(c_fprintf(s_file,
+            "%s{\"index\":%u,\"raw_phase\":%u,\"raw_10\":%u,\"retry_until\":%u,\"raw_18_frame\":%u}",
+            i ? "," : "", i, word(slot, 0), byte(slot, 0x10), word(slot, 0x14), word(slot, 0x18)));
+    }
+    void *sentinel = read_pointer_field(horde, -0xAC);
+    void *node = sentinel ? read_pointer_field(sentinel, 0) : 0;
+    checked(c_fprintf(s_file, "],\"members_available\":%u,\"members\":[", (unsigned)(sentinel != 0)));
+    for (i = 0; node && node != sentinel && i < 32; ++i) {
+        void *member = read_pointer_field(node, 8);
+        void *ai = member ? read_pointer_field(member, OBJECT_AI) : 0;
+        void *machine = ai ? read_pointer_field(ai, AI_STATE_MACHINE) : 0;
+        void *state = machine ? read_pointer_field(machine, 0x1C) : 0;
+        checked(c_fprintf(s_file,
+            "%s{\"member\":%u,\"member_id\":%u,\"ai\":%u,\"victim_id\":%u,"
+            "\"state\":%u,\"state_vtable\":%u,\"state_id\":%u,\"goal_id\":%u,\"path\":%u,\"raw_ai_1d8\":%u}",
+            i ? "," : "", member, object_id(member), ai, word(ai, 0x40),
+            state, word(state, 0), word(state, 4), word(machine, 0x20), word(ai, 0x140), word(ai, 0x1D8)));
+        node = read_pointer_field(node, 0);
+    }
+    checked(c_fprintf(s_file,
+        "],\"members_count\":%u,\"members_truncated\":%u,\"members_broken_link\":%u}\n",
+        i, (unsigned)(node && node != sentinel), (unsigned)(sentinel && !node)));
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_ready(void *a, void *t, void *s, void *horde) {
+    event("update_ready",a,t,s);
+    int f = frame();
+    if (f >= 0 && f % 15 == 0 && supported_horde(horde))
+        readiness_snapshot("ready",a,t,s,horde);
+}
+extern "C" __declspec(dllexport) void __cdecl meleeprobe_not_ready(void *a, void *t, void *s, void *horde) {
+    event("update_not_ready",a,t,s);
+    unsigned now = (unsigned)frame();
+    unsigned deadline = word(s, 0x24);
+    if (now < deadline) return;
+    readiness_snapshot("before",a,t,s,horde);
+#if BFME_AC_RETRY
+    int supported = supported_horde(horde);
+    int structureGoal = supported && predicate_target_or_outer_has_structure_attack_goal(t);
+    unsigned oldFlag = supported ? byte(horde, 0x119) : 0;
+    unsigned ready = 0;
+    if (structureGoal) {
+        typedef void (__fastcall *UpdateTarget)(void *, void *, void *);
+        typedef unsigned char (__fastcall *TargetReady)(void *, void *, void *);
+        *((unsigned char *)horde + 0x119) = 1;
+        ((UpdateTarget)0x006440E0)(horde,0,t);
+        ready = ((TargetReady)0x006439F0)(horde,0,t);
+        if (ready) *(unsigned *)((unsigned char *)s + 0x24) = now + 15;
+        readiness_snapshot("after",a,t,s,horde);
+    }
+    if (head("retry_attempt")) {
+        wait_context(a,t,s);
+        checked(c_fprintf(s_file,
+            ",\"horde\":%u,\"interface_supported\":%d,\"structure_goal\":%d,\"attempted\":%d,"
+            "\"force_before\":%u,\"force_after\":%u,\"ready_al\":%u,\"deadline_before\":%u,\"deadline_after\":%u}\n",
+            horde, supported, structureGoal, structureGoal, oldFlag,
+            supported ? byte(horde, 0x119) : 0, ready, deadline, word(s, 0x24)));
+    }
+#endif
+}
 extern "C" __declspec(dllexport) void __cdecl meleeprobe_enter_fail(void *a, void *t, unsigned rawEbx) {
     if (!head("enter_fail_minus2")) return;
     context(a,t,s_check.state);
@@ -186,8 +445,8 @@ extern "C" __declspec(dllexport) void __cdecl meleeprobe_loop(void) {
         // Flush at a new logic frame; the wall heartbeat also works in menus or stalls.
         checked(c_fprintf(s_file,
             "{\"ev\":\"heartbeat\",\"run\":\"%s\",\"f\":%d,\"tick\":%u,"
-            "\"loops\":%u,\"predicate_calls\":%u,\"events\":%u,\"dropped\":%u}\n",
-            s_run, f, tick, s_loops, s_calls, s_events, s_dropped));
+            "\"loops\":%u,\"predicate_calls\":%u,\"events\":%u,\"dropped\":%u,\"chat_events\":%u}\n",
+            s_run, f, tick, s_loops, s_calls, s_events, s_dropped, s_chat_events));
         checked(c_fflush(s_file));
         s_frame_events = 0;
         s_last_frame = f;

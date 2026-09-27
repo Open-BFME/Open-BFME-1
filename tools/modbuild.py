@@ -458,6 +458,22 @@ def build_structure_melee_gate(pe, feature_dir, probe=False):
 # Every span is checked before patching: several sites sit immediately before
 # a short branch that must remain in retail, or before a live x87 calculation.
 MELEEPROBE_HOOKS = (
+    # Both local send and received CHAT reach processChat; these sites are
+    # after delivery filtering, with the rendered UTF-16 line still in eax.
+    (0x00667238, "meleeprobe_chat", ("esi", "eax", "ebp"), "505189642444"),
+    (0x006671A1, "meleeprobe_chat", ("esi", "eax", "ebp"), "505189642444"),
+    (0x00277780, "meleeprobe_command", ("ecx", "stack:0"), "558be9c7858401000000000000"),
+    (0x000A13D9, "meleeprobe_transition", ("esi", "edi"), "85ff897e1c"),
+    (0x001D04B0, "meleeprobe_damage_result", ("esi", "edi"), "f6864403000001"),
+    (0x00238D10, "meleeprobe_plan_enter", ("stack:0", "stack:2", "stack:5", "stack:6"), "81ec0c010000"),
+    (0x0023900A, "meleeprobe_plan_candidate", (), "db4424188b84242c010000"),
+    (0x002390AD, "meleeprobe_plan_distance_pass", ("eax",), "8b8c248c000000"),
+    (0x0023910A, "meleeprobe_plan_point", ("edx",), "e86daadfff"),
+    (0x0023910F, "meleeprobe_plan_point_result", ("eax",), "84c00f8555010000"),
+    (0x0023926C, "meleeprobe_plan_passed_point", (), "8a44241184c0"),
+    (0x0023929B, "meleeprobe_plan_passed_line", (), "d9442440d85c243c"),
+    (0x002392AA, "meleeprobe_plan_chosen", (), "d944244c8b442420"),
+    (0x00244455, "meleeprobe_plan_complete", ("eax", "edi", "esi"), "8b4c242485c9"),
     (0x001758F0, "meleeprobe_enter_state", ("ecx",), "83ec0c538bd9"),
     (0x00175A80, "meleeprobe_update_state", ("ecx",), "5153558be9"),
     (STRUCTURE_MELEE_ONENTER_CALL, "meleeprobe_enter_before", ("ebp", "esi", "ebx"), "e8efabeaff"),
@@ -468,8 +484,8 @@ MELEEPROBE_HOOKS = (
     (0x00175B34, "meleeprobe_update_target", ("ebx", "edi", "ebp"), "8b16578bce"),
     (0x00175AC5, "meleeprobe_stealth_fail", ("ebx", "edi", "ebp"), "5f5db8feffffff"),
     (0x00175AFC, "meleeprobe_update_fail", ("ebx", "edi", "ebp"), "5e5f5db8feffffff"),
-    (0x00175B16, "meleeprobe_ready", ("ebx", "edi", "ebp"), "a198082f01"),
-    (0x00175B26, "meleeprobe_not_ready", ("ebx", "edi", "ebp"), "8b1598082f01"),
+    (0x00175B16, "meleeprobe_ready", ("ebx", "edi", "ebp", "esi"), "a198082f01"),
+    (0x00175B26, "meleeprobe_not_ready", ("ebx", "edi", "ebp", "esi"), "8b1598082f01"),
     (0x00175985, "meleeprobe_enter_fail", ("ebp", "esi", "ebx"), "5f5e5db8feffffff"),
     (0x001759C4, "meleeprobe_distance", ("ebp", "esi", "ebx"), "568bcde821e3ecff"),
     (TARGET_LOOPBODY, "meleeprobe_loop", (), "8b038bcbc745fc00000000"),
@@ -481,7 +497,7 @@ def build_meleeprobe(pe, feature_dir, probe=False):
         expected_bytes = bytes.fromhex(expected)
         if pe.read(target, len(expected_bytes)) != expected_bytes:
             raise SystemExit(f"meleeprobe retail span changed at 0x{target:08X}; "
-                             "052 owns 051's hooks and cannot stack with it")
+                             "AC instruments cannot stack with 051 or each other")
     return build_feature(pe, feature_dir / "src/meleeprobe.cpp", "meleeprobe_loop",
                          tuple(hook[:3] for hook in MELEEPROBE_HOOKS), probe=probe)
 
@@ -682,6 +698,7 @@ DATA = {
 # Promote one into FEATURES when it has.
 UNSHIPPED = {
     "052-meleeprobe": (build_meleeprobe, "bounded AC diagnostic; replaces 051 hooks and includes its fix"),
+    "053-melee-retry": (build_meleeprobe, "experimental AC planning retry with diagnostics; replaces 051/052"),
     "030-netlatprobe": (build_netlatprobe, "an instrument: it writes tens of lines a second"),
     "036-fpsprobe-timing": (build_fpsprobe_timing,
                             "the probe without the backbuffer readback, for "
