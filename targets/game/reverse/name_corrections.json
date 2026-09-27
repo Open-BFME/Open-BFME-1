@@ -6628,5 +6628,15 @@
   "after_sha256": "891f83c357a4fe08af670c34680a4cc6ad6d294dd727951b29e0be343820d399",
   "evidence": "targets/game/reverse/identity_evidence/005091f0-quickmatch-init.md",
   "reason": "Heuristic declaration alignment is not an identity equivalence: unused interface slot remains opaque; the new address-labelled initializer names the actual body."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00934940.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00934940.cpp",
+  "old_name": "DX8Wrapper",
+  "new_name": "Rva00934940DX8",
+  "before_sha256": "a4a507de44b7694f4bf1168b3f8dfb680288af3de5ccc5e139a9c94b4b728c22",
+  "after_sha256": "73a6336ac2fa45a6c332834a20db3cb92d23b2f829cd9f11f835616909058992",
+  "evidence": "targets/game/reverse/identity_evidence/00934940-batched-renderer.md",
+  "reason": "False pairing: canonical DX8Wrapper remains included and retains its name; new scoped subclass only supplies the independently proven BFME texture-stage slot67 contract, corroborated by matched006C5840 and009095A0. No owner or callee was renamed."
  }
 ]
