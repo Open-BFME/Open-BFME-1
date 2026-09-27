@@ -5,6 +5,14 @@
 
 #include <math.h>
 
+extern float ACos(float);  // Lib/trig.h, defined in Trig.cpp (retail 0x00873940)
+
+// Retail's toAngle clamps the cosine against named globals rather than
+// literals: 0x01075350 (0.0f), 0x0109BF3C (-1.0f) and 0x01075334 (1.0f).
+extern const float BfmeZeroRange;
+extern const float BfmeShadowScale;
+extern float g_bfmeDefaultBU;
+
 Coord2DBase &Coord2DBase::operator=(const Coord2DBase &that)
 {
     x = that.x;
@@ -234,158 +242,17 @@ Coord2D &Coord2D::Rotate(Coord2D &coord, float sine, float cosine)
     return *this;
 }
 
-__declspec(naked) float Coord2D::toAngle() const
+float Coord2D::toAngle() const
 {
-    __asm {
-        __emit 0x51
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x04
-        __emit 0xd9
-        __emit 0x01
-        __emit 0xd9
-        __emit 0xc0
-        __emit 0xd8
-        __emit 0xc9
-        __emit 0xd9
-        __emit 0xc2
-        __emit 0xd8
-        __emit 0xcb
-        __emit 0xde
-        __emit 0xc1
-        __emit 0xd9
-        __emit 0xfa
-        __emit 0xdd
-        __emit 0xda
-        __emit 0xdd
-        __emit 0xd8
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0xc1
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7a
-        __emit 0x0a
-        __emit 0xdd
-        __emit 0xd8
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0x59
-        __emit 0xc3
-        __emit 0xd8
-        __emit 0x39
-        __emit 0xd8
-        __emit 0x15
-        __emit 0x3c
-        __emit 0xbf
-        __emit 0x09
-        __emit 0x01
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x05
-        __emit 0x7a
-        __emit 0x0b
-        __emit 0xdd
-        __emit 0xd8
-        __emit 0xc7
-        __emit 0x04
-        __emit 0x24
-        __emit 0x00
-        __emit 0x00
-        __emit 0x80
-        __emit 0xbf
-        __emit 0xeb
-        __emit 0x1b
-        __emit 0xd8
-        __emit 0x15
-        __emit 0x34
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x41
-        __emit 0x75
-        __emit 0x0b
-        __emit 0xdd
-        __emit 0xd8
-        __emit 0xc7
-        __emit 0x04
-        __emit 0x24
-        __emit 0x00
-        __emit 0x00
-        __emit 0x80
-        __emit 0x3f
-        __emit 0xeb
-        __emit 0x03
-        __emit 0xd9
-        __emit 0x1c
-        __emit 0x24
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x04
-        __emit 0xd8
-        __emit 0x1d
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x05
-        __emit 0x7a
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x04
-        __emit 0x24
-        __emit 0x50
-        __emit 0xe8
-        __emit 0x11
-        __emit 0xdc
-        __emit 0x6c
-        __emit 0x00
-        __emit 0xd9
-        __emit 0xe0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x59
-        __emit 0xc3
-        __emit 0x8b
-        __emit 0x0c
-        __emit 0x24
-        __emit 0x51
-        __emit 0xe8
-        __emit 0x01
-        __emit 0xdc
-        __emit 0x6c
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x59
-        __emit 0xc3
-    }
+    const float len = length();
+    if (len == BfmeZeroRange)
+        return BfmeZeroRange;
+
+    const float c = x / len;
+    // bound it in case of numerical error
+    const float bounded = c < BfmeShadowScale ? -1.0f : (c > g_bfmeDefaultBU ? 1.0f : c);
+
+    return y < BfmeZeroRange ? -ACos(bounded) : ACos(bounded);
 }
 
 Coord2D &Coord2D::Rotate(float angle)
