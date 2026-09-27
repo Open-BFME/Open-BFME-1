@@ -6,12 +6,7 @@
 
 #include "ascii_string.h"
 
-class Object
-{
-public:
-	char m_pad[0x90];
-	unsigned int m_bits[1];
-};
+#include "../GameLogic/Object/object.h"
 
 class ScriptEngine
 {
@@ -60,5 +55,5 @@ bool __stdcall bfmeScriptUnitBitTest(const AsciiString &name, const BfmeBitReque
 	if (!object)
 		return false;
 	unsigned int bit = req->m_bit;
-	return (object->m_bits[bit >> 5] & (1u << (bit & 31))) != 0;
+	return (object->m_status[bit >> 5] & (1u << (bit & 31))) != 0;
 }

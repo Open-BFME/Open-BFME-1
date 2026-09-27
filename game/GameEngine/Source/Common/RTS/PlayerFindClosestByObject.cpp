@@ -21,12 +21,9 @@ struct Coord3D
 	Real z;
 };
 
-class Object
-{
-public:
-	unsigned char m_head[0x38];
-	Coord3D m_position;
-};
+#define BFME_HAVE_COORD3D
+#include "../../GameLogic/Object/object.h"
+#undef BFME_HAVE_COORD3D
 
 typedef void (*ObjectIterateFunc)(Object *, void *);
 
@@ -63,7 +60,7 @@ Object *Player::findClosestByKindOf(Object *queryObject,
 	ClosestKindOfData data;
 	data.m_setKindOf = setMask;
 	data.m_clearKindOf = clearMask;
-	data.m_source = queryObject->m_position;
+	data.m_source = queryObject->m_cachedPos;
 
 	union
 	{

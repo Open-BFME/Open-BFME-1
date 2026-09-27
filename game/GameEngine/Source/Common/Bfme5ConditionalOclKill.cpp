@@ -8,16 +8,10 @@ enum DeathType
 	BFME_DEATH_TYPE_0 = 0
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
-{
-public:
+#define OBJECT_TU_MEMBERS \
 	void kill(DamageType damageType, DeathType deathType);
-
-	char m_bfmeFields[0x38];
-	char m_bfmePosition[0x58];
-	unsigned int m_bfmeFlags;
-};
+#include "../GameLogic/Object/object.h"
+#undef OBJECT_TU_MEMBERS
 
 struct BfmeKillContext
 {
@@ -54,11 +48,11 @@ void Gen_0028CA70::bfmeKill(void)
 {
 	Object *object = m_bfmeObject;
 
-	if ((object->m_bfmeFlags & 4) == 0 &&
-		(object->m_bfmeFlags & 0x00080000) == 0)
+	if ((object->m_status[0] & 4) == 0 &&
+		(object->m_status[0] & 0x00080000) == 0)
 	{
 		TheWeaponStore->bfmeCreate(
-			m_bfmeContext->m_bfmeOwner, object, object->m_bfmePosition);
+			m_bfmeContext->m_bfmeOwner, object, object->m_cachedPos);
 	}
 
 	object->kill(BFME_DAMAGE_TYPE_8, BFME_DEATH_TYPE_0);

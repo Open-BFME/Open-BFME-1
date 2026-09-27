@@ -77,15 +77,13 @@ public:
 typedef BitFlags<192> KindOfMaskType;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
-{
-public:
-	Bool isKindOfMulti(const KindOfMaskType &setMask,
+#define BFME_HAVE_COORD3D
+#define OBJECT_TU_MEMBERS \
+	Bool isKindOfMulti(const KindOfMaskType &setMask, \
 		const KindOfMaskType &clearMask) const;
-
-	char m_pad[0x38];
-	Coord3D m_position;					// this+0x38
-};
+#include "../../GameLogic/Object/object.h"
+#undef OBJECT_TU_MEMBERS
+#undef BFME_HAVE_COORD3D
 
 typedef void (*ObjectIterateFunc)(Object *object, void *userData);
 
@@ -183,8 +181,8 @@ static void findClosestKindOf(Object *obj, void *userData)
 		closestData->m_clearKindOf))
 		return;
 
-	Real dx = obj->m_position.x - closestData->m_source.x;
-	Real dy = obj->m_position.y - closestData->m_source.y;
+	Real dx = obj->m_cachedPos.x - closestData->m_source.x;
+	Real dy = obj->m_cachedPos.y - closestData->m_source.y;
 	Real distSq = dx * dx + dy * dy;
 	if (distSq < closestData->m_closestDistSq)
 	{

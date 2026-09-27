@@ -1,9 +1,4 @@
-class Object
-{
-public:
-	unsigned char m_bfmeHeadXW[0x90];
-	unsigned char m_bfme90XW;
-};
+#include "../GameLogic/Object/object.h"
 
 struct Rva00367E30Logic
 {
@@ -27,7 +22,7 @@ void BfmeHostXW::bfmeSetXW(int when)
 {
 	Object *obj = m_bfme08XW;
 
-	if (obj->m_bfme90XW & 1)
+	if (reinterpret_cast<const unsigned char *>(obj->m_status)[0] & 1)
 		return;
 
 	int v;

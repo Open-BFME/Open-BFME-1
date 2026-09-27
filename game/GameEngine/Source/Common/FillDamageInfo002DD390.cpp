@@ -48,16 +48,12 @@ public:
 	int m_playerIndex;
 };
 
-class Object
-{
-public:
+#define BFME_HAVE_COORD3D
+#define OBJECT_TU_MEMBERS \
 	Player *getControllingPlayer() const;
-
-	unsigned char m_gap00[0x38];
-	Coord3D m_position;
-	unsigned char m_gap44[0x74 - 0x44];
-	int m_id;
-};
+#include "../GameLogic/Object/object.h"
+#undef OBJECT_TU_MEMBERS
+#undef BFME_HAVE_COORD3D
 
 class GameLogic
 {
@@ -99,21 +95,21 @@ bool FillDamageInfo002DD390::fill(IdRecord002DD390 *record, Object *thing, BFMED
 
 	if (!m_flag74)
 	{
-		delta.x = thing->m_position.x;
-		delta.y = thing->m_position.y;
-		delta.z = thing->m_position.z;
-		delta.x -= source->m_position.x;
-		delta.y -= source->m_position.y;
-		delta.z -= source->m_position.z;
+		delta.x = thing->m_cachedPos.x;
+		delta.y = thing->m_cachedPos.y;
+		delta.z = thing->m_cachedPos.z;
+		delta.x -= source->m_cachedPos.x;
+		delta.y -= source->m_cachedPos.y;
+		delta.z -= source->m_cachedPos.z;
 	}
 	else
 	{
-		delta.x = source->m_position.x;
-		delta.y = source->m_position.y;
-		delta.z = source->m_position.z;
-		delta.x -= thing->m_position.x;
-		delta.y -= thing->m_position.y;
-		delta.z -= thing->m_position.z;
+		delta.x = source->m_cachedPos.x;
+		delta.y = source->m_cachedPos.y;
+		delta.z = source->m_cachedPos.z;
+		delta.x -= thing->m_cachedPos.x;
+		delta.y -= thing->m_cachedPos.y;
+		delta.z -= thing->m_cachedPos.z;
 	}
 
 	if (fabs(delta.x) < Rva0109BF40ZeroRange &&

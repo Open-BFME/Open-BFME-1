@@ -17,12 +17,7 @@ struct BfmeDieHolder
 	DieMuxData m_mux;
 };
 
-class Object
-{
-public:
-	char m_pad[0x90];
-	unsigned char m_status;
-};
+#include "../GameLogic/Object/object.h"
 
 class TunnelTracker
 {
@@ -64,7 +59,7 @@ void Gen_0021A080::bfmeOnDie(DamageInfo *info)
 	if (!holder->m_mux.isDieApplicable(obj, info))
 		return;
 	obj = *(Object **)((char *)this - 0x20);
-	if ((obj->m_status & 4) != 0)
+	if ((reinterpret_cast<const unsigned char *>(obj->m_status)[0] & 4) != 0)
 		return;
 	TunnelTracker *t = (TunnelTracker *)g_bfmeJ1101->bfmeFind1101(m_id);
 	((CaveSystem *)g_bfmeJ1101)->unregisterCave(m_id);
