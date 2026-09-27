@@ -171,3 +171,34 @@ MeshClass::MeshClass(const MeshClass &that) :
 {
 	REF_PTR_SET(Model, that.Model);
 }
+
+// ??4MeshClass@@QAEAAV0@ABV0@@Z
+MeshClass &MeshClass::operator=(const MeshClass &that)
+{
+	if (this != &that) {
+		RenderObjClass::operator=(that);
+		if (that.Model != 0) {
+			that.Model->Add_Ref();
+		}
+		if (Model != 0) {
+			Model->Release_Ref();
+		}
+		Model = that.Model;
+		BaseVertexOffset = that.BaseVertexOffset;
+		DecalMesh = 0;
+		IsDisabledByDebugger = that.IsDisabledByDebugger;
+		MeshDebugId = that.MeshDebugId;
+		if (that.NextVisibleSkin != 0) {
+			that.NextVisibleSkin->Add_Ref();
+		}
+		if (NextVisibleSkin != 0) {
+			NextVisibleSkin->Release_Ref();
+		}
+		NextVisibleSkin = that.NextVisibleSkin;
+		AlphaOverride = that.AlphaOverride;
+		MaterialPassAlphaOverride = that.MaterialPassAlphaOverride;
+		MaterialPassEmissiveOverride = that.MaterialPassEmissiveOverride;
+		RuntimeData = that.RuntimeData;
+	}
+	return *this;
+}
