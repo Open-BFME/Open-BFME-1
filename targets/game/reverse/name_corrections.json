@@ -7468,5 +7468,35 @@
   "after_sha256": "ac7e086140d0aa259c8c7d86fa9d9f5b1d0a77a751ce03b1efc21968a3ed2464",
   "evidence": "targets/game/reverse/functions.csv",
   "reason": "The ledger already matches ?playerTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z at 0x004FA800 (the file-static tooltip of WOLLobbyMenuUpdate.cpp), and one symbol cannot sit at two addresses; the name follows the matched sibling rva004CB220PlayerTooltip."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x007a4b40.cpp",
+  "new_path": "targets/game/reverse/attempts/0x007a4b40.cpp",
+  "old_name": "BfmeWaterGridPoint2",
+  "new_name": "Rva0079E560Point2",
+  "before_sha256": "becfcac148723ee8afb2387f924df33836e29b5183bc3260aef2965f49e56fce",
+  "after_sha256": "7c5c0c25684648e2e0dfb170a8330758f3035c0bcfa2c4cb02fd32f9f3c7c85f",
+  "evidence": "targets/game/reverse/identity_evidence/0x007a4b40_bank_types.md",
+  "reason": "Bank-local invented type names; the bank now uses the Rva0079E560* names of the layouts already landed on master."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x007a4b40.cpp",
+  "new_path": "targets/game/reverse/attempts/0x007a4b40.cpp",
+  "old_name": "BfmeWaterGridPoint3",
+  "new_name": "Rva0079E560Point3",
+  "before_sha256": "becfcac148723ee8afb2387f924df33836e29b5183bc3260aef2965f49e56fce",
+  "after_sha256": "7c5c0c25684648e2e0dfb170a8330758f3035c0bcfa2c4cb02fd32f9f3c7c85f",
+  "evidence": "targets/game/reverse/identity_evidence/0x007a4b40_bank_types.md",
+  "reason": "Bank-local invented type names; the bank now uses the Rva0079E560* names of the layouts already landed on master."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x007a4b40.cpp",
+  "new_path": "targets/game/reverse/attempts/0x007a4b40.cpp",
+  "old_name": "BfmeWaterGridPolygon",
+  "new_name": "Rva0079E560Polygon",
+  "before_sha256": "becfcac148723ee8afb2387f924df33836e29b5183bc3260aef2965f49e56fce",
+  "after_sha256": "7c5c0c25684648e2e0dfb170a8330758f3035c0bcfa2c4cb02fd32f9f3c7c85f",
+  "evidence": "targets/game/reverse/identity_evidence/0x007a4b40_bank_types.md",
+  "reason": "Bank-local invented type names; the bank now uses the Rva0079E560* names of the layouts already landed on master."
  }
 ]

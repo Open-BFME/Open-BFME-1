@@ -1,194 +1,68 @@
-// ?getWaterHeight@WaterRenderObjClass@@QAEMMM@Z
-// partial score=0.97 date=2026-09-08
-// cl: /Igame/GameEngine/Include /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWSaveLoad
-
-extern "C" __declspec(dllimport) double __cdecl floor(double value);
-
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
-
-__forceinline long bfme_fistp(Real value)
-{
-	long result;
-	__asm {
-		fld [value]
-		fistp [result]
-	}
-	return result;
-}
-
-struct ICoord3D
-{
-	Int x;
-	Int y;
-	Int z;
-};
-
-struct BfmeWaterHeightPoint
-{
-	Int x;
-	Int y;
-	Int z;
-};
-
-class WaterHandle;
-
-class PolygonTrigger
-{
+// ?d_007a4b40@@YAXXZ
+// partial score=0.9895833333 date=2026-09-27
+// stlport
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/bfmeheightmap /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+#include "W3DDevice/GameClient/W3DWater.h"
+#include <list>
+#include <math.h>
+struct ICoord3D;
+class PolygonTrigger;
+struct WaterHandle { PolygonTrigger* m_polygon; };
+class PolygonTrigger {
+ char pad00[4]; PolygonTrigger* m_next;
+ char pad08[8]; ICoord3D* m_points; int m_numPoints;
+ char pad18[0x1a]; bool waterAt0032;
 public:
-	void *m_vtable;
-	PolygonTrigger *m_next;
-	char m_beforePoints[8];
-	BfmeWaterHeightPoint *m_points;
-	Int m_numPoints;
-	char m_beforeWaterFlag[0x1a];
-	Bool m_isWaterArea;
-	char m_beforeHandle[9];
-	WaterHandle *m_waterHandle;
-
-	Bool pointInTrigger(ICoord3D &point) const;
-	const WaterHandle *getWaterHandle(void) const;
-	const BfmeWaterHeightPoint *getPoint(Int index) const
-	{
-		if (index < 0)
-			index = 0;
-		if (index >= m_numPoints)
-			index = m_numPoints - 1;
-		return m_points + index;
-	}
+ bool pointInTrigger(ICoord3D&) const;
+ const WaterHandle* getWaterHandle() const;
+ PolygonTrigger* getNext(){return m_next;}
+ bool isWaterArea(){return waterAt0032;}
+ ICoord3D* getPoint(int i){if(i<0)i=0; if(i>=m_numPoints)i=m_numPoints-1; return m_points+i;}
 };
-
-class WaterHandle
-{
-	public:
-	PolygonTrigger *m_polygon;
-};
-
-struct BfmeWaterGridPoint2
-{
-	Real x;
-	Real y;
-};
-
-struct BfmeWaterGridPoint3
-{
-	Real X;
-	Real Y;
-	Real Z;
-};
-
-class BfmeWaterGridPolygon
-{
+extern "C" PolygonTrigger** g_bfmePolygonTriggerTable;
+struct Rva0079E560Point2 {float x,y;};
+struct Rva0079E560Point3 {float x,y,z;};
+class Rva0079E560Polygon {
+ char pad00[0x54];
 public:
-	Bool containsPoint(const BfmeWaterGridPoint2 *point);
-
-	char m_beforePoints[0x54];
-	BfmeWaterGridPoint3 *m_points;
-	Int m_numPoints;
+ Rva0079E560Point3* m_points;
+ bool containsPoint(const Rva0079E560Point2*);
 };
-
-struct BfmeWaterGridNode
+float WaterRenderObjClass::getWaterHeight(float x,float y)
 {
-	BfmeWaterGridNode *m_next;
-	BfmeWaterGridNode *m_previous;
-	BfmeWaterGridPolygon *m_grid;
-};
-
-struct BfmeWaterGridList
-{
-	BfmeWaterGridNode *m_head;
-};
-
-struct BfmePolygonTriggerTable
-{
-	PolygonTrigger *m_head;
-};
-
-extern "C" BfmePolygonTriggerTable *g_bfmePolygonTriggerTable;
-
-extern void j_00028fd3();
-
-static __forceinline Bool bfmeContainsPoint(
-	BfmeWaterGridPolygon *grid, const BfmeWaterGridPoint2 *point)
-{
-	typedef Bool (BfmeWaterGridPolygon::*ContainsPointCall)(
-		const BfmeWaterGridPoint2 *);
-	union { void (*raw)(void); ContainsPointCall member; } call;
-	call.raw = j_00028fd3;
-	return (grid->*call.member)(point);
-}
-
-class WaterRenderObjClass
-{
-public:
-	Real getWaterHeight(Real x, Real y);
-
-private:
-	char m_beforeWaterGridList[0x2ac];
-	BfmeWaterGridList *m_waterGridList;
-};
-
-Real WaterRenderObjClass::getWaterHeight(Real x, Real y)
-{
-	const WaterHandle *waterHandle = 0;
-	Real waterZ = 0.0f;
-	ICoord3D iLoc;
-	iLoc.x = (Int)bfme_fistp((Real)floor((double)(x + 0.5f)));
-	iLoc.y = (Int)bfme_fistp((Real)floor((double)(y + 0.5f)));
-	iLoc.z = 0;
-
-	for (PolygonTrigger *trigger = g_bfmePolygonTriggerTable->m_head;
-		trigger != 0; trigger = trigger->m_next) {
-		if (!trigger->m_isWaterArea)
-			continue;
-		if (!trigger->pointInTrigger(iLoc))
-			continue;
-
-		if (waterZ <= (Real)trigger->getPoint(0)->z) {
-			waterZ = (Real)trigger->getPoint(0)->z;
-			waterHandle = trigger->getWaterHandle();
-		}
-	}
-
-	if (waterHandle != 0) {
-		PolygonTrigger *polygon = waterHandle->m_polygon;
-		Int pointIndex = 0;
-		if (polygon->m_numPoints <= 0)
-			pointIndex = polygon->m_numPoints - 1;
-		waterZ = (Real)polygon->m_points[pointIndex].z;
-	} else {
-		waterZ = 0.0f;
-	}
-
-	BfmeWaterGridPoint3 gridLocation;
-	BfmeWaterGridNode *node;
-	BfmeWaterGridList *gridList;
-	Real gridX = x;
-	gridList = *(BfmeWaterGridList * volatile *)&m_waterGridList;
-	Real gridY = y;
-	gridLocation.X = gridX;
-	gridLocation.Y = gridY;
-	node = gridList->m_head;
-	gridLocation.Z = 0.0f;
-	if (node != (BfmeWaterGridNode *)gridList) {
-		while ((node = node->m_next) != (BfmeWaterGridNode *)gridList) {
-		}
-	}
-
-	BfmeWaterGridList *mainList = m_waterGridList;
-	BfmeWaterGridPolygon *grid = 0;
-	node = mainList->m_head;
-	while (node != (BfmeWaterGridNode *)mainList) {
-		grid = node->m_grid;
-		if (bfmeContainsPoint(grid, (const BfmeWaterGridPoint2 *)&gridLocation))
-			goto gridHit;
-		node = node->m_next;
-	}
-	return waterZ;
-
-gridHit:
-	if (waterZ == grid->m_points[0].Z)
-		return waterZ - 0.01f;
-	return waterZ;
+ const WaterHandle* waterHandle=0;
+ float waterZ=0.0f;
+ ICoord3D iLoc;
+ iLoc.x=fast_float2long_round((float)floor(x+0.5f));
+ iLoc.y=fast_float2long_round((float)floor(y+0.5f));
+ iLoc.z=0;
+ for(PolygonTrigger* pTrig=*g_bfmePolygonTriggerTable;pTrig;pTrig=pTrig->getNext()) {
+  if(!pTrig->isWaterArea())continue;
+  if(pTrig->pointInTrigger(iLoc)) {
+   if(pTrig->getPoint(0)->z>=waterZ){waterZ=pTrig->getPoint(0)->z;waterHandle=pTrig->getWaterHandle();}
+  }
+ }
+ if(waterHandle) waterZ=waterHandle->m_polygon->getPoint(0)->z;
+ else waterZ=0.0f;
+ Coord3D pos;
+ struct Node { Node* next; Node* previous; Rva0079E560Polygon* value; };
+ struct List { Node* volatile sentinel; };
+ List* polygons=(List*)((char*)this+0x2ac);
+ unsigned yCopy=*(volatile unsigned*)&y;
+ Node* firstEnd=polygons->sentinel;
+ unsigned xCopy=*(volatile unsigned*)&x;
+ *(unsigned*)&pos.y=yCopy;
+ Node* n=firstEnd->next;
+ bool empty=n==firstEnd;
+ *(unsigned*)&pos.x=xCopy;pos.z=0;
+ if(!empty) { do { n=n->next; } while(n!=firstEnd); }
+ Node* end=polygons->sentinel;
+ for(Node* it=end->next;it!=end;it=it->next){
+  Rva0079E560Polygon* poly=it->value;
+  if(poly->containsPoint((Rva0079E560Point2*)&pos)){
+   if(waterZ==poly->m_points[0].z) return waterZ-0.01f;
+   break;
+  }
+ }
+ return waterZ;
 }
