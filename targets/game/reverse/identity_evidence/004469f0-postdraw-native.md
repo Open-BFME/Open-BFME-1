@@ -1,6 +1,10 @@
 # InGameUI::postDraw native reconstruction
 
-2026-09-26, GPT-6. This is a bank, not a conversion. The existing game source
+2026-09-26, GPT-6. This is a bank, not a conversion.
+Timing correction: the first source was written at 22:53:11 UTC and the final
+named source at 23:25:53 UTC, so this investigation took 33 minutes. The two
+partial verdicts accidentally recorded an estimated 44 minutes; their byte
+measurements and bank scores are unchanged. The existing game source
 and ledger owner remain unchanged.
 
 ## Extent and identity
