@@ -1,8 +1,7 @@
 // ?_FunctionRva008C7500@AptActionInterpreter@@SAXPAV1@PAULocalContextT@1@@Z
-// partial score=0.898 date=2026-09-27
+// partial score=0.989 date=2026-09-28
 // ?_FunctionRva008C7500@AptActionInterpreter@@SAXPAV1@PAULocalContextT@1@@Z
-// Opaque Apt stack comparison body. Layout and pool ABI are witnessed by the
-// landed Apt value constructors, boolean factory, and Rva008CEE40 body.
+// Opaque Apt string-equality handler; SWF7 undefined count feeds a switch, the name compare reuses it.
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 #include <string.h>
@@ -126,21 +125,24 @@ struct Rva008C7500Boolean
 			Rva008D2A30Head = (Rva008D2A30Node *)object->m_next;
 			g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
 			object->m_value = value;
-			return object;
 		}
-
-		object = (Rva008C7500Boolean *)Rva008C5D70Alloc(12);
-		if (object != 0)
+		else
 		{
-			object->m_vtable = (void *)0x01135D68;
-			object->m_flags = (object->m_flags & 0xf0008005) | 0x40008005;
-			g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
-			object->m_vtable = (void *)0x011360A8;
-			object->m_value = value;
-			return object;
+			void *memory = Rva008C5D70Alloc(12);
+			if (memory != 0)
+			{
+				object = (Rva008C7500Boolean *)memory;
+				object->m_vtable = (void *)0x01135D68;
+				object->m_flags = (object->m_flags & 0xf0008005) | 0x40008005;
+				g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
+				object->m_vtable = (void *)0x011360A8;
+				object->m_value = value;
+			}
+			else
+				object = 0;
 		}
 
-		return 0;
+		return object;
 	}
 };
 
@@ -165,33 +167,37 @@ void AptActionInterpreter::_FunctionRva008C7500(
 {
 	Rva8CD130Value *top = interpreter->m_stack[interpreter->m_stackTop - 1];
 	Rva8CD130Value *under = interpreter->m_stack[interpreter->m_stackTop - 2];
-	Rva8CD130Value *result;
+	Rva8CD130Value *result = 0;
 	int undefinedCount = 0;
 
 	if (Rva00892370Get() == 7)
 	{
 		if (top->isUndefined())
-		{
 			undefinedCount = 1;
-			if (under->isUndefined())
-				++undefinedCount;
-		}
-		else if (under->isUndefined())
+		if (under->isUndefined())
 			++undefinedCount;
+
+		switch (undefinedCount)
+		{
+		case 1:
+			result = g_bfmeFallbackDB;
+			break;
+		case 2:
+			result = (Rva8CD130Value *)Rva008C7500Boolean::Create(true);
+			break;
+		}
 	}
 
-	if (undefinedCount == 1 && g_bfmeFallbackDB != 0)
-		result = g_bfmeFallbackDB;
-	else if (undefinedCount == 2)
-		result = (Rva8CD130Value *)Rva008C7500Boolean::Create(true);
-	else
+	if (result == 0)
 	{
 		Rva8CD130String topName;
 		Rva8CD130String underName;
 		top->getName(&topName);
 		under->getName(&underName);
+		if (topName == underName)
+			undefinedCount = 1;
 		result = (Rva8CD130Value *)Rva008C7500Boolean::Create(
-			topName == underName);
+			undefinedCount != 0);
 	}
 
 	for (int index = 1; index <= 2; ++index)
