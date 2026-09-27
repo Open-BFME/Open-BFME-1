@@ -1080,9 +1080,14 @@ const MapMetaData *MapCache::findMap(AsciiString mapName)
 /** Copy a file from a .big archive path to a real directory path */
 // ------------------------------------------------------------------------------------------------
 // ?copyFromBigToDir@@YAXABVAsciiString@@0@Z
-// Body in MapUtil_copyFromBigToDir.asm (exact 303B retail @ 0x004508D0).
-// Drift 0x00ABFB2C is mid unrelated W3D/allocator fn; C++ blocked by File
-// vtable seek slot and AsciiString::str +8 vs ZH +4.
+// Converted: the exact 303B retail body at 0x004508D0 now lives as real C++
+// in game/GameEngine/Source/GameClient/MapPreviewImage.cpp, which is where it
+// has to sit -- VC7.1 gives a static callee compiled beside its caller an EAX
+// register convention (first reference in EAX, second on the stack), and only
+// its one caller at 0x00451A37 reproduces that shape. The old notes here were
+// wrong: nothing blocks on the File vtable seek slot or on AsciiString::str
+// living at +8; the declared array new[]/delete[] are what resolve those two
+// relocs to retail 0x00881F70 and 0x00881EF0.
 void copyFromBigToDir( const AsciiString& infile, const AsciiString& outfile );
 
 Image *getMapPreviewImage( AsciiString mapName )

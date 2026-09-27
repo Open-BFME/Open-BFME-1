@@ -1,9 +1,14 @@
 // getMapPreviewImage at RVA 0x004516E0: 1212 retail bytes.
 // Identity: ZH MapUtil.cpp counterpart and named load-screen callers through ILT.
 // BFME strings use StringBase<char>; _art.tga previews flip the vertical UVs.
-// The static file-copy helper must remain visible: VC7.1 passes its first
-// reference in EAX and its second on the stack. Its complete 304-byte retail
-// extent matches too (the historical 303-byte claim cuts its final call).
+// The static file-copy helper must remain visible: VC7.1 gives a function it
+// compiles beside its caller an EAX register convention, so the first
+// reference arrives in EAX and the second on the stack, and the body therefore
+// opens with mov eax,[eax]. Across a TU boundary the same pair is a plain cdecl
+// push/push, which is why these 303 retail bytes at 0x004508D0 (last
+// instruction is the noreturn call ending 0x004509FE; 0x004509FF is padding)
+// can only live beside the one caller at 0x00451A37. ZH MapUtil.cpp
+// copyFromBigToDir is the twin.
 // Rva0044F4D0 is the existing opaque one-pointer texture-reference constructor;
 // its argument carries the filename pointer through the historical int ABI.
 // No layout or semantic identity is inferred from the old constructor name.
@@ -80,6 +85,12 @@ public:
  ~XferException();
 private: char *text;int tag;
 };
+// Retail allocates and frees the copy buffer through the array operators
+// (??_U@YAPAXI@Z at 0x00881F70, ??_V@YAXPAX@Z at 0x00881EF0). Without these
+// declarations cl binds new char[] and delete[] to the scalar operators, which
+// are different bodies at 0x00881F30 and 0x00881EB0.
+void * __cdecl operator new[](unsigned int bytes);
+void __cdecl operator delete[](void *block);
 static void copyFromBigToDir(const AsciiString &infile,const AsciiString &outfile) {
  File *file=TheFileSystem->openFile(infile.str(),0x41);
  if(!file) throw XferException(5,0);
