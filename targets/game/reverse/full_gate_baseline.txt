@@ -1,2 +1,1 @@
 # full-gate red rows, shrink-only (tools/gate_baseline.py). One 'name (source)' per line.
-??A?$map@VAsciiString@@W4Rva0054FA30Mapped@@U?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva0054FA30Mapped@@@_STL@@@4@@_STL@@QAEAAW4Rva0054FA30Mapped@@ABVAsciiString@@@Z (game/Libraries/Source/WWVegas/WWLib/RvaMapIndexAsciiStringNothrow.cpp)
