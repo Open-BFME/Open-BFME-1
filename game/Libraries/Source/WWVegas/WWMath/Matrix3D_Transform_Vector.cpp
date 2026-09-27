@@ -1,13 +1,7 @@
-// cl: /DNDEBUG /MD /G6 /EHsc
+// cl: /DNDEBUG /MD /G6 /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 // BFME's two-array matrix transform helper at retail 0x009244F0.
 
-class Vector3
-{
-public:
-	float X;
-	float Y;
-	float Z;
-};
+#include "vector3.h"
 
 class Vector4
 {

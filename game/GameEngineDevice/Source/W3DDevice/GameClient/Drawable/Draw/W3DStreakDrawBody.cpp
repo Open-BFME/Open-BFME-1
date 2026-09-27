@@ -1,4 +1,4 @@
-// cl: /O2 /EHsc
+// cl: /O2 /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 // W3DStreakDraw helper at retail 0x0077D6B0.
 // The inline x87 block preserves the retail stack slot for distance.
 
@@ -9,13 +9,7 @@ struct Coord3D
 	float z;
 };
 
-class Vector3
-{
-public:
-	float X;
-	float Y;
-	float Z;
-};
+#include "vector3.h"
 
 struct BfmeVecOH
 {

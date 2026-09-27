@@ -1,12 +1,7 @@
+// cl: /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 // ?Convert_Color_Clamp@Rva0090F460@@SAIVVector4@@@Z, retail 0x0090F460.
 
-class Vector3
-{
-public:
-	float X;
-	float Y;
-	float Z;
-};
+#include "vector3.h"
 
 class Vector4
 {

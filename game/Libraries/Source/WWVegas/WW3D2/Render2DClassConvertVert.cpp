@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHs-c-
+// cl: /DNDEBUG /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?Convert_Vert@Render2DClass@@: game/Libraries/Source/WWVegas/WW3D2/render2d.cpp
 // BFME Render2DClass::Convert_Vert, retail 0x006E7190 (42 B) and 0x006E71D0 (41 B).
 //
@@ -14,13 +14,7 @@ public:
 	float Y;
 };
 
-class Vector3
-{
-public:
-	float X;
-	float Y;
-	float Z;
-};
+#include "vector3.h"
 
 extern "C" float g_BfmeRender2DZ;
 
