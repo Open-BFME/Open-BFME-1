@@ -24,6 +24,7 @@ def repository(tmp_path):
     for name in ("tools/fleet", "targets/game/reverse", "game", "build"):
         (root / name).mkdir(parents=True)
     shutil.copy2(TOOLS / "fleet/harvest.py", root / "tools/fleet/harvest.py")
+    shutil.copy2(TOOLS / "bash_path.py", root / "tools/bash_path.py")
     shutil.copy2(TOOLS / "portable_lock.py", root / "tools/portable_lock.py")
     # harvest.py imports fleet_run (in-flight leases) and re_log (quarantine
     # verdicts) and runs retired_guard; without them every test here died on

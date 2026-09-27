@@ -12,6 +12,7 @@ import csv, os, re, subprocess, sys
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2 if Path(__file__).resolve().parent.name == "fleet" else 1]
 sys.path.insert(0, str(ROOT / "tools"))
+import bash_path
 import portable_lock
 
 def run(*cmd, cwd=ROOT, check=True, cap=False):
@@ -198,7 +199,7 @@ with open(ROOT / "targets/game/reverse/.add_match.lock", "a+") as h:
             # a tracked TU a seat is still editing fails the hook's byte-verify
             # and takes every other landing down with it: stage it only once
             # it verifies on its own (GameLOD.cpp and sortingrenderer.cpp, 2026-09-17)
-            v = subprocess.run(["bash", str(ROOT / "build.sh"), source], cwd=ROOT, capture_output=True, text=True, errors="replace")
+            v = subprocess.run([bash_path.bash(), str(ROOT / "build.sh"), source], cwd=ROOT, capture_output=True, text=True, errors="replace", env=bash_path.env())
             if "Functions: OK" in v.stdout + v.stderr and "FAIL" not in v.stdout + v.stderr:
                 run("git", "add", "--", source)
             else:

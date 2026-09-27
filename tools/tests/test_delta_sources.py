@@ -9,6 +9,7 @@ import pytest
 
 TOOLS = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(TOOLS))
+import bash_path
 import delta_sources as delta
 
 
@@ -304,9 +305,9 @@ printf '%s\\n' "$@" > "build-args-$n"
     build_script.chmod(0o755)
     env = dict(os.environ, PATH=f"{bindir}{os.pathsep}{os.environ['PATH']}",
                FIXTURE_ROOT=str(tmp_path), SELECTOR_MODE=mode, SELECTOR_OUTCOME=outcome)
-    result = subprocess.run(["bash", str(TOOLS.parent / ".githooks" / hook)],
+    result = subprocess.run([bash_path.bash(), str(TOOLS.parent / ".githooks" / hook)],
                             input="refs/heads/test local refs/heads/test base\n",
-                            text=True, capture_output=True, env=env)
+                            text=True, capture_output=True, env=bash_path.env(env))
     records = sorted(tmp_path.glob("build-args-*"), key=lambda p: int(p.name.rsplit("-", 1)[1]))
     chunks = [record.read_text().splitlines() for record in records]
     if outcome == "failure":

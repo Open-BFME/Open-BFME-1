@@ -11,6 +11,7 @@ import uuid
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import bash_path  # noqa: E402
 import eligibility  # noqa: E402
 import fleet_cgroup  # noqa: E402
 import fleet_run  # noqa: E402
@@ -524,8 +525,8 @@ def test_unblock_launcher_routes_through_runner_and_preserves_exit(tmp_path):
     stub.write_text("import json,sys\nfrom pathlib import Path\n"
                     "Path('build/runner_args.json').write_text(json.dumps(sys.argv[1:]))\n"
                     "sys.exit(7)\n")
-    result = subprocess.run(["bash", str(target), "review", "brief.txt"],
-                            cwd=tmp_path, capture_output=True, text=True)
+    result = subprocess.run([bash_path.bash(), str(target), "review", "brief.txt"],
+                            cwd=tmp_path, capture_output=True, text=True, env=bash_path.env())
     assert result.returncode == 7, result.stderr
     args = json.loads((tmp_path / "build/runner_args.json").read_text())
     assert args[:6] == ["--brief", "brief.txt", "--log", "build/fleet_logs/seat_unblock_review.log",

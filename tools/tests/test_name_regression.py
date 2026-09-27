@@ -7,6 +7,7 @@ from pathlib import Path
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import bash_path
 import name_regression as N
 import name_history as H
 
@@ -485,8 +486,8 @@ def hook_fixture(repo):
 def run_hook(repo, hook, old):
     head = git(repo, 'rev-parse', 'HEAD').strip()
     refs = f'refs/heads/main {head} refs/heads/main {old}\n' if hook == 'pre-push' else ''
-    return subprocess.run(['bash', str(HOOKS / hook)], cwd=repo,
-                          input=refs, text=True, capture_output=True)
+    return subprocess.run([bash_path.bash(), str(HOOKS / hook)], cwd=repo,
+                          input=refs, text=True, capture_output=True, env=bash_path.env())
 
 
 @pytest.mark.parametrize('hook', ['pre-commit', 'pre-push'])

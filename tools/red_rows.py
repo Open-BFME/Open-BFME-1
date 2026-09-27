@@ -17,10 +17,12 @@ hours of commits.
 """
 import os
 import re
-import shutil
 import subprocess
 import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import bash_path  # noqa: E402  (after the path insert that makes it importable)
 
 ROOT = Path(__file__).resolve().parents[1]
 RELOC_NAMES = ROOT / "targets/game/reverse" / "reloc_names.csv"
@@ -35,10 +37,11 @@ def run_gate():
     env.setdefault("BUILD_POOL", "8")
     command = [str(ROOT / "build.sh")]
     if os.name == "nt":
-        bash = shutil.which("bash")
-        if bash is None:
-            raise SystemExit("bash is required to run build.sh on Windows")
-        command = [bash, str(ROOT / "build.sh")]
+        try:
+            command = [bash_path.bash(), str(ROOT / "build.sh")]
+        except RuntimeError as error:
+            raise SystemExit(f"bash is required to run build.sh on Windows: {error}")
+        env = bash_path.env(env)
     result = subprocess.run(command, cwd=ROOT, env=env, text=True,
                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     return result.returncode, result.stdout

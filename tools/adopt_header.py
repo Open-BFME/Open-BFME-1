@@ -48,6 +48,9 @@ import sys
 from pathlib import Path
 from typing import NamedTuple
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import bash_path  # noqa: E402  (after the path insert that makes it importable)
+
 ROOT = Path(__file__).resolve().parents[1]
 BLOCKED = ROOT / "targets/game/reverse/header_adopt_blocked.tsv"
 
@@ -242,8 +245,8 @@ def rewrite(text, name, include, incdir):
 def verdict(rel):
     """(rel, why-it-failed or None). An unreadable answer is a defect, not a pass."""
     # through bash: on Windows a .sh is not executable (WinError 193)
-    done = subprocess.run(["bash", str(ROOT / "build.sh"), rel], cwd=ROOT,
-                          capture_output=True, text=True)
+    done = subprocess.run([bash_path.bash(), str(ROOT / "build.sh"), rel], cwd=ROOT,
+                          capture_output=True, text=True, env=bash_path.env())
     out = done.stdout + done.stderr
     if done.returncode:
         # A compile error means the header lacks something the shim declared; a

@@ -13,6 +13,8 @@ import pytest
 
 
 TOOLS = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(TOOLS))
+import bash_path  # noqa: E402
 spec = importlib.util.spec_from_file_location("target_hooks", TOOLS / "target_hooks.py")
 H = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(H)
@@ -223,13 +225,14 @@ def hook_fixture(repo):
 
 
 def invoke_hook(repo, hook, base=None):
-    bash = shutil.which("bash")
-    if not bash:
+    try:
+        bash = bash_path.bash()
+    except RuntimeError:
         pytest.skip("Bash is required to exercise hooks")
     head = git(repo, "rev-parse", "HEAD")
     refs = f"refs/heads/main {head} refs/heads/main {base}\n" if hook == "pre-push" else ""
     return subprocess.run([bash, str(TOOLS.parent / ".githooks" / hook)], cwd=repo,
-                          input=refs, capture_output=True, text=True)
+                          input=refs, capture_output=True, text=True, env=bash_path.env())
 
 
 def test_real_precommit_verifies_editor_before_game_early_exit(repo):

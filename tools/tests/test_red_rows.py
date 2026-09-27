@@ -29,7 +29,8 @@ def test_windows_runner_invokes_build_sh_through_bash(monkeypatch):
     seen = {}
 
     monkeypatch.setattr(red_rows.os, "name", "nt")
-    monkeypatch.setattr(red_rows.shutil, "which", lambda name: "C:/Git/bin/bash.exe")
+    monkeypatch.setattr(red_rows.bash_path, "bash", lambda: "C:/Git/usr/bin/bash.exe")
+    monkeypatch.setattr(red_rows.bash_path, "env", lambda base=None: dict(base or {}, PATH="with-git"))
 
     def run(command, **kwargs):
         seen["command"] = command
@@ -38,7 +39,8 @@ def test_windows_runner_invokes_build_sh_through_bash(monkeypatch):
 
     monkeypatch.setattr(red_rows.subprocess, "run", run)
     assert red_rows.run_gate() == (0, "")
-    assert seen["command"] == ["C:/Git/bin/bash.exe", str(red_rows.ROOT / "build.sh")]
+    assert seen["command"] == ["C:/Git/usr/bin/bash.exe", str(red_rows.ROOT / "build.sh")]
+    assert seen["kwargs"]["env"]["PATH"] == "with-git"
 
 GREEN = """Compile: 0 of 264 TU(s) (deps-cache: 264 current)
 Functions: OK 5127/5127 matched across 311 source file(s)
