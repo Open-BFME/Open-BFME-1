@@ -203,6 +203,31 @@ StringBase<T>::StringBase(const T *str)
 		releaseBuffer();
 }
 
+template <typename T>
+void StringBase<T>::set(const StringBase<T> &src, int start, int len)
+{
+	if (start + len < 0 || start >= src.getLength())
+	{
+		releaseBuffer();
+		return;
+	}
+	if (start < 0)
+	{
+		len += start;
+		start = 0;
+	}
+	if (start + len >= src.getLength())
+		len = src.getLength() - start;
+
+	const T *str = src.str() + start;
+	if (m_data != 0 && str == &m_data->data[0])
+		return;
+	if (len != 0)
+		ensureUniqueBufferOfSize(len, false, str, len, 0, 0);
+	else
+		releaseBuffer();
+}
+
 
 template <typename T>
 StringBase<T>::StringBase()
@@ -2521,305 +2546,6 @@ __declspec(naked) void StringBase<wchar_t>::removeLastChar()
         __emit 0x5d
         __emit 0x59
         __emit 0xc3
-    }
-}
-
-__declspec(naked) void StringBase<char>::set(const StringBase<char> &src, int start, int len)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x53
-        __emit 0x56
-        __emit 0x8d
-        __emit 0x34
-        __emit 0x10
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x57
-        __emit 0x7c
-        __emit 0x72
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x3f
-        __emit 0x85
-        __emit 0xff
-        __emit 0x74
-        __emit 0x06
-        __emit 0x0f
-        __emit 0xb7
-        __emit 0x5f
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xdb
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x7d
-        __emit 0x5c
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x7d
-        __emit 0x04
-        __emit 0x8b
-        __emit 0xd6
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x85
-        __emit 0xff
-        __emit 0x74
-        __emit 0x06
-        __emit 0x0f
-        __emit 0xb7
-        __emit 0x77
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xf6
-        __emit 0x8d
-        __emit 0x1c
-        __emit 0x10
-        __emit 0x3b
-        __emit 0xde
-        __emit 0x7c
-        __emit 0x0e
-        __emit 0x85
-        __emit 0xff
-        __emit 0x74
-        __emit 0x06
-        __emit 0x0f
-        __emit 0xb7
-        __emit 0x57
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xd2
-        __emit 0x2b
-        __emit 0xd0
-        __emit 0x85
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x77
-        __emit 0x08
-        __emit 0x75
-        __emit 0x05
-        __emit 0xbe
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x03
-        __emit 0xf0
-        __emit 0x8b
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x07
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x3b
-        __emit 0xf0
-        __emit 0x74
-        __emit 0x1d
-        __emit 0x85
-        __emit 0xd2
-        __emit 0x74
-        __emit 0x14
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x52
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x52
-        __emit 0xe8
-        __emit 0x42
-        __emit 0xed
-        __emit 0xff
-        __emit 0xff
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x5b
-        __emit 0xc2
-        __emit 0x0c
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xa7
-        __emit 0xec
-        __emit 0xff
-        __emit 0xff
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x5b
-        __emit 0xc2
-        __emit 0x0c
-        __emit 0x00
-    }
-}
-
-__declspec(naked) void StringBase<wchar_t>::set(const StringBase<wchar_t> &src, int start, int len)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x53
-        __emit 0x56
-        __emit 0x8d
-        __emit 0x34
-        __emit 0x10
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x57
-        __emit 0x7c
-        __emit 0x73
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x3f
-        __emit 0x85
-        __emit 0xff
-        __emit 0x74
-        __emit 0x06
-        __emit 0x0f
-        __emit 0xb7
-        __emit 0x5f
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xdb
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x7d
-        __emit 0x5d
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x7d
-        __emit 0x04
-        __emit 0x8b
-        __emit 0xd6
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x85
-        __emit 0xff
-        __emit 0x74
-        __emit 0x06
-        __emit 0x0f
-        __emit 0xb7
-        __emit 0x77
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xf6
-        __emit 0x8d
-        __emit 0x1c
-        __emit 0x10
-        __emit 0x3b
-        __emit 0xde
-        __emit 0x7c
-        __emit 0x0e
-        __emit 0x85
-        __emit 0xff
-        __emit 0x74
-        __emit 0x06
-        __emit 0x0f
-        __emit 0xb7
-        __emit 0x57
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xd2
-        __emit 0x2b
-        __emit 0xd0
-        __emit 0x85
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x77
-        __emit 0x08
-        __emit 0x75
-        __emit 0x05
-        __emit 0xbe
-        __emit 0x8c
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x34
-        __emit 0x46
-        __emit 0x8b
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x07
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x3b
-        __emit 0xf0
-        __emit 0x74
-        __emit 0x1d
-        __emit 0x85
-        __emit 0xd2
-        __emit 0x74
-        __emit 0x14
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x52
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x52
-        __emit 0xe8
-        __emit 0xa1
-        __emit 0xf3
-        __emit 0xff
-        __emit 0xff
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x5b
-        __emit 0xc2
-        __emit 0x0c
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x06
-        __emit 0xf3
-        __emit 0xff
-        __emit 0xff
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x5b
-        __emit 0xc2
-        __emit 0x0c
-        __emit 0x00
     }
 }
 
