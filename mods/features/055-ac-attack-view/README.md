@@ -75,5 +75,7 @@ candidate rule above.
 
 The next investigation needs a recording or logs that identify each Uruk's
 order, target, attack state and reason for leaving it around that click. The
-current patch has no chat or combat logging. It remains opt-in until the
-remaining behavior is explained and retested.
+current patch has no chat or combat logging; the separate
+[`056-ac-transition-trace`](../056-ac-transition-trace/README.md) diagnostic
+records those events. It remains opt-in until the remaining behavior is
+explained and retested.

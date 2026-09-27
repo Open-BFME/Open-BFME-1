@@ -480,6 +480,48 @@ def build_ac_attack_view(pe, feature_dir, probe=False):
                          hooks, probe=probe)
 
 
+# Diagnostic hooks from the earlier AC probe, kept separate from 055's behavior
+# hooks so the trace can also be built against the unmodified game.
+AC_TRANSITION_TRACE_HOOKS = (
+    (0x00667238, "ac_trace_chat", ("esi", "eax", "ebp"), "505189642444"),
+    (0x006671A1, "ac_trace_chat", ("esi", "eax", "ebp"), "505189642444"),
+    (0x00277780, "ac_trace_command", ("ecx", "stack:0"), "558be9c7858401000000000000"),
+    (0x000A13D9, "ac_trace_transition", ("esi", "edi"), "85ff897e1c"),
+    (0x001D04B0, "ac_trace_damage_result", ("esi", "edi"), "f6864403000001"),
+    (0x00238D10, "ac_trace_plan_enter", ("stack:0", "stack:2", "stack:5", "stack:6"), "81ec0c010000"),
+    (0x0023900A, "ac_trace_plan_candidate", (), "db4424188b84242c010000"),
+    (0x002390AD, "ac_trace_plan_distance_pass", ("eax",), "8b8c248c000000"),
+    (0x0023910A, "ac_trace_plan_point", ("edx",), "e86daadfff"),
+    (0x0023910F, "ac_trace_plan_point_result", ("eax",), "84c00f8555010000"),
+    (0x003DF331, "ac_trace_cell_begin", ("ebx", "edx"), "3b55140f8c92010000"),
+    (0x003DF390, "ac_trace_cell_data", ("esi",), "8b460c8bd0"),
+    (0x003DF4CC, "ac_trace_cell_reject", (), "5f5e5d32c0"),
+    (0x0023926C, "ac_trace_plan_passed_point", (), "8a44241184c0"),
+    (0x0023929B, "ac_trace_plan_passed_line", (), "d9442440d85c243c"),
+    (0x002392AA, "ac_trace_plan_chosen", (), "d944244c8b442420"),
+    (0x00244455, "ac_trace_plan_complete", ("eax", "edi", "esi"), "8b4c242485c9"),
+    (0x001758F0, "ac_trace_enter_state", ("ecx",), "83ec0c538bd9"),
+    (0x00175A80, "ac_trace_update_state", ("ecx",), "5153558be9"),
+    (0x00175A0F, "ac_trace_begin", ("ebp", "esi", "ebx"), "8b17568bcf"),
+    (0x00175B34, "ac_trace_update_target", ("ebx", "edi", "ebp"), "8b16578bce"),
+    (0x00175AC5, "ac_trace_stealth_fail", ("ebx", "edi", "ebp"), "5f5db8feffffff"),
+    (0x00175AFC, "ac_trace_update_fail", ("ebx", "edi", "ebp"), "5e5f5db8feffffff"),
+    (0x00175B16, "ac_trace_ready", ("ebx", "edi", "ebp", "esi"), "a198082f01"),
+    (0x00175B26, "ac_trace_not_ready", ("ebx", "edi", "ebp", "esi"), "8b1598082f01"),
+    (0x00175985, "ac_trace_enter_fail", ("ebp", "esi", "ebx"), "5f5e5db8feffffff"),
+    (0x001759C4, "ac_trace_distance", ("ebp", "esi", "ebx"), "568bcde821e3ecff"),
+    (TARGET_LOOPBODY, "ac_trace_loop", (), "8b038bcbc745fc00000000"),
+)
+
+
+def build_ac_transition_trace(pe, feature_dir, probe=False):
+    for target, _, _, expected in AC_TRANSITION_TRACE_HOOKS:
+        if pe.read(target, len(bytes.fromhex(expected))) != bytes.fromhex(expected):
+            raise SystemExit(f"AC transition trace retail span changed at 0x{target:08X}")
+    return build_feature(pe, feature_dir / "src/ac_transition_trace.cpp", "ac_trace_loop",
+                         tuple(hook[:3] for hook in AC_TRANSITION_TRACE_HOOKS), probe=probe)
+
+
 def build_uiprobe(pe, feature_dir, probe=False):
     # Shares 039-replayctl's hook address; build it with --only.
     return build_feature(pe, feature_dir / "src/uiprobe.cpp", "uiprobe_frame", (
@@ -674,6 +716,8 @@ DATA = {
 UNSHIPPED = {
     "055-ac-attack-view": (build_ac_attack_view,
                            "partial AC mitigation; rear Uruks still give up after a re-click"),
+    "056-ac-transition-trace": (build_ac_transition_trace,
+                                 "diagnostic-only AC member, command, chat, and state trace"),
     "030-netlatprobe": (build_netlatprobe, "an instrument: it writes tens of lines a second"),
     "036-fpsprobe-timing": (build_fpsprobe_timing,
                             "the probe without the backbuffer readback, for "
