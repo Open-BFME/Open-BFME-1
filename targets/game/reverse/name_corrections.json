@@ -6638,5 +6638,195 @@
   "after_sha256": "73a6336ac2fa45a6c332834a20db3cb92d23b2f829cd9f11f835616909058992",
   "evidence": "targets/game/reverse/identity_evidence/00934940-batched-renderer.md",
   "reason": "False pairing: canonical DX8Wrapper remains included and retains its name; new scoped subclass only supplies the independently proven BFME texture-stage slot67 contract, corroborated by matched006C5840 and009095A0. No owner or callee was renamed."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "old_name": "setFlags",
+  "new_name": "j_0002191d",
+  "before_sha256": "f7834026206c49ba2eedf3ded6fab6f86fa3ef7a0982592abbdbf298ace5f953",
+  "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
+  "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
+  "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "old_name": "slot00",
+  "new_name": "j_000022bb",
+  "before_sha256": "f7834026206c49ba2eedf3ded6fab6f86fa3ef7a0982592abbdbf298ace5f953",
+  "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
+  "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
+  "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "old_name": "slot01",
+  "new_name": "j_00004f1b",
+  "before_sha256": "f7834026206c49ba2eedf3ded6fab6f86fa3ef7a0982592abbdbf298ace5f953",
+  "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
+  "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
+  "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "old_name": "slot02",
+  "new_name": "j_000076fd",
+  "before_sha256": "f7834026206c49ba2eedf3ded6fab6f86fa3ef7a0982592abbdbf298ace5f953",
+  "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
+  "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
+  "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "old_name": "slot03",
+  "new_name": "j_000077b6",
+  "before_sha256": "f7834026206c49ba2eedf3ded6fab6f86fa3ef7a0982592abbdbf298ace5f953",
+  "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
+  "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
+  "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "old_name": "slot04",
+  "new_name": "j_00008337",
+  "before_sha256": "f7834026206c49ba2eedf3ded6fab6f86fa3ef7a0982592abbdbf298ace5f953",
+  "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
+  "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
+  "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "old_name": "slot05",
+  "new_name": "j_000084b8",
+  "before_sha256": "f7834026206c49ba2eedf3ded6fab6f86fa3ef7a0982592abbdbf298ace5f953",
+  "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
+  "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
+  "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "old_name": "slot06",
+  "new_name": "j_00008b8e",
+  "before_sha256": "f7834026206c49ba2eedf3ded6fab6f86fa3ef7a0982592abbdbf298ace5f953",
+  "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
+  "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
+  "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "old_name": "slot07",
+  "new_name": "j_00008e86",
+  "before_sha256": "f7834026206c49ba2eedf3ded6fab6f86fa3ef7a0982592abbdbf298ace5f953",
+  "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
+  "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
+  "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "old_name": "slot08",
+  "new_name": "j_000095ed",
+  "before_sha256": "f7834026206c49ba2eedf3ded6fab6f86fa3ef7a0982592abbdbf298ace5f953",
+  "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
+  "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
+  "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "old_name": "slot09",
+  "new_name": "j_0000a7a9",
+  "before_sha256": "f7834026206c49ba2eedf3ded6fab6f86fa3ef7a0982592abbdbf298ace5f953",
+  "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
+  "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
+  "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "old_name": "slot10",
+  "new_name": "j_0000c752",
+  "before_sha256": "f7834026206c49ba2eedf3ded6fab6f86fa3ef7a0982592abbdbf298ace5f953",
+  "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
+  "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
+  "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "old_name": "slot11",
+  "new_name": "j_0000c87e",
+  "before_sha256": "f7834026206c49ba2eedf3ded6fab6f86fa3ef7a0982592abbdbf298ace5f953",
+  "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
+  "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
+  "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "old_name": "slot12",
+  "new_name": "j_0000d990",
+  "before_sha256": "f7834026206c49ba2eedf3ded6fab6f86fa3ef7a0982592abbdbf298ace5f953",
+  "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
+  "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
+  "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "old_name": "slot13",
+  "new_name": "j_0000da8a",
+  "before_sha256": "f7834026206c49ba2eedf3ded6fab6f86fa3ef7a0982592abbdbf298ace5f953",
+  "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
+  "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
+  "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "old_name": "slot14",
+  "new_name": "j_00010096",
+  "before_sha256": "f7834026206c49ba2eedf3ded6fab6f86fa3ef7a0982592abbdbf298ace5f953",
+  "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
+  "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
+  "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "old_name": "slot15",
+  "new_name": "j_0001253f",
+  "before_sha256": "f7834026206c49ba2eedf3ded6fab6f86fa3ef7a0982592abbdbf298ace5f953",
+  "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
+  "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
+  "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "old_name": "slot16",
+  "new_name": "j_0001362e",
+  "before_sha256": "f7834026206c49ba2eedf3ded6fab6f86fa3ef7a0982592abbdbf298ace5f953",
+  "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
+  "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
+  "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0029e330.cpp",
+  "old_name": "voiceEntry",
+  "new_name": "j_00004f1b",
+  "before_sha256": "f7834026206c49ba2eedf3ded6fab6f86fa3ef7a0982592abbdbf298ace5f953",
+  "after_sha256": "81e6ab3c42f8e445a0a097b6dba490f3d4d12fd091aef58a61271aaf2595e40a",
+  "evidence": "targets/game/reverse/identity_evidence/0029e330-production-update.md",
+  "reason": "Token/declaration alignment artifact in full943-byte-prefix to complete4685-byte-body reconstruction. Old reserved virtual slots or adapter/local names are paired with unrelated existing ILT declarations; no established callee identity was renamed. Tracked evidence explains slots, clear/set buffers and actual audio input separately."
  }
 ]
