@@ -36,11 +36,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # the ledgers are large; the tests build their own fixtures
+          # the ledgers are large; the tests build their own fixtures. eligibility
+          # reads the no_ground_truth ranges from the baseline manifest (not the image).
           sparse-checkout: |
             tools
             targets/game/reverse/unlocked.txt
             docs/shape_levers.md
+            inputs/baselines/bfme1/retail-1.03-unpacked/manifest.json
             .github
           sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
