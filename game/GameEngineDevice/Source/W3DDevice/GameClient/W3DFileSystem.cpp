@@ -43,10 +43,22 @@
 // for now we maintain old legacy files
 // #define MAINTAIN_LEGACY_FILES
 
+#include <new>
+#define _OPERATOR_NEW_DEFINED_
+// Use BFME StringBase layout; the ZH string class is a different type.
+#define ASCIISTRING_H
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+template <typename T> inline const T *StringBase<T>::str() const { return m_data ? m_data->data : (const T *)""; }
+template <typename T> inline StringBase<T>::~StringBase() { releaseBuffer(); }
+// Retail accessor returns an owned value; the ZH header returns a reference.
+// No GlobalData fields are read through this declaration.
+class GlobalData { public: AsciiString getPath_UserData() const; };
+extern GlobalData *TheGlobalData;
+
 #include "Common/Debug.h"
 #include "Common/File.h"
 #include "Common/FileSystem.h"
-#include "Common/GlobalData.h"
+
 #include "Common/MapObject.h"
 #include "Common/Registry.h"
 #include "W3DDevice/GameClient/W3DFileSystem.h"
@@ -80,7 +92,10 @@ typedef enum
 	FILE_TYPE_W3D,
 	FILE_TYPE_TGA,
 	FILE_TYPE_DDS,
+	FILE_TYPE_JPG,
+	FILE_TYPE_PNG,
 } GameFileType;
+
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -132,7 +147,7 @@ char const * GameFileClass::File_Name( void ) const
 //-------------------------------------------------------------------------------------------------
 inline static Bool isImageFileType( GameFileType fileType )
 {
-	return (fileType == FILE_TYPE_TGA || fileType == FILE_TYPE_DDS);
+	return (fileType == FILE_TYPE_TGA || fileType == FILE_TYPE_DDS || fileType == FILE_TYPE_JPG || fileType == FILE_TYPE_PNG);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -153,7 +168,9 @@ inline static Bool isImageFileType( GameFileType fileType )
 	Finally we try UserData.
 */
 //-------------------------------------------------------------------------------------------------
-// ?Set_Name@GameFileClass@@ present-unmatched
+// BFME 0x006F63B0: native Set_Name body. The virtual ILT is 0x00006F05.
+// Retail returns m_filename (+0x10D); the historical lift declared void.
+// Complete extent is 1217 bytes ending after ret 4 at 0x006F6871.
 char const * GameFileClass::Set_Name( char const *filename )
 {
 
@@ -196,36 +213,16 @@ char const * GameFileClass::Set_Name( char const *filename )
 		fileType = FILE_TYPE_W3D;
 	else if( stricmp( extension, ".tga" ) == 0 )
 		fileType = FILE_TYPE_TGA;
+	else if( stricmp( extension, ".png" ) == 0 )
+		fileType = FILE_TYPE_PNG;
 	else if( stricmp( extension, ".dds" ) == 0 )
 		fileType = FILE_TYPE_DDS;
-
-
-
-	// We need to be able to grab w3d's from a localization dir, since Germany hates exploding people units.
-	if( fileType == FILE_TYPE_W3D )
-	{
-		static const char *localizedPathFormat = "Data/%s/Art/W3D/";
-		sprintf(m_filePath,localizedPathFormat, GetRegistryLanguage().str());
-		strcat( m_filePath, filename );
-
-	}  // end if
-
-	// We need to be able to grab images from a localization dir, because Art has a fetish for baked-in text.  Munkee.
-	if( isImageFileType(fileType) )
-	{
-		static const char *localizedPathFormat = "Data/%s/Art/Textures/";
-		sprintf(m_filePath,localizedPathFormat, GetRegistryLanguage().str());
-		strcat( m_filePath, filename );
-
-	}  // end else if
-
-	// see if the file exists
-	m_fileExists = TheFileSystem->doesFileExist( m_filePath );
+	else if( stricmp( extension, ".jpg" ) == 0 )
+		fileType = FILE_TYPE_JPG;
 
 
 
 	// Now try the main lookup of hitting local files and big files
-	if( m_fileExists == FALSE )
 	{
 		// all .w3d files are in W3D_DIR_PATH, all .tga files are in TGA_DIR_PATH
 		if( fileType == FILE_TYPE_W3D )
@@ -251,36 +248,7 @@ char const * GameFileClass::Set_Name( char const *filename )
 
 
 
-	// maintain legacy compatibility directories for now
-	#ifdef MAINTAIN_LEGACY_FILES
-	if( m_fileExists == FALSE )
-	{
-
-		if( fileType == FILE_TYPE_W3D )
-		{
-
-			strcpy( m_filePath, LEGACY_W3D_DIR_PATH );
-			strcat( m_filePath, filename );
-
-		}  // end if
-		else if( isImageFileType(fileType) )
-		{
-
-			strcpy( m_filePath, LEGACY_TGA_DIR_PATH );
-			strcat( m_filePath, filename );
-
-		}  // end else if
-
-		// see if the file exists
-		m_fileExists = TheFileSystem->doesFileExist( m_filePath );
-
-	}  // end if
-	#endif
-
-
-
 	// if file is still not found, try the test art folders
-	#ifdef LOAD_TEST_ASSETS
 	if( m_fileExists == FALSE )
 	{
 
@@ -303,7 +271,6 @@ char const * GameFileClass::Set_Name( char const *filename )
 		m_fileExists = TheFileSystem->doesFileExist( m_filePath );
 
 	}  // end if
-	#endif
 
 	// We allow the user to load their own images for various assets (like the control bar)
 	if( m_fileExists == FALSE  && TheGlobalData)
@@ -345,9 +312,14 @@ char const * GameFileClass::Set_Name( char const *filename )
 
 	}  // end if
 
+	if (!m_fileExists && fileType == FILE_TYPE_W3D) {
+		sprintf(m_filePath, "data/editor/molds/%s", filename);
+		m_fileExists = TheFileSystem->doesFileExist(m_filePath);
+	}
 	return m_filename;
 
 }
+
 
 //-------------------------------------------------------------------------------------------------
 /** If we found a gdi asset, the file is available. */
