@@ -89465,3 +89465,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?initialize@Rva007F01F0@@QAEXHH@Z,0x007F01F0,address-derived 25-byte two-argument initializer independently witnessed at 0x00C6C8E0
 ?bfmeRva012C37F0Value@@3HA,0x012C37F0,loaded as first argument of Rva007F01F0 initializer at 0x00C6C8E0
 ?bfmeRva0130A490Slot@@3VRva007F01F0@@A,0x0130A490,object receiving initializer at 0x00C6C8E0
+?startPings@Rva00550500Target@@QAEXXZ,0x00550500,member ABI view of matched Rva00550500 startPings; retail 005512C1 reloads receiver ECX then 005512C3 calls ILT 00042B7C which jumps here; body ignores receiver and has no stack args
