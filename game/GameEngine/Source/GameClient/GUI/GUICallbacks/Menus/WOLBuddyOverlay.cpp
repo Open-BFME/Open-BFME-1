@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringbaseunicode /Iinputs/reference/shims/stringbaseascii /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -168,9 +168,68 @@ enum
 };
 
 // ?InitBuddyControls@@YAXH@Z
-// Body in InitBuddyControlsThunk.cpp (exact 776B retail @ 0x004EA9D0), so this
-// translation unit only needs the prototype its call sites below refer to.
-void InitBuddyControls( Int );
+// Native body: the canonical Zero Hour InitBuddyControls (GeneralsMD
+// WOLBuddyOverlay.cpp:150) -- the same six window names retail loads.
+// The cl: line's stringbaseascii + stringbaseunicode shims are LOAD-BEARING
+// here, not cosmetic: retail's AsciiString is a StringBase<char> with an
+// 8-byte header, so the inlined str() is `m_data ? m_data+8 : TheNullChr`
+// (ZH's 4-byte header emits +4), and the StringBase ctor/dtor are out-of-line
+// VOID-returning calls (0x00888BC0 / ?releaseBuffer@AsciiString@@IAEXXZ
+// 0x00887940). Because the ctor returns void, the compiler cannot reuse its
+// `this` in eax and re-materialises each temporary's address from its stack
+// slot -- which is also what keeps this body down to two callee-saved
+// registers (esi = NAMEKEY_INVALID, edi = 0/NULL). With the plain ZH
+// AsciiString.h the WOL case also inlines ~AsciiString and needs a third.
+void InitBuddyControls( Int type )
+{
+	if(!TheGameSpyInfo)
+	{
+		buddyControls.textEntryEditID = NAMEKEY_INVALID;
+		buddyControls.textEntryEdit = NULL;
+		buddyControls.listboxBuddiesID = NAMEKEY_INVALID;
+		buddyControls.listboxChatID = NAMEKEY_INVALID;
+		buddyControls.listboxBuddies = NULL;
+		buddyControls.listboxChat = NULL;
+		buddyControls.isInit = FALSE;
+		return;
+	}
+	switch (type) {
+	case BUDDY_RESETALL_CRAP:
+		buddyControls.textEntryEditID = NAMEKEY_INVALID;
+		buddyControls.textEntryEdit = NULL;
+		buddyControls.listboxBuddiesID = NAMEKEY_INVALID;
+		buddyControls.listboxChatID = NAMEKEY_INVALID;
+		buddyControls.listboxBuddies = NULL;
+		buddyControls.listboxChat = NULL;
+		buddyControls.isInit = FALSE;
+	break;
+	case BUDDY_WINDOW_BUDDIES:
+		buddyControls.textEntryEditID = TheNameKeyGenerator->nameToKey( AsciiString( "WOLBuddyOverlay.wnd:TextEntryChat" ) );
+		buddyControls.textEntryEdit = TheWindowManager->winGetWindowFromId(NULL,  buddyControls.textEntryEditID);
+		buddyControls.listboxBuddiesID = TheNameKeyGenerator->nameToKey( AsciiString( "WOLBuddyOverlay.wnd:ListboxBuddies" ) );
+		buddyControls.listboxChatID = TheNameKeyGenerator->nameToKey( AsciiString( "WOLBuddyOverlay.wnd:ListboxBuddyChat" ) );
+		buddyControls.listboxBuddies = TheWindowManager->winGetWindowFromId( NULL,  buddyControls.listboxBuddiesID );
+		buddyControls.listboxChat = TheWindowManager->winGetWindowFromId( NULL,  buddyControls.listboxChatID);
+		GadgetTextEntrySetText(buddyControls.textEntryEdit, UnicodeString::TheEmptyString);
+		buddyControls.isInit = TRUE;
+		break;
+	case BUDDY_WINDOW_DIPLOMACY:
+		buddyControls.textEntryEditID = TheNameKeyGenerator->nameToKey( AsciiString( "Diplomacy.wnd:TextEntryChat" ) );
+		buddyControls.textEntryEdit = TheWindowManager->winGetWindowFromId(NULL,  buddyControls.textEntryEditID);
+		buddyControls.listboxBuddiesID = TheNameKeyGenerator->nameToKey( AsciiString( "Diplomacy.wnd:ListboxBuddies" ) );
+		buddyControls.listboxChatID = TheNameKeyGenerator->nameToKey( AsciiString( "Diplomacy.wnd:ListboxBuddyChat" ) );
+		buddyControls.listboxBuddies = TheWindowManager->winGetWindowFromId( NULL,  buddyControls.listboxBuddiesID );
+		buddyControls.listboxChat = TheWindowManager->winGetWindowFromId( NULL,  buddyControls.listboxChatID);
+		GadgetTextEntrySetText(buddyControls.textEntryEdit, UnicodeString::TheEmptyString);
+		buddyControls.isInit = TRUE;
+		break;
+	case BUDDY_WINDOW_WELCOME_SCREEN:
+		break;
+	default:
+		DEBUG_ASSERTCRASH(FALSE, ("Well, you really shouldn't have gotten here, if you really care about GUI Bugs, search for this string, you you don't care, call chris (who probably doesn't care either"));
+	}
+	
+}
 // Native body: WOLBuddyControlSystem.cpp.
 WindowMsgHandledType BuddyControlSystem(GameWindow *, UnsignedInt, WindowMsgData, WindowMsgData);
 
