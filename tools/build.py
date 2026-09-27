@@ -27,6 +27,8 @@ MANIFEST = ROOT / "inputs/baselines" / "bfme1" / "retail-1.03-unpacked" / "manif
 EXE = ROOT / "inputs/baselines" / "bfme1" / "retail-1.03-unpacked" / "files" / "lotrbfme.exe"
 FUNCTIONS = ROOT / "targets/game/reverse" / "functions.csv"
 SYMBOLS = ROOT / "targets/game/reverse" / "symbols.csv"
+DIR32_WHITELIST = ROOT / "targets/game/reverse" / "dir32_consistency_whitelist.txt"
+DIR32_ADDRESSES = ROOT / "targets/game/reverse" / "dir32_addresses.csv"
 BUILD_DIR = ROOT / "build" / "match"
 PATCH_DIR = ROOT / "build" / "patch"
 # A run that DIES leaves its marker behind, and that is the whole point: an
@@ -2697,17 +2699,9 @@ def verify_constant_refs(rows):
     print(f"Constant-ref verify: OK ({checked} float constants verified)")
 
 
-def verify_dir32_consistency(rows):
-    """Regression gate for the non-string DIR32s (globals/vtables/func-addrs) build.py masks. A symbol
-    has one address, so every reference must resolve to the same base once the addend is subtracted
-    (base = binary_addr - compiled_addend). A symbol with >1 base is a candidate hidden discrepancy.
-    Whitelist (targets/game/reverse/dir32_consistency_whitelist.txt) holds the CURRENT known-legitimate cases
-    (double-linked TUs CRC32_Table/_COLLISION_EPSILON; the investigated FX ctor/dtor vtable artifacts).
-    Hand-written only: an absent whitelist is a hard failure listing the candidates, never an
-    auto-written free pass, and any NEW inconsistency FAILS."""
-    from collections import defaultdict
-    whitelist_path = ROOT / "targets/game/reverse" / "dir32_consistency_whitelist.txt"
-    sym2base = defaultdict(set)
+def dir32_references(rows):
+    """(row, offset, symbol, base) for every masked DIR32 in the rows' bodies, where
+    base = retail dword - compiled addend is the address retail gives the symbol."""
     for row in rows:
         obj = require_row_object(row)
         trva, tsz = int(row["target_rva"], 16), int(row["target_size"])
@@ -2735,7 +2729,10 @@ def verify_dir32_consistency(rows):
             # thousands of retail instances by design, so "one symbol, one
             # address" only holds for external symbols. Locals add no detection
             # power for double-linked TUs (those always expose externals too).
-            if re.fullmatch(r"\$[A-Za-z]+\d+", sym):
+            # $LFail$59509 is the same kind of label with a second $, and _$E4 (a
+            # function-local static's helper) is numbered from the start of each
+            # TU, so two TUs reuse it (family_scan.py tells the story).
+            if sym.startswith("$") or re.fullmatch(r"_\$E\d+", sym):
                 continue
             # __ehhandler$<mangled> is the same case one step out: the compiler
             # emits one per TU alongside the COMDAT it guards, and retail does
@@ -2747,7 +2744,95 @@ def verify_dir32_consistency(rows):
                 continue
             final = struct.unpack_from("<I", target, off)[0]
             addend = struct.unpack_from("<I", body, off)[0]
-            sym2base[sym].add((final - addend) & 0xFFFFFFFF)
+            yield row, off, sym, (final - addend) & 0xFFFFFFFF
+
+
+def read_dir32_whitelist():
+    return {l.strip() for l in DIR32_WHITELIST.read_text().splitlines() if l.strip() and not l.startswith("#")}
+
+
+@functools.lru_cache(maxsize=1)
+def retail_va_span():
+    sections = pe_sections(EXE.read_bytes())
+    return 0x400000, 0x400000 + max(section["rva"] + section["size"] for section in sections)
+
+
+def in_retail_image(va):
+    low, high = retail_va_span()
+    return low <= va < high
+
+
+def read_dir32_addresses():
+    if not DIR32_ADDRESSES.exists():
+        raise SystemExit(f"DIR32 addresses: {DIR32_ADDRESSES.relative_to(ROOT)} is missing; "
+                         "the full gate (./build.sh with no arguments) writes it")
+    with DIR32_ADDRESSES.open(newline="") as handle:
+        return {row["name"]: int(row["va"], 16) for row in csv.DictReader(handle)}
+
+
+def write_dir32_addresses(sym2base, whitelist):
+    """Record the one address every matched reference gives each DIR32 symbol, for
+    verify_dir32_addresses. Only the full gate calls this: a scoped run sees a handful
+    of rows and would publish that handful as the whole set."""
+    lines = ["name,va\n"] + [
+        f"{sym},0x{base:08X}\n" for sym, bases in sorted(sym2base.items())
+        if sym not in whitelist and len(bases) == 1 and in_retail_image(base := next(iter(bases)))]
+    text = "".join(lines)
+    if not DIR32_ADDRESSES.exists() or DIR32_ADDRESSES.read_text() != text:
+        DIR32_ADDRESSES.write_text(text)
+        print(f"DIR32 addresses: rewrote {DIR32_ADDRESSES.relative_to(ROOT)} "
+              f"({len(lines) - 1} symbols) -- commit it")
+
+
+def verify_dir32_addresses(rows):
+    """Per-commit half of verify_dir32_consistency. The byte check masks every DIR32
+    operand, so a function that reads the wrong global, array slot or vtable still
+    matches, and only a full gate -- which nobody runs per commit -- would notice.
+    Each reference in the rows being verified must give its symbol the address the
+    full gate recorded; references to a symbol it has not recorded yet must at least
+    agree with each other."""
+    recorded = read_dir32_addresses()
+    whitelist = read_dir32_whitelist()
+    first, wrong, checked = {}, [], 0
+    for row, offset, sym, base in dir32_references(rows):
+        # A base outside the image is a literal where we emit a relocation:
+        # null_reloc.py's finding, with its own baseline, not an address.
+        if sym in whitelist or not in_retail_image(base):
+            continue
+        checked += 1
+        expected = recorded[sym] if sym in recorded else first.setdefault(sym, base)
+        if base != expected:
+            wrong.append((row, offset, sym, base, expected, sym in recorded))
+    if wrong:
+        print(f"DIR32 addresses: FAIL {len(wrong)} reference(s) give a symbol a different "
+              "address than the rest of the tree does")
+        for row, offset, sym, base, expected, was_recorded in wrong[:12]:
+            source = (f"{DIR32_ADDRESSES.name} records" if was_recorded
+                      else "another reference in this build gives")
+            print(f"    {row['name']} +0x{offset:x}: {sym} -> 0x{base:08X}, "
+                  f"but {source} 0x{expected:08X}")
+        print("    The byte check masks addresses, so it cannot see this. Usually the reference "
+              "names the wrong global, array slot or vtable. If the recorded address is the "
+              f"wrong one instead, fix every reference and correct {DIR32_ADDRESSES.relative_to(ROOT)} "
+              "in the same commit.")
+        raise SystemExit(1)
+    print(f"DIR32 addresses: OK ({checked} reference(s) checked against "
+          f"{len(recorded)} recorded symbols)")
+
+
+def verify_dir32_consistency(rows):
+    """Regression gate for the non-string DIR32s (globals/vtables/func-addrs) build.py masks. A symbol
+    has one address, so every reference must resolve to the same base once the addend is subtracted
+    (base = binary_addr - compiled_addend). A symbol with >1 base is a candidate hidden discrepancy.
+    Whitelist (targets/game/reverse/dir32_consistency_whitelist.txt) holds the CURRENT known-legitimate cases
+    (double-linked TUs CRC32_Table/_COLLISION_EPSILON; the investigated FX ctor/dtor vtable artifacts).
+    Hand-written only: an absent whitelist is a hard failure listing the candidates, never an
+    auto-written free pass, and any NEW inconsistency FAILS."""
+    from collections import defaultdict
+    whitelist_path = DIR32_WHITELIST
+    sym2base = defaultdict(set)
+    for _row, _offset, sym, base in dir32_references(rows):
+        sym2base[sym].add(base)
     inconsistent = sorted(s for s, b in sym2base.items() if len(b) > 1)
     if not whitelist_path.exists():
         # NOT self-seeding. Auto-writing this file is how 18 entries got in
@@ -2760,7 +2845,7 @@ def verify_dir32_consistency(rows):
             "currently inconsistent symbol(s) are listed below; READ them, confirm each is a legitimate "
             "doubly-linked TU or investigated vtable artifact, and commit the file by hand:\n"
             + "".join("    " + s + "\n" for s in inconsistent))
-    whitelist = {l.strip() for l in whitelist_path.read_text().splitlines() if l.strip() and not l.startswith("#")}
+    whitelist = read_dir32_whitelist()
     new = [s for s in inconsistent if s not in whitelist]
     if new:
         # This check refuses to self-seed because each entry needs a human to
@@ -2777,6 +2862,7 @@ def verify_dir32_consistency(rows):
         print(f"    ... all {len(new)} with their bases: {report.relative_to(ROOT)}")
         raise SystemExit(1)
     print(f"DIR32 consistency: OK ({len(sym2base)} symbols; {len(inconsistent)} whitelisted, 0 new)")
+    write_dir32_addresses(sym2base, whitelist)
 
 
 UNMATCHED_MARKER_RE = re.compile(
@@ -2894,6 +2980,7 @@ def main(only=None):
         # reached master before the full gate caught them.
         verify_string_refs(function_rows)
         verify_constant_refs(function_rows)
+        verify_dir32_addresses(function_rows)
         return
     print("Full verification")
     # Identity, not bytes: verify_functions proves each row's bytes, and a

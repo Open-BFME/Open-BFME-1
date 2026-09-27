@@ -37,10 +37,12 @@ def check_complete_path_and_partial_selectors(tmp_path):
                  patch.object(build, "verify_functions"), \
                  patch.object(build, "load_function_rows", return_value=rows), \
                  patch.object(build, "verify_string_refs") as strings, \
-                 patch.object(build, "verify_constant_refs") as constants:
+                 patch.object(build, "verify_constant_refs") as constants, \
+                 patch.object(build, "verify_dir32_addresses") as addresses:
                 build.main([source])
                 strings.assert_called_once_with([rows[0]])
                 constants.assert_called_once_with([rows[0]])
+                addresses.assert_called_once_with([rows[0]])
         finally:
             build.complete_source_selector.cache_clear()
 
@@ -68,12 +70,14 @@ class BuildSourceSelectorTests(unittest.TestCase):
              patch.object(build, "verify_functions") as functions, \
              patch.object(build, "load_function_rows", return_value=rows), \
              patch.object(build, "verify_string_refs") as strings, \
-             patch.object(build, "verify_constant_refs") as constants:
+             patch.object(build, "verify_constant_refs") as constants, \
+             patch.object(build, "verify_dir32_addresses") as addresses:
             build.main(["source:" + source, selector])
             source_claims.assert_called_once_with(["source:" + source, selector])
             functions.assert_called_once_with([selector], selected_rows=[rows[0]])
             strings.assert_called_once_with([rows[0]])
             constants.assert_called_once_with([rows[0]])
+            addresses.assert_called_once_with([rows[0]])
 
     def test_malformed_exact_row_selector_fails_closed(self):
         row = {"source": "game/Generated.cpp", "name": "?same@@YAXXZ",

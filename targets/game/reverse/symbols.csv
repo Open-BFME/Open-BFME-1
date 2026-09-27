@@ -2488,7 +2488,7 @@ name,address,notes
 ??0BfmeDrawBaseERH@@QAE@PAVBfmeThingERH@@PBVBfmeModuleDataERH@@@Z,0x00036AED,pin
 ??0BfmeElemBX@@QAE@XZ,0x00017BD9,ILT thunk: BfmeOwnVVB element (AsciiString-sized) default ctor used by the vector constructor iterator in 0x001903F0/0x00190340
 ??0BfmeElemCU@@QAE@XZ,0x00892B80,pin
-??0BfmeElemVVD@@QAE@XZ,0x00418A07,pin (additive; also pinned as ??0BfmeS1059@@QAE@XZ via thunks_011.cpp -> FUN_00796AD0; used as the array-new-ctor for LookAtTranslator::m_viewLocation)
+??0BfmeElemVVD@@QAE@XZ,0x00018A07,pin (additive; also pinned as ??0BfmeS1059@@QAE@XZ via thunks_011.cpp -> FUN_00796AD0; used as the array-new-ctor for LookAtTranslator::m_viewLocation)
 ??0BfmeErasedValue_00627200@@QAE@ABV0@@Z,0x006270C0,MainMenuUtils queue payload copy uses the six-string retail copy body
 ??0BfmeErr1042@@QAE@XZ,0x00013A8E,retail ctor ILT used by MessageBox callbacks at 0x00522470 and 0x005224C0
 ??0BfmeErr1043@@QAE@XZ,0x00013A8E,pin
@@ -8899,7 +8899,7 @@ name,address,notes
 ??1LightClass@@UAE@XZ,0x0093BE00,LightClass complete destructor; constructors 0x0093BE90/0x0093BFB0 install vtable 0x0113CBB8 whose scalar-deleting slot is 0x0093BF90
 ??1LightPulseFXNugget@@MAE@XZ,0x00034A9A,vtable 0x00CF3408 slots name LightPulseFXNugget; protected complete destructor called by wrapper 0x00428F60
 ??1LightningDrawModule@FXParticleSystem@@UAE@XZ,0x0000C39C,LightningDrawModule destructor ILT proven by matched createModule factory and constructor vtable 0x01111EE0 slot zero reaching scalar wrapper 0x005E5D00
-??1LightningEmissionInfo@FXParticleSystem@@UAE@XZ,0x0040D7F6,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x005D6A60 calls; autopin
+??1LightningEmissionInfo@FXParticleSystem@@UAE@XZ,0x0000D7F6,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x005D6A60 calls; autopin
 ??1Line3DClass@@UAE@XZ,0x00950FC0,0x00951080 deleting wrapper directly calls this scalar destructor; neighboring exact Line3D vtable methods establish class ownership
 ??1LineEmissionVolumeModule@FXParticleSystem@@UAE@XZ,0x0001F7AD,destructor ILT used by the LineEmissionVolumeModule scalar-deleting destructor
 ??1LinearOffsetTextureMapperClass@@UAE@XZ,0x009221E0,constructor 0x009667F0 installs vtable 0x0113E560 whose slot 1 (+4) is deleting wrapper 0x00966890; that wrapper directly calls this scalar body
@@ -9328,7 +9328,7 @@ name,address,notes
 ??1Rva0046C330Value@@QAE@XZ,0x00047B40,the erase at 0x0046C330 destroys its address-derived value through the retail pair destructor thunk
 ??1Rva0048B1A0TransitionMap@@QAE@XZ,0x0048B1A0,retail transition-map teardown body reached through existing ILT 0x000099C6; local ABI view preserves the 0x14-byte member; campaign=luna36h-20260907;lane=files
 ??1Rva0048C200String@@QAE@XZ,0x00887940,StringBase compatible destructor body
-??1Rva0048D530CandidateString@@QAE@XZ,0x0043B304,candidate UnicodeString element destructor from IMEManager closeCandidateList
+??1Rva0048D530CandidateString@@QAE@XZ,0x0003B304,candidate UnicodeString element destructor from IMEManager closeCandidateList
 ??1Rva00490470@@UAE@XZ,0x0004634E,ILT thunk to the window-owner destructor body 0x00490470 (tail-jumped from ~Rva00490A30 0x00490AC0)
 ??1Rva00491DB0Base@@UAE@XZ,0x0004634E,Rva00491DB0 linked base destructor thunk
 ??1Rva00491DB0String@@QAE@XZ,0x00887940,Rva00491DB0 AsciiString-compatible member destructor
@@ -10409,7 +10409,7 @@ name,address,notes
 ??_7AIWaitState@@6B@,0x01097CD8,exact constructor 0x001711F0 installs this dedicated vtable
 ??_7AIWanderInPlaceState@@6B@,0x0109A910,exact constructor 0x0017FB80 installs this dedicated vtable
 ??_7AIWanderState@@6B@,0x0109A8A8,exact constructor 0x0017FB00 installs this dedicated vtable
-??_7AODCrushCollide@@6B@,0x00CA9AC4,vtable whose slots name AODCrushCollide
+??_7AODCrushCollide@@6BBehaviorModule@@@,0x00CA9AC4,vtable whose slots name AODCrushCollide
 ??_7AODCrushCollideModuleData@@6B@,0x010A9740,exact constructor 0x00215B90 installs this dedicated vtable; slot zero ILT 0x0003F8F0 reaches scalar wrapper 0x00215DC0
 ??_7AODHordeContainModuleDataVtbl@@6B@,0x01089960,AODHordeContain ModuleData vtbl
 ??_7AimWeaponBehavior@@6B@,0x00CA1A24,vtable whose slots name AimWeaponBehavior
@@ -10448,7 +10448,7 @@ name,address,notes
 ??_7BfmeAptScreenOnlineLogin@@6B@,0x01107F58,OnlineLogin retail virtual table installed by destructor
 ??_7BfmeAptScreenSecondary@@6B@,0x01105690,second-base vtable restored at +0x3C after CustomMatch member dtors
 ??_7BfmeBaseASCa@@6B@,0x010817AC,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000B0DF0 calls; autopin
-??_7BfmeBaseCC@@6B@,0x0072162C,Open-BFME5 the base vftable the base destructor at 0x0073A4E0 restores
+??_7BfmeBaseCC@@6B@,0x00D2162C,Open-BFME5 the base vftable the base destructor at 0x0073A4E0 restores
 ??_7BfmeBaseVUH@@6B@,0x0107FCB0,Open-BFME5 retail base vftable stored by the 0x001B5550 destructor
 ??_7BfmeBaseVUJ@@6B@,0x0107FCB0,Open-BFME5 retail base vftable stored by the 0x0049C740 destructor
 ??_7BfmeBaseVUQ@@6B@,0x01073744,Open-BFME5 retail base vftable stored by the 0x00352C20 destructor
@@ -10480,12 +10480,12 @@ name,address,notes
 ??_7BfmeOwnVVB@@6B@,0x0109BFAC,BfmeOwnVVB vftable stored by the 0x00190490 destructor
 ??_7BfmeOwnVVD@@6B@,0x0110DE48,Open-BFME5 retail derived vftable stored by the 0x005B5330 destructor
 ??_7BfmeOwnVVE@@6B@,0x0113C308,Open-BFME5 retail derived vftable stored by the 0x0092B6A0 destructor
-??_7BfmeOwnerCC@@6B@,0x0072165C,Open-BFME5 the derived vftable the destructor at 0x0073A4E0 installs
+??_7BfmeOwnerCC@@6B@,0x00D2165C,Open-BFME5 the derived vftable the destructor at 0x0073A4E0 installs
 ??_7BfmeThingBHG@@6BGameWindow@@@,0x011061C4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0051D4A0 calls; autopin
 ??_7BfmeThingBHG@@6BGen_dtor_004654c0Base@@@,0x011061C0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0051D4A0 calls; autopin
 ??_7BloodthirstyUpdateModuleData@@6B@,0x010BC6B8,exact constructor 0x00286EC0 installs this dedicated vtable; slot zero routes to wrapper 0x00287350
-??_7BoneFXDamage@@6B@,0x00CB1FB4,vtable whose slots name BoneFXDamage
-??_7BoneFXUpdate@@6B@,0x00CBCA64,vtable whose slots name BoneFXUpdate
+??_7BoneFXDamage@@6BObjectModule@@@,0x00CB1FB4,vtable whose slots name BoneFXDamage
+??_7BoneFXUpdate@@6BBFU_DeepBase@@@,0x00CBCA64,vtable whose slots name BoneFXUpdate
 ??_7BridgeTowerBehavior@@6B@,0x00CA2B54,vtable whose slots name BridgeTowerBehavior
 ??_7BuildingBehavior@@6B@,0x00CA2C54,vtable whose slots name BuildingBehavior
 ??_7BuildingBehaviorModuleData@@6B@,0x010A2C88,exact constructor 0x001F6C70 installs this dedicated vtable; slot zero ILT 0x00019F0B reaches scalar wrapper 0x001F6D10
@@ -10496,7 +10496,7 @@ name,address,notes
 ??_7CategoryModuleTemplate8Sub@FXParticleSystem@@6B@,0x0107375C,CategoryModuleTemplate8 interim sub vtbl
 ??_7CaveContain@@6B@,0x00CAB000,vtable whose slots name CaveContain
 ??_7CivilianSpawnCollide@@6B@,0x00CAA21C,vtable whose slots name CivilianSpawnCollide
-??_7ClickReactionBehavior@@6B@,0x00CA33CC,vtable whose slots name ClickReactionBehavior
+??_7ClickReactionBehavior@@6BPB_DeepBase@@@,0x00CA33CC,vtable whose slots name ClickReactionBehavior
 ??_7ClickReactionBehaviorModuleData@@6B@,0x00CA4A10,exact constructor 0x002001A0 installs this dedicated vtable
 ??_7ClientUpdateModule@@6B@,0x011151DC,abstract ClientUpdateModule table: clientUpdate (slot 10) is pure; ~LaserUpdate 0x00603820 restores it last; 0x01115210 is AnimatedParticleSysBoneClientUpdate's (its factory 0x00121A70 calls ctor 0x00602ED0 which installs it)
 ??_7CloudBreakSpecialPowerModuleData@@6B@,0x010B3CD8,exact constructor 0x002592A0 installs this dedicated vtable; slot zero ILT 0x0003D861 reaches scalar wrapper 0x002592F0
@@ -10507,7 +10507,7 @@ name,address,notes
 ??_7CommandSetUpgradeModuleData@@6B@,0x0108F338,CommandSetUpgrade ModuleData constructor installs this retail vftable
 ??_7ContinueState@@6B@,0x010979B8,exact constructor 0x00170EA0 installs this dedicated vtable
 ??_7ConvertToCarBombCrateCollideModuleDataVtbl@@6B@,0x0108E940,ConvertToCarBombCrateCollide vtbl
-??_7CreateObjectDie@@6B@,0x00CB2B2C,vtable whose slots name CreateObjectDie
+??_7CreateObjectDie@@6BObjectModule@@@,0x00CB2B2C,vtable whose slots name CreateObjectDie
 ??_7CrossFadeImage@@6B@,0x00D0C878,vtable whose slots name CrossFadeImage
 ??_7CrushDie@@6B@,0x00CB2C84,vtable whose slots name CrushDie
 ??_7DX8TextureCategoryClass@@6B@,0x0113D020,DX8TextureCategoryClass vftable stored by its destructor 0x00946540
@@ -10518,7 +10518,7 @@ name,address,notes
 ??_7DebugIONet@@6B@,0x0113507C,address-derived network vptr in 0x0088FE00
 ??_7DebugIOOds@@6B@,0x01135060,address-derived ODS vptr in 0x0088FA10
 ??_7DefaultUpdateModuleInfo@FXParticleSystem@@6B@,0x01110C38,DefaultUpdateModuleInfo retail vtable
-??_7DeflectSpecialPower@@6B@,0x00CB44EC,vtable whose slots name DeflectSpecialPower
+??_7DeflectSpecialPower@@6BBehaviorModule@@@,0x00CB44EC,vtable whose slots name DeflectSpecialPower
 ??_7DeflectSpecialPowerModuleData@@6B@,0x010B4520,exact constructor 0x0025A600 installs this dedicated vtable; slot zero ILT 0x0003A70B reaches scalar wrapper 0x0025A620
 ??_7DelayedDeathBody@@6BBehaviorModule@@@,0x010A7E90,primary vtable shared by the named constructor and destructor
 ??_7DelayedDeathBody@@6BBodyModuleInterface@@@,0x010A7DC8,secondary vtable at this+0x0C
@@ -10533,10 +10533,10 @@ name,address,notes
 ??_7DeployStyleAIUpdateModuleDataVtbl@@6B@,0x01089B68,DeployStyleAIUpdate vtbl
 ??_7DestroyDie@@6B@,0x00CB2DD4,vtable whose slots name DestroyDie
 ??_7DestroyEnvironmentUpdateModuleData@@6B@,0x00CBDA00,exact constructor 0x0028CD30 installs this dedicated vtable
-??_7DetachableRiderBody@@6B@,0x00CA81A8,vtable whose slots name DetachableRiderBody
+??_7DetachableRiderBody@@6BDRB_Primary@@@,0x00CA81A8,vtable whose slots name DetachableRiderBody
 ??_7DetachableRiderUpdate@@6B@,0x00CBDC8C,vtable whose slots name DetachableRiderUpdate
 ??_7DevastateSpecialPowerModuleData@@6B@,0x010B47C8,exact constructor 0x0025AC10 installs this dedicated vtable; slot zero ILT 0x00034897 reaches scalar wrapper 0x0025AC50
-??_7DockUpdateModuleData@@6B@,0x01073744,base vftable restored by RailedTransportDockUpdateModuleData destructor
+??_7DockUpdateModuleData@@6B@,0x00CCA700,base vftable restored by RailedTransportDockUpdateModuleData destructor
 ??_7DozerActionMoveToActionPosState@@6B@,0x00CC6DA0,vtable whose slots name DozerActionMoveToActionPosState
 ??_7DozerActionPickActionPosState@@6B@,0x00CC6D28,vtable whose slots name DozerActionPickActionPosState
 ??_7DozerActionState@@6B@,0x00CC6F70,vtable whose slots name DozerActionState
@@ -10557,7 +10557,7 @@ name,address,notes
 ??_7FXListDieModuleData@@6B@,0x0108B758,dedicated FXListDieModuleData vtable installed by exact ctor 0x001234F0; slot zero ILT 0x000124A4 reaches scalar wrapper 0x00125620
 ??_7FadeAndDieOrnamentUpdate@@6B@,0x00CBE9B4,exact constructor 0x00292230 installs this dedicated vtable
 ??_7FailureState@@6B@,0x01097950,exact constructor 0x00170E10 installs this dedicated vtable
-??_7FireSpreadUpdate@@6B@,0x00CBEBD4,vtable whose slots name FireSpreadUpdate
+??_7FireSpreadUpdate@@6BObjectModule@@@,0x00CBEBD4,vtable whose slots name FireSpreadUpdate
 ??_7FireSpreadUpdateModuleData@@6B@,0x00CBEA00,exact constructor 0x00292680 installs this dedicated vtable
 ??_7FireWeaponCollideModuleData@@6B@,0x00C8EB50,vptr stored by ?friend_newModuleData@FireWeaponCollide 0x00127D00 into the object it allocates
 ??_7FireWeaponUpdateModuleData@@6B@,0x00CBED68,exact constructor 0x00292CB0 installs this dedicated vtable
@@ -10592,7 +10592,7 @@ name,address,notes
 ??_7Gen_00471390@@6B@,0x010F756C,Gen_00471390 vtable installed by constructor 0x00471390; slot zero reaches complete destructor ILT 0x00023457 and scalar wrapper 0x00471850
 ??_7Gen_0057ECF0@@6B@,0x00C806B0,Open-BFME5 vftable installed by the copy constructor at 0x0057ECF0
 ??_7Gen_00587D40@@6B@,0x00D0BA30,Gen_00587D40 vtable
-??_7GettingBuiltBehavior@@6B@,0x00CA46F4,vtable whose slots name GettingBuiltBehavior
+??_7GettingBuiltBehavior@@6BGBB_DeepBase@@@,0x00CA46F4,vtable whose slots name GettingBuiltBehavior
 ??_7GiantBirdFollowPathState@@6B@,0x00CC7778,vtable whose slots name GiantBirdFollowPathState
 ??_7GrantUpgradeCreateModuleData@@6B@,0x010B17B8,exact constructor 0x0024FA80 installs this dedicated vtable; slot zero ILT 0x00040291 reaches scalar wrapper 0x0024FB00
 ??_7HealContain@@6B@,0x00CABC78,vtable whose slots name HealContain
@@ -10624,7 +10624,7 @@ name,address,notes
 ??_7ImmortalBody@@6BBehaviorModuleInterface@@@,0x010A88B8,secondary vtable at this+0x0C
 ??_7ImmortalBody@@6BBodyModuleInterface@@@,0x010A87E8,secondary vtable at this+0x10
 ??_7InactiveBody@@6B@,0x010A8B74,exact constructor 0x00213BF0 installs this dedicated vtable; slot zero ILT 0x0003648A reaches scalar wrapper 0x00213E10
-??_7IndexBufferClass@@6B@,0x011135AC,IndexBufferClass base vftable stored by the inlined base destructor in 0x0091D300 (same table as BfmeBaseVVE)
+??_7IndexBufferClass@@6B@,0x00D3BD10,IndexBufferClass base vftable stored by the inlined base destructor in 0x0091D300 (same table as BfmeBaseVVE)
 ??_7Inner010EAD58@@6B@,0x00CEAD58,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00476440 calls; autopin
 ??_7InstantDeathBehavior@@6B@,0x00CA4EBC,vtable whose slots name InstantDeathBehavior
 ??_7KeepObjectDie@@6B@,0x00CB3224,vtable whose slots name KeepObjectDie
@@ -10699,7 +10699,7 @@ name,address,notes
 ??_7OnlineLoginFunctorWrapper@@6B@,0x011080B0,16-byte OnlineLogin fscommand functor wrapper vtable (refcount then vptr then this/method)
 ??_7OnlineLoginInitGadgetsFunctorWrapper@@6B@,0x011080BC,16-byte OnlineLogin InitGadgets functor wrapper vtable used by _bfme_setAptScreenRef
 ??_7OrConditionAllocation@@6B@,0x00CE84D8,exact constructor 0x0034F890 installs this dedicated vtable
-??_7ParkingPlaceBehavior@@6B@,0x010A2A1C,exact constructor 0x001F59F0 installs this dedicated vtable; slot zero ILT 0x0002F80B reaches scalar wrapper 0x001F5F30
+??_7ParkingPlaceBehavior@@6BPPB_DeepBase@@@,0x010A2A1C,exact constructor 0x001F59F0 installs this dedicated vtable; slot zero ILT 0x0002F80B reaches scalar wrapper 0x001F5F30
 ??_7PartitionFilter@@6B@,0x00C83B5C,355B25ED50 temporary-filter destruction restores this base table; slots deleting wrapperC3BB0 through43CB6 and purecall88C500 and default player maskC3BA0 through3B9E4 independently decoded
 ??_7PartitionFilter@Rva00327D30@@6B@,0x00C83B5C,retail 00327D30 +099 installs BFME filter base table; existing canonical table pin independently identifies slots
 ??_7PartitionFilterAcceptByKindOf@Rva00327D30@@6B@,0x00C83B70,retail 00327D30 +10F installs kind filter table; six-word KINDOFMASK_NONE construction aligns
@@ -10844,14 +10844,15 @@ name,address,notes
 ??_7SimpleSceneIterator@@6B@,0x00D3CF34,retail table begins with deleting destructor 0x00943CC0 followed by exact First Next Is_Done and Current_Item slots; 0x00943CA0 constructor stores this table
 ??_7SlowDeathBehavior@@6B@,0x00CA66B4,vtable whose slots name SlowDeathBehavior
 ??_7SlowDeathBehaviorModuleData@@6B@,0x010A6750,SlowDeathBehaviorModuleData vtable stored by retail constructor
+??_7Snapshot@@6B@,0x00C73744,Snapshot vtable (deleting dtor + crc/xfer/loadPostProcess): installed by ??0Snapshot 0x0006B180 and 0x0005C530; 63 byte-verified references give ??_7Snapshot@@6B@ this address (dir32_addresses.csv)
 ??_7SortingIndexBufferClass@@6B@,0x0113BD20,SortingIndexBufferClass vftable stored by its destructor 0x0091D300
 ??_7SoundFXNugget@@6B@,0x00CF33D8,vtable whose slots name SoundFXNugget
 ??_7SpawnPointProductionExitUpdateModuleData@@6B@,0x010E8D28,exact constructor 0x0035F0F0 installs this dedicated vtable; slot zero ILT 0x0002AEF0 reaches scalar wrapper 0x0035F120
 ??_7SpawnTownsmenBehavior@@6B@,0x00CA6DD4,vtable whose slots name SpawnTownsmenBehavior
-??_7SpawnUnitBehavior@@6B@,0x00CA6F94,vtable whose slots name SpawnUnitBehavior
+??_7SpawnUnitBehavior@@6BSpawnUnitBehaviorGrandBase@@@,0x00CA6F94,vtable whose slots name SpawnUnitBehavior
 ??_7SpecialAbilityUpdateModuleData@@6B@,0x010C2D58,SpecialAbilityUpdateModuleData retail vtable stored by ctor at 0x002A5AA0
 ??_7SpecialDisguiseUpdate@@6B@,0x00CB7708,vtable whose slots name SpecialDisguiseUpdate
-??_7SpecialPowerModule@@6B@,0x00CB7C3C,vtable whose slots name SpecialPowerModule
+??_7SpecialPowerModule@@6BModule@@@,0x00CB7C3C,vtable whose slots name SpecialPowerModule
 ??_7SplitHordeSpecialPowerModuleData@@6B@,0x010B80E8,exact constructor 0x0026B1D0 installs this dedicated vtable; slot zero ILT 0x0000C8AB reaches scalar wrapper 0x0026B1F0
 ??_7SquishCollide@@6B@,0x00CAA074,vtable whose slots name SquishCollide
 ??_7SquishCollideModuleData@@6B@,0x00CA9F40,exact constructor 0x00216B90 installs this dedicated vtable
@@ -10866,7 +10867,7 @@ name,address,notes
 ??_7StructureBodyModuleData@@6B@,0x0108ED20,exact constructor 0x001293C0 installs this dedicated vtable; slot zero ILT 0x00046C90 reaches scalar wrapper 0x00129460
 ??_7SubObjectsUpgrade@@6B@,0x00CCDFC4,vtable whose slots name SubObjectsUpgrade
 ??_7SubtitleEntry@@6B@,0x0112CF0C,vtable installed by the SubtitleEntry constructor
-??_7SupplyCenterProductionExitUpdate@@6B@,0x00CCB9F4,vtable whose slots name SupplyCenterProductionExitUpdate
+??_7SupplyCenterProductionExitUpdate@@6BPB_DeepBase@@@,0x00CCB9F4,vtable whose slots name SupplyCenterProductionExitUpdate
 ??_7SupplyWarehouseCripplingBehaviorModuleData@@6B@,0x00CA7048,exact constructor 0x0020D580 installs this dedicated vtable
 ??_7SymbioticStructuresBody@@6BBehaviorModule@@@,0x010A96B0,primary vtable installed by the named constructor and destructor
 ??_7SymbioticStructuresBody@@6BBehaviorModuleInterface@@@,0x010A95E8,secondary vtable at this+0x0C
@@ -10878,7 +10879,7 @@ name,address,notes
 ??_7TemporarilyDefectUpdate@@6B@,0x00CC4DCC,vtable whose slots name TemporarilyDefectUpdate
 ??_7TextOnFrameTransition@@6B@,0x00D0CC98,vtable whose slots name TextOnFrameTransition
 ??_7TintDrawableFXNugget@@6B@,0x00CF34F0,vtable whose slots name TintDrawableFXNugget
-??_7ToggleMountedSpecialAbilityUpdate@@6B@,0x00CB88E8,vtable whose slots name ToggleMountedSpecialAbilityUpdate
+??_7ToggleMountedSpecialAbilityUpdate@@6BBehaviorModule@@@,0x00CB88E8,vtable whose slots name ToggleMountedSpecialAbilityUpdate
 ??_7TransportContain@@6B@,0x00CAD4E8,vtable whose slots name TransportContain
 ??_7TunnelContain@@6B@,0x00CADDB8,vtable whose slots name TunnelContain
 ??_7TurretAI@@6B@,0x0109BBF4,TurretAI primary vtable installed by exact constructor 0x0018DED0; slot zero ILT 0x0003700B reaches scalar deleting wrapper 0x0018D860 while secondary vtable 0x0109BBDC is installed at +4
@@ -10907,7 +10908,7 @@ name,address,notes
 ??_7W3DProjectedShadowManager@@6B@,0x01128404,W3DProjectedShadowManager constructor vftable store at 0x007AF5C7
 ??_7W3DRenderObjectSnapshot@@6B@,0x0111D024,W3DRenderObjectSnapshot vtable; slot 2 returns the class-name literal at 0x0111D038
 ??_7W3DShadowGeometryManagerIterator@@6B@,0x00D284A8,exact constructor 0x007B96B0 installs this dedicated vtable
-??_7W3DShroudMaterialPassClass@@6B@,0x00D209C8,vtable whose slots name W3DShroudMaterialPassClass
+??_7W3DShroudMaterialPassClass@@6B@,0x00D209C4,vtable whose slots name W3DShroudMaterialPassClass
 ??_7W3DSmudgeManager@@6B@,0x01120FBC,W3DSmudgeManager vftable stored by its constructor
 ??_7W3DVideoBuffer@@6B@,0x0112165C,W3DVideoBuffer vftable installed by ctor 0x0073A230 and dtor 0x0073A4E0 with named createVideoBuffer caller; campaign=luna36h-20260907;lane=particle;model=gpt-5.6-sol-ultra
 ??_7W3DView@@6B@,0x00D217A0,vtable whose slots name W3DView
@@ -12299,7 +12300,7 @@ name,address,notes
 ?ParseAction@ScriptAction@@KAPAV1@AAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,0x0001720B,Open-BFME7: incremental-link thunk called by ParseActionDataChunk 0x00358FE0 and its ParseActionFalseDataChunk twin 0x00359030
 ?ParseAsciiStringToGameInfo@@YA_NPAVGameInfo@@VAsciiString@@_N@Z,0x00621C40,BFME three-argument game-options parser body;campaign=luna36h-20260907;lane=netpacket
 ?ParseBlendTileData@WorldHeightMap@@IAE_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,0x00040AAC
-?ParseConditionDataChunk@Condition@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,0x00449292,Open-BFME5 Condition parser function pointer
+?ParseConditionDataChunk@Condition@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,0x00049292,Open-BFME5 Condition parser function pointer
 ?ParseGameOptionsString@@YA_NPAVLANGameInfo@@VAsciiString@@PADI@Z,0x00690490,BFME extended parser: game-announcement calls viaILT3BE85; original LAN/game guards local-slot lookup oldmap/CRC and login/host maps; packet pointer and length atargs3/4
 ?ParseHeightMapData@WorldHeightMap@@IAE_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,0x00040AAC,derived-ICF
 ?ParseSizeOnly@WorldHeightMap@@IAE_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,0x00040AAC,derived-ICF
@@ -12763,7 +12764,7 @@ name,address,notes
 ?Rva009C7380@@YAXXZ,0x009C7380,codec spread-table slot filler (SSE tier); no ghidra boundary or identity yet
 ?Rva009C77C0@@YAXXZ,0x009C77C0,codec spread-table loop tail-range filler (SSE tier, array1); no ghidra boundary or identity yet
 ?Rva009C80C0@@YAXXZ,0x009C80C0,codec spread-table loop low-range filler (SSE tier, both arrays); no ghidra boundary or identity yet
-?Rva009C8600Path@@3PADA,0x0134CB4F,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x009C8600 calls; autopin
+?Rva009C8600Path@@3PADA,0x00F4CB50,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x009C8600 calls; autopin
 ?Rva009C9AA0Target@@YAXXZ,0x009C9AA0,address-derived callable alias for the matched ArchivedDirectoryTree private find; the 0x009CA000 retail wrapper passes an AsciiString reference on stack with tree this in ECX
 ?Rva009C9B70Target@@YAXXZ,0x009C9B70,address-derived callable alias for matched ArchiveFileTree private find; 0x009CA040 and 0x009CA0F0 pass AsciiString reference on stack with tree this in ECX
 ?Rva009C9CE0Target@@YAXXZ,0x009C9CE0,address-derived callable alias for matched tree private lower_bound; 0x009CA440 passes AsciiString reference on stack with tree this in ECX
@@ -12783,7 +12784,7 @@ name,address,notes
 ?Rva012BB88CAnimModeNames@@3PAPBDA,0x012BB88C,NULL-terminated anim-mode name table (MANUAL LOOP ONCE LOOP_PINGPONG PLAY_TO_FRAME LOOP_BACKWARDS ONCE_BACKWARDS) read by the 0x0078A490 index lookup; rendobj.h TheAnimModeNames is static so the copy is address-named
 ?Rva012D6D98FilterMode@@3W4TextureFilterMode@@A,0x012D6D98,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0090ADC0 calls; autopin
 ?Rva012ED238Global@@3PAXA,0x012ED238,address-derived global used by 0x0048CDD0 notification pair
-?Rva012ED8B8NoneMask@@3URva0021FC80Mask@@B,0x00AED8B8,TransportContain ctor21FC80 reads six mask words VA12ED8B8..12ED8CC; same existing KINDOFMASK_NONE storage; typed192-bit view
+?Rva012ED8B8NoneMask@@3URva0021FC80Mask@@B,0x00EED8B8,TransportContain ctor21FC80 reads six mask words VA12ED8B8..12ED8CC; same existing KINDOFMASK_NONE storage; typed192-bit view
 ?Rva012F4B3CProfile@@3PAVRva00566EC0Profile@@A,0x012F4B3C,Address-derived singleton for the distinct 28B embedded object; ctor00566EC0/dtor005668C0 test and store this VA; identity_evidence/00566ec0-profile-family.md
 ?Rva01306D88@@3IA,0x01306D88,Retail body 0x007A7D70 reads and writes global address 0x01306D88.
 ?Rva01306D8C@@3IA,0x01306D8C,Retail body 0x007A7D70 reads and writes global address 0x01306D8C.
@@ -12812,7 +12813,7 @@ name,address,notes
 ?Scale@SegLineRendererClass@@QAEXM@Z,0x0095FF30
 ?ScienceVectorInsertOverflow@@YAXXZ,0x000BC600,shim callee pinned to the verified ScienceType vector overflow body used by ILT 0x00023588
 ?ScoreScreenInit@@YAXPAVWindowLayout@@PAX@Z,0x004E8DC0,FunctionLexicon triple at 0x00EA9AD8 {name 0x01086A20 ScoreScreenInit callback 0x004274F8 = ILT 0x000274F8 -> this body}; ZH ScoreScreenInit: g_playMusic(0x012F45D4)=1 buttonIsFinishCampaign(0x012F4183)=0 then nameToKey of ParentScoreScreen ButtonOk TextEntryChat ButtonEmote ListboxChatWindowScoreScreen ChatBoxBorder ButtonBuddy ButtonContinue ButtonSaveReplay into 0x012F4138..0x012F4158 and winGetWindowFromId into 0x012F415C..0x012F417C (listbox also stored to [0x012F7730]+0x5c) StaticTextGameSaveComplete -> 0x012F4178; LastReplayFileName = TheRecorder->getLastReplayFileName; TheShell->getPopupReplayLayout()->hide; canSaveReplay(0x012F4181) from getMode()==RECORD; then dispatch on TheGameLogic+0x10c: 3 REPLAY -> isMultiplayer ? initReplayMultiPlayer 0x004E929A : initReplaySinglePlayer 0x004E92C5 (overide=1); 5 INTERNET -> 0x004E92D1; 1 LAN -> 0x004E92DD; 2 SKIRMISH -> initSkirmish 0x004E92E9; else overide=1 initSinglePlayer 0x004E92F7 without the ScoreScreenShow transition; layout->hide(FALSE) winSetFocus(parent) ReplayWasPressed(0x012F4188)=0 s_blankLayout(0x012F4184) hide(FALSE)+bringForward
-?ScriptDebugMessagesDisabled@@3_NA,0x00ED4D8,global command-line flag guarding ScriptEngine debug output
+?ScriptDebugMessagesDisabled@@3_NA,0x00EED4D8,global command-line flag guarding ScriptEngine debug output
 ?SearchStringMatches@@YA_NVBFMERetailAsciiString@@0@Z,0x009CEDB0,ArchiveFile.cpp donor names the wildcard matcher; recursive matched caller and retail tolower/wildcard control flow confirm the callee identity
 ?Search_For_Node@?$IndexClass@HPAUINIEntry@@@@ABEPBUNodeElement@1@ABH@Z,0x009E2E60
 ?Search_For_Node@?$IndexClass@HPAUINISection@@@@ABEPBUNodeElement@1@ABH@Z,0x009E2FD0
@@ -12955,7 +12956,7 @@ name,address,notes
 ?TheBfmeViewZT@@3PAVBfmeViewZT@@A,0x00EF1600
 ?TheBridgeBehaviorPool@?1??getClassMemoryPool@BridgeBehavior@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF774,pool-glue cascade static (back-solved)
 ?TheBridgeTowerBehaviorPool@?1??getClassMemoryPool@BridgeTowerBehavior@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF784,pool-glue cascade static (back-solved)
-?TheBuildAssistant@@3PAVBuildAssistant@@A,0x00ED83C,GameEngine::init at 0x00079B36 pushes TheBuildAssistant then global VA 0x012ED83C and calls matched initSubsystem<BuildAssistant> 0x00074390; constructor 0x0037CC20 installs vtable 0x010EA8D4 whose update slot +0x14 reaches 0x0037CAC0
+?TheBuildAssistant@@3PAVBuildAssistant@@A,0x00EED83C,GameEngine::init at 0x00079B36 pushes TheBuildAssistant then global VA 0x012ED83C and calls matched initSubsystem<BuildAssistant> 0x00074390; constructor 0x0037CC20 installs vtable 0x010EA8D4 whose update slot +0x14 reaches 0x0037CAC0
 ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A,0x00EED4FC,GameEngine::init constructs the 16-byte vptr-plus-AsciiString-range object at 0x00079316 and stores VA 0x012ED4FC; logger 0x00065C80 appends strings and getCRC caller transfers them under literal CRCParameterCheck
 ?TheCampaignManager@@3PAVCampaignManager@@A,0x012F4CB0,TheCampaignManager used by ScoreScreen startNextCampaignGame and initSinglePlayer
 ?TheCashHackSpecialPowerPool@?1??getClassMemoryPool@CashHackSpecialPower@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFC54,pool-glue cascade static (back-solved)
@@ -13061,7 +13062,7 @@ name,address,notes
 ?TheNetwork@@3PAVNetworkInterface@@A,0x012F7714,BFME NetworkInterface global used by the GameEngine frame-pacing path
 ?TheNetwork@@3PAXA,0x012F7714,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00383690 calls; autopin
 ?TheOCLSpecialPowerPool@?1??getClassMemoryPool@OCLSpecialPower@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFCE4,pool-glue cascade static (back-solved)
-?TheObjectCreationListStore@@3PAVObjectCreationListStore@@A,0x012EF738,ObjectCreationListStore* global read by InstantDeathBehavior parseOCL
+?TheObjectCreationListStore@@3PAVObjectCreationListStore@@A,0x00EEF70C,ObjectCreationListStore* global read by InstantDeathBehavior parseOCL
 ?TheObjectCreationUpgradePool@?1??getClassMemoryPool@ObjectCreationUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0598,pool-glue cascade static (back-solved)
 ?TheOpenContainPool@?1??getClassMemoryPool@OpenContain@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFA60,pool-glue cascade static (back-solved)
 ?TheParticleSystemManager@@3PAVParticleSystemManager@@A,0x00EF64BC,ParticleSystemManager* global; DIR32 0x012F64BC in updateSubObjectsFromShroud / same slot as g_bfme923GlobA
@@ -13104,7 +13105,7 @@ name,address,notes
 ?TheSpecialPowerCreatePool@?1??getClassMemoryPool@SpecialPowerCreate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFBA4,pool-glue cascade static (back-solved)
 ?TheSpecialPowerStore@@3PAVSpecialPowerStore@@A,0x012ED80C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000BCE80 calls; autopin
 ?TheSquishCollidePool@?1??getClassMemoryPool@SquishCollide@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF9D8,pool-glue cascade static (back-solved)
-?TheStatsCollector@@3PAVStatsCollector@@A,0x00ED63C,Global VA 0x012ED63C is the receiver for exact StatsCollector update 0x000A2E60 writeFileEnd 0x000A2900 collectMsgStats 0x000A21F0 startScrollTime 0x000A22B0 and endScrollTime 0x000A22D0 bodies; matched Money methods use counters +4/+8
+?TheStatsCollector@@3PAVStatsCollector@@A,0x00EED63C,Global VA 0x012ED63C is the receiver for exact StatsCollector update 0x000A2E60 writeFileEnd 0x000A2900 collectMsgStats 0x000A21F0 startScrollTime 0x000A22B0 and endScrollTime 0x000A22D0 bodies; matched Money methods use counters +4/+8
 ?TheStatusBitsUpgradePool@?1??getClassMemoryPool@StatusBitsUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF05C0,pool-glue cascade static (back-solved)
 ?TheStealthDetectorUpdatePool@?1??getClassMemoryPool@StealthDetectorUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF009C,pool-glue cascade static (back-solved)
 ?TheStealthUpdatePool@?1??getClassMemoryPool@StealthUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF01C8,pool-glue cascade static (back-solved)
@@ -15008,17 +15009,17 @@ name,address,notes
 ?_bfme_nextInInstanceList@BfmeTeamInstanceLink@@QBEPAV1@XZ,0x000C8A30,Const view of Team instance-list advance: retail 0032C680 calls ILT22A70 -> C8A30; complete 4B body reads this+14 and returns without mutation; independent Team.cpp prototype iteration uses same target and receiver
 ?_bfme_nextInInstanceList@Team@@QAEPAV1@XZ,0x00022A70,Open-BFME5 shape-only pin: the thunk the team instance list walk advances through; thiscall on the team with the next team back
 ?_bfme_nextInInstanceList@Team@@QBEPAV1@XZ,0x00022A70,const-member spelling of the team instance-list advance already pinned as ?_bfme_nextInInstanceList@Team@@QAEPAV1@XZ; retail AIPlayer::isSupplySourceAttacked +0x160 calls ILT 0x00022A70 (e8 fb e9 eb ff) with ECX = team and stores the returned next team; the ILT jumps to 0x000C8A30 mov eax [ecx+0x14] ret so const-ness is ABI-neutral; DLINK_ITERATOR GetNextFunc is a const PMF
-?_bfme_onBttnClose@BfmeAptScreenSpellStore@@QAEXXZ,0x00010401,SpellStore OnBttnClose callback target thunk
-?_bfme_onBttnSpell@BfmeAptScreenSpellStore@@QAEXXZ,0x00017D2D,SpellStore OnBttnSpell callback target thunk
+?_bfme_onBttnClose@BfmeAptScreenSpellStore@@QAEXXZ,0x00017D2D,SpellStore OnBttnClose callback target thunk
+?_bfme_onBttnSpell@BfmeAptScreenSpellStore@@QAEXXZ,0x00010401,SpellStore OnBttnSpell callback target thunk
 ?_bfme_onChatEnterText@BfmeAptScreenDisconnectScreen@@QAEXPBD@Z,0x0050F2B0,EXTRA(not in W3 list) fscommand AptDisconnectScreen::Chat::OnBttnEnterText handler bound at 0x0050FB8E via ILT 0x00041100: ZH DisconnectControlSystem GEM_EDIT_DONE arm: GadgetTextEntryGetText(this+0x25C) clear with TheEmptyString trim and if non-empty sendChat 0x0050EE90 at 0x0050F35B
-?_bfme_onClosed@BfmeAptScreenSpellStore@@QAEXXZ,0x0001692D,SpellStore OnClosed callback target thunk
+?_bfme_onClosed@BfmeAptScreenSpellStore@@QAEXXZ,0x00016513,SpellStore OnClosed callback target thunk
 ?_bfme_onInitGadget@BfmeAptScreenDisconnectScreen@@QAEXPBDPAXPAVGameWindow@@@Z,0x0050F0B0,EXTRA(not in W3 list) DisconnectScreen::InitGadgets handler bound at 0x0050FA21 via ILT 0x0003EED7: by gadget name ChatBox -> this+0x258 ChatEntry -> this+0x25C (+GadgetTextEntrySetText empty) RulesBox -> GadgetListBoxReset + 0x004B7AE0(win 1) + GadgetListBoxAddEntryText(TheGameText->fetch(APT:DisconnectRules)); ZH InitDisconnectWindow/ShowDisconnectWindow twin
 ?_bfme_onInitialized@BfmeAptScreenDisconnectScreen@@QAEXPBD@Z,0x0050E630,EXTRA(not in W3 list) fscommand AptDisconnectScreen::OnInitialized handler bound at 0x0050FA7D via ILT 0x0003FE95: sets this+0x260 which vslot +0x14 body 0x0050E800 consumes to re-send the 8 kick-button states
-?_bfme_onInitialized@BfmeAptScreenSpellStore@@QAEXXZ,0x000074AF,SpellStore OnInitialized callback target thunk
+?_bfme_onInitialized@BfmeAptScreenSpellStore@@QAEXXZ,0x0003C597,SpellStore OnInitialized callback target thunk
 ?_bfme_onKick@BfmeAptScreenDisconnectScreen@@QAEXPBD@Z,0x0050E6F0,EXTRA(not in W3 list) fscommand AptDisconnectScreen::Kick handler bound at 0x0050FB33 via ILT 0x000044DF: slot = atoi(arg) then tail-jumps TheNetwork slot +0x7C (0x00682270 voteForPlayerDisconnect) with untranslatedSlotPosition(slot TheNetwork->getLocalPlayerID()) 0x0066B3E0 via ILT 0x000156D6
 ?_bfme_onQuit@BfmeAptScreenDisconnectScreen@@QAEXPBD@Z,0x0050F1A0,EXTRA(not in W3 list) fscommand AptDisconnectScreen::Quit handler bound at 0x0050FAD8 via ILT 0x000278CC: sets this+0x261 builds TheNetwork->getPlayerName(getLocalPlayerID()) + L has left the game and sendChat 0x0050EE90 then for slot 0..7 if !TheNetwork->_bfme_isSlotLocalOrLive(slot) (+0xE4) TheNetwork->voteForPlayerDisconnect(slot) (+0x7C 0x00682270) then TheNetwork->quitGame (+0x78 0x006822E0) at 0x0050F24F
-?_bfme_onRollOutBttnSpell@BfmeAptScreenSpellStore@@QAEXXZ,0x0003C597,SpellStore OnRollOutBttnSpell callback target thunk
-?_bfme_onRollOverBttnSpell@BfmeAptScreenSpellStore@@QAEXXZ,0x00016513,SpellStore OnRollOverBttnSpell callback target thunk
+?_bfme_onRollOutBttnSpell@BfmeAptScreenSpellStore@@QAEXXZ,0x000074AF,SpellStore OnRollOutBttnSpell callback target thunk
+?_bfme_onRollOverBttnSpell@BfmeAptScreenSpellStore@@QAEXXZ,0x0001692D,SpellStore OnRollOverBttnSpell callback target thunk
 ?_bfme_playerSideType@BfmeAptScreenCampaignReview@@QAEXXZ,0x00042663,CampaignReview playerSideType callback target thunk
 ?_bfme_populateCountryList@BfmeAptScreenOnlineLogin@@QAEXXZ,0x00005F83,ILT thunk; OnlineLogin country-list populate called from _bfme_onInitGadget 0x00551DD0
 ?_bfme_populateMultiPlayer@BfmeAptScreenScoreScreen@@QAEXH@Z,0x005770E0,no ZH twin: +0x25c = type (1 skirmish 2 LAN 3 internet 4 replay); reserve(8) then for 8 slots TheGameInfo(0x012F708C)->getSlot(i) isOccupied name(+0x2c) -> nameToKey -> ThePlayerList->findPlayerWithNameKey skipping isPlayerObserver -> entry {slot player score teamScore}; score = ScoreKeeper::calculateScore 0x000E8D90; teamScore += allies' scores (mutual getRelationship==2 at 0x0057720A/0x0057721F); std::sort (0x00575450 introsort 0x005742C0/0x00571AB0 insertion) then per row the team-break byte +0x270[i] (0x00577315) and the row adder 0x00576C20(player slot i) at 0x00577325; ILT 0x0001B626; sole caller the opener 0x00577604
@@ -80480,7 +80481,7 @@ name,address,notes
 ?fade00565170@@YAIM_N@Z,0x37498,"Independent wrapper/table/callback ABI review; timed-operation pump passes elapsed float and firstCall bool, returns unsigned flags; post writes serial key and owns by-value release"
 ?fade005651F0@@YAIM_N@Z,0x35d6e,"Independent wrapper/table/callback ABI review; timed-operation pump passes elapsed float and firstCall bool, returns unsigned flags; post writes serial key and owns by-value release"
 ?fade0060F010@@YAIM_N@Z,0x2824f,"Independent wrapper/table/callback ABI review; timed-operation pump passes elapsed float and firstCall bool, returns unsigned flags; post writes serial key and owns by-value release"
-?fadeQueueKey@@3IA,0xed588,"Independent wrapper/table/callback ABI review; timed-operation pump passes elapsed float and firstCall bool, returns unsigned flags; post writes serial key and owns by-value release"
+?fadeQueueKey@@3IA,0x00EED588,"Independent wrapper/table/callback ABI review; timed-operation pump passes elapsed float and firstCall bool, returns unsigned flags; post writes serial key and owns by-value release"
 ?fallback@BfmeRva49250Control@@QAEXPAVBfmeRva49250Object@@@Z,0x0003F0FD,assigned body helper for Rva00249250
 ?fallback@BfmeSubD4C@@QAE_NXZ,0x0002FE05,pin
 ?falsename@?$numpunct@D@_STL@@QBE?AV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@2@XZ,0x00838FC0,num_put boolalpha at 0x00838FE0 calls narrow numpunct vtable slot 5 through this exact forwarder
@@ -80972,13 +80973,13 @@ name,address,notes
 ?g_bfme1267@@3PAVBfmeG1267@@A,0x00EF0898,pin
 ?g_bfme1268@@3PAVBfmeR1268@@A,0x00EEF4CC,pin
 ?g_bfme1269@@3PAVBfmeG1269@@A,0x00EED5C8,pin
-?g_bfme911Busy@@3DA,0x0094B208,pin
-?g_bfme911Flag@@3DA,0x008D7188,pin
-?g_bfme911Ptr@@3PAVBfmeObj911C@@A,0x0094B210,pin
-?g_bfme911Val@@3HA,0x008D7184,pin
+?g_bfme911Busy@@3DA,0x00F4B208,pin
+?g_bfme911Flag@@3DA,0x00ED7188,pin
+?g_bfme911Ptr@@3PAVBfmeObj911C@@A,0x00F4B210,pin
+?g_bfme911Val@@3HA,0x00ED7184,pin
 ?g_bfme911Vft@@3PADA,0x00D37578,pin
-?g_bfme912A@@3PAXA,0x0090A584,pin
-?g_bfme912B@@3VGen_007f0300@@A,0x0090A580,pin
+?g_bfme912A@@3PAXA,0x00F0A584,pin
+?g_bfme912B@@3VGen_007f0300@@A,0x00F0A580,pin
 ?g_bfme912Str@@3PADA,0x00D29A9C,pin
 ?g_bfme913Glob@@3PAVBfmeGlob913E@@A,0x00EF0898,pin
 ?g_bfme914A@@3PAXA,0x00EF9D04,pin
@@ -81297,7 +81298,7 @@ name,address,notes
 ?g_bfmeFVIX@@3PAXA,0x00F0A4AC,pin
 ?g_bfmeFactorDC@@3MA,0x00C96490,pin
 ?g_bfmeFallbackDB@@3PAVAptValue@@A,0x013379BC,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x008B6D70 calls; autopin
-?g_bfmeFallbackET@@3MB,0x0069CECC,pin fallback ratio for BfmeConv2041
+?g_bfmeFallbackET@@3MB,0x00C9CECC,pin fallback ratio for BfmeConv2041
 ?g_bfmeFileAO@@3PADA,0x00CAA908,pin
 ?g_bfmeFileUUA@@3PADA,0x00D2C6A8,pin
 ?g_bfmeFileUVB@@3PADA,0x00D2C24C,pin
@@ -81337,7 +81338,7 @@ name,address,notes
 ?g_bfmeFmtA1070@@3PADA,0x00D05740,pin
 ?g_bfmeFmtA1072@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmtA1073@@3PADA,0x00D05728,pin
-?g_bfmeFmtA995C@@3PADA,0x00D07374,pin
+?g_bfmeFmtA995C@@3PADA,0x00D053D4,pin
 ?g_bfmeFmtAJ@@3PADA,0x00D090FC,pin
 ?g_bfmeFmtB1064@@3PADA,0x00D0523C,pin
 ?g_bfmeFmtB1066@@3PADA,0x00D061A0,pin
@@ -81346,7 +81347,7 @@ name,address,notes
 ?g_bfmeFmtB1070@@3PADA,0x00D097A4,pin
 ?g_bfmeFmtB1072@@3PADA,0x00D04FFC,pin
 ?g_bfmeFmtB1073@@3PADA,0x00D05714,pin
-?g_bfmeFmtB995C@@3PADA,0x00D053D4,pin
+?g_bfmeFmtB995C@@3PADA,0x00D07374,pin
 ?g_bfmeFmtC1063@@3PADA,0x00D056EC,pin
 ?g_bfmeFmtC1064@@3PADA,0x00D05224,pin
 ?g_bfmeFmtC1072@@3PADA,0x00D090D8,pin
@@ -86337,8 +86338,8 @@ name,address,notes
 ?rva008F80A0@BfmeSmallFillRange@@QAE_NHHH@Z,0x008F80A0,This address-derived name identifies the range method at 0x008F80A0. The call at 0x008F82A0 passes the range object in ECX and three integer bounds.
 ?rva008fd2a0@@YAXXZ,0x008FD2A0,DX8 vertex-buffer creation retry calls the already matched no-argument invalidation wrapper
 ?rva00901160@@YAHAAV?$vector@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@V?$allocator@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@2@@_STL@@PBD1@Z,0x00901160,Address-derived; direct call at 0x009013A0+0x45 cdecl 3 pushes (&tokens/descriptor/!# literal) add esp 0xC; body plain ret reads vector at arg1 (erase ILT 0x6730) strtok(buf/arg3) push_back strings and returns (finish-start)/12
-?rva00906340CellCtor@@YAXPAX@Z,0x004110D6,Open-BFME5 cell ctor ILT
-?rva00906340CellDtor@@YAXPAX@Z,0x00430652,Open-BFME5 cell dtor ILT
+?rva00906340CellCtor@@YAXPAX@Z,0x000110D6,Open-BFME5 cell ctor ILT
+?rva00906340CellDtor@@YAXPAX@Z,0x00030652,Open-BFME5 cell dtor ILT
 ?rva00906340VecCtor@@YGXPAXIHP6AX0@Z1@Z,0x009F6EE4,Open-BFME5 eh vector ctor iterator
 ?rva00906340VecCtor@@YGXPAXIHP6AXPAX@Z1@Z,0x009F6EE4,Open-BFME5 eh vector ctor iterator
 ?rva0090C950@Rva0090C950Texture@@QAEDXZ,0x0090C950,pin
@@ -86352,7 +86353,7 @@ name,address,notes
 ?rva009A2570@CollisionManager@@QAEXXZ,0x009A2570,GameLogic::init +0x172 calls it on TheCollisionManager with no arguments; 8-byte body forwards this+0xC to 0x009A2960
 ?rva009D86E0@Rva009D8630BlockWriter@@QAEXPBD@Z,0x009D86E0,Descriptive address-derived block-writer member; retail call 0x009D894A passes the same ECX and one name stack argument to this 518-byte body; original class and member spellings unresolved
 ?rva009F2650@PartitionManager@@QAEXH@Z,0x009F2650,GameLogic::init +0x1E4 calls it on ThePartitionManager with push 7; 8-byte body forwards this+0xC to 0x009F59D0 which ends ret 4
-?rva220840Callback@@YAXXZ,0x006207F0,Open-BFME5 dispatch callback pin
+?rva220840Callback@@YAXXZ,0x002207F0,Open-BFME5 dispatch callback pin
 ?rva379ec0SmallDeallocate@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 small-block deallocator reached by the CrateTemplate node-list destructor
 ?rva423670SmallDeallocate@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 record small-block deallocator pin
 ?rva571c40@@YAXPAVRva572670Record@@HHV1@H@Z,0x0000CE0A,incremental-link thunk to 0x00571C40; callee of the 0x00572670 wrapper
@@ -87564,7 +87565,7 @@ _NewBucketSet,0x009D5BB0,vendored=gamespy-2004
 _ProcessAdHocData,0x00868E40,vendored=gamespy-2004
 _ProcessMainListData,0x008680D0,vendored=gamespy-2004
 _RunBenchmark,0x00873DA0,called by W3DShaderManager testMinimumRequirements at 0x0071792B
-_Rva0018A0F0StatePredicate,0x0058A0F0,Direct retail body pin: 118-byte cdecl bool State* plus userdata predicate at RVA 0x0018A0F0; constructor condition table stores this VA at +0x6A; no source body claimed
+_Rva0018A0F0StatePredicate,0x0018A0F0,Direct retail body pin: 118-byte cdecl bool State* plus userdata predicate at RVA 0x0018A0F0; constructor condition table stores this VA at +0x6A; no source body claimed
 _Rva001ABA80ResetHook,0x0042E8A2,ILT to the matched 1-byte ret skeleton m@Gen_00403860; pinned separately under a cdecl free-function name for the Waypoint dtor 0x001ABA80 call-site shape
 _Rva00458FC0,0x00458FC0,selection fallback helper called by Rva00459060
 _Rva0051D1E0Forward,0x0003EA45,Open-BFME5 ILT thunk to the shared 0x0051D1E0 body called by the 0x0051D2A0 and 0x0051D2C0 mode forwarders
@@ -88112,8 +88113,8 @@ _bfmeGet1252,0x008DB190,pin
 _bfmeGlobalTable12A6918,0x00EA6918,pin
 _bfmeGo1019C,0x007F0030,DirtySock module cleanup call at 0x00812CD0 passes the owned table pointer and owner pointer to this one-argument body
 _bfmeGoUPC,0x00990780,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00996D90 calls; autopin
-_bfmeGuardTableAY,0x0069B558,Open-BFME5 the guard table the state constructor at 0x0018AD00 points at
-_bfmeGuardTableAZ,0x0069B558,Open-BFME5 the guard table the state constructor at 0x0018AE90 points at
+_bfmeGuardTableAY,0x00C9B558,Open-BFME5 the guard table the state constructor at 0x0018AD00 points at
+_bfmeGuardTableAZ,0x00C9B558,Open-BFME5 the guard table the state constructor at 0x0018AE90 points at
 _bfmeHandler1233,0x008B91F0,pin
 _bfmeHash1228,0x008D3C50,pin
 _bfmeHash1229,0x008A3190,pin
@@ -88381,20 +88382,20 @@ _bfmeVftXN,0x00CEC760
 _bfmeVftYK,0x00CE7D00
 _bfmeVftYX,0x00D3DEE4
 _bfmeVftZD,0x00CC7968,pin
-_bfmeVftableAT,0x0069B370,Open-BFME5 the AIMoveToState vftable the constructor at 0x00185700 installs
-_bfmeVftableAU,0x00696348,Open-BFME5 the vftable the state constructor at 0x0015D000 installs
-_bfmeVftableAV,0x00698188,Open-BFME5 the vftable the state constructor at 0x00171680 installs
-_bfmeVftableAW,0x0069B748,Open-BFME5 the vftable the state constructor at 0x0018AE00 installs
-_bfmeVftableAX,0x0069AE00,Open-BFME5 the vftable the state constructor at 0x001804B0 installs
-_bfmeVftableAY,0x0069B650,Open-BFME5 the vftable the state constructor at 0x0018AD00 installs
-_bfmeVftableAZ,0x0069B7A0,Open-BFME5 the vftable the state constructor at 0x0018AE90 installs
-_bfmeVftableBA,0x0069A7B0,Open-BFME5 the vftable the state constructor at 0x0017FA10 installs
-_bfmeVftableBB,0x0069A6C0,Open-BFME5 the vftable the state constructor at 0x0017F7F0 installs
-_bfmeVftableBC,0x0069A2F0,Open-BFME5 the vftable the named state constructor at 0x0017F3F0 installs
-_bfmeVftableBG,0x00715C60,Open-BFME5 the vftable the named constructor at 0x0060AAE0 installs
-_bfmeVftableBX,0x00673744,Open-BFME5 the vftable the inline base destructor at 0x001F6D40 restores
-_bfmeVftableBZ,0x00673744,Open-BFME5 the vftable the second base restores at 0x00075D70
-_bfmeVftableCB,0x00673744,Open-BFME5 the vftable the second base restores at 0x00619BB0
+_bfmeVftableAT,0x00C9B370,Open-BFME5 the AIMoveToState vftable the constructor at 0x00185700 installs
+_bfmeVftableAU,0x00C96348,Open-BFME5 the vftable the state constructor at 0x0015D000 installs
+_bfmeVftableAV,0x00C98188,Open-BFME5 the vftable the state constructor at 0x00171680 installs
+_bfmeVftableAW,0x00C9B748,Open-BFME5 the vftable the state constructor at 0x0018AE00 installs
+_bfmeVftableAX,0x00C9AE00,Open-BFME5 the vftable the state constructor at 0x001804B0 installs
+_bfmeVftableAY,0x00C9B650,Open-BFME5 the vftable the state constructor at 0x0018AD00 installs
+_bfmeVftableAZ,0x00C9B7A0,Open-BFME5 the vftable the state constructor at 0x0018AE90 installs
+_bfmeVftableBA,0x00C9A7B0,Open-BFME5 the vftable the state constructor at 0x0017FA10 installs
+_bfmeVftableBB,0x00C9A6C0,Open-BFME5 the vftable the state constructor at 0x0017F7F0 installs
+_bfmeVftableBC,0x00C9A2F0,Open-BFME5 the vftable the named state constructor at 0x0017F3F0 installs
+_bfmeVftableBG,0x00D15C60,Open-BFME5 the vftable the named constructor at 0x0060AAE0 installs
+_bfmeVftableBX,0x00C73744,Open-BFME5 the vftable the inline base destructor at 0x001F6D40 restores
+_bfmeVftableBZ,0x00C73744,Open-BFME5 the vftable the second base restores at 0x00075D70
+_bfmeVftableCB,0x00C73744,Open-BFME5 the vftable the second base restores at 0x00619BB0
 _bfmeVftableCC,0x0072165C,Open-BFME5 the derived vftable the destructor at 0x0073A4E0 installs
 _bfmeVisitXM,0x00872650,Open-BFME5 the per-entry callback the table walk at 0x00872680 hands to TableMap; body sits immediately below it
 _bfmeVtERHa,0x00D22EA8,pin
