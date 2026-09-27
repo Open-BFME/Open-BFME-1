@@ -7318,5 +7318,15 @@
   "after_sha256": "3dbb00fd2ea938116e009c6df0281a4653325974be2db2c45eaba2f8ba481790",
   "evidence": "targets/game/reverse/identity_evidence/integration-squash-name-pairings.md",
   "reason": "Integration range paired a retired bank's scaffold name with an unrelated address-derived bank; no identity changed."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x007bac10.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp",
+  "old_name": "PolygonHolder",
+  "new_name": "Rva007BDB70ArrayOwner",
+  "before_sha256": "f3d3ee10c586db375dde43fee126c90dc09ea051c75a7228480d7c77e534be09",
+  "after_sha256": "5111608b9b14abf80d8cc70e8386750a21a0f5f6fdb1bf33056ea4e50bf24cde",
+  "evidence": "targets/game/reverse/identity_evidence/integration-squash-name-pairings.md",
+  "reason": "Rebase of the 0x007BAC10 landing over concurrent upstream shadow work paired unrelated types across the source and its retired bank; no identity changed."
  }
 ]
