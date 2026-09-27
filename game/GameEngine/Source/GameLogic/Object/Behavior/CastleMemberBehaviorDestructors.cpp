@@ -31,20 +31,21 @@ public:
 
 extern AudioManager *TheAudio;
 
-class Rva0036BBA0BehaviorModule
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
+class ObjectModule
 {
 public:
-	virtual ~Rva0036BBA0BehaviorModule();
+	virtual ~ObjectModule();
 
 private:
 	unsigned char m_data[ 8 ];
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
-class UpdateModuleInterface
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
+class BehaviorModuleInterface
 {
 public:
-	virtual void updateModuleInterfaceAnchor();
+	virtual void behaviorModuleInterfaceAnchor();
 };
 
 struct ModuleInterfaceDispatch { };
@@ -52,12 +53,14 @@ struct ModuleInterfaceDispatch { };
 extern const ModuleInterfaceDispatch
 	g_castleMemberBehaviorModuleInterfaceDispatch;
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
-class UpdateModule : public Rva0036BBA0BehaviorModule,
-	public UpdateModuleInterface
+// The tables restored before ~ObjectModule are BehaviorModule's (0x0109CB5C,
+// 0x0109CA98), the pair ~UpdateModule (0x001B2B10) also ends with.
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
+class BehaviorModule : public ObjectModule,
+	public BehaviorModuleInterface
 {
 public:
-	virtual ~UpdateModule() { }
+	virtual ~BehaviorModule() { }
 
 protected:
 	const ModuleInterfaceDispatch *m_moduleInterface;
@@ -69,7 +72,7 @@ protected:
 	bool m_25;
 };
 
-class CastleMemberBehavior : public UpdateModule
+class CastleMemberBehavior : public BehaviorModule
 {
 public:
 	virtual ~CastleMemberBehavior();
