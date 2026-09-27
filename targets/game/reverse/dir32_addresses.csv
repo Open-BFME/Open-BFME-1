@@ -123,7 +123,6 @@ name,va
 ??0?$NeighborInfo@I@@QAE@XZ,0x00E080D7
 ??0?$RefCountPtr@VTextureClass@@@@QAE@XZ,0x004110D6
 ??0?$RefMultiListClass@VRenderObjClass@@@@QAE@XZ,0x0040FDEE
-??0?$_Rb_tree@HHU?$_Identity@H@_STL@@U?$less@H@2@V?$allocator@H@2@@_STL@@QAE@XZ,0x00429BE5
 ??0?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAE@ABV01@@Z,0x0041CB11
 ??0?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAE@XZ,0x0044048A
 ??0?$map@PBVThingTemplate@@HU?$less@PBVThingTemplate@@@_STL@@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAE@XZ,0x0040C928
@@ -204,6 +203,7 @@ name,va
 ??0RoadType@@QAE@XZ,0x0042C476
 ??0Rva0039B450Element@@QAE@XZ,0x0043C0BA
 ??0Rva006DED60RoadRef@@QAE@XZ,0x0041F3B1
+??0Rva006DED60RoadSet@@QAE@XZ,0x00429BE5
 ??0Rva00735D80TreeType@@QAE@XZ,0x00403AA8
 ??0Rva00736590TreeRecord@@QAE@XZ,0x0040985E
 ??0Rva00739C70State@@QAE@XZ,0x0041EFCE
@@ -239,10 +239,10 @@ name,va
 ??0TextureRemapStruct@@QAE@XZ,0x00D2F180
 ??0TextureStatisticsStruct@@QAE@XZ,0x00D37380
 ??0TextureStatisticsStructWide@@QAE@XZ,0x00D3D1F0
-??0TransitionDamageFXFlags@?A0xe28edf8a@@QAE@XZ,0x0043469E
-??0TransitionDamageFXRecordA@?A0xe28edf8a@@QAE@XZ,0x00407BAD
-??0TransitionDamageFXRecordB@?A0xe28edf8a@@QAE@XZ,0x004302D8
-??0TransitionDamageFXRecordC@?A0xe28edf8a@@QAE@XZ,0x00416158
+??0TransitionDamageFXFlags@?A0xebea2875@@QAE@XZ,0x0043469E
+??0TransitionDamageFXRecordA@?A0xebea2875@@QAE@XZ,0x00407BAD
+??0TransitionDamageFXRecordB@?A0xebea2875@@QAE@XZ,0x004302D8
+??0TransitionDamageFXRecordC@?A0xebea2875@@QAE@XZ,0x00416158
 ??0UnicodeString@@QAE@XZ,0x00441C95
 ??0Vector2@@QAE@XZ,0x004427EE
 ??0Vector3@@QAE@XZ,0x0044677C
@@ -316,6 +316,7 @@ name,va
 ??1?$list@USnapshotBlock@GameState@@V?$allocator@USnapshotBlock@GameState@@@_STL@@@_STL@@QAE@XZ,0x0042E1EF
 ??1?$list@VExperienceLevel@@V?$allocator@VExperienceLevel@@@_STL@@@_STL@@QAE@XZ,0x00437D12
 ??1?$map@PBVThingTemplate@@HU?$less@PBVThingTemplate@@@_STL@@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAE@XZ,0x0041CDCD
+??1?$vector@U?$pair@MH@_STL@@V?$allocator@U?$pair@MH@_STL@@@2@@_STL@@QAE@XZ,0x00433A0A
 ??1?$vector@UGen_p8cd@@V?$allocator@UGen_p8cd@@@_STL@@@_STL@@QAE@XZ,0x00DF5690
 ??1?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@XZ,0x0041642D
 ??1?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@XZ,0x00426AB2
@@ -430,7 +431,6 @@ name,va
 ??1LightningDrawModuleTemplate@FXParticleSystem@@UAE@XZ,0x00411A3B
 ??1LightningEmissionInfo@FXParticleSystem@@UAE@XZ,0x0040D7F6
 ??1LineEmissionVolumeInfo@FXParticleSystem@@UAE@XZ,0x0042F03B
-??1LogicalDecalClass@MultiFixedPoolDecalSystemClass@@QAE@XZ,0x0043CC2C
 ??1MaterialPassStage@@QAE@XZ,0x00430652
 ??1NodeCompressedMotionStruct@@QAE@XZ,0x00D5B6C0
 ??1NodeMotionStruct@@QAE@XZ,0x00D598D0
@@ -496,6 +496,7 @@ name,va
 ??1SphereEmissionVolumeInfo@FXParticleSystem@@UAE@XZ,0x00428E9D
 ??1SphereEmissionVolumeModuleTemplate@FXParticleSystem@@UAE@XZ,0x00429BEA
 ??1SphericalEmissionVelocityInfo@FXParticleSystem@@UAE@XZ,0x0041BFDB
+??1SphericalEmissionVelocityModuleTemplate@FXParticleSystem@@UAE@XZ,0x0043CC2C
 ??1StreakDrawModuleInfo@FXParticleSystem@@UAE@XZ,0x00449CA1
 ??1StreakDrawModuleTemplate@FXParticleSystem@@UAE@XZ,0x00438A1E
 ??1StringClass@@QAE@XZ,0x0041A41F
@@ -512,7 +513,6 @@ name,va
 ??1TTreeType@@QAE@XZ,0x00432CF9
 ??1TeamGenericEntry@@QAE@XZ,0x00430251
 ??1TeamWideEntry@@QAE@XZ,0x0040D828
-??1TeamsInfo@@QAE@XZ,0x0041A41F
 ??1TerrainCollisionModuleInfo@FXParticleSystem@@UAE@XZ,0x0044B00B
 ??1TerrainCollisionModuleTemplate@FXParticleSystem@@UAE@XZ,0x00438410
 ??1TextureClassPtr@@QAE@XZ,0x00430652
@@ -520,10 +520,10 @@ name,va
 ??1TextureStatisticsStruct@@QAE@XZ,0x00D37390
 ??1TextureStatisticsStructWide@@QAE@XZ,0x00418FCF
 ??1TimeCodedMorphKeysClass@@QAE@XZ,0x0042BFF3
-??1TransitionDamageFXFlags@?A0xe28edf8a@@QAE@XZ,0x00426AB2
-??1TransitionDamageFXRecordA@?A0xe28edf8a@@QAE@XZ,0x0041074E
-??1TransitionDamageFXRecordB@?A0xe28edf8a@@QAE@XZ,0x00415703
-??1TransitionDamageFXRecordC@?A0xe28edf8a@@QAE@XZ,0x0042E451
+??1TransitionDamageFXFlags@?A0xebea2875@@QAE@XZ,0x00426AB2
+??1TransitionDamageFXRecordA@?A0xebea2875@@QAE@XZ,0x0041074E
+??1TransitionDamageFXRecordB@?A0xebea2875@@QAE@XZ,0x00415703
+??1TransitionDamageFXRecordC@?A0xebea2875@@QAE@XZ,0x0042E451
 ??1TransitionDamageFXSlotA@@QAE@XZ,0x0041074E
 ??1TransitionDamageFXSlotB@@QAE@XZ,0x00415703
 ??1TransitionDamageFXSlotC@@QAE@XZ,0x0042E451
@@ -682,6 +682,7 @@ name,va
 ??_7?$GXTri3Mesh@G$00$0PPPP@@@6B@,0x01148F90
 ??_7?$GXTri3Mesh@I$0A@$0?0@@6B@,0x01149008
 ??_7?$LatchRestore@H@@6B@,0x010E75AC
+??_7?$LatchRestore@PAVPlayer@@@@6B@,0x010E75B0
 ??_7?$LatchRestore@PAVTeam@@@@6B@,0x010E75AC
 ??_7?$LatchRestore@VAsciiString@@@@6B@,0x010E7688
 ??_7?$LatchRestore@_N@@6B@,0x010892D8
@@ -738,6 +739,7 @@ name,va
 ??_7?$SimpleVecClass@PAVFontCharsClass@@@@6B@,0x01126D64
 ??_7?$SimpleVecClass@UDecalStruct@SkinDecalMeshClass@@@@6B@,0x01126D64
 ??_7?$SimpleVecClass@UMorphKeyStruct@TimeCodedMorphKeysClass@@@@6B@,0x01126D64
+??_7?$SimpleVecClass@URva0096E1B0Elem@@@@6B@,0x0113E684
 ??_7?$SimpleVecClass@UShdSubMeshStruct@@@@6B@,0x01126D64
 ??_7?$SimpleVecClass@VAABoxClass@@@@6B@,0x01126D64
 ??_7?$SimpleVecClass@VKeyClass@?$PrimitiveAnimationChannelClass@M@@@@6B@,0x01126D64
@@ -1019,7 +1021,9 @@ name,va
 ??_7AnimationSoundClientBehaviorModuleDataBase@@6B@,0x01073744
 ??_7AnimationSteeringUpdateModuleData@@6B@,0x01080EE0
 ??_7ApplyRandomForceNugget@@6B@,0x010EC764
+??_7AptInteger@@6B@,0x01136400
 ??_7AptMapPreviewFunctorWrapper@@6B@,0x01106818
+??_7AptValue@@6B@,0x01135D68
 ??_7ArchiveFile@@6B@,0x01143BC4
 ??_7ArchiveFileSystem@@6B@,0x01143A08
 ??_7ArmorUpgrade@@6BBehaviorModule@@@,0x010CBB54
@@ -2443,6 +2447,7 @@ name,va
 ??_7HordeSiegeEngineContain@@6BHordeTransportWideIface@@@,0x010B01D0
 ??_7HordeSiegeEngineContain@@6BOpenContainPrimaryBase@@@,0x010B02A8
 ??_7HordeSiegeEngineContain@@6BOpenContainWideSecondaryBase@@@,0x010B01D0
+??_7HordeSiegeEngineContainModuleDataBase@@6B@,0x010ADA50
 ??_7HordeTransportContain@@6BHordeTransportContainBase@@@,0x010B0688
 ??_7HordeTransportContain@@6BHordeTransportContainIface1@@@,0x010B05C0
 ??_7HordeTransportContain@@6BHordeTransportContainIface2@@@,0x010B05B0
@@ -2619,6 +2624,7 @@ name,va
 ??_7LivingWorldEyeTower@@6B@,0x01115F10
 ??_7LivingWorldPlayerArmy@@6B@,0x010E8F38
 ??_7LivingWorldRegion@@6B@,0x01117258
+??_7LivingWorldRegionManager@@6B@,0x010EE010
 ??_7LivingWorldSound@@6B@,0x011173D4
 ??_7LoadGameFadeWrapper@@6B@,0x010EDB7C
 ??_7LocalFile@@6B@,0x01143D38
@@ -3948,6 +3954,7 @@ name,va
 ??_7Rva00499E60SingleStore@@6B@,0x010EDAA0
 ??_7Rva00499F00SingleStore@@6B@,0x010EDABC
 ??_7Rva0049A120FunctorSingleWrapper@@6B@,0x010FA348
+??_7Rva0049DA40Object@@6B@,0x010FB888
 ??_7Rva004B2250SingleStore@@6B@,0x010F571C
 ??_7Rva004B2300@@6B@,0x010F5738
 ??_7Rva004B2C80@@6B@,0x010FD79C
@@ -4638,6 +4645,7 @@ name,va
 ??_7Rva007E4A00@@6B@,0x01128D30
 ??_7Rva007E87C0Deleting@@6B@,0x01129358
 ??_7Rva007E8810@@6B@,0x011296B0
+??_7Rva007E9020Item@@6B@,0x01129744
 ??_7Rva007E92C0CleanupDeleting@@6B@,0x01129758
 ??_7Rva007E9B40Object@@6BQ3MakeBaseA@@@,0x01129810
 ??_7Rva007E9B40Object@@6BQ3MakeBaseB@@@,0x01129808
@@ -4650,18 +4658,26 @@ name,va
 ??_7Rva007F1C20Object@@6BQ3MakeBaseA@@@,0x0112A8B0
 ??_7Rva007F1C20Object@@6BQ3MakeBaseB@@@,0x0112A8AC
 ??_7Rva007F1DB0CleanupDeleting@@6B@,0x0112AB34
+??_7Rva007F1DE0BaseB@@6B@,0x01129744
+??_7Rva007F1DE0Object@@6BRva007F1DE0BaseA@@@,0x0112AB7C
+??_7Rva007F1DE0Object@@6BRva007F1DE0BaseB@@@,0x0112AB78
 ??_7Rva007F2150Object@@6BQ3MakeBaseA@@@,0x0112AB7C
 ??_7Rva007F2150Object@@6BQ3MakeBaseB@@@,0x0112AB78
 ??_7Rva007F2650CleanupDeleting@@6B@,0x0112AC70
+??_7Rva007F2680Object@@6BRva007F1DE0BaseA@@@,0x0112AD7C
+??_7Rva007F2680Object@@6BRva007F1DE0BaseB@@@,0x0112AD78
 ??_7Rva007F2E60Object@@6BQ3MakeBaseA@@@,0x0112AD7C
 ??_7Rva007F2E60Object@@6BQ3MakeBaseB@@@,0x0112AD78
 ??_7Rva007F2F50CleanupDeleting@@6B@,0x0112AF04
+??_7Rva007F2F80Object@@6BRva007F1DE0BaseA@@@,0x0112AF40
+??_7Rva007F2F80Object@@6BRva007F1DE0BaseB@@@,0x0112AF3C
 ??_7Rva007F3410Object@@6BQ3MakeBaseA@@@,0x0112AF40
 ??_7Rva007F3410Object@@6BQ3MakeBaseB@@@,0x0112AF3C
 ??_7Rva007F37F0CleanupDeleting@@6B@,0x0112B048
 ??_7Rva007F40F0Object@@6BQ3MakeBaseA@@@,0x0112B12C
 ??_7Rva007F40F0Object@@6BQ3MakeBaseB@@@,0x0112B128
 ??_7Rva007F41E0CleanupDeleting@@6B@,0x0112B248
+??_7Rva007F4860Owner@@6B@,0x0112B3AC
 ??_7Rva007F48D0Deleting@@6B@,0x0112B3E4
 ??_7Rva007F4900CleanupDeleting@@6B@,0x0112B3C8
 ??_7Rva007F4930Deleting@@6B@,0x0112B3AC
@@ -4681,10 +4697,14 @@ name,va
 ??_7Rva007FA990Base4@@6B@,0x0112B89C
 ??_7Rva007FAD50Deleting@@6B@,0x0112BC0C
 ??_7Rva007FADF0CleanupDeleting@@6B@,0x0112BCD0
+??_7Rva007FAE20Object@@6BRva007F1DE0BaseA@@@,0x0112BD40
+??_7Rva007FAE20Object@@6BRva007F1DE0BaseB@@@,0x0112BD38
 ??_7Rva007FBB20Object@@6BQ3MakeBaseA@@@,0x0112BD40
 ??_7Rva007FBB20Object@@6BQ3MakeBaseB@@@,0x0112BD38
 ??_7Rva007FBBE0Deleting@@6B@,0x0112BEB0
 ??_7Rva007FC120CleanupDeleting@@6B@,0x0112BEE8
+??_7Rva007FC150Object@@6BRva007F1DE0BaseA@@@,0x0112BFA0
+??_7Rva007FC150Object@@6BRva007F1DE0BaseB@@@,0x0112BF98
 ??_7Rva007FCF80Object@@6BQ3MakeBaseA@@@,0x0112BFA0
 ??_7Rva007FCF80Object@@6BQ3MakeBaseB@@@,0x0112BF98
 ??_7Rva007FD040Deleting@@6B@,0x0112C148
@@ -6002,6 +6022,7 @@ name,va
 ??_F?$list@PAVControlBarSchemeImage@@V?$allocator@PAVControlBarSchemeImage@@@_STL@@@_STL@@QAEXXZ,0x004391D5
 ??_F?$list@USnapshotBlock@GameState@@V?$allocator@USnapshotBlock@GameState@@@_STL@@@_STL@@QAEXXZ,0x004198F8
 ??_F?$list@VExperienceLevel@@V?$allocator@VExperienceLevel@@@_STL@@@_STL@@QAEXXZ,0x00402923
+??_F?$vector@U?$pair@MH@_STL@@V?$allocator@U?$pair@MH@_STL@@@2@@_STL@@QAEXXZ,0x0041BF8B
 ??_F?$vector@UGen_p8cd@@V?$allocator@UGen_p8cd@@@_STL@@@_STL@@QAEXXZ,0x00DF5680
 ??_F?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAEXXZ,0x0043469E
 ??_FAcceleratorTracker@@QAEXXZ,0x004427EE
@@ -6028,6 +6049,8 @@ name,va
 ?AssetSubsystem0059A3D0@@3PAXA,0x0134FAA0
 ?AttachedModelFXNuggetFieldParse@@3QBUFieldParse@@B,0x010F2C20
 ?AttachmentFailures007629F0@@3HA,0x01305A4C
+?AudioGlobal004092A0@@3PAUAudioView004092A0@@A,0x012ED668
+?AudioGlobal0040F780@@3PAUAudio0040F780@@A,0x012ED668
 ?AvailablePageMemory@CPUDetectClass@@0IA,0x0134ED74
 ?AvailablePhysicalMemory@CPUDetectClass@@0IA,0x0134ED60
 ?AvailableVirtualMemory@CPUDetectClass@@0IA,0x0134ED14
@@ -6109,10 +6132,13 @@ name,va
 ?Campaign00598950@@3PAXA,0x012F1024
 ?Carry@?$Int@$0EA@@@2_NA,0x0134F999
 ?ClientGlobal007629F0@@3PAVClient007629F0@@A,0x012F1464
+?Clock00200420@@3PAUFrame00200420@@A,0x012F0898
 ?CmpFunc@@YAHPBX0@Z,0x00E068C7
 ?CompareIndex@CTReorderInstructions@D3DXShader@@KGHIIPBX@Z,0x00EBF19E
 ?CompareLoad@CTReorderInstructions@D3DXShader@@KGHIIPBX@Z,0x00EBF163
 ?CompareSemantic@CCompiler@D3DXShader@@KGHIIPBX@Z,0x00E4698F
+?Control0040F780@@3PAUMovieControl0040F780@@A,0x012F1B40
+?Counter0040F780@@3_JA,0x012F1278
 ?Create@DebugIOFlat@@SAPAVDebugIOInterface@@XZ,0x00C90420
 ?Create@DebugIONet@@SAPAVDebugIOInterface@@XZ,0x00C8FE00
 ?Create@DebugIOOds@@SAPAVDebugIOInterface@@XZ,0x00C8FA10
@@ -6167,6 +6193,7 @@ name,va
 ?Data00F59214@@3P6AXXZA,0x01359214
 ?Data00F59544@@3P6AHXZA,0x01359544
 ?Data00F595C4@@3P6AXXZA,0x013595C4
+?DebugGlobal00409E20@@3PAVDebugView00409E20@@A,0x01336E5C
 ?DefaultDebugShader@WW3D@@0VShaderClass@@A,0x012D6D9C
 ?DefaultDepthBuffer@DX8Wrapper@@0PAUIDirect3DSurface8@@A,0x01340544
 ?DefaultNativeScreenSize@WW3D@@2MA,0x012D6D7C
@@ -6175,6 +6202,7 @@ name,va
 ?DefaultStaticSortLists@WW3D@@0PAVStaticSortListClass@@A,0x0133F444
 ?DisplayFormat@DX8Wrapper@@1W4_D3DFORMAT@@A,0x01340510
 ?DisplayMask@BoxRenderObjClass@@1HA,0x0134B20C
+?Distance004092A0@@3MA,0x012B4D44
 ?DistributionTypeNames@GameClientRandomVariable@@2PAPBDA,0x012A7C40
 ?DontShowMainMenu@@3_NA,0x012F45D4
 ?DrawPolygonLowBoundLimit@DX8Wrapper@@0IA,0x0134057C
@@ -6184,6 +6212,7 @@ name,va
 ?DualIndexedDispatchSixSecond@@3HA,0x012B9690
 ?DuplicateLocationHash@@3V?$HashTemplateClass@VVector3@@I@@A,0x012D71D8
 ?DynamicDecalFXNuggetFieldParse@@3QBUFieldParse@@B,0x010F2798
+?Effects0040A260@@3PAUEffectFactory0040A260@@A,0x012EF4F0
 ?EmptyScript@ScriptList@@0PAVScript@@A,0x012F078C
 ?EngineGlobal007629F0@@3PAUEngine007629F0@@A,0x012ED524
 ?EnumThreadWndProc@@YGHPAXJ@Z,0x00C89700
@@ -6195,10 +6224,12 @@ name,va
 ?FRAME_DATA_LENGTH@@3HA,0x012BA088
 ?FXListAtBonePosFXNuggetFieldParse@@3QBUFieldParse@@B,0x010F2E14
 ?FXNuggetFieldParse@@3QBUFieldParse@@B,0x010F2480
+?Factory0040A260@@3PAVThingFactory@@A,0x012EF1D8
 ?FadeTacticalView@@3PAVFadeView@@A,0x012F1600
 ?Fast_Slerp_Use_Inline@@3_NA,0x0133D1A8
 ?FeatureBits@CPUDetectClass@@0IA,0x0134ED20
 ?FireWeaponCollideFieldParse@@YAXAAVMultiIniFieldParse@@@Z,0x0043ABC0
+?Flag0133F42F@@3_NA,0x0133F42F
 ?FogColor@DX8Wrapper@@1KA,0x0134052C
 ?FogColor@DX8Wrapper@@2IA,0x0134052C
 ?FogEnable@DX8Wrapper@@1_NA,0x01340528
@@ -6302,6 +6333,7 @@ name,va
 ?InheritedWorldSpaceEmitterVel@@3VVector3@@A,0x0134BC64
 ?IntelProcessor@CPUDetectClass@@0W4IntelProcessorType@1@A,0x0134ED6C
 ?IntelProcessor@CPUDetectClass@@2W4IntelProcessorType@1@A,0x0134ED6C
+?Interval0040F780@@3NA,0x012F12A8
 ?InvProcessorTicksPerSecond@CPUDetectClass@@0NA,0x0134EDA0
 ?IsCapturing@WW3D@@0_NA,0x0133F42A
 ?IsCapturing@WW3D@@2_NA,0x0133F42A
@@ -6316,6 +6348,7 @@ name,va
 ?IsRendering@WW3D@@2_NA,0x0133F429
 ?IsScreenUVBiased@WW3D@@0_NA,0x0133F42B
 ?IsSortingEnabled@WW3D@@0_NA,0x012D6D74
+?IsSortingEnabled@WW3D@@2_NA,0x012D6D74
 ?IsTexturingEnabled@WW3D@@0_NA,0x012D6D90
 ?IsTexturingEnabled@WW3D@@2_NA,0x012D6D90
 ?IsWindowed@DX8Wrapper@@1_NA,0x0134050D
@@ -6327,6 +6360,7 @@ name,va
 ?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B,0x012ED8B8
 ?KINDOFMASK_NONE@@3VKindOfMask@@B,0x012ED8B8
 ?KeepBlankEntries@INIClass@@0_NA,0x0134EE00
+?KeyboardGlobal0040F780@@3PAUKeyboard0040F780@@A,0x012F4C50
 ?KickedCallback@@YAXPAXW4RoomType@@PBD20@Z,0x00A42E10
 ?L1DataCacheLineSize@CPUDetectClass@@0IA,0x0134ED7C
 ?L1DataCacheSetAssociative@CPUDetectClass@@0IA,0x0134EDC4
@@ -6355,10 +6389,12 @@ name,va
 ?LightPosWorld@@3PAVVector3@@A,0x012BBE6C
 ?LightPulseFXNuggetFieldParse@@3QBUFieldParse@@B,0x010F2678
 ?Light_Environment@DX8Wrapper@@1PAVLightEnvironmentClass@@A,0x0134051C
+?LightingGlobals00747FF0@@3PAULightingData00747FF0@@A,0x012ED5C8
 ?LightmapDebugShader@WW3D@@0VShaderClass@@A,0x012D6DA0
 ?LocationHash@@3V?$HashTemplateClass@VVector3@@I@@A,0x012D71C8
 ?LockCount@DX8Wrapper@@0IA,0x01340588
 ?LockCount@DX8Wrapper@@0IC,0x01340588
+?Logic0040F780@@3PAVBfmeGameLogicPause@@A,0x012F0898
 ?MOTDBuffer@@3PADA,0x012F7170
 ?MapSelectorTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,0x00437EF2
 ?MatPassTaskPool@@3VMatPassTaskPoolClass@@A,0x0134B13C
@@ -6366,7 +6402,9 @@ name,va
 ?Mix2@Random3Class@@1PAHA,0x012D9D80
 ?ModelConditionNames@@3QBQBDB,0x012A6918
 ?MonsterDockUpdateModuleDataFieldParse@@3QBUFieldParse@@B,0x010CA9B0
+?Mouse0040F780@@3PAVMouse@@A,0x012F4C5C
 ?Movie@WW3D@@0PAVFrameGrabClass@@A,0x0133F430
+?MovieFactoryGlobal0040E3B0@@3PAUMovieFactory0040E3B0@@A,0x0130B190
 ?NPatchesGapFillingMode@@3IA,0x012D6D88
 ?NPatchesLevel@@3IA,0x012D6D8C
 ?NewPlayerListCallback@@YAXPAXW4RoomType@@0@Z,0x00A42E20
@@ -6381,6 +6419,7 @@ name,va
 ?OUTWARD_EMISSION_VELOCITY_MODULE_TEMPLATE_PARSE_TABLE@FXParticleSystem@@3QBDB,0x01113FE4
 ?OpenBFME5_netCRCInterval@@3HA,0x012A7040
 ?OurLanguage@@3W4LanguageID@@A,0x012ED5D4
+?Owner0040A260@@3PAXA,0x012F10D8
 ?OwnerThreadId@DX8Wrapper@@0KA,0x01340584
 ?OwnerThreadId@DX8Wrapper@@0KC,0x01340584
 ?POINT_EMISSION_VOLUME_MODULE_TEMPLATE_PARSE_TABLE@FXParticleSystem@@3QBDB,0x01114060
@@ -6396,6 +6435,7 @@ name,va
 ?Pixel_Shader_Constants@DX8Wrapper@@1PAVVector4@@A,0x01341150
 ?PlayerList005999B0@@3PAUPlayers005999B0@@A,0x012ED748
 ?Players00598950@@3PAVBfmeThingRV@@A,0x012ED748
+?PointMaterial@PointGroupClass@@0PAVVertexMaterialClass@@A,0x01341260
 ?PointMaterial@PointGroupClass@@2PAVVertexMaterialClass@@A,0x01341260
 ?PostStaticInit@Debug@@SAXXZ,0x00C8AF60
 ?Prefix012D5A08@@3PBDB,0x012D5A08
@@ -6517,6 +6557,7 @@ name,va
 ?Remainder@?$Int@$0EA@@@2V1@A,0x0134F9A0
 ?RenderStates@DX8Wrapper@@1PAIA,0x01340100
 ?RenderStates@DX8Wrapper@@2PAIA,0x01340100
+?RendererGlobal0040F780@@3PAURenderer0040F780@@A,0x012ED524
 ?RepairDockUpdateModuleDataFieldParse@@3QBUFieldParse@@B,0x010CAE38
 ?ReplayWasPressed@@3_NA,0x012F4188
 ?ReservedMask@StringClass@@0IA,0x0134ECCC
@@ -6527,6 +6568,7 @@ name,va
 ?RingFilterObject@@3DA,0x01307348
 ?RingFilterSlot@@3PAXA,0x012F9CE8
 ?RiseProcessor@CPUDetectClass@@0W4RiseProcessorType@1@A,0x0134ED70
+?Rules00409E20@@3PAUBuffRules00409E20@@A,0x012B4D80
 ?Rva00064680FieldParseTable@@3QBUFieldParse@@B,0x010753D0
 ?Rva00064680NegativeScale@@3MB,0x01075354
 ?Rva0012A170BuildFieldParse@@YAXAAVMultiIniFieldParse@@@Z,0x0042969A
@@ -6588,6 +6630,7 @@ name,va
 ?Rva00579160TheCurrent@@3PAURva00579160Current@@A,0x012F7094
 ?Rva00579160TheManager@@3PAURva00579160Manager@@A,0x012F19E8
 ?Rva00579160TheManager@@3PAVBfmeThingBIF@@A,0x012F19E8
+?Rva00579160TheManager@@3PAVWindowManager@@A,0x012F19E8
 ?Rva0059AB00FieldParse@@3UFieldParse@@B,0x0110C62C
 ?Rva005B6BA0Global012F7048@@3PBXB,0x012F7048
 ?Rva0060B710FieldParseTable@@3QBUFieldParse@@B,0x01115CC0
@@ -6645,8 +6688,13 @@ name,va
 ?Rva007DB820FadeFrames@@3HA,0x01307338
 ?Rva007DB820FadeValue@@3MA,0x01307330
 ?Rva007DCA80Active@@3PAXA,0x012F9CE0
+?Rva007EB710Global@@3PAVRva007EB710Object@@A,0x0130A5A0
 ?Rva007EB820@@YAXXZ,0x00BEB820
+?Rva007F62E0Callback@@YAXPAVRva007E8810Message@@PAVRva007F6260GameBrowser@@@Z,0x00BF62E0
 ?Rva007F6730Callback@@YAXPAVRva007E8810Message@@PAVRva007F6740Receiver@@@Z,0x00BF6730
+?Rva007F79F0Callback@@YAXPAVRva007E8810Message@@PAVRva007F7980Browser@@@Z,0x00BF79F0
+?Rva007F7AD0Callback@@YAXPAVRva007E8810Message@@PAVRva007F7980Browser@@@Z,0x00BF7AD0
+?Rva007F8640Callback@@YAXPAXPAVBfmeHostBT@@@Z,0x00BF8640
 ?Rva00807CF0@@YAHPAXH0@Z,0x00C07CF0
 ?Rva00814020@@YAXXZ,0x00C14020
 ?Rva00815780@@YAXXZ,0x00C15780
@@ -6673,6 +6721,7 @@ name,va
 ?Rva00885430Resolved@@3HA,0x01336D00
 ?Rva0088E000DialogProc@@YGHPAXIIJ@Z,0x00C8E000
 ?Rva00892ED0ReleaseTable@@3PAP6AXPAX@ZA,0x01337A30
+?Rva008A1DF0@@YAPAXPAURva008A1DF0State@@H@Z,0x00CA1DF0
 ?Rva008A30A0ReleasePtr@@3P6AXPAX@ZA,0x0133782C
 ?Rva008A4AC0First@@3PAURva008A4AC0Object@@A,0x01337AC0
 ?Rva008A4AC0Second@@3PAURva008A4AC0Object@@A,0x01337AC4
@@ -6687,6 +6736,7 @@ name,va
 ?Rva008AC750TwoPi@@3NB,0x01126CE8
 ?Rva008AE770TheStack@@3URva008AE770Stack@@A,0x01338748
 ?Rva008AE770TheStack@@3VRva008AE770Stack@@A,0x01338748
+?Rva008AE770TheStack@@3VRva008CF3C0State@@A,0x01338748
 ?Rva008AF330Head@@3PAVRva008A4C00Value@@A,0x013387CC
 ?Rva008C3B60Head@@3PAURva008C3B60Node@@A,0x01338478
 ?Rva008C3B60Head@@3PAVRva008A9B00@@A,0x01338478
@@ -6757,7 +6807,6 @@ name,va
 ?Rva009C6900@@YAXXZ,0x00DC6900
 ?Rva009C6A30@@YAXXZ,0x00DC6A30
 ?Rva009C6D20@@YAXXZ,0x00DC6D20
-?Rva009C7380@@YAXXZ,0x00DC7380
 ?Rva009C77C0@@YAXXZ,0x00DC77C0
 ?Rva009C80C0@@YAXXZ,0x00DC80C0
 ?Rva009C8600Path@@3PADA,0x0134CB50
@@ -6777,6 +6826,8 @@ name,va
 ?Rva010A65BCProbabilityError@@3QBDB,0x010A65BC
 ?Rva01106F04@@3HB,0x01106F04
 ?Rva01113520@@3MB,0x01113520
+?Rva011172B0SoundFields@@3PAUFieldParse@@A,0x011172B0
+?Rva01126A68Threshold@@3MA,0x01126A68
 ?Rva01142BA0Table@@3QBGB,0x01142BA0
 ?Rva01143860Mask@@3QBEB,0x01143860
 ?Rva01143870Round@@3QBGB,0x01143870
@@ -6803,6 +6854,7 @@ name,va
 ?Rva012BB88CAnimModeNames@@3PAPBDA,0x012BB88C
 ?Rva012BBF14Shader@@3VShaderClass@@A,0x012BBF14
 ?Rva012D5298Empty@@3URva00893410Block@@A,0x012D5298
+?Rva012D6D75@@3_NA,0x012D6D75
 ?Rva012D6D80@WW3D@@0HA,0x012D6D80
 ?Rva012D6D84@WW3D@@0_NA,0x012D6D84
 ?Rva012D6D90Byte@@3EA,0x012D6D90
@@ -6828,6 +6880,7 @@ name,va
 ?Rva012F4B3CProfile@@3PAVRva00566EC0Profile@@A,0x012F4B3C
 ?Rva012F4B50ScoreScreen@@3PAVBfmeAptScreenScoreScreen@@A,0x012F4B50
 ?Rva012F4B54Skirmish@@3PAVBfmeAptScreenSkirmish@@A,0x012F4B54
+?Rva012F7078Region@@3URegion2D@@A,0x012F7078
 ?Rva012F7194@@3PAVRva012F7194Slots@@A,0x012F7194
 ?Rva012F71B4Buddy@@3PAVRva006549C0BuddyView@@A,0x012F71B4
 ?Rva012F8048StateInstance@@3PAURva012F8048State@@A,0x012F8048
@@ -6860,8 +6913,11 @@ name,va
 ?Rva01338748Stack@@3VRva008AE770Stack@@A,0x01338748
 ?Rva01338748State@@3URva008A1940Interpreter@@A,0x01338748
 ?Rva013387D0@@3PAURva008A1110Value@@A,0x013387D0
+?Rva013387D0Head@@3PAURva008CD740Integer@@A,0x013387D0
+?Rva013387D0Head@@3PAURva008CD8E0Integer@@A,0x013387D0
 ?Rva013387D0Head@@3PAURva008D2A30Node@@A,0x013387D0
 ?Rva013387D0Head@@3PAURva008D32B0Value@@A,0x013387D0
+?Rva013387D0Head@@3PAVAptValue@@A,0x013387D0
 ?Rva0133F42B@WW3D@@0_NA,0x0133F42B
 ?Rva0133F42D@WW3D@@0_NA,0x0133F42D
 ?Rva0133F451Snapshot@@3_NA,0x0133F451
@@ -6873,7 +6929,10 @@ name,va
 ?Rva01340534Device@@3PAURva006C9270Device@@A,0x01340534
 ?Rva01340534Device@@3PAURva006D4FF0Device@@A,0x01340534
 ?Rva01340534Device@@3PAURva007BB060Device@@A,0x01340534
+?Rva01340534Device@@3PAURva00903470Device@@A,0x01340534
+?Rva01340534Device@@3PAURva00903C20Device@@A,0x01340534
 ?Rva01340534Device@@3PAURva00904BE0Device@@A,0x01340534
+?Rva01340534Device@@3PAURva00910F10Device@@A,0x01340534
 ?Rva01340534Device@@3PAVRva006C9270Device@@A,0x01340534
 ?Rva01340534DeviceB@@3PAURva006C9270Device@@A,0x01340534
 ?Rva01340534DeviceB@@3PAURva007D9940Device@@A,0x01340534
@@ -6913,6 +6972,7 @@ name,va
 ?ScreenTextureStageStates@@3PAY0CA@IA,0x0133F9E0
 ?ScreenTotalChanges@@3IA,0x01340594
 ?ScriptDebugMessagesDisabled@@3_NA,0x012ED4D8
+?SettingsGlobal0040F780@@3PAUSettings0040F780@@A,0x012ED5C8
 ?ShaderDirty@ShaderClass@@1_NA,0x012D6DFC
 ?ShaderDirty@ShaderClass@@2_NA,0x012D6DFC
 ?ShaderDisplay@@3PAVDisplay@@A,0x012F1270
@@ -6921,6 +6981,7 @@ name,va
 ?ShaderQuadIndex@@3HA,0x012F9D20
 ?ShaderTacticalView@@3PAVView@@A,0x012F1600
 ?ShadowCameraPosition@@3VVector3@@A,0x01306EF0
+?ShadowManager01306EEC@@3PAUShadowData00747FF0@@A,0x01306EEC
 ?ShadowPoolA@@3UShadowPool@@A,0x01306F3C
 ?ShadowPoolALimit@@3HA,0x01306F4C
 ?ShadowPoolB@@3UShadowPool@@A,0x01306F54
@@ -7039,6 +7100,7 @@ name,va
 ?TheBfmeGameLogic@@3PAVGameLogic@@A,0x012F0898
 ?TheBfmeGameLogic@@3PAVGameLogicFp@@A,0x012F0898
 ?TheBfmeGameLogic@@3PAVGameLogicPortraitShim@@A,0x012F0898
+?TheBfmeGameLogic@@3PAVRva0029AB10GameLogic@@A,0x012F0898
 ?TheBfmeGameLogic@@3PAVRva00367E30Logic@@A,0x012F0898
 ?TheBfmeGameLogic@@3PAXA,0x012F0898
 ?TheBfmeGameLogic@@3RAURva00367E30Logic@@A,0x012F0898
@@ -7355,6 +7417,7 @@ name,va
 ?TheFiringTrackerPool@?1??getClassMemoryPool@FiringTracker@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012EF4F4
 ?TheFlammableUpdatePool@?1??getClassMemoryPool@FlammableUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012EFF60
 ?TheFloatUpdatePool@?1??getClassMemoryPool@FloatUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012EFF80
+?TheFontLibrary@@3PAUFontLibraryBFMERetail@@A,0x012F1B38
 ?TheFontLibrary@@3PAVFontLibrary@@A,0x012F1B38
 ?TheFunctionLexicon@@3PAVFunctionLexicon@@A,0x012ED88C
 ?TheGameClient@@3PAVBfmeMoveHintGameClient@@A,0x012F1464
@@ -7471,6 +7534,7 @@ name,va
 ?TheIMEManager@@3PAVIMEManagerInterface@@A,0x012F3344
 ?TheINIMacroHash@@3UINIMacroHash@@A,0x0130CE58
 ?TheImmortalBodyPool@?1??getClassMemoryPool@ImmortalBody@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012EF980
+?TheInGameUI@@3PAUInGameUI@@A,0x012F148C
 ?TheInGameUI@@3PAVBfmeInGameUI@@A,0x012F148C
 ?TheInGameUI@@3PAVDesyncInGameUI@@A,0x012F148C
 ?TheInGameUI@@3PAVInGameUI@@A,0x012F148C
@@ -7775,6 +7839,7 @@ name,va
 ?TheTerrainLogic@@3PAVRva002C96D0TerrainLogicPre@@A,0x012EF4CC
 ?TheTerrainLogic@@3PAVRva003FD060TerrainLogic@@A,0x012EF4CC
 ?TheTerrainLogic@@3PAVRva012EF4CCTerrain@@A,0x012EF4CC
+?TheTerrainLogic@@3PAVTerrain208A50@@A,0x012EF4CC
 ?TheTerrainLogic@@3PAVTerrainLogic@@A,0x012EF4CC
 ?TheTerrainLogic@@3PAVTerrainLogicByValue@@A,0x012EF4CC
 ?TheTerrainLogic@@3PAVTerrainLogicP48Owner@@A,0x012EF4CC
@@ -7896,6 +7961,7 @@ name,va
 ?TotalPhysicalMemory@CPUDetectClass@@0IA,0x0134EDA8
 ?TotalPhysicalMemory@CPUDetectClass@@2IA,0x0134EDA8
 ?TotalVirtualMemory@CPUDetectClass@@0IA,0x0134ED84
+?Transitions0040E3B0@@3PAVGameWindowTransitionsHandler@@A,0x012F3330
 ?Tris@@3PAVDX8IndexBufferClass@@A,0x01341228
 ?TurretAIFileName@@3PADA,0x0109BB84
 ?VALUE@?$DefaultModuleName@$07@FXParticleSystem@@2QBDB,0x0107388B
@@ -7918,6 +7984,9 @@ name,va
 ?Va01337A98@@3PAVRva00899FC0@@A,0x01337A98
 ?ValidationError@CAssembler@D3DXShader@@KGJPBDIKI0PAX@Z,0x00E41C70
 ?ValidationError@CShaderProgram@D3DXShader@@KGJPBDIKI0PAX@Z,0x00EB7F04
+?Value012B4FC8@@3ULightingCoord00747FF0@@A,0x012B4FC8
+?Value012B4FD8@@3ULightingCoord00747FF0@@A,0x012B4FD8
+?Value012B4FE8@@3ULightingCoord00747FF0@@A,0x012B4FE8
 ?VendorID@CPUDetectClass@@0PADA,0x0134EDC8
 ?VertexDiffuse@@3V?$VectorClass@VVector4@@@@A,0x013466B8
 ?VertexLoc@@3V?$VectorClass@VVector3@@@@A,0x01341264
@@ -7932,6 +8001,7 @@ name,va
 ?WOLMapSelectLayout@@3PAVWindowLayout@@A,0x012F451C
 ?WW3DSyncTime@@3HA,0x0133F420
 ?WaitHandle@DX8Wrapper@@0PAXA,0x0133F540
+?Watchdog0040F780@@3PAVWatchdog@@A,0x012EF18C
 ?WaterSettings@@3PAVWaterSetting@@A,0x012F1608
 ?WideA005E9480@@3VWideDesc@@B,0x0110F978
 ?WideA005E94E0@@3VWideDesc@@B,0x0110F978
@@ -8018,6 +8088,8 @@ name,va
 ?WideTbl0022DB70@@3QBVWideFieldParse@@B,0x010AD820
 ?WideTbl0022F8A0@@3QBVWideFieldParse@@B,0x010AE090
 ?WideTbl002469A0@@3QBVWideFieldParse@@B,0x010AF710
+?WideTbl00248F00A@@3QBVWideFieldParse@@B,0x0108E660
+?WideTbl00248F00B@@3QBVWideFieldParse@@B,0x010AFA50
 ?WideTbl00249D20@@3QBVWideFieldParse@@B,0x010AFEB8
 ?WideTbl0024E6C0@@3QBVWideFieldParse@@B,0x010B0E98
 ?WideTbl00258FB0@@3QBVWideFieldParse@@B,0x010B3A84
@@ -8128,6 +8200,7 @@ name,va
 ?WideTblB00427C80@@3QBVWideFieldParse@@B,0x010F2480
 ?WideTblB00427CB0@@3QBVWideFieldParse@@B,0x010F2480
 ?WideTblC00378170@@3QBVWideFieldParse@@B,0x010EA060
+?Window0040F780@@3PAXA,0x012ED238
 ?WindowStatusNames@@3PAPBDA,0x012B59F0
 ?WindowStyleNames@@3PAPBDA,0x012B5A68
 ?Windows9xVersionTable@@3PAUOSInfoStruct@@A,0x012D9138
@@ -8327,6 +8400,7 @@ name,va
 ?bfmeFlagCWD@@3IA,0x012F3698
 ?bfmeFmtDYG@@3PADA,0x010F71E0
 ?bfmeForward_00C6FEF0@@YAXXZ,0x0106FEF0
+?bfmeForward_00C70B40@@YAXXZ,0x01070B40
 ?bfmeFreeList@@3PAPAUBfmeFreeListNode@@A,0x0130B210
 ?bfmeGoBUA@@YAXPAUBfmeOwnerBUA@@PAPAX@Z,0x0040894A
 ?bfmeGoELB@@YGXH@Z,0x00413CD2
@@ -8390,6 +8464,8 @@ name,va
 ?bfmeProvide@Rva0050FE50Host@@QAEXHPAD_N@Z,0x0042AD51
 ?bfmeProvideObjectiveChecked@BfmeAptScreenScoreScreen@@QAEXPBDPAX_N@Z,0x0043EC6B
 ?bfmeResolveReferenceIfEnabled@@YAHPAUBfmeReferenceOwner@@PAUBfmeReferenceResolveState@@@Z,0x007972F0
+?bfmeRva012B3C84RegistrationNext@@3PAXA,0x012B3C84
+?bfmeRva0130CE50RegistrationHead@@3PAXA,0x0130CE50
 ?bfmeString10CF498@@3QBDB,0x010CF498
 ?bfmeString10CF748@@3QBDB,0x010CF748
 ?bfmeSub8to16Mmx@@YAXPBXPAXH@Z,0x00DC6E80
@@ -8515,8 +8591,6 @@ name,va
 ?buildFieldParse@UpgradeDieModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0041F3D4
 ?buildFieldParse@UpgradeModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x004365E8
 ?buildFieldParse@W3DLaserDrawModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00408454
-?buildFieldParse@W3DModelDrawModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x004392CF
-?buildFieldParse@W3DOverlordAircraftDrawModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x004392CF
 ?buildFieldParse@W3DOverlordTankDrawModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00412689
 ?buildFieldParse@W3DTreeDrawModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00447E5B
 ?buildFieldParse@WorkerAIUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0043869F
@@ -8577,6 +8651,7 @@ name,va
 ?compressed_orient@PointGroupClass@@0V?$VectorClass@E@@A,0x012D6EC8
 ?compressed_size@PointGroupClass@@0V?$VectorClass@M@@A,0x012D6EB8
 ?configBuffer@@3PADA,0x012F7174
+?configCallback@@YA?AW4GHTTPBool@@HW4GHTTPResult@@PAD_JPAX@Z,0x00A2EEE0
 ?connectCallbackWrapper@@YAXPAXH0@Z,0x0040B357
 ?const3dn_0_1@@3T__m64@@B,0x0114F360
 ?const3dn_1_1@@3T__m64@@B,0x0114F380
@@ -8687,6 +8762,7 @@ name,va
 ?d_006517e0@@YAXXZ,0x00A517E0
 ?d_00819920@@YAXXZ,0x00C19920
 ?d_0088dc30@@YAXXZ,0x00C8DC30
+?d_008a1e80@@YAXXZ,0x00CA1E80
 ?d_009a5f50@@YAXXZ,0x00DA5F50
 ?d_009b8130@@YAXXZ,0x00DB8130
 ?d_009b9700@@YAXXZ,0x00DB9700
@@ -8705,11 +8781,8 @@ name,va
 ?dataFieldParse@?1??buildFieldParse@CrushDieModuleData@@SAXAAVMultiIniFieldParse@@@Z@4QBUFieldParse@@B,0x0108B5AC
 ?dataFieldParse@?1??buildFieldParse@DamageModuleData@@SAXAAVMultiIniFieldParse@@@Z@4QBUFieldParse@@B,0x0108AE8C
 ?dataFieldParse@?1??buildFieldParse@FireWeaponWhenDamagedBehaviorModuleData@@SAXAAVMultiIniFieldParse@@@Z@4QBUFieldParse@@B,0x0108EE60
-?dataFieldParse@?1??buildFieldParse@HiveStructureBodyModuleData@@SAXAAVMultiIniFieldParse@@@Z@4QBUFieldParse@@B,0x010AFA50
 ?dataFieldParse@?1??buildFieldParse@SpecialPowerCompletionDieModuleData@@SAXAAVMultiIniFieldParse@@@Z@4QBUFieldParse@@B,0x0108B6D0
 ?dataFieldParse@?1??buildFieldParse@SpyVisionUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z@4QBUFieldParse@@B,0x0108B330
-?dataFieldParse@?1??buildFieldParse@StructureBodyModuleData@@SAXAAVMultiIniFieldParse@@@Z@4QBUFieldParse@@B,0x0108E660
-?dataFieldParse@?1??buildFieldParse@SupplyTruckAIUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z@4QBUFieldParse@@B,0x0108E660
 ?dataFieldParse@?1??buildFieldParse@TransitionDamageFXModuleData@@SAXAAVMultiIniFieldParse@@@Z@4QBUFieldParse@@B,0x0108DBF0
 ?dataFieldParse@?1??buildFieldParse@UpgradeDieModuleData@@SAXAAVMultiIniFieldParse@@@Z@4QBUFieldParse@@B,0x0108B7CC
 ?dataFieldParse@?1??getFieldParse@UpgradeMuxData@@SAPBUFieldParse@@XZ@4QBU3@B,0x010898A0
@@ -8745,6 +8818,7 @@ name,va
 ?defaultModuleTag7Vtable@FXParticleSystem@@3PAPAXA,0x011113DC
 ?deleteTeamCallback@@YAXPAVTeam@@@Z,0x004F6E10
 ?detailAlphaShader@@3VShaderClass@@A,0x012BA78C
+?device01340534@@3PAXA,0x01340534
 ?disabledDownButtonDrawData@@3PAUWinDrawData@@A,0x012F1ED8
 ?disabledDropDownButtonDrawData@@3PAUWinDrawData@@A,0x012F2418
 ?disabledEditBoxDrawData@@3PAUWinDrawData@@A,0x012F22C8
@@ -8773,6 +8847,7 @@ name,va
 ?editPlayerName@@3PAVGameWindow@@A,0x012F3EC4
 ?empty@?1??str@AsciiString@@QBEPBDXZ@4DB,0x0107388B
 ?empty@?1??str@UnicodeString@@QBEPBGXZ@4QBGB,0x0107388C
+?emptyString2E1F80@@3VAsciiString@@A,0x01336E50
 ?enabledDownButtonDrawData@@3PAUWinDrawData@@A,0x012F1F48
 ?enabledDropDownButtonDrawData@@3PAUWinDrawData@@A,0x012F2488
 ?enabledEditBoxDrawData@@3PAUWinDrawData@@A,0x012F2338
@@ -8793,8 +8868,16 @@ name,va
 ?flatTerrainShaderPixelShader@@3VFlatTerrainShaderPixelShader@@A,0x012BC000
 ?forcedCRCFrame@@3HA,0x012A6F38
 ?funcpointer@@3PAP6AXXZA,0x012D4BC0
+?g0023C310Va012F0898@@3PAULogic0023C310@@A,0x012F0898
 ?g0023FA80Va012EF214@@3PAURefresh0023FA80GlobalAI@@A,0x012EF214
 ?g0023FA80Va012F0898@@3PAURefresh0023FA80GameLogic@@A,0x012F0898
+?g0023FDB0Va012EF214@@3PAUAIHub0023FDB0@@A,0x012EF214
+?g00240F10Va012EF1D8@@3PAUFactory00240F10@@A,0x012EF1D8
+?g00242270Va012EF214@@3PAVRoute00242270@@A,0x012EF214
+?g00243070Va012EF214@@3PAVRoute00243070@@A,0x012EF214
+?g00243070Va012F0898@@3PAULogic00243070@@A,0x012F0898
+?g002432C0Va012EF214@@3PAUHub002432C0@@A,0x012EF214
+?g002432C0Va012F0898@@3PAVRoute002432C0@@A,0x012F0898
 ?g002705D0Va012ED4FC@@3PAXA,0x012ED4FC
 ?g002705D0Va012EF214@@3PAUMelee002705D0GlobalAI@@A,0x012EF214
 ?g002705D0Va012EF4CC@@3PAVMelee002705D0Terrain@@A,0x012EF4CC
@@ -9033,6 +9116,28 @@ name,va
 ?g_Rva0112A410FlagLetters@@3PADA,0x0112A410
 ?g_Rva0112B918HexDigits@@3QBDB,0x0112B918
 ?g_Rva011370DCInstanceFormat@@3QBDB,0x011370DC
+?g_Rva01141708@@3PAIA,0x01141708
+?g_Rva01141808@@3PAIA,0x01141808
+?g_Rva01141908@@3PAHA,0x01141908
+?g_Rva01141A08@@3PAHA,0x01141A08
+?g_Rva01141B08@@3PAHA,0x01141B08
+?g_Rva01141C08@@3PAHA,0x01141C08
+?g_Rva01141D08@@3PAFA,0x01141D08
+?g_Rva01141D88@@3PAFA,0x01141D88
+?g_Rva01141E08@@3PAHA,0x01141E08
+?g_Rva01141F08@@3PAHA,0x01141F08
+?g_Rva01142008@@3PAHA,0x01142008
+?g_Rva01142108@@3PAHA,0x01142108
+?g_Rva01142208@@3PAHA,0x01142208
+?g_Rva01142610@@3NA,0x01142610
+?g_Rva01142620@@3PAHA,0x01142620
+?g_Rva01142B20@@3PAEA,0x01142B20
+?g_Rva01142B60@@3PAEA,0x01142B60
+?g_Rva0114336C@@3PAEA,0x0114336C
+?g_Rva0114337C@@3PAEA,0x0114337C
+?g_Rva0114338C@@3PAEA,0x0114338C
+?g_Rva01143390@@3PAEA,0x01143390
+?g_Rva01143758@@3PAEA,0x01143758
 ?g_Rva012C391CFlag@@3DA,0x012C391C
 ?g_Rva012C391CSeparator@@3DA,0x012C391C
 ?g_Rva012C3934DefaultKey@@3PAEA,0x012C3934
@@ -9057,6 +9162,7 @@ name,va
 ?g_Rva012F9D04@@3HC,0x012F9D04
 ?g_Rva012F9D0C@@3HC,0x012F9D0C
 ?g_Rva0130A4F4Txn@@3PBDB,0x0130A4F4
+?g_Rva0130A50CTxn@@3PBDB,0x0130A50C
 ?g_Rva0130A590State@@3HA,0x0130A590
 ?g_Rva0130A594Conn@@3HA,0x0130A594
 ?g_Rva0130A598Online@@3HA,0x0130A598
@@ -9092,6 +9198,7 @@ name,va
 ?g_Rva0130AF38Lock@@3PADA,0x0130AF38
 ?g_Rva013379BC@@3PAVRva00898D60Target@@A,0x013379BC
 ?g_Rva01337A20@@3PAVRva00898D60Target@@A,0x01337A20
+?g_Rva01337A28Index@@3PAXA,0x01337A28
 ?g_Rva13595EC@@3P6GXXZA,0x013595EC
 ?g_Rva1359614@@3P6GXH@ZA,0x01359614
 ?g_Rva13596A8@@3P6GXXZA,0x013596A8
@@ -9107,6 +9214,7 @@ name,va
 ?g_Slot012BF440@@3UBigObfSlot@@A,0x012BF440
 ?g_Slot012C233C@@3UBigObfSlot@@A,0x012C233C
 ?g_SpinLock@D3DXShader@@3JC,0x01350814
+?g_String012D5140@@3VBfmeStrVKI@@A,0x012D5140
 ?g_Swizzle@D3DXShader@@3PAIA,0x012E41C8
 ?g_SwizzleL@D3DXShader@@3PAIA,0x012E4148
 ?g_Va0109B558@@3HA,0x0109B558
@@ -9687,6 +9795,8 @@ name,va
 ?g_aptPalantirWindow@@3HA,0x012B7D80
 ?g_aptStringFreeList@@3PAVRva008A9B00@@A,0x01338478
 ?g_armorTemplateSetFieldParse@@3QBEB,0x010941A0
+?g_audio00294410@@3PAVAudio00294410@@A,0x012ED668
+?g_audio00299250@@3PAVAudioDispatch00299250@@A,0x012ED668
 ?g_audio012ED668@@3PAVRva00411C30Audio@@A,0x012ED668
 ?g_b4C@@3DA,0x012F11D4
 ?g_b80@@3DA,0x012F11D5
@@ -10026,6 +10136,7 @@ name,va
 ?g_bfmeCurrentCB@@3PAXA,0x012F7094
 ?g_bfmeCurrentCU@@3VBfmeBlockCU@@A,0x012B501C
 ?g_bfmeCurrentCZ@@3VBfmeHandleCX@@A,0x01307214
+?g_bfmeCurrentCZ@@3VGen_0044f3c0@@A,0x01307214
 ?g_bfmeCurrentCZ@@3VShroudTexture@@A,0x01307214
 ?g_bfmeCurrentCZ@@3VTextureBaseClass@@A,0x01307214
 ?g_bfmeCurrentFA@@3HA,0x012F1400
@@ -10078,11 +10189,14 @@ name,va
 ?g_bfmeDefaultQA@@3HA,0x0112E8AC
 ?g_bfmeDefaultRateCX@@3MA,0x012F8234
 ?g_bfmeDefaultString1284@@3UAptStringBlock@@A,0x012D5298
+?g_bfmeDefaultString1284@@3UBfmeHdrVKI@@A,0x012D5298
 ?g_bfmeDefaultString1284@@3UBfmeStringBlock1226@@A,0x012D5298
 ?g_bfmeDefaultString1284@@3UBfmeStringData1284@@A,0x012D5298
 ?g_bfmeDefaultString1284@@3UBfmeStringData3AF0@@A,0x012D5298
 ?g_bfmeDefaultString1284@@3UBfmeStringData3AF0@@B,0x012D5298
+?g_bfmeDefaultString1284@@3URva0089DC40StringData@@A,0x012D5298
 ?g_bfmeDefaultString1284@@3URva008AE600StringData@@A,0x012D5298
+?g_bfmeDefaultString1284@@3URva008AF210StringData@@A,0x012D5298
 ?g_bfmeDefaultString1284@@3URva8CB820StringData@@A,0x012D5298
 ?g_bfmeDefaultString1284@@3URva8CBB80StringData@@A,0x012D5298
 ?g_bfmeDefaultString1284@@3URva8CC570StringBlock@@A,0x012D5298
@@ -10176,6 +10290,7 @@ name,va
 ?g_bfmeFallbackDB@@3PAURva8CD130Value@@A,0x013379BC
 ?g_bfmeFallbackDB@@3PAVAptValue@@A,0x013379BC
 ?g_bfmeFallbackDB@@3PAVRva00899F00Base@@A,0x013379BC
+?g_bfmeFallbackDB@@3PAVRva008A9B00@@A,0x013379BC
 ?g_bfmeFallbackDB@@3PAVRva8CD130Value@@A,0x013379BC
 ?g_bfmeFallbackDB@@3PAVRva8CF1B0Value@@A,0x013379BC
 ?g_bfmeFallbackDB@@3PAVRva8D0D80Value@@A,0x013379BC
@@ -11081,6 +11196,7 @@ name,va
 ?g_bfmeStringPool1284@@3PAUBfmeStringPoolVKI@@A,0x01337A30
 ?g_bfmeStringPool1284@@3PAURva00893410Pool@@A,0x01337A30
 ?g_bfmeStringPool1284@@3PAURva008AE600StringPool@@A,0x01337A30
+?g_bfmeStringPool1284@@3PAURva008AF210StringPool@@A,0x01337A30
 ?g_bfmeStringPool1284@@3PAURva008D32B0Release@@A,0x01337A30
 ?g_bfmeStringPool1284@@3PAURva8CB820StringPool@@A,0x01337A30
 ?g_bfmeStringPool1284@@3PAURva8CBB80StringPool@@A,0x01337A30
@@ -11263,6 +11379,7 @@ name,va
 ?g_bfmeWindowManager@@3PAVBfmeWindowManager@@A,0x012ED5C4
 ?g_bfmeWindowManagerAR@@3PAVBfmeWindowManagerAR@@A,0x012F1B40
 ?g_bfmeWindowManagerERC@@3PAVBfmeWindowManagerERC@@A,0x012F1B40
+?g_bfmeWolKey012F43D0@@3W4NameKeyType@@A,0x012F43D0
 ?g_bfmeWordFormat@@3QBDB,0x011442A8
 ?g_bfmeWords1228@@3PAUBfmeW1228@@A,0x012D5DCC
 ?g_bfmeWords1229@@3PAUBfmeW1229@@A,0x012D52A8
@@ -11421,6 +11538,7 @@ name,va
 ?g_liteCRC@@3_NA,0x012ED4E6
 ?g_lock0134FB1C@@3UCriticalSection@@A,0x0134FB1C
 ?g_lookup@@3P6APAXPAX0@ZA,0x0135933C
+?g_manager00299BB0@@3PAVManager00299BB0@@A,0x01306DEC
 ?g_manager013377D8@@3PAUManager008C3F10@@A,0x013377D8
 ?g_map008FF850@@3V?$map@HPAXU?$less@I@_STL@@V?$allocator@U?$pair@$$CBHPAX@_STL@@@2@@_STL@@A,0x0133F468
 ?g_mgr12ED748@@3PAVBfmeMgrD74@@A,0x012ED748
@@ -11495,6 +11613,8 @@ name,va
 ?g_pBoxFilter2D_A8R8G8B8@D3DXTex@@3P6GJPAI0IIII@ZA,0x012DC864
 ?g_pBoxFilter2D_X8R8G8B8@D3DXTex@@3P6GJPAI0IIII@ZA,0x012DC868
 ?g_pair@@3P6GXPAX0@ZA,0x013590FC
+?g_path00290990@@3PAUPathSystem00290990@@A,0x012EF214
+?g_path00294410@@3PAUPathSystem00294410@@A,0x012EF214
 ?g_pathfindCellCenterBias@@3MB,0x01095F98
 ?g_pathfindCellSize@@3MB,0x01075C74
 ?g_pathfindDoubleCellSize@@3MB,0x010977E0
@@ -11627,6 +11747,9 @@ name,va
 ?g_rva005c0fd0_id@@3DA,0x012F64E4
 ?g_rva005c5100ThrowInfo@@3HA,0x011DFE5C
 ?g_rva0060EE80Global@@3PAURva0060EE80Global@@A,0x012F1028
+?g_rva006279F0Callback@@3P6AXXZA,0x012F70A8
+?g_rva006279F0CallbackActive@@3EA,0x012F70A4
+?g_rva00627A20Callback@@3P6AXXZA,0x012F70AC
 ?g_rva00627A50A@@3PAXA,0x012F70A8
 ?g_rva00627A50B@@3PAXA,0x012F70AC
 ?g_rva00627A50Flag@@3EA,0x012F70A4
@@ -11758,11 +11881,19 @@ name,va
 ?g_rva012F49B4@@3PAURva012F49B4Thing@@A,0x012F49B4
 ?g_rva012F49B4@@3PAVRva0051D690@@A,0x012F49B4
 ?g_rva012F49B4@@3PAVRva012F49B4Thing@@A,0x012F49B4
+?g_rva012F7164ChecksLeft@@3HA,0x012F7164
+?g_rva012F7168OnlineRun@@3HA,0x012F7168
+?g_rva012F716C@@3EA,0x012F716C
+?g_rva012F716D@@3EA,0x012F716D
+?g_rva012F7170OnlineBuffer@@3PADA,0x012F7170
+?g_rva012F7178ReleaseLayout@@3_NA,0x012F7178
+?g_rva012F7180DownloadQueue@@3VGen00627270Owner@@A,0x012F7180
 ?g_rva0133782CFree@@3P6AXPAX@ZA,0x0133782C
 ?g_rva0133784C@@3P6AXPAX@ZA,0x0133784C
 ?g_rva01337850@@3P6AXPAX@ZA,0x01337850
 ?g_rva0133785CDuplicate@@3P6APADPBD@ZA,0x0133785C
 ?g_rva01337860Empty@@3P6APADXZA,0x01337860
+?g_rva01337abc@@3PAVRva00899FC0@@A,0x01337ABC
 ?g_rva01356940@@3PAHA,0x01356940
 ?g_rva01356A88@@3PBXB,0x01356A88
 ?g_rva01356A98@@3PBIB,0x01356A98
@@ -11817,6 +11948,7 @@ name,va
 ?g_s5Head0059FB50@@3HA,0x0110CBEC
 ?g_s9C@@3VAsciiString@@A,0x012F1220
 ?g_scene@@3PAVSceneClass@@A,0x012F8058
+?g_script00293E50@@3PAVBfmeOwnerBR@@A,0x012F060C
 ?g_sentinel012ADC38@@3IA,0x012ADC38
 ?g_shadowManager@@3PAVGen0003AC38@@A,0x01306EEC
 ?g_shellMenuSchemeImageFieldParse@@3QBEB,0x0110B638
@@ -12013,6 +12145,7 @@ name,va
 ?g_target_005891C0@@3HA,0x0110BAE8
 ?g_target_0058B300@@3HA,0x0110BAF8
 ?g_target_007D1E60@@3HA,0x011289B0
+?g_terrain00294410@@3PAVTerrain00294410@@A,0x012EF4CC
 ?g_theAssetRegistry@@3PAVAssetRegistry@@A,0x0134FAAC
 ?g_theGameLogic@@3PAUGameLogicState@@A,0x012F0898
 ?g_theNameKeyGenerator@@3PAVNameKeyGenerator@@A,0x012ED600
@@ -12162,6 +12295,7 @@ name,va
 ?ignoreCRCMismatches@@3_NA,0x012ED4E8
 ?ignoredChars@@3PAGA,0x012B54F0
 ?in_pats@@3PAY0CD@NA,0x01353E40
+?indexLockRva0083F090@@3JC,0x0130BD20
 ?index_buffer_changes@DX8Wrapper@@0IA,0x01340558
 ?index_buffer_changes@DX8Wrapper@@1IA,0x01340558
 ?iniParseAnim@Rva00268340Contain@@SAXPAVINI@@PAX1PBX@Z,0x0040AC09
@@ -12270,6 +12404,7 @@ name,va
 ?j_00032213@@YAXXZ,0x00432213
 ?j_00032768@@YAXXZ,0x00432768
 ?j_000330be@@YAXXZ,0x004330BE
+?j_0003429d@@YAXXZ,0x0043429D
 ?j_000344b4@@YAXXZ,0x004344B4
 ?j_000352ab@@YAXXZ,0x004352AB
 ?j_000355fd@@YAXXZ,0x004355FD
@@ -12356,11 +12491,14 @@ name,va
 ?lineEmissionVolumeSourceAt4@FXParticleSystem@@3PAPAXA,0x012F6D64
 ?lineEmissionVolumeSourceAt8@FXParticleSystem@@3PAPAXA,0x012F6D60
 ?lineEmissionVolumeVtable@FXParticleSystem@@3PAPAXA,0x01110F18
+?listboxChatWindow@@3PAVGameWindow@@A,0x012F3DB8
 ?listboxChatWindowID@@3W4NameKeyType@@A,0x012F3D84
 ?listboxChatWindowLanGame@@3PAVGameWindow@@A,0x012F3C20
 ?listboxChatWindowLanGameID@@3W4NameKeyType@@A,0x012F3BFC
 ?listboxChatWindowScoreScreen@@3PAVGameWindow@@A,0x012F417C
 ?listboxGameSetupChat@@3PAVGameWindow@@A,0x012F4520
+?listboxGameSetupChatID@@3W4NameKeyType@@A,0x012F4524
+?listboxGames@@3PAVGameWindow@@A,0x012F3DC0
 ?listboxGamesID@@3W4NameKeyType@@A,0x012F3D88
 ?listboxGamesKey@PopupReplayState@@3W4NameKeyType@@A,0x012F4054
 ?listboxIgnore@@3PAVGameWindow@@A,0x012F422C
@@ -12517,6 +12655,8 @@ name,va
 ?nShadowStartBatchIndex@@3HA,0x01306F30
 ?nShadowStartBatchVertex@@3HA,0x01306F28
 ?nShadowVertsInBuf@@3HA,0x01306F24
+?names1CB730@@3PAPBDA,0x012A8D40
+?nextIndexRva0083F090@@3HA,0x0130BD1C
 ?nickErrorCallbackWrapper@@YAXPAXHPBD0@Z,0x00429401
 ?nk@?1??getModuleNameKey@BoneFXUpdate@@UBE?AW4NameKeyType@@XZ@4W43@A,0x012EFEC8
 ?nk@?1??getModuleNameKey@BridgeScaffoldBehavior@@UBE?AW4NameKeyType@@XZ@4W43@A,0x012EF77C
@@ -12593,6 +12733,7 @@ name,va
 ?parseSkyBoxSettings007A5BA0@@YA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,0x00447BDB
 ?patchBeforeOnlineCallback@@YAXXZ,0x00A2E6B0
 ?pfunc@@YAHPBX0@Z,0x00DE8C80
+?pingTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,0x00408CB0
 ?playerChangedNickCallback@@YAXPAXW4RoomType@@PBD20@Z,0x00A4B240
 ?playerColor@@3HB,0x012BA0B8
 ?playerFlagsChangedCallback@@YAXPAXW4RoomType@@PBDHH0@Z,0x00A4B540
@@ -12660,6 +12801,7 @@ name,va
 ?roomKeyChangedCallback@@YAXPAXW4RoomType@@PBD220@Z,0x00A4E8F0
 ?roomMessageCallback@@YAXPAXW4RoomType@@PBD2W4MessageType@@0@Z,0x00A49ED0
 ?roomUTMCallback@@YAXPAXW4RoomType@@PBD22H0@Z,0x00A4A820
+?rva000C5FF0_ai@@3PAURva000C5FF0AI@@A,0x012EF214
 ?rva000C9CC0Visit@@YAXPAVObject@@PAX@Z,0x004C9CC0
 ?rva000D46E0CountVisit@@YAHPAVRva000D46E0Object@@PAX@Z,0x004D46E0
 ?rva000cbd40@@YAHPAX0@Z,0x004CBD40
@@ -12685,6 +12827,12 @@ name,va
 ?rva00447258@BfmeAptScreenOnlineChat@@QAEXXZ,0x00447258
 ?rva0044a5ca@BfmeAptScreenOnlineChat@@QAEXXZ,0x0044A5CA
 ?rva0049ca90@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,0x0089CA90
+?rva004BBFC0_audio@@3PAVRva004BBFC0Audio@@A,0x012ED668
+?rva004BBFC0_emptyString@@3VAsciiString@@B,0x01336E50
+?rva004BBFC0_keyboard@@3PAURva004BBFC0Keyboard@@A,0x012F4C50
+?rva004BBFC0_lastRepeat@@3KA,0x012F3644
+?rva0050BA40_lastNumPlayersOnline@@3HA,0x012F48C0
+?rva0050BA40_listboxInfo@@3PAVGameWindow@@A,0x012F4890
 ?rva00548d20@@YGXH@Z,0x0041A361
 ?rva005701D0@BfmeAptScreenScoreScreen@@QAEXPBD@Z,0x00426152
 ?rva00570200@BfmeAptScreenScoreScreen@@QAEXPBD@Z,0x004328B2
@@ -12702,7 +12850,9 @@ name,va
 ?rva00813CF0@@YAXXZ,0x00C13CF0
 ?rva00906340CellCtor@@YAXPAX@Z,0x004110D6
 ?rva00906340CellDtor@@YAXPAX@Z,0x00430652
+?rva009C7380BinkSse@@YAXPBE0PAXHHH@Z,0x00DC7380
 ?rva009C7CC0@@YAXPBX0PAX@Z,0x00DC7CC0
+?rva012BB85C@@3EA,0x012BB85C
 ?rva012D5A08Prefix@@3PBDB,0x012D5A08
 ?rva012F480CSelectedImage@@3PBVImage@@B,0x012F480C
 ?rva012F4810UnselectedImage@@3PBVImage@@B,0x012F4810
@@ -12721,8 +12871,16 @@ name,va
 ?rva012F9D1C@@3PAXA,0x012F9D1C
 ?rva012F9D20@@3IA,0x012F9D20
 ?rva012F9D28@@3PAVShaderTextureHandle@@A,0x012F9D28
+?rva01306958@@3IA,0x01306958
+?rva0130695C@@3IA,0x0130695C
+?rva01306960@@3IA,0x01306960
+?rva01306964@@3IA,0x01306964
+?rva01306968@@3IA,0x01306968
 ?rva01337858Callback@@3P6AXPBD0@ZA,0x01337858
+?rva0133F420@@3IA,0x0133F420
+?rva0133F424@@3IA,0x0133F424
 ?rva01340534@@3PAUResource@@A,0x01340534
+?rva01346DD8@@3IA,0x01346DD8
 ?rva220840Callback@@YAXXZ,0x006207F0
 ?s4Table0059BDE0@@3UFieldParse@@B,0x0110C6CC
 ?s4Table0059C4C0@@3UFieldParse@@B,0x0110C730
@@ -12832,6 +12990,7 @@ name,va
 ?search_compfunc@?$IndexClass@HPAUINISection@@@@CAHPBX0@Z,0x00DE23C0
 ?selectedImage@@3PBVImage@@B,0x012F480C
 ?setWakeupIfInRange@@YAHPAVObject@@PAX@Z,0x0043AA08
+?shader012BBBA8@@3UShader007A5200@@A,0x012BBBA8
 ?shadowCameraFrustum@@3PBVFrustumClass@@B,0x01306EE8
 ?shadowIndexBufferD3D@@3PAUIDirect3DIndexBuffer8@@A,0x01306F20
 ?shadowVertexBufferD3D@@3PAUIDirect3DVertexBuffer8@@A,0x01306F1C
@@ -12839,6 +12998,7 @@ name,va
 ?shift@@3VUnicodeString@@A,0x012F3B00
 ?shiftDown@@3_NA,0x012F3AF4
 ?showOnlineShellFlag@@3EA,0x012F717B
+?skyMap012F1404@@3VSkyMap007A5200@@A,0x012F1404
 ?slotNumInRow@@3PAHA,0x012F36B0
 ?sm_dwCacheSize@@3KA,0x0134FC08
 ?sm_dwMagicNumber@@3KA,0x0134FC0C
@@ -12934,6 +13094,7 @@ name,va
 ?t2_lower_table@@3QBDB,0x0112F150
 ?t2_mask_table@@3QBIB,0x0112EC4C
 ?t2_upper_table@@3QBDB,0x0112F050
+?terrain012F7FE0@@3PAUTerrainDispatch007B6D30@@A,0x012F7FE0
 ?terrainCollisionRegistryHead@FXParticleSystem@@3PAV?$ConcreteModuleClass@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@1@A,0x012F6508
 ?terrainCollisionSourceAt4@FXParticleSystem@@3PAPAXA,0x012F6D2C
 ?terrainCollisionSourceAt8@FXParticleSystem@@3PAPAXA,0x012F6D28
@@ -13507,6 +13668,7 @@ _WeaponModeSpecialPowerUpdateFieldParse,0x00438F87
 _WeaponModeSpecialPowerUpdateModuleData_vtbl,0x010C5510
 _WeaponSetSpecialAbilityUpdateFieldParse,0x00433DC0
 _WeaponStore_vtbl,0x010A13C8
+_WideAllocPtr,0x01337828
 _WorkerAIUpdateModuleData_vtbl,0x0108A680
 _WoundArrowUpdateFieldParse,0x004022C5
 __GUID_00000000_0000_0000_0000_000000000000,0x011BC35C
@@ -13572,6 +13734,7 @@ __imp_??_VBfmeElemBW@@SAXPAX@Z,0x0133782C
 __imp_?ClipCursor@@YGHPBUtagRECT@@@Z,0x01358FB0
 __imp_?CloseHandle@@YGHPAX@Z,0x01358CCC
 __imp_?CreateThread@@YGPAXPAXI00IPAI@Z,0x01358D00
+__imp_?GetCPInfo@@YGHIPAURva0084D860CpInfo@@@Z,0x01358D50
 __imp_?LoadCursorA@@YGPAXPAXPBD@Z,0x01359030
 __imp_?Rva01358EA8@@YGXPAX@Z,0x01358EA8
 __imp_?Rva01358F30Sleep@@YGXI@Z,0x01358F30
@@ -13862,6 +14025,7 @@ __imp__AIL_enumerate_3D_providers@12,0x013595AC
 __imp__AIL_enumerate_filters@12,0x013595B0
 __imp__AIL_get_preference@4,0x013595B8
 __imp__AIL_init_sample@4,0x013595BC
+__imp__AIL_lock_mutex@0,0x013595C4
 __imp__AIL_mem_free_lock@4,0x013595C8
 __imp__AIL_ms_count@0,0x013595CC
 __imp__AIL_open_3D_listener@4,0x013595D0
@@ -13877,15 +14041,21 @@ __imp__AIL_register_stream_callback@8,0x01359604
 __imp__AIL_register_timer@4,0x01359608
 __imp__AIL_resume_3D_sample@4,0x01359618
 __imp__AIL_serve@0,0x01359628
+__imp__AIL_service_stream@8,0x0135962C
 __imp__AIL_set_3D_position@16,0x01359634
 __imp__AIL_set_3D_sample_distances@12,0x01359640
+__imp__AIL_set_3D_sample_info@8,0x0135964C
 __imp__AIL_set_3D_sample_occlusion@8,0x01359654
 __imp__AIL_set_3D_sample_playback_rate@8,0x01359658
 __imp__AIL_set_3D_sample_volume@8,0x0135965C
 __imp__AIL_set_3D_user_data@12,0x01359664
+__imp__AIL_set_file_callbacks@16,0x0135966C
 __imp__AIL_set_preference@8,0x01359674
 __imp__AIL_set_redist_directory@4,0x01359678
 __imp__AIL_set_sample_user_data@12,0x0135968C
+__imp__AIL_set_stream_loop_count@8,0x01359694
+__imp__AIL_set_stream_ms_position@8,0x01359698
+__imp__AIL_set_stream_reverb_levels@12,0x0135969C
 __imp__AIL_set_timer_period@8,0x013596A4
 __imp__AIL_start_timer@4,0x013596B8
 __imp__AIL_startup@0,0x013596BC
@@ -13893,6 +14063,7 @@ __imp__AIL_stop_3D_sample@4,0x013596C0
 __imp__AIL_stop_sample@4,0x013596C4
 __imp__AIL_stop_timer@4,0x013596C8
 __imp__AIL_stream_ms_position@12,0x013596D0
+__imp__AIL_unlock_mutex@0,0x013596D8
 __imp__AVIFileCreateStreamAIat@12,0x01359750
 __imp__AVIFileInitIat@0,0x01359754
 __imp__AVIFileOpenIat@16,0x01359758
@@ -14122,6 +14293,7 @@ __imp__SHGetSpecialFolderPathW@16,0x01359174
 __imp__ScreenToClient@8,0x0135905C
 __imp__SelectObject@8,0x013590FC
 __imp__SendDlgItemMessageA@20,0x01359060
+__imp__SendMessageA@16,0x01359064
 __imp__SetBkColor@8,0x01359100
 __imp__SetConsoleScreenBufferSize@8,0x01358EF4
 __imp__SetConsoleWindowInfo@12,0x01358EFC
@@ -14578,6 +14750,7 @@ __real@3f955555,0x01075348
 __real@3f9555cbe46f80c1,0x0114D340
 __real@3f99999a,0x01094A58
 __real@3fa00000,0x010AE858
+__real@3fa1111111111111,0x010F0D58
 __real@3fa555547fbaf47e,0x0114D2D0
 __real@3fa66666,0x010EB40C
 __real@3fa73d75,0x0115CC70
@@ -14660,6 +14833,7 @@ __real@4024000000000000,0x010EE488
 __real@40273d75,0x0115CB30
 __real@40296978d4fdf3b6,0x01131710
 __real@4030000000000000,0x01132740
+__real@4034000000000000,0x010C29F8
 __real@40400000,0x01075338
 __real@4040000000000000,0x0107FD80
 __real@4049000000000000,0x01094A68
@@ -14677,6 +14851,7 @@ __real@40800000,0x01075340
 __real@408f400000000000,0x010EE5F0
 __real@40a00000,0x01075344
 __real@40afede0,0x0109BF1C
+__real@40b66666,0x010A6748
 __real@40c00000,0x010828C4
 __real@40c90fdb,0x01087B10
 __real@40d55555,0x01128C08
@@ -14756,6 +14931,7 @@ __real@45f00000,0x01127EB8
 __real@461c4000,0x010AEBB8
 __real@4647ff38,0x0107C7FC
 __real@46800100,0x0115C078
+__real@469c4000,0x01136938
 __real@46fffe00,0x0114A05C
 __real@47742400,0x01088914
 __real@477fff00,0x0113A088

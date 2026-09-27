@@ -131,6 +131,7 @@ public:
 	// pushes an extra 0 before rinfo).
 	void						Render(RenderInfoClass &rinfo, int unknown);
 	void						RenderVolumeParticle(RenderInfoClass &rinfo, unsigned int depth);
+	void						rva00913AF0(int vnum, bool no_diffuse);
 
 protected:
 	// Update arrays.
