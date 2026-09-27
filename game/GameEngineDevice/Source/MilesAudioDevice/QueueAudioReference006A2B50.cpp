@@ -57,11 +57,12 @@ class AudioReferenceQueue006A2B50 {
     char pad000[0xb04];
     _STL::list<Open269B800Ref> listB04;
     AudioReferenceMap006A2B50 mapB08;
-    char padB1C[0x14];
+    AudioReferenceMap006A2B50 mapB1C;
     AudioReferenceMap006A2B50 mapB30;
 public:
     void queue(unsigned int key);
     void queue006A2E50(unsigned int key);
+    void queue006A2CD0(unsigned int key);
 };
 void AudioReferenceQueue006A2B50::queue(unsigned int key) {
     MilesMutex006A2B50 guard;
@@ -82,6 +83,21 @@ void AudioReferenceQueue006A2B50::queue006A2E50(unsigned int key) {
     AudioReferenceMap006A2B50::iterator found=mapB30.find(key);
     Open269B800Ref value;
     if(found==mapB30.end()) goto failed;
+    value.assign(found->second.m_ptr);
+    if(!value) {
+failed:
+        guard.unlock();
+        return;
+    }
+    listB04.push_back(value);
+}
+
+// RVA 006A2CD0: the middle map has its bucket array at +0xB20.
+void AudioReferenceQueue006A2B50::queue006A2CD0(unsigned int key) {
+    MilesMutex006A2B50 guard;
+    AudioReferenceMap006A2B50::iterator found=mapB1C.find(key);
+    Open269B800Ref value;
+    if(found==mapB1C.end()) goto failed;
     value.assign(found->second.m_ptr);
     if(!value) {
 failed:
