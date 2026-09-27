@@ -89484,3 +89484,6 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?SeedNextCommandIDFromPlayerCount@@YAXG@Z,0x00682CF0,ushort caller ABI witnessed by 0x00666610 xor ecx and mov cx ax before ILT 0x00031EE4; body computes ID modulo 16 bits; existing int spelling is ABI-compatible
 ?reset@FrameDataManager@@QAEXXZ,0x00670620,ZH FrameDataManager reset delegates to init; retail reset body is E9 to ILT 0x000212E2 then 0x006705C0; attachPlayersFromGameInfo calls init then this distinct reset wrapper through ILT 0x0002E546
 ?__format_float_scientific@_STL@@YAXPADPBDHH_NHH2@Z,0x00848E60,compiler ABI alias for the retail 8 slot call from bfmeFormatFloat; canonical 7 argument helper body at 0x00848E60; exact target and twin probes
+?rva00225960@Rva00225960Owner@@QAEXXZ,0x0001727E,route=0x00225960;retail 0x0022BFF0 call +0x10 via 0x0022CDB0 and 0x0002ECC1
+?rva00225960@Rva00225960Owner@@QAEXXZ,0x0004098F,route=0x00225960;retail 0x0024A900 call +0x10 via 0x0024B8D0 and 0x0001727E
+?xfer@PackedFlags0020ECA0@@QAEXPAVXfer@@@Z,0x0020ECA0,address-derived existing dup body;0x0020F000 call +0x44 via 0x00045DA4;thiscall ret4 and 11-bit packed Xfer slot 0x24 witnessed
