@@ -1,23 +1,47 @@
-// ?handle@Gen00269C50@@QAEXI@Z
-// partial score=0.13 date=2026-09-17
-// ?handle@Gen00269C50@@QAEXI@Z
-// Retail 0x00269C50 / 1073 bytes.  The four interface wrappers and the
-// -0x10 adjustor tail prove this address is their shared finish body, but the
-// original semantic owner is not proven.  Keep the address-derived owner and
-// method while preserving the observed data and filter contracts.
-//
-// This is a mechanical reconstruction of the body contract: module data is
-// read through +0x1D0..+0x20B, the owner carries data/object at +4/+8, four
-// partition-filter records install the witnessed vtables, and the result
-// wrapper is reference-counted at +0x10.  The printed j_* names below are the
-// only names accepted for the anonymous direct callees.
-
+// ?finishSpecialPower@SpecialPowerModule@@QAEXI@Z
+// partial score=0.98 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc
+// stlport
+//
+// BANKED, NOT BYTE-EXACT (opus-5.5 2026-09-28): 1073 compiled bytes = retail
+// 1073, 23 differing non-relocation bytes, shape 0.997, 2 structural diffs.
+// Identity: the pinned ILT ?finishSpecialPower@SpecialPowerModule@@QAEXI@Z
+// (0x000251AD -> 0x00269C50) is what the matched doSpecialPower* callers call;
+// the body is the BFME expansion of ZH SpecialPowerModule::triggerSpecialPower
+// (aboutToDoSpecialPower, createViewObject, recharge, ...), and the
+// Rva0026A190 -0x10 adjustor tail enters it from the interface.
+// Remaining residue is pure register choice in three spots:
+//  +0xc7   TheGameLogic loaded into ecx (retail) vs edx (ours);
+//  +0x181  configure() args: retail value/player in edx, name in ecx and the
+//          player push after the store load; ours swaps ecx/edx and pushes
+//          player before loading the store;
+//  +0x1ea  Coord3D copies: retail eax/edx, ours edx/eax.
+// Tried without effect: inline getFrame(), a frame local, delta+frame order,
+// Coord3D::set(), eh_levers+shape_search (21 trials), flag_sweep (90 variants).
+// Levers that got here from the 0.13 bank: real filter classes (pinned global
+// vtables) declared rj/relationship/alive/object in unwind order; ZH
+// inline-recursive const+non-const friend_getFinalOverride; __real literals
+// 5.0f and 0.0f (retail 0x01075344/0x01075350 are compiler float constants);
+// ZH-style static FXList::doFXPos/doFXObj helpers; the reference store read
+// per branch; hasValue as an if; the filter/result tail in its own block so
+// the result takes the dead location parameter slot and the frame is 0x4c.
+// Landing needs two pins (not added yet, evidence below):
+//  ?aboutToDoSpecialPower@SpecialPowerModule@@IAEXPBUCoord3D@@@Z at ILT
+//    0x00046C13 (body 0x00268CB0, ledger-misnamed as a module-data dtor): ZH
+//    call order plus its TheScriptEngine notify with the controlling player's
+//    index at +0x24;
+//  an address-derived name for ILT 0x0001F505 -> dump 0x00269780 (thiscall,
+//    one BfmeWideResult* argument, ret 4).
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
+#define _STLP_USE_STATIC_LIB 1
+#define BFME_STLP_NODE_ALLOC 1
+#include <vector>
+#include <list>
+
 typedef bool Bool;
+typedef int Int;
+typedef unsigned int UnsignedInt;
+typedef float Real;
 
 struct Coord3D
 {
@@ -26,458 +50,440 @@ struct Coord3D
 	Real z;
 };
 
+class Object;
+class Player;
+class Matrix3D;
+class AsciiString;
+
 enum DisabledType
 {
-	Rva00269C50DisabledType = 3
+	DISABLED_HELD = 3
 };
 
-class Object
+enum KindOfType
+{
+	KINDOF_0x6C = 0x6c
+};
+
+class PartitionFilter
 {
 public:
-	void setDisabledUntil( DisabledType, UnsignedInt );
+	PartitionFilter() : m_next(0) {}
+	virtual ~PartitionFilter() {}
+	virtual Bool allow(Object *) = 0;
+	virtual Int getPlayerMask();
+
+	PartitionFilter *link(PartitionFilter *next);
+
+	PartitionFilter *m_next;
 };
 
-class Rva00269C50Player
+class Rva0025ED50ObjectFilter : public PartitionFilter
 {
+public:
+	explicit Rva0025ED50ObjectFilter(Object *object)
+		: m_object(object) {}
+	virtual ~Rva0025ED50ObjectFilter() {}
+	virtual Bool allow(Object *);
+
+	Object *m_object;
 };
 
-class Rva00269C50Update
+class Rva0025ED50RootFilter : public PartitionFilter
 {
+public:
+	Rva0025ED50RootFilter() {}
+	virtual ~Rva0025ED50RootFilter() {}
+	virtual Bool allow(Object *);
 };
 
-class Rva00269C50Mode
+class PartitionFilterRelationship : public PartitionFilter
 {
+public:
+	PartitionFilterRelationship(Object *object, Int flags, Bool match)
+		: m_obj(object), m_flags(flags), m_match(match) {}
+	virtual ~PartitionFilterRelationship() {}
+	virtual Bool allow(Object *);
+	virtual Int getPlayerMask();
+
+	Object *m_obj;
+	Int m_flags;
+	Bool m_match;
 };
 
-class Rva00269C50Unknown
+class Rva00265150RJFilter : public PartitionFilter
 {
+public:
+	Rva00265150RJFilter(void *subobject, void *extra, Bool match)
+		: m_subobject(subobject), m_extra(extra), m_match(match) {}
+	virtual ~Rva00265150RJFilter() {}
+	virtual Bool allow(Object *);
+	virtual Int getPlayerMask();
+
+	void *m_subobject;
+	void *m_extra;
+	Bool m_match;
 };
 
-struct Rva00269C50IteratorNode
+struct BfmeWideResultItem
 {
-	Rva00269C50IteratorNode *next;
-	unsigned char pad04[4];
-	void *object;
+	Object *m_object;
+	UnsignedInt m_distance;
 };
 
-struct Rva00269C50Iterator
+struct BfmeWideResultPayload
 {
-	void *vtable;
-	Rva00269C50IteratorNode *head;
+	std::vector<BfmeWideResultItem> m_items;
+	BfmeWideResultItem *m_cursor;
+	Int m_refCount;
 };
 
-struct BfmeWideResult
+struct Rva009F3C70Result
 {
-	void *value;
+	BfmeWideResultPayload *m_value;
+	void append(Int, Int);
+};
+
+struct BfmeWideResult : public Rva009F3C70Result
+{
+	~BfmeWideResult()
+	{
+		BfmeWideResultPayload *&payload = m_value;
+		--payload->m_refCount;
+		if (payload->m_refCount == 0)
+			delete payload;
+	}
 };
 
 class BfmeWideForwardC
 {
 public:
-	BfmeWideResult bfmeForwardWideC(
-		int, int, int, int, int );
+	BfmeWideResult bfmeForwardWideC(Int, Int, Int, Int, Int);
 };
 
-struct Rva009F3C70Result
+class PartitionManager : public BfmeWideForwardC
 {
-	void *value;
-	void append( int, int );
 };
 
-struct Rva00269C50Filter
-{
-	void *vtable;
-	Rva00269C50Filter *next;
-	void *field08;
-	void *field0c;
-	void *field10;
-};
+extern PartitionManager *ThePartitionManager;
 
-struct Rva00269C50Data
-{
-	unsigned char bytes[0x20c];
-};
-
-extern void j_00001a73( void );
-extern void j_000022bb( void );
-extern void j_0000d3b9( void );
-extern void j_0000e68d( void );
-extern void j_00011f77( void );
-extern void j_0001677f( void );
-extern void j_0001bb21( void );
-extern void j_0001f505( void );
-extern void j_00020824( void );
-extern void j_00022bba( void );
-extern void j_0002739f( void );
-extern void j_0002852e( void );
-extern void j_0002923a( void );
-extern void j_0003251f( void );
-extern void j_0003682c( void );
-extern void j_00046c13( void );
-extern void j_00048c61( void );
-extern void j_0009f2ae0( void );
-extern void __ftol2( void );
-
-namespace _STL
-{
-	template <bool Threads, int Instance>
-	class __node_alloc
-	{
-	public:
-		static void _M_deallocate( void *, unsigned int );
-	};
-}
-
-void __cdecl operator delete( void * );
-
-class Gen00269C50;
-
-typedef void (Gen00269C50::*Rva00269C50ArgCall)( UnsignedInt );
-typedef void *(Object::*Rva00269C50ObjectGet)( void );
-typedef void (Object::*Rva00269C50ObjectNoArg)( void );
-typedef Rva00269C50Iterator *(Object::*Rva00269C50ObjectIterator)( void );
-typedef void (Object::*Rva00269C50ObjectTwoInt)( int, int );
-typedef Bool (Object::*Rva00269C50ObjectOneInt)( int );
-typedef void (Rva00269C50Player::*Rva00269C50PlayerOneInt)( int );
-typedef void *(Rva00269C50Player::*Rva00269C50PlayerNoArg)( void );
-typedef void (Rva00269C50Update::*Rva00269C50UpdateFourInt)(
-	UnsignedInt, UnsignedInt, UnsignedInt, UnsignedInt );
-typedef Bool (Rva00269C50Update::*Rva00269C50UpdateNoArgBool)( void );
-typedef void (Rva00269C50Update::*Rva00269C50UpdateObject)(
-	Object *, UnsignedInt );
-typedef void (Rva00269C50Mode::*Rva00269C50ModeNoArg)( void );
-typedef void (Rva00269C50Mode::*Rva00269C50ModeFiveInt)(
-	int, int, int, int, int );
-typedef Rva00269C50Filter *(Rva00269C50Filter::*Rva00269C50Link)(
-	Rva00269C50Filter * );
-typedef void (Rva00269C50Filter::*Rva00269C50FilterInit)(
-	BfmeWideResult * );
-typedef void (Gen00269C50::*Rva00269C50ResultCall)(
-	Rva009F3C70Result * );
-typedef void (Rva00269C50Iterator::*Rva00269C50IteratorDestroy)( void );
-
-class Gen00269C50
+class Overridable
 {
 public:
-	void handle( UnsignedInt );
+	virtual ~Overridable();
+	Overridable *getFinalOverride();
+	Overridable *friend_getFinalOverride()
+	{
+		if (m_nextOverride)
+			return m_nextOverride->friend_getFinalOverride();
+		return this;
+	}
+
+	const Overridable *friend_getFinalOverride() const
+	{
+		if (m_nextOverride)
+			return m_nextOverride->friend_getFinalOverride();
+		return this;
+	}
+
+	Overridable *m_nextOverride;
 };
 
-void Gen00269C50::handle( UnsignedInt argument )
+class ThingTemplate : public Overridable
 {
-	unsigned char *self = (unsigned char *)this;
-	Rva00269C50Data *data = *(Rva00269C50Data **)(self + 4);
-	Object *object = *(Object **)(self + 8);
+public:
+	unsigned char m_unmodelled[0xd4 - 8];
+	UnsignedInt m_fieldD4;
+};
 
-	union
+class SpecialPowerTemplate : public Overridable
+{
+public:
+	const SpecialPowerTemplate *getFO() const
 	{
-		void (*raw)( void );
-		Rva00269C50ArgCall member;
-	} initialCall;
-	initialCall.raw = j_00046c13;
-	(this->*initialCall.member)( argument );
-
-	initialCall.raw = j_0002739f;
-	(this->*initialCall.member)( argument );
-
-	if (*(unsigned char *)((unsigned char *)data + 0x0c) == 0)
-	{
-		unsigned char *virtualObject = *(unsigned char **)(self + 0x10);
-		if (virtualObject != 0)
-		{
-			void (**vtable)( void ) = *(void (***)( void ))virtualObject;
-			void (*call)( void ) = vtable[0x40 / sizeof(void *)];
-			call();
-		}
+		return (const SpecialPowerTemplate *)friend_getFinalOverride();
 	}
 
-	union
+	unsigned char m_unmodelled[0x20 - 8];
+	Int m_field20;
+};
+
+class FXList
+{
+public:
+	Bool isEmpty() const;
+	void doFXPos(const Coord3D *primary, const Matrix3D *primaryMtx = 0,
+		Real primarySpeed = 0.0f, const Coord3D *secondary = 0) const;
+	void doFXObj(const Object *primary, const Object *secondary = 0) const;
+
+	static void doFXPos(const FXList *fx, const Coord3D *primary)
 	{
-		void (*raw)( void );
-		Rva00269C50ObjectGet member;
-	} objectGet;
-	objectGet.raw = j_00020824;
-	void *objectResult = (object->*objectGet.member)();
-	if (objectResult != 0)
+		if (fx && !fx->isEmpty())
+			fx->doFXPos(primary);
+	}
+	static void doFXObj(const FXList *fx, const Object *primary)
 	{
-		Rva00269C50Player *player =
-			*(Rva00269C50Player **)((unsigned char *)data + 8);
-		if (player != 0)
-		{
-			union
-			{
-				void (*raw)( void );
-				Rva00269C50PlayerNoArg member;
-			} playerCall;
-			playerCall.raw = j_00048c61;
-			void *playerResult = (player->*playerCall.member)();
-			if (playerResult != 0)
-			{
-				union
-				{
-					void (*raw)( void );
-					Rva00269C50PlayerOneInt member;
-				} playerAdjust;
-				playerAdjust.raw = j_00001a73;
-				(player->*playerAdjust.member)(
-					*(int *)((unsigned char *)objectResult + 0x20) );
-			}
-		}
+		if (fx && !fx->isEmpty())
+			fx->doFXObj(primary);
+	}
+};
+
+class Rva000C98C0
+{
+public:
+	void subtract(Int);
+};
+
+class BfmeItemRY
+{
+public:
+	void bfmeDoRY(void *, void *);
+};
+
+template <int N>
+class BfmeVirtualSlots : public BfmeVirtualSlots<N - 1>
+{
+public:
+	virtual void unused(char (*)[N]) = 0;
+};
+
+template <>
+class BfmeVirtualSlots<0>
+{
+};
+
+class Rva001BFE20Interface : public BfmeVirtualSlots<60>
+{
+public:
+	virtual void collectObjects(std::list<Object *> *out) = 0;
+};
+
+class Thing
+{
+public:
+	virtual ~Thing();
+	Bool isKindOf(KindOfType kind) const;
+
+protected:
+	ThingTemplate *m_template;
+};
+
+class Object : public Thing
+{
+public:
+	Player *getControllingPlayer() const;
+	void setDisabledUntil(DisabledType type, UnsignedInt frame);
+	void *unidentified_001BFE20() const;
+	ThingTemplate *getTemplate() const
+	{
+		ThingTemplate *thingTemplate = m_template;
+		if (thingTemplate && thingTemplate->m_nextOverride)
+			thingTemplate = (ThingTemplate *)thingTemplate->m_nextOverride->getFinalOverride();
+		return thingTemplate;
+	}
+	const Coord3D *getPosition() const
+	{
+		return (const Coord3D *)((const unsigned char *)this + 0x38);
 	}
 
-	Rva00269C50Data *powerData = data;
-	int powerFrame = *(int *)((unsigned char *)powerData + 0x1fc);
-	if (powerFrame != -1 &&
-		*(Real *)((unsigned char *)powerData + 0x200) !=
-			*(const Real *)0x01075350)
-	{
-		Real scaled = *(Real *)((unsigned char *)powerData + 0x200) *
-			*(const Real *)0x01075344;
-		int delta = (int)scaled;
-		union
-		{
-			void (*raw)( void );
-			Rva00269C50ObjectTwoInt member;
-		} objectPair;
-		objectPair.raw = j_0002852e;
-		(object->*objectPair.member)( powerFrame, delta );
+};
 
-		if (*(unsigned char *)((unsigned char *)powerData + 0x208) != 0)
-		{
-			UnsignedInt frame =
-				*(UnsignedInt *)(*(unsigned char **)0x012f0898 + 0x3c) +
-				(UnsignedInt)delta;
-			object->setDisabledUntil(
-				Rva00269C50DisabledType, frame );
-		}
+class GameLogic
+{
+public:
+	unsigned char m_unmodelled[0x3c];
+	UnsignedInt m_frame;
+	UnsignedInt getFrame() const { return m_frame; }
+};
+
+extern GameLogic *TheGameLogic;
+
+class BfmeObjectReferenceStore
+{
+public:
+	void clearObjectEntries();
+	void configure(Int kind, const Int &key, const Object *owner,
+		const AsciiString &name, Int value);
+};
+
+class BfmeModeGF;
+extern BfmeModeGF *g_bfmeModeGF;
+inline BfmeObjectReferenceStore *TheBfmeObjectReferenceStore()
+{
+	return (BfmeObjectReferenceStore *)g_bfmeModeGF;
+}
+
+
+struct SpecialPowerModuleData
+{
+	unsigned char m_unmodelled00[8];
+	SpecialPowerTemplate *m_specialPowerTemplate;
+	Bool m_updateModuleStartsAttack;
+	unsigned char m_unmodelled0d[0x1d0 - 0x0d];
+	unsigned char m_name1d0[4];
+	Int m_range1d4;
+	Bool m_field1d8;
+	unsigned char m_pad1d9[3];
+	Int m_key1dc;
+	unsigned char m_pad1e0[4];
+	Bool m_field1e4;
+	unsigned char m_pad1e5[3];
+	Int m_value1e8;
+	Bool m_field1ec;
+	Bool m_field1ed;
+	Bool m_field1ee;
+	unsigned char m_pad1ef[0x1f4 - 0x1ef];
+	const FXList *m_fx;
+	unsigned char m_pad1f8[4];
+	Int m_frames1fc;
+	Real m_scale200;
+	unsigned char m_pad204[4];
+	Bool m_field208;
+	unsigned char m_pad209;
+	Bool m_field20a;
+	Bool m_field20b;
+};
+
+class BehaviorModuleBase
+{
+public:
+	virtual ~BehaviorModuleBase();
+
+protected:
+	const SpecialPowerModuleData *m_moduleData;
+	Object *m_object;
+	unsigned char m_unmodelled0c[4];
+};
+
+class SpecialPowerModuleInterface : public BfmeVirtualSlots<16>
+{
+public:
+	virtual void startPowerRecharge() = 0;
+};
+
+class SpecialPowerModule : public BehaviorModuleBase, public SpecialPowerModuleInterface
+{
+public:
+	void finishSpecialPower(UnsignedInt arg);
+
+protected:
+	void aboutToDoSpecialPower(const Coord3D *location);
+	void createViewObject(const Coord3D *location);
+	void rva00269780(BfmeWideResult *result);
+
+	Object *getObject() const { return m_object; }
+	const SpecialPowerModuleData *getSpecialPowerModuleData() const { return m_moduleData; }
+};
+
+void SpecialPowerModule::finishSpecialPower(UnsignedInt arg)
+{
+	const Coord3D *location = (const Coord3D *)arg;
+	aboutToDoSpecialPower(location);
+	createViewObject(location);
+
+	if (!getSpecialPowerModuleData()->m_updateModuleStartsAttack)
+		startPowerRecharge();
+
+	Player *player = getObject()->getControllingPlayer();
+	if (player)
+	{
+		SpecialPowerTemplate *spTemplate = getSpecialPowerModuleData()->m_specialPowerTemplate;
+		((Rva000C98C0 *)player)->subtract(spTemplate->getFO()->m_field20);
 	}
 
-	Rva00269C50Update *update =
-		*(Rva00269C50Update **)((unsigned char *)powerData + 0x1f4);
-	if (update != 0)
+	const SpecialPowerModuleData *data = getSpecialPowerModuleData();
+	Int frames = data->m_frames1fc;
+	if (frames != -1 && data->m_scale200 > 0.0f)
 	{
-		union
-		{
-			void (*raw)( void );
-			Rva00269C50UpdateNoArgBool member;
-		} updateReady;
-		updateReady.raw = j_00011f77;
-		if (!argument)
-		{
-			if (! (update->*updateReady.member)())
-			{
-				union
-				{
-					void (*raw)( void );
-					Rva00269C50UpdateFourInt member;
-				} updateFour;
-				updateFour.raw = j_0001bb21;
-				(update->*updateFour.member)( argument, 0, 0, 0 );
-			}
-		}
-		else if (! (update->*updateReady.member)())
-		{
-			union
-			{
-				void (*raw)( void );
-				Rva00269C50UpdateObject member;
-			} updateObject;
-			updateObject.raw = j_00022bba;
-			(update->*updateObject.member)( object, 0 );
-		}
+		Int delta = (Int)(data->m_scale200 * 5.0f);
+		((BfmeItemRY *)getObject())->bfmeDoRY((void *)frames, (void *)delta);
+		if (data->m_field208)
+			getObject()->setDisabledUntil(DISABLED_HELD, TheGameLogic->m_frame + delta);
 	}
 
-	if (*(unsigned char *)((unsigned char *)powerData + 0x1e4) == 0)
-		goto finish;
-
-	if (*(unsigned char *)((unsigned char *)powerData + 0x1ee) != 0)
+	const FXList *fx = data->m_fx;
+	if (fx)
 	{
-		Rva00269C50Mode *mode = *(Rva00269C50Mode **)0x012f0fe0;
-		union
-		{
-			void (*raw)( void );
-			Rva00269C50ModeNoArg member;
-		} modeReset;
-		modeReset.raw = j_0003682c;
-		(mode->*modeReset.member)();
-		goto finish;
+		if (location)
+			FXList::doFXPos(fx, location);
+		else
+			FXList::doFXObj(fx, getObject());
 	}
 
+	if (data->m_field1e4)
 	{
-		int kind = 0;
-		if (*(unsigned char *)((unsigned char *)powerData + 0x20b) != 0)
-			kind = 1;
-		else if (*(unsigned char *)((unsigned char *)powerData + 0x20a) != 0)
+		if (data->m_field1ee)
+		{
+			TheBfmeObjectReferenceStore()->clearObjectEntries();
+			return;
+		}
+		Int kind = 1;
+		if (data->m_field20b)
 			kind = 2;
-		else
+		else if (data->m_field20a)
 			kind = 3;
-
-		Rva00269C50Mode *mode = *(Rva00269C50Mode **)0x012f0fe0;
-		union
-		{
-			void (*raw)( void );
-			Rva00269C50ModeFiveInt member;
-		} modeCall;
-		modeCall.raw = j_0002923a;
-		(mode->*modeCall.member)(
-			kind,
-			*(int *)((unsigned char *)powerData + 0x1e8),
-			argument,
-			(int)((unsigned char *)powerData + 0x1d0),
-			(int)((unsigned char *)powerData + 0x1dc) );
+		TheBfmeObjectReferenceStore()->configure(kind, data->m_key1dc, (const Object *)player,
+			*(const AsciiString *)data->m_name1d0, data->m_value1e8);
+		return;
 	}
 
-finish:
+	Bool hasValue = false;
+	if (data->m_value1e8)
+		hasValue = true;
+	const Int *name = *(const Int *const *)data->m_name1d0;
+	if ((name == 0 || *(const unsigned short *)((const char *)name + 4) == 0) && !hasValue)
+		return;
+
+	Object *object = getObject();
+	Coord3D pos;
+	if (location)
+		pos = *location;
+	else
+		pos = *object->getPosition();
+
+	Int relationship = 4;
+	if (data->m_field1ec)
+		relationship = 1;
+	if (data->m_field1ed)
+		relationship = 7;
+	else if (data->m_field1ee)
+		relationship = 5;
+	else if (hasValue)
+		relationship = (relationship != 1) ? 1 : 4;
+
+	Rva00265150RJFilter rjFilter((void *)&data->m_key1dc,
+		object->getControllingPlayer(), true);
+	PartitionFilterRelationship filterTeam(object, relationship, false);
+	Rva0025ED50RootFilter aliveFilter;
+	Rva0025ED50ObjectFilter objectFilter(object);
+	rjFilter.link(filterTeam.link(&aliveFilter));
+	if (!(object->getTemplate()->m_fieldD4 & 0x4000000))
+		rjFilter.link(&objectFilter);
+
 	{
-		Coord3D location;
-		if (argument != 0)
+	BfmeWideResult result = ThePartitionManager->bfmeForwardWideC(
+		(Int)&pos, data->m_range1d4, 0, (Int)&rjFilter, 1);
+	if (data->m_field1d8)
+	{
+		if (object->isKindOf(KINDOF_0x6C))
 		{
-			location = *(const Coord3D *)argument;
-		}
-		else
-		{
-			location.x = *(Real *)((unsigned char *)object + 0x38);
-			location.y = *(Real *)((unsigned char *)object + 0x3c);
-			location.z = *(Real *)((unsigned char *)object + 0x40);
-		}
-
-		int filterMode = 4;
-		if (*(unsigned char *)((unsigned char *)powerData + 0x1ec) != 0)
-			filterMode = 1;
-		else if (*(unsigned char *)((unsigned char *)powerData + 0x1ed) != 0)
-			filterMode = 7;
-		else if (*(unsigned char *)((unsigned char *)powerData + 0x1ee) != 0)
-			filterMode = 5;
-
-		union
-		{
-			void (*raw)( void );
-			Rva00269C50ObjectGet member;
-		} objectAgain;
-		objectAgain.raw = j_00020824;
-		(object->*objectAgain.member)();
-
-		Rva00269C50Filter relationship;
-		Rva00269C50Filter root;
-		Rva00269C50Filter objectFilter;
-		Rva00269C50Filter rj;
-		relationship.vtable = (void *)0x010a5158;
-		relationship.next = 0;
-		relationship.field08 = (void *)((unsigned char *)powerData + 0x1dc);
-		relationship.field0c = object;
-		relationship.field10 = (void *)(unsigned int)filterMode;
-		root.vtable = (void *)0x01083b80;
-		root.next = 0;
-		root.field08 = 0;
-		root.field0c = 0;
-		root.field10 = 0;
-		objectFilter.vtable = (void *)0x01085dd0;
-		objectFilter.next = 0;
-		objectFilter.field08 = object;
-		objectFilter.field0c = 0;
-		objectFilter.field10 = 0;
-		rj.vtable = (void *)0x01085dc0;
-		rj.next = 0;
-		rj.field08 = object;
-		rj.field0c = (void *)filterMode;
-		rj.field10 = (void *)1;
-
-		union
-		{
-			void (*raw)( void );
-			Rva00269C50Link member;
-		} link;
-		link.raw = j_0009f2ae0;
-		Rva00269C50Filter *head =
-			(rj.*link.member)( &objectFilter );
-		head = (objectFilter.*link.member)( &root );
-		head = (root.*link.member)( head );
-
-		BfmeWideResult wide;
-		BfmeWideForwardC *partition =
-			*(BfmeWideForwardC **)0x012ed5b8;
-		wide = partition->bfmeForwardWideC(
-			(int)((unsigned char *)powerData + 0x1d4),
-			0, (int)&location, 1, (int)head );
-
-		Rva009F3C70Result result;
-		result.value = 0;
-		if (*(unsigned char *)((unsigned char *)powerData + 0x1d8) != 0)
-		{
-			union
+			Rva001BFE20Interface *extra =
+				(Rva001BFE20Interface *)object->unidentified_001BFE20();
+			if (extra)
 			{
-				void (*raw)( void );
-				Rva00269C50ObjectOneInt member;
-			} objectKind;
-			objectKind.raw = j_0003251f;
-			if ((object->*objectKind.member)( 0x6c ))
-			{
-				union
+				std::list<Object *> objects;
+				extra->collectObjects(&objects);
+				for (std::list<Object *>::iterator it = objects.begin();
+					it != objects.end(); ++it)
 				{
-					void (*raw)( void );
-					Rva00269C50ObjectIterator member;
-				} iteratorFactory;
-				iteratorFactory.raw = j_0000d3b9;
-				Rva00269C50Iterator *iterator =
-					(Rva00269C50Iterator *)
-						(object->*iteratorFactory.member)();
-				Rva00269C50IteratorNode *cursor = 0;
-				if (iterator != 0)
-				{
-					void *vtable = *(void **)iterator;
-					void (*first)( void *, Rva00269C50IteratorNode ** ) =
-						*(void (**)( void *, Rva00269C50IteratorNode ** ))
-							((unsigned char *)vtable + 0xf0);
-					first( iterator, &cursor );
+					if (*it)
+						result.append((Int)*it, 0);
 				}
-				while (cursor != 0)
-				{
-					if (cursor->object != 0)
-						result.append( (int)cursor->object, 0 );
-					cursor = cursor->next;
-				}
-				union
-				{
-					void (*raw)( void );
-					Rva00269C50IteratorDestroy member;
-				} iteratorDestroy;
-				iteratorDestroy.raw = j_0000e68d;
-				(iterator->*iteratorDestroy.member)();
-			}
-			else
-			{
-				result.append( 0, 0 );
 			}
 		}
 		else
-		{
-			result.append( 0, 0 );
-		}
-
-		union
-		{
-			void (*raw)( void );
-			Rva00269C50ResultCall member;
-		} consume;
-		consume.raw = j_0001f505;
-		(this->*consume.member)( &result );
-
-		if (result.value != 0)
-		{
-			int *references = (int *)((unsigned char *)result.value + 0x10);
-			--*references;
-			if (*references == 0)
-			{
-				void *begin = *(void **)result.value;
-				unsigned int bytes = *(unsigned int *)
-					((unsigned char *)result.value + 8) -
-					(unsigned int)begin;
-				if (bytes > 0x80)
-					::operator delete( begin );
-				else
-					_STL::__node_alloc<true, 0>::_M_deallocate(
-						begin, bytes );
-				::operator delete( result.value );
-			}
-		}
+			result.append((Int)object, 0);
+	}
+	rva00269780(&result);
 	}
 }
