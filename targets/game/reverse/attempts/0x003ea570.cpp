@@ -1,65 +1,142 @@
 // ?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@ABUCoord3D@@0@Z
-// partial score=0.26 date=2026-09-16
+// partial score=0.94 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc
+//
+// Retail 0x003EA570 (ILT 0x000441C0): the BFME three-argument
+// Pathfinder::isAttackViewBlockedByObstacle(source, goalPos, target) that
+// Weapon::isGoalPosWithinAttackRange calls.  It scans the cells between the
+// source and the goal for the target's ID, then gives walls, wall upgrades and
+// deployed siege towers their own reach tests.  KindOf bit numbers come from
+// the retail KindOf name table at 0x012AA068.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 typedef float Real;
-typedef int NameKeyType;
 
+extern "C" double fabs(double);
+#pragma intrinsic(fabs)
+
+enum NameKeyType
+{
+	NAMEKEY_INVALID = 0
+};
+
+enum KindOfType
+{
+	KINDOF_STRUCTURE = 7,
+	KINDOF_WALK_ON_TOP_OF_WALL = 59,
+	KINDOF_SIEGE_TOWER = 92,
+	KINDOF_WALL_UPGRADE = 149
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real x;
 	Real y;
 	Real z;
+
+	void set(const Coord3D *p)
+	{
+		x = p->x;
+		y = p->y;
+		z = p->z;
+	}
+
+	void sub(const Coord3D *p)
+	{
+		x -= p->x;
+		y -= p->y;
+		z -= p->z;
+	}
+
+	Real lengthSqr() const
+	{
+		return x * x + y * y + z * z;
+	}
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
+class Overridable
+{
+public:
+	virtual ~Overridable();
+
+	const Overridable *getFinalOverride() const
+	{
+		if (m_nextOverride)
+			return m_nextOverride->getFinalOverride();
+		return this;
+	}
+
+private:
+	Overridable *m_nextOverride;
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Override.h
+template <class T>
+class OVERRIDE
+{
+public:
+	const T *operator*() const
+	{
+		if (!m_overridable)
+			return 0;
+		return (T *)m_overridable->getFinalOverride();
+	}
+
+	operator const T *() const
+	{
+		return operator*();
+	}
+
+private:
+	const T *m_overridable;
+};
+
+class ThingTemplate : public Overridable
+{
+public:
+	Bool isKindOf(KindOfType kind) const
+	{
+		return (m_kindof[(UnsignedInt)kind >> 5] & (1 << ((UnsignedInt)kind & 31))) != 0;
+	}
+
+private:
+	unsigned char m_unreconstructed_08[0xC8 - 0x08];
+	UnsignedInt m_kindof[6];
 };
 
 class Module;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
-class Overridable
+class Thing
 {
 public:
-	void *m_vtable;
-	Overridable *m_nextOverride;
-	unsigned char m_unreconstructed_008[0xC8 - 0x08];
-	signed char m_flagsC8;
-	unsigned char m_unreconstructed_0C9[3];
-	UnsignedInt m_flagsCC;
-	UnsignedInt m_flagsD0;
-	unsigned char m_unreconstructed_0D4[4];
-	UnsignedInt m_flagsD8;
+	const ThingTemplate *getTemplate() const { return m_template; }
+	const Coord3D *getPosition() const { return &m_cachedPos; }
 
-	const Overridable *getFinalOverride(void) const;
+protected:
+	virtual ~Thing();
+
+	OVERRIDE<ThingTemplate> m_template;
+	char m_unreconstructed_008[0x38 - 0x08];
+	Coord3D m_cachedPos;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
+class Object : public Thing
 {
 public:
-	void *m_vtable;
-	Overridable *m_template;
-	unsigned char m_unreconstructed_008[0x38 - 0x08];
-	Coord3D m_position;
-	unsigned char m_unreconstructed_044[0x74 - 0x44];
-	UnsignedInt m_id;
-	unsigned char m_unreconstructed_078[0xBC - 0x78];
-	Real m_bfmeBC;
-
+	UnsignedInt getID() const { return m_id; }
 	Module *findModule(NameKeyType key) const;
-};
 
-class Pathfinder
-{
-public:
-	Int bfmeCheckAttackView(Object *object, Coord3D *goalPos, void *cellIds);
-	Int bfmeCheckAttackViewAlt(Object *object, Coord3D *goalPos, void *cellIds);
-	Int bfmeCheckAttackViewHelper(Object *object, Coord3D *goalPos, void *cellIds);
-	Int bfmeCheckAttackViewAltHelper(Object *object, Coord3D *goalPos, void *cellIds);
+	// Retail 0x001C2380 (ILT 0x0001D31D); its semantic name is not evidenced.
+	Real rva001C2380(const Coord3D *pos, const Object *other, const Coord3D *goalPos) const;
 
-	Bool isAttackViewBlockedByObstacle(const Object *source,
-		const Coord3D &goalPos, const Object *target);
+	char m_unreconstructed_044[0x74 - 0x44];
+	UnsignedInt m_id;
+	char m_unreconstructed_078[0xbc - 0x78];
+	Real m_bfmeBC;
 };
 
 class NameKeyGenerator
@@ -68,181 +145,111 @@ public:
 	NameKeyType nameToKey(const char *name);
 };
 
-class SiegeDeploySpecialPower
-{
-};
+extern NameKeyGenerator *TheNameKeyGenerator;
 
+// The deployed-siege helper object the pinned 0x0002FC7A lookup returns; the
+// pin keeps its historical MemoryPool spelling.
 class MemoryPool
 {
+public:
+	// Retail 0x001F8E20 (ILT 0x00034A0E).
+	void rva001F8E20(Coord3D *out);
 };
 
-extern NameKeyGenerator *TheNameKeyGenerator;
-extern float g_Va010977E0;
-extern float g_bfmeDefaultBU;
+MemoryPool *SiegeDeploySpecialPower_getPool(Object *object);
 
-// Exact retail ILTs, used through typed member-pointer views where the owning
-// C++ class name has not yet been recovered.  The views preserve the observed
-// ecx receiver and stack argument order without inventing a fallback symbol.
-extern void j_0001d31d();
-extern void j_00034a0e();
-extern void j_00037196();
-extern void j_00048112();
-extern void j_00049cb5();
-extern MemoryPool *SiegeDeploySpecialPower_getPool(Object *object);
-
-static __forceinline Bool isSiegeAttached(SiegeDeploySpecialPower *module)
+class Rva00266340
 {
-	typedef Bool (SiegeDeploySpecialPower::*Function)() const;
-	union { void (*raw)(void); Function member; } fn;
-	fn.raw = j_00048112;
-	return (module->*fn.member)();
-}
+public:
+	bool is() const;
+};
 
-static __forceinline Real targetAttackMetric(const Object *target,
-	const Coord3D *targetPos, const Object *source, const Coord3D *goalPos)
+class Rva001F8DC0
 {
-	typedef Real (Object::*Function)(const Coord3D *, const Object *,
-		const Coord3D *) const;
-	union { void (*raw)(void); Function member; } fn;
-	fn.raw = j_0001d31d;
-	return (const_cast<Object *>(target)->*fn.member)(targetPos, source, goalPos);
-}
+public:
+	float get() const;
+};
 
-static __forceinline Bool pathHasTarget(Pathfinder *pathfinder,
-	Int (Pathfinder::*scan)(Object *, Coord3D *, void *),
-	const Object *source, const Coord3D *goalPos, const Object *target,
-	UnsignedInt *cellIds)
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
+class Pathfinder
 {
-	Int count = (pathfinder->*scan)(const_cast<Object *>(source),
-		const_cast<Coord3D *>(goalPos), cellIds);
-	for (Int i = 0; i < count; ++i)
-	{
-		if (cellIds[i] == target->m_id)
-			return true;
-	}
-	return false;
-}
+public:
+	Int bfmeCheckAttackViewHelper(Object *object, Coord3D *pos, void *ids);
+	Int bfmeCheckAttackViewAltHelper(Object *object, Coord3D *pos, void *ids);
+	// Retail 0x003E4DA0 (ILT 0x00037196).
+	Bool rva003E4DA0(const Object *source, const Coord3D *goalPos);
 
-// ?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@ABUCoord3D@@0@Z
-Bool Pathfinder::isAttackViewBlockedByObstacle(const Object *source,
-	const Coord3D &goalPos, const Object *target)
+	Bool isAttackViewBlockedByObstacle(const Object *source, const Coord3D &goalPos,
+		const Object *target);
+};
+
+Bool Pathfinder::isAttackViewBlockedByObstacle(const Object *source, const Coord3D &goalPos,
+	const Object *target)
 {
-	Coord3D *goal = const_cast<Coord3D *>(&goalPos);
-	UnsignedInt cellIds[16];
-	if (!pathHasTarget(this, &Pathfinder::bfmeCheckAttackViewHelper,
-			source, goal, target, cellIds))
+	UnsignedInt ids[16];
+	Int count = bfmeCheckAttackViewHelper(const_cast<Object *>(source),
+		const_cast<Coord3D *>(&goalPos), ids);
+	Int i;
+	for (i = 0; i < count; ++i)
 	{
-		Real dx = source->m_position.x - goal->x;
-		Real dy = source->m_position.y - goal->y;
-		Real dz = source->m_position.z - goal->z;
-		Real distanceSquared = dx * dx + dy * dy + dz * dz;
-		if (!(distanceSquared < g_bfmeDefaultBU))
-			goto checkTemplateSecond;
-		goto checkTemplate;
-	}
-
-	if (pathHasTarget(this, &Pathfinder::bfmeCheckAttackViewAltHelper,
-		source, goal, target, cellIds))
-		return false;
-	return true;
-
-checkTemplate:
-	if (target->m_template)
-	{
-		Overridable *template_ = target->m_template;
-		const Overridable *finalOverride = template_;
-		if (template_->m_nextOverride)
-			finalOverride = template_->m_nextOverride->getFinalOverride();
-		if (finalOverride->m_flagsC8 < 0)
-			goto checkTemplateSecond;
-	}
-	if (pathHasTarget(this, &Pathfinder::bfmeCheckAttackViewAltHelper,
-			target, &target->m_position, source, cellIds))
-		return true;
-
-checkTemplateSecond:
-	if (target->m_template)
-	{
-		Overridable *template_ = target->m_template;
-		const Overridable *finalOverride = template_;
-		if (template_->m_nextOverride)
-			finalOverride = template_->m_nextOverride->getFinalOverride();
-		if ((finalOverride->m_flagsCC & 0x08000000) == 0)
-			goto siegeCheck;
-	}
-
-	{
-		Real limit = source->m_bfmeBC;
-		if (target->m_template)
+		if (ids[i] == target->getID())
 		{
-			Overridable *template_ = target->m_template;
-			const Overridable *finalOverride = template_;
-			if (template_->m_nextOverride)
-				finalOverride = template_->m_nextOverride->getFinalOverride();
-			if (finalOverride->m_flagsD8 & 0x00200000)
-				limit = 0.0f;
-		}
-
-		Real metric = targetAttackMetric(target, &target->m_position,
-			source, goal);
-		if (!(metric < (limit + g_Va010977E0) *
-			(limit + g_Va010977E0)))
-			goto siegeCheck;
-	}
-
-	if (target->m_template)
-	{
-		Overridable *template_ = target->m_template;
-		const Overridable *finalOverride = template_;
-		if (template_->m_nextOverride)
-			finalOverride = template_->m_nextOverride->getFinalOverride();
-		if (finalOverride->m_flagsD8 & 0x00200000)
-			return true;
-	}
-
-	{
-		typedef Bool (Pathfinder::*Function)(const Object *, const Coord3D *);
-		union { void (*raw)(void); Function member; } fn;
-		fn.raw = j_00037196;
-		if ((this->*fn.member)(source, goal))
-			return true;
-	}
-
-siegeCheck:
-	if (target->m_template)
-	{
-		Overridable *template_ = target->m_template;
-		const Overridable *finalOverride = template_;
-		if (template_->m_nextOverride)
-			finalOverride = template_->m_nextOverride->getFinalOverride();
-		if (finalOverride->m_flagsD0 & 0x10000000)
-		{
-			MemoryPool *pool = SiegeDeploySpecialPower_getPool(
-				const_cast<Object *>(target));
-			static volatile NameKeyType key =
-				TheNameKeyGenerator->nameToKey("SiegeDeploySpecialPower");
-			Module *module = target->findModule(key);
-			if (pool && module &&
-				isSiegeAttached((SiegeDeploySpecialPower *)module))
+			count = bfmeCheckAttackViewAltHelper(const_cast<Object *>(source),
+				const_cast<Coord3D *>(&goalPos), ids);
+			for (i = 0; i < count; ++i)
 			{
-				Coord3D poolPosition;
-				typedef void (MemoryPool::*PositionFunction)(Coord3D *);
-				union { void (*raw)(void); PositionFunction member; } positionFn;
-				positionFn.raw = j_00034a0e;
-				(pool->*positionFn.member)(&poolPosition);
+				if (ids[i] == target->getID())
+					return false;
+			}
+			return true;
+		}
+	}
 
-				Real dx = poolPosition.x - goal->x;
-				Real dy = poolPosition.y - goal->y;
-				Real dz = poolPosition.z - goal->z;
+	Coord3D delta;
+	delta.set(source->getPosition());
+	delta.sub(&goalPos);
+	if (delta.lengthSqr() < 1.0f && !target->getTemplate()->isKindOf(KINDOF_STRUCTURE))
+	{
+		count = bfmeCheckAttackViewAltHelper(const_cast<Object *>(target),
+			const_cast<Coord3D *>(target->getPosition()), ids);
+		for (i = 0; i < count; ++i)
+		{
+			if (ids[i] == source->getID())
+				return true;
+		}
+	}
+
+	if (target->getTemplate()->isKindOf(KINDOF_WALK_ON_TOP_OF_WALL))
+	{
+		Real range = source->m_bfmeBC;
+		if (target->getTemplate()->isKindOf(KINDOF_WALL_UPGRADE))
+			range = 0.0f;
+		range += 20.0f;
+		Real metric = target->rva001C2380(target->getPosition(), source, &goalPos);
+		if (metric < range * range)
+		{
+			if (target->getTemplate()->isKindOf(KINDOF_WALL_UPGRADE))
+				return true;
+			if (rva003E4DA0(source, &goalPos))
+				return true;
+		}
+	}
+
+	if (target->getTemplate()->isKindOf(KINDOF_SIEGE_TOWER))
+	{
+		MemoryPool *tower = SiegeDeploySpecialPower_getPool(const_cast<Object *>(target));
+		static NameKeyType key = TheNameKeyGenerator->nameToKey("SiegeDeploySpecialPower");
+		Module *module = target->findModule(key);
+		if (tower && module && ((const Rva00266340 *)module)->is())
+		{
+			Coord3D offset;
+			tower->rva001F8E20(&offset);
+			offset.sub(&goalPos);
+			if ((Real)fabs(offset.z) < 20.0f)
+			{
 				Real range = source->m_bfmeBC;
-				typedef Real (MemoryPool::*RangeFunction)() const;
-				union { void (*raw)(void); RangeFunction member; } rangeFn;
-				rangeFn.raw = j_00049cb5;
-				Real poolRange = (pool->*rangeFn.member)();
-				if (dx < 0.0f) dx = -dx;
-				if (dy < 0.0f) dy = -dy;
-				if (dx <= poolRange + range && dy <= poolRange + range &&
-					(dz < 0.0f ? -dz : dz) <= g_Va010977E0)
+				Real reach = ((const Rva001F8DC0 *)tower)->get() + range;
+				if ((Real)fabs(offset.x) < reach && (Real)fabs(offset.y) < reach)
 					return true;
 			}
 		}
