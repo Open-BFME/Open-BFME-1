@@ -150,7 +150,13 @@ static void shutdownCompleteMapSelectMenu( WindowLayout *layout )
 
 }  // end if
 
-void SetDifficultyRadioButton( void )
+// Retail 0x004D1120 (ILT 0x00019727), called from MapSelectMenuInit. Zero Hour
+// names this helper SetDifficultyRadioButton in both MapSelectMenu.cpp and
+// DifficultySelect.cpp (static there); the ledger gives that mangled name to
+// DifficultySelect's copy at 0x004C6E70, so this copy carries the menu suffix,
+// as shutdownCompleteMapSelectMenu does.
+// ?SetDifficultyRadioButtonMapSelectMenu@@YAXXZ
+void SetDifficultyRadioButtonMapSelectMenu( void )
 {
 	AsciiString parentName( "MapSelectMenu.wnd:MapSelectMenuParent" );
 	NameKeyType parentID = TheNameKeyGenerator->nameToKey( parentName.str() );
@@ -201,9 +207,26 @@ void SetDifficultyRadioButton( void )
 	} // if (TheScriptEngine)
 }
 
+// BFME's populateMapListbox call site: see the note above MapSelectMenuSystem.
+void __cdecl bfmePopulateMapListFlags( void *listbox, char useSystemMaps, char isMultiplayer, void *mapToSelect );
+
+// BFME clears GameWindow+0x1F4 on the menu parent right after focusing it (the
+// same store as ReplayMenuInit, SaveLoadMenuInit and WOLStatusMenu). Only the
+// offset is recoverable, so the field keeps its address.
+class BfmeMenuParentView
+{
+public:
+	char m_pad[ 0x1F4 ];
+	void *m_fieldAt1F4;
+};
+
 //-------------------------------------------------------------------------------------------------
 /** Initialize the MapSelect menu */
 //-------------------------------------------------------------------------------------------------
+// Retail 0x004D1370, named by the FunctionLexicon row at VA 0x012A99A4 whose
+// literal 0x01086CC0 "MapSelectMenuInit" pairs with ILT 0x0000274D. BFME adds
+// the HeadlessCount combo box ("---" then 1..7), selects its first entry, and
+// clears the parent's +0x1F4 field.
 void MapSelectMenuInit( WindowLayout *layout, void *userData )
 {
 	showSoloMaps = true;
@@ -223,33 +246,45 @@ void MapSelectMenuInit( WindowLayout *layout, void *userData )
 
 	// get the listbox window
 	AsciiString listString( "MapSelectMenu.wnd:ListboxMap" );
-	NameKeyType mapListID = TheNameKeyGenerator->nameToKey( listString );
+	NameKeyType mapListID = TheNameKeyGenerator->nameToKey( listString.str() );
 	mapList = TheWindowManager->winGetWindowFromId( NULL, mapListID );
 	if( mapList )
 	{
 		if (TheMapCache)
 			TheMapCache->updateCache();
-		populateMapListbox( mapList, usesSystemMapDir, !showSoloMaps );
+		bfmePopulateMapListFlags( mapList, usesSystemMapDir, !showSoloMaps, (void *)&AsciiString::TheEmptyString );
 	}
 
-	
+	GameWindow *headlessCount = TheWindowManager->winGetWindowFromId( NULL,
+		TheNameKeyGenerator->nameToKey( "MapSelectMenu.wnd:HeadlessCount" ) );
+	GadgetComboBoxAddEntry( headlessCount, UnicodeString( L"---" ), -1 );
+	for( Int i = 1; i < 8; ++i )
+	{
+		UnicodeString countText;
+		countText.format( UnicodeString( L"%i" ), i );
+		GadgetComboBoxAddEntry( headlessCount, countText, -1 );
+	}
+	GadgetComboBoxSetSelectedPos( headlessCount, 0 );
+
 	// set keyboard focus to main parent
 	AsciiString parentName( "MapSelectMenu.wnd:MapSelectMenuParent" );
-	NameKeyType parentID = TheNameKeyGenerator->nameToKey( parentName );
+	NameKeyType parentID = TheNameKeyGenerator->nameToKey( parentName.str() );
 	GameWindow *parent = TheWindowManager->winGetWindowFromId( NULL, parentID );
 	TheWindowManager->winSetFocus( parent );
+	if( parent )
+		((BfmeMenuParentView *)parent)->m_fieldAt1F4 = NULL;
 
-	NameKeyType buttonBackID = TheNameKeyGenerator->nameToKey( AsciiString("MapSelectMenu.wnd:ButtonBack") );
+	NameKeyType buttonBackID = TheNameKeyGenerator->nameToKey( AsciiString("MapSelectMenu.wnd:ButtonBack").str() );
 	GameWindow *buttonBack = TheWindowManager->winGetWindowFromId( NULL, buttonBackID );
 	
-	NameKeyType buttonOKID = TheNameKeyGenerator->nameToKey( AsciiString("MapSelectMenu.wnd:ButtonOK") );
+	NameKeyType buttonOKID = TheNameKeyGenerator->nameToKey( AsciiString("MapSelectMenu.wnd:ButtonOK").str() );
 	GameWindow *buttonOK = TheWindowManager->winGetWindowFromId( NULL, buttonOKID );
 
 
 	TheShell->registerWithAnimateManager(buttonBack, WIN_ANIMATION_SLIDE_RIGHT, TRUE,0);
 	TheShell->registerWithAnimateManager(buttonOK, WIN_ANIMATION_SLIDE_LEFT, TRUE, 0);
 
-	SetDifficultyRadioButton();
+	SetDifficultyRadioButtonMapSelectMenu();
 
 	radioButtonSystemMapsID = TheNameKeyGenerator->nameToKey( "MapSelectMenu.wnd:RadioButtonSystemMaps" );
 	radioButtonUserMapsID = TheNameKeyGenerator->nameToKey( "MapSelectMenu.wnd:RadioButtonUserMaps" );
