@@ -1,7 +1,20 @@
 // ??0GlobalData@@QAE@XZ
-// partial score=0.2 date=2026-09-15
+// partial score=0.21 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+//
+// LAYOUT CORRECTED 2026-09-28 (opus-5.5). The earlier draft declared its
+// m_pad_* arrays AFTER the members they should precede, so >=101 of 495
+// members sat at offsets that contradicted their names; every order or
+// initializer-list verdict before this one (#16-#20) was measured on that
+// broken layout. Members are now sorted by their ///< offsets with
+// regenerated m_gap_* fillers: offsetof matches the stated offset for all
+// 495 names and sizeof(GlobalData) == 0x1290. The body is unchanged and still
+// only about half of retail (529 of 857 instructions); see the verdict log
+// for the missing parts. The "NO CRC" note below is WRONG: retail +0x0eb7..
+// +0x0fe8 is GetModuleFileNameA + openFile + CRC_Memory read loop + version
+// fold + BigObf wrapper, and the 0x10138 frame is a 0x104 path buffer plus a
+// 0x10000 read block.
 #include <vector>
 //
 // Open-BFME5: GlobalData::GlobalData(), retail 0x00084510, 4621 bytes
@@ -212,10 +225,12 @@ private:
 	unsigned char m_1e;				///< +0x1e
 	unsigned char m_1f;				///< +0x1f
 	unsigned char m_20;				///< +0x20
+	unsigned char m_gap_21[0x3];				///< +0x21
 	unsigned int m_24;				///< +0x24
 	unsigned char m_28;				///< +0x28
 	unsigned char m_29;				///< +0x29
 	unsigned char m_2a;				///< +0x2a
+	unsigned char m_gap_2b[0x1];				///< +0x2b
 	unsigned int m_2c;				///< +0x2c
 	unsigned int m_30;				///< +0x30
 	unsigned int m_34;				///< +0x34
@@ -224,19 +239,23 @@ private:
 	unsigned char m_3a;				///< +0x3a
 	unsigned char m_3b;				///< +0x3b
 	unsigned char m_3c;				///< +0x3c
+	unsigned char m_gap_3d[0x3];				///< +0x3d
 	unsigned int m_40;				///< +0x40
 	unsigned char m_44;				///< +0x44
 	unsigned char m_45;				///< +0x45
 	unsigned char m_46;				///< +0x46
+	unsigned char m_gap_47[0x1];				///< +0x47
 	unsigned int m_48;				///< +0x48
 	unsigned char m_4c;				///< +0x4c
 	unsigned char m_4d;				///< +0x4d
 	unsigned char m_4e;				///< +0x4e
 	unsigned char m_4f;				///< +0x4f
 	unsigned char m_50;				///< +0x50
+	unsigned char m_gap_51[0x3];				///< +0x51
 	unsigned int m_54;				///< +0x54
 	unsigned char m_58;				///< +0x58
 	unsigned char m_59;				///< +0x59
+	unsigned char m_gap_5a[0x2];				///< +0x5a
 	unsigned int m_5c;				///< +0x5c
 	unsigned char m_60;				///< +0x60
 	unsigned char m_61;				///< +0x61
@@ -244,9 +263,11 @@ private:
 	unsigned char m_63;				///< +0x63
 	unsigned char m_64;				///< +0x64
 	unsigned char m_65;				///< +0x65
+	unsigned char m_gap_66[0x2];				///< +0x66
 	unsigned int m_68;				///< +0x68
 	unsigned int m_6c;				///< +0x6c
 	unsigned char m_70;				///< +0x70
+	unsigned char m_gap_71[0x3];				///< +0x71
 	unsigned int m_74;				///< +0x74
 	unsigned int m_78;				///< +0x78
 	unsigned int m_7c;				///< +0x7c
@@ -258,15 +279,7 @@ private:
 	unsigned char m_8e;				///< +0x8e
 	unsigned char m_8f;				///< +0x8f
 	unsigned char m_90;				///< +0x90
-	unsigned char m_pad_21[0x3];				///< +0x21
-	unsigned char m_pad_2b[0x1];				///< +0x2b
-	unsigned char m_pad_3d[0x3];				///< +0x3d
-	unsigned char m_pad_47[0x1];				///< +0x47
-	unsigned char m_pad_51[0x3];				///< +0x51
-	unsigned char m_pad_5a[0x2];				///< +0x5a
-	unsigned char m_pad_66[0x2];				///< +0x66
-	unsigned char m_pad_71[0x3];				///< +0x71
-	unsigned char m_pad_91[0x3];				///< +0x91
+	unsigned char m_gap_91[0x3];				///< +0x91
 	BFMERetailAsciiString m_str_94;				///< +0x94
 	unsigned int m_98;				///< +0x98
 	BFMERetailAsciiString m_strArr_9c[4];				///< +0x9c
@@ -283,15 +296,21 @@ private:
 	unsigned int m_vertexWaterAttenuationB[4];	///< +0x14c
 	unsigned int m_vertexWaterAttenuationC[4];	///< +0x15c
 	unsigned int m_vertexWaterAttenuationRange[4];	///< +0x16c
+	unsigned char m_gap_17c[0x4];				///< +0x17c
 	unsigned int m_180;				///< +0x180
+	unsigned char m_gap_184[0xc];				///< +0x184
 	unsigned int m_190;				///< +0x190
 	unsigned int m_194;				///< +0x194
 	unsigned int m_198;				///< +0x198
 	unsigned int m_19c;				///< +0x19c
+	unsigned char m_gap_1a0[0x4];				///< +0x1a0
 	unsigned int m_1a4;				///< +0x1a4
 	unsigned int m_1a8;				///< +0x1a8
+	unsigned char m_gap_1ac[0x4];				///< +0x1ac
 	unsigned int m_1b0;				///< +0x1b0
+	unsigned char m_gap_1b4[0x4];				///< +0x1b4
 	unsigned char m_1b8;				///< +0x1b8
+	unsigned char m_gap_1b9[0x3];				///< +0x1b9
 	unsigned int m_1bc;				///< +0x1bc
 	unsigned int m_1c0;				///< +0x1c0
 	unsigned int m_1c4;				///< +0x1c4
@@ -306,35 +325,30 @@ private:
 	unsigned int m_1e8;				///< +0x1e8
 	unsigned int m_1ec;				///< +0x1ec
 	unsigned int m_1f0;				///< +0x1f0
-	unsigned char m_pad_184[0xc];				///< +0x184
-	unsigned char m_pad_1a0[0x4];				///< +0x1a0
-	unsigned char m_pad_1ac[0x4];				///< +0x1ac
-	unsigned char m_pad_1b4[0x4];				///< +0x1b4
-	unsigned char m_pad_1b9[0x3];				///< +0x1b9
-	unsigned char m_pad_1f4[0xc];				///< +0x1f4
+	unsigned char m_gap_1f4[0xc];				///< +0x1f4
 	BFMERetailAsciiString m_str_200;				///< +0x200
 	unsigned int m_204;				///< +0x204
 	unsigned int m_208;				///< +0x208
 	BFMERetailAsciiString m_str_20c;				///< +0x20c
 	unsigned int m_210;				///< +0x210
 	unsigned int m_214;				///< +0x214
+	unsigned char m_gap_218[0x4];				///< +0x218
 	unsigned int m_21c;				///< +0x21c
 	unsigned char m_220;				///< +0x220
 	unsigned char m_221;				///< +0x221
 	unsigned char m_222;				///< +0x222
 	unsigned char m_223;				///< +0x223
-	unsigned char m_pad_218[0x4];				///< +0x218
 	BfmeGdElem36 m_elem36_224[18];				///< +0x224
 	BfmeGdElem36 m_elem36_4ac[18];				///< +0x4ac
 	BfmeGdElem36 m_elem36_734[18];				///< +0x734
 	unsigned int m_9bc;				///< +0x9bc
 	unsigned int m_9c0;				///< +0x9c0
 	unsigned int m_9c4;				///< +0x9c4
+	unsigned char m_gap_9c8[0x18];				///< +0x9c8
 	unsigned int m_9e0;				///< +0x9e0
 	unsigned int m_9e4;				///< +0x9e4
 	unsigned int m_9e8;				///< +0x9e8
-	unsigned char m_pad_9c8[0x18];				///< +0x9c8
-	unsigned char m_pad_9ec[0x18];				///< +0x9ec
+	unsigned char m_gap_9ec[0x18];				///< +0x9ec
 	Coord3D m_coord3d_a04[3];				///< +0xa04
 	unsigned int m_a28;				///< +0xa28
 	unsigned int m_a2c;				///< +0xa2c
@@ -348,6 +362,7 @@ private:
 	unsigned int m_a4c;				///< +0xa4c
 	unsigned int m_a50;				///< +0xa50
 	unsigned int m_a54;				///< +0xa54
+	unsigned char m_gap_a58[0x4];				///< +0xa58
 	unsigned int m_a5c;				///< +0xa5c
 	unsigned int m_a60;				///< +0xa60
 	unsigned int m_a64;				///< +0xa64
@@ -364,12 +379,14 @@ private:
 	unsigned char m_a75;				///< +0xa75
 	unsigned char m_a76;				///< +0xa76
 	unsigned char m_a77;				///< +0xa77
+	unsigned char m_gap_a78[0x4];				///< +0xa78
 	unsigned char m_a7c;				///< +0xa7c
 	unsigned char m_a7d;				///< +0xa7d
 	unsigned char m_a7e;				///< +0xa7e
 	unsigned char m_a7f;				///< +0xa7f
 	unsigned char m_a80;				///< +0xa80
 	unsigned char m_a81;				///< +0xa81
+	unsigned char m_gap_a82[0x2];				///< +0xa82
 	unsigned int m_a84;				///< +0xa84
 	unsigned int m_a88;				///< +0xa88
 	unsigned char m_a8c;				///< +0xa8c
@@ -390,16 +407,13 @@ private:
 	unsigned char m_a9e;				///< +0xa9e
 	unsigned char m_a9f;				///< +0xa9f
 	unsigned char m_aa0;				///< +0xaa0
-	unsigned char m_pad_a58[0x4];				///< +0xa58
-	unsigned char m_pad_a78[0x4];				///< +0xa78
-	unsigned char m_pad_a82[0x2];				///< +0xa82
-	unsigned char m_pad_aa1[0x3];				///< +0xaa1
+	unsigned char m_gap_aa1[0x3];				///< +0xaa1
 	BFMERetailAsciiString m_str_aa4;				///< +0xaa4
 	BFMERetailAsciiString m_str_aa8;				///< +0xaa8
 	unsigned char m_aac;				///< +0xaac
+	unsigned char m_gap_aad[0x3];				///< +0xaad
 	unsigned int m_ab0;				///< +0xab0
 	unsigned int m_ab4;				///< +0xab4
-	unsigned char m_pad_aad[0x3];				///< +0xaad
 	BFMERetailAsciiString m_str_ab8;				///< +0xab8
 	BFMERetailAsciiString m_str_abc;				///< +0xabc
 	unsigned int m_ac0;				///< +0xac0
@@ -421,11 +435,14 @@ private:
 	BFMERetailAsciiString m_str_b00;				///< +0xb00
 	BFMERetailAsciiString m_str_b04;				///< +0xb04
 	unsigned int m_b08;				///< +0xb08
+	unsigned char m_gap_b0c[0x4];				///< +0xb0c
 	unsigned int m_b10;				///< +0xb10
 	unsigned int m_b14;				///< +0xb14
 	unsigned char m_b18;				///< +0xb18
+	unsigned char m_gap_b19[0x3];				///< +0xb19
 	unsigned int m_b1c;				///< +0xb1c
 	unsigned short m_b20;				///< +0xb20
+	unsigned char m_gap_b22[0xa];				///< +0xb22
 	unsigned int m_b2c;				///< +0xb2c
 	unsigned int m_b30;				///< +0xb30
 	unsigned int m_b34;				///< +0xb34
@@ -435,6 +452,7 @@ private:
 	unsigned int m_b44;				///< +0xb44
 	unsigned int m_b48;				///< +0xb48
 	unsigned int m_b4c;				///< +0xb4c
+	unsigned char m_gap_b50[0x4];				///< +0xb50
 	unsigned int m_b54;				///< +0xb54
 	unsigned int m_b58;				///< +0xb58
 	unsigned int m_b5c;				///< +0xb5c
@@ -442,18 +460,16 @@ private:
 	unsigned int m_b64;				///< +0xb64
 	unsigned int m_b68;				///< +0xb68
 	unsigned int m_b6c;				///< +0xb6c
+	unsigned char m_gap_b70[0xc];				///< +0xb70
 	unsigned char m_b7c;				///< +0xb7c
 	unsigned char m_b7d;				///< +0xb7d
-	unsigned char m_pad_b0c[0x4];				///< +0xb0c
-	unsigned char m_pad_b19[0x3];				///< +0xb19
-	unsigned char m_pad_b22[0xa];				///< +0xb22
-	unsigned char m_pad_b50[0x4];				///< +0xb50
-	unsigned char m_pad_b70[0xc];				///< +0xb70
-	unsigned char m_pad_b7e[0x2];				///< +0xb7e
+	unsigned char m_gap_b7e[0x2];				///< +0xb7e
 	BFMERetailAsciiString m_str_b80;				///< +0xb80
 	BFMERetailAsciiString m_str_b84;				///< +0xb84
 	unsigned char m_b88;				///< +0xb88
+	unsigned char m_gap_b89[0x3];				///< +0xb89
 	unsigned int m_b8c;				///< +0xb8c
+	unsigned char m_gap_b90[0x4];				///< +0xb90
 	unsigned int m_b94;				///< +0xb94
 	unsigned int m_b98;				///< +0xb98
 	unsigned int m_b9c;				///< +0xb9c
@@ -461,8 +477,6 @@ private:
 	unsigned int m_ba4;				///< +0xba4
 	unsigned int m_ba8;				///< +0xba8
 	unsigned int m_bac;				///< +0xbac
-	unsigned char m_pad_b89[0x3];				///< +0xb89
-	unsigned char m_pad_b90[0x4];				///< +0xb90
 	BFMERetailAsciiString m_str_bb0;				///< +0xbb0
 	unsigned char m_bb4;				///< +0xbb4
 	unsigned char m_bb5;				///< +0xbb5
@@ -470,16 +484,22 @@ private:
 	unsigned char m_bb7;				///< +0xbb7
 	unsigned char m_bb8;				///< +0xbb8
 	unsigned char m_bb9;				///< +0xbb9
+	unsigned char m_gap_bba[0x2];				///< +0xbba
 	unsigned int m_bbc;				///< +0xbbc
 	unsigned int m_bc0;				///< +0xbc0
 	unsigned char m_bc4;				///< +0xbc4
 	unsigned char m_bc5;				///< +0xbc5
+	unsigned char m_gap_bc6[0x2];				///< +0xbc6
 	unsigned int m_bc8;				///< +0xbc8
+	unsigned char m_gap_bcc[0x4];				///< +0xbcc
 	unsigned int m_bd0;				///< +0xbd0
+	unsigned char m_gap_bd4[0xc];				///< +0xbd4
 	unsigned int m_be0;				///< +0xbe0
 	unsigned int m_be4;				///< +0xbe4
+	unsigned char m_gap_be8[0x8];				///< +0xbe8
 	unsigned int m_bf0;				///< +0xbf0
 	unsigned char m_bf4;				///< +0xbf4
+	unsigned char m_gap_bf5[0x7];				///< +0xbf5
 	unsigned int m_bfc;				///< +0xbfc
 	unsigned int m_c00;				///< +0xc00
 	unsigned char m_c04;				///< +0xc04
@@ -492,29 +512,26 @@ private:
 	unsigned char m_c0b;				///< +0xc0b
 	unsigned char m_c0c;				///< +0xc0c
 	unsigned char m_c0d;				///< +0xc0d
+	unsigned char m_gap_c0e[0x2];				///< +0xc0e
 	unsigned int m_c10;				///< +0xc10
 	unsigned int m_c14;				///< +0xc14
+	unsigned char m_gap_c18[0x18];				///< +0xc18
 	unsigned int m_c30;				///< +0xc30
 	unsigned int m_c34;				///< +0xc34
 	unsigned int m_c38;				///< +0xc38
-	unsigned char m_pad_bba[0x2];				///< +0xbba
-	unsigned char m_pad_bc6[0x2];				///< +0xbc6
-	unsigned char m_pad_bcc[0x4];				///< +0xbcc
-	unsigned char m_pad_bd4[0xc];				///< +0xbd4
-	unsigned char m_pad_be8[0x8];				///< +0xbe8
-	unsigned char m_pad_bf5[0x7];				///< +0xbf5
-	unsigned char m_pad_c0e[0x2];				///< +0xc0e
-	unsigned char m_pad_c18[0x18];				///< +0xc18
-	unsigned char m_pad_c3c[0x4];				///< +0xc3c
+	unsigned char m_gap_c3c[0x4];				///< +0xc3c
 	BFMERetailAsciiString m_str_c40;				///< +0xc40
 	_STL::vector<BFMERetailAsciiString> m_vec_c44;				///< +0xc44
 	unsigned char m_c50;				///< +0xc50
+	unsigned char m_gap_c51[0x7];				///< +0xc51
 	unsigned char m_c58;				///< +0xc58
 	unsigned char m_c59;				///< +0xc59
+	unsigned char m_gap_c5a[0xa];				///< +0xc5a
 	unsigned int m_c64;				///< +0xc64
 	unsigned int m_c68;				///< +0xc68
 	unsigned int m_c6c;				///< +0xc6c
 	unsigned char m_c70;				///< +0xc70
+	unsigned char m_gap_c71[0x3];				///< +0xc71
 	unsigned int m_c74;				///< +0xc74
 	unsigned int m_c78;				///< +0xc78
 	unsigned int m_c7c;				///< +0xc7c
@@ -522,13 +539,18 @@ private:
 	unsigned char m_c84;				///< +0xc84
 	unsigned char m_c85;				///< +0xc85
 	unsigned char m_c86;				///< +0xc86
+	unsigned char m_gap_c87[0x1];				///< +0xc87
 	unsigned int m_c88;				///< +0xc88
 	unsigned int m_c8c;				///< +0xc8c
 	unsigned int m_c90;				///< +0xc90
+	unsigned char m_gap_c94[0xc];				///< +0xc94
 	unsigned char m_ca0;				///< +0xca0
+	unsigned char m_gap_ca1[0x3];				///< +0xca1
 	unsigned int m_ca4;				///< +0xca4
+	unsigned char m_gap_ca8[0x8];				///< +0xca8
 	unsigned int m_cb0;				///< +0xcb0
 	unsigned int m_cb4;				///< +0xcb4
+	unsigned char m_gap_cb8[0x38];				///< +0xcb8
 	unsigned char m_cf0;				///< +0xcf0
 	unsigned char m_cf1;				///< +0xcf1
 	unsigned char m_cf2;				///< +0xcf2
@@ -542,18 +564,26 @@ private:
 	unsigned char m_cfa;				///< +0xcfa
 	unsigned char m_cfb;				///< +0xcfb
 	unsigned char m_cfc;				///< +0xcfc
+	unsigned char m_gap_cfd[0x7];				///< +0xcfd
 	unsigned char m_d04;				///< +0xd04
 	unsigned char m_d05;				///< +0xd05
+	unsigned char m_gap_d06[0x2];				///< +0xd06
 	unsigned int m_d08;				///< +0xd08
 	unsigned char m_d0c;				///< +0xd0c
 	unsigned char m_d0d;				///< +0xd0d
+	unsigned char m_gap_d0e[0xa];				///< +0xd0e
 	unsigned int m_d18;				///< +0xd18
 	unsigned char m_d1c;				///< +0xd1c
+	unsigned char m_gap_d1d[0x7];				///< +0xd1d
 	unsigned int m_d24;				///< +0xd24
 	unsigned char m_d28;				///< +0xd28
+	unsigned char m_gap_d29[0x7];				///< +0xd29
 	unsigned int m_d30;				///< +0xd30
+	unsigned char m_gap_d34[0x24];				///< +0xd34
 	unsigned char m_d58;				///< +0xd58
+	unsigned char m_gap_d59[0x7];				///< +0xd59
 	unsigned int m_d60;				///< +0xd60
+	unsigned char m_gap_d64[0x20];				///< +0xd64
 	unsigned char m_d84;				///< +0xd84
 	unsigned char m_d85;				///< +0xd85
 	unsigned char m_d86;				///< +0xd86
@@ -562,22 +592,6 @@ private:
 	unsigned char m_d89;				///< +0xd89
 	unsigned char m_d8a;				///< +0xd8a
 	unsigned char m_d8b;				///< +0xd8b
-	unsigned char m_pad_c51[0x7];				///< +0xc51
-	unsigned char m_pad_c5a[0xa];				///< +0xc5a
-	unsigned char m_pad_c71[0x3];				///< +0xc71
-	unsigned char m_pad_c87[0x1];				///< +0xc87
-	unsigned char m_pad_c94[0xc];				///< +0xc94
-	unsigned char m_pad_ca1[0x3];				///< +0xca1
-	unsigned char m_pad_ca8[0x8];				///< +0xca8
-	unsigned char m_pad_cb8[0x38];				///< +0xcb8
-	unsigned char m_pad_cfd[0x7];				///< +0xcfd
-	unsigned char m_pad_d06[0x2];				///< +0xd06
-	unsigned char m_pad_d0e[0xa];				///< +0xd0e
-	unsigned char m_pad_d1d[0x7];				///< +0xd1d
-	unsigned char m_pad_d29[0x7];				///< +0xd29
-	unsigned char m_pad_d34[0x24];				///< +0xd34
-	unsigned char m_pad_d59[0x7];				///< +0xd59
-	unsigned char m_pad_d64[0x20];				///< +0xd64
 	BFMERetailAsciiString m_str_d8c;				///< +0xd8c
 	BFMERetailAsciiString m_str_d90;				///< +0xd90
 	unsigned int m_d94;				///< +0xd94
@@ -587,11 +601,11 @@ private:
 	unsigned int m_da4;				///< +0xda4
 	unsigned int m_da8;				///< +0xda8
 	unsigned char m_dac;				///< +0xdac
+	unsigned char m_gap_dad[0x7];				///< +0xdad
 	unsigned char m_db4;				///< +0xdb4
 	unsigned char m_db5;				///< +0xdb5
 	unsigned char m_db6;				///< +0xdb6
-	unsigned char m_pad_dad[0x7];				///< +0xdad
-	unsigned char m_pad_db7[0x1];				///< +0xdb7
+	unsigned char m_gap_db7[0x1];				///< +0xdb7
 	BFMERetailAsciiString m_str_db8;				///< +0xdb8
 	unsigned char m_dbc;				///< +0xdbc
 	unsigned char m_dbd;				///< +0xdbd
@@ -602,12 +616,13 @@ private:
 	unsigned int m_dc8;				///< +0xdc8
 	unsigned char m_dcc;				///< +0xdcc
 	unsigned char m_dcd;				///< +0xdcd
-	unsigned char m_pad_dce[0x2];				///< +0xdce
+	unsigned char m_gap_dce[0x2];				///< +0xdce
 	BFMERetailAsciiString m_str_dd0;				///< +0xdd0
 	unsigned int m_dd4;				///< +0xdd4
 	unsigned int m_dd8;				///< +0xdd8
 	unsigned int m_ddc;				///< +0xddc
 	unsigned int m_de0;				///< +0xde0
+	unsigned char m_gap_de4[0x8];				///< +0xde4
 	unsigned int m_dec;				///< +0xdec
 	unsigned int m_df0;				///< +0xdf0
 	unsigned int m_df4;				///< +0xdf4
@@ -627,59 +642,58 @@ private:
 	unsigned int m_e2c;				///< +0xe2c
 	unsigned int m_e30;				///< +0xe30
 	unsigned char m_e34;				///< +0xe34
+	unsigned char m_gap_e35[0x7];				///< +0xe35
 	unsigned int m_e3c;				///< +0xe3c
 	unsigned int m_e40;				///< +0xe40
+	unsigned char m_gap_e44[0x8];				///< +0xe44
 	unsigned int m_e4c;				///< +0xe4c
 	unsigned int m_e50;				///< +0xe50
 	unsigned char m_e54;				///< +0xe54
 	unsigned char m_e55;				///< +0xe55
+	unsigned char m_gap_e56[0x6];				///< +0xe56
 	unsigned int m_e5c;				///< +0xe5c
 	unsigned char m_e60;				///< +0xe60
+	unsigned char m_gap_e61[0x7];				///< +0xe61
 	unsigned int m_e68;				///< +0xe68
 	unsigned char m_e6c;				///< +0xe6c
+	unsigned char m_gap_e6d[0x3];				///< +0xe6d
 	unsigned int m_e70;				///< +0xe70
+	unsigned char m_gap_e74[0x4];				///< +0xe74
 	unsigned int m_e78;				///< +0xe78
+	unsigned char m_gap_e7c[0x4];				///< +0xe7c
 	unsigned int m_e80;				///< +0xe80
 	unsigned int m_e84;				///< +0xe84
 	unsigned int m_e88;				///< +0xe88
 	unsigned int m_e8c;				///< +0xe8c
 	unsigned int m_e90;				///< +0xe90
+	unsigned char m_gap_e94[0x4];				///< +0xe94
 	unsigned int m_e98;				///< +0xe98
+	unsigned char m_gap_e9c[0x4];				///< +0xe9c
 	unsigned int m_ea0;				///< +0xea0
 	unsigned int m_ea4;				///< +0xea4
+	unsigned char m_gap_ea8[0x4];				///< +0xea8
 	unsigned int m_eac;				///< +0xeac
+	unsigned char m_gap_eb0[0x18];				///< +0xeb0
 	unsigned char m_ec8;				///< +0xec8
+	unsigned char m_gap_ec9[0x3];				///< +0xec9
 	unsigned int m_ecc;				///< +0xecc
 	unsigned char m_ed0;				///< +0xed0
 	unsigned char m_ed1;				///< +0xed1
+	unsigned char m_gap_ed2[0x6];				///< +0xed2
 	unsigned int m_ed8;				///< +0xed8
-	unsigned char m_pad_de4[0x8];				///< +0xde4
-	unsigned char m_pad_e35[0x7];				///< +0xe35
-	unsigned char m_pad_e44[0x8];				///< +0xe44
-	unsigned char m_pad_e56[0x6];				///< +0xe56
-	unsigned char m_pad_e61[0x7];				///< +0xe61
-	unsigned char m_pad_e6d[0x3];				///< +0xe6d
-	unsigned char m_pad_e74[0x4];				///< +0xe74
-	unsigned char m_pad_e7c[0x4];				///< +0xe7c
-	unsigned char m_pad_e94[0x4];				///< +0xe94
-	unsigned char m_pad_e9c[0x4];				///< +0xe9c
-	unsigned char m_pad_ea8[0x4];				///< +0xea8
-	unsigned char m_pad_eb0[0x18];				///< +0xeb0
-	unsigned char m_pad_ec9[0x3];				///< +0xec9
-	unsigned char m_pad_ed2[0x6];				///< +0xed2
 	AttributeHandleStandIn m_attr_edc;				///< +0xedc
 	Rva00083150 m_grid_ee0;				///< +0xee0
 	_STL::vector<BFMERetailAsciiString> m_vec_11e0;				///< +0x11e0
 	unsigned char m_11ec;				///< +0x11ec
+	unsigned char m_gap_11ed[0x3];				///< +0x11ed
 	unsigned int m_11f0;				///< +0x11f0
+	unsigned char m_gap_11f4[0x8];				///< +0x11f4
 	unsigned char m_11fc;				///< +0x11fc
-	unsigned char m_pad_11ed[0x3];				///< +0x11ed
-	unsigned char m_pad_11f4[0x8];				///< +0x11f4
-	unsigned char m_pad_11fd[0x3];				///< +0x11fd
+	unsigned char m_gap_11fd[0x3];				///< +0x11fd
 	BFMERetailAsciiString m_str_1200;				///< +0x1200
 	BFMERetailAsciiString m_str_1204;				///< +0x1204
 	_STL::vector<BFMERetailAsciiString> m_vec_1208;				///< +0x1208
-	unsigned char m_pad_1214[0x8];				///< +0x1214
+	unsigned char m_gap_1214[0x8];				///< +0x1214
 	AttributeHandleStandIn m_attr_121c;				///< +0x121c
 	unsigned int m_1220;				///< +0x1220
 	unsigned int m_1224;				///< +0x1224
@@ -701,11 +715,11 @@ private:
 	unsigned int m_1264;				///< +0x1264
 	unsigned int m_1268;				///< +0x1268
 	unsigned char m_126c;				///< +0x126c
+	unsigned char m_gap_126d[0x3];				///< +0x126d
 	unsigned int m_1270;				///< +0x1270
+	unsigned char m_gap_1274[0x4];				///< +0x1274
 	unsigned char m_1278;				///< +0x1278
-	unsigned char m_pad_126d[0x3];				///< +0x126d
-	unsigned char m_pad_1274[0x4];				///< +0x1274
-	unsigned char m_pad_1279[0x3];				///< +0x1279
+	unsigned char m_gap_1279[0x3];				///< +0x1279
 	BFMERetailAsciiString m_str_127c;				///< +0x127c
 	BfmeGdUnicodeString m_ustr_1280;				///< +0x1280
 	BFMERetailAsciiString m_str_1284;				///< +0x1284
