@@ -9948,5 +9948,15 @@
   "after_sha256": "fb8e6547023a65f8e4bbf00618ca086ddb85e14702b05564525c2fedebbd83f8",
   "evidence": "targets/game/reverse/identity_evidence/00258BF0.md",
   "reason": "The ICoord2D name was a width-only guess on the orphaned __emit thunk: both ICoord2D and CashHack Upgrades are 8-byte elements. tools/callers_of.py finds only CashHack Upgrades callers (push_back 0x00258EC0 and parseCashHackUpgradePair 0x00258F10, both in CashHackSpecialPower.cpp) and the 5-byte ILT at 0x0000EF11 already carries the Upgrades name and jumps here. Same dup-alias pattern as OCL 0x00262FE0/?dup_003f8ef0; real overflow name kept in object-symbol."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x007f94a0.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/Rva007F94A0.cpp",
+  "old_name": "find",
+  "new_name": "rva007F94A0",
+  "before_sha256": "50f6e17fc2f2ed318b54ab29ca0fbe4993820322348335595d2e695d4515a2e9",
+  "after_sha256": "a8214ea7b37eb4a26254065f5bf0523ffff21e7cbd734b426e45e654ff99da2c",
+  "evidence": "targets/game/reverse/identity_evidence/0x007f94a0.md",
+  "reason": "The prior find label appears only in the exploratory attempt and identifies lookup shape rather than the retail owner or API; available decompile and context evidence do not establish that identity, so the source keeps the RVA."
  }
 ]
