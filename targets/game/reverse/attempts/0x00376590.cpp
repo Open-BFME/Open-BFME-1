@@ -1,76 +1,90 @@
 // ?unpack@CastleBehavior@@QAEX_N@Z
-// partial score=0.328804 date=2026-09-28
+// partial score=0.985 date=2026-09-28
 // ?unpack@CastleBehavior@@QAEX_N@Z
-// CastleBehavior's owned-object unpack path.
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_NEWALLOC 1
 #include <bitset>
 #include <hash_map>
-#include <set>
 #include <vector>
+#include "ascii_string.h"
+
+template<> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
+template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 
 typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
+typedef float Real;
+typedef Int ObjectID;
 
-enum NameKeyType { };
+enum NameKeyType { NAMEKEY_INVALID = 0 };
+
+struct Coord3D
+{
+	Real x, y, z;
+};
 
 template <int NUMBITS>
 class BitFlags
 {
 public:
-	enum InitType { kInit };
-
-	BitFlags() { }
-
-	BitFlags(InitType, Int bit)
-	{
-		m_bits._Unchecked_set(bit);
-	}
-
+	enum BogusInitType { kInit };
+	BitFlags(BogusInitType, Int bit) { m_bits.set(bit); }
 private:
 	_STL::bitset<NUMBITS> m_bits;
 };
-
 typedef BitFlags<86> ObjectStatusMaskType;
+
+class ModelConditionFlags
+{
+public:
+	UnsignedInt test(Int bit) const { return m_bits[bit >> 5] & (1u << (bit & 31)); }
+	void set(Int bit) { m_bits[bit >> 5] |= (1u << (bit & 31)); }
+	void reset(Int bit) { m_bits[bit >> 5] &= ~(1u << (bit & 31)); }
+private:
+	UnsignedInt m_bits[10];
+};
 
 class Player
 {
 public:
 	unsigned char m_pad00[0x1c];
-	struct Name
-	{
-		void *m_data;
-	};
-	Name m_playerName;
+	AsciiString m_playerName;
+};
+
+class Overridable
+{
+public:
+	void *m_vtable;
+	Overridable *m_nextOverride;
+	const Overridable *getFinalOverride() const;
+};
+
+class ThingTemplate : public Overridable
+{
+public:
+	unsigned char m_pad08[0x18];
+	AsciiString m_name;
 };
 
 class Drawable
 {
-public:
-	void applyPendingModelConditionFlags(Bool immediate);
+	friend class CastleBehavior;
+	void applyPendingModelConditionFlags(Bool);
 };
 
-class ThingTemplate;
 class Module;
 
-#include "ascii_string.h"
 class Object
 {
 public:
-	virtual void v00() = 0;
-	virtual void v04() = 0;
-	virtual void v08() = 0;
-	virtual void v0c() = 0;
-	virtual void v10() = 0;
-	virtual void v14() = 0;
-	virtual void v18() = 0;
-	virtual void v1c() = 0;
-	virtual void v20() = 0;
-	virtual void v24() = 0;
+	virtual void slot00(); virtual void slot01(); virtual void slot02();
+	virtual void slot03(); virtual void slot04(); virtual void slot05();
+	virtual void slot06(); virtual void slot07(); virtual void slot08();
+	virtual void slot09();
 	virtual Drawable *getDrawable() const;
 
 	Player *getControllingPlayer() const;
@@ -78,49 +92,30 @@ public:
 	void notifyModelConditionChanged();
 	Module *findModule(NameKeyType key) const;
 
+	ObjectID getID() const { return m_id; }
+	const Coord3D *getPosition() const { return &m_position; }
+	const ThingTemplate *getTemplate() const { return m_template; }
+
 	ThingTemplate *m_template;
+	unsigned char m_pad08[0x30];
+	Coord3D m_position;
+	unsigned char m_pad44[0x30];
+	ObjectID m_id;
+	unsigned char m_pad78[0x98];
+	ModelConditionFlags m_modelConditionFlags;
+	unsigned char m_pad138[0x120];
+	Real m_unpackCost258;
+};
 
-	Int getID() const
+static __forceinline void clearAndSetCondition(Object *object, Int clr, Int set)
+{
+	if (object->m_modelConditionFlags.test(clr) || !object->m_modelConditionFlags.test(set))
 	{
-		return *(const Int *)((const char *)this + 0x74);
+		object->m_modelConditionFlags.reset(clr);
+		object->m_modelConditionFlags.set(set);
+		object->notifyModelConditionChanged();
 	}
-
-	Int &status118()
-	{
-		return *(Int *)((char *)this + 0x118);
-	}
-};
-
-class ThingTemplate
-{
-public:
-	void *m_vtable;
-	ThingTemplate *m_nextOverride;
-	unsigned char m_pad08[0x18];
-	struct Name
-	{
-		void *m_data;
-	};
-	Name m_name;
-	const ThingTemplate *getFinalOverride() const;
-};
-
-class BfmeResult
-{
-public:
-	unsigned char m_pad00[0x370];
-	Int m_id;
-
-	Int getID() const { return m_id; }
-};
-
-class CastleMemberBehavior
-{
-public:
-	unsigned char m_pad00[0x14];
-	Int m_castleObjectID;
-	Int m_objectID;
-};
+}
 
 class Pathfinder
 {
@@ -128,17 +123,11 @@ public:
 	void removeObjectFromPathfindMap(Object *object);
 };
 
-class BfmeHostCL;
-
-class BfmePathCL
-{
-public:
-	void bfmeDropOneCL(BfmeHostCL *object);
-};
-
 class AI
 {
 public:
+	Pathfinder *pathfinder() { return m_pathfinder; }
+private:
 	unsigned char m_pad00[0x0c];
 	Pathfinder *m_pathfinder;
 };
@@ -146,7 +135,7 @@ public:
 class BfmeThingFactory
 {
 public:
-	void *findTemplate(const AsciiString &name) const;
+	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
 class NameKeyGenerator
@@ -158,25 +147,26 @@ public:
 class GameLogic
 {
 public:
+	UnsignedInt getFrame() const { return m_frame; }
+	__forceinline Object *findObjectByID(ObjectID id)
+	{
+		if (id == 0)
+			return 0;
+		ObjectPtrHash::iterator it = m_objHash.find(id);
+		if (it == m_objHash.end())
+			return 0;
+		return it->second;
+	}
+	Int getCRCTraceLevel() const { return m_crcTraceLevel; }
+
+private:
+	typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>, _STL::equal_to<ObjectID> > ObjectPtrHash;
 	unsigned char m_pad00[0x3c];
-	Int m_frame;
+	UnsignedInt m_frame;
 	unsigned char m_pad40[0x70];
-	_STL::hash_map<Int, Object *, _STL::hash<Int>, _STL::equal_to<Int> > m_objects;
- __forceinline Object *lookup(Int id) {
-  if(!id)return 0;
-  _STL::hash_map<Int,Object*,_STL::hash<Int>,_STL::equal_to<Int> >::iterator it=m_objects.find(id);
-  if(it==m_objects.end())return 0;
-  return it->second;
- }
-
-};
-
-class TerrainLogic
-{
-};
-
-struct BfmeSubFFG
-{
+	ObjectPtrHash m_objHash;
+	unsigned char m_padC4[0xdc];
+	Int m_crcTraceLevel;
 };
 
 class BfmeResFFG
@@ -186,279 +176,202 @@ public:
 	Int m_id;
 };
 
+struct BfmeSubFFG;
+
 class BfmeMidFFG
 {
 public:
 	BfmeResFFG *bfmeFindFFG(BfmeSubFFG *source);
 };
 
-struct BfmeTripleZP
-{
-	void *m_a;
-	void *m_b;
-	void *m_c;
-};
-
-class Rva0036BA60PurchaseContext
+extern void j_0002d740(void);
+class CastleMemberBehavior
 {
 public:
-	UnsignedInt withdrawPurchaseCost(const void *cost) const;
+	unsigned char m_pad00[0x14];
+	Int m_castleID014;
+	ObjectID m_castleObjectID018;
+	void setCastle(Int castleID, ObjectID objectID) { m_castleID014 = castleID; m_castleObjectID018 = objectID; }
 };
 
-class CastleBehavior;
+class CastleBehaviorModuleData
+{
+public:
+	unsigned char m_pad00[0x38];
+	Real m_clearRadius038;
+};
 
-typedef void (__cdecl *VectorUpdateCall)(void *, Int);
-typedef void (TerrainLogic::*TerrainUpdateCall)(void *, void *);
-typedef UnsignedInt (Rva0036BA60PurchaseContext::*WithdrawCall)(
-	const void *) const;
-typedef void (CastleBehavior::*BoolUpdateCall)(Bool);
-typedef void (CastleBehavior::*NoArgUpdateCall)();
-typedef void (Pathfinder::*DropCall)(Object *);
-typedef void (Object::*SetStatusCall)(const ObjectStatusMaskType &, Bool);
-typedef Player *(Object::*ControllingPlayerCall)() const;
-typedef void *(BfmeThingFactory::*FindCall)(const AsciiString &) const;
-typedef Object *(CastleBehavior::*CreateCall)(void *);
-typedef void (CastleBehavior::*ChargeCall)();
-typedef Module *(Object::*FindModuleCall)(NameKeyType) const;
-typedef void (Object::*NotifyCall)();
-typedef void (Drawable::*ApplyCall)(Bool);
-typedef const ThingTemplate *(ThingTemplate::*OverrideCall)() const;
-typedef void (__cdecl *DebugLogFunction)(void *, const char *, ...);
+extern AI *TheAI;
+extern BfmeThingFactory *TheThingFactory;
+extern NameKeyGenerator *TheNameKeyGenerator;
+class TerrainLogic
+{
+public:
+	void clearNear001ACCC0(const Coord3D *pos, Real radius)
+	{
+		union { void *raw; void (TerrainLogic::*fn)(const Coord3D *, Real); } clear;
+		clear.raw = (void *)j_0002d740;
+		(this->*clear.fn)(pos, radius);
+	}
+};
+extern TerrainLogic *TheTerrainLogic;
+extern GameLogic *TheBfmeGameLogic;
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
+extern "C" void __cdecl bfmeRetailCritterDesyncLog(CRCParameterCheck *check, const char *format, ...);
 
-extern void j_00006d7f(void);
-
-extern void j_000022bb(void);
-
-extern void j_00020824(void);
-extern void j_0002191d(void);
-extern void j_00028560(void);
+extern void j_0003091d(void);
+extern void j_0003d0af(void);
 extern void j_0000eb97(void);
 extern void j_000150cd(void);
 extern void j_000293f7(void);
-extern void j_0002d439(void);
-extern void j_0002d740(void);
-extern void j_0002ae23(void);
-extern void j_0003091d(void);
 extern void j_00036070(void);
-extern void j_000307e7(void);
-extern void j_0003add7(void);
-extern void j_0003d0af(void);
-extern void j_0003a17a(void);
-extern void j_0003b890(void);
 extern void j_0000796e(void);
-
-#define TheAI (*(AI **)0x012EF214)
-#define TheThingFactory (*(BfmeThingFactory **)0x012EF1D8)
-#define TheTerrainLogic (*(TerrainLogic **)0x012EF4CC)
-#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
-#define TheNameKeyGenerator (*(NameKeyGenerator **)0x012ED600)
-#define g_012ED4FC (*(void **)0x012ED4FC)
 
 class CastleBehavior
 {
 public:
 	void unpack(Bool unpack);
-	void chargePlayerForUnpack();
-	Object *createOwnedObject(void *definition);
 
 private:
+	Object *getObject() const { return m_object; }
+	const CastleBehaviorModuleData *getCastleBehaviorModuleData() const { return m_moduleData; }
+
 	void *m_vtable;
-	void *m_moduleData;
+	const CastleBehaviorModuleData *m_moduleData;
 	Object *m_object;
-	unsigned char m_pad0c[0x90];
-	Int m_state;
-	Int m_objectID;
+	unsigned char m_pad0c[0x94];
+	Int m_castleID0A0;
 	unsigned char m_padA4[8];
-	Bool m_flagAC;
+	Bool m_flag0AC;
 	unsigned char m_padAD[3];
-	Int m_lastFrame;
-	float m_unpackedCost;
-	_STL::vector<Int> m_ownedObjectsB8;
-	_STL::vector<Int> m_ownedObjectsC4;
-	_STL::vector<Int> m_ownedObjectsD0;
-	_STL::vector<Int> m_ownedObjectsDC;
-	_STL::vector<Int> m_ownedObjectsE8;
-	_STL::set<Int> m_ownedObjectSetF4;
-	AsciiString m_objectName;
-	Int m_objectNameKey;
+	UnsignedInt m_unpackFrame0B0;
+	Real m_unpackCost0B4;
+	_STL::vector<ObjectID> m_members0B8;
+	_STL::vector<ObjectID> m_members0C4;
+	_STL::vector<ObjectID> m_members0D0;
+	_STL::vector<ObjectID> m_members0DC;
+	unsigned char m_padE8[0x18];
+	AsciiString m_pendingObjectName;
+	Int m_regionID104;
 };
 
 void CastleBehavior::unpack(Bool unpack)
 {
-	Object *object = m_object;
-	if (object != 0)
+	Object *obj = getObject();
+	if (obj == 0)
+		return;
+
+	TheAI->pathfinder()->removeObjectFromPathfindMap(obj);
+	obj->setStatus(ObjectStatusMaskType(ObjectStatusMaskType::kInit, 4), true);
+
+	Object *self = getObject();
+	Player *player = self->getControllingPlayer();
+	BfmeResFFG *region = ((BfmeMidFFG *)player)->bfmeFindFFG((BfmeSubFFG *)self->getPosition());
+	m_regionID104 = region ? region->m_id : -1;
+	m_flag0AC = false;
+
+	if (!m_pendingObjectName.isEmpty())
 	{
-		((BfmePathCL *)TheAI->m_pathfinder)->bfmeDropOneCL(
-			(BfmeHostCL *)object);
-
-		ObjectStatusMaskType status(ObjectStatusMaskType::kInit, 4);
-		union { void *asVoid; SetStatusCall asMember; } setStatusCast;
-		setStatusCast.asVoid = (void *)j_000307e7;
-		(object->*setStatusCast.asMember)(status, true);
-
-		union { void *asVoid; ControllingPlayerCall asMember; }
-			controllingPlayerCast;
-		controllingPlayerCast.asVoid = (void *)j_00020824;
+		const ThingTemplate *tmpl = TheThingFactory->findTemplate(m_pendingObjectName);
+		if (tmpl)
 		{
-        Object *currentObject=m_object;
-		Player *player = (currentObject->*controllingPlayerCast.asMember)();
-		BfmeResFFG *result = ((BfmeMidFFG *)player)->bfmeFindFFG(
-			(BfmeSubFFG *)((char *)currentObject + 0x38));
-		m_objectNameKey = result != 0 ? result->m_id : -1;
-        }
-		m_flagAC = false;
-
-		AsciiString *name = &m_objectName;
-        void *nameData=*(void**)name;
-		if (nameData != 0 &&
-			*(const unsigned short *)((const char *)nameData + 4) != 0)
-		{
-			union { void *asVoid; FindCall asMember; } findCast;
-			findCast.asVoid = (void *)j_00028560;
-			void *definition = (TheThingFactory->*findCast.asMember)(
-				*(const AsciiString *)name);
-			if (definition != 0)
-			{
-				union { void *asVoid; CreateCall asMember; } createCast;
-				createCast.asVoid = (void *)j_0003d0af;
-				Object *created = (this->*createCast.asMember)(definition);
-				UnsignedInt cost = 0;
-				if (!unpack)
-				{
-					union { void *asVoid; WithdrawCall asMember; } withdrawCast;
-					withdrawCast.asVoid = (void *)j_0000eb97;
-					cost = (((Rva0036BA60PurchaseContext *)this)->*
-						withdrawCast.asMember)(definition);
-				}
-				if (created != 0)
-				{
-					float value = (float)cost;
-					*(float *)((char *)created + 0x258) = value;
-				}
-			}
-			name->set(*(const AsciiString *)0x01336E50);
-		}
-		else
-		{
+			union { void *raw; Object *(CastleBehavior::*fn)(const ThingTemplate *); } create;
+			create.raw = (void *)j_0003d0af;
+			Object *created = (this->*create.fn)(tmpl);
+			UnsignedInt cost = 0;
 			if (!unpack)
 			{
-				m_unpackedCost = 0;
-				union { void *asVoid; ChargeCall asMember; } chargeCast;
-				chargeCast.asVoid = (void *)j_000150cd;
-				(this->*chargeCast.asMember)();
+				union { void *raw; UnsignedInt (CastleBehavior::*fn)(const ThingTemplate *); } withdraw;
+				withdraw.raw = (void *)j_0000eb97;
+				cost = (this->*withdraw.fn)(tmpl);
 			}
-			union { void *asVoid; BoolUpdateCall asMember; } boolCast;
-			boolCast.asVoid = (void *)j_000293f7;
-			(this->*boolCast.asMember)(unpack);
-			union { void *asVoid; NoArgUpdateCall asMember; } noArgCast;
-			noArgCast.asVoid = (void *)j_00036070;
-			(this->*noArgCast.asMember)();
+			if (created)
+				created->m_unpackCost258 = (Real)cost;
 		}
-
-		if (TheTerrainLogic != 0)
+		m_pendingObjectName.set(*(const AsciiString *)0x01336E50);
+	}
+	else
+	{
+		if (!unpack)
 		{
-			void *moduleData=0;
-            if(m_moduleData) moduleData=*(void**)((char*)m_moduleData+0x38);
-			TerrainLogic *terrainLogic=TheTerrainLogic;
-            union {void *raw; TerrainUpdateCall fn;} terrain;
-            terrain.raw=(void*)j_0002d740;
-            (terrainLogic->*terrain.fn)((char*)object+0x38,moduleData);
+			m_unpackCost0B4 = 0;
+			union { void *raw; void (CastleBehavior::*fn)(); } charge;
+			charge.raw = (void *)j_000150cd;
+			(this->*charge.fn)();
 		}
+		union { void *raw; void (CastleBehavior::*fn)(Bool); } instantiate;
+		instantiate.raw = (void *)j_000293f7;
+		(this->*instantiate.fn)(unpack);
+		union { void *raw; void (CastleBehavior::*fn)(); } createPlayerObject;
+		createPlayerObject.raw = (void *)j_00036070;
+		(this->*createPlayerObject.fn)();
+	}
 
-		((VectorUpdateCall)j_0003091d)(&m_ownedObjectsB8, m_objectID);
-		((VectorUpdateCall)j_0003091d)(&m_ownedObjectsC4, m_objectID);
-		((VectorUpdateCall)j_0003091d)(&m_ownedObjectsDC, m_objectID);
-		m_lastFrame = TheBfmeGameLogic->m_frame;
+	if (TheTerrainLogic)
+	{
+		Real radius = 0.0f;
+		if (getCastleBehaviorModuleData())
+			radius = getCastleBehaviorModuleData()->m_clearRadius038;
+		TheTerrainLogic->clearNear001ACCC0(obj->getPosition(), radius);
+	}
 
-        GameLogic *logic=TheBfmeGameLogic;
-		for (std::vector<Int>::iterator it = m_ownedObjectsB8.begin();
-			it != m_ownedObjectsB8.end(); ++it)
+	typedef void (__cdecl *SetMemberPayload)(_STL::vector<ObjectID> *, Int);
+	((SetMemberPayload)j_0003091d)(&m_members0B8, m_castleID0A0);
+	((SetMemberPayload)j_0003091d)(&m_members0C4, m_castleID0A0);
+	((SetMemberPayload)j_0003091d)(&m_members0DC, m_castleID0A0);
+	m_unpackFrame0B0 = TheBfmeGameLogic->getFrame();
+
+	for (_STL::vector<ObjectID>::iterator it = m_members0B8.begin(); it != m_members0B8.end(); ++it)
+	{
+		Object *member = TheBfmeGameLogic->findObjectByID(*it);
+		if (member)
 		{
-			Object *owned=logic->lookup(*it);
-			if (owned != 0)
+			static NameKeyType key = TheNameKeyGenerator->nameToKey("CastleMemberBehavior");
+			CastleMemberBehavior *cmb = (CastleMemberBehavior *)member->findModule(key);
+			if (cmb)
 			{
-				static NameKeyType key =
-					TheNameKeyGenerator->nameToKey("CastleMemberBehavior");
-				union { void *asVoid; FindModuleCall asMember; } findModuleCast;
-				findModuleCast.asVoid = (void *)j_0002ae23;
-				CastleMemberBehavior *member =
-					(CastleMemberBehavior *)
-						(owned->*findModuleCast.asMember)(key);
-				if (member != 0)
-				{
-					member->m_castleObjectID = m_objectID;
-					member->m_objectID = m_object->getID();
-				}
-                logic=TheBfmeGameLogic;
+				cmb->m_castleID014 = m_castleID0A0;
+				cmb->m_castleObjectID018 = getObject()->getID();
 			}
 		}
+	}
 
-		for (std::vector<Int>::iterator it = m_ownedObjectsDC.begin();
-			it != m_ownedObjectsDC.end(); ++it)
+	for (_STL::vector<ObjectID>::iterator it2 = m_members0DC.begin(); it2 != m_members0DC.end(); ++it2)
+	{
+		Object *member = TheBfmeGameLogic->findObjectByID(*it2);
+		if (member)
 		{
-			Object *owned=logic->lookup(*it);
-			if (owned != 0)
-			{
-				static NameKeyType key =
-					TheNameKeyGenerator->nameToKey("CastleMemberBehavior");
-				union { void *asVoid; FindModuleCall asMember; } findModuleCast;
-				findModuleCast.asVoid = (void *)j_0002ae23;
-				CastleMemberBehavior *member =
-					(CastleMemberBehavior *)
-						(owned->*findModuleCast.asMember)(key);
-				if (member != 0)
-				{
-					member->m_castleObjectID = m_objectID;
-					member->m_objectID = m_object->getID();
-				}
-                logic=TheBfmeGameLogic;
-			}
+			static NameKeyType key = TheNameKeyGenerator->nameToKey("CastleMemberBehavior");
+			CastleMemberBehavior *cmb = (CastleMemberBehavior *)member->findModule(key);
+			if (cmb)
+				cmb->setCastle(m_castleID0A0, getObject()->getID());
 		}
+	}
 
-		Int &status118 = object->status118();
-		if ((status118 & 0x20000000) != 0 || status118 >= 0)
-		{
-			status118 &= 0xdfffffff;
-			status118 |= 0x80000000;
-			union { void *asVoid; NotifyCall asMember; } notifyCast;
-			notifyCast.asVoid = (void *)j_0002191d;
-			(object->*notifyCast.asMember)();
-		}
+	clearAndSetCondition(obj, 93, 95);
+	obj->setStatus(ObjectStatusMaskType(ObjectStatusMaskType::kInit, 3), true);
+	obj->getDrawable()->applyPendingModelConditionFlags(false);
+	union { void *raw; void (CastleBehavior::*fn)(); } refresh;
+	refresh.raw = (void *)j_0000796e;
+	(this->*refresh.fn)();
 
-		ObjectStatusMaskType finalStatus(ObjectStatusMaskType::kInit, 3);
-		union { void *asVoid; SetStatusCall asMember; } finalStatusCast;
-		finalStatusCast.asVoid = (void *)j_000307e7;
-		(object->*finalStatusCast.asMember)(finalStatus, true);
-				union { void *asVoid; ApplyCall asMember; } applyCast;
-		applyCast.asVoid = (void *)j_0002d439;
-		(object->getDrawable()->*applyCast.asMember)(false);
-		union { void *asVoid; NoArgUpdateCall asMember; } processCast;
-		processCast.asVoid = (void *)j_0000796e;
-		(this->*processCast.asMember)();
-
-		if (*(int*)((char*)TheBfmeGameLogic+0x1a0) > 0 && g_012ED4FC != 0)
-		{
-			controllingPlayerCast.asVoid = (void *)j_00020824;
-			Player *owner = (object->*controllingPlayerCast.asMember)();
-			const char *callerName = owner->m_playerName.m_data != 0 ?
-				(const char *)((const char *)owner->m_playerName.m_data + 8) :
-				(const char *)0x0107388B;
-			ThingTemplate *thingTemplate = object->m_template;
-			ThingTemplate *finalTemplate = thingTemplate;
-			if (thingTemplate && thingTemplate->m_nextOverride != 0)
-			{
-				union { void *asVoid; OverrideCall asMember; } overrideCast;
-				overrideCast.asVoid = (void *)j_000022bb;
-				finalTemplate = (ThingTemplate *)
-					(thingTemplate->m_nextOverride->*
-						overrideCast.asMember)();
-			}
-			const char *castleName = finalTemplate->m_name.m_data != 0 ?
-				(const char *)((const char *)finalTemplate->m_name.m_data + 8) :
-				(const char *)0x0107388B;
-			((DebugLogFunction)j_0003a17a)(g_012ED4FC,
-				(const char *)0x010E9D50, TheBfmeGameLogic->m_frame,
-				castleName, object->getID(), callerName);
-		}
+	if (TheBfmeGameLogic->getCRCTraceLevel() > 0)
+	{
+		if (!TheCRCParameterCheck)
+			return;
+		const char *callerName = obj->getControllingPlayer()->m_playerName.str();
+		const ObjectID castleID = obj->getID();
+		const ThingTemplate *thingTemplate = obj->getTemplate();
+		const ThingTemplate *finalTemplate = thingTemplate;
+		if (thingTemplate == 0)
+			finalTemplate = 0;
+		else if (thingTemplate->m_nextOverride)
+			finalTemplate = (const ThingTemplate *)thingTemplate->m_nextOverride->getFinalOverride();
+		else
+			finalTemplate = thingTemplate;
+		const char *castleName = finalTemplate->m_name.str();
+		bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "CAMP: Frame %d: Castle %s(%d) ::unpack() called by %s",
+			TheBfmeGameLogic->getFrame(), castleName, castleID, callerName);
 	}
 }
