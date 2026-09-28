@@ -1,11 +1,10 @@
-// ?bfmeDispatchDirect1281@BfmeSlotDispatcher1281@@QAEXI@Z
-// partial score=0.83 date=2026-09-28
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
-
-extern "C" void _ReadWriteBarrier(void);
-#pragma intrinsic(_ReadWriteBarrier)
-extern "C" void _WriteBarrier(void);
-#pragma intrinsic(_WriteBarrier)
+// BfmeSlotDispatcher1281::bfmeDispatchDirect1281 (retail 0x008BB720, 1679 B).
+// Identity: the matched caller bfmeRouteEncoded1281 (AptInput.cpp, 0x008BCCC0)
+// calls it for encoded kind 0, and symbols.csv pins the name at 0x008BB720.
+// Member names keep their offsets: no layout witness exists for this class.
+// The tail blocks are bfmeBroadcast1282 (0x008BAAB0) inlined for modes
+// 0x10, 0x20 and 2; the mode 1 broadcast stays an out-of-line call.
 
 class BfmeNodeDX;
 
@@ -160,12 +159,6 @@ public:
 	void bfmeDispatchDirect1281(unsigned int encoded);
 
 private:
-	bool bfmeContains1281(BfmeNodeDX *node, unsigned int encoded)
-	{
-		return reinterpret_cast<Rva8BB1A0BoundsCheckThunk *>(this)->contains(
-			reinterpret_cast<Rva8BB1A0BoundsSource *>(node), (void *)encoded);
-	}
-
 	char m_padding000[0xA28];
 	int m_secondaryCount;
 	BfmeNodeDX *m_secondary[512];
@@ -206,7 +199,7 @@ void BfmeSlotDispatcher1281::bfmeDispatchDirect1281(unsigned int encoded)
 				  (static_cast<unsigned char>(~(flags >> 15)) & 1) == 0 &&
 				  (entry->m_info50->m_flags74 & 8) != 0) ||
 				 reinterpret_cast<BfmeNode1220 *>(entry)->bfmeAllows1220()) &&
-				bfmeContains1281(entry, encoded)) {
+				reinterpret_cast<Rva8BB1A0BoundsCheckThunk *>(this)->contains(reinterpret_cast<Rva8BB1A0BoundsSource *>(entry), (void *)encoded)) {
 				if (bfmeBit15Clear(selected) ||
 					(!reinterpret_cast<Rva008D1EE0Chain *>(entry)->contains(selected) &&
 					 reinterpret_cast<Rva008D1FB0 *>(entry)->method(selected)))
@@ -218,11 +211,10 @@ void BfmeSlotDispatcher1281::bfmeDispatchDirect1281(unsigned int encoded)
 
 	m_node1268 = selected;
 	if (!bfmeBit15Clear(m_node125c)) {
-		if (!bfmeBit15Clear(m_node1260) && !bfmeContains1281(m_node125c, encoded)) {
+		if (!bfmeBit15Clear(m_node1260) && !reinterpret_cast<Rva8BB1A0BoundsCheckThunk *>(this)->contains(reinterpret_cast<Rva8BB1A0BoundsSource *>(m_node125c), (void *)encoded)) {
 			m_node125c->bfmeEmit1281(0x10000, (void *)encoded, 1);
 			m_node1260 = reinterpret_cast<BfmeNodeDX *>(g_bfmeFallbackDB);
-			_WriteBarrier();
-		} else if (bfmeBit15Clear(m_node1260) && bfmeContains1281(m_node125c, encoded)) {
+		} else if (bfmeBit15Clear(m_node1260) && reinterpret_cast<Rva8BB1A0BoundsCheckThunk *>(this)->contains(reinterpret_cast<Rva8BB1A0BoundsSource *>(m_node125c), (void *)encoded)) {
 			m_node125c->bfmeEmit1281(0x8000, (void *)encoded, 1);
 			m_node1260 = m_node125c;
 		}
@@ -235,7 +227,7 @@ void BfmeSlotDispatcher1281::bfmeDispatchDirect1281(unsigned int encoded)
 		m_node1260 = selected;
 		selected->bfmeEmit1281(0x2000, (void *)encoded, 1);
 	} else if (!bfmeBit15Clear(m_node1260) && selected != m_node1260 &&
-			   bfmeBit15Clear(m_node125c) && !bfmeContains1281(m_node1260, encoded)) {
+			   bfmeBit15Clear(m_node125c) && !reinterpret_cast<Rva8BB1A0BoundsCheckThunk *>(this)->contains(reinterpret_cast<Rva8BB1A0BoundsSource *>(m_node1260), (void *)encoded)) {
 		m_node1260->bfmeEmit1281(0x4000, (void *)encoded, 1);
 		m_node1260 = reinterpret_cast<BfmeNodeDX *>(g_bfmeFallbackDB);
 	}
