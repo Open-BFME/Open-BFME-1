@@ -150,6 +150,13 @@ V3_DERIVED_PLAIN( Rva005EDDE0, Rva005EDE20 )
 V3_DERIVED_PLAIN( Rva005ECCC0, Rva005ECD00 )
 V3_DERIVED_PLAIN( Rva005ED0D0, Rva005ED110 )
 
+// Vftables the copy constructors below stamp; g_ names stand for addresses without a declarable name.
+extern "C" void *bfmeVftCUAb[];
+extern const char g_0110F9AC[], g_011106F4[];
+extern const char g_0111182C[], g_01111828[], g_01111824[];
+extern const char g_011132F0[], g_011132EC[], g_011132E8[], g_011132D4[];
+extern const char g_01112420[], g_0111241C[], g_01112418[], g_01112404[];
+
 struct GenNode_006fa270
 {
 	GenNode_006fa270( const GenNode_006fa270 & );
@@ -172,7 +179,7 @@ class Rva005EDFA0SecondBase
 {
 public:
 	Rva005EDFA0SecondBase( const Rva005EDFA0SecondBase & )
-		: m_vftable( (void *)0x0110F9AC )
+		: m_vftable( (void *)g_0110F9AC )
 	{
 	}
 
@@ -183,7 +190,7 @@ class Rva005EDFA0ThirdBase
 {
 public:
 	Rva005EDFA0ThirdBase( const Rva005EDFA0ThirdBase & )
-		: m_vftable( (void *)0x011106F4 )
+		: m_vftable( (void *)g_011106F4 )
 	{
 	}
 
@@ -227,15 +234,15 @@ Rva005EDFA0Middle::Rva005EDFA0Middle(
 	  Rva005EDFA0SecondBase( other ),
 	  Rva005EDFA0ThirdBase( other )
 {
-	Rva005EDFA0FirstBase::m_vftable = (void *)0x0111182C;
-	Rva005EDFA0SecondBase::m_vftable = (void *)0x01111828;
-	Rva005EDFA0ThirdBase::m_vftable = (void *)0x01111824;
+	Rva005EDFA0FirstBase::m_vftable = (void *)g_0111182C;
+	Rva005EDFA0SecondBase::m_vftable = (void *)g_01111828;
+	Rva005EDFA0ThirdBase::m_vftable = (void *)g_01111824;
 }
 
 // ??0Rva005EDFA0FirstBase@@QAE@ABV0@@Z absent-from-retail (inlined into the matched copy constructor)
 Rva005EDFA0FirstBase::Rva005EDFA0FirstBase(
 	const Rva005EDFA0FirstBase &other)
-	: m_vftable( (void *)0x0111126C ),
+	: m_vftable( bfmeVftCUAb ),
 	  m_node( other.m_node ),
 	  m_value( other.m_value )
 {
@@ -244,10 +251,10 @@ Rva005EDFA0FirstBase::Rva005EDFA0FirstBase(
 Rva005EDFA0::Rva005EDFA0( const Rva005EDFA0 &other )
 	: Rva005EDFA0Middle( other ), FXParticleSystem::LightningEmissionInfo( other )
 {
-	Rva005EDFA0FirstBase::m_vftable = (void *)0x011132F0;
-	Rva005EDFA0SecondBase::m_vftable = (void *)0x011132EC;
-	Rva005EDFA0ThirdBase::m_vftable = (void *)0x011132E8;
-	FXParticleSystem::LightningEmissionInfo::m_vftable = (void *)0x011132D4;
+	Rva005EDFA0FirstBase::m_vftable = (void *)g_011132F0;
+	Rva005EDFA0SecondBase::m_vftable = (void *)g_011132EC;
+	Rva005EDFA0ThirdBase::m_vftable = (void *)g_011132E8;
+	FXParticleSystem::LightningEmissionInfo::m_vftable = (void *)g_011132D4;
 }
 
 class Rva005EDF60 : public Rva005EDFA0
@@ -259,10 +266,10 @@ public:
 Rva005EDF60::Rva005EDF60( const Rva005EDF60 &other )
 	: Rva005EDFA0( other )
 {
-	Rva005EDFA0FirstBase::m_vftable = (void *)0x01112420;
-	Rva005EDFA0SecondBase::m_vftable = (void *)0x0111241C;
-	Rva005EDFA0ThirdBase::m_vftable = (void *)0x01112418;
-	FXParticleSystem::LightningEmissionInfo::m_vftable = (void *)0x01112404;
+	Rva005EDFA0FirstBase::m_vftable = (void *)g_01112420;
+	Rva005EDFA0SecondBase::m_vftable = (void *)g_0111241C;
+	Rva005EDFA0ThirdBase::m_vftable = (void *)g_01112418;
+	FXParticleSystem::LightningEmissionInfo::m_vftable = (void *)g_01112404;
 }
 
 // ------------------------------------- shape B over narrower base layouts
