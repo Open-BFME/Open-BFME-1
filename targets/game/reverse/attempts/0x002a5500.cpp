@@ -1,5 +1,7 @@
-// ?update@Rva002A5500@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.31 date=2026-09-26
+// ?update@SlavedUpdate@@UAE?AW4UpdateSleepTime@@XZ
+// partial score=0.986013986 date=2026-09-28
+// ?update@SlavedUpdate@@UAE?AW4UpdateSleepTime@@XZ
+// Retry: retail858B; native scalar/coordinate lifetimes and restored guard-object branch.
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
 // Retail update body at 0x002A5500; BFME layout views follow landed neighbors.
 
@@ -34,6 +36,8 @@ struct Coord3D
     Real x;
     Real y;
     Real z;
+    Coord3D() {}
+    Coord3D(const Coord3D &v) { x=v.x;y=v.y;z=v.z; }
 };
 
 class Object;
@@ -197,6 +201,10 @@ public:
 };
 
 extern TerrainLogic *TheTerrainLogic;
+struct HeightTable002A5500 {
+ void *slots[6];
+ Real (__fastcall *height)(TerrainLogic *,HeightTable002A5500 *,Real,Real,Int);
+};
 
 class Team
 {
@@ -289,7 +297,7 @@ public:
     Int bfmeScale() const;
 };
 
-class Rva002A5500 : public UpdateModule, public SlavedUpdateInterface
+class SlavedUpdate : public UpdateModule, public SlavedUpdateInterface
 {
 public:
     virtual UpdateSleepTime update();
@@ -312,7 +320,7 @@ private:
     RepairStates m_repairState;
     Bool m_repairing;
     unsigned char m_padding3D[3];
-    ObjectID m_version2ObjectID;
+    ObjectID m_objectID040;
 };
 
 #pragma comment(linker, "/alternatename:?findObjectByID@GameLogic@@QAEPAVObject@@H@Z=?j_0001f253@@YAXXZ")
@@ -326,15 +334,15 @@ private:
 #pragma comment(linker, "/alternatename:?bfmeDistanceSquared@Gen_000E5A50@@QBEMPBVBfmeVec3EJ@@@Z=?j_00008a26@@YAXXZ")
 #pragma comment(linker, "/alternatename:?bfmeDistanceSquared@Gen_000E5A90@@QBEMPBV1@@Z=?j_0002e7fd@@YAXXZ")
 #pragma comment(linker, "/alternatename:?bfmeScale@Gen_001BEC20@@QBEHXZ=?j_0003a391@@YAXXZ")
-#pragma comment(linker, "/alternatename:?doRepairLogic@Rva002A5500@@QAEXXZ=?j_0003ff6c@@YAXXZ")
-#pragma comment(linker, "/alternatename:?endRepair@Rva002A5500@@QAEXXZ=?j_000053c6@@YAXXZ")
-#pragma comment(linker, "/alternatename:?doAttackLogic@Rva002A5500@@QAEXPBVObject@@@Z=?j_00017b2f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?doScoutLogic@Rva002A5500@@QAEXPBUCoord3D@@@Z=?j_00002680@@YAXXZ")
-#pragma comment(linker, "/alternatename:?doGuardLogic@Rva002A5500@@QAEXPAUCoord3D@@@Z=?j_00007761@@YAXXZ")
-#pragma comment(linker, "/alternatename:?stopSlavedEffects@Rva002A5500@@AAEXXZ=?j_000432b1@@YAXXZ")
+#pragma comment(linker, "/alternatename:?doRepairLogic@SlavedUpdate@@QAEXXZ=?j_0003ff6c@@YAXXZ")
+#pragma comment(linker, "/alternatename:?endRepair@SlavedUpdate@@QAEXXZ=?j_000053c6@@YAXXZ")
+#pragma comment(linker, "/alternatename:?doAttackLogic@SlavedUpdate@@QAEXPBVObject@@@Z=?j_00017b2f@@YAXXZ")
+#pragma comment(linker, "/alternatename:?doScoutLogic@SlavedUpdate@@QAEXPBUCoord3D@@@Z=?j_00002680@@YAXXZ")
+#pragma comment(linker, "/alternatename:?doGuardLogic@SlavedUpdate@@QAEXPAUCoord3D@@@Z=?j_00007761@@YAXXZ")
+#pragma comment(linker, "/alternatename:?stopSlavedEffects@SlavedUpdate@@AAEXXZ=?j_000432b1@@YAXXZ")
 
-// ?update@Rva002A5500@@UAE?AW4UpdateSleepTime@@XZ
-UpdateSleepTime Rva002A5500::update()
+// ?update@SlavedUpdate@@UAE?AW4UpdateSleepTime@@XZ
+UpdateSleepTime SlavedUpdate::update()
 {
     if (m_framesToWait > 0)
         --m_framesToWait;
@@ -363,12 +371,12 @@ UpdateSleepTime Rva002A5500::update()
     if (!locomotor)
         return UPDATE_SLEEP_NONE;
 
-    if (m_version2ObjectID)
+    if (m_objectID040)
     {
-        Object *version2Object = TheGameLogic->findObjectByID(m_version2ObjectID);
-        if (version2Object &&
+        Object *version2Object = TheGameLogic->findObjectByID(m_objectID040);
+        if (!version2Object ||
             (reinterpret_cast<BFMEObjectFields *>(version2Object)->m_privateStatus & 1))
-            m_version2ObjectID = 0;
+            m_objectID040 = 0;
     }
 
     Object *master = TheGameLogic->findObjectByID(slaver);
@@ -402,7 +410,7 @@ UpdateSleepTime Rva002A5500::update()
             Real health = body->getHealth();
             Real maxHealth = body->getMaxHealth();
             healthPercentage = (Int)(health / maxHealth *
-                *reinterpret_cast<const Real *>(0x0107FAC4));
+                100.0f);
         }
     }
 
@@ -423,17 +431,13 @@ UpdateSleepTime Rva002A5500::update()
     {
         if (masterAI->m_path)
         {
-            PathNode *lastNode = masterAI->m_path->m_lastNode;
-            const BfmePt951 *destination =
-                reinterpret_cast<const BfmePt951 *>(&lastNode->m_position);
-            Real distance =
-                reinterpret_cast<const BfmeGap951 *>(master)->bfmeGapB951(destination);
+            const Coord3D *destination = &masterAI->m_path->m_lastNode->m_position;
             Real range = (Real)data->m_guardMaxRange *
                 *reinterpret_cast<const Real *>(0x0107533C);
-            if (distance > range * range)
+            if (reinterpret_cast<const BfmeGap951 *>(master)->bfmeGapB951((const BfmePt951*)destination) > range * range)
             {
                 endRepair();
-                doScoutLogic(&lastNode->m_position);
+                doScoutLogic(destination);
                 return UPDATE_SLEEP_NONE;
             }
         }
@@ -445,23 +449,35 @@ UpdateSleepTime Rva002A5500::update()
         return UPDATE_SLEEP_NONE;
     }
 
-    Coord3D pinnedPosition = *master->getPosition();
-    pinnedPosition.x += m_guardPointOffset.x;
-    pinnedPosition.y += m_guardPointOffset.y;
-    m_guardPointOffset.z = TheTerrainLogic->getGroundHeight(
+    Coord3D pinnedPosition;
+    TerrainLogic *terrain=TheTerrainLogic;
+    HeightTable002A5500 *table=*(HeightTable002A5500**)terrain;
+    const Coord3D *original=master->getPosition();
+    float px=original->x;
+    float py=original->y;
+    pinnedPosition.z=original->z;
+    pinnedPosition.x = px + m_guardPointOffset.x;
+    pinnedPosition.y = py + m_guardPointOffset.y;
+    m_guardPointOffset.z = table->height(terrain,table,
         pinnedPosition.x, pinnedPosition.y, 0);
 
     if (data->m_guardMaxRange)
     {
-        if (myAI->isIdle() &&
-            reinterpret_cast<const Gen_000E5A50 *>(myAI)->bfmeDistanceSquared(
+        Object *guardObject = TheGameLogic->findObjectByID(m_objectID040);
+        if (guardObject) {
+            endRepair();
+            Coord3D guardPosition=*guardObject->getPosition();
+            doGuardLogic(&guardPosition);
+        }
+        else if (myAI->isIdle() &&
+            reinterpret_cast<const Gen_000E5A50 *>(me)->bfmeDistanceSquared(
                 reinterpret_cast<const BfmeVec3EJ *>(&pinnedPosition)) >
                 *reinterpret_cast<const Real *>(0x012B20E0))
         {
             endRepair();
             doGuardLogic(&pinnedPosition);
         }
-        else if (reinterpret_cast<const Gen_000E5A90 *>(myAI)->bfmeDistanceSquared(
+        else if (reinterpret_cast<const Gen_000E5A90 *>(me)->bfmeDistanceSquared(
                      reinterpret_cast<const Gen_000E5A90 *>(master)) >
                  data->m_guardMaxRange * data->m_guardMaxRange)
         {

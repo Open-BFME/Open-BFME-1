@@ -1,5 +1,5 @@
-// ?d_0029d790@@YAXXZ
-// partial score=0.109 date=2026-09-23
+// ?rva0029D790@ProductionUpdate@@QAE_NPBVThingTemplate@@HII_N@Z
+// partial score=0.43283582089552236 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 #include "ascii_string.h"
@@ -160,7 +160,7 @@ class ProductionUpdate
 public:
 	virtual void slot00();
 	virtual void slot04();
-	virtual void slot08();
+	virtual UnsignedInt requestUniqueUnitID();
 	virtual Bool queueUpgrade(const void *upgrade, const ThingTemplate *thingTemplate);
 	virtual void slot10();
 	virtual Bool isUpgradeInQueue(const void *upgrade) const;
@@ -202,28 +202,28 @@ extern void *__cdecl operator new(UnsignedInt size);
 Bool ProductionUpdate::rva0029D790(const ThingTemplate *thingTemplate,
 	Int index, UnsignedInt productionID, UnsignedInt value, Bool repeat)
 {
-	ProductionUpdateModuleDataView * volatile moduleData =
+	ProductionUpdateModuleDataView * moduleData =
 		*(ProductionUpdateModuleDataView **)((char *)this - 0x1c);
-	Object *object = *(Object **)((char *)this - 0x18);
-	if (index != -1)
-		value = 0;
-	if (TheBuildAssistant->rva0029D790Slot16(object, value, index) == 0)
+	Bool indexed = index != -1;
+	if (indexed)
+		thingTemplate = 0;
+	if (TheBuildAssistant->rva0029D790Slot16(*(Object **)((char *)this - 0x18), (UnsignedInt)thingTemplate, index) != 0)
 		return false;
-	if (*(Int *)((char *)this + 0x14) >= moduleData->m_maxQueueEntries)
+	if (*(UnsignedInt *)((char *)this + 0x14) >= (UnsignedInt)(*(ProductionUpdateModuleDataView **)((char *)this - 0x1c))->m_maxQueueEntries)
 		return false;
 
-	Player *player = object->getControllingPlayer();
+	Player *player = (*(Object **)((char *)this - 0x18))->getControllingPlayer();
 	Int cost = 0;
-	if (index != -1)
-		cost = ((BfmeBuildIndexSetter *)((char *)player + 0x684))->set((Int)productionID);
+	if (indexed)
+		cost = ((BfmeBuildIndexSetter *)((char *)player + 0x684))->set(index);
 	else if ((*(const UnsignedInt *)((const char *)thingTemplate + 0xd8) & 0x10000000) == 0)
 		cost = thingTemplate->calcCostToBuild(player, -1);
 
-	Int remaining = 1 + (repeat ? 4 : 0);
+	Int remaining = 1 + 4*(Int)(repeat != false);
 	repeat = true;
-	do
+	while (remaining != 0)
 	{
-		if (*(Int *)((char *)this + 0x14) >= moduleData->m_maxQueueEntries)
+		if (*(UnsignedInt *)((char *)this + 0x14) >= (UnsignedInt)(*(ProductionUpdateModuleDataView **)((char *)this - 0x1c))->m_maxQueueEntries)
 			return true;
 
 		((Money *)((char *)player + 0x48))->withdraw((UnsignedInt)cost, true);
@@ -256,15 +256,15 @@ Bool ProductionUpdate::rva0029D790(const ThingTemplate *thingTemplate,
 			repeat = false;
 		}
 		else
-			entry->m_productionID = thingTemplate->rva0029D790Slot02();
+			entry->m_productionID = this->requestUniqueUnitID();
 
 		entry->m_productionQuantity = 1;
 		entry->m_quantityProduced = 0;
-		if (index == -1)
+		if (!indexed)
 		{
 			const UnsignedByte *modifier = moduleData->m_quantityBegin;
-			const UnsignedByte *end = moduleData->m_quantityEnd;
-			if (modifier != end)
+			
+			if (modifier != moduleData->m_quantityEnd)
 			{
 				do
 				{
@@ -277,7 +277,7 @@ Bool ProductionUpdate::rva0029D790(const ThingTemplate *thingTemplate,
 					}
 					modifier += 8;
 				}
-				while (modifier != end);
+				while (modifier != moduleData->m_quantityEnd);
 			}
 			entry->m_type = 1;
 			entry->m_objectToProduce = thingTemplate;
@@ -299,10 +299,10 @@ Bool ProductionUpdate::rva0029D790(const ThingTemplate *thingTemplate,
 		entry->m_unknown30 = value;
 		entry->m_cost = cost;
 		((ProductionUpdate *)((char *)this - 0x20))->addToProductionQueue((ProductionEntry *)entry);
+		--remaining;
 		if (*(UnsignedInt *)((char *)player + 0x4c) < (UnsignedInt)cost)
 			return true;
-		--remaining;
 	}
-	while (remaining != 0);
+
 	return true;
 }
