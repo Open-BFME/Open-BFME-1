@@ -1,5 +1,12 @@
 // ?rva0078B4F0@Rva00785FD0Renderer@@QAEXXZ
-// partial score=0.53 date=2026-09-26
+// partial score=0.83 date=2026-09-28
+// ?rva0078B4F0@Rva00785FD0Renderer@@QAEXXZ
+// partial 2026-09-28 opus-5.5: probe shape 0.833 (was 0.814), 1613/1694 B, 1156 differing.
+// Lever added: Get_Preset returns an add-ref'd material, so the caller releases it
+// (REF_PTR_RELEASE) after Set_Material, as retail's tail shows.
+// Still missing (~80 B): retail builds a 4x16-byte row temporary through the vector
+// constructor iterator 0x0005C600 with the empty row ctor 0x000FBB40 (ILT 0x00045561)
+// inside the WORLD Set_Transform, and keeps 0 in EBX and 0x80000 in EDI.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Igame
 // stlport
 #define Matrix4x4 Matrix4
@@ -59,7 +66,9 @@ void Rva00785FD0Renderer::rva0078B4F0()
         DX8Wrapper::Set_Transform(D3DTS_PROJECTION, view);
     }
     DX8Wrapper::Set_Transform(D3DTS_WORLD, m_world);
-    DX8Wrapper::Set_Material(VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE));
+    VertexMaterialClass *material = VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
+    DX8Wrapper::Set_Material(material);
+    REF_PTR_RELEASE(material);
     DX8Wrapper::Set_Vertex_Buffer(m_vertexBuffer, 0);
     m_modeChanged = true;
     m_pendingTextureChange = true;

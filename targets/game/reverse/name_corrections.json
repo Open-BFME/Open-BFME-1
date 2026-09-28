@@ -8978,5 +8978,35 @@
   "after_sha256": "e99c31d10356d02bf1936ae87105d58c470ddd8ad9b8df1e0201780e3eb48749",
   "evidence": "targets/game/reverse/identity_evidence/0x00775760-rva00765DC0.md",
   "reason": "Whole-body rewrite of the 0x00775760 bank on the real W3DModelDraw class; findByCondition was an unevidenced stash placeholder for a BFME-only lookup with no Zero Hour counterpart and an unmatched body at 0x00765DC0, so the name keeps the address. See the evidence file."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002ad670.cpp",
+  "new_path": "targets/game/reverse/attempts/0x002ad670.cpp",
+  "old_name": "update",
+  "new_name": "rva002AD670",
+  "before_sha256": "419bb1135a34057d5752581166f78f38e034a31ca9da9fd8ff365ad1af093a7e",
+  "after_sha256": "45559dfb067901ba083df40708d3abd8c1f3400ce07759efd1d63c4e88e54671",
+  "evidence": "targets/game/reverse/identity_evidence/002ad670-stealth-step.md",
+  "reason": "0x002ADFB0 is the real StealthUpdate::update and calls this body through ILT 0x0002DA79, so the old virtual update name was wrong; the helper keeps its address."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002ad670.cpp",
+  "new_path": "targets/game/reverse/attempts/0x002ad670.cpp",
+  "old_name": "RvaJ1166",
+  "new_name": "Rva00260180SelfFilter",
+  "before_sha256": "419bb1135a34057d5752581166f78f38e034a31ca9da9fd8ff365ad1af093a7e",
+  "after_sha256": "45559dfb067901ba083df40708d3abd8c1f3400ce07759efd1d63c4e88e54671",
+  "evidence": "targets/game/reverse/identity_evidence/002ad670-stealth-step.md",
+  "reason": "False pairing: the guessed mask shim RvaJ1166 was removed in favour of the pinned KindOfMask ctor; Rva00260180SelfFilter is the existing matched filter class, not a rename of it."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002ad670.cpp",
+  "new_path": "targets/game/reverse/attempts/0x002ad670.cpp",
+  "old_name": "RvaStealthUpdate",
+  "new_name": "Rva00260180SelfFilter",
+  "before_sha256": "419bb1135a34057d5752581166f78f38e034a31ca9da9fd8ff365ad1af093a7e",
+  "after_sha256": "45559dfb067901ba083df40708d3abd8c1f3400ce07759efd1d63c4e88e54671",
+  "evidence": "targets/game/reverse/identity_evidence/002ad670-stealth-step.md",
+  "reason": "False pairing: the guessed RvaStealthUpdate shim was replaced by the real StealthUpdate class; Rva00260180SelfFilter is an unrelated matched filter class."
  }
 ]

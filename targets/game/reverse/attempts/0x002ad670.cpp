@@ -1,26 +1,46 @@
-// ?d_002ad670@@YAXXZ
-// partial score=0.13 date=2026-09-17
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-//
-// Anonymous BFME body at retail 0x002AD670, size 1885 bytes.
-// Boundary: ret at +0x75c and INT3 padding at +0x75d.
-// Identity is intentionally opaque.  The virtual wrapper at 0x002ADFB0
-// adjusts its secondary receiver by -0x10 before calling this body; that
-// proves the receiver/layout relationship, but not a unique public method
-// identity.  The BFME module-data and object offsets below are witnessed by
-// this body and by the landed StealthUpdate siblings.
+// ?rva002AD670@StealthUpdate@@QAE?AW4UpdateSleepTime@@XZ
+// partial score=0.97 date=2026-09-28
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+// Retail 0x002AD670 (1885 B): the per-frame stealth step that the real
+// StealthUpdate::update (0x002ADFB0, entered through the UpdateModule
+// subobject at +0x10) calls through ILT 0x0002DA79 after its disguise-restore
+// prologue. Name keeps the address. Cold rewrite 2026-09-28 (opus-5.5) on the
+// matched filter/result models (AIFindAllyNear.cpp,
+// BuildAssistant_moveObjectsForConstruction.cpp) and markAsDetected's
+// StealthUpdate layout: probe shape 0.967, 1873/1885 B, 1289 differing bytes
+// (the old stash re-probed at shape 0.523, 1424 B).
+// Open: this/self registers swapped (retail ESI=this, EDI=self), which moves
+// most bytes; retail keeps draw in EBP from the stealth-allowed branch on; the
+// toggle-module body block spills the compare value, ours the body pointer;
+// null-owner branch computes the position twice. Landing needs pins:
+// Drawable::rva00416820 (0x00416820), a bool alias of
+// Object::bfmeHasSignificantPreferredLocomotorHeight (retail tests AL only),
+// ~BfmeWideResult at 0x000C5FC0, the kind-filter ctor at 0x000C3DD0, and
+// Object::findModule must be declared protected (IBE).
 
-typedef unsigned char Bool;
-typedef unsigned int UnsignedInt;
+#define _STLP_NO_EXCEPTIONS 1
+#include <bitset>
+#include <vector>
+
+typedef bool Bool;
 typedef int Int;
+typedef unsigned int UnsignedInt;
 typedef float Real;
+
+extern "C" double __cdecl fabs(double);
+#pragma intrinsic(fabs)
 
 enum UpdateSleepTime
 {
-	UPDATE_SLEEP_INVALID = 0,
 	UPDATE_SLEEP_NONE = 1,
 	UPDATE_SLEEP_FOREVER = 0x3fffffff
 };
+
+enum NameKeyType { NAMEKEY_INVALID = 0 };
+enum ObjectID { INVALID_ID = 0 };
+enum ObjectStatusTypes { OBJECT_STATUS_STEALTHED = 15, OBJECT_STATUS_DETECTED = 17 };
+enum StealthLookType { STEALTHLOOK_NONE = 0 };
 
 struct Coord3D
 {
@@ -29,73 +49,25 @@ struct Coord3D
 	Real z;
 };
 
-enum RvaStealthLookType
-{
-	RVA_STEALTHLOOK_NONE = 0,
-	RVA_STEALTHLOOK_VISIBLE_FRIENDLY = 1,
-	RVA_STEALTHLOOK_DISGUISED_ENEMY = 2,
-	RVA_STEALTHLOOK_VISIBLE_DETECTED = 3,
-	RVA_STEALTHLOOK_VISIBLE_FRIENDLY_DETECTED = 4,
-	RVA_STEALTHLOOK_INVISIBLE = 5
-};
-
-class RvaAudioEvent;
-class RvaDrawable;
-class RvaObject;
-class RvaModule;
-class RvaAIUpdate;
-class RvaBody;
-class RvaPlayer;
-
-class RvaGameLogic
+class NameKeyGenerator
 {
 public:
-	char m_pad00[0x3c];
-	UnsignedInt m_frame;
+	NameKeyType nameToKey(const char *name);
 };
+extern NameKeyGenerator *TheNameKeyGenerator;
 
-class RvaPlayerList
+class AudioEventRTS
 {
 public:
-	char m_pad00[0x0c];
-	RvaPlayer *m_localPlayer;
-};
-
-class RvaNameKeyGenerator
-{
-public:
-	UnsignedInt nameToKey(const char *name);
-};
-
-#pragma comment(linker, "/alternatename:?nameToKey@RvaNameKeyGenerator@@QAEII@Z=?j_0003add7@@YAXXZ")
-
-class RvaDrawable
-{
-public:
-	RvaAudioEvent *getSound(Int index);
-	void setStealthLook(RvaStealthLookType look, Real minOpacity,
-		Real maxOpacity, Real pulse);
-};
-
-#pragma comment(linker, "/alternatename:?getSound@RvaDrawable@@QAEPAVRvaAudioEvent@@H@Z=?j_0001bfd1@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setStealthLook@RvaDrawable@@QAEXW4RvaStealthLookType@@MMM@Z=?j_0000f763@@YAXXZ")
-
-class RvaAudioEvent
-{
-public:
-	RvaAudioEvent(const RvaAudioEvent &source);
-	~RvaAudioEvent();
-	void setObjectID(UnsignedInt id);
+	AudioEventRTS(const AudioEventRTS &that);
+	~AudioEventRTS();
+	void setObjectID(ObjectID id);
 
 private:
-	char m_data[0x70];
+	unsigned char m_data[0x70];
 };
 
-#pragma comment(linker, "/alternatename:??0RvaAudioEvent@@QAE@ABV0@@Z=?j_00047b27@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1RvaAudioEvent@@QAE@XZ=?j_00026f35@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setObjectID@RvaAudioEvent@@QAEXI@Z=?j_00019a6a@@YAXXZ")
-
-class RvaAudioClient
+class AudioManager
 {
 public:
 	virtual void slot00();
@@ -115,10 +87,159 @@ public:
 	virtual void slot14();
 	virtual void slot15();
 	virtual void slot16();
-	virtual void addAudioEvent(RvaAudioEvent *event);
+	virtual void addAudioEvent(AudioEventRTS *event);
+};
+extern AudioManager *TheAudio;
+
+// The sound table read through the drawable; 0x00416FA0 is matched under this
+// ledger name.
+class ThingTemplate
+{
+public:
+	const AudioEventRTS *getSound(Int which) const;
 };
 
-class RvaBody
+class Drawable
+{
+public:
+	const AudioEventRTS *getSound(Int which) const
+	{
+		return ((const ThingTemplate *)this)->getSound(which);
+	}
+	void rva00416820(StealthLookType look, Real minOpacity, Real maxOpacity, Real pulse);
+
+	unsigned char m_unmodelled000[0xb0];
+	Real m_effectiveOpacity;
+};
+
+template <size_t NUMBITS>
+class BitFlags
+{
+public:
+	Bool test(Int i) const { return m_bits.test(i); }
+
+private:
+	_STL::bitset<NUMBITS> m_bits;
+};
+
+class KindOfMask
+{
+public:
+	KindOfMask(Int init, Int bit1, Int bit2);
+
+private:
+	UnsignedInt m_words[6];
+};
+extern const KindOfMask KINDOFMASK_NONE;
+
+class Object;
+
+class AIUpdateInterface
+{
+public:
+	virtual void slot000();
+	virtual void slot001();
+	virtual void slot002();
+	virtual void slot003();
+	virtual void slot004();
+	virtual void slot005();
+	virtual void slot006();
+	virtual void slot007();
+	virtual void slot008();
+	virtual void slot009();
+	virtual void slot010();
+	virtual void slot011();
+	virtual void slot012();
+	virtual void slot013();
+	virtual void slot014();
+	virtual void slot015();
+	virtual void slot016();
+	virtual void slot017();
+	virtual void slot018();
+	virtual void slot019();
+	virtual void slot020();
+	virtual void slot021();
+	virtual void slot022();
+	virtual void slot023();
+	virtual void slot024();
+	virtual void slot025();
+	virtual void slot026();
+	virtual void slot027();
+	virtual void slot028();
+	virtual void slot029();
+	virtual void slot030();
+	virtual void slot031();
+	virtual void slot032();
+	virtual void slot033();
+	virtual void slot034();
+	virtual void slot035();
+	virtual void slot036();
+	virtual void slot037();
+	virtual void slot038();
+	virtual void slot039();
+	virtual void slot040();
+	virtual void slot041();
+	virtual void slot042();
+	virtual void slot043();
+	virtual void slot044();
+	virtual void slot045();
+	virtual void slot046();
+	virtual void slot047();
+	virtual void slot048();
+	virtual void slot049();
+	virtual void slot050();
+	virtual void slot051();
+	virtual void slot052();
+	virtual void slot053();
+	virtual void slot054();
+	virtual void slot055();
+	virtual void slot056();
+	virtual void slot057();
+	virtual void slot058();
+	virtual void slot059();
+	virtual void slot060();
+	virtual void slot061();
+	virtual void slot062();
+	virtual void slot063();
+	virtual void slot064();
+	virtual void slot065();
+	virtual void slot066();
+	virtual void slot067();
+	virtual void slot068();
+	virtual void slot069();
+	virtual void slot070();
+	virtual void slot071();
+	virtual void slot072();
+	virtual void slot073();
+	virtual void slot074();
+	virtual void slot075();
+	virtual void slot076();
+	virtual void slot077();
+	virtual void slot078();
+	virtual void slot079();
+	virtual void slot080();
+	virtual void slot081();
+	virtual void slot082();
+	virtual void slot083();
+	virtual void slot084();
+	virtual void slot085();
+	virtual void slot086();
+	virtual void slot087();
+	virtual void slot088();
+	virtual void slot089();
+	virtual void slot090();
+	virtual void slot091();
+	virtual void slot092();
+	virtual void slot093();
+	virtual void slot094();
+	virtual void slot095();
+	virtual void slot096();
+	virtual Bool slot097();
+
+	Object *getCurrentVictim() const;
+};
+
+class BodyModuleInterface
 {
 public:
 	virtual void slot00();
@@ -136,114 +257,11 @@ public:
 	virtual void slot12();
 	virtual void slot13();
 	virtual void slot14();
-	virtual UnsignedInt slot15();
+	virtual Int slot15();
 	virtual UnsignedInt slot16();
 };
 
-class RvaAIUpdate
-{
-public:
-	virtual Bool slot00();
-	virtual void slot01();
-	virtual void slot02();
-	virtual void slot03();
-	virtual void slot04();
-	virtual void slot05();
-	virtual void slot06();
-	virtual void slot07();
-	virtual void slot08();
-	virtual void slot09();
-	virtual void slot10();
-	virtual void slot11();
-	virtual void slot12();
-	virtual void slot13();
-	virtual void slot14();
-	virtual void slot15();
-	virtual void slot16();
-	virtual void slot17();
-	virtual void slot18();
-	virtual void slot19();
-	virtual void slot20();
-	virtual void slot21();
-	virtual void slot22();
-	virtual void slot23();
-	virtual void slot24();
-	virtual void slot25();
-	virtual void slot26();
-	virtual void slot27();
-	virtual void slot28();
-	virtual void slot29();
-	virtual void slot30();
-	virtual void slot31();
-	virtual void slot32();
-	virtual void slot33();
-	virtual void slot34();
-	virtual void slot35();
-	virtual void slot36();
-	virtual void slot37();
-	virtual void slot38();
-	virtual void slot39();
-	virtual void slot40();
-	virtual void slot41();
-	virtual void slot42();
-	virtual void slot43();
-	virtual void slot44();
-	virtual void slot45();
-	virtual void slot46();
-	virtual void slot47();
-	virtual void slot48();
-	virtual void slot49();
-	virtual void slot50();
-	virtual void slot51();
-	virtual void slot52();
-	virtual void slot53();
-	virtual void slot54();
-	virtual void slot55();
-	virtual void slot56();
-	virtual void slot57();
-	virtual void slot58();
-	virtual void slot59();
-	virtual void slot60();
-	virtual void slot61();
-	virtual void slot62();
-	virtual void slot63();
-	virtual void slot64();
-	virtual void slot65();
-	virtual void slot66();
-	virtual void slot67();
-	virtual void slot68();
-	virtual void slot69();
-	virtual void slot70();
-	virtual void slot71();
-	virtual void slot72();
-	virtual void slot73();
-	virtual void slot74();
-	virtual void slot75();
-	virtual void slot76();
-	virtual void slot77();
-	virtual void slot78();
-	virtual void slot79();
-	virtual void slot80();
-	virtual void slot81();
-	virtual void slot82();
-	virtual void slot83();
-	virtual void slot84();
-	virtual void slot85();
-	virtual void slot86();
-	virtual void slot87();
-	virtual void slot88();
-	virtual void slot89();
-	virtual void slot90();
-	virtual void slot91();
-	virtual void slot92();
-	virtual void slot93();
-	virtual void slot94();
-	virtual void slot95();
-	virtual void slot96();
-	virtual Bool slot97();
-};
-
-class RvaModule
+class ToggleModule
 {
 public:
 	virtual void slot00();
@@ -267,18 +285,18 @@ public:
 	virtual void slot18();
 	virtual void slot19();
 	virtual void slot20();
-	virtual void slot21(RvaObject *object);
-	virtual void slot22(RvaObject *object);
+	virtual void slot21(Object *object);
+	virtual void slot22(Object *object, Int value);
 	virtual void slot23();
 	virtual UnsignedInt slot24();
 };
 
-class RvaChild
+class ContainModuleInterface
 {
 public:
 	virtual void slot00();
 	virtual void slot01();
-	virtual Bool slot02();
+	virtual Bool isGarrisonable();
 	virtual void slot03();
 	virtual void slot04();
 	virtual void slot05();
@@ -292,17 +310,17 @@ public:
 	virtual void slot13();
 	virtual void slot14();
 	virtual void slot15();
-	virtual void slot16();
+	virtual void recalcApparentControllingPlayer();
 };
 
-class RvaContainer
-{
-public:
-	char m_pad00[0x1fc];
-	RvaChild *m_child;
-};
+class Module;
+class Player;
+class Gen001C9AC0 { public: void handle(Int value); };
+class Rva001BEF20FieldAddress { public: char *get(); };
+class RvaC4390First;
+class RvaC4390Second { public: RvaC4390First *resolve(Int index); };
 
-class RvaObject
+class Object
 {
 public:
 	virtual void slot00();
@@ -315,373 +333,409 @@ public:
 	virtual void slot07();
 	virtual void slot08();
 	virtual void slot09();
-	virtual RvaDrawable *getDrawable();
+	virtual Drawable *getDrawable();
 
-	char m_pad04[0x34];
-	Coord3D m_position;
-	char m_pad44[0x30];
-	UnsignedInt m_id;
-	char m_pad78[0x18];
-	UnsignedInt m_kindFlags;
-	char m_pad94[0x98];
-	UnsignedInt m_statusBits;
-	char m_pad130[0xd0];
-	RvaBody *m_body;
-	RvaAIUpdate *m_ai;
-	char m_pad208[0x0c];
-	RvaContainer *m_container;
-
-	void setStatusBit(Int bit, bool value);
+	void setStatusBit(Int bit, Bool set);
+	void clearStatus(ObjectStatusTypes status);
 	void notifyModelConditionChanged();
-	void clearStatus(Int bit);
-	void handle(Int value);
-	RvaModule *findModule(UnsignedInt key);
-	Bool predicate35995(Int value);
-	Bool predicate3E54A();
-	Bool locallyControlled();
-	UnsignedInt *statusMask();
+	Bool isLocallyControlled() const;
+	Bool bfmeHasSignificantPreferredLocomotorHeight() const;
+	Module *findModule(NameKeyType key) const;
+
+	const BitFlags<86> &getStatusBits() const { return m_status; }
+	ObjectID getID() const { return m_id; }
+	Object *getContainedBy() const { return m_containedBy; }
+	ContainModuleInterface *getContain() const { return m_contain; }
+
+	unsigned char m_unmodelled004[0x34];
+	Coord3D m_position;
+	unsigned char m_unmodelled044[0x30];
+	ObjectID m_id;
+	unsigned char m_unmodelled078[0x18];
+	BitFlags<86> m_status;
+	unsigned char m_unmodelled09C[0x90];
+	UnsignedInt m_modelFlags12C;
+	unsigned char m_unmodelled130[0xcc];
+	ContainModuleInterface *m_contain;
+	BodyModuleInterface *m_body;
+	AIUpdateInterface *m_ai;
+	unsigned char m_unmodelled208[0x0c];
+	Object *m_containedBy;
 };
 
-#pragma comment(linker, "/alternatename:?setStatusBit@RvaObject@@QAEXH_N@Z=?j_00032dee@@YAXXZ")
-#pragma comment(linker, "/alternatename:?notifyModelConditionChanged@RvaObject@@QAEXXZ=?j_0002191d@@YAXXZ")
-#pragma comment(linker, "/alternatename:?clearStatus@RvaObject@@QAEXH@Z=?j_00031f7a@@YAXXZ")
-#pragma comment(linker, "/alternatename:?handle@RvaObject@@QAEXH@Z=?j_000122ab@@YAXXZ")
-#pragma comment(linker, "/alternatename:?findModule@RvaObject@@QAEPAVRvaModule@@I@Z=?j_0002ae23@@YAXXZ")
-#pragma comment(linker, "/alternatename:?predicate35995@RvaObject@@QAE_NH@Z=?j_00035995@@YAXXZ")
-#pragma comment(linker, "/alternatename:?predicate3E54A@RvaObject@@QAE_NXZ=?j_0003e54a@@YAXXZ")
-#pragma comment(linker, "/alternatename:?locallyControlled@RvaObject@@QAE_NXZ=?j_0001ff91@@YAXXZ")
-#pragma comment(linker, "/alternatename:?statusMask@RvaObject@@QAEPAIXZ=?j_000209fa@@YAXXZ")
-
-class RvaStealthUpdateModuleData
+class PlayerList
 {
 public:
-	char m_pad00[0x08];
-	UnsignedInt m_stealthDelay;
-	char m_pad0c[0x14];
-	Real m_friendlyOpacityMin;
-	Real m_friendlyOpacityMax;
-	UnsignedInt m_pulseFrequency;
-	char m_pad2c[0x04];
-	Real m_revealDistanceFromTarget;
-	char m_pad34[0x1e];
-	Bool m_detectedByFriendliesOnly;
-	char m_pad53[0x01];
-	UnsignedInt m_disguiseTransitionTime;
-	UnsignedInt m_disguiseRevealTransitionTime;
-	Real m_detectedByAnyoneRange;
-	UnsignedInt m_revealWeaponSets;
-	char m_pad64[0x2bc];
-	UnsignedInt m_ringDelayAfterRemoving;
+	unsigned char m_unmodelled00[0x0c];
+	Player *m_localPlayer;
 };
+extern PlayerList *ThePlayerList;
 
-class RvaStealthUpdate;
-
-class RvaJ1166
+class GameLogic
 {
 public:
-	RvaJ1166(UnsignedInt a, UnsignedInt b, UnsignedInt c);
-	char m_data[0x20];
+	UnsignedInt getFrame() const { return m_frame; }
+
+private:
+	unsigned char m_unmodelled00[0x3c];
+	UnsignedInt m_frame;
 };
+extern GameLogic *TheGameLogic;
 
-#pragma comment(linker, "/alternatename:??0RvaJ1166@@QAE@III@Z=?j_0000198d@@YAXXZ")
+extern Real g_Rva012B22D4Scale;
 
-class RvaFilterPair
+class PartitionFilter
 {
 public:
-	RvaFilterPair(RvaJ1166 *query, UnsignedInt *kindMask);
+	PartitionFilter() : m_next(0) {}
+	virtual ~PartitionFilter() {}
+	virtual Bool allow(Object *obj) = 0;
+	virtual Int getPlayerMask();
+
+	PartitionFilter *link(PartitionFilter *next);
+
+	PartitionFilter *m_next;
 };
 
-#pragma comment(linker, "/alternatename:??0RvaFilterPair@@QAE@PAVRvaJ1166@@PAI@Z=?j_000382fd@@YAXXZ")
-
-class RvaFilterNode
+class PartitionFilterAcceptByKindOf : public PartitionFilter
 {
 public:
-	UnsignedInt m_vtable;
-	RvaFilterNode *m_next;
-	UnsignedInt m_data08;
-	UnsignedInt m_data0c;
+	__declspec(noinline) PartitionFilterAcceptByKindOf(const KindOfMask &mustBeSet,
+		const KindOfMask &mustBeClear)
+		: m_mustBeSet(mustBeSet), m_mustBeClear(mustBeClear) {}
+	virtual Bool allow(Object *obj);
 
-	RvaFilterNode *append(RvaFilterNode *next);
+	KindOfMask m_mustBeSet;
+	KindOfMask m_mustBeClear;
 };
 
-#pragma comment(linker, "/alternatename:?append@RvaFilterNode@@QAEPAV1@PAV1@@Z=?d_009f2ae0@@YAXXZ")
-
-struct RvaWideEntry
+class Rva0025ED50ObjectFilter : public PartitionFilter
 {
-	RvaObject *object;
-	UnsignedInt value;
+public:
+	Rva0025ED50ObjectFilter(Object *object) : m_object(object) {}
+	virtual Bool allow(Object *obj);
+
+	Object *m_object;
 };
 
-struct RvaWideData
+class PartitionFilterRelationship : public PartitionFilter
 {
-	RvaWideEntry *begin;
-	RvaWideEntry *end;
+public:
+	PartitionFilterRelationship(Object *object, Int flags, Bool match)
+		: m_object(object), m_flags(flags), m_match(match) {}
+	virtual Bool allow(Object *obj);
+
+	Object *m_object;
+	Int m_flags;
+	Bool m_match;
+};
+
+class Rva000FBDC0Filter : public PartitionFilter
+{
+public:
+	Rva000FBDC0Filter() {}
+	virtual Bool allow(Object *obj);
+};
+
+class Rva0025ED50RootFilter : public PartitionFilter
+{
+public:
+	Rva0025ED50RootFilter() {}
+	virtual Bool allow(Object *obj);
+};
+
+class Rva00260180SelfFilter : public PartitionFilter
+{
+public:
+	Rva00260180SelfFilter(Object *object) : m_object(object) {}
+	virtual Bool allow(Object *obj);
+
+	Object *m_object;
+};
+
+struct SimpleObjectIteratorClump
+{
+	Object *m_object;
+	Int m_distanceBits;
+};
+
+struct SimpleObjectIterator
+{
+	_STL::vector<SimpleObjectIteratorClump> m_entries;
+	SimpleObjectIteratorClump *m_cursor;
+	Int m_refCount;
 };
 
 struct BfmeWideResult
 {
-	RvaWideData *m_value;
+	SimpleObjectIterator *m_mpo;
 	BfmeWideResult();
-	BfmeWideResult(const BfmeWideResult &source);
+	BfmeWideResult(const BfmeWideResult &that);
 	~BfmeWideResult();
 };
-
-#pragma comment(linker, "/alternatename:??1BfmeWideResult@@QAE@XZ=?j_0002c471@@YAXXZ")
 
 class BfmeWideForwardC
 {
 public:
 	BfmeWideResult bfmeForwardWideC(Int a, Int b, Int c, Int d, Int e);
 };
+extern BfmeWideForwardC *ThePartitionManager;
 
-class RvaStealthUpdate
+struct StealthUpdateModuleData
+{
+	unsigned char m_unmodelled000[0x08];
+	UnsignedInt m_stealthDelay;
+	unsigned char m_unmodelled00C[0x14];
+	Real m_opacityMin20;
+	Real m_opacityMax24;
+	UnsignedInt m_pulseFrames28;
+	unsigned char m_unmodelled02C[4];
+	Real m_revealDistanceFromTarget;
+	unsigned char m_unmodelled034[0x1e];
+	Bool m_flag52;
+	unsigned char m_unmodelled053[1];
+	UnsignedInt m_disguiseTransitionFrames;
+	UnsignedInt m_disguiseRevealTransitionFrames;
+	Real m_range5C;
+	UnsignedInt m_mask60;
+	unsigned char m_unmodelled064[0x2bc];
+	UnsignedInt m_delay320;
+};
+
+class StealthUpdate
 {
 public:
-	virtual UpdateSleepTime update();
+	virtual void slot00();
 
-	RvaStealthUpdateModuleData *m_moduleData;
-	RvaObject *m_object;
-	char m_pad0c[0x14];
+	UpdateSleepTime rva002AD670();
+
+	void markAsDetected(UnsignedInt frames, Bool propagate);
+	UpdateSleepTime calcSleepTime() const
+	{
+		return m_enabled ? UPDATE_SLEEP_NONE : UPDATE_SLEEP_FOREVER;
+	}
+
+protected:
+	StealthLookType calcStealthedStatusForPlayer(const Object *obj, const Player *player);
+	void changeVisualDisguise();
+	void hintDetectableWhileUnstealthed();
+
+public:
+	Bool allowedToStealthAt002ACD90(const Coord3D *a, const Coord3D *b) const;
+
+	const StealthUpdateModuleData *m_moduleData;
+	Object *m_object;
+	unsigned char m_unmodelled00C[0x14];
 	UnsignedInt m_stealthAllowedFrame;
 	UnsignedInt m_detectionExpiresFrame;
-	UnsignedInt m_nextBlackMarketCheckFrame;
+	UnsignedInt m_nextFrame28;
 	Bool m_enabled;
-	Bool m_xferRestoreDisguise;
-	Bool m_unknown2e;
-	Bool m_unknown2f;
-	Bool m_unknown30;
-	char m_pad31[3];
-	Int m_disguiseAsPlayerIndex;
-	const void *m_disguiseAsTemplate;
+	Bool m_restoring2D;
+	unsigned char m_unmodelled02E[0x0e];
 	UnsignedInt m_disguiseTransitionFrames;
 	Bool m_disguiseHalfpointReached;
 	Bool m_transitioningToDisguise;
-	Bool m_disguised;
-
-	void grantHook(Int active, Int frames);
-	RvaStealthLookType calcStealthedStatusForPlayer(const RvaObject *object,
-		const RvaPlayer *player);
-	void changeVisualDisguise();
-	void hintDetectableWhileUnstealthed();
-	Bool predicate1B04A(const Coord3D *first, const Coord3D *second);
 };
 
-#pragma comment(linker, "/alternatename:?grantHook@RvaStealthUpdate@@QAEXHH@Z=?j_00040dc2@@YAXXZ")
-#pragma comment(linker, "/alternatename:?calcStealthedStatusForPlayer@RvaStealthUpdate@@QAE?AW4RvaStealthLookType@@PBVRvaObject@@PBVRvaPlayer@@@Z=?j_0003778b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?changeVisualDisguise@RvaStealthUpdate@@QAEXXZ=?j_000378df@@YAXXZ")
-#pragma comment(linker, "/alternatename:?hintDetectableWhileUnstealthed@RvaStealthUpdate@@QAEXXZ=?j_00004471@@YAXXZ")
-#pragma comment(linker, "/alternatename:?predicate1B04A@RvaStealthUpdate@@QAE_NPBUCoord3D@@0@Z=?j_0001b04a@@YAXXZ")
-
-#define BFME_GAME_LOGIC (*(RvaGameLogic **)0x012F0898)
-#define BFME_PLAYER_LIST (*(RvaPlayerList **)0x012ED748)
-#define BFME_NAME_KEYS (*(RvaNameKeyGenerator **)0x012ED600)
-#define BFME_AUDIO_CLIENT (*(RvaAudioClient **)0x012ED668)
-#define BFME_PARTITION_MANAGER (*(BfmeWideForwardC **)0x012ED5B8)
-#define BFME_UPDATE_INIT (*(volatile unsigned char *)0x012F01E4)
-#define BFME_UPDATE_KEY (*(volatile UnsignedInt *)0x012F01E0)
-#define BFME_UINT32_SCALE (*(volatile Real *)0x01075358)
-#define BFME_DEFAULT_BU (*(volatile Real *)0x01075334)
-#define BFME_K1253 (*(volatile Real *)0x0107533C)
-#define BFME_ZERO_RANGE (*(volatile Real *)0x01075350)
-
-static void rvaAddStealthSound(RvaDrawable *draw, Int index, UnsignedInt objectID)
+// ?rva002AD670@StealthUpdate@@QAE?AW4UpdateSleepTime@@XZ
+UpdateSleepTime StealthUpdate::rva002AD670()
 {
-	RvaAudioEvent sound = *draw->getSound(index);
-	sound.setObjectID(objectID);
-	BFME_AUDIO_CLIENT->addAudioEvent(&sound);
-}
+	UnsignedInt now = TheGameLogic->getFrame();
+	const StealthUpdateModuleData *data = m_moduleData;
+	Object *self = m_object;
 
-// ?update@Rva002AD670StealthUpdate@@QAE?AW4UpdateSleepTime@@XZ
-UpdateSleepTime RvaStealthUpdate::update()
-{
-	RvaGameLogic *logic = BFME_GAME_LOGIC;
-	UnsignedInt now = logic->m_frame;
-	Bool enabled = m_enabled;
-	RvaStealthUpdateModuleData *data = m_moduleData;
-	RvaObject *self = m_object;
-
-	if (!enabled && !m_xferRestoreDisguise)
+	if (!m_enabled && !m_restoring2D)
 		return UPDATE_SLEEP_FOREVER;
 
-	RvaDrawable *draw = self->getDrawable();
-	if (draw && m_xferRestoreDisguise)
+	Drawable *draw = self->getDrawable();
+	if (draw)
 	{
-		if (m_stealthAllowedFrame < now)
+		if (m_restoring2D)
 		{
-			self->setStatusBit(0x0f, true);
-			if (m_detectionExpiresFrame != 0 && m_detectionExpiresFrame < now)
+			if (m_stealthAllowedFrame < now)
+				self->setStatusBit(OBJECT_STATUS_STEALTHED, true);
+			if (m_detectionExpiresFrame && m_detectionExpiresFrame < now)
 			{
-				if (self->m_statusBits & 0x40000)
+				if (self->m_modelFlags12C & 0x40000)
 				{
-					self->m_statusBits &= ~0x40000;
+					self->m_modelFlags12C &= ~0x40000;
 					self->notifyModelConditionChanged();
 				}
-				self->clearStatus(0x0f);
-				self->handle(0x1c);
-				m_xferRestoreDisguise = 0;
-				m_nextBlackMarketCheckFrame = now + data->m_ringDelayAfterRemoving;
-				RvaStealthLookType look =
-					calcStealthedStatusForPlayer(self, BFME_PLAYER_LIST->m_localPlayer);
-				Real pulse = (Real)data->m_pulseFrequency * BFME_UINT32_SCALE;
-				draw->setStealthLook(look, data->m_friendlyOpacityMin,
-					data->m_friendlyOpacityMax, pulse);
+				self->clearStatus(OBJECT_STATUS_STEALTHED);
+				((Gen001C9AC0 *)self)->handle(0x1c);
+				m_restoring2D = false;
+				m_nextFrame28 = now + data->m_delay320;
 			}
 		}
-	}
-	else if (draw && m_disguiseTransitionFrames)
-	{
-		Bool transitioning = m_transitioningToDisguise;
-		UnsignedInt frames = --m_disguiseTransitionFrames;
-		UnsignedInt duration = transitioning
-			? data->m_disguiseTransitionTime
-			: data->m_disguiseRevealTransitionTime;
-		Real factor = (Real)frames / (Real)duration;
-		factor = BFME_DEFAULT_BU - factor;
-
-		if (factor < BFME_K1253 && !m_disguiseHalfpointReached)
+		else if (m_disguiseTransitionFrames)
 		{
-			changeVisualDisguise();
-			m_disguiseHalfpointReached = 1;
-			Real opacity = BFME_DEFAULT_BU - (factor + factor);
-			if (opacity < BFME_ZERO_RANGE)
-				opacity = -opacity;
-			draw = self->getDrawable();
-			if (draw)
-				*(Real *)((char *)draw + 0xb0) = opacity;
-		}
-
-		if (frames == 0 && !transitioning)
-		{
-			m_enabled = 0;
-			self->clearStatus(0x0f);
-			self->clearStatus(0x11);
-		}
-	}
-
-	if (!(BFME_UPDATE_INIT & 1))
-	{
-		BFME_UPDATE_INIT |= 1;
-		BFME_UPDATE_KEY = BFME_NAME_KEYS->nameToKey(
-			(const char *)0x010903A8); // "AllowAudioReinitialize"
-	}
-	RvaModule *module = self->findModule(BFME_UPDATE_KEY);
-
-	if (module && !m_xferRestoreDisguise)
-	{
-		if (!self->predicate3E54A())
-		{
-			if (self->m_ai && self->m_ai->slot97())
-				grantHook(0, 1);
-		}
-
-		module->slot21(self);
-		if (self->m_body)
-		{
-			UnsignedInt bodyLimit = self->m_body->slot16();
-			if (bodyLimit > module->slot24())
+			--m_disguiseTransitionFrames;
+			Real factor;
+			if (m_transitioningToDisguise)
+				factor = 1.0f - (Real)m_disguiseTransitionFrames / (Real)data->m_disguiseTransitionFrames;
+			else
+				factor = 1.0f - (Real)m_disguiseTransitionFrames / (Real)data->m_disguiseRevealTransitionFrames;
+			if (factor >= 0.5f && !m_disguiseHalfpointReached)
 			{
-				UnsignedInt bodyValue = self->m_body->slot15();
-				module->slot22(self);
-				(void)bodyValue;
+				changeVisualDisguise();
+				m_disguiseHalfpointReached = true;
 			}
-		}
-	}
-
-	if (data->m_revealDistanceFromTarget != BFME_ZERO_RANGE &&
-		!m_xferRestoreDisguise && self->m_ai)
-	{
-		if (self->m_ai->slot00())
-		{
-			RvaJ1166 query(0, 25,
-				data->m_detectedByFriendliesOnly ? 1U : 4U);
-			RvaFilterPair pair(&query,
-				(UnsignedInt *)0x012ED8B8);
-			RvaFilterNode sameMap;
-			RvaFilterNode relationship;
-			RvaFilterNode root;
-			RvaFilterNode selfFilter;
-			RvaFilterNode extra;
-			UnsignedInt zero = 0;
-
-			sameMap.m_vtable = 0x01085DD0;
-			sameMap.m_next = 0;
-			sameMap.m_data08 = (UnsignedInt)self;
-			relationship.m_vtable = 0x01085DC0;
-			relationship.m_next = 0;
-			relationship.m_data08 = (UnsignedInt)self;
-			relationship.m_data0c = 4;
-			root.m_vtable = 0x010860B0;
-			root.m_next = 0;
-			selfFilter.m_vtable = 0x01083B80;
-			selfFilter.m_next = 0;
-			selfFilter.m_data08 = (UnsignedInt)self;
-			extra.m_vtable = 0x01095724;
-			extra.m_next = 0;
-			extra.m_data08 = (UnsignedInt)self;
-
-			RvaFilterNode *filters = sameMap.append(&relationship);
-			filters = filters->append(&root);
-			filters = filters->append(&selfFilter);
-			filters = filters->append(&extra);
-			filters = filters->append(&sameMap);
-			(void)pair;
-			(void)zero;
-
-			BfmeWideResult result = BFME_PARTITION_MANAGER->bfmeForwardWideC(
-				(Int)&self->m_position, (Int)&query,
-				*(Int *)&data->m_revealDistanceFromTarget, 2, (Int)filters);
-			if (result.m_value && result.m_value->end - result.m_value->begin > 0)
+			draw->m_effectiveOpacity = (Real)fabs(1.0f - (factor + factor));
+			if (!m_disguiseTransitionFrames && !m_transitioningToDisguise)
 			{
-				grantHook(0, 1);
-				return m_enabled ? UPDATE_SLEEP_NONE : UPDATE_SLEEP_FOREVER;
+				m_enabled = false;
+				self->clearStatus(OBJECT_STATUS_STEALTHED);
+				self->clearStatus(OBJECT_STATUS_DETECTED);
+				return calcSleepTime();
+			}
+		}
+
+		StealthLookType look = calcStealthedStatusForPlayer(self, ThePlayerList->m_localPlayer);
+		draw->rva00416820(look, data->m_opacityMin20, data->m_opacityMax24,
+			(Real)data->m_pulseFrames28 * g_Rva012B22D4Scale);
+	}
+
+	static NameKeyType key_Toggle = TheNameKeyGenerator->nameToKey("ToggleHiddenSpecialAbilityUpdate");
+	ToggleModule *toggle = (ToggleModule *)self->findModule(key_Toggle);
+	if (toggle && !m_restoring2D)
+	{
+		AIUpdateInterface *ai = self->m_ai;
+		if (!self->bfmeHasSignificantPreferredLocomotorHeight())
+		{
+			if (ai && ai->slot097())
+				markAsDetected(0, true);
+		}
+		toggle->slot21(self);
+		BodyModuleInterface *body = self->m_body;
+		if (body && body->slot16() > toggle->slot24())
+			toggle->slot22(self, body->slot15());
+	}
+
+	Real revealDistance = m_moduleData->m_revealDistanceFromTarget;
+	if (revealDistance > 0.0f && !m_restoring2D && self->m_ai)
+	{
+		Object *target = self->m_ai->getCurrentVictim();
+		if (target)
+		{
+			Real dx = self->m_position.x - target->m_position.x;
+			Real dy = self->m_position.y - target->m_position.y;
+			Real distSqr = dx * dx + dy * dy;
+			if (distSqr <= revealDistance * revealDistance)
+			{
+				markAsDetected(0, true);
+				return calcSleepTime();
 			}
 		}
 	}
 
-	if (!self->predicate35995(0) &&
-		predicate1B04A(&self->m_position, &self->m_position) &&
-		m_stealthAllowedFrame <= now &&
-		(self->m_kindFlags & 0x80000000) == 0 && draw)
+	UnsignedInt mask = m_moduleData->m_mask60;
+	if (mask && !m_restoring2D)
 	{
-		rvaAddStealthSound(draw, 0x60, self->m_id);
-		self->clearStatus(0x0f);
+		UnsignedInt bits = *(UnsignedInt *)((Rva001BEF20FieldAddress *)m_object)->get() & mask;
+		if (bits)
+		{
+			markAsDetected(0, true);
+			return calcSleepTime();
+		}
+	}
+	if (0)
+	{
+		markAsDetected(0, true);
+		return calcSleepTime();
 	}
 
-	if (!m_xferRestoreDisguise)
+	if (m_moduleData->m_range5C > 0.0f && !m_restoring2D)
 	{
-		m_stealthAllowedFrame = now + data->m_stealthDelay;
-		if (self->m_kindFlags & 0x80000000)
+		Int relationship = data->m_flag52 ? 4 : 1;
+		const BfmeWideResult &iter = ThePartitionManager->bfmeForwardWideC(
+			(Int)&self->m_position, *(const Int *)&m_moduleData->m_range5C, 2,
+			(Int)Rva00260180SelfFilter(self).link(&Rva0025ED50RootFilter())
+				->link(&Rva000FBDC0Filter())
+				->link(&PartitionFilterRelationship(self, relationship, true))
+				->link(&Rva0025ED50ObjectFilter(self))
+				->link(&PartitionFilterAcceptByKindOf(KINDOFMASK_NONE, KindOfMask(0, 25, 157))),
+			1);
+		if (iter.m_mpo->m_entries.size() > 0)
+		{
+			markAsDetected(0, true);
+			return calcSleepTime();
+		}
+	}
+
+	Object *owner = (Object *)((RvaC4390Second *)m_object)->resolve(0);
+	Bool allowed;
+	if (!owner)
+		allowed = allowedToStealthAt002ACD90(&m_object->m_position, &m_object->m_position);
+	else
+		allowed = allowedToStealthAt002ACD90(&m_object->m_position, &owner->m_position);
+	if (allowed)
+	{
+		if (m_stealthAllowedFrame > now)
+			return calcSleepTime();
+		if (!self->getStatusBits().test(OBJECT_STATUS_STEALTHED) && draw)
+		{
+			AudioEventRTS soundEvent = *draw->getSound(0x60);
+			soundEvent.setObjectID(self->getID());
+			TheAudio->addAudioEvent(&soundEvent);
+		}
+		self->setStatusBit(OBJECT_STATUS_STEALTHED, true);
+	}
+	else
+	{
+		if (!m_restoring2D)
+			m_stealthAllowedFrame = now + m_moduleData->m_stealthDelay;
+		if (self->getStatusBits().test(OBJECT_STATUS_STEALTHED))
 		{
 			if (draw)
-				rvaAddStealthSound(draw, 0x0f, self->m_id);
-			self->clearStatus(0x0f);
+			{
+				AudioEventRTS soundEvent = *draw->getSound(0x60);
+				soundEvent.setObjectID(self->getID());
+				TheAudio->addAudioEvent(&soundEvent);
+			}
+			self->clearStatus(OBJECT_STATUS_STEALTHED);
 			hintDetectableWhileUnstealthed();
-			grantHook(0, 1);
+			markAsDetected(0, true);
 		}
 	}
 
-	if (m_detectionExpiresFrame > now)
+	Bool detectedStatusChangedThisFrame = false;
+	if (now <= m_detectionExpiresFrame)
 	{
-		if (!(self->m_statusBits & 0x20000))
+		if (self->getStatusBits().test(OBJECT_STATUS_DETECTED))
+			return calcSleepTime();
+		detectedStatusChangedThisFrame = true;
+		if (draw)
 		{
-			if (draw)
-				rvaAddStealthSound(draw, 0x61, self->m_id);
-			self->setStatusBit(0x11, true);
+			AudioEventRTS soundEvent = *draw->getSound(0x61);
+			soundEvent.setObjectID(self->getID());
+			TheAudio->addAudioEvent(&soundEvent);
 		}
 	}
-	else if (self->m_statusBits & 0x20000)
+	else
 	{
-		Bool notify = self->locallyControlled();
-		if (notify && draw)
-			rvaAddStealthSound(draw, 0x60, self->m_id);
-		self->clearStatus(0x11);
-		if (notify && self->m_container && self->m_container->m_child)
+		if (self->getStatusBits().test(OBJECT_STATUS_DETECTED))
 		{
-			RvaChild *child = self->m_container->m_child;
-			if (child->slot02())
-				child->slot16();
+			detectedStatusChangedThisFrame = true;
+			if (self->isLocallyControlled() && draw)
+			{
+				AudioEventRTS soundEvent = *draw->getSound(0x60);
+				soundEvent.setObjectID(self->getID());
+				TheAudio->addAudioEvent(&soundEvent);
+			}
+		}
+		self->clearStatus(OBJECT_STATUS_DETECTED);
+	}
+
+	if (detectedStatusChangedThisFrame)
+	{
+		Object *container = self->getContainedBy();
+		if (container)
+		{
+			ContainModuleInterface *contain = container->getContain();
+			if (contain && contain->isGarrisonable())
+				contain->recalcApparentControllingPlayer();
 		}
 	}
 
-	return m_enabled ? UPDATE_SLEEP_NONE : UPDATE_SLEEP_FOREVER;
+	return calcSleepTime();
 }
