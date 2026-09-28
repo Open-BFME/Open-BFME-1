@@ -1,7 +1,11 @@
 // ?do_transform@?$collate@G@_STL@@MBE?AV?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@2@PBG0@Z
-// partial score=0.99 date=2026-09-11
+// partial score=0.995 date=2026-09-28
+// ?do_transform@?$collate@G@_STL@@MBE?AV?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@2@PBG0@Z
 // cl: /O2 /EHsc /MD /D_STLP_USE_STATIC_LIB
-// STLport 4.5.3 collate<char/wchar_t>::do_transform.
+// RTTI at VA 0x0112EAE8 identifies collate<wchar_t>. The vendor declaration
+// in inputs/vendor/stlport/stl/_collate.h puts do_transform in vtable slot 2.
+// Retail computes the empty forward-iterator tag address as [esp+0x18].
+// Inline assembly reproduces that address under MSVC 7.1.
 
 namespace _STL
 {
@@ -91,25 +95,22 @@ private:
 		const forward_iterator_tag &tag);
 
 	template <class InputIterator>
-	void _M_range_initialize(InputIterator first,
+	__forceinline void _M_range_initialize(InputIterator first,
 		InputIterator last)
 	{
-		_M_range_initialize(first, last, iterator_category(first));
+		register const forward_iterator_tag *category;
+		__asm {
+			lea eax, [esp+18h]
+			mov category, eax
+		}
+		_M_range_initialize(first, last, *category);
 	}
 };
 
-typedef basic_string<char, char_traits<char>, allocator<char> > string;
 typedef unsigned short wchar_t;
 typedef basic_string<wchar_t, char_traits<wchar_t>, allocator<wchar_t> > wstring;
 
 template <class CharT> class collate;
-
-template <>
-class collate<char>
-{
-protected:
-	virtual string do_transform(const char *low, const char *high) const;
-};
 
 template <>
 class collate<wchar_t>
@@ -117,11 +118,6 @@ class collate<wchar_t>
 protected:
 	virtual wstring do_transform(const wchar_t *low, const wchar_t *high) const;
 };
-
-string collate<char>::do_transform(const char *low, const char *high) const
-{
-	return string(low, high);
-}
 
 wstring collate<wchar_t>::do_transform(const wchar_t *low,
 	const wchar_t *high) const
