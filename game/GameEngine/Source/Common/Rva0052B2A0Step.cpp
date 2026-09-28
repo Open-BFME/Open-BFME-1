@@ -122,26 +122,37 @@ public:
 extern Display *TheDisplay;
 extern void __cdecl HideInGameChat();
 
-#define g_obj12F49E4 (*(void **)0x012F49E4)
+class GameLogic;
+class ScriptEngine;
+class DisconnectMenu;
+
+extern InGameUI *TheInGameUI;
+extern GameLogic *TheGameLogic;
+extern ScriptEngine *TheScriptEngine;
+extern GameWindowTransitionsHandler *TheTransitionHandler;
+extern DisconnectMenu *TheDisconnectMenu;
+extern Mouse *TheMouse;
+extern Shell *TheShell;
+extern void *g_obj12F49E4;
 
 void Rva0052B2A0::step()
 {
     if (g_obj12F49E4 != 0)
         return;
 
-    if ((*(InGameUI **)0x012F148C)->slot85())
+    if (TheInGameUI->slot85())
         return;
 
-    if ((unsigned char)((BfmeThingFGA *)*(void **)0x012F0898)->bfmeGoFGA())
+    if ((unsigned char)((BfmeThingFGA *)TheGameLogic)->bfmeGoFGA())
         return;
 
-    if ((*(BfmeThingFGA **)0x012F0898)->m_flag)
+    if (((BfmeThingFGA *)TheGameLogic)->m_flag)
         return;
 
-    if (*(int *)((char *)*(void **)0x012F076C + 0x17080) >= 0)
+    if (*(int *)((char *)TheScriptEngine + 0x17080) >= 0)
         return;
 
-    if ((*(GameWindowTransitionsHandler **)0x012F3330)->isFinished() == false)
+    if (TheTransitionHandler->isFinished() == false)
         return;
 
     if (TheDisplay != 0) {
@@ -152,29 +163,29 @@ void Rva0052B2A0::step()
     }
 
     {
-        Rva0005C5E0 *logic = (Rva0005C5E0 *)*(void **)0x012F0898;
+        Rva0005C5E0 *logic = (Rva0005C5E0 *)TheGameLogic;
         if ((unsigned char)logic->isEither() == false)
             ((BfmeGameLogicPause *)logic)->setGamePaused(true, 0, true);
     }
 
-    if (*(void **)0x012F4964 != 0)
+    if (TheDisconnectMenu != 0)
         return;
 
     HideInGameChat();
-    (*(Mouse **)0x012F4C5C)->slot14(2);
-    (*(Shell **)0x012F4B58)->showShell(false);
+    TheMouse->slot14(2);
+    TheShell->showShell(false);
 
     int playerStatus;
-    if (((GameLogicPortraitShim *)*(void **)0x012F0898)->isInMultiplayerOrSkirmishGame()) {
+    if (((GameLogicPortraitShim *)TheGameLogic)->isInMultiplayerOrSkirmishGame()) {
         playerStatus = 1;
-        (*(Shell **)0x012F4B58)->push(AsciiString("PlayerStatus.apt"), false);
+        TheShell->push(AsciiString("PlayerStatus.apt"), false);
     } else {
         playerStatus = 0;
-        (*(Shell **)0x012F4B58)->push(AsciiString("Objectives.apt"), false);
+        TheShell->push(AsciiString("Objectives.apt"), false);
     }
 
     if (g_obj12F49E4 != 0)
         *(int *)((char *)g_obj12F49E4 + 0x264) = playerStatus;
 
-    (*(InGameUI **)0x012F148C)->slot84(1);
+    TheInGameUI->slot84(1);
 }

@@ -70,6 +70,8 @@ public:
 template <class CharT>
 class ctype : public locale::facet
 {
+public:
+	static locale::id id;
 };
 
 template <class CharT>
@@ -111,7 +113,7 @@ template <class CharT>
 const ctype<CharT> &use_ctype_facet(const locale &loc)
 {
 	return *(const ctype<CharT> *)loc._M_use_facet(
-		*(const locale::id *)0x012C7450);
+		ctype<CharT>::id);
 }
 
 template <class CharT, class Traits>
