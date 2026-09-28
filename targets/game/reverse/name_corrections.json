@@ -7848,8 +7848,7 @@
   "after_sha256": "82e889ee0c45c4ad527206dbdde0034b894c269fa0d2ebf2bc31417f863bb2a9",
   "evidence": "targets/game/reverse/identity_evidence/00418da0-emit-callee.md",
   "reason": "Bank retirement: the stash's DrawableEmitterCall::emit was an unresolvable /alternatename shim for ILT 0x0002CB79 whose body 0x00417710 is an unidentified gen dump; the landed constructor uses the existing symbols.csv pin ?bfmeEmit@Gen_00417cb0@@AAEXPAX0@Z and asserts no emitter identity."
- }
-,
+ },
  {
   "old_path": "targets/game/reverse/attempts/0x00532280.cpp",
   "new_path": "targets/game/reverse/attempts/0x00532280.cpp",
@@ -7869,5 +7868,45 @@
   "after_sha256": "7c6de1f5ef059ad7bf5fe2f712317b8f33192c12bbacdf659d0b298a00663fe1",
   "evidence": "targets/game/reverse/functions.csv",
   "reason": "The ledger row for 0x003DD7A0 already holds ?checkDestination@Pathfinder@@QAE_NPBVObject@@HHW4PathfindLayerEnum@@H_N@Z (six arguments; Zero Hour twin plus the matched caller in PathfindAdjustDeab0.cpp). This 0x003DF580 body takes eight arguments and only its log literal says CheckDestination; no caller or vtable proves BFME kept a second C++ overload of that name, so the banked body keeps an address-derived method name until one does."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00713780.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00713780.cpp",
+  "old_name": "DoParticles",
+  "new_name": "j_000186e2",
+  "before_sha256": "fafaf926786f455a6b9e6a75dba34478f5fab01839d0f8140e948e4c3a5eadee",
+  "after_sha256": "a4d36b38271dac292ecdcd3883211f4671dc0041cb546d3af944ef1f105d603b",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "The old bank was the whole Zero Hour W3DScene.cpp; the new bank is only the retail 0x00713780 body rewritten from its disassembly. functions.csv rows ?j_00013926@@YAXXZ ?j_0004600b@@YAXXZ and ?j_000186e2@@YAXXZ are the ILT thunks at 0x00013926 0x0004600B 0x000186E2 that this body calls (targets 0x00410CC0 0x00414270 0x00414290 each return a Vector3 pointer or null). DoParticles is an unrelated Zero Hour free function the retail body never calls; the aligner paired its deleted declaration with the thunk declaration."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00713780.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00713780.cpp",
+  "old_name": "DoShadows",
+  "new_name": "j_0004600b",
+  "before_sha256": "fafaf926786f455a6b9e6a75dba34478f5fab01839d0f8140e948e4c3a5eadee",
+  "after_sha256": "a4d36b38271dac292ecdcd3883211f4671dc0041cb546d3af944ef1f105d603b",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "The old bank was the whole Zero Hour W3DScene.cpp; the new bank is only the retail 0x00713780 body rewritten from its disassembly. functions.csv rows ?j_00013926@@YAXXZ ?j_0004600b@@YAXXZ and ?j_000186e2@@YAXXZ are the ILT thunks at 0x00013926 0x0004600B 0x000186E2 that this body calls (targets 0x00410CC0 0x00414270 0x00414290 each return a Vector3 pointer or null). DoShadows is an unrelated Zero Hour free function the retail body never calls; the aligner paired its deleted declaration with the thunk declaration."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00713780.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00713780.cpp",
+  "old_name": "DoTrees",
+  "new_name": "j_00013926",
+  "before_sha256": "fafaf926786f455a6b9e6a75dba34478f5fab01839d0f8140e948e4c3a5eadee",
+  "after_sha256": "a4d36b38271dac292ecdcd3883211f4671dc0041cb546d3af944ef1f105d603b",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "The old bank was the whole Zero Hour W3DScene.cpp; the new bank is only the retail 0x00713780 body rewritten from its disassembly. functions.csv rows ?j_00013926@@YAXXZ ?j_0004600b@@YAXXZ and ?j_000186e2@@YAXXZ are the ILT thunks at 0x00013926 0x0004600B 0x000186E2 that this body calls (targets 0x00410CC0 0x00414270 0x00414290 each return a Vector3 pointer or null). DoTrees is an unrelated Zero Hour free function the retail body never calls; the aligner paired its deleted declaration with the thunk declaration."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00713780.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00713780.cpp",
+  "old_name": "tintColor",
+  "new_name": "j_000186e2",
+  "before_sha256": "fafaf926786f455a6b9e6a75dba34478f5fab01839d0f8140e948e4c3a5eadee",
+  "after_sha256": "a4d36b38271dac292ecdcd3883211f4671dc0041cb546d3af944ef1f105d603b",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "The old bank was the whole Zero Hour W3DScene.cpp; the new bank is only the retail 0x00713780 body rewritten from its disassembly. functions.csv rows ?j_00013926@@YAXXZ ?j_0004600b@@YAXXZ and ?j_000186e2@@YAXXZ are the ILT thunks at 0x00013926 0x0004600B 0x000186E2 that this body calls (targets 0x00410CC0 0x00414270 0x00414290 each return a Vector3 pointer or null). tintColor is still the local's name in the new body; the aligner paired the old getTintColor call line with the thunk argument of the ILT call that replaces it."
  }
 ]
