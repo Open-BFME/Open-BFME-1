@@ -1,5 +1,5 @@
-// ?select@MemberSelection00244680@@QAEXHHUPacket00244680@@0@Z
-// partial score=0.5929 date=2026-09-27
+// Retail 0x00244680 complete 624-byte thiscall ending ret 0x58; address-qualified identity.
+// Receiver is the HordeContain secondary interface: UpdateModule at this-0xe4, member list at this-0xac.
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Include/Precompiled /Igame/Libraries/Source/WWVegas/WWMath
 // stlport
 #define _STLP_USE_NEWALLOC 1
@@ -7,18 +7,26 @@
 #define _STLP_USE_STATIC_LIB 1
 #include <list>
 #include "coord.h"
-extern void j_00034a54(); extern void j_0001f91f(); extern void j_000157da();
+extern void j_00034a54();
 extern int GetGameLogicRandomValue(int,int,char *,int);
 extern float Rva0002CCA5GetGameLogicRandomValueRealThunk(float,float,char *,int);
+enum UpdateSleepTime {UPDATE_SLEEP_NONE=1};
+class Object;
+class Update00244680;
+class UpdateModule {
+protected: void setWakeFrame(Object *,UpdateSleepTime);
+ friend class Update00244680;
+};
+class BfmeSubDSU {public: void **bfmeTwoDSU(void **what);};
 struct Packet00244680 {int words[10];};
 class Member00244680 {public: char pad000[0x38]; Coord3D position; char pad044[0x74-0x44]; int field074;};
 struct TreeNode00244680 {int color;TreeNode00244680 *parent,*left,*right;};
 class Map00244680 {public: TreeNode00244680 *head;unsigned count;
  void erase(TreeNode00244680 *node) {union {void (*p)();void (Map00244680::*m)(TreeNode00244680 *);} c;c.p=j_00034a54;(this->*c.m)(node);}
  void clear() {if(count) {erase(head->parent);head->left=head;head->parent=0;head->right=head;count=0;}}
- int &lookup(const int &key) {union {void (*p)();int *(Map00244680::*m)(const int &);} c;c.p=j_0001f91f;return *(this->*c.m)(key);}
+ int &lookup(const int &key) {return *(int *)((BfmeSubDSU *)this)->bfmeTwoDSU((void **)&key);}
 };
-class Update00244680 {public: void wake(Member00244680 *o,int t) {union {void (*p)();void (Update00244680::*m)(Member00244680 *,int);} c;c.p=j_000157da;(this->*c.m)(o,t);}};
+class Update00244680 {public: void wake(Member00244680 *o,int t) {((UpdateModule *)this)->setWakeFrame((Object *)o,(UpdateSleepTime)t);}};
 class MemberSelection00244680 {public:
  virtual void unused0()=0;
  virtual void unused1()=0;
@@ -131,10 +139,9 @@ void MemberSelection00244680::select(int low,int high,Packet00244680 packetA,Pac
  for(_STL::list<Member00244680 *>::iterator it=members.begin();it!=members.end();++it) {
   Member00244680 *member=*it;
   if(!member) {slot17C();return;}
-  center.x+=member->position.x;center.y+=member->position.y;center.z+=member->position.z;
+  center.add(&member->position);
  }
- float inverse=1.0f/count;
- center.x*=inverse;center.y*=inverse;center.z*=inverse;
+ center.scale(1.0f/count);
  for(_STL::list<Member00244680 *>::iterator it=members.begin();it!=members.end();++it,++index) {
   Member00244680 *member=*it;
   if(!member) {slot17C();return;}
@@ -142,8 +149,9 @@ void MemberSelection00244680::select(int low,int high,Packet00244680 packetA,Pac
   float distance=diff.x*diff.x+diff.y*diff.y;
   if(distance<best) {closest=index;best=distance;}
  }
- if(closest==-1) closest=1;
- int other=closest+GetGameLogicRandomValue(1,count-1,"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Contain\\HordeContain\\HordeContain.cpp",0x1b34);
+ int leader=closest;
+ if(leader==-1) leader=1;
+ int other=leader+GetGameLogicRandomValue(1,count-1,"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Contain\\HordeContain\\HordeContain.cpp",0x1b34);
  if(other>count) other-=count;
  field074=packetB;field09C=packetA;
  index=1;
@@ -151,7 +159,7 @@ void MemberSelection00244680::select(int low,int high,Packet00244680 packetA,Pac
   Member00244680 *member=*it;
   if(!member) {slot17C();return;}
   if(index==other) field06C=member->field074;
-  else if(index==closest) field070=member->field074;
+  else if(index==leader) field070=member->field074;
   else {int id=member->field074;int &value=field0C4.lookup(id);
    value=(int)Rva0002CCA5GetGameLogicRandomValueRealThunk((float)low,(float)high,"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Contain\\HordeContain\\HordeContain.cpp",0x1b4f);
   }
