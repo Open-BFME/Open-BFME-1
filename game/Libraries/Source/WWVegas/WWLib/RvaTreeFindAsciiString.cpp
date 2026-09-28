@@ -401,4 +401,15 @@ Rva009D02A0Owner::get( const AsciiString &key ) const
 {
 	return Rva009CFA70Tree::find<AsciiString>( key );
 }
+struct Rva009D05E0Owner : Rva009CFA70Tree
+{
+	const_iterator get( const AsciiString &key ) const;
+};
+
+// retail 0x009D05E0
+Rva009D05E0Owner::const_iterator
+Rva009D05E0Owner::get( const AsciiString &key ) const
+{
+	return Rva009CFA70Tree::find<AsciiString>( key );
+}
 
