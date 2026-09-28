@@ -123,6 +123,80 @@ static void NullifyControls()
 //-------------------------------------------------------------------------------------------------
 /** Initialize the MapSelect menu */
 //-------------------------------------------------------------------------------------------------
+class BfmeLanMapAPI
+{
+public:
+    virtual void slot00() = 0;
+    virtual void slot04() = 0;
+    virtual void slot08() = 0;
+    virtual void slot0C() = 0;
+    virtual void slot10() = 0;
+    virtual void slot14() = 0;
+    virtual void slot18() = 0;
+    virtual void slot1C() = 0;
+    virtual void slot20() = 0;
+    virtual void slot24() = 0;
+    virtual void slot28() = 0;
+    virtual void slot2C() = 0;
+    virtual void slot30() = 0;
+    virtual void slot34() = 0;
+    virtual void slot38() = 0;
+    virtual void slot3C() = 0;
+    virtual void slot40() = 0;
+    virtual void slot44() = 0;
+    virtual void slot48() = 0;
+    virtual void slot4C() = 0;
+    virtual void slot50() = 0;
+    virtual void slot54() = 0;
+    virtual void slot58() = 0;
+    virtual void slot5C() = 0;
+    virtual void slot60() = 0;
+    virtual void slot64() = 0;
+    virtual void slot68() = 0;
+    virtual void slot6C() = 0;
+    virtual void slot70() = 0;
+    virtual void slot74() = 0;
+    virtual void slot78() = 0;
+    virtual void slot7C() = 0;
+    virtual void slot80() = 0;
+    virtual void slot84() = 0;
+    virtual void slot88() = 0;
+    virtual void slot8C() = 0;
+    virtual void slot90() = 0;
+    virtual void slot94() = 0;
+    virtual void slot98() = 0;
+    virtual void slot9C() = 0;
+    virtual void slotA0() = 0;
+    virtual void slotA4() = 0;
+    virtual void slotA8() = 0;
+    virtual void slotAC() = 0;
+    virtual void slotB0() = 0;
+    virtual void slotB4() = 0;
+    virtual void slotB8() = 0;
+    virtual void slotBC() = 0;
+    virtual LANGameInfo *GetMyGame() = 0;
+};
+
+void resetLanSession(int mode);
+void j_00029cee();
+void j_000487d9();
+// Call the existing address-owned ILT through its witnessed member ABI.
+// ABI-only single-inheritance member pointer; no preference layout is asserted.
+// 0x000487D9 jumps to 0x000869A0: ECX receiver, zero stack args, AL result.
+// The callee reads UseSystemMapDir; its class identity remains address-owned.
+class LanMapSelectPreferenceCall00487D9 {};
+inline Bool lanUsesSystemMapDir(LANPreferences *pref)
+{
+    union { void (*thunk)(); Bool (LanMapSelectPreferenceCall00487D9::*member)(); } call;
+    call.thunk = &j_000487d9;
+    return (((LanMapSelectPreferenceCall00487D9 *)pref)->*call.member)();
+}
+typedef Int (__cdecl *BfmePopulateRefFn)(GameWindow *, Bool, Bool, const AsciiString &);
+
+// Retail RVA 0x004D0230: ZH LanMapSelectMenuInit twin; the matching menu
+// literals, control initialization order, and adjacent callbacks prove identity.
+// BFME GetMyGame is slot 0xC0 (the same view used by the system callback);
+// populateMapListbox takes its last string by reference in this image.
 void LanMapSelectMenuInit( WindowLayout *layout, void *userData )
 {
 	showLANGameOptionsUnderlyingGUIElements(FALSE);
@@ -135,12 +209,14 @@ void LanMapSelectMenuInit( WindowLayout *layout, void *userData )
 	TheWindowManager->winSetFocus( parent );
 
 	LANPreferences pref;
-	Bool usesSystemMapDir = pref.usesSystemMapDir();
+	Bool usesSystemMapDir = lanUsesSystemMapDir(&pref);
 
-	const MapMetaData *mmd = TheMapCache->findMap(TheLAN->GetMyGame()->getMap());
+	const MapMetaData *mmd = TheMapCache->findMap(((BfmeLanMapAPI *)TheLAN)->GetMyGame()->getMap());
 	if (mmd)
 	{
-		usesSystemMapDir = mmd->m_isOfficial;
+		// Retail +0xC7 reads byte +0x26; ZH m_isOfficial is at +0x25.
+		// name_oracle has no MapMetaData witness: retain the explicit offset.
+		usesSystemMapDir = *((const Bool *)mmd + 0x26);
 	}
 
 
@@ -178,7 +254,7 @@ void LanMapSelectMenuInit( WindowLayout *layout, void *userData )
 	{
 		if (TheMapCache)
 			TheMapCache->updateCache();
-		populateMapListbox( mapList, usesSystemMapDir, TRUE, TheLAN->GetMyGame()->getMap() );
+		((BfmePopulateRefFn)&j_00029cee)( mapList, usesSystemMapDir, TRUE, ((BfmeLanMapAPI *)TheLAN)->GetMyGame()->getMap() );
 	}
 }  // end LanMapSelectMenuInit
 
@@ -280,63 +356,6 @@ WindowMsgHandledType LanMapSelectMenuInput( GameWindow *window, UnsignedInt msg,
 //-------------------------------------------------------------------------------------------------
 /** MapSelect menu window system callback */
 //-------------------------------------------------------------------------------------------------
-class BfmeLanMapAPI
-{
-public:
-    virtual void slot00() = 0;
-    virtual void slot04() = 0;
-    virtual void slot08() = 0;
-    virtual void slot0C() = 0;
-    virtual void slot10() = 0;
-    virtual void slot14() = 0;
-    virtual void slot18() = 0;
-    virtual void slot1C() = 0;
-    virtual void slot20() = 0;
-    virtual void slot24() = 0;
-    virtual void slot28() = 0;
-    virtual void slot2C() = 0;
-    virtual void slot30() = 0;
-    virtual void slot34() = 0;
-    virtual void slot38() = 0;
-    virtual void slot3C() = 0;
-    virtual void slot40() = 0;
-    virtual void slot44() = 0;
-    virtual void slot48() = 0;
-    virtual void slot4C() = 0;
-    virtual void slot50() = 0;
-    virtual void slot54() = 0;
-    virtual void slot58() = 0;
-    virtual void slot5C() = 0;
-    virtual void slot60() = 0;
-    virtual void slot64() = 0;
-    virtual void slot68() = 0;
-    virtual void slot6C() = 0;
-    virtual void slot70() = 0;
-    virtual void slot74() = 0;
-    virtual void slot78() = 0;
-    virtual void slot7C() = 0;
-    virtual void slot80() = 0;
-    virtual void slot84() = 0;
-    virtual void slot88() = 0;
-    virtual void slot8C() = 0;
-    virtual void slot90() = 0;
-    virtual void slot94() = 0;
-    virtual void slot98() = 0;
-    virtual void slot9C() = 0;
-    virtual void slotA0() = 0;
-    virtual void slotA4() = 0;
-    virtual void slotA8() = 0;
-    virtual void slotAC() = 0;
-    virtual void slotB0() = 0;
-    virtual void slotB4() = 0;
-    virtual void slotB8() = 0;
-    virtual void slotBC() = 0;
-    virtual LANGameInfo *GetMyGame() = 0;
-};
-
-void resetLanSession(int mode);
-void j_00029cee();
-typedef Int (__cdecl *BfmePopulateRefFn)(GameWindow *, Bool, Bool, const AsciiString &);
 class BfmeVirtualLayoutTeardown { public: virtual void slot00() = 0; virtual void deletingDestructor(unsigned int) = 0; virtual void slot08() = 0; virtual void slot0C() = 0; virtual void slot10() = 0; virtual void slot14() = 0; virtual void slot18() = 0; virtual void slot1C() = 0; virtual void destroyWindows() = 0; };
 class BfmeLanMapGameInfo { public: virtual void slot00() = 0; virtual void slot04() = 0; virtual void slot08() = 0; virtual void slot0C() = 0; virtual void slot10() = 0; virtual void slot14() = 0; virtual void slot18() = 0; virtual void resetStartSpots() = 0; virtual void adjustSlotsForMap() = 0; };
 // ?LanMapSelectMenuSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
