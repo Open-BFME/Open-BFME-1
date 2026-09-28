@@ -8648,5 +8648,25 @@
   "after_sha256": "4db85ad0bf13f510c27cba679b7a5907a0b53f8724d76f07f7cc7e9ba7e8c283",
   "evidence": "targets/game/reverse/identity_evidence/0x003594a0.md",
   "reason": "The old bank declares TABLE as the macro parameter of BFME_STRING_RECORD_RESET and invokes it with Rva003594A0. Its comment says the caller does not prove the table owner, so keep the class address-derived until evidence names it."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005770e0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptScoreScreenPopulateMultiPlayer.cpp",
+  "old_name": "_bfme_addPlayerTable",
+  "new_name": "Rva00576C20",
+  "before_sha256": "48126dd0fbfa912cad586c4edb3bd822cf796791541ecd6e104aa426682ffbc2",
+  "after_sha256": "d8f92face2f8561c68cf685155bb8bf823192f33e6c57af587ce054d64d68122",
+  "evidence": "targets/game/reverse/identity_evidence/005770e0-populate-multiplayer.md",
+  "reason": "the call goes through ILT 0x0001355C to 0x00576C20, already matched as BfmeAptScreenScoreScreen::Rva00576C20; no ledger row or pin carries the bank spelling"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005770e0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptScoreScreenPopulateMultiPlayer.cpp",
+  "old_name": "m_object",
+  "new_name": "m_slot",
+  "before_sha256": "48126dd0fbfa912cad586c4edb3bd822cf796791541ecd6e104aa426682ffbc2",
+  "after_sha256": "d8f92face2f8561c68cf685155bb8bf823192f33e6c57af587ce054d64d68122",
+  "evidence": "targets/game/reverse/identity_evidence/005770e0-populate-multiplayer.md",
+  "reason": "the first entry dword is the GameInfo::getSlot result and is passed as the GameSlot argument of the matched row helper 0x00576C20"
  }
 ]
