@@ -1,142 +1,87 @@
-// ?bfmeGo008939C0@@YAPAXPAPAXHH@Z
-// partial score=0.15 date=2026-09-21
-// cl: /DNDEBUG /MD /EHs-c-
-//
-// Address-derived: no this-pointer field is ever read (ecx is unused), so
-// this is a free helper, not a method. It grows/replaces a BfmeElemCU[]
-// buffer allocated through the custom allocator at 0x01337828 and freed
-// through g_bfmeFreeDWF (0x0133782c) -- both already-pinned globals used by
-// the landed Rva00893960ListClear.cpp neighbour. The two decrement/increment
-// callees resolve to the already-matched refcount helpers documented in
-// S3ChildTeardown.cpp (bfmeCheckA @ 0x00894D90 -- decrement-and-test; the
-// paired increment @ 0x00894D80 is pinned as bfmeIncVGO). Element ctor/dtor
-// are the pinned BfmeElemCU special members (0x00892B80 / thunk 0x000463AD).
-// Exact parameter semantics are NOT proven (literal straight-line
-// transliteration of the disassembly; register names kept as such where the
-// true meaning is unproven), per docs/naming_evidence.md.
-
+// ?Rva008939C0@@YAPAXPAVBfmeElemCU@@HH@Z
+// partial score=0.992 date=2026-09-28
+// Rva008939C0 uses its retail address as its name because the caller only
+// calls the body through the RVA token b_008939c0.
+// Gen_00896320::rva00896100 passes a null input and a new count to allocate
+// BfmeElemCU elements, then passes the old data pointer and zero counts to
+// destroy and free that array. Retail calls the constructor at 0x00892B80
+// and destructor thunk at 0x000463AD.
+// This draft matches 99.2% of normalized instructions and emits 360 bytes.
+// Its remaining structural difference is the one-byte loop NOP at +0xEF.
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 #include <new>
 
-typedef unsigned int UnsignedInt;
+extern "C" void *(__cdecl *g_bfmeAllocDWF)(unsigned int);
+extern "C" void (__cdecl *g_bfmeFreeDWF)(void *);
 
-extern "C" void *(__cdecl *g_bfmeAllocDWF)(unsigned int bytes);	// 0x01337828
-extern "C" void (__cdecl *g_bfmeFreeDWF)(void *ptr);			// 0x0133782c
-
-int bfmeCheckA(void *p);				// 0x00894D90, decrement-and-return
-int bfmeIncVGO(int *p);				// 0x00894D80, increment-and-return
-extern void bfmeDropA(void *p);			// 0x00895320 (S3ChildTeardown.cpp)
+class Rva00894D90Accessor
+{
+public:
+	static unsigned int decrement(unsigned int *value);
+};
+class Rva00894D80Accessor
+{
+public:
+	static unsigned int increment(unsigned int *value);
+};
+void bfmeDropA(void *value);
 
 class BfmeElemCU
 {
 public:
-	BfmeElemCU();					// 0x00892B80
-	~BfmeElemCU();					// thunk 0x000463AD
-
+	static void *__cdecl operator new[](unsigned int bytes) throw()
+	{
+		return g_bfmeAllocDWF(bytes);
+	}
+	static void __cdecl operator delete[](void *value) throw()
+	{
+		g_bfmeFreeDWF(value);
+	}
+	BfmeElemCU();
+	~BfmeElemCU();
+	BfmeElemCU &operator=(const BfmeElemCU &other)
+	{
+		if (&other != this)
+		{
+			if (m_value && Rva00894D90Accessor::decrement((unsigned int *)m_value) == 0)
+				bfmeDropA(m_value);
+			m_value = other.m_value;
+			if (m_value)
+				Rva00894D80Accessor::increment((unsigned int *)m_value);
+		}
+		return *this;
+	}
 private:
-	void *m_ptr;
+	void *m_value;
 };
 
-// this-unused free helper; ebx=p1 (nullable source array), [esp+0x24]-arg=p2
-// (existing/old count), [esp+0x28]-arg=p3 (new element count).
-void *bfmeGo008939C0(void **p1, int p2, int p3)
+void *Rva008939C0(BfmeElemCU *source, int oldCount, int newCount)
 {
-	void **ebx = p1;
-	int ebp = 0;
-	void *buf;
-	int newCount;
-	void **esi;
-	void **edi;
+	if (!source)
+		return new BfmeElemCU[newCount];
 
-	if (ebx != 0)
-		goto SecondBranch;
-
-	// ---- first branch: p1 == NULL ----
 	{
-		int count = p3;
-		buf = g_bfmeAllocDWF(count * 4 + 4);
-		newCount = 0;
-		if (buf == 0)
-			return 0;
-
-		*(int *)buf = count;
-		esi = (void **)((char *)buf + 4);
-		for (int i = 0; i < count; ++i)
-			new (&((BfmeElemCU *)esi)[i]) BfmeElemCU();
-		return esi;
-	}
-
-SecondBranch:
+	int count = *(volatile int *)&newCount;
+	BfmeElemCU *destination = 0;
+	if (count != 0)
 	{
-		int count = p3;
-		buf = 0;
-		if (count == 0)
-			goto OldBufferCheck;
-
-		void *newBuf = g_bfmeAllocDWF(count * 4 + 4);
-		buf = newBuf;
-		newCount = 1;
-		if (newBuf == 0)
+		destination = new BfmeElemCU[count];
+		if (count >= oldCount)
+			count = oldCount;
+		if (count != 0)
 		{
-			edi = 0;
-			goto Merge;
-		}
-
-		*(int *)newBuf = count;
-		edi = (void **)((char *)newBuf + 4);
-		for (int i = 0; i < count; ++i)
-			new (&((BfmeElemCU *)edi)[i]) BfmeElemCU();
-		goto AfterConstruct;
-	}
-
-Merge:
-AfterConstruct:
-	{
-		int oldCount = p2;
-		newCount = (p3 >= oldCount) ? -1 : newCount;
-		buf = edi;
-		if (p3 < oldCount)
-			goto SkipLoop;
-
-		esi = (void **)(UnsignedInt)oldCount;
-		if (oldCount == 0)
-			goto OldBufferCheck;
-
-		ebp = oldCount;
-		edi = 0;
-		for (;;)
+		int remaining = count;
+		BfmeElemCU *out = destination;
+		do
 		{
-			esi = edi;
-			edi = (void **)((char *)edi + 4);
-			if (ebx == esi)
-				break;
-
-			void *elem = *(void **)esi;
-			if (elem != 0)
-			{
-				if (bfmeCheckA(elem) == 0)
-					bfmeDropA(elem);
-			}
-
-			void *repl = *ebx;
-			*(void **)esi = repl;
-			if (repl != 0)
-				bfmeIncVGO((int *)repl);
-
-			ebx = (void **)((char *)ebx + 4);
-			if (--ebp == 0)
-				break;
+			BfmeElemCU *current = out;
+			++out;
+			*current = *source;
+			++source;
+		} while (--remaining != 0);
 		}
 	}
-
-SkipLoop:
-OldBufferCheck:
-	if (ebx != 0)
-	{
-		void *old = *((char **)ebx - 1);
-		void **oldData = (void **)((char *)ebx - 4);
-		((BfmeElemCU *)oldData)->~BfmeElemCU();
-		g_bfmeFreeDWF(oldData);
+	delete[] source;
+	return destination;
 	}
-
-	return buf;
 }
