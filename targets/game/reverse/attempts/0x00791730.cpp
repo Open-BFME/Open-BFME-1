@@ -1,79 +1,110 @@
 // ?W3DGadgetHorizontalSliderImageDrawB@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
-// partial score=0.34 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
-// stlport
-#define Matrix4x4 Matrix4  // BFME renamed it
-#define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
-// stlport
-/*
-**	Command & Conquer Generals Zero Hour(tm)
-**	Copyright 2025 Electronic Arts Inc.
-**
-**	This program is free software: you can redistribute it and/or modify
-**	it under the terms of the GNU General Public License as published by
-**	the Free Software Foundation, either version 3 of the License, or
-**	(at your option) any later version.
-**
-**	This program is distributed in the hope that it will be useful,
-**	but WITHOUT ANY WARRANTY; without even the implied warranty of
-**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-**	GNU General Public License for more details.
-**
-**	You should have received a copy of the GNU General Public License
-**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-////////////////////////////////////////////////////////////////////////////////
-//																																						//
-//  (c) 2001-2003 Electronic Arts Inc.																				//
-//																																						//
-////////////////////////////////////////////////////////////////////////////////
-
-// FILE: .cpp /////////////////////////////////////////////////////////////////
-//-----------------------------------------------------------------------------
-//                                                                          
-//                       Westwood Studios Pacific.                          
-//                                                                          
-//                       Confidential Information                           
-//                Copyright (C) 2001 - All Rights Reserved                  
-//                                                                          
-//-----------------------------------------------------------------------------
-//
-// Project:   
-//
-// File name: .cpp
-//
-// Created:   
-//
-// Desc:      
-//
-//-----------------------------------------------------------------------------
-///////////////////////////////////////////////////////////////////////////////
-
-// SYSTEM INCLUDES ////////////////////////////////////////////////////////////
-#include <stdlib.h>
-
-// USER INCLUDES //////////////////////////////////////////////////////////////
-#include "GameClient/GameWindowGlobal.h"
-#include "GameClient/GameWindowManager.h"
-#include "GameClient/GadgetSlider.h"
-#include "W3DDevice/GameClient/W3DGadget.h"
-#include "W3DDevice/GameClient/W3DDisplay.h"
-
-// DEFINES ////////////////////////////////////////////////////////////////////
-
-// PRIVATE TYPES //////////////////////////////////////////////////////////////
-
-// PRIVATE DATA ///////////////////////////////////////////////////////////////
-
-// PUBLIC DATA ////////////////////////////////////////////////////////////////
-
-// PRIVATE PROTOTYPES /////////////////////////////////////////////////////////
-
-// PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
-
+// partial score=0.9913 date=2026-09-28
 // ?W3DGadgetHorizontalSliderImageDrawB@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
-class Rva00791730Display
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringbaseunicode /Igame/Libraries/Source/WWVegas/WWLib
+// W3DGadgetHorizontalSliderImageDrawB, retail 0x00791730 (1380 bytes, ret).
+// Identity: the seven UTF-16 debug literals it formats ("mult:%g/%g, img
+// offset:%d,%d", "\norigin: %d,%d size:%d,%d", "\ns= %d <--> %d, numTicks=%g,
+// pos = %d", "\nHighlighted: ...", "\n  bsX = ...", "\ntop: start=...") are
+// Zero Hour's W3DGadgetHorizontalSliderImageDrawB (W3DHorizontalSlider.cpp)
+// word for word, and the draw loops, the tooltip hand-off and the image
+// accessors follow it line for line. BFME only adds the resolution scale gate:
+// the 800x600 multipliers stay 1.0 when window status bit 0x08000000 is set.
+// Retail's UnicodeString is the StringBase<unsigned short> wrapper
+// (stringbaseunicode shim): by-value format strings, inline concat.
+// BANKED 1380/1380 bytes, 12 differing: in the HILITED block (+0x2AE..+0x30D)
+// retail loads size.x into eax and origin.x into ecx for `origin.x + size.x`
+// (loop test and the "bsX" format args); ours swaps the two. Not reached by
+// operand order, declaration order, block scope, raw state read (worse) or the
+// 9 shape-family choices. Intended home: the Gadget directory next to
+// W3DHorizontalSlider.cpp, whose older ZH-port copy of this function is
+// unclaimed and should be removed when this lands.
+
+#include <wchar.h>
+#include "string_base.h"
+template <typename T> inline const T *StringBase<T>::str() const { return m_data ? m_data->data : (const T *)L""; }
+#include "Common/UnicodeString.h"
+inline UnicodeString::~UnicodeString() { ((StringBase<wchar_t> *)this)->releaseBuffer(); }
+
+typedef int Int;
+typedef unsigned int UnsignedInt;
+typedef float Real;
+typedef int Color;
+
+#define INT_TO_REAL(x) ((Real)(x))
+
+struct ICoord2D
+{
+	Int x, y;
+};
+
+class Image
+{
+public:
+	Int getImageWidth( void ) const { return m_imageSize.x; }
+	Int getImageHeight( void ) const { return m_imageSize.y; }
+
+private:
+	unsigned char m_unmodelled00[ 0x24 ];
+	ICoord2D m_imageSize;
+};
+
+struct WinDrawData
+{
+	const Image *image;
+	Color color;
+	Color borderColor;
+};
+
+enum { MAX_DRAW_DATA = 9 };
+enum { WIN_STATE_HILITED = 0x00000002 };
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WinInstanceData.h
+class WinInstanceData
+{
+public:
+	UnsignedInt getState( void ) { return m_state; }
+	void setTooltipText( UnicodeString tip );
+
+	unsigned char m_unmodelled00[ 0x08 ];
+	UnsignedInt m_state;
+	unsigned char m_unmodelled0c[ 0x4c - 0x0c ];
+	WinDrawData m_disabledDrawData[ MAX_DRAW_DATA ];
+	WinDrawData m_hiliteDrawData[ MAX_DRAW_DATA ];
+	unsigned char m_unmodelled124[ 0x17c - 0x124 ];
+	ICoord2D m_imageOffset;
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
+class GameWindow
+{
+public:
+	Int winGetScreenPosition( Int *x, Int *y );
+	Int winGetSize( Int *width, Int *height );
+	void *winGetUserData( void );
+	UnsignedInt winGetStatus( void );
+	const Image *winGetDisabledImage( Int index ) { return m_instData.m_disabledDrawData[ index ].image; }
+	const Image *winGetHiliteImage( Int index ) { return m_instData.m_hiliteDrawData[ index ].image; }
+
+private:
+	unsigned char m_unmodelled00[ 0x68 ];
+	WinInstanceData m_instData;
+};
+
+inline const Image *GadgetSliderGetDisabledImageLeft( GameWindow *g ) { return g->winGetDisabledImage( 0 ); }
+inline const Image *GadgetSliderGetDisabledImageRight( GameWindow *g ) { return g->winGetDisabledImage( 1 ); }
+inline const Image *GadgetSliderGetHiliteImageLeft( GameWindow *g ) { return g->winGetHiliteImage( 0 ); }
+
+// upstream: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GadgetSlider.h
+struct SliderData
+{
+	Int minVal;
+	Int maxVal;
+	Real numTicks;
+	Int position;
+};
+
+class Display
 {
 public:
 	virtual void slot00( void ) = 0;
@@ -91,166 +122,37 @@ public:
 	virtual UnsignedInt getHeight( void ) = 0;
 };
 
-///////////////////////////////////////////////////////////////////////////////
-// PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-#ifdef _INTERNAL
-// for occasional debugging...
-//#pragma optimize("", off)
-//#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
-#endif
-
-// W3DGadgetHorizontalSliderDraw ==============================================
-/** Draw colored horizontal slider using standard graphics */
-//=============================================================================
-void W3DGadgetHorizontalSliderDraw( GameWindow *window, WinInstanceData *instData )
+class GameWindowManager
 {
-	Color backBorder, backColor;
-	ICoord2D origin, size, start, end;
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03();
+	virtual void slot04(); virtual void slot05(); virtual void slot06(); virtual void slot07();
+	virtual void slot08(); virtual void slot09(); virtual void slot10(); virtual void slot11();
+	virtual void slot12(); virtual void slot13(); virtual void slot14(); virtual void slot15();
+	virtual void slot16(); virtual void slot17(); virtual void slot18(); virtual void slot19();
+	virtual void slot20(); virtual void slot21(); virtual void slot22(); virtual void slot23();
+	virtual void slot24(); virtual void slot25(); virtual void slot26(); virtual void slot27();
+	virtual void slot28(); virtual void slot29(); virtual void slot30(); virtual void slot31();
+	virtual void slot32(); virtual void slot33(); virtual void slot34(); virtual void slot35();
+	virtual void slot36(); virtual void slot37(); virtual void slot38(); virtual void slot39();
+	virtual void slot40(); virtual void slot41(); virtual void slot42(); virtual void slot43();
+	virtual void slot44(); virtual void slot45(); virtual void slot46(); virtual void slot47();
+	virtual void slot48(); virtual void slot49(); virtual void slot50(); virtual void slot51();
+	virtual void slot52(); virtual void slot53(); virtual void slot54(); virtual void slot55();
+	virtual void slot56(); virtual void slot57(); virtual void slot58(); virtual void slot59();
+	virtual void slot60();
+	virtual void winDrawImage( const Image *image, Int startX, Int startY,
+		Int endX, Int endY, Color color = 0xFFFFFFFF );
+};
 
-	// get screen position and size
-	window->winGetScreenPosition( &origin.x, &origin.y );
-	window->winGetSize( &size.x, &size.y );
+extern Display *TheDisplay;
+extern GameWindowManager *TheWindowManager;
 
-	// get the right colors
-	if( BitTest( window->winGetStatus(), WIN_STATUS_ENABLED ) == FALSE )
-	{
-
-		backBorder		= GadgetSliderGetDisabledBorderColor( window );
-		backColor			= GadgetSliderGetDisabledColor( window );
-
-	}  // end if, disabled
-	else if( BitTest( instData->getState(), WIN_STATE_HILITED ) )
-	{
-
-		backBorder		= GadgetSliderGetHiliteBorderColor( window );
-		backColor			= GadgetSliderGetHiliteColor( window );
-
-	}  // end else if, hilited
-	else
-	{
-
-		backBorder		= GadgetSliderGetEnabledBorderColor( window );
-		backColor			= GadgetSliderGetEnabledColor( window );
-
-	}  // end else, enabled
-
-	// draw background border and rect over whole control
-	if( backBorder != WIN_COLOR_UNDEFINED )
-	{
-
-		start.x = origin.x;
-		start.y = origin.y;
-		end.x = start.x + size.x;
-		end.y = start.y + size.y;
-		TheWindowManager->winOpenRect( backBorder, WIN_DRAW_LINE_WIDTH,
-																	 start.x, start.y, end.x, end.y );
-
-	}  // end if
-	if( backColor != WIN_COLOR_UNDEFINED )
-	{
-
-		start.x = origin.x + 1;
-		start.y = origin.y + 1;
-		end.x = start.x + size.x - 2;
-		end.y = start.y + size.y - 2;
-		TheWindowManager->winFillRect( backColor, WIN_DRAW_LINE_WIDTH,
-																	 start.x, start.y, end.x, end.y );
-
-	}  // end if
-
-
-}  // end W3DGadgetHorizontalSliderDraw
-
-// W3DGadgetHorizontalSliderImageDraw =========================================
-/** Draw horizontal slider with user supplied images */
-//=============================================================================
-void W3DGadgetHorizontalSliderImageDraw( GameWindow *window, 
-																				 WinInstanceData *instData )
+// ?W3DGadgetHorizontalSliderImageDrawB@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
+void W3DGadgetHorizontalSliderImageDrawB( GameWindow *window,
+	WinInstanceData *instData )
 {
 	const Image *fillSquare, *blankSquare, *highlightSquare;
-	ICoord2D origin, size, start, end, highlightOffset;
-
-	// get screen position and size
-	window->winGetScreenPosition( &origin.x, &origin.y );
-	window->winGetSize( &size.x, &size.y );
-
-	highlightSquare = GadgetSliderGetHiliteImageLeft( window );
-	blankSquare	= GadgetSliderGetDisabledImageRight( window );
-	fillSquare = GadgetSliderGetDisabledImageLeft( window );
-
-	SliderData *s = (SliderData *)window->winGetUserData();
-	
-	Real xMulti = INT_TO_REAL(TheDisplay->getWidth()) / 800;
-
-	// figure out how many boxes we draw for this slider
-	Int numBoxes = 0;
-	Int numSelectedBoxes = 0;
-	Int numHighlightBoxes = 0;
-	Int boxWidth = fillSquare->getImageWidth()* xMulti;
-	Int boxPadding = 2;
-	start.x = origin.x;
-	end.x	= start.x + boxWidth;
-	Real selectedPercent = (s->position - s->minVal)/INT_TO_REAL((s->maxVal - s->minVal));
-	Int maxSelectedX = origin.x + REAL_TO_INT(selectedPercent * size.x);
-	while(end.x < origin.x + size.x )
-	{
-		if (start.x <= maxSelectedX && end.x < origin.x + size.x && s->position != s->minVal)
-			++numSelectedBoxes;
-		start.x = end.x + boxPadding;
-		end.x	= start.x + boxWidth;
-		++numBoxes;
-	}
-	numHighlightBoxes = numBoxes + 1;
-	Int distanceCovered = end.x - origin.x - boxWidth;
-	highlightOffset.x = -(boxWidth + boxPadding)/2;
-	highlightOffset.y = boxWidth/3;
-	Int blankness = size.x - distanceCovered;
-	origin.x += blankness/2;
-
-	Int i;
-	if( BitTest( instData->getState(), WIN_STATE_HILITED ) )
-	{
-		ICoord2D backgroundStart, backgroundEnd;
-		backgroundStart.y = origin.y + highlightOffset.y;
-		backgroundEnd.y = backgroundStart.y + boxWidth + boxPadding;
-		for (i=0; i<numHighlightBoxes; ++i)
-		{
-			backgroundStart.x = origin.x + highlightOffset.x + i*(boxWidth+boxPadding);
-			backgroundEnd.x = backgroundStart.x + boxWidth + boxPadding;
-			TheWindowManager->winDrawImage( highlightSquare, 
-																		backgroundStart.x, backgroundStart.y,
-																		backgroundEnd.x, backgroundEnd.y );
-		}
-	}
-
-	start.y = origin.y;
-	end.y = start.y + boxWidth;
-	for (i=0; i<numSelectedBoxes; ++i)
-	{
-		start.x = origin.x + i*(boxWidth+boxPadding);
-		end.x = start.x + boxWidth;
-		TheWindowManager->winDrawImage( fillSquare, 
-																	start.x, start.y,
-																	end.x, end.y );
-	}
-	for (i=numSelectedBoxes; i<numBoxes; ++i)
-	{
-		start.x = origin.x + i*(boxWidth+boxPadding);
-		end.x = start.x + boxWidth;
-		TheWindowManager->winDrawImage( blankSquare, 
-																	start.x, start.y,
-																	end.x, end.y );
-	}
-}
-
-// W3DGadgetHorizontalSliderImageDraw =========================================
-/** Draw horizontal slider with user supplied images */
-//=============================================================================
-void W3DGadgetHorizontalSliderImageDrawB( GameWindow *window, 
-																	 WinInstanceData *instData )
-{
-	const Image *fillSquare, *blankSquare, *highlightSquare;//, *progressArrow;
 	ICoord2D origin, size, start, end;
 	Int xOffset, yOffset;
 
@@ -259,257 +161,83 @@ void W3DGadgetHorizontalSliderImageDrawB( GameWindow *window,
 	window->winGetSize( &size.x, &size.y );
 
 	SliderData *s = (SliderData *)window->winGetUserData();
-	
-	Real xMulti = (Real)1.0;
-	Real yMulti = (Real)1.0;
-	if( (window->winGetStatus() & 0x08000000) == 0 )
+
+	Real xMulti = 1.0f;
+	Real yMulti = 1.0f;
+	if( !( window->winGetStatus() & 0x08000000 ) )
 	{
-		xMulti = INT_TO_REAL(((Rva00791730Display *)TheDisplay)->getWidth()) / 800;
-		yMulti = INT_TO_REAL(((Rva00791730Display *)TheDisplay)->getHeight()) / 600;
+		xMulti = INT_TO_REAL( TheDisplay->getWidth() ) / 800;
+		yMulti = INT_TO_REAL( TheDisplay->getHeight() ) / 600;
 	}
 	// get image offset
 	xOffset = instData->m_imageOffset.x;
 	yOffset = instData->m_imageOffset.y;
 
 	UnicodeString tooltip, tmp;
-	tooltip.format(UnicodeString(L"mult:%g/%g, img offset:%d,%d"), xMulti, yMulti, xOffset, yOffset);
+	tooltip.format( UnicodeString( L"mult:%g/%g, img offset:%d,%d" ), xMulti, yMulti, xOffset, yOffset );
 
-	tmp.format(UnicodeString(L"\norigin: %d,%d size:%d,%d"), origin.x, origin.y, size.x, size.y);
-	tooltip.concat(tmp);
+	tmp.format( UnicodeString( L"\norigin: %d,%d size:%d,%d" ), origin.x, origin.y, size.x, size.y );
+	tooltip.concat( tmp );
 
-	tmp.format(UnicodeString(L"\ns= %d <--> %d, numTicks=%g, pos = %d"), s->minVal, s->maxVal, s->numTicks, s->position);
-	tooltip.concat(tmp);
+	tmp.format( UnicodeString( L"\ns= %d <--> %d, numTicks=%g, pos = %d" ), s->minVal, s->maxVal, s->numTicks, s->position );
+	tooltip.concat( tmp );
 
-	if( BitTest( instData->getState(), WIN_STATE_HILITED ) )
+	if( instData->getState() & WIN_STATE_HILITED )
 	{
-		highlightSquare					= *(const Image **)((unsigned char *)window + 0x120);
+		highlightSquare = GadgetSliderGetHiliteImageLeft( window );
 		ICoord2D backgroundStart, backgroundEnd;
-		backgroundStart.y = origin.y + (highlightSquare->getImageHeight() *yMulti)/3;
-		backgroundStart.x = origin.x - (highlightSquare->getImageWidth() * xMulti)/2;
-		backgroundEnd.y = backgroundStart.y + highlightSquare->getImageHeight()* yMulti;
+		backgroundStart.x = origin.x - ( highlightSquare->getImageWidth() * xMulti ) / 2;
+		backgroundStart.y = origin.y + ( highlightSquare->getImageHeight() * yMulti ) / 3;
+		backgroundEnd.y = backgroundStart.y + highlightSquare->getImageHeight() * yMulti;
 		backgroundEnd.x = backgroundStart.x + highlightSquare->getImageWidth() * xMulti;
 
-		tmp.format(UnicodeString(L"\nHighlighted: (%d,%d) -> (%d,%d), step %d/%g, full %d/%d"), backgroundStart.x, backgroundStart.y,
+		tmp.format( UnicodeString( L"\nHighlighted: (%d,%d) -> (%d,%d), step %d/%g, full %d/%d" ), backgroundStart.x, backgroundStart.y,
 			backgroundEnd.x, backgroundEnd.y, highlightSquare->getImageWidth(), highlightSquare->getImageWidth() * xMulti,
-			origin.x, size.x);
-		tooltip.concat(tmp);
+			origin.x, size.x );
+		tooltip.concat( tmp );
 
-		while(backgroundStart.x < origin.x + size.x)
+		while( backgroundStart.x < origin.x + size.x )
 		{
-			TheWindowManager->winDrawImage( highlightSquare, 
-																		backgroundStart.x, backgroundStart.y,
-																		backgroundEnd.x, backgroundEnd.y );
+			TheWindowManager->winDrawImage( highlightSquare,
+				backgroundStart.x, backgroundStart.y,
+				backgroundEnd.x, backgroundEnd.y );
 			backgroundStart.x = backgroundEnd.x;
 			backgroundEnd.x = backgroundStart.x + highlightSquare->getImageWidth() * xMulti;
-		}		
-		tmp.format(UnicodeString(L"\n  bsX = %d, beX = %d (%d < %d+%d or %d?)"), backgroundStart.x, backgroundEnd.x,
-			backgroundStart.x, origin.x, size.x, origin.x + size.x);
-		tooltip.concat(tmp);
+		}
+		tmp.format( UnicodeString( L"\n  bsX = %d, beX = %d (%d < %d+%d or %d?)" ), backgroundStart.x, backgroundEnd.x,
+			backgroundStart.x, origin.x, size.x, origin.x + size.x );
+		tooltip.concat( tmp );
 	}
 
-	fillSquare = *(const Image **)((unsigned char *)window + 0xB4);
+	fillSquare = GadgetSliderGetDisabledImageLeft( window );
 	start.x = origin.x;
 	start.y = origin.y;
 	end.y = start.y + fillSquare->getImageHeight() * yMulti;
-	end.x	= start.x + fillSquare->getImageWidth()* xMulti;
+	end.x = start.x + fillSquare->getImageWidth() * xMulti;
 
-	tmp.format(UnicodeString(L"\ntop: start=%d,%d, end=%d,%d"), start.x, start.y, end.x, end.y);
-	tooltip.concat(tmp);
+	tmp.format( UnicodeString( L"\ntop: start=%d,%d, end=%d,%d" ), start.x, start.y, end.x, end.y );
+	tooltip.concat( tmp );
 
-	while(start.x <= origin.x + (s->numTicks * (s->position - s->minVal)) && end.x < origin.x + size.x && s->position != s->minVal)
+	while( start.x <= origin.x + ( s->numTicks * ( s->position - s->minVal ) ) && end.x < origin.x + size.x && s->position != s->minVal )
 	{
-		TheWindowManager->winDrawImage( fillSquare, 
-																		start.x, start.y,
-																		end.x, end.y );
+		TheWindowManager->winDrawImage( fillSquare,
+			start.x, start.y,
+			end.x, end.y );
 		start.x = end.x + 2;
-		end.x	= start.x + fillSquare->getImageWidth()* xMulti;
-
+		end.x = start.x + fillSquare->getImageWidth() * xMulti;
 	}
 
-	blankSquare	= *(const Image **)((unsigned char *)window + 0xC0);
-	end.x	= start.x + blankSquare->getImageWidth()* xMulti;
+	blankSquare = GadgetSliderGetDisabledImageRight( window );
+	end.x = start.x + blankSquare->getImageWidth() * xMulti;
 
-	while(end.x < origin.x + size.x )
+	while( end.x < origin.x + size.x )
 	{
-		TheWindowManager->winDrawImage( blankSquare, 
-																		start.x, start.y,
-																		end.x, end.y );
+		TheWindowManager->winDrawImage( blankSquare,
+			start.x, start.y,
+			end.x, end.y );
 		start.x = end.x + 2;
-		end.x	= start.x + blankSquare->getImageWidth()* xMulti;
+		end.x = start.x + blankSquare->getImageWidth() * xMulti;
 	}
 
-	instData->setTooltipText(tooltip);
-
-//	if( BitTest( instData->getState(), WIN_STATE_HILITED ) )
-//	{
-//		progressArrow				= GadgetSliderGetHiliteImageRight( window );
-//		if(!progressArrow)
-//			return;
-//		Int transPos = (s->numTicks * (s->position - s->minVal)) - progressArrow->getImageWidth() /2;
-//		start.x = origin.x + transPos;
-//		start.y = origin.y + fillSquare->getImageHeight()/3*2;
-//		end.y = start.y + progressArrow->getImageHeight();
-//		end.x	= start.x + progressArrow->getImageWidth();
-//		TheWindowManager->winDrawImage( progressArrow, 
-//																			start.x, start.y,
-//																			end.x, end.y );
-//	}
+	instData->setTooltipText( tooltip );
 }
-
-
-// W3DGadgetHorizontalSliderImageDraw =========================================
-/** Draw horizontal slider with user supplied images */
-//=============================================================================
-void W3DGadgetHorizontalSliderImageDrawA( GameWindow *window, 
-																				 WinInstanceData *instData )
-{
-	const Image *leftImageLeft, *rightImageLeft, *centerImageLeft, *smallCenterImageLeft;
-	const Image *leftImageRight, *rightImageRight, *centerImageRight, *smallCenterImageRight;
-	ICoord2D origin, size, start, end;
-	Int xOffset, yOffset;
-	Int i;
-
-	// get screen position and size
-	window->winGetScreenPosition( &origin.x, &origin.y );
-	window->winGetSize( &size.x, &size.y );
-
-	SliderData *s = (SliderData *)window->winGetUserData();
-	Int transPos = (s->numTicks * (s->position - s->minVal)) + HORIZONTAL_SLIDER_THUMB_WIDTH/2;
-	IRegion2D clipLeft, clipRight;
-
-	// get image offset
-	xOffset = instData->m_imageOffset.x;
-	yOffset = instData->m_imageOffset.y;
-
-	// get the right images
-	if( BitTest( window->winGetStatus(), WIN_STATUS_ENABLED ) == FALSE )
-	{
-
-		leftImageRight = leftImageLeft					= GadgetSliderGetDisabledImageLeft( window );
-		rightImageRight = rightImageLeft				= GadgetSliderGetDisabledImageRight( window );
-//		centerImageRight = centerImageLeft				= GadgetSliderGetDisabledImageCenter( window );
-//		smallCenterImageRight = smallCenterImageLeft	= GadgetSliderGetDisabledImageSmallCenter( window );
-
-	}  // end if, disabled
-	else //if( BitTest( instData->getState(), WIN_STATE_HILITED ) )
-	{
-
-		leftImageLeft					= GadgetSliderGetHiliteImageLeft( window );
-		rightImageLeft				= GadgetSliderGetHiliteImageRight( window );
-		centerImageLeft				= GadgetSliderGetHiliteImageCenter( window );
-		smallCenterImageLeft	= GadgetSliderGetHiliteImageSmallCenter( window );
-
-		leftImageRight					= GadgetSliderGetEnabledImageLeft( window );
-		rightImageRight				= GadgetSliderGetEnabledImageRight( window );
-		centerImageRight				= GadgetSliderGetEnabledImageCenter( window );
-		smallCenterImageRight	= GadgetSliderGetEnabledImageSmallCenter( window );
-
-	}  // end else, enabled
-
-	// sanity, we need to have these images to make it look right
-	if( leftImageLeft == NULL || rightImageLeft == NULL || 
-			centerImageLeft == NULL || smallCenterImageLeft == NULL ||
-			leftImageRight == NULL || rightImageRight == NULL || 
-			centerImageRight == NULL || smallCenterImageRight == NULL )
-		return;
-
-	// get image sizes for the ends
-	ICoord2D leftSize, rightSize;
-	leftSize.x = leftImageLeft->getImageWidth();
-	leftSize.y = leftImageLeft->getImageHeight();
-	rightSize.x = rightImageLeft->getImageWidth();
-	rightSize.y = rightImageLeft->getImageHeight();
-
-	// get two key points used in the end drawing
-	ICoord2D leftEnd, rightStart;
-	leftEnd.x = origin.x + leftSize.x + xOffset;
-	leftEnd.y = origin.y + size.y + yOffset;
-	rightStart.x = origin.x + size.x - rightSize.x + xOffset;
-	rightStart.y = origin.y  + size.y - leftSize.y + yOffset;
-
-
-
-	// draw the center repeating bar
-	Int centerWidth, pieces;
-
-	// get width we have to draw our repeating center in
-	centerWidth = rightStart.x - leftEnd.x;
-
-	// how many whole repeating pieces will fit in that width
-	pieces = centerWidth / centerImageLeft->getImageWidth();
-
-	// draw the pieces
-	start.x = leftEnd.x;
-	start.y = origin.y + size.y - leftSize.y + yOffset;
-	end.y =origin.y + size.y + yOffset;
-	
-	clipLeft.lo.x = origin.x;
-	clipLeft.lo.y = rightStart.y;
-	clipLeft.hi.y = leftEnd.y;
-	clipLeft.hi.x = origin.x + transPos;
-	clipRight.lo.x = origin.x + transPos;
-	clipRight.lo.y = rightStart.y;
-	clipRight.hi.y = leftEnd.y;
-	clipRight.hi.x = origin.x + size.x;
-
-
-	for( i = 0; i < pieces; i++ )
-	{
-
-		end.x = start.x + centerImageLeft->getImageWidth();
-		TheDisplay->setClipRegion(&clipLeft);
-		TheWindowManager->winDrawImage( centerImageLeft, 
-																		start.x, start.y,
-																		end.x, end.y );
-		TheDisplay->setClipRegion(&clipRight);
-		TheWindowManager->winDrawImage( centerImageRight, 
-																		start.x, start.y,
-																		end.x, end.y );
-		start.x += centerImageLeft->getImageWidth();
-
-	}  // end for i
-	
-	//
-	// how many small repeating pieces will fit in the gap from where the
-	// center repeating bar stopped and the right image, draw them
-	// and overlapping underneath where the right end will go
-	//
-	centerWidth = rightStart.x - start.x;
-	pieces = centerWidth / smallCenterImageLeft->getImageWidth() + 1;
-	end.y = leftEnd.y;//start.y + smallCenterImageLeft->getImageHeight();
-	for( i = 0; i < pieces; i++ )
-	{
-
-		end.x = start.x + smallCenterImageLeft->getImageWidth();
-		TheDisplay->setClipRegion(&clipLeft);
-		TheWindowManager->winDrawImage( smallCenterImageLeft,
-																		start.x, start.y,
-																		end.x, end.y );
-		TheDisplay->setClipRegion(&clipRight);
-		TheWindowManager->winDrawImage( smallCenterImageRight,
-																		start.x, start.y,
-																		end.x, end.y );
-		start.x += smallCenterImageLeft->getImageWidth();
-
-	}  // end for i
-	
-	// draw left end
-	start.x = origin.x + xOffset;
-	start.y = rightStart.y;
-	end = leftEnd;
-	TheDisplay->setClipRegion(&clipLeft);
-	TheWindowManager->winDrawImage(leftImageLeft, start.x, start.y, end.x, end.y);
-	TheDisplay->setClipRegion(&clipRight);
-	TheWindowManager->winDrawImage(leftImageRight, start.x, start.y, end.x, end.y);
-	// draw right end
-	start = rightStart;
-	end.x = start.x + rightSize.x;
-	end.y = leftEnd.y;
-	TheDisplay->setClipRegion(&clipLeft);
-	TheWindowManager->winDrawImage(rightImageLeft, start.x, start.y, end.x, end.y);
-	TheDisplay->setClipRegion(&clipRight);
-	TheWindowManager->winDrawImage(rightImageRight, start.x, start.y, end.x, end.y);
-
-	TheDisplay->enableClipping(FALSE);
-}  // end W3DGadgetHorizontalSliderImageDraw
-
