@@ -164,22 +164,26 @@ def land(moved, rows):
     compile, or byte defect repaired before it can move. Return that source and
     record the blocker so the rest of the batch can still land.
     """
+    queued = QUEUE.read_text(encoding="utf-8")
     for _ in range(4):
-        git("add", "targets/game/reverse/functions.csv", *[t for _, t in moved])
+        # Drop by what actually moves, not by position: a batch that returned reds
+        # leaves them queued, and slicing the first N would forget them.
+        done_paths = {src for src, _ in moved}
+        rest = [r for r in rows if r[0] not in done_paths]
+        QUEUE.write_text("".join("\t".join(r) + "\n" for r in rest), encoding="utf-8")
+        git("add", "targets/game/reverse/functions.csv", str(QUEUE.relative_to(ROOT)), *[t for _, t in moved])
         if BLOCKED.exists():
             git("add", str(BLOCKED.relative_to(ROOT)))
-        subject = f"Move {len(moved)} misplaced sources into their class's directory"
+        subject = f"Move {len(moved)} misplaced sources into their original directory"
         body = (f"{subject}\n\n"
-                "Placement lane. Each file declares exactly one owning class and sat in a\n"
-                "directory that class keeps nothing else in; the destination is where ZH\n"
-                "puts that class -- by a file of its own name, or by the header that\n"
-                "declares it where ZH's Include/Source mirror is real. Never invented,\n"
-                "never the flat Common/ dumping ground, and never a parent of where the\n"
-                "file already sits.\n\n"
+                "Placement lane. The destination is EA's own source path for every row the\n"
+                "file owns (targets/game/reverse/ea_evidence.csv, routes wb1/zh) or, failing\n"
+                "that, where ZH puts the file's one owning class -- by a file of its own name,\n"
+                "or by the header that declares it where ZH's Include/Source mirror is real.\n"
+                "Never invented, never the flat Common/ dumping ground unless EA or ZH keeps\n"
+                "the file there, and never a parent of where the file already sits.\n\n"
                 "Byte-neutral: the `// cl:` line travels with the file and none of these\n"
-                "carries a relative include. The ledger source column is repointed as BYTES.\n\n"
-                "Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>\n"
-                "Claude-Session: https://claude.ai/code/session_01Wh8KKNWW2pk7waNmmnzU6R\n")
+                "carries a relative include. The ledger source column is repointed as BYTES.\n")
         done = subprocess.run(["git", "commit", "-q", "-F", "-"], cwd=ROOT,
                               input=body, text=True, capture_output=True)
         if not done.returncode:
@@ -195,6 +199,7 @@ def land(moved, rows):
                 elif line.startswith("  FAIL") and line.endswith("(" + dst + ")"):
                     named[(src, dst)] = "byte-red at the new path"
         if not named:
+            QUEUE.write_text(queued, encoding="utf-8")
             print("COMMIT REFUSED:\n" + out[-2500:], file=sys.stderr)
             return 1
         print(f"  hook refuses {len(named)} -- returning them")
@@ -206,17 +211,14 @@ def land(moved, rows):
                 fh.write(f"{src}\t{why}\n")
         moved = [m for m in moved if m not in named]
         if not moved:
+            QUEUE.write_text(queued, encoding="utf-8")
             print("  nothing left to land")
             return 1
     else:
+        QUEUE.write_text(queued, encoding="utf-8")
         print("COMMIT REFUSED: still refused after four rounds", file=sys.stderr)
         return 1
 
-    # Drop by what actually moved, not by position: a batch that returned reds
-    # leaves them queued, and slicing the first N would forget them.
-    done_paths = {src for src, _ in moved}
-    rest = [r for r in rows if r[0] not in done_paths]
-    QUEUE.write_text("".join("\t".join(r) + "\n" for r in rest), encoding="utf-8")
     print(f"  committed {len(moved)}. queue: {len(rest)} left")
     return 0
 
