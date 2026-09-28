@@ -1,144 +1,136 @@
-// ?Rva008C4A30Check@@YA_NPAVRva008C4A30Value@@@Z
-// partial score=0.28 date=2026-09-18
-// Retail 0x008C4A30, 873 bytes.
-// Address-qualified AptValue numeric-string predicate.  The caller identity is
-// not retained, so the RVA remains in the name.
+// ?Rva008C4A30Check@@YA_NPAVRva8CD130Value@@@Z
+// partial score=0.64 date=2026-09-28
+// ?Rva008C4A30Check@@YA_NPAVRva8CD130Value@@@Z
+// Retail 0x008C4A30, 873 bytes: AptValue numeric-string predicate (false for defined numbers
+// and numeric strings, true otherwise; undefined/type 3 answer SWF version == 7).
+// Rewritten from retail: per-type inline predicates, forceinline string dtor,
+// text/length re-read from m_data at every use, bool local for the SWF test.
+// Remaining: loop allocates length in EDX and next in EDI where retail uses EDI/EBP.
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-#include <ctype.h>
-#include <stdlib.h>
+extern "C" long __cdecl strtol(const char *, char **, int);
+extern "C" int __cdecl isdigit(int);
 
-struct Rva008C4A30StringBlock
+struct BfmeStringData3AF0
 {
-	unsigned short refs;
-	unsigned short length;
-	unsigned int capacity;
-	char text[1];
+	unsigned short m_refCount;
+	unsigned short m_length;
+	unsigned short m_capacity;
+	unsigned short m_flags;
 };
 
-struct Rva008C4A30StringPool
+struct BfmeStringPool3AF0
 {
 	void *slot0;
-	void (__cdecl *release)(Rva008C4A30StringBlock *);
+	void (__cdecl *free)(void *);
 };
 
-extern Rva008C4A30StringBlock g_bfmeDefaultString1284;
-extern Rva008C4A30StringPool *g_bfmeStringPool1284;
-extern int Rva00892370Get();
+extern BfmeStringData3AF0 g_bfmeDefaultString1284;
+extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
 
-struct Rva008C4A30String
-{
-	Rva008C4A30StringBlock *block;
+int Rva00892370Get();
 
-	Rva008C4A30String()
-		: block(&g_bfmeDefaultString1284)
-	{
-		++block->refs;
-	}
-
-	~Rva008C4A30String()
-	{
-		if (--block->refs == 0)
-			g_bfmeStringPool1284->release(block);
-	}
-};
-
-class Rva008C4A30Value
+class Rva8CD130String
 {
 public:
-    void fillString(Rva008C4A30String *result);
-    unsigned int type() const { return flags & 0x3f; }
-    bool isUndefined() const { return ((flags >> 15) & 1) == 0; }
+	Rva8CD130String() : m_data(&g_bfmeDefaultString1284)
+	{
+		++m_data->m_refCount;
+	}
+	__forceinline ~Rva8CD130String()
+	{
+		BfmeStringData3AF0 *old = m_data;
+		if (--old->m_refCount == 0)
+			g_bfmeStringPool1284->free(old);
+	}
+	int getLength() const { return m_data->m_length; }
+	char *text() const { return (char *)(m_data + 1); }
 
-    void *vtable;
-    unsigned int flags;
+	BfmeStringData3AF0 *m_data;
 };
 
-#pragma comment(linker, "/alternatename:?fillString@Rva008C4A30Value@@QAEXPAURva008C4A30String@@@Z=?d_008985c0@@YAXXZ")
-#pragma comment(linker, "/alternatename:?g_bfmeDefaultString1284@@3URva008C4A30StringBlock@@A=?g_bfmeDefaultString1284@@3UBfmeStringData3AF0@@A")
-#pragma comment(linker, "/alternatename:?g_bfmeStringPool1284@@3PAURva008C4A30StringPool@@A=?g_bfmeStringPool1284@@3PAUBfmeStringPool3AF0@@A")
-
-bool Rva008C4A30Check(Rva008C4A30Value *value)
+class Rva8CD130Value
 {
-    unsigned int type = value->type();
-    if (type == 7)
-    {
-        if (!value->isUndefined())
-            goto numeric;
-    }
-    if (type == 6)
-    {
-        if (!value->isUndefined())
-            goto numeric;
-    }
+public:
+	void getName(Rva8CD130String *output);
+	bool isUndefined() const { return !m_valid15; }
+	bool isType7() const { return m_type == 7 && !isUndefined(); }
+	bool isType6() const { return m_type == 6 && !isUndefined(); }
+	bool isStringType() const { return (m_type == 1 || m_type == 42) && !isUndefined(); }
 
-    if (type == 1 || (type == 42 && !value->isUndefined()))
+	void *m_unknown00;
+	union
 	{
-		Rva008C4A30String string;
-		value->fillString(&string);
-		Rva008C4A30StringBlock *block = string.block;
+		unsigned int m_flags;
+		struct
+		{
+			unsigned int m_type : 6;
+			unsigned int m_bits06 : 9;
+			unsigned int m_valid15 : 1;
+		};
+	};
+};
 
-		if (block->length == 0)
+bool Rva008C4A30Check(Rva8CD130Value *value)
+{
+	if (value->isType7() || value->isType6())
+		return false;
+
+	if (value->isStringType())
+	{
+		Rva8CD130String string;
+		value->getName(&string);
+
+		if (string.getLength() == 0)
 			return true;
 
-		char *text = block->text;
-		if (block->length > 2 && text[0] == '0' && text[1] == 'x')
+		if (string.text()[0] == '0' && string.getLength() > 2 && string.text()[1] == 'x')
 		{
-			char *end = 0;
-			strtol(text, &end, 16);
+			char *end;
+			strtol(string.text(), &end, 16);
 			if (*end == 0)
 				return false;
 		}
 
-		char last = text[block->length - 1];
+		bool sawDot = false;
+		char last = string.text()[string.getLength() - 1];
 		if (last != '-' && last != '+' && last != 'e' && last != '.' && !isdigit(last))
 			return true;
 
-		char first = text[0];
+		char first = string.text()[0];
 		if (first != '.' && first != '-' && first != '+' && !isdigit(first))
 			return true;
 
-		bool sawDot = false;
-		for (int index = 1; index < block->length; ++index)
+		for (int index = 1; index < string.getLength(); ++index)
 		{
-			char current = text[index];
+			char current = string.text()[index];
 			if (current == '.' && !sawDot)
 			{
 				sawDot = true;
 				continue;
 			}
-
-            if (current == 'e' && index != 1)
-            {
-                if (index == 2 && (text[0] == '+' || text[0] == '-'))
-                    return true;
-
-                int next = index + 1;
-                if (next < block->length)
-                {
-                    current = text[next];
-                    if (current == '-' || current == '+')
-                    {
-                        ++index;
-                        continue;
-                    }
-                    if (!isdigit(current))
-                        return true;
-                }
-                    continue;
-            }
-
+			if (current == 'e' && index != 1)
+			{
+				if (index == 2 && (string.text()[0] == '+' || string.text()[0] == '-'))
+					return true;
+				int next = index + 1;
+				if (next < string.getLength())
+				{
+					char following = string.text()[index + 1];
+					if (following != '-' && following != '+' && !isdigit(following))
+						return true;
+					index = next;
+				}
+				continue;
+			}
 			if (!isdigit(current))
 				return true;
 		}
-
 		return false;
 	}
 
-    if (!value->isUndefined() && type != 3)
-        goto numeric;
-    return Rva00892370Get() == 7;
-
-numeric:
-    return false;
+	if (!value->isUndefined() && value->m_type != 3)
+		return true;
+	bool swf7 = Rva00892370Get() == 7;
+	return swf7;
 }
