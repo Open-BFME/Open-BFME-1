@@ -309,3 +309,14 @@ def test_scoped_consistency_does_not_publish_partial_address_proposal(record_fix
     monkeypatch.setattr(cache.B, 'verify_dir32_consistency', consistency)
     cache.record(path)
     assert calls == [False]
+
+
+def test_nul_dependency_path_is_a_cache_miss(tmp_path, monkeypatch):
+    source, obj = tmp_path / 'body.asm', tmp_path / 'body.obj'
+    source.write_text('ret\n')
+    obj.write_bytes(b'object')
+    sidecar = cache.B._deps_sidecar(obj)
+    sidecar.write_text(json.dumps({'version': 2, 'source': cache.B._hash_file(str(source)),
+                                  'deps': {'invalid\0path': 'digest'}}))
+    assert cache.B.compile_is_current(source, obj, check_command=False) is False
+    assert cache._read_meta(obj) is None
