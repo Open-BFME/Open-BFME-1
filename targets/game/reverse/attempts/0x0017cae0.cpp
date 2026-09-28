@@ -1,7 +1,9 @@
 // ?update@AIAttackState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.22 date=2026-09-23
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// partial score=0.22202 date=2026-09-28
+// cl: /DNDEBUG /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib
 #include "ascii_string.h"
+template <> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
+template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 
 typedef bool Bool;
 typedef unsigned char UnsignedByte;
@@ -118,7 +120,7 @@ public:
 class Rva0017CAE0AIUpdateSlot128 : public Rva0017CAE0VirtualSlots<128>
 {
 public:
-	virtual void invoke();
+	virtual UnsignedInt invoke();
 };
 
 class Rva0017CAE0AIUpdateSlot129 : public Rva0017CAE0VirtualSlots<129>
@@ -148,7 +150,7 @@ public:
 class Rva0017CAE0ContainSlot64 : public Rva0017CAE0VirtualSlots<64>
 {
 public:
-	virtual UnsignedInt getContainCount() const;
+	virtual UnsignedInt getContainCount(Int) const;
 };
 
 class Rva0017CAE0AttackMachineSlot4 : public Rva0017CAE0VirtualSlots<4>
@@ -243,13 +245,18 @@ static Bool stringHasText(const AsciiString *string)
 	return data != 0 && *(const unsigned short *)((const char *)data + 4) != 0;
 }
 
+class Overridable { public: void *getFinalOverride() const; };
+static const char *rawString(const AsciiString &str) {
+    const char *data = *(const char * const *)&str;
+    return data ? data + 8 : "";
+}
 StateReturnType AIAttackState::update()
 {
 	StateMachine *machine = m_machine;
 	Object *source = machine->m_owner;
 	Object *victim = machine->getGoalObject();
 
-	if (m_attackParameters && m_attackParameters->shouldExit(machine))
+	if (m_attackParameters && m_attackParameters->shouldExit(m_machine))
 		return STATE_SUCCESS;
 
 	AIUpdateInterface *ai = getAI(source);
@@ -261,53 +268,49 @@ StateReturnType AIAttackState::update()
 
 	if (m_isAttackingObject)
 	{
-		if (!victim || (*(UnsignedInt *)((char *)victim + 0x344) & 1) ||
+		if (!victim || (*(UnsignedByte *)((char *)victim + 0x344) & 1) ||
 			((BFMEActionObject *)victim)->testStatus(0x31))
 		{
-			if (ai)
-				((Rva0017CAE0AIUpdateSlot129 *)ai)->notifyVictimIsDead();
+			((Rva0017CAE0AIUpdateSlot129 *)getAI(source))->notifyVictimIsDead();
 			if (((Thing *)source)->isKindOf((KindOfType)0x96))
 				return STATE_SUCCESS;
 			Int state = ((Rva0017CAE0AttackMachineSlot4 *)m_attackMachine)->invoke();
-			return state > 0 ? (StateReturnType)state : STATE_CONTINUE;
+			return state > 0 ? STATE_CONTINUE : (StateReturnType)state;
 		}
 
-		if (ai)
-			((Rva0017CAE0AIUpdateSlot128 *)ai)->invoke();
-
+		AIUpdateInterface *activeAI = getAI(source);
+		UnsignedInt action = ((Rva0017CAE0AIUpdateSlot128 *)activeAI)->invoke();
 		Bool sourceFlag = ((BFMEActionObject *)source)->testStatus(0x1C);
-		Relationship relationship = source->getRelationship(victim);
-		if (m_bfmeAttackState4D && sourceFlag && relationship == RELATIONSHIP_ENEMIES &&
+		const Bool &enemy = source->getRelationship(victim) == RELATIONSHIP_ENEMIES;
+		if (!enemy && m_bfmeAttackState4D && (action & 2) && !sourceFlag &&
 			!((Thing *)victim)->isKindOf((KindOfType)0x5D))
-		{
-			relationship = RELATIONSHIP_NEUTRAL;
-		}
-		if (ai)
-			ai->setCurrentVictim(victim);
+			goto rejectVictim;
+		getAI(source)->setCurrentVictim(victim);
 
 		if (getTeam(victim) != m_victimTeam)
 		{
-			void *contain = getContain(victim);
-			if (ai && !((BFMEActionObject *)victim)->testStatus(1) && contain &&
-				((Rva0017CAE0ContainSlot2 *)contain)->isGarrisonable() &&
-				((Rva0017CAE0ContainSlot64 *)contain)->getContainCount() == 0 &&
+			activeAI = ai;
+			if (activeAI && !((BFMEActionObject *)victim)->testStatus(1) && getContain(victim) &&
+				((Rva0017CAE0ContainSlot2 *)getContain(victim))->isGarrisonable() &&
+				((Rva0017CAE0ContainSlot64 *)getContain(victim))->getContainCount(0) == 0 &&
 				source->getRelationship(victim) == RELATIONSHIP_NEUTRAL)
 			{
-				ai->friend_setGoalObject(0);
+				activeAI->friend_setGoalObject(0);
 				Team *team = getTeam(source);
 				if (victim == team->getTeamTargetObject())
-					team->setTeamTargetObject(0);
-				((Rva0017CAE0AIUpdateSlot129 *)ai)->notifyVictimIsDead();
+					getTeam(source)->setTeamTargetObject(0);
+				((Rva0017CAE0AIUpdateSlot129 *)activeAI)->notifyVictimIsDead();
 				return STATE_FAILURE;
 			}
 
-			if (relationship != RELATIONSHIP_ENEMIES)
+			if (source->getRelationship(victim) != RELATIONSHIP_ENEMIES)
 			{
-				ai->friend_setGoalObject(0);
+rejectVictim:
+				activeAI->friend_setGoalObject(0);
 				Team *team = getTeam(source);
 				if (victim == team->getTeamTargetObject())
-					team->setTeamTargetObject(0);
-				((Rva0017CAE0AIUpdateSlot129 *)ai)->notifyVictimIsDead();
+					getTeam(source)->setTeamTargetObject(0);
+				((Rva0017CAE0AIUpdateSlot129 *)activeAI)->notifyVictimIsDead();
 				return STATE_FAILURE;
 			}
 		}
@@ -316,22 +319,25 @@ StateReturnType AIAttackState::update()
 		if (victim != attackMachine->getGoalObject())
 			((Rva0017CAE0AttackMachineSlot14 *)m_attackMachine)->setGoalObject(victim);
 
+	}
+
 		Object *related = *(Object **)((char *)source + 0x214);
 		if (related && getContain(related) &&
 			((Rva0017CAE0ContainSlot43 *)getContain(related))->invoke(source, victim))
 			return STATE_FAILURE;
-	}
-
 	if (!chooseWeapon())
 		return STATE_FAILURE;
 
 	Weapon *weapon = source->getCurrentWeapon(0);
-	if (stringHasText(&m_lockedWeaponOnEnter) && weapon)
-	{
-		AsciiString weaponName = ((Rva0016F740StringAccessor *)weapon)->getName();
-		if (((const StringBase<char> *)&m_lockedWeaponOnEnter)->compare(weaponName.str()) != 0)
-			return STATE_FAILURE;
-	}
+	if (!m_lockedWeaponOnEnter.isEmpty() && weapon &&
+        m_lockedWeaponOnEnter.compare(((Rva0016F740StringAccessor *)weapon)->getName().str()) != 0)
+    {
+        void *templ = *(void **)((char *)source + 4);
+        if (templ && *(void **)((char *)templ + 4))
+            templ = ((Overridable *)*(void **)((char *)templ + 4))->getFinalOverride();
+        if (((AsciiString *)((char *)templ + 0x20))->compare("GondorTrebuchet") != 0)
+            return STATE_FAILURE;
+    }
 
 	if (!weapon || *(Int *)((char *)weapon + 0x34) <= 0)
 		return STATE_FAILURE;
@@ -340,36 +346,35 @@ StateReturnType AIAttackState::update()
 	if (((Rva001E1770ByteField *)weaponType)->get() != m_bfmeAttackState4C)
 	{
 		onExit(STATE_EXIT_NORMAL);
-		ai = getAI(source);
 		if (ai)
 		{
 			ai->setCurrentVictim(victim);
 			ai->friend_setGoalObject(victim);
+			((Rva0017CAE0AttackMachineSlot14 *)m_machine)->setGoalObject(victim);
 		}
-		Int state = ((Rva0017CAE0AttackMachineSlot4 *)m_attackMachine)->invoke();
-		return state > 0 ? (StateReturnType)state : STATE_CONTINUE;
+		return (StateReturnType)((Rva0017CAE0AttackMachineSlot4 *)this)->invoke();
 	}
 
 	Int currentState = ((StateMachine *)m_attackMachine)->getCurrentStateID();
 	UnsignedInt &condition = getConditionBits(source);
 	if (currentState == 0xE4)
 	{
-		if (condition & 0x20)
+		if (*(UnsignedByte *)((char *)source + 0x114) & 0x20)
 		{
 			condition &= ~0x20u;
 			source->notifyModelConditionChanged();
 		}
-		if (condition & 0x40)
-			condition &= ~0x40u;
+		if (*(UnsignedByte *)((char *)source + 0x114) & 0x40) {
+			condition &= ~0x40u; source->notifyModelConditionChanged(); }
 	}
 	else
 	{
-		if (!(condition & 0x20))
+		if (!(*(UnsignedByte *)((char *)source + 0x114) & 0x20))
 		{
 			condition |= 0x20;
 			source->notifyModelConditionChanged();
 		}
-		if (victim && ((Thing *)victim)->isKindOf((KindOfType)7) && !(condition & 0x40))
+		if (victim && ((Thing *)victim)->isKindOf((KindOfType)7) && !(*(UnsignedByte *)((char *)source + 0x114) & 0x40))
 		{
 			condition |= 0x40;
 			source->notifyModelConditionChanged();
@@ -384,5 +389,5 @@ StateReturnType AIAttackState::update()
 	}
 
 	Int state = ((Rva0017CAE0AttackMachineSlot4 *)m_attackMachine)->invoke();
-	return state > 0 ? (StateReturnType)state : STATE_CONTINUE;
+	return state > 0 ? STATE_CONTINUE : (StateReturnType)state;
 }

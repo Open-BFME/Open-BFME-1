@@ -1,5 +1,5 @@
 // ?d_00177320@@YAXXZ
-// partial score=0.38 date=2026-09-22
+// partial score=0.87037 date=2026-09-28
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
@@ -59,6 +59,7 @@ typedef BitFlags<86> ObjectStatusMaskType86;
 struct Coord3D
 {
 	Real x, y, z;
+	void set(Real a, Real b, Real c) { x=a; y=b; z=c; }
 	Real length(void) const;					// ?length@Coord3D@@QBEMXZ, real landed
 };
 
@@ -191,22 +192,23 @@ StateReturnType Rva00177320State::update(void)
 
 	owner->setStatus(ObjectStatusMaskType86(ObjectStatusMaskType86::kInit, 28), false);
 
-	machine = m_bfmeMachine;
-	Object *goal = machine->getGoalObject();
-	if (!goal)
-		return (StateReturnType)-2;
+	StateReturnType result = (StateReturnType)-2;
+	Object *goal = m_bfmeMachine->getGoalObject();
+	if (goal)
+	{
 
 	if (goal->m_bfmeStatus94 & 0x40000)
-		goto continueState;
+		return (StateReturnType)-2;
 
 	{
 		Player *player = owner->getControllingPlayer();
 		if (reinterpret_cast<const BFMEObjectStealthQuery *>(goal)->isStealthedAndUndetected(player))
-			goto continueState;
+			return (StateReturnType)-2;
 	}
 
 	if (owner->crushPolicy(goal, 2) && owner->rva001c7530())
 	{
+		machine = m_bfmeMachine;
 		void **mvtbl = *reinterpret_cast<void ***>(machine);
 		VSlotSetStateFn slot20;
 		*reinterpret_cast<void **>(&slot20) = mvtbl[0x20 / 4];
@@ -217,33 +219,30 @@ StateReturnType Rva00177320State::update(void)
 	{
 		Weapon *weapon = reinterpret_cast<Weapon *>(owner->getCurrentWeapon(0));
 		if (!weapon)
-			goto haveNoRangedPath;
+			goto setVictim;
 		if (!weapon->isWithinAttackRange(owner, goal, 0))
-			goto haveNoRangedPath;
+			goto setVictim;
 	}
 
 	{
+		{
 		Bool losOk = TheAI->m_bfmeSubA->rva003e5e40(owner);
 		if (!ai->m_bfmeField140)
 			goto haveNoRangedPath;
 		if (losOk)
 			goto haveNoRangedPath;
 
+		}
+setVictim:
 		ai->setCurrentVictim(goal);
 		if (!ai->m_bfmeField140)
 		{
-			m_bfmeCachedGoalPos.x = goal->m_position.x;
-			m_bfmeCachedGoalPos.y = goal->m_position.y;
-			m_bfmeCachedGoalPos.z = goal->m_position.z;
+			m_bfmeCachedGoalPos = goal->m_position;
+			TheAISubB *data = TheAI->m_bfmeSubB;
 
 			Coord3D diff;
-			diff.x = owner->m_position.y - m_bfmeCachedGoalPos.x;
-			diff.y = owner->m_position.x - m_bfmeCachedGoalPos.y;
-			diff.z = 0;
-			Real dist = diff.length();
-
-			Real threshold = TheAI->m_bfmeSubB->m_bfmeRangeB + TheAI->m_bfmeSubB->m_bfmeRangeA;
-			if (dist > threshold)
+			diff.y=owner->m_position.y; diff.x=owner->m_position.x; diff.x-=m_bfmeCachedGoalPos.x; diff.y-=m_bfmeCachedGoalPos.y; diff.z=0;
+			if (diff.length() < data->m_bfmeRangeB + data->m_bfmeRangeA)
 				return (StateReturnType)-1;
 		}
 	}
@@ -261,14 +260,13 @@ haveRangedPath:
 	if (Glo012F0239 && TheCRCParameterCheck)
 		bfmeRetailCritterDesyncLog(TheCRCParameterCheck, (const char *)0x1099604);
 
-	void **selfVtbl = *reinterpret_cast<void ***>(this);
-	VSlotBoolFn slot44;
-	*reinterpret_cast<void **>(&slot44) = selfVtbl[0x44 / 4];
-	if (!(reinterpret_cast<VSlotHelperBool0 *>(this)->*slot44)())
+	typedef Bool (__fastcall *SelfCheck)(void *);
+	if (!reinterpret_cast<SelfCheck>((*reinterpret_cast<void ***>(this))[0x44 / 4])(this))
 		return (StateReturnType)-2;
 
-	StateReturnType baseResult = AIInternalMoveToState::update();
-	if (baseResult != 0)
+	result = AIInternalMoveToState::update();
+	if (result != 0)
 		return (StateReturnType)-1;
-	return baseResult;
+	}
+	return result;
 }
