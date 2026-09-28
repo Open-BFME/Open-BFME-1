@@ -418,7 +418,12 @@ __declspec(naked) void INI::parseVelocityReal(INI* ini, void* instance, void* st
 
 //-------------------------------------------------------------------------------------------------
 // ?getFieldParse@LocomotorTemplate@@ present-unmatched
-const FieldParse* LocomotorTemplate::getFieldParse() const  
+//
+// __forceinline, not decoration: BFME inlines getFieldParse() at retail
+// 0x001BAF27 and passes the table's address as an immediate (`push 0x109D860`),
+// so the call site has to see a constant. Left out of line, this accessor is a
+// five-byte call in the middle of the one call the parser makes here.
+__forceinline const FieldParse* LocomotorTemplate::getFieldParse() const  
 {
 	static const FieldParse TheFieldParse[] =
 	{
@@ -485,7 +490,7 @@ const FieldParse* LocomotorTemplate::getFieldParse() const
 		{ "RudderCorrectionRate",			 INI::parseReal, NULL, offsetof(LocomotorTemplate, m_rudderCorrectionRate) },
 		{ "ElevatorCorrectionDegree",	 INI::parseReal, NULL, offsetof(LocomotorTemplate, m_elevatorCorrectionDegree) },
 		{ "ElevatorCorrectionRate",		 INI::parseReal, NULL, offsetof(LocomotorTemplate, m_elevatorCorrectionRate) },
-		{ NULL, NULL, NULL, 0 }  // keep this last	
+		{ NULL, NULL, NULL, 0 }  // keep this last
 	
 	};
 	return TheFieldParse;
@@ -610,6 +615,18 @@ public:
 	// constructor throws; retail has no unwind funclet here.
 	BfmeLocomotorTemplateStorage() throw();
 
+	// The memory pool glue's placement operator new (MEMORY_POOL_GLUE's
+	// `operator new(size_t, LocomotorTemplateMagicEnum)`, which under
+	// BFME's shadow shim is a straight `::operator new(s)`), reached
+	// explicitly: a placement new only looks in the type being CONSTRUCTED,
+	// and that is this view, not LocomotorTemplate. Without it the
+	// newInstance() spelling at the parser's create site cannot allocate at
+	// the retail size.
+	inline void *operator new(size_t s, LocomotorTemplate::LocomotorTemplateMagicEnum)
+	{
+		return ::operator new(s);
+	}
+
 private:
 	unsigned char m_bfmeBody[ 0x140 ];
 };
@@ -634,6 +651,55 @@ LocomotorTemplate *LocomotorStore::newOverride( LocomotorTemplate *locoTemplate 
 }  // end newOverride
 
 //-------------------------------------------------------------------------------------------------
+// BFME keeps three AsciiString members out of line where the vendored ZH header
+// inlines all three: the char* constructor (retail RVA 0x00888BC0), 
+// set(const AsciiString&) (0x00887C90) and releaseBuffer (0x00887940). 
+// parseLocomotorTemplateDefinition is the proof: retail calls all three in that
+// order, from the vendored bodies it would instead strlen the token inline and
+// copy the buffer itself. Declared here, never defined -- same device as
+// BfmeLocomotorTemplateStorage above.
+class BFMERetailAsciiString
+{
+public:
+	// The real AsciiString is a single pointer to the shared ref-counted data
+	// block (game/Libraries/Source/string/StringBase.cpp matches its ctor at
+	// 0x00888BC0). Declaring the member makes the view a real four-byte object,
+	// which is the size of the frame slot retail builds the temporary in.
+	char *m_text;
+
+	BFMERetailAsciiString(const char *text);
+	~BFMERetailAsciiString() { releaseBuffer(); }
+	void set(const BFMERetailAsciiString &stringSrc);
+	void releaseBuffer();
+
+	// MEASURED LEVER, the last four bytes of this body: with `m_name.set(name)`
+	// written directly, VC7.1 sank the receiver load BELOW the argument push
+	// (`lea edx,[esp+10]; push edx; lea ecx,[esi+0xc]`) and the body missed
+	// retail's four bytes; routing the same call through this inline assignment
+	// (the real AsciiString::operator= forwards to set) gives retail's order
+	// (`lea edx; lea ecx; push edx`). A member-subobject receiver, a hoisted
+	// receiver pointer local and an inlined friend_setName all left the sunk
+	// form, and the inlined setter also cost the 0x14 frame and the SEH
+	// prologue form. Do not respell this call.
+	BFMERetailAsciiString &operator=(const BFMERetailAsciiString &stringSrc)
+	{
+		set(stringSrc);
+		return *this;
+	}
+};
+
+//-------------------------------------------------------------------------------------------------
+// A view of the template that reaches the name member the way retail's call site
+// does: the member is a subobject, so the receiver is the address of a real
+// member of a real object, not a char* plus a displacement.
+class BFMERetailLocomotorNameHolder
+{
+public:
+	char m_pad0000[ 0x0C ];
+	BFMERetailAsciiString m_name;
+};
+
+//-------------------------------------------------------------------------------------------------
 /*static*/ void LocomotorStore::parseLocomotorTemplateDefinition(INI* ini)
 {
 	if (!TheLocomotorStore)
@@ -651,18 +717,37 @@ LocomotorTemplate *LocomotorStore::newOverride( LocomotorTemplate *locoTemplate 
 		} 
 		isOverride = true;
 	} else {
-		loco = newInstance(LocomotorTemplate);
+		// newInstance(LocomotorTemplate) allocates sizeof(LocomotorTemplate),
+		// which is the vendored 0xEC; retail pushes BFME's 0x140. Same
+		// placement form (so the null test and the throw() constructor come out
+		// the same) over the 0x140-byte view, so the size and the constructor
+		// call are both retail's.
+		LocomotorTemplate *fresh = (LocomotorTemplate *)new (LocomotorTemplate::LocomotorTemplate_GLUE_NOT_IMPLEMENTED) BfmeLocomotorTemplateStorage;
+		loco = fresh;
 		if (ini->getLoadType() == INI_LOAD_CREATE_OVERRIDES) {
-			loco->markAsOverride();
+			fresh->markAsOverride();
 		}
 	}
 
-	loco->friend_setName(token);
+	// friend_setName(token), through the two views above: the temporary is
+	// built, assigned into m_name at LocomotorTemplate+0x0C, and released when
+	// the block ends -- which is retail's order. See the operator= note for why
+	// the assignment is spelled as an assignment.
+	{
+		BFMERetailAsciiString name(token);
+		((BFMERetailLocomotorNameHolder *)loco)->m_name = name;
+	}
 	ini->initFromINI(loco, loco->getFieldParse());
 	loco->validate();
 	
 	// if this is an override, then we want the pointer on the existing named locomotor to point us 
 	// to the override, so don't add it to the map.
+	// The map subscript below is a SECOND byte-identical copy of the same STL
+	// instantiation in retail (no COMDAT folding): this call site reaches the
+	// copy at 0x001BAE30 through ILT thunk 0x00001EEC, and the symbols.csv pin
+	// for the mangled name lists that address as an encoding candidate. Without
+	// it the resolver encodes the 0x00654E90 copy and this body fails on one
+	// relocation.
 	if (!isOverride)
 		TheLocomotorStore->m_locomotorTemplates[namekey] = loco;
 }
