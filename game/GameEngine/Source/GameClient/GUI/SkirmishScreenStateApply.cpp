@@ -71,7 +71,7 @@ public:
 
 	bool shouldRefresh();
 	bool rebuildColorCombo005284F0(int index);
-	void refreshPlayerTypeControl(int index);
+	void refreshPlayerTypeCombo00527220(int index);
 	void refreshPlayerTeamControl(int index);
 	void refreshPlayerFactionControl(int index, bool preserveSelection);
 	void bfmeFlush11();
@@ -130,7 +130,7 @@ bool SkirmishScreenState::apply(void *gameInfo, int force)
 
 	for (int index = 7; index >= 0; --index)
 	{
-		refreshPlayerTypeControl(index);
+		refreshPlayerTypeCombo00527220(index);
 		rebuildColorCombo005284F0(index);
 		refreshPlayerTeamControl(index);
 		refreshPlayerFactionControl(index, false);

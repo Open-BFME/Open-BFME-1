@@ -4,7 +4,7 @@ class SkirmishScreenState
 {
 public:
 	void refreshAllPlayerControls(void);
-	void refreshPlayerTypeControl(int index);
+	void refreshPlayerTypeCombo00527220(int index);
 	void refreshPlayerFactionControl(int index, bool preserveSelection);
 	void refreshPlayerTeamControl(int index);
 
@@ -23,7 +23,7 @@ void SkirmishScreenState::refreshAllPlayerControls(void)
 		m_refreshingControls = true;
 		for (int index = 0; index < 8; ++index)
 		{
-			refreshPlayerTypeControl(index);
+			refreshPlayerTypeCombo00527220(index);
 			refreshPlayerFactionControl(index, false);
 			refreshPlayerTeamControl(index);
 		}

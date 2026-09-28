@@ -86043,7 +86043,6 @@ name,address,notes
 ?refreshPlayerControls@SkirmishScreenState@@QAEXH@Z,0x0002D38A,called when a slot crosses the human AI boundary
 ?refreshPlayerFactionControl@SkirmishScreenState@@QAEXH_N@Z,0x0002EA91,rebuilds the faction control for one Skirmish APT slot
 ?refreshPlayerTeamControl@SkirmishScreenState@@QAEXH@Z,0x0002D38A,rebuilds the team control after a slot crosses the human AI boundary
-?refreshPlayerTypeControl@SkirmishScreenState@@QAEXH@Z,0x00029C35,rebuilds the player-type control for one Skirmish APT slot
 ?refreshRva00215650@BfmeOwnFCB@@QAEXXZ,0x00215650,ECX base receiver at 0x00215943 via ILT 0x00032C54; same +8 Object and +0xE4 ID as bfmeAfterFCB; complete body ends RET at 0x0021576A
 ?refreshTeamMember@BfmeTeamControlObject@@QAEXXZ,0x00039B5D,Team.cpp BFME-layout view spelling of the member refresh ILT to body 0x001BF380
 ?refreshTerrain@Radar@@UAEXPAVTerrainLogic@@@Z,0x0003A21A,matched W3DRadar::refreshTerrain at 0x006C4280 base call; route=0x00107240
