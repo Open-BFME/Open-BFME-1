@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "114277abac1d6bc4a9a621d437f7de5821ec74cb75c597ac6226f28eeb2db7bd",
+  "symbol": "?Rva00892170Store@@YAXHH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?Rva00892170Store@@YAXHH@Z\n// partial score=0.95 date=2026-09-28\n// Open-BFME5 conversions.\r\n\r\nclass BfmeJ1017\r\n{\r\npublic:\r\n\tvoid bfmeSendX1017(int a, int b);\r\n\tvoid bfmeSendY1017(int a, int b, int c);\r\n};\r\n\r\nextern char g_bfme1017G;\r\nextern int g_bfme1017H;\r\nextern int g_bfme1017I;\r\nextern BfmeJ1017 *g_bfmeJ1017;\r\n\r\nvoid bfmeGo1017X(int a, int b)\r\n{\r\n\tif (g_bfme1017G != 0 && g_bfme1017H != 0 && g_bfme1017I == 0 && g_bfmeJ1017 != 0)\r\n\t\tg_bfmeJ1017->bfmeSendX1017(a, b);\r\n}\r\n\r\nvoid bfmeGo1017Y(int a, int b, int c)\r\n{\r\n\tif (g_bfme1017H != 0 && g_bfme1017I == 0 && g_bfmeJ1017 != 0)\r\n\t\tg_bfmeJ1017->bfmeSendY1017(a, b, c);\r\n}\r\n"
+}
