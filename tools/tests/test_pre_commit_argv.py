@@ -72,7 +72,7 @@ python3() {
         tools/delta_sources.py) cat deltas ;;
         tools/find_declared_unmatched.py|tools/adopt_header.py|tools/name_oracle.py|tools/name_regression.py|tools/retired_guard.py) return 0 ;;
         tools/check_case_collisions.py|tools/conversion_gate.py|tools/check_csv.py|tools/pin_consistency.py|tools/identity_guard.py|tools/gate_baseline.py) return 0 ;;
-        tools/target_hooks.py|tools/eol_guard.py|tools/b_pin_check.py|tools/doc_budget.py|tools/link_debt.py) return 0 ;;
+        tools/target_hooks.py|tools/eol_guard.py|tools/b_pin_check.py|tools/doc_budget.py|tools/link_debt.py|tools/ea_name_guard.py) return 0 ;;
         tools/header_dependents.py) if [ -f header_deps ]; then cat header_deps; fi; return "${HEADER_RC:-0}" ;;
         *) printf 'unexpected Python test invocation: %s\n' "$*" >&2; return 93 ;;
     esac
