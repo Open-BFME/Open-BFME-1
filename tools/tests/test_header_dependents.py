@@ -164,6 +164,7 @@ def hook_repo(repo):
         put(repo, f"tools/{tool}.py", "raise SystemExit(0)\n")
     shutil.copyfile(TOOLS / "header_dependents.py", repo / "tools/header_dependents.py")
     put(repo, "build.sh", "#!/usr/bin/env bash\nprintf '%s\\n' \"$@\" >> built\n")
+    (repo / "build.sh").chmod(0o755)
     git(repo, "add", "tools", "build.sh")
     included_base(repo)
     return repo
