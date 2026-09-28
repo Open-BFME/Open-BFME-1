@@ -1,257 +1,368 @@
 // ?populateCommand@ControlBar@@IAEXPAVObject@@_N@Z
-// partial score=0.557 date=2026-09-28
-// ?populateCommand@ControlBar@@IAEXPAVObject@@_N@Z
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /I. /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// partial score=0.965 date=2026-09-28
+// Best current body for ?populateCommand@ControlBar@@IAEXPAVObject@@_N@Z.
+// The matched caller at 0x0049E780 passes Object* and Bool through ILT 0x0000D495.
+// This excerpt compiled in ControlBar.cpp and probed at 1345 of 1381 bytes (0.965).
+// The separate TU changed STLport cleanup code, so keep this in the original TU context.
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/controlbarvtables /Iinputs/reference/shims/controlbarlayout /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
-//
-// ControlBar::populateCommand(Object *, Bool), RVA 004A5E30, 1381 bytes through
-// the final ret 8 at 004A6392. Identity: matched ControlBar::switchToContext
-// (0049E780) calls ILT 0000D495 with Object* and Bool from its command arm.
-//
-// Clean-member rewrite of the older rvaCall bank. Callee identities are the
-// ledger's (tools/callees.py 0x004A5E30 1381); bodies that are still dumps are
-// reached through their ILT j_ symbol with /alternatename and keep an
-// address-derived member name. Retail frame map (esp-relative after the four
-// pushes; = EBP-0x48+N): +10 loop-2 window cursor, +14 this, +18 specialIndex,
-// +1C commandSet, +20 text, +24 player, +28 i, +2C contain, +30 windows.
-// Retail holds a zero in EBX for all of loop 2 and the tail (xor ebx,ebx at
-// +12F); the cursor is therefore spilled and the frame is 0x2c.
-//
-// STATE OF THIS BANK (opus-5.5, 2026-09-28): the two stores marked NOT RETAIL
-// in loop 2 are placeholders. They are the only structural difference left:
-// with them VC7.1 hoists a zero into EBX at the loop-2 preheader exactly as
-// retail does, the frame becomes 0x2c, the two hide arms stop tail-merging,
-// and probe --shape reports 0.993 with only those two stores and one
-// alignment filler (lea ecx,[ecx] vs lea esp,[esp] at +34D) different.
-// Without them the body is 1341 B / 861 differing bytes with the cursor in
-// EBX. Measured: one extra zero store does not flip EBX, two do (in the same
-// or different blocks); pushes of 0 and memory compares against 0 do not
-// count; without the text block even three or four stores do not flip.
-// The lever still missing is the retail construct that supplies that zero
-// weight while emitting nothing. The ZH-style `ScienceType science` variable
-// assigned inside the science loop is what fixed the science-load order.
-#define __PLACEMENT_VEC_NEW_INLINE
-#include <vector>
-#include "../../../../game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
-template<class T> inline void StringBase<T>::clear(){releaseBuffer();}
-#include "Common/GameMemory.h"
-#include "Common/Overridable.h"
-class CommandButton; class CommandSet; class Player; class Image; class GameWindow; class ThingTemplate;
-enum ScienceType { SCIENCE_INVALID=-1 };
-struct Coord3D;
 
-// Object::getContain() witnessed in ControlBarContextUI.cpp (+0x1fc).
-// Slot 0 is asOpenContain (the +0xb6 flag is read as in doTransportInventoryUI);
-// slot 45 (+0xb4) is the byte-returning test transports use here.
-class OpenContain;
-class ContainModuleInterface {
-public:
-    virtual OpenContain *asOpenContain();
-    virtual void s01(); virtual void s02(); virtual void s03(); virtual void s04(); virtual void s05(); virtual void s06(); virtual void s07();
-    virtual void s08(); virtual void s09(); virtual void s0a(); virtual void s0b(); virtual void s0c(); virtual void s0d(); virtual void s0e(); virtual void s0f();
-    virtual void s10(); virtual void s11(); virtual void s12(); virtual void s13(); virtual void s14(); virtual void s15(); virtual void s16(); virtual void s17();
-    virtual void s18(); virtual void s19(); virtual void s1a(); virtual void s1b(); virtual void s1c(); virtual void s1d(); virtual void s1e(); virtual void s1f();
-    virtual void s20(); virtual void s21(); virtual void s22(); virtual void s23(); virtual void s24(); virtual void s25(); virtual void s26(); virtual void s27();
-    virtual void s28(); virtual void s29(); virtual void s2a(); virtual void s2b(); virtual void s2c();
-    virtual Bool slot45();
-};
-class ExitInterface {
-public:
-    virtual void s00(); virtual void s01(); virtual void s02(); virtual void s03(); virtual void s04(); virtual void s05(); virtual void s06(); virtual void s07();
-    virtual const Coord3D *slot08();
-};
-// 0x001CAF20 (ILT 0x0002BF85): returns a record whose +0x2c AsciiString names
-// the command set that overrides the object's own.
-struct Rva001CAF20Record { char pad[0x2c]; AsciiString commandSetName; };
-class Object {
-public:
-    Player *getControllingPlayer() const;
-    const AsciiString &getCommandSetString() const;
-    Rva001CAF20Record *Rva001CAF20();
-    Bool isLocallyControlled() const;
-    ExitInterface *getObjectExitInterface() const;
-    ContainModuleInterface *getContain() const { return m_contain; }
-    char pad00[0x1fc]; ContainModuleInterface *m_contain;
-};
-#pragma comment(linker, "/alternatename:?Rva001CAF20@Object@@QAEPAURva001CAF20Record@@XZ=?j_0002bf85@@YAXXZ")
-// player+0x684: 0x000FA800 (ILT 0x0004A66F) returns the image, 0x000F9670
-// (ILT 0x00002135) the ThingTemplate, both keyed by the running special index.
-class Rva000F9670Store {
-public:
-    const Image *Rva000FA800(int index);
-    const ThingTemplate *rva000F9670(int index);
-};
-#pragma comment(linker, "/alternatename:?Rva000FA800@Rva000F9670Store@@QAEPBVImage@@H@Z=?j_0004a66f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva000F9670@Rva000F9670Store@@QAEPBVThingTemplate@@H@Z=?j_00002135@@YAXXZ")
-class Player {
-public:
-    Bool hasScience(ScienceType) const;
-    Bool isPlayerActive() const;
-    char pad[0x684]; Rva000F9670Store m_store684;
-};
-// 0x0013E4D0 (ILT 0x00046C18): copies the template's +0x1c string out when it
-// is not empty. Retail's string is the wide one (it calls UnicodeString::set,
-// ICF-shared with StringBase<char>::set at 0x00887C90); the narrow shim here
-// compiles to the same bytes.
-class Rva0013E4D0 { public: Bool take(AsciiString &out); };
-#pragma comment(linker, "/alternatename:?take@Rva0013E4D0@@QAE_NAAVAsciiString@@@Z=?j_00046c18@@YAXXZ")
-class GameWindow { public: void bfmeClose(Bool); unsigned winSetStatus(unsigned); unsigned winClearStatus(unsigned); int winEnable(Bool); };
-class CommandSet { public: const CommandButton *getCommandButton(int) const; };
-class PlayerList { public: unsigned char isLocalAlliedWith(Object*); char pad[0xc]; Player *m_localPlayer; };
-extern PlayerList *ThePlayerList;
-class Glo012F4B98Type { public: void Rva0058C040(); void Rva005976B0(Object*); };
-#pragma comment(linker, "/alternatename:?Rva0058C040@Glo012F4B98Type@@QAEXXZ=?j_0003367c@@YAXXZ")
-#pragma comment(linker, "/alternatename:?Rva005976B0@Glo012F4B98Type@@QAEXPAVObject@@@Z=?j_0001f0d7@@YAXXZ")
-extern Glo012F4B98Type *Glo012F4B98;
-class ControlBar;
-extern ControlBar *TheControlBar;
-class Rva004B19E0Owner { public: void bfmeClear(); void Rva004B19E0(std::vector<GameWindow*>*); };
-#pragma comment(linker, "/alternatename:?bfmeClear@Rva004B19E0Owner@@QAEXXZ=?j_00033f19@@YAXXZ")
-#pragma comment(linker, "/alternatename:?Rva004B19E0@Rva004B19E0Owner@@QAEXPAV?$vector@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@@Z=?j_00034b58@@YAXXZ")
+struct BfmePopulateCommandButtonView
+{
+	char pad00[ 0x10 ];
+	int m_command;
+	BfmePopulateCommandButtonView *m_next;
+	UnsignedInt m_options;
+	unsigned char m_unmodelled_01c[ 0x34 - 0x1c ];
+	SpecialPowerTemplate *m_specialPower;
+	unsigned char m_unmodelled_038[ 0x68 - 0x38 ];
+	AsciiString m_text;
+	unsigned char m_unmodelled_06c[ 0x84 - 0x6c ];
+	std::vector<int> m_science;
+	unsigned char m_unmodelled_090[ 0xa0 - 0x90 ];
+	int m_specialIndex;
+	unsigned char m_unmodelled_0a4[ 0x14d - 0xa4 ];
+	unsigned char field14d;
+	unsigned char m_unmodelled_14e[ 4 ];
+	unsigned char field152;
+	unsigned char field153;
 
-struct SpecialPowerTemplate : public Overridable {
-    char pad0c[0x10]; int m_requiredScience;
-    int getRequiredScience() const { return ((const SpecialPowerTemplate*)friend_getFinalOverride())->m_requiredScience; }
+	int getCommandType() const { return m_command; }
+	UnsignedInt getOptions() const { return m_options; }
+	SpecialPowerTemplate *getSpecialPowerTemplate() const { return m_specialPower; }
+	const std::vector<int> &getScienceVec() const { return m_science; }
+	BfmePopulateCommandButtonView *getNext() const { return m_next; }
+	void Rva0049BA80( Object *object, Bool refresh ) const;
+	void bfmeCopyFrom( const BfmePopulateCommandButtonView *button, Bool dirty ) const;
 };
-class CommandButton {
+#pragma comment(linker, "/alternatename:?Rva0049BA80@BfmePopulateCommandButtonView@@QBEXPAVObject@@_N@Z=?j_00006938@@YAXXZ")
+#pragma comment(linker, "/alternatename:?bfmeCopyFrom@BfmePopulateCommandButtonView@@QBEXPBV1@_N@Z=?j_00001947@@YAXXZ")
+
+class BfmePopulateCommandSetLookupView
+{
 public:
-    void Rva0049BA80(Object*,Bool) const;
-    void setButtonImage(const Image*) const;
-    void bfmeCopyFrom(const CommandButton*,Bool) const;
-    char pad00[0x10]; int m_command;
-    CommandButton *m_upgradeTemplate;   // oracle name for +0x14; retail walks the list through it
-    unsigned m_options;
-    char pad1c[0x18]; SpecialPowerTemplate *m_specialPower;
-    char pad38[0x30]; AsciiString field68;
-    char pad6c[0x18]; std::vector<int> m_science;
-    char pad90[0x8]; int m_zeroPlaceholderA; int m_zeroPlaceholderB; int fielda0;
-    char pada4[0xa9]; unsigned char field14d;
-    char pad14e[4]; unsigned char field152; unsigned char field153;
+	const CommandSet *findCommandSet( const AsciiString &name );
 };
-#pragma comment(linker, "/alternatename:?Rva0049BA80@CommandButton@@QBEXPAVObject@@_N@Z=?j_00006938@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeCopyFrom@CommandButton@@QBEXPBV1@_N@Z=?j_00001947@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setButtonImage@CommandButton@@QBEXPBVImage@@@Z=?j_0002a7ed@@YAXXZ")
-class ControlBar {
+#pragma comment(linker, "/alternatename:?findCommandSet@BfmePopulateCommandSetLookupView@@QAEPBVCommandSet@@ABVAsciiString@@@Z=?j_00048cca@@YAXXZ")
+
+class BfmePopulateCommandButtonLookupView
+{
 public:
-    const CommandSet *findCommandSet(const AsciiString&);
-    void setControlCommand(GameWindow*,const CommandButton*);
-protected:
-    void resetContainData();
-    void doTransportInventoryUI(Object*,const CommandSet*);
-    void showRallyPoint(const Coord3D*);
-    void Rva004A5950();
-    void populateCommand(Object *object,Bool refresh);
-    char pad00[0x28]; CommandButton *m_commandButtons;
-    char pad2c[0xd4]; GameWindow *m_commandWindows[20];
-    char pad150[0x50]; GameWindow *field1a0[20];
-    char pad1f0[0x100]; Rva004B19E0Owner *field2f0;
+	const CommandButton *getCommandButton( int index ) const;
 };
-#pragma comment(linker, "/alternatename:?Rva004A5950@ControlBar@@IAEXXZ=?j_0003672d@@YAXXZ")
-struct Rva004A4090WindowVec : std::vector<GameWindow*> { void reserve20(unsigned); };
+#pragma comment(linker, "/alternatename:?getCommandButton@BfmePopulateCommandButtonLookupView@@QBEPBVCommandButton@@H@Z=?j_00003f80@@YAXXZ")
+
+class BfmePopulateControlCommandView
+{
+public:
+	void setControlCommand( GameWindow *window, const CommandButton *button );
+};
+#pragma comment(linker, "/alternatename:?setControlCommand@BfmePopulateControlCommandView@@QAEXPAVGameWindow@@PBVCommandButton@@@Z=?setControlCommand@ControlBar@@QAEXPAVGameWindow@@PBVCommandButton@@@Z")
+
+class BfmePopulateRallyPointView
+{
+public:
+	void showRallyPoint( const Coord3D *location );
+};
+#pragma comment(linker, "/alternatename:?showRallyPoint@BfmePopulateRallyPointView@@QAEXPBUCoord3D@@@Z=?showRallyPoint@ControlBar@@IAEXPBUCoord3D@@@Z")
+
+class BfmePopulateButtonImageView
+{
+public:
+	void setButtonImage( const Image *image ) const;
+};
+#pragma comment(linker, "/alternatename:?setButtonImage@BfmePopulateButtonImageView@@QBEXPBVImage@@@Z=?j_0002a7ed@@YAXXZ")
+
+class BfmePopulateGameWindowCloseView
+{
+public:
+	void bfmeClose( Bool hide );
+};
+#pragma comment(linker, "/alternatename:?bfmeClose@BfmePopulateGameWindowCloseView@@QAEX_N@Z=?j_00027f2a@@YAXXZ")
+
+struct BfmePopulateControlBarView
+{
+	char pad00[ 0x28 ];
+	BfmePopulateCommandButtonView *m_commandButtons;
+	unsigned char m_unmodelled_02c[ 0xd4 ];
+	GameWindow *m_commandWindows[ 20 ];
+	unsigned char m_unmodelled_150[ 0x50 ];
+	GameWindow *m_overlayWindows[ 20 ];
+	unsigned char m_unmodelled_1f0[ 0x100 ];
+	void *m_overlaySink;
+};
+
+struct BfmePopulateCommandSetOverride
+{
+	char pad[ 0x2c ];
+	AsciiString m_commandSetName;
+};
+
+class BfmePopulateObjectOverrideView
+{
+public:
+	BfmePopulateCommandSetOverride *getOverride();
+};
+#pragma comment(linker, "/alternatename:?getOverride@BfmePopulateObjectOverrideView@@QAEPAUBfmePopulateCommandSetOverride@@XZ=?j_0002bf85@@YAXXZ")
+
+class BfmePopulateObjectStore
+{
+public:
+	const Image *getImage( int index );
+	const ThingTemplate *getTemplate( int index );
+};
+#pragma comment(linker, "/alternatename:?getImage@BfmePopulateObjectStore@@QAEPBVImage@@H@Z=?j_0004a66f@@YAXXZ")
+#pragma comment(linker, "/alternatename:?getTemplate@BfmePopulateObjectStore@@QAEPBVThingTemplate@@H@Z=?j_00002135@@YAXXZ")
+
+struct BfmePopulatePlayerView
+{
+	char pad[ 0x684 ];
+	BfmePopulateObjectStore m_objectStore;
+};
+
+class BfmePopulateCommandTextView
+{
+public:
+	Bool take( AsciiString &text );
+};
+#pragma comment(linker, "/alternatename:?take@BfmePopulateCommandTextView@@QAE_NAAVAsciiString@@@Z=?j_00046c18@@YAXXZ")
+
+class BfmePopulatePlayerListView
+{
+public:
+	unsigned char isLocalAlliedWith( Object *object );
+	char pad[ 0x0c ];
+	Player *m_localPlayer;
+};
+#pragma comment(linker, "/alternatename:?isLocalAlliedWith@BfmePopulatePlayerListView@@QAEGPAUObject@@@Z=?j_00003a85@@YAXXZ")
+
+class BfmePopulateOpenContain
+{
+};
+
+class BfmePopulateContainView
+{
+public:
+	virtual BfmePopulateOpenContain *asOpenContain();
+	virtual void slot01(); virtual void slot02(); virtual void slot03(); virtual void slot04();
+	virtual void slot05(); virtual void slot06(); virtual void slot07(); virtual void slot08();
+	virtual void slot09(); virtual void slot10(); virtual void slot11(); virtual void slot12();
+	virtual void slot13(); virtual void slot14(); virtual void slot15(); virtual void slot16();
+	virtual void slot17(); virtual void slot18(); virtual void slot19(); virtual void slot20();
+	virtual void slot21(); virtual void slot22(); virtual void slot23(); virtual void slot24();
+	virtual void slot25(); virtual void slot26(); virtual void slot27(); virtual void slot28();
+	virtual void slot29(); virtual void slot30(); virtual void slot31(); virtual void slot32();
+	virtual void slot33(); virtual void slot34(); virtual void slot35(); virtual void slot36();
+	virtual void slot37(); virtual void slot38(); virtual void slot39(); virtual void slot40();
+	virtual void slot41(); virtual void slot42(); virtual void slot43(); virtual void slot44();
+	virtual Bool slot45();
+};
+
+struct BfmePopulateObjectContainView
+{
+	unsigned char pad00[ 0x1fc ];
+	BfmePopulateContainView *m_contain;
+
+	BfmePopulateContainView *getContain() const { return m_contain; }
+};
+
+class BfmePopulateExitInterfaceView
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03();
+	virtual void slot04(); virtual void slot05(); virtual void slot06(); virtual void slot07();
+	virtual const Coord3D *slot08();
+};
+
+class BfmePopulateGlobalsView
+{
+public:
+	void updateContext();
+	void updateObject( Object *object );
+};
+#pragma comment(linker, "/alternatename:?updateContext@BfmePopulateGlobalsView@@QAEXXZ=?j_0003367c@@YAXXZ")
+#pragma comment(linker, "/alternatename:?updateObject@BfmePopulateGlobalsView@@QAEXPAVObject@@@Z=?j_0001f0d7@@YAXXZ")
+
+class BfmePopulateControlBarContextCommandView
+{
+public:
+	void call();
+};
+#pragma comment(linker, "/alternatename:?call@BfmePopulateControlBarContextCommandView@@QAEXXZ=?j_0003672d@@YAXXZ")
+
+class BfmePopulateClearAt004B1720
+{
+public:
+	void clear();
+};
+#pragma comment(linker, "/alternatename:?clear@BfmePopulateClearAt004B1720@@QAEXXZ=?j_00033f19@@YAXXZ")
+
+class Rva004B19E0
+{
+public:
+	void apply( void *windows );
+};
+
+class Rva004A4090WindowVec : public std::vector<GameWindow *>
+{
+public:
+	void reserve20( unsigned count );
+};
 #pragma comment(linker, "/alternatename:?reserve20@Rva004A4090WindowVec@@QAEXI@Z=?j_00046f4c@@YAXXZ")
 
-void ControlBar::populateCommand(Object *object,Bool refresh)
+#define m_commandButtons (((BfmePopulateControlBarView *)this)->m_commandButtons)
+#define m_commandWindows (((BfmePopulateControlBarView *)this)->m_commandWindows)
+#define field1a0 (((BfmePopulateControlBarView *)this)->m_overlayWindows)
+#define field2f0 ((Rva004B19E0 *)((BfmePopulateControlBarView *)this)->m_overlaySink)
+
+void ControlBar::populateCommand( Object *object, Bool refresh )
 {
-    Player *player=object->getControllingPlayer();
-    resetContainData();
-    const CommandSet *commandSet=TheControlBar->findCommandSet(object->getCommandSetString());
-    Rva001CAF20Record *overrideRecord=object->Rva001CAF20();
-    if(overrideRecord) commandSet=TheControlBar->findCommandSet(overrideRecord->commandSetName);
-    if(!commandSet) {
-        if(Glo012F4B98) Glo012F4B98->Rva0058C040();
-        return;
-    }
-    int i;
-    for(i=0;i<20;++i) {
-        if(m_commandWindows[i]) {
-            const CommandButton *button=commandSet->getCommandButton(i);
-            if(!button) m_commandWindows[i]->bfmeClose(true);
-            else button->Rva0049BA80(object,false);
-            setControlCommand(m_commandWindows[i],button);
-        }
-    }
-    ContainModuleInterface *contain=object->getContain();
-    if(contain && contain->slot45()) doTransportInventoryUI(object,commandSet);
-    int specialIndex=0;
-    for(i=0;i<20;++i) {
-        const CommandButton *button=commandSet->getCommandButton(i);
-        CommandButton *b=(CommandButton*)button;
-        if(!b || !b->field152) continue;
-        if(b->m_options&0x80000) {
-            if(m_commandWindows[i]) m_commandWindows[i]->bfmeClose(true);
-            continue;
-        }
-        if(contain && b->field153) {
-            OpenContain *open=contain->asOpenContain();
-            if(open && !*((const unsigned char*)open+0xb6)) continue;
-        }
-        if(b->m_command==0x2c) {
-            if(!ThePlayerList->isLocalAlliedWith(object)) {
-                m_commandWindows[i]->bfmeClose(true);
-                continue;
-            }
-            const Image *image=player->m_store684.Rva000FA800(specialIndex);
-            Rva0013E4D0 *tmpl=(Rva0013E4D0*)player->m_store684.rva000F9670(specialIndex);
-            if(image && tmpl) {
-                button->setButtonImage(image);
-                AsciiString text;
-                if(tmpl->take(text)) b->field68=text;
-                if(m_commandWindows[i]) setControlCommand(m_commandWindows[i],button);
-                b->field68.clear();
-                b->fielda0=specialIndex;
-            } else b->fielda0=-1;
-            ++specialIndex;
-        }
-        // NOT RETAIL: two placeholder zero stores; see header.
-        b->m_zeroPlaceholderA=0; b->m_zeroPlaceholderB=0;
-        if(b->m_command==0xf) continue;
-        if(m_commandWindows[i]) {
-            m_commandWindows[i]->bfmeClose(false);
-            m_commandWindows[i]->winEnable(true);
-            if(b->field14d) m_commandWindows[i]->winSetStatus(0x4000000U);
-            else m_commandWindows[i]->winClearStatus(0x4000000U);
-        }
-        if((b->m_options&0x80) && b->m_specialPower) {
-            SpecialPowerTemplate *power=b->m_specialPower;
-            if(power->getRequiredScience()!=-1) {
-                if(!player->hasScience((ScienceType)power->getRequiredScience())) {
-                    if(m_commandWindows[i]) m_commandWindows[i]->bfmeClose(true);
-                } else {
-                    int bestIndex=-1;
-                    ScienceType science;
-                    for(unsigned scienceIndex=0;scienceIndex<b->m_science.size();++scienceIndex) {
-                        science=(ScienceType)b->m_science[scienceIndex];
-                        if(player->hasScience(science)) bestIndex=scienceIndex;
-                        else break;
-                    }
-                    if(bestIndex!=-1) {
-                        science=(ScienceType)b->m_science[bestIndex];
-                        for(CommandButton *candidate=m_commandButtons;candidate;candidate=candidate->m_upgradeTemplate) {
-                            if(candidate->m_command==0x18 && !candidate->m_science.empty() && candidate->m_science[0]==science)
-                                button->bfmeCopyFrom(candidate,true);
-                        }
-                    }
-                }
-            }
-        }
-    }
-    if(object->isLocallyControlled() || !ThePlayerList->m_localPlayer->isPlayerActive()) {
-        ExitInterface *exitInterface=object->getObjectExitInterface();
-        if(exitInterface) showRallyPoint(exitInterface->slot08());
-    }
-    Rva004A5950();
-    Glo012F4B98->Rva005976B0(object);
-    if(field2f0) {
-        if(!object->isLocallyControlled() && ThePlayerList->m_localPlayer->isPlayerActive()) {
-            field2f0->bfmeClear();
-            return;
-        }
-        Rva004A4090WindowVec windows;
-        windows.reserve20(20U);
-        for(int k=0;k<20;++k) {
-            GameWindow *window=field1a0[k];
-            if(window) windows.push_back(window);
-        }
-        field2f0->Rva004B19E0(&windows);
-    }
+	Player *player = object->getControllingPlayer();
+	resetContainData();
+	const CommandSet *commandSet = ((BfmePopulateCommandSetLookupView *)TheControlBar)->findCommandSet( object->getCommandSetString() );
+	BfmePopulateCommandSetOverride *overrideRecord = ((BfmePopulateObjectOverrideView *)object)->getOverride();
+	if( overrideRecord )
+		commandSet = ((BfmePopulateCommandSetLookupView *)TheControlBar)->findCommandSet( overrideRecord->m_commandSetName );
+	if( !commandSet )
+	{
+		if( Glo012F4B98 )
+			((BfmePopulateGlobalsView *)Glo012F4B98)->updateContext();
+		return;
+	}
+	int i;
+	for( i = 0; i < 20; ++i )
+	{
+		if( m_commandWindows[ i ] )
+		{
+			const CommandButton *button = ((const BfmePopulateCommandButtonLookupView *)commandSet)->getCommandButton( i );
+			if( !button )
+				((BfmePopulateGameWindowCloseView *)m_commandWindows[ i ])->bfmeClose( true );
+			else
+				((BfmePopulateCommandButtonView *)button)->Rva0049BA80( object, false );
+			((BfmePopulateControlCommandView *)this)->setControlCommand( m_commandWindows[ i ], button );
+		}
+	}
+	BfmePopulateContainView *contain = ((BfmePopulateObjectContainView *)object)->getContain();
+	if( contain && contain->slot45() )
+		doTransportInventoryUI( object, commandSet );
+	int specialIndex = 0;
+	for( i = 0; i < 20; ++i )
+	{
+		const CommandButton *button = ((const BfmePopulateCommandButtonLookupView *)commandSet)->getCommandButton( i );
+		BfmePopulateCommandButtonView *b = (BfmePopulateCommandButtonView *)button;
+		if( !b || !b->field152 )
+			continue;
+		if( b->getOptions() & 0x80000 )
+		{
+			if( m_commandWindows[ i ] )
+				((BfmePopulateGameWindowCloseView *)m_commandWindows[ i ])->bfmeClose( true );
+			continue;
+		}
+		if( contain && b->field153 )
+		{
+			BfmePopulateOpenContain *open = contain->asOpenContain();
+			if( open && !*((const unsigned char *)open + 0xb6) )
+				continue;
+		}
+		if( b->getCommandType() == 0x2c )
+		{
+			if( !((BfmePopulatePlayerListView *)ThePlayerList)->isLocalAlliedWith( object ) )
+			{
+				((BfmePopulateGameWindowCloseView *)m_commandWindows[ i ])->bfmeClose( true );
+				continue;
+			}
+			const Image *image = ((BfmePopulatePlayerView *)player)->m_objectStore.getImage( specialIndex );
+			BfmePopulateCommandTextView *textTemplate = (BfmePopulateCommandTextView *)((BfmePopulatePlayerView *)player)->m_objectStore.getTemplate( specialIndex );
+			if( image && textTemplate )
+			{
+				((BfmePopulateButtonImageView *)button)->setButtonImage( image );
+				AsciiString text;
+				if( textTemplate->take( text ) )
+					b->m_text = text;
+				if( m_commandWindows[ i ] )
+					((BfmePopulateControlCommandView *)this)->setControlCommand( m_commandWindows[ i ], button );
+				b->m_text.clear();
+				b->m_specialIndex = specialIndex;
+			}
+			else
+				b->m_specialIndex = -1;
+			++specialIndex;
+		}
+		if( b->getCommandType() == 0xf )
+			continue;
+		if( m_commandWindows[ i ] )
+		{
+			((BfmePopulateGameWindowCloseView *)m_commandWindows[ i ])->bfmeClose( false );
+			m_commandWindows[ i ]->winEnable( true );
+			if( b->field14d )
+				m_commandWindows[ i ]->winSetStatus( 0x4000000U );
+			else
+				m_commandWindows[ i ]->winClearStatus( 0x4000000U );
+		}
+		if( ( b->getOptions() & 0x80 ) && b->getSpecialPowerTemplate() )
+		{
+			SpecialPowerTemplate *power = b->getSpecialPowerTemplate();
+			if( power->getRequiredScience() != -1 )
+			{
+				if( !player->hasScience( (ScienceType)power->getRequiredScience() ) )
+				{
+					if( m_commandWindows[ i ] )
+						((BfmePopulateGameWindowCloseView *)m_commandWindows[ i ])->bfmeClose( true );
+				}
+				else
+				{
+					int bestIndex = -1;
+					ScienceType science;
+					for( unsigned scienceIndex = 0; scienceIndex < b->getScienceVec().size(); ++scienceIndex )
+					{
+						science = (ScienceType)b->getScienceVec()[ scienceIndex ];
+						if( player->hasScience( science ) )
+							bestIndex = scienceIndex;
+						else
+						break;
+					}
+					if( bestIndex != -1 )
+					{
+						science = (ScienceType)b->getScienceVec()[ bestIndex ];
+						for( BfmePopulateCommandButtonView *candidate = m_commandButtons; candidate; candidate = candidate->getNext() )
+						{
+							if( candidate->getCommandType() == 0x18 && !candidate->getScienceVec().empty() && candidate->getScienceVec()[ 0 ] == science )
+								((BfmePopulateCommandButtonView *)button)->bfmeCopyFrom( candidate, true );
+						}
+					}
+				}
+			}
+		}
+	}
+	if( object->isLocallyControlled() || !((BfmePopulatePlayerListView *)ThePlayerList)->m_localPlayer->isPlayerActive() )
+	{
+		BfmePopulateExitInterfaceView *exitInterface = (BfmePopulateExitInterfaceView *)object->getObjectExitInterface();
+		if( exitInterface )
+			((BfmePopulateRallyPointView *)this)->showRallyPoint( exitInterface->slot08() );
+	}
+	((BfmePopulateControlBarContextCommandView *)this)->call();
+	((BfmePopulateGlobalsView *)Glo012F4B98)->updateObject( object );
+	if( field2f0 )
+	{
+		if( !object->isLocallyControlled() && ((BfmePopulatePlayerListView *)ThePlayerList)->m_localPlayer->isPlayerActive() )
+		{
+			((BfmePopulateClearAt004B1720 *)field2f0)->clear();
+			return;
+		}
+		Rva004A4090WindowVec windows;
+		windows.reserve20( 20U );
+		for( int k = 0; k < 20; ++k )
+		{
+			GameWindow *window = field1a0[ k ];
+			if( window )
+				windows.push_back( window );
+		}
+		((Rva004B19E0 *)field2f0)->apply( &windows );
+	}
 }
+
+
+#undef field2f0
+#undef field1a0
+#undef m_commandWindows
+#undef m_commandButtons
