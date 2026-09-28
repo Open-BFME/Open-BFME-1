@@ -50,6 +50,7 @@ class __node_alloc
 
     static _Obj *_S_free_list[0x10];
 
+    friend void __stdcall Rva009D7630(void *ptr);
     static void _M_deallocate(void *p, unsigned int n);
 };
 
@@ -64,4 +65,15 @@ void __node_alloc<__threads, __inst>::_M_deallocate(void *p, unsigned int n)
 
 template void __node_alloc<true, 0>::_M_deallocate(void *, unsigned int);
 
+
+#pragma optimize("gy", on)
+// retail 0x009D7630
+void __stdcall Rva009D7630( void *ptr )
+{
+	if ( ptr )
+	{
+		_STL::__node_alloc<true, 0>::_M_deallocate( ptr, 0xC );
+	}
+}
+#pragma optimize("gy", off)
 }
