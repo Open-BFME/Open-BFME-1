@@ -1,54 +1,93 @@
 // ?bfmeCheckAttackViewHelper@Pathfinder@@QAEHPAVObject@@PAUCoord3D@@PAX@Z
-// partial score=0.167 date=2026-09-25
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
-// BFME perimeter-cell attack-view helper at retail 0x003E49F0.
+// partial score=0.96 date=2026-09-28
+// cl: /DNDEBUG /MD
+//
+// Retail 0x003E49F0, 753 bytes (ret 0xC at +0x2EE). Identity: ILT 0x00005484 and
+// the matched caller at 0x003EA570.  Rewritten on the layout of the matched
+// sibling Pathfinder::checkDestination (PathfindCheckDestination.cpp): inline
+// Pathfinder::getCell(layer,x,y), the ZH numCellsAbove preamble, REAL_TO_INT_FLOOR
+// via fast_float2long_round, literal 0.1f/0.5f, and expression-form loop bounds
+// the compiler hoists itself.  Retail sets the ground-cell flag when the layer is
+// ground or out of range (the old bank dropped that path).
+// probe: 753/753 bytes, shape 1.000; 29 bytes differ, all stack displacements:
+// our frame is 0x28 against retail 0x24 because iRadius keeps its own slot at -12
+// where retail overlaps it with the fistp temporaries and the hoisted xLast.
 
 typedef int Int;
 typedef bool Bool;
 typedef float Real;
 typedef unsigned int ObjectID;
 
+const ObjectID INVALID_ID = 0;
+
 extern "C" __declspec(dllimport) double __cdecl floor(double);
-extern const Real g_bfmeScaleBK;
-extern const Real g_bfmeK1253;
 
 struct Coord3D { Real x, y, z; };
+struct ICoord2D { Int x, y; };
+struct IRegion2D { ICoord2D lo, hi; };
+
+enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1, LAYER_LAST = 15 };
+
+inline long fast_float2long_round(float f)
+{
+	long i;
+	__asm {
+		fld [f]
+		fistp [i]
+	}
+	return i;
+}
+
+inline float fast_float_floor(float f)
+{
+	return (float)floor(f);
+}
+
+#define REAL_TO_INT_FLOOR(x) (fast_float2long_round(fast_float_floor(x)))
 
 class Object
 {
 public:
-	Int getLayer() const;
+	ObjectID getID( void ) const { return m_id; }
+	Int getLayer( void ) const;
 
 private:
-	unsigned char m_pad00[0x74];
-public:
+	unsigned char m_prefix[0x74];
 	ObjectID m_id;
 };
 
-class Rva003E49F0CellInfo
+class PathfindCellInfo
 {
 public:
-	unsigned char m_pad00[0x18];
-	ObjectID m_id18;
-	unsigned char m_pad1c[4];
-	ObjectID m_id20;
+	unsigned char m_prefix[0x14];
+	ObjectID m_goalUnitID;
+	ObjectID m_posUnitID;
+	ObjectID m_bfme1C;
+	ObjectID m_bfme20;
 };
 
-class Rva003E49F0Cell
+class PathfindCell
 {
 public:
-	Rva003E49F0CellInfo *m_info;
-	unsigned char m_pad04[0x0c];
+	ObjectID getPosUnit( void ) const { ObjectID id = m_info ? m_info->m_posUnitID : INVALID_ID; return id; }
+	ObjectID getBfme20( void ) const { return m_info ? m_info->m_bfme20 : INVALID_ID; }
+
+	PathfindCellInfo *m_info;
+	Int m_unused1;
+	Int m_unused2;
+	unsigned int m_packed;
 };
 
-class Rva003E49F0Layer
+class PathfindLayer
 {
 public:
-	Rva003E49F0Cell *getCell(Int x, Int y);
-	unsigned char m_storage[0x44];
+	PathfindCell *getCell( Int cellX, Int cellY );
+
+private:
+	unsigned char m_body[0x44];
 };
 
-class Rva003E49F0TerrainLogic
+class TerrainLogic
 {
 public:
 	virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03();
@@ -62,141 +101,141 @@ public:
 	virtual void slot32(); virtual void slot33(); virtual void slot34(); virtual void slot35();
 	virtual void slot36(); virtual void slot37(); virtual void slot38(); virtual void slot39();
 	virtual void slot40();
-	virtual Bool queryObjectLayer(Object *object, Int layer);
+	virtual Bool queryObjectLayer( Object *object, Int layer );
 };
 
-extern Rva003E49F0TerrainLogic *TheTerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 
 class Pathfinder
 {
 public:
-	Int bfmeCheckAttackViewHelper(Object *object, Coord3D *position, void *cellIds);
+	Int bfmeCheckAttackViewHelper( Object *obj, Coord3D *pos, void *cellIds );
+	PathfindCell *getCell( PathfindLayerEnum layer, Int cellX, Int cellY );
 
 protected:
-	void getRadiusAndCenter(const Object *object, Int &radius, Bool &center);
+	void getRadiusAndCenter( const Object *obj, Int &iRadius, Bool &center );
 
 private:
-	unsigned char m_pad00[0x10];
-	Rva003E49F0Cell **m_map;
-	Int m_loX;
-	Int m_loY;
-	Int m_hiX;
-	Int m_hiY;
-	unsigned char m_pad24[0x85c - 0x24];
-	Rva003E49F0Layer m_layers[16];
+	unsigned char m_prefix[0x10];
+	PathfindCell **m_map;
+	IRegion2D m_extent;
+	unsigned char m_mid[0x85c - 0x24];
+	PathfindLayer m_layers[16];
 };
 
-static __forceinline Int rva003E49F0Round(Real value)
+inline PathfindCell *Pathfinder::getCell( PathfindLayerEnum layer, Int cellX, Int cellY )
 {
-	Int result;
-	__asm {
-		fld [value]
-		fistp [result]
+	if (cellX >= m_extent.lo.x && cellX <= m_extent.hi.x &&
+		cellY >= m_extent.lo.y && cellY <= m_extent.hi.y)
+	{
+		if (layer > LAYER_GROUND && layer <= LAYER_LAST)
+		{
+			PathfindCell *cell = m_layers[layer].getCell( cellX, cellY );
+			if (cell)
+				return cell;
+		}
+		return &m_map[cellX][cellY];
 	}
-	return result;
+	return 0;
 }
 
-static __forceinline Int rva003E49F0Floor(Real value)
-{
-	return rva003E49F0Round((Real)floor((double)value));
-}
-
-static __forceinline ObjectID rva003E49F0CellId(Rva003E49F0Cell *cell)
-{
-	Rva003E49F0CellInfo *info = cell->m_info;
-	ObjectID id = info ? info->m_id18 : 0;
-	if (id == 0 && info && info->m_id20)
-		id = info->m_id20;
-	return id;
-}
-
-static __forceinline void rva003E49F0AddUnique(ObjectID id, ObjectID ignore,
-	ObjectID *ids, Int &count)
-{
-	if (id == 0 || id == ignore)
-		return;
-	Int i = 0;
-	while (i < count && ids[i] != id)
-		++i;
-	if (i == count)
-		ids[count++] = id;
-}
-
-Int Pathfinder::bfmeCheckAttackViewHelper(Object *object, Coord3D *position,
-	void *cellIds)
+Int Pathfinder::bfmeCheckAttackViewHelper( Object *obj, Coord3D *pos, void *cellIds )
 {
 	Int radius;
-	Bool centered;
-	getRadiusAndCenter(object, radius, centered);
-
-	Int x;
-	Int y;
-	Real scaledX = position->x;
-	scaledX *= g_bfmeScaleBK;
+	Bool center;
+	{
+		Int iRadius;
+		getRadiusAndCenter(obj, iRadius, center);
+		radius = iRadius;
+	}
+	Bool centered = center;
+	Int numCellsAbove = radius;
+	ICoord2D cell;
 	if (centered)
 	{
-		x = rva003E49F0Floor(scaledX);
-		Real scaledY = position->y;
-		scaledY *= g_bfmeScaleBK;
-		y = rva003E49F0Floor(scaledY);
-		++radius;
+		numCellsAbove = radius + 1;
+		cell.x = REAL_TO_INT_FLOOR(pos->x * 0.1f);
+		cell.y = REAL_TO_INT_FLOOR(pos->y * 0.1f);
 	}
 	else
 	{
-		x = rva003E49F0Floor(scaledX + g_bfmeK1253);
-		Real scaledY = position->y;
-		scaledY *= g_bfmeScaleBK;
-		y = rva003E49F0Floor(scaledY + g_bfmeK1253);
+		cell.x = REAL_TO_INT_FLOOR(pos->x * 0.1f + 0.5f);
+		cell.y = REAL_TO_INT_FLOOR(pos->y * 0.1f + 0.5f);
 	}
 
-	Bool terrainConfirmed = false;
-	Bool useLayer = false;
-	Int layer = object->getLayer();
-	if (layer != 1 && layer < 16)
+	Bool checkGround = false;
+	Bool checkLayer = false;
+	PathfindLayerEnum layer = (PathfindLayerEnum)obj->getLayer();
+	if (layer != LAYER_GROUND && layer < 16)
 	{
-		useLayer = true;
-		terrainConfirmed = TheTerrainLogic->queryObjectLayer(object, layer);
+		checkLayer = true;
+		if (TheTerrainLogic->queryObjectLayer(obj, layer))
+			checkGround = true;
+	}
+	else
+	{
+		checkGround = true;
 	}
 
 	ObjectID *ids = (ObjectID *)cellIds;
-	Int count = 0;
-	const Int xMin = x - radius - 1;
-	const Int xMax = x + radius + 1;
-	const Int yMin = y - radius - 1;
-	const Int yMax = y + radius + 1;
-
-	for (Int cellX = xMin; cellX < xMax; ++cellX)
+	Int numIds = 0;
+	Int i, j;
+	for (i = cell.x - radius - 1; i < cell.x + numCellsAbove + 1; i++)
 	{
-		for (Int cellY = yMin; cellY < yMax; ++cellY)
+		for (j = cell.y - radius - 1; j < cell.y + numCellsAbove + 1; j++)
 		{
-			if (cellX != xMin && cellY != yMin &&
-				cellX != xMax - 1 && cellY != yMax - 1)
+			if (i != cell.x - radius - 1 && j != cell.y - radius - 1 &&
+				i != cell.x + numCellsAbove && j != cell.y + numCellsAbove)
 				continue;
 
-			if (useLayer && cellX >= m_loX && cellX <= m_hiX &&
-				cellY >= m_loY && cellY <= m_hiY)
+			if (checkLayer)
 			{
-				Rva003E49F0Cell *cell = 0;
-				if (layer > 1 && layer <= 15)
-					cell = m_layers[layer].getCell(cellX, cellY);
-				if (cell == 0)
-					cell = &m_map[cellX][cellY];
-				rva003E49F0AddUnique(rva003E49F0CellId(cell), object->m_id,
-					ids, count);
-				if (count == 16)
-					return 16;
+				PathfindCell *layerCell = getCell(layer, i, j);
+				if (layerCell)
+				{
+					ObjectID id = layerCell->getPosUnit();
+					if (id == INVALID_ID)
+						id = layerCell->getBfme20();
+					if (id != INVALID_ID && id != obj->getID())
+					{
+						Int k;
+						for (k = 0; k < numIds; k++)
+							if (ids[k] == id)
+								break;
+						if (k == numIds)
+						{
+							ids[numIds++] = id;
+							if (numIds == 16)
+								return 16;
+						}
+					}
+				}
 			}
 
-			if (terrainConfirmed && cellX >= m_loX && cellX <= m_hiX &&
-				cellY >= m_loY && cellY <= m_hiY)
+			if (checkGround)
 			{
-				Rva003E49F0Cell *cell = &m_map[cellX][cellY];
-				rva003E49F0AddUnique(rva003E49F0CellId(cell), object->m_id,
-					ids, count);
-				if (count == 16)
-					return 16;
+				PathfindCell *groundCell = getCell(LAYER_GROUND, i, j);
+				if (groundCell)
+				{
+					ObjectID id = groundCell->getPosUnit();
+					if (id == INVALID_ID)
+						id = groundCell->getBfme20();
+					if (id != INVALID_ID && id != obj->getID())
+					{
+						Int k;
+						for (k = 0; k < numIds; k++)
+							if (ids[k] == id)
+								break;
+						if (k == numIds)
+						{
+							ids[numIds++] = id;
+							if (numIds == 16)
+								return 16;
+						}
+					}
+				}
 			}
 		}
 	}
-	return count;
+	return numIds;
 }
