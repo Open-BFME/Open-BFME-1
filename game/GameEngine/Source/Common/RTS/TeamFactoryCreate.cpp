@@ -3,7 +3,7 @@
 // consecutive in the image:
 //
 //   0x000F7CA0  createTeam             33B
-//   0x000F7CD0  createTemporaryTeam   ~90B
+//   0x000F7CD0  createEmptyTeam   ~90B
 //   0x000F7E70  createTeamOnPrototype 155B
 //   0x000F7F40  findTeam               65B
 //
@@ -13,13 +13,13 @@
 // The models they shared had drifted in every way this project sees:
 //
 // Team. One file gave it 0x33 bytes ending at the two flags, another 0x110
-// bytes -- which is the size createTeamOnPrototype and createTemporaryTeam
+// bytes -- which is the size createTeamOnPrototype and createEmptyTeam
 // both allocate -- and the flag at +0x32 was m_started in one file and
 // m_created in the other, with the identical two-line body setting it. It is
 // one byte with one name now.
 //
 // TeamPrototype. findTeam named the singleton flag at +0x18 and the instance
-// list at +0x274; createTemporaryTeam knew only that the whole thing is 0x278
+// list at +0x274; createEmptyTeam knew only that the whole thing is 0x278
 // bytes because it news one. Those corroborate rather than conflict: the named
 // layout ends at +0x274 plus a pointer, which is exactly 0x278. The two
 // singleton reads stay distinct on purpose -- findTeam reads +0x18 as a dword
@@ -138,7 +138,7 @@ class TeamFactory
 {
 public:
 	Team *createTeam(const AsciiString &owner, const AsciiString &name);
-	Team *createTemporaryTeam(Player *player);
+	Team *createEmptyTeam(Player *player);
 	Team *createTeamOnPrototype(TeamPrototype *prototype);
 	Team *findTeam(const AsciiString &name, const AsciiString &owner);
 
@@ -166,12 +166,12 @@ Team *TeamFactory::createTeam(const AsciiString &owner, const AsciiString &name)
 	return team;
 }
 
-// ?createTemporaryTeam@TeamFactory@@QAEPAVTeam@@PAVPlayer@@@Z
+// ?createEmptyTeam@TeamFactory@@QAEPAVTeam@@PAVPlayer@@@Z
 //
 // The method name is a reconstruction from the __TempTeam%d format string; it
 // is not a recovered original identifier (absent from ZH Team.cpp/Team.h and
 // from exports).
-Team *TeamFactory::createTemporaryTeam(Player *player)
+Team *TeamFactory::createEmptyTeam(Player *player)
 {
 	Dict dict(0);
 	AsciiString name;
