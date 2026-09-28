@@ -89701,3 +89701,6 @@ _Rva007F5790Callback,0x007F5790,gap-seat dependency; caller 007F7030 pushes VA00
 ?invoke@Rva0056E600@@UAEPAXI@Z,0x0056E830,opaque ABI carrier for secondary-base adjustor0056E600; target independently proven by ILT0001C391; body0056E830 calls dtor viaILT00027E44 tests flags bit0 conditionally deletes returns original this RET4; no semantic class identity asserted
 ?method@Rva00925860@@QAEXPAX0@Z,0x00925860,opaque target called by 0x0092C390 with thiscall ret 8
 ??0SupplyTruckStateMachine@@QAE@PAVObject@@@Z,0x00047C80,route=0x002C6430; one-argument constructor proven by caller and ret 4; identity_evidence/002C6430-supply-truck-constructor.md
+?bfmeCollapseZones@PathfindZoneManager@@QAEXPAPAVPathfindCell@@ABUIRegion2D@@_N@Z,0x00402DB0, same matched collapse identity with class tag; caller 00408CD0 pushes map bounds true
+?phase004085F0@PathfindZoneManager@@AAEXPAPAVPathfindCell@@ABUIRegion2D@@@Z,0x004085F0, address-derived zone phase; caller 00408CD0 receiver and two args; callee ret 8
+?phase00404B10@PathfindZoneManager@@AAEXPAPAVPathfindCell@@PAVPathfindLayer@@ABUIRegion2D@@HH@Z,0x00404B10, address-derived zone phase; caller 00408CD0 pushes map layers bounds and two percentages; callee ret 20
