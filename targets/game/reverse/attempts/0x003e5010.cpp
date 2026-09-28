@@ -1,10 +1,10 @@
-// ?rva003E5010@Pathfinder@@QAEXPAVObject@@PAUCoord3D@@0PAX@Z
-// partial score=0.95 date=2026-09-27
+// ?rva003E5010@Pathfinder@@QAEXPAVObject@@PAUCoord3D@@0_N@Z
+// partial score=0.96 date=2026-09-27
 // stlport
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /I.
-// Retail 0x003E5010, 1262 bytes.  The owning Pathfinder method is kept
-// address-derived: the four-argument thiscall and the target-position work
-// are proven, but the old adjustDestination attribution was refuted.
+// Retail code at 0x003E5010 uses a four-argument Pathfinder thiscall.
+// A matched caller proves the argument types and Pathfinder owner.
+// No evidence proves a semantic method name, so this draft uses the RVA.
 
 #include "PreRTS.h"
 #include "../../../../game/GameEngine/Include/GameLogic/TerrainLogic.h"
@@ -67,9 +67,10 @@ public:
 class Pathfinder
 {
 public:
-	void rva003E5010(Object *, Coord3D *, Object *, void *);
+	void rva003E5010(Object *, Coord3D *, Object *, Bool);
+protected:
+	void getRadiusAndCenter(const Object *, Int &, Bool &);
 
-	void bfmeQuery(Object *, Int &, Bool &);
 	Bool bfmeStepD4F90(void *, PathfindCell *);
 	void adjustCoordToCell(Int, Int, Bool, Coord3D &, PathfindLayerEnum);
 
@@ -121,7 +122,7 @@ struct Rva003E5010State
 {
 	UnsignedInt m_offset00;
 	UnsignedByte m_offset04;
-	Bool m_computerControlled;
+	Bool m_offset05;
 	UnsignedByte m_offset06[2];
 	Int m_offset08;
 };
@@ -177,7 +178,7 @@ static __forceinline void rva003E5010Adjust(Pathfinder *self, Int x, Int y,
 }
 
 void Pathfinder::rva003E5010(Object *source, Coord3D *destination,
-	Object *target, void *)
+	Object *target, Bool)
 {
 	ICoord2DPair targetCell;
 	m_ignoreObstacleID = 0;
@@ -186,7 +187,7 @@ void Pathfinder::rva003E5010(Object *source, Coord3D *destination,
 
 	Int radius;
 	Bool center;
-	bfmeQuery(source, radius, center);
+	getRadiusAndCenter(source, radius, center);
 
 	BfmeThingTemplate *firstTemplate = (BfmeThingTemplate *)
 		rva003E5010Template(source->m_template);
@@ -201,7 +202,7 @@ void Pathfinder::rva003E5010(Object *source, Coord3D *destination,
 	Rva003E5010State state;
 	state.m_offset00 = validSurfaces;
 	state.m_offset04 = allowAircraftGoal;
-	state.m_computerControlled = computerControlled;
+	state.m_offset05 = computerControlled;
 	state.m_offset08 = maxLayer - 1;
 
 	ICoord2DPair sourceCell;
