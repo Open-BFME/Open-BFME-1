@@ -1,5 +1,5 @@
 // ?rva00150A70@AIGroup@@QAEXPAUCoord3D@@PBU2@H@Z
-// partial score=0.952 date=2026-09-27
+// partial score=0.984 date=2026-09-27
 // cl: /DNDEBUG /MD /EHsc
 // AIGroup methods that walk the member list.
 //
@@ -79,7 +79,7 @@ class PolygonTrigger;
 
 enum GuardMode { BFME_GUARD_MODE_NORMAL };
 
-#include "../command_source_type.h"
+#include "../../game/GameEngine/Source/GameLogic/command_source_type.h"
 
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 enum IterOrderType { ITER_FASTEST = 0, ITER_SORTED_NEAR_TO_FAR = 1 };
@@ -405,25 +405,36 @@ void AIGroup::rva00150A70(Coord3D *anchor, const Coord3D *facing,
 	((BfmeOwnerGK *)this)->bfmeRunGK();
 	prepFollow((::CommandSourceType)commandSource, 0);
 
-	for (BfmeListNodeBase *memberNode = m_memberList->m_bfmeNext;
-			memberNode != m_memberList;
-			memberNode = memberNode->m_bfmeNext)
+	BfmeListNodeBase *memberNode = m_memberList->m_bfmeNext;
+	if (memberNode != m_memberList)
 	{
-		Object *member = ((BfmeMemberNode *)memberNode)->m_bfmeValue;
-		if (member == 0)
-			continue;
+		const Coord3D *anchorPosition = anchor;
+		while (memberNode != m_memberList)
+		{
+			Object *member = ((BfmeMemberNode *)memberNode)->m_bfmeValue;
+			if (member != 0)
+			{
 
-		BfmePosTP position;
-		position.x = *(float *)((char *)member + 0x320);
-		position.y = *(float *)((char *)member + 0x324);
-		rva00150100(anchor, facing, &position);
-		position.x = position.x + anchor->x;
-		position.y = position.y + anchor->y;
-		position.zBits = *(unsigned int *)((char *)anchor + 0x08);
-		((BfmeHostTP *)member)->bfmeSetPositionTP(&position, false);
+				struct BfmeOffsetTP
+				{
+					float x;
+					float y;
+				};
+				BfmeOffsetTP offset;
+				offset.x = *(float *)((char *)member + 0x320);
+				offset.y = *(float *)((char *)member + 0x324);
+				rva00150100(anchorPosition, facing, &offset);
+				BfmePosTP position;
+				position.x = offset.x + anchorPosition->x;
+				position.y = offset.y + anchorPosition->y;
+				position.zBits = *(unsigned int *)((char *)anchorPosition + 0x08);
+				((BfmeHostTP *)member)->bfmeSetPositionTP(&position, false);
 
-		float angle = ((Thing *)member)->bfmeRelativeAngleTo(facing);
-		((Thing *)member)->setOrientation(angle);
+				float angle = ((Thing *)member)->bfmeRelativeAngleTo(facing);
+				((Thing *)member)->setOrientation(angle);
+			}
+			memberNode = memberNode->m_bfmeNext;
+		}
 	}
 }
 
