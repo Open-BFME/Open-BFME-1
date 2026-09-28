@@ -27,7 +27,7 @@ class Player {};
 class Object
 {
 public:
-	Player *getControllingPlayer();
+	Player *getControllingPlayer() const;
 
 	unsigned char m_bfmeFields[0x74];
 	unsigned int m_id;
@@ -79,16 +79,20 @@ struct RvaC4390Second
 	RvaC4390First *resolve(int mode);
 };
 
-class Rva2225E0Filter
+class BfmeRvaA760Object
+{
+};
+
+class BfmeRvaA760ProbeInterface
 {
 public:
-	bool accepts(RvaC4390First *object, Player *player);
+	bool accepts(BfmeRvaA760Object *object, int player);
 };
 
 struct BfmeFilterHolder
 {
 	char m_bfmeFields[8];
-	Rva2225E0Filter m_bfmeFilter;
+	BfmeRvaA760ProbeInterface m_bfmeFilter;
 };
 
 class Gen_00287130
@@ -97,7 +101,7 @@ public:
 	bool bfmeAccept(RvaC4390Second *source);
 };
 
-// ?bfmeAccept@Gen_00287130@@QAE_NPAVRvaC4390Second@@@Z
+// ?bfmeAccept@Gen_00287130@@QAE_NPAURvaC4390Second@@@Z
 bool Gen_00287130::bfmeAccept(RvaC4390Second *source)
 {
 	RvaC4390First *first = source->resolve(0);
@@ -105,33 +109,35 @@ bool Gen_00287130::bfmeAccept(RvaC4390Second *source)
 
 	if (first == 0)
 		return false;
-
-	BfmeGuard96 *guard = first->m_bfmeGuard;
-	if (guard != 0)
+	else
 	{
-		if (!guard->bfmeAllows())
+		BfmeGuard96 *guard = first->m_bfmeGuard;
+		if (guard != 0)
+		{
+			if (!guard->bfmeAllows())
+				return false;
+		}
+
+		RvaC4390Interface *interfaceValue = first->getInterface();
+		if (interfaceValue == 0)
 			return false;
-	}
 
-	RvaC4390Interface *interfaceValue = first->getInterface();
-	if (interfaceValue == 0)
+		Object *owner = *(Object **)((char *)this - 0x18);
+		Player *player = owner->getControllingPlayer();
+		BfmeRvaA760ProbeInterface *probe = (BfmeRvaA760ProbeInterface *)((char *)filterOwner + 8);
+		if (!probe->accepts((BfmeRvaA760Object *)first, (int)player))
+			return false;
+
+		int value = interfaceValue->bfmeValue();
+		unsigned int ownerValue;
+		if (value == 0 || ((ownerValue = owner->m_id), interfaceValue->bfmeValue() == (int)ownerValue))
+		{
+			bool stateIsZero = (interfaceValue->bfmeState() == 0);
+			return stateIsZero;
+		}
+
 		return false;
-
-	Object *owner = *(Object **)((char *)this - 0x18);
-	Player *player = owner->getControllingPlayer();
-	Rva2225E0Filter *probe = (Rva2225E0Filter *)((char *)filterOwner + 8);
-	if (!probe->accepts(first, player))
-		return false;
-
-	int value = interfaceValue->bfmeValue();
-	unsigned int ownerValue;
-	if (value == 0 || ((ownerValue = owner->m_id), interfaceValue->bfmeValue() == (int)ownerValue))
-	{
-		bool stateIsZero = (interfaceValue->bfmeState() == 0);
-		return stateIsZero;
 	}
-
-	return false;
 }
 
 #undef BFME_TEN_VIRTUALS
