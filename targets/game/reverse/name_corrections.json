@@ -9588,5 +9588,15 @@
   "after_sha256": "a68bab6621805b74b37893ad9618b40fa2204a13544c04fc6075d71d557eef8f",
   "evidence": "targets/game/reverse/identity_evidence/0017ba90-aim-worker-names.md",
   "reason": "False pairing: Rva001BE100 is the matched receiver name of ?has@Rva001BE100@@QAE_NXZ (0x001BE100) that the call must link; class Object remains in the stash."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00241f10.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/Rva00241F10MemberAttackTarget.cpp",
+  "old_name": "ByteField",
+  "new_name": "Rva001E1770ByteField",
+  "before_sha256": "9e1ae45265c01e3694e62463279b2ca861c3cfc276b4f810cdc6f6912ca672d8",
+  "after_sha256": "bf59de595db5a7125bccfc1fc3feb340aefadc8a6acec7680e9c1b74089618ad",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "targets/game/reverse/functions.csv names the body at 0x001E1770 ?get@Rva001E1770ByteField@@QBEEXZ; the old spelling ByteField matches no ledger row or pin, so the source uses the ledger name."
  }
 ]
