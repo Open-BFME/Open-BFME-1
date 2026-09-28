@@ -369,148 +369,20 @@ void AttackStateMachine::loadPostProcess( void )
 //----------------------------------------------------------------------------------------------------------
 static Bool inWeaponRangeObject(State *thisState, void* userData);
 
-//----------------------------------------------------------------------------------------------------------
-/**
- * Create an AI state machine. Define all of the states the machine 
- * can possibly be in, and set the initial (default) state.
- */
-// ??0AttackStateMachine@@QAE@PAVObject@@PAVAIAttackState@@VAsciiString@@_N33@Z present-unmatched
-AttackStateMachine::AttackStateMachine( Object *obj, AIAttackState* att, AsciiString name, Bool follow, Bool attackingObject, Bool forceAttacking ) 
-	: StateMachine( obj, name )
+// ?emitAttackStateMachineDependencies@@YAXXZ absent-from-retail
+void emitAttackStateMachineDependencies()
 {
-	// we want to use the CONTINUE mode (not NEW) since we already have acquired the target.
-	static const StateConditionInfo objectConditionsNormal[] =
-	{
-		StateConditionInfo(outOfWeaponRangeObject, AttackStateMachine::CHASE_TARGET, NULL),
-		StateConditionInfo(wantToSquishTarget, AttackStateMachine::CHASE_TARGET, NULL),
-		StateConditionInfo(cannotPossiblyAttackObject, EXIT_MACHINE_WITH_FAILURE, (void*)ATTACK_CONTINUED_TARGET),
-		StateConditionInfo(NULL, NULL, NULL)	// keep last
-	};
-
-	// we want to use the CONTINUE mode (not NEW) since we already have acquired the target.
-	static const StateConditionInfo objectConditionsForced[] =
-	{
-		StateConditionInfo(outOfWeaponRangeObject, AttackStateMachine::CHASE_TARGET, NULL),
-		StateConditionInfo(cannotPossiblyAttackObject, EXIT_MACHINE_WITH_FAILURE, (void*)ATTACK_CONTINUED_TARGET_FORCED),
-		StateConditionInfo(wantToSquishTarget, AttackStateMachine::CHASE_TARGET, NULL),
-		StateConditionInfo(NULL, NULL, NULL)	// keep last
-	};
-
-	const StateConditionInfo* objectConditions = forceAttacking ? objectConditionsForced : objectConditionsNormal;
-
-	static const StateConditionInfo positionConditions[] = 
-	{
-		StateConditionInfo(outOfWeaponRangePosition, AttackStateMachine::CHASE_TARGET, NULL),
-		StateConditionInfo(NULL, NULL, NULL)	// keep last
-	};
-
-#ifdef STATE_MACHINE_DEBUG
-		AsciiString fullName = name;
-		if (follow) fullName.concat(" follow");
-		if (attackingObject) fullName.concat(" object");
-		setName(fullName);
-		//setDebugOutput(true);
-#endif 
-
-	// order matters: first state is the default state.
-	// The default is Aim rather than Approach so things that cannot move will be able to shoot
-	// things that are in range.  Things that cannot move will automatically FAILURE on approach state.
-	/*
-		This state will succeed when we are aiming a useful weapon at the victim, and fail 
-		if the victim is dead. (Exception: if the weapon is on a turret, we don't leave this
-		state unless we get out of range.)
-	*/
-	defineState(	AttackStateMachine::AIM_AT_TARGET, 
-								newInstance(AIAttackAimAtTargetState)( this, attackingObject, forceAttacking ), 
-								AttackStateMachine::FIRE_WEAPON, 
-								EXIT_MACHINE_WITH_FAILURE,
-								attackingObject ? objectConditions : positionConditions );
-
-	/*
-		Note that the fire state succeeds iff it is able to fire... it will "fail"
-		if unable to fire. However, it may be unable to fire because the target object
-		is already dead.
-	*/
-	defineState( AttackStateMachine::FIRE_WEAPON, 
-								newInstance(AIAttackFireWeaponState)( this, att ),
-								AttackStateMachine::AIM_AT_TARGET,
-								AttackStateMachine::AIM_AT_TARGET,
-								attackingObject ? objectConditions : positionConditions );
-
-
-	if (obj->isKindOf(KINDOF_IMMOBILE) == FALSE)
-	{
-		if (obj->isKindOf(KINDOF_PORTABLE_STRUCTURE) && obj->isKindOf(KINDOF_CAN_ATTACK))
-		{
-			static const StateConditionInfo portableStructureChaseConditions[] =
-			{
-				StateConditionInfo(inWeaponRangeObject, AttackStateMachine::AIM_AT_TARGET, NULL),
-				StateConditionInfo(NULL, NULL, NULL)	// keep last
-			};
-
-			/* we're a rider on a mobile object, so we can't control our motion. 
-				just make bogus states that always fall back into "aim".
-			*/
-			defineState(	AttackStateMachine::CHASE_TARGET, 
-										newInstance(ContinueState)(this), 
-										EXIT_MACHINE_WITH_FAILURE, 
-										EXIT_MACHINE_WITH_FAILURE,
-										portableStructureChaseConditions );
-		}
-		else if (attackingObject) 
-		{
-			/*
-				This state will pursue a target that is moving away from it.  If it is not moving away, 
-				it will drop into the AIAttackApproachTarget state.
-			*/
-			defineState(	AttackStateMachine::CHASE_TARGET, 
-										newInstance(AIAttackPursueTargetState)( this, follow, attackingObject, forceAttacking ), 
-										AttackStateMachine::APPROACH_TARGET, 
-										AttackStateMachine::APPROACH_TARGET );
-
-			/*
-				This state will succeed when we have a useful weapon within range of victim, and fail 
-				if the victim is dead
-			*/
-			defineState(	AttackStateMachine::APPROACH_TARGET, 
-										newInstance(AIAttackApproachTargetState)( this, follow, attackingObject, forceAttacking ), 
-										AttackStateMachine::AIM_AT_TARGET, 
-										EXIT_MACHINE_WITH_FAILURE );
-		}	
-		else 
-		{
-			/*
-				This state will succeed when we have a useful weapon within range of victim, and fail 
-				if the victim is dead
-			*/
-			defineState(	AttackStateMachine::CHASE_TARGET, 
-										newInstance(AIAttackApproachTargetState)( this, follow, attackingObject, forceAttacking ), 
-										AttackStateMachine::AIM_AT_TARGET, 
-										EXIT_MACHINE_WITH_FAILURE );
-
-			/*
-				This state will succeed when we have a useful weapon within range of victim, and fail 
-				if the victim is dead
-			*/
-			defineState(	AttackStateMachine::APPROACH_TARGET, 
-										newInstance(AIAttackApproachTargetState)( this, follow, attackingObject, forceAttacking ), 
-										AttackStateMachine::AIM_AT_TARGET, 
-										EXIT_MACHINE_WITH_FAILURE );
-		}
-
-	}
-	else
-	{
-		/*
-			This state always instantly fails, so when immobile things transition here, we bail.
-		*/
-		defineState(	AttackStateMachine::CHASE_TARGET, 
-									newInstance(FailureState)(this), 
-									EXIT_MACHINE_WITH_FAILURE, 
-									EXIT_MACHINE_WITH_FAILURE );
-	}
-
-};
+	Bool (*volatile keepCondition)(State *, void *) = inWeaponRangeObject;
+	StateMachine *machine = NULL;
+	AIAttackState *attack = NULL;
+	(void)keepCondition;
+	(void)newInstance(AIAttackAimAtTargetState)(machine, FALSE, FALSE);
+	(void)newInstance(AIAttackFireWeaponState)(machine, attack);
+	(void)newInstance(AIAttackPursueTargetState)(machine, FALSE, FALSE, FALSE);
+	(void)newInstance(AIAttackApproachTargetState)(machine, FALSE, FALSE, FALSE);
+	(void)newInstance(ContinueState)(machine);
+	(void)newInstance(FailureState)(machine);
+}
 
 //----------------------------------------------------------------------------------------------------------
 // ??1AttackStateMachine@@MAE@XZ present-unmatched
