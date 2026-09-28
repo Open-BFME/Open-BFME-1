@@ -2866,7 +2866,7 @@ static ulong DoHuffIteration(farchar *plaintext,
 	huff_node *hufftree)
 {
 ulong i;                          /* Index */
-long j;                         /* Bigger index */
+ulong j;                        /* Bigger index */
 int root;                       /* Pointer to huffman tree root */
 float lowfreq1, lowfreq2;       /* Low frequency counters */
 int lowidx1, lowidx2;           /* Indexes of low freq. elements */
