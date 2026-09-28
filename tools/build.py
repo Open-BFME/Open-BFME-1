@@ -890,11 +890,19 @@ def _include_search_roots(source, command, env):
     return sorted(roots, key=str)
 
 
+# /I. makes the checkout a search root. build/ and .git/ change on every
+# compile, verify and commit, so inventorying them made every /I. receipt stale
+# before pre-push reread it; no TU includes from them (_write_deps_sidecar
+# refuses one that does), so they are skipped.
+_UNWATCHED_ROOT_DIRS = ("build", ".git")
+
+
 def _directory_inventory(root):
     def fail(error):
         raise error
 
     directories = []
+    top = Path(root).resolve() == ROOT.resolve()
     if not os.path.lexists(root):
         # The compiler finds nothing here, and a directory created here later
         # changes this digest, so absence is a reusable inventory entry.
@@ -905,6 +913,8 @@ def _directory_inventory(root):
         for directory, subdirs, files in os.walk(root, onerror=fail):
             if any(os.path.islink(os.path.join(directory, name)) for name in subdirs):
                 return None  # os.walk would miss additions below a symlink.
+            if top and Path(directory).resolve() == ROOT.resolve():
+                subdirs[:] = [name for name in subdirs if name not in _UNWATCHED_ROOT_DIRS]
             subdirs.sort()
             # Accepted TUs cannot include .cpp, so sibling source additions do not affect them.
             directories.append((_root_key(Path(directory)), subdirs[:],
@@ -1140,6 +1150,9 @@ def _write_deps_sidecar(source, output, fingerprint, stdout_text, is_cl,
         if re.search(r"^\s*include\s", head, re.IGNORECASE | re.MULTILINE):
             problems.append("(.asm uses an include directive; deps unknown)")
     roots = _include_search_roots(source, command, env) if is_cl else []
+    if is_cl and any(path.resolve().is_relative_to((ROOT / name).resolve())
+                     for name in _UNWATCHED_ROOT_DIRS for path in dep_paths):
+        problems.append("(a header is included from build/ or .git/, which the inventory skips)")
     anchored = set()
     if is_cl and any(_include_escapes_search_roots(
             path, source_needs_stlport(source), roots, anchored) for path in [source, *dep_paths]):
