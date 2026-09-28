@@ -730,3 +730,4 @@ game/GameEngine/Source/Common/RTS/PlayerInit.cpp	UnicodeString	game\GameEngine\S
 game/GameEngine/Source/GameClient/System/ParticleConstructor.cpp	AsciiString	Functions: FAIL 1/1
 game/GameEngine/Source/GameNetwork/LANAPIOnGameStart.cpp	StringBase	Functions: FAIL 1/1
 game/GameEngine/Source/GameNetwork/LANAPIOnGameJoin.cpp	StringBase	game\GameEngine\Source\GameNetwork\LANAPIOnGameJoin.cpp(75) : error C2039: 'm_text' : is not a member of 'StringBase<T>::Header'
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/IMECandidateTextAreaDraw.cpp	UnicodeString	Functions: FAIL 1/1
