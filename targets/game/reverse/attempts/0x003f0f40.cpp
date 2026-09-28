@@ -1,11 +1,26 @@
+// ?d_003f0f40@@YAXXZ
+// partial score=0.847 date=2026-09-28
 // ?checkForAdjust@Pathfinder@@QAEEPAVObject@@ABVLocomotorSet@@EHHHHEPAUCoord3D@@PBU4@MPAPAVPathfindCell@@H@Z
-// partial score=0.67 date=2026-09-27
-// ?checkForAdjust@Pathfinder@@QAEEPAVObject@@ABVLocomotorSet@@EHHHHEPAUCoord3D@@PBU4@MPAPAVPathfindCell@@H@Z
+// partial score=0.847 (normalised shape; prior bank measured 0.760 shape, 1466B, 1049 differing) date=2026-09-28 model=opus-5.5
 // Retail 0x003F0F40, 1496 bytes
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 //
-// BFME's 13-argument Pathfinder::checkForAdjust with tighten-path callback extensions
-
+// BFME's 13-argument Pathfinder::checkForAdjust with tighten-path callback extensions.
+// This bank: 1500B vs 1496, 1031 differing, 40 structural.  The first log block
+// is rebuilt from the retail instructions:
+//  - groupDest is copied into three block-scoped Real scalars (z, y, x order),
+//    which retail spills into the dead x and groupDest parameter slots plus one
+//    local -- not a Coord3D;
+//  - the TRUE/FALSE labels must be ONE relocated symbol each (retail loads them
+//    into EDI/EDX once and stores both ternaries branchily into [esp+14]/[esp+18]);
+//    absolute-address macros give a neg/sbb/and select and separate "TRUE"
+//    literals give no CSE.  Rva0107FA58True / Rva01080180False are address-derived
+//    externs for the retail strings "TRUE" (0x0107FA58) and "FALSE" (0x01080180);
+//    they still need symbols.csv pins before landing;
+//  - the template walk is evaluated inside the argument list (right to left).
+// Remaining: retail hoists obj into ECX before the flag branch and reads
+// obj->m_id early (+A3), keeps y on the stack (reloaded +11C) where ours
+// enregisters y in EBX, and holds the getCell result in EDI where ours spills it.
 #include <math.h>
 #pragma intrinsic(fabs)
 
@@ -19,6 +34,8 @@ extern bool Glo012F0239;
 extern CRCParameterCheck *TheCRCParameterCheck;
 extern const Real BfmeZeroRange;
 extern char Rva006A16B0Empty[];
+extern const char Rva0107FA58True[];
+extern const char Rva01080180False[];
 extern "C" void __cdecl bfmeRetailCritterDesyncLog(
     CRCParameterCheck *context, const char *format, ...);
 
@@ -95,6 +112,14 @@ public:
     Coord3D m_position;
     char m_pad44[0x30];
     Int m_id;
+
+    const Overridable *getTemplate(void) const
+    {
+        const Overridable *t = m_template;
+        if (t != 0 && t->m_nextOverride != 0)
+            t = t->m_nextOverride->getFinalOverride();
+        return t;
+    }
 };
 
 class PathfindCell
@@ -135,45 +160,31 @@ Bool Pathfinder::checkForAdjust(Object *obj, const LocomotorSet &set,
     Coord3D *dest, const Coord3D *groupDest, Real originalZ,
     PathfindCell **fromSlot, Int onlyIfLayer)
 {
-    // Force 0x18 stack frame with exactly two Coord3D locals
     Coord3D adjustDest;
-    Coord3D groupValue;
-
-    Object *debugObject = obj;
-    Int cellX = x;
-
-    // Retail prologue sequence - global load MUST be first executable statement
-    if (!Glo012F0239)
-        goto skipDebugInit;
-
-    CRCParameterCheck *check = TheCRCParameterCheck;
-    if (check == 0)
-        goto skipDebugInit;
-
-    const Overridable *templateObject = debugObject->m_template;
-    if (templateObject != 0 && templateObject->m_nextOverride != 0)
-        templateObject = templateObject->m_nextOverride->getFinalOverride();
-    const char *objectName = templateObject->m_name.str();
-
-    if (groupDest != 0)
-        groupValue = *groupDest;
-    else
+    if (Glo012F0239 && TheCRCParameterCheck)
     {
-        groupValue.x = -1.0f;
-        groupValue.y = -1.0f;
-        groupValue.z = -1.0f;
+        Real groupX, groupY, groupZ;
+        if (groupDest != 0)
+        {
+            groupZ = groupDest->z;
+            groupY = groupDest->y;
+            groupX = groupDest->x;
+        }
+        else
+        {
+            groupZ = -1.0f;
+            groupY = -1.0f;
+            groupX = -1.0f;
+        }
+        bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+            "\t\t  Pathfinder::CheckForAdjust called with: obj=%s(%d), loco=%s, isHuman=%s, cell=%d,%d, layer=%d, iRadius=%d, center=%s, groupDest=%g,%g,%g, originalZ=%g, onlyIfLayer=%d",
+            obj->getTemplate()->m_name.str(), obj->m_id, set.m_name.str(),
+            human ? Rva0107FA58True : Rva01080180False, x, y, layer, radius,
+            center ? Rva0107FA58True : Rva01080180False, groupX, groupY,
+            groupZ, originalZ, onlyIfLayer);
     }
-
-    bfmeRetailCritterDesyncLog(check,
-        "\t\t  Pathfinder::CheckForAdjust called with: obj=%s(%d), loco=%s, isHuman=%s, cell=%d,%d, layer=%d, iRadius=%d, center=%s, groupDest=%g,%g,%g, originalZ=%g, onlyIfLayer=%d",
-        objectName, debugObject->m_id, set.m_name.str(),
-        human ? "TRUE" : "FALSE", cellX, y, layer, radius,
-        center ? "TRUE" : "FALSE", groupValue.x, groupValue.y,
-        groupValue.z, originalZ, onlyIfLayer);
-
-skipDebugInit:
-    // getCell((PathfindLayerEnum)layer, cellX, y)
-    PathfindCell *cell = getCell((PathfindLayerEnum)layer, cellX, y);
+    // getCell((PathfindLayerEnum)layer, x, y)
+    PathfindCell *cell = getCell((PathfindLayerEnum)layer, x, y);
     if (cell == 0)
     {
         if (Glo012F0239 && TheCRCParameterCheck)
@@ -194,19 +205,19 @@ skipDebugInit:
             "        isHuman is TRUE");
 
     // Check logical extent for human players
-    if (human && (cellX < m_logicalExtent.lo.x || y < m_logicalExtent.lo.y ||
-        cellX > m_logicalExtent.hi.x || y > m_logicalExtent.hi.y))
+    if (human && (x < m_logicalExtent.lo.x || y < m_logicalExtent.lo.y ||
+        x > m_logicalExtent.hi.x || y > m_logicalExtent.hi.y))
     {
         if (Glo012F0239 && TheCRCParameterCheck)
             bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
                 "        cell %d,%d is outside m_logicalExtent lo:%d,%d hi:%d,%d",
-                cellX, y, m_logicalExtent.lo.x, m_logicalExtent.lo.y,
+                x, y, m_logicalExtent.lo.x, m_logicalExtent.lo.y,
                 m_logicalExtent.hi.x, m_logicalExtent.hi.y);
         return 0;
     }
 
-    // bfmeInnerE6E90(obj, cellX, y, layer, radius, center, fromSlot, 0)
-    if (!bfmeInnerE6E90((void *)obj, (void *)cellX, (void *)y, (void *)layer,
+    // bfmeInnerE6E90(obj, x, y, layer, radius, center, fromSlot, 0)
+    if (!bfmeInnerE6E90((void *)obj, (void *)x, (void *)y, (void *)layer,
         (void *)radius, (void *)center, (void **)fromSlot, 0))
     {
         if (Glo012F0239 && TheCRCParameterCheck)
@@ -218,8 +229,8 @@ skipDebugInit:
         bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
             "        CheckDestination passed");
 
-    // adjustCoordToCell(cellX, y, center, adjustDest, cell->getLayer())
-    adjustCoordToCell(cellX, y, center, adjustDest,
+    // adjustCoordToCell(x, y, center, adjustDest, cell->getLayer())
+    adjustCoordToCell(x, y, center, adjustDest,
         (PathfindLayerEnum)cell->getLayer());
 
     if (!obj->isKindOf(KINDOF_AIRCRAFT))
@@ -234,8 +245,8 @@ skipDebugInit:
                 bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
                     "        onlyIfLayer=%d", onlyIfLayer);
 
-            Int x0 = cellX - radius;
-            Int x1 = cellX + radius + (center ? 1 : 0);
+            Int x0 = x - radius;
+            Int x1 = x + radius + (center ? 1 : 0);
             Int y0 = y - radius;
             Int y1 = y + radius + (center ? 1 : 0);
 
@@ -282,7 +293,7 @@ skipDebugInit:
         if (Glo012F0239 && TheCRCParameterCheck)
             bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
                     "        adjustedPathExists=%s",
-                    adjustedPathExists ? "TRUE" : "FALSE");
+                    adjustedPathExists ? Rva0107FA58True : Rva01080180False);
 
         Bool pathExists = (Bool)slowDoesPathExist(obj, position, dest, 0);
         if (pathExists)
