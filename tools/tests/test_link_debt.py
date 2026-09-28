@@ -1,0 +1,65 @@
+"""link_debt: new hard-coded image addresses fail; moves and removals pass."""
+import subprocess
+import sys
+from pathlib import Path
+
+import pytest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import link_debt as L  # noqa: E402
+
+
+def git(root, *args):
+    subprocess.run(["git", *args], cwd=root, check=True, capture_output=True)
+
+
+@pytest.fixture
+def repo(tmp_path, monkeypatch):
+    git(tmp_path, "init", "-q")
+    git(tmp_path, "config", "user.name", "Fixture")
+    git(tmp_path, "config", "user.email", "fixture@example.invalid")
+    monkeypatch.setattr(L, "ROOT", tmp_path)
+    return tmp_path
+
+
+def put(root, path, text):
+    target = root / path
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(text)
+    git(root, "add", "--", path)
+
+
+LITERAL = "int f() { return *(int *)0x012ED5C8; }\n"
+NAMED = "extern int g_012ED5C8;\nint f() { return g_012ED5C8; }\n"
+
+
+def test_new_literal_fails(repo):
+    put(repo, "game/A.cpp", NAMED)
+    git(repo, "commit", "-qm", "base")
+    put(repo, "game/A.cpp", LITERAL)
+    assert L.staged() == 1
+
+
+def test_replacing_a_literal_passes(repo):
+    put(repo, "game/A.cpp", LITERAL)
+    git(repo, "commit", "-qm", "base")
+    put(repo, "game/A.cpp", NAMED)
+    assert L.staged() == 0
+
+
+def test_moving_a_file_keeps_its_count(repo):
+    put(repo, "game/A.cpp", LITERAL)
+    git(repo, "commit", "-qm", "base")
+    git(repo, "mv", "game/A.cpp", "game/B.cpp")
+    assert L.staged() == 0
+
+
+def test_generated_roots_are_not_watched(repo):
+    put(repo, "game/A.cpp", NAMED)
+    git(repo, "commit", "-qm", "base")
+    put(repo, "game/gen_small/x.cpp", LITERAL)
+    assert L.staged() == 0
+
+
+def test_masks_and_comments_are_not_addresses():
+    assert L.literals("if (x & 0x80000000) {}  // *(int *)0x012ED5C8\n") == []

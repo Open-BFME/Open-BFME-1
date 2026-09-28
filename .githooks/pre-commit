@@ -88,6 +88,8 @@ python3 tools/eol_guard.py || fail "staged change rewrites line endings (see abo
 python3 tools/retired_guard.py --staged || fail "retired path re-added (see above)"
 # The docs agents load may not grow back; written bans never held one.
 python3 tools/doc_budget.py --staged || fail "doc budget (see above)"
+# A literal image address matches bytes but breaks the linked build; name the global.
+python3 tools/link_debt.py --staged || fail "new hard-coded image address (see above)"
 
 # WorldBuilder has a separate image and ledger; verify it before the game-only
 # early exit, then keep its exclusive sources out of the game's source parser.
