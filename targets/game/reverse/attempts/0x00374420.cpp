@@ -1,5 +1,5 @@
 // ?rva00374420Update@Gen_00374420@@QAEXPAVRva003720F0Context@@0@Z
-// partial score=0.25 date=2026-09-21
+// partial score=0.256858 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 //
@@ -25,6 +25,7 @@
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
+#include <vector>
 
 typedef int Bool;
 typedef int ObjectID;
@@ -102,7 +103,12 @@ typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>,
 class GameLogic
 {
 public:
-	Object *findObjectByID(ObjectID id);
+	__forceinline Object *findObjectByID(ObjectID id) {
+ if(!id) return 0;
+ ObjectPtrHash::iterator it=m_objHash.find(id);
+ if(it==m_objHash.end()) return 0;
+ return it->second;
+ }
 
 	char m_slice_pad[0xB0];
 	ObjectPtrHash m_objHash;	// bucket vector at this+0xB4
@@ -118,8 +124,7 @@ private:
 	unsigned char m_pad00[0xa0];
 	ObjectID m_singleObjectID;
 	unsigned char m_pad0a4[0xc4 - 0xa4];
-	ObjectID *m_arrayBegin;
-	ObjectID *m_arrayEnd;
+	_STL::vector<ObjectID> objects;
 };
 
 // ?d_00374420@@YAXXZ
@@ -129,41 +134,33 @@ void Gen_00374420::rva00374420Update(Rva003720F0Context *previous,
 	static int key = TheNameKeyGenerator->bfmeConv1060(
 		(int)"CastleMemberBehavior");
 
+ {
 	Object *object = (Object *)TheBfmeGameLogic->bfmeFind1011(
 		m_singleObjectID);
 	if (object)
 	{
 		((BfmeThingVKP *)object)->bfmeSetVKP((int)previous, (int)current);
 
-		DrawableApplyPendingThunk *drawable =
-			reinterpret_cast<ObjectSlot10View *>(object)->getDrawableSlot10();
-		drawable->apply(false);
+		reinterpret_cast<ObjectSlot10View *>(object)->getDrawableSlot10()->apply(false);
 
 		BfmeItemDJ *module = ((BfmeThingDJ *)object)->bfmeFindDJ(key);
 		if (module)
 			((Rva003720F0Owner *)module)->update(previous, current);
 	}
 
-	for (int i = 0; i < m_arrayEnd - m_arrayBegin; ++i)
+ }
+ {
+	for (unsigned i = 0; i < objects.size(); ++i)
 	{
-		ObjectID id = m_arrayBegin[i];
-		if (id == 0)
-			continue;
-
-		ObjectPtrHash::iterator it =
-			((GameLogic *)TheBfmeGameLogic)->m_objHash.find(id);
-		if (it == ((GameLogic *)TheBfmeGameLogic)->m_objHash.end())
-			continue;
-
-		Object *found = (*it).second;
+		Object *found=((GameLogic*)TheBfmeGameLogic)->findObjectByID(objects[i]);
+        if(!found) continue;
 		((BfmeThingVKP *)found)->bfmeSetVKP((int)previous, (int)current);
 
-		DrawableApplyPendingThunk *drawable2 =
-			reinterpret_cast<ObjectSlot10View *>(found)->getDrawableSlot10();
-		drawable2->apply(false);
+		reinterpret_cast<ObjectSlot10View *>(found)->getDrawableSlot10()->apply(false);
 
 		BfmeItemDJ *module2 = ((BfmeThingDJ *)found)->bfmeFindDJ(key);
 		if (module2)
 			((Rva003720F0Owner *)module2)->update(previous, current);
 	}
+}
 }

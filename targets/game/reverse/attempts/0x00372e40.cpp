@@ -1,5 +1,5 @@
-// ?Rva00372E40@@YAHPAXHHH@Z
-// partial score=0.48 date=2026-09-21
+// ?Rva00372E40@@YAHPAXHH_N@Z
+// partial score=0.95 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
 // Retail 0x00372E40, 280B. Identity: not a matched caller, but the string
@@ -11,7 +11,7 @@
 // since no caller/vtable/name-key proves the enclosing function's own
 // identity.
 
-typedef int Bool;
+typedef bool Bool;
 
 // -- pinned wrapper stubs; each class/method reproduces one retail REL32 pin --
 
@@ -93,6 +93,7 @@ public:
 	virtual void _pad01();
 	virtual void _pad02();
 	virtual Bool queryStatus();
+ virtual int fireAt(Object *object,int cArg,void *posAddr,int zero,void *player,bool flag);
 };
 
 class FireShimBase
@@ -105,7 +106,7 @@ typedef int (FireShimBase::*FireMember)(Object *, int, void *, int, void *,
 	int);
 
 // ?d_00372e40@@YAXXZ
-int Rva00372E40(void *unused, int id, int cArg, int flag)
+int Rva00372E40(void *unused, int id, int cArg, bool flag)
 {
 	BfmeLook1011 *gameLogic = TheBfmeGameLogic;
 	Object *object = (Object *)gameLogic->bfmeFind1011(id);
@@ -143,14 +144,9 @@ int Rva00372E40(void *unused, int id, int cArg, int flag)
 
 	ProjectileUpdateInterfaceView *interface =
 		(ProjectileUpdateInterfaceView *)((BfmeY982 *)object)->bfmeConv982B();
-	if (!interface)
-		return 0;
-	if (interface->queryStatus())
-		return 0;
-
-	union { void *addr; FireMember member; } fireCast;
-	fireCast.addr = *((void **)*(void **)interface + 4);
-	BfmeR1094 *player = ((BfmeK1094 *)object)->bfmeCur1094();
-	return (((FireShimBase *)interface)->*fireCast.member)(object, cArg,
-		(char *)object + 0x38, 0, player, flag);
+	if(interface && !interface->queryStatus()) {
+	return interface->fireAt(object, cArg, (char*)object+0x38, 0,
+        ((BfmeK1094*)object)->bfmeCur1094(), flag);
+    }
+    return 0;
 }

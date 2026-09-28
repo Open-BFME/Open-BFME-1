@@ -1,6 +1,6 @@
 // ?rva00370de0@CastleBehavior@@QAEXPAVObject@@@Z
-// partial score=0.948 date=2026-09-27
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /GX- /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWMath /Igame/GameEngine/Source/GameLogic/Object
+// partial score=0.977 date=2026-09-28
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /GX- /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWMath /Igame/GameEngine/Source/GameLogic/Object /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // ?rva00370de0@CastleBehavior@@QAEXPAVObject@@@Z
 
@@ -13,19 +13,9 @@ typedef float Real;
 
 #include <set>
 
-struct Coord3DBase
-{
-	float x;
-	float y;
-	float z;
-};
-
-struct Coord3D : Coord3DBase
-{
-	Coord3D &Sub(const Coord3DBase &that);
-	float Normalize();
-	Coord3D &Add(const Coord3DBase &that);
-};
+#include "coord3d.h"
+#include "ascii_string.h"
+template <class T> inline const T *StringBase<T>::str() const { return m_data ? m_data->data : (const T*)""; }
 
 class Overridable
 {
@@ -33,19 +23,6 @@ public:
 	void *m_vtable;
 	Overridable *m_nextOverride;
 	const Overridable *getFinalOverride() const;
-};
-
-class AsciiString
-{
-public:
-	const char *str() const
-	{
-		return m_data ? (const char *)((unsigned char *)m_data + 8) :
-			(const char *)0x0107388B;
-	}
-
-private:
-	void *m_data;
 };
 
 class ThingTemplate : public Overridable
@@ -74,7 +51,7 @@ public:
 	void *m_vtable;
 	ThingTemplate *m_template;
 	unsigned char m_pad08[0x38 - 0x08];
-	Coord3D m_cachedPos;
+	Coord3DBase m_cachedPos;
 	unsigned char m_pad44[0x74 - 0x44];
 	ObjectID m_id;
 	unsigned char m_pad78[0x204 - 0x78];
@@ -252,6 +229,7 @@ void CastleBehavior::rva00370de0(Object *object)
 		AIUpdateInterface *ai = object->m_ai;
 		if (ai == 0)
 			return;
+ {
 		AIUpdateInterface *query = ai->slot148();
 		if (query == 0)
 			return;
@@ -276,18 +254,20 @@ void CastleBehavior::rva00370de0(Object *object)
 			return;
 		}
 
-		Coord3D destination = object->m_cachedPos;
-		destination.Sub(pending->m_cachedPos);
-		destination.Normalize();
+ }
+		Coord3DBase destination;
+        destination.x=object->m_cachedPos.x; destination.y=object->m_cachedPos.y; destination.z=object->m_cachedPos.z;
+		((Coord3D*)&destination)->Sub(pending->m_cachedPos);
+		((Coord3D*)&destination)->Normalize();
 		destination.x *= *(Real *)0x0109A028;
 		destination.y *= *(Real *)0x0109A028;
 		destination.z *= *(Real *)0x0109A028;
-		destination.Add(object->m_cachedPos);
+		((Coord3D*)&destination)->Add(object->m_cachedPos);
 
 		Rva00370DE0CALL(void (Rva00370DE0Receiver::*)(Object *),
 			(*(AI **)0x012EF214)->m_pathfinder, j_00015d02)(object);
 		Rva00370DE0CALL(void (Rva00370DE0Receiver::*)(Coord3D *, Bool),
-			ai, j_0003bcff)(&destination, true);
+			ai, j_0003bcff)((Coord3D*)&destination, true);
 
 		if (*(Bool *)0x012F0238)
 		{
@@ -302,9 +282,11 @@ void CastleBehavior::rva00370de0(Object *object)
 
 	Rva00370DE0CALL(void (Rva00370DE0Receiver::*)(Int, Bool), object,
 		j_00032dee)(0x54, true);
+ {
 	Gen_t_000ef440_k4 value;
 	value.value = object->m_id;
 	m_ownedObjectsF4.insert(value);
+ }
 }
 
 #undef Rva00370DE0CALL

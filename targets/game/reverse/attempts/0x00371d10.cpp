@@ -1,5 +1,5 @@
 // ?bfmeGo00371D10@Rva00371D10Owner@@QAEXXZ
-// partial score=0.35 date=2026-09-21
+// partial score=0.923288 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
 // Address-derived: no named caller and no vtable/string proves the owning
@@ -12,6 +12,7 @@
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
+#include <vector>
 
 class Object;
 typedef int ObjectID;
@@ -27,7 +28,7 @@ typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>, _STL::equal_to<
 class Rva00367E30Logic
 {
 public:
-	inline Object *findObjectByID(ObjectID id)
+	__forceinline Object *findObjectByID(ObjectID id)
 	{
 		if (id == 0)
 			return 0;
@@ -52,7 +53,9 @@ extern Rva00367E30Logic *TheBfmeGameLogic;	// 0x012F0898
 class Overridable
 {
 public:
-	const Overridable *getFinalOverride() const;
+	void *vtable;
+ Overridable *next;
+ const Overridable *getFinalOverride() const { if(next)return next->getFinalOverride();return this; }
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
@@ -82,29 +85,20 @@ private:
 
 extern AI *TheAI;	// 0x012EF214
 
-static void bfmeScanOne(ObjectID id)
+static __forceinline void bfmeScanOne(ObjectID id)
 {
-	if (id == 0)
-		return;
-
 	Object *obj = TheBfmeGameLogic->findObjectByID(id);
 	if (obj == 0)
 		return;
 
-	void *a = *(void **)((char *)obj + 4);
-	if (a == 0)
-		return;
-
-	void *b = *(void **)((char *)a + 4);
-	if (b == 0)
-		return;
-
-	const Overridable *ov = ((Overridable *)b)->getFinalOverride();
+ const Overridable *ov=(const Overridable*)*(void**)((char*)obj+4);
+ if(ov) ov=ov->getFinalOverride();
 	unsigned int bits = *(unsigned int *)((char *)ov + 0xcc);
 	if ((bits & 0x8000000) == 0)
 		return;
 
 	TheAI->pathfinder()->addObjectToPathfindMap(obj);
+
 }
 
 // this-relative fields (unproven owner): two int-id vectors, begin/end pairs
@@ -116,20 +110,15 @@ public:
 
 private:
 	char m_unreconstructed_00[0xb8];
-	ObjectID *m_vecB_begin;	// +0xb8
-	ObjectID *m_vecB_end;	// +0xbc
-	char m_unreconstructed_c0[4];
-	ObjectID *m_vecA_begin;	// +0xc4
-	ObjectID *m_vecA_end;	// +0xc8
+ _STL::vector<ObjectID> vecB;
+ _STL::vector<ObjectID> vecA;
 };
 
 void Rva00371D10Owner::bfmeGo00371D10()
 {
-	int countA = m_vecA_end - m_vecA_begin;
-	for (int i = 0; i < countA; ++i)
-		bfmeScanOne(m_vecA_begin[i]);
 
-	int countB = m_vecB_end - m_vecB_begin;
-	for (int i = 0; i < countB; ++i)
-		bfmeScanOne(m_vecB_begin[i]);
+ for(unsigned i=0;i<vecA.size();++i)
+  bfmeScanOne(vecA[i]);
+ for(unsigned j=0;j<vecB.size();++j)
+  bfmeScanOne(vecB[j]);
 }
