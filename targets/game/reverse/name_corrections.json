@@ -7928,5 +7928,95 @@
   "after_sha256": "b64adc4f1cf9dcb022b91d11adde8c40fd1756fd971bff90acb5b6ccb724e694",
   "evidence": "targets/game/reverse/identity_evidence/000da610-raw-storage-names.md",
   "reason": "Bank retirement: the stash's m_data (RawPlayerStorage whole-object byte blob) and m_storage (relation-map byte blob) were raw-storage placeholders, not Player fields; the landed source follows the matched Player destructor layout where these offsets are unnamed padding that Player::init never touches and name_oracle has no witness for."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006ff160.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006ff160.cpp",
+  "old_name": "BfmeLivingWorldConfiguration",
+  "new_name": "Rva006FF160LightDesc",
+  "before_sha256": "5f6a450b425db6235c6dbd025274a09a15a2f94854ff03c2d8a84ea73ff290df",
+  "after_sha256": "3ec254c5f9b0460098f022c41b44acef977daad0240cfb6af29379a40f62d345",
+  "evidence": "targets/game/reverse/identity_evidence/006ff160-living-world-setup-names.md",
+  "reason": "Bank rewrite of the 0x006FF160 skeleton: the old LivingWorld names were unwitnessed guesses; the matched caller Rva00700030::initialize passes its receiver through ILT 0x0003D01E so the owner is Rva00700030 and the method, settings types and padding keep address-derived names; Gen_0090E810 and Rva009EB7A0RefOwner are the existing callee spellings, paired with the old names only by position."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006ff160.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006ff160.cpp",
+  "old_name": "BfmeLivingWorldName",
+  "new_name": "Rva006FF160Name",
+  "before_sha256": "5f6a450b425db6235c6dbd025274a09a15a2f94854ff03c2d8a84ea73ff290df",
+  "after_sha256": "3ec254c5f9b0460098f022c41b44acef977daad0240cfb6af29379a40f62d345",
+  "evidence": "targets/game/reverse/identity_evidence/006ff160-living-world-setup-names.md",
+  "reason": "Bank rewrite of the 0x006FF160 skeleton: the old LivingWorld names were unwitnessed guesses; the matched caller Rva00700030::initialize passes its receiver through ILT 0x0003D01E so the owner is Rva00700030 and the method, settings types and padding keep address-derived names; Gen_0090E810 and Rva009EB7A0RefOwner are the existing callee spellings, paired with the old names only by position."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006ff160.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006ff160.cpp",
+  "old_name": "BfmeLivingWorldScene",
+  "new_name": "Rva009EB7A0RefOwner",
+  "before_sha256": "5f6a450b425db6235c6dbd025274a09a15a2f94854ff03c2d8a84ea73ff290df",
+  "after_sha256": "3ec254c5f9b0460098f022c41b44acef977daad0240cfb6af29379a40f62d345",
+  "evidence": "targets/game/reverse/identity_evidence/006ff160-living-world-setup-names.md",
+  "reason": "Bank rewrite of the 0x006FF160 skeleton: the old LivingWorld names were unwitnessed guesses; the matched caller Rva00700030::initialize passes its receiver through ILT 0x0003D01E so the owner is Rva00700030 and the method, settings types and padding keep address-derived names; Gen_0090E810 and Rva009EB7A0RefOwner are the existing callee spellings, paired with the old names only by position."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006ff160.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006ff160.cpp",
+  "old_name": "LivingWorldManager",
+  "new_name": "Gen_0090E810",
+  "before_sha256": "5f6a450b425db6235c6dbd025274a09a15a2f94854ff03c2d8a84ea73ff290df",
+  "after_sha256": "3ec254c5f9b0460098f022c41b44acef977daad0240cfb6af29379a40f62d345",
+  "evidence": "targets/game/reverse/identity_evidence/006ff160-living-world-setup-names.md",
+  "reason": "Bank rewrite of the 0x006FF160 skeleton: the old LivingWorld names were unwitnessed guesses; the matched caller Rva00700030::initialize passes its receiver through ILT 0x0003D01E so the owner is Rva00700030 and the method, settings types and padding keep address-derived names; Gen_0090E810 and Rva009EB7A0RefOwner are the existing callee spellings, paired with the old names only by position."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006ff160.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006ff160.cpp",
+  "old_name": "init",
+  "new_name": "rva006ff160",
+  "before_sha256": "5f6a450b425db6235c6dbd025274a09a15a2f94854ff03c2d8a84ea73ff290df",
+  "after_sha256": "3ec254c5f9b0460098f022c41b44acef977daad0240cfb6af29379a40f62d345",
+  "evidence": "targets/game/reverse/identity_evidence/006ff160-living-world-setup-names.md",
+  "reason": "Bank rewrite of the 0x006FF160 skeleton: the old LivingWorld names were unwitnessed guesses; the matched caller Rva00700030::initialize passes its receiver through ILT 0x0003D01E so the owner is Rva00700030 and the method, settings types and padding keep address-derived names; Gen_0090E810 and Rva009EB7A0RefOwner are the existing callee spellings, paired with the old names only by position."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006ff160.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006ff160.cpp",
+  "old_name": "initializeWorldGeometry",
+  "new_name": "rva006ff160",
+  "before_sha256": "5f6a450b425db6235c6dbd025274a09a15a2f94854ff03c2d8a84ea73ff290df",
+  "after_sha256": "3ec254c5f9b0460098f022c41b44acef977daad0240cfb6af29379a40f62d345",
+  "evidence": "targets/game/reverse/identity_evidence/006ff160-living-world-setup-names.md",
+  "reason": "Bank rewrite of the 0x006FF160 skeleton: the old LivingWorld names were unwitnessed guesses; the matched caller Rva00700030::initialize passes its receiver through ILT 0x0003D01E so the owner is Rva00700030 and the method, settings types and padding keep address-derived names; Gen_0090E810 and Rva009EB7A0RefOwner are the existing callee spellings, paired with the old names only by position."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006ff160.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006ff160.cpp",
+  "old_name": "m_betweenWorldAndSunRays",
+  "new_name": "m_pad09c",
+  "before_sha256": "5f6a450b425db6235c6dbd025274a09a15a2f94854ff03c2d8a84ea73ff290df",
+  "after_sha256": "3ec254c5f9b0460098f022c41b44acef977daad0240cfb6af29379a40f62d345",
+  "evidence": "targets/game/reverse/identity_evidence/006ff160-living-world-setup-names.md",
+  "reason": "Bank rewrite of the 0x006FF160 skeleton: the old LivingWorld names were unwitnessed guesses; the matched caller Rva00700030::initialize passes its receiver through ILT 0x0003D01E so the owner is Rva00700030 and the method, settings types and padding keep address-derived names; Gen_0090E810 and Rva009EB7A0RefOwner are the existing callee spellings, paired with the old names only by position."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006ff160.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006ff160.cpp",
+  "old_name": "m_prefix",
+  "new_name": "m_pad000",
+  "before_sha256": "5f6a450b425db6235c6dbd025274a09a15a2f94854ff03c2d8a84ea73ff290df",
+  "after_sha256": "3ec254c5f9b0460098f022c41b44acef977daad0240cfb6af29379a40f62d345",
+  "evidence": "targets/game/reverse/identity_evidence/006ff160-living-world-setup-names.md",
+  "reason": "Bank rewrite of the 0x006FF160 skeleton: the old LivingWorld names were unwitnessed guesses; the matched caller Rva00700030::initialize passes its receiver through ILT 0x0003D01E so the owner is Rva00700030 and the method, settings types and padding keep address-derived names; Gen_0090E810 and Rva009EB7A0RefOwner are the existing callee spellings, paired with the old names only by position."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006ff160.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006ff160.cpp",
+  "old_name": "m_prefix",
+  "new_name": "m_pad004",
+  "before_sha256": "5f6a450b425db6235c6dbd025274a09a15a2f94854ff03c2d8a84ea73ff290df",
+  "after_sha256": "3ec254c5f9b0460098f022c41b44acef977daad0240cfb6af29379a40f62d345",
+  "evidence": "targets/game/reverse/identity_evidence/006ff160-living-world-setup-names.md",
+  "reason": "Bank rewrite of the 0x006FF160 skeleton: the old LivingWorld names were unwitnessed guesses; the matched caller Rva00700030::initialize passes its receiver through ILT 0x0003D01E so the owner is Rva00700030 and the method, settings types and padding keep address-derived names; Gen_0090E810 and Rva009EB7A0RefOwner are the existing callee spellings, paired with the old names only by position."
  }
 ]
