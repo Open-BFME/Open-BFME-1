@@ -231,6 +231,15 @@ def fresh_checkout():
     head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
     tip = subprocess.run(["git", "rev-parse", "origin/master"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
     if head != tip:
+        # master moves every ~30 s, so a checkout refreshed a moment ago is
+        # usually already behind: fast-forward a clean detached one in place
+        detached = subprocess.run(["git", "symbolic-ref", "-q", "HEAD"], cwd=ROOT).returncode != 0
+        dirty = subprocess.run(["git", "status", "--porcelain", "--untracked-files=no"], cwd=ROOT,
+                               capture_output=True, text=True).stdout.strip()
+        behind = subprocess.run(["git", "merge-base", "--is-ancestor", head, tip], cwd=ROOT).returncode == 0
+        if detached and not dirty and behind:
+            subprocess.run(["git", "checkout", "-q", "--detach", tip], cwd=ROOT, check=True)
+            return
         raise SystemExit(f"astra_seats: this checkout is at {head[:10]} but origin/master is {tip[:10]}; "
                          f"run `git pull --rebase origin master` here first (pick() reads the local ledger)")
 
