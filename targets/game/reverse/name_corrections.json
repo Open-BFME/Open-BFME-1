@@ -8868,5 +8868,25 @@
   "after_sha256": "ae82d228099afe6c5cef63d7d3b0eb2f353318193ac75f79b025cc8ab823cffd",
   "evidence": "targets/game/reverse/identity_evidence/008ffb80-stlport-vector-base.md",
   "reason": "false pairing: _Vector_base kept as real STLport base via #include <vector>; Rva008FFB80StringBase is a new element-buffer struct"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0036a570.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0036a570.cpp",
+  "old_name": "copyClearMask",
+  "new_name": "rva0036B250ConditionsAt",
+  "before_sha256": "61cdc4807369517cf9f7de35c1bfa04cc8e60984a8b8c5ecac69600b0138f306",
+  "after_sha256": "ee86e2ce52295c416d563a76733f09846bd3deb97e62070c305cab71562b999b",
+  "evidence": "targets/game/reverse/symbols.csv",
+  "reason": "targets/game/reverse/symbols.csv pins ?rva0036B250ConditionsAt@AttributeModifierDefinitionStore@@QBE?AV?$BitFlags@$0BEA@@@H@Z at 0x0001FAE6, which spells the name rva0036B250ConditionsAt; the source uses that pinned spelling instead of copyClearMask."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0036a570.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0036a570.cpp",
+  "old_name": "copySetMask",
+  "new_name": "rva0036B250ConditionsAt",
+  "before_sha256": "61cdc4807369517cf9f7de35c1bfa04cc8e60984a8b8c5ecac69600b0138f306",
+  "after_sha256": "ee86e2ce52295c416d563a76733f09846bd3deb97e62070c305cab71562b999b",
+  "evidence": "targets/game/reverse/symbols.csv",
+  "reason": "targets/game/reverse/symbols.csv pins ?rva0036B250ConditionsAt@AttributeModifierDefinitionStore@@QBE?AV?$BitFlags@$0BEA@@@H@Z at 0x0001FAE6, which spells the name rva0036B250ConditionsAt; the source uses that pinned spelling instead of copySetMask."
  }
 ]

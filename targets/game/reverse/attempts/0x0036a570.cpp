@@ -1,5 +1,5 @@
 // ?applyAttributeModifier@AttributeModifierPoolUpdate@@QAE_NABVAsciiString@@H@Z
-// partial score=0.969 date=2026-09-28
+// partial score=0.997 date=2026-09-28
 // ?applyAttributeModifier@AttributeModifierPoolUpdate@@QAE_NABVAsciiString@@H@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame
 // stlport
@@ -7,7 +7,8 @@
 // AttributeModifierPoolUpdate::applyAttributeModifier, retail RVA 0x0036A570.
 // Object::applyAttributeModifier at 0x001C1DA0 is the named caller.  The pool
 // stores 16-byte entries, and its definition store supplies the two ten-word
-// model-condition masks used by Object::clearAndSetModelConditionFlags.
+// model-condition masks used by Object::clearAndSetModelConditionFlags:
+// 0x0036B250 (definition +0x1C) is set, 0x0036B330 (definition +0x44) is cleared.
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 #include <string.h>
@@ -19,12 +20,11 @@ typedef unsigned int UnsignedInt;
 enum NameKeyType {
 };
 template <int NUMBITS> class BitFlags {
-    public: _STL::bitset<NUMBITS> m_bits;
+    public: BitFlags() {
+    }
+    _STL::bitset<NUMBITS> m_bits;
 };
 typedef BitFlags<320> ModelConditionFlags;
-struct MaskWords36A570 {
-    unsigned words[10];
-};
 template<> inline const char *StringBase<char>::str()const {
     return m_data?m_data->data:"";
 }
@@ -117,50 +117,24 @@ class BodyModuleInterface {
     // Matched ActiveBody evidence identifies slot 0x58 as setMaxHealth.
     virtual void setValue(float,int);
 };
-extern void j_0001fae6();
-extern void j_00018e3f();
-extern void j_0001dbba();
-extern void j_0002b1a2();
-struct Call36A570 {
+class Rva0036B410Subobject;
+class Rva0036B410Collection {
+    public:
+    Rva0036B410Subobject *subobjectAt(int index) const;
 };
-template<class R,class A> __forceinline R call1(void(*raw)(),void*self,A a) {
-    typedef R(Call36A570::*F)(A);
-    union {
-        void(*raw)();
-        F member;
-    }
-    f;
-    f.raw=raw;
-    return (((Call36A570*)self)->*f.member)(a);
-}
-template<class R,class A,class B> __forceinline R call2(void(*raw)(),void*self,A a,B b) {
-    typedef R(Call36A570::*F)(A,B);
-    union {
-        void(*raw)();
-        F member;
-    }
-    f;
-    f.raw=raw;
-    return (((Call36A570*)self)->*f.member)(a,b);
-}
 class AttributeModifierDefinitionStore {
     public:
     Int indexOf(Int key) const;
     Int valueAt(Int index) const;
-    void copyClearMask(MaskWords36A570 *result,Int index) const;
-    ModelConditionFlags copySetMask(Int index) const;
+    ModelConditionFlags rva0036B250ConditionsAt(Int modifierIndex) const;
+    ModelConditionFlags copyClearMask(Int modifierIndex) const;
     Int primaryValueAt(Int,const Object*)const;
     Int secondaryValueAt(Int,const Object*)const;
     Bool getValue(Int,Int,float*)const;
+    AttributeModifierDefinition *findDefinition(UnsignedInt modifierIndex);
 };
-// The first mask helper has two stack slots and writes all ten output words.
-// 1FAE6 routes to 36B250; 18E3F routes to 36B330. Keep existing ILT identities.
-inline void AttributeModifierDefinitionStore::copyClearMask(MaskWords36A570 *result,Int index)const {
-    call2<void>(j_0001fae6,(void*)this,result,index);
-}
-inline ModelConditionFlags AttributeModifierDefinitionStore::copySetMask(Int index)const {
-    return call1<ModelConditionFlags>(j_00018e3f,(void*)this,index);
-}
+// 0x0036B330 twins the pinned 0x0036B250 getter (thiscall, hidden return, ret 8).
+#pragma comment(linker, "/alternatename:?copyClearMask@AttributeModifierDefinitionStore@@QBE?AV?$BitFlags@$0BEA@@@H@Z=?j_00018e3f@@YAXXZ")
 extern AttributeModifierDefinitionStore *TheAttributeModifierDefinitionStore;
 class Rva00367E30Logic {
     private:
@@ -182,11 +156,12 @@ class AttributeModifierPoolUpdate : public UpdateModule {
     Int m_counts[7];
     Bool isModifierActive(UnsignedInt,const AttributeModifierEntry*)const;
 };
-static inline Bool hasDrawable36A570(Object *object) {
-    return object->getDrawable()!=0;
+// Taking the object as a parameter evaluates getObject() before the empty mask.
+static inline void setConditions36A570(Object *object,const ModelConditionFlags &set) {
+    object->clearAndSetModelConditionFlags(ModelConditionFlags(),set);
 }
-static __forceinline void doFx36A570(FXList *fx,Object*object) {
-    if(fx && !fx->bfmeIsBlocked())fx->doFXObj(object,0);
+static inline void clearConditions36A570(Object *object,const ModelConditionFlags &clr) {
+    object->clearAndSetModelConditionFlags(clr,ModelConditionFlags());
 }
 Bool AttributeModifierPoolUpdate::applyAttributeModifier(const AsciiString&name,Int duration) {
     const char *text=name.str();
@@ -207,7 +182,7 @@ Bool AttributeModifierPoolUpdate::applyAttributeModifier(const AsciiString&name,
             }
             FXList *fx;
             if(isModifierActive(frame,it))fx=(FXList*)TheAttributeModifierDefinitionStore->primaryValueAt(it->m_index,getObject());
-            else fx=(FXList*)TheAttributeModifierDefinitionStore->secondaryValueAt(it->getIndex(),getObject());
+            else fx=(FXList*)TheAttributeModifierDefinitionStore->secondaryValueAt(it->m_index,getObject());
             if(fx) {
                 Object *object=m_object;
                 if(!fx->bfmeIsBlocked())fx->doFXObj(object,0);
@@ -216,21 +191,16 @@ Bool AttributeModifierPoolUpdate::applyAttributeModifier(const AsciiString&name,
         }
     }
     {
-        {
-            MaskWords36A570 flags;
-            TheAttributeModifierDefinitionStore->copyClearMask(&flags,index);
-            getObject()->clearAndSetModelConditionFlags(ModelConditionFlags(),*(const ModelConditionFlags*)&flags);
-        }
-        {
-            ModelConditionFlags flags=TheAttributeModifierDefinitionStore->copySetMask(index);
-            getObject()->clearAndSetModelConditionFlags(flags,ModelConditionFlags());
-        }
+        ModelConditionFlags flags=TheAttributeModifierDefinitionStore->rva0036B250ConditionsAt(index);
+        setConditions36A570(getObject(),flags);
+        flags=TheAttributeModifierDefinitionStore->copyClearMask(index);
+        clearConditions36A570(getObject(),flags);
         AttributeModifierEntry entry(index,name);
         Int length=duration;
         if(length<0)length=TheAttributeModifierDefinitionStore->valueAt(index);
         UnsignedInt expiration=length>0?length:0;
         entry.m_expirationFrame=expiration?frame+expiration:0x3fffffff;
-        Upgrade36A570 *upgrade=call1<Upgrade36A570*>(j_0002b1a2,TheAttributeModifierDefinitionStore,index);
+        Upgrade36A570 *upgrade=(Upgrade36A570*)((const Rva0036B410Collection*)TheAttributeModifierDefinitionStore)->subobjectAt(index);
         if(upgrade->value) {
             if(!upgrade->delay)getObject()->giveUpgrade(upgrade->value);
             else entry.m_unused0c=frame+upgrade->delay;
@@ -240,11 +210,14 @@ Bool AttributeModifierPoolUpdate::applyAttributeModifier(const AsciiString&name,
             m_nextExpiration=next;
             setWakeFrame(getObject(),expiration);
         }
-        if(isModifierActive(TheBfmeGameLogic->getFrame(),&entry) && m_object->getDrawable()) {
-            FXList *fx=(FXList*)TheAttributeModifierDefinitionStore->primaryValueAt(entry.m_index,getObject());
-            if(fx) {
-                Object *object=m_object;
-                if(!fx->bfmeIsBlocked())fx->doFXObj(object,0);
+        if(isModifierActive(TheBfmeGameLogic->getFrame(),&entry)) {
+            Drawable *draw=m_object->getDrawable();
+            if(draw) {
+                FXList *fx=(FXList*)TheAttributeModifierDefinitionStore->primaryValueAt(entry.m_index,getObject());
+                if(fx) {
+                    Object *object=m_object;
+                    if(!fx->bfmeIsBlocked())fx->doFXObj(object,0);
+                }
             }
         }
         float amount=0;
@@ -254,7 +227,7 @@ Bool AttributeModifierPoolUpdate::applyAttributeModifier(const AsciiString&name,
             if(body)body->setValue(body->getValue()+amount,1);
         }
         m_modifiers.push_back(entry);
-        AttributeModifierDefinition *definition=call1<AttributeModifierDefinition*>(j_0001dbba,TheAttributeModifierDefinitionStore,index);
+        AttributeModifierDefinition *definition=TheAttributeModifierDefinitionStore->findDefinition(index);
         if(definition)++m_counts[definition->m_flags.getSingleBit()];
     }
     return true;
