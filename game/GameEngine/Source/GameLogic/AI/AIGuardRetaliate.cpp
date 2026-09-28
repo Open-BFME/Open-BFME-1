@@ -179,7 +179,8 @@ Bool GuardRetaliateExitConditions::shouldExit(const StateMachine* machine) const
 
 //-- AIGuardRetaliateMachine -------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AIGuardRetaliateMachineCtorThunk.cpp
+// Zero Hour-layout source; the BFME byte-exact constructor is in
+// game/GameEngine/Source/GameLogic/AI/AIGuardRetaliateMachineCtor.cpp.
 // ??0AIGuardRetaliateMachine@@ present-unmatched
 AIGuardRetaliateMachine::AIGuardRetaliateMachine( Object *owner ) : 
 	StateMachine(owner, "AIGuardRetaliateMachine"),
@@ -891,4 +892,3 @@ void AIGuardRetaliateAttackAggressorState::loadPostProcess()
 {
 	onEnter();
 }
-
