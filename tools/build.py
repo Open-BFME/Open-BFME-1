@@ -957,7 +957,7 @@ def _directive_text(path):
                        if match.group().startswith("/") else match.group()), text)
 
 
-def _include_escapes_search_roots(path, stlport):
+def _include_escapes_search_roots(path, stlport, roots=None):
     text = _directive_text(path)
     if text is None:
         return True
@@ -972,9 +972,29 @@ def _include_escapes_search_roots(path, stlport):
         if not operand or operand[0] not in ('"', '<'):
             return True  # Macro-expanded includes have unknown search paths.
         end = operand.find('"' if operand[0] == '"' else '>', 1)
-        if (end < 0 or ".." in operand[1:end].replace("\\", "/").split("/")
-                or operand[1:end].lower().endswith(".cpp")):
+        if end < 0 or operand[1:end].lower().endswith(".cpp"):
             return True
+        include = operand[1:end].replace("\\", "/")
+        if ".." in include.split("/"):
+            if roots is None:
+                return True
+            candidates = [Path(root) / include for root in roots]
+            if operand[0] == '"':
+                candidates.insert(0, Path(path).parent / include)
+            root_paths = [Path(root).resolve() for root in roots]
+            found = False
+            for candidate in candidates:
+                try:
+                    resolved = candidate.resolve(strict=True)
+                except (OSError, RuntimeError):
+                    continue
+                if not resolved.is_file():
+                    continue
+                found = True
+                if not any(resolved.is_relative_to(root) for root in root_paths):
+                    return True
+            if not found:
+                return True
     return False
 
 
@@ -1080,8 +1100,8 @@ def _write_deps_sidecar(source, output, fingerprint, stdout_text, is_cl,
         problems.append("(included header lies outside the snapshotted search roots)")
     if is_cl and any(path.suffix.lower() == ".cpp" for path in dep_paths):
         problems.append("(.cpp includes are outside the directory inventory)")
-    if is_cl and any(_include_escapes_search_roots(path, source_needs_stlport(source))
-                     for path in [source, *dep_paths]):
+    if is_cl and any(_include_escapes_search_roots(
+            path, source_needs_stlport(source), roots) for path in [source, *dep_paths]):
         problems.append("(macro or parent-traversing include has unknown search roots)")
     inventory = _inventory_for_roots(roots) if roots is not None and is_cl else None
     if is_cl and (inventory_before is None or inventory != inventory_before):
