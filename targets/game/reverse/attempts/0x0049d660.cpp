@@ -1,8 +1,9 @@
 // ??0ControlBar@@QAE@XZ
-// partial score=0.6 date=2026-09-20
+// partial score=0.8 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob2
 
 typedef unsigned int UnsignedInt;
+inline UnsignedInt GameMakeColor(int r, int g, int b, int a) { return (a << 24) | (r << 16) | (g << 8) | b; }
 
 class SubsystemInterface
 {
@@ -72,8 +73,9 @@ private:
     int f06c, f070, f074, f078;
     char pad07c[0x90 - 0x7c];
     int f090, f094, f098;
-    int f09c, f0a0, f0a4, f0a8, f0ac, f0b0, f0b4, f0b8, f0bc, f0c0, f0c4, f0c8;
-    int f0cc, f0d0, f0d4, f0d8, f0dc, f0e0, f0e4, f0e8, f0ec, f0f0;
+    int a09c[12];
+    int a0cc[5];
+    int a0e0[5];
     char pad0f4[0xf8 - 0xf4];
     int f0f8, f0fc;
     int a100[20];
@@ -132,8 +134,8 @@ ControlBar::ControlBar(void)
     f29c = 0;
     f298 = 0;
     f024 = 0;
-    f26c = 0x64000000;
-    f294 = 0x64000000;
+    f26c = GameMakeColor(0, 0, 0, 100);
+    f294 = GameMakeColor(0, 0, 0, 100);
     f034 = 0;
     f038 = 0;
     f03c = 0;
@@ -149,29 +151,15 @@ ControlBar::ControlBar(void)
         a1a0[i] = 0;
         a150[i] = 0;
     }
-    f09c = 0;
-    f0a0 = 0;
-    f0a4 = 0;
-    f0a8 = 0;
-    f0ac = 0;
-    f0b0 = 0;
-    f0b4 = 0;
-    f0b8 = 0;
-    f0bc = 0;
-    f0c0 = 0;
-    f0c4 = 0;
-    f0c8 = 0;
-    f0cc = 0;
-    f0e0 = 0;
-    f0d0 = 0;
-    f0e4 = 0;
-    f0d4 = 0;
-    f0e8 = 0;
-    f0d8 = 0;
-    f0ec = 0;
-    f0dc = 0;
-    f0f0 = 0;
-    f098 = f0f8 = f0fc = (int)this;
+    for (i = 0; i < 12; ++i)
+        a09c[i] = 0;
+    for (i = 0; i < 5; ++i) {
+        a0cc[i] = 0;
+        a0e0[i] = 0;
+    }
+    f0fc = 0;
+    f0f8 = 0;
+    f098 = 0;
     f074 = 0;
     f078 = 0;
     f090 = 0;
