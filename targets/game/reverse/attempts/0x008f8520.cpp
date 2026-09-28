@@ -1,241 +1,193 @@
-// ?doSmallFill@PartitionData@@AAEXMMM@Z
-// partial score=0.35 date=2026-09-10
-// cl: /QIfist /DNDEBUG /MD /EHsc
+// ?doSmallFill@PartitionData@@AAE_NMMM@Z
+// partial score=0.2698 date=2026-09-28
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// Retail 0x008F8520, 734 bytes, ret 0xC: PartitionData::doSmallFill (BFME).
+// Identity: its DEBUG_CRASH strings ("Object ", " is too large for 'small'
+// geometry.\nRadius given is ", "; truncating...") are Zero Hour
+// PartitionData::doSmallFill's, and updateCellsTouched calls it on the
+// geom->getIsSmall() branch exactly where ZH calls doSmallFill. CONFLICT: the
+// ledger already names 0x008F83F0 doSmallFill, but that body is the midpoint
+// circle fill called on the sphere/cylinder case (ZH doCircleFill); resolve
+// that row before landing this one under the real name.
+// Banked partial (opus-5.5): 719/734 B, 506 differing, shape 0.949.
+// Residue: our allocator pins 0 in ebp through the debug block (retail uses
+// literal zeros and keeps the name temporary in ebp, stream in esi), and the
+// floor results cx2/cy2 and the row counter land in different arg slots
+// (retail: y in the centerX slot, cy2 in the radius slot).
+// Levers that helped: __forceinline getCellRange (matched sibling body),
+// (coi++)->addCoverage(first++), ++y right after getCellRange (retail
+// materialises the null range and bumps y before the cell loop).
+// Tried: halfCellSize local, getObject accessor, do/while(0) debug macro,
+// ternary polarity, ref-bound name temp, ZH-style declarations, coi placement
+// (coi at the top removes the zero pin but hoists the m_coiArray load).
 
+#include "ascii_string.h"
+
+template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
+
+typedef int Int;
+typedef bool Bool;
 typedef float Real;
-typedef unsigned char Bool;
 
-extern "C" __declspec(dllimport) double __cdecl floor(double value);
-extern volatile const Real g_bfmeK1253;
-extern const char g_bfmeEmptyAscii[];
+extern "C" __declspec(dllimport) double __cdecl floor(double);
 
-extern "C" Bool __cdecl _bfme_debugReportingEnabled(void);
-extern "C" void __cdecl _bfme_debugRecordCallsite(int kind);
+__forceinline Real fast_float_floor(Real f)
+{
+	return (Real)floor((double)f);
+}
+
+__forceinline long fast_float2long_round(Real f)
+{
+	long i;
+	__asm {
+		fld [f]
+		fistp [i]
+	}
+	return i;
+}
+
+#define REAL_TO_INT_FLOOR(x) (fast_float2long_round(fast_float_floor(x)))
 
 class BfmeAwakenLog
 {
 public:
-	virtual void slot00();
-	virtual void slot04();
-	virtual void slot08();
-	virtual void slot0C();
-	virtual void slot10();
-	virtual void slot14();
-	virtual void slot18();
-	virtual void slot1C();
-	virtual BfmeAwakenLog *slot20(Real value);
-	virtual void slot24();
-	virtual void slot28();
-	virtual void slot2C();
-	virtual void slot30();
-	virtual void slot34();
-	virtual BfmeAwakenLog *slot38(const char *text);
-	virtual void slot3C();
-	virtual void slot40();
-	virtual void slot44();
-	virtual void slot48();
-	virtual void slot4C(int report);
+	virtual void v00(); virtual void v04(); virtual void v08(); virtual void v0c();
+	virtual void v10(); virtual void v14(); virtual void v18(); virtual void v1c();
+	virtual BfmeAwakenLog *v20(Real value); virtual void v24(); virtual void v28(); virtual void v2c();
+	virtual void v30(); virtual void v34(); virtual BfmeAwakenLog *v38(const char *message);
+	virtual void v3c(); virtual void v40(); virtual void v44(); virtual void v48();
+	virtual void v4c(int value);
 };
 
 class BfmeAwakenDebug
 {
 public:
-	virtual void slot00();
-	virtual void slot04();
-	virtual void slot08();
-	virtual void slot0C();
-	virtual void slot10();
-	virtual void slot14();
-	virtual void slot18();
-	virtual void slot1C();
-	virtual void slot20();
-	virtual void slot24();
-	virtual void slot28();
-	virtual void slot2C();
-	virtual void slot30();
-	virtual void slot34();
-	virtual void slot38();
-	virtual void slot3C();
-	virtual void slot40();
-	virtual void slot44();
-	virtual void slot48();
-	virtual void slot4C();
-	virtual void slot50();
-	virtual void slot54();
-	virtual void slot58();
-	virtual void slot5C();
-	virtual void slot60();
-	virtual void slot64();
-	virtual void slot68();
-	virtual BfmeAwakenLog *slot6C(int first, int second);
+	virtual void v00(); virtual void v04(); virtual void v08(); virtual void v0c();
+	virtual void v10(); virtual void v14(); virtual void v18(); virtual void v1c();
+	virtual void v20(); virtual void v24(); virtual void v28(); virtual void v2c();
+	virtual void v30(); virtual void v34(); virtual void v38(); virtual void v3c();
+	virtual void v40(); virtual void v44(); virtual void v48(); virtual void v4c();
+	virtual void v50(); virtual void v54(); virtual void v58(); virtual void v5c();
+	virtual void v60();
+	virtual void v64(); virtual void v68();
+	virtual BfmeAwakenLog *v6c(int first, int second);
 };
 
 extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern bool _bfme_debugReportingEnabled(void);
+extern void _bfme_debugRecordCallsite(int kind);
 
-class BFMERetailAsciiString
+class PartitionData;
+
+class PartitionCell
 {
 public:
-	struct Data
-	{
-		unsigned short m_references;
-		unsigned short m_allocated;
-		unsigned short m_length;
-		unsigned short m_reserved;
-		char m_text[1];
-	};
-
-	BFMERetailAsciiString(const char *text);
-	BFMERetailAsciiString(const BFMERetailAsciiString &that);
-	~BFMERetailAsciiString()
-	{
-		releaseBuffer();
-	}
-
-	const char *str(void) const
-	{
-		return m_data ? m_data->m_text : g_bfmeEmptyAscii;
-	}
-
-private:
-	void releaseBuffer(void);
-	Data *m_data;
+	class CellAndObjectIntersection *m_firstCoiInCell;
+	Int m_data[25];
 };
 
-class BfmeObjectSmallFill
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
+class CellAndObjectIntersection
 {
 public:
-	virtual BFMERetailAsciiString getDebugName(void);
-};
-
-class BfmeCellSmallFillVoid;
-
-class BfmePartitionGridSmallFillVoid
-{
-public:
-	char m_head[4];
-	Real m_originX;
-	Real m_originY;
-	char m_middle[16];
-	Real m_cellSize;
-	Real m_scale;
-	int m_width;
-	int m_height;
-	BfmeCellSmallFillVoid *m_cells;
-
-	BfmeCellSmallFillVoid *getCellAt(int x, int y);
-};
-
-class BfmeCoiSmallFillVoid
-{
-public:
-	BfmeCellSmallFillVoid *m_cell;
+	PartitionCell *m_cell;
 	void *m_module;
-	BfmeCellSmallFillVoid *m_prev;
-	BfmeCoiSmallFillVoid *m_next;
+	PartitionCell *m_prev;
+	CellAndObjectIntersection *m_next;
 
-	__forceinline void addCoverage(BfmeCellSmallFillVoid *cell);
+	__forceinline void addCoverage(PartitionCell *cell)
+	{
+		m_cell = cell;
+		CellAndObjectIntersection *next = cell->m_firstCoiInCell;
+		m_next = next;
+		if (next != 0)
+			next->m_prev = (PartitionCell *)&m_next;
+		m_prev = cell;
+		cell->m_firstCoiInCell = this;
+	}
 };
 
-class BfmeCellSmallFillVoid
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
+class PartitionManager
 {
 public:
-	BfmeCoiSmallFillVoid *m_first;
-	int m_data[25];
+	Real getCellSize() const { return m_cellSize; }
+
+	// Matched out of line at 0x008F...; retail inlines it here.
+	__forceinline void getCellRange(PartitionCell **first, PartitionCell **last, int x1, int x2, int y)
+	{
+		if (x2 < 0 || x1 >= m_cellCountX || y < 0 || y >= m_cellCountY)
+		{
+			*last = 0;
+			*first = 0;
+			return;
+		}
+		PartitionCell *row = m_cells + y * m_cellCountX;
+		*last = row;
+		*first = row;
+		if (x1 > 0)
+			*first = row + x1;
+		*last += x2 < m_cellCountX ? x2 + 1 : m_cellCountX;
+	}
+
+	char m_head[4];
+	Real m_worldOriginX;
+	Real m_worldOriginY;
+	char m_middle[0x10];
+	Real m_cellSize;
+	Real m_cellSizeInv;
+	Int m_cellCountX;
+	Int m_cellCountY;
+	PartitionCell *m_cells;
 };
 
-BfmeCellSmallFillVoid *BfmePartitionGridSmallFillVoid::getCellAt(int x, int y)
+class Object
 {
-	if (x < 0 || x >= m_width || y < 0 || y >= m_height)
-		return 0;
-	return &m_cells[y * m_width + x];
-}
-
-__forceinline void BfmeCoiSmallFillVoid::addCoverage(BfmeCellSmallFillVoid *cell)
-{
-	m_cell = cell;
-	BfmeCoiSmallFillVoid *next = cell->m_first;
-	m_next = next;
-	if (next != 0)
-		next->m_prev = (BfmeCellSmallFillVoid *)&m_next;
-	m_prev = (BfmeCellSmallFillVoid *)cell;
-	cell->m_first = this;
-}
-
-__forceinline Real bfmeFloorSmallFillVoid(Real value)
-{
-	return (Real)floor((double)value);
-}
-
-__forceinline int bfmeFloorToIntSmallFillVoid(Real value)
-{
-	int result;
-	__asm
-	{
-		fld [value]
-		fistp [result]
-	}
-	return result;
-}
+public:
+	virtual AsciiString slot00() const;
+};
 
 class PartitionData
 {
 private:
-	void doSmallFill(Real centerX, Real centerY, Real radius);
+	Bool doSmallFill(Real centerX, Real centerY, Real radius);
 
-	BfmePartitionGridSmallFillVoid *m_grid;
-	BfmeObjectSmallFill *m_object;
-	char m_prefix[0x14];
-	BfmeCoiSmallFillVoid *m_coiArray;
+	PartitionManager *m_grid;
+	Object *m_object;
+	char m_prefix[0x1c - 0x08];
+	CellAndObjectIntersection *m_coiArray;
 };
 
-// ?doSmallFill@PartitionData@@AAEXMMM@Z
-void PartitionData::doSmallFill(Real centerX, Real centerY, Real radius)
+Bool PartitionData::doSmallFill(Real centerX, Real centerY, Real radius)
 {
-	BfmePartitionGridSmallFillVoid *grid = m_grid;
-	Real maximumRadius = grid->m_cellSize;
-	maximumRadius *= g_bfmeK1253;
-	if (radius > maximumRadius)
+	if (radius > m_grid->getCellSize() * 0.5f)
 	{
-		if (_bfme_debugReportingEnabled())
-		{
+		if (_bfme_debugReportingEnabled()) {
 			_bfme_debugRecordCallsite(1);
-			TheBfmeAwakenDebug->slot60();
-			BFMERetailAsciiString objectName = m_object ?
-				m_object->getDebugName() : BFMERetailAsciiString("*unknown*");
-			BfmeAwakenLog *report = TheBfmeAwakenDebug->slot6C(0, 0);
-			report->slot38("Object ")
-				->slot38(objectName.str())
-				->slot38(" is too large for 'small geometry. Radius given is ")
-				->slot20(radius)
-				->slot38(" but maximum radius for small geometry is ")
-				->slot20(maximumRadius)
-				->slot38("; truncating. In order to fix this problem either set the geometry of the given object\n"
-					"to non-small or reduce the geometry major radius.\n")
-				->slot4C(2);
+			TheBfmeAwakenDebug->v60();
+			TheBfmeAwakenDebug->v6c(0, 0)->v38("Object ")
+				->v38((m_object ? m_object->slot00() : AsciiString("*unknown*")).str())
+				->v38(" is too large for 'small' geometry.\nRadius given is ")->v20(radius)
+				->v38(" but maximum radius for small geometry is ")->v20(m_grid->getCellSize() * 0.5f)
+				->v38("; truncating.\n\nIn order to fix this problem either set the geometry of the given object\nto non-small or reduce the geometry major radius.\n")
+				->v4c(2);
 		}
-		radius = maximumRadius;
+		radius = m_grid->getCellSize() * 0.5f;
 	}
 
-	int x1 = bfmeFloorToIntSmallFillVoid(bfmeFloorSmallFillVoid(
-		(centerX - radius - grid->m_originX) * grid->m_scale));
-	int y1 = bfmeFloorToIntSmallFillVoid(bfmeFloorSmallFillVoid(
-		(centerY - radius - grid->m_originY) * grid->m_scale));
-	int x2 = bfmeFloorToIntSmallFillVoid(bfmeFloorSmallFillVoid(
-		(centerX + radius - grid->m_originX) * grid->m_scale));
-	int y2 = bfmeFloorToIntSmallFillVoid(bfmeFloorSmallFillVoid(
-		(centerY + radius - grid->m_originY) * grid->m_scale));
+	CellAndObjectIntersection *coi = m_coiArray;
+	Int cx1 = REAL_TO_INT_FLOOR((centerX - radius - m_grid->m_worldOriginX) * m_grid->m_cellSizeInv);
+	Int cx2 = REAL_TO_INT_FLOOR((centerX + radius - m_grid->m_worldOriginX) * m_grid->m_cellSizeInv);
+	Int cy1 = REAL_TO_INT_FLOOR((centerY - radius - m_grid->m_worldOriginY) * m_grid->m_cellSizeInv);
+	Int cy2 = REAL_TO_INT_FLOOR((centerY + radius - m_grid->m_worldOriginY) * m_grid->m_cellSizeInv);
 
-	BfmeCoiSmallFillVoid *coi = m_coiArray;
-	for (int y = y1; y <= y2; ++y)
+	for (Int y = cy1; y <= cy2; )
 	{
-		for (int x = x1; x <= x2; ++x)
-		{
-			BfmeCellSmallFillVoid *cell = grid->getCellAt(x, y);
-			if (cell != 0)
-			{
-				coi->addCoverage(cell);
-				++coi;
-			}
-		}
+		PartitionCell *first, *last;
+		m_grid->getCellRange(&first, &last, cx1, cx2, y);
+		++y;
+		while (first != last)
+			(coi++)->addCoverage(first++);
 	}
+	return true;
 }
