@@ -89587,3 +89587,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?rva0040DE00@Calls004329D0@@QAEXXZ,0x0040DE00,thiscall no stack arguments; ECX read; four ret exits; caller 004329D0 via 0004ADB3;evidence=004329D0-client-update.md
 ?rva0042F190@Rva0042F190Host@@QAEXI_N@Z,0x0042F190,two-word ABI view of matched forEach; ECX receiver; frame then bool; ret 8; caller 004329D0 via 0000C676;evidence=004329D0-client-update.md
 ?populateGameFonts@HeaderTemplateManager@@AAEXXZ,0x00020243,route=0x0048C480;retail 004329D0 call follows 00020243 to 0048CA80 to 000065F0 to matched body;evidence=004329D0-client-update.md
+?Rva00927800Target@@YAXXZ,0x00927800,pair-int-int hashtable find callable alias for matched 0x00927800 _M_find (RvaHashFind00927800.cpp); 0x00927C10 and 0x00928200 pass pair key reference on stack with table this in ECX
