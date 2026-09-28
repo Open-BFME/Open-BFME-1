@@ -1,7 +1,23 @@
 // ?doLoadAllTransports@ScriptActions@@IAEXABVAsciiString@@@Z
-// partial score=0.83 date=2026-09-26
+// partial score=1.0 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline
 // stlport
+// ScriptActions::doLoadAllTransports, retail 0x003014C0 (979 bytes, ret 4).
+//
+// Identity: ScriptActions::executeAction (0x00303BF0) indexes its jump table
+// directly by the action type; arm 52 calls this body twice through its ILT
+// thunk.  BFME's table runs one ahead of Zero Hour here (arm 56 is the landed
+// doTeamExitAll, ZH TEAM_EXIT_ALL = 55), so arm 52 is TEAM_LOAD_TRANSPORTS
+// (ZH 51), and the body is the ZH doLoadAllTransports walk: team members split
+// into transports (KINDOF bit 21, ContainModuleInterface::getContainMax) and
+// passengers, a PartitionSolver pass, then aiEnter for each pairing.
+//
+// BFME additions over Zero Hour: a passenger inside a container of KINDOF bit
+// 108 is replaced by that container, and duplicate passenger IDs are skipped.
+// The ZH `(TransportContain*)obj->getContain()` downcast is what keeps
+// retail's add -0x20 / lea +0x20 receiver.  The template is read through the
+// OVERRIDE<ThingTemplate>::operator-> shape (explicit NULL return, one level
+// of getFinalOverride inlined), which is what gives retail's EDI/ESI colouring.
 #define _STLP_NO_EXCEPTIONS 1
 #include "StringInline.h"
 #include <vector>
@@ -102,10 +118,34 @@ public:
     virtual unsigned int getContainMax() const = 0;
 };
 
+// ZH TransportContain derives from OpenContain, whose primary base occupies
+// the first 0x20 bytes; the ContainModuleInterface view sits at +0x20.
+class Rva003014C0ContainPrimary
+{
+public:
+    virtual ~Rva003014C0ContainPrimary();
+private:
+    unsigned char m_pad[0x1c];
+};
+class TransportContain : public Rva003014C0ContainPrimary, public ContainModuleInterface
+{
+public:
+    virtual unsigned int getContainMax() const;
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
+enum CommandSourceType
+{
+    CMD_FROM_PLAYER = 0,
+    CMD_FROM_SCRIPT,
+    CMD_FROM_AI,
+    CMD_FROM_DOZER
+};
+
 class AICommandInterface
 {
 public:
-    void aiEnter(Object *object, int source);
+    void aiEnter(Object *object, CommandSourceType cmdSource);
 };
 class AIUpdateInterface
 {
@@ -126,28 +166,37 @@ class BfmeObjectDlinkBase
 public:
     Object *dlink_next_TeamMemberList() const;
 };
-class BfmeObjectDlinkPad { public: unsigned char m_pad[0x64]; };
+class BfmeObjectDlinkPad { public: const ThingTemplate *m_template; unsigned char m_pad[0x60]; };
 class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
     public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
 {
 public:
+    const ThingTemplate *getTemplate() const
+    {
+        if (!m_template)
+            return 0;
+        if (m_template->m_nextOverride)
+            return (const ThingTemplate *)m_template->m_nextOverride->getFinalOverride();
+        return m_template;
+    }
     unsigned int isKindOf(unsigned int kind) const
     {
-        const ThingTemplate *value = *(const ThingTemplate * const *)((const char *)this + 4);
-        if (!value)
-            value = 0;
-        else if (value->m_nextOverride)
-            value = (const ThingTemplate *)value->m_nextOverride->getFinalOverride();
-        return value->isKindOf(kind);
+        return getTemplate()->isKindOf(kind);
     }
-    ObjectID getID() const { return *(const ObjectID *)((const char *)this + 0x74); }
-    ContainModuleInterface *getContain() const
-    { return *(ContainModuleInterface * const *)((const char *)this + 0x1fc); }
-    AIUpdateInterface *getAIUpdateInterface() const
-    { return *(AIUpdateInterface * const *)((const char *)this + 0x204); }
-    Object *getContainedBy() const
-    { return *(Object * const *)((const char *)this + 0x214); }
+    ObjectID getID() const { return m_id; }
+    ContainModuleInterface *getContain() const { return m_contain; }
+    AIUpdateInterface *getAIUpdateInterface() const { return m_ai; }
+    Object *getObject214() const { return m_object214; }
     int getTransportSlotCount() const;
+private:
+    unsigned char m_pad070[0x74 - 0x70];
+    ObjectID m_id;
+    unsigned char m_pad078[0x1fc - 0x78];
+    ContainModuleInterface *m_contain;
+    unsigned char m_pad200[0x204 - 0x200];
+    AIUpdateInterface *m_ai;
+    unsigned char m_pad208[0x214 - 0x208];
+    Object *m_object214;
 };
 
 #define callMemberFunction(object, ptrToMember) ((object).*(ptrToMember))
@@ -211,18 +260,24 @@ void ScriptActions::doLoadAllTransports(const AsciiString &name)
         {
             ContainModuleInterface *contain = object->getContain();
             if (contain)
-                transports.push_back(_STL::make_pair(object->getID(), contain->getContainMax()));
+                transports.push_back(_STL::make_pair(object->getID(), ((TransportContain *)object->getContain())->getContainMax()));
         }
         else
         {
-            Object *container = object->getContainedBy();
+            Object *container = object->getObject214();
             if (container && container->isKindOf(108))
                 object = container;
-            PairObjectIDAndUInt entry(object->getID(), object->getTransportSlotCount());
-            EntriesVec::iterator current = units.begin();
-            for (; current != units.end(); ++current)
-                if (current->first == entry.first) break;
-            if (current == units.end()) units.push_back(entry);
+            PairObjectIDAndUInt entry = _STL::make_pair(object->getID(), object->getTransportSlotCount());
+            Bool found = false;
+            for (EntriesVec::iterator current = units.begin(); current != units.end(); ++current)
+            {
+                if (entry.first == current->first)
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) units.push_back(entry);
         }
     }
     PartitionSolver partition(units, transports, PREFER_FAST_SOLUTION);
@@ -236,7 +291,25 @@ void ScriptActions::doLoadAllTransports(const AsciiString &name)
         {
             AIUpdateInterface *ai = unit->getAIUpdateInterface();
             if (ai)
-                ai->m_command.aiEnter(transport, 1);
+                ai->m_command.aiEnter(transport, CMD_FROM_SCRIPT);
         }
     }
 }
+
+// LANDING BLOCKER (2026-09-28, opus-5.5): this body is byte-exact (979/979,
+// probe EXACT) and passed add_match's scoped verify with the four callee pins
+// below, but tools/pin_consistency.py --check refuses each route= pin because
+// the routed body's matched functions.csv row does not carry the pinned name:
+//   ?solve@PartitionSolver@@QAEXXZ at ILT 0x0000117C -> 0x00096570 (still the
+//     gen dump ?d_00096570; solve is itself blocked at 731/809 B)
+//   ?getSolution@PartitionSolver@@QBEABV?$vector@U?$pair@W4ObjectID@@W41@@...@XZ
+//     at ILT 0x00013A7A -> 0x00094BF0 (row is the opaque Rva00094BF0AddressPlus2C::get;
+//     partition_solver.cpp's getSolution already compiles EXACT against it)
+//   ??0?$vector@U?$pair@W4ObjectID@@W41@@...@QAE@ABV01@@Z (SolutionVec copy ctor)
+//     at ILT 0x00027B2E -> 0x002F8980 (row is Gen_002F8980::bfmeAssign)
+//   ?_M_insert_overflow@?$vector@U?$pair@W4ObjectID@@I@...@I_N@Z at ILT
+//     0x00026198 -> 0x002FED10 (row is Rva002FED10Element; the pair<ObjectID,UInt>
+//     name sits on 0x000960A0, which only solve calls, so that row is really
+//     SolutionVec's pair<ObjectID,ObjectID> instantiation)
+// Land once those four rows carry the real names (or solve is matched and the
+// other three rows are repointed), then add_match with --replace-rva 0x003014C0.
