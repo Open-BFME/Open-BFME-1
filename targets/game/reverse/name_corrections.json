@@ -8908,5 +8908,25 @@
   "after_sha256": "49924af7f7b6b720f69b4a315800b8da83a920cfab220be0c360e2cd5aec7515",
   "evidence": "targets/game/reverse/identity_evidence/0024a350-pragma-comment-token.md",
   "reason": "false positive: comment is the #pragma comment keyword; bank's alternatename to ?j_00004d63 replaced by a direct extern of the same ILT thunk"
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/InGameUI_addSuperweapon_Thunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehaviorResolveFX.cpp",
+  "old_name": "InGameUI",
+  "new_name": "Rva000EE6D0StringAccessor",
+  "before_sha256": "e4cadbfb1816ea01eee8057f51be10cbdb0a1e195e3cc0d21922a81d9536d7dd",
+  "after_sha256": "22899f02bd296a4167340a4c5c509e56e26378d467cfb98b882039ad845e8ff8",
+  "evidence": "targets/game/reverse/identity_evidence/001f38a0-bridgebehavior-false-pairings.md",
+  "reason": "false pairings: Rva000EE6D0StringAccessor is an existing ledger class (0x000EE6D0); InGameUI kept in InGameUIAddSuperweapon.cpp; shim belongs to doAreaEffects, not in trimmed update bank"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f38a0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001f38a0.cpp",
+  "old_name": "BridgeAreaEffectsRandomPositionShim",
+  "new_name": "Rva000EE6D0StringAccessor",
+  "before_sha256": "52d7ea64bab646cb2cfc6fede6012ec957c48d6bc0f8a0d05ec627f340b6a25d",
+  "after_sha256": "d148ae903111ef5d538ee8796318d05c233638c372e8c584fa9c792348e72ea6",
+  "evidence": "targets/game/reverse/identity_evidence/001f38a0-bridgebehavior-false-pairings.md",
+  "reason": "false pairings: Rva000EE6D0StringAccessor is an existing ledger class (0x000EE6D0); InGameUI kept in InGameUIAddSuperweapon.cpp; shim belongs to doAreaEffects, not in trimmed update bank"
  }
 ]

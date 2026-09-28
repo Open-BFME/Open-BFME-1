@@ -1,5 +1,5 @@
 // ?optimize@Path@@QAEXPBVObject@@H_N@Z
-// partial score=0.65 date=2026-09-10
+// partial score=0.936 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc
 //
 // Retail 0x003E10F0: Pathfinder::buildActualPath.
@@ -12,7 +12,8 @@ typedef int Int;
 typedef bool Bool;
 typedef int LocomotorSurfaceTypeMask;
 
-inline Int IABS(Int value) { return value >= 0 ? value : -value; }
+#include <stdlib.h>
+#define IABS abs
 
 enum PathfindLayerEnum
 {
@@ -74,7 +75,7 @@ class Pathfinder
 public:
 	Int isLinePassable(Object *obj, Int acceptableSurfaces,
 		PathfindLayerEnum layer, const Coord3D *start, const Coord3D *end,
-		Int blocked);
+		Bool blocked);
 	Int bfmeCellTypeTwoWithoutFlag(const Coord3D *pos, PathfindLayerEnum layer);
 	Bool bfmeWorldLineHasNoHit(const Coord3D *start, const Coord3D *end);
 	Path *buildActualPath( const Object *obj, LocomotorSurfaceTypeMask acceptableSurfaces,
@@ -121,15 +122,10 @@ void Path::optimize(const Object *obj, LocomotorSurfaceTypeMask acceptableSurfac
 	const ThingTemplate *thing = obj->m_thingTemplate;
 	anchor = m_path;
 	Bool crusher;
-	if (thing->m_nextOverride)
+	if (!thing) thing = 0;
+	else if (thing->m_nextOverride)
 		thing = (const ThingTemplate *)thing->m_nextOverride->getFinalOverride();
 	crusher = (thing->m_kindOf >> 11) & 1;
-
-	if (anchor == 0)
-	{
-		m_isOptimized = true;
-		return;
-	}
 
 	PathfindLayerEnum layer;
 	PathfindLayerEnum curLayer;
@@ -138,14 +134,15 @@ void Path::optimize(const Object *obj, LocomotorSurfaceTypeMask acceptableSurfac
 	Int steps;
 	Bool passable;
 
-	while (anchor->getNext())
+	while (anchor)
 	{
 		node = anchor->getNext();
+		if (!node) break;
+		steps = anchor->m_costSoFar != 0x7fffffff ? 0 : 3;
 		layer = anchor->getLayer();
 		curLayer = layer;
 		distance = 0;
 		count = 0;
-		steps = anchor->m_costSoFar != 0x7fffffff ? 0 : 3;
 
 		while (node)
 		{
@@ -154,7 +151,7 @@ void Path::optimize(const Object *obj, LocomotorSurfaceTypeMask acceptableSurfac
 			++steps;
 			passable = false;
 
-			if (TheAIParseDefinitionAI->pathfinder()->bfmeCellTypeTwoWithoutFlag(
+			if ((unsigned char)TheAIParseDefinitionAI->pathfinder()->bfmeCellTypeTwoWithoutFlag(
 				node->getPosition(), layer))
 			{
 				passable = true;
@@ -164,32 +161,27 @@ void Path::optimize(const Object *obj, LocomotorSurfaceTypeMask acceptableSurfac
 			{
 				Int dx = (Int)(node->getPosition()->x - anchor->getPosition()->x);
 				Int dy = (Int)(node->getPosition()->y - anchor->getPosition()->y);
-				Bool mightBePassable = false;
+				
 
 				if (dx == 0 && IABS(dy) == distance)
-					mightBePassable = true;
+					passable = true;
 				if (dy == 0 && IABS(dx) == distance)
-					mightBePassable = true;
+					passable = true;
 				if (IABS(dx) == IABS(dy) && IABS(dx) == distance)
-					mightBePassable = true;
-				if (mightBePassable)
 					passable = true;
 			}
 
 			if (!passable)
 			{
-				if (node->m_costSoFar != 0x7fffffff && steps < 3)
+				if (node->m_costSoFar == 0x7fffffff && steps < 3)
 					passable = true;
-				if (node->m_costSoFar == 0x7fffffff)
+				if (node->m_costSoFar != 0x7fffffff)
 					passable = true;
-			}
-
-			if (!passable)
-			{
-				PathNode *testNode = node;
+				PathNode *testNode = node->getNext();
 				Int testCount = 0;
-				while (testNode && testCount <= 3)
+				while (testCount <= 3)
 				{
+					if (!testNode) break;
 					if (testNode->m_costSoFar != 0x7fffffff)
 						passable = true;
 					testNode = testNode->getNext();
@@ -199,37 +191,25 @@ void Path::optimize(const Object *obj, LocomotorSurfaceTypeMask acceptableSurfac
 
 			if (!passable)
 			{
-				passable = TheAIParseDefinitionAI->pathfinder()->isLinePassable(
+				if ((unsigned char)TheAIParseDefinitionAI->pathfinder()->isLinePassable(
 					(Object *)obj, acceptableSurfaces, layer,
-					anchor->getPosition(), node->getPosition(), blocked);
+					anchor->getPosition(), node->getPosition(), blocked)) passable = true;
 			}
 
-			if (curLayer != LAYER_GROUND)
+			if (curLayer == LAYER_GROUND || curLayer >= LAYER_FIRST_BRIDGE)
 			{
-				if (curLayer >= LAYER_FIRST_BRIDGE)
-				{
-					if (node->getLayer() != curLayer)
-					{
-						layer = node->getLayer();
-						if (distance > 30)
-							passable = false;
-					}
+				if (node->getLayer() != curLayer) {
+					layer = node->getLayer();
+					if (distance > 30) passable = false;
 				}
-				else
-				{
-					PathNode *next = node->getNext();
-					if (next && next->getLayer() != curLayer && distance > 30)
-						passable = false;
+				if (crusher && !passable) {
+					if (IABS((Int)(node->getPosition()->y-m_pathTail->getPosition()->y)) +
+						IABS((Int)(node->getPosition()->x-m_pathTail->getPosition()->x)) < 40)
+						if (TheAIParseDefinitionAI->pathfinder()->bfmeWorldLineHasNoHit(anchor->getPosition(),node->getPosition())) passable=true;
 				}
-			}
-
-			if (crusher && !passable)
-			{
-				Int dx = (Int)(node->getPosition()->y - m_pathTail->getPosition()->y);
-				Int dy = (Int)(node->getPosition()->x - m_pathTail->getPosition()->x);
-				if (IABS(dx) + IABS(dy) < 40)
-					passable = TheAIParseDefinitionAI->pathfinder()->bfmeWorldLineHasNoHit(
-						anchor->getPosition(), node->getPosition());
+			} else {
+				PathNode *next=node->getNext();
+				if (next && next->getLayer()!=curLayer && distance>30) passable=false;
 			}
 
 			curLayer = node->getLayer();
@@ -242,34 +222,12 @@ void Path::optimize(const Object *obj, LocomotorSurfaceTypeMask acceptableSurfac
 
 			if (count > 1)
 				node = node->getPrevious();
-			anchor->setNextOptimized(node);
-			anchor = node;
+			else anchor->setNextOptimized(node);
 			break;
 		}
+		anchor = node;
 	}
 
 	m_isOptimized = true;
 }
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
-class Thing
-{
-public:
-	const Coord3D *getUnitDirectionVector2D( void ) const;
-};
-
-Path *Pathfinder::buildActualPath( const Object *obj, LocomotorSurfaceTypeMask acceptableSurfaces,
-	const Coord3D *fromPos, PathfindCell *goalCell, Bool center, Bool blocked )
-{
-	Path *path = new Path;
-
-	prependCells( path, fromPos, goalCell, center );
-
-	path->optimize( obj, acceptableSurfaces, blocked );
-
-	Coord3D dir = *((const Thing *)obj)->getUnitDirectionVector2D();
-
-	path->bfmeOptimizeDir( obj, &dir, acceptableSurfaces, blocked );
-
-	return path;
-}

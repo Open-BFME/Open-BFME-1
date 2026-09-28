@@ -1,5 +1,5 @@
 // ?doSkirmishCommandButtonOnMostValuable@ScriptActions@@IAEXABVAsciiString@@0M_N@Z
-// partial score=0.55 date=2026-09-10
+// partial score=0.982 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline
 // stlport
 // Clean C++ recovery of ScriptActions::doSkirmishCommandButtonOnMostValuable.
@@ -9,7 +9,9 @@
 // with the BFME ScriptEngine by-value string ABI and the retail filter views.
 
 #include "StringInline.h"
-#include <bitset>
+#include <vector>
+#include "../../../game/GameEngine/Source/GameLogic/command_source_type.h"
+enum GUICommandType {};
 
 typedef bool Bool;
 typedef int Int;
@@ -56,11 +58,12 @@ public:
 class AIGroup
 {
 public:
-	Object *getSpecialPowerSourceObject(Int id);
-	Object *getCommandButtonSourceObject(Int commandType);
-	void getCenter(Coord3D *center);
+	Object *getSpecialPowerSourceObject(unsigned id);
+	Object *getCommandButtonSourceObject(GUICommandType commandType);
+	bool getCenter(Coord3D *center);
 	void groupDoCommandButtonAtObject(const CommandButton *button,
-		Object *object, Int source);
+		Object *object, CommandSourceType source);
+ void groupDoCommandButtonAtPosition(const CommandButton*,const Coord3D*,CommandSourceType);
 };
 
 class AI
@@ -72,7 +75,7 @@ public:
 class SpecialPowerTemplate
 {
 public:
-	Int getID() const;
+	unsigned getID() const;
 };
 
 class CommandButton
@@ -82,13 +85,14 @@ public:
 	{
 		return *(SpecialPowerTemplate **)((char *)this + 0x34);
 	}
-	Int getCommandType() const
+	GUICommandType getCommandType() const
 	{
-		return *(const Int *)((const char *)this + 0x10);
+		return *(const GUICommandType *)((const char *)this + 0x10);
 	}
-	Int getOptions() const
+	bool needsPosition() const { return (getOptions() >> 5) & 1; }
+ unsigned getOptions() const
 	{
-		return *(const Int *)((const char *)this + 0x18);
+		return *(const unsigned *)((const char *)this + 0x18);
 	}
 };
 
@@ -104,6 +108,7 @@ public:
 	PartitionFilter() : m_next(0) {}
 	virtual ~PartitionFilter() {}
 	virtual Bool allow(Object *object) = 0;
+ virtual Int getPlayerMask();
 	PartitionFilter *link(PartitionFilter *next);
 
 	PartitionFilter *m_next;
@@ -118,6 +123,7 @@ public:
 
 protected:
 	virtual Bool allow(Object *object);
+ virtual Int getPlayerMask();
 
 private:
 	const Player *m_player;
@@ -128,8 +134,8 @@ private:
 class PartitionFilterValidCommandButtonTarget : public PartitionFilter
 {
 public:
-	PartitionFilterValidCommandButtonTarget(Object *source,
-		const CommandButton *button, Bool match, Int sourceType)
+	__declspec(noinline) PartitionFilterValidCommandButtonTarget(Object *source,
+		const CommandButton *button, Bool match, CommandSourceType sourceType)
 		: m_source(source), m_button(button), m_match(match),
 		  m_sourceType(sourceType) {}
 
@@ -140,7 +146,7 @@ private:
 	Object *m_source;
 	const CommandButton *m_button;
 	Bool m_match;
-	Int m_sourceType;
+	CommandSourceType m_sourceType;
 };
 
 class PartitionFilterSameMapStatus : public PartitionFilter
@@ -155,74 +161,36 @@ private:
 	const Object *m_object;
 };
 
-template <size_t NUMBITS>
-class BitFlags
-{
-public:
-	enum BogusInitType { kInit = 0 };
-	__declspec(nothrow) BitFlags(BogusInitType, Int bit);
-	~BitFlags() {}
-
-private:
-	_STL::bitset<NUMBITS> m_bits;
+class Overridable { public: const Overridable *getFinalOverride() const; void *vtable; Overridable *m_nextOverride; };
+class ThingTemplate : public Overridable { char pad08[0x47a-8]; unsigned short m_buildCost; public: unsigned short getBuildCost() const {return m_buildCost;} };
+class Object { void *vtable; ThingTemplate *m_template; char pad08[0x30]; Coord3D m_position; public:
+ const ThingTemplate *getTemplate() const { if(!m_template) return 0; if(m_template->m_nextOverride) return (const ThingTemplate*)m_template->m_nextOverride->getFinalOverride(); return m_template; }
+ const Coord3D *getPosition() const {return &m_position;}
 };
-
-typedef BitFlags<192> KindOfMaskType;
-extern const KindOfMaskType KINDOFMASK_NONE;
-
-struct VptrZeroBlock24
-{
-	unsigned int m_dword00;
-	unsigned int m_dword04;
-	unsigned int m_dword08;
-	unsigned int m_dword0c;
-	unsigned int m_dword10;
-	unsigned int m_dword14;
+inline bool moreExpensive(const Object *a,const Object *b) { const ThingTemplate *at=a->getTemplate(); const ThingTemplate *bt=b->getTemplate(); return at->getBuildCost()>bt->getBuildCost(); }
+struct BfmeIterEntry { Object *m_obj; void *m_extra; };
+struct BfmeObjectIterator { std::vector<BfmeIterEntry> m_entries; BfmeIterEntry *m_cur; int m_refCount; };
+class BfmeThingCAD { public: void bfmeGoCAD(); };
+class BfmeThingEOF { public: void *bfmeGoEOF(); };
+struct BfmeWideResult {
+ BfmeObjectIterator *m_value;
+ BfmeWideResult(); BfmeWideResult(const BfmeWideResult &);
+ ~BfmeWideResult() { ((BfmeThingCAD*)this)->bfmeGoCAD(); }
+ Object *first() { return (Object*)((BfmeThingEOF*)this)->bfmeGoEOF(); }
+ Object *next() { if(m_value->m_cur==m_value->m_entries.end()) return 0; return (m_value->m_cur++)->m_obj; }
 };
-
-class Rva000C3DD0VptrZeroBlockObject : public PartitionFilter
-{
-public:
-	__declspec(nothrow) Rva000C3DD0VptrZeroBlockObject(
-		const VptrZeroBlock24 &first, const VptrZeroBlock24 &second);
-	virtual Bool allow(Object *object);
-
-	VptrZeroBlock24 m_first;
-	VptrZeroBlock24 m_second;
-};
-
-struct BfmeWideResult
-{
-	void *m_value;
-	BfmeWideResult();
-	BfmeWideResult(const BfmeWideResult &that);
-	~BfmeWideResult();
-};
-
-class BfmeWideResultSource
-{
-public:
-	BfmeWideResult bfmeMakeWideResult(Int a, Int b, Int c, Int d, Int e, Int f);
-};
-
-class BfmeWideForwardC
-{
-	char m_pad[0x0c];
-	BfmeWideResultSource *m_source;
-
-public:
-	BfmeWideResult bfmeForwardWideC(Int a, Int b, Int c, Int d, Int e);
-};
+enum IterOrderType {};
+class PartitionManager { public: BfmeWideResult iterate(const Coord3D*,float,IterOrderType,PartitionFilter*,bool); };
 
 extern ScriptEngine *TheScriptEngine;
 extern AI *TheAI;
 extern ControlBar *TheControlBar;
-extern BfmeWideForwardC *ThePartitionManager;
+extern PartitionManager *ThePartitionManager;
 
 enum
 {
 	ALLOW_ENEMIES = 4,
-	CMD_FROM_SCRIPT = 1,
+
 	FROM_CENTER_2D = 0,
 	ITER_SORTED_EXPENSIVE_TO_CHEAP = 3
 };
@@ -273,32 +241,31 @@ void ScriptActions::doSkirmishCommandButtonOnMostValuable(
 	Coord3D pos;
 	theGroup->getCenter(&pos);
 
-	PartitionFilterSameMapStatus mapFilter(srcObj);
-	Object *target = 0;
-	if (((commandButton->getOptions() >> 5) & 1) != 0)
-	{
-		BfmeWideResult result = ThePartitionManager->bfmeForwardWideC(
-			(Int)&pos, (Int)1000000.0f, FROM_CENTER_2D,
-			(Int)(PartitionFilterPlayerAffiliation(
-				team->getControllingPlayer(), ALLOW_ENEMIES, true).link(
-				&mapFilter)), ITER_SORTED_EXPENSIVE_TO_CHEAP);
-		target = (Object *)result.m_value;
-	}
-	else
-	{
-		BfmeWideResult result = ThePartitionManager->bfmeForwardWideC(
-			(Int)&pos, (Int)1000000.0f, FROM_CENTER_2D,
-			(Int)(PartitionFilterPlayerAffiliation(
-				team->getControllingPlayer(), ALLOW_ENEMIES, true).link(
-			PartitionFilterValidCommandButtonTarget(
-				srcObj, commandButton, true, CMD_FROM_SCRIPT).link(
-				&mapFilter))), ITER_SORTED_EXPENSIVE_TO_CHEAP);
-		target = (Object *)result.m_value;
-	}
-
-	if (target)
-		theGroup->groupDoCommandButtonAtObject(
-			commandButton, target, CMD_FROM_SCRIPT);
-
-	(void)allTeamMembers;
+ 
+ if (commandButton->needsPosition()) {
+  BfmeWideResult result=ThePartitionManager->iterate(&pos,range,(IterOrderType)0,
+   PartitionFilterPlayerAffiliation(team->getControllingPlayer(),ALLOW_ENEMIES,true).link(&PartitionFilterSameMapStatus(srcObj)),false);
+  Object *target=result.first();
+  
+  while((srcObj=result.next())!=0) {
+   const ThingTemplate *otherTemplate=srcObj->getTemplate();
+   const ThingTemplate *targetTemplate=target->getTemplate();
+   if(otherTemplate->getBuildCost()>targetTemplate->getBuildCost()) target=srcObj;
+  }
+  if(target) theGroup->groupDoCommandButtonAtPosition(commandButton,target->getPosition(),CMD_FROM_SCRIPT);
+ } else {
+  BfmeWideResult result=ThePartitionManager->iterate(&pos,range,(IterOrderType)0,
+   PartitionFilterPlayerAffiliation(team->getControllingPlayer(),ALLOW_ENEMIES,true).link(
+    PartitionFilterValidCommandButtonTarget(srcObj,commandButton,true,CMD_FROM_SCRIPT).link(&PartitionFilterSameMapStatus(srcObj))),false);
+  Object *target=result.first();
+  
+  while((srcObj=result.next())!=0) {
+   const ThingTemplate *otherTemplate=srcObj->getTemplate();
+   const ThingTemplate *targetTemplate=target->getTemplate();
+   if(otherTemplate->getBuildCost()>targetTemplate->getBuildCost()) target=srcObj;
+  }
+  if(target) theGroup->groupDoCommandButtonAtObject(commandButton,target,CMD_FROM_SCRIPT);
+ }
 }
+
+
