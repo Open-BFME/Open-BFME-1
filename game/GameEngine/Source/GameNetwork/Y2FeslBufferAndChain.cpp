@@ -279,3 +279,15 @@ void Rva00802DF0Owner::set( Rva00802DF0Source *source, int value )
 	m_text.append( source->m_text );
 	m_field8 = source->m_field0;
 }
+
+// 0x00800520 -- acquire a chain node for (int)owner + 4 bytes and zero its
+// head link. Same Gen007EFFC0()->acquire(size + 4, 0) + null-store shape as
+// Rva00800550Chain::append in this TU; the (int)owner + 4 spelling (not a
+// member load) reproduces retail's add ecx,4 after the vtable load.
+// Identity is address-derived: no caller, string, or vtable names it.
+void *Rva00800520Alloc( void *owner )
+{
+	void *node = Gen007EFFC0()->acquire( (int)owner + 4, 0 );
+	*(void **)node = 0;
+	return node;
+}
