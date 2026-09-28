@@ -1,12 +1,12 @@
 // ?d_0079d530@@YAXXZ
-// partial score=0.914 date=2026-09-27
+// partial score=0.971 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath
 // 0079D530: four-point inside/outside miter construction, owner name unproved.
-class BfmeVec2CY { public:
+struct FloatPairBase0079D530 {float x,y;};
+class BfmeVec2CY : public FloatPairBase0079D530 { public:
  BfmeVec2CY();BfmeVec2CY(const BfmeVec2CY &);BfmeVec2CY(float,float);~BfmeVec2CY();
- BfmeVec2CY &operator=(const BfmeVec2CY &); BfmeVec2CY &operator+=(const BfmeVec2CY &); BfmeVec2CY &operator-=(const BfmeVec2CY &);
+ BfmeVec2CY &operator+=(const BfmeVec2CY &); BfmeVec2CY &operator-=(const BfmeVec2CY &);
  float length()const;float toAngle()const;bool IsExactlyEqualTo(const BfmeVec2CY &)const;
- float x,y;
 };
 #include <math.h>
 #include <float.h>
@@ -14,7 +14,7 @@ inline BfmeVec2CY::BfmeVec2CY(){}
 inline BfmeVec2CY::BfmeVec2CY(const BfmeVec2CY &v){x=v.x;y=v.y;}
 inline BfmeVec2CY::BfmeVec2CY(float a,float b){x=a;y=b;}
 inline BfmeVec2CY::~BfmeVec2CY(){}
-inline BfmeVec2CY &BfmeVec2CY::operator=(const BfmeVec2CY &v){x=v.x;y=v.y;return *this;}
+
 inline BfmeVec2CY &BfmeVec2CY::operator+=(const BfmeVec2CY &v){x+=v.x;y+=v.y;return *this;}
 inline BfmeVec2CY &BfmeVec2CY::operator-=(const BfmeVec2CY &v){x-=v.x;y-=v.y;return *this;}
 inline float BfmeVec2CY::length()const{return (float)sqrt(x*x+y*y);}
@@ -52,7 +52,7 @@ void QuadrilateralInset0079D530::update(){
  if(width>minimum)width=minimum;
  BfmeVec2CY *prev=&points4dc[3];
  for(int i=0;i<4;i++){
-  int next=i+1;if(next>=4)next-=4;
+  int next=i+1;if(next>=4)next=i-3;
   BfmeVec2CY &point=points4dc[i];
   inner544[i]=point;
   outer564[i]=point;
@@ -65,7 +65,7 @@ void QuadrilateralInset0079D530::update(){
    angle-=first;
    if(fabs(angle)>0.00001f){
     float distance=width*0.5f/(float)sin(angle);
-    BfmeVec2CY offset((float)cos(middle)*distance,(float)sin(middle)*distance);
+    BfmeVec2CY offset;offset.y=(float)sin(middle)*distance;offset.x=(float)cos(middle)*distance;
     inner544[i]+=offset;outer564[i]-=offset;
    }
   }
