@@ -126,7 +126,13 @@ public:
 //-------------------------------------------------------------------------------------------------
 /** This is called when a shutdown is complete for this menu */
 //-------------------------------------------------------------------------------------------------
-static void shutdownComplete( WindowLayout *layout )
+// Retail 0x004D1000 (22 B): this menu static over isShuttingDown
+// (VA 0x012F3E6C); layout arrives in EAX beside MapSelectMenuUpdate and
+// MapSelectMenuShutdown (mov ecx,[TheShell] / push 0 / push eax / clear
+// flag / call Shell::shutdownComplete via ILT 0x2F1D). Update/Shutdown
+// inline the same sequence; no direct callers, refs=2 abs-ref.
+// ?shutdownCompleteMapSelectMenu@@YAXPAVWindowLayout@@@Z
+static void shutdownCompleteMapSelectMenu( WindowLayout *layout )
 {
 
 	isShuttingDown = false;
@@ -268,7 +274,7 @@ void MapSelectMenuShutdown( WindowLayout *layout, void *userData )
 	if( popImmediate )
 	{
 
-		shutdownComplete( layout );
+		shutdownCompleteMapSelectMenu( layout );
 		return;
 
 	}  //end if
@@ -289,7 +295,7 @@ void MapSelectMenuUpdate( WindowLayout *layout, void *userData )
 
 	// We'll only be successful if we've requested to 
 	if(isShuttingDown && TheShell->isAnimFinished())
-		shutdownComplete(layout);
+		shutdownCompleteMapSelectMenu(layout);
 
 
 }  // end MapSelectMenuUpdate
