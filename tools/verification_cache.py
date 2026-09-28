@@ -379,6 +379,10 @@ def prepare(commit, selectors, manifest):
     output = _source_selectors(selectors)
     output.extend("source:" + row["source"] for row in selected)
     output.extend(_row_selector(row) for row in misses)
+    # The pre-push hook reads these with `mapfile -t`: force LF-only output, or
+    # Windows text-mode stdout appends CR to every selector and each row
+    # selector then matches no ledger row (delta_sources.py does the same).
+    sys.stdout.reconfigure(newline="\n")
     for selector in dict.fromkeys(output):
         print(selector)
     suffix = " (boundary request active; cache disabled)" if cache_disabled else ""
