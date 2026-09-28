@@ -1,160 +1,228 @@
-// ?rva0075f210@Rva0075F210Owner@@QAE_NPAM@Z
-// partial score=0.4 date=2026-09-21
-// Open-BFME: retail RVA 0x0075F210, 349 bytes. Address-derived; no named
-// caller or vtable evidence. Callee identity is proven by the ledger:
-// AIUpdateInterface::getCurrentVictim (0x002739D0), the
-// AssistedTargetingObjectShim::find weapon accessor (0x001BE270, itself the
-// same forty-seven bytes as Object::getCurrentWeapon -- see
-// AssistedTargetingObjectShim_find.cpp), Weapon::isWithinAttackRange
-// (0x001E8930), Matrix3D::Obj_Look_At / Get_Z_Rotation (matrix3d.cpp), and
-// the address-derived stepAngleToward (0x0075B550, StepAngleToward.cpp).
-//
-// Shape: guard a chain of pointer fields (this->m_08, ->m_FC, ->m_204),
-// fetch the current victim and current weapon, bail unless the weapon is in
-// range; then build a horizontal-plane look-at matrix from this actor's
-// position (m_FC-object's +0x14/+0x24) toward a cached target position
-// (AIUpdateInterface's +0x30 record, +0x24/+0x28), read the resulting Z
-// rotation, step this object's own +0x70 angle toward it, and write the
-// delta (new angle minus the caller's *result) back through *result.
+// ?angle0075F210@AttachmentTransform007629F0@@QAE_NPAM@Z
+// partial score=0.914 date=2026-09-28
+// cl: /O2 /Ob2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug
+// RVA 007629F0: thiscall(Matrix3D&), ret4, frame30. Hub0077B3F0+281
+// proves the writable matrix and primary receiver; see its analyst report.
+// ZH adjustTransformMtx supplies the attachment and height paths. BFME adds
+// parent attachment, angle adjustment and the frame-based matrix blend.
+#include "matrix3d.h"
+#include "ascii_string.h"
+#include <stddef.h>
 
-struct Vector3
-{
-	float X, Y, Z;
-};
+// Retail expands both accessors: the canonical Header has a 16-bit length
+// at +4 and its characters at +8. Keep the canonical class and layout.
+template <> inline const char *StringBase<char>::str() const {
+    return m_data ? m_data->data : "";
+}
+template <> inline bool StringBase<char>::isNotEmpty() const {
+    return m_data && m_data->length != 0;
+}
 
-class Matrix3D
-{
+class GeometryInfo { public: float getMaxHeightAbovePosition() const; };
+class BfmeHostYA { public: float bfmeGetYA(); }; // Checked landed 001C3460 ABI.
+struct ObjectFields007629F0;
+class Drawable {
 public:
-	Matrix3D(bool init)
-	{
-		if (init)
-		{
-			m[0] = 1.0f; m[1] = 0.0f; m[2] = 0.0f; m[3] = 0.0f;
-			m[4] = 0.0f; m[5] = 1.0f; m[6] = 0.0f; m[7] = 0.0f;
-			m[8] = 0.0f; m[9] = 0.0f; m[10] = 1.0f; m[11] = 0.0f;
-		}
-	}
-
-	void Obj_Look_At(const Vector3 &p, const Vector3 &t, float roll);
-	float Get_Z_Rotation(void) const;
-
-private:
-	float m[12];
+    bool getCurrentWorldspaceClientBonePositions(const char *, Matrix3D &) const;
+    char unknown00[0xFC];
+    ObjectFields007629F0 *m_object;
 };
+#define SLOT(n) virtual void slot##n();
+#define SLOTS00_1C SLOT(00) SLOT(04) SLOT(08) SLOT(0C) SLOT(10) SLOT(14) SLOT(18) SLOT(1C)
+#define SLOTS20_3C SLOT(20) SLOT(24) SLOT(28) SLOT(2C) SLOT(30) SLOT(34) SLOT(38) SLOT(3C)
+#define SLOTS40_5C SLOT(40) SLOT(44) SLOT(48) SLOT(4C) SLOT(50) SLOT(54) SLOT(58) SLOT(5C)
+#define SLOTS60_7C SLOT(60) SLOT(64) SLOT(68) SLOT(6C) SLOT(70) SLOT(74) SLOT(78) SLOT(7C)
+#define SLOTS80_9C SLOT(80) SLOT(84) SLOT(88) SLOT(8C) SLOT(90) SLOT(94) SLOT(98) SLOT(9C)
+class Client007629F0 {
+public:
+    SLOTS00_1C SLOT(20) SLOT(24) SLOT(28)
+    virtual Drawable *slot2C(unsigned int);
+    SLOT(30) SLOT(34) SLOT(38) SLOT(3C) SLOTS40_5C SLOT(60) SLOT(64)
+    virtual unsigned int slot68();
+};
+class Contain007629F0 {
+public:
+    SLOTS00_1C SLOTS20_3C SLOTS40_5C SLOTS60_7C SLOTS80_9C
+    virtual bool slotA0();
+};
+struct ObjectFields007629F0 {
+    char unknown00[0x1FC];
+    Contain007629F0 *m_contain;
+    Contain007629F0 *contain() const { return m_contain; }
+    char unknown200[0x20];
+    float value220;
+    float buildRate() { return reinterpret_cast<BfmeHostYA *>(this)->bfmeGetYA(); }
+    const GeometryInfo &geometry() const { return *reinterpret_cast<const GeometryInfo *>((const char *)this + 0xAC); }
+};
+struct Engine007629F0 { char unknown00[0x30]; int mode30; int unknown34; float value38; };
+extern Client007629F0 *ClientGlobal007629F0;
+extern Engine007629F0 *EngineGlobal007629F0;
+extern int AttachmentFailures007629F0;
+void stepAngleToward(float *, float);
+struct State007629F0 { char unknown00[0x38]; unsigned flags38; };
+struct Data007629F0 { char unknown00[0x40]; AsciiString AttachToBoneInAnotherModule; };
+class AttachmentTransform007629F0 {
+public:
+    void adjust(Matrix3D &);
+    bool angle0075F210(float *); // Independent full helper: ECX input; ret4; AL success; writes *arg at +146.
+    char unknown00[4];
+    const Data007629F0 *data04;
+    Drawable *drawable08;
+    char unknown0C[8];
+    State007629F0 *m_curState;
+    char unknown18[0x70-0x18];
+    float angle70;
+    char unknown74[0x88-0x74];
+    unsigned int parentID88;
+    char unknown8C[0x98-0x8C];
+    AsciiString bone98;
+    char unknown9C[0x20C-0x9C];
+    float value20C;
+    char unknown210[0x234-0x210];
+    Matrix3D matrix234;
+    float blend264;
+    unsigned int frame268;
+};
+typedef char AttachmentMatrixOffset007629F0[offsetof(AttachmentTransform007629F0, matrix234) == 0x234 ? 1 : -1];
+typedef char AttachmentBoneOffset007629F0[offsetof(AttachmentTransform007629F0, bone98) == 0x98 ? 1 : -1];
 
-void stepAngleToward(float *p, float target);
+void AttachmentTransform007629F0::adjust(Matrix3D &mtx)
+{
+    if (parentID88) {
+        Drawable *parent = ClientGlobal007629F0->slot2C(parentID88);
+        if (parent) {
+            ObjectFields007629F0 *object = parent->m_object;
+            Matrix3D boneMtx;
+            if (parent->getCurrentWorldspaceClientBonePositions(bone98.str(), boneMtx)) {
+                mtx = boneMtx;
+                if (object->contain() && object->contain()->slotA0()) {
+                    float angle = mtx.Get_Z_Rotation();
+                    if (!angle0075F210(&angle)) {
+                        stepAngleToward(&angle70, angle);
+                        angle = angle70 - angle;
+                    }
+                    mtx.Rotate_Z(angle);
+                }
+                return;
+            }
+            if (AttachmentFailures007629F0 < 100) ++AttachmentFailures007629F0;
+        }
+    }
+    const Data007629F0 *d = data04;
+    if (d->AttachToBoneInAnotherModule.isNotEmpty()) {
+        Matrix3D boneMtx;
+        if (drawable08->getCurrentWorldspaceClientBonePositions(d->AttachToBoneInAnotherModule.str(), boneMtx))
+            mtx = boneMtx;
+    }
+    if (blend264 < 1.0f) {
+        if (frame268 < ClientGlobal007629F0->slot68()) {
+            frame268 = ClientGlobal007629F0->slot68();
+            blend264 += 1.0f / 30.0f;
+            if (blend264 > 1.0f) blend264 = 1.0f;
+        }
+        Matrix3D::Lerp(matrix234, mtx, blend264, mtx);
+    } else {
+        blend264 = 1.0f;
+        frame268 = ~0u;
+    }
+    if (m_curState && (m_curState->flags38 & 8)) {
+        ObjectFields007629F0 *object = drawable08->m_object;
+        if (object) {
+            if (EngineGlobal007629F0->mode30 == 1) value20C = object->value220;
+            if (value20C >= 0.0f) {
+                float pct = object->buildRate() * EngineGlobal007629F0->value38 + value20C;
+                float height = object->geometry().getMaxHeightAbovePosition();
+                mtx.Translate_Z(height * pct * 0.01f - height);
+            }
+        }
+    }
+}
 
 class Object;
 
-class TargetRecord
-{
-public:
-	unsigned char m_pad[0x24];
-	float m_x;   // +0x24
-	float m_y;   // +0x28
+struct TargetRecord0075F210 {
+    char unknown00[0x24];
+    float x;
+    float y;
 };
 
-class AIUpdateInterface
-{
+class AIUpdateInterface {
 public:
-	Object *getCurrentVictim(void) const;
-
-	unsigned char m_pad[0x30];
-	TargetRecord *m_target;   // +0x30
+    Object *getCurrentVictim() const;
+    char unknown00[0x30];
+    TargetRecord0075F210 *m_target;
 };
 
-class Object
-{
+class AssistedTargetingObjectShim {
 public:
-	unsigned char m_pad00[0x14];
-	float m_x;   // +0x14
-	unsigned char m_pad18[0x24 - 0x18];
-	float m_y;   // +0x24
-	unsigned char m_pad28[0x204 - 0x28];
-	AIUpdateInterface *m_aiUpdate;   // +0x204
+    void *find(int slot);
 };
 
-class AssistedTargetingObjectShim
-{
+class Weapon {
 public:
-	void *find(int slotOut);
+    bool isWithinAttackRange(const Object *first, const Object *second, int flags) const;
 };
 
-class Weapon
+void stepAngleToward(float *angle, float target);
+
+static __forceinline Vector3 planarVector0075F210(float x, float y)
 {
-public:
-	bool isWithinAttackRange(const Object *a, const Object *b, int c) const;
-};
+    Vector3 result;
+    result.X = x;
+    result.Y = y;
+    result.Z = 0.0f;
+    return result;
+}
 
-class Rva0075F210Link
+static __forceinline Vector2 planarPosition0075F210(float x, float y)
 {
-public:
-	unsigned char m_pad[0xFC];
-	Object *m_object;   // +0xFC
-};
+    Vector2 result;
+    result.X = x;
+    result.Y = y;
+    return result;
+}
 
-class Rva0075F210Owner
+bool AttachmentTransform007629F0::angle0075F210(float *result)
 {
-public:
-	bool rva0075f210(float *result);
+    Drawable *drawable = drawable08;
+    if (!drawable)
+        return false;
 
-	unsigned char m_pad0[8];
-	Rva0075F210Link *m_link;   // +8
-	unsigned char m_pad1[0x70 - 0xC];
-	float m_angle;   // +0x70
-};
+    Object *object = reinterpret_cast<Object *>(drawable->m_object);
+    if (!object)
+        return false;
 
-bool Rva0075F210Owner::rva0075f210(float *result)
-{
-	Rva0075F210Link *link = m_link;
-	if (!link)
-		return false;
+    AIUpdateInterface *ai = *reinterpret_cast<AIUpdateInterface **>(
+        reinterpret_cast<char *>(object) + 0x204);
+    if (!ai)
+        return false;
 
-	Object *obj = link->m_object;
-	if (!obj)
-		return false;
+    Object *victim = ai->getCurrentVictim();
+    if (!victim)
+        goto fail;
 
-	AIUpdateInterface *ai = obj->m_aiUpdate;
-	if (!ai)
-		return false;
+    Weapon *weapon = reinterpret_cast<Weapon *>(
+        reinterpret_cast<AssistedTargetingObjectShim *>(object)->find(0));
+    if (!weapon)
+        goto fail;
 
-	Object *victim = ai->getCurrentVictim();
-	if (!victim)
-		goto fail;
+    if (weapon->isWithinAttackRange(reinterpret_cast<Object *>(object), victim, 0)) {
+        TargetRecord0075F210 *targetRecord = ai->m_target;
+        float *targetX = reinterpret_cast<float *>(targetRecord) + 9;
+        Vector3 target = planarVector0075F210(targetX[0], targetX[1]);
+        Vector2 positionXY = planarPosition0075F210(
+            *reinterpret_cast<float *>(reinterpret_cast<char *>(object) + 0x14),
+            *reinterpret_cast<float *>(reinterpret_cast<char *>(object) + 0x24));
+        Vector3 position(positionXY.X, positionXY.Y, 0.0f);
 
-	{
-		Weapon *weapon = (Weapon *)((AssistedTargetingObjectShim *)obj)->find(0);
-		if (!weapon)
-			goto fail;
-
-		if (!weapon->isWithinAttackRange(obj, victim, 0))
-			goto fail;
-	}
-
-	{
-		TargetRecord *targetRecord = ai->m_target;
-
-		Vector3 t;
-		t.Y = targetRecord->m_y;
-		t.X = targetRecord->m_x;
-		t.Z = 0.0f;
-
-		Vector3 p;
-		p.X = obj->m_x;
-		p.Y = obj->m_y;
-		p.Z = 0.0f;
-
-		Matrix3D mtx(true);
-		mtx.Obj_Look_At(p, t, 0.0f);
-
-		float zRotation = mtx.Get_Z_Rotation();
-		stepAngleToward(&m_angle, zRotation);
-
-		*result = m_angle - *result;
-
-		return true;
-	}
+        Matrix3D matrix(true);
+        matrix.Obj_Look_At(position, target, 0.0f);
+        float targetAngle = matrix.Get_Z_Rotation();
+        stepAngleToward(&angle70, targetAngle);
+        *result = angle70 - *result;
+        return true;
+    }
 
 fail:
-	return false;
+    return false;
 }
