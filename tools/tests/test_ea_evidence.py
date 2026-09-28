@@ -56,7 +56,9 @@ def test_bsim_seeds_need_a_margin_a_single_claim_and_size(tmp_path):
 
 
 def test_file_precedence_and_retail_runs():
-    G = NS(funcs=[1, 2, 3, 4, 5, 6], vendored={6}, name={1: "?f@A@@QAEXXZ", 2: "", 3: "", 4: "?g@B@@QAEXXZ", 5: "uw_00000005", 6: ""})
+    G = NS(funcs=[1, 2, 3, 4, 5, 6, 7], vendored={6},
+           name={1: "?f@A@@QAEXXZ", 2: "", 3: "", 4: "?g@B@@QAEXXZ", 5: "uw_00000005", 6: "", 7: "?f@A@@QAEXXZ"},
+           names={1: {"?f@A@@QAEXXZ"}, 4: {"?g@B@@QAEXXZ"}, 7: {"?f@A@@QAEXXZ", "?h@C@@QAEXXZ"}})
     p1 = NS(pairs={1: 11, 3: 33})
     p2 = NS(pairs={4: 44})
     f1 = {11: ("X/A.cpp", "direct"), 33: ("X/A.cpp", "filled")}
@@ -67,6 +69,7 @@ def test_file_precedence_and_retail_runs():
     assert got[3] == ("X/A.cpp", "wb1-run")       # run-filled inside WorldBuilder
     assert 4 not in got                       # Zero Hour and BFME2 disagree
     assert 5 not in got and 6 not in got      # funclets and vendored code have no EA file
+    assert 7 not in got                       # two ledger names: the zh route cannot choose
 
 
 def test_worldbuilder_runs_fill_only_between_the_same_file():

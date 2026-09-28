@@ -108,12 +108,14 @@ class Side:
 
 def game_side():
     g = Side("game")
-    g.name, g.vendored = {}, set()
+    g.name, g.vendored, g.names = {}, set(), collections.defaultdict(set)
     for r in csv.DictReader(open(REVERSE / "functions.csv", encoding="utf-8", errors="replace", newline="")):
         try:
             a, n = int(r["target_rva"], 16), int(r["target_size"], 0)
         except ValueError:
             continue
+        if r["status"] == "matched":
+            g.names[a].add(r["name"])
         if r["status"] == "matched" or a not in g.size:
             g.size[a], g.name[a] = n, r["name"]
             if "vendored=" in (r["notes"] or ""):
@@ -179,8 +181,8 @@ def wb_side(kind, directory, exe, internal):
         label, path = LABEL.fullmatch(v), PATH.search(v)
         if label:
             w.labels[a].add(f"{label.group(1)}::{label.group(2)}")
-        elif path:
-            w.paths[a].add(path.group(1).replace("\\", "/"))
+        elif path and not path.group(1).lower().startswith("tools\\"):
+            w.paths[a].add(path.group(1).replace("\\", "/"))    # Tools\ is WorldBuilder's own code
         if internal:
             w.strings[a].add(("PATH:" + path.group(1).lower() + re.sub(r"\(\d+\)", "", v[path.end():]))
                              if path and not label else v)
@@ -428,7 +430,8 @@ def files(G, p1, p2, f1, f2, zh):
     for g in own:
         w1 = f1.get(p1.pairs.get(g))
         w2 = f2.get(p2.pairs.get(g))
-        z = zh.get((plain(G.name.get(g)) or "").lower())
+        # the zh route reads the ledger's name, so an address two rows claim says nothing
+        z = zh.get((plain(G.name.get(g)) or "").lower()) if len(G.names.get(g, ())) == 1 else None
         if w1:
             out[g] = (w1[0], "wb1" if w1[1] == "direct" else "wb1-run")
         elif z and w2 and z.lower() != w2[0].lower():
