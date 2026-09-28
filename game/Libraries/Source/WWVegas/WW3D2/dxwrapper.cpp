@@ -324,84 +324,131 @@ void Non_Fatal_Log_DX8_ErrorCode(unsigned res,const char * file,int line)
 
 
 
-// ?Init@DX8Wrapper@@ present-unmatched
-bool DX8Wrapper::Init(void * hwnd, bool lite)
+#define BFME_RVA_G32(a) (*(unsigned *)(a))
+#define BFME_RVA_G8(a) (*(unsigned char *)(a))
+#pragma warning(push)
+#pragma warning(disable: 4273)
+extern "C" unsigned long __stdcall GetCurrentThreadId();
+#pragma warning(pop)
+typedef void *(__stdcall *D3DCreate)(unsigned);
+extern void __cdecl W3DRadarResetLock();
+extern char __cdecl bfmeUnlock1179();
+extern void __cdecl d_009064f0();
+extern volatile int g_bfmeOwnerVHM;
+extern volatile int g_bfmeDepthVHM;
+class BfmeAwakenDebug;
+extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+struct BfmeDebug
 {
-	WWASSERT(!IsInitted);
+	virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0C();
+	virtual void slot10(); virtual void slot14(); virtual void slot18(); virtual void slot1C();
+	virtual void slot20(); virtual void slot24(); virtual void slot28(); virtual void slot2C();
+	virtual void slot30(); virtual void slot34(); virtual void slot38(); virtual void slot3C();
+	virtual void slot40(); virtual void slot44(); virtual void slot48(); virtual void slot4C();
+	virtual void slot50(); virtual void slot54(); virtual void slot58(); virtual void slot5C();
+	virtual void slot60(); virtual void slot64(); virtual void slot68(); virtual void slot6C();
+	virtual void slot70(); virtual void slot74();
+	virtual void slot78(int, void (*)(), int);
+};
+static __forceinline char Rva0090AB60UnlockInline()
+{
+	if (GetCurrentThreadId() == g_bfmeOwnerVHM)
+		(void)g_bfmeDepthVHM;
+	EnterCriticalSection((LPCRITICAL_SECTION)0x0133F4E8);
+	g_bfmeDepthVHM = g_bfmeDepthVHM - 1;
+	char release = (char)(g_bfmeDepthVHM == 0);
+	if (release)
+		g_bfmeOwnerVHM = 0;
+	LeaveCriticalSection((LPCRITICAL_SECTION)0x0133F4E8);
+	ReleaseMutex((HANDLE)BFME_RVA_G32(0x0133F540));
+	return release;
+}
 
-	// zero memory
-	memset(Textures,0,sizeof(IDirect3DBaseTexture8*)*MAX_TEXTURE_STAGES);
-	memset(RenderStates,0,sizeof(unsigned)*256);
-	memset(TextureStageStates,0,sizeof(unsigned)*32*MAX_TEXTURE_STAGES);
-	memset(Vertex_Shader_Constants,0,sizeof(Vector4)*MAX_VERTEX_SHADER_CONSTANTS);
-	memset(Pixel_Shader_Constants,0,sizeof(Vector4)*MAX_PIXEL_SHADER_CONSTANTS);
-	memset(&render_state,0,sizeof(RenderStateStruct));
-	memset(Shadow_Map,0,sizeof(ZTextureClass*)*MAX_SHADOW_MAPS);
+bool DX8Wrapper::Init(void *hwnd, bool lite)
+{
+	((BfmeDebug *)TheBfmeAwakenDebug)->slot78(100, d_009064f0, 0);
 
-	/*
-	** Initialize all variables!
-	*/
+	memset(Textures, 0, sizeof(Textures));
+
+	memset((void *)0x01340100, 0, 0x400);
+	memset((void *)0x0133F9E0, 0, 0x400);
+	memset((void *)0x01340600, 0, 0x600);
+	memset((void *)0x01341150, 0, 0x80);
+	memset((void *)0x01340EC0, 0, 0x270);
 	_Hwnd = (HWND)hwnd;
-	_MainThreadID=ThreadClass::_Get_Current_Thread_ID();
-	WWDEBUG_SAY(("DX8Wrapper main thread: 0x%x\n",_MainThreadID));
-	CurRenderDevice = -1;
-	ResolutionWidth = DEFAULT_RESOLUTION_WIDTH;
-	ResolutionHeight = DEFAULT_RESOLUTION_HEIGHT;
-	// Initialize Render2DClass Screen Resolution
-	Render2DClass::Set_Screen_Resolution( RectClass( 0, 0, ResolutionWidth, ResolutionHeight ) );
-	BitDepth = DEFAULT_BIT_DEPTH;
-	IsWindowed = false;	
-	DX8Wrapper_IsWindowed = false;
+	BFME_RVA_G32(0x01340570) = GetCurrentThreadId();
+	InitializeCriticalSection((LPCRITICAL_SECTION)0x0133F4E8);
+	BFME_RVA_G32(0x0133F540) = (unsigned)CreateMutexA(0, 0, 0);
+	W3DRadarResetLock();
 
-	for (int light=0;light<4;++light) CurrentDX8LightEnables[light]=false;
-
-	::ZeroMemory(&old_world, sizeof(D3DMATRIX));
-	::ZeroMemory(&old_view, sizeof(D3DMATRIX));
-	::ZeroMemory(&old_prj, sizeof(D3DMATRIX));
-
-	//old_vertex_shader; TODO
-	//old_sr_shader;
-	//current_shader;
-
-	//world_identity;
-	//CurrentFogColor;
-
-	D3DInterface = NULL;
-	D3DDevice = NULL;
-
-	WWDEBUG_SAY(("Reset DX8Wrapper statistics\n"));
-	Reset_Statistics();
-
+	memset((void *)0x0133F4A8, 0, 0x40);
+	memset((void *)0x0133F548, 0, 0x40);
+	// Retail loads the count and destination before seven scalar stores, then runs rep stosd after them.
+	// The measured C++ variants kept the clear setup beside rep stosd, so this block splits those instructions.
+	__asm {
+		mov ecx, 16
+		mov edi, 0x0133F500
+	}
+	*(volatile unsigned *)0x012D6DB0 = -1;
+	*(volatile unsigned *)0x012D6DB4 = 640;
+	*(volatile unsigned *)0x012D6DB8 = 480;
+	*(volatile unsigned *)0x012D6DBC = 32;
+	*(volatile unsigned char *)0x0134050D = 0;
+	*(volatile unsigned char *)0x012D6DAC = 0;
+	*(volatile unsigned *)0x013400FC = 0;
+	__asm rep stosd
+	BFME_RVA_G32(0x01340530) = 0;
+	BFME_RVA_G32(0x01340534) = 0;
+	BFME_RVA_G32(0x0134054C) = 0;
+	BFME_RVA_G32(0x01340550) = 0;
+	BFME_RVA_G32(0x01340554) = 0;
+	BFME_RVA_G32(0x01340558) = 0;
+	BFME_RVA_G32(0x0134055C) = 0;
+	BFME_RVA_G32(0x01340560) = 0;
+	BFME_RVA_G32(0x01340564) = 0;
+	BFME_RVA_G32(0x01340568) = 0;
+	BFME_RVA_G32(0x0134056C) = 0;
+	BFME_RVA_G32(0x01340594) = 0;
+	BFME_RVA_G32(0x01340598) = 0;
+	BFME_RVA_G32(0x0134059C) = 0;
+	BFME_RVA_G32(0x013405A0) = 0;
+	BFME_RVA_G32(0x013405A4) = 0;
+	BFME_RVA_G32(0x013405A8) = 0;
+	BFME_RVA_G32(0x013405AC) = 0;
+	BFME_RVA_G32(0x013405B0) = 0;
+	BFME_RVA_G32(0x013405B4) = 0;
+	BFME_RVA_G32(0x013405B8) = 0;
+	BFME_RVA_G32(0x013405BC) = 0;
 	Invalidate_Cached_Render_States();
 
 	if (!lite) {
-		D3D8Lib = LoadLibrary("D3D8.DLL");
-
-		if (D3D8Lib == NULL) return false;	// Return false at this point if init failed
-
-		Direct3DCreate8Ptr = (Direct3DCreate8Type) GetProcAddress(D3D8Lib, "Direct3DCreate8");
-		if (Direct3DCreate8Ptr == NULL) return false;
-
-		/*
-		** Create the D3D interface object
-		*/
-		WWDEBUG_SAY(("Create Direct3D8\n"));
-		D3DInterface = Direct3DCreate8Ptr(D3D_SDK_VERSION);		// TODO: handle failure cases...
-		if (D3DInterface == NULL) {
-			return(false);
+		HMODULE library = LoadLibraryA("D3D9.DLL");
+		BFME_RVA_G32(0x013405D0) = (unsigned)library;
+		if (!library) {
+			bfmeUnlock1179();
+			return false;
 		}
-		IsInitted = true;
-
-		/*
-		** Enumerate the available devices
-		*/
-		WWDEBUG_SAY(("Enumerate devices\n"));
+		D3DCreate create = (D3DCreate)GetProcAddress(library, "Direct3DCreate9");
+		BFME_RVA_G32(0x013405CC) = (unsigned)create;
+		if (!create) {
+			return false;
+		}
+		void *interface9 = create(0x1f);
+		BFME_RVA_G32(0x01340530) = (unsigned)interface9;
+		if (!interface9) {
+			bfmeUnlock1179();
+			return false;
+		}
+		BFME_RVA_G8(0x0134050C) = 1;
 		Enumerate_Devices();
-		WWDEBUG_SAY(("DX8Wrapper Init completed\n"));
 	}
 
-	return(true);
+	Rva0090AB60UnlockInline();
+	return true;
 }
+#undef BFME_RVA_G32
+#undef BFME_RVA_G8
+
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/DX8Wrapper_ShutdownMethodThunk.cpp
 // ?Shutdown@DX8Wrapper@@ present-unmatched
