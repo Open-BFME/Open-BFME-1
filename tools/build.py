@@ -818,18 +818,13 @@ _CASEDIR_MEMO = {}
 def _case_resolve(path):
     """Map a wine-reported path to the real on-disk path. Wine resolves
     case-insensitively and cl prints the REQUESTED casing (lowercased prefixes,
-    'Basetype.h' for BaseType.h), so exact lookup fails on Linux. The repo bans
-    case-colliding names, so per-component lowercase matching is unambiguous.
-    Returns None when nothing matches."""
-    if os.path.exists(path):
-        return path
+    'Basetype.h' for BaseType.h). Exact lookup can also succeed with the wrong
+    casing on case-insensitive filesystems, so resolve each component from its
+    parent directory. The repo bans case-colliding names, making lowercase
+    matching unambiguous. Returns None when nothing matches."""
     current = "/"
     for part in path.split("/"):
         if not part:
-            continue
-        candidate = os.path.join(current, part)
-        if os.path.exists(candidate):
-            current = candidate
             continue
         listing = _CASEDIR_MEMO.get(current)
         if listing is None:
