@@ -1,5 +1,5 @@
 // ?winProcessMouseEvent@GameWindowManager@@UAE?AW4WinInputReturnCode@@W4GameWindowMessage@@PAUICoord2D@@PAX@Z
-// partial score=0.966 date=2026-09-28
+// partial score=0.9904 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 // GameWindowManager::winProcessMouseEvent, retail 0x0047E630, 1569 bytes
@@ -431,8 +431,9 @@ WinInputReturnCode GameWindowManager::winProcessMouseEvent(GameWindowMessage msg
 
 				if (window)
 				{
+					Int my = mousePos->y;
 					GameWindow *childWindow =
-						window->winPointInAnyChild(mousePos->x, mousePos->y, TRUE, TRUE);
+						window->winPointInAnyChild(mousePos->x, my, TRUE, TRUE);
 					if (childWindow->vfn09() ||
 						childWindow->m_instData.getTooltipTextLength())
 						toolTipWindow = childWindow;
