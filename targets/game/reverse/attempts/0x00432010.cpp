@@ -1,6 +1,14 @@
 // ?xfer@GameClient@@MAEXPAVXfer@@@Z
-// partial score=0.25 date=2026-09-26
+// partial score=0.2498 date=2026-09-28
 // cl: /Iinputs/reference/shims/gameclientxfer /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// ?xfer@GameClient@@MAEXPAVXfer@@@Z
+// partial 2026-09-28 opus-5.5: 1376/1361 B, 991 differing bytes, shape 0.521
+// (prior 1373 B / 999, shape 0.508). Structural fix over the prior bank: the
+// briefing list + camera-yaw block is guarded by Xfer slot 3 (+0x0C, retail
+// +0x176), and only the camera yaw is version-gated. Residue: retail keeps
+// the incoming Snapshot-subobject this in EBP (lea edi,[ebp-8] per GameClient
+// use) where ours rebases once (add ebp,-8); retail lays the load loop and the
+// throw blocks out after the epilogue. Inverting the save/load test is worse.
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
@@ -131,7 +139,7 @@ class RetailXferView { public:
 	virtual void slot0();
 	virtual bool IsLoading();
 	virtual bool IsStoring();
-	virtual void slot3();
+	virtual bool slot3();
 	virtual bool IsLightCRC();
 	virtual int beginBlock(const char *);
 	virtual void endBlock();
@@ -171,7 +179,7 @@ class RetailGameClientView { public:
 	virtual void slot0();
 	virtual void slot1();
 	virtual void slot2();
-	virtual void slot3();
+	virtual bool slot3();
 	virtual void slot4();
 	virtual void slot5();
 	virtual void slot6();
@@ -440,7 +448,7 @@ void GameClient::xfer( Xfer *xfer )
 	}  // end else, load
 	
 	// xfer the in-game mission briefing history list
-	if (version[1] >= 2)
+	if (!view->slot3())
 	{
 		if( view->IsStoring() )
 		{
@@ -469,12 +477,15 @@ void GameClient::xfer( Xfer *xfer )
 				UpdateDiplomacyBriefingText(tempStr, FALSE);
 			}
 		}
-		Bool hasYaw = false;
-		Real yaw = MapObject::TheWorldDict.getReal(CameraYawAngleKey.key(), &hasYaw);
-		view->Bool(&hasYaw);
-		view->Real(&yaw);
-		if (hasYaw && view->IsLoading())
-			MapObject::TheWorldDict.setReal(CameraYawAngleKey.key(), yaw);
+		if (version[1] >= 2)
+		{
+			Bool hasYaw = false;
+			Real yaw = MapObject::TheWorldDict.getReal(CameraYawAngleKey.key(), &hasYaw);
+			view->Bool(&hasYaw);
+			view->Real(&yaw);
+			if (hasYaw && view->IsLoading())
+				MapObject::TheWorldDict.setReal(CameraYawAngleKey.key(), yaw);
+		}
 	}
 
 	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, (char *)this + 0xb4);
