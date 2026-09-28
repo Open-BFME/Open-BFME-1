@@ -1,5 +1,5 @@
 // ?apply@BfmeOwnerXJApplyCall@@QAE_NPAXPAVBfmeThingXJ@@PAVDamageInfo@@@Z
-// partial score=0.9708904 date=2026-09-28
+// partial score=0.9709 date=2026-09-28
 // cl: /O2 /Ob2 /DNDEBUG /DWIN32 /MD /EHs-c- /Igame/GameEngine/Source/GameLogic/Object /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // stlport
 #include "Lib/BaseType.h"
