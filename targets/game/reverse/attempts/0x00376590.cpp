@@ -1,7 +1,9 @@
 // ?unpack@CastleBehavior@@QAEX_N@Z
-// partial score=0.28 date=2026-09-22
+// partial score=0.29 date=2026-09-28
 // ?unpack@CastleBehavior@@QAEX_N@Z
 // CastleBehavior's owned-object unpack path.
+// 2026-09-28 opus-5.5: retail stores the bfmeFindFFG()->+0x370 result at this+0x104 (not m_objectID +0xA0) and
+// reloads m_object (+8) for getControllingPlayer/position. 1085 vs 1104 B, 797 non-reloc diffs, shape 0.919.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
@@ -311,10 +313,10 @@ void CastleBehavior::unpack(Bool unpack)
 		union { void *asVoid; ControllingPlayerCall asMember; }
 			controllingPlayerCast;
 		controllingPlayerCast.asVoid = (void *)j_00020824;
-		Player *player = (object->*controllingPlayerCast.asMember)();
+		Player *player = (m_object->*controllingPlayerCast.asMember)();
 		BfmeResFFG *result = ((BfmeMidFFG *)player)->bfmeFindFFG(
-			(BfmeSubFFG *)((char *)object + 0x38));
-		m_objectID = result != 0 ? result->m_id : -1;
+			(BfmeSubFFG *)((char *)m_object + 0x38));
+		m_objectNameKey = result != 0 ? result->m_id : -1;
 		m_flagAC = false;
 
 		UnicodeString *name = &m_objectName;
