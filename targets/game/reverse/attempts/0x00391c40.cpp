@@ -19,7 +19,6 @@ template<> __declspec(nothrow) int StringBase<wchar_t>::compare(const StringBase
 #include "snapshot.h"
 typedef bool Bool;
 #include "subsystem_interface.h"
-inline AsciiString::~AsciiString() { ((StringBase<char>*)this)->releaseBuffer(); }
 inline UnicodeString::~UnicodeString() { ((StringBase<wchar_t>*)this)->releaseBuffer(); }
 template<> inline const char *StringBase<char>::str() const {const char *text=&m_data->data[0];if(!m_data)text="";return text;}
 template<> inline bool StringBase<char>::isEmpty() const {return !m_data || m_data->length==0;}
@@ -37,12 +36,12 @@ public:
     ~XferException();
     char *text; int tagValue;
 };
-extern void j_000022bb(); extern void j_00004c41(); extern void j_00008170();
+extern void j_000022bb(); extern void j_00004c41();
 extern void j_0000c702(); extern void j_0000c9b4(); extern void j_00010898();
 extern void j_00015d7a(); extern void j_00017a12(); extern void j_0001e0c9();
 extern void j_0001e759(); extern void j_000226ec(); extern void j_00028560();
 extern void j_0002e523(); extern void j_0002fb80(); extern void j_00030bb1();
-extern void j_00033a96(); extern void j_0003b59d(); extern void j_0003e81f();
+extern void j_0003b59d(); extern void j_0003e81f();
 extern void j_000424b0(); extern void j_0004494a(); extern void j_00045935();
 extern void j_00046b82(); extern void j_00047767();
 extern void Rva009EBAC0(int);
@@ -67,23 +66,25 @@ inline void transferId(Xfer *xfer,unsigned *p) { typedef void(__cdecl*P)(Xfer*,u
 enum BuildableStatus {}; // Label independently witnessed in helper0010BFC0.
 inline void transferBuildable(Xfer *xfer,BuildableStatus *p) { typedef void(__cdecl*P)(Xfer*,BuildableStatus*); ((P)j_0001e0c9)(xfer,p); }
 inline void transferDifficulty(Xfer *xfer,int *p) { typedef void(__cdecl*P)(Xfer*,int*); ((P)j_0003e81f)(xfer,p); }
-struct Rva00391C40Hash {
-    unsigned operator()(AsciiString value) const {return (unsigned)_STL::__stl_hash_string(value.str());}
+namespace rts
+{
+template<class T> struct hash;
+template<class T> struct equal_to;
+template<> struct hash<AsciiString> {
+    size_t operator()(AsciiString value) const {
+        std::hash<const char *> tmp;
+        return tmp((const char *)value.str());
+    }
 };
-struct Rva00391C40Equal { bool operator()(const AsciiString&a,const AsciiString&b)const; };
+template<> struct equal_to<AsciiString> {
+    Bool operator()(const AsciiString &a,const AsciiString &b) const { return a==b; }
+};
+}
 struct Rva00391C40Button { char pad000[12]; AsciiString at00c; };
 template<class T> struct Rva00391C40Map {
-    typedef _STL::hash_map<AsciiString,T,Rva00391C40Hash,Rva00391C40Equal> Native;
+    typedef std::hash_map<AsciiString,T,rts::hash<AsciiString>,rts::equal_to<AsciiString> > Native;
     typedef typename Native::const_iterator const_iterator;
     Native table;
-    const_iterator first(void(*target)()) const {
-        typedef const_iterator(Rva00391C40Map::*P)()const;
-        union {void(*raw)();P member;}r={target}; return (this->*r.member)();
-    }
-    T& index(const AsciiString &key,void(*target)()) {
-        typedef T&(Rva00391C40Map::*P)(const AsciiString&);
-        union {void(*raw)();P member;}r={target}; return (this->*r.member)(key);
-    }
 };
 struct Rva00391C40Entry { AsciiString at000; unsigned short at004; };
 struct Rva00391C40UnsignedShortArgument { unsigned short *value; };
@@ -277,7 +278,7 @@ void GameLogic::xfer(Xfer *xfer) {
         for(;;) {
             AsciiString name;*xfer==name;if(name.isEmpty())break;
             BuildableStatus value;transferBuildable(xfer,&value);
-            at00c.index(name,j_00033a96)=value;
+            at00c.table[name]=value;
         }
     }
     *xfer==at091;*xfer==at092;*xfer==at093;*xfer==at098;
@@ -297,7 +298,7 @@ void GameLogic::xfer(Xfer *xfer) {
             AsciiString value;*xfer==value;
             Rva00391C40Button *button=0;
             if(!value.isEmpty())button=g_Rva00391C40Control->find(value);
-            at020.index(name,j_00008170)=button;
+            at020.table[name]=button;
         }
     }
     *xfer==at08c;

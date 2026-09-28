@@ -50,10 +50,6 @@ private:
 	BitFlags<304> m_flags;
 };
 
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 
 template <>
 inline const char *StringBase<char>::str() const

@@ -29,15 +29,17 @@ public:
 class BfmeThingFactory;
 extern BfmeThingFactory *TheThingFactory;
 
-struct Rva0024E990Name
+class BFMERetailAsciiString
 {
+public:
 	char *m_buffer;
+	void releaseBuffer();
 };
 
 class BfmeThingFactory
 {
 public:
-	const ThingTemplate *findTemplate(const Rva0024E990Name &name);
+	const ThingTemplate *findTemplate(const BFMERetailAsciiString &name);
 };
 
 class ScoreKeeper
@@ -47,11 +49,6 @@ public:
 	void addObjectDestroyedCount(const ThingTemplate *tmpl, const Player *byPlayer, int count);
 };
 
-class BFMERetailAsciiString
-{
-public:
-	void releaseBuffer();
-};
 
 struct Rva0024E990Owner
 {
@@ -61,7 +58,7 @@ struct Rva0024E990Owner
 	Object *m_creatorObj;			// +0x08
 	unsigned char m_gap[0x9bc - 8 - 4];
 	int m_count;				// +0x9bc
-	Rva0024E990Name m_name;		// +0x9c0
+	BFMERetailAsciiString m_name;		// +0x9c0
 };
 
 // retail RVA 0x0024E990
@@ -70,8 +67,7 @@ void Rva0024E990Owner::rva0024e990(Object *other)
 	if ((unsigned int)m_count <= 0)
 		return;
 
-	Rva0024E990Name *namePtr = &m_name;
-	Object *self = other;
+	BFMERetailAsciiString *namePtr = &m_name;
 	char *buf = namePtr->m_buffer;
 	if (!buf)
 		return;
@@ -79,11 +75,11 @@ void Rva0024E990Owner::rva0024e990(Object *other)
 	if (*(short *)(buf + 4) == 0)
 		return;
 
-	if (!self)
+	if (!other)
 		return;
 
 	Player *player1 = m_creatorObj->getControllingPlayer();
-	Player *player2 = self->getControllingPlayer();
+	Player *player2 = other->getControllingPlayer();
 
 	const ThingTemplate *tmpl = TheThingFactory->findTemplate(*namePtr);
 
@@ -96,5 +92,5 @@ void Rva0024E990Owner::rva0024e990(Object *other)
 	((ScoreKeeper *)((char *)player2 + 0x348))->addObjectDestroyedCount(tmpl, player1, m_count);
 
 	m_count = 0;
-	((BFMERetailAsciiString *)namePtr)->releaseBuffer();
+	namePtr->releaseBuffer();
 }

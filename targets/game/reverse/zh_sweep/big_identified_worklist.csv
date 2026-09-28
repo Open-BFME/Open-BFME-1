@@ -3,7 +3,6 @@ size,rva,pinned_name,zh_twin,dump_file
 3726,0x7be000,?updateMeshVolume@W3DVolumetricShadow@@IAEXHHPBVMatrix3D@@ABVAABoxClass@@M@Z,,d_007be000.asm
 2924,0x997c80,_luaV_execute,,d_009817d0.asm
 2633,0x8af650,?rva008AF650Implementation@@YAXHHH@Z,,d_008af650.asm
-2531,0x93a810,?Flush@SortingRendererClass@@SAXXZ,?Flush@SortingRendererClass@@SAXXZ,sortingrenderer_Flush.asm
 2153,0x7073d0,?insertY@W3DRoadBufferInsertYShim@@QAE_NVVector2@@HM@Z,,d_007039e0.asm
 2153,0x4b42f0,?gen004B42F0@@YAXPAX000@Z,,GadgetComboBoxSystem.asm
 1983,0x93eb50,?helper_006f4660@@YGXHHHH@Z,,d_00939520.asm

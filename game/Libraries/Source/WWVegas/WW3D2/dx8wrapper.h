@@ -185,7 +185,11 @@ struct RenderStateStruct
 {
 	ShaderClass shader;
 	VertexMaterialClass* material;
+#if defined(BFME_SORTINGRENDERER_TEXTURE_REFS)
+	BfmeSortingRendererTextureRef *Textures[MAX_TEXTURE_STAGES];
+#else
 	TextureBaseClass * Textures[MAX_TEXTURE_STAGES];
+#endif
 	D3DLIGHT8 Lights[4];
 	bool LightEnable[4];
   //unsigned lightsHash;
@@ -1186,8 +1190,13 @@ WWINLINE void DX8Wrapper::Get_Shader(ShaderClass& shader)
 WWINLINE void DX8Wrapper::Set_Texture(unsigned stage,TextureBaseClass* texture)
 {
 	WWASSERT(stage<(unsigned int)CurrentCaps->Get_Max_Textures_Per_Pass());
+#if defined(BFME_SORTINGRENDERER_TEXTURE_REFS)
+	if (texture==reinterpret_cast<TextureBaseClass *>(render_state.Textures[stage])) return;
+	REF_PTR_SET(render_state.Textures[stage], reinterpret_cast<BfmeSortingRendererTextureRef *>(texture));
+#else
 	if (texture==render_state.Textures[stage]) return;
 	REF_PTR_SET(render_state.Textures[stage],texture);
+#endif
 	render_state_changed|=(TEXTURE0_CHANGED<<stage);
 }
 
@@ -1398,17 +1407,37 @@ WWINLINE void DX8Wrapper::Release_Render_State()
 		}
 	}
 
+#if defined(BFME_SORTINGRENDERER_TEXTURE_REFS)
+	for (i=0;i<MAX_VERTEX_STREAMS;++i) {
+		if (render_state.vertex_buffers[i]) {
+			render_state.vertex_buffers[i]->Release_Ref();
+			*reinterpret_cast<VertexBufferClass * volatile *>(&render_state.vertex_buffers[i])=0;
+		}
+	}
+	if (render_state.index_buffer) {
+		render_state.index_buffer->Release_Ref();
+		*reinterpret_cast<IndexBufferClass * volatile *>(&render_state.index_buffer)=0;
+	}
+	if (render_state.material) {
+		render_state.material->Release_Ref();
+		*reinterpret_cast<VertexMaterialClass * volatile *>(&render_state.material)=0;
+	}
+	for (i=0;i<MAX_TEXTURE_STAGES;++i) {
+		if (render_state.Textures[i]) {
+			render_state.Textures[i]->Release_Ref();
+			*reinterpret_cast<BfmeSortingRendererTextureRef * volatile *>(&render_state.Textures[i])=0;
+		}
+	}
+#else
 	for (i=0;i<MAX_VERTEX_STREAMS;++i) {
 		REF_PTR_RELEASE(render_state.vertex_buffers[i]);
 	}
 	REF_PTR_RELEASE(render_state.index_buffer);
 	REF_PTR_RELEASE(render_state.material);
-
-	
-	for (i=0;i<MAX_TEXTURE_STAGES;++i) 
-	{
+	for (i=0;i<MAX_TEXTURE_STAGES;++i) {
 		REF_PTR_RELEASE(render_state.Textures[i]);
 	}
+#endif
 }
 
 

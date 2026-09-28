@@ -79,6 +79,18 @@ struct BannerMovieEntry
 	int m_value14;
 	int m_value18;
 };
+class Rva005841D0MovieEntryVectorView
+{
+public:
+	typedef BannerMovieEntry *iterator;
+	iterator begin() { return m_start; }
+	iterator end() { return m_finish; }
+
+private:
+	BannerMovieEntry *m_start;
+	BannerMovieEntry *m_finish;
+	BannerMovieEntry *m_capacity;
+};
 
 class BannerUI
 {
@@ -89,7 +101,7 @@ private:
 	unsigned char m_unmodelled_00[8];
 	BannerTypeStore m_bannerTypes;							// +0x08
 	unsigned char m_unmodelled_1C[0x14];
-	_STL::vector<BannerMovieEntry> m_movieEntries;			// +0x30
+	Rva005841D0MovieEntryVectorView m_movieEntries;			// +0x30
 };
 
 // ?rva005841D0@BannerUI@@QAEHXZ
@@ -105,8 +117,8 @@ static inline int firstFreeSlot(const BfmeTaggedPair &used)
 
 int BannerUI::rva005841D0()
 {
-	BfmeTaggedPair used;
 	BannerMovieEntry entry;
+	BfmeTaggedPair used;
 	entry.m_flag00 = true;
 	entry.m_value08 = -1;
 	entry.m_type = 0;
@@ -114,8 +126,8 @@ int BannerUI::rva005841D0()
 	entry.m_value10 = 0;
 	entry.m_value14 = 0;
 
-	bfmeScanTaggedPair((BfmeTaggedRecord *)m_movieEntries.begin(),
-		(BfmeTaggedRecord *)m_movieEntries.end(), used);
+	BfmeTaggedRecord *first = (BfmeTaggedRecord *)m_movieEntries.begin();
+	bfmeScanTaggedPair(first, (BfmeTaggedRecord *)m_movieEntries.end(), used);
 
 	int slot = firstFreeSlot(used);
 	entry.m_id = slot;
@@ -131,6 +143,6 @@ int BannerUI::rva005841D0()
 	BannerType *type = &it->second;
 	entry.m_type = type;
 	AddBanner(slot, type->m_field0, type->m_field1);
-	m_movieEntries.push_back(entry);
+	reinterpret_cast<_STL::vector<BannerMovieEntry> &>(m_movieEntries).push_back(entry);
 	return slot;
 }

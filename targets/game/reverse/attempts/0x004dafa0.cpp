@@ -65,7 +65,6 @@ public:
 	float m_winMultiplier;
 	float m_lostMultiplier;
 };
-
 // ??0RankPoints@@QAE@XZ
 RankPoints::RankPoints()
 {

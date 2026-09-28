@@ -1,5 +1,4 @@
 size,rva,zh_symbol,zh_source,dump_file
-2531,0x93a810,?Flush@SortingRendererClass@@SAXXZ,inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/sortingrenderer.cpp,game/Libraries/Source/WWVegas/WW3D2/sortingrenderer_Flush.asm
 1439,0x6cc0a0,?getMaximumVisibleBox@BaseHeightMapRenderObjClass@@QAE_NABVFrustumClass@@PAVAABoxClass@@_N@Z,inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp,game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_getMaximumVisibleBox.asm
 784,0x4efaf0,?WOLBuddyOverlaySystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLBuddyOverlay.cpp,game/gen_asm/d_004e5420.asm
 750,0x7a46e0,??0Upgrade@@QAE@PBVUpgradeTemplate@@@Z,inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/System/Upgrade.cpp,game/gen_asm/d_0079d530.asm

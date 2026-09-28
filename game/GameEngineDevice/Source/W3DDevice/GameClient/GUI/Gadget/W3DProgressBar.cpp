@@ -191,22 +191,33 @@ void W3DGadgetProgressBarImageDrawA( GameWindow *window, WinInstanceData *instDa
 {
 	ICoord2D origin, size;
 	const Image *barCenter, *barRight, *left, *right, *center;
-	Int progress = (Int)window->winGetUserData();
-	Int xOffset, yOffset;
+	Int pieces = (Int)window->winGetUserData();
 	Int i;
+	struct RetailWinDrawData
+	{
+		const Image *image;
+		Color color;
+		Color borderColor;
+	};
+	struct RetailGameWindowImages
+	{
+		char m_prefix[0x48];
+		RetailWinDrawData m_enabledDrawData[7];
+	};
+	RetailGameWindowImages *retailWindow =
+		reinterpret_cast<RetailGameWindowImages *>(window);
+
 	// get window size and position
   window->winGetScreenPosition( &origin.x, &origin.y );
 	window->winGetSize( &size.x, &size.y );
 
-	// get offset
-	xOffset = instData->m_imageOffset.x;
-	yOffset = instData->m_imageOffset.y;
 
-	barCenter				= GadgetProgressBarGetEnabledBarImageCenter( window );
-	barRight				= GadgetProgressBarGetEnabledBarImageRight( window );
-	left						= GadgetProgressBarGetEnabledImageLeft( window );
-	right						= GadgetProgressBarGetEnabledImageRight( window );
-	center					= GadgetProgressBarGetEnabledImageCenter( window );
+	barCenter = retailWindow->m_enabledDrawData[6].image;
+	barRight = retailWindow->m_enabledDrawData[5].image;
+	left = retailWindow->m_enabledDrawData[0].image;
+	right = retailWindow->m_enabledDrawData[1].image;
+	center = retailWindow->m_enabledDrawData[2].image;
+
 
 	if(!barCenter || !barRight || !left || !right || !center)
 		return;
@@ -214,8 +225,9 @@ void W3DGadgetProgressBarImageDrawA( GameWindow *window, WinInstanceData *instDa
 	Int width = barCenter->getImageWidth();
 //	Int height = barCenter->getImageHeight();
 
-	Int drawWidth = (size.x * progress) / 100;
-	Int pieces = drawWidth / width;
+	pieces *= *reinterpret_cast<volatile Int *>(&size.x);
+	pieces /= 100;
+	pieces /= width;
 	Int x = origin.x;
 	for( i = 0; i < pieces; i ++)
 	{
