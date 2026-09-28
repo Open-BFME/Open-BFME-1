@@ -1,5 +1,5 @@
 // ?bfmeSet1016@BfmeDst1016@@QAEXHHH@Z
-// partial score=0.897 date=2026-09-23
+// partial score=0.904 date=2026-09-28
 // cl: /DNDEBUG /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
 // Open-BFME5 conversions.
 
@@ -123,7 +123,8 @@ void BfmeDst1016::bfmeSet1016(int a, int b, int r)
 				++po;
 			}
 		} else {
-			const Matrix3D &m = tree->m_pivots[b0].m_tm;
+			const Matrix3D *pm = &tree->m_pivots[b0].m_tm;
+			const Matrix3D &m = *pm;
 			const Vector3 *in;
 			Vector3 *out;
 			in = srcV[0];
