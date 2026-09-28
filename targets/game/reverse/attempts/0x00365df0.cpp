@@ -1,5 +1,5 @@
 // ?d_00365df0@@YAXXZ
-// partial score=0.82 date=2026-09-17
+// partial score=0.83 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Retail 0x00365DF0 (498 B).  The owning class is not named by the retail
 // symbols; this TU keeps the proven Living World layouts and uses an
@@ -158,6 +158,8 @@ public:
 		ArmySlot *m_begin;
 		ArmySlot *m_end;
 		ArmySlot *m_capacity;
+		unsigned int size() const { return (unsigned int)(m_end - m_begin); }
+		ArmySlot *begin() const { return m_begin; }
 	};
 
 	char m_unmodelled00[ 0x18 ];
@@ -291,12 +293,11 @@ void __fastcall BfmeLivingWorldPlayerArmyCollection::rva00365df0(
 		if( index < 0 )
 			continue;
 
-		BfmeLivingWorldPlayerArmyCollection::ArmySlot *begin = self->m_playerArmies.m_begin;
-		BfmeLivingWorldPlayerArmyCollection::ArmySlot *end = self->m_playerArmies.m_end;
-		if( (unsigned int)index > (unsigned int)(end - begin) - 1 )
+		if( (unsigned int)index > self->m_playerArmies.size() - 1 )
 			continue;
 
 		object->fill( &record );
+		BfmeLivingWorldPlayerArmyCollection::ArmySlot *begin = self->m_playerArmies.begin();
 		Gen00365520 *army = reinterpret_cast<Gen00365520 *>(
 			reinterpret_cast<char *>( begin ) + index * 0x58 );
 		++record.m_field3C;
