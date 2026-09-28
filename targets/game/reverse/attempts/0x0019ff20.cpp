@@ -1,6 +1,8 @@
 // ?d_0019ff20@@YAXXZ
-// partial score=0.979 date=2026-09-28
+// partial score=0.9668 date=2026-09-28
 // cl: /O2 /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// 2026-09-28 opus-5.5: early returns (if(!TheAudio) return; if(name.isEmpty()) return;) give retail's or esi,-1 CSE and 693 B;
+// residue = 23 low-frame displacement bytes: retail packs exists with push_back tag at B+3 and keeps the loop spill tv at B+0x20.
 
 typedef bool Bool;
 
@@ -176,7 +178,7 @@ extern GenKey GenKey0012A7918;
 void *operator new(unsigned int,void *p) {return p;}
 void operator delete(void*,void*) {}
 namespace _STL {
-struct __false_type {};
+struct __false_type { __false_type() {} };
 template<class T> class allocator {};
 template<class T,class U> __forceinline void _Construct(T *p,const U &v) { new(p) T(v); }
 template<class T,class A=allocator<T> > class vector {
@@ -186,7 +188,7 @@ public:
  ~vector();
  __forceinline void push_back(const T &value) {
   if(m_end!=m_capacity) {_Construct(m_end,value); ++m_end;}
-  else { __false_type tag; _M_insert_overflow(m_end,value,tag,1,true); }
+  else _M_insert_overflow(m_end,value,__false_type(),1,true);
  }
 protected:
  void _M_insert_overflow(T*,const T&,const __false_type&,unsigned int,bool);
@@ -281,9 +283,9 @@ void Rva001A0320Owner::rva0019FF20() {
   if(dict && dict->getAsciiString((NameKeyType)GenKey0012A7918.fetch(),&exists).isEmpty()) {
    if(index==-1)return;
    AsciiString name;
-   if(TheAudio) {
-    name=TheAudio->slot72()->field74;
-    if(name.isNotEmpty()) {
+   if(!TheAudio) return;
+   name=TheAudio->slot72()->field74;
+   if(name.isEmpty()) return;
      Rva0019A7D0Vector out;
      Rva00197AE0Temporary temporary;
      _STL::vector<AsciiString> names;
@@ -292,13 +294,7 @@ void Rva001A0320Owner::rva0019FF20() {
      names.push_back(name);
      fillHelper(index,&out,&names,&temporary,&scripts,&tree);
      buildScriptData(record,&scripts,&tree);
-    }
-   }
    return;
   }
  }
 }
-
-
-
-
