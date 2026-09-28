@@ -23,3 +23,14 @@ typedef _STL::_Rb_tree<unsigned int, Rva009A38E0Value,
 
 template Rva009A38E0Tree::iterator
 Rva009A38E0Tree::find<unsigned int>(const unsigned int &);
+
+class Rva009A3FF0Tree : public Rva009A38E0Tree
+{
+public:
+	iterator findAt9A3FF0(const unsigned int &id);
+};
+
+Rva009A3FF0Tree::iterator Rva009A3FF0Tree::findAt9A3FF0(const unsigned int &id)
+{
+	return find(id);
+}
