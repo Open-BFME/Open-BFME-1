@@ -1,5 +1,3 @@
-// ?buildUpgrade@AIPlayer@@QAEXABVAsciiString@@@Z
-// partial score=0.99 date=2026-09-26
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?buildUpgrade@AIPlayer@@QAEXABVAsciiString@@@Z: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp
 //
@@ -21,10 +19,13 @@
 // messages are built with StringBase<char>::concat(const char *, int) inline;
 // the later ones call the out-of-line concat overloads, as retail does.
 //
+// The SOLD status test is read into a Bool local first; canUpgradeHere is
+// assigned from that local after the guard, which is the spelling that puts
+// the `mov [esp+0x13],al` store after `mov ecx,ebp` and keeps factory in EBP.
+//
 // Layout: AIPlayer m_player +0x0C; Player name key +0x20; UpgradeTemplate
 // type +0x04 (UPGRADE_TYPE_OBJECT 1), name +0x08; Object next +0x88;
 // CommandButton name +0x0C, upgrade template +0x20.
-
 #include "ascii_string.h"
 
 typedef bool Bool;
@@ -278,9 +279,11 @@ void AIPlayer::buildUpgrade(const AsciiString &upgrade)
 			continue;
 		if( factory->testStatus( OBJECT_STATUS_UNDER_CONSTRUCTION ) )
 			continue;
-		Bool canUpgradeHere = false;
-		if( factory->testStatus( OBJECT_STATUS_SOLD ) )
+		Bool canUpgradeHere;
+		Bool sold = factory->testStatus( OBJECT_STATUS_SOLD );
+		if( sold )
 			continue;
+		canUpgradeHere = sold;
 		const CommandSet *commandSet = TheControlBar->findCommandSet( factory->getCommandSetString() );
 		const ThingTemplate *buttonThing = NULL;
 		if( commandSet == NULL) continue;
