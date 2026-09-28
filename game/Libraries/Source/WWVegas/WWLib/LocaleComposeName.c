@@ -41,3 +41,27 @@ char *_Locale_compose_name(
     strcat(buf, ";");
     return buf;
 }
+
+
+
+
+char *Rva0084D360(char *name, char *out)
+{
+	char *esi = out;
+	if (name[0] == 0x4c && name[1] == 0x43 && name[2] == 0x5f)
+	{
+		*(unsigned short *)esi = 0x43;
+		return esi;
+	}
+	{
+		int delta = (int)esi - (int)name;
+		char c;
+		do
+		{
+			c = *name;
+			name[delta] = c;
+			++name;
+		} while (c);
+		return esi;
+	}
+}
