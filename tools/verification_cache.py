@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-"""Reuse successful scoped byte-verification without trusting a commit SHA.
+"""Record scoped verification receipts without skipping publication checks.
 
-This is an optimization around ``tools/build.py``, not a second verifier.  A
-cache entry is usable only when the hook can reconstruct the same verification
-inputs and the current object still reproduces the recorded result.  A missing,
-malformed, old, or incomplete entry is a miss and the normal build gate runs.
-
-The cache deliberately lives below ``build/``: it is local to one worktree,
-never published, and cannot make a different checkout's objects look current.
+Every selected row stays in the ordinary gate, which retains compile/object
+reuse. Receipts describe repeated byte evidence only; ancillary checks always
+run on the combined selected set, including hits. Invocation-local fingerprints
+share expensive inputs and are checked again for mutation before recording.
+Missing, malformed or incomplete receipts are misses. Evidence that cannot be
+recorded after a successful gate does not turn verification failure into success.
 """
 import argparse
 import hashlib

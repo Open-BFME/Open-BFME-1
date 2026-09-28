@@ -1145,8 +1145,15 @@ def compile_is_current(source, output, *, check_command=True, inventory_cache=No
             isinstance(path, str) for path in meta.get("retry_dirs", [])):
         return False
     is_cl = source.suffix.lower() != ".asm"
-    if is_cl and meta.get("version") not in (None, 2):
+    if meta.get("version") not in (None, 2):
         return False
+    if not is_cl and meta.get("version") is None:
+        try:
+            text = source.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            return False
+        if re.search(r"^\s*include\s", text, re.IGNORECASE | re.MULTILINE):
+            return False  # Old assembler receipts did not prove include bytes.
     legacy_header_free = is_cl and meta.get("version") is None
     if legacy_header_free and meta.get("deps") != {}:
         return False

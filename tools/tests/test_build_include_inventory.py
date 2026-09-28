@@ -212,3 +212,17 @@ def test_case_directory_cache_observes_new_headers(tmp_path):
     assert build._case_resolve(str(added).lower()) == str(added)
     added.unlink()
     assert build._case_resolve(str(added).lower()) is None
+
+
+def test_unknown_asm_receipt_version_and_legacy_includes_are_misses(tmp_path, monkeypatch):
+    source, output = tmp_path / 'body.asm', tmp_path / 'body.obj'
+    output.write_bytes(b'object')
+    monkeypatch.setattr(build, 'ROOT', tmp_path)
+    monkeypatch.setattr(build, 'compiler_command', lambda *_: (['ml'], {}))
+    monkeypatch.setattr(build, '_cmd_fingerprint', lambda *_: 'command')
+    for version, body in ((99, 'ret\n'), (None, 'include hidden.inc\nret\n')):
+        source.write_text(body)
+        build._deps_sidecar(output).write_text(json.dumps({
+            'version': version, 'cmd': 'command', 'source': build._hash_file(str(source)), 'deps': {},
+        }))
+        assert not build.compile_is_current(source, output)
