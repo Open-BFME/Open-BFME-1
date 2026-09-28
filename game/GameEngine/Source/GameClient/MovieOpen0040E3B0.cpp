@@ -1,4 +1,4 @@
-// Retail RVAs 0x0040E3B0 (573 bytes) and 0x0040F780 (834 bytes).
+// Retail RVAs 0x0040E3B0 (573 bytes), 0x0040E680 (616 bytes) and 0x0040F780 (834 bytes).
 // Address-derived ABI view: movie stream at +0x34, transition state at +0x50,
 // and the virtual slots below are independently read from both retail bodies.
 // These declarations do not construct objects or assert an original class name.
@@ -15,6 +15,8 @@ public:
  virtual void v00(); virtual void v04(); virtual void v08(); virtual void v0c(); virtual void reset();
  void reverse(AsciiString);
  int bfmeGetGroupTotalFrames(AsciiString);
+ bool isFinished();
+ void setGroup(AsciiString,bool);
 };
 extern GameWindowTransitionsHandler *Transitions0040E3B0;
 class Rva00382960 {
@@ -23,6 +25,7 @@ public:
  ~Rva00382960() { if(Transitions0040E3B0) ((Glo00EF3330*)Transitions0040E3B0)->h00489410(); }
 };
 extern "C" unsigned __stdcall bfme_timeGetTime();
+class Rva004893C0ByteSetter {public: void set();};
 struct MovieStream0040E3B0 {
  virtual void v00();
  virtual void v01();
@@ -32,7 +35,7 @@ struct MovieStream0040E3B0 {
  virtual void v05();
  virtual unsigned advance(int);
  virtual void v07();
- virtual void v08();
+ virtual int current();
  virtual int frames();
  virtual void v0a();
  virtual void v0b();
@@ -42,7 +45,9 @@ struct MovieStream0040E3B0 {
  virtual void v0f();
  virtual void v10();
  virtual void rate(float);
+ virtual float getRate();
 };
+__forceinline bool finished0040E680(MovieStream0040E3B0 *const &stream) {return stream->current()>=stream->frames()-1;}
 struct MovieFactory0040E3B0 {
  virtual void v00();
  virtual void v01();
@@ -156,6 +161,7 @@ struct MovieOpen0040E3B0 {
  char bytese8[0x20]; bool field108; char bytes109[3]; int field10c;
  bool open(AsciiString name,int flags,int a,int b);
  bool update0040E680(bool);
+ void setRate0040E680(float r) {stream34->rate(r);}
  bool play0040F780(AsciiString,bool,int);
 };
 class DebugStream00409E20
@@ -352,6 +358,54 @@ bool MovieOpen0040E3B0::open(AsciiString name,int flags,int a,int b) {
  else if(flags38&0x200) field54=count-Transitions0040E3B0->bfmeGetGroupTotalFrames(AsciiString("FadeScreenToWhite"));
  else field54=stream34->frames();
  return true;
+}
+
+bool MovieOpen0040E3B0::update0040E680(bool skip) {
+ if(!stream34) return true;
+ bool done=false;
+ switch(field50) {
+ case 0:
+  if(flags38&0x400000) {
+   float rate=stream34->getRate()+0.05f;
+   if(rate>1.0f) {rate=1.0f; field50=1;}
+   setRate0040E680(rate);
+  } else if(Transitions0040E3B0->isFinished()) {
+   field50=1;
+   Transitions0040E3B0->reset();
+  }
+  break;
+ case 1:
+  if((unsigned)stream34->current()>=(unsigned)field54 || skip) {
+   field50=3;
+   if(flags38&0x200000) field50=2;
+   else if(flags38&0x20) {
+    field50=2;
+    Transitions0040E3B0->setGroup(AsciiString("FadeInGameMovie"),false);
+    ((Rva004893C0ByteSetter*)Transitions0040E3B0)->set();
+    Control0040F780->update();
+   } else if(flags38&0x200) {
+    field50=2;
+    Transitions0040E3B0->setGroup(AsciiString("FadeScreenToWhite"),false);
+    ((Rva004893C0ByteSetter*)Transitions0040E3B0)->set();
+    Control0040F780->update();
+   } else if(skip) done=true;
+  }
+  break;
+ case 2: {
+  bool finished=false;
+  if(flags38&0x200000) {
+   if(field10c<=0) {
+    float rate=stream34->getRate()-0.05f;
+    if(rate<0.0f) {rate=0.0f; finished=true;}
+    setRate0040E680(rate);
+   } else --field10c;
+  } else if(Transitions0040E3B0->isFinished()) finished=true;
+  if(finished) { if(skip || finished0040E680(stream34)) done=true; }
+  break;
+ }
+ default: done=skip; break;
+ }
+ return done;
 }
 
 bool MovieOpen0040E3B0::play0040F780(AsciiString name,bool allowSkip,int flags) {
