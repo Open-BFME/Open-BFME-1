@@ -78,6 +78,13 @@ DynamicVectorClass<T>::DynamicVectorClass(int size, T const *array) :
 	GrowthStep = 10;
 	ActiveCount = 0;
 }
+// ??0?$DynamicVectorClass@VRva0113C8ACElem@@@@QAE@HPBVRva0113C8ACElem@@@Z
+// Retail 0x00936D00 is the batch-vector constructor: it forwards (size,
+// array) to the VectorClass base at 0x00933D30, seats vtable 0x0113C8AC,
+// then stores GrowthStep = 10 at this+0x14 and ActiveCount = 0 at
+// this+0x10 before returning this. The Render2DClass constructor below
+// calls it for the Batches member.
+template DynamicVectorClass<Rva0113C8ACElem>::DynamicVectorClass(int, Rva0113C8ACElem const *);
 
 class TextureRef
 {
