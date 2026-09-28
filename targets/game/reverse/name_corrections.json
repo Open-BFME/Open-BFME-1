@@ -9938,5 +9938,15 @@
   "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
   "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
   "reason": "The bank labels these bytes as padding without identifying a member. The landed source records the same unmodelled byte span by offset."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "_M_insert_overflow",
+  "new_name": "dup_00258bf0",
+  "before_sha256": "d48cf3c862b1242431ae39de58fd6d0b9f4d799d097c5e1ada822e16aa990a67",
+  "after_sha256": "fb8e6547023a65f8e4bbf00618ca086ddb85e14702b05564525c2fedebbd83f8",
+  "evidence": "targets/game/reverse/identity_evidence/00258BF0.md",
+  "reason": "The ICoord2D name was a width-only guess on the orphaned __emit thunk: both ICoord2D and CashHack Upgrades are 8-byte elements. tools/callers_of.py finds only CashHack Upgrades callers (push_back 0x00258EC0 and parseCashHackUpgradePair 0x00258F10, both in CashHackSpecialPower.cpp) and the 5-byte ILT at 0x0000EF11 already carries the Upgrades name and jumps here. Same dup-alias pattern as OCL 0x00262FE0/?dup_003f8ef0; real overflow name kept in object-symbol."
  }
 ]
