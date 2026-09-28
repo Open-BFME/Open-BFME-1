@@ -16,8 +16,10 @@
 // popping arguments: MSVC 7.1's private convention for a static helper.  That
 // is why it stays `static` here and why one source-level call site is kept at
 // the bottom -- without a call in the TU the helper is neither emitted nor
-// given the register-passed first argument.  The real caller is still the
-// generated body at 0x00340F10, which reaches it four times.
+// given the register-passed first argument.  ScriptEngine::applyNamed
+// (0x00340F10, BFME's executeScript) below reaches it four times; placing
+// that caller in this TU is what gives it retail's `mov edi,eax` and
+// two-push call shape.
 
 typedef int Int;
 typedef bool Bool;
@@ -58,9 +60,12 @@ public:
 	Data *m_data;
 };
 
+template <class T> class BFMERetailStringBase;
+
 class BFMERetailAsciiString : public StringBase<char>
 {
 	friend class AsciiString;
+	friend class BFMERetailStringBase<char>;
 
 public:
 	BFMERetailAsciiString(const char *text) : StringBase<char>(text) {}
@@ -139,11 +144,154 @@ public:
 	GlobalData11E0StringVec m_stringVec11E0;		// +0x11E0
 };
 
+class Script;
+class ScriptAction;
+class Team;
+class Player;
+
+enum GameDifficulty
+{
+	DIFFICULTY_EASY,
+	DIFFICULTY_NORMAL,
+	DIFFICULTY_HARD
+};
+
+class Player
+{
+public:
+	GameDifficulty getPlayerDifficulty() const;		// ILT 0x000217D8
+};
+
+// Zero Hour's DLINK_ITERATOR (GameCommon.h): the next-function member pointer
+// is a second iterator word, which is why the walk's frame holds eight bytes
+// for it although the pointer folds into a direct call.
+template <class OBJCLASS>
+class DLINK_ITERATOR
+{
+public:
+	typedef OBJCLASS *(OBJCLASS::*GetNextFunc)() const;
+
+private:
+	OBJCLASS *m_cur;
+	GetNextFunc m_getNextFunc;
+
+public:
+	DLINK_ITERATOR(OBJCLASS *cur, GetNextFunc getNextFunc) : m_cur(cur), m_getNextFunc(getNextFunc) {}
+
+	void advance()
+	{
+		if (m_cur)
+			m_cur = ((*m_cur).*(m_getNextFunc))();
+	}
+
+	Bool done() const { return m_cur == 0; }
+	OBJCLASS *cur() const { return m_cur; }
+};
+
+class Team
+{
+public:
+	Team *_bfme_nextInInstanceList() const;			// ILT 0x00022A70
+};
+
+class TeamPrototype
+{
+public:
+	Int countTeamInstances();				// ILT 0x0003DE8D
+
+	DLINK_ITERATOR<Team> iterate_TeamInstanceList() const
+	{
+		return DLINK_ITERATOR<Team>(m_teamInstanceList, &Team::_bfme_nextInInstanceList);
+	}
+
+private:
+	unsigned char m_unmodelled_000[0x274];
+	Team *m_teamInstanceList;				// +0x274
+};
+
+class TeamFactory
+{
+public:
+	TeamPrototype *findTeamPrototype(const AsciiString &name,
+		const AsciiString &ownerName);			// ILT 0x00040A39
+};
+
+// The by-value string accessor at 0x00338EF0 (ILT 0x00012378) returns the
+// retail StringBase<char> copy of the string at Script+0x30.
+template <class T> class BFMERetailStringBase
+{
+public:
+	~BFMERetailStringBase()
+	{
+		((BFMERetailAsciiString *)this)->releaseBuffer();
+	}
+
+	Bool isEmpty() const { return !m_data || m_data->m_length == 0; }
+
+	typename StringBase<T>::Data *m_data;
+};
+
+class Rva00338EF0Host
+{
+public:
+	BFMERetailStringBase<char> copyStringAt30();		// ILT 0x00012378
+};
+
+class ScriptEngine;
+
+class BFMEScriptEngineFlagLookup
+{
+	friend class ScriptEngine;
+
+private:
+	AsciiString canonicalFlagName(const AsciiString &name);	// ILT 0x00036336
+};
+
+class Script
+{
+public:
+	Int getDelayEvalSeconds() const { return *(const Int *)((const char *)this + 0x10); }
+	Bool isActive() const { return *(const Bool *)((const char *)this + 0x14); }
+	void setActive(Bool active) { *(Bool *)((char *)this + 0x14) = active; }
+	Bool isOneShot() const { return *(const Bool *)((const char *)this + 0x16); }
+	Bool isEasy() const { return *(const Bool *)((const char *)this + 0x18); }
+	Bool isNormal() const { return *(const Bool *)((const char *)this + 0x19); }
+	Bool isHard() const { return *(const Bool *)((const char *)this + 0x1a); }
+	ScriptAction *getAction() const { return *(ScriptAction *const *)((const char *)this + 0x20); }
+	ScriptAction *getFalseAction() const { return *(ScriptAction *const *)((const char *)this + 0x24); }
+	unsigned int getFrameToEvaluate() const { return *(const unsigned int *)((const char *)this + 0x28); }
+	void setFrameToEvaluate(unsigned int frame) { *(unsigned int *)((char *)this + 0x28) = frame; }
+	void setCurTime(float t) { *(float *)((char *)this + 0x38) = t; }
+};
+
 class ScriptEngine
 {
 public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02();
+	virtual void slot03(); virtual void slot04(); virtual void slot05();
+	virtual void slot06(); virtual void slot07(); virtual void slot08();
+	virtual void slot09(); virtual void slot10(); virtual void slot11();
+	virtual void slot12(); virtual void slot13(); virtual void slot14();
+	virtual void slot15(); virtual void slot16(); virtual void slot17();
+	virtual void slot18(); virtual void slot19(); virtual void slot20();
+	virtual void slot21(); virtual void slot22();
+	virtual Bool evaluateConditions(Script *pScript, Team *thisTeam = 0,
+		Player *player = 0);				// vtable +0x5C
+
 	Bool isTimeFast();					// ILT 0x0000A8A8 -> 0x00336FB0
+	void applyNamed(void *object, void *slot);
+
+protected:
+	void executeActions(ScriptAction *pActionHead);		// ILT 0x0000B811
+
+private:
+	const AsciiString &scope17088() const { return *(const AsciiString *)((const char *)this + 0x17088); }
+	Team *&team17094() { return *(Team **)((char *)this + 0x17094); }
+	Player *player170AC() const { return *(Player *const *)((const char *)this + 0x170ac); }
+	GameDifficulty difficulty17620() const { return *(const GameDifficulty *)((const char *)this + 0x17620); }
 };
+
+AsciiString Rva00195FC0JoinPath(const AsciiString &left, const AsciiString &right);
 
 extern "C" __declspec(dllimport) int __cdecl sprintf(char *buffer,
 	const char *format, ...);
@@ -152,6 +300,7 @@ extern void *TheScriptDebugWindowDLL;				// 0x012F0758
 extern GlobalData *TheWritableGlobalData;			// 0x012ED5C8
 extern GameLogic *TheGameLogic;					// 0x012F0898
 extern ScriptEngine *TheScriptEngine;				// 0x012F076C
+extern TeamFactory *TheTeamFactory;				// 0x012ED810
 
 // 0x012ED4D8 carries no ledger pin; the address-derived spelling already used
 // by game/GameEngine/Source/Common/T3CommandLineParsers.cpp is kept.
@@ -250,10 +399,96 @@ static void _adjustVariable(const AsciiString &str, Int value,
 	((void(__cdecl *)(const char *, const char *))proc)(str.str(), buff);
 }
 
-// Scaffold, not a retail body: the only call sites of the helpers inside this
-// TU, which is what makes MSVC emit them at all and keep their private
-// register-passed first argument.  They go away when the callers at
-// 0x00340F10, 0x00341350 and 0x0034B9A0 are converted.
+// ?applyNamed@ScriptEngine@@QAEXPAX0@Z
+// Retail 0x00340F10, 779 bytes: BFME's ScriptEngine::executeScript (the Zero
+// Hour twin at ScriptEngine.cpp:6950) with a second argument, the qualified
+// script name the debug messages join onto the scope at this+0x17088.
+void ScriptEngine::applyNamed(void *object, void *slot)
+{
+	Script *pScript = (Script *)object;
+	const AsciiString &scriptName = *(const AsciiString *)slot;
+
+	pScript->setCurTime(0);
+	if (!pScript->isActive())
+		return;
+	GameDifficulty difficulty = difficulty17620();
+	if (player170AC())
+		difficulty = player170AC()->getPlayerDifficulty();
+	switch (difficulty)
+	{
+		case DIFFICULTY_EASY: if (!pScript->isEasy()) return; break;
+		case DIFFICULTY_NORMAL: if (!pScript->isNormal()) return; break;
+		case DIFFICULTY_HARD: if (!pScript->isHard()) return; break;
+	}
+	if ((unsigned int)TheGameLogic->getFrame() < pScript->getFrameToEvaluate())
+		return;
+	Int delaySeconds = pScript->getDelayEvalSeconds();
+	if (delaySeconds > 0)
+		pScript->setFrameToEvaluate(TheGameLogic->getFrame() + delaySeconds * 5);
+
+	Team *pSavConditionTeam = team17094();
+	TeamPrototype *pProto = 0;
+
+	if (!((Rva00338EF0Host *)pScript)->copyStringAt30().isEmpty())
+	{
+		BFMERetailStringBase<char> teamName = ((Rva00338EF0Host *)pScript)->copyStringAt30();
+		AsciiString canonical = ((BFMEScriptEngineFlagLookup *)this)->canonicalFlagName(
+			*(const AsciiString *)&teamName);
+		pProto = TheTeamFactory->findTeamPrototype(canonical, *(const AsciiString *)&teamName);
+	}
+
+	if (pProto && pProto->countTeamInstances() > 0)
+	{
+		for (DLINK_ITERATOR<Team> iter = pProto->iterate_TeamInstanceList(); !iter.done(); iter.advance())
+		{
+			team17094() = iter.cur();
+			if (evaluateConditions(pScript))
+			{
+				if (pScript->getAction())
+				{
+					_appendMessage(Rva00195FC0JoinPath(scope17088(), scriptName), true, false);
+					executeActions(pScript->getAction());
+				}
+				if (pScript->isOneShot())
+					pScript->setActive(false);
+			}
+			else if (pScript->getFalseAction())
+			{
+				_appendMessage(Rva00195FC0JoinPath(scope17088(), scriptName), false, false);
+				executeActions(pScript->getFalseAction());
+			}
+		}
+	}
+	else
+	{
+		team17094() = 0;
+		if (evaluateConditions(pScript))
+		{
+			if (pScript->getAction())
+			{
+				_appendMessage(Rva00195FC0JoinPath(scope17088(), scriptName), true, false);
+				executeActions(pScript->getAction());
+			}
+			if (pScript->isOneShot())
+				pScript->setActive(false);
+		}
+		else if (pScript->getFalseAction())
+		{
+			_appendMessage(Rva00195FC0JoinPath(scope17088(), scriptName), false, false);
+			executeActions(pScript->getFalseAction());
+			if (pScript->isOneShot())
+				pScript->setActive(false);
+		}
+	}
+
+	team17094() = pSavConditionTeam;
+}
+
+// Scaffold, not a retail body: the only call site of _adjustVariable inside
+// this TU, which is what makes MSVC emit it at all and keep its private
+// register-passed first argument.  It goes away when the callers at
+// 0x00341350 and 0x0034B9A0 are converted; applyNamed above already calls
+// _appendMessage from retail's own TU.
 void Rva0033E9A0AppendMessageCallSite(const AsciiString &str)
 {
 	_appendMessage(str, true, false);
