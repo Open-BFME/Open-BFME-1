@@ -8018,5 +8018,15 @@
   "after_sha256": "3ec254c5f9b0460098f022c41b44acef977daad0240cfb6af29379a40f62d345",
   "evidence": "targets/game/reverse/identity_evidence/006ff160-living-world-setup-names.md",
   "reason": "Bank rewrite of the 0x006FF160 skeleton: the old LivingWorld names were unwitnessed guesses; the matched caller Rva00700030::initialize passes its receiver through ILT 0x0003D01E so the owner is Rva00700030 and the method, settings types and padding keep address-derived names; Gen_0090E810 and Rva009EB7A0RefOwner are the existing callee spellings, paired with the old names only by position."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000f4f30.cpp",
+  "new_path": "game/GameEngine/Source/Common/RTS/Team_updateState.cpp",
+  "old_name": "isIdle",
+  "new_name": "rva000F4E20",
+  "before_sha256": "47857fffa19886abde414aa9f088f82a6b2a5f66765c8567afd365b8c291c295",
+  "after_sha256": "5934adadc4791343c1f5aa0734a94677d0a9f4bc06798dc4686582b1b5ffb440",
+  "evidence": "targets/game/reverse/identity_evidence/000f4f30-team-query-not-isidle.md",
+  "reason": "Bank retirement: the ZH-port stash called Team::isIdle where retail calls body 0x000F4E20; Team::isIdle is landed at 0x000EDB30 (matched AIPlayer::checkReadyTeams caller) while 0x000F4E20 never asks the AI slot 96 isIdle and gates on Team+0xE6 plus contain-module slots, so it keeps an address-derived name."
  }
 ]
