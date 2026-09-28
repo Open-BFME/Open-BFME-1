@@ -573,6 +573,12 @@ extern ScriptActionsInterface *TheScriptActions;
 extern ScriptConditionsInterface *TheScriptConditions;
 extern SidesList *TheSidesList;
 extern PlayerList *ThePlayerList;
+class AudioManager; class NameKeyGenerator; class View; class TerrainLogic; class ThingFactory;
+extern AudioManager *TheAudio; // 0x012ED668
+extern NameKeyGenerator *TheNameKeyGenerator; // 0x012ED600
+extern View *TheTacticalView; // 0x012F1600
+extern TerrainLogic *TheTerrainLogic; // 0x012EF4CC
+extern ThingFactory *TheThingFactory; // 0x012EF1D8
 #define CurrentFrame st_CurrentFrame
 
 void ScriptEngine::update() {
@@ -615,8 +621,8 @@ void ScriptEngine::update() {
   if(TheScriptDebugWindowDLL) {
    FARPROC proc=GetProcAddress(TheScriptDebugWindowDLL,"SetTheSidesList");
    if(proc) ((void (__cdecl*)(void*,void*,void*,void*,void*,void*,void*,void*,void*,void*,void*))proc)(
-    TheSidesList,TheScriptEngine,*(void**)0x012ed668,TheWritableGlobalData,*(void**)0x012ed600,0,0,
-    *(void**)0x012f1600,*(void**)0x012ef4cc,*(void**)0x012ef1d8,*(void**)0x012f0898);
+    TheSidesList,TheScriptEngine,TheAudio,TheWritableGlobalData,TheNameKeyGenerator,0,0,
+    TheTacticalView,TheTerrainLogic,TheThingFactory,TheGameLogic);
   }
   end=at16040;
   for(CounterIterator it((CounterNode*)end->_M_left), e((CounterNode*)end); it!=e; ++it) {

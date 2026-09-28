@@ -19,43 +19,43 @@ Gen009D9220 *Gen009D9220::bfmeEmit(const void *data, unsigned int length)
 
 	if (m_pending)
 	{
-		bfmeAppend(this, reinterpret_cast<const char *>(0x01080294));
+		bfmeAppend(this, "\n");
 		m_pending = false;
 	}
 
 	if (length == 0)
 	{
 		bfmeAppend(this, 0);
-		bfmeAppend(this, reinterpret_cast<const char *>(0x01144284));
+		bfmeAppend(this, "--- 0 raw bytes\n");
 		return this;
 	}
 
 	for (unsigned int row = 0; row < length; row += 16)
 	{
 		bfmeAppend(this, 0);
-		bfmeAppend(this, reinterpret_cast<const char *>(0x0114427C), row);
+		bfmeAppend(this, "%04x", row);
 
 		for (unsigned int col = 0; col < 16; ++col)
 		{
 			if ((col & 7) == 0)
-				bfmeAppend(this, reinterpret_cast<const char *>(0x0108ED1C));
+				bfmeAppend(this, " ");
 
 			if (col + row < length)
-				bfmeAppend(this, reinterpret_cast<const char *>(0x01144274), static_cast<unsigned int>(static_cast<const unsigned char *>(data)[col + row]));
+				bfmeAppend(this, " %02x", static_cast<unsigned int>(static_cast<const unsigned char *>(data)[col + row]));
 			else
-				bfmeAppend(this, reinterpret_cast<const char *>(0x01142704));
+				bfmeAppend(this, "   ");
 		}
 
-		bfmeAppend(this, reinterpret_cast<const char *>(0x010E8B00));
+		bfmeAppend(this, "  ");
 
 		for (unsigned int col = 0; col < 16 && col + row < length; ++col)
 		{
 			unsigned char raw = static_cast<const unsigned char *>(data)[col + row];
-			bfmeAppend(this, reinterpret_cast<const char *>(0x01140290),
+			bfmeAppend(this, "%c",
 				raw > 0x20 ? raw : '.');
 		}
 
-		bfmeAppend(this, reinterpret_cast<const char *>(0x01080294));
+		bfmeAppend(this, "\n");
 	}
 
 	return this;
