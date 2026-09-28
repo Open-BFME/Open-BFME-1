@@ -8928,5 +8928,45 @@
   "after_sha256": "d148ae903111ef5d538ee8796318d05c233638c372e8c584fa9c792348e72ea6",
   "evidence": "targets/game/reverse/identity_evidence/001f38a0-bridgebehavior-false-pairings.md",
   "reason": "false pairings: Rva000EE6D0StringAccessor is an existing ledger class (0x000EE6D0); InGameUI kept in InGameUIAddSuperweapon.cpp; shim belongs to doAreaEffects, not in trimmed update bank"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006a9200.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006a9200.cpp",
+  "old_name": "bfmeOneTED",
+  "new_name": "rva006A9200",
+  "before_sha256": "cef54054d8dd78d27a0e0c58d3d1246751fa77b9d70ba1cdf5ad277dd4848088",
+  "after_sha256": "8c238bac32ed3720d5cbfd2093d7b53f7ba398f4af8e67717ac04cb94340eb3c",
+  "evidence": "targets/game/reverse/identity_evidence/0x006a9200-bank-rewrite.md",
+  "reason": "Whole-body rewrite of the 0x006A9200 bank on the MilesAudioManager layout; the old token was an unevidenced stash placeholder and the new one follows the callee pin or the matched sibling or keeps the offset. See the evidence file."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006a9200.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006a9200.cpp",
+  "old_name": "m_pointer",
+  "new_name": "m_ptr",
+  "before_sha256": "cef54054d8dd78d27a0e0c58d3d1246751fa77b9d70ba1cdf5ad277dd4848088",
+  "after_sha256": "8c238bac32ed3720d5cbfd2093d7b53f7ba398f4af8e67717ac04cb94340eb3c",
+  "evidence": "targets/game/reverse/identity_evidence/0x006a9200-bank-rewrite.md",
+  "reason": "Whole-body rewrite of the 0x006A9200 bank on the MilesAudioManager layout; the old token was an unevidenced stash placeholder and the new one follows the callee pin or the matched sibling or keeps the offset. See the evidence file."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006a9200.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006a9200.cpp",
+  "old_name": "m_soundType",
+  "new_name": "m_28",
+  "before_sha256": "cef54054d8dd78d27a0e0c58d3d1246751fa77b9d70ba1cdf5ad277dd4848088",
+  "after_sha256": "8c238bac32ed3720d5cbfd2093d7b53f7ba398f4af8e67717ac04cb94340eb3c",
+  "evidence": "targets/game/reverse/identity_evidence/0x006a9200-bank-rewrite.md",
+  "reason": "Whole-body rewrite of the 0x006A9200 bank on the MilesAudioManager layout; the old token was an unevidenced stash placeholder and the new one follows the callee pin or the matched sibling or keeps the offset. See the evidence file."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006a9200.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006a9200.cpp",
+  "old_name": "releasePlayingAudio",
+  "new_name": "rva006A59F0",
+  "before_sha256": "cef54054d8dd78d27a0e0c58d3d1246751fa77b9d70ba1cdf5ad277dd4848088",
+  "after_sha256": "8c238bac32ed3720d5cbfd2093d7b53f7ba398f4af8e67717ac04cb94340eb3c",
+  "evidence": "targets/game/reverse/identity_evidence/0x006a9200-bank-rewrite.md",
+  "reason": "Whole-body rewrite of the 0x006A9200 bank on the MilesAudioManager layout; the old token was an unevidenced stash placeholder and the new one follows the callee pin or the matched sibling or keeps the offset. See the evidence file."
  }
 ]
