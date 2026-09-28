@@ -1,5 +1,5 @@
 // ?d_0024da80@@YAXXZ
-// partial score=0.17 date=2026-09-28
+// partial score=0.88 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc
 // Retail 0x0024DA80, 1742 bytes, thiscall ret 12: (Object *member,
 // const Coord3D *goal, Real orientation).  Reached through ILT 0x0000E200 from
@@ -8,19 +8,34 @@
 // the body in that module; the method name is not known, so the class and the
 // method keep the address.
 //
-// BANKED DRAFT (not matching). State 2026-09-28, opus-5.5: 1737/1742 bytes,
-// frame sub esp,0x64 and ebp=this/edi=ai/esi=member as retail, shape 0.967.
-// Levers that got here: force-inlined model-condition helpers (60/127/128);
-// copy member+0xA4 before the cell compare; the idle guard needs ONE shared
-// aiIdle block reached from the m_1fc path (goto into the then-branch; a
-// bool flag threads too but lays the command branch first); read
-// member+0x44 directly for the angle; no Path* local.  Param-slot reuse
-// (ownerAI->arg1, dist->arg2, preferredHeight->arg3) only happens once the
-// aggregate frame is small enough: dest must be declared at function scope
-// and the target copy must reuse delta.  Remaining: scalar slots rotate
-// (retail 0x10 locomotor/minDist, 0x14 owner, 0x18 speed, 0x1c
-// ownerLocomotor/maxSpeed) and myPos/delta are swapped (retail myPos 0x38,
-// delta 0x44), plus entry scheduling of the goal/myPos copies.
+// BANKED DRAFT (not matching). State 2026-09-28 (second opus-5.5 pass):
+// 1737/1742 bytes, frame table now IDENTICAL to retail (/FAsc listing):
+// minDist+locomotor -100, owner -96, speed -92, fastSpeed+maxSpeed+
+// ownerLocomotor -88, goal -84, dest -72, myPos -60, target+delta -48,
+// point -36, ownerAI/dist/preferredHeight in the dead parameter slots.
+// 451 of 503 retail instructions align exactly (was 408).  Levers that
+// fixed the frame (docs/shape_levers.md "one more object"):
+//  - maxSpeed*0.66 is a NEW local (fastSpeed), not an in-place *=; that
+//    extra object re-pairs the scalar slots.
+//  - the tail copy is its own object (target), not delta reused; VC7.1
+//    orders slots by reference count and delta+target outweighed myPos.
+//  - target packs onto delta (not myPos) only when delta lives in an
+//    ENDED block and target's block opens before myPos's last use
+//    (dest.z = myPos.z); a block-scoped target at the tail packs onto
+//    myPos instead.
+//  - surfaces via an inline LocomotorSet accessor and the owner via an
+//    inline object08() accessor fix the validMovementPosition registers.
+// Remaining (52 instructions): entry schedule (retail keeps this in ECX
+// over the goal copy and loads goal.x before push ebx; we move this to EBP
+// first and copy the position pointer to ECX), the owner store placement,
+// the surfaces load placement, record->m_state compared in memory (retail
+// cmp [eax],1), the tail call setup hoisted above the m_byte204 branch in
+// ours (retail keeps one copy per arm), and an eax/ecx/edx rotation in
+// the pathfinder calls.
+// Earlier levers kept: force-inlined model-condition helpers (60/127/128);
+// copy member+0xA4 before the cell compare; one shared aiIdle block reached
+// from the m_1fc path (goto into the then-branch); member+0x44 read
+// directly for the angle; no Path* local.
 
 #include <math.h>
 #pragma intrinsic(fabs)
@@ -97,7 +112,10 @@ public:
 
 class LocomotorSet
 {
+public:
+	UnsignedInt surfaceMask10() const { return m_surfaceMask10; }
 	UnsignedByte m_unmodelled_00[0x10];
+	UnsignedInt m_surfaceMask10;
 };
 
 enum CommandSourceType
@@ -176,7 +194,6 @@ public:
 	Path *m_path140;
 	UnsignedByte m_unmodelled_144[0x1a8 - 0x144];
 	LocomotorSet m_locomotorSet1a8;
-	UnsignedInt m_uint1b8;
 	UnsignedByte m_unmodelled_1bc[0x1cc - 0x1bc];
 	Locomotor *m_curLocomotor1cc;
 };
@@ -314,6 +331,7 @@ class HorseHordeContain0024DA80
 {
 public:
 	void rva0024DA80(Object *member, const Coord3D *pos, Real orientation);
+	Object *object08() const { return m_object08; }
 
 	UnsignedByte m_unmodelled_000[8];
 	Object *m_object08;
@@ -367,11 +385,16 @@ void HorseHordeContain0024DA80::rva0024DA80(Object *member, const Coord3D *pos, 
 	}
 
 	Coord3D dest;
-	Coord3D delta;
-	delta.x = goal.x - myPos.x;
-	delta.y = goal.y - myPos.y;
-	delta.z = 0.0f;
-	Real dist = delta.length();
+	Real dist;
+	{
+		Coord3D delta;
+		delta.x = goal.x - myPos.x;
+		delta.y = goal.y - myPos.y;
+		delta.z = 0.0f;
+		dist = delta.length();
+	}
+	{
+	Coord3D target;
 	Real speed = dist;
 
 	if (ownerAI->getPath())
@@ -409,7 +432,7 @@ doIdle:
 		if (locomotor->rva00233D20() != 8)
 		{
 			dest.z = myPos.z;
-			if (TheAI->pathfinder()->validMovementPosition(&dest, member->getLayer(), ai->m_uint1b8, m_object08))
+			if (TheAI->pathfinder()->validMovementPosition(&dest, member->getLayer(), ai->m_locomotorSet1a8.surfaceMask10(), object08()))
 				dest.z = TheTerrainLogic->getLayerHeight(dest.x, dest.y, member->getLayer(), 0, true);
 		}
 		member->setPosition(&dest);
@@ -464,11 +487,11 @@ doIdle:
 	if (!m_byte1fc)
 		TheAI->pathfinder()->removeGoal(member);
 
-	delta = goal;
+	target = goal;
 	if (m_byte204)
-		ai->slot1d8(&delta);
+		ai->slot1d8(&target);
 	else
-		ai->slot1dc(&delta);
+		ai->slot1dc(&target);
 	((Rva0026FE90DwordSlot *)ai)->set(*(Int *)&speed);
 	ai->setDesiredSpeed(dist);
 
@@ -482,12 +505,12 @@ doIdle:
 			raise = TRUE;
 	}
 
-	maxSpeed *= 0.66f;
-	if (dist > preferredHeight && preferredHeight < maxSpeed)
+	Real fastSpeed = maxSpeed * 0.66f;
+	if (dist > preferredHeight && preferredHeight < fastSpeed)
 	{
 		member->clearCondition(128);
 	}
-	else if (dist < preferredHeight && preferredHeight < maxSpeed)
+	else if (dist < preferredHeight && preferredHeight < fastSpeed)
 	{
 		member->clearCondition(127);
 		if (((WordBitTest000D2F40 *)&owner->m_conditions110)->test(0x80) || !ownerAI->bfmeBlocksFormationRefresh())
@@ -504,4 +527,5 @@ doIdle:
 	if (raise && preferredHeight > BfmeZeroRange)
 		member->setCondition(128);
 	}
+}
 }
