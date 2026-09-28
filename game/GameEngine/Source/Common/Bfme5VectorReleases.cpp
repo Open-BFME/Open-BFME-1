@@ -1,4 +1,5 @@
-// Four vector releases.
+// Three vector releases (the fourth, 0x000D7330, is AICommandParms's
+// destructor and lives in GameLogic/AI/AICommandParmsDtor.cpp).
 //
 // Each frees the block its three pointers describe, choosing the free by the
 // byte size exactly as the matching allocate chooses the allocator: over 0x80
@@ -8,7 +9,7 @@
 // is why the compiler divides the byte span by the width and multiplies it
 // straight back -- casting the pointers to char first would leave a plain
 // subtraction and no magic multiply at all. The multiply-back names the width:
-// 0x60 for the first, 0x0C for the other three.
+// 0x60 for the first, 0x0C for the other two.
 //
 // The start pointer is read into a local before the guard. Testing the member
 // directly instead lets MSVC shrink-wrap the callee-saved push into the
@@ -36,20 +37,6 @@ private:
 	BfmeElem_000CEDF0 *m_bfmeStart;			// +0x00
 	BfmeElem_000CEDF0 *m_bfmeFinish;			// +0x04
 	BfmeElem_000CEDF0 *m_bfmeEnd;			// +0x08
-};
-
-struct BfmeElem_000D7330 { char m_bfmeBytes[0xC]; };
-
-class Gen_000D7330
-{
-public:
-	void bfmeClear(void);
-
-private:
-	char m_bfmePad[0x20];					// +0x00
-	BfmeElem_000D7330 *m_bfmeStart;			// +0x20
-	BfmeElem_000D7330 *m_bfmeFinish;			// +0x24
-	BfmeElem_000D7330 *m_bfmeEnd;			// +0x28
 };
 
 struct BfmeElem_007D84C0 { char m_bfmeBytes[0xC]; };
@@ -89,17 +76,6 @@ void Gen_000CEDF0::bfmeClear(void)
 		return;
 
 	bfmeRelease(start, sizeof(BfmeElem_000CEDF0) * (m_bfmeEnd - start));
-}
-
-// ?bfmeClear@Gen_000D7330@@QAEXXZ
-void Gen_000D7330::bfmeClear(void)
-{
-	BfmeElem_000D7330 *start = m_bfmeStart;
-
-	if (start == 0)
-		return;
-
-	bfmeRelease(start, sizeof(BfmeElem_000D7330) * (m_bfmeEnd - start));
 }
 
 // ?bfmeClear@Gen_007D84C0@@QAEXXZ
