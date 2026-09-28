@@ -9318,5 +9318,75 @@
   "after_sha256": "172c2cf0397f562fa439fa03c5444966eaebdec98b89bf68af14127f74f0e896",
   "evidence": "targets/game/reverse/identity_evidence/0019b030-caller-decided-name.md",
   "reason": "Caller-decided identity: matched GameLogic::init links to ?rva0019B030@BfmeTableERJ@@QAEXXZ at this body; loadBuildLists was an unlanded stash guess with no caller or literal evidence."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006add50.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006add50.cpp",
+  "old_name": "AudioStreamAdvance006ADD50",
+  "new_name": "Rva006A43D0RequestTable",
+  "before_sha256": "de863a9c69b612f161a18d43001ab2502b31953eeeb35249860debfd3f441e0e",
+  "after_sha256": "0fcc72457bd51791388a2f829931edaecc31c6cf00fde793a678b9ded28ac82d",
+  "evidence": "targets/game/reverse/identity_evidence/0x006afd00-stop-chain.md",
+  "reason": "Bank replaced by the MilesAudioManager stop-chain TU; the pairing is positional across a restructured body and the new name is the landed or witnessed identity (see evidence)."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006add50.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006add50.cpp",
+  "old_name": "advance",
+  "new_name": "rva006ABDA0",
+  "before_sha256": "de863a9c69b612f161a18d43001ab2502b31953eeeb35249860debfd3f441e0e",
+  "after_sha256": "0fcc72457bd51791388a2f829931edaecc31c6cf00fde793a678b9ded28ac82d",
+  "evidence": "targets/game/reverse/identity_evidence/0x006afd00-stop-chain.md",
+  "reason": "Bank replaced by the MilesAudioManager stop-chain TU; the pairing is positional across a restructured body and the new name is the landed or witnessed identity (see evidence)."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006add50.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006add50.cpp",
+  "old_name": "go",
+  "new_name": "Rva006910F0Handle",
+  "before_sha256": "de863a9c69b612f161a18d43001ab2502b31953eeeb35249860debfd3f441e0e",
+  "after_sha256": "0fcc72457bd51791388a2f829931edaecc31c6cf00fde793a678b9ded28ac82d",
+  "evidence": "targets/game/reverse/identity_evidence/0x006afd00-stop-chain.md",
+  "reason": "Bank replaced by the MilesAudioManager stop-chain TU; the pairing is positional across a restructured body and the new name is the landed or witnessed identity (see evidence)."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006afd00.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006afd00.cpp",
+  "old_name": "Ref006AFD00",
+  "new_name": "Rva006910F0Handle",
+  "before_sha256": "3b169c12e88ac5709a16a1ba17c32c7c8f0203c097cb7fb827b4be8a8008582d",
+  "after_sha256": "d548cedcc44dccddde3dc78df7390058d76e35cb63e763049f8102f76e8069d3",
+  "evidence": "targets/game/reverse/identity_evidence/0x006afd00-stop-chain.md",
+  "reason": "Bank replaced by the MilesAudioManager stop-chain TU; the pairing is positional across a restructured body and the new name is the landed or witnessed identity (see evidence)."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006afd00.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006afd00.cpp",
+  "old_name": "erase",
+  "new_name": "rva006ABDA0",
+  "before_sha256": "3b169c12e88ac5709a16a1ba17c32c7c8f0203c097cb7fb827b4be8a8008582d",
+  "after_sha256": "d548cedcc44dccddde3dc78df7390058d76e35cb63e763049f8102f76e8069d3",
+  "evidence": "targets/game/reverse/identity_evidence/0x006afd00-stop-chain.md",
+  "reason": "Bank replaced by the MilesAudioManager stop-chain TU; the pairing is positional across a restructured body and the new name is the landed or witnessed identity (see evidence)."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006afd00.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006afd00.cpp",
+  "old_name": "pad0",
+  "new_name": "m_pad010",
+  "before_sha256": "3b169c12e88ac5709a16a1ba17c32c7c8f0203c097cb7fb827b4be8a8008582d",
+  "after_sha256": "d548cedcc44dccddde3dc78df7390058d76e35cb63e763049f8102f76e8069d3",
+  "evidence": "targets/game/reverse/identity_evidence/0x006afd00-stop-chain.md",
+  "reason": "Bank replaced by the MilesAudioManager stop-chain TU; the pairing is positional across a restructured body and the new name is the landed or witnessed identity (see evidence)."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006afd00.cpp",
+  "new_path": "targets/game/reverse/attempts/0x006afd00.cpp",
+  "old_name": "table_50",
+  "new_name": "m_pad064",
+  "before_sha256": "3b169c12e88ac5709a16a1ba17c32c7c8f0203c097cb7fb827b4be8a8008582d",
+  "after_sha256": "d548cedcc44dccddde3dc78df7390058d76e35cb63e763049f8102f76e8069d3",
+  "evidence": "targets/game/reverse/identity_evidence/0x006afd00-stop-chain.md",
+  "reason": "Bank replaced by the MilesAudioManager stop-chain TU; the pairing is positional across a restructured body and the new name is the landed or witnessed identity (see evidence)."
  }
 ]
