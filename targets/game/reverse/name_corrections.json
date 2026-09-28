@@ -9988,5 +9988,25 @@
   "after_sha256": "735e1ed650169c50cff36d7a5136f51fc048b59dee7915b82ee57419b8158e79",
   "evidence": "targets/game/reverse/identity_evidence/005CE090.md",
   "reason": "Generated unwind-pin placeholder for ILT 0x00031692; that ILT jumps to 0x005CDFF0, matched as ??1Rva005CDFF0@@QAE@XZ in BigChainBaseDtors.cpp, and the landed source calls the matched body by its own name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00552100.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/OnlineLoginUpdate.cpp",
+  "before_sha256": "1a374ad92d4e56968c05f571f0534fee4a6e8615ff4b1dad481b9c0885a18d19",
+  "after_sha256": "a8013b1037b6b90e3c9a9432be6b6aee05addf6975adb700dfd791fd9d6be6aa",
+  "evidence": "targets/game/reverse/identity_evidence/0x00552100-online-login-update-layout.md",
+  "old_name": "m_numPlaying",
+  "new_name": "m_bfme1C",
+  "reason": "Offset pairing is false: the byte-exact landing proves GameSpyGroupRoom has m_translatedName at +4 (StringBase<unsigned short>::set on room+4) and m_numPlaying at +0x18; the +0x1C dword the old hole-after-name layout called m_numPlaying is BFME's tail field copied from resp+0x108."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00552100.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/OnlineLoginUpdate.cpp",
+  "before_sha256": "1a374ad92d4e56968c05f571f0534fee4a6e8615ff4b1dad481b9c0885a18d19",
+  "after_sha256": "a8013b1037b6b90e3c9a9432be6b6aee05addf6975adb700dfd791fd9d6be6aa",
+  "evidence": "targets/game/reverse/identity_evidence/0x00552100-online-login-update-layout.md",
+  "old_name": "m_name",
+  "new_name": "m_unmodelledA8",
+  "reason": "The old bank named screen+0xA8 m_name as a char[4]; nothing witnesses it and this body never reads +0xA8, so the landing keeps it as unnamed padding instead of an unproven name."
  }
 ]
