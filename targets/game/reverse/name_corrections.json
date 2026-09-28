@@ -7708,5 +7708,15 @@
   "after_sha256": "93b5cd77f18fe7fd57af8b55bb2d846c3c9a3a0673677ab177299510186c28de",
   "evidence": "targets/game/reverse/identity_evidence/0016e6c0-audio-client-type-name.md",
   "reason": "The stash's BfmeStartMoveSoundAudio was an unproven local label; the landed source uses the repository's established address-derived name for the same TheAudioClientUpdate object (vtable 0x0111C0C0, slots +0x44/+0x4C), declared in many matched TUs."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "bfmeRva00C6C8E0InitializeSlot",
+  "new_name": "Rva00C6C8E0Init",
+  "before_sha256": "46c9f02ea68fca02ebc9b9fa19a37337426c1a4d8114da78073ecabda310242d",
+  "after_sha256": "bd0f8bd54a250e2cfaff329ded5b350edaea1124f859d325772e26ff33f899d8",
+  "evidence": "targets/game/reverse/identity_evidence/00c6c8e0-dyninit-correction.md",
+  "reason": "The old name claims the CRT-called dynamic initializer is an ordinary named function. Retail has no such export: the body is MSVC's TU-local _$E15 for the namespace-scope 0x0130A490 slot global defined in this TU, called from the CRT init table; the ledger now names the COFF symbol via object-symbol=_$E15 under an address-derived row name."
  }
 ]
