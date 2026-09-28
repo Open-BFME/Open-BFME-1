@@ -499,9 +499,11 @@ def busy_rvas(root=None, seats_log=None):
                 continue
     # Claims other hosts and contributors hold on origin (tools/claims.py):
     # the leases above are local to this checkout and nobody else sees them.
+    # Fetched through `root`'s own origin, so a fixture root without a remote
+    # (the fleet lifecycle tests) is not polluted by this checkout's claims.
     if os.environ.get("BFME_CLAIMS", "on") != "off":
         import claims
-        busy |= {f"0x{rva:08x}" for rva in claims.active()}
+        busy |= {f"0x{rva:08x}" for rva in claims.active(root)}
     return busy
 
 

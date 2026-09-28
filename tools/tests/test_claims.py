@@ -75,3 +75,20 @@ def test_an_unreachable_origin_blocks_nothing(hosts, monkeypatch):
     monkeypatch.setattr(claims, "REMOTE", "no-such-remote")
     assert claims.active() == {}
     assert claims.claim([0x100]) == ([], [])
+
+
+def test_active_reads_the_origin_of_the_given_root_not_this_checkout(hosts, tmp_path):
+    # tools/tests/test_fleet_lifecycle_regressions.py failed on every host with
+    # live claims on the real origin: busy_rvas(fixture_root) merged claims.active(),
+    # which always fetched from THIS checkout. A root is now fetched through
+    # its own origin, so a fixture repository without a remote sees none.
+    hosts("a")
+    assert claims.claim([0x300]) == ([0x300], [])
+    hosts("b")
+    assert set(claims.active(claims.ROOT)) == {0x300}
+    lonely = tmp_path / "lonely"
+    _git(tmp_path, "init", "-q", str(lonely))
+    assert claims.active(lonely) == {}
+    import eligibility
+    (lonely / "build").mkdir()
+    assert "0x00000300" not in eligibility.busy_rvas(lonely)

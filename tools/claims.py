@@ -83,15 +83,16 @@ def _record(who, ttl_hours, note=""):
     return made.stdout.strip()
 
 
-def fetch():
+def fetch(root=None):
     """Mirror origin's claims locally (refs/claims-seen/*); False on failure."""
-    got = _git("fetch", "-q", "--prune", "--no-tags", REMOTE, f"+{NS}*:{SEEN}*", timeout=120)
+    got = _git("fetch", "-q", "--prune", "--no-tags", REMOTE, f"+{NS}*:{SEEN}*", cwd=root, timeout=120)
     return got.returncode == 0
 
 
-def _read_local():
+def _read_local(root=None):
     """{rva: (sha, info)} from the local mirror."""
-    out = _git("for-each-ref", "--format=%(refname)%09%(objectname)%09%(contents:subject)", SEEN).stdout
+    out = _git("for-each-ref", "--format=%(refname)%09%(objectname)%09%(contents:subject)", SEEN,
+               cwd=root).stdout
     claims = {}
     for line in out.splitlines():
         name, sha, subject = (line.split("\t") + ["", ""])[:3]
@@ -109,15 +110,25 @@ def live(claims, now=None):
     return {rva: v for rva, v in claims.items() if v[1].get("expires", 0) > now}
 
 
-@lru_cache(maxsize=1)
-def active():
-    """{rva: info} of every unexpired claim on origin, fetched once per process.
-    Empty (with a warning) when origin cannot be reached."""
-    if not fetch():
+def active(root=None):
+    """{rva: info} of every unexpired claim on the origin of `root` (this
+    checkout by default), fetched once per process per root. Empty (with a
+    warning) when that origin cannot be reached: a fixture repository with no
+    remote sees no claims, so a picker under test never inherits this
+    checkout's live shared claims."""
+    return dict(_active(str(Path(root).resolve()) if root else None))
+
+
+@lru_cache(maxsize=8)
+def _active(root):
+    if not fetch(root):
         print("claims: could not fetch refs/claims/* from origin; serving without shared claims",
               file=sys.stderr)
         return {}
-    return {rva: info for rva, (_, info) in live(_read_local()).items()}
+    return {rva: info for rva, (_, info) in live(_read_local(root)).items()}
+
+
+active.cache_clear = _active.cache_clear
 
 
 def claim(rvas, who=None, ttl_hours=TTL_HOURS, note=""):
