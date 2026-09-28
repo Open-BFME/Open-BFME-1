@@ -1,5 +1,5 @@
-// ?rva00590480@Rva00590480GameClient@@QAEXXZ
-// partial score=0.622 date=2026-09-26
+// ?d_00590480@@YAXXZ
+// partial score=0.893 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // stlport
 
@@ -126,11 +126,10 @@ void Rva00590480GameClient::rva00590480( void )
 		Int raw = (Int)( player->m_progress25C - lower );
 		raw = raw * 100 / delta;
 		if ( raw < 1 )
-			progress = 1;
-		else if ( raw > 100 )
-			progress = 100;
-		else
-			progress = raw;
+			raw = 1;
+		if ( raw > 100 )
+			raw = 100;
+		progress = raw;
 	}
 
 	if ( progress != m_progress64 )
