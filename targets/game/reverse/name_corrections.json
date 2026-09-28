@@ -10058,5 +10058,25 @@
   "old_name": "update",
   "new_name": "rva0079D530",
   "reason": "The earlier bank guessed update on an invented QuadrilateralInset class. The owner is now proven to be AptPalantir (called from renderRadarViewBox; witnessed +0x51C and +0x524/544/564 layout). On that class update would collide with the inherited SubsystemInterface::update virtual while this body is a directly called non-virtual helper. No evidence names the method so it keeps the address token."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x007f9d00.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/FeslConnectionHandlerRva007F9D00.cpp",
+  "before_sha256": "9d6f4e3d0b472ca430fff8716a092ef39ce0603b6895b35391037f0a8c66bddc",
+  "after_sha256": "7d7984784af1e92ed61e5b71dc65efd1cae5ad8e730cfe67109ca431fc561495",
+  "evidence": "targets/game/reverse/identity_evidence/0x007F9D00-fesl-connection-handler-slot3.md",
+  "new_name": "rva007F9D00",
+  "old_name": "process",
+  "reason": "The earlier bank guessed process on an invented Rva007F9D00Owner class. The body is slot 3 of the FeslConnectionHandler vtable 0x0112BAD0 (beside matched onConnectionMade/onConnectionBroken) and nothing names the method, so the landing keeps the address token."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x007f9d00.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/FeslConnectionHandlerRva007F9D00.cpp",
+  "before_sha256": "9d6f4e3d0b472ca430fff8716a092ef39ce0603b6895b35391037f0a8c66bddc",
+  "after_sha256": "7d7984784af1e92ed61e5b71dc65efd1cae5ad8e730cfe67109ca431fc561495",
+  "evidence": "targets/game/reverse/identity_evidence/0x007F9D00-fesl-connection-handler-slot3.md",
+  "new_name": "rva007F9D00",
+  "old_name": "v0",
+  "reason": "False pairing: v0 is Rva007EB810Diag's first virtual slot, which the new source still declares as v0; it was never a name for this method."
  }
 ]
