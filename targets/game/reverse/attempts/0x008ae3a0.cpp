@@ -1,18 +1,17 @@
-// ?bfmeVisit008AE3A0@@YAHPAUBfmeEntry008AE3A0@@H@Z
-// partial score=0.65 date=2026-09-03
-// Open-BFME5 conversion.
+// ?aptHelper008AE3A0@@YAPAVAptValue@@PAXHH@Z
+// partial score=0.931 date=2026-09-28
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+
+class AptValue
+{
+public:
+	int toInteger() const;
+};
 
 class BfmeF1034
 {
 public:
 	int bfmeGo1034F(int key);
-};
-
-struct BfmeLookupBase008AE3A0
-{
-	char m_padding00[8];
-	BfmeF1034 m_value;
 };
 
 class BfmeThingCBC
@@ -21,22 +20,10 @@ public:
 	void bfmeStepCBC(int value);
 };
 
-class BfmeN1034
+struct BfmeLookupBase008AE3A0
 {
-public:
-	int bfmeVal1034(void);
-};
-
-struct BfmeOwner008AE3A0;
-
-struct BfmeEntry008AE3A0
-{
-	char m_padding00[4];
-	unsigned m_kind;
-	char m_padding08[0x18];
-	void *m_value20;
-	char m_padding24[0x2C];
-	BfmeOwner008AE3A0 *m_owner;
+	char m_padding00[8];
+	BfmeF1034 m_value;
 };
 
 struct BfmeOwner008AE3A0
@@ -49,43 +36,69 @@ struct BfmeOwner008AE3A0
 	unsigned m_rest : 6;
 };
 
-extern BfmeEntry008AE3A0 **g_bfmeArr1233;
-extern int g_bfmeCount1233;
-extern int g_bfmeFallbackDB;
-
-int bfmeVisit008AE3A0(BfmeEntry008AE3A0 *entry, volatile int count)
+union Rva008AE3A0Flags
 {
-	if (count < 1)
-		return g_bfmeFallbackDB;
+	unsigned m_value;
+	struct
+	{
+		unsigned m_kind : 6;
+		unsigned m_reserved : 9;
+		unsigned m_bit15 : 1;
+		unsigned m_rest : 16;
+	};
+};
 
-	BfmeEntry008AE3A0 *last = g_bfmeArr1233[g_bfmeCount1233 - 1];
-	BfmeEntry008AE3A0 *current = entry;
-	unsigned flags = current->m_kind;
+struct BfmeEntry008AE3A0
+{
+	char m_padding00[4];
+	Rva008AE3A0Flags m_flags;
+	char m_padding08[0x18];
+	void *m_value20;
+	char m_padding24[0x2C];
+	BfmeOwner008AE3A0 *m_owner;
+};
+
+extern AptValue **g_bfmeArr1233;
+extern int g_bfmeCount1233;
+extern AptValue *g_bfmeFallbackDB;
+
+AptValue *aptHelper008AE3A0(void *entry, int count, int flag)
+{
+	BfmeEntry008AE3A0 *last;
+	int value;
+
+	if (count < 1)
+		goto fallback;
+
+	last = (BfmeEntry008AE3A0 *)g_bfmeArr1233[g_bfmeCount1233 - 1];
+	BfmeEntry008AE3A0 *current = (BfmeEntry008AE3A0 *)entry;
+	unsigned flags = current->m_flags.m_value;
 	unsigned kind = flags & 0x3F;
 	if (kind == 0x13 && ((unsigned char)~(flags >> 15) & 1) == 0)
-		return g_bfmeFallbackDB;
+		goto fallback;
 
-	int value;
-	if ((last->m_kind & 0x3F) == 1 || (last->m_kind & 0x3F) == 0x2A)
+	if ((last->m_flags.m_value & 0x3F) == 1 ||
+		(last->m_flags.m_value & 0x3F) == 0x2A)
 	{
-		if (((unsigned char)~(last->m_kind >> 15) & 1) == 0)
+		if (last->m_flags.m_bit15 != 0)
 		{
 			BfmeEntry008AE3A0 *lookupArg = last;
-			if ((last->m_kind & 0x3F) != 1)
-				lookupArg = (BfmeEntry008AE3A0 *)last->m_value20;
+			if ((last->m_flags.m_value & 0x3F) != 1)
+				lookupArg = (BfmeEntry008AE3A0 *)*(void **)((char *)last + 0x20);
 			value = current->m_owner->m_lookup->m_value.bfmeGo1034F(
 				(int)((char *)lookupArg + 8)) + 1;
 		}
 		else
-			value = ((BfmeN1034 *)last)->bfmeVal1034();
+			value = ((AptValue *)last)->toInteger();
 	}
 	else
-		value = ((BfmeN1034 *)last)->bfmeVal1034();
+		value = ((AptValue *)last)->toInteger();
 
 	if (--value < 0)
-		return g_bfmeFallbackDB;
+		goto fallback;
 	((BfmeThingCBC *)current)->bfmeStepCBC(value);
-	current->m_owner->m_flag = count != 0;
+	current->m_owner->m_flag = flag != 0;
 
+	fallback:
 	return g_bfmeFallbackDB;
 }
