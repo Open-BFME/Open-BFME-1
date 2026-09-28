@@ -1,5 +1,5 @@
-// ?loadBuildLists@Rva0019B030Owner@@QAEXXZ
-// partial score=0.46 date=2026-09-23
+// ?d_0019b030@@YAXXZ
+// partial score=0.983 date=2026-09-28
 // Scratch reconstruction of retail RVA 0x0019B030 (641 bytes).
 //
 // This TU intentionally keeps the owning class address-labelled.  The
@@ -92,93 +92,37 @@ public:
   void resetBuildLists();
 };
 
-typedef bool (*BfmeParserCallback)(DataChunkInput &, DataChunkInfo *, void *);
-typedef void (__cdecl *BuildListCallback)(void);
-
-class BfmeParserRegistrationVE {
-public:
-  BfmeParserRegistrationVE(
-      DataChunkInput *table, AsciiString *name, AsciiString *label) {
-    m_vtable = reinterpret_cast<void *>(0x0107C7D0);
-    m_table = table;
-    m_parser = table->registerParser(
-        *name, *label, (BfmeParserCallback)0x0041579E, this);
-  }
-
-  __forceinline ~BfmeParserRegistrationVE() {
-    m_vtable = reinterpret_cast<void *>(0x0107C7D0);
-    reinterpret_cast<BfmeSubVE *>(m_table)->bfmeDropVE(m_parser);
-  }
-
-protected:
-  void *m_vtable;
-  DataChunkInput *m_table;
-  UserParser *m_parser;
-};
-
-class Rva0019B030BuildListsBinding : public BfmeParserRegistrationVE {
-public:
-  __forceinline Rva0019B030BuildListsBinding(
-      void *owner, BuildListCallback callback, int adjuster,
-      DataChunkInput *table)
-      : BfmeParserRegistrationVE(
-            table,
-            (AsciiString *)&AsciiString(
-                reinterpret_cast<const char *>(0x0109C14C)),
-            &AsciiString::TheEmptyString) {
-    Rva0019B030BuildListsBinding *self = this;
-    self->m_vtable = reinterpret_cast<void *>(0x0109BFD4);
-    self->m_owner = owner;
-    self->m_callback = callback;
-    self->m_adjuster = adjuster;
-  }
-
-private:
-  void *m_owner;
-  BuildListCallback m_callback;
-  int m_adjuster;
-};
-
-// This is a six-argument binding constructor already matched at RVA
-// 0x001920C0.  The temporary label and empty string are deliberately passed
-// as the actual pointer arguments used by the retail call sequence.
-class BfmeParserBindingBaseVE {
-public:
-  virtual void bfmeSlot0(void);
-  virtual void bfmeSlot1(void);
-
-protected:
-  BfmeParserRegistryVE *m_registry;
-  UserParser *m_parser;
-};
-
-class BfmeParserBindingVE : public BfmeParserBindingBaseVE {
-public:
-  BfmeParserBindingVE(
-      int owner, int callback, int adjuster,
-      BfmeParserRegistryVE *registry, void *label, void *empty);
-
-  ~BfmeParserBindingVE() {
-    reinterpret_cast<BfmeSubVE *>(m_registry)->bfmeDropVE(m_parser);
-  }
-
-  virtual void bfmeSlot0(void);
-  virtual void bfmeSlot1(void);
-
-private:
-  int m_owner;
-  int m_callback;
-  int m_adjuster;
-};
-
+#pragma pointers_to_members(full_generality, multiple_inheritance)
 class Rva0019B030Owner {
 public:
-  void loadBuildLists();
+ void loadBuildLists();
+ bool readCamps(DataChunkInput &, DataChunkInfo *);
+ bool readOthers(DataChunkInput &, DataChunkInfo *);
 };
-
+typedef bool (Rva0019B030Owner::*BuildListCallback)(DataChunkInput &, DataChunkInfo *);
+static __forceinline BuildListCallback callbackAt0019B030(unsigned address) {
+ union Bits { BuildListCallback method;struct {unsigned address;int adjustment;} words; } bits;
+ bits.words.address=address;bits.words.adjustment=0;return bits.method;
+}
+typedef bool (*CallbackBase0019B030)(DataChunkInput&,DataChunkInfo*,void*);
+class ParserBase0019B030 {
+public:
+ ParserBase0019B030(DataChunkInput *table,const AsciiString &name,const AsciiString &parent) {
+  vtable_=(void*)0x0107C7D0;table_=table;parser_=table->registerParser(name,parent,(CallbackBase0019B030)0x0041579E,this);
+ }
+ ~ParserBase0019B030() {vtable_=(void*)0x0107C7D0;reinterpret_cast<BfmeSubVE *>(table_)->bfmeDropVE(parser_);}
+protected:
+ void *vtable_;DataChunkInput *table_;UserParser *parser_;
+};
+class ParserBinding0019B030:public ParserBase0019B030 {
+ Rva0019B030Owner *owner_;BuildListCallback callback_;
+public:
+ ParserBinding0019B030(Rva0019B030Owner *owner,BuildListCallback callback,DataChunkInput *table,
+ const AsciiString &name,const AsciiString &parent):ParserBase0019B030(table,name,parent) {
+  vtable_=(void*)0x0109BFD4;owner_=owner;callback_=callback;
+ }
+};
 void Rva0019B030Owner::loadBuildLists() {
-  BuildListCallback first_callback = (BuildListCallback)0x0040F51A;
-  int first_adjuster = 0;
   reinterpret_cast<Rva001988D0SidesLists *>(this)->resetBuildLists();
 
   {
@@ -187,8 +131,7 @@ void Rva0019B030Owner::loadBuildLists() {
     return;
   }
     DataChunkInput campsData(&camps);
-      Rva0019B030BuildListsBinding binding(
-          this, first_callback, first_adjuster, &campsData);
+      ParserBinding0019B030 binding(this, callbackAt0019B030(0x0040F51A), &campsData, AsciiString(reinterpret_cast<const char *>(0x0109C14C)), AsciiString::TheEmptyString);
       if (!campsData.parse(0)) {
         throw(ERROR_CORRUPT_FILE_FORMAT);
       }
@@ -199,13 +142,7 @@ void Rva0019B030Owner::loadBuildLists() {
   CachedFileInputStream others;
   if (others.open(AsciiString(reinterpret_cast<const char *>(0x0109C174)))) {
     DataChunkInput othersData(&others);
-      BfmeParserBindingVE binding(
-          reinterpret_cast<int>(this), 0x00413C6E, 0,
-          reinterpret_cast<BfmeParserRegistryVE *>(&othersData),
-          reinterpret_cast<void *>(
-              (AsciiString *)&AsciiString(
-                  reinterpret_cast<const char *>(0x0109C14C))),
-          reinterpret_cast<void *>(&AsciiString::TheEmptyString));
+      ParserBinding0019B030 binding(this, callbackAt0019B030(0x00413C6E), &othersData, AsciiString(reinterpret_cast<const char *>(0x0109C14C)), AsciiString::TheEmptyString);
       if (!othersData.parse(0)) {
         throw(ERROR_CORRUPT_FILE_FORMAT);
       }
@@ -213,3 +150,4 @@ void Rva0019B030Owner::loadBuildLists() {
   }
   }
 }
+
