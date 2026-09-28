@@ -1,5 +1,7 @@
 // ?Rva008FEF60Method@@YA_NPAVRenderObjClass@@PAPAVTextureClass@@H@Z
-// partial score=0.19 date=2026-09-21
+// partial score=0.9959016393442623 date=2026-09-28
+// ?Rva008FEF60Method@@YA_NPAVRenderObjClass@@PAPAVTextureClass@@H@Z
+// partial: 244 bytes; one differing branch displacement at +0x7A (2026-09-28).
 // ?d_008fef60@@YAXXZ
 // cl: /DNDEBUG /MD /EHsc
 //
@@ -14,7 +16,8 @@
 // Bfme5TextureArray::bfmeSetSlot shape (Bfme5ReadyQueue.cpp) for the actual
 // slot store.  The TextureClass** argument arrives in ebx with no stack
 // load and no save/restore in the body -- a private register convention
-// (docs/shape_levers.md); ebx is left address-derived here too.
+// (docs/shape_levers.md). The semantic correction from the older stash is
+// calling self->Mesh_Self(), not a virtual on MaterialInfoClass.
 
 class MeshClass;
 class MaterialInfoClass;
@@ -158,7 +161,7 @@ public:
 	int m_bfme30;
 };
 
-// The trampoline this body reaches through the material's mystery slot 5:
+// The trampoline this body reaches through RenderObjClass::Mesh_Self() at slot 5:
 // same shape as Rva0092C3E0::invoke() in IndirectMemberTailThunks.cpp, but
 // THIS call site pushes two stack arguments the plain no-arg invoke() there
 // does not model, so it keeps its own address-derived declaration.
@@ -194,7 +197,7 @@ static bool Rva008FEF60Method(RenderObjClass *self, TextureClass **src, int inde
 	if (material->m_bfme30 <= index)
 		return false;
 
-	Rva0092C3E0Trampoline *sink = (Rva0092C3E0Trampoline *)material->_bfme_mi_slot14();
+	Rva0092C3E0Trampoline *sink = (Rva0092C3E0Trampoline *)self->Mesh_Self();
 
 	BfmeHandleCX handle = material->Get_Texture(index);
 	if (handle.m_bfmeThing == *src)

@@ -8848,5 +8848,25 @@
   "after_sha256": "7cf150756c30ed274efa68b5626e66cafa034a339262e55301bb42bc03a7a540",
   "evidence": "targets/game/reverse/identity_evidence/0x00763ac0-name-correction.md",
   "reason": "The local shim is not a retail layout witness, and the matched caller names no owner or field. The replacement reports the byte offset without claiming a semantic member name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008ffb80.cpp",
+  "new_path": "game/Libraries/Source/STLport/Rva00900FF0VecOfVecCount.cpp",
+  "old_name": "_Vector_base",
+  "new_name": "Rva008FFB80StringBase",
+  "before_sha256": "4437ad6a3c9a27640ba4afe1c5ea4224d65c3dfe1af523eaf440edafacb0fd6b",
+  "after_sha256": "404582e92dc4e711bee49e7f4fdd6b84d293f80d8d026ec3d0372f933437b7d4",
+  "evidence": "targets/game/reverse/identity_evidence/008ffb80-stlport-vector-base.md",
+  "reason": "false pairing: _Vector_base kept as real STLport base via #include <vector>; Rva008FFB80StringBase is a new element-buffer struct"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008ffb80.cpp",
+  "new_path": "game/Libraries/Source/STLport/Rva00900FF0VecOfVecCount.cpp",
+  "old_name": "_Vector_base",
+  "new_name": "Rva008FFB80StringBase",
+  "before_sha256": "4437ad6a3c9a27640ba4afe1c5ea4224d65c3dfe1af523eaf440edafacb0fd6b",
+  "after_sha256": "ae82d228099afe6c5cef63d7d3b0eb2f353318193ac75f79b025cc8ab823cffd",
+  "evidence": "targets/game/reverse/identity_evidence/008ffb80-stlport-vector-base.md",
+  "reason": "false pairing: _Vector_base kept as real STLport base via #include <vector>; Rva008FFB80StringBase is a new element-buffer struct"
  }
 ]
