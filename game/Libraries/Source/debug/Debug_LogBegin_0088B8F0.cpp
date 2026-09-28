@@ -88,7 +88,7 @@ Debug &Debug::LogBegin(const char *fileOrGroup)
     if (curFrameEntry->status==2 || curFrameEntry->status==3 ||
         curFrameEntry->status==0)
     {
-        StartOutput((const char *)0x0107301C,10);
+        StartOutput("",10);
         ++curFrameEntry->hits;
 
         if (curType==1 &&
@@ -96,7 +96,7 @@ Debug &Debug::LogBegin(const char *fileOrGroup)
             ((BfmeThingQO *)this)->bfmeFlushQO(1);
 
         if (curType!=1)
-            bfmeLogQO((BfmeThingQO *)this,1,(const char *)0x0107C824,
+            bfmeLogQO((BfmeThingQO *)this,1,"%s",
                       curFrameEntry->fileOrGroup);
     }
     else if (curType!=7)

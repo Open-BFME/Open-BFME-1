@@ -225,6 +225,22 @@ public:
 };
 
 extern Display *TheDisplay;
+extern InGameUI *TheInGameUI;
+extern Mouse *TheMouse;
+extern Shell *TheShell;
+extern GameWindowTransitionsHandler *TheTransitionHandler;
+
+struct PurchaseScienceWindow;
+class AptPalantir;
+class GameLogic;
+class ScriptEngine;
+class DisconnectMenu;
+extern PurchaseScienceWindow *g_purchaseScienceWindow;
+extern AptPalantir *TheAptPalantir;
+extern void *g_obj12F4B40;
+extern GameLogic *TheGameLogic;
+extern ScriptEngine *TheScriptEngine;
+extern DisconnectMenu *TheDisconnectMenu;
 
 extern bool __cdecl rva00592D60Ask();
 extern void __cdecl HideInGameChat();
@@ -233,30 +249,30 @@ extern void __cdecl HideDiplomacy();
 // ?finishShowPurchaseScience@@YAXXZ
 void finishShowPurchaseScience(void)
 {
-	if (*(void **)0x012F4C38 != 0)
+	if (g_purchaseScienceWindow != 0)
 		return;
 
-	if ((*(InGameUI **)0x012F148C)->slot85())
+	if (TheInGameUI->slot85())
 		return;
 
-	if (*(void **)0x012F4B98 == 0)
+	if (TheAptPalantir == 0)
 		return;
 	if (rva00592D60Ask() == false)
 		return;
 
-	if (*(void **)0x012F4B40 != 0)
+	if (g_obj12F4B40 != 0)
 		return;
 
-	if ((unsigned char)((BfmeThingFGA *)*(void **)0x012F0898)->bfmeGoFGA())
+	if ((unsigned char)((BfmeThingFGA *)TheGameLogic)->bfmeGoFGA())
 		return;
 
-	if ((*(BfmeThingFGA **)0x012F0898)->m_flag)
+	if (((BfmeThingFGA *)TheGameLogic)->m_flag)
 		return;
 
-	if (*(int *)((char *)*(void **)0x012F076C + 0x17080) >= 0)
+	if (*(int *)((char *)TheScriptEngine + 0x17080) >= 0)
 		return;
 
-	if ((*(GameWindowTransitionsHandler **)0x012F3330)->isFinished() == false)
+	if (TheTransitionHandler->isFinished() == false)
 		return;
 
 	if (TheDisplay != 0) {
@@ -266,13 +282,13 @@ void finishShowPurchaseScience(void)
 			return;
 	}
 
-	if (*(void **)0x012F4964 != 0)
+	if (TheDisconnectMenu != 0)
 		return;
 
 	HideInGameChat();
 	HideDiplomacy();
-	(*(Mouse **)0x012F4C5C)->slot14(2);
-	(*(Shell **)0x012F4B58)->showShell(false);
-	(*(Shell **)0x012F4B58)->push(AsciiString("SpellStore.apt"), false);
-	(*(InGameUI **)0x012F148C)->slot84(1);
+	TheMouse->slot14(2);
+	TheShell->showShell(false);
+	TheShell->push(AsciiString("SpellStore.apt"), false);
+	TheInGameUI->slot84(1);
 }
