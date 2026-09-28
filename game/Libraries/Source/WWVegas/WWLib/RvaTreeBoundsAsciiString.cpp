@@ -425,6 +425,18 @@ Bool BfmeTreeBoundsAnchor009CFC80( const Rva009CFC80Tree &tree, const AsciiStrin
 	return tree.lower_bound( key ) != tree.upper_bound( key );
 }
 
+struct Rva009D0660Owner : Rva009CFC80Tree
+{
+	const_iterator get( const AsciiString &key ) const;
+};
+
+// retail 0x009D0660
+Rva009D0660Owner::const_iterator
+Rva009D0660Owner::get( const AsciiString &key ) const
+{
+	return Rva009CFC80Tree::lower_bound( key );
+}
+
 struct Rva006339C0Value
 {
 	AsciiString m_key;
