@@ -990,3 +990,16 @@ void StateMachine::loadPostProcess( void )
 {
 
 }  // end loadPostProcess
+
+// Retail RVA 0x009EDF50 calls the signed-int red-black-tree find and
+// compares its node with the map header; owner identity stays address-derived.
+class Rva009EDF50Owner : public std::map<int, State *>
+{
+public:
+	bool m009EDF50(int id);
+};
+
+bool Rva009EDF50Owner::m009EDF50(int id)
+{
+	return find(id) != end();
+}
