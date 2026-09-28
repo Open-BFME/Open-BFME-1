@@ -8338,5 +8338,155 @@
   "after_sha256": "d3b25157241468dfa22895be62bc4dc0e585b95dd55e918652970c133695d0f2",
   "evidence": "targets/game/reverse/identity_evidence/003d6210-checkforpossible.md",
   "reason": "+0x20 is checkForPossible argument 8: selects the terrain-zone equivalence (ZH startingInObstacle); the ZH checkForAdjust isHuman guess does not apply."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000d22a0.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeObjNotify3F0Notify.cpp",
+  "old_name": "BfmeDlinkNext",
+  "new_name": "Rva000D22A0ObjectDlinkNext",
+  "before_sha256": "e6c60e4662945481f2a8b5ef1112e6bd77a345025827ef3efaba0791cc8d73b0",
+  "after_sha256": "d59c44aade606e7afca4d3fc1615caf8f8fe4798feeebbf25b9285e68082535e",
+  "evidence": "targets/game/reverse/identity_evidence/0x000d22a0-view-names.md",
+  "reason": "The callers and ILT pin prove only the outer method. The helper views keep RVA tokens because their class identities remain unknown. Shared Object and Thing headers retain the witnessed members."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000d22a0.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeObjNotify3F0Notify.cpp",
+  "old_name": "BfmeDlinkPmf",
+  "new_name": "Rva000D22A0ObjectDlinkPmf",
+  "before_sha256": "e6c60e4662945481f2a8b5ef1112e6bd77a345025827ef3efaba0791cc8d73b0",
+  "after_sha256": "d59c44aade606e7afca4d3fc1615caf8f8fe4798feeebbf25b9285e68082535e",
+  "evidence": "targets/game/reverse/identity_evidence/0x000d22a0-view-names.md",
+  "reason": "The callers and ILT pin prove only the outer method. The helper views keep RVA tokens because their class identities remain unknown. Shared Object and Thing headers retain the witnessed members."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000d22a0.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeObjNotify3F0Notify.cpp",
+  "old_name": "BfmeOverride",
+  "new_name": "Rva000D22A0OverrideView",
+  "before_sha256": "e6c60e4662945481f2a8b5ef1112e6bd77a345025827ef3efaba0791cc8d73b0",
+  "after_sha256": "d59c44aade606e7afca4d3fc1615caf8f8fe4798feeebbf25b9285e68082535e",
+  "evidence": "targets/game/reverse/identity_evidence/0x000d22a0-view-names.md",
+  "reason": "The callers and ILT pin prove only the outer method. The helper views keep RVA tokens because their class identities remain unknown. Shared Object and Thing headers retain the witnessed members."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000d22a0.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeObjNotify3F0Notify.cpp",
+  "old_name": "BfmePlayerDlinkIterator",
+  "new_name": "Rva000D22A0ObjectDlinkIterator",
+  "before_sha256": "e6c60e4662945481f2a8b5ef1112e6bd77a345025827ef3efaba0791cc8d73b0",
+  "after_sha256": "d59c44aade606e7afca4d3fc1615caf8f8fe4798feeebbf25b9285e68082535e",
+  "evidence": "targets/game/reverse/identity_evidence/0x000d22a0-view-names.md",
+  "reason": "The callers and ILT pin prove only the outer method. The helper views keep RVA tokens because their class identities remain unknown. Shared Object and Thing headers retain the witnessed members."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000d22a0.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeObjNotify3F0Notify.cpp",
+  "old_name": "BfmePlayerObjectView",
+  "new_name": "Rva000D22A0TeamInstanceIterator",
+  "before_sha256": "e6c60e4662945481f2a8b5ef1112e6bd77a345025827ef3efaba0791cc8d73b0",
+  "after_sha256": "d59c44aade606e7afca4d3fc1615caf8f8fe4798feeebbf25b9285e68082535e",
+  "evidence": "targets/game/reverse/identity_evidence/0x000d22a0-view-names.md",
+  "reason": "The callers and ILT pin prove only the outer method. The helper views keep RVA tokens because their class identities remain unknown. Shared Object and Thing headers retain the witnessed members."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000d22a0.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeObjNotify3F0Notify.cpp",
+  "old_name": "BfmePlayerTeamFields",
+  "new_name": "Rva000D22A0OwnerView",
+  "before_sha256": "e6c60e4662945481f2a8b5ef1112e6bd77a345025827ef3efaba0791cc8d73b0",
+  "after_sha256": "d59c44aade606e7afca4d3fc1615caf8f8fe4798feeebbf25b9285e68082535e",
+  "evidence": "targets/game/reverse/identity_evidence/0x000d22a0-view-names.md",
+  "reason": "The callers and ILT pin prove only the outer method. The helper views keep RVA tokens because their class identities remain unknown. Shared Object and Thing headers retain the witnessed members."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000d22a0.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeObjNotify3F0Notify.cpp",
+  "old_name": "BfmePlayerTeamInstanceIterator",
+  "new_name": "Rva000D22A0TeamInstanceIterator",
+  "before_sha256": "e6c60e4662945481f2a8b5ef1112e6bd77a345025827ef3efaba0791cc8d73b0",
+  "after_sha256": "d59c44aade606e7afca4d3fc1615caf8f8fe4798feeebbf25b9285e68082535e",
+  "evidence": "targets/game/reverse/identity_evidence/0x000d22a0-view-names.md",
+  "reason": "The callers and ILT pin prove only the outer method. The helper views keep RVA tokens because their class identities remain unknown. Shared Object and Thing headers retain the witnessed members."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000d22a0.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeObjNotify3F0Notify.cpp",
+  "old_name": "BfmePlayerTeamList",
+  "new_name": "Rva000D22A0TeamPrototypeList",
+  "before_sha256": "e6c60e4662945481f2a8b5ef1112e6bd77a345025827ef3efaba0791cc8d73b0",
+  "after_sha256": "d59c44aade606e7afca4d3fc1615caf8f8fe4798feeebbf25b9285e68082535e",
+  "evidence": "targets/game/reverse/identity_evidence/0x000d22a0-view-names.md",
+  "reason": "The callers and ILT pin prove only the outer method. The helper views keep RVA tokens because their class identities remain unknown. Shared Object and Thing headers retain the witnessed members."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000d22a0.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeObjNotify3F0Notify.cpp",
+  "old_name": "BfmePlayerTeamPrototypeInstances",
+  "new_name": "Rva000D22A0TeamPrototypeView",
+  "before_sha256": "e6c60e4662945481f2a8b5ef1112e6bd77a345025827ef3efaba0791cc8d73b0",
+  "after_sha256": "d59c44aade606e7afca4d3fc1615caf8f8fe4798feeebbf25b9285e68082535e",
+  "evidence": "targets/game/reverse/identity_evidence/0x000d22a0-view-names.md",
+  "reason": "The callers and ILT pin prove only the outer method. The helper views keep RVA tokens because their class identities remain unknown. Shared Object and Thing headers retain the witnessed members."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000d22a0.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeObjNotify3F0Notify.cpp",
+  "old_name": "BfmePlayerTeamView",
+  "new_name": "Rva000D22A0TeamView",
+  "before_sha256": "e6c60e4662945481f2a8b5ef1112e6bd77a345025827ef3efaba0791cc8d73b0",
+  "after_sha256": "d59c44aade606e7afca4d3fc1615caf8f8fe4798feeebbf25b9285e68082535e",
+  "evidence": "targets/game/reverse/identity_evidence/0x000d22a0-view-names.md",
+  "reason": "The callers and ILT pin prove only the outer method. The helper views keep RVA tokens because their class identities remain unknown. Shared Object and Thing headers retain the witnessed members."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000d22a0.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeObjNotify3F0Notify.cpp",
+  "old_name": "BfmeThingName",
+  "new_name": "Rva000D22A0OverrideView",
+  "before_sha256": "e6c60e4662945481f2a8b5ef1112e6bd77a345025827ef3efaba0791cc8d73b0",
+  "after_sha256": "d59c44aade606e7afca4d3fc1615caf8f8fe4798feeebbf25b9285e68082535e",
+  "evidence": "targets/game/reverse/identity_evidence/0x000d22a0-view-names.md",
+  "reason": "The callers and ILT pin prove only the outer method. The helper views keep RVA tokens because their class identities remain unknown. Shared Object and Thing headers retain the witnessed members."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000d22a0.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeObjNotify3F0Notify.cpp",
+  "old_name": "Object",
+  "new_name": "Rva000D22A0ObjectView",
+  "before_sha256": "e6c60e4662945481f2a8b5ef1112e6bd77a345025827ef3efaba0791cc8d73b0",
+  "after_sha256": "d59c44aade606e7afca4d3fc1615caf8f8fe4798feeebbf25b9285e68082535e",
+  "evidence": "targets/game/reverse/identity_evidence/0x000d22a0-view-names.md",
+  "reason": "The callers and ILT pin prove only the outer method. The helper views keep RVA tokens because their class identities remain unknown. Shared Object and Thing headers retain the witnessed members."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000d22a0.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeObjNotify3F0Notify.cpp",
+  "old_name": "StringBase",
+  "new_name": "Rva000D22A0OverrideView",
+  "before_sha256": "e6c60e4662945481f2a8b5ef1112e6bd77a345025827ef3efaba0791cc8d73b0",
+  "after_sha256": "d59c44aade606e7afca4d3fc1615caf8f8fe4798feeebbf25b9285e68082535e",
+  "evidence": "targets/game/reverse/identity_evidence/0x000d22a0-view-names.md",
+  "reason": "The callers and ILT pin prove only the outer method. The helper views keep RVA tokens because their class identities remain unknown. Shared Object and Thing headers retain the witnessed members."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000d22a0.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeObjNotify3F0Notify.cpp",
+  "old_name": "ThingTemplate",
+  "new_name": "Rva000D22A0ThingTemplateView",
+  "before_sha256": "e6c60e4662945481f2a8b5ef1112e6bd77a345025827ef3efaba0791cc8d73b0",
+  "after_sha256": "d59c44aade606e7afca4d3fc1615caf8f8fe4798feeebbf25b9285e68082535e",
+  "evidence": "targets/game/reverse/identity_evidence/0x000d22a0-view-names.md",
+  "reason": "The callers and ILT pin prove only the outer method. The helper views keep RVA tokens because their class identities remain unknown. Shared Object and Thing headers retain the witnessed members."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000d22a0.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeObjNotify3F0Notify.cpp",
+  "old_name": "m_template",
+  "new_name": "m_unmodelled",
+  "before_sha256": "e6c60e4662945481f2a8b5ef1112e6bd77a345025827ef3efaba0791cc8d73b0",
+  "after_sha256": "d59c44aade606e7afca4d3fc1615caf8f8fe4798feeebbf25b9285e68082535e",
+  "evidence": "targets/game/reverse/identity_evidence/0x000d22a0-view-names.md",
+  "reason": "The callers and ILT pin prove only the outer method. The helper views keep RVA tokens because their class identities remain unknown. Shared Object and Thing headers retain the witnessed members."
  }
 ]
