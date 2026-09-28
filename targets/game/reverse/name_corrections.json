@@ -8638,5 +8638,15 @@
   "after_sha256": "9f9a8dff7260300e66e49209e362e6ca65daf81a337410ea9f512ef3b6538c1d",
   "evidence": "targets/game/reverse/identity_evidence/00100690-buildassistant-location-clear.md",
   "reason": "retail 0x00100690 calls the pinned single-box predicate 0x0087E8D0 (bool); getGeomType is the separate matched body 0x001F5AD0, so the Zero Hour port's getGeomType tests were not this function"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003594a0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/Rva00359E40ClearActiveRecords.cpp",
+  "old_name": "TABLE",
+  "new_name": "Rva003594A0",
+  "before_sha256": "fbeee6ef53e3373927aca01a19a0b9bc8a8668633ad249720bd3375b325f68cb",
+  "after_sha256": "4db85ad0bf13f510c27cba679b7a5907a0b53f8724d76f07f7cc7e9ba7e8c283",
+  "evidence": "targets/game/reverse/identity_evidence/0x003594a0.md",
+  "reason": "The old bank declares TABLE as the macro parameter of BFME_STRING_RECORD_RESET and invokes it with Rva003594A0. Its comment says the caller does not prove the table owner, so keep the class address-derived until evidence names it."
  }
 ]

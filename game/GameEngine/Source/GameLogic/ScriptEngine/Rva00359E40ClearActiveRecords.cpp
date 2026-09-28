@@ -5,8 +5,61 @@
 
 struct Rva00359E40Version;
 
-extern void j_00042a32();
 void __cdecl operator delete(void *block);
+
+class BfmeNodeY
+{
+public:
+	~BfmeNodeY();
+	BfmeNodeY *m_next;
+};
+
+struct Rva003594A0Record
+{
+	int m_previous;
+	int m_next;
+	char m_name[4];
+	unsigned char m_released;
+	unsigned char m_pad;
+	unsigned short m_references;
+	BfmeNodeY *m_nodes;
+};
+
+class Rva003594A0
+{
+public:
+	void method();
+
+	int *m_nameIndexesBegin;
+	int *m_nameIndexesEnd;
+	int *m_nameIndexesCapacity;
+	Rva003594A0Record *m_records;
+	int m_10;
+	int m_14;
+	int m_freeHead;
+	int m_activeTail;
+};
+
+void Rva003594A0::method()
+{
+	int index = m_activeTail;
+	while (index != -1)
+	{
+		Rva003594A0Record *record = &m_records[index];
+		BfmeNodeY *head = record->m_nodes;
+		while (head->m_next != 0)
+		{
+			BfmeNodeY *node = head->m_next;
+			BfmeNodeY *next = head->m_next->m_next;
+			delete node;
+			head->m_next = next;
+		}
+		record->m_references = 1;
+		index = m_records[index].m_previous;
+	}
+}
+
+extern void j_00042a32();
 
 class Rva003592A0NodeLink
 {
