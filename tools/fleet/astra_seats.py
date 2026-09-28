@@ -299,6 +299,9 @@ For each literal listed below:
     is witnessed (tools/name_oracle.py), else as the named global plus a byte offset.
   2 declare it the way other matched files already do (rg the name in game/ first and copy that declaration);
     an address no table names gets an address-derived extern `g_XXXXXXXX` -- never a guessed descriptive name.
+    The table often holds SEVERAL names for one address (earlier agents' spellings): prefer the real engine name
+    (a Zero Hour spelling such as `WaterSettings` or `TheNullChr`, confirmed in inputs/reference) over coded
+    placeholders like `bfmeObjDAB`, and never add another coded name when a real one is listed.
     A hint naming `__real@XXXXXXXX` / `__real@XXXXXXXXXXXXXXXX` is a compiler float/double constant: write the
     value itself (`6.0f` for __real@40c00000) and the compiler emits that constant. A large offset past a
     named global is usually a DIFFERENT, unnamed global, not a member: check its size before spelling a field.
@@ -350,14 +353,22 @@ def link_debt_brief(rvas):
     with (ROOT / "targets/game/reverse/dir32_addresses.csv").open(newline="", encoding="utf-8") as handle:
         table = sorted((int(r["va"], 16), r["name"]) for r in csv.DictReader(handle) if r["va"].startswith("0x"))
     starts = [va for va, _ in table]
-    lines = [f"FILE: {source}", "LITERALS (address -> nearest named global at or below it):"]
+    names_at = collections.defaultdict(list)
+    for va, symbol in table:
+        names_at[va].append(symbol)
+    lines = [f"FILE: {source}", "LITERALS (address -> every name the table has there, or the nearest below):"]
     text = (ROOT / source).read_text(encoding="utf-8", errors="replace")
     for number, line in enumerate(text.splitlines(), 1):
         for found in link_debt.literals(line):
             value = int(re.search(r"0x[0-9A-Fa-f]{7,8}", found).group(0), 16)
             index = bisect.bisect_right(starts, value) - 1
-            hint = (f"{table[index][1]} + 0x{value - starts[index]:X}" if index >= 0 and value - starts[index] < 0x10000
-                    else "no named global nearby: use g_%08X" % value)
+            if value in names_at:
+                hint = "exact: " + " | ".join(names_at[value][:6])
+            elif index >= 0 and value - starts[index] < 0x10000:
+                base = starts[index]
+                hint = f"{' | '.join(names_at[base][:4])} + 0x{value - base:X}"
+            else:
+                hint = "no named global nearby: use g_%08X" % value
             lines.append(f"  line {number}: {found[:70]}  ->  {hint}")
     return "\n".join(lines) + "\n"
 
