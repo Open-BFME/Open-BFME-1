@@ -72,8 +72,8 @@ def test_payload_changes_only_for_relevant_inputs(tmp_path, monkeypatch):
     monkeypatch.setattr(cache.B, "compile_is_current", lambda *_args, **_kw: True)
     monkeypatch.setattr(cache.B, "compile_function",
                         lambda *_args: {"bytes": target, "masked": False, "concrete": 4})
-    monkeypatch.setattr(cache, "_tool_receipt", lambda _command: [["compiler.exe", "tool"]])
-    monkeypatch.setattr(cache, "_rules_receipt", lambda: [["rule.py", cache._sha256(rules)]])
+    monkeypatch.setattr(cache, "_tool_receipt", lambda _command, *_args: [["compiler.exe", "tool"]])
+    monkeypatch.setattr(cache, "_rules_receipt", lambda *_args: [["rule.py", cache._sha256(rules)]])
     monkeypatch.setattr(cache, "_live_build_marker", lambda: None)
 
     payload = cache._payload(row, symbol_map, {})
@@ -135,10 +135,10 @@ def test_record_skips_rows_whose_evidence_cannot_be_keyed(tmp_path, monkeypatch)
     monkeypatch.setattr(cache, "exact_worktree", lambda _commit: None)
     monkeypatch.setattr(cache, "_live_build_marker", lambda: None)
     monkeypatch.setattr(cache.B, "load_symbol_map", lambda: {})
-    monkeypatch.setattr(cache, "_payload", lambda *_args: None)
+    monkeypatch.setattr(cache, "_payload", lambda *_args, **_kwargs: None)
     for check in ('verify_baseline', 'verify_string_refs', 'verify_constant_refs',
                   'verify_dir32_addresses', 'verify_dir32_consistency'):
-        monkeypatch.setattr(cache.B, check, lambda *a: None)
+        monkeypatch.setattr(cache.B, check, lambda *a, **kw: None)
     monkeypatch.setattr(cache.B, 'row_object', lambda _: tmp_path / 'obj')
     monkeypatch.setattr(cache.B, 'read_target_bytes', lambda *a: b'ABCD')
     monkeypatch.setattr(cache.B, 'compile_function', lambda *a: {'bytes': b'ABCD', 'masked': False, 'concrete': 4})
@@ -177,9 +177,9 @@ def test_hits_keep_all_rows_in_gate(tmp_path, monkeypatch, capsys):
     monkeypatch.setattr(cache, 'exact_worktree', lambda _: None)
     monkeypatch.setattr(cache, '_live_build_marker', lambda: None)
     monkeypatch.setattr(cache, '_rows', lambda: [row])
-    monkeypatch.setattr(cache, '_rules_receipt', lambda: [])
+    monkeypatch.setattr(cache, '_rules_receipt', lambda *a: [])
     monkeypatch.setattr(cache.B, 'load_symbol_map', lambda: {})
-    monkeypatch.setattr(cache, '_payload', lambda *a: {'version': cache.VERSION, 'rules': [], 'resolved': 'x'})
+    monkeypatch.setattr(cache, '_payload', lambda *a, **kw: {'version': cache.VERSION, 'rules': [], 'resolved': 'x'})
     monkeypatch.setattr(cache, '_load_entry', lambda _: {'payload': {'version': cache.VERSION, 'rules': [], 'resolved': 'x'}})
     manifest = tmp_path / 'manifest'
     cache.prepare('sha', ['game/a.cpp'], manifest)
@@ -199,9 +199,9 @@ def record_fixture(tmp_path, monkeypatch):
     monkeypatch.setattr(cache.B, 'row_object', lambda _: tmp_path / 'obj')
     monkeypatch.setattr(cache.B, 'read_target_bytes', lambda *a: b'ABCD')
     monkeypatch.setattr(cache.B, 'compile_function', lambda *a: {'bytes': b'ABCD', 'masked': False, 'concrete': 4})
-    monkeypatch.setattr(cache, '_payload', lambda *a: None)
+    monkeypatch.setattr(cache, '_payload', lambda *a, **kw: None)
     for name in ('verify_baseline', 'verify_string_refs', 'verify_constant_refs', 'verify_dir32_addresses', 'verify_dir32_consistency'):
-        monkeypatch.setattr(cache.B, name, lambda *a: None)
+        monkeypatch.setattr(cache.B, name, lambda *a, **kw: None)
     return path, rows
 
 
@@ -238,7 +238,7 @@ def test_combined_rows_detect_new_dir32_conflict(record_fixture, tmp_path, monke
     monkeypatch.setattr(real, 'DIR32_WHITELIST', whitelist)
     monkeypatch.setattr(real, 'read_dir32_addresses', lambda: {})
     monkeypatch.setattr(real, 'read_dir32_whitelist', lambda: set())
-    monkeypatch.setattr(real, 'propose_dir32_addresses', lambda *a: None)
+    monkeypatch.setattr(real, 'propose_dir32_addresses', lambda *a, **kw: None)
     monkeypatch.setattr(real, 'dir32_references', lambda selected: [(r, 0, 'global', int(r['target_rva'], 16)) for r in selected])
     for row in rows:
         real.verify_dir32_consistency([row])
@@ -265,3 +265,36 @@ def test_concurrent_object_edit_discards_evidence(record_fixture, tmp_path, monk
     monkeypatch.setattr(cache.B, 'verify_constant_refs', lambda _: obj.write_bytes(b'after'))
     with pytest.raises(RuntimeError, match='inputs changed'):
         cache.record(path)
+
+
+def test_fingerprints_share_hashes_only_within_invocation(tmp_path, monkeypatch):
+    source = tmp_path / 'source'
+    source.write_bytes(b'initial')
+    calls = []
+    original = cache._sha256
+    def digest(path):
+        calls.append(path)
+        return original(path)
+    monkeypatch.setattr(cache, '_sha256', digest)
+    context = cache.Fingerprints()
+    assert context.file(source) == context.file(source)
+    assert len(calls) == 1
+    context.validate()
+    assert len(calls) == 2  # independent final content check
+    cache.Fingerprints().file(source)
+    assert len(calls) == 3  # no reuse across invocations
+    source.write_bytes(b'changed')
+    with pytest.raises(RuntimeError, match='input changed'):
+        context.validate()
+
+
+def test_rule_and_tool_fingerprints_are_shared_per_configuration(monkeypatch):
+    calls = []
+    monkeypatch.setattr(cache, '_rules_receipt', lambda *a: calls.append('rules') or [])
+    monkeypatch.setattr(cache, '_tool_receipt', lambda cmd, *a: calls.append(tuple(cmd)) or [])
+    context = cache.Fingerprints()
+    for _ in range(4):
+        context.rules()
+        context.toolchain(['compiler', 'config-a'])
+    context.toolchain(['compiler', 'config-b'])
+    assert calls == ['rules', ('compiler', 'config-a'), ('compiler', 'config-b')]

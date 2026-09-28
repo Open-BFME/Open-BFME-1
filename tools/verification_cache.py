@@ -96,7 +96,49 @@ def _file_receipt(path):
     return [_normal_path(path), _sha256(path)]
 
 
-def _tool_receipt(command):
+class Fingerprints:
+    """Invocation-local sharing, with a final mutation check before recording."""
+    def __init__(self):
+        self.files = {}
+        self.toolchains = {}
+        self.rules_value = None
+
+    def file(self, path):
+        path = Path(path)
+        before = path.stat()
+        stamp = (before.st_dev, before.st_ino, before.st_size,
+                 before.st_mtime_ns, before.st_ctime_ns)
+        if path in self.files:
+            old_stamp, receipt = self.files[path]
+            if old_stamp != stamp:
+                raise RuntimeError(f'verification input changed: {path}')
+            return receipt
+        receipt = _file_receipt(path)
+        after = path.stat()
+        if before != after:
+            raise RuntimeError(f'verification input changed while hashing: {path}')
+        self.files[path] = (stamp, receipt)
+        return receipt
+
+    def rules(self):
+        if self.rules_value is None:
+            self.rules_value = _rules_receipt(self)
+        return self.rules_value
+
+    def toolchain(self, command):
+        key = tuple(command)
+        if key not in self.toolchains:
+            self.toolchains[key] = _tool_receipt(command, self)
+        return self.toolchains[key]
+
+    def validate(self):
+        for path, (_stamp, receipt) in list(self.files.items()):
+            self.file(path)
+            if _file_receipt(path) != receipt:
+                raise RuntimeError(f'verification input changed: {path}')
+
+
+def _tool_receipt(command, context=None):
     """Hash compiler executables and DLLs, not only their path names."""
     paths = set()
     for item in command:
@@ -115,12 +157,12 @@ def _tool_receipt(command):
         # a toolchain digest a prior result must not be accepted.
         return None
     try:
-        return sorted(_file_receipt(path) for path in paths)
+        return sorted((context.file(path) if context else _file_receipt(path)) for path in paths)
     except (OSError, RuntimeError):
         return None
 
 
-def _rules_receipt():
+def _rules_receipt(context=None):
     """Content-address every tracked tool and hook used by publication."""
     names = []
     for root in ("tools", ".githooks"):
@@ -132,7 +174,7 @@ def _rules_receipt():
         path = ROOT / name
         if not path.is_file():
             return None
-        result.append([name, _sha256(path)])
+        result.append([name, context.file(path)[1] if context else _sha256(path)])
     return result
 
 
@@ -232,7 +274,8 @@ def _body_and_relocs(row, obj, target, symbol_map):
     return body, relocs
 
 
-def _payload(row, symbol_map, inventory_cache):
+def _payload(row, symbol_map, inventory_cache, *, context=None, result=None):
+    context = context or Fingerprints()
     obj = B.row_object(row)
     source = ROOT / row["source"]
     target = B.read_target_bytes(int(row["target_rva"], 16), int(row["target_size"]))
@@ -250,14 +293,14 @@ def _payload(row, symbol_map, inventory_cache):
         command, env = B.compiler_command(source, obj)
     except (OSError, RuntimeError, SystemExit):
         command, env = [], {}
-    toolchain = _tool_receipt(command) if command else []
+    toolchain = context.toolchain(command) if command else []
     if command and toolchain is None:
         return None
     dependencies = []
     for dep in sorted(meta.get("deps", {})):
         path = Path(dep) if os.path.isabs(dep) else ROOT / dep
         try:
-            dependencies.append(_file_receipt(path))
+            dependencies.append(context.file(path))
         except (OSError, RuntimeError):
             return None
     try:
@@ -265,7 +308,8 @@ def _payload(row, symbol_map, inventory_cache):
     except (OSError, ValueError, SystemExit):
         return None
     try:
-        result = B.compile_function(row, symbol_map, obj)
+        if result is None:
+            result = B.compile_function(row, symbol_map, obj)
     except (OSError, ValueError, SystemExit):
         return None
     if result["bytes"] != target or (result["masked"] and
@@ -279,9 +323,9 @@ def _payload(row, symbol_map, inventory_cache):
     # The compiled object and sidecar are receipts as well as inputs.  This
     # catches a concurrent writer even when the file remains parseable.
     try:
-        object_receipt = _file_receipt(obj)
-        sidecar_receipt = _file_receipt(B._deps_sidecar(obj))
-        source_receipt = _file_receipt(source)
+        object_receipt = context.file(obj)
+        sidecar_receipt = context.file(B._deps_sidecar(obj))
+        source_receipt = context.file(source)
     except (OSError, RuntimeError):
         return None
     return {
@@ -298,7 +342,7 @@ def _payload(row, symbol_map, inventory_cache):
         "object-sidecar": sidecar_receipt,
         "relocations": [[offset, rtype, symbol] for offset, rtype, symbol in relocs],
         "resolutions": resolutions,
-        "rules": _rules_receipt(),
+        "rules": context.rules(),
         "python": [sys.executable, sys.version, os.name],
         "version": VERSION,
         # A successful record stores the bytes that the ordinary gate compared.
@@ -364,7 +408,8 @@ def prepare(commit, selectors, manifest):
         raise RuntimeError(f"build {marker} is running; retry publishing after it exits")
     rows = _rows()
     selected = _rows_for_selectors(selectors, rows)
-    rules = _rules_receipt()
+    context = Fingerprints()
+    rules = context.rules()
     if rules is None:
         raise RuntimeError("checker/rules inputs are incomplete; cannot cache verification")
     symbol_map = B.load_symbol_map()
@@ -372,13 +417,17 @@ def prepare(commit, selectors, manifest):
     misses, hits = [], []
     cache_disabled = _boundary_request_active()
     for row in selected:
-        payload = None if cache_disabled else _payload(row, symbol_map, inventory_cache)
+        payload = None if cache_disabled else _payload(row, symbol_map, inventory_cache, context=context)
         key = _key(payload)
         entry = _load_entry(key) if key else None
         if not cache_disabled and key and _entry_is_valid(entry, payload):
             hits.append(_row_selector(row))
         else:
             misses.append(row)
+    context.validate()
+    if not B._inventory_cache_still_current(inventory_cache):
+        raise RuntimeError("include search directories changed during preparation")
+    exact_worktree(commit)
     data = {"version": VERSION, "commit": commit,
             "rows": selected, "hits": hits, "selectors": selectors}
     Path(manifest).write_text(json.dumps(data, sort_keys=True), encoding="utf-8")
@@ -420,6 +469,7 @@ def record(manifest):
     inventory_cache = {}
     rows = data.get("rows", [])
     before = evidence_snapshot(rows)
+    context = Fingerprints()
     # Receipts certify row bytes only. These checks depend on referenced data,
     # baselines, whitelists, and agreement ACROSS rows, so never cache them.
     B.verify_baseline()
@@ -432,6 +482,10 @@ def record(manifest):
     for row in data.get("rows", []):
         target = B.read_target_bytes(int(row["target_rva"], 16), int(row["target_size"]))
         obj = B.row_object(row)
+        source = ROOT / row['source']
+        if (_read_meta(obj) is not None and source.suffix.lower() != B.LIB_SUFFIX
+                and not B.compile_is_current(source, obj, inventory_cache=inventory_cache)):
+            raise RuntimeError(f'post-verification object is stale for {row["name"]}')
         try:
             result = B.compile_function(row, symbol_map, obj)
         except (OSError, ValueError, SystemExit) as exc:
@@ -439,7 +493,7 @@ def record(manifest):
         if result["bytes"] != target or (result["masked"] and
                                           result["concrete"] < B.MIN_LIB_CONCRETE):
             raise RuntimeError(f"post-verification evidence failed for {row['name']}")
-        payload = _payload(row, symbol_map, inventory_cache)
+        payload = _payload(row, symbol_map, inventory_cache, context=context, result=result)
         key = _key(payload)
         if key is None:
             # The build gate has just verified this row; evidence that cannot be
@@ -451,6 +505,9 @@ def record(manifest):
         pending.append((key, payload))
         saved += 1
     exact_worktree(data["commit"])
+    context.validate()
+    if not B._inventory_cache_still_current(inventory_cache):
+        raise RuntimeError("include search directories changed during verification")
     if before != evidence_snapshot(rows):
         raise RuntimeError("verification inputs changed during ancillary checks; evidence discarded")
     if marker := _live_build_marker():
