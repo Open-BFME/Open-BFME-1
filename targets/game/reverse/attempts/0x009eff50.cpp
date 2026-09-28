@@ -1,5 +1,5 @@
 // ?refresh@Q1Receiver0134FAAC@@QAEXXZ
-// partial score=0.991 date=2026-09-28
+// partial score=0.998 date=2026-09-28
 // ?refresh@Q1Receiver0134FAAC@@QAEXXZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
@@ -26,7 +26,9 @@
 // retail inlines _M_advance); the two size sums are separate expressions
 // (retail hoists only their node terms); pass 0 adds +0x1B8 through the
 // range insert, which MSVC inlines there (cached end, insert_unique(value)
-// per key) while the earlier local copy keeps the out-of-line 0x0003AFD0.
+// per key) while the earlier local copy keeps the out-of-line 0x0003AFD0;
+// the +0x44 lookup result is a const_iterator (as in the matched
+// Queue_Keys_009EFBF0), which is what puts it in memory at retail's slot.
 
 #include <deque>
 #include <hash_map>
@@ -277,7 +279,7 @@ void Q1Receiver0134FAAC::refresh()
 
 		for (Rva001408C0Set::iterator it = keys.m_tree.begin(); it != keys.m_tree.end(); ++it)
 		{
-			Q1ReceiverAssetHash::iterator found = m_map44.find((int)*it);
+			Q1ReceiverAssetHash::const_iterator found = m_map44.find((int)*it);
 			if (found != m_map44.end())
 			{
 				Rva009EF0D0Element *asset = (*found).second;
