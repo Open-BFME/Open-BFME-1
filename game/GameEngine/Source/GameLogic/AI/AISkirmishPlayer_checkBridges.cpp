@@ -34,11 +34,83 @@ public:
     Waypoint *getNext() const { return *(Waypoint **)((const char *)this + 0x1c); }
 };
 
+typedef int Int;
+typedef unsigned short zoneStorageType;
+
+enum PathfindLayerEnum
+{
+    LAYER_INVALID = -1,
+    LAYER_GROUND = 1,
+    LAYER_FIRST_BRIDGE = 16
+};
+
+class TerrainLogic
+{
+public:
+    PathfindLayerEnum getLayerForDestination(Object *, const Coord3D *);
+};
+struct Rva003FD060TerrainLogic;
+extern Rva003FD060TerrainLogic *TheTerrainLogic;
+
+class LocomotorSet
+{
+public:
+    int getValidSurfaces() const { return *(const int *)((const char *)this + 0x10); }
+};
+
+struct PathfindMovementProfile
+{
+    int acceptableSurfaces;
+    bool crusher;
+    bool terrainOnly;
+    unsigned char padding[2];
+    int layer;
+
+    explicit PathfindMovementProfile(int surfaces) :
+        acceptableSurfaces(surfaces), crusher(false), terrainOnly(false), layer(LAYER_INVALID) {}
+};
+
+class PathfindZoneManager
+{
+public:
+    zoneStorageType getEffectiveZone(const PathfindMovementProfile &, zoneStorageType) const;
+    zoneStorageType bfmeEffectiveTerrainZone(const PathfindMovementProfile &, zoneStorageType) const;
+};
+
+class PathfindCell
+{
+public:
+    zoneStorageType getZone() const { return *(const zoneStorageType *)((const char *)this + 8); }
+};
+
+class Gen_003fbaa0
+{
+public:
+    int m();
+};
+
+class PathfindLayer
+{
+public:
+    bool isDestroyed() const { return *(const unsigned char *)((const char *)this + 0x34) != 0; }
+    bool connectsZones(PathfindZoneManager *, const LocomotorSet &, int, int);
+private:
+    char padding[0x44];
+};
+
+struct ICoord2D { Int x; Int y; };
+
 class Pathfinder
 {
 public:
     bool clientSafeQuickDoesPathExist(Object *, const Coord3D *, const Coord3D *, int);
-    int findBrokenBridge(const void *, const Coord3D *, const Coord3D *);
+    __declspec(noinline) int findBrokenBridge(const void *, const Coord3D *, const Coord3D *);
+    bool worldToCell(const Coord3D *, ICoord2D *);
+    PathfindCell *getCell(PathfindLayerEnum, int, int);
+private:
+    char padding[0x85c];
+    PathfindLayer m_layers[16];
+    PathfindZoneManager m_zoneManager;
 };
 
 class AI
@@ -80,4 +152,30 @@ bool AISkirmishPlayer::checkBridges(Object *unit, Waypoint *way)
         }
     }
     return false;
+}
+
+int Pathfinder::findBrokenBridge(const void *locomotorSetPointer, const Coord3D *from, const Coord3D *to)
+{
+    const LocomotorSet &locomotorSet = *(const LocomotorSet *)locomotorSetPointer;
+    PathfindLayerEnum destinationLayer = ((TerrainLogic *)TheTerrainLogic)->getLayerForDestination(0, to);
+    PathfindLayerEnum fromLayer = ((TerrainLogic *)TheTerrainLogic)->getLayerForDestination(0, from);
+    ICoord2D cell;
+    worldToCell(from, &cell);
+    PathfindCell *parentCell = getCell(fromLayer, cell.x, cell.y);
+    worldToCell(to, &cell);
+    PathfindCell *goalCell = getCell(destinationLayer, cell.x, cell.y);
+    PathfindMovementProfile profile(locomotorSet.getValidSurfaces());
+    int zone1 = m_zoneManager.getEffectiveZone(profile, parentCell->getZone());
+    int zone2 = m_zoneManager.getEffectiveZone(profile, goalCell->getZone());
+    zone1 = m_zoneManager.bfmeEffectiveTerrainZone(profile, zone1);
+    zone2 = m_zoneManager.bfmeEffectiveTerrainZone(profile, zone2);
+    zone1 = m_zoneManager.getEffectiveZone(profile, zone1);
+    zone2 = m_zoneManager.getEffectiveZone(profile, zone2);
+    if (zone1 == zone2)
+        return 0;
+    for (int i = 0; i <= 0x0f; ++i) {
+        if (m_layers[i].isDestroyed() && m_layers[i].connectsZones(&m_zoneManager, locomotorSet, zone1, zone2))
+            return ((Gen_003fbaa0 *)&m_layers[i])->m();
+    }
+    return 0;
 }

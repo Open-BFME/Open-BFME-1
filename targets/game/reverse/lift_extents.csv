@@ -22,7 +22,6 @@ name,ledger_rva,ledger_size,start,size,evidence
 ?deleteLoadScreen@GameLogic@@QAEXXZ,0x0038D100,1473,0x0038D100,1516,end 0x0038D6EC meets int3 padding before a 16-aligned start
 ?startNewGame@GameLogic@@QAEX_N@Z,0x00394260,7640,0x00394260,7643,end 0x0039603B meets int3 padding before a 16-aligned start
 ?logicMessageDispatcher@GameLogic@@,0x00397540,11543,0x00397540,12044,end 0x0039A44C meets int3 padding before a 16-aligned start
-?clientSafeQuickDoesPathExistForUI@Pathfinder@@QAE_NABVLocomotorSet@@PBUCoord3D@@1@Z,0x003D96A3,375,0x003D96A0,378,start 0x003D96A0 is 16-aligned after int3
 ?tryUnderAttackEvent@Radar@@,0x004271B0,373,0x004271B0,379,end 0x0042732B meets int3 padding before a 16-aligned start
 ?write@SkirmishPreferences@@,0x004559A0,830,0x004559A0,838,end 0x00455CE6 meets int3 padding before a 16-aligned start
 ?assignDefaultGadgetLook@GameWindowManager@@UAEXPAVGameWindow@@PAVGameFont@@_N@Z,0x004800FC,9955,0x00480090,10063,start 0x00480090 is 16-aligned after int3
