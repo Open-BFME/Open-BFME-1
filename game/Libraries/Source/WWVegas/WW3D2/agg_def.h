@@ -109,7 +109,11 @@ class AggregateDefClass
 		//	Public methods
 		//		
 		virtual WW3DErrorType	Load_W3D (ChunkLoadClass &chunk_load);
-		virtual WW3DErrorType	Save_W3D (ChunkSaveClass &chunk_save);
+		// BFME: the whole Save family returns a byte bool, not WW3DErrorType.
+		// Retail 0x00980590 (Save_W3D) tests every sub-save with "cmp al,1",
+		// 0x009805E0 (Save_Header) and 0x00980680 (Save_Class_Info) each finish
+		// with "mov al,bl; pop ebx; ret 4", so a caller can only see a byte.
+		virtual bool				Save_W3D (ChunkSaveClass &chunk_save);
 		const char *				Get_Name (void) const					{ return m_pName; }
 		void							Set_Name (const char *pname)			{ SAFE_FREE (m_pName); m_pName = ::_strdup (pname); }
 		RenderObjClass *			Create (void);
@@ -157,10 +161,10 @@ class AggregateDefClass
 		//
 		//	Saving methods
 		//
-		virtual WW3DErrorType		Save_Header (ChunkSaveClass &chunk_save);
+		virtual bool				Save_Header (ChunkSaveClass &chunk_save);
 		virtual bool				Save_Info (ChunkSaveClass &chunk_save);
 		virtual bool				Save_Subobject (ChunkSaveClass &chunk_save, W3dAggregateSubobjectStruct *psubobject);
-		virtual WW3DErrorType		Save_Class_Info (ChunkSaveClass &chunk_save);
+		virtual bool				Save_Class_Info (ChunkSaveClass &chunk_save);
 
 		//
 		//	Creation methods

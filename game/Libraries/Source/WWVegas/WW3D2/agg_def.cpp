@@ -779,96 +779,35 @@ AggregateDefClass::Read_Class_Info (ChunkLoadClass &chunk_load)
 //
 //	Save
 //
-WW3DErrorType
-__declspec(naked) AggregateDefClass::Save_W3D (ChunkSaveClass &chunk_save)
+bool
+AggregateDefClass::Save_W3D (ChunkSaveClass &chunk_save)
 {
-	// BFME returns the one-byte result from the successful Save_Class_Info call.
-	// MSVC 7.1 widens an enum return, so the exact retail epilogue requires emits.
-	__asm {
-		__emit 0x53
-		__emit 0x56
-		__emit 0x57
-		__emit 0x8b
-		__emit 0x7c
-		__emit 0x24
-		__emit 0x10
-		__emit 0x8b
-		__emit 0xf1
-		__emit 0x68
-		__emit 0x00
-		__emit 0x06
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0x32
-		__emit 0xdb
-		__emit 0xe8
-		__emit 0x49
-		__emit 0x11
-		__emit 0x06
-		__emit 0x00
-		__emit 0x3c
-		__emit 0x01
-		__emit 0x75
-		__emit 0x2d
-		__emit 0x8b
-		__emit 0x06
-		__emit 0x57
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xff
-		__emit 0x50
-		__emit 0x1c
-		__emit 0x3c
-		__emit 0x01
-		__emit 0x75
-		__emit 0x1a
-		__emit 0x8b
-		__emit 0x16
-		__emit 0x57
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xff
-		__emit 0x52
-		__emit 0x20
-		__emit 0x3c
-		__emit 0x01
-		__emit 0x75
-		__emit 0x0e
-		__emit 0x8b
-		__emit 0x06
-		__emit 0x57
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xff
-		__emit 0x50
-		__emit 0x28
-		__emit 0x3c
-		__emit 0x01
-		__emit 0x75
-		__emit 0x02
-		__emit 0x8a
-		__emit 0xd8
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xe8
-		__emit 0x18
-		__emit 0x12
-		__emit 0x06
-		__emit 0x00
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x8a
-		__emit 0xc3
-		__emit 0x5b
-		__emit 0xc2
-		__emit 0x04
-		__emit 0x00
-		__emit 0x83
-		__emit 0xec
-		__emit 0x14
+	// BFME returns a byte bool here: every sub-save is tested with "cmp al,1"
+	// and the aggregate chunk id 0x600 is wrapped around the three sub-chunks.
+	bool ret_val = false;
+
+	// Begin the chunk that wraps the aggregate description
+	if (chunk_save.Begin_Chunk (W3D_CHUNK_AGGREGATE) == TRUE) {
+
+		// Write each of the sub-chunks in turn
+		if (Save_Header (chunk_save) == TRUE) {
+
+			if (Save_Info (chunk_save) == TRUE) {
+
+				if (Save_Class_Info (chunk_save) == TRUE) {
+
+					// Success!
+					ret_val = true;
+				}
+			}
+		}
+
+		// End the aggregate chunk
+		chunk_save.End_Chunk ();
 	}
+
+	// Return the true/false result code
+	return ret_val;
 }
 
 
@@ -876,12 +815,12 @@ __declspec(naked) AggregateDefClass::Save_W3D (ChunkSaveClass &chunk_save)
 //
 //	Save_Header
 //
-WW3DErrorType
-// ?Save_Header@AggregateDefClass@@MAE?AW4WW3DErrorType@@AAVChunkSaveClass@@@Z present-unmatched
+bool
+// ?Save_Header@AggregateDefClass@@MAE_NAAVChunkSaveClass@@@Z present-unmatched
 AggregateDefClass::Save_Header (ChunkSaveClass &chunk_save)
 {
-	// Assume error
-	WW3DErrorType ret_val = WW3D_ERROR_SAVE_FAILED;
+	// BFME returns the byte-sized success result, like the other Save members.
+	bool ret_val = false;
 
 	// Begin a chunk that identifies the aggregate
 	if (chunk_save.Begin_Chunk (W3D_CHUNK_AGGREGATE_HEADER) == TRUE) {
@@ -895,14 +834,14 @@ AggregateDefClass::Save_Header (ChunkSaveClass &chunk_save)
 		// Write the header out to the chunk
 		if (chunk_save.Write (&header, sizeof (header)) == sizeof (header)) {
 			// Success!
-			ret_val = WW3D_ERROR_OK;			
+			ret_val = true;
 		}
 
 		// End the header chunk
 		chunk_save.End_Chunk ();
 	}
 
-	// Return the WW3D_ERROR_TYPE return code
+	// Return the true/false result code
 	return ret_val;
 }
 
@@ -976,12 +915,12 @@ AggregateDefClass::Save_Subobject
 //
 //	Save_Class_Info
 //
-WW3DErrorType
-// ?Save_Class_Info@AggregateDefClass@@MAE?AW4WW3DErrorType@@AAVChunkSaveClass@@@Z present-unmatched
+bool
+// ?Save_Class_Info@AggregateDefClass@@MAE_NAAVChunkSaveClass@@@Z present-unmatched
 AggregateDefClass::Save_Class_Info (ChunkSaveClass &chunk_save)
 {
-	// Assume error
-	WW3DErrorType ret_val = WW3D_ERROR_SAVE_FAILED;
+	// BFME returns the byte-sized success result, like the other Save members.
+	bool ret_val = false;
 
 	// Begin a chunk that identifies the texture replacer header
 	if (chunk_save.Begin_Chunk (W3D_CHUNK_AGGREGATE_CLASS_INFO) == TRUE) {
@@ -990,14 +929,14 @@ AggregateDefClass::Save_Class_Info (ChunkSaveClass &chunk_save)
 		if (chunk_save.Write (&m_MiscInfo, sizeof (m_MiscInfo)) == sizeof (m_MiscInfo)) {
 			
 			// Success!
-			ret_val = WW3D_ERROR_OK;
+			ret_val = true;
 		}
 
 		// End the class info chunk
 		chunk_save.End_Chunk ();
 	}
 
-	// Return the WW3D_ERROR_TYPE return code
+	// Return the true/false result code
 	return ret_val;
 }
 
