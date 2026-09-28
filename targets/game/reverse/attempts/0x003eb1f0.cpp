@@ -1,52 +1,92 @@
-// ?snapClosestGoalPosition@Rva003EB1F0Pathfinder@@QAEXPAVObject@@PAUCoord3D@@@Z
-// partial score=0.35 date=2026-09-17
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
-//
-// Retail 0x003EB1F0, 1678 bytes.  The carved boundary is the contiguous
-// body ending in `ret 8` at +0x68b.  The SnapClosestGoalPosition strings and
-// AIStates.cpp's named caller prove the Pathfinder goal-position role.  The
-// canonical Pathfinder spelling is already occupied by the separate 0x3F89A0
-// body, so this recovered address keeps the semantic method name while
-// retaining the address in its owner identity.
-//
-// The seven calls below are deliberately made through the ILT names printed
-// by `tools/callees.py 0x003EB1F0 1678`; no guessed callee identity is used.
+// ?snapClosestGoalPosition@Pathfinder@@QAEXPAVObject@@PAUCoord3D@@@Z
+// partial score=0.45 date=2026-09-28
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// ?snapClosestGoalPosition@Pathfinder@@QAEXPAVObject@@PAUCoord3D@@@Z  retail 0x003EB1F0 1678 B
+// Identity: the ten CritterDesync format strings (0x010EF008..) name Pathfinder::SnapClosestGoalPosition.
+// Levers in this bank: Zero Hour body plus the BFME debug logs; checkDestination is the inlined
+// 0x003E6E90 wrapper (inner 8-arg call then blocker==NULL) with the Bool passed by const reference
+// so the raw dword of center is pushed; worldToCell / PathfindLayer::getCell / getRadiusAndCenter
+// visible noinline (frame 0x30 exact, iRadius==0 constant-propagated into logs); memberwise
+// adjustDest copy; getGoalUnit ternary on m_info. Compiled 1672 vs 1678, 923 non-reloc diffs.
+// Residue: pos in EDI (retail EBX), layer in EBX (retail EBP), cell.y in EBP where retail keeps
+// cell.x in EDI across the first checkDestination; blocker/iRadius/center slots differ.
 
 typedef int Int;
 typedef bool Bool;
 typedef unsigned char UByte;
 typedef float Real;
+typedef unsigned int ObjectID;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+struct Coord3D { Real x, y, z; };
+struct ICoord2D { Int x, y; };
+struct IRegion2D { ICoord2D lo, hi; };
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
 
-enum Rva003EB1F0Layer
+extern "C" __declspec(dllimport) double __cdecl floor(double);
+__forceinline Real fast_float_floor(Real f) { return (Real)floor((double)f); }
+__forceinline long fast_float2long_round(Real f)
 {
-	Rva003EB1F0Ground = 1
+	long i;
+	__asm {
+		fld [f]
+		fistp [i]
+	}
+	return i;
+}
+#define REAL_TO_INT_FLOOR(x) (fast_float2long_round(fast_float_floor(x)))
+#define PATHFIND_CELL_SIZE 10
+
+enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1, LAYER_LAST = 15 };
+
+#define PATHFIND_CELL_SIZE_F 10.0f
+
+class CRCParameterCheck;
+extern Bool Glo012F0239;
+extern CRCParameterCheck *TheCRCParameterCheck;
+extern "C" void __cdecl bfmeRetailCritterDesyncLog(
+	CRCParameterCheck *check, const char *format, ...);
+
+extern const Real g_pathfindCellSize;
+extern const Real g_pathfindDoubleCellSize;
+extern const Real g_pathfindLevelLimit;
+extern const Real g_pathfindCellCenterBias;
+
+class BfmeOverridable
+{
+public:
+	BfmeOverridable *friend_getFinalOverride( void );
+
+	BfmeOverridable *getFinalOverride( void )
+	{
+		if (m_override == 0) return this;
+		return m_override->friend_getFinalOverride();
+	}
+
+	Int m_unknown00;
+	BfmeOverridable *m_override;
+	unsigned char m_pad08[0xc8 - 0x08];
+	Int m_flagsC8;
+	unsigned char m_padCC[0xd4 - 0xcc];
+	Int m_flagsD4;
+	unsigned char m_padD8[0x408 - 0xd8];
+	Real m_level;
 };
 
 class Object
 {
 public:
-	char m_pad00[0x74];
-	Int m_id;
+	ObjectID getID(void) const { return m_id; }
+	BfmeOverridable *getTemplate( void ) const { return m_template; }
+
+	Int m_unknown00;
+	BfmeOverridable *m_template;
+	unsigned char m_pad08[0x74 - 0x08];
+	ObjectID m_id;
+	unsigned char m_pad78[0xbc - 0x78];
+	Real m_boundingCircleRadius;
 };
 
-class CRCParameterCheck
-{
-};
-
-class Rva003FD060TerrainLogic
+class TerrainLogic
 {
 public:
 	virtual void slot00(void);
@@ -56,344 +96,248 @@ public:
 	virtual void slot04(void);
 	virtual void slot05(void);
 	virtual void slot06(void);
-	virtual Real getGroundHeight(Real x, Real y, Int layer,
-		void *normal, Bool unknown);
+	virtual Real getLayerHeight(Real x, Real y, PathfindLayerEnum layer,
+		Coord3D *normal = 0, Bool clip = true) const;
+	PathfindLayerEnum getLayerForDestination(Object *obj, const Coord3D *pos);
+};
+extern TerrainLogic *TheTerrainLogic;
+
+class PathfindCellInfo
+{
+public:
+	unsigned char m_pad00[0x14];
+	ObjectID m_goalUnitID;
 };
 
-struct Rva003EB1F0PathfindCell
+class PathfindCell
 {
+public:
+	ObjectID getGoalUnit(void) const
+	{
+		ObjectID id = m_info ? ((PathfindCellInfo *)m_info)->m_goalUnitID : 0;
+		return id;
+	}
+	Int getType(void) const { return m_packed & 7; }
+	Int getFlags(void) const { return (m_packed >> 3) & 7; }
+private:
 	void *m_info;
-	Int m_unused04;
-	Int m_unused08;
+	unsigned char m_pad04[8];
 	unsigned int m_packed;
 };
 
-class Rva003EB1F0PathfindLayer
+class PathfindLayer
 {
 public:
-	char m_pad00[4];
-	Rva003EB1F0PathfindCell **m_cells;
+	inline __declspec(noinline) PathfindCell *getCell(Int cellX, Int cellY)
+	{
+		if (m_layerCells == 0)
+			return 0;
+		cellX -= m_xOrigin;
+		cellY -= m_yOrigin;
+		if (cellX < 0 || cellX >= m_width)
+			return 0;
+		if (cellY < 0 || cellY >= m_height)
+			return 0;
+		PathfindCell *cell = &m_layerCells[cellX][cellY];
+		if (cell->getType() == 5)
+			return 0;
+		return cell;
+	}
+private:
+	void *m_blockOfMapCells;
+	PathfindCell **m_layerCells;
 	Int m_width;
 	Int m_height;
 	Int m_xOrigin;
 	Int m_yOrigin;
-	char m_tail[0x44 - 0x18];
+	unsigned char m_tail[0x44 - 0x18];
 };
 
-class Rva003EB1F0Pathfinder
+class Pathfinder
 {
 public:
 	void snapClosestGoalPosition(Object *obj, Coord3D *pos);
-
-	char m_prefix[0x10];
-	Rva003EB1F0PathfindCell **m_map;
-	Int m_extentLoX;
-	Int m_extentLoY;
-	Int m_extentHiX;
-	Int m_extentHiY;
-	char m_middle[0x85c - 0x24];
-	Rva003EB1F0PathfindLayer m_layers[16];
-};
-
-extern void j_000105cd(void);
-extern void j_000171e8(void);
-extern void j_0001c675(void);
-extern void j_0003a17a(void);
-extern void j_000411d2(void);
-extern void j_000461ff(void);
-extern void j_00049f3f(void);
-
-#define Rva003EB1F0DebugFlag (*(unsigned char *)0x012F0239)
-#define Rva003EB1F0DebugSink (*(void **)0x012ED4FC)
-#define Rva003EB1F0Terrain (*(Rva003FD060TerrainLogic **)0x012EF4CC)
-#define Rva003EB1F0K1266C (*(const Real *)0x01075344)
-#define Rva003EB1F0K1253 (*(const Real *)0x0107533C)
-#define Rva003EB1F0DirectionWeight (*(const Real *)0x01075C74)
-#define Rva003EB1F0CellBias (*(const double *)0x010EE498)
-#define Rva003EB1F0CellScale (*(const double *)0x010EE488)
-
-typedef void (__cdecl *Rva003EB1F0Log)(void *, const char *, ...);
-
-static __forceinline UByte rva003eb1f0CheckDestination(
-	Rva003EB1F0Pathfinder *self, Object *obj, Int x, Int y,
-	Rva003EB1F0Layer layer, Int radius, Int center, void **checked)
-{
-	typedef UByte (Rva003EB1F0Pathfinder::*Call)(void *, void *, void *,
-		void *, void *, void *, void **, Int);
-	union
+	inline __declspec(noinline) Bool worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex)
 	{
-		void (*raw)(void);
-		Call member;
-	} call;
-	call.raw = ::j_00049f3f;
-	return (self->*call.member)((void *)obj, (void *)x, (void *)y,
-		(void *)(Int)layer, (void *)radius, (void *)(Int)center, checked, 0);
-}
-
-static __forceinline void rva003eb1f0GetRadius(
-	Rva003EB1F0Pathfinder *self, const Object *obj, Int &radius,
-	Bool &center)
-{
-	typedef void (Rva003EB1F0Pathfinder::*Call)(const Object *, Int &, Bool &);
-	union
-	{
-		void (*raw)(void);
-		Call member;
-	} call;
-	call.raw = ::j_000461ff;
-	(self->*call.member)(obj, radius, center);
-}
-
-static __forceinline Rva003EB1F0Layer rva003eb1f0GetLayer(
-	Rva003FD060TerrainLogic *terrain, Object *obj, const Coord3D *pos)
-{
-	typedef Rva003EB1F0Layer (Rva003FD060TerrainLogic::*Call)(
-		Object *, const Coord3D *);
-	union
-	{
-		void (*raw)(void);
-		Call member;
-	} call;
-	call.raw = ::j_0001c675;
-	return (terrain->*call.member)(obj, pos);
-}
-
-static __forceinline Bool rva003eb1f0WorldToCell(
-	Rva003EB1F0Pathfinder *self, const Coord3D *pos, ICoord2D *cell)
-{
-	typedef Bool (Rva003EB1F0Pathfinder::*Call)(const Coord3D *, ICoord2D *);
-	union
-	{
-		void (*raw)(void);
-		Call member;
-	} call;
-	call.raw = ::j_000171e8;
-	return (self->*call.member)(pos, cell);
-}
-
-static __forceinline void rva003eb1f0AdjustThunk(
-	Rva003EB1F0Pathfinder *self, Int x, Int y, Bool center, Coord3D &pos,
-	Rva003EB1F0Layer layer)
-{
-	typedef void (Rva003EB1F0Pathfinder::*Call)(Int, Int, Bool, Coord3D &,
-		Rva003EB1F0Layer);
-	union
-	{
-		void (*raw)(void);
-		Call member;
-	} call;
-	call.raw = ::j_000411d2;
-	(self->*call.member)(x, y, center, pos, layer);
-}
-
-static __forceinline Rva003EB1F0PathfindCell *rva003eb1f0LayerCell(
-	Rva003EB1F0PathfindLayer *layer, Int x, Int y)
-{
-	typedef Rva003EB1F0PathfindCell *
-		(Rva003EB1F0PathfindLayer::*Call)(Int, Int);
-	union
-	{
-		void (*raw)(void);
-		Call member;
-	} call;
-	call.raw = ::j_000105cd;
-	return (layer->*call.member)(x, y);
-}
-
-static __forceinline Rva003EB1F0PathfindCell *rva003eb1f0CellAt(
-	Rva003EB1F0Pathfinder *self, Rva003EB1F0Layer layer, Int x, Int y)
-{
-	Rva003EB1F0PathfindCell *cell;
-	if (layer > 1 && layer <= 15)
-	{
-		cell = rva003eb1f0LayerCell(&self->m_layers[layer], x, y);
-		if (cell != 0)
-			return cell;
+		cellIndex->x = REAL_TO_INT_FLOOR(worldPosition->x/PATHFIND_CELL_SIZE);
+		cellIndex->y = REAL_TO_INT_FLOOR(worldPosition->y/PATHFIND_CELL_SIZE);
+		Bool overflow = false;
+		if (cellIndex->x < m_extent.lo.x) {overflow = true; cellIndex->x = m_extent.lo.x;}
+		if (cellIndex->y < m_extent.lo.y) {overflow = true; cellIndex->y = m_extent.lo.y;}
+		if (cellIndex->x > m_extent.hi.x) {overflow = true; cellIndex->x = m_extent.hi.x;}
+		if (cellIndex->y > m_extent.hi.y) {overflow = true; cellIndex->y = m_extent.hi.y;}
+		return overflow;
 	}
-	return self->m_map[x] + y;
-}
+	UByte bfmeInnerE6E90(void *a1, void *a2, void *a3, void *a4, void *a5,
+		void *a6, void **a7, int a8);
 
-static __forceinline void rva003eb1f0AdjustInline(
-	Int x, Int y, Bool center, Coord3D *pos, Rva003EB1F0Layer layer)
-{
-	if (center)
+	PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y)
 	{
-		pos->x = ((Real)x + Rva003EB1F0K1253) *
-			Rva003EB1F0DirectionWeight;
-		pos->y = ((Real)y + Rva003EB1F0K1253) *
-			Rva003EB1F0DirectionWeight;
-	}
-	else
-	{
-		pos->x = ((Real)x + Rva003EB1F0CellBias) * Rva003EB1F0CellScale;
-		pos->y = ((Real)y + Rva003EB1F0CellBias) * Rva003EB1F0CellScale;
-	}
-	Real groundHeight = Rva003EB1F0Terrain->getGroundHeight(
-		pos->x, pos->y, (Int)layer, 0, 1);
-	pos->z = groundHeight;
-}
-
-void Rva003EB1F0Pathfinder::snapClosestGoalPosition(Object *obj,
-	Coord3D *pos)
-{
-	Int iRadius;
-	Bool center;
-	if (Rva003EB1F0DebugFlag && Rva003EB1F0DebugSink)
-		((Rva003EB1F0Log)::j_0003a17a)(Rva003EB1F0DebugSink,
-			(const char *)0x010EF008, pos->x, pos->y, pos->z);
-
-	rva003eb1f0GetRadius(this, obj, iRadius, center);
-	if (Rva003EB1F0DebugFlag && Rva003EB1F0DebugSink)
-	{
-		const char *centerName = center ? (const char *)0x0107FA58 :
-			(const char *)0x01080180;
-		((Rva003EB1F0Log)::j_0003a17a)(Rva003EB1F0DebugSink,
-			(const char *)0x010EEFA8, iRadius, centerName);
-	}
-
-	ICoord2D cell;
-	Coord3D adjustDest = *pos;
-	Rva003EB1F0Layer layer;
-	struct
-	{
-		void *result;
-		Int pad;
-	} checked;
-	if (!center)
-	{
-		if (Rva003EB1F0DebugFlag && Rva003EB1F0DebugSink)
-			((Rva003EB1F0Log)::j_0003a17a)(Rva003EB1F0DebugSink,
-				(const char *)0x010EEF48);
-		adjustDest.x += Rva003EB1F0K1266C;
-		adjustDest.y += Rva003EB1F0K1266C;
-	}
-
-	layer = rva003eb1f0GetLayer(Rva003EB1F0Terrain, obj, pos);
-	rva003eb1f0WorldToCell(this, &adjustDest, &cell);
-	rva003eb1f0AdjustThunk(this, cell.x, cell.y,
-		center, *pos,
-		Rva003EB1F0Ground);
-
-	if (Rva003EB1F0DebugFlag && Rva003EB1F0DebugSink)
-	{
-		const char *centerName = center ? (const char *)0x0107FA58 :
-			(const char *)0x01080180;
-		((Rva003EB1F0Log)::j_0003a17a)(Rva003EB1F0DebugSink,
-			(const char *)0x010EEE90, cell.x, cell.y,
-			(Int)layer, iRadius, centerName, pos->x, pos->y, pos->z);
-	}
-
-	Bool initialCheck = rva003eb1f0CheckDestination(this, obj,
-		cell.x, cell.y, layer, iRadius, *(Int *)&center, &checked.result);
-	if (initialCheck)
-	{
-		Bool initialEmpty = (checked.result == 0);
-		if (initialEmpty)
+		if (x >= m_extent.lo.x && x <= m_extent.hi.x &&
+			y >= m_extent.lo.y && y <= m_extent.hi.y)
 		{
-			if (Rva003EB1F0DebugFlag && Rva003EB1F0DebugSink)
-				((Rva003EB1F0Log)::j_0003a17a)(Rva003EB1F0DebugSink,
-					(const char *)0x010EEE20);
-			return;
+			PathfindCell *cell = 0;
+			if (layer > LAYER_GROUND && layer <= LAYER_LAST)
+			{
+				cell = m_layers[layer].getCell(x, y);
+				if (cell)
+					return cell;
+			}
+			return &m_map[x][y];
+		}
+		return 0;
+	}
+
+protected:
+	inline __declspec(noinline) void getRadiusAndCenter( const Object *object, Int &radius, Bool &centerInCell )
+	{
+		Real diameter;
+		Int maxRadius = 2;
+		BfmeOverridable *t1 = object->getTemplate();
+		if ((t1 == 0 ? t1 : t1->getFinalOverride())->m_flagsC8 & 0x400) {
+			maxRadius = 4;
+		} else {
+			BfmeOverridable *t2 = object->getTemplate();
+			if ((t2 == 0 ? t2 : t2->getFinalOverride())->m_flagsD4 & 0x1000) {
+				maxRadius = 4;
+			}
+		}
+
+		diameter = object->m_boundingCircleRadius * 2.0f;
+		if (diameter > g_pathfindCellSize && diameter < g_pathfindDoubleCellSize) {
+			diameter = 20.0f;
+		}
+
+		if ((object->getTemplate() == 0 ? object->getTemplate() :
+			object->getTemplate()->getFinalOverride())->m_level > g_pathfindLevelLimit) {
+			diameter = (object->getTemplate() == 0 ? object->getTemplate() :
+			object->getTemplate()->getFinalOverride())->m_level;
+		}
+
+		radius = REAL_TO_INT_FLOOR( diameter / 10.0f + g_pathfindCellCenterBias );
+		centerInCell = false;
+		if (radius == 0) radius++;
+		if (radius & 1) {
+			centerInCell = true;
+		}
+		radius /= 2;
+		if (radius > maxRadius) {
+			radius = maxRadius;
+			centerInCell = true;
 		}
 	}
+	void adjustCoordToCell(Int cellX, Int cellY, Bool centerInCell,
+		Coord3D &position, PathfindLayerEnum layer);
 
-	if (Rva003EB1F0DebugFlag && Rva003EB1F0DebugSink)
-		((Rva003EB1F0Log)::j_0003a17a)(Rva003EB1F0DebugSink,
-			(const char *)0x010EEDB0);
-
-	Int i;
-	Int j;
-	for (i = cell.x - 1; i < cell.x + 2; ++i)
+	Bool checkDestination(const Object *obj, Int cellX, Int cellY,
+		PathfindLayerEnum layer, Int iRadius, const Bool &centerInCell)
 	{
-		for (j = cell.y - 1; j < cell.y + 2; ++j)
-		{
-			Bool neighbourCheck = rva003eb1f0CheckDestination(this, obj,
-				i, j, layer, iRadius, *(Int *)&center, &checked.result);
-			if (neighbourCheck)
-			{
-				Bool neighbourEmpty = (checked.result == 0);
-				if (neighbourEmpty)
-				{
-					rva003eb1f0AdjustThunk(this, i, j, center, *pos, layer);
-					if (Rva003EB1F0DebugFlag && Rva003EB1F0DebugSink)
-					{
-						const char *centerName = center ?
-							(const char *)0x0107FA58 :
-							(const char *)0x01080180;
-						((Rva003EB1F0Log)::j_0003a17a)(
-							Rva003EB1F0DebugSink,
-							(const char *)0x010EEC90, i, j, (Int)layer,
-						 iRadius, centerName, pos->x, pos->y, pos->z);
-					}
-					return;
-				}
+		void *blocker;
+		if (!bfmeInnerE6E90((void *)obj, (void *)cellX, (void *)cellY,
+			(void *)layer, (void *)iRadius, *(void **)&centerInCell, &blocker, 0))
+			return false;
+		Bool empty = (blocker == 0);
+		return empty;
+	}
+
+	void adjustCoordToCellInline(Int cellX, Int cellY, Bool centerInCell,
+		Coord3D &position, PathfindLayerEnum layer)
+	{
+		if (centerInCell) {
+			position.x = ((Real)cellX + 0.5f) * PATHFIND_CELL_SIZE_F;
+			position.y = ((Real)cellY + 0.5f) * PATHFIND_CELL_SIZE_F;
+		} else {
+			position.x = ((Real)cellX+0.05) * PATHFIND_CELL_SIZE_F;
+			position.y = ((Real)cellY+0.05) * PATHFIND_CELL_SIZE_F;
+		}
+		position.z = TheTerrainLogic->getLayerHeight(position.x, position.y, layer);
+	}
+
+private:
+	unsigned char m_prefix[0x10];
+	PathfindCell **m_map;
+	IRegion2D m_extent;
+	unsigned char m_mid[0x85c - 0x24];
+	PathfindLayer m_layers[16];
+};
+
+#define CRITTER_LOG Glo012F0239 && TheCRCParameterCheck
+
+void Pathfinder::snapClosestGoalPosition(Object *obj, Coord3D *pos)
+{
+	if (CRITTER_LOG)
+		bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "CritterDesync: Pathfinder::SnapClosestGoalPosition() called with pos=%g,%g,%g", pos->x, pos->y, pos->z);
+	Int iRadius;
+	Bool center;
+	getRadiusAndCenter(obj, iRadius, center);
+	if (CRITTER_LOG)
+		bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "CritterDesync: Pathfinder::SnapClosestGoalPosition() iRadius=%d, center=%s", iRadius, center ? "TRUE" : "FALSE");
+	ICoord2D cell;
+	Coord3D adjustDest;
+	adjustDest.x = pos->x;
+	adjustDest.y = pos->y;
+	adjustDest.z = pos->z;
+	if (!center) {
+		if (CRITTER_LOG)
+			bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "CritterDesync: Pathfinder::SnapClosestGoalPosition() !center, adjustDest...");
+		adjustDest.x += PATHFIND_CELL_SIZE_F/2;
+		adjustDest.y += PATHFIND_CELL_SIZE_F/2;
+	}
+	PathfindLayerEnum layer = TheTerrainLogic->getLayerForDestination(obj, pos);
+	worldToCell(&adjustDest, &cell);
+	adjustCoordToCell(cell.x, cell.y, center, *pos, LAYER_GROUND);
+	if (CRITTER_LOG)
+		bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "CritterDesync: Pathfinder::SnapClosestGoalPosition() CheckDestination about to get called with cell=%d,%d, layer=%d, iRadius=%d, center=%s, pos=%g%g%g", cell.x, cell.y, layer, iRadius, center ? "TRUE" : "FALSE", pos->x, pos->y, pos->z);
+	if (checkDestination(obj, cell.x, cell.y, layer, iRadius, center)) {
+		if (CRITTER_LOG)
+			bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "CritterDesync: Pathfinder::SnapClosestGoalPosition() CheckDestination succeeds, returning...");
+		return;
+	}
+	if (CRITTER_LOG)
+		bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "CritterDesync: Pathfinder::SnapClosestGoalPosition() CheckDestination fails, continuing...");
+
+	// Try adjusting by 1.
+	Int i, j;
+	for (i = cell.x - 1; i < cell.x + 2; i++) {
+		for (j = cell.y - 1; j < cell.y + 2; j++) {
+			if (checkDestination(obj, i, j, layer, iRadius, center)) {
+				adjustCoordToCell(i, j, center, *pos, layer);
+				if (CRITTER_LOG)
+					bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "CritterDesync: Pathfinder::SnapClosestGoalPosition() CheckDestination2 succeeds with cell=%d,%d, layer=%d, iRadius=%d, center=%s, pos=%g%g%g", cell.x, cell.y, layer, iRadius, center ? "TRUE" : "FALSE", pos->x, pos->y, pos->z);
+				return;
 			}
 		}
 	}
-
-	if (iRadius == 0)
-	{
-		for (i = cell.x - 1; i < cell.x + 2; ++i)
-		{
-			for (j = cell.y - 1; j < cell.y + 2; ++j)
-			{
-				Rva003EB1F0PathfindCell *newCell =
-					rva003eb1f0CellAt(this, layer, i, j);
-				if (newCell != 0)
-				{
-					void *info = newCell->m_info;
-					Int goal = info == 0 ? 0 :
-						*(Int *)((char *)info + 0x14);
-					if (goal == 0 || goal == obj->m_id)
-					{
-						rva003eb1f0AdjustInline(i, j, center, pos, layer);
-						if (Rva003EB1F0DebugFlag &&
-							Rva003EB1F0DebugSink)
-						{
-							const char *centerName = center ?
-								(const char *)0x0107FA58 :
-								(const char *)0x01080180;
-							((Rva003EB1F0Log)::j_0003a17a)(
-								Rva003EB1F0DebugSink,
-								(const char *)0x010EEBE0, i, j,
-								(Int)layer, iRadius, centerName,
-								pos->x, pos->y, pos->z);
-						}
+	if (iRadius == 0) {
+		// Try to find an unoccupied cell.
+		for (i = cell.x - 1; i < cell.x + 2; i++) {
+			for (j = cell.y - 1; j < cell.y + 2; j++) {
+				PathfindCell *newCell = getCell(layer, i, j);
+				if (newCell) {
+					if (newCell->getGoalUnit() == 0 || newCell->getGoalUnit() == obj->getID()) {
+						adjustCoordToCellInline(i, j, center, *pos, layer);
+						if (CRITTER_LOG)
+							bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "CritterDesync: Pathfinder::SnapClosestGoalPosition() CheckDestination3 succeeds with cell=%d,%d, layer=%d, iRadius=%d, center=%s, pos=%g%g%g", cell.x, cell.y, layer, iRadius, center ? "TRUE" : "FALSE", pos->x, pos->y, pos->z);
 						return;
 					}
 				}
 			}
 		}
-
-		for (i = cell.x - 1; i < cell.x + 2; ++i)
-		{
-			for (j = cell.y - 1; j < cell.y + 2; ++j)
-			{
-				Rva003EB1F0PathfindCell *newCell =
-					rva003eb1f0CellAt(this, layer, i, j);
-				if (newCell != 0 &&
-					(newCell->m_packed & 0x38) != 0x18)
-				{
-				rva003eb1f0AdjustInline(i, j, center, pos, layer);
-					if (Rva003EB1F0DebugFlag &&
-						Rva003EB1F0DebugSink)
-					{
-						const char *centerName = center ?
-							(const char *)0x0107FA58 :
-							(const char *)0x01080180;
-						((Rva003EB1F0Log)::j_0003a17a)(
-							Rva003EB1F0DebugSink,
-							(const char *)0x010EEB30, i, j,
-							(Int)layer, iRadius, centerName,
-								pos->x, pos->y, pos->z);
+		// Try to find an unoccupied cell.
+		for (i = cell.x - 1; i < cell.x + 2; i++) {
+			for (j = cell.y - 1; j < cell.y + 2; j++) {
+				PathfindCell *newCell = getCell(layer, i, j);
+				if (newCell) {
+					if (newCell->getFlags() != 3) {
+						adjustCoordToCellInline(i, j, center, *pos, layer);
+						if (CRITTER_LOG)
+							bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "CritterDesync: Pathfinder::SnapClosestGoalPosition() CheckDestination4 succeeds with cell=%d,%d, layer=%d, iRadius=%d, center=%s, pos=%g%g%g", cell.x, cell.y, layer, iRadius, center ? "TRUE" : "FALSE", pos->x, pos->y, pos->z);
+						return;
 					}
-					return;
 				}
 			}
 		}
 	}
-
-	if (Rva003EB1F0DebugFlag && Rva003EB1F0DebugSink)
-	((Rva003EB1F0Log)::j_0003a17a)(Rva003EB1F0DebugSink,
-			(const char *)0x010EED40, iRadius, pos->x, pos->y, pos->z);
+	if (CRITTER_LOG)
+		bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "CritterDesync: Pathfinder::SnapClosestGoalPosition() iRadius=%d>0 do nothing case, pos=%g%g%g", iRadius, pos->x, pos->y, pos->z);
 }
