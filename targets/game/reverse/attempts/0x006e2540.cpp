@@ -1,43 +1,18 @@
 // ?d_006e2540@@YAXXZ
-// partial score=0.849911190053286 date=2026-09-28
+// partial score=0.9849 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
-// PARTIAL reconstruction of retail RVA 0x006E2540, 1126 bytes. NOT LANDED.
-// This address-derived owner has no witnessed layout in name_oracle.
-// Direct call ABI map (all RVAs):
-// Gen00049FDA::handle -> ILT 49FDA -> 39B020 (AL flag; ECX receiver).
-// Sink::write -> ILT 22BB0 -> 7110F0 (one stack pointer, receiver unused).
-// Sink::read -> ILT 3ED6F -> 7110B0 (one stack pointer, receiver unused).
-// Sink::adjust -> ILT 34608 -> 711130 (live ECX, pointer + bool, ret 8).
-// BfmeSubXW::bfmeScaleXW -> ILT D7B5 -> 96F60 (float ST0).
-// pick -> ILT 18552 -> 40BC50, BfmeObjBC::bfmeGoBC (out triple pointer).
-// color -> ILT 1A1FE -> 40B300, BfmeObjB3::bfmeGoB3 (unsigned EAX).
-// stringAt9C -> ILT 15BD6 -> 6E22E0 (four-byte string by-value return).
-// StringBase<char>::isNotEmpty -> ILT 2D5C4 -> 5E510; releaseBuffer -> 887940.
-// FXListStore::findFXList -> ILT 1669E -> 42B660.
-// FXList::doFXPos -> ILT 1593D -> 1E0A80.
-// WWMath::Random_Float -> 8D8E00; integer cast uses CRT __ftol2 at 9F6E38.
-// Scratch shim methods above are ABI descriptions, NOT new semantic identities
-// or missing-pin claims. Before landing, reuse established spellings where ABI
-// agrees; independently verify any additional address-derived member aliases.
-// Globals are named by observed VA. No symbols.csv pins have been added.
-// Frame/global slots: terrain +20 returns 24-byte bounds; client +68 returns
-// unsigned frame counter; terrain renderer +228 takes one zero stack argument.
-// Native EH lifetime: only the four-byte returned string is protected.
-// Remaining wall: aggregate-copy scheduling, 0x34 vs 0x40 stack allocation,
-// TEST AL,AL vs CMP AL,BL, and scratch-register/store/epilogue ordering.
 #include "ascii_string.h"
 template<> inline StringBase<char>::~StringBase() { releaseBuffer(); }
 template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 
 struct Triple006E2540 {
     float x,y,z;
-    Triple006E2540 &operator=(const Triple006E2540 &v) { x=v.x; z=v.z; y=v.y; return *this; }
     void set(float a,float b,float c) { x=a; y=b; z=c; }
 };
 struct Copy006E2540 { float x,y,z; };
 struct Box006E2540 { Triple006E2540 lo,hi; };
-class Gen00049FDA { public: unsigned char handle(); };
-extern Gen00049FDA *g_012F0FE0;
+class Gen00049FDA { public: bool handle(); };
+extern Gen00049FDA *R2Ptr012F0FE0;
 class BfmeSubXW { public: float bfmeScaleXW(); char data[12]; };
 class WWMath { public: static float Random_Float(); };
 class Sink006E2540 {
@@ -215,7 +190,7 @@ class Matrix3D;
 struct Coord3D {float x,y,z;};
 class FXList { public: static void doFXPos(const FXList *,const Coord3D *,const Matrix3D *,float,const Coord3D *); };
 class FXListStore { public: const FXList *findFXList(const char *) const; };
-extern FXListStore *g_012F144C;
+extern FXListStore *TheFXListStore;
 
 class Rva006E2540 {
 public:
@@ -247,21 +222,24 @@ public:
     const FXList *fec;
     unsigned ff0;
     int ff4;
-    __forceinline void clear() {
-        fb8=false; fbc=0; fc0=0; ff4=0; fc4.set(0,0,0);
-        if(f4c) {g_012F8058->write(&fd0); if(g_01306EEC) g_01306EEC->color=fe8;}
-        g_012F8058->adjust(&fdc,true);
-        fd0.set(0,0,0); fdc.set(0,0,0);
-    }
 };
+// Retail keeps both colour copies at one stack slot; the fade factor stays on the x87 stack.
 void Rva006E2540::update() {
     if(fb0==0) return;
+    Triple006E2540 value;
     if(fb0==2) {
-        Triple006E2540 value=f2c;
-        if(g_012F0FE0 && g_012F0FE0->handle()) {
+        value=f2c;
+        unsigned char on = R2Ptr012F0FE0 ? R2Ptr012F0FE0->handle() : 0;
+        if(on) {
             if(fb8) {
-                fc4=value;
-                if(--fbc<=0) {clear(); return;}
+                fc4.set(value.x,value.y,value.z);
+                if(--fbc<=0) {
+                    fb8=false; fbc=0; fc0=0; ff4=0; fc4.set(0,0,0);
+                    if(f4c) {g_012F8058->write(&fd0); if(g_01306EEC) g_01306EEC->color=fe8;}
+                    g_012F8058->adjust(&fdc,true);
+                    fd0.set(0,0,0); fdc.set(0,0,0);
+                    return;
+                }
                 if(f81) {
                     fc0=f74.bfmeScaleXW();
                     if(fc0>0.9) fc0=0.9f;
@@ -280,6 +258,7 @@ void Rva006E2540::update() {
             }
             float random=WWMath::Random_Float();
             if(random < probability() && ++ff4>3) {
+                Triple006E2540 other;
                 fb8=true;
                 fbc=(int)f64.bfmeScaleXW();
                 fc0=f74.bfmeScaleXW();
@@ -287,37 +266,38 @@ void Rva006E2540::update() {
                 fdc.set(fc0,fc0,fc0);
                 if(f4c) {
                     g_012F8058->read(&fd0);
-                    Triple006E2540 other;
                     pick(&other);
                     g_012F8058->write(&other);
                     if(g_01306EEC) {
-                        fe8=g_01306EEC->color;
+                        unsigned saved=g_01306EEC->color;
+                        fe8=saved;
                         g_01306EEC->color=color();
                     }
                 }
                 g_012F8058->adjust(&fdc,false);
                 if(!fec) {
                     AsciiString name=stringAt9C();
-                    if(name.isNotEmpty()) fec=g_012F144C->findFXList(name.str());
+                    if(name.isNotEmpty()) fec=TheFXListStore->findFXList(name.str());
                 }
                 if(fec) {
                     Box006E2540 box;
                     g_012EF4CC->bounds(&box);
                     Coord3D pos;
-                    pos.x=(box.hi.x+box.lo.x)*0.5f;
-                    pos.y=(box.hi.y+box.lo.y)*0.5f;
+                    pos.x=(box.lo.x+box.hi.x)*0.5f;
+                    pos.y=(box.lo.y+box.hi.y)*0.5f;
                     pos.z=0;
                     FXList::doFXPos(fec,&pos,0,0,0);
                 }
             }
         }
-        fc4=value;
-        return;
+        fc4.set(value.x,value.y,value.z);
     }
-    {
-        float factor=1.0-(float)fb4*0.00392156862745098;
-        Triple006E2540 value; value=f2c;
-        fc4.set(value.x*factor,value.y*factor,value.z*factor);
+    else {
+        double factor=1.0-(float)fb4*0.00392156862745098;
+        value=f2c;
+        fc4.x=value.x*factor;
+        fc4.y=value.y*factor;
+        fc4.z=value.z*factor;
         if(g_012F1464->frame()%10==0) g_012F7FE0->refresh(0);
     }
 }
