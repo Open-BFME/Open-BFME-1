@@ -1,11 +1,12 @@
 // ?prepareFinish@Rva56E070StateOwner@@QAEXXZ
-// partial score=0.49 date=2026-09-28
+// partial score=0.63 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWLib /D_STLP_USE_STATIC_LIB
 //
 // BFME anonymous body 0x0056F1F0, 2286 bytes.  The finishCurrent caller and
 // the 0x00006B3B ILT prove the prepareFinish identity.  The constructor at
 // 0x0056A2F0 proves the list<AvailableGameInfo> header at this+0x284.
-// NOT byte matched: 2289/2286 B, 1171 masked differing bytes, shape 0.970.
+// NOT byte matched: 2282/2286 B, 845 masked differing bytes, shape 0.976.
+// Listbox picked by default-then-override if (not a ternary): 1171 -> 845.
 // 2026-09-28 opus-5.5 rewrite from the retail decode and the matched sibling
 // GameState::populateSaveGameListbox (0x001121A0, same column order):
 //   RecorderClass is 0x2B4 bytes (EH extent ebp-0x2C0..EH record; witness
@@ -673,7 +674,9 @@ void Rva56E070StateOwner::prepareFinish()
 					header.iniCRC == TheWritableGlobalData->m_iniCRC;
 
 				Int color = versionMatches ? -1 : (Int)0xff808080;
-				GameWindow *listbox = isLastReplay ? m_arg268 : m_arg264;
+				GameWindow *listbox = m_arg264;
+				if (isLastReplay)
+					listbox = m_arg268;
 
 				Int index = GadgetListBoxAddEntryText(listbox, mapStr, color, -1, 0, TRUE);
 				GadgetListBoxAddEntryText(listbox, replayNameToShow, color, index, 1, TRUE);
