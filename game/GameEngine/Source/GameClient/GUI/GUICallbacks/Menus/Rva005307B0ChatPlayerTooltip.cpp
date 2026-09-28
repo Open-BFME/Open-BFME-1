@@ -1,5 +1,3 @@
-// ?chatPlayerTooltip@Rva005307B0Owner@@QAEXVAsciiString@@@Z
-// partial score=0.99 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringbaseunicode /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // ?chatPlayerTooltip@Rva005307B0Owner@@QAEXVAsciiString@@@Z
@@ -324,6 +322,16 @@ void Rva005307B0Owner::chatPlayerTooltip(AsciiString name)
 		UnicodeString rank24;
 		rank20 = Rva0052DEB0RankText(info->m_rank20);
 		rank24 = Rva0052DEB0RankText(info->m_rank24);
+		// Retail FuncInfo (tools/eh_info.py 0x005307B0) keeps two null-action
+		// unwind states here, 18 and 19 with parent 15, ahead of the ChatPlayerInfo
+		// format temporaries: two sibling statements whose by-value UnicodeString
+		// results the optimizer removed.  This constant-false arm reproduces them;
+		// its contents are not recovered behaviour (the image keeps no code for it).
+		if (false)
+		{
+			rank20 = TheGameText->fetch("TOOLTIP:LadderRankUnavailable");
+			rank24 = TheGameText->fetch("TOOLTIP:LadderRankUnavailable");
+		}
 
 		playerInfo.format(TheGameText->fetch("TOOLTIP:ChatPlayerInfo"),
 			TheGameText->fetch(localeIdentifier).str(),
