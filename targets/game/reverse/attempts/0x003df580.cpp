@@ -1,472 +1,403 @@
 // ?d_003df580@@YAXXZ
-// partial score=0.3 date=2026-09-17
+// partial score=0.481 date=2026-09-28
+// ?d_003df580@@YAXXZ
+// partial score=0.4810 date=2026-09-28 model=opus-5.5
+// probe symbol: ?checkDestination@Pathfinder@@QAE_NPBVObject@@HHW4PathfindLayerEnum@@H_NPAH2@Z
 // cl: /DNDEBUG /MD
 //
-// Retail 0x003DF580: the BFME-extended Pathfinder destination predicate.
-// The string at 0x010EEA60 names CheckDestination and the 0x003E6E90
-// Pathfinder wrapper supplies the eight-argument ABI.  The class and method
-// keep the address token because the added BFME arguments do not yet prove a
-// canonical public signature.
-
+// Retail 0x003DF580, 2029 bytes, ret 0x20: the BFME Pathfinder::CheckDestination
+// (string 0x010EEA60 "Pathfinder::CheckDestination called with: obj=%s(%d),
+// cell=%d,%d, layer=%d, iRadius=%d, centerInCell=%s").  Fresh rewrite from the
+// retail instructions over the Zero Hour checkDestination twin
+// (AIPathfind.cpp:4924) with every BFME log string decoded:
+//  - horde (template+D4 bit12) / path-through-infantry (D4 bit28) prologue
+//    sets ursurpAllyGoalCells [esp+12] and canPathThroughInfantry [esp+13];
+//  - the horde ground case builds pos=(cell+0.5)*10, pos.z = TerrainLogic
+//    vslot7 getLayerHeight(x,y,LAYER_GROUND,NULL,true) and asks vslot47(&pos)
+//    ("narrow passage area");
+//  - D0 bit25 + C8 bit8 off-ground forces radius 1 / centre false;
+//  - j_00010ea1 true ("human controlled") range-checks m_logicalExtent (+24);
+//  - arg7 counts allied goal cells, arg8 skips the unit lookup.
+// The override walker body is visible in the TU (noinline, pinned name
+// ?friend_getFinalOverride@BfmeOverridable@@QAEPAV1@XZ -> ILT 0x22BB) so the
+// flag/logger stay cached in BL/EBP across it exactly as retail does; the
+// template pointer is read volatile because retail re-reads it each time.
+// OFF THE MAP is the else of if(cell), as in ZH, which puts its tail last.
+// The two IMPASSABLE tests (5, then 6) are separate ifs with the same log so
+// the merged tail lands after CELL_CLIFF as in retail (a 5||6 test put it last).
+// Remaining (6 structural diffs, 2015 vs 2029 bytes, 1025 differing): +264
+// radius/centre load order; +2CC retail reloads this into EDX and uses ECX as
+// temp; +3A7 retail reloads TheCRCParameterCheck for the BEGIN-iteration log;
+// +44C this-copy register choice in inlined getCell; the +3E7 loop-alignment
+// jmp/pad only follows from the earlier size deficit.
 typedef int Int;
+typedef bool Bool;
+typedef float Real;
 typedef unsigned int ObjectID;
-typedef unsigned char Bool;
-typedef unsigned char UByte;
 
+const ObjectID INVALID_ID = 0;
+
+struct ICoord2D { Int x, y; };
+struct IRegion2D { ICoord2D lo, hi; };
+struct Coord3D { Real x, y, z; };
+
+enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1, LAYER_LAST = 15 };
 enum Relationship { ENEMIES = 0, NEUTRAL = 1, ALLIES = 2 };
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
+extern bool Glo012F0239;
+extern "C" void __cdecl bfmeRetailCritterDesyncLog(CRCParameterCheck *, const char *, ...);
 
-struct IRegion2D
-{
-	ICoord2D lo;
-	ICoord2D hi;
-};
+#define CHECKDEST_LOG(args) \
+	do { if (Glo012F0239 && TheCRCParameterCheck) bfmeRetailCritterDesyncLog args; } while (0)
 
-struct Rva003DF580ThingTemplate
+extern void j_00010ea1();
+extern void j_0001a36b();
+extern void j_00024c99();
+extern void j_0003251f();
+extern void j_000420aa();
+
+class Rva003DF580Call {};
+template<class P> __forceinline P rva003DF580Pmf(void (*f)())
 {
-	void *m_vtable;
-	Rva003DF580ThingTemplate *m_next;
-	unsigned char m_pad08[0x18];
-	char *m_nameData;
-	unsigned char m_pad24[0xa4];
+	union { void (*raw)(); P member; } u;
+	u.raw = f;
+	return u.member;
+}
+#define RVA003DF580_CALL(T,obj,fn) (((Rva003DF580Call*)(obj))->*rva003DF580Pmf<T>(fn))
+
+class BfmeOverridable
+{
+public:
+	__declspec(noinline) BfmeOverridable *friend_getFinalOverride();
+	Int m_unknown00;
+	BfmeOverridable *m_override;
+};
+BfmeOverridable *BfmeOverridable::friend_getFinalOverride()
+{
+	if (m_override) return m_override->friend_getFinalOverride();
+	return this;
+}
+
+struct Rva003DF580AsciiData { char m_pad[8]; char m_chars[1]; };
+struct Rva003DF580Template : public BfmeOverridable
+{
+	char m_pad08[0x20 - 8];
+	Rva003DF580AsciiData *m_name;
+	char m_pad24[0xc8 - 0x24];
 	unsigned int m_flagsC8;
-	unsigned int m_padCC;
+	unsigned int m_flagsCC;
 	unsigned int m_flagsD0;
 	unsigned int m_flagsD4;
+	const char *getNameStr() const { return m_name ? m_name->m_chars : ""; }
 };
+
+class Rva003DF580AI {};
 
 class Object
 {
 public:
 	Relationship getRelationship(const Object *that) const;
 
+	Rva003DF580Template *getTemplate() const
+	{
+		BfmeOverridable *t = *(BfmeOverridable * volatile *)&m_template;
+		if (t && t->m_override) t = t->m_override->friend_getFinalOverride();
+		return (Rva003DF580Template *)t;
+	}
+	ObjectID getID() const { return m_id; }
+	Rva003DF580AI *getAI() const { return m_ai; }
+
 	void *m_vtable;
-	Rva003DF580ThingTemplate *m_template;
-	unsigned char m_pad08[0x6c];
+	Rva003DF580Template *m_template;
+	char m_pad08[0x74 - 8];
 	ObjectID m_id;
-	unsigned char m_pad78[0x18c];
-	void *m_ai;
+	char m_pad78[0x204 - 0x78];
+	Rva003DF580AI *m_ai;
 };
 
-struct Rva003DF580CellInfo
-{
-	unsigned char m_pad00[0x14];
-	ObjectID m_goalUnit;
-	unsigned char m_pad18[4];
-	ObjectID m_goalAircraft;
-	ObjectID m_obstacle;
-};
-
-struct Rva003DF580PathfindCell
-{
-	Rva003DF580CellInfo *m_info;
-	Int m_field04;
-	Int m_field08;
-	unsigned int m_packed;
-};
-
-struct Rva003DF580PathfindLayer
-{
-	unsigned char m_body[0x44];
-};
-
-class Rva003DF580OverrideCall
-{
-};
-
-class Rva003DF580LayerCall
-{
-};
-
-class Rva003DF580AICall
-{
-};
+typedef Bool (Rva003DF580Call::*Rva001BE410)() const;
+typedef Int (Rva003DF580Call::*Rva0026F940)();
+typedef Bool (Rva003DF580Call::*Rva00271450)() const;
+typedef Bool (Rva003DF580Call::*Rva001CC790)(const Object *, Int) const;
+typedef Bool (Rva003DF580Call::*Rva000A2CF0)(Int) const;
 
 class GameLogic
 {
 public:
-	Object *findObjectByID(ObjectID);
+	Object *findObjectByID(Int id);
+};
+extern GameLogic *TheBfmeGameLogic;
+
+class TerrainLogic
+{
+public:
+	virtual void slot0(); virtual void slot1(); virtual void slot2();
+	virtual void slot3(); virtual void slot4(); virtual void slot5(); virtual void slot6();
+	virtual Real getLayerHeight(Real x, Real y, PathfindLayerEnum layer, Coord3D *normal = 0, Bool clip = true) const;
+	virtual void slot8(); virtual void slot9(); virtual void slot10(); virtual void slot11();
+	virtual void slot12(); virtual void slot13(); virtual void slot14(); virtual void slot15();
+	virtual void slot16(); virtual void slot17(); virtual void slot18(); virtual void slot19();
+	virtual void slot20(); virtual void slot21(); virtual void slot22(); virtual void slot23();
+	virtual void slot24(); virtual void slot25(); virtual void slot26(); virtual void slot27();
+	virtual void slot28(); virtual void slot29(); virtual void slot30(); virtual void slot31();
+	virtual void slot32(); virtual void slot33(); virtual void slot34(); virtual void slot35();
+	virtual void slot36(); virtual void slot37(); virtual void slot38(); virtual void slot39();
+	virtual void slot40(); virtual void slot41(); virtual void slot42(); virtual void slot43();
+	virtual void slot44(); virtual void slot45(); virtual void slot46();
+	virtual Bool slot47(const Coord3D *pos);
+};
+extern TerrainLogic *TheTerrainLogic;
+
+struct PathfindCellInfo
+{
+	char m_pad00[0x14];
+	ObjectID m_goalUnitID;
+	char m_pad18[4];
+	ObjectID m_goalAircraftID;
+	ObjectID m_obstacleID;
 };
 
-extern GameLogic *TheGameLogic;
-
-class Rva003DF580ObjectCall
+class PathfindCell
 {
+public:
+	Int getType() const { return m_packed & 7; }
+	Int getFlags() const { return m_packed & 0x38; }
+	unsigned char getAircraftGoalByte() const { return (unsigned char)(m_packed >> 19); }
+	unsigned char getPlayerImpassableByte() const { return (unsigned char)(m_packed >> 21); }
+	ObjectID getGoalUnit() const { return m_info ? m_info->m_goalUnitID : INVALID_ID; }
+	ObjectID getGoalAircraft() const { return m_info ? m_info->m_goalAircraftID : INVALID_ID; }
+	Bool isObstaclePresent(ObjectID id) const
+	{
+		if (id != INVALID_ID && m_info && m_info->m_obstacleID == id) return true;
+		return false;
+	}
+
+	PathfindCellInfo *m_info;
+	Int m_unused04;
+	Int m_unused08;
+	unsigned int m_packed;
 };
 
-extern void j_000022bb();
-extern void j_000105cd();
-extern void j_00010ea1();
-extern void j_0001a36b();
-extern void j_00024c99();
-extern void j_0003251f();
-extern void j_0003a17a();
-extern void j_000420aa();
-
-static __forceinline Rva003DF580ThingTemplate *rva003df580Final(
-	Rva003DF580ThingTemplate *value)
+class PathfindLayer
 {
-	typedef Rva003DF580ThingTemplate *
-		(Rva003DF580OverrideCall::*Function)();
-	union { void (*raw)(); Function member; } call;
-	call.raw = j_000022bb;
-	return (reinterpret_cast<Rva003DF580OverrideCall *>(value)->*call.member)();
-}
-
-static __forceinline Rva003DF580PathfindCell *rva003df580LayerCell(
-	Rva003DF580PathfindLayer *layer, Int x, Int y)
-{
-	typedef Rva003DF580PathfindCell *
-		(Rva003DF580LayerCall::*Function)(Int, Int);
-	union { void (*raw)(); Function member; } call;
-	call.raw = j_000105cd;
-	return (reinterpret_cast<Rva003DF580LayerCall *>(layer)->*call.member)(x, y);
-}
-
-static __forceinline Bool rva003df580IsComputerControlled(Object *object)
-{
-	typedef Bool (Rva003DF580ObjectCall::*Function)() const;
-	union { void (*raw)(); Function member; } call;
-	call.raw = j_00010ea1;
-	return (reinterpret_cast<Rva003DF580ObjectCall *>(object)->*call.member)();
-}
-
-static __forceinline Int rva003df580IgnoredObstacle(void *ai)
-{
-	typedef Int (Rva003DF580AICall::*Function)();
-	union { void (*raw)(); Function member; } call;
-	call.raw = j_0001a36b;
-	return (reinterpret_cast<Rva003DF580AICall *>(ai)->*call.member)();
-}
-
-static __forceinline Bool rva003df580AircraftDestination(void *ai)
-{
-	typedef Bool (Rva003DF580AICall::*Function)();
-	union { void (*raw)(); Function member; } call;
-	call.raw = j_00024c99;
-	return (reinterpret_cast<Rva003DF580AICall *>(ai)->*call.member)();
-}
-
-static __forceinline Bool rva003df580CanCrush(Object *object, Object *other)
-{
-	typedef Bool (Rva003DF580ObjectCall::*Function)(Object *, Int) const;
-	union { void (*raw)(); Function member; } call;
-	call.raw = j_000420aa;
-	return (reinterpret_cast<Rva003DF580ObjectCall *>(object)->*call.member)(other, 2);
-}
-
-static __forceinline Bool rva003df580KindOf(Object *object, Int kind)
-{
-	typedef Bool (Rva003DF580ObjectCall::*Function)(Int) const;
-	union { void (*raw)(); Function member; } call;
-	call.raw = j_0003251f;
-	return (reinterpret_cast<Rva003DF580ObjectCall *>(object)->*call.member)(kind);
-}
-
-typedef void (__cdecl *Rva003DF580Log)(void *, const char *, ...);
-
-class Rva003DF580TerrainLogic
-{
+public:
+	PathfindCell *getCell(Int x, Int y);
+private:
+	unsigned char m_body[0x44];
 };
-
-static __forceinline float rva003df580TerrainFloat(
-	Rva003DF580TerrainLogic *terrain, float x, float y)
-{
-	typedef float (Rva003DF580TerrainLogic::*Function)(float, float);
-	union { void (*raw)(); Function member; } call;
-	call.raw = (void (*)())(*(void ***)terrain)[7];
-	return (terrain->*call.member)(x, y);
-}
-
-static __forceinline Bool rva003df580TerrainCheck(
-	Rva003DF580TerrainLogic *terrain, void *value)
-{
-	typedef Bool (Rva003DF580TerrainLogic::*Function)(void *);
-	union { void (*raw)(); Function member; } call;
-	call.raw = (void (*)())(*(void ***)terrain)[47];
-	return (terrain->*call.member)(value);
-}
 
 class Pathfinder
 {
 public:
-	Bool bfmeInnerE6E90(void *, void *, void *, void *, void *, void *,
-		void **, Int);
+	Bool checkDestination(const Object *obj, Int cellX, Int cellY, PathfindLayerEnum layer,
+		Int iRadius, Bool centerInCell, Int *allyGoalCount, Bool skipUnitCheck);
 
-	unsigned char m_head[0x10];
-	Rva003DF580PathfindCell **m_map;
-	IRegion2D m_extent;
-	IRegion2D m_logicalExtent;
-	unsigned char m_opaque[0x85c - 0x34];
-	Rva003DF580PathfindLayer m_layers[16];
-};
-
-Bool Pathfinder::bfmeInnerE6E90(void *a1, void *a2, void *a3,
-	void *a4, void *a5, void *a6, void **a7, Int a8)
-{
-	Object *object = (Object *)a1;
-	Int cellX = (Int)a2;
-	Int cellY = (Int)a3;
-	Int layer = (Int)a4;
-	Int radius = (Int)a5;
-	Int centerInCell = (Int)a6;
-	Rva003DF580ThingTemplate *thing = object->m_template;
-	Rva003DF580ThingTemplate *finalThing;
-	ObjectID objectID;
-	const char *name;
-	void *crc;
-
-	if (*(UByte *)0x012F0239 != 0 &&
-		(crc = *(void **)0x012ED4FC) != 0)
+	PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y)
 	{
-		Rva003DF580Log log = (Rva003DF580Log)j_0003a17a;
-		const char *label = centerInCell != 0 ? (const char *)0x0107FA58 :
-			(const char *)0x01080180;
-		objectID = object->m_id;
-		finalThing = thing;
-		if (finalThing != 0 && finalThing->m_next != 0)
-			finalThing = rva003df580Final(finalThing->m_next);
-		if (finalThing != 0 && finalThing->m_nameData != 0)
-			name = finalThing->m_nameData + 8;
-		else
-			name = (const char *)0x0107388B;
-		log(crc, (const char *)0x010EEA60, name, objectID, cellX, cellY,
-			layer, radius, label);
-	}
-
-	Bool allowGoal = 0;
-	Bool allowMoving = 0;
-	Rva003DF580ThingTemplate *currentThing = object->m_template;
-	if (currentThing != 0 && currentThing->m_next != 0)
-		currentThing = rva003df580Final(currentThing->m_next);
-
-	if (currentThing != 0 && (currentThing->m_flagsD4 & 0x01000000) != 0)
-	{
-		if (*(UByte *)0x012F0239 != 0 &&
-			(crc = *(void **)0x012ED4FC) != 0)
-			((Rva003DF580Log)j_0003a17a)(crc, (const char *)0x010EEA48);
-
-		if (layer == 1 && centerInCell == 0)
+		if (x >= m_extent.lo.x && x <= m_extent.hi.x &&
+			y >= m_extent.lo.y && y <= m_extent.hi.y)
 		{
-			Rva003DF580TerrainLogic *terrain =
-				*(Rva003DF580TerrainLogic **)0x012EF4CC;
-			float x = (float)cellX;
-			float y = (float)centerInCell;
-			x += *(const float *)0x0107533C;
-			x *= *(const float *)0x01075C74;
-			y += *(const float *)0x0107533C;
-			y *= *(const float *)0x01075C74;
-			if (rva003df580TerrainFloat(terrain, x, y) != 0.0f)
+			PathfindCell *cell = 0;
+			if (layer > LAYER_GROUND && layer <= LAYER_LAST)
 			{
-				unsigned char terrainProbe[8];
-				if (rva003df580TerrainCheck(terrain, terrainProbe) != 0)
-				{
-					if (*(UByte *)0x012F0239 != 0 &&
-						(crc = *(void **)0x012ED4FC) != 0)
-						((Rva003DF580Log)j_0003a17a)(crc,
-							(const char *)0x010EE9FC);
-					radius = 1;
-					centerInCell = 1;
-					allowGoal = 1;
-				}
-				else
-					return 0;
+				cell = m_layers[layer].getCell(x, y);
+				if (cell)
+					return cell;
 			}
+			return &m_map[x][y];
 		}
 		else
 		{
-			if (*(UByte *)0x012F0239 != 0 &&
-				(crc = *(void **)0x012ED4FC) != 0)
-				((Rva003DF580Log)j_0003a17a)(crc,
-					(const char *)0x010EE9C8, layer);
-			radius = 1;
-			centerInCell = 1;
-			allowGoal = 1;
-		}
-	}
-
-	currentThing = object->m_template;
-	if (currentThing != 0 && currentThing->m_next != 0)
-		currentThing = rva003df580Final(currentThing->m_next);
-	if (currentThing != 0 &&
-		(currentThing->m_flagsD4 & 0x10000000) != 0)
-	{
-		if (*(UByte *)0x012F0239 != 0 &&
-			(crc = *(void **)0x012ED4FC) != 0)
-			((Rva003DF580Log)j_0003a17a)(crc,
-				(const char *)0x010EE990);
-		allowMoving = 1;
-	}
-
-	currentThing = object->m_template;
-	if (currentThing != 0 && currentThing->m_next != 0)
-		currentThing = rva003df580Final(currentThing->m_next);
-	if (currentThing != 0 && (currentThing->m_flagsC8 & 0x00000100) != 0 &&
-		layer != 1)
-	{
-		radius = 1;
-		centerInCell = 0;
-	}
-
-	Int numCellsAbove = radius;
-	if (centerInCell != 0)
-		numCellsAbove++;
-
-	Bool checkForAircraft = 0;
-	ObjectID ignoreID = 0;
-	objectID = 0;
-	if (object->m_ai != 0)
-	{
-		ignoreID = (ObjectID)rva003df580IgnoredObstacle(object->m_ai);
-		checkForAircraft = rva003df580AircraftDestination(object->m_ai);
-		objectID = object->m_id;
-	}
-	*a7 = 0;
-
-	if (objectID != 0 && object->m_ai != 0 &&
-		*(UByte *)0x012F0239 != 0 &&
-		(crc = *(void **)0x012ED4FC) != 0)
-	{
-		((Rva003DF580Log)j_0003a17a)(crc, (const char *)0x010EE8D0,
-			cellX - radius, cellX + numCellsAbove,
-			cellY - radius, cellY + numCellsAbove);
-	}
-
-	Int i = cellX - radius;
-	Int iEnd = cellX + numCellsAbove;
-	Int jStart = cellY - radius;
-	Int jEnd = cellY + numCellsAbove;
-	for (; i < iEnd; ++i)
-	{
-		if (i < m_logicalExtent.lo.x || i > m_logicalExtent.hi.x ||
-			jStart < m_logicalExtent.lo.y || jStart > m_logicalExtent.hi.y ||
-			jEnd > m_logicalExtent.hi.y)
-		{
-		if (*(UByte *)0x012F0239 != 0 &&
-				(crc = *(void **)0x012ED4FC) != 0)
-				((Rva003DF580Log)j_0003a17a)(crc,
-					(const char *)0x010EE94C);
 			return 0;
 		}
+	}
 
-		Rva003DF580PathfindCell *cell = 0;
-		for (Int j = jStart; j < jEnd; ++j)
+	unsigned char m_prefix[0x10];
+	PathfindCell **m_map;
+	IRegion2D m_extent;
+	IRegion2D m_logicalExtent;
+	unsigned char m_mid[0x85c - 0x34];
+	PathfindLayer m_layers[16];
+};
+
+Bool Pathfinder::checkDestination(const Object *obj, Int cellX, Int cellY, PathfindLayerEnum layer,
+	Int iRadius, Bool centerInCell, Int *allyGoalCount, Bool skipUnitCheck)
+{
+	CHECKDEST_LOG((TheCRCParameterCheck,
+		"          Pathfinder::CheckDestination called with: obj=%s(%d), cell=%d,%d, layer=%d, iRadius=%d, centerInCell=%s",
+		obj->getTemplate()->getNameStr(), obj->getID(), cellX, cellY, layer, iRadius,
+		centerInCell ? "TRUE" : "FALSE"));
+
+	Bool ursurpAllyGoalCells = false;
+	Bool canPathThroughInfantry = false;
+	if (obj->getTemplate()->m_flagsD4 & 0x1000)
+	{
+		CHECKDEST_LOG((TheCRCParameterCheck, "          horde"));
+		if (layer == LAYER_GROUND && !skipUnitCheck)
 		{
-			if (i < m_extent.lo.x || i > m_extent.hi.x ||
-				j < m_extent.lo.y || j > m_extent.hi.y)
+			CHECKDEST_LOG((TheCRCParameterCheck, "          layer is LAYER_GROUND"));
+			Coord3D pos;
+			pos.x = ((Real)cellX + 0.5f) * 10.0f;
+			pos.y = ((Real)cellY + 0.5f) * 10.0f;
+			pos.z = TheTerrainLogic->getLayerHeight(pos.x, pos.y, LAYER_GROUND);
+			if (TheTerrainLogic->slot47(&pos))
 			{
-			if (*(UByte *)0x012F0239 != 0 &&
-					(crc = *(void **)0x012ED4FC) != 0)
-					((Rva003DF580Log)j_0003a17a)(crc,
-						(const char *)0x010EE7D0, i, j);
-				return 0;
-			}
-
-			if (layer > 1 && layer <= 15)
-			{
-				cell = rva003df580LayerCell(
-					&m_layers[layer], i, j);
-				if (cell == 0)
-					cell = m_map[i] + j;
-			}
-			else
-				cell = m_map[i] + j;
-			if (cell == 0)
-			{
-				if (*(UByte *)0x012F0239 != 0 &&
-					(crc = *(void **)0x012ED4FC) != 0)
-					((Rva003DF580Log)j_0003a17a)(crc,
-						(const char *)0x010EE788, i, j);
-				return 0;
-			}
-
-			if (checkForAircraft)
-			{
-				if (((cell->m_packed >> 19) & 1) == 0)
-					continue;
-				Rva003DF580CellInfo *info = cell->m_info;
-				ObjectID aircraft = info != 0 ? info->m_goalAircraft : 0;
-				if (aircraft == objectID)
-					continue;
-				if (*(UByte *)0x012F0239 != 0 &&
-					(crc = *(void **)0x012ED4FC) != 0)
-					((Rva003DF580Log)j_0003a17a)(crc,
-						(const char *)0x010EE884, i, j);
-				return 0;
-			}
-
-			unsigned int packed = cell->m_packed;
-			Int type = (Int)(packed & 7);
-			if (type == 5)
-				return 0;
-			if (((packed >> 21) & 1) != 0 &&
-				rva003df580IsComputerControlled(object) != 0)
-				return 0;
-			if (type == 2)
-				return 0;
-			if (type == 4)
-			{
-				Rva003DF580CellInfo *info = cell->m_info;
-				if (info != 0 && info->m_obstacle == ignoreID)
-					continue;
-				if (*(UByte *)0x012F0239 != 0 &&
-					(crc = *(void **)0x012ED4FC) != 0)
-					((Rva003DF580Log)j_0003a17a)(crc,
-						(const char *)0x010EE83C, i, j);
-				return 0;
-			}
-			if ((packed & 0x38) == 0)
-				continue;
-
-			Rva003DF580CellInfo *info = cell->m_info;
-			ObjectID goal = info != 0 ? info->m_goalUnit : 0;
-			if (goal == objectID || goal == ignoreID || goal == 0)
-				continue;
-			if (a8 != 0)
-				continue;
-			Object *unit = TheGameLogic->findObjectByID(goal);
-			if (unit == 0)
-				continue;
-			if (object->getRelationship(unit) == ALLIES)
-			{
-				if (allowGoal == 0)
-				{
-					if (*(UByte *)0x012F0239 != 0 &&
-						(crc = *(void **)0x012ED4FC) != 0)
-						((Rva003DF580Log)j_0003a17a)(crc,
-							(const char *)0x010EE6F0, i, j);
-					return 0;
-				}
-				++*(Int *)a7;
-				continue;
-			}
-			if ((packed & 0x38) != 0x18)
-				continue;
-			if (rva003df580CanCrush(object, unit) != 0)
-				continue;
-			if (allowMoving == 0)
-			{
-				if (*(UByte *)0x012F0239 != 0 &&
-					(crc = *(void **)0x012ED4FC) != 0)
-					((Rva003DF580Log)j_0003a17a)(crc,
-						(const char *)0x010EE6A8, i, j);
-				return 0;
-			}
-			if (rva003df580KindOf(unit, 8) == 0)
-			{
-				if (*(UByte *)0x012F0239 != 0 &&
-					(crc = *(void **)0x012ED4FC) != 0)
-					((Rva003DF580Log)j_0003a17a)(crc,
-						(const char *)0x010EE658, i, j);
-				return 0;
+				CHECKDEST_LOG((TheCRCParameterCheck, "          narrow passage area"));
+				iRadius = 1;
+				centerInCell = true;
 			}
 		}
-		jStart++;
+		else
+		{
+			CHECKDEST_LOG((TheCRCParameterCheck, "          layer != LAYER_GROUND, layer=%d", layer));
+			iRadius = 1;
+			centerInCell = true;
+		}
+		ursurpAllyGoalCells = true;
 	}
-	return 1;
+	else if (obj->getTemplate()->m_flagsD4 & 0x10000000)
+	{
+		CHECKDEST_LOG((TheCRCParameterCheck, "          I'm a path through infantry kindof"));
+		canPathThroughInfantry = true;
+		ursurpAllyGoalCells = true;
+	}
+
+	if ((obj->getTemplate()->m_flagsD0 & 0x2000000) &&
+		(obj->getTemplate()->m_flagsC8 & 0x100) &&
+		layer != LAYER_GROUND)
+	{
+		iRadius = 1;
+		centerInCell = false;
+	}
+
+	Int numCellsAbove = iRadius;
+	if (centerInCell) numCellsAbove++;
+
+	if (RVA003DF580_CALL(Rva001BE410, obj, j_00010ea1)())
+	{
+		CHECKDEST_LOG((TheCRCParameterCheck, "          human controlled"));
+		if (cellX - iRadius < m_logicalExtent.lo.x || cellX + numCellsAbove > m_logicalExtent.hi.x ||
+			cellY - iRadius < m_logicalExtent.lo.y || cellY + numCellsAbove > m_logicalExtent.hi.y)
+		{
+			CHECKDEST_LOG((TheCRCParameterCheck, "            returning false"));
+			return false;
+		}
+	}
+
+	Bool checkForAircraft = false;
+	Int i, j;
+	ObjectID ignoreId = INVALID_ID;
+	ObjectID objID = INVALID_ID;
+	if (obj->getAI())
+	{
+		CHECKDEST_LOG((TheCRCParameterCheck, "          I have an AI"));
+		ignoreId = RVA003DF580_CALL(Rva0026F940, obj->getAI(), j_0001a36b)();
+		checkForAircraft = RVA003DF580_CALL(Rva00271450, obj->getAI(), j_00024c99)();
+		objID = obj->getID();
+	}
+	*allyGoalCount = 0;
+
+	CHECKDEST_LOG((TheCRCParameterCheck,
+		"          BEGIN cell iteration (deep innards), i from %d to %d, j from %d to %d",
+		cellX - iRadius, cellX + numCellsAbove, cellY - iRadius, cellY + numCellsAbove));
+
+	for (i = cellX - iRadius; i < cellX + numCellsAbove; i++)
+	{
+		for (j = cellY - iRadius; j < cellY + numCellsAbove; j++)
+		{
+			PathfindCell *cell = getCell(layer, i, j);
+			if (cell)
+			{
+				if (checkForAircraft)
+				{
+					if (!(cell->getAircraftGoalByte() & 1)) continue;
+					if (cell->getGoalAircraft() == objID) continue;
+					CHECKDEST_LOG((TheCRCParameterCheck, "          checkForAircraft=TRUE, return false: i=%d, j=%d", i, j));
+					return false;
+				}
+				if (cell->getType() == 5)
+				{
+					CHECKDEST_LOG((TheCRCParameterCheck, "          cell is CELL_IMPASSABLE, return false: i=%d, j=%d", i, j));
+					return false;
+				}
+				if ((cell->getPlayerImpassableByte() & 1) && RVA003DF580_CALL(Rva001BE410, obj, j_00010ea1)())
+				{
+					CHECKDEST_LOG((TheCRCParameterCheck, "          cell is playerImpassable and obj is human controlled, return false: i=%d, j=%d", i, j));
+					return false;
+				}
+				if (cell->getType() == 2)
+				{
+					CHECKDEST_LOG((TheCRCParameterCheck, "          cell is CELL_CLIFF, return false: i=%d, j=%d", i, j));
+					return false;
+				}
+				if (cell->getType() == 4)
+				{
+					if (cell->isObstaclePresent(ignoreId))
+						continue;
+					CHECKDEST_LOG((TheCRCParameterCheck, "          cell is CELL_OBSTACLE, return false: i=%d, j=%d", i, j));
+					return false;
+				}
+				if (cell->getType() == 5)
+				{
+					CHECKDEST_LOG((TheCRCParameterCheck, "          cell is CELL_IMPASSABLE, return false: i=%d, j=%d", i, j));
+					return false;
+				}
+				if (cell->getType() == 6)
+				{
+					CHECKDEST_LOG((TheCRCParameterCheck, "          cell is CELL_IMPASSABLE, return false: i=%d, j=%d", i, j));
+					return false;
+				}
+				if (cell->getFlags() == 0)
+					continue;
+				ObjectID goalUnitID = cell->getGoalUnit();
+				if (goalUnitID == objID)
+					continue;
+				else if (ignoreId == goalUnitID)
+					continue;
+				else if (goalUnitID != INVALID_ID)
+				{
+					if (skipUnitCheck)
+						continue;
+					Object *unit = TheBfmeGameLogic->findObjectByID(goalUnitID);
+					if (unit)
+					{
+						if (obj->getRelationship(unit) == ALLIES)
+						{
+							if (!ursurpAllyGoalCells)
+							{
+								CHECKDEST_LOG((TheCRCParameterCheck, "          cell is !ursurpAllyGoalCells, return false: i=%d, j=%d", i, j));
+								return false;
+							}
+							(*allyGoalCount)++;
+							continue;
+						}
+						if (cell->getFlags() == 0x18)
+						{
+							if (!RVA003DF580_CALL(Rva001CC790, obj, j_000420aa)(unit, 2))
+							{
+								if (!canPathThroughInfantry)
+								{
+									CHECKDEST_LOG((TheCRCParameterCheck, "          !canPathThroughInfantry, return false: i=%d, j=%d", i, j));
+									return false;
+								}
+								if (!RVA003DF580_CALL(Rva000A2CF0, unit, j_0003251f)(8))
+								{
+									CHECKDEST_LOG((TheCRCParameterCheck, "          Sorry no luck (not infantry), return false: i=%d, j=%d", i, j));
+									return false;
+								}
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				CHECKDEST_LOG((TheCRCParameterCheck, "          OFF THE MAP, return false: i=%d, j=%d", i, j));
+				return false;
+			}
+		}
+	}
+	return true;
 }
