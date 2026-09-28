@@ -1,5 +1,5 @@
 // ?setDate@Rva007FF700Date@@QAEHHHH@Z
-// partial score=0.78 date=2026-09-26
+// partial score=0.79 date=2026-09-28
 // cl: /Ob1
 /* A small CALENDAR DATE class sitting just below the DirtySock text helpers.
  * It is a separate translation unit from those because it is built with
@@ -132,16 +132,18 @@ int Rva007FF700Date::setYear( int year )
 	return -3;
 }
 
+// Banked near-miss for 0x007FF4F0 (56 B, score 0.79): month/year guards and
+// setDay tail all match; residue is the two fail-tail order (or-eax,-1 vs mov
+// eax,-3 swapped) and the fail jumps landing at +0x32 instead of +0x2a.
 int Rva007FF700Date::setDate( int month, int day, int year )
 {
-	if ( month <= 0 || month >= 13 )
+	if( month <= 0 || month >= 13 )
 		return -1;
-
 	m_month = month;
-	if ( year >= 1900 )
+	if( year >= 1900 )
 	{
 		m_year = year;
-		return setDay(day);
+		return setDay( day );
 	}
 	return -3;
 }
