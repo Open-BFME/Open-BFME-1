@@ -86105,7 +86105,7 @@ name,address,notes
 ?reset@?$bitset@$0BEA@@_STL@@QAEAAV12@XZ,0x0002194A,address-derived call target from the exact 320-bit INI token sink at 0x00208810; ILT fronts the shared bitset reset body at 0x001C2B80
 ?reset@BfmeMgr089_152@@QAEXXZ,0x00003486,pin
 ?reset@BfmePathfindLayerReset@@QAEXXZ,0x000379FC,Pathfinder reset layer alias
-?reset@BfmeZoneManagerReset@@QAEXXZ,0x0000742D,Pathfinder reset zone manager alias
+?reset@BfmeZoneManagerReset@@QAEXXZ,0x0000742D,route=0x00406B10; ILT 0x0000742D jumps to body 0x00406B10
 ?reset@ConnectionManager@@QAEXXZ,0x00665350,EXTRA - 494-byte body with NO ledger row and NO Ghidra function (gap 0x00665350..0x0066553E): ZH reset line for line - delete m_transport +0x12024; destroy the eight Connections and FrameDataManagers; (re)create+reset m_pendingCommands +0x12104 m_relayedCommands +0x12108 NetCommandWrapperList +0x1210C; m_localSlot=m_packetRouterSlot=-1; id list +0x12030=-1 and +0x12060/+0x12080/+0x120A0/+0x120C0=0; clears +0x12110
 ?reset@ControlBarScheme@@QAEXXZ,0x0002E2D5
 ?reset@CrateSystem@@UAEXXZ,0x00379250,vtable-slot ??_7CrateSystem@@6B@ slot 4 anchors=2

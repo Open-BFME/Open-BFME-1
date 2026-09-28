@@ -3892,6 +3892,162 @@ public:
 
 #pragma comment(linker, "/alternatename:?deallocate@?$BfmeNodeAllocator@$00$0A@@@SAXPAXI@Z=?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")
 
+struct Rva004029F0GridExtent
+{
+	short width;
+	short height;
+};
+
+class Rva004029F0
+{
+public:
+	Rva004029F0();
+	~Rva004029F0();
+
+private:
+	int m_field00;
+	unsigned char m_field04;
+	unsigned char m_field05;
+	unsigned char m_pad06[2];
+	int m_ints[12];
+	Rva004029F0GridExtent m_firstGridExtent;
+	void *m_firstGrid[12][5];
+	unsigned char m_field12c;
+	unsigned char m_pad12d[3];
+	Rva004029F0GridExtent m_secondGridExtent;
+	void *m_secondGrid[12][5];
+	unsigned char m_field224;
+	unsigned char m_pad225[3];
+};
+
+struct Rva00406B10ZoneManagerState
+{
+	unsigned char m_bfmeHead[0x23624];
+	Rva004029F0 *m_blockOfZoneBlocks;
+	short *m_zoneBlocks;
+	int m_zoneBlockExtentX;
+	int m_zoneBlockExtentY;
+	char m_padTail[0x23638 - 0x23634];
+};
+
+namespace
+{
+struct BfmeVectorElement
+{
+	char value[16];
+};
+
+struct BfmeRandomAccessIteratorTag
+{
+};
+
+template <class InputIterator, class OutputIterator, class Distance>
+static __forceinline OutputIterator BfmeCopy(
+	InputIterator first, InputIterator last, OutputIterator result,
+	const BfmeRandomAccessIteratorTag &, Distance *)
+{
+	int count = (int)(last - first);
+	for (; count > 0; --count)
+	{
+		*result = *first;
+		++first;
+		++result;
+	}
+	return result;
+}
+
+class BfmeVector
+{
+public:
+	BfmeVectorElement *begin() { return m_start; }
+	BfmeVectorElement *end() { return m_finish; }
+	__forceinline BfmeVectorElement *erase(
+		BfmeVectorElement *first, BfmeVectorElement *last)
+	{
+		BfmeRandomAccessIteratorTag tag;
+		m_finish = BfmeCopy(last, m_finish, first, tag, (int *)0);
+		return first;
+	}
+
+	BfmeVectorElement *m_start;
+	BfmeVectorElement *m_finish;
+	BfmeVectorElement *m_end;
+};
+}
+
+class Rva00406B10TreeNode
+{
+public:
+	void *m_color;
+	Rva00406B10TreeNode *m_parent;
+	Rva00406B10TreeNode *m_left;
+	Rva00406B10TreeNode *m_right;
+};
+
+class Rva00406B10TreeState
+{
+public:
+	Rva00406B10TreeNode *m_header;
+	UnsignedInt m_size;
+	void *m_pad8;
+	void *m_padc;
+};
+
+extern void j_0001b9b9(void);
+void operator delete[](void *value) throw();
+
+// ?reset@BfmeZoneManagerReset@@QAEXXZ
+void BfmeZoneManagerReset::reset(void)
+{
+	Rva00406B10ZoneManagerState *state =
+		reinterpret_cast<Rva00406B10ZoneManagerState *>(this);
+	if (state->m_blockOfZoneBlocks != 0)
+	{
+		delete[] state->m_blockOfZoneBlocks;
+	}
+
+	short *zoneBlocks = state->m_zoneBlocks;
+	state->m_blockOfZoneBlocks = 0;
+	delete[] zoneBlocks;
+	state->m_zoneBlocks = 0;
+	state->m_zoneBlockExtentX = 0;
+	state->m_zoneBlockExtentY = 0;
+
+	state->m_bfmeHead[0] = 1;
+	state->m_bfmeHead[1] = 1;
+	BfmeVector *secondVector = reinterpret_cast<BfmeVector *>(
+		state->m_bfmeHead + 0x2360c);
+	secondVector->erase(secondVector->begin(), secondVector->end());
+	*reinterpret_cast<int *>(state->m_bfmeHead + 4) = -1;
+
+	Rva00406B10TreeState *tree = reinterpret_cast<Rva00406B10TreeState *>(
+		state->m_bfmeHead + 0x235fc);
+	if (tree->m_size != 0)
+	{
+		Rva00406B10TreeNode *node = tree->m_header->m_parent;
+		if (node != 0)
+		{
+			do
+			{
+				typedef void (Rva00406B10TreeState::*EraseFn)(Rva00406B10TreeNode *);
+				union { void (*freeFn)(void); EraseFn memberFn; } erase;
+				erase.freeFn = j_0001b9b9;
+				(tree->*erase.memberFn)(node->m_right);
+
+				Rva00406B10TreeNode *left = node->m_left;
+				BfmeNodeAllocator<true, 0>::deallocate(node, 0x34);
+				node = left;
+			}
+			while (node != 0);
+		}
+
+		tree->m_header->m_left = tree->m_header;
+		tree->m_header->m_parent = 0;
+		tree->m_header->m_right = tree->m_header;
+		tree->m_size = 0;
+	}
+}
+
 struct BfmePathfindListNode
 {
 	void *m_field00;
