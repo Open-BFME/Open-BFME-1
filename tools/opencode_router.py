@@ -418,6 +418,9 @@ def model_selection(model, variant):
     return model.split('#')[0] + ('#' + variant if variant else '')
 
 
+FAILURE_CLASS = ('partial', 'blocked', 'no-match', 'refuted')
+
+
 def classify(error):
     """Only classify transport/error events, never the worker's task prose."""
     text = json.dumps(error).lower()
@@ -494,6 +497,12 @@ class Events:
                 report = None
                 try:
                     value = json.loads(line[len('ROUTER_RESULT '):])
+                    # Workers use the repository's verdict words: a near miss is 'partial' and a
+                    # dead end 'blocked'. Both are failure-class outcomes whose structured handoff
+                    # (approaches, discoveries, remaining differences) must survive for the next
+                    # attempt and for escalation; discarding them lost every Nemotron trial report.
+                    if isinstance(value, dict) and value.get('outcome') in FAILURE_CLASS:
+                        value = dict(value, reported_outcome=value['outcome'], outcome='failure')
                     if isinstance(value, dict) and value.get('outcome') in ('success', 'failure'):
                         report = value
                 except ValueError:

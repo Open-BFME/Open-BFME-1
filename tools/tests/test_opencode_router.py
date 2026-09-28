@@ -367,6 +367,21 @@ class RouterTests(unittest.TestCase):
         path.write_text(json.dumps(c))
         with self.assertRaises(ValueError):r.config(path)
 
+    def test_partial_and_blocked_reports_survive_as_failures(self):
+        for word in ('partial', 'blocked'):
+            ev = r.Events()
+            ev.text = 'work\nROUTER_RESULT {"outcome":"%s","approaches":["a"],"discoveries":["d"]}\n' % word
+            res = ev.result(0)
+            self.assertEqual(res['kind'], 'failure')
+            self.assertIsNotNone(res['report'])
+            self.assertEqual(res['report']['outcome'], 'failure')
+            self.assertEqual(res['report']['reported_outcome'], word)
+            self.assertEqual(res['report']['approaches'], ['a'])
+        ev = r.Events(); ev.text = 'ROUTER_RESULT {"outcome":"success"}\n'
+        self.assertEqual(ev.result(0)['kind'], 'success')
+        ev = r.Events(); ev.text = 'ROUTER_RESULT {"outcome":"whatever"}\n'
+        self.assertIsNone(ev.result(0)['report'])
+
     def test_provider_server_errors_are_availability_not_task_failure(self):
         self.assertEqual(r.classify({'type':'provider.internal','message':'Streaming response failed: [504] Upstream idle timeout exceeded','status':200}),'unavailable')
         self.assertEqual(r.classify({'status':502,'message':'Bad Gateway'}),'unavailable')
