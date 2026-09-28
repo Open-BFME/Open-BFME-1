@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c635c0b23642bce6462cdadb980b929eb196142cd1505e0c74629eea34b96a4a",
+  "symbol": "?init@Rva008824E0Block@@QAEXI@Z",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?init@Rva008824E0Block@@QAEXI@Z\n// partial score=0.99 date=2026-09-28\n// Best candidate for ?init@Rva008824E0Block@@QAEXI@Z at 0x008824E0 (105B).\r\n// Probe: size exact, shape 1.000, 1 non-reloc byte: retail lea eax,[edx+esi+0x0c],\r\n// ours lea eax,[esi+edx+0x0c] at +0x33. Five operand-order variants tried.\r\n// Place inside game/GameEngine/Source/Common/System/memory_pool.cpp after memset32,\r\n// with class Rva008824E0Block { void init(unsigned); void *m_field00; void *m_field04; unsigned m_size08; };\r\nvoid Rva008824E0Block::init(unsigned int used)\r\n{\r\n\textern int Rva0130EA00GuardWords;\r\n\tm_size08 = used;\r\n\tunsigned int guardWords = Rva0130EA00GuardWords;\r\n\tm_field00 = 0;\r\n\tif (guardWords != 0)\r\n\t{\r\n\t\tunsigned int guardBytes = guardWords * 4;\r\n\t\tmemset32((char *)this - guardBytes, 0x0BADF00D, guardBytes);\r\n\t\tmemset32((char *)((unsigned int)this + (m_size08 + 0x0c)), 0x0BADF00D, guardBytes);\r\n\t}\r\n\tif (*(volatile unsigned int *)0x0130EA04 != 0)\r\n\t{\r\n\t\tunsigned int size = m_size08;\r\n\t\tmemset32((char *)this + 0x0c, 0xDEADC0DE, size);\r\n\t}\r\n}\r\n"
+}
