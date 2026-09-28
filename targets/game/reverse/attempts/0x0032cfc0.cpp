@@ -1,5 +1,5 @@
 // ?evaluateTypeSighted@ScriptConditions@@IAE_NPAVParameter@@00@Z
-// partial score=0.26 date=2026-09-20
+// partial score=0.261 date=2026-09-28
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Byte-matched BFME reconstruction of the TYPE_SIGHTED condition body.
 // stlport
@@ -237,7 +237,7 @@ class ScriptConditions
 {
 protected:
 	Bool evaluateTypeSighted(Parameter *itemParameter,
-		Parameter *playerParameter, Parameter *typeParameter);
+		Parameter *typeParameter, Parameter *playerParameter);
 	static void objectTypesFromParam(Parameter *, ObjectTypes *);
 };
 
@@ -246,7 +246,7 @@ extern PlayerList *ThePlayerList;
 extern BfmeWideForwardC *ThePartitionManager;
 
 Bool ScriptConditions::evaluateTypeSighted(Parameter *itemParameter,
-	Parameter *playerParameter, Parameter * volatile typeParameter)
+	Parameter *typeParameter, Parameter *playerParameter)
 {
 	Object *object = TheScriptEngine->getUnitNamed(itemParameter);
 	if (!object)
@@ -261,7 +261,7 @@ Bool ScriptConditions::evaluateTypeSighted(Parameter *itemParameter,
 	{
 		Player *player = ThePlayerList->getEachPlayerFromMask(playerMask);
 		ObjectTypesTemp types;
-		objectTypesFromParam(*(Parameter * volatile *)&typeParameter,
+		objectTypesFromParam(typeParameter,
 			types.m_types);
 
 		Rva001DCBB0Filter relationshipFilter(object, 0);
