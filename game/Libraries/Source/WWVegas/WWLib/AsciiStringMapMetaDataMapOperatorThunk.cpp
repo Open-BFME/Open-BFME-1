@@ -1,6 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift the retail AsciiString/MapMetaData map operator MASM body into a C++ thunk.
-
+// Open-BFME5: retail-byte fallback while this STL specialization remains unresolved.
 extern "C" __declspec(naked) void bfme_AsciiStringMapMetaDataMapOperator_7DF70()
 {
     __asm {
@@ -237,4 +236,3 @@ extern "C" __declspec(naked) void bfme_AsciiStringMapMetaDataMapOperator_7DF70()
         __emit 0x00;
     }
 }
-
