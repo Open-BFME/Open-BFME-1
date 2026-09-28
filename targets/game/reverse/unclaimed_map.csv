@@ -1,0 +1,289 @@
+gap_start,gap_end,code_bytes,kind,prev_row,prev_ends_terminal,starts,ghidra_starts,evidence
+0x00541250,0x00544DD0,11736,functions,?d_005409a0@@YAXXZ,1,0x00541480:0,0x00541480,1 Ghidra start(s); 1 start(s) after int3 padding
+0x0007904E,0x0007AC33,7123,functions,??_GMapCache@@QAEPAXI@Z,1,0x00079060:0,0x00079060 0x0007AA03 0x0007ABB8,3 Ghidra start(s); 1 start(s) after int3 padding
+0x005ADE0D,0x005AFFB0,6784,functions,?evaluateForceAttack@CommandTranslator@@AAEHPAVDrawable@@PBVCoord3D@@W4CommandEvaluateType@@@Z,1,0x005ADE90:3,0x005ADE90,1 call target(s); 1 Ghidra start(s); 1 start(s) after int3 padding
+0x00C6E308,0x00C6FC80,6514,functions,?bfmeRva00C6E2F2InitializeCriticalSection@@YAXXZ,1,0x00C6E380:0 0x00C6E390:0 0x00C6FC60:0 0x00C6FC70:0,,4 start(s) after int3 padding
+0x004A774A,0x004A8F10,4400,unknown,?onRemoving@RiderChangeContain@@UAEXPAVObject@@@Z,1,,,
+0x008B73A6,0x008B84A0,4328,functions,?formatStringValue008B72B0@@YAPAVRva008A9B00@@PAVRva008B6880@@@Z,1,0x008B73B0:0,,1 start(s) after int3 padding
+0x000A5C6F,0x000A71A0,4164,functions,??4PSPlayerStats@@QAEAAV0@ABV0@@Z,1,0x000A5D40:1 0x000A67D0:0 0x000A6D1A:1,0x000A5D40,2 call target(s); 1 Ghidra start(s); 2 start(s) after int3 padding
+0x009F8AE4,0x009F9AF0,4096,functions,?Rva009F8ADEFreeLockedMemory@@YGXPAX@Z,1,0x009F8AF0:0,,1 start(s) after int3 padding
+0x00535340,0x00536530,3588,tail,?d_005351c0@@YAXXZ,0,,,?d_005351c0@@YAXXZ ends at the gap on a non-terminal instruction
+0x0083D9AA,0x0083E420,2670,functions,?d_0083d930@@YAXXZ,1,,0x0083D9AA,1 Ghidra start(s)
+0x0083CBDA,0x0083D640,2662,functions,?d_0083cb60@@YAXXZ,1,,0x0083CBDA,1 Ghidra start(s)
+0x005B5C8F,0x005B6A70,2473,functions,?d_005b5590@@YAXXZ,1,0x005B5E50:0,0x005B5E50,1 Ghidra start(s); 1 start(s) after int3 padding
+0x0068C364,0x0068CF00,2248,functions,?handleGameAnnounce@LANAPI@@IAEXPAULANMessage@@PAUBfmeNetAddress@@@Z,1,0x0068C400:1,0x0068C400,1 call target(s); 1 Ghidra start(s); 1 start(s) after int3 padding
+0x0030D6A0,0x003107F0,2172,unknown,?executeAction@ScriptActions@@UAEXPAVScriptAction@@@Z,1,,,
+0x004BEB5B,0x004BF660,2155,functions,?GadgetTextEntryInsertCharacter@@YA_NPAVGameWindow@@I@Z,1,0x004BEBD0:1,0x004BEBD0,1 call target(s); 1 Ghidra start(s); 1 start(s) after int3 padding
+0x005B436E,0x005B4D40,1989,functions,??_GGen_dtor_005b4350@@UAEPAXI@Z,1,0x005B4380:0,0x005B4380,1 Ghidra start(s); 1 start(s) after int3 padding
+0x004A6E16,0x004A747F,1631,functions,Gen_hashraw_004a6e00,1,0x004A6E20:3,0x004A6E20,1 call target(s); 1 Ghidra start(s); 1 start(s) after int3 padding
+0x008D5002,0x008D5660,1603,functions,?Rva008D4F80@@YAPBUR4Word@@PBDI@Z,1,0x008D5010:0 0x008D5650:0,,2 start(s) after int3 padding
+0x009B072F,0x009B0D60,1583,unknown,?d_009b0100@@YAXXZ,1,,,
+0x008BC6DF,0x008BCCC0,1493,functions,?d_008bc3e0@@YAXXZ,1,0x008BC710:1,0x008BC710,1 call target(s); 1 Ghidra start(s); 1 start(s) after int3 padding
+0x0090D275,0x0090D860,1493,functions,?createStats@Rva0090D210Owner@@QAEXXZ,1,0x0090D280:0,,1 start(s) after int3 padding
+0x00C71616,0x00C73000,1447,functions,?bfmeGoDXE@@YAXXZ,1,0x00C72A59:0,,1 start(s) after int3 padding
+0x006B8BDB,0x006B9320,1401,tail,?d_006b8a60@@YAXXZ,0,0x006B90E4:1,,?d_006b8a60@@YAXXZ ends at the gap on a non-terminal instruction
+0x0005CC13,0x0005D18D,1389,functions,?DebugGetDefaultCommands@@YAPBDXZ,1,0x0005CC20:0,0x0005CC20,1 Ghidra start(s); 1 start(s) after int3 padding
+0x0084FF6D,0x008504C0,1359,functions,__Locale_monetary_create,1,0x0084FF70:0,,1 start(s) after int3 padding
+0x0093B84E,0x0093BD60,1289,functions,??_GSortingNodeStruct@@QAEPAXI@Z,1,0x0093B850:0,,1 start(s) after int3 padding
+0x009C77BF,0x009C7CC0,1272,unknown,?rva009C7760BinkSse@@YAXPAX0PBX11H@Z,1,,,
+0x005B1C0C,0x005B22B0,1270,functions,?doGuardCommand@@YA?AW4CommandStatus@@PBVCommandButton@@W4GuardMode@@PBUICoord2D@@@Z,1,0x005B1C70:0,0x005B1C70,1 Ghidra start(s); 1 start(s) after int3 padding
+0x002BB0F6,0x002BB7A0,1261,functions,?bfmeAETC@BfmeBaseETC@@QAEXPAX00@Z,1,0x002BB170:1,0x002BB170,1 call target(s); 1 Ghidra start(s); 1 start(s) after int3 padding
+0x0063E459,0x0063EA60,1188,functions,?addResponse@GameSpyBuddyMessageQueue@@UAEXABVBuddyResponse@@@Z,1,0x0063E490:1,0x0063E490,1 call target(s); 1 Ghidra start(s); 1 start(s) after int3 padding
+0x008D7C1E,0x008D80C0,1183,functions,?Get_Inverse@Matrix3D@@QBEXAAV1@@Z,1,0x008D7C20:0,,1 start(s) after int3 padding
+0x0081BE86,0x0081C2F0,1118,functions,?ji_0081be80@@YAXXZ,1,0x0081C2E0:0,,1 start(s) after int3 padding
+0x008D769E,0x008D7B00,1115,functions,?Solve_Linear_System@Matrix3D@@SA_NAAV1@@Z,1,0x008D76A0:0,,1 start(s) after int3 padding
+0x009EF280,0x009EF6D0,1102,functions,?Add_Prototype_Impl@AssetRegistry@@QAEXPAX@Z,1,0x009EF280:1,0x009EF280,1 call target(s); 1 Ghidra start(s)
+0x00C6BE95,0x00C6C2D0,1067,functions,?bfmeRva00C6BE80LinkRegistration@@YAXXZ,1,0x00C6BEA0:0 0x00C6BEB0:0 0x00C6BEC0:0 0x00C6BED0:0 0x00C6BEE0:0 0x00C6BEF0:0 0x00C6BF00:0 0x00C6BF10:0 0x00C6BF20:0 0x00C6BF30:0 0x00C6BF40:0 0x00C6BF50:0,,67 start(s) after int3 padding
+0x004578E6,0x00457E70,1064,functions,?get@Rva004578E0ConstantGetter@@QAEPAXXZ,1,,0x004578EB,1 Ghidra start(s)
+0x00911BF1,0x00912000,1039,tail,?Get_Description@ShaderClass@@QBEABVStringClass@@AAV2@@Z,0,,,?Get_Description@ShaderClass@@QBEABVStringClass@@AAV2@@Z ends at the gap on a non-terminal instruction
+0x009C588E,0x009C5CA0,1032,functions,?Rva009C54A0DequantZigzag@@YAXPBF0PAH@Z,1,0x009C5890:0,,1 start(s) after int3 padding
+0x002C1D75,0x002C2280,1015,functions,?j_002c1d70@@YAXXZ,1,0x002C1D80:0,,1 start(s) after int3 padding
+0x0092E4AE,0x0092E890,984,functions,??_GMeshClass@@UAEPAXI@Z,1,0x0092E4B0:0,,1 start(s) after int3 padding
+0x0090256D,0x00902910,921,functions,?rva00902550Power2Clamp@@YIIII@Z,1,0x00902570:0,,1 start(s) after int3 padding
+0x0040CFC0,0x0040D4A0,908,tail,?d_0040ce30@@YAXXZ,0,,,?d_0040ce30@@YAXXZ ends at the gap on a non-terminal instruction
+0x005B9C40,0x005BA0E0,908,tail,?rawMouseToWindowMessage@@YA?AW4GameWindowMessage@@PBVGameMessage@@@Z,0,0x005B9C70:0,0x005B9C70,?rawMouseToWindowMessage@@YA?AW4GameWindowMessage@@PBVGameMe ends at the gap on a non-terminal instruction
+0x008A555E,0x008A58C0,859,functions,??1Rva008A5500@@QAE@XZ,1,0x008A5560:0,,1 start(s) after int3 padding
+0x0048DEBE,0x0048E2F0,840,functions,??_GIMEManager@@UAEPAXI@Z,1,0x0048DED0:0,,1 start(s) after int3 padding
+0x009A8107,0x009A8410,766,functions,?Rva009A7FE0Vp6Filter@@YAXPBEPAGHPBH2@Z,1,0x009A8110:0,,1 start(s) after int3 padding
+0x00958F1F,0x009591F0,717,unknown,?invoke@Rva00958D30@@QAEJVBfmeBstrVGP@@PAX@Z,1,,,
+0x005A6918,0x005A6CA0,658,tail,?d_005a67e0@@YAXXZ,0,,,?d_005a67e0@@YAXXZ ends at the gap on a non-terminal instruction
+0x00415280,0x004155A0,633,tail,?Set_HTree@Animatable3DObjClass@@QAEXPAVHTreeClass@@@Z,0,,,?Set_HTree@Animatable3DObjClass@@QAEXPAVHTreeClass@@@Z ends at the gap on a non-terminal instruction
+0x00AFE438,0x00AFE680,570,unknown,?ji_00afe432@@YAXXZ,1,,,
+0x00C701FA,0x00C70430,554,functions,?bfmeForward_00C701F0@@YAXXZ,1,0x00C70200:0 0x00C70210:0 0x00C70220:0 0x00C70230:0 0x00C70240:0 0x00C70250:0 0x00C70260:0 0x00C70270:0 0x00C70280:0 0x00C70290:0 0x00C702A0:0 0x00C702B0:0,,35 start(s) after int3 padding
+0x00858951,0x00858B64,516,functions,_peerJoinGroupRoom,1,0x00858960:2,,1 call target(s); 1 start(s) after int3 padding
+0x001F2E9E,0x001F3130,510,tail,?OnGameJoin@LANAPI@@UAEXW4ReturnType@LANAPIInterface@@PAVLANGameInfo@@@Z,0,,,?OnGameJoin@LANAPI@@UAEXW4ReturnType@LANAPIInterface@@PAVLAN ends at the gap on a non-terminal instruction
+0x0070161C,0x007018A0,506,tail,?initW3DAssets@W3DMouse@@AAEXXZ,0,,,?initW3DAssets@W3DMouse@@AAEXXZ ends at the gap on a non-terminal instruction
+0x0039A257,0x0039B010,501,tail,?logicMessageDispatcher@GameLogic@@,0,,,?logicMessageDispatcher@GameLogic@@ ends at the gap on a non-terminal instruction
+0x0091A7FF,0x0091A9F0,494,unknown,??0StreakLineClass@@QAE@XZ,1,,,
+0x009F88BA,0x009F8AB0,492,unknown,?ji_009f88b4@@YAXXZ,1,,,
+0x0096FD6D,0x0096FF50,483,tail,??1MeshLoadContextClass@@AAE@XZ,0,,,??1MeshLoadContextClass@@AAE@XZ ends at the gap on a non-terminal instruction
+0x008B593E,0x008B5AF0,432,functions,??1Rva008B58E0@@QAE@XZ,1,0x008B5940:0,,1 start(s) after int3 padding
+0x0084ED1D,0x0084EED0,420,functions,_Rva0084ECE0,1,0x0084ED20:3,0x0084ED20,1 call target(s); 1 Ghidra start(s); 1 start(s) after int3 padding
+0x0092D4AE,0x0092D660,419,functions,?Get_Draw_Call_Count@MeshClass@@QBEHXZ,1,0x0092D4B0:0,,1 start(s) after int3 padding
+0x00C706EA,0x00C70890,410,functions,?bfmeForward_00C706E0@@YAXXZ,1,0x00C706F0:0 0x00C70700:0 0x00C70710:0 0x00C70720:0 0x00C70730:0 0x00C70740:0 0x00C70750:0 0x00C70760:0 0x00C70770:0 0x00C70780:0 0x00C70790:0 0x00C707A0:0,,26 start(s) after int3 padding
+0x009DE593,0x009DE740,406,functions,?Get_OS_Info@@YAXAAUOSInfoStruct@@IIII@Z,1,0x009DE5A0:0 0x009DE5B0:0 0x009DE5C0:0 0x009DE5D0:0 0x009DE5E0:0 0x009DE5F0:0 0x009DE600:0 0x009DE610:0 0x009DE620:0 0x009DE630:0 0x009DE640:0 0x009DE650:0,,26 start(s) after int3 padding
+0x006878DE,0x00687CE0,405,tail,?update@LANAPI@@,0,,,?update@LANAPI@@ ends at the gap on a non-terminal instruction
+0x00718B25,0x00718D05,405,functions,?Rva00718B14Forward@@YAPAXXZ,1,0x00718B70:7,0x00718B70,1 call target(s); 1 Ghidra start(s); 1 start(s) after int3 padding
+0x0074D2B6,0x0074D461,401,functions,?getEdgeTerrainTexture@WorldHeightMap@@QAE?AVTerrainTextureRef@@XZ,1,0x0074D2D0:0,0x0074D2D0,1 Ghidra start(s); 1 start(s) after int3 padding
+0x009AADF0,0x009AAF80,398,unknown,?d_009aad20@@YAXXZ,1,,,
+0x00851905,0x00851A95,389,functions,?parseBitString16@INI@@SAXPAV1@PAX1PBX@Z,1,0x00851910:35,0x00851910 0x008519C0,1 call target(s); 2 Ghidra start(s); 1 start(s) after int3 padding
+0x001CDC48,0x001CDE30,375,tail,?reactToTransformChange@Object@@MAEXPBVMatrix3D@@PBUCoord3D@@M@Z,0,,,?reactToTransformChange@Object@@MAEXPBVMatrix3D@@PBUCoord3D@ ends at the gap on a non-terminal instruction
+0x005247B0,0x005249B0,372,unknown,?mapListTooltipFunc@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,1,,,
+0x006F148A,0x006F1AC0,371,functions,?gatherDebugStats@W3DDisplay@@,1,0x006F18F0:2,0x006F18F0,1 call target(s); 1 Ghidra start(s); 1 start(s) after int3 padding
+0x000C7546,0x000C7A10,353,unknown,?canDoSpecialPowerAtLocation@ActionManager@@QAE_NPBVObject@@PBUCoord3D@@W4CommandSourceType@@PBVSpecialPowerTemplate@@0I_N@Z,1,,,
+0x0005D220,0x0005D5A0,345,unknown,?d_0005d1d2@@YAXXZ,1,,,
+0x0080A67F,0x0080A7E0,345,unknown,?rva0080A3C0@BfmeThingUNC@@QAEXPAURva0080A3C0Input@@@Z,1,,,
+0x009A93F2,0x009A9550,332,functions,?Rva009A9370@@YAXPAEHI@Z,1,0x009A9400:3,,1 call target(s); 1 start(s) after int3 padding
+0x008CE73F,0x008CE890,326,unknown,?rva8CE5C0AppendRecord@@YAXPAVRva8CE5C0State@@PAURva8CE5C0Cursor@@@Z,1,,,
+0x009F66EF,0x009F6834,323,functions,?bfmeMakeResultA@BfmeResultSourceA@@QAE?AUBfmeResultA@@H@Z,1,0x009F67ED:1,,1 call target(s)
+0x00893669,0x008937A0,302,functions,?rva00893410InvokeStrings@@YAXPBDPAD0HZZ,1,0x00893670:0,,1 start(s) after int3 padding
+0x009A97A8,0x009A98E0,300,functions,?Rva009A9720@@YAXPAEHI@Z,1,0x009A97B0:3,,1 call target(s); 1 start(s) after int3 padding
+0x007F222F,0x007F2350,283,unknown,??0BfmeThingURC@@QAE@PAVBfmeSrcURC@@@Z,1,,,
+0x0076E7EA,0x0076E90A,282,functions,?bfmeGoEMA@@YAXPAXPAUBfmeThingEMA@@@Z,1,0x0076E7F0:1,0x0076E7F0,1 call target(s); 1 Ghidra start(s); 1 start(s) after int3 padding
+0x009D9C6E,0x009D9D90,273,functions,??_GGen_009D9C00@@UAEPAXI@Z,1,0x009D9C70:0,,1 start(s) after int3 padding
+0x007F5DEF,0x007F5F00,272,unknown,?handlePendingActiveReply@Rva007F5D10GameBrowser@@QAEXPAVRva007E8810Message@@@Z,1,,,
+0x009B48FE,0x009B4A10,269,functions,?Rva009B4880PredictValue@@YAXPAURva009B4880State@@HPAFPBURva009B4880Neighbor@@2@Z,1,0x009B4900:0,,1 start(s) after int3 padding
+0x008615EF,0x00861700,257,unknown,_chatSetUserModeA,1,,,
+0x008321F6,0x00832300,254,functions,?m@Gen_008321f0@@QAEIXZ,1,0x00832200:0 0x00832220:0 0x00832240:0 0x00832260:0 0x00832280:0 0x008322A0:0 0x008322C0:0 0x008322E0:0,,8 start(s) after int3 padding
+0x001C8D58,0x001C8E7D,253,functions,?didExit@Object@@QBE_NPBVPolygonTrigger@@@Z,1,0x001C8D80:1,0x001C8D80,1 call target(s); 1 Ghidra start(s); 1 start(s) after int3 padding
+0x0098E79A,0x0098E8A0,251,tail,??0ParticleEmitterDefClass@@QAE@ABV0@@Z,0,,,??0ParticleEmitterDefClass@@QAE@ABV0@@Z ends at the gap on a non-terminal instruction
+0x0080103B,0x00801140,244,functions,?update@Rva00800F40PendingProbeUpdate@@QAEXI@Z,1,0x00801040:0 0x00801050:0 0x00801060:0 0x00801070:0 0x00801080:0 0x00801090:0 0x008010A0:0 0x008010B0:0 0x008010C0:0 0x008010D0:0 0x008010E0:0 0x008010F0:0,,16 start(s) after int3 padding
+0x00946A2E,0x00946B20,239,tail,??0DX8FVFCategoryContainer@@QAE@I_N@Z,0,,,??0DX8FVFCategoryContainer@@QAE@I_N@Z ends at the gap on a non-terminal instruction
+0x007F6FD1,0x007F70D0,238,functions,?Rva007F6FC0BrowserGameReply@@YAXPAVRva007E8810Message@@PAVRva007F7980Browser@@@Z,1,0x007F6FE0:0,,1 start(s) after int3 padding
+0x00A9C509,0x00A9C5F1,232,unknown,?d3dx9_twin_00a9c435@@YAXXZ,1,,,
+0x00AA066E,0x00AA0756,232,unknown,?d3dx9_twin_00aa059a@@YAXXZ,1,,,
+0x0056E521,0x0056E606,229,functions,?d_0056e230@@YAXXZ,1,0x0056E600:0,,1 start(s) after int3 padding
+0x0090EE20,0x0090EF10,229,tail,?d_0090eb00@@YAXXZ,0,,,?d_0090eb00@@YAXXZ ends at the gap on a non-terminal instruction
+0x009439E9,0x00943AD0,225,tail,?Compute_Point_Visibility@SimpleSceneClass@@UAEMAAVRenderInfoClass@@ABVVector3@@@Z,0,,,?Compute_Point_Visibility@SimpleSceneClass@@UAEMAAVRenderInf ends at the gap on a non-terminal instruction
+0x008CD047,0x008CD130,223,functions,?d_008cced0@@YAXXZ,1,0x008CD050:0,,1 start(s) after int3 padding
+0x00965B1E,0x00965C00,222,functions,?Calculate_Texture_Matrix@GridClassicEnvironmentMapperClass@@UAEXAAVMatrix4x4@@@Z,1,0x00965B20:0,,1 start(s) after int3 padding
+0x0092439F,0x00924480,217,unknown,??4PlaneClass@@QAEAAV0@ABV0@@Z,1,,,
+0x00A9C6E7,0x00A9C7BB,212,unknown,?sse_D3DXMatrixShadow@@YGPAU_D3DMATRIX@@PAU1@PBUD3DXVECTOR4@@PBUD3DXPLANE@@@Z,1,,,
+0x00AA084C,0x00AA0920,212,unknown,?sse2_D3DXMatrixShadow@@YGPAU_D3DMATRIX@@PAU1@PBUD3DXVECTOR4@@PBUD3DXPLANE@@@Z,1,,,
+0x00982980,0x00982A60,209,tail,??4Animatable3DObjClass@@QAEAAV0@ABV0@@Z,0,,,??4Animatable3DObjClass@@QAEAAV0@ABV0@@Z ends at the gap on a non-terminal instruction
+0x009C68FE,0x009C69D0,204,functions,?Rva009C6800@@YAXPBEPAEHPBX2@Z,1,0x009C6900:0,,1 start(s) after int3 padding
+0x00078B6E,0x00078C70,188,functions,??_GSubsystemLegend@@UAEPAXI@Z,1,0x00078B80:2,0x00078B80,1 call target(s); 1 Ghidra start(s); 1 start(s) after int3 padding
+0x0062E953,0x0062EA60,187,tail,?hasWriteAccess@@YA_NXZ,0,,,?hasWriteAccess@@YA_NXZ ends at the gap on a non-terminal instruction
+0x00905B6F,0x00905C30,187,unknown,?bfmeUnlock1179@@YADXZ,1,,,
+0x002AF819,0x002AF8F9,185,functions,?bfmeSeed@Gen_002AF780@@QAEXPAVBfmeSeedTarget@@@Z,1,0x002AF840:2,0x002AF840,1 call target(s); 1 Ghidra start(s); 1 start(s) after int3 padding
+0x00411747,0x00411840,185,tail,?handleWeaponFireFX@Drawable@@QAE_NW4WeaponSlotType@@HPBVFXList@@MMMPBUCoord3D@@M@Z,0,,,?handleWeaponFireFX@Drawable@@QAE_NW4WeaponSlotType@@HPBVFXL ends at the gap on a non-terminal instruction
+0x0097247E,0x00972540,185,functions,??_GGen_dtor_00972460@@UAEPAXI@Z,1,0x00972480:0,,1 start(s) after int3 padding
+0x008CAF2F,0x008CAFF0,181,unknown,?rva008CAF00IntegerAppend@@YAXPAVRva008CAF00Array@@@Z,1,,,
+0x009CE808,0x009CE8D0,181,functions,?dup_009ce800@@YAXXZ,1,0x009CE810:0 0x009CE820:0 0x009CE830:0 0x009CE840:0 0x009CE850:0 0x009CE860:0 0x009CE870:0 0x009CE880:0 0x009CE890:0 0x009CE8A0:0 0x009CE8B0:0 0x009CE8C0:0,,12 start(s) after int3 padding
+0x00846819,0x008468D0,180,unknown,?__write_formatted_time@_STL@@YAPADPADDDABV_Time_Info@1@PBUtm@@@Z,1,,,
+0x009FDFEE,0x009FE0A3,180,tail,?c_D3DXVec3Project@@YGPAUD3DXVECTOR3@@PAU1@PBU1@PBU_D3DVIEWPORT9@@PBUD3DXMATRIX@@33@Z,0,,,?c_D3DXVec3Project@@YGPAUD3DXVECTOR3@@PAU1@PBU1@PBU_D3DVIEWP ends at the gap on a non-terminal instruction
+0x007E9A4F,0x007E9B10,179,unknown,?bfmeFetch@Gen_007e9a40@@QAEHXZ,1,,,
+0x007F115F,0x007F1220,179,unknown,?bfmeFetch@Gen_007f1150@@QAEHXZ,1,,,
+0x007F1E9F,0x007F1F60,179,unknown,?bfmeFetch@Gen_007f1e90@@QAEHXZ,1,,,
+0x007F2D6F,0x007F2E30,179,unknown,?bfmeFetch@Gen_007f2d60@@QAEHXZ,1,,,
+0x007F331F,0x007F33E0,179,unknown,?bfmeFetch@Gen_007f3310@@QAEHXZ,1,,,
+0x007F3FFF,0x007F40C0,179,unknown,?bfmeFetch@Gen_007f3ff0@@QAEHXZ,1,,,
+0x007F437F,0x007F4440,179,unknown,?bfmeFetch@Gen_007f4370@@QAEHXZ,1,,,
+0x0090E2DF,0x0090E390,175,functions,?bfmeRunBR@BfmeOwnBR@@QAEXXZ,1,0x0090E360:0,,1 start(s) after int3 padding
+0x009F6ADB,0x009F6B86,171,functions,?Add@?$CSimpleArray@PAXV?$CSimpleArrayEqualHelper@PAX@ATL@@@ATL@@QAEHABQAX@Z,1,0x009F6ADB:1,,1 call target(s)
+0x001E3827,0x001E3910,169,tail,?positionProjectileForLaunch@Weapon@@SAXPAVObject@@PBV2@W4WeaponSlotType@@H@Z,0,,,?positionProjectileForLaunch@Weapon@@SAXPAVObject@@PBV2@W4We ends at the gap on a non-terminal instruction
+0x009187AC,0x00918860,167,functions,?Get_Shader@SegLineRendererClass@@QBE?AVShaderClass@@XZ,1,0x009187B0:0 0x009187C0:0 0x009187D0:0 0x009187E0:0 0x009187F0:0 0x00918800:0 0x00918810:0 0x00918820:0 0x00918830:0 0x00918840:0 0x00918850:0,,11 start(s) after int3 padding
+0x00902431,0x009024F0,166,functions,?End_Statistics@DX8Wrapper@@SAXXZ,1,0x00902440:0 0x00902450:0 0x00902460:0 0x00902470:0 0x00902480:0 0x00902490:0 0x009024A0:0 0x009024B0:0 0x009024C0:0 0x009024D0:0 0x009024E0:0,,11 start(s) after int3 padding
+0x001985FE,0x001986A3,165,tail,?_M_insert_overflow@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@IAEXPAUCoord3D@@ABU3@ABU__false_type@2@I_N@Z,0,,,?_M_insert_overflow@?$vector@UCoord3D@@V?$allocator@UCoord3D ends at the gap on a non-terminal instruction
+0x0080123C,0x008012F0,164,functions,?get@Rva00801230Owner@@QBE?AVGetterWord@@XZ,1,0x00801240:0 0x00801250:0 0x00801260:0 0x00801270:0 0x00801280:0 0x00801290:0 0x008012A0:0 0x008012B0:0 0x008012C0:0 0x008012D0:0 0x008012E0:0,,11 start(s) after int3 padding
+0x00802163,0x00802220,164,functions,?bfmeDelTYA@BfmeThingTYA@@QAEPAXE@Z,1,0x00802170:0 0x00802180:0 0x00802190:0 0x008021A0:0 0x008021B0:0 0x008021C0:0 0x008021D0:0 0x008021E0:0 0x008021F0:0 0x00802200:0 0x00802210:0,,11 start(s) after int3 padding
+0x009D26DE,0x009D2790,161,functions,??_GLocalFile@@UAEPAXI@Z,1,0x009D26E0:0,,1 start(s) after int3 padding
+0x008FAECE,0x008FAF70,158,functions,??0?$deque@PAVPartitionCell@@V?$allocator@PAVPartitionCell@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVPartitionCell@@@1@@Z,1,0x008FAED0:0 0x008FAF20:0,,2 start(s) after int3 padding
+0x00802768,0x00802810,153,functions,??_GRva00802680Owner@@UAEPAXI@Z,1,0x00802770:0 0x00802780:0 0x00802790:0 0x008027A0:0 0x008027B0:0 0x008027C0:0 0x008027D0:0 0x008027E0:0 0x008027F0:0 0x00802800:0,,10 start(s) after int3 padding
+0x001D19E5,0x001D1D10,149,unknown,?d_001d1020@@YAXXZ,1,,,
+0x004A541C,0x004A5950,146,unknown,?d_004a4240@@YAXXZ,1,,,
+0x0074703C,0x00747100,146,tail,?countTiles@WorldHeightMap@@SAHPAVInputStream@@PA_N@Z,0,,,?countTiles@WorldHeightMap@@SAHPAVInputStream@@PA_N@Z ends at the gap on a non-terminal instruction
+0x00C6FD64,0x00C6FE10,145,functions,?bfmeGoDAA@@YAXXZ,1,0x00C6FD70:0 0x00C6FD80:0 0x00C6FD90:0 0x00C6FDA0:0 0x00C6FDB0:0 0x00C6FDC0:0 0x00C6FDD0:0 0x00C6FDE0:0 0x00C6FDF0:0 0x00C6FE00:0,,10 start(s) after int3 padding
+0x0091B74E,0x0091B7E0,142,functions,?Init_Caps@DX8Caps@@AAEXPAUIDirect3DDevice8@@@Z,1,0x0091B750:1,0x0091B750,1 call target(s); 1 Ghidra start(s); 1 start(s) after int3 padding
+0x00C6FCBA,0x00C6FD50,138,functions,?bfmeForward_00C6FCB0@@YAXXZ,1,0x00C6FCC0:0 0x00C6FCD0:0 0x00C6FCE0:0 0x00C6FCF0:0 0x00C6FD00:0 0x00C6FD10:0 0x00C6FD20:0 0x00C6FD30:0 0x00C6FD40:0,,9 start(s) after int3 padding
+0x0007AC72,0x0007B420,136,unknown,??1GameEngine@@UAE@XZ,1,,,
+0x003D14E8,0x003D15A0,136,tail,?reserve@?$vector@UParkingPlaceInfo@ParkingPlaceBehavior@@V?$allocator@UParkingPlaceInfo@ParkingPlaceBehavior@@@_STL@@@_STL@@QAEXI@Z,0,,,?reserve@?$vector@UParkingPlaceInfo@ParkingPlaceBehavior@@V? ends at the gap on a non-terminal instruction
+0x00851B61,0x00851BF0,135,tail,?d_00851b04@@YAXXZ,0,,,?d_00851b04@@YAXXZ ends at the gap on a non-terminal instruction
+0x009239E1,0x00923A80,132,functions,?packed@Rva009239D0@@QBEIPBURva009239D0Pair@@@Z,1,0x009239F0:0 0x00923A00:0 0x00923A10:0 0x00923A20:0 0x00923A30:0 0x00923A40:0 0x00923A50:0 0x00923A60:0 0x00923A70:0,,9 start(s) after int3 padding
+0x00871461,0x008714F0,131,unknown,_ciCallCallback,1,,,
+0x008B0099,0x008B0120,131,unknown,?d_008af650@@YAXXZ,1,,,
+0x0094BD04,0x0094BDA0,129,functions,tg_0094bcf0,1,0x0094BD10:0 0x0094BD20:0 0x0094BD30:0 0x0094BD40:0 0x0094BD50:0 0x0094BD60:0 0x0094BD70:0 0x0094BD80:0 0x0094BD90:0,,9 start(s) after int3 padding
+0x000C4903,0x000C49F0,128,unknown,?d_000c47f0@@YAXXZ,1,,,
+0x002AA1B3,0x002AA4B0,128,unknown,??1WeaponSetSpecialAbilityUpdate@@UAE@XZ,1,,,
+0x008922BE,0x00892340,128,functions,?bfmeGo929E@@YAXPAX@Z,1,0x008922C0:0,,1 start(s) after int3 padding
+0x0035D0C1,0x0035D1E0,124,tail,?d_0035d0ac@@YAXXZ,0,,,?d_0035d0ac@@YAXXZ ends at the gap on a non-terminal instruction
+0x0089DD3E,0x0089DDC0,124,functions,?utf8EncodedLength@@YAHH@Z,1,0x0089DD40:0,,1 start(s) after int3 padding
+0x0035D626,0x0035D740,123,tail,?d_0035d611@@YAXXZ,0,,,?d_0035d611@@YAXXZ ends at the gap on a non-terminal instruction
+0x00906385,0x00906410,120,functions,?j_00906380@@YAXXZ,1,0x00906390:0 0x009063A0:0 0x009063B0:0 0x009063C0:0 0x009063D0:0 0x009063E0:0 0x009063F0:0 0x00906400:0,,8 start(s) after int3 padding
+0x0047F55E,0x0047F757,119,functions,?gogoMessageBox@GameWindowManager@@UAEPAVGameWindow@@HHHHGVUnicodeString@@0P6AXXZ111_N@Z,1,0x0047F6E0:0,0x0047F6E0,1 Ghidra start(s); 1 start(s) after int3 padding
+0x00928F76,0x00929000,119,functions,?Peek_Material@MeshMatDescClass@@QBEPAVVertexMaterialClass@@HH@Z,1,0x00928F80:0 0x00928F90:0 0x00928FA0:0 0x00928FB0:0 0x00928FC0:0 0x00928FD0:0 0x00928FE0:0 0x00928FF0:0,,8 start(s) after int3 padding
+0x00844611,0x008446A0,117,functions,?b7@T2StrRet@@QAE?AV?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@_STL@@XZ,1,0x00844620:0 0x00844630:0 0x00844640:0 0x00844650:0 0x00844660:0 0x00844670:0 0x00844680:0 0x00844690:0,,8 start(s) after int3 padding
+0x009ECE71,0x009ECF00,117,functions,?dup_009ece60@@YAXXZ,1,0x009ECE80:0 0x009ECE90:0 0x009ECEA0:0 0x009ECEB0:0 0x009ECEC0:0 0x009ECED0:0 0x009ECEE0:0 0x009ECEF0:0,,8 start(s) after int3 padding
+0x00680EE4,0x006810D0,116,unknown,?d_00680980@@YAXXZ,1,,,
+0x0084AC3E,0x0084ACC0,116,functions,?_M_allocate_buffers@?$basic_filebuf@DV?$char_traits@D@_STL@@@_STL@@AAE_NXZ,1,0x0084AC40:0 0x0084AC60:0,,2 start(s) after int3 padding
+0x00880954,0x008809E0,116,functions,?d_00880780@@YAXXZ,1,0x00880960:0 0x00880970:0 0x00880980:0 0x00880990:0 0x008809A0:0 0x008809B0:0 0x008809C0:0 0x008809D0:0,,8 start(s) after int3 padding
+0x008A04E9,0x008A0570,116,functions,?Assign@EAStringC@@QAEAAV1@ABV1@@Z,1,0x008A04F0:0 0x008A0500:0 0x008A0510:0 0x008A0520:0 0x008A0530:0 0x008A0540:0 0x008A0550:0 0x008A0560:0,,8 start(s) after int3 padding
+0x0090337E,0x00903400,116,functions,?getPointOrad@LightEnvironmentClass@@QBEMH@Z,1,0x00903380:0 0x00903390:0 0x009033A0:0 0x009033B0:0 0x009033C0:0 0x009033D0:0 0x009033E0:0 0x009033F0:0,,8 start(s) after int3 padding
+0x00819510,0x00819590,114,unknown,_CommUDPConnect,1,,,
+0x00AFE378,0x00AFE3EA,114,unknown,?_com_handle_excepinfo@@YGJAAUtagEXCEPINFO@@PAPAUIErrorInfo@@@Z,1,,,
+0x00783348,0x007833E0,113,functions,?Rva00783310GuardedRatio@@YAMMM@Z,1,0x00783360:0 0x00783370:0 0x00783380:0 0x00783390:0 0x007833A0:0 0x007833B0:0 0x007833C0:0 0x007833D0:0,,8 start(s) after int3 padding
+0x0084850E,0x00848590,113,functions,??_G?$moneypunct@G$0A@@_STL@@MAEPAXI@Z,1,0x00848510:0,,1 start(s) after int3 padding
+0x008C57B4,0x008C5840,113,functions,?bfmeResetGlobalSlot8C5780@@YAXXZ,1,0x008C57C0:0 0x008C57D0:0 0x008C57E0:0 0x008C57F0:0 0x008C5800:0 0x008C5810:0 0x008C5820:0 0x008C5830:0,,8 start(s) after int3 padding
+0x009805E3,0x00980660,113,tail,?Save_W3D@AggregateDefClass@@UAE?AW4WW3DErrorType@@AAVChunkSaveClass@@@Z,0,,,?Save_W3D@AggregateDefClass@@UAE?AW4WW3DErrorType@@AAVChunkS ends at the gap on a non-terminal instruction
+0x009F9AF6,0x009F9B70,112,functions,?ji_009f9af0@@YAXXZ,1,0x009F9B00:0,,1 start(s) after int3 padding
+0x009F4A2C,0x009F4AA0,111,functions,?dup_009f4a20@@YAXXZ,1,0x009F4A30:0 0x009F4A40:0 0x009F4A70:0,,3 start(s) after int3 padding
+0x00853C3B,0x00853CB0,110,tail,?d_00853c2a@@YAXXZ,0,,,?d_00853c2a@@YAXXZ ends at the gap on a non-terminal instruction
+0x009A78DB,0x009A7950,110,functions,?d_009a7870@@YAXXZ,1,0x009A78E0:0,,1 start(s) after int3 padding
+0x0095805F,0x009580D0,109,unknown,??_GStaticSortListClass@@UAEPAXI@Z,1,,,
+0x009B473E,0x009B47B0,108,functions,?d_009b46e0@@YAXXZ,1,0x009B4740:0,,1 start(s) after int3 padding
+0x0010B856,0x0010B930,107,functions,?Thread_Function@Watchdog@@UAEXXZ,1,0x0010B8A0:0,,1 start(s) after int3 padding
+0x004B4B59,0x004B4E00,107,unknown,?GadgetComboBoxSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,1,,,
+0x0084A544,0x0084A5C0,107,functions,?open@?$basic_filebuf@GV?$char_traits@G@_STL@@@_STL@@QAEPAV12@PBDHJ@Z,1,0x0084A550:0 0x0084A560:0 0x0084A570:0 0x0084A580:0 0x0084A590:0 0x0084A5A0:0 0x0084A5B0:0,,7 start(s) after int3 padding
+0x008C4524,0x008C45A0,107,functions,?body@Rva008C4510Body@@QBEHH@Z,1,0x008C4530:0 0x008C4540:0 0x008C4550:0 0x008C4560:0 0x008C4570:0 0x008C4580:0 0x008C4590:0,,7 start(s) after int3 padding
+0x008CC4CD,0x008CC540,107,unknown,?d_008cbdf0@@YAXXZ,1,,,
+0x002C2F53,0x002C3020,106,unknown,?aiDoCommand@GiantBirdAIUpdate@@UAEXPBUAICommandParms@@@Z,1,,,
+0x00C6FE7A,0x00C6FEF0,106,functions,?bfmeForward_00C6FE70@@YAXXZ,1,0x00C6FE80:0 0x00C6FE90:0 0x00C6FEA0:0 0x00C6FEB0:0 0x00C6FEC0:0 0x00C6FED0:0 0x00C6FEE0:0,,7 start(s) after int3 padding
+0x00C70A34,0x00C70AB0,106,functions,?d_00c70a20@@YAXXZ,1,0x00C70A40:0 0x00C70A50:0 0x00C70A60:0 0x00C70A70:0 0x00C70A80:0 0x00C70A90:0 0x00C70AA0:0,,7 start(s) after int3 padding
+0x006510AB,0x00651680,105,unknown,?Rva006510A5Constant@@YAIXZ,1,,,
+0x003DD560,0x003DD7A0,104,tail,?d_003dce70@@YAXXZ,0,,,?d_003dce70@@YAXXZ ends at the gap on a non-terminal instruction
+0x00781413,0x007814A8,104,functions,?setHidden@W3DTankTruckDraw@@UAEX_N@Z,1,0x00781440:0,,1 start(s) after int3 padding
+0x007F567C,0x007F56F0,103,functions,?writeValue@Rva007F5670PointerOutput@@QBEPAPAXPAPAX@Z,1,0x007F5680:0 0x007F5690:0 0x007F56A0:0 0x007F56B0:0 0x007F56C0:0 0x007F56D0:0 0x007F56E0:0,,7 start(s) after int3 padding
+0x007F61DF,0x007F6250,103,unknown,?bfmeGoVJQ@BfmeThingVJQ@@QAEXH@Z,1,,,
+0x0097E507,0x0097E580,103,functions,?Get_UV_Offset_Rate@ParticleEmitterClass@@QBE?AVVector2@@XZ,1,0x0097E510:0 0x0097E520:0 0x0097E530:0 0x0097E540:0 0x0097E550:0 0x0097E560:0 0x0097E570:0,,7 start(s) after int3 padding
+0x0062777B,0x00627810,102,tail,??1DownloadManager@@UAE@XZ,0,,,??1DownloadManager@@UAE@XZ ends at the gap on a non-terminal instruction
+0x008BD046,0x008BD0C0,102,functions,?ji_008bd040@@YAXXZ,1,0x008BD050:0 0x008BD060:0 0x008BD070:0 0x008BD080:0 0x008BD090:0 0x008BD0A0:0 0x008BD0B0:0,,7 start(s) after int3 padding
+0x00937166,0x009371E0,102,functions,?Rva00937160Get@@YAHXZ,1,0x00937170:0 0x00937180:0 0x00937190:0 0x009371A0:0 0x009371B0:0 0x009371C0:0 0x009371D0:0,,7 start(s) after int3 padding
+0x009C9038,0x009C90B0,101,functions,?dup_009c9030@@YAXXZ,1,0x009C9040:0 0x009C9050:0 0x009C9060:0 0x009C9070:0 0x009C9080:0 0x009C9090:0 0x009C90A0:0,,7 start(s) after int3 padding
+0x007F5258,0x007F52D0,100,functions,??0Rva007F51D0Ticket@@QAE@PAVRva007E8810Message@@@Z,1,0x007F5260:0 0x007F5270:0 0x007F5280:0 0x007F5290:0 0x007F52A0:0 0x007F52B0:0 0x007F52C0:0,,7 start(s) after int3 padding
+0x008919A6,0x00891A14,100,functions,?d_00891940@@YAXXZ,1,0x008919B0:0 0x008919C0:0 0x008919D0:0 0x008919E0:0 0x008919F0:0,,5 start(s) after int3 padding
+0x00903724,0x009037A0,100,functions,?dup_00903710@@YAXXZ,1,0x00903730:0 0x00903740:0 0x00903750:0 0x00903760:0 0x00903770:0 0x00903780:0 0x00903790:0,,7 start(s) after int3 padding
+0x0080C328,0x0080C390,99,unknown,_Rva0080B4B0,1,,,
+0x008168A1,0x00816910,97,unknown,_CommSRPListen,1,,,
+0x008FE96D,0x008FE9E0,97,functions,?dup_008fe960@@YAXXZ,1,0x008FE970:0 0x008FE980:0 0x008FE990:0 0x008FE9A0:0 0x008FE9B0:0 0x008FE9C0:0 0x008FE9D0:0,,7 start(s) after int3 padding
+0x009D6F0B,0x009D6F80,97,functions,?dup_009d6f00@@YAXXZ,1,0x009D6F10:0 0x009D6F20:0 0x009D6F30:0 0x009D6F40:0 0x009D6F50:0 0x009D6F60:0 0x009D6F70:0,,7 start(s) after int3 padding
+0x0032A64C,0x0032A710,96,tail,?d_0032a550@@YAXXZ,0,,,?d_0032a550@@YAXXZ ends at the gap on a non-terminal instruction
+0x0081D572,0x0081D5E0,95,functions,?broadcast@Rva0081D520Owner@@QAEXHMMMM@Z,1,0x0081D580:0 0x0081D5B0:0,,2 start(s) after int3 padding
+0x008D9EBD,0x008D9F20,95,functions,?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVAABoxClass@@ABVLineSegClass@@@Z,1,0x008D9EC0:0,,1 start(s) after int3 padding
+0x008F9DCF,0x008F9E30,95,functions,?deallocate@?$allocator@N@_STL@@QBEXPANI@Z,1,0x008F9E00:0,,1 start(s) after int3 padding
+0x0090FE7D,0x0090FEE0,95,functions,?rva0090FE40ExtractReset@@YAXPAURva0090FE40Pair@@0@Z,1,0x0090FE80:0,,1 start(s) after int3 padding
+0x009A192B,0x009A1990,95,functions,?dup_009a1920@@YAXXZ,1,0x009A1930:0 0x009A1960:0,,2 start(s) after int3 padding
+0x009ECF8F,0x009ECFF0,95,functions,?deallocate@?$allocator@M@_STL@@QBEXPAMI@Z,1,0x009ECFC0:0,,1 start(s) after int3 padding
+0x0087F08D,0x0087F0F0,94,functions,?d_0087f020@@YAXXZ,1,0x0087F090:0,,1 start(s) after int3 padding
+0x00816B93,0x00816BF0,93,unknown,_CommSRPConnect,1,,,
+0x008CED95,0x008CEE00,93,functions,?d_008cec60@@YAXXZ,1,0x008CEDA0:0,,1 start(s) after int3 padding
+0x00911B83,0x00911BE0,93,unknown,?d_00911020@@YAXXZ,1,,,
+0x0096CAEC,0x0096CB50,93,functions,??0MeshSaveContextClass@@QAE@XZ,1,0x0096CAF0:0 0x0096CB00:0 0x0096CB10:0 0x0096CB20:0 0x0096CB30:0 0x0096CB40:0,,6 start(s) after int3 padding
+0x007F735F,0x007F73C0,92,unknown,?Rva007F7350Thunk@@YAXHPAURva007F72D0Obj@@@Z,1,,,
+0x00818F87,0x00818FF0,92,unknown,_CommUdpListen,1,,,
+0x0084A482,0x0084A4F0,91,functions,?_M_do_noconv_input@?$basic_filebuf@DV?$char_traits@D@_STL@@@_STL@@QAEHXZ,1,0x0084A490:0 0x0084A4A0:0 0x0084A4B0:0 0x0084A4C0:0 0x0084A4D0:0 0x0084A4E0:0,,6 start(s) after int3 padding
+0x005B3ABE,0x005B3B2A,90,functions,??_GHotKeyManager@@UAEPAXI@Z,1,0x005B3AD0:1,0x005B3AD0,1 call target(s); 1 Ghidra start(s); 1 start(s) after int3 padding
+0x00C7043B,0x00C704A0,90,functions,?Rva00C70430SetGlobal@@YAXXZ,1,0x00C70440:0 0x00C70450:0 0x00C70460:0 0x00C70470:0 0x00C70480:0 0x00C70490:0,,6 start(s) after int3 padding
+0x001844BC,0x00184580,88,unknown,?d_0018448e@@YAXXZ,1,,,
+0x0084DBD1,0x0084DC40,88,functions,?Rva0084DBC0GetText@@YAPBDPBURva0084DBText@@@Z,1,0x0084DBE0:0 0x0084DBF0:0 0x0084DC00:0 0x0084DC10:0 0x0084DC20:0 0x0084DC30:0,,6 start(s) after int3 padding
+0x00898251,0x008982C0,88,functions,?aptHasAll@Rva008981E0Value@@QAEHXZ,1,0x00898260:0 0x00898270:0 0x00898280:0 0x00898290:0 0x008982A0:0 0x008982B0:0,,6 start(s) after int3 padding
+0x00969BFF,0x00969C60,88,unknown,?Calculate_Texture_Matrix@GridWSEnvMapperClass@@UAEXAAVMatrix4@@@Z,1,,,
+0x0090C7A9,0x0090C810,87,functions,?dup_90c780@@YAXXZ,1,0x0090C7B0:0 0x0090C7C0:0 0x0090C7D0:0 0x0090C7E0:0 0x0090C7F0:0 0x0090C800:0,,6 start(s) after int3 padding
+0x008FD5D7,0x008FD640,86,functions,?dup_008fd5c0@@YAXXZ,1,0x008FD5E0:0 0x008FD5F0:0 0x008FD600:0 0x008FD610:0 0x008FD620:0 0x008FD630:0,,6 start(s) after int3 padding
+0x0094BC8D,0x0094BCF0,86,functions,?dup_0094bc80@@YAXXZ,1,0x0094BC90:0 0x0094BCA0:0 0x0094BCB0:0 0x0094BCC0:0 0x0094BCD0:0 0x0094BCE0:0,,6 start(s) after int3 padding
+0x00840FE8,0x00841050,85,functions,?dup_00840fe0@@YAXXZ,1,0x00840FF0:0 0x00841000:0 0x00841010:0 0x00841020:0 0x00841030:0 0x00841040:0,,6 start(s) after int3 padding
+0x008F8F03,0x008F8F70,85,functions,?dup_008f8ee0@@YAXXZ,1,0x008F8F10:0 0x008F8F20:0 0x008F8F30:0 0x008F8F40:0 0x008F8F50:0 0x008F8F60:0,,6 start(s) after int3 padding
+0x0093C9B8,0x0093CA20,84,functions,?copyFrom@Rva0093C9A0Box@@QAEPAV1@PBURva0093C9A0Src@@PBH@Z,1,0x0093C9C0:0 0x0093C9D0:0 0x0093C9E0:0 0x0093C9F0:0 0x0093CA00:0 0x0093CA10:0,,6 start(s) after int3 padding
+0x0093CC28,0x0093CC90,84,functions,?dup_0093cc20@@YAXXZ,1,0x0093CC30:0 0x0093CC40:0 0x0093CC50:0 0x0093CC60:0 0x0093CC70:0 0x0093CC80:0,,6 start(s) after int3 padding
+0x0081B6AC,0x0081B700,83,unknown,_Rva0081B010,1,,,
+0x0083EB54,0x0083EBC0,83,functions,?pubimbue@?$basic_streambuf@GV?$char_traits@G@_STL@@@_STL@@QAE?AVlocale@2@ABV32@@Z,1,0x0083EB60:0 0x0083EB70:0 0x0083EB80:0 0x0083EB90:0 0x0083EBA0:0 0x0083EBB0:0,,6 start(s) after int3 padding
+0x00843E86,0x00843EF0,83,functions,?do_max_length@?$codecvt@GDH@_STL@@MBEHXZ,1,0x00843E90:0 0x00843EA0:0 0x00843EB0:0 0x00843EC0:0 0x00843ED0:0 0x00843EE0:0,,6 start(s) after int3 padding
+0x008AC01F,0x008AC080,83,unknown,?rva008AC000@Rva008ABFE0Flags@@QBEHXZ,1,,,
+0x009714DE,0x00971540,83,functions,??_GHTreeClass@@QAEPAXI@Z,1,0x009714E0:0 0x009714F0:0 0x00971500:0 0x00971510:0 0x00971520:0 0x00971530:0,,6 start(s) after int3 padding
+0x002C4662,0x002C46F0,81,unknown,?dispatch@Rva002C45E0@@UAEXPBUAICommandParms@@@Z,1,,,
+0x007B7753,0x007B77E0,81,unknown,?d_007b76c0@@YAXXZ,1,,,
+0x007F994E,0x007F99B0,81,functions,?d_007f97b0@@YAXXZ,1,0x007F9950:0,,1 start(s) after int3 padding
+0x00812C73,0x00812CD0,81,unknown,?d_00812690@@YAXXZ,1,,,
+0x00853E6F,0x00853EC0,81,tail,?d_00853e5e@@YAXXZ,0,,,?d_00853e5e@@YAXXZ ends at the gap on a non-terminal instruction
+0x009728A6,0x00972910,81,functions,?name@Rva009728A0Named@@QBEPBDXZ,1,0x009728B0:0 0x009728C0:0 0x009728D0:0 0x009728E0:0 0x009728F0:0 0x00972900:0,,6 start(s) after int3 padding
+0x009C8EDD,0x009C8F40,81,functions,?dup_009c8ed0@@YAXXZ,1,0x009C8EE0:0 0x009C8EF0:0 0x009C8F00:0 0x009C8F10:0 0x009C8F20:0 0x009C8F30:0,,6 start(s) after int3 padding
+0x009D7243,0x009D72B0,81,functions,?dup_009d7230@@YAXXZ,1,0x009D7250:0 0x009D7260:0 0x009D7270:0 0x009D7280:0 0x009D7290:0 0x009D72A0:0,,6 start(s) after int3 padding
+0x009F447B,0x009F44E0,81,functions,?dup_009f4470@@YAXXZ,1,0x009F4480:0 0x009F4490:0 0x009F44A0:0 0x009F44B0:0 0x009F44C0:0 0x009F44D0:0,,6 start(s) after int3 padding
+0x007F0A61,0x007F0AC0,79,functions,?setPair@Rva007F0A50PairStore@@QAEXII@Z,1,0x007F0A70:0 0x007F0A80:0 0x007F0A90:0,,3 start(s) after int3 padding
+0x008FAD71,0x008FADD0,78,functions,??$__destroy@U?$_Deque_iterator@UGen_t_008fb350_p12pod@@U?$_Nonconst_traits@UGen_t_008fb350_p12pod@@@_STL@@@_STL@@UGen_t_008fb350_p12pod@@@_STL@@YAXU?$_Deque_iterator@UGen_t_008fb350_p12pod@@U?$_Nonconst_traits@UGen_t_008fb350_p12pod@@@_STL@@@0@0PAUGen_t_008fb350_p12pod@@@Z,1,0x008FAD80:0,,1 start(s) after int3 padding
+0x009ECF0A,0x009ECF60,78,functions,?dup_009ecf00@@YAXXZ,1,0x009ECF10:0 0x009ECF20:0 0x009ECF30:0,,3 start(s) after int3 padding
+0x009F7D2C,0x009F7D7A,78,unknown,?ji_009f7d26@@YAXXZ,1,,,
+0x009F7DA4,0x009F7DF2,78,unknown,?ji_009f7d9e@@YAXXZ,1,,,
+0x008D644F,0x008D64A0,77,unknown,?dup_008d6430@@YAXXZ,1,,,
+0x009F882D,0x009F8878,75,tail,?_RTC_GetSrcLine@@YAHKPADHPAHPAPAD@Z,0,,,?_RTC_GetSrcLine@@YAHKPADHPAHPAPAD@Z ends at the gap on a non-terminal instruction
+0x0043617F,0x004361F0,74,tail,?getCSFInfo@GameTextManager@@IAE_NPBD@Z,0,,,?getCSFInfo@GameTextManager@@IAE_NPBD@Z ends at the gap on a non-terminal instruction
+0x00A07FB9,0x00A08002,73,unknown,?d3dx9_twin_00a07f97@@YAXXZ,1,,,
+0x00A08036,0x00A0807F,73,unknown,?d3dx9_twin_00a08014@@YAXXZ,1,,,
+0x004BAFF8,0x004BB490,72,unknown,?GadgetListBoxSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,1,,,
+0x008A05B6,0x008A0610,71,functions,?ji_008a05b0@@YAXXZ,1,0x008A05C0:0 0x008A05D0:0 0x008A05E0:0 0x008A05F0:0 0x008A0600:0,,5 start(s) after int3 padding
+0x00918CD1,0x00918D30,71,functions,?get@Rva00918CB0TripleGetter@@QBEXPAURva00918CB0Triple@@@Z,1,0x00918CE0:0 0x00918CF0:0 0x00918D00:0 0x00918D10:0 0x00918D20:0,,5 start(s) after int3 padding
+0x0092C6EA,0x0092C740,71,functions,??0LineSegClass@@QAE@ABV0@ABVMatrix3D@@@Z,1,0x0092C6F0:0 0x0092C700:0 0x0092C710:0 0x0092C720:0 0x0092C730:0,,5 start(s) after int3 padding
+0x009D70A2,0x009D7100,71,functions,?dup_009d7090@@YAXXZ,1,0x009D70B0:0 0x009D70C0:0 0x009D70D0:0 0x009D70E0:0 0x009D70F0:0,,5 start(s) after int3 padding
+0x0043DDAD,0x0043DE80,70,unknown,?setRadiusCursor@InGameUI@@UAEXW4RadiusCursorType@@PBVSpecialPowerTemplate@@W4WeaponSlotType@@@Z,1,,,
+0x00903414,0x00903470,70,functions,?dup_00903400@@YAXXZ,1,0x00903420:0 0x00903430:0 0x00903440:0 0x00903450:0 0x00903460:0,,5 start(s) after int3 padding
+0x00923BCD,0x00923C20,70,functions,?dup_00923bc0@@YAXXZ,1,0x00923BD0:0 0x00923BE0:0 0x00923BF0:0 0x00923C00:0 0x00923C10:0,,5 start(s) after int3 padding
+0x009A1714,0x009A1770,70,functions,?dup_009a1700@@YAXXZ,1,0x009A1720:0 0x009A1730:0 0x009A1740:0 0x009A1750:0 0x009A1760:0,,5 start(s) after int3 padding
+0x009B63CF,0x009B6420,70,unknown,?Rva009B6320DecodeTree@@YAXPAURva009B6320Node@@HPAHPAEHH@Z,1,,,
+0x002B574E,0x002B5800,69,unknown,?aiDoCommand@DeployStyleAIUpdate@@UAEXPBUAICommandParms@@@Z,1,,,
+0x0080C912,0x0080C960,69,unknown,_Rva0080C6F0,1,,,
+0x0080D540,0x0080D590,69,unknown,_Rva0080C960,1,,,
+0x0083E908,0x0083E960,69,functions,?process@@YAXXZ,1,0x0083E910:0 0x0083E920:0 0x0083E930:0 0x0083E940:0 0x0083E950:0,,5 start(s) after int3 padding
+0x00850C93,0x00850CF0,69,functions,?dup_00850c80@@YAXXZ,1,0x00850CA0:0 0x00850CB0:0 0x00850CC0:0 0x00850CD0:0 0x00850CE0:0,,5 start(s) after int3 padding
+0x009D6F96,0x009D6FF0,69,functions,?dup_009d6f80@@YAXXZ,1,0x009D6FA0:0 0x009D6FB0:0 0x009D6FC0:0 0x009D6FD0:0 0x009D6FE0:0,,5 start(s) after int3 padding
+0x008028BC,0x00802910,68,functions,?get@Rva008028B0Owner@@QBE?AVGetterWord@@XZ,1,0x008028C0:0 0x008028D0:0 0x008028E0:0 0x008028F0:0 0x00802900:0,,5 start(s) after int3 padding
+0x0080FAEF,0x0080FB40,68,unknown,_Rva0080F5A0,1,,,
+0x008C4493,0x008C44F0,68,functions,?bfmeAt1238@BfmeN1238@@QAEPAVBfmeS1238@@H@Z,1,0x008C44A0:0 0x008C44B0:0 0x008C44C0:0 0x008C44D0:0 0x008C44E0:0,,5 start(s) after int3 padding
+0x009032DD,0x00903330,68,functions,??$clamp@M@?A0xf4c29cab@@YAMMMM@Z,1,0x009032E0:0 0x009032F0:0 0x00903300:0 0x00903310:0 0x00903320:0,,5 start(s) after int3 padding
+0x0093C8BA,0x0093C910,68,functions,?Check@Rva0093C870Owner@@QAEPAVRva0093C4A0Target@@PBGPAGH@Z,1,0x0093C8C0:0 0x0093C8D0:0 0x0093C8E0:0 0x0093C8F0:0 0x0093C900:0,,5 start(s) after int3 padding
+0x0095592C,0x00955980,68,functions,?dup_00955920@@YAXXZ,1,0x00955930:0 0x00955940:0 0x00955950:0 0x00955960:0 0x00955970:0,,5 start(s) after int3 padding
+0x0080082E,0x00800880,67,functions,?onConnectReply@Rva00800780Owner@@QAEXPAVRva007E8810Message@@@Z,1,0x00800830:0 0x00800850:0 0x00800860:0 0x00800870:0,,4 start(s) after int3 padding
+0x0089182A,0x00891880,67,functions,?invoke@Rva00891810Object@@QAEXXZ,1,0x00891830:0 0x00891840:0 0x00891850:0 0x00891860:0 0x00891870:0,,5 start(s) after int3 padding
+0x00898141,0x008981A0,67,functions,?active@Rva00898130Record@@QAEPAXXZ,1,0x00898150:0 0x00898160:0 0x00898170:0 0x00898180:0 0x00898190:0,,5 start(s) after int3 padding
+0x008C48E2,0x008C4940,67,functions,??3Rva008C48C0HeaderedDelete@@SAXPAXI@Z,1,0x008C48F0:0 0x008C4900:0 0x008C4910:0 0x008C4920:0 0x008C4930:0,,5 start(s) after int3 padding
+0x00944BD2,0x00944C30,67,functions,??1Vertex_Split_Table@@QAE@XZ,1,0x00944BE0:0 0x00944BF0:0 0x00944C00:0 0x00944C10:0 0x00944C20:0,,5 start(s) after int3 padding
+0x0080E170,0x0080E1C0,65,unknown,_Rva0080E030,1,,,
+0x0087A240,0x0087A290,65,tail,?d_00879f60@@YAXXZ,0,,,?d_00879f60@@YAXXZ ends at the gap on a non-terminal instruction
+0x008FD446,0x008FD4A0,65,functions,?Rva008FD440Get@@YAHXZ,1,0x008FD450:0 0x008FD460:0 0x008FD470:0 0x008FD480:0 0x008FD490:0,,5 start(s) after int3 padding
+0x008FE90E,0x008FE960,65,functions,?get@Rva008FE900NullableField@@QBEHXZ,1,0x008FE910:0 0x008FE920:0 0x008FE930:0 0x008FE940:0 0x008FE950:0,,5 start(s) after int3 padding
+0x00923B69,0x00923BC0,65,functions,?Resize@?$ShareBufferClass@UMeshGeometrySlot64Element_00923F70@@@@QAEXH@Z,1,0x00923B70:0 0x00923B80:0 0x00923B90:0 0x00923BA0:0 0x00923BB0:0,,5 start(s) after int3 padding
+0x00923C33,0x00923C90,65,functions,?dup_00923c20@@YAXXZ,1,0x00923C40:0 0x00923C50:0 0x00923C60:0 0x00923C70:0 0x00923C80:0,,5 start(s) after int3 padding
+0x009A2D66,0x009A2DC0,65,functions,?dup_009a2d50@@YAXXZ,1,0x009A2D70:0 0x009A2D80:0 0x009A2D90:0 0x009A2DA0:0 0x009A2DB0:0,,5 start(s) after int3 padding
+0x009CE69D,0x009CE6F0,65,functions,?dup_009ce690@@YAXXZ,1,0x009CE6A0:0 0x009CE6B0:0 0x009CE6C0:0 0x009CE6D0:0 0x009CE6E0:0,,5 start(s) after int3 padding
+0x009ECC3F,0x009ECC90,65,functions,dup_9ecc10,1,0x009ECC50:0 0x009ECC60:0 0x009ECC70:0 0x009ECC80:0,,4 start(s) after int3 padding
+0x00813CA3,0x00813CF0,64,unknown,_Rva00813A50,1,,,
+0x0081E681,0x0081E6D0,64,unknown,?dup_0081e679@@YAXXZ,1,,,
+0x0088AF1B,0x0088AF60,64,functions,?GetFrameEntry@Debug@@AAEPAUFrameHashEntry@1@IIPBDH@Z,1,0x0088AF20:0,,1 start(s) after int3 padding
