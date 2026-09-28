@@ -1,7 +1,25 @@
 // ?chatPlayerTooltip@Rva005307B0Owner@@QAEXVAsciiString@@@Z
-// partial score=0.98 date=2026-09-28
+// partial score=0.99 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringbaseunicode /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
+// ?chatPlayerTooltip@Rva005307B0Owner@@QAEXVAsciiString@@@Z
+// Retail 0x005307B0: 2117 bytes of code (ret 4 at +0x842) followed by the
+// four-entry side switch table, 2136 bytes in the ledger.  The only caller,
+// 0x005369A0, calls it through ILT 0x00002E1E with its own object in ECX
+// (esi, whose +0xAC/+0xB0 it writes afterwards), so the owner keeps the
+// address token.  The body builds the GameSpy chat-player tooltip from the
+// literals TOOLTIP:ChatPlayerInfo / LocalPlayer / BuddyPlayer / ProfiledPlayer
+// / GenericPlayer, which names the method.  It is BFME's version of the Zero
+// Hour WOLGameSetupMenu playerTooltip: PlayerInfoMap find (the pinned
+// map<AsciiString,PlayerInfo,AsciiComparator>::_M_find at ILT 0x00022930),
+// PSPlayerStats from TheGameSpyPSMessageQueue with a PSRequest when absent,
+// win/loss/favourite-side totals, and the BFME good/evil rank label.
+// GameSpyInfo slot 0x48 is the PlayerInfoMap (the find above); slot 0x54 is
+// the int-keyed map looked up with the profile ID before TOOLTIP:BuddyPlayer
+// (Zero Hour getBuddyMap); slot 0x68 returns an AsciiString by value compared
+// with the name before TOOLTIP:LocalPlayer (Zero Hour getLocalName).  Slot
+// 0x4C returns the record whose +0x14 is the profile ID and +0x20/+0x24 the
+// rank values; it keeps an address-derived name.
 #include <map>
 #include <string>
 #include "ascii_string.h"
@@ -216,113 +234,115 @@ void Rva005307B0Owner::chatPlayerTooltip(AsciiString name)
 	uName.translate(name);
 
 	PlayerInfoMap::iterator pmIt = TheGameSpyInfo->getPlayerInfoMap()->find(name);
-	if (pmIt != TheGameSpyInfo->getPlayerInfoMap()->end())
+	if (pmIt == TheGameSpyInfo->getPlayerInfoMap()->end())
 	{
+		TheMouse->setCursorTooltip(uName, -1, 0, 1.5f);
+		return;
+	}
+
 	Rva005307B0PlayerRecord *info = TheGameSpyInfo->slot4C(name.str());
 	if (info)
 	{
+		Int profileID = info->m_profileID;
+		PSPlayerStats stats = TheGameSpyPSMessageQueue->findPlayerStatsByID(profileID);
+		if (stats.id == 0)
+		{
+			PSRequest req;
+			req.requestType = 0;
+			req.player.id = profileID;
+			TheGameSpyPSMessageQueue->addRequest(req);
+			TheMouse->setCursorTooltip(uName, -1, 0, 1.5f);
+			return;
+		}
 
-			Int profileID = info->m_profileID;
-			PSPlayerStats stats = TheGameSpyPSMessageQueue->findPlayerStatsByID(profileID);
-			if (stats.id == 0)
+		AsciiString localName = TheGameSpyInfo->getLocalName();
+		Bool isLocalPlayer = (((StringBase<char> &)name).compare(localName) == 0);
+
+		AsciiString localeIdentifier;
+		localeIdentifier.format("WOL:Locale%2.2d", stats.locale);
+		UnicodeString playerInfo;
+		Int totalWins = 0, totalLosses = 0;
+		PerGeneralMap::iterator it;
+
+		for (it = stats.wins.begin(); it != stats.wins.end(); ++it)
+			totalWins += it->second;
+		for (it = stats.losses.begin(); it != stats.losses.end(); ++it)
+			totalLosses += it->second;
+
+		UnicodeString favoriteSide;
+		UnsignedInt numGames = 0;
+		Int favorite = 0;
+		for (it = stats.games.begin(); it != stats.games.end(); ++it)
+		{
+			if (it->second > numGames)
 			{
-				PSRequest req;
-				req.requestType = 0;
-				req.player.id = profileID;
-				TheGameSpyPSMessageQueue->addRequest(req);
-				TheMouse->setCursorTooltip(uName, -1, 0, 1.5f);
-				return;
+				numGames = it->second;
+				favorite = it->first;
 			}
-
-			AsciiString localName = TheGameSpyInfo->getLocalName();
-			Bool isLocalPlayer = (((StringBase<char> &)name).compare(localName) == 0);
-
-			AsciiString localeIdentifier;
-			localeIdentifier.format("WOL:Locale%2.2d", stats.locale);
-			UnicodeString playerInfo;
-			Int totalWins = 0, totalLosses = 0;
-			PerGeneralMap::iterator it;
-
-			for (it = stats.wins.begin(); it != stats.wins.end(); ++it)
-				totalWins += it->second;
-			for (it = stats.losses.begin(); it != stats.losses.end(); ++it)
-				totalLosses += it->second;
-
-			UnicodeString favoriteSide;
-			UnsignedInt numGames = 0;
-			Int favorite = 0;
-			for (it = stats.games.begin(); it != stats.games.end(); ++it)
+		}
+		if (numGames == 0)
+			favoriteSide = TheGameText->fetch("APT:Gondor");
+		else
+		{
+			AsciiString side;
+			switch (favorite)
 			{
-				if (it->second > numGames)
-				{
-					numGames = it->second;
-					favorite = it->first;
-				}
+			case 1:
+				side.set("Gondor");
+				break;
+			case 3:
+				side.set("Isengard");
+				break;
+			case 0:
+				side.set("Rohan");
+				break;
+			case 2:
+				side.set("Mordor");
+				break;
 			}
-			if (numGames == 0)
-				favoriteSide = TheGameText->fetch("APT:Gondor");
-			else
-			{
-				AsciiString side;
-				switch (favorite)
-				{
-				case 1:
-					side.set("Gondor");
-					break;
-				case 3:
-					side.set("Isengard");
-					break;
-				case 0:
-					side.set("Rohan");
-					break;
-				case 2:
-					side.set("Mordor");
-					break;
-				}
-				AsciiString sideKey;
-				sideKey.format("SIDE:%s", side.str());
-				favoriteSide = TheGameText->fetch(sideKey);
-			}
+			AsciiString sideKey;
+			sideKey.format("SIDE:%s", side.str());
+			favoriteSide = TheGameText->fetch(sideKey);
+		}
 
-			Int bestSide = bfmePickBestRankSide((Gen_uw_00025c1b *)&stats);
-			Int points = bfmeRankPointsFromStats((Gen_uw_00025c1b *)&stats, bestSide);
-			Bool evil = Rva004D8F50(bestSide);
-			Int rank = 1;
-			while (rank < 10 && points >= TheRankPointValues->m_ranks[rank])
-				++rank;
+		Int bestSide = bfmePickBestRankSide((Gen_uw_00025c1b *)&stats);
+		Int points = bfmeRankPointsFromStats((Gen_uw_00025c1b *)&stats, bestSide);
+		Bool evil = Rva004D8F50(bestSide);
+		Int rank = 1;
+		while (rank < 10 && points >= TheRankPointValues->m_ranks[rank])
+			++rank;
 
-			AsciiString rankKey("TOOLTIP:");
-			AsciiString rankLabel;
-			if (evil)
-				rankLabel.set(g_rva012B7828EvilRanks[rank]);
-			else
-				rankLabel.set(g_rva012B7800GoodRanks[rank]);
-			rankKey.concat(rankLabel);
+		AsciiString rankKey("TOOLTIP:");
+		AsciiString rankLabel;
+		if (evil)
+			rankLabel.set(g_rva012B7828EvilRanks[rank]);
+		else
+			rankLabel.set(g_rva012B7800GoodRanks[rank]);
+		rankKey.concat(rankLabel);
 
-			UnicodeString rank20;
-			UnicodeString rank24;
-			rank20 = Rva0052DEB0RankText(info->m_rank20);
-			rank24 = Rva0052DEB0RankText(info->m_rank24);
+		UnicodeString rank20;
+		UnicodeString rank24;
+		rank20 = Rva0052DEB0RankText(info->m_rank20);
+		rank24 = Rva0052DEB0RankText(info->m_rank24);
 
-			playerInfo.format(TheGameText->fetch("TOOLTIP:ChatPlayerInfo"),
-				TheGameText->fetch(localeIdentifier).str(),
-				TheGameText->fetch(rankKey).str(),
-				totalWins, totalLosses, favoriteSide.str(), rank20.str(), rank24.str());
+		playerInfo.format(TheGameText->fetch("TOOLTIP:ChatPlayerInfo"),
+			TheGameText->fetch(localeIdentifier).str(),
+			TheGameText->fetch(rankKey).str(),
+			totalWins, totalLosses, favoriteSide.str(), rank20.str(), rank24.str());
 
-			UnicodeString tooltip = UnicodeString::TheEmptyString;
-			if (isLocalPlayer)
-				tooltip.format(TheGameText->fetch("TOOLTIP:LocalPlayer"), uName.str());
-			else if (TheGameSpyInfo->getBuddyMap()->find(profileID) != TheGameSpyInfo->getBuddyMap()->end())
-				tooltip.format(TheGameText->fetch("TOOLTIP:BuddyPlayer"), uName.str());
-			else if (profileID)
-				tooltip.format(TheGameText->fetch("TOOLTIP:ProfiledPlayer"), uName.str());
-			else
-				tooltip.format(TheGameText->fetch("TOOLTIP:GenericPlayer"), uName.str());
+		UnicodeString tooltip = UnicodeString::TheEmptyString;
+		if (isLocalPlayer)
+			tooltip.format(TheGameText->fetch("TOOLTIP:LocalPlayer"), uName.str());
+		else if (TheGameSpyInfo->getBuddyMap()->find(profileID) != TheGameSpyInfo->getBuddyMap()->end())
+			tooltip.format(TheGameText->fetch("TOOLTIP:BuddyPlayer"), uName.str());
+		else if (profileID)
+			tooltip.format(TheGameText->fetch("TOOLTIP:ProfiledPlayer"), uName.str());
+		else
+			tooltip.format(TheGameText->fetch("TOOLTIP:GenericPlayer"), uName.str());
 
-			tooltip.concat(playerInfo);
-			TheMouse->setCursorTooltip(tooltip, -1, 0, 1.0f);
+		tooltip.concat(playerInfo);
+		TheMouse->setCursorTooltip(tooltip, -1, 0, 1.0f);
 		return;
-	}
 	}
 	TheMouse->setCursorTooltip(uName, -1, 0, 1.5f);
 }
