@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "7e16b2055ea8dbef0b02134f82fe86c8d2bb82e3fcda38c35fdec2d9f9783173",
+  "symbol": "?insert_unique@?$_Rb_tree@IURva00064F70Value@@URva00064F70KeyOfValue@@U?$less@I@_STL@@V?$allocator@URva00064F70Value@@@4@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@URva00064F70Value@@U?$_Nonconst_traits@URva00064F70Value@@@_STL@@@_STL@@_N@2@ABURva00064F70Value@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?insert_unique@?$_Rb_tree@IURva00064F70Value@@URva00064F70KeyOfValue@@U?$less@I@_STL@@V?$allocator@URva00064F70Value@@@4@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@URva00064F70Value@@U?$_Nonconst_traits@URva00064F70Value@@@_STL@@@_STL@@_N@2@ABURva00064F70Value@@@Z\n// partial score=0.9 date=2026-09-28\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB\n// stlport\n#define _BFME_RETAIL_TREE_INSERT_LAYOUT\n#include <map>\n\nstruct Rva00064F70Value\n{\n\tchar m_lead[24];\n\tunsigned int m_key;\n};\n\nstruct Rva00064F70KeyOfValue\n{\n\tconst unsigned int &operator()(const Rva00064F70Value &x) const { return x.m_key; }\n};\n\ntypedef _STL::pair<const unsigned int, Rva00064F70Value> Rva00064F70Pair;\n\ntypedef _STL::_Rb_tree<unsigned int, Rva00064F70Value, Rva00064F70KeyOfValue,\n\t_STL::less<unsigned int>, _STL::allocator<Rva00064F70Value> > Rva00064F70Tree;\n\ntemplate _STL::pair<Rva00064F70Tree::iterator, bool>\nRva00064F70Tree::insert_unique(const Rva00064F70Value &);\n"
+}
