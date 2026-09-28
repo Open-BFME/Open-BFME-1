@@ -1,18 +1,39 @@
 // ?scanClosestTarget@CommandButtonHuntUpdate@@IAEPAVObject@@XZ
-// partial score=0.6 date=2026-09-20
-// cl: /O2 /Oy /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// partial score=0.97 date=2026-09-28
+// cl: /DNDEBUG /MD /EHsc
 // stlport
 
 #define _STLP_USE_STATIC_LIB 1
 #define BFME_STLP_NODE_ALLOC 1
 #define __PLACEMENT_VEC_NEW_INLINE
 #include <vector>
+#include <bitset>
 #include <math.h>
 
-// CommandButtonHuntUpdate::huntSpecialPower, retail 0x0028B490, 133 bytes.
-// The module stores its data pointer at +0x04, its owner at +0x08, and its
-// command button at +0x24. The three calls below use the retail thunks for the
-// override walk, special-ability lookup, and target scan.
+// BANKED, NOT BYTE-EXACT (opus-5.5 2026-09-28): 972 compiled bytes vs retail
+// 974, shape 0.997, ONE structural difference. Frame (0xac, no aligned ebp),
+// EH states 0..5, every stack slot and every callee now line up. The only
+// residue is in the inlined iterator next(): retail loads end into ecx and the
+// cursor into edx, then `mov ecx,edx` (+0x1ef) before `mov esi,[ecx]; add
+// ecx,8; mov [eax+0xc],ecx`; ours keeps the cursor in ecx with no copy. Every
+// spelling of next() tried (pre/post increment, item copy, ternary, !=, const
+// cursor, const_iterator, for-loop first()/next()) is either identical or worse.
+// Levers that got here from the 0.60 bank (769 diffs, aligned frame):
+//  * filters are the BFME virtual-dtor classes (ScriptConditions.cpp model),
+//    declared alive, relationship, map-status (unwind map order);
+//  * ZH inline-recursive Overridable::friend_getFinalOverride (two levels
+//    inline, third via ILT 0x48C61) instead of an out-of-line call;
+//  * Object has a vptr, so m_template is at +4;
+//  * the result dtor reloads m_value; the kind-of filter is a temporary whose
+//    ctor is throw() (retail never stores EH state 4), passed through link();
+//  * KINDOFMASK_NONE global as mustBeClear; getClosestObject distance arg 1;
+//  * ZH two-if priority update; `SpecialPowerModuleInterface *mod` local;
+//  * getTemplate returns 0 early for a null template;
+//  * filterPlayer in its own block so its vptr reset follows the EH state 3
+//    store and range takes the slot below it.
+// Landing note: ??_7PlayerFilter0028AE90@@6B@ (retail 0x01097144, three slots)
+// is defined by this TU (inline virtual dtor); by the 0x002A1780 precedent it
+// should need no pin -- unverified until add_match runs.
 
 typedef bool Bool;
 typedef int Int;
@@ -56,105 +77,115 @@ enum Relationship
 	RELATIONSHIP_ALLIES = 2
 };
 
-template <int N>
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
+template <int NUMBITS>
 class BitFlags
 {
+	_STL::bitset<NUMBITS> m_bits;
+
 public:
-	enum BogusInitType
-	{
-		kInit = 0
-	};
+	enum BogusInitType { kInit = 0 };
 
-	BitFlags()
+	BitFlags(BogusInitType, Int idx)
 	{
-		for (int i = 0; i != 6; ++i)
-			m_words[i] = 0;
+		m_bits._Unchecked_set((size_t)idx);
 	}
-
-	BitFlags(int, int index)
-	{
-		for (int i = 0; i != 6; ++i)
-			m_words[i] = 0;
-		m_words[index >> 5] |= 1u << (index & 31);
-	}
-
-	UnsignedInt m_words[6];
 };
 
 typedef BitFlags<192> KindOfMaskType;
+
+// ?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B, VA 0x012ED8B8
+extern const KindOfMaskType KINDOFMASK_NONE;
 
 enum KindOfType
 {
 	KINDOF_MINE = 54
 };
 
+// BFME filters (same model as ScriptConditions.cpp Rva00327D30): virtual
+// destructor, allow, getPlayerMask, then next at +4.
 class PartitionFilter
 {
 public:
+	PartitionFilter() : m_next(0) {}
+	virtual ~PartitionFilter() {}
+	virtual Bool allow(Object *) = 0;
+	virtual Int getPlayerMask();
+
 	PartitionFilter *link(PartitionFilter *next);
 
-	UnsignedInt m_vptr;
 	PartitionFilter *m_next;
 };
 
-class PartitionFilterAlive : public PartitionFilter
-{
-public:
-	PartitionFilterAlive()
-	{
-		m_next = 0;
-		m_vptr = 0x01083B80;
-	}
-};
-
-class PartitionFilterSameMapStatus : public PartitionFilter
-{
-public:
-	PartitionFilterSameMapStatus(const Object *object)
-	{
-		m_next = 0;
-		m_vptr = 0x01085DD0;
-		m_object = object;
-	}
-
-	const Object *m_object;
-};
-
-class PartitionFilterRelationship : public PartitionFilter
-{
-public:
-	PartitionFilterRelationship(const Object *object, Int flags, Bool state)
-	{
-		m_next = 0;
-		m_vptr = 0x01085DC0;
-		m_object = object;
-		m_flags = flags;
-		m_state = state;
-	}
-
-	const Object *m_object;
-	Int m_flags;
-	Bool m_state;
-};
-
-class PartitionFilterSamePlayer : public PartitionFilter
-{
-public:
-	PartitionFilterSamePlayer(const Player *player)
-	{
-		m_next = 0;
-		m_vptr = 0x01097144;
-		m_player = player;
-	}
-
-	const Player *m_player;
-};
-
+// vtable 0x01083B70; out-of-line ctor at ILT 0x000382FD.
 class PartitionFilterAcceptByKindOf : public PartitionFilter
 {
 public:
 	PartitionFilterAcceptByKindOf(const KindOfMaskType &mustBeSet,
-		const KindOfMaskType &mustBeClear);
+		const KindOfMaskType &mustBeClear) throw();
+	virtual ~PartitionFilterAcceptByKindOf() {}
+	virtual Bool allow(Object *);
+
+	KindOfMaskType m_mustBeSet;
+	KindOfMaskType m_mustBeClear;
+};
+
+// vtable 0x01085DD0
+class Rva0025ED50ObjectFilter : public PartitionFilter
+{
+public:
+	explicit Rva0025ED50ObjectFilter(Object *object)
+		: m_object(object) {}
+	virtual ~Rva0025ED50ObjectFilter() {}
+	virtual Bool allow(Object *);
+
+	Object *m_object;
+};
+
+// vtable 0x01083B80
+class Rva0025ED50RootFilter : public PartitionFilter
+{
+public:
+	Rva0025ED50RootFilter() {}
+	virtual ~Rva0025ED50RootFilter() {}
+	virtual Bool allow(Object *);
+};
+
+// ZH PartitionFilterAlive; the BFME table name stays address-derived.
+typedef Rva0025ED50RootFilter PartitionFilterAlive;
+
+// vtable 0x01085DC0
+class PartitionFilterRelationship : public PartitionFilter
+{
+public:
+	enum RelationshipAllowTypes
+	{
+		ALLOW_ENEMIES = 1,
+		ALLOW_NEUTRAL = 2,
+		ALLOW_ALLIES = 4
+	};
+
+	PartitionFilterRelationship(Object *object, Int flags, Bool match)
+		: m_obj(object), m_flags(flags), m_match(match) {}
+	virtual ~PartitionFilterRelationship() {}
+	virtual Bool allow(Object *);
+	virtual Int getPlayerMask();
+
+	Object *m_obj;
+	Int m_flags;
+	Bool m_match;
+};
+
+// vtable 0x01097144 (three slots: destructor, allow, getPlayerMask).
+class PlayerFilter0028AE90 : public PartitionFilter
+{
+public:
+	PlayerFilter0028AE90(Player *player) : m_player(player) {}
+	virtual ~PlayerFilter0028AE90() {}
+	virtual Bool allow(Object *);
+	virtual Int getPlayerMask();
+
+	Player *m_player;
 };
 
 struct BfmeWideResultItem
@@ -171,6 +202,15 @@ struct BfmeWideResultPayload
 	std::vector<BfmeWideResultItem> m_items;
 	BfmeWideResultItem *m_cursor;
 	Int m_refCount;
+
+	Object *next()
+	{
+		if (m_cursor == m_items.end())
+			return 0;
+		Object *object = m_cursor->m_object;
+		++m_cursor;
+		return object;
+	}
 };
 
 struct BfmeWideResult
@@ -179,7 +219,7 @@ struct BfmeWideResult
 
 	~BfmeWideResult()
 	{
-		BfmeWideResultPayload *payload = m_value;
+		BfmeWideResultPayload *&payload = m_value;
 		--payload->m_refCount;
 		if (payload->m_refCount == 0)
 			delete payload;
@@ -297,8 +337,18 @@ public:
 	virtual ~Overridable();
 	Overridable *getFinalOverride();
 	const Overridable *getFinalOverride() const;
-	Overridable *friend_getFinalOverride();
-	const Overridable *friend_getFinalOverride() const;
+	Overridable *friend_getFinalOverride()
+	{
+		if (m_nextOverride)
+			return m_nextOverride->friend_getFinalOverride();
+		return this;
+	}
+	const Overridable *friend_getFinalOverride() const
+	{
+		if (m_nextOverride)
+			return m_nextOverride->friend_getFinalOverride();
+		return this;
+	}
 
 	Overridable *m_nextOverride;
 };
@@ -396,8 +446,10 @@ public:
 	}
 	const ThingTemplate *getTemplate() const
 	{
+		if (m_template == 0)
+			return 0;
 		const ThingTemplate *thingTemplate = m_template;
-		if (thingTemplate && thingTemplate->m_nextOverride)
+		if (thingTemplate->m_nextOverride)
 			thingTemplate = (const ThingTemplate *)
 				thingTemplate->m_nextOverride->getFinalOverride();
 		return thingTemplate;
@@ -406,6 +458,7 @@ public:
 		CommandSourceType source, Bool playVoiceResponse);
 
 	private:
+	void *m_vftable;
 	ThingTemplate *m_template;
 };
 
@@ -421,35 +474,7 @@ private:
 	const CommandButton *m_commandButton;
 };
 
-UpdateSleepTime CommandButtonHuntUpdate::huntSpecialPower(AIUpdateInterface *ai)
-{
-	Object *obj = getObject();
-	const CommandButtonHuntUpdateModuleData *data =
-		(const CommandButtonHuntUpdateModuleData *)m_moduleData;
-	if (!ai->isIdle())
-	{
-		return (UpdateSleepTime)data->m_scanFrames;
-	}
-
-	const SpecialPowerTemplate *spTemplate = m_commandButton->getSpecialPowerTemplate();
-	if (spTemplate)
-	{
-		SpecialAbilityUpdate *spUpdate = obj->findSpecialAbilityUpdate(
-			spTemplate->getSpecialPowerType());
-		if (spUpdate == 0)
-			return UPDATE_SLEEP_FOREVER;
-		if (spUpdate->isActive())
-			return (UpdateSleepTime)data->m_scanFrames;
-	}
-
-	Object *victim = scanClosestTarget();
-	if (victim)
-	{
-		obj->doCommandButtonAtObject(m_commandButton, victim, CMD_FROM_AI, false);
-	}
-	return (UpdateSleepTime)data->m_scanFrames;
-}
-
+// ?scanClosestTarget@CommandButtonHuntUpdate@@IAEPAVObject@@XZ
 Object *CommandButtonHuntUpdate::scanClosestTarget()
 {
 	const CommandButtonHuntUpdateModuleData *data =
@@ -460,46 +485,41 @@ Object *CommandButtonHuntUpdate::scanClosestTarget()
 	if (spTemplate == 0)
 		return 0;
 
-	Bool isCaptureBuilding = false;
+	Bool isCaptureBuilding = (spTemplate->getSpecialPowerType() == (SpecialPowerType)0x1d);
 	Bool isPlaceExplosive = false;
-	if (spTemplate->getSpecialPowerType() == (SpecialPowerType)0x1d)
-		isCaptureBuilding = true;
-	if (spTemplate->getSpecialPowerType() == (SpecialPowerType)0x17 ||
-		spTemplate->getSpecialPowerType() == (SpecialPowerType)0x19)
+	if (spTemplate->getSpecialPowerType() == (SpecialPowerType)0x17)
 		isPlaceExplosive = true;
+	if (spTemplate->getSpecialPowerType() == (SpecialPowerType)0x19)
+		isPlaceExplosive = true;
+
 	PartitionFilterAlive aliveFilter;
-	PartitionFilterSameMapStatus filterMapStatus(me);
-	PartitionFilterRelationship filterTeam(me, 1, false);
+	PartitionFilterRelationship filterTeam(me, PartitionFilterRelationship::ALLOW_ENEMIES, false);
+	Rva0025ED50ObjectFilter filterMapStatus(me);
 	aliveFilter.link(&filterMapStatus);
 	if (!isCaptureBuilding)
 		aliveFilter.link(&filterTeam);
 
-	Int positionBits = (Int)(const void *)me->getPosition();
-	Int rangeBits = *(const Int *)&data->m_scanRange;
+	BfmeWideResult result = ThePartitionManager->bfmeForwardWideC(
+		(Int)(const void *)me->getPosition(), *(const Int *)&data->m_scanRange,
+		0, (Int)(const void *)&aliveFilter, 1);
 
-	BfmeWideResult result =
-	ThePartitionManager->bfmeForwardWideC(
-		positionBits, rangeBits, 0, (Int)(const void *)&aliveFilter, 1);
-
-	AIUpdateInterface *ai =
-		*(AIUpdateInterface **)((unsigned char *)me + 0x204);
-	const AttackPriorityInfo *info = ai ? ai->m_attackInfo : 0;
 	Object *bestTarget = 0;
 	Int effectivePriority = 0;
 	Int actualPriority = 0;
-	BfmeWideResultPayload *payload = result.m_value;
-	if (me->getSpecialPowerModule(spTemplate))
+	const AttackPriorityInfo *info = 0;
+	AIUpdateInterface *ai = *(AIUpdateInterface **)((unsigned char *)me + 0x204);
+	if (ai)
+		info = ai->m_attackInfo;
+
+	SpecialPowerModuleInterface *mod = me->getSpecialPowerModule(spTemplate);
+	if (mod)
 	{
-		for (BfmeWideResultItem *item = payload->m_cursor;
-			item != payload->m_items.end(); ++item)
+		Object *other;
+		while ((other = result.m_value->next()) != 0)
 		{
-			Object *other = item->m_object;
-			payload->m_cursor = item + 1;
-			if (!other)
-				continue;
 			if (isCaptureBuilding)
 			{
-				if (me->getControllingPlayer() == other->getControllingPlayer())
+				if (other->getControllingPlayer() == me->getControllingPlayer())
 					continue;
 				if (me->getRelationship(other) == RELATIONSHIP_ALLIES)
 					continue;
@@ -510,28 +530,36 @@ Object *CommandButtonHuntUpdate::scanClosestTarget()
 			if (isPlaceExplosive)
 			{
 				Real range = spTemplate->getViewObjectRange();
-				PartitionFilterSamePlayer filterPlayer(me->getControllingPlayer());
-				KindOfMaskType mustBeSet(KindOfMaskType::kInit, KINDOF_MINE);
-				KindOfMaskType mustBeClear;
-				PartitionFilterAcceptByKindOf filterKind(mustBeSet, mustBeClear);
-				if (ThePartitionManager->getClosestObject(
-					(const Coord3D *)((const unsigned char *)other + 0x38), range,
-					2, filterKind.link(&filterPlayer)))
+				Object *mine;
+				{
+					PlayerFilter0028AE90 filterPlayer(me->getControllingPlayer());
+					mine = ThePartitionManager->getClosestObject(
+						other->getPosition(), range, 1,
+						PartitionFilterAcceptByKindOf(
+							KindOfMaskType(KindOfMaskType::kInit, KINDOF_MINE),
+							KINDOFMASK_NONE).link(&filterPlayer));
+				}
+				if (mine)
 					continue;
 			}
-			Real distance = (Real)sqrt(me->getDistanceSquared(other));
-			Int curPriority = (Int)(data->m_scanRange - distance);
+			Real dist = (Real)sqrt(me->getDistanceSquared(other));
+			Int curPriority = (Int)(data->m_scanRange - dist);
 			if (info)
 				curPriority = info->getPriority(other->getTemplate());
 			if (curPriority == 0)
 				continue;
-			Int modifier = (Int)(distance /
+			Int modifier = (Int)(dist /
 				TheAI->m_aiData->m_attackPriorityDistanceModifier);
 			Int modPriority = curPriority - modifier;
 			if (modPriority < 1)
 				modPriority = 1;
-			if (modPriority > effectivePriority ||
-				(modPriority == effectivePriority && curPriority > actualPriority))
+			if (modPriority > effectivePriority)
+			{
+				effectivePriority = modPriority;
+				actualPriority = curPriority;
+				bestTarget = other;
+			}
+			if (modPriority == effectivePriority && curPriority > actualPriority)
 			{
 				effectivePriority = modPriority;
 				actualPriority = curPriority;
