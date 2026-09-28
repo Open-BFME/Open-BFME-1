@@ -1,8 +1,10 @@
-// ?handleMatch@BfmeBaseDF9@@QAEXPAX0@Z
-// partial score=0.9 date=2026-09-27
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWDebug
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWDebug
+// Retail 0x002DDD60 (443 B), reached through ILT 0x000240EB from BfmeBaseDF9::checkAndDispatch.
+// Zero Hour Weapon.cpp's directional damage cone test, then a disable timer and an FXList.
+
 #include "matrix3d.h"
-#include "coord3d.h"
+
+struct Coord3D;
 
 struct BfmeHandleDF9
 {
@@ -41,6 +43,11 @@ struct BfmeTargetDF9
 	float m_matrixRow20;
 	unsigned char m_pad02C[0x0C];
 	BfmePointDF9 m_position;
+
+	const Matrix3D *getTransformMatrix() const
+	{
+		return (const Matrix3D *)&m_matrixRow00;
+	}
 };
 
 class Object;
@@ -94,11 +101,13 @@ public:
 #define BfmePi (*(const float *)0x01087B14)
 #define BfmeZeroRange (*(const float *)0x01075350)
 
+// math.h makes cosf an inline over the cos intrinsic; retail calls _cosf.
 namespace BfmeCrtDF9
 {
 	extern "C" float __cdecl cosf(float value);
 }
 
+// ?handleMatch@BfmeBaseDF9@@QAEXPAX0@Z
 void BfmeBaseDF9::handleMatch(void *owner, void *target)
 {
 	BfmeHandleDF9 *handle = (BfmeHandleDF9 *)owner;
@@ -107,27 +116,24 @@ void BfmeBaseDF9::handleMatch(void *owner, void *target)
 
 	if (m_60 < BfmePi && object != 0)
 	{
-		BfmePointDF9 *targetPosition = (BfmePointDF9 *)((unsigned char *)target + 0x38);
 		BfmePointDF9 delta;
-		delta.set(targetPosition);
+		delta.set((BfmePointDF9 *)((unsigned char *)target + 0x38));
 		delta.sub(&object->m_position);
-		Vector3 sourceVector;
-		((Matrix3D *)((unsigned char *)object + 8))->Get_X_Vector(&sourceVector);
+		Vector3 sourceVector = object->getTransformMatrix()->Get_X_Vector();
 		Vector3 damageVector(delta.x, delta.y, delta.z);
-		float sourceLength = sourceVector.Length2();
-		if (BfmeZeroRange < sourceLength)
+		// The z, x, y term order sets MSVC's x87 operand order for this vector.
+		float sourceLength = sourceVector.Z * sourceVector.Z +
+			sourceVector.X * sourceVector.X + sourceVector.Y * sourceVector.Y;
+		if (sourceLength != 0.0f)
 		{
 			float inverseSourceLength = WWMath::Inv_Sqrt(sourceLength);
-			sourceVector *= inverseSourceLength;
+			sourceVector.X *= inverseSourceLength;
+			sourceVector.Y *= inverseSourceLength;
+			sourceVector.Z *= inverseSourceLength;
 		}
-		float damageLength = damageVector.Length2();
-		if (BfmeZeroRange < damageLength)
-		{
-			float inverseDamageLength = WWMath::Inv_Sqrt(damageLength);
-			damageVector *= inverseDamageLength;
-		}
-		if (Vector3::Dot_Product(sourceVector, damageVector) <
-			BfmeCrtDF9::cosf(m_60))
+		damageVector.Normalize();
+		if (sourceVector.X * damageVector.X + sourceVector.Y * damageVector.Y +
+			sourceVector.Z * damageVector.Z < BfmeCrtDF9::cosf(m_60))
 			return;
 	}
 
