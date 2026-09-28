@@ -128,9 +128,19 @@ solo, 46.5% with ten or more siblings landed together, because the layout,
 offsets and callee pins from the first body are what the next one needs. A
 shared header edit costs a full gate: edit every dependent body, pay once.
 
-## Convert, verify, commit, push — per body
+## Convert, verify, commit, push — per body or routine batch
 
-1. Make the smallest source and ledger change for one function.
+When several functions each recover under 100 retail bytes through the same
+established pattern, prefer one coherent commit for the batch. Verify each
+function and its identity independently; similar instruction bytes alone do
+not establish identity. Keep substantial reconstruction and investigation
+records, including 0-byte attempt commits, separate from routine recoveries.
+If a routine tiny change stands alone, prefer publishing its verified commit
+with the next one if another commit is expected. Publish a smaller final batch
+normally; do not invent work to reach a byte threshold.
+
+1. Make the smallest source and ledger change for one function or a routine
+   batch under the rule above.
 2. `./build.sh <file-or-symbol>`. If a command returns a process or session ID,
    poll it; never launch a duplicate build.
    `DIR32 addresses: FAIL` means a global, array slot, vtable or function
