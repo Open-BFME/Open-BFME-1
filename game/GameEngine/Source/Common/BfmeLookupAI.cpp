@@ -31,6 +31,8 @@ private:
 	void releaseBuffer();
 };
 
+extern const char Rva006A16B0Empty[];
+
 class AsciiStringAI : public StringBase<char>
 {
 public:
@@ -75,7 +77,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? m_data->data : (const char *)0x0107388B;
+		return m_data ? m_data->data : Rva006A16B0Empty;
 	}
 };
 

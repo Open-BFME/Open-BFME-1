@@ -71,6 +71,7 @@ extern "C" XferException *__cdecl bfmeFormatText(
 	XferException *result, Int tag, const char *format, ...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
+extern int g_guardTargetTypeThrowInfo;
 
 class Snapshot;
 
@@ -194,7 +195,7 @@ void AttackPriorityInfo::xfer(Xfer *xfer)
 			if (thingTemplate == 0)
 			{
 				bfmeFormatText(&error, 5, 0);
-				_CxxThrowException(&error, (void *)0x011DFE5C);
+				_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 			}
 			xfer->xferInt(&priority);
 			setPriority(thingTemplate, priority);

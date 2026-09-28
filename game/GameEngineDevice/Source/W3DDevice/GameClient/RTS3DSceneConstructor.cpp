@@ -224,7 +224,7 @@ public:
 	int m_nonOccludersCount;
 };
 
-#define TheWritableGlobalData (*(GlobalData **)0x012ED5C8)
+extern GlobalData *TheWritableGlobalData;
 
 class RTS3DScene : public SimpleSceneClass, public SubsystemInterface
 {

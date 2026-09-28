@@ -51,39 +51,39 @@ void W3DTreeBuffer::updateSway(const BreezeInfo& info)
 	Int i = 0;
 	char *sway = (char *)this + 0x2a93d0;
 	for (; i < 100; ) {
-		Real factor = bfmeCosVNB((Real)i * *(Real *)0x01120dbc);
+		Real factor = bfmeCosVNB((Real)i * 0.0622097589f);
 		Real angle = info.m_lean + (info.m_intensity * factor);
 		Real S = bfmeSinVNB(angle);
 		Real C = bfmeCosVNB(angle);
 
 		*(Real *)(sway - 0x04) = info.m_directionVecX * S;
 		*(Real *)sway = info.m_directionVecY * S;
-		*(Real *)(sway + 0x04) = C - *(Real *)0x01075334;
+		*(Real *)(sway + 0x04) = C - 1.0f;
 		++i;
 		sway += 0xc;
 	}
 
-	Real delta = info.m_randomness * *(Real *)0x0107533c;
+	Real delta = info.m_randomness * 0.5f;
 	register Int j = 0;
 	if (m_numTrees > 0) {
 		for (; j < m_numTrees; j++) {
 			m_trees[j].m_swayType = 1 + GetGameClientRandomValue(
-				0, 9, (char *)0x01121410, 0xe6);
+				0, 9, "F:\\bfme\\Code\\gameenginedevice\\Source\\W3DDevice\\GameClient\\W3DTreeBuffer.cpp", 0xe6);
 		}
 	}
 
-	Real high = *(Real *)0x01075334 + delta;
-	Real low = *(Real *)0x01075334 - delta;
+	Real high = 1.0f + delta;
+	Real low = 1.0f - delta;
 	for (i = 0; i < 10; i++) {
-		m_curSwayStep[i] = *(Real *)0x0107fac4 /
+		m_curSwayStep[i] = 100.0f /
 			((Real)info.m_breezePeriod * *(Real *)((char *)this + 0x2a98f8));
 		m_curSwayStep[i] *= GetGameClientRandomValueReal(
-				low, high, (char *)0x01121410, 0xea);
-		if (m_curSwayStep[i] < *(Real *)0x01075350)
+				low, high, "F:\\bfme\\Code\\gameenginedevice\\Source\\W3DDevice\\GameClient\\W3DTreeBuffer.cpp", 0xea);
+		if (m_curSwayStep[i] < 0.0f)
 			m_curSwayStep[i] = 0.0f;
 		m_curSwayOffset[i] = 0;
 		m_curSwayFactor[i] = GetGameClientRandomValueReal(
-				low, high, (char *)0x01121410, 0xef);
+				low, high, "F:\\bfme\\Code\\gameenginedevice\\Source\\W3DDevice\\GameClient\\W3DTreeBuffer.cpp", 0xef);
 	}
 	m_curSwayVersion = (Int)info.m_breezeVersion;
 }

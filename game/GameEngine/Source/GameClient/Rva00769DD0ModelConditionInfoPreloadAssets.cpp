@@ -42,7 +42,8 @@ public:
 	bool isEmpty() const { return m_data == 0 || m_data->length == 0; }
 	const char *str() const
 	{
-		return m_data ? &m_data->data[0] : (const char *)0x0107388B;
+		static const char TheNullChr = 0;
+		return m_data ? &m_data->data[0] : &TheNullChr;
 	}
 	void set(const AsciiString &source)
 	{

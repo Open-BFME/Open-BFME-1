@@ -68,6 +68,7 @@ public:
 class MidVirtualSlot90Receiver;
 void Rva0010BE80(MidVirtualSlot90Receiver *receiver, void *context);
 void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
+extern int g_Va012ACC30;
 
 class BfmeSeedTarget;
 class Rva000D6CF0Field
@@ -125,7 +126,7 @@ void Waypoint::xfer(Xfer *xfer)
 	xfer->xferAsciiString(&m_name);
 	xfer->xferCoord3D(&m_location);
 	if (version.currentVersion >= 2)
-		Rva0010BE80((MidVirtualSlot90Receiver *)xfer, (void *)0x012ACC30);
+		Rva0010BE80((MidVirtualSlot90Receiver *)xfer, &g_Va012ACC30);
 
 	if (xfer->isLoading())
 	{
