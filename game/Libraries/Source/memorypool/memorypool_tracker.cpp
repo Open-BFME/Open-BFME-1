@@ -33,6 +33,7 @@ public:
 	~Rva008838F0Owner();
 	int lookup(unsigned int key, void **dest, unsigned int limit);
 	bool isValidBlock(int type, void *block);
+	static void rva00883c0(void);
 
 private:
 	void *m_owner;
@@ -180,4 +181,14 @@ Rva008838F0Owner::~Rva008838F0Owner()
 		node = next;
 	}
 	m_current = 0;
+}
+
+void Rva008838F0Owner::rva00883c0(void)
+{
+	Rva008838F0Owner *owner = *(Rva008838F0Owner **)0x01336CE0;
+	while (owner != 0)
+	{
+		owner->~Rva008838F0Owner();
+		owner = (Rva008838F0Owner *)owner->m_previousOwner;
+	}
 }
