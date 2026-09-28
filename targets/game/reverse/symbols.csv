@@ -89595,3 +89595,5 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?concat@BfmeConcatShim@@QAEXPBDH@Z,0x00887D60,ScriptActions createUnitOnTeamAt shim spelling of the two-argument StringBase<char>::concat; retail calls at 0x002F9380 and 0x002F9390; same body as the existing ?bfmeConcatERC@BfmeStrERC pin; lane=createUnitOnTeamAt
 ?bfmeFindRaw@Gen_0021AD10@@AAEPAXPAX@Z,0x00012224,retail 0x0021AD10 reaches the matched Rva002493A0::find list search at 0x002493A0 through this ILT stub; Gen_0021AD10::bfmeFindRaw is the address-derived local spelling with identical ABI
 ?bfmeAskRaw@Gen_0021AD10@@AAEPAXPAX@Z,0x00036C05,retail 0x0021AD10 reaches the matched bfmeAskDG query at 0x00248AE0 through this ILT stub; Gen_0021AD10::bfmeAskRaw is the address-derived local spelling with identical ABI
+?create008BE760@BfmeSubmitter1283@@QAEXHPAXHHHHPAPAVBfmeNodeDX@@PAH@Z,0x008BE760,direct call from 0x008BEBF0; callees.py infers eight stack slots
+?finish008B06C0@BfmeNodeDX@@QAEXXZ,0x008B06C0,direct call from 0x008BEBF0; callees.py infers zero stack slots
