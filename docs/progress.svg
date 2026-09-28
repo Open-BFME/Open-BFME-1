@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="880" height="252" viewBox="0 0 880 252" role="img" aria-labelledby="title desc">
-  <title id="title">BFME 1 rebuilt from source: 80.80%</title>
-  <desc id="desc">7,839,204 of 9,702,173 code bytes rebuilt without copying the original; 5,302,982 of 8,331,464 bytes of the game's own code are C++. Ledger-derived; not a fresh build verification.</desc>
+  <title id="title">BFME 1 rebuilt from source: 81.66%</title>
+  <desc id="desc">7,922,505 of 9,702,173 code bytes rebuilt without copying the original; 5,386,090 of 8,331,384 bytes of the game's own code are C++. Ledger-derived; not a fresh build verification.</desc>
   <rect x="1" y="1" width="878" height="250" rx="16" fill="#0d1117" stroke="#30363d"/>
   <g font-family="Segoe UI,Arial,sans-serif">
     <text x="28" y="37" fill="#c9d1d9" font-size="14" font-weight="600" letter-spacing="1.4">BFME 1 · REBUILT FROM SOURCE</text>
-    <text x="852" y="43" fill="#f0f6fc" font-size="30" font-weight="700" text-anchor="end">80.80%</text>
+    <text x="852" y="43" fill="#f0f6fc" font-size="30" font-weight="700" text-anchor="end">81.66%</text>
     <rect x="28" y="62" width="824" height="20" rx="10" fill="#21262d"/>
-    <rect x="28" y="62" width="665.7791" height="20" rx="10" fill="#3fb950"/>
-    <text x="28" y="111" fill="#c9d1d9" font-size="14">7,839,204 / 9,702,173 bytes rebuilt without copying the original game exe (v1.03)</text>
+    <rect x="28" y="62" width="672.8538" height="20" rx="10" fill="#3fb950"/>
+    <text x="28" y="111" fill="#c9d1d9" font-size="14">7,922,505 / 9,702,173 bytes rebuilt without copying the original game exe (v1.03)</text>
     <text x="28" y="157" fill="#c9d1d9" font-size="14" font-weight="600" letter-spacing="1.4">BFME 1 · GAME CODE IN C++</text>
-    <text x="852" y="163" fill="#f0f6fc" font-size="30" font-weight="700" text-anchor="end">63.65%</text>
+    <text x="852" y="163" fill="#f0f6fc" font-size="30" font-weight="700" text-anchor="end">64.65%</text>
     <rect x="28" y="182" width="824" height="20" rx="10" fill="#21262d"/>
-    <rect x="28" y="182" width="524.4765" height="20" rx="10" fill="#58a6ff"/>
-    <text x="28" y="231" fill="#c9d1d9" font-size="14">5,302,982 / 8,331,464 bytes of the game's own code, now C++ (libraries not counted)</text>
+    <rect x="28" y="182" width="532.7012" height="20" rx="10" fill="#58a6ff"/>
+    <text x="28" y="231" fill="#c9d1d9" font-size="14">5,386,090 / 8,331,384 bytes of the game's own code, now C++ (libraries not counted)</text>
   </g>
 </svg>
