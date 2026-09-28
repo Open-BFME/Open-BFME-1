@@ -1,5 +1,5 @@
 // ?updateFormationMembers@BfmeAODHordeContainOwner@@QAEXXZ
-// partial score=0.95 date=2026-09-28
+// partial score=0.97 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 // BfmeAODHordeContainOwner::updateFormationMembers, retail 0x00241050 / 1540 bytes
@@ -34,10 +34,8 @@ public:
 typedef float Real;
 typedef unsigned int UnsignedInt;
 
-extern void j_00025d56(); extern void j_00044774(); extern void j_00015d02();
-extern void j_0001f253(); extern void j_0001a9dd(); extern void j_0001f91f();
+extern void j_0001f91f();
 extern void j_00049413(); extern void j_0002253e(); extern void j_00037691();
-extern void j_000416aa();
 
 class Route00241050 {};
 #define ROUTE(ret, name, thunk, params, args) \
@@ -46,12 +44,12 @@ class Route00241050 {};
 	return (((Route00241050 *)this)->*route.member) args; }
 
 class Object;
-class Flags00241050 { public: UnsignedInt words[10]; };
 
-class AI00241050 {
+class AIUpdateInterface {
 public:
-	ROUTE(bool, blocksFormationRefresh, j_00044774, (), ())
+	bool bfmeBlocksFormationRefresh();
 };
+template<int N> class BitFlags { public: UnsignedInt m_bits[(N + 31) / 32]; };
 
 class Object {
 public:
@@ -61,25 +59,25 @@ public:
 	unsigned char pad048[0x74 - 0x48];
 	int m_id;
 	unsigned char pad078[0x110 - 0x78];
-	UnsignedInt m_modelConditionFlags[10];
+	BitFlags<320> m_modelConditionFlags;
 	unsigned char pad138[0x204 - 0x138];
-	AI00241050 *m_ai;
+	AIUpdateInterface *m_ai;
 	int getID() const { return m_id; }
-	ROUTE(void, clearModelConditionFlags, j_0001a9dd, (const Flags00241050 &flags), (flags))
+	void bfmeClearYG(const BitFlags<320> &flags);
 	ROUTE(Real, relativeAngleTo, j_00049413, (const Coord3D *point), (point))
 	ROUTE(Real, distanceSquared, j_0002253e, (const Object *other), (other))
 };
 
-class Pathfinder00241050 {
+class Pathfinder {
 public:
-	ROUTE(void, rva003E4190, j_00025d56, (Object *obj), (obj))
-	ROUTE(void, removeGoal, j_00015d02, (Object *obj), (obj))
+	void Rva003E4190(Object *obj);
+	void removeGoal003E3D20(Object *obj);
 };
-class AI { public: unsigned char pad000[0xc]; Pathfinder00241050 *m_pathfinder; };
+class AI { public: unsigned char pad000[0xc]; Pathfinder *m_pathfinder; };
 extern AI *TheAI;
 class GameLogic {
 public:
-	ROUTE(Object *, findObjectByID, j_0001f253, (int id), (id))
+	Object *findObjectByID(int id);
 };
 extern GameLogic *TheGameLogic;
 extern const Real BfmeZeroRange;
@@ -121,8 +119,8 @@ public:
 	DelayMap00241050 m_map144;
 	int m_id150;
 	int m_id154;
-	Flags00241050 m_flags158;
-	Flags00241050 m_flags180;
+	BitFlags<320> m_flags158;
+	BitFlags<320> m_flags180;
 	IndexMap00241050 m_map1a8;
 	unsigned char pad1b4[0x208 - 0x1b4];
 	int m_id208;
@@ -138,24 +136,19 @@ public:
 		union { void (*address)(); Call member; } route = { j_0001f91f };
 		return (((Route00241050 *)&m_map1a8)->*route.member)(id);
 	}
-	__forceinline DelayMap00241050::iterator findDelay(const int &id) {
-		typedef DelayMap00241050::iterator (Route00241050::*Call)(const int &);
-		union { void (*address)(); Call member; } route = { j_000416aa };
-		return (((Route00241050 *)&m_map144)->*route.member)(id);
-	}
 };
 
 void BfmeAODHordeContainOwner::updateFormationMembers()
 {
 	_STL::list<Object *>::iterator it = m_list038.begin();
 	Object *owner = m_object;
-	TheAI->m_pathfinder->rva003E4190(owner);
+	TheAI->m_pathfinder->Rva003E4190(owner);
 	Real orient = owner->m_cachedAngle;
-	AI00241050 *ai = owner->m_ai;
+	AIUpdateInterface *ai = owner->m_ai;
 	if (!ai)
 		return;
-	if (!ai->blocksFormationRefresh())
-		TheAI->m_pathfinder->removeGoal(owner);
+	if (!ai->bfmeBlocksFormationRefresh())
+		TheAI->m_pathfinder->removeGoal003E3D20(owner);
 	ModuleData00241050 *data = m_moduleData;
 	if (!data)
 		return;
@@ -170,7 +163,7 @@ void BfmeAODHordeContainOwner::updateFormationMembers()
 		iface()->memberPosition(&pos, member, &angle);
 		angle += orient;
 		if (!m_map1a8.empty()) {
-			if (member->m_modelConditionFlags[5] & 1) {
+			if (member->m_modelConditionFlags.m_bits[5] & 1) {
 				iface()->abortFormation();
 				return;
 			}
@@ -188,12 +181,12 @@ void BfmeAODHordeContainOwner::updateFormationMembers()
 			Real distSq = dx * dx + dy * dy;
 			if (member == a) {
 				if (distSq < 410.0f) {
-					member->clearModelConditionFlags(m_flags158);
+					member->bfmeClearYG(m_flags158);
 					angle = member->relativeAngleTo(bPos) + member->m_cachedAngle;
 				}
 			} else if (member == b) {
 				if (distSq < 410.0f)
-					member->clearModelConditionFlags(m_flags158);
+					member->bfmeClearYG(m_flags158);
 				pos = member->m_cachedPos;
 				pos.sub(aPos);
 				pos.normalize();
@@ -202,7 +195,7 @@ void BfmeAODHordeContainOwner::updateFormationMembers()
 				angle = member->relativeAngleTo(aPos) + member->m_cachedAngle;
 			} else if (distSq < 410.0f) {
 				int index = indexOf(member->getID());
-				member->clearModelConditionFlags(m_flags180);
+				member->bfmeClearYG(m_flags180);
 				angle = member->relativeAngleTo(aPos) + member->m_cachedAngle;
 				pos = member->m_cachedPos;
 				pos.sub(aPos);
@@ -225,7 +218,7 @@ void BfmeAODHordeContainOwner::updateFormationMembers()
 				}
 			}
 		} else if (!m_map144.empty()) {
-			DelayMap00241050::iterator found = findDelay(member->getID());
+			DelayMap00241050::iterator found = m_map144.find(member->getID());
 			if (found != m_map144.end()) {
 				if (target && data->at288 != BfmeZeroRange) {
 					Coord3D delta = member->m_cachedPos;
@@ -254,6 +247,6 @@ void BfmeAODHordeContainOwner::updateFormationMembers()
 		} else if (m_flag220) {
 			angle = member->relativeAngleTo(&m_pos214) + member->m_cachedAngle;
 		}
-		primary()->placeMember(member, &pos, angle, !ai->blocksFormationRefresh());
+		primary()->placeMember(member, &pos, angle, !ai->bfmeBlocksFormationRefresh());
 	}
 }
