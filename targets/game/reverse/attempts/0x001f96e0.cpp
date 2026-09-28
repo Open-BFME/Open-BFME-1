@@ -1,362 +1,240 @@
 // ?rva001f96e0@DynamicPortalBehaviour@@QAEXXZ
-// partial score=0.5 date=2026-09-24
-// ?dup_001f96e0@@YAXXZ
-// Retail 0x001F96E0 / 979 bytes.  DynamicPortalBehaviour receiver layout is
-// proven by ctor/vtable (caller 0x001F9C20 is vtable 0x010A3950 slot 1;
-// neighbour ctor 0x001F8B80 installs DynamicPortalBehaviour's primary/Create
-// vtables), but this private method has no proved semantic name, so it stays
-// address-derived under the proven owner.
-//
-// The body builds BFME waypoint objects from the module's bone positions and
-// then links the copied integer paths.  The small local types below are
-// deliberately scoped to this reconstruction: their offsets are witnessed by
-// the retail stores, while their semantic owners are not.
+// partial score=0.7 date=2026-09-28
+// ?rva001f96e0@DynamicPortalBehaviour@@QAEXXZ
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
+// stlport
+// partial score=0.70 date=2026-09-28
+// NOT byte matched: 967/979 B, 295 masked differing bytes, shape 0.961.
+// 2026-09-28 opus-5.5 clean rewrite: real new-expression and by-value
+// AsciiString arguments (EH states 1-5), nodes stored by loop index,
+// Coord3D location copy, pathfinder call OUTSIDE the first !built block
+// (this moves `this` from EBP to EDI as in retail), path[0]/path[count-1].
+// Remaining: count in EBX vs retail EBP (end node swaps with it), the module
+// pointer spill slot (retail esp+0x18, ours esp+0x2C) shifting the path
+// vector by 4, and retail's two extra reloads of the module pointer.
+// Retail 0x001F96E0 / 979 bytes.  DynamicPortalBehaviour receiver (caller
+// 0x001F9C20 is vtable 0x010A3950 slot 1; ctor 0x001F8B80).  The private
+// method has no proven semantic name, so it keeps its address.
 
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath
+#define _STLP_NO_EXCEPTIONS 1
 
+#include <vector>
+#include "ascii_string.h"
 #include "coord3d.h"
-#include <string.h>
 
-typedef unsigned int UnsignedInt;
+// Retail inlines str() at this call site: null data -> "".
+template <> inline const char *StringBase<char>::str() const
+{
+	return m_data ? m_data->data : "";
+}
+
 typedef int Int;
-typedef bool Bool;
+typedef unsigned int UnsignedInt;
 typedef float Real;
+typedef bool Bool;
 
-// Retail's real Coord3D() / ~Coord3D() (0x00016C93 / 0x0001364C, both empty)
-// are what make MSVC emit the ??_L/??_M array-with-cleanup helpers for a
-// local Coord3D[16] -- no hand-rolled array-new/delete shim is needed.
+#define TRUE true
+#define FALSE false
+
+extern const AsciiString BFMEAsciiEmptyString;
+#pragma comment(linker, "/alternatename:?BFMEAsciiEmptyString@@3VAsciiString@@B=?TheEmptyString@AsciiString@@2V1@B")
 
 class Matrix3D;
 
-// upstream layout: witnessed by the retail call at this body's +0x7d, which
-// pushes (prefix, module->0x70, positions, 0, 1, 0) into the real, already
-// matched ?getMultiLogicalBonePosition@Object@@... row.
 class Object
 {
 public:
-	Int getMultiLogicalBonePosition( const char *boneNamePrefix, Int maxBones,
-		Coord3D *positions, Matrix3D *transforms, Bool convertToWorld, Int extra ) const;
+	Int getMultiLogicalBonePosition(const char *boneNamePrefix, Int maxBones,
+		Coord3D *positions, Matrix3D *transforms, Bool convertToWorld, Int extra) const;
+
+	UnsignedInt rva074() const { return m_rva074; }
 
 private:
-	unsigned char m_pad00[0x74];
+	char m_pad00[0x74];
+	UnsignedInt m_rva074;
 };
 
-class BFMERetailAsciiString
+class GameLogic
 {
 public:
-	BFMERetailAsciiString( const char *text );
-	~BFMERetailAsciiString() {}
-
-	const char *text( void ) const
-	{
-		if (m_data == 0)
-			return 0;
-		return (const char *)m_data + 8;
-	}
+	UnsignedInt getFrame() const { return m_frame; }
 
 private:
-	void *m_data;
+	char m_pad00[0x3c];
+	UnsignedInt m_frame;
 };
 
-// Retail's 0x00887B60 copy body is ICF-folded under this name.  Its live
-// payload for this call site is one pointer, not the unrelated 0x20-byte
-// network-room record that shares the printed ICF name elsewhere.
-class GameSpyGroupRoom
+extern GameLogic *TheGameLogic;
+
+class Waypoint;
+
+class Pathfinder
 {
 public:
-	GameSpyGroupRoom( const GameSpyGroupRoom &other );
-	~GameSpyGroupRoom() {}
+	void rva003D84A0(Waypoint *waypoint);
+};
+
+class AI
+{
+public:
+	Pathfinder *pathfinder() { return m_pathfinder; }
 
 private:
-	void *m_data;
+	char m_pad00[0x0c];
+	Pathfinder *m_pathfinder;
 };
 
-class Rva001F96E0Waypoint
+extern AI *TheAI;
+
+// Twelve-byte location argument of the node constructor (pinned spelling).
+struct Rva001AB600Arg
+{
+	Real x, y, z;
+};
+
+// Six-dword records copied wholesale from the module data into the node.
+struct Rva001F96E0Six
+{
+	UnsignedInt w[6];
+};
+
+// The 0xB0-byte node built here (constructor 0x001AB600 via ILT 0x0001ADB1).
+class Rva001A2D50Node
 {
 public:
-	unsigned char m_storage[0xb0];
+	Rva001A2D50Node(Int id, AsciiString name, const Rva001AB600Arg &location,
+		AsciiString s1, AsciiString s2, AsciiString s3, Bool flag, Int kind,
+		AsciiString s4);
+
+	char m_pad00[0x20];
+	Rva001A2D50Node *m_links[8];
+	Rva001A2D50Node *m_rva40;
+	Rva001A2D50Node *m_rva44;
+	Bool m_rva48;
+	char m_pad49[3];
+	Int m_numLinks;
+	char m_pad50[0x18];
+	Bool m_rva68;
+	char m_pad69[3];
+	Rva001F96E0Six m_rva6c;
+	Bool m_rva84;
+	char m_pad85[3];
+	Rva001F96E0Six m_rva88;
+	Bool m_rvaA0;
+	char m_padA1[7];
+	UnsignedInt m_rvaA8;
+	UnsignedInt m_rvaAC;
 };
+
+typedef _STL::vector<Int> Rva001F96E0Path;
 
 struct Rva001F96E0Pair
 {
-	UnsignedInt index;
-	UnsignedInt kind;
+	Int first;
+	Int second;
 };
-
-// Witnessed 12-byte width: module->m_nested.begin sits at module+0xB4, not
-// +0xB0, so this vector carries a third (unread) capacity-style slot exactly
-// like Rva001F96E0IntVector below.
-struct Rva001F96E0PairVector
-{
-	Rva001F96E0Pair *begin;
-	Rva001F96E0Pair *end;
-	Rva001F96E0Pair *capacity;
-};
-
-struct Rva001F96E0IntVector
-{
-	int *begin;
-	int *end;
-	int *capacity;
-};
-
-// Witnessed 12-byte width: module->m_flagc5/m_valueDC only land on their
-// named offsets (0xC5 / 0xDC) when this vector is 12 bytes, not 8.
-struct Rva001F96E0NestedVector
-{
-	Rva001F96E0IntVector *begin;
-	Rva001F96E0IntVector *end;
-	Rva001F96E0IntVector *capacity;
-};
-
-namespace _STL
-{
-	template <bool Threads, int Instance>
-	class __node_alloc
-	{
-	public:
-		static void _M_deallocate( void *, unsigned int );
-	};
-}
 
 class Rva001F96E0ModuleData
 {
 public:
-	unsigned char m_pad00[0x70];
-	UnsignedInt m_value70;
-	unsigned char m_pad74[0x30];
-	BFMERetailAsciiString m_bonePrefix;
-	Rva001F96E0PairVector m_pairs;
-	Rva001F96E0NestedVector m_nested;
-	unsigned char m_padc0[5];
-	unsigned char m_flagc5;
-	unsigned char m_padc6[0x16];
-	Real m_valueDC;
+	char m_pad00[0x70];
+	Int m_numBones;
+	Rva001F96E0Six m_rva74;
+	Rva001F96E0Six m_rva8c;
+	AsciiString m_bonePrefix;
+	_STL::vector<Rva001F96E0Pair> m_pairs;
+	_STL::vector<Rva001F96E0Path> m_paths;
+	char m_padC0[5];
+	Bool m_rvaC5;
+	char m_padC6[0x16];
+	Real m_rvaDC;
 };
-
-class Rva001F96E0Pathfinder
-{
-};
-
-class Rva001F96E0AI
-{
-public:
-	unsigned char m_pad00[0x0c];
-	Rva001F96E0Pathfinder *m_pathfinder;
-};
-
-class Rva001F96E0GameLogic
-{
-public:
-	unsigned char m_pad00[0x3c];
-	UnsignedInt m_frame;
-};
-
-extern void j_0001adb1( void );
-extern void j_000212d3( void );
-extern void j_0003793e( void );
-extern void j_0003cf51( void );
-
-typedef void (Rva001F96E0Waypoint::*Rva001F96E0WaypointCtor)(
-	UnsignedInt, BFMERetailAsciiString,
-	const Coord3D *, GameSpyGroupRoom, GameSpyGroupRoom, GameSpyGroupRoom,
-	unsigned char, UnsignedInt, GameSpyGroupRoom );
-typedef int (Rva001F96E0IntVector::*Rva001F96E0NestedValue)(
-	unsigned char * );
-typedef void (Rva001F96E0IntVector::*Rva001F96E0VectorCtor)(
-	int, int );
-typedef void (Rva001F96E0Pathfinder::*Rva001F96E0PathAdd)(
-	Rva001F96E0Waypoint * );
 
 class DynamicPortalBehaviour
 {
 public:
-	void rva001f96e0( void );
+	void rva001f96e0();
+
+	const Rva001F96E0ModuleData *getModuleData() const { return m_moduleData; }
+	Object *getObject() const { return m_object; }
+
+private:
+	void *m_vtable;
+	const Rva001F96E0ModuleData *m_moduleData;
+	Object *m_object;
+	char m_pad0c[0x18];
+	Rva001A2D50Node *m_nodes[6];
+	Bool m_built;
 };
 
-void DynamicPortalBehaviour::rva001f96e0( void )
+void DynamicPortalBehaviour::rva001f96e0()
 {
-	unsigned char *owner = (unsigned char *)this;
 	Coord3D positions[16];
+	const Rva001F96E0ModuleData *data = getModuleData();
+	Bool built = m_built;
+	Object *obj = getObject();
 
-	unsigned char wasBuilt = *(owner + 0x3c);
-	Rva001F96E0ModuleData *module =
-		*(Rva001F96E0ModuleData **)(owner + 4);
-	Object *object =
-		*(Object **)(owner + 8);
-
-	if (wasBuilt == 0)
+	if (!built)
 	{
-		const char *prefix = module->m_bonePrefix.text();
-		if (prefix == 0)
-			prefix = (const char *)0x0107388b;
+		obj->getMultiLogicalBonePosition(data->m_bonePrefix.str(),
+			data->m_numBones, positions, NULL, TRUE, 0);
 
-		object->getMultiLogicalBonePosition( prefix, (Int)module->m_value70,
-			positions, 0, true, 0 );
+		UnsignedInt startFrame = 0;
+		if (data->m_rvaDC > 0.0f)
+			startFrame = TheGameLogic->getFrame() - (Int)(data->m_rvaDC * -5.0f);
 
-		int frameDelta = 0;
-		if (module->m_valueDC != *(const Real *)0x01075350)
+		UnsignedInt objectValue = getObject()->rva074();
+		Int i = 0;
+		for (_STL::vector<Rva001F96E0Pair>::const_iterator it = data->m_pairs.begin();
+			it != data->m_pairs.end(); ++it, ++i)
 		{
-			Rva001F96E0GameLogic *logic =
-				*(Rva001F96E0GameLogic **)0x012f0898;
-			Real scaled = module->m_valueDC * *(const Real *)0x010a39c4;
-			frameDelta = (int)scaled;
-			frameDelta = (int)logic->m_frame - frameDelta;
+			const Coord3D *src = &positions[it->first];
+			Rva001AB600Arg location = *(const Rva001AB600Arg *)src;
+			Rva001A2D50Node *node = new Rva001A2D50Node(0x7ffffffe,
+				AsciiString("#dynamicportal_wp"), location,
+				BFMEAsciiEmptyString, BFMEAsciiEmptyString, BFMEAsciiEmptyString,
+				FALSE, it->second, BFMEAsciiEmptyString);
+			node->m_rvaA8 = objectValue;
+			node->m_rva68 = TRUE;
+			node->m_rva6c = data->m_rva74;
+			node->m_rva84 = TRUE;
+			node->m_rva88 = data->m_rva8c;
+			node->m_rvaA0 = data->m_rvaC5;
+			if (startFrame > 0)
+				node->m_rvaAC = startFrame;
+			m_nodes[i] = node;
 		}
-
-		UnsignedInt objectField74 =
-			*(const UnsignedInt *)((const unsigned char *)object + 0x74);
-
-		Rva001F96E0Pair *pair = module->m_pairs.begin;
-		Rva001F96E0Pair *pairEnd = module->m_pairs.end;
-		while (pair != pairEnd)
-		{
-			UnsignedInt index = pair->index;
-			const Coord3D *location = positions + index;
-			void *rawWaypoint = ::operator new( 0xb0 );
-			if (rawWaypoint != 0)
-			{
-				Rva001F96E0Waypoint *waypoint =
-					(Rva001F96E0Waypoint *)rawWaypoint;
-				union
-				{
-					void (*raw)( void );
-					Rva001F96E0WaypointCtor member;
-				} constructWaypoint;
-				constructWaypoint.raw = j_0001adb1;
-				(waypoint->*constructWaypoint.member)( 0x7ffffffe,
-					BFMERetailAsciiString( (const char *)0x010a39ac ),
-					location,
-					*(const GameSpyGroupRoom *)0x01336e50,
-					*(const GameSpyGroupRoom *)0x01336e50,
-					*(const GameSpyGroupRoom *)0x01336e50,
-					(unsigned char)0,
-					module->m_value70,
-					*(const GameSpyGroupRoom *)0x01336e50 );
-
-				*(UnsignedInt *)((unsigned char *)waypoint + 0xa8) = objectField74;
-				*(unsigned char *)((unsigned char *)waypoint + 0x68) = 1;
-
-				UnsignedInt *dst6c = (UnsignedInt *)((unsigned char *)waypoint + 0x6c);
-				const UnsignedInt *src74 = (const UnsignedInt *)((const unsigned char *)module + 0x74);
-				dst6c[0] = src74[0];
-				dst6c[1] = src74[1];
-				dst6c[2] = src74[2];
-				dst6c[3] = src74[3];
-				dst6c[4] = src74[4];
-				dst6c[5] = src74[5];
-
-				*(unsigned char *)((unsigned char *)waypoint + 0x84) = 1;
-
-				UnsignedInt *dst88 = (UnsignedInt *)((unsigned char *)waypoint + 0x88);
-				const UnsignedInt *src8c = (const UnsignedInt *)((const unsigned char *)module + 0x8c);
-				dst88[0] = src8c[0];
-				dst88[1] = src8c[1];
-				dst88[2] = src8c[2];
-				dst88[3] = src8c[3];
-				dst88[4] = src8c[4];
-				dst88[5] = src8c[5];
-
-				*(unsigned char *)((unsigned char *)waypoint + 0xa0) =
-					module->m_flagc5;
-				if (frameDelta > 0)
-					*(UnsignedInt *)((unsigned char *)waypoint + 0xac) = (UnsignedInt)frameDelta;
-
-				*(UnsignedInt *)(owner + 0x24 + index * 4) =
-					(UnsignedInt)waypoint;
-			}
-
-			++pair;
-		}
-
-		*(owner + 0x3c) = 1;
+		m_built = TRUE;
 	}
 
-	Rva001F96E0IntVector *inner = module->m_nested.begin;
-	while (inner != module->m_nested.end)
+	for (_STL::vector<Rva001F96E0Path>::const_iterator pathIt = data->m_paths.begin();
+		pathIt != data->m_paths.end(); ++pathIt)
 	{
-		unsigned char allocatorStorage;
-		union
+		Rva001F96E0Path path = *pathIt;
+		Int first = path[0];
+		Int count = path.size();
+		Int last = path[count - 1];
+		if (!built)
 		{
-			void (*raw)( void );
-			Rva001F96E0NestedValue member;
-		} valueAt;
-		valueAt.raw = j_0003cf51;
-		int allocator = (inner->*valueAt.member)( &allocatorStorage );
-
-		int *sourceBegin = inner->begin;
-		int *sourceEnd = inner->end;
-		int sourceCount = (int)(sourceEnd - sourceBegin);
-		Rva001F96E0IntVector copied;
-		union
-		{
-			void (*raw)( void );
-			Rva001F96E0VectorCtor member;
-		} constructVector;
-		constructVector.raw = j_000212d3;
-		(( &copied )->*constructVector.member)( sourceCount, allocator );
-
-		if (sourceCount != 0)
-			memmove( copied.begin, sourceBegin, sourceCount * sizeof(int) );
-
-		int *copiedBegin = copied.begin;
-		int *copiedEnd = copied.end;
-		if (copiedBegin != copiedEnd)
-		{
-			UnsignedInt firstIndex = (UnsignedInt)copiedBegin[0];
-			UnsignedInt lastIndex =
-				(UnsignedInt)copiedEnd[-1];
-			if (wasBuilt == 0)
+			Rva001A2D50Node *end = m_nodes[last];
+			Rva001A2D50Node *start = m_nodes[first];
+			if (start->m_numLinks < 8)
 			{
-				Rva001F96E0Waypoint *first =
-					*(Rva001F96E0Waypoint **)(owner + 0x24 + firstIndex * 4);
-				Rva001F96E0Waypoint *last =
-					*(Rva001F96E0Waypoint **)(owner + 0x24 + lastIndex * 4);
-				UnsignedInt count =
-					*(UnsignedInt *)((unsigned char *)first + 0x4c);
-				if (count < 8)
-				{
-					*(Rva001F96E0Waypoint **)((unsigned char *)first +
-						0x20 + count * 4) = last;
-					*(UnsignedInt *)((unsigned char *)first + 0x4c) = count + 1;
-				}
-				*(Rva001F96E0Waypoint **)((unsigned char *)last + 0x40) = first;
-
-				Rva001F96E0AI *ai = *(Rva001F96E0AI **)0x012ef214;
-				union
-				{
-					void (*raw)( void );
-					Rva001F96E0PathAdd member;
-				} addPath;
-				addPath.raw = j_0003793e;
-				(ai->m_pathfinder->*addPath.member)( first );
+				start->m_links[start->m_numLinks] = end;
+				++start->m_numLinks;
 			}
-
-			if (wasBuilt == 0)
+			end->m_rva40 = start;
+		}
+		TheAI->pathfinder()->rva003D84A0((Waypoint *)m_nodes[first]);
+		if (!built)
+		{
+			for (Int j = 0; j < count - 2; ++j)
 			{
-				int count = (int)(copiedEnd - copiedBegin) - 2;
-				for (int i = 0; i < count; ++i)
-				{
-					UnsignedInt nextIndex = (UnsignedInt)copiedBegin[i + 1];
-					UnsignedInt priorIndex = (UnsignedInt)copiedBegin[i];
-					Rva001F96E0Waypoint *next =
-						*(Rva001F96E0Waypoint **)(owner + 0x24 + nextIndex * 4);
-					Rva001F96E0Waypoint *prior =
-						*(Rva001F96E0Waypoint **)(owner + 0x24 + priorIndex * 4);
-					*(unsigned char *)((unsigned char *)next + 0x48) = 0;
-					*(Rva001F96E0Waypoint **)((unsigned char *)prior + 0x44) = next;
-				}
+				Int next = path[j + 1];
+				Int prev = path[j];
+				m_nodes[next]->m_rva48 = FALSE;
+				m_nodes[prev]->m_rva44 = m_nodes[next];
 			}
 		}
-
-		int elemCount = (int)(copiedEnd - copiedBegin);
-		unsigned int copiedBytes = (unsigned int)elemCount * sizeof(int);
-		if (copiedBytes > 0x80)
-			::operator delete( copiedBegin );
-		else if (copiedBegin != 0)
-			_STL::__node_alloc<true, 0>::_M_deallocate(
-				copiedBegin, copiedBytes );
-
-		++inner;
 	}
 }
