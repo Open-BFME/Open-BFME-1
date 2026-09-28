@@ -822,15 +822,26 @@ def _case_resolve(path):
     casing on case-insensitive filesystems, so resolve each component from its
     parent directory. The repo bans case-colliding names, making lowercase
     matching unambiguous. Returns None when nothing matches."""
-    current = "/"
-    for part in path.split("/"):
+    current, parts = "/", path.split("/")
+    if os.name == "nt":
+        # A native path (C:\...) split on "/" was one unresolvable component:
+        # every include note failed, no deps sidecar was ever written on
+        # Windows, and the publish verification cache could never hit. Walk
+        # from the drive root instead; cl reports lowercased prefixes here too.
+        pure = Path(os.path.normpath(path))
+        if not pure.anchor:
+            return None
+        current, parts = pure.anchor.upper(), pure.parts[1:]
+    for part in parts:
         if not part:
             continue
         try:
             stat = os.stat(current)
             stamp = (stat.st_dev, stat.st_ino, stat.st_mtime_ns, stat.st_ctime_ns)
             cached = _CASEDIR_MEMO.get(current)
-            if cached is None or cached[0] != stamp:
+            # NTFS defers a directory's mtime (two creations in a row share
+            # one stamp), so a miss re-lists and a hit is re-checked below.
+            if cached is None or cached[0] != stamp or part.lower() not in cached[1]:
                 listing = {name.lower(): name for name in os.listdir(current)}
                 _CASEDIR_MEMO[current] = (stamp, listing)
             else:
@@ -841,7 +852,7 @@ def _case_resolve(path):
         if real is None:
             return None
         current = os.path.join(current, real)
-    return current
+    return current if os.path.lexists(current) else None
 
 
 def _include_search_roots(source, command, env):
@@ -860,10 +871,14 @@ def _include_search_roots(source, command, env):
             reported.add(arg[2:])
     for raw in reported:
         host = _host_path(raw)
-        host = _case_resolve(host) if host is not None else None
-        if host is None:
+        resolved = _case_resolve(host) if host is not None else None
+        if resolved is None and host is not None and os.name == "nt":
+            # A missing /I directory inventories as "absent", and NTFS lookups
+            # are case-insensitive, so creating it later changes the digest.
+            resolved = host
+        if resolved is None:
             return None
-        roots.add(Path(host))
+        roots.add(Path(resolved))
     if source_needs_stlport(source):
         # STLport's native-header macros expand to <../include/HEADER>
         # (_STLP_NATIVE_INCLUDE_PATH in stl/_config.h) and
@@ -961,7 +976,11 @@ def _directive_text(path):
                        if match.group().startswith("/") else match.group()), text)
 
 
-def _include_escapes_search_roots(path, stlport, roots=None):
+def _include_escapes_search_roots(path, stlport, roots=None, anchored=None):
+    """True when an include in PATH may resolve outside the inventoried roots.
+    A quoted include is searched first in its includer's own directory, so one
+    that resolves there cannot be shadowed by a header added anywhere else;
+    such targets are added to ANCHORED (they need no enclosing search root)."""
     text = _directive_text(path)
     if text is None:
         return True
@@ -979,6 +998,14 @@ def _include_escapes_search_roots(path, stlport, roots=None):
         if end < 0 or operand[1:end].lower().endswith(".cpp"):
             return True
         include = operand[1:end].replace("\\", "/")
+        if operand[0] == '"' and anchored is not None:
+            try:
+                local = (Path(path).parent / include).resolve(strict=True)
+            except (OSError, RuntimeError):
+                local = None
+            if local is not None and local.is_file():
+                anchored.add(local)
+                continue
         if ".." in include.split("/"):
             if roots is None:
                 return True
@@ -1113,14 +1140,16 @@ def _write_deps_sidecar(source, output, fingerprint, stdout_text, is_cl,
         if re.search(r"^\s*include\s", head, re.IGNORECASE | re.MULTILINE):
             problems.append("(.asm uses an include directive; deps unknown)")
     roots = _include_search_roots(source, command, env) if is_cl else []
+    anchored = set()
+    if is_cl and any(_include_escapes_search_roots(
+            path, source_needs_stlport(source), roots, anchored) for path in [source, *dep_paths]):
+        problems.append("(macro or parent-traversing include has unknown search roots)")
     if is_cl and (roots is None or any(
-            not any(path.is_relative_to(root) for root in roots) for path in dep_paths)):
+            not any(path.is_relative_to(root) for root in roots)
+            and path.resolve() not in anchored for path in dep_paths)):
         problems.append("(included header lies outside the snapshotted search roots)")
     if is_cl and any(path.suffix.lower() == ".cpp" for path in dep_paths):
         problems.append("(.cpp includes are outside the directory inventory)")
-    if is_cl and any(_include_escapes_search_roots(
-            path, source_needs_stlport(source), roots) for path in [source, *dep_paths]):
-        problems.append("(macro or parent-traversing include has unknown search roots)")
     inventory = _inventory_for_roots(roots) if roots is not None and is_cl else None
     if is_cl and (inventory_before is None or inventory != inventory_before):
         problems.append("(include search directories changed during compile or are unreadable)")
