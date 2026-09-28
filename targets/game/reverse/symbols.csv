@@ -89809,3 +89809,4 @@ _Rva0086C6E0,0x0086C6E0,gap-seat; opaque address-derived five-argument cdecl hel
 ?perNode@Rva006F8F00Payload@@QAEXPAX0PAH1@Z,0x006F8E60, retail thiscall ret16; arrays then index and vertex counts; caller 006F8F00
 ?Draw_Sentence@Render2DSentenceHHHH@@QAEXIIII@Z,0x0093EB50,banked four-color ABI view of Render2DSentenceClass; retail thiscall ret16; W3DGameWindowDrawText witness
 ?rva0052B540@BfmeAptScreenObjectives@@QAEXHHABVUnicodeString@@@Z,0x0052B540,APT PlayerTable helper; all four 0x0052C220 calls set ECX=this and push row column UnicodeString reference; RET12; independent body and ABI evidence in identity_evidence/0x0052c220.md
+??0?$list@PAVRva002E06C0Target@@V?$allocator@PAVRva002E06C0Target@@@_STL@@@_STL@@QAE@ABV01@@Z,0x002E0F20,native list pointer copy ctor independently exact 111B in Rva002E2110KeyedListInsert.cpp; ret4 and matched list range-insert 0x002E06C0 prove ABI; called through ILT 0x0000B537 by 0x002E2110

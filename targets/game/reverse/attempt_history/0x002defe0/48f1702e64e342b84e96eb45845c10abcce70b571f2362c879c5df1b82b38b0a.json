@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "48f1702e64e342b84e96eb45845c10abcce70b571f2362c879c5df1b82b38b0a",
+  "symbol": "?testOne@Rva002DF100@@QAEEPAX@Z",
+  "score_kind": "author-estimate",
+  "score": 0.844,
+  "source": "// ?testOne@Rva002DF100@@QAEEPAX@Z\n// partial score=0.844 date=2026-09-28\n// cl: /DNDEBUG /DWIN32 /MD /EHs-c- /D_STLP_USE_STATIC_LIB\r\n// stlport\r\n#include <bitset>\r\ntemplate <unsigned N> class BitFlags {\r\npublic:\r\n unsigned m_bits[N/32];\r\n bool testSetAndClear(const BitFlags&, const BitFlags&) const;\r\n bool any() const { for(unsigned i=0;i<N/32;++i) if(m_bits[i]) return true; return false; }\r\n void set(const BitFlags& x) { for(unsigned i=0;i<N/32;++i) m_bits[i] |= x.m_bits[i]; }\r\n\r\n};\r\nclass Player;\r\nclass Object { public: Player* getControllingPlayer() const; __forceinline BitFlags<192> getCombinedFlags() const { BitFlags<192> f=*(BitFlags<192>*)((char*)this+0x224); f.set(*(BitFlags<192>*)((char*)getControllingPlayer()+0x8c)); return f; } };\r\nclass GameLogic { public: Object* findObjectByID(int); };\r\nextern GameLogic* TheGameLogic;\r\nclass Rva002DF100 { public: unsigned char testOne(void*); unsigned m_00; BitFlags<192> m_04, m_1c; };\r\nunsigned char Rva002DF100::testOne(void* value) {\r\n if (!value) return 0;\r\n Object* obj=TheGameLogic->findObjectByID(*(int*)((char*)value+8));\r\n if (!obj) { if(m_04.any()) return 0; return 1; }\r\n return obj->getCombinedFlags().testSetAndClear(m_04,m_1c)!=0;\r\n}\r\n"
+}
