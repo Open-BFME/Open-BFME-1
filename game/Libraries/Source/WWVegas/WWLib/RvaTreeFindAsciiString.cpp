@@ -173,22 +173,18 @@ typedef _STL::_Rb_tree<AsciiString, Rva0038BFE0Value, Rva0038BFE0KeyOfValue,
 template _STL::_Rb_tree_node<Rva0038BFE0Value> *
 Rva0038BFE0Tree::_M_find<AsciiString>( const AsciiString & ) const;
 
-struct Rva0038C0E0Value
-{
-	AsciiString m_key;
-};
-
-struct Rva0038C0E0KeyOfValue
-{
-	const AsciiString &operator()( const Rva0038C0E0Value &x ) const { return x.m_key; }
-};
-
-typedef _STL::_Rb_tree<AsciiString, Rva0038C0E0Value, Rva0038C0E0KeyOfValue,
-	_STL::less<AsciiString>, _STL::allocator<Rva0038C0E0Value> > Rva0038C0E0Tree;
+// 0x0038C0E0 is the one body here whose value type is known: it is
+// set<AsciiString>'s own tree (value == key, _Identity). Matched callers of
+// _STL::set<AsciiString>::find -- PopulatePlayerTemplateComboBox 0x006247B0 and
+// PopulateLobbyPlayerListbox 0x004FB500 -- reach it through ILT 0x00003071, and
+// that tree's _M_erase (0x00076A90, 20-byte nodes, ~AsciiString at +0x10) is
+// the one the matched set<AsciiString> destructor 0x000775F0 calls.
+typedef _STL::_Rb_tree<AsciiString, AsciiString, _STL::_Identity<AsciiString>,
+	_STL::less<AsciiString>, _STL::allocator<AsciiString> > AsciiStringSetTree;
 
 // retail 0x0038C0E0
-template _STL::_Rb_tree_node<Rva0038C0E0Value> *
-Rva0038C0E0Tree::_M_find<AsciiString>( const AsciiString & ) const;
+template _STL::_Rb_tree_node<AsciiString> *
+AsciiStringSetTree::_M_find<AsciiString>( const AsciiString & ) const;
 
 struct Rva003B9DC0Value
 {
