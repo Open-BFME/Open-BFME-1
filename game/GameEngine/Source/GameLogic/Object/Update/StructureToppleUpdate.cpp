@@ -531,16 +531,72 @@ void StructureToppleUpdate::applyCrushingDamage(Real theta)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?doToppleStartFX@StructureToppleUpdate@@IAEXPAVObject@@PBVDamageInfo@@@Z present-unmatched
-void StructureToppleUpdate::doToppleStartFX(Object *building, const DamageInfo *damageInfo) 
+// BFME views for the start-of-topple FX: the object's body module sits at
+// +0x200 and its last-damage slot is vtable +0x3C, the damage type is +0x10 of
+// DamageInfo, and the module data keeps DamageFXTypes at +0x48 with
+// ToppleStartFX right after it at +0x4C (field_names.csv).
+class BfmeStructureToppleBodyCall
 {
-	const StructureToppleUpdateModuleData *d = getStructureToppleUpdateModuleData();
-	const DamageInfo *lastDamageInfo = getObject()->getBodyModule()->getLastDamageInfo();
+public:
+	virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03();
+	virtual void v04(); virtual void v05(); virtual void v06(); virtual void v07();
+	virtual void v08(); virtual void v09(); virtual void v10(); virtual void v11();
+	virtual void v12(); virtual void v13(); virtual void v14();
+	virtual const DamageInfo *getLastDamageInfo() const;
+};
 
-	if( lastDamageInfo == NULL || getDamageTypeFlag( d->m_damageFXTypes, lastDamageInfo->in.m_damageType ) )	
-		FXList::doFXPos(d->m_toppleStartFXList, building->getPosition());
+struct BfmeStructureToppleBodyObjectView
+{
+	unsigned char m_padding00[0x200];
+	BfmeStructureToppleBodyCall *body;
+};
 
-	doPhaseStuff(STPHASE_INITIAL, building->getPosition());
+struct BfmeStructureToppleLastDamageView
+{
+	unsigned char m_padding00[0x10];
+	Int damageType;
+};
+
+class StructureCollapseFXShim
+{
+public:
+	Bool isEmpty() const;
+	void doFXPos( const Coord3D *, const Matrix3D *, Real, const Coord3D * ) const;
+};
+
+struct BfmeStructureToppleFXDataView
+{
+	unsigned char m_padding00[0x48];
+	UnsignedInt damageFXTypes;
+	const StructureCollapseFXShim *toppleStartFXList;
+};
+
+static inline Bool bfmeStructureToppleDamageTypeFlag(UnsignedInt flags, Int damageType)
+{
+	return (flags & (1u << (damageType - 1))) != 0;
+}
+
+// Retail 0x002AFAA0 (100 bytes), called from beginStructureTopple through the
+// ILT at 0x000475F0 (pinned there as BfmeStructureToppleUpdateCall).
+// ?doToppleStartFX@StructureToppleUpdate@@IAEXPAVObject@@PBVDamageInfo@@@Z
+void StructureToppleUpdate::doToppleStartFX(Object *building, const DamageInfo *damageInfo)
+{
+	BfmeStructureToppleUpdateView *self =
+		(BfmeStructureToppleUpdateView *)this;
+	const BfmeStructureToppleFXDataView *d =
+		(const BfmeStructureToppleFXDataView *)self->moduleData;
+	const DamageInfo *lastDamageInfo =
+		((BfmeStructureToppleBodyObjectView *)self->object)->body->getLastDamageInfo();
+
+	if (lastDamageInfo == NULL || bfmeStructureToppleDamageTypeFlag(d->damageFXTypes,
+		((const BfmeStructureToppleLastDamageView *)lastDamageInfo)->damageType))
+	{
+		const StructureCollapseFXShim *fx = d->toppleStartFXList;
+		if (fx != NULL && !fx->isEmpty())
+			fx->doFXPos(&((BfmeStructureToppleObjectView *)building)->position, NULL, 0.0f, NULL);
+	}
+
+	doPhaseStuff(STPHASE_INITIAL, &((BfmeStructureToppleObjectView *)building)->position);
 }
 
 //-------------------------------------------------------------------------------------------------
