@@ -284,7 +284,15 @@ def gap_groups(count, budget=10000):
     import eligibility
 
     busy = claimed() | {int(r, 16) for r in eligibility.busy_rvas()}
-    gaps = [g for g in find_gaps() if g[0] not in busy]
+    # tools/map_gaps.py's map: serve gaps with proven starts ("functions");
+    # "tail" is an extent fix on the row before, "unknown" needs a human first
+    kinds = {}
+    gap_map = ROOT / "targets/game/reverse/unclaimed_map.csv"
+    if gap_map.exists():
+        import csv
+        with gap_map.open(newline="", encoding="utf-8") as handle:
+            kinds = {int(r["gap_start"], 16): r["kind"] for r in csv.DictReader(handle)}
+    gaps = [g for g in find_gaps() if g[0] not in busy and kinds.get(g[0], "functions") == "functions"]
     groups, current, total = [], [], 0
     for start, _, size in gaps:
         current.append(start)
