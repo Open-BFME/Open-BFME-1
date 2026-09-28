@@ -87,8 +87,7 @@ namespace BfmeCrtA97
 {
 	extern "C" float __cdecl cosf(float value);
 }
-#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
-#define BfmePi (*(const float *)0x01087B14)
+extern GameLogic *TheGameLogic;
 
 class BfmeBaseA97
 {
@@ -113,9 +112,9 @@ void BfmeBaseA97::handleMatch(void *owner, void *direction)
 	BfmeDirectionA97 *sample = (BfmeDirectionA97 *)direction;
 	BfmeHandleA97 *handle = (BfmeHandleA97 *)owner;
 	BfmeFoundObjectA97 *object = (BfmeFoundObjectA97 *)
-		TheBfmeGameLogic->findObjectByID(handle->m_objectID);
+		TheGameLogic->findObjectByID(handle->m_objectID);
 
-	if (m_angle < BfmePi && object != 0)
+	if (m_angle < 3.14159265359f && object != 0)
 	{
 		BfmeVector3A97 delta;
 		delta.set(sample->getPosition());

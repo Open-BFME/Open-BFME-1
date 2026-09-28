@@ -1174,6 +1174,7 @@ extern const char Rva010896AC[];	// ".wak", the suffix loadTracks copies inline
 extern void *bfmeGoEMEb(void *);
 extern void Rva009EBAC0(int);
 #define FirstUpdateSubsystem (*(void **)0x0134FAA0)
+extern const char Rva006A16B0Empty[];
 
 struct Rva001408C0Target;
 typedef Rva001408C0Target *Rva001408C0Key;
@@ -1231,7 +1232,7 @@ struct WaterTracksObjFlip007AC7E0
 static const char *bfmeSourceFilename(const AsciiString &fileName)
 {
 	const char *data = *(const char **)&fileName;
-	return data ? data + 8 : (const char *)0x0107388B;
+	return data ? data + 8 : Rva006A16B0Empty;
 }
 
 void WaterTracksRenderSystemLoadTracksShim::loadTracks(void)

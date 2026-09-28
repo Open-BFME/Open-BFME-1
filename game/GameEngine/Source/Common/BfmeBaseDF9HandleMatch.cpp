@@ -97,9 +97,7 @@ public:
 	void handleMatch(void *owner, void *target);
 };
 
-#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
-#define BfmePi (*(const float *)0x01087B14)
-#define BfmeZeroRange (*(const float *)0x01075350)
+extern GameLogic *TheGameLogic;
 
 // math.h makes cosf an inline over the cos intrinsic; retail calls _cosf.
 namespace BfmeCrtDF9
@@ -112,9 +110,9 @@ void BfmeBaseDF9::handleMatch(void *owner, void *target)
 {
 	BfmeHandleDF9 *handle = (BfmeHandleDF9 *)owner;
 	BfmeTargetDF9 *object = (BfmeTargetDF9 *)
-		TheBfmeGameLogic->findObjectByID(handle->m_objectID);
+		TheGameLogic->findObjectByID(handle->m_objectID);
 
-	if (m_60 < BfmePi && object != 0)
+	if (m_60 < 3.14159265359f && object != 0)
 	{
 		BfmePointDF9 delta;
 		delta.set((BfmePointDF9 *)((unsigned char *)target + 0x38));
@@ -138,7 +136,7 @@ void BfmeBaseDF9::handleMatch(void *owner, void *target)
 	}
 
 	((Object *)target)->setDisabledUntil(
-		DISABLED_DF9, TheBfmeGameLogic->m_frame + m_5c);
+		DISABLED_DF9, TheGameLogic->m_frame + m_5c);
 	FXList *effects = m_64;
 	if (effects != 0 && !effects->bfmeIsBlocked())
 	{
