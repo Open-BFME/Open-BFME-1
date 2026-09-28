@@ -331,8 +331,8 @@ def comdat_conflicts(objs):
 
 
 def build_dump(row):
-    source = row["source"]
-    return source.startswith("game/gen_asm/") or source.startswith("game/masm_dumps/") or "__emit" in row.get("notes", "")
+    """Not a C++ definition: a gen-dump row (349 live in gen_small C++), MASM, or an __emit lift."""
+    return build.is_scaffold_row(row) or row["source"].endswith(".asm") or "__emit" in row.get("notes", "")
 
 
 def report(census):
