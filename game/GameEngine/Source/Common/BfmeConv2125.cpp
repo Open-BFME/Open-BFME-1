@@ -69,3 +69,24 @@ void __stdcall bfmeDispatchAAX(BfmeArgAAX *a, int kind)
 		}
 	}
 }
+
+// 0x0060D510: the same eligibility check, cursor change and apply as case 1
+// above, as its own stdcall entry that tail-calls the apply.
+struct BfmeArg0060D510
+{
+	unsigned char m_bfmeHead0060D510[8];
+	int m_bfme08_0060D510;
+};
+
+void __stdcall bfmeApplyCursor0060D510(BfmeArg0060D510 *a);
+
+void __stdcall bfmeApplyCursor0060D510(BfmeArg0060D510 *a)
+{
+	int id = a->m_bfme08_0060D510;
+
+	if (Glo012F1028->bfmeCheckAAX(id))
+	{
+		TheMouse->bfmeSetCursorAAX(5);
+		Glo012F1028->bfmeApplyAAX(a->m_bfme08_0060D510);
+	}
+}
