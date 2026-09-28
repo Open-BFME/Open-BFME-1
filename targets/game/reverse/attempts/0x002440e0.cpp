@@ -1,6 +1,6 @@
 // ?update@MemberGoals002440E0@@QAEXPAVMember002440E0@@@Z
-// partial score=0.24498692240627729 date=2026-09-21
-// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Include/Precompiled
+// partial score=0.2476024411508282 date=2026-09-28
+// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Include/Precompiled /Igame/Libraries/Source/WWVegas/WWMath
 // stlport
 // Retail 002440E0, 1147 bytes, adjusted ECX receiver and ret4.
 // Hub contract from docs/analysis/0x003e9720.md; no EH frame.
@@ -11,7 +11,7 @@
 #include <map>
 #include <vector>
 #include <algorithm>
-#include "../../../../game/Libraries/Source/WWVegas/WWMath/coord.h"
+#include "coord.h"
 
 class Member002440E0;
 template<int N> class Slots002440E0:public Slots002440E0<N-1> {public: virtual void unused(char(*)[N])=0;};
@@ -54,6 +54,11 @@ struct Record002440E0 {
 };
 class Primary002440E0 {
 public:
+    char pad000[0x120]; _STL::map<int,int> indices;
+    int findIndex(int id) {
+        _STL::map<int,int>::iterator found=indices.find(id);
+        return found!=indices.end()?found->second:0;
+    }
     bool rva00238d10(Member002440E0*,Coord3D*,Member002440E0*,const Coord3D*,bool,unsigned*,bool);
 };
 class MemberGoals002440E0:public Slots002440E0<37> {
@@ -90,12 +95,9 @@ void MemberGoals002440E0::update(Member002440E0* target) {
         if(!member) continue;
         AI002440E0* ai=member->m_ai;
         if(ai && ai->field1D8==4 && ai->path140) continue;
-        int id=member->m_id;
-        _STL::map<int,int>::iterator found=indices.find(id);
-        int index=found!=indices.end()?found->second:0;
+        int index=((Primary002440E0*)((char*)this-0xe4))->findIndex(member->m_id);
         if(index<0 || (unsigned)index>=records.size()) continue;
         Record002440E0& record=records[index];
-        int line;
         if(!(member->field090&0x10000000) && !ai->slot184()) {
             bool special=false;
             if(record.field000==3) special=target->rva000a2cf0(0x5c);
@@ -103,8 +105,9 @@ void MemberGoals002440E0::update(Member002440E0* target) {
             int result;
             if(((target->rva000a2cf0(7) && ((result=TheAI->pathfinder->rva003e4680(member,&member->position,&output))==0 || result==2)) || special) && member->rva001be230(0) && member->rva001be230(0)->rva001e8930(member,target,0) && member->m_ai) {
                 ((Command002440E0*)((char*)member->m_ai+0x20))->rva001535a0(target,0x7fffffff,2);
-                line=0x1992;
-                goto updateCurrent;
+                Pathfinder002440E0* currentPathfinder=TheAI->pathfinder;
+                currentPathfinder->rva003e9720(member,&member->position,member->rva001bec20(),"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Contain\\HordeContain\\HordeContain.cpp",0x1992);
+                continue;
             }
             if(record.field014>frame && !field119) continue;
             if(record.field000==1 || record.field000==2) {field004=true;continue;}
@@ -142,10 +145,8 @@ void MemberGoals002440E0::update(Member002440E0* target) {
         }
         record.field010=true;
         record.field018=frame;
-        line=0x197d;
-updateCurrent:
         Pathfinder002440E0* currentPathfinder=TheAI->pathfinder;
-        currentPathfinder->rva003e9720(member,&member->position,member->rva001bec20(),"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Contain\\HordeContain\\HordeContain.cpp",line);
+        currentPathfinder->rva003e9720(member,&member->position,member->rva001bec20(),"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Contain\\HordeContain\\HordeContain.cpp",0x197d);
     }
     field119=false;
 }

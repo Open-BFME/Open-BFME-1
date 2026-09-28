@@ -8888,5 +8888,25 @@
   "after_sha256": "ee86e2ce52295c416d563a76733f09846bd3deb97e62070c305cab71562b999b",
   "evidence": "targets/game/reverse/symbols.csv",
   "reason": "targets/game/reverse/symbols.csv pins ?rva0036B250ConditionsAt@AttributeModifierDefinitionStore@@QBE?AV?$BitFlags@$0BEA@@@H@Z at 0x0001FAE6, which spells the name rva0036B250ConditionsAt; the source uses that pinned spelling instead of copySetMask."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0024a350.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/HordeSiegeEngineContainCreatePayload.cpp",
+  "old_name": "comment",
+  "new_name": "j_00004d63",
+  "before_sha256": "43e4386866a52f7caaea640a90e919dd00d63c02e2ed61340fabcd9560089ad9",
+  "after_sha256": "cfbe5a6180a2d797a047de89edfffd9acb31223fc5062c43ac8275738ed9c10e",
+  "evidence": "targets/game/reverse/identity_evidence/0024a350-pragma-comment-token.md",
+  "reason": "false positive: comment is the #pragma comment keyword; bank's alternatename to ?j_00004d63 replaced by a direct extern of the same ILT thunk"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0024a350.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/HordeSiegeEngineContainCreatePayload.cpp",
+  "old_name": "comment",
+  "new_name": "j_00004d63",
+  "before_sha256": "43e4386866a52f7caaea640a90e919dd00d63c02e2ed61340fabcd9560089ad9",
+  "after_sha256": "49924af7f7b6b720f69b4a315800b8da83a920cfab220be0c360e2cd5aec7515",
+  "evidence": "targets/game/reverse/identity_evidence/0024a350-pragma-comment-token.md",
+  "reason": "false positive: comment is the #pragma comment keyword; bank's alternatename to ?j_00004d63 replaced by a direct extern of the same ILT thunk"
  }
 ]
