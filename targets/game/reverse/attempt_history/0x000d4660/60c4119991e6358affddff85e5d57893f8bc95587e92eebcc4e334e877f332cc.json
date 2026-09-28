@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "60c4119991e6358affddff85e5d57893f8bc95587e92eebcc4e334e877f332cc",
+  "symbol": "?rva000D4660@Player@@QBEPAVObject@@_NPAPAV2@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.6,
+  "source": "// ?rva000D4660@Player@@QBEPAVObject@@_NPAPAV2@@Z\r\n// partial score=0.6 date=2026-09-24\r\n// cl: /DNDEBUG /DWIN32 /MD\r\nclass Object\r\n{\r\npublic:\r\n\tchar m_pad[0xA0];\r\n\tint m_id;\r\n};\r\n\r\nclass GameLogic\r\n{\r\npublic:\r\n\tObject *findObjectByID(int id);\r\n};\r\nextern GameLogic *TheBfmeGameLogic;\r\n\r\nclass Player;\r\n// Retail passes the callback at RVA 0x000D4500 (VA 0x004D4500).\r\n// Its original method name is unresolved, so this source keeps the address.\r\ntypedef void (*Rva000D4500Visitor)(Object *, void *);\r\nstruct Rva000D4660VisitContext\r\n{\r\n\tconst Player *player;\r\n\tbool flag;\r\n\tObject *chosen;\r\n\tObject *special;\r\n};\r\n\r\nclass Player\r\n{\r\npublic:\r\n\tvoid iterateObjects(Rva000D4500Visitor visitor, void *data) const;\r\n\tObject *rva000D4660(bool flag, Object **out) const;\r\n};\r\n\r\nObject *Player::rva000D4660(bool flag, Object **out) const\r\n{\r\n\tRva000D4660VisitContext info;\r\n\tinfo.player = this;\r\n\tinfo.flag = flag;\r\n\tinfo.chosen = 0;\r\n\tinfo.special = 0;\r\n\titerateObjects(reinterpret_cast<Rva000D4500Visitor>(0x004D4500), &info);\r\n\tObject *chosen = info.chosen;\r\n\tif (out)\r\n\t\t*out = chosen;\r\n\tif (info.special) {\r\n\t\tObject *special = TheBfmeGameLogic->findObjectByID(info.special->m_id);\r\n\t\tif (special)\r\n\t\t\treturn special;\r\n\t}\r\n\treturn chosen;\r\n}\r\n"
+}
