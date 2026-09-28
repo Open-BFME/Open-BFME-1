@@ -34,3 +34,5 @@ inputs/reference/shims/sweep/D3DX8Math.h
 # between the write and the rename leaves one behind; two 23 MB ones were committed
 # by a broad `git add` on 2026-09-06 and shipped to every clone.
 targets/game/reverse/*.tmp-*
+# re_log's scratch copy while it measures a stash (a killed probe can leave one)
+targets/game/reverse/attempts/.measure_*

@@ -399,7 +399,7 @@ def _measure_stash(rva, data):
     try:
         probe_path.write_bytes(data)
         result = finish_measure.measure(rva, probe_path)
-    except (OSError, ValueError):
+    except Exception:  # noqa: BLE001 -- an unmeasurable body still banks, labelled author-estimate
         return None
     finally:
         probe_path.unlink(missing_ok=True)

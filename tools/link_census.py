@@ -152,6 +152,47 @@ def classify(log, rows):
     return classes, detail, dup_kinds, {s: sorted(o)[:6] for s, o in duplicates.items()}
 
 
+COMDAT = 0x1000  # IMAGE_SCN_LNK_COMDAT
+EXTERNAL = 2      # IMAGE_SYM_CLASS_EXTERNAL
+
+
+def comdat_conflicts(objs):
+    """{name: [(sha, size, obj), ...]} for COMDAT symbols whose copies differ.
+
+    The linker never reports these: inline functions, template instances and
+    vftables are COMDATs, and link.exe keeps one copy and discards the rest
+    without a word. When two TUs compiled different private copies of a class,
+    that silent pick is a one-definition-rule violation, the failure the
+    unresolved/duplicate counts cannot show.
+    """
+    import hashlib
+    import struct
+    copies = collections.defaultdict(dict)
+    for obj in objs:
+        try:
+            data = obj.read_bytes()
+        except OSError:
+            continue
+        count = struct.unpack_from("<H", data, 2)[0]
+        flags, spans = [], []
+        for index in range(count):
+            offset = 20 + index * 40
+            size, pointer = struct.unpack_from("<II", data, offset + 16)
+            flags.append(struct.unpack_from("<I", data, offset + 36)[0])
+            spans.append((pointer, size))
+        for symbol in build.read_object_symbols(data):
+            section = symbol["section"]
+            if (symbol["storage"] != EXTERNAL or section <= 0 or section > count
+                    or not flags[section - 1] & COMDAT):
+                continue
+            pointer, size = spans[section - 1]
+            body = data[pointer:pointer + size]
+            digest = hashlib.sha1(body).hexdigest()[:12]
+            copies[symbol["name"]].setdefault(digest, (size, obj.name))
+    return {name: [(sha, size, obj) for sha, (size, obj) in found.items()]
+            for name, found in copies.items() if len(found) > 1}
+
+
 def build_dump(row):
     source = row["source"]
     return source.startswith("game/gen_asm/") or source.startswith("game/masm_dumps/") or "__emit" in row.get("notes", "")
@@ -166,6 +207,10 @@ def report(census):
     print(f"  duplicate definitions: {sum(census['duplicate_classes'].values()):,}")
     for kind, count in sorted(census["duplicate_classes"].items(), key=lambda kv: -kv[1]):
         print(f"    {kind:18} {count:8,}")
+    conflicts = census.get("comdat_conflicts", {})
+    vtables = sum(1 for name in conflicts if name.startswith(("??_7", "??_R")))
+    print(f"  COMDAT copies that differ (linker keeps one silently): {len(conflicts):,} "
+          f"({vtables:,} vftable/RTTI)")
 
 
 def main(argv=None):
@@ -185,7 +230,7 @@ def main(argv=None):
     classes, detail, dup_kinds, dups = classify(log, rows)
     census = {"when": time.strftime("%Y-%m-%d %H:%M"), "objects": len(present), "missing": len(missing),
               "seconds": seconds, "unresolved_classes": dict(classes), "duplicate_classes": dict(dup_kinds),
-              "unresolved": detail, "duplicates": dups,
+              "unresolved": detail, "duplicates": dups, "comdat_conflicts": comdat_conflicts(present),
               "missing_objects": [str(p.relative_to(ROOT)) for p in missing[:200]]}
     OUT.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(census, indent=1), encoding="utf-8")
