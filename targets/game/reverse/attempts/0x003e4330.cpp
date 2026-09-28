@@ -1,5 +1,5 @@
 // ?d_003e4330@@YAXXZ
-// partial score=0.14 date=2026-09-27
+// partial score=0.5472 date=2026-09-28
 // cl: /DNDEBUG /MD /Igame/GameEngine/Include/Precompiled
 // RVA 003E4330: matched bfmeCheckAttackViewAlt forwards to this established
 // helper name. Behavior: collect up to 16 unique occupying goal IDs.
@@ -87,8 +87,8 @@ int Pathfinder::bfmeCheckAttackViewAltHelper(Object *obj,Coord3D *pos,void *outp
   cellX=CELL_FLOOR(pos->x*0.1f);
   cellY=CELL_FLOOR(pos->y*0.1f);
  } else {
-  cellX=CELL_FLOOR(pos->x*0.1f+0.5f);
   cellY=CELL_FLOOR(pos->y*0.1f+0.5f);
+  cellX=CELL_FLOOR(pos->x*0.1f+0.5f);
  }
  bool checkGround=false; centerInCell=false; bool &checkLayer=centerInCell;
  int layer=((BfmeHolderNS *)obj)->bfmeQueryNS();
