@@ -19,7 +19,7 @@ def git(cwd, *a):
     subprocess.run(['git', *a], cwd=cwd, check=True, capture_output=True)
 
 
-class PortTest(unittest.TestCase):
+class PortFixture(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         base = Path(self.tmp.name) / 'repo'
@@ -43,6 +43,8 @@ class PortTest(unittest.TestCase):
     def tearDown(self):
         self.tmp.cleanup()
 
+
+class PortTest(PortFixture):
     def test_port_staged_deleted_and_ledger(self):
         ws, dest = self.ws, self.dest
         # worker: edit keep.cpp (unstaged), add clean source (staged via git add),
@@ -190,7 +192,7 @@ def test_review_checks_each_source_once_and_blocks_other_failure(tmp_path, monke
     assert any('game/bad.cpp' in p for p in result['problems'])
 
 
-class ConflictTest(PortTest):
+class ConflictTest(PortFixture):
     def test_new_file_conflicts_with_upstream_addition(self):
         for tree, content in ((self.ws, 'worker'), (self.dest, 'upstream')):
             (tree / 'game/new.cpp').write_text(content)
@@ -211,7 +213,7 @@ class ConflictTest(PortTest):
         self.assertEqual((self.dest / name).read_text(), 'int keep() { return 3; }\n')
 
 
-class DestinationTest(PortTest):
+class DestinationTest(PortFixture):
     def test_retained_dirty_and_unpushed_work_is_refused(self):
         with self.assertRaisesRegex(SystemExit, 'retained changes'):
             (self.dest / 'game/keep.cpp').write_text('retained')
@@ -297,3 +299,44 @@ def test_review_rejects_concurrent_workspace_edit(tmp_path, monkeypatch):
     monkeypatch.setattr(ri, 'workspace_fingerprint', lambda _: next(fingerprints))
     result = ri.review(SimpleNamespace(job='fixture'))
     assert any('changed during review' in p for p in result['problems'])
+
+
+def test_rejected_push_preserves_commit_and_refuses_reset(tmp_path, monkeypatch):
+    import pytest
+    from types import SimpleNamespace
+    fixture = PortTest()
+    fixture.setUp()
+    try:
+        remote = tmp_path / 'remote.git'
+        git(fixture.base, 'init', '--bare', '-q', str(remote))
+        git(fixture.base, 'remote', 'add', 'origin', str(remote))
+        git(fixture.base, 'push', '-q', 'origin', 'master')
+        hook = remote / 'hooks/pre-receive'
+        hook.write_text('#!/bin/sh\nexit 1\n')
+        hook.chmod(0o755)
+        ws, dest = fixture.ws, fixture.dest
+        raw = (ws / LED).read_bytes().replace(b'?a@@YAXXZ,,0x00000010',
+                                              b'?a@@YAXXZ,,0x00000010,8,game/keep.cpp')
+        (ws / LED).write_bytes(raw)
+        (ws / 'game/keep.cpp').write_text('int keep() { return 2; }\n')
+        monkeypatch.setattr(ri, 'ROOT', fixture.base)
+        monkeypatch.setattr(ri, 'gate', lambda *a: (True, 'fixture gate'))
+        original_sh = ri.sh
+        def fake_check(cmd, cwd, **kwargs):
+            if cmd[-1] == 'tools/check_csv.py':
+                return subprocess.CompletedProcess(cmd, 0, 'fixture ledger OK', '')
+            return original_sh(cmd, cwd, **kwargs)
+        monkeypatch.setattr(ri, 'sh', fake_check)
+        args = SimpleNamespace(job=None, workspace=str(ws), rva=['0x10'], worktree=str(dest),
+                               base='origin/master', force=False, keep=False, dry_run=False,
+                               push=True, push_retries=1, title='fixture integration', trailer='', measure=False)
+        with pytest.raises(SystemExit, match='commit kept locally'):
+            ri.integrate(args)
+        retained = ri.git(dest, 'rev-parse', 'HEAD', check=True).stdout
+        assert retained != ri.git(dest, 'rev-parse', 'origin/master', check=True).stdout
+        assert (dest / 'game/keep.cpp').read_text() == 'int keep() { return 2; }\n'
+        with pytest.raises(SystemExit, match='unintegrated commits'):
+            ri.integrate(args)
+        assert ri.git(dest, 'rev-parse', 'HEAD', check=True).stdout == retained
+    finally:
+        fixture.tearDown()

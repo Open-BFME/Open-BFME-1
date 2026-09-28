@@ -142,7 +142,7 @@ def route(path):
 
 def added_naked(ws, path):
     """Inline asm/naked code on lines the worker added to a tracked file (comments ignored)."""
-    d = git(ws, 'diff', '-U0', 'HEAD', '--', path).stdout
+    d = git(ws, 'diff', '-U0', 'HEAD', '--', path, check=True).stdout
     return bool(NAKED.search(code_only('\n'.join(l[1:] for l in d.splitlines()
                                                  if l.startswith('+') and not l.startswith('+++')))))
 
@@ -153,7 +153,7 @@ def rva_of(row):
 
 
 def ledger_delta(ws, path):
-    d = git(ws, 'diff', '-U0', 'HEAD', '--', path).stdout
+    d = git(ws, 'diff', '-U0', 'HEAD', '--', path, check=True).stdout
     add = [l[1:].rstrip('\r') for l in d.splitlines() if l.startswith('+') and not l.startswith('+++')]
     rem = [l[1:].rstrip('\r') for l in d.splitlines() if l.startswith('-') and not l.startswith('---')]
     return add, rem
@@ -207,8 +207,8 @@ def review(args):
                 res['problems'].append(f'{path}: new source contains inline asm/__emit/naked code')
             elif st == 'modified' and path.endswith('.cpp') and added_naked(ws, path):
                 res['problems'].append(f'{path}: the worker added inline asm/__emit/naked code')
-    gutted = [l for l in git(ws, 'diff', '--cached', '--name-only', '--diff-filter=D').stdout.splitlines()
-              if (Path(ws) / l).exists()]
+    gutted = [l for l in git(ws, 'diff', '--cached', '--name-only', '-z', '--diff-filter=D', check=True).stdout.split('\0')
+              if l and (Path(ws) / l).exists()]
     if len(gutted) > GUTTED_INDEX:
         res['problems'].append(f'index gutted: {len(gutted)} staged deletions of files still on disk')
     for rva in rvas:
@@ -367,6 +367,8 @@ def bank(args):
             continue
         if not any(f'/{k}' in p.lower() for k in keys):  # attempts/0x0012abcd.cpp, attempt_history/0x0012abcd/
             continue  # another target's evidence
+        safe_port_path(ws, p)
+        safe_port_path(dest, p)
         src, dst = Path(ws) / p, dest / p
         if os.path.lexists(dst) and (dst.is_symlink() or not dst.is_file()
                                     or src.is_symlink() or src.read_bytes() != dst.read_bytes()):
@@ -492,7 +494,7 @@ def integrate(args):
                   'document the correction in targets/game/reverse/name_corrections.json (see '
                   'docs/naming_evidence.md) in this worktree and commit by hand.')
         raise SystemExit('commit hook rejected the integration; worktree left as ported for inspection')
-    sha = git(dest, 'rev-parse', 'HEAD').stdout.strip()
+    sha = git(dest, 'rev-parse', 'HEAD', check=True).stdout.strip()
     print('committed', sha)
     if not args.push:
         return
@@ -508,17 +510,17 @@ def integrate(args):
             break
     else:
         raise SystemExit('push kept losing the race; integration commit kept locally in ' + str(dest))
-    sha = git(dest, 'rev-parse', 'HEAD').stdout.strip()
+    sha = git(dest, 'rev-parse', 'HEAD', check=True).stdout.strip()
     print('pushed', sha)
     git(dest, 'pull', '-q', '--rebase', 'origin', 'master', check=True)
     if args.measure and attempts and args.job:
-        delta = sh([sys.executable, 'tools/progress.py', f'{sha}^..{sha}'], dest).stdout
+        delta = sh([sys.executable, 'tools/progress.py', f'{sha}^..{sha}'], dest, check=True).stdout
         m = re.search(r'REBUILDS FROM.*?delta ([+-][\d,]+) bytes', delta)
         cmd = [sys.executable, 'tools/opencode_router.py', 'measure', attempts[-1]['id'], '--exact-match', 'yes',
                '--evidence', f'tools/router_integrate.py integrate {args.job}: scoped gates + commit hooks, pushed {sha[:10]}']
         if m:
             cmd += ['--bytes-gained', m.group(1).replace(',', '').lstrip('+')]
-        print(sh(cmd, ROOT).stdout)
+        print(sh(cmd, ROOT, check=True).stdout)
 
 
 def main(argv=None):
