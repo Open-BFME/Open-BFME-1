@@ -118,9 +118,11 @@ class Gen_009D9C00 : public BfmeDtorBase<1>
 {
 public:
 	virtual ~Gen_009D9C00(void);
+	Gen_009D9C00(void);
 
 private:
 	BfmeDtorMemberB m_bfmeMember;				// +0x0C
+	unsigned int m_bfmeExtendedState[2];			// +0x10
 };
 
 BfmeDtorMemberA::~BfmeDtorMemberA(void)
@@ -165,6 +167,17 @@ Gen_008375D0::~Gen_008375D0(void)
 void DeleteGen008375D0(Gen_008375D0 *value)
 {
 	delete value;
+}
+
+// ??0Gen_009D9C00@@QAE@XZ
+Gen_009D9C00::Gen_009D9C00(void)
+{
+	unsigned int *fields = reinterpret_cast<unsigned int *>(this);
+	reinterpret_cast<unsigned char *>(this)[4] = 0;
+	fields[2] = 0;
+	fields[3] = 0;
+	fields[4] = 0;
+	fields[5] = 0;
 }
 
 // ??1Gen_009D9C00@@UAE@XZ
