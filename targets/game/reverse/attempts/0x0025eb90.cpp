@@ -1,5 +1,5 @@
 // ?clearAffected@Rva0025EB90Owner@@QAEXXZ
-// partial score=0.87 date=2026-09-22
+// partial score=0.989 date=2026-09-27
 // Retail [0x0025EB90,0x0025EC43), 179 bytes, RET 0.
 // Primary receiver of the GloriousChargeUpdate vtable island; called from
 // GloriousChargeUpdateUpdate.cpp as owner->clearAffected(). Walks a
@@ -74,7 +74,8 @@ void Rva0025EB90Owner::clearAffected()
 	{
 		for( _STL::list<ObjectID>::iterator i = ids.begin(); i != ids.end(); ++i )
 		{
-			Object *object = TheGameLogic->findObjectByID( *i );
+			ObjectID id = *i;
+			Object *object = TheGameLogic->findObjectByID( id );
 			if( object )
 			{
 				clearCondition( object, 191 );
