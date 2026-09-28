@@ -1,11 +1,14 @@
-// ?d_00182f70@@YAXXZ
-// partial score=0.3785004516711834 date=2026-09-21
-// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc /Igame/GameEngine/Include/Precompiled
+// ?computePath@AIAttackMeleeHordeApproachTargetState@@UAE_NXZ
+// partial score=0.44905320108205593 date=2026-09-28
+// ?computePath@AIAttackMeleeHordeApproachTargetState@@UAE_NXZ
+// Retry candidate; measured score recorded by re_log.
+// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc /Igame/GameEngine/Include/Precompiled /Igame/Libraries/Source/WWVegas/WWMath
 // Retail 00182F70: ECX receiver, no incoming stack arguments, AL result.
 // Complete 1107-byte boundary ends at 001833C2; no EH frame.
-// Opaque owner retained: old structural method names contradict one another.
+// Identity: vtable VA 0x0109A540 slot 17 -> ILT 0x0000A867; matched constructor 0x0017F610.
+// The earlier approach/pursue labels were contradicted by this independent owner evidence.
 // Hub/remover contracts: docs/analysis/0x003e9720.md.
-#include "../../../../game/Libraries/Source/WWVegas/WWMath/coord.h"
+#include "coord.h"
 
 struct Object00182F70;
 struct AI00182F70;
@@ -49,7 +52,7 @@ struct CoordCalls00182F70 {
     Coord3D& rva0014ffd0(float); Coord3D& rva000ec6f0(const Coord3D&);
     Coord3D& rva000c3d40(const Coord3D&); void rva000fb930(); float rva000fe9b0() const;
 };
-struct AIHub00182F70 {unsigned char pad00[12]; Pathfinder00182F70* pathfinder;};
+struct AIHub00182F70 {unsigned char pad00[12]; Pathfinder00182F70* pathfinder; __forceinline Pathfinder00182F70* getPathfinder() { return pathfinder; }};
 struct Clock00182F70 {unsigned char pad00[0x3c]; unsigned frame;};
 extern AIHub00182F70* TheAI;
 extern Clock00182F70* TheGameLogic;
@@ -61,14 +64,14 @@ extern bool rva00175820(Object00182F70*,Object00182F70*);
 extern bool rva001752a0(Coord3D*,Object00182F70*,Object00182F70*);
 extern void rva00065c80(void*,const char*);
 
-class PathCompute00182F70 {
+class AIAttackMeleeHordeApproachTargetState {
 public:
-    unsigned char pad00[0x1c]; Machine00182F70* machine;
+    unsigned char pad00[0x18]; Machine00182F70* machine;
     unsigned char pad20[4]; Coord3D coord24;
     unsigned char pad30[0x1c]; bool byte4C,byte4D; unsigned char pad4E[2]; Coord3D coord50;
     unsigned frame5C; bool byte60,byte61;
-    static bool __stdcall rva0016f150(Coord3D*,Object00182F70*,Object00182F70*);
-    bool compute();
+    void rva0016f150(Coord3D*,Object00182F70*,Object00182F70*);
+    virtual bool computePath();
 };
 
 // The real static helper is visible so VC7.1 can select its private
@@ -83,7 +86,7 @@ static bool isSamePosition(const Coord3D* ourPos,const Coord3D* prevTargetPos,co
     return true;
 }
 
-bool PathCompute00182F70::compute() {
+bool AIAttackMeleeHordeApproachTargetState::computePath() {
     bool forceRepath=false;
     byte60=false;
     Object00182F70* source=machine->owner;
@@ -104,11 +107,11 @@ bool PathCompute00182F70::compute() {
     ai->rva0026fe90(100.0f);
     coord24=coord50;
     Coord3D delta=coord24;
-    if(rva00175820(source,victim) && TheAI->pathfinder->rva003edf90(source,&source->position,&victim->position,0)) {
-        delta=*victim->rva00132140();
+    if(rva00175820(source,victim) && TheAI->getPathfinder()->rva003edf90(source,&source->position,&victim->position,0)) {
+        const Coord3D* direction = victim->rva00132140(); delta.x=direction->x; delta.y=direction->y; delta.z=direction->z;
         ((CoordCalls00182F70*)&delta)->rva0014ffd0(victim->floatBC*2+60.0f);
         ((CoordCalls00182F70*)&coord24)->rva000ec6f0(delta);
-        TheAI->pathfinder->rva003eac80(source,ai->data1A8,&coord24);
+        TheAI->getPathfinder()->rva003eac80(source,ai->data1A8,&coord24);
         if(g_012F0239 && g_012ED4FC) rva00065c80(g_012ED4FC,"CritterDesync: setAdjustDestination(FALSE) 23");
         byte4C=false;
         ai->rva0027bd90(&coord24,false);
@@ -120,24 +123,22 @@ bool PathCompute00182F70::compute() {
     ((CoordCalls00182F70*)&delta)->rva000fb930();
     delta.scale(source->floatBC*0.7f);
     if(victim->rva001bec20()==1) {
-        Coord3D destination=coord24;
-        destination.sub(&delta);
-        if(!(unsigned char)TheAI->pathfinder->rva003ee850(source,ai->dword1B8,1,&coord24,&destination)) coord24=destination;
+        Coord3D destination; destination.set(&coord24); destination.sub(&delta);
+        if(!(unsigned char)TheAI->getPathfinder()->rva003ee850(source,ai->dword1B8,1,&coord24,&destination)) coord24=destination;
         if(victim->rva000a2cf0(7)) rva0016f150(&coord24,source,victim);
     }
     if(!rva001752a0(&coord24,source,victim)) {byte60=true; return false;}
-    TheAI->pathfinder->rva003e3d20(source);
-    if(byte61) TheAI->pathfinder->rva003f5c70(source,ai->data1A8,&coord24);
+    TheAI->getPathfinder()->rva003e3d20(source);
+    if(byte61) TheAI->getPathfinder()->rva003f5c70(source,ai->data1A8,&coord24);
     else rva0016f150(&coord24,source,0);
-    delta=coord24;
-    delta.sub(&source->position);
+    delta.set(&coord24); delta.sub(&source->position);
     float before=victim->rva0015be50(&source->position);
     float improvement=before-victim->rva0015be50(&coord24);
     if(improvement < ((CoordCalls00182F70*)&delta)->rva000fe9b0()*0.5f && ai->path140 && source->contain1FC) {
         Query00182F70* q=source->contain1FC->slot68();
         if(q && q->slot124(victim)) {byte60=true; return false;}
     }
-    if(byte61) TheAI->pathfinder->rva003e9720(source,&coord24,TheTerrainLogic->rva001a7c20(source,&coord24),"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp",0x13eb);
+    if(byte61) TheAI->getPathfinder()->rva003e9720(source,&coord24,TheTerrainLogic->rva001a7c20(source,&coord24),"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp",0x13eb);
     ai->rva0027bd90(&coord24,false);
     byte4D=ai->byte31E;
     if(ai->path140) byte4D=false;
@@ -163,7 +164,7 @@ bool PathCompute00182F70::compute() {
 #pragma comment(linker, "/alternatename:?rva001bec20@Object00182F70@@QAEHXZ=?j_0003a391@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva003ee850@Pathfinder00182F70@@QAEHPAUObject00182F70@@HHPBUCoord3D@@1@Z=?j_00029d7f@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva000a2cf0@Object00182F70@@QAE_NH@Z=?j_0003251f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0016f150@PathCompute00182F70@@SG_NPAUCoord3D@@PAUObject00182F70@@1@Z=?j_0002255c@@YAXXZ")
+#pragma comment(linker, "/alternatename:?rva0016f150@AIAttackMeleeHordeApproachTargetState@@QAEXPAUCoord3D@@PAUObject00182F70@@1@Z=?j_0002255c@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva001752a0@@YA_NPAUCoord3D@@PAUObject00182F70@@1@Z=?j_0001e0d3@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva003e3d20@Pathfinder00182F70@@QAEXPAUObject00182F70@@@Z=?j_00015d02@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva003f5c70@Pathfinder00182F70@@QAEXPAUObject00182F70@@PAXPAUCoord3D@@@Z=?j_0004029b@@YAXXZ")
@@ -172,4 +173,5 @@ bool PathCompute00182F70::compute() {
 #pragma comment(linker, "/alternatename:?rva001a7c20@Terrain00182F70@@QAEHPAUObject00182F70@@PBUCoord3D@@@Z=?j_0001c675@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva003e9720@Pathfinder00182F70@@QAEXPAUObject00182F70@@PBUCoord3D@@HPBDH@Z=?j_000294e2@@YAXXZ")
 
-// 0016F150 consumes three stack dwords and ret 12; incoming ECX is unused.
+// 0016F150: three stack dwords and ret 12; retail caller also supplies the state in ECX.
+// Linker pragmas below are inherited route notes, not build.py relocation acceptance.

@@ -9088,5 +9088,15 @@
   "after_sha256": "b52250fb0ce5224bdb6ceee7b200a87844974031bb7732bb5775b1565f0329d1",
   "evidence": "targets/game/reverse/identity_evidence/00383440-gamelogic-thiscall.md",
   "reason": "The stdcall ?bfmeGo1010B@@YGXPAVBfmeThing1010@@@Z claim is refuted by its only caller, Object::~Object, which loads ECX from TheGameLogic before the call. The body is Zero Hour's GameLogic::sendObjectDestroyed, but that name is held by 0x0038D090, so the corrected thiscall member keeps the address. See the evidence file."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00185060.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIChargeTargetState_update.cpp",
+  "old_name": "comment",
+  "new_name": "j_0000d689",
+  "before_sha256": "53e24351ec22e8c7ce6322b4e1a595465129d4b32345086342136477f3c019dd",
+  "after_sha256": "e74e71a0d4b86bb6c4b21b583a3b7c0f57379d0ad15a3e67a47b98f8bed5b692",
+  "evidence": "targets/game/reverse/identity_evidence/harvest-20260928T084123_2-pragma.md",
+  "reason": "pragma comment tokenized as identifier; false positive fixed in 46080facd7"
  }
 ]
