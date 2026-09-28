@@ -7908,5 +7908,25 @@
   "after_sha256": "a4d36b38271dac292ecdcd3883211f4671dc0041cb546d3af944ef1f105d603b",
   "evidence": "targets/game/reverse/functions.csv",
   "reason": "The old bank was the whole Zero Hour W3DScene.cpp; the new bank is only the retail 0x00713780 body rewritten from its disassembly. functions.csv rows ?j_00013926@@YAXXZ ?j_0004600b@@YAXXZ and ?j_000186e2@@YAXXZ are the ILT thunks at 0x00013926 0x0004600B 0x000186E2 that this body calls (targets 0x00410CC0 0x00414270 0x00414290 each return a Vector3 pointer or null). tintColor is still the local's name in the new body; the aligner paired the old getTintColor call line with the thunk argument of the ILT call that replaces it."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000da610.cpp",
+  "new_path": "game/GameEngine/Source/Common/RTS/PlayerInit.cpp",
+  "old_name": "m_data",
+  "new_name": "m_694",
+  "before_sha256": "8293f3a89110ee2b2d7fefab20d3062a1fc71825b390f435dedd15007c92fb09",
+  "after_sha256": "b64adc4f1cf9dcb022b91d11adde8c40fd1756fd971bff90acb5b6ccb724e694",
+  "evidence": "targets/game/reverse/identity_evidence/000da610-raw-storage-names.md",
+  "reason": "Bank retirement: the stash's m_data (RawPlayerStorage whole-object byte blob) and m_storage (relation-map byte blob) were raw-storage placeholders, not Player fields; the landed source follows the matched Player destructor layout where these offsets are unnamed padding that Player::init never touches and name_oracle has no witness for."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000da610.cpp",
+  "new_path": "game/GameEngine/Source/Common/RTS/PlayerInit.cpp",
+  "old_name": "m_storage",
+  "new_name": "m_54",
+  "before_sha256": "8293f3a89110ee2b2d7fefab20d3062a1fc71825b390f435dedd15007c92fb09",
+  "after_sha256": "b64adc4f1cf9dcb022b91d11adde8c40fd1756fd971bff90acb5b6ccb724e694",
+  "evidence": "targets/game/reverse/identity_evidence/000da610-raw-storage-names.md",
+  "reason": "Bank retirement: the stash's m_data (RawPlayerStorage whole-object byte blob) and m_storage (relation-map byte blob) were raw-storage placeholders, not Player fields; the landed source follows the matched Player destructor layout where these offsets are unnamed padding that Player::init never touches and name_oracle has no witness for."
  }
 ]
