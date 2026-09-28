@@ -1,5 +1,5 @@
 // ?d_006f9380@@YAXXZ
-// partial score=0.706521739 date=2026-09-27
+// partial score=0.714 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // 006F9380 list cleanup, shroud transitions and multi-pass floor rendering.
 // Owner and element member offsets are direct instruction witnesses here.
@@ -91,7 +91,10 @@ class FloorBuffer006F9380 { public:
 void FloorBuffer006F9380::draw(void *unused,bool skipTexture,TextureBaseClass *&lightmap,TextureBaseClass *&cloudmap)
 {
  int player;
- if (*(char **)0x012ED748) player=*(int *)(*(char **)(*(char **)0x012ED748+0xc)+0x24);
+ char *root = *(char **)0x012ED748;
+ char *inner;
+ int selected;
+ if (root) { inner = *(char **)(root+0xc); selected = *(int *)(inner+0x24); player = selected; }
  else player=0;
  _STL::list<FloorElement006F9380 *>::iterator it=elements.begin();
  for (;it!=elements.end();++it) {
