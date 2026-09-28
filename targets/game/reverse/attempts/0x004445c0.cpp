@@ -1,26 +1,240 @@
-// ?createMouseoverHint@InGameUI@@
-// partial score=0.78 date=2026-09-25
-// BANKED ATTEMPT (claude-opus-5-5, 2026-09-25) for InGameUI::createMouseoverHint
-// at 0x004445C0 (2194 B, vtable 0x010F5B38 slot 30). Drop-in replacement for the
-// ZH createMouseoverHint in Code/GameEngine/Source/GameClient/InGameUI.cpp (it
-// relies on that TU's BfmeGameClientGarrisonView, BfmeMouseSetCursorView,
-// BfmeUnicodeStringArg, bfmeMessageText and Rva002EE330PlayerList). Compiles; 2166 B
-// against 2194, normalized instruction similarity 0.78. Open items, in order:
-//  * frame is 0x54 not 0x58: retail keeps `player` in a stack slot ([esp+0x14])
-//    and uses ebx for the EH-state constant 9; ours keeps player in ebx.
-//  * the underWindow arrow+return block sits at +0x113 in retail (between the two
-//    arms of `draw ? draw->object : NULL`); ours places it after the isEmpty block.
-//  * by-value AsciiString args (fetch(label), fetch(txtTemp), format's "ThingTemplate:%s")
-//    need an AsciiString twin of BfmeUnicodeStringArg for retail's EH saved-esp order;
-//    the L"%s
-%s" format arg likewise.
-//  * esi/edi swapped in the SpecialDisguiseUpdate block (module vs local player).
-// Unresolved REL32 names still needing pins before landing: the view spellings
-// ?setCursorTooltip@BfmeHintMouseTooltipView@@... (ILT 0x000346E9),
-// ?getPlayerDisplayName@BfmePlayerDisplayNameView@@QAE?AVUnicodeString@@XZ (0x00098FD0),
-// ?rva004C15D0@Rva004C15D0ControlBar@@QAEXPAVBfmeHintRecordBase010EDAA0@@@Z
-// (0x004C15D0, thiscall, ret 4, still a gen_asm dump); move the two record classes out
-// of the anonymous namespace first or the parameter mangles with ?A0x...
+// ?createMouseoverHint@InGameUI@@UAEXPBVGameMessage@@@Z
+// partial score=0.946 date=2026-09-28
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/stringbaseunicode /Iinputs/reference/shims/stringbaseascii /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
+// InGameUI::createMouseoverHint, RVA 0x004445C0, retail extent 2194 bytes.
+// Bank refreshed 2026-09-28 by gpt-6-astra-medium. NOT byte-matched.
+// Stack-read variant: 2192/2194 bytes; normalized shape 0.946. Explicit reads of player and warehouseModule local slots recover the 0x58 frame but do not match all allocation decisions.
+// Started with the earlier complete bank; all descriptive names retained.
+// Native string headers expose forwarding copy/character constructors. Both
+// format calls take native by-value string temporaries. Retail EH map has no
+// cleanup around isEmpty or compare: both existing StringBase bodies are pure
+// read-only queries, so explicit nothrow specializations remove excess states.
+// Current residue: underWindow return block placement; message-type load;
+// self/label/player frame-slot permutation; ESI/EDI disguise scratch choice;
+// zero-value lifetime around the tactical-view call and late EH-state reload.
+// Three original external view bindings remain unlanded; no pins were added.
+// Original shape normalized by this probe version: 0.907 (2166/2194 bytes).
+// Scores below are INSTRUCTION similarity, not positional byte acceptance.
+
+#define Matrix4x4 Matrix4  // BFME renamed it
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+////////////////////////////////////////////////////////////////////////////////
+//																																						//
+//  (c) 2001-2003 Electronic Arts Inc.																				//
+//																																						//
+////////////////////////////////////////////////////////////////////////////////
+
+// InGameUI.cpp ///////////////////////////////////////////////////////////////////////////////////
+// Implementation of in-game user interface singleton inteface
+// Author: Michael S. Booth, March 2001
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+#define _BFME_RETAIL_TREE_INSERT_LAYOUT
+#define BFME_PARTICLE_LIST_NODE_TAIL
+#include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+
+#define DEFINE_SHADOW_NAMES
+
+// BFME's placement operator delete is one shared 12-byte body that calls the
+// CRT free import directly; ZH's macro routes it through ::operator delete,
+// which is a different (and here, wrong) callee.  InGameUI.h is pulled in here,
+// ahead of every other header, so the override reaches its four pooled classes
+// and nothing else.
+// GameMemory.h must be resolved BEFORE the override: every header below
+// reaches it transitively, and its own #define would otherwise land after
+// ours and silently restore ZH's ::operator delete routing.
+#include "Common/GameMemory.h"
+#pragma push_macro("MEMORY_POOL_GLUE_WITHOUT_GCMP")
+#undef MEMORY_POOL_GLUE_WITHOUT_GCMP
+extern "C" void free(void *);
+#define MEMORY_POOL_GLUE_WITHOUT_GCMP(ARGCLASS) \
+protected: \
+	virtual ~ARGCLASS(); \
+public: \
+	enum ARGCLASS##MagicEnum { ARGCLASS##_GLUE_NOT_IMPLEMENTED = 0 }; \
+public: \
+	inline void *operator new(size_t s, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
+	{ \
+		DEBUG_ASSERTCRASH(s == sizeof(ARGCLASS), ("The wrong operator new is being called; ensure all objects in the hierarchy have MemoryPoolGlue set up correctly")); \
+		return MP_GLUE_ALLOCATE(ARGCLASS); \
+	} \
+public: \
+	inline void operator delete(void *p, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
+	{ \
+		free(p); \
+	} \
+protected: \
+	inline void *operator new(size_t s) \
+	{ \
+		DEBUG_ASSERTCRASH(s == sizeof(ARGCLASS), ("The wrong operator new is being called; ensure all objects in the hierarchy have MemoryPoolGlue set up correctly")); \
+		return ::operator new(s); \
+	} \
+	inline void operator delete(void *p) \
+	{ \
+		::operator delete(p); \
+	} \
+private: \
+	virtual MemoryPool *getObjectMemoryPool() \
+	{ \
+		return ARGCLASS::getClassMemoryPool(); \
+	} \
+public:
+#include "GameClient/InGameUI.h"
+#pragma pop_macro("MEMORY_POOL_GLUE_WITHOUT_GCMP")
+
+#include "Common/ActionManager.h"
+#include "Common/GameAudio.h"
+#include "Common/GameEngine.h"
+#include "Common/GameType.h"
+#include "Common/MessageStream.h"
+#include "Common/PerfTimer.h"
+#include "Common/Player.h"
+#include "Common/PlayerList.h"
+#include "Common/Radar.h"
+#include "Common/Team.h"
+#include "Common/ThingFactory.h"
+#include "Common/ThingTemplate.h"
+#include "Common/BuildAssistant.h"
+#include "Common/Recorder.h"
+#include "Common/BuildAssistant.h"
+#include "Common/SpecialPower.h"
+
+#include "GameClient/Anim2D.h"
+#include "GameClient/ControlBar.h"
+#include "GameClient/DisplayStringManager.h"
+#include "GameClient/Diplomacy.h"
+#include "GameClient/Eva.h"
+#include "GameClient/GameText.h"
+#include "GameClient/GameWindowManager.h"
+#include "GameClient/Drawable.h"
+#include "GameClient/GadgetPushButton.h"
+#include "GameClient/GameClient.h"
+#include "GameClient/GameWindowGlobal.h"
+#include "GameClient/GameWindowID.h"
+#include "GameClient/GUICallbacks.h"
+#include "GameClient/InGameUI.h"
+#include "GameClient/VideoPlayer.h"
+#include "GameClient/Mouse.h"
+#include "GameClient/GadgetStaticText.h"
+#include "GameClient/View.h"
+#include "GameClient/TerrainVisual.h"	
+#include "GameClient/ControlBar.h"
+#include "GameClient/Display.h"
+#include "GameClient/WindowLayout.h"
+#include "GameClient/LookAtXlat.h"
+#include "GameClient/SelectionXlat.h"
+#include "GameClient/Shadow.h"
+#include "GameClient/GlobalLanguage.h"
+
+#include "GameLogic/AIGuard.h"
+#include "GameLogic/Weapon.h"
+#include "GameLogic/Object.h"
+#include "GameLogic/GameLogic.h"
+#include "GameLogic/PartitionManager.h"
+#include "GameLogic/ScriptEngine.h"
+#include "GameLogic/Module/ContainModule.h"
+#include "GameLogic/Module/ProductionUpdate.h"
+#include "GameLogic/Module/SpecialPowerModule.h"
+#include "GameLogic/Module/StealthUpdate.h"
+#include "GameLogic/Module/SupplyWarehouseDockUpdate.h"
+#include "GameLogic/Module/MobMemberSlavedUpdate.h"//ML
+
+#include "Common/UnitTimings.h" //Contains the DO_UNIT_TIMINGS define jba.		 
+
+// UnicodeString is StringBase<WideChar>, and retail inlined the one-line
+// forwarder away: every call site here encodes ?set@?$StringBase@G@@QAEXABV1@@Z
+// at 0x00888530 directly, not the ZH ?set@UnicodeString@@QAEXABV1@@Z spelling
+// (which resolves to the NARROW StringBase<char> body at 0x00887C90).
+#include "string_base.h"
+
+template <> bool StringBase<unsigned short>::isEmpty() const throw();
+template <> int StringBase<unsigned short>::compare(const StringBase<unsigned short>&) const throw();
+#define BFME_MOUSE_SLOT(n) virtual void bfmeMouseSlot##n() = 0;
+struct BfmeMouseSetCursorView
+{
+	BFME_MOUSE_SLOT(0) BFME_MOUSE_SLOT(1) BFME_MOUSE_SLOT(2) BFME_MOUSE_SLOT(3)
+	BFME_MOUSE_SLOT(4) BFME_MOUSE_SLOT(5) BFME_MOUSE_SLOT(6) BFME_MOUSE_SLOT(7)
+	BFME_MOUSE_SLOT(8) BFME_MOUSE_SLOT(9) BFME_MOUSE_SLOT(10) BFME_MOUSE_SLOT(11)
+	BFME_MOUSE_SLOT(12) BFME_MOUSE_SLOT(13)
+	virtual void setCursor( Mouse::MouseCursor cursor ) = 0;	///< vtable +0x38
+};
+#undef BFME_MOUSE_SLOT
+
+class BfmeUnicodeArgBase
+{
+	friend class BfmeUnicodeStringArg;
+private:
+	BfmeUnicodeArgBase( const BfmeUnicodeArgBase &other );	///< retail StringBase<G> copy ctor 0x00888400
+	~BfmeUnicodeArgBase();
+};
+
+class BfmeUnicodeStringArg
+{
+public:
+	BfmeUnicodeStringArg( const UnicodeString &that )
+	{
+		((BfmeUnicodeArgBase *)this)->BfmeUnicodeArgBase::BfmeUnicodeArgBase(
+			*(const BfmeUnicodeArgBase *)&that);
+	}
+	~BfmeUnicodeStringArg();
+private:
+	WideChar *m_text;
+};
+
+class Rva00589320Player;
+struct Rva002EE330PlayerList
+{
+	Rva00589320Player *getLocalPlayer( void );
+};
+
+extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+static __forceinline const char *bfmeMessageText( const AsciiString &text )
+{
+	const char *data = *reinterpret_cast<const char *const *>( &text );
+	return data ? data + 8 : "";
+}
+
+static __forceinline const WideChar *bfmeMessageText( const UnicodeString &text )
+{
+	const void *data = *reinterpret_cast<const void *const *>( &text );
+	return data ? reinterpret_cast<const WideChar *>( static_cast<const char *>( data ) + 8 ) : L"";
+}
+
+class BfmeGameClientGarrisonView
+{
+public:
+	virtual void _m0() = 0;
+	virtual void _m1() = 0;
+	virtual void _m2() = 0;
+	virtual void _m3() = 0;
+	virtual void _m4() = 0;
+	virtual void _m5() = 0;
+	virtual void _m6() = 0;
+	virtual void _m7() = 0;
+	virtual void _m8() = 0;
+	virtual void _m9() = 0;
+	virtual void _m10() = 0;
+	virtual Drawable *findDrawableByID(DrawableID id) = 0;
+};
+
 //-------------------------------------------------------------------------------------------------
 /** Details of what is mouse hovered over right now are in this message.  Terrain might result
 	* in just a tooltip.  An object might get a tooltip and show its hit points.
@@ -354,7 +568,7 @@ void InGameUI::createMouseoverHint( const GameMessage *msg )
 			if( reinterpret_cast<StringBase<WideChar> &>( str ).isEmpty() )
 			{
 				AsciiString txtTemp;
-				txtTemp.format("ThingTemplate:%s", bfmeMessageText( reinterpret_cast<const BfmeHintThingTemplate *>( obj->getTemplate() )->name ));
+				txtTemp.format(AsciiString("ThingTemplate:%s"), bfmeMessageText( reinterpret_cast<const BfmeHintThingTemplate *>( obj->getTemplate() )->name ));
 				str = TheGameText->fetch(txtTemp);
 			}
 
@@ -374,7 +588,7 @@ void InGameUI::createMouseoverHint( const GameMessage *msg )
 			{
 				UnicodeString tooltip;
 				if (TheRecorder->isMultiplayer() && reinterpret_cast<BfmeHintGameLogic *>( TheGameLogic )->field10C != 6 && player->isPlayableSide())
-					tooltip.format(L"%s\n%s", bfmeMessageText( str ), bfmeMessageText( reinterpret_cast<BfmePlayerDisplayNameView *>( (Player *)player )->getPlayerDisplayName() ));
+					tooltip.format(UnicodeString(L"%s\n%s"), bfmeMessageText( str ), bfmeMessageText( reinterpret_cast<BfmePlayerDisplayNameView *>( (Player *)player )->getPlayerDisplayName() ));
 				else
 					tooltip = str;
 
@@ -392,7 +606,7 @@ void InGameUI::createMouseoverHint( const GameMessage *msg )
 					RGBColor rgb;
 					if( disguised )
 					{
-						rgb.setFromInt( reinterpret_cast<const BfmeHintPlayer *>( player )->color );
+						rgb.setFromInt( reinterpret_cast<const BfmeHintPlayer *>( *reinterpret_cast<const Player* volatile*>(&player) )->color );
 					}
 					else
 					{
@@ -428,7 +642,7 @@ void InGameUI::createMouseoverHint( const GameMessage *msg )
 								BfmeHintRecord010F5738 record( reinterpret_cast<BfmeHintObject *>( obj )->field74, self->field13A8 );
 								reinterpret_cast<Rva004C15D0ControlBar *>( TheControlBar )->rva004C15D0( &record );
 							}
-							if( !reinterpret_cast<const BfmeHintGlobalData *>( TheGlobalData )->fieldA88 && warehouseModule == NULL )
+							if( !reinterpret_cast<const BfmeHintGlobalData *>( TheGlobalData )->fieldA88 && *reinterpret_cast<BfmeHintWarehouse* volatile*>(&warehouseModule) == NULL )
 								showTooltip = FALSE;
 						}
 						if( showTooltip )

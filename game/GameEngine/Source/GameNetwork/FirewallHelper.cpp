@@ -186,21 +186,30 @@ void FirewallHelperClass::reset(void)
  * HISTORY:                                                                                    *
  *   3/15/01 6:47PM ST : Created                                                               *
  *=============================================================================================*/
-// Body matched as MASM dump (see targets/game/reverse/functions.csv); C++ kept for readability only.
+// Retail 0x0066FCC0, 232 bytes. Identity: ZH detectFirewall and the
+// FirewallNeedToRefresh key; BFME callers refresh the same firewall state.
+// Both lookup and case-insensitive comparison allocate nothing and cannot
+// throw. Keep that visible to avoid cleanup states for the temporary strings.
+// BfmeSubENF is the existing typed ABI name for ILT 0x000405E8 -> 0x00075E00.
+// The two state assignments share the value, as in the retail inlined helper.
+static inline OptionPreferences::const_iterator firewallFind(const OptionPreferences& pref,const AsciiString& key) throw() { return pref.find(key); }
+class BfmeSubENF { public: int bfmeCmpENF(const char*) throw(); };
+static inline int firewallCompare(const AsciiString& value,const char* text) throw() { return ((BfmeSubENF*)&value)->bfmeCmpENF(text); }
 Bool FirewallHelperClass::detectFirewall(void)
 {
 	OptionPreferences pref;
 
-	OptionPreferences::const_iterator it = pref.find("FirewallNeedToRefresh");
+	OptionPreferences::const_iterator it = firewallFind(pref,"FirewallNeedToRefresh");
 	if (it != pref.end()) {
 		AsciiString str = it->second;
-		if (str.compareNoCase("TRUE") == 0) {
+		if (firewallCompare(str,"TRUE") == 0) {
 			TheWritableGlobalData->m_firewallBehavior = FIREWALL_TYPE_UNKNOWN;
 		}
 	}
 
 	if (TheWritableGlobalData->m_firewallBehavior == FIREWALL_TYPE_UNKNOWN) {
-		detectFirewallBehavior();
+		m_behavior = (FirewallBehaviorType)1;
+		m_currentState = (FirewallDetectionState)(int)m_behavior;
 
 		return FALSE;
 	} else {
