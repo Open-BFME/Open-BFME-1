@@ -1,5 +1,5 @@
 // ?getAircraftPath@Pathfinder@@QAEPAVPath@@PBVObject@@PBUCoord3D@@@Z
-// partial score=0.88 date=2026-09-26
+// partial score=0.89 date=2026-09-28
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // BFME Pathfinder::getAircraftPath, retail RVA 0x003EDC50.
 //
@@ -264,16 +264,20 @@ Path *Pathfinder::getAircraftPath(const Object *obj, const Coord3D *to)
 			checkClips = true;
 	}
 
-	Real radius = 100;
-	Coord3D adjDest = *to;
-	if (checkClips)
-		self->circleClipsTallBuilding(obj->getPosition(), to, radius, avoidObject, &adjDest);
+	{
+		Real radius = 100;
+		Coord3D adjDest = *to;
+		if (checkClips)
+			self->circleClipsTallBuilding(obj->getPosition(), to, radius, avoidObject, &adjDest);
+		thePath->prependNode(&adjDest, LAYER_GROUND);
+	}
 
 	PathfindLayerEnum layer = LAYER_GROUND;
-	thePath->prependNode(&adjDest, layer);
-	Coord3D pos = *obj->getPosition();
-	pos.z = to->z;
-	thePath->prependNode(&pos, layer);
+	{
+		Coord3D pos = *obj->getPosition();
+		pos.z = to->z;
+		thePath->prependNode(&pos, layer);
+	}
 
 	Int limit = 20;
 	PathNode *curNode = thePath->getFirstNode();
