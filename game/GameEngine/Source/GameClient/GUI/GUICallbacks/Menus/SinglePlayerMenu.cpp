@@ -98,7 +98,12 @@ static Bool buttonPushed = false;
 //-------------------------------------------------------------------------------------------------
 /** This is called when a shutdown is complete for this menu */
 //-------------------------------------------------------------------------------------------------
-static void shutdownComplete( WindowLayout *layout )
+// Retail 0x004E94C0 (31 B): this menu static over isShuttingDown
+// (VA 0x012F41AC); layout arrives in ESI beside SinglePlayerMenuUpdate and
+// Shutdown (vtable slot 0x10 hide(TRUE), then Shell::shutdownComplete via
+// ILT 0x2F1D). Update/Shutdown inline the same sequence; refs=0.
+// ?shutdownCompleteSinglePlayerMenu@@YAXPAVWindowLayout@@@Z
+static void shutdownCompleteSinglePlayerMenu( WindowLayout *layout )
 {
 
 	isShuttingDown = false;
@@ -158,7 +163,7 @@ void SinglePlayerMenuShutdown( WindowLayout *layout, void *userData )
 	if( popImmediate )
 	{
 
-		shutdownComplete( layout );
+		shutdownCompleteSinglePlayerMenu( layout );
 		return;
 
 	}  //end if
@@ -175,7 +180,7 @@ void SinglePlayerMenuUpdate( WindowLayout *layout, void *userData )
 
 	// We'll only be successful if we've requested to 
 	if(isShuttingDown && TheShell->isAnimFinished())
-		shutdownComplete(layout);
+		shutdownCompleteSinglePlayerMenu(layout);
 
 }  // end SinglePlayerMenuUpdate
 
