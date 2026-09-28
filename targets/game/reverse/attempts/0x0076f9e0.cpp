@@ -1,5 +1,18 @@
 // ?validate@Rva0076F9E0Owner@@QBEXPAURva0076F9E0Names@@@Z
-// partial score=0.22 date=2026-09-26
+// partial score=0.33 date=2026-09-28
+// ?validate@Rva0076F9E0Owner@@QBEXPAURva0076F9E0Names@@@Z -- retail 0x0076F9E0, 1603 bytes (banked, not matched).
+//
+// Zero Hour twin: ModelConditionInfo::validateWeaponBarrelInfo (W3DModelDraw.cpp),
+// written here as that source reads, with BFME's differences taken from the
+// disassembly: the four bone-name arrays and the recoil/muzzle-flash flags live
+// in the object the caller (0x00774AA0) passes as the one stack argument; the
+// outer test is fx-or-launch-bone only; the unadorned fallback looks up only the
+// launch bone (inlined findPristineBone) and the fx bone (the out-of-line body at
+// 0x00769260).  Levers that moved it: the WWMath Vector4/Matrix3D copy
+// constructors and member-wise assignment (slots and the integer matrix copy),
+// a WeaponBarrelInfo constructor that zeroes only the three bone ints (retail
+// never writes an identity for the fallback record before its if/else), and the
+// out-of-line STLport _Construct retail calls.
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Iinputs/reference/shims/namekeygenerator /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas
 // stlport
 
@@ -8,50 +21,35 @@
 #include <stdio.h>
 #include <vector>
 
-struct Rva0076F9E0Vector4
-{
-	float m_x;
-	float m_y;
-	float m_z;
-	float m_w;
+typedef int Int;
+typedef bool Bool;
 
-	Rva0076F9E0Vector4 &operator=(const Rva0076F9E0Vector4 &other)
-	{
-		m_x = other.m_x;
-		m_y = other.m_y;
-		m_z = other.m_z;
-		m_w = other.m_w;
-		return *this;
-	}
+class Vector4
+{
+public:
+	Vector4(void) {}
+	Vector4(const Vector4 &v) { X = v.X; Y = v.Y; Z = v.Z; W = v.W; }
+	Vector4 &operator=(const Vector4 &v) { X = v.X; Y = v.Y; Z = v.Z; W = v.W; return *this; }
+	float X;
+	float Y;
+	float Z;
+	float W;
 };
 
-struct Matrix3D
+class Matrix3D
 {
-	Rva0076F9E0Vector4 m_row[3];
-
+public:
 	void Make_Identity(void)
 	{
-		m_row[0].m_x = 1.0f;
-		m_row[0].m_y = 0.0f;
-		m_row[0].m_z = 0.0f;
-		m_row[0].m_w = 0.0f;
-		m_row[1].m_x = 0.0f;
-		m_row[1].m_y = 1.0f;
-		m_row[1].m_z = 0.0f;
-		m_row[1].m_w = 0.0f;
-		m_row[2].m_x = 0.0f;
-		m_row[2].m_y = 0.0f;
-		m_row[2].m_z = 0.0f;
-		m_row[2].m_w = 1.0f;
+		Row[0].X = 1.0f; Row[0].Y = 0.0f; Row[0].Z = 0.0f; Row[0].W = 0.0f;
+		Row[1].X = 0.0f; Row[1].Y = 1.0f; Row[1].Z = 0.0f; Row[1].W = 0.0f;
+		Row[2].X = 0.0f; Row[2].Y = 0.0f; Row[2].Z = 1.0f; Row[2].W = 0.0f;
 	}
 
-	Matrix3D &operator=(const Matrix3D &other)
-	{
-		m_row[0] = other.m_row[0];
-		m_row[1] = other.m_row[1];
-		m_row[2] = other.m_row[2];
-		return *this;
-	}
+	Matrix3D(void) {}
+	Matrix3D(const Matrix3D &m) { Row[0] = m.Row[0]; Row[1] = m.Row[1]; Row[2] = m.Row[2]; }
+	Matrix3D &operator=(const Matrix3D &m) { Row[0] = m.Row[0]; Row[1] = m.Row[1]; Row[2] = m.Row[2]; return *this; }
+	Vector4 Row[3];
 };
 
 enum NameKeyType
@@ -67,6 +65,8 @@ public:
 };
 
 extern NameKeyGenerator *TheNameKeyGenerator;
+#define NAMEKEY(s) TheNameKeyGenerator->nameToKey(s)
+
 extern void setFPMode(void);
 
 struct Rva0075B660Logic
@@ -84,16 +84,77 @@ struct Rva0075B660State
 extern Rva0075B660Logic *TheBfmeGameLogic;
 extern Rva0075B660State *TheGameState;
 
+inline Bool isValidTimeToCalcLogicStuff()
+{
+	return (TheBfmeGameLogic && TheBfmeGameLogic->m_flag) || (TheGameState && TheGameState->m_flag);
+}
+
+struct Rva0076F9E0AsciiData
+{
+	int m_refCount;
+	unsigned short m_length;
+	unsigned short m_capacity;
+};
+
+struct Rva0076F9E0AsciiString
+{
+	Rva0076F9E0AsciiData *m_data;
+
+	bool isEmpty(void) const { return m_data == 0 || m_data->m_length == 0; }
+	const char *str(void) const { return m_data ? reinterpret_cast<const char *>(m_data) + 8 : ""; }
+};
+
+enum { WEAPONSLOT_COUNT = 4 };
+
+// The caller's object: four per-slot bone-name arrays and the per-slot
+// recoil/muzzle-flash flags this body sets.
+struct Rva0076F9E0Names
+{
+	char m_pad00[0x4c];
+	Rva0076F9E0AsciiString m_weaponFireFXBoneName[WEAPONSLOT_COUNT];			///< +0x4C
+	Rva0076F9E0AsciiString m_weaponRecoilBoneName[WEAPONSLOT_COUNT];			///< +0x5C
+	Rva0076F9E0AsciiString m_weaponMuzzleFlashName[WEAPONSLOT_COUNT];			///< +0x6C
+	Rva0076F9E0AsciiString m_weaponProjectileLaunchBoneName[WEAPONSLOT_COUNT];	///< +0x7C
+	char m_pad8c[0x120 - 0x8c];
+	Bool m_hasRecoilBonesOrMuzzleFlashes[WEAPONSLOT_COUNT];					///< +0x120
+};
+
+struct ModelConditionInfo
+{
+	struct WeaponBarrelInfo
+	{
+		Int m_recoilBone;
+		Int m_fxBone;
+		Int m_muzzleFlashBone;
+		Matrix3D m_projectileOffsetMtx;
+
+		WeaponBarrelInfo() : m_recoilBone(0), m_fxBone(0), m_muzzleFlashBone(0) {}
+		void clear()
+		{
+			m_recoilBone = 0;
+			m_fxBone = 0;
+			m_muzzleFlashBone = 0;
+			m_projectileOffsetMtx.Make_Identity();
+		}
+	};
+};
+
+namespace _STL
+{
+	template<> __declspec(noinline) void _Construct<ModelConditionInfo::WeaponBarrelInfo, ModelConditionInfo::WeaponBarrelInfo>(ModelConditionInfo::WeaponBarrelInfo *, const ModelConditionInfo::WeaponBarrelInfo &);
+}
+
+// STLport map<NameKeyType, PristineBoneInfo> node: value at +0x10, the matrix
+// at +0x14 and the bone index at +0x44.
 struct Rva00769260Node
 {
 	char m_pad00[0x14];
-	char m_result[0x30];
-	int m_value;
+	Matrix3D m_mtx;
+	Int m_boneIndex;
 };
 
 struct Rva00769260Iterator
 {
-	Rva00769260Iterator(const Rva00769260Iterator &);
 	Rva00769260Node *m_node;
 };
 
@@ -101,76 +162,16 @@ class Rva00769260Tree
 {
 public:
 	Rva00769260Iterator find(void *const &key);
-	Rva00769260Node *m_end;
+	Rva00769260Node *end() const { return m_header; }
+	Rva00769260Node *m_header;
 };
 
+// The out-of-line findPristineBone body (matched at 0x00769260).
 class Rva00769260Owner
 {
 public:
 	void *lookup(void *key, int *value);
 };
-
-struct Rva0076F9E0AsciiData
-{
-	int m_refCount;
-	unsigned short m_length;
-	unsigned short m_padding;
-};
-
-struct Rva0076F9E0AsciiString
-{
-	Rva0076F9E0AsciiData *m_data;
-
-	bool isEmpty(void) const
-	{
-		return m_data == 0 || m_data->m_length == 0;
-	}
-
-	const char *str(void) const
-	{
-		return reinterpret_cast<const char *>(m_data) + 8;
-	}
-};
-
-struct Rva0076F9E0Names
-{
-	char m_pad00[0x4c];
-	Rva0076F9E0AsciiString m_first[4];
-	Rva0076F9E0AsciiString m_second[4];
-	Rva0076F9E0AsciiString m_third[4];
-	Rva0076F9E0AsciiString m_fourth[4];
-};
-
-struct ModelConditionInfo
-{
-	struct WeaponBarrelInfo
-	{
-		int m_first;
-		int m_second;
-		int m_third;
-		Matrix3D m_projectileOffsetMtx;
-
-		WeaponBarrelInfo(void)
-		{
-			clear();
-		}
-
-		void clear(void)
-		{
-			m_first = 0;
-			m_second = 0;
-			m_third = 0;
-			m_projectileOffsetMtx.Make_Identity();
-		}
-
-		WeaponBarrelInfo(const WeaponBarrelInfo &other);
-	};
-};
-
-namespace _STL
-{
-	 template<> __declspec(noinline) void _Construct<ModelConditionInfo::WeaponBarrelInfo, ModelConditionInfo::WeaponBarrelInfo>(ModelConditionInfo::WeaponBarrelInfo *, const ModelConditionInfo::WeaponBarrelInfo &);
-}
 
 class Rva0076F9E0Owner
 {
@@ -178,48 +179,47 @@ public:
 	void validate(Rva0076F9E0Names *names) const;
 
 private:
-	const Matrix3D *findBone(NameKeyType key, int *boneIndex) const
+	enum { PRISTINE_BONES_VALID = 0x01, BARRELS_VALID = 0x08 };
+
+	const Matrix3D *findPristineBone(NameKeyType boneName, Int *boneIndex) const
 	{
-		if ((m_validStuff & 1) == 0)
+		if (!(m_validStuff & PRISTINE_BONES_VALID))
 		{
-			if (boneIndex != 0)
+			if (boneIndex)
 				*boneIndex = 0;
 			return 0;
 		}
-
-		if (key == NAMEKEY_INVALID)
+		if (boneName == NAMEKEY_INVALID)
 		{
-			if (boneIndex != 0)
+			if (boneIndex)
 				*boneIndex = 0;
 			return 0;
 		}
-
-		void *keyPointer = reinterpret_cast<void *>(static_cast<unsigned int>(key));
-		Rva00769260Iterator found = m_pristineBones.find(keyPointer);
-		if (found.m_node != m_pristineBones.m_end)
+		Rva00769260Iterator it = m_pristineBones.find(reinterpret_cast<void *const &>(boneName));
+		if (it.m_node != m_pristineBones.end())
 		{
-			if (boneIndex != 0)
-				*boneIndex = found.m_node->m_value;
-			return reinterpret_cast<const Matrix3D *>(found.m_node->m_result);
+			if (boneIndex)
+				*boneIndex = it.m_node->m_boneIndex;
+			return &it.m_node->m_mtx;
 		}
-
-		if (boneIndex != 0)
-			*boneIndex = 0;
-		return 0;
+		else
+		{
+			if (boneIndex)
+				*boneIndex = 0;
+			return 0;
+		}
 	}
 
 	char m_pad00[0x70];
-	mutable Rva00769260Tree m_pristineBones;
+	mutable Rva00769260Tree m_pristineBones;									///< +0x70
 	char m_pad74[8];
-	mutable _STL::vector<ModelConditionInfo::WeaponBarrelInfo> m_weaponBarrelInfoVec[4];
-	mutable unsigned char m_validStuff;
-	char m_padAD[0x73];
-	mutable unsigned char m_hasRecoilBonesOrMuzzleFlashes[4];
+	mutable _STL::vector<ModelConditionInfo::WeaponBarrelInfo> m_weaponBarrelInfoVec[WEAPONSLOT_COUNT];	///< +0x7C
+	mutable unsigned char m_validStuff;											///< +0xAC
 };
 
 void Rva0076F9E0Owner::validate(Rva0076F9E0Names *names) const
 {
-	if ((m_validStuff & 8) != 0)
+	if (m_validStuff & BARRELS_VALID)
 		return;
 
 	if (TheBfmeGameLogic == 0 || !TheBfmeGameLogic->m_flag)
@@ -230,104 +230,80 @@ void Rva0076F9E0Owner::validate(Rva0076F9E0Names *names) const
 
 	setFPMode();
 
-	for (int wslot = 0; wslot < 4; ++wslot)
+	for (int wslot = 0; wslot < WEAPONSLOT_COUNT; ++wslot)
 	{
-		_STL::vector<ModelConditionInfo::WeaponBarrelInfo> &barrelVec =
-			m_weaponBarrelInfoVec[wslot];
-		barrelVec.clear();
+		m_weaponBarrelInfoVec[wslot].clear();
 
-		const Rva0076F9E0AsciiString &firstName = names->m_first[wslot];
-		const Rva0076F9E0AsciiString &secondName = names->m_second[wslot];
-		const Rva0076F9E0AsciiString &thirdName = names->m_third[wslot];
-		const Rva0076F9E0AsciiString &fourthName = names->m_fourth[wslot];
+		const Rva0076F9E0AsciiString &fxBoneName = names->m_weaponFireFXBoneName[wslot];
+		const Rva0076F9E0AsciiString &recoilBoneName = names->m_weaponRecoilBoneName[wslot];
+		const Rva0076F9E0AsciiString &mfName = names->m_weaponMuzzleFlashName[wslot];
+		const Rva0076F9E0AsciiString &plbName = names->m_weaponProjectileLaunchBoneName[wslot];
 
-		if (firstName.isEmpty() && fourthName.isEmpty())
-			continue;
-
-		volatile int previousBone = 0;
-		char buffer[256];
-		for (int i = 1; i <= 99; ++i)
+		if (!fxBoneName.isEmpty() || !plbName.isEmpty())
 		{
-			ModelConditionInfo::WeaponBarrelInfo info;
-			info.m_projectileOffsetMtx.Make_Identity();
-			if (!secondName.isEmpty())
+			Int prevFxBone = 0;
+			char buffer[256];
+			for (Int i = 1; i <= 99; ++i)
 			{
-				sprintf(buffer, "%s%02d", secondName.str(), i);
-				NameKeyType key = TheNameKeyGenerator->nameToKey(buffer);
-				int bone = 0;
-				const Matrix3D *matrix = findBone(key, &bone);
-				if (matrix != 0)
-					info.m_first = bone;
-			}
-			if (!thirdName.isEmpty())
-			{
-				sprintf(buffer, "%s%02d", thirdName.str(), i);
-				NameKeyType key = TheNameKeyGenerator->nameToKey(buffer);
-				int bone = 0;
-				const Matrix3D *matrix = findBone(key, &bone);
-				if (matrix != 0)
-					info.m_third = bone;
-			}
-			if (!firstName.isEmpty())
-			{
-				sprintf(buffer, "%s%02d", firstName.str(), i);
-				NameKeyType key = TheNameKeyGenerator->nameToKey(buffer);
-				int bone = 0;
-				const Matrix3D *matrix = findBone(key, &bone);
-				if (matrix != 0)
-					info.m_second = bone;
-				if (info.m_second == 0 && info.m_third != 0)
-					info.m_second = previousBone;
-			}
-
-			int projectileBone = 0;
-			if (!fourthName.isEmpty())
-			{
-				sprintf(buffer, "%s%02d", fourthName.str(), i);
-				NameKeyType key = TheNameKeyGenerator->nameToKey(buffer);
-				const Matrix3D *matrix = findBone(key, &projectileBone);
-				if (matrix != 0)
-					info.m_projectileOffsetMtx = *matrix;
-			}
-
-			if (info.m_first == 0 && info.m_second == 0 &&
-					info.m_third == 0 && projectileBone == 0)
-				break;
-
-			barrelVec.push_back(info);
-			if (info.m_first != 0 || info.m_third != 0)
-				m_hasRecoilBonesOrMuzzleFlashes[wslot] = true;
-			previousBone = info.m_second;
-		}
-
-		if (barrelVec.empty())
-		{
-			ModelConditionInfo::WeaponBarrelInfo info;
-			const Matrix3D *projectileMatrix = 0;
-			if (!fourthName.isEmpty())
-			{
-				NameKeyType key = TheNameKeyGenerator->nameToKey(fourthName.str());
-				projectileMatrix = findBone(key, 0);
-			}
-			if (projectileMatrix != 0)
-				info.m_projectileOffsetMtx = *projectileMatrix;
-			else
+				ModelConditionInfo::WeaponBarrelInfo info;
 				info.m_projectileOffsetMtx.Make_Identity();
 
-			if (!firstName.isEmpty())
-			{
-				NameKeyType key = TheNameKeyGenerator->nameToKey(firstName.str());
-				Rva00769260Owner *lookupOwner = const_cast<Rva00769260Owner *>(
-					reinterpret_cast<const Rva00769260Owner *>(this));
-				lookupOwner->lookup(reinterpret_cast<void *>(static_cast<unsigned int>(key)), &info.m_second);
+				if (!recoilBoneName.isEmpty())
+				{
+					sprintf(buffer, "%s%02d", recoilBoneName.str(), i);
+					findPristineBone(NAMEKEY(buffer), &info.m_recoilBone);
+				}
+				if (!mfName.isEmpty())
+				{
+					sprintf(buffer, "%s%02d", mfName.str(), i);
+					findPristineBone(NAMEKEY(buffer), &info.m_muzzleFlashBone);
+				}
+				if (!fxBoneName.isEmpty())
+				{
+					sprintf(buffer, "%s%02d", fxBoneName.str(), i);
+					findPristineBone(NAMEKEY(buffer), &info.m_fxBone);
+					if (info.m_fxBone == 0 && info.m_muzzleFlashBone != 0)
+						info.m_fxBone = prevFxBone;
+				}
+
+				Int plbBoneIndex = 0;
+				if (!plbName.isEmpty())
+				{
+					sprintf(buffer, "%s%02d", plbName.str(), i);
+					const Matrix3D *mtx = findPristineBone(NAMEKEY(buffer), &plbBoneIndex);
+					if (mtx != 0)
+						info.m_projectileOffsetMtx = *mtx;
+				}
+
+				if (info.m_fxBone == 0 && info.m_recoilBone == 0 && info.m_muzzleFlashBone == 0 && plbBoneIndex == 0)
+					break;
+
+				m_weaponBarrelInfoVec[wslot].push_back(info);
+
+				if (info.m_recoilBone != 0 || info.m_muzzleFlashBone != 0)
+					names->m_hasRecoilBonesOrMuzzleFlashes[wslot] = true;
+
+				prevFxBone = info.m_fxBone;
 			}
 
-			if (info.m_second != 0 || projectileMatrix != 0)
+			if (m_weaponBarrelInfoVec[wslot].empty())
 			{
-				barrelVec.push_back(info);
+				ModelConditionInfo::WeaponBarrelInfo info;
+
+				const Matrix3D *plbMtx = plbName.isEmpty() ? 0 : findPristineBone(NAMEKEY(plbName.str()), 0);
+				if (plbMtx != 0)
+					info.m_projectileOffsetMtx = *plbMtx;
+				else
+					info.m_projectileOffsetMtx.Make_Identity();
+
+				if (!fxBoneName.isEmpty())
+					reinterpret_cast<Rva00769260Owner *>(const_cast<Rva0076F9E0Owner *>(this))->lookup(
+						reinterpret_cast<void *>(NAMEKEY(fxBoneName.str())), &info.m_fxBone);
+
+				if (info.m_fxBone != 0 || plbMtx != 0)
+					m_weaponBarrelInfoVec[wslot].push_back(info);
 			}
 		}
 	}
-
-	m_validStuff |= 8;
+	m_validStuff |= BARRELS_VALID;
 }
