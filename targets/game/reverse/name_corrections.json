@@ -10078,5 +10078,35 @@
   "new_name": "rva007F9D00",
   "old_name": "v0",
   "reason": "False pairing: v0 is Rva007EB810Diag's first virtual slot, which the new source still declares as v0; it was never a name for this method."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002e9680.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/LuaScriptEngineParseModelConditionEvent.cpp",
+  "before_sha256": "8adc5c76a260ba46c876c06fca108416622924d9cc8f18c894a6b4dd40ad89f7",
+  "after_sha256": "308398ed1b8143b2f911da37ab5ca33765d11b64035b87d9c89020296d332a46",
+  "evidence": "targets/game/reverse/identity_evidence/0x002E9680-model-condition-event-record.md",
+  "old_name": "Gen84",
+  "new_name": "Rva002E9680ModelConditionEvent",
+  "reason": "Gen84 was the bank's placeholder typedef for the 0x54-byte element; retail field use proves a name key plus two 40-byte condition word sets, so it gets an address-derived record name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002e9680.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/LuaScriptEngineParseModelConditionEvent.cpp",
+  "before_sha256": "8adc5c76a260ba46c876c06fca108416622924d9cc8f18c894a6b4dd40ad89f7",
+  "after_sha256": "308398ed1b8143b2f911da37ab5ca33765d11b64035b87d9c89020296d332a46",
+  "evidence": "targets/game/reverse/identity_evidence/0x002E9680-model-condition-event-record.md",
+  "old_name": "WeaponTemplateSet",
+  "new_name": "Rva0035EF60",
+  "reason": "False pairing: the bank spelled the pushed element WeaponTemplateSet only because the reached _M_insert_overflow row carries that element name; the element is the model-condition event record (see evidence) and Rva0035EF60 is the unrelated attribute-name getter class."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002e9680.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/LuaScriptEngineParseModelConditionEvent.cpp",
+  "before_sha256": "8adc5c76a260ba46c876c06fca108416622924d9cc8f18c894a6b4dd40ad89f7",
+  "after_sha256": "308398ed1b8143b2f911da37ab5ca33765d11b64035b87d9c89020296d332a46",
+  "evidence": "targets/game/reverse/identity_evidence/0x002E9680-model-condition-event-record.md",
+  "old_name": "m_events",
+  "new_name": "m_unmodelled08",
+  "reason": "The bank named LuaScriptEngine storage below +0x98 (m_events and neighbours) without any layout witness; this body never reads it, so the landing keeps it as unnamed padding."
  }
 ]
