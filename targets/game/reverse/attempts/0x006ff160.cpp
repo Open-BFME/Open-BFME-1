@@ -17,6 +17,9 @@
 #include "mesh.h"
 #include "matrix3d.h"
 
+extern "C" void __cdecl _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
 struct Coord3D
 {
 	Coord3D(float ax, float ay, float az) : x(ax), y(ay), z(az) {}
@@ -238,6 +241,7 @@ void Rva00700030::rva006ff160()
 				float fy = j * 0.02f;
 				m_heights[i * 50 + j] = reinterpret_cast<BfmeLivingWorldManager *>(this)->rva006fe600(
 					Coord3D(spanX * fx + low.X, fy * spanY + low.Y, 0.0f));
+				_ReadWriteBarrier();
 			}
 		}
 
