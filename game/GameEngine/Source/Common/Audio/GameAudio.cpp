@@ -712,7 +712,6 @@ void AudioManager::removeDisabledEvents()
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?isCurrentlyPlaying@AudioManager@@ present-unmatched
 Bool AudioManager::isCurrentlyPlaying( AudioHandle audioEvent )
 {
 	return true;
@@ -1115,70 +1114,96 @@ Bool AudioManager::isCurrentSpeakerTypeSurroundSound()
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?shouldPlayLocally@AudioManager@@ present-unmatched
+class Rva00589320Player;
+
+class Rva002EE330PlayerList
+{
+public:
+	Rva00589320Player *getLocalPlayer();
+};
+
+class Counted
+{
+public:
+	virtual ~Counted();
+
+	void Add_Ref()
+	{
+		InterlockedIncrement(&m_refCount);
+	}
+
+	void Release_Ref()
+	{
+		if (InterlockedDecrement(&m_refCount) <= 0)
+			delete this;
+	}
+
+	long m_refCount;
+};
+
+class AudioEventInfoRef
+{
+public:
+	AudioEventInfoRef(const AudioEventInfoRef &other) : m_info(other.m_info)
+	{
+		if (m_info)
+			m_info->Add_Ref();
+	}
+
+	~AudioEventInfoRef()
+	{
+		if (m_info)
+			m_info->Release_Ref();
+	}
+
+	Counted *m_info;
+};
+
 Bool AudioManager::shouldPlayLocally(const AudioEventRTS *audioEvent)
 {
-	Player *localPlayer = ThePlayerList->getLocalPlayer();
-	if( !localPlayer->isPlayerActive() ) 
-	{
-		//We are dead, thus are observing. Get the player we are observing. It's 
-		//possible that we're not looking at any player, therefore it can be NULL.
-		localPlayer = TheControlBar->getObserverLookAtPlayer();
-	}
-
-	const AudioEventInfo *ei = audioEvent->getAudioEventInfo();
-
-	// Music should always play locally.
-	if (ei->m_soundType == AT_Music) {
+	if (ThePlayerList == NULL)
 		return TRUE;
-	}
 
-	if (!BitTest(ei->m_type, (ST_PLAYER | ST_ALLIES | ST_ENEMIES | ST_EVERYONE))) {
-		DEBUG_CRASH(("No player restrictions specified for '%s'. Using Everyone.\n", ei->m_audioName.str()));
+	Player *localPlayer = (Player *)((Rva002EE330PlayerList *)ThePlayerList)->getLocalPlayer();
+	AudioEventInfoRef retainedInfo(*(const AudioEventInfoRef *)((const char *)audioEvent + 8));
+	Counted *info = retainedInfo.m_info;
+	unsigned int typeAt84 = *(unsigned int *)((char *)info + 0x84);
+	if (typeAt84 == 0 || typeAt84 == 3)
 		return TRUE;
-	}
 
-	if (BitTest(ei->m_type, ST_EVERYONE)) {
+	unsigned int restrictions = *(unsigned int *)((char *)info + 0x38);
+	if ((restrictions & 0x1e0) == 0)
 		return TRUE;
-	}
+	if ((restrictions & ST_EVERYONE) != 0)
+		return TRUE;
 
 	Player *owningPlayer = ThePlayerList->getNthPlayer(audioEvent->getPlayerIndex());
 
-	if (BitTest(ei->m_type, ST_PLAYER) && BitTest(ei->m_type, ST_UI) && owningPlayer == NULL) {
+	if ((*(unsigned int *)((char *)info + 0x38) & ST_PLAYER) != 0 &&
+		(*(unsigned int *)((char *)info + 0x38) & ST_UI) != 0 &&
+		owningPlayer == NULL) {
 		DEBUG_ASSERTCRASH(!TheGameLogic->isInGameLogicUpdate(), ("Playing %s sound -- player-based UI sound without specifying a player.\n"));
 		return TRUE;
 	}
 
 	if (owningPlayer == NULL) {
-		DEBUG_CRASH(("Sound '%s' expects an owning player, but the audio event that created it didn't specify one.\n", ei->m_audioName.str()));
 		return FALSE;
 	}
 
-	if( !localPlayer )
-	{
+	if (localPlayer == NULL)
 		return FALSE;
-	}
 
-	const Team *localTeam = localPlayer->getDefaultTeam();
-	if (localTeam == NULL) { 
+	const Team *localTeam = *(Team **)((char *)localPlayer + 0x230);
+	if (localTeam == NULL)
 		return FALSE;
-	}
 
-	if (BitTest(ei->m_type, ST_PLAYER))  {
-		return owningPlayer == localPlayer;
-	}
+	if (owningPlayer == localPlayer)
+		return (*(unsigned int *)((char *)info + 0x38) & ST_PLAYER) != 0;
 
-	if (BitTest(ei->m_type, ST_ALLIES)) { 
-		// We have to also check that the owning player isn't the local player, because PLAYER 
-		// wasn't specified, or we wouldn't have gotten here.
-		return (owningPlayer != localPlayer) && owningPlayer->getRelationship(localTeam) == ALLIES;
-	}
+	if (owningPlayer->getRelationship(localTeam) == ALLIES)
+		return (*(unsigned int *)((char *)info + 0x38) & ST_ALLIES) != 0;
 
-	if (BitTest(ei->m_type, ST_ENEMIES)) {
-		return owningPlayer->getRelationship(localTeam) == ENEMIES;
-	}
-	
-	return FALSE;
+	return (*(unsigned int *)((char *)info + 0x38) & ST_ENEMIES) != 0;
 }
 
 //-------------------------------------------------------------------------------------------------
