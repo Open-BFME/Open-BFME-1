@@ -103,6 +103,19 @@ template class _STL::vector<Gen000DD310Entry>;
 		( (CALLEE *)( (char *)this + ( OFFSET ) ) )->handle( item );      \
 	}
 
+// Two stack words are inherited by the tail target at 0x00362760 (ret 8);
+// the matched caller 0x0049A540 pushes an index and a visitor pointer.
+#define BFME_OFFSET_TAIL_THUNK_ARG2( NAME, CALLEE, OFFSET )               \
+	class NAME                                                            \
+	{                                                                     \
+	public:                                                               \
+		void invoke( int index, void *item );                             \
+	};                                                                    \
+	void NAME::invoke( int index, void *item )                            \
+	{                                                                     \
+		( (CALLEE *)( (char *)this + ( OFFSET ) ) )->handle( index, item ); \
+	}
+
 BFME_OFFSET_TAIL_CALLEE( 00064110 )
 BFME_OFFSET_TAIL_CALLEE( 00064800 )
 BFME_OFFSET_TAIL_CALLEE( 00065090 )
@@ -140,7 +153,13 @@ BFME_OFFSET_TAIL_CALLEE( 003613A0 )
 BFME_OFFSET_TAIL_CALLEE( 00361420 )
 BFME_OFFSET_TAIL_CALLEE( 003614D0 )
 BFME_OFFSET_TAIL_CALLEE( 00361530 )
-BFME_OFFSET_TAIL_CALLEE( 00362760 )
+// 0x00362760 is the matched Gen00362760::handle(int index, void *visitor)
+// (Gen00362760ElemHandle.cpp), which ends in `ret 8`.
+class Gen00362760
+{
+public:
+	void handle( int index, void *visitor );
+};
 BFME_OFFSET_TAIL_CALLEE( 00363050 )
 BFME_OFFSET_TAIL_CALLEE( 003631D0 )
 BFME_OFFSET_TAIL_CALLEE( 00363360 )
@@ -288,7 +307,7 @@ BFME_OFFSET_TAIL_THUNK( Rva003838F0, Gen00361420, 368 )
 BFME_OFFSET_TAIL_THUNK( Rva00383910, Gen003614D0, 368 )
 BFME_OFFSET_TAIL_THUNK( Rva00383920, Gen00361530, 368 )
 BFME_OFFSET_TAIL_THUNK( Rva00383930, Gen00361250, 368 )
-BFME_OFFSET_TAIL_THUNK( Rva00383940, Gen00362760, 368 )
+BFME_OFFSET_TAIL_THUNK_ARG2( Rva00383940, Gen00362760, 368 )
 BFME_OFFSET_TAIL_THUNK( Rva003851A0, Gen00887C90, 44 )
 BFME_OFFSET_TAIL_THUNK( Rva00386080, Gen00887940, 24 )
 BFME_OFFSET_TAIL_THUNK( Rva00388730, Gen00386910, 8 )
