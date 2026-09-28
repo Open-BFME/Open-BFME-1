@@ -1,6 +1,11 @@
 // ?rva0053E870@BfmeAptScreenOnlineCustomMatch@@QAEXXZ
-// partial score=0.684 date=2026-09-27
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// partial score=0.977 date=2026-09-28
+// ?rva0053E870@BfmeAptScreenOnlineCustomMatch@@QAEXXZ
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+
+#include <map>
+#include <string>
 // ?rva0053E870@BfmeAptScreenOnlineCustomMatch@@QAEXXZ
 // The caller at 0x00544E40 reaches this body through ILT 0x00017481.
 // This body calls the matched applyPreferredGameNamePassword method on the
@@ -79,17 +84,7 @@ struct StagingRoomMapNode
 	GameSpyStagingRoom *m_room;
 };
 
-struct StagingRoomMapIterator
-{
-	StagingRoomMapIterator( const StagingRoomMapIterator &other );
-	StagingRoomMapNode *m_node;
-};
-
-struct StagingRoomMap
-{
-	StagingRoomMapNode *m_header;
-	StagingRoomMapIterator find( const int &key );
-};
+typedef _STL::map<int, GameSpyStagingRoom *> StagingRoomMap;
 
 #define GAMESPY_SLOT( n ) virtual void gamespySlot##n() = 0
 class GameSpyInfo
@@ -118,8 +113,12 @@ class GameSpyStagingRoom
 {
 public:
 	UnicodeString getGameName();
-	AsciiString getLadderIP();
+	AsciiString getLadderIP() const;
 	void setLadderIP( AsciiString ip );
+	unsigned int getExeCRC() { return m_exeCRC; }
+	unsigned int getIniCRC() { return m_iniCRC; }
+	unsigned int getExtraCRC() { return m_extraCRC; }
+	unsigned short getLadderPort() { return m_ladderPort; }
 
 	unsigned char m_head[ 0x428 ];
 	unsigned char m_hasPassword;
@@ -160,8 +159,8 @@ public:
 	const LadderInfo *findLadder( const AsciiString &addr, unsigned short port );
 };
 
-class BfmeK1058;
-extern BfmeK1058 *g_bfmeK1058;
+
+extern LadderList *TheLadderList;
 
 class WindowManager
 {
@@ -178,20 +177,6 @@ public:
 	unsigned char m_pad[ 0x250 ];
 	void *m_movie;
 };
-
-namespace _STL
-{
-	template <typename T> struct char_traits {};
-	template <typename T> class allocator {};
-	template <typename T, typename Traits, typename Alloc>
-	class basic_string
-	{
-	public:
-		basic_string &operator=( const T *s );
-	private:
-		char m_bytes[ 12 ];
-	};
-}
 
 class StlStr
 {
@@ -257,111 +242,82 @@ private:
 
 void BfmeAptScreenOnlineCustomMatch::rva0053E870()
 {
-	int selected = 0;
 	if( m_field1B4 )
 		return;
 
 	m_state = 1;
 	m_field1C4 = 0;
+	int selected;
 	GadgetListBoxGetSelected( m_gameList, &selected );
-	if( selected < 0 )
+	if( selected >= 0 )
 	{
-		GSMessageBoxOk( TheGameText->fetch( "GUI:Error", 0 ),
-			TheGameText->fetch( "GUI:NoGameSelected", 0 ), 0 );
-		return;
-	}
-
-	selected = (int)GadgetListBoxGetItemData( m_gameList, selected, 0 );
-	if( selected <= 0 )
-	{
-		GSMessageBoxOk( TheGameText->fetch( "GUI:Error", 0 ),
-			TheGameText->fetch( "GUI:NoGameInfo", 0 ), 0 );
-		return;
-	}
-
-	StagingRoomMap *rooms = TheGameSpyInfo->getStagingRoomList();
-	StagingRoomMapIterator it = rooms->find( selected );
-	if( it.m_node == rooms->m_header )
-		return;
-
-	GameSpyStagingRoom *room = it.m_node->m_room;
-	unsigned char exeOk;
-	if( !room )
-		exeOk = 0;
-	else
-	{
-		unsigned int exeCRC = TheWritableGlobalData->m_exeCRC;
-		if( room->m_exeCRC == (unsigned int)Rva0009B4B0( (int)exeCRC, (int)exeCRC ) )
-			exeOk = 1;
+		int selectedID = (int)GadgetListBoxGetItemData( m_gameList, selected, 0 );
+		if( selectedID > 0 )
+		{
+			StagingRoomMap *srm = TheGameSpyInfo->getStagingRoomList();
+			StagingRoomMap::iterator srmIt = srm->find( selectedID );
+			if( srmIt != srm->end() )
+			{
+				GameSpyStagingRoom *roomToJoin = srmIt->second;
+				bool exeOk = roomToJoin && roomToJoin->getExeCRC() == (unsigned int)Rva0009B4B0(
+					(int)TheWritableGlobalData->m_exeCRC, (int)TheWritableGlobalData->m_exeCRC );
+				bool iniOk = roomToJoin && roomToJoin->getIniCRC() == TheWritableGlobalData->m_iniCRC;
+				bool extraOk = roomToJoin && roomToJoin->getExtraCRC() == TheWritableGlobalData->m_extraCRC;
+				if( !exeOk || !iniOk || !extraOk )
+				{
+					GSMessageBoxOk( TheGameText->fetch( "GUI:JoinFailedDefault" ),
+						TheGameText->fetch( "GUI:JoinFailedCRCMismatch" ), 0 );
+					return;
+				}
+				bool unknownLadder = ( roomToJoin->getLadderPort() && TheLadderList->findLadder(
+					roomToJoin->getLadderIP(), roomToJoin->getLadderPort() ) == 0 );
+				if( unknownLadder )
+				{
+					GSMessageBoxOk( TheGameText->fetch( "GUI:JoinFailedDefault" ),
+						TheGameText->fetch( "GUI:JoinFailedUnknownLadder" ), 0 );
+					return;
+				}
+				if( roomToJoin->m_reportedNumPlayers == roomToJoin->m_reportedMaxPlayers )
+				{
+					GSMessageBoxOk( TheGameText->fetch( "GUI:JoinFailedDefault" ),
+						TheGameText->fetch( "GUI:JoinFailedRoomFull" ), 0 );
+					return;
+				}
+				m_field1B4 = 1;
+				m_field1BC = -1;
+				if( roomToJoin->m_hasPassword )
+				{
+					m_selectedID = selectedID;
+					g_theWindowManager->add( m_field34->m_movie, "CallChild", 1,
+						"EnterPassword", 0, 0, 0, 0 );
+					applyPreferredGameNamePassword( 0 );
+					m_state = 10;
+				}
+				else
+				{
+					TheGameSpyInfo->markAsStagingRoomJoiner( selectedID );
+					( (Gen004D4880 *)TheGameSpyGame )->bfmeSet( roomToJoin->getGameName() );
+					TheGameSpyGame->setLadderIP( roomToJoin->getLadderIP() );
+					TheGameSpyGame->m_ladderPort = roomToJoin->getLadderPort();
+					PeerRequest req;
+					req.peerRequestType = 0xB;
+					req.text = srmIt->second->getGameName().str();
+					req.m_stagingRoomId = selectedID;
+					req.password = "";
+					TheGameSpyPeerMessageQueue->addRequest( req );
+					m_state = 0xB;
+				}
+			}
+		}
 		else
-			exeOk = 0;
+		{
+			GSMessageBoxOk( TheGameText->fetch( "GUI:Error" ),
+				TheGameText->fetch( "GUI:NoGameInfo" ), 0 );
+		}
 	}
-	unsigned char iniOk;
-	if( !room )
-		iniOk = 0;
-	else if( room->m_iniCRC == TheWritableGlobalData->m_iniCRC )
-		iniOk = 1;
 	else
-		iniOk = 0;
-	unsigned char extraOk;
-	if( !room )
-		extraOk = 0;
-	else if( room->m_extraCRC == TheWritableGlobalData->m_extraCRC )
-		extraOk = 1;
-	else
-		extraOk = 0;
-	if( !exeOk || !iniOk || !extraOk )
 	{
-		GSMessageBoxOk( TheGameText->fetch( "GUI:JoinFailedDefault", 0 ),
-			TheGameText->fetch( "GUI:JoinFailedCRCMismatch", 0 ), 0 );
-		return;
+		GSMessageBoxOk( TheGameText->fetch( "GUI:Error" ),
+			TheGameText->fetch( "GUI:NoGameSelected" ), 0 );
 	}
-
-	unsigned char unknownLadder;
-	if( !room->m_ladderPort )
-		unknownLadder = 0;
-	else if( ( (LadderList *)g_bfmeK1058 )->findLadder(
-			room->getLadderIP(), room->m_ladderPort ) == 0 )
-		unknownLadder = 1;
-	else
-		unknownLadder = 0;
-	if( unknownLadder )
-	{
-		GSMessageBoxOk( TheGameText->fetch( "GUI:JoinFailedDefault", 0 ),
-			TheGameText->fetch( "GUI:JoinFailedUnknownLadder", 0 ), 0 );
-		return;
-	}
-
-	if( room->m_reportedNumPlayers == room->m_reportedMaxPlayers )
-	{
-		GSMessageBoxOk( TheGameText->fetch( "GUI:JoinFailedDefault", 0 ),
-			TheGameText->fetch( "GUI:JoinFailedRoomFull", 0 ), 0 );
-		return;
-	}
-
-	m_field1B4 = 1;
-	m_field1BC = -1;
-	if( room->m_hasPassword )
-	{
-		void *movie = m_field34->m_movie;
-		m_selectedID = selected;
-		g_theWindowManager->add( movie, "CallChild", 1,
-			"EnterPassword", 0, 0, 0, 0 );
-		applyPreferredGameNamePassword( 0 );
-		m_state = 10;
-		return;
-	}
-
-	TheGameSpyInfo->markAsStagingRoomJoiner( selected );
-	( (Gen004D4880 *)TheGameSpyGame )->bfmeSet( room->getGameName() );
-	TheGameSpyGame->setLadderIP( room->getLadderIP() );
-	TheGameSpyGame->m_ladderPort = room->m_ladderPort;
-
-	PeerRequest req;
-	req.peerRequestType = 0xB;
-	req.text = it.m_node->m_room->getGameName().str();
-	req.m_stagingRoomId = selected;
-	req.password = "";
-	TheGameSpyPeerMessageQueue->addRequest( req );
-	m_state = 0xB;
 }
