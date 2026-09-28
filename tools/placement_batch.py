@@ -198,6 +198,9 @@ def land(moved, rows):
                     named[(src, dst)] = "does not compile at the new path"
                 elif line.startswith("  FAIL") and line.endswith("(" + dst + ")"):
                     named[(src, dst)] = "byte-red at the new path"
+                elif line.startswith("  " + src + " -> ") or " -> " + dst + ": " in line:
+                    # name_regression can pair two moved files that are not one file renamed
+                    named[(src, dst)] = "name_regression pairs it with a different moved file"
         if not named:
             QUEUE.write_text(queued, encoding="utf-8")
             print("COMMIT REFUSED:\n" + out[-2500:], file=sys.stderr)

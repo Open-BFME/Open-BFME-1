@@ -474,6 +474,20 @@ def test_ea_paths_never_queue_a_masm_dump(tmp_path):
     assert queue.build(root)[0] == []
 
 
+def test_ea_paths_never_move_a_file_whose_address_another_row_claims(tmp_path):
+    root = tmp_path / "repo"
+    a, b = f"{queue.DUMPING_GROUND}/ACtor.cpp", f"{queue.DUMPING_GROUND}/BCtor.cpp"
+    _write(root, a)
+    _write(root, b)
+    _write(root, "targets/game/reverse/functions.csv",
+           "name,export_rva,target_rva,target_size,source,status,notes\n"
+           f"??0A@@QAE@XZ,,0x00500000,16,{a},matched,\n"
+           f"??0B@@QAE@XZ,,0x00500000,16,{b},matched,\n")
+    (root / queue.EA_EVIDENCE).write_text(
+        "rva,kind,value,route,basis\n0x00500000,file,GameEngine/Source/GameLogic/Object/Update/C.cpp,wb1,\n")
+    assert queue.build(root)[0] == []
+
+
 def test_ea_paths_need_every_row_of_a_file_to_agree(tmp_path):
     root = tmp_path / "repo"
     both = f"{queue.DUMPING_GROUND}/Split.cpp"

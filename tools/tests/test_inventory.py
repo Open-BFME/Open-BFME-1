@@ -237,6 +237,12 @@ def _closure_table(stdout):
     return table
 
 
+def _clean_cpp(cells):
+    """CPP plus LIB: both are clean C++, and a byte-neutral placement move into
+    game/Libraries/ (EA's own path for INI, Xfer, Apt, ...) turns one into the other."""
+    return tuple(a + b for a, b in zip(cells.get("CPP", (0, 0)), cells.get("LIB", (0, 0))))
+
+
 def test_game_end_closure_coverage_never_regresses():
     proc = subprocess.run(
         [sys.executable, str(TOOLS / "callers_of.py"), "--closure", CLOSURE_SEEDS],
@@ -253,8 +259,9 @@ def test_game_end_closure_coverage_never_regresses():
             if now[column][0] > base[column][0] or now[column][1] > base[column][1]:
                 moved.append(f"{key}: {column} rose to {now[column]} from {base[column]}")
         for column in IMPROVING:
-            if now[column][0] < base[column][0] or now[column][1] < base[column][1]:
-                moved.append(f"{key}: {column} fell to {now[column]} from {base[column]}")
+            now_v, base_v = (_clean_cpp(now), _clean_cpp(base)) if column == "CPP" else (now[column], base[column])
+            if now_v[0] < base_v[0] or now_v[1] < base_v[1]:
+                moved.append(f"{key}: {column} fell to {now_v} from {base_v}")
     assert not moved, "\n".join(moved) + "\n\n" + proc.stdout
     print("PASS game-end closure: no state or identity figure moved the wrong way")
 

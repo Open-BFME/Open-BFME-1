@@ -364,18 +364,27 @@ def ea_directories(root):
         for r in csv.DictReader(fh):
             if r["kind"] == "file" and r["route"] in EA_ROUTES:
                 where[int(r["rva"], 16)] = posixpath.dirname(r["value"])
-    dirs = collections.defaultdict(set)
+    dirs, claims = collections.defaultdict(set), collections.Counter()
+    rows = []
     with open(root / "targets/game/reverse/functions.csv", newline="") as fh:
         for row in csv.DictReader(fh):
-            source = row.get("source") or ""
-            # placement_batch moves C++ sources only; a MASM dump is not one
-            if (row.get("status") != "matched" or not source.startswith(AREAS)
-                    or source.startswith("game/gen") or not source.endswith((".cpp", ".h"))):
-                continue
-            try:
-                dirs[source].add(where.get(int(row["target_rva"], 16)))
-            except ValueError:
-                dirs[source].add(None)
+            if row.get("status") == "matched":
+                claims[row.get("target_rva")] += 1
+                rows.append(row)
+    for row in rows:
+        source = row.get("source") or ""
+        # placement_batch moves C++ sources only; a MASM dump is not one
+        if (not source.startswith(AREAS) or source.startswith("game/gen")
+                or not source.endswith((".cpp", ".h"))):
+            continue
+        try:
+            rva = int(row["target_rva"], 16)
+        except ValueError:
+            dirs[source].add(None)
+            continue
+        # An address two rows claim is an over-claim: which file owns the body is
+        # exactly what is unsettled, so neither moves on the address's evidence.
+        dirs[source].add(where.get(rva) if claims[row["target_rva"]] == 1 else None)
     cased = {}
     return {s: existing_case(root, "game/" + next(iter(d)), cased)
             for s, d in dirs.items() if len(d) == 1 and None not in d}

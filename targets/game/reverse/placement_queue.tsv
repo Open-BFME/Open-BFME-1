@@ -194,19 +194,15 @@ game/GameEngine/Source/GameLogic/LivingWorld/Rva003C7A40RegionPass.cpp	game/Game
 game/GameEngine/Source/GameLogic/LivingWorld/SplineEffectParseGeometryName.cpp	game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/SplineEffectParseGeometryName.cpp	EA
 game/GameEngine/Source/GameLogic/Map/LookupInitialWalkOnWaypoints.cpp	game/GameEngine/Source/GameLogic/System/LookupInitialWalkOnWaypoints.cpp	EA
 game/GameEngine/Source/GameLogic/Map/SidesList_removeSideMethodThunk.cpp	game/GameEngine/Source/Common/INI/SidesList_removeSideMethodThunk.cpp	EA
-game/GameEngine/Source/GameLogic/Object/Behavior/BunkerBusterBehaviorCtorThunk.cpp	game/GameEngine/Source/GameLogic/Object/Update/BunkerBusterBehaviorCtorThunk.cpp	EA
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorRegisterOwnedObject.cpp	game/GameEngine/Source/GameLogic/System/CastleBehaviorRegisterOwnedObject.cpp	EA
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorRva0036F4D0EvaNotify.cpp	game/GameEngine/Source/GameLogic/System/CastleBehaviorRva0036F4D0EvaNotify.cpp	EA
-game/GameEngine/Source/GameLogic/Object/Behavior/OverchargeBehaviorCtorThunk.cpp	game/GameEngine/Source/GameLogic/Object/Update/OverchargeBehaviorCtorThunk.cpp	EA
 game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorReclaimOrphanSpawn.cpp	game/GameEngine/Source/GameLogic/Object/Contain/SpawnBehaviorReclaimOrphanSpawn.cpp	EA
 game/GameEngine/Source/GameLogic/Object/Contain/FormationRefresh0023FA80.cpp	game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/FormationRefresh0023FA80.cpp	EA
 game/GameEngine/Source/GameLogic/Object/Contain/MemberReleaseMovement00242C90.cpp	game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberReleaseMovement00242C90.cpp	EA
-game/GameEngine/Source/GameLogic/Object/Die/SpecialPowerCompletionDieModuleDataCtorThunk.cpp	game/GameEngine/Source/GameLogic/Object/Update/SpecialPowerCompletionDieModuleDataCtorThunk.cpp	EA
 game/GameEngine/Source/GameLogic/Object/Object_rva001CA550_ghostDraw.cpp	game/GameEngine/Source/GameClient/Drawable/Behavior/Object_rva001CA550_ghostDraw.cpp	EA
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/RunReadyAction0027A7A0.cpp	game/GameEngine/Source/GameLogic/AI/RunReadyAction0027A7A0.cpp	BfmeObjectAI
 game/GameEngine/Source/GameLogic/Object/Update/ApplyObjectState0037C030.cpp	game/GameEngine/Source/GameLogic/System/ApplyObjectState0037C030.cpp	EA
 game/GameEngine/Source/GameLogic/Object/Update/Rva0025DF30GiveUpgradeUpdate.cpp	game/GameEngine/Source/GameLogic/Object/SpecialPower/Rva0025DF30GiveUpgradeUpdate.cpp	EA
-game/GameEngine/Source/GameLogic/Object/Update/Rva0039D770Xfer.cpp	game/Tools/WorldBuilder/src/Rva0039D770Xfer.cpp	EA
 game/GameEngine/Source/GameLogic/Object/Update/Rva003A01E0AttributeXfer.cpp	game/GameEngine/Source/GameLogic/System/Rva003A01E0AttributeXfer.cpp	EA
 game/GameEngine/Source/GameLogic/Object/Update/WeaponFireSpecialAbilityUpdate_xfer.cpp	game/GameEngine/Source/GameLogic/Object/SpecialPower/WeaponFireSpecialAbilityUpdate_xfer.cpp	EA
 game/GameEngine/Source/GameLogic/Object/Waypoint_method001ABBB0.cpp	game/GameEngine/Source/GameLogic/Map/Waypoint_method001ABBB0.cpp	EA
@@ -239,7 +235,6 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/ScreenGridRva007D4AF0.cpp	game
 game/GameEngineDevice/Source/W3DDevice/GameClient/ScreenGridRva007D95B0.cpp	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShader/ScreenGridRva007D95B0.cpp	EA
 game/GameEngineDevice/Source/W3DDevice/GameClient/ScreenHilightFilterInit.cpp	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShader/ScreenHilightFilterInit.cpp	EA
 game/GameEngineDevice/Source/W3DDevice/GameClient/ShroudTexture_getFilter.cpp	game/Libraries/Source/WWVegas/WW3D2/ShroudTexture_getFilter.cpp	EA
-game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisualRva00730590Init.cpp	game/Tools/WorldBuilder/src/W3DTerrainVisualRva00730590Init.cpp	EA
 game/Libraries/Source/EA/Apt/ArraySortFieldHandler008B91F0.cpp	game/Libraries/Source/Apt/ArraySortFieldHandler008B91F0.cpp	EA
 game/Libraries/Source/EA/Apt/Rva008A1460AptCleanup.cpp	game/Libraries/Source/Apt/Rva008A1460AptCleanup.cpp	EA
 game/Libraries/Source/EA/Apt/Rva008A1940QueueFlush.cpp	game/Libraries/Source/Apt/Rva008A1940QueueFlush.cpp	EA
@@ -249,8 +244,6 @@ game/Libraries/Source/EA/Apt/Rva008AF0B0CreateNode.cpp	game/Libraries/Source/Apt
 game/Libraries/Source/EA/Apt/Rva008C3F10Cleanup.cpp	game/Libraries/Source/Apt/Rva008C3F10Cleanup.cpp	EA
 game/Libraries/Source/EA/Apt/Rva008CE1E0StoreMember.cpp	game/Libraries/Source/Apt/Rva008CE1E0StoreMember.cpp	EA
 game/Libraries/Source/EA/Apt/Rva8CD520ConfigureState.cpp	game/Libraries/Source/Apt/Rva8CD520ConfigureState.cpp	EA
-game/Libraries/Source/WWVegas/WW3D2/DistLODClassFreeBody.cpp	game/GameEngineDevice/Source/W3DDevice/GameClient/DistLODClassFreeBody.cpp	EA
 game/Libraries/Source/WWVegas/WW3D2/RegistryPrototypeLookup.cpp	game/Libraries/Source/assetmanager/RegistryPrototypeLookup.cpp	EA
-game/Libraries/Source/WWVegas/WW3D2/TextureBaseReleaseRefThunk.cpp	game/Libraries/Source/assetmanager/TextureBaseReleaseRefThunk.cpp	EA
 game/Libraries/Source/WWVegas/WWDebug/DebugConstructor_00889370.cpp	game/Libraries/Source/debug/DebugConstructor_00889370.cpp	EA
 game/Libraries/Source/WWVegas/WWDebug/DebugFinishAssert0088B530.cpp	game/Libraries/Source/debug/DebugFinishAssert0088B530.cpp	Debug
