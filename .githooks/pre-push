@@ -186,8 +186,12 @@ def git(*argv):
 
 claimed = {r["source"] for r in csv.DictReader(io.StringIO(
     git("show", "%s:targets/game/reverse/functions.csv" % rev))) if r.get("status") == "matched"}
+# No suffix list here: the ledger owns which paths are claimed sources
+# (.c, .cc, .cpp, .cxx, .asm today), so every changed game/ path is
+# intersected with the claimed set. A hook-local extension list let a .cc,
+# .cxx or .asm edit with an unchanged row go out unverified.
 touched = git("diff", "--name-only", "--diff-filter=ACMRT", base, rev,
-              "--", "game/*.cpp", "game/*.c").splitlines()
+              "--", "game/").splitlines()
 sys.stdout.reconfigure(newline="\n")
 for path in sorted(set(touched) & claimed):
     print(path)
