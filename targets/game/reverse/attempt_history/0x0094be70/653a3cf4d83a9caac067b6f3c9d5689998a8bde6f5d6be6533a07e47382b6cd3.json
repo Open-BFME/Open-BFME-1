@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "653a3cf4d83a9caac067b6f3c9d5689998a8bde6f5d6be6533a07e47382b6cd3",
+  "symbol": "?d_0094be70@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.71,
+  "source": "// ?d_0094be70@@YAXXZ\n// partial score=0.71 date=2026-09-28\n// cl: /DNDEBUG /MD\nclass Rva0094BE70Box\n{\npublic:\n\tunsigned int m_key;\n\tunsigned int isLess(const Rva0094BE70Box *other) const;\n\tunsigned int getKey() const;\n};\nunsigned int Rva0094BE70Box::isLess(const Rva0094BE70Box *other) const\n{\n\treturn m_key < other->m_key;\n}\nunsigned int Rva0094BE70Box::getKey() const\n{\n\treturn m_key;\n}\n"
+}

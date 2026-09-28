@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "b2e3d9822b21bade45feaba84f17dd2f32374d262b6776e560f283f914a54da3",
+  "symbol": "?d_009d8c30@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.82,
+  "source": "// ?d_009d8c30@@YAXXZ\n// partial score=0.82 date=2026-09-28\n// cl: /DNDEBUG /MD /O2\r\n// Clean C++ conversion of the length-prefixed skip helper at retail RVA 0x009D8C30.\r\n\r\nstruct XferException\r\n{\r\n\tvoid *text;\r\n\tint tag;\r\n};\r\n\r\nextern \"C\" XferException *__cdecl bfmeFormatText(\r\n\tXferException *result, int tag, const char *format, ...);\r\n__declspec(noreturn) void __stdcall _CxxThrowException(void *object, void *throwInfo);\r\nextern int g_guardTargetTypeThrowInfo;\r\n\r\nclass BfmeByteStream\r\n{\r\npublic:\r\n\tvirtual void slot0();\r\n\tvirtual void slot1();\r\n\tvirtual void slot2();\r\n\tvirtual int read(void *buffer, int size);\r\n\tvirtual void slot4();\r\n\tvirtual int skip(int count, int flag);\r\n};\r\n\r\nclass Gen009D8C30\r\n{\r\npublic:\r\n\tvoid bfmeSkipPrefixed();\r\n\r\nprivate:\r\n\tunsigned char m_pad[0x14];\r\n\tBfmeByteStream *m_stream;\r\n};\r\n\r\nvoid Gen009D8C30::bfmeSkipPrefixed()\r\n{\r\n\tunsigned char length;\r\n\tif (m_stream->read(&length, 1) != 1)\r\n\t{\r\n\t\tXferException error;\r\n\t\tbfmeFormatText(&error, 1, 0);\r\n\t\t_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);\r\n\t}\r\n\r\n\tif (length == 0)\r\n\t\treturn;\r\n\tswitch (length)\r\n\t{\r\n\tcase 0xff:\r\n\t\t{\r\n\t\t\tint count = 4;\r\n\t\t\tm_stream->skip(count, 1);\r\n\t\t\treturn;\r\n\t\t}\r\n\tdefault:\r\n\t\tm_stream->skip(static_cast<int>(length), 1);\r\n\t\treturn;\r\n\t}\r\n}\r\n"
+}
