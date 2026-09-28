@@ -1,5 +1,5 @@
 // ?rva001f96e0@DynamicPortalBehaviour@@QAEXXZ
-// partial score=0.7 date=2026-09-28
+// partial score=0.8407 date=2026-09-28
 // ?rva001f96e0@DynamicPortalBehaviour@@QAEXXZ
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
 // stlport
@@ -198,8 +198,8 @@ void DynamicPortalBehaviour::rva001f96e0()
 			node->m_rva68 = TRUE;
 			node->m_rva6c = data->m_rva74;
 			node->m_rva84 = TRUE;
-			node->m_rva88 = data->m_rva8c;
 			node->m_rvaA0 = data->m_rvaC5;
+			node->m_rva88 = data->m_rva8c;
 			if (startFrame > 0)
 				node->m_rvaAC = startFrame;
 			m_nodes[i] = node;
