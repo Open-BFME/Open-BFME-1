@@ -1,17 +1,27 @@
-// ?onRemoving@TransportContain@@UAEXPAVObject@@@Z
-// partial score=0.990881459 date=2026-09-28
-// ?onContaining@TransportContain@@UAEXPAVObject@@_N@Z
-// Reconstructed from retail 0x0022E340; BFME exit path differs from ZH.
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
+// ?onRemoving@TransportContain@@UAEXPAVObject@@@Z
+// Open-BFME: TransportContain::onRemoving, retail 0x0022E340, 987 bytes.
 //
-// BFME TransportContain::onContaining, retail 0x0022DD10 (865 bytes).
+// Identity: TransportContain's ContainModuleInterface vtable 0x010AD268 slot 18
+// (+0x48) reaches this body through ILT 0x00041E34; the same slot of
+// OpenContain's secondary vtable 0x010AC038 is the matched
+// OpenContain::onRemoving (0x00227DC0), which this body calls first as its
+// base (ILT 0x00032E61). Slot 17 is TransportContain::onContaining (0x0022DD10).
+// The body is the Zero Hour TransportContain::onRemoving (exit bone, orient,
+// slot count, loaded condition, AI attitude/mood, scatter, exit delay) with a
+// BFME tail: model-condition bits 86/87/88, a drawable hand-off, a passenger
+// kind-of scan and the passenger fade driven by module data +0x211/+0x218 (the
+// FieldParse keys FadePassengerOnExit and ExitFadeTime).
 //
-// Identity is established by the matched RiderChangeContain::onContaining
-// caller at 0x0022B3E0 and the existing TransportContain callee pin.  The
-// retail body is the ContainModuleInterface secondary view: module data is at
-// this-0x1c and the owning Object is at this-0x18.  This TU keeps that BFME
-// view local; the vendored Zero Hour TransportContain layout is not used.
+// `this` is the ContainModuleInterface subobject: module data is at this-0x1c,
+// the owning Object at this-0x18 and the OpenContain object at this-0x20.
+// Members name_oracle cannot witness keep their offsets in their names.
+//
+// Codegen notes: the exit delay is `TheGameLogic->getFrame() + d->m_exitDelay`
+// through Zero Hour's out-of-class inline getFrame(), which loads the frame
+// first as retail does; the orient-on-exit flag is read through an inline
+// accessor, which is what keeps the Object in EDI and the module data in EBP.
 
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
@@ -29,6 +39,7 @@ typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
 class Object;
+// Retail destroys the passenger list through ILT 0x0000E68D (0x000CEBD0).
 void j_0000e68d();
 namespace _STL {
 template<> inline _List_base<Object*,allocator<Object*> >::~_List_base() {
@@ -42,16 +53,14 @@ class Player;
 
 enum KindOfType
 {
-	KINDOF_BFME_66 = 0x66,
 	KINDOF_BFME_6C = 0x6c
 };
 
-void j_0003f288(); void j_00046a1f();
+// ILT 0x00046A1F -> 0x00410D80, a Drawable member taking a frame count.
+void j_00046a1f();
 class Drawable
 {
 public:
-	void applyPendingModelConditionFlags(Bool pending);
-	void bfmeDelayA(Int frames) { union {void (*raw)(); void(Drawable::*member)(int);} c; c.raw=&j_0003f288; (this->*c.member)(frames); }
 	void bfmeDelayB(Int frames) { union {void (*raw)(); void(Drawable::*member)(int);} c; c.raw=&j_00046a1f; (this->*c.member)(frames); }
 };
 
@@ -61,28 +70,24 @@ class Thing
 {
 public:
 	Bool isKindOf(KindOfType kind) const;
- void convertBonePosToWorldPos(const Coord3D*,const Matrix3D*,Coord3D*,Matrix3D*)const;
- void setPosition(const Coord3D*);
- void setOrientation(float);
- char pad000[0x44]; float m_cachedAngle;
- float getOrientation()const{return m_cachedAngle;}
+	void convertBonePosToWorldPos(const Coord3D*,const Matrix3D*,Coord3D*,Matrix3D*)const;
+	void setPosition(const Coord3D*);
+	void setOrientation(float);
+	char pad000[0x44]; float m_cachedAngle;
+	float getOrientation()const{return m_cachedAngle;}
 
 	template <int NUMBITS>
 	class KindOfMask
 	{
 	public:
 		_STL::bitset<NUMBITS> m_bits;
- Bool any() const { return m_bits.any(); }
 	};
 
 	typedef KindOfMask<192> KindOfMaskType;
 	Bool isKindOfMulti(const BitFlags<116>&,const BitFlags<116>&) const;
 };
 
-void j_000348ec();
-enum ObjectStatusTypes { STATUS_003B=0x3b };
 enum DisabledType { DISABLED_HELD=3 };
-enum Relationship { RELATIONSHIP_ENEMY=2 };
 class Object
 {
 public:
@@ -99,29 +104,19 @@ public:
 	virtual void objectSlot09() = 0;
 	virtual Drawable *getDrawable() const;
 
- struct ModelFlags { _STL::bitset<320> bits; unsigned test(unsigned bit)const{return ((const unsigned*)&bits)[bit>>5]&(1u<<(bit&31));} void set(unsigned bit){bits.set(bit);} };
- char pad004[0x10c];
- ModelFlags m_modelConditionFlags;
- const ModelFlags& getFlags() const { return m_modelConditionFlags; }
- __forceinline void setModelCondition(unsigned bit) { if(!getFlags().test(bit)) { m_modelConditionFlags.set(bit); notifyModelConditionChanged(); } }
+	struct ModelFlags { _STL::bitset<320> bits; };
+	char pad004[0x10c];
+	ModelFlags m_modelConditionFlags;
 
-	void setDisabled(DisabledType);
- bool clearDisabled(DisabledType);
- __forceinline void clearModelCondition(unsigned bit) { unsigned &f=((unsigned*)&m_modelConditionFlags)[bit>>5]; if(f&(1u<<(bit&31))) {f&=~(1u<<(bit&31));notifyModelConditionChanged();} }
+	bool clearDisabled(DisabledType);
+	__forceinline void clearModelCondition(unsigned bit) { unsigned &f=((unsigned*)&m_modelConditionFlags)[bit>>5]; if(f&(1u<<(bit&31))) {f&=~(1u<<(bit&31));notifyModelConditionChanged();} }
 	void notifyModelConditionChanged();
 	Int getTransportSlotCount() const;
 	void *unidentified_001BFE20() const;
-	void setStatusBit(Int mode, bool value);
- void clearStatus(ObjectStatusTypes);
-	void clearCondition(Int mode) { union {void (*raw)();void(Object::*member)(int);} c;c.raw=&j_000348ec;(this->*c.member)(mode); }
-	Relationship getRelationship(const Object *other) const;
 };
 
-// Object::unidentified_001BFE20 is the existing address-derived accessor at
-// ILT 0x0000D3B9.  Its retail return is an opaque provider used only through
-// the virtual slot at +0xf0 below, so keep the return opaque in this TU.
-typedef void *(*BfmeOpaqueAccessor)(void);
-
+// The provider returned by Object::unidentified_001BFE20 fills a list of
+// objects through its vtable slot +0xf0.
 class BfmeListProvider
 {
 public:
@@ -188,6 +183,8 @@ public:
 	virtual void fill(_STL::list<Object *> *objects) = 0; // vtable +0xf0
 };
 
+// Module data +0x20c: its member at 0x003A04A0 (ILT 0x0001DA34) decides
+// whether the rider fades.
 void j_0001da34();
 class Rva2225E0Filter
 {
@@ -199,8 +196,10 @@ class TransportContainModuleData
 {
 public:
 	char pad000[0x17c]; unsigned m_exitDelay;
- float exitValue220()const{return *(const float*)((const char*)this+0x220);}
- Thing::KindOfMaskType *kindOfMask180() const
+	const AsciiString& exitBone()const{return *(const AsciiString*)((const char*)this+0x170);}
+	Bool orientLikeContainerOnExit()const{return *(const Bool*)((const char*)this+0x1fb);}
+	float exitValue220()const{return *(const float*)((const char*)this+0x220);}
+	Thing::KindOfMaskType *kindOfMask180() const
 	{
 		return reinterpret_cast<Thing::KindOfMaskType *>(
 			const_cast<char *>(reinterpret_cast<const char *>(this)) + 0x180);
@@ -212,65 +211,23 @@ public:
 			const_cast<char *>(reinterpret_cast<const char *>(this)) + 0x198);
 	}
 
-	void *createList() const
-	{
-		return *reinterpret_cast<void *const *>(
-			reinterpret_cast<const char *>(this) + 0x200);
-	}
-
-	Bool keepStatus() const
-	{
-		return *reinterpret_cast<const Bool *>(
-			reinterpret_cast<const char *>(this) + 0x204);
-	}
-
 	Rva2225E0Filter *filter() const
 	{
 		return reinterpret_cast<Rva2225E0Filter *>(
 			const_cast<char *>(reinterpret_cast<const char *>(this)) + 0x20c);
 	}
-
-	Bool applyPassengerDelay() const
-	{
-		return *reinterpret_cast<const Bool *>(
-			reinterpret_cast<const char *>(this) + 0x210);
-	}
-
-	float passengerDelay() const
-	{
-		return *reinterpret_cast<const float *>(
-			reinterpret_cast<const char *>(this) + 0x214);
-	}
-
-	Bool scalePassengerDelay() const
-	{
-		return *reinterpret_cast<const Bool *>(
-			reinterpret_cast<const char *>(this) + 0x21c);
-	}
 };
-
-struct Coord3D;
-class WeaponTemplate;
-class WeaponStore
-{
-public:
-	void createAndFireTempWeapon(const WeaponTemplate*, const Object*, const Coord3D*);
-};
-
-extern "C" WeaponStore *g_bfmeRegistryAS;
 
 class OpenContain
 {
 public:
-	virtual void onContaining(Object *rider, Bool wasSelected);
- virtual void onRemoving(Object* rider);
+	virtual void onRemoving(Object* rider);
 };
 
 class TransportContain
 {
 public:
-	// The BFME ContainModuleInterface view has these established slots.  The
-	// body calls +0x58, +0xa0, +0xd8 and +0x100 directly through this view.
+	// The BFME ContainModuleInterface view; the body calls +0xdc and +0x100.
 	virtual void containSlot00() = 0;
 	virtual void containSlot01() = 0;
 	virtual void containSlot02() = 0;
@@ -337,12 +294,12 @@ public:
 	virtual void containSlot63() = 0;
 	virtual Int getContainCount(Int argument) const = 0; // +0x100
 	virtual void onContaining(Object *rider, Bool wasSelected);
- virtual void onRemoving(Object* rider);
+	virtual void onRemoving(Object* rider);
 
 private:
- unsigned char pad004[0xb4];
- unsigned m_extraSlotsInUse;
- unsigned m_exitFrame;
+	unsigned char pad004[0xb4];
+	unsigned m_extraSlotsInUse;
+	unsigned m_exitFrame;
 	TransportContainModuleData *getModuleData() const
 	{
 		return *reinterpret_cast<TransportContainModuleData *const *>(
@@ -353,12 +310,6 @@ private:
 	{
 		return *reinterpret_cast<Object *const *>(
 			reinterpret_cast<const char *>(this) - 0x18);
-	}
-
-	Bool payloadCreated() const
-	{
-		return *reinterpret_cast<const Bool *>(
-			reinterpret_cast<const char *>(this) + 0xc0);
 	}
 
 	UnsignedInt &extraSlotsInUse() const
@@ -372,6 +323,10 @@ private:
 class BFMEDrawableBoneQuery { public:int getPristineBonePositions(const char*,int,Coord3D*,Matrix3D*,int,int)const;};
 enum CommandSourceType { COMMANDSOURCE_SCRIPT=2 };
 class AICommandInterface {public:void aiIdle(CommandSourceType);};
+
+// Calls this body makes through ILT thunks whose targets have no proven
+// signature under their current ledger names; the helper names say what the
+// Zero Hour twin does at the same point.
 void j_00030553();void j_0000da03();void j_0002dbfa();void j_00030d37();void j_0002a6e4();void j_000122ab();void j_00009b01();
 class ExitCalls0022E340 { public:
  void attitude(int n){union{void(*raw)();void(ExitCalls0022E340::*member)(int);} c;c.raw=j_00030553;(this->*c.member)(n);}
@@ -382,8 +337,11 @@ class ExitCalls0022E340 { public:
  void status(int n){union{void(*raw)();void(ExitCalls0022E340::*member)(int);} c;c.raw=j_000122ab;(this->*c.member)(n);}
  unsigned id(){union{void(*raw)();unsigned(ExitCalls0022E340::*member)();} c;c.raw=j_00009b01;return (this->*c.member)();}
 };
-struct Rva00367E30Logic {char pad[0x3c];unsigned frame;unsigned getFrame()const{return frame;}};
-extern Rva00367E30Logic* TheBfmeGameLogic;
+
+class GameLogic { public: UnsignedInt getFrame( void ); private: char pad[0x3c]; UnsignedInt m_frame; };
+inline UnsignedInt GameLogic::getFrame( void ) { return m_frame; }
+extern GameLogic *TheGameLogic;
+
 void TransportContain::onRemoving(Object* rider) {
  ((OpenContain*)this)->OpenContain::onRemoving(rider);
  rider->clearDisabled(DISABLED_HELD); rider->clearModelCondition(88);
@@ -401,7 +359,7 @@ void TransportContain::onRemoving(Object* rider) {
    }
   }
  }
- if(*(const bool*)((const char*)data+0x1fb)) ((Thing*)rider)->setOrientation(((Thing*)getObject())->getOrientation());
+ if(data->orientLikeContainerOnExit()) ((Thing*)rider)->setOrientation(((Thing*)getObject())->getOrientation());
  extraSlotsInUse() -= rider->getTransportSlotCount()-1;
  if(getContainCount(0)==0) owner->clearModelCondition(86);
  rider->clearModelCondition(87);
@@ -410,7 +368,7 @@ void TransportContain::onRemoving(Object* rider) {
  if(*(const bool*)((const char*)data+0x1fc) && ai) ai->attitude(2);
  if((*(unsigned char*)((char*)getObject()+0x344)&1) && !(*(unsigned char*)((char*)rider+0x344)&1)) ((ExitCalls0022E340*)((char*)this-0x20))->scatter(rider);
  if(*(const bool*)((const char*)data+0x1fd) && ai) ai->mood();
- m_exitFrame=data->m_exitDelay+TheBfmeGameLogic->frame;
+ m_exitFrame=TheGameLogic->getFrame()+data->m_exitDelay;
  Drawable* riderDrawable=rider->getDrawable();
  if(!(*(unsigned*)((char*)rider+0x94)&0x10000000) && ownerDrawable && riderDrawable) {
   ((ExitCalls0022E340*)ownerDrawable)->drawableRemove(((ExitCalls0022E340*)riderDrawable)->id());
