@@ -1,27 +1,6 @@
-// ?rva0016F7C0@Rva0016F7C0State@@QAE_NXZ
-// partial score=0.978 date=2026-09-27
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/objectdlink
+// cl: /DNDEBUG /DWIN32 /MD /EHsc
 // stlport
-//
-// Retail 0x0016F7C0 (426B): opaque state condition reached through ILT
-// 0x0000254F from the 0x00179B10 update body, which branches on AL.
-// TheAI+0x14 data byte +0xB4 gates; State+0x1C machine, machine+0x10 owner
-// (StateMachine+0x10 m_owner, witnessed); owner AI at +0x204, owner field
-// +0x31C, AI int at +0x194 and locomotor at +0x1CC; member AI state machine
-// at +0x30 (AIUpdateInterface+0x30 m_stateMachine, witnessed), current state
-// at +0x1C (StateMachine+0x1C m_currentState, witnessed), state id at +4,
-// compared against 0x36. The walk idiom is the matched AIPlayer::
-// isSupplySourceAttacked shape: STL list at Player+0x288, prototype instance
-// head at +0x274 drained through a DLINK_ITERATOR<Team> over
-// Team::_bfme_nextInInstanceList (const PMF, symbols.csv pin at ILT
-// 0x00022A70), each team's member list at Team+0x0C drained through a
-// DLINK_ITERATOR<Object> over the Object DLINK PMF {0x00401140,-100,0} from
-// ObjectDlinkPmf.h. Locals mirror retail: esi owner, way/int in [esp+0x18],
-// damage source in [esp+0x1C], ok flag at [esp+0x13], player in [esp+0x28],
-// list node in [esp+0x14], team in [esp+0x2C]. No caller, vtable slot, string
-// or ZH twin proves a semantic owner, so the receiver and method keep the
-// address token.
-#include "ObjectDlinkPmf.h"
+// Retail 0x0016F7C0: AI state condition reached through ILT 0x0000254F from the 0x00179B10 update body.
 #include <list>
 
 typedef bool Bool;
@@ -31,10 +10,15 @@ typedef unsigned int ObjectID;
 
 class Player;
 
-class Rva0016F7C0Locomotor
+// Landed at 0x0016E3C0 in Q2OverrideChainFieldReads.cpp; retail calls it through ILT 0x00045FE3.
+class Rva0016E3C0
 {
 public:
 	Bool field() const;
+};
+
+class Rva0016F7C0Locomotor : public Rva0016E3C0
+{
 };
 
 class Rva0016F7C0AI
@@ -44,23 +28,49 @@ public:
 	Rva0016F7C0Locomotor *locomotorAt1CC() const { return *(Rva0016F7C0Locomotor **)((const char *)this + 0x1CC); }
 };
 
-class Rva0016F7C0Object
+class Object;
+
+class BfmeObjectVirtualTail { public: unsigned char m_vt[4]; };
+
+// Introduces the vbptr at its own +0 and lands at Object+0x68 (the shape the {0x00401140,-100,0} DLINK PMF needs).
+class BfmeObjectVbptrCarrier : public virtual BfmeObjectVirtualTail
+{
+public:
+	unsigned char m_carrier[4];
+};
+
+class BfmeObjectVtbl { public: virtual void bfmeObjectSlot0( void ); };
+
+class BfmeObjectDlinkBase
+{
+public:
+	Object *dlink_next_TeamMemberList( void ) const;
+};
+
+class BfmeObjectDlinkPad { public: unsigned char m_pad[0x64]; };
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
+class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
+	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
 {
 public:
 	Player *getControllingPlayer() const;
-	Bool bfmeGetRecentDamageSource(ObjectID *source, UnsignedInt frames) const;
+	Bool bfmeGetRecentDamageSource(ObjectID *sourceID, UnsignedInt frames) const;
+
+	unsigned char m_tail[0x40];
+};
+
+class Rva0016F7C0Object : public Object
+{
+public:
 	Rva0016F7C0AI *getAI() const { return *(Rva0016F7C0AI **)((const char *)this + 0x204); }
 	UnsignedInt field31C() const { return *(const UnsignedInt *)((const char *)this + 0x31C); }
 };
 
-#pragma comment(linker, "/alternatename:?field@Rva0016F7C0Locomotor@@QBE_NXZ=?j_00045fe3@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Rva0016F7C0Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeGetRecentDamageSource@Rva0016F7C0Object@@QBE_NPAII@Z=?j_000402d2@@YAXXZ")
-
 #define callMemberFunction(object, ptrToMember) ((object).*(ptrToMember))
 
-template<class OBJCLASS>
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
+template<class OBJCLASS>
 class DLINK_ITERATOR
 {
 public:
@@ -188,7 +198,7 @@ Bool Rva0016F7C0State::rva0016F7C0()
 	if (locomotor && !locomotor->field())
 		return true;
 	ObjectID damageSource;
-	if (owner->bfmeGetRecentDamageSource((ObjectID *)&way, 4))
+	if (owner->bfmeGetRecentDamageSource(&damageSource, 4))
 		return true;
 	Bool ok = true;
 	Player *player = owner->getControllingPlayer();
@@ -218,10 +228,7 @@ Bool Rva0016F7C0State::rva0016F7C0()
 					continue;
 				Rva0016F7C0MemberMachine *machine =
 					*(Rva0016F7C0MemberMachine **)((const char *)memberAI + 0x30);
-				Rva0016F7C0MemberState *state = machine->m_currentState;
-				if (!state)
-					continue;
-				if (state->m_ID != 0x36)
+				if (!machine->m_currentState || machine->m_currentState->m_ID != 0x36)
 					continue;
 				Rva0016F7C0Locomotor *memberLocomotor = memberAI->locomotorAt1CC();
 				if (memberLocomotor && !memberLocomotor->field())
