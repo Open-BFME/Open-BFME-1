@@ -81108,7 +81108,7 @@ name,address,notes
 ?finishReset@Rva00249C50HordeContain@@QAEXXZ,0x00004B51,pin 0x00249C50 finishReset ILT target
 ?finishReset@Rva003F7380State@@QAEXXZ,0x0004B3B7,Open-BFME5 retail call target; ILT thunk to body 0x003F6F10
 ?finishShowPurchaseScience@@YAXXZ,0x00028A92,ILT to 0x00599490 window-show tail of showPurchaseScience
-?finishSinglePlayerInit@@YAXXZ,0x0001F78F,ScoreScreen.cpp TU-local; ILT thunk to body 0x004E4790
+?finishSinglePlayerInit@@YAXXZ,0x0001F78F,route=0x004E4790; ScoreScreen.cpp TU-local; ILT thunk to body 0x004E4790
 ?finishSpecialPower@SpecialPowerModule@@QAEXI@Z,0x000251AD,Open-BFME6 ILT of 0x0026A550 finish follow
 ?finishState14@Rva56E070StateOwner@@QAEXXZ,0x000335F0,call target in the 0x0056E070 late-state dispatcher
 ?finishState15@Rva56E070StateOwner@@QAEXXZ,0x0000C4EB,incremental-link call target in the 0x0056E070 late-state dispatcher
@@ -89829,3 +89829,5 @@ _Rva0086C6E0,0x0086C6E0,gap-seat; opaque address-derived five-argument cdecl hel
 ?Glo012F4B78@@3PAVGlo012F4B78Type@@A,0x012F4B78,subsystem global InGameUI::reset (0x0044B3F0) resets through vtable slot 4 between TheControlBar and Glo012F4B98; address-derived name
 ?rva00551C80@BfmeAptScreenOnlineLogin@@QAEX_N@Z,0x00551C80,240-byte BfmeAptScreenOnlineLogin member reached through ILT 0x00005F9C from _bfme_update 0x00552100 (push 1; ecx = the screen); body saves ECX and its only exit is RET 4; meaning unproven so the name keeps the address
 ?doDrawModule@W3DTruckDraw@@UAEXPBVMatrix3D@@@Z,0x0001A041,ILT jumping to the 4431-byte body 0x00781660 (still a gen dump): slot 9 of vtable 0x011265B0 which the matched ??0W3DTruckDraw (0x0077FB20) installs; W3DPoliceCarDraw::doDrawModule (0x00758EF0) calls it qualified as ZH does and the police car ctor 0x00758CE0 calls ??0W3DTruckDraw as its base ctor
+?getFinalVictoryMovie@Campaign@@QAE?AVAsciiString@@XZ,0x005BB890,Campaign m_finalMovieName getter: 32B body copies the AsciiString at this+0x14 into the hidden return (StringBase copy 0x00887B60; ret 4); called twice via ILT 0x0000DBB6 by finishSinglePlayerInit 0x004E4790 on the Campaign from getCurrentCampaign as ZH getFinalVictoryMovie().isNotEmpty() then vidName = getFinalVictoryMovie(); ZH Campaign puts m_finalMovieName at +0x14 after m_name +4; game CampaignManager.cpp's present-unmatched body compiles 32/32 exact; the dup_005bb890 row is a byte-twin alias not an identity
+?PlayMovieAndBlock@@YAXVAsciiString@@@Z,0x004E2D50,ZH ScoreScreen.cpp PlayMovieAndBlock(AsciiString movieTitle): body opens TheVideoPlayer (vtbl +0x30) with a copy of the by-value title then TheDisplay video buffer / s_blankLayout (0x012F4184) first window and TheWritableGlobalData load-screen flag and a TheGameEngine serviceWindowsOS/isActive loop; sole caller finishSinglePlayerInit 0x004E4790 passes vidName by value via ILT 0x0004782F; body row is still the gen dump d_004e2d50
