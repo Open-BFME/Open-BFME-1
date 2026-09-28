@@ -1,32 +1,33 @@
 // ?d_00177320@@YAXXZ
-// partial score=0.87037 date=2026-09-28
+// partial score=0.99383 date=2026-09-28
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// probe: python tools/probe.py <this file> "?update@Rva00177320State@@UAE?AW4StateReturnType@@XZ" 0x00177320
 
 // Open-BFME: unnamed AIInternalMoveToState-derived State::update() override,
-// retail 0x00177320, 486 bytes, served as Code/gen_asm/d_00177320.asm. No
+// retail 0x00177320, 486 bytes, served as game/gen_asm/d_00177320.asm. No
 // direct named caller (reached only through StateMachine's virtual update
-// dispatch), so this lands address-kept; the base-class call at retail
-// 0x00172E70 (?update@AIInternalMoveToState@@UAE?AW4StateReturnType@@XZ) is
-// real and proves the inheritance. The neighbouring already-landed
-// Rva00177A40State::onExit (Rva00177A40State_onExit.cpp) shows the same
-// ObjectStatusMaskType bit-28 clear/set idiom, but that file's m_machine sits
-// at +0x18 while this body reads its own machine pointer at +0x1c, so the two
-// are NOT assumed to share one layout -- every field here is measured from
-// this body's own bytes only.
+// dispatch), so this stays address-kept; the base-class call through ILT
+// 0x000488F6 to retail 0x00172E70 (AIInternalMoveToState::update) is real and
+// proves the inheritance. Zero Hour's AIAttackApproachTargetState::updateInternal
+// (AIStates.cpp) is the twin family: goal-destroyed early-out, victim checks,
+// setCurrentVictim, computePath() == false -> failure, base update, any
+// non-continue result normalised to success.
 //
-// Shape: if the state machine's goal object was destroyed, clear the victim
-// (through a still-dump virtual slot) and continue (-2). Otherwise clear
-// status bit 28 on the owner. If there is no goal, or the goal is
-// dead/hidden-from-us (status94 bit 0x40000) or stealthed-and-undetected, or
-// we can crush/squish it and a still-dump owner predicate at 0x001C7530
-// agrees, transition the state machine (virtual slot +0x20) to state 0xE9 and
-// succeed (0). Otherwise look for a weapon in attack range plus a
-// TheAI-derived line-of-sight-ish helper (still-dump 0x003E5E40), or fall
-// back to a cached-position distance-vs-threshold check; on failure return
-// -1. On success, past a debug CRC-desync log gate, defer to a self-check
-// virtual slot (+0x44) and either continue (-2) or hand off to
-// AIInternalMoveToState::update(), normalising any non-zero result to -1.
+// Shape: if the state machine's goal object was destroyed, notify the AI
+// (virtual slot +0x204), clear the victim and fail (-2). Otherwise clear status
+// bit 28 on the owner. A goal that is hidden (status94 bit 0x40000) or
+// stealthed-and-undetected fails; a crushable goal with the owner predicate at
+// 0x001C7530 switches the machine (virtual slot +0x20) to state 0xE9 and
+// continues (0). A weapon in range succeeds (-1) unless the AI has a path
+// (+0x140) and TheAI's pathfinder (+0x0C, 0x003E5E40) reports false. Then the
+// victim is set; without a path the goal position is cached at +0x54 and a
+// 2D distance below TheAI data (+0x14) fields +0x94 + +0x90 succeeds. Past the
+// CRC-desync log gate, computePath (virtual slot +0x44) false fails, else the
+// base update runs.
+//
+// Remaining residue (3 bytes): retail keeps the TheAI data pointer in ESI, this
+// source in EDI. See build/r177320 in the seat that banked it.
 
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
@@ -38,7 +39,7 @@ typedef bool Bool;
 typedef float Real;
 
 template <int NUMBITS>
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 public:
@@ -56,15 +57,34 @@ private:
 
 typedef BitFlags<86> ObjectStatusMaskType86;
 
+enum StateReturnType
+{
+	STATE_CONTINUE = 0,
+	STATE_SUCCESS = -1,
+	STATE_FAILURE = -2
+};
+
+template <Int N>
+class BFMEVirtualSlots : public BFMEVirtualSlots<N - 1>
+{
+public:
+	virtual void unused(char (*)[N]) = 0;
+};
+
+template <>
+class BFMEVirtualSlots<0>
+{
+};
+
 struct Coord3D
 {
 	Real x, y, z;
 	void set(Real a, Real b, Real c) { x=a; y=b; z=c; }
+	void set(const Coord3D *p) { x = p->x; y = p->y; z = p->z; }
 	Real length(void) const;					// ?length@Coord3D@@QBEMXZ, real landed
 };
 
 class Player;
-// (ObjectStatusMaskType86 declared above)
 
 class BFMEObjectStealthQuery
 {
@@ -78,6 +98,16 @@ public:
 	Bool isWithinAttackRange(const void *source, const void *target, Int extra) const; // real, Weapon_isWithinAttackRange.cpp
 };
 
+class AIUpdateInterfaceLike : public BFMEVirtualSlots<129>
+{
+public:
+	virtual void notifyVictimIsDead(void) = 0;			// vtable +0x204
+	void setCurrentVictim(const class Object *victim);		// ILT 0x0004AB4C
+
+	char m_bfmeUnreconstructed_004[0x140 - 0x04];
+	void *m_bfmeField140;						///< retail this+0x140
+};
+
 class Object
 {
 public:
@@ -86,6 +116,8 @@ public:
 	Bool crushPolicy(Object *other, Int testType) const;		// ILT 0x000420AA
 	void setStatus(const ObjectStatusMaskType86 &mask, Bool value);	// ILT 0x000307E7
 	Bool rva001c7530(void) const;					// ABI-only pin, retail 0x001C7530
+	const Coord3D *getPosition(void) const { return &m_position; }
+	AIUpdateInterfaceLike *getAI(void) { return (AIUpdateInterfaceLike *)m_bfmeAi; }
 
 	char m_bfmeUnreconstructed_000[0x38];
 	Coord3D m_position;						///< retail this+0x38
@@ -95,23 +127,16 @@ public:
 	void *m_bfmeAi;						///< retail this+0x204
 };
 
-class StateMachine
+class StateMachine : public BFMEVirtualSlots<8>
 {
 public:
+	virtual StateReturnType setState(UnsignedInt id) = 0;	// vtable +0x20
 	Bool isGoalObjectDestroyed(void) const;			// ILT 0x0000432C
 	Object *getGoalObject(void) const;				// ILT 0x0000E570
+	Object *getOwner(void) { return m_owner; }
 
-	char m_bfmeUnreconstructed_000[0x10];
+	char m_bfmeUnreconstructed_004[0x10 - 0x04];
 	Object *m_owner;						///< retail this+0x10
-};
-
-class AIUpdateInterfaceLike
-{
-public:
-	void setCurrentVictim(const Object *victim);			// ILT 0x0004AB4C
-
-	char m_bfmeUnreconstructed_000[0x140];
-	void *m_bfmeField140;						///< retail this+0x140
 };
 
 class TheAISubA
@@ -143,11 +168,10 @@ extern void *TheCRCParameterCheck;					// 0x012ED4FC
 
 extern "C" void __cdecl bfmeRetailCritterDesyncLog(void *check, const char *format, ...); // 0x0003A17A
 
-enum StateReturnType { STATE_RETURN_PLACEHOLDER = 0 };
-
-class AIInternalMoveToState
+class AIInternalMoveToState : public BFMEVirtualSlots<17>
 {
 public:
+	virtual Bool computePath(void);					// vtable +0x44
 	virtual StateReturnType update(void);				// real, retail 0x00172E70
 };
 
@@ -156,117 +180,74 @@ class Rva00177320State : public AIInternalMoveToState
 public:
 	virtual StateReturnType update(void);
 
+	StateMachine *getMachine(void) { return m_bfmeMachine; }
+	Object *getMachineOwner(void) { return m_bfmeMachine->getOwner(); }
+	Object *getMachineGoalObject(void) { return m_bfmeMachine->getGoalObject(); }
+
 	char m_bfmeUnreconstructed_004[0x1C - 0x04];
 	StateMachine *m_bfmeMachine;					///< retail this+0x1C
 	char m_bfmeUnreconstructed_020[0x54 - 0x20];
 	Coord3D m_bfmeCachedGoalPos;					///< retail this+0x54
 };
 
-// Raw vtable-slot calls use MSVC's plain (single, non-virtual, no-base)
-// pointer-to-member representation, which is just the code address, to reach
-// __thiscall without the reserved __thiscall keyword on a free function type.
-struct VSlotHelperVoid0 { void call(void); };
-struct VSlotHelperBool0 { Bool call(void); };
-struct VSlotHelperVoid1Int { void call(Int); };
-
-typedef void (VSlotHelperVoid0::*VSlotVoidFn)(void);
-typedef Bool (VSlotHelperBool0::*VSlotBoolFn)(void);
-typedef void (VSlotHelperVoid1Int::*VSlotSetStateFn)(Int);
-
-// ?rva00177320@Rva00177320State@@UAEHXZ (StateReturnType via Int-sized ABI)
 StateReturnType Rva00177320State::update(void)
 {
-	StateMachine *machine = m_bfmeMachine;
-	Object *owner = machine->m_owner;
-	AIUpdateInterfaceLike *ai = reinterpret_cast<AIUpdateInterfaceLike *>(owner->m_bfmeAi);
-
-	if (machine->isGoalObjectDestroyed())
+	Object *owner = getMachineOwner();
+	AIUpdateInterfaceLike *ai = owner->getAI();
+	if (getMachine()->isGoalObjectDestroyed())
 	{
-		void **vtbl = *reinterpret_cast<void ***>(ai);
-		VSlotVoidFn slot204;
-		*reinterpret_cast<void **>(&slot204) = vtbl[0x204 / 4];
-		(reinterpret_cast<VSlotHelperVoid0 *>(ai)->*slot204)();
+		ai->notifyVictimIsDead();
 		ai->setCurrentVictim(0);
-		return (StateReturnType)-2;
+		return STATE_FAILURE;
 	}
 
 	owner->setStatus(ObjectStatusMaskType86(ObjectStatusMaskType86::kInit, 28), false);
 
-	StateReturnType result = (StateReturnType)-2;
-	Object *goal = m_bfmeMachine->getGoalObject();
+	StateReturnType result = STATE_FAILURE;
+	Object *goal = getMachineGoalObject();
 	if (goal)
 	{
-
-	if (goal->m_bfmeStatus94 & 0x40000)
-		return (StateReturnType)-2;
-
-	{
-		Player *player = owner->getControllingPlayer();
-		if (reinterpret_cast<const BFMEObjectStealthQuery *>(goal)->isStealthedAndUndetected(player))
-			return (StateReturnType)-2;
-	}
-
-	if (owner->crushPolicy(goal, 2) && owner->rva001c7530())
-	{
-		machine = m_bfmeMachine;
-		void **mvtbl = *reinterpret_cast<void ***>(machine);
-		VSlotSetStateFn slot20;
-		*reinterpret_cast<void **>(&slot20) = mvtbl[0x20 / 4];
-		(reinterpret_cast<VSlotHelperVoid1Int *>(machine)->*slot20)(0xe9);
-		return (StateReturnType)0;
-	}
-
-	{
-		Weapon *weapon = reinterpret_cast<Weapon *>(owner->getCurrentWeapon(0));
-		if (!weapon)
-			goto setVictim;
-		if (!weapon->isWithinAttackRange(owner, goal, 0))
-			goto setVictim;
-	}
-
-	{
+		if (goal->m_bfmeStatus94 & 0x40000)
+			return STATE_FAILURE;
+		if (reinterpret_cast<const BFMEObjectStealthQuery *>(goal)->isStealthedAndUndetected(owner->getControllingPlayer()))
+			return STATE_FAILURE;
+		if (owner->crushPolicy(goal, 2) && owner->rva001c7530())
 		{
-		Bool losOk = TheAI->m_bfmeSubA->rva003e5e40(owner);
-		if (!ai->m_bfmeField140)
-			goto haveNoRangedPath;
-		if (losOk)
-			goto haveNoRangedPath;
-
+			getMachine()->setState(0xe9);
+			return STATE_CONTINUE;
 		}
-setVictim:
+
+		Weapon *weapon = reinterpret_cast<Weapon *>(owner->getCurrentWeapon(0));
+		if (weapon && weapon->isWithinAttackRange(owner, goal, 0))
+		{
+			Bool losOk = TheAI->m_bfmeSubA->rva003e5e40(owner);
+			if (!ai->m_bfmeField140 || losOk)
+				return STATE_SUCCESS;
+		}
+
 		ai->setCurrentVictim(goal);
 		if (!ai->m_bfmeField140)
 		{
-			m_bfmeCachedGoalPos = goal->m_position;
+			m_bfmeCachedGoalPos = *goal->getPosition();
+			const Coord3D *goalPos = &m_bfmeCachedGoalPos;
 			TheAISubB *data = TheAI->m_bfmeSubB;
-
 			Coord3D diff;
-			diff.y=owner->m_position.y; diff.x=owner->m_position.x; diff.x-=m_bfmeCachedGoalPos.x; diff.y-=m_bfmeCachedGoalPos.y; diff.z=0;
+			diff.set(owner->getPosition());
+			diff.x -= goalPos->x;
+			diff.y -= goalPos->y;
+			diff.z = 0;
 			if (diff.length() < data->m_bfmeRangeB + data->m_bfmeRangeA)
-				return (StateReturnType)-1;
+				return STATE_SUCCESS;
 		}
-	}
-	goto haveRangedPath;
 
-haveNoRangedPath:
-	return (StateReturnType)-1;
+		if (Glo012F0239 && TheCRCParameterCheck)
+			bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "CritterDesync: ComputePath20");
 
-continueState:
-	return (StateReturnType)-2;
-
-haveRangedPath:
-	;
-
-	if (Glo012F0239 && TheCRCParameterCheck)
-		bfmeRetailCritterDesyncLog(TheCRCParameterCheck, (const char *)0x1099604);
-
-	typedef Bool (__fastcall *SelfCheck)(void *);
-	if (!reinterpret_cast<SelfCheck>((*reinterpret_cast<void ***>(this))[0x44 / 4])(this))
-		return (StateReturnType)-2;
-
-	result = AIInternalMoveToState::update();
-	if (result != 0)
-		return (StateReturnType)-1;
+		if (computePath() == false)
+			return STATE_FAILURE;
+		result = AIInternalMoveToState::update();
+		if (result != STATE_CONTINUE)
+			return STATE_SUCCESS;
 	}
 	return result;
 }
