@@ -1,9 +1,11 @@
 // cl: /DNDEBUG /MD -Igame/Libraries/Source/Compression/LZHCompress/CompLibHeader
 /* LZH-Light 1.0 (Sergey Ignatchenko, 1998) -- upstream C++ source, verbatim
    from github.com/TheSuperHackers/lzhl-1.0 commit dfd96e2, EXCEPT for comments:
-   this block and the `present-unmatched` markers below it. Not one line of code
-   is changed, and the alterations are named here because the licence below
-   requires an altered source version to say so.
+   this block and the `present-unmatched` markers below it, AND for
+   LZHLDecompressor::decompress, whose body is EA's shipped revision (control
+   flow and error checks differ; see the comment above it) because retail
+   0x00826920 is that revision. The alterations are named here because the
+   licence below requires an altered source version to say so.
    Statically linked into lotrbfme.exe; EA kept it at
    Compression/LZHCompress/CompLib{Header,Source} (Zero Hour Compression.dsp).
    See ../PROVENANCE.txt for the artifact identity, the five Huffman tables in
@@ -406,10 +408,13 @@ inline int LZHLDecompressor::_get( const BYTE*& src, const BYTE* srcEnd, int n )
     return ret;
     }
 
-// ?decompress@LZHLDecompressor@@QAEHPAEPAIPBE1@Z present-unmatched -- see
-// ../PROVENANCE.txt: upstream compiles 852 bytes at both published revisions;
-// retail's callable body at 0x00826920 is 824 bytes.  The 844-byte unclaimed
-// run starts in the preceding alignment pad. EA's divergence.
+// ?decompress@LZHLDecompressor@@QAEHPAEPAIPBE1@Z -- retail 0x00826920, 824 bytes.
+// EA's revision of the LZH-Light 1.0 decoder (not either published upstream
+// revision, which compile to 852 bytes): the empty-input guard and the
+// do/while are one top-tested `while( src < endSrc )`, the -1 checks on
+// _get are absent, the end symbol jumps to the size write-back, and the two
+// _get results feeding pos and disp are used in place rather than through a
+// named local.
 BOOL LZHLDecompressor::decompress( BYTE* dst, size_t* dstSz, const BYTE* src, size_t* srcSz )
     {
     BYTE* startDst = dst;
@@ -418,24 +423,18 @@ BOOL LZHLDecompressor::decompress( BYTE* dst, size_t* dstSz, const BYTE* src, si
     const BYTE* endDst = dst + *dstSz;
     nBits = 0;
     int i, n;
-    for(;;)
+    Group* group;
+    while( src < endSrc )
         {
-        int grp = _get( src, endSrc, 4 );
-        if( grp < 0 )
-            return FALSE;
-        Group& group = groupTable[ grp ];
+        group = &groupTable[ _get( src, endSrc, 4 ) ];
 
         int symbol;
-        int nBits = group.nBits;
+        int nBits = group->nBits;
         if( nBits == 0 )
-            symbol = symbolTable[ group.pos ];
+            symbol = symbolTable[ group->pos ];
         else
             {
-            assert( nBits <= 8 );
-            int got = _get( src, endSrc, nBits );
-            if( got < 0 )
-                return FALSE;
-            int pos = group.pos + got;
+            int pos = group->pos + _get( src, endSrc, nBits );
             if( pos >= NHUFFSYMBOLS )
                 return FALSE;
             symbol = symbolTable[ pos ];
@@ -479,7 +478,7 @@ BOOL LZHLDecompressor::decompress( BYTE* dst, size_t* dstSz, const BYTE* src, si
             continue;//forever
             }
         else if( symbol == NHUFFSYMBOLS - 1 )
-            break;//forever
+            goto success;//forever
 
         static struct MatchOverItem { int nExtraBits; int base; } _matchOverTable[] =
             {
@@ -498,14 +497,10 @@ BOOL LZHLDecompressor::decompress( BYTE* dst, size_t* dstSz, const BYTE* src, si
             {
             MatchOverItem* item = &_matchOverTable[ symbol - 256 - 8 ];
             int extra = _get( src, endSrc, item->nExtraBits );
-            if( extra < 0 )
-                return FALSE;
             matchOver = item->base + extra;
             }
 
         int dispPrefix = _get( src, endSrc, 3 );
-        if( dispPrefix < 0 )
-            return FALSE;
 
         static struct DispItem { int nBits; int disp; } _dispTable[] =
             {
@@ -529,10 +524,7 @@ BOOL LZHLDecompressor::decompress( BYTE* dst, size_t* dstSz, const BYTE* src, si
             disp |= _get( src, endSrc, 8 ) << nBits;
             }
         assert( nBits <= 8 );
-        int got = _get( src, endSrc, nBits );
-        if( got < 0 )
-            return FALSE;
-        disp |= got;
+        disp |= _get( src, endSrc, nBits );
 
         disp += item->disp << (LZBUFBITS - 7);
         assert( disp >=0 && disp < LZBUFSIZE );
@@ -553,10 +545,12 @@ BOOL LZHLDecompressor::decompress( BYTE* dst, size_t* dstSz, const BYTE* src, si
         dst += matchLen;
         }
 
-    if( dstSz )
-        *dstSz -= dst - startDst;
-    if( srcSz )
-        *srcSz -= src - startSrc;
+    return FALSE;
+
+success:
+
+    *dstSz -= dst - startDst;
+    *srcSz -= src - startSrc;
 
 	return TRUE;
     }

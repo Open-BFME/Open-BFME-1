@@ -145,6 +145,11 @@ What this evidence does NOT decide
    biggest functions rather than a different vintage, but nothing here
    establishes what the edit was, and no attempt was made to guess it. That
    is 2,568 bytes this file explicitly does not claim.
+   Update 2026-09-28: decompress is now matched (824/824) from EA's revision
+   in Huff.cpp: one top-tested while(src < endSrc) in place of the empty guard
+   plus do/while, no -1 checks on _get, the end symbol jumping straight to the
+   size write-back, and the pos/disp _get results used in place. compress
+   (1,724 bytes) remains unclaimed.
 
 2. `?_wrap@LZBuffer@@KAHI@Z` and `?_distance@LZBuffer@@KAHH@Z` compile to the
    same ten bytes, and exactly two unclaimed addresses in the run hold those
