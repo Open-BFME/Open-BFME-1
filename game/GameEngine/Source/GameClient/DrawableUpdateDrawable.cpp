@@ -1,30 +1,24 @@
-// ?updateDrawable@Drawable@@QAEXXZ
-// partial score=0.95 date=2026-09-28
-// cl: /DNDEBUG /DWIN32 /MD /EHs-c-
-
 // ?updateDrawable@Drawable@@QAEXXZ  retail 0x0041BE60, 2437 bytes (ret at +0x984).
-// Identity: matched StealthUpdate::changeVisualDisguise (0x002AC620) reaches this
-// body through ILT 0x00031C55.
+// cl: /DNDEBUG /DWIN32 /MD /EHs-c-
 //
-// probe: EXACT modulo relocation slots (2437/2437, 64 relocs), with no invented
-// class. Two overload pairs on the real classes produce the split:
-//   * TintEnvelope: an out-of-line default ctor (ILT 0x00037475, used at the
-//     bit-0x10, bit-0x20 and default sites) plus an inline
-//     `explicit TintEnvelope(int)` used as `new TintEnvelope(0)` at the bit-1
-//     and bit-8 sites (+0x4B0, +0x535).
-//   * RGBColor: an inline setFromInt(Int) for the flash color (+0x428) plus an
-//     out-of-line setFromInt(UnsignedInt), which the 0xffffffff literal selects
-//     (ILT 0x0002CDC7, +0x680).
-// NOT LANDED: the image cannot confirm either pair. All five constructions pass
-// zero stack arguments, and an inline ctor's argument disappears once inlined,
-// so argument shape cannot tell the two ctors apart. The int parameter is
-// therefore unwitnessed. setFromInt(UnsignedInt) would also put a second
-// spelling on the 0x00083370 body, whose ledger name says Int.
-// With one inline ctor and one setFromInt the body is 2623 B with 1485
-// differing bytes.
-// Landing also needs route pins for the ILT callees (0x1DF2F play, 0x2CE76
-// update, 0x341C6, 0x2CDC7, 0x421AE, 0x1E0BA, 0x37475) and data symbols for
-// 0x010F1058, 0x010F1064 and 0x012B4F98.
+// Identity: matched StealthUpdate::changeVisualDisguise (0x002AC620) reaches this
+// body through ILT 0x00031C55 right after binding the replacement Drawable.
+// The 0x010F1410 vtable belongs to the 0x50-byte TintEnvelope objects built here;
+// TintEnvelope::play (0x004156D0) is called on them.
+//
+// Two retail facts shape the spelling:
+//   * RGBColor::setFromInt is out of line in retail: about eight callers in
+//     other TUs reach 0x00083370 through ILT 0x0002CDC7 and none inline it.
+//     The 0xffffffff reset at +0x680 is that call; the flash colour at +0x428
+//     is open-coded, not a setFromInt call.
+//   * The TintEnvelope vtable immediate appears only in the out-of-line ctor
+//     (0x00412140) and at +0x4B0 and +0x535 here; every other construction in
+//     the image (colorFlash, 0x0041A2E0, xfer, +0x5DD/+0x634/+0x6B3 here)
+//     calls the ctor through ILT 0x00037475. A single ctor cannot produce that
+//     split, so the bit-1 and bit-8 sites use a second, inline ctor. Its
+//     parameter is not witnessed (an inlined ctor leaves no argument behind).
+//     No retail body is ever called as that ctor, so its name is not pinned
+//     and claims no retail address.
 
 typedef unsigned int UnsignedInt;
 typedef int Int;
@@ -66,13 +60,7 @@ struct RGBColor
 	Real green;
 	Real blue;
 
-	void setFromInt(UnsignedInt color);
-	void setFromInt(Int color)
-	{
-		red = (Real)((color >> 16) & 0xff) * (1.0f / 255.0f);
-		green = (Real)((color >> 8) & 0xff) * (1.0f / 255.0f);
-		blue = (Real)(color & 0xff) * (1.0f / 255.0f);
-	}
+	void setFromInt(Int color);
 };
 
 class Matrix3D
@@ -87,30 +75,36 @@ public:
 	void clearAndSet(const ModelConditionFlags &clr, const ModelConditionFlags &set);
 };
 
+struct Vector3
+{
+	Real X;
+	Real Y;
+	Real Z;
+
+	void Set(Real x, Real y, Real z)
+	{
+		X = x;
+		Y = y;
+		Z = z;
+	}
+};
+
 class TintEnvelope
 {
 public:
 	TintEnvelope(void);
 	explicit TintEnvelope(int)
 	{
-		m_bfme04 = 0;
-		m_bfme08 = 0;
-		m_bfme0C = 0;
-		m_bfme10 = 0;
-		m_bfme14 = 0;
-		m_bfme18 = 0;
-		m_bfme1C = 0;
-		m_bfme20 = 0;
-		m_bfme24 = 0;
-		m_bfme28 = 0;
-		m_bfme2C = 0;
-		m_bfme30 = 0;
+		m_attackRate.Set(0, 0, 0);
+		m_decayRate.Set(0, 0, 0);
+		m_peakColor.Set(0, 0, 0);
+		m_currentColor.Set(0, 0, 0);
 		m_bfme44 = 0;
 		m_bfme48 = 0;
 		m_bfme4C = 0;
-		m_bfme38 = 0;
-		m_bfme34 = 0;
-		m_bfme39 = 0;
+		m_envState = 0;
+		m_sustainCounter = 0;
+		m_affect = 0;
 		m_bfme3C = 0;
 		m_bfme40 = 0;
 	}
@@ -126,21 +120,13 @@ public:
 		m_bfme40 = b;
 	}
 
-	Int m_bfme04;
-	Int m_bfme08;
-	Int m_bfme0C;
-	Int m_bfme10;
-	Int m_bfme14;
-	Int m_bfme18;
-	Int m_bfme1C;
-	Int m_bfme20;
-	Int m_bfme24;
-	Int m_bfme28;
-	Int m_bfme2C;
-	Int m_bfme30;
-	Int m_bfme34;
-	unsigned char m_bfme38;
-	unsigned char m_bfme39;
+	Vector3 m_attackRate;
+	Vector3 m_decayRate;
+	Vector3 m_peakColor;
+	Vector3 m_currentColor;
+	UnsignedInt m_sustainCounter;
+	unsigned char m_envState;
+	Bool m_affect;
 	Real m_bfme3C;
 	Real m_bfme40;
 	Int m_bfme44;
@@ -305,7 +291,7 @@ public:
 	virtual Drawable *getDrawable(void) = 0;
 
 	const Coord3D *bfmeGetPosition421AE(Coord3D *position, Coord3D *second);
-	Object *bfmeRelated0FAA6(Int which);
+	Object *bfmeResolveMeleeTarget(Int which);
 
 	unsigned char m_bfmeHead04[0x04];
 	Matrix3D m_transform;
@@ -334,7 +320,7 @@ extern GameEngine *TheGameEngine;
 extern ClientRoot4120 *TheGameClient;
 extern const RGBColor g_rva00CF1058TintColor;
 extern const RGBColor g_rva00CF1064TintColor;
-extern Real g_rva00EB4F98FrameSeconds;
+extern Real g_rva00EB4F98;
 
 class Thing
 {
@@ -583,7 +569,10 @@ void Drawable::updateDrawable(void)
 	if (m_flashCount160 > 0 && (TheGameClient->getFrame() % 15) == 0)
 	{
 		RGBColor tmp;
-		tmp.setFromInt(m_flashColor164);
+		const Real scale = 1.0f / 255.0f;
+		tmp.red = (Real)((m_flashColor164 >> 16) & 0xff) * scale;
+		tmp.green = (Real)((m_flashColor164 >> 8) & 0xff) * scale;
+		tmp.blue = (Real)(m_flashColor164 & 0xff) * scale;
 		colorFlash(&tmp);
 		m_flashCount160--;
 	}
@@ -634,7 +623,7 @@ void Drawable::updateDrawable(void)
 		{
 			if (m_colorTintEnvelope == 0)
 				m_colorTintEnvelope = new TintEnvelope;
-			m_colorTintEnvelope->m_bfme38 = 2;
+			m_colorTintEnvelope->m_envState = 2;
 		}
 	}
 
@@ -651,7 +640,7 @@ void Drawable::updateDrawable(void)
 	{
 		Real target = sinf(m_bfmeCC) * m_bfmeC8 + m_bfmeC4;
 		bfmeBlend(target);
-		m_bfmeCC += g_rva00EB4F98FrameSeconds / m_bfmeC0 * 3.14159265359f;
+		m_bfmeCC += g_rva00EB4F98 / m_bfmeC0 * 3.14159265359f;
 	}
 	else
 	{
@@ -673,7 +662,7 @@ void Drawable::updateDrawable(void)
 			return;
 		}
 
-		Object *other = obj->bfmeRelated0FAA6(1);
+		Object *other = obj->bfmeResolveMeleeTarget(1);
 		if (other)
 		{
 			Drawable *otherDraw = other->getDrawable();

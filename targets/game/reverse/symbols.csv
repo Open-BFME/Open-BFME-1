@@ -10957,6 +10957,7 @@ name,address,notes
 ??_7TemporarilyDefectUpdate@@6B@,0x00CC4DCC,vtable whose slots name TemporarilyDefectUpdate
 ??_7TextOnFrameTransition@@6B@,0x00D0CC98,vtable whose slots name TextOnFrameTransition
 ??_7TintDrawableFXNugget@@6B@,0x00CF34F0,vtable whose slots name TintDrawableFXNugget
+??_7TintEnvelope@@6B@,0x010F1410,TintEnvelope vtable: installed by the TintEnvelope ctor 0x00412140 and at the two inline constructions in Drawable::updateDrawable 0x0041BE60 (+0x4B0 +0x535)
 ??_7ToggleMountedSpecialAbilityUpdate@@6BBehaviorModule@@@,0x00CB88E8,vtable whose slots name ToggleMountedSpecialAbilityUpdate
 ??_7TransportContain@@6B@,0x00CAD4E8,vtable whose slots name TransportContain
 ??_7TunnelContain@@6B@,0x00CADDB8,vtable whose slots name TunnelContain
@@ -77391,6 +77392,7 @@ name,address,notes
 ?bfmeGetPlayerZB@BfmeOwnerZB@@QAEPAVBfmePlayerZB@@XZ,0x00020824,get player
 ?bfmeGetPoolVLR@@YAPAVBfmePoolVLR@@XZ,0x007EFFC0,pin
 ?bfmeGetPoolVMP@@YAPAVBfmePoolVMP@@XZ,0x007EFFC0,pin
+?bfmeGetPosition421AE@Object@@QAEPBUCoord3D@@PAU2@0@Z,0x001C86B0,Drawable::updateDrawable 0x0041BE60 calls this via ILT 0x000421AE with ecx=m_object; body writes the transform translation (+0xC +0x1C +0x2C) into the first out pointer and returns it (name kept from the banked attempt)
 ?bfmeGetRecentDamageSource@Object@@QBE_NPAII@Z,0x000402D2,route=0x001BFF70; retail 0x00174A20 reaches the matched damage-source query through this ILT thunk
 ?bfmeGetRelationInterface@Object@@QBEPAVBfmeRelationInterface@@XZ,0x0000D3B9,Object relationship body calls this protected ILT for its BFME relation interface
 ?bfmeGetSA@BfmeThingSA@@QAEHPBDH@Z,0x007E8900,matched 0x008037A0 caller reads TID and PID through this method; complete 45B body returns the fallback or calls the matched signed-decimal parser 0x007EE720; replaces stale pointer-shaped declaration; campaign=luna36h-20260907;lane=netpacket_next;model=gpt-5.6-sol-ultra
@@ -78294,6 +78296,7 @@ name,address,notes
 ?bfmeRebuildZones@BfmePathfindZoneManager@@QAEXPAXPAUBfmePathfindLayer44@@PAUBfmePathfindExtent@@@Z,0x00020A13,Open-BFME5 zone rebuild ILT thunk used by 0x003D5790
 ?bfmeRecordTransform@Object@@QAEXI@Z,0x0002BB43,ILT 0x0002BB43 -> 0x001C0BE0 Drawable::bfmeRecordTransform ICF; fire-at Object this
 ?bfmeRecordVHJ@@YAXH@Z,0x008896A0,pin
+?bfmeRefresh411CD0@Drawable@@QAEXXZ,0x00411CD0,Drawable::updateDrawable 0x0041BE60 calls this via ILT 0x000200D1 after changing the +0x3AD hidden byte; body recomputes hidden from +0x3AD/+0x3AE and pushes it to every draw module (name kept from the banked attempt)
 ?bfmeRefreshAS@BfmeResolverAS@@QAEXXZ,0x000165B8,Open-BFME5 the refresh the name resolve at 0x002DAE80 runs first
 ?bfmeRefreshAW@BfmeOwnAW@@QAEXXZ,0x00047B6D,pin
 ?bfmeRefreshBN@BfmeResolverBN@@QAEXXZ,0x000165B8,Open-BFME5 the refresh the two-name resolve at 0x002DE300 runs first
@@ -78847,6 +78850,7 @@ name,address,notes
 ?bfmeSetMatrixTN@BfmeThingTN@@QAEXPBVMatrix3DTN@@@Z,0x000361CE,pin set matrix for BfmeConv2024
 ?bfmeSetNeedsGateOpenRaw@Team@@QAEXHH@Z,0x0000E6B5,TEAM_NEEDS_OPEN_GATE canonical callee consumes the low byte of the full stack-word flag
 ?bfmeSetOneCAC@BfmePairCAC@@QAEXHH@Z,0x0004A43A,pin
+?bfmeSetOpacity412430@Drawable@@QAEXM@Z,0x00412430,Drawable::updateDrawable 0x0041BE60 calls this via ILT 0x000341C6 with ecx=this and the clamped [0 1] float at +0xF4; body stores it at +0xF4 and an integer lerp of +0xE8/+0xEC at +0xF0 (name kept from the banked attempt)
 ?bfmeSetOwnerETD@BfmeCellETD@@QAEXPAVBfmeOwnerETD@@@Z,0x00040D7C,pin
 ?bfmeSetPG@BfmeThingPG@@QAEXHPAX@Z,0x00021C1F,pin
 ?bfmeSetPalantirYW@@YAXH@Z,0x00032EBB,route=0x00565620; ILT E9 stub to the matched palantir resource-count update; called by resource-bar refresh 0x0058DDD0
@@ -82457,6 +82461,9 @@ name,address,notes
 ?g_rva00914860PoolA@@3VRva00914860PoolA@@A,0x01341264,Open-BFME5 first pool object used by the 0x00914860 sizing update
 ?g_rva00914860PoolB@@3VRva00914860PoolB@@A,0x01343698,Open-BFME5 second pool object used by the 0x00914860 sizing update
 ?g_rva00914860PoolC@@3VRva00914860PoolC@@A,0x013466B8,Open-BFME5 third pool object used by the 0x00914860 sizing update
+?g_rva00CF1058TintColor@@3URGBColor@@B,0x010F1058,RGBColor {-0.5 -0.5 -0.5} passed to TintEnvelope::play by Drawable::updateDrawable 0x0041BE60 (ZH DARK_GRAY_DISABLED_COLOR values)
+?g_rva00CF1064TintColor@@3URGBColor@@B,0x010F1064,RGBColor {0.5 -0.5 -0.5} passed to TintEnvelope::play by Drawable::updateDrawable 0x0041BE60
+?g_rva00EB4F98@@3MA,0x012B4F98,address-derived .data float (1/30 at rest) read by Drawable::updateDrawable 0x0041BE60
 ?g_rva00ED7770Vp6ModeDispatch@@3PAHA,0x00ED7770,typed integer mode dispatch table indexed by state mode at9B5830
 ?g_rva012EF4D0@@3PAVRva001A2D50Node@@A,0x012EF4D0,typed pointer at the dword already read by Rva001A19D0Get
 ?g_rva012F49B4@@3PAURva012F49B4Thing@@A,0x012F49B4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0051D4A0 calls; autopin
@@ -87601,6 +87608,7 @@ name,address,notes
 ?update@SpecialAbilityUpdate@@QAE?AW4UpdateSleepTime@@XZ,0x00044B0C,GiveUpgradeUpdate update calls the inherited special-ability update through this ILT
 ?update@TerrainLogic@@UAEXXZ,0x001a2be0,vtable-slot ??_7TerrainLogic@@6BSubsystemInterface@@@ slot 5 anchors=3
 ?update@TimedOperationNode@@QAEIXZ,0x0007B8E0,timed-operation node update called by the queue pump
+?update@TintEnvelope@@QAEXXZ,0x00415790,Drawable::updateDrawable 0x0041BE60 calls this via ILT 0x0002CE76 on m_colorTintEnvelope and m_selectionFlashEnvelope (TintEnvelope objects built with vtable 0x010F1410 and played via TintEnvelope::play 0x004156D0) as ZH updateDrawable does
 ?update@ToppleUpdate@@UAE?AW4UpdateSleepTime@@XZ,0x002b1610,vtable-slot ??_7ToppleUpdate@@6BUpdateModuleInterface@@@ slot 0 anchors=1
 ?update@Transport@@QAEXXZ,0x00001EC4,Transport::update for LANAPI::RequestLobbyLeave forced path
 ?update@TransportContain@@QAEXXZ,0x000133EF,base-class update HordeTransportContain::update tail-calls; 0x0022D660 is slot 0 of TransportContain UpdateModule vftable 0x00CAD410

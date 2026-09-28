@@ -134,15 +134,8 @@ public:
 	void setPosition(const Coord3D *position);
 	void setIndicatorColor(UnsignedInt color);
 	const AudioEventRTS *getPerUnitSound(const AsciiString &name) const;
+	void updateDrawable(void);
 };
-
-// The existing body at 0x0041BE60 is the present-unmatched
-// Drawable::updateDrawable implementation in GameClient/Drawable.cpp, while
-// its current generated ledger name is ?d_0041be60@@YAXXZ.  Route through that
-// existing address-derived symbol; the fastcall view supplies Drawable in
-// ECX and preserves the retail no-stack-argument call shape.
-void d_0041be60();
-typedef void (__fastcall *DrawableUpdateCall)(Drawable *draw);
 
 enum Relationship
 {
@@ -375,7 +368,7 @@ void StealthUpdate::changeVisualDisguise()
 			draw->setPosition(self->getPosition());
 			draw->setOrientation(self->getOrientation());
 			self->bfmeClearYG(flags);
-			((DrawableUpdateCall)d_0041be60)(draw);
+			draw->updateDrawable();
 			if (selected)
 				TheInGameUI->selectDrawable(draw);
 
@@ -421,7 +414,7 @@ void StealthUpdate::changeVisualDisguise()
 			draw->setPosition(self->getPosition());
 			draw->setOrientation(self->getOrientation());
 			self->bfmeClearYG(flags);
-			((DrawableUpdateCall)d_0041be60)(draw);
+			draw->updateDrawable();
 			if (TheWritableGlobalData->m_timeOfDay == 4)
 				draw->setIndicatorColor(self->getNightIndicatorColor());
 			else
