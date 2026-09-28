@@ -8218,5 +8218,15 @@
   "after_sha256": "3af9e73025a842fb446a053174d87af5712b52ea7a149ee06a11c7af16605533",
   "evidence": "targets/game/reverse/identity_evidence/001abc90-genkey-placeholder.md",
   "reason": "GenKey is a generator-era placeholder class (absent from inputs/reference; its symbols.csv pins at 0x00009304 are labelled address-derived); the landed TerrainLogic::addWaypoint uses address-derived Key001ABC90 / Rva0002FF6DStringPresenceThunk for the same ILT callees"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00699b90.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva00699B40RefreshChannel.cpp",
+  "old_name": "bfmeRefreshAAK",
+  "new_name": "Rva00699B90",
+  "before_sha256": "8fb51ff04c10af9ffdf09de708cb89ca76771a5ab26f2928f4e8a7a4c59058c3",
+  "after_sha256": "f11349e3424148057a68d4f43a0227f8d74470491f959f4e6e5eb6e873a10c93",
+  "evidence": "targets/game/reverse/identity_evidence/00699b90-address-derived-name.md",
+  "reason": "The old bank name bfmeRefreshAAK has no semantic pin or matched caller that supports it. The caller index names the two Rva006B47F0Owner methods and the body proves only the refreshPair loop. The address-derived replacement preserves the RVA without asserting an identity."
  }
 ]

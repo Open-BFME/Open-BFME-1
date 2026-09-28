@@ -30,3 +30,19 @@ void rva00699B40RefreshChannel(int b)
         }
     }
 }
+
+void Rva00699B90()
+{
+    if (TheAudioClientUpdate)
+    {
+        for (int i = 0; i < 3; ++i)
+        {
+            Rva00699180Owner &owner = ((Rva00699B40Client *)TheAudioClientUpdate)->blocks[i].owner;
+            for (int a = 0; a < 6; ++a)
+            {
+                for (int b = 0; b < 2; ++b)
+                    owner.refreshPair(a, b);
+            }
+        }
+    }
+}
