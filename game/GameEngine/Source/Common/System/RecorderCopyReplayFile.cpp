@@ -70,13 +70,17 @@ public:
 	void concat(const AsciiString &other)
 	{
 		const Int length = other.m_data ? other.m_data->m_length : 0;
-		const char *text = other.m_data ? other.m_data->m_text : (const char *)0x0107388B;
+		const char *text = other.str();
 		StringBase<char>::concat(text, length);
 	}
 
 	void __cdecl format(AsciiString fmt, ...);
 
-	const char *str() const { return m_data ? m_data->m_text : (const char *)0x0107388B; }
+	const char *str() const
+	{
+		static const char TheNullChr = 0;
+		return m_data ? m_data->m_text : &TheNullChr;
+	}
 	Int getLength() const { return m_data ? m_data->m_length : 0; }
 	Bool isEmpty() const { return m_data == 0 || m_data->m_length == 0; }
 };
@@ -88,7 +92,11 @@ public:
 	UnicodeString(const UnicodeString &other) : StringBase<WideChar>(other) {}
 	~UnicodeString() {}
 
-	const WideChar *str() const { return m_data ? m_data->m_text : (const WideChar *)0x0107388C; }
+	const WideChar *str() const
+	{
+		static const WideChar TheNullChr = 0;
+		return m_data ? m_data->m_text : &TheNullChr;
+	}
 };
 
 class RecorderClass

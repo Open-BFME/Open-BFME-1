@@ -1301,20 +1301,23 @@ public:
 	virtual void startGame( Int gameID ) = 0;
 };
 
+extern const char Rva006A16B0Empty[];
+extern const unsigned short BFMEEmptyUnicodeString;
+
 // BFME's StringBase payload starts eight bytes after m_data.  The vendored
 // StringBase wrappers keep str() out of line, but this body has the retail
 // inline access at each of these call sites.
 static __forceinline const char *BfmeStartAsciiString( const AsciiString &string )
 {
 	void *data = *(void *const *)&string;
-	return data ? (const char *)data + 8 : (const char *)0x0107388B;
+	return data ? (const char *)data + 8 : Rva006A16B0Empty;
 }
 
 static __forceinline const unsigned short *BfmeStartUnicodeString( const UnicodeString &string )
 {
 	void *data = *(void *const *)&string;
 	return data ? (const unsigned short *)((const char *)data + 8)
-	            : (const unsigned short *)0x0107388C;
+	            : &BFMEEmptyUnicodeString;
 }
 
 // The menu's literal temporaries call the retail StringBase constructor and
@@ -1327,7 +1330,7 @@ public:
 
 	__forceinline const char *str() const
 	{
-		return m_text ? m_text + 8 : (const char *)0x0107388B;
+		return m_text ? m_text + 8 : Rva006A16B0Empty;
 	}
 
 	private:

@@ -77,6 +77,7 @@ extern int Rva00898D20Get();
 extern BfmeS1238 *Rva00898D40At(void *unused, int index);
 extern void __cdecl bfmeAppend(int, int, int);
 extern "C" void (*TheBfmeFree)(void *, UnsignedInt);
+extern const char vtable01135D68[], vtable011360A8[];
 
 struct BfmeStateNode
 {
@@ -150,10 +151,10 @@ struct Rva00899800Boolean
 		object = (Rva00899800Boolean *)Rva008C5D70Alloc(12);
 		if (object != 0)
 		{
-			object->m_vtable = (void *)0x01135D68;
+			object->m_vtable = (void *)vtable01135D68;
 			object->m_flags = (object->m_flags & 0xf0008005) | 0x40008005;
 			g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
-			object->m_vtable = (void *)0x011360A8;
+			object->m_vtable = (void *)vtable011360A8;
 			object->m_value = 0;
 			return object;
 		}
@@ -178,10 +179,10 @@ struct Rva00899800Boolean
 		{
 			UnsignedInt flags =
 				(object->m_flags & 0xf0008005) | 0x40008005;
-			object->m_vtable = (void *)0x01135D68;
+			object->m_vtable = (void *)vtable01135D68;
 			object->m_flags = flags;
 			g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
-			object->m_vtable = (void *)0x011360A8;
+			object->m_vtable = (void *)vtable011360A8;
 			object->m_value = 1;
 			return object;
 		}

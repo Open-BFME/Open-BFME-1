@@ -260,13 +260,15 @@ public:
 	Matrix3D m_transform;
 };
 
+extern const char Rva006A16B0Empty[];
+
 struct PropNameString
 {
 	void *m_data;
 
 	const char *str() const
 	{
-		return m_data ? (const char *)m_data + 8 : (const char *)0x0107388b;
+		return m_data ? (const char *)m_data + 8 : Rva006A16B0Empty;
 	}
 };
 

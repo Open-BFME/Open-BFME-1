@@ -116,7 +116,7 @@ private:
 };
 
 class MapCache;
-#define TheMapCache (*(MapCache **)0x012F1594)
+extern MapCache *TheMapCache;
 
 class BfmeXfJF
 {
@@ -127,7 +127,8 @@ public:
 	Int m_timeOfDay;
 };
 
-#define TheWritableGlobalData (*(BfmeXfJF **)0x012ED5C8)
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class BfmeGlobalData
 {
@@ -136,7 +137,7 @@ public:
 	Int m_timeOfDay;
 };
 
-#define TheGlobalData (*(BfmeGlobalData **)0x012ED5C8)
+#define TheGlobalData ((BfmeGlobalData *)TheWritableGlobalData)
 
 class GameClient
 {
@@ -169,7 +170,7 @@ public:
 	virtual void setTimeOfDay(Int timeOfDay);
 };
 
-#define TheGameClient (*(GameClient **)0x012F1464)
+extern GameClient *TheGameClient;
 
 Bool W3DTerrainLogic::loadMapAbi(AsciiString filename,
 	ChunkInputStream *stream, Bool tailFlag, Bool query)
@@ -229,14 +230,8 @@ Bool W3DTerrainLogic::loadMapAbi(AsciiString filename,
 		filename, stream, tailFlag, query) == false)
 		return false;
 
-	BfmeXfJF *writableGlobalData = TheWritableGlobalData;
-	Int timeOfDay = writableGlobalData->m_timeOfDay;
-	if (writableGlobalData->bfmeLoadJF(timeOfDay))
-	{
-		BfmeGlobalData *globalData = TheGlobalData;
-		GameClient *gameClient = TheGameClient;
-		gameClient->setTimeOfDay(globalData->m_timeOfDay);
-	}
+	if (((BfmeXfJF *)TheWritableGlobalData)->bfmeLoadJF(TheGlobalData->m_timeOfDay))
+		TheGameClient->setTimeOfDay(TheGlobalData->m_timeOfDay);
 
 	return true;
 }
