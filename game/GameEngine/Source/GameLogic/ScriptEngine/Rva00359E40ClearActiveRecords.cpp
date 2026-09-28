@@ -5,6 +5,27 @@
 
 struct Rva00359E40Version;
 
+extern void j_00042a32();
+void __cdecl operator delete(void *block);
+
+class Rva003592A0NodeLink
+{
+public:
+	Rva003592A0NodeLink *m_next;
+
+	~Rva003592A0NodeLink()
+	{
+		typedef void (Rva003592A0NodeLink::*Destructor)(void);
+		union
+		{
+			void (__cdecl *raw)(void);
+			Destructor member;
+		} thunk;
+		thunk.raw = ::j_00042a32;
+		(this->*thunk.member)();
+	}
+};
+
 struct Rva00359E40Record
 {
 	int m_previous;
@@ -19,6 +40,8 @@ struct Rva00359E40Record
 class Rva00359E40Table
 {
 public:
+	void rva003592A0();
+
 	char m_prefix[0x0c];
 	Rva00359E40Record *m_records;
 	int m_10;
@@ -26,6 +49,26 @@ public:
 	int m_freeHead;
 	int m_activeTail;
 };
+
+void Rva00359E40Table::rva003592A0()
+{
+	int index = m_activeTail;
+	while (index != -1)
+	{
+		Rva00359E40Record *record = &m_records[index];
+		Rva003592A0NodeLink *head =
+			reinterpret_cast<Rva003592A0NodeLink *>(record->m_nodes);
+		while (head->m_next != 0)
+		{
+			Rva003592A0NodeLink *node = head->m_next;
+			Rva003592A0NodeLink *next = head->m_next->m_next;
+			delete node;
+			head->m_next = next;
+		}
+		record->m_references = 1;
+		index = m_records[index].m_previous;
+	}
+}
 
 class Rva00359E40HeldBody
 {

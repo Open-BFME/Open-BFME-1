@@ -7759,4 +7759,35 @@
   "evidence": "targets/game/reverse/identity_evidence/0061fda0-twin-class.md",
   "reason": "Bank retirement pairing: the retired 0x0061FDA0 stash reused the twin's SkirmishGameInfo shape; the body is a different class (ctor 0x00619720 installs vtable 0x011171C8, twin installs 0x01075E7C), landed under an address-derived owner."
  }
+,
+ {
+  "old_path": "targets/game/reverse/attempts/0x003592a0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/Rva00359E40ClearActiveRecords.cpp",
+  "old_name": "_ReadWriteBarrier",
+  "new_name": "j_00042a32",
+  "before_sha256": "33c3c69bb364517a845a07d5efa4a2901d0568e9c890294d7243f15d03fa97a1",
+  "after_sha256": "53fec114b919e6a1e152f7e0bd5431c189cd7e7c449bd45106532ef4883b6eb6",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "The bank's `_ReadWriteBarrier` was a compiler intrinsic, and its `invoke` and `resetActive` labels came from an unproven twin. The matched caller at 0x00359E40 invokes 0x003592A0 on its script table, and the 108-byte body uses that table's +0x0C record pointer and +0x1C active tail. Retail calls the destructor thunk at 0x00042A32 and delete at 0x00881EB0, so the landed symbol keeps 0x003592A0 in its method name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003592a0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/Rva00359E40ClearActiveRecords.cpp",
+  "old_name": "invoke",
+  "new_name": "rva003592A0",
+  "before_sha256": "33c3c69bb364517a845a07d5efa4a2901d0568e9c890294d7243f15d03fa97a1",
+  "after_sha256": "53fec114b919e6a1e152f7e0bd5431c189cd7e7c449bd45106532ef4883b6eb6",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "The bank's `_ReadWriteBarrier` was a compiler intrinsic, and its `invoke` and `resetActive` labels came from an unproven twin. The matched caller at 0x00359E40 invokes 0x003592A0 on its script table, and the 108-byte body uses that table's +0x0C record pointer and +0x1C active tail. Retail calls the destructor thunk at 0x00042A32 and delete at 0x00881EB0, so the landed symbol keeps 0x003592A0 in its method name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003592a0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/Rva00359E40ClearActiveRecords.cpp",
+  "old_name": "resetActive",
+  "new_name": "rva003592A0",
+  "before_sha256": "33c3c69bb364517a845a07d5efa4a2901d0568e9c890294d7243f15d03fa97a1",
+  "after_sha256": "53fec114b919e6a1e152f7e0bd5431c189cd7e7c449bd45106532ef4883b6eb6",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "The bank's `_ReadWriteBarrier` was a compiler intrinsic, and its `invoke` and `resetActive` labels came from an unproven twin. The matched caller at 0x00359E40 invokes 0x003592A0 on its script table, and the 108-byte body uses that table's +0x0C record pointer and +0x1C active tail. Retail calls the destructor thunk at 0x00042A32 and delete at 0x00881EB0, so the landed symbol keeps 0x003592A0 in its method name."
+ }
 ]
