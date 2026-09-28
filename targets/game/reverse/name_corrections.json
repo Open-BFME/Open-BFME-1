@@ -7798,5 +7798,45 @@
   "after_sha256": "c53d1e42eaa1d68d6c80e9732dbf74a764d84934285febdfb76d4bb81be885c8",
   "evidence": "targets/game/reverse/symbols.csv",
   "reason": "targets/game/reverse/symbols.csv pins ?createString@Rva008AE770Stack@@QAEPAVRva00899770@@PAXHPAVBfmeStrVKI@@HHH@Z at 0x008CC940, which spells the name Rva00899770; the source uses that pinned spelling instead of Rva8CD520Value."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008bc3e0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x008bc3e0.cpp",
+  "old_name": "Hub008CF740",
+  "new_name": "Rva008CF740",
+  "before_sha256": "b1d7d98933f2bc3c6822b8845d54bdb7fc4d760bd5adb97bef4eee82799ed7c5",
+  "after_sha256": "e05d3030ed10d07979e8169c8412581d56aea22724f74cc1dd9ec2f8ee242453",
+  "evidence": "targets/game/reverse/symbols.csv",
+  "reason": "targets/game/reverse/symbols.csv pins ?run@Rva008CF740@@QAEXPAVRva008CF740Value@@0H@Z at 0x008CF740, which spells the name Rva008CF740; the source uses that pinned spelling instead of Hub008CF740."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008bc3e0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x008bc3e0.cpp",
+  "old_name": "Stack008BC3E0",
+  "new_name": "Rva008AE770Stack",
+  "before_sha256": "b1d7d98933f2bc3c6822b8845d54bdb7fc4d760bd5adb97bef4eee82799ed7c5",
+  "after_sha256": "e05d3030ed10d07979e8169c8412581d56aea22724f74cc1dd9ec2f8ee242453",
+  "evidence": "targets/game/reverse/symbols.csv",
+  "reason": "targets/game/reverse/symbols.csv pins ?Rva008AE770TheStack@@3URva008AE770Stack@@A at 0x01338748, which spells the name Rva008AE770Stack; the source uses that pinned spelling instead of Stack008BC3E0."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008bc3e0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x008bc3e0.cpp",
+  "old_name": "Value008BC3E0",
+  "new_name": "Rva008CF740Value",
+  "before_sha256": "b1d7d98933f2bc3c6822b8845d54bdb7fc4d760bd5adb97bef4eee82799ed7c5",
+  "after_sha256": "e05d3030ed10d07979e8169c8412581d56aea22724f74cc1dd9ec2f8ee242453",
+  "evidence": "targets/game/reverse/symbols.csv",
+  "reason": "targets/game/reverse/symbols.csv pins ?run@Rva008CF740@@QAEXPAVRva008CF740Value@@0H@Z at 0x008CF740, which spells the name Rva008CF740Value; the source uses that pinned spelling instead of Value008BC3E0."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008bc3e0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x008bc3e0.cpp",
+  "old_name": "stack01338748",
+  "new_name": "Rva008AE770TheStack",
+  "before_sha256": "b1d7d98933f2bc3c6822b8845d54bdb7fc4d760bd5adb97bef4eee82799ed7c5",
+  "after_sha256": "e05d3030ed10d07979e8169c8412581d56aea22724f74cc1dd9ec2f8ee242453",
+  "evidence": "targets/game/reverse/symbols.csv",
+  "reason": "targets/game/reverse/symbols.csv pins ?Rva008AE770TheStack@@3URva008AE770Stack@@A at 0x01338748, which spells the name Rva008AE770TheStack; the source uses that pinned spelling instead of stack01338748."
  }
 ]
