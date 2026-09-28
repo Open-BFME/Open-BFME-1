@@ -94,10 +94,16 @@ requires that model to be enabled and still obeys concurrency and cooldowns.
 ## Workspaces, ownership, and recovery
 
 By default each job receives a retained detached Git worktree at the submitting
-repository's **HEAD**. Uncommitted parent changes are not copied. All retries
+repository's **HEAD at submission time**. Repository identity and that SHA are
+persisted before dispatch; a later scheduler HEAD cannot change the task's base.
+Uncommitted parent changes are not copied. All retries
 reuse that job's workspace, so failed source experiments remain available.
 `--cwd /absolute/prepared/worktree` uses a parent-prepared workspace instead.
 The scheduler serializes overlapping workspace paths, even for redundant jobs.
+An explicit retained Git workspace records its own HEAD. Legacy jobs with an
+existing workspace may retry there without inventing an original base. Legacy
+jobs without a workspace or recorded base must be reviewed and resubmitted
+with refreshed task evidence; they do not silently use today's HEAD.
 It sets both the process cwd and `PWD`: OpenCode run uses the latter to choose
 its session location, so changing cwd alone does not isolate linked worktrees.
 It never deletes worktrees or worker artifacts; remove reviewed worktrees using
@@ -129,7 +135,7 @@ works for queued/finished jobs while the scheduler is stopped.
 expiry, operator stop, or a restart that verified empty containment — is
 recorded for audit, but it is not evidence against a model or a task. It does
 not increment `failures` or `availability_failures`, does not promote the job's
-tier, and sets no model cooldown, so repeated restarts can neither terminally
+tier, and by itself sets no model cooldown, so repeated restarts can neither terminally
 retire a job nor escalate model selection. The job returns to `queued` under the
 same ID and keeps its target/workspace ownership; an interruption arriving for
 an already terminal job never resurrects it. Only `failure`, `timeout` and
@@ -140,6 +146,12 @@ an already terminal job never resurrects it. Only `failure`, `timeout` and
 model+variant+class, so historical rows are reclassified at read time and no
 stored counter is rewritten. `needs_review` and `cancelled` remain terminal and
 still hold the model back, because ownership of the worker is unresolved.
+
+A genuine quota event survives a simultaneous interruption as separate
+`quota_observed` evidence. It still controls account pacing, model cooldowns
+and slow start, while the interrupted job spends neither retry budget.
+`show JOB_ID` queries only that job and its attempts; it does not gather fleet
+statistics, probe other workers or refresh remote account data.
 
 Because interruption is free, a crash-looping scheduler requeues a job forever.
 That is deliberate — an unbounded retry loop must not be mistaken for task
@@ -811,3 +823,24 @@ missing credentials, stale/cache failures, source timestamps and timezone edges,
 quota races/recovery, explicit overrides, free-model evidence, and existing
 variant/cost/containment behavior. The monitoring smoke uses status only; no
 new inference or deliberate allowance consumption is required.
+
+
+## Integration and publication checks
+
+`tools/router_integrate.py` locks each destination across review, port, commit
+and push. It requires a clean detached destination whose HEAD is already
+contained in the chosen base. Retained edits, staged work, unfinished Git
+operations and unpushed commits are refused and left recoverable. `--keep`
+explicitly combines unstaged work and stops before committing. Conflicting
+upstream additions and symlinked port paths require manual review. Source
+changes during review or port require a new review; every touched-source gate
+and ledger check must exit successfully.
+
+Publication receipts never remove selected rows from the ordinary gate.
+Compile/object reuse remains enabled. String and constant bytes, baseline
+identity, DIR32 mappings/whitelists and combined-row agreement are checked on
+every publication attempt, even when all receipts hit. Scoped consistency
+checks do not write the full address-ledger proposal. Invalid receipts miss;
+unrecordable evidence after successful verification is distinct from a failed
+verification. Rules, toolchains and file fingerprints are shared only within
+an invocation and validated again for mutation before recording.

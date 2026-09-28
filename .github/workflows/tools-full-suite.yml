@@ -14,6 +14,9 @@ on:
     - cron: '17 4 * * *'
   workflow_dispatch:
 
+env:
+  BFME_CLAIMS: 'off'  # tests use fixtures, never live remote body claims
+
 permissions:
   contents: read
 

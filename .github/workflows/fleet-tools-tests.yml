@@ -22,6 +22,9 @@ on:
       - '.github/workflows/fleet-tools-tests.yml'
   workflow_dispatch:
 
+env:
+  BFME_CLAIMS: 'off'  # tests use fixtures, never live remote body claims
+
 permissions:
   contents: read
 
