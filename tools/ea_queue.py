@@ -167,7 +167,17 @@ def show(item, rows_at):
     for f in files:
         print(f"    {f}")
     if item["kind"] != "method":
-        print(f"  if the hook says a TU now redeclares {item['new']}, run python3 tools/adopt_header.py --fix-staged")
+        members = sorted({(shape(n)[1], w.split("::")[1]) for _, n, _, w in item["rows"]
+                          if w and shape(n)[1] and shape(n)[1] != w.split("::")[1]})
+        for old_m, new_m in members:
+            print(f"  and rename the member {old_m} -> {new_m}")
+        pins = [l for l in (REVERSE / "symbols.csv").read_text(encoding="utf-8", errors="replace").splitlines()
+                if re.search(rf"[@?VU01]{re.escape(item['old'])}@", l.split(",")[0])]
+        for pin in pins:
+            print(f"  pin to rename in targets/game/reverse/symbols.csv: {pin[:110]}")
+        print(f"  EA's class has real member names and signatures; if the hook says a TU now redeclares\n"
+              f"  {item['new']}, run python3 tools/adopt_header.py --fix-staged, and land the spelling the\n"
+              f"  compiler emits even when it differs from the one shown")
     print(f"  steps:\n    python3 tools/claims.py claim {rvas}\n    edit every file above, then land each row"
           f" (add_match rewrites the ledger row, then byte-verifies its source):")
     for rva, name, new_name, _ in item["rows"]:
