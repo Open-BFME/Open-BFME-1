@@ -936,7 +936,7 @@ def _root_key(root):
 
 def _recorded_inventory(meta, inventory_cache=None):
     keys = meta.get("search_roots")
-    if not isinstance(keys, list) or not keys or not all(isinstance(key, str) and key and "\0" not in key for key in keys):
+    if not isinstance(keys, list) or not keys or not all(cache_path_is_valid(key) for key in keys):
         return None
     roots = [Path(key) if os.path.isabs(key) else ROOT / key for key in keys]
     return _inventory_for_roots(roots, inventory_cache)
@@ -1017,16 +1017,30 @@ def _legacy_header_free(source, command, env):
 _HASH_MEMO = {}
 
 
+def cache_path_is_valid(path):
+    if not isinstance(path, str) or not path or "\0" in path:
+        return False
+    try:
+        os.fsencode(path)
+    except UnicodeError:
+        return False
+    return True
+
+
 def _hash_file(path):
     try:
         stat = os.stat(path)
-    except OSError:
+        stamp = (stat.st_dev, stat.st_ino, stat.st_size, stat.st_mtime_ns, stat.st_ctime_ns)
+        cached = _HASH_MEMO.get(path)
+        if cached and cached[0] == stamp:
+            return cached[1]
+        digest = hashlib.md5(Path(path).read_bytes()).hexdigest()
+        after = os.stat(path)
+        if stamp != (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns, after.st_ctime_ns):
+            return None  # A concurrent writer cannot produce a reusable receipt.
+    except (OSError, ValueError):
         return None
-    cached = _HASH_MEMO.get(path)
-    if cached and cached[0] == (stat.st_mtime_ns, stat.st_size):
-        return cached[1]
-    digest = hashlib.md5(Path(path).read_bytes()).hexdigest()
-    _HASH_MEMO[path] = ((stat.st_mtime_ns, stat.st_size), digest)
+    _HASH_MEMO[path] = (stamp, digest)
     return digest
 
 
@@ -1138,7 +1152,7 @@ def compile_is_current(source, output, *, check_command=True, inventory_cache=No
     if (not isinstance(meta, dict) or not isinstance(meta.get("deps"), dict)
             or not isinstance(meta.get("source"), str) or not meta["source"]):
         return False
-    if not all(isinstance(path, str) and path and "\0" not in path and isinstance(digest, str) and digest
+    if not all(cache_path_is_valid(path) and isinstance(digest, str) and digest
                for path, digest in meta["deps"].items()):
         return False
     if not isinstance(meta.get("retry_dirs", []), list) or not all(

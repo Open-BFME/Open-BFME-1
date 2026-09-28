@@ -258,7 +258,7 @@ def _read_meta(obj):
         return None
     if not isinstance(meta, dict) or not isinstance(meta.get("deps"), dict):
         return None
-    if not all(isinstance(dep, str) and dep and "\0" not in dep and isinstance(digest, str)
+    if not all(B.cache_path_is_valid(dep) and isinstance(digest, str)
                for dep, digest in meta["deps"].items()):
         return None
     return meta
