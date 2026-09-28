@@ -143,6 +143,29 @@ class RouterTests(unittest.TestCase):
         self.assertEqual(r.choose(self.c,j,{},s,[],9)['id'],'opencode-go/two')
         self.assertEqual(r.choose(self.c,j,{},s,[],10)['id'],'opencode-go/one')
 
+    def test_rate_limit_slow_start(self):
+        self.c['models'][0].update(concurrency=16)
+        db=sqlite3.connect(':memory:'); db.executescript(r.SCHEMA)
+        mid='opencode-go/one'
+        n=iter(range(10**6))
+        def attempt(status,started,ended=None):
+            db.execute('INSERT INTO attempts(id,model,status,started,ended) VALUES (?,?,?,?,?)',
+                       (str(next(n)),mid,status,started,ended))
+        self.assertEqual(r.ramp_caps(db,self.c,1000),{})  # never limited: no cap
+        for t in range(16): attempt('quota',100,105)
+        self.assertEqual(r.ramp_caps(db,self.c,1000)[mid],1)  # one probe first
+        attempt('running',400)
+        self.assertEqual(r.ramp_caps(db,self.c,430)[mid],1)   # probe not yet survived
+        self.assertEqual(r.ramp_caps(db,self.c,470)[mid],2)
+        attempt('success',410,900); attempt('failure',420,500); attempt('quota',430,436)
+        self.assertEqual(r.ramp_caps(db,self.c,1000)[mid],1)  # a later quota restarts the ramp
+        for t in (500,501,502,503): attempt('success',t,t+100)
+        self.assertNotIn(mid,r.ramp_caps(db,self.c,1000))     # 2**4 reaches concurrency
+        j=dict(model=None,tier='bulk')
+        s={mid:{'ramp_cap':1}}
+        self.assertEqual(r.choose(self.c,j,{},s,[],0)['id'],mid)
+        self.assertEqual(r.choose(self.c,j,{mid:1},s,[],0)['id'],'opencode-go/two')
+
     def test_account_quota_defers_without_consuming_reasoning_budget(self):
         self.c['models'][0]['id']='opencode-go/quota'
         job=self.job()

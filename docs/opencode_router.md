@@ -178,6 +178,13 @@ The separate JSON configuration contains all model IDs and policy knobs:
 - `cooldown`: seconds before reconsidering quota/unavailable models (default 300).
 - `failure_cooldown`: brief cooldown for genuine worker failures (default 20).
 
+After a rate limit (`quota`), a model restarts at **one** slot when its cooldown
+expires, and its cap doubles for every attempt started since that quota that
+finished without one or has run 60 s; a new quota restarts the ramp. Without it,
+every cooldown expiry launched the whole per-model cap at once: measured
+2026-09-27, 15 of 16 Muse free launches were refused with 429 inside 5 s, and
+each refusal spent one of that job's `availability_retries`.
+
 Quota errors do not spend the reasoning-failure budget. Structured error events
 are classified by status/type/message; text *discussing* quotas is not an error.
 A model in cooldown is skipped immediately while other jobs/models proceed.

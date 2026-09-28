@@ -200,6 +200,31 @@ def enqueue(state, category, task, target=None, cwd=None, model=None, redundant=
     return job
 
 
+RAMP_SURVIVAL = 60  # seconds a worker must run without a rate limit to count as admitted
+
+
+def ramp_caps(db, c, now):
+    """Slow start after a rate limit: {model: slots} for models whose last quota
+    event has not yet been followed by a full ramp. Measured 2026-09-27: at every
+    cooldown expiry the fleet launched 16 Muse workers at once, 15 were refused
+    with 429 within 5 s, and each refusal spent one of the job's availability
+    retries. One probe goes first; every attempt started after the quota that
+    finished without one, or has run RAMP_SURVIVAL seconds, doubles the cap."""
+    caps = {}
+    for m in c['models']:
+        row = db.execute("SELECT MAX(ended) FROM attempts WHERE model=? AND status='quota'", (m['id'],)).fetchone()
+        if not row or row[0] is None:
+            continue
+        admitted = db.execute(
+            "SELECT COUNT(*) FROM attempts WHERE model=? AND started>? AND "
+            "((status NOT IN ('running','quota','unavailable','interrupted')) OR (status='running' AND started<=?))",
+            (m['id'], row[0], now - RAMP_SURVIVAL)).fetchone()[0]
+        cap = 1 << min(admitted, 16)
+        if cap < m['concurrency']:
+            caps[m['id']] = cap
+    return caps
+
+
 def choose(c, job, active, model_state, history, now, budget=None):
     """Optional cost-first policy; legacy configurations retain their selection."""
     economic = c.get('cost_aware', False)
@@ -247,6 +272,7 @@ def choose(c, job, active, model_state, history, now, budget=None):
                 continue
         s = model_state.get(mid, {})
         slots = m['concurrency'] - (m['reserve'] if job['tier'] != 'escalation' else 0)
+        slots = min(slots, s.get('ramp_cap', slots))
         if s.get('cooldown', 0) > now or active.get(mid, 0) >= slots:
             continue
         tried = sum(1 for h in history if h['model'] == mid)
@@ -680,6 +706,8 @@ def fleet(root, state, c, duration, workers=None, until=None):
                 with database(state) as db:
                     jobs = [dict(r) for r in db.execute("SELECT * FROM jobs WHERE status='queued' ORDER BY created")]
                     ms = {r['id']: dict(r) for r in db.execute('SELECT * FROM models')}
+                    for mid, cap in ramp_caps(db, c, time.time()).items():
+                        ms.setdefault(mid, {})['ramp_cap'] = cap
                     all_active = [dict(r) for r in db.execute("SELECT * FROM jobs WHERE status IN ('running','needs_review')")]
                     if until:
                         j = db.execute('SELECT status FROM jobs WHERE id=?', (until,)).fetchone()
