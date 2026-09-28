@@ -578,3 +578,19 @@ static const char * Make_W3D_Filename (const char *w3d_name)
 	strcat(buffer, ".w3d");
 	return buffer;
 }
+
+struct Rva009D73F0Range
+{
+	const char *m_begin;
+	const char *m_end;
+};
+
+int Rva009D73F0(const Rva009D73F0Range &range)
+{
+	int hash = 0;
+	const char *begin = range.m_begin;
+	const unsigned int length = static_cast<unsigned int>(range.m_end - begin);
+	for (unsigned int i = 0; i < length; ++i)
+		hash = hash * 5 + begin[i];
+	return hash;
+}
