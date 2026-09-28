@@ -24,6 +24,7 @@ extern BfmeStringData3AF0 g_bfmeDefaultString1284;
 extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
 extern const float BfmeZeroRange;
 extern double g_bfmeSubB3;
+extern "C" BfmeStringData3AF0 *g_bfmeRouteKeys1282[];
 
 extern "C" int __cdecl sprintf(char *, const char *, ...);
 extern "C" double __cdecl fmod(double, double);
@@ -138,14 +139,14 @@ void Rva8CD130Value::getName(Rva8CD130String *output)
     }
     case 5:
         if (m_boolean)
-            output->assign(*reinterpret_cast<Rva8CD130String *>(0x01338720));
+            output->assign(*reinterpret_cast<Rva8CD130String *>(&g_bfmeRouteKeys1282[168]));
         else
-            output->assign(*reinterpret_cast<Rva8CD130String *>(0x01338550));
+            output->assign(*reinterpret_cast<Rva8CD130String *>(&g_bfmeRouteKeys1282[52]));
         break;
     case 7:
     {
         int number = m_integer;
-        sprintf(buffer, reinterpret_cast<const char *>(0x0107C7B4), number);
+        sprintf(buffer, "%d", number);
         *output = BfmeStrVKI(buffer); // T0
         break;
     }
@@ -154,10 +155,10 @@ void Rva8CD130Value::getName(Rva8CD130String *output)
         union { unsigned bits; float number; } copy;
         copy.bits = static_cast<unsigned>(m_integer);
         if (fmod(static_cast<double>(copy.number), g_bfmeSubB3) == BfmeZeroRange)
-            sprintf(buffer, reinterpret_cast<const char *>(0x0107C7B4),
+            sprintf(buffer, "%d",
                 static_cast<int>(m_float));
         else
-            sprintf(buffer, reinterpret_cast<const char *>(0x01082F4C),
+            sprintf(buffer, "%f",
                 static_cast<double>(m_float));
         *output = BfmeStrVKI(buffer); // T1: both float arms join first
         break;
@@ -167,48 +168,48 @@ void Rva8CD130Value::getName(Rva8CD130String *output)
             reinterpret_cast<BfmeString1284 *>(output), 0x01076FE8);
         break;
     case 21:
-        *output = BfmeStrVKI(reinterpret_cast<const char *>(0x01136028)); // T2
+        *output = BfmeStrVKI("[sound]"); // T2
         break;
     case 9:
-        sprintf(buffer, reinterpret_cast<const char *>(0x0113600C), m_raw20);
+        sprintf(buffer, "[native function 0x%08x]", m_raw20);
         *output = BfmeStrVKI(buffer); // T3
         break;
     case 10:
-        *output = BfmeStrVKI(reinterpret_cast<const char *>(0x01136000)); // T4
+        *output = BfmeStrVKI("[function]"); // T4
         break;
     case 23: case 24: case 25: case 26: case 27:
     case 31: case 35: case 36: case 39:
-        *output = BfmeStrVKI(reinterpret_cast<const char *>(0x01135FF0)); // T5
+        *output = BfmeStrVKI("[object Object]"); // T5
         break;
     case 32: case 33: case 34:
-        *output = BfmeStrVKI(reinterpret_cast<const char *>(0x01135FE4)); // T6
+        *output = BfmeStrVKI("[object]"); // T6
         break;
     case 28:
-        *output = BfmeStrVKI(reinterpret_cast<const char *>(0x01135FCC)); // T7
+        *output = BfmeStrVKI("[object (prototype)]"); // T7
         break;
     case 29:
         reinterpret_cast<Rva008B6880 *>(this)->invoke(output);
         break;
     case 30:
-        *output = BfmeStrVKI(reinterpret_cast<const char *>(0x01135FC0)); // T8
+        *output = BfmeStrVKI("[MovieClip]"); // T8
         break;
     case 4:
-        *output = BfmeStrVKI(reinterpret_cast<const char *>(0x01135FB4)); // T9
+        *output = BfmeStrVKI("[Register]"); // T9
         break;
     case 8:
-        *output = BfmeStrVKI(reinterpret_cast<const char *>(0x01135FA8)); // T10
+        *output = BfmeStrVKI("[Lookup]"); // T10
         break;
     case 11:
-        *output = BfmeStrVKI(reinterpret_cast<const char *>(0x01135F9C)); // T11
+        *output = BfmeStrVKI("[Extern]"); // T11
         break;
     case 20:
-        *output = BfmeStrVKI(reinterpret_cast<const char *>(0x01135F8C)); // T12
+        *output = BfmeStrVKI("[FrameStack]"); // T12
         break;
     case 37:
-        *output = BfmeStrVKI(reinterpret_cast<const char *>(0x01135F80)); // T13
+        *output = BfmeStrVKI("[Extension]"); // T13
         break;
     case 38:
-        *output = BfmeStrVKI(reinterpret_cast<const char *>(0x01135F6C)); // T14
+        *output = BfmeStrVKI("[GlobalExtension]"); // T14
         break;
     case 41:
         output->assign(m_string20);
