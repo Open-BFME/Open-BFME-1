@@ -1,5 +1,5 @@
-// ?d_002a9000@@YAXXZ
-// partial score=0.901561 date=2026-09-26
+// ?approachTarget@SpecialAbilityUpdate@@UAEEXZ
+// partial score=0.915966 date=2026-09-28
 // cl: /DNDEBUG /MD
 extern "C" double sqrt(double);
 #pragma intrinsic(sqrt)
@@ -37,7 +37,7 @@ class SpecialAbilityUpdateModuleData {public:
  char pad1dc[0x10];float m_startAbilityRange;
  char pad1f0[0x60];ContactString002A9000 field250;
 };
-extern void j_00046e34();
+struct Rva002A5FB0 { unsigned char method(Coord3D*,float); };
 class SpecialAbilityUpdate {public:
  virtual void slot0();
  virtual void slot1();
@@ -52,19 +52,19 @@ class SpecialAbilityUpdate {public:
  virtual void slot10();
  virtual void onExit(bool,bool);
 
- unsigned char approachTarget();
+ virtual unsigned char approachTarget();
  SpecialAbilityUpdateModuleData* data;Object* object;
+ SpecialAbilityUpdateModuleData* getSpecialAbilityUpdateModuleData() const { return data; }
+ Object* getObject() const { return object; }
  char pad00c[0xa0];int targetID;Coord3D targetPos;Coord3D lastPosition;
  char pad0c8[0x15];bool field0dd;char pad0de[7];bool field0e5;
- unsigned char adjust002A5FB0(Coord3D*,float);
 };
 unsigned char SpecialAbilityUpdate::approachTarget() {
- Object* self=object;
- const SpecialAbilityUpdateModuleData* d=data;
+ Object* self=getObject();
+ const SpecialAbilityUpdateModuleData* d=getSpecialAbilityUpdateModuleData();
  if(!field0dd) {
-  int id=targetID;
   Coord3D pos=targetPos;
-  Object* target=TheGameLogic->findObjectByID(id);
+  Object* target=TheGameLogic->findObjectByID(targetID);
   if(target) pos.set(target->getPosition());
   Coord3D delta=lastPosition;
   delta.sub(&pos);
@@ -94,7 +94,7 @@ unsigned char SpecialAbilityUpdate::approachTarget() {
     ai->ignoreObstacle(target);
     if(!((Thing*)target)->isKindOf((KindOfType)7) && ((Gen_001BEC20*)target)->bfmeScale()!=1 && ranged) {
      Coord3D pos=*target->getPosition();
-     adjust002A5FB0(&pos,d->m_startAbilityRange);
+     ((Rva002A5FB0*)this)->method(&pos,d->m_startAbilityRange);
      ai->command()->aiFacePosition(&pos,(CommandSourceType)2);return true;
     }
     ai->command()->aiMoveToObject(target,(CommandSourceType)2);return true;
