@@ -33,19 +33,44 @@ extern "C" RvaModuleHandle821D0 (__stdcall *g_rva0130E988LoadLibraryA)(
 extern void *rva00882140PatchAllModules(const char *dllName,
 	const char *functionName, void *replacement);
 
+extern unsigned char g_0130E990;
+extern RvaLoadLibraryW821D0 g_0130E984;
+extern RvaLoadLibraryExA821D0 g_0130E980;
+extern RvaLoadLibraryExW821D0 g_0130E97C;
+
+extern RvaModuleHandle821D0 __stdcall d_00881fb0(const char *name);
+extern RvaModuleHandle821D0 __stdcall d_00881fd0(const unsigned short *name);
+extern RvaModuleHandle821D0 __stdcall d_00881ff0(const char *name,
+	RvaModuleHandle821D0 module, RvaDword821D0 flags);
+extern RvaModuleHandle821D0 __stdcall d_00882020(const unsigned short *name,
+	RvaModuleHandle821D0 module, RvaDword821D0 flags);
+extern void *d_00881ca0(unsigned int count, unsigned int size);
+extern void *d_00881ce0(unsigned int count, unsigned int size);
+extern void d_00881d20(void *ptr);
+extern void d_00881d40(void);
+extern void *d_00881d70(unsigned int size);
+extern void *d_00881d90(unsigned int size);
+extern void d_00881db0(void);
+extern void d_00881dc0(void);
+extern void d_00881dd0(void);
+extern void *d_00881df0(void *ptr, unsigned int size);
+extern char *d_00881e10(const char *src);
+extern unsigned short *d_00881e60(const unsigned short *src);
+extern void d_00881ea0(void);
+
 // ?rva008821d0LoaderPatch@@YAXXZ
 void rva008821d0LoaderPatch(void)
 {
-	if (*(volatile unsigned char *)0x0130E990 != 0)
+	if (g_0130E990 != 0)
 		return;
 
 	if (g_rva0130E988LoadLibraryA != 0)
 	{
-		*(volatile unsigned char *)0x0130E990 = 1;
+		g_0130E990 = 1;
 	}
 	else
 	{
-		*(volatile unsigned char *)0x0130E990 = 1;
+		g_0130E990 = 1;
 		g_rva0130E988LoadLibraryA =
 			(RvaModuleHandle821D0 (__stdcall *)(const char *))GetProcAddress(
 				LoadLibraryA("kernel32.dll"), "LoadLibraryA");
@@ -58,31 +83,31 @@ void rva008821d0LoaderPatch(void)
 	if (osvi.dwPlatformId > 1)
 	{
 		rva00882140PatchAllModules("kernel32.dll", "LoadLibraryA",
-			(void *)0x00C81FB0);
-		*(RvaLoadLibraryW821D0 *)0x0130E984 =
+			(void *)d_00881fb0);
+		g_0130E984 =
 			(RvaLoadLibraryW821D0)rva00882140PatchAllModules(
-				"kernel32.dll", "LoadLibraryW", (void *)0x00C81FD0);
-		*(RvaLoadLibraryExA821D0 *)0x0130E980 =
+				"kernel32.dll", "LoadLibraryW", (void *)d_00881fd0);
+		g_0130E980 =
 			(RvaLoadLibraryExA821D0)rva00882140PatchAllModules(
-				"kernel32.dll", "LoadLibraryExA", (void *)0x00C81FF0);
-		*(RvaLoadLibraryExW821D0 *)0x0130E97C =
+				"kernel32.dll", "LoadLibraryExA", (void *)d_00881ff0);
+		g_0130E97C =
 			(RvaLoadLibraryExW821D0)rva00882140PatchAllModules(
-				"kernel32.dll", "LoadLibraryExW", (void *)0x00C82020);
+				"kernel32.dll", "LoadLibraryExW", (void *)d_00882020);
 	}
 
-	rva00882140PatchAllModules("msvcr71.dll", "calloc", (void *)0x00C81CA0);
-	rva00882140PatchAllModules("msvcr71.dll", "_calloc_dbg", (void *)0x00C81CE0);
-	rva00882140PatchAllModules("msvcr71.dll", "free", (void *)0x00C81D20);
-	rva00882140PatchAllModules("msvcr71.dll", "_free_dbg", (void *)0x00C81D40);
-	rva00882140PatchAllModules("msvcr71.dll", "malloc", (void *)0x00C81D70);
-	rva00882140PatchAllModules("msvcr71.dll", "_malloc_dbg", (void *)0x00C81D90);
-	rva00882140PatchAllModules("msvcr71.dll", "_msize", (void *)0x00C81DB0);
-	rva00882140PatchAllModules("msvcr71.dll", "_msize_dbg", (void *)0x00C81DC0);
-	rva00882140PatchAllModules("msvcr71.dll", "realloc", (void *)0x00C81DD0);
-	rva00882140PatchAllModules("msvcr71.dll", "_realloc_dbg", (void *)0x00C81DF0);
-	rva00882140PatchAllModules("msvcr71.dll", "_strdup", (void *)0x00C81E10);
-	rva00882140PatchAllModules("msvcr71.dll", "_wcsdup", (void *)0x00C81E60);
-	rva00882140PatchAllModules("msvcr71.dll", "_mbsdup", (void *)0x00C81EA0);
+	rva00882140PatchAllModules("msvcr71.dll", "calloc", (void *)d_00881ca0);
+	rva00882140PatchAllModules("msvcr71.dll", "_calloc_dbg", (void *)d_00881ce0);
+	rva00882140PatchAllModules("msvcr71.dll", "free", (void *)d_00881d20);
+	rva00882140PatchAllModules("msvcr71.dll", "_free_dbg", (void *)d_00881d40);
+	rva00882140PatchAllModules("msvcr71.dll", "malloc", (void *)d_00881d70);
+	rva00882140PatchAllModules("msvcr71.dll", "_malloc_dbg", (void *)d_00881d90);
+	rva00882140PatchAllModules("msvcr71.dll", "_msize", (void *)d_00881db0);
+	rva00882140PatchAllModules("msvcr71.dll", "_msize_dbg", (void *)d_00881dc0);
+	rva00882140PatchAllModules("msvcr71.dll", "realloc", (void *)d_00881dd0);
+	rva00882140PatchAllModules("msvcr71.dll", "_realloc_dbg", (void *)d_00881df0);
+	rva00882140PatchAllModules("msvcr71.dll", "_strdup", (void *)d_00881e10);
+	rva00882140PatchAllModules("msvcr71.dll", "_wcsdup", (void *)d_00881e60);
+	rva00882140PatchAllModules("msvcr71.dll", "_mbsdup", (void *)d_00881ea0);
 
-	*(volatile unsigned char *)0x0130E990 = 0;
+	g_0130E990 = 0;
 }
