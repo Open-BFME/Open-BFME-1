@@ -1,29 +1,30 @@
 // ?updateDrawable@Drawable@@QAEXXZ
-// partial score=0.9 date=2026-09-28
+// partial score=0.95 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /MD /EHs-c-
 
 // ?updateDrawable@Drawable@@QAEXXZ  retail 0x0041BE60, 2437 bytes (ret at +0x984).
 // Identity: matched StealthUpdate::changeVisualDisguise (0x002AC620) reaches this
-// body through ILT 0x00031C55 (verdict #3 and #4 in re_attempts.log).
+// body through ILT 0x00031C55.
 //
-// probe: EXACT modulo relocation slots (2437/2437, 64 relocs). NOT landable yet,
-// because two spots rely on a spelling that no retail source would contain:
-//   1. TintEnvelopeInlineCtor: retail INLINES the 0x50-byte TintEnvelope
-//      constructor (vtable 0x010F1410 plus zero stores) at the tint-bit-1 and
-//      tint-bit-8 sites (+0x4B0, +0x535), then CALLS it through ILT 0x00037475
-//      at the bit-0x10, bit-0x20 and default sites (+0x5DD, +0x634, +0x6B3).
-//      colorFlash (0x00416440) calls it out of line too.
-//   2. setFromIntInline: retail inlines RGBColor::setFromInt for the flash color
-//      (+0x428) but calls it through ILT 0x0002CDC7 for m_tintColor6C (+0x680).
-// MSVC 7.1 /O2 inlines every site when the ctor and setFromInt are one inline
-// function (measured: 1485 differing bytes, all in these five sites plus the
-// register fallout). /Os, /O1 and /Ob1 are worse. Eleven extra ctor sites in the
-// same function also all inline, so a plain growth budget does not explain it.
-// NEXT: find the native spelling that inlines the first two sites only, for
-// example an inline Drawable helper or a second inline TintEnvelope entry point
-// used by the first two branches. Then replace the twin class. Landing also needs
-// route pins for the ILT callees (0x1DF2F play, 0x2CE76 update, 0x341C6,
-// 0x2CDC7, 0x421AE, 0x1E0BA) and a symbol for the envelope vtable DIR32.
+// probe: EXACT modulo relocation slots (2437/2437, 64 relocs), with no invented
+// class. Two overload pairs on the real classes produce the split:
+//   * TintEnvelope: an out-of-line default ctor (ILT 0x00037475, used at the
+//     bit-0x10, bit-0x20 and default sites) plus an inline
+//     `explicit TintEnvelope(int)` used as `new TintEnvelope(0)` at the bit-1
+//     and bit-8 sites (+0x4B0, +0x535).
+//   * RGBColor: an inline setFromInt(Int) for the flash color (+0x428) plus an
+//     out-of-line setFromInt(UnsignedInt), which the 0xffffffff literal selects
+//     (ILT 0x0002CDC7, +0x680).
+// NOT LANDED: the image cannot confirm either pair. All five constructions pass
+// zero stack arguments, and an inline ctor's argument disappears once inlined,
+// so argument shape cannot tell the two ctors apart. The int parameter is
+// therefore unwitnessed. setFromInt(UnsignedInt) would also put a second
+// spelling on the 0x00083370 body, whose ledger name says Int.
+// With one inline ctor and one setFromInt the body is 2623 B with 1485
+// differing bytes.
+// Landing also needs route pins for the ILT callees (0x1DF2F play, 0x2CE76
+// update, 0x341C6, 0x2CDC7, 0x421AE, 0x1E0BA, 0x37475) and data symbols for
+// 0x010F1058, 0x010F1064 and 0x012B4F98.
 
 typedef unsigned int UnsignedInt;
 typedef int Int;
@@ -65,8 +66,8 @@ struct RGBColor
 	Real green;
 	Real blue;
 
-	void setFromInt(Int color);
-	void setFromIntInline(Int color)
+	void setFromInt(UnsignedInt color);
+	void setFromInt(Int color)
 	{
 		red = (Real)((color >> 16) & 0xff) * (1.0f / 255.0f);
 		green = (Real)((color >> 8) & 0xff) * (1.0f / 255.0f);
@@ -90,7 +91,29 @@ class TintEnvelope
 {
 public:
 	TintEnvelope(void);
-	TintEnvelope(int) {}
+	explicit TintEnvelope(int)
+	{
+		m_bfme04 = 0;
+		m_bfme08 = 0;
+		m_bfme0C = 0;
+		m_bfme10 = 0;
+		m_bfme14 = 0;
+		m_bfme18 = 0;
+		m_bfme1C = 0;
+		m_bfme20 = 0;
+		m_bfme24 = 0;
+		m_bfme28 = 0;
+		m_bfme2C = 0;
+		m_bfme30 = 0;
+		m_bfme44 = 0;
+		m_bfme48 = 0;
+		m_bfme4C = 0;
+		m_bfme38 = 0;
+		m_bfme34 = 0;
+		m_bfme39 = 0;
+		m_bfme3C = 0;
+		m_bfme40 = 0;
+	}
 
 	virtual void bfmeSnapshotSlot00(void);
 
@@ -123,34 +146,6 @@ public:
 	Int m_bfme44;
 	Int m_bfme48;
 	Int m_bfme4C;
-};
-
-class TintEnvelopeInlineCtor : public TintEnvelope
-{
-public:
-	TintEnvelopeInlineCtor(void) : TintEnvelope(0)
-	{
-		m_bfme04 = 0;
-		m_bfme08 = 0;
-		m_bfme0C = 0;
-		m_bfme10 = 0;
-		m_bfme14 = 0;
-		m_bfme18 = 0;
-		m_bfme1C = 0;
-		m_bfme20 = 0;
-		m_bfme24 = 0;
-		m_bfme28 = 0;
-		m_bfme2C = 0;
-		m_bfme30 = 0;
-		m_bfme44 = 0;
-		m_bfme48 = 0;
-		m_bfme4C = 0;
-		m_bfme38 = 0;
-		m_bfme34 = 0;
-		m_bfme39 = 0;
-		m_bfme3C = 0;
-		m_bfme40 = 0;
-	}
 };
 
 class ModelConditionFlags;
@@ -588,7 +583,7 @@ void Drawable::updateDrawable(void)
 	if (m_flashCount160 > 0 && (TheGameClient->getFrame() % 15) == 0)
 	{
 		RGBColor tmp;
-		tmp.setFromIntInline(m_flashColor164);
+		tmp.setFromInt(m_flashColor164);
 		colorFlash(&tmp);
 		m_flashCount160--;
 	}
@@ -598,14 +593,14 @@ void Drawable::updateDrawable(void)
 		if (m_tintStatus114 & 0x1)
 		{
 			if (m_colorTintEnvelope == 0)
-				m_colorTintEnvelope = new TintEnvelopeInlineCtor;
+				m_colorTintEnvelope = new TintEnvelope(0);
 			m_colorTintEnvelope->play(&g_rva00CF1058TintColor, 30, 30, 0xfffffffe);
 			m_colorTintEnvelope->setPulse(0.0f, 0.0f);
 		}
 		else if (m_tintStatus114 & 0x8)
 		{
 			if (m_colorTintEnvelope == 0)
-				m_colorTintEnvelope = new TintEnvelopeInlineCtor;
+				m_colorTintEnvelope = new TintEnvelope(0);
 			m_colorTintEnvelope->play(&g_rva00CF1064TintColor, 30, 30, 300);
 			m_colorTintEnvelope->setPulse(0.25f, 0.05f);
 			m_tintStatus114 = 0;
