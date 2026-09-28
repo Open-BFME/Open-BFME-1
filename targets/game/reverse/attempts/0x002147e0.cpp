@@ -1,5 +1,5 @@
 // ?apply@Rva002147E0Owner@@QAEXMPAUDamageInfo@@@Z
-// partial score=0.375635 date=2026-09-25
+// partial score=0.383249 date=2026-09-28
 // ?apply@Rva002147E0Owner@@QAEXMPAUDamageInfo@@@Z
 // cl: /EHsc
 // Scratch conversion probe for retail RVA 0x002147E0 (394 bytes).
@@ -70,7 +70,8 @@ struct Rva002147E0Owner
 
 void Rva002147E0Owner::apply(float amount, DamageInfo *info)
 {
- if (amount != 0.0f) {
+ if(amount == 0.0f) return;
+ {
   Object *objectPointer=object();
   unsigned char *data=moduleData();
   bool fatal=false;
@@ -79,17 +80,17 @@ void Rva002147E0Owner::apply(float amount, DamageInfo *info)
    fatal=true;
    if(!data[0x60]) accepted=true;
    else if(info) {
-    Object *source=TheBfmeGameLogic->findObjectByID(info->sourceID);
-    if(source && ((Rva003A04A0Filter*)(data+0x5c))->accepts(source,objectPointer->getControllingPlayer()))
-     accepted=true;
+    Object *savedObject=objectPointer;
+    objectPointer=TheBfmeGameLogic->findObjectByID(info->sourceID);
+    if(objectPointer && ((Rva003A04A0Filter*)(data+0x5c))->accepts(objectPointer,savedObject->getControllingPlayer())) accepted=true;
+    objectPointer=savedObject;
    }
   }
   rva002103A0(amount,info);
   static unsigned int respawnUpdateKey=TheNameKeyGenerator->nameToKey("RespawnUpdate");
   Module *module=objectPointer->findModule(respawnUpdateKey);
-  if(accepted) {
-   if(module) module->rva002A21F0();
-  } else if(fatal && module) {
+  if(!accepted) {
+   if(!fatal || !module) return;
    if(objectPointer->testStatus(0x4f)) {
     module->rva002A21F0();
     module->timer=0;
@@ -98,6 +99,8 @@ void Rva002147E0Owner::apply(float amount, DamageInfo *info)
    }
    module->rva002A30D0();
    objectPointer->onDie(info);
+   return;
   }
+  if(module) module->rva002A21F0();
  }
 }

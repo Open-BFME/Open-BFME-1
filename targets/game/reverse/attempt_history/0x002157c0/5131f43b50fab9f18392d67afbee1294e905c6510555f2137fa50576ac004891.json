@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "5131f43b50fab9f18392d67afbee1294e905c6510555f2137fa50576ac004891",
+  "symbol": "?refresh@Rva002157C0Owner@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.942373,
+  "source": "// ?refresh@Rva002157C0Owner@@QAEXXZ\n// partial score=0.942373 date=2026-09-28\n// cl: /DNDEBUG /MD /EHsc\r\n#include \"../../game/Libraries/Source/WWVegas/WWLib/ascii_string.h\"\r\nstruct Matrix3D;\r\nstruct Thing { void rva00132200(const Matrix3D*); };\r\nstruct Rva002157C0Data { char pad[0x5c]; AsciiString field5c; };\r\nstruct Rva002157C0Node { char pad[0x74]; int field74; char gap[0xc]; AsciiString field84; Rva002157C0Node *next; };\r\nstruct Gen_00383090 { int m(); };\r\nextern Gen_00383090 *TheBfmeGameLogic;\r\nstruct BfmeOwnFCB { void bfmeAfterFCB(); void refreshRva00215650(); };\r\nstruct Rva002157C0Owner {\r\n void *vtable; Rva002157C0Data *data; Thing *object; char pad[0xd8]; int fieldE4;\r\n void refresh();\r\n};\r\nvoid Rva002157C0Owner::refresh() {\r\n Thing *obj=object;\r\n if(obj) {\r\n  Rva002157C0Data *md=data;\r\n  Rva002157C0Node *node=(Rva002157C0Node*)TheBfmeGameLogic->m();\r\n  AsciiString name;\r\n  for(;node;node=node->next) {\r\n   name=node->field84;\r\n   if(name.compare(md->field5c)==0) {\r\n    obj->rva00132200((const Matrix3D*)((char*)node+8));\r\n    fieldE4=node->field74;\r\n    ((BfmeOwnFCB*)this)->bfmeAfterFCB();\r\n    break;\r\n   }\r\n  }\r\n  ((BfmeOwnFCB*)this)->refreshRva00215650();\r\n  ((BfmeOwnFCB*)this)->bfmeAfterFCB();\r\n }\r\n}\r\n"
+}
