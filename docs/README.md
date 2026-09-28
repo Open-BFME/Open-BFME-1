@@ -1,3 +1,2 @@
-These documents preserve context for contributors. Add or expand documentation
-only with explicit user permission, and keep it concise enough to justify its
-context cost.
+Instructions for contributors and agents. `tools/doc_budget.py`, run by both
+hooks, refuses net growth here, in AGENTS.md and in README.md: cut before you add.

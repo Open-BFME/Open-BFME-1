@@ -86,6 +86,8 @@ python3 tools/name_regression.py "$layout_base" : || fail "descriptive names reg
 python3 tools/eol_guard.py || fail "staged change rewrites line endings (see above)"
 # A deliberately deleted file may not come back by accident (targets/game/reverse/retired_paths.txt).
 python3 tools/retired_guard.py --staged || fail "retired path re-added (see above)"
+# The docs agents load may not grow back; written bans never held one.
+python3 tools/doc_budget.py --staged || fail "doc budget (see above)"
 
 # WorldBuilder has a separate image and ledger; verify it before the game-only
 # early exit, then keep its exclusive sources out of the game's source parser.

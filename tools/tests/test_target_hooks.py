@@ -215,7 +215,8 @@ def test_untracked_header_cannot_influence_compilation(repo):
 def hook_fixture(repo):
     for name in ("check_case_collisions", "conversion_gate", "name_regression", "name_oracle",
                  "name_history", "eol_guard", "retired_guard", "check_csv", "pin_consistency",
-                 "one_identity", "b_pin_check", "identity_guard", "adopt_header", "delta_sources"):
+                 "one_identity", "b_pin_check", "identity_guard", "adopt_header", "delta_sources",
+                 "doc_budget"):
         put(repo, "tools/" + name + ".py", "raise SystemExit(0)\n")
     put(repo, "tools/find_declared_unmatched.py", "open('game-parser', 'w').write('called')\n")
     put(repo, "build.sh", "#!/usr/bin/env bash\nprintf '%s\\n' \"$@\" > game-build\n")
