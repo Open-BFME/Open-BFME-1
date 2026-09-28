@@ -1,11 +1,9 @@
-// ?d_006b1a00@@YAXXZ
-// partial score=0.82 date=2026-09-21
-// ?d_006b1a00@@YAXXZ
-// partial score~0.82 date=2026-09-21
-// Retail 0x006B1A00: BFME Miles fading-audio volume update, reached by the
-// fading-list processor at 0x006B2FC0 (two call sites).  A sibling of the
+// ?rva006B1A00@Rva006B1B40MilesAudioManager@@QAEXPAVRva006B1B40PlayingAudioRef@@@Z
+//
+// Retail 0x006B1A00 (252 B): BFME Miles fading-audio volume update, reached by the
+// fading-list processor at 0x006B2FC0 (two call sites). A sibling of the
 // PlayingAudio sample-start helper 0x006B1B40 (same compute()/fade shape,
-// same PlayingAudio/PlayingAudioRef/AudioSettings layout).  Type dispatch
+// same PlayingAudio/PlayingAudioRef/AudioSettings layout). Type dispatch
 // (playing->m_type) mirrors ZH's MilesAudioManager::processFadingList
 // switch(playing->m_type) for cases PAT_Sample(0)/PAT_3DSample(1)/
 // PAT_Stream, but BFME preserves the sample/stream's live pan (queries it
@@ -17,23 +15,16 @@
 // handle from a per-instance 0x40-byte-stride table at this+0xb44, indexed
 // by the PlayingAudio's m_sample field reinterpreted as an integer, then
 // shares the m_type==1 tail (null check + AIL_set_3D_sample_volume). No ZH
-// counterpart names the m_type==2 case, so its identity stays address-
-// derived (do not call it PAT_Stream -- confirmed PAT_Stream is m_type==3
-// here).
+// counterpart names the m_type==2 case, so the method identity stays
+// address-derived.
 //
-// Size is 1 byte short (251 vs retail 252) and 45 non-reloc bytes differ,
-// ALL of them inside the m_type==1||2 dispatch (from +0x9c onward); the
-// fade/volume prologue and both the sample(0) and stream(3) cases are
-// BYTE-EXACT.  Retail's shape there is "dec eax; je case1Tail; dec eax;
-// jne default" (6 bytes) where case1's own body (mov ecx,[ecx+8]) sits
-// physically first and the m_type==2/table path *jumps into the middle*
-// of it, past that one mov, to a shared "test ecx,ecx" tail -- i.e. the
-// compiler cross-jumped two textually distinct blocks into one shared
-// suffix. A plain if/else, an if/else on --type, and an explicit
-// switch(type){case 2: ...; default: ...} were all tried (this file keeps
-// the switch form, closest at 251B/45 diffs); none reproduced the same
-// dec/dec/je/jne shape or the shared mid-block jump target. Treat as an
-// MSVC 7.1 cross-block tail-merge residue, not a semantic or layout gap.
+// The landing shape is a switch with explicit case 1 (direct sample handle),
+// case 2 (slot-table lookup) and default: return. MSVC 7.1 emits retail's
+// "dec eax; je case1Tail; dec eax; jne default" dispatch with case1's mov
+// sitting physically first and the case-2 path jumping into its middle.
+// Earlier forms (plain if/else, if/else on --type, switch with case 2 plus
+// default only) all came out 251 B with 45 differing bytes confined to that
+// dispatch.
 
 typedef float Real;
 typedef unsigned char Bool;
@@ -115,7 +106,7 @@ struct Rva006B1A00TableEntry
 class Rva006B1B40MilesAudioManager : public Rva006AE150Owner
 {
 public:
-	void rva006B1A00UpdateFadeVolume(Rva006B1B40PlayingAudioRef *playingRef);
+	void rva006B1A00(Rva006B1B40PlayingAudioRef *playingRef);
 
 private:
 	Rva006B1B40AudioSettings *m_audioSettings;
@@ -123,7 +114,7 @@ private:
 	Rva006B1A00TableEntry *m_slotTable;
 };
 
-void Rva006B1B40MilesAudioManager::rva006B1A00UpdateFadeVolume(
+void Rva006B1B40MilesAudioManager::rva006B1A00(
 	Rva006B1B40PlayingAudioRef *playingRef)
 {
 	Rva006B1B40AudioEvent *event = playingRef->m_ptr->m_event;
@@ -152,6 +143,9 @@ void Rva006B1B40MilesAudioManager::rva006B1A00UpdateFadeVolume(
 		H3DSAMPLE sample3D;
 		switch (type)
 		{
+		case 1:
+			sample3D = (H3DSAMPLE)playingRef->m_ptr->m_sample;
+			break;
 		case 2:
 		{
 			int index = (int)(long)playingRef->m_ptr->m_sample;
@@ -159,8 +153,7 @@ void Rva006B1B40MilesAudioManager::rva006B1A00UpdateFadeVolume(
 			break;
 		}
 		default:
-			sample3D = (H3DSAMPLE)playingRef->m_ptr->m_sample;
-			break;
+			return;
 		}
 		if (sample3D)
 			_AIL_set_3D_sample_volume(sample3D, volume);
