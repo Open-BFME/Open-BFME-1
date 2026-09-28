@@ -287,6 +287,7 @@ def replay(repo, commit, tree, tries=20, correct=None):
 def _replay(repo, commit, tree, tries, correct):
     delta = seat_delta(repo, commit)
     message = git(repo, "log", "-1", "--format=%B", commit).stdout
+    last_failure, repeats, last_text = None, 0, ""
     for attempt in range(tries):
         git(tree, "fetch", "-q", "origin", "master", check=True)
         git(tree, "reset", "-q", "--hard", "origin/master", check=True)
@@ -322,11 +323,23 @@ def _replay(repo, commit, tree, tries, correct):
         # our "conversion direction" regression (2026-09-27, two seats).
         git(tree, "fetch", "-q", "origin", "master")
         moved = git(tree, "rev-parse", "origin/master").stdout.strip() != base
-        if not moved and not any(k in pushed.stdout + pushed.stderr for k in RACES):
-            return "push refused:\n" + (pushed.stdout + pushed.stderr)[-2500:]
+        text = pushed.stdout + pushed.stderr
+        if not moved and not any(k in text for k in RACES):
+            return "push refused:\n" + text[-2500:]
+        # ...but master moves every ~40 s, so a GENUINE refusal would otherwise
+        # loop forever as a "race": the same hook failure three times running
+        # is real (2026-09-27: a CR bug in verification_cache failed every
+        # Windows push for an hour and looked like 20 lost races).
+        failure = next((line for line in text.splitlines() if "FAILED" in line), None)
+        if failure and "conversion direction" not in failure:
+            repeats = repeats + 1 if failure == last_failure else 1
+            last_failure = failure
+            if repeats >= 3:
+                return "push refused (same hook failure 3 times):\n" + text[-2500:]
+        last_text = text
         if attempt + 1 < tries:
             time.sleep(min(2 ** attempt, 8))
-    return f"not pushed after {tries} replays"
+    return f"not pushed after {tries} replays; last refusal:\n" + last_text[-2000:]
 
 
 def replay_tree():
