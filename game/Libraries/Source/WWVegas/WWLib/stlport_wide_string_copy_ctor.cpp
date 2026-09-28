@@ -84,6 +84,12 @@ basic_string<CharT, Traits, Alloc>::basic_string(const basic_string<CharT, Trait
 	_M_range_initialize(s._M_start, s._M_finish);
 }
 
+// Open-BFME5: _STL::basic_string<char>::_M_range_initialize(const char *, const char *),
+// retail 0x004FB130, 23 bytes. Explicitly instantiate the two-argument
+// wrapper; it forwards to the three-argument iterator-tag overload.
+template void basic_string<char, char_traits<char>, allocator<char> >
+	::_M_range_initialize(const char *, const char *);
+
 }
 
 // Placement new declared here rather than including <new>: the anchor only
