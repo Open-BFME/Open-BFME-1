@@ -7838,5 +7838,15 @@
   "after_sha256": "e05d3030ed10d07979e8169c8412581d56aea22724f74cc1dd9ec2f8ee242453",
   "evidence": "targets/game/reverse/symbols.csv",
   "reason": "targets/game/reverse/symbols.csv pins ?Rva008AE770TheStack@@3URva008AE770Stack@@A at 0x01338748, which spells the name Rva008AE770TheStack; the source uses that pinned spelling instead of stack01338748."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00418da0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/DrawableConstructor.cpp",
+  "old_name": "DrawableEmitterCall",
+  "new_name": "Gen_00417cb0",
+  "before_sha256": "bf9ca4460bec7a8d6e77f78c3ad1c0f7e4b5340eb3562f5d9b66782af57d080f",
+  "after_sha256": "82e889ee0c45c4ad527206dbdde0034b894c269fa0d2ebf2bc31417f863bb2a9",
+  "evidence": "targets/game/reverse/identity_evidence/00418da0-emit-callee.md",
+  "reason": "Bank retirement: the stash's DrawableEmitterCall::emit was an unresolvable /alternatename shim for ILT 0x0002CB79 whose body 0x00417710 is an unidentified gen dump; the landed constructor uses the existing symbols.csv pin ?bfmeEmit@Gen_00417cb0@@AAEXPAX0@Z and asserts no emitter identity."
  }
 ]
