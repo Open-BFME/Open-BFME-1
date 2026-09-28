@@ -224,6 +224,67 @@ rotation_sweep.py. Siblings in the same file share layouts: land the closest one
 """ + NOTE.split("\n", 3)[3]
 
 
+LEVER_NOTE = """LEVER TRIAL SEAT ({model}, {effort}, hard cap {hours} hours). Each body below compiles to within 10% of
+retail -- MEASURED by the compiler (tools/finish_measure.py), not an author's score -- and earlier sessions blamed
+register allocation, stack slots or instruction order. Blind source shuffling is a measured dead end for this class
+(a 1,871-mutation permuter moved 0 of 9 such bodies; the compiler-flag sweep found nothing). The hypothesis under
+test: these residues usually come from a wrong TYPE, ABI or INLINE decision. START FROM THE STASH and work these
+lever families IN ORDER on each body, probing after every change:
+  1 abi     python3 tools/callees.py: every callee's convention, argument count and types, return use. A wrong
+            ABI reads as an allocation residue (docs/shape_levers.md, 0x000BE410).
+  2 types   the exact type of every member, local and parameter the body touches (tools/name_oracle.py, layout
+            witnesses): int vs unsigned, char/short width, Bool vs BOOL, signed compares, pointer vs reference.
+  3 inline  which callees retail inlined and which it called; header-inline accessors, a static __forceinline
+            helper (0x0024E990), operator forms (ICoord2D operator!=, 0x003D86E0).
+  4 locals  the catalogued local shapes in docs/shape_levers.md: a narrow local whose address is taken, a Bool
+            assigned inside a guard, a call result landed in an unsigned char local, integer-on-the-right indexing.
+  5 search  python3 tools/shape_family_levers.py and tools/shape_search.py on whatever residue remains.
+LOG EVERY VERDICT with `levers=<families tried, in order>` and, when one moved the diff, `lever_hit=<family>`, e.g.
+re_log.py record ... partial "levers=abi,types,inline lever_hit=types blocker=regalloc ..." --stash <best> --score
+<probe's measured score>. The families you tried are the experiment's data; an unlogged session is a lost sample.
+""" + NOTE.split("\n", 3)[3]
+
+
+def experiment_groups(measured_path, bodies=20, per_seat=5):
+    """Both arms of the lever experiment: [(arm, label, rvas)]. Candidates are
+    open dumps whose stash MEASURES 0.90-0.99 and compiles, whose latest verdict
+    blames regalloc, stack-slot or codegen-order, 150-2500 B, free of claims and
+    of earlier seats. Ranked by measured quality and dealt alternately, so the
+    arms see the same difficulty."""
+    import blockers
+    import eligibility
+    import re_log
+
+    cache = json.loads(Path(measured_path).read_text(encoding="utf-8"))
+    latest = re_log.latest_records()
+    busy = claimed() | {int(r, 16) for r in eligibility.busy_rvas()}
+    open_dumps = {int(r["target_rva"], 16): int(r["target_size"]) for r in eligibility.load_rows()
+                  if r.get("status") == "matched" and eligibility.is_dump_row(r)}
+    found = []
+    for key, entry in cache.items():
+        rva = int(key, 16)
+        size = open_dumps.get(rva)
+        quality = entry.get("quality") or 0
+        record = latest.get(rva)
+        if (size is None or not 150 <= size <= 2500 or rva in busy or not entry.get("compiles")
+                or not 0.90 <= quality < 1.0 or record is None):
+            continue
+        tags = blockers.TAG.findall(record[4])
+        if not tags or blockers.canonical(tags[0]) not in ("regalloc", "stack-slot", "codegen-order"):
+            continue
+        found.append((quality, rva))
+    found.sort(reverse=True)
+    arms = {"A": [], "B": []}
+    for index, (_, rva) in enumerate(found[:bodies]):
+        arms["A" if index % 2 == 0 else "B"].append(rva)
+    groups = []
+    for arm, rvas in arms.items():
+        name = "levers" if arm == "A" else "control"
+        for start in range(0, len(rvas), per_seat):
+            groups.append((arm, f"experiment {arm} ({name})", rvas[start:start + per_seat]))
+    return groups
+
+
 def fresh_checkout():
     """pick() reads this checkout's ledger; a stale one re-serves landed bodies
     (2026-09-27: a seat was served four lifts landed hours earlier)."""
@@ -560,6 +621,9 @@ def main(argv=None):
                     help="serve bodies attempted once or twice (start from the stash) instead of never-tried ones")
     ap.add_argument("--big", action="store_true",
                     help="serve never-attempted bodies of 1.2-8 KB, 1-3 per seat, 3 h cap (half the remaining bytes)")
+    ap.add_argument("--experiment", metavar="MEASURED_JSON",
+                    help="lever experiment: 20 measured 0.90-0.99 allocation/order near misses, dealt alternately "
+                         "to lever-protocol seats (A) and ordinary retry seats (B) launched together")
     ap.add_argument("--seat", help="harvested: mark this seat id as reviewed, releasing its bodies")
     ap.add_argument("--correct", nargs=2, metavar=("EVIDENCE", "REASON"),
                     help="harvest --seat ID: document the renames name_regression reports, citing EVIDENCE "
@@ -591,6 +655,17 @@ def main(argv=None):
                 print(f"{label}: {' '.join(f'0x{r:08X}' for r in starts)}")
             return 0
         launch(groups, 3.0, GAP_NOTE, gap_brief)
+        return 0
+    if args.experiment:
+        groups = experiment_groups(args.experiment)
+        if args.action == "pick":
+            for arm, label, rvas in groups:
+                print(f"{label}: {' '.join(f'0x{r:08X}' for r in rvas)}")
+            return 0
+        for arm in ("A", "B"):
+            time.sleep(1.1)  # seat ids are timestamped to the second
+            launch([(label, rvas) for a, label, rvas in groups if a == arm], 2.0,
+                   LEVER_NOTE if arm == "A" else RETRY_NOTE)
         return 0
     if args.big:
         groups = pick(args.count, args.lifts, lo=1200, hi=8000, budget=8000, max_bodies=3, retry=args.retry)
