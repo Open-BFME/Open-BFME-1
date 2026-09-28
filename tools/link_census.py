@@ -45,6 +45,7 @@ OUT = ROOT / "build" / "link_census"
 UNRESOLVED = re.compile(r'error LNK20(?:01|19): unresolved external symbol (?:"[^"]*" \((\S+)\)|(\S+))')
 DUPLICATE = re.compile(r'^(\S+\.obj) : (?:error LNK2005|warning LNK4006): (?:"[^"]*" \((\S+)\)|(\S+)) '
                        r'already defined in (\S+\.obj)')
+FATAL = re.compile(r"fatal error (LNK(?!1120)\d+).*")  # LNK1120 is only the unresolved count
 REFERRER = re.compile(r"^(\S+\.obj) : error LNK20(?:01|19)")
 
 
@@ -54,14 +55,75 @@ def ledger():
                 and (r.get("target_rva") or "").startswith("0x")]
 
 
-def pins():
-    """{name: address} from symbols.csv (first pin wins, as the resolver does)."""
+def pins(routes=None):
+    """{name: address} from symbols.csv (first pin wins, as the resolver does).
+    `routes`, when given, collects {name: target} from `route=0x...` notes."""
     found = {}
     with (ROOT / "targets/game/reverse/symbols.csv").open(newline="", encoding="utf-8") as handle:
         for row in csv.reader(handle):
             if len(row) >= 2 and row[1].startswith("0x"):
                 found.setdefault(row[0], int(row[1], 16))
+                route = re.search(r"route=(0x[0-9A-Fa-f]+)", ",".join(row[2:]))
+                if routes is not None and route:
+                    routes.setdefault(row[0], int(route.group(1), 16))
     return found
+
+
+BASE = 0x400000
+
+
+def _thunk_target(notes):
+    """RVA an ILT jump-stub row forwards to (`target=0x...` RVA or `target=FUN_<va>`)."""
+    found = re.search(r"target=(?:0x([0-9A-Fa-f]+)|FUN_([0-9A-Fa-f]+))", notes or "")
+    if not found:
+        return None
+    return int(found.group(1), 16) if found.group(1) else int(found.group(2), 16) - BASE
+
+
+def alias_scaffold(rows, wanted):
+    """{called name: defining name} for names the census found unresolved.
+
+    Every byte-matched call already lands on retail's address, so pointing the
+    name it spells at the symbol DEFINED at that address reproduces what the
+    retail image does. This is a link scaffold, like a dump: the source still
+    calls the alias, and each one a header lane fixes leaves this table. An
+    address is followed through its ILT jump stub (route= pin note, or the stub
+    row's target=). One definition per address is chosen deterministically:
+    authored game/ C++ first, then by name. Addresses with no defining row are
+    left unresolved (the census still reports them).
+    """
+    routes = {}
+    pinned = pins(routes)
+    by_address = collections.defaultdict(list)
+    stubs = {}
+    for row in rows:
+        address = int(row["target_rva"], 16)
+        if row["name"].startswith("?j_"):
+            target = _thunk_target(row.get("notes"))
+            if target is not None:
+                stubs.setdefault(address, target)
+        else:
+            by_address[address].append(row)
+
+    def defining(address, depth=0):
+        owners = by_address.get(address)
+        if owners:
+            authored = sorted(r["name"] for r in owners
+                              if r["source"].startswith("game/") and not r["source"].startswith(("game/gen_small/", "game/gen_asm/")))
+            return authored[0] if authored else sorted(r["name"] for r in owners)[0]
+        if depth < 2 and address in stubs:
+            return defining(stubs[address], depth + 1)
+        return None
+
+    table = {}
+    for name in wanted:
+        address = routes.get(name, pinned.get(name))
+        if address is None:
+            continue
+        target = defining(address)
+        if target and target != name:
+            table[name] = target
+    return table
 
 
 def data_names():
@@ -82,20 +144,26 @@ def objects(rows):
     return present, missing
 
 
-def link(objs):
+def link(objs, aliases=None, tag="census"):
     OUT.mkdir(parents=True, exist_ok=True)
     rsp = OUT / "objects.rsp"
     rsp.write_text("\n".join(f'"{o}"' for o in objs) + "\n", encoding="utf-8")
+    extra = []
+    if aliases:
+        alias_rsp = OUT / "aliases.rsp"
+        alias_rsp.write_text("".join(f"/ALTERNATENAME:{name}={target}\n"
+                                     for name, target in sorted(aliases.items())), encoding="utf-8")
+        extra.append(f"@{alias_rsp}")
     root = build.vc71_root()
     linker = root / "Vc7" / "bin" / "link.exe"
     command = [str(linker), "/NOLOGO", "/FORCE", "/NODEFAULTLIB", "/INCREMENTAL:NO", "/MACHINE:X86",
-               "/SUBSYSTEM:WINDOWS", "/ENTRY:WinMainCRTStartup", f"/OUT:{OUT / 'census.exe'}", f"@{rsp}"]
+               "/SUBSYSTEM:WINDOWS", "/ENTRY:WinMainCRTStartup", f"/OUT:{OUT / (tag + '.exe')}", f"@{rsp}", *extra]
     if sys.platform != "win32":
         command.insert(0, "wine")
     started = time.time()
     result = subprocess.run(command, capture_output=True, text=True, errors="replace",
                             env=build.compiler_environment(root), cwd=ROOT)
-    (OUT / "link.log").write_text(result.stdout + result.stderr, encoding="utf-8")
+    (OUT / f"{tag}.log").write_text(result.stdout + result.stderr, encoding="utf-8")
     return result.stdout + result.stderr, time.time() - started, result.returncode
 
 
@@ -211,11 +279,26 @@ def report(census):
     vtables = sum(1 for name in conflicts if name.startswith(("??_7", "??_R")))
     print(f"  COMDAT copies that differ (linker keeps one silently): {len(conflicts):,} "
           f"({vtables:,} vftable/RTTI)")
+    scaffold = census.get("scaffold")
+    if scaffold and scaffold.get("crashed"):
+        print(f"  with the alias scaffold ({scaffold['aliases']:,} entries): LINK DIED -- {scaffold['crashed']}; "
+              "no counts")
+    elif scaffold:
+        print(f"  with the alias scaffold ({scaffold['aliases']:,} /ALTERNATENAME entries): "
+              f"{sum(scaffold['unresolved_classes'].values()):,} unresolved, "
+              f"{sum(scaffold['duplicate_classes'].values()):,} duplicates")
+        for kind, count in sorted(scaffold["unresolved_classes"].items(), key=lambda kv: -kv[1]):
+            print(f"    {kind:18} {count:8,}")
 
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--report", action="store_true", help="summarise build/link_census/census.json")
+    ap.add_argument("--scaffold", action="store_true",
+                    help="relink with the alias scaffold (/ALTERNATENAME each called name to the symbol "
+                         "defined at its pinned address) and report what remains")
+    ap.add_argument("--scaffold-limit", type=int, default=0,
+                    help="use only the first N aliases (bisecting a linker failure)")
     args = ap.parse_args(argv)
     path = OUT / "census.json"
     if args.report:
@@ -227,11 +310,29 @@ def main(argv=None):
         print(f"link_census: {len(missing):,} objects missing (run the full ./build.sh first); "
               f"linking the {len(present):,} present", file=sys.stderr)
     log, seconds, _ = link(present)
+    crashed = FATAL.search(log)
+    if crashed:
+        # A linker that dies prints no per-symbol errors, which would read as
+        # "0 unresolved": never report counts from a crashed link.
+        raise SystemExit(f"link_census: the link died ({crashed.group(0).strip()}); no counts recorded")
     classes, detail, dup_kinds, dups = classify(log, rows)
     census = {"when": time.strftime("%Y-%m-%d %H:%M"), "objects": len(present), "missing": len(missing),
               "seconds": seconds, "unresolved_classes": dict(classes), "duplicate_classes": dict(dup_kinds),
               "unresolved": detail, "duplicates": dups, "comdat_conflicts": comdat_conflicts(present),
               "missing_objects": [str(p.relative_to(ROOT)) for p in missing[:200]]}
+    if args.scaffold:
+        wanted = [name for name, entry in detail.items() if entry["kind"] in ("alias", "dump", "pinned-elsewhere")]
+        table = alias_scaffold(rows, wanted)
+        if args.scaffold_limit:
+            table = dict(sorted(table.items())[:args.scaffold_limit])
+        log, seconds, _ = link(present, table, tag="scaffold")
+        crashed = FATAL.search(log)
+        after, after_detail, after_dup_kinds, _ = classify(log, rows)
+        census["scaffold"] = {"aliases": len(table), "seconds": seconds,
+                              "crashed": crashed.group(0).strip() if crashed else None,
+                              "unresolved_classes": dict(after), "duplicate_classes": dict(after_dup_kinds),
+                              "unresolved": {n: e for n, e in after_detail.items()
+                                             if e["kind"] in ("alias", "dump", "pinned-elsewhere")}}
     OUT.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(census, indent=1), encoding="utf-8")
     report(census)
