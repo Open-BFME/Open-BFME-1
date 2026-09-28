@@ -3893,7 +3893,7 @@ const Matrix3D *Drawable::getTransformMatrix( void ) const
  * Set and clear the drawable's caption text
  */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/Drawable_setCaptionText_Thunk.cpp
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/Drawable_setCaptionText.cpp
 // ?setCaptionText@Drawable@@QAEXABVUnicodeString@@@Z present-unmatched
 // m_captionDisplayString is at Drawable+0x2D0 in retail where the vendored
 // class lands it at +0x130 -- the same misplaced-member shape getID above has,
