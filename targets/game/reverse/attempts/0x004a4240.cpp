@@ -1,5 +1,5 @@
 // ?getCommandAvailability@ControlBar@@IBE?AW4CommandAvailability@@PBVCommandButton@@PAVGameWindow@@PAVObject@@PAM_N@Z
-// partial score=0.92 date=2026-09-28
+// partial score=0.93 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // ControlBar::getCommandAvailability (retail 0x004A4240, 4572 B), rewritten
 // from the retail disassembly instead of the Zero Hour ControlBarCommand.cpp
@@ -9,15 +9,21 @@
 // 0x004A541C (targets) / 0x004A547C (index bytes, type-1). Members are named
 // by offset: only offsets are witnessed here, not names.
 //
-// BANK STATE (opus-5.5, 2026-09-28): compiles 4678 B incl. jump table
-// (code ends +0x11B6 vs retail +0x11DC), probe shape 0.926, 28 structural
-// diffs. Residue is mostly register allocation: retail keeps this in EBX
-// and a -1 constant in EBP (EH-state resets, index==-1, canMakeUnit arg);
-// ours puts this in EBP. Other open items: query zero-stores scheduled after
-// the hidden-return push; cases 5/6/7 not cross-jumped onto one
-// canAffordUpgrade tail; shared return-0 epilogue placed at case 0x25 instead
-// of the SpecialAbilityUpdate check (+0xE53).
-// Landing needs ILT pins for about 25 thunk callees (tools/callees.py).
+// BANK STATE (opus-5.5, 2026-09-28, pass 2): compiles 4670 B incl. jump
+// table, probe shape 0.932, 2876 non-reloc diffs, 17 structural diffs.
+// Pass-2 levers: upgrade local before canAffordUpgrade (cases 5/6/7 tails),
+// single re-fetch of the projectile interface in case 1, ai/contain locals so
+// the pointer loads straight into ECX, options loaded before the battle-plan
+// virtual call. Prologue, this=EBX and the EBP=-1 constant now match retail.
+// Residue: first CastleBehavior key reload uses ECX (6 B) where retail uses
+// EAX (5 B) at +0x28D, shifting everything after by one byte; query zero
+// stores after the hidden-return push (+0x2A2); shared return-0 epilogue
+// placement (+0xE53); case 7 not cross-jumped onto the case 5 tail; spUpdate
+// +0x20 lea
+// order. Mechanical eh_levers + shape_family_levers (register, store,
+// constant, copy): 16 trials, no gain. A `const Int none = -1` local changes
+// nothing (folded). No pins are needed: all 63 call targets have ledger rows;
+// landing needs these TU-local declarations respelled to the ledger names.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -63,10 +69,23 @@ public:
 extern NameKeyGenerator *TheNameKeyGenerator;
 #define NAMEKEY(s) TheNameKeyGenerator->nameToKey(s)
 
-class ThingTemplate
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
+class Overridable
+{
+public:
+	virtual ~Overridable();
+	const Overridable *getFinalOverride() const;
+	Overridable *m_nextOverride;
+};
+
+class ThingTemplate : public Overridable
 {
 public:
 	Int getBuildable() const;
+	Bool canRappel() const { return (m_kindof[1] & 0x800) != 0; }
+private:
+	unsigned char m_padding[0xc0];
+	volatile UnsignedInt m_kindof[3];
 };
 
 class UpgradeTemplate
@@ -283,7 +302,7 @@ public:
 	VSLOTS4(h) VSLOTS1(i0) VSLOTS1(i1) VSLOTS1(i2)
 	virtual void callForEach(ContainCallback fn, void *data, Bool flag);	// +0x100 - 4 = +0xfc
 	virtual UnsignedInt getCount(Int arg);					// +0x100
-	virtual void s104();
+	virtual const struct ContainedItemsList *getContainedItemsList() const;	// +0x104
 	virtual IntList *getList();								// +0x108
 };
 
@@ -364,6 +383,12 @@ public:
 	Int getDestinationLayer() const;
 	Relation1BFE20 *unidentified001BFE20() const;
 
+	const ThingTemplate *getTemplate() const
+	{
+		const volatile unsigned char *address = reinterpret_cast<const volatile unsigned char *>(this);
+		address += 4;
+		return *(const ThingTemplate *volatile *)address;
+	}
 	Bool testScriptStatusBit(UnsignedInt bit) const { return (m_status343 & bit) != 0; }
 	Bool isDisabled() const { return m_disabled.m_bits != 0; }
 	DisabledMaskType getDisabledFlags() const { return m_disabled; }
@@ -489,13 +514,40 @@ protected:
 };
 extern ControlBar *TheControlBar;
 
-// STAND-IN BODY: the real one is landed at 0x004A4160
-// (ControlBar_getRappellerCount.cpp). It is repeated here only so the caller
-// gets MSVC's same-TU static register convention (object in EAX, as retail
-// +0xB9A shows); port the real body before landing.
+struct ContainedItemNode
+{
+	ContainedItemNode *m_next;
+	ContainedItemNode *m_prev;
+	Object *m_item;
+};
+
+struct ContainedItemsList
+{
+	ContainedItemNode *m_node;
+};
+
+// Same body as the landed 0x004A4160 (ControlBar_getRappellerCount.cpp). It
+// is defined in this TU because retail +0xB9A passes the object in EAX: MSVC's
+// same-TU static calling convention, so the caller only matches with the
+// definition visible here.
 static __declspec(noinline) Int getRappellerCount(Object *obj)
 {
-	return obj->m_contain != 0 ? (Int)obj->m_contain->getCount(0) : 0;
+	Int num = 0;
+	const ContainedItemsList *items = obj->m_contain ? obj->m_contain->getContainedItemsList() : 0;
+	if (items)
+	{
+		ContainedItemNode *sentinel = items->m_node;
+		for (ContainedItemNode *it = sentinel->m_next; it != sentinel; it = it->m_next)
+		{
+			Object *member = it->m_item;
+			const ThingTemplate *thingTemplate = member->getTemplate();
+			if (thingTemplate != 0 && thingTemplate->m_nextOverride != 0)
+				thingTemplate = (const ThingTemplate *)thingTemplate->m_nextOverride->getFinalOverride();
+			if (thingTemplate->canRappel())
+				++num;
+		}
+	}
+	return num;
 }
 
 CommandAvailability ControlBar::getCommandAvailability(const CommandButton *command, GameWindow *win,
@@ -621,14 +673,19 @@ CommandAvailability ControlBar::getCommandAvailability(const CommandButton *comm
 			}
 			if (obj->isKindOf(0x0e) == false && obj->isKindOf(0x67) == false)
 				return COMMAND_RESTRICTED;
-			DozerAIInterface *dozerAI = obj->m_ai ? obj->m_ai->getDozerAIInterface() : 0;
+			AIUpdateInterface *ai = obj->m_ai;
+			DozerAIInterface *dozerAI = ai ? ai->getDozerAIInterface() : 0;
 			ProjectileUpdateInterface *projectile = obj->getProjectileUpdateInterface();
 			if (dozerAI == 0 && projectile == 0)
 				return COMMAND_RESTRICTED;
 			if (dozerAI && dozerAI->isTaskPending(0) == true)
 				return COMMAND_RESTRICTED;
-			if (projectile && obj->getProjectileUpdateInterface() && obj->getProjectileUpdateInterface()->v0c())
-				return COMMAND_RESTRICTED;
+			if (projectile)
+			{
+				ProjectileUpdateInterface *again = obj->getProjectileUpdateInterface();
+				if (again && again->v0c())
+					return COMMAND_RESTRICTED;
+			}
 			if (player->canBuild(command->getThingTemplate()) == false)
 				return command->m_flag14D ? COMMAND_HIDDEN : COMMAND_RESTRICTED;
 			if (!player->canAffordBuild(command->getThingTemplate()))
@@ -752,7 +809,8 @@ CommandAvailability ControlBar::getCommandAvailability(const CommandButton *comm
 			if (player->hasUpgradeComplete(command->m_upgrade20) == true
 				|| player->hasUpgradeInProduction(command->m_upgrade20) == true)
 				return COMMAND_AVAILABILITY_7;
-			if (TheUpgradeCenter->canAffordUpgrade(player, command->m_upgrade20, command->getThingTemplate(), false) == false)
+			const UpgradeTemplate *upgrade = command->m_upgrade20;
+			if (TheUpgradeCenter->canAffordUpgrade(player, upgrade, command->getThingTemplate(), false) == false)
 				return COMMAND_CANT_AFFORD;
 			break;
 		}
@@ -772,7 +830,8 @@ CommandAvailability ControlBar::getCommandAvailability(const CommandButton *comm
 				return COMMAND_AVAILABILITY_7;
 			if (obj->affectedByUpgrade(command->m_upgrade20) == false)
 				return COMMAND_RESTRICTED;
-			if (TheUpgradeCenter->canAffordUpgrade(player, command->m_upgrade20, command->getThingTemplate(), false) == false)
+			const UpgradeTemplate *upgrade = command->m_upgrade20;
+			if (TheUpgradeCenter->canAffordUpgrade(player, upgrade, command->getThingTemplate(), false) == false)
 				return COMMAND_CANT_AFFORD;
 			break;
 		}
@@ -794,7 +853,8 @@ CommandAvailability ControlBar::getCommandAvailability(const CommandButton *comm
 						return COMMAND_AVAILABILITY_7;
 				}
 			}
-			if (TheUpgradeCenter->canAffordUpgrade(player, command->m_upgrade20, command->getThingTemplate(), false) == false)
+			const UpgradeTemplate *upgrade = command->m_upgrade20;
+			if (TheUpgradeCenter->canAffordUpgrade(player, upgrade, command->getThingTemplate(), false) == false)
 				return COMMAND_CANT_AFFORD;
 			break;
 		}
@@ -854,7 +914,8 @@ CommandAvailability ControlBar::getCommandAvailability(const CommandButton *comm
 
 		case 0x26:
 		{
-			if (obj->m_contain == 0 || obj->m_contain->getList() == 0
+			ContainModuleInterface *contain = obj->m_contain;
+			if (contain == 0 || contain->getList() == 0
 				|| obj->m_contain->getList()->size() <= 0)
 				return COMMAND_RESTRICTED;
 			break;
@@ -912,8 +973,12 @@ CommandAvailability ControlBar::getCommandAvailability(const CommandButton *comm
 			{
 				static NameKeyType key_BattlePlanUpdate = NAMEKEY("BattlePlanUpdate");
 				BattlePlanUpdate *update = (BattlePlanUpdate *)obj->findModule(key_BattlePlanUpdate);
-				if (update && (command->m_options & update->getCommandOption()))
-					return COMMAND_ACTIVE;
+				if (update)
+				{
+					UnsignedInt options = command->m_options;
+					if (update->getCommandOption() & options)
+						return COMMAND_ACTIVE;
+				}
 			}
 			break;
 		}
