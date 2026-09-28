@@ -16060,3 +16060,5 @@ _x3d_D3DXVec4Transform@12,0x00EA8A7C
 _z_errmsg,0x012C5E40
 _zcalloc,0x00C28BE0
 _zcfree,0x00C28C00
+??_7DX8_CleanupHook@@6B@,0x0111D868
+??_7PartitionFilterPolygonTrigger@@6B@,0x01095714
