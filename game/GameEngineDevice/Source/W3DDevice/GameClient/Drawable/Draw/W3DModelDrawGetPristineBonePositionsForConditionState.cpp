@@ -5,10 +5,11 @@
 // W3DModelDraw::getPristineBonePositionsForConditionState, retail 0x00775760
 // (1036 bytes), BFME's seven-argument form.
 //
-// Identity: its ILT thunk 0x0000DC29 fills slot 3 of W3DModelDraw's
-// ObjectDrawInterface table 0x011223A0, between the matched
-// getCurrentWorldspaceClientBonePositions (slot 2) and getCurrentBonePositions
-// (slot 4); the matched Drawable caller (Drawable_getPristineBonePositions.cpp)
+// Identity: its ILT thunk 0x0000DC29 fills slot 3 of all seven W3DModelDraw
+// family ObjectDrawInterface tables (e.g. 0x011223A0, which the matched
+// W3DHordeModelDraw constructor 0x00751CF0 stores at +0x0C), between the matched
+// W3DModelDraw getCurrentWorldspaceClientBonePositions (slot 2) and
+// getCurrentBonePositions (slot 4); the matched Drawable caller (Drawable_getPristineBonePositions.cpp)
 // dispatches the seven-argument pristine-bone query through that slot, and the
 // body is Zero Hour's W3DModelDraw.cpp algorithm step for step. Retail returns
 // with ret 0x1c: BFME added a seventh argument, an optional array that receives
@@ -19,7 +20,10 @@
 // best-info state; validateStuff takes that state and a drawable-owned bone
 // list at Drawable+0x2F0 as two more arguments; tmpMtx is a function static.
 // `this` is the ObjectDrawInterface subobject at W3DModelDraw+0x0C, as in the
-// matched getCurrentBonePositions (m_renderObject at this+0x28).
+// matched getCurrentBonePositions (m_renderObject at this+0x28) and the
+// W3DHordeModelDraw constructor's interface-table store at +0x0C. That puts
+// m_curState (the first member after the bases, as in Zero Hour) at +0x10;
+// tools/bfme_layout.py's +0x14 witness for it conflicts with that store.
 #define _STLP_NO_EXCEPTIONS 1
 #include <map>
 #include <vector>
