@@ -2188,7 +2188,7 @@ name,address,notes
 ??0?$list@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAE@ABV01@@Z,0x000385F5,HordeContain::createPayload list copy constructor call at 0x0023C078
 ??0?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV01@@Z,0x00011ADB,pinharvest x1 (thunk)
 ??0?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@@Z,0x00008DCD,pinharvest x1 (thunk)
-??0?$list@VPeerResponse@@V?$allocator@VPeerResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VPeerResponse@@@1@@Z,0x00008DCD,pinharvest x1 (thunk)
+??0?$list@VPeerResponse@@V?$allocator@VPeerResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VPeerResponse@@@1@@Z,0x00039022,repointed from the 0x00008DCD pinharvest guess: WOLLobbyMenu.cpp _$E25 (the TheLobbyQueuedUTMs initializer at 0x00C6BB50) encodes 0x00039022 which jumps to 0x004FD8A0; the only caller of 0x00008DCD constructs the list<UnicodeString> briefing list at 0x012F3884
 ??0?$list@VQueuedDownload@@V?$allocator@VQueuedDownload@@@_STL@@@_STL@@QAE@ABV?$allocator@VQueuedDownload@@@1@@Z,0x00008DCD,pinharvest x1 (thunk)
 ??0?$list@VUnicodeString@@V?$allocator@VUnicodeString@@@_STL@@@_STL@@QAE@I@Z,0x00018FE3,route=0x0009F630; retail SkirmishPreferences ctor 0x0009F850 calls this ILT for m_userNames(0); node copy is UnicodeString at this+0x14
 ??0?$map@VAsciiString@@V1@U?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@@_STL@@QAE@XZ,0x00080900,Portrait 00596D40 +0x1A1 calls ILT22D1D->80900 on static at VA012F4C18; four AsciiString key constructors and AsciiString assignments plus find value+0x14 independently establish map<AsciiString AsciiString>; 54B native constructor probe exact with STLport static allocator; header node24B and count+4
