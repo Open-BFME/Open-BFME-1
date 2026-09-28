@@ -8028,5 +8028,25 @@
   "after_sha256": "5934adadc4791343c1f5aa0734a94677d0a9f4bc06798dc4686582b1b5ffb440",
   "evidence": "targets/game/reverse/identity_evidence/000f4f30-team-query-not-isidle.md",
   "reason": "Bank retirement: the ZH-port stash called Team::isIdle where retail calls body 0x000F4E20; Team::isIdle is landed at 0x000EDB30 (matched AIPlayer::checkReadyTeams caller) while 0x000F4E20 never asks the AI slot 96 isIdle and gates on Team+0xE6 plus contain-module slots, so it keeps an address-derived name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0055b200.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0055b200.cpp",
+  "old_name": "m_firewallBehavior",
+  "new_name": "m_slot78",
+  "before_sha256": "408e0b5154409a8dd2bf76a983e534907ac147c1fe54fc4fe1d2b6e32fe7fdcc",
+  "after_sha256": "9160de1de5a7da15b0de7cb2f576f49de17e7d62c29848b6e11e129b539dc609",
+  "evidence": "targets/game/reverse/identity_evidence/0055b200-quickmatch-request.md",
+  "reason": "Retail 0x0055B200 stores getFirewallBehavior() only into PeerRequest+0x130; this+0x78 is written from the player-count switch (2->1 4->2 else 0) and reloaded to pick the 1v1/2v2 rank globals. The matched OnlineQuickMatchConstructor.cpp zeroes the same field as m_slot78."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0055b200.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0055b200.cpp",
+  "old_name": "PlayerTemplate",
+  "new_name": "Rva000E1410PlayerTemplate",
+  "before_sha256": "408e0b5154409a8dd2bf76a983e534907ac147c1fe54fc4fe1d2b6e32fe7fdcc",
+  "after_sha256": "9160de1de5a7da15b0de7cb2f576f49de17e7d62c29848b6e11e129b539dc609",
+  "evidence": "targets/game/reverse/identity_evidence/0055b200-quickmatch-request.md",
+  "reason": "The old bank used the Zero Hour PlayerTemplate header whose inline getPlayerTemplateCount divides by the Zero Hour sizeof; retail divides the vector span by 0x124 (magic 0xE070381D sar 8) and reads the side at +8. The new bank reuses the matched 0x00509B30 sibling's 0x124-byte address-token view of the same class."
  }
 ]
