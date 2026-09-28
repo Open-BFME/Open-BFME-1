@@ -1,5 +1,5 @@
 // ?findClosestPath@Pathfinder@@EAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBUCoord3D@@PAU5@_NM4@Z
-// partial score=0.55 date=2026-09-26
+// partial score=0.891 date=2026-09-27
 // cl: /DNDEBUG /MD
 // stlport
 //
@@ -53,6 +53,7 @@ struct Coord3D
 {
 	Real x, y, z;
 	Real Normalize( void );
+ void set(const Coord3D *a){x=a->x;y=a->y;z=a->z;}
 };
 
 class Player
@@ -290,7 +291,7 @@ public:
 	PathfindCell *getClippedCell( PathfindLayerEnum layer, const Coord3D *pos );
 	void clip( Coord3D *from, Coord3D *to );
 	void getRadiusAndCenter( const Object *obj, Int &iRadius, Bool &center );
-	Bool slowDoesPathExist( Object *obj, const Coord3D *from, const Coord3D *to, ObjectID ignoreObject );
+	Bool slowDoesPathExist( Object *obj, const Coord3D *from, const Coord3D *to, const void *movementProfile );
 	Bool bfmeStepD4F90( void *info, PathfindCell *cell );
 	Bool bfmeStepE05B0( Object *obj, ICoord2D *info );
 	Path *rva003EEB90HierarchicalPath( Bool isHuman, Int surfaces, Object *obj, const Coord3D *from,
@@ -354,7 +355,7 @@ Path *Pathfinder::findClosestPath( Object *obj, const LocomotorSet& locomotorSet
 	Int radius;
 	getRadiusAndCenter( obj, radius, centerInCell );
 
-	Coord3D adjustTo = *rawTo;
+	Coord3D adjustTo; adjustTo.set(rawTo);
 	if (!slowDoesPathExist( obj, from, &adjustTo, INVALID_ID ))
 	{
 		Coord3D delta;

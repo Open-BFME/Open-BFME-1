@@ -1,34 +1,27 @@
 // ?canDoSpecialPowerAtLocation@ActionManager@@QAE_NPBVObject@@PBUCoord3D@@W4CommandSourceType@@PBVSpecialPowerTemplate@@0I_N@Z
-// partial score=0.31534667827096025 date=2026-09-27
+// partial score=0.809 date=2026-09-27
+// ?canDoSpecialPowerAtLocation@ActionManager@@QAE_NPBVObject@@PBUCoord3D@@W4CommandSourceType@@PBVSpecialPowerTemplate@@0I_N@Z
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 #define __PLACEMENT_VEC_NEW_INLINE
 #include "basetype.h"
 #include <new>
 #include <string.h>
 // Native reconstruction of RVA000C6930, complete 3447-byte retail extent.
-// PARTIAL (GPT-6, 2026-09-27): native 3479B / full retail 3447B;
-// 2360 masked differences, 1087/3447 positional agreement. Normalized shape
-// .797 is a distinct instruction metric, not byte agreement. Strict resolver
-// has exactly 3 unresolved declarations: the two visible, independently exact
-// BitFlags192 constructors (81B/129B) and the corrected nullable
-// profile-pointer Pathfinder overload. No new pins were added for an unmatched
-// caller. Native mask/filter definitions are exact existing-owned dependencies,
-// not gains. Fresh review: TerrainLogic 001A62D0 returns Coord3D* (existing
-// proven queryPointAt001A62D0 spelling); 003EDF90 consumes Object*, two Coord3D
-// pointers, and a nullable movement-profile pointer, returns AL, and RET16. Its
-// old ObjectID final argument and the old bool TerrainLogic result were
-// incorrect. Whole masks/accept-filter visibility, placement adapters, iterator
-// cursor variants and common exits were measured. Coord3D class adoption
-// changes the main ABI spelling from PBU to PBV and is not an acceptable
-// drop-in lever. Remaining blocker: 604B versus 596B frame and filter/iterator
-// EH lifetimes, followed by whole-function register allocation and switch-table
-// placement. Native dispatcher has 3094 code bytes, 2 alignment bytes, and 351
-// table bytes. Anonymous ABI views are address-qualified; no candidate-only
-// pins were added. The original named lift remains intact until this
-// reconstruction byte-matches. Identity: native
-// InGameUI::canSelectedObjectsDoSpecialPower and
-// Rva003273A0SpecialPowerAction::execute callers, plus the ZH ActionManager
-// twin.
+// PARTIAL follow-up, 2026-09-28: complete 3447B source extent, exactly the
+// same size as retail. 2012 masked byte differences; positional 1435/3447;
+// normalized instruction shape 0.809 (NOT byte agreement). Changed the two
+// castle-distance copy sites to use native Coord3D::set for diff, and set for
+// the second otherPos. Sixteen combinations measured; this removed 32 bytes.
+// Frame is still 604B versus native 596B. Native keeps EBP as zero through the
+// body; ours allocates it to spTemplate. EH metadata confirms 15 unwind states
+// and named root/filter lifetimes through both loops. EH and family sweeps plus
+// early-return guards did not resolve the frame/prologue. No new pins.
+// Existing unresolved dependency identities remain from the earlier bank:
+// two 192-bit mask constructors and nullable movement-profile path query.
+// Native code is 3094B plus 2 alignment and 351 switch-table bytes. The probe
+// boundary warning is caused by treating that table as instructions.
+// Identity: named InGameUI and Rva003273A0SpecialPowerAction callers and ZH twin.
+// Original naked lift remains until exact verification.
 enum CommandSourceType { CMD_FROM_PLAYER = 0 };
 enum SpecialPowerType { Rva000C6930PowerNone = 0 };
 enum KindOfType { KINDOF_STRUCTURE = 7 };
@@ -416,7 +409,7 @@ bool ActionManager::canDoSpecialPowerAtLocation(
           if (castle && castle->m_9c) {
             float radius = castle->value();
             Coord3D otherPos = other->m_cachedPos;
-            Coord3D diff = *loc;
+            Coord3D diff; diff.set(loc);
             diff.sub(&otherPos);
             if (((Rva000B6CA0Coord *)&diff)->length() < radius + 75.0f)
               return false;
@@ -535,8 +528,8 @@ bool ActionManager::canDoSpecialPowerAtLocation(
               (Rva0036CD30Owner *)other->findModule(castleKey);
           if (castle && castle->m_9c) {
             float radius = castle->value();
-            Coord3D otherPos = other->m_cachedPos;
-            Coord3D diff = *loc;
+            Coord3D otherPos; otherPos.set(&other->m_cachedPos);
+            Coord3D diff; diff.set(loc);
             diff.sub(&otherPos);
             if (((Rva000B6CA0Coord *)&diff)->length() < radius + 175.0f)
               return false;
