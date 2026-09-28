@@ -1,5 +1,5 @@
 // ?d_00239e00@@YAXXZ
-// partial score=0.9138 date=2026-09-28
+// partial score=0.9668 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Source
 // stlport
 // Retail 0x00239E00 (603 bytes): a HordeContain virtual reached through the
@@ -135,8 +135,9 @@ public:
 class PartitionFilterAcceptByKindOf : public PartitionFilter
 {
 public:
+	// throw() lets VC7.1 put the mask and the loop's delta on separate slots.
 	PartitionFilterAcceptByKindOf(const KindOfMaskType &mustBeSet,
-		const KindOfMaskType &mustBeClear);
+		const KindOfMaskType &mustBeClear) throw();
 	virtual Bool allow(Object *obj);
 
 	KindOfMaskType m_mustBeSet;
@@ -198,7 +199,8 @@ extern NameKeyGenerator *TheNameKeyGenerator;
 class BfmeThingBQA
 {
 public:
-	Int bfmeGoBQA();
+	// throw() lets the dock direction share the best distance's slot.
+	Int bfmeGoBQA() throw();
 };
 
 class Rva002060B0Triple
@@ -319,10 +321,12 @@ void Rva00239E00HordeContain::rva00239E00()
 					}
 				}
 			}
-			Coord2D dir;
-			dir.x = -((Rva00206100Owner *)dock)->point(best).x;
-			dir.y = -((Rva00206100Owner *)dock)->point(best).y;
-			obj->setOrientation(dir.toAngle());
+			{
+				Coord2D dir;
+				dir.x = -((Rva00206100Owner *)dock)->point(best).x;
+				dir.y = -((Rva00206100Owner *)dock)->point(best).y;
+				obj->setOrientation(dir.toAngle());
+			}
 		}
 		else if (!onBridge)
 		{
