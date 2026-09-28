@@ -368,8 +368,9 @@ def ea_directories(root):
     with open(root / "targets/game/reverse/functions.csv", newline="") as fh:
         for row in csv.DictReader(fh):
             source = row.get("source") or ""
+            # placement_batch moves C++ sources only; a MASM dump is not one
             if (row.get("status") != "matched" or not source.startswith(AREAS)
-                    or source.startswith("game/gen")):
+                    or source.startswith("game/gen") or not source.endswith((".cpp", ".h"))):
                 continue
             try:
                 dirs[source].add(where.get(int(row["target_rva"], 16)))

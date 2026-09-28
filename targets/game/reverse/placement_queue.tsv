@@ -1,4 +1,7 @@
-game/GameEngine/Source/Common/BfmeN1242Put.cpp	game/Libraries/Source/Apt/BfmeN1242Put.cpp	BfmeN1242
+game/GameEngine/Source/Common/LargeGroupAudioKeyMapBfmeAddKey.cpp	game/GameEngine/Source/GameLogic/LargeGroupAudio/LargeGroupAudioKeyMapBfmeAddKey.cpp	LargeGroupAudioKeyMap
+game/GameEngine/Source/Common/LargeGroupAudioKeyMapBfmeMerge.cpp	game/GameEngine/Source/GameLogic/LargeGroupAudio/LargeGroupAudioKeyMapBfmeMerge.cpp	LargeGroupAudioKeyMap
+game/GameEngine/Source/Common/LargeGroupAudioKeyMapBuildKeyString.cpp	game/GameEngine/Source/GameLogic/LargeGroupAudio/LargeGroupAudioKeyMapBuildKeyString.cpp	LargeGroupAudioKeyMap
+game/GameEngine/Source/Common/LargeGroupAudioKeyMapCopyConstructor.cpp	game/GameEngine/Source/GameLogic/LargeGroupAudio/LargeGroupAudioKeyMapCopyConstructor.cpp	LargeGroupAudioKeyMap
 game/GameEngine/Source/Common/Rva003D0A40MapXfer.cpp	game/GameEngine/Source/GameLogic/LargeGroupAudio/Rva003D0A40MapXfer.cpp	EA
 game/GameEngine/Source/Common/Rva003D1020AudioMapXfer.cpp	game/GameEngine/Source/GameLogic/LargeGroupAudio/Rva003D1020AudioMapXfer.cpp	EA
 game/GameEngine/Source/Common/Rva004101B0TextSetter.cpp	game/GameEngine/Source/GameClient/Rva004101B0TextSetter.cpp	EA
@@ -81,6 +84,7 @@ game/GameEngine/Source/GameClient/GUI/BfmeAptScreenLanLobby_applySlotTeam.cpp	ga
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenLanLobby_onInitGadget.cpp	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/BfmeAptScreenLanLobby_onInitGadget.cpp	EA
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenLanLobby_rva00517B60.cpp	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/BfmeAptScreenLanLobby_rva00517B60.cpp	EA
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenMapTransferConstructor.cpp	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/BfmeAptScreenMapTransferConstructor.cpp	EA
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenObjectivesRva0052C220.cpp	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/BfmeAptScreenObjectivesRva0052C220.cpp	EA
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOnlineChatInitGadgets.cpp	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/BfmeAptScreenOnlineChatInitGadgets.cpp	EA
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOnlineChatOnBttnAccept.cpp	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/BfmeAptScreenOnlineChatOnBttnAccept.cpp	EA
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsSave.cpp	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/BfmeAptScreenOptionsSave.cpp	EA
@@ -118,7 +122,6 @@ game/GameEngine/Source/GameClient/GUI/OnlineLoginConstructor.cpp	game/GameEngine
 game/GameEngine/Source/GameClient/GUI/OnlineLoginLogin.cpp	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineLoginLogin.cpp	EA
 game/GameEngine/Source/GameClient/GUI/OnlineLoginRva00552C40.cpp	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineLoginRva00552C40.cpp	EA
 game/GameEngine/Source/GameClient/GUI/OnlineLoginRva005536F0.cpp	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineLoginRva005536F0.cpp	EA
-game/GameEngine/Source/GameClient/GUI/OnlineLoginSubmit00551620.cpp	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineLoginSubmit00551620.cpp	EA
 game/GameEngine/Source/GameClient/GUI/OnlineLoginSubmitNew00551060.cpp	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineLoginSubmitNew00551060.cpp	EA
 game/GameEngine/Source/GameClient/GUI/OnlineProfileRankTooltip00554510.cpp	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineProfileRankTooltip00554510.cpp	EA
 game/GameEngine/Source/GameClient/GUI/OnlineQuickMatchConstructor.cpp	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineQuickMatchConstructor.cpp	EA
@@ -153,8 +156,6 @@ game/GameEngine/Source/GameClient/Input/Rva005A6470MouseEventQueue_emit.cpp	game
 game/GameEngine/Source/GameClient/ParabolicEaseSetEaseTimesBFME.cpp	game/GameEngine/Source/Common/ParabolicEaseSetEaseTimesBFME.cpp	EA
 game/GameEngine/Source/GameClient/System/FXParticleSystem/Q4Sort0034BFC0Comparator.cpp	game/GameEngine/Source/GameLogic/ScriptEngine/Q4Sort0034BFC0Comparator.cpp	EA
 game/GameEngine/Source/GameClient/WeatherData.cpp	game/GameEngine/Source/GameLogic/System/WeatherData.cpp	EA
-game/GameEngine/Source/GameLogic/AI/AIPathfind_classifyCells.asm	game/GameEngine/Source/GameLogic/Pathfinder/AIPathfind_classifyCells.asm	EA
-game/GameEngine/Source/GameLogic/AI/AIPathfind_findGroundPath.asm	game/GameEngine/Source/GameLogic/Pathfinder/AIPathfind_findGroundPath.asm	EA
 game/GameEngine/Source/GameLogic/AI/BfmeAttackQueryCanAttackTarget.cpp	game/GameEngine/Source/GameLogic/Pathfinder/BfmeAttackQueryCanAttackTarget.cpp	EA
 game/GameEngine/Source/GameLogic/AI/BfmePathfindZoneManagerDestructor.cpp	game/Libraries/Source/WWVegas/WW3D2/BfmePathfindZoneManagerDestructor.cpp	EA
 game/GameEngine/Source/GameLogic/AI/GiantBirdGuardAttackAggressorState_onEnter.cpp	game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardAttackAggressorState_onEnter.cpp	EA
@@ -253,4 +254,3 @@ game/Libraries/Source/WWVegas/WW3D2/RegistryPrototypeLookup.cpp	game/Libraries/S
 game/Libraries/Source/WWVegas/WW3D2/TextureBaseReleaseRefThunk.cpp	game/Libraries/Source/assetmanager/TextureBaseReleaseRefThunk.cpp	EA
 game/Libraries/Source/WWVegas/WWDebug/DebugConstructor_00889370.cpp	game/Libraries/Source/debug/DebugConstructor_00889370.cpp	EA
 game/Libraries/Source/WWVegas/WWDebug/DebugFinishAssert0088B530.cpp	game/Libraries/Source/debug/DebugFinishAssert0088B530.cpp	Debug
-game/Libraries/Source/WWVegas/WWDebug/DebugStackwalk_GetSymbol.asm	game/Libraries/Source/debug/DebugStackwalk_GetSymbol.asm	EA

@@ -462,6 +462,18 @@ def test_ea_paths_place_address_named_and_free_functions_the_class_rules_cannot(
     assert skipped["EA's own source path says it is home"] == 1
 
 
+def test_ea_paths_never_queue_a_masm_dump(tmp_path):
+    root = tmp_path / "repo"
+    dump = "game/GameEngine/Source/GameLogic/AI/AIPathfind_classifyCells.asm"
+    _write(root, dump)
+    _write(root, "targets/game/reverse/functions.csv",
+           "name,export_rva,target_rva,target_size,source,status,notes\n"
+           f"?d_00400000@@YAXXZ,,0x00400000,16,{dump},matched,gen-dump\n")
+    (root / queue.EA_EVIDENCE).write_text(
+        "rva,kind,value,route,basis\n0x00400000,file,GameEngine/Source/GameLogic/Pathfinder/pathfinder.cpp,wb1,\n")
+    assert queue.build(root)[0] == []
+
+
 def test_ea_paths_need_every_row_of_a_file_to_agree(tmp_path):
     root = tmp_path / "repo"
     both = f"{queue.DUMPING_GROUND}/Split.cpp"
