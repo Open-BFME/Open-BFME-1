@@ -1,6 +1,6 @@
 // ?d_009f63d0@@YAXXZ
-// partial score=0.924 date=2026-09-28
-// cl: /O2 /Ob2 /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// partial score=0.946 date=2026-09-28
+// cl: /O2 /Ob2 /FAsc /Fabuild/Rva009F63D0Probe.cod /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 
 
@@ -36,7 +36,7 @@ struct BfmeWideResult : private Rva009F39F0Result
 	}
 	__forceinline ~BfmeWideResult()
 	{
-		Rva009F39F0Payload *value = m_value;
+		Rva009F39F0Payload *&value = m_value;
 		if (--value->m_refCount == 0)
 		{
 			value->m_items.~vector();
@@ -94,8 +94,6 @@ public:
 };
 
 typedef _STL::vector<Rva009F4130NodeList> Rva009F63D0NodeVector;
-extern Rva009F4130Distance g_rva00EDBD60DistanceProcs[];
-
 class Rva009F63D0
 {
 public:
@@ -154,7 +152,7 @@ BfmeWideResult Rva009F63D0::method(int position, int radius, int bounds,
 				nodes->size() / 4,
 				xMin, yMin, xMax, yMax, 0, 0, m_fieldEC,
 				(void *)point, radiusSquared, range,
-				g_rva00EDBD60DistanceProcs[distanceType],
+				((Rva009F4130Distance *)0x012DBD60)[distanceType],
 				(BfmeThingEQ *)filters);
 		}
 		filterMask >>= 1;
