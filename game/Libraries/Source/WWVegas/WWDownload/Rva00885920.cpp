@@ -12,6 +12,7 @@ public:
 
 	int d_00885920( void );
 	int d_00885530( const char* command, int size );
+	int d_00885990( const char *buf, int len );
 };
 
 
@@ -32,6 +33,11 @@ int Rva00885920Class::d_00885920( void )
 
 extern "C" int __stdcall send( int, const char*, int, int );
 extern "C" __declspec(dllimport) void __stdcall Rva01358EA8( void* );
+
+int Rva00885920Class::d_00885990( const char *buf, int len )
+{
+	return send( m_socket8, buf, len, 0 );
+}
 
 int Rva00885920Class::d_00885530( const char* command, int size )
 {
