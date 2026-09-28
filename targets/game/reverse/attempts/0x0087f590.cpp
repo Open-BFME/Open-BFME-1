@@ -1,173 +1,216 @@
-// ?getBestContactPoint@GeometryInfo@@QBE_NPAUCoord3D@@PBU2@PBDHH_N@Z
-// partial score=0.55 date=2026-09-26
-// cl: /O2 /Ob0 /G6
+// ?d_0087f590@@YAXXZ
+// partial score=0.84 date=2026-09-28
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringbaseascii/Common /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
+// GeometryInfo::getBestContactPoint, retail 0x0087F590 (1066 bytes).
+//
+// Identity: the retail trace literal names the method and the member
+// ("GeometryInfo::getBestContactPoint, callerPos=... m_innermostContactPoint=")
+// and the matched Object::getWorldspaceBestContactPoint calls it on its
+// GeometryInfo with this six-argument signature (ret 0x18).
+//
+// Layout (BFME's 0x5C-byte GeometryInfo): the 0x24-byte shape vector at +0x2C
+// (GeometryInfoRva0087E650.cpp), a vector of 0x10-byte labelled points at
+// +0x38, a point at +0x44 and m_innermostContactPoint at +0x50. Names that no
+// evidence proves keep their offset.
 
+#include <vector>
+#include "AsciiString.h"
+
+typedef bool Bool;
+typedef float Real;
+typedef int Int;
+
+#ifndef NULL
+#define NULL 0
+#endif
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
 struct Coord3D
 {
-	float x, y, z;
+	Real x, y, z;
+
+	Coord3D() {}
+	Coord3D(const Coord3D &v) { x = v.x; y = v.y; z = v.z; }
+
+	void add(const Coord3D *a)
+	{
+		x += a->x;
+		y += a->y;
+		z += a->z;
+	}
+
+	void scale(Real s)
+	{
+		x *= s;
+		y *= s;
+		z *= s;
+	}
 };
 
-class CRCParameterCheck;
-extern bool g_bfmeDockingTraceActive;
-extern CRCParameterCheck *TheCRCParameterCheck;
-extern "C" void __cdecl bfmeRetailCritterDesyncLog(void *, const char *, ...);
-
-class AsciiString
+enum GeometryType
 {
-public:
-	int bfmeCompare1294(const char *s) const;
-	void *m_data;
+	GEOMETRY_SPHERE = 0,
+	GEOMETRY_CYLINDER,
+	GEOMETRY_BOX
 };
 
-struct Rva0087F590Contact
+struct GeometryShape
 {
-	Coord3D m_point;
+	GeometryType m_type;
+	Real m_height;
+	Real m_majorRadius;
+	Real m_minorRadius;
+	Coord3D m_offset;
+	AsciiString m_unmodelled1C;
+	Bool m_enabled;
+	char m_unmodelled21[3];
+};
+
+// One labelled point of the +0x38 list.
+struct Rva0087F590LabeledPoint
+{
+	Coord3D m_pos;
 	AsciiString m_label;
 };
-
-struct Rva0087F590Shape
-{
-	char pad00[0x10];
-	float offsetX;
-	float offsetY;
-	float offsetZ;
-	char pad1C[4];
-	bool enabled;
-	char pad21[3];
-};
-
-class BfmeSubYR
-{
-public:
-	char bfmeDoYR(void *a, void *b, void *c, void *d, int e);
-};
-
-#define BFME_ONE (*(const float *)0x01075334)
-#define BFME_TENTH (*(const float *)0x01075C70)
-#define BFME_255TH (*(const float *)0x0107C64C)
 
 class GeometryInfo
 {
 public:
-	bool getBestContactPoint(Coord3D *out, const Coord3D *callerPos, const char *label,
-		int pref, int seed, bool skipCollideTest) const;
-	float getMaxHeightAbovePosition() const;
+	Bool getBestContactPoint(Coord3D *pointOut, const Coord3D *callerPos,
+		const char *label, Int preference, Int seed, Bool skipCollideTest) const;
+	Real getMaxHeightAbovePosition() const;					///< 0x0087E000
+	// 0x0087F2F0
+	Bool bfmeIntersects(const Coord3D &thisPos, Real thisAngle,
+		const GeometryInfo &that, const Coord3D &thatPos, Real thatAngle) const;
 
-	char pad00[0x2C];
-	Rva0087F590Shape *m_shapes;
-	Rva0087F590Shape *m_shapesEnd;
-	char pad34[4];
-	Rva0087F590Contact *m_contacts38;
-	Rva0087F590Contact *m_contactsEnd3C;
-	char pad40[4];
-	Coord3D m_coord44;
-	Coord3D m_innermostContactPoint;
+private:
+	void *m_vtbl;
+	char pad04[0x28];
+	std::vector<GeometryShape> m_shapes;					///< +0x2C
+	std::vector<Rva0087F590LabeledPoint> m_rva38Points;	///< +0x38
+	Coord3D m_rva44Point;									///< +0x44
+	Coord3D m_innermostContactPoint;						///< +0x50
 };
 
-bool GeometryInfo::getBestContactPoint(Coord3D *out, const Coord3D *callerPos,
-	const char *label, int pref, int seed, bool skipCollideTest) const
-{
-	if (g_bfmeDockingTraceActive && callerPos && TheCRCParameterCheck)
-	{
-		bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-			"        GeometryInfo::getBestContactPoint, callerPos=%g,%g,%g, label=%s, pref=%d, seed=%d, skipCollideTest=%d, m_innermostContactPoint=%g,%g,%g",
-			callerPos->x, callerPos->y, callerPos->z,
-			label ? label : "NONE", pref, seed,
-			skipCollideTest ? "TRUE" : "FALSE", m_innermostContactPoint.x, m_innermostContactPoint.y, m_innermostContactPoint.z);
-	}
-	*out = m_innermostContactPoint;
-	switch (pref)
-	{
-	case 0:
-	{
-		if (!callerPos)
-			return false;
+// The point geometry at the origin every collide test runs against.
+extern const Coord3D g_rva0130E908Origin;
+extern const GeometryInfo g_bfmeStaticAAO;
 
-		float bestDistance = 3.402823466e+38F;
-		int bestIndex = m_contactsEnd3C - m_contacts38;
-		int index = 0;
-		for (const Rva0087F590Contact *p = m_contacts38; p != m_contactsEnd3C; ++p, ++index)
+extern unsigned char g_contactPointDebug;
+extern void *g_contactPointDebugSink;
+extern "C" int __cdecl fprintf(void *sink, const char *format, ...);
+
+// ?getBestContactPoint@GeometryInfo@@QBE_NPAUCoord3D@@PBU2@PBDHH_N@Z
+Bool GeometryInfo::getBestContactPoint(Coord3D *pointOut, const Coord3D *callerPos,
+	const char *label, Int preference, Int seed, Bool skipCollideTest) const
+{
+	if (g_contactPointDebug && callerPos && g_contactPointDebugSink)
+		fprintf(g_contactPointDebugSink,
+			"        GeometryInfo::getBestContactPoint, callerPos=%g,%g,%g, label=%s, pref=%d, seed=%d, skipCollideTest=%d, m_innermostContactPoint=%g,%g,%g",
+			callerPos->x, callerPos->y, callerPos->z, label ? label : "NONE",
+			preference, seed, skipCollideTest ? "TRUE" : "FALSE",
+			m_innermostContactPoint.x, m_innermostContactPoint.y, m_innermostContactPoint.z);
+
+	*pointOut = m_innermostContactPoint;
+
+	switch (preference)
+	{
+		case 3:
 		{
-			if (p->m_label.bfmeCompare1294(label ? label : "") != 0)
-				continue;
-			Coord3D candidate = p->m_point;
-			if (getMaxHeightAbovePosition() < candidate.z)
-				candidate.z = getMaxHeightAbovePosition();
-			if (!skipCollideTest &&
-				!((BfmeSubYR *)this)->bfmeDoYR((void *)0x0130E908, 0,
-					(void *)0x0130E918, &candidate, 0))
-				continue;
-			float dx = candidate.x - callerPos->x;
-			float dy = candidate.y - callerPos->y;
-			float dz = candidate.z - callerPos->z;
-			float dist = dx * dx + dy * dy + dz * dz;
-			if (dist < bestDistance)
+			Int count = m_rva38Points.size();
+			if (count >= 2)
 			{
-				bestDistance = dist;
-				bestIndex = index;
+				Int index = seed % (count - 1);
+				Coord3D first = m_rva38Points[index].m_pos;
+				Coord3D second = m_rva38Points[index + 1].m_pos;
+				Real t = ((seed >> 8) & 0xff) * (1.0f / 255.0f);
+				first.scale(t);
+				second.scale(1.0f - t);
+				first.add(&second);
+				*pointOut = first;
 			}
-		}
-		if (bestIndex == m_contactsEnd3C - m_contacts38)
-			return false;
-		*out = m_contacts38[bestIndex].m_point;
-		if (getMaxHeightAbovePosition() < out->z)
-		{
-			out->z = getMaxHeightAbovePosition();
-			return true;
-		}
-		if (getMaxHeightAbovePosition() * BFME_TENTH > out->z)
-			out->z = getMaxHeightAbovePosition() * BFME_TENTH;
-		return true;	}
-	case 1:
-	{
-		*out = m_coord44;
-		if (getMaxHeightAbovePosition() < out->z)
-			out->z = getMaxHeightAbovePosition();
-		return true;
-	}
-	case 3:
-	{
-		int count = m_contactsEnd3C - m_contacts38;
-		if (count >= 2)
-		{
-			int index = seed % (count - 1);
-			const Rva0087F590Contact *first = &m_contacts38[index];
-			const Rva0087F590Contact *second = first + 1;
-			volatile float firstZ = first->m_point.z;
-			Coord3D secondPoint = second->m_point;
-			float fraction = ((seed >> 8) & 255) * BFME_255TH;
-			Coord3D mixedPoint;
-			mixedPoint.x = first->m_point.x * fraction + secondPoint.x * (BFME_ONE - fraction);
-			mixedPoint.y = first->m_point.y * fraction + secondPoint.y * (BFME_ONE - fraction);
-			mixedPoint.z = firstZ * fraction + secondPoint.z * (BFME_ONE - fraction);
-			*out = mixedPoint;
-		}
-		if (getMaxHeightAbovePosition() < out->z)
-			out->z = getMaxHeightAbovePosition();
-		if (!skipCollideTest &&
-			!((BfmeSubYR *)this)->bfmeDoYR((void *)0x0130E908, 0,
-				(void *)0x0130E918, out, 0))
-		{
-			for (Rva0087F590Shape *shape = m_shapes; shape != m_shapesEnd; ++shape)
+			if (pointOut->z > getMaxHeightAbovePosition())
+				pointOut->z = getMaxHeightAbovePosition();
+
+			if (!skipCollideTest &&
+				!bfmeIntersects(g_rva0130E908Origin, 0.0f, g_bfmeStaticAAO, *pointOut, 0.0f))
 			{
-				if (shape->enabled)
+				for (std::vector<GeometryShape>::const_iterator it = m_shapes.begin(); it != m_shapes.end(); ++it)
 				{
-					out->x = shape->offsetX;
-					out->y = shape->offsetY;
-					break;
+					if (it->m_enabled)
+					{
+						pointOut->x = it->m_offset.x;
+						pointOut->y = it->m_offset.y;
+						break;
+					}
 				}
 			}
-		}
-		if (getMaxHeightAbovePosition() < out->z)
-		{
-			out->z = getMaxHeightAbovePosition();
+
+			if (pointOut->z > getMaxHeightAbovePosition())
+			{
+				pointOut->z = getMaxHeightAbovePosition();
+				return true;
+			}
+			if (pointOut->z < getMaxHeightAbovePosition() * 0.1f)
+				pointOut->z = getMaxHeightAbovePosition() * 0.1f;
 			return true;
 		}
-		if (getMaxHeightAbovePosition() * BFME_TENTH > out->z)
-			out->z = getMaxHeightAbovePosition() * BFME_TENTH;
-		return true;
+
+		case 1:
+		{
+			*pointOut = m_rva44Point;
+			if (pointOut->z > getMaxHeightAbovePosition())
+				pointOut->z = getMaxHeightAbovePosition();
+			return true;
+		}
+
+		case 0:
+		{
+			if (callerPos == NULL)
+				break;
+
+			Int count = m_rva38Points.size();
+			Int bestIndex = count;
+			Real bestDistSqr = 3.402823466e+38f;
+			for (Int i = 0; i < count; ++i)
+			{
+				if (m_rva38Points[i].m_label.compare(label ? label : "") != 0)
+					continue;
+
+				Coord3D pos = m_rva38Points[i].m_pos;
+				if (pos.z > getMaxHeightAbovePosition())
+					pos.z = getMaxHeightAbovePosition();
+
+				if (!skipCollideTest &&
+					!bfmeIntersects(g_rva0130E908Origin, 0.0f, g_bfmeStaticAAO, pos, 0.0f))
+					continue;
+
+				Real dx = pos.x - callerPos->x;
+				Real dy = pos.y - callerPos->y;
+				Real dz = pos.z - callerPos->z;
+				Real distSqr = dx * dx + dy * dy + dz * dz;
+				if (distSqr < bestDistSqr)
+				{
+					bestDistSqr = distSqr;
+					bestIndex = i;
+				}
+			}
+
+			if (bestIndex == count)
+				break;
+
+			*pointOut = m_rva38Points[bestIndex].m_pos;
+			if (pointOut->z > getMaxHeightAbovePosition())
+			{
+				pointOut->z = getMaxHeightAbovePosition();
+				return true;
+			}
+			if (pointOut->z < getMaxHeightAbovePosition() * 0.1f)
+				pointOut->z = getMaxHeightAbovePosition() * 0.1f;
+			return true;
+		}
 	}
-	default:
-		return false;
-	}
+
+	return false;
 }
