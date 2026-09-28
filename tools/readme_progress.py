@@ -23,20 +23,26 @@ def _bar(y, label, value, total, caption, color):
 '''
 
 
-def render(rebuilt, total, cpp=None):
-    """Bytes matched (the headline) and, when given, the C++ we wrote: the end
-    state, since the headline also counts generated C++ and prebuilt .libs."""
-    if total <= 0 or not 0 <= rebuilt <= total or (cpp is not None and not 0 <= cpp <= rebuilt):
+def render(rebuilt, total, cpp=None, game_total=None):
+    """Green: bytes rebuilt without copying the retail image (the headline:
+    C++, vendored source, generated C++ and prebuilt .libs; dumps excluded).
+    Blue: the game's own code rewritten as C++ ("C++ we wrote"), out of the
+    code that is not vendored or prebuilt library code, so it can reach 100%."""
+    if total <= 0 or not 0 <= rebuilt <= total:
         raise ValueError("Invalid rebuild coverage")
+    if cpp is not None and (not game_total or not 0 <= cpp <= game_total <= total):
+        raise ValueError("Invalid C++ coverage")
     percentage = progress.percent(rebuilt, total)
     height = 132 if cpp is None else 252
-    bars = _bar(37, "BFME 1 · BYTES MATCHED", rebuilt, total, "bytes match the original game exe (v1.03)", GREEN)
-    desc = f"{rebuilt:,} of {total:,} code bytes matched"
+    bars = _bar(37, "BFME 1 · REBUILT FROM SOURCE", rebuilt, total,
+                "bytes rebuilt without copying the original game exe (v1.03)", GREEN)
+    desc = f"{rebuilt:,} of {total:,} code bytes rebuilt without copying the original"
     if cpp is not None:
-        bars += _bar(157, "BFME 1 · C++ SOURCE CODE", cpp, total, "bytes matched by C++ source code", BLUE)
-        desc += f"; {cpp:,} of them by C++ source code ({progress.percent(cpp, total):.2f}%)"
+        bars += _bar(157, "BFME 1 · GAME CODE IN C++", cpp, game_total,
+                     "bytes of the game's own code, now C++ (libraries not counted)", BLUE)
+        desc += f"; {cpp:,} of {game_total:,} bytes of the game's own code are C++"
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="880" height="{height}" viewBox="0 0 880 {height}" role="img" aria-labelledby="title desc">
-  <title id="title">BFME 1 bytes matched: {percentage:.2f}%</title>
+  <title id="title">BFME 1 rebuilt from source: {percentage:.2f}%</title>
   <desc id="desc">{desc}. Ledger-derived; not a fresh build verification.</desc>
   <rect x="1" y="1" width="878" height="{height - 2}" rx="16" fill="#0d1117" stroke="#30363d"/>
   <g font-family="Segoe UI,Arial,sans-serif">
@@ -60,13 +66,15 @@ def _section(label, value, total, square, previous_value=None, caption="bytes ma
 def announcement(current, previous):
     total = current["total"]
     same_total = bool(previous) and previous.get("total") == total
-    parts = [_section("Bytes matched", current["rebuilt"], total, "🟩",
+    parts = [_section("Rebuilt from source", current["rebuilt"], total, "🟩",
                       previous["rebuilt"] if same_total else None,
-                      "bytes match the original game exe (v1.03)")]
+                      "bytes rebuilt without copying the original game exe (v1.03)")]
     if current.get("cpp") is not None:
-        parts.append(_section("C++ source code", current["cpp"], total, "🟦",
-                              previous.get("cpp") if same_total else None,
-                              "bytes matched by C++ source code"))
+        game_total = current["game_total"]
+        same_game = bool(previous) and previous.get("game_total") == game_total
+        parts.append(_section("Game code in C++", current["cpp"], game_total, "🟦",
+                              previous.get("cpp") if same_game else None,
+                              "bytes of the game's own code, now C++ (libraries not counted)"))
     return {
         "allowed_mentions": {"parse": []},
         "embeds": [{
@@ -114,12 +122,15 @@ def main():
     _, total = progress.real_code_denominator(start, size)
     rebuilt = progress.rebuildable(split)
     cpp = split["authored"]
+    # The game's own code: vendored library source and prebuilt .libs are
+    # third-party code that will never be rewritten, so blue leaves them out.
+    game_total = total - split["vendored"] - split["library"]
     output = progress.ROOT / "docs" / "progress.svg"
-    output.write_text(render(rebuilt, total, cpp), encoding="utf-8", newline="\n")
-    print(f"{output.relative_to(progress.ROOT)}: {progress.percent(rebuilt, total):.2f}% matched, "
-          f"{progress.percent(cpp, total):.2f}% C++ we wrote")
+    output.write_text(render(rebuilt, total, cpp, game_total), encoding="utf-8", newline="\n")
+    print(f"{output.relative_to(progress.ROOT)}: {progress.percent(rebuilt, total):.2f}% rebuilt, "
+          f"{progress.percent(cpp, game_total):.2f}% of game code in C++")
     if args.discord:
-        notify({"rebuilt": rebuilt, "total": total, "cpp": cpp})
+        notify({"rebuilt": rebuilt, "total": total, "cpp": cpp, "game_total": game_total})
 
 
 if __name__ == "__main__":
