@@ -8258,5 +8258,25 @@
   "after_sha256": "e6c7dcb46d28c89f477a2222becaba065d32f7f91aac11841d443d3d2c7fd73a",
   "evidence": "targets/game/reverse/identity_evidence/00882ba0-free-tracker-callee.md",
   "reason": "isValidBlock (0x00883AD0) and rva008839B0 (0x008839B0) are distinct methods; _Free calls 0x008839B0"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006d2130.cpp",
+  "new_path": "game/GameEngine/Source/Common/GridDispatch006D2130.cpp",
+  "old_name": "apply",
+  "new_name": "rva0072EAA0",
+  "before_sha256": "7bfa15765091725336a6106cee7a96f4fb1849ea7f8b5b98172c347efd58eca9",
+  "after_sha256": "3645b3882127f8d48625b90daede0c455d4e897a70f270ebfae52762c06c8d36",
+  "evidence": "targets/game/reverse/identity_evidence/006d2130-grid-dispatch-element-callees.md",
+  "reason": "probe/apply were the bank's own call-site placeholders; targets have only gen names"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006d2130.cpp",
+  "new_path": "game/GameEngine/Source/Common/GridDispatch006D2130.cpp",
+  "old_name": "probe",
+  "new_name": "rva00729180",
+  "before_sha256": "7bfa15765091725336a6106cee7a96f4fb1849ea7f8b5b98172c347efd58eca9",
+  "after_sha256": "3645b3882127f8d48625b90daede0c455d4e897a70f270ebfae52762c06c8d36",
+  "evidence": "targets/game/reverse/identity_evidence/006d2130-grid-dispatch-element-callees.md",
+  "reason": "probe/apply were the bank's own call-site placeholders; targets have only gen names"
  }
 ]

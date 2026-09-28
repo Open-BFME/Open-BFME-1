@@ -1,5 +1,5 @@
 // ?d_006b66a0@@YAXXZ
-// partial score=0.24 date=2026-09-18
+// partial score=0.5434343434 date=2026-09-28
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc- /D_STLP_USE_STATIC_LIB
 //
 // Retail 0x006B66A0 is the Miles audio-event dispatch reached by the
@@ -31,6 +31,8 @@ public:
 	virtual ~Rva006B66A0RefBase();
 
 	long m_refCount;
+	void addRef() { InterlockedIncrement(&m_refCount); }
+	void releaseRef() { if (InterlockedDecrement(&m_refCount) <= 0) delete this; }
 };
 
 class AudioEventRTS;
@@ -64,12 +66,14 @@ public:
 	}
 
 	AudioEventRTS *m_pointer;
+	AudioEventRTS *get() const { return m_pointer; }
 };
 
 struct Rva006B66A0AudioInfo
 {
 	unsigned char m_pad00[0x84];
 	int m_soundType;
+	int soundType() const { return m_soundType; }
 };
 
 class AudioEventRTS
@@ -87,34 +91,22 @@ public:
 	unsigned char m_flag47;
 	unsigned char m_pad48[0x0c];
 	float m_delay;
+	float delay() const { return m_delay; }
+	bool negativeDelay() const { if (m_delay >= g_bfmeElapsedScale) return false; return true; }
+	unsigned int timeOfDay() const { return m_timeOfDay; }
 };
+
+extern void j_000298e8();
 
 class Rva006B66A0FileHandle
 {
 public:
-	void *m_pointer;
-};
-
-struct Rva006B66A0Record;
-
-extern void j_000298e8();
-
-class Rva006B66A0RecordRef
-{
-public:
-	Rva006B66A0RecordRef(Rva006B66A0Record *pointer) : m_pointer(pointer) {}
-	~Rva006B66A0RecordRef()
-	{
-		typedef void (Rva006B66A0RecordRef::*Release)(void);
-		union
-		{
-			void (__cdecl *freeFunction)();
-			Release memberFunction;
-		} release;
-		release.freeFunction = ::j_000298e8;
-		(this->*release.memberFunction)();
-	}
-
+    ~Rva006B66A0FileHandle() {
+        typedef void (Rva006B66A0FileHandle::*Release)();
+        union { void (*raw)(); Release method; } release;
+        release.raw=j_000298e8;
+        (this->*release.method)();
+    }
 	void *m_pointer;
 };
 
@@ -130,6 +122,8 @@ struct Rva006B66A0Record
 	unsigned char m_flag13;
 	unsigned char m_flag14;
 	unsigned char m_pad15[3];
+	Rva006B66A0AudioHolder &event() { return m_event; }
+	void setEvent(const Rva006B66A0AudioHolder &v) { m_event=v; }
 };
 
 struct Rva006B66A0Link
@@ -200,25 +194,25 @@ bool Rva006B66A0AudioOwner::rva006B66A0(
 	union { void (__cdecl *freeFunction)(); Clamp memberFunction; } clamp;
 	clamp.freeFunction = ::j_00001b77;
 
-	if (!(this->*canPlay.memberFunction)(source->m_pointer))
+	if (!(this->*canPlay.memberFunction)(source->get()))
 	{
-		if (source->m_pointer->m_delay < g_bfmeElapsedScale)
+		if (source->get()->m_delay < g_bfmeElapsedScale)
 		{
-			if ((source->m_pointer->*hasMore.memberFunction)())
+			if ((source->get()->*hasMore.memberFunction)())
 			{
-				(source->m_pointer->*generate.memberFunction)();
-				if ((source->m_pointer->*hasMore.memberFunction)())
+				(source->get()->*generate.memberFunction)();
+				if ((source->get()->*hasMore.memberFunction)())
 				{
-					(source->m_pointer->*advance.memberFunction)();
-					source->m_pointer->m_flag44 = 1;
-					(source->m_pointer->*clamp.memberFunction)(34.3333321f,
+					(source->get()->*advance.memberFunction)();
+					source->get()->m_flag44 = 1;
+					(source->get()->*clamp.memberFunction)(34.3333321f,
 						g_Va0112E8B0);
 				}
 			}
 		}
 
-		if (source->m_pointer->m_delay < g_bfmeElapsedScale &&
-			!(source->m_pointer->*hasMore.memberFunction)())
+		if (!(source->get()->m_delay >= g_bfmeElapsedScale) &&
+			!(source->get()->*hasMore.memberFunction)())
 			return false;
 	}
 
@@ -229,7 +223,6 @@ bool Rva006B66A0AudioOwner::rva006B66A0(
 
 	{
 		record = (this->*create.memberFunction)();
-		Rva006B66A0RecordRef recordRef(record);
 		record->m_event = *source;
 		record->m_value0 = 0;
 
@@ -247,17 +240,16 @@ bool Rva006B66A0AudioOwner::rva006B66A0(
 		} getSoundClass;
 		getSoundClass.freeFunction = ::j_00015a69;
 		unsigned int soundClass =
-			(source->m_pointer->*getSoundClass.memberFunction)();
-		if (m_flags0[source->m_pointer->m_timeOfDay] & soundClass)
+			(source->get()->*getSoundClass.memberFunction)();
+		if (m_flags0[source->get()->timeOfDay()] & soundClass)
 			record->m_flag12 = 1;
-		if (m_flags1[source->m_pointer->m_timeOfDay] & soundClass)
+		if (m_flags1[source->get()->timeOfDay()] & soundClass)
 			record->m_flag13 = 1;
 
-		if (source->m_pointer->m_eventInfo->m_soundType == 2)
+		if (source->get()->m_eventInfo->soundType() == 2)
 		{
-			typedef Rva006B66A0FileHandle *
-				(Rva006B66A0Worker::*Load)(Rva006B66A0RecordRef *,
-				Rva006B66A0AudioHolder *, int);
+			typedef Rva006B66A0FileHandle
+				(Rva006B66A0Worker::*Load)(Rva006B66A0AudioHolder *, int);
 			union
 			{
 				void (__cdecl *freeFunction)();
@@ -274,14 +266,11 @@ bool Rva006B66A0AudioOwner::rva006B66A0(
 			} assign;
 			assign.freeFunction = ::j_0004066f;
 
-		int state = source->m_pointer->m_delay <
-			g_bfmeElapsedScale ? 1 : 0;
-			if (source->m_pointer->m_delay < g_bfmeElapsedScale && !allowLocal)
+		int state = source->get()->m_delay >= g_bfmeElapsedScale ? 0 : 1;
+			if (source->get()->m_delay < g_bfmeElapsedScale && !allowLocal)
 				state = 2;
 
-			Rva006B66A0FileHandle *opened =
-				(m_worker->*load.memberFunction)(&recordRef, source, state);
-			(record->m_file.*assign.memberFunction)(*opened);
+			(record->m_file.*assign.memberFunction)((m_worker->*load.memberFunction)(source,state));
 		}
 	}
 
