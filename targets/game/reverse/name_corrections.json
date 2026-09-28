@@ -10008,5 +10008,35 @@
   "old_name": "m_name",
   "new_name": "m_unmodelledA8",
   "reason": "The old bank named screen+0xA8 m_name as a char[4]; nothing witnesses it and this body never reads +0xA8, so the landing keeps it as unnamed padding instead of an unproven name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0048fc90.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0048fc90.cpp",
+  "old_name": "BfmeLayoutElementFC",
+  "new_name": "Rva0048E730Element",
+  "before_sha256": "de0f07cd869657cea8ee451eed454d243936e650bb5a56f40471770eee889eb6",
+  "after_sha256": "0eefb687b5960720ad00f065f38ccb5554c537d17127af639a8100ee29094c94",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "The line elements are passed to the matched 0x0048E730 walk whose ledger name ?layoutRva0048E730@@YA?AVRva0048E730Layout@@PAPAURva0048E730Element@@0V1@@Z fixes the element type as Rva0048E730Element; the stash keeps BfmeLayoutElementFC as a typedef of it."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0048fc90.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0048fc90.cpp",
+  "old_name": "BfmeDisplayManagerFC",
+  "new_name": "Rva0048EC80Manager",
+  "before_sha256": "de0f07cd869657cea8ee451eed454d243936e650bb5a56f40471770eee889eb6",
+  "after_sha256": "0eefb687b5960720ad00f065f38ccb5554c537d17127af639a8100ee29094c94",
+  "evidence": "targets/game/reverse/symbols.csv",
+  "reason": "The global at VA 0x012F12CC is pinned only as ?Rva0048EC80TheManager@@3PAVRva0048EC80Manager@@A, which fixes the manager's type name for the DIR32 reference; the old stash reached it through a raw address macro. The stash keeps BfmeDisplayManagerFC as a typedef and TheDisplayStringManager as a macro."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0048fc90.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0048fc90.cpp",
+  "old_name": "BfmeLayoutRangeFC",
+  "new_name": "Rva0048FC90Font",
+  "before_sha256": "de0f07cd869657cea8ee451eed454d243936e650bb5a56f40471770eee889eb6",
+  "after_sha256": "0eefb687b5960720ad00f065f38ccb5554c537d17127af639a8100ee29094c94",
+  "evidence": "targets/game/reverse/attempts/0x0048fc90.cpp",
+  "reason": "False pairing: BfmeLayoutRangeFC is kept in the new stash (it now wraps the line's element vector read at line+0/+4); Rva0048FC90Font is a new record for the font the target holds at +0x04 whose +0x10 height feeds the line step, not a rename of the range."
  }
 ]
