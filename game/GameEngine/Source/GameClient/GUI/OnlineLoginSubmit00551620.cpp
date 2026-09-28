@@ -131,3 +131,20 @@ void BfmeAptScreenOnlineLogin::submitLogin00551620() {
   else GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoAll"));
  }
 }
+// Opaque address token for retail 0x00551DB0 (21 B): DeleteNickname
+// message-box OK callback. Evidence: DeleteNickname arm at 0x00552C40
+// (rva00552C40) passes VA 0x00951DB0 as the MessageBoxOkCancel OK callback
+// with cancel 0x00948D00 (-> ILT 0x42A50 -> Rva004C5490); no direct callers,
+// ledger refs=0, no ILT thunk. Calls Rva004C5490 (0x004C5490 via ILT
+// 0x42A50), then tail-jumps to TheBfmeOnlineLogin-gated submitLogin00551620
+// (ECX-gated je/jmp E9 to ILT 0x7FB3 -> 0x00551620). Calls by address take
+// (TheBfmeOnlineLogin, 0x012F4AAC) live here only as an opaque pointer.
+// ?Rva00551DB0@@YAXXZ
+extern void Rva004C5490();
+extern BfmeAptScreenOnlineLogin *TheBfmeOnlineLogin;
+void Rva00551DB0()
+{
+	Rva004C5490();
+	if (TheBfmeOnlineLogin)
+		TheBfmeOnlineLogin->submitLogin00551620();
+}
