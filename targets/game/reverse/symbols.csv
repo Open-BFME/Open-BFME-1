@@ -77450,7 +77450,7 @@ name,address,notes
 ?bfmeGoalF1005@BfmeHold1005@@QAEPAUBfmeGoal1005@@XZ,0x0000E570,pin
 ?bfmeGrab@BfmeSourceA@@QAEPAXPAPAX@Z,0x00019876,Open-BFME5 ILT the vector assignment at 0x00095A50 grabs through
 ?bfmeGrab@BfmeSourceB@@QAEPAXPAPAX@Z,0x000314E9,Open-BFME5 ILT the vector assignment at 0x000B54C0 grabs through
-?bfmeGrab@BfmeSourceC@@QAEPAXPAPAX@Z,0x0002EBC2,Open-BFME5 ILT the vector assignment at 0x002F8980 grabs through
+?get_allocator@?$vector@U?$pair@W4ObjectID@@W41@@_STL@@V?$allocator@U?$pair@W4ObjectID@@W41@@_STL@@@2@@_STL@@QBE?AV?$allocator@U?$pair@W4ObjectID@@W41@@_STL@@@2@XZ,0x0002EBC2,Open-BFME5 ILT for SolutionVec::get_allocator (body 0x002F19E0 returns its hidden return pointer) that the SolutionVec copy ctor 0x002F8980 calls first
 ?bfmeGrab@BfmeSourceD@@QAEPAXPAPAX@Z,0x00018697,Open-BFME5 ILT the vector assignment at 0x003A9560 grabs through
 ?bfmeGrantBS@ExperienceLevelSystem@@QAEXPAVBfmeInfoBS@@PAVBfmeAgentBS@@H@Z,0x000240D7
 ?bfmeGrantBW@ExperienceLevelSystem@@QAEXPAVBfmeInfoBW@@PAVBfmeAgentBW@@PAX@Z,0x000240D7
@@ -78375,7 +78375,7 @@ name,address,notes
 ?bfmeReserve1242@BfmeN1242@@QAEXH@Z,0x008B8D60,pin
 ?bfmeReserve@Gen_00095A50@@AAEXHPAX@Z,0x000472DA,Open-BFME5 ILT the vector assignment at 0x00095A50 reserves through
 ?bfmeReserve@Gen_000B54C0@@AAEXHPAX@Z,0x00043E37,Open-BFME5 ILT the vector assignment at 0x000B54C0 reserves through
-?bfmeReserve@Gen_002F8980@@AAEXHPAX@Z,0x00015ABE,Open-BFME5 ILT the vector assignment at 0x002F8980 reserves through
+??0?$_Vector_base@U?$pair@W4ObjectID@@W41@@_STL@@V?$allocator@U?$pair@W4ObjectID@@W41@@_STL@@@2@@_STL@@QAE@IABV?$allocator@U?$pair@W4ObjectID@@W41@@_STL@@@1@@Z,0x00015ABE,Open-BFME5 ILT for the SolutionVec _Vector_base(size_t const allocator&) ctor (tgrid body 0x002F19F0) that the copy ctor 0x002F8980 calls with (count allocator)
 ?bfmeReserve@Gen_003A9560@@AAEXHPAX@Z,0x00027098,Open-BFME5 ILT the vector assignment at 0x003A9560 reserves through
 ?bfmeReserve@Rva00789220VectorA@@QAEXI@Z,0x00016E96,ILT for first hash bucket initializer
 ?bfmeReserve@Rva00789220VectorB@@QAEXI@Z,0x000330A5,ILT for second hash bucket initializer

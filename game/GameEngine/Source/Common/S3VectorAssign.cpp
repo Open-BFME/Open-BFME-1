@@ -1,4 +1,5 @@
-// Four vector assignments, 0x00095A50, 0x000B54C0, 0x002F8980 and 0x003A9560.
+// Three vector assignments, 0x00095A50, 0x000B54C0 and 0x003A9560 (0x002F8980
+// is the SolutionVec copy constructor, SolutionVecCopyConstructor.cpp).
 //
 // The first call is entered with the source as this and the ADDRESS OF THE
 // PARAMETER SLOT as its argument -- there is no sub esp, so that address can
@@ -72,24 +73,6 @@ private:
 	BfmePair *m_bfmeFinish;					// +0x04
 };
 
-class BfmeSourceC
-{
-public:
-	void *bfmeGrab(void **slot);			// ILT 0x0002EBC2
-};
-
-class Gen_002F8980
-{
-public:
-	Gen_002F8980 *bfmeAssign(BfmeVectorRange *source);
-
-private:
-	void bfmeReserve(int count, void *grabbed);		// ILT 0x00015ABE
-
-	BfmePair *m_bfmeStart;					// +0x00
-	BfmePair *m_bfmeFinish;					// +0x04
-};
-
 class BfmeSourceD
 {
 public:
@@ -137,30 +120,6 @@ Gen_000B54C0 *Gen_000B54C0::bfmeAssign(BfmeVectorRange *source)
 {
 	void *slot;
 	void *grabbed = ((BfmeSourceB *)source)->bfmeGrab(&slot);
-
-	bfmeReserve(source->m_bfmeFinish - source->m_bfmeStart, grabbed);
-
-	const BfmePair *last = source->m_bfmeFinish;
-	const BfmePair *element = source->m_bfmeStart;
-	BfmePair *cursor = m_bfmeStart;
-
-	while (element != last)
-	{
-		new (cursor) BfmePair(*element);
-		++element;
-		++cursor;
-	}
-
-	m_bfmeFinish = cursor;
-
-	return this;
-}
-
-// ?bfmeAssign@Gen_002F8980@@QAEPAV1@PAUBfmeVectorRange@@@Z
-Gen_002F8980 *Gen_002F8980::bfmeAssign(BfmeVectorRange *source)
-{
-	void *slot;
-	void *grabbed = ((BfmeSourceC *)source)->bfmeGrab(&slot);
 
 	bfmeReserve(source->m_bfmeFinish - source->m_bfmeStart, grabbed);
 
