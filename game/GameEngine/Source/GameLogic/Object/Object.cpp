@@ -1990,6 +1990,18 @@ void Object::reactToTurretChange( WhichTurretType turret, Real oldRotation, Real
 
 //-------------------------------------------------------------------------------------------------
 //DECLARE_PERF_TIMER(Object_reactToTransformChange)
+// The retail callback uses primary vtable slot +18 before notifying containment.
+// Keep this slot address-derived: the ZH partition-data branch is not present.
+class Rva001CDC30Virtual
+{
+public:
+ virtual void slot00(); virtual void slot04(); virtual void slot08();
+ virtual void slot0c(); virtual void slot10(); virtual void slot14();
+ virtual void slot18();
+};
+class Rva001BF150Object { public: void expire(); };
+class Rva00132200Target { public: void rva00132200(const Matrix3D *); };
+class Rva001C8D80Object { public: void invoke(); };
 void Object::reactToTransformChange(const Matrix3D* oldMtx, const Coord3D* oldPos, Real oldAngle)
 {
 	//USE_PERF_TIMER(Object_reactToTransformChange)
@@ -1999,7 +2011,14 @@ void Object::reactToTransformChange(const Matrix3D* oldMtx, const Coord3D* oldPo
 	}
 	if (m_drawable)
 	{
-  	m_drawable->setTransformMatrix( this->getTransformMatrix() );
+  	// Retail-only drawable bookkeeping at +314/+318/+319 precedes the
+        // inherited transform setter. Offsets come from 001CDC8A..001CDCA0.
+        char *drawableBytes = reinterpret_cast<char *>(m_drawable);
+        *reinterpret_cast<unsigned *>(drawableBytes + 0x314) =
+            *reinterpret_cast<const unsigned *>(reinterpret_cast<const char *>(TheGameLogic) + 0x3c);
+        *(drawableBytes + 0x318) = 0;
+        *(drawableBytes + 0x319) = 0;
+        reinterpret_cast<Rva00132200Target *>(m_drawable)->rva00132200(getTransformMatrix());
 	}
 
 	Bool posDiff = isPosDifferent(oldPos, getPosition());
@@ -2007,23 +2026,26 @@ void Object::reactToTransformChange(const Matrix3D* oldMtx, const Coord3D* oldPo
 
 	if (posDiff || angDiff)
 	{
-		if (m_partitionData)
-			m_partitionData->makeDirty(true);
+		reinterpret_cast<Rva001CDC30Virtual *>(this)->slot18();
 		
-		if (getContain())
-			getContain()->containReactToTransformChange();
+		// name_oracle: Object+0x1fc is m_contain (BFME layout witness).
+        ContainModuleInterface *contain = *reinterpret_cast<ContainModuleInterface **>(
+            reinterpret_cast<char *>(this) + 0x1fc);
+        if (contain)
+            contain->containReactToTransformChange();
 	}
 
 	if (posDiff)
 	{
-		setTriggerAreaFlagsForChangeInPosition(); // Update for entered/exited
+		reinterpret_cast<Rva001C8D80Object *>(this)->invoke(); // Full body starts before the old fragment pin.
 		
 		Region3D mapExtent;
 		TheTerrainLogic->getExtent(&mapExtent);
 		if (mapExtent.isInRegionNoZ(getPosition()))
-			m_privateStatus &= ~OFF_MAP;
+			(*reinterpret_cast<unsigned char *>(reinterpret_cast<char *>(this) + 0x344)) &= ~OFF_MAP;
 		else
-			m_privateStatus |= OFF_MAP;
+			(*reinterpret_cast<unsigned char *>(reinterpret_cast<char *>(this) + 0x344)) |= OFF_MAP;
+		reinterpret_cast<Rva001BF150Object *>(this)->expire();
 	}
 }
 

@@ -29,6 +29,7 @@ class Rva007F2350StatsCursor
 {
 public:
 	bool next( Rva007F2350StatsRecord *record );
+	bool rva007F2230( Rva007F2350StatsRecord *record );
 
 	Rva007E8810Message *m_msg;
 	int m_index;
@@ -68,4 +69,31 @@ bool Rva007F2350StatsCursor::next( Rva007F2350StatsRecord *record )
 	++m_index;
 	m_state = 0;
 	return true;
+}
+
+// Retail 0x007F2230: int3 at 0x007F222F, ret 4 at 0x007F2348,
+// then five int3 bytes. The stats.* strings prove this shares the cursor
+// and output record layout with next; its +0x30 output is the key string.
+bool Rva007F2350StatsCursor::rva007F2230(Rva007F2350StatsRecord *record)
+{
+ char name[0x40];
+ char valueText[0x40];
+ union { float number; int bits; } value;
+ record->m_name[0] = 0;
+ record->m_30 = 0;
+ record->m_value = 0;
+ record->m_addStat[0] = 0;
+ record->m_rank = 0;
+ sprintf(name, "stats.%d.key", m_index);
+ if (!m_msg->getString(name, &record->m_30, 0x20)) return false;
+ sprintf(name, "stats.%d.value", m_index);
+ m_msg->getString(name, valueText, 0x40);
+ sscanf(valueText, "%f", &value.number);
+ record->m_value = value.bits;
+ sprintf(name, "stats.%d.rank", m_index);
+ record->m_rank = m_msg->getInt(name, 0);
+ sprintf(name, "stats.%d.text", m_index);
+ m_msg->getString(name, record->m_addStat, 0xff);
+ ++m_index;
+ return true;
 }

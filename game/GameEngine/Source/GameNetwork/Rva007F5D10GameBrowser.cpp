@@ -2,7 +2,51 @@
 // The assertion text names the pending-active state and the message carries
 // the hosted-player TID used by the lookup.
 
+#include <string.h>
+
 extern "C" unsigned char bfmeInfoDFI[];
+
+// The complete retail destructor at 0x007E86C0 has an address-derived
+// ledger identity; use that existing declaration for the scoped cleanup.
+class Gen_007e86c0 { public: void m(); };
+class BfmeC994
+{
+public:
+ BfmeC994(char *buffer, int capacity);
+ ~BfmeC994() { ((Gen_007e86c0 *)this)->m(); }
+ char m_storage[0x34];
+};
+class Rva007F5E00Sender
+{
+public:
+ virtual void slot00();
+ virtual void slot04();
+ virtual void slot08();
+ virtual void slot0C();
+ virtual void slot10();
+ virtual void slot14();
+ virtual void slot18();
+ virtual void slot1C();
+ virtual void slot20();
+ virtual void slot24();
+ virtual void slot28();
+ virtual void slot2C();
+ virtual void slot30();
+ virtual void slot34();
+ virtual void slot38();
+ virtual void slot3C();
+ virtual void slot40();
+ virtual void slot44(BfmeC994 *, int, int, int);
+};
+class Rva007E8810Message;
+class Rva007F5D10GameBrowser;
+class Rva007F5E00Notifier
+{
+public:
+ virtual void slot00();
+ virtual void slot04();
+ virtual void slot08(BfmeC994 *, void (__cdecl *)(Rva007E8810Message *, Rva007F5D10GameBrowser *), Rva007F5D10GameBrowser *, int);
+};
 
 class Rva00803620Getter
 {
@@ -28,6 +72,7 @@ public:
 	virtual void slot05();
 	virtual void slot06();
 	virtual int getState();
+	virtual const char *slot20();
 	void setHpState( int state );
 };
 
@@ -90,10 +135,11 @@ class Rva007F5D10GameBrowser
 {
 public:
 	void handlePendingActiveReply( Rva007E8810Message *message ) throw();
+	void rva007F5E00(int id, const char *text) throw();
 
 	char m_pad00[0x10];
-	void *m_sender;
-	void *m_notifier;
+	Rva007F5E00Sender *m_sender;
+	Rva007F5E00Notifier *m_notifier;
 	char m_pad18[4];
 	Rva007F5D10Listener *m_listener;
 	char m_pad20[0x2b8];
@@ -133,4 +179,23 @@ void Rva007F5D10GameBrowser::handlePendingActiveReply( Rva007E8810Message *messa
 		m_listener->notifyActive( id );
 		m_hosts->resetHpState( player );
 	}
+}
+
+// Retail 0x007F5DF0: callback target at 0x007F5EE1; ret then int3.
+void Rva007F5DF0Callback(Rva007E8810Message *message, Rva007F5D10GameBrowser *browser)
+{
+	browser->handlePendingActiveReply(message);
+}
+
+// Retail 0x007F5E00: separate int3-aligned body, ending in ret 8 at 0x007F5EFD.
+void Rva007F5D10GameBrowser::rva007F5E00(int id, const char *text) throw()
+{
+ Rva008022A0Owner *player = m_hosts->find(id);
+ if (!player) { m_listener->notifyPendingActive(id, -106); return; }
+ if (player->getState() != 2) { m_listener->notifyPendingActive(id, -108); return; }
+ if (strcmp(text, player->slot20())) { m_listener->notifyPendingActive(id, -107); return; }
+ player->setHpState(3);
+ BfmeC994 message(m_messageBuffer, 0x400);
+ m_sender->slot44(&message, id, 0, 0);
+ m_notifier->slot08(&message, Rva007F5DF0Callback, this, m_transaction);
 }

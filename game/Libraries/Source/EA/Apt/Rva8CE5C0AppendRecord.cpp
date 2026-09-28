@@ -138,3 +138,54 @@ void rva8CE5C0AppendRecord(Rva8CE5C0State *state, Rva8CE5C0Cursor *cursor)
 			(Rva8CD130Value *)value, 1, 1, 0);
 	}
 }
+
+// Retail sibling at 0x008CE740 follows one int3 byte; ends with ret at
+// 0x008CE885 and ten int3 bytes. Its record has an additional dword at +0x0c.
+struct Rva008CE740Record
+{
+ const char *m_name;
+ char m_gap04[0x0c];
+ unsigned m_size;
+ int m_line;
+ int m_column;
+};
+class Rva008D62F0Object : public Rva8CE5C0Value, public Rva008BA800HeaderedDelete
+{
+public:
+ Rva008D62F0Object(void *, Rva8CE5C0Value *, int, void *);
+ static void *operator new(unsigned int bytes)
+ {
+  char *raw = (char *)Rva008C5D70Alloc(bytes + 8);
+  char *block = raw + 8;
+  Gen00897300(block);
+  return block;
+ }
+ char m_gap08[0x2c];
+};
+// Existing ledger names 0x008D62F0 as bfmeGo1055C. Its full 44-byte body
+// calls the base constructor with args 2..4, stores arg1 at +0x30, installs
+// the vtable and returns this (ret 16): exactly the constructor ABI here.
+
+void rva008CE740(Rva8CE5C0State *state, Rva8CE5C0Cursor *cursor)
+{
+ Rva008CE740Record *record = (Rva008CE740Record *)(((unsigned)cursor->m_position + 3) & ~3u);
+ cursor->m_position = (unsigned char *)(record + 1);
+ cursor->m_position += record->m_size;
+ record->m_line = state->m_line;
+ record->m_column = state->m_column;
+ Rva8CE5C0Value *top;
+ if (state->m_stack0C.size() > 0) {
+  top = state->m_stack0C.top();
+  top->addRef();
+ } else top = 0;
+ Rva8CE5C0Value *value = new Rva008D62F0Object(record, top,
+  cursor->m_context->properties()[1], cursor->m_context);
+ if (*record->m_name == 0) {
+  state->m_stack[state->m_count++] = value;
+  if (!value->maxRefCountHit()) value->addRef();
+ } else {
+  BfmeStrVKI name(record->m_name);
+  state->append(cursor->m_context, cursor->m_scope, (Rva8CD130String *)&name,
+   (Rva8CD130Value *)value, 1, 1, 0);
+ }
+}

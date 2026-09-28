@@ -8668,5 +8668,35 @@
   "after_sha256": "d8f92face2f8561c68cf685155bb8bf823192f33e6c57af587ce054d64d68122",
   "evidence": "targets/game/reverse/identity_evidence/005770e0-populate-multiplayer.md",
   "reason": "the first entry dword is the GameInfo::getSlot result and is passed as the GameSlot argument of the matched row helper 0x00576C20"
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Object.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Object.cpp",
+  "old_name": "setTransformMatrix",
+  "new_name": "rva00132200",
+  "before_sha256": "42426c005286a4a44ea79c263f7b42f914a4477f2de98ee1831cbe74de6c2703",
+  "after_sha256": "5c9c068ba0d9d67d19bc5de6a8bc7e725b0cd7604a821be76502480143d23849",
+  "evidence": "targets/game/reverse/identity_evidence/gap_seat_051426_2_callee_views.md",
+  "reason": "call sites and element type follow the ledger names of the real retail targets; no definition renamed"
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameNetwork/Rva007F2350StatsCursor.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/Rva007F2350StatsCursor.cpp",
+  "old_name": "next",
+  "new_name": "rva007F2230",
+  "before_sha256": "53bc4e39f5c04629ca632ad8b9d4e31df7ba34a5174dd96da3eb50dfaf985eea",
+  "after_sha256": "39baaab6c9ec0b90e30faefb15f7e8f0db4fe0e4ceb2086a7f0e3849e2cb8ea5",
+  "evidence": "targets/game/reverse/identity_evidence/gap_seat_051426_2_callee_views.md",
+  "reason": "call sites and element type follow the ledger names of the real retail targets; no definition renamed"
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WW3D2/meshmdlio.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WW3D2/MeshLoadContextDestructor.cpp",
+  "old_name": "Vector2",
+  "new_name": "Rva0096E1B0Elem",
+  "before_sha256": "a50b86f7f6509160a12ce80f9eefe6bf1b57c164ef2d39c5f8a49be31f58b1cf",
+  "after_sha256": "623b4010c98e83e3d6f58ae66515b638ef8dd8c4af891961cacc6177357a4a77",
+  "evidence": "targets/game/reverse/identity_evidence/gap_seat_051426_2_callee_views.md",
+  "reason": "call sites and element type follow the ledger names of the real retail targets; no definition renamed"
  }
 ]

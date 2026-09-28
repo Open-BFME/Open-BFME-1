@@ -100,6 +100,7 @@ public:
 	void handle( BfmeC994 *message, int gid, char *name );
 };
 
+struct Rva0080A680Input;
 class BfmeThingUNC
 {
 public:
@@ -107,6 +108,7 @@ public:
 	void rva00809400( BfmeC994 *message, int gid,
 		Rva00802680Owner *player );
 	void rva0080A3C0( Rva0080A3C0Input *input );
+	void rva0080A680(Rva0080A680Input *input);
 
 	void *m_vtable;
 	int m_registrationValue;
@@ -187,4 +189,65 @@ void BfmeThingUNC::rva0080A3C0( Rva0080A3C0Input *input )
 		++index;
 		count = sender->count();
 	}
+}
+
+class Gen_007e86c0 { public: void m(); };
+class Rva007E8810Message
+{
+public:
+ Rva007E8810Message();
+ ~Rva007E8810Message() { ((Gen_007e86c0 *)this)->m(); }
+ unsigned m_00, m_04, m_08, m_0c, m_10, m_14, m_18, m_1c, m_20, m_24, m_28, m_2c;
+ char m_30;
+};
+struct Rva0080A680Input { int m_00, m_04, m_08, m_0c, m_10, m_14, m_18, m_1c, m_20; };
+struct Rva00800E50Header;
+void Rva007F91D0(Rva00800E50Header *, const char *);
+struct Rva00809500Entry;
+struct Rva00809500Sink { void accept(Rva00809500Entry *); };
+class Rva00809010Finder { public: Rva00809500Sink *find(Rva00809500Entry *); };
+class Rva00809E40Owner { public: void rva00809E40(Rva007E8810Message *); };
+struct Rva0080A110Message;
+class Rva0080A110Owner { public: void route(Rva0080A110Message *); };
+struct Rva0080A280Input;
+class Rva0080A280Owner { public: void rva0080A280(Rva0080A280Input *); };
+class Rva0080A680Forwarder
+{
+public:
+ virtual void slot00();
+ virtual void slot04();
+ virtual void slot08();
+ virtual void slot0c(Rva0080A680Input *);
+};
+class Rva0080A680Base { public: virtual void base00(); };
+class Rva0080A680ForwarderOwner : public Rva0080A680Base, public Rva0080A680Forwarder {};
+// Int3 at 0x0080A67F proves the start; final ret 4 at 0x0080A7D6
+// is followed by seven int3 bytes. The vtable reference is VA 0x0112C83C.
+void BfmeThingUNC::rva0080A680(Rva0080A680Input *input)
+{
+ bool response = (input->m_04 & 0x80000000) && (input->m_04 & 0x40000000);
+ Rva007F91D0((Rva00800E50Header *)input, "<-L");
+ Rva007E8810Message message;
+ message.m_10 = input->m_08;
+ message.m_14 = input->m_0c;
+ message.m_20 = input->m_04;
+ message.m_1c = input->m_00;
+ message.m_04 = input->m_18;
+ message.m_08 = input->m_1c;
+ message.m_0c = input->m_20;
+ if (!response) {
+  if (message.m_1c != 0x474c5354) {
+   ((Rva0080A680ForwarderOwner *)m_registrationValue)->slot0c(input);
+   return;
+  }
+  Rva00809500Sink *sink = ((Rva00809010Finder *)this)->find((Rva00809500Entry *)&message);
+  if (sink) sink->accept((Rva00809500Entry *)&message);
+ } else {
+  switch ((int)message.m_1c) {
+   case 0x4547414d: ((Rva00809E40Owner *)this)->rva00809E40(&message); break;
+   case 0x45434e4c: ((Rva0080A110Owner *)this)->route((Rva0080A110Message *)&message); break;
+   case 0x47444154: rva0080A3C0((Rva0080A3C0Input *)&message); break;
+   case 0x474c5354: ((Rva0080A280Owner *)this)->rva0080A280((Rva0080A280Input *)&message); break;
+  }
+ }
 }

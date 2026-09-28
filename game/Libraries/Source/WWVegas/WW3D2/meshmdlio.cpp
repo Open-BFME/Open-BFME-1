@@ -2001,25 +2001,7 @@ MeshLoadContextClass::MeshLoadContextClass(void)
  * HISTORY:                                                                                    *
  *   12/10/98   GTH : Created.                                                                 *
  *=============================================================================================*/
-// ??1MeshLoadContextClass@@EAE@XZ present-unmatched
-MeshLoadContextClass::~MeshLoadContextClass(void)
-{
-	int i;
-
-	if (TexCoords != NULL) {
-		delete TexCoords;
-		TexCoords = NULL;
-	}
-	for (i=0; i<Textures.Count(); i++) {
-		Textures[i]->Release_Ref();
-	}
-	for (i=0; i<VertexMaterials.Count(); i++) {
-		VertexMaterials[i]->Release_Ref();
-	}
-	for (i=0; i<LegacyMaterials.Count(); i++) {
-		delete LegacyMaterials[i];
-	}
-}
+// Complete BFME destructor: MeshLoadContextDestructor.cpp (0x0096FD30, 544 bytes).
 
 
 /***********************************************************************************************
