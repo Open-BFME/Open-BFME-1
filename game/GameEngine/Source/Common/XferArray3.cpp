@@ -34,3 +34,10 @@ extern "C" Xfer &__cdecl xferThreeInts(Xfer &xfer, int (&targets)[3])
 
 	return xfer;
 }
+
+// retail 0x009D6900
+void Rva009D6900( Xfer &xfer )
+{
+	int targets[3];
+	xferThreeInts( xfer, targets );
+}
