@@ -1,5 +1,5 @@
 // ?rva00763AC0@Rva00763AC0@@QAEPAVGen00375590EntryStorage@@PAVRenderObjClass@@PAM@Z
-// partial score=0.57 date=2026-09-28
+// partial score=0.5907 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWMath /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWDebug
 
 // Retail body 0x00763AC0 spans 1,500 bytes and ends at ret 8 at +0x5D9.
@@ -141,8 +141,10 @@ Gen00375590EntryStorage *Rva00763AC0::rva00763AC0(RenderObjClass *mesh, float *h
 {
 	int edgeCount = 0;
 	int verts3[3][100];
-	verts3[2][0] = 0;
-	verts3[1][0] = 0;
+	int zero;
+	zero = 0;
+	verts3[2][0] = zero;
+	verts3[1][0] = zero;
 
 	Rva00763AC0TransformView *obj = m_field_008->m_unwitnessed_0FC;
 	if (!obj)
