@@ -1,5 +1,11 @@
 // cl: /DNDEBUG /MD /O2
 
+class Rva00894D80Accessor
+{
+public:
+	static unsigned int increment(unsigned int *value);
+};
+
 struct Rva008923E0Index
 {
     int m_position;
@@ -232,5 +238,19 @@ private:
 Rva0088D990Owner *Rva0088D990Owner::set( Rva0088D990Inner *src )
 {
 	m_copy = src->m_value;
+	return this;
+}
+
+struct Rva00892400Owner
+{
+	unsigned int *m_handle;
+	Rva00892400Owner *attach(unsigned int *incoming);
+};
+// ?attach@Rva00892400Owner@@QAEPAU1@PAI@Z
+Rva00892400Owner *Rva00892400Owner::attach(unsigned int *incoming)
+{
+	m_handle = incoming;
+	if (incoming)
+		Rva00894D80Accessor::increment(incoming);
 	return this;
 }
