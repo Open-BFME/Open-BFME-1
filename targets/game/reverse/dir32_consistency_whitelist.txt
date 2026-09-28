@@ -364,10 +364,13 @@ __TI1?AW4ErrorCode@@
 #
 # Float constants retail keeps at more than one .rdata address. Every address holds the
 # same value (checked 2026-09-27), so rows resolving to different copies are equivalent.
+# __real@3f266666 is 0.65f: retail holds it at 0x010A656C and 0x01120A28, and
+# beginSlowDeath (0x00209BB0) is the body that reads the 0x010A656C copy at +0x0266.
 __real@38d1b717
 __real@3a83126f
 __real@3ba3d70a
 __real@3cf5c28f
+__real@3f266666
 __real@40e00000
 __real@41000000
 __real@43c80000

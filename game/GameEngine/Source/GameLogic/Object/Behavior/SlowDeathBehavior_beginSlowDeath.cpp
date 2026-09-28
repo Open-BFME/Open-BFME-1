@@ -1,10 +1,52 @@
-// ?beginSlowDeath@SlowDeathBehavior@@UAEXPBVDamageInfo@@@Z
-// partial score=0.999131 date=2026-09-27
-// Bank: one masked byte differs: EH static initialization state 0 versus retail 2.
-// Retail EH map has two earlier null-cleanup states; their native lifetime source is unresolved.
-// Callee relocation destinations have not yet passed add_match; preserve the existing lift.
 // cl: /Igame/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /DNDEBUG /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
+//
+// SlowDeathBehavior::beginSlowDeath (retail 0x00209BB0, 1151 B).  Clean C++
+// conversion of the former __emit lift in
+// game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorBeginSlowDeathThunk.cpp.
+//
+// IDENTITY (checked against the image, not inherited from the lift).  The
+// vtable at 0x00CA2FF0, and the second one at 0x00CA65A4, both start after a
+// null slot and carry, at slot 0, the ILT thunk 0x0001F7C1 that jumps to
+// 0x00209BB0.  Slot 2 of the same vtable is the landed
+// ?isDieApplicable@SlowDeathBehavior@@UBE_NPBVDamageInfo@@@Z (0x001F7080),
+// whose ledger row records that it lives on the SlowDeathBehaviorInterface
+// subobject, and the Zero Hour header
+// (GameLogic/Module/SlowDeathBehavior.h:116) declares that interface as
+// beginSlowDeath / getProbabilityModifier / isDieApplicable in that order, so
+// slot 0 is beginSlowDeath.  Slot 1 (0x00207DD0) is the interface's
+// getProbabilityModifier, ICF-folded with an unrelated one-dword body.  The
+// body agrees: module data at this-0x20 and object at this-0x1c, the
+// SlavedUpdate probe, the fling-force physics block and the trailing
+// doPhaseStuff(SDPHASE_INITIAL) are beginSlowDeath and nothing else.
+//
+// LAYOUT.  The receiver is the SlowDeathBehaviorInterface subobject at
+// complete-object +0x24 (see the isDieApplicable row), so the compact base
+// below reserves the witnessed ObjectModule/UpdateModule prefix.  This TU
+// keeps the BFME1 layout and receiver; the Zero Hour-layout
+// SlowDeathBehavior.cpp already defines this member against the reference
+// headers, so it cannot hold this body.
+//
+// EH.  tools/eh_info.py 0x00209BB0: FuncInfo 0x00DFABCC keeps THREE unwind
+// states -- 0->-1 and 1->0 with no cleanup action at all, then 2->-1 clearing
+// the SlavedUpdate guard 0x012EF8FC -- and the body stores a state value
+// exactly once, the immediate 2 at +0x02D5, resetting it to -1 at +0x02E7.
+// The two leading states are therefore lifetimes the optimizer removed before
+// the link: their scopes survive in the unwind map, their code does not, and
+// their cleanup actions are empty.  Measured on this compiler (MSVC 7.1,
+// /EHsc), that signature -- levels kept, no action, no emitted code -- is what
+// a class-typed lifetime in a scope the optimizer deletes produces; every
+// live spelling of it (a non-empty destructor here) keeps the destructor call
+// in the normal path, which retail does not have.  What the two lifetimes
+// held is unrecoverable, so, as in
+// SalvageCrateCollide_executeCrateBehavior.cpp, they are modelled only by
+// their count, in a branch that emits nothing.
+//
+// ?calcRandomForce@@YAXMMMMAAUCoord3D@@@Z present-unmatched here: retail keeps
+// this companion out of line at 0x00207F20, where the ledger already names it
+// from SlowDeathBehavior.cpp.  The copy below is this function's own private
+// helper and is not a second claim on that address.
+
 #define Coord3D ZHCoord3D
 #define Coord2D ZHCoord2D
 #include "Common/RandomValue.h"
@@ -14,7 +56,27 @@
 #include "GameLogic/LogicRandomValue.h"
 #undef Coord3D
 #undef Coord2D
-#include "WWMath/coord3d.h"
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
+// Retail copies both Coord3D locals in place (three movs at +0x332 and
+// +0x36C, no constructor or destructor call anywhere in the body), so the
+// empty constructors and destructor have to be visible here and inline: the
+// compiler folds their calls away, which is also why neither local carries an
+// unwind level.  The type is the three-float aggregate the pinned call sites
+// spell `UCoord3D`: ?calcRandomForce@@YAXMMMMAAUCoord3D@@@Z (0x00207F20),
+// ?applyMotiveForce@PhysicsBehavior@@QAEXPBUCoord3D@@@Z (ILT 0x0002A284) and
+// ?setPosition@Thing@@QAEXPBUCoord3D@@@Z (ILT 0x0003A1A7) all resolve only
+// with the struct spelling.
+struct Coord3D
+{
+	Real x;
+	Real y;
+	Real z;
+
+	Coord3D();
+	Coord3D(const Coord3D &that);
+	~Coord3D();
+};
 inline Coord3D::Coord3D() {}
 inline Coord3D::Coord3D(const Coord3D &that) {x=that.x; y=that.y; z=that.z;}
 inline Coord3D::~Coord3D() {}
@@ -119,6 +181,18 @@ protected:
  void setWakeFrame(Object *,UpdateSleepTime);
 };
 class SlowDeathBehaviorInterface { public: virtual void beginSlowDeath(const DamageInfo *)=0; };
+
+// Retail unwind states 0 and 1 (FuncInfo 0x00DFABCC): two class-typed
+// lifetimes in scopes the optimizer deleted.  The type they held cannot be
+// recovered from the image, so this shim is named for its address and only
+// has to be class-typed with a destructor this TU cannot fold -- declared
+// here, defined in the library, exactly like the retail type was.  The
+// unreachability of the branch below is what keeps the levels: the front end
+// registers them, the optimizer removes the code, and the unwind entries
+// survive with no cleanup action, as retail's do.
+struct Rva00209BB0EliminatedLifetime { ~Rva00209BB0EliminatedLifetime(); };
+void rva00209bb0EliminatedSink(const void *, const void *);
+
 class SlowDeathBehavior : public UpdateModule, public SlowDeathBehaviorInterface {
 public:
  virtual void beginSlowDeath(const DamageInfo *);
@@ -165,6 +239,15 @@ void SlowDeathBehavior::beginSlowDeath(const DamageInfo *) {
   unsigned now=at<unsigned>(TheGameLogic,0x3c);
   unsigned when;
   if(d->m_flingForce>0) {
+   if(0) {
+    // Unreachable: retail unwind states 0 and 1, two no-cleanup lifetimes.
+    // The placement matters: MSVC 7.1 numbers unwind levels in code order,
+    // so these two must precede the SlavedUpdate guard to make it state 2,
+    // the immediate retail stores at +0x02D5.
+    Rva00209BB0EliminatedLifetime eliminated0;
+    Rva00209BB0EliminatedLifetime eliminated1;
+    rva00209bb0EliminatedSink(&eliminated0, &eliminated1);
+   }
    if(at<unsigned>(obj,0x1a4)&8) {
     static NameKeyType key_SlavedUpdate=TheNameKeyGenerator->nameToKey("SlavedUpdate");
     Module *slave=obj->findModule(key_SlavedUpdate);
