@@ -292,7 +292,16 @@ void _STLP_CALL ios_base::_S_uninitialize()
 }
 
 
-// ?sync_with_stdio@ios_base@_STL@@SA_N_N@Z present-unmatched
+// ?sync_with_stdio@ios_base@_STL@@SA_N_N@Z (RVA 0x00842F80, 742 B)
+// Retail compiled this body with STLport's no-exception expansions of
+// _STLP_TRY / _STLP_CATCH_ALL (stl/_config.h): no try region, an FPO SEH
+// frame, and EH states only for the four new-expressions. With try/catch
+// MSVC 7.1 builds an ebp frame (the 0.46 banked attempts). It is the last
+// function in the TU, so the redefinition reaches nothing else.
+#undef _STLP_TRY
+#define _STLP_TRY
+#undef _STLP_CATCH_ALL
+#define _STLP_CATCH_ALL if (false)
 bool _STLP_CALL ios_base::sync_with_stdio(bool sync) {
 #if !defined(STLP_WINCE)
 # ifndef _STLP_HAS_NO_NAMESPACES
