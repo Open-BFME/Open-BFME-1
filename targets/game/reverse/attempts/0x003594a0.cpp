@@ -1,33 +1,23 @@
-// ?resetActive@Rva00359530StringRecordTable@@QAEXXZ
-// partial score=0.7 date=2026-09-15
+// ?d_003594a0@@YAXXZ
+// partial score=0.955 date=2026-09-27
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: the two string-record tables each carry a 108-byte body that
-// walks the active chain backwards from +0x1C, drains the node tail hanging
-// off each record's +0x10 slot and sets the reference count at +0x0E back to
-// one. The record stride of 20 bytes and the table fields are the ones
-// Rva00359330StringRecordRelease.cpp established. The two bodies differ only
-// in the node destructor they call, which is what ties 0x003592A0 to the
-// 0x00359330 table and 0x003594A0 to the 0x00359530 table.
+// Retail contains matching 108-byte routines at 0x003592A0 and 0x003594A0.
+// Rva00359330StringRecordRelease.cpp establishes a 20-byte record and its
+// field offsets. This draft walks the active index at +0x1C backwards, drains
+// each node list at record +0x10, and sets the reference count at +0x0E to one.
+// Callers do not prove the table owner, so the class name keeps the target RVA.
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
 void __cdecl operator delete(void *block);
 
-class Rva00354A00Node
+class BfmeNodeY
 {
 public:
-	~Rva00354A00Node();
+	~BfmeNodeY();
 
-	Rva00354A00Node *m_next;
-};
-
-class Rva00354A60
-{
-public:
-	void invoke();
-
-	Rva00354A60 *m_next;
+	BfmeNodeY *m_next;
 };
 
 #define BFME_STRING_RECORD_RESET( TABLE, RECORD, NODE, DESTROY )           \
@@ -45,7 +35,7 @@ public:
 	class TABLE                                                            \
 	{                                                                      \
 	public:                                                                \
-		void resetActive();                                                \
+		void method();                                                     \
 	                                                                       \
 	public:                                                                \
 		int *m_nameIndexesBegin;                                           \
@@ -58,7 +48,7 @@ public:
 		int m_activeTail;                                                  \
 	};                                                                     \
 	                                                                       \
-	void TABLE::resetActive()                                              \
+	void TABLE::method()                                                   \
 	{                                                                      \
 		TABLE *self = this;                                                \
 		int index = self->m_activeTail;                                    \
@@ -68,13 +58,13 @@ public:
 			RECORD *record = &self->m_records[index];                       \
 			NODE *head = record->m_nodes;                                   \
 	                                                                       \
-			NODE *next = head->m_next;                                     \
-	                                                                       \
-			while (next != 0)                                              \
+			NODE *next;                                                      \
+			                                                               \
+			while (head->m_next != 0)                                      \
 			{                                                              \
 				NODE *node = head->m_next;                                  \
-	                                                                       \
-				next = node->m_next;                                        \
+			                                                               \
+				next = head->m_next->m_next;                                 \
 	                                                                       \
 				DESTROY;                                                   \
 	                                                                       \
@@ -87,7 +77,5 @@ public:
 		}                                                                  \
 	}
 
-BFME_STRING_RECORD_RESET( Rva00359330StringRecordTable, Rva00359330ResetRecord,
-	Rva00354A00Node, delete node )
-BFME_STRING_RECORD_RESET( Rva00359530StringRecordTable, Rva00359530ResetRecord,
-	Rva00354A60, if (node != 0) { node->invoke(); operator delete(node); } )
+BFME_STRING_RECORD_RESET( Rva003594A0, Rva003594A0Record,
+	BfmeNodeY, delete node )
