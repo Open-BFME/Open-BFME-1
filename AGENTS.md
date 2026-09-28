@@ -7,8 +7,7 @@ and easy to rebase. `docs/matching.md` covers byte matching and
 ## Setup
 
 - `git pull --rebase origin master`. Once per host:
-  `python3 -m pip install -r tools/requirements.txt` (the hooks need `pefile`
-  and `capstone`).
+  `python3 -m pip install -r tools/requirements.txt`.
 - On Windows use `.\build.cmd` (same arguments as `./build.sh`) and
   `tools\fleet\launch_fleet.cmd`; run other scripts as `bash tools/<name>.sh`, never
   directly from PowerShell or cmd. Python is `py -3` in PowerShell.
@@ -38,13 +37,14 @@ ledger and verification are separate from the game's.
    function.
 4. When `next_work.py` is dry, `python3 tools/list_naked_candidates.py game`
    serves byte-true dumps from `game/gen_asm/` whose boundaries are proven.
-5. Replacing generator-written C++ with hand-written C++ is deferred: it scores
-   +0. Take it only when the lanes above are dry, and say so.
-6. **Linked build.** Nothing has linked the tree yet.
-   `python3 tools/link_debt.py --report` lists literal image addresses: replace
-   each with a named extern (`dir32_addresses.csv`, else `g_XXXXXXXX`) without
-   changing a byte. `tools/link_census.py`, after a full `BUILD_POOL=12
-   ./build.sh`, lists the rest.
+5. Replacing generator-written C++ scores +0 on the headline but raises the C++
+   bar. Only `gen-tgrid`/`gen-shim` rows have source to write; `gen-thunk`,
+   `gen-funclet`, `gen-ehstub`, `gen-dtor` and `gen-import` never do. Take it
+   after the lanes above.
+6. **Linked build.** `python3 tools/link_debt.py --report` lists literal image
+   addresses: replace each with a named extern (`dir32_addresses.csv`, else
+   `g_XXXXXXXX`) without changing a byte. `tools/link_census.py`, after a full
+   `BUILD_POOL=12 ./build.sh`, lists the rest.
 
 Whether a body is open work is decided in one place, `tools/eligibility.py`;
 never re-derive it in a new tool.
