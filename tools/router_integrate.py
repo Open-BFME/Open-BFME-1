@@ -45,6 +45,7 @@ GIT_VERBS = re.compile(r'(?m)^\$ git (add|commit|push|stash|checkout|reset|rebas
 # worker's shim-header edit that the port left behind let the hook pass on
 # the working tree while the commit could not compile (2026-09-27, batch 5).
 PORTED = ('game/', 'worldbuilder/', 'targets/', 'inputs/reference/shims/')
+SOURCE_SUFFIXES = ('.c', '.cc', '.cpp', '.cxx', '.asm')
 GUTTED_INDEX = 200  # staged deletions of files still on disk: a worker emptied its index
 
 
@@ -199,13 +200,13 @@ def review(args):
     for path, st in ch:
         if route(path) == 'refuse':
             res['problems'].append(f'{path}: changed outside {", ".join(PORTED)}; the port does not carry it')
-        if st != 'deleted' and path.endswith(('.cpp', '.asm')) and path.startswith('game/'):
+        if st != 'deleted' and path.lower().endswith(SOURCE_SUFFIXES) and path.startswith('game/'):
             res['gates'][path] = gate(ws, path)
             if not res['gates'][path][0]:
                 res['problems'].append(f'{path}: touched source gate fails ({res["gates"][path][1]})')
             if st == 'added' and NAKED.search(code_only((Path(ws) / path).read_text(errors='replace'))):
                 res['problems'].append(f'{path}: new source contains inline asm/__emit/naked code')
-            elif st == 'modified' and path.endswith('.cpp') and added_naked(ws, path):
+            elif st == 'modified' and not path.lower().endswith('.asm') and added_naked(ws, path):
                 res['problems'].append(f'{path}: the worker added inline asm/__emit/naked code')
     gutted = [l for l in git(ws, 'diff', '--cached', '--name-only', '-z', '--diff-filter=D', check=True).stdout.split('\0')
               if l and (Path(ws) / l).exists()]
@@ -459,7 +460,7 @@ def integrate(args):
     if stray:
         raise SystemExit('integration worktree has changes outside the ported set:\n  ' + '\n  '.join(stray))
     touched = [p for p in status
-               if p.endswith(('.cpp', '.asm')) and (dest / p).exists() and not p.startswith('build/')]
+               if p.lower().endswith(SOURCE_SUFFIXES) and (dest / p).exists() and not p.startswith('build/')]
     for src in touched:
         ok, text = gate(str(dest), src)
         print(f'gate {src}: {text}')

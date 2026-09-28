@@ -7,6 +7,7 @@ banked attempts, CRLF ledgers where upstream appended rows concurrently, and
 name_corrections.json entries.
 """
 import json, subprocess, sys, tempfile, unittest
+import pytest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -173,13 +174,15 @@ def test_gate_rejects_late_nonzero_exit(monkeypatch):
     assert ri.gate('.', 'game/a.cpp')[0] is False
 
 
-def test_review_checks_each_source_once_and_blocks_other_failure(tmp_path, monkeypatch):
+@pytest.mark.parametrize('bad_suffix', ['cpp', 'c', 'cc', 'cxx', 'asm'])
+def test_review_checks_each_source_once_and_blocks_other_failure(tmp_path, monkeypatch, bad_suffix):
     from types import SimpleNamespace
     (tmp_path / 'game').mkdir()
-    for name in ('good', 'bad'):
-        (tmp_path / 'game' / (name + '.cpp')).write_text('void f() {}')
+    bad = 'game/bad.' + bad_suffix
+    for name in ('game/good.cpp', bad):
+        (tmp_path / name).write_text('void f() {}')
     monkeypatch.setattr(ri, 'info', lambda _: ({'cwd': str(tmp_path), 'status': 'completed'}, [], ['0x00000010'], ''))
-    monkeypatch.setattr(ri, 'changes', lambda _: [('game/good.cpp', 'modified'), ('game/bad.cpp', 'modified')])
+    monkeypatch.setattr(ri, 'changes', lambda _: [('game/good.cpp', 'modified'), (bad, 'modified')])
     monkeypatch.setattr(ri, 'ledger_delta', lambda ws, path: (['?f,,0x00000010,1,game/good.cpp'], []) if path == LED else ([], []))
     monkeypatch.setattr(ri, 'git', lambda *a, **k: subprocess.CompletedProcess([], 0, '', ''))
     calls = []
@@ -188,8 +191,8 @@ def test_review_checks_each_source_once_and_blocks_other_failure(tmp_path, monke
         return (src.endswith('good.cpp'), 'fixture')
     monkeypatch.setattr(ri, 'gate', fake_gate)
     result = ri.review(SimpleNamespace(job='fixture'))
-    assert calls == ['game/good.cpp', 'game/bad.cpp']
-    assert any('game/bad.cpp' in p for p in result['problems'])
+    assert calls == ['game/good.cpp', bad]
+    assert any(bad in p for p in result['problems'])
 
 
 class ConflictTest(PortFixture):
