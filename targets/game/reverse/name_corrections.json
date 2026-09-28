@@ -8088,5 +8088,15 @@
   "after_sha256": "61fca333f6add24e8238a3a0a0f22c23ae15ecc53e1d4ac86acb7b875c318c78",
   "evidence": "targets/game/reverse/identity_evidence/0035c0c0-parse-script-instance-method.md",
   "reason": "Retail 0x0035C0C0 is a thiscall instance method returning bool with ret 8 and no allocation, not the static Script *Script::ParseScript(DataChunkInput&, unsigned short) the lift named. The Script layout is proven by its member stores; the method name keeps the address."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "W3DAnimationLoader",
+  "new_name": "Rva0090BD60Proto",
+  "before_sha256": "923c73ad516d49455a3623df07fcbefdc9f1934a718311560409e310d2d8c0fb",
+  "after_sha256": "0ecdfd76aaab51efbaef4276ec1dec3e1594bf66d73ed9bbcfaa181b090b3700",
+  "evidence": "targets/game/reverse/identity_evidence/0090C080-vtable-slot.md",
+  "reason": "Retail's vtable 0x0113A510 slot +0x08 is 0x0090C080 and its only installer is the matched constructor 0x0090BD60 (Rva0090BD60Proto); the +0x14..+0x20 fields match that constructor, and W3DAnimationLoader exists nowhere else in the tree. The body is that prototype's virtual Load_Animation."
  }
 ]

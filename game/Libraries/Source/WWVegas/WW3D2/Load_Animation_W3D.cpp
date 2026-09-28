@@ -1,492 +1,182 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// BFME animation type loader — retail 0x0090C080 size 479
-// thiscall no stack args; Open_W3D_File, chunks 0x200/0x280 anim.
+// cl: /DNDEBUG /MD /EHsc
+// BFME animation catalog prototype loader, retail 0x0090C080, 479 bytes.
+//
+// Identity: vtable 0x0113A510, installed by the prototype constructor at
+// 0x0090BD60 (ledger row Rva0090BD60Proto), holds this body at slot +0x08, so
+// it is a virtual member of that prototype class -- the naked lift's
+// "W3DAnimationLoader" and its non-virtual `@QAEXXZ` were both wrong.
+// Evidence: targets/game/reverse/identity_evidence/0090C080-vtable-slot.md
+//
+// The member rewrites the registered name's extension to ".w3d", opens that
+// file through the shared W3D opener and reads animation chunk 0x200
+// (HRawAnimClass, 0x50 bytes) or 0x280 (HCompressedAnimClass, 0x54 bytes) from
+// it.  The owned object is released and cleared when Load_W3D reports a
+// non-zero error.
 
-class W3DAnimationLoader { public: void Load_Animation(void); };
+extern "C" unsigned int __cdecl strlen(const char *string);
+extern "C" void *__cdecl memcpy(void *dest, const void *source, unsigned int count);
+#pragma intrinsic(strlen, memcpy)
 
-// ?Load_Animation@W3DAnimationLoader@@QAEXXZ
-__declspec(naked) void W3DAnimationLoader::Load_Animation(void)
+extern "C" __declspec(dllimport) char *__cdecl strchr(const char *s, int c);
+
+class StringClass
 {
-__asm {
-		_emit 06Ah
-		_emit 0FFh
-		_emit 068h
-		_emit 097h
-		_emit 0B8h
-		_emit 005h
-		_emit 001h
-		_emit 064h
-		_emit 0A1h
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 050h
-		_emit 064h
-		_emit 089h
-		_emit 025h
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 081h
-		_emit 0ECh
-		_emit 020h
-		_emit 00Ch
-		_emit 000h
-		_emit 000h
-		_emit 055h
-		_emit 056h
-		_emit 08Bh
-		_emit 0F1h
-		_emit 08Bh
-		_emit 046h
-		_emit 018h
-		_emit 06Ah
-		_emit 02Eh
-		_emit 050h
-		_emit 089h
-		_emit 074h
-		_emit 024h
-		_emit 014h
-		_emit 0FFh
-		_emit 015h
-		_emit 09Ch
-		_emit 094h
-		_emit 035h
-		_emit 001h
-		_emit 033h
-		_emit 0EDh
-		_emit 083h
-		_emit 0C4h
-		_emit 008h
-		_emit 03Bh
-		_emit 0C5h
-		_emit 00Fh
-		_emit 084h
-		_emit 08Ch
-		_emit 001h
-		_emit 000h
-		_emit 000h
-		_emit 053h
-		_emit 08Dh
-		_emit 058h
-		_emit 001h
-		_emit 03Bh
-		_emit 0DDh
-		_emit 0A1h
-		_emit 024h
-		_emit 091h
-		_emit 02Dh
-		_emit 001h
-		_emit 057h
-		_emit 089h
-		_emit 044h
-		_emit 024h
-		_emit 010h
-		_emit 074h
-		_emit 066h
-		_emit 08Bh
-		_emit 0C3h
-		_emit 08Dh
-		_emit 050h
-		_emit 001h
-		_emit 08Ah
-		_emit 008h
-		_emit 040h
-		_emit 084h
-		_emit 0C9h
-		_emit 075h
-		_emit 0F9h
-		_emit 02Bh
-		_emit 0C2h
-		_emit 03Bh
-		_emit 0C5h
-		_emit 07Eh
-		_emit 00Ch
-		_emit 055h
-		_emit 040h
-		_emit 050h
-		_emit 08Dh
-		_emit 04Ch
-		_emit 024h
-		_emit 018h
-		_emit 0E8h
-		_emit 0A4h
-		_emit 0F7h
-		_emit 00Ch
-		_emit 000h
-		_emit 08Bh
-		_emit 0C3h
-		_emit 08Dh
-		_emit 050h
-		_emit 001h
-		_emit 08Ah
-		_emit 008h
-		_emit 040h
-		_emit 084h
-		_emit 0C9h
-		_emit 075h
-		_emit 0F9h
-		_emit 02Bh
-		_emit 0C2h
-		_emit 08Bh
-		_emit 0E8h
-		_emit 08Dh
-		_emit 075h
-		_emit 001h
-		_emit 056h
-		_emit 08Dh
-		_emit 04Ch
-		_emit 024h
-		_emit 014h
-		_emit 0E8h
-		_emit 067h
-		_emit 0F9h
-		_emit 00Ch
-		_emit 000h
-		_emit 08Bh
-		_emit 07Ch
-		_emit 024h
-		_emit 010h
-		_emit 03Bh
-		_emit 03Dh
-		_emit 024h
-		_emit 091h
-		_emit 02Dh
-		_emit 001h
-		_emit 074h
-		_emit 007h
-		_emit 089h
-		_emit 06Fh
-		_emit 0FCh
-		_emit 08Bh
-		_emit 07Ch
-		_emit 024h
-		_emit 010h
-		_emit 08Bh
-		_emit 0CEh
-		_emit 08Bh
-		_emit 0D1h
-		_emit 0C1h
-		_emit 0E9h
-		_emit 002h
-		_emit 08Bh
-		_emit 0F3h
-		_emit 0F3h
-		_emit 0A5h
-		_emit 08Bh
-		_emit 0CAh
-		_emit 083h
-		_emit 0E1h
-		_emit 003h
-		_emit 0F3h
-		_emit 0A4h
-		_emit 08Bh
-		_emit 074h
-		_emit 024h
-		_emit 014h
-		_emit 033h
-		_emit 0EDh
-		_emit 068h
-		_emit 0E4h
-		_emit 039h
-		_emit 011h
-		_emit 001h
-		_emit 08Dh
-		_emit 04Ch
-		_emit 024h
-		_emit 014h
-		_emit 089h
-		_emit 0ACh
-		_emit 024h
-		_emit 03Ch
-		_emit 00Ch
-		_emit 000h
-		_emit 000h
-		_emit 0E8h
-		_emit 047h
-		_emit 0B4h
-		_emit 0FFh
-		_emit 0FFh
-		_emit 08Bh
-		_emit 046h
-		_emit 020h
-		_emit 08Bh
-		_emit 04Eh
-		_emit 01Ch
-		_emit 08Bh
-		_emit 054h
-		_emit 024h
-		_emit 010h
-		_emit 050h
-		_emit 051h
-		_emit 052h
-		_emit 0E8h
-		_emit 056h
-		_emit 02Dh
-		_emit 071h
-		_emit 0FFh
-		_emit 08Bh
-		_emit 0F8h
-		_emit 083h
-		_emit 0C4h
-		_emit 00Ch
-		_emit 03Bh
-		_emit 0FDh
-		_emit 00Fh
-		_emit 084h
-		_emit 0CAh
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 057h
-		_emit 08Dh
-		_emit 04Ch
-		_emit 024h
-		_emit 01Ch
-		_emit 0E8h
-		_emit 0AEh
-		_emit 051h
-		_emit 00Dh
-		_emit 000h
-		_emit 08Dh
-		_emit 04Ch
-		_emit 024h
-		_emit 018h
-		_emit 0E8h
-		_emit 005h
-		_emit 052h
-		_emit 00Dh
-		_emit 000h
-		_emit 084h
-		_emit 0C0h
-		_emit 00Fh
-		_emit 084h
-		_emit 0A8h
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 08Dh
-		_emit 04Ch
-		_emit 024h
-		_emit 018h
-		_emit 0E8h
-		_emit 0B4h
-		_emit 052h
-		_emit 00Dh
-		_emit 000h
-		_emit 03Dh
-		_emit 000h
-		_emit 002h
-		_emit 000h
-		_emit 000h
-		_emit 074h
-		_emit 049h
-		_emit 03Dh
-		_emit 080h
-		_emit 002h
-		_emit 000h
-		_emit 000h
-		_emit 00Fh
-		_emit 085h
-		_emit 08Dh
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 06Ah
-		_emit 054h
-		_emit 0E8h
-		_emit 08Bh
-		_emit 05Dh
-		_emit 0F7h
-		_emit 0FFh
-		_emit 083h
-		_emit 0C4h
-		_emit 004h
-		_emit 089h
-		_emit 044h
-		_emit 024h
-		_emit 014h
-		_emit 03Bh
-		_emit 0C5h
-		_emit 0C6h
-		_emit 084h
-		_emit 024h
-		_emit 038h
-		_emit 00Ch
-		_emit 000h
-		_emit 000h
-		_emit 002h
-		_emit 074h
-		_emit 009h
-		_emit 08Bh
-		_emit 0C8h
-		_emit 0E8h
-		_emit 011h
-		_emit 0F6h
-		_emit 004h
-		_emit 000h
-		_emit 0EBh
-		_emit 002h
-		_emit 033h
-		_emit 0C0h
-		_emit 08Dh
-		_emit 04Ch
-		_emit 024h
-		_emit 018h
-		_emit 051h
-		_emit 08Bh
-		_emit 0C8h
-		_emit 0C6h
-		_emit 084h
-		_emit 024h
-		_emit 03Ch
-		_emit 00Ch
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 089h
-		_emit 046h
-		_emit 014h
-		_emit 0E8h
-		_emit 046h
-		_emit 0FFh
-		_emit 004h
-		_emit 000h
-		_emit 0EBh
-		_emit 03Ch
-		_emit 06Ah
-		_emit 050h
-		_emit 0E8h
-		_emit 04Dh
-		_emit 05Dh
-		_emit 0F7h
-		_emit 0FFh
-		_emit 083h
-		_emit 0C4h
-		_emit 004h
-		_emit 089h
-		_emit 044h
-		_emit 024h
-		_emit 014h
-		_emit 03Bh
-		_emit 0C5h
-		_emit 0C6h
-		_emit 084h
-		_emit 024h
-		_emit 038h
-		_emit 00Ch
-		_emit 000h
-		_emit 000h
-		_emit 001h
-		_emit 074h
-		_emit 009h
-		_emit 08Bh
-		_emit 0C8h
-		_emit 0E8h
-		_emit 0B3h
-		_emit 0D7h
-		_emit 004h
-		_emit 000h
-		_emit 0EBh
-		_emit 002h
-		_emit 033h
-		_emit 0C0h
-		_emit 08Dh
-		_emit 04Ch
-		_emit 024h
-		_emit 018h
-		_emit 051h
-		_emit 08Bh
-		_emit 0C8h
-		_emit 0C6h
-		_emit 084h
-		_emit 024h
-		_emit 03Ch
-		_emit 00Ch
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 089h
-		_emit 046h
-		_emit 014h
-		_emit 0E8h
-		_emit 0A8h
-		_emit 0EAh
-		_emit 004h
-		_emit 000h
-		_emit 085h
-		_emit 0C0h
-		_emit 074h
-		_emit 00Fh
-		_emit 08Bh
-		_emit 04Eh
-		_emit 014h
-		_emit 0FFh
-		_emit 049h
-		_emit 004h
-		_emit 075h
-		_emit 004h
-		_emit 08Bh
-		_emit 011h
-		_emit 0FFh
-		_emit 012h
-		_emit 089h
-		_emit 06Eh
-		_emit 014h
-		_emit 08Bh
-		_emit 007h
-		_emit 08Bh
-		_emit 0CFh
-		_emit 0FFh
-		_emit 050h
-		_emit 008h
-		_emit 08Dh
-		_emit 04Ch
-		_emit 024h
-		_emit 010h
-		_emit 0C7h
-		_emit 084h
-		_emit 024h
-		_emit 038h
-		_emit 00Ch
-		_emit 000h
-		_emit 000h
-		_emit 0FFh
-		_emit 0FFh
-		_emit 0FFh
-		_emit 0FFh
-		_emit 0E8h
-		_emit 05Ah
-		_emit 0F5h
-		_emit 00Ch
-		_emit 000h
-		_emit 05Fh
-		_emit 05Bh
-		_emit 08Bh
-		_emit 08Ch
-		_emit 024h
-		_emit 028h
-		_emit 00Ch
-		_emit 000h
-		_emit 000h
-		_emit 05Eh
-		_emit 05Dh
-		_emit 064h
-		_emit 089h
-		_emit 00Dh
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 081h
-		_emit 0C4h
-		_emit 02Ch
-		_emit 00Ch
-		_emit 000h
-		_emit 000h
-		_emit 0C3h
+public:
+	StringClass(const char *string, bool hint_temporary = false)
+		: m_Buffer(m_EmptyString)
+	{
+		int len = string ? (int)strlen(string) : 0;
+		if (hint_temporary || len > 0)
+			Get_String(len + 1, hint_temporary);
+		*this = string;
+	}
+	~StringClass() { Free_String(); }
+	const StringClass &operator=(const char *string)
+	{
+		if (string != 0) {
+			int len = (int)strlen(string);
+			Uninitialised_Grow(len + 1);
+			Store_Length(len);
+			memcpy(m_Buffer, string, len + 1);
+		}
+		return *this;
+	}
+	const StringClass &operator+=(const char *string);
+	operator const char *() const { return m_Buffer; }
+
+private:
+	struct Header { int allocated_length; int length; };
+	static char *m_EmptyString;
+	void Get_String(int length, bool is_temp);
+	void Uninitialised_Grow(int length);
+	void Free_String();
+	void Store_Length(int length)
+	{
+		if (m_Buffer != m_EmptyString)
+			((Header *)m_Buffer - 1)->length = length;
+	}
+	char *m_Buffer;
+};
+
+// The shared BFME image stores this exact ".w3d" literal at VA 0x011139E4.
+extern "C" const char Rva011139E4_W3D_Extension[];
+
+class BFMEChunkInput
+{
+public:
+	virtual void slot0();
+	virtual void slot1();
+	virtual void slot2();
+};
+
+class ChunkLoadClass
+{
+public:
+	ChunkLoadClass(BFMEChunkInput *input);
+	bool Open_Chunk();
+	unsigned long Cur_Chunk_ID();
+
+private:
+	char m_opaque[0xc18];
+};
+
+class HRawAnimClass
+{
+public:
+	HRawAnimClass();
+	int Load_W3D(ChunkLoadClass &cload);
+	virtual void Delete_This();
+
+	void Release_Ref()
+	{
+		if (--m_ref_count == 0)
+			Delete_This();
+	}
+
+private:
+	int m_ref_count;
+	char m_opaque[0x48];
+};
+
+class HCompressedAnimClass
+{
+public:
+	HCompressedAnimClass();
+	int Load_W3D(ChunkLoadClass &cload);
+	virtual void Delete_This();
+
+	void Release_Ref()
+	{
+		if (--m_ref_count == 0)
+			Delete_This();
+	}
+
+private:
+	int m_ref_count;
+	char m_opaque[0x4c];
+};
+
+class GenBase009EB7D0
+{
+public:
+	virtual ~GenBase009EB7D0();
+	virtual void handle();
+
+private:
+	char m_pad[0x10];
+};
+
+// The class whose constructor at 0x0090BD60 installs vtable 0x0113A510; its
+// +0x08 slot is this body.  Offsets: owned object +0x14, StringClass name
+// +0x18, the two W3D opener arguments +0x1c and +0x20.
+class Rva0090BD60Proto : public GenBase009EB7D0
+{
+public:
+	virtual void Load_Animation();
+
+private:
+	void *m_ptr;
+	StringClass m_name;
+	int m_first;
+	int m_second;
+};
+
+extern void *Open_W3D_File(void *filename_arg, void *offset_arg, const char *size_arg);
+
+void Rva0090BD60Proto::Load_Animation()
+{
+	char *dot = strchr(m_name, '.');
+
+	if (dot != 0) {
+		StringClass filename(dot + 1);
+		filename += Rva011139E4_W3D_Extension;
+
+		BFMEChunkInput *file = (BFMEChunkInput *)Open_W3D_File(
+			(void *)(const char *)filename,
+			(void *)(unsigned int)m_first,
+			(const char *)(unsigned int)m_second);
+		if (file != 0) {
+			ChunkLoadClass cload(file);
+			if (cload.Open_Chunk()) {
+				unsigned long id = cload.Cur_Chunk_ID();
+				switch (id) {
+				case 0x200:
+					m_ptr = new HRawAnimClass;
+					if (((HRawAnimClass *)m_ptr)->Load_W3D(cload)) {
+						((HRawAnimClass *)m_ptr)->Release_Ref();
+						m_ptr = 0;
+					}
+					break;
+				case 0x280:
+					m_ptr = new HCompressedAnimClass;
+					if (((HCompressedAnimClass *)m_ptr)->Load_W3D(cload)) {
+						((HCompressedAnimClass *)m_ptr)->Release_Ref();
+						m_ptr = 0;
+					}
+					break;
+				}
+			}
+			file->slot2();
+		}
 	}
 }
-
