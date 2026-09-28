@@ -209,3 +209,42 @@ class ConflictTest(PortTest):
         ri.port({'cwd': str(self.ws)}, self.dest)
         self.assertFalse((self.dest / 'game/keep.cpp').exists())
         self.assertEqual((self.dest / name).read_text(), 'int keep() { return 3; }\n')
+
+
+class DestinationTest(PortTest):
+    def test_retained_dirty_and_unpushed_work_is_refused(self):
+        with self.assertRaisesRegex(SystemExit, 'retained changes'):
+            (self.dest / 'game/keep.cpp').write_text('retained')
+            ri.safe_destination(self.dest, 'master')
+        self.assertEqual((self.dest / 'game/keep.cpp').read_text(), 'retained')
+        git(self.dest, 'add', 'game/keep.cpp')
+        with self.assertRaisesRegex(SystemExit, 'staged work'):
+            ri.safe_destination(self.dest, 'master', keep=True)
+        git(self.dest, 'commit', '-qm', 'retained commit')
+        with self.assertRaisesRegex(SystemExit, 'unintegrated commits'):
+            ri.safe_destination(self.dest, 'master')
+
+    def test_clean_detached_destination_and_explicit_keep(self):
+        ri.safe_destination(self.dest, 'master')
+        (self.dest / 'game/keep.cpp').write_text('retained')
+        ri.safe_destination(self.dest, 'master', keep=True)
+
+
+def test_check_csv_failure_blocks_integration(tmp_path, monkeypatch):
+    from types import SimpleNamespace
+    dest = tmp_path / 'destination'
+    dest.mkdir()
+    monkeypatch.setattr(ri, 'review', lambda _: {'landed': ['x'], 'problems': [], 'gates': {}})
+    monkeypatch.setattr(ri, 'info', lambda _: ({'cwd': 'worker'}, [], [], ''))
+    monkeypatch.setattr(ri, 'safe_destination', lambda *a: None)
+    monkeypatch.setattr(ri, 'port', lambda *a: None)
+    monkeypatch.setattr(ri, 'git', lambda *a, **k: subprocess.CompletedProcess([], 0, '', ''))
+    def run(cmd, cwd, check=False):
+        assert cmd[-1] == 'tools/check_csv.py'
+        if check:
+            raise SystemExit('fixture invalid ledger')
+        return subprocess.CompletedProcess(cmd, 1, '', '')
+    monkeypatch.setattr(ri, 'sh', run)
+    import pytest
+    with pytest.raises(SystemExit, match='invalid ledger'):
+        ri.integrate(SimpleNamespace(worktree=str(dest), force=False, keep=False, base='master'))

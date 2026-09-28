@@ -30,6 +30,8 @@ step, and it trusts nothing the worker reported:
 Workspaces are never modified or deleted.
 """
 import argparse, json, os, re, shutil, subprocess, sys
+from functools import wraps
+from portable_lock import lock, unlock
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -253,7 +255,7 @@ def port(j, dest):
                                capture_output=True)
             if r.returncode:
                 raise SystemExit(f'patch does not apply on origin/master:\n{r.stderr.decode(errors="replace")}')
-            git(dest, 'reset', '-q')
+            git(dest, 'reset', '-q', '--', *tracked, check=True)
     for p, s in ch:
         if p in ledgers:
             continue
@@ -326,6 +328,7 @@ def bank(args):
     if not dest.exists():
         git(ROOT, 'fetch', '-q', 'origin', 'master', check=True)
         git(ROOT, 'worktree', 'add', '-q', '--detach', str(dest), args.base, check=True)
+    safe_destination(dest, args.base, keep=True)
     keys = {r.lower() for r in rvas}
     moved = []
     for p, st in changes(ws):
@@ -333,8 +336,12 @@ def bank(args):
             continue
         if not any(f'/{k}' in p.lower() for k in keys):  # attempts/0x0012abcd.cpp, attempt_history/0x0012abcd/
             continue  # another target's evidence
-        (dest / p).parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(Path(ws) / p, dest / p)
+        src, dst = Path(ws) / p, dest / p
+        if os.path.lexists(dst) and (dst.is_symlink() or not dst.is_file()
+                                    or src.is_symlink() or src.read_bytes() != dst.read_bytes()):
+            raise SystemExit(f'retained bank evidence conflicts at {p}')
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, dst)
         moved.append(p)
     add, _ = ledger_delta(ws, LEDGERS[3])
     add = [a for a in add if any(k in a.lower() for k in keys)]
@@ -349,11 +356,51 @@ def bank(args):
     print(json.dumps({'job': args.job, 'status': j['status'], 'files': moved, 'verdict_rows': len(new)}))
 
 
+def serialized_destination(function):
+    @wraps(function)
+    def wrapped(args):
+        dest = Path(args.worktree).resolve()
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        # A sibling lock survives checkout and is shared by bank/integrate.
+        with (dest.parent / ('.' + dest.name + '.integration.lock')).open('a+b') as handle:
+            lock(handle, exclusive=True)
+            try:
+                return function(args)
+            finally:
+                unlock(handle)
+    return wrapped
+
+
+def safe_destination(dest, base, keep=False):
+    if git(dest, 'rev-parse', '--show-toplevel', check=True).stdout.strip() != str(dest):
+        raise SystemExit('destination is not a worktree root')
+    if git(dest, 'diff', '--cached', '--quiet').returncode:
+        raise SystemExit('destination has staged work; retained for inspection')
+    for name in ('MERGE_HEAD', 'rebase-merge', 'rebase-apply', 'CHERRY_PICK_HEAD'):
+        path = git(dest, 'rev-parse', '--git-path', name, check=True).stdout.strip()
+        if (dest / path).exists():
+            raise SystemExit('destination has an unfinished Git operation')
+    if keep:
+        return
+    if changes(dest):
+        raise SystemExit('destination has retained changes; use --keep to explicitly combine them')
+    if git(dest, 'symbolic-ref', '-q', 'HEAD').returncode == 0:
+        raise SystemExit('destination must be detached; refusing to move a retained branch')
+    if git(dest, 'merge-base', '--is-ancestor', 'HEAD', base).returncode:
+        raise SystemExit('destination has unintegrated commits; retained for recovery')
+
+
+bank = serialized_destination(bank)
+
+
+@serialized_destination
 def integrate(args):
     rev = review(args)
     print(json.dumps(rev, indent=1))
     if not rev['landed']:
         raise SystemExit('nothing landed in this workspace; nothing to integrate')
+    if any(not result[0] for result in rev['gates'].values()):
+        raise SystemExit('source verification failed; cannot integrate')
     blocking = [p for p in rev['problems'] if 'renamed' not in p and 'mutating git' not in p]
     if blocking and not args.force:
         raise SystemExit('review found problems (rerun with --force after checking them):\n  ' + '\n  '.join(blocking))
@@ -363,16 +410,13 @@ def integrate(args):
     base = args.base
     if not dest.exists():
         git(ROOT, 'worktree', 'add', '-q', '--detach', str(dest), base, check=True)
-    elif args.keep:
-        print(f'--keep: porting on top of the work already in {dest}')
+    safe_destination(dest, base, args.keep)
     if not args.keep:
         git(dest, 'checkout', '-q', '--detach', base, check=True)
-        git(dest, 'reset', '-q', '--hard', base, check=True)
-        git(dest, 'clean', '-qfd', '-e', 'build/')
     port(j, dest)
     r = sh([sys.executable, 'tools/check_csv.py'], dest, check=True)
     print(r.stdout[-600:])
-    status = [l[3:] for l in git(dest, 'status', '--porcelain', '--untracked-files=all').stdout.splitlines()]
+    status = [path for path, _ in changes(dest)]
     stray = [p for p in status if not p.startswith('build/') and route(p) != 'port']
     if stray:
         raise SystemExit('integration worktree has changes outside the ported set:\n  ' + '\n  '.join(stray))
@@ -397,13 +441,13 @@ def integrate(args):
            'origin/master) and the commit hooks.\n')
     if args.trailer:
         msg += '\n' + args.trailer.replace('\\n', '\n') + '\n'
-    git(dest, 'add', '-A', '--', *(d.rstrip('/') for d in PORTED if (dest / d).exists()), check=True)
+    git(dest, 'add', '-A', '--', *status, check=True)
     c = git(dest, 'commit', '-q', '-m', msg)
     out = c.stdout + c.stderr
     if c.returncode and 'adopt_header.py --fix-staged' in out:
         print('commit hook asks for header adoption; running tools/adopt_header.py --fix-staged once')
         sh([sys.executable, 'tools/adopt_header.py', '--fix-staged'], dest, check=True)
-        git(dest, 'add', '-A', '--', *(d.rstrip('/') for d in PORTED if (dest / d).exists()), check=True)
+        git(dest, 'add', '-A', '--', *status, check=True)
         c = git(dest, 'commit', '-q', '-m', msg)
         out = c.stdout + c.stderr
     if c.returncode:
@@ -424,12 +468,14 @@ def integrate(args):
         if p.returncode:
             git(dest, 'rebase', '--abort')
             raise SystemExit('rebase conflict; integration commit kept locally in ' + str(dest))
+        sh([sys.executable, 'tools/check_csv.py'], dest, check=True)
         if git(dest, 'push', '-q', 'origin', 'HEAD:master').returncode == 0:
             break
     else:
         raise SystemExit('push kept losing the race; integration commit kept locally in ' + str(dest))
     sha = git(dest, 'rev-parse', 'HEAD').stdout.strip()
     print('pushed', sha)
+    git(dest, 'pull', '-q', '--rebase', 'origin', 'master', check=True)
     if args.measure and attempts and args.job:
         delta = sh([sys.executable, 'tools/progress.py', f'{sha}^..{sha}'], dest).stdout
         m = re.search(r'REBUILDS FROM.*?delta ([+-][\d,]+) bytes', delta)
