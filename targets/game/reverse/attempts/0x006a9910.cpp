@@ -1,6 +1,6 @@
 // ?setHardwareAccelerated@MilesAudioManager@@AAEXE@Z
-// partial score=0.35 date=2026-09-10
-// cl: /O2 /Ob0 /EHs-c- /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// partial score=0.873 date=2026-09-28
+// cl: /O2 /Ob1 /EHs-c- /DNDEBUG /DWIN32 /D_WINDOWS /MD /Igame/Libraries/Source/WWVegas/WWLib
 
 // ?setHardwareAccelerated@MilesAudioManager@@AAEXE@Z
 // The retail body at RVA 0x006A9910 is the BFME provider switch reached by
@@ -10,15 +10,7 @@
 typedef unsigned char Bool;
 typedef unsigned int UnsignedInt;
 
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct ProviderInfo
 {
@@ -38,7 +30,7 @@ public:
 	virtual void slot14() = 0;
 	virtual void slot18() = 0;
 	virtual void slot1c() = 0;
-	virtual int getSpeakerConfig(Bool *config) = 0;
+	virtual int __stdcall getSpeakerConfig(unsigned int *config) = 0;
 };
 
 struct AudioLODInfo
@@ -234,13 +226,13 @@ void MilesAudioManager::setHardwareAccelerated(Bool accelerated)
 		(reinterpret_cast<MilesAudioManagerCallView *>(this)->*closeCast.asMember)();
 	}
 
-	DirectSoundInfo *directSound = 0;
+	DirectSoundInfo *directSound;
 	AIL_get_DirectSound_info(0, reinterpret_cast<void **>(&directSound), 0);
 	if (directSound != 0)
 	{
-		Bool speakerConfig;
+		unsigned int speakerConfig;
 		directSound->getSpeakerConfig(&speakerConfig);
-		switch (speakerConfig)
+		switch ((unsigned char)speakerConfig)
 		{
 		case 0:
 			*reinterpret_cast<UnsignedInt *>(reinterpret_cast<unsigned char *>(this) + 0xb60) = 0;
@@ -295,7 +287,7 @@ void MilesAudioManager::setHardwareAccelerated(Bool accelerated)
 					BfmeAwakenLog *report = TheBfmeAwakenDebug->v6c(0, 0);
 					report = report->v38("You do not have an EAX3-enabled sound card. Switching to software support.\n\nError code: ");
 					report = report->v38(AIL_last_error());
-					report->v38("\n\nTo remove this message, go to options.ini and change the line UseEAX3For3DAudio=1 to UseEAX3For3DAudio=0");
+					report = report->v38("\n\nTo remove this message, go to options.ini and change the line UseEAX3For3DAudio=1 to UseEAX3For3DAudio=0");
 					report->v4c(2);
 				}
 			}
@@ -304,8 +296,8 @@ void MilesAudioManager::setHardwareAccelerated(Bool accelerated)
 		}
 	}
 
-	if (*reinterpret_cast<UnsignedInt *>(reinterpret_cast<unsigned char *>(this) + 0xb60) > 0 &&
-		*reinterpret_cast<UnsignedInt *>(reinterpret_cast<unsigned char *>(this) + 0xb60) <= 5)
+	if (*reinterpret_cast<int *>(reinterpret_cast<unsigned char *>(this) + 0xb60) > 0 &&
+		*reinterpret_cast<int *>(reinterpret_cast<unsigned char *>(this) + 0xb60) <= 5)
 	{
 		GameLODManager *lod = TheGameLODManager;
 		if (lod != 0)

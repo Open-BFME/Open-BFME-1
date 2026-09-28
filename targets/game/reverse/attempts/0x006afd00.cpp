@@ -1,5 +1,5 @@
-// ?d_006afd00@@YAXXZ
-// partial score=0.953 date=2026-09-27
+// ?stop@StopAudioHandle006AFD00@@QAEXI@Z
+// partial score=0.991 date=2026-09-28
 // stlport
 // cl: /O2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB
 #define _STLP_NO_EXCEPTIONS 1
@@ -23,7 +23,7 @@ class Ref006AFD00 {
  Ref006AFD00 &operator=(const Ref006AFD00 &r) { if(this!=&r) { if(r.ptr) InterlockedIncrement(&r.ptr->count_4); if(ptr) ptr->release(); ptr=r.ptr; } return *this; }
  Ref006AFD00(const Ref006AFD00 &r) { Playing006AFD00 *p=r.ptr; ptr=p; if(p) InterlockedIncrement(&p->count_4); }
  ~Ref006AFD00() { Playing006AFD00 *p=ptr; if(p) p->release(); }
- void clear() { Playing006AFD00 *p=ptr; if(p) { if(InterlockedDecrement(&p->count_4)<=0) delete p; ptr=0; } }
+ void clear() { if(ptr) { ptr->release(); ptr=0; } }
 };
 class BfmeHostESG { public: ~BfmeHostESG(); };
 struct Request006AFD00 { int kind; Event006AFD00 *event; unsigned handle; char padc[12];
@@ -47,12 +47,13 @@ void StopAudioHandle006AFD00::stop(unsigned handle) {
  if(handle<5) return;
  for(_STL::list<Ref006AFD00>::iterator it=streams_9d0.begin();it!=streams_9d0.end();++it) {
   const Ref006AFD00 audio=*it;
+  Playing006AFD00 *callbackRef=audio.get();
   if(!audio.get()) continue;
   if(audio.get()->event_14->handle_c==handle) {
    audio.get()->event_14->byte_45=true;
    if(!(audio.get()->event_14->info_8->flags_3c&0x10)) {
-    typedef void (StopAudioHandle006AFD00::*Fn)(const Ref006AFD00&);
-    union { void (__cdecl *raw)(); Fn member; } call; call.raw=j_0001ffc8; (this->*call.member)(audio);
+    typedef void (StopAudioHandle006AFD00::*Fn)(Playing006AFD00 *const&);
+    union { void (__cdecl *raw)(); Fn member; } call; call.raw=j_0001ffc8; (this->*call.member)(callbackRef);
    }
    break;
   }
