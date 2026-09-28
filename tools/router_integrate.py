@@ -160,6 +160,16 @@ def ledger_delta(ws, path):
     return add, rem
 
 
+def head_matched(ws, key):
+    """True when HEAD's ledger already holds a matched row for this RVA (lower-case key)."""
+    text = git(ws, 'show', 'HEAD:' + LEDGERS[0], check=True).stdout
+    for line in text.splitlines():
+        f = line.rstrip('\r').split(',')
+        if len(f) > 5 and f[2].lower() == key and f[5] == 'matched':
+            return True
+    return False
+
+
 def gate(cwd, src):
     r = sh(['./build.sh', src], cwd, timeout=1800)
     lines = [l for l in (r.stdout + r.stderr).splitlines() if 'fixme' not in l and ('Functions:' in l or 'FAIL' in l)]
@@ -220,15 +230,34 @@ def review(args):
         if new:
             row = new[-1].split(',')
             src = row[4]
+            status = row[5] if len(row) > 5 else ''
             if src not in res['gates']:
                 res['gates'][src] = gate(ws, src) if (Path(ws) / src).exists() else (False, 'source missing')
             ok = res['gates'][src]
-            t.update(landed=ok[0], name=row[0], size=row[3], source=src, gate=ok[1])
+            t.update(name=row[0], size=row[3], source=src, status=status, gate=ok[1])
             if old and old[-1].split(',')[0] != row[0]:
                 t['renamed_from'] = old[-1].split(',')[0]
                 res['problems'].append(f'{rva}: row renamed from {t["renamed_from"]} -- check the identity evidence')
             if not ok[0]:
                 res['problems'].append(f'{rva}: row changed but its gate fails ({ok[1]})')
+            # A green source-wide gate proves the SIBLINGS still match. The target
+            # itself lands only when its row says matched AND its exact row selector
+            # verifies: an `unmatched` row is a legitimate investigation, not a landing.
+            if status != 'matched':
+                t['outcome'] = 'unmatched investigation retained'
+            elif not ok[0]:
+                t['outcome'] = 'matched row but its source gate fails'
+            else:
+                selector = f'row:{row[2]}:{row[3]}:{row[0]}'
+                exact = gate(ws, selector)
+                t['row_gate'] = exact[1]
+                t['landed'] = exact[0]
+                t['outcome'] = 'target newly matched' if exact[0] else 'matched row but its exact row selector fails'
+                if not exact[0]:
+                    res['problems'].append(f'{rva}: row says matched but {selector} fails ({exact[1]})')
+        else:
+            t['outcome'] = ('existing match preserved' if head_matched(ws, key)
+                            else 'no row change for the target')
         v = [r for r in radd if key in r.lower()]
         if v:
             f = v[-1].split('\t')
@@ -504,27 +533,60 @@ def integrate(args):
         return
     if args.base != 'origin/master':
         raise SystemExit('--push only integrates onto origin/master')
-    for _ in range(args.push_retries):
-        p = git(dest, 'pull', '-q', '--rebase', 'origin', 'master')
-        if p.returncode:
-            git(dest, 'rebase', '--abort')
-            raise SystemExit('rebase conflict; integration commit kept locally in ' + str(dest))
-        sh([sys.executable, 'tools/check_csv.py'], dest, check=True)
-        if git(dest, 'push', '-q', 'origin', 'HEAD:master').returncode == 0:
-            break
-    else:
-        raise SystemExit('push kept losing the race; integration commit kept locally in ' + str(dest))
+    publish(dest, args.push_retries, checks=[[sys.executable, 'tools/check_csv.py']])
     sha = git(dest, 'rev-parse', 'HEAD', check=True).stdout.strip()
     print('pushed', sha)
     git(dest, 'pull', '-q', '--rebase', 'origin', 'master', check=True)
     if args.measure and attempts and args.job:
         delta = sh([sys.executable, 'tools/progress.py', f'{sha}^..{sha}'], dest, check=True).stdout
         m = re.search(r'REBUILDS FROM.*?delta ([+-][\d,]+) bytes', delta)
-        cmd = [sys.executable, 'tools/opencode_router.py', 'measure', attempts[-1]['id'], '--exact-match', 'yes',
+        # exact-match is the TARGET's verdict (review's landed list), never the
+        # fact that the batch was accepted: a pushed unmatched investigation is
+        # useful work but not an exact match.
+        exact = 'yes' if any(rva in rev['landed'] for rva in rvas) else 'no'
+        cmd = [sys.executable, 'tools/opencode_router.py', 'measure', attempts[-1]['id'], '--exact-match', exact,
                '--evidence', f'tools/router_integrate.py integrate {args.job}: scoped gates + commit hooks, pushed {sha[:10]}']
         if m:
             cmd += ['--bytes-gained', m.group(1).replace(',', '').lstrip('+')]
         print(sh(cmd, ROOT, check=True).stdout)
+
+
+# Push outputs that mean "the remote moved under you": a rebase fixes these and
+# nothing else. Hook rejections, auth and transport failures are reported as is.
+RACE = re.compile(r'non-fast-forward|fetch first|cannot lock ref|failed to lock|'
+                  r'is at [0-9a-f]+ but expected|Updates were rejected because the (?:remote|tip)', re.I)
+
+
+def publish(dest, retries, checks=()):
+    """Rebase onto origin/master and push; retry only on evidence of a stale-base race.
+
+    The original push output is kept and reported: a byte-verification hook
+    rejection used to be retried eight times and then reported as a lost race.
+    Returns the attempt number that succeeded.
+    """
+    last = ''
+    for attempt in range(1, retries + 1):
+        p = git(dest, 'pull', '-q', '--rebase', 'origin', 'master')
+        if p.returncode:
+            out = (p.stdout + p.stderr).strip()
+            if re.search(r'CONFLICT|could not apply|Resolve all conflicts', out):
+                git(dest, 'rebase', '--abort')
+                raise SystemExit('rebase conflict; integration commit kept locally in ' + str(dest)
+                                 + '\n' + out[-3000:])
+            raise SystemExit(f'pull --rebase origin master failed before the push; this is not a stale-base '
+                             f'race. Integration commit kept locally in {dest}. Output:\n' + out[-3000:])
+        for cmd in checks:
+            sh(cmd, dest, check=True)
+        p = git(dest, 'push', '-q', 'origin', 'HEAD:master')
+        if p.returncode == 0:
+            return attempt
+        last = (p.stdout + p.stderr).strip()
+        if not RACE.search(last):
+            raise SystemExit(f'push rejected on attempt {attempt}; this is not a stale-base race, so retrying '
+                             f'cannot fix it. Integration commit kept locally in {dest}. Push output:\n'
+                             + last[-3000:])
+    raise SystemExit(f'push kept losing the race over {retries} attempt(s); integration commit kept locally '
+                     f'in {dest}. Last push output:\n' + last[-3000:])
 
 
 def main(argv=None):

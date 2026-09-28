@@ -195,6 +195,127 @@ def test_review_checks_each_source_once_and_blocks_other_failure(tmp_path, monke
     assert any(bad in p for p in result['problems'])
 
 
+def _review_fixture(tmp_path, monkeypatch, new_rows, gates, head_ledger=''):
+    """review() over a workspace whose functions.csv delta adds `new_rows`;
+    `gates` maps a build.sh selector (source path or row: selector) to (ok, text)."""
+    from types import SimpleNamespace
+    (tmp_path / 'game').mkdir(exist_ok=True)
+    (tmp_path / 'game/shared.cpp').write_text('void f() {}')
+    monkeypatch.setattr(ri, 'info', lambda _: ({'cwd': str(tmp_path), 'status': 'completed'}, [], ['0x00000020'], ''))
+    monkeypatch.setattr(ri, 'changes', lambda _: [('game/shared.cpp', 'modified')])
+    monkeypatch.setattr(ri, 'ledger_delta', lambda ws, path: (new_rows, []) if path == LED else ([], []))
+    monkeypatch.setattr(ri, 'git', lambda *a, **k: subprocess.CompletedProcess([], 0, head_ledger, ''))
+    calls = []
+    def fake_gate(ws, selector):
+        calls.append(selector)
+        return gates.get(selector, (False, 'fixture: unknown selector ' + selector))
+    monkeypatch.setattr(ri, 'gate', fake_gate)
+    return ri.review(SimpleNamespace(job='fixture')), calls
+
+
+def test_review_does_not_land_an_unmatched_row_behind_a_green_source_gate(tmp_path, monkeypatch):
+    # The audited defect: a source with an already-matched sibling and a NEW
+    # unmatched row for the target passed its source-wide gate, and review
+    # reported the target as landed.
+    row = '?t@@YAXXZ,,0x00000020,5,game/shared.cpp,unmatched,investigation'
+    result, calls = _review_fixture(tmp_path, monkeypatch, [row], {'game/shared.cpp': (True, 'siblings ok')})
+    assert result['landed'] == []
+    assert result['targets']['0x00000020']['outcome'] == 'unmatched investigation retained'
+    assert result['problems'] == []
+    assert not any(c.startswith('row:') for c in calls)
+
+
+def test_review_lands_only_a_matched_row_whose_exact_selector_verifies(tmp_path, monkeypatch):
+    row = '?t@@YAXXZ,,0x00000020,5,game/shared.cpp,matched,proof'
+    selector = 'row:0x00000020:5:?t@@YAXXZ'
+    result, calls = _review_fixture(tmp_path, monkeypatch, [row],
+                                    {'game/shared.cpp': (True, 'ok'), selector: (True, 'exact')})
+    assert result['landed'] == ['0x00000020']
+    assert result['targets']['0x00000020']['outcome'] == 'target newly matched'
+    assert selector in calls
+    # the same row whose exact selector FAILS is not a landing, and it is a problem
+    result, _ = _review_fixture(tmp_path, monkeypatch, [row],
+                                {'game/shared.cpp': (True, 'ok'), selector: (False, 'byte mismatch')})
+    assert result['landed'] == []
+    assert any(selector in p for p in result['problems'])
+
+
+def test_review_distinguishes_a_preserved_existing_match(tmp_path, monkeypatch):
+    head = 'name,export_rva,target_rva,size,source,status,notes\n?t@@YAXXZ,,0x00000020,5,game/shared.cpp,matched,\n'
+    result, _ = _review_fixture(tmp_path, monkeypatch, [], {'game/shared.cpp': (True, 'ok')}, head_ledger=head)
+    assert result['landed'] == []
+    assert result['targets']['0x00000020']['outcome'] == 'existing match preserved'
+
+
+class PublishFixture(unittest.TestCase):
+    """A bare origin, a clone playing the integration worktree, and a second
+    clone that can race it."""
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        root = Path(self.tmp.name)
+        self.origin = root / 'origin.git'
+        subprocess.run(['git', 'init', '-q', '--bare', '-b', 'master', str(self.origin)], check=True)
+        self.dest, self.racer = root / 'dest', root / 'racer'
+        for clone in (self.dest, self.racer):
+            subprocess.run(['git', 'clone', '-q', str(self.origin), str(clone)], check=True, capture_output=True)
+            git(clone, 'config', 'user.email', 't@t'); git(clone, 'config', 'user.name', 't')
+        (self.dest / 'a').write_text('base\n')
+        git(self.dest, 'add', 'a'); git(self.dest, 'commit', '-qm', 'base'); git(self.dest, 'push', '-q', 'origin', 'master')
+        git(self.racer, 'pull', '-q', 'origin', 'master')
+        (self.dest / 'a').write_text('integration\n')
+        git(self.dest, 'commit', '-qam', 'integration')
+        self.counter = root / 'pushes'
+        self.counter.write_text('')
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def hook(self, body):
+        hooks = self.dest / '.git/hooks'
+        script = hooks / 'pre-push'
+        script.write_text('#!/bin/sh\nprintf x >> "%s"\n%s\n' % (self.counter, body))
+        script.chmod(0o755)
+
+    def attempts(self):
+        return len(self.counter.read_text())
+
+
+class PublishTest(PublishFixture):
+    def test_hook_rejection_is_reported_once_not_retried_as_a_race(self):
+        self.hook('echo "byte verification failed for game/x.cpp" >&2\nexit 1')
+        with self.assertRaises(SystemExit) as cm:
+            ri.publish(self.dest, 8)
+        message = str(cm.exception)
+        self.assertIn('byte verification failed for game/x.cpp', message)
+        self.assertIn('not a stale-base race', message)
+        self.assertNotIn('losing the race', message)
+        self.assertEqual(self.attempts(), 1)
+        # the local commit is preserved and origin did not move
+        self.assertEqual((self.dest / 'a').read_text(), 'integration\n')
+        self.assertEqual(git_out(self.origin, 'rev-parse', 'master'), git_out(self.dest, 'rev-parse', 'HEAD~1'))
+
+    def test_stale_base_race_is_rebased_and_retried(self):
+        # the first push loses to the racer, which lands its commit from inside
+        # the hook; the retry rebases onto it and succeeds
+        flag = Path(self.tmp.name) / 'raced'
+        self.hook('if [ ! -f "%s" ]; then touch "%s"; git -C "%s" commit -q --allow-empty -m race; '
+                  'git -C "%s" push -q origin HEAD:master; fi\nexit 0' % (flag, flag, self.racer, self.racer))
+        self.assertEqual(ri.publish(self.dest, 8), 2)
+        self.assertEqual(self.attempts(), 2)
+        log = git_out(self.dest, 'log', '--format=%s', 'origin/master')
+        self.assertEqual(log.split('\n'), ['integration', 'race', 'base'])
+
+    def test_transport_failure_is_not_retried(self):
+        git(self.dest, 'remote', 'set-url', 'origin', str(Path(self.tmp.name) / 'missing.git'))
+        with self.assertRaises(SystemExit) as cm:
+            ri.publish(self.dest, 8)
+        self.assertIn('not a stale-base race', str(cm.exception))
+
+
+def git_out(cwd, *a):
+    return subprocess.run(['git', *a], cwd=cwd, check=True, capture_output=True, text=True).stdout.strip()
+
+
 class ConflictTest(PortFixture):
     def test_new_file_conflicts_with_upstream_addition(self):
         for tree, content in ((self.ws, 'worker'), (self.dest, 'upstream')):
@@ -319,7 +440,7 @@ def test_rejected_push_preserves_commit_and_refuses_reset(tmp_path, monkeypatch)
         hook.chmod(0o755)
         ws, dest = fixture.ws, fixture.dest
         raw = (ws / LED).read_bytes().replace(b'?a@@YAXXZ,,0x00000010',
-                                              b'?a@@YAXXZ,,0x00000010,8,game/keep.cpp')
+                                              b'?a@@YAXXZ,,0x00000010,8,game/keep.cpp,matched,')
         (ws / LED).write_bytes(raw)
         (ws / 'game/keep.cpp').write_text('int keep() { return 2; }\n')
         monkeypatch.setattr(ri, 'ROOT', fixture.base)
