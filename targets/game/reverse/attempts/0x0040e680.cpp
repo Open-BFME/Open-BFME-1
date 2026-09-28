@@ -1,5 +1,5 @@
-// ?d_0040e680@@YAXXZ
-// partial score=0.934 date=2026-09-27
+// ?update0040E680@MovieOpen0040E3B0@@QAE_N_N@Z
+// partial score=0.939 date=2026-09-28
 // cl: /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 #include "ascii_string.h"
 class Glo00EF3330 { public: void h004893E0(); void h00489410(); };
@@ -127,6 +127,7 @@ struct MovieOpen0040E3B0 {
  char bytese8[0x24]; int field10c;
  bool open(AsciiString name,int flags,int a,int b);
  bool update0040E680(bool skip);
+void setRate0040E680(float r) {stream34->rate(r);}
 };
 bool MovieOpen0040E3B0::update0040E680(bool skip) {
  if(!stream34) return true;
@@ -136,7 +137,7 @@ bool MovieOpen0040E3B0::update0040E680(bool skip) {
   if(flags38&0x400000) {
    float rate=stream34->getRate()+0.05f;
    if(rate>1.0f) {rate=1.0f; field50=1;}
-   stream34->rate(rate);
+   setRate0040E680(rate);
   } else if(Transitions0040E3B0->isFinished()) {
    field50=1;
    Transitions0040E3B0->reset();
@@ -160,20 +161,15 @@ bool MovieOpen0040E3B0::update0040E680(bool skip) {
   }
   break;
  case 2: {
-  bool finished=false;
-  float rate;
-  if(flags38&0x200000) {
-   if(field10c<=0) {
-    rate=stream34->getRate()-0.05f;
+ bool finished=false;
+ float rate;
+ if(flags38&0x200000) {if(field10c<=0) {rate=stream34->getRate()-0.05f;
     if(rate<0.0f) {rate=0.0f;finished=true;}
-    stream34->rate(rate);
-    if(finished) {
-finishedFade:
-     if(skip || finished0040E680(stream34)) done=true;
-    }
-   } else --field10c;
-  } else if(Transitions0040E3B0->isFinished()) goto finishedFade;
-  break;
+    setRate0040E680(rate);
+} else --field10c;}
+else finished=Transitions0040E3B0->isFinished();
+if(finished) { if(skip || finished0040E680(stream34)) done=true; }
+ break;
  }
  default: done=skip; break;
  }

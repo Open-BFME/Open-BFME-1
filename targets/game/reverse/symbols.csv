@@ -89739,3 +89739,6 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?key012F4B84@@3VAsciiString@@A,0x012F4B84,Address-derived AsciiString key; RVA005868D0+1DD pushes this address for static helper5867D0 which copies StringBase<char> from it
 ?key012F4B88@@3VAsciiString@@A,0x012F4B88,Address-derived AsciiString key; RVA005868D0+21A pushes this address for static helper5867D0 which copies StringBase<char> from it
 ?dispatch@Rva00529EC0State@@QAEHHPAX0@Z,0x00529EC0,Address-derived state dispatcher; RVA0057E9A0 calls ILT41EE3 with receiver this+25C and three stack args; body saves ECX in ESI and ret12 returns integer EAX; inferred ABI independently confirmed
+?method00404B10@PathfindZoneManager@@QAEXPAPAVPathfindCell@@PAVPathfindLayer@@ABUIRegion2D@@HH@Z,0x00404B10,Address-derived zone pass; aligned scheduler call via 0x24983; ECX manager plus map layers bounds and two percentages; retail ret20
+?eraseNodes@Rva00405E80Tree@@QAEXPAURva00405E80TreeNode@@@Z,0x004041B0,Address-scoped tree eraser ABI; retail recurses via ILT 0x1B9B9 on right child +0xC then left +8 and frees 0x34-byte nodes; ret4
+?bfmeResolveZones@@YAXHHPAG00H@Z,0x00403C90,Existing zone-list merger with unused sixth size argument witnessed at initial-pass call +0x2F2; caller cleans 24 bytes; decoded callee reads only first five arguments
