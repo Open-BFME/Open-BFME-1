@@ -89722,3 +89722,9 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??0?$ctype@D@_STL@@QAE@PBW4mask@ctype_base@1@_NI@Z,0x00840730,vendored STLport 4.5.3 enum-mask spelling of the matched ctype<char> ctor; retail REL32 at 0x0083B3A9 in the classic-locale builder targets this body directly
 ?computeParticlePosition@ParticleSystem@@IAE?AUCoord3D@@HH@Z,0x005C36C0,ParticleSystem position draw: generateParticleInfo 0x005D0530 +0x80 calls it (ILT 0x0001CFC6) with sret and (particleNum particleCount) and stores the result as info m_pos exactly where ZH calls computeParticlePosition; full91B body forwards to the +0x1C4 emission volume module or returns a zero Coord3D; ret 0xC
 ?computeParticleVelocity@ParticleSystem@@IAE?AUCoord3D@@PBU2@@Z,0x005C3630,ParticleSystem velocity draw: generateParticleInfo 0x005D0530 +0xA2 calls it (ILT 0x0000C2BB) with sret and &info.m_pos as ZH computeParticleVelocity(&info.m_pos); full104B body forwards to the +0x1C0 velocity module with the +0x1C4 volume or returns a zero Coord3D; ret 8
+?isPlayerActive@Player@@QBE_NXZ,0x000179BD,route=0x000C9D10; ILT E9 stub to the matched Player::isPlayerActive; resource-bar refresh 0x0058DDD0 calls it on the local player
+?bfmeSetPalantirYW@@YAXH@Z,0x00032EBB,route=0x00565620; ILT E9 stub to the matched palantir resource-count update; called by resource-bar refresh 0x0058DDD0
+?Rva00564C70@@YAX_N@Z,0x00015EDD,route=0x00564C70; ILT E9 stub to the matched bool toggle; called by resource-bar refresh 0x0058DDD0
+?bfmePalantirCountZD@@YADHH@Z,0x00005BD2,route=0x00565940; ILT E9 stub to the matched palantir command-point update; called by resource-bar refresh 0x0058DDD0
+?bfmeMultiplierZC@@YADM@Z,0x0002DBF5,route=0x00565A80; ILT E9 stub to the matched palantir resource-multiplier update; called by resource-bar refresh 0x0058DDD0
+?go@Rva00564910@@SAXXZ,0x0001D2DC,route=0x00564910; ILT E9 stub to the matched niladic static; called twice by resource-bar refresh 0x0058DDD0
