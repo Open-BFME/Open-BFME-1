@@ -8698,5 +8698,15 @@
   "after_sha256": "623b4010c98e83e3d6f58ae66515b638ef8dd8c4af891961cacc6177357a4a77",
   "evidence": "targets/game/reverse/identity_evidence/gap_seat_051426_2_callee_views.md",
   "reason": "call sites and element type follow the ledger names of the real retail targets; no definition renamed"
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Weapon.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Weapon.cpp",
+  "old_name": "setTransformMatrix",
+  "new_name": "rva00132200",
+  "before_sha256": "84c6daa03bb15bc5215461c55edf1e7dcd6e6e0f7cefa96f682c64f5dda3fd09",
+  "after_sha256": "abe09e3cf628d373c67ee36ec81ae30852c5352b66238361914bf15520fac801",
+  "evidence": "targets/game/reverse/identity_evidence/weapon_positionProjectileForLaunch_rva00132200.md",
+  "reason": "call binds to the ledger name of the body retail calls (0x00132200); no definition renamed"
  }
 ]

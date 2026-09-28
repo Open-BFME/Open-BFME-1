@@ -31,7 +31,12 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
+// This TU calls the independently witnessed matrix-copy variant at 0x132200.
+// Rename the reference header declaration locally; the published setter is a different body.
+#define setTransformMatrix rva00132200
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+
+#undef setTransformMatrix
 
 #define DEFINE_DEATH_NAMES
 #define DEFINE_WEAPONBONUSCONDITION_NAMES
@@ -3111,6 +3116,10 @@ public:
 }
 
 //-------------------------------------------------------------------------------------------------
+// Retail 0x1E37F0: the former 55-byte extent ended after PUSH EDI.
+// The full body ends at RET 0x1E38CF; it uses Drawable vslot +0x28,
+// the existing opaque bool setter at 0x411DD0, and no physics tail.
+class Gen_00411DD0 { public: void bfmeSet(Bool); };
 /*static*/ void Weapon::positionProjectileForLaunch(
 	Object* projectile, 
 	const Object* launcher, 
@@ -3133,18 +3142,11 @@ public:
 
 	Weapon::calcProjectileLaunchPosition(launcher, wslot, specificBarrelToUse, worldTransform, worldPos);
 
-	projectile->getDrawable()->setDrawableHidden(false);
-	projectile->setTransformMatrix(&worldTransform);
+	reinterpret_cast<Gen_00411DD0*>(reinterpret_cast<BFME_Object_GetDrawable*>(projectile)->getDrawable())->bfmeSet(false);
+	projectile->rva00132200(&worldTransform);
 	projectile->setPosition(&worldPos);
-	projectile->getExperienceTracker()->setExperienceSink( launcher->getID() );
+	(*reinterpret_cast<ExperienceTracker**>(reinterpret_cast<char*>(projectile) + 0x210))->setExperienceSink( launcher->getID() );
 
-	const PhysicsBehavior* launcherPhys = launcher->getPhysics();
-	PhysicsBehavior* missilePhys = projectile->getPhysics();
-	if (launcherPhys && missilePhys)
-	{
-		launcherPhys->transferVelocityTo(missilePhys);
-		missilePhys->setIgnoreCollisionsWith(launcher);
-	}
 }
 
 //-------------------------------------------------------------------------------------------------
