@@ -1473,21 +1473,21 @@ bool INIClass::Put_Float(char const * section, char const * entry, float number)
  * HISTORY:                                                                                    *
  *   8/27/2001 AJA : Created.                                                                  *
  *=============================================================================================*/
-// ?Get_Double@INIClass@@QBENPBD0N@Z absent-from-retail
+// ?Get_Double@INIClass@@QBENPBD0N@Z
 double INIClass::Get_Double(char const * section, char const * entry, double defvalue) const
 {
-	/*
-	**	Verify that the parameters are nominally correct.
-	*/
 	if (section == NULL || entry == NULL) return(defvalue);
 
-	INIEntry * entryptr = Find_Entry(section, entry);
+	INISection * sectionptr = Find_Section(section);
+	if (sectionptr == NULL) return(defvalue);
+
+	INIEntry * entryptr = sectionptr->Find_Entry(entry);
 	if (entryptr != NULL && entryptr->Value != NULL) {
-		float val = defvalue;
+		double val = defvalue;
 		sscanf(entryptr->Value, "%lf", &val);
 		defvalue = val;
 		if (strchr(entryptr->Value, '%') != NULL) {
-			defvalue /= 100.0f;
+			defvalue *= 0.01;
 		}
 	}
 	return(defvalue);
