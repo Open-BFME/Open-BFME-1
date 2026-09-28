@@ -1,12 +1,20 @@
 // ?d_00541480@@YAXXZ
-// partial score=0.224273268 date=2026-09-22
+// partial score=0.370707242 date=2026-09-27
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
-// PARTIAL research draft, NOT a matched or behavior-complete implementation.
-// RVA 00541480, code extent 11593. See build/gap_00540910/GAP.md.
-// All retail switch cases are represented. ABI/layout and compiler-shape
-// assumptions remain; no semantic or byte-equivalence claim is made.
-// All Rva names preserve addresses. Slot and field names assert offsets only.
+// PARTIAL research draft; NOT matched and NOT claimed as behavior-complete.
+// RVA 00541480: emitted extent 11736 (code 11593 + alignment 3 + tables 140).
+// Boundary evidence: ILT 0001776F; primary vtable VA 01107484 slot 5;
+// CFG returns at 00543FF3 and last reachable instruction ends at 005441C9;
+// three switch tables occupy 005441CC..00544258, then INT3 padding.
+// Resume from the banked source, with tools/probe.py --size 11736.
+// The earlier attempt's 11593 comparison incorrectly omitted emitted tables.
+// This revision restores case order, the state-13 room-message guard, bool
+// payload copies, the observed thiscall setup at 00538290, scoped lookup
+// temporaries, and single-fetch room resets. Address names remain opaque.
+// ABI/lifetime assumptions remain, including the explicitly marked no-throw
+// hypothesis and canonical UnicodeString's by-value constructor shape.
+// No semantic or byte-equivalence claim is made. See build/astra_seat/REPORT.md.
 #define _STLP_USE_STATIC_LIB
 #include "ascii_string.h"
 #include "unicode_string.h"
@@ -14,7 +22,7 @@
 #include <sstream>
 
 // Existing canonical string declarations; retail inlines these forwards.
-inline AsciiString::~AsciiString() { ((StringBase<char>*)this)->releaseBuffer(); }
+// AsciiString destructor is now inline in the canonical header.
 inline UnicodeString::UnicodeString() { m_text=0; }
 inline UnicodeString::UnicodeString(const UnicodeString& s) {
     ((StringBase<unsigned short>*)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short>*)&s);
@@ -35,7 +43,7 @@ extern "C" __declspec(dllimport) unsigned long __stdcall htonl(unsigned long);
 
 // These three-pointer string records are read by the caller, but are owned by
 // the real out-of-line PeerResponse constructor/destructor (004DAB40/004DAC70).
-template<class C> struct RvaPeerString { C *first,*last,*limit; const C* c_str() const {return first;} bool empty() const{return first==last;} };
+template<class C> struct RvaPeerString { C *first,*last,*limit; const C* c_str() const {return first;} unsigned size() const{return last-first;} bool empty() const{return first==last;} };
 class PeerResponse {
 public:
     PeerResponse(); ~PeerResponse();
@@ -46,7 +54,7 @@ public:
     RvaPeerString<wchar_t> serverName;
     RvaPeerString<char> ping,ladderIP,map;
     RvaPeerString<char> playerNames[8],command,commandOptions;
-    union { int words[143]; unsigned char bytes[572]; } payload;
+    union { int words[143]; unsigned char bytes[572]; bool flags[572]; } payload;
 };
 typedef char RvaResponseSize[sizeof(PeerResponse)==0x330?1:-1];
 class PeerRequest {
@@ -69,6 +77,8 @@ public:
     int field38; unsigned char pad3C[0x44-0x3C];
     int field44; unsigned char pad48[0x58-0x48]; int field58,field5C;
     unsigned char pad60[8]; int field68,field6C;
+    GameSlotConnectInfo getConnectInfo() const { return *(const GameSlotConnectInfo*)&field30; }
+    void setConnectInfo(const GameSlotConnectInfo& info) { *(GameSlotConnectInfo*)&field30=info; }
     void setPlayerTemplate(int);
     void setState(SlotState,UnicodeString,const GameSlotConnectInfo*);
     UnicodeString getName() const;
@@ -185,19 +195,39 @@ void GameSpyCloseAllOverlays();
 void GSMessageBoxOk(UnicodeString,UnicodeString,void(__cdecl*)());
 void TearDownGameSpy();
 void SendStatsToOtherPlayers(const GameSpyStagingRoom*);
-void __stdcall Rva00538290(const PeerResponse*,Rva004F1280*);
+// 00538290 is called with ecx=this at all six dispatcher call sites;
+// the current stdcall ledger label does not preserve that caller contract.
 class Rva004675F0 { public: void run(void*,const char*,int,const char*,int,int,int,int); };
 extern Rva004675F0* Rva012F19E8;
-bool __cdecl Rva000AA230(const AsciiString&,const char*);
+// RVA 000AA230 is the landed StringBase<char> / C-string equality operator.
+// No-throw is a code-generation hypothesis; caller omits a temporary EH state.
+bool operator==(const StringBase<char>&,const char*) throw();
 PSPlayerStats __cdecl Rva00659670(std::string);
 bool WouldMapTransfer(GameSpyStagingRoom*);
 void postPeerRequest19();
 bool Rva00621C40(GameSpyStagingRoom*,AsciiString,bool);
 std::wstring MultiByteToWideCharSingleLine(const char*);
 
+// Inlined search region: retail 00541BE6..00541D09 has a bool join at AL.
+static __forceinline bool rva00541BE6(GameSpyStagingRoom* room,const PeerResponse& response)
+{
+    if(!room) return false;
+    bool found=false;
+    for(int i=0;i<8;++i) {
+        AsciiString name;
+        name.translate(room->getConstSlot(0)->getName());
+        const char* source=response.playerNames[i].c_str();
+        char buf[256]={0};
+        strncpy(buf,source,255);
+        if(!strcmp(name.str(),buf)) found=true;
+    }
+    return found;
+}
+
 class Rva00541480 {
 public:
     void run();
+    void Rva00538290(const PeerResponse*,Rva004F1280*);
     void Rva005409A0(); void Rva005406E0(); void Rva005397D0(); void Rva0053FC00();
     unsigned char field00[0x34];
     unsigned char* field34;
@@ -219,33 +249,36 @@ void Rva00541480::run()
     bool important=false;
     while(remaining-- && !important && TheGameSpyPeerMessageQueue->v24(response)) {
         switch(response.type) {
-        case 1: {
+        case 8:
+            if(response.payload.words[0]==0) {
+                TheGameSpyInfo->vB4(); TheGameSpyInfo->vCC();
+                if(TheGameSpyInfo->vC4()) Rva005409A0();
+            } else {
+                GSMessageBoxOk(TheGameText->v28("APT:CreateGame",false),TheGameText->v28("GUI:GSFailedToHost",false),0);
+                Rva005406E0();
+            }
+            break;
+        case 7:
             important=true;
-            UnicodeString title,body;
-            AsciiString key;
-            key.format("GUI:GSDisconReason%d",response.payload.words[0]);
-            title=TheGameText->v28("GUI:GSErrorTitle",false);
-            body=TheGameText->v24(key,false);
-            GameSpyCloseAllOverlays();
-            GSMessageBoxOk(title,body,0);
-            TheGameSpyInfo->v04();
-            TheShell->pop();
-            TearDownGameSpy();
+            if(response.payload.bytes[4]) {
+                TheGameSpyInfo->v28(response.payload.words[0]);
+                TheGameSpyInfo->v38(response.payload.words[0]);
+                TheGameSpyInfo->v48()->run();
+                Rva005397D0();
+            } else {
+                TheGameSpyInfo->v24(1); Rva005397D0();
+            }
             break;
-        }
-        case 2:
-            if(field198)
-                TheGameSpyInfo->vF0(AsciiString(response.nick.c_str()),response.payload.words[1],
-                    UnicodeString(response.text.c_str()),!response.payload.bytes[0],
-                    *(const int*)&response.payload.bytes[1],field198);
-            break;
+        case 5:
+            TheGameSpyInfo->vBC(); Rva0053FC00(); break;
         case 4: {
             GameSpyStagingRoom room;
             switch(response.payload.words[1]) {
+            case 3: TheGameSpyInfo->v94(); break;
             case 0: case 1: {
                 if(response.payload.words[51]==100) TheGameSpyInfo->vBC();
-                bool hasMap=!response.map.empty();
-                bool own=Rva000AA230(TheGameSpyInfo->v68(),response.playerNames[0].c_str());
+                bool hasMap=true; if(response.map.size()==0) hasMap=false;
+                bool own=operator==((const StringBase<char>&)TheGameSpyInfo->v68(),response.playerNames[0].c_str());
                 if(own || !hasMap) {
                     room.field41C=response.payload.words[0];
                     TheGameSpyInfo->vA8(room);
@@ -254,10 +287,10 @@ void Rva00541480::run()
                 room.Rva004D4880(UnicodeString(response.serverName.c_str()));
                 room.field41C=response.payload.words[0];
                 room.field430=response.payload.words[4];
-                room.field428=response.payload.bytes[9]!=0;
+                room.field428=response.payload.flags[9];
                 room.field54=response.payload.words[52];
                 room.field434=response.payload.words[5];
-                room.field429=response.payload.bytes[10]!=0;
+                room.field429=response.payload.flags[10];
                 room.field438=response.payload.words[6];
                 room.field42C=response.payload.words[3];
                 room.setPingString(AsciiString(response.ping.c_str()));
@@ -268,9 +301,9 @@ void Rva00541480::run()
                 room.field458=response.payload.words[50];
                 AsciiString map(response.map.c_str()),normalised("");
                 for(int i=0;i<map.getLength();++i) {
-                    char ch=map.getCharAt(i);
-                    if(ch=='/') ch='\\';
-                    ((StringBase<char>*)&normalised)->concat(&ch,1);
+                    char read=map.getCharAt(i);
+                    if(read!='/') { char ch=read; ((StringBase<char>*)&normalised)->concat(&ch,1); }
+                    else { char ch='\\'; ((StringBase<char>*)&normalised)->concat(&ch,1); }
                 }
                 room.setMap(TheGameState->portableMapPathToRealMapPath(normalised));
                 for(int i=0;i<8;++i) {
@@ -285,7 +318,7 @@ void Rva00541480::run()
                         if(id==2) {GameSlotConnectInfo connect={0,0}; slot->setState(Slot2,Rva01336E54,&connect);}
                         else if(id==3) {GameSlotConnectInfo connect={0,0}; slot->setState(Slot3,Rva01336E54,&connect);}
                         else if(id==4) {GameSlotConnectInfo connect={0,0}; slot->setState(Slot4,Rva01336E54,&connect);}
-                        else if(!response.playerNames[i].empty()) {
+                        else if(response.playerNames[i].size()>0) {
                             UnicodeString name;
                             name.translate(AsciiString(response.playerNames[i].c_str()));
                             GameSlotConnectInfo connect={0,0}; slot->setState(Slot5,name,&connect);
@@ -299,32 +332,9 @@ void Rva00541480::run()
             case 2:
                 room.field41C=response.payload.words[0];
                 TheGameSpyInfo->vA8(room); break;
-            case 3: TheGameSpyInfo->v94(); break;
             }
             break;
         }
-        case 5:
-            TheGameSpyInfo->vBC(); Rva0053FC00(); break;
-        case 7:
-            important=true;
-            if(response.payload.bytes[4]) {
-                TheGameSpyInfo->v28(response.payload.words[0]);
-                TheGameSpyInfo->v38(response.payload.words[0]);
-                TheGameSpyInfo->v48()->run();
-                Rva005397D0();
-            } else {
-                TheGameSpyInfo->v24(1); Rva005397D0();
-            }
-            break;
-        case 8:
-            if(response.payload.words[0]==0) {
-                TheGameSpyInfo->vB4(); TheGameSpyInfo->vCC();
-                if(TheGameSpyInfo->vC4()) Rva005409A0();
-            } else {
-                GSMessageBoxOk(TheGameText->v28("APT:CreateGame",false),TheGameText->v28("GUI:GSFailedToHost",false),0);
-                Rva005406E0();
-            }
-            break;
         case 9: {
             important=true;
             if(field1B4) {
@@ -332,17 +342,7 @@ void Rva00541480::run()
                 Rva012F19E8->run(*(void**)(field34+0x250),"CallChild",1,"ClosePassword",0,0,0,0);
             }
             if(response.payload.bytes[4]==1) {
-                GameSpyStagingRoom* room=TheGameSpyInfo->vC4();
-                bool found=false;
-                if(room) {
-                    for(int i=0;i<8;++i) {
-                        AsciiString name;
-                        name.translate(room->getConstSlot(0)->getName());
-                        char buf[256]={0};
-                        strncpy(buf,response.playerNames[i].c_str(),255);
-                        if(!strcmp(name.str(),buf)) found=true;
-                    }
-                }
+                bool found=rva00541BE6(TheGameSpyInfo->vC4(),response);
                 if(response.payload.bytes[4]==1 && found) {
                     if(TheGameSpyInfo->vC4()) Rva005409A0();
                     break;
@@ -363,6 +363,44 @@ void Rva00541480::run()
             Rva005406E0();
             break;
         }
+        case 19:
+            TheGameSpyInfo->vEC(TheGameText->v28("GUI:GSFailedToHost",false),Rva012B9200,0);
+            break;
+        case 18: {
+            important=true;
+            GameSpyStagingRoom* room=TheGameSpyInfo->vC4();
+            if(room && room->field0C && TheGameSpyGame) {
+                SendStatsToOtherPlayers(TheGameSpyGame);
+                field40.v04();
+                room->field460=response.payload.words[0];
+                *TheGameSpyGame=*room;
+                TheGameSpyGame->v0C(false);
+                field188=13;
+            }
+            break;
+        }
+        case 14: {
+            Rva004F1280 row;
+            Rva00538290(&response,&row);
+            TheGameSpyInfo->v40(row,Rva01336E50);
+            field50=true;
+            break;
+        }
+        case 13: {
+            Rva004F1280 row;
+            Rva00538290(&response,&row);
+            TheGameSpyInfo->v40(row,Rva01336E50);
+            field50=true;
+            TheGameSpyInfo->vCC();
+            break;
+        }
+        case 22: {
+            Rva004F1280 row;
+            Rva00538290(&response,&row);
+            TheGameSpyInfo->v40(row,Rva01336E50);
+            field50=true;
+            break;
+        }
         case 10: {
             if(response.payload.words[3]==1) {
                 Rva004F1280 row; Rva00538290(&response,&row);
@@ -371,10 +409,10 @@ void Rva00541480::run()
                 important=true;
                 Rva004F1280 row; Rva00538290(&response,&row);
                 TheGameSpyInfo->v40(row,Rva01336E50);
-                if(row.field14 && !Rva012F76F0Global->v24(row.field14).field00) {
+                if(row.field14) { if(!Rva012F76F0Global->v24(row.field14).field00) {
                     PSRequest request; request.field04.field00=row.field14; request.field00=0;
                     Rva012F76F0Global->v10(request);
-                }
+                } }
                 GameSpyStagingRoom* room=TheGameSpyInfo->vC4();
                 bool kicked=false;
                 if(TheGameSpyInfo->vC0() && room) {
@@ -386,7 +424,7 @@ void Rva00541480::run()
                         for(int i=0;i<8;++i) if(room->getSlot(i)->isOccupied()) room->getSlot(i);
                         TheMapCache->findMap(room->getMap());
                         int empty=-1;
-                        for(int i=0;i<8;++i) if(room->getConstSlot(i) && room->getConstSlot(i)->isOpen()) {empty=i; break;}
+                        for(int i=0;i<8;++i) { const GameSlot* slot=room->getConstSlot(i); if(slot && slot->isOpen()) {empty=i; break;} }
                         if(empty>=0) {
                             Rva0061F0C0 slot;
                             UnicodeString name; name.translate(row.field04);
@@ -414,7 +452,8 @@ void Rva00541480::run()
             important=true;
             Rva004F1280 row; Rva00538290(&response,&row);
             TheGameSpyInfo->v44(AsciiString(response.nick.c_str()));
-            if((TheGameSpyGame && TheGameSpyGame->field0D) || TheNAT) break;
+            if(TheGameSpyGame && TheGameSpyGame->field0D) break;
+            if(TheNAT) break;
             GameSpyStagingRoom* room=TheGameSpyInfo->vC4();
             if(room && TheGameSpyInfo->vC0()) {
                 int which=room->getSlotNum(AsciiString(row.field04.str()));
@@ -431,27 +470,40 @@ void Rva00541480::run()
             }
             break;
         }
-        case 13: {
-            Rva004F1280 row;
-            Rva00538290(&response,&row);
-            TheGameSpyInfo->v40(row,Rva01336E50);
-            field50=true;
-            TheGameSpyInfo->vCC();
+        case 2:
+            if(field198)
+                TheGameSpyInfo->vF0(AsciiString(response.nick.c_str()),response.payload.words[1],
+                    UnicodeString(response.text.c_str()),!response.payload.bytes[0],
+                    *(const int*)&response.payload.bytes[1],field198);
             break;
-        }
-        case 14: {
-            Rva004F1280 row;
-            Rva00538290(&response,&row);
-            TheGameSpyInfo->v40(row,Rva01336E50);
-            field50=true;
+        case 20:
+            if(field198) TheGameSpyInfo->vEC(UnicodeString(response.text.c_str()),Rva012B9200,field198);
+            break;
+        case 1: {
+            important=true;
+            UnicodeString title,body;
+            AsciiString key;
+            key.format("GUI:GSDisconReason%d",response.payload.words[0]);
+            title=TheGameText->v28("GUI:GSErrorTitle",false);
+            body=TheGameText->v24(key,false);
+            GameSpyCloseAllOverlays();
+            GSMessageBoxOk(title,body,0);
+            TheGameSpyInfo->v04();
+            TheShell->pop();
+            TearDownGameSpy();
             break;
         }
         case 15: {
+            if(field188==13) break;
             important=true;
-            const char* command=response.command.c_str();
-            if(!strcmp(command,"SL")) {
+            if(!strcmp(response.command.c_str(),"SL")) {
                 GameSpyStagingRoom* room=TheGameSpyInfo->vC4();
-                Rva004F18C0Node* node=TheGameSpyInfo->v48()->Rva004F18C0(AsciiString(response.nick.c_str()));
+                Rva004F18C0Node* node;
+                {
+                    AsciiString lookupName(response.nick.c_str());
+                    Rva004FB170* map=TheGameSpyInfo->v48();
+                    node=map->Rva004F18C0(lookupName);
+                }
                 AsciiString nick;
                 if(node!=TheGameSpyInfo->v48()->field00) nick=node->field18; else nick=response.nick.c_str();
                 if(!room) break;
@@ -508,15 +560,20 @@ void Rva00541480::run()
                     }
                     if(!field1C8) field1C8=true;
                 } else if(field1C4 && field1C4<timeGetTime()-10000) {
-                    if(TheGameSpyInfo->vC4()) TheGameSpyInfo->vC4()->v08();
+                    { GameSpyStagingRoom* current=TheGameSpyInfo->vC4(); if(current) current->v08(); }
                     TheGameSpyInfo->vB0();
                     GSMessageBoxOk(TheGameText->v28("GUI:GSErrorTitle",false),TheGameText->v28("GUI:GSKicked",false),0);
                     field40.v04(); Rva005406E0();
                 }
-            } else if(!strcmp(command,"PN")) {
+            } else if(!strcmp(response.command.c_str(),"PN")) {
                 GameSpyStagingRoom* room=TheGameSpyInfo->vC4();
                 AsciiString nick;
-                Rva004F18C0Node* node=TheGameSpyInfo->v48()->Rva004F18C0(AsciiString(response.nick.c_str()));
+                Rva004F18C0Node* node;
+                {
+                    AsciiString lookupName(response.nick.c_str());
+                    Rva004FB170* map=TheGameSpyInfo->v48();
+                    node=map->Rva004F18C0(lookupName);
+                }
                 if(node!=TheGameSpyInfo->v48()->field00) nick=node->field18; else nick=response.nick.c_str();
                 if(room && room->getSlot(0) && room->getSlot(0)->isPlayer(nick) && !TheGameSpyInfo->vC0()) {
                     int index=-1; char equal=' '; std::string name;
@@ -532,7 +589,7 @@ void Rva00541480::run()
                         }
                     }
                 }
-            } else if(!strcmp(command,"HWS")) {
+            } else if(!strcmp(response.command.c_str(),"HWS")) {
                 GameSpyStagingRoom* room=TheGameSpyInfo->vC4();
                 if(room && room->field0C && room->getSlot(0) &&
                     room->getSlot(0)->isPlayer(AsciiString(response.nick.c_str()))) {
@@ -540,17 +597,17 @@ void Rva00541480::run()
                     if(local && !local->field08)
                         TheGameSpyInfo->vEC(TheGameText->v28("GUI:HostWantsToStart",false),Rva012B9200,field198);
                 }
-            } else if(!strcmp(command,"DUI")) {
+            } else if(!strcmp(response.command.c_str(),"DUI")) {
                 GameSpyStagingRoom* room=TheGameSpyInfo->vC4();
                 if(room && room->field0C && !room->v10() && room->getSlot(0) &&
                     room->getSlot(0)->isPlayer(AsciiString(response.nick.c_str()))) field40.Rva00523340();
-            } else if(!strcmp(command,"EUI")) {
+            } else if(!strcmp(response.command.c_str(),"EUI")) {
                 GameSpyStagingRoom* room=TheGameSpyInfo->vC4();
                 if(room && room->field0C && !room->v10() && room->getSlot(0) &&
                     room->getSlot(0)->isPlayer(AsciiString(response.nick.c_str()))) field40.Rva005235B0();
-            } else if(!_strcmpi(command,"NAT")) {
+            } else if(!_strcmpi(response.command.c_str(),"NAT")) {
                 if(TheNAT) TheNAT->processGlobalMessage(-1,response.commandOptions.c_str());
-            } else if(!_strcmpi(command,"Pings")) {
+            } else if(!_strcmpi(response.command.c_str(),"Pings")) {
                 GameSpyStagingRoom* room=TheGameSpyInfo->vC4();
                 if(room && !TheGameSpyInfo->vC0()) {
                     AsciiString pings(response.commandOptions.c_str()),token;
@@ -573,7 +630,12 @@ void Rva00541480::run()
             }
             GameSpyStagingRoom* room=TheGameSpyInfo->vC4();
             if(!room) break;
-            Rva004F18C0Node* node=TheGameSpyInfo->v48()->Rva004F18C0(AsciiString(response.nick.c_str()));
+            Rva004F18C0Node* node;
+                {
+                    AsciiString lookupName(response.nick.c_str());
+                    Rva004FB170* map=TheGameSpyInfo->v48();
+                    node=map->Rva004F18C0(lookupName);
+                }
             AsciiString nick;
             if(node!=TheGameSpyInfo->v48()->field00) nick=node->field18;
             else nick=response.nick.c_str();
@@ -582,7 +644,7 @@ void Rva00541480::run()
                 TheNAT->processGlobalMessage(sender,response.commandOptions.c_str());
             if(sender<=0) {
                 if(!TheGameSpyInfo->vC0() && !strcmp(response.command.c_str(),"KICK")) {
-                    if(TheGameSpyInfo->vC4()) TheGameSpyInfo->vC4()->v08();
+                    { GameSpyStagingRoom* current=TheGameSpyInfo->vC4(); if(current) current->v08(); }
                     TheGameSpyInfo->vB0();
                     UnicodeString error=TheGameText->v28("GUI:GSKicked",false);
                     AsciiString options(response.commandOptions.c_str()); options.trim();
@@ -621,48 +683,52 @@ void Rva00541480::run()
                 value.nextToken(&key,"=");
                 int number=atoi(value.str()+1);
                 unsigned ip=(unsigned)atoi(value.str()+1);
-                GameSlot* slot=room->getSlot(sender);
+                // Retail 00543E9E loads the entry this pointer, then routes via ILT 000061D6.
+                GameSlot* slot=((GameSpyStagingRoom*)this)->Rva00637D10(sender);
                 if(!slot) break;
                 if(!key.compare("Color")) {
                     if(number>=-1 && number<Rva012ED5FCGlobal->Rva00086460() &&
                         number!=slot->field0C && slot->field14!=-2) {
-                        bool duplicate=false;
                         if(number!=-1) for(int i=0;i<8;++i) {
                             GameSlot* other=room->getSlot(i);
-                            if(other->field0C==number && other!=slot) { duplicate=true; break; }
+                            if(number==other->field0C && slot!=other) goto rva00543F72;
                         }
-                        if(!duplicate) slot->field0C=number;
-                        TheGameSpyInfo->vCC(); field50=true;
+                        slot->field0C=number;
+                        goto rva00543F72;
                     }
                 } else if(!key.compare("PlayerTemplate")) {
                     if(number>=-2 && number<Rva012ED750Global->Rva000863E0() && number!=slot->field14) {
                         slot->setPlayerTemplate(number);
-                        if(number==-2) slot->field0C=slot->field10=slot->field18=-1;
-                        room->v18(); TheGameSpyInfo->vCC(); field50=true;
+                        if(number==-2) { slot->field0C=-1; slot->field10=-1; slot->field18=-1; }
+                    rva00543F69:
+                        room->v18();
+                    rva00543F72:
+                        TheGameSpyInfo->vCC(); field50=true;
                     }
                 } else if(!key.compare("StartPos")) {
                     if(number>=-1 && number<8 && number!=slot->field10 && slot->field14!=-2) {
-                        bool duplicate=false;
                         if(number!=-1) for(int i=0;i<8;++i) {
                             GameSlot* other=room->getSlot(i);
-                            if(other->field10==number && other!=slot) { duplicate=true; break; }
+                            if(number==other->field10 && slot!=other) goto rva00543F69;
                         }
-                        if(!duplicate) slot->field10=number;
-                        room->v18(); TheGameSpyInfo->vCC(); field50=true;
+                        slot->field10=number;
+                        goto rva00543F69;
                     }
                 } else if(!key.compare("Team")) {
                     if(number>=-1 && number<4 && number!=slot->field18 && slot->field14!=-2) {
                         slot->field18=number;
-                        room->v18(); TheGameSpyInfo->vCC(); field50=true;
+                        goto rva00543F69;
                     }
                 } else if(!key.compare("IP")) {
-                    if(ip!=slot->field30) {
-                        slot->field30=ip;
-                        room->v18(); TheGameSpyInfo->vCC(); field50=true;
+                    GameSlotConnectInfo info=slot->getConnectInfo();
+                    if(ip!=info.ip) {
+                        info.ip=ip; slot->setConnectInfo(info);
+                        goto rva00543F69;
                     }
                 } else if(!key.compare("NAT")) {
                     if(number>=0 && number<=128) {
-                        slot->field38=number; TheGameSpyInfo->vCC(); field50=true;
+                        slot->field38=number;
+                        goto rva00543F72;
                     }
                 } else if(!key.compare("Ping")) {
                     slot->setPingString(AsciiString(value.str()+1)); TheGameSpyInfo->vCC();
@@ -672,32 +738,6 @@ void Rva00541480::run()
                     slot->field6C=atoi(value.str()); TheGameSpyInfo->vCC();
                 }
             }
-            break;
-        }
-        case 18: {
-            important=true;
-            GameSpyStagingRoom* room=TheGameSpyInfo->vC4();
-            if(room && room->field0C && TheGameSpyGame) {
-                SendStatsToOtherPlayers(TheGameSpyGame);
-                field40.v04();
-                room->field460=response.payload.words[0];
-                *TheGameSpyGame=*room;
-                TheGameSpyGame->v0C(false);
-                field188=13;
-            }
-            break;
-        }
-        case 19:
-            TheGameSpyInfo->vEC(TheGameText->v28("GUI:GSFailedToHost",false),Rva012B9200,field198);
-            break;
-        case 20:
-            if(field198) TheGameSpyInfo->vEC(UnicodeString(response.text.c_str()),Rva012B9200,field198);
-            break;
-        case 22: {
-            Rva004F1280 row;
-            Rva00538290(&response,&row);
-            TheGameSpyInfo->v40(row,Rva01336E50);
-            field50=true;
             break;
         }
         // Default table arms 3,6,12,17,21 really return to the poll loop.
