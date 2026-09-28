@@ -1,34 +1,37 @@
-// ??0GlobalData@@QAE@XZ
-// partial score=0.45 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 //
-// FULL-BODY DRAFT 2026-09-28 (opus-5.5). Every retail store, loop, call and
-// the CRC tail is present, transcribed in retail order from dis_retail.py.
-// Member types come from the binary's GameData field-parse table (VA
-// 0x01077018: parseReal/Int/Bool/RGBColor/Coord3D/...); names come from
-// name_oracle, else the INI key, else the offset. Unproven types carry the
-// address: BfmeGdCrcValue0BD0 (+0xbd0 initialised to 0x254b6fae during member
-// construction), m_rgb09bc/m_rgb09e0/m_pos0a04 (the three per-light arrays
-// setTimeOfDay fills), m_lighting0734. The call at +0xdba is setTimeOfDay
-// (0x00082AA0 copies m_terrainLighting[tod]); +0xe2c is new WeaponBonusSet
-// (132 x 1.0f); +0xeb7.. is GetModuleFileNameA + openFile + CRC_Memory read
-// loop + version fold + the inlined BigObf wrapper 0x00062EF0; m_bd8 = 2;
-// +0xc74 = GetDoubleClickTime(). The older notes further down that deny a
-// CRC pass or call the frame a placeholder are superseded.
+// GlobalData::GlobalData(), retail 0x00084510..0x0008571D (4621 B, ret).
 //
-// LAYOUT CORRECTED 2026-09-28 (opus-5.5). The earlier draft declared its
-// m_pad_* arrays AFTER the members they should precede, so >=101 of 495
-// members sat at offsets that contradicted their names; every order or
-// initializer-list verdict before this one (#16-#20) was measured on that
-// broken layout. Members are now sorted by their ///< offsets with
-// regenerated m_gap_* fillers: offsetof matches the stated offset for all
-// 495 names and sizeof(GlobalData) == 0x1290. The body is unchanged and still
-// only about half of retail (529 of 857 instructions); see the verdict log
-// for the missing parts. The "NO CRC" note below is WRONG: retail +0x0eb7..
-// +0x0fe8 is GetModuleFileNameA + openFile + CRC_Memory read loop + version
-// fold + BigObf wrapper, and the 0x10138 frame is a 0x104 path buffer plus a
-// 0x10000 read block.
+// Identity: the matched GlobalData::newOverride (0x00085BA0) and
+// GlobalData::parseGameDataDefinition (0x00085C20) construct through this
+// body; it installs ??_7GlobalData@@6B@ (0x0107C68C) after the
+// SubsystemInterface base.
+//
+// Layout: the 49 destructible members come from the /EHsc unwind map (50
+// states; each funclet names its member's offset and destructor). Every other
+// member takes its type from the binary's own GameData field-parse table
+// (VA 0x01077018: parseReal/Int/Bool/RGBColor/Coord3D/...), its width from
+// retail's stores where the two disagree, and its name from name_oracle, else
+// the INI key, else its offset. Unproven types keep their address:
+// BfmeGdCrcValue0BD0, m_rgb09bc/m_rgb09e0/m_pos0a04 (the per-light arrays
+// the time-of-day apply at 0x00082AA0 fills from m_terrainLighting[tod]) and m_lighting0734.
+//
+// Body, in retail order:
+//   * m_theOriginal registration, m_next = NULL, then the scalar defaults;
+//   * the four vertex-water rows (one i<4 loop) and the 3 x 6 lighting loop;
+//   * three small loops VC7.1 unrolled: m_healthBonus[4],
+//     m_soloPlayerHealthBonusForDifficulty[6] and eighteen consecutive
+//     ScoreKeeper Int fields. Spelling any of them out instead lets the global
+//     allocator hoist the constant into edi and spill every loop pointer;
+//   * m_standardPublicBones.clear(), the time-of-day apply bfmeLoadJF(m_timeOfDay) through ILT
+//     0x0000BA64 (body 0x00082AA0 copies m_terrainLighting[tod]),
+//     m_weaponBonusSet = new WeaponBonusSet (132 x 1.0f);
+//   * the executable CRC: GetModuleFileNameA, TheFileSystem->openFile(buf,
+//     0x41), a 64 KB read loop into CRC_Memory (ILT 0x0000A984), the
+//     TheVersion fold, then the anti-tamper wrapper 0x00062EF0 inlined
+//     (slot g_Slot012C233C, state ILT 0x0002F923, fallback ILT 0x0003F508);
+//   * m_movementPenaltyDamageState = 2 and GetDoubleClickTime().
 #include <vector>
 #include <string.h>
 typedef float Real;
@@ -37,8 +40,8 @@ typedef unsigned int UnsignedInt;
 typedef unsigned char UnsignedByte;
 typedef unsigned short UnsignedShort;
 typedef bool Bool;
-#define TRUE true
-#define FALSE false
+#define TRUE 1
+#define FALSE 0
 
 struct RGBColor
 {
@@ -71,11 +74,11 @@ struct ICoord2D
 class GameClientRandomVariable
 {
 public:
-	GameClientRandomVariable() : m_low(0), m_high(0), m_type(0) { }
+	GameClientRandomVariable() : m_type(0), m_low(0), m_high(0) { }
 
+	Int m_type;		// DistributionType; layout witness puts m_high at +0x8
 	Real m_low;
 	Real m_high;
-	Int m_type;
 };
 
 // +0xbd0 is initialised to 0x254b6fae during member construction and again
@@ -147,19 +150,19 @@ struct BigObfSlot
 
 extern BigObfSlot g_Slot012C233C;
 
-class Obf00084510State
+class Obf00062D90
 {
 public:
-	Obf00084510State(int *a, int *b);
+	Obf00062D90(int *a, int *b);
 	unsigned int m_bits[8];
 };
 
-int __cdecl Gen00084510Fallback(int a, int b);
+// The fallback 0x00061F00 is still a gen_asm dump; retail reaches it through
+// ILT 0x0003F508, called here by that ILT's own ledger name.
+void j_0003f508();
+typedef int (__cdecl *BigObfFallback)(int, int);
 
-#pragma comment(linker, "/alternatename:??0Obf00084510State@@QAE@PAH0@Z=?j_0002f923@@YAXXZ")
-#pragma comment(linker, "/alternatename:?Gen00084510Fallback@@YAHHH@Z=?j_0003f508@@YAXXZ")
 #pragma comment(linker, "/alternatename:?getVersionNumber@Version@@QAEIXZ=?j_0001b76b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setTimeOfDay@GlobalData@@QAE_NH@Z=?j_0000ba64@@YAXXZ")
 
 static __forceinline int protectCrc00062EF0(int a, int b)
 {
@@ -171,115 +174,20 @@ static __forceinline int protectCrc00062EF0(int a, int b)
 hot:
 		void *pa = g_Slot012C233C.m_a;
 		void *pb = g_Slot012C233C.m_b;
-		Obf00084510State o(&a, &b);
+		Obf00062D90 o(&a, &b);
 		return hook(pa, pb, (__int64)(int)&o);
 	}
-	return Gen00084510Fallback(a, b);
+	return ((BigObfFallback)j_0003f508)(a, b);
 }
-//
-// Open-BFME5: GlobalData::GlobalData(), retail 0x00084510, 4621 bytes
-// (the ledger's 4499-byte estimate was stale -- the extent ends in `ret`
-// at +0x120c, confirmed with dis_retail.py; this is the real boundary).
-//
-// STRUCTURAL DRAFT, not yet byte-exact. This is the store-run-constructor /
-// unwind-state lever from docs/shape_levers.md applied at scale: the /EHsc
-// FuncInfo at VA 0x011E2888 lists 50 states (build/ehmap.py), each a
-// destructible sub-object of GlobalData in DECLARATION order. Every state's
-// funclet was disassembled (mov ecx,[ebp-0x10134]; add ecx,<offset>; jmp
-// <dtor>, or the eh-vector iterator form for arrays) to recover the member
-// list below -- offset, size and destructor identity for all 49 of
-// GlobalData's own destructible members (state 0 destroys the inherited
-// SubsystemInterface base).
-//
-// Every destructible type below is REUSED, not re-modelled:
-//   - BFMERetailAsciiString: the project's standard AsciiString stand-in
-//     (dtor ILT 0x0000D828, already pinned everywhere).
-//   - _STL::vector<BFMERetailAsciiString>: dtor already pinned at 0x000658A0
-//     under this exact template spelling (symbols.csv:4134) -- ICF-folded
-//     onto ??1PlayerUpgradeSpecialPowerModuleData, confirmed by inspecting
-//     the callee body's loop shape and by SubsystemLegend.cpp's own working
-//     vector<AsciiString> member using the same dtor address.
-//   - AttributeHandleStandIn: already a MATCHED class (ctor 0x0003747A, dtor
-//     0x0039D550) in AttributeHandleStandInDestructor.cpp /
-//     AttributeModifierAuraUpdateModuleDataCtorThunk.cpp -- declared here,
-//     not redefined, so the linker resolves to the existing body.
-//   - Coord3D: real, already-matched class (coord3d.cpp; default ctor
-//     0x00016C93->0x00083330, 3 bytes, dtor 0x00016C93 thunk chain ends at
-//     ??1Coord3D). Minimal local redeclaration (name + size only) to avoid
-//     pulling in the full header graph, exactly like BFMERetailAsciiString
-//     stands in for the real AsciiString elsewhere in this project.
-//   - Rva00083150: already-matched class (Rva00083150Ctor.cpp) -- a 0x300
-//     byte, six-row/32-float grid defaulted to 1.0f, called via a plain
-//     thiscall ctor with NO unwind state (its own ctor cannot throw, so it
-//     never got a state slot -- that is why 50 states cover only 49 of
-//     GlobalData's members plus the SubsystemInterface base).
-//   - BfmeGdElem36 / BfmeGdUnicodeString: two NEW stand-ins, pinned below.
-//     BfmeGdElem36 is a 36-byte element (three 18-element array members at
-//     +0x224/+0x4ac/+0x734) whose real ctor (0x00083440: mov eax,ecx / ret)
-//     and dtor (0x00083450: ret) are BOTH empty -- confirmed by disassembly,
-//     so the element's actual field layout is irrelevant to this function's
-//     bytes and is left as an opaque byte blob.  BfmeGdUnicodeString's dtor
-//     is retail's own real UnicodeString release path (0x0045EEA0 is an ILT
-//     that jumps to the already-pinned ??1UnicodeString@@QAE@XZ body at
-//     0x008881D0); a locally-named stand-in avoids an ODR clash with the
-//     full UnicodeString class already defined in
-//     Code/GameEngine/Source/Common/System/UnicodeString.cpp.
-//
-// UPDATE (worker W6, wave 2): the assigned brief's "CRC tail" theory for the
-// 0x10138-byte __chkstk frame is WRONG -- checked directly against the full
-// call list of the retail body (every `call`/`call [..]` instruction from
-// +0x0 to +0x120c, 47 total): there is NO GetModuleFileName, NO File::open,
-// NO read loop and NO CRC object anywhere in this function. The only import
-// call is `call dword ptr [0x1359000]` at +0x0ffe, which reverse/imports.csv
-// identifies as USER32!GetDoubleClickTime (matches ZH's tail-of-ctor
-// `m_doubleClickTimeMS = GetDoubleClickTime();`, so the general "this is
-// ZH's ctor tail" mapping still holds -- just not the CRC part). The other
-// unresolved tail calls (0x1b76b, 0xa984, 0x2f923, 0x3f508) are all
-// already-matched `gen-thunk` placeholder rows (Code/gen_small/thunks_*.cpp)
-// -- 5-byte jump stubs to FUN_004aea50 / FUN_00465250 / etc, not identified
-// real callees yet.
-//
-// What the buffer actually IS is still unresolved, but its SIZE is now
-// pinned empirically: adding an unused (one volatile byte touched) local
-// `char[0x10134]` reproduces retail's exact `mov eax, 0x10138` / __chkstk
-// prologue (0x10134 local + 4 bytes compiler overhead = 0x10138) and pushes
-// the first diff from the missing-chkstk-call point to the next one (score
-// 2774 -> 2820 bytes, still far short of 4621). Per docs/shape_levers.md
-// "frame first": this only gets the PROLOGUE aligned; everything after it
-// still needs real content, at which point the buffer's shape may turn out
-// to matter (e.g. if it's really several arrays MSVC coalesced).
-//
-// Retail water loop at +0x068d..+0x06e6 is four iterations. It starts
-// edi at this+0xbc, writes 13 separate dwords at edi-0x10 through
-// edi+0xb0, calls the narrow-string release path with ecx=edi-0x20
-// (this+0x9c+i*4), then advances edi by four. The matching GeneralsMD
-// GlobalData constructor clears m_vertexWaterAvailableMaps[i] after those
-// 13 initializers; its inline clear() delegates to releaseBuffer().
-// This draft now includes that missing call, using the existing pinned
-// BFMERetailAsciiString releaseBuffer body at 0x00887940. No byte-match
-// result has been claimed for this change.
-//
-// Other loops, calls, BFME-specific scalar defaults and the large stack
-// frame remain unresolved; the original 0.2 score is not an updated score.
-//
-// NOT YET DONE (why this is a partial, not a landed body):
-//   - Many BFME scalar members are named by offset and the initializer
-//     list is incomplete, notably retail-only stores before the water loop,
-//     the three lighting grids, and fields after the final default loop.
-//   - At least three call sites (+0x40f/+0x421 `RetailLayoutString::set`,
-//     +0xc72 `UnicodeString::set`) assign LITERAL STRING content to specific
-//     AsciiString/UnicodeString members -- these need the literal bytes read
-//     out of retail's .rdata and are not yet reproduced.
-//   - GlobalData's own vtable store (`mov dword ptr [esi], 0x0107C68C` right
-//     after the SubsystemInterface base ctor call) has no pin yet; nothing
-//     in this file forces our compiled vtable to that literal.
-//   - Trailing calls through thunks 0x1b76b, 0xa984, 0x2f923 and 0x3f508,
-//     plus the indirect call through edi, still need genuine source paths.
-//     The import through [0x1359000] is GetDoubleClickTime.
-//
-// The size below is verified: SubsystemInterface (8) + the member list =
-// 0x1290, matching newOverride's own comment that `operator new` is handed
-// 0x1290 and m_next lives at +0x128c.
+
+// GlobalData's time-of-day apply at 0x00082AA0 (range-checks tod, then copies
+// m_terrainLighting[tod] into the per-light arrays), reached through ILT
+// 0x0000BA64 under its ledger spelling.
+class BfmeXfJF
+{
+public:
+	Bool bfmeLoadJF(Int tod);
+};
 
 class SubsystemInterface
 {
@@ -306,10 +214,6 @@ public:
 	void *m_data;
 };
 
-// AttributeHandleStandIn: already matched at
-// Code/GameEngine/Source/GameLogic/Object/Update/AttributeHandleStandInDestructor.cpp
-// (dtor 0x0039D550) / AttributeModifierAuraUpdateModuleDataCtorThunk.cpp
-// (ctor pinned 0x0003747A). Declared, not redefined.
 class AttributeHandleStandIn
 {
 public:
@@ -320,8 +224,7 @@ private:
 	unsigned int m_value;
 };
 
-// Real, already-matched class (Code/Libraries/Source/WWVegas/WWMath/coord3d.cpp).
-// Minimal local redeclaration: name + size only, ctor/dtor resolved externally.
+// Coord3D element type of m_pos0a04; ctor/dtor are the matched out-of-line bodies.
 class Coord3D
 {
 public:
@@ -332,20 +235,20 @@ public:
 	float x, y, z;
 };
 
-// Already-matched class (Code/GameEngine/Source/Common/Rva00083150Ctor.cpp):
+// Matched class (game/GameEngine/Source/Common/Rva00083150Ctor.cpp):
 // six rows of 32 floats, all defaulted to 1.0f, nothrow ctor (no unwind state).
 class Rva00083150
 {
 public:
-	Rva00083150();
+	Rva00083150() throw();
 
 private:
 	unsigned int m_grid[6][32];
 };
 
-// New stand-in: retail's element ctor (0x00083440: mov eax,ecx / ret) and
-// dtor (0x00083450: ret) are both empty, so the field layout does not matter
-// to this function's bytes.  Pinned below.
+// TerrainLighting element (36 B): retail passes its empty ctor (0x00083440)
+// and dtor (0x00083450) to the array-construct helper; the fields are the
+// ambient/diffuse/lightPos the lighting loop writes.
 class BfmeGdElem36
 {
 public:
@@ -362,7 +265,7 @@ public:
 // dtor call goes through ILT 0x0045EEA0, which itself jumps to the
 // already-pinned ??1UnicodeString@@QAE@XZ body at 0x008881D0. A locally
 // named class avoids redefining the real UnicodeString from
-// Code/GameEngine/Source/Common/System/UnicodeString.cpp in this TU.
+// game/GameEngine/Source/Common/System/UnicodeString.cpp in this TU.
 class BfmeGdUnicodeString
 {
 public:
@@ -377,7 +280,6 @@ class GlobalData : public SubsystemInterface
 {
 public:
 	GlobalData();
-	Bool setTimeOfDay(Int tod);
 
 	static GlobalData *m_theOriginal;
 
@@ -466,8 +368,7 @@ public:
 	Real m_vertexWaterAttenuationC[4];				///< +0x15c
 	Real m_vertexWaterAttenuationRange[4];				///< +0x16c
 	Real m_downwindAngle;				///< +0x17c
-	Bool m_drawSkyBox;				///< +0x180
-	UnsignedByte m_gap0181[0x3];
+	Int m_drawSkyBox;				///< +0x180
 	Real m_defaultCameraMinHeight;				///< +0x184
 	Real m_defaultCameraMaxHeight;				///< +0x188
 	Real m_defaultCameraPitchAngle;				///< +0x18c
@@ -545,8 +446,7 @@ public:
 	Bool m_showTerrainNormals;				///< +0xa81
 	UnsignedByte m_gap0a82[0x2];
 	UnsignedInt m_a84;				///< +0xa84
-	Bool m_debugAI;				///< +0xa88
-	UnsignedByte m_gap0a89[0x3];
+	Int m_debugAI;				///< +0xa88
 	Bool m_debugAIObstacles;				///< +0xa8c
 	Bool m_showObjectHealth;				///< +0xa8d
 	UnsignedByte m_a8e;				///< +0xa8e
@@ -599,7 +499,8 @@ public:
 	UnsignedByte m_b18;				///< +0xb18
 	UnsignedByte m_gap0b19[0x3];
 	Int m_firewallPortOverride;				///< +0xb1c
-	Int m_firewallPortAllocationDelta;				///< +0xb20
+	UnsignedShort m_firewallPortAllocationDelta;				///< +0xb20
+	UnsignedByte m_gap0b22[0x2];
 	Int m_baseValuePerSupplyBox;				///< +0xb24
 	Int m_supplyBoxesPerTree;				///< +0xb28
 	Real m_BuildSpeed;				///< +0xb2c
@@ -632,8 +533,7 @@ public:
 	Int m_maxParticleCount;				///< +0xb8c
 	Int m_maxFieldParticleCount;				///< +0xb90
 	WeaponBonusSet * m_weaponBonusSet;				///< +0xb94
-	UnsignedInt m_b98;				///< +0xb98
-	Real m_healthBonus[3];				///< +0xb9c
+	Real m_healthBonus[4];				///< +0xb98
 	Real m_defaultStructureRubbleHeight;				///< +0xba8
 	Real m_attributeModifierArmorMaxBonus;				///< +0xbac
 	BFMERetailAsciiString m_shellMapName;				///< +0xbb0
@@ -912,7 +812,6 @@ public:
 	GlobalData *m_next;				///< +0x128c
 };
 
-// ??0GlobalData@@QAE@XZ
 GlobalData::GlobalData()
 {
 	Int i, j;
@@ -942,7 +841,7 @@ GlobalData::GlobalData()
 	m_d10 = 0x20;
 	m_d18 = 5;
 	m_d58 = 0;
-	m_d5c = 0x41200000;  // float bits 1e+01f
+	m_d5c = 0x41200000;  // float bits 10.0f
 	m_d60 = 5;
 	m_d1c = 0;
 	m_d20 = 0x1388;
@@ -981,7 +880,7 @@ GlobalData::GlobalData()
 	m_hideLivingWorldRegions = FALSE;
 	m_liveCampaignMode = TRUE;
 	m_livingWorldTurbo = FALSE;
-	m_resourceBonusMultiplier = 1e+01f;
+	m_resourceBonusMultiplier = 10.0f;
 	m_initialMaxRingLevel = 2;
 	m_goodCommandPointLimit = 0xc8;
 	m_evilCommandPointLimit = 0x258;
@@ -1066,7 +965,7 @@ GlobalData::GlobalData()
 	m_showSoftWaterEdge = TRUE;
 	m_8d = 0;
 	m_defaultVoiceAttackChargeTimeout = 0x32;
-	m_defaultMaxDistanceForEngaged = 3e+01f;
+	m_defaultMaxDistanceForEngaged = 30.0f;
 	m_defaultEngagedStateTimeout = 0xa;
 	m_animationSharingCap = 0x64;
 	m_animationSharingFrameTolerance = 5.0f;
@@ -1091,7 +990,7 @@ GlobalData::GlobalData()
 		m_vertexWaterAttenuationRange[i] = 0.0f;
 		m_strArr_9c[i].clear();
 	}
-	m_drawSkyBox = FALSE;
+	m_drawSkyBox = 0;
 	m_maxTerrainTracks = 0;
 	m_levelGainAnimationDisplayTimeInSeconds = 0.0f;
 	m_levelGainAnimationZRisePerSecond = 0.0f;
@@ -1208,7 +1107,7 @@ GlobalData::GlobalData()
 	m_drawEntireTerrain = FALSE;
 	m_maxParticleCount = 0;
 	m_maxFieldParticleCount = 0x1e;
-	m_debugAI = FALSE;
+	m_debugAI = 0;
 	m_debugAIObstacles = FALSE;
 	m_showClientPhysics = TRUE;
 	m_showTerrainNormals = FALSE;
@@ -1219,9 +1118,9 @@ GlobalData::GlobalData()
 	m_defaultCameraPitchAngle = 37.5f;
 	m_defaultCameraYawAngle = 0.0f;
 	m_defaultCameraScrollSpeedScalar = 1.0f;
-	m_defaultCameraMinHeight = 1e+02f;
-	m_defaultCameraMaxHeight = 3e+02f;
-	m_cameraLockHeightDelta = 2.5e+02f;
+	m_defaultCameraMinHeight = 100.0f;
+	m_defaultCameraMaxHeight = 300.0f;
+	m_cameraLockHeightDelta = 250.0f;
 	m_terrainHeightAtEdgeOfMap = 0.0f;
 	m_cameraEaseFactor = 0.2f;
 	m_unitDamagedThresh = 0.5f;
@@ -1254,7 +1153,7 @@ GlobalData::GlobalData()
 	m_maxUnitSelectSounds = 8;
 	m_selectionFlashSaturationFactor = 0.5f;
 	m_selectionFlashHouseColor = FALSE;
-	m_cameraAudibleRadius = 5e+02f;
+	m_cameraAudibleRadius = 500.0f;
 	m_groupMoveClickToGatherFactor = 1.0f;
 	m_shakeSubtleIntensity = 0.5f;
 	m_shakeNormalIntensity = 1.0f;
@@ -1262,8 +1161,8 @@ GlobalData::GlobalData()
 	m_shakeSevereIntensity = 5.0f;
 	m_shakeCineExtremeIntensity = 8.0f;
 	m_shakeCineInsaneIntensity = 12.0f;
-	m_maxShakeIntensity = 1e+01f;
-	m_maxShakeRange = 1.5e+02f;
+	m_maxShakeIntensity = 10.0f;
+	m_maxShakeRange = 150.0f;
 	m_sellPercentage = 1.0f;
 	m_baseRegenHealthPercentPerSecond = 0.0f;
 	m_baseRegenDelay = 0;
@@ -1320,21 +1219,15 @@ GlobalData::GlobalData()
 	m_networkDisconnectScreenNotifyTime = 0x3a98;
 	m_dbe = 0;
 	m_dbf = 0;
-	setTimeOfDay(m_timeOfDay);
+	((BfmeXfJF *)this)->bfmeLoadJF(m_timeOfDay);
 	m_b7d = 0;
 	m_str_b80.clear();
 	m_str_b84.clear();
 	m_b88 = 0;
-	m_b98 = 0x3f800000;  // float bits 1.0f
-	m_healthBonus[0] = 1.0f;
-	m_healthBonus[1] = 1.0f;
-	m_healthBonus[2] = 1.0f;
-	m_soloPlayerHealthBonusForDifficulty[0] = 1.0f;
-	m_soloPlayerHealthBonusForDifficulty[1] = 1.0f;
-	m_soloPlayerHealthBonusForDifficulty[2] = 1.0f;
-	m_soloPlayerHealthBonusForDifficulty[3] = 1.0f;
-	m_soloPlayerHealthBonusForDifficulty[4] = 1.0f;
-	m_soloPlayerHealthBonusForDifficulty[5] = 1.0f;
+	for (i = 0; i < 4; ++i)
+		m_healthBonus[i] = 1.0f;
+	for (i = 0; i < 6; ++i)
+		m_soloPlayerHealthBonusForDifficulty[i] = 1.0f;
 	m_defaultStructureRubbleHeight = 1.0f;
 	m_weaponBonusSet = new WeaponBonusSet;
 	m_shellMapName.set("Maps\\ShellMap1\\ShellMap1.map");
@@ -1347,10 +1240,12 @@ GlobalData::GlobalData()
 	m_bb9 = 0;
 	m_keyboardScrollFactor = 1.0f;
 	m_keyboardDefaultScrollFactor = 1.0f;
-	m_scrollAmountCutoff = 1e+01f;
+	m_scrollAmountCutoff = 10.0f;
 	m_cameraAdjustSpeed = 0.1f;
 	m_enforceMaxCameraHeight = TRUE;
 	m_attributeModifierArmorMaxBonus = 1.0f;
+	m_bc4 = 1;
+	m_bc8 = 0;
 	m_bd0.m_value = 0x254b6fae;
 	m_bd4 = -1;
 
@@ -1418,25 +1313,14 @@ GlobalData::GlobalData()
 	m_shrubBrightnessScale = 1.0f;
 	m_126c = 1;
 	m_tintUnitIfPathingForMoreThan = 0;
-	m_clampedLOSHeightForCastleStructures = 4e+01f;
-	m_scoreKeeperUnitsBuiltMultiplier = 1;
-	m_scoreKeeperUnitsDestroyedMultiplier = 1;
-	m_scoreKeeperStructuresBuiltMultiplier = 1;
-	m_scoreKeeperStructuresDestroyedMultiplier = 1;
-	m_scoreKeeperHeroesVettedMultiplier = 1;
-	m_scoreKeeperUnitsVettedMultiplier = 1;
-	m_scoreKeeperObjectivesCompletedMultiplier = 1;
-	m_scoreKeeperSuppliesCollectedMultiplier = 1;
-	m_scoreKeeperPowerPointsMultiplier = 1;
-	m_scoreKeeperRegionCommandPointsMultiplier = 1;
-	m_scoreKeeperRegionResourcesMultiplier = 1;
-	m_scoreKeeperRegionPowerPointsMultiplier = 1;
-	m_scoreKeeperTimeTakenMultiplier = 1;
-	m_scoreKeeperTimeTakenMaximumScore = 1;
-	m_scoreKeeperTimeTakenMinimumScore = 1;
-	m_scoreKeeperTotalVictoryRequiredScore = 1;
-	m_scoreKeeperNormalVictoryRequiredScore = 1;
-	m_scoreKeeperNormalVictoryRequiredObjectivesPercentage = 1;
+	m_clampedLOSHeightForCastleStructures = 40.0f;
+	{
+		// Eighteen consecutive ScoreKeeper Int fields; retail sets them in one
+		// unrolled loop (a spelled-out run makes VC7.1 hoist the 1 globally).
+		Int *scores = &m_scoreKeeperUnitsBuiltMultiplier;
+		for (i = 0; i < 18; ++i)
+			scores[i] = 1;
+	}
 	m_1214 = 0xff0b5ef2;
 	m_1218 = 0xffd92102;
 	m_1278 = 0;
