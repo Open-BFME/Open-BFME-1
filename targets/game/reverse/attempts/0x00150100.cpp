@@ -1,5 +1,5 @@
-// ?Rva00150100Rotate@@YAXPBUVec2@@0PAU1@@Z
-// partial score=0.26 date=2026-09-21
+// ?Rva00150100Rotate@@YAXPBUCoord3D@@0PAUCoord2D@@@Z
+// partial score=0.3375 date=2026-09-28
 // cl: /DNDEBUG /MD
 
 // Retail 0x00150100, 160 bytes. Leaf x87 helper, no calls: two prior blocked
@@ -29,25 +29,40 @@
 
 typedef float Real;
 
-struct Vec2
+struct Coord2D
 {
 	Real x, y;
 };
+struct Coord3D
+{
+	Real x, y, z;
+};
 
-extern "C" Real sqrtf(Real);
-#pragma intrinsic(sqrtf)
+extern "C" double sqrt(double);
+#pragma intrinsic(sqrt)
 
 extern const Real BfmeZeroRange;		// 0x01075350
 extern Real g_bfmeDefaultBU;			// 0x01075334
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
-void Rva00150100Rotate(const Vec2 *pB, const Vec2 *pA, Vec2 *vec)
+void Rva00150100Rotate(const Coord3D *pB, const Coord3D *pA, Coord2D *vec)
 {
-	Real dx = pA->x - pB->x;
-	Real dy = pA->y - pB->y;
-	Real len = sqrtf(dy * dy + dx * dx);
+	union Scratch
+	{
+		struct { Real negY, savedY, unused08, productX, productY, unused14; } products;
+		struct { int unused00[4], pAyBits, unused14; } input;
+	} temp;
+	register Real dx = pA->x;
+	register Real dy;
+	_ReadWriteBarrier();
+	temp.input.pAyBits = *(const int *)&pA->y;
+	dx -= pB->x;
+	dy = *(const Real *)&temp.input.pAyBits - pB->y;
+	Real len = (Real)sqrt(dy * dy + dx * dx);
 
 	Real x, y;
-	if (len <= BfmeZeroRange)
+	if (len != BfmeZeroRange)
 	{
 		Real k = g_bfmeDefaultBU / len;
 		y = dy * k;
@@ -59,11 +74,14 @@ void Rva00150100Rotate(const Vec2 *pB, const Vec2 *pA, Vec2 *vec)
 		y = dy;
 	}
 
-	Real negY = -y;
+	temp.products.negY = -y;
+	temp.products.savedY = x;
 	Real vx = vec->x;
+	temp.products.productX = vx * x;
+	temp.products.productY = vx * y;
 	Real vy = vec->y;
-	Real outX = negY * vy + vx * x;
-	Real outY = x * vy + vx * y;
+	Real outX = temp.products.negY * vy + temp.products.productX;
+	Real outY = temp.products.savedY * vy + temp.products.productY;
 	vec->x = outX;
 	vec->y = outY;
 }
