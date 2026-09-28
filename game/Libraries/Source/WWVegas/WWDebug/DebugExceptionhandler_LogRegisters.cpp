@@ -4,6 +4,30 @@
 
 #include "windows.h"
 
+// Retail string storage. These addresses contain separate NUL-terminated
+// strings, not members of the preceding vtables in the address index.
+// Match the existing declaration in GameEngine/Source/Common/BfmeConv492.cpp.
+extern "C" unsigned char bfmeTextBME[];
+extern "C" const char g_01132DD4[];
+extern "C" const char g_01134280[];
+extern "C" const char g_011343E4[];
+extern "C" const char g_011343DC[];
+extern "C" const char g_011343D4[];
+extern "C" const char g_01080294[];
+extern "C" const char g_011343CC[];
+extern "C" const char g_011343C4[];
+extern "C" const char g_011343BC[];
+extern "C" const char g_011343B4[];
+extern "C" const char g_011343AC[];
+extern "C" const char g_011343A4[];
+extern "C" const char g_0113439C[];
+extern "C" const char g_01134398[];
+extern "C" const char g_01134390[];
+extern "C" const char g_01134388[];
+extern "C" const char g_01134380[];
+extern "C" const char g_01134378[];
+extern "C" const char g_01134370[];
+
 // This TU uses the BFME Debug interface as a local ABI view.  The retail
 // exception logger dispatches the unsigned-long writer at +0x28, the string
 // writer at +0x38, and SetPrefixAndRadix at +0x50.  The fields used by the
@@ -60,19 +84,19 @@ public:
 
     Debug &operator<<(const Hex &)
     {
-        SetPrefixAndRadix((const char *)0x01132DD4, 16);
+        SetPrefixAndRadix(g_01132DD4, 16);
         return *this;
     }
 
     Debug &operator<<(const Dec &)
     {
-        SetPrefixAndRadix((const char *)0x0107301C, 10);
+        SetPrefixAndRadix((const char *)bfmeTextBME, 10);
         return *this;
     }
 
     Debug &operator<<(const Bin &)
     {
-        SetPrefixAndRadix((const char *)0x01134280, 2);
+        SetPrefixAndRadix(g_01134280, 2);
         return *this;
     }
 
@@ -106,25 +130,25 @@ void DebugExceptionhandler::LogRegisters(Debug &dbg, struct _EXCEPTION_POINTERS 
 
     dbg << Debug::FillChar('0')
         << Debug::Hex()
-        << (const char *)0x011343E4 << Debug::Width(8) << ctx.Eax
-        << (const char *)0x011343DC << Debug::Width(8) << ctx.Ebx
-        << (const char *)0x011343D4 << Debug::Width(8) << ctx.Ecx
-        << (const char *)0x01080294
-        << (const char *)0x011343CC << Debug::Width(8) << ctx.Edx
-        << (const char *)0x011343C4 << Debug::Width(8) << ctx.Esi
-        << (const char *)0x011343BC << Debug::Width(8) << ctx.Edi
-        << (const char *)0x01080294
-        << (const char *)0x011343B4 << Debug::Width(8) << ctx.Eip
-        << (const char *)0x011343AC << Debug::Width(8) << ctx.Esp
-        << (const char *)0x011343A4 << Debug::Width(8) << ctx.Ebp
-        << (const char *)0x01080294
-        << (const char *)0x0113439C << Debug::Bin() << Debug::Width(32) << ctx.EFlags
-        << Debug::Hex() << (const char *)0x01080294
-        << (const char *)0x01134398 << Debug::Width(4) << ctx.SegCs
-        << (const char *)0x01134390 << Debug::Width(4) << ctx.SegDs
-        << (const char *)0x01134388 << Debug::Width(4) << ctx.SegSs
-        << (const char *)0x01134380 << Debug::Width(4) << ctx.SegEs
-        << (const char *)0x01134378 << Debug::Width(4) << ctx.SegFs
-        << (const char *)0x01134370 << Debug::Width(4) << ctx.SegGs
-        << (const char *)0x01080294 << Debug::FillChar() << Debug::Dec();
+        << g_011343E4 << Debug::Width(8) << ctx.Eax
+        << g_011343DC << Debug::Width(8) << ctx.Ebx
+        << g_011343D4 << Debug::Width(8) << ctx.Ecx
+        << g_01080294
+        << g_011343CC << Debug::Width(8) << ctx.Edx
+        << g_011343C4 << Debug::Width(8) << ctx.Esi
+        << g_011343BC << Debug::Width(8) << ctx.Edi
+        << g_01080294
+        << g_011343B4 << Debug::Width(8) << ctx.Eip
+        << g_011343AC << Debug::Width(8) << ctx.Esp
+        << g_011343A4 << Debug::Width(8) << ctx.Ebp
+        << g_01080294
+        << g_0113439C << Debug::Bin() << Debug::Width(32) << ctx.EFlags
+        << Debug::Hex() << g_01080294
+        << g_01134398 << Debug::Width(4) << ctx.SegCs
+        << g_01134390 << Debug::Width(4) << ctx.SegDs
+        << g_01134388 << Debug::Width(4) << ctx.SegSs
+        << g_01134380 << Debug::Width(4) << ctx.SegEs
+        << g_01134378 << Debug::Width(4) << ctx.SegFs
+        << g_01134370 << Debug::Width(4) << ctx.SegGs
+        << g_01080294 << Debug::FillChar() << Debug::Dec();
 }
