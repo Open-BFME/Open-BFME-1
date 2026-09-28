@@ -10048,5 +10048,15 @@
   "old_name": "BufferRebuild006F8F00",
   "new_name": "Rva006F8F00Owner",
   "reason": "The bank's callee class was an unpinned invented name for body 0x006F8F00 (reached through ILT 0x000472BC); that body is already matched as Rva006F8F00Owner::updateBuffers, so the landing uses the ledger identity instead of a second name for the same body."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0079d530.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0079d530.cpp",
+  "before_sha256": "6bdf8465b6d9305b0d632345054ffd709bc532ede94de775368e62b752463b7d",
+  "after_sha256": "20885e847d0cd3b8d8d6ca71788099a58b561908cdf9ad8e765362180fa19875",
+  "evidence": "targets/game/reverse/identity_evidence/0x0079D530-aptpalantir-view-box-quads.md",
+  "old_name": "update",
+  "new_name": "rva0079D530",
+  "reason": "The earlier bank guessed update on an invented QuadrilateralInset class. The owner is now proven to be AptPalantir (called from renderRadarViewBox; witnessed +0x51C and +0x524/544/564 layout). On that class update would collide with the inherited SubsystemInterface::update virtual while this body is a directly called non-virtual helper. No evidence names the method so it keeps the address token."
  }
 ]
