@@ -675,48 +675,14 @@ const char * WW3D::Get_Render_Device_Name(int device_index)
  * HISTORY:                                                                                    *
  *   3/24/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-WW3DErrorType WW3D::Set_Device_Resolution(int width,int height,int bits,int windowed, bool resize_window)
+bool WW3D::Set_Device_Resolution(int width,int height,int bits,int windowed, bool resize_window)
 {
-	__asm {
-		_emit 08Bh
-		_emit 044h
-		_emit 024h
-		_emit 014h
-		_emit 08Bh
-		_emit 04Ch
-		_emit 024h
-		_emit 010h
-		_emit 08Bh
-		_emit 054h
-		_emit 024h
-		_emit 00Ch
-		_emit 050h
-		_emit 08Bh
-		_emit 044h
-		_emit 024h
-		_emit 00Ch
-		_emit 051h
-		_emit 08Bh
-		_emit 04Ch
-		_emit 024h
-		_emit 00Ch
-		_emit 052h
-		_emit 050h
-		_emit 051h
-		_emit 0E8h
-		_emit 0E2h
-		_emit 0BCh
-		_emit 000h
-		_emit 000h
-		_emit 083h
-		_emit 0C4h
-		_emit 014h
-		_emit 084h
-		_emit 0C0h
-		_emit 00Fh
-		_emit 095h
-		_emit 0C0h
-		_emit 0C3h
+	bool success = DX8Wrapper::Set_Device_Resolution(width,height,bits,windowed,resize_window);
+
+	if (success) {
+		return true;
+	} else {
+		return false;
 	}
 }
 

@@ -124,7 +124,10 @@ public:
 	static void					Get_Pixel_Center(float &x, float &y);
 	static void					Get_Render_Target_Resolution(int & set_w,int & set_h,int & get_bits,bool & get_windowed);
 	static void					Get_Device_Resolution(int & set_w,int & set_h,int & get_bits,bool & get_windowed);
-	static WW3DErrorType		Set_Device_Resolution(int w=-1,int h=-1,int bits=-1,int windowed=-1, bool resize_window=false );
+	// retail 0x008FD1C0 returns BOOL in AL (test al,al / setne al / ret) and its only
+	// caller tests the result with `cmp al,1`; the ZH twin's WW3DErrorType return is
+	// an upstream change BFME never took.
+	static bool					Set_Device_Resolution(int w=-1,int h=-1,int bits=-1,int windowed=-1, bool resize_window=false );
 
 	static bool					Is_Windowed( void );
 	static WW3DErrorType		Toggle_Windowed ( void );

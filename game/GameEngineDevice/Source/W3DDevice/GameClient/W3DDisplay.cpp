@@ -600,7 +600,8 @@ void Reset_D3D_Device(bool active)
 // ?setDisplayMode@W3DDisplay@@UAE_NIII_N@Z present-unmatched
 Bool W3DDisplay::setDisplayMode( UnsignedInt xres, UnsignedInt yres, UnsignedInt bitdepth, Bool windowed )
 {
-	if (WW3D_ERROR_OK == WW3D::Set_Device_Resolution(xres,yres,bitdepth,windowed,true))
+	// retail 0x008FD1C0 returns a BOOL (see ww3d.cpp), so the test is the value itself
+	if (WW3D::Set_Device_Resolution(xres,yres,bitdepth,windowed,true))
 	{
 		Render2DClass::Set_Screen_Resolution(RectClass(0, 0, xres, yres));
 		Display::setDisplayMode(xres, yres, bitdepth, windowed);
