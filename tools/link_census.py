@@ -210,17 +210,23 @@ def alias_object(table, path):
     return path
 
 
+def _arg(path):
+    """A repo-relative, forward-slash path, as build.py passes cl.exe: under Wine
+    an absolute POSIX path (/home/...) would read as a link.exe option."""
+    return Path(path).resolve().relative_to(ROOT.resolve()).as_posix()
+
+
 def link(objs, aliases=None, tag="census"):
     OUT.mkdir(parents=True, exist_ok=True)
     rsp = OUT / "objects.rsp"
-    rsp.write_text("\n".join(f'"{o}"' for o in objs) + "\n", encoding="utf-8")
+    rsp.write_text("\n".join(f'"{_arg(o)}"' for o in objs) + "\n", encoding="utf-8")
     extra = []
     if aliases:
-        extra.append(str(alias_object(aliases, OUT / "aliases.obj")))
+        extra.append(_arg(alias_object(aliases, OUT / "aliases.obj")))
     root = build.vc71_root()
     linker = root / "Vc7" / "bin" / "link.exe"
     command = [str(linker), "/NOLOGO", "/FORCE", "/NODEFAULTLIB", "/INCREMENTAL:NO", "/MACHINE:X86",
-               "/SUBSYSTEM:WINDOWS", "/ENTRY:WinMainCRTStartup", f"/OUT:{OUT / (tag + '.exe')}", f"@{rsp}", *extra]
+               "/SUBSYSTEM:WINDOWS", "/ENTRY:WinMainCRTStartup", f"/OUT:{_arg(OUT / (tag + '.exe'))}", f"@{_arg(rsp)}", *extra]
     if sys.platform != "win32":
         command.insert(0, "wine")
     started = time.time()
