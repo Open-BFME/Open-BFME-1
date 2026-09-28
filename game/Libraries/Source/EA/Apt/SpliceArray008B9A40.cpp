@@ -1,6 +1,6 @@
-// ?d_008b9a40@@YAXXZ
-// partial score=0.989 date=2026-09-27
-// Retail 0x008B9A40: array range deletion and argument insertion.
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// Retail 0x008B9A40: type-22 array native that deletes a range and inserts stack arguments.
+// Registered as callback slot 8 by the array property dispatcher at 0x008BA0B0.
 class AptValue { public:
  virtual void retain(); virtual void release(); virtual void slot08(); virtual void slot0c(); virtual void slot10(); virtual unsigned char slot14();
  int toInteger() const;
@@ -16,8 +16,9 @@ class BfmeN1242 { public:
      AptValue *old=(AptValue *)(field20[index]&~1);
      item->retain();
      if(old) old->release();
-     if(item->slot14()==1) item=(AptValue *)((unsigned)item|1);
-     field20[index]=(unsigned)item;
+     unsigned tagged=(unsigned)item;
+     if(item->slot14()==1) tagged|=1;
+     field20[index]=tagged;
      field28=index+1>field28?index+1:field28;
     }
  }
@@ -33,18 +34,19 @@ AptValue *splice008B9A40(AptValue *value,int argc)
  if(value->kind()==22 && !value->invalid()) {
   if(argc>0) {
   BfmeN1242 *array=(BfmeN1242 *)value;
+  int i;
   int start=g_bfmeArr1233[Rva008AE770TheStack.field00-1]->toInteger();
   if(start<0) start+=array->field28;
   int count=array->field28-start;
   if(argc>1) count=g_bfmeArr1233[Rva008AE770TheStack.field00-2]->toInteger();
   if(count>array->field28-start) count=array->field28-start;
   if(start>=array->field28) count=0;
-  for(int i=0;i<count;++i) {
+  for(i=0;i<count;++i) {
    AptValue *old=(AptValue *)(array->field20[start+i]&~1);
    if(old) old->release();
   }
   bfmeMove1242(array->field20+start,array->field20+start+count,(array->field28-count-start)*4);
-  for(int j=0;j<count;++j) array->field20[j-count+array->field28]=0;
+  for(i=0;i<count;++i) array->field20[i-count+array->field28]=0;
   array->field28-=count;
   if(argc>2) {
    int add=argc-2;
