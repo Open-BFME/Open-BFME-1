@@ -1,5 +1,5 @@
 // ?getCommandAvailability@ControlBar@@IBE?AW4CommandAvailability@@PBVCommandButton@@PAVGameWindow@@PAVObject@@PAM_N@Z
-// partial score=0.11 date=2026-09-02
+// partial score=0.35 date=2026-09-27
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/controlbarvtables /Iinputs/reference/shims/controlbarlayout /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 #define Matrix4x4 Matrix4
@@ -33,6 +33,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // USER INCLUDES //////////////////////////////////////////////////////////////////////////////////
+#define ControlBar ControlBarReal
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "Common/NameKeyGenerator.h"
@@ -1019,11 +1020,19 @@ static Int getRappellerCount(Object* obj)
 /** What's the status between 'obj' and the 'command' at present.  Can we do it?  Are
 	* we already doing it?  Can ya dig it? */
 //-------------------------------------------------------------------------------------------------
-CommandAvailability ControlBar::getCommandAvailability( const CommandButton *command, 
-																							Object *obj, 
-																							GameWindow *win,
-																							GameWindow *applyToWin,
-																							Bool forceDisabledEvaluation ) const
+#undef ControlBar
+class ControlBar
+{
+protected:
+    CommandAvailability getCommandAvailability(const CommandButton *command,
+                                               GameWindow *win, Object *obj,
+                                               Real *readiness,
+                                               Bool forceDisabledEvaluation) const;
+};
+
+CommandAvailability ControlBar::getCommandAvailability( const CommandButton *command,
+    GameWindow *win, Object *obj, Real *readiness,
+    Bool forceDisabledEvaluation ) const
 {
 	volatile unsigned char bfmeAvailabilityScratch[60];
 	bfmeAvailabilityScratch[0] = 0;
@@ -1031,7 +1040,7 @@ CommandAvailability ControlBar::getCommandAvailability( const CommandButton *com
 	// BFME uses this fourth argument as a caller-owned availability factor rather
 	// than ZH's alternate clock window.  The retail body initializes it before
 	// performing even the null-object checks.
-	*reinterpret_cast<Real *>(applyToWin) = 1.0f;
+	*readiness = 1.0f;
 
 	if(	command->getCommandType() == GUI_COMMAND_SPECIAL_POWER_FROM_SHORTCUT 
 			|| command->getCommandType() == (GUICommandType)0x24 )
@@ -1099,7 +1108,7 @@ CommandAvailability ControlBar::getCommandAvailability( const CommandButton *com
 				commandType != GUI_COMMAND_STOP && 
 				commandType != GUI_COMMAND_SWITCH_WEAPON )
 		{
-			if( getCommandAvailability( command, obj, win, applyToWin, TRUE ) == COMMAND_HIDDEN )
+			if( getCommandAvailability( command, win, obj, readiness, TRUE ) == COMMAND_HIDDEN )
 			{
 				return COMMAND_HIDDEN;
 			}
@@ -1333,8 +1342,7 @@ CommandAvailability ControlBar::getCommandAvailability( const CommandButton *com
 					// only draw the clock when reloading a clip, not when merely between shots, since that's usually a tiny amount of time
 					if ( w->getStatus() == RELOADING_CLIP)
 					{
-						Int percent = w->getPercentReadyToFire() * 100;
-						GadgetButtonDrawInverseClock( applyToWin, percent, m_buildUpClockColor );
+						*readiness = w->getPercentReadyToFire();
 					}
 					return COMMAND_NOT_READY;
 				}
@@ -1432,9 +1440,7 @@ CommandAvailability ControlBar::getCommandAvailability( const CommandButton *com
 			} 
 			else if( mod->isReady() == FALSE )
 			{
-				Int percent =  mod->getPercentReady() * 100;
-
-				GadgetButtonDrawInverseClock( applyToWin, percent, m_buildUpClockColor );
+				*readiness = mod->getPercentReady();
 				return COMMAND_NOT_READY;
 			}
 			else if( SpecialAbilityUpdate *spUpdate = obj->findSpecialAbilityUpdate( command->getSpecialPowerTemplate()->getSpecialPowerType() ) )
@@ -1544,4 +1550,5 @@ CommandAvailability ControlBar::getCommandAvailability( const CommandButton *com
 	return COMMAND_AVAILABLE;
 
 }  // end getCommandAvailability
+#define ControlBar ControlBarReal
 
