@@ -45,3 +45,9 @@ unsigned short __cdecl Rva0084D7F0(Rva0084D7F0Locale *locale, int character)
     LCMapStringW(locale->lcid, 0x200, (const unsigned short *)&character, 1, &converted, 1);
     return converted;
 }
+
+int Rva0084DB70(Rva0084D7F0Locale *locale, unsigned short *to, int count,
+    const unsigned short *from, int fromCount)
+{
+    return LCMapStringW(locale->lcid, 0x400, from, fromCount, to, count);
+}
