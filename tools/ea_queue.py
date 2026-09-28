@@ -160,8 +160,9 @@ def show(item, rows_at):
     files = mentions(item["old"])
     rvas = " ".join(f"0x{rva:08X}" for rva, *_ in item["rows"])
     print(f"EA rename ({item['kind']}): {item['old']} -> {item['new']}, {len(item['rows'])} row(s)")
-    for rva, name, new_name, want in item["rows"]:
-        print(f"  0x{rva:08X} {name}\n             -> {new_name}{'  (EA: ' + want + ')' if want else ''}")
+    for rva, name, new_name, want in item["rows"]:   # "- 0xRVA SIZEB" is the line fleet_run claims from
+        print(f"- 0x{rva:08X} {rows_at[rva][0]['target_size']}B {name}\n"
+              f"      -> {new_name}{'  (EA: ' + want + ')' if want else ''}")
     print(f"  rename {item['old']} -> {item['new']} in every file below. Callers declare the old symbol\n"
           f"  too, and a caller left behind goes byte-red the next time it builds:")
     for f in files:

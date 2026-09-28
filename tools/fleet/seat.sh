@@ -5,6 +5,7 @@
 #            lunablock               -> up to 12 open bodies that share one blocker family (pick_blocker.py)
 #            lunaanon                -> 2 anonymous dump bodies, warmest evidence pack first (pick_anon.py)
 #            lunareview              -> review 2 banked bodies 0.5..0.95 for identity/layout/convention (pick_review.py)
+#            lunaea                  -> one rename to EA's own name, the target fixed by evidence (tools/ea_queue.py)
 #            grokbig | solbig | lunabig -> claim ONE large body (1KB..2.5KB) and stay on it
 #            for up to 3 sessions while it is still a dump and the last banked partial
 #            scored >= 0.5 (each session restarts from the stash)
@@ -170,6 +171,18 @@ while true; do
     BRIEF="build/brief_seat_${ENGINE}${SEAT}_${STEM}.txt"
     # shellcheck disable=SC2086
     python tools/brief.py --rvas $RVAS --model "$CMODEL" --limit 2 --note "REVIEWER. A worker banked each body below (START FROM STASH line) and wrote its assumptions into the re_attempts.log evidence. Your job is what the byte gate cannot see: is the identity right (caller naming the symbol? vtable slot? literal?), is the class layout witnessed (tools/name_oracle.py, tools/bfme_layout.py), is the calling convention and every callee name what tools/callees.py prints, is any pin naming the WRONG function (tools/pin_consistency.py --symbol)? Correct what is wrong in the stash, run probe.py, and either land it with add_match.py or re-bank it with a corrected evidence line that states what you verified, what you changed, and the one thing still missing. Do not rewrite from scratch. Do not add a pin on the worker's say-so." > "$BRIEF" 2>/dev/null || { echo "seat $SEAT: brief failed for $RVAS"; continue; }
+    LOG="build/fleet_logs/seat_${ENGINE}${SEAT}_${STEM}.log"
+    echo "$(date '+%H:%M') seat $ENGINE$SEAT assigned $RVAS" >> build/fleet_logs/seats.log
+    run_engine "$BRIEF" "$LOG"
+    echo "$(date '+%H:%M') seat $ENGINE$SEAT finished $RVAS" >> build/fleet_logs/seats.log
+  elif [ "${ENGINE%ea}" != "$ENGINE" ]; then
+    # EA rename lane: the queue item is the whole brief; its "- 0xRVA SIZEB" lines are the claim
+    BRIEF="build/brief_seat_${ENGINE}${SEAT}.txt"
+    { echo "EA RENAME. EA's own build fixes the new name below; do not choose another. Follow the steps exactly: edit every listed file, land each row with the add_match command shown, rename the listed pins, and commit together. If it cannot land byte-exact, append 0xRVA<TAB>reason to targets/game/reverse/ea_rename_blocked.tsv, release the claim and stop."
+      python tools/ea_queue.py next; } > "$BRIEF" 2>/dev/null
+    RVAS=$(grep -oE '^- 0x[0-9A-F]{8}' "$BRIEF" | cut -c3- | tr '\n' ' ')
+    [ -z "${RVAS// /}" ] && { echo "seat $SEAT: no EA renames left; retry in 1800s"; sleep 1800; continue; }
+    STEM=$(echo "$RVAS" | awk '{print $1}')
     LOG="build/fleet_logs/seat_${ENGINE}${SEAT}_${STEM}.log"
     echo "$(date '+%H:%M') seat $ENGINE$SEAT assigned $RVAS" >> build/fleet_logs/seats.log
     run_engine "$BRIEF" "$LOG"
