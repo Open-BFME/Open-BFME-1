@@ -8078,5 +8078,15 @@
   "after_sha256": "bdff202b549ec1ead90a805871dc1b1b73132e6e4f75b399955c6438159dd5c3",
   "evidence": "targets/game/reverse/identity_evidence/0002248f-ilt-thunk.md",
   "reason": "0x0002248F is the five-byte ILT thunk jmp 0x006C39D0 (tools/dis_retail.py 2248F 5); the real name moves to the matched body at 0x006C39D0 and the thunk is claimed by address as ?j_0002248f@@YAXXZ per targets/game/reverse/identity_evidence/0002248f-ilt-thunk.md."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "ParseScript",
+  "new_name": "Rva0035C0C0",
+  "before_sha256": "b8ad7f4e1351ff138a257e74275a8022f1b4e586fcf9660418b5829737ca1bf1",
+  "after_sha256": "61fca333f6add24e8238a3a0a0f22c23ae15ecc53e1d4ac86acb7b875c318c78",
+  "evidence": "targets/game/reverse/identity_evidence/0035c0c0-parse-script-instance-method.md",
+  "reason": "Retail 0x0035C0C0 is a thiscall instance method returning bool with ret 8 and no allocation, not the static Script *Script::ParseScript(DataChunkInput&, unsigned short) the lift named. The Script layout is proven by its member stores; the method name keeps the address."
  }
 ]

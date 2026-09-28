@@ -1374,7 +1374,7 @@ void Script::WriteScriptDataChunk(DataChunkOutput &chunkWriter, Script *pScript)
 *	Input: DataChunkInput 
 *		
 */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/Script_ParseScript_Thunk.cpp
+// NOT retail's shape: that reader is the __thiscall instance method ?Rva0035C0C0@Script@@QAE_NAAVDataChunkInput@@G@Z at 0x0035C0C0, landed in ScriptRva0035C0C0Parse.cpp. Kept only for the two ParseScriptFrom*DataChunk wrappers below.
 // ?ParseScript@Script@@SAPAV1@AAVDataChunkInput@@G@Z present-unmatched
 Script *Script::ParseScript(DataChunkInput &file, unsigned short version)
 {
