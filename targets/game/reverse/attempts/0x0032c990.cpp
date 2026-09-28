@@ -2,7 +2,7 @@
 // partial score=0.625 date=2026-09-25
 // stlport
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/objectdlink /Igame/Libraries/Source/WWVegas/WWLib
-// Retail RVA 0x0032C990 (288 bytes), dispatcher-proven thiscall member.
+// Retail RVA 0x0032C990, 291 bytes. The dispatcher passes three arguments through a member-function pointer.
 // Parameters: player mask, minimum count, upgrade name. Three nested loops
 // visit player prototypes, live Team instances, and Object team members.
 // Object PMF layout mirrors ObjectDlinkPmf.h; this local view additionally
