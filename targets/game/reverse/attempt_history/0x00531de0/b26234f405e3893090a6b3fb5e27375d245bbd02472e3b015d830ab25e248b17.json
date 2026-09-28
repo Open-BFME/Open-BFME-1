@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "b26234f405e3893090a6b3fb5e27375d245bbd02472e3b015d830ab25e248b17",
+  "symbol": "?d_00531de0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.4,
+  "source": "// ?d_00531de0@@YAXXZ\n// partial score=0.4 date=2026-09-28\n// partial 0x00531DE0 (171 B, ret 8): native vector<int> refresh model over\n// GadgetListBoxGetNumEntries/GetSelected hoisted + memmove + insert_overflow.\n// shape 0.722, 148 diffs: retail pushes ebx before the count call and inlines\n// GetSelected via winSendSystemMsg rather than calling it; needs\n// callee-visibility lever per shape_levers row 77.\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\nclass GameWindow;\nextern int GadgetListBoxGetNumEntries(GameWindow *listbox);\nextern void GadgetListBoxGetSelected(GameWindow *listbox, int *selectList);\nint __stdcall Rva00531DE0RefreshSelectedIndices(GameWindow *listbox, void *vec)\n{\n\treturn GadgetListBoxGetNumEntries(listbox);\n}\n"
+}
