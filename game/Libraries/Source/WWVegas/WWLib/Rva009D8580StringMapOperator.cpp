@@ -24,3 +24,16 @@ typedef _STL::hash_map<Rva009D8580String, int, _STL::hash<Rva009D8580String>,
 // key/value types while the owner remains address-derived pending a public
 // class/registration proof.
 template int &Rva009D8580Map::operator[]( const Rva009D8580String &key );
+// retail RVA 0x009D7840 returns the string-map iterator built from this key's
+// node and the map receiver.
+class Rva009D7840Owner : public Rva009D8580Map
+{
+public:
+	Rva009D8580Map::iterator m009D7840( const Rva009D8580String &key );
+};
+
+Rva009D8580Map::iterator Rva009D7840Owner::m009D7840(
+	const Rva009D8580String &key )
+{
+	return Rva009D8580Map::find( key );
+}
