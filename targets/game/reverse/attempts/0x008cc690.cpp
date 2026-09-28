@@ -1,6 +1,13 @@
 // ?d_008cc690@@YAXXZ
-// partial score=0.1965065502183406 date=2026-09-22
+// partial score=0.441 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// 2026-09-28 opus-5.5: State+0x0C is the owner stack {count, unused, items} with inline
+// size()/top(), the layout the matched caller EnsureName008CDAD0.cpp uses; that alone took
+// the stash from 685 B / 548 differing bytes to 687 B / 384. Next lever (measured, not
+// applied here because the 1-byte ebp shift raises the byte count): read value->field04
+// once into a local for the kind==10 test (see re_attempts.log) -> shape 0.974.
+// Remaining residue: first half keeps this in EBX and name.block in EDI; retail has this
+// in EDI, input in EBX, name.block in EBP (EBP pushed in the prologue).
 // 008CC690: thiscall, seven stack dwords, AL result, ret 1C.
 // Layout/ABI witnesses: docs/analysis/0x008cf740.md and retail body.
 // 008C6460 is a private helper taking value/name/flag in ESI/EBX/EDI.
@@ -52,9 +59,10 @@ extern void d_008c6320();
 typedef void (__cdecl *Prepare008CC690)(Value008CC690 *,void *,String008CC690 *,Value008CC690 **,String008CC690 *);
 extern Value008CC690 *g_value013379F4, *g_value013379BC;
 struct Frame008CC690 { unsigned field00,field04; Table008CC690 table; };
+struct Stack008CC690 { int m_count; int m_unused; Frame008CC690 **m_items; int size() { return m_count; } Frame008CC690 *top() { return m_items[m_count-1]; } };
 class Rva008CC690State {
 public:
-    char gap00[12]; int field0C; int field10; Frame008CC690 **field14;
+    char gap00[12]; Stack008CC690 m_owner;
     bool assignNamed(Value008CC690 *,void *,String008CC690 *,Value008CC690 *,int,int,int);
 };
 bool Rva008CC690State::assignNamed(Value008CC690 *owner,void *scope,String008CC690 *input,Value008CC690 *value,int a,int b,int c) {
@@ -71,7 +79,7 @@ bool Rva008CC690State::assignNamed(Value008CC690 *owner,void *scope,String008CC6
     if (resolved->family() && resolved->kind()==12) return false;
     if (!resolved->invalid() && resolved->slot2C(resolved,&name,value)) return true;
     if (a) {
-        if (b && field0C>0 && field14[field0C-1]->table.bfmeFind1024((int)&name)) goto frame;
+        if (b && m_owner.size()>0 && m_owner.top()->table.bfmeFind1024((int)&name)) goto frame;
         {
             notify008C6460(resolved,&name,!value ? 1 : value->invalid());
             Table008CC690 *table=resolved->slot18();
@@ -88,9 +96,9 @@ bool Rva008CC690State::assignNamed(Value008CC690 *owner,void *scope,String008CC6
                 if (table) table->bfmeAdd1024((int)&name,(int)value);
             }
         }
-    } else if (field0C>0) {
+    } else if (m_owner.size()>0) {
 frame:
-        field14[field0C-1]->table.bfmeAdd1024((int)&name,(int)value);
+        m_owner.top()->table.bfmeAdd1024((int)&name,(int)value);
     } else {
         notify008C6460(resolved,&name,value==g_value013379BC);
         Table008CC690 *table=resolved->slot18();
