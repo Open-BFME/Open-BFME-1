@@ -1,15 +1,13 @@
-// ?check@MemberTarget002439F0@@QAE_NPAVMember002439F0@@@Z
-// partial score=0.6373 date=2026-09-27
+// Retail 0x002439F0 complete 474-byte thiscall predicate ending ret 4; address-qualified identity.
+// Receiver layout matches the HordeContain secondary interface of 0x00243C40: owner at this-0xdc, member list at this-0xac.
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
 #include <list>
-// Retail 002439F0. Adjusted receiver and member/object offsets witnessed in retail.
-extern void j_00043ced(); extern void j_0000faa6(); extern void j_0001f253();
-extern void j_000261a2(); extern void j_000016a4(); extern void j_00006dcf();
-extern void j_00024d70(); extern void j_0000e4a8();
+#include "../../../command_source_type.h"
+extern void j_00006dcf(); extern void j_0000e4a8();
 class Member002439F0;
 class BfmeSrcBT {public: float bfmeCalcBT(void *);};
 class BfmeObjAS {public: BfmeObjAS *bfmeParentAS(int);};
@@ -17,13 +15,10 @@ class Object;
 class AIUpdateInterface {public: Object *getCurrentVictim() const;};
 class BFMEActionObject {public: bool testStatus(int) const;};
 class Rva001B3FE0 {public: bool test() const;};
-class BfmeOwnedD {public: void *bfmeDeleteSelf(unsigned);};
 
 class Predicate002439F0 { public: bool test() const {
  union {void (*p)(); bool (Predicate002439F0::*m)() const;} c; c.p=j_00006dcf; return (this->*c.m)();
 }};
-template<int N> class Slots002439F0: public Slots002439F0<N-1> {public: virtual void unused(char (*)[N])=0;};
-template<> class Slots002439F0<0> {};
 class AI002439F0 { public:
  virtual void unused0()=0;
  virtual void unused1()=0;
@@ -127,17 +122,17 @@ class AI002439F0 { public:
  char pad004[0x140-4]; Predicate002439F0 *field140;
  Member002439F0 *victim() const {return (Member002439F0 *)((const AIUpdateInterface *)this)->getCurrentVictim();}
 };
-class Commands002439F0 { public: void idle(int source) {union {void (*p)();void (Commands002439F0::*m)(int);} c;c.p=j_00024d70;(this->*c.m)(source);} };
+class AICommandInterface {public: void aiIdle(CommandSourceType cmdSource);};
+class Commands002439F0 { public: void idle(CommandSourceType source) {((AICommandInterface *)this)->aiIdle(source);} };
 class Member002439F0 {public:
  char pad000[0x74]; int field074; int field078; char pad07C[0x94-0x7c]; unsigned field094;
  char pad098[0x204-0x98]; AI002439F0 *field204; char pad208[12]; Member002439F0 *field214;
- float distance(Member002439F0 *o) {return ((BfmeSrcBT *)this)->bfmeCalcBT(o);}
  Member002439F0 *parent(bool b) {return (Member002439F0 *)((BfmeObjAS *)this)->bfmeParentAS(b);}
  bool status(int i) const {return ((const BFMEActionObject *)this)->testStatus(i);}
  void action(bool b) {union {void (*p)();void (Member002439F0::*m)(bool);} c;c.p=j_0000e4a8;(this->*c.m)(b);}
 };
 class GameLogic {public: char pad000[0x3c]; unsigned frame;
- Member002439F0 *lookup(int id) {union {void (*p)();Member002439F0 *(GameLogic::*m)(int);} c;c.p=j_0001f253;return (this->*c.m)(id);}
+ Object *findObjectByID(int id);
 };
 extern GameLogic *TheGameLogic;
 class MemberTarget002439F0 {public:
@@ -224,15 +219,14 @@ class MemberTarget002439F0 {public:
  bool check(Member002439F0 *target);
 };
 bool MemberTarget002439F0::check(Member002439F0 *arg) {
- Member002439F0 *target=arg;
- if (!target) return false;
- bool close=target->distance(*(Member002439F0 **)((char *)this-0xdc))<10000.0f;
- int id=target->field074;
- Member002439F0 *parent=target->parent(false);
+ if (!arg) return false;
+ bool close=((BfmeSrcBT *)arg)->bfmeCalcBT(*(Member002439F0 **)((char *)this-0xdc))<10000.0f;
+ int id=arg->field074;
+ Member002439F0 *parent=arg->parent(false);
  if(parent) id=parent->field074;
- if ((target->field074==field100 || id==field100) && TheGameLogic->frame<field104) return true;
- Member002439F0 *container=target->field214;
- if(!container && (target->field094&0x20)) container=TheGameLogic->lookup(target->field078);
+ if ((arg->field074==field100 || id==field100) && TheGameLogic->frame<field104) return true;
+ Member002439F0 *container=arg->field214;
+ if(!container && (arg->field094&0x20)) container=(Member002439F0 *)TheGameLogic->findObjectByID(arg->field078);
  _STL::list<Member002439F0 *> &members=*(_STL::list<Member002439F0 *> *)((char *)this-0xac);
  bool found=false;
  for(_STL::list<Member002439F0 *>::iterator it=members.begin();it!=members.end();++it) {
@@ -249,7 +243,7 @@ bool MemberTarget002439F0::check(Member002439F0 *arg) {
     if(victimContainer==arg) found=true;
     if(container) {
      if(!victimContainer && victim->status(37)) {
-      victimContainer=TheGameLogic->lookup(victim->field078);
+      victimContainer=(Member002439F0 *)TheGameLogic->findObjectByID(victim->field078);
       if(victimContainer==container) found=true;
      }
      if(victimContainer==container) found=true;
@@ -257,7 +251,7 @@ bool MemberTarget002439F0::check(Member002439F0 *arg) {
    }
   } else if(close) {
    if(ai->field140 && ai->field140->test()) continue;
-   if(ai->slot18C()) ((Commands002439F0 *)((char *)ai+0x20))->idle(2);
+   if(ai->slot18C()) ((Commands002439F0 *)((char *)ai+0x20))->idle(CMD_FROM_AI);
    member->action(false);
    if(ai->slot184()) found=true;
   }
