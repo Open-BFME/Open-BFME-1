@@ -1,6 +1,13 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // RVA 006B0E00: MilesAudioManager::MilesAudioManager (1550 B; RET at +0x60D, INT3 after).
+// RVA 006ACF50: MilesAudioManager::~MilesAudioManager (1256 B), reached from
+//   primary vtable slot 0 through the scalar-deleting wrapper 0x006AF7B0. It
+//   installs the same vtable pair, holds the "LOTRMilesAudioManagerMutex"
+//   handle through the scoped lock whose out-of-line destructor is 0x006915E0,
+//   drains the +0x4C request list and +0x50 request set (RequestFlags006A6B40),
+//   then destroys every member in reverse order (29 unwind states, the last one
+//   the lock) and ends in the inlined Rva00694E00 destructor.
 //
 // IDENTITY
 //   * installs the MilesAudioManager vtable pair 0x0111C0C0 (+0x00) and
@@ -14,6 +21,11 @@
 //     +0xB68 the _time64 stamp openDevice rewrites;
 //   * sole caller: the niladic factory make006B5890 (via ILT).
 //
+// Member types: every out-of-line destructor the retail destructor calls binds
+// by its instantiation's mangled name (vector<AsciiString>, vector<UnicodeString>,
+// set<AsciiString>, the request containers, and address-derived payloads that
+// keep the names the matched STLport bodies already carry).
+//
 // LAYOUT. BFME's audio manager shares almost nothing with Zero Hour's; members
 // are spelled from this body alone and keep their offsets as names except where
 // the body proves the role. The two bases are wrapped in the novtable
@@ -23,7 +35,10 @@
 // container is real STLport so that its constructor inlines as retail's does;
 // each out-of-line helper binds by its instantiation's mangled name.
 #define _STLP_NO_EXCEPTIONS 1
+#include "ascii_string.h"
+#include "unicode_string.h"
 #include <hash_map>
+#include <hash_set>
 #include <list>
 #include <set>
 #include <map>
@@ -38,6 +53,34 @@ typedef __int64 Time64;
 
 extern "C" __declspec(dllimport) Time64 __cdecl _time64(Time64 *time);
 extern "C" __declspec(dllimport) void *__stdcall CreateMutexA(void *attributes, int initialOwner, const char *name);
+extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(void *handle, unsigned long milliseconds);
+extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *mutex);
+extern "C" __declspec(dllimport) int __stdcall CloseHandle(void *handle);
+
+// Scoped mutex hold; its out-of-line destructor is 0x006915E0.
+class Rva006915E0
+{
+public:
+	Rva006915E0( void *mutex ) : m_held( false )
+	{
+		m_mutex = mutex;
+		if ( WaitForSingleObject( mutex, 0xFFFFFFFF ) != 0x102 )
+			m_held = true;
+	}
+	~Rva006915E0( void ) { release(); }
+	void release( void )
+	{
+		if ( m_held )
+		{
+			ReleaseMutex( m_mutex );
+			m_held = false;
+		}
+	}
+
+private:
+	void *m_mutex;
+	Bool m_held;
+};
 
 class Snapshot
 {
@@ -65,22 +108,50 @@ class __declspec(novtable) Rva00694E00 : public SubsystemInterface, public Snaps
 {
 public:
 	Rva00694E00( void ) {}
-	virtual ~Rva00694E00( void );
+	virtual ~Rva00694E00( void ) {}
 };
 
-class AudioSettings { public: AudioSettings( void ); char m_body[0x138]; };
-class MiscAudio { public: MiscAudio( void ); char m_body[0xe00]; };
-class Rva00694710AudioWorker { public: Rva00694710AudioWorker( void *mutex ); char m_body[0x4c]; };
+class AudioSettings { public: AudioSettings( void ); ~AudioSettings( void ); char m_body[0x138]; };
+class MiscAudio { public: MiscAudio( void ); ~MiscAudio( void ); char m_body[0xe00]; };
+class Rva00694710AudioWorker { public: Rva00694710AudioWorker( void *mutex ); ~Rva00694710AudioWorker( void ); char m_body[0x4c]; };
+class Gen0000D33C { public: ~Gen0000D33C( void ); char m_body[0x14]; };
+template <class T> inline void deleteAndClearX( T *&pointer )
+{
+	if ( pointer )
+	{
+		delete pointer;
+		pointer = 0;
+	}
+}
+class Rva006A9800This { public: void rva006A9800( void ); };
+class BfmeHostESG { public: ~BfmeHostESG( void ); };
+struct Rva005A00B0AudioClient;
+extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+
+// The +0x4C request list and +0x50 pointer-keyed request set, as in
+// RequestFlags006A6B40.cpp; the request destructor is 0x006912A0.
+struct AudioRequest006A6B40 { unsigned int dword00; void *event04; unsigned int hash08; };
+struct RequestHash006A6B40 {
+	unsigned int operator()( const AudioRequest006A6B40 *p ) const { if ( !p ) return 0; return p->hash08; }
+};
+typedef _STL::hash_set<AudioRequest006A6B40 *, RequestHash006A6B40> RequestTable006A6B40;
+typedef _STL::list<AudioRequest006A6B40 *> RequestList006A6B40;
+
+class Rva006A6CF0String { public: ~Rva006A6CF0String( void ); void *m_data; };
+struct Gen_t_006a0470_p4cd { Gen_t_006a0470_p4cd( void ); ~Gen_t_006a0470_p4cd( void ); int v; };
+struct Gen_t_0069e220_p4pod { int v; };
+struct Gen_t_0069e310_p4pod { int v; };
+struct Gen_t_0069e400_p4pod { int v; };
+struct Gen_t_006a00d0_p4pod { int v; };
+struct Rva006AD440Entry { ~Rva006AD440Entry( void ); char m_body[0x40]; };
 
 // Hash map payloads and set key: the address-derived spellings the matched
 // out-of-line STLport bodies already carry.
-struct Gen_t_006ac680_p12cd { int a[3]; };
-struct Gen_t_006ac620_p12cd { int a[3]; };
-struct Gen_t_006ac6e0_p12cd { int a[3]; };
-struct Gen_t_006ac7d0_p12cd { int a[3]; };
-struct Gen_t_006ac830_p12cd { int a[3]; };
-struct Gen_t_006ac890_p12cd { int a[3]; };
-struct Gen_t_00076a90_k4 { int k; bool operator<( const Gen_t_00076a90_k4 &o ) const { return k < o.k; } };
+struct Gen_t_006aab80_p12cd { int a[3]; };
+struct Gen_t_006aad10_p12cd { int a[3]; };
+struct Gen_t_006a3b50_p12cd { int a[3]; };
+struct Gen_t_006a3c20_p12cd { int a[3]; };
+struct Gen_t_006a3cf0_p12cd { int a[3]; };
 struct Gen00026F35 { int a[3]; };
 struct Rva006AADB0Element { int a[2]; };
 
@@ -119,12 +190,12 @@ private:
 	UnsignedInt m_028, m_02c, m_030, m_034, m_038, m_03c, m_040;
 	Real m_044;											// +0x044
 	UnsignedInt m_048;									// +0x048
-	_STL::list<void *> m_list04c;						// +0x04c
-	_STL::hash_map<int, Gen_t_006ac680_p12cd> m_hash050;	// +0x050
-	_STL::set<Gen_t_00076a90_k4> m_set064;				// +0x064
-	_STL::hash_map<int, Gen_t_006ac620_p12cd> m_hash070;	// +0x070
+	RequestList006A6B40 m_requests;						// +0x04c
+	RequestTable006A6B40 m_requestTable;	// +0x050
+	_STL::set<AsciiString> m_set064;				// +0x064
+	_STL::hash_map<int, Gen_t_006aab80_p12cd> m_hash070;	// +0x070
 	Int m_084;											// +0x084
-	_STL::vector<int> m_vector088;						// +0x088
+	_STL::vector<Rva006A6CF0String> m_vector088;						// +0x088
 	_STL::vector<Gen00026F35> m_vectors094[3];			// +0x094
 	Rva006ABC60 m_slots[3];								// +0x0b8
 	Int m_604;											// +0x604
@@ -140,30 +211,32 @@ private:
 	Int m_958;											// +0x958
 	void *m_mutex;										// +0x95c
 	UnsignedInt m_960, m_964, m_968;					// +0x960
-	_STL::hash_map<int, Gen_t_006ac6e0_p12cd> m_hash96c;	// +0x96c
-	_STL::vector<int> m_vector980;						// +0x980
-	_STL::vector<int> m_vector98c;						// +0x98c
+	_STL::hash_map<int, Gen_t_006aad10_p12cd> m_hash96c;	// +0x96c
+	_STL::vector<UnicodeString> m_vector980;						// +0x980
+	_STL::vector<AsciiString> m_vector98c;						// +0x98c
 	Rva00478100 m_998[3];								// +0x998
-	_STL::list<void *> m_list9bc;						// +0x9bc
-	_STL::list<void *> m_list9c0;
-	_STL::list<void *> m_list9c4;
-	_STL::list<void *> m_list9c8;
-	_STL::list<void *> m_list9cc;
-	_STL::list<void *> m_list9d0;
+	_STL::list<Gen_t_0069e220_p4pod> m_list9bc;						// +0x9bc
+	_STL::list<Gen_t_0069e310_p4pod> m_list9c0;
+	_STL::list<Gen_t_0069e400_p4pod> m_list9c4;
+	_STL::list<Gen_t_006a0470_p4cd> m_list9c8;
+	_STL::list<Gen_t_006a0470_p4cd> m_list9cc;
+	_STL::list<Gen_t_006a0470_p4cd> m_list9d0;
 	_STL::queue<Rva006AADB0Element> m_queues[6];			// +0x9d4
 	UnsignedInt m_ac4[3];								// +0xac4
 	Rva006967A0 m_ad0[3];								// +0xad0
-	_STL::vector<int> m_vectoradc;						// +0xadc
-	_STL::vector<int> m_vectorae8;						// +0xae8
-	_STL::map<int, int> m_mapaf4;						// +0xaf4
+	_STL::vector<double> m_vectoradc;						// +0xadc
+	_STL::vector<double> m_vectorae8;						// +0xae8
+	_STL::map<int, Gen_t_006a00d0_p4pod> m_mapaf4;						// +0xaf4
 	Rva00694710AudioWorker *m_worker;					// +0xb00
-	_STL::list<void *> m_listb04;						// +0xb04
-	_STL::hash_map<int, Gen_t_006ac7d0_p12cd> m_hashb08;	// +0xb08
-	_STL::hash_map<int, Gen_t_006ac830_p12cd> m_hashb1c;	// +0xb1c
-	_STL::hash_map<int, Gen_t_006ac890_p12cd> m_hashb30;	// +0xb30
-	UnsignedInt m_b44, m_b48;							// +0xb44
+	_STL::list<Gen_t_006a0470_p4cd> m_listb04;						// +0xb04
+	_STL::hash_map<int, Gen_t_006a3b50_p12cd> m_hashb08;	// +0xb08
+	_STL::hash_map<int, Gen_t_006a3c20_p12cd> m_hashb1c;	// +0xb1c
+	_STL::hash_map<int, Gen_t_006a3cf0_p12cd> m_hashb30;	// +0xb30
+	Rva006AD440Entry *m_b44;
+	UnsignedInt m_b48;							// +0xb44
 	Int m_b4c;											// +0xb4c
-	UnsignedInt m_b50, m_b54, m_b58;					// +0xb50
+	UnsignedInt m_b50, m_b54;
+	Gen0000D33C *m_b58;					// +0xb50
 	Int m_b5c;											// +0xb5c
 	UnsignedInt m_b60;									// +0xb60
 	Time64 m_b68;										// +0xb68
@@ -204,4 +277,48 @@ MilesAudioManager::MilesAudioManager( void )
 	m_miscAudio = new MiscAudio;
 	m_mutex = CreateMutexA( 0, 0, "LOTRMilesAudioManagerMutex" );
 	m_worker = new Rva00694710AudioWorker( m_mutex );
+}
+
+MilesAudioManager::~MilesAudioManager( void )
+{
+	Rva006915E0 lock( m_mutex );
+	((Rva006A9800This *)this)->rva006A9800();
+	m_listb04.clear();
+	while ( !m_requests.empty() )
+	{
+		AudioRequest006A6B40 *request = m_requests.back();
+		m_requests.pop_back();
+		delete (BfmeHostESG *)request;
+	}
+	RequestTable006A6B40::iterator it = m_requestTable.begin();
+	while ( it != m_requestTable.end() )
+	{
+		AudioRequest006A6B40 *request = *it;
+		m_requestTable.erase( it );
+		it = m_requestTable.begin();
+		delete (BfmeHostESG *)request;
+	}
+	if ( TheAudioClientUpdate == (Rva005A00B0AudioClient *)this )
+		TheAudioClientUpdate = 0;
+	m_b48 = 0;
+	delete [] m_b44;
+	delete m_worker;
+	lock.release();
+	CloseHandle( m_mutex );
+	m_mutex = 0;
+	if ( m_miscAudio )
+	{
+		delete m_miscAudio;
+		m_miscAudio = 0;
+	}
+	if ( m_audioSettings )
+	{
+		delete m_audioSettings;
+		m_audioSettings = 0;
+	}
+	if ( m_b58 )
+	{
+		delete m_b58;
+		m_b58 = 0;
+	}
 }
