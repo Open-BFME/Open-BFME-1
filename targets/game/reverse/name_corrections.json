@@ -8098,5 +8098,35 @@
   "after_sha256": "0ecdfd76aaab51efbaef4276ec1dec3e1594bf66d73ed9bbcfaa181b090b3700",
   "evidence": "targets/game/reverse/identity_evidence/0090C080-vtable-slot.md",
   "reason": "Retail's vtable 0x0113A510 slot +0x08 is 0x0090C080 and its only installer is the matched constructor 0x0090BD60 (Rva0090BD60Proto); the +0x14..+0x20 fields match that constructor, and W3DAnimationLoader exists nowhere else in the tree. The body is that prototype's virtual Load_Animation."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/MainMenuMediumScaleUpTransition_init_Thunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/LivingWorld/Rva003A4C80NameSize.cpp",
+  "old_name": "MainMenuMediumScaleUpTransition",
+  "new_name": "Rva003A48B0Owner",
+  "before_sha256": "704b70b87026b5b7de87c9be5c5607610b46f98ca30d36bd226e3e7e232b0d8f",
+  "after_sha256": "0142a102466a2343878ab448a60b6974ccf8083835914346feb4969a3c5abfc0",
+  "evidence": "targets/game/reverse/identity_evidence/003a4c80-init-name-correction.md",
+  "reason": "The class name arrived with the 2026-08-11 Open-BFME5 __emit lift, not from the retail image. The body at 0x003A4C80 never dereferences its argument as a window, touches only this+0x3c, passes `this` unchanged to the two address-derived bodies at 0x003A48B0 and 0x003A4BD0 that are contiguous with it, and no vtable reaches it (vtable_lookup reports no candidate within the slot cap). The claimed class's other methods sit at 0x0059E0E0-0x0059E260. Two landed rows in the same neighbourhood already carry the address-derived owner Rva003A48B0Owner, so the successor keeps it."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "MainMenuMediumScaleUpTransition",
+  "new_name": "Rva003A48B0Owner",
+  "before_sha256": "6d620392b66761918befbb7f2a63234fd6ab6cc8dc14a71be77b2853c41057e9",
+  "after_sha256": "8dfbebfc4faa348a266a49c15a2849c10cb0c2c039b1159dda17476f70fdfb93",
+  "evidence": "targets/game/reverse/identity_evidence/003a4c80-init-name-correction.md",
+  "reason": "The ledger row carried the lift's class name for the same reason as the source pair. Its bytes make it a name/size selector over g_bfmeGameCW+0x188/+0x18c/+0x190, contiguous with 0x003A48B0 and 0x003A4BD0, not a transition; the MainMenuMediumScaleUpTransition methods are 3.2 KB away at 0x0059E0E0-0x0059E260 and no vtable slot installs this body. The address-derived owner replaces the lift's guess."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "init",
+  "new_name": "rva003A4C80",
+  "before_sha256": "6d620392b66761918befbb7f2a63234fd6ab6cc8dc14a71be77b2853c41057e9",
+  "after_sha256": "8dfbebfc4faa348a266a49c15a2849c10cb0c2c039b1159dda17476f70fdfb93",
+  "evidence": "targets/game/reverse/identity_evidence/003a4c80-init-name-correction.md",
+  "reason": "`init` is the lift's name for a function whose only parameter is an AsciiString, run through three StringBase<char>::compare calls against \"Small\", \"Medium\" and \"Large\"; no transition init(GameWindow*) body can omit the window calls this one does not make. No emitter, Zero Hour twin or matched caller supplies a source-level spelling, so the name keeps the address token rather than asserting a class method the evidence contradicts."
  }
 ]
