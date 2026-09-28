@@ -448,6 +448,17 @@ Rva009D0660Owner::get( const AsciiString &key ) const
 	return Rva009CFC80Tree::lower_bound( key );
 }
 
+struct Rva009D0AC0Owner : Rva009CFC80Tree
+{
+	const_iterator get( const AsciiString &key ) const;
+};
+
+Rva009D0AC0Owner::const_iterator
+Rva009D0AC0Owner::get( const AsciiString &key ) const
+{
+	return Rva009CFC80Tree::lower_bound( key );
+}
+
 struct Rva006339C0Value
 {
 	AsciiString m_key;
