@@ -69,7 +69,10 @@ tools/re_log.py record ... partial "<what is wrong> blocker=<family> t=<min>min 
 evidence and move to the next sibling. Write build/astra_seat/REPORT.md at the end: per body, result and what moved it.
 
 RULES: never run git (the operator commits). No full gate, no whole-tree build, never launch the game. Do not edit
-tools/, docs/, game/gen_asm/ or game/gen_small/. Never rename an established descriptive name without evidence. New
+tools/, docs/, game/gen_asm/ or game/gen_small/. Never rename an established descriptive name without evidence:
+that includes the function, member and callee names in a banked stash you start from (the harvest refuses a
+descriptive-to-placeholder rename; half the refused seats on 2026-09-28 renamed a stash's `apply`/`build`/`m_object`
+to rvaXXXXXXXX). Keep them, or cite the evidence that they are wrong in REPORT.md. New
 STLport-derived sources go under game/Libraries/Source/STLport/ (the hooks refuse new files in game/stlport/). Stop
 at {hours} hours."""
 
