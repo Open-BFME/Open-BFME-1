@@ -1,5 +1,5 @@
 // ?writeDict@DataChunkOutput@@QAEXABVDict@@@Z
-// partial score=0.72 date=2026-09-09
+// partial score=0.74 date=2026-09-27
 // cl: /DNDEBUG /MD /EHsc
 
 typedef int Int;
@@ -201,8 +201,9 @@ void DataChunkOutput::writeByte(Byte value)
 
 void DataChunkOutput::writeDict(const Dict &d)
 {
+	FILE *tmpFile = m_tmp_file;
 	UnsignedShort len = d.getPairCount();
-	::fwrite((const char *)&len, sizeof(UnsignedShort), 1, m_tmp_file);
+	::fwrite((const char *)&len, sizeof(UnsignedShort), 1, tmpFile);
 	for (int i = 0; i < len; i++)
 	{
 		NameKeyType k = d.getNthKey(i);
