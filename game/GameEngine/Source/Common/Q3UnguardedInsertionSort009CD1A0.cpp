@@ -37,3 +37,9 @@ void Gen009CD1A0(Q3SortElem4 *first, Q3SortElem4 *last, Q3SortElem4 *,
 	for (Q3SortElem4 *i = first; i != last; ++i)
 		Gen009CCE50(i, *i, comp);
 }
+
+void Rva009CD540(Q3SortElem4 *first, Q3SortElem4 *last,
+	Q3SortCompare compare)
+{
+	Gen009CD1A0(first, last, (Q3SortElem4 *)0, compare);
+}
