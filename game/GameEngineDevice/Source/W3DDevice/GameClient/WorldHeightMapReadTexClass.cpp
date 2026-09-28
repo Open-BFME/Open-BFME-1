@@ -1,8 +1,9 @@
-// ?readTexClass@WorldHeightMap@@IAEXPAUTXTextureClass@@PAPAVTileData@@@Z
-// partial score=0.99 date=2026-09-26
+// BFME WorldHeightMap::readTexClass; retail range [0x0074BBB0, 0x0074BCBE) (270B).
+// Retail ret 8 is at +0x10B; INT3 padding starts at +0x10E.
+// Keep this dedicated TU separate from WorldHeightMap.cpp's broad Zero Hour
+// headers: the target uses the out-of-line StringBase copy constructor for its
+// by-value terrain name.
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringinline
-// The retail WorldHeightMap texture reader uses the out-of-line StringBase copy
-// constructor for its by-value terrain name, unlike the broad ZH header TU.
 #include "StringInline.h"
 #include <stdio.h>
 

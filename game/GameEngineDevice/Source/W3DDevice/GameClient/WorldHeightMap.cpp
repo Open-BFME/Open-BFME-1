@@ -1214,48 +1214,6 @@ Bool WorldHeightMap::ParseBlendTileDataChunk(DataChunkInput &file, DataChunkInfo
 	return pThis->ParseBlendTileData(file, info, userData);
 }
 
-/** Function to read in the tiles for a texture class. */
-// ?readTexClass@WorldHeightMap@@IAEXPAUTXTextureClass@@PAPAVTileData@@@Z present-unmatched
-void WorldHeightMap::readTexClass(TXTextureClass *texClass, TileData **tileData) 
-{
-	char path[_MAX_PATH];
-	path[0] = 0;
-	File *theFile = NULL;
-
-	// get the file from the description in TheTerrainTypes
-	TerrainType *terrain = TheTerrainTypes->findTerrain( texClass->name );
-	char texturePath[ _MAX_PATH ];
-	if (terrain==NULL) 
-	{
-#ifdef LOAD_TEST_ASSETS
-		theFile = TheFileSystem->openFile( texClass->name.str(), File::READ|File::BINARY);
-#endif
-	} 
-	else 
-	{
-		sprintf( texturePath, "%s%s", TERRAIN_TGA_DIR_PATH, terrain->getTexture().str() );
-		theFile = TheFileSystem->openFile( texturePath, File::READ|File::BINARY);
-	}
-
-	if (theFile != NULL) {
-		GDIFileStream theStream(theFile);
-		InputStream *pStr = &theStream;
-		Int numTiles = WorldHeightMap::countTiles(pStr);
-		theFile->seek(0, File::START);
-		if (numTiles >= texClass->numTiles) { 
-			numTiles = texClass->numTiles;
-			Int width;
-			for (width = 10; width >= 1; width--) {
-				if (numTiles >= width*width) {
-					numTiles = width*width;
-					break;
-				}
-			}
-			WorldHeightMap::readTiles(pStr, tileData+texClass->firstTile, width);						
-		}
-		theFile->close();
-	}
-}
 
 /**
 * WorldHeightMap::ParseBlendTileData - read a blend tile info chunk.
