@@ -94,7 +94,9 @@ have.
 
 - Briefs (`tools/fleet/context_pack.py`) print `EA name` and `EA source file`.
 - `tools/placement_queue.py`: EA's own path, when every row a file owns agrees, is the
-  strongest destination rule.
+  strongest destination rule. On 2026-09-29 it moved 367 files, 147 of them out of the flat
+  `Common/` root, and confirmed 2,140 others already home. It skips `.asm` dumps and addresses
+  two rows claim: over-claimed addresses gave the `zh` route an arbitrary name to read.
 - `tools/ea_name_guard.py` (pre-commit and pre-push): giving a placeholder address a real
   name against a strongly paired EA name fails, unless the name is EA's, one Zero Hour
   declares, the export, or keeps the address token, or the notes say
@@ -115,6 +117,21 @@ have.
    - This takes about an hour in all and adds about a quarter more pairs.
 3. `python3 tools/ea_evidence.py --wb1 DIR --wb2 DIR --wb2-exe PATH --bsim DIR`, about 10
    minutes.
+
+## Renames are a queue, not a script
+
+Of 537 matched rows with a strongly paired EA name that is not an export:
+
+| Rows | Situation |
+|---:|---|
+| 181 | already agree |
+| 79 | asm dumps: they take EA's name when converted, through the brief and the guard |
+| 91 | need a class rename: one class per commit with a full gate (`docs/naming_evidence.md`) |
+| 73 | not mechanical: a Zero Hour name (32), a free function where EA has a member (31), a structor where EA has a method (10) |
+| 24 | same-class method renames that are byte-neutral, for example `?Rva0006C180@GameEngine@@` to `GameEngine::startHeadlessClients` |
+
+Virtual methods are in none of these safe groups: renaming an override without its base (`xfer`
+to `DoXfer`) moves the vtable slot.
 
 ## Open, for when agent naming is revisited
 
