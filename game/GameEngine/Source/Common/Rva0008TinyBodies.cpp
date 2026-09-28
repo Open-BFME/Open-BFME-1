@@ -175,17 +175,7 @@ void *Rva00094750AddressPlus8::get() const
     return (unsigned char *)this + 8;
 }
 
-class Rva00094BF0AddressPlus2C
-{
-public:
-    void *get() const;
-};
-
-// ?get@Rva00094BF0AddressPlus2C@@QBEPAXXZ
-void *Rva00094BF0AddressPlus2C::get() const
-{
-    return (unsigned char *)this + 0x2C;
-}
+// 0x00094BF0 is PartitionSolver::getSolution (partition_solver.cpp).
 
 class Rva00094C40Self
 {
