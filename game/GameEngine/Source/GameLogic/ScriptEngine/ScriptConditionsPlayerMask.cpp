@@ -135,6 +135,7 @@ class Player
 {
 public:
 	int countObjects(KindOfMaskType setMask, KindOfMaskType clearMask);	// retail 0x0001FF1E
+	int rva000D4730CountObjects( UnsignedInt bitIndex, int limit ) const;
 	Money *getMoney() { return &m_money; }
 	const AsciiString &getSide() const { return m_side; }
 
@@ -202,6 +203,16 @@ extern ScriptEngine *TheScriptEngine;
 extern PlayerList *ThePlayerList;
 extern const KindOfMaskType KINDOFMASK_NONE;
 extern void j_00047d34();
+int bfmeLookup_001c62b0( void *name );
+
+class BfmeP1087
+{
+public:
+	PlayerMaskType bfmeNext1087( Parameter *parameter );
+};
+
+extern BfmeP1087 *g_bfmeP1087;
+extern char Rva006A16B0Empty[];
 
 // The per-player light-point reader is only known as the thunk at 0x00047D34,
 // so it is called through the thunk's address rather than by name.
@@ -227,6 +238,8 @@ protected:
 	Bool evaluatePlayerCompareLightPoints(Parameter *, Parameter *, Parameter *);
 	Bool evaluatePlayerHasNOrFewerFactionBuildings(Parameter *, Parameter *);
 	Bool evaluatePlayerHasKilledKindOfUnits(Parameter *, Parameter *, Parameter *);
+	Bool evaluatePlayerHasNumberObjectsWithModelCondition(
+		Parameter *, Parameter *, Parameter *, Parameter *);
 	Bool evaluateNamedOwnedByPlayer(Parameter *, Parameter *);
 	Bool evaluateSkirmishPlayerIsFaction(Parameter *, Parameter *);
 };
@@ -341,6 +354,44 @@ Bool ScriptConditions::evaluatePlayerHasNOrFewerFactionBuildings(
 	int limit = buildingCountParm->getInt();
 	Bool result = limit >= count;
 	return result;
+}
+
+// Condition 160 maps to this body in the dispatcher and names model-condition counts.
+// ?evaluatePlayerHasNumberObjectsWithModelCondition@ScriptConditions@@IAE_NPAVParameter@@000@Z
+Bool ScriptConditions::evaluatePlayerHasNumberObjectsWithModelCondition(
+	Parameter *playerParm, Parameter *modelConditionParm,
+	Parameter *comparisonParm, Parameter *countParm)
+{
+	PlayerMaskType mask = g_bfmeP1087->bfmeNext1087(playerParm);
+	int limit = countParm->getInt();
+	int count = 0;
+	{
+		char *stringData = *(char **)((char *)modelConditionParm + 0x10);
+		char *name = stringData ? stringData + 8 : Rva006A16B0Empty;
+		int modelCondition = bfmeLookup_001c62b0((void *)name);
+		while (mask)
+		{
+			Player *player = ThePlayerList->getEachPlayerFromMask(mask);
+			if (player)
+			{
+				count += player->rva000D4730CountObjects(
+					(UnsignedInt)modelCondition, limit);
+				if (count > limit)
+					break;
+			}
+		}
+	}
+
+	switch (comparisonParm->getInt())
+	{
+	case 0: return count < limit;
+	case 1: return count <= limit;
+	case 2: return count == limit;
+	case 3: return count >= limit;
+	case 4: return count > limit;
+	case 5: return count != limit;
+	}
+	return false;
 }
 
 // ?evaluatePlayerHasKilledKindOfUnits@ScriptConditions@@IAE_NPAVParameter@@00@Z
