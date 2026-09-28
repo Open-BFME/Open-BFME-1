@@ -92,9 +92,26 @@ void SnowManager::init( void )
 	updateIniSettings();
 }
 
-// ?updateIniSettings@SnowManager@@ present-unmatched
+struct SnowManagerRetailUpdateLayout
+{
+	unsigned char m_pad00[0x3d];
+	Bool m_slot3d;
+	unsigned char m_pad3e[2];
+	Int m_slot40;
+	unsigned char m_pad44[4];
+	Int m_slot48;
+	Int m_slot4c;
+	Real m_slot50;
+	Real m_slot54;
+	Real m_slot58;
+	Real m_slot5c;
+	Real m_slot60;
+	Real m_slot64;
+};
+
 void SnowManager::updateIniSettings(void)
 {
+	SnowManagerRetailUpdateLayout *retail = (SnowManagerRetailUpdateLayout *)this;
 	Real *dst=m_startingHeights;
 	//initialize a table of random starting positions for each particle.
 	Int boxDimensions = (Int)TheWeatherSetting->m_snowBoxDimensions;
@@ -114,12 +131,25 @@ void SnowManager::updateIniSettings(void)
 	m_pointSize = TheWeatherSetting->m_snowPointSize;	
 	m_quadSize	= TheWeatherSetting->m_snowQuadSize;		
 	m_boxDimensions	= TheWeatherSetting->m_snowBoxDimensions;
-	m_emitterSpacing = 1.0f/TheWeatherSetting->m_snowBoxDensity;
+	m_emitterSpacing = TheWeatherSetting->m_snowBoxDensity;
 	m_maxPointSize = TheWeatherSetting->m_snowMaxPointSize;
 	m_minPointSize = TheWeatherSetting->m_snowMinPointSize;
 
 	//Time for snow flake to make it from top to bottom of rendered cube around camera.
-	m_fullTimePeriod = m_boxDimensions/m_velocity;
+	const WeatherSetting *numberTilesSetting = TheWeatherSetting;
+	Real boxDimensionFloat = *(volatile Real *)&m_boxDimensions;
+	retail->m_slot40 = numberTilesSetting->m_numberTiles;
+	Real fullTimePeriod = boxDimensionFloat / *(volatile Real *)&m_velocity;
+	m_fullTimePeriod = fullTimePeriod;
+	retail->m_slot3d = TheWeatherSetting->m_isSnowing;
+	retail->m_slot48 = TheWeatherSetting->m_lightningDuration;
+	retail->m_slot4c = TheWeatherSetting->m_spellDuration;
+	retail->m_slot50 = TheWeatherSetting->m_rampControl[0];
+	retail->m_slot54 = TheWeatherSetting->m_rampControl[1];
+	retail->m_slot58 = TheWeatherSetting->m_rampSpacing[0];
+	retail->m_slot5c = TheWeatherSetting->m_rampSpacing[1];
+	retail->m_slot60 = TheWeatherSetting->m_rampSpeed[0];
+	retail->m_slot64 = TheWeatherSetting->m_rampSpeed[1];
 }
 
 void SnowManager::setVisible(Bool showWeather)
