@@ -1,5 +1,5 @@
 // ?moveAlongWaypointPath@W3DView@@AAEXH@Z
-// partial score=0.27 date=2026-09-22
+// partial score=0.78 date=2026-09-28
 // cl: /DNDEBUG /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib
 // BFME W3DView::moveAlongWaypointPath, retail 0x0073CB10.
 //
@@ -7,6 +7,16 @@
 // W3DView camera bodies, and the primary vftable installed by 0x00745B10.
 // The path records and their 20-byte stride are the witnessed
 // Rva00740AE0-derived layout used by the matched BFME camera-path methods.
+//
+// 2026-09-28 rewrite (333 of 1540 bytes differ, was 1142): ZH division by
+// totalTime (MSVC turns the pair into one reciprocal), the first ease result kept
+// as a local because BFME lerps the ground level by it, WWMath::Lerp for the
+// angle / time multiplier / ground level, a file-static normAngle so EDX stays
+// live across the calls, inline updateMinMax for the early-exit clamp, and the
+// GlobalData view declared as a struct to match the pinned mangled name.
+// Remaining: before the factor<0.5 branch retail hoists this+curSeg*20 into ECX
+// (both arms start with identical lea pairs); ours builds it in EAX per arm, so
+// the arms and tail differ by an EAX/ECX swap and 6 bytes.
 
 typedef float Real;
 typedef int Int;
@@ -17,9 +27,8 @@ extern "C" __declspec(dllimport) double __cdecl floor(double);
 extern const Real g_bfmeK1253;
 extern const Real g_rva001B5860TwoPi;
 
-class Rva006C9270GlobalData
+struct Rva006C9270GlobalData
 {
-public:
 	char padding0000[0xA74];
 	Bool m_disableCameraMovement;
 };
@@ -132,8 +141,42 @@ public:
 	virtual void rva006DF110(Coord3D *out, Real *angle);
 };
 
-extern void updateMinMax(Real *minimum, Real value, Real *maximum);
-extern void __fastcall normAngle(Real &angle);
+inline void updateMinMax(Real *minimum, Real value, Real *maximum)
+{
+	if (value < *minimum) {
+		*minimum = value;
+		return;
+	}
+	if (value > *maximum) {
+		*maximum = value;
+	}
+}
+
+
+#define PI 3.14159265359f
+
+namespace WWMath
+{
+	inline Real Lerp(Real a, Real b, Real t) { return a + (b - a) * t; }
+}
+
+// Normalizes angle to +- PI (the W3DView.cpp file-static helper; retail calls it
+// with the angle in ECX and keeps EDX live across it).
+static void normAngle(Real &angle)
+{
+	if (angle < -10*PI) {
+		angle = 0;
+	}
+	if (angle > 10*PI) {
+		angle = 0;
+	}
+	while (angle < -PI) {
+		angle += 2*PI;
+	}
+	while (angle > PI) {
+		angle -= 2*PI;
+	}
+}
 
 __forceinline long fast_float2long_round(Real value)
 {
@@ -208,7 +251,6 @@ void W3DView::moveAlongWaypointPath(Int milliseconds)
 		}
 		return;
 	}
-
 	if (cameraPath.elapsedTimeMilliseconds > cameraPath.totalTimeMilliseconds) {
 		cameraMovementMode = 0;
 		setInt23BC(0);
@@ -218,29 +260,17 @@ void W3DView::moveAlongWaypointPath(Int milliseconds)
 		cameraLimits.rva006DF110(&cameraOffset, 0);
 		cameraOffset.x *= scale;
 		cameraOffset.y *= scale;
-		Rva00740AE0Elem *finalWaypoint =
-			&cameraPath.waypoints[cameraPath.numWaypoints];
-		Coord3D finalPosition;
-		finalPosition.z = 0;
-		finalPosition.x = finalWaypoint->position.x;
-		finalPosition.y = finalWaypoint->position.y;
-		position.x = finalPosition.x;
-		position.y = finalPosition.y;
-		position.z = finalPosition.z;
-		if (cameraConstraint.lo.x > finalPosition.x)
-			cameraConstraint.lo.x = finalPosition.x;
-		else if (cameraConstraint.hi.x < finalPosition.x)
-			cameraConstraint.hi.x = finalPosition.x;
-		if (cameraConstraint.lo.y > finalPosition.y)
-			cameraConstraint.lo.y = finalPosition.y;
-		else if (cameraConstraint.hi.y < finalPosition.y)
-			cameraConstraint.hi.y = finalPosition.y;
+		Coord3D pos = cameraPath.waypoints[cameraPath.numWaypoints].position;
+		pos.z = 0;
+		setPosition(&pos);
+		updateMinMax(&cameraConstraint.lo.x, pos.x, &cameraConstraint.hi.x);
+		updateMinMax(&cameraConstraint.lo.y, pos.y, &cameraConstraint.hi.y);
 		return;
 	}
 
-	const Real totalTime = (Real)cameraPath.totalTimeMilliseconds;
-	const Real deltaTime = cameraPath.ease(
-		cameraPath.elapsedTimeMilliseconds / totalTime) -
+	const Real totalTime = cameraPath.totalTimeMilliseconds;
+	const Real easedTime = cameraPath.ease(cameraPath.elapsedTimeMilliseconds / totalTime);
+	const Real deltaTime = easedTime -
 		cameraPath.ease((cameraPath.elapsedTimeMilliseconds - milliseconds) / totalTime);
 	cameraPath.currentDistance += deltaTime * cameraPath.totalDistance;
 	while (cameraPath.currentDistance - cameraPath.segmentStartDistance >=
@@ -253,80 +283,69 @@ void W3DView::moveAlongWaypointPath(Int milliseconds)
 			return;
 		}
 	}
-
-	Real averageFactor = 1.0f / cameraPath.rollingAverageFrames;
+	Real avgFactor = 1.0f / cameraPath.rollingAverageFrames;
 	Real factor = (cameraPath.currentDistance - cameraPath.segmentStartDistance) /
 		cameraPath.waySegmentLengths[cameraPath.curSegment];
 	if (cameraPath.curSegment == cameraPath.numWaypoints - 1) {
-		averageFactor = averageFactor +
-			(1.0f - averageFactor) * factor;
+		avgFactor = avgFactor + (1.0f - avgFactor) * factor;
 	}
-	Real factor1 = 1.0f - factor;
-	Real factor2 = 1.0f - factor1;
 	Real angle1 = cameraPath.cameraAngles[cameraPath.curSegment];
 	Real angle2 = cameraPath.cameraAngles[cameraPath.curSegment + 1];
-	if (angle2 - angle1 > 3.1415927410125732f)
-		angle1 += g_rva001B5860TwoPi;
-	if (angle2 - angle1 < -3.1415927410125732f)
-		angle1 -= g_rva001B5860TwoPi;
-	Real blendedAngle = angle1 * factor1 + angle2 * factor2;
-	normAngle(blendedAngle);
-	Real deltaAngle = blendedAngle - angle;
+	if (angle2 - angle1 > PI) angle1 += 2*PI;
+	if (angle2 - angle1 < -PI) angle1 -= 2*PI;
+	Real newAngle = WWMath::Lerp(angle1, angle2, factor);
+	normAngle(newAngle);
+	Real deltaAngle = newAngle - angle;
 	normAngle(deltaAngle);
-	angle += averageFactor * deltaAngle;
+	angle += avgFactor * deltaAngle;
 	normAngle(angle);
 
-	Real interpolatedTimeMultiplier =
-		cameraPath.timeMultiplier[cameraPath.curSegment] * factor1 +
-		cameraPath.timeMultiplier[cameraPath.curSegment + 1] * factor2;
-	timeMultiplierValue = REAL_TO_INT_FLOOR(g_bfmeK1253 + interpolatedTimeMultiplier);
-	groundLevel = cameraPath.groundStart * factor1 + cameraPath.groundEnd * factor2;
+	Real timeMultiplier = WWMath::Lerp(cameraPath.timeMultiplier[cameraPath.curSegment],
+		cameraPath.timeMultiplier[cameraPath.curSegment + 1], factor);
+	timeMultiplierValue = REAL_TO_INT_FLOOR(timeMultiplier + 0.5f);
+	groundLevel = WWMath::Lerp(cameraPath.groundStart, cameraPath.groundEnd, easedTime);
 	cameraLimits.rva006DF110(&cameraOffset, 0);
 	cameraOffset.x *= scale;
 	cameraOffset.y *= scale;
 
-	Coord3D start, middle, end;
-	if (factor < g_bfmeK1253) {
+	Coord3D start, mid, end;
+	if (factor < 0.5f) {
 		start = cameraPath.waypoints[cameraPath.curSegment - 1].position;
 		start.x += cameraPath.waypoints[cameraPath.curSegment].position.x;
 		start.y += cameraPath.waypoints[cameraPath.curSegment].position.y;
-		start.x *= g_bfmeK1253;
-		start.y *= g_bfmeK1253;
-		middle = cameraPath.waypoints[cameraPath.curSegment].position;
+		start.x /= 2;
+		start.y /= 2;
+		mid = cameraPath.waypoints[cameraPath.curSegment].position;
 		end = cameraPath.waypoints[cameraPath.curSegment].position;
 		end.x += cameraPath.waypoints[cameraPath.curSegment + 1].position.x;
 		end.y += cameraPath.waypoints[cameraPath.curSegment + 1].position.y;
-		end.x *= g_bfmeK1253;
-		end.y *= g_bfmeK1253;
-		factor += g_bfmeK1253;
+		end.x /= 2;
+		end.y /= 2;
+		factor += 0.5f;
 	} else {
 		start = cameraPath.waypoints[cameraPath.curSegment].position;
 		start.x += cameraPath.waypoints[cameraPath.curSegment + 1].position.x;
 		start.y += cameraPath.waypoints[cameraPath.curSegment + 1].position.y;
-		start.x *= g_bfmeK1253;
-		start.y *= g_bfmeK1253;
-		middle = cameraPath.waypoints[cameraPath.curSegment + 1].position;
+		start.x /= 2;
+		start.y /= 2;
+		mid = cameraPath.waypoints[cameraPath.curSegment + 1].position;
 		end = cameraPath.waypoints[cameraPath.curSegment + 1].position;
 		end.x += cameraPath.waypoints[cameraPath.curSegment + 2].position.x;
 		end.y += cameraPath.waypoints[cameraPath.curSegment + 2].position.y;
-		end.x *= g_bfmeK1253;
-		end.y *= g_bfmeK1253;
-		factor -= g_bfmeK1253;
+		end.x /= 2;
+		end.y /= 2;
+		factor -= 0.5f;
 	}
 
-	Real resultX = start.x;
-	Real resultY = start.y;
-	resultX += factor * (end.x - start.x);
-	resultY += factor * (end.y - start.y);
-	resultX += (1.0f - factor) * factor *
-		(middle.x - end.x + middle.x - start.x);
-	resultY += (1.0f - factor) * factor *
-		(middle.y - end.y + middle.y - start.y);
-	position.x = resultX;
-	position.y = resultY;
-	position.z = 0;
-	updateMinMax(&cameraConstraint.lo.x, resultX, &cameraConstraint.hi.x);
-	updateMinMax(&cameraConstraint.lo.y, resultY, &cameraConstraint.hi.y);
+	Coord3D result = start;
+	result.x += factor * (end.x - start.x);
+	result.y += factor * (end.y - start.y);
+	result.x += (mid.x - end.x + mid.x - start.x) * (1 - factor) * factor;
+	result.y += (mid.y - end.y + mid.y - start.y) * (1 - factor) * factor;
+	result.z = 0;
+	setPosition(&result);
+	updateMinMax(&cameraConstraint.lo.x, result.x, &cameraConstraint.hi.x);
+	updateMinMax(&cameraConstraint.lo.y, result.y, &cameraConstraint.hi.y);
 }
 
 #undef REAL_TO_INT_FLOOR
