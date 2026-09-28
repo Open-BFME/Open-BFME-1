@@ -1,0 +1,197 @@
+#!/usr/bin/env python3
+"""Link every matched object into one image and count what stops it.
+
+Every other gate verifies one function at a time. Nothing had ever linked the
+tree, so nobody knew how far "the functions match" is from "the game builds".
+This links the object of every matched ledger row (compiled TUs, MASM dumps,
+generated C++, prebuilt-library members) with MSVC 7.1's own link.exe under
+/FORCE, so it reports every problem instead of stopping at the first, and sorts
+them into the classes the integration work has to clear:
+
+  unresolved   a referenced name nothing defines
+    data         a global the code reaches by a pinned address
+                 (dir32_addresses.csv): needs a definition
+    import       __imp__ DLL entry: needs the import libraries
+    alias        a pinned call name whose address is matched under another
+                 name: collapse onto the defining name
+    dump         a pinned call name whose address is still a dump: the dump
+                 defines ?d_XXXXXXXX, so it needs the real name
+    unpinned     referenced but pinned nowhere (runtime, shims, typos)
+    vtable/rtti  ??_7 / ??_R: a class's vftable or type info
+  duplicate    a name defined by two objects (private class copies, shims,
+               double conversions)
+
+  python3 tools/link_census.py            # link, write build/link_census/census.json
+  python3 tools/link_census.py --report   # summarise the last census
+
+The census is diagnostic. The image it writes is not expected to run.
+"""
+import argparse
+import collections
+import csv
+import json
+import re
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+import build  # noqa: E402
+
+OUT = ROOT / "build" / "link_census"
+# The linker prints `"<demangled>" (<mangled>)` for a C++ name and the bare name for a C one.
+UNRESOLVED = re.compile(r'error LNK20(?:01|19): unresolved external symbol (?:"[^"]*" \((\S+)\)|(\S+))')
+DUPLICATE = re.compile(r'^(\S+\.obj) : (?:error LNK2005|warning LNK4006): (?:"[^"]*" \((\S+)\)|(\S+)) '
+                       r'already defined in (\S+\.obj)')
+REFERRER = re.compile(r"^(\S+\.obj) : error LNK20(?:01|19)")
+
+
+def ledger():
+    with (ROOT / "targets/game/reverse/functions.csv").open(newline="", encoding="utf-8") as handle:
+        return [r for r in csv.DictReader(handle) if r.get("status") == "matched"
+                and (r.get("target_rva") or "").startswith("0x")]
+
+
+def pins():
+    """{name: address} from symbols.csv (first pin wins, as the resolver does)."""
+    found = {}
+    with (ROOT / "targets/game/reverse/symbols.csv").open(newline="", encoding="utf-8") as handle:
+        for row in csv.reader(handle):
+            if len(row) >= 2 and row[1].startswith("0x"):
+                found.setdefault(row[0], int(row[1], 16))
+    return found
+
+
+def data_names():
+    with (ROOT / "targets/game/reverse/dir32_addresses.csv").open(newline="", encoding="utf-8") as handle:
+        return {row["name"] for row in csv.DictReader(handle)}
+
+
+def objects(rows):
+    """Unique object per matched row; (present, missing)."""
+    build.extract_lib_members([r for r in rows if r["source"].lower().endswith(build.LIB_SUFFIX)])
+    seen, present, missing = set(), [], []
+    for row in rows:
+        obj = build.row_object(row)
+        if obj in seen:
+            continue
+        seen.add(obj)
+        (present if obj.exists() else missing).append(obj)
+    return present, missing
+
+
+def link(objs):
+    OUT.mkdir(parents=True, exist_ok=True)
+    rsp = OUT / "objects.rsp"
+    rsp.write_text("\n".join(f'"{o}"' for o in objs) + "\n", encoding="utf-8")
+    root = build.vc71_root()
+    linker = root / "Vc7" / "bin" / "link.exe"
+    command = [str(linker), "/NOLOGO", "/FORCE", "/NODEFAULTLIB", "/INCREMENTAL:NO", "/MACHINE:X86",
+               "/SUBSYSTEM:WINDOWS", "/ENTRY:WinMainCRTStartup", f"/OUT:{OUT / 'census.exe'}", f"@{rsp}"]
+    if sys.platform != "win32":
+        command.insert(0, "wine")
+    started = time.time()
+    result = subprocess.run(command, capture_output=True, text=True, errors="replace",
+                            env=build.compiler_environment(root), cwd=ROOT)
+    (OUT / "link.log").write_text(result.stdout + result.stderr, encoding="utf-8")
+    return result.stdout + result.stderr, time.time() - started, result.returncode
+
+
+def classify(log, rows):
+    pinned = pins()
+    data = data_names()
+    by_address = collections.defaultdict(list)
+    for row in rows:
+        by_address[int(row["target_rva"], 16)].append(row)
+    unresolved = {}
+    duplicates = collections.defaultdict(set)
+    for line in log.splitlines():
+        found = UNRESOLVED.search(line)
+        if found:
+            symbol = found.group(1) or found.group(2)
+            referrer = REFERRER.match(line)
+            entry = unresolved.setdefault(symbol, {"refs": set()})
+            if referrer:
+                entry["refs"].add(Path(referrer.group(1)).name)
+            continue
+        found = DUPLICATE.match(line)
+        if found:
+            duplicates[found.group(2) or found.group(3)].update({Path(found.group(1)).name, Path(found.group(4)).name})
+    classes = collections.Counter()
+    detail = {}
+    for symbol, entry in unresolved.items():
+        address = pinned.get(symbol)
+        if symbol.startswith("__imp_"):
+            kind = "import"
+        elif symbol.startswith(("??_7", "??_R")):
+            kind = "vtable/rtti"
+        elif symbol in data:
+            kind = "data"
+        elif address is not None:
+            owners = [r for r in by_address.get(address, []) if not r["name"].startswith("?j_")]
+            if owners and any(not build_dump(r) for r in owners):
+                kind = "alias"
+                entry["defined_as"] = sorted(r["name"] for r in owners if not build_dump(r))[:3]
+            elif owners:
+                kind = "dump"
+            else:
+                kind = "pinned-elsewhere"
+            entry["address"] = f"0x{address:08X}"
+        else:
+            kind = "unpinned"
+        classes[kind] += 1
+        entry["kind"] = kind
+        entry["refs"] = sorted(entry["refs"])[:5]
+        detail[symbol] = entry
+    dup_kinds = collections.Counter()
+    for symbol in duplicates:
+        dup_kinds["vtable/rtti" if symbol.startswith(("??_7", "??_R")) else
+                  "data" if symbol in data else "function/other"] += 1
+    return classes, detail, dup_kinds, {s: sorted(o)[:6] for s, o in duplicates.items()}
+
+
+def build_dump(row):
+    source = row["source"]
+    return source.startswith("game/gen_asm/") or source.startswith("game/masm_dumps/") or "__emit" in row.get("notes", "")
+
+
+def report(census):
+    print(f"link census {census['when']}: {census['objects']:,} objects linked, "
+          f"{census['missing']:,} missing, link {census['seconds']:.0f}s")
+    print(f"  unresolved names: {sum(census['unresolved_classes'].values()):,}")
+    for kind, count in sorted(census["unresolved_classes"].items(), key=lambda kv: -kv[1]):
+        print(f"    {kind:18} {count:8,}")
+    print(f"  duplicate definitions: {sum(census['duplicate_classes'].values()):,}")
+    for kind, count in sorted(census["duplicate_classes"].items(), key=lambda kv: -kv[1]):
+        print(f"    {kind:18} {count:8,}")
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+    ap.add_argument("--report", action="store_true", help="summarise build/link_census/census.json")
+    args = ap.parse_args(argv)
+    path = OUT / "census.json"
+    if args.report:
+        report(json.loads(path.read_text(encoding="utf-8")))
+        return 0
+    rows = ledger()
+    present, missing = objects(rows)
+    if missing:
+        print(f"link_census: {len(missing):,} objects missing (run the full ./build.sh first); "
+              f"linking the {len(present):,} present", file=sys.stderr)
+    log, seconds, _ = link(present)
+    classes, detail, dup_kinds, dups = classify(log, rows)
+    census = {"when": time.strftime("%Y-%m-%d %H:%M"), "objects": len(present), "missing": len(missing),
+              "seconds": seconds, "unresolved_classes": dict(classes), "duplicate_classes": dict(dup_kinds),
+              "unresolved": detail, "duplicates": dups,
+              "missing_objects": [str(p.relative_to(ROOT)) for p in missing[:200]]}
+    OUT.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(census, indent=1), encoding="utf-8")
+    report(census)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
