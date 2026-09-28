@@ -1,8 +1,9 @@
-// ?d_00328cc0@@YAXXZ
-// partial score=0.36 date=2026-09-26
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
-// The player-unit condition counts matching templates over every selected player.
+// BFME's dispatcher sends a condition with five parameters to this body in
+// case 58. The Zero Hour source and BFME's earlier implementation name it
+// ScriptConditions::evaluatePlayerUnitCondition. This source file models the
+// parser call as retail's static helper with two arguments.
 #include <vector>
 #include "ascii_string.h"
 
@@ -128,7 +129,6 @@ protected:
 	Bool evaluatePlayerUnitCondition(Condition *, Parameter *, Parameter *, Parameter *, Parameter *);
 };
 
-// ?evaluatePlayerUnitCondition@ScriptConditions@@IAE_NPAVCondition@@PAVParameter@@111@Z present-unmatched
 Bool ScriptConditions::evaluatePlayerUnitCondition(Condition *pCondition,
 	Parameter *pPlayerParm, Parameter *pComparisonParm, Parameter *pCountParm,
 	Parameter *pUnitTypeParm)
@@ -172,7 +172,10 @@ Bool ScriptConditions::evaluatePlayerUnitCondition(Condition *pCondition,
 	}
 
 	pCondition->setCustomFrame(TheScriptEngine->getFrameObjectCountChanged());
+	if (comparison) {
+		pCondition->setCustomData(1);
+		return true;
+	}
 	pCondition->setCustomData(-1);
-	if (comparison) pCondition->setCustomData(1);
-	return comparison;
+	return false;
 }
