@@ -69,7 +69,8 @@ tools/re_log.py record ... partial "<what is wrong> blocker=<family> t=<min>min 
 evidence and move to the next sibling. Write build/astra_seat/REPORT.md at the end: per body, result and what moved it.
 
 RULES: never run git (the operator commits). No full gate, no whole-tree build, never launch the game. Do not edit
-tools/, docs/, game/gen_asm/ or game/gen_small/. Never rename an established descriptive name without evidence. Stop
+tools/, docs/, game/gen_asm/ or game/gen_small/. Never rename an established descriptive name without evidence. New
+STLport-derived sources go under game/Libraries/Source/STLport/ (the hooks refuse new files in game/stlport/). Stop
 at {hours} hours."""
 
 
@@ -246,7 +247,8 @@ TOOLS: the GhidraSQL server (POST SQL to http://127.0.0.1:8081/query; VA = RVA +
 starts, advisory), xrefs WHERE to_addr=<VA> (who calls a start), pseudocode WHERE func_addr=<VA>, instructions.
 python3 tools/callees.py, tools/fleet/context_pack.py and tools/probe.py work on any RVA/size you establish.
 Rules as AGENTS.md: never run git, no full gate, never launch the game, never edit tools/ docs/ game/gen_asm/
-game/gen_small/. Record a verdict for every function you establish (re_log.py; bank near misses with --stash
+game/gen_small/; new STLport-derived sources go under game/Libraries/Source/STLport/, never game/stlport/.
+Record a verdict for every function you establish (re_log.py; bank near misses with --stash
 --score). Stop at {hours} hours and write build/astra_seat/REPORT.md: per gap, what it is and what landed.
 """
 
@@ -513,6 +515,10 @@ def harvest(seat, correct=None):
             return "nothing to harvest"
         for path in paths:
             git(tree, "add", "-A", "--", path)
+        if correct:
+            # The seat's own commit hook runs name_regression before replay
+            # ever sees --correct, so document the findings here as well.
+            seat_replay.add_corrections(tree, *correct)
         total = sum(size for _, _, size in rows)
         subject = f"reverse: {len(rows)} bodies from {Path(seat['label']).name} ({total:,} B), {seat['model']} seat"
         body = "\n".join(f"  {rva} {size:5} B {name}" for name, rva, size in sorted(rows, key=lambda r: r[1]))
