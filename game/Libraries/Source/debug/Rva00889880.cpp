@@ -26,15 +26,15 @@ public:
 
 Rva00889880Class* Rva00889880Class::d_00889880( int val )
 {
-	print( (const char*)0x0113310C );
+	print( "ptr:" );
 	if ( val )
 	{
 		char buf[12];
-		print( (const char*)0x01132DD4 )->print( BfmeItoaImport( val, buf, 16 ) );
+		print( "0x" )->print( BfmeItoaImport( val, buf, 16 ) );
 	}
 	else
 	{
-		print( (const char*)0x01080374 );
+		print( "NULL" );
 	}
 	return this;
 }

@@ -73,6 +73,12 @@ public:
 
 void postTimedOp( LoadGameFadeHolder holder, void *key );
 
+extern unsigned fadeQueueKey;
+void j_00049454();
+void j_0003922a();
+void j_00009a70();
+void j_0000e2f5();
+
 class BfmeAptScreenMainMenu
 {
 public:
@@ -83,10 +89,18 @@ private:
 	unsigned char m_active25c;
 };
 
-#define RVA012B7638 (*(int *)0x012B7638)
-#define RVA012F706C (*(Rva012F706COwner **)0x012F706C)
-#define RVA012F1028 (*(Rva012F1028Owner **)0x012F1028)
-#define RVA012ED5C8 (*(Rva012ED5C8Owner **)0x012ED5C8)
+class BfmeLivingWorldManagerIcons;
+class CampaignManager;
+class GlobalData;
+extern int g_012B7638;
+extern BfmeLivingWorldManagerIcons *TheLivingWorldManager;
+extern CampaignManager *TheLivingWorldLogic;
+extern GlobalData *TheWritableGlobalData;
+
+#define RVA012B7638 g_012B7638
+#define RVA012F706C ((Rva012F706COwner *)TheLivingWorldManager)
+#define RVA012F1028 ((Rva012F1028Owner *)TheLivingWorldLogic)
+#define RVA012ED5C8 ((Rva012ED5C8Owner *)TheWritableGlobalData)
 
 // ?rva0051F1C0Campaign@BfmeAptScreenMainMenu@@QAEXPBD_N@Z
 void BfmeAptScreenMainMenu::rva0051F1C0Campaign( const char *campaign, bool evil )
@@ -118,19 +132,19 @@ void BfmeAptScreenMainMenu::rva0051F1C0Campaign( const char *campaign, bool evil
 		RVA012F1028->m_value90 = value;
 	}
 
-	postTimedOp( LoadGameFadeSlot( (void *)0x00449454 ),
-		reinterpret_cast<void *>( 0x012ED588 ) );
+	postTimedOp( LoadGameFadeSlot( (void *)j_00049454 ),
+		&fadeQueueKey );
 
 	if( RVA012ED5C8->m_flag2a == (unsigned char)zero )
-		postTimedOp( LoadGameFadeSlot( (void *)0x0043922A ),
-			reinterpret_cast<void *>( 0x012ED588 ) );
+		postTimedOp( LoadGameFadeSlot( (void *)j_0003922a ),
+			&fadeQueueKey );
 
 	if( evil != (bool)zero )
-		postTimedOp( LoadGameFadeSlot( (void *)0x00409A70 ),
-			reinterpret_cast<void *>( 0x012ED588 ) );
+		postTimedOp( LoadGameFadeSlot( (void *)j_00009a70 ),
+			&fadeQueueKey );
 	else
-		postTimedOp( LoadGameFadeSlot( (void *)0x0040E2F5 ),
-			reinterpret_cast<void *>( 0x012ED588 ) );
+		postTimedOp( LoadGameFadeSlot( (void *)j_0000e2f5 ),
+			&fadeQueueKey );
 
 	m_active25c = 1;
 }
