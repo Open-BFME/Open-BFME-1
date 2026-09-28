@@ -46,6 +46,8 @@ def test_windows_without_git_bash_refuses_rather_than_reach_wsl(tmp_path):
 def test_env_puts_git_before_the_host_path_and_behind_the_callers_stubs(tmp_path, monkeypatch):
     root = tmp_path / "Git"
     git = [str(root / "mingw64/bin"), str(root / "usr/bin")]
+    # Mock the platform branch without asking pathlib to instantiate a foreign path type.
+    monkeypatch.setattr(bash_path, "Path", type(tmp_path))
     monkeypatch.setattr(bash_path.os, "name", "nt")
     monkeypatch.setattr(bash_path, "bash", lambda: str(root / "usr/bin/bash.exe"))
     monkeypatch.setenv("PATH", os.pathsep.join(["system32", "host", git[1]]))

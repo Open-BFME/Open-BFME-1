@@ -14,6 +14,9 @@ on:
       - '.github/workflows/router-safety-tests.yml'
   workflow_dispatch:
 
+env:
+  BFME_CLAIMS: 'off'  # fixture tests must not consult live body claims
+
 permissions:
   contents: read
 
@@ -42,6 +45,7 @@ jobs:
           tools/tests/test_router_integrate.py
           tools/tests/test_router_state_safety.py
           tools/tests/test_verification_cache.py
+          tools/tests/test_build_include_inventory.py
           tools/tests/test_object_cache.py
           tools/tests/test_opencode_router.py
           tools/tests/test_opencode_go_budget.py
