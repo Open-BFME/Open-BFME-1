@@ -1,17 +1,19 @@
 // ?createBridgeObjectsRva003916F0@GameLogic@@QAEX_N@Z
-// partial score=0.6080402010050251 date=2026-09-27
+// partial score=0.6935 date=2026-09-28
 // cl: /Igame/Libraries/Source/WWVegas/WWMath /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 // RVA003916F0: BFME bridge-object creation phase, extracted from the ZH startNewGame flow.
 // Exact method name is not established; retain the address in its identity.
+// Exact only when 0x0038F7B0's body is in the same TU (VC7.1 then proves `created` does not escape).
 #include <vector>
 #include <bitset>
-extern void j_000017a8(); extern void j_0000991c(); extern void j_00012814();
+extern void j_000017a8(); extern void j_00012814();
 extern void j_0001325a(); extern void j_00015d7a(); extern void j_00017a12();
-extern void j_0001fd39(); extern void j_0002fb80(); extern void j_000399A5();
-extern void j_0003a1a7(); extern void j_0003a855(); extern void j_000441b1();
+extern void j_0002fb80(); extern void j_000399A5();
+extern void j_0003a1a7(); extern void j_000441b1();
 extern void j_0004494a();
 extern void Rva0090F050();
+float normalizeAngle(float angle);
 extern void Rva009EBAC0(int);
 #include "coord3d.h"
 inline Coord3D::Coord3D(const Coord3D &p) {x=p.x;y=p.y;z=p.z;}
@@ -42,8 +44,8 @@ public:
 };
 typedef std::pair<BridgeObject003916F0*,BridgeMapObject003916F0*> BridgePair003916F0;
 typedef std::vector<BridgePair003916F0> BridgeVector003916F0;
-struct BridgePlayer003916F0 { char at000[0x230]; void *at230; };
-struct Players005999B0 {char at000[0x14];BridgePlayer003916F0*at014;};
+struct BridgePlayer003916F0 { char at000[0x230]; void *at230; void *getDefaultTeam() const { return at230; } };
+struct Players005999B0 {char at000[0x14];BridgePlayer003916F0*at014; BridgePlayer003916F0 *getNeutralPlayer() const { return at014; }};
 extern Players005999B0 *PlayerList005999B0;
 class Object; class Team; class ThingTemplate;
 template<int N> class BitFlags { std::bitset<N> m_bits; public: BitFlags() {} };
@@ -98,10 +100,7 @@ extern TerrainLogic *TheTerrainLogic;
 class GameLogic {
 public:
     void createBridgeObjectsRva003916F0(bool loadingSaveGame);
-    void createMapObjectsRva0038F7B0(BridgeVector003916F0 *v,bool flag,int *progress,bool loading) {
-        typedef void(GameLogic::*P)(BridgeVector003916F0*,bool,int*,bool);
-        union{void(*raw)();P member;}r={j_0001fd39};(this->*r.member)(v,flag,progress,loading);
-    }
+    void createMapObjectsRva0038F7B0(BridgeVector003916F0 *v,bool flag,int *progress,bool loading);
 };
 void GameLogic::createBridgeObjectsRva003916F0(bool loadingSaveGame) {
     BridgeVector003916F0 created;
@@ -110,24 +109,24 @@ void GameLogic::createBridgeObjectsRva003916F0(bool loadingSaveGame) {
         if(map->at020 & 0x36) continue;
         BridgeTemplate003916F0 *thing=map->getTemplate();
         if(!thing || !thing->m_isBridge) continue;
-        bool flag=false;
+        struct Context003916F0 { bool value; Context003916F0():value(false) {} } flag;
         BridgeExtra003916F0 extra;
-        thing->read(&extra,&flag);
+        thing->read(&extra,&flag.value);
         Rva009EBAC0((int)&extra);
         if(!loadingSaveGame) {
-            void *team=PlayerList005999B0->at014->at230;
+            void *team=PlayerList005999B0->getNeutralPlayer()->getDefaultTeam();
             BridgeObject003916F0 *obj=(BridgeObject003916F0*)Factory0040A260->newObject((ThingTemplate*)thing,(Team*)team,BitFlags<86>(),0);
             if(obj) {
                 BridgePosition003916F0 pos=*map->getLocation();
                 pos.z+=((BridgeTerrain003916F0*)TheTerrainLogic)->groundHeight(pos.x,pos.y,0);
                 float angle=map->at01c;
-                float normalized=((float(__cdecl*)(float))j_0000991c)(angle);
+                float normalized=normalizeAngle(angle);
                 obj->setOrientation(normalized);
                 obj->setPosition(&pos);
                 if(thing->m_isBridge) ((BridgeTerrain003916F0*)TheTerrainLogic)->addBridge(obj);
-                BridgePair003916F0 pair(obj,map);
-                typedef void(BridgeVector003916F0::*Push)(const BridgePair003916F0&);
-                union{void(*raw)();Push member;}p={j_0003a855};(created.*p.member)(pair);
+                BridgePair003916F0 pair;
+                pair.first=obj; pair.second=map;
+                created.push_back(pair);
                 obj->updateProperties(map->at024);
             }
         }
