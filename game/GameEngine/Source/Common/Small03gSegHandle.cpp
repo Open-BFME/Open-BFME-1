@@ -37,3 +37,24 @@ RefCountedHandle Rva0094FB40Box::getHandle() const
 	volatile int guard = 0;
 	return m_owner.getHandle();
 }
+
+class Rva00975050Owner
+{
+public:
+	RefCountedTarget *m_target;
+	RefCountedHandle getHandle() const;
+};
+
+class Rva00955AB0Box
+{
+	unsigned char m_prefix[0xE8];
+	Rva00975050Owner m_owner;
+public:
+	RefCountedHandle getHandle() const;
+};
+
+RefCountedHandle Rva00955AB0Box::getHandle() const
+{
+	volatile int guard = 0;
+	return m_owner.getHandle();
+}
