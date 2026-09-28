@@ -1,54 +1,27 @@
 // ?bfmeSetXC@BfmeXformXC@@QAEXM@Z
-// partial score=0.8 date=2026-09-08
-extern const float BfmeZeroRange;
-
-float Cos(float a);
-float Sin(float a);
-
-class BfmeXformXC
-{
-public:
-	void bfmeSetXC(float a);
-
-	unsigned char m_bfmeHeadXC[0x64];
-	float m_bfme64XC;
-	float m_bfme68XC;
-	float m_bfme6CXC;
-	float m_bfme70XC;
-	float m_bfme74XC;
-	float m_bfme78XC;
-	float m_bfme7CXC;
-	float m_bfme80XC;
-	float m_bfme84XC;
-	float m_bfme88XC;
-	float m_bfme8CXC;
-	float m_bfme90XC;
+// partial score=0.9732142857 date=2026-09-28
+struct Row001B4A50 {float X,Y,Z,W; void Set(float x,float y,float z,float w){X=x;Y=y;Z=z;W=w;} };
+struct Matrix001B4A50 { Row001B4A50 row[3];
+ void Set(float a,float b,float c,float d,float e,float f,float g,float h,float i,float j,float k,float l) {
+ row[0].Set(a,b,c,d); row[1].Set(e,f,g,h); row[2].Set(i,j,k,l);
+ }
 };
-
-void BfmeXformXC::bfmeSetXC(float a)
-{
-	float tx = m_bfme70XC;
-	float ty = m_bfme80XC;
-	float tz = m_bfme90XC;
-
-	float c = Cos(a);
-	float s = Sin(a);
-	float ns = -s;
-
-	float t1 = *(volatile float *)&s * BfmeZeroRange - *(volatile float *)&c * BfmeZeroRange;
-	float *pt1 = &t1;
-	float t2 = t1 * BfmeZeroRange;
-
-	m_bfme64XC = c - t2;
-	m_bfme68XC = ns;
-	m_bfme6CXC = 0.0f;
-	m_bfme70XC = tx;
-	m_bfme74XC = t2 - ns;
-	m_bfme78XC = c;
-	m_bfme7CXC = 0.0f;
-	m_bfme80XC = ty;
-	m_bfme84XC = ns * BfmeZeroRange - c * BfmeZeroRange;
-	m_bfme88XC = *pt1;
-	m_bfme8CXC = 1.0f;
-	m_bfme90XC = tz;
+float Cos(float); float Sin(float);
+class BfmeXformXC { public: void bfmeSetXC(float a); unsigned char pad[0x64]; Matrix001B4A50 m; };
+struct Vector001B4A50 {
+ float x,y,z;
+ static __forceinline void cross(const Vector001B4A50 *a,const Vector001B4A50 *b,Vector001B4A50 *r) {
+ r->x=a->y*b->z-a->z*b->y;
+ r->y=a->z*b->x-a->x*b->z;
+ r->z=a->x*b->y-a->y*b->x;
+ }
+};
+void BfmeXformXC::bfmeSetXC(float a) {
+ Vector001B4A50 u,x,y,z,pos;
+ pos.x=m.row[0].W; pos.y=m.row[1].W; pos.z=m.row[2].W;
+ z.x=0.0f; z.y=0.0f; z.z=1.0f;
+ u.x=Cos(a); u.y=Sin(a); u.z=0.0f;
+ Vector001B4A50::cross(&z,&u,&y);
+ Vector001B4A50::cross(&y,&z,&x);
+ m.Set(x.x,y.x,z.x,pos.x,x.y,y.y,z.y,pos.y,x.z,y.z,z.z,pos.z);
 }

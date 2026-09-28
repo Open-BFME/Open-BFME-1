@@ -89697,3 +89697,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?rva002E9680ParseModelConditionEvent@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z,0x002E9680,002EA5D0 retail ModelConditionEvent literal selects this body through ILT; callee saves ECX and accepts parser stack slot with ret 4
 ?rva002E9AA0ParseObjectStatusEvent@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z,0x002E9AA0,002EA5D0 retail ObjectStatusEvent literal selects this body through ILT; callee saves ECX and accepts parser stack slot with ret 4
 ?d_0088e970@@YAXXZ,0x0088E970,Legacy void-declared reference in matched DebugConstructor_00889370 ignores AL; same cdecl no-argument body now recovered as installDebugImportHook0088E970 returning bool
+?getWaypointName@MapObject@@QAE?AVAsciiString@@XZ,0x00010F05,route=0x00088AE0; addWaypoint RVA001ABC90+1CC encodes this ILT; WorldHeightMap getWaypointName returns AsciiString from TheKey_waypointName

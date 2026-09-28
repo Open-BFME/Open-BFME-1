@@ -8208,5 +8208,15 @@
   "after_sha256": "4e11b3100b3d9fbd563813cb3a0fd4d594a113165016fff29abe077127c0242f",
   "evidence": "targets/game/reverse/identity_evidence/0023caa0-00242a30-002435f0-bank-placeholders.md",
   "reason": "Bank-local placeholders only: TU-local Object redeclaration replaced by object.h (Object still used), m_bfmeHead/m_bfmeGap* padding spans renamed to offset pads, and the unevidenced fillFormationPosition alias of ILT 0x00019736 now calls its matched ledger identity Rva00233F30::rva002350c0 at 0x002350C0"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001abc90.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Map/TerrainLogicAddWaypoint.cpp",
+  "old_name": "GenKey",
+  "new_name": "Rva0002FF6DStringPresenceThunk",
+  "before_sha256": "9061e50003f5eac6c31605ec4e2ece6d0a44dcd98012de9a5292a6e988b2046d",
+  "after_sha256": "3af9e73025a842fb446a053174d87af5712b52ea7a149ee06a11c7af16605533",
+  "evidence": "targets/game/reverse/identity_evidence/001abc90-genkey-placeholder.md",
+  "reason": "GenKey is a generator-era placeholder class (absent from inputs/reference; its symbols.csv pins at 0x00009304 are labelled address-derived); the landed TerrainLogic::addWaypoint uses address-derived Key001ABC90 / Rva0002FF6DStringPresenceThunk for the same ILT callees"
  }
 ]

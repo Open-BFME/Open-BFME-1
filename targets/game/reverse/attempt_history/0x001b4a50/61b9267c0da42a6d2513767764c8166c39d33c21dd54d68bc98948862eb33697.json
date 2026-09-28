@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "61b9267c0da42a6d2513767764c8166c39d33c21dd54d68bc98948862eb33697",
+  "symbol": "?bfmeSetXC@BfmeXformXC@@QAEXM@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9732142857,
+  "source": "// ?bfmeSetXC@BfmeXformXC@@QAEXM@Z\n// partial score=0.9732142857 date=2026-09-28\nstruct Row001B4A50 {float X,Y,Z,W; void Set(float x,float y,float z,float w){X=x;Y=y;Z=z;W=w;} };\r\nstruct Matrix001B4A50 { Row001B4A50 row[3];\r\n void Set(float a,float b,float c,float d,float e,float f,float g,float h,float i,float j,float k,float l) {\r\n row[0].Set(a,b,c,d); row[1].Set(e,f,g,h); row[2].Set(i,j,k,l);\r\n }\r\n};\r\nfloat Cos(float); float Sin(float);\r\nclass BfmeXformXC { public: void bfmeSetXC(float a); unsigned char pad[0x64]; Matrix001B4A50 m; };\r\nstruct Vector001B4A50 {\r\n float x,y,z;\r\n static __forceinline void cross(const Vector001B4A50 *a,const Vector001B4A50 *b,Vector001B4A50 *r) {\r\n r->x=a->y*b->z-a->z*b->y;\r\n r->y=a->z*b->x-a->x*b->z;\r\n r->z=a->x*b->y-a->y*b->x;\r\n }\r\n};\r\nvoid BfmeXformXC::bfmeSetXC(float a) {\r\n Vector001B4A50 u,x,y,z,pos;\r\n pos.x=m.row[0].W; pos.y=m.row[1].W; pos.z=m.row[2].W;\r\n z.x=0.0f; z.y=0.0f; z.z=1.0f;\r\n u.x=Cos(a); u.y=Sin(a); u.z=0.0f;\r\n Vector001B4A50::cross(&z,&u,&y);\r\n Vector001B4A50::cross(&y,&z,&x);\r\n m.Set(x.x,y.x,z.x,pos.x,x.y,y.y,z.y,pos.y,x.z,y.z,z.z,pos.z);\r\n}\r\n"
+}
