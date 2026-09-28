@@ -42,7 +42,7 @@ class BfmeThingDUC { public: void bfmeGoDUC(); };
 class StreakLineClass { public: void Set_Texture(TextureClass*); };
 class Rva00918DA0 { public: void set(int); };
 class BfmeStreakUGB { public: void bfmeSetUGB(unsigned,void*,void*,void*,int); };
-class StreakSlots005F8010 {
+class Rva005F8010Slots {
 public:
 #define S(n) virtual void s##n();
  S(0) S(1) S(2) S(3) S(4) S(5) S(6) S(7) S(8) S(9) S(10) S(11)
@@ -50,15 +50,15 @@ public:
  virtual void render(void*);
 
 };
-extern StreakSlots005F8010 *streak005F8010;
+extern Rva005F8010Slots *renderTarget005F8010;
 struct Bounds005F8010 { Vector3 center,extent; };
-class StreakParticles005F8010 {
+class Rva005F8010 {
 public:
  int render(void*,const Bounds005F8010*,int*);
  System005F8010 *system() const { return !system04 ? ((System005F8010*(*)())j_00001b18)() : system04; }
  char pad00[4]; System005F8010 *system04;
 };
-int StreakParticles005F8010::render(void *renderInfo,const Bounds005F8010 *bounds,int *fieldCount)
+int Rva005F8010::render(void *renderInfo,const Bounds005F8010 *bounds,int *fieldCount)
 {
  int count=0;
  Vector3 *posArray=positionBuffer005F8010->Get_Array();
@@ -86,25 +86,25 @@ int StreakParticles005F8010::render(void *renderInfo,const Bounds005F8010 *bound
   angleArray[count]=(unsigned char)(invoke005F8010<float>(p,j_00022796)*(255.0f/(2.0f*WWMATH_PI)));
   if(++count==512) break;
  }
- if(streak005F8010 && count>=2) {
+ if(renderTarget005F8010 && count>=2) {
   char *name=system()->name10;
   BFMEWaterTrackTextureHandle texture=BFMEGetWaterTrackTexture(name ? name+8 : "",0,0);
-  ((BfmeThingDUC*)streak005F8010)->bfmeGoDUC();
-  ((StreakLineClass*)streak005F8010)->Set_Texture((TextureClass*)&texture);
+  ((BfmeThingDUC*)renderTarget005F8010)->bfmeGoDUC();
+  ((StreakLineClass*)renderTarget005F8010)->Set_Texture((TextureClass*)&texture);
   union { void(Rva00918DA0::*raw)(int); void(Rva00918DA0::*typed)(ShaderClass); } shaderCall;
   shaderCall.raw=&Rva00918DA0::set;
   switch(system()->shader08) {
-  case 1: (((Rva00918DA0*)streak005F8010)->*shaderCall.typed)(shader012D6E2C); break;
-  case 2: (((Rva00918DA0*)streak005F8010)->*shaderCall.typed)(shader012D6E30); break;
-  case 3: (((Rva00918DA0*)streak005F8010)->*shaderCall.typed)(shader012D6E34); break;
-  case 4: (((Rva00918DA0*)streak005F8010)->*shaderCall.typed)(shader012D6E48); break;
-  case 5: (((Rva00918DA0*)streak005F8010)->*shaderCall.typed)(shader012D6E60); break;
-  case 6: (((Rva00918DA0*)streak005F8010)->*shaderCall.typed)(shader012D6E24); break;
-  case 7: (((Rva00918DA0*)streak005F8010)->*shaderCall.typed)(shader012D6E28); break;
+  case 1: (((Rva00918DA0*)renderTarget005F8010)->*shaderCall.typed)(shader012D6E2C); break;
+  case 2: (((Rva00918DA0*)renderTarget005F8010)->*shaderCall.typed)(shader012D6E30); break;
+  case 3: (((Rva00918DA0*)renderTarget005F8010)->*shaderCall.typed)(shader012D6E34); break;
+  case 4: (((Rva00918DA0*)renderTarget005F8010)->*shaderCall.typed)(shader012D6E48); break;
+  case 5: (((Rva00918DA0*)renderTarget005F8010)->*shaderCall.typed)(shader012D6E60); break;
+  case 6: (((Rva00918DA0*)renderTarget005F8010)->*shaderCall.typed)(shader012D6E24); break;
+  case 7: (((Rva00918DA0*)renderTarget005F8010)->*shaderCall.typed)(shader012D6E28); break;
   }
-  ((BfmeStreakUGB*)streak005F8010)->bfmeSetUGB(count,positionBuffer005F8010->Get_Array(),sizeBuffer005F8010->Get_Array(),rgbaBuffer005F8010->Get_Array(),(int)personalities);
+  ((BfmeStreakUGB*)renderTarget005F8010)->bfmeSetUGB(count,positionBuffer005F8010->Get_Array(),sizeBuffer005F8010->Get_Array(),rgbaBuffer005F8010->Get_Array(),(int)personalities);
   rgbaArray[0].X=0;rgbaArray[0].Y=0;rgbaArray[0].Z=0;rgbaArray[0].W=0;
-  streak005F8010->render(renderInfo);
+  renderTarget005F8010->render(renderInfo);
  }
  return count;
 }

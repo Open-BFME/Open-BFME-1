@@ -8228,5 +8228,25 @@
   "after_sha256": "f11349e3424148057a68d4f43a0227f8d74470491f959f4e6e5eb6e873a10c93",
   "evidence": "targets/game/reverse/identity_evidence/00699b90-address-derived-name.md",
   "reason": "The old bank name bfmeRefreshAAK has no semantic pin or matched caller that supports it. The caller index names the two Rva006B47F0Owner methods and the body proves only the refreshPair loop. The address-derived replacement preserves the RVA without asserting an identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005f8010.cpp",
+  "new_path": "targets/game/reverse/attempts/0x005f8010.cpp",
+  "old_name": "StreakParticles005F8010",
+  "new_name": "Rva005F8010",
+  "before_sha256": "e2cac0d785a594549287d893200d776245f14239ced1e5cdd1d6b99f87c409e3",
+  "after_sha256": "c72455aa64b7341a19cd0f4a46e7e1d420a3b4a378ae75e2e088fe70d8178514",
+  "evidence": "targets/game/reverse/identity_evidence/005f8010-address-derived-attempt.md",
+  "reason": "No address-specific caller, vtable slot, or string proves the old class name. The replacement keeps the retail RVA in the name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005f8010.cpp",
+  "new_path": "targets/game/reverse/attempts/0x005f8010.cpp",
+  "old_name": "StreakSlots005F8010",
+  "new_name": "Rva005F8010Slots",
+  "before_sha256": "e2cac0d785a594549287d893200d776245f14239ced1e5cdd1d6b99f87c409e3",
+  "after_sha256": "c72455aa64b7341a19cd0f4a46e7e1d420a3b4a378ae75e2e088fe70d8178514",
+  "evidence": "targets/game/reverse/identity_evidence/005f8010-address-derived-attempt.md",
+  "reason": "No address-specific caller, vtable slot, or string proves the old class name. The replacement keeps the retail RVA in the name."
  }
 ]

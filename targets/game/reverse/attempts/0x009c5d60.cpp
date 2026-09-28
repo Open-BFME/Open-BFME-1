@@ -1,5 +1,5 @@
 // ?Rva009C5D60@@YAXPAF00@Z
-// partial score=0.99 date=2026-09-27
+// partial score=0.9967 date=2026-09-28
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 // On2 VP3/VP6-style IDct10: dequantise the first ten coefficients, row pass over
 // four rows, column pass over eight columns. Stored by the codec init at 0x009B3D76
