@@ -1,7 +1,7 @@
 # BFME 1 Source Code
 <img width="1000" height="125" alt="image" src="https://github.com/user-attachments/assets/d4ac956a-5221-42a6-aaf0-b0c0e41f6b8a" />
 
-Goal: reach 100% independently rebuilt byte parity with BFME 1's retail executable outside explicitly declared `no_ground_truth` ranges, while pursuing game-modernization improvements.
+Goal: rebuild BFME 1's retail executable byte for byte from source, and use that source to fix and improve the game.
 
 [Join our Discord to participate!](https://discord.gg/wCvA2XqPUT)
 
@@ -27,7 +27,7 @@ reference sources live in `inputs/`; mods remain in `mods/`.
 * [ ] Better crash logs
 * [ ] 60/120 FPS
 * [ ] Multi CPU
-* [ ] [AC fix](mods/features/055-ac-attack-view/README.md) (partial target-acquisition patch; rear units still cancel)
+* [ ] [AC fix](mods/features/055-ac-attack-view/README.md) (live-tested for the reported case; opt-in until other horde fights are tested)
 * [ ] World builder Source Code
 * [ ] 16 player maps
 
@@ -55,12 +55,9 @@ The MSVC 7.1 toolchain and baseline executables are committed directly (plain gi
 ```
 
 On Linux, use WineHQ's Wine 11 (`winehq-stable`), not a distro package, with a
-32-bit prefix (`WINEARCH=win32 wineboot -i`). Ubuntu 24.04's Wine 9.0 compiles
-almost everything, but `cl.exe` spins forever on a few TUs (among them
-`WW3D2/Rva0093C4A0.cpp`, `System/RegistryUserDataLeafNameUnicode.cpp` and
-`GameNetwork/NetPacket_ConstructBigCommandPacketList.cpp`), so a full gate
-never finishes. Under Wine 11 the same full gate runs in about 30 minutes on
-four cores.
+32-bit prefix (`WINEARCH=win32 wineboot -i`). Ubuntu 24.04's Wine 9.0 hangs
+`cl.exe` on a few files, so a full gate never finishes; under Wine 11 it takes
+about 30 minutes on four cores.
 
 To check a single function while iterating, pass its file or name — a few seconds instead of the full run:
 
