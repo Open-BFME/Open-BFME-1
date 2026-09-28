@@ -89728,3 +89728,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?bfmePalantirCountZD@@YADHH@Z,0x00005BD2,route=0x00565940; ILT E9 stub to the matched palantir command-point update; called by resource-bar refresh 0x0058DDD0
 ?bfmeMultiplierZC@@YADM@Z,0x0002DBF5,route=0x00565A80; ILT E9 stub to the matched palantir resource-multiplier update; called by resource-bar refresh 0x0058DDD0
 ?go@Rva00564910@@SAXXZ,0x0001D2DC,route=0x00564910; ILT E9 stub to the matched niladic static; called twice by resource-bar refresh 0x0058DDD0
+?xfer00401C70@Path@@QAEXPAVXfer@@@Z,0x00045FD9,ILT (jmp 0x00401C70) called thiscall with the Xfer as its one argument on the Path that AICommandParmsStorage::doXfer (0x00187860+0x2EC) constructs through the pinned Path ctor ILT 0x000335B4; the body transfers through Xfer slot 4 like the other xfer bodies; address-derived method name
