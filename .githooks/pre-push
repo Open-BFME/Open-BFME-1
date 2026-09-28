@@ -119,7 +119,8 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
     # ordinary functions.csv edits remain selectively cacheable below.
     wide_change=0
     if ! git diff --quiet "$base" "$local_sha" -- \
-            '*.h' '*.hpp' 'inputs/reference/shims/*' 'inputs/toolchains/*'; then
+            '*.h' '*.hpp' '*.hh' '*.hxx' '*.inl' '*.inc' \
+            'inputs/reference/shims/*' 'inputs/toolchains/*'; then
         wide_change=1
     fi
     if [ "$wide_change" -ne 0 ]; then

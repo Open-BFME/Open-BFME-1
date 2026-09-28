@@ -266,7 +266,8 @@ elif a and a[0] == "diff":
         print("targets/game/reverse/functions.csv")
         if os.environ["SELECTOR_MODE"] == "pins": print("targets/game/reverse/symbols.csv")
     elif "--quiet" in a:
-        wide = {"*.h", "*.hpp", "inputs/reference/shims/*", "inputs/toolchains/*"}
+        wide = {"*.h", "*.hpp", "*.hh", "*.hxx", "*.inl", "*.inc",
+                "inputs/reference/shims/*", "inputs/toolchains/*"}
         changed = "--cached" in a or ("base" in a and not wide.intersection(a))
         sys.exit(1 if changed else 0)
 ''',
