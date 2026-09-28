@@ -108,6 +108,11 @@ def added_naked(ws, path):
                                                  if l.startswith('+') and not l.startswith('+++')))))
 
 
+def rva_of(row):
+    f = row.split(',')
+    return f[2].lower() if len(f) > 3 and f[2].lower().startswith('0x') else None
+
+
 def ledger_delta(ws, path):
     d = git(ws, 'diff', '-U0', 'HEAD', '--', path).stdout
     add = [l[1:].rstrip('\r') for l in d.splitlines() if l.startswith('+') and not l.startswith('+++')]
@@ -242,10 +247,24 @@ def port(j, dest):
         trail = rows and rows[-1] == ''
         if trail:
             rows = rows[:-1]
+        # A row the worker removed and re-added unchanged is no change: porting
+        # it as delete+append moved ~160 untouched rows to the end (batch 8).
+        rem, add = [r for r in rem if r not in add], [a for a in add if a not in rem]
         remset = set(rem)
-        rows = [r for r in rows if r not in remset]
-        have = set(rows)
-        rows += [a for a in add if a not in have]
+        # A changed functions.csv row takes its predecessor's place (same RVA).
+        by_rva = {}
+        if led.endswith('functions.csv'):
+            for a in add:
+                by_rva.setdefault(rva_of(a), []).append(a)
+        out, placed = [], set()
+        for r in rows:
+            if r in remset:
+                for a in by_rva.pop(rva_of(r), []):
+                    out.append(a); placed.add(a)
+                continue
+            out.append(r)
+        have = set(out)
+        rows = out + [a for a in add if a not in have and a not in placed]
         f.write_text(nl.join(rows) + (nl if trail else ''), encoding='utf-8', errors='surrogateescape', newline='')
     # name_corrections.json: append entries the worker added, keeping the file's format
     old = git(ws, 'show', f'HEAD:{CORRECTIONS}').stdout

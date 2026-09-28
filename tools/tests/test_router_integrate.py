@@ -118,6 +118,20 @@ class PortTest(unittest.TestCase):
         ri.port({'cwd': str(self.ws)}, str(self.dest))
         self.assertEqual((self.dest / crlf).read_bytes(), b'int a;\r\nint c;\r\n')
 
+    def test_port_keeps_ledger_order(self):
+        # a worker ledger rewrite that re-adds an untouched row must not move it,
+        # and a changed row keeps its predecessor's position
+        led = (self.ws / LED).read_bytes()
+        led = led.replace(b'?a@@YAXXZ,,0x00000010\r\n', b'') + b'?a@@YAXXZ,,0x00000010\r\n'
+        led = led.replace(b'?lift@@YAXXZ,,0x00000020', b'?clean@@YAXXZ,,0x00000020')
+        (self.ws / LED).write_bytes(led)
+        with open(self.dest / LED, 'ab') as f:
+            f.write(b'?up@@YAXXZ,,0x00000030\r\n')
+        ri.port({'cwd': str(self.ws)}, str(self.dest))
+        self.assertEqual((self.dest / LED).read_bytes(),
+                         b'name,export_rva,target_rva\r\n?a@@YAXXZ,,0x00000010\r\n?clean@@YAXXZ,,0x00000020\r\n'
+                         b'?up@@YAXXZ,,0x00000030\r\n')
+
     def test_route(self):
         self.assertEqual(ri.route('inputs/reference/shims/a/b.h'), 'port')
         self.assertEqual(ri.route('inputs/reference/CnC_Generals_Zero_Hour/x.h'), 'refuse')
