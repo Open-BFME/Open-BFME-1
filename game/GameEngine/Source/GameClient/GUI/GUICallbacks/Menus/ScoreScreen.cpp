@@ -505,51 +505,213 @@ WindowMsgHandledType ScoreScreenInput( GameWindow *window, UnsignedInt msg,
 
 /** System Function for the ScoreScreen */
 //-------------------------------------------------------------------------------------------------
-WindowMsgHandledType ScoreScreenSystem( GameWindow *window, UnsignedInt msg, 
-																				  WindowMsgData mData1, WindowMsgData mData2 )
-{
-	UnicodeString txtInput;
+// ?ScoreScreenSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z  retail 0x004E5420, 1170 B.
+// Identity: the retail GUI function table entry at VA 0x012A96C0 pairs the string
+// "ScoreScreenSystem" (VA 0x010872DC) with ILT thunk 0x0043B0DE, which jumps here.
+// BFME string facades below are TU-local views of StringBase<T> (header {int ref_count;
+// ushort length; ushort capacity; T data[]}). Retail calls StringBase<WideChar>::isEmpty out of
+// line in the emote path but tests the ushort length inline at GEM_EDIT_DONE, and expands
+// UnicodeString::str() inline for the buddy-request text.
 
-	switch( msg ) 
+// TU-local view of BFME's StringBase<T> (game/Libraries/Source/WWVegas/WWLib/string_base.h):
+// the same members, access and 8-byte header. That header befriends AsciiString and
+// UnicodeString, which in this TU are the Zero Hour classes, so the retail-layout string views
+// below are befriended here instead.
+extern char Rva006A16B0Empty[];
+extern const char g_bfmeEmptyUnicode[];
+
+template <typename T> class StringBase
+{
+	friend class BFMERetailAsciiString;
+	friend class ScoreScreenRvaUnicodeString;
+
+public:
+	bool isEmpty() const;
+	void set( const StringBase<T> &src );
+	void trim();
+
+private:
+	StringBase() : m_data( 0 ) {}
+	StringBase( const T *str );
+	StringBase( const StringBase<T> &src );
+	~StringBase();
+
+	struct Header
 	{
-		// --------------------------------------------------------------------------------------------
+		int ref_count;
+		unsigned short length;
+		unsigned short capacity;
+		T data[1];
+	};
+
+	Header *m_data;
+};
+
+class ScoreScreenRvaWindowLayoutView
+{
+public:
+	virtual void runInit( void *userData ) = 0;
+	virtual ~ScoreScreenRvaWindowLayoutView() {}
+	virtual void runUpdate( void *userData ) = 0;
+	virtual void runShutdown( void *userData ) = 0;
+	virtual void hide( Bool hidden ) = 0;
+	virtual void bringForward( void ) = 0;
+};
+
+// BFME UnicodeString over StringBase<WideChar>.
+class ScoreScreenRvaUnicodeString : private StringBase<WideChar>
+{
+public:
+	ScoreScreenRvaUnicodeString() : StringBase<WideChar>() {}
+	ScoreScreenRvaUnicodeString( const ScoreScreenRvaUnicodeString &other )
+		: StringBase<WideChar>( other ) {}
+	~ScoreScreenRvaUnicodeString() {}
+	using StringBase<WideChar>::set;
+	using StringBase<WideChar>::trim;
+	using StringBase<WideChar>::isEmpty;
+	// Inline length view; retail compares the ushort length field directly.
+	unsigned short getLength( void ) const
+	{
+		return m_data ? m_data->length : (unsigned short)0;
+	}
+	const WideChar *str( void ) const
+	{
+		return m_data ? m_data->data : (const WideChar *)g_bfmeEmptyUnicode;
+	}
+};
+
+// BFME AsciiString over StringBase<char>; the name is the shared retail-layout view whose
+// constructor, destructor and format pins already exist.
+class BFMERetailAsciiString : private StringBase<char>
+{
+public:
+	BFMERetailAsciiString() : StringBase<char>() {}
+	BFMERetailAsciiString( const char *text ) : StringBase<char>( text ) {}
+	BFMERetailAsciiString( const BFMERetailAsciiString &other ) : StringBase<char>( other ) {}
+	~BFMERetailAsciiString() {}
+	void __cdecl format( BFMERetailAsciiString format, ... );
+	using StringBase<char>::isEmpty;
+	const char *str( void ) const
+	{
+		return m_data ? m_data->data : Rva006A16B0Empty;
+	}
+};
+
+// GameWindowTransitionsHandler::remove (0x0048AFE0) taking the retail-layout string by value.
+class ScoreScreenRvaTransitionHandlerView
+{
+public:
+	void remove( BFMERetailAsciiString groupName, Bool skipPending );
+};
+
+class ScoreScreenRvaCampaignManagerView
+{
+public:
+	void setCampaign( BFMERetailAsciiString campaign );
+	BFMERetailAsciiString getCurrentMap( void );
+};
+
+// Address-derived name of the retail callback registration helper (pinned at ILT 0x0002FCB1).
+typedef void (*ScoreScreenRvaGameStartCallback)( void );
+void bfmeReg1033( ScoreScreenRvaGameStartCallback callback, ScoreScreenRvaGameStartCallback other );
+
+class ScoreScreenRvaLanApiView
+{
+public:
+	virtual void slot00( void ) = 0; virtual void slot04( void ) = 0;
+	virtual void slot08( void ) = 0; virtual void slot0C( void ) = 0;
+	virtual void slot10( void ) = 0; virtual void slot14( void ) = 0;
+	virtual void slot18( void ) = 0; virtual void slot1C( void ) = 0;
+	virtual void slot20( void ) = 0; virtual void slot24( void ) = 0;
+	virtual void slot28( void ) = 0; virtual void slot2C( void ) = 0;
+	virtual void slot30( void ) = 0; virtual void slot34( void ) = 0;
+	virtual void slot38( void ) = 0; virtual void slot3C( void ) = 0;
+	virtual void RequestChat( ScoreScreenRvaUnicodeString message, int format ) = 0;
+};
+
+// BFME keeps GadgetTextEntrySetText out of line (0x0047E5B0, ILT 0x0000C874).
+void GadgetTextEntrySetText( GameWindow *window, ScoreScreenRvaUnicodeString text );
+
+class ScoreScreenRvaGameSpyInfoView
+{
+public:
+	virtual void slot00() = 0; virtual void slot04() = 0; virtual void slot08() = 0;
+	virtual void slot0C() = 0; virtual void slot10() = 0; virtual void slot14() = 0;
+	virtual void slot18() = 0; virtual void slot1C() = 0; virtual void slot20() = 0;
+	virtual void slot24() = 0; virtual void slot28() = 0; virtual void slot2C() = 0;
+	virtual void slot30() = 0; virtual void slot34() = 0; virtual void slot38() = 0;
+	virtual void slot3C() = 0; virtual void slot40() = 0; virtual void slot44() = 0;
+	virtual void slot48() = 0; virtual void slot4C() = 0; virtual void slot50() = 0;
+	virtual BuddyInfoMap *getBuddyMap() = 0;
+};
+
+class ScoreScreenRvaBuddyRequest
+{
+public:
+	enum { BUDDYREQUEST_ADDBUDDY = 5 };
+	int buddyRequestType;
+	union
+	{
+		struct { int id; WideChar text[MAX_BUDDY_CHAT_LEN]; } addbuddy;
+		char body[0x2B4];
+	} arg;
+};
+typedef char ScoreScreenRvaBuddyRequestSizeCheck[
+	sizeof( ScoreScreenRvaBuddyRequest ) == 0x2B8 ? 1 : -1 ];
+
+class ScoreScreenRvaBuddyMessageQueueView
+{
+public:
+	virtual ~ScoreScreenRvaBuddyMessageQueueView() {}
+	virtual void startThread( void ) = 0;
+	virtual void endThread( void ) = 0;
+	virtual Bool isThreadRunning( void ) = 0;
+	virtual Bool isConnected( void ) = 0;
+	virtual Bool isConnecting( void ) = 0;
+	virtual void addRequest( const ScoreScreenRvaBuddyRequest &request ) = 0;
+};
+
+WindowMsgHandledType ScoreScreenSystem( GameWindow *window, UnsignedInt msg,
+	WindowMsgData mData1, WindowMsgData mData2 )
+{
+	ScoreScreenRvaUnicodeString txtInput;
+	register GameWindow *control = (GameWindow *)mData1;
+
+	switch( msg )
+	{
 		case GWM_DESTROY:
 		{
 			break;
 		}
 
-		// --------------------------------------------------------------------------------------------
 		case GWM_INPUT_FOCUS:
 		{
-
-			// if we're givin the opportunity to take the keyboard focus we must say we want it
 			if( mData1 == TRUE )
 				*(Bool *)mData2 = TRUE;
-
 			break;
-		}  // end input
+		}
 
-		// --------------------------------------------------------------------------------------------
 		case GBM_SELECTED:
 		{
-			TheTransitionHandler->remove("ScoreScreenShow", TRUE);
+			((ScoreScreenRvaTransitionHandlerView *)TheTransitionHandler)->remove(
+				BFMERetailAsciiString("ScoreScreenShow"), TRUE);
 			ReplayWasPressed = FALSE;
 
-			GameWindow *control = (GameWindow *)mData1;
 			Int controlID = control->winGetWindowId();
 			if( controlID == buttonOkID )
 			{
 				TheShell->pop();
-				TheCampaignManager->setCampaign(AsciiString::TheEmptyString);
+				((ScoreScreenRvaCampaignManagerView *)TheCampaignManager)->setCampaign(
+					*(const BFMERetailAsciiString *)&AsciiString::TheEmptyString);
 			}
-			else if ( controlID == buttonContinueID )	
+			else if ( controlID == buttonContinueID )
 			{
 				if(!buttonIsFinishCampaign)
 					ReplayWasPressed = TRUE;
-				if( screenType == SCORESCREEN_SINGLEPLAYER)	
+				if( screenType == SCORESCREEN_SINGLEPLAYER)
 				{
-					AsciiString mapName = TheCampaignManager->getCurrentMap();
-
+					BFMERetailAsciiString mapName =
+						((ScoreScreenRvaCampaignManagerView *)TheCampaignManager)->getCurrentMap();
 					if( mapName.isEmpty() )
 					{
 						ReplayWasPressed = FALSE;
@@ -557,48 +719,50 @@ WindowMsgHandledType ScoreScreenSystem( GameWindow *window, UnsignedInt msg,
 					}
 					else
 					{
-						CheckForCDAtGameStart( startNextCampaignGame );
+						bfmeReg1033( startNextCampaignGame,
+							(ScoreScreenRvaGameStartCallback)0x8e25e0 );
 					}
 				}
 			}
-			else if ( controlID == buttonBuddiesID )	
+			else if ( controlID == buttonBuddiesID )
 			{
 				GameSpyToggleOverlay( GSOVERLAY_BUDDY );
 			}
 			else if ( controlID == buttonSaveReplayID )
 			{
 				ScoreScreenEnableControls(FALSE);
-        WindowLayout *saveReplayLayout = TheShell->getPopupReplayLayout();
+				WindowLayout *saveReplayLayout = TheShell->getPopupReplayLayout();
 				DEBUG_ASSERTCRASH( saveReplayLayout, ("Unable to get save replay menu layout.\n") );
-				saveReplayLayout->runInit();
-				saveReplayLayout->hide( FALSE );
-				saveReplayLayout->bringForward();
+				ScoreScreenRvaWindowLayoutView *layout =
+					(ScoreScreenRvaWindowLayoutView *)saveReplayLayout;
+				layout->runInit( 0 );
+				layout->hide( FALSE );
+				layout->bringForward();
 			}
-
 			else if ( controlID == buttonEmoteID )
 			{
-				// read the user's input
-				txtInput.set(GadgetTextEntryGetText( textEntryChat ));
-				// Clear the text entry line
-				GadgetTextEntrySetText(textEntryChat, UnicodeString::TheEmptyString);
-				// Clean up the text (remove leading/trailing chars, etc)
+				txtInput.set(*(const StringBase<WideChar> *)&GadgetTextEntryGetText( textEntryChat ));
+				GadgetTextEntrySetText( textEntryChat,
+					*(const ScoreScreenRvaUnicodeString *)&UnicodeString::TheEmptyString );
 				txtInput.trim();
-				// Echo the user's input to the chat window
 				if (!txtInput.isEmpty())
 					if(TheLAN)
-						TheLAN->RequestChat(txtInput, LANAPIInterface::LANCHAT_EMOTE);
-					//add the gamespy chat request here
-			} //if ( controlID == buttonEmote )
+						((ScoreScreenRvaLanApiView *)TheLAN)->RequestChat(
+							(ScoreScreenRvaUnicodeString &)txtInput,
+							LANAPIInterface::LANCHAT_EMOTE);
+			}
 			for(Int i = 0; i < MAX_SLOTS; ++i)
 			{
-				AsciiString name;
+				BFMERetailAsciiString name;
 				name.format("ScoreScreen.wnd:ButtonAdd%d", i);
-				if( controlID == TheNameKeyGenerator->nameToKey(name))
+				if( controlID ==
+					TheNameKeyGenerator->nameToKey(
+						name.str()))
 				{
 					Bool notBuddy = TRUE;
 					Int playerID = (Int)GadgetButtonGetData(TheWindowManager->winGetWindowFromId(NULL,controlID));
-											// request to add a buddy
-					BuddyInfoMap *buddies = TheGameSpyInfo->getBuddyMap();
+					BuddyInfoMap *buddies =
+						((ScoreScreenRvaGameSpyInfoView *)TheGameSpyInfo)->getBuddyMap();
 					BuddyInfoMap::iterator bIt;
 					if( playerID > 0)
 					{
@@ -610,14 +774,14 @@ WindowMsgHandledType ScoreScreenSystem( GameWindow *window, UnsignedInt msg,
 					}
 					if(notBuddy)
 					{
-						BuddyRequest req;
-						req.buddyRequestType = BuddyRequest::BUDDYREQUEST_ADDBUDDY;
+						ScoreScreenRvaBuddyRequest req;
+						req.buddyRequestType = ScoreScreenRvaBuddyRequest::BUDDYREQUEST_ADDBUDDY;
 						req.arg.addbuddy.id = playerID;
-						UnicodeString buddyAddstr;
-						buddyAddstr = TheGameText->fetch("GUI:BuddyAddReq");
+						ScoreScreenRvaUnicodeString buddyAddstr;
+						buddyAddstr.set( *(const StringBase<WideChar> *)&TheGameText->fetch("GUI:BuddyAddReq") );
 						wcsncpy(req.arg.addbuddy.text, buddyAddstr.str(), MAX_BUDDY_CHAT_LEN);
 						req.arg.addbuddy.text[MAX_BUDDY_CHAT_LEN-1] = 0;
-						TheGameSpyBuddyMessageQueue->addRequest(req);
+						((ScoreScreenRvaBuddyMessageQueueView *)TheGameSpyBuddyMessageQueue)->addRequest(req);
 					}
 					break;
 				}
@@ -626,29 +790,21 @@ WindowMsgHandledType ScoreScreenSystem( GameWindow *window, UnsignedInt msg,
 
 		case GEM_EDIT_DONE:
 		{
-			GameWindow *control = (GameWindow *)mData1;
 			Int controlID = control->winGetWindowId();
-
-			// Take the user's input and echo it into the chat window as well as
-			// send it to the other clients on the lan
 			if ( controlID == textEntryChatID )
 			{
-				
-				// read the user's input
-				txtInput.set(GadgetTextEntryGetText( textEntryChat ));
-				// Clear the text entry line
-				GadgetTextEntrySetText(textEntryChat, UnicodeString::TheEmptyString);
-				// Clean up the text (remove leading/trailing chars, etc)
+				txtInput.set(*(const StringBase<WideChar> *)&GadgetTextEntryGetText( textEntryChat ));
+				GadgetTextEntrySetText( textEntryChat,
+					*(const ScoreScreenRvaUnicodeString *)&UnicodeString::TheEmptyString );
 				txtInput.trim();
-				// Echo the user's input to the chat window
-				if (!txtInput.isEmpty())
+				if (txtInput.getLength() != 0)
 					if(TheLAN)
-						TheLAN->RequestChat(txtInput, LANAPIInterface::LANCHAT_NORMAL);
-					//add the gamespy chat request here
-
-			}// if ( controlID == textEntryChatID )
+					((ScoreScreenRvaLanApiView *)TheLAN)->RequestChat(
+						(ScoreScreenRvaUnicodeString &)txtInput,
+						LANAPIInterface::LANCHAT_NORMAL);
+			}
 		}
-	}		
+	}
 	return MSG_HANDLED;
 }
 
