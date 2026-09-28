@@ -75846,7 +75846,7 @@ name,address,notes
 ?bfmeBaseTL@BfmeThingTL@@QAEXPAXH@Z,0x0083FB60,pin
 ?bfmeBaseUBA@BfmeThingUBA@@QAEXXZ,0x00010D07,pin
 ?bfmeBaseUNC@BfmeThingUNC@@QAEXXZ,0x00808B80,pin
-?bfmeBaseUpdate@Gen009D6330@@QAEXPAXPBXI@Z,0x009D6E50,address-derived base update target from the direct REL32 call at retail 0x009D634E
+?bfmeBaseUpdate@XferMD5CRC@@QAEXPAXPBXI@Z,0x009D6E50,address-derived base update target from the direct REL32 call at retail 0x009D634E
 ?bfmeBaseVDW@BfmeThingVDW@@QAEXHH@Z,0x00899F00,pin
 ?bfmeBaseVHC@BfmeThingVHC@@QAEXPAVBfmeMsgVHC@@@Z,0x007FBC30,pin
 ?bfmeBaseVHD@BfmeThingVHD@@QAEXPAVBfmeMsgVHC@@@Z,0x007FBC30,pin
