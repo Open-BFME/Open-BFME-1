@@ -1,7 +1,5 @@
 // ?computeAttackPath@AIUpdateInterface@@AAE_NPAVPathfindServicesInterface@@PBVObject@@PBUCoord3D@@@Z
-// partial score=0.73 date=2026-09-28
-// ?computeAttackPath@AIUpdateInterface@@AAE_NPAVPathfindServicesInterface@@PBVObject@@PBUCoord3D@@@Z
-// partial score=0.73 date=2026-09-28 (measured: 506 differing bytes, 1931/1929 B)
+// partial score=0.74 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/iniexception /Iinputs/reference/shims/turretai /Iinputs/reference/shims/aiupdatelayout /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 // Graft: replace the whole present-unmatched AIUpdateInterface::computeAttackPath body in game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp with everything below this header (declarations + body), then probe that TU. Stash alone does not compile.
@@ -22,6 +20,19 @@ struct BFMEAttackNode {
     BFMEAttackNode *m_nextOptimized;
     Coord3D m_position;
     PathfindLayerEnum m_layer;
+    Bool m_canOptimize;
+    Int m_costSoFar;
+    BFMEAttackNode(const Coord3D *position, PathfindLayerEnum layer) {
+        m_next = 0;
+        m_prev = 0;
+        m_nextOptimized = 0;
+        m_position.x = position->x;
+        m_position.y = position->y;
+        m_position.z = position->z;
+        m_layer = layer;
+        m_canOptimize = FALSE;
+        m_costSoFar = 0x7FFFFFFF;
+    }
     BFMEAttackNode *getNext() { return m_next; }
     BFMEAttackNode *getNextOptimized() { return m_nextOptimized; }
     const Coord3D *getPosition() const { return &m_position; }
@@ -111,6 +122,21 @@ public:
 		(this->*route.member)(o, g, l, f, line);
 	}
 };
+__declspec(noinline) void Path::prependNode(const Coord3D *position, PathfindLayerEnum layer)
+{
+    BFMEAttackNode *node = new BFMEAttackNode(position, layer);
+    BFMEAttackPath *path = reinterpret_cast<BFMEAttackPath *>(this);
+    BFMEAttackNode *head = path->m_first;
+    node->m_nextOptimized = head;
+    node->m_next = head;
+    if (head)
+        head->m_prev = node;
+    path->m_first = node;
+    path->m_isOptimized = FALSE;
+    if (path->m_last == 0)
+        path->m_last = node;
+}
+
 Bool AIUpdateInterface::computeAttackPath( PathfindServicesInterface *pathServices, const Object *victim, const Coord3D* victimPos )
 {
 	//CRCDEBUG_LOG(("AIUpdateInterface::computeAttackPath() for object %d\n", layout->m_object->getID()));
