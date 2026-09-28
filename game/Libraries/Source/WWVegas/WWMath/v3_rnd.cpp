@@ -35,6 +35,8 @@
  * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
+// Retail CRT initializer 00C6E390 calls the out-of-line Random3Class ctor.
+#define BFME_RANDOM3CLASS_CTOR_NOINLINE
 #include "v3_rnd.h"
 #include "vector2.h"
 

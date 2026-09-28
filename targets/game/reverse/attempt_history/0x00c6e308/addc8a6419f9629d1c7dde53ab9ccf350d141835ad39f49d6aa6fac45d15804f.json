@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "addc8a6419f9629d1c7dde53ab9ccf350d141835ad39f49d6aa6fac45d15804f",
+  "symbol": "?Rva00C6E308Initialize@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 1.0,
+  "source": "// ?Rva00C6E308Initialize@@YAXXZ\n// partial score=1.0 date=2026-09-27\n// cl: /O2 /MD\r\n#include <new>\r\n\r\n// Candidate entry boundaries are unproven: no incoming REL32, ILT or raw\r\n// image pointer was found for the three starts below. Do not claim these\r\n// bodies on byte shape alone. The surrounding routines end in plain RET.\r\nnamespace ATL {\r\nclass CAtlWinModule {\r\npublic:\r\n    CAtlWinModule() throw();\r\nprivate:\r\n    unsigned char storage[44];\r\n};\r\n}\r\nextern ATL::CAtlWinModule g_rva0130A45CObject;\r\nextern \"C\" int __cdecl atexit(void (__cdecl *callback)());\r\nvoid Rva00C715C0Release();\r\nvoid Rva00C715D4Release();\r\nvoid Rva00C715E8Release();\r\n\r\nvoid Rva00C6E308Initialize()\r\n{\r\n    new (&g_rva0130A45CObject) ATL::CAtlWinModule;\r\n    atexit(Rva00C715C0Release);\r\n}\r\n"
+}
