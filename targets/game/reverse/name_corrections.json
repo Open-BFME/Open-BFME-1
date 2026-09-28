@@ -7688,5 +7688,15 @@
   "after_sha256": "361fa880e70d3c272eb5ef39a8b0f36a6129ed0d1f08ca36fd756672e64a870c",
   "evidence": "targets/game/reverse/identity_evidence/00c6df70-dyninit-correction.md",
   "reason": "The old name claims the CRT-called dynamic initializer is an ordinary named function. Retail has no such export: the body is MSVC's TU-local _$E1 for the namespace-scope 0x01346DB0 vector global defined in this TU, called from the CRT init table with an atexit cleanup; the ledger now names the COFF symbol via object-symbol=_$E1 under an address-derived row name."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "bfmeRva00C6DF90Initialize",
+  "new_name": "Rva00C6DF90Init",
+  "before_sha256": "d70af649f034b5ba8c65c210def93362d2c0bcf085e7394fa834e064bee625c4",
+  "after_sha256": "f4b8c5604723ed7eb1993be3a17570087d7e3715f01f2b093c98fbd8bf8f1a2c",
+  "evidence": "targets/game/reverse/identity_evidence/00c6df70-dyninit-correction.md",
+  "reason": "The old name claims the CRT-called dynamic initializer is an ordinary named function. Retail has no such export: the body is MSVC's TU-local _$E1 for the namespace-scope 0x01346DC0 vector global defined in this TU, called from the CRT init table with an atexit cleanup; the ledger now names the COFF symbol via object-symbol=_$E1 under an address-derived row name."
  }
 ]
