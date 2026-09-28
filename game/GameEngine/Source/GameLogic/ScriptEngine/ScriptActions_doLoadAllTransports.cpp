@@ -1,5 +1,3 @@
-// ?doLoadAllTransports@ScriptActions@@IAEXABVAsciiString@@@Z
-// partial score=1.0 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline
 // stlport
 // ScriptActions::doLoadAllTransports, retail 0x003014C0 (979 bytes, ret 4).
@@ -296,20 +294,3 @@ void ScriptActions::doLoadAllTransports(const AsciiString &name)
     }
 }
 
-// LANDING BLOCKER (2026-09-28, opus-5.5): this body is byte-exact (979/979,
-// probe EXACT) and passed add_match's scoped verify with the four callee pins
-// below, but tools/pin_consistency.py --check refuses each route= pin because
-// the routed body's matched functions.csv row does not carry the pinned name:
-//   ?solve@PartitionSolver@@QAEXXZ at ILT 0x0000117C -> 0x00096570 (still the
-//     gen dump ?d_00096570; solve is itself blocked at 731/809 B)
-//   ?getSolution@PartitionSolver@@QBEABV?$vector@U?$pair@W4ObjectID@@W41@@...@XZ
-//     at ILT 0x00013A7A -> 0x00094BF0 (row is the opaque Rva00094BF0AddressPlus2C::get;
-//     partition_solver.cpp's getSolution already compiles EXACT against it)
-//   ??0?$vector@U?$pair@W4ObjectID@@W41@@...@QAE@ABV01@@Z (SolutionVec copy ctor)
-//     at ILT 0x00027B2E -> 0x002F8980 (row is Gen_002F8980::bfmeAssign)
-//   ?_M_insert_overflow@?$vector@U?$pair@W4ObjectID@@I@...@I_N@Z at ILT
-//     0x00026198 -> 0x002FED10 (row is Rva002FED10Element; the pair<ObjectID,UInt>
-//     name sits on 0x000960A0, which only solve calls, so that row is really
-//     SolutionVec's pair<ObjectID,ObjectID> instantiation)
-// Land once those four rows carry the real names (or solve is matched and the
-// other three rows are repointed), then add_match with --replace-rva 0x003014C0.
