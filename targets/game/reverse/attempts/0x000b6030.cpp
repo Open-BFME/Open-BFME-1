@@ -1,5 +1,5 @@
 // ?parseAmbientAudioProperties_000B6030@@YAXPAVDict@@PBVThingTemplate@@PAVRva00087BD0@@PA_NPAVDynamicAudioEventInfoRef@@3@Z
-// partial score=0.5 date=2026-09-28
+// partial score=0.51 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 #include "ascii_string.h"
@@ -230,13 +230,9 @@ void __cdecl parseAmbientAudioProperties_000B6030(Dict *properties, const ThingT
 			if (audioToModify->m_ptr == 0)
 			{
 				AudioEventInfoRef baseInfo;
-				const AudioEventRTS *sound;
-				if (tmpl)
-					sound = tmpl->getSound(0x57);
-				else if (soundOwner)
-					sound = soundOwner->get(0x57);
-				else
+				if (tmpl == 0 && soundOwner == 0)
 					return;
+				const AudioEventRTS *sound = tmpl ? tmpl->getSound(0x57) : soundOwner->get(0x57);
 				if (sound)
 				{
 					baseInfo = sound->m_eventInfo;
@@ -283,13 +279,7 @@ void __cdecl parseAmbientAudioProperties_000B6030(Dict *properties, const ThingT
 		else
 		{
 			AudioEventInfoRef baseInfo;
-			const AudioEventRTS *sound;
-			if (tmpl)
-				sound = tmpl->getSound(0x57);
-			else if (soundOwner)
-				sound = soundOwner->get(0x57);
-			else
-				sound = 0;
+			const AudioEventRTS *sound = !tmpl ? (soundOwner ? soundOwner->get(0x57) : 0) : tmpl->getSound(0x57);
 			if (sound)
 				baseInfo = sound->m_eventInfo;
 			if (baseInfo.m_ptr != 0)
