@@ -1,13 +1,30 @@
 // ?validMovement@BfmeAttackQuery@@QAE_NHHGPBX@Z
-// partial score=0.72 date=2026-09-17
+// partial score=0.8 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+//
+// opus-5.5 2026-09-28: 1671B vs retail 1708, shape 0.966 with 17 structural
+// differences (the 0.72 body was 1434B, shape 0.705, 54 structural). Fixes
+// with retail evidence: both early exits return FALSE (they jump to the
+// xor al,al epilogue at +0x693); profile byte +4 is template-flag==0 and +5
+// is bfmeIsComputerControlled, all four profile stores follow that call;
+// getTemplate is re-read for 0x444 and 0x4cc; the zone step is equal_range
+// with the iterator advanced before the links are walked; getLink(i) is
+// bounds-checked (0..7) inside i < getNumLinks(); the linked waypoint is
+// looked up with find() and the zone is visited only if the set does not
+// contain it (find, then insert, then push_back); _STLP_NO_EXCEPTIONS gives
+// retail's 0x88 aligned frame. Still wrong: container slots. Retail puts
+// set 0x38, maps 0x44/0x50, profile 0x5c, deque 0x68 (esp after the three
+// pushes); ours puts deque 0x14, set 0x3c, maps 0x4c/0x58, profile 0x7c, so
+// constant 0 takes edi early and acceptableSurfaces spills. Block-scoping the
+// deque/set and moving the profile after the maps did not move them.
 //
 // Retail 0x003ED070.  The body is the zone-graph transition test reached by
 // BfmeAttackQuery::checkCandidate through ILT 0x0002F798.  The waypoint
 // fields at +0x48, +0x60, +0x20 and +0x4c are kept address-derived here: the
 // retail bytes prove their offsets and use, but not a semantic field name.
 
+#define _STLP_NO_EXCEPTIONS 1
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #include <deque>
 #include <map>
@@ -33,8 +50,8 @@ struct Coord3D
 struct PathfindMovementProfile
 {
 	Int acceptableSurfaces;
-	Bool crusher;
 	Bool terrainOnly;
+	Bool crusher;
 	unsigned char padding[2];
 	Int layer;
 };
@@ -100,6 +117,18 @@ public:
 	Waypoint *getNext() const
 	{
 		return *(Waypoint **)((const unsigned char *)this + 0x1c);
+	}
+
+	Int getNumLinks() const
+	{
+		return *(const Int *)((const unsigned char *)this + 0x4c);
+	}
+
+	Waypoint *getLink(Int index) const
+	{
+		if (index >= 0 && index < 8)
+			return *(Waypoint **)((const unsigned char *)this + 0x20 + index * 4);
+		return 0;
 	}
 };
 
@@ -290,11 +319,11 @@ Bool BfmeAttackQuery::validMovement(Int layer, Int fromZone,
 	Object *object = (Object *)layer;
 
 	if (forceGround(object))
-		return true;
+		return false;
 
 	const unsigned char *ai = *(const unsigned char **)((const unsigned char *)object + 0x204);
 	if (ai == 0 && extra == 0)
-		return true;
+		return false;
 
 	Int acceptableSurfaces;
 	if (extra != 0)
@@ -302,17 +331,15 @@ Bool BfmeAttackQuery::validMovement(Int layer, Int fromZone,
 	else
 		acceptableSurfaces = readInt(ai, 0x1b8);
 
-	const unsigned char *thingTemplate =
-		*(const unsigned char **)((const unsigned char *)object + 4);
-	const unsigned char *effectiveTemplate = finalTemplate(thingTemplate);
-	Int effectiveLayer = readInt(effectiveTemplate, 0x444) - 1;
-
-	effectiveTemplate = finalTemplate(thingTemplate);
-	unsigned char templateFlag = readByte(effectiveTemplate, 0x4cc);
+	Int effectiveLayer = readInt(finalTemplate(
+		*(const unsigned char **)((const unsigned char *)object + 4)), 0x444) - 1;
+	unsigned char templateFlag = readByte(finalTemplate(
+		*(const unsigned char **)((const unsigned char *)object + 4)), 0x4cc);
+	Bool computerControlled = isComputerControlled(object);
 	PathfindMovementProfile profile;
 	profile.acceptableSurfaces = acceptableSurfaces;
 	profile.terrainOnly = templateFlag == 0;
-	profile.crusher = isComputerControlled(object);
+	profile.crusher = computerControlled;
 	profile.layer = effectiveLayer;
 
 	RvaWaypointByZone zoneToWaypoint;
@@ -363,20 +390,25 @@ Bool BfmeAttackQuery::validMovement(Int layer, Int fromZone,
 		if (currentZone == (Int)toZone)
 			return true;
 
-		RvaWaypointByZone::iterator it = zoneToWaypoint.lower_bound(currentZone);
-		while (it != zoneToWaypoint.end() && it->first == currentZone)
+		_STL::pair<RvaWaypointByZone::iterator, RvaWaypointByZone::iterator> range =
+			zoneToWaypoint.equal_range(currentZone);
+		RvaWaypointByZone::iterator it = range.first;
+		while (it != range.second)
 		{
 			Waypoint *waypoint = it->second;
-			Int count = readInt(waypoint, 0x4c);
-			for (Int index = 0; index < count && index < 8; ++index)
-			{
-				Waypoint *linked = *(Waypoint **)((unsigned char *)waypoint +
-					0x20 + index * 4);
-				Int linkedZone = waypointToZone[linked];
-				if (visited.insert(linkedZone).second)
-					pending.push_back(linkedZone);
-			}
 			++it;
+			for (Int index = 0; index < waypoint->getNumLinks(); ++index)
+			{
+				Waypoint *linked = waypoint->getLink(index);
+				RvaWaypointToZone::iterator found = waypointToZone.find(linked);
+				if (found == waypointToZone.end())
+					continue;
+				Int linkedZone = found->second;
+				if (visited.find(linkedZone) != visited.end())
+					continue;
+				visited.insert(linkedZone);
+				pending.push_back(linkedZone);
+			}
 		}
 	}
 
