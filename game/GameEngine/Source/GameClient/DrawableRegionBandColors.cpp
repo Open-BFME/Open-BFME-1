@@ -44,6 +44,21 @@ static const RGBAColorInt s_greenColors00CF1310[4] =
 	{ 0x4d, 0xb4, 0x03, 0xff }, { 0x04, 0x5d, 0x03, 0xff },
 };
 
+static const RGBAColorInt s_redColors00CF135C[3] =
+{
+	{ 0xff, 0x13, 0x4e, 0xff }, { 0xff, 0x83, 0x6c, 0xff }, { 0xcc, 0x00, 0x01, 0xff },
+};
+
+static const RGBAColorInt s_amberColors00CF1398[3] =
+{
+	{ 0xe6, 0xa2, 0x00, 0xff }, { 0xff, 0xff, 0xb0, 0xff }, { 0xb0, 0x61, 0x00, 0xff },
+};
+
+static const RGBAColorInt s_greenColors00CF13D4[3] =
+{
+	{ 0x0c, 0x9c, 0x24, 0xff }, { 0xdd, 0xf5, 0x8e, 0xff }, { 0x05, 0x71, 0x16, 0xff },
+};
+
 // from * (1 - t) + to * t per channel, packed as A8R8G8B8.  Each channel is
 // widened to Real before the blend; retail schedules the second channel's
 // sign test ahead of the first product only in that form.
@@ -105,5 +120,40 @@ void bfmeColorLookup00411270( Real value, Color *colors )
 		colors[1] = 0xffffb76c;
 		colors[2] = 0xffff2a19;
 		colors[3] = 0xffd1010d;
+	}
+}
+
+// ?bfmeColorLookup00411400@@YAXMPAH@Z
+void bfmeColorLookup00411400( Real value, Color *colors )
+{
+	if( value >= 0.8f )
+	{
+		colors[0] = 0xff0c9c24;
+		colors[1] = 0xffddf58e;
+		colors[2] = 0xff057116;
+	}
+	else if( value >= 0.6f )
+	{
+		value = ( value - 0.6f ) * 5.0f;
+		for( Int i = 0; i < 3; ++i )
+			colors[i] = lerpColor00411110( s_amberColors00CF1398[i], s_greenColors00CF13D4[i], value );
+	}
+	else if( value >= 0.4f )
+	{
+		colors[0] = 0xffe6a200;
+		colors[1] = 0xffffffb0;
+		colors[2] = 0xffb06100;
+	}
+	else if( value >= 0.2f )
+	{
+		value = ( value - 0.2f ) * 5.0f;
+		for( Int i = 0; i < 3; ++i )
+			colors[i] = lerpColor00411110( s_redColors00CF135C[i], s_amberColors00CF1398[i], value );
+	}
+	else
+	{
+		colors[0] = 0xffff134e;
+		colors[1] = 0xffff836c;
+		colors[2] = 0xffcc0001;
 	}
 }
