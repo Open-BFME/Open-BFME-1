@@ -89808,3 +89808,4 @@ _Rva0086C6E0,0x0086C6E0,gap-seat; opaque address-derived five-argument cdecl hel
 ?rva001BD790@BfmeSub1CC_EC3@@QAEXM@Z,0x00032A24,ILT jumping to the unclaimed 24-byte locomotor body that lowers the float at +0x3C to its argument (thiscall ret 4); called by Object::rva001CC250 (0x001CC250) on AI+0x1CC right before cache1B4980; address-derived name
 ?perNode@Rva006F8F00Payload@@QAEXPAX0PAH1@Z,0x006F8E60, retail thiscall ret16; arrays then index and vertex counts; caller 006F8F00
 ?Draw_Sentence@Render2DSentenceHHHH@@QAEXIIII@Z,0x0093EB50,banked four-color ABI view of Render2DSentenceClass; retail thiscall ret16; W3DGameWindowDrawText witness
+?rva0052B540@BfmeAptScreenObjectives@@QAEXHHABVUnicodeString@@@Z,0x0052B540,APT PlayerTable helper; all four 0x0052C220 calls set ECX=this and push row column UnicodeString reference; RET12; independent body and ABI evidence in identity_evidence/0x0052c220.md

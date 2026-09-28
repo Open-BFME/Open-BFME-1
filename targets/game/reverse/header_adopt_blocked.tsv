@@ -38,6 +38,8 @@ game/GameEngine/Source/Common/RTS/PlayerProductionCost.cpp	AsciiString	Functions
 game/GameEngine/Source/Common/RTS/PlayerRankAndScience.cpp	AsciiString	Code\GameEngine\Source\Common\RTS\PlayerRankAndScience.cpp(68) : error C2953: 'StringBase' : template class has already been defined
 game/GameEngine/Source/Common/RTS/Player_setDefaultTeam.cpp	AsciiString	Code\GameEngine\Source\Common\RTS\Player_setDefaultTeam.cpp(7) : error C2039: 'Header' : is not a member of 'AsciiString'
 game/GameEngine/Source/Common/RTS/TeamFactoryCtorThunk.cpp	AsciiString	Functions: FAIL 2/16
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenObjectivesRva0052C220.cpp	AsciiString	Functions: FAIL 1/1
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenObjectivesRva0052C220.cpp	UnicodeString	Functions: FAIL 1/1
 game/GameEngine/Source/Common/RTS/TeamFactory_findTeamPrototype_Thunk.cpp	AsciiString	Functions: FAIL 1/1
 game/GameEngine/Source/Common/Recorder.cpp	AsciiString	Functions: FAIL 1/7
 game/GameEngine/Source/Common/RecorderInitControls_Thunk.cpp	AsciiString	Functions: FAIL 1/1
