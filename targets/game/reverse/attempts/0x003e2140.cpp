@@ -1,6 +1,6 @@
-// ?d_003e2140@@YAXXZ
-// partial score=0.3 date=2026-09-27
-// cl: /DNDEBUG /MD /Igame/GameEngine/Include/Precompiled
+// ?validateEndpoint003E2140@Pathfinder@@QAE_NPAVObject@@PBUCoord3D@@1@Z
+// partial score=0.663 date=2026-09-28
+// cl: /DNDEBUG /MD /Igame/GameEngine/Include/Precompiled /Igame/GameEngine/Source/GameLogic/Object /Igame/GameEngine/Source/Common/Thing
 // RVA 003E2140: compare endpoint cells/layers then validate the destination.
 // Address retained: no independently established semantic method identity.
 #include "PreRTS.h"
@@ -9,16 +9,15 @@ float __cdecl floor(float);
 struct Coord3D { float x,y,z; };
 struct ICoord2D { int x,y; };
 enum PathfindLayerEnum { LAYER_INVALID=0 };
-class BfmeSubBIA { public: int ask(); };
-class Override2140 { public: int m_00; BfmeSubBIA *m_override; char pad08[0xc8-8]; unsigned m_c8;
- Override2140 *finalOverride() { return m_override?(Override2140 *)m_override->ask():this; }
+class Overridable { public: const Overridable *getFinalOverride() const; int m_00; const Overridable *m_nextOverride; };
+class Override2140 { public: int m_00; const Overridable *m_override; char pad08[0xc8-8]; unsigned m_c8; char padcc[0xd4-0xcc]; unsigned m_flagsD4; char padd8[0x408-0xd8]; float m_level;
+ Override2140 *finalOverride() { return m_override?(Override2140 *)m_override->getFinalOverride():this; }
 };
 class AIUpdateInterface { public: int getIgnoredObstacleID(); char pad00[0x1b8]; unsigned m_1b8; };
-class Object { public:
- bool bfmeIsComputerControlled() const;
- int m_00; Override2140 *m_template; char pad08[0x204-8]; AIUpdateInterface *m_ai204;
- char pad208[0x344-0x208]; unsigned m_privateStatus;
-};
+// Canonical Object layout has m_ai at +0x204 and a byte m_privateStatus
+// at +0x344 (object.h BFME_LAYOUT_CHECK), replacing the bank's partial view.
+#define OBJECT_TU_MEMBERS bool bfmeIsComputerControlled() const;
+#include "object.h"
 class Rva003DB4C0 { public: bool field() const; };
 class Rva003DB4F0 { public: int value() const; };
 class PathfindCell { public: char pad00[12]; unsigned m_word;
@@ -40,14 +39,54 @@ public:
  bool bfmeStepD4F90(void *,PathfindCell *);
  char pad00[0x844]; int m_ignoreObstacleID;
 };
+extern "C" __declspec(dllimport) double __cdecl floor(double);
+extern const Real g_pathfindCellSize, g_pathfindDoubleCellSize, g_pathfindLevelLimit, g_pathfindCellCenterBias;
+__declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *object, Int &radius, Bool &centerInCell )
+{
+	Real diameter;
+	Int maxRadius = 2;
+	Override2140 *t1 = ((Override2140 *)object->m_template);
+	if ((t1 == 0 ? t1 : t1->finalOverride())->m_c8 & 0x400) {
+		maxRadius = 4;
+	} else {
+		Override2140 *t2 = ((Override2140 *)object->m_template);
+		if ((t2 == 0 ? t2 : t2->finalOverride())->m_flagsD4 & 0x1000) {
+			maxRadius = 4;
+		}
+	}
+
+	diameter = (*(const float *)((const char *)object+0xbc)) * 2.0f;
+	if (diameter > g_pathfindCellSize && diameter < g_pathfindDoubleCellSize) {
+		diameter = 20.0f;
+	}
+
+	if ((((Override2140 *)object->m_template) == 0 ? ((Override2140 *)object->m_template) :
+		((Override2140 *)object->m_template)->finalOverride())->m_level > g_pathfindLevelLimit) {
+		diameter = (((Override2140 *)object->m_template) == 0 ? ((Override2140 *)object->m_template) :
+		((Override2140 *)object->m_template)->finalOverride())->m_level;
+	}
+
+	radius = fast_float2long_round((Real)floor((double)(diameter / 10.0f + g_pathfindCellCenterBias)));
+	centerInCell = false;
+	if (radius == 0) radius++;
+	if (radius & 1) {
+		centerInCell = true;
+	}
+	radius /= 2;
+	if (radius > maxRadius) {
+		radius = maxRadius;
+		centerInCell = true;
+	}
+}
+
 bool Pathfinder::validateEndpoint003E2140(Object *obj,const Coord3D *from,const Coord3D *to)
 {
  if(obj->m_privateStatus&1) return true;
- Override2140 *data=obj->m_template;
- if(data && data->m_override) data=(Override2140 *)data->m_override->ask();
+ Override2140 *data=(Override2140 *)obj->m_template;
+ if(data && data->m_override) data=(Override2140 *)data->m_override->getFinalOverride();
  if(data->m_c8&4) return true;
  if(!*((unsigned char *)this+8)) return true;
- AIUpdateInterface *ai=obj->m_ai204;
+ AIUpdateInterface *ai=obj->m_ai;
  if(!ai) { yesEarly: return true; }
  PathfindCell *b;
  {
@@ -82,7 +121,7 @@ bool Pathfinder::validateEndpoint003E2140(Object *obj,const Coord3D *from,const 
  int saved=m_ignoreObstacleID;
  m_ignoreObstacleID=ai->getIgnoredObstacleID();
  Movement2140 info;
- AIUpdateInterface *curAI=obj->m_ai204;
+ AIUpdateInterface *curAI=obj->m_ai;
  unsigned char computer=obj->bfmeIsComputerControlled();
  info.m_surfaces=curAI->m_1b8;
  info.m_field04=!((Rva003DB4C0 *)obj)->field();
