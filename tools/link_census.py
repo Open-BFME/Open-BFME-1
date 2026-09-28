@@ -105,12 +105,35 @@ def alias_scaffold(rows, wanted):
         else:
             by_address[address].append(row)
 
+    defined = {}
+
+    def object_name(row):
+        """The symbol the row's object really defines for it: the notes'
+        object-symbol= alias, else the ledger name, else the one defined
+        symbol equal to it up to the per-machine anonymous-namespace hash."""
+        obj = build.row_object(row)
+        if obj not in defined:
+            try:
+                defined[obj] = {s["name"] for s in build.read_object_symbols(obj.read_bytes()) if s["section"] > 0}
+            except OSError:
+                defined[obj] = set()
+        wanted_name = build.ledger_object_symbol(row)
+        if wanted_name in defined[obj]:
+            return wanted_name
+        normal = re.sub(r"\?A0x[0-9A-Fa-f]{8}", "?A0xHASH", wanted_name)
+        found = [n for n in defined[obj] if re.sub(r"\?A0x[0-9A-Fa-f]{8}", "?A0xHASH", n) == normal]
+        return found[0] if len(found) == 1 else None
+
     def defining(address, depth=0):
         owners = by_address.get(address)
         if owners:
-            authored = sorted(r["name"] for r in owners
-                              if r["source"].startswith("game/") and not r["source"].startswith(("game/gen_small/", "game/gen_asm/")))
-            return authored[0] if authored else sorted(r["name"] for r in owners)[0]
+            ranked = sorted(owners, key=lambda r: (not (r["source"].startswith("game/") and not r["source"].startswith(
+                ("game/gen_small/", "game/gen_asm/"))), r["name"]))
+            for row in ranked:
+                name = object_name(row)
+                if name:
+                    return name
+            return None
         if depth < 2 and address in stubs:
             return defining(stubs[address], depth + 1)
         return None
@@ -152,16 +175,48 @@ def objects(rows):
     return present, missing
 
 
+def alias_object(table, path):
+    """Write a COFF object holding one weak external per alias.
+
+    /ALTERNATENAME for all 71,090 aliases crashed link.exe 7.1 (LNK1000) while
+    20,000 linked; a weak external with IMAGE_WEAK_EXTERN_SEARCH_ALIAS, the
+    record MASM's ALIAS directive emits, is the ordinary object-file way to say
+    "if nothing defines this name, use that one".
+    """
+    import struct
+    targets = sorted(set(table.values()))
+    strings = bytearray(b"\0\0\0\0")
+
+    def name_field(text):
+        raw = text.encode("latin-1")
+        if len(raw) <= 8:
+            return raw.ljust(8, b"\0")
+        offset = len(strings)
+        strings.extend(raw + b"\0")
+        return struct.pack("<II", 0, offset)
+
+    symbols = bytearray()
+    index = {}
+    for target in targets:
+        index[target] = len(symbols) // 18
+        symbols += name_field(target) + struct.pack("<IhHBB", 0, 0, 0x20, 2, 0)  # UNDEF external
+    for alias, target in sorted(table.items()):
+        symbols += name_field(alias) + struct.pack("<IhHBB", 0, 0, 0, 105, 1)  # WEAK_EXTERNAL
+        symbols += struct.pack("<II", index[target], 3) + b"\0" * 10          # SEARCH_ALIAS
+    count = len(symbols) // 18
+    strings[0:4] = struct.pack("<I", len(strings))
+    header = struct.pack("<HHIIIHH", 0x14C, 0, 0, 20, count, 0, 0)
+    path.write_bytes(header + bytes(symbols) + bytes(strings))
+    return path
+
+
 def link(objs, aliases=None, tag="census"):
     OUT.mkdir(parents=True, exist_ok=True)
     rsp = OUT / "objects.rsp"
     rsp.write_text("\n".join(f'"{o}"' for o in objs) + "\n", encoding="utf-8")
     extra = []
     if aliases:
-        alias_rsp = OUT / "aliases.rsp"
-        alias_rsp.write_text("".join(f"/ALTERNATENAME:{name}={target}\n"
-                                     for name, target in sorted(aliases.items())), encoding="utf-8")
-        extra.append(f"@{alias_rsp}")
+        extra.append(str(alias_object(aliases, OUT / "aliases.obj")))
     root = build.vc71_root()
     linker = root / "Vc7" / "bin" / "link.exe"
     command = [str(linker), "/NOLOGO", "/FORCE", "/NODEFAULTLIB", "/INCREMENTAL:NO", "/MACHINE:X86",
@@ -292,7 +347,7 @@ def report(census):
         print(f"  with the alias scaffold ({scaffold['aliases']:,} entries): LINK DIED -- {scaffold['crashed']}; "
               "no counts")
     elif scaffold:
-        print(f"  with the alias scaffold ({scaffold['aliases']:,} /ALTERNATENAME entries): "
+        print(f"  with the alias scaffold ({scaffold['aliases']:,} weak-external aliases): "
               f"{sum(scaffold['unresolved_classes'].values()):,} unresolved, "
               f"{sum(scaffold['duplicate_classes'].values()):,} duplicates")
         for kind, count in sorted(scaffold["unresolved_classes"].items(), key=lambda kv: -kv[1]):
@@ -303,7 +358,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--report", action="store_true", help="summarise build/link_census/census.json")
     ap.add_argument("--scaffold", action="store_true",
-                    help="relink with the alias scaffold (/ALTERNATENAME each called name to the symbol "
+                    help="relink with the alias scaffold (a weak external from each called name to the symbol "
                          "defined at its pinned address) and report what remains")
     ap.add_argument("--history", action="store_true",
                     help="append this census to targets/game/reverse/link_census_history.csv (the weekly trend)")
