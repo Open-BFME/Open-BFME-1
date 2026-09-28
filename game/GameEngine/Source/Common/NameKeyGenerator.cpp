@@ -84,7 +84,7 @@ void NameKeyGenerator::freeSockets()
 	}
 
 	// BFME-only: also drop the reverse key->Bucket index (see shim header).
-	reinterpret_cast<KeyToBucketMap*>(m_keyToBucketStorage)->clear();
+	keyToBucketMap().clear();
 
 }  // end freeSockets
 

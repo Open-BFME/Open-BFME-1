@@ -191,8 +191,8 @@ private:
 	// freed anywhere); this storage does too, by construction. Same technique as
 	// WWDebug/wwmemlog.cpp's `char _MemLogCriticalSectionHandle[sizeof(CRITICAL_SECTION)]`.
 	typedef std::hash_map<NameKeyType, Bucket*, rts::hash<NameKeyType>, rts::equal_to<NameKeyType> > KeyToBucketMap;
-	UnsignedInt		m_keyToBucketStorage[(sizeof(KeyToBucketMap) + sizeof(UnsignedInt) - 1) / sizeof(UnsignedInt)];
-	KeyToBucketMap& keyToBucketMap() { return *reinterpret_cast<KeyToBucketMap*>(m_keyToBucketStorage); }
+	KeyToBucketMap		m_keyToBucketStorage;
+	KeyToBucketMap& keyToBucketMap() { return m_keyToBucketStorage; }
 
 };  // end class NameKeyGenerator
 
