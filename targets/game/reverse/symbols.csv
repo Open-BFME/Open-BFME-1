@@ -89605,3 +89605,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?countTiles@WorldHeightMap@@SAHPAVInputStream@@PA_N@Z,0x0001B022,additive: retail call target of the red row ?readTexClass@WorldHeightMap@@IAEXPAUTXTextureClass@@PAPAVTileData@@@Z
 ?getTexture@TerrainType@@QAE?AVAsciiString@@XZ,0x0003B82C,additive: retail call target of the red row ?readTexClass@WorldHeightMap@@IAEXPAUTXTextureClass@@PAPAVTileData@@@Z
 ?readTiles@WorldHeightMap@@SA_NPAVInputStream@@PAPAVTileData@@H@Z,0x0000B910,additive: retail call target of the red row ?readTexClass@WorldHeightMap@@IAEXPAUTXTextureClass@@PAPAVTileData@@@Z
+?getUnicodeBuildTime@Version@@QAE?AVUnicodeString@@XZ,0x000AF080, RecorderStartRecording retail call +0x25A; existing matched VersionGetUnicodeBuildTime body and Version:BuildTime literal prove identity; thiscall hidden UnicodeString return ret4
