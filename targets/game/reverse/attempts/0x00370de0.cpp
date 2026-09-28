@@ -1,8 +1,8 @@
-// ?rva00370de0@CastleBehavior@@QAEXPAVObject@@@Z
+// ?onTriggerEntered@CastleBehavior@@QAEXPAVObject@@@Z
 // partial score=0.977 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /GX- /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWMath /Igame/GameEngine/Source/GameLogic/Object /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
-// ?rva00370de0@CastleBehavior@@QAEXPAVObject@@@Z
+// ?onTriggerEntered@CastleBehavior@@QAEXPAVObject@@@Z
 
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
@@ -204,16 +204,16 @@ class CastleBehavior : public FoundationAIUpdate
 {
 public:
 	virtual ~CastleBehavior();
-	void rva00370de0(Object *object);
+	void onTriggerEntered(Object *object);
 
 private:
 	int m_at9c;
 	ObjectID m_objectID;
 	unsigned char m_padA4[0xF4 - 0xA4];
-	_STL::set<Gen_t_000ef440_k4> m_ownedObjectsF4;
+	_STL::set<Gen_t_000ef440_k4> m_ownedObjectSetF4;
 };
 
-void CastleBehavior::rva00370de0(Object *object)
+void CastleBehavior::onTriggerEntered(Object *object)
 {
 	if (object == 0)
 		return;
@@ -285,7 +285,7 @@ void CastleBehavior::rva00370de0(Object *object)
  {
 	Gen_t_000ef440_k4 value;
 	value.value = object->m_id;
-	m_ownedObjectsF4.insert(value);
+	m_ownedObjectSetF4.insert(value);
  }
 }
 
