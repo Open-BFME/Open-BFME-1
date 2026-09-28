@@ -1,5 +1,5 @@
-// ?drawTrapezoidWater@WaterRenderObjClass@@IAEXPAVRva007A8FF0Data@@QAVVector3@@@Z
-// partial score=0.997981021603 date=2026-09-23
+// ?d_007a8ff0@@YAXXZ
+// partial score=0.9992 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/water /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Benchmark /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 // RVA 007A8FF0: continuous Capstone decode of 4953 bytes, RET 8 at 007AA346,
@@ -193,7 +193,7 @@ void WaterRenderObjClass::drawTrapezoidWater(Rva007A8FF0Data *water, Vector3 poi
 	Vector3 uVec2(points[2]);
 	Vector3 vVec2(points[2]);
 	uVec2 -= vVec1;
-	vVec2	-= uVec1;
+	vVec2 -= Vector3(uVec1);
 	uVec1 -= origin;
 	vVec1 -= origin;
 	Int uCount = (Rva007A8FF0Length(uVec1)+Rva007A8FF0Length(uVec2)) / (8*MAP_XY_FACTOR);
