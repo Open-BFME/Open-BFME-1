@@ -527,7 +527,7 @@ void StructureToppleUpdate::applyCrushingDamage(Real theta)
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // ?doDamageLine@StructureToppleUpdate@@IAEXPAVObject@@PBVWeaponTemplate@@MMMM@Z
-// Body in StructureToppleUpdate_doDamageLine.asm (exact 523B retail).
+// Body in StructureToppleUpdate_doDamageLine.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
