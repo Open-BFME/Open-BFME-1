@@ -1,34 +1,37 @@
 # Carving unclaimed `.text`
 
-`tools/carve_unclaimed.py` serves a second anonymous lane for bytes that are
-not covered by `targets/game/reverse/functions.csv`. A carved row is a temporary boundary
-claim, not an identity claim. Its name is `?d_%08x@@YAXXZ`, its source is
-`targets/game/reverse/carved.csv`, and `eligibility.carved_rows()` removes it as soon as a
-new ledger row covers its range.
+`tools/carve_unclaimed.py` serves a second anonymous lane: bytes that no row
+in `targets/game/reverse/functions.csv` covers. A carved row is a temporary
+boundary claim, not an identity claim. It is named `?d_%08x@@YAXXZ`, lives in
+`targets/game/reverse/carved.csv`, and `eligibility.carved_rows()` drops it as
+soon as a ledger row covers its range.
 
 ## Evidence and columns
 
-The carver merges every ledger interval, subtracts it from the retail `.text`
-section, removes `0xCC` padding runs, and emits only candidates with positive
-evidence:
+The carver subtracts every ledger interval from retail `.text`, removes `0xCC`
+padding runs, and keeps only candidates with positive evidence at both ends:
 
 | Column | Meaning |
 | --- | --- |
-| `rva`, `size` | The decoded body extent; the serving layer derives the address-based anonymous name. |
-| `start_evidence` | `rel32-call/jmp` means a direct relative call or jump landed at the start; `ghidra-start` is an advisory inventory start. |
-| `callers` | Number of direct REL32 call/jump sites that targeted the start. |
-| `end_evidence` | A decoded `ret` or tail `jmp` before padding/end, or a Ghidra extent. |
-| `ghidra` | The advisory Ghidra name when one exists; empty means the name is unknown. |
+| `rva`, `size` | The decoded body extent. The anonymous name derives from the address. |
+| `start_evidence` | `rel32-call/jmp`: a direct relative call or jump lands on the start. `ghidra-start`: an advisory Ghidra inventory start. |
+| `callers` | Number of direct REL32 call/jump sites that target the start. |
+| `end_evidence` | A decoded terminal: `ret+int3`/`jmp+int3` (followed by padding) or `ret-tail`/`jmp-tail` (immediately before the next positive start or the gap end). |
+| `ghidra` | Ghidra's advisory name, if any; empty means unknown. |
 
-Every candidate goes through `BoundaryValidator.check_start`,
-`check_end`, and its padding check. Candidates crossing a known function,
-an internal `int3` run, a claimed range, or another carved candidate are
-discarded. Absence from Ghidra never rejects a start. Regeneration is
-deterministic and shrink-on-land.
+Ends are never taken from Ghidra: its sizes stop short of the real `ret`,
+inside the epilogue. A Ghidra start with no decoded terminal before the next
+fence is not served, but absence from Ghidra never rejects a start.
+
+Every candidate passes `BoundaryValidator.check_start`, `check_end` and its
+padding check. A candidate crossing a known function, an internal `int3` run,
+a claimed range or another carved candidate is discarded.
+`python3 tools/carve_unclaimed.py` regenerates the file deterministically and
+prints counts by size band; landed ranges drop out.
 
 ## Working a carved row
 
-Use the same workflow as an anonymous body. Start with the retail boundary
+Work it like any anonymous body. Start from the retail boundary
 (`tools/dis_retail.py`), then read the evidence pack:
 
 ```text
@@ -36,48 +39,14 @@ python3 tools/brief.py --rvas 0x003B92D0
 python3 tools/callees.py 0x003B92D0 296
 ```
 
-Keep the address token in the name unless a caller, vtable, string, layout, or
-other independent evidence proves a real identity. Write clean C++ under its
+Keep the address token in the name unless a caller, vtable, string, layout or
+other independent evidence proves the identity. Write clean C++ at its
 official `game/` path and land it with the ordinary `tools/add_match.py`
-command. A partial reconstruction is banked with `re_log.py --stash`, just as
-for a dump body; no carved-specific ledger exception is needed.
+command. Bank a partial reconstruction as for a dump body:
+`re_log.py record ... partial ... --stash <file> --score <0..1>`.
 
-`tools/fleet/pick_anon.py` includes carved rows in its expected-bytes ranking.
-`tools/next_work.py --tier carved` selects only this lane, and the default
-queue checks it immediately after the finish tier. `brief.py` and
-`context_pack.py` resolve carved addresses so callers through an ILT thunk,
-strings, vtables, witnessed layouts, and landed neighbours remain available.
-
-## Live pool measurement
-
-Before the proof landings the ledger reported **1,147,215** unclaimed
-non-padding `.text` bytes; the three five-byte landings leave **1,147,200** in
-the live `progress.py` denominator. Running `python3 tools/carve_unclaimed.py
---summary` on this checkout produced
-7,688 positive-evidence candidates covering 760,051 bytes (the three proof
-landings removed three five-byte candidates):
-
-| Size band | Candidates | Candidate bytes |
-| --- | ---: | ---: |
-| 32-299 B | 7,099 | 85,193 |
-| 300-999 B | 397 | 217,258 |
-| 1,000-2,499 B | 140 | 224,768 |
-| 2,500+ B | 52 | 232,832 |
-| **Total** | **7,688** | **760,051** |
-
-The candidate total is a measured, evidence-backed subset of the larger
-unclaimed denominator; bytes without a positive start and end remain unserved
-until later evidence appears.
-
-## Ends are decoded, never taken from Ghidra
-
-The first eight served candidates whose end came from Ghidra's function size
-were all refuted as `no-boundary` on 2026-09-16 (0x003A2700, 0x003FEBB0,
-0x003ED070, 0x003E6EE0, 0x004CC980, 0x00713780, 0x000DA610, 0x0068C400): Ghidra
-stops 3 to 13 bytes before the real `ret`, inside the epilogue. Since then the
-carver takes an end only from a decoded terminal instruction: `ret+int3` /
-`jmp+int3` (terminal followed by padding) or `ret-tail` / `jmp-tail` (terminal
-immediately before the next positive start or the gap end, no padding between).
-A Ghidra start with no decoded terminal before the next fence is not served.
-Regenerating after the fix re-carved all eight at exactly the sizes the
-refutations measured.
+`python3 tools/next_work.py --tier carved` serves only this lane; the default
+queue checks it right after the finish tier. `tools/fleet/pick_anon.py`
+includes carved rows in its expected-bytes ranking. `brief.py` and
+`context_pack.py` resolve carved addresses, so callers through an ILT thunk,
+strings, vtables, witnessed layouts and landed neighbours stay available.
