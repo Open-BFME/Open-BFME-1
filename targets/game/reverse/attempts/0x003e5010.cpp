@@ -1,5 +1,5 @@
 // ?rva003E5010@Pathfinder@@QAEXPAVObject@@PAUCoord3D@@0PAX@Z
-// partial score=0.22 date=2026-09-21
+// partial score=0.95 date=2026-09-27
 // stlport
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /I.
 // Retail 0x003E5010, 1262 bytes.  The owning Pathfinder method is kept
@@ -190,13 +190,19 @@ void Pathfinder::rva003E5010(Object *source, Coord3D *destination,
 
 	BfmeThingTemplate *firstTemplate = (BfmeThingTemplate *)
 		rva003E5010Template(source->m_template);
-	Int maxLayer = firstTemplate->m_offset444 - 1;
+	Int maxLayer = firstTemplate->m_offset444;
 	BfmeThingTemplate *secondTemplate = (BfmeThingTemplate *)
 		rva003E5010Template(source->m_template);
 	AIUpdateInterface *ai = source->m_ai;
+	UnsignedByte aircraftField = secondTemplate->m_offset4cc;
 	UnsignedInt validSurfaces = ai->m_validSurfaces;
 	Bool computerControlled = source->bfmeIsComputerControlled();
-	Bool allowAircraftGoal = secondTemplate->m_offset4cc == 0;
+	Bool allowAircraftGoal = aircraftField == 0;
+	Rva003E5010State state;
+	state.m_offset00 = validSurfaces;
+	state.m_offset04 = allowAircraftGoal;
+	state.m_computerControlled = computerControlled;
+	state.m_offset08 = maxLayer - 1;
 
 	ICoord2DPair sourceCell;
 	if (center)
@@ -213,12 +219,6 @@ void Pathfinder::rva003E5010(Object *source, Coord3D *destination,
 	Int average = rva003E5010Average(source);
 	Int targetLayer = rva003E5010Layer(target);
 	Int sourceLayer = rva003E5010Layer(source);
-	Rva003E5010State state;
-	state.m_offset00 = validSurfaces;
-	state.m_offset04 = allowAircraftGoal;
-	state.m_computerControlled = computerControlled;
-	state.m_offset08 = maxLayer;
-
 	Rva003D86E0Scanner scanner;
 	scanner.m_pathfinder = this;
 	scanner.m_field04 = &state;
