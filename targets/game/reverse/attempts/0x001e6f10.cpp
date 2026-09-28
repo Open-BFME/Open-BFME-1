@@ -1,6 +1,6 @@
-// ?getPreAttackDelay@Weapon@@QBEHPBVObject@@HH@Z
-// partial score=0.86 date=2026-09-05
-// cl: /DNDEBUG /MD /EHsc
+// ?getPreAttackDelay@Weapon@@QBEHPBVObject@@0PBUCoord3D@@@Z
+// partial score=0.92 date=2026-09-28
+// cl: /DNDEBUG /MD /EHsc /FAsc /Fabuild/luna_10_001e6f10.cod
 
 typedef unsigned int UnsignedInt;
 
@@ -96,17 +96,19 @@ extern GameLogic *TheGameLogic;
 
 struct WeaponBonus
 {
-	WeaponBonus()
+	void clear()
 	{
-		m_values[0] = 1.0f;
-		m_values[1] = 1.0f;
-		m_values[2] = 1.0f;
-		m_values[3] = 1.0f;
-		m_values[4] = 1.0f;
-		m_values[5] = 1.0f;
+		float one = 1.0f;
+		volatile float *values = &m_bfmeA;
+		values[0] = one;
+		values[1] = one;
+		values[2] = one;
+		values[3] = one;
+		values[4] = one;
+		values[5] = one;
 	}
 
-	float m_values[6];
+	volatile float m_bfmeA, m_bfmeB, m_bfmeC, m_bfmeD, m_bfmeE, m_bfmeF;
 };
 
 struct WeaponTemplate
@@ -123,7 +125,8 @@ struct WeaponTemplate
 class Weapon
 {
 public:
-	int getPreAttackDelay(const Object *source, int arg2, int arg3) const;
+	int getPreAttackDelay(const Object *source, const Object *victim,
+		const Coord3D *position) const;
 
 private:
 	void computeBonus(const Object *source, UnsignedInt extra,
@@ -139,7 +142,8 @@ private:
 	int m_preAttackJitter;
 };
 
-int Weapon::getPreAttackDelay(const Object *source, int arg2, int arg3) const
+int Weapon::getPreAttackDelay(const Object *source, const Object *victim,
+	const Coord3D *position) const
 {
 	int type = m_template->m_prefireType;
 	if (type == 2)
@@ -168,8 +172,8 @@ int Weapon::getPreAttackDelay(const Object *source, int arg2, int arg3) const
 	else if (type == 1)
 	{
 		if (reinterpret_cast<Gen_001BF950 *>(const_cast<Object *>(source))->
-			bfmeForward(reinterpret_cast<void *>(arg2),
-				reinterpret_cast<void *>(arg3)) > 0)
+			bfmeForward(reinterpret_cast<void *>(const_cast<Object *>(victim)),
+				reinterpret_cast<void *>(const_cast<Coord3D *>(position))) > 0)
 		{
 			return 0;
 		}
@@ -181,8 +185,11 @@ int Weapon::getPreAttackDelay(const Object *source, int arg2, int arg3) const
 			return 0;
 	}
 
-	WeaponBonus bonus;
-	computeBonus(source, 0, bonus);
-	return static_cast<int>(m_template->m_preAttackDelay * bonus.m_values[4])
-		+ m_preAttackJitter;
+	{
+		WeaponBonus bonus;
+		bonus.clear();
+		computeBonus(source, 0, bonus);
+		return static_cast<int>(m_template->m_preAttackDelay * bonus.m_bfmeE)
+			+ m_preAttackJitter;
+	}
 }
