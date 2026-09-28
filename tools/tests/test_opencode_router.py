@@ -363,6 +363,13 @@ class RouterTests(unittest.TestCase):
         path.write_text(json.dumps(c))
         with self.assertRaises(ValueError):r.config(path)
 
+    def test_provider_server_errors_are_availability_not_task_failure(self):
+        self.assertEqual(r.classify({'type':'provider.internal','message':'Streaming response failed: [504] Upstream idle timeout exceeded','status':200}),'unavailable')
+        self.assertEqual(r.classify({'status':502,'message':'Bad Gateway'}),'unavailable')
+        self.assertEqual(r.classify({'status':503,'message':'model overloaded'}),'unavailable')
+        self.assertEqual(r.classify({'status':429,'message':'upstream rate limit'}),'quota')  # quota keeps priority
+        self.assertEqual(r.classify({'type':'tool.error','message':'compile failed'}),'failure')
+
     def test_variant_error_classification_preserves_quota_priority(self):
         self.assertEqual(r.classify({'status':400,'message':'Variant unavailable for opencode-go/one: max'}),'variant_unavailable')
         self.assertEqual(r.classify({'status':400,'message':'Unsupported value reasoning_effort: xhigh'}),'variant_unavailable')

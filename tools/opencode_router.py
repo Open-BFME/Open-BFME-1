@@ -415,6 +415,12 @@ def classify(error):
     if re.search(r'provider.no-route|model.?not.?found|model unavailable|global regions|'
                  r'privacy settings|trains on request data|unsupported.model|\b401\b|\b403\b|authentication|api.key|insufficient.balance', text):
         return 'unavailable'
+    # A provider-side server error (2026-09-27: provider.internal "[504] Upstream idle
+    # timeout exceeded" mid-task on a Nemotron trial) says nothing about the task or the
+    # model's work; counting it as a task failure spent retries and skewed model stats.
+    if re.search(r'provider\.internal|\b50[0234]\b|upstream.{0,40}(timeout|error|unavailable)|'
+                 r'overloaded|service.unavailable|bad.gateway|gateway.time.?out', text):
+        return 'unavailable'
     return 'failure'
 
 
