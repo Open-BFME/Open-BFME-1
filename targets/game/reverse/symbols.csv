@@ -89700,3 +89700,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?getWaypointName@MapObject@@QAE?AVAsciiString@@XZ,0x00010F05,route=0x00088AE0; addWaypoint RVA001ABC90+1CC encodes this ILT; WorldHeightMap getWaypointName returns AsciiString from TheKey_waypointName
 _Rva007F5790Callback,0x007F5790,gap-seat dependency; caller 007F7030 pushes VA00BF5790 at 007F70B0; independent INT3-delimited body 007F5790..007F579E loads two stack args and forwards first to thiscall 007F5720 with second as ECX; cdecl ret; opaque identity
 ?invoke@Rva0056E600@@UAEPAXI@Z,0x0056E830,opaque ABI carrier for secondary-base adjustor0056E600; target independently proven by ILT0001C391; body0056E830 calls dtor viaILT00027E44 tests flags bit0 conditionally deletes returns original this RET4; no semantic class identity asserted
+?method@Rva00925860@@QAEXPAX0@Z,0x00925860,opaque target called by 0x0092C390 with thiscall ret 8
