@@ -29,7 +29,7 @@ step, and it trusts nothing the worker reported:
 
 Workspaces are never modified or deleted.
 """
-import argparse, json, os, re, shutil, subprocess, sys
+import argparse, hashlib, json, os, re, shutil, subprocess, sys
 from functools import wraps
 from portable_lock import lock, unlock
 from pathlib import Path
@@ -49,7 +49,7 @@ GUTTED_INDEX = 200  # staged deletions of files still on disk: a worker emptied 
 
 
 def sh(cmd, cwd, check=False, timeout=None):
-    r = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, errors='replace', timeout=timeout)
+    r = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, errors='surrogateescape', timeout=timeout)
     if check and r.returncode:
         raise SystemExit(f'{" ".join(map(str, cmd))} failed:\n{r.stdout}{r.stderr}')
     return r
@@ -107,6 +107,30 @@ def changes(ws):
         exists = os.path.lexists(Path(ws) / path)
         out.append((path, 'deleted' if not exists else ('modified' if tracked else 'added')))
     return out
+
+
+def workspace_fingerprint(ws):
+    digest = hashlib.sha256(git(ws, 'rev-parse', 'HEAD', check=True).stdout.encode())
+    for path, status in changes(ws):
+        digest.update(os.fsencode(path) + b'\0' + status.encode() + b'\0')
+        file = Path(ws) / path
+        if file.is_symlink():
+            digest.update(b'link\0' + os.fsencode(os.readlink(file)))
+        elif file.is_file():
+            digest.update(str(file.stat().st_mode).encode() + b'\0' + file.read_bytes())
+    return digest.hexdigest()
+
+
+def safe_port_path(root, path):
+    # Git pathnames are relative, but a symlinked parent can escape the tree.
+    relative = Path(path)
+    if relative.is_absolute() or '..' in relative.parts:
+        raise SystemExit(f'unsafe worker path: {path}')
+    current = Path(root)
+    for part in relative.parts:
+        current /= part
+        if current.is_symlink():
+            raise SystemExit(f'symlink in port path: {path}; review manually')
 
 
 def route(path):
@@ -167,6 +191,7 @@ def review(args):
     j, attempts, rvas, log = info(args)
     job = args.job or j['cwd']
     ws = j['cwd']
+    fingerprint = workspace_fingerprint(ws)
     ch = changes(ws)
     fadd, frem = ledger_delta(ws, LEDGERS[0])
     radd, _ = ledger_delta(ws, LEDGERS[3])
@@ -221,6 +246,9 @@ def review(args):
         res['problems'].append('worker ran a mutating git command')
     if not rvas:
         res['problems'].append('no target RVA found in the job target or prompt')
+    if fingerprint != workspace_fingerprint(ws):
+        res['problems'].append('workspace changed during review; rerun on a stable snapshot')
+    res['fingerprint'] = fingerprint
     res['landed'] = sorted(r for r, t in res['targets'].items() if t.get('landed'))
     return res
 
@@ -235,6 +263,9 @@ def port(j, dest):
         if route(p) == 'scratch':
             print(f'skipping top-level scratch file {p}')
     ch = [(p, s) for p, s in ch if route(p) == 'port']
+    for path, _status in ch:
+        safe_port_path(ws, path)
+        safe_port_path(dest, path)
     ledgers = set(LEDGERS) | {CORRECTIONS}
     # Check every addition before applying any part of the worker patch.
     for p, status in ch:
@@ -413,7 +444,11 @@ def integrate(args):
     safe_destination(dest, base, args.keep)
     if not args.keep:
         git(dest, 'checkout', '-q', '--detach', base, check=True)
+    if rev.get('fingerprint') != workspace_fingerprint(j['cwd']):
+        raise SystemExit('workspace changed since review; review again before porting')
     port(j, dest)
+    if rev['fingerprint'] != workspace_fingerprint(j['cwd']):
+        raise SystemExit('workspace changed during port; destination retained for inspection')
     r = sh([sys.executable, 'tools/check_csv.py'], dest, check=True)
     print(r.stdout[-600:])
     status = [path for path, _ in changes(dest)]

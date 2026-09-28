@@ -234,10 +234,11 @@ def test_check_csv_failure_blocks_integration(tmp_path, monkeypatch):
     from types import SimpleNamespace
     dest = tmp_path / 'destination'
     dest.mkdir()
-    monkeypatch.setattr(ri, 'review', lambda _: {'landed': ['x'], 'problems': [], 'gates': {}})
+    monkeypatch.setattr(ri, 'review', lambda _: {'landed': ['x'], 'problems': [], 'gates': {}, 'fingerprint': 'stable'})
     monkeypatch.setattr(ri, 'info', lambda _: ({'cwd': 'worker'}, [], [], ''))
     monkeypatch.setattr(ri, 'safe_destination', lambda *a: None)
     monkeypatch.setattr(ri, 'port', lambda *a: None)
+    monkeypatch.setattr(ri, 'workspace_fingerprint', lambda *a: 'stable')
     monkeypatch.setattr(ri, 'git', lambda *a, **k: subprocess.CompletedProcess([], 0, '', ''))
     def run(cmd, cwd, check=False):
         assert cmd[-1] == 'tools/check_csv.py'
@@ -248,3 +249,51 @@ def test_check_csv_failure_blocks_integration(tmp_path, monkeypatch):
     import pytest
     with pytest.raises(SystemExit, match='invalid ledger'):
         ri.integrate(SimpleNamespace(worktree=str(dest), force=False, keep=False, base='master'))
+
+
+def test_destination_mutations_are_serialized(tmp_path):
+    from concurrent.futures import ThreadPoolExecutor
+    from threading import Event
+    from types import SimpleNamespace
+    first_entered, release, second_entered = Event(), Event(), Event()
+    @ri.serialized_destination
+    def mutate(args):
+        if args.first:
+            first_entered.set()
+            assert release.wait(3)
+        else:
+            second_entered.set()
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        first = pool.submit(mutate, SimpleNamespace(worktree=str(tmp_path / 'dest'), first=True))
+        assert first_entered.wait(3)
+        second = pool.submit(mutate, SimpleNamespace(worktree=str(tmp_path / 'dest'), first=False))
+        try:
+            assert not second_entered.wait(.1)
+        finally:
+            release.set()
+        first.result()
+        second.result()
+    assert second_entered.is_set()
+
+
+def test_symlink_parent_cannot_redirect_port(tmp_path):
+    import pytest
+    outside = tmp_path / 'outside'
+    outside.mkdir()
+    dest = tmp_path / 'dest'
+    dest.mkdir()
+    (dest / 'game').symlink_to(outside, target_is_directory=True)
+    with pytest.raises(SystemExit, match='symlink'):
+        ri.safe_port_path(dest, 'game/new.cpp')
+
+
+def test_review_rejects_concurrent_workspace_edit(tmp_path, monkeypatch):
+    from types import SimpleNamespace
+    monkeypatch.setattr(ri, 'info', lambda _: ({'cwd': str(tmp_path), 'status': 'completed'}, [], [], ''))
+    monkeypatch.setattr(ri, 'changes', lambda _: [])
+    monkeypatch.setattr(ri, 'ledger_delta', lambda *a: ([], []))
+    monkeypatch.setattr(ri, 'git', lambda *a, **k: subprocess.CompletedProcess([], 0, '', ''))
+    fingerprints = iter(['before', 'after'])
+    monkeypatch.setattr(ri, 'workspace_fingerprint', lambda _: next(fingerprints))
+    result = ri.review(SimpleNamespace(job='fixture'))
+    assert any('changed during review' in p for p in result['problems'])
