@@ -89847,3 +89847,19 @@ _Rva0086C6E0,0x0086C6E0,gap-seat; opaque address-derived five-argument cdecl hel
 ?_M_initialize_buckets@?$hashtable@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@W4NameKeyType@@U?$hash@W4NameKeyType@@@rts@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@@2@U?$equal_to@W4NameKeyType@@@5@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@@2@@_STL@@AAEXI@Z,0x0008FF00,NameKeyGenerator aux hash_map hashtable<>::_M_initialize_buckets(); identity proven by codegen not by adjacency: this TU's own copy of the instantiation is byte-identical to 0x0008FF00 over 93 bytes with only the three call displacements differing (STLport _M_next_size/_M_list lower_bound + _M_buckets.reserve + _M_fill_insert + _M_num_elements=0); reached from ctor 0x00090380 through the j_0003a99f thunk with the literal 100
 ??$BfmeElementConstruct@V?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@@_STL@@YAXPAV?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@0@ABV10@@Z,0x0000E705,ILT to 0x000BC360; the ScienceVec element copy all four copy sites of the insert at 0x000BDF20 call; 0x000BC360 reaches the 4-byte-inner copy constructor 0x000BB890
 ?_M_clear@?$vector@V?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@V?$allocator@V?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@@2@@_STL@@IAEXXZ,0x0002211F,ILT to 0x000BDCA0; the teardown the insert at 0x000BDF20 calls after moving the tail; 0x000BDCA0 walks the old buffer at the same 12-byte stride
+?j_00047f3c@@YAXH@Z,0x00047F3C,AudioManagerInit 0x006B8220 volume publish x5 via gen-asm 0x00699AF0
+??1Rva00699D60AudioOwner@@QAE@XZ,0x0002D902,route=0x00699D60; AudioManagerInit 0x006B8220 ??_L element dtor VA 0x0042D902
+??0Rva00699D60AudioOwner@@QAE@XZ,0x000315B6,AudioManagerInit 0x006B8220 ??_L element ctor VA 0x004315B6 routes to gen-asm 0x00699CB0
+?g_real3f0ccccd@@3MB,0x010B933C,AudioManagerInit 0x006B8220 __real@3f0ccccd fallback 0.55
+?g_real3f400000@@3MB,0x0109F748,AudioManagerInit 0x006B8220 __real@3f400000 fallback 0.75
+?g_milesVolume012BA134@@3MA,0x012BA134,AudioManagerInit 0x006B8220 Miles channel-2 volume global
+?g_milesVolume012BA12C@@3MA,0x012BA12C,AudioManagerInit 0x006B8220 Miles channel-0 volume global
+?g_milesVolume012BA13C@@3MA,0x012BA13C,AudioManagerInit 0x006B8220 Miles channel-4 volume global
+?g_milesVolume012BA130@@3MA,0x012BA130,AudioManagerInit 0x006B8220 Miles channel-1 volume global
+?g_milesVolume012BA138@@3MA,0x012BA138,AudioManagerInit 0x006B8220 Miles channel-3 volume global
+?rva00696370OpenFile@@YAXXZ,0x00A96370,AudioManagerInit 0x006B8220 AIL file-open callback
+?dup_006963a0@@YAXXZ,0x00A963A0,AudioManagerInit 0x006B8220 AIL file-close callback
+?rva006963B0ForwardSlot5@@YAXXZ,0x00A963B0,AudioManagerInit 0x006B8220 AIL file-read callback
+?rva006963D0ForwardSlot3@@YAXXZ,0x00A963D0,AudioManagerInit 0x006B8220 AIL file-write callback
+__imp___AIL_set_file_callbacks@16,0x0135966C,AudioManagerInit 0x006B8220 mss32 IAT slot
+?TheGameLODManager@@3PAVGameLODManager006B8220@@A,0x012ED5AC,AudioManagerInit 0x006B8220 address-keyed view of the LOD-manager global
