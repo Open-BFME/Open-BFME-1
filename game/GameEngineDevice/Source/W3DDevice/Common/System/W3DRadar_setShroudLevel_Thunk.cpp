@@ -1,6 +1,7 @@
-// ?setShroudLevel@W3DRadar@@UAEXHHW4CellShroudStatus@@@Z
-// partial score=0.93 date=2026-09-26
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+#define Matrix4x4 Matrix4
+#include "W3DDevice/Common/W3DRadar.h"
 
 class BfmeA1087;
 extern BfmeA1087 *g_bfmeA1087;
@@ -19,15 +20,6 @@ struct BfmeA1087ShroudView
 	unsigned char pad00[0x30b8];
 	Rva006C23B0Grid *grid;
 	Rva006C23B0Grid *getShroud() const { return grid; }
-};
-
-class Coord3D;
-class ICoord2D;
-
-class Radar
-{
-public:
-	bool worldToRadar(const Coord3D *world, ICoord2D *radar);
 };
 
 #pragma comment(linker, "/alternatename:?worldToRadar@Radar@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z=?j_00026099@@YAXXZ")
@@ -63,10 +55,8 @@ public:
 	~W3DRadarResetSurface();
 
 private:
-	void *surface;
+	void *m_surface;
 };
-
-typedef char CheckResetSurfaceSize[sizeof(W3DRadarResetSurface) == 4 ? 1 : -1];
 
 class W3DRadarResetTexture
 {
@@ -74,10 +64,8 @@ public:
 	W3DRadarResetSurface getSurfaceLevel();
 
 private:
-	void *texture;
+	void *m_texture;
 };
-
-typedef char CheckResetTextureSize[sizeof(W3DRadarResetTexture) == 4 ? 1 : -1];
 
 class BfmeThingGN
 {
@@ -95,9 +83,6 @@ class SurfaceClass
 {
 public:
 	void rva008FCF40(unsigned x, unsigned y, unsigned value);
-
-private:
-	void *D3DSurface;
 };
 
 extern void W3DRadarResetLock(void);
@@ -127,19 +112,7 @@ struct Rva006C23B0RadarPoint
 	int y;
 };
 
-enum CellShroudStatus { CELLSHROUD_CLEAR = 0, CELLSHROUD_FOGGED = 1, CELLSHROUD_SHROUDED = 2 };
-
-class W3DRadar
-{
-public:
-	virtual void setShroudLevel(int cellX, int cellY, CellShroudStatus status);
-
-private:
-	unsigned char pad00[0x1490];
-	W3DRadarResetTexture texture;
-};
-
-void W3DRadar::setShroudLevel(int cellX, int cellY, CellShroudStatus status)
+void W3DRadar::setShroudLevel(Int cellX, Int cellY, CellShroudStatus status)
 {
 	BfmeA1087ShroudView *terrain = (BfmeA1087ShroudView *)g_bfmeA1087;
 	Rva006C23B0Grid *grid = terrain ? terrain->getShroud() : 0;
@@ -148,7 +121,8 @@ void W3DRadar::setShroudLevel(int cellX, int cellY, CellShroudStatus status)
 
 	Rva006C23B0Lock lock;
 
-	W3DRadarResetSurface surface = texture.getSurfaceLevel();
+	W3DRadarResetSurface surface =
+		((W3DRadarResetTexture *)((char *)this + 0x1494))->getSurfaceLevel();
 
 	int mapMinX = (int)(cellX * grid->getCellWidth());
 	int mapMinY = (int)(cellY * grid->getCellHeight());
@@ -178,29 +152,32 @@ void W3DRadar::setShroudLevel(int cellX, int cellY, CellShroudStatus status)
 	{
 		radarMinY = (int)(radarMinY * yRatio);
 		radarMaxY = (int)(radarMaxY * yRatio);
-		unsigned north = ((BfmeThingGN *)&texture)->bfmeAskGN();
-		float correction = ((float)north) *
+		unsigned north = ((BfmeThingGN *)((char *)this + 0x1494))->bfmeAskGN();
+		float northFactor = (float)north;
+		float correction = northFactor *
 			((g_bfmeDefaultBU - yRatio) * g_bfmeK1253);
 		radarMinY = (int)(radarMinY + correction);
 		radarMaxY = (int)(radarMaxY + correction);
 	}
-
 	else
 	{
 		radarMinX = (int)(radarMinX * xRatio);
 		radarMaxX = (int)(radarMaxX * xRatio);
-		unsigned east = ((BfmeThingEF *)&texture)->bfmeAskEF();
-		float correction = ((float)east) *
+		unsigned east = ((BfmeThingEF *)((char *)this + 0x1494))->bfmeAskEF();
+		float eastFactor = (float)east;
+		float correction = eastFactor *
 			((g_bfmeDefaultBU - xRatio) * g_bfmeK1253);
 		radarMinX = (int)(radarMinX + correction);
 		radarMaxX = (int)(radarMaxX + correction);
-
 	}
+
 	unsigned char &alpha = *(unsigned char *)&status;
 	if (status == 2)
 		alpha = 0xff;
+	else if (status == 1)
+		alpha = 0x7f;
 	else
-		alpha = status == 1 ? 0x7f : 0;
+		alpha = 0;
 
 	for (int y = radarMinY; y <= radarMaxY; ++y)
 	{
@@ -211,5 +188,4 @@ void W3DRadar::setShroudLevel(int cellX, int cellY, CellShroudStatus status)
 			((SurfaceClass *)&surface)->rva008FCF40(x, y, status);
 		}
 	}
-
 }

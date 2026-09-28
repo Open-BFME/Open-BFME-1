@@ -948,6 +948,8 @@ class W3DRadarResetTexture
 public:
 	W3DRadarResetSurface getSurfaceLevel();
 	W3DRadarResetSurface getSurfaceLevel( UnsignedInt level );
+private:
+	void *m_texture;
 };
 
 W3DRadarResetSurface W3DRadarResetTexture::getSurfaceLevel()
@@ -1268,70 +1270,6 @@ void W3DRadar::clearShroud()
 // ------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_setShroudLevel_Thunk.cpp
-// ?setShroudLevel@W3DRadar@@UAEXHHW4CellShroudStatus@@@Z present-unmatched
-void W3DRadar::setShroudLevel(Int shroudX, Int shroudY, CellShroudStatus setting)
-{
-#if defined(_DEBUG) || defined(_INTERNAL)
-	if (!TheGlobalData->m_shroudOn)
-		return;
-#endif
-
-	W3DShroud* shroud = TheTerrainRenderObject ? TheTerrainRenderObject->getShroud() : NULL;
-	if (!shroud)
-		return;
-
-	SurfaceClass* surface = m_shroudTexture->Get_Surface_Level();
-	DEBUG_ASSERTCRASH( surface, ("W3DRadar: Can't get surface for Shroud texture\n") );
-
-	Int mapMinX = shroudX * shroud->getCellWidth();
-	Int mapMinY = shroudY * shroud->getCellHeight();
-	Int mapMaxX = (shroudX+1) * shroud->getCellWidth();
-	Int mapMaxY = (shroudY+1) * shroud->getCellHeight();
-
-	ICoord2D radarPoint;
-	Coord3D worldPoint;
-
-	worldPoint.x = mapMinX;
-	worldPoint.y = mapMinY;
-	worldToRadar( &worldPoint, &radarPoint );
-	Int radarMinX = radarPoint.x;
-	Int radarMinY = radarPoint.y;
-
-	worldPoint.x = mapMaxX;
-	worldPoint.y = mapMaxY;
-	worldToRadar( &worldPoint, &radarPoint );
-	Int radarMaxX = radarPoint.x;
-	Int radarMaxY = radarPoint.y;
-
-/*
-	Int radarMinX = REAL_TO_INT_FLOOR(mapMinX / getXSample());
-	Int radarMinY = REAL_TO_INT_FLOOR(mapMinY / getYSample());
-	Int radarMaxX = REAL_TO_INT_CEIL(mapMaxX / getXSample());
-	Int radarMaxY = REAL_TO_INT_CEIL(mapMaxY / getYSample());
-*/
-
-	/// @todo srj -- this really needs to smooth the display!
-
-	//Logic is saying shroud.  We can add alpha levels here in client if needed.  
-	// W3DShroud is a 0-255 alpha byte.  Logic shroud is a double reference count.
-	Int alpha;
-	if( setting == CELLSHROUD_SHROUDED )
-		alpha = 255;
-	else if( setting == CELLSHROUD_FOGGED )
-		alpha = 127;///< @todo placeholder to get feedback on logic work while graphic side being decided
-	else
-		alpha = 0;
-
-	for( Int y = radarMinY; y <= radarMaxY; y++ )
-	{
-		for( Int x = radarMinX; x <= radarMaxX; x++ )
-		{
-			if( legalRadarPoint( x, y ) )
-				surface->DrawPixel( x, y, GameMakeColor( 0, 0, 0, alpha ) );
-		}
-	}
-	REF_PTR_RELEASE(surface);
-}
 
 //-------------------------------------------------------------------------------------------------
 /** Actually draw the radar at the screen coordinates provided 
