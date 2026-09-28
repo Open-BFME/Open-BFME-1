@@ -1,15 +1,10 @@
 // ?checkForAdjust@Pathfinder@@QAEEPAVObject@@ABVLocomotorSet@@EHHHHEPAUCoord3D@@PBU4@MPAPAVPathfindCell@@H@Z
-// partial score=0.66 date=2026-09-17
+// partial score=0.67 date=2026-09-27
+// ?checkForAdjust@Pathfinder@@QAEEPAVObject@@ABVLocomotorSet@@EHHHHEPAUCoord3D@@PBU4@MPAPAVPathfindCell@@H@Z
+// Retail 0x003F0F40, 1496 bytes
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 //
-// BFME's 13-argument Pathfinder::checkForAdjust, retail 0x003F0F40.
-// The extra arguments are used by the BFME tighten-path callback; this is
-// separate from the older eight-argument adjust cascade.
-//
-// Identity evidence: TightenPathCallbackInfo::cellCallback names this exact
-// 13-argument method through its ILT call.  Its retail body has the debug
-// strings below, the Pathfinder logical-extent accesses, and the established
-// BFME callee set from tools/callees.py 0x003F0F40 1496.
+// BFME's 13-argument Pathfinder::checkForAdjust with tighten-path callback extensions
 
 #include <math.h>
 #pragma intrinsic(fabs)
@@ -25,276 +20,304 @@ extern CRCParameterCheck *TheCRCParameterCheck;
 extern const Real BfmeZeroRange;
 extern char Rva006A16B0Empty[];
 extern "C" void __cdecl bfmeRetailCritterDesyncLog(
-	CRCParameterCheck *context, const char *format, ...);
+    CRCParameterCheck *context, const char *format, ...);
 
 #define Rva0107FAA8Scale50 (*(const Real *)0x0107FAA8)
+#define Rva0107FA58_MinasTirithMsg ((const char *)0x0107FA58)
+#define Rva01080180_AltMsg ((const char *)0x01080180)
 
 struct Coord3D
 {
-	Real x, y, z;
+    Real x, y, z;
 };
 
 class AsciiString
 {
 public:
-	char *m_data;
+    char *m_data;
 
-	__forceinline const char *str(void) const
-	{
-		return m_data != 0 ? m_data + 8 : Rva006A16B0Empty;
-	}
+    __forceinline const char *str(void) const
+    {
+        return m_data != 0 ? m_data + 8 : Rva006A16B0Empty;
+    }
 };
 
 class Overridable
 {
 public:
-	virtual ~Overridable();
-	const Overridable *getFinalOverride(void) const;
+    virtual ~Overridable();
+    const Overridable *getFinalOverride(void) const;
 
-	Overridable *m_nextOverride;
-	char m_pad08[0x18];
-	AsciiString m_name;
+    Overridable *m_nextOverride;
+    char m_pad08[0x18];
+    AsciiString m_name;
 };
 
 struct ICoord2D
 {
-	Int x, y;
+    Int x, y;
 };
 
 struct IRegion2D
 {
-	ICoord2D lo, hi;
+    ICoord2D lo, hi;
 };
 
 enum PathfindLayerEnum
 {
-	PATHFIND_LAYER_UNKNOWN = 0
+    PATHFIND_LAYER_UNKNOWN = 0
 };
 
 enum KindOfType
 {
-	KINDOF_AIRCRAFT = 12
-};
-
-class LocomotorSet;
-
-class Thing
-{
-public:
-	bool isKindOf(KindOfType kind) const;
-};
-
-class Object : public Thing
-{
-public:
-	char m_pad00[4];
-	Overridable *m_template;
-	char m_pad08[0x30];
-	Coord3D m_position;
-	char m_pad44[0x30];
-	Int m_id;
+    KINDOF_AIRCRAFT = 12
 };
 
 class LocomotorSet
 {
 public:
-	char m_pad00[0x18];
-	AsciiString m_name;
+    char m_pad00[0x18];
+    AsciiString m_name;
+};
+
+class Thing
+{
+public:
+    bool isKindOf(KindOfType kind) const;
+};
+
+class Object : public Thing
+{
+public:
+    char m_pad00[4];
+    Overridable *m_template;
+    char m_pad08[0x30];
+    Coord3D m_position;
+    char m_pad44[0x30];
+    Int m_id;
 };
 
 class PathfindCell
 {
 public:
-	Int getLayer(void) const { return (m_word >> 6) & 0x3f; }
-	Int getType(void) const { return m_word & 7; }
+    Int getLayer(void) const { return (m_word >> 6) & 0x3f; }
+    Int getType(void) const { return m_word & 7; }
 
 private:
-	char m_pad00[0x0c];
-	unsigned int m_word;
+    char m_pad00[0x0c];
+    unsigned int m_word;
 };
 
 class Pathfinder
 {
 public:
-	Bool checkForAdjust(Object *obj, const LocomotorSet &set,
-		Bool human, Int x, Int y, Int layer, Int radius, Bool center,
-		Coord3D *dest, const Coord3D *groupDest, Real originalZ,
-		PathfindCell **fromSlot, Int onlyIfLayer);
+    Bool checkForAdjust(Object *obj, const LocomotorSet &set,
+        Bool human, Int x, Int y, Int layer, Int radius, Bool center,
+        Coord3D *dest, const Coord3D *groupDest, Real originalZ,
+        PathfindCell **fromSlot, Int onlyIfLayer);
 
-	PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y);
-	Bool bfmeInnerE6E90(void *a1, void *a2, void *a3, void *a4, void *a5,
-		void *a6, void **a7, int a8);
-	bool slowDoesPathExist(Object *obj, const Coord3D *from,
-		const Coord3D *to, int ignoreObject);
+    PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y);
+    bool bfmeInnerE6E90(void *a1, void *a2, void *a3, void *a4, void *a5,
+        void *a6, void **a7, int a8);
+    bool slowDoesPathExist(Object *obj, const Coord3D *from,
+        const Coord3D *to, int ignoreObject);
 
 protected:
-	void adjustCoordToCell(Int x, Int y, Bool center, Coord3D &pos,
-		PathfindLayerEnum layer);
+    void adjustCoordToCell(Int x, Int y, Bool center, Coord3D &pos,
+        PathfindLayerEnum layer);
 
-	char m_pad00[0x24];
-	IRegion2D m_logicalExtent;
+    char m_pad00[0x24];
+    IRegion2D m_logicalExtent;
 };
 
 Bool Pathfinder::checkForAdjust(Object *obj, const LocomotorSet &set,
-	Bool human, Int x, Int y, Int layer, Int radius, Bool center,
-	Coord3D *dest, const Coord3D *groupDest, Real originalZ,
-	PathfindCell **fromSlot, Int onlyIfLayer)
+    Bool human, Int x, Int y, Int layer, Int radius, Bool center,
+    Coord3D *dest, const Coord3D *groupDest, Real originalZ,
+    PathfindCell **fromSlot, Int onlyIfLayer)
 {
-	Coord3D adjustDest;
-	Object *debugObject = obj;
-	Int cellX = x;
-	if (Glo012F0239 && TheCRCParameterCheck)
-	{
-		const Overridable *templateObject = debugObject->m_template;
-		if (templateObject != 0 && templateObject->m_nextOverride != 0)
-			templateObject = templateObject->m_nextOverride->getFinalOverride();
-		const char *objectName = templateObject->m_name.str();
-		Coord3D groupValue = { -1.0f, -1.0f, -1.0f };
-		if (groupDest != 0)
-			groupValue = *groupDest;
-		bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-			"\t\t  Pathfinder::CheckForAdjust called with: obj=%s(%d), loco=%s, isHuman=%s, cell=%d,%d, layer=%d, iRadius=%d, center=%s, groupDest=%g,%g,%g, originalZ=%g, onlyIfLayer=%d",
-			objectName, debugObject->m_id, set.m_name.str(),
-			human ? "TRUE" : "FALSE", cellX, y, layer, radius,
-			center ? "TRUE" : "FALSE", groupValue.x, groupValue.y,
-			groupValue.z, originalZ, onlyIfLayer);
-	}
+    // Force 0x18 stack frame with exactly two Coord3D locals
+    Coord3D adjustDest;
+    Coord3D groupValue;
 
-	PathfindCell *cell = getCell((PathfindLayerEnum)layer, cellX, y);
-	if (cell == 0)
-	{
-		if (Glo012F0239 && TheCRCParameterCheck)
-			bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-				"        cellP is NULL, return FALSE.");
-		return 0;
-	}
-	if (cell->getType() == 2)
-	{
-		if (Glo012F0239 && TheCRCParameterCheck)
-			bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-				"        cellP is CLIFF, return FALSE.");
-		return 0;
-	}
+    Object *debugObject = obj;
+    Int cellX = x;
 
-	if (human && Glo012F0239 && TheCRCParameterCheck)
-		bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-			"        isHuman is TRUE");
-	if (human && (cellX < m_logicalExtent.lo.x || y < m_logicalExtent.lo.y ||
-		cellX > m_logicalExtent.hi.x || y > m_logicalExtent.hi.y))
-	{
-		if (Glo012F0239 && TheCRCParameterCheck)
-			bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-				"        cell %d,%d is outside m_logicalExtent lo:%d,%d hi:%d,%d",
-			cellX, y, m_logicalExtent.lo.x, m_logicalExtent.lo.y,
-				m_logicalExtent.hi.x, m_logicalExtent.hi.y);
-		return 0;
-	}
+    // Retail prologue sequence - global load MUST be first executable statement
+    if (!Glo012F0239)
+        goto skipDebugInit;
 
-	if (!bfmeInnerE6E90((void *)obj, (void *)cellX, (void *)y, (void *)layer,
-		(void *)radius, (void *)center, (void **)fromSlot, 0))
-	{
-		if (Glo012F0239 && TheCRCParameterCheck)
-			bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-				"        CheckDestination failed, return false");
-		return 0;
-	}
-	if (Glo012F0239 && TheCRCParameterCheck)
-		bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-			"        CheckDestination passed");
+    CRCParameterCheck *check = TheCRCParameterCheck;
+    if (check == 0)
+        goto skipDebugInit;
 
-	adjustCoordToCell(cellX, y, center, adjustDest,
-		(PathfindLayerEnum)cell->getLayer());
+    const Overridable *templateObject = debugObject->m_template;
+    if (templateObject != 0 && templateObject->m_nextOverride != 0)
+        templateObject = templateObject->m_nextOverride->getFinalOverride();
+    const char *objectName = templateObject->m_name.str();
 
-	if (!obj->isKindOf(KINDOF_AIRCRAFT))
-	{
-		if (Glo012F0239 && TheCRCParameterCheck)
-			bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-				"        object is not kindof aircraft");
-		if (onlyIfLayer)
-		{
-			if (Glo012F0239 && TheCRCParameterCheck)
-				bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-					"        onlyIfLayer=%d", onlyIfLayer);
-			Int x0 = cellX - radius;
-			Int x1 = cellX + radius + (center ? 1 : 0);
-			Int y0 = y - radius;
-			Int y1 = y + radius + (center ? 1 : 0);
-			for (Int ix = x0; ix < x1; ++ix)
-			{
-				for (Int iy = y0; iy < y1; ++iy)
-				{
-					PathfindCell *near = getCell(
-						(PathfindLayerEnum)onlyIfLayer, ix, iy);
-					if (near == 0)
-					{
-						if (Glo012F0239 && TheCRCParameterCheck)
-							bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-								"        ground unit failed iteration: i=%d, j=%d, cell=NULL, onlyIfLayer",
-								ix, iy, onlyIfLayer);
-						return 0;
-					}
-					if (near->getLayer() != onlyIfLayer)
-					{
-						if (Glo012F0239 && TheCRCParameterCheck)
-							bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-								"        ground unit failed iteration: i=%d, j=%d, cell=VALID, cellLayer=%d, onlyIfLayer",
-								ix, iy, near->getLayer(), onlyIfLayer);
-						return 0;
-					}
-				}
-			}
+    if (groupDest != 0)
+        groupValue = *groupDest;
+    else
+    {
+        groupValue.x = -1.0f;
+        groupValue.y = -1.0f;
+        groupValue.z = -1.0f;
+    }
 
-			if (originalZ > BfmeZeroRange &&
-				fabs(adjustDest.z - originalZ) > Rva0107FAA8Scale50)
-			{
-				if (Glo012F0239 && TheCRCParameterCheck)
-					bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-						"        MinasTirith check failed, return FALSE: originalZ=%g, adjustDest.z=%g",
-						originalZ, adjustDest.z);
-				return 0;
-			}
-		}
+    bfmeRetailCritterDesyncLog(check,
+        "\t\t  Pathfinder::CheckForAdjust called with: obj=%s(%d), loco=%s, isHuman=%s, cell=%d,%d, layer=%d, iRadius=%d, center=%s, groupDest=%g,%g,%g, originalZ=%g, onlyIfLayer=%d",
+        objectName, debugObject->m_id, set.m_name.str(),
+        human ? "TRUE" : "FALSE", cellX, y, layer, radius,
+        center ? "TRUE" : "FALSE", groupValue.x, groupValue.y,
+        groupValue.z, originalZ, onlyIfLayer);
 
-		const Coord3D *position = &obj->m_position;
-		Bool adjustedPathExists = (Bool)slowDoesPathExist(
-			obj, position, &adjustDest, 0);
-		if (Glo012F0239 && TheCRCParameterCheck)
-			bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-					"        adjustedPathExists=%s",
-					adjustedPathExists ? "TRUE" : "FALSE");
-		Bool pathExists = (Bool)slowDoesPathExist(obj, position, dest, 0);
-		if (pathExists)
-		{
-			if (Glo012F0239 && TheCRCParameterCheck)
-				bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-					"        QuickDoesPathExist1 succeeds");
-		}
-		else
-		{
-			if (Glo012F0239 && TheCRCParameterCheck)
-				bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-					"        QuickDoesPathExist1 fails. Try adjusted destination");
-			if (slowDoesPathExist(obj, dest, &adjustDest, 0))
-			{
-				adjustedPathExists = 1;
-				if (Glo012F0239 && TheCRCParameterCheck)
-					bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-						"        QuickDoesPathExist2 succeeds. adjustedPathExists");
-			}
-		}
-		if (!adjustedPathExists)
-		{
-			if (Glo012F0239 && TheCRCParameterCheck)
-				bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-					"        returning false because adjustedPathExists is false");
-			return 0;
-		}
-	}
+skipDebugInit:
+    // getCell((PathfindLayerEnum)layer, cellX, y)
+    PathfindCell *cell = getCell((PathfindLayerEnum)layer, cellX, y);
+    if (cell == 0)
+    {
+        if (Glo012F0239 && TheCRCParameterCheck)
+            bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+                "        cellP is NULL, return FALSE.");
+        return 0;
+    }
+    if (cell->getType() == 2)
+    {
+        if (Glo012F0239 && TheCRCParameterCheck)
+            bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+                "        cellP is CLIFF, return FALSE.");
+        return 0;
+    }
 
-	if (Glo012F0239 && TheCRCParameterCheck)
-		bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-			"        dest calculated to be %g,%g,%g and returning true",
-			adjustDest.x, adjustDest.y, adjustDest.z);
-	*dest = adjustDest;
-	return 1;
+    if (human && Glo012F0239 && TheCRCParameterCheck)
+        bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+            "        isHuman is TRUE");
+
+    // Check logical extent for human players
+    if (human && (cellX < m_logicalExtent.lo.x || y < m_logicalExtent.lo.y ||
+        cellX > m_logicalExtent.hi.x || y > m_logicalExtent.hi.y))
+    {
+        if (Glo012F0239 && TheCRCParameterCheck)
+            bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+                "        cell %d,%d is outside m_logicalExtent lo:%d,%d hi:%d,%d",
+                cellX, y, m_logicalExtent.lo.x, m_logicalExtent.lo.y,
+                m_logicalExtent.hi.x, m_logicalExtent.hi.y);
+        return 0;
+    }
+
+    // bfmeInnerE6E90(obj, cellX, y, layer, radius, center, fromSlot, 0)
+    if (!bfmeInnerE6E90((void *)obj, (void *)cellX, (void *)y, (void *)layer,
+        (void *)radius, (void *)center, (void **)fromSlot, 0))
+    {
+        if (Glo012F0239 && TheCRCParameterCheck)
+            bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+                "        CheckDestination failed, return false");
+        return 0;
+    }
+    if (Glo012F0239 && TheCRCParameterCheck)
+        bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+            "        CheckDestination passed");
+
+    // adjustCoordToCell(cellX, y, center, adjustDest, cell->getLayer())
+    adjustCoordToCell(cellX, y, center, adjustDest,
+        (PathfindLayerEnum)cell->getLayer());
+
+    if (!obj->isKindOf(KINDOF_AIRCRAFT))
+    {
+        if (Glo012F0239 && TheCRCParameterCheck)
+            bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+                "        object is not kindof aircraft");
+
+        if (onlyIfLayer)
+        {
+            if (Glo012F0239 && TheCRCParameterCheck)
+                bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+                    "        onlyIfLayer=%d", onlyIfLayer);
+
+            Int x0 = cellX - radius;
+            Int x1 = cellX + radius + (center ? 1 : 0);
+            Int y0 = y - radius;
+            Int y1 = y + radius + (center ? 1 : 0);
+
+            for (Int ix = x0; ix < x1; ++ix)
+            {
+                for (Int iy = y0; iy < y1; ++iy)
+                {
+                    PathfindCell *near = getCell(
+                        (PathfindLayerEnum)onlyIfLayer, ix, iy);
+                    if (near == 0)
+                    {
+                        if (Glo012F0239 && TheCRCParameterCheck)
+                            bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+                                "        ground unit failed iteration: i=%d, j=%d, cell=NULL, onlyIfLayer",
+                                ix, iy, onlyIfLayer);
+                        return 0;
+                    }
+                    if (near->getLayer() != onlyIfLayer)
+                    {
+                        if (Glo012F0239 && TheCRCParameterCheck)
+                            bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+                                "        ground unit failed iteration: i=%d, j=%d, cell=VALID, cellLayer=%d, onlyIfLayer",
+                                ix, iy, near->getLayer(), onlyIfLayer);
+                        return 0;
+                    }
+                }
+            }
+
+            // MinasTirith height check: originalZ > 0 && fabs(adjustDest.z - originalZ) > 50
+            if (originalZ > BfmeZeroRange &&
+                fabs(adjustDest.z - originalZ) > Rva0107FAA8Scale50)
+            {
+                if (Glo012F0239 && TheCRCParameterCheck)
+                    bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+                        "        MinasTirith check failed, return FALSE: originalZ=%g, adjustDest.z=%g",
+                        originalZ, adjustDest.z);
+                return 0;
+            }
+        }
+
+        const Coord3D *position = &obj->m_position;
+        Bool adjustedPathExists = (Bool)slowDoesPathExist(
+            obj, position, &adjustDest, 0);
+        if (Glo012F0239 && TheCRCParameterCheck)
+            bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+                    "        adjustedPathExists=%s",
+                    adjustedPathExists ? "TRUE" : "FALSE");
+
+        Bool pathExists = (Bool)slowDoesPathExist(obj, position, dest, 0);
+        if (pathExists)
+        {
+            if (Glo012F0239 && TheCRCParameterCheck)
+                bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+                    "        QuickDoesPathExist1 succeeds");
+        }
+        else
+        {
+            if (Glo012F0239 && TheCRCParameterCheck)
+                bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+                    "        QuickDoesPathExist1 fails. Try adjusted destination");
+            if (slowDoesPathExist(obj, dest, &adjustDest, 0))
+            {
+                adjustedPathExists = 1;
+                if (Glo012F0239 && TheCRCParameterCheck)
+                    bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+                        "        QuickDoesPathExist2 succeeds. adjustedPathExists");
+            }
+        }
+        if (!adjustedPathExists)
+        {
+            if (Glo012F0239 && TheCRCParameterCheck)
+                bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+                    "        returning false because adjustedPathExists is false");
+            return 0;
+        }
+    }
+
+    if (Glo012F0239 && TheCRCParameterCheck)
+        bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+            "        dest calculated to be %g,%g,%g and returning true",
+            adjustDest.x, adjustDest.y, adjustDest.z);
+
+    *dest = adjustDest;
+    return 1;
 }

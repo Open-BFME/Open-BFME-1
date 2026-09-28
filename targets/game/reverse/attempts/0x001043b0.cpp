@@ -1,225 +1,547 @@
 // ?writeDict@DataChunkOutput@@QAEXABVDict@@@Z
-// partial score=0.74 date=2026-09-27
-// cl: /DNDEBUG /MD /EHsc
+// partial score=0.95 date=2026-09-27
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/asciistring_outofline /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Igame/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWLib
+// ?writeDict@DataChunkOutput@@QAEXABVDict@@@Z -- banked attempt, 0x001043B0, 572 B.
+//
+// THIS IS THE WHOLE TRANSLATION UNIT, not a standalone body. The winning
+// shape needs DataChunk.cpp's own infrastructure: writeReal/writeInt/writeByte
+// inlined into their four fwrite calls, Dict.h's getPairCount/getNthKey/
+// getNthType inlines, allocateID inlined, and findMapping / getNthBool / Int /
+// Real / AsciiString / UnicodeString / writeAsciiString / writeUnicodeString
+// left out of line. Diff against game/GameEngine/Source/Common/System/
+// DataChunk.cpp; the three hunks that matter are
+//   1. DataChunkOutput::writeDict, new, at the old "Body in DataChunk_writeDict
+//      .asm" comment (~line 489);
+//   2. DataChunkTableOfContents::findMapping -- `name.compare(m->name) == 0`
+//      instead of `name == m->name`, which is what stops the inliner folding
+//      the list walk into allocateID and from there into writeDict;
+//   3. allocateID's `m->id = m_nextID++` written out as two reads, which is
+//      byte-identical for allocateID itself (0x00103D60, 100 B, still EXACT)
+//      and is what lifts writeDict from 568 to 572 bytes.
+//
+// Measured: 572/572 bytes, 30 relocations, 13 differing non-relocation bytes,
+// all inside the six-instruction window at +0xC8..+0xD6 -- the epilogue of the
+// INLINED allocateID. See re_attempts.log for the spellings and levers tried.
+//
+// 2026-09-27 (second pass): 19 further allocateID/writeDict spellings plus the
+// mechanical rotation sweep (24 single toggles and 279 pairs, all +0) leave the
+// IDENTICAL permutation, so the residue is a register/schedule tie-break, not a
+// source shape. This file is the byte-for-byte current DataChunk.cpp.
+// Verified with: python3 tools/probe.py <this file> \
+//     "?writeDict@DataChunkOutput@@QAEXABVDict@@@Z" 0x001043B0
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/asciistring_outofline /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Igame/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
+#define Matrix4x4 Matrix4  // BFME renamed it
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char Byte;
-typedef bool Bool;
-typedef float Real;
-typedef unsigned short WideChar;
+////////////////////////////////////////////////////////////////////////////////
+//																																						//
+//  (c) 2001-2003 Electronic Arts Inc.																				//
+//																																						//
+////////////////////////////////////////////////////////////////////////////////
 
-struct _iobuf;
-typedef _iobuf FILE;
-extern "C" __declspec(dllimport) unsigned int __cdecl fwrite(const void *, unsigned int, unsigned int, FILE *);
+// DataChunk.cpp
+// Implementation of Data Chunk save/load system
+// Author: Michael S. Booth, October 2000
 
-struct BfmeStringData
+#include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+
+// ??0OutputChunk@@QAE@XZ present-unmatched
+// ??0Mapping@@QAE@XZ present-unmatched
+
+#include "stdlib.h"
+#include "string.h"
+#include "Compression.h"
+// BFME's placement operator delete is one shared 12-byte body that calls the
+// CRT free import at 0x009F6C3A directly; ZH's macro routes it through
+// ::operator delete, which is a different (and here, wrong) callee.  Scoped to
+// the one header that declares this TU's pooled classes.
+#pragma push_macro("MEMORY_POOL_GLUE_WITHOUT_GCMP")
+#undef MEMORY_POOL_GLUE_WITHOUT_GCMP
+extern "C" void free(void *);
+#define MEMORY_POOL_GLUE_WITHOUT_GCMP(ARGCLASS) \
+friend class DataChunkInput; \
+protected: \
+	virtual ~ARGCLASS(); \
+public: \
+	enum ARGCLASS##MagicEnum { ARGCLASS##_GLUE_NOT_IMPLEMENTED = 0 }; \
+public: \
+	inline void *operator new(size_t s, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
+	{ \
+		DEBUG_ASSERTCRASH(s == sizeof(ARGCLASS), ("The wrong operator new is being called; ensure all objects in the hierarchy have MemoryPoolGlue set up correctly")); \
+		return MP_GLUE_ALLOCATE(ARGCLASS); \
+	} \
+public: \
+	inline void operator delete(void *p, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
+	{ \
+		free(p); \
+	} \
+protected: \
+	inline void *operator new(size_t s) \
+	{ \
+		DEBUG_ASSERTCRASH(s == sizeof(ARGCLASS), ("The wrong operator new is being called; ensure all objects in the hierarchy have MemoryPoolGlue set up correctly")); \
+		return ::operator new(s); \
+	} \
+	inline void operator delete(void *p) \
+	{ \
+		::operator delete(p); \
+	} \
+private: \
+	virtual MemoryPool *getObjectMemoryPool() \
+	{ \
+		return ARGCLASS::getClassMemoryPool(); \
+	} \
+public:
+#include "Common/DataChunk.h"
+#pragma pop_macro("MEMORY_POOL_GLUE_WITHOUT_GCMP")
+#include "Common/File.h"
+#include "Common/FileSystem.h"
+#include "Common/GameEngine.h"
+
+// UnicodeString is StringBase<WideChar>, and retail inlined its one-line
+// forwarders away: the call sites below encode the StringBase<WideChar> bodies
+// directly, not the ZH UnicodeString spellings (which resolve to the NARROW
+// StringBase<char> bodies).
+#include "string_base.h"
+
+// ??0?$StringBase@G@@AAE@ABV0@@Z at 0x00888400 -- private, which is what
+// mangles it AAE.
+inline UnicodeString::UnicodeString( const UnicodeString &stringSrc )
 {
-	UnsignedShort m_refCount;
-	UnsignedShort m_numCharsAllocated;
-	UnsignedShort m_len;
-	UnsignedShort m_pad;
+	((StringBase<WideChar> *)this)->StringBase<WideChar>::StringBase(
+		*(const StringBase<WideChar> *)&stringSrc );
+}
+
+// If verbose, lots of debug logging.
+#define not_VERBOSE
+
+// BFME retail GameEngine vtable: serviceWindowsOS is slot 16 (+0x40).
+// ZH GameEngine.h places it earlier; force the retail slot for DataChunk yield sites.
+class BFME_GameEngineServiceWindowsOS {
+public:
+	virtual void _bfme_ge_slot00() = 0;
+	virtual void _bfme_ge_slot01() = 0;
+	virtual void _bfme_ge_slot02() = 0;
+	virtual void _bfme_ge_slot03() = 0;
+	virtual void _bfme_ge_slot04() = 0;
+	virtual void _bfme_ge_slot05() = 0;
+	virtual void _bfme_ge_slot06() = 0;
+	virtual void _bfme_ge_slot07() = 0;
+	virtual void _bfme_ge_slot08() = 0;
+	virtual void _bfme_ge_slot09() = 0;
+	virtual void _bfme_ge_slot10() = 0;
+	virtual void _bfme_ge_slot11() = 0;
+	virtual void _bfme_ge_slot12() = 0;
+	virtual void _bfme_ge_slot13() = 0;
+	virtual void _bfme_ge_slot14() = 0;
+	virtual void _bfme_ge_slot15() = 0;
+	virtual void serviceWindowsOS() = 0;
 };
 
-template <typename Char>
-class StringBase
+static inline void bfmeDataChunkYieldToOS(void)
 {
-public:
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase<Char> &source);
-	void set(const StringBase<Char> &source);
-	void releaseBuffer() throw();
+	::Sleep(0);
+	if (TheGameEngine)
+		reinterpret_cast<BFME_GameEngineServiceWindowsOS *>(TheGameEngine)->serviceWindowsOS();
+}
 
-protected:
-	BfmeStringData *m_data;
-};
-
-class AsciiString : private StringBase<char>
+CachedFileInputStream::CachedFileInputStream(void):m_size(0),m_buffer(NULL),m_pos(0)
 {
-public:
-	AsciiString() {}
-	AsciiString(const AsciiString &source) : StringBase<char>(source) {}
-	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
-	AsciiString &operator=(const AsciiString &source)
-	{
-		((StringBase<char> *)this)->set(*(const StringBase<char> *)&source);
-		return *this;
+}
+
+CachedFileInputStream::~CachedFileInputStream(void)
+{
+	if (m_buffer) {
+		delete[] m_buffer;
+		m_buffer=NULL;
 	}
-};
+}
 
-class UnicodeString : private StringBase<WideChar>
+// BFME's AsciiString carries the eight-byte StringBase header where this TU
+// compiles the four-byte one, so str() is spelled out at retail's offset.
+#define BFME_STR8(s) (*(char *const *)&(s) ? *(char *const *)&(s) + 8 : (char *)"")
+
+// File's virtuals sit one entry lower than the vendored header declares:
+// close is +0x08, size is +0x2C and readEntireAndClose is +0x34, against
+// +0x0C, +0x30 and +0x38.  FileSystem::openFile is a DIRECT call in both and
+// needs no view.
+class BfmeFileView
 {
 public:
-	UnicodeString() {}
-	UnicodeString(const UnicodeString &source) : StringBase<WideChar>(source) {}
-	~UnicodeString();
+	virtual void _bfme_file_v0( void ) = 0;
+	virtual void _bfme_file_v1( void ) = 0;
+	virtual void close( void ) = 0;							///< vtable +0x08
+	virtual void _bfme_file_v3( void ) = 0;
+	virtual void _bfme_file_v4( void ) = 0;
+	virtual void _bfme_file_v5( void ) = 0;
+	virtual void _bfme_file_v6( void ) = 0;
+	virtual void _bfme_file_v7( void ) = 0;
+	virtual void _bfme_file_v8( void ) = 0;
+	virtual void _bfme_file_v9( void ) = 0;
+	virtual void _bfme_file_v10( void ) = 0;
+	virtual Int size( void ) = 0;							///< vtable +0x2C
+	virtual void _bfme_file_v12( void ) = 0;
+	virtual char *readEntireAndClose( void ) = 0;			///< vtable +0x34
 };
 
-enum NameKeyType { NAMEKEY_INVALID = 0, FORCE_NAMEKEYTYPE_LONG = 0x7fffffff };
-
-class NameKeyGenerator
+Bool CachedFileInputStream::open(AsciiString path)
 {
-public:
-	AsciiString keyToName(NameKeyType);
-};
+	File *file=TheFileSystem->openFile(BFME_STR8(path), File::READ | File::BINARY);
+	m_size = 0;
 
-extern NameKeyGenerator *TheNameKeyGenerator;
+	if (file) {
+		m_size=((BfmeFileView *)file)->size();
+		if (m_size) {
+			m_buffer = ((BfmeFileView *)file)->readEntireAndClose();
+			file = NULL;
+		}
+		m_pos=0;
+	}
 
-class Dict
-{
-public:
-	enum DataType
+	if (CompressionManager::isDataCompressed(m_buffer, m_size) == 0)
 	{
-		DICT_NONE = -1,
-		DICT_BOOL = 0,
-		DICT_INT,
-		DICT_REAL,
-		DICT_ASCIISTRING,
-		DICT_UNICODESTRING
-	};
-
-	Int getPairCount() const;
-	NameKeyType getNthKey(Int n) const;
-	DataType getNthType(Int n) const;
-	Bool getNthBool(Int n) const;
-	Int getNthInt(Int n) const;
-	Real getNthReal(Int n) const;
-	AsciiString getNthAsciiString(Int n) const;
-	UnicodeString getNthUnicodeString(Int n) const;
-
-private:
-	struct DictPair;
-	struct DictPairData;
-	DictPairData *m_data;
-
-	enum DictPairKeyType { DICTPAIRKEY_ILLEGAL = 0 };
-	struct DictPair
+		//DEBUG_LOG(("CachedFileInputStream::open() - file %s is uncompressed at %d bytes!\n", path.str(), m_size));
+	}
+	else
 	{
-	private:
-		DictPairKeyType m_key;
-		void *m_value;
-	public:
-		DataType getType() const { return (DataType)(((UnsignedInt)m_key) & 0xff); }
-		NameKeyType getName() const { return (NameKeyType)(((UnsignedInt)m_key) >> 8); }
-	};
-	struct DictPairData
+		Int uncompLen = CompressionManager::getUncompressedSize(m_buffer, m_size);
+		//DEBUG_LOG(("CachedFileInputStream::open() - file %s is compressed!  It should go from %d to %d\n", path.str(),
+		//	m_size, uncompLen));
+		char *uncompBuffer = NEW char[uncompLen];
+		Int actualLen = CompressionManager::decompressData(m_buffer, m_size, uncompBuffer, uncompLen);
+		if (actualLen == uncompLen)
+		{
+			//DEBUG_LOG(("Using uncompressed data\n"));
+			delete[] m_buffer;
+			m_buffer = uncompBuffer;
+			m_size = uncompLen;
+		}
+		else
+		{
+			//DEBUG_LOG(("Decompression failed - using compressed data\n"));
+			// decompression failed.  Maybe we invalidly thought it was compressed?
+			delete[] uncompBuffer;
+		}
+	}
+	//if (m_size >= 4)
+	//{
+	//	DEBUG_LOG(("File starts as '%c%c%c%c'\n", m_buffer[0], m_buffer[1],
+	//		m_buffer[2], m_buffer[3]));
+	//}
+
+	if (file)
 	{
-		UnsignedShort m_refCount;
-		UnsignedShort m_numPairsAllocated;
-		UnsignedShort m_numPairsUsed;
-		DictPair *peek() { return (DictPair *)(this + 1); }
-	};
-};
-
-inline Int Dict::getPairCount() const
-{
-	return m_data ? m_data->m_numPairsUsed : 0;
+		((BfmeFileView *)file)->close();
+	}
+	return m_size != 0;
 }
 
-inline NameKeyType Dict::getNthKey(Int n) const
+void CachedFileInputStream::close(void)
 {
-	if (!m_data || n < 0 || n >= m_data->m_numPairsUsed)
-		return NAMEKEY_INVALID;
-	return m_data->peek()[n].getName();
+	if (m_buffer) {
+		delete[] m_buffer;
+		m_buffer=NULL;
+	}
+	m_pos=0;
+	m_size=0;
 }
 
-inline Dict::DataType Dict::getNthType(Int n) const
+Int CachedFileInputStream::read(void *pData, Int numBytes)
 {
-	if (!m_data || n < 0 || n >= m_data->m_numPairsUsed)
-		return DICT_NONE;
-	return m_data->peek()[n].getType();
+	if (m_buffer) {
+		if ((numBytes+m_pos)>m_size) {
+			numBytes=m_size-m_pos;
+		}
+		if (numBytes) {
+			memcpy(pData,m_buffer+m_pos,numBytes);
+			m_pos+=numBytes;
+		}
+		return(numBytes);
+	}
+	return 0;
 }
 
-class Mapping
+UnsignedInt CachedFileInputStream::tell(void)
 {
-public:
-	virtual ~Mapping();
-	Mapping *next;
-	AsciiString name;
-	UnsignedInt id;
-};
-
-class DataChunkTableOfContents
-{
-public:
-	DataChunkTableOfContents();
-	~DataChunkTableOfContents();
-	Mapping *findMapping(const AsciiString &name);
-	UnsignedInt allocateID(const AsciiString &name);
-
-private:
-	Mapping *m_list;
-	Int m_listLength;
-	UnsignedInt m_nextID;
-	Bool m_headerOpened;
-};
-
-class OutputStream;
-class OutputChunk
-{
-public:
-	virtual ~OutputChunk();
-	OutputChunk *next;
-	UnsignedInt id;
-	Int filepos;
-};
-
-class DataChunkOutput
-{
-public:
-	DataChunkOutput(OutputStream *pOut);
-	~DataChunkOutput();
-	void writeReal(Real value);
-	void writeInt(Int value);
-	void writeByte(Byte value);
-	void writeAsciiString(const AsciiString &value);
-	void writeUnicodeString(UnicodeString value);
-	void writeDict(const Dict &dict);
-
-protected:
-	OutputStream *m_pOut;
-	FILE *m_tmp_file;
-	DataChunkTableOfContents m_contents;
-	OutputChunk *m_chunkStack;
-};
-
-void DataChunkOutput::writeReal(Real value)
-{
-	::fwrite((const void *)&value, sizeof(Real), 1, m_tmp_file);
+	return m_pos;
 }
 
-void DataChunkOutput::writeInt(Int value)
+Bool CachedFileInputStream::absoluteSeek(UnsignedInt pos)
 {
-	::fwrite((const void *)&value, sizeof(Int), 1, m_tmp_file);
+	if (pos<0) return false;
+	if (pos>m_size) {
+		pos=m_size;
+	}
+	m_pos=pos;
+	return true;
 }
 
-void DataChunkOutput::writeByte(Byte value)
+Bool CachedFileInputStream::eof(void)
 {
-	::fwrite((const void *)&value, sizeof(Byte), 1, m_tmp_file);
+	return m_size==m_pos;
 }
 
-void DataChunkOutput::writeDict(const Dict &d)
+// ?rewind@CachedFileInputStream@@QAEXXZ
+void CachedFileInputStream::rewind()
 {
-	FILE *tmpFile = m_tmp_file;
+	m_pos=0;
+}
+
+// -----------------------------------------------------------
+
+//
+// FileInputStream - helper class.	Used to read in data using a FILE *
+//
+/*
+// ??0FileInputStream@@ present-unmatched
+FileInputStream::FileInputStream(void):m_file(NULL)
+{
+}
+
+// ??1FileInputStream@@ present-unmatched
+FileInputStream::~FileInputStream(void)
+{
+	if (m_file != NULL) {
+		m_file->close();
+		m_file = NULL;
+	}
+}
+
+// ?open@FileInputStream@@ present-unmatched
+Bool FileInputStream::open(AsciiString path)
+{
+	m_file = TheFileSystem->openFile(path.str(), File::READ | File::BINARY);
+	return m_file==NULL?false:true;
+}
+
+// ?close@FileInputStream@@ present-unmatched
+void FileInputStream::close(void)
+{
+	if (m_file != NULL) {
+		m_file->close();
+		m_file = NULL;
+	}
+}
+
+// ?read@FileInputStream@@ present-unmatched
+Int FileInputStream::read(void *pData, Int numBytes)
+{
+	int bytesRead = 0;
+	if (m_file != NULL) {
+		bytesRead = m_file->read(pData, numBytes);
+	}
+	return(bytesRead);
+}
+
+// ?tell@FileInputStream@@ present-unmatched
+UnsignedInt FileInputStream::tell(void)
+{
+	UnsignedInt pos = 0;
+	if (m_file != NULL) {
+		pos = m_file->position();
+	}
+	return(pos);
+}
+
+// ?absoluteSeek@FileInputStream@@ present-unmatched
+Bool FileInputStream::absoluteSeek(UnsignedInt pos)
+{
+	if (m_file != NULL) {
+		return (m_file->seek(pos, File::START) != -1);
+	}
+	return(false);
+}
+
+// ?eof@FileInputStream@@ present-unmatched
+Bool FileInputStream::eof(void)
+{
+	if (m_file != NULL) {
+		return (m_file->size() == m_file->position());
+	}	 
+	return(true);
+}
+
+// byte-exact reconstruction: game/GameEngine/Source/Common/FileInputStreamRewindThunk.cpp
+// ?rewind@FileInputStream@@ present-unmatched
+void FileInputStream::rewind()
+{
+	if (m_file != NULL) {
+		m_file->seek(0, File::START);
+	}
+}
+*/
+
+//----------------------------------------------------------------------
+// DataChunkOutput
+// Data will be stored to a temporary m_tmp_file until the DataChunkOutput
+// object is destroyed.  At that time, the actual output m_tmp_file will
+// be written, including a table of m_contents.
+//----------------------------------------------------------------------
+
+#define TEMP_FILENAME		"_tmpChunk.dat"
+
+// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkOutput.cpp
+// ??0DataChunkOutput@@QAE@PAVOutputStream@@@Z present-unmatched
+DataChunkOutput::DataChunkOutput( OutputStream *pOut ) :  
+m_pOut(pOut)
+{
+	AsciiString tmpFileName = TheGlobalData->getPath_UserData();
+	tmpFileName.concat(TEMP_FILENAME);
+	m_tmp_file = ::fopen( tmpFileName.str(), "wb" );	
+	// Added Sadullah Nader
+	// Initializations missing and needed
+	m_chunkStack = NULL;
+	
+	// End Add
+}
+
+// ??1DataChunkOutput@@QAE@XZ present-unmatched
+DataChunkOutput::~DataChunkOutput()
+{
+	// store the table of m_contents
+	m_contents.write(*m_pOut);
+
+	// Rewind the temp m_tmp_file
+	::fclose(m_tmp_file);
+
+	AsciiString tmpFileName = TheGlobalData->getPath_UserData();
+	tmpFileName.concat(TEMP_FILENAME);
+
+ 	m_tmp_file = ::fopen( tmpFileName.str(), "rb" );	
+	::fseek(m_tmp_file, 0, SEEK_SET);
+
+	// append the temp m_tmp_file m_contents
+	char buffer[256];
+	int len = 256;
+	while( len == 256 )
+	{
+		// copy data from the temp m_tmp_file to the output m_tmp_file
+		len = ::fread( buffer, 1, 256, m_tmp_file );
+		m_pOut->write( buffer, len );
+	}
+
+	::fclose(m_tmp_file);
+}
+
+// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkOutputOpenDataChunkBody.cpp
+// ?openDataChunk@DataChunkOutput@@QAEXPADG@Z present-unmatched
+void DataChunkOutput::openDataChunk( char *name, DataChunkVersionType ver )
+{
+	// allocate (or get existing) ID from the table of m_contents
+	UnsignedInt id = m_contents.allocateID( AsciiString(name) );
+
+	// allocate a new chunk and place it on top of the chunk stack
+	OutputChunk *c = newInstance(OutputChunk);
+	c->next = m_chunkStack;
+	m_chunkStack = c;
+	m_chunkStack->id = id;
+
+	// store the chunk ID
+	::fwrite( (const char *)&id, sizeof(UnsignedInt), 1, m_tmp_file );
+
+	// store the chunk version number
+	::fwrite( (const char *)&ver, sizeof(DataChunkVersionType), 1, m_tmp_file );
+
+	// remember this m_tmp_file position so we can write the real data size later
+	c->filepos = ::ftell(m_tmp_file);
+#ifdef VERBOSE
+	DEBUG_LOG(("Writing chunk %s at %d (%x)\n", name, ::ftell(m_tmp_file), ::ftell(m_tmp_file)));
+#endif
+	// store a placeholder for the data size
+	Int dummy = 0xffff;
+	::fwrite( (const char *)&dummy, sizeof(Int), 1, m_tmp_file  );
+}
+
+// ?closeDataChunk@DataChunkOutput@@QAEXXZ
+// Body in DataChunk_closeDataChunk.asm (exact 118B retail).
+
+void DataChunkOutput::writeReal( Real r ) 
+{ 
+	::fwrite( (const char *)&r, sizeof(float) , 1, m_tmp_file  ); 
+}
+
+void DataChunkOutput::writeInt( Int i ) 
+{ 
+	::fwrite( (const char *)&i, sizeof(Int) , 1, m_tmp_file ); 
+}
+
+void DataChunkOutput::writeByte( Byte b ) 
+{ 
+	::fwrite( (const char *)&b, sizeof(Byte) , 1, m_tmp_file ); 
+}
+
+void DataChunkOutput::writeArrayOfBytes(char *ptr, Int len) 
+{ 
+	::fwrite( (const char *)ptr, 1, len , m_tmp_file ); 
+}
+
+// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkOutput_writeAsciiString.cpp
+// ?writeAsciiString@DataChunkOutput@@QAEXABVAsciiString@@@Z present-unmatched
+void DataChunkOutput::writeAsciiString( const AsciiString& theString ) 
+{ 
+	UnsignedShort len = theString.getLength();
+	::fwrite( (const char *)&len, sizeof(UnsignedShort) , 1, m_tmp_file );
+	::fwrite( theString.str(), len , 1, m_tmp_file ); 
+}
+
+// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkOutputWriteUnicodeString.cpp
+// ?writeUnicodeString@DataChunkOutput@@QAEXVUnicodeString@@@Z present-unmatched
+void DataChunkOutput::writeUnicodeString( UnicodeString theString ) 
+{ 
+	UnsignedShort len = theString.getLength();
+	::fwrite( (const char *)&len, sizeof(UnsignedShort) , 1, m_tmp_file );
+	::fwrite( theString.str(), len*sizeof(WideChar) , 1, m_tmp_file ); 
+}
+
+// ?writeNameKey@DataChunkOutput@@QAEXW4NameKeyType@@@Z
+// Body in DataChunk_writeNameKey.asm (exact 134B retail @ 0x00104300).
+// Queue 0x00454F43 was misplaced (inside MapUtil Player_%d_Start fn @ 0x454EF0).
+
+
+// ?writeDict@DataChunkOutput@@QAEXABVDict@@@Z
+// The reference loop unchanged. Everything it needs is visible from this TU:
+// writeReal/writeInt/writeByte inline into their four fwrite calls, the Dict
+// accessors getPairCount/getNthKey/getNthType are the header inlines (16-bit
+// count at data+4, pairs at data+6+8n, key>>8, type&0xff), and
+// allocateID folds in while findMapping, getNthBool/Int/Real/AsciiString/
+// UnicodeString, writeAsciiString and writeUnicodeString stay out of line
+// behind their ILT thunks -- exactly retail's call graph at 0x001043B0.
+void DataChunkOutput::writeDict( const Dict& d )
+{
 	UnsignedShort len = d.getPairCount();
-	::fwrite((const char *)&len, sizeof(UnsignedShort), 1, tmpFile);
+	::fwrite( (const char *)&len, sizeof(UnsignedShort) , 1, m_tmp_file );
+
 	for (int i = 0; i < len; i++)
 	{
 		NameKeyType k = d.getNthKey(i);
 		AsciiString kname = TheNameKeyGenerator->keyToName(k);
 
 		Int keyAndType = m_contents.allocateID(kname);
-
 		keyAndType <<= 8;
 		Dict::DataType t = d.getNthType(i);
 		keyAndType |= (t & 0xff);
 		writeInt(keyAndType);
 
-		switch (t)
+		switch(t)
 		{
 			case Dict::DICT_BOOL:
-				writeByte(d.getNthBool(i) ? 1 : 0);
+				writeByte(d.getNthBool(i)?1:0);
 				break;
 			case Dict::DICT_INT:
 				writeInt(d.getNthInt(i));
@@ -234,21 +556,589 @@ void DataChunkOutput::writeDict(const Dict &d)
 				writeUnicodeString(d.getNthUnicodeString(i));
 				break;
 			default:
+				DEBUG_CRASH(("impossible"));
 				break;
 		}
 	}
 }
 
-UnsignedInt DataChunkTableOfContents::allocateID(const AsciiString &name)
+// Force-emit Dict inline accessors matched as out-of-line COMDATs on this TU.
+// The C++ writeDict body above inlines them, but /Ob1 drops the unreferenced
+// COMDATs unless something else in the TU asks for them.
+static void bfme_force_dict_accessors(const Dict &d, Int n)
 {
-	Mapping *m = findMapping(name);
+	(void)d.getPairCount();
+	(void)d.getNthKey(n);
+	(void)d.getNthType(n);
+}
+// Address-of prevents the static helper (and thus the accessor COMDATs) from being dropped.
+void (*bfme_force_dict_accessors_anchor)(const Dict &, Int) = &bfme_force_dict_accessors;
+
+//----------------------------------------------------------------------
+// DataChunkTableOfContents
+//----------------------------------------------------------------------
+
+DataChunkTableOfContents::DataChunkTableOfContents( void ) : 
+m_list(NULL), 
+m_nextID(1), 
+m_listLength(0),
+m_headerOpened(false)
+{
+}
+
+// ??1DataChunkTableOfContents@@QAE@XZ present-unmatched
+DataChunkTableOfContents::~DataChunkTableOfContents()
+{
+	Mapping *m, *next;
+
+	// free all list elements
+	for( m=m_list; m; m=next )
+	{
+		next = m->next;
+		m->deleteInstance();
+	}
+}
+
+// return mapping data
+// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkTableOfContents_findMapping.cpp
+// ?findMapping@DataChunkTableOfContents@@AAEPAVMapping@@ABVAsciiString@@@Z present-unmatched
+// The name is compared through compare() so this copy compiles to the same
+// repe-cmpsb body the byte-verified DataChunkTableOfContents.cpp copy emits.
+// Spelled as operator== it expands to this TU's char-by-char AsciiString loop,
+// which is both wrong for the class and large enough for the inliner to fold
+// the whole list walk into allocateID -- and from there into the writeDict
+// body at 0x001043B0, which retail calls through the ILT thunk instead.
+Mapping *DataChunkTableOfContents::findMapping( const AsciiString& name )
+{
+	Mapping *m;
+
+	for( m=m_list; m; m=m->next )
+		if (name.compare(m->name) == 0)
+			return m;
+
+	return NULL;
+}
+
+// convert name to integer identifier
+UnsignedInt DataChunkTableOfContents::getID( const AsciiString& name )		
+{
+	Mapping *m = findMapping( name );
+
 	if (m)
 		return m->id;
-	m = new Mapping;
-	m->id = m_nextID++;
-	m->name = name;
-	m->next = m_list;
-	m_list = m;
-	m_listLength++;
-	return m->id;
+
+	DEBUG_CRASH(("name not found in DataChunkTableOfContents::getName for name %s\n",name.str()));
+	return 0;
+}
+
+// convert integer identifier to name
+// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkTableOfContentsGetName.cpp
+// ?getName@DataChunkTableOfContents@@QAE?AVAsciiString@@I@Z present-unmatched
+AsciiString DataChunkTableOfContents::getName( UnsignedInt id )	
+{
+	Mapping *m;
+
+	for( m=m_list; m; m=m->next )
+		if (m->id == id)
+			return m->name;
+
+	DEBUG_CRASH(("name not found in DataChunkTableOfContents::getName for id %d\n",id));
+	return AsciiString::TheEmptyString;
+}
+
+// create new ID for given name or return existing mapping
+UnsignedInt DataChunkTableOfContents::allocateID(const AsciiString& name )
+{
+	Mapping *m = findMapping( name );
+
+	if (m)
+		return m->id;
+	else
+	{
+		// allocate new id mapping
+		m = newInstance(Mapping);
+
+		// `m->id = m_nextID++;` in one statement lets MSVC 7.1 fold the
+		// load/increment/store into `inc dword ptr [m_nextID]`. Retail's
+		// allocateID body at 0x00103D60 -- and the copy of it inlined into
+		// writeDict at 0x001043B0 -- both reload the counter into a register
+		// and increment it there, so the read is written out. Byte-identical
+		// standalone, 572/572 bytes for writeDict.
+		//
+		// Do not respell the three lines below. Measured 2026-09-27: the
+		// counter bump is the LAST 13 differing byte of writeDict's 572
+		// (+0xC8..+0xD6, the inlined epilogue), and twenty-plus distinct
+		// spellings of it -- register hint, const int temp, short temp,
+		// same-variable reassignment, same-variable self-plus-one,
+		// two-read temp, this-qualified -- all compile to the SAME
+		// normalised instruction shape, because MSVC 7.1's front end
+		// normalises them to one IR. The only byte that names the cause is
+		// +0xC9: 8b 43 10 (mov eax,[m_nextID]) here against retail's 8b 4b
+		// 10 (mov ecx); the other twelve are the schedule permutation that
+		// follows. Retail reloads into EDX standalone (0x00103D60) and into
+		// ECX once inlined, so the register is a per-callsite allocation
+		// decision, not a property of this source. Anything that leaves the
+		// 572-byte shape is worse: a folded `inc dword ptr [m_nextID]`
+		// gives 568 bytes, moving the update later gives 584.
+		m->id = m_nextID;
+		UnsignedInt bumpedID = m_nextID;
+		m_nextID = bumpedID + 1;
+		m->name =  name ;
+
+		// prepend to list
+		m->next = m_list;
+		m_list = m;
+
+		m_listLength++;
+
+		return m->id;
+	}
+}
+
+// output the table of m_contents to a binary m_tmp_file stream
+// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkTableOfContentsWrite.cpp
+// ?write@DataChunkTableOfContents@@QAEXAAVOutputStream@@@Z present-unmatched
+void DataChunkTableOfContents::write( OutputStream &s )
+{
+	Mapping *m;
+	unsigned char len;
+
+	Byte tag[4]={'C','k', 'M', 'p'};	// Chunky height map. jba.
+	s.write(tag,sizeof(tag));
+
+	// output number of elements in the table
+	s.write( (void *)&this->m_listLength, sizeof(Int) );
+
+	// output symbol table
+	for( m=this->m_list; m; m=m->next )
+	{
+		len = m->name.getLength();
+		s.write( (char *)&len, sizeof(unsigned char) );
+		s.write( (char *)m->name.str(),  len);
+		s.write( (char *)&m->id, sizeof(UnsignedInt) );
+	}
+}
+
+// read the table of m_contents from a binary m_tmp_file stream
+// TODO: Should this reset the symbol table?
+// Append symbols to table
+// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkTableOfContentsRead.cpp
+// ?read@DataChunkTableOfContents@@QAEXAAVChunkInputStream@@@Z present-unmatched
+void DataChunkTableOfContents::read( ChunkInputStream &s)
+{
+	Int count, i;
+	UnsignedInt maxID = 0;
+	unsigned char len;
+	Mapping *m;
+
+	Byte tag[4]={'x','x', 'x', 'x'};	// Chunky height map. jba.
+	s.read(tag,sizeof(tag));
+	if (tag[0] != 'C' || tag[1] != 'k' || tag[2] != 'M' || tag[3] != 'p') {
+		return;	 // Don't throw, may happen with legacy files.
+	}
+
+	// get number of symbols in table
+	s.read( (char *)&count, sizeof(Int) );
+
+	for( i=0; i<count; i++ )
+	{
+		// allocate new id mapping
+		m = newInstance(Mapping);
+
+		// read string length
+		s.read( (char *)&len, sizeof(unsigned char) );
+
+		// allocate and read in string
+		if (len>0) {
+			char *str = m->name.getBufferForRead(len);
+			s.read( str, len );
+			str[len] = '\000';
+		}
+
+		// read id
+		s.read( (char *)&m->id, sizeof(UnsignedInt) );
+
+		// prepend to list
+		m->next = this->m_list;
+		this->m_list = m;
+
+		this->m_listLength++;
+
+		// track max ID used
+		if (m->id > maxID)
+			maxID = m->id;
+	}
+	m_headerOpened = count > 0 && !s.eof();
+
+	// adjust next ID so no ID's are reused
+	this->m_nextID = max( this->m_nextID, maxID+1 );
+}
+
+//----------------------------------------------------------------------
+// DataChunkInput
+//----------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkInputCtorThunk.cpp
+// ??0DataChunkInput@@QAE@PAVChunkInputStream@@@Z present-unmatched
+DataChunkInput::DataChunkInput( ChunkInputStream *pStream ) : m_file( pStream ), 
+																										m_userData(NULL), 
+																										m_currentObject(NULL),
+																										m_chunkStack(NULL),
+																										m_parserList(NULL)
+{
+	// read table of m_contents
+	m_contents.read(*m_file);
+
+	// store location of first data chunk
+	m_fileposOfFirstChunk = m_file->tell();
+}
+
+// byte-exact reconstruction: game/GameEngine/Source/Common/DataChunkInputDestructor.cpp
+// ??1DataChunkInput@@QAE@XZ present-unmatched
+DataChunkInput::~DataChunkInput()
+{
+	clearChunkStack();
+
+	UserParser *p, *next;
+	for (p=m_parserList; p; p=next) {
+		next = p->next;
+		p->deleteInstance();
+	}
+
+}
+
+// register a user parsing function for a given DataChunk label
+// ?registerParser@DataChunkInput@@QAEXABVAsciiString@@0P6A_NAAV1@PAUDataChunkInfo@@PAX@Z3@Z present-unmatched
+void DataChunkInput::registerParser( const AsciiString& label, const AsciiString& parentLabel, 
+																		 DataChunkParserPtr parser, void *userData )
+{
+	UserParser *p = newInstance(UserParser);
+
+	p->label.set( label );
+	p->parentLabel.set(parentLabel );
+	p->parser = parser;
+	p->userData = userData;
+
+	// prepend parser to parser list
+	p->next = m_parserList;
+	m_parserList = p;
+}
+
+// parse the chunk stream using registered parsers
+// it is assumed that the file position is at the start of a data chunk
+// (it can be inside a parent chunk) when parse is called.
+// ?parse@DataChunkInput@@QAE_NPAX@Z
+// Body in DataChunk_parse.asm (exact 1006B retail).
+
+// clear the stack
+// ?clearChunkStack@DataChunkInput@@IAEXXZ present-unmatched
+void DataChunkInput::clearChunkStack( void )
+{
+	InputChunk *c, *next;
+
+	for( c=m_chunkStack; c; c=next )
+	{
+		next = c->next;
+		c->deleteInstance();
+	}
+
+	m_chunkStack = NULL;
+}
+
+// reset the stream to just-opened state - ready to parse the first chunk
+// ?reset@DataChunkInput@@QAEXXZ present-unmatched
+void DataChunkInput::reset( void )
+{
+	clearChunkStack();
+	m_file->absoluteSeek( m_fileposOfFirstChunk );
+}
+
+// Checks if the file has our initial tag word.
+// ?isValidFileType@DataChunkInput@@QAE_NXZ present-unmatched
+Bool DataChunkInput::isValidFileType(void)
+{
+	return m_contents.isOpenedForRead();
+}
+
+// Open-BFME5: byte-exact clean C++ reconstruction at retail RVA 0x001032A0.
+AsciiString DataChunkInput::openDataChunk(DataChunkVersionType *ver )
+{
+	// allocate a new chunk and place it on top of the chunk stack
+	InputChunk *c = newInstance(InputChunk);
+	c->id = 0;
+	c->version = 0;
+	c->dataSize = 0;
+	//DEBUG_LOG(("Opening data chunk at offset %d (%x)\n", m_file->tell(), m_file->tell()));
+	// read the chunk ID
+	m_file->read( (char *)&c->id, sizeof(UnsignedInt) );
+	decrementDataLeft( sizeof(UnsignedInt) );
+
+	// read the chunk version number
+	m_file->read( (char *)&c->version, sizeof(DataChunkVersionType) );
+	decrementDataLeft( sizeof(DataChunkVersionType) );
+
+	// read the chunk data size
+	m_file->read( (char *)&c->dataSize, sizeof(Int) );
+	decrementDataLeft( sizeof(Int) );
+
+	// all of the data remains to be read
+	c->dataLeft = c->dataSize;
+	c->chunkStart = m_file->tell();
+
+	*ver = c->version;
+
+	c->next = m_chunkStack;
+	m_chunkStack = c;
+	if (this->atEndOfFile()) {
+		return (AsciiString(""));
+	}
+	return m_contents.getName( c->id );
+}
+
+// close chunk and move to start of next chunk
+void DataChunkInput::closeDataChunk( void )
+{										
+	if (m_chunkStack == NULL)
+	{
+		// TODO: Throw exception
+		return;
+	}
+
+	if (m_chunkStack->dataLeft > 0)
+	{
+		// skip past the remainder of this chunk
+		m_file->absoluteSeek( m_file->tell()+m_chunkStack->dataLeft );
+		decrementDataLeft( m_chunkStack->dataLeft );
+
+	}
+
+	// pop the chunk off the stack
+	InputChunk *c = m_chunkStack;
+	m_chunkStack = m_chunkStack->next;
+	// Retail001029D0 invokes InputChunk's deleting destructor directly
+	// (vtable0108631C slot0 ->001026F0), without the ZH pool-release path.
+	delete c;
+}
+
+
+// return label of current data chunk
+// ?getChunkLabel@DataChunkInput@@QAE?AVAsciiString@@XZ present-unmatched
+AsciiString DataChunkInput::getChunkLabel( void )
+{
+	if (m_chunkStack == NULL)
+	{
+		// TODO: Throw exception
+		DEBUG_CRASH(("Bad."));
+		return AsciiString("");
+	}
+
+	return m_contents.getName( m_chunkStack->id );
+}
+
+// return version of current data chunk
+DataChunkVersionType DataChunkInput::getChunkVersion( void )
+{
+	if (m_chunkStack == NULL)
+	{
+		// TODO: Throw exception
+		DEBUG_CRASH(("Bad."));
+		return NULL;
+	}
+
+	return m_chunkStack->version;
+}		
+
+// return size of data stored in this chunk
+UnsignedInt DataChunkInput::getChunkDataSize( void )
+{
+	if (m_chunkStack == NULL)
+	{
+		// TODO: Throw exception
+		DEBUG_CRASH(("Bad."));
+		return NULL;
+	}
+
+	return m_chunkStack->dataSize;
+}
+
+
+// return size of data left to read in this chunk
+UnsignedInt DataChunkInput::getChunkDataSizeLeft( void )
+{
+	if (m_chunkStack == NULL)
+	{
+		// TODO: Throw exception
+		DEBUG_CRASH(("Bad."));
+		return NULL;
+	}
+
+	return m_chunkStack->dataLeft;
+}
+
+Bool DataChunkInput::atEndOfChunk( void )
+{
+	if (m_chunkStack)
+	{
+		if (m_chunkStack->dataLeft <= 0)
+			return true;
+		return false;
+	}
+
+	return true; 
+}
+
+// update data left in chunk(s)
+// since data read from a chunk is also read from all parent chunks,
+// traverse the chunk stack and decrement the data left for each
+void DataChunkInput::decrementDataLeft( Int size )
+{
+	InputChunk *c;
+
+	c = m_chunkStack;
+	while (c) {
+		c->dataLeft -= size;
+		c = c->next;
+	}
+	// The sizes of the parent chunks on the stack are adjusted in closeDataChunk.
+}
+
+Real DataChunkInput::readReal(void) 
+{ 
+	Real r;
+	DEBUG_ASSERTCRASH(m_chunkStack->dataLeft>=sizeof(Real), ("Read past end of chunk."));
+	m_file->read( (char *)&r, sizeof(Real) ); 
+	decrementDataLeft( sizeof(Real) );
+	return r; 
+}
+
+Int DataChunkInput::readInt(void) 
+{ 
+	Int i;
+	DEBUG_ASSERTCRASH(m_chunkStack->dataLeft>=sizeof(Int), ("Read past end of chunk."));
+	m_file->read( (char *)&i, sizeof(Int) ); 
+	decrementDataLeft( sizeof(Int) );
+	return i; 
+}
+
+Byte DataChunkInput::readByte(void) 
+{ 
+	Byte b;
+	DEBUG_ASSERTCRASH(m_chunkStack->dataLeft>=sizeof(Byte), ("Read past end of chunk."));
+	m_file->read( (char *)&b, sizeof(Byte) ); 
+	decrementDataLeft( sizeof(Byte) );
+	return b; 
+}
+
+// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkInputReadArrayOfBytes.cpp
+// ?readArrayOfBytes@DataChunkInput@@QAEXPADH@Z present-unmatched
+void DataChunkInput::readArrayOfBytes(char *ptr, Int len) 
+{ 
+	DEBUG_ASSERTCRASH(m_chunkStack->dataLeft>=len, ("Read past end of chunk."));
+	m_file->read( ptr, len ); 
+	decrementDataLeft( len );
+}
+
+// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkInput_readNameKey_Thunk.cpp
+// ?readNameKey@DataChunkInput@@QAE?AW4NameKeyType@@XZ present-unmatched
+NameKeyType DataChunkInput::readNameKey(void)
+{
+		Int keyAndType = readInt();
+#if (defined(_DEBUG) || defined(_INTERNAL))
+		Dict::DataType t = (Dict::DataType)(keyAndType & 0xff);
+		DEBUG_ASSERTCRASH(t==Dict::DICT_ASCIISTRING,("Invalid key data."));
+#endif
+		keyAndType >>= 8;
+
+		AsciiString kname = m_contents.getName(keyAndType);
+		NameKeyType k = TheNameKeyGenerator->nameToKey(kname);
+		return k;
+}
+
+// Full584B at0x001039C0 includes561B code plus3 alignment and5 DWORD
+// switch targets at0x00103BF4 through0x00103C08 exclusive; CC follows.
+Dict DataChunkInput::readDict() 
+{ 
+	bfmeDataChunkYieldToOS();
+	UnsignedShort len;	
+	DEBUG_ASSERTCRASH(m_chunkStack->dataLeft>=sizeof(UnsignedShort), ("Read past end of chunk."));
+	m_file->read( &len, sizeof(UnsignedShort) );
+	decrementDataLeft( sizeof(UnsignedShort) );
+	DEBUG_ASSERTCRASH(m_chunkStack->dataLeft>=len, ("Read past end of chunk."));
+
+	Dict d(len);
+
+	for (int i = 0; i < len; i++)
+	{
+		Int keyAndType = readInt();
+		Dict::DataType t = (Dict::DataType)(keyAndType & 0xff);
+		keyAndType >>= 8;
+
+		AsciiString kname = m_contents.getName(keyAndType);
+		NameKeyType k = TheNameKeyGenerator->nameToKey(BFME_STR8(kname));
+
+		switch(t)
+		{
+			case Dict::DICT_BOOL:
+				d.setBool(k, readByte() ? true : false);
+				break;
+			case Dict::DICT_INT:
+				d.setInt(k, readInt());
+				break;
+			case Dict::DICT_REAL:
+				d.setReal(k, readReal());
+				break;
+			case Dict::DICT_ASCIISTRING:
+				d.setAsciiString(k, readAsciiString());
+				break;
+			case Dict::DICT_UNICODESTRING:
+				d.setUnicodeString(k, readUnicodeString());
+				break;
+			default:
+				throw ERROR_CORRUPT_FILE_FORMAT;
+				break;
+		}
+	}
+
+	return d;
+}
+
+// byte-exact reconstruction: game/GameEngine/Source/Common/System/DataChunkInputReadAsciiString.cpp
+// ?readAsciiString@DataChunkInput@@QAE?AVAsciiString@@XZ present-unmatched
+AsciiString DataChunkInput::readAsciiString(void) 
+{ 
+	UnsignedShort len;	
+	DEBUG_ASSERTCRASH(m_chunkStack->dataLeft>=sizeof(UnsignedShort), ("Read past end of chunk."));
+	m_file->read( &len, sizeof(UnsignedShort) );
+	decrementDataLeft( sizeof(UnsignedShort) );
+	DEBUG_ASSERTCRASH(m_chunkStack->dataLeft>=len, ("Read past end of chunk."));
+	AsciiString theString;
+	if (len>0) {
+		char *str = theString.getBufferForRead(len);
+		m_file->read( str, len );
+		decrementDataLeft( len );
+		// add null delimiter to string.  Note that getBufferForRead allocates space for terminating null.
+		str[len] = '\000';
+	}
+
+	return theString; 
+}
+
+UnicodeString DataChunkInput::readUnicodeString(void) 
+{ 
+	bfmeDataChunkYieldToOS();
+
+	UnsignedShort len;	
+	DEBUG_ASSERTCRASH(m_chunkStack->dataLeft>=sizeof(UnsignedShort), ("Read past end of chunk."));
+	m_file->read( &len, sizeof(UnsignedShort) );
+	decrementDataLeft( sizeof(UnsignedShort) );
+	DEBUG_ASSERTCRASH(m_chunkStack->dataLeft>=len, ("Read past end of chunk."));
+	UnicodeString theString;
+	if (len>0) {
+		WideChar *str = theString.getBufferForRead(len);
+		m_file->read( (char*)str, len*sizeof(WideChar) );
+		decrementDataLeft( len*sizeof(WideChar) );
+		// add null delimiter to string.  Note that getBufferForRead allocates space for terminating null.
+		str[len] = '\000';
+	}
+
+	return theString; 
 }
