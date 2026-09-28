@@ -1,5 +1,5 @@
 // ?getPath_UserData@ScreenshotGlobalData@@QBE?AVScreenshotAsciiString@@XZ
-// partial score=0.712 date=2026-09-28
+// partial score=0.72 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // The pinned ILT at 0x00036D9A and the call in W3DDisplay::saveScreenShot
@@ -82,8 +82,11 @@ ScreenshotAsciiString ScreenshotGlobalData::getPath_UserData(void) const
 	// Retail loads the buffer pointer directly into EAX, then computes this
 	// field's address in ESI. This source uses a raw view at the same offset.
 	const char *dataPtr = *(const char *const *)((const char *)this + 0x1284);
-	if ((dataPtr == 0 ||
-		*(const unsigned short *)(dataPtr + 4) == 0) && TheGameText)
+	bool needsPath = dataPtr == 0 ||
+		*(const unsigned short *)(dataPtr + 4) == 0;
+	const ScreenshotAsciiString * volatile userDataDir = 0;
+	userDataDir = &m_userDataDirLegacy;
+	if (needsPath && TheGameText)
 	{
 		char temp[MAX_PATH];
 		if (SHGetSpecialFolderPathA(0, temp, 0x27, TRUE))
@@ -100,5 +103,5 @@ ScreenshotAsciiString ScreenshotGlobalData::getPath_UserData(void) const
 			TheWritableGlobalData->m_userDataDirLegacy = temp;
 		}
 	}
-	return m_userDataDirLegacy;
+	return *userDataDir;
 }
