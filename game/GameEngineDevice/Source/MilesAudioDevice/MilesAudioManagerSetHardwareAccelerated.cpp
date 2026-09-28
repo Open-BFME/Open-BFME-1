@@ -1,14 +1,18 @@
-// ?setHardwareAccelerated@MilesAudioManager@@AAEXE@Z
-// partial score=0.873 date=2026-09-28
+// ?setHardwareAccelerated@MilesAudioManager@@AAEXE@Z  retail 0x006A9910, 747 bytes
+// (ret 4 at +0x2E8; the 8-entry speaker-config jump table follows at 0x006A9BFC).
 // cl: /O2 /Ob1 /EHs-c- /DNDEBUG /DWIN32 /D_WINDOWS /MD /Igame/Libraries/Source/WWVegas/WWLib
-
-// ?setHardwareAccelerated@MilesAudioManager@@AAEXE@Z
-// The retail body at RVA 0x006A9910 is the BFME provider switch reached by
-// MilesAudioManager::openDevice at 0x006B78D0.  Its full boundary is 747
-// bytes, ending at `ret 4` before the jump table at 0x006A9BFC.
+//
+// Identity: matched MilesAudioManager::openDevice (0x006B78D0) calls it as
+// setHardwareAccelerated(prefs.getUseEAX3()) through ILT 0x0001F046.
+// Shape: the Zero Hour selectProvider skeleton (EAX3, then Dolby Surround, then
+// the Miles Fast 2D fallback), with one `success` flag and getProviderIndex
+// called on string-literal temporaries, which gives each AsciiString its own
+// frame slot as retail does (0x14-byte frame).
 
 typedef unsigned char Bool;
 typedef unsigned int UnsignedInt;
+const Bool FALSE_BOOL = 0;
+const Bool TRUE_BOOL = 1;
 
 #include "ascii_string.h"
 
@@ -186,10 +190,16 @@ public:
 private:
 	void setHardwareAccelerated(Bool accelerated);
 
-	char m_pad[0x650];
+	char m_pad004[0x618 - 0x004];
+	UnsignedInt m_bfme618;
+	char m_pad61C[0x632 - 0x61C];
+	Bool m_bfme632;
+	char m_pad633[0x654 - 0x633];
 	ProviderInfo m_provider3D[64];
 	UnsignedInt m_providerCount;
 	UnsignedInt m_selectedProvider;
+	char m_pad95C[0xB60 - 0x95C];
+	int m_speakerTypeB60;
 };
 
 // MSVC 7.1 reserves __thiscall in a free-function-pointer typedef.  These
@@ -220,7 +230,7 @@ void MilesAudioManager::setHardwareAccelerated(Bool accelerated)
 		union { void (*asFunction)(void); MilesAudioManagerCall asMember; } clearVOBCast;
 		clearVOBCast.asFunction = j_00033d89;
 		(reinterpret_cast<MilesAudioManagerCallView *>(this)->*clearVOBCast.asMember)();
-		*reinterpret_cast<UnsignedInt *>(reinterpret_cast<unsigned char *>(this) + 0x618) = 0;
+		m_bfme618 = 0;
 		union { void (*asFunction)(void); MilesAudioManagerCall asMember; } closeCast;
 		closeCast.asFunction = j_00017d3c;
 		(reinterpret_cast<MilesAudioManagerCallView *>(this)->*closeCast.asMember)();
@@ -235,49 +245,44 @@ void MilesAudioManager::setHardwareAccelerated(Bool accelerated)
 		switch ((unsigned char)speakerConfig)
 		{
 		case 0:
-			*reinterpret_cast<UnsignedInt *>(reinterpret_cast<unsigned char *>(this) + 0xb60) = 0;
+			m_speakerTypeB60 = 0;
 			break;
 		case 1:
-			*reinterpret_cast<UnsignedInt *>(reinterpret_cast<unsigned char *>(this) + 0xb60) = 1;
+			m_speakerTypeB60 = 1;
 			break;
 		case 2:
-			*reinterpret_cast<UnsignedInt *>(reinterpret_cast<unsigned char *>(this) + 0xb60) = 0;
+			m_speakerTypeB60 = 0;
 			break;
 		case 3:
-			*reinterpret_cast<UnsignedInt *>(reinterpret_cast<unsigned char *>(this) + 0xb60) = 3;
+			m_speakerTypeB60 = 3;
 			break;
 		case 4:
-			*reinterpret_cast<UnsignedInt *>(reinterpret_cast<unsigned char *>(this) + 0xb60) = 0;
+			m_speakerTypeB60 = 0;
 			break;
 		case 5:
-			*reinterpret_cast<UnsignedInt *>(reinterpret_cast<unsigned char *>(this) + 0xb60) = 2;
+			m_speakerTypeB60 = 2;
 			break;
 		case 6:
-			*reinterpret_cast<UnsignedInt *>(reinterpret_cast<unsigned char *>(this) + 0xb60) = 4;
+			m_speakerTypeB60 = 4;
 			break;
 		case 7:
-			*reinterpret_cast<UnsignedInt *>(reinterpret_cast<unsigned char *>(this) + 0xb60) = 5;
+			m_speakerTypeB60 = 5;
 			break;
 		default:
-			*reinterpret_cast<UnsignedInt *>(reinterpret_cast<unsigned char *>(this) + 0xb60) = 0;
+			m_speakerTypeB60 = 0;
 			break;
 		}
 	}
 
-	Bool setSpeakerType = 0;
+	Bool setSpeakerType = FALSE_BOOL;
+	Bool success = FALSE_BOOL;
 	UnsignedInt providerIndex;
-	UnsignedInt *providerId;
-	Bool success;
 	if (accelerated)
 	{
-		{
-			AsciiString providerName("Creative Labs EAX 3 (TM)");
-			providerIndex = MilesAudioManager::getProviderIndex(providerName);
-		}
+		providerIndex = MilesAudioManager::getProviderIndex("Creative Labs EAX 3 (TM)");
 		if (providerIndex != (UnsignedInt)-1)
 		{
-			providerId = &m_provider3D[providerIndex].m_id;
-			success = AIL_open_3D_provider(*providerId) == 0;
+			success = AIL_open_3D_provider(m_provider3D[providerIndex].m_id) == 0;
 			if (!success)
 			{
 				if (_bfme_debugReportingEnabled())
@@ -291,66 +296,57 @@ void MilesAudioManager::setHardwareAccelerated(Bool accelerated)
 					report->v4c(2);
 				}
 			}
-			if (success)
-				goto provider_selected;
+			else
+				setSpeakerType = FALSE_BOOL;
 		}
 	}
 
-	if (*reinterpret_cast<int *>(reinterpret_cast<unsigned char *>(this) + 0xb60) > 0 &&
-		*reinterpret_cast<int *>(reinterpret_cast<unsigned char *>(this) + 0xb60) <= 5)
+	if (!success)
 	{
-		GameLODManager *lod = TheGameLODManager;
-		if (lod != 0)
+		int speakerType = m_speakerTypeB60;
+		if (speakerType > 0 && speakerType <= 5)
 		{
-			int level = lod->m_audioLODIndex;
-			if (level >= 0 && level < 2 && !lod->m_audioLOD[level].m_allowDolby)
-				goto software_provider;
-		}
-
-		{
-			AsciiString providerName("Dolby Surround");
-			providerIndex = MilesAudioManager::getProviderIndex(providerName);
-		}
-		if (providerIndex != (UnsignedInt)-1)
-		{
-			providerId = &m_provider3D[providerIndex].m_id;
-			success = AIL_open_3D_provider(*providerId) == 0;
-			if (success)
+			GameLODManager *lod = TheGameLODManager;
+			if (lod == 0 || lod->m_audioLODIndex < 0 || lod->m_audioLODIndex >= 2 ||
+				lod->m_audioLOD[lod->m_audioLODIndex].m_allowDolby)
 			{
-				setSpeakerType = 1;
-				goto provider_selected;
+				providerIndex = MilesAudioManager::getProviderIndex("Dolby Surround");
+				if (providerIndex != (UnsignedInt)-1)
+				{
+					success = AIL_open_3D_provider(m_provider3D[providerIndex].m_id) == 0;
+					if (success)
+						setSpeakerType = TRUE_BOOL;
+				}
 			}
 		}
+
+		if (!success)
+		{
+			m_selectedProvider = (UnsignedInt)-1;
+			providerIndex = MilesAudioManager::getProviderIndex("Miles Fast 2D Positional Audio");
+			success = AIL_open_3D_provider(m_provider3D[providerIndex].m_id) == 0;
+			if (success)
+				setSpeakerType = TRUE_BOOL;
+		}
 	}
 
-software_provider:
-	m_selectedProvider = (UnsignedInt)-1;
+	if (success)
 	{
-		AsciiString providerName("Miles Fast 2D Positional Audio");
-		providerIndex = MilesAudioManager::getProviderIndex(providerName);
+		m_selectedProvider = providerIndex;
+		AIL_set_3D_rolloff_factor(m_provider3D[providerIndex].m_id, 0.0f);
+		union { void (*asFunction)(void); MilesAudioManagerCall asMember; } samplePoolCast;
+		samplePoolCast.asFunction = j_0003da23;
+		(reinterpret_cast<MilesAudioManagerCallView *>(this)->*samplePoolCast.asMember)();
+		createListener();
+		if (setSpeakerType)
+		{
+			if (m_bfme632)
+				AIL_set_3D_speaker_type(m_provider3D[providerIndex].m_id, 1);
+			else
+				AIL_set_3D_speaker_type(m_provider3D[providerIndex].m_id,
+					m_speakerTypeB60);
+		}
+		if (TheVideoPlayer)
+			TheVideoPlayer->notifyVideoPlayerOfNewProvider(1);
 	}
-	providerId = &m_provider3D[providerIndex].m_id;
-	success = AIL_open_3D_provider(*providerId) == 0;
-	if (!success)
-		return;
-
-	setSpeakerType = 1;
-
-provider_selected:
-	m_selectedProvider = providerIndex;
-	AIL_set_3D_rolloff_factor(*providerId, 0.0f);
-	union { void (*asFunction)(void); MilesAudioManagerCall asMember; } samplePoolCast;
-	samplePoolCast.asFunction = j_0003da23;
-	(reinterpret_cast<MilesAudioManagerCallView *>(this)->*samplePoolCast.asMember)();
-	createListener();
-	if (setSpeakerType)
-	{
-		if (*reinterpret_cast<unsigned char *>(reinterpret_cast<unsigned char *>(this) + 0x632))
-			AIL_set_3D_speaker_type(*providerId, 1);
-		else
-			AIL_set_3D_speaker_type(*providerId,
-				*reinterpret_cast<UnsignedInt *>(reinterpret_cast<unsigned char *>(this) + 0xb60));
-	}
-	if (TheVideoPlayer)
-		TheVideoPlayer->notifyVideoPlayerOfNewProvider(1);
 }
