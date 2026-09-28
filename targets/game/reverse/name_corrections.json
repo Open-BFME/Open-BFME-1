@@ -9958,5 +9958,15 @@
   "after_sha256": "a8214ea7b37eb4a26254065f5bf0523ffff21e7cbd734b426e45e654ff99da2c",
   "evidence": "targets/game/reverse/identity_evidence/0x007f94a0.md",
   "reason": "The prior find label appears only in the exploratory attempt and identifies lookup shape rather than the retail owner or API; available decompile and context evidence do not establish that identity, so the source keeps the RVA."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004b0d40.cpp",
+  "new_path": "targets/game/reverse/attempts/0x004b0d40.cpp",
+  "old_name": "BfmeN1073",
+  "new_name": "Rva004B0C80Target",
+  "before_sha256": "523b6e80bc41891cadaf5903c3ea59f4c13eecb374819462d1d5db138a2c2f37",
+  "after_sha256": "d049968e5d251cb414f0b04cc06a8314da43b8cbad7ee5437a1bdbe752a70405",
+  "evidence": "targets/game/reverse/attempts/0x004b0d40.cpp",
+  "reason": "Positional pairing across a cold rewrite: the old bank named the bfmeGo1073B argument BfmeN1073 and hung m_left/m_top on it, but retail reads those floats from the map value target record (+0x0C/+0x10) and passes that record's +0x08 block as the BfmeN1073 argument; BfmeN1073 is kept for that block (see the bank header)."
  }
 ]
