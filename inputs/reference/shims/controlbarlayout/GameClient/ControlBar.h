@@ -837,6 +837,7 @@ protected:
 	static void populateButtonProc( Object *obj, void *userData );
 	void populatePurchaseScience(Player* player);
 	void populateCommand( Object *obj );
+	void populateCommand( Object *obj, Bool refresh );
 	void populateMultiSelect( void );
 	void populateBuildQueue( Object *producer );
 	void populateStructureInventory( Object *building );

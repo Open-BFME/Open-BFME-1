@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/controlbarvtables /Iinputs/reference/shims/controlbarlayout /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc /Iinputs/vendor/stlport /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/controlbarvtables /Iinputs/reference/shims/controlbarlayout /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -32,7 +32,9 @@
 
 // USER INCLUDES //////////////////////////////////////////////////////////////////////////////////
 
+#define BFME_STLP_NODE_ALLOC
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+#include "Common/UnicodeString.h"
 
 // BFME de-pooled this glue: retail's per-class `operator delete(void*, MagicEnum)`
 // is one 12-byte body (0x007EFFF0) that calls the CRT free IMPORT THUNK -- a
@@ -1994,6 +1996,360 @@ struct BfmeControlBarButtonList
 	const BfmeCommandButtonNode *m_commandButtons;		///< retail this+0x28
 };
 
+struct Rva004A5E30ButtonView
+{
+	unsigned char m_unmodelled_000[ 0x10 ];
+	int m_command;
+	void *m_upgradeTemplate;
+	UnsignedInt m_options;
+	unsigned char m_unmodelled_01c[ 0x34 - 0x1c ];
+	SpecialPowerTemplate *m_specialPower;
+	unsigned char m_unmodelled_038[ 0x68 - 0x38 ];
+	AsciiString m_unmodelled_068;
+	unsigned char m_unmodelled_06c[ 0x84 - 0x6c ];
+	std::vector<int> m_science;
+	unsigned char m_unmodelled_090[ 0xa0 - 0x90 ];
+	int m_unmodelled_0a0;
+	unsigned char m_unmodelled_0a4[ 0x14d - 0xa4 ];
+	unsigned char m_unknown_14d;
+	unsigned char m_unmodelled_14e[ 4 ];
+	unsigned char m_unknown_152;
+	unsigned char m_unknown_153;
+
+	int getCommandType() const { return m_command; }
+	UnsignedInt getOptions() const { return m_options; }
+	SpecialPowerTemplate *getSpecialPowerTemplate() const { return m_specialPower; }
+	const std::vector<int> &getScienceVec() const { return m_science; }
+	Rva004A5E30ButtonView *getNext() const { return (Rva004A5E30ButtonView *)m_upgradeTemplate; }
+};
+
+class Rva0049BA80
+{
+public:
+	void call( Object *object, Bool refresh ) const;
+};
+
+class Gen_0049C4B0
+{
+public:
+	void bfmeCopyFrom( Gen_0049C4B0 *source, bool notify );
+};
+
+class Gen_004B1720
+{
+public:
+	void bfmeClear();
+};
+
+class BFMERetailCommandButton
+{
+public:
+	void setButtonImage( const Image *image );
+};
+
+class Rva004A0340
+{
+public:
+	const CommandSet *call( const AsciiString &name );
+};
+
+class Rva0049C590
+{
+public:
+	const CommandButton *call( int index ) const;
+};
+
+class Rva0049EDE0
+{
+public:
+	void call( GameWindow *window, const CommandButton *button );
+};
+
+class Rva0049DF00
+{
+public:
+	void call( const Coord3D *location );
+};
+
+class Rva00478390
+{
+public:
+	int call( Bool hide );
+};
+
+struct Rva004A5E30ControlBarView
+{
+	unsigned char m_unmodelled_000[ 0x28 ];
+	Rva004A5E30ButtonView *field_0028;
+	unsigned char m_unmodelled_02c[ 0xd4 ];
+	GameWindow *field_0100[ 20 ];
+	unsigned char m_unmodelled_150[ 0x50 ];
+	GameWindow *field_0150[ 20 ];
+	unsigned char m_unmodelled_1f0[ 0x100 ];
+	void *field_02f0;
+};
+
+struct Rva004A5E30OverrideView
+{
+	unsigned char m_unmodelled_000[ 0x2c ];
+	AsciiString field_002c;
+};
+
+class Rva001CAF20
+{
+public:
+	Rva004A5E30OverrideView *call();
+};
+
+class Rva000FA800
+{
+public:
+	const Image *call( int index );
+};
+
+struct Rva004A5E30PlayerView
+{
+	unsigned char m_unmodelled_000[ 0x684 ];
+	Rva000FA800 field_0684;
+};
+
+class Rva0013E4D0
+{
+public:
+	Bool take( class Rva0036CA00Str &text );
+};
+
+class Rva000DF810
+{
+public:
+	unsigned char call( Object *object );
+};
+
+class BfmeVecVLH
+{
+public:
+	const ThingTemplate *rva000F9670( int index );
+};
+
+class Rva0036CA00Str;
+
+class Rva004A5E30ContainView
+{
+public:
+	virtual OpenContain *asOpenContain();
+	virtual void slot01(); virtual void slot02(); virtual void slot03(); virtual void slot04();
+	virtual void slot05(); virtual void slot06(); virtual void slot07(); virtual void slot08();
+	virtual void slot09(); virtual void slot10(); virtual void slot11(); virtual void slot12();
+	virtual void slot13(); virtual void slot14(); virtual void slot15(); virtual void slot16();
+	virtual void slot17(); virtual void slot18(); virtual void slot19(); virtual void slot20();
+	virtual void slot21(); virtual void slot22(); virtual void slot23(); virtual void slot24();
+	virtual void slot25(); virtual void slot26(); virtual void slot27(); virtual void slot28();
+	virtual void slot29(); virtual void slot30(); virtual void slot31(); virtual void slot32();
+	virtual void slot33(); virtual void slot34(); virtual void slot35(); virtual void slot36();
+	virtual void slot37(); virtual void slot38(); virtual void slot39(); virtual void slot40();
+	virtual void slot41(); virtual void slot42(); virtual void slot43(); virtual void slot44();
+	virtual Bool slot45();
+};
+
+struct Rva004A5E30ObjectView
+{
+	unsigned char m_unmodelled_000[ 0x1fc ];
+	Rva004A5E30ContainView *m_contain;
+};
+
+class BFMERetailExitVTable
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03();
+	virtual void slot04(); virtual void slot05(); virtual void slot06(); virtual void slot07();
+	virtual const Coord3D *getRallyPoint() const;
+};
+
+class Rva005976B0
+{
+public:
+	void update( void *value );
+};
+
+class BfmeRva004A5950ControlBarContextCommandView
+{
+public:
+	void call();
+};
+
+class Rva004B19E0
+{
+public:
+	void apply( void *windows );
+};
+
+class Rva004A4090 : public std::vector<GameWindow *>
+{
+public:
+	void call( unsigned count );
+};
+
+#define field_0028 (((Rva004A5E30ControlBarView *)this)->field_0028)
+#define field_0100 (((Rva004A5E30ControlBarView *)this)->field_0100)
+#define field_0150 (((Rva004A5E30ControlBarView *)this)->field_0150)
+#define field_02f0 ((Rva004B19E0 *)((Rva004A5E30ControlBarView *)this)->field_02f0)
+
+void ControlBar::populateCommand( Object *object, Bool refresh )
+{
+	Player *player = object->getControllingPlayer();
+	resetContainData();
+	const CommandSet *commandSet = ((Rva004A0340 *)TheControlBar)->call( object->getCommandSetString() );
+	Rva004A5E30OverrideView *overrideRecord = ((Rva001CAF20 *)object)->call();
+	if( overrideRecord )
+		commandSet = ((Rva004A0340 *)TheControlBar)->call( overrideRecord->field_002c );
+	if( !commandSet )
+	{
+		if( Glo012F4B98 )
+			((Rva0058C040 *)Glo012F4B98)->invoke();
+		return;
+	}
+	int i;
+	for( i = 0; i < 20; ++i )
+	{
+		if( field_0100[ i ] )
+		{
+			const CommandButton *button = ((const Rva0049C590 *)commandSet)->call( i );
+			if( !button )
+				((Rva00478390 *)field_0100[ i ])->call( true );
+			else
+				((Rva0049BA80 *)button)->call( object, false );
+			((Rva0049EDE0 *)this)->call( field_0100[ i ], button );
+		}
+	}
+	Rva004A5E30ContainView *contain = ((Rva004A5E30ObjectView *)object)->m_contain;
+	if( contain && contain->slot45() )
+		doTransportInventoryUI( object, commandSet );
+	int specialIndex = 0;
+	for( i = 0; i < 20; ++i )
+	{
+		const CommandButton *button = ((const Rva0049C590 *)commandSet)->call( i );
+		Rva004A5E30ButtonView *b = (Rva004A5E30ButtonView *)button;
+		if( !b || !b->m_unknown_152 )
+			continue;
+		if( b->getOptions() & 0x80000 )
+		{
+			if( field_0100[ i ] )
+				((Rva00478390 *)field_0100[ i ])->call( true );
+			continue;
+		}
+		if( contain && b->m_unknown_153 )
+		{
+		OpenContain *open = contain->asOpenContain();
+			if( open && !*((const unsigned char *)open + 0xb6) )
+				continue;
+		}
+		if( b->getCommandType() == 0x2c )
+		{
+			if( !((Rva000DF810 *)ThePlayerList)->call( object ) )
+			{
+				((Rva00478390 *)field_0100[ i ])->call( true );
+				continue;
+			}
+			Rva004A5E30PlayerView *playerView = (Rva004A5E30PlayerView *)player;
+			const Image *image = playerView->field_0684.call( specialIndex );
+			Rva0013E4D0 *textTemplate = (Rva0013E4D0 *)((BfmeVecVLH *)&playerView->field_0684)->rva000F9670( specialIndex );
+			if( image && textTemplate )
+			{
+				((BFMERetailCommandButton *)button)->setButtonImage( image );
+				AsciiString text;
+				if( textTemplate->take( (Rva0036CA00Str &)text ) )
+				{
+					AsciiString &buttonText = b->m_unmodelled_068;
+					buttonText = text;
+				}
+				if( field_0100[ i ] )
+				((Rva0049EDE0 *)this)->call( field_0100[ i ], button );
+				b->m_unmodelled_068.clear();
+				b->m_unmodelled_0a0 = specialIndex;
+			}
+			else
+				b->m_unmodelled_0a0 = -1;
+			++specialIndex;
+		}
+		if( b->getCommandType() == 0xf )
+			continue;
+		if( field_0100[ i ] )
+		{
+			((Rva00478390 *)field_0100[ i ])->call( false );
+			field_0100[ i ]->winEnable( true );
+			if( b->m_unknown_14d )
+				field_0100[ i ]->winSetStatus( 0x4000000U );
+			else
+				field_0100[ i ]->winClearStatus( 0x4000000U );
+		}
+		if( ( b->getOptions() & 0x80 ) && b->getSpecialPowerTemplate() )
+		{
+			SpecialPowerTemplate *power = b->getSpecialPowerTemplate();
+			if( power->getRequiredScience() != -1 )
+			{
+				if( !player->hasScience( (ScienceType)power->getRequiredScience() ) )
+				{
+					if( field_0100[ i ] )
+						((Rva00478390 *)field_0100[ i ])->call( true );
+				}
+				else
+				{
+					int bestIndex = -1;
+					ScienceType science;
+					for( unsigned scienceIndex = 0; scienceIndex < b->getScienceVec().size(); ++scienceIndex )
+					{
+						science = (ScienceType)b->getScienceVec()[ scienceIndex ];
+						if( player->hasScience( science ) )
+							bestIndex = scienceIndex;
+						else
+						break;
+					}
+					if( bestIndex != -1 )
+					{
+						science = (ScienceType)b->getScienceVec()[ bestIndex ];
+						for( Rva004A5E30ButtonView *candidate = field_0028; candidate; candidate = candidate->getNext() )
+						{
+							if( candidate->getCommandType() == 0x18 && !candidate->getScienceVec().empty() && candidate->getScienceVec()[ 0 ] == science )
+								((Gen_0049C4B0 *)button)->bfmeCopyFrom( (Gen_0049C4B0 *)candidate, true );
+						}
+					}
+				}
+			}
+		}
+	}
+	if( object->isLocallyControlled() || !ThePlayerList->getLocalPlayer()->isPlayerActive() )
+	{
+		BFMERetailExitVTable *exitInterface = (BFMERetailExitVTable *)object->getObjectExitInterface();
+		if( exitInterface )
+			((Rva0049DF00 *)this)->call( exitInterface->getRallyPoint() );
+	}
+	((BfmeRva004A5950ControlBarContextCommandView *)this)->call();
+	((Rva005976B0 *)Glo012F4B98)->update( object );
+	if( field_02f0 )
+	{
+		if( !object->isLocallyControlled() && ThePlayerList->getLocalPlayer()->isPlayerActive() )
+		{
+			((Gen_004B1720 *)field_02f0)->bfmeClear();
+			return;
+		}
+		Rva004A4090 windows;
+		windows.call( 20U );
+		for( int k = 0; k < 20; ++k )
+		{
+			GameWindow *window = field_0150[ k ];
+			if( window )
+				windows.push_back( window );
+		}
+		field_02f0->apply( &windows );
+	}
+}
+
+
+#undef field_02f0
+#undef field_0150
+#undef field_0100
+#undef field_0028
+
 CommandButton *ControlBar::findNonConstCommandButton( const AsciiString& name )
 {
 	const BfmeControlBarStringView &searchName = reinterpret_cast<const BfmeControlBarStringView &>( name );
@@ -3264,12 +3620,6 @@ void ControlBar::setHiddenControlBar( void )
 //	}
 //}
 //
-class BFMERetailCommandButton
-{
-public:
-	void setButtonImage( const Image *image );
-};
-
 void ControlBar::updateCommandMarkerImage( const Image *image )
 {
 	if(!image)

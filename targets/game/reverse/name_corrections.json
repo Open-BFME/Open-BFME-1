@@ -9658,5 +9658,285 @@
   "after_sha256": "e8d77d9bcea50a6de61617a150691c49612e1fc6f75252073dca5cba27c30d39",
   "evidence": "targets/game/reverse/identity_evidence/harvest-20260928T084123_3-fillhelper.md",
   "reason": "SideEntry0019F890 unified with matched caller's Rva001A0320Record; other findings are token/cross-body alignment artifacts (SidesList and swap still used)"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulateButtonImageView",
+  "new_name": "Rva00478390",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file maps the old image adapter to matched BFMERetailCommandButton::setButtonImage at 0x0049C380. Rva00478390 names the separate matched GameWindow::winHide target, so the name checker paired unrelated declarations."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulateClearAt004B1720",
+  "new_name": "Gen_004B1720",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file traces this bank-local adapter to its retail target and records the matched identity or remaining address-only evidence. The replacement keeps only the supported target or layout name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulateCommandButtonLookupView",
+  "new_name": "Rva0049C590",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file maps ILT 0x00003F80 to matched CommandSet::getCommandButton at 0x0049C590. The banked lookup class does not own that retail method."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulateCommandButtonView",
+  "new_name": "Gen_0049C4B0",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file shows that the bank used this class for a layout view, anonymous body 0x0049BA80, and generated body 0x0049C4B0. The landed source names those separate targets and keeps the unresolved owner opaque."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulateCommandButtonView",
+  "new_name": "Rva0049BA80",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file shows that the bank used this class for a layout view, anonymous body 0x0049BA80, and generated body 0x0049C4B0. The landed source names those separate targets and keeps the unresolved owner opaque."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulateCommandButtonView",
+  "new_name": "Rva004A5E30ButtonView",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file shows that the bank used this class for a layout view, anonymous body 0x0049BA80, and generated body 0x0049C4B0. The landed source names those separate targets and keeps the unresolved owner opaque."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulateCommandSetLookupView",
+  "new_name": "Rva004A0340",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file maps ILT 0x00048CCA to matched ControlBar::findCommandSet at 0x004A0340. The banked lookup class does not own that retail method."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulateCommandSetOverride",
+  "new_name": "Rva004A5E30OverrideView",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file records the conflict between the ledger name BfmeHostERH::bfmeGoERH and this caller reading a string-like object at returned EAX+0x2C. The banked override getter and result type remain unproven."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulateCommandTextView",
+  "new_name": "Rva0013E4D0",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file traces this bank-local adapter to its retail target and records the matched identity or remaining address-only evidence. The replacement keeps only the supported target or layout name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulateContainView",
+  "new_name": "Rva004A5E30ContainView",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file traces this bank-local adapter to its retail target and records the matched identity or remaining address-only evidence. The replacement keeps only the supported target or layout name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulateControlBarView",
+  "new_name": "Rva004A5E30ControlBarView",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file traces this bank-local adapter to its retail target and records the matched identity or remaining address-only evidence. The replacement keeps only the supported target or layout name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulateControlCommandView",
+  "new_name": "Rva0049EDE0",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file maps ILT 0x00015DA7 to matched ControlBar::setControlCommand at 0x0049EDE0. The banked helper class is a local call adapter."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulateGameWindowCloseView",
+  "new_name": "Rva00478390",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file shows that ILT 0x00027F2A targets matched GameWindow::winHide at 0x00478390. The banked bfmeClose adapter does not supply the retail method name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulateGlobalsView",
+  "new_name": "Rva0058C040",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file traces this bank-local adapter to its retail target and records the matched identity or remaining address-only evidence. The replacement keeps only the supported target or layout name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulateGlobalsView",
+  "new_name": "Rva005976B0",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file traces this bank-local adapter to its retail target and records the matched identity or remaining address-only evidence. The replacement keeps only the supported target or layout name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulateObjectContainView",
+  "new_name": "Rva004A5E30ObjectView",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file traces this bank-local adapter to its retail target and records the matched identity or remaining address-only evidence. The replacement keeps only the supported target or layout name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulateObjectOverrideView",
+  "new_name": "Rva001CAF20",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file records the conflict between the ledger name BfmeHostERH::bfmeGoERH and this caller reading a string-like object at returned EAX+0x2C. The banked override getter and result type remain unproven."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulateObjectStore",
+  "new_name": "Rva000FA800",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file traces this bank-local adapter to its retail target and records the matched identity or remaining address-only evidence. The replacement keeps only the supported target or layout name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulatePlayerListView",
+  "new_name": "Rva000DF810",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file traces this bank-local adapter to its retail target and records the matched identity or remaining address-only evidence. The replacement keeps only the supported target or layout name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulatePlayerView",
+  "new_name": "Rva004A5E30PlayerView",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file traces this bank-local adapter to its retail target and records the matched identity or remaining address-only evidence. The replacement keeps only the supported target or layout name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmePopulateRallyPointView",
+  "new_name": "Rva0049DF00",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The evidence file maps ILT 0x0000D436 to matched ControlBar::showRallyPoint at 0x0049DF00. The banked helper class is a local call adapter."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "field14d",
+  "new_name": "m_unknown_14d",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The name oracle finds no BFME or Zero Hour member at CommandButton+0x14D. The landed source keeps this field at its witnessed byte offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "field152",
+  "new_name": "m_unknown_152",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The name oracle finds no BFME or Zero Hour member at CommandButton+0x152. The landed source keeps this field at its witnessed byte offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "field153",
+  "new_name": "m_unknown_153",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The name oracle finds no BFME or Zero Hour member at CommandButton+0x153. The landed source keeps this field at its witnessed byte offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "m_specialIndex",
+  "new_name": "m_unmodelled_0a0",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The name oracle finds no BFME or Zero Hour member at CommandButton+0xA0. The landed source keeps this field at its witnessed byte offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "m_text",
+  "new_name": "m_unmodelled_068",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The name oracle finds no BFME or Zero Hour member at CommandButton+0x68. The landed source keeps this field at its witnessed byte offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "pad",
+  "new_name": "m_unmodelled_000",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The bank labels these bytes as padding without identifying a member. The landed source records the same unmodelled byte span by offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x004a5e30.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "pad00",
+  "new_name": "m_unmodelled_000",
+  "before_sha256": "0708708440c68e69c2cc0dca2c33bd627726b3beda24d9c6541b55275200ee40",
+  "after_sha256": "6c5194d10a6903f176f1ed807a2cc8a79e3b6d5b2133e0434d7e2b9a388d0466",
+  "evidence": "targets/game/reverse/identity_evidence/0x004a5e30-name-corrections.md",
+  "reason": "The bank labels these bytes as padding without identifying a member. The landed source records the same unmodelled byte span by offset."
  }
 ]
