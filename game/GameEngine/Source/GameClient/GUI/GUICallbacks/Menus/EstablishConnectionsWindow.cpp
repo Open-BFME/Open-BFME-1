@@ -164,6 +164,20 @@ static const char *qmgadgetsToHide[] = {
 };
 static const char *qmperPlayerGadgetsToHide[] = { 0 };
 
+// Retail 0x004C8460 and 0x004C8490 (33 bytes each). Every call is inlined, but
+// VC7.1 still emits both statics with a private ABI that takes show in EDX.
+// The GameOptions helper compiles exact at 0x004C8460 but has no ledger row:
+// WOLMapSelectMenu.cpp owns the same mangled static name at 0x00503E80.
+static void showGameSpyGameOptionsUnderlyingGUIElements( bool show )
+{
+	ShowUnderlyingGUIElements( show, layoutFilename, parentName, gadgetsToHide, perPlayerGadgetsToHide );
+}
+
+static void showGameSpyQMUnderlyingGUIElements( bool show )
+{
+	ShowUnderlyingGUIElements( show, qmlayoutFilename, qmparentName, qmgadgetsToHide, qmperPlayerGadgetsToHide );
+}
+
 // ?ShowEstablishConnectionsWindow@@YAXXZ 0x004C8660
 void ShowEstablishConnectionsWindow( void )
 {
@@ -180,13 +194,11 @@ void ShowEstablishConnectionsWindow( void )
 		*reinterpret_cast<int *>( reinterpret_cast<char *>( firstWindow ) + 0x1f4 ) = 0;
 	if( !TheGameSpyGame->m_isQuickMatch )
 	{
-		ShowUnderlyingGUIElements( 0, layoutFilename, parentName,
-			gadgetsToHide, perPlayerGadgetsToHide );
+		showGameSpyGameOptionsUnderlyingGUIElements( false );
 	}
 	else
 	{
-		ShowUnderlyingGUIElements( 0, qmlayoutFilename, qmparentName,
-			qmgadgetsToHide, qmperPlayerGadgetsToHide );
+		showGameSpyQMUnderlyingGUIElements( false );
 	}
 }
 
