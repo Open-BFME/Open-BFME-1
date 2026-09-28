@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline
 // stlport
 // Retail team command-button queries: 0x002FBC90 (760B), 0x002FB8D0 (766B),
-// and 0x002FB4F0 (782B). The dispatcher reaches these through ILT thunks;
+// 0x002FB4F0 (782B) and 0x002FC050 (849B). The dispatcher reaches these through ILT thunks;
 // action identities remain address-derived rather than inferred from adjacency.
 // Layouts follow the byte-verified named-unit query siblings and the ZH
 // PartitionManager.h filter declarations, with BFME's next-link at +4.
@@ -406,6 +406,62 @@ void TeamCommandQuery002FB4F0::apply(const AsciiString &teamName, const AsciiStr
                         PartitionFilterValidCommandButtonTarget(source, button, true, CMD_FROM_SCRIPT).link(
                             Rva000C3DD0VptrZeroBlockObject(*(const VptrZeroBlock24 *)&KINDOFMASK_NONE,
                                 *(const VptrZeroBlock24 *)&excluded).link(&mapFilter))))));
+        }
+        if (target) group->groupDoCommandButtonAtObject(button, target, CMD_FROM_SCRIPT);
+    }
+}
+
+// Retail 0x002FC050: kind-of mask 7 (with the excluded mask) plus the
+// third-argument mask, in both the position and the object branch. Its
+// behaviour is Zero Hour's doTeamUseCommandButtonOnNearestBuildingClass
+// (structure mask and kindofBit mask), but like its siblings above it keeps
+// the address-derived name.
+class TeamCommandQuery002FC050
+{
+public:
+    void apply(const AsciiString &teamName, const AsciiString &commandAbility, Int kindofBit);
+};
+void TeamCommandQuery002FC050::apply(const AsciiString &teamName, const AsciiString &commandAbility, Int kindofBit)
+{
+    Team *team = TheScriptEngine->getTeamNamed(teamName, false);
+    if (!team) return;
+    AIGroup *group = TheAI->createGroup();
+    team->getTeamAsAIGroup(group);
+    const CommandButton *button = TheControlBar->findCommandButton(commandAbility);
+    if (!button) return;
+    Object *source;
+    if (button->getSpecialPowerTemplate())
+        source = group->getSpecialPowerSourceObject(button->getSpecialPowerTemplate()->getID());
+    else
+        source = group->getCommandButtonSourceObject(button->getCommandType());
+    if (!source) return;
+    if (!button->isReady(source)) return;
+    Coord3D position;
+    group->getCenter(&position);
+    KindOfMaskType excluded(KindOfMaskType::kInit, 88, 53, 129);
+    if ((Bool)((button->getOptions() >> 5) & 1)) {
+        Object *target;
+        {
+            PartitionFilterSameMapStatus mapFilter(source);
+            target = ThePartitionManager->getClosestObject(&position, 1000000.0f, 0,
+                PartitionFilterPlayerAffiliation(team->getControllingPlayer(), ALLOW_ENEMIES, true).link(
+                    Rva000C3DD0VptrZeroBlockObject(*(const VptrZeroBlock24 *)&MAKE_KINDOF_MASK(7),
+                        *(const VptrZeroBlock24 *)&excluded).link(
+                    Rva000C3DD0VptrZeroBlockObject(*(const VptrZeroBlock24 *)&MAKE_KINDOF_MASK(kindofBit),
+                        *(const VptrZeroBlock24 *)&KINDOFMASK_NONE).link(&mapFilter))));
+        }
+        if (target) group->groupDoCommandButtonAtPosition(button, target->getPosition(), CMD_FROM_SCRIPT);
+    } else {
+        Object *target;
+        {
+            PartitionFilterSameMapStatus mapFilter(source);
+            target = ThePartitionManager->getClosestObject(&position, 1000000.0f, 0,
+                PartitionFilterPlayerAffiliation(team->getControllingPlayer(), ALLOW_ENEMIES, true).link(
+                    Rva000C3DD0VptrZeroBlockObject(*(const VptrZeroBlock24 *)&MAKE_KINDOF_MASK(7),
+                        *(const VptrZeroBlock24 *)&excluded).link(
+                    Rva000C3DD0VptrZeroBlockObject(*(const VptrZeroBlock24 *)&MAKE_KINDOF_MASK(kindofBit),
+                        *(const VptrZeroBlock24 *)&KINDOFMASK_NONE).link(
+                        PartitionFilterValidCommandButtonTarget(source, button, true, CMD_FROM_SCRIPT).link(&mapFilter)))));
         }
         if (target) group->groupDoCommandButtonAtObject(button, target, CMD_FROM_SCRIPT);
     }
