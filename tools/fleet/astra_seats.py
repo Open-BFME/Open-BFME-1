@@ -231,7 +231,119 @@ def fresh_checkout():
                          f"run `git pull --rebase origin master` here first (pick() reads the local ledger)")
 
 
-def launch(groups, hours, note_template=None):
+GAP_NOTE = """GAP SEAT ({model}, {effort}, hard cap {hours} hours). The ranges below are retail .text that NO ledger row
+claims: no boundary has been proven there yet. Your job is to turn each gap into claimed, byte-exact code.
+For each gap, first decide what it is, with evidence:
+  (a) the TAIL of the row that ends where the gap starts (a start mid-instruction or right after a non-terminal
+      instruction means that row's extent stops short: extend it with add_match --replace-existing at the proven
+      size and re-verify; Ghidra sizes are known to stop before the real ret);
+  (b) one or more separate functions: prove each start (a REL32 call/jmp target, an ILT thunk target, a vtable
+      slot, or int3 padding before it) and end (ret/tail jmp followed by int3 padding or the next proven start),
+      then write the C++ and land it with tools/add_match.py as a new row (opaque address-derived name unless a
+      caller/vtable/string proves the identity);
+  (c) data inside .text (jump/index tables, constants): record it with re_log.py blocked "data: ..." and move on.
+TOOLS: the GhidraSQL server (POST SQL to http://127.0.0.1:8081/query; VA = RVA + 0x400000): funcs (Ghidra's own
+starts, advisory), xrefs WHERE to_addr=<VA> (who calls a start), pseudocode WHERE func_addr=<VA>, instructions.
+python3 tools/callees.py, tools/fleet/context_pack.py and tools/probe.py work on any RVA/size you establish.
+Rules as AGENTS.md: never run git, no full gate, never launch the game, never edit tools/ docs/ game/gen_asm/
+game/gen_small/. Record a verdict for every function you establish (re_log.py; bank near misses with --stash
+--score). Stop at {hours} hours and write build/astra_seat/REPORT.md: per gap, what it is and what landed.
+"""
+
+
+def find_gaps(min_bytes=64):
+    """[(start, end, code_bytes)] of unclaimed .text between matched rows, padding
+    stripped, largest first; SafeDisc no-ground-truth ranges excluded."""
+    import build
+    import eligibility
+
+    rows = eligibility.load_rows()
+    spans = sorted({(int(r["target_rva"], 16), int(r["target_size"] or 0)) for r in rows
+                    if r.get("status") == "matched" and (r.get("target_rva") or "").startswith("0x")})
+    data = open(build.EXE, "rb").read()
+    text = build.pe_sections(data)[0]
+    lo, hi = text["rva"], text["rva"] + text["size"]
+    raw = data[text["raw_pointer"]:text["raw_pointer"] + text["size"]]
+    gaps, cur = [], lo
+    for start, size in spans:
+        if start > cur:
+            gaps.append((cur, start))
+        cur = max(cur, start + size)
+    if cur < hi:
+        gaps.append((cur, hi))
+    out = []
+    for a, b in gaps:
+        core = raw[a - lo:b - lo].strip(b"\xcc")
+        if len(core) >= min_bytes and not eligibility.no_ground_truth(a):
+            out.append((a, b, len(core)))
+    return sorted(out, key=lambda g: -g[2])
+
+
+def gap_groups(count, budget=10000):
+    """[(label, [gap start, ...])]: largest unclaimed gaps first, ~budget bytes a seat."""
+    import eligibility
+
+    busy = claimed() | {int(r, 16) for r in eligibility.busy_rvas()}
+    gaps = [g for g in find_gaps() if g[0] not in busy]
+    groups, current, total = [], [], 0
+    for start, _, size in gaps:
+        current.append(start)
+        total += size
+        if total >= budget:
+            groups.append((f"gaps ({total:,} B)", current))
+            current, total = [], 0
+            if len(groups) >= count:
+                break
+    if current and len(groups) < count:
+        groups.append((f"gaps ({total:,} B)", current))
+    return groups
+
+
+def gap_brief(starts):
+    """TARGETS-style evidence for each gap: neighbours, Ghidra starts, callers."""
+    import eligibility
+    import json
+    import urllib.request
+
+    rows = [r for r in eligibility.load_rows()
+            if r.get("status") == "matched" and (r.get("target_rva") or "").startswith("0x")]
+    rows.sort(key=lambda r: int(r["target_rva"], 16))
+    ends = {int(r["target_rva"], 16) + int(r["target_size"] or 0): r for r in rows}
+    begins = {int(r["target_rva"], 16): r for r in rows}
+    gaps = {g[0]: g for g in find_gaps()}
+
+    def ghidra(sql):
+        try:
+            req = urllib.request.Request("http://127.0.0.1:8081/query", data=sql.encode(), method="POST")
+            with urllib.request.urlopen(req, timeout=60) as resp:
+                res = json.loads(resp.read().decode())["results"][-1]
+            return [dict(zip(res["columns"], row)) for row in res["rows"]] if res.get("success") else []
+        except OSError:
+            return []
+
+    lines = ["TARGETS (unclaimed gaps; claimed on origin for this seat):"]
+    for start in starts:
+        a, b, size = gaps.get(start, (start, start, 0))
+        lines.append(f"- GAP 0x{a:08X}..0x{b:08X} ({b - a} B span, {size} B not int3 padding)")
+        before, after = ends.get(a), begins.get(b)
+        if before:
+            lines.append(f"    ends here: {before['name']} @ {before['target_rva']} ({before['target_size']} B) "
+                         f"in {before['source']}")
+        if after:
+            lines.append(f"    starts after: {after['name']} @ {after['target_rva']} ({after['target_size']} B)")
+        funcs = ghidra(f"SELECT addr, size, name FROM funcs WHERE addr >= {a + 0x400000} "
+                       f"AND addr < {b + 0x400000} ORDER BY addr")
+        for f in funcs[:12]:
+            rva = int(f["addr"]) - 0x400000
+            callers = ghidra(f"SELECT COUNT(*) AS n FROM xrefs WHERE to_addr = {f['addr']}")
+            n = callers[0]["n"] if callers else "?"
+            lines.append(f"    Ghidra start 0x{rva:08X} size {f['size']} ({f['name']}), {n} xref(s)")
+        if not funcs:
+            lines.append("    Ghidra knows no function start inside this gap (tail of the row before, or data?)")
+    return "\n".join(lines) + "\n"
+
+
+def launch(groups, hours, note_template=None, brief_fn=None):
     bash = shutil.which("bash")
     if not bash or not shutil.which("codex"):
         raise SystemExit("astra_seats: needs Git Bash (for `timeout`) and the codex CLI on PATH")
@@ -258,10 +370,15 @@ def launch(groups, hours, note_template=None):
         (worktree / "build" / "astra_seat").mkdir(parents=True, exist_ok=True)
         note = (note_template or NOTE).format(model=MODEL, effort=EFFORT, hours=hours)
         brief = work / "brief.txt"
-        with brief.open("w", encoding="utf-8") as handle:
-            subprocess.run([sys.executable, str(worktree / "tools/brief.py"), "--rvas", *[f"0x{r:08X}" for r in rvas],
-                            "--model", MODEL, "--limit", str(len(rvas)), "--note", note],
-                           cwd=worktree, stdout=handle, check=True)
+        if brief_fn is not None:
+            # gap seats have no ledger rows for brief.py to describe
+            brief.write_text(note + "\n" + brief_fn(rvas), encoding="utf-8")
+        else:
+            with brief.open("w", encoding="utf-8") as handle:
+                subprocess.run([sys.executable, str(worktree / "tools/brief.py"), "--rvas",
+                                *[f"0x{r:08X}" for r in rvas],
+                                "--model", MODEL, "--limit", str(len(rvas)), "--note", note],
+                               cwd=worktree, stdout=handle, check=True)
         log = work / "session.log"
         script = (f"export BFME_MODEL={MODEL}; timeout -k 60 {int(hours * 3600)} codex exec -m {MODEL} "
                   f"-c 'model_reasoning_effort=\"{EFFORT}\"' --sandbox danger-full-access "
@@ -393,6 +510,8 @@ def main(argv=None):
     ap.add_argument("action", choices=["pick", "launch", "status", "harvest", "harvested"])
     ap.add_argument("count", nargs="?", type=int, default=4)
     ap.add_argument("--lifts", action="store_true", help="add one seat on servable named lifts")
+    ap.add_argument("--gaps", action="store_true",
+                    help="serve unclaimed .text gaps (no boundary proven yet) with GhidraSQL evidence, ~10 KB a seat")
     ap.add_argument("--retry", action="store_true",
                     help="serve bodies attempted once or twice (start from the stash) instead of never-tried ones")
     ap.add_argument("--big", action="store_true",
@@ -421,6 +540,14 @@ def main(argv=None):
         mark_harvested(args.seat)
         return 0
     fresh_checkout()
+    if args.gaps:
+        groups = gap_groups(args.count)
+        if args.action == "pick":
+            for label, starts in groups:
+                print(f"{label}: {' '.join(f'0x{r:08X}' for r in starts)}")
+            return 0
+        launch(groups, 3.0, GAP_NOTE, gap_brief)
+        return 0
     if args.big:
         groups = pick(args.count, args.lifts, lo=1200, hi=8000, budget=8000, max_bodies=3, retry=args.retry)
     else:
