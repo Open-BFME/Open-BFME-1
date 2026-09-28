@@ -1,8 +1,8 @@
-// ??0W3DScriptedModelDraw@@QAE@PAVThing@@PBVModuleData@@@Z
-// partial score=0.41 date=2026-09-17
+// ??0W3DModelDraw@@QAE@PAVThing@@PBVModuleData@@@Z
+// partial score=0.45 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /O2 /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC
 // stlport
-// BFME W3DScriptedModelDraw constructor, retail 0x00773360 (1185B).
+// BFME W3DModelDraw constructor, retail 0x00773360 (1185B).
 //
 // This is the BFME-sized W3D model-draw base used by the scripted and vehicle
 // draw modules.  The public ZH header stops at the first few pointers; the
@@ -16,6 +16,7 @@
 #include <set>
 #include <vector>
 #include <stddef.h>
+#include <string.h>
 
 
 typedef bool Bool;
@@ -35,11 +36,11 @@ public:
 	char *m_data;
 };
 
-class DrawModule
+class DrawableModule
 {
 public:
-	DrawModule(Thing *, const ModuleData *);
-	virtual ~DrawModule();
+	DrawableModule(Thing *, const ModuleData *);
+	virtual ~DrawableModule();
 	virtual void drawModuleAnchor();
 
 private:
@@ -137,16 +138,7 @@ class BfmeZeroFields10
 public:
 	BfmeZeroFields10()
 	{
-		m_00 = 0;
-		m_04 = 0;
-		m_08 = 0;
-		m_0c = 0;
-		m_10 = 0;
-		m_14 = 0;
-		m_18 = 0;
-		m_1c = 0;
-		m_20 = 0;
-		m_24 = 0;
+		memset(this, 0, sizeof(*this));
 	}
 
 	int m_00;
@@ -202,10 +194,10 @@ public:
 extern GlobalData *TheWritableGlobalData;
 extern GameLODManager *TheGameLODManager;
 
-class W3DScriptedModelDraw : public DrawModule, public W3DModelDrawInterface
+class W3DModelDraw : public DrawableModule, public W3DModelDrawInterface
 {
 public:
-	W3DScriptedModelDraw(Thing *, const ModuleData *);
+	W3DModelDraw(Thing *, const ModuleData *);
 
 	// This is a local ABI probe; keeping the packet public lets the compile-time
 	// checks below reject an accidental STL layout drift.
@@ -282,28 +274,28 @@ public:
 };
 
 typedef char W3DScriptedModelDraw_size_check
-	[(sizeof(W3DScriptedModelDraw) == 0x27c) ? 1 : -1];
+	[(sizeof(W3DModelDraw) == 0x27c) ? 1 : -1];
 typedef char W3DScriptedModelDraw_handle_check
-	[(offsetof(W3DScriptedModelDraw, m_particleHandle) == 0x18) ? 1 : -1];
+	[(offsetof(W3DModelDraw, m_particleHandle) == 0x18) ? 1 : -1];
 typedef char W3DScriptedModelDraw_list_check
-	[(offsetof(W3DScriptedModelDraw, m_particleSystemIDs) == 0x48) ? 1 : -1];
+	[(offsetof(W3DModelDraw, m_particleSystemIDs) == 0x48) ? 1 : -1];
 typedef char W3DScriptedModelDraw_tree_check
-	[(offsetof(W3DScriptedModelDraw, m_tree) == 0x8c) ? 1 : -1];
+	[(offsetof(W3DModelDraw, m_tree) == 0x8c) ? 1 : -1];
 typedef char W3DScriptedModelDraw_recoil_check
-	[(offsetof(W3DScriptedModelDraw, m_recoil) == 0xac) ? 1 : -1];
+	[(offsetof(W3DModelDraw, m_recoil) == 0xac) ? 1 : -1];
 typedef char W3DScriptedModelDraw_decal_check
-	[(offsetof(W3DScriptedModelDraw, m_radiusDecal) == 0x178) ? 1 : -1];
+	[(offsetof(W3DModelDraw, m_radiusDecal) == 0x178) ? 1 : -1];
 typedef char W3DScriptedModelDraw_strings_check
-	[(offsetof(W3DScriptedModelDraw, m_string200) == 0x200) ? 1 : -1];
+	[(offsetof(W3DModelDraw, m_string200) == 0x200) ? 1 : -1];
 typedef char W3DScriptedModelDraw_string_array_check
-	[(offsetof(W3DScriptedModelDraw, m_strings) == 0x204) ? 1 : -1];
+	[(offsetof(W3DModelDraw, m_strings) == 0x204) ? 1 : -1];
 typedef char W3DScriptedModelDraw_zero_packet_check
-	[(offsetof(W3DScriptedModelDraw, m_zero148) == 0x148) ? 1 : -1];
+	[(offsetof(W3DModelDraw, m_zero148) == 0x148) ? 1 : -1];
 
 // ??0W3DScriptedModelDraw@@QAE@PAVThing@@PBVModuleData@@@Z
-W3DScriptedModelDraw::W3DScriptedModelDraw(Thing *thing,
+W3DModelDraw::W3DModelDraw(Thing *thing,
 	const ModuleData *moduleData)
-	: DrawModule(thing, moduleData)
+	: DrawableModule(thing, moduleData)
 	, m_particleHandle()
 	, m_particleSystemIDs()
 	, m_member4c()
@@ -322,7 +314,6 @@ W3DScriptedModelDraw::W3DScriptedModelDraw(Thing *thing,
 	, m_string200()
 	, m_strings()
 {
-	((AsciiString *)((unsigned char *)this + 0x38))->set("", 0);
 	m_flag68 = 1;
 	m_ready = true;
 	m_ready2 = false;
@@ -330,15 +321,16 @@ W3DScriptedModelDraw::W3DScriptedModelDraw(Thing *thing,
 	m_state10 = 0;
 	m_indicatorColor = 0;
 	m_renderObject = 0;
+	m_modelName.set("", 0);
 	m_shadow = 0;
 	m_isHidden = true;
 	m_hasShadow = false;
 	m_hasTerrainDecal = false;
-	m_fullyObscuredByShroud = false;
 	m_terrainDecal = 0;
 	m_trackRenderObject = 0;
 	m_modelCondition = -1;
 	m_hidden = false;
+	m_fullyObscuredByShroud = false;
 	extern int g_Va012F8064;
 	m_field9c = ~g_Va012F8064;
 	m_field84 = true;
@@ -354,39 +346,35 @@ W3DScriptedModelDraw::W3DScriptedModelDraw(Thing *thing,
 	m_field70 = 0.0f;
 	m_lodResult = 0;
 	m_lodResult2 = 0;
-	m_fielda8 = 5;
-	m_string200.releaseBuffer();
-	for (int i = 0; i < 2; ++i)
-		m_strings[i].releaseBuffer();
-	m_field20c = 0;
-	m_field22c = 0;
-	m_field210 = false;
-	m_field214 = 0;
-	m_field218 = 0;
-	m_field21c = 0;
 	*((unsigned char *)this + 0x1fc) = 1;
 	m_field230 = false;
 	m_field231 = true;
 	m_field232 = false;
-	m_field268 = -1;
+	m_fielda8 = 5;
+	m_string200.releaseBuffer();
+	for (int i = 0; i < 2; ++i)
+		m_strings[i].releaseBuffer();
+
+	Drawable *drawable = *(Drawable **)((unsigned char *)this + 8);
+	m_field20c = 0;
+	m_field22c = 0;
 	m_bounds[0] = -9999.0f;
 	m_bounds[1] = -9999.0f;
 	m_bounds[2] = -9999.0f;
 	m_bounds[3] = -9999.0f;
 
-	Drawable *drawable = *(Drawable **)((unsigned char *)this + 8);
-	if (drawable)
+	Object *object = drawable ? (Object *)drawable->m_object : 0;
+	if (object)
 	{
-		Object *object = (Object *)drawable->m_object;
-		if (object)
-		{
-			if (TheWritableGlobalData->m_timeOfDay == 4)
-				m_indicatorColor = object->getNightIndicatorColor();
-			else
-				m_indicatorColor = object->getIndicatorColor();
-		}
+		if (TheWritableGlobalData->m_timeOfDay == 4)
+			m_indicatorColor = object->getNightIndicatorColor();
+		else
+			m_indicatorColor = object->getIndicatorColor();
 	}
 
+	m_field173 = false;
+	m_field174 = 0;
+	*(int *)((unsigned char *)this + 0x1b8) = -1;
 	if (*(ModuleData **)((unsigned char *)this + 4) && drawable)
 	{
 		unsigned char *module = *(unsigned char **)((unsigned char *)this + 4);
@@ -395,6 +383,10 @@ W3DScriptedModelDraw::W3DScriptedModelDraw(Thing *thing,
 		*(int *)(draw + 0xe8) = *(int *)(module + 0x110);
 		*(int *)(draw + 0xec) = *(int *)(module + 0x114);
 	}
+	m_field210 = false;
+	m_field214 = 0;
+	m_field218 = 0;
+	m_field21c = 0;
 
 	if (drawable)
 	{
@@ -411,7 +403,6 @@ W3DScriptedModelDraw::W3DScriptedModelDraw(Thing *thing,
 		m_matrix[9] = matrix[9];
 		m_matrix[10] = matrix[10];
 		m_matrix[11] = matrix[11];
-		m_matrix[12] = 1.0f;
 	}
 	else
 	{
@@ -427,11 +418,11 @@ W3DScriptedModelDraw::W3DScriptedModelDraw(Thing *thing,
 		m_matrix[9] = 0.0f;
 		m_matrix[10] = 1.0f;
 		m_matrix[11] = 0.0f;
-		m_matrix[12] = 1.0f;
 	}
+	m_matrix[12] = 1.0f;
+	m_field268 = -1;
 
-	int level = TheGameLODManager->m_level;
-	switch (level)
+	switch (TheGameLODManager->m_level)
 	{
 	case 0:
 	case 1:
@@ -440,6 +431,8 @@ W3DScriptedModelDraw::W3DScriptedModelDraw(Thing *thing,
 	case 2:
 		m_lodResult = 1;
 		break;
+	case 3:
+	case 4:
 	default:
 		m_lodResult = 0;
 		break;
