@@ -68,6 +68,14 @@ public:
 
 extern Rva00367E30Logic *TheBfmeGameLogic;
 
+// Retail 0x0037D0D0 (43 bytes): whether a level applies to the current game
+// mode.
+static Bool rva0037D0D0IsLevelForGameMode(const ExperienceLevel *level)
+{
+	return ((GameLogicShim *)TheBfmeGameLogic)->unidentified_0001e0ab() ?
+		!level->m_singlePlayerOnly : !level->m_multiPlayerOnly;
+}
+
 class ExperienceLevelSystem
 {
 public:
@@ -105,8 +113,7 @@ ExperienceLevel *ExperienceLevelSystem::rva003806D0(
 		}
 
 	checkLevel:
-		if ((unsigned char)(((GameLogicShim *)TheBfmeGameLogic)->unidentified_0001e0ab() ?
-			!level->m_singlePlayerOnly : !level->m_multiPlayerOnly) != false)
+		if (rva0037D0D0IsLevelForGameMode(level))
 		{
 			if (level->m_requiredExperience > threshold &&
 				level->m_requiredExperience < bestRequiredExperience)
