@@ -1,5 +1,5 @@
 // ?stateReturn@Gen00039BD5@@QAE?AW4StateReturnType@@_N@Z
-// partial score=0.9565 date=2026-09-28
+// partial score=0.971 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Retail 0x0017BA90 (897 B, ret 4): the AIAttackAimAtTargetState per-frame worker.
 // Matched AIAttackAimAtTargetState::onEnter calls it with 1 through ILT 0x00039BD5,
@@ -9,11 +9,12 @@
 // Int parameter is cached in edi. The pinned caller name
 // ?stateReturn@Gen00039BD5@@QAE?AW4StateReturnType@@H@Z (onEnter) therefore needs
 // a correction to ...@_N@Z when this lands (callers push the same immediate).
-// Model: Coord3D = member-wise copy ctor + IMPLICIT operator= (retail copies the
-// goal position interleaved, the victim position load-all/store-all); the aim delta
-// is assigned under `if (weapon)`; the angle offset goes through a named local.
-// Residue (39 bytes): the "Ram" contact block puts `gotContact=false` before the
-// call (retail) vs after (ours), and the victim-position assignment interleaves.
+// Model: Coord3D = member-wise copy ctor + IMPLICIT operator=; the aim delta is
+// assigned under `if (weapon)`; the angle offset goes through a named local.
+// SCOPE: the Zero Hour "no else here!" block encloses REL_THRESH through the
+// aim-success test; with targetPos declared inside it, retail's load-all victim
+// position copy follows (26 wrong bytes left, all in the "Ram" contact block,
+// where retail places `gotContact = false` before the contact call).
 #include <math.h>
 
 typedef int Int;
@@ -190,70 +191,72 @@ StateReturnType Gen00039BD5::stateReturn(Bool firstTime)
 			return STATE_CONTINUE;
 	}
 
-	const Real REL_THRESH = 0.035f;
-	Real aimDelta = 0.0f;
-	if (weapon)
-		aimDelta = weapon->getAimDelta();
-	if (aimDelta < REL_THRESH)
-		aimDelta = REL_THRESH;
-
-	Real turnRate = 0.0f;
-	if (((Rva001BE010 *)source)->get())
-		turnRate = ((Locomotor *)((Rva001BE010 *)source)->get())->getMaxTurnRate(source);
-
-	if (source->isDisabledByType(DISABLED_HELD) && aimDelta < 0.3f)
-		aimDelta = 0.3f;
-
-	if ((source->m_status98 & 0x400) != 0)
-		return STATE_SUCCESS;
-
-	Coord3D targetPos = m_machine->m_goalPosition;
-	if (m_isAttackingObject)
 	{
-		Bool gotContact;
-		if (weapon && (victim->isKindOf(KINDOF_BFME_3B) || victim->isKindOf(KINDOF_BFME_88)) &&
-			(((Gen_001e1760 *)weapon->m_template)->m() ||
-			 ((Rva001E1770ByteField *)weapon->m_template)->get()))
-			gotContact = victim->getWorldspaceBestContactPoint(&targetPos, source->getPosition(), "Ram", 0, 0x2a, false);
+		const Real REL_THRESH = 0.035f;
+		Real aimDelta = 0.0f;
+		if (weapon)
+			aimDelta = weapon->getAimDelta();
+		if (aimDelta < REL_THRESH)
+			aimDelta = REL_THRESH;
+
+		Real turnRate = 0.0f;
+		if (((Rva001BE010 *)source)->get())
+			turnRate = ((Locomotor *)((Rva001BE010 *)source)->get())->getMaxTurnRate(source);
+
+		if (source->isDisabledByType(DISABLED_HELD) && aimDelta < 0.3f)
+			aimDelta = 0.3f;
+
+		if ((source->m_status98 & 0x400) != 0)
+			return STATE_SUCCESS;
+
+		Coord3D targetPos = m_machine->m_goalPosition;
+		if (m_isAttackingObject)
+		{
+			Bool gotContact;
+			if (weapon && (victim->isKindOf(KINDOF_BFME_3B) || victim->isKindOf(KINDOF_BFME_88)) &&
+				(((Gen_001e1760 *)weapon->m_template)->m() ||
+				 ((Rva001E1770ByteField *)weapon->m_template)->get()))
+				gotContact = victim->getWorldspaceBestContactPoint(&targetPos, source->getPosition(), "Ram", 0, 0x2a, false);
+			else
+				gotContact = false;
+			if (!victim->isKindOf(KINDOF_BFME_95) && !gotContact)
+				targetPos = *victim->getPosition();
+		}
+
+		Real relAngle = source->bfmeRelativeAngleTo(&targetPos);
+		if (weapon && weapon->m_template->m_field24 > 0.0f)
+		{
+			Real offset = weapon->m_template->m_field24;
+			relAngle = normalizeAngle(relAngle - offset);
+		}
+
+		if (m_canTurnInPlace)
+		{
+			if (fabs(relAngle) > aimDelta || firstTime)
+			{
+				sourceAI->setLocomotorGoalOrientation(source->getOrientation() + relAngle);
+				m_setLocomotor = true;
+			}
+		}
 		else
-			gotContact = false;
-		if (!victim->isKindOf(KINDOF_BFME_95) && !gotContact)
-			targetPos = *victim->getPosition();
-	}
-
-	Real relAngle = source->bfmeRelativeAngleTo(&targetPos);
-	if (weapon && weapon->m_template->m_field24 > 0.0f)
-	{
-		Real offset = weapon->m_template->m_field24;
-		relAngle = normalizeAngle(relAngle - offset);
-	}
-
-	if (m_canTurnInPlace)
-	{
-		if (fabs(relAngle) > aimDelta || firstTime)
 		{
-			sourceAI->setLocomotorGoalOrientation(source->getOrientation() + relAngle);
-			m_setLocomotor = true;
+			sourceAI->setLocomotorGoalPositionExplicit(targetPos);
 		}
-	}
-	else
-	{
-		sourceAI->setLocomotorGoalPositionExplicit(targetPos);
-	}
 
-	if (firstTime)
-		return STATE_CONTINUE;
+		if (firstTime)
+			return STATE_CONTINUE;
 
-	if (fabs(relAngle) < aimDelta || fabs(relAngle) < turnRate * 0.5f)
-	{
-		AIUpdateInterface *victimAI = victim ? victim->getAI() : 0;
-		if (victimAI)
+		if (fabs(relAngle) < aimDelta || fabs(relAngle) < turnRate * 0.5f)
 		{
-			victimAI->addTargeter(source->getID(), true);
-			if (victimAI->isTemporarilyPreventingAimSuccess())
-				return STATE_CONTINUE;
+			AIUpdateInterface *victimAI = victim ? victim->getAI() : 0;
+			if (victimAI)
+			{
+				victimAI->addTargeter(source->getID(), true);
+				if (victimAI->isTemporarilyPreventingAimSuccess())
+					return STATE_CONTINUE;
+			}
+			return STATE_SUCCESS;
 		}
-		return STATE_SUCCESS;
 	}
 
 	if (source->isDisabledByType(DISABLED_HELD))
