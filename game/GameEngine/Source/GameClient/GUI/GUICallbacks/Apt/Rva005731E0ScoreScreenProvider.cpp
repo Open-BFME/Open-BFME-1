@@ -105,6 +105,8 @@ private:
 extern "C" __declspec( dllimport ) int __cdecl sprintf(
 	char *destination, const char *format, ... );
 extern char g_aptPalantirNumberFormat[];
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 // ?rva005731E0@BfmeAptScreenScoreScreen@@QAEXHPAD_N@Z
 void BfmeAptScreenScoreScreen::rva005731E0(
@@ -162,31 +164,18 @@ void BfmeAptScreenScoreScreen::rva005731E0(
 		if( !setting )
 		{
 			if( m_slot290 == 2 )
-			{
-				*(int *)( output + 0 ) = *(int *)0x0110A9CC;
-				*(int *)( output + 4 ) = *(int *)0x0110A9D0;
-				*(int *)( output + 8 ) = *(int *)0x0110A9D4;
-				*(short *)( output + 12 ) = *(short *)0x0110A9D8;
-			}
+				strcpy( output, "_totalvictory" );
 			else if( m_slot290 == 1 )
-			{
-				*(int *)( output + 0 ) = *(int *)0x0110A9C0;
-				*(int *)( output + 4 ) = *(int *)0x0110A9C4;
-				*(char *)( output + 8 ) = *(char *)0x0110A9C8;
-			}
+				strcpy( output, "_victory" );
 			else
-			{
-				*(int *)( output + 0 ) = *(int *)0x0110A9B4;
-				*(int *)( output + 4 ) = *(int *)0x0110A9B8;
-				*(short *)( output + 8 ) = *(short *)0x0110A9BC;
-			}
+				strcpy( output, "_survived" );
 		}
 	}
 	else if( selector == 9 )
 	{
 		if( !setting )
 			sprintf( output, g_aptPalantirNumberFormat,
-				*(int *)( (char *)*(void **)0x012ED5C8 + 0x123c ) );
+				*(int *)( (char *)TheWritableGlobalData + 0x123c ) );
 	}
 	else if( selector == 10 )
 	{
