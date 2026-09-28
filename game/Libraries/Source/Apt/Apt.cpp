@@ -1,5 +1,20 @@
 // cl: /DNDEBUG /MD /EHs-c-
 
+extern int g_bfme1017I;
+extern int g_013377E0;
+extern int g_013377E4;
+extern int g_013377EC;
+
+// Retail RVA 0x00892170, 34 bytes. EA file evidence places this body in Apt.cpp;
+// its original function name and the meanings of these globals are unproved.
+void Rva00892170Store(int first, int second)
+{
+    g_bfme1017I = first;
+    g_013377E0 = first;
+    g_013377E4 = second;
+    g_013377EC = 0;
+}
+
 struct Rva00892A00First
 {
     char m_prefix[0x58];

@@ -10228,5 +10228,15 @@
   "after_sha256": "fc7ad42030293d8c7c8f793fe58458b20fe9cdebbceb5b1f41bf638c88987318",
   "evidence": "targets/game/reverse/identity_evidence/0068ef70-packet-decoder-unnamed.md",
   "reason": "0x0068EF70 identity unproven: ZH ParseAsciiStringToGameInfo parses an AsciiString, not a (buffer,length) packet; address-keyed until a witness names it"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00892170.cpp",
+  "new_path": "game/Libraries/Source/Apt/Apt.cpp",
+  "old_name": "bfmeGo1017X",
+  "new_name": "Rva00892170Store",
+  "before_sha256": "e92942bd77d20a3809569ca99bcdfac659947b3454c1e9b5c14646f269879598",
+  "after_sha256": "0b47ef88ca4826a90077a2e9ac313c9e0a0e514d40a04bfee452fe86707d6d7c",
+  "evidence": "targets/game/reverse/identity_evidence/0x00892170-scratch-rename-correction.md",
+  "reason": "The deleted experiment contains the separate bfmeGo1017X and bfmeGo1017Y functions, which remain matched at 0x00892080 and 0x008920C0 in BfmeConv1017.cpp. The new 34-byte RVA 0x00892170 body is an unrelated address-derived Apt.cpp function; the path/name pair is a diff heuristic false positive."
  }
 ]
