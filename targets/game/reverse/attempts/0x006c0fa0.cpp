@@ -1,9 +1,11 @@
-// ?d_006c0fa0@@YAXXZ
-// partial score=0.4 date=2026-09-25
+// ?method@Rva006C0FA0W3DRadar@@QAEXHHHHH@Z
+// partial score=0.75 date=2026-09-28
 // ?method@Rva006C0FA0W3DRadar@@QAEXHHHHH@Z
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
+#include <string.h>
 typedef float Real;
+struct Rva006C0FA0Point { float x,y; };
 typedef int Int;
 
 struct ICoord2D
@@ -21,7 +23,6 @@ struct Coord3D
 
 struct Rva006C0FA0Locals
 {
-	unsigned int leading[2];
 	ICoord2D origin;
 	Coord3D world;
 };
@@ -29,8 +30,8 @@ struct Rva006C0FA0Locals
 class Coord2D
 {
 public:
-	Coord2D();
-	~Coord2D();
+	Coord2D() {}
+	~Coord2D() {}
 
 	Real x;
 	Real y;
@@ -173,37 +174,40 @@ void Rva006C0FA0W3DRadar::method(Int pixelX, Int pixelY, Int width, Int height, 
 {
 	Rva006C0FA0Locals locals;
 	Real terrainZ;
+	Coord2D start, end;
 
 	TheTacticalView->getOrigin(&locals.origin.x, &locals.origin.y);
 	terrainZ = m_terrainAverageZ;
 	TheTacticalView->screenToWorldAtZ(&locals.origin, &locals.world, terrainZ);
 
-	Real x;
-	Real y;
-	x = locals.world.x /
+	Coord2D ulRadar, radar;
+	ulRadar.x = locals.world.x /
 		((m_mapExtent.hi.x - m_mapExtent.lo.x) * RvaRadarCellScale);
-	y = locals.world.y /
+	ulRadar.y = locals.world.y /
 		((m_mapExtent.hi.y - m_mapExtent.lo.y) * RvaRadarCellScale);
-	locals.world.x = pixelX + (width * x) * RvaRadarCellScale;
-	locals.world.y = pixelY + ((RvaRadarCellOrigin - y) * height) * RvaRadarCellScale;
+	start.x = pixelX + (width * ulRadar.x) * RvaRadarCellScale;
+	start.y = pixelY + ((RvaRadarCellOrigin - ulRadar.y) * height) * RvaRadarCellScale;
 
 	{
 	Coord2D points[4];
 
-	points[0].x = locals.world.x;
-	points[0].y = locals.world.y;
-	x += m_viewBox[1].x;
-	y += m_viewBox[1].y;
-	points[1].x = pixelX + (width * x) * RvaRadarCellScale;
-	points[1].y = pixelY + ((RvaRadarCellOrigin - y) * height) * RvaRadarCellScale;
-	x += m_viewBox[2].x;
-	y += m_viewBox[2].y;
-	points[2].x = pixelX + (width * x) * RvaRadarCellScale;
-	points[2].y = pixelY + ((RvaRadarCellOrigin - y) * height) * RvaRadarCellScale;
-	x += m_viewBox[3].x;
-	y += m_viewBox[3].y;
-	points[3].x = pixelX + (width * x) * RvaRadarCellScale;
-	points[3].y = pixelY + ((RvaRadarCellOrigin - y) * height) * RvaRadarCellScale;
+	Coord2D first = start;
+	radar.x = ulRadar.x + m_viewBox[1].x;
+	radar.y = ulRadar.y + m_viewBox[1].y;
+	end.x = pixelX + (width * radar.x) * RvaRadarCellScale;
+	end.y = pixelY + ((RvaRadarCellOrigin - radar.y) * height) * RvaRadarCellScale;
+	points[0] = first;
+	points[1] = end;
+	radar.x += m_viewBox[2].x;
+	radar.y += m_viewBox[2].y;
+	end.x = pixelX + (width * radar.x) * RvaRadarCellScale;
+	end.y = pixelY + ((RvaRadarCellOrigin - radar.y) * height) * RvaRadarCellScale;
+	points[2] = end;
+	radar.x += m_viewBox[3].x;
+	radar.y += m_viewBox[3].y;
+	end.x = pixelX + (width * radar.x) * RvaRadarCellScale;
+	end.y = pixelY + ((RvaRadarCellOrigin - radar.y) * height) * RvaRadarCellScale;
+	points[3] = end;
 
 	if (Glo012F4B98)
 		Glo012F4B98->copy((const Rva00592E10Pair *)points);

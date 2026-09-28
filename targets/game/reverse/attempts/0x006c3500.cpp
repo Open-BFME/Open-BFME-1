@@ -1,5 +1,5 @@
 // ?method@Rva006C3500W3DRadar@@UAEXXZ
-// partial score=0.21 date=2026-09-27
+// partial score=0.37 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline
 // Opaque W3DRadar virtual at retail RVA 0x006C3500.
 
@@ -249,19 +249,16 @@ void Rva006C3500W3DRadar::method()
 		AsciiString imageName("ScrollShroud");
 		image = TheMappedImageCollection->findImageByName(imageName);
 	}
-	if (!image)
-		return;
+	if (image)
+	{
 
 	BFMEWaterTrackTextureHandle texture =
 		BFMEGetWaterTrackTexture(bfmeString(image->getFilename()), 1, 0);
 	((Gen_0090E810 *)&texture)->bfmeSetFlag(1);
 
-	W3DRadarResetTexture *sourceTexture =
-		reinterpret_cast<W3DRadarResetTexture *>(image->m_rawTextureData);
-	if (!sourceTexture)
-		sourceTexture = reinterpret_cast<W3DRadarResetTexture *>(&texture);
-	if (!sourceTexture)
-		return;
+	W3DRadarResetTexture *sourceTexture = !image->m_rawTextureData ? reinterpret_cast<W3DRadarResetTexture *>(&texture) : reinterpret_cast<W3DRadarResetTexture *>(image->m_rawTextureData);
+	if (sourceTexture)
+	{
 
 	W3DRadarResetSurface source = sourceTexture->getSurfaceLevel();
 	W3DRadarResetSurface destination = radar->m_shroudTexture.getSurfaceLevel();
@@ -269,19 +266,21 @@ void Rva006C3500W3DRadar::method()
 	SurfaceDescription sourceDescription;
 	((SurfaceClass *)&source)->Get_Description(sourceDescription);
 	((SurfaceClass *)&destination)->Get_Description(destinationDescription);
-	if (sourceDescription.format != destinationDescription.format)
-		return;
+	if (sourceDescription.format == destinationDescription.format)
+	{
 
 	Rva006C3500Lock lock;
 	SurfaceResource *sourceSurface = source.m_surface;
 	SurfaceResource *destinationSurface = destination.m_surface;
 	if (sourceSurface && destinationSurface)
 	{
-		LockedRect sourceLocked = { 0, 0 };
-		LockedRect destinationLocked = { 0, 0 };
+		LockedRect sourceLocked;
+		LockedRect destinationLocked;
+		memset(&sourceLocked,0,sizeof(sourceLocked));
+		memset(&destinationLocked,0,sizeof(destinationLocked));
 		int lockResult = sourceSurface->LockRect(&sourceLocked, 0, 0x10);
 		recordSurfaceError(lockResult);
-		lockResult = destinationSurface->LockRect(&destinationLocked, 0, 0x10);
+		lockResult = destinationSurface->LockRect(&destinationLocked, 0, 0);
 		recordSurfaceError(lockResult);
 
 		if (sourceDescription.width == destinationDescription.width &&
@@ -293,11 +292,11 @@ void Rva006C3500W3DRadar::method()
 			else if (sourceDescription.format == 0x1a)
 				bytesPerPixel = 2;
 
-			if (bytesPerPixel)
+			if (sourceDescription.format == 0x15 || sourceDescription.format == 0x1a)
 			{
 				char *sourceBits = (char *)sourceLocked.bits;
 				char *destinationBits = (char *)destinationLocked.bits;
-				for (UnsignedInt row = 0; row < destinationDescription.height; ++row)
+				for (int row = destinationDescription.height - 1; row >= 0; --row)
 				{
 					memcpy(destinationBits, sourceBits,
 						bytesPerPixel * sourceDescription.width);
@@ -317,4 +316,7 @@ void Rva006C3500W3DRadar::method()
 		recordSurfaceError(sourceSurface->UnlockRect());
 		radar->m_imageReady = 1;
 	}
+}
+}
+}
 }
