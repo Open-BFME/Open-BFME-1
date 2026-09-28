@@ -47,7 +47,7 @@ a hint and check the evidence lines. Land with
 `--replace-rva 0xRVA` only when replacing a generated scaffold; carved rows are
 ordinary new claims). The command byte-verifies, auto-reverts, and may wait on the
 ledger lock -- that is normal. If a body
-resists after ~40 minutes bank it:
+resists for about 30 minutes without byte progress, bank it:
 `python3 tools/re_log.py record SYM 0xRVA SIZE partial "evidence t=Xmin model=MODEL" --stash FILE.cpp --score 0.NN`
 and move on.
 For a narrow codegen hypothesis, tools/shape_search.py tests explicit C++ alternatives
@@ -64,19 +64,14 @@ branch-length/polarity, constant-materialisation, or frame-array residues, run
 and feed the finite choices to shape_search. It is a hypothesis generator only:
 the byte gate decides, and the SIB family may remain compiler-internal after all
 choices are exhausted.
-NAMING. Ask before you invent: `python3 tools/name_oracle.py --class <C> --offset 0x2c`
-answers from the ZH<->retail layout witness and the binary's own FieldParse tables, and
-`--todo` lists placeholders the evidence can already name. The commit hook REFUSES a
-member name that contradicts the witness, and refuses a placeholder you ADD at an offset
-the evidence already names -- its message carries the name to use, so there is nothing to
-guess. An address-derived name is honest and greps out in a second; a plausible WRONG one
-is invisible and no byte gate can see it. So: identity you can PROVE (matched caller,
-vtable slot, string literal, ZH twin) -> the real name, cite the evidence. Identity you
-cannot prove -> a name describing what the body itself proves, KEEPING the address token
-(`FiveDwordElem063700`, not `Rva063700Elem` and not a guessed class name). The address has
-to stay UNIQUE, because ICF means one spelling reaches several retail copies; it never has
-to be the whole name. Never put a real class's name on a shim whose layout you have not
-checked. docs/naming_evidence.md has the detail.
+NAMING. Ask before you invent: `python3 tools/name_oracle.py --class <C> --offset 0x2c`,
+and `--todo` for placeholders the evidence can already name. The commit hook refuses a
+member name that contradicts the witnessed layout, and its message carries the name to
+use. Identity you can PROVE (matched caller, vtable slot, string literal, ZH twin) gets
+the real name with the evidence cited; otherwise describe what the body proves and KEEP
+the address token (`FiveDwordElem063700`, never a guessed class name). Never put a real
+class's name on a shim whose layout you have not checked. docs/naming_evidence.md has
+the detail.
 HARD RULES: never run git commands (the orchestrator owns VCS); never run a full ./build.sh;
 never edit files under game/gen_asm/; only touch your assigned bodies; new sources go in
 the class's home directory under game/ with descriptive names.
