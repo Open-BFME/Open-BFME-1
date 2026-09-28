@@ -59,23 +59,39 @@ struct BfmeKeyboardSystemEntryData
 };
 
 // These are the private KeyboardOptionsMenu objects in the retail compiland.
-#define kButtonBackID (*(NameKeyType *)0x012F3AAC)
-#define kComboBoxCategoryListID (*(NameKeyType *)0x012F3ABC)
-#define kComboBoxCategoryList (*(GameWindow **)0x012F3AC0)
-#define kListBoxCommandListID (*(NameKeyType *)0x012F3AC4)
-#define kListBoxCommandList (*(GameWindow **)0x012F3AC8)
-#define kStaticTextDescription (*(GameWindow **)0x012F3AD0)
-#define kStaticTextCurrentHotkey (*(GameWindow **)0x012F3AD8)
-#define kButtonResetAllID (*(NameKeyType *)0x012F3ADC)
-#define kTextEntryAssignHotkey (*(GameWindow **)0x012F3AE8)
-#define kButtonAssignID (*(NameKeyType *)0x012F3AEC)
-#define kAlt (*(UnicodeString *)0x012F3AF8)
-#define kCtrl (*(UnicodeString *)0x012F3AFC)
-#define kShift (*(UnicodeString *)0x012F3B00)
-#define kTheEmptyString (*(UnicodeString *)0x01336E54)
-#define kGuiNull ((const Char *)0x010FEF88)
-#define kCategoryList ((const BfmeKeyboardSystemLookupListRec *)0x010FE7E0)
-#define kKeyNames ((const BfmeKeyboardSystemLookupListRec *)0x010FE828)
+extern NameKeyType g_012F3AAC;
+extern NameKeyType g_012F3ABC;
+extern GameWindow *g_012F3AC0;
+extern NameKeyType g_012F3AC4;
+extern GameWindow *g_012F3AC8;
+extern GameWindow *g_012F3AD0;
+extern GameWindow *g_012F3AD8;
+extern NameKeyType g_012F3ADC;
+extern GameWindow *g_012F3AE8;
+extern NameKeyType g_012F3AEC;
+extern UnicodeString alt;
+extern UnicodeString ctrl;
+extern UnicodeString shift;
+extern const BfmeKeyboardSystemLookupListRec g_010FE7E0[];
+extern const BfmeKeyboardSystemLookupListRec g_010FE828[];
+
+#define kButtonBackID g_012F3AAC
+#define kComboBoxCategoryListID g_012F3ABC
+#define kComboBoxCategoryList g_012F3AC0
+#define kListBoxCommandListID g_012F3AC4
+#define kListBoxCommandList g_012F3AC8
+#define kStaticTextDescription g_012F3AD0
+#define kStaticTextCurrentHotkey g_012F3AD8
+#define kButtonResetAllID g_012F3ADC
+#define kTextEntryAssignHotkey g_012F3AE8
+#define kButtonAssignID g_012F3AEC
+#define kAlt alt
+#define kCtrl ctrl
+#define kShift shift
+#define kTheEmptyString UnicodeString::TheEmptyString
+#define kGuiNull "GUI:NULL"
+#define kCategoryList g_010FE7E0
+#define kKeyNames g_010FE828
 
 extern void populateCategoryBox();
 extern void fillCommandListBox(MappableKeyCategories cat);
