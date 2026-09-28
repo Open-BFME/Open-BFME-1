@@ -1,5 +1,5 @@
 // ?angle0075F210@AttachmentTransform007629F0@@QAE_NPAM@Z
-// partial score=0.914 date=2026-09-28
+// partial score=0.924 date=2026-09-28
 // cl: /O2 /Ob2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug
 // RVA 007629F0: thiscall(Matrix3D&), ret4, frame30. Hub0077B3F0+281
 // proves the writable matrix and primary receiver; see its analyst report.
@@ -174,14 +174,6 @@ static __forceinline Vector3 planarVector0075F210(float x, float y)
     return result;
 }
 
-static __forceinline Vector2 planarPosition0075F210(float x, float y)
-{
-    Vector2 result;
-    result.X = x;
-    result.Y = y;
-    return result;
-}
-
 bool AttachmentTransform007629F0::angle0075F210(float *result)
 {
     Drawable *drawable = drawable08;
@@ -210,10 +202,9 @@ bool AttachmentTransform007629F0::angle0075F210(float *result)
         TargetRecord0075F210 *targetRecord = ai->m_target;
         float *targetX = reinterpret_cast<float *>(targetRecord) + 9;
         Vector3 target = planarVector0075F210(targetX[0], targetX[1]);
-        Vector2 positionXY = planarPosition0075F210(
-            *reinterpret_cast<float *>(reinterpret_cast<char *>(object) + 0x14),
-            *reinterpret_cast<float *>(reinterpret_cast<char *>(object) + 0x24));
-        Vector3 position(positionXY.X, positionXY.Y, 0.0f);
+        const Matrix3D *transform = reinterpret_cast<const Matrix3D *>(
+            reinterpret_cast<char *>(object) + 8);
+        Vector3 position(transform->Get_Translation().X, transform->Get_Translation().Y, 0.0f);
 
         Matrix3D matrix(true);
         matrix.Obj_Look_At(position, target, 0.0f);
