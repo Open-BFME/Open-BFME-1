@@ -8298,5 +8298,45 @@
   "after_sha256": "741fe6d16725e69cec21d88b5ec828043f15230e4e02933169ab22a85369c5f7",
   "evidence": "targets/game/reverse/identity_evidence/0032d300-holder-member-not-renamed.md",
   "reason": "ZH MemoryPoolObjectHolder (m_mpo) replaced by BFME BfmeWideResult ABI; different class, neither name witnessed"
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/PathfindAdjustDeab0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/PathfindAdjustDeab0.cpp",
+  "old_name": "checkForAdjust",
+  "new_name": "checkForPossible",
+  "before_sha256": "504e595cf4724f6728dc69b1d05746885e221f8ca586c97b2863e7c33eafbcad",
+  "after_sha256": "d3b25157241468dfa22895be62bc4dc0e585b95dd55e918652970c133695d0f2",
+  "evidence": "targets/game/reverse/identity_evidence/003d6210-checkforpossible.md",
+  "reason": "Retail 0x003D6210 (via ILT 0x00018BE7) is Zero Hour checkForPossible: getCell / impassable reject / effective zone of the goal cell from the movement profile / terrain zone when startingInObstacle / zone compare / adjust; the real checkForAdjust is the 13-arg body pinned at 0x003F0F40; the matched adjustToPossibleDestination 0x003EAC80 calls it at the ZH checkForPossible sites."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/PathfindAdjustDeab0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/PathfindAdjustDeab0.cpp",
+  "old_name": "m_object",
+  "new_name": "m_profile",
+  "before_sha256": "504e595cf4724f6728dc69b1d05746885e221f8ca586c97b2863e7c33eafbcad",
+  "after_sha256": "d3b25157241468dfa22895be62bc4dc0e585b95dd55e918652970c133695d0f2",
+  "evidence": "targets/game/reverse/identity_evidence/003d6210-checkforpossible.md",
+  "reason": "+0x04 is checkForPossible argument 1: the body dereferences it as the PathfindMovementProfile passed to getEffectiveZone; not an Object."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/PathfindAdjustDeab0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/PathfindAdjustDeab0.cpp",
+  "old_name": "m_locomotorSet",
+  "new_name": "m_fromZone",
+  "before_sha256": "504e595cf4724f6728dc69b1d05746885e221f8ca586c97b2863e7c33eafbcad",
+  "after_sha256": "d3b25157241468dfa22895be62bc4dc0e585b95dd55e918652970c133695d0f2",
+  "evidence": "targets/game/reverse/identity_evidence/003d6210-checkforpossible.md",
+  "reason": "+0x08 is checkForPossible argument 2: compared against the goal cell effective zone; not a LocomotorSet."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/PathfindAdjustDeab0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/PathfindAdjustDeab0.cpp",
+  "old_name": "m_isHuman",
+  "new_name": "m_startingInObstacle",
+  "before_sha256": "504e595cf4724f6728dc69b1d05746885e221f8ca586c97b2863e7c33eafbcad",
+  "after_sha256": "d3b25157241468dfa22895be62bc4dc0e585b95dd55e918652970c133695d0f2",
+  "evidence": "targets/game/reverse/identity_evidence/003d6210-checkforpossible.md",
+  "reason": "+0x20 is checkForPossible argument 8: selects the terrain-zone equivalence (ZH startingInObstacle); the ZH checkForAdjust isHuman guess does not apply."
  }
 ]
