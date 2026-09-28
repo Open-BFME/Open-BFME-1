@@ -183,13 +183,15 @@ void Rva007F6FB0BrowserLobbyReply( Rva007E8810Message *msg, Rva007F7980Browser *
 	browser->onLobby( msg );
 }
 
-// The third entry calls the still-anonymous thiscall body at 0x007F65E0.
-// The message and constant one are its two stack arguments; the browser is ECX.
-extern void d_007f65e0( void );
+// The third entry calls the game-detail handler at 0x007F65E0
+// (Rva007F65E0GameReply.cpp). The message and constant one are its two stack
+// arguments; the browser is ECX.
+class Rva007F65E0Owner
+{
+public:
+	void handleGameLobbyReply( Rva007E8810Message *msg, int flag );
+};
 void Rva007F6FC0BrowserGameReply( Rva007E8810Message *msg, Rva007F7980Browser *browser )
 {
-	typedef void (Rva007F7980Browser::*GameReply)( Rva007E8810Message *, int );
-	union { void (*function)( void ); GameReply member; } reply;
-	reply.function = d_007f65e0;
-	(browser->*reply.member)( msg, 1 );
+	((Rva007F65E0Owner *)browser)->handleGameLobbyReply( msg, 1 );
 }
