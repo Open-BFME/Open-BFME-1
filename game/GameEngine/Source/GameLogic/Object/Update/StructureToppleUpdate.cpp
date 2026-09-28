@@ -203,7 +203,10 @@ struct BfmeStructureToppleModuleDataView
 	unsigned char m_padding00[0x34];
 	Int minToppleDelay;
 	Int maxToppleDelay;
-	unsigned char m_padding3c[0x28];
+	unsigned char m_padding3c[0x0c];
+	UnsignedInt m_damageFXTypes;
+	FXList *m_toppleStartFXList;
+	unsigned char m_padding50[0x14];
 	Int minToppleBurstDelay;
 	Int maxToppleBurstDelay;
 	unsigned char m_padding6c[0x48];
@@ -214,6 +217,27 @@ struct BfmeStructureToppleDamageInfoView
 {
 	unsigned char m_padding00[8];
 	Int sourceID;
+};
+
+class Rva002AFAA0BodyModuleView
+{
+public:
+	virtual void v00() = 0;
+	virtual void v04() = 0;
+	virtual void v08() = 0;
+	virtual void v0c() = 0;
+	virtual void v10() = 0;
+	virtual void v14() = 0;
+	virtual void v18() = 0;
+	virtual void v1c() = 0;
+	virtual void v20() = 0;
+	virtual void v24() = 0;
+	virtual void v28() = 0;
+	virtual void v2c() = 0;
+	virtual void v30() = 0;
+	virtual void v34() = 0;
+	virtual void v38() = 0;
+	virtual const DamageInfo *getLastDamageInfo() const = 0;
 };
 
 struct BfmeStructureToppleGameLogicView
@@ -270,7 +294,7 @@ public:
 	Real toAngle() const;
 };
 
-class BfmeStructureToppleUpdateCall
+class BfmeStructureToppleUpdateCall : public StructureToppleUpdate
 {
 public:
 	void doToppleStartFX(Object *, const DamageInfo *);
@@ -280,6 +304,38 @@ public:
 extern Int bfmeStructureToppleRandom(Int, Int, char *, Int);
 extern Real bfmeStructureToppleRandomReal(Real, Real, char *, Int);
 extern Real bfmeStructureToppleNormalizeAngle(Real);
+extern void j_00011f77();
+extern void j_0001bb21();
+
+typedef bool (FXList::*BfmeFXBlockedCall)();
+typedef void (FXList::*BfmeFXPositionCall)(
+	const Coord3D *, const Matrix3D *, Real, const Coord3D *) const;
+
+union BfmeFXBlockedCallUnion
+{
+	void (*raw)();
+	BfmeFXBlockedCall member;
+};
+
+union BfmeFXPositionCallUnion
+{
+	void (*raw)();
+	BfmeFXPositionCall member;
+};
+
+static bool callBfmeFXBlocked(FXList *fx)
+{
+	BfmeFXBlockedCallUnion function;
+	function.raw = j_00011f77;
+	return (fx->*function.member)();
+}
+
+static void callBfmeFXPosition(FXList *fx, const Coord3D *position)
+{
+	BfmeFXPositionCallUnion function;
+	function.raw = j_0001bb21;
+	(fx->*function.member)(position, 0, 0.0f, 0);
+}
 
 extern const float g_01075954;
 
@@ -541,6 +597,29 @@ void StructureToppleUpdate::doToppleStartFX(Object *building, const DamageInfo *
 		FXList::doFXPos(d->m_toppleStartFXList, building->getPosition());
 
 	doPhaseStuff(STPHASE_INITIAL, building->getPosition());
+}
+
+void BfmeStructureToppleUpdateCall::doToppleStartFX(Object *building, const DamageInfo *)
+{
+	BfmeStructureToppleUpdateView *self =
+		(BfmeStructureToppleUpdateView *)this;
+	BfmeStructureToppleModuleDataView *data =
+		(BfmeStructureToppleModuleDataView *)self->moduleData;
+	Rva002AFAA0BodyModuleView *body = *(Rva002AFAA0BodyModuleView **)((char *)self->object + 0x200);
+	const DamageInfo *lastDamageInfo = body->getLastDamageInfo();
+
+	if (lastDamageInfo == NULL ||
+		(data->m_damageFXTypes &
+		 (1 << (*(Int *)((char *)lastDamageInfo + 0x10) - 1))))
+	{
+		FXList *fx = data->m_toppleStartFXList;
+		if (fx && !callBfmeFXBlocked(fx))
+			callBfmeFXPosition(fx,
+				&((BfmeStructureToppleObjectView *)building)->position);
+	}
+
+	this->doPhaseStuff(STPHASE_INITIAL,
+		&((BfmeStructureToppleObjectView *)building)->position);
 }
 
 //-------------------------------------------------------------------------------------------------
