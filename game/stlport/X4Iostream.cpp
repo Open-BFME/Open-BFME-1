@@ -1,3 +1,4 @@
+// cl: /MD /D_STLP_USE_STATIC_LIB
 // stlport
 /*
  * Copyright (c) 1999
@@ -176,67 +177,60 @@ _Stl_create_wfilebuf(FILE* f, ios_base::openmode mode )
 
 # endif
 
-// ?_S_initialize@ios_base@_STL@@KAXXZ present-unmatched
 void  _STLP_CALL ios_base::_S_initialize()
 {
 # if !defined(_STLP_HAS_NO_NAMESPACES) && !defined(_STLP_WINCE)
   using _SgI::stdio_istreambuf;
   using _SgI::stdio_ostreambuf;
 # endif
-  _STLP_TRY {
-    // Run constructors for the four narrow stream objects.
-    // check with locale system
-    if (_Loc_init::_S_count++ == 0) {
-      locale::_S_initialize();
-    }
-#if !defined(_STLP_WINCE)
-    istream* ptr_cin  = new((void*)&cin)  istream(0);
-    ostream* ptr_cout = new((void*)&cout) ostream(0);
-    ostream* ptr_cerr = new((void*)&cerr) ostream(0);
-    ostream* ptr_clog = new((void*)&clog) ostream(0);
+  if (Init::_S_count > 0)
+    return;
 
-    // Initialize the four narrow stream objects.
-    if (_S_was_synced) {
-      ptr_cin->init(new stdio_istreambuf(stdin));
-      ptr_cout->init(new stdio_ostreambuf(stdout));
-      ptr_cerr->init(new stdio_ostreambuf(stderr));
-      ptr_clog->init(new stdio_ostreambuf(stderr));
-    } else {
-      ptr_cin->init(_Stl_create_filebuf(stdin, ios_base::in));
-      ptr_cin->init(_Stl_create_filebuf(stdout, ios_base::out));
-      ptr_cin->init(_Stl_create_filebuf(stderr, ios_base::out));
-      ptr_cin->init(_Stl_create_filebuf(stderr, ios_base::out)); 
-    }
-    ptr_cin->tie(ptr_cout);
-    ptr_cerr->setf(ios_base::unitbuf);
-
-# ifndef _STLP_NO_WCHAR_T
-
-    // Run constructors for the four wide stream objects.
-    wistream* ptr_wcin  = new(&wcin)  wistream(0);
-    wostream* ptr_wcout = new(&wcout) wostream(0);
-    wostream* ptr_wcerr = new(&wcerr) wostream(0);
-    wostream* ptr_wclog = new(&wclog) wostream(0);
-    
-    wfilebuf* win  = _Stl_create_wfilebuf(stdin, ios_base::in);
-    wfilebuf* wout = _Stl_create_wfilebuf(stdout, ios_base::out);;
-    wfilebuf* werr = _Stl_create_wfilebuf(stderr, ios_base::out);
-    wfilebuf* wlog = _Stl_create_wfilebuf(stderr, ios_base::out);
-    
-    ptr_wcin->init(win);
-    ptr_wcout->init(wout);
-    ptr_wcerr->init(werr);
-    ptr_wclog->init(wlog);
-
-    ptr_wcin->tie(ptr_wcout);
-    ptr_wcerr->setf(ios_base::unitbuf);
-    
-# endif /*  _STLP_NO_WCHAR_T */
-#endif /* _STLP_WINCE */
-
+  // Run constructors for the four narrow stream objects.
+  // check with locale system
+  if (_Loc_init::_S_count == 0) {
+    locale::_S_initialize();
   }
+  istream* ptr_cin  = new((void*)&cin)  istream(0);
+  ostream* ptr_cout = new((void*)&cout) ostream(0);
+  ostream* ptr_cerr = new((void*)&cerr) ostream(0);
+  ostream* ptr_clog = new((void*)&clog) ostream(0);
 
-  _STLP_CATCH_ALL {}
+  // Initialize the four narrow stream objects.
+  if (_S_was_synced) {
+    ptr_cin->init(new stdio_istreambuf(stdin));
+    ptr_cout->init(new stdio_ostreambuf(stdout));
+    ptr_cerr->init(new stdio_ostreambuf(stderr));
+    ptr_clog->init(new stdio_ostreambuf(stderr));
+  } else {
+    ptr_cin->init(_Stl_create_filebuf(stdin, ios_base::in));
+    ptr_cin->init(_Stl_create_filebuf(stdout, ios_base::out));
+    ptr_cin->init(_Stl_create_filebuf(stderr, ios_base::out));
+    ptr_cin->init(_Stl_create_filebuf(stderr, ios_base::out));
+  }
+  ptr_cin->tie(ptr_cout);
+  ptr_cerr->setf(ios_base::unitbuf);
+
+  // Run constructors for the four wide stream objects.
+  wistream* ptr_wcin  = new(&wcin)  wistream(0);
+  wostream* ptr_wcout = new(&wcout) wostream(0);
+  wostream* ptr_wcerr = new(&wcerr) wostream(0);
+  wostream* ptr_wclog = new(&wclog) wostream(0);
+
+  wfilebuf* win  = _Stl_create_wfilebuf(stdin, ios_base::in);
+  wfilebuf* wout = _Stl_create_wfilebuf(stdout, ios_base::out);
+  wfilebuf* werr = _Stl_create_wfilebuf(stderr, ios_base::out);
+  wfilebuf* wlog = _Stl_create_wfilebuf(stderr, ios_base::out);
+
+  ptr_wcin->init(win);
+  ptr_wcout->init(wout);
+  ptr_wcerr->init(werr);
+  ptr_wclog->init(wlog);
+
+  ptr_wcin->tie(ptr_wcout);
+  ptr_wcerr->setf(ios_base::unitbuf);
+
+  --Init::_S_count;
 }
 
 void _STLP_CALL ios_base::_S_uninitialize()
