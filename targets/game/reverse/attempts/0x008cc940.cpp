@@ -1,7 +1,17 @@
 // ?createString@Rva008AE770Stack@@QAEPAVRva00899770@@PAXHPAVBfmeStrVKI@@HHH@Z
-// partial score=0.38 date=2026-09-18
-// ?createString@Rva008AE770Stack@@QAEPAVRva00899770@@PAXHPAVBfmeStrVKI@@HHH@Z
+// partial score=0.3097 date=2026-09-28
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// Boundary: RVA 008CC940, 917 bytes, final ret 18h at +392.
+// Analyst source: docs/analysis/0x008cf740.md; 00893380 independently calls
+// this six-argument method on the stack global and exports its returned pointer.
+// Revised from the old bank: slot +28 takes BOTH receiver and string holder;
+// frame-table lookup is controlled by arg5; only a valid candidate's failed
+// virtual/recursive lookup invokes the callback when arg2 is zero.
+// EH unwind 0105A158 independently proves sized delete at RVA 00891A80.
+// 008C6320 returns only AL (do not change to int); typed declarations below
+// describe the proved call ABI, and are not new semantic-identity pins.
+// Provisional aggregate preserves a byte flag but still allocates 12 rather
+// than retail's 8 local bytes; register allocation and return-tail merging differ.
 
 inline void *operator new(unsigned int, void *place)
 {
@@ -67,7 +77,7 @@ public:
 		++m_data->m_refCount;
 	}
 
-	BfmeStrVKI &operator=(const BfmeStrVKI &other)
+	__forceinline BfmeStrVKI &operator=(const BfmeStrVKI &other)
 	{
 		++other.m_data->m_refCount;
 		BfmeStringData3AF0 *old = m_data;
@@ -77,7 +87,7 @@ public:
 		return *this;
 	}
 
-	~BfmeStrVKI()
+	__forceinline ~BfmeStrVKI()
 	{
 		BfmeStringData3AF0 *data = m_data;
 		if (--data->m_refCount == 0)
@@ -106,7 +116,7 @@ public:
 	virtual void slot07();
 	virtual void slot08();
 	virtual void slot09();
-	virtual Rva00899770 *slot10(BfmeStrVKI *name);
+	virtual Rva00899770 *slot10(Rva00899770 *receiver, BfmeStrVKI *name);
 
 	unsigned int m_flags;
 	BfmeStringData3AF0 *m_data;
@@ -121,6 +131,7 @@ public:
 		return Rva008C5D70Alloc(bytes);
 	}
 
+	static void operator delete(void *, unsigned int); // EH-only RVA 00891A80: storage and size16, cdecl
 	Rva008A9B00();
 
 	void *m_vptr;
@@ -163,18 +174,16 @@ extern Rva008AE770Stack Rva008AE770TheStack;
 extern Rva008C3B60Node *Rva008C3B60Head;
 extern AptValue *g_bfmeFallbackDB;
 
-extern void d_008c6320();
-extern void d_0089cef0();
+extern unsigned char __cdecl parse008C6320(void *, void *, BfmeStrVKI *, void *&, BfmeStrVKI *);
 
-typedef unsigned char (__cdecl *PrepareLookup)(void *, void *, BfmeStrVKI *,
-	void *&, BfmeStrVKI *);
-typedef Rva00899770 *(Rva0089CEF0Owner::*FindString)(BfmeStrVKI *);
 typedef void (__cdecl *NotifyString)(const char *);
+extern NotifyString g_Va013378C4Notify;
 
 Rva00899770 *Rva008AE770Stack::createString(void *value, int unused,
 	BfmeStrVKI *name, int one, int another, int zero)
 {
-	BfmeStrVKI key;
+	struct LookupState008CC940 { BfmeStrVKI key; unsigned char prepared; __forceinline ~LookupState008CC940() {} } state;
+	BfmeStrVKI &key=state.key;
 	register Rva008AE770Stack *owner = this;
 	BfmeStrVKI &input = *name;
 	if (input.m_data->m_text[0] == '$')
@@ -202,16 +211,10 @@ Rva00899770 *Rva008AE770Stack::createString(void *value, int unused,
 	}
 
 	void *original = value;
-	unsigned char prepared = 0;
+	state.prepared = 0;
 	if (zero == 0)
 	{
-		union
-		{
-			void (*raw)(void);
-			PrepareLookup typed;
-		} thunk;
-		thunk.raw = d_008c6320;
-		prepared = thunk.typed(value, (void *)unused, &input, value, &key);
+		state.prepared = parse008C6320(value, (void *)unused, &input, value, &key);
 	}
 	else
 	{
@@ -226,38 +229,36 @@ Rva00899770 *Rva008AE770Stack::createString(void *value, int unused,
 		return candidate;
 	}
 
-	if (prepared == 1 && candidate != 0)
+	if (state.prepared == 1 && candidate != 0)
 	{
-		Rva00899770 *found =
-			((BfmeNode1220 *)candidate)->bfmeTest1220(&key, unused);
-		if (found != 0)
-			return found;
+		value = ((BfmeNode1220 *)candidate)->bfmeTest1220(&key, unused);
+		if (value != 0) return (Rva00899770 *)value;
 	}
 
 	Rva00899770 *found = 0;
-	if (zero != 0 && owner->m_count > 0)
+	if (another != 0 && owner->m_count > 0)
 	{
-		union
-		{
-			void (*raw)(void);
-			FindString member;
-		} thunk;
-		thunk.raw = d_0089cef0;
 		Rva0089CEF0Owner *stackOwner =
 			(Rva0089CEF0Owner *)((char *)owner->m_values[owner->m_count - 1] + 8);
-		found = (stackOwner->*thunk.member)(&key);
+		found = stackOwner->find(&key);
 		if (found != 0)
 			return found;
 	}
 
-	if (candidate != 0 && ((candidate->m_flags >> 15) & 1) != 0)
+	if (candidate != 0 && !((unsigned char)~(candidate->m_flags >> 15) & 1))
 	{
-		found = candidate->slot10(&key);
-		if (found != 0)
-			return found;
+		value = candidate->slot10(candidate, &key);
+		if (value != 0) return (Rva00899770 *)value;
 		found = ((BfmeNode1220 *)candidate)->bfmeTest1220(&key, unused);
 		if (found != 0)
 			return found;
+		if (unused == 0)
+		{
+			NotifyString notify = g_Va013378C4Notify;
+			if (notify != 0)
+				notify(input.m_data->m_text);
+			return (Rva00899770 *)g_bfmeFallbackDB;
+		}
 	}
 
 	if (unused != 0)
@@ -266,9 +267,6 @@ Rva00899770 *Rva008AE770Stack::createString(void *value, int unused,
 	}
 	else
 	{
-		NotifyString notify = (*reinterpret_cast<NotifyString *>(0x013378c4));
-		if (notify != 0)
-		notify((const char *)input.m_data->m_text);
 		found = (Rva00899770 *)g_bfmeFallbackDB;
 	}
 	return found;
