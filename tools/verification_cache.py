@@ -476,7 +476,7 @@ def record(manifest):
     B.verify_string_refs(rows)
     B.verify_constant_refs(rows)
     B.verify_dir32_addresses(rows)
-    B.verify_dir32_consistency(rows)
+    B.verify_dir32_consistency(rows, propose=False)
     saved = skipped = 0
     pending = []
     for row in data.get("rows", []):

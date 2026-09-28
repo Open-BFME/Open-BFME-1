@@ -201,3 +201,14 @@ def test_legacy_asm_without_include_can_still_reuse(tmp_path, monkeypatch):
         "cmd": "command", "source": build._hash_file(str(source)), "deps": {},
     }))
     assert build.compile_is_current(source, output)
+
+
+def test_case_directory_cache_observes_new_headers(tmp_path):
+    original = tmp_path / 'Original.h'
+    original.write_text('old')
+    assert build._case_resolve(str(original).lower()) == str(original)
+    added = tmp_path / 'Added.h'
+    added.write_text('new')
+    assert build._case_resolve(str(added).lower()) == str(added)
+    added.unlink()
+    assert build._case_resolve(str(added).lower()) is None

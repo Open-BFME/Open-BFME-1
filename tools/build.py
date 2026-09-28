@@ -826,13 +826,17 @@ def _case_resolve(path):
     for part in path.split("/"):
         if not part:
             continue
-        listing = _CASEDIR_MEMO.get(current)
-        if listing is None:
-            try:
+        try:
+            stat = os.stat(current)
+            stamp = (stat.st_dev, stat.st_ino, stat.st_mtime_ns, stat.st_ctime_ns)
+            cached = _CASEDIR_MEMO.get(current)
+            if cached is None or cached[0] != stamp:
                 listing = {name.lower(): name for name in os.listdir(current)}
-            except OSError:
-                return None
-            _CASEDIR_MEMO[current] = listing
+                _CASEDIR_MEMO[current] = (stamp, listing)
+            else:
+                listing = cached[1]
+        except OSError:
+            return None
         real = listing.get(part.lower())
         if real is None:
             return None
@@ -2860,7 +2864,7 @@ def verify_dir32_addresses(rows):
           f"{len(recorded)} recorded symbols)")
 
 
-def verify_dir32_consistency(rows):
+def verify_dir32_consistency(rows, *, propose=True):
     """Regression gate for the non-string DIR32s (globals/vtables/func-addrs) build.py masks. A symbol
     has one address, so every reference must resolve to the same base once the addend is subtracted
     (base = binary_addr - compiled_addend). A symbol with >1 base is a candidate hidden discrepancy.
@@ -2908,7 +2912,8 @@ def verify_dir32_consistency(rows):
         print(f"    ... all {len(new)} with their bases: {report.relative_to(ROOT)}")
         raise SystemExit(1)
     print(f"DIR32 consistency: OK ({len(sym2base)} symbols; {len(inconsistent)} whitelisted, 0 new)")
-    propose_dir32_addresses(sym2base, whitelist)
+    if propose:
+        propose_dir32_addresses(sym2base, whitelist)
 
 
 UNMATCHED_MARKER_RE = re.compile(

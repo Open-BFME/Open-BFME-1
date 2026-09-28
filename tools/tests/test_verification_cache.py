@@ -208,7 +208,7 @@ def record_fixture(tmp_path, monkeypatch):
 @pytest.mark.parametrize('check', ['verify_baseline', 'verify_string_refs', 'verify_constant_refs', 'verify_dir32_addresses', 'verify_dir32_consistency'])
 def test_receipt_hits_cannot_skip_ancillary_failure(record_fixture, monkeypatch, check):
     path, rows = record_fixture
-    def fail(*args):
+    def fail(*args, **kwargs):
         if args:
             assert args[0] == rows
         raise SystemExit('fixture ancillary failure')
@@ -298,3 +298,14 @@ def test_rule_and_tool_fingerprints_are_shared_per_configuration(monkeypatch):
         context.toolchain(['compiler', 'config-a'])
     context.toolchain(['compiler', 'config-b'])
     assert calls == ['rules', ('compiler', 'config-a'), ('compiler', 'config-b')]
+
+
+def test_scoped_consistency_does_not_publish_partial_address_proposal(record_fixture, monkeypatch):
+    path, rows = record_fixture
+    calls = []
+    def consistency(selected, *, propose):
+        assert selected == rows
+        calls.append(propose)
+    monkeypatch.setattr(cache.B, 'verify_dir32_consistency', consistency)
+    cache.record(path)
+    assert calls == [False]
