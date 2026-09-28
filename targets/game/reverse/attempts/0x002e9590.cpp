@@ -1,107 +1,188 @@
-// ?appendInternalEventName@Rva002E9590Host@@QAEXPAVXmlNameSlotList@@@Z
-// partial score=0.28 date=2026-09-21
-// cl: /DNDEBUG /MD /O2 /Ob0
-// Open-BFME5: retail 0x002E9590 (186B).
-// Sibling of Rva002E2970ApplyNameFlags.cpp: same XmlNameSlotList accessor
-// class (count/tagAt/nameAt/finish, pins from that landing) and the same
-// "this" object (the vector field at +0x7c sits inside that class's own
-// m_pad78 padding, 0x78-0xB8). Reached from the still-carved dispatcher at
-// 0x002EA5D0 (stash reverse/attempts/0x002ea5d0.cpp) for the InternalEvent
-// tag. For each attribute whose tag is "Name", converts the attribute value
-// through BfmeThingVKT::bfmeBaseVKT (pinned, a local zero-init) and
-// BfmeThingBLC::bfmeGoBLC (matched, BfmeConv484.cpp) and appends the
-// resulting pointer to a BfmeVector28-shaped growable array (same
-// double-checked push_back idiom as the landed BfmeVector28::push_back in
-// BfmeConv826.cpp), falling back to the vector<Gen_t_002e8eb0_m4pod>-style
-// overflow helper pinned at 0x002E7940 through its ILT thunk.
+// ?rva002E9590ParseScriptedEvent@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z
+// partial score=0.5914 date=2026-09-28
+// ?rva002E9590ParseScriptedEvent@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z present-unmatched
+// Retail 0x002E9590, 186 bytes. The matched 0x002EA5D0 caller proves the
+// LuaScriptEngine/BfmeLexEAN ABI; the parser argument slot is reused for the
+// temporary BfmeThing adapters, and the vector begins at LuaScriptEngine+0x7c.
 //
-// PARTIAL: identity chain (accessors, memcmp("Name",5), the BfmeVector28
-// push_back double-check idiom, the VKT/BLC conversion pair) all reproduce
-// retail's instruction stream faithfully, but retail's prologue is a bare
-// 3-register push frame (push ecx/ebx/ebp, no `sub esp`) that reuses the
-// now-dead incoming "xml" stack argument slot as scratch for the two local
-// "thing" temporaries and the insertHelper out-param, keeping `this` off
-// any callee-saved register. Every shape tried (separate locals, a shared
-// `scratch` local, a `self` alias for `this`, /Ob1, /O1) still made the
-// compiler emit `sub esp, N` and route `this` through ebx, which shifts
-// every later instruction. Best score with this identity: 52/186 matching
-// non-reloc bytes (0.28), from this exact source.
-
+// cl: /DNDEBUG /MD /O2 /Ob0
 #include <string.h>
+#pragma intrinsic(memcmp)
+
+typedef int Int;
+
+extern void j_00038fc8();
+extern void j_0003a5fd();
+extern void j_00027a7a();
+extern void j_00025e1e();
+extern void j_00022bf6();
+extern void j_00017c38();
+extern void j_00049ae4();
 
 class XmlNameSlotList
 {
 public:
-	int count();
-	const char *tagAt(int index);
-	const char *nameAt(int index);
-	void finish();
+	__forceinline Int count()
+	{
+		typedef Int (XmlNameSlotList::*CountThunk)();
+		union
+		{
+			void (*function)();
+			CountThunk member;
+		} thunk;
+		thunk.function = j_00038fc8;
+		return (this->*thunk.member)();
+	}
+
+	__forceinline const char *tagAt(Int index)
+	{
+		typedef const char *(XmlNameSlotList::*GetThunk)(Int);
+		union
+		{
+			void (*function)();
+			GetThunk member;
+		} thunk;
+		thunk.function = j_0003a5fd;
+		return (this->*thunk.member)(index);
+	}
+
+	__forceinline const char *nameAt(Int index)
+	{
+		typedef const char *(XmlNameSlotList::*GetThunk)(Int);
+		union
+		{
+			void (*function)();
+			GetThunk member;
+		} thunk;
+		thunk.function = j_00027a7a;
+		return (this->*thunk.member)(index);
+	}
+
+	__forceinline Int finish()
+	{
+		typedef Int (XmlNameSlotList::*FinishThunk)();
+		union
+		{
+			void (*function)();
+			FinishThunk member;
+		} thunk;
+		thunk.function = j_00049ae4;
+		return (this->*thunk.member)();
+	}
 };
+class BfmeLexEAN;
+
 
 class BfmeThingVKT
 {
 public:
-	void bfmeBaseVKT();
+	__forceinline void bfmeBaseVKT()
+	{
+		typedef void (BfmeThingVKT::*BaseThunk)();
+		union
+		{
+			void (*function)();
+			BaseThunk member;
+		} thunk;
+		thunk.function = j_00025e1e;
+		(this->*thunk.member)();
+	}
 };
 
 class BfmeThingBLC
 {
 public:
-	void bfmeGoBLC(void *what);
+	__forceinline void bfmeGoBLC(void *what)
+	{
+		typedef void (BfmeThingBLC::*GoThunk)(void *);
+		union
+		{
+			void (*function)();
+			GoThunk member;
+		} thunk;
+		thunk.function = j_00022bf6;
+		(this->*thunk.member)(what);
+	}
+
 	void *m_bfmeGot;
 };
 
-// address-derived view of the same object Rva002E2970Host describes; only
-// the growable-array field this body actually touches is modeled.
-class Rva002E9590Host
+class Rva002E9590Vector
 {
-	char m_pad7c[0x7c];
+public:
 	void **m_start;
 	void **m_cur;
 	void **m_end;
 
-	void insertHelper(void **pos, void * const *src, void *temp, int one1, int one2);
-
-public:
-	void appendInternalEventName(XmlNameSlotList *xml);
+	__forceinline void insertHelper(void **position,
+		void *const *source, void *temporary, Int one1, Int one2)
+	{
+		typedef void (Rva002E9590Vector::*InsertThunk)(
+			void **, void *const *, void *, Int, Int);
+		union
+		{
+			void (*function)();
+			InsertThunk member;
+		} thunk;
+		thunk.function = j_00017c38;
+		(this->*thunk.member)(position, source, temporary, one1, one2);
+	}
 };
 
-#pragma comment(linker, "/alternatename:?insertHelper@Rva002E9590Host@@AAEXPAPAXPBQAX0HH@Z=?j_00017c38@@YAXXZ")
-
-void Rva002E9590Host::appendInternalEventName(XmlNameSlotList *xml)
+class __declspec(novtable) SubsystemInterface
 {
-	int i = 0;
-	if (xml->count() > 0)
+public:
+	virtual ~SubsystemInterface();
+
+private:
+	void *m_name;
+};
+
+class __declspec(novtable) LuaScriptEngine : public SubsystemInterface
+{
+public:
+	void rva002E9590ParseScriptedEvent(BfmeLexEAN *parser);
+
+private:
+	char m_pad08To7c[0x74];
+	Rva002E9590Vector m_eventCapacity;
+};
+
+void LuaScriptEngine::rva002E9590ParseScriptedEvent(BfmeLexEAN *parser)
+{
+	LuaScriptEngine * volatile owner = this;
+	XmlNameSlotList &xml = *(XmlNameSlotList *)parser;
+	Int i = 0;
+	if (xml.count() > 0)
 	{
 		do
 		{
-			int diff = memcmp(xml->tagAt(i), "Name", 5);
+			int diff = memcmp(xml.tagAt(i), "Name", 5);
 			if (diff == 0)
 			{
-				const char *value = xml->nameAt(i);
+				const char *value = xml.nameAt(i);
+				((BfmeThingVKT *)&parser)->bfmeBaseVKT();
+				((BfmeThingBLC *)&parser)->bfmeGoBLC((void *)value);
 
+				LuaScriptEngine *ownerValue = owner;
+				void **current = ownerValue->m_eventCapacity.m_cur;
+				void **end = ownerValue->m_eventCapacity.m_end;
+				Rva002E9590Vector *vector = &ownerValue->m_eventCapacity;
+				if (current != end)
 				{
-					BfmeThingVKT vkt;
-					vkt.bfmeBaseVKT();
-				}
-
-				BfmeThingBLC blc;
-				blc.bfmeGoBLC((void *)value);
-
-				if (m_cur != m_end)
-				{
-					if (m_cur)
-						*m_cur = blc.m_bfmeGot;
-					m_cur++;
+					if (current)
+						*current = ((BfmeThingBLC *)&parser)->m_bfmeGot;
+					vector->m_cur++;
 				}
 				else
 				{
-					void *temp;
-					insertHelper(m_cur, &blc.m_bfmeGot, &temp, 1, 1);
+					vector->insertHelper(current,
+						(void *const *)&((BfmeThingBLC *)&parser)->m_bfmeGot,
+						(void *)&parser, 1, 1);
 				}
 			}
 			++i;
-		} while (i < xml->count());
+		} while (i < xml.count());
 	}
-	xml->finish();
+	xml.finish();
 }
