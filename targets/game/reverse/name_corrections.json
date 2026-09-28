@@ -8048,5 +8048,35 @@
   "after_sha256": "9160de1de5a7da15b0de7cb2f576f49de17e7d62c29848b6e11e129b539dc609",
   "evidence": "targets/game/reverse/identity_evidence/0055b200-quickmatch-request.md",
   "reason": "The old bank used the Zero Hour PlayerTemplate header whose inline getPlayerTemplateCount divides by the Zero Hour sizeof; retail divides the vector span by 0x124 (magic 0xE070381D sar 8) and reads the side at +8. The new bank reuses the matched 0x00509B30 sibling's 0x124-byte address-token view of the same class."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006c39d0.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_buildTerrainTexture.cpp",
+  "old_name": "W3DRadarFormatCaps",
+  "new_name": "Rva006C39D0Lock",
+  "before_sha256": "0ae379aa0404227cc0f15c30c4ac0f3e0fdedff6358f453613b1e06afa02ba76",
+  "after_sha256": "72c4fabf0ad5842c9b987310976c381d8289048a98c8ad730a9189ed4990a648",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "The old bank was the whole Zero Hour W3DRadar.cpp; the landed source is only the retail 0x006C39D0 body. W3DRadarFormatCaps is an unrelated class of that TU which the body never uses; Rva006C39D0Lock is a new TU-local scope lock (W3DRadarResetLock ctor / bfmeUnlock1179 dtor, unwind state 2 in the retail body) that the aligner paired with the deleted declaration."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006c39d0.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_buildTerrainTexture.cpp",
+  "old_name": "howDark",
+  "new_name": "m_unmodelled_01c",
+  "before_sha256": "0ae379aa0404227cc0f15c30c4ac0f3e0fdedff6358f453613b1e06afa02ba76",
+  "after_sha256": "72c4fabf0ad5842c9b987310976c381d8289048a98c8ad730a9189ed4990a648",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "The old bank was the whole Zero Hour W3DRadar.cpp; the landed source is only the retail 0x006C39D0 body. howDark was a Zero Hour W3DRadar member the body never reads; m_unmodelled_01c is the new layout pad between Radar+0x18 and the first field the body touches (+0x143C), which the aligner paired with the deleted member."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "buildTerrainTexture",
+  "new_name": "j_0002248f",
+  "before_sha256": "03d79712993799acace8781fe12d8ccf5475f6c63d77ea82d9260080575622dd",
+  "after_sha256": "bdff202b549ec1ead90a805871dc1b1b73132e6e4f75b399955c6438159dd5c3",
+  "evidence": "targets/game/reverse/identity_evidence/0002248f-ilt-thunk.md",
+  "reason": "0x0002248F is the five-byte ILT thunk jmp 0x006C39D0 (tools/dis_retail.py 2248F 5); the real name moves to the matched body at 0x006C39D0 and the thunk is claimed by address as ?j_0002248f@@YAXXZ per targets/game/reverse/identity_evidence/0002248f-ilt-thunk.md."
  }
 ]

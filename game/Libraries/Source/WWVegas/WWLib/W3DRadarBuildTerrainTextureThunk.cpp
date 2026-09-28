@@ -1,21 +1,11 @@
-// readable body of ?buildTerrainTexture@W3DRadar@@IAEXPAVTerrainLogic@@@Z: game/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar.cpp
-// readable body of ?removeGoal@Pathfinder@@QAEXPAVObject@@@Z: game/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
-class TerrainLogic;
+// Retail 0x0002248F is the five-byte incremental-link thunk `jmp 0x006C39D0`
+// for W3DRadar::buildTerrainTexture; the body itself is matched at 0x006C39D0
+// (game/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_buildTerrainTexture.cpp).
+// The matched W3DRadar::refreshTerrain (0x006C4280) calls through this thunk.
+// Claimed by address, as the ILT convention says; see
+// targets/game/reverse/identity_evidence/0002248f-ilt-thunk.md.
+// Under /O2 a tail call with no arguments is exactly `E9 rel32`.
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/Common/W3DRadar.h
-class W3DRadar
-{
-protected:
-    void buildTerrainTexture(TerrainLogic *);
-};
+void b_006c39d0();
 
-class W3DRadarBuildTerrainTextureShim
-{
-public:
-    void build(TerrainLogic *terrain);
-};
-
-void W3DRadar::buildTerrainTexture(TerrainLogic *terrain)
-{
-    ((W3DRadarBuildTerrainTextureShim *)this)->build(terrain);
-}
+void j_0002248f() { b_006c39d0(); }
