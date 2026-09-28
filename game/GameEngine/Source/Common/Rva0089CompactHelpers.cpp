@@ -254,3 +254,26 @@ Rva00892400Owner *Rva00892400Owner::attach(unsigned int *incoming)
 		Rva00894D80Accessor::increment(incoming);
 	return this;
 }
+
+class Rva00892390Item
+{
+public:
+	virtual void slot0();
+	int m_flags;
+};
+struct Rva00892390List
+{
+public:
+	void push(Rva00892390Item *item);
+	int m_count;
+	int m_unused;
+	void **m_slots;
+};
+// ?push@Rva00892390List@@QAEXPAVRva00892390Item@@@Z
+void Rva00892390List::push(Rva00892390Item *item)
+{
+	m_slots[m_count++] = item;
+	unsigned char flags = (unsigned char)((unsigned int)item->m_flags >> 30);
+	if ((flags & 1) == 0)
+		item->slot0();
+}
