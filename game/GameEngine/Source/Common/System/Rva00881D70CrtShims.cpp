@@ -10,6 +10,7 @@
 
 extern "C" void *( *__cdecl __gameMemAllocPtr )( unsigned int size, int flags );
 extern "C" void ( *__cdecl __gameMemFreePtr )( void *ptr, int flags );
+extern "C" void *Rva01357214Onexitbegin;
 extern "C" void *( *__cdecl g_rva0130E9A0 )( void *ptr, unsigned int size, int flags );
 extern "C" void *( __stdcall *g_rva0130E988LoadLibraryA )( const char *name );
 
@@ -17,6 +18,14 @@ extern void rva008821d0LoaderPatch( void );
 
 typedef void *( __stdcall *RvaLoadLibraryExA00881FF0 )( const char *, void *, unsigned long );
 typedef void *( __stdcall *RvaLoadLibraryExW00882020 )( const unsigned short *, void *, unsigned long );
+
+// ?d_00881d20@@YAXPAX@Z
+void d_00881d20( void *ptr )
+{
+	if ( ptr != 0 && ptr != Rva01357214Onexitbegin )
+		__gameMemFreePtr( ptr, 0 );
+}
+
 
 // ?d_00881d70@@YAPAXI@Z
 void *d_00881d70( unsigned int size )
