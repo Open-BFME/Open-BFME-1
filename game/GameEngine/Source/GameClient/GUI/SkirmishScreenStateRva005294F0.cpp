@@ -1,5 +1,4 @@
 // ?rva005294F0@SkirmishScreenState@@QAEXH@Z
-// partial score=0.9942 date=2026-09-28
 // cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 //
@@ -8,14 +7,13 @@
 // slot's player-template combo at +0xC8. Callers (refreshAllPlayerControls,
 // handlePlayerSelection, apply via ILT 0x0002D38A) declare it refreshPlayerTeamControl,
 // which this body contradicts (it fills SIDE:%s faction entries), so the name keeps
-// the address.
-// BANKED at 1214/1214 bytes, 7 differing: a pure stack-slot rotation. Retail has
-// sideName(+$T saved-esp) at esp+0x34, numPlayerTemplates at 0x38 and def at 0x3C;
-// ours has def 0x34, sideName 0x38, count 0x3C.
-// Still needed to land even at 0 bytes: _Rb_tree<AsciiString>::_M_find at 0x0038C0E0 is
-// matched under an Rva0038C0E0Value tree spelling (identity correction or pin), and
-// _M_erase at 0x00076A90 is a gen_small placeholder (pin the set<AsciiString> spelling).
-#define _STLP_USE_NEWALLOC 1
+// the address (identity_evidence/005294f0-player-template-combo.md).
+// The side label is tested with `if (!exists) continue;` as in the matched
+// PopulatePlayerTemplateComboBox (0x006247B0): the nested `if (exists) {}` form
+// compiles to the same code but weights def above sideName and the count, which
+// rotated those three stack slots. The set's header node comes from the
+// out-of-line node allocator (0x0082E540), so the TU keeps STLport's default
+// allocator rather than _STLP_USE_NEWALLOC, which inlines operator new.
 #include <set>
 #include "ascii_string.h"
 template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
@@ -225,13 +223,12 @@ void SkirmishScreenState::rva005294F0(Int index)
 			{
 				Bool exists;
 				UnicodeString sideName = TheGameText->fetch(side, &exists);
-				if (exists)
-				{
-					newIndex = GadgetComboBoxAddEntry(m_playerTemplateCombos[index], TheGameText->fetch(side), def->getColor());
-					GadgetComboBoxSetItemData(m_playerTemplateCombos[index], newIndex, (void *)c);
-					if (selectedData == c)
-						selectPos = newIndex;
-				}
+				if (!exists)
+					continue;
+				newIndex = GadgetComboBoxAddEntry(m_playerTemplateCombos[index], TheGameText->fetch(side), def->getColor());
+				GadgetComboBoxSetItemData(m_playerTemplateCombos[index], newIndex, (void *)c);
+				if (selectedData == c)
+					selectPos = newIndex;
 			}
 		}
 	}
