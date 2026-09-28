@@ -1,168 +1,136 @@
 // ?populateCommand@ControlBar@@IAEXPAVObject@@_N@Z
-// partial score=0.443881245474294 date=2026-09-24
+// partial score=0.557 date=2026-09-28
+// ?populateCommand@ControlBar@@IAEXPAVObject@@_N@Z
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /I. /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // stlport
-// ControlBar::populateCommand, RVA 004A5E30, 1381 bytes through ret8 at 004A6392.
-// Identity: matched ControlBar::switchToContext at 0049E780, command arm
-// 0049E93E calls ILT 0000D495 with Object* and Bool (caller source line 2332).
-// Raw contracts from tools/callees.py; offsets witnessed in astra_R/LAYOUTS.md.
+//
+// ControlBar::populateCommand(Object *, Bool), RVA 004A5E30, 1381 bytes through
+// the final ret 8 at 004A6392. Identity: matched ControlBar::switchToContext
+// (0049E780) calls ILT 0000D495 with Object* and Bool from its command arm.
+//
+// Clean-member rewrite of the older rvaCall bank. Callee identities are the
+// ledger's (tools/callees.py 0x004A5E30 1381); bodies that are still dumps are
+// reached through their ILT j_ symbol with /alternatename and keep an
+// address-derived member name. Retail frame map (esp-relative after the four
+// pushes; = EBP-0x48+N): +10 loop-2 window cursor, +14 this, +18 specialIndex,
+// +1C commandSet, +20 text, +24 player, +28 i, +2C contain, +30 windows.
+// Retail holds a zero in EBX for all of loop 2 and the tail (xor ebx,ebx at
+// +12F); the cursor is therefore spilled and the frame is 0x2c.
+//
+// STATE OF THIS BANK (opus-5.5, 2026-09-28): the two stores marked NOT RETAIL
+// in loop 2 are placeholders. They are the only structural difference left:
+// with them VC7.1 hoists a zero into EBX at the loop-2 preheader exactly as
+// retail does, the frame becomes 0x2c, the two hide arms stop tail-merging,
+// and probe --shape reports 0.993 with only those two stores and one
+// alignment filler (lea ecx,[ecx] vs lea esp,[esp] at +34D) different.
+// Without them the body is 1341 B / 861 differing bytes with the cursor in
+// EBX. Measured: one extra zero store does not flip EBX, two do (in the same
+// or different blocks); pushes of 0 and memory compares against 0 do not
+// count; without the text block even three or four stores do not flip.
+// The lever still missing is the retail construct that supplies that zero
+// weight while emitting nothing. The ZH-style `ScienceType science` variable
+// assigned inside the science loop is what fixed the science-load order.
 #define __PLACEMENT_VEC_NEW_INLINE
 #include <vector>
 #include "../../../../game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
-inline AsciiString::~AsciiString(){((StringBase<char>*)this)->releaseBuffer();}
 template<class T> inline void StringBase<T>::clear(){releaseBuffer();}
-
 #include "Common/GameMemory.h"
 #include "Common/Overridable.h"
-class CommandButton; class CommandSet; class Player; class Image;
+class CommandButton; class CommandSet; class Player; class Image; class GameWindow; class ThingTemplate;
 enum ScienceType { SCIENCE_INVALID=-1 };
+struct Coord3D;
 
-class Object { public: Player *getControllingPlayer() const; const AsciiString &getCommandSetString() const; };
-class Player { public: Bool hasScience(ScienceType) const; };
-class GameWindow { public: void bfmeClose(Bool); unsigned winSetStatus(unsigned); unsigned winClearStatus(unsigned); };
-class BfmeUnit1013 { public: void bfmeStop1013(char); };
+// Object::getContain() witnessed in ControlBarContextUI.cpp (+0x1fc).
+// Slot 0 is asOpenContain (the +0xb6 flag is read as in doTransportInventoryUI);
+// slot 45 (+0xb4) is the byte-returning test transports use here.
+class OpenContain;
+class ContainModuleInterface {
+public:
+    virtual OpenContain *asOpenContain();
+    virtual void s01(); virtual void s02(); virtual void s03(); virtual void s04(); virtual void s05(); virtual void s06(); virtual void s07();
+    virtual void s08(); virtual void s09(); virtual void s0a(); virtual void s0b(); virtual void s0c(); virtual void s0d(); virtual void s0e(); virtual void s0f();
+    virtual void s10(); virtual void s11(); virtual void s12(); virtual void s13(); virtual void s14(); virtual void s15(); virtual void s16(); virtual void s17();
+    virtual void s18(); virtual void s19(); virtual void s1a(); virtual void s1b(); virtual void s1c(); virtual void s1d(); virtual void s1e(); virtual void s1f();
+    virtual void s20(); virtual void s21(); virtual void s22(); virtual void s23(); virtual void s24(); virtual void s25(); virtual void s26(); virtual void s27();
+    virtual void s28(); virtual void s29(); virtual void s2a(); virtual void s2b(); virtual void s2c();
+    virtual Bool slot45();
+};
+class ExitInterface {
+public:
+    virtual void s00(); virtual void s01(); virtual void s02(); virtual void s03(); virtual void s04(); virtual void s05(); virtual void s06(); virtual void s07();
+    virtual const Coord3D *slot08();
+};
+// 0x001CAF20 (ILT 0x0002BF85): returns a record whose +0x2c AsciiString names
+// the command set that overrides the object's own.
+struct Rva001CAF20Record { char pad[0x2c]; AsciiString commandSetName; };
+class Object {
+public:
+    Player *getControllingPlayer() const;
+    const AsciiString &getCommandSetString() const;
+    Rva001CAF20Record *Rva001CAF20();
+    Bool isLocallyControlled() const;
+    ExitInterface *getObjectExitInterface() const;
+    ContainModuleInterface *getContain() const { return m_contain; }
+    char pad00[0x1fc]; ContainModuleInterface *m_contain;
+};
+#pragma comment(linker, "/alternatename:?Rva001CAF20@Object@@QAEPAURva001CAF20Record@@XZ=?j_0002bf85@@YAXXZ")
+// player+0x684: 0x000FA800 (ILT 0x0004A66F) returns the image, 0x000F9670
+// (ILT 0x00002135) the ThingTemplate, both keyed by the running special index.
+class Rva000F9670Store {
+public:
+    const Image *Rva000FA800(int index);
+    const ThingTemplate *rva000F9670(int index);
+};
+#pragma comment(linker, "/alternatename:?Rva000FA800@Rva000F9670Store@@QAEPBVImage@@H@Z=?j_0004a66f@@YAXXZ")
+#pragma comment(linker, "/alternatename:?rva000F9670@Rva000F9670Store@@QAEPBVThingTemplate@@H@Z=?j_00002135@@YAXXZ")
+class Player {
+public:
+    Bool hasScience(ScienceType) const;
+    Bool isPlayerActive() const;
+    char pad[0x684]; Rva000F9670Store m_store684;
+};
+// 0x0013E4D0 (ILT 0x00046C18): copies the template's +0x1c string out when it
+// is not empty. Retail's string is the wide one (it calls UnicodeString::set,
+// ICF-shared with StringBase<char>::set at 0x00887C90); the narrow shim here
+// compiles to the same bytes.
+class Rva0013E4D0 { public: Bool take(AsciiString &out); };
+#pragma comment(linker, "/alternatename:?take@Rva0013E4D0@@QAE_NAAVAsciiString@@@Z=?j_00046c18@@YAXXZ")
+class GameWindow { public: void bfmeClose(Bool); unsigned winSetStatus(unsigned); unsigned winClearStatus(unsigned); int winEnable(Bool); };
 class CommandSet { public: const CommandButton *getCommandButton(int) const; };
-class BFMERetailCommandButton { public: void setButtonImage(const Image*); };
-class Rva004A5E30Calls {};
-extern void j_00001947();
-extern void j_00002135();
-extern void j_00003a85();
-extern void j_00003f80();
-extern void j_000056cd();
-extern void j_00006938();
-extern void j_0000943f();
-extern void j_0000d436();
-extern void j_00015da7();
-extern void j_000179bd();
-extern void j_0001a73f();
-extern void j_0001f0d7();
-extern void j_0001ff91();
-extern void j_00020824();
-extern void j_00023d4e();
-extern void j_00027b24();
-extern void j_00027f2a();
-extern void j_00029dc0();
-extern void j_0002a7ed();
-extern void j_0002bf85();
-extern void j_0002d1af();
-extern void j_00033523();
-extern void j_0003367c();
-extern void j_00033f19();
-extern void j_00034b58();
-extern void j_0003672d();
-extern void j_00046c18();
-extern void j_00046f4c();
-extern void j_00048c61();
-extern void j_00048cca();
-extern void j_0004a1fb();
-extern void j_0004a66f();
-template<class R> static __forceinline R rvaCall0(const void *owner,void (*raw)()) {
-    typedef R (Rva004A5E30Calls::*Method)();
-    union { void (*raw)(); Method member; } route;
-    route.raw=raw;
-    return (reinterpret_cast<Rva004A5E30Calls*>(const_cast<void*>(owner))->*route.member)();
-}
-template<class R, class A0> static __forceinline R rvaCall1(const void *owner,void (*raw)(), A0 a0) {
-    typedef R (Rva004A5E30Calls::*Method)(A0);
-    union { void (*raw)(); Method member; } route;
-    route.raw=raw;
-    return (reinterpret_cast<Rva004A5E30Calls*>(const_cast<void*>(owner))->*route.member)(a0);
-}
-template<class R, class A0, class A1> static __forceinline R rvaCall2(const void *owner,void (*raw)(), A0 a0, A1 a1) {
-    typedef R (Rva004A5E30Calls::*Method)(A0, A1);
-    union { void (*raw)(); Method member; } route;
-    route.raw=raw;
-    return (reinterpret_cast<Rva004A5E30Calls*>(const_cast<void*>(owner))->*route.member)(a0, a1);
-}
-template<class R, class A0, class A1, class A2> static __forceinline R rvaCall3(const void *owner,void (*raw)(), A0 a0, A1 a1, A2 a2) {
-    typedef R (Rva004A5E30Calls::*Method)(A0, A1, A2);
-    union { void (*raw)(); Method member; } route;
-    route.raw=raw;
-    return (reinterpret_cast<Rva004A5E30Calls*>(const_cast<void*>(owner))->*route.member)(a0, a1, a2);
-}
-
-class Rva004A5E30Contain {
-public:
-    virtual void *slot00();
-    virtual void slot01();
-    virtual void slot02();
-    virtual void slot03();
-    virtual void slot04();
-    virtual void slot05();
-    virtual void slot06();
-    virtual void slot07();
-    virtual void slot08();
-    virtual void slot09();
-    virtual void slot0a();
-    virtual void slot0b();
-    virtual void slot0c();
-    virtual void slot0d();
-    virtual void slot0e();
-    virtual void slot0f();
-    virtual void slot10();
-    virtual void slot11();
-    virtual void slot12();
-    virtual void slot13();
-    virtual void slot14();
-    virtual void slot15();
-    virtual void slot16();
-    virtual void slot17();
-    virtual void slot18();
-    virtual void slot19();
-    virtual void slot1a();
-    virtual void slot1b();
-    virtual void slot1c();
-    virtual void slot1d();
-    virtual void slot1e();
-    virtual void slot1f();
-    virtual void slot20();
-    virtual void slot21();
-    virtual void slot22();
-    virtual void slot23();
-    virtual void slot24();
-    virtual void slot25();
-    virtual void slot26();
-    virtual void slot27();
-    virtual void slot28();
-    virtual void slot29();
-    virtual void slot2a();
-    virtual void slot2b();
-    virtual void slot2c();
-    virtual Bool slot2d();
-};
-class Rva004A5E30Exit {
-public:
-    virtual void slot00();
-    virtual void slot01();
-    virtual void slot02();
-    virtual void slot03();
-    virtual void slot04();
-    virtual void slot05();
-    virtual void slot06();
-    virtual void slot07();
-    virtual void *slot08();
-};
-struct Rva004A5E30ObjectView { char pad00[0x1fc]; Rva004A5E30Contain *field1fc; };
-struct Rva004A5E30PlayerList { char pad00[0xc]; Player *field0c; };
-extern Rva004A5E30PlayerList *Rva012ED748;
-extern void *Rva012F4B98;
+class PlayerList { public: unsigned char isLocalAlliedWith(Object*); char pad[0xc]; Player *m_localPlayer; };
+extern PlayerList *ThePlayerList;
+class Glo012F4B98Type { public: void Rva0058C040(); void Rva005976B0(Object*); };
+#pragma comment(linker, "/alternatename:?Rva0058C040@Glo012F4B98Type@@QAEXXZ=?j_0003367c@@YAXXZ")
+#pragma comment(linker, "/alternatename:?Rva005976B0@Glo012F4B98Type@@QAEXPAVObject@@@Z=?j_0001f0d7@@YAXXZ")
+extern Glo012F4B98Type *Glo012F4B98;
 class ControlBar;
-extern ControlBar *Rva012F33F8;
+extern ControlBar *TheControlBar;
+class Rva004B19E0Owner { public: void bfmeClear(); void Rva004B19E0(std::vector<GameWindow*>*); };
+#pragma comment(linker, "/alternatename:?bfmeClear@Rva004B19E0Owner@@QAEXXZ=?j_00033f19@@YAXXZ")
+#pragma comment(linker, "/alternatename:?Rva004B19E0@Rva004B19E0Owner@@QAEXPAV?$vector@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@@Z=?j_00034b58@@YAXXZ")
 
-struct Rva004A5E30Override : public Overridable {
-    char pad0c[0x10]; int field1c;
-    int requiredView() const { return ((const Rva004A5E30Override*)friend_getFinalOverride())->field1c; }
+struct SpecialPowerTemplate : public Overridable {
+    char pad0c[0x10]; int m_requiredScience;
+    int getRequiredScience() const { return ((const SpecialPowerTemplate*)friend_getFinalOverride())->m_requiredScience; }
 };
-
-struct Rva004A5E30ButtonView {
-    char pad00[0x10]; int field10; CommandButton *field14; unsigned field18;
-    char pad1c[0x18]; Rva004A5E30Override *field34;
+class CommandButton {
+public:
+    void Rva0049BA80(Object*,Bool) const;
+    void setButtonImage(const Image*) const;
+    void bfmeCopyFrom(const CommandButton*,Bool) const;
+    char pad00[0x10]; int m_command;
+    CommandButton *m_upgradeTemplate;   // oracle name for +0x14; retail walks the list through it
+    unsigned m_options;
+    char pad1c[0x18]; SpecialPowerTemplate *m_specialPower;
     char pad38[0x30]; AsciiString field68;
-    char pad6c[0x18]; std::vector<int> field84;
-    char pad90[0x10]; int fielda0;
+    char pad6c[0x18]; std::vector<int> m_science;
+    char pad90[0x8]; int m_zeroPlaceholderA; int m_zeroPlaceholderB; int fielda0;
     char pada4[0xa9]; unsigned char field14d;
     char pad14e[4]; unsigned char field152; unsigned char field153;
 };
+#pragma comment(linker, "/alternatename:?Rva0049BA80@CommandButton@@QBEXPAVObject@@_N@Z=?j_00006938@@YAXXZ")
+#pragma comment(linker, "/alternatename:?bfmeCopyFrom@CommandButton@@QBEXPBV1@_N@Z=?j_00001947@@YAXXZ")
+#pragma comment(linker, "/alternatename:?setButtonImage@CommandButton@@QBEXPBVImage@@@Z=?j_0002a7ed@@YAXXZ")
 class ControlBar {
 public:
     const CommandSet *findCommandSet(const AsciiString&);
@@ -171,116 +139,119 @@ protected:
     void resetContainData();
     void doTransportInventoryUI(Object*,const CommandSet*);
     void showRallyPoint(const Coord3D*);
+    void Rva004A5950();
     void populateCommand(Object *object,Bool refresh);
-    char pad00[0x28]; CommandButton *field28;
-    char pad2c[0xd4]; GameWindow *field100[20];
+    char pad00[0x28]; CommandButton *m_commandButtons;
+    char pad2c[0xd4]; GameWindow *m_commandWindows[20];
     char pad150[0x50]; GameWindow *field1a0[20];
-    char pad1f0[0x100]; void *field2f0;
+    char pad1f0[0x100]; Rva004B19E0Owner *field2f0;
 };
+#pragma comment(linker, "/alternatename:?Rva004A5950@ControlBar@@IAEXXZ=?j_0003672d@@YAXXZ")
+struct Rva004A4090WindowVec : std::vector<GameWindow*> { void reserve20(unsigned); };
+#pragma comment(linker, "/alternatename:?reserve20@Rva004A4090WindowVec@@QAEXI@Z=?j_00046f4c@@YAXXZ")
 
 void ControlBar::populateCommand(Object *object,Bool refresh)
 {
     Player *player=object->getControllingPlayer();
     resetContainData();
-    const CommandSet *commandSet=Rva012F33F8->findCommandSet(object->getCommandSetString());
-    void *overrideData=rvaCall0<void*>(object,j_0002bf85);
-    if(overrideData) commandSet=Rva012F33F8->findCommandSet(*(AsciiString*)((char*)overrideData+0x2c));
+    const CommandSet *commandSet=TheControlBar->findCommandSet(object->getCommandSetString());
+    Rva001CAF20Record *overrideRecord=object->Rva001CAF20();
+    if(overrideRecord) commandSet=TheControlBar->findCommandSet(overrideRecord->commandSetName);
     if(!commandSet) {
-        if(Rva012F4B98) rvaCall0<void>(Rva012F4B98,j_0003367c);
+        if(Glo012F4B98) Glo012F4B98->Rva0058C040();
         return;
     }
     int i;
     for(i=0;i<20;++i) {
-        if(field100[i]) {
+        if(m_commandWindows[i]) {
             const CommandButton *button=commandSet->getCommandButton(i);
-            if(!button) field100[i]->bfmeClose(true);
-            else rvaCall2<void>(button,j_00006938,object,false);
-            setControlCommand(field100[i],button);
+            if(!button) m_commandWindows[i]->bfmeClose(true);
+            else button->Rva0049BA80(object,false);
+            setControlCommand(m_commandWindows[i],button);
         }
     }
-    Rva004A5E30Contain *contain=((Rva004A5E30ObjectView*)object)->field1fc;
-    if(contain && contain->slot2d()) doTransportInventoryUI(object,commandSet);
-    int specialIndex[2];
-    specialIndex[1] = 0;
+    ContainModuleInterface *contain=object->getContain();
+    if(contain && contain->slot45()) doTransportInventoryUI(object,commandSet);
+    int specialIndex=0;
     for(i=0;i<20;++i) {
         const CommandButton *button=commandSet->getCommandButton(i);
-        Rva004A5E30ButtonView *b=(Rva004A5E30ButtonView*)button;
+        CommandButton *b=(CommandButton*)button;
         if(!b || !b->field152) continue;
-        if(b->field18&0x80000) {
-            if(field100[i]) field100[i]->bfmeClose(true);
+        if(b->m_options&0x80000) {
+            if(m_commandWindows[i]) m_commandWindows[i]->bfmeClose(true);
             continue;
         }
         if(contain && b->field153) {
-            void *data=contain->slot00();
-            if(data && !*((unsigned char*)data+0xb6)) continue;
+            OpenContain *open=contain->asOpenContain();
+            if(open && !*((const unsigned char*)open+0xb6)) continue;
         }
-        if(b->field10==0x2c) {
-            if(!rvaCall1<Bool>(Rva012ED748,j_00003a85,object)) {
-                field100[i]->bfmeClose(true);
+        if(b->m_command==0x2c) {
+            if(!ThePlayerList->isLocalAlliedWith(object)) {
+                m_commandWindows[i]->bfmeClose(true);
                 continue;
             }
-            void *image=rvaCall1<void*>((char*)player+0x684,j_0004a66f,specialIndex[1]);
-            void *item=rvaCall1<void*>((char*)player+0x684,j_00002135,specialIndex[1]);
-            if(image && item) {
-                ((BFMERetailCommandButton*)button)->setButtonImage((const Image*)image);
+            const Image *image=player->m_store684.Rva000FA800(specialIndex);
+            Rva0013E4D0 *tmpl=(Rva0013E4D0*)player->m_store684.rva000F9670(specialIndex);
+            if(image && tmpl) {
+                button->setButtonImage(image);
                 AsciiString text;
-                if(rvaCall1<Bool>(item,j_00046c18,&text)) b->field68=text;
-                if(field100[i]) setControlCommand(field100[i],button);
+                if(tmpl->take(text)) b->field68=text;
+                if(m_commandWindows[i]) setControlCommand(m_commandWindows[i],button);
                 b->field68.clear();
-                b->fielda0=specialIndex[1];
+                b->fielda0=specialIndex;
             } else b->fielda0=-1;
-            ++specialIndex[1];
+            ++specialIndex;
         }
-        if(b->field10==0xf) continue;
-        if(field100[i]) {
-            field100[i]->bfmeClose(false);
-            ((BfmeUnit1013*)field100[i])->bfmeStop1013(1);
-            if(b->field14d) field100[i]->winSetStatus(0x4000000U);
-            else field100[i]->winClearStatus(0x4000000U);
+        // NOT RETAIL: two placeholder zero stores; see header.
+        b->m_zeroPlaceholderA=0; b->m_zeroPlaceholderB=0;
+        if(b->m_command==0xf) continue;
+        if(m_commandWindows[i]) {
+            m_commandWindows[i]->bfmeClose(false);
+            m_commandWindows[i]->winEnable(true);
+            if(b->field14d) m_commandWindows[i]->winSetStatus(0x4000000U);
+            else m_commandWindows[i]->winClearStatus(0x4000000U);
         }
-        if((b->field18&0x80) && b->field34) {
-            Rva004A5E30Override *power=b->field34;
-            if(power->requiredView()!=-1) {
-                if(!player->hasScience((ScienceType)power->requiredView())) {
-                    if(field100[i]) field100[i]->bfmeClose(true);
-                    goto rvaCommandNext;
+        if((b->m_options&0x80) && b->m_specialPower) {
+            SpecialPowerTemplate *power=b->m_specialPower;
+            if(power->getRequiredScience()!=-1) {
+                if(!player->hasScience((ScienceType)power->getRequiredScience())) {
+                    if(m_commandWindows[i]) m_commandWindows[i]->bfmeClose(true);
                 } else {
                     int bestIndex=-1;
-                    for(unsigned scienceIndex=0;scienceIndex<b->field84.size();++scienceIndex) {
-                        int science=b->field84[scienceIndex];
-                        if(player->hasScience((ScienceType)science)) bestIndex=scienceIndex;
+                    ScienceType science;
+                    for(unsigned scienceIndex=0;scienceIndex<b->m_science.size();++scienceIndex) {
+                        science=(ScienceType)b->m_science[scienceIndex];
+                        if(player->hasScience(science)) bestIndex=scienceIndex;
                         else break;
                     }
                     if(bestIndex!=-1) {
-                        int science=b->field84[bestIndex];
-                        for(CommandButton *candidate=field28;candidate;candidate=((Rva004A5E30ButtonView*)candidate)->field14) {
-                            Rva004A5E30ButtonView *c=(Rva004A5E30ButtonView*)candidate;
-                            if(c->field10==0x18 && !c->field84.empty() && c->field84[0]==science)
-                                rvaCall2<void>(button,j_00001947,candidate,true);
+                        science=(ScienceType)b->m_science[bestIndex];
+                        for(CommandButton *candidate=m_commandButtons;candidate;candidate=candidate->m_upgradeTemplate) {
+                            if(candidate->m_command==0x18 && !candidate->m_science.empty() && candidate->m_science[0]==science)
+                                button->bfmeCopyFrom(candidate,true);
                         }
                     }
                 }
             }
         }
-        rvaCommandNext:;
     }
-    if(rvaCall0<Bool>(object,j_0001ff91) || !rvaCall0<Bool>(Rva012ED748->field0c,j_000179bd)) {
-        Rva004A5E30Exit *exit=rvaCall0<Rva004A5E30Exit*>(object,j_00023d4e);
-        if(exit) showRallyPoint((const Coord3D*)exit->slot08());
+    if(object->isLocallyControlled() || !ThePlayerList->m_localPlayer->isPlayerActive()) {
+        ExitInterface *exitInterface=object->getObjectExitInterface();
+        if(exitInterface) showRallyPoint(exitInterface->slot08());
     }
-    rvaCall0<void>(this,j_0003672d);
-    rvaCall1<void>(Rva012F4B98,j_0001f0d7,object);
+    Rva004A5950();
+    Glo012F4B98->Rva005976B0(object);
     if(field2f0) {
-        if(!rvaCall0<Bool>(object,j_0001ff91) && rvaCall0<Bool>(Rva012ED748->field0c,j_000179bd)) {
-            rvaCall0<void>(field2f0,j_00033f19);
+        if(!object->isLocallyControlled() && ThePlayerList->m_localPlayer->isPlayerActive()) {
+            field2f0->bfmeClear();
             return;
         }
-        std::vector<GameWindow*> windows;
-        rvaCall1<void>(&windows,j_00046f4c,20U);
+        Rva004A4090WindowVec windows;
+        windows.reserve20(20U);
         for(int k=0;k<20;++k) {
             GameWindow *window=field1a0[k];
             if(window) windows.push_back(window);
         }
-        rvaCall1<void>(field2f0,j_00034b58,&windows);
+        field2f0->Rva004B19E0(&windows);
     }
 }
