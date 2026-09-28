@@ -7738,5 +7738,25 @@
   "after_sha256": "601470a116f0ba57bd56568f44f6856f629b6fab5dd089f07742217328c38927",
   "evidence": "targets/game/reverse/identity_evidence/009004A0-cdecl-render-object-factory.md",
   "reason": "Retired thiscall name contradicted by the callee (no ECX use, plain ret) and two callers (six pushed arguments, add esp 0x18); address-derived factory name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0061fda0.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/Rva0061FDA0Owner_xfer.cpp",
+  "old_name": "SkirmishGameInfo",
+  "new_name": "Rva0061FDA0Owner",
+  "before_sha256": "d6028e9c17c67c19f942d2d2c1ad81bf4049b071430c01b6ce6c7dbcf0753d28",
+  "after_sha256": "f44a91228781c166135dffe9f15dc650350531a3e0deaa80f081a31f7ed64c24",
+  "evidence": "targets/game/reverse/identity_evidence/0061fda0-twin-class.md",
+  "reason": "The bank name SkirmishGameInfo was the unproven twin hypothesis for 0x0061FDA0, copied from landed 0x0061F930. Retail ctor 0x00619720 installs vtable 0x011171C8 while the twin ctor 0x00075C10 installs 0x01075E7C, so same-name claim is an identity collision. Owner unproven, so the new class keeps the body address per AGENTS.md 3a."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0061fda0.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/Rva0061FDA0Owner_xfer.cpp",
+  "old_name": "SkirmishGameInfo",
+  "new_name": "Rva0061FDA0Owner",
+  "before_sha256": "d6028e9c17c67c19f942d2d2c1ad81bf4049b071430c01b6ce6c7dbcf0753d28",
+  "after_sha256": "422bfbd78d6d3f13de3a902af0f9e7894f8b5b8085f84129c3bc82403cc07393",
+  "evidence": "targets/game/reverse/identity_evidence/0061fda0-twin-class.md",
+  "reason": "Bank retirement pairing: the retired 0x0061FDA0 stash reused the twin's SkirmishGameInfo shape; the body is a different class (ctor 0x00619720 installs vtable 0x011171C8, twin installs 0x01075E7C), landed under an address-derived owner."
  }
 ]
