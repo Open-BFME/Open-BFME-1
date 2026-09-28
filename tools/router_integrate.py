@@ -481,6 +481,10 @@ def integrate(args):
     port(j, dest)
     if rev['fingerprint'] != workspace_fingerprint(j['cwd']):
         raise SystemExit('workspace changed during port; destination retained for inspection')
+    # Stage the port before any check reads the index: check_csv lists tracked files, so a
+    # lift or stash the worker deleted (unlinked by port() but still indexed) crashed it with
+    # FileNotFoundError and aborted every landing that retired a banked attempt.
+    git(dest, 'add', '-A', '--', *(d.rstrip('/') for d in PORTED if (dest / d).exists()), check=True)
     ported_fingerprint = workspace_fingerprint(dest)
     r = sh([sys.executable, 'tools/check_csv.py'], dest, check=True)
     print(r.stdout[-600:])
