@@ -63,8 +63,10 @@ def job_info(job):
     j = data['jobs'][0]
     attempts = sorted(data['attempts'], key=lambda a: a['started'] or 0)
     rvas = []
-    if re.fullmatch(r'0x[0-9A-Fa-f]{1,8}', str(j['target'] or '')):
-        rvas.append('0x%08X' % int(j['target'], 16))
+    # a follow-up job is keyed fu-0xRVA (one target per job, so the RVA is unambiguous)
+    m = re.fullmatch(r'(?:fu-)?(0x[0-9A-Fa-f]{1,8})', str(j['target'] or ''))
+    if m:
+        rvas.append('0x%08X' % int(m.group(1), 16))
     log = ''
     for a in attempts:
         d = Path(a['directory'] or '')
