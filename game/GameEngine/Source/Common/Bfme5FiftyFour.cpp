@@ -157,3 +157,20 @@ void Gen_00899DA0::bfmeBump(void)
 
 	m_bfmeBits = (bits & 0xF000FFFF) | (count << 16);
 }
+
+class Rva008918F0Bits
+{
+public:
+	void setCount(unsigned int count);
+
+private:
+	int m_head;
+	unsigned int m_bits;
+};
+// ?setCount@Rva008918F0Bits@@QAEXI@Z
+void Rva008918F0Bits::setCount(unsigned int count)
+{
+	if (count > 0xFFF)
+		count = 0xFFF;
+	m_bits = (m_bits & 0xF000FFFF) | (count << 16);
+}
