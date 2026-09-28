@@ -1,16 +1,17 @@
-// ?setup@WaterShader007A6AA0@@QAEXPAD@Z
-// partial score=0.989060489060489 date=2026-09-27
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /I.
-// BFME RVA 0x007A6AA0 (1554 bytes): complete fixed-function bump-water setup.
-// Retail has a settings pointer on the stack; ret 4; no EH; 0x190-byte local frame.
-#define private public
-#define protected public
+// BFME RVA 0x007A6AA0 (1554 bytes): fixed-function bump-water shader setup, bump matrix as in ZH BumpEnvTextureMapperClass::Apply.
+// Retail passes a settings pointer on the stack; ret 4; no EH; 0x190-byte local frame.
 #include "game/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h"
-#undef protected
-#undef private
 #include <string.h>
 
-void BaseHeightMapScorchSetShader(const ShaderClass &);
+
+// File-local view that reaches the protected DX8Wrapper statistics counters.
+class DX8CounterAccess007A6AA0 : public DX8Wrapper
+{
+public:
+    static unsigned &textureStageCount(void) { return texture_stage_state_changes; }
+    static unsigned &matrixCount(void) { return matrix_changes; }
+};
 
 struct WaterMatrix007A6AA0 { float m[16]; };
 inline WaterMatrix007A6AA0 operator*(const WaterMatrix007A6AA0 &a, const WaterMatrix007A6AA0 &b) {
@@ -132,7 +133,7 @@ struct WaterShaderDevice007A6AA0 {
 static inline WaterShaderDevice007A6AA0 *waterDevice() { return (WaterShaderDevice007A6AA0 *)DX8Wrapper::_Get_D3D_Device8(); }
 static inline void addressState(unsigned stage, unsigned long state, unsigned value) {
     waterDevice()->SetTextureStageState(stage,state,value);
-    ++number_of_DX8_calls; ++DX8Wrapper::texture_stage_state_changes;
+    ++number_of_DX8_calls; ++DX8CounterAccess007A6AA0::textureStageCount();
 }
 #include <math.h>
 // Address-derived names preserve the actual mutable global accesses.
@@ -143,7 +144,7 @@ void BoxSetTexture(unsigned, TextureBaseClass *&);
 static inline unsigned floatBits(const float f) { return *(const unsigned *)&f; }
 class WaterShader007A6AA0 { public: void setup(char *settings); };
 void WaterShader007A6AA0::setup(char *settings) {
-    BaseHeightMapScorchSetShader(ShaderClass::_PresetAlphaShader);
+    DX8Wrapper::Set_Shader(ShaderClass::_PresetAlphaShader);
     DX8Wrapper::Apply_Render_State_Changes();
     BoxSetTexture(0,*(TextureBaseClass **)(settings+0x34));
     BoxSetTexture(1,*(TextureBaseClass **)(settings+0x38));
@@ -154,9 +155,11 @@ void WaterShader007A6AA0::setup(char *settings) {
     DX8Wrapper::Set_DX8_Texture_Stage_State(0,(D3DTEXTURESTAGESTATETYPE)5,2);
     DX8Wrapper::Set_DX8_Texture_Stage_State(0,(D3DTEXTURESTAGESTATETYPE)6,1);
     addressState(0,1,1); addressState(0,2,1);
-    WaterPhase01306D84=(float)fmod((double)(WaterPhase01306D84+0.0052359881810843945f),6.2831854820251465);
-    float c=WWMath::Fast_Cos(WaterPhase01306D84); c*=WaterBumpScale012BBBE4;
-    float s=WWMath::Fast_Sin(WaterPhase01306D84)*WaterBumpScale012BBBE4;
+    WaterPhase01306D84+=0.0052359881810843945f;
+    WaterPhase01306D84=fmodf(WaterPhase01306D84,2*WWMATH_PI);
+    float c,s;
+    c=WaterBumpScale012BBBE4*WWMath::Fast_Cos(WaterPhase01306D84);
+    s=WaterBumpScale012BBBE4*WWMath::Fast_Sin(WaterPhase01306D84);
     DX8Wrapper::Set_DX8_Texture_Stage_State(0,(D3DTEXTURESTAGESTATETYPE)7,floatBits(c));
     DX8Wrapper::Set_DX8_Texture_Stage_State(0,(D3DTEXTURESTAGESTATETYPE)8,floatBits(-s));
     DX8Wrapper::Set_DX8_Texture_Stage_State(0,(D3DTEXTURESTAGESTATETYPE)9,floatBits(s));
@@ -181,7 +184,7 @@ void WaterShader007A6AA0::setup(char *settings) {
     WaterMatrix007A6AA0 destMatrix=inv*scale;
     D3DXMatrixTranslation((D3DXMATRIX *)&scale,*(float *)(settings+0x5c)*-0.1,*(float *)(settings+0x5c)*0.1,0);
     destMatrix=destMatrix*scale;
-    ++DX8Wrapper::matrix_changes;
+    ++DX8CounterAccess007A6AA0::matrixCount();
     waterDevice()->SetTransform(16,&destMatrix); ++number_of_DX8_calls;
     DX8Wrapper::Set_DX8_Texture_Stage_State(1,(D3DTEXTURESTAGESTATETYPE)11,0x30000);
     DX8Wrapper::Set_DX8_Texture_Stage_State(1,(D3DTEXTURESTAGESTATETYPE)24,2);
@@ -191,7 +194,7 @@ void WaterShader007A6AA0::setup(char *settings) {
     bias.m[4]=0; bias.m[5]=0.5f; bias.m[6]=0; bias.m[7]=0.5f;
     bias.m[8]=0; bias.m[9]=0; bias.m[10]=1; bias.m[11]=0;
     bias.m[12]=0; bias.m[13]=0; bias.m[14]=0; bias.m[15]=1;
-    ++DX8Wrapper::matrix_changes;
+    ++DX8CounterAccess007A6AA0::matrixCount();
     waterDevice()->SetTransform(17,&bias); ++number_of_DX8_calls;
 }
 
