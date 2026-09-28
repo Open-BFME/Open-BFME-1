@@ -28,13 +28,13 @@ public:
 void Rva008897E0Class::d_008897e0( float val )
 {
 	char buf[200]; // 0xC8 = 200
-	_snprintf( buf, 200, (const char*)0x01082F4C, val );
+	_snprintf( buf, 200, "%f", val );
 	print( buf );
 }
 
 void Rva008897E0Class::d_00889830( double val )
 {
 	char buf[200];
-	_snprintf( buf, 200, (const char*)0x01082F4C, val );
+	_snprintf( buf, 200, "%f", val );
 	print( buf );
 }

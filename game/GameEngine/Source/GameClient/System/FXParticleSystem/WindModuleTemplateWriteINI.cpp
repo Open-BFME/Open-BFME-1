@@ -162,6 +162,9 @@ extern const float BfmeZeroRange;
 
 namespace FXParticleSystem
 {
+// Exported retail table of wind-motion keywords, indexed by m_windMotion.
+extern const char *const WindMotionNames[];
+
 // The generic float writer, reached through ILT 0x0001FC8A.
 void writePhysicsScalar(INI *stream, void *flags, const void *name,
 	const float *value);
@@ -212,42 +215,42 @@ void DefaultModuleTemplate<7>::writeINI(File &file, unsigned int flags) const
 	// "WindMotion" = the WindMotionNames entry; nothing is written for the
 	// not-used default.
 	if (m_windMotion != 1)
-		u1Call_005C7110(&stream, (void *)flags, (void *)0x010891d8,
-			(void **)(0x01110244 + m_windMotion * 4));
+		u1Call_005C7110(&stream, (void *)flags, (void *)"WindMotion",
+			(void **)(WindMotionNames + m_windMotion));
 
 	if (m_windStrength != 2.0f)
 		writePhysicsScalar((INI *)&stream, (void *)flags,
-			(const void *)0x01114754, &m_windStrength);
+			"WindStrength", &m_windStrength);
 	if (m_windFullStrengthDist != 75.0f)
 		writePhysicsScalar((INI *)&stream, (void *)flags,
-			(const void *)0x01114738, &m_windFullStrengthDist);
+			"WindFullStrengthDist", &m_windFullStrengthDist);
 	if (m_windZeroStrengthDist != 200.0f)
 		writePhysicsScalar((INI *)&stream, (void *)flags,
-			(const void *)0x0111471c, &m_windZeroStrengthDist);
+			"WindZeroStrengthDist", &m_windZeroStrengthDist);
 	if (m_windAngleChangeMin != 0.15f)
 		writePhysicsScalar((INI *)&stream, (void *)flags,
-			(const void *)0x01114704, &m_windAngleChangeMin);
+			"WindAngleChangeMin", &m_windAngleChangeMin);
 	if (m_windAngleChangeMax != 0.45f)
 		writePhysicsScalar((INI *)&stream, (void *)flags,
-			(const void *)0x011146ec, &m_windAngleChangeMax);
+			"WindAngleChangeMax", &m_windAngleChangeMax);
 	if (m_windMotionStartAngleMin != BfmeZeroRange)
 		writePhysicsScalar((INI *)&stream, (void *)flags,
-			(const void *)0x011146cc, &m_windMotionStartAngleMin);
+			"WindPingPongStartAngleMin", &m_windMotionStartAngleMin);
 	if (m_windMotionStartAngleMax != 0.7853982f)
 		writePhysicsScalar((INI *)&stream, (void *)flags,
-			(const void *)0x011146ac, &m_windMotionStartAngleMax);
+			"WindPingPongStartAngleMax", &m_windMotionStartAngleMax);
 	if (m_windMotionEndAngleMin != 5.4977875f)
 		writePhysicsScalar((INI *)&stream, (void *)flags,
-			(const void *)0x01114690, &m_windMotionEndAngleMin);
+			"WindPingPongEndAngleMin", &m_windMotionEndAngleMin);
 	if (m_windMotionEndAngleMax != 6.2831855f)
 		writePhysicsScalar((INI *)&stream, (void *)flags,
-			(const void *)0x01114674, &m_windMotionEndAngleMax);
+			"WindPingPongEndAngleMax", &m_windMotionEndAngleMax);
 	if (m_turbulenceAmplitude != BfmeZeroRange)
 		writePhysicsScalar((INI *)&stream, (void *)flags,
-			(const void *)0x0111465c, &m_turbulenceAmplitude);
+			"TurbulenceAmplitude", &m_turbulenceAmplitude);
 	if (m_turbulenceFrequency != BfmeZeroRange)
 		writePhysicsScalar((INI *)&stream, (void *)flags,
-			(const void *)0x01114644, &m_turbulenceFrequency);
+			"TurbulenceFrequency", &m_turbulenceFrequency);
 
 	writeStreamText(file,
 		reinterpret_cast<StreamTextAccessor *>(&stream)->getText());
