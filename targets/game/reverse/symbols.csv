@@ -89822,3 +89822,5 @@ _Rva0086C6E0,0x0086C6E0,gap-seat; opaque address-derived five-argument cdecl hel
 ?call@Rva004A4090@@QAEXI@Z,0x00046F4C,retail ILT 0x00046F4C targets matched STLport vector reserve body 0x004A4090; thiscall unsigned count input
 ?call@Rva001CAF20@@QAEPAURva004A5E30OverrideView@@XZ,0x0002BF85,retail ILT 0x0002BF85 targets body 0x001CAF20; caller reads AsciiString at returned EAX+0x2C; address-derived result view
 ??0?$DynamicVectorClass@URva009080A0Element@@@@QAE@IPBURva009080A0Element@@@Z,0x0090B4E0,retail call from 0x00C6DDC0; DynamicVectorRenderDeviceDescConstructor.cpp explicitly instantiates DynamicVectorClass<Rva009080A0Element> constructor; Rva009080A0Element is the proven 0x5B8 render descriptor wrapper
+?Free_Object_Memory@ObjectPool@@QAEXPAX@Z,0x008DDA50,object-pool free reached by GridLinkClass pool delete 0x008DDEB0; same body as GridLinkClass pool row
+?g_pool008DDA50@@3VObjectPool@@A,0x0133D1AC,GridLinkClass pool object freed by dup_008ddeb0
