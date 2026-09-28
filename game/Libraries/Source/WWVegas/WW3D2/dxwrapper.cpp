@@ -705,16 +705,187 @@ bool DX8Wrapper::Create_Device(void)
 	return true;
 }
 
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WW3D2/DX8WrapperResetDeviceThunk.cpp
-// ?Reset_Device@DX8Wrapper@@ present-unmatched
+// ---------------------------------------------------------------------------
+// BFME's texture-asset walk, the model the already-matched
+// ?_Invalidate_Textures@WW3D@@SAXXZ (game/.../WW3D__Invalidate_TexturesMethodThunk.cpp)
+// established: select the 'TEX' stream, then repeatedly take a counted
+// AssetReference by value and hand it to a step method.
+//
+// Three recovered names stand for that ONE retail class, and a mangled symbol
+// spells the class it is declared in, so the declarations below carry all three
+// as empty derived spellings of a single four-byte holder: Gen_0090DB10 owns the
+// tag-checked assignment (0x0090DB10, matched as
+// ??4Gen_0090DB10@@QAEAAV0@ABV0@@Z) and the counted release, BfmeA973 owns the
+// release step (0x0090E260) and BfmeOwnBR the re-acquire step (0x0090E2A0).
+// AssetReference is the registry's return type, so
+// ?Rva009EBDC0@@YA?AVAssetReference@@XZ still encodes. No vtable anywhere, so
+// every base subobject sits at offset 0 and the object stays four bytes wide --
+// the shape retail's hidden return pointer and stack slots require.
+// ---------------------------------------------------------------------------
+class Gen_0090DB10
+{
+public:
+	Gen_0090DB10() : m_object(0) {}
+	Gen_0090DB10 &operator=(const Gen_0090DB10 &other);		// 0x0090DB10
+	~Gen_0090DB10() { if (m_object) m_object->Release_Ref(); }
+
+	operator const void *() const { return m_object; }
+
+	TextureClass *m_object;
+};
+
+class BfmeA973 : public Gen_0090DB10
+{
+public:
+	void bfmeGo973A(void);									// 0x0090E260
+};
+
+class BfmeOwnBR : public BfmeA973
+{
+public:
+	void bfmeRunBR(void);									// 0x0090E2A0
+};
+
+class AssetReference : public BfmeOwnBR
+{
+public:
+	AssetReference() {}
+};
+
+void Rva009EBBC0(int asset_type);							// 0x009EBBC0
+AssetReference Rva009EBDC0();									// 0x009EBDC0
+void Rva0090F050(void);										// 0x0090F050
+
+// The mesh renderer's two reset steps. Both retail bodies are the one-byte
+// `ret` stubs ?m@Gen_00944c30@@QAEXXZ and ?m@Gen_00944c40@@QAEXXZ.
+class Gen_00944c30 { public: void m(void); };
+class Gen_00944c40 { public: void m(void); };
+
+// BFME keeps the mesh renderer BEHIND A POINTER: both calls below arrive as
+// `mov ecx, dword ptr [0x0134B0E8]`, a load of the slot, where the address of
+// an object of the vendored header's shape would have been folded into the
+// operand of a `mov ecx, imm32`. symbols.csv agrees -- the slot is pinned as
+// ?TheDX8MeshRenderer@@3PAVDX8MeshRendererClass@@A -- but dx8renderer.h declares
+// the same storage as an object, so read the slot through a pointer type; the
+// cast is a layout no-op.
+template <class T> static __forceinline T *dx8_mesh_renderer(void)
+{
+	return *reinterpret_cast<T **>(&TheDX8MeshRenderer);
+}
+
+// The two device slots this body calls. The BFME device is the stock D3D8
+// vtable -- TestCooperativeLevel at +0x0C and Reset at +0x40 -- while the shared
+// shim (inputs/reference/shims/d3d8_shim_validated.h) omits GetSwapChain and
+// GetNumberOfSwapChains and so carries Reset at +0x38. Mirroring the SDK prefix
+// here keeps that shared header untouched; the cast is a layout no-op.
+class BfmeDx8Device
+{
+public:
+	virtual HRESULT __stdcall QueryInterface(const void *, void **) = 0;
+	virtual unsigned long __stdcall AddRef() = 0;
+	virtual unsigned long __stdcall Release() = 0;
+	virtual HRESULT __stdcall TestCooperativeLevel() = 0;
+	virtual unsigned int __stdcall GetAvailableTextureMem() = 0;
+	virtual HRESULT __stdcall ResourceManagerDiscardBytes(unsigned long) = 0;
+	virtual HRESULT __stdcall GetDirect3D(void **) = 0;
+	virtual HRESULT __stdcall GetDeviceCaps(void *) = 0;
+	virtual HRESULT __stdcall GetDisplayMode(void *) = 0;
+	virtual HRESULT __stdcall GetCreationParameters(void *) = 0;
+	virtual HRESULT __stdcall SetCursorProperties(unsigned int, unsigned int, void *) = 0;
+	virtual void __stdcall SetCursorPosition(int, int, unsigned long) = 0;
+	virtual int __stdcall ShowCursor(int) = 0;
+	virtual HRESULT __stdcall CreateAdditionalSwapChain(void *, void **) = 0;
+	virtual HRESULT __stdcall GetSwapChain(unsigned int, void **) = 0;
+	virtual HRESULT __stdcall GetNumberOfSwapChains() = 0;
+	virtual HRESULT __stdcall Reset(void *) = 0;
+};
+
+// BFME's DX8CALL_HRES carries a second counter next to number_of_DX8_calls: the
+// run of consecutive failures, tested against 50 by the report below and cleared
+// on both exits. The vendored header increments only number_of_DX8_calls, so the
+// body names the retail address itself and defines it here, where
+// number_of_DX8_calls (0x01340594) is defined above. The test is SIGNED --
+// retail emits `cmp dword ptr [0x013411E8], 0x32 / jl` -- so the counter is int.
+int Rva013411E8Dx8Errors = 0;
+
+// The DX9 error string, from the vendored dxerr9 the game links: the archive
+// member obj\i386\dxerr9.obj exports the stdcall name _DXGetErrorString9A@4
+// (0x00AD548E), which is what a C-linkage DXGetErrorString9A of one dword
+// argument decorates to.
+extern "C" char *__stdcall DXGetErrorString9A(long code);
+
+// The awake-log object the report hands its text to, as
+// game/GameEngine/Source/Common/INI/INIAudioDefinitionParsers.cpp already models
+// it: a 0x60 flush, a 0x6C open taking two ints, then text insertion at 0x38 and
+// finalisation at 0x4C on the log it returns.
+class BfmeAwakenLog
+{
+public:
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0C();
+	virtual void slot10();
+	virtual void slot14();
+	virtual void slot18();
+	virtual void slot1C();
+	virtual void slot20();
+	virtual void slot24();
+	virtual void slot28();
+	virtual void slot2C();
+	virtual void slot30();
+	virtual void slot34();
+	virtual BfmeAwakenLog *slot38(const char *text);
+	virtual void slot3C();
+	virtual void slot40();
+	virtual void slot44();
+	virtual void slot48();
+	virtual void slot4C(int report);
+};
+
+class BfmeAwakenDebug
+{
+public:
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0C();
+	virtual void slot10();
+	virtual void slot14();
+	virtual void slot18();
+	virtual void slot1C();
+	virtual void slot20();
+	virtual void slot24();
+	virtual void slot28();
+	virtual void slot2C();
+	virtual void slot30();
+	virtual void slot34();
+	virtual void slot38();
+	virtual void slot3C();
+	virtual void slot40();
+	virtual void slot44();
+	virtual void slot48();
+	virtual void slot4C();
+	virtual void slot50();
+	virtual void slot54();
+	virtual void slot58();
+	virtual void slot5C();
+	virtual void slot60();
+	virtual void slot64();
+	virtual void slot68();
+	virtual BfmeAwakenLog *slot6C(int first, int second);
+};
+
+extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void _bfme_debugRecordCallsite(int kind);
+
+// ?Reset_Device@DX8Wrapper@@ matched: retail 0x009082B0, 969 bytes
 bool DX8Wrapper::Reset_Device(bool reload_assets)
 {
 	WWDEBUG_SAY(("Resetting device.\n"));
 	DX8_THREAD_ASSERT();
 	if ((IsInitted) && (D3DDevice != NULL)) {
 		// Release all non-MANAGED stuff
-		WW3D::_Invalidate_Textures();
-
 		for (unsigned i=0;i<MAX_VERTEX_STREAMS;++i) 
 		{
 			Set_Vertex_Buffer (NULL,i);
@@ -725,8 +896,21 @@ bool DX8Wrapper::Reset_Device(bool reload_assets)
 		}
 		DynamicVBAccessClass::_Deinit();
 		DynamicIBAccessClass::_Deinit();
-		DX8TextureManagerClass::Release_Textures();
-		SHD_SHUTDOWN_SHADERS;
+
+		// Release every texture the registry holds.
+		bool has_texture;
+		Rva009EBBC0(0x544558);
+		Gen_0090DB10 texture;
+		for (;;) {
+			has_texture = (texture = Rva009EBDC0()) != 0;
+			if (has_texture)
+				((BfmeA973 *)&texture)->bfmeGo973A();
+			if (!has_texture)
+				break;
+		}
+
+		dx8_mesh_renderer<Gen_00944c30>()->m();
+		Rva0090F050();
 
 		// Reset frame count to reflect the flipping chain being reset by Reset()
 		FrameCount = 0;
@@ -734,25 +918,53 @@ bool DX8Wrapper::Reset_Device(bool reload_assets)
 		memset(Vertex_Shader_Constants,0,sizeof(Vector4)*MAX_VERTEX_SHADER_CONSTANTS);
 		memset(Pixel_Shader_Constants,0,sizeof(Vector4)*MAX_PIXEL_SHADER_CONSTANTS);
 
-		HRESULT hr=_Get_D3D_Device8()->TestCooperativeLevel();
+		HRESULT hr=((BfmeDx8Device *)_Get_D3D_Device8())->TestCooperativeLevel();
 		if (hr != D3DERR_DEVICELOST )
-		{	DX8CALL_HRES(Reset(reinterpret_cast<D3DPRESENT_PARAMETERS *>(&_PresentParameters)),hr)
-			if (hr != D3D_OK)
+		{	hr = ((BfmeDx8Device *)_Get_D3D_Device8())->Reset(&_PresentParameters);
+			number_of_DX8_calls++;
+			Rva013411E8Dx8Errors++;
+			if (hr != D3D_OK) {
+				// Report the failure once the run of them gets long.
+				StringClass s("Device reset failed: ");
+				s += DXGetErrorString9A(hr);
+				s += "\n";
+				if (Rva013411E8Dx8Errors >= 50) {
+					Rva013411E8Dx8Errors = 0;
+					_bfme_debugRecordCallsite(1);
+					TheBfmeAwakenDebug->slot60();
+					TheBfmeAwakenDebug->slot6C(0,0)->slot38(
+						"Direct3D device reset failed after multiple attempts")->slot4C(1);
+				}
 				return false;	//reset failed.
+			}
 		}
 		else
 			return false;	//device is lost and can't be reset.
 
+		Rva013411E8Dx8Errors = 0;
 		if (reload_assets)
 		{
-			DX8TextureManagerClass::Recreate_Textures();
+			// Re-acquire every texture the registry holds.
+			Rva009EBBC0(0x544558);
+			Gen_0090DB10 reacquired;
+			for (;;) {
+				has_texture = (reacquired = Rva009EBDC0()) != 0;
+				if (has_texture)
+					((BfmeOwnBR *)&reacquired)->bfmeRunBR();
+				if (!has_texture)
+					break;
+			}
 			if (m_pCleanupHook) {
 				m_pCleanupHook->ReAcquireResources();
 			}
+			// BFME runs the mesh renderer's second reset step INSIDE the
+			// reload_assets scope: retail's `je 0x385` at +0x02f8 skips it
+			// along with the re-acquire walk, and the local's release at
+			// +0x0374 comes after the call, not before it.
+			dx8_mesh_renderer<Gen_00944c40>()->m();
 		}
 		Invalidate_Cached_Render_States();
 		Set_Default_Global_Render_States();
-		SHD_INIT_SHADERS;
 		WWDEBUG_SAY(("Device reset completed\n"));
 		return true;
 	}

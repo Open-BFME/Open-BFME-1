@@ -69,7 +69,14 @@ public:
 
 #pragma comment(linker, "/alternatename:?d_008f7990@BfmeThingCDE@@QAEXXZ=?d_008f7990@@YAXXZ")
 #pragma comment(linker, "/alternatename:?d_008f7ec0@BfmeThingCDE@@QAEXXZ=?d_008f7ec0@@YAXXZ")
-#pragma comment(linker, "/alternatename:?ArrayDeleteHelperBodyThunk@@YGXPAXII0@Z=?ArrayDeleteHelperBodyThunk@@YAXXZ")
+// 0x009F6D76 is the MSVC 7.1 CRT's own array-destruction helper, published by
+// libc.lib's ..\build\intel\st_obj\ehvecdtr.obj under the reserved front-end
+// name ??_M@YGXPAXIHP6EX0@Z@Z (see
+// targets/game/reverse/identity_evidence/009f6d76-eh-vector-destructor-iterator.md).
+// The call below already pushes its four stack arguments in that function's
+// order -- base, element size, count, element destructor -- so the alternatename
+// resolves the local spelling onto the real library symbol.
+#pragma comment(linker, "/alternatename:?ArrayDeleteHelperBodyThunk@@YGXPAXII0@Z=??_M@YGXPAXIHP6EX0@Z@Z")
 
 void __stdcall ArrayDeleteHelperBodyThunk(void *, unsigned, unsigned, void *);
 extern void __cdecl operator delete[](void *);

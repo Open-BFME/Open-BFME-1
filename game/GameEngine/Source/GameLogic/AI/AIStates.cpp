@@ -9468,6 +9468,7 @@ AsciiString AIHuntState::getName(  ) const
 //----------------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AIHuntState_update_Thunk.cpp
 // ?update@AIHuntState@@UAE?AW4StateReturnType@@XZ present-unmatched
+
 StateReturnType AIHuntState::update()
 {
 
@@ -9499,16 +9500,16 @@ StateReturnType AIHuntState::update()
 
 		// Check if team auto targets same victim.
 		Object* teamVictim = NULL;
-		if (owner->getTeam()->getPrototype()->getTemplateInfo()->m_attackCommonTarget) 
+		if (owner->getTeam()->getPrototype()->getTemplateInfo()->m_attackCommonTarget)
 		{
 			teamVictim = owner->getTeam()->getTeamTargetObject();
 		}
 		Object* victim = NULL;
-		if (teamVictim && info==NULL) 
+		if (teamVictim && info==NULL)
 		{
 			victim = teamVictim;
-		} 
-		else 
+		}
+		else
 		{
 			// do NOT do line of sight check - we want to find everything
 			victim = TheAI->findClosestEnemy( owner, 9999.9f, AI::CAN_ATTACK, info );
@@ -9516,7 +9517,7 @@ StateReturnType AIHuntState::update()
 				// If we are doing an all hunt, try hunting without the attack priority info. jba.
 				victim = TheAI->findClosestEnemy(owner, 9999.9f, AI::CAN_ATTACK, NULL);
 			}
-			if (owner->getTeam()->getPrototype()->getTemplateInfo()->m_attackCommonTarget) 
+			if (owner->getTeam()->getPrototype()->getTemplateInfo()->m_attackCommonTarget)
 			{
 				// Check priorities.
 				if (teamVictim && info) {
@@ -9540,7 +9541,7 @@ StateReturnType AIHuntState::update()
 		}
 		m_huntMachine->setGoalObject( victim );
 
-		if (m_huntMachine->getCurrentStateID() == AI_IDLE && victim)	
+		if (m_huntMachine->getCurrentStateID() == AI_IDLE && victim)
 		{
 			m_huntMachine->setState( AI_ATTACK_OBJECT );
 		}
@@ -9552,9 +9553,9 @@ StateReturnType AIHuntState::update()
 		}
 	}
 
-	getMachine()->lock("AIHuntState::update");	// The idle state in the sub machine can sometimes acquire targets. 
-												// It is important to not switch out of this state via a sub machine call. jba.
-	/* 
+	getMachine()->lock("AIHuntState::update");	// The idle state in the sub machine can sometimes acquire targets.
+																	// It is important to not switch out of this state via a sub machine call. jba.
+	/*
 		Note the use of CONVERT_SLEEP_TO_CONTINUE; even if the sub-machine
 		sleeps, we still need to be called every frame.
 	*/

@@ -1,6 +1,64 @@
 // ?update@AIHuntState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.45 date=2026-09-10
+// partial score=0.85 date=2026-09-27
+// (previous bank: 0.76, shape 0.965, 11 structural diffs)
 // cl: /DNDEBUG /MD /EHsc
+//
+// Retail AIHuntState::update at 0x0017E480 (800 bytes).  Identity: AIHuntState vtable
+// 0x01098330 slot 6, ILT thunk 0x00413CDC -> 0x0017E480; ctor 0x00171820 installs the
+// vtable.  tools/callees.py 0x0017E480 800: 14 direct targets, 0 unnamed.
+//
+// This bank probes at ours=798 retail=800, 404 differing non-relocation bytes,
+// shape 0.990 with only THREE structural differences left:
+//
+//   1. Callee-saved allocation.  Retail {edi=this, ebp=owner, ebx=info/bool,
+//      esi=the rotating call-result pointer} and pushes all four in the prologue.
+//      Ours allocates {esi=this, ebp=owner, ebx=info/bool, edi=the call-result
+//      pointer} and MSVC 7.1 SINKS the `push edi` to +0x10.  Everything else is a
+//      pure ESI/EDI mirror of retail, so this one swap is ~380 of the 404 bytes.
+//      Measured NOT reachable by: `register` on any of the 11 body locals
+//      (12 combinations), hoisting every declaration to the top of the body,
+//      huntGoal/teamVictim/victim/info/crate aliases, a `register AIHuntState
+//      *self = this` alias, a __forceinline helper for the goal-sync block,
+//      Int-vs-Bool scan/status flags, and tools/rotation_sweep.py (51 toggles,
+//      best -4 bytes).  Cross-checked against the two landed, byte-exact siblings
+//      ?update@AIAttackAreaState@@ (0x0017E900, this->ESI) and
+//      ?update@AIHarvestPrepareSiteState@@ (0x00160050, this->EDI): MSVC 7.1 hands
+//      the implicit `this` the LAST free callee-saved register, and retail here
+//      left EDI for it.  See build/HUNT_0x0017E480_NOTES.md.
+//   2. Retail materialises the goal-changed test at +0x28d/+0x290 as
+//      `cmp esi,ebx; setne al; test al,al; je` where we emit `cmp ebx,edi; je`.
+//      20 spellings tried (Bool/int/unsigned-char temp at top level and in an
+//      inner scope, !(a==b), swapped operands, (Bool)/bool casts, a __forceinline
+//      helper, an inline second getGoalObject(), a volatile qualifier, an &&
+//      chain, if (x == true)): MSVC 7.1 folds all of them.  5 bytes.
+//   3. Size: 798 vs 800.
+//
+// Everything else is decoded and reproduced, including three things the earlier
+// banks had wrong:
+//
+//   * The hunt goal and the team victim are SEPARATE variables that share one
+//     stack slot.  Retail zeroes [esp+0x10] at +0x1aa, before the
+//     attackCommonTarget branch, and re-reads the flag from
+//     owner->getTeam()->getPrototype() at +0x21b rather than caching it: caching
+//     it in a `Bool` local adds `mov byte ptr [esp+0x13],al` and a frame slot.
+//   * The goal-changed block TAIL-MERGES its setState(AI_ATTACK_OBJECT) with the
+//     idle branch's: one call at +0x2b7 reached by `jmp 0x2b7` from +0x2a8 and
+//     by fallthrough from +0x2b5.  The `goto scanned` spelling is what makes
+//     MSVC 7.1 emit the single call; the if/else-if spelling duplicates it.
+//     Retail therefore really does force ATTACK_OBJECT when the hunt goal
+//     CHANGED, and only tests isIdle/victim when it did not.
+//   * teamVictimPriority is stored to the `now` stack slot at +0x24f and compared
+//     against 0 at +0x268, so it is the if/else form, not the ternary the
+//     earlier bank used.
+//
+// Faithful but unproven ABI spellings (unchanged from the previous bank, no
+// better evidence exists in this body): StateMachine slot +0x20 setState,
+// +0x38 setGoalObject, +0x40 the lock byte; State slot +0x34 the idle predicate
+// (AIAttackAreaState's landed body proves +0x20/+0x38/+0x40 on the same class);
+// updateStateMachine at StateMachine +0x10; Object +0x04 template, +0x90 status,
+// +0x1fc contain module, +0x204 AI update, +0x23c team; AIUpdate +0x70
+// attack info and slot +0x130; TeamPrototype +0x1c2 attackCommonTarget; Player
+// +0x29d unitsShouldHunt.
 //
 // Retail AIHuntState::update at 0x0017E480 (800 bytes).  The BFME state
 // machine stores goal IDs at +0x20 and resolves them through the game-logic
@@ -201,7 +259,7 @@ public:
 
 class AI;
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 extern AI *TheAI;
 
 extern void j_0000e570(void);
@@ -381,13 +439,37 @@ static __forceinline Bool bfmeIsIdle(BfmeStateMachine *machine)
 	return (reinterpret_cast<BfmeIdleCall *>(machine)->*fn.member)();
 }
 
-class AIHuntState
+struct BfmeStateIDCall
+{
+	UnsignedInt call();
+};
+
+static __forceinline UnsignedInt bfmeGetCurrentStateID(BfmeStateMachine *machine)
+{
+	typedef UnsignedInt (BfmeStateIDCall::*Function)();
+	union { void (*raw)(void); Function member; } fn;
+	fn.raw = j_0002dd2b;
+	return (reinterpret_cast<BfmeStateIDCall *>(machine)->*fn.member)();
+}
+
+class BfmeStateBaseView
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot04() = 0;
+	virtual void slot08() = 0;
+	virtual void slot0c() = 0;
+	virtual StateReturnType onEnter() = 0;
+
+	unsigned char m_fields04[0x18];
+	BfmeStateMachine *m_machine;
+};
+
+class AIHuntState : public BfmeStateBaseView
 {
 public:
 	virtual StateReturnType update();
 
-	unsigned char m_fields04[0x18];
-	BfmeStateMachine *m_machine;
 	unsigned char m_fields20[4];
 	BfmeStateMachine *m_huntMachine;
 	UnsignedInt m_nextEnemyScanTime;
@@ -397,36 +479,33 @@ public:
 StateReturnType AIHuntState::update()
 {
 	register Object *contained;
-	register AIHuntState *self = this;
-	if (self->m_machine->m_goalObjectID != 0
-		&& self->m_huntMachine->m_goalObjectID
-			!= self->m_machine->m_goalObjectID)
+	if (m_machine->m_goalObjectID != 0
+		&& m_huntMachine->m_goalObjectID != m_machine->m_goalObjectID)
 	{
-		Object *goal = bfmeGetGoalObject(self->m_machine);
+		Object *goal = bfmeGetGoalObject(m_machine);
 		if (goal == 0)
 		{
-			self->m_machine->setGoalObject(0);
+			m_machine->setGoalObject(0);
 		}
 		else
 		{
-			self->m_huntMachine->setGoalObject(goal);
-			BfmeCurrentState *current = self->m_huntMachine->m_currentState;
+			m_huntMachine->setGoalObject(goal);
+			BfmeCurrentState *current = m_huntMachine->m_currentState;
 			if (current == 0 || current->m_id != 0)
 			{
 			}
 			else
 			{
-				self->m_huntMachine->setState(BFME_AI_ATTACK_OBJECT);
+				m_huntMachine->setState(BFME_AI_ATTACK_OBJECT);
 			}
-			self->m_nextEnemyScanTime = TheBfmeGameLogic->m_frame + 15;
+			m_nextEnemyScanTime = TheGameLogic->m_frame + 15;
 		}
 	}
 
-	BfmeStateMachine *machine = self->m_machine;
-	Object *owner = machine->m_owner;
-	UnsignedInt now = TheBfmeGameLogic->m_frame;
-	Bool statusBit = (owner->m_status & 0x10000000) != 0;
-	Object *teamVictim = bfmeGetGoalObject(self->m_huntMachine);
+	UnsignedInt now = TheGameLogic->m_frame;
+	Object *owner = m_machine->m_owner;
+	register Bool statusBit = (owner->m_status & 0x10000000) != 0;
+	Object *huntGoal = bfmeGetGoalObject(m_huntMachine);
 
 	ThingTemplate *ownerTemplate = owner->m_template;
 	if (ownerTemplate != 0 && ownerTemplate->m_nextOverride != 0)
@@ -440,11 +519,10 @@ StateReturnType AIHuntState::update()
 		if (contain != 0)
 		{
 			contained = contain->slot26();
-			if (contained != 0 && teamVictim != 0
-				&& !bfmeIsKindOf(teamVictim, 7))
+			if (contained != 0 && huntGoal != 0
+				&& !bfmeIsKindOf(huntGoal, 7))
 			{
-				Bool query = ((BfmeContainedQuery *)contained)->slot76(teamVictim);
-				if (query)
+				if (((BfmeContainedQuery *)contained)->slot76(huntGoal))
 					goto update_state_machine;
 			}
 		}
@@ -452,7 +530,7 @@ StateReturnType AIHuntState::update()
 
 	if (statusBit)
 		goto update_state_machine;
-	if (now < self->m_nextEnemyScanTime)
+	if (now < m_nextEnemyScanTime)
 		goto update_state_machine;
 
 	if (bfmeNoArgBool(owner) && !bfmeIsKindOf(owner, 0x19))
@@ -462,25 +540,24 @@ StateReturnType AIHuntState::update()
 	Object *crate = bfmeCheckForCrate(ai);
 	if (crate != 0)
 	{
-		self->m_huntMachine->setGoalObject(crate);
-		self->m_huntMachine->setState(BFME_AI_PICK_UP_CRATE);
+		m_huntMachine->setGoalObject(crate);
+		m_huntMachine->setState(BFME_AI_PICK_UP_CRATE);
 		return STATE_CONTINUE;
 	}
 
-	Bool scan = ai->isGiantBird();
-	if (!scan)
+	register Int scan = 1;
+	if (ai->isGiantBird())
 	{
-		BfmeCurrentState *current = self->m_huntMachine->m_currentState;
-		if (current == 0 || current->slot34() || bfmeIsIdle(self->m_huntMachine))
-			scan = true;
+		BfmeCurrentState *current = m_huntMachine->m_currentState;
+		if (current != 0 && !current->slot34() && !bfmeIsIdle(m_huntMachine))
+			scan = 0;
 	}
+	m_nextEnemyScanTime = now + 15;
 	if (!scan)
-	{
-		self->m_nextEnemyScanTime = now + 15;
 		goto update_state_machine;
-	}
 
 	const AttackPriorityInfo *info = ai->m_attackInfo;
+	Object *teamVictim = 0;
 	if (owner->m_team->m_prototype->m_attackCommonTarget)
 		teamVictim = bfmeGetTeamTarget(owner->m_team);
 
@@ -507,8 +584,11 @@ StateReturnType AIHuntState::update()
 				if (victim == 0)
 					victim = teamVictim;
 				Int teamPriority = bfmeGetPriority(info, bfmeGetTemplate(teamVictim));
-				Int victimPriority = victim != 0
-					? bfmeGetPriority(info, bfmeGetTemplate(victim)) : 0;
+				Int victimPriority;
+				if (victim != 0)
+					victimPriority = bfmeGetPriority(info, bfmeGetTemplate(victim));
+				else
+					victimPriority = 0;
 				if (teamPriority >= victimPriority)
 					victim = teamVictim;
 			}
@@ -516,20 +596,30 @@ StateReturnType AIHuntState::update()
 		}
 	}
 
-	Object *oldGoal = bfmeGetGoalObject(self->m_huntMachine);
+	Object *oldGoal = bfmeGetGoalObject(m_huntMachine);
 	if (oldGoal != victim)
 	{
-		self->m_huntMachine->setGoalObject(victim);
+		m_huntMachine->setGoalObject(victim);
 		if (oldGoal == 0)
 			bfmePlayAttackVoice(ai, victim);
 	}
-	if (bfmeIsIdle(self->m_huntMachine) && victim != 0)
-		self->m_huntMachine->setState(BFME_AI_ATTACK_OBJECT);
+	else if (!(bfmeIsIdle(m_huntMachine) && victim != 0))
+	{
+		goto scanned;
+	}
+
+	m_huntMachine->setState(BFME_AI_ATTACK_OBJECT);
+scanned:
+
+	if (bfmeGetControllingPlayer(owner) != 0 &&
+		!bfmeGetControllingPlayer(owner)->m_unitsShouldHunt &&
+		bfmeGetCurrentStateID(m_huntMachine) == 0 && victim == 0)
+		return STATE_SUCCESS;
 
 update_state_machine:
-	self->m_machine->m_locked = true;
+	m_machine->m_locked = true;
 	StateReturnType result =
-		((BfmeStateMachineUpdate *)self->m_huntMachine)->updateStateMachine();
-	self->m_machine->m_locked = false;
+		((BfmeStateMachineUpdate *)m_huntMachine)->updateStateMachine();
+	m_machine->m_locked = false;
 	return result > STATE_CONTINUE ? STATE_CONTINUE : result;
 }
