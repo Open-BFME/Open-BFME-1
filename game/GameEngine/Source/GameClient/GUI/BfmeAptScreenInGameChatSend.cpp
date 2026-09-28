@@ -1,4 +1,6 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+#include <vector>
 //
 // BfmeAptScreenInGameChat::_bfme_send, retail 0x00514000, 778 bytes. The Apt
 // selector table registers this body under "AptInGameChat::Send", which is
@@ -209,6 +211,9 @@ class BfmeAptScreenInGameChat
 {
 public:
 	void _bfme_send( const char *name );
+	void rva00513E70( const char *name );
+	Int rva00513BF0( GameWindow *list, void *selected, Int buddyMask,
+		Bool skipStatusFilter );
 
 private:
 	unsigned char m_unmodelled000[ 0x258 ];
@@ -218,6 +223,7 @@ private:
 	Int m_chatMode;
 	// named by game/GameEngine/Source/GameClient/GUI/BfmeAptScreenInGameChatInitGadgets.cpp
 	GameWindow *m_chatEntry;
+	GameWindow *m_friendsList;
 };
 
 UnicodeString GadgetTextEntryGetText( GameWindow *textEntry );
@@ -296,4 +302,33 @@ void BfmeAptScreenInGameChat::_bfme_send( const char *name )
 	}
 
 	m_rva0258 = 2;
+}
+
+extern void j_0002a112();
+
+// AptInGameChat::Send at 0x00514000 calls this method through ILT 0x000084DB
+// when chat mode is 3. InitGadgets identifies the fields at +0x260 and +0x264 as
+// the chat entry and friends list. No selector names this helper, so its RVA
+// remains in the method name.
+void BfmeAptScreenInGameChat::rva00513E70( const char *name )
+{
+	UnicodeString msg;
+	msg.set( GadgetTextEntryGetText( m_chatEntry ) );
+	GadgetTextEntrySetText( m_chatEntry, UnicodeString::TheEmptyString );
+	msg.trim();
+	if( !msg.isEmpty() )
+	{
+		std::vector<Int> selected;
+		if( rva00513BF0( m_friendsList, &selected, 1, false ) > 0 )
+		{
+			typedef void (__cdecl *SendSelected)( const WideChar *, std::vector<Int> * );
+			union
+			{
+				void (__cdecl *freeFunction)();
+				SendSelected call;
+			} send;
+			send.freeFunction = ::j_0002a112;
+			( send.call )( msg.str(), &selected );
+		}
+	}
 }
