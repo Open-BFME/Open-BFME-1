@@ -1,6 +1,8 @@
 // ?updateObjectReference@BfmeObjectReferenceStore@@QAEXPAVObject@@_N@Z
-// partial score=0.85 date=2026-09-08
+// partial score=0.8561 date=2026-09-08
 // cl: /DNDEBUG /MD /EHsc
+// Reprobe 2026-09-28: exact 264B extent, 38 non-reloc differences and one
+// relocation-site drift; normalized shape 0.947, with a prologue register swap.
 
 typedef bool Bool;
 typedef unsigned short UnsignedShort;
