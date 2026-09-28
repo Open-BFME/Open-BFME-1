@@ -9008,5 +9008,55 @@
   "after_sha256": "45559dfb067901ba083df40708d3abd8c1f3400ce07759efd1d63c4e88e54671",
   "evidence": "targets/game/reverse/identity_evidence/002ad670-stealth-step.md",
   "reason": "False pairing: the guessed RvaStealthUpdate shim was replaced by the real StealthUpdate class; Rva00260180SelfFilter is an unrelated matched filter class."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f0960.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001f0960.cpp",
+  "old_name": "BfmeWideResult",
+  "new_name": "Rva0025ED50WideResult",
+  "before_sha256": "12472a89d9a3a4f700cafb36f769fdd05436b37ec2e38ebb267c2b61114f537e",
+  "after_sha256": "63e10e8e500b4bec36c538413342ee161c89e1c89cb1c15c560f97df9ff8bb2c",
+  "evidence": "targets/game/reverse/identity_evidence/001f0960-filter-model.md",
+  "reason": "The iterate result is the owning result type the matched Rva002113A0NearbyObjects model names Rva0025ED50WideResult."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f0960.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001f0960.cpp",
+  "old_name": "ProjectileObjectFilter",
+  "new_name": "Rva0025ED50ObjectFilter",
+  "before_sha256": "12472a89d9a3a4f700cafb36f769fdd05436b37ec2e38ebb267c2b61114f537e",
+  "after_sha256": "63e10e8e500b4bec36c538413342ee161c89e1c89cb1c15c560f97df9ff8bb2c",
+  "evidence": "targets/game/reverse/identity_evidence/001f0960-filter-model.md",
+  "reason": "Vtable 0x01085DD0 is ??_7Rva0025ED50ObjectFilter@@6B@ in the retail image and matched filter TUs."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f0960.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001f0960.cpp",
+  "old_name": "ProjectileOwnerFilter",
+  "new_name": "Rva0025ED50RootFilter",
+  "before_sha256": "12472a89d9a3a4f700cafb36f769fdd05436b37ec2e38ebb267c2b61114f537e",
+  "after_sha256": "63e10e8e500b4bec36c538413342ee161c89e1c89cb1c15c560f97df9ff8bb2c",
+  "evidence": "targets/game/reverse/identity_evidence/001f0960-filter-model.md",
+  "reason": "Vtable 0x01083B80 is ??_7Rva0025ED50RootFilter@@6B@ in the retail image and matched filter TUs."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f0960.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001f0960.cpp",
+  "old_name": "ProjectileOwnerFilter",
+  "new_name": "Rva0025ED50WideResult",
+  "before_sha256": "12472a89d9a3a4f700cafb36f769fdd05436b37ec2e38ebb267c2b61114f537e",
+  "after_sha256": "63e10e8e500b4bec36c538413342ee161c89e1c89cb1c15c560f97df9ff8bb2c",
+  "evidence": "targets/game/reverse/identity_evidence/001f0960-filter-model.md",
+  "reason": "False pairing: the invented owner filter was replaced by the matched root filter; the result type is unrelated."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f0960.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001f0960.cpp",
+  "old_name": "__declspec",
+  "new_name": "Rva0025ED50RootFilter",
+  "before_sha256": "12472a89d9a3a4f700cafb36f769fdd05436b37ec2e38ebb267c2b61114f537e",
+  "after_sha256": "63e10e8e500b4bec36c538413342ee161c89e1c89cb1c15c560f97df9ff8bb2c",
+  "evidence": "targets/game/reverse/identity_evidence/001f0960-filter-model.md",
+  "reason": "False pairing: __declspec was an attribute on the old fake constructors, not a type."
  }
 ]

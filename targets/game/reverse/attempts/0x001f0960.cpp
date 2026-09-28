@@ -1,458 +1,416 @@
-// ?d_001f0960@@YAXXZ
-// partial score=0.45 date=2026-09-26
-// cl: /DNDEBUG /DWIN32 /MD /O2 /Ob2 /EHsc /D_STLP_USE_STATIC_LIB
+// ?update@BezierProjectileBehavior@@UAE?AW4UpdateSleepTime@@XZ
+// partial score=0.966 date=2026-09-28
+// cl: /DNDEBUG /DWIN32 /MD /O2 /Ob2 /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
-// BezierProjectileBehavior::update, retail 0x001F0960 size 1733.
-// Identity: calls calcFlightPath ILT 0x00021BD9, projectileFire 0x001F00A0,
-// getAimPosition, Inv_Sqrt, buildTransformMatrix, setPosition/setLayer,
-// getHighestLayerForDestination. ecx is the UpdateModuleInterface this
-// (module+0x10): [this-0xC] module data, [this-8] Object*, vector at +0x34
-// (dtor-proven 12-byte flight path at module+0x44), step at +0x60.
-// ZH twin is DumbProjectileBehavior::update; BFME adds a model-condition
-// burst, victim-aim path adjust via getAimPosition, and an extra pos at
-// Object+0x178.
-// Reconstructed the formerly fake WideGuard path: owner/default/object
-// PartitionFilter chain, spatial query, and condition update of nearby objects.
-// Current probe: 1569/1733 bytes, frame 0x80 vs retail 0x6c, 1324
-// non-relocation differences and 42 relocation-layout mismatches. The
-// independent aim-output local now copies from getAimPosition's returned
-// pointer, and x87 squared-sum order follows the retail arithmetic.
+// BezierProjectileBehavior::update, retail 0x001F0960, 1733 bytes.
+//
+// Zero Hour twin DumbProjectileBehavior::update (BFME renamed the behavior):
+// detonate past the end of the flight path, retarget a moving victim through
+// calcFlightPath, orient along or snap to the flight path, and detonate on a
+// bridge drop. BFME adds a model-condition burst (ModuleData+0x3C frames before
+// the end: a debug icon when GlobalData+0xEC8 is set, then a partition query
+// over three temporary filters that applies ModuleData+0xA4 to everything in
+// ModuleData+0xA8), a 0.5-height victim-contact check through the projectile
+// interface at +0x20, and the next-position hint at Object+0x178.
+// `this` is the UpdateModuleInterface subobject (module+0x10), as for every
+// update() override. Member offsets follow the matched constructor
+// 0x001F1470 and xfer 0x001F1860; the filter and result model follows the
+// matched Rva002113A0NearbyObjects.cpp, with the relationship filter built by
+// its real out-of-line constructor 0x000EC770.
 
+#define _STLP_USE_STATIC_LIB 1
 #define _STLP_NO_EXCEPTIONS 1
-#include <vector>
+#define __PLACEMENT_VEC_NEW_INLINE
 #include <math.h>
+#include "vector3.h"
+#include "matrix3d.h"
+#include <vector>
 
+typedef int Int;
+typedef unsigned int UnsignedInt;
 typedef float Real;
 typedef bool Bool;
-typedef int Int;
-typedef int ObjectID;
+typedef unsigned int ObjectID;
 
 enum UpdateSleepTime
 {
+	UPDATE_SLEEP_INVALID = 0,
 	UPDATE_SLEEP_NONE = 1,
 	UPDATE_SLEEP_FOREVER = 0x3fffffff
 };
 
 enum PathfindLayerEnum
 {
+	LAYER_INVALID = 0,
 	LAYER_GROUND = 1
 };
 
-extern const Real BfmeZeroRange;
-extern const Real g_bfmeScaleBK;
-extern const Real g_bfmeADL;
-extern const Real g_bfmeFudge2;
-extern const Real g_bfmeTumbleScale;
+enum IterOrderType
+{
+	ITER_FASTEST = 0,
+	ITER_SORTED_NEAR_TO_FAR = 1
+};
 
 struct Coord3D
 {
-	Real x;
-	Real y;
-	Real z;
-
-	void normalize();
+	Real x, y, z;
 	Real length() const;
-};
-
-struct Vector3
-{
-	Real x;
-	Real y;
-	Real z;
-};
-
-class Matrix3D
-{
-public:
-	void buildTransformMatrix(const Vector3 &pos, const Vector3 &dir);
-
-private:
-	Real m[12];
-};
-
-class WWMath
-{
-public:
-	static Real __fastcall Inv_Sqrt(Real value);
+	void normalize();
+	void sub(const Coord3D *a) { x -= a->x; y -= a->y; z -= a->z; }
+	void scale(Real k) { x *= k; y *= k; z *= k; }
 };
 
 class GeometryInfo
 {
 public:
 	Real getMaxHeightAbovePosition() const;
-
-private:
-	char m_pad[0x10];
+	unsigned char m_pad00[0x10];
+	Real m_boundingSphereRadius;			// +0x10
 };
 
-class Thing
+class Object
 {
 public:
-	virtual void slot00();
-	void setTransformMatrix(const Matrix3D *mtx);
+	void setTransformMatrix(const Matrix3D *mtx);	// Thing 0x00132200
 	void setPosition(const Coord3D *pos);
-};
-
-class Object : public Thing
-{
-public:
 	Int getLayer() const;
 	void setLayer(PathfindLayerEnum layer);
-	void applySpecialModelCondition(Int condition, Object *source, Int enabled);
-	void applyOwnerNotify();
+	void notifyModelConditionChanged();
+	void bfmeApplySpecialModelCondition(Int condition, const void *source, Int mode);
 
-	char m_pad04[0x38 - 4];
-	Coord3D m_position;
-	char m_pad44[0xAC - 0x44];
-	GeometryInfo m_geom;
-	Real m_radius;
-	char m_padC0[0x120 - 0xC0];
-	unsigned m_status120;
-	char m_pad124[0x178 - 0x124];
-	Coord3D m_extraPos;
-	char m_pad184[0x186 - 0x184];
-	unsigned char m_extraFlag;
+	unsigned char m_pad000[0x38];
+	Coord3D m_position;				// +0x38
+	unsigned char m_pad044[0xac - 0x44];
+	GeometryInfo m_geometryInfo;			// +0xAC
+	unsigned char m_padc0[0x120 - 0xc0];
+	UnsignedInt m_modelConditionBits;		// +0x120
+	unsigned char m_pad124[0x178 - 0x124];
+	Coord3D m_extraPos;				// +0x178
+	unsigned char m_pad184[2];
+	Bool m_at186;					// +0x186
+
+	void setExtraPos(const Coord3D &pos) { m_at186 = true; m_extraPos = pos; }
+	const Coord3D *getPosition() const { return &m_position; }
 };
 
 class WeaponTemplate
 {
 public:
-	Coord3D *getAimPosition(Coord3D *out, const Object *proj, const Object *victim, Int flag);
+	Coord3D *getAimPosition(Coord3D *out, const Object *source, const Object *victim, Int mode);
 };
 
 class GameLogic
 {
 public:
-	Object *findObjectByID(ObjectID id);
+	Object *findObjectByID(Int id);
 };
+extern GameLogic *TheGameLogic;
 
 class TerrainLogic
 {
 public:
-	virtual void v00();
-	virtual void v01();
-	virtual void v02();
-	virtual void v03();
-	virtual void v04();
-	virtual void v05();
-	virtual Real getGroundHeight(Real x, Real y, Int extra);
-	virtual Real getLayerHeight(Real x, Real y, PathfindLayerEnum layer, Int extra, Int extra2);
-
+	virtual void v00(); virtual void v04(); virtual void v08(); virtual void v0C();
+	virtual void v10(); virtual void v14();
+	virtual Real getGroundHeight(Real x, Real y, Coord3D *normal);			// +0x18
+	virtual Real getLayerHeight(Real x, Real y, Int layer, Coord3D *normal, Bool clip);	// +0x1C
 	PathfindLayerEnum getHighestLayerForDestination(const Coord3D *pos, Bool onlyHealthyBridges);
 };
+extern TerrainLogic *TheTerrainLogic;
 
 class View
 {
 public:
-	virtual void v00();
-	virtual void v01();
-	virtual void v02();
-	virtual void v03();
-	virtual void v04();
-	virtual void v05();
-	virtual void v06();
-	virtual void v07();
-	virtual void v08();
-	virtual void v09();
-	virtual void v10();
-	virtual void v11();
-	virtual void addDebugIcon(const Coord3D *pos, Int color, Int player, Int flag);
+	virtual void v00(); virtual void v04(); virtual void v08(); virtual void v0C();
+	virtual void v10(); virtual void v14(); virtual void v18(); virtual void v1C();
+	virtual void v20(); virtual void v24(); virtual void v28(); virtual void v2C();
+	virtual void addIcon(const Coord3D *pos, Real width, Int color, Int duration);	// +0x30
 };
+extern View *TheTacticalView;
 
-class GlobalData
+struct GlobalData
 {
-public:
-	char m_pad[0xEC8];
-	unsigned char m_debugProjectiles;
+	unsigned char m_pad000[0xec8];
+	Bool m_ec8;					// +0xEC8 debug icon switch
 };
+extern GlobalData *TheWritableGlobalData;
 
-class BezierProjectileBehaviorModuleData
-{
-public:
-	char m_pad00[0x3C];
-	Int m_fxLeadSteps;
-	char m_pad40[0x48 - 0x40];
-	unsigned char m_tumbleRandomly;
-	unsigned char m_orientToFlightPath;
-	char m_pad4A[0x84 - 0x4A];
-	Real m_flightPathAdjustDistPerFrame;
-	char m_pad88[0xA4 - 0x88];
-	Int m_modelCondition;
-	Int m_debugPlayer;
-};
-
-class Gen_001EFCE0
-{
-public:
-	int bfmeCost() const;
-};
-
-struct WideResultEntry
-{
-	Object *object;
-	int unknown;
-};
-
-struct WideResultData
-{
-	_STL::vector<WideResultEntry> entries;
-	WideResultEntry *cursor;
-	int references;
-};
-
-struct BfmeWideResult
-{
-	WideResultData *value;
-	~BfmeWideResult();
-};
-
-#pragma comment(linker, "/alternatename:??1BfmeWideResult@@QAE@XZ=?j_0002c471@@YAXXZ")
-
+// ---- partition filters and the owning result (Rva002113A0NearbyObjects.cpp) ----
 class PartitionFilter
 {
 public:
-	PartitionFilter *link(PartitionFilter *);
-	volatile unsigned vptr;
-	PartitionFilter *next;
+	PartitionFilter() : m_next(0) {}
+	virtual ~PartitionFilter() {}
+	virtual Bool allow(Object *) = 0;
+	virtual int getPlayerMask();
+
+	PartitionFilter *link(PartitionFilter *next);
+
+	PartitionFilter *m_next;
 };
 
-class ProjectileObjectFilter : public PartitionFilter
+class Rva0025ED50ObjectFilter : public PartitionFilter
 {
 public:
-	ProjectileObjectFilter(Object *object)
+	explicit Rva0025ED50ObjectFilter(Object *object) : m_object(object) {}
+	virtual ~Rva0025ED50ObjectFilter() {}
+	virtual Bool allow(Object *);
+
+	Object *m_object;
+};
+
+class PartitionFilterRelationship : public PartitionFilter
+{
+public:
+	PartitionFilterRelationship(const Object *obj, Int flags, Bool match) throw();	// 0x000EC770
+	virtual ~PartitionFilterRelationship() {}
+	virtual Bool allow(Object *);
+	virtual int getPlayerMask();
+
+	const Object *m_obj;
+	Int m_flags;
+	Bool m_match;
+};
+
+class Rva0025ED50RootFilter : public PartitionFilter
+{
+public:
+	Rva0025ED50RootFilter() {}
+	virtual ~Rva0025ED50RootFilter() {}
+	virtual Bool allow(Object *);
+};
+
+struct Rva0025ED50Entry
+{
+	Object *object;
+	UnsignedInt unknown04;
+};
+
+struct Rva0025ED50ResultData
+{
+	std::vector<Rva0025ED50Entry> entries;
+	Rva0025ED50Entry *current;
+	Int references;
+};
+
+struct Rva0025ED50WideResult
+{
+	Rva0025ED50ResultData *value;
+
+	Rva0025ED50WideResult();
+	Rva0025ED50WideResult(const Rva0025ED50WideResult &);
+	~Rva0025ED50WideResult()
 	{
-		next = 0;
-		vptr = 0x1085DD0;
-		data = object;
+		if (--value->references == 0)
+			delete value;
 	}
-	~ProjectileObjectFilter() { vptr = 0x1083B5C; }
-	Object *data;
-};
 
-class ProjectileDefaultFilter : public PartitionFilter
-{
-public:
-	ProjectileDefaultFilter()
+	Object *next(Object *&object)
 	{
-		next = 0;
-		vptr = 0x1083B80;
+		if (value->current == value->entries.end())
+			return 0;
+		object = (value->current++)->object;
+		return object;
 	}
-	~ProjectileDefaultFilter() { vptr = 0x1083B5C; }
 };
 
-class ProjectileOwnerFilter : public PartitionFilter
+class PartitionManager
 {
 public:
-	__declspec(noinline) ProjectileOwnerFilter(Object *object, int mode, bool flag);
-	~ProjectileOwnerFilter() { vptr = 0x1083B5C; }
-	Object *data;
-	int mode;
-	bool flag;
+	Rva0025ED50WideResult iterate(const Coord3D *, Real, IterOrderType, PartitionFilter *, Bool);
+};
+extern PartitionManager *ThePartitionManager;
+
+// ---- module ----
+class ModuleData;
+
+struct BezierProjectileBehaviorModuleData
+{
+	unsigned char m_pad00[0x3c];
+	Int m_fxLeadSteps;					// +0x3C burst lead, frames before the end
+	unsigned char m_pad40[8];
+	Bool m_flag48;					// +0x48 tumble
+	Bool m_enabled;					// +0x49 orient to flight path
+	unsigned char m_pad4a[0x84 - 0x4a];
+	Real m_flightPathAdjustDistPerFrame;					// +0x84 flight path adjust distance per frame
+	unsigned char m_pad88[0xa4 - 0x88];
+	Int m_invalidA4;				// +0xA4 special model condition (-1 none)
+	Real m_valueA8;					// +0xA8 burst radius
 };
 
-class ProjectileWideForward
+class Module
 {
 public:
-	BfmeWideResult bfmeForwardWideC(int pos, int radius, int flags,
-		int filters, int include);
+	virtual ~Module() {}
+	const BezierProjectileBehaviorModuleData *m_moduleData;	// +0x04
+	Object *m_object;					// +0x08
 };
 
-extern ProjectileWideForward *ThePartitionManager;
-
-ProjectileOwnerFilter::ProjectileOwnerFilter(Object *object, int mode, bool flag)
+class BehaviorModuleInterface
 {
-	next = 0;
-	vptr = 0x1085DC0;
-	data = object;
-	this->mode = mode;
-	this->flag = flag;
-}
-
-struct FlightPod
-{
-	int a[3];
+public:
+	virtual void getBehaviorModuleInterface() = 0;
 };
 
-class CollideIface
+class UpdateModuleInterface
+{
+public:
+	virtual UpdateSleepTime update() = 0;
+};
+
+class BezierProjectileInterface
+{
+public:
+	virtual void slot00(); virtual void slot04(); virtual void slot08();
+	virtual void slot0C(Object *victim);
+};
+
+class BezierProjectileSecondary
 {
 public:
 	virtual void slot00();
-	virtual void slot04();
-	virtual void slot08();
-	virtual void handleCollision(Object *other);
 };
 
-extern GameLogic *TheBfmeGameLogic;
-extern TerrainLogic *TheTerrainLogic;
-extern View *TheTacticalView;
-extern GlobalData *TheWritableGlobalData;
+class UpdateModule : public Module, public BehaviorModuleInterface, public UpdateModuleInterface
+{
+public:
+	UnsignedInt m_nextCallFrameAndPhase;		// +0x14
+	Int m_indexInLogic;				// +0x18
+	Int m_currentUpdatePhase;			// +0x1C
+};
 
 class BezierProjectileBehavior
+	: public UpdateModule, public BezierProjectileInterface, public BezierProjectileSecondary
 {
 public:
 	virtual UpdateSleepTime update();
-
-	Bool calcFlightPath(Bool recalc);
+	Bool calcFlightPath(Bool recalcNumSegments);
 	void projectileFire();
 
-	unsigned m_nextCallFrame;
-	int m_indexInLogic;
-	unsigned m_updateState;
-	CollideIface m_collide;
-	void *m_iface24;
-	char m_pad18[0x28 - 0x18];
-	ObjectID m_victimId;
-	WeaponTemplate *m_aimWeapon;
-	char m_pad30[0x34 - 0x30];
-	_STL::vector<FlightPod> m_flightPath;
-	char m_pad40[0x4C - 0x40];
-	Coord3D m_flightPathEnd;
-	Real m_flightPathSpeed;
-	int m_flightPathSegments;
-	int m_currentFlightPathStep;
-	char m_pad64[0x74 - 0x64];
-	Real m_heightScale;
+	// 0x001EFCE0
+	UpdateSleepTime calcSleepTime() const
+	{
+		return m_flightPath.size() > 0 ? UPDATE_SLEEP_NONE : UPDATE_SLEEP_FOREVER;
+	}
+
+	ObjectID m_launcherID;				// +0x28
+	Coord3D m_at2C;					// +0x2C
+	ObjectID m_victimID;				// +0x38
+	WeaponTemplate *m_aimWeapon;				// +0x3C
+	const WeaponTemplate *m_at40;			// +0x40
+	std::vector<Coord3D> m_flightPath;		// +0x44
+	Coord3D m_flightPathStart;			// +0x50
+	Coord3D m_flightPathEnd;			// +0x5C
+	Real m_flightPathSpeed;				// +0x68
+	Int m_flightPathSegments;			// +0x6C
+	Int m_currentFlightPathStep;			// +0x70
+	UnsignedInt m_extraBonusFlags;			// +0x74
+	Int m_altCurve;					// +0x78
+	unsigned char m_at7C[4];			// +0x7C list
+	Bool m_hasDetonated;				// +0x80
+	Real m_heightScale;				// +0x84
 };
-
-static UpdateSleepTime sleepFromPathSize(Int n)
-{
-	return n ? UPDATE_SLEEP_NONE : UPDATE_SLEEP_FOREVER;
-}
-
-static BezierProjectileBehavior *complete(BezierProjectileBehavior *iface)
-{
-	return (BezierProjectileBehavior *)((char *)iface - 0x10);
-}
 
 // ?update@BezierProjectileBehavior@@UAE?AW4UpdateSleepTime@@XZ
 UpdateSleepTime BezierProjectileBehavior::update()
 {
-	BezierProjectileBehaviorModuleData *md =
-		*(BezierProjectileBehaviorModuleData **)((char *)this - 0x0C);
-	int z = 0;
-	Object *obj = *(Object **)((char *)this - 8);
-	if ((int)md == z || (int)obj == z)
+	const BezierProjectileBehaviorModuleData *d = m_moduleData;
+	Object *obj = m_object;
+	if (!d || !obj)
 		return UPDATE_SLEEP_FOREVER;
 
-	Int pathSize = (Int)m_flightPath.size();
-	if (m_currentFlightPathStep >= pathSize)
+	Int size = m_flightPath.size();
+	if (m_currentFlightPathStep >= size)
 	{
-		m_collide.handleCollision((Object *)z);
-		return sleepFromPathSize((Int)m_flightPath.size());
+		slot0C(0);
+		return calcSleepTime();
 	}
 
-	if (md->m_fxLeadSteps != z && m_currentFlightPathStep == pathSize - md->m_fxLeadSteps)
+	if (d->m_fxLeadSteps != 0 && m_currentFlightPathStep == size - d->m_fxLeadSteps)
 	{
-		if ((obj->m_status120 & 0x20000) == (unsigned)z)
+		if (!(obj->m_modelConditionBits & 0x20000))
 		{
-			obj->m_status120 |= 0x20000;
-			obj->applyOwnerNotify();
+			obj->m_modelConditionBits |= 0x20000;
+			obj->notifyModelConditionChanged();
 		}
-		if (md->m_modelCondition != -1)
+		if (d->m_invalidA4 != -1)
 		{
-			if (TheWritableGlobalData->m_debugProjectiles)
+			if (TheWritableGlobalData->m_ec8)
 			{
 				Coord3D pos;
+				pos.x = m_flightPathEnd.x;
 				pos.y = m_flightPathEnd.y;
 				pos.z = m_flightPathEnd.z;
-				pos.x = m_flightPathEnd.x;
-				pos.z = TheTerrainLogic->getGroundHeight(pos.x, pos.y, z);
-				TheTacticalView->addDebugIcon(&pos, 0xFFFF00FF, md->m_debugPlayer, z);
+				pos.z = TheTerrainLogic->getGroundHeight(pos.x, pos.y, 0);
+				TheTacticalView->addIcon(&pos, d->m_valueA8, 0xFFFF00FF, 0);
 			}
-			ProjectileObjectFilter objFilter(obj);
-			ProjectileDefaultFilter defaultFilter;
-			ProjectileOwnerFilter ownerFilter(obj, 7, false);
-			BfmeWideResult result = ThePartitionManager->bfmeForwardWideC(
-				(int)&m_flightPathEnd, md->m_debugPlayer, 1,
-				(int)ownerFilter.link(defaultFilter.link(&objFilter)), 1);
-			WideResultData *found = result.value;
-			while (found->cursor != found->entries.end())
+			Rva0025ED50WideResult iterator = ThePartitionManager->iterate(
+				&m_flightPathEnd, d->m_valueA8, ITER_SORTED_NEAR_TO_FAR,
+				PartitionFilterRelationship(obj, 7, false).link(
+					Rva0025ED50RootFilter().link(&Rva0025ED50ObjectFilter(obj))), true);
+			Object *other;
+			while (iterator.next(other))
 			{
-				Object *other = (found->cursor++)->object;
-				if (!other)
-					break;
 				if (other != obj)
-					other->applySpecialModelCondition(md->m_modelCondition, obj, 1);
+					other->bfmeApplySpecialModelCondition(d->m_invalidA4, obj, 1);
 			}
 		}
 	}
 
-	if (m_victimId != 0 && md->m_flightPathAdjustDistPerFrame > BfmeZeroRange)
+	if (m_victimID != 0 && d->m_flightPathAdjustDistPerFrame > 0.0f)
 	{
-		Object *victim = TheBfmeGameLogic->findObjectByID(m_victimId);
+		Object *victim = TheGameLogic->findObjectByID(m_victimID);
 		if (victim)
 		{
-			Coord3D aimOutput;
-			Coord3D newVictimPos = *m_aimWeapon->getAimPosition(&aimOutput, obj, victim, 1);
+			Coord3D aim;
+			Coord3D newVictimPos = *m_aimWeapon->getAimPosition(&aim, obj, victim, 1);
 			Coord3D delta;
 			delta.x = newVictimPos.x - m_flightPathEnd.x;
 			delta.y = newVictimPos.y - m_flightPathEnd.y;
 			delta.z = newVictimPos.z - m_flightPathEnd.z;
-			Real distVictimMovedSqr = delta.z * delta.z + delta.y * delta.y + delta.x * delta.x;
-			if (distVictimMovedSqr > g_bfmeScaleBK)
+			Real distVictimMovedSqr = delta.x * delta.x + delta.y * delta.y + delta.z * delta.z;
+			if (distVictimMovedSqr > 0.1f)
 			{
 				Real distVictimMoved = sqrtf(distVictimMovedSqr);
-				if (distVictimMoved > md->m_flightPathAdjustDistPerFrame)
-					distVictimMoved = md->m_flightPathAdjustDistPerFrame;
+				if (distVictimMoved > d->m_flightPathAdjustDistPerFrame)
+					distVictimMoved = d->m_flightPathAdjustDistPerFrame;
 				delta.normalize();
 				m_flightPathEnd.x += distVictimMoved * delta.x;
 				m_flightPathEnd.y += distVictimMoved * delta.y;
 				m_flightPathEnd.z += distVictimMoved * delta.z;
-				BezierProjectileBehavior *self = complete(this);
-				if (!self->calcFlightPath(false))
+				if (!calcFlightPath(false))
 				{
-					self->projectileFire();
-					return (UpdateSleepTime)((Gen_001EFCE0 *)self)->bfmeCost();
+					projectileFire();
+					return calcSleepTime();
 				}
 			}
 		}
 	}
 
-	Coord3D *begin = (Coord3D *)&m_flightPath[0];
-	Coord3D *flightStep = begin + m_currentFlightPathStep;
+	const Coord3D *flightStep = &m_flightPath[m_currentFlightPathStep];
 
-	if (md->m_orientToFlightPath && !md->m_tumbleRandomly)
+	if (d->m_enabled && !d->m_flag48)
 	{
-		Real tumble = m_heightScale * g_bfmeTumbleScale;
+		Real drop = m_heightScale * 20.0f;
 		Coord3D prevPos;
+		Coord3D curPos;
 		if (m_currentFlightPathStep > 0)
-			prevPos = begin[m_currentFlightPathStep - 1];
+			prevPos = m_flightPath[m_currentFlightPathStep - 1];
 		else
 		{
-			prevPos = begin[0];
-			prevPos.z -= tumble;
+			prevPos = m_flightPath[m_currentFlightPathStep];
+			prevPos.z -= drop;
 		}
-		Vector3 curPos;
-		if (m_currentFlightPathStep < pathSize - 1)
-		{
-			const Coord3D &next = begin[m_currentFlightPathStep + 1];
-			curPos.x = next.x;
-			curPos.y = next.y;
-			curPos.z = next.z;
-		}
+		if (m_currentFlightPathStep < size - 1)
+			curPos = m_flightPath[m_currentFlightPathStep + 1];
 		else
 		{
-			curPos.x = flightStep->x;
-			curPos.y = flightStep->y;
-			curPos.z = flightStep->z - tumble;
+			curPos = m_flightPath[m_currentFlightPathStep];
+			curPos.z -= drop;
 		}
-		Vector3 curDir;
-		curDir.x = curPos.x - prevPos.x;
-		curDir.y = curPos.y - prevPos.y;
-		curDir.z = curPos.z - prevPos.z;
-		Real len2 = curDir.x * curDir.x + curDir.z * curDir.z + curDir.y * curDir.y;
-		if (len2 != BfmeZeroRange)
-		{
-			Real inv = WWMath::Inv_Sqrt(len2);
-			curDir.x *= inv;
-			curDir.y *= inv;
-			curDir.z *= inv;
-		}
-		curPos.x = flightStep->x;
-		curPos.y = flightStep->y;
-		curPos.z = flightStep->z;
+		Vector3 curDir(curPos.x - prevPos.x, curPos.y - prevPos.y, curPos.z - prevPos.z);
+		curDir.Normalize();
 		Matrix3D orientMtx;
-		orientMtx.buildTransformMatrix(curPos, curDir);
+		orientMtx.buildTransformMatrix(Vector3(flightStep->x, flightStep->y, flightStep->z), curDir);
 		obj->setTransformMatrix(&orientMtx);
 	}
 	else
@@ -460,50 +418,52 @@ UpdateSleepTime BezierProjectileBehavior::update()
 		obj->setPosition(flightStep);
 	}
 
-	if (m_currentFlightPathStep < pathSize - 1)
+	if (m_currentFlightPathStep < size - 1)
 	{
-		obj->m_extraFlag = 1;
-		obj->m_extraPos = begin[m_currentFlightPathStep + 1];
+		obj->setExtraPos(m_flightPath[m_currentFlightPathStep + 1]);
 	}
 	else
 	{
-		obj->m_extraFlag = 1;
-		obj->m_extraPos.x = obj->m_position.x + obj->m_position.x - flightStep->x;
-		obj->m_extraPos.y = obj->m_position.y + obj->m_position.y - flightStep->y;
-		obj->m_extraPos.z = obj->m_position.z + obj->m_position.z - flightStep->z;
+		const Coord3D *pos = obj->getPosition();
+		Coord3D next = *flightStep;
+		next.scale(2.0f);
+		next.sub(pos);
+		obj->setExtraPos(next);
 	}
 
-	if (m_victimId != 0)
+	if (m_victimID != 0)
 	{
-		Object *victim = TheBfmeGameLogic->findObjectByID(m_victimId);
+		Object *victim = TheGameLogic->findObjectByID(m_victimID);
 		if (victim)
 		{
-			Coord3D vicPos = victim->m_position;
-			vicPos.z += victim->m_geom.getMaxHeightAbovePosition() * g_bfmeADL;
-			if (victim->m_radius + m_flightPathSpeed > vicPos.length())
-				m_collide.handleCollision(victim);
+			Coord3D top = *victim->getPosition();
+			top.z += victim->m_geometryInfo.getMaxHeightAbovePosition() * 0.5f;
+			if (top.length() < victim->m_geometryInfo.m_boundingSphereRadius + m_flightPathSpeed)
+				slot0C(victim);
 		}
 	}
 
-	PathfindLayerEnum oldLayer = (PathfindLayerEnum)obj->getLayer();
-	PathfindLayerEnum newLayer = TheTerrainLogic->getHighestLayerForDestination(&obj->m_position, false);
+	Int oldLayer = obj->getLayer();
+	const Coord3D *pos = obj->getPosition();
+	PathfindLayerEnum newLayer = TheTerrainLogic->getHighestLayerForDestination(pos, false);
 	obj->setLayer(newLayer);
 
 	if (oldLayer != LAYER_GROUND && newLayer == LAYER_GROUND)
 	{
-		Coord3D tmp = obj->m_position;
+		Coord3D tmp;
+		tmp.x = pos->x;
+		tmp.y = pos->y;
 		tmp.z = 9999.0f;
 		PathfindLayerEnum testLayer = TheTerrainLogic->getHighestLayerForDestination(&tmp, false);
 		if (testLayer == oldLayer)
 		{
-			tmp.z = TheTerrainLogic->getLayerHeight(tmp.x, tmp.y, testLayer, 0, 1) + g_bfmeFudge2;
+			tmp.z = TheTerrainLogic->getLayerHeight(tmp.x, tmp.y, testLayer, 0, true) + 2.0f;
 			obj->setPosition(&tmp);
-			BezierProjectileBehavior *self = complete(this);
-			self->projectileFire();
-			return (UpdateSleepTime)((Gen_001EFCE0 *)self)->bfmeCost();
+			projectileFire();
+			return calcSleepTime();
 		}
 	}
 
 	++m_currentFlightPathStep;
-	return sleepFromPathSize((Int)m_flightPath.size());
+	return calcSleepTime();
 }
