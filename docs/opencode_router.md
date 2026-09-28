@@ -111,7 +111,13 @@ normal Git worktree commands when finished.
 
 The default state directory is `opencode-router/` under the **common Git
 directory**, shared by linked worktrees. Separate clones must explicitly share
-one `--state` on the same host if they are to share limits. Use one configuration
+one `--state` on the same host if they are to share limits; a job records the
+clone it was submitted from (`repository`, `submission_root`, `base_sha`) and
+whichever scheduler dispatches it creates the workspace from THAT clone at that
+base, so a scheduler running in another clone does not reject it. A submission
+root that has moved, a recorded workspace that is no longer a worktree root of
+its repository, or one whose HEAD left the recorded base, parks the job as
+`needs_review` with its edits intact instead of failing it. Use one configuration
 for all clients. State is local SQLite/WAL, not a network-filesystem service.
 A durable identity marker rejects a missing/replaced database. Do not delete
 state while workers exist. Back up SQLite with its backup API or while stopped.

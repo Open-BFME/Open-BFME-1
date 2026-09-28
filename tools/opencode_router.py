@@ -600,30 +600,78 @@ def repository_identity(root):
     return str((Path(root) / common).resolve())
 
 
+class WorkspaceReview(ValueError):
+    """The job's workspace or submission snapshot moved in a way only a person can resolve.
+
+    Dispatch parks the job as needs_review instead of failed: the retained edits
+    are kept and nothing is silently re-based or re-homed.
+    """
+
+
+def _check_retained(cwd, job, require_root=False):
+    """A recorded workspace must still belong to the submission repository at its base.
+
+    `require_root` (the scheduler-created worktrees under --state) also demands
+    that the directory is the worktree root; an explicitly submitted cwd may be
+    a subdirectory of a checkout."""
+    try:
+        top = subprocess.check_output(['git', 'rev-parse', '--show-toplevel'], cwd=cwd, text=True,
+                                      stderr=subprocess.DEVNULL).strip()
+    except (subprocess.CalledProcessError, OSError) as error:
+        if require_root:
+            raise WorkspaceReview(f'retained workspace {cwd} is not a git worktree; review required') from error
+        # An explicit scratch cwd outside any repository: the recorded snapshot
+        # came from the submitting checkout, so there is nothing here that can
+        # have moved; it is accepted as submitted.
+        return
+    try:
+        identity = repository_identity(cwd)
+        head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=cwd, text=True,
+                                       stderr=subprocess.DEVNULL).strip()
+    except (subprocess.CalledProcessError, OSError) as error:
+        raise WorkspaceReview(f'retained workspace {cwd} has no readable HEAD; review required') from error
+    if require_root and Path(top).resolve() != Path(cwd).resolve():
+        raise WorkspaceReview(f'retained workspace {cwd} is not a worktree root (it is inside {top}); review required')
+    if job.get('repository') and identity != job['repository']:
+        raise WorkspaceReview('retained workspace belongs to a different repository than the submission; review required')
+    if job.get('base_sha') and head != job['base_sha']:
+        raise WorkspaceReview(f'retained workspace HEAD {head[:10]} moved from the submission base '
+                              f'{job["base_sha"][:10]}; unfinished edits are kept, review required')
+
+
 def prepare_workspace(root, state, job):
     if job['cwd']:
         cwd = Path(job['cwd'])
         if not cwd.is_dir():
-            raise ValueError(f'workspace does not exist: {cwd}')
+            raise WorkspaceReview(f'workspace does not exist: {cwd}')
         # Legacy jobs with retained workspaces may retry there. Their original
-        # base remains unknown; never manufacture one from today's HEAD.
+        # base remains unknown; never manufacture one from today's HEAD. A job
+        # that recorded its snapshot is held to it.
+        _check_retained(cwd, job)
         return cwd
     if not job.get('repository') or not job.get('base_sha'):
         raise ValueError('legacy job has no submission snapshot; review evidence and resubmit explicitly')
-    if repository_identity(root) != job['repository']:
+    # The workspace is created from the repository the job was SUBMITTED from.
+    # Separate clones share one --state to share limits, so the scheduler's own
+    # root may legitimately be another clone; the identity guard stays, applied
+    # to the persisted submission root.
+    origin = Path(job['submission_root']) if job.get('submission_root') else Path(root)
+    if not origin.is_dir():
+        raise WorkspaceReview(f'submission root {origin} no longer exists; review required')
+    try:
+        identity = repository_identity(origin)
+    except (subprocess.CalledProcessError, OSError) as error:
+        raise WorkspaceReview(f'submission root {origin} is no longer a git repository; review required') from error
+    if identity != job['repository']:
         raise ValueError('scheduler repository differs from submission repository')
     cwd = state / 'worktrees' / job['id']
     cwd.parent.mkdir(parents=True, exist_ok=True)
     if cwd.exists():
         # Recover creation completed before the database update, without
         # deleting useful edits or quietly adopting some other repository.
-        base = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=cwd, text=True).strip()
-        top = subprocess.check_output(['git', 'rev-parse', '--show-toplevel'], cwd=cwd, text=True).strip()
-        if (repository_identity(cwd) != job['repository'] or base != job['base_sha']
-                or Path(top).resolve() != cwd.resolve()):
-            raise ValueError('retained workspace differs from submission snapshot; review required')
+        _check_retained(cwd, job, require_root=True)
     else:
-        subprocess.run(['git', 'worktree', 'add', '--detach', str(cwd), job['base_sha']], cwd=root,
+        subprocess.run(['git', 'worktree', 'add', '--detach', str(cwd), job['base_sha']], cwd=origin,
                        check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, timeout=120)
     with database(state) as db:
         db.execute('UPDATE jobs SET cwd=? WHERE id=?', (str(cwd), job['id']))
@@ -850,8 +898,11 @@ def fleet(root, state, c, duration, workers=None, until=None):
                     except BaseException as exc:
                         if aid in running:
                             raise
+                        # A moved workspace or submission snapshot is a review item, not a
+                        # failure: the job keeps its edits and waits for a person.
+                        parked = 'needs_review' if isinstance(exc, WorkspaceReview) else 'failed'
                         with database(state) as db:
-                            db.execute("UPDATE jobs SET status='failed',note=? WHERE id=?", (str(exc), job['id']))
+                            db.execute("UPDATE jobs SET status=?,note=? WHERE id=?", (parked, str(exc), job['id']))
                             db.execute("UPDATE attempts SET status='launch_error',ended=?,result=? WHERE id=?",
                                        (time.time(), json.dumps({'error': str(exc)}), aid))
                         release_attempt(claims, aid, unit, record_path, record)

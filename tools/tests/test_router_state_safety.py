@@ -81,17 +81,80 @@ def test_show_does_not_scan_fleet(tmp_path, monkeypatch):
     assert data['attempts'] == []
 
 
-def test_delayed_dispatch_rejects_different_repository(repo, tmp_path, monkeypatch):
+def test_scheduler_in_another_clone_creates_the_workspace_from_the_submission_root(repo, tmp_path, monkeypatch):
+    # Separate clones share one --state to share limits; a job submitted from
+    # `repo` and dispatched by a scheduler running in `other` gets a worktree of
+    # `repo` at its recorded base, not a rejection.
     monkeypatch.setattr(r, 'ROOT', repo)
     state = tmp_path / 'state'
     job = r.enqueue(state, 'bulk', 'task')
+    base = git(repo, 'rev-parse', 'HEAD')
     other = tmp_path / 'other'
     other.mkdir()
     git(other, 'init', '-q')
     with r.database(state) as db:
         row = dict(db.execute('SELECT * FROM jobs WHERE id=?', (job,)).fetchone())
+    cwd = r.prepare_workspace(other, state, row)
+    assert git(cwd, 'rev-parse', 'HEAD') == base
+    assert r.repository_identity(cwd) == row['repository'] == r.repository_identity(repo)
+
+
+def test_submission_root_that_moved_is_a_review_case(repo, tmp_path, monkeypatch):
+    monkeypatch.setattr(r, 'ROOT', repo)
+    state = tmp_path / 'state'
+    job = r.enqueue(state, 'bulk', 'task')
+    with r.database(state) as db:
+        row = dict(db.execute('SELECT * FROM jobs WHERE id=?', (job,)).fetchone())
+    row['submission_root'] = str(tmp_path / 'gone')
+    with pytest.raises(r.WorkspaceReview, match='no longer exists'):
+        r.prepare_workspace(repo, state, row)
+    # a different repository now living at the recorded root keeps the identity guard
+    other = tmp_path / 'other'
+    other.mkdir()
+    git(other, 'init', '-q')
+    row['submission_root'] = str(other)
     with pytest.raises(ValueError, match='repository differs'):
-        r.prepare_workspace(other, state, row)
+        r.prepare_workspace(repo, state, row)
+
+
+def test_recorded_workspace_is_held_to_its_repository_and_base(repo, tmp_path, monkeypatch):
+    monkeypatch.setattr(r, 'ROOT', repo)
+    first = git(repo, 'rev-parse', 'HEAD')
+    worker = tmp_path / 'worker'
+    git(repo, 'worktree', 'add', '-q', '--detach', str(worker), first)
+    state = tmp_path / 'state'
+    job = r.enqueue(state, 'bulk', 'task', cwd=worker)
+    row = r.show(state, job)['jobs'][0]
+    assert r.prepare_workspace(repo, state, row) == worker
+    # the workspace HEAD moved: edits are kept, dispatch is a review case
+    (worker / 'edit').write_text('unfinished')
+    git(worker, 'commit', '-q', '--allow-empty', '-m', 'moved')
+    with pytest.raises(r.WorkspaceReview, match='moved from the submission base'):
+        r.prepare_workspace(repo, state, row)
+    assert (worker / 'edit').read_text() == 'unfinished'
+    # a subdirectory of the submission checkout at its base is a valid explicit cwd ...
+    inside = repo / 'inside'
+    inside.mkdir()
+    row['cwd'] = str(inside)
+    git(repo, 'checkout', '-q', '--detach', first)
+    assert r.prepare_workspace(repo, state, row) == inside
+    # ... and a scratch directory outside any repository has nothing that can move,
+    # so it is accepted as submitted (the fleet fixtures rely on this) ...
+    plain = tmp_path.parent / (tmp_path.name + '-plain')
+    plain.mkdir()
+    row['cwd'] = str(plain)
+    assert r.prepare_workspace(repo, state, row) == plain
+    # ... but another repository is refused
+    other = tmp_path / 'other'
+    other.mkdir()
+    git(other, 'init', '-q')
+    git(other, 'config', 'user.name', 'fixture')
+    git(other, 'config', 'user.email', 'fixture@example.invalid')
+    (other / 'x').write_text('x'); git(other, 'add', 'x'); git(other, 'commit', '-qm', 'x')
+    row['cwd'] = str(other)
+    with pytest.raises(r.WorkspaceReview, match='different repository'):
+        r.prepare_workspace(repo, state, row)
+    assert issubclass(r.WorkspaceReview, ValueError)
 
 
 def test_explicit_retained_workspace_records_its_own_base(repo, tmp_path, monkeypatch):
