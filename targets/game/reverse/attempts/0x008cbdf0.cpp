@@ -1,476 +1,461 @@
 // ?gen008CBDF0@@YAXPAX0H0@Z
-// partial score=0.3 date=2026-09-17
-// ?gen008CBDF0@@YAXPAX0H0@Z
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-//
-// Retail 0x008CBDF0 is the Apt serialized-record walker.  The caller at
-// 0x008CC540 proves the four-argument cdecl ABI and passes a null third
-// argument.  The record dispatch bytes, the 0x01337828 allocator, the Apt
-// free-list heads, and the two registry constructors are all read directly
-// from the retail body.  The routine keeps its address-derived name because
-// no evidence proves a source class or method name for the whole walker.
-
-struct Rva00899560Value
+// partial score=0.847 date=2026-09-28
+// ?gen008CBDF0@@YAXPAEPADPAURva008CBDF0Movie@@PAH@Z
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// Retail 0x008CBDF0: Apt serialized-block pointer walker, 1757 bytes, cdecl
+// (block, base, movie, serial); the caller at 0x008CC540 forwards (a,b,0,c).
+// REWRITE (opus-5.5, 2026-09-28), complete semantics decoded from retail:
+// tag byte switch 0x81..0xB8 through a 56-entry byte table into 12 case
+// bodies; a null movie means un-relocate (subtract base, release values and
+// replace them with serial numbers), otherwise relocate and build Apt values
+// from the movie constant table (+0x1C, 8-byte {kind,value}): kind 1 via
+// d_008C3C00 on the movie-relative text; 6/7/5 through the inlined pooled
+// Float/Integer/Boolean creators (vtables 01136698/01136400/011360A8 over base
+// 01135D68, pool heads 013387CC/D0/D4, idle registry 01337810); 8 and 4
+// through the matched BfmeDerivedVNF/VN4 constructors; 3 the shared
+// g_bfmeFallbackDB value. List cases 0x9B/0x8E stamp 0x98765432/0x12345678
+// only when un-relocating. Idle step (d_008A30C0 on the registry) runs every
+// 16 values and after every tag. Case bodies are in retail's layout order and
+// the align+4 case falls through into the +4 case.
+// Measured: code ret at +0x6D8 vs retail +0x6DC; 1487 non-reloc diffs; shape
+// 0.847 (prior bank 764B, shape 0.224). Residue: cursor EBX / array EBP where
+// retail has cursor EBP / array EBX; the array case's un-relocate block sits
+// before the relocate block (retail places it after the kind==1 arm);
+// 0x12345678 kept in EBP.
+struct AptPoolNode
 {
 	void *m_vtable;
 	unsigned int m_flags;
-	unsigned int m_payload;
+	union
+	{
+		AptPoolNode *m_next;
+		int m_int;
+		float m_float;
+		bool m_bool;
+	};
+};
+
+class BfmeG1211
+{
+public:
+	void bfmeStep1211C();
 };
 
 struct Rva00899560Pool
 {
 	int m_capacity;
 	int m_count;
-	Rva00899560Value **m_items;
-};
-
-struct Rva008D2950Node
-{
-	void *m_vtable;
-	unsigned int m_flags;
-	Rva008D2950Node *m_next;
-};
-
-struct Rva008D29C0Node
-{
-	void *m_vtable;
-	unsigned int m_flags;
-	Rva008D29C0Node *m_next;
-};
-
-struct Rva008D2A30Node
-{
-	void *m_vtable;
-	unsigned int m_flags;
-	Rva008D2A30Node *m_next;
-};
-
-struct AptValue
-{
-	virtual void slot0();
-	virtual void release();
-	unsigned int m_flags;
-};
-
-struct BfmeNode3AF0
-{
-	unsigned char m_bytes[4];
-};
-
-struct BfmeDerivedVNF
-{
-	BfmeDerivedVNF(int value);
-};
-
-struct BfmeDerivedVN4
-{
-	BfmeDerivedVN4(int value);
-};
-
-struct Rva008CBDF0Array
-{
-	int m_count;
-	unsigned int *m_items;
-};
-
-struct Rva008CBDF0Pair
-{
-	int m_kind;
-	int m_value;
-};
-
-struct Rva008CBDF0Table
-{
-	unsigned char m_gap[0x1c];
-	Rva008CBDF0Pair *m_pairs;
+	AptPoolNode **m_items;
+	__forceinline void addPooled(AptPoolNode *node)
+	{
+		int &count = m_count;
+		if (count >= m_capacity)
+		{
+			node->m_flags &= 0xbfffffff;
+		}
+		else
+		{
+			m_items[count] = node;
+			count++;
+		}
+	}
+	__forceinline void step() { ((BfmeG1211 *)this)->bfmeStep1211C(); }
 };
 
 extern Rva00899560Pool *g_rva8CD130IdleHook;
 extern void *(*Rva008C5D70Alloc)(unsigned int bytes);
-extern Rva008D2950Node *Rva008D2950Head;
-extern Rva008D29C0Node *Rva008D29C0Head;
-extern Rva008D2A30Node *Rva008D2A30Head;
+extern AptPoolNode *Rva008D2950Head;
+extern AptPoolNode *Rva008D29C0Head;
+extern AptPoolNode *Rva008D2A30Head;
+
+class AptValue
+{
+public:
+	virtual void vslot00();
+	virtual void release();
+	unsigned int m_flags;
+	__forceinline int type() const { return m_flags & 0x3f; }
+};
+
 extern AptValue *g_bfmeFallbackDB;
 
-extern void d_008a30c0();
+struct BfmeNode3AF0;
+void bfmeUnlink3AF0(BfmeNode3AF0 *node);
 extern void d_008c3c00();
-extern void bfmeUnlink3AF0(BfmeNode3AF0 *node);
 
-inline void *operator new(unsigned int, void *place)
+class BfmeDerivedVNF
 {
-	return place;
-}
+public:
+	BfmeDerivedVNF(int value);
+};
 
-static __forceinline void idleStep(Rva00899560Pool *pool)
+class BfmeDerivedVN4
 {
-	// MSVC 7.1 spells the ECX-only member call through __fastcall.
-	typedef void (__fastcall *Call)(Rva00899560Pool *);
-	(reinterpret_cast<Call>(d_008a30c0))(pool);
-}
+public:
+	BfmeDerivedVN4(int value);
+};
 
-static __forceinline void addToIdlePool(Rva00899560Value *value)
+static __forceinline AptValue *createFloat(float value)
 {
-	Rva00899560Pool *pool = g_rva8CD130IdleHook;
-	int index = pool->m_count;
-	if (index >= pool->m_capacity)
+	AptPoolNode *object = Rva008D2950Head;
+	if (object != 0)
 	{
-		value->m_flags &= 0xbfffffff;
+		Rva008D2950Head = object->m_next;
+		g_rva8CD130IdleHook->addPooled(object);
+		object->m_float = value;
+		return (AptValue *)object;
 	}
-	else
+	object = (AptPoolNode *)Rva008C5D70Alloc(12);
+	if (object != 0)
 	{
-		pool->m_items[index] = value;
-		pool->m_count = index + 1;
+		object->m_vtable = (void *)0x01135D68;
+		object->m_flags = (object->m_flags & 0xf0008006) | 0x40008006;
+		g_rva8CD130IdleHook->addPooled(object);
+		object->m_vtable = (void *)0x01136698;
+		object->m_float = value;
+		return (AptValue *)object;
 	}
+	return 0;
 }
+
+static __forceinline AptValue *createInteger(int value)
+{
+	AptPoolNode *object = Rva008D29C0Head;
+	if (object != 0)
+	{
+		Rva008D29C0Head = object->m_next;
+		g_rva8CD130IdleHook->addPooled(object);
+		object->m_int = value;
+		return (AptValue *)object;
+	}
+	object = (AptPoolNode *)Rva008C5D70Alloc(12);
+	if (object != 0)
+	{
+		object->m_vtable = (void *)0x01135D68;
+		object->m_flags = (object->m_flags & 0xf0008007) | 0x40008007;
+		g_rva8CD130IdleHook->addPooled(object);
+		object->m_vtable = (void *)0x01136400;
+		object->m_int = value;
+		return (AptValue *)object;
+	}
+	return 0;
+}
+
+static __forceinline AptValue *createBoolean(bool value)
+{
+	AptPoolNode *object = Rva008D2A30Head;
+	if (object != 0)
+	{
+		Rva008D2A30Head = object->m_next;
+		g_rva8CD130IdleHook->addPooled(object);
+		object->m_bool = value;
+		return (AptValue *)object;
+	}
+	object = (AptPoolNode *)Rva008C5D70Alloc(12);
+	if (object != 0)
+	{
+		object->m_vtable = (void *)0x01135D68;
+		object->m_flags = (object->m_flags & 0xf0008005) | 0x40008005;
+		g_rva8CD130IdleHook->addPooled(object);
+		object->m_vtable = (void *)0x011360A8;
+		object->m_bool = value;
+		return (AptValue *)object;
+	}
+	return 0;
+}
+
+inline void *operator new(unsigned int, void *place) { return place; }
+
+struct Rva008CBDF0Constant
+{
+	int kind;
+	union
+	{
+		int intValue;
+		float floatValue;
+		char *text;
+	};
+};
+
+struct Rva008CBDF0Movie
+{
+	char pad00[0x1c];
+	Rva008CBDF0Constant *constants;
+};
+
+struct Rva008CBDF0Array
+{
+	int count;
+	AptValue **items;
+};
+
+struct Rva008CBDF0PointerPair
+{
+	char *first;
+	char *second;
+};
+
+struct Rva008CBDF0List
+{
+	char *owner;
+	int count;
+	char **items;
+	int pad0c;
+	int marker10;
+	int marker14;
+};
+
+struct Rva008CBDF0PairEntry
+{
+	int key;
+	char *value;
+};
+
+struct Rva008CBDF0PairList
+{
+	char *owner;
+	int count;
+	int pad08;
+	Rva008CBDF0PairEntry *items;
+	int pad10;
+	int marker14;
+	int marker18;
+};
+
+struct Rva008CBDF0Flagged
+{
+	int pad00[3];
+	unsigned char flags;
+	char pad0d[3];
+	char *pointer;
+};
 
 static __forceinline unsigned char *align4(unsigned char *cursor)
 {
-	return reinterpret_cast<unsigned char *>(
-		(reinterpret_cast<unsigned int>(cursor) + 3) & ~3u);
+	return (unsigned char *)(((unsigned int)cursor + 3) & ~3u);
 }
 
-static __forceinline bool valueIsDefined(unsigned int flags)
+void __cdecl gen008CBDF0(unsigned char *block, char *base, Rva008CBDF0Movie *movie, int *serial)
 {
-	return ((flags >> 15) & 1) != 0;
-}
-
-static __forceinline void adjustWord(unsigned int *word, unsigned int delta,
-	bool subtract)
-{
-	if (*word != 0)
-		*word = subtract ? *word - delta : *word + delta;
-}
-
-static __forceinline Rva00899560Value *makeFloat(int value)
-{
-	Rva008D2950Node *node = Rva008D2950Head;
-	if (node != 0)
-	{
-		Rva008D2950Head = node->m_next;
-		addToIdlePool(reinterpret_cast<Rva00899560Value *>(node));
-		reinterpret_cast<Rva00899560Value *>(node)->m_payload =
-			static_cast<unsigned int>(value);
-		return reinterpret_cast<Rva00899560Value *>(node);
-	}
-
-	Rva00899560Value *object = reinterpret_cast<Rva00899560Value *>(
-		Rva008C5D70Alloc(12));
-	if (object == 0)
-		return 0;
-	object->m_vtable = reinterpret_cast<void *>(0x01135d68);
-	object->m_flags = (object->m_flags & 0xf0008006) | 0x40008006;
-	addToIdlePool(object);
-	object->m_vtable = reinterpret_cast<void *>(0x01136698);
-	object->m_payload = static_cast<unsigned int>(value);
-	return object;
-}
-
-static __forceinline Rva00899560Value *makeInteger(int value)
-{
-	Rva008D29C0Node *node = Rva008D29C0Head;
-	if (node != 0)
-	{
-		Rva008D29C0Head = node->m_next;
-		addToIdlePool(reinterpret_cast<Rva00899560Value *>(node));
-		reinterpret_cast<Rva00899560Value *>(node)->m_payload =
-			static_cast<unsigned int>(value);
-		return reinterpret_cast<Rva00899560Value *>(node);
-	}
-
-	Rva00899560Value *object = reinterpret_cast<Rva00899560Value *>(
-		Rva008C5D70Alloc(12));
-	if (object == 0)
-		return 0;
-	object->m_vtable = reinterpret_cast<void *>(0x01135d68);
-	object->m_flags = (object->m_flags & 0xf0008007) | 0x40008007;
-	addToIdlePool(object);
-	object->m_vtable = reinterpret_cast<void *>(0x01136400);
-	object->m_payload = static_cast<unsigned int>(value);
-	return object;
-}
-
-static __forceinline Rva00899560Value *makeBoolean(bool value)
-{
-	Rva008D2A30Node *node = Rva008D2A30Head;
-	if (node != 0)
-	{
-		Rva008D2A30Head = node->m_next;
-		addToIdlePool(reinterpret_cast<Rva00899560Value *>(node));
-		reinterpret_cast<Rva00899560Value *>(node)->m_payload = value ? 1 : 0;
-		return reinterpret_cast<Rva00899560Value *>(node);
-	}
-
-	Rva00899560Value *object = reinterpret_cast<Rva00899560Value *>(
-		Rva008C5D70Alloc(12));
-	if (object == 0)
-		return 0;
-	object->m_vtable = reinterpret_cast<void *>(0x01135d68);
-	object->m_flags = (object->m_flags & 0xf0008005) | 0x40008005;
-	addToIdlePool(object);
-	object->m_vtable = reinterpret_cast<void *>(0x011360a8);
-	object->m_payload = value ? 1 : 0;
-	return object;
-}
-
-static __forceinline Rva00899560Value *makeFromPair(int kind, int value)
-{
-	switch (kind)
-	{
-	case 6:
-		return makeFloat(value);
-	case 7:
-		return makeInteger(value);
-	case 5:
-		return makeBoolean(value != 0);
-	case 8:
-	{
-		void *raw = Rva008C5D70Alloc(12);
-		return raw == 0 ? 0 : reinterpret_cast<Rva00899560Value *>(
-			new (raw) BfmeDerivedVNF(value));
-	}
-	case 4:
-	{
-		void *raw = Rva008C5D70Alloc(12);
-		return raw == 0 ? 0 : reinterpret_cast<Rva00899560Value *>(
-			new (raw) BfmeDerivedVN4(value));
-	}
-	case 3:
-		return reinterpret_cast<Rva00899560Value *>(g_bfmeFallbackDB);
-	default:
-		return 0;
-	}
-}
-
-static __forceinline void callC3C00(unsigned int value)
-{
-	typedef void (__cdecl *Call)(unsigned int);
-	(reinterpret_cast<Call>(d_008c3c00))(value);
-}
-
-static void cleanSerializedValues(Rva008CBDF0Array *array, unsigned int *state)
-{
-	int count = array->m_count;
-	for (int index = 0; index < count; ++index)
-	{
-		AptValue *value = reinterpret_cast<AptValue *>(array->m_items[index]);
-		unsigned int flags = value->m_flags;
-		unsigned int kind = flags & 0x3f;
-
-		if (kind == 42 && valueIsDefined(flags))
-		{
-			BfmeNode3AF0 *node = reinterpret_cast<BfmeNode3AF0 *>(
-				*reinterpret_cast<unsigned int *>(
-					reinterpret_cast<unsigned char *>(value) + 0x20));
-			bfmeUnlink3AF0(node);
-		}
-		else
-		{
-			value->release();
-		}
-
-		array->m_items[index] = *state;
-		++*state;
-		if ((index & 0x8000000f) == 0)
-			idleStep(g_rva8CD130IdleHook);
-	}
-}
-
-static void processModeTable(Rva008CBDF0Array *array, unsigned int *base,
-	int mode, unsigned int *state)
-{
-	Rva008CBDF0Table *table = reinterpret_cast<Rva008CBDF0Table *>(
-		static_cast<unsigned int>(mode));
-	if (array->m_items != 0)
-		array->m_items = reinterpret_cast<unsigned int *>(
-			reinterpret_cast<unsigned int>(array->m_items) +
-			reinterpret_cast<unsigned int>(base));
-
-	for (int index = 0; index < array->m_count; ++index)
-	{
-		unsigned int slot = array->m_items[index];
-		Rva008CBDF0Pair *pair = table->m_pairs + slot;
-		++*state;
-		if (pair->m_kind == 1 && pair->m_value != 0)
-		{
-			unsigned int *pointer = reinterpret_cast<unsigned int *>(
-				reinterpret_cast<unsigned char *>(pair) + 4);
-			*pointer += reinterpret_cast<unsigned int>(table);
-			callC3C00(*pointer);
-			*pointer -= reinterpret_cast<unsigned int>(table);
-		}
-		else
-		{
-			Rva00899560Value *value = makeFromPair(pair->m_kind, pair->m_value);
-			if (value != 0)
-				array->m_items[index] = reinterpret_cast<unsigned int>(value);
-		}
-	}
-}
-
-void __cdecl gen008CBDF0(void *serialized, void *base, int mode, void *state)
-{
-	int modeIsNull = mode == 0;
-	idleStep(g_rva8CD130IdleHook);
-
-	unsigned char *cursor = reinterpret_cast<unsigned char *>(serialized);
-	unsigned int record = *cursor++;
-	if (record == 0)
+	int unrelocate = movie == 0;
+	g_rva8CD130IdleHook->step();
+	int tag = *block;
+	unsigned char *cursor = block + 1;
+	if (tag == 0)
 		return;
-
-	for (;;)
+	do
 	{
-		unsigned int code = record - 0x81;
-		switch (code)
+		switch (tag)
 		{
-		case 0:
-		case 6:
-		case 24:
-		case 28:
-		case 30:
-		case 55:
-			cursor = align4(cursor + 3);
-			cursor += 4;
+		case 0xa2: case 0xae: case 0xaf: case 0xb0: case 0xb1: case 0xb2: case 0xb3: case 0xb5:
+			cursor += 1;
 			break;
-
-		case 2:
-		{
-			cursor = align4(cursor + 3);
-			Rva008CBDF0Array *array = reinterpret_cast<Rva008CBDF0Array *>(cursor);
-			cursor += 8;
-			if (array->m_items != 0 && modeIsNull)
-			{
-				cleanSerializedValues(array,
-					reinterpret_cast<unsigned int *>(state));
-			}
-			else if (array->m_items != 0)
-			{
-				processModeTable(array, reinterpret_cast<unsigned int *>(base),
-					mode, reinterpret_cast<unsigned int *>(state));
-			}
-		if (array->m_items != 0)
-			array->m_items = reinterpret_cast<unsigned int *>(
-				reinterpret_cast<unsigned int>(array->m_items) +
-				(modeIsNull ? -reinterpret_cast<unsigned int>(base)
-					: reinterpret_cast<unsigned int>(base)));
-			break;
-		}
-
-		case 10:
-		case 11:
-		case 32:
-		case 35:
-		case 36:
-		case 37:
-		case 38:
-			cursor = align4(cursor + 3);
-			adjustWord(reinterpret_cast<unsigned int *>(cursor),
-				reinterpret_cast<unsigned int>(base), modeIsNull);
-			cursor += 4;
-			break;
-
-		case 13:
-			cursor = align4(cursor + 3);
-		{
-			unsigned int *object = reinterpret_cast<unsigned int *>(cursor);
-			cursor += 0x1c;
-			adjustWord(object, reinterpret_cast<unsigned int>(base), modeIsNull);
-			adjustWord(object + 3, reinterpret_cast<unsigned int>(base), modeIsNull);
-			if (object[3] != 0)
-			{
-				unsigned int count = object[1];
-				for (unsigned int index = 0; index < count; ++index)
-					adjustWord(reinterpret_cast<unsigned int *>(object[3]) + index * 2,
-						reinterpret_cast<unsigned int>(base), modeIsNull);
-			}
-		}
-			break;
-
-		case 19:
-			cursor = align4(cursor + 3);
-		{
-			unsigned int *object = reinterpret_cast<unsigned int *>(cursor);
-			cursor += 4;
-			adjustWord(object, reinterpret_cast<unsigned int>(cursor), modeIsNull);
-		}
-			break;
-
-		case 26:
-			cursor = align4(cursor + 3);
-		{
-			unsigned int *object = reinterpret_cast<unsigned int *>(cursor);
-			cursor += 0x18;
-			adjustWord(object, reinterpret_cast<unsigned int>(base), modeIsNull);
-			adjustWord(object + 2, reinterpret_cast<unsigned int>(base), modeIsNull);
-			if (object[2] != 0)
-			{
-				unsigned int count = object[1];
-				for (unsigned int index = 0; index < count; ++index)
-					adjustWord(reinterpret_cast<unsigned int *>(object[2]) + index,
-						reinterpret_cast<unsigned int>(base), modeIsNull);
-			}
-		}
-			break;
-
-		case 14:
-			cursor = align4(cursor + 3);
-		{
-			unsigned char *object = cursor;
-			unsigned char flags = object[0x0c];
-			cursor += 0x14;
-			if ((flags & 4) == 0)
-				adjustWord(reinterpret_cast<unsigned int *>(object + 0x10),
-					reinterpret_cast<unsigned int>(base), modeIsNull);
-		}
-			break;
-
-		case 33:
-		case 45:
-		case 46:
-		case 47:
-		case 48:
-		case 49:
-		case 50:
-		case 52:
-			++cursor;
-			break;
-
-		case 34:
-		case 53:
+		case 0xa3: case 0xb6:
 			cursor += 2;
 			break;
-
-		case 51:
-		case 54:
-			cursor += 4;
-			break;
-
-		case 7:
-		case 21:
+		case 0x88: case 0x96:
 		{
-			cursor = align4(cursor + 3);
-			Rva008CBDF0Array *array = reinterpret_cast<Rva008CBDF0Array *>(cursor);
-			cursor += 8;
-			if (modeIsNull)
+			cursor = align4(cursor);
+			Rva008CBDF0Array *array = (Rva008CBDF0Array *)cursor;
+			cursor += sizeof(Rva008CBDF0Array);
+			if (unrelocate)
 			{
-				cleanSerializedValues(array,
-					reinterpret_cast<unsigned int *>(state));
+				for (int i = 0; i < array->count; ++i)
+				{
+					AptValue *value = array->items[i];
+					unsigned int flags = value->m_flags;
+					int kind = flags & 0x3f;
+					if ((kind == 1 || kind == 0x2a) && !(~(flags >> 15) & 1))
+					{
+						bfmeUnlink3AF0(kind == 1 ? (BfmeNode3AF0 *)value : *(BfmeNode3AF0 **)((char *)value + 0x20));
+					}
+					else
+					{
+						value->release();
+					}
+					array->items[i] = (AptValue *)*serial;
+					++*serial;
+					if (i % 16 == 0)
+						g_rva8CD130IdleHook->step();
+				}
+				if (array->items)
+					array->items = (AptValue **)((char *)array->items - (unsigned int)base);
 			}
 			else
 			{
-				processModeTable(array, reinterpret_cast<unsigned int *>(base),
-					mode, reinterpret_cast<unsigned int *>(state));
+				if (array->items)
+					array->items = (AptValue **)((char *)array->items + (unsigned int)base);
+				for (int i = 0; i < array->count; ++i)
+				{
+					int index = (int)array->items[i];
+					++*serial;
+					Rva008CBDF0Constant *constant = &movie->constants[index];
+					AptValue *value = 0;
+					if (constant->kind == 1)
+					{
+						if (movie->constants[index].text)
+							movie->constants[index].text += (unsigned int)movie;
+						value = ((AptValue *(__cdecl *)(char *))d_008c3c00)(movie->constants[index].text);
+						if (movie->constants[index].text)
+							movie->constants[index].text -= (unsigned int)movie;
+					}
+					else if (constant->kind == 6)
+						value = createFloat(constant->floatValue);
+					else if (constant->kind == 7)
+						value = createInteger(constant->intValue);
+					else if (constant->kind == 8)
+						{ void *raw = Rva008C5D70Alloc(12); value = raw ? (AptValue *)new (raw) BfmeDerivedVNF(movie->constants[index].intValue) : 0; }
+					else if (constant->kind == 5)
+						value = createBoolean(constant->intValue != 0);
+					else if (constant->kind == 4)
+						{ void *raw = Rva008C5D70Alloc(12); value = raw ? (AptValue *)new (raw) BfmeDerivedVN4(movie->constants[index].intValue) : 0; }
+					else if (constant->kind == 3)
+						value = g_bfmeFallbackDB;
+					array->items[i] = value;
+					unsigned int flags = value->m_flags;
+					int kind = flags & 0x3f;
+					if (!((kind == 1 || kind == 0x2a) && !(~(flags >> 15) & 1)))
+						value->vslot00();
+					if (i % 16 == 0)
+						g_rva8CD130IdleHook->step();
+				}
 			}
 			break;
 		}
-
-		default:
-			idleStep(g_rva8CD130IdleHook);
+		case 0x83:
+		{
+			cursor = align4(cursor);
+			Rva008CBDF0PointerPair *pair = (Rva008CBDF0PointerPair *)cursor;
+			cursor += sizeof(Rva008CBDF0PointerPair);
+			if (unrelocate)
+			{
+				if (pair->first) pair->first -= (unsigned int)base;
+				if (pair->second) pair->second -= (unsigned int)base;
+			}
+			else
+			{
+				if (pair->first) pair->first += (unsigned int)base;
+				if (pair->second) pair->second += (unsigned int)base;
+			}
 			break;
 		}
-
-		idleStep(g_rva8CD130IdleHook);
-		record = *cursor++;
-		if (record == 0)
+		case 0x8b: case 0x8c: case 0xa1: case 0xa4: case 0xa5: case 0xa6: case 0xa7:
+		{
+			cursor = align4(cursor);
+			char **pointer = (char **)cursor;
+			cursor += sizeof(char *);
+			if (unrelocate)
+			{
+				if (*pointer) *pointer -= (unsigned int)base;
+			}
+			else
+			{
+				if (*pointer) *pointer += (unsigned int)base;
+			}
 			break;
-	}
+		}
+		case 0x9b:
+		{
+			cursor = align4(cursor);
+			Rva008CBDF0List *list = (Rva008CBDF0List *)cursor;
+			cursor += sizeof(Rva008CBDF0List);
+			if (unrelocate)
+			{
+				if (list->owner) list->owner -= (unsigned int)base;
+			}
+			else
+			{
+				if (list->owner) list->owner += (unsigned int)base;
+				if (list->items) list->items = (char **)((char *)list->items + (unsigned int)base);
+			}
+			for (int i = 0; i < list->count; ++i)
+			{
+				if (unrelocate)
+				{
+					if (list->items[i]) list->items[i] -= (unsigned int)base;
+				}
+				else
+				{
+					if (list->items[i]) list->items[i] += (unsigned int)base;
+				}
+			}
+			if (unrelocate)
+			{
+				if (list->items) list->items = (char **)((char *)list->items - (unsigned int)base);
+				list->marker10 = 0x98765432;
+				list->marker14 = 0x12345678;
+			}
+			break;
+		}
+		case 0x81: case 0x87: case 0x99: case 0x9d: case 0x9f: case 0xb8:
+			cursor = align4(cursor);
+		case 0xb4: case 0xb7:
+			cursor += 4;
+			break;
+		case 0x94:
+		{
+			cursor = align4(cursor);
+			int *offset = (int *)cursor;
+			cursor += sizeof(int);
+			if (unrelocate)
+				*offset -= (int)cursor;
+			else
+				*offset += (int)cursor;
+			break;
+		}
+		case 0x8e:
+		{
+			cursor = align4(cursor);
+			Rva008CBDF0PairList *list = (Rva008CBDF0PairList *)cursor;
+			cursor += sizeof(Rva008CBDF0PairList);
+			if (unrelocate)
+			{
+				if (list->owner) list->owner -= (unsigned int)base;
+			}
+			else
+			{
+				if (list->owner) list->owner += (unsigned int)base;
+				if (list->items) list->items = (Rva008CBDF0PairEntry *)((char *)list->items + (unsigned int)base);
+			}
+			for (int i = 0; i < list->count; ++i)
+			{
+				if (unrelocate)
+				{
+					if (list->items[i].value) list->items[i].value -= (unsigned int)base;
+				}
+				else
+				{
+					if (list->items[i].value) list->items[i].value += (unsigned int)base;
+				}
+			}
+			if (unrelocate)
+			{
+				if (list->items) list->items = (Rva008CBDF0PairEntry *)((char *)list->items - (unsigned int)base);
+				list->marker14 = 0x98765432;
+				list->marker18 = 0x12345678;
+			}
+			break;
+		}
+		case 0x8f:
+		{
+			cursor = align4(cursor);
+			Rva008CBDF0Flagged *flagged = (Rva008CBDF0Flagged *)cursor;
+			cursor += sizeof(Rva008CBDF0Flagged);
+			if (!(flagged->flags & 4))
+			{
+				if (unrelocate)
+				{
+					if (flagged->pointer) flagged->pointer -= (unsigned int)base;
+				}
+				else
+				{
+					if (flagged->pointer) flagged->pointer += (unsigned int)base;
+				}
+			}
+			break;
+		}
+		}
+		g_rva8CD130IdleHook->step();
+		tag = *cursor++;
+	} while (tag != 0);
 }
