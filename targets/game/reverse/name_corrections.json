@@ -8508,5 +8508,25 @@
   "after_sha256": "83af430710bf9c55c03d882a1de2c87ad45fd2d183d5c5891df62a340b2e6807",
   "evidence": "targets/game/reverse/identity_evidence/001ec8e0-weaponset-attack-query.md",
   "reason": "The layout witness names Object+0x343 m_scriptStatus (name_oracle confidence 1.00) and this body reads +0x343 as the script-status byte; +0x110 is a separate bit array tested through WordBitTest000D2F40::test(0x10C) with no witnessed name so it keeps its offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0022dba0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0022dba0.cpp",
+  "old_name": "m_allowTransport",
+  "new_name": "m_unknown1f9",
+  "before_sha256": "d3d97b5cce4d7feaabe6ea333f52a986d8500486d652a6e2512ecf5136719475",
+  "after_sha256": "fedfa064ad56e3e34f9fb9118d4c280dd6ff97285d833906f39e17c2db9eb64c",
+  "evidence": "targets/game/reverse/identity_evidence/transportcontain-moduledata-0022dba0.md",
+  "reason": "retail body contradicts guessed names: +0x1f9 is a kind-0x83 capacity shortcut, +0x208 indexes Object+0x110 model-condition flags"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0022dba0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0022dba0.cpp",
+  "old_name": "m_playerMaskBit",
+  "new_name": "m_unknown208",
+  "before_sha256": "d3d97b5cce4d7feaabe6ea333f52a986d8500486d652a6e2512ecf5136719475",
+  "after_sha256": "fedfa064ad56e3e34f9fb9118d4c280dd6ff97285d833906f39e17c2db9eb64c",
+  "evidence": "targets/game/reverse/identity_evidence/transportcontain-moduledata-0022dba0.md",
+  "reason": "retail body contradicts guessed names: +0x1f9 is a kind-0x83 capacity shortcut, +0x208 indexes Object+0x110 model-condition flags"
  }
 ]

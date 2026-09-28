@@ -1,5 +1,5 @@
 // ?onContaining@TransportContain@@UAEXPAVObject@@_N@Z
-// partial score=0.43 date=2026-09-10
+// partial score=0.9976878613 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 //
@@ -14,12 +14,21 @@
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
+#include <bitset>
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
 class Object;
+void j_0000e68d();
+namespace _STL {
+template<> inline _List_base<Object*,allocator<Object*> >::~_List_base() {
+ typedef _List_base<Object*,allocator<Object*> > Base;
+ union { void (*raw)(); void (Base::*member)(); } call;
+ call.raw=&j_0000e68d; (this->*call.member)();
+}
+}
 class Player;
 
 enum KindOfType
@@ -28,21 +37,17 @@ enum KindOfType
 	KINDOF_BFME_6C = 0x6c
 };
 
+void j_0003f288(); void j_00046a1f();
 class Drawable
 {
 public:
-	void apply(Bool pending);
-	void bfmeDelayA(Int frames);
-	void bfmeDelayB(Int frames);
+	void applyPendingModelConditionFlags(Bool pending);
+	void bfmeDelayA(Int frames) { union {void (*raw)(); void(Drawable::*member)(int);} c; c.raw=&j_0003f288; (this->*c.member)(frames); }
+	void bfmeDelayB(Int frames) { union {void (*raw)(); void(Drawable::*member)(int);} c; c.raw=&j_00046a1f; (this->*c.member)(frames); }
 };
 
-// The drawable methods below are existing ILT targets.  The names are the
-// address-backed names already recorded in symbols.csv, not new identity
-// claims for the surrounding TransportContain body.
-#pragma comment(linker, "/alternatename:?apply@Drawable@@QAEX_N@Z=?j_0002d439@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeDelayA@Drawable@@QAEXH@Z=?j_0003f288@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeDelayB@Drawable@@QAEXH@Z=?j_00046a1f@@YAXXZ")
-
+template<int N> class BitFlags {public: _STL::bitset<N> bits;};
+extern const BitFlags<116> KINDOFMASK_NONE;
 class Thing
 {
 public:
@@ -52,14 +57,18 @@ public:
 	class KindOfMask
 	{
 	public:
-		UnsignedInt m_bits[(NUMBITS + 31) / 32];
+		_STL::bitset<NUMBITS> m_bits;
+ Bool any() const { return m_bits.any(); }
 	};
 
 	typedef KindOfMask<192> KindOfMaskType;
-	Bool isKindOfMulti(const KindOfMaskType &mustBeSet,
-		const KindOfMaskType &mustBeClear) const;
+	Bool isKindOfMulti(const BitFlags<116>&,const BitFlags<116>&) const;
 };
 
+void j_000348ec();
+enum ObjectStatusTypes { STATUS_003B=0x3b };
+enum DisabledType { DISABLED_HELD=3 };
+enum Relationship { RELATIONSHIP_ENEMY=2 };
 class Object
 {
 public:
@@ -76,13 +85,20 @@ public:
 	virtual void objectSlot09() = 0;
 	virtual Drawable *getDrawable() const;
 
-	void bfmeSetConditionState(Int state);
+ struct ModelFlags { _STL::bitset<320> bits; unsigned test(unsigned bit)const{return ((const unsigned*)&bits)[bit>>5]&(1u<<(bit&31));} void set(unsigned bit){bits.set(bit);} };
+ char pad004[0x10c];
+ ModelFlags m_modelConditionFlags;
+ const ModelFlags& getFlags() const { return m_modelConditionFlags; }
+ __forceinline void setModelCondition(unsigned bit) { if(!getFlags().test(bit)) { m_modelConditionFlags.set(bit); notifyModelConditionChanged(); } }
+
+	void setDisabled(DisabledType);
 	void notifyModelConditionChanged();
 	Int getTransportSlotCount() const;
-	void *unidentified_001BFE20();
-	void setMode(Int mode, Int value);
-	void clearCondition(Int mode);
-	int getRelationship(const Object *other) const;
+	void *unidentified_001BFE20() const;
+	void setStatusBit(Int mode, bool value);
+ void clearStatus(ObjectStatusTypes);
+	void clearCondition(Int mode) { union {void (*raw)();void(Object::*member)(int);} c;c.raw=&j_000348ec;(this->*c.member)(mode); }
+	Relationship getRelationship(const Object *other) const;
 };
 
 // Object::unidentified_001BFE20 is the existing address-derived accessor at
@@ -156,10 +172,11 @@ public:
 	virtual void fill(_STL::list<Object *> *objects) = 0; // vtable +0xf0
 };
 
+void j_0001da34();
 class Rva2225E0Filter
 {
 public:
-	Bool accepts(Object *object, Player *player);
+	Bool accepts(Object *object, Player *player) { union {void (*raw)(); bool(Rva2225E0Filter::*member)(Object*,Player*);} c;c.raw=&j_0001da34;return (this->*c.member)(object,player); }
 };
 
 class TransportContainModuleData
@@ -214,13 +231,15 @@ public:
 	}
 };
 
-class ObjectCreationListStore
+struct Coord3D;
+class WeaponTemplate;
+class WeaponStore
 {
 public:
-	void bfmeCreate(void *list, Object *owner, void *position);
+	void createAndFireTempWeapon(const WeaponTemplate*, const Object*, const Coord3D*);
 };
 
-extern ObjectCreationListStore *TheObjectCreationListStore;
+extern "C" WeaponStore *g_bfmeRegistryAS;
 
 class OpenContain
 {
@@ -301,6 +320,8 @@ public:
 	virtual void onContaining(Object *rider, Bool wasSelected);
 
 private:
+ unsigned char pad004[0xb4];
+ unsigned m_extraSlotsInUse;
 	TransportContainModuleData *getModuleData() const
 	{
 		return *reinterpret_cast<TransportContainModuleData *const *>(
@@ -331,9 +352,9 @@ void TransportContain::onContaining(Object *rider, Bool wasSelected)
 {
 	reinterpret_cast<OpenContain *>(this)->OpenContain::onContaining(
 		rider, wasSelected);
-	Object *owner = getObject();
 	TransportContainModuleData *data = getModuleData();
-	rider->bfmeSetConditionState(3);
+	Object *owner = getObject();
+	rider->setDisabled(DISABLED_HELD);
 
 	if (payloadCreated())
 	{
@@ -346,7 +367,7 @@ void TransportContain::onContaining(Object *rider, Bool wasSelected)
 		}
 	}
 
-	extraSlotsInUse() += rider->getTransportSlotCount() - 1;
+	m_extraSlotsInUse += rider->getTransportSlotCount() - 1;
 	if (getContainCount(0) == 1)
 	{
 		Object *conditionOwner = getObject();
@@ -362,128 +383,50 @@ void TransportContain::onContaining(Object *rider, Bool wasSelected)
 	Drawable *riderDrawable = rider->getDrawable();
 	if (riderDrawable != 0)
 	{
-		if (!containSlot40())
-		{
-			UnsignedInt &conditions = *reinterpret_cast<UnsignedInt *>(
-				reinterpret_cast<char *>(rider) + 0x118);
-			if ((conditions & 0x00800000) == 0)
-			{
-				conditions |= 0x00800000;
-				rider->notifyModelConditionChanged();
-			}
-			else if ((conditions & 0x02000000) == 0)
-			{
-				conditions |= 0x02000000;
-				rider->notifyModelConditionChanged();
-			}
-		}
-		else
-		{
-			if (reinterpret_cast<Thing *>(rider)->isKindOf(KINDOF_BFME_66))
-			{
-				UnsignedInt &conditions = *reinterpret_cast<UnsignedInt *>(
-					reinterpret_cast<char *>(rider) + 0x118);
-				if ((conditions & 0x00800000) == 0)
-				{
-					conditions |= 0x00800000;
-					rider->notifyModelConditionChanged();
-				}
-				else if ((conditions & 0x02000000) == 0)
-				{
-					conditions |= 0x02000000;
-					rider->notifyModelConditionChanged();
-				}
-			}
-			else
-			{
-				UnsignedInt &conditions = *reinterpret_cast<UnsignedInt *>(
-					reinterpret_cast<char *>(rider) + 0x118);
-				if ((conditions & 0x02000000) == 0)
-				{
-					conditions |= 0x02000000;
-					rider->notifyModelConditionChanged();
-				}
-			}
-		}
+if(!containSlot40()) { unsigned flags=((unsigned*)&rider->m_modelConditionFlags)[2]; if(!(flags&0x800000)) { rider->m_modelConditionFlags.set(87); rider->notifyModelConditionChanged(); } } else if(reinterpret_cast<Thing*>(rider)->isKindOf(KINDOF_BFME_66)) { unsigned flags=((unsigned*)&rider->m_modelConditionFlags)[2]; if(!(flags&0x800000)) { rider->m_modelConditionFlags.set(87); rider->notifyModelConditionChanged(); } } else { unsigned flags=((unsigned*)&rider->m_modelConditionFlags)[2]; if(!(flags&0x2000000)) { rider->m_modelConditionFlags.set(89); rider->notifyModelConditionChanged(); } }
 
-		riderDrawable->apply(false);
+		riderDrawable->applyPendingModelConditionFlags(false);
 	}
 
-	Thing::KindOfMaskType *firstMask = data->kindOfMask180();
-	for (Int i = 0; i != 6; ++i)
-	{
-		if (firstMask->m_bits[i] != 0)
-		{
-			if (reinterpret_cast<Thing *>(rider)->isKindOfMulti(
-				*data->kindOfMask198(), *reinterpret_cast<Thing::KindOfMaskType *>(
-					0x012ED8B8)))
-			{
-				getObject()->clearCondition(4);
-				goto masks_done;
-			}
-			break;
-		}
-	}
+	if(data->kindOfMask180()->any() && reinterpret_cast<Thing*>(rider)->isKindOfMulti((const BitFlags<116>&)*data->kindOfMask180(),KINDOFMASK_NONE)) owner->clearCondition(4);
+	else if(data->kindOfMask198()->any() && reinterpret_cast<Thing*>(rider)->isKindOfMulti((const BitFlags<116>&)*data->kindOfMask198(),KINDOFMASK_NONE)) owner->clearCondition(5);
 
-	Thing::KindOfMaskType *secondMask = data->kindOfMask198();
-	for (Int i = 0; i != 6; ++i)
-	{
-		if (secondMask->m_bits[i] != 0)
-		{
-			if (reinterpret_cast<Thing *>(rider)->isKindOfMulti(
-				*secondMask, *reinterpret_cast<Thing::KindOfMaskType *>(
-					0x012ED8B8)))
-				getObject()->clearCondition(5);
-			break;
-		}
-	}
-
-	masks_done:
 	containSlot54(rider);
 	containSlot22(rider, false);
 
 	if (data->createList() != 0)
 	{
-		if (owner->getRelationship(rider) != 2)
+		if (getObject()->getRelationship(rider) != 2)
 		{
 			if (!data->keepStatus())
-				rider->setMode(0x3b, 1);
+				rider->setStatusBit(0x3b, true);
 
-			TheObjectCreationListStore->bfmeCreate(
-				data->createList(), owner, reinterpret_cast<char *>(owner) + 0x38);
+			Object* source=getObject(); const Coord3D* position=(const Coord3D*)((char*)source+0x38); g_bfmeRegistryAS->createAndFireTempWeapon((const WeaponTemplate*)data->createList(),source,position);
 			if (!data->keepStatus())
-				rider->clearCondition(0x3b);
+				rider->clearStatus((ObjectStatusTypes)0x3b);
 		}
 	}
 
 	if (!data->applyPassengerDelay() || riderDrawable == 0)
 		return;
 
-	float delay = data->passengerDelay();
-	if (delay <= 0.0f)
-		return;
-	if (!data->filter()->accepts(rider, 0))
-		return;
-	if (!reinterpret_cast<Thing *>(rider)->isKindOf(KINDOF_BFME_6C))
-		return;
-
-	BfmeListProvider *provider = reinterpret_cast<BfmeListProvider *>(
-		rider->unidentified_001BFE20());
-	_STL::list<Object *> objects;
-	provider->fill(&objects);
-	for (_STL::list<Object *>::iterator it = objects.begin(); it != objects.end(); ++it)
-	{
-		Object *object = *it;
-		if (object == 0)
-			continue;
-		Drawable *drawable = object->getDrawable();
-		if (drawable == 0)
-			continue;
-
-		Int frames = (Int)delay;
-		if (data->scalePassengerDelay())
-			drawable->bfmeDelayA(frames);
-		else
-			drawable->bfmeDelayB(frames);
+	if (data->passengerDelay() == 0.0f) return;
+	if (!data->filter()->accepts(rider,0)) return;
+	if (reinterpret_cast<Thing*>(rider)->isKindOf(KINDOF_BFME_6C) && rider->unidentified_001BFE20()) {
+		_STL::list<Object*> objects;
+		((BfmeListProvider*)rider->unidentified_001BFE20())->fill(&objects);
+		for(_STL::list<Object*>::iterator it=objects.begin();it!=objects.end();++it) {
+			Object* object=*it;
+			if(object) {
+				Drawable* drawable=object->getDrawable();
+				if(drawable) {
+					if(data->scalePassengerDelay()) drawable->bfmeDelayA((Int)(data->passengerDelay()*0.03f));
+					else drawable->bfmeDelayB((Int)(data->passengerDelay()*0.03f));
+				}
+			}
+		}
+	} else {
+		if(data->scalePassengerDelay()) riderDrawable->bfmeDelayA((Int)(data->passengerDelay()*0.03f));
+		else riderDrawable->bfmeDelayB((Int)(data->passengerDelay()*0.03f));
 	}
 }

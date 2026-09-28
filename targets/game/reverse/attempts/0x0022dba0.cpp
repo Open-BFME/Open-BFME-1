@@ -1,5 +1,7 @@
 // ?isValidContainerFor@TransportContain@@UBE_NPBVObject@@_N@Z
-// partial score=0.72 date=2026-09-10
+// partial score=0.8807017544 date=2026-09-28
+// ?isValidContainerFor@TransportContain@@UBE_NPBVObject@@_N@Z
+// Corrected semantic retry 2026-09-28; remaining 34 differing bytes.
 // cl: /DNDEBUG /MD /EHsc-
 //
 // Open-BFME: TransportContain::isValidContainerFor, retail 0x0022DBA0.
@@ -58,13 +60,13 @@ public:
 	unsigned char m_unmodelled_000[0x90];
 	unsigned int m_status[6];
 	unsigned char m_unmodelled_0a8[0x110 - 0xa8];
-	unsigned int m_playerMask[8];
-	unsigned char m_unmodelled_130[0x1fc - 0x130];
+	unsigned int m_modelConditionFlags[10];
+	unsigned char m_unmodelled_138[0x1fc - 0x138];
 	ContainModuleInterface *m_contain;
 
-	Bool hasPlayerBit(Int bit) const
+	Bool hasModelConditionBit(unsigned bit) const
 	{
-		return (m_playerMask[bit >> 5] & (1U << (bit & 31))) != 0;
+		return (m_modelConditionFlags[bit >> 5] & (1U << (bit & 31))) != 0;
 	}
 };
 
@@ -72,9 +74,9 @@ class TransportContainModuleData
 {
 public:
 	unsigned char m_unmodelled_000[0x1f9];
-	Bool m_allowTransport;
+	Bool m_unknown1f9;
 	unsigned char m_unmodelled_1fa[0x208 - 0x1fa];
-	Int m_playerMaskBit;
+	Int m_unknown208;
 };
 
 #define TRANSPORT_SLOT(n) virtual void transportSlot##n() = 0;
@@ -90,7 +92,7 @@ public:
 	TRANSPORT_SLOT(15) TRANSPORT_SLOT(16) TRANSPORT_SLOT(17)
 	TRANSPORT_SLOT(18) TRANSPORT_SLOT(19) TRANSPORT_SLOT(20)
 	TRANSPORT_SLOT(21) TRANSPORT_SLOT(22)
-	virtual Int getContainMax() const = 0;
+	virtual unsigned getContainMax() const = 0;
 	TRANSPORT_SLOT(24) TRANSPORT_SLOT(25) TRANSPORT_SLOT(26)
 	TRANSPORT_SLOT(27) TRANSPORT_SLOT(28) TRANSPORT_SLOT(29)
 	TRANSPORT_SLOT(30) TRANSPORT_SLOT(31) TRANSPORT_SLOT(32)
@@ -106,7 +108,7 @@ public:
 	TRANSPORT_SLOT(56) TRANSPORT_SLOT(57) TRANSPORT_SLOT(58)
 	TRANSPORT_SLOT(59) TRANSPORT_SLOT(60) TRANSPORT_SLOT(61)
 	TRANSPORT_SLOT(62) TRANSPORT_SLOT(63)
-	virtual Int getContainCount(Bool countRiders) const = 0;
+	virtual unsigned getContainCount(Bool countRiders) const = 0;
 	virtual Bool isValidContainerFor(const Object *object,
 		Bool checkCapacity) const;
 
@@ -133,7 +135,7 @@ extern void j_0003251f();
 
 struct BfmeOpenContainValidationCall
 {
-	Bool call(Object *object, Bool checkCapacity) const;
+	Bool call(const Object *object, Bool checkCapacity) const;
 };
 
 struct BfmeTransportSlotCountCall
@@ -147,54 +149,53 @@ struct BfmeKindOfCall
 };
 
 static Bool callOpenContainValidation(const TransportContain *self,
-	Object *object, Bool checkCapacity)
+	const Object *object, Bool checkCapacity)
 {
-	typedef Bool (BfmeOpenContainValidationCall::*Function)(Object *, Bool) const;
+	typedef Bool (BfmeOpenContainValidationCall::*Function)(const Object *, Bool) const;
 	union { void (*raw)(); Function member; } function;
 	function.raw = j_000237b8;
 	return (reinterpret_cast<const BfmeOpenContainValidationCall *>(self)->*
 		function.member)(object, checkCapacity);
 }
 
-static Int getTransportSlotCount(Object *object)
+static Int getTransportSlotCount(const Object *object)
 {
 	typedef Int (BfmeTransportSlotCountCall::*Function)();
 	union { void (*raw)(); Function member; } function;
 	function.raw = j_00026107;
-	return (reinterpret_cast<BfmeTransportSlotCountCall *>(object)->*
+	return (reinterpret_cast<BfmeTransportSlotCountCall *>((Object*)object)->*
 		function.member)();
 }
 
-static Bool isKindOf(Object *object, Int kind)
+static Bool isKindOf(const Object *object, Int kind)
 {
 	typedef Bool (BfmeKindOfCall::*Function)(Int);
 	union { void (*raw)(); Function member; } function;
 	function.raw = j_0003251f;
-	return (reinterpret_cast<BfmeKindOfCall *>(object)->*
+	return (reinterpret_cast<BfmeKindOfCall *>((Object*)object)->*
 		function.member)(kind);
 }
 
 // ?isValidContainerFor@TransportContain@@UBE_NPBVObject@@_N@Z
-Bool TransportContain::isValidContainerFor(const Object *object,
+Bool TransportContain::isValidContainerFor(const Object *rider,
 	Bool checkCapacity) const
 {
-	register Object *rider = (Object *)object;
 	TransportContainModuleData *data = getModuleData();
-	Int playerMaskBit = data->m_playerMaskBit;
 	if (rider == 0)
 		return false;
 
 	if ((rider->m_status[1] & 0x20000000) != 0)
 		return false;
 
+	Int playerMaskBit = data->m_unknown208;
 	if (playerMaskBit != -1 &&
-		!getObject()->hasPlayerBit(playerMaskBit))
+		!getObject()->hasModelConditionBit(playerMaskBit))
 		return false;
 
 	ContainModuleInterface *contain = rider->m_contain;
 	if (contain != 0 && contain->isSpecialZeroSlotContainer())
 	{
-		const ContainedItemsList *items = contain->getContainedItemsList();
+		const ContainedItemsList *items = rider->m_contain->getContainedItemsList();
 		if (items != 0)
 		{
 			ContainedItemNode *node = items->m_sentinel->m_next;
@@ -206,19 +207,16 @@ Bool TransportContain::isValidContainerFor(const Object *object,
 	if (!callOpenContainValidation(this, rider, checkCapacity))
 		return false;
 
-	if (getModuleData()->m_allowTransport == false)
-		return false;
-
-	if (!isKindOf(rider, 0x83))
+	if (isKindOf(rider, 0x83) && getModuleData()->m_unknown1f9)
 		return getContainCount(false) < getContainMax();
 
 	Int transportSlotCount = getTransportSlotCount(rider);
 	if (transportSlotCount == 0)
 		return false;
 
-	if (!checkCapacity)
-		return true;
-
-	return getContainCount(false) + m_extraSlotsInUse +
-		transportSlotCount <= getContainMax();
+	if (checkCapacity)
+		return getContainCount(false) + m_extraSlotsInUse +
+			transportSlotCount <= getContainMax();
+	return true;
 }
+
