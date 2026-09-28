@@ -1,233 +1,594 @@
 // ?reallyDoFX@ParticleSystemFXNugget@@IBEXPBUCoord3D@@PBVMatrix3D@@PBVObject@@2@Z
-// partial score=0.25 date=2026-09-28
-// cl: /DNDEBUG /MD /EHsc
-// ?reallyDoFX@ParticleSystemFXNugget@@IBEXPBUCoord3D@@PBVMatrix3D@@PBVObject@@2@Z  retail 0x0042A270 3002 B
-// First full-flow BFME body (no earlier bank existed). Field names from the BFME FieldParse table as
-// used by the matched ctor (ParticleSystemFXNuggetConstructor.cpp). Flow decoded from retail:
-// createParticleSystem returns a BfmeParticleSystemHandle (EH state 0; dtor = if (m_system) U1Sub::_bfme_detach);
-// every sys-> goes through the handle operator-> (Make00001B18 null system); CreateBoneOverride /
-// CreateBoneAtTarget pick the bone matrix translation instead of the radius spread (the random angle is
-// still drawn and popped); OrientToObject copies *mtx and, with SetTargetMatrix, post-multiplies by a
-// Rotate_Y(PI - atan2(dz + 10, horizontal)) pitch toward the secondary; OnlyIfOnLand/OnlyIfOnWater use
-// TerrainLogic slot 0x4C (isUnderwater) + TheAI->pathfinder()->getLayer and destroy the system;
-// AttachToBone -> 0x005BE1A0 (sets the AsciiString at sys+0xBC); TargetBoneOverride / UseTargetOffset
-// store a target at sys+0x18C with flag sys+0x198; SystemLife -> sys+0x12C; InitialDelay -> ceil import.
-// KNOWN GAP (the main lever still open): retail builds every Matrix3D through ??_H(ptr,0x10,3,Vector4 ctor)
-// (ILT 0x0000AE5C / 0x00045561). This standalone TU gets an inline 3-call loop instead (Vector4() declared
-// only; a defined empty ctor folds away and lets VC7.1 constant-fold the identity pitch matrix, which
-// retail cannot because &matrix escapes into ??_H). Measured: the matched in-class doFXObj in
-// game/GameEngine/Source/GameClient/FXList.cpp DOES emit ??_H for Matrix3D(1), but the same code as a free
-// function, an out-of-class member, or an in-class virtual of another class in that same TU does not.
-// Compiled 2870 vs 3002, 2326 non-reloc diffs, shape 0.754, frame 0x124 vs 0x120, this in EBP (retail EDI).
+// partial score=0.28 date=2026-09-28
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+#define Matrix4x4 Matrix4  // BFME renamed it
+// BANK for 0x0042A270 ParticleSystemFXNugget::reallyDoFX: a full copy of
+// game/GameEngine/Source/GameClient/FXList.cpp with the BFME body defined IN-CLASS in
+// ParticleSystemFXNugget (search "void reallyDoFX(const Coord3D *primary") and the class
+// members re-laid to the BFME offsets (m_name +0xB4 .. m_targetOffset +0x11C). Only an
+// in-class definition in this class/TU emits retail's ??_H vector-ctor-iterator for each
+// Matrix3D (4 calls, frame 0x120 in the base variant). Callees that ZH headers cannot name
+// are reached through TU-local views (BfmeObjectView/BfmeTerrainView/...); several of those
+// view names are NOT pinned, so this cannot land as-is even if exact.
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
-#include <math.h>
+////////////////////////////////////////////////////////////////////////////////
+//																																						//
+//  (c) 2001-2003 Electronic Arts Inc.																				//
+//																																						//
+////////////////////////////////////////////////////////////////////////////////
 
-typedef float Real;
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+// FILE: FXList.cpp ///////////////////////////////////////////////////////////////////////////////
+// Author: Steven Johnson, December 2001
+// Desc:   FXList descriptions
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define PI 3.14159265359f
-#define LOGICFRAMES_PER_MSEC_REAL 0.005f
+// INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
+#include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
-extern "C" __declspec(dllimport) double __cdecl ceil(double);
+#include "GameClient/FXList.h"
 
-__forceinline long fast_float2long_round(Real f)
+#include "Common/DrawModule.h"
+#include "Common/GameAudio.h"
+#include "Common/INI.h"
+#include "Common/Player.h"
+#include "Common/PlayerList.h"
+#include "Common/RandomValue.h"
+#include "Common/ThingTemplate.h"
+#include "Common/ThingFactory.h"
+
+#include "GameLogic/Object.h"
+#include "GameLogic/GameLogic.h"
+#include "GameLogic/TerrainLogic.h"
+#include "GameClient/Display.h"
+#include "GameClient/GameClient.h"
+#include "GameClient/Drawable.h"
+#include "GameClient/ParticleSys.h"
+#include "GameLogic/PartitionManager.h"
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// PUBLIC DATA ////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+#ifdef _INTERNAL
+// for occasional debugging...
+//#pragma optimize("", off)
+//#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
+#endif
+
+FXListStore *TheFXListStore = NULL;					///< the FXList store definition
+
+//-------------------------------------------------------------------------------------------------
+static void adjustVector(Coord3D *vec, const Matrix3D* mtx)
 {
-	long i;
-	__asm {
-		fld [f]
-		fistp [i]
+	if (mtx)
+	{
+		Vector3 rotatedVector;
+		rotatedVector.X = vec->x;
+		rotatedVector.Y = vec->y;
+		rotatedVector.Z = vec->z;
+		rotatedVector = mtx->Rotate_Vector(rotatedVector);
+		vec->x = rotatedVector.X;
+		vec->y = rotatedVector.Y;
+		vec->z = rotatedVector.Z;
 	}
-	return i;
 }
-#define REAL_TO_INT_CEIL(x) (fast_float2long_round((Real)ceil((double)(x))))
 
-struct Coord3D
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// PRIVATE CLASSES ///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// BFME's placement operator delete is one shared 12-byte body that calls the
+// CRT free import directly; ZH's macro routes it through ::operator delete,
+// which is a different (and here, wrong) callee.
+extern "C" void free(void *);
+#undef MEMORY_POOL_GLUE_WITHOUT_GCMP
+#define MEMORY_POOL_GLUE_WITHOUT_GCMP(ARGCLASS) \
+protected: \
+	virtual ~ARGCLASS(); \
+public: \
+	enum ARGCLASS##MagicEnum { ARGCLASS##_GLUE_NOT_IMPLEMENTED = 0 }; \
+public: \
+	inline void *operator new(size_t s, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
+	{ \
+		DEBUG_ASSERTCRASH(s == sizeof(ARGCLASS), ("The wrong operator new is being called; ensure all objects in the hierarchy have MemoryPoolGlue set up correctly")); \
+		return MP_GLUE_ALLOCATE(ARGCLASS); \
+	} \
+public: \
+	inline void operator delete(void *p, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
+	{ \
+		free(p); \
+	} \
+protected: \
+	inline void *operator new(size_t s) \
+	{ \
+		DEBUG_ASSERTCRASH(s == sizeof(ARGCLASS), ("The wrong operator new is being called; ensure all objects in the hierarchy have MemoryPoolGlue set up correctly")); \
+		return ::operator new(s); \
+	} \
+	inline void operator delete(void *p) \
+	{ \
+		::operator delete(p); \
+	} \
+private: \
+	virtual MemoryPool *getObjectMemoryPool() \
+	{ \
+		return ARGCLASS::getClassMemoryPool(); \
+	} \
+public:
+
+//-------------------------------------------------------------------------------------------------
+void FXNugget::doFXObj(const Object* primary, const Object* secondary) const
 {
-	Real x, y, z;
-};
+	const Coord3D* primaryPosition = primary ? primary->getPosition() : NULL;
+	const Matrix3D* primaryTransform = primary ? primary->getTransformMatrix() : NULL;
+	const Real speed = 0.0f;	// yes, that's right -- NOT the object's speed.
+	const Coord3D* secondaryPosition = secondary ? secondary->getPosition() : NULL;
+	doFXPos(primaryPosition, primaryTransform, speed, secondaryPosition);
+}
 
-class Vector4
+//-------------------------------------------------------------------------------------------------
+// ??0SoundFXNugget@@QAE@XZ present-unmatched
+class SoundFXNugget : public FXNugget
+{
+	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(SoundFXNugget, "SoundFXNugget")		
+	
+public:
+
+	virtual void doFXPos(const Coord3D *primary, const Matrix3D* /*primaryMtx*/, const Real /*primarySpeed*/, const Coord3D * /*secondary*/, const Real /*overrideRadius*/ ) const
+	{
+		AudioEventRTS sound(m_soundName);
+		
+		if (primary) 
+		{
+			sound.setPosition(primary);
+		}
+
+		TheAudio->addAudioEvent(&sound);
+	}
+
+	// Body: game/masm_dumps/SoundFXNugget_doFXObj_428A60.asm (BFME rewrite @ 0x428A60/146B)
+	// Retail: name@+0xB4, AudioEventRTS 2-arg, addAudioEvent vtbl+0x44 (not ZH m_soundName@+4).
+	virtual void doFXObj(const Object* primary, const Object* secondary = NULL) const;
+
+	// Retail: global new(0xB8)+filters MultiIniFieldParse; Name@+0xB4; queue 0x9A15F7 was parseSideInfo@AI interior.
+	static void parse(INI *ini, void *instance, void* store, const void* userData);
+
+	// The BFME-layout facade inlines a different ctor, so retain this TU's Zero Hour COMDATs.
+	static void bfmeRetainSymbols()
+	{
+		SoundFXNugget *n = newInstance(SoundFXNugget);
+		volatile SoundFXNugget *sink = n;
+		(void)sink;
+	}
+
+private:
+	AsciiString		m_soundName;
+};  
+EMPTY_DTOR(SoundFXNugget)
+
+static int s_bfmeRetainSoundFXNugget =
+	(SoundFXNugget::bfmeRetainSymbols(), 0);
+
+//-------------------------------------------------------------------------------------------------
+static Real calcDist(const Coord3D& src, const Coord3D& dst)
+{
+  Real dx = dst.x - src.x;
+  Real dy = dst.y - src.y;
+  Real dz = dst.z - src.z;
+  return sqrt(dx*dx + dy*dy + dz*dz);
+}
+
+//-------------------------------------------------------------------------------------------------
+class TracerFXNugget : public FXNugget
+{
+	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(TracerFXNugget, "TracerFXNugget")		
+public:
+
+	TracerFXNugget()
+	{
+		m_tracerName.set("GenericTracer");
+    m_boneName.clear();
+    m_speed = 0.0f; // means "use passed-in speed"
+    m_decayAt = 1.0f;
+		m_length = 10.0f;
+		m_width = 1.0f;
+		m_color.red = m_color.green = m_color.blue = 1.0f;
+		m_probability = 1.0f;
+	}
+
+	virtual void doFXPos(const Coord3D *primary, const Matrix3D* primaryMtx, const Real primarySpeed, const Coord3D *secondary, const Real /*overrideRadius*/ ) const
+	{
+		if (m_probability <= GameClientRandomValueReal(0, 1))
+			return;
+
+		if (primary && secondary)
+		{
+			Drawable *tracer = TheThingFactory->newDrawable(TheThingFactory->findTemplate(m_tracerName));
+			if(!tracer)
+				return;
+			
+			//Kris -- Redid this section Sept 18, 2002
+			//Calculate tracer orientations to face from primary to secondary position. This
+			//should be the direction that the projectile is being fired towards. It doesn't make
+			//sense that the old stuff made use of the muzzle fx bone orientation (because it's a 
+			//subobject). It had other problems because of elevation variations the tracers would
+			//stay on the ground.
+			//tracer->setTransformMatrix(primaryMtx);
+			Matrix3D tracerMtx;
+			Vector3 pos( primary->x, primary->y, primary->z );
+			Vector3 dir( secondary->x - primary->x, secondary->y - primary->y, secondary->z - primary->z );
+			dir.Normalize(); //This is fantastically crucial for calling buildTransformMatrix!!!!!
+			tracerMtx.buildTransformMatrix( pos, dir );
+			tracer->setTransformMatrix( &tracerMtx );
+			tracer->setPosition(primary);
+
+			Real speed = m_speed;
+			if (speed == 0.0f)
+			{
+				speed = primarySpeed;
+			}
+
+			TracerDrawInterface* tdi = NULL;
+			for (DrawModule** d = tracer->getDrawModules(); *d; ++d)
+			{
+				if ((tdi = (*d)->getTracerDrawInterface()) != NULL)
+				{
+					tdi->setTracerParms(speed, m_length, m_width, m_color, 1.0f);
+				}
+			}
+
+			// estimate how long it will take us to get to the destination
+			Real dist = calcDist(*primary, *secondary) - m_length;
+			Real frames = (dist >= 0.0f && speed >= 0.0f) ? (dist / speed) : 1;
+			Int framesAdjusted = REAL_TO_INT_CEIL(frames * m_decayAt);
+			tracer->setExpirationDate(TheGameLogic->getFrame() + framesAdjusted);
+		}
+		else
+		{
+			DEBUG_CRASH(("You must have a primary and secondary source for this effect"));
+		}
+	}
+
+	static void parse(INI *ini, void *instance, void* /*store*/, const void* /*userData*/)
+	{
+		static const FieldParse myFieldParse[] = 
+		{
+			{ "TracerName",			INI::parseAsciiString,			NULL, offsetof( TracerFXNugget, m_tracerName ) },
+			{ "BoneName",				INI::parseAsciiString,			NULL, offsetof( TracerFXNugget, m_boneName ) },
+      { "Speed",          INI::parseVelocityReal,     NULL, offsetof( TracerFXNugget, m_speed ) },
+      { "DecayAt",        INI::parseReal,             NULL, offsetof( TracerFXNugget, m_decayAt ) },
+      { "Length",					INI::parseReal,             NULL, offsetof( TracerFXNugget, m_length ) },
+      { "Width",					INI::parseReal,             NULL, offsetof( TracerFXNugget, m_width ) },
+      { "Color",					INI::parseRGBColor,					NULL, offsetof( TracerFXNugget, m_color ) },
+      { "Probability",		INI::parseReal,             NULL, offsetof( TracerFXNugget, m_probability ) },
+			{ 0, 0, 0, 0 }
+		};
+
+		TracerFXNugget* nugget = newInstance( TracerFXNugget );	
+		ini->initFromINI(nugget, myFieldParse);
+		((FXList*)instance)->addFXNugget(nugget);
+	}
+
+private:
+	AsciiString			m_tracerName;
+  AsciiString     m_boneName;
+  Real            m_speed;
+  Real            m_decayAt;
+	Real						m_length;
+	Real						m_width;
+	RGBColor				m_color;
+	Real						m_probability;
+};  
+EMPTY_DTOR(TracerFXNugget)
+
+//-------------------------------------------------------------------------------------------------
+class RayEffectFXNugget : public FXNugget
+{
+	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(RayEffectFXNugget, "RayEffectFXNugget")		
+public:
+
+	RayEffectFXNugget()
+	{
+		m_templateName.clear();
+		m_primaryOffset.x = m_primaryOffset.y = m_primaryOffset.z = 0;
+		m_secondaryOffset.x = m_secondaryOffset.y = m_secondaryOffset.z = 0;
+	}
+
+	virtual void doFXPos(const Coord3D *primary, const Matrix3D* /*primaryMtx*/, const Real /*primarySpeed*/, const Coord3D * secondary, const Real /*overrideRadius*/ ) const
+	{
+		const ThingTemplate* tmpl = TheThingFactory->findTemplate(m_templateName);
+		DEBUG_ASSERTCRASH(tmpl, ("RayEffect %s not found\n",m_templateName.str()));
+		if (primary && secondary && tmpl)
+		{
+			Coord3D sourcePos = *primary;
+			sourcePos.x += m_primaryOffset.x;
+			sourcePos.y += m_primaryOffset.y;
+			sourcePos.z += m_primaryOffset.z;
+
+			Coord3D targetPos = *secondary;
+			targetPos.x += m_secondaryOffset.x;
+			targetPos.y += m_secondaryOffset.y;
+			targetPos.z += m_secondaryOffset.z;
+
+			TheGameClient->createRayEffectByTemplate(&sourcePos, &targetPos, tmpl);
+		}
+		else
+		{
+			DEBUG_CRASH(("You must have a primary AND secondary source for this effect"));
+		}
+	}
+
+	static void parse(INI *ini, void *instance, void* /*store*/, const void* /*userData*/)
+	{
+		static const FieldParse myFieldParse[] = 
+		{
+			{ "Name",									INI::parseAsciiString,			NULL, offsetof( RayEffectFXNugget, m_templateName ) },
+			{ "PrimaryOffset",				INI::parseCoord3D,					NULL, offsetof( RayEffectFXNugget, m_primaryOffset ) },
+			{ "SecondaryOffset",			INI::parseCoord3D,					NULL, offsetof( RayEffectFXNugget, m_secondaryOffset ) },
+			{ 0, 0, 0, 0 }
+		};
+
+		RayEffectFXNugget* nugget = newInstance( RayEffectFXNugget ); 
+		ini->initFromINI(nugget, myFieldParse);
+		((FXList*)instance)->addFXNugget(nugget);
+	}
+
+private:
+	AsciiString			m_templateName;
+	Coord3D					m_primaryOffset;
+	Coord3D					m_secondaryOffset;
+};  
+EMPTY_DTOR(RayEffectFXNugget)
+
+//-------------------------------------------------------------------------------------------------
+class LightPulseFXNugget : public FXNugget
+{
+	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(LightPulseFXNugget, "LightPulseFXNugget")		
+public:
+
+	LightPulseFXNugget() : m_radius(0), m_increaseFrames(0), m_decreaseFrames(0), m_boundingCirclePct(0)
+	{
+		m_color.red = m_color.green = m_color.blue = 0;
+	}
+
+	virtual void doFXObj(const Object* primary, const Object* /*secondary*/) const
+	{
+		if (primary)
+		{
+			Real radius = m_radius;
+
+			if (m_boundingCirclePct > 0)
+				radius = (primary->getGeometryInfo().getBoundingCircleRadius() * m_boundingCirclePct);
+
+			TheDisplay->createLightPulse(primary->getPosition(), &m_color, 1, radius, m_increaseFrames, m_decreaseFrames);
+		}
+		else
+		{
+			DEBUG_CRASH(("You must have a primary source for this effect"));
+		}
+	}
+
+	virtual void doFXPos(const Coord3D *primary, const Matrix3D* /*primaryMtx*/, const Real /*primarySpeed*/, const Coord3D * /*secondary*/, const Real /*overrideRadius*/ ) const
+	{
+		if (primary)
+		{
+			TheDisplay->createLightPulse(primary, &m_color, 1, m_radius, m_increaseFrames, m_decreaseFrames);
+		}
+		else
+		{
+			DEBUG_CRASH(("You must have a primary source for this effect"));
+		}
+	}
+
+	static void parse(INI *ini, void *instance, void* /*store*/, const void* /*userData*/)
+	{
+		static const FieldParse myFieldParse[] = 
+		{
+			{ "Color",						INI::parseRGBColor,								NULL, offsetof( LightPulseFXNugget, m_color ) },
+			{ "Radius",						INI::parseReal,										NULL, offsetof( LightPulseFXNugget, m_radius ) },
+			{ "RadiusAsPercentOfObjectSize",		INI::parsePercentToReal,	NULL, offsetof( LightPulseFXNugget, m_boundingCirclePct ) },
+			{ "IncreaseTime",			INI::parseDurationUnsignedInt,	NULL, offsetof( LightPulseFXNugget, m_increaseFrames ) },
+			{ "DecreaseTime",			INI::parseDurationUnsignedInt,	NULL, offsetof( LightPulseFXNugget, m_decreaseFrames ) },
+			{ 0, 0, 0, 0 }
+		};
+
+		LightPulseFXNugget* nugget = newInstance( LightPulseFXNugget );	
+		ini->initFromINI(nugget, myFieldParse);
+		((FXList*)instance)->addFXNugget(nugget);
+	}
+
+private:
+	RGBColor			m_color;
+	Real					m_radius;
+	Real					m_boundingCirclePct;
+	UnsignedInt		m_increaseFrames;
+	UnsignedInt		m_decreaseFrames;
+};  
+EMPTY_DTOR(LightPulseFXNugget)
+
+//-------------------------------------------------------------------------------------------------
+class ViewShakeFXNugget : public FXNugget
+{
+	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(ViewShakeFXNugget, "ViewShakeFXNugget")		
+public:
+
+	// ??0ViewShakeFXNugget@@QAE@XZ present-unmatched
+	ViewShakeFXNugget() : m_shake(View::SHAKE_NORMAL)
+	{
+	}
+
+	virtual void doFXPos(const Coord3D *primary, const Matrix3D* /*primaryMtx*/, const Real /*primarySpeed*/, const Coord3D * /*secondary*/, const Real /*overrideRadius*/ ) const
+	{
+		if (primary)
+		{
+			if (TheTacticalView)
+				TheTacticalView->shake(primary, m_shake);
+		}
+		else
+		{
+			DEBUG_CRASH(("You must have a primary source for this effect"));
+		}
+	}
+
+	static void parse(INI *ini, void *instance, void* /*store*/, const void* /*userData*/)
+	{
+		static const FieldParse myFieldParse[] = 
+		{
+			{ "Type",				parseShakeType,								NULL, offsetof( ViewShakeFXNugget, m_shake ) },
+			{ 0, 0, 0, 0 }
+		};
+
+		ViewShakeFXNugget* nugget = newInstance( ViewShakeFXNugget );	
+		ini->initFromINI(nugget, myFieldParse);
+		((FXList*)instance)->addFXNugget(nugget);
+	}
+
+protected:
+	static void parseShakeType( INI* ini, void *instance, void *store, const void* /*userData*/ )
+	{
+		static const LookupListRec shakeTypeNames[] = 
+		{
+			{ "SUBTLE", View::SHAKE_SUBTLE },
+			{ "NORMAL", View::SHAKE_NORMAL },
+			{ "STRONG", View::SHAKE_STRONG },
+			{ "SEVERE", View::SHAKE_SEVERE },
+			{ "CINE_EXTREME", View::SHAKE_CINE_EXTREME },
+			{ "CINE_INSANE",  View::SHAKE_CINE_INSANE },
+			{ 0, 0 }
+		};
+		*(Int *)store = INI::scanLookupList(ini->getNextToken(), shakeTypeNames);
+	}
+
+private:
+	View::CameraShakeType m_shake;
+
+};  
+EMPTY_DTOR(ViewShakeFXNugget)
+
+//-------------------------------------------------------------------------------------------------
+class TerrainScorchFXNugget : public FXNugget
+{
+	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(TerrainScorchFXNugget, "TerrainScorchFXNugget")		
+public:
+
+	// ?a_003500a0@@YAXXZ present-unmatched
+	TerrainScorchFXNugget() : m_scorch(-1), m_radius(0)
+	{
+	}
+
+	virtual void doFXPos(const Coord3D *primary, const Matrix3D* /*primaryMtx*/, const Real /*primarySpeed*/, const Coord3D * /*secondary*/, const Real /*overrideRadius*/ ) const
+	{
+		if (primary)
+		{
+			Int scorch = m_scorch;
+			if (scorch < 0)
+			{
+				scorch = GameClientRandomValue( SCORCH_1, SCORCH_4 );
+			}
+			TheGameClient->addScorch(primary, m_radius, (Scorches)scorch);
+		}
+		else
+		{
+			DEBUG_CRASH(("You must have a primary source for this effect"));
+		}
+	}
+
+	static void parse(INI *ini, void *instance, void* store, const void* userData);
+
+	// The BFME-layout parse facade cannot keep the Zero Hour COMDATs claimed by this TU alive.
+	static void bfmeRetainSymbols()
+	{
+		TerrainScorchFXNugget *n = newInstance(TerrainScorchFXNugget);
+		volatile TerrainScorchFXNugget *sink = n;
+		(void)sink;
+		static const FieldParse retainParse[] = {
+			{ "Type", parseScorchType, NULL, 0 },
+			{ 0, 0, 0, 0 }
+		};
+		volatile const FieldParse *fp = retainParse;
+		(void)fp;
+	}
+
+protected:
+
+	static void parseScorchType( INI* ini, void *instance, void *store, const void* /*userData*/ )
+	{
+		static const LookupListRec scorchTypeNames[] = 
+		{
+			{ "SCORCH_1",				SCORCH_1 },
+			{ "SCORCH_2",				SCORCH_2 },
+			{ "SCORCH_3",				SCORCH_3 },
+			{ "SCORCH_4",				SCORCH_4 },
+			{ "SHADOW_SCORCH",	SHADOW_SCORCH },
+			{ "RANDOM",					-1 },
+			{ 0, 0 }
+		};
+		*(Int *)store = INI::scanLookupList(ini->getNextToken(), scorchTypeNames);
+	}
+
+private:
+	Int		m_scorch;
+	Real	m_radius;
+};  
+EMPTY_DTOR(TerrainScorchFXNugget)
+
+static int s_bfmeRetainTerrainScorchFXNugget =
+	(TerrainScorchFXNugget::bfmeRetainSymbols(), 0);
+
+
+//-------------------------------------------------------------------------------------------------
+// BFME views used by ParticleSystemFXNugget::reallyDoFX (retail 0x0042A270).
+class U1Sub
 {
 public:
-	Vector4();
-	float &operator[](int i) { return (&X)[i]; }
-	const float &operator[](int i) const { return (&X)[i]; }
-	void Set(float x, float y, float z, float w) { X = x; Y = y; Z = z; W = w; }
-	float X, Y, Z, W;
+	void _bfme_detach(void);
+	ParticleSystem *m_system;
+	U1Sub *m_previous;
+	U1Sub *m_next;
 };
-
-class Matrix3D
+ParticleSystem *Make00001B18(void);
+namespace FXParticleSystem
 {
-public:
-	__forceinline Matrix3D() {}
-	__forceinline explicit Matrix3D(bool init) { if (init) Make_Identity(); }
-	__forceinline Matrix3D(const Matrix3D &m)
+	class ParticleSystemTemplate;
+	class ParticleSystemHandle : public U1Sub
 	{
-		Row[0] = m.Row[0];
-		Row[1] = m.Row[1];
-		Row[2] = m.Row[2];
-	}
-	Vector4 &operator[](int i) { return Row[i]; }
-	const Vector4 &operator[](int i) const { return Row[i]; }
-	__forceinline void Make_Identity(void)
-	{
-		Row[0].Set(1.0f, 0.0f, 0.0f, 0.0f);
-		Row[1].Set(0.0f, 1.0f, 0.0f, 0.0f);
-		Row[2].Set(0.0f, 0.0f, 1.0f, 0.0f);
-	}
-	__forceinline void Rotate_Y(float theta)
-	{
-		float tmp1, tmp2;
-		float s, c;
-		s = sinf(theta);
-		c = cosf(theta);
-		tmp1 = Row[0][0]; tmp2 = Row[0][2];
-		Row[0][0] = (float)(c*tmp1 - s*tmp2);
-		Row[0][2] = (float)(s*tmp1 + c*tmp2);
-		tmp1 = Row[1][0]; tmp2 = Row[1][2];
-		Row[1][0] = (float)(c*tmp1 - s*tmp2);
-		Row[1][2] = (float)(s*tmp1 + c*tmp2);
-		tmp1 = Row[2][0]; tmp2 = Row[2][2];
-		Row[2][0] = (float)(c*tmp1 - s*tmp2);
-		Row[2][2] = (float)(s*tmp1 + c*tmp2);
-	}
-	// In-place post-multiply, one row at a time.
-	__forceinline void postMulRow(int r, const Matrix3D &b)
-	{
-		float a0 = Row[r][0], a1 = Row[r][1], a2 = Row[r][2];
-		float t3 = a0*b[0][3] + a1*b[1][3] + a2*b[2][3];
-		Row[r][0] = a0*b[0][0] + a1*b[1][0] + a2*b[2][0];
-		Row[r][1] = a0*b[0][1] + a1*b[1][1] + a2*b[2][1];
-		Row[r][2] = a0*b[0][2] + a1*b[1][2] + a2*b[2][2];
-		Row[r][3] += t3;
-	}
-	__forceinline void postMul(const Matrix3D &b)
-	{
-		postMulRow(0, b);
-		postMulRow(1, b);
-		postMulRow(2, b);
-	}
-	Vector4 Row[3];
-};
-
-void adjustVector(Coord3D *vec, const Matrix3D *mtx);
-
-class AsciiString
-{
-public:
-	struct Header
-	{
-		int ref_count;
-		unsigned short length;
-		unsigned short capacity;
+	public:
+		~ParticleSystemHandle() { if (m_system) _bfme_detach(); }
+		operator Bool() const { return m_system != 0; }
+		::ParticleSystem *operator->() const
+		{
+			if (!m_system)
+				return Make00001B18();
+			return m_system;
+		}
 	};
-	const char *str() const { return m_data ? (const char *)(m_data + 1) : ""; }
-	Bool isEmpty() const { return m_data == 0 || m_data->length == 0; }
-	Header *m_data;
-};
-
-class GameClientRandomVariable
-{
-public:
-	Real getValue(void) const;
-private:
-	Real m_min, m_max;
-	Int m_type;
-};
-
-Real GetGameClientRandomValueReal(Real lo, Real hi, char *file, int line);
-
-enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1 };
-
-class Drawable
-{
-public:
-	Bool getCurrentWorldspaceClientBonePositions(const char *boneName, Matrix3D &transform) const;
-};
-
-class Object
-{
-public:
-	virtual void v00();
-	virtual void v04();
-	virtual void v08();
-	virtual void v0c();
-	virtual void v10();
-	virtual void v14();
-	virtual void v18();
-	virtual void v1c();
-	virtual void v20();
-	virtual void v24();
-	virtual Drawable *getDrawable() const;
-	const Coord3D *getPosition() const
+	class ParticleSystemManager
 	{
-		return reinterpret_cast<const Coord3D *>(reinterpret_cast<const char *>(this) + 0x38);
-	}
-	Int getLayer() const;
-};
-
-class TerrainLogic
+	public:
+		ParticleSystemHandle createParticleSystem(const ParticleSystemTemplate *sysTemplate, bool createSlaves);
+	};
+}
+class BfmeParticleSystemView
 {
 public:
-	virtual void v00();
-	virtual void v04();
-	virtual void v08();
-	virtual void v0c();
-	virtual void v10();
-	virtual void v14();
-	virtual void v18();
-	virtual Real getLayerHeight(Real x, Real y, PathfindLayerEnum layer, Coord3D *normal = 0, Bool clip = true) const;
-	virtual void v20();
-	virtual void v24();
-	virtual void v28();
-	virtual void v2c();
-	virtual void v30();
-	virtual void v34();
-	virtual void v38();
-	virtual void v3c();
-	virtual void v40();
-	virtual void v44();
-	virtual void v48();
-	virtual Bool isUnderwater(Real x, Real y, Real *waterZ = 0, Real *terrainZ = 0);
-	PathfindLayerEnum getLayerForDestination(Object *obj, const Coord3D *pos);
-};
-extern TerrainLogic *TheTerrainLogic;
-
-class Pathfinder
-{
-public:
-	Int getLayer(const Coord3D *pos);
-};
-
-class AI
-{
-public:
-	Pathfinder *pathfinder() { return m_pathfinder; }
-private:
-	unsigned char m_pad[0xc];
-	Pathfinder *m_pathfinder;
-};
-extern AI *TheAI;
-
-class ParticleSystemTemplate;
-
-class ParticleSystem
-{
-public:
-	void setLocalTransform(const Matrix3D *matrix);
-	void rotateLocalTransformX(Real x);
-	void rotateLocalTransformY(Real y);
-	void rotateLocalTransformZ(Real z);
-	void attachToObject(const Object *obj);
-	void setPosition(const Coord3D *pos);
-	void destroy();
-	void rva005BE1A0(const AsciiString &boneName);
-	void setInitialDelay(UnsignedInt delay) { m_delayLeft = delay; }
-	void setSystemLifetime(Int frames) { m_systemLifetime = frames; }
-	void setTargetPosition(const Coord3D &pos) { m_targetPos = pos; m_hasTarget = true; }
-private:
+	void setAttachBone005BE1A0(const AsciiString &boneName);
 	unsigned char m_pad000[0x124];
 	UnsignedInt m_delayLeft;
 	unsigned char m_pad128[0x12c - 0x128];
@@ -236,238 +597,639 @@ private:
 	Coord3D m_targetPos;
 	Bool m_hasTarget;
 };
-
-ParticleSystem *Make00001B18(void);
-
-class U1Sub
+class BfmeObjectView
 {
 public:
-	void _bfme_detach(void);
-
-	ParticleSystem *m_system;
-	U1Sub *m_previous;
-	U1Sub *m_next;
+	virtual void v00(); virtual void v04(); virtual void v08(); virtual void v0c(); virtual void v10();
+	virtual void v14(); virtual void v18(); virtual void v1c(); virtual void v20(); virtual void v24();
+	virtual Drawable *getDrawable() const;
+	const Coord3D *getPosition() const { return (const Coord3D *)((const char *)this + 0x38); }
 };
-
-class BfmeParticleSystemHandle : public U1Sub
+class BFMEObjectLayerQuery
 {
 public:
-	~BfmeParticleSystemHandle()
-	{
-		if (m_system)
-			_bfme_detach();
+	Int getLayer() const;
+};
+class BfmeTerrainView
+{
+public:
+	virtual void v00(); virtual void v04(); virtual void v08(); virtual void v0c(); virtual void v10();
+	virtual void v14(); virtual void v18();
+	virtual Real getLayerHeight(Real x, Real y, PathfindLayerEnum layer, Coord3D *normal = 0, Bool clip = true) const;
+	virtual void v20(); virtual void v24(); virtual void v28(); virtual void v2c(); virtual void v30();
+	virtual void v34(); virtual void v38(); virtual void v3c(); virtual void v40(); virtual void v44(); virtual void v48();
+	virtual Bool isUnderwater(Real x, Real y, Real *waterZ = 0, Real *terrainZ = 0);
+	PathfindLayerEnum getLayerForDestination(Object *obj, const Coord3D *pos);
+};
+class BfmePathfinderView { public: Int getLayer(const Coord3D *pos); };
+class BfmeAIView
+{
+public:
+	BfmePathfinderView *pathfinder() { return m_pathfinder; }
+	unsigned char m_pad[0xc];
+	BfmePathfinderView *m_pathfinder;
+};
+#define TheBfmeAI (*(BfmeAIView **)&TheAI)
+class AI;
+extern AI *TheAI;
+
+struct BfmeAsciiStringHeader { int ref_count; unsigned short length; unsigned short capacity; };
+static __forceinline Bool bfmeIsEmpty(const AsciiString &s)
+{
+	const BfmeAsciiStringHeader *d = *(BfmeAsciiStringHeader *const *)&s;
+	return d == 0 || d->length == 0;
+}
+static __forceinline const char *bfmeStr(const AsciiString &s)
+{
+	const BfmeAsciiStringHeader *d = *(BfmeAsciiStringHeader *const *)&s;
+	return d ? (const char *)(d + 1) : "";
+}
+__forceinline long bfme_float2long_round(Real f)
+{
+	long i;
+	__asm {
+		fld [f]
+		fistp [i]
 	}
-	operator Bool() const { return m_system != 0; }
-	ParticleSystem *operator->() const
-	{
-		if (!m_system)
-			return Make00001B18();
-		return m_system;
-	}
-};
+	return i;
+}
 
-class ParticleSystemManager
-{
-public:
-	const ParticleSystemTemplate *findTemplate(const AsciiString &name) const;
-	BfmeParticleSystemHandle createParticleSystem(const ParticleSystemTemplate *sysTemplate, bool createSlaves);
-};
-extern ParticleSystemManager *TheParticleSystemManager;
-
-class FXNugget
-{
-public:
-	virtual ~FXNugget();
-protected:
-	int m_nuggetType;
-private:
-	unsigned char m_bfmeBaseData[0xAC];
-};
-
+//-------------------------------------------------------------------------------------------------
 class ParticleSystemFXNugget : public FXNugget
 {
-protected:
-	void reallyDoFX(const Coord3D *primary, const Matrix3D *mtx, const Object *thingToAttachTo, const Object *secondary) const;
+	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(ParticleSystemFXNugget, "ParticleSystemFXNugget")		
+public:
 
-	__forceinline Bool isOverWater(const Coord3D *pos) const
+	ParticleSystemFXNugget()
 	{
-		Bool underwater = TheTerrainLogic->isUnderwater(pos->x, pos->y);
-		if (underwater && TheAI && TheAI->pathfinder() && TheAI->pathfinder()->getLayer(pos) != LAYER_GROUND)
+		m_name.clear();
+		m_count = 1;
+		m_radius.setRange(0, 0, GameClientRandomVariable::CONSTANT);
+		m_height.setRange(0, 0, GameClientRandomVariable::CONSTANT);
+		// -1 means "don't mess with it, just accept the particle-system's defaults"
+		m_delay.setRange(-1, -1, GameClientRandomVariable::CONSTANT);
+		m_offset.x = m_offset.y = m_offset.z = 0;
+		m_orientToObject = false;
+		m_attachToObject = false;
+		m_createAtGroundHeight = FALSE;
+		m_useCallersRadius = FALSE;
+		m_rotateX = m_rotateY = m_rotateZ = 0;
+	}
+
+	virtual void doFXPos(const Coord3D *primary, const Matrix3D* primaryMtx, const Real /*primarySpeed*/, const Coord3D * /*secondary*/, const Real overrideRadius ) const
+	{
+		if (primary)
+		{
+			reallyDoFX(primary, primaryMtx, NULL, overrideRadius);
+		}
+		else
+		{
+			DEBUG_CRASH(("You must have a primary source for this effect"));
+		}
+	}
+
+	virtual void doFXObj(const Object* primary, const Object* secondary) const
+	{
+		if (primary)
+		{
+
+			// BFME's extended nugget keeps Ricochet at +0x101, beyond the ZH layout retained here.
+			if (*(const Bool *)((const char *)this + 0x101) && secondary)
+			{
+				// HERE WE MUST BUILD A MATRIX WHICH WILL ORIENT THE NEW PARTICLE SYSTEM TO FACE AWAY FROM THE SECONDARY OBJECT
+				// THE RESULT SHOULD LOOK LIKE THE DIRECTION OF THE "ATTACK" IS CARRIED THROUGH LIKE A RICOCHET
+				Real deltaX = primary->getPosition()->x - secondary->getPosition()->x;
+				Real deltaY = primary->getPosition()->y - secondary->getPosition()->y;
+				Real aimingAngle = atan2(deltaY, deltaX);
+				Matrix3D aimingMatrix(1);
+				aimingMatrix.Rotate_Z( aimingAngle );
+
+				reallyDoFX(primary->getPosition(), &aimingMatrix, primary, secondary);
+			}
+			else
+				// if we have an object, then adjust the offset and direction by the object's transformation
+				// matrix, so that (say) an offset of +10 in the z axis "follows" the orientation of the object.
+				reallyDoFX(primary->getPosition(), primary->getTransformMatrix(), primary, secondary);
+		}
+		else
+		{
+			DEBUG_CRASH(("You must have a primary source for this effect"));
+		}
+	}
+
+	static void parse(INI *ini, void *instance, void* /*store*/, const void* /*userData*/)
+	{
+		static const FieldParse myFieldParse[] = 
+		{
+			{ "Name",									INI::parseAsciiString,			NULL, offsetof( ParticleSystemFXNugget, m_name ) },
+			{ "Count",								INI::parseInt,							NULL, offsetof( ParticleSystemFXNugget, m_count ) },
+			{ "Offset",								INI::parseCoord3D,					NULL, offsetof( ParticleSystemFXNugget, m_offset ) },
+			{ "Radius",								INI::parseGameClientRandomVariable,		NULL, offsetof( ParticleSystemFXNugget, m_radius ) },
+			{ "Height",								INI::parseGameClientRandomVariable,		NULL, offsetof( ParticleSystemFXNugget, m_height ) },
+			{ "InitialDelay",					INI::parseGameClientRandomVariable,		NULL, offsetof( ParticleSystemFXNugget, m_delay ) },
+			{ "RotateX",							INI::parseAngleReal,				NULL, offsetof( ParticleSystemFXNugget, m_rotateX ) },
+			{ "RotateY",							INI::parseAngleReal,				NULL, offsetof( ParticleSystemFXNugget, m_rotateY ) },
+			{ "RotateZ",							INI::parseAngleReal,				NULL, offsetof( ParticleSystemFXNugget, m_rotateZ ) },
+			{ "OrientToObject",				INI::parseBool,							NULL, offsetof( ParticleSystemFXNugget, m_orientToObject ) },
+			{ "Ricochet",				      INI::parseBool,							NULL, offsetof( ParticleSystemFXNugget, m_ricochet ) },
+			{ "AttachToObject",				INI::parseBool,							NULL, offsetof( ParticleSystemFXNugget, m_attachToObject ) },
+			{ "CreateAtGroundHeight",	INI::parseBool,							NULL, offsetof( ParticleSystemFXNugget, m_createAtGroundHeight ) },
+			{ "UseCallersRadius",			INI::parseBool,							NULL, offsetof( ParticleSystemFXNugget, m_useCallersRadius ) },
+			{ 0, 0, 0, 0 }
+		};
+
+		ParticleSystemFXNugget* nugget = newInstance( ParticleSystemFXNugget );	
+		ini->initFromINI(nugget, myFieldParse);
+		((FXList*)instance)->addFXNugget(nugget);
+	}
+
+protected:
+	static __forceinline void postMulRow(Matrix3D &a, int r, const Matrix3D &b)
+	{
+		float a0 = a[r][0], a1 = a[r][1], a2 = a[r][2];
+		float t3 = a0*b[0][3] + a1*b[1][3] + a2*b[2][3];
+		a[r][0] = a0*b[0][0] + a1*b[1][0] + a2*b[2][0];
+		a[r][1] = a0*b[0][1] + a1*b[1][1] + a2*b[2][1];
+		a[r][2] = a0*b[0][2] + a1*b[1][2] + a2*b[2][2];
+		a[r][3] += t3;
+	}
+
+	static __forceinline Bool isOverWater(const Coord3D *pos)
+	{
+		BfmeTerrainView *terrain = (BfmeTerrainView *)TheTerrainLogic;
+		BfmeAIView *ai = TheBfmeAI;
+		Bool underwater = terrain->isUnderwater(pos->x, pos->y);
+		if (underwater && ai && ai->pathfinder() && ai->pathfinder()->getLayer(pos) != LAYER_GROUND)
 			underwater = false;
 		return underwater;
 	}
 
-private:
-	AsciiString m_name;
-	int m_count;
-	Coord3D m_offset;
-	GameClientRandomVariable m_radius;
-	GameClientRandomVariable m_height;
-	GameClientRandomVariable m_delay;
-	Real m_rotateX;
-	Real m_rotateY;
-	Real m_rotateZ;
-	Bool m_orientToObject;
-	Bool m_attachToObject;
-	unsigned char m_padFA[2];
-	AsciiString m_attachToBone;
-	Bool m_createAtGroundHeight;
-	Bool m_ricochet;
-	unsigned char m_pad102[2];
-	AsciiString m_createBoneOverride;
-	AsciiString m_targetBoneOverride;
-	Bool m_createBoneAtTarget;
-	unsigned char m_pad10D[3];
-	Real m_targetCoeff;
-	int m_systemLife;
-	Bool m_useTargetOffset;
-	Bool m_setTargetMatrix;
-	Bool m_onlyIfOnLand;
-	Bool m_onlyIfOnWater;
-	Coord3D m_targetOffset;
-};
-
-void ParticleSystemFXNugget::reallyDoFX(const Coord3D *primary, const Matrix3D *mtx,
-	const Object *thingToAttachTo, const Object *secondary) const
-{
-	Coord3D offset = m_offset;
-	if (mtx)
+	void reallyDoFX(const Coord3D *primary, const Matrix3D *mtx, const Object *thingToAttachTo, const Object *secondary) const
 	{
-		adjustVector(&offset, mtx);
-	}
-
-	const ParticleSystemTemplate *tmp = TheParticleSystemManager->findTemplate(m_name);
-	if (tmp)
-	{
-		for (Int i = 0; i < m_count; i++)
+		Coord3D offset;
+		offset.x = m_offset.x;
+		offset.y = m_offset.y;
+		offset.z = m_offset.z;
+		if (mtx)
 		{
-			BfmeParticleSystemHandle sys = TheParticleSystemManager->createParticleSystem(tmp, true);
-			if (sys)
+			adjustVector(&offset, mtx);
+		}
+
+		const ParticleSystemTemplate *tmp = TheParticleSystemManager->findTemplate(m_name);
+		if (tmp)
+		{
+			for (Int i = 0; i < m_count; i++)
 			{
-				Coord3D newPos;
-				Real radius = m_radius.getValue();
-				Real angle = GetGameClientRandomValueReal(0.0f, 2.0f * PI, "F:\\bfme\\Code\\gameengine\\Source\\GameClient\\FXList.cpp", 0x681);
-				Bool useSpread = true;
+				FXParticleSystem::ParticleSystemHandle sys =
+					((FXParticleSystem::ParticleSystemManager *)TheParticleSystemManager)->createParticleSystem(
+						(const FXParticleSystem::ParticleSystemTemplate *)tmp, true);
+				if (sys)
+				{
+					Coord3D newPos;
+					Real radius = m_radius.getValue();
+					Real angle = GetGameClientRandomValueReal(0.0f, 2.0f * PI, "F:\\bfme\\Code\\gameengine\\Source\\GameClient\\FXList.cpp", 0x681);
+					Bool useSpread = true;
 
-				if (!m_createBoneOverride.isEmpty() && thingToAttachTo)
-				{
-					Matrix3D boneMtx(true);
-					if (m_createBoneAtTarget && secondary)
-						secondary->getDrawable()->getCurrentWorldspaceClientBonePositions(m_createBoneOverride.str(), boneMtx);
-					else
-						thingToAttachTo->getDrawable()->getCurrentWorldspaceClientBonePositions(m_createBoneOverride.str(), boneMtx);
-					newPos.x = boneMtx[0][3];
-					newPos.y = boneMtx[1][3];
-					newPos.z = boneMtx[2][3];
-					useSpread = false;
-				}
-				else
-				{
-					newPos.x = radius * cos(angle) + primary->x + offset.x;
-					newPos.y = radius * sin(angle) + primary->y + offset.y;
-				}
-
-				if (m_createAtGroundHeight && TheTerrainLogic)
-				{
-					if (useSpread)
+					if (!bfmeIsEmpty(m_createBoneOverride) && thingToAttachTo)
 					{
-						PathfindLayerEnum layer = TheTerrainLogic->getLayerForDestination(0, &newPos);
-						newPos.z = TheTerrainLogic->getLayerHeight(newPos.x, newPos.y, layer);
-					}
-				}
-				else if (useSpread)
-				{
-					newPos.z = m_height.getValue() + primary->z + offset.z;
-				}
-
-				if (m_orientToObject && mtx)
-				{
-					Matrix3D orient(*mtx);
-					if (m_setTargetMatrix && secondary)
-					{
-						Coord3D dir;
-						const Coord3D *targetPos = secondary->getPosition();
-						dir.x = targetPos->x - newPos.x;
-						dir.y = targetPos->y - newPos.y;
-						dir.z = targetPos->z - newPos.z;
-						Matrix3D pitch(true);
-						Real horizontal = (Real)sqrt(dir.x * dir.x + dir.y * dir.y);
-						pitch.Rotate_Y(PI - (Real)atan2(dir.z + 10.0f, horizontal));
-						orient.postMul(pitch);
-					}
-					sys->setLocalTransform(&orient);
-				}
-
-				if (m_rotateX != 0.0f)
-					sys->rotateLocalTransformX(m_rotateX);
-				if (m_rotateY != 0.0f)
-					sys->rotateLocalTransformY(m_rotateY);
-				if (m_rotateZ != 0.0f)
-					sys->rotateLocalTransformZ(m_rotateZ);
-
-				if (m_onlyIfOnLand)
-				{
-					Bool overWater = isOverWater(&newPos);
-					if ((thingToAttachTo == 0 || thingToAttachTo->getLayer() == LAYER_GROUND) && overWater)
-					{
-						sys->destroy();
-						continue;
-					}
-				}
-				else if (m_onlyIfOnWater)
-				{
-					Bool overWater = isOverWater(&newPos);
-					if (!((thingToAttachTo == 0 || thingToAttachTo->getLayer() == LAYER_GROUND) && overWater))
-					{
-						sys->destroy();
-						continue;
-					}
-				}
-
-				if (m_attachToObject && thingToAttachTo)
-					sys->attachToObject(thingToAttachTo);
-				else
-					sys->setPosition(&newPos);
-
-				if (!m_attachToBone.isEmpty())
-					sys->rva005BE1A0(m_attachToBone);
-
-				if (!m_targetBoneOverride.isEmpty() && secondary)
-				{
-					Matrix3D targetMtx(true);
-					Coord3D targetPos;
-					if (secondary->getDrawable()->getCurrentWorldspaceClientBonePositions(m_targetBoneOverride.str(), targetMtx))
-					{
-						targetPos.x = targetMtx[0][3];
-						targetPos.y = targetMtx[1][3];
-						targetPos.z = targetMtx[2][3];
+						Matrix3D boneMtx(true);
+						if (m_createBoneAtTarget && secondary)
+							((const BfmeObjectView *)secondary)->getDrawable()->getCurrentWorldspaceClientBonePositions(bfmeStr(m_createBoneOverride), boneMtx);
+						else
+							((const BfmeObjectView *)thingToAttachTo)->getDrawable()->getCurrentWorldspaceClientBonePositions(bfmeStr(m_createBoneOverride), boneMtx);
+						newPos.x = boneMtx[0][3];
+						newPos.y = boneMtx[1][3];
+						newPos.z = boneMtx[2][3];
+						useSpread = false;
 					}
 					else
 					{
-						targetPos = *secondary->getPosition();
+						newPos.x = radius * (Real)cos(angle) + primary->x + offset.x;
+						newPos.y = radius * (Real)sin(angle) + primary->y + offset.y;
 					}
-					sys->setTargetPosition(targetPos);
-				}
 
-				if (m_useTargetOffset)
-				{
-					Coord3D targetPos;
-					targetPos.x = newPos.x + m_targetOffset.x;
-					targetPos.y = newPos.y + m_targetOffset.y;
-					targetPos.z = newPos.z + m_targetOffset.z;
-					sys->setTargetPosition(targetPos);
-				}
+					if (m_createAtGroundHeight && TheTerrainLogic)
+					{
+						if (useSpread)
+						{
+							BfmeTerrainView *terrain = (BfmeTerrainView *)TheTerrainLogic;
+							PathfindLayerEnum layer = terrain->getLayerForDestination(NULL, &newPos);
+							newPos.z = ((BfmeTerrainView *)TheTerrainLogic)->getLayerHeight(newPos.x, newPos.y, layer);
+						}
+					}
+					else if (useSpread)
+					{
+						newPos.z = m_height.getValue() + primary->z + offset.z;
+					}
 
-				if (m_systemLife >= 0)
-					sys->setSystemLifetime(m_systemLife);
+					if (m_orientToObject && mtx)
+					{
+						Matrix3D orient(*mtx);
+						if (m_setTargetMatrix && secondary)
+						{
+							Coord3D dir;
+							const Coord3D *targetPos = ((const BfmeObjectView *)secondary)->getPosition();
+							dir.x = targetPos->x - newPos.x;
+							dir.y = targetPos->y - newPos.y;
+							dir.z = targetPos->z - newPos.z;
+							Matrix3D pitch(true);
+							Real horizontal = (Real)sqrt(dir.x * dir.x + dir.y * dir.y);
+							pitch.Rotate_Y(PI - (Real)atan2(dir.z + 10.0f, horizontal));
+							postMulRow(orient, 0, pitch);
+							postMulRow(orient, 1, pitch);
+							postMulRow(orient, 2, pitch);
+						}
+						sys->setLocalTransform(&orient);
+					}
 
-				Real delayInMsec = m_delay.getValue();
-				if (delayInMsec >= 0.0f)
-				{
-					UnsignedInt delayInFrames = REAL_TO_INT_CEIL(delayInMsec * LOGICFRAMES_PER_MSEC_REAL);
-					sys->setInitialDelay(delayInFrames);
+					if (m_rotateX != 0.0f)
+						sys->rotateLocalTransformX(m_rotateX);
+					if (m_rotateY != 0.0f)
+						sys->rotateLocalTransformY(m_rotateY);
+					if (m_rotateZ != 0.0f)
+						sys->rotateLocalTransformZ(m_rotateZ);
+
+					if (m_onlyIfOnLand)
+					{
+						Bool overWater = isOverWater(&newPos);
+						if ((thingToAttachTo == NULL || ((const BFMEObjectLayerQuery *)thingToAttachTo)->getLayer() == LAYER_GROUND) && overWater)
+						{
+							sys->destroy();
+							continue;
+						}
+					}
+					else if (m_onlyIfOnWater)
+					{
+						Bool overWater = isOverWater(&newPos);
+						if (!((thingToAttachTo == NULL || ((const BFMEObjectLayerQuery *)thingToAttachTo)->getLayer() == LAYER_GROUND) && overWater))
+						{
+							sys->destroy();
+							continue;
+						}
+					}
+
+					if (m_attachToObject && thingToAttachTo)
+						sys->attachToObject(thingToAttachTo);
+					else
+						sys->setPosition(&newPos);
+
+					if (!bfmeIsEmpty(m_attachToBone))
+						((BfmeParticleSystemView *)sys.operator->())->setAttachBone005BE1A0(m_attachToBone);
+
+					if (!bfmeIsEmpty(m_targetBoneOverride) && secondary)
+					{
+						Matrix3D targetMtx(true);
+						Coord3D targetPos;
+						if (((const BfmeObjectView *)secondary)->getDrawable()->getCurrentWorldspaceClientBonePositions(bfmeStr(m_targetBoneOverride), targetMtx))
+						{
+							targetPos.x = targetMtx[0][3];
+							targetPos.y = targetMtx[1][3];
+							targetPos.z = targetMtx[2][3];
+						}
+						else
+						{
+							targetPos = *((const BfmeObjectView *)secondary)->getPosition();
+						}
+						BfmeParticleSystemView *view = (BfmeParticleSystemView *)sys.operator->();
+						view->m_targetPos = targetPos;
+						view->m_hasTarget = true;
+					}
+
+					if (m_useTargetOffset)
+					{
+						Coord3D targetPos;
+						targetPos.x = newPos.x + m_targetOffset.x;
+						targetPos.y = newPos.y + m_targetOffset.y;
+						targetPos.z = newPos.z + m_targetOffset.z;
+						BfmeParticleSystemView *view = (BfmeParticleSystemView *)sys.operator->();
+						view->m_targetPos = targetPos;
+						view->m_hasTarget = true;
+					}
+
+					if (m_systemLife >= 0)
+						((BfmeParticleSystemView *)sys.operator->())->m_systemLifetime = m_systemLife;
+
+					Real delayInMsec = m_delay.getValue();
+					if (delayInMsec >= 0.0f)
+					{
+						UnsignedInt delayInFrames = bfme_float2long_round((Real)ceil((double)(delayInMsec * 0.005f)));
+						((BfmeParticleSystemView *)sys.operator->())->m_delayLeft = delayInFrames;
+					}
 				}
 			}
 		}
 	}
+
+	void reallyDoFX(const Coord3D *primary, const Matrix3D* mtx, const Object* thingToAttachTo, Real overrideRadius ) const
+	{
+		Coord3D offset = m_offset;
+		if (mtx)
+		{
+			adjustVector(&offset, mtx);
+		}
+
+		const ParticleSystemTemplate *tmp = TheParticleSystemManager->findTemplate(m_name);
+		DEBUG_ASSERTCRASH(tmp, ("ParticleSystem %s not found\n",m_name.str()));
+		if (tmp)
+		{
+			for (Int i = 0; i < m_count; i++ )
+			{
+				ParticleSystem *sys = TheParticleSystemManager->createParticleSystem(tmp);
+				if (sys)
+				{
+					Coord3D newPos;
+					Real radius = m_radius.getValue();
+					Real angle = GameClientRandomValueReal( 0.0f, 2.0f * PI );
+
+					newPos.x = primary->x + offset.x + radius * cos(angle);
+					newPos.y = primary->y + offset.y + radius * sin(angle);
+					if( m_createAtGroundHeight && TheTerrainLogic )
+					{
+						//old way:
+						//newPos.z = TheTerrainLogic->getGrsoundHeight( newPos.x, newPos.y ) + 1;// The plus one prevents scissoring with terrain
+						
+						//new way: now we allow bridges in the GroundHeight.
+						PathfindLayerEnum layer = TheTerrainLogic->getLayerForDestination(&newPos);
+						newPos.z = TheTerrainLogic->getLayerHeight( newPos.x, newPos.y, layer );
+					}
+					else
+						newPos.z = primary->z + offset.z + m_height.getValue();
+
+
+					if (m_orientToObject && mtx)
+					{
+						sys->setLocalTransform(mtx);
+					}
+					if (m_rotateX != 0.0f)
+						sys->rotateLocalTransformX(m_rotateX);
+					if (m_rotateY != 0.0f)
+						sys->rotateLocalTransformY(m_rotateY);
+					if (m_rotateZ != 0.0f)
+						sys->rotateLocalTransformZ(m_rotateZ);
+
+					if (m_attachToObject && thingToAttachTo)
+						sys->attachToObject(thingToAttachTo);
+					else
+						sys->setPosition( &newPos );
+
+					Real delayInMsec = m_delay.getValue();
+					if (delayInMsec >= 0.0f)
+					{
+						UnsignedInt delayInFrames = REAL_TO_INT_CEIL(ConvertDurationFromMsecsToFrames(delayInMsec));
+						sys->setInitialDelay(delayInFrames);
+					}
+
+					if( m_useCallersRadius  &&  overrideRadius )
+					{
+						ParticleSystemInfo::EmissionVolumeType type = sys->getEmisionVolumeType();
+
+						if( type == ParticleSystemInfo::EmissionVolumeType::SPHERE )
+							sys->setEmissionVolumeSphereRadius( overrideRadius );
+						else if( type == ParticleSystemInfo::EmissionVolumeType::CYLINDER )
+							sys->setEmissionVolumeCylinderRadius( overrideRadius );
+					}
+				}
+			}
+		}
+	}
+
+
+private:
+	unsigned char		m_bfmeBaseData[0xB0];		// BFME FXNugget body (0x04..0xB4)
+	AsciiString			m_name;						// +0xB4
+	Int							m_count;
+	Coord3D					m_offset;
+	GameClientRandomVariable	m_radius;
+	GameClientRandomVariable	m_height;
+	GameClientRandomVariable	m_delay;
+	Real						m_rotateX, m_rotateY, m_rotateZ;
+	Bool						m_orientToObject;			// +0xF8
+	Bool						m_attachToObject;
+	Bool						m_useCallersRadius;			// ZH-only; BFME slot unknown
+	unsigned char		m_padFB;
+	AsciiString			m_attachToBone;				// +0xFC
+	Bool						m_createAtGroundHeight;		// +0x100
+	Bool						m_ricochet;					// +0x101
+	unsigned char		m_pad102[2];
+	AsciiString			m_createBoneOverride;		// +0x104
+	AsciiString			m_targetBoneOverride;		// +0x108
+	Bool						m_createBoneAtTarget;		// +0x10C
+	unsigned char		m_pad10D[3];
+	Real						m_targetCoeff;				// +0x110
+	Int							m_systemLife;				// +0x114
+	Bool						m_useTargetOffset;			// +0x118
+	Bool						m_setTargetMatrix;
+	Bool						m_onlyIfOnLand;
+	Bool						m_onlyIfOnWater;
+	Coord3D					m_targetOffset;				// +0x11C
+};  
+EMPTY_DTOR(ParticleSystemFXNugget)
+
+//-------------------------------------------------------------------------------------------------
+class FXListAtBonePosFXNugget : public FXNugget
+{
+	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(FXListAtBonePosFXNugget, "FXListAtBonePosFXNugget")		
+public:
+
+	FXListAtBonePosFXNugget()
+	{
+		m_fx = NULL;
+    m_boneName.clear();
+    m_orientToBone = true;
+	}
+
+	virtual void doFXPos(const Coord3D *primary, const Matrix3D* primaryMtx, const Real /*primarySpeed*/, const Coord3D * /*secondary*/, const Real /*overrideRadius*/ ) const
+	{
+		DEBUG_CRASH(("You must use the object form for this effect"));
+	}
+
+	virtual void doFXObj(const Object* primary, const Object* /*secondary*/) const
+	{
+		if (primary)
+		{
+      // first, try the unadorned name.
+			doFxAtBones(primary, 0);
+
+      // then, try the 01,02,03...etc names.
+			doFxAtBones(primary, 1);
+		}
+		else
+		{
+			DEBUG_CRASH(("You must have a primary source for this effect"));
+		}
+	}
+
+	static void parse(INI *ini, void *instance, void* /*store*/, const void* /*userData*/)
+	{
+		static const FieldParse myFieldParse[] = 
+		{
+			{ "FX",								  	INI::parseFXList,			    NULL, offsetof( FXListAtBonePosFXNugget, m_fx ) },
+			{ "BoneName",							INI::parseAsciiString,		NULL, offsetof( FXListAtBonePosFXNugget, m_boneName ) },
+			{ "OrientToBone",					INI::parseBool,					  NULL, offsetof( FXListAtBonePosFXNugget, m_orientToBone ) },
+			{ 0, 0, 0, 0 }
+		};
+
+		FXListAtBonePosFXNugget* nugget = newInstance( FXListAtBonePosFXNugget );	
+		ini->initFromINI(nugget, myFieldParse);
+		((FXList*)instance)->addFXNugget(nugget);
+	}
+
+protected:
+
+	void doFxAtBones(const Object* obj, Int start) const
+	{
+    Coord3D bonePos[MAX_BONE_POINTS];
+    Matrix3D boneMtx[MAX_BONE_POINTS];
+
+    Drawable* draw = obj->getDrawable();
+		if (draw)
+		{
+			// yes, BONEPOS_CURRENT_CLIENT_ONLY -- this is client-only, so should be safe to do.
+			Int count = draw->getCurrentClientBonePositions(m_boneName.str(), start, bonePos, boneMtx, MAX_BONE_POINTS);
+			for (Int i = 0; i < count; ++i)
+			{
+				Coord3D p;
+				Matrix3D m;
+				obj->convertBonePosToWorldPos(&bonePos[i], &boneMtx[i], &p, &m);
+				FXList::doFXPos(m_fx, &p, &m, 0.0f, NULL, 0.0f);
+			}
+		}
+	}
+
+private:
+
+	enum { MAX_BONE_POINTS = 40 };
+
+	const FXList*		m_fx;
+  AsciiString     m_boneName;
+  Bool            m_orientToBone;
+};  
+EMPTY_DTOR(FXListAtBonePosFXNugget)
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+
+static const FieldParse TheFXListFieldParse[] =
+{
+	{ "Sound",											SoundFXNugget::parse, 0, 0},		
+	{ "RayEffect",									RayEffectFXNugget::parse, 0, 0},		
+	{ "Tracer",											TracerFXNugget::parse, 0, 0},		
+	{ "LightPulse",									LightPulseFXNugget::parse, 0, 0},		
+	{ "ViewShake",									ViewShakeFXNugget::parse, 0, 0},		
+	{ "TerrainScorch",							TerrainScorchFXNugget::parse, 0, 0},		
+	{ "ParticleSystem",							ParticleSystemFXNugget::parse, 0, 0},		
+	{ "FXListAtBonePos",						FXListAtBonePosFXNugget::parse, 0, 0},		
+	{ NULL, NULL, 0, 0 }  // keep this last
+};
+
+//-------------------------------------------------------------------------------------------------
+FXList::FXList()
+{
+}
+
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/FXListLifecycle.cpp
+// ??1FXList@@UAE@XZ present-unmatched
+FXList::~FXList()
+{
+	clear();
+}
+
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/FXListLifecycle.cpp
+// ?clear@FXList@@QAEXXZ present-unmatched
+void FXList::clear()
+{
+	for (FXNuggetList::iterator it = m_nuggets.begin(); it != m_nuggets.end(); ++it)
+	{
+		if (*it)
+			(*it)->deleteInstance();
+	}
+	m_nuggets.clear();
+}
+
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/FXListDoFXPosThunk.cpp
+// ?doFXPos@FXList@@IBEXPBUCoord3D@@PBVMatrix3D@@M0M@Z present-unmatched
+void FXList::doFXPos(const Coord3D *primary, const Matrix3D* primaryMtx, const Real primarySpeed, const Coord3D *secondary, const Real overrideRadius ) const
+{
+	if (ThePartitionManager->getShroudStatusForPlayer(ThePlayerList->getLocalPlayer()->getPlayerIndex(), primary) != CELLSHROUD_CLEAR)
+		return;
+
+	for (FXNuggetList::const_iterator it = m_nuggets.begin(); it != m_nuggets.end(); ++it)
+	{
+		(*it)->doFXPos(primary, primaryMtx, primarySpeed, secondary, overrideRadius);
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+// ?doFXObj@FXList@@IBEXPBVObject@@0@Z present-unmatched
+void FXList::doFXObj(const Object* primary, const Object* secondary) const
+{
+	if (primary && primary->getShroudedStatus(ThePlayerList->getLocalPlayer()->getPlayerIndex()) > OBJECTSHROUD_PARTIAL_CLEAR)
+		return;	//the primary object is fogged or shrouded so don't bother with the effect.
+
+	for (FXNuggetList::const_iterator it = m_nuggets.begin(); it != m_nuggets.end(); ++it)
+	{
+
+		// HERE THE PRIMARY IS THE GUY RECEIVING THE FX, AND SECONDARY MIGHT BE THE GUY DEALING IT
+		(*it)->doFXObj(primary, secondary);
+	}
+}
+
+
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: game/GameEngine/Source/GameClient/FXListStoreLifecycle.cpp
+// ??0FXListStore@@QAE@XZ present-unmatched
+FXListStore::FXListStore()
+{
+}
+
+//-------------------------------------------------------------------------------------------------
+// ??1FXListStore@@UAE@XZ body: FXListStoreLifecycle.cpp (exact retail @ 0x0042DE50)
+
+//-------------------------------------------------------------------------------------------------
+const FXList *FXListStore::findFXList(const char* name) const
+{
+	if (stricmp(name, "None") == 0)
+		return NULL;
+
+  FXListMap::const_iterator entry = m_fxmap.find(NAMEKEY(name));
+  if (entry != m_fxmap.end())
+	{
+		return &(*entry).second;
+	}
+	return NULL;
+}
+
+//-------------------------------------------------------------------------------------------------
+// ?parseFXListDefinition@FXListStore@@SAXPAVINI@@@Z present-unmatched
+// The FXList block's parser is 0x0042E130 (319 bytes), not the 77-byte body this
+// file used to claim -- that one reads TheDamageFXStore and is
+// DamageFXStore::parseDamageFXDefinition, now in Common/DamageFX.cpp. The two
+// are interchangeable under byte comparison because a store-map parser's only
+// distinguishing operands are DIR32 slots, which the verifier fills from the
+// target. The real body is much larger and builds an AsciiString, so this
+// transcription is not it either.
+/*static */ void FXListStore::parseFXListDefinition(INI *ini)
+{
+	// read the FXList name
+	const char *c = ini->getNextToken();
+	NameKeyType key = TheNameKeyGenerator->nameToKey(c);
+	FXList& fxl = TheFXListStore->m_fxmap[key];
+	fxl.clear();
+	ini->initFromINI(&fxl, TheFXListFieldParse);
+}
+
+//-------------------------------------------------------------------------------------------------
+/*static*/ void INI::parseFXListDefinition(INI *ini)
+{
+	FXListStore::parseFXListDefinition(ini);
 }
