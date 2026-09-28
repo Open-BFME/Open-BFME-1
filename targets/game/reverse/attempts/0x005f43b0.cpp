@@ -1,5 +1,5 @@
-// ?d_005f43b0@@YAXXZ
-// partial score=0.922600619195 date=2026-09-27
+// ?draw@LightningDraw005F43B0@@QAEHPAX0PAH@Z
+// partial score=0.967 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Source/Common/System /Iinputs/reference/shims/sweep
 #include <stddef.h>
 #include "vector3.h"
@@ -9,20 +9,22 @@
 #include "game_client_random_variable.h"
 
 // Candidate symbol: ?draw@LightningDraw005F43B0@@QAEHPAX0PAH@Z
-// Not landed: 2220-byte compiled body; 265 masked differing bytes; shape 0.923.
-// First difference at +0x2AE is x87 operand selection. No inline assembly.
+// Not landed: 2220-byte compiled body; 50 masked differing bytes; shape 0.967.
+// Residue: x87 memory-operand order in both cross products and the first
+// offset term (+0x2A0..+0x31F, +0x3C3..+0x3DA). No inline assembly.
 // Intended home: game/GameEngine/Source/GameClient/System/FXParticleSystem/.
-// Renderer aliases below are typed ABI evidence, not installed ledger pins.
 // Retail 005F43B0: LightningDrawModule primary vtable 01112FD0 slot +10,
 // installed by the verified ctor 005F4E90. The method spelling is unproven.
 // Layout below is offset-derived from this body and that constructor.
+// Renderer callees use their landed symbols except 00918DA0, whose landed
+// spelling takes int while this caller passes a copy-constructed shader word.
 class ParticleSystemZA;
 ParticleSystemZA *bfmeNullSystemZA();
 class Rva005C30A0Owner { public: float Rva005C30A0() const; float Rva005C3120() const; };
 class Rva005C3160Owner { public: float Rva005C3160() const; };
 class Rva005C3180 { public: int dispatch() const; };
-class TextureClass;
-class BFMEWaterTrackTexture { public: void Release_Ref(); };
+class TextureClass { public: void Release_Ref(); }; // 009EB7A0
+class BFMEWaterTrackTexture : public TextureClass {};
 class BFMEWaterTrackTextureHandle {
 public:
     TextureClass *m_texture;
@@ -44,13 +46,23 @@ struct ShaderWord005F43B0 {
 };
 extern ShaderWord005F43B0 shader012D6E2C,shader012D6E30,shader012D6E34,
     shader012D6E48,shader012D6E60,shader012D6E24,shader012D6E28;
+class StreakLineClass { public: void Set_Texture(TextureClass *texture); }; // 009182C0
+struct BfmeThingDUC { void bfmeGoDUC(); }; // 00918290
+class Rva00918DA0 { public: void set(int a); }; // 00918DA0
+class BfmeStreakUGB { public: void bfmeSetUGB(unsigned n,void *locs,void *widths,void *colors,int stamp); }; // 0091A480
+class BfmeThingCBA { public: void bfmeGoCBA(void *what); }; // 009182F0
+typedef void (BfmeThingCBA::*TileSetter005F43B0)(float);
 class StreakCalls005F43B0 {
 public:
-    void texture(const BFMEWaterTrackTextureHandle&); // 009182C0
-    void reset(); // 00918290
-    void shader(ShaderWord005F43B0); // 00918DA0
-    void points(unsigned,void*,void*,void*,void*); // 0091A480
-    void tile(float); // 009182F0
+    // ?texture@StreakCalls005F43B0@@QAEXABVBFMEWaterTrackTextureHandle@@@Z absent-from-retail
+    void texture(const BFMEWaterTrackTextureHandle &h) { ((StreakLineClass*)this)->Set_Texture((TextureClass*)&h); }
+    // ?reset@StreakCalls005F43B0@@QAEXXZ absent-from-retail
+    void reset() { ((BfmeThingDUC*)this)->bfmeGoDUC(); }
+    void shader(ShaderWord005F43B0); // 00918DA0: landed ?set@Rva00918DA0@@QAEXH@Z takes int; see handoff
+    // ?points@StreakCalls005F43B0@@QAEXIPAX000@Z absent-from-retail
+    void points(unsigned n,void *locs,void *widths,void *colors,void *stamps) { ((BfmeStreakUGB*)this)->bfmeSetUGB(n,locs,widths,colors,(int)stamps); }
+    // ?tile@StreakCalls005F43B0@@QAEXM@Z absent-from-retail
+    void tile(float f) { (((BfmeThingCBA*)this)->*reinterpret_cast<TileSetter005F43B0>(&BfmeThingCBA::bfmeGoCBA))(f); }
 };
 class RenderSlots005F43B0 {
 public:
@@ -87,6 +99,7 @@ typedef char Check005F43B0Points[(offsetof(LightningDraw005F43B0,field48)==0x48)
 typedef char Check005F43B0Offsets[(offsetof(LightningDraw005F43B0,field480)==0x480)?1:-1];
 typedef char Check005F43B0Axes[(offsetof(LightningDraw005F43B0,field8bc)==0x8bc)?1:-1];
 
+// ?updateLightningPoint005F43B0@@YAXHHPAVVector3@@PBV1@1@Z absent-from-retail
 inline void updateLightningPoint005F43B0(int k,int n,Vector3 *out, const Vector3 *offset, const Vector3 *base) {
  if(k!=0 && k!=n-1) Vector3::Add(*base,*offset,out); else *out=*offset;
 }
@@ -128,11 +141,11 @@ int LightningDraw005F43B0::draw(void *renderInfo,void *unused,int *count)
         char *text=system()->field10;
         BFMEWaterTrackTextureHandle texture=BFMEGetWaterTrackTexture(text ? text+8 : "",0,0);
         if(changed) {
-            Vector3 *end=positions+n; field8bc=Vector3(end[-1].X-positions[0].X,end[-1].Y-positions[0].Y,end[-1].Z-positions[0].Z);
-            ((Coord3D*)&field8bc)->normalize();
-            field8d4.Set(0,0,1);
-            Vector3::Cross_Product(field8d4,field8bc,&field8c8);
-            Vector3::Cross_Product(field8bc,field8c8,&field8d4);
+            Vector3 &along=field8bc; Vector3 *end=positions+n; along=Vector3(end[-1].X-positions[0].X,end[-1].Y-positions[0].Y,end[-1].Z-positions[0].Z);
+            ((Coord3D*)&along)->normalize();
+            field8d4.Z=1; field8d4.X=0; field8d4.Y=0;
+            Vector3::Cross_Product(field8d4,along,&field8c8);
+            Vector3::Cross_Product(along,field8c8,&field8d4);
             for(int j=0;j<field8b8;++j) {
                 Vector3 *out=field48[j];
                 Vector3 *offset=field480[j];
@@ -141,9 +154,9 @@ int LightningDraw005F43B0::draw(void *renderInfo,void *unused,int *count)
                         float a=field1c.getValue();
                         float b=field28.getValue();
                         float c=field34.getValue();
-                        offset[k].X = c*field8bc.X+b*field8d4.X+a*field8c8.X;
-                        offset[k].Y = b*field8d4.Y+a*field8c8.Y+c*field8bc.Y;
-                        offset[k].Z = b*field8d4.Z+a*field8c8.Z+c*field8bc.Z;
+                        offset[k].X = a*field8c8.X+b*field8d4.X+c*field8bc.X;
+                        offset[k].Y = a*field8c8.Y+b*field8d4.Y+c*field8bc.Y;
+                        offset[k].Z = a*field8c8.Z+b*field8d4.Z+c*field8bc.Z;
                         Vector3::Add(positions[k],offset[k],&out[k]);
                     } else {
                         out[k].X=offset[k].X=positions[k].X;
@@ -157,7 +170,8 @@ int LightningDraw005F43B0::draw(void *renderInfo,void *unused,int *count)
                 Vector3 *out=field48[j];
                 Vector3 *offset=field480[j];
                 for(int k=0;k<n;++k) {
-                    updateLightningPoint005F43B0(k,n,out+k,offset+k,positions+k);
+                    if(k!=0 && k!=n-1) { out[k].X=positions[k].X+offset[k].X; out[k].Y=positions[k].Y+offset[k].Y; out[k].Z=positions[k].Z+offset[k].Z; }
+                    else { out[k].X=offset[k].X; out[k].Y=offset[k].Y; out[k].Z=offset[k].Z; }
                 }
             }
         }
