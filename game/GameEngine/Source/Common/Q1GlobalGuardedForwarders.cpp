@@ -44,6 +44,7 @@ public:
 	void m009EC9A0( int value );
 	void m009ECA30( int value );
 	void m009F1AE0();
+	void m009EC960( void *value );
 };
 
 extern Q1Receiver0134FAAC *g_q1Receiver0134FAAC;
@@ -81,5 +82,11 @@ void Rva009EBC40()
 {
 	if (g_q1Receiver0134FAAC)
 		g_q1Receiver0134FAAC->m009F1AE0();
+}
+
+void Rva009EBBA0( void *value )
+{
+	if (value && g_q1Receiver0134FAAC)
+		g_q1Receiver0134FAAC->m009EC960(value);
 }
 Q1_GLOBAL_GUARDED_FORWARD( Rva005091B0, g_q1Receiver012F4820, m0003CAD3 )
