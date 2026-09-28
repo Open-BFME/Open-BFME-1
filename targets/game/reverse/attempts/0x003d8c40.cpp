@@ -1,9 +1,10 @@
 // ?bfmePickBridge@Pathfinder@@QAE_NABVVector3@@0PAV2@@Z
-// partial score=0.26 date=2026-09-17
-// "?bfmePickBridge@Pathfinder@@QAE_NABVVector3@@0PAV2@@Z"
-// Probe copy of the banked attempt, with the three retail callee contracts
-// declared under their actual classes.
-// cl: /DNDEBUG /MD /EHs-c- /Iinputs/reference/shims/pathfind /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
+// partial score=0.69 date=2026-09-28
+// ?bfmePickBridge@Pathfinder@@QAE_NABVVector3@@0PAV2@@Z  retail 0x003D8C40
+// TRUE EXTENT 1502 bytes (ledger row says 1494): jp at +0x5c9 targets the return-false
+// tail xor eax,eax / add esp,0x6c / ret 0xc at +0x5d6..+0x5dd. Probe with --size 1502.
+// Residue: this/bridge swapped (retail this=ebx bridge=edi) and loop-3 cell.x via eax->ebp.
+// cl: /DNDEBUG /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 
 #include "vector3.h"
 
@@ -15,26 +16,40 @@ struct ICoord2D { Int x, y; };
 struct IRegion2D { ICoord2D lo, hi; };
 struct Coord3D { Real x, y, z; };
 
-struct PathfindCell
+enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1, LAYER_LAST = 15 };
+
+class PathfindCell
 {
-	unsigned char m_prefix[0x0c];
-	unsigned int m_flags;
+public:
+	Int getType(void) const { return m_packed & 0x7; }
+	Int getLayer(void) const { return (m_packed >> 6) & 0x3f; }
+private:
+	void *m_info;
+	Int m_unused1;
+	Int m_unused2;
+	unsigned int m_packed;
 };
 
 class Bridge
 {
 public:
 	Bool pickBridge(const Vector3 &from, const Vector3 &to, Vector3 *pos);
+	Bridge *getNext(void) { return m_next; }
+private:
+	void *m_vtbl;
+	Bridge *m_next;
 };
 
 class PathfindLayer
 {
-	public:
+public:
+	PathfindCell *getCell(Int x, Int y);
+	Bool isBfmeActive3C(void) const { return m_active != 0; }
+	Int getBfmeHeight40(void) const { return m_height; }
+private:
 	unsigned char m_prefix[0x3c];
 	void *m_active;
 	Int m_height;
-
-	PathfindCell *getCell(Int x, Int y);
 };
 
 class Pathfinder
@@ -43,120 +58,104 @@ public:
 	Bool bfmePickBridge(const Vector3 &from, const Vector3 &to, Vector3 *pos);
 	Bool worldToCell(const Coord3D *pos, ICoord2D *cell);
 
+	PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y)
+	{
+		if (x >= m_extent.lo.x && x <= m_extent.hi.x &&
+			y >= m_extent.lo.y && y <= m_extent.hi.y)
+		{
+			PathfindCell *cell = 0;
+			if (layer > LAYER_GROUND && layer <= LAYER_LAST)
+			{
+				cell = m_layers[layer].getCell(x, y);
+				if (cell)
+					return cell;
+			}
+			return &m_map[x][y];
+		}
+		return 0;
+	}
+
+	PathfindCell *getCell(PathfindLayerEnum layer, const Coord3D *pos)
+	{
+		ICoord2D cell;
+		Bool overflow = worldToCell(pos, &cell);
+		if (overflow)
+			return 0;
+		return getCell(layer, cell.x, cell.y);
+	}
+
+private:
 	unsigned char m_prefix[0x10];
 	PathfindCell **m_map;
 	IRegion2D m_extent;
-	unsigned char m_toBridgeList[0x858 - 0x24];
-	Bridge *m_bridgeList;
+	unsigned char m_mid[0x858 - 0x24];
+	Bridge *m_bfmeBridges858;
 	PathfindLayer m_layers[16];
-	unsigned char m_toBridgeHeights[0x243f8 - 0xc9c];
-	Int m_bridgeHeightCount;
-	Real *m_bridgeHeights;
+	unsigned char m_gap[0x243f8 - 0xc9c];
+	Int m_bfmeHeightCount243F8;
+	Real m_bfmeHeights243FC[1];
 };
 
-#define BFME_PICK_BEST_LIMIT (*(const Real *)0x01084C3C)
-
-Bool Pathfinder::bfmePickBridge(const Vector3 &from,
-	const Vector3 &to, Vector3 *pos)
+Bool Pathfinder::bfmePickBridge(const Vector3 &from, const Vector3 &to, Vector3 *pos)
 {
-	Vector3 bridgePos;
-	Vector3 candidate;
-	Vector3 delta;
-	Coord3D worldPosition;
-	ICoord2D cellCoord;
-	Bridge *bridge = m_bridgeList;
-	Real bestMetric = 3.402823466e+38f;
-
-	while (bridge != 0)
+	Real bestDist = 3.402823466e+38f;
+	for (Bridge *bridge = m_bfmeBridges858; bridge; bridge = bridge->getNext())
 	{
-		if (bridge->pickBridge(from, to, &bridgePos))
+		Vector3 curPos;
+		if (bridge->pickBridge(from, to, &curPos))
 		{
-			Real metric = Vector3::Quick_Distance(bridgePos, from);
-			if (metric < bestMetric)
+			Real dist = Vector3::Quick_Distance(curPos, from);
+			if (dist < bestDist)
 			{
-				bestMetric = metric;
-				*pos = bridgePos;
+				bestDist = dist;
+				*pos = curPos;
 			}
 		}
-		bridge = *(Bridge **)((unsigned char *)bridge + 4);
 	}
 
-	Int index = 0;
-	if (index < m_bridgeHeightCount)
+	Int i;
+	for (i = 0; i < m_bfmeHeightCount243F8; i++)
 	{
-		Real *height = m_bridgeHeights;
-		do
+		Vector3 delta = to - from;
+		Real t = (m_bfmeHeights243FC[i] - from.Z) / delta.Z;
+		Vector3 hitPos = from + delta * t;
+		Coord3D pt;
+		pt.x = hitPos.X;
+		pt.y = hitPos.Y;
+		pt.z = hitPos.Z;
+		PathfindCell *cell = getCell(LAYER_GROUND, &pt);
+		if (cell && cell->getLayer() == i + 0x11 && cell->getType() == 0)
 		{
-			Real heightValue = *height;
-			Vector3::Subtract(to, from, &delta);
-			Real t = (heightValue - from.Z) / delta.Z;
-			delta *= t;
-			Vector3::Add(from, delta, &candidate);
-			worldPosition = *reinterpret_cast<const Coord3D *>(&candidate);
-
-			if (!worldToCell(&worldPosition, &cellCoord) &&
-				cellCoord.x >= m_extent.lo.x && cellCoord.x <= m_extent.hi.x &&
-				cellCoord.y >= m_extent.lo.y && cellCoord.y <= m_extent.hi.y)
+			Real dist = Vector3::Quick_Distance(hitPos, from);
+			if (dist < bestDist)
 			{
-				PathfindCell *cell = &m_map[cellCoord.x][cellCoord.y];
-				if (cell != 0)
-				{
-					unsigned int bits = *(unsigned int *)((unsigned char *)cell + 0x0c);
-					if (((bits >> 6) & 0x3f) == index + 0x11 && (bits & 7) == 0)
-					{
-						Real metric = Vector3::Quick_Distance(candidate, from);
-						if (metric < bestMetric)
-						{
-							bestMetric = metric;
-							*pos = candidate;
-						}
-					}
-				}
+				bestDist = dist;
+				*pos = hitPos;
 			}
-			++index;
-			++height;
-		} while (index < m_bridgeHeightCount);
-	}
-
-	for (Int index = 2; index <= 15; ++index)
-	{
-		PathfindLayer *layer = &m_layers[index];
-		if (layer->m_active == 0)
-			continue;
-
-		Real height = (Real)layer->m_height;
-		Vector3::Subtract(to, from, &delta);
-		Real t = (height - from.Z) / delta.Z;
-		delta *= t;
-		Vector3::Add(from, delta, &candidate);
-		worldPosition = *reinterpret_cast<const Coord3D *>(&candidate);
-
-		if (worldToCell(&worldPosition, &cellCoord))
-			continue;
-		if (cellCoord.x < m_extent.lo.x || cellCoord.x > m_extent.hi.x ||
-			cellCoord.y < m_extent.lo.y || cellCoord.y > m_extent.hi.y)
-			continue;
-
-		PathfindCell *cell;
-		if (index > 1 && index <= 15)
-			cell = m_layers[index].getCell(cellCoord.x, cellCoord.y);
-		else
-			cell = &m_map[cellCoord.x][cellCoord.y];
-		if (cell == 0)
-			continue;
-		unsigned int bits = *(unsigned int *)((unsigned char *)cell + 0x0c);
-		if (((bits >> 6) & 0x3f) != (unsigned int)index || (bits & 7) != 0)
-			continue;
-
-		Real metric = Vector3::Quick_Distance(candidate, from);
-		if (metric < bestMetric)
-		{
-			bestMetric = metric;
-			*pos = candidate;
 		}
 	}
 
-	if (bestMetric < BFME_PICK_BEST_LIMIT)
-		return true;
-	return false;
+	for (i = 2; i <= LAYER_LAST; i++)
+	{
+		if (!m_layers[i].isBfmeActive3C())
+			continue;
+		Vector3 delta = to - from;
+		Real t = ((Real)m_layers[i].getBfmeHeight40() - from.Z) / delta.Z;
+		Vector3 hitPos = from + delta * t;
+		Coord3D pt;
+		pt.x = hitPos.X;
+		pt.y = hitPos.Y;
+		pt.z = hitPos.Z;
+		PathfindCell *cell = getCell((PathfindLayerEnum)i, &pt);
+		if (cell && cell->getLayer() == i && cell->getType() == 0)
+		{
+			Real dist = Vector3::Quick_Distance(hitPos, from);
+			if (dist < bestDist)
+			{
+				bestDist = dist;
+				*pos = hitPos;
+			}
+		}
+	}
+	return bestDist < 3.402823466e+38f;
 }
