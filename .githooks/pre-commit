@@ -184,7 +184,7 @@ fi
 # targets/game/reverse/full_gate_baseline.txt is the set of rows already red on origin; it
 # may only shrink (tools/gate_baseline.py --validate). While the full gate is
 # red a header could never land, and the gate is red partly BECAUSE of header
-# fixes it refused (docs/full_gate_red.md), so the check is "no NEW red row",
+# fixes it refused, so the check is "no NEW red row",
 # not "no red row". A gate that dies before byte comparison still fails.
 if git diff --cached --quiet -- targets/game/reverse/full_gate_baseline.txt targets/game/reverse/dir32_known_red.txt; then :; else
     python3 tools/gate_baseline.py --validate || fail "full-gate baseline may only shrink (see above)"

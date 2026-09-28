@@ -8,7 +8,7 @@ whose latest record merely carried today's date; brief.py dropped only
 SecuROM dead ends. The same class of starvation reappears in every new tool
 unless the predicate lives in exactly one place. It lives here.
 
-Rules (Claude/Astra consensus, 2026-09-15; see docs/baseline-2026-09-15.md):
+Rules:
 
   * a DUMP row is open work: gen-dump note or a .asm/.s source; it fixes a
     boundary and holds no source (build.is_scaffold_row is the canonical

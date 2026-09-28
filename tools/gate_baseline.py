@@ -2,7 +2,7 @@
 """Let a header land while the full gate is red, without hiding a regression.
 
 The pre-commit hook runs the FULL gate for any staged header or shim with no
-tolerance, and the gate has been red for weeks (docs/full_gate_red.md). The
+tolerance, and the gate has been red for weeks. The
 gate is red partly BECAUSE of header fixes it refuses to accept, so nothing
 structural could land. This is the same shape as the identity and pin
 baselines: record the known red rows once, then fail only on a row that is

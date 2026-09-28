@@ -12,7 +12,7 @@ regenerate only if the baseline changes (it shouldn't).
 
 ## Decompiling (optional, any OS)
 
-`python tools/ghidra_decompile.py 0xRVA [0xRVA ...]` (or `./ghdec 0xRVA`) prints, per function, the references to
+`python tools/ghidra_decompile.py 0xRVA [0xRVA ...]` prints, per function, the references to
 its entry, its direct callees and Ghidra's decompile. `--out DIR` writes one `<rva>.c` per function. It finds Ghidra
 in `$GHIDRA_INSTALL_DIR` or `inputs/toolchains/ghidra_*`, and a JDK in `$JAVA_HOME`, `inputs/toolchains/jdk-*` or on
 `PATH`; both are plain unpacked archives, no installer. Analyze once per host (about 13 minutes on a desktop):

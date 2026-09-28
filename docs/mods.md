@@ -87,8 +87,7 @@ with its bug restored.
 
 `FEATURES` is the repository's distributable set; `UNSHIPPED` contains opt-in
 experiments and diagnostics. `030-netlatprobe` writes tens of lines a second,
-so `--dist` refuses it. Arena deployment is a separate choice; see
-`docs/measuring.md` for the test measurements.
+so `--dist` refuses it. Arena deployment is a separate choice.
 
 A hook that needs the target's own argument uses `detour_call(..., args=("ecx",
 "stack:0"))`: a thiscall's `this` arrives in ecx and its arguments do not, and
@@ -101,7 +100,6 @@ function's **entry**, before the body has pushed anything.
 python3 tools/modbuild.py --dist    # -> mods/dist/lotrbfme.exe (needs wine)
 ```
 
-Tests, and what producing `measured.jsonl` costs: `docs/measuring.md`.
 
 ## A mod can ship data as well as code
 

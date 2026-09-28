@@ -50,3 +50,16 @@ tools/fpssmooth.py
 tools/collect_clone.sh
 tools/push_retry.sh
 tools/ghidra/check_placement.java
+# Retired 2026-09-28 (doc trim): docs that no agent opened and nothing live linked to.
+docs/interp-seams.md
+docs/interp-seams-1.md
+docs/interp-seams-2.md
+docs/apt-ui.md
+docs/measuring.md
+docs/data_coverage.md
+docs/publishing.md
+docs/full_gate_red.md
+docs/full_gate_red_2026-09-15.txt
+docs/baseline-2026-09-15.md
+docs/analysis/remaining-30pct-blockers-2026-09-24.md
+docs/ghdec

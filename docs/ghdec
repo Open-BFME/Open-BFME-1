@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-# Decompile one or more BFME function RVAs using this host's analyzed Ghidra project.
-# Usage: ghdec 0x00853F38 0x00C6DF40 ...
-# Portable wrapper (Windows Git Bash, Linux, macOS); see tools/ghidra_decompile.py
-# for how Ghidra and the JDK are found and how to analyze once (--analyze).
-cd "$(git -C "$(dirname "$0")" rev-parse --show-toplevel)" || exit 1
-exec "$(command -v python3 || command -v python)" tools/ghidra_decompile.py "$@"

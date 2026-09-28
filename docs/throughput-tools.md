@@ -96,8 +96,7 @@ function boundary (301 such bodies had been re-served for 559 sessions).
   expanding it.
 
 The pilot is 20 anonymous bodies through `lunaanon` with `lunareview` behind
-it; judge it by headline pp against `docs/baseline-2026-09-15.md`, not by
-commits.
+it; judge it by headline pp, not by commits.
 
 ## Exception-frame bodies: detection and mechanical levers (2026-09-15)
 
