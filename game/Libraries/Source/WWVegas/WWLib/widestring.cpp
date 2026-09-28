@@ -363,3 +363,18 @@ bool WideStringClass::Is_ANSI(void)
 	return true;
 	}
 
+struct Rva009DCD00Owner
+{
+	void *m_pad;
+	void *m_value;
+
+	void *get(void);
+};
+
+void *Rva009DCD00Owner::get(void)
+{
+	void *value = m_value;
+	if (value == 0 || *reinterpret_cast<void **>(reinterpret_cast<char *>(value) + 4) == 0)
+		return 0;
+	return value;
+}
