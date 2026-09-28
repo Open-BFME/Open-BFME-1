@@ -11731,7 +11731,7 @@ name,address,notes
 ?BfmeDynamicSortingVertexArrayOffset@@3GA,0x013467E4,Open-BFME5 sorting-array vertex offset the BoxDynamicVBAccessClass destructor at 0x0091D9E0 advances
 ?BfmeDynamicSortingVertexArraySize@@3GA,0x013467E0,Open-BFME5 sorting-array capacity BoxDynamicVBAccess allocate at 0x0091F040 grows
 ?BfmeElementConstruct@_STL@@YAXPAU?$pair@UICoord2D@@UCoord3D@@@1@ABU21@@Z,0x0002A400,Open-BFME5 ILT for _STL::_Construct on pair<ICoord2D Coord3D> as its vector _M_insert_overflow reaches it
-?BfmeElementConstruct@_STL@@YAXPAU?$pair@W4ObjectID@@I@1@ABU21@@Z,0x000267F6,Open-BFME5 ILT for _STL::_Construct on pair<ObjectID unsigned int> as vector<pair<ObjectID unsigned int>>::_M_insert_overflow reaches it
+?BfmeElementConstruct@_STL@@YAXPAU?$pair@W4ObjectID@@I@1@ABU21@@Z,0x000060CD,Open-BFME5 ILT for _STL::_Construct on pair<ObjectID unsigned int>: the element copy vector<pair<ObjectID unsigned int>>::_M_insert_overflow at 0x002FED10 calls (body 0x000953E0; see identity_evidence/000960a0-002fed10-objectid-pair-overflow.md)
 ?BfmeElementConstruct@_STL@@YAXPAU?$pair@W4ObjectID@@W41@@1@ABU21@@Z,0x0001FA1E,Open-BFME5 ILT for _STL::_Construct on pair<ObjectID ObjectID> as vector<pair<ObjectID ObjectID>>::_M_insert_overflow reaches it
 ?BfmeElementConstruct@_STL@@YAXPAURva00776240Vector60Element@@ABU2@@Z,0x00016626,Rva00776240Vector60 copy constructor typed element call at 0x0076D020
 ?BfmeElementConstruct@_STL@@YAXPAXABUNugget@ModuleInfo@@@Z,0x00016626,Open-BFME5 ILT the ModuleInfo Nugget allocate-and-copy uses for its per-element construct
@@ -11763,7 +11763,7 @@ name,address,notes
 ?BfmeRva001E9020Construct@_STL@@YAXPAURva001E9020Element@@ABU2@@Z,0x00046AF1,Open-BFME5 ILT for the 8-byte-element _STL::_Construct at 0x001E21F0
 ?BfmeRva0028DAB0TailCopy@_STL@@YAPAVRva0028DAB0Element@@PAV2@00ABU__false_type@1@@Z,0x000030DA,Open-BFME5 ILT for the 48-byte-element _STL::__uninitialized_copy at 0x0028D4E0
 ?BfmeRva002E7C50TailCopy@_STL@@YAPAVRva002E7C50Element@@PAV2@00ABU__false_type@1@@Z,0x0001BC93,Open-BFME5 ILT for the 28-byte-element _STL::__uninitialized_copy at 0x002E3050
-?BfmeRva002FED10Construct@_STL@@YAXPAURva002FED10Element@@ABU2@@Z,0x000060CD,Open-BFME5 ILT for the 8-byte-element _STL::_Construct at 0x000953E0
+?BfmeRva000952A0Construct@_STL@@YAXPAURva000960A0Element@@ABU2@@Z,0x000267F6,Open-BFME5 ILT for the 8-byte-element _STL::_Construct at 0x000952A0 that the solve-side _M_insert_overflow 0x000960A0 calls
 ?BfmeRva00365020Copy@_STL@@YAPAURva00365020Element@@PAU2@00ABU__false_type@1@@Z,0x0000D242,Open-BFME5 ILT for the trailing uninitialized copy at 0x003644D0
 ?BfmeRva0038BAD0Construct@_STL@@YAXPAURva0038BAD0Element@@ABU2@@Z,0x0002A56D,Open-BFME5 ILT for the 8-byte-element _STL::_Construct at 0x00385CC0
 ?BfmeRva003A35A0Copy@_STL@@YAPAURva003A35A0Element@@PAU2@00ABU__false_type@1@@Z,0x000287EA,Open-BFME5 ILT for the trailing uninitialized copy at 0x003A3410

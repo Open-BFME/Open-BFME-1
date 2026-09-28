@@ -9458,5 +9458,25 @@
   "after_sha256": "759b5a10bdfb9248e5316b9cbc087ec3decb9b839f4da95730fd748e9712a6cf",
   "evidence": "targets/game/reverse/identity_evidence/0x006afd00-stop-chain.md",
   "reason": "0x006AE250 re-homed by add_match --correct-identity: Rva006ABFD0::goLoop was a slot-view stand-in; the body is the MilesAudioManager method on the constructor-witnessed layout and no evidence names it, so it keeps the address token (see evidence)."
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WWLib/ObjectIDUnsignedPairVectorInsertOverflowBody.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WWLib/Rva000960A0VectorInsertOverflowBody.cpp",
+  "old_name": "ObjectID",
+  "new_name": "Rva000960A0Element",
+  "before_sha256": "5188dd0bfd0829bb96446951a661d0b3a81bc02c8ca4b7cbdab5388be4e2d4ad",
+  "after_sha256": "490f8580c64e5d98e44eb5c62c16858356d02d7fc8e33a0fe1b439c10cf7b0ae",
+  "evidence": "targets/game/reverse/identity_evidence/000960a0-002fed10-objectid-pair-overflow.md",
+  "reason": "The pair<ObjectID, unsigned int> element on body 0x000960A0 is refuted by the call graph: only PartitionSolver::solve calls 0x000960A0, and the pair<ObjectID, unsigned int> instantiation is 0x002FED10 (doLoadAllTransports' EntriesVec/SpacesVec push_back). The likely pair<ObjectID, ObjectID> name is still held by 0x00771870, so the element is address-derived until that claim is resolved."
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WWLib/ObjectIDUnsignedPairVectorOverflowThunk.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WWLib/Rva0002AB44InsertOverflowThunk.cpp",
+  "old_name": "ObjectID",
+  "new_name": "Rva000960A0Element",
+  "before_sha256": "ee770d992427c73745789d79166e88c39154a9a969d4d61bdfe694bfbfd611f2",
+  "after_sha256": "c7ab6651da983a86631a7b0cacc54febcb8f7ce393e7353ae0ba758b630fc72f",
+  "evidence": "targets/game/reverse/identity_evidence/000960a0-002fed10-objectid-pair-overflow.md",
+  "reason": "The pair<ObjectID, unsigned int> element on ILT thunk 0x0002AB44 into 0x000960A0 is refuted by the call graph: only PartitionSolver::solve calls 0x000960A0, and the pair<ObjectID, unsigned int> instantiation is 0x002FED10 (doLoadAllTransports' EntriesVec/SpacesVec push_back). The likely pair<ObjectID, ObjectID> name is still held by 0x00771870, so the element is address-derived until that claim is resolved."
  }
 ]
