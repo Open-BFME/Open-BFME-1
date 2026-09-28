@@ -19,8 +19,11 @@
 
 // Matrix3D transform class, verbatim from the Generals reference
 // (Libraries/Source/WWVegas/WWMath/matrix3d.cpp). Only the functions located in
-// the binary are defined here; Multiply and Lerp are omitted because the retail
-// build's inlining/codegen for them drifted from this source (see report).
+// the binary are defined here. Multiply and Lerp differ from the reference:
+// Multiply spells out its temporaries, and BFME's Lerp keeps the scale of A's
+// third row (it normalises both inputs before the slerp and rescales the result).
+// Lerp must stay in this file: retail relies on Set_Rotation preserving ECX,
+// which VC7.1 only sees when that body is in the same translation unit.
 
 #include "matrix3d.h"
 
@@ -518,6 +521,33 @@ void Matrix3D::Re_Orthogonalize(void)
 	Row[2][0] = z.X;
 	Row[2][1] = z.Y;
 	Row[2][2] = z.Z;
+}
+
+
+void Matrix3D::Lerp(const Matrix3D &A, const Matrix3D &B, float factor, Matrix3D& result)
+{
+	// Lerp position
+	Vector3 pos;
+	Vector3::Lerp(A.Get_Translation(), B.Get_Translation(), factor, &pos);
+
+	float scale = WWMath::Sqrt(A[2].X * A[2].X + A[2].Y * A[2].Y + A[2].Z * A[2].Z);
+	if (fabs(scale - 1.0f) > 0.000001f) {
+		Matrix3D a = A;
+		Matrix3D b = B;
+		a.Scale(1.0f / scale);
+		b.Scale(1.0f / scale);
+
+		Quaternion rot;
+		Slerp(rot, Build_Quaternion(a), Build_Quaternion(b), factor);
+		result.Set_Rotation(rot);
+		result.Set_Translation(pos);
+		result.Scale(scale);
+	} else {
+		Quaternion rot;
+		Slerp(rot, Build_Quaternion(A), Build_Quaternion(B), factor);
+		result.Set_Rotation(rot);
+		result.Set_Translation(pos);
+	}
 }
 
 
