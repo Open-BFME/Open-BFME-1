@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "830079d61694b72bfd1ee3f4402068f953799cc37c9b4f81a6bdaf65b26e5309",
+  "symbol": "?d_00c6cf80@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 1.0,
+  "source": "// ?d_00c6cf80@@YAXXZ\n// partial score=1.0 date=2026-09-27\n// cl: /O2 /Ob0\n// Candidate for 0x00C6CF80 (22B): dynamic initializer for a global Rva007F01F0\n// slot at 0x0130A788 constructed from the value at 0x012C3A14 plus 0x0112B394.\n// CRT init-table entry at 0x012A5BD8. Probe: EXACT 22/22 as _$E1 in a scratch\n// TU holding this single global. Opaque address-derived names throughout.\n\nclass Rva007F01F0\n{\n    int m_00;\n    int m_04;\n    int m_08;\n\npublic:\n    Rva007F01F0(int first, int second);\n};\n\nextern int bfmeRva012C3A14Value;\n\nRva007F01F0 bfmeRva0130A788Slot(bfmeRva012C3A14Value, 0x0112B394);\n"
+}
