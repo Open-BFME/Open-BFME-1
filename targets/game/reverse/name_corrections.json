@@ -7758,8 +7758,7 @@
   "after_sha256": "422bfbd78d6d3f13de3a902af0f9e7894f8b5b8085f84129c3bc82403cc07393",
   "evidence": "targets/game/reverse/identity_evidence/0061fda0-twin-class.md",
   "reason": "Bank retirement pairing: the retired 0x0061FDA0 stash reused the twin's SkirmishGameInfo shape; the body is a different class (ctor 0x00619720 installs vtable 0x011171C8, twin installs 0x01075E7C), landed under an address-derived owner."
- }
-,
+ },
  {
   "old_path": "targets/game/reverse/attempts/0x003592a0.cpp",
   "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/Rva00359E40ClearActiveRecords.cpp",
@@ -7789,5 +7788,15 @@
   "after_sha256": "53fec114b919e6a1e152f7e0bd5431c189cd7e7c449bd45106532ef4883b6eb6",
   "evidence": "targets/game/reverse/functions.csv",
   "reason": "The bank's `_ReadWriteBarrier` was a compiler intrinsic, and its `invoke` and `resetActive` labels came from an unproven twin. The matched caller at 0x00359E40 invokes 0x003592A0 on its script table, and the 108-byte body uses that table's +0x0C record pointer and +0x1C active tail. Retail calls the destructor thunk at 0x00042A32 and delete at 0x00881EB0, so the landed symbol keeps 0x003592A0 in its method name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008cd520.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/Rva8CD520ConfigureState.cpp",
+  "old_name": "Rva8CD520Value",
+  "new_name": "Rva00899770",
+  "before_sha256": "c8c19352f4fa3fb0e35690e39e111e77c279cd18c42dcfb9580b80502c6be3a6",
+  "after_sha256": "c53d1e42eaa1d68d6c80e9732dbf74a764d84934285febdfb76d4bb81be885c8",
+  "evidence": "targets/game/reverse/symbols.csv",
+  "reason": "targets/game/reverse/symbols.csv pins ?createString@Rva008AE770Stack@@QAEPAVRva00899770@@PAXHPAVBfmeStrVKI@@HHH@Z at 0x008CC940, which spells the name Rva00899770; the source uses that pinned spelling instead of Rva8CD520Value."
  }
 ]
