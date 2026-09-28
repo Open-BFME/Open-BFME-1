@@ -42,3 +42,15 @@ unsigned int Rva009CC2F0Box::swap() const
 	hi <<= 8;
 	return a + hi + (v >> 24);
 }
+
+// Retail 0x009CC290 is the cdecl free-function twin of the same word
+// shuffle (35 B, ret with no this-load or push). Same split-hi spelling.
+unsigned int __cdecl Rva009CC290Swap(unsigned int v)
+{
+	unsigned int a = (v & 0xFF00) + (v << 16);
+	a <<= 8;
+	unsigned int hi = v >> 16;
+	hi &= 0xFF;
+	hi <<= 8;
+	return a + hi + (v >> 24);
+}
