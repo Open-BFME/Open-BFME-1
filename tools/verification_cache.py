@@ -115,7 +115,7 @@ def _tool_receipt(command):
         return None
     try:
         return sorted(_file_receipt(path) for path in paths)
-    except OSError:
+    except (OSError, RuntimeError):
         return None
 
 
@@ -254,7 +254,7 @@ def _payload(row, symbol_map, inventory_cache):
         path = Path(dep) if os.path.isabs(dep) else ROOT / dep
         try:
             dependencies.append(_file_receipt(path))
-        except OSError:
+        except (OSError, RuntimeError):
             return None
     try:
         body, relocs = _body_and_relocs(row, obj, target, symbol_map)
@@ -277,11 +277,12 @@ def _payload(row, symbol_map, inventory_cache):
     try:
         object_receipt = _file_receipt(obj)
         sidecar_receipt = _file_receipt(B._deps_sidecar(obj))
-    except OSError:
+        source_receipt = _file_receipt(source)
+    except (OSError, RuntimeError):
         return None
     return {
         "row": _row_identity(row),
-        "source": _file_receipt(source),
+        "source": source_receipt,
         "deps": dependencies,
         "sidecar": meta,
         "command": B._cmd_fingerprint(command, env) if command else "archive-member",

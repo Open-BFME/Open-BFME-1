@@ -86,6 +86,9 @@ def test_payload_changes_only_for_relevant_inputs(tmp_path, monkeypatch):
     header.write_text("#define A 2\n")
     assert cache._key(cache._payload(row, symbol_map, {})) != original
     header.write_text("#define A 1\n")
+    header.unlink()
+    assert cache._key(cache._payload(row, symbol_map, {})) is None
+    header.write_text("#define A 1\n")
 
     # An unrelated ledger candidate is not part of this row's resolution.
     unrelated = dict(symbol_map)
