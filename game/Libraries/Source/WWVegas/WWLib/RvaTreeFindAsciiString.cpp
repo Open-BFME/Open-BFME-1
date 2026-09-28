@@ -338,6 +338,17 @@ typedef _STL::_Rb_tree<AsciiString, Rva009CF9A0Value, Rva009CF9A0KeyOfValue,
 // retail 0x009CF9A0
 template _STL::_Rb_tree_node<Rva009CF9A0Value> *
 Rva009CF9A0Tree::_M_find<AsciiString>( const AsciiString & ) const;
+struct Rva009D0260Owner : Rva009CF9A0Tree
+{
+	const_iterator get( const AsciiString &key ) const;
+};
+
+// retail 0x009D0260
+Rva009D0260Owner::const_iterator
+Rva009D0260Owner::get( const AsciiString &key ) const
+{
+	return Rva009CF9A0Tree::find<AsciiString>( key );
+}
 
 struct Rva009CFA70Value
 {
