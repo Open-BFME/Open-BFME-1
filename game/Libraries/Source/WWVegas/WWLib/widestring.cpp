@@ -378,3 +378,19 @@ void *Rva009DCD00Owner::get(void)
 		return 0;
 	return value;
 }
+
+struct Rva009DCD30Owner
+{
+	void *m_pad;
+	void *m_value;
+
+	void *get(void);
+};
+
+void *Rva009DCD30Owner::get(void)
+{
+	void *value = m_value;
+	if (value == 0 || *reinterpret_cast<void **>(reinterpret_cast<char *>(value) + 4) == 0)
+		return 0;
+	return value;
+}
