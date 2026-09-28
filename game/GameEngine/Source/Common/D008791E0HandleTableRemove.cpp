@@ -40,3 +40,16 @@ int __cdecl Rva008791E0Remove(void *key, void **out)
 
 	return -1;
 }
+
+// 0x008791B0: append the pair while fewer than 20 entries are live, else -1.
+// ?Rva008791B0Add@@YAHPAX0@Z
+int __cdecl Rva008791B0Add(void *a, void *b)
+{
+	int i = Rva008791E0Handles.m_count;
+	if (i >= 20)
+		return -1;
+	Rva008791E0Handles.m_vals[i] = a;
+	Rva008791E0Handles.m_keys[i] = b;
+	Rva008791E0Handles.m_count = i + 1;
+	return 0;
+}
