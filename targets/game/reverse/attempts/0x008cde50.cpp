@@ -1,5 +1,5 @@
 // ?rva8CDE50Continue@@YAXPAVRva8CEE00State@@PAURva8CEE00Cursor@@@Z
-// partial score=0.4189636163175303 date=2026-09-28
+// partial score=0.419 date=2026-09-28
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // RVA 008CDE50, 907B. Existing opaque caller contract from 008CEE00.
 // String handles and hub ABI: docs/analysis/0x008985c0.md.
