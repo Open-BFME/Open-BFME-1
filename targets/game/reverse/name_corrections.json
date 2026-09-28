@@ -9098,5 +9098,215 @@
   "after_sha256": "e74e71a0d4b86bb6c4b21b583a3b7c0f57379d0ad15a3e67a47b98f8bed5b692",
   "evidence": "targets/game/reverse/identity_evidence/harvest-20260928T084123_2-pragma.md",
   "reason": "pragma comment tokenized as identifier; false positive fixed in 46080facd7"
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/AptPalantirConstructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/AptPalantirConstructor.cpp",
+  "old_name": "GameClient",
+  "new_name": "Rva00597FC0Client",
+  "before_sha256": "33a492f5f842e6e7502b4947665822c538bfc7e17ef8953a34af7959aad72150",
+  "after_sha256": "811b020efc381baab64dbef1e4bb7a6536a42384d970d5b064ed1f56188fa21b",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/AptPalantirDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/AptPalantirDestructor.cpp",
+  "old_name": "GameClient",
+  "new_name": "Rva00597FC0Client",
+  "before_sha256": "c03088995000bbb1f9afe8142a760ca354f3df23a5094daeee53b6316eb73abd",
+  "after_sha256": "218bdfc9bc1d6af53ba7a34cd10501f9f7c4da1d796025419a68826ed6e68d32",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GameClientBfmeReset00592B80.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GameClientBfmeReset00592B80.cpp",
+  "old_name": "GameClient",
+  "new_name": "Rva00597FC0Client",
+  "before_sha256": "7549461b19fb0e22ff36acb35eeca734fdff81c37b9a50fe6f5da94b76f199ce",
+  "after_sha256": "4dd898c6369e4aee0c5d01d0de80ba257c6838d25ec793c2ddd43a23841e30da",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GameClientDeletingDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GameClientDeletingDestructor.cpp",
+  "old_name": "GameClient",
+  "new_name": "Rva00597FC0Client",
+  "before_sha256": "116c7bc42cf32d723bf866eec24f7e8bd81646bca5d4f5bb02bfec8b19abaa07",
+  "after_sha256": "396dfe97264bbf9135258563556e29f1a6c1d259b61b900664e0d0ec6a8139fc",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "old_name": "GameClient",
+  "new_name": "Rva00597FC0Client",
+  "before_sha256": "1ec8ad5b5cc634836f795925be656a935f03ee92b7d69ec9f187894869d48f96",
+  "after_sha256": "0f038b2a9cab3d97612b1dc6c030947c81c2d33c842138f53b3a8427b47f24bd",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "old_name": "GameClientCoordArray",
+  "new_name": "Rva00597FC0ClientCoordArray",
+  "before_sha256": "1ec8ad5b5cc634836f795925be656a935f03ee92b7d69ec9f187894869d48f96",
+  "after_sha256": "0f038b2a9cab3d97612b1dc6c030947c81c2d33c842138f53b3a8427b47f24bd",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "old_name": "GameClientList",
+  "new_name": "Rva00597FC0ClientList",
+  "before_sha256": "1ec8ad5b5cc634836f795925be656a935f03ee92b7d69ec9f187894869d48f96",
+  "after_sha256": "0f038b2a9cab3d97612b1dc6c030947c81c2d33c842138f53b3a8427b47f24bd",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "old_name": "GameClientMember154",
+  "new_name": "Rva00597FC0ClientMember154",
+  "before_sha256": "1ec8ad5b5cc634836f795925be656a935f03ee92b7d69ec9f187894869d48f96",
+  "after_sha256": "0f038b2a9cab3d97612b1dc6c030947c81c2d33c842138f53b3a8427b47f24bd",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "old_name": "GameClientMember17c",
+  "new_name": "Rva00597FC0ClientMember17c",
+  "before_sha256": "1ec8ad5b5cc634836f795925be656a935f03ee92b7d69ec9f187894869d48f96",
+  "after_sha256": "0f038b2a9cab3d97612b1dc6c030947c81c2d33c842138f53b3a8427b47f24bd",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "old_name": "GameClientMember20",
+  "new_name": "Rva00597FC0ClientMember20",
+  "before_sha256": "1ec8ad5b5cc634836f795925be656a935f03ee92b7d69ec9f187894869d48f96",
+  "after_sha256": "0f038b2a9cab3d97612b1dc6c030947c81c2d33c842138f53b3a8427b47f24bd",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "old_name": "GameClientMember2b8",
+  "new_name": "Rva00597FC0ClientMember2b8",
+  "before_sha256": "1ec8ad5b5cc634836f795925be656a935f03ee92b7d69ec9f187894869d48f96",
+  "after_sha256": "0f038b2a9cab3d97612b1dc6c030947c81c2d33c842138f53b3a8427b47f24bd",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "old_name": "GameClientMember460",
+  "new_name": "Rva00597FC0ClientMember460",
+  "before_sha256": "1ec8ad5b5cc634836f795925be656a935f03ee92b7d69ec9f187894869d48f96",
+  "after_sha256": "0f038b2a9cab3d97612b1dc6c030947c81c2d33c842138f53b3a8427b47f24bd",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "old_name": "GameClientMember488",
+  "new_name": "Rva00597FC0ClientMember488",
+  "before_sha256": "1ec8ad5b5cc634836f795925be656a935f03ee92b7d69ec9f187894869d48f96",
+  "after_sha256": "0f038b2a9cab3d97612b1dc6c030947c81c2d33c842138f53b3a8427b47f24bd",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "old_name": "GameClientMember68",
+  "new_name": "Rva00597FC0ClientMember68",
+  "before_sha256": "1ec8ad5b5cc634836f795925be656a935f03ee92b7d69ec9f187894869d48f96",
+  "after_sha256": "0f038b2a9cab3d97612b1dc6c030947c81c2d33c842138f53b3a8427b47f24bd",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "old_name": "GameClientSecondaryVftable",
+  "new_name": "Rva00597FC0ClientSecondaryVftable",
+  "before_sha256": "1ec8ad5b5cc634836f795925be656a935f03ee92b7d69ec9f187894869d48f96",
+  "after_sha256": "0f038b2a9cab3d97612b1dc6c030947c81c2d33c842138f53b3a8427b47f24bd",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "old_name": "GameClientTailFields",
+  "new_name": "Rva00597FC0ClientTailFields",
+  "before_sha256": "1ec8ad5b5cc634836f795925be656a935f03ee92b7d69ec9f187894869d48f96",
+  "after_sha256": "0f038b2a9cab3d97612b1dc6c030947c81c2d33c842138f53b3a8427b47f24bd",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GameClientDestructor.cpp",
+  "old_name": "GameClientVftable",
+  "new_name": "Rva00597FC0ClientVftable",
+  "before_sha256": "1ec8ad5b5cc634836f795925be656a935f03ee92b7d69ec9f187894869d48f96",
+  "after_sha256": "0f038b2a9cab3d97612b1dc6c030947c81c2d33c842138f53b3a8427b47f24bd",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GameClientUpdate00598950.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GameClientUpdate00598950.cpp",
+  "old_name": "GameClient",
+  "new_name": "Rva00597FC0Client",
+  "before_sha256": "b2b7cb4823dc921d8fd2d1843f425f035824aedc8f28e822d53de8c401a05f42",
+  "after_sha256": "a8c184e643ce9a157fa41ee2432159eb4aebd8bfba3251c963b5452560708bf5",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "GameClient",
+  "new_name": "Rva00597FC0Client",
+  "before_sha256": "3722f157234b370217b2436a2dc12e31c43e317eb09722ccd5deecf153fe82e7",
+  "after_sha256": "4b288976e3eac2b3c6b6a76f14073ed2ddb30edcfb5924a08f81887afccd515e",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "GameClient",
+  "new_name": "Rva00597FC0Client",
+  "before_sha256": "66d9e2742733a32ede92d428ea3da3cce7af228feaff5e0fe89635f87564f73d",
+  "after_sha256": "acd53084e7e1a2addd901cdf9f8cec182a65c9a5868ae5be4ec471c8bda8523e",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "GameClient",
+  "new_name": "Rva00597FC0Client",
+  "before_sha256": "d2ebdb4458297563c3f24b446ea34bfd637f1902bb5566d82406c8980d361d06",
+  "after_sha256": "b2afa9e7990fe9eef6755444514af02fabc43660ebedf0af67de72df7f0f01ce",
+  "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
+  "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
  }
 ]

@@ -89,8 +89,8 @@ private:
 	GameWindow *m_window;
 };
 
-// The destructor role is proven (the GameClient dtor 0x00596500+0x2F6 calls
-// ILT 0x60D7 -> 0x00591D60 on esi+0x2B8, and the GameClient ctor builds this
+// The destructor role is proven (the Rva00597FC0Client dtor 0x00596500+0x2F6 calls
+// ILT 0x60D7 -> 0x00591D60 on esi+0x2B8, and the Rva00597FC0Client ctor builds this
 // object at +0x2B8), while the class name AptPalantirHeroSelector is inherited
 // from the 2026-09-08 ctor landing and is not independently verified (no RTTI;
 // the string "HeroSelector" does not occur in the EXE).

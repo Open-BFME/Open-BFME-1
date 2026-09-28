@@ -2,7 +2,7 @@
 //
 // BFME AptPalantir destructor at retail 0x0079D1D0.  The adjacent constructor
 // installs the two AptPalantir tables, and TheAptPalantir is a 0x584-byte
-// GameClient-derived object.  The three four-element Coord2D arrays are kept
+// Rva00597FC0Client-derived object.  The three four-element Coord2D arrays are kept
 // as real members so MSVC emits the retail eh-vector cleanup sequence.
 
 class SubsystemInterface
@@ -20,11 +20,11 @@ public:
 	virtual ~Snapshot();
 };
 
-class GameClient
+class Rva00597FC0Client
 	: public SubsystemInterface, public Snapshot
 {
 public:
-	virtual ~GameClient();
+	virtual ~Rva00597FC0Client();
 
 private:
 	char m_base[0x504];
@@ -194,7 +194,7 @@ public:
 	float m_y;
 };
 
-class Rva0079D1D0AptPalantir : public GameClient
+class Rva0079D1D0AptPalantir : public Rva00597FC0Client
 {
 public:
 	virtual ~Rva0079D1D0AptPalantir();

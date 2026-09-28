@@ -1,4 +1,4 @@
-// BFME-only no-argument GameClient vtable entry at retail 0x00592B80.
+// BFME-only no-argument Rva00597FC0Client vtable entry at retail 0x00592B80.
 // The address-derived spelling is intentional: the owning class and vtable
 // slot are proven, but no surviving source establishes the original name.
 #pragma intrinsic(_ReadWriteBarrier)
@@ -46,13 +46,13 @@ public:
 	void reset();
 };
 
-class GameClient;
+class Rva00597FC0Client;
 
 template <class Type>
 class StringBase
 {
 private:
-	friend class GameClient;
+	friend class Rva00597FC0Client;
 	void releaseBuffer();
 
 	void *m_data;
@@ -70,7 +70,7 @@ struct BfmeOtherABO
 	int m_bfme1F4ABO;
 };
 
-class GameClient
+class Rva00597FC0Client
 {
 public:
 	void bfmeReset00592B80();
@@ -114,7 +114,7 @@ public:
 	BfmePairABO m_bfme4DCABO[4];
 };
 
-void GameClient::bfmeReset00592B80()
+void Rva00597FC0Client::bfmeReset00592B80()
 {
 	m_bfme14ABO = 0;
 	m_bfme154ABO.clear();

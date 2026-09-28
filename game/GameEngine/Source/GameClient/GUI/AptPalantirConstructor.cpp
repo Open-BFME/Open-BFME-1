@@ -1,18 +1,11 @@
 // ??0AptPalantir@@QAE@XZ
 // partial score=0.99 date=2026-09-27
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // The installed vtables match the AptPalantir destructor at 0x0079D1D0.
 // RadarViewBoxEdge and the registered callback names independently identify this class.
 // The destructor witnesses the base size, texture field, and three Coord2D arrays.
-class AsciiString
-{
-public:
-	AsciiString() {}
-	~AsciiString() { releaseBuffer(); }
-	void releaseBuffer();
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class BFMERetailAsciiString : public AsciiString
 {
@@ -38,17 +31,17 @@ public:
 	virtual ~Snapshot();
 };
 
-class GameClient : public SubsystemInterface, public Snapshot
+class Rva00597FC0Client : public SubsystemInterface, public Snapshot
 {
 public:
-	GameClient();
-	virtual ~GameClient();
+	Rva00597FC0Client();
+	virtual ~Rva00597FC0Client();
 
 private:
 	char m_base[0x504];
 };
 
-#pragma comment(linker, "/alternatename:??0GameClient@@QAE@XZ=?j_0000da58@@YAXXZ")
+#pragma comment(linker, "/alternatename:??0Rva00597FC0Client@@QAE@XZ=?j_0000da58@@YAXXZ")
 
 class Image;
 class ImageCollection
@@ -136,7 +129,7 @@ struct Coord2D
 	float y;
 };
 
-class AptPalantir : public GameClient
+class AptPalantir : public Rva00597FC0Client
 {
 public:
 	virtual ~AptPalantir();
@@ -160,7 +153,7 @@ static char *bfmeString( const AsciiString &value )
 }
 
 AptPalantir::AptPalantir()
-	: GameClient()
+	: Rva00597FC0Client()
 	, m_510( 0 )
 	, m_514( 0 )
 	, m_518( 0 )

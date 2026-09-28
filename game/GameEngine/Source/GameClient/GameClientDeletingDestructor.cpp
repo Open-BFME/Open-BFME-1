@@ -1,15 +1,15 @@
 // cl: /DNDEBUG /MD /EHsc
-// Scalar wrapper 0x00597680 calls GameClient::~GameClient through ILT 0x00025FB8.
+// Scalar wrapper 0x00597680 calls Rva00597FC0Client::~Rva00597FC0Client through ILT 0x00025FB8.
 
-class GameClient
+class Rva00597FC0Client
 {
 public:
-	virtual ~GameClient();
+	virtual ~Rva00597FC0Client();
 };
 
-__declspec(noinline) GameClient::~GameClient() {}
+__declspec(noinline) Rva00597FC0Client::~Rva00597FC0Client() {}
 
-void Force_GameClient_Deleting_Destructor(GameClient *client)
+void Force_Rva00597FC0Client_Deleting_Destructor(Rva00597FC0Client *client)
 {
 	delete client;
 }

@@ -1,6 +1,9 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
-// BFME GameClient destructor, retail 0x00596500 (860 bytes).
+// BFME Rva00597FC0Client destructor, retail 0x00596500 (860 bytes).
+// Rva00597FC0Client (constructor 0x00597FC0, vtable 0x0110C2D8) is the base
+// AptPalantir derives from; it is not GameClient, whose destructor is
+// 0x00431380 (identity_evidence/00431380-gameclient-vs-00597fc0-client.md).
 
 #include "../../../../game/Libraries/Source/WWVegas/WWMath/coord2d.h"
 
@@ -72,8 +75,8 @@ public:
 
 extern WindowManager *g_theWindowManager;
 extern WindowManager *TheWindowManager;
-extern const void *GameClientVftable[];
-extern const void *GameClientSecondaryVftable[];
+extern const void *Rva00597FC0ClientVftable[];
+extern const void *Rva00597FC0ClientSecondaryVftable[];
 
 extern void j_00025464();
 extern void j_0001e277();
@@ -104,94 +107,94 @@ static __forceinline void gameClientRemoveName(WindowManager *manager,
 	(manager->*cast.member)(name);
 }
 
-class GameClientMember20
+class Rva00597FC0ClientMember20
 {
 public:
-	~GameClientMember20()
+	~Rva00597FC0ClientMember20()
 	{
-		((void (__fastcall *)(GameClientMember20 *))j_00016261)(this);
+		((void (__fastcall *)(Rva00597FC0ClientMember20 *))j_00016261)(this);
 	}
 
 private:
 	unsigned char m_pad[0x48];
 };
 
-class GameClientMember68
+class Rva00597FC0ClientMember68
 {
 public:
-	~GameClientMember68()
+	~Rva00597FC0ClientMember68()
 	{
-		((void (__fastcall *)(GameClientMember68 *))j_0003760a)(this);
+		((void (__fastcall *)(Rva00597FC0ClientMember68 *))j_0003760a)(this);
 	}
 
 private:
 	unsigned char m_pad[0xec];
 };
 
-class GameClientMember154
+class Rva00597FC0ClientMember154
 {
 public:
-	~GameClientMember154()
+	~Rva00597FC0ClientMember154()
 	{
-		((void (__fastcall *)(GameClientMember154 *))j_00042e51)(this);
+		((void (__fastcall *)(Rva00597FC0ClientMember154 *))j_00042e51)(this);
 	}
 
 private:
 	unsigned char m_pad[0x28];
 };
 
-class GameClientMember17c
+class Rva00597FC0ClientMember17c
 {
 public:
-	~GameClientMember17c()
+	~Rva00597FC0ClientMember17c()
 	{
-		((void (__fastcall *)(GameClientMember17c *))j_00011d42)(this);
+		((void (__fastcall *)(Rva00597FC0ClientMember17c *))j_00011d42)(this);
 	}
 
 private:
 	unsigned char m_pad[0x13c];
 };
 
-class GameClientMember2b8
+class Rva00597FC0ClientMember2b8
 {
 public:
-	~GameClientMember2b8()
+	~Rva00597FC0ClientMember2b8()
 	{
-		((void (__fastcall *)(GameClientMember2b8 *))j_000060d7)(this);
+		((void (__fastcall *)(Rva00597FC0ClientMember2b8 *))j_000060d7)(this);
 	}
 
 private:
 	unsigned char m_pad[0x1a8];
 };
 
-class GameClientMember460
+class Rva00597FC0ClientMember460
 {
 public:
-	~GameClientMember460()
+	~Rva00597FC0ClientMember460()
 	{
-		((void (__fastcall *)(GameClientMember460 *))j_00049e72)(this);
+		((void (__fastcall *)(Rva00597FC0ClientMember460 *))j_00049e72)(this);
 	}
 
 private:
 	unsigned char m_pad[0x28];
 };
 
-class GameClientMember488
+class Rva00597FC0ClientMember488
 {
 public:
-	~GameClientMember488()
+	~Rva00597FC0ClientMember488()
 	{
-		((void (__fastcall *)(GameClientMember488 *))j_0001bd1f)(this);
+		((void (__fastcall *)(Rva00597FC0ClientMember488 *))j_0001bd1f)(this);
 	}
 
 private:
 	unsigned char m_pad[0x3c];
 };
 
-class GameClientTailFields
+class Rva00597FC0ClientTailFields
 {
 public:
-	__forceinline ~GameClientTailFields() throw()
+	__forceinline ~Rva00597FC0ClientTailFields() throw()
 	{
 		void *value = m_4cc;
 		::operator delete(value);
@@ -208,52 +211,52 @@ private:
 	unsigned char m_tailPad[3];
 };
 
-class GameClientCoordArray
+class Rva00597FC0ClientCoordArray
 {
 private:
 	Coord2D m_data[4];
 };
 
-class GameClientList
+class Rva00597FC0ClientList
 {
 public:
-	~GameClientList()
+	~Rva00597FC0ClientList()
 	{
-		((void (__fastcall *)(GameClientList *))j_00032ba0)(this);
+		((void (__fastcall *)(Rva00597FC0ClientList *))j_00032ba0)(this);
 	}
 
 private:
 	unsigned char m_pad[0x14];
 };
 
-class GameClient
+class Rva00597FC0Client
 	: public SubsystemInterface,
 	  public Snapshot
 {
 public:
-	virtual ~GameClient();
+	virtual ~Rva00597FC0Client();
 
 private:
 	void *m_0c;
 	CommandTranslator *m_10;
 	unsigned char m_14[0x0c];
-	GameClientMember20 m_member20;
-	GameClientMember68 m_member68;
-	GameClientMember154 m_member154;
-	GameClientMember17c m_member17c;
-	GameClientMember2b8 m_member2b8;
-	GameClientMember460 m_member460;
-	GameClientMember488 m_member488;
-	GameClientTailFields m_tail;
+	Rva00597FC0ClientMember20 m_member20;
+	Rva00597FC0ClientMember68 m_member68;
+	Rva00597FC0ClientMember154 m_member154;
+	Rva00597FC0ClientMember17c m_member17c;
+	Rva00597FC0ClientMember2b8 m_member2b8;
+	Rva00597FC0ClientMember460 m_member460;
+	Rva00597FC0ClientMember488 m_member488;
+	Rva00597FC0ClientTailFields m_tail;
 	AsciiString m_name;
 	Coord2D m_coords[4];
-	GameClientList m_list;
+	Rva00597FC0ClientList m_list;
 };
 
-GameClient::~GameClient()
+Rva00597FC0Client::~Rva00597FC0Client()
 {
-	*(const void ***)this = GameClientVftable;
-	*(const void ***)((char *)this + 8) = GameClientSecondaryVftable;
+	*(const void ***)this = Rva00597FC0ClientVftable;
+	*(const void ***)((char *)this + 8) = Rva00597FC0ClientSecondaryVftable;
 
 	if (g_theWindowManager)
 	{

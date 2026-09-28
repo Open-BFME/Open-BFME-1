@@ -2873,7 +2873,7 @@ name,address,notes
 ??0FreezingRainSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,FreezingRainSpecialPowerModuleData base ctor
 ??0GBB_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,GettingBuiltBehavior ModuleFactory body calls the shared ObjectModule constructor ILT
 ??0GODupBase@@QAE@XZ,0x0001901A,local helper name for shared Snapshot+SubsystemInterface combined base ctor (retail body 0x001B0D20/thunk 0x0001901A); real retail identity unknown, additive pin for dup_6bc530 call resolution
-??0GameClient@@QAE@XZ,0x00597FC0,The destructor at 0x00596500 installs GameClient vtables 0x0110C2D8 and 0x0110C2C4. The caller at 0x0079D9F0 reaches this constructor through ILT 0x0000DA58 with thiscall and no stack arguments.
+??0Rva00597FC0Client@@QAE@XZ,0x00597FC0,Rva00597FC0Client constructor (vtables 0x0110C2D8/0x0110C2C4; base of AptPalantir; the caller at 0x0079D9F0 reaches it through ILT 0x0000DA58); formerly filed as GameClient - see identity_evidence/00431380-gameclient-vs-00597fc0-client.md
 ??0GameFont@@QAE@XZ,0x000310A7,constructor ILT to 0x004735A0
 ??0GameInfo@@QAE@XZ,0x0002D5BF,SkirmishGameInfo retail base-constructor thunk
 ??0GameLogic@@QAE@XZ,0x003928E0,Win32GameEngine::createGameLogic calls this body before installing W3DGameLogic primary and Snapshot vtables; body begins with SubsystemInterface construction and initializes the GameLogic layout established by its matched destructor
@@ -87583,7 +87583,7 @@ name,address,notes
 ?update@DistanceUpdate003C5990@@QAEXPAUDistanceNode003C5990@@H@Z,0x003C5990,Address-derived ABI spelling for raw flag stack slot; call 003C5D4F pushes unmodified fourth argument; assigned exact body consumes only its low byte at 003C59C0; both int and bool ABI slots are four bytes
 ?update@DockUpdate@@UAE?AW4UpdateSleepTime@@XZ,0x002ccec0,vtable-slot ??_7DockUpdate@@6BUpdateModule@@@ slot 0 anchors=1
 ?update@DozerPrimaryIdleState@@UAE?AW4StateReturnType@@XZ,0x002b9970,vtable-slot ??_7DozerPrimaryIdleState@@6BMemoryPoolObject@@@ slot 6 anchors=1
-?update@GameClient@@UAEXXZ,0x00598950,vtable-slot ??_7GameClient@@6BSubsystemInterface@@@ slot 5 anchors=1
+?update@Rva00597FC0Client@@UAEXXZ,0x00598950,vtable 0x0110C2D8 slot 5 (Rva00597FC0Client update); formerly filed as GameClient::update
 ?update@GameLogic@@UAEXXZ,0x0038DA10,the main logic tick; calls setFPMode popSleepyUpdate getCRC RecorderClass::getMode and VictorySystem::update at 0x0038DC4D; reached through ILT 0x0003A9C7 and loads TheNetwork 0x012F7714
 ?update@HijackerUpdate@@UAE?AW4UpdateSleepTime@@XZ,0x00295d70,vtable-slot ??_7HijackerUpdate@@6BUpdateModuleInterface@@@ slot 0 anchors=1
 ?update@LoadScreen@@UAEXH@Z,0x00003FE4,ZH LoadScreen base update called by BFME load screens

@@ -6244,8 +6244,8 @@ name,va
 ?FrameCount@WW3D@@2HA,0x0133F434
 ?GadgetListBoxInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,0x0043C281
 ?GadgetListBoxMultiInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,0x004356E8
-?GameClientSecondaryVftable@@3PAPBXA,0x0110C2C4
-?GameClientVftable@@3PAPBXA,0x0110C2D8
+?Rva00597FC0ClientSecondaryVftable@@3PAPBXA,0x0110C2C4
+?Rva00597FC0ClientVftable@@3PAPBXA,0x0110C2D8
 ?GameSpyColor@@3PAHA,0x012B9200
 ?Gen01083D34@@3HA,0x01083D34
 ?Gen01083E78@@3HA,0x01083E78

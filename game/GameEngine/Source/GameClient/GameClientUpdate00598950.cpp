@@ -1,4 +1,4 @@
-// GameClient::update at RVA 0x00598950 (1119 bytes).
+// Rva00597FC0Client::update at RVA 0x00598950 (1119 bytes).
 // Retains the established vtable-slot identity from symbols.csv. The receiver
 // offsets and bit fields are witnessed by this body; unknown names stay numeric.
 // The zero-stack-argument dump callees use ECX; a one-argument fastcall cast
@@ -62,15 +62,15 @@ struct Handle00598950 { Counter00598950 *p; Counter00598950 *get() const {return
   return n;
  }
 };
-class GameClient { public:
+class Rva00597FC0Client { public:
  virtual void update();
  SubState00598950 *stateAt0c() const { return field_c; }
- char pad4[8];SubState00598950 *field_c;Transition00598950 *field_10;char pad14[0x28-0x14];unsigned m_nextDrawableID;char pad2c[0x4c-0x2c];
+ char pad4[8];SubState00598950 *field_c;Transition00598950 *field_10;char pad14[0x28-0x14];unsigned field_28;char pad2c[0x4c-0x2c];
  bool byte_4c;char pad4d[0x58-0x4d];Bits00598950 bits58;char pad59[3];int field_5c;int field_60;int field_64;
  char field_68[0x154-0x68];char field_154[0x17c-0x154];char field_17c[0x2b8-0x17c];char field_2b8[0x460-0x2b8];char field_460[0x488-0x460];char field_488[0x4c5-0x488];
  bool byte_4c5;char pad4c6[2];int field_4c8;Counter00598950 *field_4cc;int field_4d0;bool byte_4d4;char pad4d5[3];AsciiString field_4d8;char pad4dc[0x4fc-0x4dc];std::map<int,bool> field_4fc;
 };
-void GameClient::update()
+void Rva00597FC0Client::update()
 {
  ((AptPalantirStore*)field_154)->rva00591b60();
  ((Call00598950)j_0003f198)(field_17c);
