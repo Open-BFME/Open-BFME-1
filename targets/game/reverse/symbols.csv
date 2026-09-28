@@ -89693,3 +89693,7 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??0Gen_0051b690@@QAE@XZ,0x0051B690, constructor ABI of existing ctorTail owner: callee calls base ctor 00490420 installs vtable 01105FCC returns this; caller 00386190 allocates 16 bytes
 ??0LoadScreen0051BF30@@QAE@I@Z,0x0051BF30, address-derived constructor: base ctor 00490420 then vtable 01106070 and argument at +14; returns this with RET4; caller 00386190 allocates A4 bytes
 ?Rva005B18C0@@YA?AW4CommandStatus@@PBVCommandButton@@PBUICoord2D@@@Z,0x005B18C0,gap caller 005B20B6 direct REL32; callee reads EAX command and ECX mouse; returns EAX CommandStatus; opaque private-ABI helper
+?rva002E9590ParseScriptedEvent@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z,0x002E9590,002EA5D0 retail ScriptedEvent literal selects this body through ILT; callee saves ECX and accepts parser stack slot with ret 4
+?rva002E9680ParseModelConditionEvent@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z,0x002E9680,002EA5D0 retail ModelConditionEvent literal selects this body through ILT; callee saves ECX and accepts parser stack slot with ret 4
+?rva002E9AA0ParseObjectStatusEvent@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z,0x002E9AA0,002EA5D0 retail ObjectStatusEvent literal selects this body through ILT; callee saves ECX and accepts parser stack slot with ret 4
+?d_0088e970@@YAXXZ,0x0088E970,Legacy void-declared reference in matched DebugConstructor_00889370 ignores AL; same cdecl no-argument body now recovered as installDebugImportHook0088E970 returning bool

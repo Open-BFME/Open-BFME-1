@@ -10,16 +10,22 @@
 
 static OverallStats s_statsUSA, s_statsChina, s_statsGLA;
 
+// calcPercent at 0050B200 uses a reference-returning max and an inline
+// StringBase accessor. Keep this static helper with updateOverallStats:
+// MSVC uses a private ESI argument convention shared by their exact bodies.
+template <class T> inline const T &percentMax(const T &a, const T &b) { return a > b ? a : b; }
+template <> inline const unsigned short *StringBase<unsigned short>::str() const { return m_data ? m_data->data : L""; }
+
 static UnicodeString calcPercent(const OverallStats& stats, Int n, UnicodeString sideStr)
 {
-	Real winPercentUSA   = s_statsUSA.wins[n]*100/INT_TO_REAL(max(1, s_statsUSA.wins[n]+s_statsUSA.losses[n]));
-	Real winPercentChina = s_statsChina.wins[n]*100/INT_TO_REAL(max(1, s_statsChina.wins[n]+s_statsChina.losses[n]));
-	Real winPercentGLA   = s_statsGLA.wins[n]*100/INT_TO_REAL(max(1, s_statsGLA.wins[n]+s_statsGLA.losses[n]));
-	Real thisWinPercent  = stats.wins[n]*100/INT_TO_REAL(max(1, stats.wins[n]+stats.losses[n]));
+	Real winPercentUSA   = s_statsUSA.wins[n]*100/INT_TO_REAL(percentMax(1, s_statsUSA.wins[n]+s_statsUSA.losses[n]));
+	Real winPercentChina = s_statsChina.wins[n]*100/INT_TO_REAL(percentMax(1, s_statsChina.wins[n]+s_statsChina.losses[n]));
+	Real winPercentGLA   = s_statsGLA.wins[n]*100/INT_TO_REAL(percentMax(1, s_statsGLA.wins[n]+s_statsGLA.losses[n]));
+	Real thisWinPercent  = stats.wins[n]*100/INT_TO_REAL(percentMax(1, stats.wins[n]+stats.losses[n]));
 	Real totalWinPercent = winPercentUSA + winPercentChina + winPercentGLA;
-	Real val = thisWinPercent*100/max(1.0f,totalWinPercent);
+	Real val = thisWinPercent*100/percentMax(1.0f,totalWinPercent);
 	UnicodeString s;
-	s.format(TheGameText->fetch("GUI:PerSideWinPercentage"), REAL_TO_INT(val), sideStr.str());
+	s.format(TheGameText->fetch("GUI:PerSideWinPercentage"), (Int)val, sideStr.str());
 	return s;
 }
 

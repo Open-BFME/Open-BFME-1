@@ -8148,5 +8148,15 @@
   "after_sha256": "eb7259beaf5a32a60fca5f6d7abf474be98dc31536aafbca8b2c646af4537b6a",
   "evidence": "targets/game/reverse/identity_evidence/0061da30-bank-placeholder-names.md",
   "reason": "Open-BFME5 TU-local placeholders: AsciiStringBG redeclares AsciiString (bank now includes ascii_string.h); bfmeBaseInitBG/BfmeNamedBG are absent from inputs/reference and misstate a polymorphic base constructor (0x0060BEB0 is its derived ctor), so the bank takes the address-derived Rva0061DA30Base"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000c1d10.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/MapCacheIndex000C1D10.cpp",
+  "old_name": "MapMetaDataMap",
+  "new_name": "Rva000C1D10MapCache",
+  "before_sha256": "aa30b211a91f6bc883da8825fbed88a08774a887e987f1285e87c7d1b0d488d1",
+  "after_sha256": "ca92ddf3cc6e33eda8757d7f86fa007fd784567bc1625e80c95397a57933009b",
+  "evidence": "targets/game/reverse/identity_evidence/000c1d10-mapmetadatamap-placeholder.md",
+  "reason": "MapMetaDataMap was a TU-local stand-in for std::map<AsciiString,MapMetaData> (absent from inputs/reference); that operator[] identity is already the matched row at 0x0007DF70 and retail has no ICF, so 0x000C1D10 lands under an address-derived owner"
  }
 ]
