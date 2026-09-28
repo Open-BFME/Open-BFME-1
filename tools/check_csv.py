@@ -469,7 +469,7 @@ def check_attempts(spec, problems, *, functions_raw=None, sources_ok=None):
 # not a clean-up: it cannot fail the fleet today, and it refuses the 7th.
 # It may only ever be LOWERED, never raised to get green. Five of the six have
 # since been claimed or removed; leaving the number at 6 let five new orphans in.
-ORPHAN_BASELINE = 1
+ORPHAN_BASELINE = 0
 
 
 def worldbuilder_claims(spec, sources_ok):
