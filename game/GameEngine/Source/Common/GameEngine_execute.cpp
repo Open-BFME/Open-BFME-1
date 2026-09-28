@@ -186,26 +186,44 @@ struct GlobalDataLayout
 	bool fastMode;
 };
 
-#define TheRecorder (*(RecorderClass **)0x012ED62C)
-#define TheStatsCollector (*(StatsCollector **)0x012EF18C)
-#define TheScriptEngine (*(ScriptEngine **)0x012F076C)
-#define TheTacticalView (*(TacticalView **)0x012F1600)
-#define TheGameClient (*(GameClient **)0x012F1464)
-#define TheGlobalLanguageData (*(GlobalLanguage **)0x012F1484)
-#define TheGlobalData (*(GlobalDataLayout **)0x012ED5C8)
-#define TheDebugManager (*(DebugManager **)0x01336E5C)
+class GlobalData;
+class BfmeDebugManager;
 
+extern RecorderClass *TheRecorder;
+extern ScriptEngine *TheScriptEngine;
+extern TacticalView *TheTacticalView;
+extern GameClient *TheGameClient;
+extern GlobalData *TheWritableGlobalData;
+extern BfmeDebugManager *TheGen001336E5C;
+
+extern int *g_012A7244;
+extern int BfmeSavedClientFrame;
+extern UnsignedInt g_012ED510;
+extern UnsignedInt g_012ED514;
+extern UnsignedInt g_012ED518;
+extern UnsignedInt g_012ED51C;
+extern bool g_deepCRC;
+extern bool g_liteCRC;
+
+#define TheGlobalData ((GlobalDataLayout *)TheWritableGlobalData)
+#define TheDebugManager ((DebugManager *)TheGen001336E5C)
+
+// These five stay literal: a named extern (Watchdog0040F780, TheGlobalLanguageData, g_012A72A4,
+// g_012ED50C, g_012ED520) changes this body's generated code, so the object would no longer match.
+#define TheStatsCollector (*(StatsCollector **)0x012EF18C)
+#define TheGlobalLanguageData (*(GlobalLanguage **)0x012F1484)
 #define LogicTimeScale (*(float *)0x012A72A4)
-#define LogicFrameAdjustment (**(int **)0x012A7244)
-#define SavedClientFrame (*(int *)0x012ED508)
 #define SleepTimeTotal (*(UnsignedInt *)0x012ED50C)
-#define SleepTimeRemaining (*(UnsignedInt *)0x012ED510)
-#define FrameElapsedTime (*(UnsignedInt *)0x012ED514)
-#define PreviousFrameTime (*(UnsignedInt *)0x012ED518)
-#define InitialFrameTime (*(UnsignedInt *)0x012ED51C)
 #define LimitFrameRate (*(bool *)0x012ED520)
-#define DisablePacingA (*(bool *)0x012ED4E5)
-#define DisablePacingB (*(bool *)0x012ED4E6)
+
+#define LogicFrameAdjustment (*g_012A7244)
+#define SavedClientFrame BfmeSavedClientFrame
+#define SleepTimeRemaining g_012ED510
+#define FrameElapsedTime g_012ED514
+#define PreviousFrameTime g_012ED518
+#define InitialFrameTime g_012ED51C
+#define DisablePacingA g_deepCRC
+#define DisablePacingB g_liteCRC
 
 #define REPORT_CRASH(reason) do { \
 	_bfme_debugRecordCallsite(1); \
@@ -319,7 +337,7 @@ void GameEngine::execute(void)
 		}
 
 	pacing_done:
-		if (*(volatile float *)0x012A72A4 != 1.0f)
+		if (*(volatile float *)&LogicTimeScale != 1.0f)
 			LimitFrameRate = true;
 
 		if ((UnsignedInt)SavedClientFrame + 6 > TheGameClient->getFrame())
