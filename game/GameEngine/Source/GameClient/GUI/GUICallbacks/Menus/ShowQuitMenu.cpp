@@ -256,35 +256,48 @@ public:
 	void setGamePaused(bool paused, int pauseMode, bool affectMouse);
 };
 
+class Mouse;
+class ScriptEngine;
+class DisconnectMenu;
+
 extern Display *TheDisplay;
+extern void *g_obj12F4B40;
+extern InGameUI *TheInGameUI;
+extern int g_Va012F49B0;
+extern GameLogic *TheGameLogic;
+extern ScriptEngine *TheScriptEngine;
+extern GameWindowTransitionsHandler *TheTransitionHandler;
+extern DisconnectMenu *TheDisconnectMenu;
+extern Mouse *TheMouse;
+extern Shell *TheShell;
 extern void _bfme_hidePurchaseScience();
 extern void HideInGameChat();
 extern void HideDiplomacy();
 
 void showQuitMenu()
 {
-	if (*(void **)0x012F4B40 != 0)
+	if (g_obj12F4B40 != 0)
 		return;
 
-	if ((*(InGameUI **)0x012F148C)->slot85())
+	if (TheInGameUI->slot85())
 		return;
 
-	if (*(void **)0x012F49B0 != 0)
+	if (g_Va012F49B0 != 0)
 		return;
 
-	if ((unsigned char)((BfmeThingFGA *)*(void **)0x012F0898)->bfmeGoFGA())
+	if ((unsigned char)((BfmeThingFGA *)TheGameLogic)->bfmeGoFGA())
 		return;
 
-	if ((*(BfmeThingFGA **)0x012F0898)->m_flag)
+	if (((BfmeThingFGA *)TheGameLogic)->m_flag)
 		return;
 
-	if (*(int *)((char *)*(void **)0x012F076C + 0x17080) >= 0)
+	if (*(int *)((char *)TheScriptEngine + 0x17080) >= 0)
 		return;
 
-	if ((*(GameWindowTransitionsHandler **)0x012F3330)->isFinished() == false)
+	if (TheTransitionHandler->isFinished() == false)
 		return;
 
-	if (*(void **)0x012F4964 != 0)
+	if (TheDisconnectMenu != 0)
 		return;
 
 	if (TheDisplay != 0) {
@@ -297,14 +310,14 @@ void showQuitMenu()
 	_bfme_hidePurchaseScience();
 	HideInGameChat();
 	HideDiplomacy();
-	((BfmeHistoryYR *)*(void **)0x012F4C5C)->bfmeSetYR(1);
+	((BfmeHistoryYR *)TheMouse)->bfmeSetYR(1);
 
-	GameLogic *logic = *(GameLogic **)0x012F0898;
+	GameLogic *logic = TheGameLogic;
 	if (!logic->isInMultiplayerGame())
 		((BfmeGameLogicPause *)logic)->setGamePaused(true, 0, true);
 
-	((BfmeVirtualMouseSetCursor *)*(void **)0x012F4C5C)->setCursor(2);
-	(*(Shell **)0x012F4B58)->showShell(false);
-	(*(Shell **)0x012F4B58)->push(AsciiString("QuitMenu.apt"), false);
-	(*(InGameUI **)0x012F148C)->slot84(1);
+	((BfmeVirtualMouseSetCursor *)TheMouse)->setCursor(2);
+	TheShell->showShell(false);
+	TheShell->push(AsciiString("QuitMenu.apt"), false);
+	TheInGameUI->slot84(1);
 }

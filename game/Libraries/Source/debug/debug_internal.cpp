@@ -69,7 +69,8 @@ public:
 
 extern void _bfme_debugRecordCallsite(int kind);
 
-#define TheBfmeDebug (*(BfmeDebugManager **)0x01336E5C)
+extern BfmeDebugManager *TheGen001336E5C;
+#define TheBfmeDebug TheGen001336E5C
 
 #pragma optimize("y", off)
 void *DebugAllocMemory(unsigned numBytes)
