@@ -1,5 +1,5 @@
-// ?setup@Rva0051A5A0Host@@QAEXH@Z
-// partial score=0.26 date=2026-09-21
+// ?d_00518ff0@@YAXXZ
+// partial score=0.3 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 #define Matrix4x4 Matrix4
@@ -34,17 +34,17 @@ private:
 // ?setup@Rva0051A5A0Host@@QAEXH@Z
 void Rva0051A5A0Host::setup(int enable)
 {
+	Rva0051A5A0Host *self = this;
 	unsigned char en = (unsigned char)enable;
-	if (en == m_tabState)
+	if (en == self->m_tabState)
 		return;
 
-	GameWindow *second = m_windowB;
-	if (second == NULL)
+	if (self->m_windowB == NULL)
 		return;
-	if (m_windowA == NULL)
+	if (self->m_windowA == NULL)
 		return;
 
-	m_tabState = en;
+	self->m_tabState = en;
 	if (!en)
 	{
 		TheWindowManager->clearTabList();
@@ -52,9 +52,9 @@ void Rva0051A5A0Host::setup(int enable)
 	}
 
 	GameWindowList tabList;
-	tabList.push_front(m_windowA);
-	tabList.push_back(second);
+	tabList.push_front(self->m_windowA);
+	tabList.push_back(self->m_windowB);
 	TheWindowManager->clearTabList();
 	TheWindowManager->registerTabList(tabList);
-	TheWindowManager->winSetFocus(m_windowA);
+	TheWindowManager->winSetFocus(self->m_windowA);
 }
