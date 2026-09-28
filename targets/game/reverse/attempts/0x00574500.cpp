@@ -1,5 +1,5 @@
 // ?handleMessage00574500@BfmeAptScreenScoreScreen@@QAEHHPAX0@Z
-// partial score=0.8773747841 date=2026-09-28
+// partial score=0.9583 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 #include "ascii_string.h"
 #include "unicode_string.h"
@@ -12,7 +12,7 @@ class GameWindow { public: int winEnable(bool); };
 void* GadgetListBoxGetItemData(GameWindow*,int,int);
 int GadgetListBoxGetEntryBasedOnXY(GameWindow*,int,int,int&,int&);
 void GadgetTextEntrySetText(GameWindow*,UnicodeString);
-class Rva00361900String { public: AsciiString getString(); };
+class LivingWorldArmy { public: AsciiString getName() const; };
 struct ScoreRecord00574500 { char at00[0x78]; UnicodeString at78; };
 enum KindOfType { Kind00574500=0x59 };
 class ThingTemplate { public: bool isKindOf(KindOfType) const; };
@@ -112,16 +112,17 @@ int BfmeAptScreenScoreScreen::handleMessage00574500(int message,void* argument,v
      m_record=(ScoreRecord00574500*)GadgetListBoxGetItemData(m_listBox,row,0);
      if(m_record) {
       const ThingTemplate* type=0;
-      if(TheThingFactory) type=TheThingFactory->findTemplate(((Rva00361900String*)m_record)->getString());
+      if(TheThingFactory) type=TheThingFactory->findTemplate(((const LivingWorldArmy*)m_record)->getName());
       if(type && type->isKindOf(Kind00574500)) label="TOOLTIP:YouMayNotRenameAHero";
       else label="TOOLTIP:ClickToRenameThisUnit";
       TheMouse->setCursorTooltip(TheGameText->fetch(label),-1,0,1.0f);
      }
      m_tooltip=label;
     }
-   m_x=x; m_y=y; break;
    } else if(m_hoverTicks>7 && column==0) {
+    // The refresh arm leaves through its own position update; retail places it after the epilogue.
     TheMouse->setCursorTooltip(TheGameText->fetch(m_tooltip),-1,0,1.0f);
+    m_x=x; m_y=y; break;
    }
    m_x=x; m_y=y;
   }
@@ -134,7 +135,7 @@ int BfmeAptScreenScoreScreen::handleMessage00574500(int message,void* argument,v
     m_row=row;
     const ThingTemplate* type=0;
     if(TheThingFactory) {
-     type=TheThingFactory->findTemplate(((Rva00361900String*)m_record)->getString());
+     type=TheThingFactory->findTemplate(((const LivingWorldArmy*)m_record)->getName());
      if(type && type->isKindOf(Kind00574500)) { m_record=0; m_row=-1; break; }
     }
     UnicodeString name;
