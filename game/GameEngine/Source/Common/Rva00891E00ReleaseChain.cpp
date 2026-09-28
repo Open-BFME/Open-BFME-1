@@ -4,7 +4,7 @@
 // gap-thunk row until this body claimed its full extent (nothing in the
 // image targets 0x00891E3C).  No caller names it, so it keeps its address.
 extern void rva008B8B80ReleaseAll();
-extern void d_008b61d0();
+extern void rva008B61D0ReleaseGlobals();
 extern void rva008A4630ReleaseGlobals();
 extern void rva008A47B0ReleaseGlobals();
 extern void bfmeGo1062B();
@@ -32,7 +32,7 @@ void rva00891DE0RegisterChain()
 void rva00891E00ReleaseChain()
 {
 	rva008B8B80ReleaseAll();
-	d_008b61d0();
+	rva008B61D0ReleaseGlobals();
 	rva008A4630ReleaseGlobals();
 	rva008A47B0ReleaseGlobals();
 	bfmeGo1062B();
