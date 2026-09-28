@@ -1,4 +1,5 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
+// stlport
 //
 // Retail 0x0033E9A0, 360 bytes: BFME's copy of the ScriptEngine.cpp file-scope
 // helper _appendMessage.  The identity is the Zero Hour twin at
@@ -14,12 +15,15 @@
 //
 // The retail body takes `str` live in EDI, saves only ESI and returns without
 // popping arguments: MSVC 7.1's private convention for a static helper.  That
-// is why it stays `static` here and why one source-level call site is kept at
-// the bottom -- without a call in the TU the helper is neither emitted nor
-// given the register-passed first argument.  ScriptEngine::applyNamed
-// (0x00340F10, BFME's executeScript) below reaches it four times; placing
-// that caller in this TU is what gives it retail's `mov edi,eax` and
-// two-push call shape.
+// is why it stays `static` here, beside its retail callers: without a call in
+// the TU the helper is neither emitted nor given the register-passed first
+// argument.  ScriptEngine::applyNamed (0x00340F10, BFME's executeScript)
+// reaches _appendMessage four times, which gives it retail's `mov edi,eax` and
+// two-push call shape; ScriptEngine::update (0x0034B9A0) calls _adjustVariable.
+
+#define _STLP_NO_EXCEPTIONS 1
+#define _STLP_USE_STATIC_LIB 1
+#include <map>
 
 typedef int Int;
 typedef bool Bool;
@@ -54,6 +58,7 @@ private:
 	void releaseBuffer();
 
 public:
+	void set(const StringBase<T> &other);			// 0x00887C90
 	void concat(const T *text, Int length);			// 0x00887D60
 	Bool startsWith(const T *text, Int length) const;	// 0x008875A0
 
@@ -87,9 +92,20 @@ public:
 
 	void __cdecl format(AsciiString format, ...);		// 0x00888FF0
 
+	AsciiString &operator=(const AsciiString &other)
+	{
+		StringBase<char>::set(other);
+		return *this;
+	}
+
 	void concat(const char *text, Int length)
 	{
 		StringBase<char>::concat(text, length);
+	}
+
+	void concat(char c)
+	{
+		concat(&c, 1);
 	}
 
 	void concat(const AsciiString &other)
@@ -112,6 +128,8 @@ public:
 		return m_data ? m_data->m_length : 0;
 	}
 };
+
+#include "Common/LatchRestore.h"
 
 class GameLogic
 {
@@ -156,10 +174,16 @@ enum GameDifficulty
 	DIFFICULTY_HARD
 };
 
+enum NameKeyType;
+
 class Player
 {
 public:
 	GameDifficulty getPlayerDifficulty() const;		// ILT 0x000217D8
+	NameKeyType getNameKey() const { return at20; }
+
+	char at0[0x20];
+	NameKeyType at20;
 };
 
 // Zero Hour's DLINK_ITERATOR (GameCommon.h): the next-function member pointer
@@ -237,6 +261,45 @@ public:
 	BFMERetailStringBase<char> copyStringAt30();		// ILT 0x00012378
 };
 
+
+// Types used by ScriptEngine::update (0x0034B9A0).
+extern AsciiString KEYNAME(NameKeyType);
+struct Update0034B9A0Counter { AsciiString at10,at14; int at18; bool at1c,at1d; };
+struct Update0034B9A0Flag { AsciiString at10,at14; bool at18; };
+typedef _STL::_Rb_tree_node<Update0034B9A0Counter> CounterNode;
+typedef _STL::_Rb_tree_node<Update0034B9A0Flag> FlagNode;
+typedef _STL::_Rb_tree_iterator<Update0034B9A0Counter,_STL::_Nonconst_traits<Update0034B9A0Counter> > CounterIterator;
+typedef _STL::_Rb_tree_iterator<Update0034B9A0Flag,_STL::_Nonconst_traits<Update0034B9A0Flag> > FlagIterator;
+struct Update0034B9A0List { Update0034B9A0List *next,*prev; AsciiString value; };
+class ScriptActionsInterface {
+public:
+ virtual void slot0(); virtual void slot1(); virtual void slot2();
+ virtual void slot3(); virtual void slot4(); virtual void update();
+ virtual void slot6(); virtual void slot7(); virtual void slot8(); virtual void slot9();
+ virtual void closeWindows(bool);
+};
+class ScriptConditionsInterface {
+public:
+ virtual void slot0(); virtual void slot1(); virtual void slot2();
+ virtual void slot3(); virtual void slot4(); virtual void update();
+ virtual void slot6(); virtual void slot7(); virtual void slot8(); virtual void slot9();
+ virtual void closeWindows(bool);
+};
+struct Rva003412E0Node;
+class Rva00355950Arr;
+class Rva003558C0Arr;
+struct Update0034B9A0ScriptList { int at0; Rva003412E0Node *at4,*at8;
+ Rva003412E0Node *getScript() { return at8; } Rva003412E0Node *getScriptGroup() { return at4; } };
+struct Update0034B9A0Side { char at0[8]; Update0034B9A0ScriptList *at8; char atc[12];
+ Update0034B9A0ScriptList *getScriptList() { return at8; } };
+class SidesList {
+public:
+ char at0[0x28]; int at28; Update0034B9A0Side at2c[1];
+ int getNumSides() const { return at28; }
+ Update0034B9A0Side *at(int i) { return i>=0 && i<at28 ? &at2c[i] : 0; }
+};
+class PlayerList { public: Player *getNthPlayer(int); void updateTeamStates(); };
+
 class ScriptEngine;
 
 class BFMEScriptEngineFlagLookup
@@ -268,7 +331,7 @@ class ScriptEngine
 {
 public:
 	virtual void slot00(); virtual void slot01(); virtual void slot02();
-	virtual void slot03(); virtual void slot04(); virtual void slot05();
+	virtual void slot03(); virtual void slot04(); virtual void update();
 	virtual void slot06(); virtual void slot07(); virtual void slot08();
 	virtual void slot09(); virtual void slot10(); virtual void slot11();
 	virtual void slot12(); virtual void slot13(); virtual void slot14();
@@ -280,9 +343,21 @@ public:
 
 	Bool isTimeFast();					// ILT 0x0000A8A8 -> 0x00336FB0
 	void applyNamed(void *object, void *slot);
+	void createNamedCache(); void _bfme_finishEndGame();
+	void walkNamed(Rva00355950Arr*,Rva003412E0Node*,bool);
+	void walkChild(Rva003558C0Arr*,Rva003412E0Node*);
+	// Layout offsets read directly from the retail update and corroborated by newMap.
+	char at00004[0x16040-4];
+	_STL::_Rb_tree_node_base *at16040; char at16044[8];
+	_STL::_Rb_tree_node_base *at1604c; char at16050[0x17080-0x16050];
+	int at17080,at17084; AsciiString at17088; char at1708c[0x170a8-0x1708c];
+	bool at170a8; char at170a9[3]; Player *at170ac; int at170b0,at170b4;
+	char at170b8[0x17270-0x170b8]; Update0034B9A0List *at17270;
+	char at17274[0x17637-0x17274]; bool at17637;
 
 protected:
 	void executeActions(ScriptAction *pActionHead);		// ILT 0x0000B811
+	void updateFades();
 
 private:
 	const AsciiString &scope17088() const { return *(const AsciiString *)((const char *)this + 0x17088); }
@@ -296,7 +371,9 @@ AsciiString Rva00195FC0JoinPath(const AsciiString &left, const AsciiString &righ
 extern "C" __declspec(dllimport) int __cdecl sprintf(char *buffer,
 	const char *format, ...);
 
-extern void *TheScriptDebugWindowDLL;				// 0x012F0758
+// File statics as in the Zero Hour ScriptEngine.cpp (st_DebugDLL, st_CurrentFrame).
+static void *TheScriptDebugWindowDLL;				// 0x012F0758
+static int st_CurrentFrame;					// 0x012F0760
 extern GlobalData *TheWritableGlobalData;			// 0x012ED5C8
 extern GameLogic *TheGameLogic;					// 0x012F0898
 extern ScriptEngine *TheScriptEngine;				// 0x012F076C
@@ -484,13 +561,74 @@ void ScriptEngine::applyNamed(void *object, void *slot)
 	team17094() = pSavConditionTeam;
 }
 
-// Scaffold, not a retail body: the only call site of _adjustVariable inside
-// this TU, which is what makes MSVC emit it at all and keep its private
-// register-passed first argument.  It goes away when the callers at
-// 0x00341350 and 0x0034B9A0 are converted; applyNamed above already calls
-// _appendMessage from retail's own TU.
-void Rva0033E9A0AppendMessageCallSite(const AsciiString &str)
-{
-	_appendMessage(str, true, false);
-	_adjustVariable(str, 0, false, false);
+// ?update@ScriptEngine@@UAEXXZ
+// Retail 0x0034B9A0, 1212 bytes: ZH ScriptEngine::update; vtable 010E7A30 slot 5
+// -> ILT 00025A3B. Same TU as _adjustVariable for its private EDI convention.
+extern void j_0003ce98(); extern void j_0000fcbd();
+static __forceinline void callUpdateMember(ScriptEngine *p, void (*raw)()) {
+ union {void (*raw)(); void (ScriptEngine::*member)();} u;
+ u.raw=raw; (p->*u.member)();
 }
+extern ScriptActionsInterface *TheScriptActions;
+extern ScriptConditionsInterface *TheScriptConditions;
+extern SidesList *TheSidesList;
+extern PlayerList *ThePlayerList;
+#define CurrentFrame st_CurrentFrame
+
+void ScriptEngine::update() {
+ if(at170a8) {
+  createNamedCache(); callUpdateMember(this,j_0003ce98); at170a8=false;
+ } else callUpdateMember(this,j_0003ce98);
+ if(at17084>0) { --at17084; if(at17084<1) TheScriptActions->closeWindows(false); }
+ if(at17080>0) { --at17080; if(at17080<1) _bfme_finishEndGame(); }
+ if(at170b4) updateFades();
+ if(at17080>=0) return;
+ if(TheScriptActions) TheScriptActions->update();
+ if(TheScriptConditions) TheScriptConditions->update();
+ // BFME uses ordered trees instead of the ZH fixed counter/flag arrays.
+ _STL::_Rb_tree_node_base *end=at16040;
+ for(CounterIterator it((CounterNode*)end->_M_left), e((CounterNode*)end); it!=e; ++it) {
+  Update0034B9A0Counter *c=&*it;
+  if(c->at1c && c->at18>=0) --c->at18;
+ }
+ // Each player temporarily overrides the current script-name scope.
+ for(int i=0; i<TheSidesList->getNumSides(); i++) {
+  at170ac=ThePlayerList->getNthPlayer(i);
+  LatchRestore<AsciiString> latch(at17088,KEYNAME(at170ac->getNameKey()));
+  Update0034B9A0Side *side=TheSidesList->at(i);
+  Update0034B9A0ScriptList *sl=side->getScriptList();
+  if(sl) { walkNamed((Rva00355950Arr*)sl,sl->getScript(),true); walkChild((Rva003558C0Arr*)sl,sl->getScriptGroup()); }
+  at170ac=0;
+ }
+ // UI interaction strings are STLport 12-byte list nodes.
+ ThePlayerList->updateTeamStates();
+ Update0034B9A0List *node=at17270->next;
+ while(node!=at17270) {
+  Update0034B9A0List *old=node; node=node->next;
+  old->value.~AsciiString(); _STL::__node_alloc<true,0>::deallocate(old,12);
+ }
+ at17270->next=at17270; at17270->prev=at17270;
+ at17637=true; callUpdateMember(this,j_0000fcbd);
+ at17637=false; CurrentFrame=(CurrentFrame+1);
+ // Preserve the three separate temporary AsciiString lifetimes/EH states.
+ if(TheScriptDebugWindowDLL && !isTimeFast()) {
+  if(TheScriptDebugWindowDLL) {
+   FARPROC proc=GetProcAddress(TheScriptDebugWindowDLL,"SetTheSidesList");
+   if(proc) ((void (__cdecl*)(void*,void*,void*,void*,void*,void*,void*,void*,void*,void*,void*))proc)(
+    TheSidesList,TheScriptEngine,*(void**)0x012ed668,TheWritableGlobalData,*(void**)0x012ed600,0,0,
+    *(void**)0x012f1600,*(void**)0x012ef4cc,*(void**)0x012ef1d8,*(void**)0x012f0898);
+  }
+  end=at16040;
+  for(CounterIterator it((CounterNode*)end->_M_left), e((CounterNode*)end); it!=e; ++it) {
+   AsciiString name=it->at10; name.concat('/'); name.concat(it->at14);
+   if(it->at1d) _adjustVariable(name.str(),it->at18,false,true);
+   else _adjustVariable(name.str(),it->at18,false,false);
+  }
+  end=at1604c;
+  for(FlagIterator it((FlagNode*)end->_M_left), e((FlagNode*)end); it!=e; ++it) {
+   AsciiString name=it->at10; name.concat('/'); name.concat(it->at14);
+   _adjustVariable(name.str(),it->at18,false,false);
+  }
+ }
+}
+
