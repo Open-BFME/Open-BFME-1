@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c4cb9ba769862008585056d8283fed7b7ea7ad34e01240e244d59dabbea2a13c",
+  "symbol": "?d_00881d40@@YAXPAX@Z",
+  "score_kind": "author-estimate",
+  "score": 0.7,
+  "source": "// ?d_00881d40@@YAXPAX@Z\n// partial score=0.7 date=2026-09-28\n// Candidate for ?d_00881d40@@YAXPAX@Z at 0x00881D40 (35B): guarded free with TAIL JMP.\n// Closest pure-C: guards match, arg order matches, but MSVC emits call+add esp\n// (29B) where retail writes outgoing slots and jmps (35B). Tail-jmp lever unknown.\nvoid d_00881d40( void *ptr )\n{\n\tif ( ptr == 0 || ptr == Rva01357214Onexitbegin )\n\t\treturn;\n\t__gameMemFreePtr( ptr, 0 );\n}\n"
+}
