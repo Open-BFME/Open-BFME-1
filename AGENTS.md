@@ -2,8 +2,7 @@
 
 Many agents push to `origin/master` all day. Keep each change small, verified
 and easy to rebase. `docs/matching.md` covers byte matching and
-`docs/structural.md` manual reverse engineering. Trimmed prose lives in git
-history.
+`docs/structural.md` manual reverse engineering.
 
 ## Setup
 
@@ -13,8 +12,7 @@ history.
 - On Windows use `.\build.cmd` (same arguments as `./build.sh`) and
   `tools\fleet\launch_fleet.cmd`; run other scripts as `bash tools/<name>.sh`, never
   directly from PowerShell or cmd. Python is `py -3` in PowerShell.
-- `python3 tools/check_csv.py` must pass before other work. Repair ledger
-  errors first.
+- `python3 tools/check_csv.py` must pass before other work.
 
 ## Work selection
 
@@ -42,6 +40,11 @@ ledger and verification are separate from the game's.
    serves byte-true dumps from `game/gen_asm/` whose boundaries are proven.
 5. Replacing generator-written C++ with hand-written C++ is deferred: it scores
    +0. Take it only when the lanes above are dry, and say so.
+6. **Linked build.** Nothing has linked the tree yet.
+   `python3 tools/link_debt.py --report` lists literal image addresses: replace
+   each with a named extern (`dir32_addresses.csv`, else `g_XXXXXXXX`) without
+   changing a byte. `tools/link_census.py`, after a full `BUILD_POOL=12
+   ./build.sh`, lists the rest.
 
 Whether a body is open work is decided in one place, `tools/eligibility.py`;
 never re-derive it in a new tool.
@@ -91,12 +94,10 @@ dependent body and pay once.
 5. `git pull --rebase origin master`, `git push`, then pull again. On rejection,
    rebase, recheck the ledger and retry.
 6. Before pushing, `python3 tools/progress.py origin/master` shows what your
-   session added. `+0.00 pp` is common: take another body from the same file,
-   or say why it is exhausted.
+   session added.
 
-Never `git stash pop` bare, and prefer not to stash: worktrees share one stash
-stack, and a bare pop takes another lane's work. Park work in a patch file or a
-temp branch.
+Never `git stash pop` bare: worktrees share one stash stack. Park work in a
+patch file or a temp branch.
 
 ## Verdicts and near misses
 
