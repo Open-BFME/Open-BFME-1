@@ -1,5 +1,3 @@
-// ??1GameClient@@UAE@XZ
-// partial score=1.0 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 //
@@ -16,22 +14,11 @@
 // Zero Hour's GameClient.h has a different member layout, so the class here
 // is the BFME layout this body and the matched siblings witness.
 //
-// STATUS (opus-5.5, 2026-09-28): EXACT modulo relocations at 1046 bytes
-// (probe --size 1046; the ledger scaffold says 1040 and cuts the epilogue).
-// Not landed: ??1GameClient@@UAE@XZ is claimed at 0x00596500
-// (GameClientDestructor.cpp), a different class (vtable 0x0110C2D8: 12 slots,
-// pure holes at 9/10, members out to +0x488) that AptPalantir derives from.
-// Landing needs that family renamed first: 0x00596500 GameClientDestructor.cpp,
-// 0x00597680 GameClientDeletingDestructor.cpp (??_GGameClient), the AptPalantir
-// destructor 0x0079D1D0 and constructor TUs (GUI/AptPalantirDestructor.cpp,
-// GUI/AptPalantirConstructor.cpp), funclets uw_00C51B50/uw_00C51BE0, and the
-// ??0GameClient pin 0x00597FC0 / update@GameClient 0x00598950 /
-// bfmeReset00592B80@GameClient claims.  Then land with --replace-rva
-// 0x00431380 and --boundary-evidence (ret +0x415, int3 after).
-// Levers that closed it: /D_STLP_USE_STATIC_LIB (inline node_alloc
-// threshold), an undefined explicit specialisation of the drawable
-// hashtable destructor (retail calls 0x00430CA0 out of line), and a plain
-// `delete TheDrawGroupInfo` (no Zero Hour if).
+// The 0x0110C2D8 class that was once filed under this name is
+// Rva00597FC0Client (identity_evidence/00431380-gameclient-vs-00597fc0-client.md).
+// Levers: /D_STLP_USE_STATIC_LIB (inline node_alloc threshold), an undefined
+// explicit specialisation of the drawable hashtable destructor (retail calls
+// 0x00430CA0 out of line), and a plain `delete TheDrawGroupInfo`.
 
 #include "string_base.h"
 template<> inline StringBase<char>::~StringBase() { releaseBuffer(); }
