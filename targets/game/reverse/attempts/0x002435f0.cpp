@@ -1,6 +1,6 @@
-// ?run@Rva002435F0View@@QAEXXZ
-// partial score=0.3 date=2026-09-23
-// cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// ?d_002435f0@@YAXXZ
+// partial score=0.9877883311 date=2026-09-28
+// cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Source/GameLogic/Object
 // stlport
 
 #include <math.h>
@@ -81,33 +81,22 @@ public:
 	int value;
 };
 
-class Object
-{
-public:
-	char pad000[4];
-	Rva002435F0Link *link;
-	char pad008[0x38 - 8];
-	Coord3D position;
-	char pad044[0x74 - 0x44];
-	Int id;
-
-	Weapon *getCurrentWeapon(WeaponSlotType *slot);
-	const Coord3D *getPosition() const { return &position; }
-};
+#define BFME_HAVE_COORD3D 1
+#define OBJECT_TU_MEMBERS int getID() const { return m_id; } Weapon *getCurrentWeapon(WeaponSlotType *slot); const Coord3D *getPosition() const {return &m_cachedPos;}
+#include "object.h"
 
 class BfmeSubDSU
 {
 public:
 	void **bfmeTwoDSU(void **key);
+ int &lookup(const int &key);
 
 	unsigned char body[0xc];
 };
 
-class Rva002435F0Owner
-{
-public:
-	Coord3D *fillFormationPosition(Coord3D *out, Int index);
-};
+struct Rva00233F30Offset { float x,y; };
+struct BfmeRva44E60Record { BfmeRva44E60Record(const BfmeRva44E60Record&); int m_dword00; Rva00233F30Offset m_pair04; float m_float0C; };
+class Rva00233F30 { public: BfmeRva44E60Record rva002350c0(Int index); };
 
 #pragma comment(linker, "/alternatename:?fillFormationPosition@Rva002435F0Owner@@QAEPAVCoord3D@@PAV2@H@Z=?j_00019736@@YAXXZ")
 
@@ -122,120 +111,61 @@ public:
 	unsigned char *slotEnd;
 };
 
-#define RVA002435F0_THRESHOLD (*(const float *)0x01095F98)
+#define RVA002435F0_THRESHOLD 0.3f
 
 static __forceinline Int getIndex(Rva002435F0View *view, Object *object)
 {
-	Int key = object->id;
-	return *(Int *)view->m_indices.bfmeTwoDSU((void **)&key);
+	return view->m_indices.lookup(object->getID());
 }
 
 static __forceinline Overridable *resolveOverride(Object *object)
 {
-	Rva002435F0Link *link = object->link;
+	Rva002435F0Link *link = (Rva002435F0Link*)object->m_template;
 	if (link == 0)
 		return 0;
-	Overridable *value = link->overrideValue;
-	if (value != 0)
-		value = (Overridable *)value->getFinalOverride();
-	return value;
+	if(link->overrideValue) return (Overridable*)link->overrideValue->getFinalOverride();
+ return (Overridable*)link;
 }
 
-void Rva002435F0View::run()
-{
-	const Rva002435F0MemberList *members =
-		((Rva002435F0OpenContainInterface *)((char *)this - 0xc4))
-			->getContainedItemsList();
-	Rva002435F0MemberNode *sentinel = members->node;
-	Rva002435F0MemberNode *first = sentinel->next;
-	Rva002435F0MemberNode *outer = first;
-
-	if (first == sentinel)
-		return;
-
-	const Coord3D *basePosition =
-		(const Coord3D *)(*(char **)((char *)this - 0xdc) + 0x38);
-
-	for (;;)
-	{
-		Object *member = (Object *)outer->value;
-		Int index = getIndex(this, member);
-		unsigned char *slotBegin = this->slotBegin;
-		unsigned char *slotEnd = this->slotEnd;
-		unsigned int count = (unsigned int)((slotEnd - slotBegin) >> 4);
-		if ((unsigned int)index <= count)
-		{
-			Coord3D memberFormationPosition;
-			Coord3D memberSlot;
-			((Rva002435F0Owner *)((char *)this - 0xe4))
-				->fillFormationPosition(&memberFormationPosition, index);
-			memberSlot.x = memberFormationPosition.x + basePosition->x;
-			memberSlot.y = memberFormationPosition.y + basePosition->y;
-
-			for (Rva002435F0MemberNode *inner = outer->next;
-				inner != first; inner = inner->next)
-			{
-				Object *other = (Object *)inner->value;
-				if (resolveOverride(other) != resolveOverride(member))
-					continue;
-
-				Weapon *otherWeapon = other->getCurrentWeapon(0);
-				if (otherWeapon == 0)
-					continue;
-				Weapon *memberWeapon = member->getCurrentWeapon(0);
-				if (memberWeapon == 0)
-					continue;
-				otherWeapon = other->getCurrentWeapon(0);
-				memberWeapon = member->getCurrentWeapon(0);
-				if (otherWeapon->value != memberWeapon->value)
-					continue;
-
-			Int otherIndex = getIndex(this, other);
-				if ((unsigned int)otherIndex > count)
-					continue;
-
-				Coord3D otherFormationPosition;
-				Coord3D otherSlot;
-				((Rva002435F0Owner *)((char *)this - 0xe4))
-					->fillFormationPosition(&otherFormationPosition, otherIndex);
-				otherSlot.x = otherFormationPosition.x + basePosition->x;
-				otherSlot.y = otherFormationPosition.y + basePosition->y;
-
-				const Coord3D *otherPosition = other->getPosition();
-				const Coord3D *memberPosition = member->getPosition();
-				float memberDistance = (float)sqrt(
-					(memberPosition->x - memberSlot.x) *
-					(memberPosition->x - memberSlot.x) +
-					(memberPosition->y - memberSlot.y) *
-					(memberPosition->y - memberSlot.y));
-				float otherDistance = (float)sqrt(
-					(otherPosition->x - otherSlot.x) *
-					(otherPosition->x - otherSlot.x) +
-					(otherPosition->y - otherSlot.y) *
-					(otherPosition->y - otherSlot.y));
-				float otherToMemberSlot = (float)sqrt(
-					(otherPosition->x - memberSlot.x) *
-					(otherPosition->x - memberSlot.x) +
-					(otherPosition->y - memberSlot.y) *
-					(otherPosition->y - memberSlot.y));
-				float memberToOtherSlot = (float)sqrt(
-					(memberPosition->x - otherSlot.x) *
-					(memberPosition->x - otherSlot.x) +
-					(memberPosition->y - otherSlot.y) *
-					(memberPosition->y - otherSlot.y));
-				if ((otherDistance - memberDistance) * RVA002435F0_THRESHOLD +
-					memberToOtherSlot > otherToMemberSlot)
-				{
-					Int key = other->id;
-					*(Int *)m_indices.bfmeTwoDSU((void **)&key) = index;
-					key = member->id;
-					*(Int *)m_indices.bfmeTwoDSU((void **)&key) = otherIndex;
-					index = otherIndex;
-				}
-			}
-		}
-		outer = outer->next;
-		if (outer == first)
-			break;
-	}
+static __forceinline float distance2D(Coord3D &p, const Coord3D &q) {
+ p.x-=q.x; p.y-=q.y; return (float)sqrt(p.x*p.x+p.y*p.y);
 }
+void Rva002435F0View::run() {
+ const Rva002435F0MemberList *members=((Rva002435F0OpenContainInterface*)((char*)this-0xc4))->getContainedItemsList();
+ const Coord3D *basePosition=(const Coord3D*)(*(char**)((char*)this-0xdc)+0x38);
+ for(Rva002435F0MemberNode *outer=members->node->next;outer!=members->node;outer=outer->next) {
+  Object *member=(Object*)outer->value;
+  int index=getIndex(this,member);
+  if((unsigned)index>(unsigned)((slotEnd-slotBegin)>>4)) return;
+  BfmeRva44E60Record rec=((Rva00233F30*)((char*)this-0xe4))->rva002350c0(index);
+  Coord3D memberSlot;
+  memberSlot.x=rec.m_pair04.x+basePosition->x; memberSlot.y=rec.m_pair04.y+basePosition->y;
+  for(Rva002435F0MemberNode *inner=outer->next;inner!=members->node;inner=inner->next) {
+   Object *other=(Object*)inner->value;
+   if(resolveOverride(other)!=resolveOverride(member)) continue;
+   if(other->getCurrentWeapon(0) && member->getCurrentWeapon(0)) { int value=other->getCurrentWeapon(0)->value; if(value!=member->getCurrentWeapon(0)->value) continue; }
+   int otherIndex=getIndex(this,other);
+   if((unsigned)otherIndex>(unsigned)((slotEnd-slotBegin)>>4)) continue;
+   BfmeRva44E60Record rec2=((Rva00233F30*)((char*)this-0xe4))->rva002350c0(otherIndex);
+   Coord3D otherSlot;
+   otherSlot.x=rec2.m_pair04.x+basePosition->x; otherSlot.y=rec2.m_pair04.y+basePosition->y;
+   Coord3D position;position.x=member->getPosition()->x;position.y=member->getPosition()->y;position.z=member->getPosition()->z;
+   float memberDistance=distance2D(position,memberSlot);
+   position=*other->getPosition();
+   float otherToMember=distance2D(position,memberSlot);
+   if(otherToMember<memberDistance) {
+    position=*other->getPosition();
+    float otherDistance=distance2D(position,otherSlot);
+    position=*member->getPosition();
+    float memberToOther=distance2D(position,otherSlot);
+    if(memberToOther<(memberDistance-otherToMember)*RVA002435F0_THRESHOLD+otherDistance) {
+     m_indices.lookup(other->getID())=index;
+     m_indices.lookup(member->getID())=otherIndex;
+     index=otherIndex;
+    }
+   }
+  }
+ }
+}
+
+#pragma comment(linker, "/alternatename:?lookup@BfmeSubDSU@@QAEAAHABH@Z=?j_0001f91f@@YAXXZ")

@@ -1,42 +1,12 @@
 // ?d_00242a30@@YAXXZ
-// partial score=0.24 date=2026-09-21
-// ?d_00242a30@@YAXXZ
-// partial score~0.24 date=2026-09-21
-// Retail 0x00242A30: HordeContain member formation-position lookup.
-// Same class as the already-landed
-// Code/GameEngine/Source/GameLogic/Object/Contain/HordeContainMemberNameMatches.cpp
-// (retail 0x00242630): the member's id at Object+0x74 goes through the same
-// index map at this+0x120 (BfmeSubDSU::bfmeTwoDSU, pinned at 0x0001F91F),
-// and the result indexes the same sixteen-byte roster slot table whose
-// begin/end pointers sit at this+0x12c/this+0x130 (used here only for a
-// bounds check via (end-begin)>>4). A SEPARATE, wider (0x1c-byte) formation
-// slot table lives at this+0x1d8, parallel-indexed by the same id; a ready
-// flag sits at this+0x1fc. member+0x38 is treated as the member's own
-// current Coord3D position (address-derived -- no ZH/BFME field name
-// proven from this body alone).
-//
-// Three exits: (a) id out of bounds -> member's own position, unchanged;
-// (b) this+0x1fc set AND the formation slot not itself busy -> the
-// formation slot's stored Coord3D, verbatim; (c) otherwise, a per-axis
-// blend of a helper's result (thunk at 0x00019736, still a dump) with the
-// member's own position, whose exact FPU scheduling (which axis gets which
-// source) is transcribed straight-line from the disassembly, not derived
-// from any named formation-offset concept.
-//
-// Identity and the two data structures are solid (confirmed against the
-// landed sibling's field offsets and the bfmeTwoDSU pin), but the codegen
-// shape is not: ours compiles to 221B against retail's 273B (208 non-reloc
-// bytes differ) -- retail keeps a live `edi = (char*)member + 0x38` pointer
-// across the whole function and copies the member's x/y/z fallback through
-// mixed float/raw-int stores (x via fld/fstp, y/z via plain mov) that this
-// attempt only partially reproduces; the bounds check (signed <0, then
-// unsigned > count) and the final three-way axis blend both still diverge
-// structurally, not just by register choice. A future attempt should start
-// from a persistent byte-pointer local for member+0x38 and try matching
-// retail's asymmetric x-vs-y/z store instruction selection lever by lever
-// (docs/shape_levers.md's SIB/copy family) rather than reworking the whole
-// body again from scratch.
-
+// partial score=0.4065934066 date=2026-09-28
+// ?rva00242A30GetFormationPosition@Rva00242A30Owner@@QAE?AUCoord3D@@PAVObject@@PAM@Z
+// Retail 0x00242A30 ret12: hidden Coord3D return; owner object at +8.
+// Corrected stash: the fallback position belongs to owner+8, not the member.
+// Helper at 0x002350C0 returns the 16-byte BfmeRva44E60Record by value
+// with index + hidden buffer (ret8), established by its landed source.
+// Native scoped aggregate lifetimes reproduce retail's 16-byte frame.
+// Current residue: index EAX/ECX allocation, slot pointer/CSE; 271/273B.
 typedef float Real;
 typedef unsigned char Bool;
 typedef unsigned int UnsignedInt;
@@ -46,6 +16,8 @@ struct Coord3D
 	Real x;
 	Real y;
 	Real z;
+	Coord3D() {}
+	Coord3D(const Coord3D &o) : x(o.x), y(o.y), z(o.z) {}
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
@@ -53,16 +25,21 @@ class Object
 {
 public:
 	char m_bfmeHead[0x38];
-	Coord3D m_bfmePosition;					///< retail this+0x38 (address-derived)
+	Coord3D m_bfmePosition;					///< object position at +0x38
 	char m_bfmeMid[0x74 - 0x38 - 0xc];
-	void *m_bfmeId;								///< retail this+0x74
+	void *m_id;								///< retail this+0x74
 };
 
 // the index map BfmeConv776/HordeContainMemberNameMatches pins at 0x0001F91F
+extern void j_0001f91f();
 class BfmeSubDSU
 {
 public:
-	void **bfmeTwoDSU(void **what);
+	int &lookup(const unsigned &key) {
+        typedef int &(BfmeSubDSU::*Fn)(const unsigned&);
+        union { void (*raw)(); Fn member; } f;
+        f.raw=j_0001f91f; return (this->*f.member)(key);
+    }
 };
 
 // matches HordeContainMemberNameMatches.cpp's BfmeHordeRosterEntry-adjacent
@@ -80,86 +57,51 @@ struct Rva00242A30FormationSlot
 	char m_pad11[0x1c - 0x11];
 };
 
-class Rva00242A30Owner;
-extern void j_00019736();
-
+struct Rva00233F30Offset { float x,y; };
+struct BfmeRva44E60Record {
+    int m_dword00;
+    Rva00233F30Offset m_pair04;
+    float m_float0C;
+};
+class Rva00233F30 {
+public: BfmeRva44E60Record rva002350c0(int index);
+};
 class Rva00242A30Owner
 {
 public:
-	void rva00242A30GetFormationPosition(
-		Coord3D *outPosition, Object *member, Real *outThird);
-
-private:
-	typedef void (Rva00242A30Owner::*Rva00242A30HelperFn)(Real *out);
-	void rva00242A30CallHelper(Real *out)
-	{
-		union
-		{
-			void (*freeFn)();
-			Rva00242A30HelperFn memberFn;
-		} fn;
-		fn.freeFn = ::j_00019736;
-		(this->*fn.memberFn)(out);
-	}
-
-	char m_bfmeHead[0x120];
-	BfmeSubDSU m_bfmeIndices;					///< retail this+0x120
-	char m_bfmeGap[0x12c - 0x124];
-	BfmeHordeSlot *m_bfmeSlotsBegin;			///< retail this+0x12c
-	BfmeHordeSlot *m_bfmeSlotsEnd;				///< retail this+0x130
-	char m_bfmeGap2[0x1d8 - 0x134];
-	Rva00242A30FormationSlot *m_formationSlots;	///< retail this+0x1d8
-	char m_bfmeGap3[0x1fc - 0x1dc];
-	Bool m_readyFlag;							///< retail this+0x1fc
+    Coord3D rva00242A30GetFormationPosition(Object *member, Real *outThird);
+    char m_pad00[8];
+    Object *m_object08;
+    char m_pad0c[0x120-0xc];
+    char m_indices120[0xc];
+    BfmeHordeSlot *m_bfmeSlotsBegin;
+    BfmeHordeSlot *m_bfmeSlotsEnd;
+    char m_pad134[0x1d8-0x134];
+    Rva00242A30FormationSlot *m_formationSlots;
+    char m_pad1dc[0x1fc-0x1dc];
+    Bool m_readyFlag;
 };
-
-void Rva00242A30Owner::rva00242A30GetFormationPosition(
-	Coord3D *outPosition, Object *member, Real *outThird)
+Coord3D Rva00242A30Owner::rva00242A30GetFormationPosition(Object *member, Real *outThird)
 {
-	Coord3D *pos = &member->m_bfmePosition;
-	void *key = member->m_bfmeId;
-	int index = (int)(long)*m_bfmeIndices.bfmeTwoDSU(&key);
-
-	unsigned int fallbackXBits = *(unsigned int *)&pos->x;
-	unsigned int fallbackYBits = *(unsigned int *)&pos->y;
-	unsigned int fallbackZBits = *(unsigned int *)&pos->z;
-
-	if (index < 0)
-	{
-		outPosition->x = *(Real *)&fallbackXBits;
-		*(unsigned int *)&outPosition->y = fallbackYBits;
-		*(unsigned int *)&outPosition->z = fallbackZBits;
-		return;
-	}
-
-	UnsignedInt count = (UnsignedInt)(m_bfmeSlotsEnd - m_bfmeSlotsBegin);
-	if ((UnsignedInt)index > count)
-	{
-		outPosition->x = *(Real *)&fallbackXBits;
-		*(unsigned int *)&outPosition->y = fallbackYBits;
-		*(unsigned int *)&outPosition->z = fallbackZBits;
-		return;
-	}
-
-	if (m_readyFlag)
-	{
-		Rva00242A30FormationSlot *slot = &m_formationSlots[index];
-		if (!slot->m_busy)
-		{
-			outPosition->x = slot->m_position.x;
-			outPosition->y = slot->m_position.y;
-			outPosition->z = slot->m_position.z;
-			return;
-		}
-	}
-
-	Real callResult;
-	rva00242A30CallHelper(&callResult);
-	Real xNew = callResult + pos->x;
-	*outThird = *(Real *)&fallbackZBits;
-	Real yNew = *(Real *)&fallbackZBits + pos->y;
-	Real zPass = pos->z;
-	outPosition->x = xNew;
-	outPosition->y = yNew;
-	outPosition->z = zPass;
+    Coord3D *pos = &m_object08->m_bfmePosition;
+    unsigned key = (unsigned)member->m_id;
+    int index = ((BfmeSubDSU*)m_indices120)->lookup(key);
+    {
+    Coord3D result; result = *pos;
+    if (index >= 0 && (unsigned)index <= (unsigned)(m_bfmeSlotsEnd-m_bfmeSlotsBegin)) {
+        if (m_readyFlag && !m_formationSlots[index].m_busy) {
+            result = m_formationSlots[index].m_position;
+            return result;
+        }
+    } else return result;
+    }
+    {
+        BfmeRva44E60Record record = ((Rva00233F30*)this)->rva002350c0(index);
+        Coord3D result;
+        result.x = record.m_pair04.x + pos->x;
+        result.y = record.m_pair04.y + pos->y;
+        result.z = pos->z;
+        *outThird = record.m_float0C;
+    return result;
+    }
 }

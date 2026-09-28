@@ -1,6 +1,6 @@
 // ?scan@Rva0023FED0MemberScanBase@@QAEXPAV?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@00@Z
-// partial score=0.16 date=2026-09-21
-// cl: /DNDEBUG /MD /D_STLP_USE_STATIC_LIB
+// partial score=0.9525316456 date=2026-09-28
+// cl: /DNDEBUG /MD /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Source/GameLogic/Object
 // stlport
 //
 // Opaque member-list scan: walks an _STL::list<Object *> embedded at this-0xAC
@@ -17,6 +17,7 @@
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
+#include <list>
 
 enum ObjectID { INVALID_OBJECT_ID = 0 };
 
@@ -88,17 +89,9 @@ public:
 	void rva0023fed0Compare(Object *member, void *goalField, Rva0023FED0CompareOut *out, int zero) const;
 };
 
-class Object
-{
-public:
-	ObjectID getID() const { return m_id; }
-
-private:
-	unsigned char m_pad0[0x74];
-	ObjectID m_id;               // Object+0x74, layout_witness confidence 1.00
-	unsigned char m_pad1[0x204 - 0x74 - 4];
-	void *m_updateCache;         // Object+0x204, not witnessed; address-derived only
-};
+#define BFME_HAVE_OBJECTID 1
+#define OBJECT_TU_MEMBERS ObjectID getID() const { return m_id; }
+#include "object.h"
 
 // STLport's list<T> header node: {next, prev, data}; the list object itself
 // doubles as the sentinel, so list.end() is the list object's own address.
@@ -123,61 +116,47 @@ static Rva0023FED0Node *sentinelOf(Rva0023FED0MemberScanBase *self)
 	return *reinterpret_cast<Rva0023FED0Node **>(reinterpret_cast<char *>(self) - 0xAC);
 }
 
+extern void j_00008a9e();
+extern void j_000169cd();
+struct Route0023FED0 {};
+static void compare0023FED0(Path *path, Object *obj, void *locomotor, Rva0023FED0CompareOut *out) {
+ typedef void (Route0023FED0::*Fn)(Object*, void*, Rva0023FED0CompareOut*, bool);
+ union { void (*raw)(); Fn call; } route={j_00008a9e};
+ (((Route0023FED0*)path)->*route.call)(obj,locomotor,out,false);
+}
+// The existing generated callee owns this address-derived element type.
+// Its pointer-triple layout and 4-byte append are proven by 0x00152780.
+struct Gen_t_00152780_p4pod { int a[1]; };
+namespace _STL { template<> void vector<Gen_t_00152780_p4pod>::push_back(const Gen_t_00152780_p4pod&); }
+static void append0023FED0(_STL::vector<ObjectID> *vec,const ObjectID &id) {
+ ((_STL::vector<Gen_t_00152780_p4pod>*)vec)->push_back((const Gen_t_00152780_p4pod&)id);
+}
 void Rva0023FED0MemberScanBase::scan(_STL::vector<ObjectID> *needRepath, _STL::vector<ObjectID> *lookupFailed, _STL::vector<ObjectID> *ok)
 {
-	Rva0023FED0Node *sentinel = sentinelOf(this);
-	Rva0023FED0Node *node = sentinel->m_next;
-
-	if (node == sentinel)
-		return;
-
-	do
-	{
-		Object *member = node->m_data;
-		if (!member)
-			goto next;
-
-		char *upd = *reinterpret_cast<char **>(reinterpret_cast<char *>(member) + 0x204);
-		if (!upd)
-			goto next;
-
-		{
-			Path *pathPtr = *reinterpret_cast<Path **>(upd + 0x140);
-			ObjectID id = member->getID();
-
-			if (!pathPtr)
-			{
-				ok->push_back(id);
-				goto next;
-			}
-
-			void *goalField = *reinterpret_cast<void **>(upd + 0x1cc);
-			Rva0023FED0CompareOut out;
-			pathPtr->rva0023fed0Compare(member, goalField, &out, 0);
-
-			if (out.m_posA[0] == out.m_posB[0] && out.m_posA[1] == out.m_posB[1] && out.m_posA[2] == out.m_posB[2])
-			{
-				ok->push_back(id);
-				goto next;
-			}
-
-			{
-				WaypointID waypointId = out.m_waypointId;
-				if (waypointId == INVALID_WAYPOINT_ID || TheTerrainLogic->getWaypointByID(waypointId) != 0)
-				{
-					if (pathPtr->bfmeHasMissingWaypoint())
-						needRepath->push_back(id);
-					else
-						ok->push_back(id);
-				}
-				else
-				{
-					lookupFailed->push_back(id);
-				}
-			}
-		}
-
-	next:
-		node = node->m_next;
-	} while (node != sentinel);
+ for (_STL::list<Object*>::iterator it=((_STL::list<Object*>*)((char*)this-0xac))->begin();
+      it!=((_STL::list<Object*>*)((char*)this-0xac))->end();++it) {
+  Object *member=*it;
+  if(!member) continue;
+  char *upd=(char*)member->m_ai;
+  if(!upd) continue;
+  Path *path=*(Path**)(upd+0x140);
+  Rva0023FED0CompareOut out;
+  bool equal=true;
+  if(path) {
+   compare0023FED0(path,member,*(void**)(upd+0x1cc),&out);
+   equal=(out.m_posA[0]==out.m_posB[0] && out.m_posA[1]==out.m_posB[1] && out.m_posA[2]==out.m_posB[2]);
+  }
+  if(equal) {
+   ok->push_back(member->getID());
+  } else {
+   WaypointID id=out.m_waypointId;
+   if(id!=INVALID_WAYPOINT_ID && !TheTerrainLogic->getWaypointByID(id)) {
+    append0023FED0(lookupFailed,member->getID());
+   } else if(path->bfmeHasMissingWaypoint()) {
+    append0023FED0(needRepath,member->getID());
+   } else {
+    append0023FED0(ok,member->getID());
+   }
+  }
+ }
 }

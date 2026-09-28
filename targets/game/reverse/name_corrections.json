@@ -8158,5 +8158,55 @@
   "after_sha256": "ca92ddf3cc6e33eda8757d7f86fa007fd784567bc1625e80c95397a57933009b",
   "evidence": "targets/game/reverse/identity_evidence/000c1d10-mapmetadatamap-placeholder.md",
   "reason": "MapMetaDataMap was a TU-local stand-in for std::map<AsciiString,MapMetaData> (absent from inputs/reference); that operator[] identity is already the matched row at 0x0007DF70 and retail has no ICF, so 0x000C1D10 lands under an address-derived owner"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0023caa0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0023caa0.cpp",
+  "old_name": "Object",
+  "new_name": "Rva00238740Lookup",
+  "before_sha256": "f0678dc30af6e5c3c26bb65d9fe2a7a37c45923eba1d8b25e4e478e909e47d45",
+  "after_sha256": "4868d3f963c0c4bb516619af45629d93d646b13df97c4f1793acb321c8ff42af",
+  "evidence": "targets/game/reverse/identity_evidence/0023caa0-00242a30-002435f0-bank-placeholders.md",
+  "reason": "Bank-local placeholders only: TU-local Object redeclaration replaced by object.h (Object still used), m_bfmeHead/m_bfmeGap* padding spans renamed to offset pads, and the unevidenced fillFormationPosition alias of ILT 0x00019736 now calls its matched ledger identity Rva00233F30::rva002350c0 at 0x002350C0"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00242a30.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00242a30.cpp",
+  "old_name": "m_bfmeGap2",
+  "new_name": "m_pad134",
+  "before_sha256": "d95f794c3b2d279db5b74d23e802d1f913747045b4e2d2654d1948ab3a80c1af",
+  "after_sha256": "d8aa83e51260d24df6fe28af56cbef35d41eb40397eae9bcd28987f8d449781f",
+  "evidence": "targets/game/reverse/identity_evidence/0023caa0-00242a30-002435f0-bank-placeholders.md",
+  "reason": "Bank-local placeholders only: TU-local Object redeclaration replaced by object.h (Object still used), m_bfmeHead/m_bfmeGap* padding spans renamed to offset pads, and the unevidenced fillFormationPosition alias of ILT 0x00019736 now calls its matched ledger identity Rva00233F30::rva002350c0 at 0x002350C0"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00242a30.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00242a30.cpp",
+  "old_name": "m_bfmeGap3",
+  "new_name": "m_pad1dc",
+  "before_sha256": "d95f794c3b2d279db5b74d23e802d1f913747045b4e2d2654d1948ab3a80c1af",
+  "after_sha256": "d8aa83e51260d24df6fe28af56cbef35d41eb40397eae9bcd28987f8d449781f",
+  "evidence": "targets/game/reverse/identity_evidence/0023caa0-00242a30-002435f0-bank-placeholders.md",
+  "reason": "Bank-local placeholders only: TU-local Object redeclaration replaced by object.h (Object still used), m_bfmeHead/m_bfmeGap* padding spans renamed to offset pads, and the unevidenced fillFormationPosition alias of ILT 0x00019736 now calls its matched ledger identity Rva00233F30::rva002350c0 at 0x002350C0"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00242a30.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00242a30.cpp",
+  "old_name": "m_bfmeHead",
+  "new_name": "m_pad0c",
+  "before_sha256": "d95f794c3b2d279db5b74d23e802d1f913747045b4e2d2654d1948ab3a80c1af",
+  "after_sha256": "d8aa83e51260d24df6fe28af56cbef35d41eb40397eae9bcd28987f8d449781f",
+  "evidence": "targets/game/reverse/identity_evidence/0023caa0-00242a30-002435f0-bank-placeholders.md",
+  "reason": "Bank-local placeholders only: TU-local Object redeclaration replaced by object.h (Object still used), m_bfmeHead/m_bfmeGap* padding spans renamed to offset pads, and the unevidenced fillFormationPosition alias of ILT 0x00019736 now calls its matched ledger identity Rva00233F30::rva002350c0 at 0x002350C0"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002435f0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x002435f0.cpp",
+  "old_name": "fillFormationPosition",
+  "new_name": "rva002350c0",
+  "before_sha256": "820579fa4ffac70b15031961c5a101470c5a5fb296518f9c36329542fd042b2d",
+  "after_sha256": "4e11b3100b3d9fbd563813cb3a0fd4d594a113165016fff29abe077127c0242f",
+  "evidence": "targets/game/reverse/identity_evidence/0023caa0-00242a30-002435f0-bank-placeholders.md",
+  "reason": "Bank-local placeholders only: TU-local Object redeclaration replaced by object.h (Object still used), m_bfmeHead/m_bfmeGap* padding spans renamed to offset pads, and the unevidenced fillFormationPosition alias of ILT 0x00019736 now calls its matched ledger identity Rva00233F30::rva002350c0 at 0x002350C0"
  }
 ]

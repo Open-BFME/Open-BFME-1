@@ -1,6 +1,6 @@
 // ?method@Rva0023F670@@QAE_NXZ
-// partial score=0.1574 date=2026-09-24
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep
+// partial score=0.5099009901 date=2026-09-28
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep /Igame/GameEngine/Source/GameLogic/Object
 // stlport
 
 #define _STLP_NO_EXCEPTIONS 1
@@ -35,23 +35,12 @@ enum KindOfType
 	KINDOF_INVALID = 0,
 };
 
-class Thing
-{
-public:
-	virtual void slot00() = 0;
-	Bool isKindOf(KindOfType kind) const;
-	ThingTemplate *m_template;
-};
+#define THING_TU_MEMBERS Bool isKindOf(KindOfType kind) const;
+#include "object.h"
 
-class Object : public Thing
-{
-public:
-	unsigned char m_gap08[0x90 - 8];
-	unsigned char m_status[12];
-};
-
-typedef _STL::list<Object *> BfmeMemberList;
-typedef _STL::vector<Object *> BfmeObjectVector;
+typedef _STL::list<int> BfmeMemberList;
+namespace _STL { template<> _List_base<int,allocator<int> >::~_List_base(); }
+typedef _STL::vector<int> BfmeObjectVector;
 
 class Rva0003E80B
 {
@@ -128,7 +117,7 @@ public:
 	virtual void slot57() = 0;
 	virtual void slot58() = 0;
 	virtual void slot59() = 0;
-	virtual void slot60(_STL::list<Object *> *members) = 0;
+	virtual void slot60(_STL::list<int> *members) = 0;
 	virtual void slot61() = 0;
 	virtual void slot62() = 0;
 	virtual void slot63() = 0;
@@ -183,7 +172,7 @@ public:
 	virtual void slot112() = 0;
 	virtual void slot113() = 0;
 	virtual void slot114() = 0;
-	virtual void slot115(_STL::vector<Object *> *members) = 0;
+	virtual void slot115(_STL::vector<int> *members) = 0;
 	virtual Bool slot116() = 0;
 };
 
@@ -204,51 +193,54 @@ public:
 	void destroyObject(Object *object);
 };
 
+extern Eva *TheEva;
+extern GameLogic *TheGameLogic;
+
 #pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
 #pragma comment(linker, "/alternatename:?isKindOf@Thing@@QBE_NW4KindOfType@@@Z=?j_0003251f@@YAXXZ")
 #pragma comment(linker, "/alternatename:?setShouldPlay@Eva@@QAE_NW4EvaMessage@@PBUCoord3D@@@Z=?j_0002b5f3@@YAXXZ")
 #pragma comment(linker, "/alternatename:?destroyObject@GameLogic@@QAEXPAVObject@@@Z=?j_0001d0de@@YAXXZ")
 #pragma comment(linker, "/alternatename:?compare@Rva0003E80B@@QAE_NPAX@Z=?j_0003e80b@@YAXXZ")
 
-static HordeContainMemberInterface *memberInterface(Rva0023F670 *self)
+inline HordeContainMemberInterface *memberInterface(Rva0023F670 *self)
 {
 	return (HordeContainMemberInterface *)((char *)self + 0xe4);
 }
 
+inline ThingTemplate *finalTemplate0023F670(Object *obj) {
+ ThingTemplate *t=obj->m_template;
+ if(t==0) return 0;
+ if(t->m_nextOverride) return (ThingTemplate*)t->m_nextOverride->getFinalOverride();
+ return t;
+}
 Bool Rva0023F670::method()
 {
 	Object *member = *(Object **)((char *)this + 8);
 	Bool result = false;
 
-	if ((member->m_status[0] & 4) == 0
+	if (((unsigned char)member->m_status[0] & 4) == 0
 		&& ((BfmeMemberList *)((char *)this + 0x38))->empty()
 		&& *(UnsignedInt *)((char *)this + 0x118) == 0)
 	{
 		void *moduleData = *(void **)((char *)this + 4);
-		Eva *eva = *(Eva **)0x012f142c;
+		Eva *eva = TheEva;
 		eva->setShouldPlay((EvaMessage)*(Int *)((char *)moduleData + 0x2e4), 0);
-		GameLogic *logic = *(GameLogic **)0x012f0898;
+		GameLogic *logic = TheGameLogic;
 		logic->destroyObject(member);
-		goto finish;
 	}
-
+	else {
 	HordeContainMemberInterface *interfaceView = memberInterface(this);
-	if (!interfaceView->slot116())
-		goto finish;
+	if (interfaceView->slot116()) {
 
-	ThingTemplate *memberTemplate = member->m_template;
-	if (memberTemplate->m_nextOverride != 0)
-		memberTemplate = (ThingTemplate *)memberTemplate->m_nextOverride->getFinalOverride();
+	ThingTemplate *memberTemplate = finalTemplate0023F670(member);
 	if ((memberTemplate->m_kindFlags[2] & 0x10000000) == 0
 		&& !member->isKindOf((KindOfType)0x0b))
-		goto finish;
+		return false;
 
 	{
 		BfmeMemberList members;
 		interfaceView->slot60(&members);
-		UnsignedInt memberCount = 0;
-		for (BfmeMemberList::iterator it = members.begin(); it != members.end(); ++it)
-			++memberCount;
+		UnsignedInt memberCount=members.size();
 
 		void *moduleData = *(void **)((char *)this + 4);
 		Int memberLimit = *(Int *)((char *)moduleData + 0x2ec);
@@ -271,25 +263,21 @@ Bool Rva0023F670::method()
 			ThingTemplate *firstTemplate = 0;
 			for (BfmeMemberList::iterator it = members.begin(); it != members.end(); ++it)
 			{
-				Object *current = *it;
+				Object *current = (Object*)*it;
 				if (current == 0 || current->isKindOf((KindOfType)0xa3))
 					continue;
 
-				ThingTemplate *currentTemplate = current->m_template;
-				if (currentTemplate != 0 && currentTemplate->m_nextOverride != 0)
-					currentTemplate = (ThingTemplate *)currentTemplate->m_nextOverride->getFinalOverride();
-
-				if (firstTemplate == 0)
-					firstTemplate = currentTemplate;
-				else if (currentTemplate != 0
-					&& !((Rva0003E80B *)firstTemplate)->compare(currentTemplate))
-					goto listDone;
+                if(firstTemplate==0) firstTemplate=finalTemplate0023F670(current);
+                else if(current->m_template!=0) {
+                    ThingTemplate *currentTemplate=finalTemplate0023F670(current);
+                    if(currentTemplate!=0 && !((Rva0003E80B*)firstTemplate)->compare(currentTemplate)) goto listDone;
+                }
 			}
 
 			{
 				BfmeObjectVector selected;
 				interfaceView->slot115(&selected);
-				result = selected.begin() != 0;
+				result = true;
 			}
 		}
 
@@ -297,6 +285,7 @@ listDone:
 		;
 	}
 
-finish:
+	}
+	}
 	return result;
 }
