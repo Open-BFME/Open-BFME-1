@@ -1,234 +1,126 @@
-// ?d_003ecc70@@YAXXZ
-// partial score=0.1674 date=2026-09-25
+// ?rva003ecc70@Pathfinder@@QAE_NPBVPathNode@@PAV2@W4ObjectID@@PAUCoord3D@@33@Z
+// partial score=0.3172 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc
-
 #include <math.h>
 
 typedef int Int;
 typedef bool Bool;
 typedef float Real;
 
-enum ObjectID
-{
-	OBJECT_ID_INVALID = 0
-};
+enum ObjectID { INVALID_ID = 0 };
+enum PathfindLayerEnum { LAYER_GROUND = 1 };
 
 struct Coord3D
 {
-	Real x;
-	Real y;
-	Real z;
-
-	Real length() const
-	{
-		return (Real)sqrt(x * x + y * y + z * z);
-	}
-
-	void normalize()
-	{
-		Real lengthValue = length();
-		if (lengthValue != 0)
-		{
-			x /= lengthValue;
-			y /= lengthValue;
-			z /= lengthValue;
-		}
-	}
+	Real x, y, z;
+	Coord3D() {}
+	Coord3D(const Coord3D &o) : x(o.x), y(o.y), z(o.z) {}
 };
-
+struct ICoord2D { Int x, y; };
 struct Coord2D
 {
-	Real x;
-	Real y;
-
-	Real length() const
-	{
-		return (Real)sqrt(x * x + y * y);
-	}
-
+	Real x, y;
+	Real length() const { return (Real)sqrt(x * x + y * y); }
 	void normalize()
 	{
-		Real lengthValue = length();
-		if (lengthValue != 0)
+		Real len = length();
+		if (len != 0.0f)
 		{
-			x /= lengthValue;
-			y /= lengthValue;
+			Real inv = 1.0f / len;
+			x *= inv;
+			y *= inv;
 		}
 	}
-};
-
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
-
-enum PathfindLayerEnum
-{
-	LAYER_GROUND = 1
-};
-
-struct Rva003E3650Struct
-{
-	class Object *theTallBuilding;
-	ObjectID ignoreBuilding;
-};
-
-class PathNode
-{
-public:
-	Coord3D *getPosition()
-	{
-		return &m_position;
-	}
-
-	const Coord3D *getPosition() const
-	{
-		return &m_position;
-	}
-
-	void setPosition(const Coord3D *position)
-	{
-		m_position = *position;
-	}
-
-	PathNode *m_next;
-	PathNode *m_previous;
-	PathNode *m_nextOptimized;
-	Coord3D m_position;
-	PathfindLayerEnum m_layer;
-	Bool m_canOptimize;
-	Int m_costSoFar;
-};
-
-class GeometryInfo
-{
-public:
-	Real getBoundingCircleRadius() const
-	{
-		return m_boundingCircleRadius;
-	}
-
-private:
-	char m_beforeRadius[0xc];
-	Real m_boundingCircleRadius;
 };
 
 class Object
 {
 public:
-	const Coord3D *getPosition() const
-	{
-		return &m_position;
-	}
-
-	const GeometryInfo &getGeometryInfo() const
-	{
-		return m_geometryInfo;
-	}
-
+	const Coord3D *getPosition() const { return &m_pos; }
+	Real getBoundingCircleRadius() const { return m_boundingCircleRadius; }
 private:
 	char m_beforePosition[0x38];
-	Coord3D m_position;
-	char m_beforeGeometryInfo[0x6c];
-	GeometryInfo m_geometryInfo;
+	Coord3D m_pos;
+	char m_beforeGeometryInfo[0xbc - 0x44];
+	Real m_boundingCircleRadius;
+};
+
+class PathNode
+{
+public:
+	const Coord3D *getPosition() const { return &m_pos; }
+	void setPosition(const Coord3D *pos) { m_pos = *pos; }
+private:
+	char m_pad00[0x0c];
+	Coord3D m_pos;
+};
+
+struct Rva003E3650Struct
+{
+	Object *theTallBuilding;
+	ObjectID ignoreBuilding;
 };
 
 class Pathfinder
 {
 public:
-	Bool worldToCell(const Coord3D *world, ICoord2D *cell);
-	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end,
-		PathfindLayerEnum layer, Rva003E3650Struct *userData);
-	Int iterateCellsAlongLine(const Coord3D &startWorld,
-		const Coord3D &endWorld, PathfindLayerEnum layer,
-		Rva003E3650Struct *userData);
-
-protected:
-	Bool rva003ecc70(const PathNode *curNode, PathNode *nextNode,
-		ObjectID ignoreBuilding, Coord3D *insertPos1,
-		Coord3D *insertPos2, Coord3D *insertPos3);
-
-private:
-	char m_witnessedPathfinderLayout[0x8c0];
+	Bool worldToCell(const Coord3D *pos, ICoord2D *cell);
+	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end, PathfindLayerEnum layer, Rva003E3650Struct *info);
+	Bool rva003ecc70(const PathNode *curNode, PathNode *nextNode, ObjectID ignoreBuilding,
+		Coord3D *insertPos1, Coord3D *insertPos2, Coord3D *insertPos3);
 };
 
-__forceinline Int Pathfinder::iterateCellsAlongLine(
-	const Coord3D &startWorld, const Coord3D &endWorld,
-	PathfindLayerEnum layer, Rva003E3650Struct *userData)
+static void computeNormalRadialOffset(const Coord3D &from, Coord3D &insert, const Coord3D &to, Object *obj, Real radius)
 {
-	ICoord2D start;
-	ICoord2D end;
-	worldToCell(&startWorld, &start);
-	worldToCell(&endWorld, &end);
-	return iterateCellsAlongLine(start, end, layer, userData);
-}
-
-extern const Real BfmeZeroRange;
-extern const Real g_bfmeDefaultBU;
-#define PATHFIND_CELL_SIZE_F (*(const Real *)0x010977E0)
-
-static void computeNormalRadialOffset(const Coord3D &from,
-	Coord3D &insert, const Coord3D &to, Object *obj, Real radius)
-{
-	Real crossProduct;
 	Real dx = to.x - from.x;
 	Real dy = to.y - from.y;
 	Coord3D objPos = *obj->getPosition();
 	Real objDx = objPos.x - from.x;
 	Real objDy = objPos.y - from.y;
-
-	crossProduct = dx * objDy - dy * objDx;
-
-	Coord3D fromToNormal;
-	fromToNormal.z = 0;
-	if (crossProduct > 0)
+	Real cross = dx * objDy - dy * objDx;
+	Coord2D normal;
+	if (cross > 0.0f)
 	{
-		fromToNormal.x = dy;
-		fromToNormal.y = -dx;
+		normal.x = dy;
+		normal.y = -dx;
 	}
 	else
 	{
-		fromToNormal.x = -dy;
-		fromToNormal.y = dx;
+		normal.x = -dy;
+		normal.y = dx;
 	}
-	fromToNormal.normalize();
-	Real length = radius;
+	normal.normalize();
 	insert = *obj->getPosition();
-	insert.x += fromToNormal.x * length;
-	insert.y += fromToNormal.y * length;
+	insert.x += normal.x * radius;
+	insert.y += normal.y * radius;
 }
 
-Bool Pathfinder::rva003ecc70(const PathNode *curNode,
-	PathNode *nextNode, ObjectID ignoreBuilding, Coord3D *insertPos1,
-	Coord3D *insertPos2, Coord3D *insertPos3)
+Bool Pathfinder::rva003ecc70(const PathNode *curNode, PathNode *nextNode, ObjectID ignoreBuilding,
+	Coord3D *insertPos1, Coord3D *insertPos2, Coord3D *insertPos3)
 {
 	Rva003E3650Struct info;
-	info.ignoreBuilding = ignoreBuilding;
-
-	Coord3D fromPos;
-	fromPos = *curNode->getPosition();
-	Coord3D toPos;
-	toPos = *nextNode->getPosition();
 	info.theTallBuilding = 0;
+	info.ignoreBuilding = ignoreBuilding;
+	Coord3D fromPos = *curNode->getPosition();
+	Coord3D toPos = *nextNode->getPosition();
 
-	Int i;
-	for (i = 0; i < 2; i++)
+	for (Int i = 0; i < 2; ++i)
 	{
-		Int ret = iterateCellsAlongLine(fromPos, toPos, LAYER_GROUND,
-			&info);
-		if (ret != 0 && info.theTallBuilding)
+		ICoord2D fromCell, toCell;
+		worldToCell(&fromPos, &fromCell);
+		worldToCell(&toPos, &toCell);
+		if (iterateCellsAlongLine(fromCell, toCell, LAYER_GROUND, &info) && info.theTallBuilding)
 		{
-			Coord3D bldgPos = *info.theTallBuilding->getPosition();
+			Object *bldg = info.theTallBuilding;
+			Coord3D bldgPos = *bldg->getPosition();
+			Real radius = bldg->getBoundingCircleRadius() + 20.0f;
 			Coord2D delta;
-			Real radius = info.theTallBuilding->getGeometryInfo().getBoundingCircleRadius();
-			radius += PATHFIND_CELL_SIZE_F;
 			delta.x = toPos.x - bldgPos.x;
 			delta.y = toPos.y - bldgPos.y;
 			if (delta.length() <= radius * 0.98)
 			{
 				if (delta.length() < 0.1)
-					delta.x = 1;
+					delta.x = 1.0f;
 				delta.normalize();
 				delta.x *= radius;
 				delta.y *= radius;
@@ -237,29 +129,23 @@ Bool Pathfinder::rva003ecc70(const PathNode *curNode,
 				nextNode->setPosition(&toPos);
 				continue;
 			}
-
 			delta.x = fromPos.x - bldgPos.x;
 			delta.y = fromPos.y - bldgPos.y;
 			if (delta.length() <= radius * 0.98)
 			{
 				if (delta.length() < 0.1)
-					delta.x = 1;
+					delta.x = 1.0f;
 				delta.normalize();
 				delta.x *= radius;
 				delta.y *= radius;
-				fromPos.y = bldgPos.y + delta.y;
 				fromPos.x = bldgPos.x + delta.x;
+				fromPos.y = bldgPos.y + delta.y;
 			}
-
-			computeNormalRadialOffset(fromPos, *insertPos2, toPos,
-				info.theTallBuilding, radius);
-			computeNormalRadialOffset(fromPos, *insertPos1, *insertPos2,
-				info.theTallBuilding, radius);
-			computeNormalRadialOffset(*insertPos2, *insertPos3, toPos,
-				info.theTallBuilding, radius);
+			computeNormalRadialOffset(fromPos, *insertPos2, toPos, bldg, radius);
+			computeNormalRadialOffset(fromPos, *insertPos1, *insertPos2, bldg, radius);
+			computeNormalRadialOffset(*insertPos2, *insertPos3, toPos, bldg, radius);
 			return true;
 		}
 	}
-
 	return false;
 }
