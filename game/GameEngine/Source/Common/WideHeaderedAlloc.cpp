@@ -58,3 +58,5 @@ WIDE_ALLOC( 008C4890 )
 // The sixteenth member, from the pattern sweep.
 
 WIDE_ALLOC( 00897560 )
+
+WIDE_ALLOC( 00891620 )
