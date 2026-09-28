@@ -451,6 +451,7 @@ def integrate(args):
     port(j, dest)
     if rev['fingerprint'] != workspace_fingerprint(j['cwd']):
         raise SystemExit('workspace changed during port; destination retained for inspection')
+    ported_fingerprint = workspace_fingerprint(dest)
     r = sh([sys.executable, 'tools/check_csv.py'], dest, check=True)
     print(r.stdout[-600:])
     status = [path for path, _ in changes(dest)]
@@ -464,6 +465,8 @@ def integrate(args):
         print(f'gate {src}: {text}')
         if not ok:
             raise SystemExit(f'scoped gate fails on origin/master for {src}; not committing')
+    if ported_fingerprint != workspace_fingerprint(dest):
+        raise SystemExit('destination changed during verification; work retained for inspection')
     if args.dry_run or args.keep:
         print('dry run: ported and gated, not committed')
         return

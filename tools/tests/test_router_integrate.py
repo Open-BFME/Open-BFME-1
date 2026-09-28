@@ -338,5 +338,19 @@ def test_rejected_push_preserves_commit_and_refuses_reset(tmp_path, monkeypatch)
         with pytest.raises(SystemExit, match='unintegrated commits'):
             ri.integrate(args)
         assert ri.git(dest, 'rev-parse', 'HEAD', check=True).stdout == retained
+        # A cooperating integrator is locked out, but an external editor may
+        # still change the destination during a gate. Never stage that edit.
+        fresh = tmp_path / 'fresh'
+        git(fixture.base, 'worktree', 'add', '-q', '--detach', str(fresh), 'origin/master')
+        args.worktree, args.push = str(fresh), False
+        def changing_gate(cwd, src):
+            if Path(cwd) == fresh:
+                (fresh / src).write_text('concurrent editor work\n')
+            return True, 'fixture gate'
+        monkeypatch.setattr(ri, 'gate', changing_gate)
+        with pytest.raises(SystemExit, match='destination changed during verification'):
+            ri.integrate(args)
+        assert (fresh / 'game/keep.cpp').read_text() == 'concurrent editor work\n'
+        assert ri.git(fresh, 'diff', '--cached', '--quiet').returncode == 0
     finally:
         fixture.tearDown()
