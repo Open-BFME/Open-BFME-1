@@ -349,6 +349,18 @@ Rva009D0260Owner::get( const AsciiString &key ) const
 {
 	return Rva009CF9A0Tree::find<AsciiString>( key );
 }
+struct Rva009D0580Owner : Rva009CF9A0Tree
+{
+	const_iterator get( const AsciiString &key ) const;
+};
+
+// retail 0x009D0580
+Rva009D0580Owner::const_iterator
+Rva009D0580Owner::get( const AsciiString &key ) const
+{
+	return Rva009CF9A0Tree::find<AsciiString>( key );
+}
+
 struct Rva009D0560Owner : Rva009CF9A0Tree
 {
 	const_iterator get( const AsciiString &key ) const;
