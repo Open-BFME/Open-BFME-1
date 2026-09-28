@@ -1,5 +1,5 @@
 // ?updateFormationMembers@BfmeAODHordeContainOwner@@QAEXXZ
-// partial score=0.97 date=2026-09-28
+// partial score=0.996 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 // BfmeAODHordeContainOwner::updateFormationMembers, retail 0x00241050 / 1540 bytes
@@ -8,12 +8,16 @@
 // Receiver is the horde contain module: +4 module data (float at +0x288),
 // +8 owner object, +0x38 contained list, +0xE4 secondary interface (slots 7
 // and 95), primary slot 33 places a member. Field names below are offsets only.
+// The per-member body sits in its own block after the set test: member is then
+// loaded outside pos's scope, so the three pos copies load all words first.
+// relativeAngleTo stays routed: its landed symbol takes struct Coord3D while the
+// Coord3D operators here are landed with class Coord3D.
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 #include <set>
 #include <map>
 // Coord3D as its out-of-line helpers mangle it: struct base, class derived,
-// implicit (memberwise) copy.
+// implicit (memberwise) copy; the dot product sums x, z, y as MemberMotion's length does.
 struct Coord3DBase { float x, y, z; };
 class Coord3D : public Coord3DBase {
 public:
@@ -28,14 +32,14 @@ public:
 	Coord3D &CrossProduct(const Coord3DBase &left, const Coord3DBase &right);
 	void sub(const Coord3DBase *that) { x -= that->x; y -= that->y; z -= that->z; }
 	void add(const Coord3DBase *that) { x += that->x; y += that->y; z += that->z; }
+	float operator*(const Coord3DBase &that) const { float v = x * that.x; v = v + z * that.z; v = v + y * that.y; return v; }
 	void scale(float s) { x *= s; y *= s; z *= s; }
 };
 
 typedef float Real;
 typedef unsigned int UnsignedInt;
 
-extern void j_0001f91f();
-extern void j_00049413(); extern void j_0002253e(); extern void j_00037691();
+extern void j_00049413();
 
 class Route00241050 {};
 #define ROUTE(ret, name, thunk, params, args) \
@@ -44,6 +48,10 @@ class Route00241050 {};
 	return (((Route00241050 *)this)->*route.member) args; }
 
 class Object;
+class BfmeSpotCN;
+class Gen_0016E370 { public: Real bfmeDistanceSquared(const BfmeSpotCN *other) const; };
+class OpenContain { public: virtual Object *getClosestRider(Object *referenceObject); };
+class BfmeSubDSU { public: void **bfmeTwoDSU(void **what); };
 
 class AIUpdateInterface {
 public:
@@ -65,7 +73,7 @@ public:
 	int getID() const { return m_id; }
 	void bfmeClearYG(const BitFlags<320> &flags);
 	ROUTE(Real, relativeAngleTo, j_00049413, (const Coord3D *point), (point))
-	ROUTE(Real, distanceSquared, j_0002253e, (const Object *other), (other))
+	Real distanceSquared(const Object *other) const { return ((const Gen_0016E370 *)this)->bfmeDistanceSquared((const BfmeSpotCN *)other); }
 };
 
 class Pathfinder {
@@ -130,12 +138,8 @@ public:
 
 	Iface00241050 *iface() { return (Iface00241050 *)((char *)this + 0xe4); }
 	Primary00241050 *primary() { return (Primary00241050 *)this; }
-	ROUTE(Object *, closestRider, j_00037691, (Object *member), (member))
-	__forceinline int &indexOf(const int &id) {
-		typedef int &(Route00241050::*Call)(const int &);
-		union { void (*address)(); Call member; } route = { j_0001f91f };
-		return (((Route00241050 *)&m_map1a8)->*route.member)(id);
-	}
+	Object *closestRider(Object *member) { return ((OpenContain *)this)->OpenContain::getClosestRider(member); }
+	int &indexOf(const int &id) { return *(int *)((BfmeSubDSU *)&m_map1a8)->bfmeTwoDSU((void **)&id); }
 };
 
 void BfmeAODHordeContainOwner::updateFormationMembers()
@@ -156,97 +160,97 @@ void BfmeAODHordeContainOwner::updateFormationMembers()
 	while (it != m_list038.end()) {
 		Object *member = *it;
 		++it;
-		if (m_set114.find(member->getID()) != m_set114.end())
-			continue;
-		Coord3D pos;
-		Real angle = 0.0f;
-		iface()->memberPosition(&pos, member, &angle);
-		angle += orient;
-		if (!m_map1a8.empty()) {
-			if (member->m_modelConditionFlags.m_bits[5] & 1) {
-				iface()->abortFormation();
-				return;
-			}
-			GameLogic *logic = TheGameLogic;
-			Object *a = logic->findObjectByID(m_id154);
-			Object *b = logic->findObjectByID(m_id150);
-			if (!b || !a) {
-				iface()->abortFormation();
-				return;
-			}
-			const Coord3D *aPos = &a->m_cachedPos;
-			const Coord3D *bPos = &b->m_cachedPos;
-			Real dx = aPos->x - bPos->x;
-			Real dy = aPos->y - bPos->y;
-			Real distSq = dx * dx + dy * dy;
-			if (member == a) {
-				if (distSq < 410.0f) {
-					member->bfmeClearYG(m_flags158);
-					angle = member->relativeAngleTo(bPos) + member->m_cachedAngle;
+		if (m_set114.find(member->getID()) == m_set114.end()) {
+			Coord3D pos;
+			Real angle = 0.0f;
+			iface()->memberPosition(&pos, member, &angle);
+			angle += orient;
+			if (!m_map1a8.empty()) {
+				if (member->m_modelConditionFlags.m_bits[5] & 1) {
+					iface()->abortFormation();
+					return;
 				}
-			} else if (member == b) {
-				if (distSq < 410.0f)
-					member->bfmeClearYG(m_flags158);
-				pos = member->m_cachedPos;
-				pos.sub(aPos);
-				pos.normalize();
-				pos.scale(20.0f);
-				pos.add(aPos);
-				angle = member->relativeAngleTo(aPos) + member->m_cachedAngle;
-			} else if (distSq < 410.0f) {
-				int index = indexOf(member->getID());
-				member->bfmeClearYG(m_flags180);
-				angle = member->relativeAngleTo(aPos) + member->m_cachedAngle;
-				pos = member->m_cachedPos;
-				pos.sub(aPos);
-				pos.normalize();
-				pos.scale((Real)index);
-				pos.add(aPos);
-				Object *rider = closestRider(member);
-				if (rider && member->distanceSquared(rider) < 55.0f) {
-					Coord3D diff = member->m_cachedPos;
-					Coord3D up(0.0f, 0.0f, 1.0f);
-					diff -= *aPos;
-					Coord3D side;
-					side.CrossProduct(up, diff);
-					Coord3D toRider = rider->m_cachedPos;
-					toRider -= member->m_cachedPos;
-					side.normalize();
-					int offset = (toRider.y * side.y + toRider.z * side.z + toRider.x * side.x > BfmeZeroRange) ? -4 : 4;
-					side *= (Real)offset;
-					pos.add(&side);
+				GameLogic *logic = TheGameLogic;
+				Object *a = logic->findObjectByID(m_id154);
+				Object *b = logic->findObjectByID(m_id150);
+				if (!b || !a) {
+					iface()->abortFormation();
+					return;
 				}
-			}
-		} else if (!m_map144.empty()) {
-			DelayMap00241050::iterator found = m_map144.find(member->getID());
-			if (found != m_map144.end()) {
-				if (target && data->at288 != BfmeZeroRange) {
-					Coord3D delta = member->m_cachedPos;
-					delta.sub(&target->m_cachedPos);
-					Real len = delta.length();
-					if (len < data->at288 * 0.9) {
-						pos = delta;
-						pos.normalize();
-						pos.scale(5.0f);
-						pos += member->m_cachedPos;
-					} else if (len < data->at288) {
-						pos = member->m_cachedPos;
+				const Coord3D *aPos = &a->m_cachedPos;
+				const Coord3D *bPos = &b->m_cachedPos;
+				Real dx = aPos->x - bPos->x;
+				Real dy = aPos->y - bPos->y;
+				Real distSq = dx * dx + dy * dy;
+				if (member == a) {
+					if (distSq < 410.0f) {
+						member->bfmeClearYG(m_flags158);
+						angle = member->relativeAngleTo(bPos) + member->m_cachedAngle;
 					}
-				} else {
-					Delay00241050 &delay = found->second;
-					if (delay.count <= 0) {
-						pos = delay.pos;
+				} else if (member == b) {
+					if (distSq < 410.0f)
+						member->bfmeClearYG(m_flags158);
+					pos = member->m_cachedPos;
+					pos.sub(aPos);
+					pos.normalize();
+					pos.scale(20.0f);
+					pos.add(aPos);
+					angle = member->relativeAngleTo(aPos) + member->m_cachedAngle;
+				} else if (distSq < 410.0f) {
+					int index = indexOf(member->getID());
+					member->bfmeClearYG(m_flags180);
+					angle = member->relativeAngleTo(aPos) + member->m_cachedAngle;
+					pos = member->m_cachedPos;
+					pos.sub(aPos);
+					pos.normalize();
+					pos.scale((Real)index);
+					pos.add(aPos);
+					Object *rider = closestRider(member);
+					if (rider && member->distanceSquared(rider) < 55.0f) {
+						Coord3D up(0.0f, 0.0f, 1.0f);
+						Coord3D diff = member->m_cachedPos;
+						diff -= *aPos;
+						Coord3D side;
+						side.CrossProduct(up, diff);
+						Coord3D toRider = rider->m_cachedPos;
+						toRider -= member->m_cachedPos;
+						side.normalize();
+						int offset = (toRider * side > BfmeZeroRange) ? -4 : 4;
+						side *= (Real)offset;
+						pos.add(&side);
+					}
+				}
+			} else if (!m_map144.empty()) {
+				DelayMap00241050::iterator found = m_map144.find(member->getID());
+				if (found != m_map144.end()) {
+					if (target && data->at288 != BfmeZeroRange) {
+						Coord3D delta = member->m_cachedPos;
+						delta.sub(&target->m_cachedPos);
+						Real len = delta.length();
+						if (len < data->at288 * 0.9) {
+							pos = delta;
+							pos.normalize();
+							pos.scale(5.0f);
+							pos += member->m_cachedPos;
+						} else if (len < data->at288) {
+							pos = member->m_cachedPos;
+						}
 					} else {
-						delay.count--;
-						continue;
+						Delay00241050 &delay = found->second;
+						if (delay.count <= 0) {
+							pos = delay.pos;
+						} else {
+							delay.count--;
+							continue;
+						}
 					}
 				}
+				if (target)
+					angle = member->relativeAngleTo(&target->m_cachedPos) + member->m_cachedAngle;
+			} else if (m_flag220) {
+				angle = member->relativeAngleTo(&m_pos214) + member->m_cachedAngle;
 			}
-			if (target)
-				angle = member->relativeAngleTo(&target->m_cachedPos) + member->m_cachedAngle;
-		} else if (m_flag220) {
-			angle = member->relativeAngleTo(&m_pos214) + member->m_cachedAngle;
+			primary()->placeMember(member, &pos, angle, !ai->bfmeBlocksFormationRefresh());
 		}
-		primary()->placeMember(member, &pos, angle, !ai->bfmeBlocksFormationRefresh());
 	}
 }
