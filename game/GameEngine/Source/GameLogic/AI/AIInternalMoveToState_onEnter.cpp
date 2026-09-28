@@ -196,6 +196,7 @@ extern unsigned char g_012F0239;
 extern void *g_012ED4FC;
 extern Real g_01098AD4;
 extern Real g_01083B6C;
+extern const char Rva006A16B0Empty[];
 
 extern void j_000022bb(void);
 extern void j_0000979b(void);
@@ -283,9 +284,9 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 					->*finalOverrideCast.asMember)();
 		}
 		const char *objectName = templateForLog->m_name ?
-            (const char *)templateForLog->m_name + 8 : (const char *)0x0107388b;
+            (const char *)templateForLog->m_name + 8 : Rva006A16B0Empty;
 		((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
-			(const char *)0x01098e70, objectName, objectId,
+			"CritterDesync: AIInternalMoveToState::onEnter() entered. Object %s(%d) m_goalPosition=%g,%g,%g", objectName, objectId,
 			m_goalPosition.x, m_goalPosition.y, m_goalPosition.z);
 	}
 
@@ -294,7 +295,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 		if (g_012F0239 && g_012ED4FC)
 		{
 			((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
-				(const char *)0x01098e08);
+				"CritterDesync: AIInternalMoveToState::onEnter() immobile, returning STATE_FAILURE");
 		}
 		return STATE_FAILURE;
 	}
@@ -319,7 +320,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 	if (g_012F0239 && g_012ED4FC)
 	{
 		((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
-			(const char *)0x01098d90, m_goalPosition.x,
+			"CritterDesync: AIInternalMoveToState::onEnter() pre-adjustDestination. m_goalPosition=%g,%g,%g", m_goalPosition.x,
 			m_goalPosition.y, m_goalPosition.z);
 	}
 
@@ -332,7 +333,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 		if (g_012F0239 && g_012ED4FC)
 		{
 			((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
-				(const char *)0x01098d38);
+				"CritterDesync: AIInternalMoveToState::onEnter() will adjustDestination");
 		}
 
 		Rva00172600Pathfinder *pathfinder = TheAI->m_pathfinder;
@@ -354,7 +355,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 			if (g_012F0239 && g_012ED4FC)
 			{
 				((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
-					(const char *)0x01098cb0, m_goalPosition.x,
+					"CritterDesync: AIInternalMoveToState::onEnter() AdjustDestination failed, snap pos. m_goalPosition=%g,%g,%g", m_goalPosition.x,
 					m_goalPosition.y, m_goalPosition.z);
 			}
 			Rva00172600CallCast<Rva00172600VoidObjectCoordCall> snapGoalCall;
@@ -364,14 +365,14 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 			if (g_012F0239 && g_012ED4FC)
 			{
 				((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
-					(const char *)0x01098c30, m_goalPosition.x,
+					"CritterDesync: AIInternalMoveToState::onEnter() post-SnapClosestGoalPosition. m_goalPosition=%g,%g,%g", m_goalPosition.x,
 					m_goalPosition.y, m_goalPosition.z);
 			}
 		}
 		else if (g_012F0239 && g_012ED4FC)
 		{
 			((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
-				(const char *)0x01098bb0, m_goalPosition.x,
+				"CritterDesync: AIInternalMoveToState::onEnter() AdjustDestination succeeded. m_goalPosition=%g,%g,%g", m_goalPosition.x,
 				m_goalPosition.y, m_goalPosition.z);
 		}
 
@@ -383,11 +384,11 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 			owner, &m_goalPosition,
 			(((Rva00172600Calls *)TheTerrainLogic)
 				->*getLayerCall.asMember)(owner, &m_goalPosition),
-			(const char *)0x0109769c, 0x909);
+			"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp", 0x909);
 		if (g_012F0239 && g_012ED4FC)
 		{
 			((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
-				(const char *)0x01098b38, m_goalPosition.x,
+				"CritterDesync: AIInternalMoveToState::onEnter() post-UpdateGoalPosition. m_goalPosition=%g,%g,%g", m_goalPosition.x,
 				m_goalPosition.y, m_goalPosition.z);
 		}
 		(((Rva00172600Calls *)pathfinder)->*setPathStateCall.asMember)(0);
@@ -395,7 +396,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 	else if (g_012F0239 && g_012ED4FC)
 	{
 		((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
-			(const char *)0x01098ad8);
+			"CritterDesync: AIInternalMoveToState::onEnter() NOT adjustingDestination!!!");
 	}
 
 	Coord3D *position = owner->getPosition();
@@ -410,7 +411,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 		if (g_012F0239 && g_012ED4FC)
 		{
 			((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
-				(const char *)0x01098a58, m_goalPosition.x,
+				"CritterDesync: AIInternalMoveToState::onEnter() getLengthEstimate2D succeeds. m_goalPosition=%g,%g,%g", m_goalPosition.x,
 				m_goalPosition.y, m_goalPosition.z);
 		}
 
@@ -427,7 +428,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 			if (g_012F0239 && g_012ED4FC)
 			{
 				((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
-					(const char *)0x010989f8, m_goalPosition.x,
+					"CritterDesync: AIInternalMoveToState::onEnter() blah1. m_goalPosition=%g,%g,%g", m_goalPosition.x,
 					m_goalPosition.y, m_goalPosition.z);
 			}
 			Rva00172600Pathfinder *pathfinder = TheAI->m_pathfinder;
@@ -450,7 +451,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 			if (g_012F0239 && g_012ED4FC)
 			{
 				((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
-					(const char *)0x01098998, m_goalPosition.x,
+					"CritterDesync: AIInternalMoveToState::onEnter() blah2. m_goalPosition=%g,%g,%g", m_goalPosition.x,
 					m_goalPosition.y, m_goalPosition.z);
 			}
 			owner->setCondition(0x3c);
@@ -459,7 +460,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 		{
 			if (g_012F0239 && g_012ED4FC)
 				((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
-					(const char *)0x01098938, m_goalPosition.x,
+					"CritterDesync: AIInternalMoveToState::onEnter() blah3. m_goalPosition=%g,%g,%g", m_goalPosition.x,
 					m_goalPosition.y, m_goalPosition.z);
 		}
 	}
@@ -469,7 +470,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 		if (g_012F0239 && g_012ED4FC)
 		{
 			((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
-				(const char *)0x010988c0, m_goalPosition.x,
+				"CritterDesync: AIInternalMoveToState::onEnter() getLengthEstimate2D fails. m_goalPosition=%g,%g,%g", m_goalPosition.x,
 				m_goalPosition.y, m_goalPosition.z);
 		}
 	}
@@ -477,7 +478,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 	if (g_012F0239 && g_012ED4FC)
 	{
 		((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
-			(const char *)0x01098850, m_goalPosition.x,
+			"CritterDesync: AIInternalMoveToState::onEnter() calling ComputePath1. m_goalPosition=%g,%g,%g", m_goalPosition.x,
 			m_goalPosition.y, m_goalPosition.z);
 	}
 
@@ -489,7 +490,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 		if (g_012F0239 && g_012ED4FC)
 		{
 			((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
-				(const char *)0x010987e0, m_goalPosition.x,
+				"CritterDesync: AIInternalMoveToState::onEnter() ComputePath1 failed. m_goalPosition=%g,%g,%g", m_goalPosition.x,
 				m_goalPosition.y, m_goalPosition.z);
 		}
 		Rva00172600CallCast<Rva00172600VoidNoArgsCall> failurePathCall;
@@ -501,7 +502,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 	if (g_012F0239 && g_012ED4FC)
 	{
 		((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
-			(const char *)0x01098768, m_goalPosition.x,
+			"CritterDesync: AIInternalMoveToState::onEnter() ComputePath1 succeeded. m_goalPosition=%g,%g,%g", m_goalPosition.x,
 			m_goalPosition.y, m_goalPosition.z);
 	}
 	Rva00172600AIVtable *aiVtable = *(Rva00172600AIVtable **)aiObject;
