@@ -1,8 +1,10 @@
 // ?computeAttackPath@AIUpdateInterface@@AAE_NPAVPathfindServicesInterface@@PBVObject@@PBUCoord3D@@@Z
-// partial score=0.618 date=2026-09-26
+// partial score=0.73 date=2026-09-28
+// ?computeAttackPath@AIUpdateInterface@@AAE_NPAVPathfindServicesInterface@@PBVObject@@PBUCoord3D@@@Z
+// partial score=0.73 date=2026-09-28 (measured: 506 differing bytes, 1931/1929 B)
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/iniexception /Iinputs/reference/shims/turretai /Iinputs/reference/shims/aiupdatelayout /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
-// Graft this declaration block and body into AIUpdate.cpp at computeAttackPath.
+// Graft: replace the whole present-unmatched AIUpdateInterface::computeAttackPath body in game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp with everything below this header (declarations + body), then probe that TU. Stash alone does not compile.
 extern void j_0003a391(void);
 extern void j_0000b8ac(void);
 extern void j_0002ceee(void);
@@ -11,6 +13,7 @@ struct BFMEComputeAttackPoint { char pad[0x20]; Int m_waypointID; };
 class Rva0003A391Object {};
 class Rva0002E85CWeapon {};
 class Rva0003A4E5Weapon {};
+typedef Bool (Rva0003A4E5Weapon::*GoalRangeCall)(const Object *, const Coord3D *, const Object *, const Coord3D *, Int) const;
 class Rva0000B8ACTemplate {};
 class Rva0002CEEEBoundaryObject {};
 struct BFMEAttackNode {
@@ -76,6 +79,37 @@ public: virtual void slot(char (*)[N]) = 0;
 template<> class BFMEAttackSlots<0> {};
 class BFMEAttackAI : public BFMEAttackSlots<123> {
 public: virtual Bool isDoingGroundMovement() = 0;
+};
+extern void j_0001c7e2(void);
+// Retail copies the airborne start coordinate with an inline member-wise copy
+// (the first loads fold the member offset); the Zero Hour Coord3D is POD.
+struct BFMEAttackCoord : public Coord3D
+{
+	BFMEAttackCoord(const Coord3D &c) { x = c.x; y = c.y; z = c.z; }
+};
+// BFME's Path is 0x24 bytes (retail allocates 0x24 through global operator new
+// before calling the Path constructor ILT 0x000335B4); the Zero Hour header
+// declares the 0x3C Zero Hour layout, so size the allocation explicitly.
+enum BFMEAttackPathSize24 { BFME_ATTACK_PATH_SIZE_24 };
+inline void *operator new(size_t, BFMEAttackPathSize24) { return ::operator new(0x24); }
+inline void operator delete(void *p, BFMEAttackPathSize24) { ::operator delete(p); }
+// Retail calls Pathfinder::setIgnoreObstacleID out of line (ILT 0x0001C7E2 ->
+// 0x003D5620, a dword store at +0x844); the Zero Hour header inlines it.
+class Rva003D5620Pathfinder {
+public:
+	typedef void (Rva003D5620Pathfinder::*Call)(ObjectID);
+	__forceinline void setIgnoreObstacleID(ObjectID id) {
+		union { void (*address)(); Call member; } route = { j_0001c7e2 };
+		(this->*route.member)(id);
+	}
+};
+class BFMEAttackUpdateGoalRoute {
+public:
+	typedef void (BFMEAttackUpdateGoalRoute::*Call)(Object *, const Coord3D *, PathfindLayerEnum, const char *, Int);
+	__forceinline void updateGoal(Object *o, const Coord3D *g, PathfindLayerEnum l, const char *f, Int line) {
+		union { void (*address)(); Call member; } route = { j_000294e2 };
+		(this->*route.member)(o, g, l, f, line);
+	}
 };
 Bool AIUpdateInterface::computeAttackPath( PathfindServicesInterface *pathServices, const Object *victim, const Coord3D* victimPos )
 {
@@ -150,7 +184,6 @@ Bool AIUpdateInterface::computeAttackPath( PathfindServicesInterface *pathServic
 	}
 	else if (victimPos != NULL)
 	{
-		typedef Bool (Rva0003A4E5Weapon::*GoalRangeCall)(const Object *, const Coord3D *, const Object *, const Coord3D *, Int) const;
 		union { void *asVoid; GoalRangeCall asMember; } goalRangeCast;
 		goalRangeCast.asVoid = (void *)j_0003a4e5;
 		if ((reinterpret_cast<const Rva0003A4E5Weapon *>(weapon)->*goalRangeCast.asMember)(source, source->getPosition(), NULL, victimPos, 0))
@@ -263,9 +296,9 @@ Bool AIUpdateInterface::computeAttackPath( PathfindServicesInterface *pathServic
 			}
 		}
 		destroyPath();
-		layout->m_path = newInstance(Path);
+		layout->m_path = ::new (BFME_ATTACK_PATH_SIZE_24) Path;
 		layout->m_path->prependNode( &localVictimPos, LAYER_GROUND );
-		Coord3D pos = *layout->m_object->getPosition();
+		BFMEAttackCoord pos = *layout->m_object->getPosition();
 		pos.z = localVictimPos.z;
 		layout->m_path->prependNode( &pos, LAYER_GROUND );
 		reinterpret_cast<BFMEAttackPath *>(layout->m_path)->m_first->setNextOptimized(reinterpret_cast<BFMEAttackPath *>(layout->m_path)->m_first->getNext());
@@ -277,7 +310,8 @@ Bool AIUpdateInterface::computeAttackPath( PathfindServicesInterface *pathServic
 	else
 	{
 		destroyPath();
-		TheAI->pathfinder()->setIgnoreObstacleID( (ObjectID)reinterpret_cast<BFMEAttackField164 *>(this)->m_field164 );
+		TheAI->pathfinder()->removeGoal(layout->m_object);
+		reinterpret_cast<Rva003D5620Pathfinder *>(TheAI->pathfinder())->setIgnoreObstacleID( (ObjectID)reinterpret_cast<BFMEAttackField164 *>(this)->m_field164 );
 		Bool bfmeAttackFlag = FALSE;
 		void *machine = reinterpret_cast<BFMEAttackMachineFields *>(this)->m_machine;
 		if (machine) {
@@ -289,9 +323,13 @@ Bool AIUpdateInterface::computeAttackPath( PathfindServicesInterface *pathServic
 			layout->m_object, *locomotorSet, layout->m_object->getPosition(),
 			victim, &localVictimPos, weapon, bfmeAttackFlag);
 		if (layout->m_path) {
-			Coord3D goal = *reinterpret_cast<BFMEAttackPath *>(layout->m_path)->m_last->getPosition();
-			if (!weapon->isGoalPosWithinAttackRange(layout->m_object, &goal, victim, &localVictimPos) && !bfmeAttackFlag) {
-				Coord3D objPos = *layout->m_object->getPosition();
+			const Coord3D *goalSrc = reinterpret_cast<BFMEAttackPath *>(layout->m_path)->m_last->getPosition();
+			Coord3D goal; goal.x = goalSrc->x; goal.y = goalSrc->y; goal.z = goalSrc->z;
+			union { void *asVoid; GoalRangeCall asMember; } goalRangeCast2;
+			goalRangeCast2.asVoid = (void *)j_0003a4e5;
+			if (!(reinterpret_cast<const Rva0003A4E5Weapon *>(weapon)->*goalRangeCast2.asMember)(layout->m_object, &goal, victim, &localVictimPos, 0) && !bfmeAttackFlag) {
+				const Coord3D *objSrc = layout->m_object->getPosition();
+				Coord3D objPos; objPos.x = objSrc->x; objPos.y = objSrc->y; objPos.z = objSrc->z;
 				goal.sub(&objPos);
 				if (goal.length()<3*PATHFIND_CELL_SIZE_F) {
 					destroyPath();
@@ -300,14 +338,21 @@ Bool AIUpdateInterface::computeAttackPath( PathfindServicesInterface *pathServic
 								&objPos, false, 0.2f, true );
 				}
 				if (layout->m_path==NULL) {
+					reinterpret_cast<Rva003D5620Pathfinder *>(TheAI->pathfinder())->setIgnoreObstacleID( INVALID_ID );
 					return false;
 				}
 			}
 			goal = *reinterpret_cast<BFMEAttackPath *>(layout->m_path)->m_last->getPosition();
-			PathfindLayerEnum goalLayer = reinterpret_cast<BFMETerrainLayer *>(TheTerrainLogic)->getLayerForDestination(layout->m_object, &goal);
-			((BFMEUpdateGoalCall)j_000294e2)(TheAI->pathfinder(), layout->m_object,
-				layout->m_object, &goal, goalLayer,
+			Object *goalObject = layout->m_object;
+			union { void *asVoid; BFMEAttackUpdateGoalRoute::Call asMember; } goalCast;
+			goalCast.asVoid = (void *)j_000294e2;
+			(reinterpret_cast<BFMEAttackUpdateGoalRoute *>(TheAI->pathfinder())->*goalCast.asMember)(goalObject, &goal,
+				reinterpret_cast<BFMETerrainLayer *>(TheTerrainLogic)->getLayerForDestination(goalObject, &goal),
 				"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\AIUpdate.cpp", 0xD84);
+		}
+		reinterpret_cast<Rva003D5620Pathfinder *>(TheAI->pathfinder())->setIgnoreObstacleID( INVALID_ID );
+		if (bfmeAttackFlag) return TRUE;
+		if (layout->m_path) {
 			Bool moveAllies;
 			if (reinterpret_cast<BFMEAttackPath *>(layout->m_path)->m_blockedByAlly &&
 				!layout->m_object->isKindOf((KindOfType)0x1E))
@@ -315,8 +360,10 @@ Bool AIUpdateInterface::computeAttackPath( PathfindServicesInterface *pathServic
 			else
 				moveAllies = FALSE;
 			Object *object = layout->m_object;
-			if (object->isKindOf((KindOfType)0x6C) &&
-				!*reinterpret_cast<const Bool *>(reinterpret_cast<const char *>(TheAI->getAiData()) + 0xB5))
+			Bool bfmeKind6C = object->isKindOf((KindOfType)0x6C);
+			AI *ai = TheAI;
+			if (bfmeKind6C &&
+				!*reinterpret_cast<const Bool *>(reinterpret_cast<const char *>(ai->getAiData()) + 0xB5))
 				moveAllies = FALSE;
 			if (reinterpret_cast<const Rva00216D20 *>(object)->field() ||
 				object->isKindOf((KindOfType)0x7C))
@@ -326,14 +373,12 @@ Bool AIUpdateInterface::computeAttackPath( PathfindServicesInterface *pathServic
 				!reinterpret_cast<const BFMESelectionStatusBits *>(object)->test(0x7C) &&
 				moveAllies)
 			{
-				Pathfinder *alliesPathfinder = TheAI->pathfinder();
+				Pathfinder *alliesPathfinder = ai->pathfinder();
 				char crushableLevel = static_cast<char>(object->getCrushableLevel());
 				reinterpret_cast<BFMEPathfinderMoveAllies *>(alliesPathfinder)->moveAllies(
 					object, layout->m_path, !(crushableLevel < 4));
 			}
 		}
-		TheAI->pathfinder()->setIgnoreObstacleID( INVALID_ID );
-		if (bfmeAttackFlag) return TRUE;
 	}
 
 	layout->m_pathTimestamp = TheGameLogic->getFrame();
