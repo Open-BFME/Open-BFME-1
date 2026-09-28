@@ -13,6 +13,7 @@ public:
 extern int bfmeRva012C3B38TagValue;
 extern Rva007F0210 bfmeRva0130A938TagSlot;
 extern Rva007F0210 bfmeRva0130A98CTagSlot;
+extern Rva007F0210 bfmeRva0130A968TagSlot;
 extern Rva007F0210 bfmeRva0130A89CTagSlot;
 extern int bfmeRva012C3BC0TagValue;
 extern Rva007F0210 bfmeRva0130A908TagSlot;
@@ -78,6 +79,11 @@ extern Rva007F0210 bfmeRva0130A9E0TagSlot;
 void bfmeRva00C6D010InitializeTag()
 {
     bfmeRva0130A98CTagSlot.set(bfmeRva012C3B38TagValue, 0x41555448);
+}
+
+void bfmeRva00C6D030InitializeTag()
+{
+    bfmeRva0130A968TagSlot.set(bfmeRva012C3B38TagValue, 0x44495343);
 }
 
 void bfmeRva00C6D070InitializeTag()
