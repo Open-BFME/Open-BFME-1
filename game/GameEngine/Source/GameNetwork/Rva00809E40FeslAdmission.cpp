@@ -242,3 +242,23 @@ void Rva00809E40Owner::rva00809E40( Rva007E8810Message *input )
 		m_sender->send( &request );
 	}
 }
+
+// Retail 0x00808C60 (25 B): forward one message on the admission route. Reads
+// the route owner at +0x10 and sends the caller's message through Rva007F93E0
+// with the same (void *)0x0112C7C0 route literal this TU already uses.
+// Identity of the owning forwarder is not recovered, so the name is
+// address-derived.
+class Rva00808C60Owner
+{
+public:
+	void rva00808C60( void *message );
+	char m_pad00[ 0x10 ];
+	void *m_routeOwner;
+};
+
+void Rva00808C60Owner::rva00808C60( void *message )
+{
+	Rva007F93E0( message, (void *)0x0112C7C0, m_routeOwner );
+}
+
+// @?rva00808C60@Rva00808C60Owner@@QAEXPAX@Z 0x00808C60
