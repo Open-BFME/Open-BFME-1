@@ -7,14 +7,15 @@ Goal: rebuild BFME 1's retail executable byte for byte from source, and use that
 
 ## What?
 
-* If you take a part of the BFME binary, recreate the exact source code that would make that part of the binary, then compile the source code and inject it into the binary, you get the same binary
-* Doing this piece by piece will eventually give you a full, open source recreation of BFME, and enable some (insane) mods
+* We rewrite the game's code as C++, one small piece at a time.
+* Each piece must turn back into the exact same bytes as the original game exe (BFME 1, version 1.03).
+* When every piece matches, the whole game is open source, and we can fix bugs and make big mods.
 
 [![BFME 1 rebuild progress](docs/progress.svg)](tools/progress.py)
 
 ## Status
 
-The bar above tracks source that rebuilds from what this repository holds.
+Green: bytes that match the original game exe. Blue: bytes matched by C++ source code.
 Game source lives in `game/`, WorldBuilder source in `worldbuilder/`, and their
 separate recovery ledgers in `targets/`. Original binaries, toolchains and
 reference sources live in `inputs/`; mods remain in `mods/`.

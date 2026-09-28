@@ -10,41 +10,69 @@ from urllib.request import Request, urlopen
 import progress
 
 
-def render(rebuilt, total):
-    if total <= 0 or not 0 <= rebuilt <= total:
+GREEN, BLUE = "#3fb950", "#58a6ff"
+
+
+def _bar(y, label, value, total, caption, color):
+    percentage = progress.percent(value, total)
+    return f'''    <text x="28" y="{y}" fill="#c9d1d9" font-size="14" font-weight="600" letter-spacing="1.4">{label}</text>
+    <text x="852" y="{y + 6}" fill="#f0f6fc" font-size="30" font-weight="700" text-anchor="end">{percentage:.2f}%</text>
+    <rect x="28" y="{y + 25}" width="824" height="20" rx="10" fill="#21262d"/>
+    <rect x="28" y="{y + 25}" width="{824 * percentage / 100:.4f}" height="20" rx="10" fill="{color}"/>
+    <text x="28" y="{y + 74}" fill="#c9d1d9" font-size="14">{value:,} / {total:,} {caption}</text>
+'''
+
+
+def render(rebuilt, total, cpp=None):
+    """Bytes matched (the headline) and, when given, the C++ we wrote: the end
+    state, since the headline also counts generated C++ and prebuilt .libs."""
+    if total <= 0 or not 0 <= rebuilt <= total or (cpp is not None and not 0 <= cpp <= rebuilt):
         raise ValueError("Invalid rebuild coverage")
     percentage = progress.percent(rebuilt, total)
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="880" height="132" viewBox="0 0 880 132" role="img" aria-labelledby="title desc">
-  <title id="title">BFME 1 rebuild progress: {percentage:.2f}%</title>
-  <desc id="desc">{rebuilt:,} of {total:,} code bytes rebuild from what we hold. Ledger-derived; not a fresh build verification.</desc>
-  <rect x="1" y="1" width="878" height="130" rx="16" fill="#0d1117" stroke="#30363d"/>
+    height = 132 if cpp is None else 252
+    bars = _bar(37, "BFME 1 · BYTES MATCHED", rebuilt, total, "bytes match the original game exe (v1.03)", GREEN)
+    desc = f"{rebuilt:,} of {total:,} code bytes matched"
+    if cpp is not None:
+        bars += _bar(157, "BFME 1 · C++ SOURCE CODE", cpp, total, "bytes matched by C++ source code", BLUE)
+        desc += f"; {cpp:,} of them by C++ source code ({progress.percent(cpp, total):.2f}%)"
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="880" height="{height}" viewBox="0 0 880 {height}" role="img" aria-labelledby="title desc">
+  <title id="title">BFME 1 bytes matched: {percentage:.2f}%</title>
+  <desc id="desc">{desc}. Ledger-derived; not a fresh build verification.</desc>
+  <rect x="1" y="1" width="878" height="{height - 2}" rx="16" fill="#0d1117" stroke="#30363d"/>
   <g font-family="Segoe UI,Arial,sans-serif">
-    <text x="28" y="37" fill="#c9d1d9" font-size="14" font-weight="600" letter-spacing="1.4">BFME 1 · REBUILD PROGRESS</text>
-    <text x="852" y="43" fill="#f0f6fc" font-size="30" font-weight="700" text-anchor="end">{percentage:.2f}%</text>
-    <rect x="28" y="62" width="824" height="20" rx="10" fill="#21262d"/>
-    <rect x="28" y="62" width="{824 * percentage / 100:.4f}" height="20" rx="10" fill="#3fb950"/>
-    <text x="28" y="111" fill="#c9d1d9" font-size="14">{rebuilt:,} / {total:,} code bytes rebuild from what we hold</text>
-  </g>
+{bars}  </g>
 </svg>
 '''
 
 
-def announcement(current, previous):
-    percentage = progress.percent(current["rebuilt"], current["total"])
+def _section(label, value, total, square, previous_value=None, caption="bytes matched"):
+    percentage = progress.percent(value, total)
     filled = round(percentage / 10)
     change = ""
-    if previous:
-        delta = percentage - progress.percent(previous["rebuilt"], previous["total"])
+    if previous_value is not None:
+        delta = percentage - progress.percent(previous_value, total)
         change = f"\n{delta:+.2f} percentage points since the last update"
+    return (f"**{label}: {percentage:.2f}%**\n"
+            + square * filled + "⬛" * (10 - filled)
+            + f"{change}\n{value:,} / {total:,} {caption}")
+
+
+def announcement(current, previous):
+    total = current["total"]
+    same_total = bool(previous) and previous.get("total") == total
+    parts = [_section("Bytes matched", current["rebuilt"], total, "🟩",
+                      previous["rebuilt"] if same_total else None,
+                      "bytes match the original game exe (v1.03)")]
+    if current.get("cpp") is not None:
+        parts.append(_section("C++ source code", current["cpp"], total, "🟦",
+                              previous.get("cpp") if same_total else None,
+                              "bytes matched by C++ source code"))
     return {
         "allowed_mentions": {"parse": []},
         "embeds": [{
             "title": "BFME 1 · Rebuild progress",
             "color": 0x3FB950,
-            "description": f"**{percentage:.2f}%**\n\n"
-                           + "🟩" * filled + "⬛" * (10 - filled)
-                           + f"\n{change}\n"
-                           + f"{current['rebuilt']:,} / {current['total']:,} code bytes",
+            "description": "\n\n".join(parts),
         }],
     }
 
@@ -85,11 +113,13 @@ def main():
     split = progress.source_split(matched, progress.notes_at(None), start, size, naked)
     _, total = progress.real_code_denominator(start, size)
     rebuilt = progress.rebuildable(split)
+    cpp = split["authored"]
     output = progress.ROOT / "docs" / "progress.svg"
-    output.write_text(render(rebuilt, total), encoding="utf-8", newline="\n")
-    print(f"{output.relative_to(progress.ROOT)}: {progress.percent(rebuilt, total):.2f}%")
+    output.write_text(render(rebuilt, total, cpp), encoding="utf-8", newline="\n")
+    print(f"{output.relative_to(progress.ROOT)}: {progress.percent(rebuilt, total):.2f}% matched, "
+          f"{progress.percent(cpp, total):.2f}% C++ we wrote")
     if args.discord:
-        notify({"rebuilt": rebuilt, "total": total})
+        notify({"rebuilt": rebuilt, "total": total, "cpp": cpp})
 
 
 if __name__ == "__main__":
