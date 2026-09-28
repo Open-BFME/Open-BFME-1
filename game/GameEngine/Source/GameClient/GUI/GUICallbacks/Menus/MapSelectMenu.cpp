@@ -1,11 +1,7 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringbaseunicode /Iinputs/reference/shims/stringbaseascii /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
-// Open-BFME5: retail calls AsciiString(const char *) out of line at 0x00088BC0
-// from this TU. The attribute lives guarded in AsciiString.h; the choice is
-// per call site, so it is opted into here rather than turned on globally.
-#define BFME_ASCIISTRING_CSTR_CTOR_NOINLINE
 // stlport
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -52,6 +48,7 @@
 #include "GameClient/Shell.h"
 #include "GameClient/GameWindowManager.h"
 #include "GameClient/GadgetListBox.h"
+#include "GameClient/GadgetComboBox.h"
 #include "GameClient/GadgetRadioButton.h"
 #include "GameClient/MapUtil.h"
 #include "GameClient/Mouse.h"
@@ -67,25 +64,6 @@ static Bool startGame = false;
 static Bool buttonPushed = false;
 static GameDifficulty s_AIDiff = DIFFICULTY_NORMAL;
 
-class BFMERetailAsciiString;
-
-template <typename T> class StringBase
-{
-	friend class BFMERetailAsciiString;
-
-private:
-	StringBase( const T *text );
-	void releaseBuffer();
-	T *m_data;
-};
-
-class BFMERetailAsciiString : private StringBase<char>
-{
-public:
-	BFMERetailAsciiString( const char *text ) : StringBase<char>( text ) {}
-	~BFMERetailAsciiString() { releaseBuffer(); }
-	const char *str() const { return m_data ? m_data + 8 : (const char *)0x0107388b; }
-};
 
 class BFMERetailScriptEngineView
 {
@@ -96,13 +74,9 @@ public:
 	GameDifficulty getGlobalDifficulty() const { return m_globalDifficulty; }
 };
 
-// BFME's pending map string moved from the Zero Hour GlobalData layout.
-static void setupGameStart(AsciiString mapName)
-{
-	startGame = true;
-	TheWritableGlobalData->m_pendingFile = mapName;
-	TheShell->reverseAnimatewindow();
-}
+// Zero Hour's setupGameStart(AsciiString) is not reconstructed here: retail's
+// copy is the out-of-line body at 0x004D1080 (ledger name bfmeCommitYH) that
+// MapSelectMenuSystem's OK branch calls; see the declaration above that body.
 
 static void doGameStart( void )
 {
@@ -172,7 +146,7 @@ static void shutdownComplete( WindowLayout *layout )
 
 void SetDifficultyRadioButton( void )
 {
-	BFMERetailAsciiString parentName( "MapSelectMenu.wnd:MapSelectMenuParent" );
+	AsciiString parentName( "MapSelectMenu.wnd:MapSelectMenuParent" );
 	NameKeyType parentID = TheNameKeyGenerator->nameToKey( parentName.str() );
 	GameWindow *parent = TheWindowManager->winGetWindowFromId( NULL, parentID );
 
@@ -187,7 +161,7 @@ void SetDifficultyRadioButton( void )
 			case DIFFICULTY_EASY:
 			{
 				NameKeyType radioButtonEasyAIID = TheNameKeyGenerator->nameToKey(
-					BFMERetailAsciiString( "MapSelectMenu.wnd:RadioButtonEasyAI" ).str() );
+					AsciiString( "MapSelectMenu.wnd:RadioButtonEasyAI" ).str() );
 				GameWindow *radioButtonEasyAI = TheWindowManager->winGetWindowFromId( parent, radioButtonEasyAIID );			
 				GadgetRadioSetSelection(radioButtonEasyAI, FALSE);
 				s_AIDiff = DIFFICULTY_EASY;
@@ -196,7 +170,7 @@ void SetDifficultyRadioButton( void )
 			case DIFFICULTY_NORMAL:
 			{
 				NameKeyType radioButtonMediumAIID = TheNameKeyGenerator->nameToKey(
-					BFMERetailAsciiString( "MapSelectMenu.wnd:RadioButtonMediumAI" ).str() );
+					AsciiString( "MapSelectMenu.wnd:RadioButtonMediumAI" ).str() );
 				GameWindow *radioButtonMediumAI = TheWindowManager->winGetWindowFromId( parent, radioButtonMediumAIID );
 				GadgetRadioSetSelection(radioButtonMediumAI, FALSE);
 				s_AIDiff = DIFFICULTY_NORMAL;
@@ -205,7 +179,7 @@ void SetDifficultyRadioButton( void )
 			case DIFFICULTY_HARD:
 			{
 				NameKeyType radioButtonHardAIID = TheNameKeyGenerator->nameToKey(
-					BFMERetailAsciiString( "MapSelectMenu.wnd:RadioButtonHardAI" ).str() );
+					AsciiString( "MapSelectMenu.wnd:RadioButtonHardAI" ).str() );
 				GameWindow *radioButtonHardAI = TheWindowManager->winGetWindowFromId( parent, radioButtonHardAIID );			
 				GadgetRadioSetSelection(radioButtonHardAI, FALSE);
 				s_AIDiff = DIFFICULTY_HARD;
@@ -378,7 +352,26 @@ WindowMsgHandledType MapSelectMenuInput( GameWindow *window, UnsignedInt msg,
 //-------------------------------------------------------------------------------------------------
 /** MapSelect menu window system callback */
 //-------------------------------------------------------------------------------------------------
-WindowMsgHandledType MapSelectMenuSystem( GameWindow *window, UnsignedInt msg, 
+// Retail 0x004D1C40, named by the FunctionLexicon row at 0x00EA94DC
+// (MapSelectMenuSystem) whose ILT 0x0002EB81 jumps here.
+//
+// BFME's populateMapListbox call site is the cdecl four-argument helper at
+// 0x00457090 (reached through ILT 0x00029CEE); its last argument is the
+// address of AsciiString::TheEmptyString, i.e. taken by reference.
+void __cdecl bfmePopulateMapListFlags( void *listbox, char useSystemMaps, char isMultiplayer, void *mapToSelect );
+
+// Retail 0x004D1080 (Zero Hour's setupGameStart shape plus a BFME refresh)
+// takes the chosen map name by value. Retail builds that argument in place with
+// the out-of-line AsciiString(const char *) copy at 0x0005EE70 (ILT 0x00012C42)
+// and the callee releases it through the StringBase<char> dtor 0x00887940, so
+// the parameter is the real AsciiString; the landed row spells the same type
+// as its alias AsciiStringYH, hence the second pinned spelling.
+extern void __cdecl bfmeCommitYH( AsciiString label );
+
+// Retail 0x012F3E70: filled from the HeadlessCount combo box selection.
+extern void *g_bfmePtrAAV;
+
+WindowMsgHandledType MapSelectMenuSystem( GameWindow *window, UnsignedInt msg,
 																				  WindowMsgData mData1, WindowMsgData mData2 )
 {
 	static NameKeyType buttonBack = NAMEKEY_INVALID;
@@ -387,7 +380,7 @@ WindowMsgHandledType MapSelectMenuSystem( GameWindow *window, UnsignedInt msg,
 	static NameKeyType radioButtonEasyAI = NAMEKEY_INVALID;
 	static NameKeyType radioButtonMediumAI = NAMEKEY_INVALID;
 	static NameKeyType radioButtonHardAI = NAMEKEY_INVALID;
-	switch( msg ) 
+	switch( msg )
 	{
 
 		// --------------------------------------------------------------------------------------------
@@ -440,19 +433,19 @@ WindowMsgHandledType MapSelectMenuSystem( GameWindow *window, UnsignedInt msg,
 			{
 				showSoloMaps = true;
 				OptionPreferences pref;
-				populateMapListbox( mapList, pref.usesSystemMapDir(), !showSoloMaps );
+				bfmePopulateMapListFlags( mapList, pref.usesSystemMapDir(), !showSoloMaps, (void *)&AsciiString::TheEmptyString );
 			}
 			else if ( controlID == multiplayerID )
 			{
 				showSoloMaps = false;
 				OptionPreferences pref;
-				populateMapListbox( mapList, pref.usesSystemMapDir(), !showSoloMaps );
+				bfmePopulateMapListFlags( mapList, pref.usesSystemMapDir(), !showSoloMaps, (void *)&AsciiString::TheEmptyString );
 			}
 			else if ( controlID == radioButtonSystemMapsID )
 			{
 				if (TheMapCache)
 					TheMapCache->updateCache();
-				populateMapListbox( mapList, TRUE, !showSoloMaps );
+				bfmePopulateMapListFlags( mapList, TRUE, !showSoloMaps, (void *)&AsciiString::TheEmptyString );
 				OptionPreferences pref;
 				pref["UseSystemMapDir"] = "yes";
 				pref.write();
@@ -461,7 +454,7 @@ WindowMsgHandledType MapSelectMenuSystem( GameWindow *window, UnsignedInt msg,
 			{
 				if (TheMapCache)
 					TheMapCache->updateCache();
-				populateMapListbox( mapList, FALSE, !showSoloMaps );
+				bfmePopulateMapListFlags( mapList, FALSE, !showSoloMaps, (void *)&AsciiString::TheEmptyString );
 				OptionPreferences pref;
 				pref["UseSystemMapDir"] = "no";
 				pref.write();
@@ -494,7 +487,12 @@ WindowMsgHandledType MapSelectMenuSystem( GameWindow *window, UnsignedInt msg,
 					const char *mapFname = (const char *)GadgetListBoxGetItemData( mapWindow, selected );
 					DEBUG_ASSERTCRASH(mapFname, ("No map item data"));
 					if (mapFname)
-						setupGameStart(mapFname);
+					{
+						GameWindow *headlessCount = TheWindowManager->winGetWindowFromId( NULL,
+							NAMEKEY("MapSelectMenu.wnd:HeadlessCount") );
+						GadgetComboBoxGetSelectedPos( headlessCount, (Int *)&g_bfmePtrAAV );
+						bfmeCommitYH( mapFname );
+					}
 				}  // end if
 
 			}  // end else if
@@ -513,17 +511,18 @@ WindowMsgHandledType MapSelectMenuSystem( GameWindow *window, UnsignedInt msg,
 			break;
 
 		}  // end selected
-		case GLM_DOUBLE_CLICKED:
+		// BFME's list box double-click message is 0x4015 (GBM_SELECTED + 0xD).
+		case 0x4015:
 			{
 				if (buttonPushed)
 					break;
 
 				GameWindow *control = (GameWindow *)mData1;
 				Int controlID = control->winGetWindowId();
-				if( controlID == listboxMap ) 
+				if( controlID == listboxMap )
 				{
 					int rowSelected = mData2;
-				
+
 					if (rowSelected >= 0)
 					{
 						//buttonPushed = true;
@@ -531,7 +530,7 @@ WindowMsgHandledType MapSelectMenuSystem( GameWindow *window, UnsignedInt msg,
 						NameKeyType buttonOKID = TheNameKeyGenerator->nameToKey( AsciiString("MapSelectMenu.wnd:ButtonOK") );
 						GameWindow *buttonOK = TheWindowManager->winGetWindowFromId( NULL, buttonOKID );
 
-						TheWindowManager->winSendSystemMsg( window, GBM_SELECTED, 
+						TheWindowManager->winSendSystemMsg( window, GBM_SELECTED,
 																								(WindowMsgData)buttonOK, buttonOKID );
 					}
 				}
