@@ -1,10 +1,11 @@
-// ?d_0029b760@@YAXXZ
-// partial score=0.711806 date=2026-09-27
+// ?step@PhysicsPathStep0029B760@@QAEHXZ
+// partial score=0.981439 date=2026-09-28
 // cl: /DNDEBUG /MD /Igame/GameEngine/Source/GameLogic/Object /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWLib
 
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
+#include <vector>
 #define _OPERATOR_NEW_DEFINED_
 #include "matrix3d.h"
 class ModelConditionFlags { public: bool test(int n) const { return bits.test(n); } void reset(int n) { bits.reset(n); } void set(int n) { bits.set(n); } _STL::bitset<320> bits; };
@@ -29,8 +30,8 @@ public: int step();
  Config0029B760* config() { return *(Config0029B760**)((char*)this-12); }
  Object* object() { return *(Object**)((char*)this-8); }
  PhysicsBehavior* physics() { return (PhysicsBehavior*)((char*)this-16); }
- unsigned size() { return end-begin; }
- char pad00[0x10]; Coord3D* begin; Coord3D* end; char pad18[0x28]; int at40,at44,at48; bool at4c,at4d,at4e;
+ unsigned size() { return points.size(); }
+ char pad00[0x10]; _STL::vector<Coord3D> points; char pad1c[0x24]; int at40,at44,at48; bool at4c,at4d,at4e;
 };
 inline void setVectorHint0029B760(Object* obj,const Vector3& p) { *(bool*)((char*)obj+0x186)=true; *(Vector3*)((char*)obj+0x178)=p; }
 inline void setHint0029B760(Object* obj,const Coord3D* p) { *(bool*)((char*)obj+0x186)=true; *(Coord3D*)((char*)obj+0x178)=*p; }
@@ -55,9 +56,9 @@ int PhysicsPathStep0029B760::step() {
   return ((PhysicsSleep0029B760*)physics())->sleep();
  }
  if(changed && obj->getDrawable()) obj->getDrawable()->applyPendingModelConditionFlags(false);
- const Coord3D& pos=begin[at40];
+ const Coord3D& pos=points[at40];
  if(data->at41 && !data->at40 && at40>0) {
-  const Coord3D& previous=begin[at40-1];
+  const Coord3D& previous=points[at40-1];
   Vector3 direction(pos.x-previous.x,pos.y-previous.y,pos.z-previous.z);
   if(at44>0) direction.Z=g_globals0029B760->at1ac*data->at4c*100.0f;
   direction.Normalize();
@@ -67,7 +68,7 @@ int PhysicsPathStep0029B760::step() {
   object()->rva00132200(&transform);
  } else object()->setPosition(&pos);
  if((unsigned)at40<size()-1) {
-  setHint0029B760(obj,&begin[at40+1]);
+  setHint0029B760(obj,&points[at40+1]);
  } else {
   Vector3 next=2.0f*Vector3(pos.x,pos.y,pos.z)-Vector3(obj->m_cachedPos.x,obj->m_cachedPos.y,obj->m_cachedPos.z);
   setHint0029B760(obj,(const Coord3D*)&next);

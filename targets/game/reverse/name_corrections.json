@@ -8278,5 +8278,15 @@
   "after_sha256": "3645b3882127f8d48625b90daede0c455d4e897a70f270ebfae52762c06c8d36",
   "evidence": "targets/game/reverse/identity_evidence/006d2130-grid-dispatch-element-callees.md",
   "reason": "probe/apply were the bank's own call-site placeholders; targets have only gen names"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0029a150.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorRva0029A150.cpp",
+  "old_name": "build",
+  "new_name": "rva0029A150",
+  "before_sha256": "0bdc75e64ec2a8677107d18aa85bab54326b661b768ad5cb830d1f43d7f70057",
+  "after_sha256": "2aabc7c81fc530eab446ab4cd07c2f9d1fde05e2da10df6f141b4045f7a77801",
+  "evidence": "targets/game/reverse/identity_evidence/0029a150-bank-build-placeholder.md",
+  "reason": "build was a bank-only guess; matched caller rva0029AB10 and pre-existing pin name it PhysicsBehavior::rva0029A150"
  }
 ]

@@ -89704,3 +89704,4 @@ _Rva007F5790Callback,0x007F5790,gap-seat dependency; caller 007F7030 pushes VA00
 ?bfmeCollapseZones@PathfindZoneManager@@QAEXPAPAVPathfindCell@@ABUIRegion2D@@_N@Z,0x00402DB0, same matched collapse identity with class tag; caller 00408CD0 pushes map bounds true
 ?phase004085F0@PathfindZoneManager@@AAEXPAPAVPathfindCell@@ABUIRegion2D@@@Z,0x004085F0, address-derived zone phase; caller 00408CD0 receiver and two args; callee ret 8
 ?phase00404B10@PathfindZoneManager@@AAEXPAPAVPathfindCell@@PAVPathfindLayer@@ABUIRegion2D@@HH@Z,0x00404B10, address-derived zone phase; caller 00408CD0 pushes map layers bounds and two percentages; callee ret 20
+?rva0029B350@PhysicsBehavior@@QAEX_N@Z,0x0029B350,address-derived body; caller 0x0029B4E0+0x1A2 routes through ILT 0x00023C0E with same primary this and bool false; callee calls matched PhysicsBehavior rva0029B120 with unchanged this and returns ret4
