@@ -46,6 +46,28 @@ class ZenTests(unittest.TestCase):
             r.discover_variants(self.c,r.ROOT)
         self.assertIsNone(r.choose(self.c,self.job,{}, {},[],0,exhausted))
 
+    def test_free_override_only_for_catalog_absent_models(self):
+        # an operator override may vouch for a model the catalog omits, never
+        # overrule a catalog price, and never stand in for an unread catalog
+        self.zen['zen_free_override']='operator confirmed free for this account'
+        free=[dict(input=0,output=0,cache=dict(read=0,write=0))]
+        def catalog(entries):
+            def run(argv,**kwargs):
+                kwargs['stdout'].write(json.dumps({'data':entries}))
+            return run
+        absent=[dict(id='other-free',providerID='opencode',enabled=True,cost=free,variants=[])]
+        with patch.object(r.subprocess,'run',side_effect=catalog(absent)):
+            r.discover_variants(self.c,r.ROOT)
+        self.assertIn(self.zen['id'],self.c['_verified_free_zen'])
+        priced=[dict(id='space-bunny-free',providerID='opencode',enabled=True,
+                     cost=[dict(input=1,output=1,cache=dict(read=0,write=0))],variants=[])]
+        with patch.object(r.subprocess,'run',side_effect=catalog(priced)):
+            r.discover_variants(self.c,r.ROOT)
+        self.assertNotIn(self.zen['id'],self.c['_verified_free_zen'])
+        with patch.object(r.subprocess,'run',side_effect=OSError('offline')):
+            r.discover_variants(self.c,r.ROOT)
+        self.assertNotIn(self.zen['id'],self.c['_verified_free_zen'])
+
     def test_paid_zen_cannot_be_enabled(self):
         paid=next(m for m in self.c['models'] if m['id'].startswith('opencode/') and m['metered'])
         paid['enabled']=True

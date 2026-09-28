@@ -24,6 +24,8 @@ step, and it trusts nothing the worker reported:
       prints what a reviewer must decide (docs/naming_evidence.md).
       --push rebases and pushes with retries; --measure then records the
       parent-verified result on the job's last attempt.
+      --keep ports on top of whatever the worktree already holds and stops
+      before committing, so several reviewed jobs become one batch commit.
 
 Workspaces are never modified or deleted.
 """
@@ -37,6 +39,11 @@ CORRECTIONS = 'targets/game/reverse/name_corrections.json'
 RVA_LINE = re.compile(r'^- (0x[0-9A-Fa-f]{8})\b', re.M)
 NAKED = re.compile(r'__declspec\s*\(\s*naked\s*\)|\b__emit\b|\b__asm\b')
 GIT_VERBS = re.compile(r'(?m)^\$ git (add|commit|push|stash|checkout|reset|rebase|rm|mv)\b')
+# Every changed path is routed explicitly; nothing is dropped in silence. A
+# worker's shim-header edit that the port left behind let the hook pass on
+# the working tree while the commit could not compile (2026-09-27, batch 5).
+PORTED = ('game/', 'worldbuilder/', 'targets/', 'inputs/reference/shims/')
+GUTTED_INDEX = 200  # staged deletions of files still on disk: a worker emptied its index
 
 
 def sh(cmd, cwd, check=False, timeout=None):
@@ -87,6 +94,20 @@ def changes(ws):
     return out
 
 
+def route(path):
+    """'port', 'scratch' (an untracked top-level file such as aim.cod) or 'refuse'."""
+    if path.startswith(PORTED):
+        return 'port'
+    return 'scratch' if '/' not in path else 'refuse'
+
+
+def added_naked(ws, path):
+    """Inline asm/naked code on lines the worker added to a tracked file (comments ignored)."""
+    d = git(ws, 'diff', '-U0', 'HEAD', '--', path).stdout
+    return bool(NAKED.search(code_only('\n'.join(l[1:] for l in d.splitlines()
+                                                 if l.startswith('+') and not l.startswith('+++')))))
+
+
 def ledger_delta(ws, path):
     d = git(ws, 'diff', '-U0', 'HEAD', '--', path).stdout
     add = [l[1:].rstrip('\r') for l in d.splitlines() if l.startswith('+') and not l.startswith('+++')]
@@ -130,10 +151,18 @@ def review(args):
     radd, _ = ledger_delta(ws, LEDGERS[3])
     res = {'job': job, 'workspace': ws, 'status': j['status'], 'targets': {}, 'problems': [], 'gates': {}}
     for path, st in ch:
+        if route(path) == 'refuse':
+            res['problems'].append(f'{path}: changed outside {", ".join(PORTED)}; the port does not carry it')
         if st != 'deleted' and path.endswith(('.cpp', '.asm')) and path.startswith('game/'):
             res['gates'][path] = gate(ws, path)
             if st == 'added' and NAKED.search(code_only((Path(ws) / path).read_text(errors='replace'))):
                 res['problems'].append(f'{path}: new source contains inline asm/__emit/naked code')
+            elif st == 'modified' and path.endswith('.cpp') and added_naked(ws, path):
+                res['problems'].append(f'{path}: the worker added inline asm/__emit/naked code')
+    gutted = [l for l in git(ws, 'diff', '--cached', '--name-only', '--diff-filter=D').stdout.splitlines()
+              if (Path(ws) / l).exists()]
+    if len(gutted) > GUTTED_INDEX:
+        res['problems'].append(f'index gutted: {len(gutted)} staged deletions of files still on disk')
     for rva in rvas:
         key = rva.lower()
         new = [r for r in fadd if f',{key},' in r.lower()]
@@ -174,6 +203,13 @@ def review(args):
 def port(j, dest):
     ws = j['cwd']
     ch = changes(ws)
+    refused = [p for p, s in ch if route(p) == 'refuse']
+    if refused:
+        raise SystemExit('workspace changed paths the port does not carry:\n  ' + '\n  '.join(refused))
+    for p, s in ch:
+        if route(p) == 'scratch':
+            print(f'skipping top-level scratch file {p}')
+    ch = [(p, s) for p, s in ch if route(p) == 'port']
     ledgers = set(LEDGERS) | {CORRECTIONS}
     tracked = [p for p, s in ch if s != 'added' and p not in ledgers]
     if tracked:
@@ -239,20 +275,27 @@ def integrate(args):
     base = args.base
     if not dest.exists():
         git(ROOT, 'worktree', 'add', '-q', '--detach', str(dest), base, check=True)
-    git(dest, 'checkout', '-q', '--detach', base, check=True)
-    git(dest, 'reset', '-q', '--hard', base, check=True)
-    git(dest, 'clean', '-qfd', '-e', 'build/')
+    elif args.keep:
+        print(f'--keep: porting on top of the work already in {dest}')
+    if not args.keep:
+        git(dest, 'checkout', '-q', '--detach', base, check=True)
+        git(dest, 'reset', '-q', '--hard', base, check=True)
+        git(dest, 'clean', '-qfd', '-e', 'build/')
     port(j, dest)
     r = sh([sys.executable, 'tools/check_csv.py'], dest)
     print(r.stdout[-600:])
-    touched = [l[3:] for l in git(dest, 'status', '--porcelain', '--untracked-files=all').stdout.splitlines()
-               if l[3:].endswith(('.cpp', '.asm')) and (dest / l[3:]).exists() and not l[3:].startswith('build/')]
+    status = [l[3:] for l in git(dest, 'status', '--porcelain', '--untracked-files=all').stdout.splitlines()]
+    stray = [p for p in status if not p.startswith('build/') and route(p) != 'port']
+    if stray:
+        raise SystemExit('integration worktree has changes outside the ported set:\n  ' + '\n  '.join(stray))
+    touched = [p for p in status
+               if p.endswith(('.cpp', '.asm')) and (dest / p).exists() and not p.startswith('build/')]
     for src in touched:
         ok, text = gate(str(dest), src)
         print(f'gate {src}: {text}')
         if not ok:
             raise SystemExit(f'scoped gate fails on origin/master for {src}; not committing')
-    if args.dry_run:
+    if args.dry_run or args.keep:
         print('dry run: ported and gated, not committed')
         return
     landed = rev['landed']
@@ -266,13 +309,13 @@ def integrate(args):
            'origin/master) and the commit hooks.\n')
     if args.trailer:
         msg += '\n' + args.trailer.replace('\\n', '\n') + '\n'
-    git(dest, 'add', '-A', '--', 'game', 'targets', check=True)
+    git(dest, 'add', '-A', '--', *(d.rstrip('/') for d in PORTED if (dest / d).exists()), check=True)
     c = git(dest, 'commit', '-q', '-m', msg)
     out = c.stdout + c.stderr
     if c.returncode and 'adopt_header.py --fix-staged' in out:
         print('commit hook asks for header adoption; running tools/adopt_header.py --fix-staged once')
         sh([sys.executable, 'tools/adopt_header.py', '--fix-staged'], dest, check=True)
-        git(dest, 'add', '-A', '--', 'game', 'targets', check=True)
+        git(dest, 'add', '-A', '--', *(d.rstrip('/') for d in PORTED if (dest / d).exists()), check=True)
         c = git(dest, 'commit', '-q', '-m', msg)
         out = c.stdout + c.stderr
     if c.returncode:
@@ -322,6 +365,8 @@ def main(argv=None):
     i.add_argument('--base', default='origin/master', help='integration base (default origin/master)')
     i.add_argument('--worktree', default=str(ROOT / 'build' / 'wt' / 'integrate'))
     i.add_argument('--dry-run', action='store_true')
+    i.add_argument('--keep', action='store_true',
+                   help='port on top of the worktree as it is (batch several jobs; implies --dry-run)')
     i.add_argument('--push', action='store_true')
     i.add_argument('--push-retries', type=int, default=8)
     i.add_argument('--measure', action='store_true', help='after --push, record the verified result on the job')

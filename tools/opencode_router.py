@@ -325,8 +325,10 @@ def discover_variants(c, root):
                            stdout=output, stderr=subprocess.DEVNULL, timeout=10, check=True)
             output.seek(0)
             data = json.load(output)['data']
-        caps = {}
+        caps, listed = {}, set()
         for m in data:
+            if m.get('providerID') == 'opencode' and isinstance(m.get('id'), str):
+                listed.add('opencode/' + m['id'])
             if m.get('providerID') not in ('opencode-go', 'opencode') or not isinstance(m.get('variants'), list):
                 continue
             mid = m['providerID'] + '/' + m['id']
@@ -335,10 +337,22 @@ def discover_variants(c, root):
             variants = [v['id'] for v in m['variants']]
             if MODEL_ID.fullmatch(mid) and all(isinstance(v, str) and VARIANT_ID.fullmatch(v) for v in variants):
                 caps[mid] = variants
+        c['_verified_free_zen'].extend(i for i in zen_free_overrides(c) if i not in listed)
         return caps
     except (OSError, subprocess.SubprocessError, ValueError, KeyError, TypeError, AttributeError):
         c['_verified_free_zen'] = []
         return {}  # Go keeps configured variants; Zen fails closed on unknown pricing.
+
+
+def zen_free_overrides(c):
+    """Zen IDs the operator has confirmed free for this account although the
+    catalog omits them. Each needs `zen_free_override` evidence text and
+    `metered: false`; nothing is inferred from a model's name. The caller
+    admits only IDs a successfully read catalog does NOT list: a listed model
+    is priced by the catalog, and an unread catalog proves nothing."""
+    return [m['id'].split('#')[0] for m in c['models']
+            if m['id'].startswith('opencode/') and m.get('metered', True) is False
+            and isinstance(m.get('zen_free_override'), str) and m['zen_free_override'].strip()]
 
 
 def choose_variant(model, tier, capabilities, history=()):

@@ -575,6 +575,13 @@ python3 tools/opencode_router.py --config build/opencode-router.json run bulk \
   --model opencode/space-bunny-free#low 'Your bounded task'
 ```
 
+A free Zen model that the account's runtime catalog **omits** (so no zero price
+can be read) may carry `zen_free_override` with the operator's evidence text,
+alongside `metered: false` and `unmetered_evidence`. It is admitted only when a
+catalog was read successfully and does not list that ID: a listed model is
+priced by the catalog and the override never overrules it, and an unread
+catalog proves nothing, so Zen still fails closed.
+
 All five declared suffixes can be requested using the same syntax. They share
 one configured concurrency pool; they are not five independent model budgets.
 An explicit unavailable variant is deferred with
@@ -697,7 +704,15 @@ python3 tools/router_integrate.py integrate JOB_ID --push --measure
 `review` diffs the workspace against its base (staged work included, so a worker
 that ran `git add` is still seen), runs the scoped gate on every touched source
 in the workspace, and flags renamed rows, new inline asm/naked code, lifts left
-behind and mutating git commands. `integrate` ports the work onto a clean
+behind and mutating git commands. Every changed path is routed explicitly: `game/`,
+`worldbuilder/`, `targets/` and `inputs/reference/shims/` are ported and
+staged; an untracked top-level scratch file is skipped with a note; anything
+else (vendored references, `tools/`, `docs/`, hooks) is a review problem and
+`integrate` refuses it rather than dropping it. A port that carried only `game/`
+and `targets/` once left a shim-header edit behind: the hook compiled the
+working tree and passed while the commit could not build. Naked code added to a
+*modified* source and a gutted index (hundreds of staged deletions of files
+still on disk) are flagged too. `integrate` ports the work onto a clean
 detached worktree at `origin/master` (`build/wt/integrate`): source edits as a
 3-way patch, new files copied, deletions applied, ledger rows moved line by line
 with their CRLF endings so concurrent upstream rows survive. It then runs

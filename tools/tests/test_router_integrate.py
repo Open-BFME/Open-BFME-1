@@ -78,6 +78,41 @@ class PortTest(unittest.TestCase):
         git(self.ws, 'add', 'game/new.cpp')
         self.assertIn(('game/new.cpp', 'added'), ri.changes(str(self.ws)))
 
+    def test_port_carries_shim_header_edit(self):
+        # batch 5: the worker's new source needed its shim-header edit, and a
+        # port that carried only game/ and targets/ produced a tree that the
+        # hook passed (working tree) but the commit could not compile
+        shim = 'inputs/reference/shims/x/X.h'
+        for tree in (self.base,):
+            (tree / shim).parent.mkdir(parents=True)
+            (tree / shim).write_text('int a;\n')
+        git(self.base, 'add', '-A'); git(self.base, 'commit', '-q', '-m', 'shim')
+        for tree in (self.ws, self.dest):
+            git(tree, 'checkout', '-q', '--detach', 'master')
+        (self.ws / shim).write_text('int a, b;\n')
+        (self.ws / 'aim.cod').write_text('scratch\n')
+        ri.port({'cwd': str(self.ws)}, str(self.dest))
+        self.assertEqual((self.dest / shim).read_text(), 'int a, b;\n')
+        self.assertFalse((self.dest / 'aim.cod').exists())
+
+    def test_port_refuses_vendored_reference_edit(self):
+        ref = 'inputs/reference/Vendor/Y.h'
+        (self.base / ref).parent.mkdir(parents=True)
+        (self.base / ref).write_text('int y;\n')
+        git(self.base, 'add', '-A'); git(self.base, 'commit', '-q', '-m', 'ref')
+        for tree in (self.ws, self.dest):
+            git(tree, 'checkout', '-q', '--detach', 'master')
+        (self.ws / ref).write_text('int y, z;\n')
+        with self.assertRaises(SystemExit):
+            ri.port({'cwd': str(self.ws)}, str(self.dest))
+        self.assertEqual((self.dest / ref).read_text(), 'int y;\n')
+
+    def test_route(self):
+        self.assertEqual(ri.route('inputs/reference/shims/a/b.h'), 'port')
+        self.assertEqual(ri.route('inputs/reference/CnC_Generals_Zero_Hour/x.h'), 'refuse')
+        self.assertEqual(ri.route('tools/opencode_router.py'), 'refuse')
+        self.assertEqual(ri.route('aim.cod'), 'scratch')
+
     def test_code_only_ignores_comments(self):
         self.assertIsNone(ri.NAKED.search(ri.code_only('// was a __declspec(naked) copy\nvoid f() {}\n')))
         self.assertIsNotNone(ri.NAKED.search(ri.code_only('__declspec(naked) void f() {}\n')))
