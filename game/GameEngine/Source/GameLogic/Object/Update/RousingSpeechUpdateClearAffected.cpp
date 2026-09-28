@@ -1,6 +1,6 @@
 // ?clearAffected@Rva00264F60Owner@@QAEXXZ
 // partial score=0.86 date=2026-09-15
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // stlport
 #include <list>
 #include <bitset>
@@ -41,7 +41,8 @@ void Rva00264F60Owner::clearAffected()
 {
     if (!ids.empty()) {
         for (_STL::list<ObjectID>::iterator i=ids.begin(); i!=ids.end(); ++i) {
-            Object *object=TheGameLogic->findObjectByID(*i);
+            ObjectID id=*i;
+            Object *object=TheGameLogic->findObjectByID(id);
             if (object) {
                 clearCondition(object, 191);
                 object->word360=0;
