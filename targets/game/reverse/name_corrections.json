@@ -7698,5 +7698,15 @@
   "after_sha256": "f4b8c5604723ed7eb1993be3a17570087d7e3715f01f2b093c98fbd8bf8f1a2c",
   "evidence": "targets/game/reverse/identity_evidence/00c6df70-dyninit-correction.md",
   "reason": "The old name claims the CRT-called dynamic initializer is an ordinary named function. Retail has no such export: the body is MSVC's TU-local _$E1 for the namespace-scope 0x01346DC0 vector global defined in this TU, called from the CRT init table with an atexit cleanup; the ledger now names the COFF symbol via object-symbol=_$E1 under an address-derived row name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0016e6c0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateStartMoveSound.cpp",
+  "old_name": "BfmeStartMoveSoundAudio",
+  "new_name": "Rva005A00B0AudioClient",
+  "before_sha256": "2a7e70ad6aadcd91d51cbb96459445f7efef421649ee2c2ebf331d1785a74212",
+  "after_sha256": "93b5cd77f18fe7fd57af8b55bb2d846c3c9a3a0673677ab177299510186c28de",
+  "evidence": "targets/game/reverse/identity_evidence/0016e6c0-audio-client-type-name.md",
+  "reason": "The stash's BfmeStartMoveSoundAudio was an unproven local label; the landed source uses the repository's established address-derived name for the same TheAudioClientUpdate object (vtable 0x0111C0C0, slots +0x44/+0x4C), declared in many matched TUs."
  }
 ]
