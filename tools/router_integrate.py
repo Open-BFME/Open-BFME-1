@@ -213,12 +213,15 @@ def port(j, dest):
     ledgers = set(LEDGERS) | {CORRECTIONS}
     tracked = [p for p, s in ch if s != 'added' and p not in ledgers]
     if tracked:
-        patch = git(ws, 'diff', '--binary', 'HEAD', '--', *tracked).stdout
+        # bytes, never text: universal-newline decoding strips the CRs of a CRLF
+        # source, and the patch then no longer applies to the identical blob
+        patch = subprocess.run(['git', 'diff', '--binary', 'HEAD', '--', *tracked], cwd=ws,
+                               capture_output=True).stdout
         if patch.strip():
             r = subprocess.run(['git', 'apply', '-3', '--whitespace=nowarn'], cwd=dest, input=patch,
-                               capture_output=True, text=True)
+                               capture_output=True)
             if r.returncode:
-                raise SystemExit(f'patch does not apply on origin/master:\n{r.stderr}')
+                raise SystemExit(f'patch does not apply on origin/master:\n{r.stderr.decode(errors="replace")}')
             git(dest, 'reset', '-q')
     for p, s in ch:
         if p in ledgers:

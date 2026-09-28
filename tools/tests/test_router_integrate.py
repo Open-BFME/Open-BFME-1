@@ -107,6 +107,17 @@ class PortTest(unittest.TestCase):
             ri.port({'cwd': str(self.ws)}, str(self.dest))
         self.assertEqual((self.dest / ref).read_text(), 'int y;\n')
 
+    def test_port_crlf_source(self):
+        crlf = 'game/crlf.cpp'
+        (self.base / crlf).write_bytes(b'int a;\r\nint b;\r\n')
+        git(self.base, 'add', '-A'); git(self.base, 'commit', '-q', '-m', 'crlf')
+        for tree in (self.ws, self.dest):
+            git(tree, 'checkout', '-q', '--detach', 'master')
+        (self.ws / crlf).write_bytes(b'int a;\r\nint c;\r\n')
+        (self.ws / 'game/keep.cpp').unlink()
+        ri.port({'cwd': str(self.ws)}, str(self.dest))
+        self.assertEqual((self.dest / crlf).read_bytes(), b'int a;\r\nint c;\r\n')
+
     def test_route(self):
         self.assertEqual(ri.route('inputs/reference/shims/a/b.h'), 'port')
         self.assertEqual(ri.route('inputs/reference/CnC_Generals_Zero_Hour/x.h'), 'refuse')
