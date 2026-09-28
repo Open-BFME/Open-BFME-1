@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "4ab28871ce9b3078d18892283ba0cef061872b35fa030514c14af41d7677a0fe",
+  "symbol": "?d_00881dc0@@YAIPAX@Z",
+  "score_kind": "author-estimate",
+  "score": 0.6,
+  "source": "// ?d_00881dc0@@YAIPAX@Z\n// partial score=0.6 date=2026-09-28\n// Candidate halves for the 38B row at 0x00881DC0 (int3-split: 15B msize-wrap + 23B realloc-wrap).\n// Half1 as (block,ignored-extra) is byte-exact for its 15B (diffs 0); native 1-arg form\n// tail-jmps (6B). Boundary/signature lever unknown: banked, not landed.\n// Half2 matches landed ?d_00881df0@@YAPAXPAXI@Z (realloc through g_rva0130E9A0, flags 0).\nunsigned int d_00881dc0_half1( void *block, unsigned int ignored )\n{\n\treturn g_rva0130E9B0( block );\n}\n"
+}
