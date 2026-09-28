@@ -135,9 +135,12 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
             > /dev/null \
             || { rm -f "$wide_empty" "$wide_manifest"; \
                  fail "wide verification evidence preparation (see above)"; }
-        rm -f "$wide_empty" "$wide_manifest"
         BUILD_POOL="${BUILD_POOL:-4}" python3 tools/gate_baseline.py --check \
             || fail "full gate after header/toolchain change (see above)"
+        python3 tools/verification_cache.py record --manifest "$wide_manifest" \
+            || { rm -f "$wide_empty" "$wide_manifest"; \
+                 fail "post-gate snapshot verification (see above)"; }
+        rm -f "$wide_empty" "$wide_manifest"
         echo "PRE-PUSH OK (full gate after wide dependency change)"
         continue
     fi
@@ -241,8 +244,8 @@ PY
         verify+=("$s")
     done
     # Reuse only successful row evidence whose content fingerprint still holds.
-    # Source selectors are retained on every invocation for the cheap source
-    # claim check; only exact rows with valid receipts leave the compiler list.
+    # Every selected row stays in the gate; compile/object reuse remains enabled.
+    # record also checks ancillary evidence over the combined set across chunks.
     # The helper refuses a dirty relevant worktree, so build.sh cannot verify a
     # different tree from the pushed commit.
     if [ "${#verify[@]}" -ne 0 ]; then

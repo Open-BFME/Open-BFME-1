@@ -932,7 +932,7 @@ def _root_key(root):
 
 def _recorded_inventory(meta, inventory_cache=None):
     keys = meta.get("search_roots")
-    if not isinstance(keys, list) or not keys:
+    if not isinstance(keys, list) or not keys or not all(isinstance(key, str) and key for key in keys):
         return None
     roots = [Path(key) if os.path.isabs(key) else ROOT / key for key in keys]
     return _inventory_for_roots(roots, inventory_cache)
@@ -1130,6 +1130,15 @@ def compile_is_current(source, output, *, check_command=True, inventory_cache=No
     try:
         meta = json.loads(sidecar.read_text())
     except (OSError, ValueError):
+        return False
+    if (not isinstance(meta, dict) or not isinstance(meta.get("deps"), dict)
+            or not isinstance(meta.get("source"), str) or not meta["source"]):
+        return False
+    if not all(isinstance(path, str) and path and isinstance(digest, str) and digest
+               for path, digest in meta["deps"].items()):
+        return False
+    if not isinstance(meta.get("retry_dirs", []), list) or not all(
+            isinstance(path, str) for path in meta.get("retry_dirs", [])):
         return False
     is_cl = source.suffix.lower() != ".asm"
     if is_cl and meta.get("version") not in (None, 2):

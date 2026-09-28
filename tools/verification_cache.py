@@ -26,7 +26,7 @@ from portable_lock import lock, unlock  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "build" / "verification-cache"
-VERSION = 1
+VERSION = 2
 ZERO = "0" * 40
 
 # These are the inputs a compiler or a publication checker can read.  The
@@ -215,7 +215,10 @@ def _read_meta(obj):
         meta = json.loads(sidecar.read_text(encoding="utf-8"))
     except (OSError, ValueError, TypeError):
         return None
-    if not isinstance(meta, dict) or not isinstance(meta.get("deps", {}), dict):
+    if not isinstance(meta, dict) or not isinstance(meta.get("deps"), dict):
+        return None
+    if not all(isinstance(dep, str) and dep and isinstance(digest, str)
+               for dep, digest in meta["deps"].items()):
         return None
     return meta
 
@@ -322,7 +325,10 @@ def _load_entry(key):
         return None
     if not isinstance(entry, dict) or entry.get("version") != VERSION:
         return None
-    if entry.get("key") != key or entry.get("payload", {}).get("version") != VERSION:
+    payload = entry.get("payload")
+    if (entry.get("key") != key or not isinstance(payload, dict)
+            or payload.get("version") != VERSION or not payload.get("resolved")
+            or _key(payload) != key):
         return None
     return entry
 
@@ -374,11 +380,11 @@ def prepare(commit, selectors, manifest):
         else:
             misses.append(row)
     data = {"version": VERSION, "commit": commit,
-            "rows": misses, "hits": hits, "selectors": selectors}
+            "rows": selected, "hits": hits, "selectors": selectors}
     Path(manifest).write_text(json.dumps(data, sort_keys=True), encoding="utf-8")
     output = _source_selectors(selectors)
     output.extend("source:" + row["source"] for row in selected)
-    output.extend(_row_selector(row) for row in misses)
+    output.extend(_row_selector(row) for row in selected)
     # The pre-push hook reads these with `mapfile -t`: force LF-only output, or
     # Windows text-mode stdout appends CR to every selector and each row
     # selector then matches no ledger row (delta_sources.py does the same).
@@ -386,8 +392,21 @@ def prepare(commit, selectors, manifest):
     for selector in dict.fromkeys(output):
         print(selector)
     suffix = " (boundary request active; cache disabled)" if cache_disabled else ""
-    print(f"publish-verify: {len(hits)} cache hit(s), {len(misses)} expensive row check(s){suffix}",
+    print(f"publish-verify: {len(hits)} receipt hit(s), {len(selected)} row check(s) (object reuse retained){suffix}",
           file=sys.stderr)
+
+
+def evidence_snapshot(rows):
+    """Watch non-Git inputs too, including objects and ignored dependencies."""
+    paths = {B.EXE, B.MANIFEST}
+    for row in rows:
+        obj = B.row_object(row)
+        paths.update((ROOT / row['source'], obj, B._deps_sidecar(obj)))
+        meta = _read_meta(obj)
+        if meta:
+            paths.update(Path(dep) if os.path.isabs(dep) else ROOT / dep
+                         for dep in meta['deps'])
+    return {str(path): _sha256(path) if path.is_file() else None for path in paths}
 
 
 def record(manifest):
@@ -399,17 +418,18 @@ def record(manifest):
         raise RuntimeError(f"build {marker} started during verification; evidence discarded")
     symbol_map = B.load_symbol_map()
     inventory_cache = {}
+    rows = data.get("rows", [])
+    before = evidence_snapshot(rows)
+    # Receipts certify row bytes only. These checks depend on referenced data,
+    # baselines, whitelists, and agreement ACROSS rows, so never cache them.
+    B.verify_baseline()
+    B.verify_string_refs(rows)
+    B.verify_constant_refs(rows)
+    B.verify_dir32_addresses(rows)
+    B.verify_dir32_consistency(rows)
     saved = skipped = 0
+    pending = []
     for row in data.get("rows", []):
-        payload = _payload(row, symbol_map, inventory_cache)
-        key = _key(payload)
-        if key is None:
-            # The build gate has just verified this row; evidence that cannot be
-            # keyed (e.g. uncacheable dependencies) is only a miss next time.
-            print(f"publish-verify: not recording {row['name']}: its evidence cannot be keyed",
-                  file=sys.stderr)
-            skipped += 1
-            continue
         target = B.read_target_bytes(int(row["target_rva"], 16), int(row["target_size"]))
         obj = B.row_object(row)
         try:
@@ -419,8 +439,24 @@ def record(manifest):
         if result["bytes"] != target or (result["masked"] and
                                           result["concrete"] < B.MIN_LIB_CONCRETE):
             raise RuntimeError(f"post-verification evidence failed for {row['name']}")
-        _write_entry(key, payload)
+        payload = _payload(row, symbol_map, inventory_cache)
+        key = _key(payload)
+        if key is None:
+            # The build gate has just verified this row; evidence that cannot be
+            # keyed (e.g. uncacheable dependencies) is only a miss next time.
+            print(f"publish-verify: not recording {row['name']}: its evidence cannot be keyed",
+                  file=sys.stderr)
+            skipped += 1
+            continue
+        pending.append((key, payload))
         saved += 1
+    exact_worktree(data["commit"])
+    if before != evidence_snapshot(rows):
+        raise RuntimeError("verification inputs changed during ancillary checks; evidence discarded")
+    if marker := _live_build_marker():
+        raise RuntimeError(f"build {marker} started during verification; evidence discarded")
+    for key, payload in pending:
+        _write_entry(key, payload)
     print(f"publish-verify: recorded {saved} successful row verification(s)"
           + (f", {skipped} not recordable" if skipped else ""), file=sys.stderr)
 

@@ -136,6 +136,12 @@ def test_record_skips_rows_whose_evidence_cannot_be_keyed(tmp_path, monkeypatch)
     monkeypatch.setattr(cache, "_live_build_marker", lambda: None)
     monkeypatch.setattr(cache.B, "load_symbol_map", lambda: {})
     monkeypatch.setattr(cache, "_payload", lambda *_args: None)
+    for check in ('verify_baseline', 'verify_string_refs', 'verify_constant_refs',
+                  'verify_dir32_addresses', 'verify_dir32_consistency'):
+        monkeypatch.setattr(cache.B, check, lambda *a: None)
+    monkeypatch.setattr(cache.B, 'row_object', lambda _: tmp_path / 'obj')
+    monkeypatch.setattr(cache.B, 'read_target_bytes', lambda *a: b'ABCD')
+    monkeypatch.setattr(cache.B, 'compile_function', lambda *a: {'bytes': b'ABCD', 'masked': False, 'concrete': 4})
     monkeypatch.setattr(cache, "_write_entry", lambda *args: written.append(args))
     assert cache.main(["record", "--manifest", str(manifest)]) == 0
     assert written == []
@@ -156,3 +162,106 @@ def test_concurrent_writers_leave_one_complete_entry(tmp_path, monkeypatch):
     loaded = json.loads(cache._entry_path(key).read_text())
     assert loaded["key"] == key
     assert loaded["payload"] == payload
+
+
+@pytest.mark.parametrize('payload', [None, [], 1, 'bad', {'version': 1}, {}])
+def test_malformed_nested_receipt_is_a_miss(tmp_path, monkeypatch, payload):
+    monkeypatch.setattr(cache, 'CACHE', tmp_path)
+    key = 'c' * 64
+    cache._entry_path(key).write_text(json.dumps({'version': cache.VERSION, 'key': key, 'payload': payload}))
+    assert cache._load_entry(key) is None
+
+
+def test_hits_keep_all_rows_in_gate(tmp_path, monkeypatch, capsys):
+    row = {'name': '?f', 'target_rva': '0x10', 'target_size': '1', 'source': 'game/a.cpp'}
+    monkeypatch.setattr(cache, 'exact_worktree', lambda _: None)
+    monkeypatch.setattr(cache, '_live_build_marker', lambda: None)
+    monkeypatch.setattr(cache, '_rows', lambda: [row])
+    monkeypatch.setattr(cache, '_rules_receipt', lambda: [])
+    monkeypatch.setattr(cache.B, 'load_symbol_map', lambda: {})
+    monkeypatch.setattr(cache, '_payload', lambda *a: {'version': cache.VERSION, 'rules': [], 'resolved': 'x'})
+    monkeypatch.setattr(cache, '_load_entry', lambda _: {'payload': {'version': cache.VERSION, 'rules': [], 'resolved': 'x'}})
+    manifest = tmp_path / 'manifest'
+    cache.prepare('sha', ['game/a.cpp'], manifest)
+    assert cache._row_selector(row) in capsys.readouterr().out
+    assert json.loads(manifest.read_text())['rows'] == [row]
+
+
+@pytest.fixture
+def record_fixture(tmp_path, monkeypatch):
+    rows = [{'name': name, 'target_rva': hex(rva), 'target_size': '4', 'source': 'game/a.cpp'}
+            for name, rva in [('one', 16), ('two', 32)]]
+    path = tmp_path / 'manifest'
+    path.write_text(json.dumps({'version': cache.VERSION, 'commit': 'sha', 'rows': rows, 'hits': ['one', 'two']}))
+    monkeypatch.setattr(cache, 'exact_worktree', lambda _: None)
+    monkeypatch.setattr(cache, '_live_build_marker', lambda: None)
+    monkeypatch.setattr(cache.B, 'load_symbol_map', lambda: {})
+    monkeypatch.setattr(cache.B, 'row_object', lambda _: tmp_path / 'obj')
+    monkeypatch.setattr(cache.B, 'read_target_bytes', lambda *a: b'ABCD')
+    monkeypatch.setattr(cache.B, 'compile_function', lambda *a: {'bytes': b'ABCD', 'masked': False, 'concrete': 4})
+    monkeypatch.setattr(cache, '_payload', lambda *a: None)
+    for name in ('verify_baseline', 'verify_string_refs', 'verify_constant_refs', 'verify_dir32_addresses', 'verify_dir32_consistency'):
+        monkeypatch.setattr(cache.B, name, lambda *a: None)
+    return path, rows
+
+
+@pytest.mark.parametrize('check', ['verify_baseline', 'verify_string_refs', 'verify_constant_refs', 'verify_dir32_addresses', 'verify_dir32_consistency'])
+def test_receipt_hits_cannot_skip_ancillary_failure(record_fixture, monkeypatch, check):
+    path, rows = record_fixture
+    def fail(*args):
+        if args:
+            assert args[0] == rows
+        raise SystemExit('fixture ancillary failure')
+    monkeypatch.setattr(cache.B, check, fail)
+    with pytest.raises(SystemExit, match='ancillary failure'):
+        cache.record(path)
+
+
+def test_unrecordable_evidence_cannot_hide_byte_failure(record_fixture, monkeypatch):
+    path, _ = record_fixture
+    monkeypatch.setattr(cache.B, 'compile_function', lambda *a: {'bytes': b'BAD!', 'masked': False, 'concrete': 4})
+    with pytest.raises(RuntimeError, match='evidence failed'):
+        cache.record(path)
+
+
+def test_combined_rows_detect_new_dir32_conflict(record_fixture, tmp_path, monkeypatch):
+    path, rows = record_fixture
+    # Exercise the real consistency implementation: each row alone agrees;
+    # combined receipts must not hide the disagreement on an unrecorded global.
+    import importlib.util
+    spec = importlib.util.spec_from_file_location('audit_build', ROOT / 'tools/build.py')
+    real = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(real)
+    whitelist = tmp_path / 'whitelist'
+    whitelist.write_text('')
+    monkeypatch.setattr(real, 'ROOT', tmp_path)
+    monkeypatch.setattr(real, 'DIR32_WHITELIST', whitelist)
+    monkeypatch.setattr(real, 'read_dir32_addresses', lambda: {})
+    monkeypatch.setattr(real, 'read_dir32_whitelist', lambda: set())
+    monkeypatch.setattr(real, 'propose_dir32_addresses', lambda *a: None)
+    monkeypatch.setattr(real, 'dir32_references', lambda selected: [(r, 0, 'global', int(r['target_rva'], 16)) for r in selected])
+    for row in rows:
+        real.verify_dir32_consistency([row])
+    monkeypatch.setattr(cache.B, 'verify_dir32_consistency', real.verify_dir32_consistency)
+    with pytest.raises(SystemExit):
+        cache.record(path)
+
+
+@pytest.mark.parametrize('meta', [None, [], 3, {'deps': None}, {'version': 2, 'deps': []}, {'version': 2, 'deps': {'a': []}}, {'version': 2, 'deps': {}, 'search_roots': [None]}])
+def test_malformed_object_sidecars_are_misses(tmp_path, monkeypatch, meta):
+    source, obj = tmp_path / 'a.cpp', tmp_path / 'a.obj'
+    source.write_text('int a;')
+    obj.write_bytes(b'obj')
+    sidecar = tmp_path / 'deps'
+    sidecar.write_text(json.dumps(meta))
+    monkeypatch.setattr(cache.B, '_deps_sidecar', lambda _: sidecar)
+    assert cache.B.compile_is_current(source, obj, check_command=False) is False
+
+
+def test_concurrent_object_edit_discards_evidence(record_fixture, tmp_path, monkeypatch):
+    path, rows = record_fixture
+    obj = tmp_path / 'obj'
+    obj.write_bytes(b'before')
+    monkeypatch.setattr(cache.B, 'verify_constant_refs', lambda _: obj.write_bytes(b'after'))
+    with pytest.raises(RuntimeError, match='inputs changed'):
+        cache.record(path)
