@@ -1,5 +1,5 @@
 // ?queue007B4FE0@W3DProjectedShadowManager@@QAEXPAUShadow007B6D30@@HH@Z
-// partial score=0.86 date=2026-09-28
+// partial score=0.868 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
@@ -89,7 +89,7 @@ static void projectRangesRva007AF940(const Vector3 &axisA, const Vector3 &axisB,
 // ---------------------------------------------------------------------------
 // Retail 0x007B4FE0 (4341 B, ret 0x0C): BFME's queueDecal. renderShadows
 // (0x007B6D30) calls it through ILT 0x00034FD6 with (shadow, 1, 0).
-// MILESTONE 1 (banked): full structure, 4376 B vs 4341, probe shape 0.863.
+// MILESTONE 1 (banked): full structure, 4376 B vs 4341, probe shape 0.868.
 // Zero Hour queueDecal gives the terrain half; BFME adds a partition query
 // for up to 16 nearby drawables whose meshes also receive the decal.
 
@@ -444,11 +444,11 @@ void W3DProjectedShadowManager::queue007B4FE0(Shadow007B6D30 *shadow, int flagA,
 	if (shadow->m_decalSizeX58 == 0.0f)
 		uVector.Set(0.0f, 0.0f, 0.0f);
 	else
-		uVector *= 1.0f / shadow->m_decalSizeX58;
+		uVector /= shadow->m_decalSizeX58;
 	if (shadow->m_decalSizeY5c == 0.0f)
 		vVector.Set(0.0f, 0.0f, 0.0f);
 	else
-		vVector *= 1.0f / shadow->m_decalSizeY5c;
+		vVector /= shadow->m_decalSizeY5c;
 
 	float uOffset = shadow->m_offsetU78 + 0.5f;
 	float vOffset = shadow->m_offsetV7c + 0.5f;
