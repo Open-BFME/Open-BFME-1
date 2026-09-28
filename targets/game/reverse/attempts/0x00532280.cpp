@@ -1,7 +1,10 @@
-// ?d_00532280@@YAXXZ
+// ?classify@Rva005329Classify@@QAEXPAVRva005329C0Obj@@H@Z
 // partial score=0.9891304348 date=2026-09-26
 // stlport
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/asciistring_copyctor_outofline /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Igame/Libraries/Source/WWVegas/WWLib
+// The matched wrappers at 0x005329C0 and 0x005329E0 call ILT 0x00047807.
+// That thunk routes to this 460-byte body at 0x00532280. Both wrappers
+// declare the target as Rva005329Classify::classify(Rva005329C0Obj *, int).
 #define _STLP_USE_STATIC_LIB 1
 #include <vector>
 #include "Common/AsciiString.h"
@@ -9,6 +12,7 @@
 inline UnicodeString::UnicodeString() { m_text=0; }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->releaseBuffer(); }
 class GameWindow;
+class Rva005329C0Obj;
 void *GadgetListBoxGetItemData(GameWindow*,int,int);
 class Gather00531DE0 { public: int gather(GameWindow*,std::vector<int>*); };
 class BfmeStateXC { public: void bfmeNotifyXC(int); };
@@ -42,9 +46,10 @@ public:
 #undef S
  virtual bool slot11(int);
 };
-class SelectedPlayerAction00532280 { public: void apply(GameWindow*, int); };
-void SelectedPlayerAction00532280::apply(GameWindow *window, int action)
+class Rva005329Classify { public: void classify(Rva005329C0Obj*, int); };
+void Rva005329Classify::classify(Rva005329C0Obj *obj, int action)
 {
+ GameWindow *window = reinterpret_cast<GameWindow *>(obj);
  std::vector<int> selected;
  int count=((Gather00531DE0*)this)->gather(window,&selected); if (count>0) {
   if(!selected.empty()) { int *it=selected.begin(); do {
@@ -70,6 +75,4 @@ void SelectedPlayerAction00532280::apply(GameWindow *window, int action)
    } while(++it!=selected.end()); }
  } else ((BfmeStateXC*)this)->bfmeNotifyXC(action);
 }
-
-
 

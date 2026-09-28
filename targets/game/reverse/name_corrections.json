@@ -7849,4 +7849,15 @@
   "evidence": "targets/game/reverse/identity_evidence/00418da0-emit-callee.md",
   "reason": "Bank retirement: the stash's DrawableEmitterCall::emit was an unresolvable /alternatename shim for ILT 0x0002CB79 whose body 0x00417710 is an unidentified gen dump; the landed constructor uses the existing symbols.csv pin ?bfmeEmit@Gen_00417cb0@@AAEXPAX0@Z and asserts no emitter identity."
  }
+,
+ {
+  "old_path": "targets/game/reverse/attempts/0x00532280.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00532280.cpp",
+  "old_name": "GameWindow",
+  "new_name": "Rva005329C0Obj",
+  "before_sha256": "3f0927445a8b3176a5940d9484c8f7f12d9569e6faa7fd91154137bb33a7c6e2",
+  "after_sha256": "d7126bb4aedd1edc0368c8db688707394c84aeb4e51ba3ec2f436b5a6f5f8edd",
+  "evidence": "targets/game/reverse/symbols.csv",
+  "reason": "The old bank typed this method's first argument as GameWindow* because it passed the value to GadgetListBoxGetItemData. The matched wrappers and the existing pin at ILT 0x00047807 call the method as Rva005329C0Obj*. The body now follows that caller signature and casts the pointer to GameWindow* only for the list-box helper."
+ }
 ]
