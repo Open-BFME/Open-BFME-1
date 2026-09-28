@@ -20,3 +20,27 @@ order (0x006ABDA0, 0x006ABFD0, 0x006ADD50, 0x006AE250, 0x006AFD00).
   reached as `go`.
 - 0x006AFD00 in the chain TU probes EXACT (1027/1027 modulo relocations) once
   0x006ADD50 is visible; 0x006ADD50 is 22 scratch-rotation bytes off.
+
+## Landing (2026-09-28, opus-5.5)
+
+- 0x006ADD50 went exact once the +0x624 affect mask became a plain
+  `unsigned int` and its bit clear went through a reference alias
+  (`unsigned int &bits = flags624; ... bits &= ~bit;`), the spelling the matched
+  sibling MilesAudioManagerRva006B86D0.cpp already uses for +0x61C/+0x624.
+  The banked `volatile` member reproduced the test-in-memory/reload shape but
+  cost one scratch-rotation step (22 bytes).
+- The whole chain now lives in
+  game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerStopChain.cpp.
+- 0x006ABFD0 and 0x006AE250 are re-homed there from
+  game/GameEngine/Source/GameClient/Rva006ABFD0AudioLoop.cpp. Their old
+  owners `Rva006ABFD0::go`/`goLoop` (with `Rva006ABFD0Slot`/`Rva006ABFD0Event`
+  stand-ins) are the same bodies read through a slot view: the slot's first
+  dword is the PlayingAudioRef pointer, +0x0C the PlayingAudio type, +0x14 the
+  AudioEventRTS ref and +0x18 the file handle, all on the MilesAudioManager
+  layout above; the callee `add` at 0x006ABDA0 is the landed
+  `MilesAudioManager::rva006ABDA0`. The event helpers the old TU reached as
+  `Rva006ABFD0Event::advance/advanceNextPlayPortion/clamp/hasMoreLoops` are
+  AudioEventRTS methods (bfmeGenerateFilename 0x000B4840,
+  advanceNextPlayPortion 0x000B3320, 0x000B2860, hasMoreLoops 0x000B28B0),
+  so those placeholder pins retire. `Rva006ABFD0File::release` stays: it is
+  still called by Rva006A5080ReleaseSlot.cpp.

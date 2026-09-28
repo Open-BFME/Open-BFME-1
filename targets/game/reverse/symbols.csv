@@ -15229,7 +15229,6 @@ name,address,notes
 ?add@PlayerAddScienceShim@@QAE_NW4ScienceType@@@Z,0x000D5380,Player addScience incremental-link thunk target through a TU-local forwarding shim
 ?add@PlayerAddUpgradeShim@@QAEPAVUpgrade@@PBVUpgradeTemplate@@W4UpgradeStatusType@@@Z,0x000D24C0,Player addUpgrade incremental-link thunk target through a TU-local forwarding shim
 ?add@Rva0014C090Store@@QAEXPAVGen0014AE40@@@Z,0x0003E1D0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0014C090 calls; autopin
-?add@Rva006ABFD0@@AAEXPAVRva006ABFD0Slot@@@Z,0x00010DB6,ILT thunk to 0x006ABDA0 called from 0x006ABFD0
 ?add@Rva007EAServiceList@@QAEXPAVRva00803080@@@Z,0x007EA550,Y2 lane: FESL service-list add callback called by the 0x00803260 pending-request removal body
 ?add@Rva8D0D80Table@@QAEXPAVRva8D0D80String@@PAVRva8D0D80Value@@@Z,0x0089D890,address-derived Apt table insertion helper called by 0x008D0D80
 ?add@TeamsInfoRecAddTeamShim@@QAEXPBVDict@@@Z,0x0005EE90,TeamsInfoRec addTeam incremental-link thunk target through a TU-local forwarding shim
@@ -15364,8 +15363,6 @@ name,address,notes
 ?adjustSlotsForMap@GameInfo@@UAEXXZ,0x00620b00,vtable-slot ??_7GameInfo@@6B@ slot 8 anchors=4
 ?adjustStacking@W3DRoadBuffer@@IAEXHH@Z,0x0000448F,ILT thunk pin for insertCrossTypeJoins
 ?adjust_out_wts@@YAXXZ,0x00875A20,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00877960 calls; autopin
-?advance@Rva006ABFD0Event@@QAEXXZ,0x00046A33,ILT thunk to 0x000B4840 called from 0x006ABFD0
-?advanceNextPlayPortion@Rva006ABFD0Event@@QAEXXZ,0x0001079E,ILT thunk to AudioEventRTS::advanceNextPlayPortion 0x000B3320
 ?advanceUpdate@SpecialAbilityUpdate@@QAEXXZ,0x0003D0EB,GiveUpgradeUpdate update calls the matched special-ability transition body through this ILT
 ?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x000077B6,Open-BFME5 ILT thunk from CommandButton::isReady call site (body 0x001C5A30)
 ?after@Glo012F4B98Type@@QAEXXZ,0x0001CAE9,Reviewed58EFF0129B releases buffers4CC/480/484 and resets fields460..47C
@@ -79732,7 +79729,6 @@ name,address,notes
 ?chooseBestWeaponForTarget@WeaponSet@@QAE_NPBVObject@@0W4WeaponChoiceCriteria@@W4CommandSourceType@@@Z,0x001EC3F0,callee pin from Object.cpp REL32 site
 ?claim@Rva00800460Arena@@QAEPAXH_N@Z,0x008003F0,jabba util.cpp arena claim; skipped convert pin for 0x801EC0
 ?clamp007A0960@WaterRenderObjClass@@QAEXPAVRenderObjClass@@@Z,0x007A0960,RVA-derived ABI from retail WaterRenderObj init 007A5200 and callee; ECX receiver with witnessed stack arguments; body pin discovers ILT
-?clamp@Rva006ABFD0Event@@QAEXMM@Z,0x00001B77,ILT thunk to 0x000B2860 called from 0x006AE250
 ?clampSkyboxSubobject@WaterRenderObjClass@@QAEXPAVBfmeSkyBoxRenderObjClass@@@Z,0x0002BEB3,assigned Water skybox texture clamp helper thunk
 ?classic@locale@_STL@@SAABV12@XZ,0x008321F0,STLport locale classic accessor thunk read from num_get_float retail call
 ?classify@Rva005329Classify@@QAEXPAVRva005329C0Obj@@H@Z,0x00047807,ILT for 15B classify wrappers at 0x005329C0/E0
@@ -84528,7 +84524,6 @@ name,address,notes
 ?hasIncompleteStructure@CastleBehavior@@QAE_NPBVThingTemplate@@@Z,0x00009453,typed thiscall alias of the ILT previously reached via union j_00009453; independently reviewed matched callee and caller types
 ?hasLeaveRequestTimedOut@BFMEConnectionManager@@QAE_NXZ,0x00662E30,+0x12110 is the timeGetTime stamp written by sendRequestPlayerLeaveCommand 0x00664955 and sendPlayerLeaveCommands 0x00665CAA; returns stamp!=0 && now-stamp > 0x2710 (10s); sole caller 0x0068299E in 0x006828D0 which then forces beginPlayerLeave(local)+DESTROYPLAYER; ILT 0x0003A12A
 ?hasLeechRange@BfmeOutOfWeaponRangeWeapon@@QBE_NXZ,0x0000B1A4,outOfWeaponRangeObject retail active-leech thunk
-?hasMoreLoops@Rva006ABFD0Event@@QBE_NXZ,0x00011FCC,ILT thunk to AudioEventRTS::hasMoreLoops 0x000B28B0
 ?hasPingSuccessRatioAtLeast@BFMEDisconnectManager@@QAE_NM@Z,0x0003E3AB,DisconnectManager status update ratio check through ILT to the existing 0x0066B150 body
 ?hasPlayerConnectionTimedOut@BFMEDisconnectManager@@QAE_NHPAX@Z,0x0066B6A0,(slot;conMgr): TRUE if slot>=8 or !isPlayerConnected 0x00662BB0 or !isPlayerConnectedDefaultTimeout 0x00662A50; FALSE if conMgr NULL; the out-of-line form of the voter-eligibility test inlined in 0x0066B720/0x0066BB60/0x0066BBC0; no .text caller (ILT 0x0002A7D9 only)
 ?hasPlayerTimedOut@DisconnectManager@@IAE_NH@Z,0x00014AD8

@@ -9398,5 +9398,65 @@
   "after_sha256": "ef70b75a332a3d85e6b004b09509a844308c5ae2cc6e48100991e64b8ab2834f",
   "evidence": "targets/game/reverse/identity_evidence/005294f0-player-template-combo.md",
   "reason": "The banked body at 0x005294F0 is BFME's PopulatePlayerTemplateComboBox for the +0xC8 player-template combo (GUI:Random / SIDE:%s / GUI:Observer entries); refreshPlayerTeamControl, the callers' unproven spelling, names a team control this body does not build, so the bank keeps the address token. See the evidence file."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/Rva006ABFD0AudioLoop.cpp",
+  "new_path": "game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerStopChain.cpp",
+  "old_name": "add",
+  "new_name": "rva006ABDA0",
+  "before_sha256": "1deaf4d3d5f80091b3f6dce384578340c1e1e0b3e37cb46d4d40f76d23358702",
+  "after_sha256": "3b687906237386bae861a5c145be494321f0b5cafcaf666733e9c345f6f48377",
+  "evidence": "targets/game/reverse/identity_evidence/0x006afd00-stop-chain.md",
+  "reason": "Rva006ABFD0::add was a placeholder pin on ILT 0x00010DB6 to 0x006ABDA0, which is the landed MilesAudioManager::rva006ABDA0; the placeholder pin retires (see evidence)."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/Rva006ABFD0AudioLoop.cpp",
+  "new_path": "game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerStopChain.cpp",
+  "old_name": "clamp",
+  "new_name": "rva000B2860",
+  "before_sha256": "1deaf4d3d5f80091b3f6dce384578340c1e1e0b3e37cb46d4d40f76d23358702",
+  "after_sha256": "3b687906237386bae861a5c145be494321f0b5cafcaf666733e9c345f6f48377",
+  "evidence": "targets/game/reverse/identity_evidence/0x006afd00-stop-chain.md",
+  "reason": "Rva006ABFD0Event::clamp was a placeholder pin on ILT 0x00001B77 to AudioEventRTS 0x000B2860, whose identity is unproven; the stop-chain TU calls it by address token and the placeholder pin retires (see evidence)."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/Rva006ABFD0AudioLoop.cpp",
+  "new_path": "game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerStopChain.cpp",
+  "old_name": "goLoop",
+  "new_name": "rva006ADD50",
+  "before_sha256": "1deaf4d3d5f80091b3f6dce384578340c1e1e0b3e37cb46d4d40f76d23358702",
+  "after_sha256": "3b687906237386bae861a5c145be494321f0b5cafcaf666733e9c345f6f48377",
+  "evidence": "targets/game/reverse/identity_evidence/0x006afd00-stop-chain.md",
+  "reason": "Positional pairing across the retired Rva006ABFD0AudioLoop.cpp stand-in and the stop-chain TU: goLoop is 0x006AE250 (re-homed as rva006AE250), not 0x006ADD50 (see evidence)."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/Rva006ABFD0AudioLoop.cpp",
+  "new_path": "game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerStopChain.cpp",
+  "old_name": "release",
+  "new_name": "rva00691080",
+  "before_sha256": "1deaf4d3d5f80091b3f6dce384578340c1e1e0b3e37cb46d4d40f76d23358702",
+  "after_sha256": "3b687906237386bae861a5c145be494321f0b5cafcaf666733e9c345f6f48377",
+  "evidence": "targets/game/reverse/identity_evidence/0x006afd00-stop-chain.md",
+  "reason": "Positional pairing: the stop-chain TU reaches ILT 0x000311BF (0x00691080) as the file-handle method rva00691080; the pin release@Rva006ABFD0File stays for Rva006A5080ReleaseSlot.cpp (see evidence)."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "go",
+  "new_name": "rva006ABFD0",
+  "before_sha256": "2fedce0cc0419ebafe755faf8aa732f9940745fd036d5c0f1a9ca919c5fb0e2e",
+  "after_sha256": "9fbf9d211e05b9a2c7cf018bef0e93a9dd32386da5a196870b38a89209b610db",
+  "evidence": "targets/game/reverse/identity_evidence/0x006afd00-stop-chain.md",
+  "reason": "0x006ABFD0 re-homed by add_match --correct-identity: Rva006ABFD0::go was a slot-view stand-in; the body is the MilesAudioManager method on the constructor-witnessed layout and no evidence names it, so it keeps the address token (see evidence)."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "goLoop",
+  "new_name": "rva006AE250",
+  "before_sha256": "784e79a538419df53cd8631321861f7cc622688c760d8cae5566c81a3ea4b8ab",
+  "after_sha256": "759b5a10bdfb9248e5316b9cbc087ec3decb9b839f4da95730fd748e9712a6cf",
+  "evidence": "targets/game/reverse/identity_evidence/0x006afd00-stop-chain.md",
+  "reason": "0x006AE250 re-homed by add_match --correct-identity: Rva006ABFD0::goLoop was a slot-view stand-in; the body is the MilesAudioManager method on the constructor-witnessed layout and no evidence names it, so it keeps the address token (see evidence)."
  }
 ]
