@@ -255,3 +255,44 @@ def test_resumed_bom_bank_repairs_preferred_body_and_archives_original(log,
     assert any(entry["sha256"] == hashlib.sha256(old).hexdigest()
                and entry["source"] == old.decode("utf-8")
                for entry in archived), "the malformed preferred bytes must remain archived"
+
+
+def test_measured_score_replaces_the_typed_one(log, tmp_path, monkeypatch):
+    monkeypatch.setattr(re_log, "_measure_stash", lambda rva, data: 0.71)
+    body = tmp_path / "attempt.cpp"
+    body.write_text("int f() { return 1; }\n")
+    assert record(SYM, hex(RVA), "16", "partial", "trial blocker=other/test",
+                  "--stash", str(body), "--score", "0.99") is None
+    path, score = re_log.stash_for(RVA)
+    assert score == 0.71 and "// partial score=0.71 " in path.read_text()
+    last = log.read_text().splitlines()[-1]
+    assert "score=0.71 " in last and "submitted=0.99" in last and "measured=0.71" in last
+    (entry,) = [json.loads(p.read_text()) for p in (log.parent / "attempt_history").rglob("*.json")]
+    assert entry["score_kind"] == "measured" and entry["score"] == 0.71
+
+
+def test_inflated_kept_header_is_remeasured_before_ranking(log, tmp_path, monkeypatch):
+    target = re_log._stash_path(RVA)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(f"// {SYM}\n// partial score=0.99 date=2026-09-01\nint f() {{ return 1; }}\n".encode())
+    # the kept body measures 0.40; the incoming one 0.85
+    monkeypatch.setattr(re_log, "_measure_stash",
+                        lambda rva, data: 0.40 if b"return 1" in data else 0.85)
+    body = tmp_path / "attempt.cpp"
+    body.write_text("int f() { return 2; }\n")
+    re_log._bank(SYM, hex(RVA), str(body), "0.5")
+    path, score = re_log.stash_for(RVA)
+    assert score == 0.85 and "return 2" in path.read_text()
+
+
+def test_unmeasurable_stash_keeps_the_typed_score(log, tmp_path, monkeypatch):
+    monkeypatch.setattr(re_log, "_measure_stash", lambda rva, data: None)
+    body = tmp_path / "attempt.cpp"
+    body.write_text("int f() { return 1; }\n")
+    result = re_log._bank(SYM, hex(RVA), str(body), "0.6")
+    assert result.startswith("score=0.6 ") and "measured=" not in result
+
+
+def test_only_the_repository_log_is_measured(log):
+    # a tmpdir log (every test here) never compiles against the real ledger
+    assert re_log._measure_stash(RVA, b"// x\n// partial score=0.5 date=2026-09-28\n") is None

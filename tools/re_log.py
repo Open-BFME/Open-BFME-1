@@ -379,6 +379,42 @@ def _take(argv, flag):
     return argv[:at] + argv[at + 2:], argv[at + 1]
 
 
+_REPO_LOG = RE_ATTEMPTS  # tests repoint RE_ATTEMPTS; only this log is measured
+
+
+def _measure_stash(rva, data):
+    """The compiler's score for a stash body (bytes with its two header lines),
+    or None when it cannot be measured here.
+
+    Typed scores were estimates: on 2026-09-28 finish_measure found 119 of 355
+    "0.9+" banks overstated by 0.2 or more (26-41% for every model), and the
+    preferred-body pointer and every picker ranked on them. Measured only
+    against the repository's own log, whose ledger the probe reads; a test's
+    tmpdir log is not a place the probe can compile for.
+    """
+    if _REPO_LOG is None or RE_ATTEMPTS.resolve() != _REPO_LOG.resolve():
+        return None
+    import finish_measure
+    probe_path = _stash_path(rva).with_name(f".measure_{uuid.uuid4().hex}.cpp")
+    try:
+        probe_path.write_bytes(data)
+        result = finish_measure.measure(rva, probe_path)
+    except (OSError, ValueError):
+        return None
+    finally:
+        probe_path.unlink(missing_ok=True)
+    if result.get("note") == "probe timed out":
+        return None
+    return round(float(result.get("quality") or 0.0), 4) if result.get("compiles") else 0.0
+
+
+def _with_score(data, score):
+    """`data` with its line-2 score replaced, date kept."""
+    first, second, rest = data.split(b"\n", 2)
+    date_part = second.decode().split(" date=", 1)[1]
+    return first + b"\n" + f"// partial score={score} date={date_part}".encode() + b"\n" + rest
+
+
 def _bank(symbol, rva_text, source_text, score_text):
     """Copy an attempt body under targets/game/reverse/attempts/ and return its evidence tokens.
 
@@ -422,22 +458,36 @@ def _bank(symbol, rva_text, source_text, score_text):
             incoming = _source_body(source.read_bytes())
             candidate = (f"// {symbol}\n// partial score={score} date={date.today().isoformat()}\n"
                          .encode("utf-8") + incoming)
-            archived = archive_attempt(history, candidate, symbol, score)
-            # Scores are author estimates, not byte proof. Preserve every body;
-            # the preferred pointer only moves on an improvement, not recency.
+            submitted = score
+            measured = _measure_stash(rva, candidate)
+            if measured is not None:
+                score = measured
+                candidate = _with_score(candidate, score)
+                if previous:
+                    # Rank against what the kept body MEASURES, not the
+                    # estimate typed into its header when it was banked.
+                    kept = _measure_stash(rva, previous_normalised)
+                    if kept is not None and kept != previous[1]:
+                        previous_normalised = _with_score(previous_normalised, kept)
+                        previous = (previous[0], kept)
+            archived = archive_attempt(history, candidate, symbol, score,
+                                       "measured" if measured is not None else "author-estimate")
+            # Preserve every body; the preferred pointer only moves on an
+            # improvement, not recency.
             if previous is None or score > previous[1]:
                 atomic_bytes(target, candidate)
             elif previous_raw != previous_normalised:
                 # A same-score (or lower-score) resume must still repair an old
-                # line-three BOM, while retaining the already preferred body
-                # and its original score/date metadata.
+                # line-three BOM (and take the kept body's measured score),
+                # while retaining the already preferred body and its date.
                 atomic_bytes(target, previous_normalised)
             preferred = score if previous is None else max(score, previous[1])
         finally:
             unlock(handle)
     base = RE_ATTEMPTS.parents[3]
     return (f"score={preferred} stash={target.relative_to(base).as_posix()} "
-            f"submitted={score} alternative={archived.relative_to(base).as_posix()}")
+            f"submitted={submitted}" + (f" measured={measured}" if measured is not None else "")
+            + f" alternative={archived.relative_to(base).as_posix()}")
 
 
 def atomic_bytes(path, data):
@@ -449,12 +499,12 @@ def atomic_bytes(path, data):
         tmp.unlink(missing_ok=True)
 
 
-def archive_attempt(directory, data, symbol, score):
+def archive_attempt(directory, data, symbol, score, score_kind="author-estimate"):
     """Immutable source evidence, separate from active stashes retired on landing."""
     digest = hashlib.sha256(data).hexdigest()
     path = directory / (digest + ".json")
     payload = {"schema": 1, "sha256": digest, "symbol": data.splitlines()[0].decode()[3:],
-               "score_kind": "author-estimate", "score": score,
+               "score_kind": score_kind, "score": score,
                "source": data.decode("utf-8", errors="strict")}
     if path.exists():
         if json.loads(path.read_text(encoding="utf-8")) != payload:
