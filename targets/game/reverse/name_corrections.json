@@ -10038,5 +10038,15 @@
   "after_sha256": "0eefb687b5960720ad00f065f38ccb5554c537d17127af639a8100ee29094c94",
   "evidence": "targets/game/reverse/attempts/0x0048fc90.cpp",
   "reason": "False pairing: BfmeLayoutRangeFC is kept in the new stash (it now wraps the line's element vector read at line+0/+4); Rva0048FC90Font is a new record for the font the target holds at +0x04 whose +0x10 height feeds the line step, not a rename of the range."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006f9380.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/FloorBuffer006F9380Draw.cpp",
+  "before_sha256": "566fba28b6dd215d6505f0ccb03395d01d9372c41b2fc86fd71fc8bd8e68aa1f",
+  "after_sha256": "963dcfb928932c7e140d6757a27bb6bdd10fa4f96f9be257bee1489dd01fae4a",
+  "evidence": "targets/game/reverse/identity_evidence/0x006F9380-floor-buffer-update-callee.md",
+  "old_name": "BufferRebuild006F8F00",
+  "new_name": "Rva006F8F00Owner",
+  "reason": "The bank's callee class was an unpinned invented name for body 0x006F8F00 (reached through ILT 0x000472BC); that body is already matched as Rva006F8F00Owner::updateBuffers, so the landing uses the ledger identity instead of a second name for the same body."
  }
 ]
