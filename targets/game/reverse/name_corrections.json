@@ -7668,5 +7668,15 @@
   "after_sha256": "7e716a6b22a58f7bfadc364357abab5557df334fcd2c75943771719733210611",
   "evidence": "targets/game/reverse/identity_evidence/0035bfb0-parse-scripts-name.md",
   "reason": "The lift name is __cdecl with three arguments (ret 12); retail 0x0035BFB0 is thiscall and returns with ret 8, and it is reached only through slot 1 of vtable 0x010E8538 installed by the matched parser-registration constructor 0x00352810. The owning class keeps the address-derived name of that constructor."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "bfmeRva00C6DC90Initialize",
+  "new_name": "Rva00C6DC90Init",
+  "before_sha256": "741132982105718b5909ba41251d8ae71873f08392891a20248e41dcc5da3d0c",
+  "after_sha256": "fc6dd41e90af0a1605421480ca6dc4e553c0b6848f31de6c3b41bf58ea4c2b3e",
+  "evidence": "targets/game/reverse/identity_evidence/00c6df70-dyninit-correction.md",
+  "reason": "The old name claims the CRT-called dynamic initializer is an ordinary named function. Retail has no such export: the body is MSVC single-global TU-local E1 for the namespace-scope 0x01338480 Rva00891B40 array global defined in this TU, called from the CRT init table with an atexit cleanup; the ledger now names the COFF symbol via object-symbol E1 under an address-derived row name."
  }
 ]
