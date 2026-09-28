@@ -33,10 +33,10 @@ public:
 	{
 		if (!CPUDetectClass::Has_CMOV_Instruction()) {
 			for (int i = 0; i < 4; ++i) {
-				color[i] = (color[i] <= *(const float *)0x01075350)
-					? *(const float *)0x01075350
-					: ((color[i] > *(const float *)0x01075334)
-						? *(const float *)0x01075334 : color[i]);
+				color[i] = (color[i] <= 0.0f)
+					? 0.0f
+					: ((color[i] > 1.0f)
+						? 1.0f : color[i]);
 			}
 			return;
 		}

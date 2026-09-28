@@ -1482,13 +1482,13 @@ struct BfmeRenderDevice { void **vtable; };
 // ?RenderMeshVolume@W3DVolumetricShadow@@IAEXHHPBVMatrix3D@@@Z
 void W3DVolumetricShadow::RenderMeshVolume(Int meshIndex, Int lightIndex, const Matrix3D *meshXform)
 {
-    BfmeRenderDevice *device = *(BfmeRenderDevice **)0x01340534;
+    BfmeRenderDevice *device = (BfmeRenderDevice *)DX8Wrapper::_Get_D3D_Device8();
     if (!device) return;
 
     int shadowMask = *(int *)((char *)this + 0x34) >> 7 & 7;
     if (shadowMask) {
         unsigned shadowRef = shadowMask << 4;
-        unsigned mask = *(unsigned *)((char *)*(void **)0x01306EEC + 8);
+        unsigned mask = TheW3DShadowManager->getStencilShadowMask();
         unsigned repeated = shadowRef;
         repeated = (repeated << 8) | shadowRef;
         repeated = (repeated << 8) | shadowRef;
@@ -1522,14 +1522,14 @@ void W3DVolumetricShadow::RenderMeshVolume(Int meshIndex, Int lightIndex, const 
     (*(BfmeSetIndices **)device)[104](device,
         ibSlot->m_IB->m_DX8IndexBuffer->Get_DX8_Index_Buffer());
 
-    if (*(unsigned char *)0x012D6DAD) {
-        Debug_Statistics::Record_DX8_Polys_And_Vertices(numPolys, numVerts, *reinterpret_cast<const ShaderClass *>(0x012D6E08));
+    if (DX8Wrapper::_Is_Triangle_Draw_Enabled()) {
+        Debug_Statistics::Record_DX8_Polys_And_Vertices(numPolys, numVerts, ShaderClass::_PresetOpaqueShader);
         (*(BfmeDrawIndexedPrimitive **)device)[82](device, 4, vbSlot->m_start, 0,
             numVerts, ibSlot->m_start, numPolys);
     }
 
     if (shadowMask) {
-        unsigned mask = *(unsigned *)((char *)*(void **)0x01306EEC + 8);
+        unsigned mask = TheW3DShadowManager->getStencilShadowMask();
         (*(BfmeSetRenderState **)device)[57](device, 0x3a, mask);
         (*(BfmeSetRenderState **)device)[57](device, 0x39, 0x80808080);
     }

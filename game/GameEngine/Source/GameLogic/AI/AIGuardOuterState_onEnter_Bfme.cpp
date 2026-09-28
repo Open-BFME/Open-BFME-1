@@ -200,6 +200,11 @@ public:
 	static Real getAdjustedVisionRangeForObject(const Object *object, Int flags);
 };
 
+class AI;
+extern GameLogic *TheGameLogic;
+extern TeamFactory *TheTeamFactory;
+extern AI *TheAI;
+
 #pragma comment(linker, "/alternatename:??0CtorTargetR0015C7A0@@QAE@PAVStateMachine@@_N11PAVAttackExitConditionsInterface@@@Z=?j_0000bf3c@@YAXXZ")
 
 StateReturnType AIGuardOuterState::onEnter()
@@ -212,10 +217,10 @@ StateReturnType AIGuardOuterState::onEnter()
 
 	Coord3D position;
 	{
-		GameLogic *logic = *(GameLogic **)0x012F0898;
+		GameLogic *logic = TheGameLogic;
 		Object *target = logic->findObjectByID(*reinterpret_cast<Int *>(container + 0x44));
 
-		Team *team = (*(TeamFactory **)0x012ED810)->findTeamByID(
+		Team *team = TheTeamFactory->findTeamByID(
 			*reinterpret_cast<UnsignedInt *>(container + 0x48));
 
 		if (target)
@@ -241,7 +246,7 @@ StateReturnType AIGuardOuterState::onEnter()
 	}
 
 	container = *reinterpret_cast<unsigned char **>(self + 0x1c);
-	GameLogic *logic = *(GameLogic **)0x012F0898;
+	GameLogic *logic = TheGameLogic;
 	Object *nemesis = logic->findObjectByID(
 		((Rva0015C7A0GuardMachine *)container)->getNemesisID());
 	if (!nemesis)
@@ -284,8 +289,8 @@ StateReturnType AIGuardOuterState::onEnter()
 	m_exitConditions.m_center = position;
 	m_exitConditions.m_radiusSqr = range * range;
 	m_exitConditions.m_field18 =
-		(*(GameLogic **)0x012F0898)->getFrame() +
-		(*(AIRootR0015C7A0 **)0x012EF214)->getAiData()->m_field3c;
+		TheGameLogic->getFrame() +
+		((AIRootR0015C7A0 *)TheAI)->getAiData()->m_field3c;
 	m_exitConditions.m_conditionsToConsider = 7;
 
 	m_attackState = new CtorTargetR0015C7A0(
