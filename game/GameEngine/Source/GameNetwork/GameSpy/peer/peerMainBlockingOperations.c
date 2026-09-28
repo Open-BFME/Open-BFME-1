@@ -1897,5 +1897,7 @@ static __declspec(noinline) void Rva00858960Join(PEER peer,void* server,const ch
  * optimization. These wrapper bodies are not claimed by this gap seat. */
 void peerJoinStagingRoomA(PEER peer,void* server,const char* password,void* callback,void* param,int blocking)
 { Rva00858960Join(peer,server,0,password,callback,param,blocking); }
+void Rva00858B70JoinStagingRoom(PEER peer,void* server,const char* password,void* callback,void* param,int blocking)
+{ Rva00858960Join(peer,server,0,password,callback,param,blocking); }
 void Rva00858BA0JoinChannel(PEER peer,const char* channel,const char* password,void* callback,void* param,int blocking)
 { Rva00858960Join(peer,0,channel,password,callback,param,blocking); }
