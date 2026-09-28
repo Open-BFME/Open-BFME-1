@@ -19,7 +19,7 @@ class Rva00882580Block
 public:
 	unsigned char check(void);
 	void setUsed(int used);
-
+	void *guardStart(void);
 private:
 	void *m_field00;
 	void *m_field04;
@@ -68,4 +68,9 @@ void Rva00882580Block::setUsed(int used)
 	m_size08 = used;
 	if (Rva0130EA00GuardWords)
 		memset32((char *)this + used + 0x0c, 0x0BADF00D, Rva0130EA00GuardWords * 4);
+}
+
+void *Rva00882580Block::guardStart(void)
+{
+	return (char *)this - Rva0130EA00GuardWords * 4;
 }
