@@ -1517,17 +1517,11 @@ Int WorldHeightMap::countTiles(InputStream *pStr, Bool *halfTile)
 	// 2x2 gives 4, 
 	// 1x1 gives 1, 
 	// else 0;
-	if (tileWidth>10 || tileHeight>10) return(0);  // don't do huge images, or bad files.
-	if (tileWidth>=10 && tileHeight >=10) return(100);
-	if (tileWidth>=9 && tileHeight >=9) return(81);
-	if (tileWidth>=8 && tileHeight >=8) return(64);
-	if (tileWidth>=7 && tileHeight >=7) return(49);
-	if (tileWidth>=6 && tileHeight >=6) return(36);
-	if (tileWidth>=5 && tileHeight >=5) return(25);
-	if (tileWidth>=4 && tileHeight >=4) return(16);
-	if (tileWidth>=3 && tileHeight >=3) return(9);
-	if (tileWidth>=2 && tileHeight >=2) return(4);
-	if (tileWidth>=1 && tileHeight >=1) return(1);
+	// Retail accepts square grids up to 16 tiles per side.
+	if (tileWidth>16 || tileHeight>16) return 0;
+	for (Int i=16; i>0; --i) {
+		if (tileWidth>=i && tileHeight>=i) return i*i;
+	}
 	if (halfTile && hdr.imageHeight==TILE_PIXEL_EXTENT/2 && hdr.imageWidth==TILE_PIXEL_EXTENT/2) {
 		*halfTile = true;
 		return 1;

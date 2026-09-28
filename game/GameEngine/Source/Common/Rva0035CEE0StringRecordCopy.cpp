@@ -2,8 +2,8 @@
 // stlport
 // Open-BFME: Rva0035CEE0(Rva00359330Record *, const Rva00359330Record *) --
 // retail 0x0035CEE0, 605 bytes including its catch(...) block (0x0035D0AC)
-// and the inlined deque destructor tail (0x0035D0C1). The carved row stops
-// at the loop back-edge (460 bytes).
+// and the inlined deque destructor tail (0x0035D0C1). The corrected ledger
+// owns all 605 bytes; the former 21-byte catch dump row is absorbed here.
 //
 // Copies one 20-byte string record: the two leading dwords, the AsciiString
 // name through StringBase<char>::set (0x00887C90), the released byte, the
