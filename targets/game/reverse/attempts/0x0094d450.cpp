@@ -1,104 +1,58 @@
 // ?bfmeRefreshEY@BfmeHostEY@@QAEXXZ
-// partial score=0.14 date=2026-09-18
-// cl: /O2 /Ob2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
-// stlport
-
-#include "PreRTS.h"
-
-#define _STLP_NO_EXCEPTIONS 1
-#include <map>
+// partial score=0.94 date=2026-09-28
+// ?bfmeRefreshEY@BfmeHostEY@@QAEXXZ
+// Retail 0x0094D450, 1111 bytes: rebuilds the host's texture atlas.  Sorts
+// the textures of the +0x08 map<RefCountPtr<TextureClass>, rect> by area into
+// a local multimap, packs them in descending area on a 32-pixel row-skyline
+// (rows[64], doubling the atlas until size*64 exceeds the +0x00 limit), writes
+// each rect back through map::operator[] (0x0094D370), creates the atlas via
+// the +0x18 handle, blits every texture with D3DXLoadSurfaceFromSurface and
+// filters the mip chain.  Owner/role proven by the matched bfmeLookupEY caller.
+// The STL classes are a view in namespace _STL (as Rva0019A1D0TreeCtor.cpp)
+// so the retail direct calls to __new_alloc::allocate, _Rb_global and the
+// out-of-line ~_Rb_tree survive; the real STLport either imports them (DLL)
+// or inlines them (static lib).
+// cl: /DNDEBUG /MD /EHsc
 
 class TextureClass
 {
 public:
-	void Release_Ref();
 	void Add_Ref()
 	{
-		++*reinterpret_cast<unsigned short *>(
-			reinterpret_cast<char *>(this) + 4);
+		++m_numRefs;
 	}
+	void Release_Ref();
+
+	void *m_vftable;
+	unsigned short m_numRefs;
 };
 
 template <class T>
 class RefCountPtr
 {
 public:
-	RefCountPtr() : Referent(0) {}
-	RefCountPtr(const RefCountPtr &other) : Referent(other.Referent)
+	RefCountPtr() : m_referent(0) {}
+	RefCountPtr(const RefCountPtr &other) : m_referent(other.m_referent)
 	{
-		if (Referent != 0)
-			Referent->Add_Ref();
+		if (m_referent != 0)
+			m_referent->Add_Ref();
 	}
 	~RefCountPtr()
 	{
-		if (Referent != 0)
-			Referent->Release_Ref();
+		if (m_referent != 0)
+			m_referent->Release_Ref();
 	}
-	T *Peek() const { return Referent; }
 	bool operator<(const RefCountPtr &other) const
 	{
-		return Referent < other.Referent;
+		return m_referent < other.m_referent;
 	}
 
-	T *Referent;
+	T *m_referent;
 };
 
-struct Rva0094D370Value
-{
-	unsigned int x;
-	unsigned int y;
-	unsigned int z;
-	unsigned int w;
-};
+typedef RefCountPtr<TextureClass> TexturePtr;
 
-typedef _STL::map<RefCountPtr<TextureClass>, Rva0094D370Value,
-	_STL::less<RefCountPtr<TextureClass> >,
-	_STL::allocator<_STL::pair<const RefCountPtr<TextureClass>,
-		Rva0094D370Value> > > Rva0094D370Map;
-
-class BfmeThingCX
-{
-public:
-	int m_bfmeHead;
-	unsigned short m_bfmeRefs;
-};
-
-class BfmeHandleCX
-{
-public:
-	BfmeHandleCX() : m_bfmeThing(0) {}
-	BfmeHandleCX(const BfmeHandleCX &other) : m_bfmeThing(other.m_bfmeThing)
-	{
-		if (m_bfmeThing != 0)
-			++m_bfmeThing->m_bfmeRefs;
-	}
-	~BfmeHandleCX()
-	{
-		if (m_bfmeThing != 0)
-			--m_bfmeThing->m_bfmeRefs;
-	}
-
-	BfmeThingCX *m_bfmeThing;
-};
-
-class BfmePairDW
-{
-public:
-	BfmePairDW(int tag, const BfmeHandleCX &handle)
-		: m_bfmeTag(tag), m_bfmeHandle(handle) {}
-
-	int m_bfmeTag;
-	BfmeHandleCX m_bfmeHandle;
-};
-
-extern BfmePairDW __cdecl bfmeMakePair(const int *, const BfmeHandleCX *);
-
-class BfmeThing930A
-{
-public:
-	void bfmeGo930A();
-};
-
+// Ledger views of the texture handle's out-of-line accessors.
 class BfmeThingEF
 {
 public:
@@ -111,24 +65,237 @@ public:
 	int bfmeAskGN();
 };
 
-struct Rva0094CA90Value
+static __forceinline int textureWidth(TexturePtr &texture)
 {
-	unsigned int m_texture;
+	return ((BfmeThingEF *)&texture)->bfmeAskEF();
+}
+
+static __forceinline int textureHeight(TexturePtr &texture)
+{
+	return ((BfmeThingGN *)&texture)->bfmeAskGN();
+}
+
+namespace _STL
+{
+
+template <class T> class allocator {};
+template <class T> struct less {};
+template <class P> struct _Select1st {};
+template <class T> struct _Nonconst_traits {};
+
+template <class T1, class T2>
+struct pair
+{
+	pair(const T1 &a, const T2 &b) : first(a), second(b) {}
+	template <class U1, class U2>
+	pair(const pair<U1, U2> &p) : first(p.first), second(p.second) {}
+
+	T1 first;
+	T2 second;
 };
 
-typedef _STL::map<unsigned int, Rva0094CA90Value> Rva0094CA90Map;
+struct _Rb_tree_node_base
+{
+	char _M_color;
+	_Rb_tree_node_base *_M_parent;
+	_Rb_tree_node_base *_M_left;
+	_Rb_tree_node_base *_M_right;
+};
+
+template <class V>
+struct _Rb_tree_node : public _Rb_tree_node_base
+{
+	V _M_value_field;
+};
+
+template <class Dummy>
+struct _Rb_global
+{
+	static _Rb_tree_node_base *_M_increment(_Rb_tree_node_base *x);
+	static _Rb_tree_node_base *_M_decrement(_Rb_tree_node_base *x);
+};
+
+template <class V, class Traits>
+struct _Rb_tree_iterator
+{
+	typedef V value_type;
+
+	_Rb_tree_iterator(_Rb_tree_node_base *x) : _M_node(x) {}
+	V &operator*() const { return ((_Rb_tree_node<V> *)_M_node)->_M_value_field; }
+	V *operator->() const { return &((_Rb_tree_node<V> *)_M_node)->_M_value_field; }
+	_Rb_tree_iterator &operator++() { _M_node = _Rb_global<bool>::_M_increment(_M_node); return *this; }
+	_Rb_tree_iterator &operator--() { _M_node = _Rb_global<bool>::_M_decrement(_M_node); return *this; }
+	bool operator!=(const _Rb_tree_iterator &x) const { return _M_node != x._M_node; }
+
+	_Rb_tree_node_base *_M_node;
+};
+
+template <class It>
+struct reverse_iterator
+{
+	reverse_iterator(const It &x) : current(x) {}
+	typename It::value_type &operator*() const { It tmp = current; return *--tmp; }
+	typename It::value_type *operator->() const { return &(operator*()); }
+	reverse_iterator &operator++() { --current; return *this; }
+	bool operator!=(const reverse_iterator &x) const { return current != x.current; }
+
+	It current;
+};
+
+class __new_alloc
+{
+public:
+	static void *allocate(unsigned int n);
+};
+
+template <class K, class V, class KoV, class Cmp, class A>
+class _Rb_tree
+{
+public:
+	typedef _Rb_tree_iterator<V, _Nonconst_traits<V> > iterator;
+
+	_Rb_tree()
+	{
+		_M_header = 0;
+		_M_header = (_Rb_tree_node_base *)__new_alloc::allocate(sizeof(_Rb_tree_node<V>));
+		_M_node_count = 0;
+		_M_header->_M_color = 0;
+		_M_header->_M_parent = 0;
+		_M_header->_M_left = _M_header;
+		_M_header->_M_right = _M_header;
+	}
+	~_Rb_tree();
+
+	iterator begin() { return _M_header->_M_left; }
+	iterator end() { return _M_header; }
+
+	iterator insert_equal(const V &v)
+	{
+		_Rb_tree_node_base *y = _M_header;
+		_Rb_tree_node_base *x = _M_header->_M_parent;
+		while (x != 0)
+		{
+			y = x;
+			x = v.first < ((_Rb_tree_node<V> *)x)->_M_value_field.first ? x->_M_left : x->_M_right;
+		}
+		return _M_insert(x, y, v, 0);
+	}
+
+private:
+	iterator _M_insert(_Rb_tree_node_base *x, _Rb_tree_node_base *y, const V &v,
+		_Rb_tree_node_base *w);
+
+public:
+	_Rb_tree_node_base *_M_header;
+	unsigned int _M_node_count;
+	Cmp _M_key_compare;
+};
+
+template <class K, class T, class Cmp = less<K>, class A = allocator<pair<const K, T> > >
+class multimap
+{
+public:
+	typedef pair<const K, T> value_type;
+	typedef _Rb_tree<K, value_type, _Select1st<value_type>, Cmp, allocator<value_type> > _Rep_type;
+	typedef typename _Rep_type::iterator iterator;
+	typedef reverse_iterator<iterator> reverse_iterator;
+
+	iterator insert(const value_type &v) { return _M_t.insert_equal(v); }
+	reverse_iterator rbegin() { return reverse_iterator(_M_t.end()); }
+	reverse_iterator rend() { return reverse_iterator(_M_t.begin()); }
+
+	_Rep_type _M_t;
+};
+
+template <class K, class T, class Cmp = less<K>, class A = allocator<pair<const K, T> > >
+class map
+{
+public:
+	typedef pair<const K, T> value_type;
+	typedef _Rb_tree<K, value_type, _Select1st<value_type>, Cmp, allocator<value_type> > _Rep_type;
+	typedef typename _Rep_type::iterator iterator;
+
+	iterator begin() { return _M_t.begin(); }
+	iterator end() { return _M_t.end(); }
+	T &operator[](const K &k);
+
+	_Rep_type _M_t;
+};
+
+}
+
+// The per-texture atlas rectangle (operator[] at 0x0094D370).
+struct Rva0094D370Value
+{
+	int left;
+	int top;
+	int right;
+	int bottom;
+};
+
+typedef _STL::map<TexturePtr, Rva0094D370Value> Rva0094D370Map;
+
+// Area-sorted value (the multimap _M_insert at 0x0094CA90).
+struct Rva0094CA90Value
+{
+	Rva0094CA90Value(const TexturePtr &t) : texture(t) {}
+
+	TexturePtr texture;
+};
+
+typedef _STL::multimap<unsigned int, Rva0094CA90Value> Rva0094CA90Map;
+
+class BfmeHandleCX;
+
+class BfmePairDW : public _STL::pair<int, TexturePtr>
+{
+};
+
+BfmePairDW __cdecl bfmeMakePair(const int *first, const BfmeHandleCX *second);
+
+class W3DRadarResetSurface
+{
+public:
+	~W3DRadarResetSurface();
+
+	void *m_surface;
+};
+
+class W3DRadarResetTexture
+{
+public:
+	W3DRadarResetSurface getSurfaceLevel();
+};
+
+class Rva008FC830Surface
+{
+public:
+	void fill(unsigned int value);
+};
+
+#pragma comment(linker, "/alternatename:?fill@Rva008FC830Surface@@QAEXI@Z=?d_008fc830@@YAXXZ")
 
 struct IDirect3DBaseTexture8;
+
+class TextureBaseClass
+{
+public:
+	IDirect3DBaseTexture8 *Peek_D3D_Base_Texture() const;
+};
+
+class BfmeThing930A
+{
+public:
+	void bfmeGo930A();
+};
 
 class Rva006D6050
 {
 public:
-	void init(unsigned, unsigned, unsigned, unsigned, unsigned, unsigned);
-
-	void *m_texture;
+	void init(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int);
 };
 
-class Rva006D6050Texture
+class Rva0094D450Texture
 {
 public:
 	virtual void slot00();
@@ -141,266 +308,112 @@ public:
 	virtual void slot1c();
 	virtual void slot20();
 	virtual void slot24();
-	virtual Bool slot28();
+	virtual bool slot28();
 };
 
-class TextureBaseClass
-{
-public:
-	IDirect3DBaseTexture8 *Peek_D3D_Base_Texture() const;
-};
-
-class SurfaceResource
-{
-public:
-	virtual void slot00();
-	virtual unsigned long __stdcall addRef();
-	virtual unsigned long __stdcall release();
-};
-
-class W3DRadarResetSurface
-{
-public:
-	W3DRadarResetSurface() : m_surface(0) {}
-	W3DRadarResetSurface(const W3DRadarResetSurface &other)
-		: m_surface(other.m_surface)
-	{
-		if (m_surface != 0)
-			m_surface->addRef();
-	}
-	~W3DRadarResetSurface();
-	void *peek() const { return m_surface; }
-
-private:
-	SurfaceResource *m_surface;
-};
-
-class W3DRadarResetTexture
-{
-public:
-	W3DRadarResetSurface getSurfaceLevel();
-
-	void *m_texture;
-};
-
-class Rva008FC830Surface
-{
-public:
-	void clear(unsigned char);
-};
-
-#pragma comment(linker, "/alternatename:?clear@Rva008FC830Surface@@QAEXE@Z=?d_008fc830@@YAXXZ")
-
-extern "C" long __stdcall D3DXLoadSurfaceFromSurface(
-	void *, const void *, const void *, void *, const void *, const void *,
-	unsigned long, unsigned long);
-extern "C" long __stdcall D3DXFilterTexture(
-	void *, const void *, unsigned long, unsigned long);
-
-extern float g_bfmeDefaultBU;
-
-struct Rva0094D450Rect
-{
-	int left;
-	int top;
-	int right;
-	int bottom;
-};
+extern "C" long __stdcall D3DXLoadSurfaceFromSurface(void *dst, const void *dstPalette,
+	const void *dstRect, void *src, const void *srcPalette, const void *srcRect,
+	unsigned long filter, unsigned long colorKey);
+extern "C" long __stdcall D3DXFilterTexture(IDirect3DBaseTexture8 *texture,
+	const void *palette, unsigned long srcLevel, unsigned long filter);
 
 class BfmeHostEY
 {
 public:
 	void bfmeRefreshEY();
 
-	unsigned char m_bfmeHeadEY[8];
-	unsigned char m_bfmeMapEY[4];
-	unsigned char m_bfmeGapEY[0x10];
-	unsigned char m_bfmeDirtyEY;
-	unsigned char m_bfmePadEY[3];
-	float m_bfmeSxEY;
-	float m_bfmeSyEY;
+	unsigned int m_maxSize;			// +0x00
+	unsigned int m_format;			// +0x04
+	Rva0094D370Map m_rects;			// +0x08
+	Rva0094D450Texture *m_texture;		// +0x18
+	bool m_dirty;				// +0x1C
+	unsigned char m_fill;			// +0x1D
+	float m_scaleY;				// +0x20
+	float m_scaleX;				// +0x24
 };
 
 void BfmeHostEY::bfmeRefreshEY()
 {
-	BfmeHostEY *owner = this;
-	Rva006D6050 *render = reinterpret_cast<Rva006D6050 *>(
-		reinterpret_cast<char *>(owner) + 0x18);
-	BfmeThing930A *thing = reinterpret_cast<BfmeThing930A *>(
-		reinterpret_cast<char *>(owner) + 0x18);
-	owner->m_bfmeDirtyEY = 0;
-	thing->bfmeGo930A();
-	m_bfmeSxEY = 1.0f;
-	m_bfmeSyEY = 1.0f;
+	m_dirty = false;
+	((BfmeThing930A *)&m_texture)->bfmeGo930A();
+	m_scaleY = m_scaleX = 1.0f;
 
-	Rva0094CA90Map packed;
-	unsigned int rowWidth[64];
-	unsigned int rowCount = 1;
-	rowWidth[0] = 0;
-
-	Rva0094D370Map *images = reinterpret_cast<Rva0094D370Map *>(
-		owner->m_bfmeMapEY);
-	Rva0094D370Map::iterator image = images->begin();
-
-	for (; image != images->end(); ++image)
+	Rva0094CA90Map sorted;
+	for (Rva0094D370Map::iterator it = m_rects.begin(); it != m_rects.end(); ++it)
 	{
-		BfmeHandleCX *handle = const_cast<BfmeHandleCX *>(
-			reinterpret_cast<const BfmeHandleCX *>(&image->first));
-		int width = reinterpret_cast<BfmeThingEF *>(handle)->bfmeAskEF();
-		int height = reinterpret_cast<BfmeThingGN *>(handle)->bfmeAskGN();
-		int cells = width * height;
-		BfmePairDW pair = bfmeMakePair(&cells, handle);
-		Rva0094CA90Value value;
-		value.m_texture = reinterpret_cast<unsigned int>(
-			pair.m_bfmeHandle.m_bfmeThing);
-
-		TextureClass *texture = reinterpret_cast<TextureClass *>(
-			pair.m_bfmeHandle.m_bfmeThing);
-		if (texture != 0)
-			texture->Add_Ref();
-
-		packed.insert(Rva0094CA90Map::value_type(
-			static_cast<unsigned int>(cells), value));
-
-		if (texture != 0)
-			texture->Release_Ref();
+		TexturePtr &texture = (TexturePtr &)it->first;
+		int area = textureWidth(texture) * textureHeight(texture);
+		sorted.insert(bfmeMakePair(&area, (const BfmeHandleCX *)&texture));
 	}
 
-	Rva0094CA90Map::iterator packedIt = packed.end();
-	if (packedIt == packed.begin())
-		return;
-	--packedIt;
-
-	for (;;)
+	int size = 1;
+	int rows[64];
+	rows[0] = 0;
+	for (Rva0094CA90Map::reverse_iterator rit = sorted.rbegin(); rit != sorted.rend(); ++rit)
 	{
-		BfmeHandleCX current;
-		current.m_bfmeThing = reinterpret_cast<BfmeThingCX *>(
-			packedIt->second.m_texture);
-		if (current.m_bfmeThing != 0)
-			++current.m_bfmeThing->m_bfmeRefs;
-
-		int tileWidth = (reinterpret_cast<BfmeThingEF *>(
-			&current)->bfmeAskEF() + 0x1f) >> 5;
-		int tileHeight = (reinterpret_cast<BfmeThingGN *>(
-			&current)->bfmeAskGN() + 0x1f) >> 5;
-		unsigned int row = 0;
-		unsigned int column = 0;
-		unsigned int candidate = 0;
-
-		if (tileHeight <= static_cast<int>(rowCount))
+		TexturePtr texture = rit->second.texture;
+		int width = (unsigned int)(textureWidth(texture) + 31) >> 5;
+		int height = (unsigned int)(textureHeight(texture) + 31) >> 5;
+		int row;
+		for (;;)
 		{
-			unsigned int lastRow = rowCount - tileHeight;
-			for (;;)
+			row = 0;
+			int last = size - height;
+			for (; row <= last; row++)
 			{
-				unsigned int scan = 0;
-				while (scan < static_cast<unsigned int>(tileHeight)
-					&& rowWidth[candidate + scan] + tileWidth <= rowCount)
-					++scan;
-				if (scan == static_cast<unsigned int>(tileHeight))
+				int i;
+				for (i = 0; i < height; i++)
 				{
-					row = candidate;
-					column = rowWidth[candidate];
-					break;
+					if (rows[row + i] + width > size)
+						break;
 				}
-				++candidate;
-				if (candidate > lastRow)
+				if (i == height)
 					break;
 			}
-			if (candidate <= lastRow)
-			{
-				row = candidate;
-				column = rowWidth[candidate];
-			}
-		}
+			if (row <= last)
+				break;
 
-		if (tileHeight > static_cast<int>(rowCount)
-			|| candidate > rowCount - tileHeight)
-		{
-			if ((rowCount << 6) > *reinterpret_cast<unsigned int *>(this))
+			if ((unsigned int)(size * 64) > m_maxSize)
 				return;
-
-			unsigned int maximum = 0;
-			unsigned int start = tileHeight <= static_cast<int>(rowCount)
-				? candidate : 0;
-			for (unsigned int index = 0;
-				index < static_cast<unsigned int>(tileHeight); ++index)
-			{
-				if (rowWidth[start + index] > maximum)
-					maximum = rowWidth[start + index];
-			}
-
-			column = maximum;
-			for (unsigned int index = 0;
-				index < static_cast<unsigned int>(tileHeight); ++index)
-				rowWidth[start + index] = maximum + tileWidth;
-
-			rowCount <<= 1;
-			if (rowCount > 64)
-				return;
-
-			continue;
+			int grown = size * 2;
+			for (int i = size; i < grown; i++)
+				rows[i] = 0;
+			size = grown;
 		}
 
-		Rva0094D370Value &record = (*images)[
-			*reinterpret_cast<RefCountPtr<TextureClass> *>(&current)];
-		record.x = column << 5;
-		record.y = row << 5;
-		record.z = record.x + reinterpret_cast<BfmeThingEF *>(
-			&current)->bfmeAskEF();
-		record.w = record.y + reinterpret_cast<BfmeThingGN *>(
-			&current)->bfmeAskGN();
-
-		if (current.m_bfmeThing != 0)
+		int column = 0;
+		for (int i = 0; i < height; i++)
 		{
-			reinterpret_cast<TextureClass *>(current.m_bfmeThing)->Release_Ref();
-			current.m_bfmeThing = 0;
+			if (rows[row + i] > column)
+				column = rows[row + i];
 		}
+		for (int i = 0; i < height; i++)
+			rows[row + i] = width + column;
 
-		if (packedIt == packed.begin())
-			break;
-		--packedIt;
+		Rva0094D370Value &rect = m_rects[texture];
+		rect.left = column << 5;
+		rect.top = row << 5;
+		rect.right = textureWidth(texture) + rect.left;
+		rect.bottom = textureHeight(texture) + rect.top;
 	}
 
-	int atlas = static_cast<int>(rowCount) << 5;
-	render->init(atlas, atlas,
-		*reinterpret_cast<unsigned int *>(reinterpret_cast<char *>(this) + 4),
-		0, 1, 0);
-
-	TextureBaseClass *renderTexture = reinterpret_cast<TextureBaseClass *>(render);
-	if (render->m_texture == 0)
+	int pixels = size << 5;
+	((Rva006D6050 *)&m_texture)->init(pixels, pixels, m_format, 0, 1, 0);
+	if (m_texture == 0 || !m_texture->slot28())
 		return;
-	if (!reinterpret_cast<Rva006D6050Texture *>(render->m_texture)->slot28())
-			return;
 
-	m_bfmeSxEY = static_cast<float>(atlas) / g_bfmeDefaultBU;
-	m_bfmeSyEY = m_bfmeSxEY;
-	W3DRadarResetSurface destination =
-		reinterpret_cast<W3DRadarResetTexture *>(render)->getSurfaceLevel();
-	reinterpret_cast<Rva008FC830Surface *>(&destination)->clear(
-		*(reinterpret_cast<unsigned char *>(this) + 0x1d));
+	m_scaleY = m_scaleX = 1.0f / (float)pixels;
+	W3DRadarResetSurface destination = ((W3DRadarResetTexture *)&m_texture)->getSurfaceLevel();
+	((Rva008FC830Surface *)&destination)->fill(m_fill);
 
-	for (image = images->begin(); image != images->end(); ++image)
+	for (Rva0094D370Map::iterator it = m_rects.begin(); it != m_rects.end(); ++it)
 	{
-		BfmeHandleCX *handle = const_cast<BfmeHandleCX *>(
-			reinterpret_cast<const BfmeHandleCX *>(&image->first));
-		TextureClass *texture = reinterpret_cast<TextureClass *>(
-			handle->m_bfmeThing);
-		if (texture != 0)
-			texture->Add_Ref();
-
-		Rva0094D450Rect rect;
-		rect.left = image->second.x;
-		rect.top = image->second.y;
-		rect.right = image->second.z;
-		rect.bottom = image->second.w;
-		W3DRadarResetSurface source =
-			reinterpret_cast<W3DRadarResetTexture *>(handle)->getSurfaceLevel();
-		D3DXLoadSurfaceFromSurface(
-			destination.peek(), 0, &rect, source.peek(), 0, 0, 1, 0);
-
-		if (texture != 0)
-			texture->Release_Ref();
+		TexturePtr texture = it->first;
+		Rva0094D370Value rect = it->second;
+		W3DRadarResetSurface source = ((W3DRadarResetTexture *)&texture)->getSurfaceLevel();
+		D3DXLoadSurfaceFromSurface(destination.m_surface, 0, &rect, source.m_surface, 0, 0, 1, 0);
 	}
 
-	D3DXFilterTexture(renderTexture->Peek_D3D_Base_Texture(), 0, 0xffffffff, 0xffffffff);
+	D3DXFilterTexture(((TextureBaseClass *)&m_texture)->Peek_D3D_Base_Texture(), 0,
+		0xffffffff, 0xffffffff);
 }
