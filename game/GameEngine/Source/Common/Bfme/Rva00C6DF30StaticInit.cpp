@@ -8,3 +8,5 @@
 #include "wwstring.h"
 
 StringClass g_bfmeRva01346718Str(0, false);
+// Retail 0x00C6DFD0 initializes the StringClass global at 0x01346E74.
+StringClass g_bfmeRva01346E74Str(0, false);
