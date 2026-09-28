@@ -1,60 +1,43 @@
-// ?d_001752a0@@YAXXZ
-// partial score=0.15 date=2026-09-23
-// Retail 0x001752A0, 943 bytes. The owner remains address-derived.
-// The three-argument cdecl ABI is witnessed by callers 0x00177A90 and 0x00182F70.
-// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
-
+// ?Rva001752A0@@YA_NPAUCoord3D@@PAVObject@@1@Z
+// partial score=0.949 date=2026-09-28
+// ?Rva001752A0@@YA_NPAUCoord3D@@PAVObject@@1@Z
+// cl: /DNDEBUG /MD /EHsc
+// Retail 0x001752A0, 943 bytes, cdecl (destination, source, victim); called
+// through ILT 0x0001E0D3 by AIAttackMeleeEngageState::computePath.
+// REWRITE (opus-5.5, 2026-09-28): real member declarations on existing pins
+// (Thing::isKindOf, NameKeyGenerator::nameToKey, Object::findModule,
+// Object::getCurrentWeapon, BfmePathfinderMethods::check,
+// Pathfinder::slowDoesPathExist) and ledger body names reached through
+// auto-discovered ILTs (TerrainLogic::getLayerForDestination,
+// Pathfinder::bfmeCellTypeFourWithFlag, Coord3D::normalize,
+// Pathfinder::adjustToPossibleDestination, Rva00266340::is).
+// Levers that moved it: one address-taken Coord3D (normalize) for phases 1-2
+// with dy a separate float; 3D length (z=0) for the unit scale so the two
+// sqrts do not CSE; final phase reads delta = *destination into float dx/dy;
+// TheAI cached in a local at the found label. Measured 944B vs 943B, 412
+// non-reloc diffs, shape 0.949. Residue: source ESI (retail EBP), destination
+// EDI (retail ESI), &pos EBX (retail EDI); x/y offset products load offset
+// first (retail loads delta first).
 #include <math.h>
 
 typedef bool Bool;
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
-
-enum KindOfType
-{
-	KINDOF_MELEE_HORDE_TARGET = 92
-};
-
-enum WeaponSlotType
-{
-	WEAPON_SLOT_PRIMARY = 0
-};
+typedef float Real;
+enum KindOfType { KINDOF_5C = 0x5c };
+enum NameKeyType { NAMEKEY_INVALID = 0 };
+enum WeaponSlotType { WEAPONSLOT_DUMMY = 0 };
+enum ObjectID { INVALID_ID = 0 };
+enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1 };
 
 struct Coord3D
 {
-	float x;
-	float y;
-	float z;
+	Real x, y, z;
 	void normalize();
 };
 
-class Rva001752A0Receiver {};
-
-template<class T> __forceinline T Rva001752A0Member(void (*raw)())
-{
-	union { void (*raw)(); T member; } fn;
-	fn.raw = raw;
-	return fn.member;
-}
-
-#define CALL(T, obj, fn) (((Rva001752A0Receiver *)(obj))->*Rva001752A0Member<T>(fn))
-
 class Module {};
 class Weapon {};
-class Pathfinder {};
-class Object;
-class TerrainLogic
-{
-public:
-	int getLayerForDestination(Object *object, const Coord3D *position);
-};
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+class LocomotorSet {};
+class Rva00266340 { public: Bool is() const; };
 
 class Thing
 {
@@ -62,11 +45,45 @@ public:
 	Bool isKindOf(KindOfType kind) const;
 };
 
+class AIUpdateInterface
+{
+	char m_pad000[0x1a8];
+public:
+	LocomotorSet m_locomotorSet;
+};
+
+class Object : public Thing
+{
+	char m_pad000[0x38];
+public:
+	Coord3D m_pos038;
+	char m_pad044[0xbc - 0x44];
+	Real m_bfmeBC;
+	char m_pad0c0[0x204 - 0xc0];
+	AIUpdateInterface *m_ai204;
+	Weapon *getCurrentWeapon(WeaponSlotType *slot);
+	Module *findModule(NameKeyType key) const;
+};
+
+class Pathfinder
+{
+public:
+	Bool slowDoesPathExist(Object *obj, const Coord3D *from, const Coord3D *to, ObjectID ignore);
+	Bool bfmeCellTypeFourWithFlag(const Coord3D *pos, PathfindLayerEnum layer);
+	Bool adjustToPossibleDestination(Object *obj, const LocomotorSet &locomotorSet, Coord3D *dest);
+};
+
+class BfmePathfinderMethods
+{
+public:
+	Bool check(const Object *obj, const Coord3D *pos, const Weapon *weapon, int flag);
+};
+
 class AIData
 {
 	char m_pad000[0xd0];
 public:
-	float m_meleeOffset;
+	Real m_meleeOffset;
 };
 
 class AI
@@ -75,143 +92,119 @@ class AI
 public:
 	Pathfinder *m_pathfinder;
 	char m_pad010[4];
-	AIData *m_aiData;
+	AIData *m_data14;
 };
 
-class AIUpdateInterface
+class NameKeyGenerator
 {
-	char m_pad000[0x1a8];
-};
-
-class Object : public Thing
-{
-	char m_pad000[0x38];
 public:
-	Coord3D m_position;
-	char m_pad044[0xbc - 0x44];
-	float m_bfmeBC;
-	char m_pad0c0[0x204 - 0xc0];
-	AIUpdateInterface *m_ai;
-	Weapon *getCurrentWeapon(WeaponSlotType *slot);
-	Module *findModule(NameKeyType key) const;
+	NameKeyType nameToKey(const char *name);
 };
 
-#define TheAI (*(AI **)0x012EF214)
-#define TheTerrainLogic (*(TerrainLogic **)0x012EF4CC)
-#define TheNameKeyGenerator (*(NameKeyGenerator **)0x012ED600)
-#define Rva001752A0One (*(const float *)0x01075334)
-#define Rva001752A0Zero (*(const float *)0x01075350)
-#define Rva001752A0StepCount (*(const float *)0x010977E4)
-#define Rva001752A0Twenty (*(const float *)0x010977E0)
+class TerrainLogic
+{
+public:
+	PathfindLayerEnum getLayerForDestination(Object *obj, const Coord3D *pos);
+};
 
-extern void j_00048112();
-extern void j_00032b46();
-extern void j_0004a327();
-extern void j_0007fbd();
-extern void j_00011252();
-
-typedef Bool (Rva001752A0Receiver::*ModuleIs)();
-typedef Bool (Rva001752A0Receiver::*Check)(Object *, const Coord3D *, Weapon *, Bool);
-typedef Bool (Rva001752A0Receiver::*SlowDoesPathExist)(Object *, const Coord3D *, const Coord3D *, int);
-typedef int (Rva001752A0Receiver::*GetLayerForDestination)(Object *, const Coord3D *);
-typedef int (Rva001752A0Receiver::*CellTypeFourWithFlag)(const Coord3D *, int);
-typedef Bool (Rva001752A0Receiver::*AdjustDestination)(Object *, void *, Coord3D *);
+extern AI *TheAI;
+extern NameKeyGenerator *TheNameKeyGenerator;
+extern TerrainLogic *TheTerrainLogic;
 
 bool Rva001752A0(Coord3D *destination, Object *source, Object *victim)
 {
-	AIUpdateInterface *sourceAI = source->m_ai;
-	if (sourceAI == 0)
+	AIUpdateInterface *ai = source->m_ai204;
+	if (ai == 0)
 		return false;
 
-	Coord3D victimPosition = *destination;
-	float dx = destination->x - source->m_position.x;
-	float dy = destination->y - source->m_position.y;
-	float initialDistance = (float)sqrt(dx * dx + dy * dy);
-
-	if (victim != 0)
+	Coord3D victimPos;
+	Coord3D candidate;
+	Real initialDistance;
+	Bool pathCheck;
+	Bool adjusted;
+	Coord3D delta;
+	AI *theAI;
 	{
-		victimPosition = victim->m_position;
-		if (victim->isKindOf(KINDOF_MELEE_HORDE_TARGET))
+		delta.x = destination->x - source->m_pos038.x;
+		Real dy = destination->y - source->m_pos038.y;
+		victimPos = *destination;
+		initialDistance = (Real)sqrt(delta.x * delta.x + dy * dy);
+
+		if (victim)
 		{
-			static NameKeyType siegeDeploySpecialPowerKey =
-				TheNameKeyGenerator->nameToKey("SiegeDeploySpecialPower");
-			Module *module = victim->findModule(siegeDeploySpecialPowerKey);
-			if (module != 0 && CALL(ModuleIs, module, j_00048112)())
-				return true;
+			victimPos = victim->m_pos038;
+			if (victim->isKindOf(KINDOF_5C))
+			{
+				static NameKeyType key = TheNameKeyGenerator->nameToKey("SiegeDeploySpecialPower");
+				Module *module = victim->findModule(key);
+				if (module && ((Rva00266340 *)module)->is())
+					return true;
+			}
 		}
-	}
 
-	Pathfinder *pathfinder = TheAI->m_pathfinder;
-	Weapon *weapon = source->getCurrentWeapon(0);
-	Bool pathCheck = CALL(Check, pathfinder, j_00032b46)(
-		source, &victimPosition, weapon, false);
-	if (pathCheck && CALL(SlowDoesPathExist, pathfinder, j_0004a327)(
-		source, &source->m_position, destination, 0))
-		return true;
+		Pathfinder *pathfinder = TheAI->m_pathfinder;
+		pathCheck = ((BfmePathfinderMethods *)pathfinder)->check(
+			source, &victimPos, source->getCurrentWeapon(0), 0);
+		if (pathCheck && TheAI->m_pathfinder->slowDoesPathExist(
+			source, &source->m_pos038, destination, INVALID_ID))
+			return true;
 
-	Coord3D step = *destination;
-	Coord3D candidate = *destination;
-	step.x -= source->m_position.x;
-	step.y -= source->m_position.y;
-	float distance = (float)sqrt(step.x * step.x + step.y * step.y);
-	int limit = -1 - (int)(distance * Rva001752A0StepCount);
-	float inverseDistance = Rva001752A0One / distance;
-	step.x *= inverseDistance;
-	step.y *= inverseDistance;
-	step.z *= inverseDistance;
-	step.x *= Rva001752A0Twenty;
-	step.y *= Rva001752A0Twenty;
-	step.z *= Rva001752A0Twenty;
+		delta = *destination;
+		candidate = *destination;
+		delta.x -= source->m_pos038.x;
+		delta.y -= source->m_pos038.y;
+		delta.z = 0.0f;
+		int limit = -1 - (int)((Real)sqrt(delta.y * delta.y + delta.x * delta.x) * -0.05f);
+		Real length = (Real)sqrt(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z);
+		Real scale = 1.0f / length;
+		delta.x *= scale;
+		delta.y *= scale;
+		delta.z *= scale;
+		delta.x *= 20.0f;
+		delta.y *= 20.0f;
+		delta.z *= 20.0f;
 
-	Bool specialCell = false;
-	if (limit > 0)
-	{
-		int index = 0;
-		while (index < limit)
+		Bool specialCell = false;
+		for (int index = 0; index < limit; ++index)
 		{
-			candidate.x -= step.x;
-			candidate.y -= step.y;
-			candidate.z -= step.z;
-			if (CALL(SlowDoesPathExist, pathfinder, j_0004a327)(
-				source, &source->m_position, &candidate, 0))
+			candidate.x -= delta.x;
+			candidate.y -= delta.y;
+			candidate.z -= delta.z;
+			if (TheAI->m_pathfinder->slowDoesPathExist(source, &source->m_pos038, &candidate, INVALID_ID))
 				goto found;
-
-			int layer = TheTerrainLogic->getLayerForDestination(source, &candidate);
-			if (layer > 1 || CALL(CellTypeFourWithFlag, pathfinder, j_0007fbd)(
-				&candidate, 1))
+			if (TheTerrainLogic->getLayerForDestination(source, &candidate) > LAYER_GROUND ||
+				TheAI->m_pathfinder->bfmeCellTypeFourWithFlag(&candidate, LAYER_GROUND))
 				specialCell = true;
-			++index;
 		}
-	}
-	return false;
+		return false;
 
 found:
-	Bool adjusted = false;
-	if (specialCell && !pathCheck)
-	{
-		float offset = TheAI->m_aiData->m_meleeOffset + source->m_bfmeBC;
-		step.normalize();
-		step.x *= offset;
-		step.y *= offset;
-		step.z *= offset;
-		candidate.x -= step.x;
-		candidate.y -= step.y;
-		candidate.z -= step.z;
-		adjusted = true;
+		theAI = TheAI;
+		adjusted = false;
+		if (specialCell && !pathCheck)
+		{
+			Real offset = theAI->m_data14->m_meleeOffset + source->m_bfmeBC;
+			delta.normalize();
+			adjusted = true;
+			delta.x *= offset;
+			delta.y *= offset;
+			delta.z *= offset;
+			candidate.x -= delta.x;
+			candidate.y -= delta.y;
+			candidate.z -= delta.z;
+		}
 	}
 
+	delta = *destination;
+	Real dx = delta.x - candidate.x;
+	Real dy = delta.y - candidate.y;
 	if (!adjusted)
 	{
-		float candidateDx = destination->x - candidate.x;
-		float candidateDy = destination->y - candidate.y;
-		float movedDistance = (float)sqrt(
-			candidateDx * candidateDx + candidateDy * candidateDy);
-		if (!(movedDistance + Rva001752A0Twenty <= initialDistance))
+		if ((Real)sqrt(dx * dx + dy * dy) + 20.0f > initialDistance)
 			return false;
 	}
 
-	CALL(AdjustDestination, pathfinder, j_00011252)(
-		source, (char *)sourceAI + 0x1a8, &candidate);
+	theAI->m_pathfinder->adjustToPossibleDestination(source, ai->m_locomotorSet, &candidate);
 	*destination = candidate;
 	return true;
 }
