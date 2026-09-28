@@ -10218,5 +10218,15 @@
   "old_name": "prepareLobby",
   "new_name": "Rva005406E0",
   "reason": "The draft's unresolved prepareLobby stub targeted ILT 0x0002F4AF at 0x005397D0, whose matched body is rva005397D0PopulateGroupRoomListbox. That evidence refutes prepareLobby as the helper identity; the source calls the proven address-derived callee."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00690490.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/LANGameInfoParseGameOptionsString.cpp",
+  "old_name": "ParseAsciiStringToGameInfo",
+  "new_name": "Rva0068EF70ParseBuffer",
+  "before_sha256": "9641d538f0ce3abba1d2c387a00cd6e43f040e07628c25732c6e6be283914077",
+  "after_sha256": "fc7ad42030293d8c7c8f793fe58458b20fe9cdebbceb5b1f41bf638c88987318",
+  "evidence": "targets/game/reverse/identity_evidence/0068ef70-packet-decoder-unnamed.md",
+  "reason": "0x0068EF70 identity unproven: ZH ParseAsciiStringToGameInfo parses an AsciiString, not a (buffer,length) packet; address-keyed until a witness names it"
  }
 ]
