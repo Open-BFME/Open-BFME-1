@@ -16,6 +16,11 @@ proven; the rest stays an anonymous "gap". This classifies each gap so a seat
              jump elsewhere points into it
   unknown    none of the above (read it by hand)
 
+The `verdicts` column lists re_attempts.log bodies overlapping the gap (latest
+status per address): a gap with a `partial`/`blocked` body there is already
+mapped -- its boundary is proven and the work is a conversion, served by the
+finish/retry lanes -- not unexplored code.
+
 Evidence comes from the retail bytes (capstone), the repo's call index, and --
 when the GhidraSQL server is up -- Ghidra's function table (advisory starts).
 
@@ -37,7 +42,7 @@ sys.path.insert(0, str(ROOT / "tools" / "fleet"))
 
 OUT = ROOT / "targets/game/reverse/unclaimed_map.csv"
 FIELDS = ["gap_start", "gap_end", "code_bytes", "kind", "prev_row", "prev_ends_terminal",
-          "starts", "ghidra_starts", "evidence"]
+          "starts", "ghidra_starts", "evidence", "verdicts"]
 BASE = 0x400000
 TERMINAL = ("ret", "retf", "jmp", "int3")
 
@@ -62,7 +67,20 @@ def last_instruction(md, raw, lo, start, size):
     return last.mnemonic if last else None
 
 
-def classify(gap, raw, lo, md, rows_by_end, callers, url):
+def overlapping_verdicts(a, b, records):
+    """[(rva, size, status)] of latest verdict bodies overlapping [a, b)."""
+    found = []
+    for rva, fields in records.items():
+        try:
+            size = int(fields[2])
+        except (ValueError, IndexError):
+            continue
+        if rva < b and rva + max(size, 1) > a:
+            found.append((rva, size, fields[3]))
+    return sorted(found)
+
+
+def classify(gap, raw, lo, md, rows_by_end, callers, url, records=None):
     a, b, code = gap
     prev = rows_by_end.get(a)
     prev_terminal = None
@@ -111,6 +129,8 @@ def classify(gap, raw, lo, md, rows_by_end, callers, url):
         "starts": " ".join(f"0x{s:08X}:{len(callers.get(s, ()))}" for s in all_starts[:12]),
         "ghidra_starts": " ".join(f"0x{s:08X}" for s in ghidra[:12]),
         "evidence": "; ".join(evidence),
+        "verdicts": " ".join(f"0x{v:08X}:{size}:{status}"
+                             for v, size, status in overlapping_verdicts(a, b, records or {})[:6]),
     }
 
 
@@ -126,6 +146,7 @@ def main(argv=None):
     import build
     import callee_protos
     import eligibility
+    import re_log
 
     data = open(build.EXE, "rb").read()
     text = build.pe_sections(data)[0]
@@ -138,7 +159,8 @@ def main(argv=None):
     callers = callee_protos.call_sites()
     url = None if args.no_ghidra else args.url
     gaps = astra_seats.find_gaps()
-    mapped = [classify(g, raw, lo, md, rows_by_end, callers, url) for g in gaps]
+    records = re_log.latest_records()
+    mapped = [classify(g, raw, lo, md, rows_by_end, callers, url, records) for g in gaps]
     if args.top:
         for m in mapped[:args.top]:
             print(f"{m['gap_start']}..{m['gap_end']} {m['code_bytes']:6} B  {m['kind']:9} {m['evidence']}")
@@ -146,6 +168,8 @@ def main(argv=None):
                 print(f"    starts: {m['starts']}")
             if m["ghidra_starts"]:
                 print(f"    ghidra: {m['ghidra_starts']}")
+            if m["verdicts"]:
+                print(f"    verdicts: {m['verdicts']}")
         return 0
     with OUT.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, FIELDS, lineterminator="\n")
@@ -158,6 +182,9 @@ def main(argv=None):
     print(f"map_gaps: {len(mapped)} gaps, {sum(kinds.values()):,} B -> {OUT.relative_to(ROOT).as_posix()}")
     for kind, size in kinds.most_common():
         print(f"  {kind:10} {size:8,} B  {sum(1 for m in mapped if m['kind'] == kind):4} gaps")
+    known = [m for m in mapped if m["verdicts"]]
+    print(f"  already mapped by a verdict (conversion work, not exploration): "
+          f"{sum(int(m['code_bytes']) for m in known):,} B in {len(known)} gaps")
     return 0
 
 

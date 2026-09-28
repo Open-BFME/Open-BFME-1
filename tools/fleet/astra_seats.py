@@ -289,8 +289,10 @@ def gap_groups(count, budget=10000):
     import eligibility
 
     busy = claimed() | {int(r, 16) for r in eligibility.busy_rvas()}
-    # tools/map_gaps.py's map: serve gaps with proven starts ("functions");
-    # "tail" is an extent fix on the row before, "unknown" needs a human first
+    # tools/map_gaps.py's map. "functions" gaps have proven starts; once those
+    # ran dry (2026-09-28: 7 KB left open of 113 KB, 82 KB already mapped by
+    # verdicts) "tail" (an extent fix on the row before) and "unknown" gaps
+    # are served too -- GAP_NOTE tells the seat how to settle each kind.
     kinds = {}
     gap_map = ROOT / "targets/game/reverse/unclaimed_map.csv"
     if gap_map.exists():
@@ -311,7 +313,7 @@ def gap_groups(count, budget=10000):
         return i < len(verdicts) and verdicts[i] < b
 
     gaps = [g for g in find_gaps() if g[0] not in busy and g[0] not in served
-            and not attempted(g[0], g[1]) and kinds.get(g[0], "functions") == "functions"]
+            and not attempted(g[0], g[1]) and kinds.get(g[0], "functions") in ("functions", "tail", "unknown")]
     groups, current, total = [], [], 0
     for start, _, size in gaps:
         current.append(start)
