@@ -1,7 +1,19 @@
-// ?issueSpecialPower@Rva005ACF80Owner@@QAE?AW4Type@GameMessage@@PBVCommandButton@@W4CommandEvaluateType@1@PAVDrawable@@PBUCoord3D@@PAVObject@@@Z
-// partial score=0.84 date=2026-09-26
 // cl: /O2
 // stlport
+//
+// Retail 0x005ACF80 (746 B, thiscall, ret 0x14): the BFME special-power
+// command helper of the command translator family.  It issues message 0x411
+// (object target, validated through CommandButton::isValidObjectTarget),
+// 0x410 (location) or 0x40F (no target), appends the power ID, options and
+// the ignore-selection source, and plays the unit voice response through
+// PickAndPlayInfo.  Zero Hour's CommandTranslator::issueSpecialPowerCommand
+// is the (weak) twin; five callers reach it only through ILT thunks from the
+// unconverted 0x005ADE90 dispatcher, so no caller or vtable proves the real
+// name and the owner keeps the address token.
+//
+// The no-target branch reads the final override inline two levels deep:
+// getFinalOverride() inlines one call of the const friend_getFinalOverride(),
+// whose own recursion stays out of line (ILT 0x00048C61).
 
 #include <list>
 
@@ -30,22 +42,26 @@ class Overridable {
 public:
     void *vtable;
     Overridable *m_nextOverride;
-    Overridable *friend_getFinalOverride();
-    Overridable *finalInline() {
-        if (m_nextOverride) {
-            Overridable *next = m_nextOverride;
-            if (next->m_nextOverride)
-                return next->m_nextOverride->friend_getFinalOverride();
-            return next;
-        }
+    const Overridable *friend_getFinalOverride() const
+    {
+        if (m_nextOverride)
+            return m_nextOverride->friend_getFinalOverride();
+        return this;
+    }
+    const Overridable *getFinalOverride() const
+    {
+        if (m_nextOverride)
+            return m_nextOverride->friend_getFinalOverride();
         return this;
     }
 };
 
+enum SpecialPowerType { SPECIAL_INVALID };
+
 class SpecialPowerTemplate : public Overridable {
 public:
     unsigned getID() const;
-    int getSpecialPowerType() const;
+    SpecialPowerType getSpecialPowerType() const;
     char pad08[8];
     unsigned m_id;
     int m_type;
@@ -171,13 +187,13 @@ GameMessage::Type Rva005ACF80Owner::issueSpecialPower(const CommandButton *comma
         msgType = GameMessage::MSG_SPECIAL;
         if (commandType == DO_COMMAND) {
             GameMessage *msg = TheMessageStream->appendMessage(msgType);
-            SpecialPowerTemplate *power = (SpecialPowerTemplate *)command->m_specialPower->finalInline();
+            SpecialPowerTemplate *power = (SpecialPowerTemplate *)command->m_specialPower->getFinalOverride();
             msg->appendIntegerArgument(power->m_id);
             msg->appendIntegerArgument(command->m_options);
             msg->appendObjectIDArgument(specificSource);
             PickAndPlayInfo info;
             info.m_drawTarget = target;
-            power = (SpecialPowerTemplate *)command->m_specialPower->finalInline();
+            power = (SpecialPowerTemplate *)command->m_specialPower->getFinalOverride();
             info.m_specialPowerType = power->m_type;
             pickAndPlayUnitVoiceResponse(TheInGameUI->getAllSelectedDrawables(), msgType, &info);
         }
