@@ -1,14 +1,7 @@
-// ?executeCrateBehavior@UnitCrateCollide@@UAE_NPAVObject@@@Z
-// partial score=0.85 date=2026-09-25
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
-
-// UnitCrateCollide::executeCrateBehavior (0x00218A00): slot 10 (+0x28) of
-// UnitCrateCollide's table 0x010AAB8C through ILT 0x000189BC; slot 11 is
-// CrateCollide::isValidToExecute. Zero Hour's body from UnitCrateCollide.cpp
-// on BFME's types: newObject takes the status mask and one more word,
-// findPositionAround is a free function, AudioEventRTS is 0x70 bytes and the
-// audio manager hands out MiscAudio through vtable +0x124 and plays through
-// +0x44, with crateFreeUnit at MiscAudio+0x9A0.
+// UnitCrateCollide::executeCrateBehavior (retail 0x00218A00, 381 B): slot 10 of UnitCrateCollide's table
+// 0x010AAB8C through ILT 0x000189BC. Zero Hour's UnitCrateCollide.cpp body on BFME types: 4-argument
+// newObject, free findPositionAround, 0x70-byte AudioEventRTS, audio slots +0x124/+0x44.
 
 #include "ascii_string.h"
 
@@ -22,23 +15,25 @@ enum ObjectID { INVALID_ID = 0 };
 struct Coord3D
 {
 	Real x, y, z;
+	Coord3D() {}
+	// Retail copies member by member straight from Object+0x38.
+	Coord3D( const Coord3D &o ) : x( o.x ), y( o.y ), z( o.z ) {}
 };
 
 class Team;
 class ThingTemplate;
 
+// A plain aggregate: ObjectStatusMaskType() value-initializes it with one zero register.
 template <int NUMBITS>
 class BitFlags
 {
 public:
-	BitFlags() { m_bits[0] = m_bits[1] = m_bits[2] = 0; }
-private:
 	UnsignedInt m_bits[3];
 };
 
 typedef BitFlags<86> ObjectStatusMaskType;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -48,7 +43,7 @@ private:
 	Team *m_bfmeTeam230;								///< this+0x230
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
@@ -87,7 +82,7 @@ public:
 
 extern ThingFactory *TheThingFactory;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 struct FindPositionOptions
 {
 	FindPositionOptions()
@@ -113,7 +108,7 @@ struct FindPositionOptions
 
 Bool findPositionAround( const Coord3D *center, const FindPositionOptions *options, Coord3D *result );
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioEventRTS
 {
 public:
