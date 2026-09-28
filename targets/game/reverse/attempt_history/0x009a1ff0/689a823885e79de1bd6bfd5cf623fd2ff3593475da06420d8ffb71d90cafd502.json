@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "689a823885e79de1bd6bfd5cf623fd2ff3593475da06420d8ffb71d90cafd502",
+  "symbol": "?pushOne@Rva009A1FF0VecBox@@QAEXABUUpgrades@OCLSpecialPowerModuleData@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?pushOne@Rva009A1FF0VecBox@@QAEXABUUpgrades@OCLSpecialPowerModuleData@@@Z\n// partial score=0.99 date=2026-09-28\n// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB\n// stlport\n#define _STLP_NO_EXCEPTIONS 1\n#include <vector>\nclass OCLSpecialPowerModuleData\n{\npublic:\n\tstruct Upgrades\n\t{\n\t\tint m_first;\n\t\tint m_second;\n\t};\n};\nclass Rva009A1FF0VecBox\n{\npublic:\n\tvoid pushOne(const OCLSpecialPowerModuleData::Upgrades &value);\n\t_STL::vector<OCLSpecialPowerModuleData::Upgrades> m_vec;\n};\nvoid Rva009A1FF0VecBox::pushOne(const OCLSpecialPowerModuleData::Upgrades &value)\n{\n\tm_vec.push_back(value);\n}\n"
+}
