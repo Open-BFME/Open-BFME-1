@@ -1,10 +1,24 @@
 // ?prepareFinish@Rva56E070StateOwner@@QAEXXZ
-// partial score=0.35 date=2026-09-18
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// partial score=0.49 date=2026-09-28
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWLib /D_STLP_USE_STATIC_LIB
 //
 // BFME anonymous body 0x0056F1F0, 2286 bytes.  The finishCurrent caller and
 // the 0x00006B3B ILT prove the prepareFinish identity.  The constructor at
 // 0x0056A2F0 proves the list<AvailableGameInfo> header at this+0x284.
+// NOT byte matched: 2289/2286 B, 1171 masked differing bytes, shape 0.970.
+// 2026-09-28 opus-5.5 rewrite from the retail decode and the matched sibling
+// GameState::populateSaveGameListbox (0x001121A0, same column order):
+//   RecorderClass is 0x2B4 bytes (EH extent ebp-0x2C0..EH record; witness
+//   m_doingAnalysis +0x2A8) -> frame 0x634 and every EH slot aligned;
+//   columns are map/name/time/date, SetItemData(listbox,&back(),index);
+//   availableGameInfo.filename = asciistr (not the description);
+//   ReplayGameInfo has a real destructor (0x00099000, EH state 8);
+//   the version temp lives inside the && (flag at ebp-0x62C);
+//   set(const char*) is set(s, s ? strlen(s) : 0); concat(AsciiString) inline;
+//   static STLport so the tree helpers are direct calls.
+// Remaining: `this` in EDI (retail ESI, spilled to ebp-0x61C) and the
+// isLastReplay/versionMatches BL-vs-[esp+0x13] swap, which turns the color
+// select branchless; locals therefore sit on permuted slots.
 // stlport
 
 #define _STLP_USE_NEWALLOC 1
@@ -15,7 +29,9 @@
 #include <new>
 #include <set>
 
-#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+#include "string_base.h"
+#include <string.h>
+#pragma intrinsic(strlen)
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -62,10 +78,7 @@ public:
 
 	void set(const char *text)
 	{
-		const char *end = text;
-		while (*end != 0)
-			++end;
-		set(text, (Int)(end - text));
+		set(text, text ? (Int)strlen(text) : 0);
 	}
 
 	const char *str() const
@@ -99,8 +112,7 @@ public:
 
 	void concat(const AsciiString &other)
 	{
-		((StringBase<char> *)this)->concat(
-			*(const StringBase<char> *)&other);
+		concat(other.str(), other.getLength());
 	}
 
 	Int compareNoCase(const AsciiString &other) const
@@ -126,10 +138,7 @@ public:
 
 	void set(const char *text)
 	{
-		const char *end = text;
-		while (*end != 0)
-			++end;
-		set(text, (Int)(end - text));
+		set(text, text ? (Int)strlen(text) : 0);
 	}
 
 	RetailLayoutString &operator=(const RetailLayoutString &other)
@@ -153,6 +162,11 @@ public:
 	void concat(const char *text, Int length)
 	{
 		((StringBase<char> *)this)->concat(text, length);
+	}
+
+	void concat(const AsciiString &other)
+	{
+		concat(other.str(), other.getLength());
 	}
 
 	Int compareNoCase(const RetailLayoutString &other) const
@@ -228,7 +242,7 @@ void GadgetListBoxReset(GameWindow *listbox);
 Int GadgetListBoxAddEntryText(GameWindow *listbox, UnicodeString text,
 	Int color, Int row, Int column, Bool overwrite);
 void GadgetListBoxSetSelected(GameWindow *listbox, Int selectIndex);
-void bfmeCall926A(void *listbox, void *data, void *row, Int column);
+void GadgetListBoxSetItemData(GameWindow *listbox, void *data, Int row, Int column = 0);
 
 class GameTextInterface
 {
@@ -264,6 +278,7 @@ struct _SYSTEMTIME
 	UnsignedShort wMilliseconds;
 };
 
+UnicodeString getUnicodeDateBuffer(_SYSTEMTIME timeVal);
 UnicodeString getUnicodeTimeBuffer(_SYSTEMTIME timeVal);
 
 struct SaveDate
@@ -296,11 +311,7 @@ struct SaveGameInfo
 
 struct AvailableGameInfo
 {
-	__forceinline AvailableGameInfo()
-		: filename(), saveGameInfo(), next(0), prev(0)
-	{
-		saveGameInfo.saveFileType = 3;
-	}
+	__forceinline AvailableGameInfo() : filename(), saveGameInfo() {}
 	AvailableGameInfo(const AvailableGameInfo &other);
 	~AvailableGameInfo();
 
@@ -355,6 +366,7 @@ class ReplayGameInfo : public GameInfo
 {
 public:
 	ReplayGameInfo();
+	~ReplayGameInfo();
 
 	char m_bfmeSlots[8 * 0x44];
 };
@@ -408,10 +420,12 @@ private:
 	void *m_file;
 	char m_bfmeGap[0x10];
 	ReplayGameInfo m_gameInfo;
-	Int m_networkCRCInterval;
-	Int m_originalGameMode;
-	Int m_numPlayers;
-	Int m_seedOrDesync;
+	// BFME tail after the 0x278-byte m_gameInfo: the local's EH extent
+	// (ebp-0x2C0 up to the EH record) makes the object 0x2B4 bytes, and the
+	// layout witness puts m_doingAnalysis at +0x2A8.
+	char m_rva298[0x10];
+	Bool m_doingAnalysis;
+	char m_rva2a9[0xb];
 };
 
 static AsciiString &replayHeaderGameOptions(RecorderClass::ReplayHeader &header)
@@ -461,8 +475,7 @@ static UnsignedInt &replayHeaderIniCRC(RecorderClass::ReplayHeader &header)
 
 // The landed reader is object-symboled under the precise BFME storage view;
 // route this canonical call to that existing implementation.
-#pragma comment(linker, "/alternatename:?readReplayHeader@RecorderClass@@QAE_NAAUReplayHeader@1@@Z=?readReplayHeader@Rva00099490RecorderClass@@QAE_NAAUReplayHeader@1@@Z")
-#pragma comment(linker, "/alternatename:??1ReplayHeader@RecorderClass@@QAE@XZ=??1BfmeOwnVUL@@QAE@XZ")
+#pragma comment(linker, "/alternatename:??1ReplayGameInfo@@QAE@XZ=??1BfmeOwnerBU@@QAE@XZ")
 
 extern RecorderClass *TheRecorder;
 
@@ -479,6 +492,8 @@ extern FileSystem *TheFileSystem;
 
 class MapMetaData
 {
+public:
+	UnicodeString bfme_getBaseDisplayName();
 };
 
 class MapCache
@@ -490,22 +505,12 @@ public:
 
 extern MapCache *TheMapCache;
 
-// The BFME map display helper is proven by the ILT pin at 0x00042807.  Its
-// return type is the distinct AP string wrapper, not a guessed MapMetaData
-// member name.
-class UnicodeStringAP : public UnicodeString
+// BFME's version text accessor returns its own string wrapper (UnicodeStringAL,
+// BfmeVersionTextAL.cpp); the object is the Version singleton.
+class UnicodeStringAL : public UnicodeString
 {
 public:
-	UnicodeStringAP() : UnicodeString() {}
-	UnicodeStringAP(const UnicodeStringAP &other)
-		: UnicodeString(other) {}
-	~UnicodeStringAP() {}
-};
-
-class BfmeEntryAP
-{
-public:
-	UnicodeStringAP bfmeBaseNameAP();
+	~UnicodeStringAL() {}
 };
 
 class Version
@@ -517,8 +522,10 @@ public:
 class BfmeVersionAL
 {
 public:
-	UnicodeStringAP bfmeVersionTextAL();
+	UnicodeStringAL bfmeVersionTextAL();
 };
+
+extern Version *TheVersion;
 
 class GlobalDataView
 {
@@ -529,13 +536,25 @@ public:
 	UnsignedInt m_exeCRC;
 };
 
-extern BfmeVersionAL *TheBfmeVersion;
-extern Version *TheVersionNumber;
 extern GlobalDataView *TheWritableGlobalData;
 
 extern int Rva0009B4B0(int left, int right);
 extern Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options,
-	Bool includeSlots) throw();
+	Bool includeSlots);
+
+// Recorder member at 0x00098130, matched under an address-derived owner.
+class BfmeThingUXB
+{
+public:
+	void bfmeGoUXB();
+};
+
+inline Int GameMakeColor(unsigned char red, unsigned char green,
+	unsigned char blue, unsigned char alpha)
+{
+	return ((UnsignedInt)alpha << 24) | ((UnsignedInt)red << 16) |
+		((UnsignedInt)green << 8) | blue;
+}
 
 class BfmeThingME
 {
@@ -568,48 +587,43 @@ public:
 // ?prepareFinish@Rva56E070StateOwner@@QAEXXZ
 void Rva56E070StateOwner::prepareFinish()
 {
-	if (TheMapCache == 0)
+	if (!TheMapCache)
 		return;
 
-	GadgetListBoxReset(this->m_arg264);
-	if (this->m_arg268 != 0)
-		GadgetListBoxReset(this->m_arg268);
+	GadgetListBoxReset(m_arg264);
+	if (m_arg268)
+		GadgetListBoxReset(m_arg268);
 
-	this->m_availableGames.clear();
+	m_availableGames.clear();
 
 	Int widths[4] = { 30, 40, 15, 15 };
-	if (GadgetListBoxGetNumColumns(this->m_arg264) < 4)
-		GadgetListBoxSetColumnWidths(this->m_arg264, 4, widths);
-	if (this->m_arg268 != 0 &&
-		GadgetListBoxGetNumColumns(this->m_arg268) < 4)
-		GadgetListBoxSetColumnWidths(this->m_arg268, 4, widths);
+	if (GadgetListBoxGetNumColumns(m_arg264) < 4)
+		GadgetListBoxSetColumnWidths(m_arg264, 4, widths);
+	if (m_arg268 && GadgetListBoxGetNumColumns(m_arg268) < 4)
+		GadgetListBoxSetColumnWidths(m_arg268, 4, widths);
 
 	RetailLayoutString asciistr;
-	RetailLayoutString search;
-	search.set((const char *)0x010892DC, 1);
-	{
-		AsciiString extension = RecorderClass::getReplayExtention();
-		search.concat(extension.str(), extension.getLength());
-	}
+	RetailLayoutString asciisearch;
+	asciisearch.set("*");
+	asciisearch.concat(RecorderClass::getReplayExtention());
 
 	FilenameList replayFilenames;
-	register FilenameList::iterator it;
-	TheFileSystem->getFileListInDirectory(RecorderClass::getReplayDir(), search,
+	FilenameList::iterator it;
+
+	TheFileSystem->getFileListInDirectory(RecorderClass::getReplayDir(), asciisearch,
 		replayFilenames, TRUE);
+
 	TheMapCache->updateCache();
 
-	Int autoSaveIndex = 0;
-	Int gameIndex = 0;
-	if (this->m_mode270 == 3)
+	UnsignedInt normalCount = 0;
+	UnsignedInt autoCount = 0;
+	if (m_mode270 == 3)
 	{
-		UnicodeString newReplayText =
-			((GameTextCharView *)TheGameText)->fetch(
-				(const char *)0x0110A818);
-		Int row = GadgetListBoxAddEntryText(this->m_arg264, newReplayText,
-			0xffc8c8c8, -1, -1, TRUE);
-		bfmeCall926A(this->m_arg264, 0,
-			(void *)(unsigned int)row, 0);
-		gameIndex = 1;
+		UnicodeString newText = ((GameTextCharView *)TheGameText)->fetch("GUI:NewSaveReplayFile");
+		Int index = GadgetListBoxAddEntryText(m_arg264, newText,
+			GameMakeColor(200, 200, 200, 255), -1, -1, TRUE);
+		GadgetListBoxSetItemData(m_arg264, 0, index);
+		++normalCount;
 	}
 
 	for (it = replayFilenames.begin(); it != replayFilenames.end(); ++it)
@@ -617,106 +631,77 @@ void Rva56E070StateOwner::prepareFinish()
 		asciistr.set((*it).reverseFind('\\') + 1);
 
 		RecorderClass::ReplayHeader header;
-		header.filename = asciistr;
 		header.forPlayback = FALSE;
-
+		header.filename = asciistr;
 		RecorderClass recorder;
-		if (TheMapCache == 0 ||
-			!recorder.readReplayHeader(header))
-			continue;
-
-		ReplayGameInfo info;
-		if (ParseAsciiStringToGameInfo(&info, header.gameOptions, TRUE))
+		if (TheMapCache && recorder.readReplayHeader(header))
 		{
+			ReplayGameInfo info;
+			if (ParseAsciiStringToGameInfo(&info, header.gameOptions, TRUE))
+			{
+				Bool isLastReplay = FALSE;
+				AvailableGameInfo availableGameInfo;
+				availableGameInfo.filename = asciistr;
+				availableGameInfo.saveGameInfo.saveFileType = 3;
+				availableGameInfo.next = 0;
+				availableGameInfo.prev = 0;
+				m_availableGames.push_back(availableGameInfo);
 
-		register unsigned char isLastReplay = 0;
-		AvailableGameInfo availableGameInfo;
-		availableGameInfo.saveGameInfo.description = header.replayName;
-		this->m_availableGames.push_back(availableGameInfo);
+				UnicodeString replayNameToShow = header.replayName;
+				AsciiString lastReplayFName = TheRecorder->getLastReplayFileName();
+				lastReplayFName.concat(RecorderClass::getReplayExtention());
+				if (lastReplayFName.compareNoCase(asciistr) == 0)
+				{
+					replayNameToShow = ((GameTextCharView *)TheGameText)->fetch("GUI:LastReplay");
+					isLastReplay = TRUE;
+				}
 
-		UnicodeString replayNameToShow =
-			availableGameInfo.saveGameInfo.description;
-		AsciiString lastReplay = TheRecorder->getLastReplayFileName();
-		AsciiString replayExtension = RecorderClass::getReplayExtention();
-		lastReplay.concat(replayExtension.str(), replayExtension.getLength());
-		if (((RetailLayoutString *)&lastReplay)->compareNoCase(asciistr) == 0)
-		{
-			isLastReplay = 1;
-			replayNameToShow =
-				((GameTextCharView *)TheGameText)->fetch(
-					(const char *)0x01080448);
-		}
+				UnicodeString displayDate = getUnicodeDateBuffer(header.timeVal);
+				UnicodeString displayTime = getUnicodeTimeBuffer(header.timeVal);
 
-		_SYSTEMTIME systemTime;
-		systemTime.wYear = header.timeVal.wYear;
-		systemTime.wMonth = header.timeVal.wMonth;
-		systemTime.wDayOfWeek = header.timeVal.wDayOfWeek;
-		systemTime.wDay = header.timeVal.wDay;
-		systemTime.wHour = header.timeVal.wHour;
-		systemTime.wMinute = header.timeVal.wMinute;
-		systemTime.wSecond = header.timeVal.wSecond;
-		systemTime.wMilliseconds = header.timeVal.wMilliseconds;
-		UnicodeString displayTimeBuffer = getUnicodeTimeBuffer(systemTime);
+				UnicodeString mapStr;
+				const MapMetaData *md = TheMapCache->findMap(info.getMap());
+				if (!md)
+					mapStr.translate(info.getMap());
+				else
+					mapStr = const_cast<MapMetaData *>(md)->bfme_getBaseDisplayName();
 
-		UnicodeString mapString;
-		const MapMetaData *mapData = TheMapCache->findMap(info.getMap());
-		if (mapData == 0)
-		{
-			mapString.translate(info.getMap());
-		}
-		else
-		{
-			UnicodeStringAP baseName =
-				((BfmeEntryAP *)mapData)->bfmeBaseNameAP();
-			mapString = *(const UnicodeString *)&baseName;
-		}
+				Bool versionMatches =
+					header.versionString.compare(((BfmeVersionAL *)TheVersion)->bfmeVersionTextAL()) == 0 &&
+					header.versionNumber == TheVersion->getVersionNumber() &&
+					header.exeCRC == (UnsignedInt)Rva0009B4B0(TheWritableGlobalData->m_exeCRC, TheWritableGlobalData->m_exeCRC) &&
+					header.iniCRC == TheWritableGlobalData->m_iniCRC;
 
-		Bool versionMatches = false;
-		UnicodeStringAP currentVersion = TheBfmeVersion->bfmeVersionTextAL();
-		if (header.versionString.compare(
-			*(const UnicodeString *)&currentVersion) == 0 &&
-			header.versionNumber == TheVersionNumber->getVersionNumber())
-		{
-			UnsignedInt exeCRC = TheWritableGlobalData->m_exeCRC;
-			versionMatches =
-				header.exeCRC == (UnsignedInt)Rva0009B4B0(exeCRC, exeCRC) &&
-				header.iniCRC == TheWritableGlobalData->m_iniCRC;
-		}
+				Int color = versionMatches ? -1 : (Int)0xff808080;
+				GameWindow *listbox = isLastReplay ? m_arg268 : m_arg264;
 
-		Int color = versionMatches ? -1 : (Int)0xff808080;
-		GameWindow *listbox = isLastReplay ? this->m_arg268 : this->m_arg264;
-		Int row = isLastReplay ? autoSaveIndex : gameIndex;
-		Int index = GadgetListBoxAddEntryText(listbox, replayNameToShow,
-			color, -1, 0, TRUE);
-		GadgetListBoxAddEntryText(listbox, displayTimeBuffer,
-			color, index, 1, TRUE);
-		GadgetListBoxAddEntryText(listbox, header.versionString,
-			color, index, 2, TRUE);
-		GadgetListBoxAddEntryText(listbox, mapString,
-			color, index, 3, TRUE);
-
-		AvailableGameInfo *last = &this->m_availableGames.back();
-		bfmeCall926A(listbox, (void *)last, (void *)(unsigned int)row, 0);
-		if (isLastReplay)
-			++autoSaveIndex;
-		else
-			++gameIndex;
+				Int index = GadgetListBoxAddEntryText(listbox, mapStr, color, -1, 0, TRUE);
+				GadgetListBoxAddEntryText(listbox, replayNameToShow, color, index, 1, TRUE);
+				GadgetListBoxAddEntryText(listbox, displayTime, color, index, 2, TRUE);
+				GadgetListBoxAddEntryText(listbox, displayDate, color, index, 3, TRUE);
+				GadgetListBoxSetItemData(listbox, &m_availableGames.back(), index);
+				if (isLastReplay)
+					++autoCount;
+				else
+					++normalCount;
+			}
+			((BfmeThingUXB *)&recorder)->bfmeGoUXB();
 		}
 	}
 
-	if (gameIndex != 0)
+	if (normalCount > 0)
 	{
-		GadgetListBoxSetSelected(this->m_arg264, 0);
-		GadgetListBoxSetSelected(this->m_arg268, -1);
+		GadgetListBoxSetSelected(m_arg264, 0);
+		GadgetListBoxSetSelected(m_arg268, -1);
 	}
-	else if (autoSaveIndex != 0)
+	else if (autoCount > 0)
 	{
-		GadgetListBoxSetSelected(this->m_arg264, -1);
-		GadgetListBoxSetSelected(this->m_arg268, 0);
+		GadgetListBoxSetSelected(m_arg264, -1);
+		GadgetListBoxSetSelected(m_arg268, 0);
 	}
 	else
 	{
-		GadgetListBoxSetSelected(this->m_arg264, -1);
-		GadgetListBoxSetSelected(this->m_arg268, -1);
+		GadgetListBoxSetSelected(m_arg264, -1);
+		GadgetListBoxSetSelected(m_arg268, -1);
 	}
 }
