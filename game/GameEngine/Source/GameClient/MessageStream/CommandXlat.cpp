@@ -740,6 +740,22 @@ bool Rva005A7620Caller(const GameMessage *msg)
 	return isSystemMessage005A7620(msg);
 }
 
+// Retail 0x005A75C0 (41 B, void(void)): out-of-line copy of the case-0x5E
+// site below (ThePlayerList +0xC local, rva000D4660(TRUE, NULL) via ILT
+// 0x4AF84, TheTacticalView->lookAt(obj + 0x38) slot 0x54). No callers,
+// refs=0, no ILT. getPosition() is obj + 0x38 here, matching retail add.
+// ?lookAtHero005A75C0@@YAXXZ
+void lookAtHero005A75C0()
+{
+	Player *player = ThePlayerList->getLocalPlayer();
+	if (player)
+	{
+		Object *obj = player->rva000D4660(true, 0);
+		if (obj)
+			TheTacticalView->lookAt(obj->getPosition());
+	}
+}
+
 GameMessageDisposition CommandTranslator::translateGameMessage(const GameMessage* msg)
 {
  InGameUI* initialUI=TheInGameUI;
