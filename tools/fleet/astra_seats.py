@@ -33,6 +33,7 @@ import collections
 import datetime
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -285,6 +286,80 @@ def experiment_groups(measured_path, bodies=20, per_seat=5):
         for start in range(0, len(rvas), per_seat):
             groups.append((arm, f"experiment {arm} ({name})", rvas[start:start + per_seat]))
     return groups
+
+
+LINK_DEBT_NOTE = """LINK-DEBT SEAT ({model}, {effort}, hard cap {hours} hours). The source file below already byte-matches
+retail, but it reaches globals through LITERAL image addresses (`*(int *)0x012ED5C8`). The byte gate masks
+relocations, so a literal matches today, and it breaks the linked build the moment data moves
+(tools/link_census.py, tools/link_debt.py). Your job: remove every literal in this file WITHOUT changing a byte.
+For each literal listed below:
+  1 find the global it means: the brief lists the named global at or just below each address from
+    targets/game/reverse/dir32_addresses.csv (name + offset). An offset inside a known object is a member or
+    element access through that object; spell it that way (a struct field, an array index) when the layout
+    is witnessed (tools/name_oracle.py), else as the named global plus a byte offset.
+  2 declare it the way other matched files already do (rg the name in game/ first and copy that declaration);
+    an address no table names gets an address-derived extern `g_XXXXXXXX` -- never a guessed descriptive name.
+    A hint naming `__real@XXXXXXXX` / `__real@XXXXXXXXXXXXXXXX` is a compiler float/double constant: write the
+    value itself (`6.0f` for __real@40c00000) and the compiler emits that constant. A large offset past a
+    named global is usually a DIFFERENT, unnamed global, not a member: check its size before spelling a field.
+  3 ./build.sh <this file> must still print Functions OK for every row, and `DIR32 addresses` must pass (it
+    proves every reference lands where all other matched code puts that name). python3 tools/link_debt.py
+    --report shows what is left.
+A literal you cannot replace without losing bytes stays; say which and why in REPORT.md. Do not touch other
+files' bodies; a shared header edit is out of scope. RULES: never run git (the operator commits). No full gate,
+never launch the game, no edits to tools/, docs/, game/gen_asm/ or game/gen_small/. Stop at {hours} hours and
+write build/astra_seat/REPORT.md: per literal, replaced with what, or kept and why."""
+
+
+def link_debt_groups(count):
+    """[(file, rvas)]: the game sources with the most literal image addresses,
+    one per seat, skipping any whose rows are claimed or already in a seat."""
+    import eligibility
+    import link_debt
+
+    busy = claimed() | {int(r, 16) for r in eligibility.busy_rvas()}
+    served = {s["label"] for s in seats() if not s.get("harvested")}
+    by_source = collections.defaultdict(list)
+    for row in eligibility.load_rows():
+        if row.get("status") == "matched" and (row.get("target_rva") or "").startswith("0x"):
+            by_source[row["source"]].append(int(row["target_rva"], 16))
+    ranked = []
+    for source, rvas in by_source.items():
+        if not link_debt.watched(source) or source in served or any(r in busy for r in rvas):
+            continue
+        try:
+            found = link_debt.literals((ROOT / source).read_text(encoding="utf-8", errors="replace"))
+        except OSError:
+            continue
+        if found:
+            ranked.append((len(found), source, rvas))
+    ranked.sort(reverse=True)
+    return [(source, rvas) for _, source, rvas in ranked[:count]]
+
+
+def link_debt_brief(rvas):
+    """Each literal in the seat's file with the named global at or below it."""
+    import bisect
+    import csv
+    import eligibility
+    import link_debt
+
+    wanted = set(rvas)
+    source = next(r["source"] for r in eligibility.load_rows()
+                  if (r.get("target_rva") or "").startswith("0x") and int(r["target_rva"], 16) in wanted)
+    with (ROOT / "targets/game/reverse/dir32_addresses.csv").open(newline="", encoding="utf-8") as handle:
+        table = sorted((int(r["va"], 16), r["name"]) for r in csv.DictReader(handle) if r["va"].startswith("0x"))
+    starts = [va for va, _ in table]
+    lines = [f"FILE: {source}", "LITERALS (address -> nearest named global at or below it):"]
+    text = (ROOT / source).read_text(encoding="utf-8", errors="replace")
+    for number, line in enumerate(text.splitlines(), 1):
+        for found in link_debt.literals(line):
+            value = int(re.search(r"0x[0-9A-Fa-f]{7,8}", found).group(0), 16)
+            index = bisect.bisect_right(starts, value) - 1
+            hint = (f"{table[index][1]} + 0x{value - starts[index]:X}" if index >= 0 and value - starts[index] < 0x10000
+                    else "no named global nearby: use g_%08X" % value)
+            lines.append(f"  line {number}: {found[:70]}  ->  {hint}")
+    return "\n".join(lines) + "\n"
 
 
 def fresh_checkout():
@@ -623,6 +698,9 @@ def main(argv=None):
                     help="serve bodies attempted once or twice (start from the stash) instead of never-tried ones")
     ap.add_argument("--big", action="store_true",
                     help="serve never-attempted bodies of 1.2-8 KB, 1-3 per seat, 3 h cap (half the remaining bytes)")
+    ap.add_argument("--link-debt", action="store_true",
+                    help="serve the game sources with the most literal image addresses, one per seat, "
+                         "to replace them with named globals (tools/link_debt.py)")
     ap.add_argument("--experiment", metavar="MEASURED_JSON",
                     help="lever experiment: 20 measured 0.90-0.99 allocation/order near misses, dealt alternately "
                          "to lever-protocol seats (A) and ordinary retry seats (B) launched together")
@@ -657,6 +735,14 @@ def main(argv=None):
                 print(f"{label}: {' '.join(f'0x{r:08X}' for r in starts)}")
             return 0
         launch(groups, 3.0, GAP_NOTE, gap_brief)
+        return 0
+    if args.link_debt:
+        groups = link_debt_groups(args.count)
+        if args.action == "pick":
+            for label, rvas in groups:
+                print(f"{label}: {len(rvas)} rows")
+            return 0
+        launch(groups, 2.0, LINK_DEBT_NOTE, link_debt_brief)
         return 0
     if args.experiment:
         groups = experiment_groups(args.experiment)
