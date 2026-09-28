@@ -1,136 +1,95 @@
-// ?d_0017ba90@@YAXXZ
-// partial score=0.3 date=2026-09-25
-// ?handle@Gen00039BD5@@QAEXH@Z
-// Candidate v2 for retail 0x0017BA90, preserving the indexed helper ABI.
-
+// ?stateReturn@Gen00039BD5@@QAE?AW4StateReturnType@@_N@Z
+// partial score=0.9565 date=2026-09-28
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// Retail 0x0017BA90 (897 B, ret 4): the AIAttackAimAtTargetState per-frame worker.
+// Matched AIAttackAimAtTargetState::onEnter calls it with 1 through ILT 0x00039BD5,
+// and vtable slot 6's forwarder 0x001840D0 calls it with 0. Rewritten cold from
+// retail on the ZH AIAttackAimAtTargetState::update skeleton.
+// PARAMETER IS Bool: retail re-reads `byte ptr [esp+0x34]` at every use, while an
+// Int parameter is cached in edi. The pinned caller name
+// ?stateReturn@Gen00039BD5@@QAE?AW4StateReturnType@@H@Z (onEnter) therefore needs
+// a correction to ...@_N@Z when this lands (callers push the same immediate).
+// Model: Coord3D = member-wise copy ctor + IMPLICIT operator= (retail copies the
+// goal position interleaved, the victim position load-all/store-all); the aim delta
+// is assigned under `if (weapon)`; the angle offset goes through a named local.
+// Residue (39 bytes): the "Ram" contact block puts `gotContact=false` before the
+// call (retail) vs after (ours), and the victim-position assignment interleaves.
 #include <math.h>
 
 typedef int Int;
 typedef bool Bool;
 typedef float Real;
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
-
-enum WhichTurretType
-{
-	TURRET_INVALID = -1
-};
-
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0
-};
-
-enum KindOfType
-{
-	KINDOF_3B = 0x3b,
-	KINDOF_88 = 0x88,
-	KINDOF_95 = 0x95
-};
+enum StateReturnType { STATE_CONTINUE = 0, STATE_SUCCESS = -1, STATE_FAILURE = -2 };
+enum WhichTurretType { TURRET_INVALID = -1 };
+enum WeaponSlotType { PRIMARY_WEAPON = 0 };
+enum KindOfType { KINDOF_BFME_3B = 0x3b, KINDOF_BFME_88 = 0x88, KINDOF_BFME_95 = 0x95 };
 
 struct Coord3D
 {
-	Real x;
-	Real y;
-	Real z;
+	Coord3D() {}
+	Coord3D(const Coord3D &o) { x = o.x; y = o.y; z = o.z; }
+	void set(const Coord3D *p) { x = p->x; y = p->y; z = p->z; }
+	Real x, y, z;
 };
 
 class Player;
-class WeaponTemplate;
-class Weapon;
 class Object;
 
 template<int N>
-class BfmeVirtualSlots : public BfmeVirtualSlots<N - 1>
+class VirtualSlots : public VirtualSlots<N - 1>
 {
 public:
 	virtual void unused(char (*)[N]) = 0;
 };
-
-template<>
-class BfmeVirtualSlots<0>
-{
-};
+template<> class VirtualSlots<0> {};
 
 class StateMachine
 {
 public:
+	Object *getGoalObject();
+
 	unsigned char m_unreconstructed_000[0x10];
 	Object *m_owner;
 	unsigned char m_unreconstructed_014[0x10];
 	Coord3D m_goalPosition;
-
-	Object *getGoalObject();
 };
 
 class Locomotor
 {
 public:
-	Real getMaxTurnRate(Object *object) const;
+	Real getMaxTurnRate(Object *obj) const;
 };
 
-class AIUpdateInterface : public BfmeVirtualSlots<115>
+class AIUpdateInterface : public VirtualSlots<115>
 {
 public:
 	virtual void addTargeter(Int id, Bool add) = 0;
-	virtual Bool isTemporarilyPreventingAimSuccess() const = 0;
-	virtual void unusedAt1d4() = 0;
-	virtual void setLocomotorGoalPositionExplicit(const Coord3D *) = 0;
-	virtual void unusedAt1dc() = 0;
-	virtual void unusedAt1e0() = 0;
-	virtual void setLocomotorGoalOrientation(Real) = 0;
+	virtual Bool isTemporarilyPreventingAimSuccess() = 0;
+	virtual void vslot1D4() = 0;
+	virtual void setLocomotorGoalPositionExplicit(const Coord3D &pos) = 0;
+	virtual void vslot1DC() = 0;
+	virtual void vslot1E0() = 0;
+	virtual void setLocomotorGoalOrientation(Real angle) = 0;
 
 	WhichTurretType getWhichTurretForCurWeapon() const;
-	void setTurretTargetObject(WhichTurretType, Object *, Bool);
-	void setTurretTargetPosition(WhichTurretType, const Coord3D *);
-	Real getTurretTurnRate(WhichTurretType) const;
+	void setTurretTargetObject(WhichTurretType tur, Object *victim, Bool force);
+	void setTurretTargetPosition(WhichTurretType tur, const Coord3D *pos);
 };
 
-class Object
+// Placeholder-named callees, used through views on the receiver they take.
+class Gen_0026EB40 { public: Real bfmeValue(Int turret) const; };      // turret turn rate
+class Rva001BE100 { public: Bool has(); };                            // hasAnyWeapon
+class Rva001BE010 { public: Int get(); };                             // current locomotor
+class Gen_001e1760 { public: Bool m(); };
+class Rva001E1770ByteField { public: unsigned char get() const; };
+class BFMEObjectStealthQuery { public: Bool isStealthedAndUndetected(const Object *) const; };
+
+class Thing
 {
 public:
-	void *m_vtable;
-	WeaponTemplate *m_template;
-	unsigned char m_unreconstructed_008[0x30];
-	Coord3D m_position;
-	Real m_orientation;
-	unsigned char m_unreconstructed_048[0x2c];
-	Int m_id;
-	unsigned char m_unreconstructed_078[0x1c];
-	unsigned int m_status94;
-	unsigned int m_status98;
-	unsigned char m_unreconstructed_09c[0x108];
-	unsigned char m_status1a4;
-	unsigned char m_unreconstructed_1a5[0x5f];
-	AIUpdateInterface *m_ai;
-	unsigned char m_unreconstructed_208[0x13c];
-	unsigned char m_status344;
-
-	Bool hasAnyWeapon();
-	Weapon *getCurrentWeapon(WeaponSlotType);
-	Player *getControllingPlayer() const;
-	Locomotor *getCurLocomotor() const;
-	Bool isKindOf(KindOfType) const;
-	Bool getWorldspaceBestContactPoint(Coord3D *, const Coord3D *,
-		const char *, Int, Int, Bool) const;
-	Real bfmeRelativeAngleTo(const Coord3D *) const;
-};
-
-class BFMEObjectStealthQuery
-{
-public:
-	Bool isStealthedAndUndetected(const Object *) const;
-};
-
-class ThingTemplate
-{
-public:
-	Bool isKindOf(KindOfType) const;
+	Bool isKindOf(KindOfType kind) const;
+	Real bfmeRelativeAngleTo(const Coord3D *pos) const;
 };
 
 class WeaponTemplate
@@ -138,24 +97,61 @@ class WeaponTemplate
 public:
 	unsigned char m_unreconstructed_000[0x20];
 	Real m_aimDelta;
-	Real m_range;
-
-	Bool isContactWeapon() const;
-	Bool isLeechRangeWeapon() const;
+	Real m_field24;
 };
 
 class Weapon
 {
 public:
+	Real getAimDelta() const { return m_template->m_aimDelta; }
+	Bool isWithinAttackRange(const Object *source, const Coord3D *pos, Int flags) const;
+
 	void *m_vtable;
 	WeaponTemplate *m_template;
-
-	Bool isWithinAttackRange(const Object *, const Coord3D *, Int) const;
 };
 
+class Object : public Thing
+{
+public:
+	Weapon *getCurrentWeapon(WeaponSlotType *slot);
+	Player *getControllingPlayer() const;
+	Bool getWorldspaceBestContactPoint(Coord3D *result, const Coord3D *from, const char *bone,
+		Int a, Int b, Bool c) const;
+	Bool isEffectivelyDead() const { return (m_privateStatus & 1) != 0; }
+	Bool isDisabledByType(Int type) const { return (m_disabledMask & (1 << type)) != 0; }
+	AIUpdateInterface *getAI() { return m_ai; }
+	const Coord3D *getPosition() const { return &m_position; }
+	Real getOrientation() const { return m_orientation; }
+	Int getID() const { return m_id; }
+
+	void *m_vtable;
+	char m_pad04[0x34];
+	Coord3D m_position;
+	Real m_orientation;
+	char m_pad48[0x2c];
+	Int m_id;
+	char m_pad78[0x1c];
+	unsigned int m_status94;
+	unsigned int m_status98;
+	char m_pad9C[0x108];
+	unsigned char m_disabledMask;
+	char m_pad1A5[0x5f];
+	AIUpdateInterface *m_ai;
+	char m_pad208[0x13c];
+	unsigned char m_privateStatus;
+};
+
+extern Real normalizeAngle(Real angle);
+
+enum { DISABLED_HELD = 3 };
+
+// The AIAttackAimAtTargetState layout of the matched onEnter TU; the member
+// name is the value-returning placeholder that onEnter links at ILT 0x00039BD5.
 class Gen00039BD5
 {
 public:
+	StateReturnType stateReturn(Bool firstTime);
+
 	unsigned char m_unreconstructed_000[0x1c];
 	StateMachine *m_machine;
 	unsigned char m_unreconstructed_020[0x04];
@@ -163,146 +159,108 @@ public:
 	Bool m_canTurnInPlace;
 	Bool m_setLocomotor;
 	Bool m_isForceAttacking;
-
-	StateReturnType handle(Int index);
 };
 
-#pragma comment(linker, "/alternatename:?getGoalObject@StateMachine@@QAEPAVObject@@XZ=?j_0000e570@@YAXXZ")
-#pragma comment(linker, "/alternatename:?hasAnyWeapon@Object@@QAE_NXZ=?j_00048b80@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getCurrentWeapon@Object@@QAEPAVWeapon@@W4WeaponSlotType@@@Z=?j_00031a7f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getCurLocomotor@Object@@QBEPAVLocomotor@@XZ=?j_00021017@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isStealthedAndUndetected@BFMEObjectStealthQuery@@QBE_NPBVObject@@@Z=?j_00003b1b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getWhichTurretForCurWeapon@AIUpdateInterface@@QBE?AW4WhichTurretType@@XZ=?j_000346a3@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setTurretTargetObject@AIUpdateInterface@@QAEXW4WhichTurretType@@PAVObject@@_N@Z=?j_0001a0e1@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setTurretTargetPosition@AIUpdateInterface@@QAEXW4WhichTurretType@@PBUCoord3D@@@Z=?j_000331bd@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getTurretTurnRate@AIUpdateInterface@@QBEMW4WhichTurretType@@@Z=?j_0003cc18@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getMaxTurnRate@Locomotor@@QBEMPAVObject@@@Z=?j_00024ea6@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getWorldspaceBestContactPoint@Object@@QBE_NPATCoord3D@@PBT1@PBDHH_N@Z=?j_00034e91@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeRelativeAngleTo@Object@@QBEMPBTCoord3D@@@Z=?j_00049413@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isKindOf@Object@@QBE_NW4KindOfType@@@Z=?j_0003251f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isContactWeapon@WeaponTemplate@@QBE_NXZ=?j_0000b8ac@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isLeechRangeWeapon@WeaponTemplate@@QBE_NXZ=?j_00028f74@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isWithinAttackRange@Weapon@@QBE_NPBVObject@@PBUCoord3D@@H@Z=?j_0002e951@@YAXXZ")
-#pragma comment(linker, "/alternatename:?normalizeAngle@@YAMM@Z=?j_0000991c@@YAXXZ")
-
-extern Real normalizeAngle(Real);
-
-#define BFME_ZERO_RANGE (*(const Real *)0x01075350)
-#define BFME_MIN_AIM_DELTA (*(const Real *)0x010977F0)
-#define BFME_TURN_THRESHOLD (*(const Real *)0x01095F98)
-#define BFME_TURN_RATE_FACTOR (*(const Real *)0x0107533C)
-
-StateReturnType Gen00039BD5::handle(Int index)
+StateReturnType Gen00039BD5::stateReturn(Bool firstTime)
 {
 	Object *source = m_machine->m_owner;
-	AIUpdateInterface *sourceAI = source->m_ai;
+	AIUpdateInterface *sourceAI = source->getAI();
 
-	if (!source->hasAnyWeapon())
+	if (!((Rva001BE100 *)source)->has())
 		return STATE_FAILURE;
 
 	Object *victim = m_machine->getGoalObject();
-	Weapon *weapon = source->getCurrentWeapon(PRIMARY_WEAPON);
-
-	if (m_isAttackingObject && victim)
+	Weapon *weapon = source->getCurrentWeapon(0);
+	if (m_isAttackingObject)
 	{
-		if ((victim->m_status344 & 1) != 0 ||
-			(victim->m_status94 & 0x20000) != 0 ||
+		if (!victim || victim->isEffectivelyDead() || (victim->m_status94 & 0x20000) != 0 ||
 			((BFMEObjectStealthQuery *)victim)->isStealthedAndUndetected(
 				(const Object *)source->getControllingPlayer()))
 			return STATE_FAILURE;
 	}
 
-	WhichTurretType turret = sourceAI->getWhichTurretForCurWeapon();
-	if (turret != TURRET_INVALID)
+	WhichTurretType tur = sourceAI->getWhichTurretForCurWeapon();
+	if (tur != TURRET_INVALID)
 	{
 		if (m_isAttackingObject)
-			sourceAI->setTurretTargetObject(turret, victim, m_isForceAttacking);
+			sourceAI->setTurretTargetObject(tur, victim, m_isForceAttacking);
 		else
-			sourceAI->setTurretTargetPosition(turret, &m_machine->m_goalPosition);
-
-		if (sourceAI->getTurretTurnRate(turret) != BFME_ZERO_RANGE)
+			sourceAI->setTurretTargetPosition(tur, &m_machine->m_goalPosition);
+		if (((Gen_0026EB40 *)sourceAI)->bfmeValue(tur) != 0.0f)
 			return STATE_CONTINUE;
 	}
 
-	Real aimDelta = BFME_MIN_AIM_DELTA;
+	const Real REL_THRESH = 0.035f;
+	Real aimDelta = 0.0f;
 	if (weapon)
-	{
-		aimDelta = weapon->m_template->m_aimDelta;
-		if (aimDelta < BFME_MIN_AIM_DELTA)
-			aimDelta = BFME_MIN_AIM_DELTA;
-	}
+		aimDelta = weapon->getAimDelta();
+	if (aimDelta < REL_THRESH)
+		aimDelta = REL_THRESH;
 
 	Real turnRate = 0.0f;
-	if (source->getCurLocomotor())
-		turnRate = source->getCurLocomotor()->getMaxTurnRate(source);
-	if ((source->m_status1a4 & 8) != 0 && aimDelta < BFME_TURN_THRESHOLD)
+	if (((Rva001BE010 *)source)->get())
+		turnRate = ((Locomotor *)((Rva001BE010 *)source)->get())->getMaxTurnRate(source);
+
+	if (source->isDisabledByType(DISABLED_HELD) && aimDelta < 0.3f)
 		aimDelta = 0.3f;
 
 	if ((source->m_status98 & 0x400) != 0)
-		return STATE_CONTINUE;
+		return STATE_SUCCESS;
 
-	Coord3D targetPosition = m_machine->m_goalPosition;
-	if (m_isAttackingObject && victim)
+	Coord3D targetPos = m_machine->m_goalPosition;
+	if (m_isAttackingObject)
 	{
-		Bool gotContact = false;
-		if (victim->isKindOf(KINDOF_3B) || victim->isKindOf(KINDOF_88))
-		{
-			gotContact = victim->m_template->isContactWeapon();
-			if (!gotContact)
-				gotContact = victim->m_template->isLeechRangeWeapon();
-		}
-
-		if (!gotContact && !victim->isKindOf(KINDOF_95))
-		{
-			gotContact = victim->getWorldspaceBestContactPoint(
-				&targetPosition, &source->m_position,
-				(const char *)0x0109A0AC, 0x2a, 0, false);
-		}
-
-		if (!gotContact)
-			targetPosition = victim->m_position;
+		Bool gotContact;
+		if (weapon && (victim->isKindOf(KINDOF_BFME_3B) || victim->isKindOf(KINDOF_BFME_88)) &&
+			(((Gen_001e1760 *)weapon->m_template)->m() ||
+			 ((Rva001E1770ByteField *)weapon->m_template)->get()))
+			gotContact = victim->getWorldspaceBestContactPoint(&targetPos, source->getPosition(), "Ram", 0, 0x2a, false);
+		else
+			gotContact = false;
+		if (!victim->isKindOf(KINDOF_BFME_95) && !gotContact)
+			targetPos = *victim->getPosition();
 	}
 
-	Real relativeAngle = source->bfmeRelativeAngleTo(&targetPosition);
-	if (weapon && weapon->m_template->m_range != BFME_ZERO_RANGE)
+	Real relAngle = source->bfmeRelativeAngleTo(&targetPos);
+	if (weapon && weapon->m_template->m_field24 > 0.0f)
 	{
-		relativeAngle = normalizeAngle(relativeAngle - weapon->m_template->m_range);
+		Real offset = weapon->m_template->m_field24;
+		relAngle = normalizeAngle(relAngle - offset);
 	}
 
 	if (m_canTurnInPlace)
 	{
-		if (fabs(relativeAngle) > aimDelta && index != 0)
+		if (fabs(relAngle) > aimDelta || firstTime)
 		{
-			sourceAI->setLocomotorGoalOrientation(source->m_orientation + relativeAngle);
+			sourceAI->setLocomotorGoalOrientation(source->getOrientation() + relAngle);
 			m_setLocomotor = true;
 		}
 	}
 	else
 	{
-		sourceAI->setLocomotorGoalPositionExplicit(&targetPosition);
+		sourceAI->setLocomotorGoalPositionExplicit(targetPos);
 	}
 
-	if (index != 0)
+	if (firstTime)
 		return STATE_CONTINUE;
 
-	if (fabs(relativeAngle) < aimDelta ||
-		fabs(relativeAngle) < turnRate * BFME_TURN_RATE_FACTOR)
+	if (fabs(relAngle) < aimDelta || fabs(relAngle) < turnRate * 0.5f)
 	{
-		AIUpdateInterface *victimAI = victim ? victim->m_ai : 0;
+		AIUpdateInterface *victimAI = victim ? victim->getAI() : 0;
 		if (victimAI)
-			victimAI->addTargeter(source->m_id, true);
-		if (victimAI && victimAI->isTemporarilyPreventingAimSuccess())
-			return STATE_CONTINUE;
+		{
+			victimAI->addTargeter(source->getID(), true);
+			if (victimAI->isTemporarilyPreventingAimSuccess())
+				return STATE_CONTINUE;
+		}
 		return STATE_SUCCESS;
 	}
 
-	if ((source->m_status1a4 & 8) != 0)
+	if (source->isDisabledByType(DISABLED_HELD))
 	{
-		weapon = source->getCurrentWeapon(PRIMARY_WEAPON);
-		const Coord3D *position = m_isAttackingObject && victim ?
-			&victim->m_position : &m_machine->m_goalPosition;
-		if (!weapon || !weapon->isWithinAttackRange(source, position, 0))
+		Weapon *heldWeapon = source->getCurrentWeapon(0);
+		const Coord3D *pos = m_isAttackingObject ? victim->getPosition() : &m_machine->m_goalPosition;
+		if (!heldWeapon || !heldWeapon->isWithinAttackRange(source, pos, 0))
 			return STATE_FAILURE;
 	}
 

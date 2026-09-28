@@ -9568,5 +9568,25 @@
   "after_sha256": "a9beac1e2e695b17ea6d27e968ff8e8ae5962615788a3787ffc91349b1dadfd1",
   "evidence": "targets/game/reverse/identity_evidence/000960a0-00771870-objectid-pair-vector.md",
   "reason": "ILT thunk 0x00022AF7 forwards to the W3D-side insert 0x00771870, whose pair<ObjectID, ObjectID> element is refuted (see evidence); it takes the same address-derived element."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0017ba90.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0017ba90.cpp",
+  "old_name": "m_range",
+  "new_name": "m_field24",
+  "before_sha256": "c1146c2cb79a5073b044c1022f14f886b2278f757a1f3933a6ef1528eb0ced9a",
+  "after_sha256": "a68bab6621805b74b37893ad9618b40fa2204a13544c04fc6075d71d557eef8f",
+  "evidence": "targets/game/reverse/identity_evidence/0017ba90-aim-worker-names.md",
+  "reason": "WeaponTemplate+0x24 is an angle offset subtracted from the relative angle at retail 0x0017BA90+0x24D; not a range and not witnessed."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0017ba90.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0017ba90.cpp",
+  "old_name": "Object",
+  "new_name": "Rva001BE100",
+  "before_sha256": "c1146c2cb79a5073b044c1022f14f886b2278f757a1f3933a6ef1528eb0ced9a",
+  "after_sha256": "a68bab6621805b74b37893ad9618b40fa2204a13544c04fc6075d71d557eef8f",
+  "evidence": "targets/game/reverse/identity_evidence/0017ba90-aim-worker-names.md",
+  "reason": "False pairing: Rva001BE100 is the matched receiver name of ?has@Rva001BE100@@QAE_NXZ (0x001BE100) that the call must link; class Object remains in the stash."
  }
 ]
