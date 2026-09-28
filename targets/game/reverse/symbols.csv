@@ -76915,7 +76915,6 @@ name,address,notes
 ?bfmeFindZK@Rva00367E30Logic@@QAEPAVBfmeActorZK@@PAX@Z,0x0001F253,pin
 ?bfmeFinish1003@BfmeB1003@@QAEXXZ,0x0003FBF7,pin
 ?bfmeFinish1010A@BfmeA1010@@QAEXXZ,0x0002A05E,pin
-?bfmeFinish1010B@BfmeThing1010@@QAEXH@Z,0x0001AA0A,pin
 ?bfmeFinish1013@BfmeB1013@@QAEXXZ,0x00011464,pin
 ?bfmeFinish1279@BfmeNode1279@@QAEXXZ,0x008C4310,address decoded from the 0x008BD400 finalizer call
 ?bfmeFinish1282@BfmeA1282@@QAEXPAVBfmeQ1282@@HHH@Z,0x0001C7EC,pin
@@ -82177,7 +82176,6 @@ name,address,notes
 ?g_bfmeSink1010@@3PAVBfmeSink1010@@A,0x00EF0898,pin
 ?g_bfmeSinkAAA@@3PAVBfmeSinkAAA@@A,0x00EF33F8,pin
 ?g_bfmeSinkAAB@@3PAVBfmeSinkAAB@@A,0x00EF33F8,pin
-?g_bfmeSinkB1010@@3PAVBfmeSinkB1010@@A,0x00EF1464,pin
 ?g_bfmeSinkBFC@@3PAVBfmeSinkBFC@@A,0x00EF6924,pin
 ?g_bfmeSinkBHD@@3PAVBfmeSinkBHD@@A,0x00EED668,pin
 ?g_bfmeSinkBLC@@3PAVBfmeSinkBLC@@A,0x00EED600,pin
@@ -89798,3 +89796,4 @@ _Rva0086C6E0,0x0086C6E0,gap-seat; opaque address-derived five-argument cdecl hel
 ?validateStuff@ModelConditionInfo@@QBEXPAVRenderObjClass@@MABV?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@PBU1@ABURva00774AA0DrawableBones@@@Z,0x00006E92,ILT 0x00006E92 to body 0x00774AA0; ZH stateToUse->validateStuff(robj scale m_extraPublicBones) in matched 0x00775760 with BFME bone-state and Drawable+0x2F0 arguments; thiscall five stack args void
 ?find@?$hash_map@HPAURva006A5080PlayingAudio@@U?$hash@H@_STL@@U?$equal_to@H@3@V?$allocator@U?$pair@$$CBHPAURva006A5080PlayingAudio@@@_STL@@@3@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBHPAURva006A5080PlayingAudio@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAURva006A5080PlayingAudio@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHPAURva006A5080PlayingAudio@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHPAURva006A5080PlayingAudio@@@_STL@@@2@@2@ABH@Z,0x006A0200,caller006A5080; witnessed int key pointer value map and two-word iterator; retail 0x006A0200; full callee ABI checked including 006A0C70 raw pointer node release
 ?erase@?$hash_map@HPAURva006A5080PlayingAudio@@U?$hash@H@_STL@@U?$equal_to@H@3@V?$allocator@U?$pair@$$CBHPAURva006A5080PlayingAudio@@@_STL@@@3@@_STL@@QAEXU?$_Ht_iterator@U?$pair@$$CBHPAURva006A5080PlayingAudio@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAURva006A5080PlayingAudio@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHPAURva006A5080PlayingAudio@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHPAURva006A5080PlayingAudio@@@_STL@@@2@@2@@Z,0x006A3BF0,caller006A5080; witnessed int key pointer value map and two-word iterator; retail 0x006A3BF0; full callee ABI checked including 006A0C70 raw pointer node release
+?rva008F73C0@PartitionManager@@QAEXPAURva00C9EE28Base@@@Z,0x008F73C0,8-byte thiscall forwarder (mov ecx [ecx+0xC]; jmp 0x008F8D00 which ret 4); Object::~Object 0x001D4010 calls it directly with ECX=TheShroudManager 0x012ED5BC (PartitionManager) and pushes Object+0x64; ZH ThePartitionManager->unRegisterObject(this) position; address-derived name

@@ -9058,5 +9058,35 @@
   "after_sha256": "63e10e8e500b4bec36c538413342ee161c89e1c89cb1c15c560f97df9ff8bb2c",
   "evidence": "targets/game/reverse/identity_evidence/001f0960-filter-model.md",
   "reason": "False pairing: __declspec was an attribute on the old fake constructors, not a type."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001d4010.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/ObjectDestructor.cpp",
+  "old_name": "remove",
+  "new_name": "rva008F73C0",
+  "before_sha256": "f437a1b88a54f1bbad0883b8d1596dc70e9a235c69ddb64f546f076f1262c393",
+  "after_sha256": "95fbc7c9c3d704a43d044b6bd2d1220a3a30a9a5dc1865dfee827be53fd1dbef",
+  "evidence": "targets/game/reverse/identity_evidence/008f73c0-partition-forwarder.md",
+  "reason": "`remove` was the banked stash's placeholder for the 8-byte thiscall forwarder at 0x008F73C0, which Object::~Object calls with ECX=TheShroudManager (PartitionManager) and Object+0x64; no emitter, matched caller or Zero Hour spelling proves its name, so the landed pin keeps the address. See the evidence file."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001d4010.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/ObjectDestructor.cpp",
+  "old_name": "sendDestroyed",
+  "new_name": "rva00383440",
+  "before_sha256": "f437a1b88a54f1bbad0883b8d1596dc70e9a235c69ddb64f546f076f1262c393",
+  "after_sha256": "95fbc7c9c3d704a43d044b6bd2d1220a3a30a9a5dc1865dfee827be53fd1dbef",
+  "evidence": "targets/game/reverse/identity_evidence/00383440-gamelogic-thiscall.md",
+  "reason": "`sendDestroyed` was the banked stash's placeholder for the GameLogic thiscall member at 0x00383440. Its body is Zero Hour's sendObjectDestroyed, but that name is already matched at 0x0038D090, so the landed body keeps the address until the two rows are reconciled. See the evidence file."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "bfmeGo1010B",
+  "new_name": "rva00383440",
+  "before_sha256": "f4dacfe5f10748d6d14d0bd72b6f5406b99b68b61676e223e764d31eb1352da0",
+  "after_sha256": "b52250fb0ce5224bdb6ceee7b200a87844974031bb7732bb5775b1565f0329d1",
+  "evidence": "targets/game/reverse/identity_evidence/00383440-gamelogic-thiscall.md",
+  "reason": "The stdcall ?bfmeGo1010B@@YGXPAVBfmeThing1010@@@Z claim is refuted by its only caller, Object::~Object, which loads ECX from TheGameLogic before the call. The body is Zero Hour's GameLogic::sendObjectDestroyed, but that name is held by 0x0038D090, so the corrected thiscall member keeps the address. See the evidence file."
  }
 ]

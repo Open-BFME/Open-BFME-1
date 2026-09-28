@@ -169,7 +169,6 @@ Thing::Thing( const ThingTemplate *thingTemplate )
 //=============================================================================
 /** Destructor */
 //=============================================================================
-// ??1Thing@@MAE@XZ present-unmatched
 Thing::~Thing()
 {
 }
