@@ -411,6 +411,35 @@ def test_changed_source_extraction_still_detects_owner_and_member_downgrades(rep
     assert EXPECTED <= {(f.old_name, f.new_name) for f in findings}
 
 
+def test_edited_source_keeping_its_names_is_not_renamed_by_a_moved_row(repo):
+    old_path, new_path = 'game/InGameUIAddSuperweapon.cpp', 'game/BridgeResolveFX.cpp'
+    put(repo, old_path,
+        'class InGameUI { public: void addSuperweapon(int); };\n'
+        'void InGameUI::addSuperweapon(int) {}\n'
+        'void movedHelper() {}\n')
+    put(repo, 'targets/game/reverse/functions.csv',
+        f'?movedHelper@@YAXXZ,,0x000EE6D0,32,{old_path},matched,evidence\n')
+    commit(repo)
+
+    # One row moves out; the old file is edited but still declares InGameUI.
+    put(repo, old_path,
+        'class InGameUI { public: void addSuperweapon(int); };\n'
+        'void InGameUI::addSuperweapon(int) {}\n')
+    put(repo, new_path,
+        'class Rva000EE6D0StringAccessor { public: void rva000EE6D0(int); };\n'
+        'void Rva000EE6D0StringAccessor::rva000EE6D0(int) {}\n')
+    put(repo, 'targets/game/reverse/functions.csv',
+        f'?movedHelper@@YAXXZ,,0x000EE6D0,32,{new_path},matched,evidence\n')
+    findings, _ = N.check(repo, 'HEAD', ':')
+    assert not {'InGameUI', 'addSuperweapon'} & {f.old_name for f in findings}
+
+
+def test_pragma_comment_is_not_an_identifier():
+    before = '#pragma comment(linker, "/alternatename:_x=?j_00004d63@@YAXXZ")\nvoid f() { x(); }\n'
+    after = 'extern void j_00004d63();\nvoid f() { j_00004d63(); }\n'
+    assert ('comment', 'j_00004d63') not in N.regressions(before, after)
+
+
 def test_bank_need_not_be_deleted_and_filename_need_not_have_rva(repo):
     incident(repo, keep_bank=True, path='game/LodGate.cpp')
     findings, _ = N.check(repo, 'HEAD', ':')

@@ -63,8 +63,14 @@ def downgrade(old, new):
     return old != new and bool(IDENT.fullmatch(old)) and old not in KEYWORDS and not opaque(old) and opaque(new)
 
 
+# `#pragma comment(linker, ...)` and friends name no identifier: a bank that
+# reached a thunk through /alternatename and a source that calls it directly
+# aligned `comment` against the thunk and reported a rename (2026-09-28).
+PRAGMA = re.compile(r'^[ \t]*#[ \t]*pragma\b[^\n]*', re.M)
+
+
 def tokens(text):
-    return [t for t in TOKEN.findall(text) if not t.startswith(('//', '/*', '"', "'"))]
+    return [t for t in TOKEN.findall(PRAGMA.sub('', text)) if not t.startswith(('//', '/*', '"', "'"))]
 
 
 FUNCTION_DECL_TAIL = {
@@ -603,11 +609,20 @@ def check(root, old, new):
     findings = []
     accepted = 0
     retained = {}
-    candidates = [
-        Finding(a, b, x, y, digest(before), digest(after))
-        for a, b, before, after in pairs(root, old, new, retained)
-        for x, y in regressions(before, after, retained.get(a, frozenset()))
-    ]
+    candidates = []
+    for a, b, before, after in pairs(root, old, new, retained):
+        found = regressions(before, after, retained.get(a, frozenset()))
+        if found and a != b and a.startswith('game/'):
+            # One row moved out of a game/ source that stays in the tree: the
+            # whole old file is compared with the new one, so every name the
+            # old file still uses would read as renamed (InGameUI against a
+            # bridge helper, 2026-09-28). A name the file still carries was not
+            # lost. Banks are excluded: one kept beside its conversion must
+            # still be held to its names.
+            kept = read(root, new, a)
+            names = set(tokens(kept)) if kept is not None else set()
+            found = [(x, y) for x, y in found if x not in names]
+        candidates.extend(Finding(a, b, x, y, digest(before), digest(after)) for x, y in found)
     candidates.extend(ledger_symbol_regressions(root, old, new))
     for finding in candidates:
         allowed = False
