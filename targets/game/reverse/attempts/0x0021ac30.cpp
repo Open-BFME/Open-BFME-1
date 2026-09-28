@@ -1,4 +1,7 @@
 // ?invoke@Owner@@QAE_NPAVObject@@@Z
+// partial score=0.83 date=2026-09-27
+// ?invoke@Owner@@QAE_NPAVObject@@@Z
+// cl: /G7
 // partial score=0.77 date=2026-09-21
 // cl: /DNDEBUG /MD
 
@@ -113,5 +116,6 @@ Bool Owner::invoke(Object *arg1)
 	if (m_otherList->next == m_otherList)
 		return true;
 
-	return m_interior.slot51() == arg1->getControllingPlayer();
+	Bool eq = (m_interior.slot51() == arg1->getControllingPlayer());
+	return eq;
 }
