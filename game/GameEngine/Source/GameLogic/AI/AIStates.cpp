@@ -374,7 +374,6 @@ static Bool inWeaponRangeObject(State *thisState, void* userData);
  * Create an AI state machine. Define all of the states the machine 
  * can possibly be in, and set the initial (default) state.
  */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AttackStateMachineCtorThunk.cpp
 // ??0AttackStateMachine@@QAE@PAVObject@@PAVAIAttackState@@VAsciiString@@_N33@Z present-unmatched
 AttackStateMachine::AttackStateMachine( Object *obj, AIAttackState* att, AsciiString name, Bool follow, Bool attackingObject, Bool forceAttacking ) 
 	: StateMachine( obj, name )
