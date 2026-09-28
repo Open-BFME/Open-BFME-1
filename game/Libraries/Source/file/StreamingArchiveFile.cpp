@@ -179,7 +179,7 @@ Bool StreamingArchiveFile::openFromArchive(File *archiveFile, const AsciiString 
 		_bfme_debugRecordCallsite(1);
 		g_BFMEIndexBufferDebug->Begin_Report();
 		BFMEIndexBufferDebugStream *stream = g_BFMEIndexBufferDebug->Get_Stream(0, 0);
-		stream->Put_String((const char *)0x01143cf8)->Finish(1);
+		stream->Put_String("Streaming from a compressed archive file is not supported")->Finish(1);
 	}
 
 	m_file->seek(offset, File::START);

@@ -100,20 +100,27 @@ public:
 	Real bfmeExtra;
 };
 
-#define RVA004585F0_GAME_LOGIC (*(Rva004585F0GameLogicLayout **)0x012F0898)
-#define RVA004585F0_GAME_CLIENT (*(GameClient **)0x012F1464)
-#define RVA004585F0_ZERO (*(const Real *)0x01075350)
-#define RVA004585F0_UINT32_SCALE (*(const Real *)0x01075358)
-#define RVA004585F0_ONE (*(const Real *)0x01075334)
-#define RVA004585F0_HALF (*(const Real *)0x0107533C)
-#define RVA004585F0_TWO_PI (*(const Real *)0x01087B10)
-#define RVA004585F0_SCALE (*(const Real *)0x01084068)
-#define RVA004585F0_THROB_SCALE (*(const Real *)0x010F638C)
-#define RVA004585F0_FIRST_FACTOR (*(volatile Real *)0x012B5628)
-#define RVA004585F0_SECOND_FACTOR (*(volatile Real *)0x010F6394)
-#define RVA004585F0_POSITION_SCALE (*(const Real *)0x0108882C)
-#define RVA004585F0_WRITABLE_DATA (*(Rva004585F0WritableGlobalData **)0x012ED5C8)
-#define RVA004585F0_LOOK_AT_TRANSLATOR (*(Rva004585F0LookAtTranslator **)0x012F4C84)
+class GameLogic;
+class BfmeOwnVVD;
+extern GameLogic *TheGameLogic;
+extern GameClient *TheGameClient;
+extern float g_bfmeSecondCF;
+extern BfmeOwnVVD *g_bfmeSingletonVVD;
+
+#define RVA004585F0_GAME_LOGIC ((Rva004585F0GameLogicLayout *)TheGameLogic)
+#define RVA004585F0_GAME_CLIENT TheGameClient
+#define RVA004585F0_ZERO 0.0f
+#define RVA004585F0_UINT32_SCALE 4294967296.0f
+#define RVA004585F0_ONE 1.0f
+#define RVA004585F0_HALF 0.5f
+#define RVA004585F0_TWO_PI 6.28318548f
+#define RVA004585F0_SCALE 255.0f
+#define RVA004585F0_THROB_SCALE 0.03f
+#define RVA004585F0_FIRST_FACTOR g_bfmeSecondCF
+#define RVA004585F0_SECOND_FACTOR 0.0174532924f
+#define RVA004585F0_POSITION_SCALE 60.0f
+#define RVA004585F0_WRITABLE_DATA ((Rva004585F0WritableGlobalData *)TheWritableGlobalData)
+#define RVA004585F0_LOOK_AT_TRANSLATOR ((Rva004585F0LookAtTranslator *)g_bfmeSingletonVVD)
 
 extern "C" __declspec(dllimport) double bfmeMathVE(double);
 extern Real bfmeSinVNB(Real);
