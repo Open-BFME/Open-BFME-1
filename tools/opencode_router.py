@@ -49,7 +49,8 @@ CREATE UNIQUE INDEX IF NOT EXISTS target_owner ON jobs(target)
  WHERE redundant=0 AND status IN ('queued','running','needs_review');
 CREATE TABLE IF NOT EXISTS attempts (
  id TEXT PRIMARY KEY, job TEXT, model TEXT, tier TEXT, status TEXT, started REAL,
- ended REAL, pid INTEGER, result TEXT, directory TEXT, cgroup TEXT, variant TEXT);
+ ended REAL, pid INTEGER, result TEXT, directory TEXT, cgroup TEXT, variant TEXT,
+ quota_observed INTEGER NOT NULL DEFAULT 0);
 CREATE TABLE IF NOT EXISTS models (
  id TEXT PRIMARY KEY, cooldown REAL DEFAULT 0, reason TEXT DEFAULT '', dispatched INTEGER DEFAULT 0);
 CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT);
@@ -148,6 +149,13 @@ def connect(state):
                 db.commit()
             if 'budget_justification' not in {r['name'] for r in db.execute('PRAGMA table_info(jobs)')}:
                 db.execute("ALTER TABLE jobs ADD COLUMN budget_justification TEXT NOT NULL DEFAULT ''")
+            columns = {r['name'] for r in db.execute('PRAGMA table_info(jobs)')}
+            for column in ('repository', 'submission_root', 'base_sha'):
+                if column not in columns:
+                    db.execute(f'ALTER TABLE jobs ADD COLUMN {column} TEXT')
+            if 'quota_observed' not in {r['name'] for r in db.execute('PRAGMA table_info(attempts)')}:
+                db.execute('ALTER TABLE attempts ADD COLUMN quota_observed INTEGER NOT NULL DEFAULT 0')
+            db.execute('CREATE INDEX IF NOT EXISTS attempts_job_started ON attempts(job,started)')
             db.execute('CREATE TABLE IF NOT EXISTS economic_measurements ('
                        'attempt TEXT PRIMARY KEY, bytes_gained INTEGER, useful_investigation INTEGER)')
             db.commit()
@@ -189,14 +197,18 @@ def target_key(target, task):
     return target.strip()
 
 
-def enqueue(state, category, task, target=None, cwd=None, model=None, redundant=False, budget_justification=''):
+def enqueue(state, category, task, target=None, cwd=None, model=None, redundant=False, budget_justification='', root=None):
+    root = Path(root or ROOT).resolve()
+    repository = repository_identity(root)
+    base = subprocess.check_output(['git', 'rev-parse', '--verify', 'HEAD^{commit}'], cwd=root, text=True).strip()
     job = uuid.uuid4().hex[:16]
     with database(state) as db:
         db.execute('INSERT INTO jobs (id,target,task,category,tier,cwd,model,redundant,status,created) '
                    'VALUES (?,?,?,?,?,?,?,?,?,?)',
                    (job, target_key(target, task), task, category, category,
                     str(Path(cwd).resolve()) if cwd else None, model, redundant, 'queued', time.time()))
-        db.execute('UPDATE jobs SET budget_justification=? WHERE id=?', (budget_justification, job))
+        db.execute('UPDATE jobs SET budget_justification=?,repository=?,submission_root=?,base_sha=? WHERE id=?',
+                   (budget_justification, repository, str(root), base, job))
     return job
 
 
@@ -212,11 +224,11 @@ def ramp_caps(db, c, now):
     finished without one, or has run RAMP_SURVIVAL seconds, doubles the cap."""
     caps = {}
     for m in c['models']:
-        row = db.execute("SELECT MAX(ended) FROM attempts WHERE model=? AND status='quota'", (m['id'],)).fetchone()
+        row = db.execute("SELECT MAX(ended) FROM attempts WHERE model=? AND (status='quota' OR quota_observed=1)", (m['id'],)).fetchone()
         if not row or row[0] is None:
             continue
         admitted = db.execute(
-            "SELECT COUNT(*) FROM attempts WHERE model=? AND started>? AND "
+            "SELECT COUNT(*) FROM attempts WHERE model=? AND quota_observed=0 AND started>? AND "
             "((status NOT IN ('running','quota','unavailable','interrupted')) OR (status='running' AND started<=?))",
             (m['id'], row[0], now - RAMP_SURVIVAL)).fetchone()[0]
         cap = 1 << min(admitted, 16)
@@ -480,11 +492,12 @@ class Events:
                         report = value
                 except ValueError:
                     pass
-        if any(classify(error) == 'quota' for error in self.errors):
-            forced = 'quota' if forced not in ('needs_review', 'cancelled') else forced
+        quota_observed = any(classify(error) == 'quota' for error in self.errors)
+        if quota_observed and forced not in (INTERRUPTED, 'needs_review', 'cancelled'):
+            forced = 'quota'
         kind = forced or (classify(self.errors[-1]) if self.errors else
                           ('success' if code == 0 and report and report['outcome'] == 'success' else 'failure'))
-        return {'kind': kind, 'exit_code': code, 'session': self.session,
+        return {'kind': kind, 'quota_observed': quota_observed, 'exit_code': code, 'session': self.session,
                 'reported_cost_usd': sum(self.costs.values()) if self.costs else None,
                 'costed_steps': len(self.costs), 'report': report, 'errors': self.errors[-3:], 'text_tail': self.text[-6000:]}
 
@@ -520,7 +533,8 @@ def finish(state, c, attempt, result, now=None):
         a = db.execute('SELECT * FROM attempts WHERE id=?', (attempt,)).fetchone()
         if not a or a['status'] != 'running':
             return
-        if kind == 'quota' and a['model'].startswith('opencode-go/'):
+        quota_observed = kind == 'quota' or result.get('quota_observed') is True
+        if quota_observed and a['model'].startswith('opencode-go/'):
             try:
                 go_budget.quota(state, c, now)
             except (OSError, ValueError, TypeError, KeyError, OverflowError, sqlite3.Error):
@@ -553,14 +567,14 @@ def finish(state, c, attempt, result, now=None):
             status = 'failed'
         elif interrupted and j['status'] in TERMINAL:
             status = j['status']  # never resurrect a job the parent finished
-        db.execute('UPDATE attempts SET status=?,ended=?,result=? WHERE id=?',
-                   (kind, now, json.dumps(result), attempt))
+        db.execute('UPDATE attempts SET status=?,ended=?,result=?,quota_observed=? WHERE id=?',
+                   (kind, now, json.dumps(result), quota_observed, attempt))
         db.execute('UPDATE jobs SET status=?,failures=?,availability_failures=?,tier=?,note=? WHERE id=?',
                    (status, failures, availability, tier, kind, j['id']))
-        delay = c['cooldown'] if kind in ('quota', 'unavailable') else c['failure_cooldown']
-        if kind not in ('success', 'variant_unavailable', INTERRUPTED):
+        delay = c['cooldown'] if quota_observed or kind == 'unavailable' else c['failure_cooldown']
+        if quota_observed or kind not in ('success', 'variant_unavailable', INTERRUPTED):
             db.execute('UPDATE models SET cooldown=MAX(cooldown,?),reason=? WHERE id=?',
-                       (now + delay, kind, a['model']))
+                       (now + delay, 'quota' if quota_observed else kind, a['model']))
 
 
 def default_state(root):
@@ -575,16 +589,36 @@ def workspaces_overlap(left, right):
     return a.is_relative_to(b) or b.is_relative_to(a)
 
 
+def repository_identity(root):
+    common = subprocess.check_output(['git', 'rev-parse', '--git-common-dir'], cwd=root, text=True).strip()
+    return str((Path(root) / common).resolve())
+
+
 def prepare_workspace(root, state, job):
     if job['cwd']:
         cwd = Path(job['cwd'])
         if not cwd.is_dir():
             raise ValueError(f'workspace does not exist: {cwd}')
+        # Legacy jobs with retained workspaces may retry there. Their original
+        # base remains unknown; never manufacture one from today's HEAD.
         return cwd
+    if not job.get('repository') or not job.get('base_sha'):
+        raise ValueError('legacy job has no submission snapshot; review evidence and resubmit explicitly')
+    if repository_identity(root) != job['repository']:
+        raise ValueError('scheduler repository differs from submission repository')
     cwd = state / 'worktrees' / job['id']
     cwd.parent.mkdir(parents=True, exist_ok=True)
-    subprocess.run(['git', 'worktree', 'add', '--detach', str(cwd), 'HEAD'], cwd=root,
-                   check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, timeout=120)
+    if cwd.exists():
+        # Recover creation completed before the database update, without
+        # deleting useful edits or quietly adopting some other repository.
+        base = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=cwd, text=True).strip()
+        top = subprocess.check_output(['git', 'rev-parse', '--show-toplevel'], cwd=cwd, text=True).strip()
+        if (repository_identity(cwd) != job['repository'] or base != job['base_sha']
+                or Path(top).resolve() != cwd.resolve()):
+            raise ValueError('retained workspace differs from submission snapshot; review required')
+    else:
+        subprocess.run(['git', 'worktree', 'add', '--detach', str(cwd), job['base_sha']], cwd=root,
+                       check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, timeout=120)
     with database(state) as db:
         db.execute('UPDATE jobs SET cwd=? WHERE id=?', (str(cwd), job['id']))
     return cwd
@@ -854,7 +888,7 @@ def refresh_budget(state, c):
 def budget_snapshot(state, c):
     budget = go_budget.snapshot(state, c)
     with database(state) as db:
-        quota_at = db.execute("SELECT MAX(ended) FROM attempts WHERE status='quota' AND model LIKE 'opencode-go/%'").fetchone()[0]
+        quota_at = db.execute("SELECT MAX(ended) FROM attempts WHERE (status='quota' OR quota_observed=1) AND model LIKE 'opencode-go/%'").fetchone()[0]
     if quota_at is not None and (budget['observed_at'] is None or budget['observed_at'] <= quota_at):
         budget.update(exhausted=True, pacing_mode='exhausted', quota_error_at=quota_at)
     return budget
@@ -887,6 +921,14 @@ def compact_status(state, c):
                 cpu_admission=cpu_admission.snapshot(state, c))
 
 
+def show(state, job):
+    """One job and its attempts; no fleet statistics, budget or cgroup probes."""
+    with database(state) as db:
+        jobs = [dict(r) for r in db.execute('SELECT * FROM jobs WHERE id=?', (job,))]
+        attempts = [dict(r) for r in db.execute('SELECT * FROM attempts WHERE job=? ORDER BY started', (job,))]
+    return {'jobs': jobs, 'attempts': attempts}
+
+
 def status(state, c):
     with database(state) as db:
         jobs = [dict(r) for r in db.execute('SELECT id,target,category,tier,cwd,status,failures,availability_failures,note FROM jobs ORDER BY created')]
@@ -904,7 +946,7 @@ def status(state, c):
                        'successes': sum(a['status'] == 'success' for a in rows),
                        'task_failures': sum(a['status'] in TASK_FAILURES for a in rows),
                        'interruptions': sum(a['status'] == INTERRUPTED for a in rows),
-                       'quota_events': sum(a['status'] == 'quota' for a in rows),
+                       'quota_events': sum(a['status'] == 'quota' or a.get('quota_observed', 0) for a in rows),
                        'unavailable_events': sum(a['status'] == 'unavailable' for a in rows),
                        'duration_seconds': round(sum((a['ended'] - a['started']) for a in rows if a['ended']), 2)})
     configurations = {}
@@ -928,7 +970,7 @@ def status(state, c):
         row['successes'] += a['status'] == 'success'
         row['task_failures'] += a['status'] in TASK_FAILURES
         row['interruptions'] += a['status'] == INTERRUPTED
-        row['quota_events'] += a['status'] == 'quota'
+        row['quota_events'] += a['status'] == 'quota' or bool(a.get('quota_observed'))
         row['variant_errors'] += a['status'] == 'variant_unavailable'
         if a['ended']:
             row['duration_seconds'] = round(row['duration_seconds'] + a['duration_seconds'], 2)
@@ -1097,10 +1139,7 @@ def main(argv=None):
     if args.command == 'discover':
         print(json.dumps(discover(c, root), indent=2)); return 0
     if args.command in ('status', 'show'):
-        data = status(state, c)
-        if args.command == 'show':
-            data = {k: [v for v in data[k] if v.get('id' if k == 'jobs' else 'job') == args.job]
-                    for k in ('jobs','attempts')}
+        data = show(state, args.job) if args.command == 'show' else status(state, c)
         if args.command == 'status' and not args.json:
             print_status(data)
         else:
@@ -1173,7 +1212,7 @@ def main(argv=None):
         p.error('task must contain 1..200000 bytes')
     if args.command == 'run':
         execution_ready(c)
-    job = enqueue(state, args.category, task, args.target, args.cwd, args.model, args.redundant, args.budget_justification)
+    job = enqueue(state, args.category, task, args.target, args.cwd, args.model, args.redundant, args.budget_justification, root=root)
     print(json.dumps({'job': job, 'state': str(state)}), flush=True)
     if args.command == 'submit':
         return 0

@@ -57,6 +57,10 @@ class RouterTests(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
+        for args in (('init', '-q'), ('config', 'user.name', 'fixture'),
+                     ('config', 'user.email', 'fixture@example.invalid'),
+                     ('commit', '--allow-empty', '-qm', 'submission')):
+            subprocess.run(['git', *args], cwd=self.root, check=True, capture_output=True)
         self.state = self.root / 'state'
         self.fake = self.root / 'opencode'
         self.fake.write_text(FAKE)
