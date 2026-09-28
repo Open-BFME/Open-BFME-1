@@ -73,7 +73,9 @@ tools/, docs/, game/gen_asm/ or game/gen_small/. Never rename an established des
 that includes the function, member and callee names in a banked stash you start from (the harvest refuses a
 descriptive-to-placeholder rename; half the refused seats on 2026-09-28 renamed a stash's `apply`/`build`/`m_object`
 to rvaXXXXXXXX). Keep them, or cite the evidence that they are wrong in REPORT.md. New
-STLport-derived sources go under game/Libraries/Source/STLport/ (the hooks refuse new files in game/stlport/). Stop
+STLport-derived sources go under game/Libraries/Source/STLport/ (the hooks refuse new files in game/stlport/). Never
+cast a literal image address (`*(int *)0x012ED5C8`): declare the global as a named extern (dir32_addresses.csv, or
+g_XXXXXXXX); the hooks refuse new literals because they break the linked build. Stop
 at {hours} hours."""
 
 
