@@ -1033,3 +1033,36 @@ AggregateLoaderClass::Load_W3D (ChunkLoadClass &chunk_load)
     // Return a pointer to the prototype
 	 return pprototype;
 }
+
+// 0x00980450: zero/read nine dwords, then invoke virtual slot +0x14 by count.
+class Rva00980450Owner
+{
+public:
+	virtual char method(ChunkLoadClass &chunk_load) = 0;
+	virtual void slot04(void) = 0;
+	virtual void slot08(void) = 0;
+	virtual void slot0C(void) = 0;
+	virtual void slot10(void) = 0;
+	virtual char slot14(ChunkLoadClass &chunk_load) = 0;
+
+private:
+	char m_pad04[0x1C];
+	unsigned int m_info[9];
+};
+
+char Rva00980450Owner::method(ChunkLoadClass &chunk_load)
+{
+	::memset(m_info, 0, sizeof(m_info));
+	char result = 0;
+	if (chunk_load.Read(m_info, sizeof(m_info)) == sizeof(m_info))
+	{
+		result = true;
+		unsigned int index = 0;
+		while (index < m_info[8] && result == true)
+		{
+			result = slot14(chunk_load);
+			++index;
+		}
+	}
+	return result;
+}
