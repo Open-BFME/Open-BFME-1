@@ -153,3 +153,19 @@ void Rva0080A110Owner::route( Rva0080A110Message *input )
 		}
 	}
 }
+
+// Retail 0x008035F0 (37 B): the same two-call key/value copy as route's head,
+// over the caller's own message pair instead of the stack message. The RF
+// getter runs on the second slot and the CIB setter on the first; swapping
+// the receivers is the one shape that reproduces retail's argument order.
+// Identity of the owning pair is not recovered; the class types are the ones
+// route already declares and the name is address-derived.
+void __cdecl Rva008035F0Go( void *first, void *second )
+{
+	void *value = ( (BfmeThingRF *)second )->bfmeGoRF(
+		&g_bfmeKeyVHE, (void *)-1 );
+	if( value != (void *)-1 )
+		( (BfmeThingCIB *)first )->bfmeGoCIB( &g_bfmeKeyVHE, value );
+}
+
+// @?Rva008035F0Go@@YAXPAX0@Z 0x008035F0
