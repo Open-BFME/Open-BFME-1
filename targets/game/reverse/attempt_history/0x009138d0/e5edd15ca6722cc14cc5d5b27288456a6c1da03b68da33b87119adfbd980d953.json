@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e5edd15ca6722cc14cc5d5b27288456a6c1da03b68da33b87119adfbd980d953",
+  "symbol": "?d_009138d0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.57,
+  "source": "// ?d_009138d0@@YAXXZ\n// partial score=0.57 date=2026-09-28\n// Banked near miss for retail 0x009138D0 (51 bytes). Shape 0.57: the\n// vector/resize/CopyIndexed logic is right but retail enters with source in\n// EBX, vector in ESI and count in EDI with no frame - a compiler-private\n// register ABI that needs its same-TU caller context to inherit.\n#include \"vector4.h\"\n#include \"vp.h\"\nclass Rva009138D0Vector\n{\npublic:\n\tvirtual bool Resize(int newsize, const Vector4 *array = 0);\n\tVector4 *m_data;\n\tint m_count;\n\tint m_capacity;\n};\nclass Rva009138D0Source\n{\npublic:\n\tconst Vector4 *m_data;\n\tint m_pad;\n\tint m_indexData;\n};\nVector4 *__fastcall Rva009138D0Copy(Rva009138D0Vector *vector, Rva009138D0Source *source,\n\tint count, const unsigned int *index)\n{\n\tif (source == 0)\n\t{\n\t\treturn 0;\n\t}\n\tif (vector->m_capacity < count)\n\t{\n\t\tvector->Resize(count * 2, 0);\n\t}\n\tVectorProcessorClass::CopyIndexed(vector->m_data, source->m_data, index, count);\n\treturn vector->m_data;\n}\n"
+}
