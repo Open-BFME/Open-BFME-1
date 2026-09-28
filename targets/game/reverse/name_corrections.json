@@ -8718,5 +8718,135 @@
   "after_sha256": "586635a9d487e3a8d4578e180979768a3d31593c0193ef4e876adf3574049a4e",
   "evidence": "targets/game/reverse/identity_evidence/bank_0090eb00_chunkloadclass.md",
   "reason": "ChunkLoadClass is still the parameter type (from chunkio.h); Gen_00920a60 is the ledger name of callee 0x00920A60"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "old_name": "m_array",
+  "new_name": "m_00C",
+  "before_sha256": "d4f8ef087c04d755056f0d7418caf82f64e2a8d8b19ddaf88e4c79b8d1b09146",
+  "after_sha256": "7cf150756c30ed274efa68b5626e66cafa034a339262e55301bb42bc03a7a540",
+  "evidence": "targets/game/reverse/identity_evidence/0x00763ac0-name-correction.md",
+  "reason": "The local shim is not a retail layout witness, and the matched caller names no owner or field. The replacement reports the byte offset without claiming a semantic member name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "old_name": "m_drawable",
+  "new_name": "m_field_008",
+  "before_sha256": "d4f8ef087c04d755056f0d7418caf82f64e2a8d8b19ddaf88e4c79b8d1b09146",
+  "after_sha256": "7cf150756c30ed274efa68b5626e66cafa034a339262e55301bb42bc03a7a540",
+  "evidence": "targets/game/reverse/identity_evidence/0x00763ac0-name-correction.md",
+  "reason": "The local shim is not a retail layout witness, and the matched caller names no owner or field. The replacement reports the byte offset without claiming a semantic member name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "old_name": "m_model",
+  "new_name": "m_0C8",
+  "before_sha256": "d4f8ef087c04d755056f0d7418caf82f64e2a8d8b19ddaf88e4c79b8d1b09146",
+  "after_sha256": "7cf150756c30ed274efa68b5626e66cafa034a339262e55301bb42bc03a7a540",
+  "evidence": "targets/game/reverse/identity_evidence/0x00763ac0-name-correction.md",
+  "reason": "The local shim is not a retail layout witness, and the matched caller names no owner or field. The replacement reports the byte offset without claiming a semantic member name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "old_name": "m_moduleData",
+  "new_name": "m_field_004",
+  "before_sha256": "d4f8ef087c04d755056f0d7418caf82f64e2a8d8b19ddaf88e4c79b8d1b09146",
+  "after_sha256": "7cf150756c30ed274efa68b5626e66cafa034a339262e55301bb42bc03a7a540",
+  "evidence": "targets/game/reverse/identity_evidence/0x00763ac0-name-correction.md",
+  "reason": "The local shim is not a retail layout witness, and the matched caller names no owner or field. The replacement reports the byte offset without claiming a semantic member name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "old_name": "m_polyCount",
+  "new_name": "m_024",
+  "before_sha256": "d4f8ef087c04d755056f0d7418caf82f64e2a8d8b19ddaf88e4c79b8d1b09146",
+  "after_sha256": "7cf150756c30ed274efa68b5626e66cafa034a339262e55301bb42bc03a7a540",
+  "evidence": "targets/game/reverse/identity_evidence/0x00763ac0-name-correction.md",
+  "reason": "The local shim is not a retail layout witness, and the matched caller names no owner or field. The replacement reports the byte offset without claiming a semantic member name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "old_name": "m_polys",
+  "new_name": "m_02C",
+  "before_sha256": "d4f8ef087c04d755056f0d7418caf82f64e2a8d8b19ddaf88e4c79b8d1b09146",
+  "after_sha256": "7cf150756c30ed274efa68b5626e66cafa034a339262e55301bb42bc03a7a540",
+  "evidence": "targets/game/reverse/identity_evidence/0x00763ac0-name-correction.md",
+  "reason": "The local shim is not a retail layout witness, and the matched caller names no owner or field. The replacement reports the byte offset without claiming a semantic member name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "old_name": "m_transform",
+  "new_name": "m_008",
+  "before_sha256": "d4f8ef087c04d755056f0d7418caf82f64e2a8d8b19ddaf88e4c79b8d1b09146",
+  "after_sha256": "7cf150756c30ed274efa68b5626e66cafa034a339262e55301bb42bc03a7a540",
+  "evidence": "targets/game/reverse/identity_evidence/0x00763ac0-name-correction.md",
+  "reason": "The local shim is not a retail layout witness, and the matched caller names no owner or field. The replacement reports the byte offset without claiming a semantic member name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "old_name": "m_vertexCount",
+  "new_name": "m_028",
+  "before_sha256": "d4f8ef087c04d755056f0d7418caf82f64e2a8d8b19ddaf88e4c79b8d1b09146",
+  "after_sha256": "7cf150756c30ed274efa68b5626e66cafa034a339262e55301bb42bc03a7a540",
+  "evidence": "targets/game/reverse/identity_evidence/0x00763ac0-name-correction.md",
+  "reason": "The local shim is not a retail layout witness, and the matched caller names no owner or field. The replacement reports the byte offset without claiming a semantic member name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "old_name": "m_vertices",
+  "new_name": "m_030",
+  "before_sha256": "d4f8ef087c04d755056f0d7418caf82f64e2a8d8b19ddaf88e4c79b8d1b09146",
+  "after_sha256": "7cf150756c30ed274efa68b5626e66cafa034a339262e55301bb42bc03a7a540",
+  "evidence": "targets/game/reverse/identity_evidence/0x00763ac0-name-correction.md",
+  "reason": "The local shim is not a retail layout witness, and the matched caller names no owner or field. The replacement reports the byte offset without claiming a semantic member name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "old_name": "vertex",
+  "new_name": "m_000",
+  "before_sha256": "d4f8ef087c04d755056f0d7418caf82f64e2a8d8b19ddaf88e4c79b8d1b09146",
+  "after_sha256": "7cf150756c30ed274efa68b5626e66cafa034a339262e55301bb42bc03a7a540",
+  "evidence": "targets/game/reverse/identity_evidence/0x00763ac0-name-correction.md",
+  "reason": "The local shim is not a retail layout witness, and the matched caller names no owner or field. The replacement reports the byte offset without claiming a semantic member name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "old_name": "x",
+  "new_name": "m_000",
+  "before_sha256": "d4f8ef087c04d755056f0d7418caf82f64e2a8d8b19ddaf88e4c79b8d1b09146",
+  "after_sha256": "7cf150756c30ed274efa68b5626e66cafa034a339262e55301bb42bc03a7a540",
+  "evidence": "targets/game/reverse/identity_evidence/0x00763ac0-name-correction.md",
+  "reason": "The local shim is not a retail layout witness, and the matched caller names no owner or field. The replacement reports the byte offset without claiming a semantic member name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "old_name": "y",
+  "new_name": "m_004",
+  "before_sha256": "d4f8ef087c04d755056f0d7418caf82f64e2a8d8b19ddaf88e4c79b8d1b09146",
+  "after_sha256": "7cf150756c30ed274efa68b5626e66cafa034a339262e55301bb42bc03a7a540",
+  "evidence": "targets/game/reverse/identity_evidence/0x00763ac0-name-correction.md",
+  "reason": "The local shim is not a retail layout witness, and the matched caller names no owner or field. The replacement reports the byte offset without claiming a semantic member name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00763ac0.cpp",
+  "old_name": "z",
+  "new_name": "m_008",
+  "before_sha256": "d4f8ef087c04d755056f0d7418caf82f64e2a8d8b19ddaf88e4c79b8d1b09146",
+  "after_sha256": "7cf150756c30ed274efa68b5626e66cafa034a339262e55301bb42bc03a7a540",
+  "evidence": "targets/game/reverse/identity_evidence/0x00763ac0-name-correction.md",
+  "reason": "The local shim is not a retail layout witness, and the matched caller names no owner or field. The replacement reports the byte offset without claiming a semantic member name."
  }
 ]

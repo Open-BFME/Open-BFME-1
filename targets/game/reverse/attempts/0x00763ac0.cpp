@@ -1,26 +1,26 @@
-// ?rva00763AC0@Rva00763AC0ModelDraw@@QAEPAVGen00375590EntryStorage@@PAVRenderObjClass@@PAM@Z
-// partial score=0.41 date=2026-09-28
+// ?rva00763AC0@Rva00763AC0@@QAEPAVGen00375590EntryStorage@@PAVRenderObjClass@@PAM@Z
+// partial score=0.57 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWMath /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWDebug
-// Retail RVA 0x00763AC0 (1500 B, ret 8), W3DModelDraw neighbourhood.  The
-// W3DModelDraw slot-32 body at 0x00767B30 (and the dump at 0x00767C70) call it
-// through ILT 0x0002E7B7 with the render object returned by slot 5 (already
-// referenced; every exit here releases it) and a float out pointer.  It
-// places the model's render object at the owner transform, welds the mesh's
-// duplicate vertices, keeps the triangle edges used by exactly one triangle,
-// chains them into an outline loop and returns a new point list holding the
-// transformed outline (the last point's height goes to the out pointer).
-// No retail name is known, so the owner and method stay address-derived.
+
+// Retail body 0x00763AC0 spans 1,500 bytes and ends at ret 8 at +0x5D9.
+// The W3DModelDraw slot-32 caller at 0x00767B30 calls through ILT 0x0002E7B7.
+// The caller passes a RenderObjClass pointer and a float output pointer.
+// This body sets the render object's transform.
+// It joins mesh edges used by one triangle into an outline.
+// It writes the final transformed point's z through the output pointer.
+// The caller does not prove the owner's class or this method's name.
+// The source keeps both names address-derived.
 
 #define Matrix4x4 Matrix4
 #include "WW3D2/rendobj.h"
 
 typedef unsigned short UnsignedShort;
 
-// Retail 0x0075C690: internal-linkage helper, compiled in this TU so VC7.1
-// applies the same private register convention at the three call sites.
+// The helper at 0x0075C690 stays in this source because VC7.1 uses a private
+// register convention for its three calls.
 struct Rva0075C690PackedEntry
 {
-	UnsignedShort vertex[3];
+	UnsignedShort m_000[3];
 };
 
 static __declspec(noinline) int Rva0075C690CountSharedEdges(
@@ -31,13 +31,13 @@ static __declspec(noinline) int Rva0075C690CountSharedEdges(
 	for (int i = 0; i < entryCount; ++i)
 	{
 		bool hasFirst =
-			firstVertex == vertexRemap[entries[i].vertex[0]] ||
-			firstVertex == vertexRemap[entries[i].vertex[1]] ||
-			firstVertex == vertexRemap[entries[i].vertex[2]];
+			firstVertex == vertexRemap[entries[i].m_000[0]] ||
+			firstVertex == vertexRemap[entries[i].m_000[1]] ||
+			firstVertex == vertexRemap[entries[i].m_000[2]];
 		bool hasSecond =
-			secondVertex == vertexRemap[entries[i].vertex[0]] ||
-			secondVertex == vertexRemap[entries[i].vertex[1]] ||
-			secondVertex == vertexRemap[entries[i].vertex[2]];
+			secondVertex == vertexRemap[entries[i].m_000[0]] ||
+			secondVertex == vertexRemap[entries[i].m_000[1]] ||
+			secondVertex == vertexRemap[entries[i].m_000[2]];
 		if (hasFirst && hasSecond)
 			++sharedCount;
 	}
@@ -47,22 +47,28 @@ static __declspec(noinline) int Rva0075C690CountSharedEdges(
 struct Rva00763AC0Buffer
 {
 	char m_pad00[0xc];
-	void *m_array;
+	void *m_00C;
 };
 
 struct Rva00763AC0MeshModel
 {
 	char m_pad00[0x24];
-	int m_polyCount;
-	int m_vertexCount;
-	Rva00763AC0Buffer *m_polys;
-	Rva00763AC0Buffer *m_vertices;
+	int m_024;
+	int m_028;
+	Rva00763AC0Buffer *m_02C;
+	Rva00763AC0Buffer *m_030;
 };
 
 struct Rva00763AC0MeshView
 {
 	char m_pad00[0xc8];
-	Rva00763AC0MeshModel *m_model;
+	Rva00763AC0MeshModel *m_0C8;
+};
+
+struct Rva00763AC0MeshScratch
+{
+	char m_008[0x30];
+	const Vector3 *m_030;
 };
 
 class Drawable
@@ -71,29 +77,29 @@ public:
 	const Matrix3D *getTransformMatrix() const;
 };
 
-struct Rva00763AC0ObjectView
+struct Rva00763AC0TransformView
 {
 	char m_pad00[8];
-	Matrix3D m_transform;
+	Matrix3D m_008;
 };
 
-struct Rva00763AC0DrawableView
+struct Rva00763AC0Offset008View
 {
 	char m_pad00[0xfc];
-	Rva00763AC0ObjectView *m_object;
+	Rva00763AC0TransformView *m_unwitnessed_0FC;
 };
 
-struct Rva00763AC0ModuleData
+struct Rva00763AC0Offset004View
 {
 	char m_pad00[0x69];
-	bool m_useDrawablePosition;
+	bool m_unwitnessed_069;
 };
 
 struct BfmeVector3BG
 {
-	int x;
-	int y;
-	int z;
+	int m_000;
+	int m_004;
+	int m_008;
 };
 
 class Gen00375590EntryStorage
@@ -117,28 +123,28 @@ public:
 	void rva007629F0(Matrix3D &transform);
 };
 
-class Rva00763AC0ModelDraw
+class Rva00763AC0
 {
 public:
 	virtual void slot00();
 
 	Gen00375590EntryStorage *rva00763AC0(RenderObjClass *mesh, float *height);
 
-	Rva00763AC0ModuleData *m_moduleData;
-	Rva00763AC0DrawableView *m_drawable;
+	Rva00763AC0Offset004View *m_field_004;
+	Rva00763AC0Offset008View *m_field_008;
 	char m_pad00c[0x34 - 0xc];
 	RenderObjClass *m_renderObject;
 };
 
-// ?rva00763AC0@Rva00763AC0ModelDraw@@QAEPAVGen00375590EntryStorage@@PAVRenderObjClass@@PAM@Z
-Gen00375590EntryStorage *Rva00763AC0ModelDraw::rva00763AC0(RenderObjClass *mesh, float *height)
+// ?rva00763AC0@Rva00763AC0@@QAEPAVGen00375590EntryStorage@@PAVRenderObjClass@@PAM@Z
+Gen00375590EntryStorage *Rva00763AC0::rva00763AC0(RenderObjClass *mesh, float *height)
 {
 	int edgeCount = 0;
 	int verts3[3][100];
 	verts3[2][0] = 0;
 	verts3[1][0] = 0;
 
-	Rva00763AC0ObjectView *obj = m_drawable->m_object;
+	Rva00763AC0TransformView *obj = m_field_008->m_unwitnessed_0FC;
 	if (!obj)
 	{
 		if (mesh)
@@ -147,30 +153,29 @@ Gen00375590EntryStorage *Rva00763AC0ModelDraw::rva00763AC0(RenderObjClass *mesh,
 	}
 
 	Matrix3D transform(true);
-	if (m_moduleData->m_useDrawablePosition)
+	if (m_field_004->m_unwitnessed_069)
 	{
-		const Matrix3D *drawTransform = ((Drawable *)m_drawable)->getTransformMatrix();
+		const Matrix3D *drawTransform = ((Drawable *)m_field_008)->getTransformMatrix();
 		transform.Set_Translation(drawTransform->Get_Translation());
 	}
 	else
 	{
-		transform = obj->m_transform;
+		transform = obj->m_008;
 	}
 
 	((Rva0077B3F0 *)this)->rva007629F0(transform);
 	m_renderObject->Set_Transform(transform);
 
-	if (!mesh)
-		return 0;
-
-	if (mesh->Class_ID() == RenderObjClass::CLASSID_MESH)
+	if (mesh && mesh->Class_ID() == RenderObjClass::CLASSID_MESH)
 	{
-		Matrix3D meshTransform = mesh->Get_Transform();
-		Rva00763AC0MeshModel *model = ((Rva00763AC0MeshView *)mesh)->m_model;
-		int vertexCount = model->m_vertexCount;
-		const Vector3 *vertices = (const Vector3 *)model->m_vertices->m_array;
-		int polyCount = model->m_polyCount;
-		const Rva0075C690PackedEntry *polys = (const Rva0075C690PackedEntry *)model->m_polys->m_array;
+		Rva00763AC0MeshScratch scratch;
+		Matrix3D &meshTransform = *(Matrix3D *)scratch.m_008;
+		meshTransform = mesh->Get_Transform();
+		Rva00763AC0MeshModel *model = ((Rva00763AC0MeshView *)mesh)->m_0C8;
+		int vertexCount = model->m_028;
+		scratch.m_030 = (const Vector3 *)model->m_030->m_00C;
+		int polyCount = model->m_024;
+		const Rva0075C690PackedEntry *polys = (const Rva0075C690PackedEntry *)model->m_02C->m_00C;
 
 		if (vertexCount >= 100 || polyCount >= 100)
 		{
@@ -182,28 +187,28 @@ Gen00375590EntryStorage *Rva00763AC0ModelDraw::rva00763AC0(RenderObjClass *mesh,
 		for (i = 0; i < vertexCount; i++)
 			verts3[0][i] = i;
 
-		for (i = 0; i < vertexCount; i++)
+		for (i = 0; i < vertexCount - 1; i++)
 		{
 			for (int j = i + 1; j < vertexCount; j++)
 			{
-				if (vertices[i].X == vertices[j].X &&
-					vertices[i].Y == vertices[j].Y &&
-					vertices[i].Z == vertices[j].Z)
+				if (scratch.m_030[i].X == scratch.m_030[j].X &&
+					scratch.m_030[i].Y == scratch.m_030[j].Y &&
+					scratch.m_030[i].Z == scratch.m_030[j].Z)
 					verts3[0][j] = verts3[0][i];
 			}
 		}
 
 		for (i = 0; i < polyCount; i++)
 		{
-			int a = verts3[0][polys[i].vertex[0]];
-			int b = verts3[0][polys[i].vertex[1]];
+			int a = verts3[0][polys[i].m_000[0]];
+			int b = verts3[0][polys[i].m_000[1]];
 			if (Rva0075C690CountSharedEdges(polyCount, polys, verts3[0], a, b) == 1)
 			{
 				verts3[2][edgeCount] = a;
 				verts3[1][edgeCount] = b;
 				edgeCount++;
 			}
-			int c = verts3[0][polys[i].vertex[2]];
+			int c = verts3[0][polys[i].m_000[2]];
 			if (Rva0075C690CountSharedEdges(polyCount, polys, verts3[0], b, c) == 1)
 			{
 				verts3[2][edgeCount] = b;
@@ -258,13 +263,13 @@ Gen00375590EntryStorage *Rva00763AC0ModelDraw::rva00763AC0(RenderObjClass *mesh,
 				for (i = 0; i < count; i++)
 				{
 					Vector3 point;
-					Matrix3D::Transform_Vector(meshTransform, vertices[verts3[0][i]], &point);
+					Matrix3D::Transform_Vector(meshTransform, scratch.m_030[verts3[0][i]], &point);
 					BfmeVector3BG ipoint;
-					ipoint.x = (int)point.X;
-					ipoint.y = (int)point.Y;
-					ipoint.z = (int)point.Z;
+					ipoint.m_000 = (int)point.X;
+					ipoint.m_004 = (int)point.Y;
+					ipoint.m_008 = (int)point.Z;
 					((Gen_0018F210 *)outline)->bfmeAppendVector3(&ipoint);
-					*height = (float)ipoint.z;
+					*height = (float)ipoint.m_008;
 				}
 				mesh->Release_Ref();
 				return outline;
@@ -272,6 +277,7 @@ Gen00375590EntryStorage *Rva00763AC0ModelDraw::rva00763AC0(RenderObjClass *mesh,
 		}
 	}
 
-	mesh->Release_Ref();
+	if (mesh)
+		mesh->Release_Ref();
 	return 0;
 }
