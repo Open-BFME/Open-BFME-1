@@ -70,14 +70,15 @@ public:
 	void suppressTimeouts();
 	void resumeTimeouts();
 };
-#define TheWatchdog (*(Watchdog **)0x012ef18c)
+extern Watchdog *Watchdog0040F780;
+#define TheWatchdog Watchdog0040F780
 
 class StatsCollector
 {
 public:
 	void writeFileEnd();
 };
-#define TheStatsCollector (*(StatsCollector **)0x012ed63c)
+extern StatsCollector *TheStatsCollector;
 
 class Glo012F7048
 {
@@ -90,7 +91,9 @@ public:
 	unsigned char m_pad4[4];
 	unsigned char m_flag8;
 };
-#define Glo012F7048Ptr (*(Glo012F7048 **)0x012f7048)
+class Glo012F7048Type;
+extern Glo012F7048Type *Glo012F7048;
+#define Glo012F7048Ptr ((class Glo012F7048 *)Glo012F7048)
 
 class ScriptActions
 {
@@ -107,7 +110,9 @@ public:
 	virtual void sa09();
 	virtual void closeWindows(Bool arg);
 };
-#define TheScriptActions (*(ScriptActions **)0x012f0620)
+class ScriptActionsInterface;
+extern ScriptActionsInterface *TheScriptActions;
+#define TheScriptActions ((ScriptActions *)TheScriptActions)
 
 class AudioManager
 {
@@ -208,7 +213,7 @@ public:
 	virtual void a93();
 	virtual void a94setup();          // slot94, 0x178
 };
-#define TheAudio (*(AudioManager **)0x012ed668)
+extern AudioManager *TheAudio;
 
 class Glo012F1028
 {
@@ -217,7 +222,9 @@ public:
 	unsigned char m_flag2c;
 	unsigned char m_flag2d;
 };
-#define Glo012F1028Ptr (*(Glo012F1028 **)0x012f1028)
+class Glo012F1028Type;
+extern Glo012F1028Type *Glo012F1028;
+#define Glo012F1028Ptr ((class Glo012F1028 *)Glo012F1028)
 
 class Shell
 {
@@ -247,7 +254,7 @@ public:
 	virtual void ge12();
 	virtual void setQuitting(Bool arg); // slot13, 0x34
 };
-#define TheGameEngine (*(GameEngine **)0x012ed524)
+extern GameEngine *TheGameEngine;
 
 class InGameUI
 {
@@ -269,7 +276,7 @@ public:
 	virtual void iu56(); virtual void iu57();
 	virtual void iu58clear();          // slot58, 0xe8
 };
-#define TheInGameUI (*(InGameUI **)0x012f148c)
+extern InGameUI *TheInGameUI;
 
 class ControlBar
 {
@@ -281,7 +288,7 @@ public:
 	virtual void cb04();
 	virtual void cb05reset();           // slot5, 0x14
 };
-#define TheControlBar (*(ControlBar **)0x012f33f8)
+extern ControlBar *TheControlBar;
 
 void HideControlBar(Bool arg);
 
@@ -290,7 +297,7 @@ class Mouse
 public:
 	void _bfme_setEngineVisibility(Bool visible);
 };
-#define TheMouse (*(Mouse **)0x012f4c5c)
+extern Mouse *TheMouse;
 
 class WindowLayout
 {
@@ -306,8 +313,8 @@ public:
 	virtual void destroyWindows();            // slot8, 0x20
 };
 
-#define BfmeSavedClientFrame (*(int *)0x012ed508)
-#define Rva00579160Flag (*(int *)0x012f4b54)
+extern int BfmeSavedClientFrame;
+extern int Rva00579160Flag;
 
 class GameLogic
 {
@@ -340,7 +347,7 @@ void U4Sink0060D3B0::push(bool showScoreScreen, bool arg2)
 
 	TheAudio->a94setup();
 
-	Glo012F7048 *state7048 = Glo012F7048Ptr;
+	class Glo012F7048 *state7048 = Glo012F7048Ptr;
 	if (state7048)
 	{
 		if (state7048->m_flag8)

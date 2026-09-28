@@ -62,6 +62,8 @@ namespace _STL
 			return do_widen(low, high, to);
 		}
 
+		static locale::id id;
+
 	protected:
 		// The STLport wide ctype table's vftable is the range-first variant
 		// proved at 0x00D2EA54.  Keep all preceding slots in the declaration;
@@ -94,6 +96,8 @@ namespace _STL
 			return do_widen(low, high, to);
 		}
 
+		static locale::id id;
+
 	protected:
 		virtual char do_toupper(char) const;
 		virtual char do_tolower(char) const;
@@ -107,14 +111,14 @@ namespace _STL
 	const ctype<CharT> &use_ctype_facet(const locale &loc)
 	{
 		return *(const ctype<CharT> *)loc._M_use_facet(
-			*(const locale::id *)0x012C7450);
+			ctype<CharT>::id);
 	}
 
 	template <>
 	const ctype<char> &use_ctype_facet<char>(const locale &loc)
 	{
 		return *(const ctype<char> *)loc._M_use_facet(
-			*(const locale::id *)0x012C7430);
+			ctype<char>::id);
 	}
 
 	class ios_base
@@ -206,10 +210,9 @@ namespace _STL
 		char_traits<unsigned short> > WideIterator;
 	typedef istreambuf_iterator<char, char_traits<char> > NarrowIterator;
 
-	// The vendor's __narrow_atoms is the five-byte table beginning at this
-	// independently read retail VA ("+x0123456789abcdef...").
-	static const char *const __narrow_atoms =
-		(const char *)0x0112F430;
+	// The vendor's five-byte atom table "+-0xX" (stl/_num_get.c), which retail
+	// places between __digit_val_table and __hex_char_table_lo.
+	extern const char __narrow_atoms[];
 
 	template <class InputIter, class CharT>
 	__declspec(nothrow) int _M_get_base_or_zero(InputIter &in, InputIter &end,
