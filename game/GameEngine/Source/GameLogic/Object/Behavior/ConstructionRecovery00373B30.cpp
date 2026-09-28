@@ -1,5 +1,15 @@
-// cl: /Igame/GameEngine/Source/GameLogic/Object
-#define OBJECT_TU_MEMBERS Team* getTeam() const { return m_team; }
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Source/GameLogic/Object
+// stlport
+enum NameKeyType { NAMEKEY_INVALID = 0 };
+enum DamageType { DAMAGE_TYPE_8 = 8 };
+enum DeathType { DEATH_TYPE_0 = 0 };
+enum ObjectStatusTypes { OBJECT_STATUS_4E = 0x4e };
+typedef bool Bool;
+class Module;
+#define OBJECT_TU_MEMBERS \
+	Team* getTeam() const { return m_team; } \
+	Module* findModule(NameKeyType) const; \
+	void kill(DamageType, DeathType);
 #include "object.h"
 // Retail 0x00373B30. CastleBehavior receiver witnessed by neighbouring methods;
 // semantic method identity remains unknown. Caller: CastleBehavior update
@@ -99,4 +109,165 @@ effects:
   const FXList* fx=at<FXList*>(data,0x4c);
   if(fx) FXList::doFXObj(fx,at<Object*>(this,8),0);
  }
+}
+
+#define _STLP_USE_NEWALLOC 1
+#define _STLP_NO_EXCEPTIONS 1
+#include <algorithm>
+#include <hash_map>
+
+enum ObjectID
+{
+	INVALID_ID = 0,
+	FORCE_OBJECTID_TO_LONG_SIZE = 0x7ffffff
+};
+typedef _STL::hash_map<int, Object *, _STL::hash<int>,
+	_STL::equal_to<int> > CastleObjectMap00372BD0;
+
+struct Rva00367E30Logic
+{
+	__forceinline Object *findObjectByID(int id)
+	{
+		if (id == 0)
+			return 0;
+
+		CastleObjectMap00372BD0::iterator it = m_objects.find(id);
+		if (it == m_objects.end())
+			return 0;
+
+		return (*it).second;
+	}
+
+private:
+	unsigned char m_pad00[0xb0];
+	CastleObjectMap00372BD0 m_objects;
+};
+
+extern Rva00367E30Logic *TheBfmeGameLogic;
+
+struct CastleOwnedObjectVector00372BD0
+{
+	ObjectID *m_start;
+	ObjectID *m_finish;
+	ObjectID *m_capacity;
+
+	ObjectID *begin() { return m_start; }
+	ObjectID *end() { return m_finish; }
+	unsigned int size() { return (unsigned int)(m_finish - m_start); }
+	void clear() { m_finish = std::copy(m_finish, m_finish, m_start); }
+};
+
+struct CastleBehaviorModuleData00372BD0
+{
+	unsigned char m_pad00[0x50];
+	FXList *m_effects;
+};
+
+class CastleBehavior
+{
+public:
+	void rva00372bd0(Bool killOwnedObjects);
+
+private:
+	void *m_vtable;
+	CastleBehaviorModuleData00372BD0 *m_moduleData;
+	Object *m_object;
+	unsigned char m_pad0c[0xc4];
+	CastleOwnedObjectVector00372BD0 m_ownedObjectsD0;
+};
+
+class Rva00372BD0Calls {};
+
+template <class R>
+__forceinline R call0(void (*p)(), void *self)
+{
+	typedef R (Rva00372BD0Calls::*F)();
+	union { void (*p)(); F f; } u;
+	u.p = p;
+	return (((Rva00372BD0Calls *)self)->*u.f)();
+}
+
+template <class R, class A>
+__forceinline R call1(void (*p)(), void *self, A a)
+{
+	typedef R (Rva00372BD0Calls::*F)(A);
+	union { void (*p)(); F f; } u;
+	u.p = p;
+	return (((Rva00372BD0Calls *)self)->*u.f)(a);
+}
+
+template <class R, class A, class B>
+__forceinline R call2(void (*p)(), void *self, A a, B b)
+{
+	typedef R (Rva00372BD0Calls::*F)(A, B);
+	union { void (*p)(); F f; } u;
+	u.p = p;
+	return (((Rva00372BD0Calls *)self)->*u.f)(a, b);
+}
+
+extern void j_00011f77();
+extern void j_00014506();
+extern void j_00022bba();
+extern void j_00026094();
+extern void j_0002ae23();
+extern void j_0002ec44();
+extern void j_0003add7();
+extern void j_0003bf11();
+extern void j_00045827();
+
+class NameKeyGenerator {};
+extern NameKeyGenerator *TheNameKeyGenerator;
+
+// The matched update at RVA 0x00373B30 calls through ILT 0x00013935 and passes
+// a boolean. Matched CastleBehavior method 0x00371EE0 identifies the receiver.
+// Retail strings identify the EntEnragedUpdate and LifetimeUpdate lookups.
+// The method's purpose remains unproven, so its name keeps RVA 0x00372BD0.
+void CastleBehavior::rva00372bd0(Bool killOwnedObjects)
+{
+	ObjectID *ownedEnd = m_ownedObjectsD0.end();
+	ObjectID *id = m_ownedObjectsD0.begin();
+	if (id != ownedEnd) {
+		do {
+			if (*id != 0) {
+				Object *child = TheBfmeGameLogic->findObjectByID(*id);
+				if (child != 0) {
+					call1<void>(j_00045827, this, child);
+					if (killOwnedObjects) {
+						call2<void>(j_00014506, child,
+							(DamageType)8, (DeathType)0);
+					} else {
+						static NameKeyType enragedKey =
+							call1<NameKeyType>(j_0003add7, TheNameKeyGenerator,
+								"EntEnragedUpdate");
+						Module *enraged = call1<Module *>(j_0002ae23, child,
+							enragedKey);
+						if (enraged != 0)
+							call2<void>(j_0002ec44, enraged,
+								(unsigned char)1, (unsigned char)1);
+
+						static NameKeyType lifetimeKey =
+							call1<NameKeyType>(j_0003add7, TheNameKeyGenerator,
+								"LifetimeUpdate");
+						Module *lifetime = call1<Module *>(j_0002ae23, child,
+							lifetimeKey);
+						if (lifetime != 0)
+							call0<void>(j_0003bf11, lifetime);
+					}
+				}
+			}
+			++id;
+		} while (id != m_ownedObjectsD0.end());
+	}
+
+	if (m_ownedObjectsD0.size() > 0 && !killOwnedObjects) {
+		FXList *effects = m_moduleData->m_effects;
+		if (effects != 0) {
+			Object *owner = m_object;
+			if (!call0<Bool>(j_00011f77, effects))
+				call2<void>(j_00022bba, effects, owner, (Object *)0);
+		}
+	}
+
+	m_ownedObjectsD0.clear();
+	call2<void>(j_00026094, this, (ObjectStatusTypes)0x4e, false);
 }
