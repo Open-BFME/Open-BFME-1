@@ -10158,5 +10158,35 @@
   "old_name": "finish",
   "new_name": "rva0023b9f0",
   "reason": "The bank's wrapper name finish was invented for the still-dumped 0x0023B9F0 callee; earlier verdicts call it rva0023B9F0 and nothing proves finish so the pin keeps the address token."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002fb170.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamUseCommandButtonOnNearestEnemy.cpp",
+  "old_name": "construct",
+  "new_name": "Rva000C3DD0VptrZeroBlockObject",
+  "before_sha256": "e6b20341720bd6e25b0f89ab7226aef6da2c9aee8bcf223edb2e888bdd0c27cc",
+  "after_sha256": "ff2a5a8a475b9c7f610819cf81ca2cc2af4dc4da014858f2972eaaaced26716d",
+  "evidence": "targets/game/reverse/identity_evidence/002fb170-helper-names.md",
+  "reason": "The stash's local labels (construct, m_vptr, m_next) were invented for an unlanded draft; the landed body shows a kind-of PartitionFilter copying two 24-byte flag masks, so it uses address-derived names that assert nothing unproven."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002fb170.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamUseCommandButtonOnNearestEnemy.cpp",
+  "old_name": "m_next",
+  "new_name": "m_dword04",
+  "before_sha256": "e6b20341720bd6e25b0f89ab7226aef6da2c9aee8bcf223edb2e888bdd0c27cc",
+  "after_sha256": "ff2a5a8a475b9c7f610819cf81ca2cc2af4dc4da014858f2972eaaaced26716d",
+  "evidence": "targets/game/reverse/identity_evidence/002fb170-helper-names.md",
+  "reason": "The stash's local labels (construct, m_vptr, m_next) were invented for an unlanded draft; the landed body shows a kind-of PartitionFilter copying two 24-byte flag masks, so it uses address-derived names that assert nothing unproven."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002fb170.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamUseCommandButtonOnNearestEnemy.cpp",
+  "old_name": "m_vptr",
+  "new_name": "m_dword00",
+  "before_sha256": "e6b20341720bd6e25b0f89ab7226aef6da2c9aee8bcf223edb2e888bdd0c27cc",
+  "after_sha256": "ff2a5a8a475b9c7f610819cf81ca2cc2af4dc4da014858f2972eaaaced26716d",
+  "evidence": "targets/game/reverse/identity_evidence/002fb170-helper-names.md",
+  "reason": "The stash's local labels (construct, m_vptr, m_next) were invented for an unlanded draft; the landed body shows a kind-of PartitionFilter copying two 24-byte flag masks, so it uses address-derived names that assert nothing unproven."
  }
 ]
