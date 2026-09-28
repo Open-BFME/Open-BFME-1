@@ -239,33 +239,9 @@ const Image *ImageCollection::findImageByName( const AsciiString& name )
 /** Load this image collection with all the images specified in the INI files
 	* for the proper texture size directory */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/ImageCollection_loadMethodThunk.cpp
-// ?load@ImageCollection@@QAEXH@Z present-unmatched
-void ImageCollection::load( Int textureSize )
-{
-	char buffer[ _MAX_PATH ];
-	INI ini;
-	// first load in the user created mapped image files if we have them.
-	WIN32_FIND_DATA findData;
-	AsciiString userDataPath;	
-	if(TheGlobalData)
-	{
-		userDataPath.format("%sINI\\MappedImages\\*.ini",TheGlobalData->getPath_UserData().str());
-		if(FindFirstFile(userDataPath.str(), &findData) !=INVALID_HANDLE_VALUE)
-		{
-			userDataPath.format("%sINI\\MappedImages",TheGlobalData->getPath_UserData().str());
-			ini.loadDirectory(userDataPath, TRUE, INI_LOAD_OVERWRITE, NULL );
-		}
-	}
+// ?load@ImageCollection@@QAEXH@Z (retail 0x005D23A0) lives in
+// ImageCollectionLoad.cpp: retail calls GlobalData::getPath_UserData out of
+// line and builds its strings through StringBase<char>'s out-of-line
+// constructor, which the Zero Hour headers this file builds against inline
+// instead. Both bodies are byte-verified; only one may define the symbol.
 
-	// construct path to the mapped images folder of the correct texture size
-	sprintf( buffer, "Data\\INI\\MappedImages\\TextureSize_%d", textureSize );
-
-	// load all the ine files in that directory
-
-	ini.loadDirectory( AsciiString( buffer ), TRUE, INI_LOAD_OVERWRITE, NULL );
-
-	ini.loadDirectory("Data\\INI\\MappedImages\\HandCreated", TRUE, INI_LOAD_OVERWRITE, NULL );
-
-
-}  // end load
