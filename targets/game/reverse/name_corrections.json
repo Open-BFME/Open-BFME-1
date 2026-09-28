@@ -10238,5 +10238,55 @@
   "after_sha256": "0b47ef88ca4826a90077a2e9ac313c9e0a0e514d40a04bfee452fe86707d6d7c",
   "evidence": "targets/game/reverse/identity_evidence/0x00892170-scratch-rename-correction.md",
   "reason": "The deleted experiment contains the separate bfmeGo1017X and bfmeGo1017Y functions, which remain matched at 0x00892080 and 0x008920C0 in BfmeConv1017.cpp. The new 34-byte RVA 0x00892170 body is an unrelated address-derived Apt.cpp function; the path/name pair is a diff heuristic false positive."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00163030.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIPlayerIsLocationSafe.cpp",
+  "old_name": "BfmeFilterV0109685C",
+  "new_name": "Rva0109685CFilter",
+  "before_sha256": "c013f71cd27b986e0e19eeca0b2ed01b560b3577d59d5c99c88f52ae5698c5f2",
+  "after_sha256": "73896925d83e7706f7a5580f625b44863f4c7503f21f50be0f1d5c7e067dcd17",
+  "evidence": "targets/game/reverse/identity_evidence/00163030-filter-names.md",
+  "reason": "filter classes named by their installed vtable; ZH names without a BFME vtable witness replaced by address-keyed names; padding placeholders renamed"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00163030.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIPlayerIsLocationSafe.cpp",
+  "old_name": "PartitionFilterAlive",
+  "new_name": "Rva01083B80Filter",
+  "before_sha256": "c013f71cd27b986e0e19eeca0b2ed01b560b3577d59d5c99c88f52ae5698c5f2",
+  "after_sha256": "73896925d83e7706f7a5580f625b44863f4c7503f21f50be0f1d5c7e067dcd17",
+  "evidence": "targets/game/reverse/identity_evidence/00163030-filter-names.md",
+  "reason": "filter classes named by their installed vtable; ZH names without a BFME vtable witness replaced by address-keyed names; padding placeholders renamed"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00163030.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIPlayerIsLocationSafe.cpp",
+  "old_name": "PartitionFilterInsignificantBuildings",
+  "new_name": "Rva010956E4Filter",
+  "before_sha256": "c013f71cd27b986e0e19eeca0b2ed01b560b3577d59d5c99c88f52ae5698c5f2",
+  "after_sha256": "73896925d83e7706f7a5580f625b44863f4c7503f21f50be0f1d5c7e067dcd17",
+  "evidence": "targets/game/reverse/identity_evidence/00163030-filter-names.md",
+  "reason": "filter classes named by their installed vtable; ZH names without a BFME vtable witness replaced by address-keyed names; padding placeholders renamed"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00163030.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIPlayerIsLocationSafe.cpp",
+  "old_name": "m_bfmeBeforePlayer",
+  "new_name": "m_unmodelled000",
+  "before_sha256": "c013f71cd27b986e0e19eeca0b2ed01b560b3577d59d5c99c88f52ae5698c5f2",
+  "after_sha256": "73896925d83e7706f7a5580f625b44863f4c7503f21f50be0f1d5c7e067dcd17",
+  "evidence": "targets/game/reverse/identity_evidence/00163030-filter-names.md",
+  "reason": "filter classes named by their installed vtable; ZH names without a BFME vtable witness replaced by address-keyed names; padding placeholders renamed"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00163030.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIPlayerIsLocationSafe.cpp",
+  "old_name": "m_bfmePad",
+  "new_name": "m_unmodelled000",
+  "before_sha256": "c013f71cd27b986e0e19eeca0b2ed01b560b3577d59d5c99c88f52ae5698c5f2",
+  "after_sha256": "73896925d83e7706f7a5580f625b44863f4c7503f21f50be0f1d5c7e067dcd17",
+  "evidence": "targets/game/reverse/identity_evidence/00163030-filter-names.md",
+  "reason": "filter classes named by their installed vtable; ZH names without a BFME vtable witness replaced by address-keyed names; padding placeholders renamed"
  }
 ]
