@@ -41,12 +41,20 @@ class BfmeEngineETE
 {
 public:
 	unsigned char m_bfmeHeadETE[0x38];
-	void *m_bfme38ETE;
+	float m_bfme38ETE;
 };
 
 extern BfmeEngineETE *g_bfmeEngineETE;
 
-void bfmeBlendETE(BfmeMatETE *from, BfmeMatETE *to, void *state, BfmeMatETE *out);
+// 0x008D8480 is Matrix3D::Lerp (matrix3d.cpp, matched); BfmeMatETE is this
+// TU's 48-byte view of a Matrix3D, kept so the accessor's mangled name (its
+// ledger identity) is unchanged.
+class Matrix3D
+{
+public:
+	static void Lerp(const Matrix3D &A, const Matrix3D &B, float factor, Matrix3D &result);
+	unsigned char m_bfmeBody[0x30];
+};
 
 class BfmeHostETE
 {
@@ -70,8 +78,9 @@ BfmeMatETE *BfmeHostETE::bfmeGetETE()
 
 	if (m_bfme1fcETE != g_bfmeClientETE->bfmeSlot26ETE())
 	{
-		bfmeBlendETE(&m_bfme168ETE, &m_bfme198ETE, g_bfmeEngineETE->m_bfme38ETE,
-			&m_bfme1c8ETE);
+		Matrix3D::Lerp(*reinterpret_cast<const Matrix3D *>(&m_bfme168ETE),
+			*reinterpret_cast<const Matrix3D *>(&m_bfme198ETE), g_bfmeEngineETE->m_bfme38ETE,
+			*reinterpret_cast<Matrix3D *>(&m_bfme1c8ETE));
 
 		m_bfme1fcETE = g_bfmeClientETE->bfmeSlot26ETE();
 	}

@@ -75889,7 +75889,6 @@ name,address,notes
 ?bfmeBindOnlineHomeMessageGadget@@YAXPAVGameWindow@@H@Z,0x0004970B,OnlineHome message gadget binding helper
 ?bfmeBindRva004650F0@WindowManager@@QAEXABVAsciiString@@VRva0050F8B0FunctorHolder@@@Z,0x0000F31C,address-derived pin: 0x004650F0 sibling WindowManager forward target still an unclaimed dump
 ?bfmeBitsURD@@YIIH@Z,0x0090C400,pin
-?bfmeBlendETE@@YAXPAUBfmeMatETE@@0PAX0@Z,0x008D8480,pin
 ?bfmeBlendTileEmit@@YAXPAD0HH@Z,0x00747940,Open-BFME5 the 180-byte cdecl emitter the blendTileData at 0x0074A240 finishes with
 ?bfmeBlendTileFits@@YG_NGHPADH@Z,0x000274A8,Open-BFME5 ILT the blendTileData at 0x0074A240 tests through
 ?bfmeBlendTileOffset@BFMERetailWorldHeightMapBlendTileDataShim@@AAEHHPAUTBlendTileInfo@@@Z,0x0003D965,Open-BFME5 ILT the blendTileData at 0x0074A240 asks for its offset through
