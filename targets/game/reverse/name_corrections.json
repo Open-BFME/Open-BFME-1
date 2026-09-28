@@ -8498,5 +8498,15 @@
   "after_sha256": "aa95a78a929524a271459f1f3faa1069808fdebd31abccba7f114d171787f496",
   "evidence": "targets/game/reverse/identity_evidence/0053e390-create-game.md",
   "reason": "ILT 0x000019F6 reaches 0x0009B4B0 which the ledger matches as the obfuscation-hook wrapper Rva0009B4B0 (BigObfHookWrappers.cpp); called here as (exeCRC exeCRC) for the request CRC; the APT Living World window-index name was a guess with no supporting evidence."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001ec8e0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/WeaponSetGetAbleToAttackSpecificObject.cpp",
+  "old_name": "m_scriptStatus",
+  "new_name": "m_field110",
+  "before_sha256": "7e5474e8c01a51fa8c0223022404430f186e572e79756868aee4eec5f7b21f26",
+  "after_sha256": "83af430710bf9c55c03d882a1de2c87ad45fd2d183d5c5891df62a340b2e6807",
+  "evidence": "targets/game/reverse/identity_evidence/001ec8e0-weaponset-attack-query.md",
+  "reason": "The layout witness names Object+0x343 m_scriptStatus (name_oracle confidence 1.00) and this body reads +0x343 as the script-status byte; +0x110 is a separate bit array tested through WordBitTest000D2F40::test(0x10C) with no witnessed name so it keeps its offset."
  }
 ]
