@@ -5,6 +5,8 @@
 // lookAtPlayerName from the by-value AsciiString's str(). BFME keeps the
 // name as STLport std::string (assign first/last after a strlen walk) and
 // the id as a TU-scope Int. Callers: WOLWelcomeMenu.cpp and WOLBuddyOverlay.cpp.
+// The name's dynamic initializer (_$E1: default-construct through the string
+// ctor ILT 0x0004048A, then atexit) is retail 0x00C6BAF0.
 
 #include <string>
 
