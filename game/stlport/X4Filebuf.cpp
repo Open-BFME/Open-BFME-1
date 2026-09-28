@@ -47,6 +47,11 @@ bool _Filebuf_base::_M_open(int file_no, ios_base::openmode init_mode)
   return true;
 }
 
+bool _Filebuf_base::_M_open(const char *name, ios_base::openmode openmode)
+{
+  return _M_open(name, openmode, 0x80);
+}
+
 bool _Filebuf_base::_M_open(const char *name, ios_base::openmode openmode,
                             long permission)
 {
