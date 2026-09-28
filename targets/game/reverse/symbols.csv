@@ -89692,3 +89692,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?rva0027B000@AI001FFFC0@@QAEHMPAURva0029AB10Coord3D@@0USixWords001FFFC0@@@Z,0x0027B000,ILT 0x00042B9A reaches this body; retail 0x001FFFC0 call at +0xE4 passes ECX AI receiver then float and two coordinate pointers plus six-word value; target reads ECX+8 and returns EAX 0 or 1 with ret 0x24
 ??0Gen_0051b690@@QAE@XZ,0x0051B690, constructor ABI of existing ctorTail owner: callee calls base ctor 00490420 installs vtable 01105FCC returns this; caller 00386190 allocates 16 bytes
 ??0LoadScreen0051BF30@@QAE@I@Z,0x0051BF30, address-derived constructor: base ctor 00490420 then vtable 01106070 and argument at +14; returns this with RET4; caller 00386190 allocates A4 bytes
+?Rva005B18C0@@YA?AW4CommandStatus@@PBVCommandButton@@PBUICoord2D@@@Z,0x005B18C0,gap caller 005B20B6 direct REL32; callee reads EAX command and ECX mouse; returns EAX CommandStatus; opaque private-ABI helper

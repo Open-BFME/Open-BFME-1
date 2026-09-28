@@ -688,3 +688,155 @@ extern "C" void *_Locale_collate_create(const char *name)
     }
     return obj;
 }
+
+// INT3-bounded locale category extraction at 0x0084FF70.
+extern const char *g_Rva012C83A0;
+#pragma intrinsic(strcpy)
+extern "C" char *Rva0084FF70(const char *name, char *out)
+{
+    char lname[256];
+    LCID lcid;
+    char cp[6];
+    lname[0] = 0;
+    if (name[0] == 'L' && name[1] == 'C' && name[2] == '_') {
+        char *p = strstr(name, g_Rva012C83A0);
+        if (p != 0) {
+            char *q = strchr(p, '=');
+            if (q != 0) {
+                unsigned int len;
+                ++q;
+                len = strcspn(q, ";");
+                if (len > 256) len = 256;
+                strncpy(lname, q, len);
+                lname[len] = 0;
+            }
+        }
+    } else {
+        strncpy(lname, name, 256);
+    }
+    if (lname[0] == 'C' && lname[1] == 0) {
+        return strcpy(out, lname);
+    }
+    if (__GetLCIDFromName(lname, &lcid, cp) != 0) return 0;
+    return __GetLocaleName(lcid, cp, out);
+}
+
+// Independent RET + INT3 boundaries; category global read directly from retail.
+extern "C" char *Rva00850080(const char *name, char *out)
+{
+    char lname[256];
+    LCID lcid;
+    char cp[6];
+    lname[0] = 0;
+    if (name[0] == 'L' && name[1] == 'C' && name[2] == '_') {
+        char *p = strstr(name, g_Rva012C83A8);
+        if (p != 0) {
+            char *q = strchr(p, '=');
+            if (q != 0) {
+                unsigned int len;
+                ++q;
+                len = strcspn(q, ";");
+                if (len > 256) len = 256;
+                strncpy(lname, q, len);
+                lname[len] = 0;
+            }
+        }
+    } else {
+        strncpy(lname, name, 256);
+    }
+    if (lname[0] == 'C' && lname[1] == 0) {
+        return strcpy(out, lname);
+    }
+    if (__GetLCIDFromName(lname, &lcid, cp) != 0) return 0;
+    return __GetLocaleName(lcid, cp, out);
+}
+
+// Independent RET + INT3 boundaries; category global read directly from retail.
+extern "C" char *Rva00850190(const char *name, char *out)
+{
+    char lname[256];
+    LCID lcid;
+    char cp[6];
+    lname[0] = 0;
+    if (name[0] == 'L' && name[1] == 'C' && name[2] == '_') {
+        char *p = strstr(name, g_Rva012C83AC);
+        if (p != 0) {
+            char *q = strchr(p, '=');
+            if (q != 0) {
+                unsigned int len;
+                ++q;
+                len = strcspn(q, ";");
+                if (len > 256) len = 256;
+                strncpy(lname, q, len);
+                lname[len] = 0;
+            }
+        }
+    } else {
+        strncpy(lname, name, 256);
+    }
+    if (lname[0] == 'C' && lname[1] == 0) {
+        return strcpy(out, lname);
+    }
+    if (__GetLCIDFromName(lname, &lcid, cp) != 0) return 0;
+    return __GetLocaleName(lcid, cp, out);
+}
+
+// Independent RET + INT3 boundaries; category global read directly from retail.
+extern "C" char *Rva008502A0(const char *name, char *out)
+{
+    char lname[256];
+    LCID lcid;
+    char cp[6];
+    lname[0] = 0;
+    if (name[0] == 'L' && name[1] == 'C' && name[2] == '_') {
+        char *p = strstr(name, g_Rva012C839C);
+        if (p != 0) {
+            char *q = strchr(p, '=');
+            if (q != 0) {
+                unsigned int len;
+                ++q;
+                len = strcspn(q, ";");
+                if (len > 256) len = 256;
+                strncpy(lname, q, len);
+                lname[len] = 0;
+            }
+        }
+    } else {
+        strncpy(lname, name, 256);
+    }
+    if (lname[0] == 'C' && lname[1] == 0) {
+        return strcpy(out, lname);
+    }
+    if (__GetLCIDFromName(lname, &lcid, cp) != 0) return 0;
+    return __GetLocaleName(lcid, cp, out);
+}
+
+// Independent RET + INT3 boundaries; category global read directly from retail.
+extern "C" char *Rva008503B0(const char *name, char *out)
+{
+    char lname[256];
+    LCID lcid;
+    char cp[6];
+    lname[0] = 0;
+    if (name[0] == 'L' && name[1] == 'C' && name[2] == '_') {
+        char *p = strstr(name, g_Rva012C83A4);
+        if (p != 0) {
+            char *q = strchr(p, '=');
+            if (q != 0) {
+                unsigned int len;
+                ++q;
+                len = strcspn(q, ";");
+                if (len > 256) len = 256;
+                strncpy(lname, q, len);
+                lname[len] = 0;
+            }
+        }
+    } else {
+        strncpy(lname, name, 256);
+    }
+    if (lname[0] == 'C' && lname[1] == 0) {
+        return strcpy(out, lname);
+    }
+    if (__GetLCIDFromName(lname, &lcid, cp) != 0) return 0;
+    return __GetLocaleName(lcid, cp, out);
+}

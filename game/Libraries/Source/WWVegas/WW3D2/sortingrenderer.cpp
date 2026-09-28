@@ -850,7 +850,9 @@ void SortingRendererClass::Deinit()
 //
 // ----------------------------------------------------------------------------
 
-// ?Insert_VolumeParticle@SortingRendererClass@@SAXABVSphereClass@@GGGGG@Z present-unmatched
+// 0x0093B850..0x0093BD59: INT3-bounded volume-particle sorting body.
+// Callee contract: retail CALL at 0x0093B893 targets matched 0x00937280.
+extern void bfmeAccount(int, int);
 void SortingRendererClass::Insert_VolumeParticle(
 	const SphereClass& bounding_sphere,
 	unsigned short start_index, 
@@ -866,7 +868,7 @@ void SortingRendererClass::Insert_VolumeParticle(
 
 	//FOR VOLUME_PARTICLE LOGIC:
 	// WE MUST MULTIPLY THE VERTCOUNT AND POLYCOUNT BY THE VOLUME_PARTICLE DEPTH
-	DX8_RECORD_SORTING_RENDER( polygon_count * layerCount,vertex_count * layerCount);//THIS IS VOLUME_PARTICLE SPECIFIC
+	bfmeAccount(polygon_count * layerCount, vertex_count * layerCount);//THIS IS VOLUME_PARTICLE SPECIFIC
 
 	SortingNodeStruct* state=Get_Sorting_Struct();
 	DX8Wrapper::Get_Render_State(reinterpret_cast<RenderStateStruct &>(state->sorting_state));
@@ -886,14 +888,15 @@ void SortingRendererClass::Insert_VolumeParticle(
 
 	// Transform the center point to view space for sorting
 
-	D3DXMATRIX mtx=(D3DXMATRIX&)state->sorting_state.world*(D3DXMATRIX&)state->sorting_state.view;
-	D3DXVECTOR3 vec=(D3DXVECTOR3&)bounding_sphere.Center;
-	D3DXVECTOR4 transformed_vec;
-	D3DXVec3Transform(
-		&transformed_vec,
-		&vec,
-		&mtx); 
-	state->transformed_center=transformed_vec[2];
+	// Volatile reads preserve the witnessed VC7 x87 product order.
+	const Matrix4 &w = state->sorting_state.world;
+	const Matrix4 &v = state->sorting_state.view;
+	float transformed_z =
+        (*(const volatile float *)&w[2][3] * v[3][2] + w[2][1] * v[1][2] + w[2][0] * v[0][2] + w[2][2] * v[2][2]) * bounding_sphere.Center.Z +
+        (*(const volatile float *)&w[1][3] * v[3][2] + w[1][1] * v[1][2] + w[1][0] * v[0][2] + w[1][2] * v[2][2]) * bounding_sphere.Center.Y +
+        (*(const volatile float *)&w[0][3] * v[3][2] + w[0][1] * v[1][2] + *(const volatile float *)&w[0][0] * v[0][2] + w[0][2] * v[2][2]) * bounding_sphere.Center.X +
+        (*(const volatile float *)&w[3][3] * v[3][2] + w[3][1] * v[1][2] + w[3][0] * v[0][2] + w[3][2] * v[2][2]);
+	state->transformed_center = transformed_z;
 
 
 	// BUT WHAT IS THE DEAL WITH THE VERTCOUNT AND POLYCOUNT BEING N BUT TRANSFORMED CENTER COUNT == 1
