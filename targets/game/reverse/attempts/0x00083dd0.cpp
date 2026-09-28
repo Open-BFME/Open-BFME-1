@@ -1,17 +1,13 @@
-// ?rva0083DD0@GlobalData@@QBE?AVAsciiString@@XZ
-// partial score=0.25 date=2026-09-21
+// ?getPath_UserData@ScreenshotGlobalData@@QBE?AVScreenshotAsciiString@@XZ
+// partial score=0.712 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
-// Retail 0x00083DD0, 401 bytes. Reached from W3DDisplay::saveScreenShot only
-// through the pinned thunk 0x00036D9A (symbols.csv:
-// ?getPath_UserData@ScreenshotGlobalData@@QBE?AVScreenshotAsciiString@@XZ),
-// which jmp's straight here. Lazily builds the "legacy" (My Pictures based)
-// user-data directory the first time anyone asks for it: GlobalData+0x1284
-// is m_userDataDirLegacy, a real member already proven by the landed
-// Code/GameEngine/Source/Common/GlobalDataParseDefinition.cpp, which declares
-// the identical GlobalData padding layout up to +0x1290 and clears this same
-// field. The label string fetched from TheGameText, "APPDATA:PictureFolder",
-// was read directly out of mods/dist/lotrbfme.exe's .rdata at VA 0x0107C670.
+// The pinned ILT at 0x00036D9A and the call in W3DDisplay::saveScreenShot
+// identify this body as ScreenshotGlobalData::getPath_UserData.
+// The method creates the screenshot path when GlobalData+0x1284 is empty.
+// GlobalDataParseDefinition.cpp declares and clears m_userDataDirLegacy at
+// this offset. The current retail baseline stores APPDATA:PictureFolder at
+// VA 0x0107C670.
 
 #include <string.h>
 #include "ascii_string.h"
@@ -29,7 +25,7 @@ extern "C" __declspec(dllimport) BOOL __stdcall SHGetSpecialFolderPathA(HWND hwn
 // GameTextInterface's vtable: ten unnamed base-class/earlier-overload slots
 // (SubsystemInterface plus GameTextInterface's own destructor) precede
 // fetch(const Char *, Bool *), matching the target's `call [edx+0x28]`; the
-// same shim shape is already landed in
+// same shim shape appears in
 // Code/GameEngine/Source/Common/OnlineHomeRankText.cpp.
 class GameTextInterface
 {
@@ -57,19 +53,34 @@ class GlobalData
 public:
 	unsigned char m_bfme_pad[0x1284];
 	AsciiString m_userDataDirLegacy;
-
-	AsciiString rva0083DD0(void) const;
 };
 
 extern GlobalData *TheWritableGlobalData;
 
-AsciiString GlobalData::rva0083DD0(void) const
+// W3DDisplay.cpp declares ScreenshotAsciiString with one pointer to the string.
+// Its destructor pin at 0x00887940 names StringBase<char>::releaseBuffer.
+// This view inherits AsciiString to reuse the matched copy and release methods.
+class ScreenshotAsciiString : private AsciiString
 {
-	// Retail inlines the emptiness check as a single `mov eax,[this+1284]`
-	// (the AsciiString's raw m_text pointer, laid directly at +0x1284 of
-	// GlobalData) rather than materialising &m_userDataDirLegacy first and
-	// loading through that address; a this-relative raw view gets the same
-	// one-instruction field load.
+public:
+	ScreenshotAsciiString(const ScreenshotAsciiString &that)
+		: AsciiString((const AsciiString &)that) {}
+	~ScreenshotAsciiString() {}
+};
+
+class ScreenshotGlobalData
+{
+public:
+	unsigned char m_pad[0x1284];
+	ScreenshotAsciiString m_userDataDirLegacy;
+
+	ScreenshotAsciiString getPath_UserData(void) const;
+};
+
+ScreenshotAsciiString ScreenshotGlobalData::getPath_UserData(void) const
+{
+	// Retail loads the buffer pointer directly into EAX, then computes this
+	// field's address in ESI. This source uses a raw view at the same offset.
 	const char *dataPtr = *(const char *const *)((const char *)this + 0x1284);
 	if ((dataPtr == 0 ||
 		*(const unsigned short *)(dataPtr + 4) == 0) && TheGameText)
