@@ -1,20 +1,19 @@
 // ?_bfme_populateSinglePlayer@BfmeAptScreenScoreScreen@@QAEXXZ
-// partial score=0.518605332552007 date=2026-09-27
+// partial score=0.555 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringbaseunicode /Igame/Libraries/Source/WWVegas/WWLib /D_STLP_USE_STATIC_LIB
 // stlport
-// Complete native ScoreScreen single-player population; NOT byte matched.
-// Retail00575B70..005768C5 is3413B. Matched opener reaches ILT0003D08C.
-// Follow-up GPT-6: full3413B; frame50 exactly; 1643 masked differences,
-// positional agreement1770/3413=.518605332552, separate from .979 normalized
-// instruction shape. A genuine named __copy result fixes the bit-vector
-// frame/return lifetime. Extern global012F1028 is TheLivingWorldLogic;
-// TheCampaignManager is independently pinned at a different012F4CB0 slot.
-// Canonical body definitions independently reproduce the already-owned33B
-// GameLogic wrapper,158B numbered lookup,49B score record getter and112B list
-// append. They add no coverage. Five main dependency spellings still need
-// supported resolver ownership before landing; no speculative pins were added.
-// See identity_evidence/00575b70-score-single-player.md for full provenance,
-// value-return/callee proofs and the bounded unsuccessful lifetime variants.
+// NOT byte matched: 3413/3413 B, 1518 masked differing bytes (0.555 positional).
+// Retail 0x00575B70..0x005768C5; the matched _bfme_showScoreScreen caller
+// reaches it through ILT 0x0003D08C.
+// 2026-09-28 opus-5.5 levers that moved bytes over the 0.5186 bank:
+//   inline opaque ScoreKeeper accessors for the +0x8c/+0x114/+0x124/+0x4 reads
+//   (they take EAX without stepping the scratch rotation; 1643 -> 1585);
+//   seven {a,b,a*b} records at +0x294 with an indexed do-while (1585 -> 1520);
+//   block-scoped value groups for the three region rows (1520 -> 1518).
+// Remaining: objective/army loop temps and regionName sit one slot off
+// (retail fetch temp ebp-0x48, regionName ebp-0x40); introsort comparator
+// slot and __lg register at +0x458; __copy iterator args +0x4f1..0x530.
+// Extern global 012F1028 is TheLivingWorldLogic (see identity_evidence).
 #define _STLP_NO_EXCEPTIONS 1
 #include "ascii_string.h"
 #include <wchar.h>
@@ -135,6 +134,10 @@ public:
   int countMissionObjectives(int *);
   int calculateScore();
   int getVictoryType();
+  int rva004() const { return *(const int *)((const char *)this + 4); }
+  int rva08c() const { return *(const int *)((const char *)this + 0x8c); }
+  int rva114() const { return *(const int *)((const char *)this + 0x114); }
+  int rva124() const { return *(const int *)((const char *)this + 0x124); }
 };
 class Rva000E95A0Owner {
 public:
@@ -234,6 +237,10 @@ extern GameLogic *TheGameLogic;
 extern BfmeThingFactory *TheThingFactory;
 extern WindowManager *g_theWindowManager;
 extern GameTextInterface *TheGameText;
+// Seven {a, b, a*b} records at +0x294; roles unproven.
+struct Rva00575B70Line {
+  int field0, field4, field8;
+};
 class BfmeAptScreenScoreScreen {
 public:
   void _bfme_populateSinglePlayer();
@@ -246,7 +253,7 @@ public:
   int field25c;
   char field260[0x18];
   int field278, field27c, field280, field284, field288, field28c, field290;
-  int field294[21];
+  Rva00575B70Line field294[7];
   _STL::vector<bool> field2e8;
   int field2fc;
   AsciiString field300;
@@ -265,28 +272,26 @@ void BfmeAptScreenScoreScreen::_bfme_populateSinglePlayer() {
   if (!score)
     return;
   ScoreKeeper *keeper = (ScoreKeeper *)score;
-  field294[0] = SCORE(0x8c);
-  int *battle = field294 + 1;
-  *battle = TheWritableGlobalData->field1224;
-  field294[3] = keeper->getTotalUnitsDestroyed();
-  field294[4] = TheWritableGlobalData->field1228;
-  field294[6] = SCORE(0x114);
-  field294[7] = TheWritableGlobalData->field122c;
-  field294[18] = keeper->getTotalBuildingsDestroyed();
-  field294[19] = TheWritableGlobalData->field1230;
-  field294[9] = SCORE(0x124);
-  field294[10] = TheWritableGlobalData->field1244;
-  field294[12] = SCORE(4);
-  field294[13] = TheWritableGlobalData->field1240;
-  field294[15] = keeper->getTimeTakenScore();
-  field294[16] = 1;
+  field294[0].field0 = keeper->rva08c();
+  field294[0].field4 = TheWritableGlobalData->field1224;
+  field294[1].field0 = keeper->getTotalUnitsDestroyed();
+  field294[1].field4 = TheWritableGlobalData->field1228;
+  field294[2].field0 = keeper->rva114();
+  field294[2].field4 = TheWritableGlobalData->field122c;
+  field294[6].field0 = keeper->getTotalBuildingsDestroyed();
+  field294[6].field4 = TheWritableGlobalData->field1230;
+  field294[3].field0 = keeper->rva124();
+  field294[3].field4 = TheWritableGlobalData->field1244;
+  field294[4].field0 = keeper->rva004();
+  field294[4].field4 = TheWritableGlobalData->field1240;
+  field294[5].field0 = keeper->getTimeTakenScore();
+  field294[5].field4 = 1;
   field278 = 0;
-  int left = 7;
+  int i = 0;
   do {
-    battle[1] = battle[-1] * battle[0];
-    field278 += battle[1];
-    battle += 3;
-  } while (--left);
+    field294[i].field8 = field294[i].field0 * field294[i].field4;
+    field278 += field294[i].field8;
+  } while (++i < 7);
   if (!TheLivingWorldLogic)
     return;
   field304 = 0;
@@ -392,24 +397,30 @@ void BfmeAptScreenScoreScreen::_bfme_populateSinglePlayer() {
   typedef void (ScoreKeeper::*SetM)(int, int, int);
   (keeper->*retailMethod<SetM>(j_000045d4))(region->field78, region->field7c,
                                             region->field80);
-  int value = SCORE(0x12c);
-  rva00573C20(0, 0, value);
-  rva00573C20(0, 1, TheWritableGlobalData->field1248);
-  int product = TheWritableGlobalData->field1248 * value;
-  rva00573C20(0, 2, product);
-  field288 += product;
-  value = SCORE(0x134);
-  rva00573C20(1, 0, value);
-  rva00573C20(1, 1, TheWritableGlobalData->field1250);
-  product = TheWritableGlobalData->field1250 * value;
-  rva00573C20(1, 2, product);
-  field288 += product;
-  value = SCORE(0x130);
-  rva00573C20(2, 0, value);
-  rva00573C20(2, 1, TheWritableGlobalData->field124c);
-  product = TheWritableGlobalData->field124c * value;
-  rva00573C20(2, 2, product);
-  field288 += product;
+  {
+    int value = SCORE(0x12c);
+    rva00573C20(0, 0, value);
+    rva00573C20(0, 1, TheWritableGlobalData->field1248);
+    int product = TheWritableGlobalData->field1248 * value;
+    rva00573C20(0, 2, product);
+    field288 += product;
+  }
+  {
+    int value = SCORE(0x134);
+    rva00573C20(1, 0, value);
+    rva00573C20(1, 1, TheWritableGlobalData->field1250);
+    int product = TheWritableGlobalData->field1250 * value;
+    rva00573C20(1, 2, product);
+    field288 += product;
+  }
+  {
+    int value = SCORE(0x130);
+    rva00573C20(2, 0, value);
+    rva00573C20(2, 1, TheWritableGlobalData->field124c);
+    int product = TheWritableGlobalData->field124c * value;
+    rva00573C20(2, 2, product);
+    field288 += product;
+  }
   field28c = keeper->calculateScore();
   field290 = keeper->getVictoryType();
   {
