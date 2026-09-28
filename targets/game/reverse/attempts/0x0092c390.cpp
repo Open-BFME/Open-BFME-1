@@ -1,5 +1,5 @@
 // ?Get_Deformed_Vertices@BfmeShadowMesh@@QAEXPAVVector3@@@Z
-// partial score=0.826 date=2026-09-28
+// partial score=0.87 date=2026-09-28
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad
 
 #include "matrix4.h"
@@ -84,11 +84,10 @@ public:
 
 void BfmeShadowMesh::Get_Deformed_Vertices(Vector3 *dst)
 {
-	unsigned int object84 = m_field84;
-	if (object84 != 0)
+	if (m_field84 != 0)
 	{
 		((Rva00925860 *)m_model)->method(
-			dst, (void *)((RenderObjClass *)object84)->Get_HTree());
+			dst, (void *)((RenderObjClass *)m_field84)->Get_HTree());
 	}
 	else
 	{

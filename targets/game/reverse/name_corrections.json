@@ -8608,5 +8608,15 @@
   "after_sha256": "29fab3a6ab3874613328e02a0715be1607acc16c455b7c8c9c9bb8c0264b1996",
   "evidence": "targets/game/reverse/identity_evidence/00088480-mapobject-ambient-audio.md",
   "reason": "Whole-body rewrite of the 0x00088480 bank: the old token was scaffolding from the raw-thunk decomposition (guessed local roles and shim class names), not evidence about this member; the new name is the ledger symbol or the ref class member the rewrite actually uses. See the evidence file."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0092c390.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0092c390.cpp",
+  "old_name": "object84",
+  "new_name": "m_field84",
+  "before_sha256": "b8defaca5c72e5a0b47b6d9af3658ac59a060ada667a839eb9ad26ec1cc3c022",
+  "after_sha256": "cbec92633599d1dca81fcf5906d3c030ad4c2cb2d6dd365f94e8d6c80e9cbc77",
+  "evidence": "targets/game/reverse/identity_evidence/0x0092c390-object84-alias.md",
+  "reason": "object84 named a local copy of the value at +0x84. The layout witness has no member name for that offset, so the source reads it through m_field84. The direct field version matches retail through the virtual call and improves the probe from 0.826 to 0.870."
  }
 ]
