@@ -28,7 +28,7 @@ directly:
   function's body is referenced from its class's vtable, but no dword
   anywhere outside `.text` points at `0x00912040` or `0x008E21C0`.
 - `Object::friend_setPartitionData` stores `+0x1A4`, which is
-  `m_disabledMask` in `docs/object_layout.md` (15 byte-verified copies);
+  `m_disabledMask` in `targets/game/reverse/analysis/object_layout.md` (15 byte-verified copies);
   `m_partitionData` is at `+0x3B0`.
 - `BuildListInfo::setNextBuildList` stores `+0x30`. Retail
   `Player::addToBuildList` (0x000CD830) stores `m_nextBuildList` at

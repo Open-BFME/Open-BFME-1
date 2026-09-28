@@ -16,8 +16,8 @@ row), bank the rest.
   python tools/fleet/gap_seats.py N --map [--lanes astra-finish,twin] [--dry]
 
 --map serves build/unclaimed_map/map.csv instead of the raw census: capstone-resolved sizes, identity with grade
-and witness, Zero Hour source, twin, lane and rank (expected exact bytes per seat-hour); docs/analysis/unclaimed_map.md
-explains the lanes. Eligibility is tools/eligibility.servable(), the one predicate every picker uses.
+and witness, Zero Hour source, twin, lane and rank (expected exact bytes per seat-hour).
+Eligibility is tools/eligibility.servable(), the one predicate every picker uses.
 """
 import argparse
 import csv

@@ -31,7 +31,7 @@ Retail has no identical-COMDAT folding (`tiny-accessor-aliases.md`), so a
 slot body is only the particle method. Retired as aliases of slot bodies:
 `ThingTemplate::setReskinnedFrom` (slot 4), `GameWindow::setTooltipDelay`
 (slot 5) and `Object::friend_setRadarData` (slot 16, contradicted as well
-by `m_radarData` at `+0x20C` in `docs/object_layout.md`).
+by `m_radarData` at `+0x20C` in `targets/game/reverse/analysis/object_layout.md`).
 
 The same names had been claimed on eight other bodies with the same byte
 shape and no named caller: `0x001065F0`, `0x0021A220`, `0x00253D20`,

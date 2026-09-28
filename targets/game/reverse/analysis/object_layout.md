@@ -4,7 +4,7 @@
 copy (`grep -rlE '^(class|struct) Object( *[:{]|$)' Code --include=*.cpp`),
 each padded out to the fields one body touches. Verdicts citing layout drift
 name `Object` more than any other class (88 KB of dump bodies, see
-`docs/analysis/remaining-30pct-blockers-2026-09-24.md`). This page collects
+`targets/game/reverse/analysis/remaining-30pct-blockers-2026-09-24.md`). This page collects
 what is proven so a header can be written once, from evidence.
 
 Two sources, both independent of any one author's guess:

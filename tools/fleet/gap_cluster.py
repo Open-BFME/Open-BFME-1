@@ -166,7 +166,7 @@ def main():
         log = ROOT / "build" / "fleet_logs" / f"seat_astragapG_{s:08x}.log"
         code = fleet_run.execute(ROOT, brief, log, "astragap", "G", codex_command(int(a.cap_hours * 3600)))
         if (work / "GAP.md").exists():
-            doc = ROOT / "docs" / "analysis" / f"gap_0x{s:08x}.md"
+            doc = ROOT / "targets/game/reverse" / "analysis" / f"gap_0x{s:08x}.md"
             doc.parent.mkdir(exist_ok=True)
             parts = [f"# Gap analyst: 0x{s:08X}..0x{e:08X} ({MODEL} with Ghidra, {time.strftime('%Y-%m-%d')})\n"]
             for f in ("GAP.md", "FUNCTIONS.csv"):

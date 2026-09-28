@@ -68,7 +68,7 @@ class label has now been repaired across the constructor, 300-byte destructor,
 virtual destructor naturally emits the deleting wrapper; the old force-delete
 probe is removed. The main constructor continues to use its verified
 address-derived member view and existing constructor ILT. See
-[the lifecycle identity proof](../../targets/game/reverse/identity_evidence/00566ec0-profile-family.md).
+[the lifecycle identity proof](../identity_evidence/00566ec0-profile-family.md).
 The actual full-screen identity remains independently proved by its matched
 factory caller.
 

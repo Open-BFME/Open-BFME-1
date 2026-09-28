@@ -7,7 +7,7 @@ follow-up sessions land 4 of the hub's 7 open callers/callees byte-exact in
 15-45 minutes each. Large bodies are analysis hubs; their neighbours are the
 landing targets.
 
-  python tools/fleet/hub_cluster.py 0xHUB analyse     # phase 1: analyst session -> docs/analysis/<hub>.md
+  python tools/fleet/hub_cluster.py 0xHUB analyse     # phase 1: analyst session -> targets/game/reverse/analysis/<hub>.md
   python tools/fleet/hub_cluster.py 0xHUB neighbours  # phase 2: 2-3 open neighbours per session, analyst pack attached
   python tools/fleet/hub_cluster.py --rank            # hubs by open bytes among direct callers/callees
 
@@ -59,7 +59,7 @@ RULES. Never run git. No full gate, no whole-tree build, never launch the game. 
 """
 
 PACK_NOTE = ("ANALYST PACK. An analyst session reverse-engineered the neighbouring hub body 0x{rva:08X} and wrote "
-             "docs/analysis/0x{rva:08x}.md. READ ITS 'LAYOUTS', 'CALLEE CONTRACTS' and 'NEIGHBOUR NOTES' FIRST: they give, "
+             "targets/game/reverse/analysis/0x{rva:08x}.md. READ ITS 'LAYOUTS', 'CALLEE CONTRACTS' and 'NEIGHBOUR NOTES' FIRST: they give, "
              "with instruction-level witnesses, the object layouts and the proved calling convention, argument count, stack "
              "cleanup and return width of the hub's callees, and what the hub proves about each of these bodies. Use them "
              "instead of rediscovering them; the names in them are opaque on purpose. The Ghidra decompiler is installed: "
@@ -154,7 +154,7 @@ def main():
         log = ROOT / "build" / "fleet_logs" / f"seat_astrahubH_{rva:08x}.log"
         code = fleet_run.execute(ROOT, brief, log, "astrahub", "H", codex_command(int(a.cap_hours * 3600)))
         if (work / "ANALYSIS.md").exists():
-            doc = ROOT / "docs" / "analysis" / f"0x{rva:08x}.md"
+            doc = ROOT / "targets/game/reverse" / "analysis" / f"0x{rva:08x}.md"
             doc.parent.mkdir(exist_ok=True)
             parts = [f"# Analyst hub: 0x{rva:08X} ({MODEL} with Ghidra, {time.strftime('%Y-%m-%d')})\n"]
             for f in ("REPORT.md", "ANALYSIS.md"):

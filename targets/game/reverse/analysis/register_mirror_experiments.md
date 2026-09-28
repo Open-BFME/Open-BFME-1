@@ -16,7 +16,7 @@ dead ends.
 ## Harness
 
 `build/regmirror/` (untracked, gitignored under `build/*`, same pattern as
-`build/sib_experiment/` documented in `docs/sib_lea_experiments.md`).
+`build/sib_experiment/` documented in `targets/game/reverse/analysis/sib_lea_experiments.md`).
 `build/regmirror/compile.py` wraps `tools/build.py`'s
 `compiler_command`/`compiler_environment` (same wine/cl.exe path, same
 `INCLUDE`/`LIB` env) and inserts `-FAcs -Fa<name>.cod` before the trailing
@@ -37,7 +37,7 @@ pointer, with the two reads' SOURCE STATEMENT order swapped between
 variants. In every pair the compiled instruction order was identical —
 lower struct offset loads first, regardless of which local was declared or
 read first in the C++ text. This reproduces, with a cleaner two-line
-repro, the same conclusion `docs/sib_lea_experiments.md` Experiment 1
+repro, the same conclusion `targets/game/reverse/analysis/sib_lea_experiments.md` Experiment 1
 already reached for SIB base selection ("declaration order of the two
 locals never changed anything"). Consistent with why the fleet's plain
 "reorder the local declarations" lever already failed on all eight bodies.

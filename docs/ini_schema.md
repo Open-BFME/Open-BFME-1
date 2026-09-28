@@ -1937,7 +1937,7 @@ Field table `0x01116D18`, returned by the getter at `0x006185F0`:
 | `DefaultFlashValue` | `0x010` | `0x00852B20` |
 | `FlashVariation` | `0x014` | `0x00852B20` |
 
-See [boundary and identity evidence](living_world_parser_boundary.md).
+See [boundary and identity evidence](../targets/game/reverse/analysis/living_world_parser_boundary.md).
 
 ### `LivingWorldPlayerArmy`
 

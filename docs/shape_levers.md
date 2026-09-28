@@ -1466,7 +1466,7 @@ that only feeds a `test`/`cmp` branch takes EAX without moving the pointer.
 The pointer counts code-generation temporaries, including ones a later fold
 removes (`p->m++` becomes `inc [eax]` and still moves it). Probe TUs,
 listings and the full experiment table are in
-`docs/analysis/allocation_residue.md`.
+`targets/game/reverse/analysis/allocation_residue.md`.
 
 So when a shape-1.000 bank misses only scratch registers, and every
 mismatched temp from some point on is shifted one place along

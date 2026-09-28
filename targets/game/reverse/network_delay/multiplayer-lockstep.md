@@ -53,12 +53,12 @@ and departure duties add work when the local peer is the router.
    and fast paths, not simply the Zero Hour lexicographic loop.
 
 The principal readable sources are
-[the command pump](../game/GameEngine/Source/GameNetwork/Network_GetCommandsFromCommandList.cpp),
-[enqueue/fragmentation](../game/GameEngine/Source/GameNetwork/Connection_sendNetCommandMsg.cpp),
-[packet sending](../game/GameEngine/Source/GameNetwork/Connection_doSend.cpp),
-[frame storage](../game/GameEngine/Source/GameNetwork/FrameData.cpp),
-[command insertion](../game/GameEngine/Source/GameNetwork/NetCommandList_addMessage.cpp),
-and [routing/readiness](../game/GameEngine/Source/GameNetwork/native_connection_timing.cpp).
+[the command pump](../../../../game/GameEngine/Source/GameNetwork/Network_GetCommandsFromCommandList.cpp),
+[enqueue/fragmentation](../../../../game/GameEngine/Source/GameNetwork/Connection_sendNetCommandMsg.cpp),
+[packet sending](../../../../game/GameEngine/Source/GameNetwork/Connection_doSend.cpp),
+[frame storage](../../../../game/GameEngine/Source/GameNetwork/FrameData.cpp),
+[command insertion](../../../../game/GameEngine/Source/GameNetwork/NetCommandList_addMessage.cpp),
+and [routing/readiness](../../../../game/GameEngine/Source/GameNetwork/native_connection_timing.cpp).
 
 ## Why there is delay even on a fast network
 
@@ -117,8 +117,8 @@ bytes despite the historical CRC name.
 
 Readable evidence includes
 [state collection](../game/GameEngine/Source/Common/GameLogicCRC.cpp),
-[peer comparison](../game/GameEngine/Source/GameLogic/System/GameLogicPeerCRC.cpp),
-and [the local guard](../game/GameEngine/Source/GameNetwork/native_desync_report.cpp).
+[peer comparison](../../../../game/GameEngine/Source/GameLogic/System/GameLogicPeerCRC.cpp),
+and [the local guard](../../../../game/GameEngine/Source/GameNetwork/native_desync_report.cpp).
 Object registration, wake-up scheduling and deferred destruction matter here:
 all peers must update the same objects in the same phases and order.
 
@@ -142,7 +142,7 @@ and it is absent from the packaged feature list. `035-adaptretry` is closed and
 not built. Faster command sending and more aggressive simulation advancement
 must therefore be evaluated separately.
 
-[Network fixes](net-fixes.md) records the earlier two-client latency/loss trials
+[Network fixes](../../../../docs/net-fixes.md) records the earlier two-client latency/loss trials
 and their limits. The 2026-09-07 reconstruction session has not rerun those
 matches. The user-supplied
 [RotWK delay-fix article](https://www.gamereplays.org/riseofthewitchking/portals.php?show=page&name=rotwk_2.02_delay_fix)

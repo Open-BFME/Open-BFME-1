@@ -2,7 +2,7 @@
 
 > Current-reading note (2026-09-07): this file preserves the investigation's
 > earlier conclusions and later corrections. Use
-> [the lockstep guide](../../docs/multiplayer-lockstep.md) for the current map.
+> [the lockstep guide](multiplayer-lockstep.md) for the current map.
 > The actual engine caller consumes a positive admission result as a boolean,
 > not a frame-batching count. The accumulator cap is two seconds
 > (`frequency * 2`), not two 200 ms quanta. Early command sending can reduce

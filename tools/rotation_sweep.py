@@ -2,7 +2,7 @@
 """Sweep the scratch-register rotation lever over one allocation-only near miss.
 
 MSVC 7.1 hands out EAX/ECX/EDX to short-lived values round-robin, in program
-order across the whole function (docs/analysis/allocation_residue.md, measured
+order across the whole function (targets/game/reverse/analysis/allocation_residue.md, measured
 2026-09-26). A body whose scratch registers are all shifted one step from
 retail's is one rotation step away, and the step comes from spelling, not from
 the value: `f(m_x)` and `T v = m_x; f(v)` compile to the same bytes except
