@@ -1,5 +1,5 @@
 // ?bfmeSet1016@BfmeDst1016@@QAEXHHH@Z
-// partial score=0.904 date=2026-09-28
+// partial score=0.933 date=2026-09-28
 // cl: /DNDEBUG /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
 // Open-BFME5 conversions.
 
@@ -127,22 +127,13 @@ void BfmeDst1016::bfmeSet1016(int a, int b, int r)
 			const Matrix3D &m = *pm;
 			const Vector3 *in;
 			Vector3 *out;
-			in = srcV[0];
-			out = dstV;
-			c = n;
-			while (c--) {
-				out->X = m[0].X * (*in)[0] + m[0].Y * (*in)[1] + m[0].Z * (*in)[2] + m[0].W;
-				out->Y = m[1].X * in->X + m[1].Y * in->Y + m[1].Z * in->Z + m[1].W;
-				out->Z = m[2].X * (*in)[0] + m[2].Y * (*in)[1] + m[2].Z * (*in)[2] + m[2].W;
-				++in;
-				++out;
-			}
+			pm->mulVector3Array(srcV[0], dstV, n);
 			in = srcN[0];
 			out = dstN;
 			c = n;
 			while (c--) {
 				out->X = m[0].X * in->X + m[0].Y * in->Y + m[0].Z * in->Z;
-				out->Y = m[1].X * (*in)[0] + m[1].Y * (*in)[1] + m[1].Z * (*in)[2];
+				out->Y = m[1].X * in->X + m[1].Y * in->Y + m[1].Z * in->Z;
 				out->Z = m[2].X * in->X + m[2].Y * in->Y + m[2].Z * in->Z;
 				++in;
 				++out;
