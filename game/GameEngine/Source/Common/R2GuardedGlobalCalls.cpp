@@ -267,6 +267,32 @@ int Rva00739D20( int value, bool enabled )
 	}
 	return result;
 }
+// Adjacent retail selector at 0x00739CC0; same scalar-mapping family as Rva00739D20.
+int Rva00739CC0( int value, bool enabled )
+{
+	int result = 0;
+	switch ( value - 1 )
+	{
+	case 0:
+		result = 0x16;
+		break;
+	case 1:
+		result = enabled ? 0x15 : 0x16;
+		break;
+	case 2:
+		result = 0x14;
+		break;
+	case 3:
+		result = 0x17;
+		break;
+	case 4:
+		result = 0x18;
+		break;
+	default:
+		break;
+	}
+	return result;
+}
 
 class Rva00739C10Owned
 {
