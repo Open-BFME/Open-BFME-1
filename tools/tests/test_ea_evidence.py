@@ -78,7 +78,7 @@ def test_worldbuilder_runs_fill_only_between_the_same_file():
     assert got == {1: ("A.cpp", "direct"), 2: ("A.cpp", "filled"), 3: ("A.cpp", "direct")}
 
 
-def test_name_guard_only_guards_the_step_from_unknown_to_named_under_strong_pairing():
+def test_name_guard_checks_every_rename_at_a_strongly_paired_address():
     import ea_name_guard as guard
     ea = {0x3D9430: ("Pathfinder::IsCliffCell", "chain", "strong"), 0x10: ("A::f", "chain", "aligned")}
     exports = {0x3D9430: {"?exported@Pathfinder@@QAE_NH@Z"}}
@@ -93,9 +93,48 @@ def test_name_guard_only_guards_the_step_from_unknown_to_named_under_strong_pair
     assert guard.problems([row("?bfmeCellTypeTwo@Pathfinder@@QAE_NH@Z")], {}, ea, exports, zh={})  # a new row
     zh = {"pathfinder": {"cellistypetwo"}}                                                  # Zero Hour declares it
     assert guard.problems([row("?cellIsTypeTwo@Pathfinder@@QAE_NH@Z")], was_dump, ea, exports, zh=zh) == []
-    real_before = {0x3D9430: {"?cellTypeTwo@Pathfinder@@QAE_NH@Z"}}
-    assert guard.problems([row("?bfmeCellTypeTwo@Pathfinder@@QAE_NH@Z")], real_before, ea, exports) == []
+    real_before = {0x3D9430: {"?cellTypeTwo@Pathfinder@@QAE_NH@Z"}}                        # real -> real
+    assert guard.problems([row("?bfmeCellTypeTwo@Pathfinder@@QAE_NH@Z")], real_before, ea, exports, zh={})
+    assert guard.problems([row("?IsCliffCell@Pathfinder@@QAE_NH@Z")], real_before, ea, exports, zh={}) == []
     moved = {0x3D9430: {"?bfmeCellTypeTwo@Pathfinder@@QAE_NH@Z"}}                          # source repoint only
     assert guard.problems([row("?bfmeCellTypeTwo@Pathfinder@@QAE_NH@Z")], moved, ea, exports) == []
     assert guard.problems([row("?g@B@@QAEXXZ", rva="0x00000010")], {}, ea, exports) == []      # aligned basis
     assert guard.problems([row("?Token@CParse@D3DXShader@@IAEHXZ", "vendored=d3dx9-9.0c")], {}, ea, exports, zh={}) == []
+
+
+def test_rename_queue_serves_fixed_targets_and_refuses_the_risky_shapes():
+    import ea_queue as Q
+    row = lambda name, source="game/GameEngine/Source/Common/X.cpp", notes="": {
+        "name": name, "source": source, "notes": notes, "target_size": "16"}
+    rows_at = {
+        0x10: [row("?Rva00000010@GameEngine@@QAEXPAX@Z")],                 # method rename
+        0x20: [row("?bfmeFoo@BfmeThingBE@@QAEXXZ")],                        # stand-in class
+        0x30: [row("?bar@BfmeThingBE@@QAEXXZ")],                            # its unlabelled member
+        0x40: [row("?XferEnum@XferSave@@UAEXPAXPBXI@Z")],                   # virtual: never alone
+        0x50: [row("?AddBanner@@YAXHABVAsciiString@@0@Z")],                 # free vs member
+        0x60: [row("??1AIStateMachine@@MAE@XZ")],                           # structor vs method
+        0x70: [row("?getBool@Dict@@QBE_NW4NameKeyType@@PA_N@Z")],           # already EA's name
+        0x80: [row("?isCliff@Pathfinder@@QAE_NH@Z")],                       # a Zero Hour name
+    }
+    ea = {0x10: ("GameEngine::startHeadlessClients", "chain", "strong"), 0x20: ("AptCIH::Go", "chain", "strong"),
+          0x40: ("XferSave::XferImpl", "chain", "strong"), 0x50: ("BannerUI::CreateBanner", "chain", "strong"),
+          0x60: ("AIStateMachine::clear", "chain", "strong"), 0x70: ("Dict::getBool", "chain", "strong"),
+          0x80: ("Pathfinder::IsCliffCell", "chain", "strong")}
+    got = {i["kind"]: i for i in Q.items(ea, rows_at, {}, {"pathfinder": {"iscliff"}}, set())}
+    assert set(got) == {"method", "class"}
+    assert got["method"]["rows"] == [(0x10, "?Rva00000010@GameEngine@@QAEXPAX@Z",
+                                      "?startHeadlessClients@GameEngine@@QAEXPAX@Z", "GameEngine::startHeadlessClients")]
+    assert [r[2] for r in got["class"]["rows"]] == ["?Go@AptCIH@@QAEXXZ", "?bar@AptCIH@@QAEXXZ"]
+    assert Q.items(ea, rows_at, {}, {"pathfinder": {"iscliff"}}, {0x10, 0x20}) == []       # blocked
+
+
+def test_a_big_stand_in_class_needs_a_second_label_or_a_matching_name():
+    import ea_queue as Q
+    row = lambda name: {"name": name, "source": "game/X.cpp", "notes": "", "target_size": "16"}
+    rows_at = {0x10 * k: [row(f"?m{k}@WindowManager@@QAEXXZ")] for k in range(1, 5)}
+    ea = {0x10: ("AptPlayer::HideBackground", "chain", "strong")}
+    assert Q.items(ea, rows_at, {}, {}, set()) == []
+    ea[0x20] = ("AptPlayer::ShowBackground", "chain", "strong")
+    assert len(Q.items(ea, rows_at, {}, {}, set())[0]["rows"]) == 4
+    named = {0x10 * k: [row(f"?m{k}@BfmeAptScreenInGameChat@@QAEXXZ")] for k in range(1, 5)}
+    assert Q.items({0x10: ("AptInGameChat::InitGadgets", "chain", "strong")}, named, {}, {}, set())

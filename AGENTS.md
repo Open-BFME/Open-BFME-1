@@ -21,12 +21,12 @@ ledger and verification are separate from the game's.
 
 1. `python3 tools/next_work.py` is the default work, and it explains its own
    tiers. The first, `finish`, serves a body whose banked attempt already
-   scores 0.90+: start from that stash, and do not rewrite it because a later
-   session recorded `blocked`.
-2. Most remaining work is anonymous `?d_` bodies, and the brief's evidence
-   pack is the lead. A proven identity gets its real name with
-   the evidence cited. An unproven one gets an opaque name that keeps the
-   address (`RvaXXXXXXXX::method`, `?dup_XXXXXXXX`). Never ship a plausible
+   scores 0.90+: start from that stash, even if a later session recorded
+   `blocked`.
+2. Most remaining work is anonymous `?d_` bodies; the brief's evidence pack
+   is the lead. A proven identity gets its real name, evidence cited. An
+   unproven one gets an opaque name that keeps the address
+   (`RvaXXXXXXXX::method`, `?dup_XXXXXXXX`). Never ship a plausible
    guessed name: no gate can see it. `docs/carving.md` and
    `tools/carve_unclaimed.py` serve bodies found by boundary evidence.
 3. Named `__emit` lifts are dumps too; `python3 tools/lift_lane.py` lists them.
@@ -45,6 +45,8 @@ ledger and verification are separate from the game's.
    addresses: replace each with a named extern (`dir32_addresses.csv`, else
    `g_XXXXXXXX`) without changing a byte. `tools/link_census.py`, after a full
    `BUILD_POOL=12 ./build.sh`, lists the rest.
+7. **EA renames.** `python3 tools/ea_queue.py next` serves one rename to EA's
+   own name and every file it touches; follow its steps.
 
 Whether a body is open work is decided in one place, `tools/eligibility.py`;
 never re-derive it in a new tool.
@@ -55,10 +57,10 @@ releases yours when you land; run `python3 tools/claims.py release 0xRVA` if you
 bank, block or abandon the body.
 
 **Before writing a body**, run `python3 tools/callees.py <rva> <size>` and use
-the callee names it prints. A link failure against a real retail body almost
-always means a callee is named wrong, not that it needs a pin; never add a pin
-on a seat's say-so. For a callee with no signature it prints `inferred ABI:`;
-declare the callee that way before blaming your body.
+the callee names it prints. A link failure against a real retail body usually
+means a callee is named wrong, not a missing pin; never pin on a seat's say-so.
+For a callee with no signature it prints `inferred ABI:`; declare the callee
+that way before blaming your body.
 
 **Small dependency repairs travel with the body.** If the scoped gate fails only
 on an unresolved callee the body really calls, prove that callee's identity and
@@ -85,14 +87,14 @@ dependent body and pay once.
    commit; verify each function and its identity separately.
 2. `./build.sh <file-or-symbol>`. If a command returns a process or session ID,
    poll it; never launch a duplicate build.
-3. Stage explicit paths only (`git add <paths>`, never `git add .`), and check
-   that every new ledger source is tracked.
-4. Commit normally; never bypass hooks or use `--no-verify`. A commit that
-   stages a header or shim runs the full gate (40-60 minutes): poll it, never
-   relaunch it, and never pipe it through anything that hides its exit code.
+3. Stage explicit paths only (never `git add .`); check every new ledger source
+   is tracked.
+4. Commit normally; never bypass hooks (`--no-verify`). A commit that stages a
+   header or shim runs the full gate (40-60 minutes): poll it; never relaunch it
+   or pipe it through anything that hides its exit code.
    Baselines may only shrink; never add a line to one to go green.
-5. `git pull --rebase origin master`, `git push`, then pull again. On rejection,
-   rebase, recheck the ledger and retry.
+5. `git pull --rebase origin master`, `git push`, then pull again; on rejection,
+   rebase, recheck the ledger, retry.
 6. Before pushing, `python3 tools/progress.py origin/master` shows what your
    session added.
 
@@ -120,9 +122,8 @@ agent starts from your body. No body, no `partial`: record `blocked`. For a
 ## File placement
 
 - The game baseline is `inputs/baselines/bfme1/retail-1.03-unpacked` (since
-  2026-09-27; older verdicts that blame the baseline predate it). Its
-  `no_ground_truth` addresses are retired. Mods still build from the workshop
-  exe.
+  2026-09-27; older verdicts blaming the baseline predate it); its
+  `no_ground_truth` addresses are retired. Mods build from the workshop exe.
 - Game source lives under `game/` at its official BFME path, MASM dumps in
   `game/masm_dumps/`, and scratch in untracked `build/`. Banked attempts
   (`targets/game/reverse/attempts/`) are evidence, never progress.

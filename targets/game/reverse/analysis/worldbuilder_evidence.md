@@ -133,6 +133,20 @@ Of 537 matched rows with a strongly paired EA name that is not an export:
 Virtual methods are in none of these safe groups: renaming an override without its base (`xfer`
 to `DoXfer`) moves the vtable slot.
 
+`tools/ea_queue.py` serves the renames as fixed-target work. On 2026-09-29 it held 20 method
+items and 71 stand-in classes, 245 rows in all. It drops four kinds of row:
+
+- a method name other classes also use (`xfer` appears in 510 files);
+- a lone virtual method;
+- a free function where EA has a member, and a structor where EA has a method;
+- a stand-in class of more than two rows resting on one label its own name does not
+  corroborate: `WindowManager` to `AptPlayer` would rename 22 rows on one label.
+
+Each item lists every file that names the old symbol. Callers declare it too, and the scoped
+gates rebuild only staged files, so a caller left behind would stay red unnoticed.
+`TeamFactory::createTemporaryTeam` to `createEmptyTeam` landed first by following the printed
+steps.
+
 ## Open, for when agent naming is revisited
 
 - 983 placeholders whose WorldBuilder partner carries assert or debug text. For 517 of

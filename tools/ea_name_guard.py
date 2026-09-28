@@ -2,14 +2,13 @@
 """Refuse naming an address against EA's own name for it.
 
 targets/game/reverse/ea_evidence.csv (tools/ea_evidence.py) records EA's Class::method for
-addresses whose WorldBuilder partner names itself. When a row gets its first real name (it is
-new, or its old name kept its address token) at an address whose EA name has strong pairing, the
-name must be EA's, keep the address token, be the retail export there, be a Class::method Zero
-Hour declares, or say in the row's notes why EA's name is wrong for BFME1:
-`ea-name-disputed=<evidence>`. Labels are evidence, not proof:
-BFME2 renamed some members, and a body that inlined a labelled callee carries the callee's label
-(a destructor labelled with the clear() it inlined). Renaming an already-real name is left to
-the identity tools; only the step from unknown to named is guarded.
+addresses whose WorldBuilder partner names itself. When a row at an address whose EA name has
+strong pairing is added or renamed, the new name must be EA's, keep the address token, be the
+retail export there, be a Class::method Zero Hour declares, or say in the row's notes why EA's
+name is wrong for BFME1: `ea-name-disputed=<evidence>`. Labels are evidence, not proof: BFME2
+renamed some members, and a body that inlined a labelled callee carries the callee's label (a
+destructor labelled with the clear() it inlined). Rows whose name did not change are not checked,
+so the invented names already in the ledger are tools/ea_queue.py's work, not a commit's.
 
   python3 tools/ea_name_guard.py --staged
   python3 tools/ea_name_guard.py --range OLD NEW
@@ -92,8 +91,8 @@ def problems(rows, old, ea, exports, zh=None):
             continue                          # a vendored row carries its upstream's identity
         name, (want, route, basis) = r["name"] or "", ea[rva]
         token = f"{rva:08x}"
-        if any(n == name or token not in n.lower() for n in old.get(rva, ())):
-            continue                          # unchanged, or renaming a name that was already real
+        if name in old.get(rva, ()):
+            continue                          # the name did not change (a source repoint, notes)
         have = plain(name)
         if ((have and have.lower() == want.lower()) or token in name.lower()
                 or name in exports.get(rva, ()) or "ea-name-disputed=" in (r["notes"] or "")):
