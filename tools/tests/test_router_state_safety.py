@@ -92,3 +92,17 @@ def test_delayed_dispatch_rejects_different_repository(repo, tmp_path, monkeypat
         row = dict(db.execute('SELECT * FROM jobs WHERE id=?', (job,)).fetchone())
     with pytest.raises(ValueError, match='repository differs'):
         r.prepare_workspace(other, state, row)
+
+
+def test_explicit_retained_workspace_records_its_own_base(repo, tmp_path, monkeypatch):
+    monkeypatch.setattr(r, 'ROOT', repo)
+    first = git(repo, 'rev-parse', 'HEAD')
+    worker = tmp_path / 'worker'
+    git(repo, 'worktree', 'add', '-q', '--detach', str(worker), first)
+    (repo / 'evidence').write_text('new submission checkout HEAD')
+    git(repo, 'commit', '-qam', 'later')
+    state = tmp_path / 'state'
+    job = r.enqueue(state, 'bulk', 'task for retained workspace', cwd=worker)
+    row = r.show(state, job)['jobs'][0]
+    assert row['base_sha'] == first
+    assert r.prepare_workspace(repo, state, row) == worker

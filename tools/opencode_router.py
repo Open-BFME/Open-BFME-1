@@ -199,6 +199,12 @@ def target_key(target, task):
 
 def enqueue(state, category, task, target=None, cwd=None, model=None, redundant=False, budget_justification='', root=None):
     root = Path(root or ROOT).resolve()
+    if cwd:
+        # A retained worker may be at an older commit than the submitting tree.
+        probe = subprocess.run(['git', 'rev-parse', '--show-toplevel'], cwd=cwd,
+                               capture_output=True, text=True, check=False)
+        if probe.returncode == 0:
+            root = Path(probe.stdout.strip()).resolve()
     repository = repository_identity(root)
     base = subprocess.check_output(['git', 'rev-parse', '--verify', 'HEAD^{commit}'], cwd=root, text=True).strip()
     job = uuid.uuid4().hex[:16]
@@ -871,7 +877,9 @@ def fleet(root, state, c, duration, workers=None, until=None):
                     finish(state, c, aid, run['events'].result(run['child'].returncode, INTERRUPTED))
                     run['unit'].remove()
                 except (OSError, RuntimeError, TimeoutError, subprocess.TimeoutExpired) as exc:
-                    finish(state, c, aid, {'kind': 'needs_review', 'error': str(exc)})
+                    result = run['events'].result(run['child'].returncode, 'needs_review')
+                    result['error'] = str(exc)
+                    finish(state, c, aid, result)
                     print(f'router: retained ownership for {aid}: {exc}', file=sys.stderr)
                 finally:
                     run['reader'].close()
