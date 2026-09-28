@@ -73,6 +73,7 @@ python3() {
         tools/find_declared_unmatched.py|tools/adopt_header.py|tools/name_oracle.py|tools/name_regression.py|tools/retired_guard.py) return 0 ;;
         tools/check_case_collisions.py|tools/conversion_gate.py|tools/check_csv.py|tools/pin_consistency.py|tools/identity_guard.py|tools/gate_baseline.py) return 0 ;;
         tools/target_hooks.py|tools/eol_guard.py|tools/b_pin_check.py|tools/doc_budget.py|tools/link_debt.py) return 0 ;;
+        tools/header_dependents.py) if [ -f header_deps ]; then cat header_deps; fi; return "${HEADER_RC:-0}" ;;
         *) printf 'unexpected Python test invocation: %s\n' "$*" >&2; return 93 ;;
     esac
 }
@@ -80,7 +81,7 @@ source ./hook
 ''', encoding='utf-8', newline='\n')
 
     def run(paths, claimed=None, fail_chunk=0, broken_csv=False, build_pool=None,
-            raw_selectors=False, staged_source=None):
+            raw_selectors=False, staged_source=None, header_deps=None, header_rc=0):
         claimed = paths if claimed is None else claimed
         if raw_selectors:
             selectors = paths
@@ -101,6 +102,10 @@ source ./hook
             path.parent.mkdir(parents=True, exist_ok=True)
             path.touch()
             env['STAGED_SOURCE'] = staged_source
+        if header_deps is not None:
+            (root / 'header_deps').write_text(''.join(p + '\n' for p in header_deps),
+                                              encoding='utf-8', newline='\n')
+        env['HEADER_RC'] = str(header_rc)
         env.pop('BUILD_POOL', None)
         if build_pool is not None:
             env['BUILD_POOL'] = build_pool
@@ -199,3 +204,19 @@ def test_changed_staged_source_still_uses_full_source_selector(hook_runner):
     assert len(chunks) == 1
     assert source in chunks[0]
     assert any(selector.startswith('row:') for selector in chunks[0])
+
+
+def test_bounded_header_change_verifies_only_its_dependents(hook_runner):
+    deps = ['game/A.cpp', 'game/B.cpp']
+    result, chunks, root = hook_runner([], staged_source='game/Inc/Low.h', header_deps=deps)
+    assert result.returncode == 0, result.stderr
+    assert 'scoped gate over 2 dependent source(s)' in result.stderr
+    assert deps in chunks
+    assert 'tools/gate_baseline.py --check' not in (root / 'guards').read_text()
+
+
+def test_unbounded_header_change_runs_the_full_gate(hook_runner):
+    result, chunks, root = hook_runner([], staged_source='game/Inc/Low.h', header_rc=2)
+    assert result.returncode == 0, result.stderr
+    assert 'running FULL gate' in result.stderr
+    assert 'tools/gate_baseline.py --check' in (root / 'guards').read_text()

@@ -128,6 +128,38 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
         wide_change=1
     fi
     if [ "$wide_change" -ne 0 ]; then
+        # Byte-verify only the ledger sources the changed headers can reach;
+        # header_dependents.py exits 2 (toolchain, vendored, STLport, or too
+        # many dependents) and the full gate below runs instead.
+        header_deps_out=$(mktemp)
+        if python3 tools/header_dependents.py --range "$base" "$local_sha" > "$header_deps_out"; then
+            mapfile -t header_deps < "$header_deps_out"
+            rm -f "$header_deps_out"
+            # build.sh verifies the files on disk: they must be the pushed ones.
+            git diff --quiet "$local_sha" -- '*.h' '*.hpp' '*.hh' '*.hxx' '*.inl' '*.inc' \
+                    'inputs/reference/shims/*' "${header_deps[@]}" \
+                || fail "working tree differs from $local_sha in a header or dependent source; the scoped header gate would verify the wrong bytes"
+            echo "pre-push: header/shim change — scoped gate over ${#header_deps[@]} dependent source(s)" >&2
+            chunk=()
+            chunk_bytes=0
+            for path in "${header_deps[@]}"; do
+                if [ "${#chunk[@]}" -ne 0 ] && [ "$((chunk_bytes + ${#path} + 3))" -gt 24000 ]; then
+                    BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${chunk[@]}" || fail "scoped header gate (see above)"
+                    chunk=()
+                    chunk_bytes=0
+                fi
+                chunk+=("$path")
+                chunk_bytes=$((chunk_bytes + ${#path} + 3))
+            done
+            if [ "${#chunk[@]}" -ne 0 ]; then
+                BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${chunk[@]}" || fail "scoped header gate (see above)"
+            fi
+            wide_change=0
+        else
+            rm -f "$header_deps_out"
+        fi
+    fi
+    if [ "$wide_change" -ne 0 ]; then
         wide_empty=$(mktemp)
         wide_manifest=$(mktemp)
         : > "$wide_empty"

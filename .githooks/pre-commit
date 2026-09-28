@@ -153,6 +153,8 @@ while IFS= read -r path; do
         # so the delta byte-verify below would prove nothing. Any such change
         # forces the full gate — this is exactly how a layout-shim experiment
         # could otherwise land a silent regression.
+        # mods/ is patched into a copy of the image, never compiled into the byte gate.
+        mods/*) ;;
         *.h|inputs/reference/shims/*) wide_change=1 ;;
     esac
 done < <(git diff --cached --name-only --diff-filter=ACMRT)
@@ -194,8 +196,39 @@ if git diff --cached --quiet -- targets/game/reverse/full_gate_baseline.txt targ
     python3 tools/gate_baseline.py --validate || fail "full-gate baseline may only shrink (see above)"
 fi
 if [ "$wide_change" -ne 0 ]; then
-    echo "pre-commit: header/shim change — running FULL gate against targets/game/reverse/full_gate_baseline.txt (no NEW red row allowed)" >&2
-    BUILD_POOL="${BUILD_POOL:-4}" python3 tools/gate_baseline.py --check || fail "full gate after header/shim change: new red row(s) or the gate did not reach byte comparison (see above)"
+    # Byte-verify only the ledger sources the changed headers can reach
+    # (tools/header_dependents.py widens on every doubt and exits 2 when it
+    # cannot bound the change); otherwise the full gate, as before.
+    header_deps_out=$(mktemp)
+    if python3 tools/header_dependents.py --staged > "$header_deps_out"; then
+        mapfile -t header_deps < "$header_deps_out"
+        rm -f "$header_deps_out"
+        for path in $(git diff --cached --name-only --diff-filter=ACMRT); do
+            case "$path" in
+                *.h|*.hpp|*.hh|*.hxx|*.inl|*.inc|inputs/reference/shims/*)
+                    git diff --quiet -- "$path" || fail "unstaged edits in $path: the scoped header gate would verify the wrong bytes" ;;
+            esac
+        done
+        echo "pre-commit: header/shim change — scoped gate over ${#header_deps[@]} dependent source(s)" >&2
+        chunk=()
+        chunk_bytes=0
+        for path in "${header_deps[@]}"; do
+            if [ "${#chunk[@]}" -ne 0 ] && [ "$((chunk_bytes + ${#path} + 3))" -gt 24000 ]; then
+                BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${chunk[@]}" || fail "scoped header gate (see above)"
+                chunk=()
+                chunk_bytes=0
+            fi
+            chunk+=("$path")
+            chunk_bytes=$((chunk_bytes + ${#path} + 3))
+        done
+        if [ "${#chunk[@]}" -ne 0 ]; then
+            BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${chunk[@]}" || fail "scoped header gate (see above)"
+        fi
+    else
+        rm -f "$header_deps_out"
+        echo "pre-commit: header/shim change — running FULL gate against targets/game/reverse/full_gate_baseline.txt (no NEW red row allowed)" >&2
+        BUILD_POOL="${BUILD_POOL:-4}" python3 tools/gate_baseline.py --check || fail "full gate after header/shim change: new red row(s) or the gate did not reach byte comparison (see above)"
+    fi
 fi
 
 # The build verifies file contents on disk; refuse if a file being committed

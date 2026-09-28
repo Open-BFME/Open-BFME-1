@@ -15,10 +15,12 @@ on:
     branches: [master]
     paths:
       - 'tools/**'
+      - '.githooks/**'
       - '.github/workflows/fleet-tools-tests.yml'
   pull_request:
     paths:
       - 'tools/**'
+      - '.githooks/**'
       - '.github/workflows/fleet-tools-tests.yml'
   workflow_dispatch:
 
@@ -47,6 +49,7 @@ jobs:
             docs/shape_levers.md
             inputs/baselines/bfme1/retail-1.03-unpacked/manifest.json
             .github
+            .githooks
           sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
@@ -75,3 +78,8 @@ jobs:
           tools/tests/test_b_pin_check.py
           tools/tests/test_dedup_csv_cli.py
           tools/tests/test_session_tooling.py
+          tools/tests/test_header_dependents.py
+          tools/tests/test_link_debt.py
+          tools/tests/test_pre_commit_argv.py
+          tools/tests/test_pre_push_lists_fail_closed.py
+          tools/tests/test_pre_push_source_selection.py
