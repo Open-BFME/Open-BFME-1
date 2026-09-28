@@ -62,25 +62,25 @@ public:
 
     Debug &operator<<(const Hex &)
     {
-        SetPrefixAndRadix((const char *)0x01132DD4, 16);
+        SetPrefixAndRadix("0x", 16);
         return *this;
     }
 
     Debug &operator<<(const RawHex &)
     {
-        SetPrefixAndRadix((const char *)0x0107301C, 16);
+        SetPrefixAndRadix("", 16);
         return *this;
     }
 
     Debug &operator<<(const Dec &)
     {
-        SetPrefixAndRadix((const char *)0x0107301C, 10);
+        SetPrefixAndRadix("", 10);
         return *this;
     }
 
     Debug &operator<<(const Bin &)
     {
-        SetPrefixAndRadix((const char *)0x01134280, 2);
+        SetPrefixAndRadix("%", 2);
         return *this;
     }
 
@@ -111,30 +111,30 @@ void DebugExceptionhandler::LogFPURegisters(Debug &dbg, struct _EXCEPTION_POINTE
 
     if ((ctx.ContextFlags & (CONTEXT_i386 | CONTEXT_FLOATING_POINT)) == 0)
     {
-        dbg << (const char *)0x011342E0;
+        dbg << "FP registers not available\n";
         return;
     }
 
     dbg << Debug::Bin() << Debug::FillChar('0')
-        << (const char *)0x011342DC << Debug::Width(16) << (ctx.FloatSave.ControlWord & 0xffff)
-        << (const char *)0x01080294
-        << (const char *)0x011342D8 << Debug::Width(16) << (ctx.FloatSave.StatusWord & 0xffff)
-        << (const char *)0x01080294
-        << (const char *)0x011342D4 << Debug::Width(16) << (ctx.FloatSave.TagWord & 0xffff)
-        << (const char *)0x01080294
+        << "CW:" << Debug::Width(16) << (ctx.FloatSave.ControlWord & 0xffff)
+        << "\n"
+        << "SW:" << Debug::Width(16) << (ctx.FloatSave.StatusWord & 0xffff)
+        << "\n"
+        << "TW:" << Debug::Width(16) << (ctx.FloatSave.TagWord & 0xffff)
+        << "\n"
         << Debug::Hex()
-        << (const char *)0x011342C4 << Debug::Width(8) << ctx.FloatSave.ErrorOffset
-        << (const char *)0x011342B8 << Debug::Width(8) << ctx.FloatSave.ErrorSelector
-        << (const char *)0x01080294
-        << (const char *)0x011342A8 << Debug::Width(8) << ctx.FloatSave.DataOffset
-        << (const char *)0x0113429C << Debug::Width(8) << ctx.FloatSave.DataSelector
-        << (const char *)0x01080294
-        << (const char *)0x0113428C << Debug::Width(8) << ctx.FloatSave.Cr0NpxState
-        << (const char *)0x01080294;
+        << "ErrOfs:      " << Debug::Width(8) << ctx.FloatSave.ErrorOffset
+        << " ErrSel:  " << Debug::Width(8) << ctx.FloatSave.ErrorSelector
+        << "\n"
+        << "DataOfs:     " << Debug::Width(8) << ctx.FloatSave.DataOffset
+        << " DataSel: " << Debug::Width(8) << ctx.FloatSave.DataSelector
+        << "\n"
+        << "Cr0NpxState: " << Debug::Width(8) << ctx.FloatSave.Cr0NpxState
+        << "\n";
 
     for (unsigned reg = 0; reg < 8; ++reg)
     {
-        dbg << Debug::Dec() << (const char *)0x01134288 << reg << (const char *)0x01134284;
+        dbg << Debug::Dec() << "ST(" << reg << ") ";
         dbg << Debug::RawHex();
 
         unsigned char *loaded = ctx.FloatSave.RegisterArea + reg * 10;
@@ -152,7 +152,7 @@ void DebugExceptionhandler::LogFPURegisters(Debug &dbg, struct _EXCEPTION_POINTE
             fstp value
         }
 
-        dbg << (const char *)0x0108ED1C << value << (const char *)0x01080294;
+        dbg << " " << value << "\n";
 
     }
 
