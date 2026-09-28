@@ -15472,6 +15472,7 @@ name,address,notes
 ?appendRealArgument@GameMessage@@QAEXM@Z,0x00002608,GameMessage::appendRealArgument thunk
 ?appendSequentialScript@ScriptEngine@@QAEXPAVBfme5CtorA0@@@Z,0x0000146A,ABI alias for the SequentialScript append call through its incremental-link thunk
 ?appendTeamIDArgument@GameMessage@@QAEXI@Z,0x0000C522,GameMessage::appendTeamIDArgument thunk
+?appendText005867D0@@YAXAAVUnicodeString@@ABVAsciiString@@HABV1@@Z,0x005867D0,Dependency of RVA005868D0; actual direct target at caller+160/+1AD/+1E7/+224; static C++ in PopupCountdown005868D0.cpp independently matches all185B with resolved REL32; compiler-private ESI output plus three stack args
 ?appendTimestampArgument@GameMessage@@QAEXI@Z,0x0000D558,GameMessage::appendTimestampArgument thunk
 ?appendWideCharArgument@GameMessage@@QAEXABG@Z,0x000028C9,GameMessage::appendWideCharArgument thunk
 ?apply006F8340@BaseHeightMapFloorElement@@QAEXPAVDrawable@@VAsciiString@@EE@Z,0x006F8340,0x006F9A90 calls it via ILT 0x00011B03 on the new floor element with the drawable plus by-value name and two byte flags; address-derived method name
@@ -78451,6 +78452,7 @@ name,address,notes
 ?bfmeResolveYT@BfmeInnerYT@@QAEPAVBfmeThingYT@@XZ,0x000022BB,pin
 ?bfmeResolveZK@BfmeInnerZK@@QAEPAVBfmeThingZK@@XZ,0x000022BB,pin
 ?bfmeResolveZones@@YAXHHPAG00@Z,0x0002B648,Open-BFME5 ILT thunk to exact body 0x00403C90; BFME zone-equivalence list merger
+?bfmeResolveZones@@YAXHHPAG00H@Z,0x00403C90,Existing zone-list merger with unused sixth size argument witnessed at initial-pass call +0x2F2; caller cleans 24 bytes; decoded callee reads only first five arguments
 ?bfmeRestart@Gen_0018BC70@@AAEXXZ,0x0003F1FC,Open-BFME5 the ICF thunk (to 0x0043F1FC) the compaction at 0x0018BC70 calls when its flag is set
 ?bfmeResume@Gen_0018BC70@@AAEXXZ,0x0000764E,Open-BFME5 the ICF thunk (to 0x0040764E) the compaction at 0x0018BC70 calls when its flag is clear
 ?bfmeRingPrepare@@YAXXZ,0x0002832B,Gen_00587BB0 preparation thunk
@@ -80428,6 +80430,7 @@ name,address,notes
 ?dispatch@Rva004791F0GameWindow@@QAE?AW4WindowMsgHandledType@@III@Z,0x00003148,route=0x004791F0; full22B real helper with optionaldelegate1DC and vslot4; caller47CA59
 ?dispatch@Rva00479210GameWindow@@QAE?AW4WindowMsgHandledType@@III@Z,0x0003D07D,route=0x00479210; full22B real helper with optionaldelegate1DC and vslot8; caller47CA19
 ?dispatch@Rva005121A0Service@@QAEXPAX0_NH@Z,0x000267F1,address-scoped four-argument service dispatch ILT observed in retail 0x0056FD30
+?dispatch@Rva00529EC0State@@QAEHHPAX0@Z,0x00529EC0,Address-derived state dispatcher; RVA0057E9A0 calls ILT41EE3 with receiver this+25C and three stack args; body saves ECX in ESI and ret12 returns integer EAX; inferred ABI independently confirmed
 ?dispatch@Rva00720BB0Context@@QAEXHPAX@Z,0x00039680,Rva00720BB0 retail transfer thunk
 ?dispatch@Rva00736AF0Context@@QAEXHPAX@Z,0x00034EC3,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00736AF0 calls; autopin
 ?dispatchC20@Rva00720BB0Context@@QAEXHPAX@Z,0x0003DBEF,Rva00720C20 call-site ILT to 0x00720BB0
@@ -80772,6 +80775,7 @@ name,address,notes
 ?erase@UnsignedPairTreeEraseShim@_STL@@QAEXPAU?$_Rb_tree_node@U?$pair@$$CBGE@_STL@@@2@@Z,0x007612D0,_STL unsigned pair tree incremental-link thunk target through a TU-local forwarding shim
 ?erase@W3DProjectileStreamResources@@QAEXPAX0@Z,0x00007A45,ILT thunk for the resources clear the W3DProjectileStreamDraw ctor at 0x00369FD0 performs (body 0x001D2940)
 ?erase@WindowVideoHashtableEraseShim@_STL@@QAEXPBX@Z,0x00498A90,_STL hashtable erase GameWindowVideo incremental-link thunk target through a TU-local forwarding shim
+?eraseNodes@Rva00405E80Tree@@QAEXPAURva00405E80TreeNode@@@Z,0x004041B0,Address-scoped tree eraser ABI; retail recurses via ILT 0x1B9B9 on right child +0xC then left +8 and frees 0x34-byte nodes; ret4
 ?eraseSubtree@Rva00605820Tree@@QAEXPAURva00605820Node@@@Z,0x000082D3,route=0x00605820; retail605836 recurses on node+C with same ECX; canonical STLport _M_erase confirms right recursion
 ?eraseViaThunk@Rva00124FC0RbTree@@QAEXPAURva00124FC0RbTreeNode@@@Z,0x000296E0,ILT thunk back to the 0x00124FC0 red-black-tree erase body
 ?errorCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPErrorArg@@@Z,0x0000BEE2
@@ -82439,6 +82443,7 @@ name,address,notes
 ?g_recorderSavedGlobalFlag@@3EA,0x012ED624,RecorderClass saved byte restored into TheWritableGlobalData+0x11EC by restoreGlobalDataFields
 ?g_recorderSavedGlobalValue@@3HA,0x012ED620,RecorderClass saved scalar restored into TheWritableGlobalData+0x11F0 by restoreGlobalDataFields
 ?g_release@@3P6GXPAX@ZA,0x013590C8,address-derived IAT call recovered from 0x0093C400
+?g_rva001AF610RingSpacing@@3MA,0x00EACC34,findPositionAround 0x001AF610 loads this .data float (5.0f) as the ring step and the angle-spacing numerator; ZH PartitionManager.cpp static Real ringSpacing = 5.0f
 ?g_rva001B5860TwoPi@@3MB,0x01087B10,direct float data 0x40C90FDB used as 2*pi angular-period numerator at retail 0x001B5860;campaign=luna36h-20260907;lane=files;model=gpt-5.6-sol-ultra
 ?g_rva001B59ScaleConstant@@3MC,0x00EACFE0,retail 0.2 scale constant used by override float getters
 ?g_rva001B59ScaleConstantDamaged@@3MC,0x00EACFE0,compiler alias for the retail 0.2 scale constant used by Locomotor damaged acceleration
@@ -85234,6 +85239,9 @@ name,address,notes
 ?ji_009f6fac@@YANPBD@Z,0x009F6FAC,typed cdecl atof import alias used by the exact 0x008921B0 wrapper; existing import thunk jumps directly to CRT atof
 ?ji_009f709c@@YAPADPBD0@Z,0x009F709C,typed strstr import alias used by Rva0080A280
 ?ji_009f70ba@@YAPADPADPBDI@Z,0x009F70BA,typed direct import thunk used by the LanTheaterEmulator address update
+?key012F4B80@@3VAsciiString@@A,0x012F4B80,Address-derived AsciiString key; RVA005868D0+19F pushes this address for static helper5867D0 which copies StringBase<char> from it
+?key012F4B84@@3VAsciiString@@A,0x012F4B84,Address-derived AsciiString key; RVA005868D0+1DD pushes this address for static helper5867D0 which copies StringBase<char> from it
+?key012F4B88@@3VAsciiString@@A,0x012F4B88,Address-derived AsciiString key; RVA005868D0+21A pushes this address for static helper5867D0 which copies StringBase<char> from it
 ?key@?1??getKey@Rva002308E0@@SAIXZ@4IA,0x012EFAB4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002308E0 calls; autopin
 ?key@?1??getKey@Rva002A0A40@@SAIXZ@4IA,0x012F0028,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002A0A40 calls; autopin
 ?key@StaticNameKey@@QBE?AW4NameKeyType@@XZ,0x00009304,ParseObjectDataChunk 0x00088B70 StaticNameKey::key thunk shared ILT slot
@@ -85441,6 +85449,7 @@ name,address,notes
 ?messageBoxShown@Gen00522E00@@QAEXH@Z,0x0002924E,route=0x00522470; typed callback address in00522E00; matched method takes unused int and bound complete receiver
 ?messageBoxWin@PopupReplayState@@3PAVGameWindow@@A,0x012F4068,PopupReplay single shared state; retail Init4DE270 save4DE8E0 really4DE460 absolute accesses; one definition in PopupReplay.cpp
 ?messageCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyMessageArg@@@Z,0x0000E43A
+?method00404B10@PathfindZoneManager@@QAEXPAPAVPathfindCell@@PAVPathfindLayer@@ABUIRegion2D@@HH@Z,0x00404B10,Address-derived zone pass; aligned scheduler call via 0x24983; ECX manager plus map layers bounds and two percentages; retail ret20
 ?method@Rva00409850SubObject@@QAEXE@Z,0x0003207E,incremental link thunk
 ?method@Rva00925860@@QAEXPAX0@Z,0x00925860,opaque target called by 0x0092C390 with thiscall ret 8
 ?method@SubObject00739E70@@QAEXPAX@Z,0x00739E70,address-derived callee of 0x00739F70 forwarder
@@ -89742,14 +89751,6 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
-?appendText005867D0@@YAXAAVUnicodeString@@ABVAsciiString@@HABV1@@Z,0x005867D0,Dependency of RVA005868D0; actual direct target at caller+160/+1AD/+1E7/+224; static C++ in PopupCountdown005868D0.cpp independently matches all185B with resolved REL32; compiler-private ESI output plus three stack args
-?key012F4B80@@3VAsciiString@@A,0x012F4B80,Address-derived AsciiString key; RVA005868D0+19F pushes this address for static helper5867D0 which copies StringBase<char> from it
-?key012F4B84@@3VAsciiString@@A,0x012F4B84,Address-derived AsciiString key; RVA005868D0+1DD pushes this address for static helper5867D0 which copies StringBase<char> from it
-?key012F4B88@@3VAsciiString@@A,0x012F4B88,Address-derived AsciiString key; RVA005868D0+21A pushes this address for static helper5867D0 which copies StringBase<char> from it
-?dispatch@Rva00529EC0State@@QAEHHPAX0@Z,0x00529EC0,Address-derived state dispatcher; RVA0057E9A0 calls ILT41EE3 with receiver this+25C and three stack args; body saves ECX in ESI and ret12 returns integer EAX; inferred ABI independently confirmed
-?method00404B10@PathfindZoneManager@@QAEXPAPAVPathfindCell@@PAVPathfindLayer@@ABUIRegion2D@@HH@Z,0x00404B10,Address-derived zone pass; aligned scheduler call via 0x24983; ECX manager plus map layers bounds and two percentages; retail ret20
-?eraseNodes@Rva00405E80Tree@@QAEXPAURva00405E80TreeNode@@@Z,0x004041B0,Address-scoped tree eraser ABI; retail recurses via ILT 0x1B9B9 on right child +0xC then left +8 and frees 0x34-byte nodes; ret4
-?bfmeResolveZones@@YAXHHPAG00H@Z,0x00403C90,Existing zone-list merger with unused sixth size argument witnessed at initial-pass call +0x2F2; caller cleans 24 bytes; decoded callee reads only first five arguments
 ?swap@VectorSwap00272AA0@@QAEXAAV?$vector@HV?$allocator@H@_STL@@@_STL@@@Z,0x00272AA0,RunReadyAction0027A7A0 aligned call via ILT 0x00003D69; independently decoded 45B callee swaps pointer triple and ret4; caller vector ID stride4
 ?iterate@PartitionManager@@QAE?AUBfmeWideResult@@PBUCoord3D@@MW4IterOrderType@@PAVPartitionFilter@@_N@Z,0x009F2960,BfmeWideResult return-tag view of the pinned ?iterate@PartitionManager@@QAE?AURva0025ED50WideResult@@... row at the same 57B wrapper; same hidden owning result + position radius order filter Bool ABI; RET24; used by ClearPosition0027B000
 ?_M_initialize_buckets@?$hashtable@PAUAudioRequest006A6B40@@PAU1@URequestHash006A6B40@@U?$_Identity@PAUAudioRequest006A6B40@@@_STL@@U?$equal_to@PAUAudioRequest006A6B40@@@4@V?$allocator@PAUAudioRequest006A6B40@@@4@@_STL@@AAEXI@Z,0x006AB190,MilesAudioManager ctor 0x006B0E00+0xA8 calls ILT 0x3BEE9 with ECX=this+0x50 and 100 buckets; +0x50 is the request hash_set of RequestFlags006A6B40 (begin 0x006A0400 erase 0x006A0810 dtor 0x006A3830 on the same member)
