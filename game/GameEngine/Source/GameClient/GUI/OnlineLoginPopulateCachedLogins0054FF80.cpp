@@ -1,17 +1,25 @@
-// ?rva0054FF80@Rva0054FF80Owner@@QAEXAAVAsciiString@@0@Z
-// partial score=0.776 date=2026-09-18
-// ?rva0054FF80@Rva0054FF80Owner@@QAEXAAVAsciiString@@0@Z
-// Retail RVA 0x0054FF80, 1116 bytes.  The owning class is not proven by the
-// ICF-shared body; the address-derived owner keeps that uncertainty explicit.
-// The +0x3C preferences object and +0x74..+0x84 gadget fields are witnessed
-// by the callers and by the matched OnlineLogin constructor.
+// Retail 0x0054FF80, 1116 bytes, RET 8: the OnlineLogin screen's cached-login
+// population (the Zero Hour WOLLoginMenuInit email/nick block).  The matched
+// caller BfmeAptScreenOnlineLogin::_bfme_refreshLoginState passes its own this
+// in ECX, and the body ends by calling the matched
+// BfmeAptScreenOnlineLogin::applyLoginGadgets0054FB10 on that same this, so the
+// receiver is the OnlineLogin screen.  The ledger keeps the existing
+// address-derived receiver name Rva0054FF80::call that the caller links to.
+// The +0x3C preferences object and +0x74..+0x84 gadget fields agree with the
+// matched OnlineLogin siblings.
+//
+// The retail TU expands the list destructor fully (clear loop, head reset and
+// head free, no null test), which this compiler does only when the STLport
+// _List_base::clear/~_List_base/~list are forced inline; those three
+// specialisations below are the stock STLport bodies.  The busy flag at
+// 0x012F4AB2 is file-static: an extern lets the flag store block the hoisted
+// first gadget load that retail schedules ahead of it.
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 
+#define _STLP_NO_EXCEPTIONS 1
 #include <list>
 #include "string_base.h"
-
-#pragma inline_depth(255)
 
 extern "C" int __cdecl memcmp( const void *, const void *, unsigned int );
 #pragma intrinsic( memcmp )
@@ -107,14 +115,27 @@ extern void GadgetComboBoxSetSelectedPos( GameWindow *window, int selected,
 extern void GadgetCheckBoxSetChecked( GameWindow *window, bool checked );
 extern void GadgetComboBoxSetText( GameWindow *window, UnicodeString text );
 
-#pragma comment(linker, "/alternatename:?GadgetComboBoxReset@@YAXPAVGameWindow@@@Z=?j_00007004@@YAXXZ")
-#pragma comment(linker, "/alternatename:?GadgetComboBoxSetIsEditable@@YAXPAVGameWindow@@_N@Z=?j_0004813a@@YAXXZ")
-#pragma comment(linker, "/alternatename:?GadgetTextEntrySetText@@YAXPAVGameWindow@@VUnicodeString@@@Z=?j_0000c874@@YAXXZ")
-#pragma comment(linker, "/alternatename:?GadgetComboBoxAddEntry@@YAHPAVGameWindow@@VUnicodeString@@H@Z=?j_0002f338@@YAXXZ")
-#pragma comment(linker, "/alternatename:?GadgetComboBoxSetSelectedPos@@YAXPAVGameWindow@@H_N@Z=?j_000439c3@@YAXXZ")
-#pragma comment(linker, "/alternatename:?GadgetCheckBoxSetChecked@@YAXPAVGameWindow@@_N@Z=?j_0002e875@@YAXXZ")
-#pragma comment(linker, "/alternatename:?GadgetComboBoxSetText@@YAXPAVGameWindow@@VUnicodeString@@@Z=?j_00022237@@YAXXZ")
 
+namespace _STL {
+template <> __forceinline void _List_base<AsciiString, allocator<AsciiString> >::clear()
+{
+  _List_node<AsciiString>* __cur = (_List_node<AsciiString>*) this->_M_node._M_data->_M_next;
+  while (__cur != this->_M_node._M_data) {
+    _List_node<AsciiString>* __tmp = __cur;
+    __cur = (_List_node<AsciiString>*) __cur->_M_next;
+    _Destroy(&__tmp->_M_data);
+    this->_M_node.deallocate(__tmp, 1);
+  }
+  this->_M_node._M_data->_M_next = this->_M_node._M_data;
+  this->_M_node._M_data->_M_prev = this->_M_node._M_data;
+}
+template <> __forceinline _List_base<AsciiString, allocator<AsciiString> >::~_List_base()
+{
+  clear();
+  _M_node.deallocate(_M_node._M_data, 1);
+}
+template <> __forceinline list<AsciiString, allocator<AsciiString> >::~list() {}
+}
 typedef std::list<AsciiString> AsciiStringList;
 typedef AsciiStringList::iterator AsciiStringListIterator;
 
@@ -129,14 +150,11 @@ private:
 	unsigned char m_unmodelled[ 0x38 ];
 };
 
-#pragma comment(linker, "/alternatename:?getEmails@GameSpyLoginPreferences@@QAE?AV?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@XZ=?j_0000604b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getPasswordForEmail@GameSpyLoginPreferences@@QAE?AVAsciiString@@V2@@Z=?j_0001f7b7@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getNicksForEmail@GameSpyLoginPreferences@@QAE?AV?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@VAsciiString@@@Z=?j_000191b9@@YAXXZ")
 
-class Rva0054FF80Owner
+class Rva0054FF80
 {
 public:
-	void rva0054FF80( AsciiString &lastEmail, AsciiString &lastName );
+	void call( AsciiString &lastEmail, AsciiString &lastName );
 
 private:
 	unsigned char m_unmodelled[ 0x3c ];
@@ -148,18 +166,23 @@ private:
 	GameWindow *m_control84;
 };
 
-extern void j_0004557a();
+class BfmeAptScreenOnlineLogin
+{
+public:
+	bool applyLoginGadgets0054FB10();
+};
 
-void Rva0054FF80Owner::rva0054FF80( AsciiString &lastEmail,
+static bool g_rva0054FF80Busy;
+
+void Rva0054FF80::call( AsciiString &lastEmail,
 	AsciiString &lastName )
 {
-	if ( *(unsigned char *)0x012F4AB2 )
+	if ( g_rva0054FF80Busy )
 		return;
 
 	{
-	GameWindow *emailCombo = m_control74;
-	*(unsigned char *)0x012F4AB2 = 1;
-	GadgetComboBoxReset( emailCombo );
+	g_rva0054FF80Busy = 1;
+	GadgetComboBoxReset( m_control74 );
 	GadgetComboBoxSetIsEditable( m_control74, true );
 	GadgetComboBoxReset( m_control78 );
 	GadgetComboBoxSetIsEditable( m_control78, true );
@@ -171,12 +194,14 @@ void Rva0054FF80Owner::rva0054FF80( AsciiString &lastEmail,
 	AsciiStringListIterator emailIt = cachedEmails.begin();
 	while ( emailIt != cachedEmails.end() )
 	{
-		UnicodeString translated;
-		translated.translate( *emailIt );
-		int position = GadgetComboBoxAddEntry( m_control74, translated,
-			GameSpyColor[ 0 ] );
-		if ( *emailIt == lastEmail )
-			selectedPosition = position;
+		{
+			UnicodeString translated;
+			translated.translate( *emailIt );
+			int position = GadgetComboBoxAddEntry( m_control74, translated,
+				GameSpyColor[ 0 ] );
+			if ( *emailIt == lastEmail )
+				selectedPosition = position;
+		}
 		++emailIt;
 	}
 
@@ -187,9 +212,12 @@ void Rva0054FF80Owner::rva0054FF80( AsciiString &lastEmail,
 		UnicodeString password;
 		password.translate(
 			m_loginPreferences.getPasswordForEmail( lastEmail ) );
-		if ( m_control7C != 0 && m_control80 != 0 )
-			GadgetCheckBoxSetChecked( m_control80, !password.isEmpty() );
-		GadgetTextEntrySetText( m_control7C, password );
+		if ( m_control7C != 0 )
+		{
+			if ( m_control80 != 0 )
+				GadgetCheckBoxSetChecked( m_control80, !password.isEmpty() );
+			GadgetTextEntrySetText( m_control7C, password );
+		}
 	}
 	else
 	{
@@ -204,25 +232,21 @@ void Rva0054FF80Owner::rva0054FF80( AsciiString &lastEmail,
 	selectedPosition = -1;
 	while ( nameIt != cachedNames.end() )
 	{
-		UnicodeString translated;
-		translated.translate( *nameIt );
-		int position = GadgetComboBoxAddEntry( m_control78, translated,
-			GameSpyColor[ 0 ] );
-		if ( *nameIt == lastName )
-			selectedPosition = position;
+		{
+			UnicodeString translated;
+			translated.translate( *nameIt );
+			int position = GadgetComboBoxAddEntry( m_control78, translated,
+				GameSpyColor[ 0 ] );
+			if ( *nameIt == lastName || selectedPosition < 0 )
+				selectedPosition = position;
+		}
 		++nameIt;
 	}
 
 	if ( selectedPosition >= 0 )
 		GadgetComboBoxSetSelectedPos( m_control78, selectedPosition, false );
 
-	*(unsigned char *)0x012F4AB2 = 0;
-	union
-	{
-		void (*raw)( void );
-		void (Rva0054FF80Owner::*member)( void );
-	} apply;
-	apply.raw = j_0004557a;
-	(this->*apply.member)();
+	g_rva0054FF80Busy = 0;
+	((BfmeAptScreenOnlineLogin *)this)->applyLoginGadgets0054FB10();
 	}
 }
