@@ -1,5 +1,7 @@
 // ?draw@LightningDraw005F43B0@@QAEHPAX0PAH@Z
-// partial score=0.967 date=2026-09-28
+// partial score=0.9811 date=2026-09-28
+// ?draw@LightningDraw005F43B0@@QAEHPAX0PAH@Z
+// partial score=0.981 date=2026-09-28 (42 nonreloc diffs by probe; along = end[-1]-positions[0])
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Source/Common/System /Iinputs/reference/shims/sweep
 #include <stddef.h>
 #include "vector3.h"
@@ -141,7 +143,7 @@ int LightningDraw005F43B0::draw(void *renderInfo,void *unused,int *count)
         char *text=system()->field10;
         BFMEWaterTrackTextureHandle texture=BFMEGetWaterTrackTexture(text ? text+8 : "",0,0);
         if(changed) {
-            Vector3 &along=field8bc; Vector3 *end=positions+n; along=Vector3(end[-1].X-positions[0].X,end[-1].Y-positions[0].Y,end[-1].Z-positions[0].Z);
+            Vector3 &along=field8bc; Vector3 *end=positions+n; along=end[-1]-positions[0];
             ((Coord3D*)&along)->normalize();
             field8d4.Z=1; field8d4.X=0; field8d4.Y=0;
             Vector3::Cross_Product(field8d4,along,&field8c8);
