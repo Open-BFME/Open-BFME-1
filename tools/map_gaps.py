@@ -182,9 +182,18 @@ def main(argv=None):
     print(f"map_gaps: {len(mapped)} gaps, {sum(kinds.values()):,} B -> {OUT.relative_to(ROOT).as_posix()}")
     for kind, size in kinds.most_common():
         print(f"  {kind:10} {size:8,} B  {sum(1 for m in mapped if m['kind'] == kind):4} gaps")
-    known = [m for m in mapped if m["verdicts"]]
-    print(f"  already mapped by a verdict (conversion work, not exploration): "
-          f"{sum(int(m['code_bytes']) for m in known):,} B in {len(known)} gaps")
+    # By the largest overlapping verdict body: partial/blocked gaps are proven
+    # bodies (or proven data) awaiting conversion, the rest is still unexplored.
+    state = Counter()
+    count = Counter()
+    for m in mapped:
+        found = [v.split(":") for v in m["verdicts"].split()]
+        key = f"verdict {max(found, key=lambda v: int(v[1]))[2]}" if found else f"open {m['kind']}"
+        state[key] += int(m["code_bytes"])
+        count[key] += 1
+    print("  by state:")
+    for key, size in state.most_common():
+        print(f"    {key:22} {size:8,} B  {count[key]:4} gaps")
     return 0
 
 
