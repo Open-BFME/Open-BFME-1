@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "51bba11e66b20eac9406a47fbba90be7eb9a9dd09310d5de17bab56526499845",
+  "symbol": "?Rva009AC420@@YAXPAURva009AC240State@@II@Z",
+  "score_kind": "author-estimate",
+  "score": 0.94,
+  "source": "// ?Rva009AC420@@YAXPAURva009AC240State@@II@Z\n// partial score=0.94 date=2026-09-27\n// cl: /DNDEBUG /MD /EHsc\r\nstruct Rva009AC240State\r\n{\r\n    int m_words[5];\r\n    void *m_pointer;\r\n};\r\n\r\nvoid __cdecl Rva009AC420(Rva009AC240State *state, unsigned int, unsigned int probability)\r\n{\r\n    unsigned int range = (unsigned int)state->m_words[1];\r\n    unsigned int code = (unsigned int)state->m_words[0];\r\n    int count = state->m_words[3];\r\n    unsigned int bound = (((range - 1) * probability) >> 8) + 1;\r\n    while (bound < 128)\r\n    {\r\n        bound <<= 1;\r\n        if ((code & 0x80000000) != 0)\r\n        {\r\n            int i = state->m_words[4] - 1;\r\n            while (i >= 0 && ((unsigned char *)state->m_pointer)[i] == 255)\r\n            {\r\n                ((unsigned char *)state->m_pointer)[i] = 0;\r\n                --i;\r\n            }\r\n            ++((unsigned char *)state->m_pointer)[i];\r\n        }\r\n        code <<= 1;\r\n        if (++count == 0)\r\n        {\r\n            ((unsigned char *)state->m_pointer)[state->m_words[4]] = (unsigned char)(code >> 24);\r\n            count = -8;\r\n            ++state->m_words[4];\r\n            code &= 0xffffff;\r\n        }\r\n    }\r\n    state->m_words[0] = (int)code;\r\n    state->m_words[1] = (int)bound;\r\n    state->m_words[3] = count;\r\n}\r\n"
+}
