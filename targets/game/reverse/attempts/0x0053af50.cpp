@@ -1,5 +1,5 @@
-// ?d_0053af50@@YAXXZ
-// partial score=0.73 date=2026-09-27
+// ?Rva0053AF50PlayerTooltip@@YGXPAVGameSpyGameSlot@@@Z
+// partial score=0.982039 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringbaseunicode /Iinputs/reference/shims/stringbaseascii /Iinputs/reference/shims/psplayerstats /Iinputs/reference/shims/nat /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4
@@ -7,7 +7,14 @@
 #include <string>
 #include <map>
 #include <string.h>
-#include "PreRTS.h"
+#include "ascii_string.h"
+#include "Common/UnicodeString.h"
+
+template<> inline const char *StringBase<char>::str() const
+{ return m_data ? &m_data->data[0] : ""; }
+
+template<> inline const wchar_t *StringBase<wchar_t>::str() const
+{ return m_data ? &m_data->data[0] : L""; }
 
 typedef int Int;
 typedef bool Bool;
@@ -20,13 +27,14 @@ class RetailLayoutString : public AsciiString
 {
 public:
 	void set(const char *, Int);
+	void concat(const char *, Int);
 };
 
 class BFMERetailAsciiString : public RetailLayoutString
 {
 public:
 	BFMERetailAsciiString(const char *);
-	~BFMERetailAsciiString() { releaseBuffer(); }
+	~BFMERetailAsciiString() {}
 
 private:
 	void releaseBuffer();
@@ -128,8 +136,8 @@ public:
 	virtual void slot10() = 0; virtual void slot14() = 0;
 	virtual void slot18() = 0; virtual void slot1C() = 0;
 	virtual void slot20() = 0;
-	virtual UnicodeString fetch(AsciiString, bool *exists = 0) = 0;
 	virtual UnicodeString fetch(const char *, bool *exists = 0) = 0;
+	virtual UnicodeString fetch(AsciiString, bool *exists = 0) = 0;
 };
 
 class Mouse
@@ -238,7 +246,8 @@ void __stdcall Rva0053AF50PlayerTooltip(GameSpyGameSlot *slot)
 	Rva0053AF50PlayerInfo *player = TheGameSpyInfo->findPlayerInfo(aName.str());
 	if (player)
 	{
-	PSPlayerStats stats = reinterpret_cast<GameSpyPSMessageQueueInterface *>(g_bfmeQueueEUG)->findPlayerStatsByID(player->m_profileID);
+	Int profileID = player->m_profileID;
+	PSPlayerStats stats = reinterpret_cast<GameSpyPSMessageQueueInterface *>(g_bfmeQueueEUG)->findPlayerStatsByID(profileID);
 	if (stats.id == 0)
 	{
 		TheMouse->setCursorTooltip(uName, -1, NULL, 1.5f);
@@ -249,23 +258,19 @@ void __stdcall Rva0053AF50PlayerTooltip(GameSpyGameSlot *slot)
 	AsciiString localeIdentifier;
 	localeIdentifier.format("WOL:Locale%2.2d", stats.locale);
 	UnicodeString playerInfo;
-	Int totalWins = 0, totalLosses = 0, totalDiscons = 0;
+	Int totalWins = 0, totalLosses = 0;
 	PerGeneralMap::iterator it;
 	for (it = stats.wins.begin(); it != stats.wins.end(); ++it)
 		totalWins += it->second;
 	for (it = stats.losses.begin(); it != stats.losses.end(); ++it)
 		totalLosses += it->second;
-	for (it = stats.discons.begin(); it != stats.discons.end(); ++it)
-		totalDiscons += it->second;
-	for (it = stats.desyncs.begin(); it != stats.desyncs.end(); ++it)
-		totalDiscons += it->second;
 
 	UnicodeString favoriteSide;
 	Int numGames = 0;
 	Int favorite = 0;
 	for (it = stats.games.begin(); it != stats.games.end(); ++it)
 	{
-		if (it->second >= numGames)
+		if (it->second > numGames)
 		{
 			numGames = it->second;
 			favorite = it->first;
@@ -281,7 +286,7 @@ void __stdcall Rva0053AF50PlayerTooltip(GameSpyGameSlot *slot)
 		case 0: sideName = "Gondor"; break;
 		case 1: sideName = "Rohan"; break;
 		case 2: sideName = "Isengard"; break;
-		default: sideName = "Mordor"; break;
+		case 3: sideName = "Mordor"; break;
 		}
 		AsciiString sideKey;
 		sideKey.format("SIDE:%s", sideName.str());
@@ -294,27 +299,28 @@ void __stdcall Rva0053AF50PlayerTooltip(GameSpyGameSlot *slot)
 	Int rank = 1;
 	while (rank < 10 && rankPoints >= g_bfmeLimitsDF[rank])
 		++rank;
-	BFMERetailAsciiString rankKey("TOOLTIP:");
-	const char *rankName = evil
-		? ((const char *const *)0x012B7888)[rank]
-		: ((const char *const *)0x012B7860)[rank];
-	if (rankName)
-		((RetailLayoutString *)&rankKey)->set(rankName, strlen(rankName));
-	UnicodeString rankText = TheGameText->fetch(rankKey);
-	UnicodeString ladder1 = formatLadderRankText(player->m_rank1);
-	UnicodeString ladder2 = formatLadderRankText(player->m_rank2);
+	AsciiString rankKey("TOOLTIP:");
+	AsciiString rankName;
+	if (evil)
+		{ const char *name = ((const char *const *)0x012B7888)[rank]; ((StringBase<char> *)&rankName)->set(name, name ? strlen(name) : 0); }
+	else
+		{ const char *name = ((const char *const *)0x012B7860)[rank]; ((StringBase<char> *)&rankName)->set(name, name ? strlen(name) : 0); }
+	((StringBase<char> *)&rankKey)->concat(rankName.str(), *(char **)&rankName ? *(unsigned short *)(*(char **)&rankName + 4) : 0);
+	UnicodeString ladder1, ladder2;
+	ladder1 = formatLadderRankText(player->m_rank1);
+	ladder2 = formatLadderRankText(player->m_rank2);
 
 	playerInfo.format(TheGameText->fetch("TOOLTIP:StagingPlayerInfo"),
-		TheGameText->fetch(localeIdentifier).str(), slot->getPingAsInt(), totalWins, totalLosses,
-		totalDiscons, favoriteSide.str(), rankText.str(), ladder1.str(), ladder2.str());
+		TheGameText->fetch(rankKey).str(), TheGameText->fetch(localeIdentifier).str(),
+		slot->getPingAsInt(), totalWins, totalLosses, favoriteSide.str(), ladder1.str(), ladder2.str());
 
 	UnicodeString tooltip = UnicodeString::TheEmptyString;
 	if (isLocalPlayer)
 		tooltip.format(TheGameText->fetch("TOOLTIP:LocalPlayer"), uName.str());
-	else if (TheGameSpyInfo->getBuddyMap()->find(player->m_profileID) !=
+	else if (TheGameSpyInfo->getBuddyMap()->find(profileID) !=
 		TheGameSpyInfo->getBuddyMap()->end())
 		tooltip.format(TheGameText->fetch("TOOLTIP:BuddyPlayer"), uName.str());
-	else if (player->m_profileID)
+	else if (profileID)
 		tooltip.format(TheGameText->fetch("TOOLTIP:ProfiledPlayer"), uName.str());
 	else
 		tooltip.format(TheGameText->fetch("TOOLTIP:GenericPlayer"), uName.str());
