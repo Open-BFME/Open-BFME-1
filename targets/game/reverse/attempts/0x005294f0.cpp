@@ -1,124 +1,96 @@
-// ?refreshPlayerTeamControl@SkirmishScreenState@@QAEXH@Z
-// partial score=0.45 date=2026-09-18
-// ?refreshPlayerTeamControl@SkirmishScreenState@@QAEXH@Z
-// cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/vendor/stlport /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/stringbaseascii /Iinputs/reference/shims/stringbaseunicode
+// ?rva005294F0@SkirmishScreenState@@QAEXH@Z
+// partial score=0.9942 date=2026-09-28
+// cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 //
-// Retail 0x005294F0.  The matched refreshAllPlayerControls and
-// handlePlayerSelection callers prove the SkirmishScreenState method name.
-// The map/start-position helper is called through its retail ILT; its
-// address-derived Gen005293E0 layout is the only layout claim made here.
-
+// SkirmishScreenState::rva005294F0(Int), retail 0x005294F0, 1214 bytes, RET 4.
+// BFME form of Zero Hour's PopulatePlayerTemplateComboBox (GUIUtil.cpp) for the
+// slot's player-template combo at +0xC8. Callers (refreshAllPlayerControls,
+// handlePlayerSelection, apply via ILT 0x0002D38A) declare it refreshPlayerTeamControl,
+// which this body contradicts (it fills SIDE:%s faction entries), so the name keeps
+// the address.
+// BANKED at 1214/1214 bytes, 7 differing: a pure stack-slot rotation. Retail has
+// sideName(+$T saved-esp) at esp+0x34, numPlayerTemplates at 0x38 and def at 0x3C;
+// ours has def 0x34, sideName 0x38, count 0x3C.
+// Still needed to land even at 0 bytes: _Rb_tree<AsciiString>::_M_find at 0x0038C0E0 is
+// matched under an Rva0038C0E0Value tree spelling (identity correction or pin), and
+// _M_erase at 0x00076A90 is a gen_small placeholder (pin the set<AsciiString> spelling).
 #define _STLP_USE_NEWALLOC 1
-
 #include <set>
 #include "ascii_string.h"
-#include "unicode_string.h"
+template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 
-typedef int Int;
 typedef bool Bool;
+typedef int Int;
+typedef int Color;
 
-class GameWindow
+template <>
+class StringBase<unsigned short>
 {
+	friend class UnicodeString;
+private:
+	StringBase() : m_data(0) {}
+	StringBase(const StringBase<unsigned short> &src);
+	~StringBase() { releaseBuffer(); }
+	void releaseBuffer();
+	void *m_data;
 };
-
-class GameInfo;
-class GameSlot;
-
-class SkirmishScreenOwner
-{
-public:
-	virtual void slot00() = 0;
-	virtual void slot04() = 0;
-	virtual void slot08() = 0;
-	virtual void slot0c() = 0;
-	virtual void slot10() = 0;
-	virtual void slot14() = 0;
-	virtual void slot18() = 0;
-	virtual void slot1c() = 0;
-	virtual void slot20() = 0;
-	virtual Bool contains(GameInfo *game) = 0;
-};
-
-class GameInfo
+class UnicodeString : public StringBase<unsigned short>
 {
 public:
-	GameSlot *getSlot(Int index);
+	UnicodeString() {}
+	UnicodeString(const UnicodeString &that) : StringBase<unsigned short>(that) {}
+	~UnicodeString() {}
 };
 
-class GameSlot
-{
-public:
-	Bool isAI() const;
-};
-
-struct StartPositionInfo
-{
-	unsigned char m_data[20];
-};
-
-class Gen_00525EE0
-{
-public:
-	const StartPositionInfo *bfmeGetStartPositionInfo(Int index);
-};
-
-class MultiplayerColorDefinition
-{
-public:
-	Int getColor() const
-	{
-		return *(const Int *)((const char *)this + 0x10);
-	}
-};
-
-class MultiplayerSettings
-{
-public:
-	MultiplayerColorDefinition *getColor(Int index);
-};
+class GameWindow;
+void GadgetComboBoxGetSelectedPos(GameWindow *comboBox, Int *selectedIndex);
+void *GadgetComboBoxGetItemData(GameWindow *comboBox, Int index);
+void GadgetComboBoxReset(GameWindow *comboBox);
+Int GadgetComboBoxAddEntry(GameWindow *comboBox, UnicodeString text, Color color);
+void GadgetComboBoxSetItemData(GameWindow *comboBox, Int index, void *data);
+void GadgetComboBoxSetSelectedPos(GameWindow *comboBox, Int selectedIndex, Bool dontHide);
+void GadgetComboBoxSetMaxDisplay(GameWindow *comboBox, Int maxDisplay);
 
 class GameTextInterface
 {
 public:
 	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void slot02() = 0;
+	virtual void slot03() = 0;
 	virtual void slot04() = 0;
+	virtual void slot05() = 0;
+	virtual void slot06() = 0;
+	virtual void slot07() = 0;
 	virtual void slot08() = 0;
-	virtual void slot0c() = 0;
-	virtual void slot10() = 0;
-	virtual void slot14() = 0;
-	virtual void slot18() = 0;
-	virtual void slot1c() = 0;
-	virtual void slot20() = 0;
 	virtual UnicodeString fetch(const char *label, Bool *exists = 0) = 0;
 	virtual UnicodeString fetch(AsciiString label, Bool *exists = 0) = 0;
 };
+extern GameTextInterface *TheGameText;
 
-class PopulateRemoteIPComboBoxEntry : public UnicodeString
+class MultiplayerColorDefinition
 {
 public:
-	PopulateRemoteIPComboBoxEntry(const UnicodeString &source)
-		: UnicodeString(source) {}
+	Color getColor() const { return m_color; }
+	unsigned char m_unmodelled000[0x10];
+	Color m_color;
 };
+class MultiplayerSettings
+{
+public:
+	MultiplayerColorDefinition *getColor(Int which);
+};
+extern MultiplayerSettings *TheMultiplayerSettings;
+
+enum { PLAYERTEMPLATE_RANDOM = -1, PLAYERTEMPLATE_OBSERVER = -2 };
 
 class PlayerTemplate
 {
 public:
-	const AsciiString &getSide() const
-	{
-		return m_side;
-	}
-
-	Bool isPlayableSide() const
-	{
-		return m_playableSide;
-	}
-
-	Bool isObserver() const
-	{
-		return m_observer;
-	}
-
+	const AsciiString &getSide() const { return m_side; }
+	Bool isObserver() const { return m_observer; }
+	Bool isPlayableSide() const { return m_playableSide; }
 private:
 	unsigned char m_beforeSide[0x08];
 	AsciiString m_side;
@@ -127,342 +99,152 @@ private:
 	Bool m_playableSide;
 	unsigned char m_afterPlayableSide[0x124 - 0xbe];
 };
-
 class PlayerTemplateStore
 {
 public:
 	const PlayerTemplate *getNthPlayerTemplate(Int index) const;
-
-	Int getPlayerTemplateCount() const
-	{
-		return (Int)(m_end - m_begin);
-	}
-
+	Int getPlayerTemplateCount() const { return (Int)(m_end - m_begin); }
 private:
 	unsigned char m_beforeTemplates[0x08];
 	PlayerTemplate *m_begin;
 	PlayerTemplate *m_end;
 };
+extern PlayerTemplateStore *ThePlayerTemplateStore;
+
+class GameSlot
+{
+public:
+	Bool isAI() const;
+};
+class GameInfo
+{
+public:
+	GameSlot *getSlot(Int index);
+};
+
+// The start-position record retail passes on to the map-key helper at 0x005293E0.
+class Gen005293E0Object
+{
+public:
+	unsigned char m_unmodelled000[0x0c];
+	Int m_ready;
+};
+Bool bfmeGen005293E0(Gen005293E0Object *startPos, void *side);
+inline Bool startPositionHasSide(Gen005293E0Object *startPos, const AsciiString &side)
+{
+	return bfmeGen005293E0(startPos, (void *)&side);
+}
+struct StartPositionInfo;
+class MpGameSetup
+{
+public:
+	const StartPositionInfo *bfmeGetStartPositionInfo(Int index);
+};
+
+class SkirmishScreenOwner
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void slot02() = 0;
+	virtual void slot03() = 0;
+	virtual void slot04() = 0;
+	virtual void slot05() = 0;
+	virtual void slot06() = 0;
+	virtual void slot07() = 0;
+	virtual void slot08() = 0;
+	virtual Bool contains(GameInfo *game) = 0;
+};
 
 class SkirmishScreenState
 {
 public:
-	void refreshPlayerTeamControl(Int index);
-
+	void rva005294F0(Int index);
 private:
 	unsigned char m_vtable[4];
 	SkirmishScreenOwner *m_owner;
 	GameInfo *m_game;
 	GameInfo *m_secondaryGame;
-	unsigned char m_flags10[0x08];
-	unsigned char m_visible[0x01];
-	unsigned char m_padding19[0x03];
-	Int m_value1c;
-	Int m_value20;
-	Int m_value24;
-	unsigned char m_member28[0x40];
-	GameWindow *m_first[8];
-	GameWindow *m_elements[8];
-	GameWindow *m_second[8];
-	GameWindow *m_third[8];
-	GameWindow *m_fourth[8];
-	unsigned char m_member10c[0x20];
-	Int m_field128;
+	unsigned char m_flags10[0xc8 - 0x10];
+	GameWindow *m_playerTemplateCombos[8];		// +0xC8
+	unsigned char m_unmodelledE8[0x10c - 0xe8];
+	unsigned char m_member10c[0x120 - 0x10c];
+	unsigned int m_flags120;
+	Bool m_rva124;
 };
 
-extern GameTextInterface *TheGameText;
-extern MultiplayerSettings *TheMultiplayerSettings;
-extern PlayerTemplateStore *ThePlayerTemplateStore;
-
-extern void GadgetComboBoxGetSelectedPos(GameWindow *window, Int *selected);
-extern void *GadgetComboBoxGetItemData(GameWindow *window, Int selected);
-extern void GadgetComboBoxReset(GameWindow *window);
-extern void GadgetComboBoxSetItemData(GameWindow *window, Int item, void *data);
-extern void GadgetComboBoxSetSelectedPos(GameWindow *window, Int selected,
-	Bool dontHide);
-extern void GadgetComboBoxSetMaxDisplay(GameWindow *window, Int count);
-
-extern void j_00003071();
-extern void j_00007004();
-extern void j_0001d01b();
-extern void j_0001ec18();
-extern void j_00021ec2();
-extern void j_00028f6f();
-extern void j_0002f338();
-extern void j_00037bd2();
-extern void j_0003aa67();
-extern void j_0003b75a();
-extern void j_0003b971();
-extern void j_000422df();
-extern void j_000439c3();
-extern void j_00044080();
-
-static __forceinline const char *rva005294f0AsciiText(
-	const AsciiString &value)
+void SkirmishScreenState::rva005294F0(Int index)
 {
-	const void *data = *(const void *const *)&value;
-	return data ? (const char *)data + 8 : (const char *)0x0107388b;
-}
-
-static __forceinline GameSlot *rva005294f0GetSlot(GameInfo *game, Int index)
-{
-	union
-	{
-		void (*raw)(void);
-		GameSlot *(GameInfo::*member)(Int);
-	} call;
-	call.raw = j_0001ec18;
-	return (game->*call.member)(index);
-}
-
-static __forceinline Bool rva005294f0IsAI(GameSlot *slot)
-{
-	union
-	{
-		void (*raw)(void);
-		Bool (GameSlot::*member)() const;
-	} call;
-	call.raw = j_000422df;
-	return (slot->*call.member)();
-}
-
-static __forceinline const StartPositionInfo *rva005294f0StartInfo(
-	SkirmishScreenState *state, Int index)
-{
-	union
-	{
-		void (*raw)(void);
-		const StartPositionInfo *(Gen_00525EE0::*member)(Int);
-	} call;
-	call.raw = j_0003aa67;
-	return (((Gen_00525EE0 *)state)->*call.member)(index);
-}
-
-static __forceinline void rva005294f0GetSelectedPos(GameWindow *window, Int *selected)
-{
-	union
-	{
-		void (*raw)(void);
-		void (*function)(GameWindow *, Int *);
-	} call;
-	call.raw = j_0003b75a;
-	call.function(window, selected);
-}
-
-static __forceinline void *rva005294f0GetItemData(GameWindow *window, Int selected)
-{
-	union
-	{
-		void (*raw)(void);
-		void *(*function)(GameWindow *, Int);
-	} call;
-	call.raw = j_0003b971;
-	return call.function(window, selected);
-}
-
-static __forceinline void rva005294f0Reset(GameWindow *window)
-{
-	union
-	{
-		void (*raw)(void);
-		void (*function)(GameWindow *);
-	} call;
-	call.raw = j_00007004;
-	call.function(window);
-}
-
-static __forceinline MultiplayerColorDefinition *rva005294f0GetColor(
-	MultiplayerSettings *settings, Int index)
-{
-	union
-	{
-		void (*raw)(void);
-		MultiplayerColorDefinition *(MultiplayerSettings::*member)(Int);
-	} call;
-	call.raw = j_00021ec2;
-	return (settings->*call.member)(index);
-}
-
-static __forceinline Int rva005294f0AddEntry(GameWindow *window,
-	PopulateRemoteIPComboBoxEntry text,
-	Int color)
-{
-	union
-	{
-		void (*raw)(void);
-		Int (*function)(GameWindow *, PopulateRemoteIPComboBoxEntry, Int);
-	} call;
-	call.raw = j_0002f338;
-	return call.function(window, text, color);
-}
-
-static __forceinline void rva005294f0SetItemData(GameWindow *window, Int item, void *data)
-{
-	union
-	{
-		void (*raw)(void);
-		void (*function)(GameWindow *, Int, void *);
-	} call;
-	call.raw = j_0001d01b;
-	call.function(window, item, data);
-}
-
-static __forceinline Bool rva005294f0MapKeyExists(StartPositionInfo *start,
-	AsciiString *side)
-{
-	union
-	{
-		void (*raw)(void);
-		Bool (*function)(void *, void *);
-	} call;
-	call.raw = j_00028f6f;
-	return call.function((void *)start, (void *)side);
-}
-
-static __forceinline const PlayerTemplate *rva005294f0GetTemplate(Int index)
-{
-	union
-	{
-		void (*raw)(void);
-		const PlayerTemplate *(PlayerTemplateStore::*member)(Int) const;
-	} call;
-	call.raw = j_00037bd2;
-	return (ThePlayerTemplateStore->*call.member)(index);
-}
-
-static __forceinline void rva005294f0SetSelectedPos(GameWindow *window, Int selected,
-	Bool dontHide)
-{
-	union
-	{
-		void (*raw)(void);
-		void (*function)(GameWindow *, Int, Bool);
-	} call;
-	call.raw = j_000439c3;
-	call.function(window, selected, dontHide);
-}
-
-static __forceinline void rva005294f0SetMaxDisplay(GameWindow *window, Int count)
-{
-	union
-	{
-		void (*raw)(void);
-		void (*function)(GameWindow *, Int);
-	} call;
-	call.raw = j_00044080;
-	call.function(window, count);
-}
-
-// ?refreshPlayerTeamControl@SkirmishScreenState@@QAEXH@Z
-void SkirmishScreenState::refreshPlayerTeamControl(Int index)
-{
+	Int newIndex;
 	if (m_game && !m_owner->contains(m_game))
 		m_game = 0;
-
-	if (m_secondaryGame
-		&& !m_owner->contains(m_secondaryGame))
+	if (m_secondaryGame && !m_owner->contains(m_secondaryGame))
 		m_secondaryGame = 0;
-
 	if (!m_game)
 		return;
-
 	GameSlot *slot = m_game->getSlot(index);
 	if (!slot)
 		return;
 
-	Bool addObserver;
-	if (!slot->isAI())
-	{
-		addObserver = true;
-		if (*(const unsigned char *)((const char *)this + 0x120) & 4)
-			addObserver = false;
-	}
-	else
-		addObserver = false;
-
-	const StartPositionInfo *start =
-		((Gen_00525EE0 *)this)->bfmeGetStartPositionInfo(index);
-	GameWindow *combo = m_third[index];
-	Int selected = 0;
-	GadgetComboBoxGetSelectedPos(combo, &selected);
-	Int oldData = -1;
-	if (selected >= 0)
-		oldData = (Int)GadgetComboBoxGetItemData(combo, selected);
+	Bool allowObservers = !slot->isAI() && !(m_flags120 & 4);
+	Gen005293E0Object *startPos = (Gen005293E0Object *)((MpGameSetup *)this)->bfmeGetStartPositionInfo(index);
+	Int selectedData = -1;
+	GadgetComboBoxGetSelectedPos(m_playerTemplateCombos[index], &newIndex);
+	if (newIndex >= 0)
+		selectedData = (Int)GadgetComboBoxGetItemData(m_playerTemplateCombos[index], newIndex);
 
 	Int numPlayerTemplates = ThePlayerTemplateStore->getPlayerTemplateCount();
-	(void)oldData;
-	GadgetComboBoxReset(combo);
-	MultiplayerColorDefinition *def =
-		TheMultiplayerSettings->getColor(-1);
+	UnicodeString playerTemplateName;
+	GadgetComboBoxReset(m_playerTemplateCombos[index]);
 
-	const unsigned char forceRandom =
-		*(const unsigned char *)((const char *)this + 0x124);
-	if ((!forceRandom && (!start || *(const Int *)((const char *)start + 0x0c) != 1))
-		|| (forceRandom && start
-			&& *(const Int *)((const char *)start + 0x0c) != 1))
+	MultiplayerColorDefinition *def = TheMultiplayerSettings->getColor(PLAYERTEMPLATE_RANDOM);
+	if ((!m_rva124 && (!startPos || startPos->m_ready != 1)) || (m_rva124 && startPos && startPos->m_ready != 1))
 	{
-		Int newIndex = rva005294f0AddEntry(
-			combo, TheGameText->fetch((const char *)0x010eb894, 0),
-			def->getColor());
-		GadgetComboBoxSetItemData(combo, newIndex, (void *)-1);
+		newIndex = GadgetComboBoxAddEntry(m_playerTemplateCombos[index], TheGameText->fetch("GUI:Random"), def->getColor());
+		GadgetComboBoxSetItemData(m_playerTemplateCombos[index], newIndex, (void *)PLAYERTEMPLATE_RANDOM);
 	}
 
+	Int selectPos = 0;
 	std::set<AsciiString> seenSides;
-	if (*(const unsigned char *)((const char *)this + 0x124)
-		&& start && numPlayerTemplates > 0)
+	if (!m_rva124 || startPos)
 	{
-		Int c = 0;
-		while (c < numPlayerTemplates)
+		for (Int c = 0; c < numPlayerTemplates; ++c)
 		{
-			const PlayerTemplate *playerTemplate =
-				ThePlayerTemplateStore->getNthPlayerTemplate(c);
-			if (playerTemplate && playerTemplate->isPlayableSide()
-				&& !playerTemplate->isObserver())
+			const PlayerTemplate *fac = ThePlayerTemplateStore->getNthPlayerTemplate(c);
+			if (!fac || !fac->isPlayableSide() || fac->isObserver())
+				continue;
+
+			AsciiString side;
+			side.format("SIDE:%s", fac->getSide().str());
+			std::set<AsciiString>::iterator it = seenSides.find(side);
+			if (it != seenSides.end())
+				continue;
+			seenSides.insert(side);
+
+			if (!startPos || startPositionHasSide(startPos, AsciiString(fac->getSide().str())))
 			{
-				AsciiString side;
-				side.format(AsciiString("SIDE:%s"),
-					rva005294f0AsciiText(playerTemplate->getSide()));
-				if (seenSides.find(side) == seenSides.end())
+				Bool exists;
+				UnicodeString sideName = TheGameText->fetch(side, &exists);
+				if (exists)
 				{
-					seenSides.insert(side);
-					Bool accepted;
-					{
-						AsciiString mapSide(
-							rva005294f0AsciiText(playerTemplate->getSide()));
-						accepted = rva005294f0MapKeyExists(
-							(StartPositionInfo *)start, &mapSide);
-					}
-					if (accepted)
-					{
-						Bool exists = false;
-						TheGameText->fetch(side, &exists);
-						if (exists)
-						{
-							UnicodeString text = TheGameText->fetch(side);
-							Int newIndex = rva005294f0AddEntry(
-								combo, text, def->getColor());
-							GadgetComboBoxSetItemData(
-								combo, newIndex, (void *)c);
-						}
-					}
+					newIndex = GadgetComboBoxAddEntry(m_playerTemplateCombos[index], TheGameText->fetch(side), def->getColor());
+					GadgetComboBoxSetItemData(m_playerTemplateCombos[index], newIndex, (void *)c);
+					if (selectedData == c)
+						selectPos = newIndex;
 				}
 			}
-			++c;
 		}
 	}
+	seenSides.clear();
 
-	if (!start && addObserver)
+	if (!startPos && allowObservers)
 	{
-		MultiplayerColorDefinition *observer =
-			TheMultiplayerSettings->getColor(-2);
-		Int newIndex = rva005294f0AddEntry(
-			combo, TheGameText->fetch((const char *)0x010eb884, 0),
-			observer->getColor());
-		GadgetComboBoxSetItemData(combo, newIndex, (void *)-2);
-		if (newIndex == -2)
-		{
-			GadgetComboBoxSetSelectedPos(combo, selected, false);
-			GadgetComboBoxSetMaxDisplay(combo, 10);
-		}
+		def = TheMultiplayerSettings->getColor(PLAYERTEMPLATE_OBSERVER);
+		newIndex = GadgetComboBoxAddEntry(m_playerTemplateCombos[index], TheGameText->fetch("GUI:Observer"), def->getColor());
+		GadgetComboBoxSetItemData(m_playerTemplateCombos[index], newIndex, (void *)PLAYERTEMPLATE_OBSERVER);
+		if (selectedData == PLAYERTEMPLATE_OBSERVER)
+			selectPos = newIndex;
 	}
+	GadgetComboBoxSetSelectedPos(m_playerTemplateCombos[index], selectPos, false);
+	GadgetComboBoxSetMaxDisplay(m_playerTemplateCombos[index], 10);
 }

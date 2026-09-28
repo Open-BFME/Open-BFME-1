@@ -9388,5 +9388,15 @@
   "after_sha256": "d548cedcc44dccddde3dc78df7390058d76e35cb63e763049f8102f76e8069d3",
   "evidence": "targets/game/reverse/identity_evidence/0x006afd00-stop-chain.md",
   "reason": "Bank replaced by the MilesAudioManager stop-chain TU; the pairing is positional across a restructured body and the new name is the landed or witnessed identity (see evidence)."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005294f0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x005294f0.cpp",
+  "old_name": "refreshPlayerTeamControl",
+  "new_name": "rva005294F0",
+  "before_sha256": "fc0316fe711355cb8572f2be15c8252c98763e3d2ce28f2e8850764cdb592041",
+  "after_sha256": "ef70b75a332a3d85e6b004b09509a844308c5ae2cc6e48100991e64b8ab2834f",
+  "evidence": "targets/game/reverse/identity_evidence/005294f0-player-template-combo.md",
+  "reason": "The banked body at 0x005294F0 is BFME's PopulatePlayerTemplateComboBox for the +0xC8 player-template combo (GUI:Random / SIDE:%s / GUI:Observer entries); refreshPlayerTeamControl, the callers' unproven spelling, names a team control this body does not build, so the bank keeps the address token. See the evidence file."
  }
 ]
