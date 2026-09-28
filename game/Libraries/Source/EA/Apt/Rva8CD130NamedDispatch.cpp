@@ -40,6 +40,7 @@ public:
 	{
 		return ((m_flags >> 30) & 1) != 0;
 	}
+	bool Rva008CD050Undefined() const { return ((unsigned char)~(m_flags >> 15) & 1) != 0; }
 
 	unsigned m_flags;
 };
@@ -71,6 +72,31 @@ public:
 };
 
 extern Rva8CD130IdleHook *g_rva8CD130IdleHook;
+
+class BfmeStrVKI;
+class Rva00899770;
+class Rva008AE770Stack {
+public:
+    Rva00899770 *createString(void *, int, BfmeStrVKI *, int, int, int);
+};
+
+// 008CD050..008CD12E, bounded by INT3 padding. Resolve the top value's
+// name and replace it on the stack, balancing the two virtual references.
+void Rva008CD050(Rva8CD130State *state, Rva8CD130Context *context)
+{
+    Rva8CD130Value *top = state->m_stack[state->m_count - 1];
+    if (!top->Rva008CD050Undefined()) {
+        Rva8CD130String name;
+        top->getName(&name);
+        Rva8CD130Value *value = (Rva8CD130Value *)((Rva008AE770Stack *)state)->createString(
+            context->m_first, (int)context->m_second, (BfmeStrVKI *)&name, 1, 1, 0);
+        Rva8CD130Value *old = state->m_stack[state->m_count - 1];
+        if (!old->maxRefCountHit()) old->release();
+        --state->m_count;
+        state->m_stack[state->m_count++] = value;
+        if (!value->maxRefCountHit()) value->addRef();
+    }
+}
 
 void rva8CD130NamedDispatch(Rva8CD130State *state, Rva8CD130Context *context)
 {

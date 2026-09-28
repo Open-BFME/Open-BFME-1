@@ -190,3 +190,52 @@ int __cdecl Rva009AA260Scale(
 	last_vertical_scale(dest, dest_pitch, dest_width);
 	return ratio_scalable;
 }
+
+// Fixed 4:5 scaler. Retail entry 009A9400 follows INT3; RET at 009A954B.
+// The nine stack slots and callback ABIs agree with the generic scaler above.
+void __cdecl Rva009A9400(
+    Rva009AA260Context *, const unsigned char *source, int source_pitch,
+    unsigned int source_width, unsigned int, unsigned char *dest,
+    unsigned int dest_pitch, unsigned int dest_width, unsigned int dest_height)
+{
+    unsigned int i, k;
+    rva009AA260Horizontal45()(source, source_width, dest, dest_width);
+    for (k = 0; k < dest_height / 5 - 1; ++k) {
+        for (i = 1; i < 4; ++i)
+            rva009AA260Horizontal45()(source + i * source_pitch, source_width,
+                dest + i * dest_pitch, dest_width);
+        rva009AA260Horizontal45()(source + 4 * source_pitch, source_width,
+            dest + 5 * dest_pitch, dest_width);
+        rva009AA260Vertical45()(dest, dest_pitch, dest_width);
+        source += 4 * source_pitch;
+        dest += 5 * dest_pitch;
+    }
+    for (i = 1; i < 4; ++i)
+        rva009AA260Horizontal45()(source + i * source_pitch, source_width,
+            dest + i * dest_pitch, dest_width);
+    rva009AA260LastVertical45()(dest, dest_pitch, dest_width);
+}
+
+// Fixed 3:5 sibling, 009A97B0..009A98DB, likewise bounded by INT3.
+void __cdecl Rva009A97B0(
+    Rva009AA260Context *, const unsigned char *source, int source_pitch,
+    unsigned int source_width, unsigned int, unsigned char *dest,
+    unsigned int dest_pitch, unsigned int dest_width, unsigned int dest_height)
+{
+    unsigned int i, k;
+    rva009AA260Horizontal35()(source, source_width, dest, dest_width);
+    for (k = 0; k < dest_height / 5 - 1; ++k) {
+        for (i = 1; i < 3; ++i)
+            rva009AA260Horizontal35()(source + i * source_pitch, source_width,
+                dest + i * dest_pitch, dest_width);
+        rva009AA260Horizontal35()(source + 3 * source_pitch, source_width,
+            dest + 5 * dest_pitch, dest_width);
+        rva009AA260Vertical35()(dest, dest_pitch, dest_width);
+        source += 3 * source_pitch;
+        dest += 5 * dest_pitch;
+    }
+    for (i = 1; i < 3; ++i)
+        rva009AA260Horizontal35()(source + i * source_pitch, source_width,
+            dest + i * dest_pitch, dest_width);
+    rva009AA260LastVertical35()(dest, dest_pitch, dest_width);
+}

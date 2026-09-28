@@ -39,6 +39,10 @@ public:
     virtual void retain();
     virtual void release();
     bool permanent() const { return ((flags >> 30) & 1) != 0; }
+    bool Rva00893670Eligible() const {
+        int type = flags & 63;
+        return type >= 12 && type <= 19 && !((unsigned char)~(flags >> 15) & 1);
+    }
     unsigned flags;
     Rva00893410Block *block;
     Rva008A9B00 *next;
@@ -70,6 +74,26 @@ public:
     }
 };
 extern Rva008AE770Stack Rva01338748Stack;
+
+class Rva008A0C20DwordSlot { public: void set(int); };
+extern char *Rva008A5380Holder;
+
+// Retail 00893670..0089379D; INT3 before entry and after final RET.
+// An optional name resolves an Apt value before setting the holder slot.
+bool Rva00893670(const char *name)
+{
+    if (name == 0) {
+        ((Rva008A0C20DwordSlot *)Rva008A5380Holder)->set(0);
+        return true;
+    }
+    BfmeStrVKI value(name);
+    Rva008A9B00 *found = (Rva008A9B00 *)Rva01338748Stack.createString(
+        Rva008930C0AptLookup(0), 0, &value, 1, 1, 0);
+    if (found == 0) return false;
+    if (!found->Rva00893670Eligible()) return false;
+    ((Rva008A0C20DwordSlot *)Rva008A5380Holder)->set((int)found);
+    return true;
+}
 
 static __forceinline Rva008A9B00 *createValue() {
     Rva008A9B00 *value = Rva01338478FreeHead;
