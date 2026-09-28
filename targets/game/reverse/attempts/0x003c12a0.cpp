@@ -1,36 +1,139 @@
-// ?rva003c12a0@Gen_003C12A0Owner@@QAEXPAVGen_003C12A0Iface@@@Z
-// partial score=0.38 date=2026-09-21
+// ?tail003C12A0@Transfer003C3D90@@QAEXPAVXfer@@@Z
+// partial score=0.4808 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 //
-// Retail 0x003C12A0, 443 bytes. This body operates on the same
-// _STL::list<T> at this+0xC0 that the sized-list constructor at 0x003C15C0
-// (Rva003C15C0LivingWorldListCtor.cpp, "neutral physical owner at 0x003C2FC0
-// loads this+0xC0") builds: same 12-byte payload {wide StringBase handle,
-// int, int(=3 default)}, same circular sentinel walk shape counted here via
-// _STL::distance(begin(),end()) for size(). No owner class identity (not
-// LivingWorldLogic, not proven) is claimed -- only the +0xC0 list member and
-// its element shape are read out of the retail bytes, matching the sibling.
+// The caller load003C4160 in Load003C4160.cpp passes its Xfer pointer to this
+// method. The symbols.csv row at 0x003C12A0 names it tail003C12A0 on
+// Transfer003C3D90. This method belongs in Load003C4160.cpp, which declares
+// Transfer003C3D90 and calls it.
 //
-// The single stack argument (thiscall, ret 4) is a pointer to an interface
-// with unresolved virtuals; only the vtable slots this body actually calls
-// are named (by offset), the rest are unused placeholders that exist purely
-// to keep later slots at the right index. Call shapes read out of the bytes:
-//   slot01 (vtbl+4):  bool ()                          -- gates rebuild vs report
-//   slot09 (vtbl+0x24): void (int *, int)               -- pushed (ptr, 4)
-//   slot25 (vtbl+0x64): void (Rva003C12A0Element *)      -- fills text+word4+word8
-//   slot30 (vtbl+0x78): void (int *)                     -- in/out int, called twice
+// The list at this+0xC0 has 12-byte elements. The sized-list constructor at
+// 0x003C15C0 shows the same wide string and two integer fields, with the last
+// field initialized to 3. The virtual declarations in xfer.h map slots 1, 9,
+// 25, and 30 to IsLoading, XferRawBytes, operator==(UnicodeString&), and
+// operator==(int&).
 //
-// When slot01() is true: the list is cleared (thunk 0x0002AF95 -> 0x003C0060,
-// pinned _List_base<Gen_t_003c0c70_p12cd>::clear -- same 12-byte
-// nontrivial-dtor payload shape) and rebuilt with `count` (size(), possibly
-// updated in place by the first slot30 call) freshly-constructed elements.
-// When false: the existing elements are left untouched but each one's copy is
-// still round-tripped through slot25/slot30/slot09 (a "report existing
-// entries" pass), matching the retail second block at +0x13e.
+// The trial emits 444 bytes, one more than retail's 443, and differs at 228
+// non-relocation bytes. Its frame matches retail's 0x28 bytes, but register
+// and stack slot choices still differ.
 
-#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
-#include <list>
+#include "../../../../game/Libraries/Source/WWVegas/WWLib/string_base.h"
+#include "../../../../game/GameEngine/Source/Common/System/xfer.h"
+#include <new>
+
+namespace _STL
+{
+
+class __new_alloc
+{
+public:
+	static void *allocate(unsigned int bytes);
+};
+
+template <class T>
+class allocator
+{
+};
+
+template <class T>
+struct _Nonconst_traits
+{
+};
+
+struct _List_node_base
+{
+	_List_node_base *_M_next;
+	_List_node_base *_M_prev;
+};
+
+template <class T>
+struct _List_node : public _List_node_base
+{
+	T _M_data;
+};
+
+template <class T, class Traits>
+struct _List_iterator
+{
+	_List_iterator(_List_node_base *node) : _M_node(node) {}
+	bool operator!=(const _List_iterator &that) const { return _M_node != that._M_node; }
+	_List_iterator &operator++() { _M_node = _M_node->_M_next; return *this; }
+	T &operator*() const { return ((_List_node<T> *)_M_node)->_M_data; }
+	_List_node_base *_M_node;
+};
+
+template <class T, class Alloc>
+class _List_base
+{
+public:
+	typedef _List_node<T> _Node;
+	_Node *_M_node;
+	void clear();
+};
+
+template <class T, class Alloc = allocator<T> >
+class list : public _List_base<T, Alloc>
+{
+public:
+	typedef _List_node<T> _Node;
+	typedef _List_iterator<T, _Nonconst_traits<T> > iterator;
+
+	int size() const
+	{
+		int count = 0;
+		_List_node_base *end = this->_M_node;
+		_List_node_base *node = end->_M_next;
+		while (node != end)
+		{
+			node = node->_M_next;
+			++count;
+		}
+		return count;
+	}
+
+	iterator begin() { return iterator(this->_M_node->_M_next); }
+	iterator end() { return iterator(this->_M_node); }
+
+	iterator insert(iterator position, const T &value)
+	{
+		_Node *node = _M_create_node(value);
+		_List_node_base *at = position._M_node;
+		_List_node_base *before = at->_M_prev;
+		node->_M_next = at;
+		node->_M_prev = before;
+		before->_M_next = node;
+		at->_M_prev = node;
+		return iterator(node);
+	}
+
+	void push_back(const T &value)
+	{
+		insert(iterator(this->_M_node), value);
+	}
+
+private:
+	__forceinline _Node *_M_create_node(const T &value)
+	{
+		_Node *node = (_Node *)__new_alloc::allocate(sizeof(_Node));
+		new (&node->_M_data) T(value);
+		return node;
+	}
+};
+
+template <class Iterator>
+int distance(Iterator first, Iterator last)
+{
+	int count = 0;
+	while (first != last)
+	{
+		++first;
+		++count;
+	}
+	return count;
+}
+
+}
 
 class UnicodeString
 {
@@ -69,69 +172,34 @@ struct Rva003C12A0Element
 bool operator==(const Rva003C12A0Element &, const Rva003C12A0Element &);
 bool operator<(const Rva003C12A0Element &, const Rva003C12A0Element &);
 
-class Gen_003C12A0Iface
+class Transfer003C3D90
 {
 public:
-	virtual void slot00();
-	virtual bool slot01();
-	virtual void slot02();
-	virtual void slot03();
-	virtual void slot04();
-	virtual void slot05();
-	virtual void slot06();
-	virtual void slot07();
-	virtual void slot08();
-	virtual void slot09(int *value, int tag);
-	virtual void slot10();
-	virtual void slot11();
-	virtual void slot12();
-	virtual void slot13();
-	virtual void slot14();
-	virtual void slot15();
-	virtual void slot16();
-	virtual void slot17();
-	virtual void slot18();
-	virtual void slot19();
-	virtual void slot20();
-	virtual void slot21();
-	virtual void slot22();
-	virtual void slot23();
-	virtual void slot24();
-	virtual void slot25(Rva003C12A0Element *elem);
-	virtual void slot26();
-	virtual void slot27();
-	virtual void slot28();
-	virtual void slot29();
-	virtual void slot30(int *value);
-};
-
-class Gen_003C12A0Owner
-{
-public:
-	void rva003c12a0(Gen_003C12A0Iface *iface);
+	void tail003C12A0(Xfer *xfer);
 
 private:
 	unsigned char m_unmodelled00[0xC0];
 	_STL::list<Rva003C12A0Element> m_list;
 };
 
-// ?rva003c12a0@Gen_003C12A0Owner@@QAEXPAVGen_003C12A0Iface@@@Z
-void Gen_003C12A0Owner::rva003c12a0(Gen_003C12A0Iface *iface)
+// ?tail003C12A0@Transfer003C3D90@@QAEXPAVXfer@@@Z
+void Transfer003C3D90::tail003C12A0(Xfer *xfer)
 {
-	int count = (int)m_list.size();
-	iface->slot30(&count);
-	bool proceed = iface->slot01();
+	int count = _STL::distance(m_list.begin(), m_list.end());
+	*xfer == count;
+	bool proceed = xfer->IsLoading();
 
 	if (proceed)
 	{
 		m_list.clear();
-		for (int i = 0; i < count; ++i)
+		int i;
+		i = 0;
+		for (; i < count; ++i)
 		{
 			Rva003C12A0Element tmp;
-			iface->slot25(&tmp);
-			iface->slot30(&tmp.m_word4);
-			int extra;
-			iface->slot09(&extra, 4);
+			*xfer == tmp.m_text;
+			*xfer == tmp.m_word4;
+			xfer->XferRawBytes(&tmp.m_word8, 4);
 			m_list.push_back(tmp);
 		}
 		return;
@@ -142,9 +210,8 @@ void Gen_003C12A0Owner::rva003c12a0(Gen_003C12A0Iface *iface)
 	for (; it != end; ++it)
 	{
 		Rva003C12A0Element tmp2(*it);
-		iface->slot25(&tmp2);
-		iface->slot30(&tmp2.m_word4);
-		int extra2;
-		iface->slot09(&extra2, 4);
+		*xfer == tmp2.m_text;
+		*xfer == tmp2.m_word4;
+		xfer->XferRawBytes(&tmp2.m_word8, 4);
 	}
 }
