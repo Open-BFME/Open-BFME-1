@@ -714,6 +714,32 @@ int CommandTranslator::evaluateForceAttack(Drawable* draw,const Coord3D* pos,Com
  return retVal;
 }
 
+// Retail 0x005A7620 (30 B): out-of-line copy of the system-message
+// switch below (MSG_DESTROY_SELECTED_GROUP=0x3EB, MSG_SET_REPLAY_CAMERA=
+// 0x446, MSG_LOGIC_CRC=0x449 per message_stream_commandName.cpp); msg
+// arrives in EAX beside translateGameMessage, refs=0, no ILT.
+// ?isSystemMessage005A7620@@YA_NPBVGameMessage@@@Z
+static bool isSystemMessage005A7620(const GameMessage *msg)
+{
+	if (!msg)
+		return false;
+	switch (msg->getType())
+	{
+	case 0x3eb:
+	case 0x446:
+	case 0x449:
+		return true;
+	}
+	return false;
+}
+
+// absent-from-retail: TU-local caller keeping the static alive with the
+// same private register convention its translateGameMessage caller gives it.
+bool Rva005A7620Caller(const GameMessage *msg)
+{
+	return isSystemMessage005A7620(msg);
+}
+
 GameMessageDisposition CommandTranslator::translateGameMessage(const GameMessage* msg)
 {
  InGameUI* initialUI=TheInGameUI;
