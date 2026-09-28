@@ -1,63 +1,32 @@
-// ?Rva001B0E90Dispatch@@YGHPAVRva001B0E90Owner@@PAX@Z
-// partial score=0.2876 date=2026-09-25
-// ?Rva001B0E90Dispatch@@YGHPAVRva001B0E90Owner@@PAX@Z
-// cl: /DNDEBUG /MD /EHsc
+// ?create001B0E90@EffectFactory0040A260@@QAEPAUSnapshot0040A260@@PBVThingTemplate@@PAX@Z
+// partial score=0.704 date=2026-09-28
+// The matched call in BuffTransfer0040A260 names this body at RVA 0x001B0E90.
+#include "ascii_string.h"
 
 typedef int Int;
 
-template <typename T>
-class StringBase;
+class ThingTemplate;
+struct Snapshot0040A260;
 
-template <>
-class StringBase<char>
-{
-	friend class BFMERetailAsciiString;
-
-private:
-	struct Header
-	{
-		int ref_count;
-		unsigned short length;
-		unsigned short capacity;
-		char data[1];
-	};
-
-	StringBase() : m_data(0) {}
-	StringBase(const char *text);
-	StringBase(const StringBase<char> &other);
-	~StringBase();
-	void releaseBuffer();
-	Header *m_data;
-};
-
-class BFMERetailAsciiString : private StringBase<char>
+class EffectFactory0040A260
 {
 public:
-	BFMERetailAsciiString() : StringBase<char>() {}
-	BFMERetailAsciiString(const char *text) : StringBase<char>(text) {}
-	BFMERetailAsciiString(const BFMERetailAsciiString &other)
-		: StringBase<char>(other) {}
-	~BFMERetailAsciiString() { releaseBuffer(); }
-	void __cdecl format(BFMERetailAsciiString format, ...);
-	const char *str() const
-	{
-		return m_data ? m_data->data : (const char *)0x0107388B;
-	}
+	Snapshot0040A260 *create001B0E90(const ThingTemplate *thingTemplate, void *context);
 };
 
 class Rva001B0E90EntryObject
 {
 public:
 	virtual void slot00() = 0;
-	virtual void slot01() = 0;
-	virtual void slot02() = 0;
-	virtual void slot03() = 0;
 	virtual void slot04() = 0;
-	virtual void slot05() = 0;
-	virtual void slot06() = 0;
-	virtual void slot07() = 0;
 	virtual void slot08() = 0;
-	virtual void slot09() = 0;
+	virtual void slot0C() = 0;
+	virtual void slot10() = 0;
+	virtual void slot14() = 0;
+	virtual void slot18() = 0;
+	virtual void slot1C() = 0;
+	virtual void slot20() = 0;
+	virtual void slot24() = 0;
 	virtual void *slot28() = 0;
 };
 
@@ -72,21 +41,41 @@ struct Rva001B0E90Range
 {
 	Rva001B0E90Record *m_begin;
 	Rva001B0E90Record *m_end;
+	Rva001B0E90Record *begin() const { return m_begin; }
+	int size() const { return (int)(m_end - m_begin); }
 };
 
-class Rva001B0E90Owner
+struct Rva001B0E90ThingTemplateView
 {
-public:
 	char m_prefix[0x20];
-	BFMERetailAsciiString m_name;
+	AsciiString m_name;
 	char m_padding[0x27C];
 	Rva001B0E90Range m_records;
 };
 
+struct Rva001B0E90StringData
+{
+	int m_refCount;
+	unsigned short m_length;
+	unsigned short m_capacity;
+	char m_text[1];
+};
+
+struct Rva001B0E90StringStorage
+{
+	Rva001B0E90StringData *m_data;
+};
+
+inline const char *Rva001B0E90StringText(const AsciiString &string)
+{
+	const Rva001B0E90StringStorage *storage = (const Rva001B0E90StringStorage *)&string;
+	return storage->m_data ? storage->m_data->m_text : (const char *)0x0107388B;
+}
+
 class BfmeAwakenLog
 {
 public:
-	virtual BfmeAwakenLog *slot00() = 0;
+	virtual void slot00() = 0;
 	virtual void slot04() = 0;
 	virtual void slot08() = 0;
 	virtual void slot0C() = 0;
@@ -179,7 +168,7 @@ public:
 	virtual void slot80() = 0;
 	virtual void slot84() = 0;
 	virtual void slot88() = 0;
-	virtual Int slot90(void *, void *) = 0;
+	virtual Snapshot0040A260 *slot90(void *, void *) = 0;
 };
 
 extern BfmeAwakenDebug *TheBfmeAwakenDebug;
@@ -187,41 +176,32 @@ extern void _bfme_debugRecordCallsite(Int kind);
 extern bool _bfme_debugReportingEnabled(void);
 extern "C" Rva001B0E90TerrainVisual *g_bfmeTerrainVisual;
 
-Int __stdcall Rva001B0E90Dispatch(Rva001B0E90Owner *self, void *context)
+Snapshot0040A260 *EffectFactory0040A260::create001B0E90(const ThingTemplate *thingTemplate, void *context)
 {
-	if ((int)(self->m_records.m_end - self->m_records.m_begin) != 0)
+	const Rva001B0E90ThingTemplateView *self = (const Rva001B0E90ThingTemplateView *)thingTemplate;
+	if (self->m_records.size() == 0 || !self->m_records.begin()->m_object)
 	{
-		if (self->m_records.m_begin->m_object != 0)
-			goto success;
+		AsciiString message;
+		message.format(AsciiString((const char *)0x0109C918),
+			(int)((char *)self->m_records.m_end - (char *)self->m_records.m_begin),
+			Rva001B0E90StringText(self->m_name));
+		return 0;
 	}
 
-warning:
+	void *result = self->m_records.begin()->m_object->slot28();
+	if (result == 0)
 	{
-		BFMERetailAsciiString message;
-		message.format(BFMERetailAsciiString((const char *)0x0109C918),
-			(int)((char *)self->m_records.m_end -
-				(char *)self->m_records.m_begin), self->m_name.str());
-	}
-	return 0;
-
-	success:
-	{
-		void *result = self->m_records.m_begin->m_object->slot28();
-		if (result == 0)
+		if (_bfme_debugReportingEnabled())
 		{
-			if (_bfme_debugReportingEnabled())
-			{
-				_bfme_debugRecordCallsite(1);
-				TheBfmeAwakenDebug->slot60();
-				BfmeAwakenLog *report = TheBfmeAwakenDebug->slot6C(0, 0);
-				report = report->slot38((const char *)0x0109C910);
-				report = report->slot38(self->m_name.str());
-				report = report->slot38((const char *)0x0109C8E8);
-				report->slot4C(2);
-			}
-			return 0;
+			_bfme_debugRecordCallsite(1);
+			TheBfmeAwakenDebug->slot60();
+			TheBfmeAwakenDebug->slot6C(0, 0)
+				->slot38((const char *)0x0109C910)
+				->slot38(Rva001B0E90StringText(self->m_name))
+				->slot38((const char *)0x0109C8E8)
+				->slot4C(2);
 		}
-		return g_bfmeTerrainVisual->slot90(context, result);
+		return 0;
 	}
-	return 0;
+	return g_bfmeTerrainVisual->slot90(context, result);
 }
