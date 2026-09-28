@@ -8968,5 +8968,15 @@
   "after_sha256": "8c238bac32ed3720d5cbfd2093d7b53f7ba398f4af8e67717ac04cb94340eb3c",
   "evidence": "targets/game/reverse/identity_evidence/0x006a9200-bank-rewrite.md",
   "reason": "Whole-body rewrite of the 0x006A9200 bank on the MilesAudioManager layout; the old token was an unevidenced stash placeholder and the new one follows the callee pin or the matched sibling or keeps the offset. See the evidence file."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00775760.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawGetPristineBonePositionsForConditionState.cpp",
+  "old_name": "findByCondition",
+  "new_name": "rva00765DC0",
+  "before_sha256": "304c05f6e03a1a17e513905545f28b850b0a639c4719c76977af80c4e2a10f26",
+  "after_sha256": "e99c31d10356d02bf1936ae87105d58c470ddd8ad9b8df1e0201780e3eb48749",
+  "evidence": "targets/game/reverse/identity_evidence/0x00775760-rva00765DC0.md",
+  "reason": "Whole-body rewrite of the 0x00775760 bank on the real W3DModelDraw class; findByCondition was an unevidenced stash placeholder for a BFME-only lookup with no Zero Hour counterpart and an unmatched body at 0x00765DC0, so the name keeps the address. See the evidence file."
  }
 ]
