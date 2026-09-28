@@ -9478,5 +9478,75 @@
   "after_sha256": "c7ab6651da983a86631a7b0cacc54febcb8f7ce393e7353ae0ba758b630fc72f",
   "evidence": "targets/game/reverse/identity_evidence/000960a0-002fed10-objectid-pair-overflow.md",
   "reason": "The pair<ObjectID, unsigned int> element on ILT thunk 0x0002AB44 into 0x000960A0 is refuted by the call graph: only PartitionSolver::solve calls 0x000960A0, and the pair<ObjectID, unsigned int> instantiation is 0x002FED10 (doLoadAllTransports' EntriesVec/SpacesVec push_back). The likely pair<ObjectID, ObjectID> name is still held by 0x00771870, so the element is address-derived until that claim is resolved."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003ec8c0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/PathfinderFindSafePathBfme.cpp",
+  "old_name": "checkChangeLayers",
+  "new_name": "rva003DAE40",
+  "before_sha256": "0659c78bdef8a9f057f09c74f454cd2c5da951ab50ff94f58c1ca8897f602b70",
+  "after_sha256": "0bb72586bc8b774b9ace6baca317314cf6320f97bbc2705e87ed097b8323b050",
+  "evidence": "targets/game/reverse/identity_evidence/0x003ec8c0-findsafepath-helpers.md",
+  "reason": "0x003EC8C0 findSafePath landed byte-exact: the removed ZH-text bank named BFME helpers it never compiled against; the retail call sites (ABI, targets) refute checkChangeLayers and the landed source uses the existing address-derived name rva003DAE40 (see evidence)."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003ec8c0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/PathfinderFindSafePathBfme.cpp",
+  "old_name": "cleanOpenAndClosedLists",
+  "new_name": "rva003D5FC0",
+  "before_sha256": "0659c78bdef8a9f057f09c74f454cd2c5da951ab50ff94f58c1ca8897f602b70",
+  "after_sha256": "0bb72586bc8b774b9ace6baca317314cf6320f97bbc2705e87ed097b8323b050",
+  "evidence": "targets/game/reverse/identity_evidence/0x003ec8c0-findsafepath-helpers.md",
+  "reason": "0x003EC8C0 findSafePath landed byte-exact: the removed ZH-text bank named BFME helpers it never compiled against; the retail call sites (ABI, targets) refute cleanOpenAndClosedLists and the landed source uses the existing address-derived name rva003D5FC0 (see evidence)."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003ec8c0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/PathfinderFindSafePathBfme.cpp",
+  "old_name": "examineNeighboringCells",
+  "new_name": "rva003E6EE0",
+  "before_sha256": "0659c78bdef8a9f057f09c74f454cd2c5da951ab50ff94f58c1ca8897f602b70",
+  "after_sha256": "0bb72586bc8b774b9ace6baca317314cf6320f97bbc2705e87ed097b8323b050",
+  "evidence": "targets/game/reverse/identity_evidence/0x003ec8c0-findsafepath-helpers.md",
+  "reason": "0x003EC8C0 findSafePath landed byte-exact: the removed ZH-text bank named BFME helpers it never compiled against; the retail call sites (ABI, targets) refute examineNeighboringCells and the landed source uses the existing address-derived name rva003E6EE0 (see evidence)."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003ec8c0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/PathfinderFindSafePathBfme.cpp",
+  "old_name": "m_openList",
+  "new_name": "rva003D6400",
+  "before_sha256": "0659c78bdef8a9f057f09c74f454cd2c5da951ab50ff94f58c1ca8897f602b70",
+  "after_sha256": "0bb72586bc8b774b9ace6baca317314cf6320f97bbc2705e87ed097b8323b050",
+  "evidence": "targets/game/reverse/identity_evidence/0x003ec8c0-findsafepath-helpers.md",
+  "reason": "0x003EC8C0 findSafePath landed byte-exact: the removed ZH-text bank named BFME helpers it never compiled against; the retail call sites (ABI, targets) refute m_openList and the landed source uses the existing address-derived name rva003D6400 (see evidence)."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003ec8c0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/PathfinderFindSafePathBfme.cpp",
+  "old_name": "m_zoneManager",
+  "new_name": "m_bfme2470C",
+  "before_sha256": "0659c78bdef8a9f057f09c74f454cd2c5da951ab50ff94f58c1ca8897f602b70",
+  "after_sha256": "0bb72586bc8b774b9ace6baca317314cf6320f97bbc2705e87ed097b8323b050",
+  "evidence": "targets/game/reverse/identity_evidence/0x003ec8c0-findsafepath-helpers.md",
+  "reason": "0x003EC8C0 findSafePath landed byte-exact: the removed ZH-text bank named BFME helpers it never compiled against; the retail call sites (ABI, targets) refute m_zoneManager and the landed source uses the existing address-derived name m_bfme2470C (see evidence)."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003ec8c0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/PathfinderFindSafePathBfme.cpp",
+  "old_name": "putOnClosedList",
+  "new_name": "rva003F6C30",
+  "before_sha256": "0659c78bdef8a9f057f09c74f454cd2c5da951ab50ff94f58c1ca8897f602b70",
+  "after_sha256": "0bb72586bc8b774b9ace6baca317314cf6320f97bbc2705e87ed097b8323b050",
+  "evidence": "targets/game/reverse/identity_evidence/0x003ec8c0-findsafepath-helpers.md",
+  "reason": "0x003EC8C0 findSafePath landed byte-exact: the removed ZH-text bank named BFME helpers it never compiled against; the retail call sites (ABI, targets) refute putOnClosedList and the landed source uses the existing address-derived name rva003F6C30 (see evidence)."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003ec8c0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/PathfinderFindSafePathBfme.cpp",
+  "old_name": "releaseInfo",
+  "new_name": "rva003F6F10",
+  "before_sha256": "0659c78bdef8a9f057f09c74f454cd2c5da951ab50ff94f58c1ca8897f602b70",
+  "after_sha256": "0bb72586bc8b774b9ace6baca317314cf6320f97bbc2705e87ed097b8323b050",
+  "evidence": "targets/game/reverse/identity_evidence/0x003ec8c0-findsafepath-helpers.md",
+  "reason": "0x003EC8C0 findSafePath landed byte-exact: the removed ZH-text bank named BFME helpers it never compiled against; the retail call sites (ABI, targets) refute releaseInfo and the landed source uses the existing address-derived name rva003F6F10 (see evidence)."
  }
 ]
