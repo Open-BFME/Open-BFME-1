@@ -9608,5 +9608,55 @@
   "after_sha256": "8c54be02e0814944b3c5a68b6275cfe0a75ac224d86154d7764c65d0806f2b6e",
   "evidence": "targets/game/reverse/identity_evidence/harvest-20260928T084123_0-fontlibrary.md",
   "reason": "bank-to-source token alignment: unused FontLibraryBFMERetail declaration dropped; 0x00942BC0 keeps its ledger name Gen_00942BC0::process"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0019f890.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Map/Rva0019F890FillHelper.cpp",
+  "old_name": "SideEntry0019F890",
+  "new_name": "Rva001A0320Record",
+  "before_sha256": "425a97b2abf201a9c39aa5fe5846c6810e158ad5144fca9bb70fc2b10b755a66",
+  "after_sha256": "739de706a133cefadd0e1dd08178c01c5fd295693078342c4933b3dda6d89f17",
+  "evidence": "targets/game/reverse/identity_evidence/harvest-20260928T084123_3-fillhelper.md",
+  "reason": "SideEntry0019F890 unified with matched caller's Rva001A0320Record; other findings are token/cross-body alignment artifacts (SidesList and swap still used)"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0019f890.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Map/Rva0019F890FillHelper.cpp",
+  "old_name": "SidesList",
+  "new_name": "Rva00357800Owner",
+  "before_sha256": "425a97b2abf201a9c39aa5fe5846c6810e158ad5144fca9bb70fc2b10b755a66",
+  "after_sha256": "739de706a133cefadd0e1dd08178c01c5fd295693078342c4933b3dda6d89f17",
+  "evidence": "targets/game/reverse/identity_evidence/harvest-20260928T084123_3-fillhelper.md",
+  "reason": "SideEntry0019F890 unified with matched caller's Rva001A0320Record; other findings are token/cross-body alignment artifacts (SidesList and swap still used)"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0019f890.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Map/Rva0019F890FillHelper.cpp",
+  "old_name": "swap",
+  "new_name": "j_00020d92",
+  "before_sha256": "425a97b2abf201a9c39aa5fe5846c6810e158ad5144fca9bb70fc2b10b755a66",
+  "after_sha256": "739de706a133cefadd0e1dd08178c01c5fd295693078342c4933b3dda6d89f17",
+  "evidence": "targets/game/reverse/identity_evidence/harvest-20260928T084123_3-fillhelper.md",
+  "reason": "SideEntry0019F890 unified with matched caller's Rva001A0320Record; other findings are token/cross-body alignment artifacts (SidesList and swap still used)"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0019f890.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0019ff20.cpp",
+  "old_name": "SideEntry0019F890",
+  "new_name": "Rva001A0320Record",
+  "before_sha256": "425a97b2abf201a9c39aa5fe5846c6810e158ad5144fca9bb70fc2b10b755a66",
+  "after_sha256": "e8d77d9bcea50a6de61617a150691c49612e1fc6f75252073dca5cba27c30d39",
+  "evidence": "targets/game/reverse/identity_evidence/harvest-20260928T084123_3-fillhelper.md",
+  "reason": "SideEntry0019F890 unified with matched caller's Rva001A0320Record; other findings are token/cross-body alignment artifacts (SidesList and swap still used)"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0019f890.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0019ff20.cpp",
+  "old_name": "SidesList",
+  "new_name": "Rva00197AE0Temporary",
+  "before_sha256": "425a97b2abf201a9c39aa5fe5846c6810e158ad5144fca9bb70fc2b10b755a66",
+  "after_sha256": "e8d77d9bcea50a6de61617a150691c49612e1fc6f75252073dca5cba27c30d39",
+  "evidence": "targets/game/reverse/identity_evidence/harvest-20260928T084123_3-fillhelper.md",
+  "reason": "SideEntry0019F890 unified with matched caller's Rva001A0320Record; other findings are token/cross-body alignment artifacts (SidesList and swap still used)"
  }
 ]
