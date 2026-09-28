@@ -1,5 +1,5 @@
 // ?validateSides@SidesList@@QAE_NXZ
-// partial score=0.997 date=2026-09-26
+// partial score=0.997 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Retail ?validateSides@SidesList@@QAE_NXZ at 0x0019C920, 1810 bytes.
 //
@@ -17,7 +17,6 @@
 typedef bool Bool;
 typedef int Int;
 
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 template <class T> inline bool StringBase<T>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
 template <class T> inline void StringBase<T>::concat(const StringBase<T> &s)
 {
