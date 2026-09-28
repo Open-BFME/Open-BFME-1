@@ -41,6 +41,8 @@ public:
 
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 
+extern const float Rva00064680NegativeScale;
+
 class TaintBuffer
 {
 public:
@@ -94,26 +96,26 @@ void TaintBuffer::setShroudLevel(int x, int y,
 		int delta = 0x80 - levelValue;
 		float fraction = (float)delta;
 		int xMod5 = x % 5;
-		fraction *= *(const float *)0x010888f4;
+		fraction *= 0.0078125f;
 		float base = 1.0f - fraction;
 		float redAdjustment;
 		float greenAdjustment;
 		float blueAdjustment;
 
 		if (xMod5 == 0 && yForColor % 2 == 0)
-			redAdjustment = *(const float *)0x01075354;
+			redAdjustment = Rva00064680NegativeScale;
 		else
-			redAdjustment = *(const float *)0x01121290;
+			redAdjustment = -0.02f;
 
 		if (x % 3 == 0 && yForColor % 5 == 0)
-			greenAdjustment = *(const float *)0x01121290;
+			greenAdjustment = -0.02f;
 		else
-			greenAdjustment = *(const float *)0x01075354;
+			greenAdjustment = Rva00064680NegativeScale;
 
 		if (x % 2 == 0 && yForColor % 3 == 0)
-			blueAdjustment = *(const float *)0x0112128c;
+			blueAdjustment = -0.03f;
 		else
-			blueAdjustment = *(const float *)0x0107c6ec;
+			blueAdjustment = 0.02f;
 
 		red = base + fraction * (TheWritableGlobalData->m_lowRed + redAdjustment);
 		green = base + fraction * (TheWritableGlobalData->m_lowGreen + greenAdjustment);
@@ -124,26 +126,26 @@ void TaintBuffer::setShroudLevel(int x, int y,
 		int delta = levelValue - 0x80;
 		float fraction = (float)delta;
 		int xMod5 = x % 5;
-		fraction *= *(const float *)0x01121288;
+		fraction *= 0.007874016f;
 		float base = 1.0f - fraction;
 		float redAdjustment;
 		float greenAdjustment;
 		float blueAdjustment;
 
 		if (xMod5 == 0 && yForColor % 2 == 0)
-			redAdjustment = *(const float *)0x01075354;
+			redAdjustment = Rva00064680NegativeScale;
 		else
-			redAdjustment = *(const float *)0x01121290;
+			redAdjustment = -0.02f;
 
 		if (x % 3 == 0 && yForColor % 5 == 0)
-			greenAdjustment = *(const float *)0x01121290;
+			greenAdjustment = -0.02f;
 		else
-			greenAdjustment = *(const float *)0x01075354;
+			greenAdjustment = Rva00064680NegativeScale;
 
 		if (x % 2 == 0 && yForColor % 3 == 0)
-			blueAdjustment = *(const float *)0x0112128c;
+			blueAdjustment = -0.03f;
 		else
-			blueAdjustment = *(const float *)0x0107c6ec;
+			blueAdjustment = 0.02f;
 
 		red = base + fraction * (TheWritableGlobalData->m_highRed + redAdjustment);
 		green = base + fraction * (TheWritableGlobalData->m_highGreen + greenAdjustment);
