@@ -1,5 +1,5 @@
 // ?Build_Sentence_Not_Centered@Render2DSentenceClass@@AAE?AVVector2@@PBGPAH1_N@Z
-// partial score=0.928128 date=2026-09-27
+// partial score=0.9937952430196484 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
@@ -1287,20 +1287,19 @@ finished:
 			for (;; i++) {
 				if (i >= count || SentenceData[i].ScreenRect.Top != top) {
 				float line_width = (Font->Get_Extra_Overlap() * 0.5f + right) - left;
-				float offset = (float)floor( (extent.X - line_width) * 0.5f - left + 0.5f );
+				double argument = (extent.X - line_width) * 0.5f - left + 0.5f;
+				float offset = (float)floor(argument);
 				for (int k = start; k < i; k++) {
 					SentenceData[k].ScreenRect.Left += offset;
 					SentenceData[k].ScreenRect.Right += offset;
 				}
 				if (i >= count)
 					break;
-				top		= SentenceData[i].ScreenRect.Top;
-				left	= SentenceData[i].ScreenRect.Left;
-				right	= SentenceData[i].ScreenRect.Right;
 				start = i;
-				} else {
-					right = SentenceData[i].ScreenRect.Right;
+top = SentenceData[i].ScreenRect.Top;
+left = SentenceData[i].ScreenRect.Left;
 				}
+				right = SentenceData[i].ScreenRect.Right;
 			}
 		}
 	}
