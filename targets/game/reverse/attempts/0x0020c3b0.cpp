@@ -1,15 +1,19 @@
 // ?createSpawn@SpawnBehavior@@AAE_NXZ
-// partial score=0.37 date=2026-09-24
+// partial score=0.99 date=2026-09-28
+// cl: /O2 /Ob2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// ?createSpawn@SpawnBehavior@@AAE_NXZ
+// 2026-09-28 opus-5.5: real extern globals, native bitset BitFlags<86>, team hoisted to a local, pinned callee spellings; 740/740 with 6 differing bytes (two temp-register choices).
 // BFME SpawnBehavior::createSpawn reconstruction at retail RVA 0x0020C3B0.
 // The local views preserve the BFME module and object offsets without shared-header edits.
 // stlport
 
 #define _STLP_NO_EXCEPTIONS 1
+#include <bitset>
 #include <list>
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
-typedef unsigned int ObjectID;
+typedef int ObjectID;
 typedef bool Bool;
 typedef float Real;
 
@@ -18,27 +22,30 @@ class Object;
 class Drawable;
 class AsciiString
 {
+private:
+	void *m_data;
 };
 class ThingTemplate
 {
 public:
-	unsigned char m_pad00[0x4b4];
-	Int m_unknown4b4;
+	Int getCommandPoints(void) const { return m_commandPoints; }
+
+private:
+	unsigned char m_beforeCommandPoints[0x4b4];
+	Int m_commandPoints;
 };
 class RvaBehaviorModuleSlots;
 class SlavedUpdateInterface;
 
-template <int Bits>
+template <int NUMBITS>
 class BitFlags
 {
-public:
-	UnsignedInt m_words[3];
+private:
+	_STL::bitset<NUMBITS> m_bits;
 
-	void clear()
+public:
+	BitFlags()
 	{
-		m_words[0] = 0;
-		m_words[1] = 0;
-		m_words[2] = 0;
 	}
 };
 
@@ -126,7 +133,12 @@ public:
 	void setDrawableHidden(Bool);
 };
 
-class Object
+enum KindOfType
+{
+	KINDOF_STRUCTURE = 7
+};
+
+class Thing
 {
 public:
 	virtual void slot00();
@@ -141,11 +153,17 @@ public:
 	virtual void slot09();
 	virtual Drawable *getDrawable() const;
 
+	Bool isKindOf(KindOfType t) const;
+};
+
+class Object : public Thing
+{
+public:
+
 	ExitInterface *getObjectExitInterface() const;
 	class Player *getControllingPlayer() const;
 	void setProducer(const Object *);
 	ObjectShroudStatus getShroudedStatus(Int) const;
-	Bool isKindOf(Int) const;
 
 	Team *getTeam() const
 	{
@@ -181,8 +199,19 @@ struct Coord3D
 	Real z;
 };
 
+class Rva000C7C30Holder;
+
 class Player
 {
+public:
+	const Rva000C7C30Holder *commandPoints(void) const
+	{
+		return (const Rva000C7C30Holder *)((const char *)this + 0x30);
+	}
+	Int getPlayerIndex() const { return m_playerIndex; }
+private:
+	unsigned char m_pad00[0x24];
+	Int m_playerIndex;
 };
 
 class Rva000C9530
@@ -202,15 +231,10 @@ private:
 	Int m_right;
 };
 
-class BfmeThingFactory
-{
-public:
-	const ThingTemplate *findTemplate(const AsciiString &);
-};
-
 class ThingFactory
 {
 public:
+	ThingTemplate *findTemplate(const AsciiString &);
 	Object *newObject(const ThingTemplate *, Team *, const ObjectStatusMaskType &, UnsignedInt);
 };
 
@@ -317,9 +341,8 @@ public:
 		return m_moduleData;
 	}
 
-	Object *reclaimOrphanSpawn();
-
 private:
+	Object *reclaimOrphanSpawn();
 	Bool createSpawn();
 	void *m_unknown30;
 	const ThingTemplate *m_spawnTemplate;
@@ -338,15 +361,18 @@ private:
 	AsciiString *m_templateNameIterator;
 };
 
-#define TheThingFactory (*(BfmeThingFactory **)0x012EF1D8)
-#define TheGameLogic (*(GameLogic **)0x012F0898)
-#define ThePlayerList (*(struct Rva0020C3B0PlayerList **)0x012ED748)
-
-struct Rva0020C3B0PlayerList
+class PlayerList
 {
+public:
+	Player *getLocalPlayer() const { return m_localPlayer; }
+private:
 	unsigned char m_pad00[0x0c];
 	Player *m_localPlayer;
 };
+
+extern ThingFactory *TheThingFactory;
+extern GameLogic *TheGameLogic;
+extern PlayerList *ThePlayerList;
 
 struct Rva0020C3B0Player
 {
@@ -382,26 +408,22 @@ Bool SpawnBehavior::createSpawn()
 		if (md->m_unknown19 && m_spawnTemplate)
 		{
 			Player *controllingPlayer = parent->getControllingPlayer();
-			if (controllingPlayer)
+			if (controllingPlayer && controllingPlayer->commandPoints())
 			{
-				Rva000C7C30Holder *holder = reinterpret_cast<Rva000C7C30Holder *>(
-					reinterpret_cast<char *>(controllingPlayer) + 0x30);
-				if (holder && holder->get(1) < m_spawnTemplate->m_unknown4b4)
+				if (controllingPlayer->commandPoints()->get(1) < m_spawnTemplate->getCommandPoints())
 					return false;
 			}
 		}
 
-		ObjectStatusMaskType statusBits;
-		statusBits.clear();
-		newSpawn = reinterpret_cast<ThingFactory *>(TheThingFactory)->newObject(
-			m_spawnTemplate, parent->getTeam(), statusBits, 0);
+		Team *team = parent->getTeam();
+		newSpawn = TheThingFactory->newObject(
+			m_spawnTemplate, team, ObjectStatusMaskType(), 0);
 
 		reinterpret_cast<Rva000C9530 *>(newSpawn->getControllingPlayer())->wrap(
 			reinterpret_cast<Int>(parent), reinterpret_cast<Int>(newSpawn));
 
 		if (newSpawn->getDrawable() != 0 &&
-			parent->getShroudedStatus(reinterpret_cast<Rva0020C3B0Player *>(
-				*reinterpret_cast<Player **>(reinterpret_cast<char *>(ThePlayerList) + 0x0c))->m_playerIndex) >=
+			parent->getShroudedStatus(ThePlayerList->getLocalPlayer()->getPlayerIndex()) >=
 				OBJECTSHROUD_FOGGED)
 		{
 			newSpawn->getDrawable()->setDrawableHidden(true);
@@ -433,7 +455,7 @@ Bool SpawnBehavior::createSpawn()
 			if (m_initialBurstCountdown > 0)
 			{
 				Object *barracks = TheGameLogic->findObjectByID(parent->getProducerID());
-				if (barracks && barracks->isKindOf(7))
+				if (barracks && barracks->isKindOf(KINDOF_STRUCTURE))
 				{
 					ExitInterface *barracksExitInterface = barracks->getObjectExitInterface();
 					if (barracksExitInterface)
