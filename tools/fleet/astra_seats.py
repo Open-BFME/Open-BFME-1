@@ -292,7 +292,21 @@ def gap_groups(count, budget=10000):
         import csv
         with gap_map.open(newline="", encoding="utf-8") as handle:
             kinds = {int(r["gap_start"], 16): r["kind"] for r in csv.DictReader(handle)}
-    gaps = [g for g in find_gaps() if g[0] not in busy and kinds.get(g[0], "functions") == "functions"]
+    # Never re-serve a gap: a harvested seat releases its claims, and on
+    # 2026-09-28 the next round was handed the same three gaps the first gap
+    # round had already worked. Skip every gap an earlier seat was given and
+    # every gap holding an address with a recorded verdict.
+    served = {int(r, 16) for s in seats() if str(s.get("label", "")).startswith("gaps")
+              for r in s["rvas"]}
+    import bisect
+    verdicts = sorted(eligibility.attempt_counts())
+
+    def attempted(a, b):
+        i = bisect.bisect_left(verdicts, a)
+        return i < len(verdicts) and verdicts[i] < b
+
+    gaps = [g for g in find_gaps() if g[0] not in busy and g[0] not in served
+            and not attempted(g[0], g[1]) and kinds.get(g[0], "functions") == "functions"]
     groups, current, total = [], [], 0
     for start, _, size in gaps:
         current.append(start)
