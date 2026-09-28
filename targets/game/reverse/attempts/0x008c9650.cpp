@@ -1,5 +1,5 @@
 // ?d_008c9650@@YAXXZ
-// partial score=0.966 date=2026-09-27
+// partial score=0.5337 date=2026-09-27
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // RVA 008C9650: numeric validation and stack replacement; address-qualified identity.
 // COMPLETE PARTIAL, NOT BYTE EXACT. Retail extent: 1304 bytes through RET at +0x517.
