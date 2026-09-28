@@ -9598,5 +9598,15 @@
   "after_sha256": "bf59de595db5a7125bccfc1fc3feb340aefadc8a6acec7680e9c1b74089618ad",
   "evidence": "targets/game/reverse/functions.csv",
   "reason": "targets/game/reverse/functions.csv names the body at 0x001E1770 ?get@Rva001E1770ByteField@@QBEEXZ; the old spelling ByteField matches no ledger row or pin, so the source uses the ledger name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006f4f50.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayStringCheckForChangedTextData.cpp",
+  "old_name": "FontLibraryBFMERetail",
+  "new_name": "Gen_00942BC0",
+  "before_sha256": "0e44fb42b42dbd9a9283fc9b276fd0bdc0799b11680e62b7526fc20ffd3eb0d6",
+  "after_sha256": "8c54be02e0814944b3c5a68b6275cfe0a75ac224d86154d7764c65d0806f2b6e",
+  "evidence": "targets/game/reverse/identity_evidence/harvest-20260928T084123_0-fontlibrary.md",
+  "reason": "bank-to-source token alignment: unused FontLibraryBFMERetail declaration dropped; 0x00942BC0 keeps its ledger name Gen_00942BC0::process"
  }
 ]

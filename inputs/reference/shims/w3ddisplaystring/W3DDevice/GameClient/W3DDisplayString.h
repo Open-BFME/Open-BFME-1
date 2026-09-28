@@ -91,6 +91,11 @@ public:
 
 protected:
 
+	// BFME retail 0x006F4F50 returns Bool and consumes one out-flag pointer.
+	Bool checkForChangedTextData(Bool *needNewPolys);
+	// BFME private draw helper at 0x006F5170; four integer stack arguments.
+	void drawText006F5170(Int x, Int y, Int xDrop, Int yDrop);
+
 	void checkForChangedTextData( void );  /**< called when we need to update our
 																				 render sentence and update extents */
 	void usingResources( UnsignedInt frame );  /**< call this whenever display
