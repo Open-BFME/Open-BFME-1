@@ -1,10 +1,8 @@
 // ?unpack@CastleBehavior@@QAEX_N@Z
-// partial score=0.29 date=2026-09-28
+// partial score=0.328804 date=2026-09-28
 // ?unpack@CastleBehavior@@QAEX_N@Z
 // CastleBehavior's owned-object unpack path.
-// 2026-09-28 opus-5.5: retail stores the bfmeFindFFG()->+0x370 result at this+0x104 (not m_objectID +0xA0) and
-// reloads m_object (+8) for getControllingPlayer/position. 1085 vs 1104 B, 797 non-reloc diffs, shape 0.919.
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
 // stlport
 
 #define _STLP_NO_EXCEPTIONS 1
@@ -59,12 +57,7 @@ public:
 class ThingTemplate;
 class Module;
 
-class AsciiString
-{
-public:
-	void *m_data;
-};
-
+#include "ascii_string.h"
 class Object
 {
 public:
@@ -168,18 +161,18 @@ public:
 	unsigned char m_pad00[0x3c];
 	Int m_frame;
 	unsigned char m_pad40[0x70];
-	_STL::hash_map<Int, Object *> m_objects;
+	_STL::hash_map<Int, Object *, _STL::hash<Int>, _STL::equal_to<Int> > m_objects;
+ __forceinline Object *lookup(Int id) {
+  if(!id)return 0;
+  _STL::hash_map<Int,Object*,_STL::hash<Int>,_STL::equal_to<Int> >::iterator it=m_objects.find(id);
+  if(it==m_objects.end())return 0;
+  return it->second;
+ }
+
 };
 
 class TerrainLogic
 {
-};
-
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
 };
 
 struct BfmeSubFFG
@@ -199,13 +192,6 @@ public:
 	BfmeResFFG *bfmeFindFFG(BfmeSubFFG *source);
 };
 
-class UnicodeString
-{
-public:
-	void set(const UnicodeString &that);
-	void *m_data;
-};
-
 struct BfmeTripleZP
 {
 	void *m_a;
@@ -222,7 +208,7 @@ public:
 class CastleBehavior;
 
 typedef void (__cdecl *VectorUpdateCall)(void *, Int);
-typedef void (__cdecl *TerrainUpdateCall)(void *, void *);
+typedef void (TerrainLogic::*TerrainUpdateCall)(void *, void *);
 typedef UnsignedInt (Rva0036BA60PurchaseContext::*WithdrawCall)(
 	const void *) const;
 typedef void (CastleBehavior::*BoolUpdateCall)(Bool);
@@ -293,7 +279,7 @@ private:
 	_STL::vector<Int> m_ownedObjectsDC;
 	_STL::vector<Int> m_ownedObjectsE8;
 	_STL::set<Int> m_ownedObjectSetF4;
-	UnicodeString m_objectName;
+	AsciiString m_objectName;
 	Int m_objectNameKey;
 };
 
@@ -313,15 +299,19 @@ void CastleBehavior::unpack(Bool unpack)
 		union { void *asVoid; ControllingPlayerCall asMember; }
 			controllingPlayerCast;
 		controllingPlayerCast.asVoid = (void *)j_00020824;
-		Player *player = (m_object->*controllingPlayerCast.asMember)();
+		{
+        Object *currentObject=m_object;
+		Player *player = (currentObject->*controllingPlayerCast.asMember)();
 		BfmeResFFG *result = ((BfmeMidFFG *)player)->bfmeFindFFG(
-			(BfmeSubFFG *)((char *)m_object + 0x38));
+			(BfmeSubFFG *)((char *)currentObject + 0x38));
 		m_objectNameKey = result != 0 ? result->m_id : -1;
+        }
 		m_flagAC = false;
 
-		UnicodeString *name = &m_objectName;
-		if (name->m_data != 0 &&
-			*(const unsigned short *)((const char *)name->m_data + 4) != 0)
+		AsciiString *name = &m_objectName;
+        void *nameData=*(void**)name;
+		if (nameData != 0 &&
+			*(const unsigned short *)((const char *)nameData + 4) != 0)
 		{
 			union { void *asVoid; FindCall asMember; } findCast;
 			findCast.asVoid = (void *)j_00028560;
@@ -340,13 +330,13 @@ void CastleBehavior::unpack(Bool unpack)
 					cost = (((Rva0036BA60PurchaseContext *)this)->*
 						withdrawCast.asMember)(definition);
 				}
-				if (created != 0 && cost != 0)
+				if (created != 0)
 				{
 					float value = (float)cost;
 					*(float *)((char *)created + 0x258) = value;
 				}
 			}
-			name->set(*(const UnicodeString *)0x01336E50);
+			name->set(*(const AsciiString *)0x01336E50);
 		}
 		else
 		{
@@ -367,10 +357,12 @@ void CastleBehavior::unpack(Bool unpack)
 
 		if (TheTerrainLogic != 0)
 		{
-			void *moduleData = m_moduleData != 0 ?
-				*(void **)((char *)m_moduleData + 0x38) : 0;
-			((TerrainUpdateCall)j_0002d740)((char *)object + 0x38,
-				moduleData);
+			void *moduleData=0;
+            if(m_moduleData) moduleData=*(void**)((char*)m_moduleData+0x38);
+			TerrainLogic *terrainLogic=TheTerrainLogic;
+            union {void *raw; TerrainUpdateCall fn;} terrain;
+            terrain.raw=(void*)j_0002d740;
+            (terrainLogic->*terrain.fn)((char*)object+0x38,moduleData);
 		}
 
 		((VectorUpdateCall)j_0003091d)(&m_ownedObjectsB8, m_objectID);
@@ -378,18 +370,11 @@ void CastleBehavior::unpack(Bool unpack)
 		((VectorUpdateCall)j_0003091d)(&m_ownedObjectsDC, m_objectID);
 		m_lastFrame = TheBfmeGameLogic->m_frame;
 
+        GameLogic *logic=TheBfmeGameLogic;
 		for (std::vector<Int>::iterator it = m_ownedObjectsB8.begin();
 			it != m_ownedObjectsB8.end(); ++it)
 		{
-			Int id = *it;
-			Object *owned = 0;
-			if (id != 0)
-			{
-				_STL::hash_map<Int, Object *>::iterator found =
-					TheBfmeGameLogic->m_objects.find(id);
-				if (found != TheBfmeGameLogic->m_objects.end())
-					owned = (*found).second;
-			}
+			Object *owned=logic->lookup(*it);
 			if (owned != 0)
 			{
 				static NameKeyType key =
@@ -402,23 +387,16 @@ void CastleBehavior::unpack(Bool unpack)
 				if (member != 0)
 				{
 					member->m_castleObjectID = m_objectID;
-					member->m_objectID = object->getID();
+					member->m_objectID = m_object->getID();
 				}
+                logic=TheBfmeGameLogic;
 			}
 		}
 
 		for (std::vector<Int>::iterator it = m_ownedObjectsDC.begin();
 			it != m_ownedObjectsDC.end(); ++it)
 		{
-			Int id = *it;
-			Object *owned = 0;
-			if (id != 0)
-			{
-				_STL::hash_map<Int, Object *>::iterator found =
-					TheBfmeGameLogic->m_objects.find(id);
-				if (found != TheBfmeGameLogic->m_objects.end())
-					owned = (*found).second;
-			}
+			Object *owned=logic->lookup(*it);
 			if (owned != 0)
 			{
 				static NameKeyType key =
@@ -431,8 +409,9 @@ void CastleBehavior::unpack(Bool unpack)
 				if (member != 0)
 				{
 					member->m_castleObjectID = m_objectID;
-					member->m_objectID = object->getID();
+					member->m_objectID = m_object->getID();
 				}
+                logic=TheBfmeGameLogic;
 			}
 		}
 
@@ -450,15 +429,14 @@ void CastleBehavior::unpack(Bool unpack)
 		union { void *asVoid; SetStatusCall asMember; } finalStatusCast;
 		finalStatusCast.asVoid = (void *)j_000307e7;
 		(object->*finalStatusCast.asMember)(finalStatus, true);
-		Drawable *drawable = object->getDrawable();
-		union { void *asVoid; ApplyCall asMember; } applyCast;
+				union { void *asVoid; ApplyCall asMember; } applyCast;
 		applyCast.asVoid = (void *)j_0002d439;
-		(drawable->*applyCast.asMember)(false);
+		(object->getDrawable()->*applyCast.asMember)(false);
 		union { void *asVoid; NoArgUpdateCall asMember; } processCast;
 		processCast.asVoid = (void *)j_0000796e;
 		(this->*processCast.asMember)();
 
-		if (TheBfmeGameLogic->m_frame > 0 && g_012ED4FC != 0)
+		if (*(int*)((char*)TheBfmeGameLogic+0x1a0) > 0 && g_012ED4FC != 0)
 		{
 			controllingPlayerCast.asVoid = (void *)j_00020824;
 			Player *owner = (object->*controllingPlayerCast.asMember)();
@@ -467,7 +445,7 @@ void CastleBehavior::unpack(Bool unpack)
 				(const char *)0x0107388B;
 			ThingTemplate *thingTemplate = object->m_template;
 			ThingTemplate *finalTemplate = thingTemplate;
-			if (thingTemplate->m_nextOverride != 0)
+			if (thingTemplate && thingTemplate->m_nextOverride != 0)
 			{
 				union { void *asVoid; OverrideCall asMember; } overrideCast;
 				overrideCast.asVoid = (void *)j_000022bb;
