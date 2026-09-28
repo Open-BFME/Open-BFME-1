@@ -1,5 +1,4 @@
-// ?bfmeCanZE@BfmeHostZE@@QAEDPAXPAVBfmeObjZE@@@Z
-// partial score=0.80 date=2026-09-09
+// ?bfmeCanZE@BfmeHostZE@@QAEDPAXPAVBfmeObjZE@@@Z// partial score=0.80 date=2026-09-09
 struct BfmeOwnZE
 {
 	unsigned char m_bfmeHeadZE[0x4b0];
@@ -90,11 +89,13 @@ public:
 	char bfmeCheckZE(void *a1, BfmeObjZE *obj);
 };
 
+
 char BfmeHostZE::bfmeCanZE(void *a1, BfmeObjZE *obj)
 {
 	if (obj == 0)
 		return 0;
-
+	else
+	{
 	if (obj->m_bfme344ZE & 1)
 	{
 		BfmeAgeZE *age = obj->m_bfme200ZE;
@@ -111,7 +112,8 @@ char BfmeHostZE::bfmeCanZE(void *a1, BfmeObjZE *obj)
 	if (!bfmeCheckZE(a1, obj))
 		return 0;
 
-	if (obj->m_bfme1FCZE != 0 && obj->m_bfme1FCZE->bfmeStateZE() != 0)
+	BfmeStateZE *state = obj->m_bfme1FCZE;
+	if (state != 0 && state->bfmeStateZE() != 0)
 		return 0;
 
 	if (obj->m_bfme214ZE != 0 && !obj->m_bfme214ZE->bfmeTestZE(0x6c))
@@ -124,4 +126,5 @@ char BfmeHostZE::bfmeCanZE(void *a1, BfmeObjZE *obj)
 		return 0;
 
 	return obj->bfmeOwnerZE()->m_bfme4B0ZE == 0;
+	}
 }

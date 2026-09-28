@@ -89597,3 +89597,6 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?bfmeAskRaw@Gen_0021AD10@@AAEPAXPAX@Z,0x00036C05,retail 0x0021AD10 reaches the matched bfmeAskDG query at 0x00248AE0 through this ILT stub; Gen_0021AD10::bfmeAskRaw is the address-derived local spelling with identical ABI
 ?create008BE760@BfmeSubmitter1283@@QAEXHPAXHHHHPAPAVBfmeNodeDX@@PAH@Z,0x008BE760,direct call from 0x008BEBF0; callees.py infers eight stack slots
 ?finish008B06C0@BfmeNodeDX@@QAEXXZ,0x008B06C0,direct call from 0x008BEBF0; callees.py infers zero stack slots
+?bfmeCheckZE@BfmeHostZE@@QAEDPAXPAVBfmeObjZE@@@Z,0x0001D813,opaque ABI alias for the proven predicate call at 0x002DD5B0
+?bfmeTestZE@BfmeObjZE@@QAEDH@Z,0x0003251F,opaque ABI alias for the proven kind-test calls at 0x002DD5B0
+?bfmeOwnerZE@BfmeObjZE@@QAEPAUBfmeOwnZE@@XZ,0x000084B8,opaque ABI alias for the proven template-owner call at 0x002DD5B0
