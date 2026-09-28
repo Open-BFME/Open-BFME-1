@@ -10108,5 +10108,55 @@
   "old_name": "m_events",
   "new_name": "m_unmodelled08",
   "reason": "The bank named LuaScriptEngine storage below +0x98 (m_events and neighbours) without any layout witness; this body never reads it, so the landing keeps it as unnamed padding."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00245010.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/Rva00245010RecordBuild.cpp",
+  "before_sha256": "d97cee86fa3e53016e2ea337fa6681a8fa064d6bc152ee10d71402d90d579a71",
+  "after_sha256": "72ff142d99dc1a04dabcad5ab24f0a68d642a774ef622fb2d7a51dcbd4a6eabd",
+  "evidence": "targets/game/reverse/identity_evidence/0x00245010-hordecontain-record-build.md",
+  "old_name": "FormationBuild00245010",
+  "new_name": "Rva00244E60",
+  "reason": "False pairing: the bank's members +0x04..+0x12c now sit in the Rva00244E60 view that the landed 0x00244E60 sibling declares (this is passed to Rva00244E60::add unadjusted); FormationBuild00245010 is kept as the derived class that owns build."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00245010.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/Rva00245010RecordBuild.cpp",
+  "before_sha256": "d97cee86fa3e53016e2ea337fa6681a8fa064d6bc152ee10d71402d90d579a71",
+  "after_sha256": "72ff142d99dc1a04dabcad5ab24f0a68d642a774ef622fb2d7a51dcbd4a6eabd",
+  "evidence": "targets/game/reverse/identity_evidence/0x00245010-hordecontain-record-build.md",
+  "old_name": "Slot00245010",
+  "new_name": "Rva00244A80Element",
+  "reason": "The 28-byte element's constructor _Construct and _M_insert_overflow ILTs are pinned under Rva00244A80Element and landed 0x002459D0 declares the same +0x1d8 vector with that type; the bank's invented type name cannot link to them."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00245010.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/Rva00245010RecordBuild.cpp",
+  "before_sha256": "d97cee86fa3e53016e2ea337fa6681a8fa064d6bc152ee10d71402d90d579a71",
+  "after_sha256": "72ff142d99dc1a04dabcad5ab24f0a68d642a774ef622fb2d7a51dcbd4a6eabd",
+  "evidence": "targets/game/reverse/identity_evidence/0x00245010-hordecontain-record-build.md",
+  "old_name": "extra",
+  "new_name": "rva00244f00",
+  "reason": "The bank's local wrapper name extra is the landed callee 0x00244F00 Rva00244F00Owner::rva00244f00 called directly on this."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00245010.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/Rva00245010RecordBuild.cpp",
+  "before_sha256": "d97cee86fa3e53016e2ea337fa6681a8fa064d6bc152ee10d71402d90d579a71",
+  "after_sha256": "72ff142d99dc1a04dabcad5ab24f0a68d642a774ef622fb2d7a51dcbd4a6eabd",
+  "evidence": "targets/game/reverse/identity_evidence/0x00245010-hordecontain-record-build.md",
+  "old_name": "field000",
+  "new_name": "m_value",
+  "reason": "The bank's Record00245010::field000 is BfmeRva44E60Record::m_value from the landed 0x00244E60 sibling whose record type this body pushes through the pinned BfmeRva44E60Record ILTs."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00245010.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/Rva00245010RecordBuild.cpp",
+  "before_sha256": "d97cee86fa3e53016e2ea337fa6681a8fa064d6bc152ee10d71402d90d579a71",
+  "after_sha256": "72ff142d99dc1a04dabcad5ab24f0a68d642a774ef622fb2d7a51dcbd4a6eabd",
+  "evidence": "targets/game/reverse/identity_evidence/0x00245010-hordecontain-record-build.md",
+  "old_name": "finish",
+  "new_name": "rva0023b9f0",
+  "reason": "The bank's wrapper name finish was invented for the still-dumped 0x0023B9F0 callee; earlier verdicts call it rva0023B9F0 and nothing proves finish so the pin keeps the address token."
  }
 ]
