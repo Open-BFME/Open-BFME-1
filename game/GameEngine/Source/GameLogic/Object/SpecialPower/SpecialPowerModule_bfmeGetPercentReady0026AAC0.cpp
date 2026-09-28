@@ -25,9 +25,16 @@ class Overridable
 public:
 	Overridable *friend_getFinalOverride(void)
 	{
-		if (m_next)
-			return m_next->m_next ? m_next->m_next->friend_getFinalOverride() : m_next;
-		return this;
+		Overridable *first = m_next;
+		if (first == 0)
+			return this;
+		Overridable *second = first->m_next;
+		Overridable *resolved;
+		if (second == 0)
+			resolved = first;
+		else
+			resolved = second->friend_getFinalOverride();
+		return resolved;
 	}
 
 private:
@@ -43,7 +50,9 @@ public:
 	unsigned int getReloadTime(void) const
 	{
 		SpecialPowerTemplate *self = const_cast<SpecialPowerTemplate *>(this);
-		return ((const SpecialPowerTemplate *)self->friend_getFinalOverride())->m_reloadTime;
+		const SpecialPowerTemplate *resolved = (const SpecialPowerTemplate *)self->friend_getFinalOverride();
+		unsigned int reload = resolved->m_reloadTime;
+		return reload;
 	}
 
 private:
