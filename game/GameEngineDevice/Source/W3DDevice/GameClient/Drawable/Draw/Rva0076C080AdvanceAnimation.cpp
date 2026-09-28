@@ -1,32 +1,9 @@
-// ?d_0076c080@@YAXXZ
-// partial score=0.952 date=2026-09-27
-// cl: /O2 /Ob2 /DNDEBUG /MD /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug
-// BANK NOTES (2026-09-27): whole body, all retail branches/calls reconstructed.
-// probe --shape=0.952; 2144 compiled / 2132 retail; raw masked byte fraction
-// 0.7798507463. Not a match; no production row or new pin is claimed.
-// First structural residue +03AA; loop delta/last stack slots are swapped;
-// three dual x87 stores are reversed. The volatile comparison reads below are
-// explicit float-rounding experiments, NOT evidence of volatile retail members.
-// Native WWMath::Sqrt reproduces the witnessed fsqrt/store/reload sequence.
-// Static complete0075B980 is EXACT in probe for 132 B including jump table;
-// the separate ledger's 104 B excludes that table. It is not landed here.
-//
-// Remaining address-derived external declarations require normal pin review
-// only if this caller reaches exact. Independently decoded retail operands:
-// TheView0076C080 -> VA 012F1600 (existing TheTacticalView global)
-// TheLOD0076C080 -> VA 012ED5AC (existing TheGameLODManager global)
-// Sync0076C080 / PrevSync0076C080 -> VA 0133F420 / 0133F424
-// apply(State*,float,bool,bool,bool) -> ILT RVA 00001CA8 -> body 00765FB0;
-//   ECX=this; five stack slots; values are state,-1.0f,0,0,0.
-// finish() -> tail ILT RVA 000363AE -> body 00762900; ECX=this, no stack args.
-// Other external calls retain established ledger declarations and names.
-// No guessed semantic identity for this owner or its opaque field views.
-// Intended production home if exact: game/GameEngineDevice/Source/W3DDevice/
-// GameClient/Drawable/Draw/Rva0076C080AdvanceAnimation.cpp
-// Candidate RVA 0076C080, retail extent 2132 incl six-entry switch table.
-// Complete reconstruction; opaque views preserve witnessed retail offsets.
-// 0075B980 is a TU-local helper with compiler-private ECX/ESI/stack ABI.
+// ?advanceAnimation@Rva0076C080@@QAEXXZ
+// cl: /O2 /Ob2 /DNDEBUG /MD /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug
+// BFME model-draw animation step (Zero Hour twin: the animation half of W3DModelDraw::doDrawModule).
+// Distance fade, per-track frame advance and the transition/idle restart; owner layout is address-derived.
 #include "wwmath.h"
+#include "ww3d.h"
 #include <stddef.h>
 #pragma intrinsic(sqrt, fabs)
 typedef unsigned int U32;
@@ -247,7 +224,7 @@ class Interface0076C080 { public:
 };
 
 struct Coord3D;
-class BFMERopeDrawable { public: const Coord3D* getPosition() const; };
+class BFMERopeDrawableGetPositionShim { public: const Coord3D* get() const; };
 class BfmeThing923B { public: void bfmeGo923B(char); };
 class Gen_004181B0 { public: bool bfmeAllows(bool) const; };
 class BfmeHostESC { public: void bfmeSendESC(void*,int); };
@@ -276,16 +253,23 @@ struct State0076C080 {
     unsigned char pad00[0x2c]; Info0076C080* p2c;
     unsigned char pad30[8]; U32 u38;
 };
-extern View0076C080* TheView0076C080;
-extern unsigned char* TheLOD0076C080;
+class View;
+class GameLODManager;
+extern View* TheTacticalView;
+extern GameLODManager* TheGameLODManager;
 extern int g_Va012F8064;
-extern U32 Sync0076C080,PrevSync0076C080;
 float minf(float,float);
 float maxf(float,float);
+class Rva0076C080;
+class Rva00766A70W3DScriptedModelDraw {
+    friend class Rva0076C080;
+    void apply(void *model, int value, int from, int to, int flags);
+};
+void b_00762900();
+typedef void (__fastcall *Finish0076C080)(Rva0076C080*);
 class Rva0076C080 {
 public:
     void advanceAnimation();
-    void apply(State0076C080*,float,bool,bool,bool);
     void finish();
     unsigned char pad00[4]; Data0076C080* p04; void* p08;
     Interface0076C080 secondary;
@@ -300,6 +284,9 @@ public:
     unsigned char pad178[0x1fc-0x178]; bool b1fc;
     unsigned char pad1fd[0x230-0x1fd]; bool b230,b231;
 };
+inline void Rva0076C080::finish() { ((Finish0076C080)&b_00762900)(this); }
+inline bool testFlagBit0076C080(U32 flags, int bit) { return ((flags>>bit)&1)!=0; }
+// ?complete0075B980@@YA_NPAVRender0076C080@@ABUTrack0076C080@@_N@Z
 static bool complete0075B980(Render0076C080* r, const Track0076C080& t, bool flag)
 {
     if (r && r->classID()==25 && t.p00) {
@@ -311,6 +298,7 @@ static bool complete0075B980(Render0076C080* r, const Track0076C080& t, bool fla
     }
     return true;
 }
+// ?advanceAnimation@Rva0076C080@@QAEXXZ
 void Rva0076C080::advanceAnimation()
 {
     if (!p34 || !p14) return;
@@ -318,10 +306,10 @@ void Rva0076C080::advanceAnimation()
     *((bool*)p34+0xc4)=false;
     if (b231 && d->f120 < 1.0f) {
         Coord0076C080 camera;
-        const Coord0076C080* cameraPtr=TheView0076C080->position();
+        const Coord0076C080* cameraPtr=((View0076C080*)TheTacticalView)->position();
         camera.x=cameraPtr->x; camera.y=cameraPtr->y;
         float cx=camera.x, cy=camera.y;
-        const Coord0076C080* pos=(const Coord0076C080*)((BFMERopeDrawable*)p08)->getPosition();
+        const Coord0076C080* pos=(const Coord0076C080*)((BFMERopeDrawableGetPositionShim*)p08)->get();
         float dx=cx-pos->x,dy=cy-pos->y;
         float dist=dx*dx+dy*dy;
         if (dist >= d->f118*d->f118) {
@@ -338,7 +326,7 @@ void Rva0076C080::advanceAnimation()
                 float b=d->f118-d->f11c;
                 opacity=((b-a)*d->f120+a)/b;
             }
-            if (TheLOD0076C080 && *(int*)(TheLOD0076C080+0x16c4)<=1) {
+            if (TheGameLODManager && *(int*)((char*)TheGameLODManager+0x16c4)<=1) {
                 ((BfmeThing923B*)p08)->bfmeGo923B(0);
                 p34->hidden(1);
                 if (d->i12c>=0) *(int*)((char*)p34+0xa0)=0;
@@ -373,7 +361,7 @@ void Rva0076C080::advanceAnimation()
     u9c=now;
     if (b1fc) {
         b1fc=false;
-        elapsed=Sync0076C080-PrevSync0076C080;
+        elapsed=WW3D::Get_Frame_Time();
     }
     Gen_004181B0* drawable=(Gen_004181B0*)p08;
     secondary.pause(!drawable->bfmeAllows(d->b6a));
@@ -394,31 +382,28 @@ void Rva0076C080::advanceAnimation()
             t.f08=t.f04;
             t.b18=false;
             switch(t.i10) {
-            case 1: {
-                t.f04=t.f04+delta; delta=t.f04;
-                if (*(volatile float*)&delta>last) { int loops=(int)(delta/last); t.f04=delta-loops*last; t.b18=true; }
+            case 1:
+                t.f04+=delta;
+                if (t.f04>last) { int loops=(int)(t.f04/last); t.f04-=loops*last; t.b18=true; }
                 break;
-            }
             case 2:
                 t.f04+=delta;
                 if (t.f04>last) { t.f04=last; t.b18=true; }
                 break;
-            case 3: {
-                t.f04=t.f04+t.i14*delta; delta=t.f04;
+            case 3:
+                t.f04+=t.i14*delta;
                 if (t.i14==1) {
-                    if (*(volatile float*)&delta>last) { int loops=(int)(delta/last); float wrapped=loops*last; t.i14=-1; t.f04=(last+wrapped)-delta; t.b18=true; }
-                } else if (*(volatile float*)&delta<0.0f) {
-                    int loops=(int)(fabs(delta)/last);
-                    if (loops>0) t.f04=loops*last+delta;
+                    if (t.f04>last) { int loops=(int)(t.f04/last); float wrapped=loops*last; t.f04=(wrapped+last)-t.f04; t.i14=-1; t.b18=true; }
+                } else if (t.f04<0.0f) {
+                    int loops=(int)(fabs(t.f04)/last);
+                    if (loops>0) t.f04=loops*last+t.f04;
                     t.i14=1; t.f04=-t.f04; t.b18=true;
                 }
                 break;
-            }
-            case 5: {
-                t.f04=t.f04-delta; delta=t.f04;
-                if (*(volatile float*)&delta<0.0f) { int loops=(int)(fabs(delta)/last); float wrapped=loops*last; t.f04=last+wrapped+delta; t.b18=true; }
+            case 5:
+                t.f04-=delta;
+                if (t.f04<0.0f) { int loops=(int)(fabs(t.f04)/last); float wrapped=loops*last; t.f04=t.f04+(wrapped+last); t.b18=true; }
                 break;
-            }
             case 6:
                 t.f04-=delta;
                 if (t.f04<0.0f) { t.f04=0.0f; t.b18=true; }
@@ -434,7 +419,7 @@ void Rva0076C080::advanceAnimation()
                 ((BfmeHostESC*)this)->bfmeSendESC((void*)1,2);
                 float blend=tracks[1].f0c;
                 if (blend>0.0f) f74=f78=maxf(1.0f,minf(blend,tracks[1].p00->frames()-1.0f));
-            else f74=f78=maxf(1.0f,minf(5.0f,tracks[1].p00->frames()-1.0f));
+                else f74=f78=maxf(1.0f,minf(5.0f,tracks[1].p00->frames()-1.0f));
             } else f74=0.0f;
         }
     }
@@ -443,17 +428,20 @@ void Rva0076C080::advanceAnimation()
             const State0076C080* state=p14;
             if (b173) {
                 State0076C080* next=(State0076C080*)((const RvaModuleData*)d)->findByCondition(*(const BitFlags<117>*)u148);
-                u174=0;
                 if (next) {
+                    u174=0;
                     b230=false;
                     ((BfmeRecordHook6BE90*)this)->bfmeSelect6BE90((BfmeRecord6BE90*)next,0,0);
                     if (!u174) b173=false;
                     return;
                 }
+                u174=0;
                 b173=false;
             }
-            if (!((Gen_00208330*)((char*)state+4))->bfmeAny() || ((state->u38>>5)&1))
-                apply((State0076C080*)state,-1.0f,false,false,false);
+            if (!((Gen_00208330*)((char*)state+4))->bfmeAny())
+                reinterpret_cast<Rva00766A70W3DScriptedModelDraw*>(this)->apply((void*)state,(int)0xBF800000,0,0,0);
+            else if (testFlagBit0076C080(state->u38,5))
+                reinterpret_cast<Rva00766A70W3DScriptedModelDraw*>(this)->apply((void*)state,(int)0xBF800000,0,0,0);
         }
     }
     const Info0076C080* info=p14->p2c+i28;
@@ -464,8 +452,8 @@ void Rva0076C080::advanceAnimation()
         if (frame<info->f2c) opacity=info->b34?0.0f:1.0f;
         else if (frame>end) opacity=info->b34?1.0f:0.0f;
         else {
-            opacity=(frame-info->f2c)/(end-info->f2c);
-            if (!info->b34) opacity=1.0f-opacity;
+            float ratio=(frame-info->f2c)/(end-info->f2c);
+            opacity=info->b34?ratio:1.0f-ratio;
         }
         if (opacity>0.0f) { ((BfmeThing923B*)p08)->bfmeGo923B(1); p34->hidden(0); }
         else { ((BfmeThing923B*)p08)->bfmeGo923B(0); p34->hidden(1); }
