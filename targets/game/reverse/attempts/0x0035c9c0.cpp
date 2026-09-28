@@ -1,8 +1,11 @@
 // ?bfmeLinkEAT@BfmeNodeEAT@Rva0035E510@@QAEXPAV12@PAH1@Z
-// partial score=0.86 date=2026-09-24
+// partial score=1.0 date=2026-09-28
 // stlport
 // ?bfmeLinkEAT@BfmeNodeEAT@Rva0035E510@@QAEXPAV12@PAH1@Z
 // cl: /DNDEBUG /MD /O2 /EHsc /D_STLP_USE_STATIC_LIB
+// Byte-exact modulo relocations (probe EXACT 518/518). add_match fails only on
+// the two rel32 slots of _M_initialize_map (ILT 0x00048838) and _M_reallocate_map
+// (ILT 0x00031E08): their pins carry other placeholder element types.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <deque>
@@ -81,16 +84,8 @@ public:
 void BfmeNodeEAT::bfmeLinkEAT(BfmeNodeEAT *node, int *a, int *b)
 {
 	_STL::deque<BfmeNodeZN **> links;
-	BfmeNodeZN **link = reinterpret_cast<BfmeNodeZN **>(a);
-	if (*link != 0) {
-		for (;;) {
-			links.push_back(link);
-			BfmeNodeZN *current = *link;
-			link = reinterpret_cast<BfmeNodeZN **>(current);
-			if (current->m_bfmeNextZN == 0)
-				break;
-		}
-	}
+	for (BfmeNodeZN **link = reinterpret_cast<BfmeNodeZN **>(a); *link; link = &(*link)->m_bfmeNextZN)
+		links.push_back(link);
 	Rva0035E710Owner *owner = reinterpret_cast<Rva0035E710Owner *>(this);
 	while (!links.empty()) {
 		owner->bfmeDoZN(node, links.back(), b);
