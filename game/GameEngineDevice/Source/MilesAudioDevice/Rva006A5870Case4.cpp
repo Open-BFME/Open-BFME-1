@@ -111,3 +111,34 @@ void Rva006A5870::case4(Rva006B9320Request *request)
 	if (!m_bfmeCells[b + a * 2].empty())
 		m_bfmeCells[b + a * 2].pop_back();
 }
+
+// The matched request dispatcher, Rva006B9320RequestDispatch.cpp, calls the five byte import linkage table (ILT) stub at 0x00012C4C, whose jump reaches this body.
+// The symbol pin table targets/game/reverse/symbols.csv has no owner name for that ILT, so this class keeps its RVA in the name.
+// The bfmePrep pin at ILT 0x000299A1 and the PlayingAudioRef deque pin at 0x0001309D support the helper and pop operation.
+class Rva006A5950
+{
+public:
+	void case2(Rva006B9320Request *request);
+
+private:
+	char m_pad00[0x9D4];
+	PlayingAudioDeque m_cellDequesAt009D4[6];
+	int m_valueAt00AC4[1];
+};
+
+// ?case2@Rva006A5950@@QAEXPAURva006B9320Request@@@Z
+void Rva006A5950::case2(Rva006B9320Request *request)
+{
+	Rva006B9320Field *field = request->m_field;
+	int a = field->m_field28;
+	int b = field->m_field64;
+
+	if (m_valueAt00AC4[a] == b)
+	{
+		((Gen_006A6AF0 *)this)->bfmePrep(a, !request->m_flag10);
+		return;
+	}
+
+	if (!m_cellDequesAt009D4[b + a * 2].empty())
+		m_cellDequesAt009D4[b + a * 2].pop_back();
+}
