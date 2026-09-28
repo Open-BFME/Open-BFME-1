@@ -1,12 +1,13 @@
 // cl: /DNDEBUG /MD /EHsc
 
-// The five bodies that reach Object's GeometryInfo at +0xAC:
+// The six bodies that reach Object's GeometryInfo at +0xAC:
 //
 //   ObjectGeometryBoundsShim::getMin  0x001BFC20  position minus the extents
 //   ObjectGeometryBoundsShim::getMax  0x001BFC80  position plus the extents
 //   Object::bfmeGeometryIntersects    0x001BE980  two oriented footprints
 //   Object::lazySet                   0x001D5C20  clone the embedded one, then assign
 //   Object::setGeometryInfo           0x001D5D20  assign, then notify four helpers
+//   Object::setGeometryInfoZ          0x001BDF70  set every shape height, then notify
 //
 // Five files, and they contradicted each other about how big that field is.
 // bfmeGeometryIntersects declared GeometryInfo as 0x20 bytes; getMin and getMax
@@ -111,6 +112,15 @@ public:
 	void init();
 };
 
+// The same 0x5C bytes again, under the spelling the multi-shape height setter
+// (0x0087F270, Zero Hour's GeometryInfo::setMaxHeightAbovePosition position) is
+// matched as: ?bfmeOneCNG@BfmeSubCNG@@QAEXPAX@Z. It takes the height's bits.
+class BfmeSubCNG
+{
+public:
+	void bfmeOneCNG(void *value);
+};
+
 // The object at +0x80, which ObjectModelConditions.cpp names m_drawable.
 class BfmeBCNG
 {
@@ -127,6 +137,7 @@ public:
 	Bool bfmeGeometryIntersects(const Object *other) const;
 	void lazySet(void *arg);
 	void setGeometryInfo(const GeometryInfo &geom);
+	void setGeometryInfoZ(Real newZ);
 
 private:
 	friend class ObjectGeometryBoundsShim;
@@ -233,6 +244,23 @@ void Object::setGeometryInfo(const GeometryInfo &geom)
 
 	if (m_helper3b4)
 		m_helper3b4->init();
+
+	if (m_drawable)
+		m_drawable->bfmeThreeCNG();
+}
+
+// ?setGeometryInfoZ@Object@@QAEXM@Z
+//
+// Zero Hour's setGeometryInfoZ: set the height of every shape, then tell the
+// drawable. BFME also re-initialises the +0x3B8 helper first, as setGeometryInfo
+// does. ActiveBody::setCorrectDamageState (0x00210BF0) calls it with a float.
+void Object::setGeometryInfoZ(Real newZ)
+{
+	reinterpret_cast<BfmeSubCNG *>(&m_geometryInfo)->bfmeOneCNG(
+		*reinterpret_cast<void **>(&newZ));
+
+	if (m_helper3b8)
+		m_helper3b8->init();
 
 	if (m_drawable)
 		m_drawable->bfmeThreeCNG();

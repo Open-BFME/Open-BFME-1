@@ -79353,7 +79353,6 @@ name,address,notes
 ?bfmeTwoCHF@BfmeTwoCHF@@QAEXXZ,0x0000A754,pin
 ?bfmeTwoCKE@BfmeOneCKE@@QAEPAVBfmeTwoCKE@@XZ,0x0000F498,pin
 ?bfmeTwoCKF@BfmeOneCKF@@QAEPAVBfmeTwoCKF@@XZ,0x0000F498,pin
-?bfmeTwoCNG@BfmeACNG@@QAEXXZ,0x009A2350,pin
 ?bfmeTwoCPB@BfmeSubCPB@@QAEXH@Z,0x0003E126,pin
 ?bfmeTwoCRC@BfmeBCRC@@QAEXPAX0@Z,0x00040412,pin
 ?bfmeTwoDIE@BfmeThingDIE@@QAEXPAXH@Z,0x00850920,pin
