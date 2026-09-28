@@ -78,6 +78,9 @@ __forceinline Type *uninitialized_fill_n(Type *result, unsigned int count, const
 template <class Type, class Allocator>
 class vector
 {
+public:
+	void push_back(const Type &value);
+
 protected:
 	void _M_insert_overflow(Type *position, const Type &value,
 		const __false_type &, unsigned int fillLength, bool atEnd);
@@ -144,6 +147,25 @@ void vector<Type, Allocator>::_M_insert_overflow(
 	_M_finish = newFinish;
 	_M_start = newStart;
 	_M_end_of_storage = newStart + length;
+}
+
+// Retail 0x007740E0 (62 bytes, reached through the ILT at 0x000049CB): the
+// append copies in place through the same out-of-line _Construct and hands a
+// full vector to the reallocating insert above, whose ILT is 0x00022AF7. The
+// empty tag local lets VC7.1 lend it the argument slot's address.
+template <class Type, class Allocator>
+void vector<Type, Allocator>::push_back(const Type &value)
+{
+	if (_M_finish != _M_end_of_storage)
+	{
+		BfmeElementConstruct(_M_finish, value);
+		++_M_finish;
+	}
+	else
+	{
+		__false_type tag;
+		_M_insert_overflow(_M_finish, value, tag, 1, true);
+	}
 }
 
 template class vector<Rva00771870Element, allocator<Rva00771870Element > >;
