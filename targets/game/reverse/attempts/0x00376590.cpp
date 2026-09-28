@@ -1,5 +1,5 @@
 // ?unpack@CastleBehavior@@QAEX_N@Z
-// partial score=0.985 date=2026-09-28
+// partial score=0.997 date=2026-09-28
 // ?unpack@CastleBehavior@@QAEX_N@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
@@ -169,9 +169,8 @@ private:
 	Int m_crcTraceLevel;
 };
 
-class BfmeResFFG
+struct BfmeResFFG
 {
-public:
 	unsigned char m_pad00[0x370];
 	Int m_id;
 };
