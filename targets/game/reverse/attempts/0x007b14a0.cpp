@@ -1,5 +1,5 @@
 // ?flush007B14A0@W3DProjectedShadowManager@@QAEXIPAUShadowTexture007B6D30@@0H@Z
-// partial score=0.99 date=2026-09-28
+// partial score=0.998 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc
 // Retail 0x007B14A0, 3124 bytes, ret 0x10 at +0xC31 then int3.
 //
@@ -27,6 +27,11 @@
 // SetStreamSource, SetFVF 0x242 over a 32-byte two-UV vertex) and the Z-bias
 // bracket are BFME's. Release-build snapshot diagnostics stay inline in
 // DX8Wrapper's render-state and shader setters, as in the other BFME bodies.
+//
+// NEAR MISS (banked, not landed): 3123 of 3124 bytes. The one residue is
+// the register choice inside the StringClass constructor of the Set_Shader
+// tail that the tex2 0x20 and no-tex2 0x20/0x40 cases share (+0x385):
+// retail `mov dl,[m_NullChar]; mov eax,[buf]`, ours `mov al; mov edx`.
 
 class TextureBaseClass;
 
@@ -49,6 +54,14 @@ public:
 	{
 		Get_String(n, temp);
 		m_Buffer[0] = m_NullChar;
+	}
+	// The one value_name whose buffer retail reads before the null
+	// character (docs/shape_levers.md, per-site inline-ctor load order).
+	struct BufferFirst {};
+	StringClass(int n, bool temp, BufferFirst) : m_Buffer(m_EmptyString)
+	{
+		Get_String(n, temp);
+		(*(char *volatile *)&m_Buffer)[0] = m_NullChar;
 	}
 	~StringClass() throw()
 	{
@@ -221,6 +234,21 @@ public:
 		++render_state_changes;
 	}
 
+	static __forceinline void Set_DX8_Render_State(D3DRENDERSTATETYPE state, unsigned int value,
+		StringClass::BufferFirst tag)
+	{
+		if (RenderStates[state] == value)
+			return;
+		if (Rva0133F451Snapshot) {
+			StringClass value_name(0, true, tag);
+			Get_DX8_Render_State_Value_Name(value_name, state, value);
+		}
+		RenderStates[state] = value;
+		D3DDevice->SetRenderState(state, value);
+		++number_of_DX8_calls;
+		++render_state_changes;
+	}
+
 private:
 	static ShadowDecalDevice007B14A0 *D3DDevice;
 	static unsigned int RenderStates[256];
@@ -242,17 +270,6 @@ struct GlobalData007B14A0
 	float m_bfmeA78;
 };
 extern GlobalData007B14A0 *TheWritableGlobalData;
-
-class WWMath
-{
-public:
-	static int Clamp_Int(int val, int min_val, int max_val)
-	{
-		if (val < min_val) return min_val;
-		if (val > max_val) return max_val;
-		return val;
-	}
-};
 
 class Matrix4x4
 {
@@ -293,11 +310,6 @@ class W3DProjectedShadowManager
 public:
 	void flush007B14A0(unsigned, ShadowTexture007B6D30 *, ShadowTexture007B6D30 *, int);
 };
-
-static inline const Gen_007AE6B0 *decalTexture(ShadowTexture007B6D30 *texture)
-{
-	return (const Gen_007AE6B0 *)texture;
-}
 
 void W3DProjectedShadowManager::flush007B14A0(unsigned type, ShadowTexture007B6D30 *texture,
 	ShadowTexture007B6D30 *texture2, int mode)
@@ -356,7 +368,7 @@ void W3DProjectedShadowManager::flush007B14A0(unsigned type, ShadowTexture007B6D
 		if (DX8Wrapper::Has_Stencil()) {
 			if (TheWritableGlobalData->m_bfmeA77) {
 				DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILFUNC, D3DCMP_NOTEQUAL);
-				DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILPASS, D3DSTENCILOP_REPLACE);
+				DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILPASS, D3DSTENCILOP_REPLACE, StringClass::BufferFirst());
 				BoxSetTexture(1, BfmeHandleCX());
 				DX8Wrapper::Set_Shader(Rva012BBE34Shader);
 				DX8Wrapper::Apply_Render_State_Changes();
