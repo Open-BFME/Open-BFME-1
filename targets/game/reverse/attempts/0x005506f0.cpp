@@ -1,121 +1,187 @@
 // ?_bfme_populateCountryList@BfmeAptScreenOnlineLogin@@QAEXXZ
-// partial score=0.78 date=2026-09-10
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /DBFME_STLP_NODE_ALLOC /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stlp_nodealloc
-// Complete typed candidate retained after the retail control-flow and ABI
-// reconstruction.  The source-order lever moved selectedRow before the map
-// and changed the loop to i < 0x25; the remaining mismatch is compiler local
-// layout/register allocation, not an unresolved identity or generated thunk.
-// Retail body: 0x005506F0, 791 bytes.  Named caller: _bfme_onInitGadget at
-// 0x00551DD0 through ILT 0x00005F83.  The map, string helpers, and UI calls
-// are pinned to their actual retail bodies in reverse/symbols.csv.
+// partial score=0.998 date=2026-09-28
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+//
+// BfmeAptScreenOnlineLogin::_bfme_populateCountryList, retail 0x005506F0
+// (791 bytes).  Its only caller, _bfme_onInitGadget (0x00551DD0), calls it
+// through ILT 0x00005F83 once the country list box (+0x88) is initialised.
+// Row 0 is "WOL:Locale01"; locales 02..37 are sorted through a
+// map<UnicodeString, locale> (the operator[] at 0x0054FA30) and added in
+// name order, and the row matching the registry language is selected, with an
+// empty or "english" language standing for "United States".
+
+void __cdecl operator delete[]( void * ) throw();
+void __cdecl operator delete( void * ) throw();
+#include <map>
+
+extern "C" __declspec(dllimport) unsigned int __cdecl wcslen( const unsigned short *text );
 
 class GameWindow;
-class AsciiString;
-class UnicodeString;
-class GameTextInterface;
+
+struct Rva0009ECA0NoCaseTraits
+{
+	Rva0009ECA0NoCaseTraits() {}
+	int compareNoCaseRaw( const unsigned short *left, const unsigned short *right,
+		int length ) const throw();
+
+private:
+	int m_unused;
+};
+
+template <typename T>
+class StringBase
+{
+	friend class AsciiString;
+	friend class UnicodeString;
+
+public:
+	int compare( const StringBase<T> &str ) const;
+
+	bool isEmpty() const { return getLength() == 0; }
+	int getLength() const { return m_data ? m_data->length : 0; }
+
+	void set( const T *str, int len );
+
+	const T *str() const { return m_data ? m_data->data : (const T *)L""; }
+
+	int compareNoCase( const T *str, int strLength ) const
+	{
+		int thisLength = m_data ? m_data->length : 0;
+		const T *thisText = m_data ? m_data->data : (const T *)L"";
+		int result = Rva0009ECA0NoCaseTraits().compareNoCaseRaw( thisText, str,
+			thisLength < strLength ? thisLength : strLength );
+		return result != 0 ? result : thisLength - strLength;
+	}
+
+	int compareNoCase( const T *str ) const { return compareNoCase( str, wcslen( str ) ); }
+
+	int compareNoCase( const StringBase<T> &other ) const
+	{
+		return compareNoCase( other.str(), other.getLength() );
+	}
+
+private:
+	StringBase() : m_data( 0 ) {}
+	StringBase( const T *str );
+	StringBase( const StringBase<T> &src ) throw();
+	~StringBase() { releaseBuffer(); }
+
+	void releaseBuffer();
+
+	struct Header
+	{
+		int ref_count;
+		unsigned short length;
+		unsigned short capacity;
+		T data[ 1 ];
+	};
+
+	Header *m_data;
+};
+
+class AsciiString : public StringBase<char>
+{
+public:
+	AsciiString() {}
+	AsciiString( const char *str ) : StringBase<char>( str ) {}
+	~AsciiString() {}
+
+	void __cdecl format( AsciiString fmt, ... );
+	const char *str() const { return m_data ? m_data->data : ""; }
+};
+
+class UnicodeString : public StringBase<unsigned short>
+{
+public:
+	UnicodeString() {}
+	UnicodeString( const UnicodeString &that ) : StringBase<unsigned short>( that ) {}
+	~UnicodeString() {}
+
+	void translate( const AsciiString &that );
+	UnicodeString &operator=( const unsigned short *str )
+	{
+		set( str, wcslen( str ) );
+		return *this;
+	}
+};
+
+namespace _STL
+{
+template <> struct less<UnicodeString>
+{
+	bool operator()( const UnicodeString &left, const UnicodeString &right ) const
+	{
+		return left.compare( right ) < 0;
+	}
+};
+}
+
+enum Rva0054FA30Mapped { Rva0054FA30MappedZero = 0 };
+
+typedef _STL::map<UnicodeString, Rva0054FA30Mapped, _STL::less<UnicodeString>,
+	_STL::allocator<_STL::pair<const UnicodeString, Rva0054FA30Mapped> > > CountryLocaleMap;
+
+class GameTextInterface
+{
+public:
+	virtual void slot00(); virtual void slot04(); virtual void slot08();
+	virtual void slot0c(); virtual void slot10(); virtual void slot14();
+	virtual void slot18(); virtual void slot1c(); virtual void slot20();
+	virtual void slot24();
+	virtual UnicodeString fetch( const char *label, bool *exists = 0 );
+};
+
+extern GameTextInterface *TheGameText;
+extern int GameSpyColor[];
+
+AsciiString GetRegistryLanguage();
+int GadgetListBoxAddEntryText( GameWindow *listbox, UnicodeString text, int color,
+	int row, int column, bool overwrite );
+void GadgetListBoxSetItemData( GameWindow *listbox, void *data, int row, int column );
+void GadgetListBoxSetSelected( GameWindow *listbox, int selectIndex );
+
 class BfmeAptScreenOnlineLogin
 {
 public:
 	void _bfme_populateCountryList();
 
 private:
+	unsigned char m_unmodelled00[ 0x88 ];
 	GameWindow *m_countryList;
 };
 
-extern GameTextInterface *TheGameText;
-extern int GameSpyColor[];
-extern AsciiString GetRegistryLanguage();
-extern unsigned int __cdecl bfmeLenVGI(const unsigned short *);
-
-extern int GadgetListBoxAddEntryText(GameWindow *, UnicodeString, int, int, int, bool);
-extern void GadgetListBoxSetItemData(GameWindow *, void *, int, int);
-extern void GadgetListBoxSetSelected(GameWindow *, int);
-
-class AsciiString
-{
-public:
-	AsciiString();
-	AsciiString(const char *);
-	AsciiString(const AsciiString &);
-	~AsciiString();
-	void format(AsciiString, ...);
-	const char *str() const;
-};
-
-class UnicodeString
-{
-public:
-	UnicodeString();
-	UnicodeString(const UnicodeString &);
-	~UnicodeString();
-	void translate(const AsciiString &);
-	void set(const unsigned short *, int);
-	bool isEmpty() const;
-	int compareNoCase(const unsigned short *) const;
-	int compareNoCase(const UnicodeString &) const;
-};
-
-class GameTextInterface
-{
-public:
-	virtual void slot00(); virtual void slot01(); virtual void slot02();
-	virtual void slot03(); virtual void slot04(); virtual void slot05();
-	virtual void slot06(); virtual void slot07(); virtual void slot08();
-	virtual void slot09();
-	virtual UnicodeString fetch(const char *, bool *exists = 0);
-};
-
-struct UnicodeStringLessThan
-{
-	bool operator()(UnicodeString left, UnicodeString right) const
-	{
-		return left.compareNoCase(right) < 0;
-	}
-};
-
-namespace _STL
-{
-	template <typename K, typename V, typename C> class map;
-}
-
-typedef _STL::map<UnicodeString, int, UnicodeStringLessThan> CountryLocaleMap;
-
+// ?_bfme_populateCountryList@BfmeAptScreenOnlineLogin@@QAEXXZ
 void BfmeAptScreenOnlineLogin::_bfme_populateCountryList()
 {
-	AsciiString id;
-	id.format(AsciiString("WOL:Locale%2.2d"), 1);
-	int row = GadgetListBoxAddEntryText(m_countryList,
-		TheGameText->fetch(id.str(), 0), GameSpyColor[0], -1, -1, true);
-	GadgetListBoxSetItemData(m_countryList, (void *)1, row, 0);
+	AsciiString label;
+	label.format( AsciiString( "WOL:Locale%2.2d" ), 1 );
+	int row = GadgetListBoxAddEntryText( m_countryList,
+		TheGameText->fetch( label.str() ), GameSpyColor[ 0 ], -1, -1, true );
+	GadgetListBoxSetItemData( m_countryList, (void *)1, row, 0 );
+
+	CountryLocaleMap locales;
+	for( int i = 2; i <= 0x25; ++i )
+	{
+		AsciiString localeLabel;
+		localeLabel.format( AsciiString( "WOL:Locale%2.2d" ), i );
+		locales[ TheGameText->fetch( localeLabel.str() ) ] = (Rva0054FA30Mapped)i;
+	}
+
+	UnicodeString language;
+	language.translate( GetRegistryLanguage() );
+	if( language.isEmpty() || language.compareNoCase( (const unsigned short *)L"english" ) == 0 )
+		language = (const unsigned short *)L"United States";
 
 	int selectedRow = 0;
-	CountryLocaleMap locales;
-	for (int i = 2; i < 0x25; ++i)
+	for( CountryLocaleMap::iterator it = locales.begin(); it != locales.end(); ++it )
 	{
-		id.format(AsciiString("WOL:Locale%2.2d"), i);
-		UnicodeString text = TheGameText->fetch(id.str(), 0);
-		locales[text] = i;
-	}
-
-	UnicodeString selected;
-	selected.translate(GetRegistryLanguage());
-	if (!selected.isEmpty()
-		&& selected.compareNoCase((const unsigned short *)L"english") == 0)
-	{
-		const unsigned short *unitedStates =
-			(const unsigned short *)L"United States";
-		selected.set(unitedStates, (int)bfmeLenVGI(unitedStates));
-	}
-
-	for (CountryLocaleMap::iterator it = locales.begin();
-		it != locales.end(); ++it)
-	{
-		row = GadgetListBoxAddEntryText(m_countryList, it->first,
-			GameSpyColor[0], -1, -1, true);
-		GadgetListBoxSetItemData(m_countryList, (void *)it->second, row, 0);
-		if (it->first.compareNoCase(selected) == 0)
+		row = GadgetListBoxAddEntryText( m_countryList, it->first,
+			GameSpyColor[ 0 ], -1, -1, true );
+		GadgetListBoxSetItemData( m_countryList, (void *)it->second, row, 0 );
+		if( language.compareNoCase( it->first ) == 0 )
 			selectedRow = row;
 	}
 
-	GadgetListBoxSetSelected(m_countryList, selectedRow);
+	GadgetListBoxSetSelected( m_countryList, selectedRow );
 }
