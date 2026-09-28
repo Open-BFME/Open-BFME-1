@@ -2555,7 +2555,7 @@ name,address,notes
 ??0BfmeMsgVJH@@QAE@XZ,0x007E8810,FESL message ctor alias used by the 0x00809520 TADG loop
 ??0BfmeMsgVJI@@QAE@PADH@Z,0x007E8850,pin
 ??0BfmeNamedSlot@@QAE@ABVAsciiString@@H@Z,0x00025306,Open-BFME5 ILT thunk; ??0BloodthirstyUpdateModuleData@@QAE@XZ at 0x00286EC0 constructs its two 0x70-byte members at +0x10 and +0x80 through it with the global AsciiString and a zero; address-derived name
-??0BfmeNestedBE@@QAE@HIH@Z,0x00892DA0,address-derived nested constructor called by BfmeThingBE at 0x008BE3B0
+??0BfmeNestedBE@@QAE@HIH@Z,0x00892DA0,matched callers name this constructor as BfmeNestedBE, including BfmeThingBE at 0x008BE3B0, AptDisplayList at 0x008BE5A0, and Rva008930C0AptLookup at 0x008930C0
 ??0BfmeNodeEVC@@QAE@PAVBfmeSrcEVC@@@Z,0x0097D0D0,pin node ctor for BfmeConv1994
 ??0BfmeObjEE@@QAE@XZ,0x0003198F,Display base default ctor: ILT to 0x0040F260 which installs vtable 0x010F0DC0 like matched dtor ??1BfmeObjEE 0x0040F6D0; W3DDisplay ctor 0x006EF850 calls it with ecx=this and no stack args
 ??0BfmeOnlineLoginMember3C@@QAE@XZ,0x00010BE0,OnlineLogin member at +0x3C constructed by ctor 0x005538A0; ILT of GameSpyLoginPreferences-shaped body 0x00082970
