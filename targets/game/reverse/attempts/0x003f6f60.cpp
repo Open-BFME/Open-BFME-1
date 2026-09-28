@@ -1,6 +1,8 @@
-// ?releaseOpenList@PathfindCellInfo@@SAHPAV1@@Z
-// partial score=0.76 date=2026-09-03
-// BFME compact info-list release bodies, retail 0x003F6F60/0x003F7020.
+// ?method@Rva003F6F60@@YAHPAX@Z
+// partial score=0.881 date=2026-09-27
+// Retail 0x003F6F60: unlink PathfindCellInfo records, clear flag bit 3, and
+// release eligible cell metadata. The best C++ probe emits 141 bytes, with
+// 117 non-relocation bytes different from the 146-byte retail body.
 // cl: /DNDEBUG /MD /EHsc
 
 class PathfindCell;
@@ -8,7 +10,6 @@ class PathfindCell;
 class PathfindCellInfo
 {
 public:
-	static int releaseOpenList(PathfindCellInfo *list);
 	static int releaseClosedList(PathfindCellInfo *list);
 
 	char m_pad00[0x24];
@@ -34,26 +35,33 @@ public:
 
 extern int TheMixFileInfoPool;
 
-
-int PathfindCellInfo::releaseOpenList(PathfindCellInfo *list)
+static __forceinline void unlinkRva003F6F60Node(
+	PathfindCellInfo *current, PathfindCellInfo **back, PathfindCellInfo *next)
+{
+	if (back)
 	{
+		*back = next;
+		if (next)
+			next->m_back = back;
+		current->m_back = 0;
+		current->m_next = 0;
+	}
+}
+
+namespace Rva003F6F60
+{
+int method(void *list)
+{
 	if (list == 0) return 0;
 	int count = 0;
-	while (list)
+	do
 	{
-		PathfindCellInfo *current = list;
+		PathfindCellInfo *current = (PathfindCellInfo *)list;
 		PathfindCellInfo **back = current->m_back;
 		PathfindCellInfo *next = current->m_next;
 		list = next;
 		++count;
-		if (back)
-		{
-			*back = list;
-			if (list)
-				list->m_back = back;
-			current->m_back = 0;
-			current->m_next = 0;
-		}
+		unlinkRva003F6F60Node(current, back, (PathfindCellInfo *)list);
 
 		unsigned int flags = current->m_flags;
 		PathfindCell *cell = current->m_cell;
@@ -70,8 +78,9 @@ int PathfindCellInfo::releaseOpenList(PathfindCellInfo *list)
 				cell->m_info = 0;
 			}
 		}
-	}
+	} while (list);
 	return count;
+}
 }
 
 int PathfindCellInfo::releaseClosedList(PathfindCellInfo *list)
