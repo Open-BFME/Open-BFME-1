@@ -70,3 +70,22 @@ void Rva0090D210Owner::createStats()
     m_stats = p;
     p->bfmeApplyGR((int)m_target);
 }
+
+// Separate vtable target VA 0x0113A6B4 -> 0x0090D7F0. The preceding
+// function's switch tables end at this start; ret at 0x0090D854 then int3.
+// Same construction sequence and callee as 0x0090D210; identity stays opaque.
+class Rva0090D7F0
+{
+public:
+    void method();
+    char m_pad[0x14];
+    BfmeThingGR *m_stats;
+    char m_gap[0x3c - 0x18];
+    void *m_target;
+};
+void Rva0090D7F0::method()
+{
+    BfmeThingGR *p = new BfmeThingGR();
+    m_stats = p;
+    p->bfmeApplyGR((int)m_target);
+}

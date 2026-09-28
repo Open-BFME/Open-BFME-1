@@ -1,5 +1,5 @@
-// ?bfmeFallback1281@BfmeSlotDispatcher1281@@QAEXPAXHH@Z
-// partial score=0.0 date=2026-09-22
+// ?method@Rva008BC710@@QAEXPAUBfmeNode1285@@HH@Z
+// partial score=0.88 date=2026-09-27
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
 extern "C" int __cdecl isdigit(int value);
@@ -136,206 +136,6 @@ extern BfmeRoute1285 g_bfmeRouteTable1282[7];
 extern int g_bfmeRouteKeys1282[1];
 extern void (__cdecl *g_bfmePlay1282)(void *handle, int zero);
 
-static __forceinline int bfmeAbs1285(int value)
-{
-	return value < 0 ? -value : value;
-}
-
-static __declspec(noinline) float bfmeDirectionalScore1285(
-	int direction, int referenceFirst, int referenceSecond,
-	int candidateFirst, int candidateSecond)
-{
-	int dy;
-	int dx = candidateSecond - referenceSecond;
-	dy = candidateFirst - referenceFirst;
-	switch (direction) {
-	case 14:
-		if (dx >= 0)
-			return g_bfmeInvalidScore1285;
-		{
-			int primary = bfmeAbs1285(dx);
-			int perpendicular = bfmeAbs1285(dy);
-			return (float)perpendicular * g_bfmeDirectionWeight1285 + primary;
-		}
-	case 15:
-		if (dx <= 0)
-			return g_bfmeInvalidScore1285;
-		return (float)bfmeAbs1285(dy) * g_bfmeDirectionWeight1285 + dx;
-	case 1:
-		if (dy >= 0)
-			return g_bfmeInvalidScore1285;
-		{
-			int primary = bfmeAbs1285(dy);
-			int perpendicular = bfmeAbs1285(dx);
-			return (float)perpendicular * g_bfmeDirectionWeight1285 + primary;
-		}
-	case 2:
-		if (dy <= 0)
-			return g_bfmeInvalidScore1285;
-		return (float)bfmeAbs1285(dx) * g_bfmeDirectionWeight1285 + dy;
-	}
-	return g_bfmeInvalidScore1285;
-}
-
-static __declspec(noinline) bool bfmeParseSuffix1285(
-	BfmeString1285 *value, int *first, int *second)
-{
-	BfmeStringData1285 *data = value->m_data;
-	if (data == &g_bfmeEmptyString1285)
-		return false;
-
-	char *cursor = &data->m_text[data->m_length - 1];
-	if (!isdigit(*cursor))
-		return false;
-	while (isdigit(*cursor)) {
-		--cursor;
-	}
-	if (second != 0)
-		*second = atoi(cursor + 1);
-	if (*cursor-- != '_')
-		return false;
-	if (!isdigit(*cursor))
-		return false;
-	while (isdigit(*cursor)) {
-		--cursor;
-	}
-	if (first != 0)
-		*first = atoi(cursor + 1);
-	return true;
-}
-
-BfmeNode1285 *bfmeFindDirectional1285(
-	int direction, BfmeNode1285 *current, BfmeNode1285 *reference)
-{
-	while (current != 0) {
-		float bestScore = 1000000000.0f;
-		int referenceFirst = 0;
-		int referenceSecond = 0;
-		BfmeNode1285 *bestNode = 0;
-		if (reference != 0) {
-			bfmeParseSuffix1285(&reference->m_name0c, &referenceFirst, &referenceSecond);
-		}
-
-		for (BfmeIterator1285 *iterator = current->m_info50->m_list10->bfmeFirst1285();
-			 iterator != 0;
-			 iterator = current->m_info50->m_list10->bfmeNext1285(iterator)) {
-			BfmeNode1285 *candidate = reinterpret_cast<BfmeNode1285 *>(
-				reinterpret_cast<unsigned int>(iterator->m_taggedNode) & ~1U);
-			unsigned int flags = candidate->m_flags04;
-			int kind = flags & 0x3f;
-			if (kind < 12 || kind > 19 ||
-				(static_cast<unsigned char>(~(flags >> 15)) & 1) != 0 ||
-				reference == candidate || (kind != 13 && kind != 18 && kind != 14)) {
-				continue;
-			}
-
-			int candidateSecond;
-			int candidateFirst;
-			if (!bfmeParseSuffix1285(reinterpret_cast<BfmeString1285 *>(iterator),
-				&candidateFirst, &candidateSecond)) {
-				continue;
-			}
-			if (reinterpret_cast<BfmeRouteManager1285 *>(g_bfmeHolderBU)
-				->bfmeAllows1285(candidate))
-				continue;
-			if (reference == 0) {
-				bestNode = candidate;
-				break;
-			}
-
-			float score = bfmeDirectionalScore1285(direction, referenceFirst,
-				referenceSecond, candidateFirst, candidateSecond);
-			if (score >= g_bfmeMinimumScore1285 && score < bestScore) {
-				bestScore = score;
-				bestNode = candidate;
-			}
-		}
-
-		if (bestNode != 0) {
-			unsigned int flags = bestNode->m_flags04;
-			if ((flags & 0x3f) != 13 ||
-				(static_cast<unsigned char>(~(flags >> 15)) & 1) != 0)
-				return bestNode;
-			reference = 0;
-			current = bestNode;
-		} else {
-			reference = current;
-			current = current->m_next4c;
-		}
-	}
-
-	return 0;
-}
-
-void BfmeBroadcast1285::bfmeAdvance1285()
-{
-	int first;
-	int second;
-	if (m_current126c != 0 &&
-		bfmeParseSuffix1285(&m_current126c->m_name0c, &first, &second)) {
-		return;
-	}
-
-	if (m_current126c != 0) {
-		m_current126c->bfmeSetState1285(1);
-		BfmeNode1285 *entry = m_current126c;
-		BfmeDescriptor1285 *descriptor = entry->m_info50->m_descriptor0c;
-		for (int index = 0; index < descriptor->m_count34; ++index) {
-			BfmeRecord1285 *record = &descriptor->m_records38[index];
-			if ((record->m_mask & 2) != 0) {
-				bfmeAdd1227(&record->m_payload, entry->m_next4c, g_bfmeExtra1282);
-			}
-		}
-
-		if ((entry->m_info50->m_flags18 & 0x4000) != 0) {
-			int *route = &g_bfmeRouteTable1282[0].m_index;
-			for (; (int)route < (int)&g_bfmeRouteTable1282[7].m_index; route += 3) {
-				if ((route[-1] & 0x4000) != 0) {
-					BfmeNode1285 *node =
-						reinterpret_cast<BfmeEntrySource1285 *>(entry->m_next4c)
-							->bfmeGetLookup1285()->bfmeFind1285(
-								(int)&g_bfmeRouteKeys1282[route[0]]);
-					if (node != 0) {
-						int encoded = ((route[1] & 0x7f) << 10) | 5;
-						reinterpret_cast<BfmeRouteManager1285 *>(g_bfmeHolderBU)
-							->bfmeSubmit1285(entry, node, 0, encoded);
-					}
-				}
-			}
-		}
-
-		if (descriptor->m_audio3c != 0 && descriptor->m_audio3c[0] != 0) {
-			g_bfmePlay1282(descriptor->m_audio3c[0]->m_handle08, 0);
-		}
-		bfmeFlush1285();
-	}
-
-	if (m_current126c != 0)
-		m_current126c->bfmeReleaseVirtual1285();
-	m_current126c = 0;
-
-	int seen = 0;
-	BfmeNode1285 **slot = m_entries18;
-	for (int index = 0; index < 512; ++index, ++slot) {
-		if (seen == m_count14)
-			break;
-		if (*slot != 0) {
-			if ((*slot)->m_name0c.m_data != &g_bfmeEmptyString1285 &&
-				bfmeParseSuffix1285(&(*slot)->m_name0c, &first, &second)) {
-				m_current126c = m_entries18[index];
-				m_current126c->bfmeAttachVirtual1285();
-				break;
-			}
-			++seen;
-		}
-	}
-
-	if (m_current126c != 0) {
-		m_current126c->bfmeSetState1285(2);
-		bfmeBroadcast1285(m_current126c, 1);
-	}
-}
-
 class BfmeN1034;
 
 class BfmeTab1034
@@ -398,7 +198,21 @@ public:
 	void bfmeFlush1282();
 };
 
-void BfmeBroadcast1282::bfmeBroadcast1282(BfmeEntry1282 *entry, int mode)
+
+// REL32 caller RVA 0x008BCD60 targets 0x008BC710; ret12 at 0x008BCC94.
+// Switch tables end at 0x008BCCB4 followed by int3 padding.
+class Rva008BC710 : public BfmeR1227 {
+public:
+ void method(BfmeNode1285 *node, int direction, int state);
+ __forceinline void emit(BfmeEntry1282 *entry, int mode);
+ char pad[0x1240];
+ BfmeNode1285 *f1240;
+ char pad1244[0x126c-0x1244];
+ BfmeNode1285 *current;
+ int active;
+};
+BfmeNode1285 *bfmeFindDirectional1285(int,BfmeNode1285*,BfmeNode1285*);
+__forceinline void Rva008BC710::emit(BfmeEntry1282 *entry, int mode)
 {
 	BfmeDescriptor1282 *descriptor = entry->m_info50->m_descriptor0c;
 	for (int index = 0; index < descriptor->m_count34; ++index) {
@@ -451,116 +265,56 @@ void BfmeBroadcast1282::bfmeBroadcast1282(BfmeEntry1282 *entry, int mode)
 			break;
 		}
 	}
-	bfmeFlush1282();
+	((BfmeBroadcast1282*)this)->bfmeFlush1282();
 }
 
-extern unsigned char g_bfmeDispatchEnabled1281;
 
-class BfmeSlotDispatcher1281
-{
-public:
-	void bfmeApplySlot1281(void *entry, int mode, void *tail);
-	void bfmeDispatchDirect1281(unsigned int encoded);
-	void bfmeDispatchVisible1281(int group, void *encoded);
-	void bfmePrepare1281(int group, int slot, unsigned int encoded);
-	void bfmeDispatchSlots1281(int enabled, int mode, void *tail);
-	void bfmeMirror1281(int group, int slot, unsigned int encoded);
-	void bfmeResolve1281(int group, int slot, void **result, bool *handled);
-	void bfmeFallback1281(void *result, int group, int slot);
-	void bfmeRouteEncoded1281(unsigned int encoded);
-
-private:
-	char m_padding000[0x820];
-	int m_count;
-	void *m_slots[64];
-	char m_unreconstructed924[0x1240 - 0x924];
-	BfmeEntrySource1282 *m_source1240;
-	char m_unreconstructed1244[0x126c - 0x1244];
-	BfmeEntry1282 *m_current126c;
-	int m_active1270;
-};
-
-void BfmeSlotDispatcher1281::bfmeDispatchSlots1281(int enabled, int mode, void *tail)
-{
-	int visited = 0;
-	for (int index = 0; index < 64; ++index) {
-		if (visited == m_count)
-			break;
-		void *entry = m_slots[index];
-		if (entry != 0) {
-			switch (mode) {
-			case 0:
-				if (enabled != 0)
-					bfmeApplySlot1281(entry, 0x40, tail);
-				break;
-			case 1:
-				if (enabled != 0)
-					bfmeApplySlot1281(entry, 0x80, tail);
-				break;
-			}
-			++visited;
-		}
-	}
+void Rva008BC710::method(BfmeNode1285 *node,int direction,int state) {
+ switch(direction) {
+ case 1: case 2: case 14: case 15:
+  if(!active && state==0) {
+   ((BfmeBroadcast1285*)this)->bfmeAdvance1285();
+   if(current) {
+    if(!node) node=bfmeFindDirectional1285(direction,current->m_next4c,current);
+    else {
+     unsigned flags=node->m_flags04;
+     if(((flags&63)==13 && ((unsigned char)~(flags>>15)&1)==0) || ((flags&63)==18 && ((unsigned char)~(flags>>15)&1)==0))
+      node=bfmeFindDirectional1285(direction,node,0);
+    }
+    if(node) {
+     current->bfmeSetState1285(1);
+     node->bfmeSetState1285(2);
+     emit((BfmeEntry1282*)current,2);
+     ((BfmeBroadcast1282*)this)->bfmeBroadcast1282((BfmeEntry1282*)node,1);
+     if(current) current->bfmeReleaseVirtual1285();
+     current=node;
+     node->bfmeAttachVirtual1285();
+    }
+   }
+  }
+  break;
+ case 0:
+  if(!current) { active=state==0; active=state!=1; return; }
+  if(!active && state==0) {
+   active=1;
+   current->bfmeSetState1285(4);
+   emit((BfmeEntry1282*)current,4);
+  }
+  if(active && state==1) {
+   active=0;
+   if(*(int*)((char*)current->m_info50+0x1c)==2) {
+    current->bfmeSetState1285(1);
+    emit((BfmeEntry1282*)current,0x40);
+    if(current) {
+     current->bfmeSetState1285(2);
+     if(f1240 != current->m_next4c) ((BfmeBroadcast1282*)this)->bfmeBroadcast1282((BfmeEntry1282*)current,1);
+     else emit((BfmeEntry1282*)current,8);
+    }
+   } else {
+    current->bfmeSetState1285(2);
+    emit((BfmeEntry1282*)current,8);
+   }
+  }
+  break;
+ }
 }
-
-void BfmeSlotDispatcher1281::bfmeRouteEncoded1281(unsigned int encoded)
-{
-	unsigned int kind = encoded & 3;
-	if (kind == 0) {
-		if (g_bfmeDispatchEnabled1281 != 0)
-			bfmeDispatchDirect1281(encoded);
-		return;
-	}
-	if (kind != 1)
-		return;
-
-	int group = encoded >> 17;
-	if (group == 502 || group == 501) {
-		bfmeDispatchVisible1281(group, (void *)encoded);
-		return;
-	}
-
-	int slot = (encoded >> 10) & 0x7f;
-	void *result = 0;
-	bool handled;
-	bfmePrepare1281(group, slot, encoded);
-	bfmeDispatchSlots1281(group, slot, (void *)encoded);
-	if (g_bfmeDispatchEnabled1281 != 0)
-		bfmeMirror1281(group, slot, encoded);
-
-	bfmeResolve1281(group, slot, &result, &handled);
-	if (!handled)
-		bfmeFallback1281(result, group, slot);
-}
-
-// Retail 0x008BC710, decoded extent 1415 bytes.  The caller at 0x008BCCC0
-// proves the argument ABI; the state and transition paths below are still a
-// partial reconstruction of the long switch.
-void BfmeSlotDispatcher1281::bfmeFallback1281(void *result, int group, int slot)
-{
-	if (group == 0) {
-		if (m_current126c == 0) {
-			m_active1270 = slot != 1;
-			return;
-		}
-		if (m_active1270 == 0 && slot == 0) {
-			m_active1270 = 1;
-			reinterpret_cast<BfmeBroadcast1285 *>(this)->bfmeAdvance1285();
-		}
-		if (slot == 1 && m_active1270 != 0) {
-			m_active1270 = 0;
-			reinterpret_cast<BfmeBroadcast1285 *>(this)->bfmeAdvance1285();
-			if (m_current126c != 0 && m_source1240 != m_current126c->m_source4c) {
-				reinterpret_cast<BfmeBroadcast1282 *>(this)->bfmeBroadcast1282(m_current126c, 1);
-				return;
-			}
-		}
-		return;
-	}
-	if ((group == 1 || group == 2 || group == 14 || group == 15) &&
-		m_active1270 == 0 && slot == 0 && result != 0) {
-		m_current126c = reinterpret_cast<BfmeEntry1282 *>(result);
-	}
-}
-
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD

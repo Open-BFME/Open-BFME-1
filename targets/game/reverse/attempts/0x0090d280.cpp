@@ -1,164 +1,172 @@
 // ?method@Rva0090D280@@QAEXXZ
-// partial score=0.5610632183908046 date=2026-09-23
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
-// Retail 0090D280..0090D7AA, switch data 0090D7AC..0090D7EF.
-// Owner is address-derived: ctor 0090E470 installs VA 0113A668; slot 3.
-// BFME surface wrappers below have the retail one-pointer ABI, unlike ZH SurfaceClass.
+// partial score=0.906 date=2026-09-27
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// Opaque identity: vtable VA 0x0113A674; ret at RVA 0x0090D7AA; switch tables end at 0x0090D7F0.
+class BFMEDebugStream008FC660
+{
+public:
+	virtual BFMEDebugStream008FC660 *Put_Unsigned(unsigned value);
+	virtual void Slot04(); virtual void Slot08(); virtual void Slot0C();
+	virtual void Slot10(); virtual void Slot14(); virtual void Slot18(); virtual void Slot1C();
+	virtual void Slot20(); virtual void Slot24(); virtual void Slot28(); virtual void Slot2C();
+	virtual void Slot30(); virtual void Slot34();
+	virtual BFMEDebugStream008FC660 *Put_String(const char *text);
+	virtual void Slot3C(); virtual void Slot40(); virtual void Slot44(); virtual void Slot48();
+	virtual BFMEDebugStream008FC660 *Finish(int report);
+};
+
+class BFMEDebugClass008FC660
+{
+public:
+	virtual void Slot00(); virtual void Slot04(); virtual void Slot08(); virtual void Slot0C();
+	virtual void Slot10(); virtual void Slot14(); virtual void Slot18(); virtual void Slot1C();
+	virtual void Slot20(); virtual void Slot24(); virtual void Slot28(); virtual void Slot2C();
+	virtual void Slot30(); virtual void Slot34(); virtual void Slot38(); virtual void Slot3C();
+	virtual void Slot40(); virtual void Slot44(); virtual void Slot48(); virtual void Slot4C();
+	virtual void Slot50(); virtual void Slot54(); virtual void Slot58(); virtual void Slot5C();
+	virtual void Begin_Report();
+	virtual void Slot64(); virtual void Slot68();
+	virtual BFMEDebugStream008FC660 *Get_Stream(void *owner, void *context);
+};
+
+extern BFMEDebugClass008FC660 *g_BFMEIndexBufferDebug;
+extern void _bfme_debugRecordCallsite(int kind);
+
+static __forceinline void BFME_Surface_ErrorCode008FC660(unsigned result)
+{
+	if (result != 0) {
+		_bfme_debugRecordCallsite(1);
+		g_BFMEIndexBufferDebug->Begin_Report();
+		BFMEDebugStream008FC660 *stream =
+			g_BFMEIndexBufferDebug->Get_Stream(0, 0);
+		stream->Put_String("DX8 error ")->Put_Unsigned(result)->Finish(1);
+	}
+}
+
+
+#include "surfaceclass.h"
 #include "vector3.h"
+#include <string.h>
 void RGB_To_HSV(Vector3 &, const Vector3 &);
 void HSV_To_RGB(Vector3 &, const Vector3 &);
-struct BfmeItemDC {
-    virtual void slot00(); virtual void slot04();
-    virtual unsigned long __stdcall release();
-};
-class BfmeThingDC {
-public: BfmeThingDC(BfmeItemDC *); BfmeItemDC *surface;
+class SurfaceResource {
+public:
+ virtual void s0(); virtual unsigned __stdcall AddRef(); virtual unsigned __stdcall Release();
 };
 class W3DRadarResetSurface {
-public: ~W3DRadarResetSurface(); BfmeItemDC *surface;
-};
-class SurfaceClass {
 public:
-    struct SurfaceDescription { int Format; unsigned Width, Height; };
-    void *Lock(int *, bool); void Unlock(); void Get_Description(SurfaceDescription &);
+ W3DRadarResetSurface(SurfaceResource *);
+ ~W3DRadarResetSurface();
+ SurfaceResource *p;
 };
-struct Rva0090D280Surface : BfmeThingDC {
-    Rva0090D280Surface(BfmeItemDC *p) : BfmeThingDC(p) {}
-    ~Rva0090D280Surface() { reinterpret_cast<W3DRadarResetSurface *>(this)->~W3DRadarResetSurface(); }
-};
-class Rva0090D280Texture {
+// The real header lacks the BFME-only overload. Opaque ABI pending independent pin.
+class SurfaceClass { public: void *method(int *, bool); };
+class Rva0090D280Resource {
 public:
-    virtual void s00(); virtual void s04(); virtual void s08(); virtual void s0c();
-    virtual void s10(); virtual void s14(); virtual void s18(); virtual void s1c();
-    virtual void s20(); virtual void s24(); virtual void s28(); virtual void s2c();
-    virtual void s30(); virtual void s34(); virtual void s38(); virtual void s3c();
-    virtual void s40(); virtual void s44();
-    virtual int __stdcall surfaceLevel(unsigned, BfmeItemDC **);
+ virtual void s00(); virtual void s04(); virtual void s08(); virtual void s0c();
+ virtual void s10(); virtual void s14(); virtual void s18(); virtual void s1c();
+ virtual void s20(); virtual void s24(); virtual void s28(); virtual void s2c();
+ virtual void s30(); virtual void s34(); virtual void s38(); virtual void s3c();
+ virtual void s40(); virtual void s44();
+ virtual unsigned __stdcall get(unsigned,SurfaceResource **);
 };
-class BfmeSub937B {
-public: void bfmeCall937B(void *); char pad[8]; Rva0090D280Texture *texture;
-};
-class Rva0090D280Stream {
-public:
-    virtual Rva0090D280Stream *s00(int);
-    virtual void s04(); virtual void s08(); virtual void s0c(); virtual void s10();
-    virtual void s14(); virtual void s18(); virtual void s1c(); virtual void s20();
-    virtual void s24(); virtual void s28(); virtual void s2c(); virtual void s30();
-    virtual void s34(); virtual Rva0090D280Stream *s38(const char *);
-    virtual void s3c(); virtual void s40(); virtual void s44(); virtual void s48();
-    virtual Rva0090D280Stream *s4c(int);
-};
-class Rva0090D280Debug {
-public:
-    virtual void s00(); virtual void s04(); virtual void s08(); virtual void s0c();
-    virtual void s10(); virtual void s14(); virtual void s18(); virtual void s1c();
-    virtual void s20(); virtual void s24(); virtual void s28(); virtual void s2c();
-    virtual void s30(); virtual void s34(); virtual void s38(); virtual void s3c();
-    virtual void s40(); virtual void s44(); virtual void s48(); virtual void s4c();
-    virtual void s50(); virtual void s54(); virtual void s58(); virtual void s5c();
-    virtual void s60(); virtual void s64(); virtual void s68();
-    virtual Rva0090D280Stream *s6c(int,int);
-};
-extern Rva0090D280Debug *g_BFMEIndexBufferDebug;
-void _bfme_debugRecordCallsite(int);
-extern unsigned short Rva00D3A54C[16];
+class BfmeSub937B { public: void bfmeCall937B(void *); char f00[8]; Rva0090D280Resource *f08; };
+extern unsigned short g_Rva0090D280Palette[16];
 class Rva0090D280 {
 public:
-    virtual void *slot00();
-    char pad04[0x10]; BfmeSub937B *sub;
-    char pad18[0x24]; const char *name; unsigned color;
-    void method();
+ virtual void *slot00();
+ char f04[0x10]; BfmeSub937B *f14; char f18[0x24]; char *f3c; unsigned f40;
+ void method();
 };
 void Rva0090D280::method()
 {
-    sub->bfmeCall937B(slot00());
-    if (!sub->texture) return;
-    BfmeItemDC *p = 0;
-    int hr = sub->texture->surfaceLevel(0, &p);
-    if (hr) {
-        _bfme_debugRecordCallsite(1);
-        g_BFMEIndexBufferDebug->s60();
-        g_BFMEIndexBufferDebug->s6c(0,0)->s38("DX8 error ")->s00(hr)->s4c(1);
+ f14->bfmeCall937B(slot00());
+ if (!f14->f08) return;
+ SurfaceResource *resource=0;
+ BFME_Surface_ErrorCode008FC660(f14->f08->get(0,&resource));
+ W3DRadarResetSurface surface(resource);
+ if (resource) resource->Release();
+ int pitch;
+ void *pixels=((SurfaceClass *)&surface)->method(&pitch,false);
+ Vector3 color;
+ SurfaceClass::SurfaceDescription desc;
+ ((SurfaceClass *)&surface)->Get_Description(desc);
+ float blue=(f40&255)*(1.0f/255.0f);
+ float green=((f40>>8)&255)*(1.0f/255.0f);
+ color.Set((float)((f40>>16)&255)*(1.0f/255.0f),green,blue);
+ bool palette;
+ int entries[16];
+ Vector3 shift;
+ if(f3c[3]!='D'&&f3c[3]!='d') {palette=false; RGB_To_HSV(shift,color);}
+ else {
+  palette=true;
+  int *out=entries;
+  for(unsigned short *p=g_Rva0090D280Palette;(int)p<(int)(g_Rva0090D280Palette+16);++p,++out) {
+   float scale=*p;
+   int r=(int)(color.X*scale),g=(int)(green*scale),b=(int)(blue*scale);
+   switch((int)desc.Format) {
+    case 21:case 22:*out=((((r|0xffffff00)<<8)|g)<<8)|b;break;
+    case 26:*out=(((r&~15)<<4|g)&~15)|((b|0xf0000)>>4);break;
+    case 25:*out=((((r&~7)<<5|g)&~7)<<2)|((b|0x40000)>>3);break;
+    case 23:*out=((((r&~7)<<5|g)&~3)<<3)|(b>>3);break;
+   }
+  }
+ }
+ switch((int)desc.Format) {
+ case 21:case 22:
+  if(palette) { unsigned *out=(unsigned *)pixels;
+   out[0]=entries[0];
+   out[1]=entries[1];
+   out[2]=entries[2];
+   out[3]=entries[3];
+   out[4]=entries[4];
+   out[5]=entries[5];
+   out[6]=entries[6];
+   out[7]=entries[7];
+   out[8]=entries[8];
+   out[9]=entries[9];
+   out[10]=entries[10];
+   out[11]=entries[11];
+   out[12]=entries[12];
+   out[13]=entries[13];
+   out[14]=entries[14];
+   out[15]=entries[15];
+  }
+  else {
+   unsigned *p=(unsigned *)pixels;
+   unsigned rowbytes=desc.Width*4;
+   for(unsigned y=0;y<desc.Height;++y) {
+    for(unsigned x=0;x<desc.Width;++x,++p) {
+     if((*p&0xffffff)!=0xffffff) {
+      double alpha=((unsigned char *)p)[3]*(1.0/255.0);
+      *p=((((((int)(alpha*255.0)<<8)|(int)(color.X*255.0))<<8)|(int)(green*255.0))<<8)|(int)(blue*255.0);
+     }
     }
-    Rva0090D280Surface surface(p);
-    if (p) p->release();
-    int pitch;
-    void *bits = reinterpret_cast<SurfaceClass *>(&surface)->Lock(&pitch,false);
-    SurfaceClass::SurfaceDescription desc;
-    reinterpret_cast<SurfaceClass *>(&surface)->Get_Description(desc);
-    float blue = float(color & 255u) * (1.0f/255.0f);
-    float green = float((color >> 8) & 255) * (1.0f/255.0f);
-    Vector3 rgb(float((color >> 16) & 255) * (1.0f/255.0f),green,blue), hsv;
-    const float &red = rgb.X;
-    bool palette = name[3]=='D' || name[3]=='d';
-    unsigned values[16];
-    if (palette) goto fillPalette;
-    RGB_To_HSV(hsv,rgb);
-convertPixels:
-    switch(desc.Format) {
-    case 21: case 22:
-        if (palette) {
-            for (int i=0;i<16;++i) static_cast<unsigned *>(bits)[i]=values[i];
-        } else {
-            unsigned rowBytes=desc.Width*4;
-            unsigned *dest=static_cast<unsigned *>(bits);
-            for (unsigned y=0;y<desc.Height;++y) {
-                for(unsigned x=0;x<desc.Width;++x,++dest) {
-                    if ((*dest & 0xffffff) != 0xffffff) {
-                        double opacity=double(reinterpret_cast<unsigned char*>(dest)[3])*(1.0/255.0);
-                        int packed=int(opacity*255.0);
-                        packed<<=8; packed|=int(double(red)*255.0);
-                        packed<<=8; packed|=int(double(green)*255.0);
-                        packed<<=8; packed|=int(double(blue)*255.0);
-                        *dest=packed;
-                    }
-                }
-                dest += (pitch-rowBytes)/4;
-            }
-        }
-        break;
-    case 23: case 24: case 25: case 26: case 29: case 30: case 40: case 51:
-        if (palette) {
-            for(int i=0;i<16;++i) static_cast<unsigned short *>(bits)[i]=(unsigned short)values[i];
-        } else {
-            unsigned short *dest=static_cast<unsigned short *>(bits);
-            for(unsigned y=0;y<desc.Height;++y) {
-                for(unsigned x=0;x<desc.Width;++x,++dest) {
-                    if (*dest < 0xffff) {
-                        Vector3 c(float((*dest>>8)&15)*(1.0f/15.0f),float((*dest>>4)&15)*(1.0f/15.0f),float(*dest&15)*(1.0f/15.0f));
-                        Vector3 output;
-                        RGB_To_HSV(rgb,c);
-                        rgb.X=hsv.X; rgb.Y*=hsv.Y;
-                        HSV_To_RGB(output,rgb);
-                        float alpha=float(*dest>>12);
-                        unsigned packed = (unsigned short)(output.X*15.0f);
-                        packed = (packed<<4)|int(output.Y*15.0f);
-                        packed = (packed<<4)|int(output.Z*15.0f);
-                        *dest = (unsigned short)(packed|int(alpha));
-                    }
-                }
-                dest += (pitch-desc.Width)/2;
-            }
-        }
-        break;
+    p+=((unsigned)pitch-rowbytes)/4;
+   }
+  }
+  break;
+ case 23:case 24:case 25:case 26:case 29:case 30:case 40:case 51:
+  if(palette) { for(int i=0;i<16;++i) ((unsigned short *)pixels)[i]=(unsigned short)entries[i]; }
+  else {
+   unsigned short *p=(unsigned short *)pixels;
+   for(unsigned y=0;y<desc.Height;++y) {
+    for(unsigned x=0;x<desc.Width;++x,++p) {
+     if(*p<0xffff) {
+      Vector3 rgb(((*p>>8)&15)*(1.0f/15.0f),((*p>>4)&15)*(1.0f/15.0f),(*p&15)*(1.0f/15.0f));
+      RGB_To_HSV(color,rgb);
+      color.X=shift.X;
+      color.Y*=shift.Y;
+      Vector3 result;
+      HSV_To_RGB(result,color);
+      float alpha=*p>>12;
+      *p=(((((unsigned short)(int)(result.X*15.0f)<<4)|(int)(result.Y*15.0f))<<4)|(int)(result.Z*15.0f))|(int)alpha;
+     }
     }
-    goto done;
-fillPalette:
-    { unsigned *dest=values;
-        for (int i=0; i<16; ++i,++dest) {
-            float intensity = float(Rva00D3A54C[i]);
-            int r = int(red*intensity);
-            int g = int(green*intensity);
-            int b = int(blue*intensity);
-            switch (desc.Format) {
-            case 21: case 22: *dest = (((r|0xffffff00)<<8 | g)<<8)|b; break;
-            case 26: *dest = (((((r & ~15)<<4)|g)&~15) | ((b|0xf0000)>>4)); break;
-            case 25: *dest = (((((r & ~7)<<5)|g)&~7)<<2) | ((b|0x40000)>>3); break;
-            case 23: *dest = (((((r & ~7)<<5)|g)&~3)<<3) | (b>>3); break;
-            }
-        }
-    }
-    goto convertPixels;
-done:
-    reinterpret_cast<SurfaceClass *>(&surface)->Unlock();
+    p+=((unsigned)pitch-desc.Width)/2;
+   }
+  }
+  break;
+ }
+ ((SurfaceClass *)&surface)->Unlock();
 }
