@@ -1839,3 +1839,63 @@ void Rva00858100StopAutoMatchIfTitled(PEER peer)
 	if (connection->title[0] && connection->connected)
 		piStopAutoMatch(peer);
 }
+
+int piGetNextID(PEER);
+void piAddJoinRoomCallback(PEER,int,int,int,void*,void*,int);
+void msleep(unsigned);
+void bfmePiThinkFromEsi(int);
+int PeerOperationsComplete(PEER,int);
+int piIsCallbackFinished(PEER,int);
+void peerShutdown(PEER);
+unsigned SBServerGetPublicInetAddress(void*);
+unsigned SBServerGetPrivateInetAddress(void*);
+int SBServerHasPrivateAddress(void*);
+unsigned short SBServerGetPrivateQueryPort(void*);
+unsigned short SBServerGetPublicQueryPort(void*);
+void piStopHosting(PEER,int);
+void piMangleStagingRoom(char*,const char*,unsigned,unsigned,unsigned short);
+int piNewJoinRoomOperation(PEER,int,const char*,const char*,void*,void*,int);
+void* piSBCloneServer(void*);
+static __declspec(noinline) void Rva00858960Join(PEER peer,void* server,const char* channel,
+ const char* password,void* callback,void* param,int blocking)
+{
+ piConnection* connection=(piConnection*)peer;
+ int success=1;
+ int result=10;
+ char room[257];
+ unsigned publicIP,privateIP;
+ unsigned short port;
+ int opID=piGetNextID(peer);
+ if(!password) password="";
+ if(!connection->title[0]) { success=0; result=6; }
+ if(success && !connection->connected) { success=0; result=7; }
+ if(success && (connection->enteringRoom[2] || connection->inRoom[2])) { success=0; result=5; }
+ if(success && connection->autoMatchStatus && connection->autoMatchStatus!=5) { success=0; result=8; }
+ if(success) {
+  if(server) {
+   publicIP=SBServerGetPublicInetAddress(server);
+   privateIP=SBServerGetPrivateInetAddress(server);
+   port=SBServerHasPrivateAddress(server) ? SBServerGetPrivateQueryPort(server) : SBServerGetPublicQueryPort(server);
+   if(!publicIP) goto failed;
+  } else if(!channel || !channel[0]) success=0;
+ }
+ if(success) {
+  piStopHosting(peer,1);
+  if(server) { piMangleStagingRoom(room,connection->title,publicIP,privateIP,port); channel=room; }
+  if(!piNewJoinRoomOperation(peer,2,channel,password,callback,param,opID)) success=0;
+  if(success && server) connection->hostServer=piSBCloneServer(server);
+ }
+ if(!success) { failed: piAddJoinRoomCallback(peer,0,result,2,callback,param,opID); }
+ if(blocking) {
+  do { msleep(1); piThink(peer,opID); }
+  while(!PeerOperationsComplete(peer,opID) || !piIsCallbackFinished(peer,opID));
+  if(connection->shutdown && connection->callbackDepth==0) peerShutdown(peer);
+ }
+}
+/* Two real call sites at 00858B70 and 00858BA0 establish the private EAX ABI.
+ * Keep both calls visible so VC7.1 performs its own private calling-convention
+ * optimization. These wrapper bodies are not claimed by this gap seat. */
+void peerJoinStagingRoomA(PEER peer,void* server,const char* password,void* callback,void* param,int blocking)
+{ Rva00858960Join(peer,server,0,password,callback,param,blocking); }
+void Rva00858BA0JoinChannel(PEER peer,const char* channel,const char* password,void* callback,void* param,int blocking)
+{ Rva00858960Join(peer,0,channel,password,callback,param,blocking); }

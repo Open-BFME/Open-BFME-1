@@ -465,3 +465,63 @@ char *Rva0084E830LocaleName(LocaleCodePageObject_0084EED0 *object, char *buf)
 {
     return __GetLocaleName(object->locale, object->codePage, buf);
 }
+
+/* Retail 0084ED20, after INT3. The return at 0084EE53 is followed by
+ * compiler switch tables through 0084EEC3, then INT3. Retain the retail
+ * GetLocaleInfo count even though the local array is only 80 bytes. */
+extern char locale_format_0084ED20[];
+char *Rva0084ED20Tail(LocaleCodePageObject_0084EED0 *object)
+{
+    char format[80];
+    char *source;
+    char *out;
+    GetLocaleInfoA(object->locale, 0x1003, format, 0x104);
+    __ConvertFromACP(format, 80, object->codePage);
+    source = format;
+    out = locale_format_0084ED20;
+    while (*source) {
+        switch (*source) {
+        case 'h':
+            *out++ = '%';
+            if (source[1] == 'h') { *out++ = 'I'; ++source; }
+            else { *out++ = '#'; *out++ = 'I'; }
+            break;
+        case 'H':
+            *out++ = '%';
+            if (source[1] == 'H') { *out++ = 'H'; ++source; }
+            else { *out++ = '#'; *out++ = 'H'; }
+            break;
+        case 'm':
+            *out++ = '%';
+            if (source[1] == 'm') { *out++ = 'M'; ++source; }
+            else { *out++ = '#'; *out++ = 'M'; }
+            break;
+        case 's':
+            *out++ = '%';
+            if (source[1] == 's') { *out++ = 'S'; ++source; }
+            else { *out++ = '#'; *out++ = 'S'; }
+            break;
+        case 't':
+            if (source[1] == 't') ++source;
+            *out++ = '%'; *out++ = 'p';
+            break;
+        case '%':
+            *out++ = '%'; *out++ = '%';
+            break;
+        case '\'':
+            ++source;
+            while (*source != '\'') {
+                if (!*source) goto done;
+                *out++ = *source++;
+            }
+            break;
+        default:
+            *out++ = *source;
+        }
+        if (!*source) break;
+        ++source;
+    }
+done:
+    *out = 0;
+    return locale_format_0084ED20;
+}
