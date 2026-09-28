@@ -1,25 +1,43 @@
-// ?update@OneRingTrajectory00299400@@QAEXXZ
-// partial score=0.938992 date=2026-09-28
-// cl: /DNDEBUG /MD /Igame/GameEngine/Source/GameLogic/Object
+// cl: /DNDEBUG /MD
 // stlport
+// Retail 0x00299400: OneRingPenaltyUpdate trajectory step (string VA 0x010C06B8 names OneRingPenaltyUpdate.cpp); method name unknown.
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
-// Retail OneRingPenaltyUpdate.cpp string at VA 0x010C06B8; method name unknown.
+#include <vector>
 extern "C" float cosf(float);
 extern "C" float sinf(float);
 struct Coord3D { float x,y,z; };
 #define BFME_HAVE_COORD3D
 #define THING_TU_MEMBERS void setPosition(const Coord3D*);
-#include "object.h"
-#include "../command_source_type.h"
+#define OBJECT_TU_MEMBERS AIUpdateInterface* getAIUpdateInterface() { return m_ai; }
+#include "../object.h"
+#include "../../command_source_type.h"
 typedef _STL::hash_map<int, Object *, _STL::hash<int>, _STL::equal_to<int> > ObjectPtrHash;
 class GameLogic { public:
  __declspec(noinline) Object* findObjectByID(int id) { if(!id) return 0; ObjectPtrHash::iterator it=m_objHash.find(id); if(it==m_objHash.end()) return 0; return (*it).second; }
  char pad00[0x3c]; unsigned frame; char pad40[0x70]; ObjectPtrHash m_objHash;
 };
 extern GameLogic* TheBfmeGameLogic;
-class AICommandInterface { public: void aiMoveToPosition(const Coord3D*,CommandSourceType); };
+class Team; class Waypoint; class PolygonTrigger; class CommandButton; class Path;
+enum AICommandType { AICMD_MOVE_TO_POSITION = 0x00 };
+struct DamageInfo { char m_bfme_body[0x5C]; };
+// Layout and body as landed in AICommandInterfaceMovementOrders.cpp; visible here as in the retail header.
+class AICommandParms { public:
+ AICommandParms( AICommandType cmd, CommandSourceType commandSource );
+ AICommandType m_cmd; CommandSourceType m_cmdSource; Coord3D m_pos; Object *m_obj; Object *m_otherObj; const Team *m_team;
+ _STL::vector<Coord3D> m_coords; const Waypoint *m_waypoint; const PolygonTrigger *m_polygon; int m_intValue; DamageInfo m_damage;
+ const CommandButton *m_commandButton; Path *m_path;
+};
+class AICommandInterface { public:
+ virtual void aiDoCommand( const AICommandParms *parms ) = 0;
+ void aiMoveToPosition( const Coord3D *position, CommandSourceType commandSource )
+ {
+  AICommandParms parms( AICMD_MOVE_TO_POSITION, commandSource );
+  parms.m_pos = *position;
+  aiDoCommand( &parms );
+ }
+};
 class AIUpdateInterface { public:
  virtual void slot00();
  virtual void slot01();
@@ -119,17 +137,16 @@ class AIUpdateInterface { public:
  virtual void slot5f();
  virtual bool slot180();
 };
-class Terrain00299400 { public: virtual void s00(); virtual void s04(); virtual void s08(); virtual void s0c(); virtual void s10(); virtual void s14(); virtual float height(float,float,void*); };
-extern Terrain00299400* g_terrain00299400;
+class TerrainLogic { public: virtual void s00(); virtual void s04(); virtual void s08(); virtual void s0c(); virtual void s10(); virtual void s14(); virtual float height(float,float,void*); };
+extern TerrainLogic* TheTerrainLogic;
 class StealthCleanup00299250 { public: void apply(); };
 extern float Rva0002CCA5GetGameLogicRandomValueRealThunk(float,float,char*,int);
 struct Config00299400 { char pad00[12]; unsigned at0c,at10; char pad14[4]; float at18; };
 class OneRingTrajectory00299400 { public: void update(); char pad00[4]; Config00299400* at04; Object* at08; char pad0c[0x18]; int at24; unsigned at28; float at2c; };
 inline float lerp00299400(float a,float b,float t) { return a+(b-a)*t; }
-inline bool aiCheck00299400(AIUpdateInterface* p) { typedef bool (__fastcall *Fn)(AIUpdateInterface*); return ((Fn*)*(void**)p)[96](p); }
 void OneRingTrajectory00299400::update() {
- Object* owner=at08;
  Config00299400* config=at04;
+ Object* owner=at08;
  Object* target=TheBfmeGameLogic->findObjectByID(at24);
  unsigned frame=TheBfmeGameLogic->frame;
  unsigned start=config->at0c+at28;
@@ -139,18 +156,17 @@ void OneRingTrajectory00299400::update() {
   ((StealthCleanup00299250*)this)->apply();
   return;
  }
- if(target && target->m_ai && aiCheck00299400(target->m_ai)) {
+ if(target && target->getAIUpdateInterface() && target->getAIUpdateInterface()->slot180()) {
   Coord3D pos;
   pos.x=owner->m_cachedPos.x; pos.y=owner->m_cachedPos.y;
   float angle=at2c+Rva0002CCA5GetGameLogicRandomValueRealThunk(-1.5707963267948966f,1.5707963267948966f,"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\OneRingPenaltyUpdate.cpp",185);
   at2c=angle;
-  frame-=start;
   float distance;
-  if(frame==0) distance=config->at18;
-  else distance=lerp00299400(config->at18,config->at18*0.5f,(float)frame/(float)(end-start));
+  if(frame-start==0) distance=config->at18;
+  else distance=lerp00299400(config->at18,config->at18*0.5f,(float)(frame-start)/(float)(end-start));
   pos.x+=cosf(angle)*distance;
   pos.y+=sinf(at2c)*distance;
-  pos.z=g_terrain00299400->height(pos.x,pos.y,0);
+  pos.z=TheTerrainLogic->height(pos.x,pos.y,0);
   ((AICommandInterface*)((char*)target->m_ai+0x20))->aiMoveToPosition(&pos,(CommandSourceType)2);
  }
 }
