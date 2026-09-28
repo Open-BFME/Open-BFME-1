@@ -634,7 +634,8 @@ TheInGameUI->DEBUG_addFloatingText("entering idle state", getMachineOwner()->get
 //-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckStateMachineConstructorThunk.cpp
+// BFME byte-exact constructor: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckStateMachineConstructor.cpp
+// This Zero Hour draft lacks BFME HarvestingState and uses the reference layouts.
 // ??0SupplyTruckStateMachine@@ present-unmatched
 SupplyTruckStateMachine::SupplyTruckStateMachine( Object *owner ) : StateMachine( owner, "SupplyTruckStateMachine" )
 {

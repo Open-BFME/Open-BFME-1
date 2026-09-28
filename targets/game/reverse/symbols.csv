@@ -3923,7 +3923,6 @@ name,address,notes
 ??0SupplyCenterDockUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048EA5,SupplyCenterDockUpdate ctor base
 ??0SupplyCenterDockUpdateModuleData@@QAE@XZ,0x000118E7,pinharvest x1 (thunk)
 ??0SupplyCenterProductionExitUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00027B06,module ctor (friend_newModuleInstance retail call target)
-??0SupplyTruckStateMachine@@QAE@PAVObject@@@Z,0x00047C80,one-argument BFME constructor ILT forwards to the matched two-argument body at 0x002C6430
 ??0SupplyWarehouseCreate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003ECA7,link thunk to the SupplyWarehouseCreate constructor; named from the ModuleFactory registration that pairs "SupplyWarehouseCreate" with factory 0x0011E460
 ??0SupplyWarehouseCripplingBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x037619,module ctor (friend_newModuleInstance retail call target)
 ??0SupplyWarehouseCripplingBehaviorModuleData@@QAE@XZ,0x000261CA,module-glue cascade callee (from retail call site)
@@ -89701,3 +89700,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 _Rva007F5790Callback,0x007F5790,gap-seat dependency; caller 007F7030 pushes VA00BF5790 at 007F70B0; independent INT3-delimited body 007F5790..007F579E loads two stack args and forwards first to thiscall 007F5720 with second as ECX; cdecl ret; opaque identity
 ?invoke@Rva0056E600@@UAEPAXI@Z,0x0056E830,opaque ABI carrier for secondary-base adjustor0056E600; target independently proven by ILT0001C391; body0056E830 calls dtor viaILT00027E44 tests flags bit0 conditionally deletes returns original this RET4; no semantic class identity asserted
 ?method@Rva00925860@@QAEXPAX0@Z,0x00925860,opaque target called by 0x0092C390 with thiscall ret 8
+??0SupplyTruckStateMachine@@QAE@PAVObject@@@Z,0x00047C80,route=0x002C6430; one-argument constructor proven by caller and ret 4; identity_evidence/002C6430-supply-truck-constructor.md
