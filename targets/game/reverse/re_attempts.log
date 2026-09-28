@@ -40162,3 +40162,4 @@ _bfmeVp6ThresholdSelect	0x009A5000	404	converted	Boundary009A5000..009A5193; pre
 ?Rva00C51008@@YAXXZ	0x00C51008	11	blocked	SEH Unwind@ reads parent EBP-frame data and lacks an independent prologue/caller identity; no enclosing parent source t=5min model=sonic
 ?Rva00C5FE4A@@YAXXZ	0x00C5FE4A	11	blocked	SEH Unwind@ reads parent EBP-frame data and lacks an independent prologue/caller identity; no enclosing parent source t=5min model=sonic
 ?Rva00C5FEB4@@YAXXZ	0x00C5FEB4	18	blocked	SEH Unwind@ parent-frame tail plus adjacent CxxFrameHandler tail; no proven function boundary or parent source t=5min model=sonic
+?Rva00C209F8@@YAXXZ	0x00C209F8	39	blocked	SEH Unwind@ reads parent EBP-frame data and lacks an independent prologue/caller identity; no enclosing parent source t=5min model=sonic
