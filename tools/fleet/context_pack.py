@@ -344,6 +344,29 @@ def pack(rva, max_items=8):
     if nb:
         out.append("  landed neighbours: " + '; '.join(nb))
     out += zh_twin_lines(rva)
+    out += ea_lines(rva)
+    return out
+
+
+_ea = None
+
+
+def ea_lines(rva):
+    """EA's own name and source file, read from WorldBuilder internal builds (tools/ea_evidence.py)."""
+    global _ea
+    if _ea is None:
+        _ea = collections.defaultdict(dict)
+        with open(ROOT / 'targets/game/reverse/ea_evidence.csv', newline='', encoding='utf-8') as f:
+            for r in csv.DictReader(f):
+                _ea[int(r['rva'], 16)][r['kind']] = r
+    e = _ea.get(rva, {})
+    out = []
+    if 'name' in e:
+        n = e['name']
+        bfme2 = '' if 'wb1' in n['route'] else '; BFME2 label, and BFME2 renamed some members'
+        out.append(f"  EA name ({n['route']}, {n['basis']}{bfme2}): {n['value']}")
+    if 'file' in e:
+        out.append(f"  EA source file ({e['file']['route']}): {e['file']['value']}")
     return out
 
 

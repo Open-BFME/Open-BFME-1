@@ -47,3 +47,13 @@ def test_callee_truncation_is_explicit():
     assert any("tools/callees.py 0x005F6ED0 1885" in line for line in lines)
     full = context_pack.pack(0x005F6ED0, max_items=30)
     assert not any("target(s) omitted" in line for line in full)
+
+
+def test_ea_lines_quote_the_worldbuilder_name_and_file(monkeypatch):
+    monkeypatch.setattr(context_pack, "_ea", {0x10: {
+        "name": {"value": "Pathfinder::IsCliffCell", "route": "chain+direct", "basis": "strong"},
+        "file": {"value": "GameEngine/Source/GameLogic/AI/AIPathfind.cpp", "route": "wb1"}}})
+    lines = context_pack.ea_lines(0x10)
+    assert "Pathfinder::IsCliffCell" in lines[0] and "BFME2 label" in lines[0]
+    assert lines[1].endswith("(wb1): GameEngine/Source/GameLogic/AI/AIPathfind.cpp")
+    assert context_pack.ea_lines(0x20) == []

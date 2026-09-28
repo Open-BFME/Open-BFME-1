@@ -17,10 +17,15 @@ Moving has none of those constraints: the `// cl:` line travels with the file an
 14,615 of 14,734 sources (99%) carry no relative include, so nothing resolves
 differently afterwards. Measured, a move is byte-neutral.
 
-THE RULE. A file is queued only when it declares exactly ONE owning class and
-that class demonstrably lives somewhere else: the ZH reference has a file for it,
-or the class already keeps two or more bodies in another existing directory. The
-destination is never invented and the queue never guesses.
+THE RULE. EA's own source paths come first: when every row a file owns has an
+original file in targets/game/reverse/ea_evidence.csv (tools/ea_evidence.py, read
+from WorldBuilder internal builds) and they all name one directory, that is the
+destination. This is the only rule that reaches address-named classes, free
+functions and BFME-only classes. Otherwise a file is queued only when it declares
+exactly ONE owning class and that class demonstrably lives somewhere else: the ZH
+reference has a file for it, or the class already keeps two or more bodies in
+another existing directory. The destination is never invented and the queue never
+guesses.
 
     python3 tools/placement_queue.py            # write the queue, print a summary
     python3 tools/placement_queue.py --by-dir   # where files would leave and land
@@ -32,6 +37,7 @@ import collections
 import csv
 import glob
 import os
+import posixpath
 import re
 import sys
 from pathlib import Path
@@ -40,6 +46,10 @@ ROOT = Path(__file__).resolve().parents[1]
 ZH = "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code"
 AREAS = ("game/GameEngine", "game/Libraries", "game/GameEngineDevice")
 QUEUE = "targets/game/reverse/placement_queue.tsv"
+EA_EVIDENCE = "targets/game/reverse/ea_evidence.csv"
+# Only routes where the function itself names its file. Run-filled routes give an inline
+# body the TU that emitted it: 84% of retail-run directories agreed with a class home.
+EA_ROUTES = ("wb1", "zh")
 BLOCKED = "targets/game/reverse/placement_blocked.tsv"
 # The flat root of Common/ holds 6,892 files because the conversion lane writes
 # new TUs there by default. A class whose bodies mostly sit in the dumping ground
@@ -347,20 +357,65 @@ def blocked_sources(root):
     return blocked
 
 
+def ea_directories(root):
+    """source -> the one directory EA's own paths give every row the source owns."""
+    where = {}
+    with open(root / EA_EVIDENCE, newline="", encoding="utf-8") as fh:
+        for r in csv.DictReader(fh):
+            if r["kind"] == "file" and r["route"] in EA_ROUTES:
+                where[int(r["rva"], 16)] = posixpath.dirname(r["value"])
+    dirs = collections.defaultdict(set)
+    with open(root / "targets/game/reverse/functions.csv", newline="") as fh:
+        for row in csv.DictReader(fh):
+            source = row.get("source") or ""
+            if (row.get("status") != "matched" or not source.startswith(AREAS)
+                    or source.startswith("game/gen")):
+                continue
+            try:
+                dirs[source].add(where.get(int(row["target_rva"], 16)))
+            except ValueError:
+                dirs[source].add(None)
+    cased = {}
+    return {s: existing_case(root, "game/" + next(iter(d)), cased)
+            for s, d in dirs.items() if len(d) == 1 and None not in d}
+
+
+def existing_case(root, path, cache):
+    """EA's spelling of a directory, re-cased segment by segment onto what already exists."""
+    if path in cache:
+        return cache[path]
+    parent, seg = posixpath.split(path)
+    base = existing_case(root, parent, cache) if parent else ""
+    here = root / base
+    names = {c.name.lower(): c.name for c in here.iterdir() if c.is_dir()} if here.is_dir() else {}
+    cache[path] = posixpath.join(base, names.get(seg.lower(), seg))
+    return cache[path]
+
+
 def build(root):
     single, homes = survey(root)
+    ea = ea_directories(root)
     corroborating_homes = deleting_destructor_homes(root)
     pinned = included_by_siblings(root)
     refused = blocked_sources(root)
     zh, zh_hdr = zh_directories(root), zh_header_directories(root)
     queue, skipped = [], collections.Counter()
-    for source, cls in sorted(single.items()):
+    for source in sorted(set(single) | set(ea)):
         if source in refused:
             skipped["a previous placement gate rejected the source"] += 1
             continue
-        dest = destination(
-            root, source, cls, homes, zh, zh_hdr, corroborating_homes
-        )
+        if source in ea:
+            # EA's path is the original's own statement, so it outranks every class
+            # rule, including when it says the file is already home. Never UP, as below.
+            cls, dest, here = "EA", ea[source], os.path.dirname(source)
+            if dest == here or here.startswith(dest + "/"):
+                skipped["EA's own source path says it is home"] += 1
+                continue
+        else:
+            cls = single[source]
+            dest = destination(
+                root, source, cls, homes, zh, zh_hdr, corroborating_homes
+            )
         if not dest:
             skipped["no destination the evidence supports"] += 1
             continue

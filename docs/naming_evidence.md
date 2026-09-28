@@ -39,6 +39,7 @@ prints is a hint, not proof.
 | `targets/game/reverse/name_tables.tsv` | every shipped enum's names, in declaration order, from the image |
 | `targets/game/reverse/exports.csv` | real mangled symbols at RVAs; authoritative |
 | `lotrbfme.exe` strings | EA's `\bfme\Code\...` source paths; they anchor nearby vftables |
+| `targets/game/reverse/ea_evidence.csv` | EA's names and files from WorldBuilder builds; not proof |
 
 Function identity is thin and capped by evidence; more agents do not raise it.
 
@@ -158,4 +159,3 @@ real class's destructor body. That pin is the evidence the rule asks for. Open c
   removed and duplicate definitions eliminated, not commits.
 - In a renaming pass, a rename counts only when evidence lets the address go:
   `Q2Vt0110F978` -> `PolymorphicVptrBase0110F978` is longer, not clearer.
-- Name things right when the file is created; cleanup cannot keep up with new files.

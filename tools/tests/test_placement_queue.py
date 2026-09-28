@@ -31,6 +31,9 @@ def _write(root, relative, text="// fixture\n"):
     path = root / relative
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text)
+    evidence = root / queue.EA_EVIDENCE
+    if relative.endswith("functions.csv") and not evidence.exists():
+        evidence.write_text("rva,kind,value,route,basis\n")
 
 
 def _world(tmp_path):
@@ -432,3 +435,41 @@ def test_sibling_counts_do_not_move_an_established_split_family(
 
     queued, _skipped = queue.build(root)
     assert all(source != candidate for source, _target, _cls in queued)
+
+
+def test_ea_paths_place_address_named_and_free_functions_the_class_rules_cannot(tmp_path):
+    root = tmp_path / "repo"
+    stray, free, home, run = (f"{queue.DUMPING_GROUND}/Rva00200000Thing.cpp", f"{queue.DUMPING_GROUND}/Rva00200010.cpp",
+                              "game/GameEngine/Source/GameClient/GUI/Palantir/Keep.cpp", f"{queue.DUMPING_GROUND}/Inline.cpp")
+    for f in (stray, free, home, run):
+        _write(root, f)
+    _write(root, "targets/game/reverse/functions.csv",
+           "name,export_rva,target_rva,target_size,source,status,notes\n"
+           f"?go@Rva00200000Thing@@QAEXXZ,,0x00200000,16,{stray},matched,\n"
+           f"?Rva00200010@@YAXXZ,,0x00200010,16,{free},matched,\n"
+           f"?keep@Palantir@@QAEXXZ,,0x00200020,16,{home},matched,\n"
+           f"?Rva00200030@@YAXXZ,,0x00200030,16,{run},matched,\n")
+    (root / queue.EA_EVIDENCE).write_text(
+        "rva,kind,value,route,basis\n"
+        "0x00200000,file,GameEngine/Source/GameClient/GUI/Palantir/Palantir.cpp,wb1,\n"
+        "0x00200010,file,GAMEENGINE/Source/GameClient/GUI/PALANTIR/Palantir.cpp,zh,\n"
+        "0x00200020,file,GameEngine/Source/GameClient/GUI/Palantir/Palantir.cpp,wb1,\n"
+        "0x00200030,file,GameEngine/Source/GameClient/GUI/Palantir/Palantir.cpp,retail-run,\n")
+    moves, skipped = queue.build(root)
+    got = {s: d for s, d, _ in moves}
+    assert got == {stray: "game/GameEngine/Source/GameClient/GUI/Palantir/Rva00200000Thing.cpp",
+                   free: "game/GameEngine/Source/GameClient/GUI/Palantir/Rva00200010.cpp"}
+    assert skipped["EA's own source path says it is home"] == 1
+
+
+def test_ea_paths_need_every_row_of_a_file_to_agree(tmp_path):
+    root = tmp_path / "repo"
+    both = f"{queue.DUMPING_GROUND}/Split.cpp"
+    _write(root, both)
+    _write(root, "targets/game/reverse/functions.csv",
+           "name,export_rva,target_rva,target_size,source,status,notes\n"
+           f"?a@Rva00300000A@@QAEXXZ,,0x00300000,16,{both},matched,\n"
+           f"?b@Rva00300010B@@QAEXXZ,,0x00300010,16,{both},matched,\n")
+    (root / queue.EA_EVIDENCE).write_text(
+        "rva,kind,value,route,basis\n0x00300000,file,GameEngine/Source/GameLogic/AI/A.cpp,wb1,\n")
+    assert queue.build(root)[0] == []

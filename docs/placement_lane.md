@@ -37,15 +37,17 @@ An empty queue means the lane is exhausted, not broken.
 
 ## Where a file belongs
 
-A file is queued only when it declares exactly one owning class and the evidence
-names a different home. Evidence, strongest first:
+A file is queued only when the evidence names a different home. Strongest first:
 
-1. ZH has a `.cpp` named for the class: its directory.
-2. A ZH header declares the class: the mirrored `Source/` directory, only if that
+1. EA's own source path for every row the file owns (`ea_evidence.csv`, routes
+   `wb1`/`zh`; `targets/game/reverse/analysis/worldbuilder_evidence.md`): its
+   directory. The only rule that reaches BFME-only classes, free functions and
+   address-named shims.
+2. The file's one owning class has a ZH `.cpp`: its directory.
+3. A ZH header declares the class: the mirrored `Source/` directory, only if that
    directory exists in ZH.
-3. The class keeps two or more bodies in one other directory: that directory. One
-   sibling elsewhere is as likely to be the misplaced file, and two candidate
-   directories are ambiguous.
+4. The class keeps two or more bodies in one other directory. One sibling
+   elsewhere is as likely to be misplaced; two candidates are ambiguous.
 
 A byte-neutral move to the wrong place passes every gate, so these rules carry the
 lane:
@@ -54,9 +56,9 @@ lane:
   Never fall through to weaker evidence.
 - An exact ZH source path for the file beats an inferred owner. An inline method
   emitted from an included header does not make its class the TU's owner.
-- Never move into an ancestor of the current directory or into a directory that
-  does not exist. Never move into the flat `Common/` root unless ZH keeps the
-  class's own `.cpp` there.
+- Never move into an ancestor of the current directory, or into the flat
+  `Common/` root unless EA or ZH keeps the file there. Only EA's path may create
+  a directory.
 - Refine a coarse ZH header mirror to a deeper directory only when that is the
   class's one established descendant. Several descendants are ambiguous.
 - Sibling counts cannot split a module from its `<Class>ModuleData` partner. The
@@ -66,13 +68,10 @@ lane:
 These were measured and rejected; do not retry them. Reach is not evidence.
 
 - The file's own `#include` set: mostly wrong.
-- The classes a file references: wide reach, wrong in every spot check, because
-  files reference whichever area dominates the tree.
-- The `/I` paths on its `// cl:` line, and the ZH directory of its base class: both
-  reach nothing.
-
-Files with no supported destination (BFME-only classes, free functions, `Rva*`,
-`Gen_*` and `Bfme*` shims) are blocked on identification, not on tooling.
+- The classes a file references: wrong in every spot check.
+- The `/I` paths on its `// cl:` line, and the ZH directory of its base class.
+- Run-filled EA paths (`wb1-run`, `retail-run`): they give an inline body the TU
+  that emitted it.
 
 ## Traps
 
