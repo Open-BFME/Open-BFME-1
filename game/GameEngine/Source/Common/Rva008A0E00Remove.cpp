@@ -146,3 +146,29 @@ void Rva008A0D80Owner::append( Rva008A0D80Entry *entry )
 	++m_count;
 	entry->notify();
 }
+
+class Rva008A10E0Entry
+{
+public:
+	virtual void notify();
+	unsigned int m_flags;
+};
+
+class Rva008A10E0Owner
+{
+public:
+	void append(Rva008A10E0Entry *entry);
+
+	int m_count;
+	int m_pad;
+	Rva008A10E0Entry **m_table;
+};
+
+// ?append@Rva008A10E0Owner@@QAEXPAVRva008A10E0Entry@@@Z
+void Rva008A10E0Owner::append(Rva008A10E0Entry *entry)
+{
+	m_table[m_count] = entry;
+	++m_count;
+	if (!((unsigned char)(entry->m_flags >> 30) & 1))
+		entry->notify();
+}
