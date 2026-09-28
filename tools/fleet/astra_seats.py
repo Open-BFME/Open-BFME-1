@@ -532,7 +532,7 @@ def gap_brief(starts):
     return "\n".join(lines) + "\n"
 
 
-def launch(groups, hours, note_template=None, brief_fn=None):
+def launch(groups, hours, note_template=None, brief_fn=None, mode=None):
     bash = shutil.which("bash")
     if not bash or not shutil.which("codex"):
         raise SystemExit("astra_seats: needs Git Bash (for `timeout`) and the codex CLI on PATH")
@@ -580,7 +580,7 @@ def launch(groups, hours, note_template=None, brief_fn=None):
                          start_new_session=os.name != "nt")
         record = {"id": seat_id, "label": label, "rvas": [f"0x{r:08X}" for r in rvas],
                   "worktree": str(worktree), "log": str(log), "model": MODEL, "effort": EFFORT,
-                  "started": stamp, "hours": hours}
+                  "started": stamp, "hours": hours, "mode": mode}
         update_seats(lambda items: items.append(record))
         print(f"seat {seat_id}: {label}: {' '.join(f'0x{r:08X}' for r in rvas)}")
 
@@ -684,6 +684,8 @@ def harvest(seat, correct=None):
             seat_replay.add_corrections(tree, *correct)
         total = sum(size for _, _, size in rows)
         subject = f"reverse: {len(rows)} bodies from {Path(seat['label']).name} ({total:,} B), {seat['model']} seat"
+        if seat.get("mode") == "link-debt":
+            subject = f"link-debt: name the globals in {Path(seat['label']).name}, {seat['model']} seat"
         body = "\n".join(f"  {rva} {size:5} B {name}" for name, rva, size in sorted(rows, key=lambda r: r[1]))
         made = git(tree, "commit", "-q", "-m", subject, "-m",
                    f"{seat['model']} ({seat['effort']}) fresh-file seat {seat['id']}, landed byte-exact:\n{body}",
@@ -753,7 +755,7 @@ def main(argv=None):
             for label, rvas in groups:
                 print(f"{label}: {len(rvas)} rows")
             return 0
-        launch(groups, 2.0, LINK_DEBT_NOTE, link_debt_brief)
+        launch(groups, 2.0, LINK_DEBT_NOTE, link_debt_brief, mode="link-debt")
         return 0
     if args.experiment:
         groups = experiment_groups(args.experiment)

@@ -123,7 +123,15 @@ def alias_scaffold(rows, wanted):
         target = defining(address)
         if target and target != name:
             table[name] = target
-    return table
+    # A defining name can itself be unresolved and aliased (2 such chains on
+    # 2026-09-28): point every alias straight at the end of its chain.
+    for name in list(table):
+        seen, target = {name}, table[name]
+        while target in table and target not in seen:
+            seen.add(target)
+            target = table[target]
+        table[name] = target
+    return {name: target for name, target in table.items() if name != target}
 
 
 def data_names():
@@ -297,6 +305,8 @@ def main(argv=None):
     ap.add_argument("--scaffold", action="store_true",
                     help="relink with the alias scaffold (/ALTERNATENAME each called name to the symbol "
                          "defined at its pinned address) and report what remains")
+    ap.add_argument("--history", action="store_true",
+                    help="append this census to targets/game/reverse/link_census_history.csv (the weekly trend)")
     ap.add_argument("--scaffold-limit", type=int, default=0,
                     help="use only the first N aliases (bisecting a linker failure)")
     args = ap.parse_args(argv)
@@ -336,7 +346,42 @@ def main(argv=None):
     OUT.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(census, indent=1), encoding="utf-8")
     report(census)
+    if args.history:
+        append_history(census)
     return 0
+
+
+HISTORY = ROOT / "targets/game/reverse/link_census_history.csv"
+HISTORY_FIELDS = ["date", "commit", "objects", "unresolved", "alias", "pinned_elsewhere", "dump", "data",
+                  "import", "unpinned", "duplicates", "comdat_conflicts", "comdat_vtables",
+                  "scaffold_aliases", "scaffold_unresolved", "scaffold_crashed"]
+
+
+def append_history(census):
+    """One row per census: the trend of what stands between the tree and a link."""
+    unresolved = census["unresolved_classes"]
+    conflicts = census.get("comdat_conflicts", {})
+    scaffold = census.get("scaffold") or {}
+    commit = subprocess.run(["git", "rev-parse", "--short=10", "HEAD"], cwd=ROOT,
+                            capture_output=True, text=True).stdout.strip()
+    row = {"date": census["when"], "commit": commit, "objects": census["objects"],
+           "unresolved": sum(unresolved.values()), "alias": unresolved.get("alias", 0),
+           "pinned_elsewhere": unresolved.get("pinned-elsewhere", 0), "dump": unresolved.get("dump", 0),
+           "data": unresolved.get("data", 0), "import": unresolved.get("import", 0),
+           "unpinned": unresolved.get("unpinned", 0), "duplicates": sum(census["duplicate_classes"].values()),
+           "comdat_conflicts": len(conflicts),
+           "comdat_vtables": sum(1 for n in conflicts if n.startswith(("??_7", "??_R"))),
+           "scaffold_aliases": scaffold.get("aliases", ""),
+           "scaffold_unresolved": "" if not scaffold or scaffold.get("crashed")
+           else sum(scaffold["unresolved_classes"].values()),
+           "scaffold_crashed": (scaffold.get("crashed") or "")[:60]}
+    new = not HISTORY.exists()
+    with HISTORY.open("a", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, HISTORY_FIELDS, lineterminator="\n")
+        if new:
+            writer.writeheader()
+        writer.writerow(row)
+    print(f"link_census: appended {HISTORY.relative_to(ROOT).as_posix()}")
 
 
 if __name__ == "__main__":
