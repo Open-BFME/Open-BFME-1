@@ -34,6 +34,8 @@ ZERO = "0" * 40
 # accidentally certify a dirty neighbouring tree.
 TREE_PATHS = ("game", "worldbuilder", "inputs", "targets", "tools", ".githooks",
               "build.sh", "build.cmd", "build.ps1")
+BOUNDARY_ENV = ("ADDMATCH_BOUNDARY_NAME", "ADDMATCH_BOUNDARY_RVA",
+                "ADDMATCH_BOUNDARY_SOURCE", "ADDMATCH_BOUNDARY_BATCH_FILE")
 
 
 def git(*args, check=True):
@@ -146,6 +148,10 @@ def _live_build_marker():
         if alive is not False:
             return str(marker)
     return None
+
+
+def _boundary_request_active():
+    return any(os.environ.get(name) is not None for name in BOUNDARY_ENV)
 
 
 def _row_selector(row):
@@ -356,11 +362,12 @@ def prepare(commit, selectors, manifest):
     symbol_map = B.load_symbol_map()
     inventory_cache = {}
     misses, hits = [], []
+    cache_disabled = _boundary_request_active()
     for row in selected:
-        payload = _payload(row, symbol_map, inventory_cache)
+        payload = None if cache_disabled else _payload(row, symbol_map, inventory_cache)
         key = _key(payload)
         entry = _load_entry(key) if key else None
-        if key and _entry_is_valid(entry, payload):
+        if not cache_disabled and key and _entry_is_valid(entry, payload):
             hits.append(_row_selector(row))
         else:
             misses.append(row)
@@ -372,7 +379,8 @@ def prepare(commit, selectors, manifest):
     output.extend(_row_selector(row) for row in misses)
     for selector in dict.fromkeys(output):
         print(selector)
-    print(f"publish-verify: {len(hits)} cache hit(s), {len(misses)} expensive row check(s)",
+    suffix = " (boundary request active; cache disabled)" if cache_disabled else ""
+    print(f"publish-verify: {len(hits)} cache hit(s), {len(misses)} expensive row check(s){suffix}",
           file=sys.stderr)
 
 

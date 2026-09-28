@@ -114,6 +114,12 @@ def test_corrupt_or_incompatible_entries_are_misses(tmp_path, monkeypatch):
     assert cache._load_entry(key) is None
 
 
+def test_one_shot_boundary_requests_disable_reuse(monkeypatch):
+    assert not cache._boundary_request_active()
+    monkeypatch.setenv("ADDMATCH_BOUNDARY_RVA", "0x1000")
+    assert cache._boundary_request_active()
+
+
 def test_concurrent_writers_leave_one_complete_entry(tmp_path, monkeypatch):
     from concurrent.futures import ThreadPoolExecutor
 
