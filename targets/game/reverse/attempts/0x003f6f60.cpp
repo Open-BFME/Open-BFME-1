@@ -1,9 +1,12 @@
 // ?method@Rva003F6F60@@YAHPAX@Z
-// partial score=0.881 date=2026-09-27
+// partial score=0.898 date=2026-09-27
 // Retail 0x003F6F60: unlink PathfindCellInfo records, clear flag bit 3, and
 // release eligible cell metadata. The best C++ probe emits 141 bytes, with
 // 117 non-relocation bytes different from the 146-byte retail body.
 // cl: /DNDEBUG /MD /EHsc
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 class PathfindCell;
 
@@ -11,6 +14,7 @@ class PathfindCellInfo
 {
 public:
 	static int releaseClosedList(PathfindCellInfo *list);
+	void releaseToPool(void *pool);
 
 	char m_pad00[0x24];
 	unsigned int m_flags;
@@ -27,13 +31,8 @@ public:
 	unsigned int m_packed;
 };
 
-class MixFileInfoBuffer
-{
-public:
-	void releaseInto(void *head);
-};
 
-extern int TheMixFileInfoPool;
+extern PathfindCellInfo *g_bfmePathfindFreeList;
 
 static __forceinline void unlinkRva003F6F60Node(
 	PathfindCellInfo *current, PathfindCellInfo **back, PathfindCellInfo *next)
@@ -58,6 +57,7 @@ int method(void *list)
 	{
 		PathfindCellInfo *current = (PathfindCellInfo *)list;
 		PathfindCellInfo **back = current->m_back;
+		_ReadWriteBarrier();
 		PathfindCellInfo *next = current->m_next;
 		list = next;
 		++count;
@@ -74,7 +74,7 @@ int method(void *list)
 				cell->m_info->m_back == 0 &&
 				(cell->m_info->m_flags & 0x18) == 0)
 			{
-				reinterpret_cast<MixFileInfoBuffer *>(cell->m_info)->releaseInto(&TheMixFileInfoPool);
+				cell->m_info->releaseToPool(&g_bfmePathfindFreeList);
 				cell->m_info = 0;
 			}
 		}
@@ -116,7 +116,7 @@ int PathfindCellInfo::releaseClosedList(PathfindCellInfo *list)
 				cell->m_info->m_back == 0 &&
 				(cell->m_info->m_flags & 0x18) == 0)
 			{
-				reinterpret_cast<MixFileInfoBuffer *>(cell->m_info)->releaseInto(&TheMixFileInfoPool);
+				cell->m_info->releaseToPool(&g_bfmePathfindFreeList);
 				cell->m_info = 0;
 			}
 		}
