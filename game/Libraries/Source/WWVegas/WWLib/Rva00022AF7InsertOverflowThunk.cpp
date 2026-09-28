@@ -1,21 +1,15 @@
 // cl: /DNDEBUG /MD /EHsc
 // The retail body is a five-byte incremental-link tail thunk. Its decoded
-// target is the matched vector<pair<ObjectID,ObjectID> > insertion body at
-// 0x00771870. This derived view preserves the exact thiscall ABI while keeping
+// target is the matched 8-byte-element insertion body at 0x00771870
+// (W3D side; targets/game/reverse/identity_evidence/000960a0-00771870-objectid-pair-vector.md). This derived view preserves the exact thiscall ABI while keeping
 // the thunk's own identity address-qualified.
-enum ObjectID
+struct Rva00771870Element
 {
+	unsigned char m_data[8];
 };
 
 namespace _STL
 {
-template <class First, class Second>
-struct pair
-{
-	First first;
-	Second second;
-};
-
 template <class Type>
 class allocator
 {
@@ -38,21 +32,21 @@ protected:
 };
 }
 
-typedef _STL::pair<ObjectID, ObjectID> Rva00022AF7ObjectIDPair;
-typedef _STL::allocator<Rva00022AF7ObjectIDPair> Rva00022AF7Allocator;
+typedef Rva00771870Element Rva00022AF7Element;
+typedef _STL::allocator<Rva00022AF7Element> Rva00022AF7Allocator;
 
 class Rva00022AF7InsertOverflowThunk :
-	public _STL::vector<Rva00022AF7ObjectIDPair, Rva00022AF7Allocator>
+	public _STL::vector<Rva00022AF7Element, Rva00022AF7Allocator>
 {
 public:
-	void forward(Rva00022AF7ObjectIDPair *position,
-		const Rva00022AF7ObjectIDPair &value,
+	void forward(Rva00022AF7Element *position,
+		const Rva00022AF7Element &value,
 		const _STL::__false_type &tag, unsigned int fillLength, bool atEnd);
 };
 
 void Rva00022AF7InsertOverflowThunk::forward(
-	Rva00022AF7ObjectIDPair *position,
-	const Rva00022AF7ObjectIDPair &value,
+	Rva00022AF7Element *position,
+	const Rva00022AF7Element &value,
 	const _STL::__false_type &tag, unsigned int fillLength, bool atEnd)
 {
 	_M_insert_overflow(position, value, tag, fillLength, atEnd);
