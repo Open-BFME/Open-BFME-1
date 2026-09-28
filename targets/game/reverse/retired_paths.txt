@@ -63,3 +63,13 @@ docs/full_gate_red_2026-09-15.txt
 docs/baseline-2026-09-15.md
 docs/analysis/remaining-30pct-blockers-2026-09-24.md
 docs/ghdec
+# Retired 2026-09-28: broken or abandoned mods (desynced, changed game speed, never drew, or never registered).
+mods/features/034-framedrain/src/framedrain.cpp
+mods/features/035-adaptretry/README.md
+mods/features/037-fps60/README.md
+mods/features/037-fps60/src/fps60.cpp
+mods/features/044-modpanel/README.md
+mods/features/044-modpanel/src/modpanel.cpp
+mods/features/049-unitinterp/src/unitinterp.cpp
+mods/features/050-ratiocont/src/ratiocont.cpp
+tools/tests/test_fps60.py

@@ -111,17 +111,13 @@ def test_it_is_promoted_and_dist_would_accept_it():
 def test_the_unshipped_gate_is_not_vacuous():
     """The UNSHIPPED list must still hold something, or the check above is empty.
 
-    034-framedrain is refuted -- it desyncs -- and must never reach a --dist
-    build. Verified by reading the registry rather than by shelling out, for two
-    reasons learned the hard way here: `--only X --dist` used to rewrite the
-    shipped artifact with a one-feature build, and a plain `--dist` rewrites it
-    too (harmlessly, but a test has no business writing mods/dist at all).
+    Verified by reading the registry rather than by shelling out: `--dist`
+    rewrites the shipped artifact, and a test has no business writing mods/dist.
     """
     import modbuild
-    assert "034-framedrain" in modbuild.UNSHIPPED, (
-        "034-framedrain left UNSHIPPED: it desyncs, and a --dist build must "
-        "never carry it")
-    assert "034-framedrain" not in modbuild.FEATURES
+    assert modbuild.UNSHIPPED, "UNSHIPPED is empty, so nothing is gated"
+    assert not set(modbuild.UNSHIPPED) & set(modbuild.FEATURES), (
+        "a feature is both shipped and UNSHIPPED")
 
 
 def test_dist_refuses_a_partial_build():

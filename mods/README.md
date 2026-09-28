@@ -15,12 +15,8 @@ here. See [docs/mods.md](../docs/mods.md) for how the patches are built.
 | In the repository bundle | `048-advancedgfx` | Graphics options UI; requires its bundled `apt/options.big`. |
 | Opt-in AC gameplay fix | [`055-ac-attack-view`](features/055-ac-attack-view/README.md) | The only AC feature players need. The reported scenario passed an offline replay and a live two-client test; broader horde-combat effects remain to be tested before bundling. |
 | Opt-in experiment | `038-fpsrender`, `040-horplus` | Render-only 60 FPS attempt and camera change; neither is in the bundle. |
-| Broken or unfinished | `034-framedrain`, `037-fps60`, `044-modpanel` | Desyncs, changes spell timing, or does not draw, respectively. Do not ship. |
 | Developer diagnostics only | `030-netlatprobe`, `036-fpsprobe`, `041-tracksprobe`, `045-drawprobe`, `047-uiprobe`, [`056-ac-transition-trace`](features/056-ac-transition-trace/README.md) | Optional measurement tools, not player fixes; `041` includes a deliberate crash trigger. |
-| Not registered with the mod builder | `035-adaptretry`, `049-unitinterp`, `050-ratiocont` | Abandoned or incomplete source, not selectable by `modbuild.py`. |
 
-There are **22 feature directories**: seven in the repository bundle, twelve
-opt-in or diagnostic directories, and three not registered with the builder.
-`036-fpsprobe` has two opt-in build variants, so `modbuild.py` lists thirteen
-opt-in names. None of the FPS experiments is in the repository bundle; the
-full 60 FPS attempt is [documented as broken](../docs/fps60.md).
+There are **16 feature directories**: seven in the repository bundle, the opt-in
+AC fix, two opt-in experiments, and six developer diagnostics. The full 60 FPS
+attempt raised the game speed and is retired; it is in git history.
