@@ -70,7 +70,7 @@ public:
 	virtual void slot02() = 0;
 
 	bool shouldRefresh();
-	void refreshPlayerSlot(int index);
+	bool rebuildColorCombo005284F0(int index);
 	void refreshPlayerTypeControl(int index);
 	void refreshPlayerTeamControl(int index);
 	void refreshPlayerFactionControl(int index, bool preserveSelection);
@@ -131,7 +131,7 @@ bool SkirmishScreenState::apply(void *gameInfo, int force)
 	for (int index = 7; index >= 0; --index)
 	{
 		refreshPlayerTypeControl(index);
-		refreshPlayerSlot(index);
+		rebuildColorCombo005284F0(index);
 		refreshPlayerTeamControl(index);
 		refreshPlayerFactionControl(index, false);
 		m_first[index]->winEnable(restore);

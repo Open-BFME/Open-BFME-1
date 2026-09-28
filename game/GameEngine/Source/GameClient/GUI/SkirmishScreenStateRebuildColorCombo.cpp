@@ -175,7 +175,8 @@ private:
 // box's current item data, and the combo is repopulated with the
 // AptRandomColor / AptWhiteBox images only when that set changed.  It returns
 // whether it repopulated.  The ZH twin is GUIUtil PopulateColorComboBox; the
-// method name keeps the address because no symbol names it.
+// method name keeps the address because no evidence names it (see
+// targets/game/reverse/identity_evidence/005284f0-refreshplayerslot-pin.md).
 // ?rebuildColorCombo005284F0@SkirmishScreenState@@QAE_NH@Z
 Bool SkirmishScreenState::rebuildColorCombo005284F0(Int index)
 {

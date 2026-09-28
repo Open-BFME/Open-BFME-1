@@ -85899,7 +85899,6 @@ name,address,notes
 ?refreshPair@Rva006ABC60@@QAEXHH@Z,0x00019E6B,Rva006ABC60 xfer refresh loop calls the existing volume helper ILT
 ?refreshPlayerControls@SkirmishScreenState@@QAEXH@Z,0x0002D38A,called when a slot crosses the human AI boundary
 ?refreshPlayerFactionControl@SkirmishScreenState@@QAEXH_N@Z,0x0002EA91,rebuilds the faction control for one Skirmish APT slot
-?refreshPlayerSlot@SkirmishScreenState@@QAEXH@Z,0x0003B1F1,SkirmishScreenState::apply calls the row refresh thunk for each slot and the thunk targets body 0x005284F0
 ?refreshPlayerTeamControl@SkirmishScreenState@@QAEXH@Z,0x0002D38A,rebuilds the team control after a slot crosses the human AI boundary
 ?refreshPlayerTypeControl@SkirmishScreenState@@QAEXH@Z,0x00029C35,rebuilds the player-type control for one Skirmish APT slot
 ?refreshRva00215650@BfmeOwnFCB@@QAEXXZ,0x00215650,ECX base receiver at 0x00215943 via ILT 0x00032C54; same +8 Object and +0xE4 ID as bfmeAfterFCB; complete body ends RET at 0x0021576A
