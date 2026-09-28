@@ -597,7 +597,7 @@ def build_horplus(pe, feature_dir, probe=False):
 FEATURES = {"020-gameresult": build_gameresult,
             # Promoted once its spike came back green: twelve rig matches, no
             # retail match overlapping any fixed one, and the logic rate
-            # unchanged at 5.000/s. docs/net-fixes.md has the numbers.
+            # unchanged at 5.000/s. mods/features/031-earlysend/README.md has the numbers.
             "031-earlysend": build_earlysend,
             # Promoted 2026-08-29 on the condition its UNSHIPPED note set --
             # "green at 150ms+ round trip". Four stress matches at 300ms RTT,
@@ -608,7 +608,7 @@ FEATURES = {"020-gameresult": build_gameresult,
             # whole range: gap p99 420/419/420 vs 1740/1769/1800, worst stall
             # 805/806/800 vs 2031/3724/3719, game time lost ~0% vs 3-11%. On
             # real build orders, placement goes 0.7-2.6s unpredictable to
-            # 0.43-0.65s. docs/net-fixes.md has the numbers.
+            # 0.43-0.65s. mods/features/033-retrytime/README.md has the numbers.
             "033-retrytime": build_retrytime,
             # Promoted once the three things holding it back were gone: the
             # button stopped squatting a shared command (it swallows

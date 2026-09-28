@@ -1,4 +1,4 @@
-# AC transition trace (developer diagnostics only)
+# 056-ac-transition-trace: logs why melee horde members stop attacking
 
 **Players do not need this feature to fix AC.** Use
 [`055-ac-attack-view`](../055-ac-attack-view/README.md) by itself for the
@@ -46,8 +46,8 @@ each client's `command_dispatch`, `readiness_snapshot`, `member_change`, `state_
 `melee_plan`, and `damage_result` records by frame and object ID. Do not infer
 that the click caused the transition merely because they occurred together.
 
-A captured two-client match reproduced the later disengagement in an offline
-replay. The `engage_horde_range_refusal` and `reacquire_fail` records identify
+An offline replay of a captured two-client match reproduced a disengagement.
+The `engage_horde_range_refusal` and `reacquire_fail` records identify
 the two consecutive exits for an out-of-range member of a horde. A successful
 diagnostic run has no dropped events, no write failure, and a trace for each
-rear member through the disengagement. The trace alone does not prove a fix.
+rear member through the disengagement being diagnosed. The trace alone does not prove a fix.

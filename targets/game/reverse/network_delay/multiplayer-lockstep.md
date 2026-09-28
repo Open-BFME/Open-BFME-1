@@ -80,7 +80,7 @@ simulation age, but a stalled simulation does not age frames like a wall clock.
 Read each installation's INI archives before quoting configurable values.
 
 See [the caller and phase evidence](bfme1-network-admission-and-client-phases.md)
-and the recovered [admission function](../game/GameEngine/Source/GameNetwork/BFMENativeNetwork_getFrameAdvanceCount.cpp).
+and the recovered [admission function](../../../../game/GameEngine/Source/GameNetwork/Network.cpp).
 
 ## Loss, leaving and router replacement
 
@@ -116,7 +116,7 @@ The checksum accumulator's implementation is a rotate/add over words and tail
 bytes despite the historical CRC name.
 
 Readable evidence includes
-[state collection](../game/GameEngine/Source/Common/GameLogicCRC.cpp),
+[state collection](../../../../game/GameEngine/Source/GameLogic/System/GameLogicCRC.cpp),
 [peer comparison](../../../../game/GameEngine/Source/GameLogic/System/GameLogicPeerCRC.cpp),
 and [the local guard](../../../../game/GameEngine/Source/GameNetwork/native_desync_report.cpp).
 Object registration, wake-up scheduling and deferred destruction matter here:
@@ -142,7 +142,8 @@ and it is absent from the packaged feature list. `035-adaptretry` is closed and
 not built. Faster command sending and more aggressive simulation advancement
 must therefore be evaluated separately.
 
-[Network fixes](../../../../docs/net-fixes.md) records the earlier two-client latency/loss trials
+The [031-earlysend](../../../../mods/features/031-earlysend/README.md) and
+[033-retrytime](../../../../mods/features/033-retrytime/README.md) READMEs record the earlier two-client latency/loss trials
 and their limits. The 2026-09-07 reconstruction session has not rerun those
 matches. The user-supplied
 [RotWK delay-fix article](https://www.gamereplays.org/riseofthewitchking/portals.php?show=page&name=rotwk_2.02_delay_fix)

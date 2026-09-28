@@ -1,15 +1,18 @@
-# AC fix
+# 055-ac-attack-view: units attacking a building can be hit (AC fix)
 
-This keeps melee horde members attacking an enemy horde while that enemy attacks a structure.
+In AC ("attack cancel"), units attacking a structure could not be hit back by
+the enemy melee horde fighting them. This keeps melee horde members attacking an
+enemy horde while that enemy attacks a structure.
 
-Build the player executable from the repository root:
+Build a test executable from the repository root. It carries the AC fix alone,
+without the bundle's other features:
 
 ```sh
 python3 tools/modbuild.py --only 055-ac-attack-view -o build/ac-fix.exe
 ```
 ## How it fixes AC
 
-The observed AC encounter had two failure paths. First, the melee target search
+A reported AC encounter showed two failure paths. First, the melee target search
 could miss an enemy attacking a structure because that enemy was represented in
 a pathfinder cell by a goal reservation rather than the position or obstacle ID
 the search normally checks. The fix lets that search consider the reserved
@@ -25,14 +28,14 @@ and subsequent attack states then run normally. These conditions depend on
 horde orders and enemy relationships, not on a specific faction, unit type, or
 formation.
 
-The feature also retains four earlier hooks that temporarily change the melee
+The feature also contains four hooks that temporarily change the melee
 target predicate for an enemy attacking a structure. They restore the predicate
 bit afterward. They were present in the tested build, but their independent
 contribution has not been measured.
 
 ## Verification and scope
 
-In an offline replay of the reported encounter, four of ten Uruks were actively
+In an offline replay of that encounter, four of ten Uruks were actively
 attacking at frame 500 without the member-path change; all ten were attacking
 with it. Hits on the Soldiers during frames 456–623 rose from 55 to 82, while
 hits on the mill stayed at 61. A live two-client test of the complete feature

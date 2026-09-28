@@ -1,21 +1,22 @@
-# 020-gameresult — match results, plus the desync flag retail hides
+# 020-gameresult: match results, plus the desync flag retail hides
 
-Shipped in `mods/dist`, and the feature the ladder already runs. This file is
-the whole of it: where the records land, what quitting actually does to them,
-and the divergence flag stock BFME detects and tells nobody about.
+Shipped in `mods/dist`; the BFME ladder reused its win-detection findings in
+its own tools. Each client
+writes one JSON line per match event, including the engine's own desync flag,
+which retail detects but never reports.
 
 ## Where
 
 `BFME_RESULT_PATH` if set, else
-`%APPDATA%\My Battle for Middle-earth Files\GameResult.jsonl`. Opened `"a"` and
-flushed per line, so a crash costs at most a torn last line. One file per
-WINEPREFIX. **Gap:** `getenv("APPDATA")` is unchecked — unset, the CRT formats
-`(null)`, `fopen` fails, the record is dropped silently.
+`%APPDATA%\My Battle for Middle-earth Files\GameResult.jsonl`, one file per Wine
+prefix. The file is opened for append and flushed per line, so a crash costs at
+most a torn last line. If `APPDATA` is unset, the open fails and the record is
+dropped silently.
 
 ## Format
 
-JSONL: one `start` per match, one `leave` if this machine walked out mid-game,
-one `end` if the match resolved here.
+One `start` per match, one `leave` if this machine walked out mid-game, and one
+`end` if the match resolved here:
 
 ```
 {"ev":"start","t":1787485862,"slot":0}
@@ -26,100 +27,48 @@ one `end` if the match resolved here.
  "players":[{"player":143839956,"defeated":0,"teamWon":1}, ...x8]}
 ```
 
-**Reconcile on `teamWon`, not `result`**: `result` is one machine's verdict.
-Empty slots carry `slotIndex:255`. A `leave` frame is when the request was
-*sent*; survivors log when the router's PLAYERLEAVE executed, a frame or two
-later (row 27: 40 against 42).
+* Reconcile on `teamWon`, not `result`: `result` is one machine's verdict.
+* Empty slots carry `slotIndex:255`.
+* A `leave` frame is when the quit request was sent; survivors record the
+  router's PLAYERLEAVE a frame or two later.
+* A player who quits writes its own `end` only if the match ends at its quit.
+  Otherwise its file holds `start` and `leave` only, which is why every `end`
+  carries all eight slots.
 
-## Quitting
-
-BFME sends **REQUESTPLAYERLEAVE** (7) to every peer; only the packet router
-turns it into the frame-synchronised **PLAYERLEAVE** (10) / **DESTROYPLAYER**
-(11) pair. The leaver does not wait — it posts `MSG_CLEAR_GAME_DATA` and is on
-the score screen a tick later. It writes its own `end` only when the match ends
-at its quit: in a 1v1, row 2 measured `defeat`, `leave=1`, `leaveFrame=57`,
-`defeatFrame=58`. When its team fights on, the file holds `start` + `leave` and
-no more. That is why every `end` carries all eight slots: a departed player's
-fate lives only in the survivors' files.
+Leave codes: `0` played to the end, `1` graceful quit, `2` stopped answering and
+was dropped. All three were observed in test matches. Demolishing your own
+citadel is a defeat (`leave=0`, `defeated=1`), not a quit. A crash and a freeze
+give the same record: survivors log `leave=2`, and neither the crashed nor the
+frozen client writes an `end`.
 
 The `leave` line comes from `ConnectionManager::sendPlayerLeaveCommands`
-(`0x00665C10`) — **not** `Network::quitGame` (`0x006822E0`), which a four-client
-probe recorded firing zero times. It is gated on
-`TheVictoryConditions->m_endFrame == 0` (`0x012F079C`, `+0x98`), because the
-same entry fires when a player leaves a *finished* match.
-
-## Leave codes
-
-| Value | Meaning | Measured in |
-|---|---|---|
-| 0 | never left; played to the end | every row |
-| 1 | graceful quit | rows 2, 6, 27, 30 |
-| 2 | stopped answering, dropped | rows 3, 4, 7, 8 |
-
-Demolishing your citadel is **not** a quit: `leave=0`, `defeated=1`, a real
-`defeatFrame` — a genuine loss on demand.
-
-**A crash and a freeze are the same record.** SIGKILL closes the client's
-sockets so peers see the connection go; SIGSTOP leaves them open and silent so
-peers can only time it out. The survivor records `leave=2` either way, host or
-joiner, with a defeat frame one to three frames later. Neither writes an `end`,
-and a resumed frozen client still writes nothing 45 s after `SIGCONT`.
+(`0x00665C10`), not `Network::quitGame`, which never fired in a four-client
+probe. It is gated on `TheVictoryConditions->m_endFrame == 0` because the same
+entry fires when a player leaves a finished match.
 
 ## The desync flag
 
-Every `end` record carries a `desync` field, read from `GameLogic+0x6C`:
+`desync` is read from `GameLogic+0x6C`, the engine's own divergence flag, which
+retail sets during normal play. Retail writes a `CLIENT_DESYNC_*.txt` report
+(RVA `0x00065470`) only when a command-line option sets `[0x12ED4E4]`, and a
+normal launch passes none. On a plain launch, a test build known to desync
+(`034-framedrain`, in git history) raised the flag on both seats from logic
+frame 102, while four other captures of 877–1326 frames read zero.
 
-```json
-{"ev":"end", "frame":3757, "result":"victory", "desync":0, ...}
-```
+**A desynced match has no single winner.** Each seat reports the outcome of its
+own diverged game, so any record with `desync != 0` marks a match that should
+not be rated. This needs no network change: the field is already in every record
+the ladder collects.
 
-That byte is the engine's own divergence flag, and retail sets it during normal
-play with no special switches. What retail does **not** do is tell anybody. The
-routine that writes a `CLIENT_DESYNC_*.txt` report (RVA `0x00065470`) is gated
-on `[0x12ED4E4]`, which is set only by a command-line option handler
-(`0x00461470`, which also ORs `0x1000` into the option word at `0x012A6FA0`).
-A normal launch passes no such switch, so a retail client detects the
-divergence, records it internally, and writes no report.
+## Build
 
-Confirmed by positive control rather than by reading alone: the refuted
-`034-framedrain` arm raised this flag on both seats from logic frame 102 on a
-plain launch, while four other captures of 877–1326 frames each read zero.
+`python3 tools/modbuild.py --dist` builds the bundle into `mods/dist/`.
 
-## Why the ladder should care
+## Limits
 
-**A desynced match has no single winner.** Once seats diverge they are
-simulating different games, so each reports the outcome of *its own* game.
-Whichever seat's record the ladder happens to ingest decides the result, and the
-other seat's record may disagree — silently, with nothing anywhere marking the
-match as suspect.
-
-This field is the mark. `desync != 0` on any seat's record means that match's
-result should not be rated. Retail cannot offer that signal at all; a client
-running this build can, and it costs nothing to check because the field is
-already in every record the ladder collects.
-
-**This is independent of everything else in this repository.** It needs no
-network change, no `031-earlysend`, no `033-retrytime` — the field has been in
-the records the ladder is already ingesting.
-
-## What is not established
-
-How often it fires in real ladder matches. Every clean capture on the rig reads
-zero, and the only non-zero came from a deliberately broken build.
-
-**An earlier revision of this file proposed asking the ladder to count
-`desync != 0` as a test of `033-retrytime`'s mechanism. That was wrong and is
-withdrawn.** Tracing the abandonment through the exe (see
-`mods/features/033-retrytime`, "What an abandoned command actually does") shows
-it never produces two seats simulating different games: the receiving seat's
-frame is short one command, nothing in BFME can complete it, and the seat freezes
-until the disconnect timers drop it. That path does not raise this flag. The
-quantity that would test the mechanism is the ladder's **disconnect / drop rate**
-bucketed by player count and match length, not its desync rate.
-
-**The field is still worth what this file claims for it** — it just tests a
-different thing. `desync != 0` marks a match whose result should not be rated,
-and it is already present in every record the ladder collects. That value does
-not depend on `033` or on any network change. Its rate in real matches remains
-unmeasured, and a count across existing records is still worth having for its own
-sake; it simply is not a test of the retransmission mechanism.
+* How often the flag fires in real ladder matches is unmeasured; every clean
+  test capture read zero.
+* The desync rate does not test `033-retrytime`. An abandoned command freezes
+  the receiving seat until the disconnect timers drop it, without two seats
+  diverging, and that path does not raise this flag. The ladder's disconnect
+  and drop rate, by player count and match length, would test that mechanism.

@@ -73,3 +73,6 @@ mods/features/044-modpanel/src/modpanel.cpp
 mods/features/049-unitinterp/src/unitinterp.cpp
 mods/features/050-ratiocont/src/ratiocont.cpp
 tools/tests/test_fps60.py
+# Retired 2026-09-28: folded into the 031-earlysend and 033-retrytime READMEs and mods/README.md.
+docs/net-fixes.md
+docs/fps60.md
