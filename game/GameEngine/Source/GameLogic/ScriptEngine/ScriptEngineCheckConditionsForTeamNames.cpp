@@ -1,5 +1,4 @@
 // ?checkConditionsForTeamNames@ScriptEngine@@QAEXPAVScript@@ABVAsciiString@@@Z
-// partial score=0.28 date=2026-09-27
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // BFME's map loader checks team-condition names before evaluating scripts.
 
@@ -8,6 +7,20 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 
 #include "ascii_string.h"
+
+struct AsciiStringDataLayout
+{
+    int references;
+    unsigned short length;
+    unsigned short capacity;
+    char data[1];
+};
+
+static __forceinline Bool isStringEmpty(const AsciiString &value)
+{
+    const AsciiStringDataLayout *data = *(const AsciiStringDataLayout **)&value;
+    return data == 0 || data->length == 0;
+}
 
 class Xfer;
 
@@ -92,10 +105,10 @@ private:
 class Condition
 {
 public:
-    Int getNumParameters(void) const { return m_numParameters; }
+    Int getNumParameters(void) const { return m_numParms; }
     Parameter *getParameter(Int index) const
     {
-        if (index >= 0 && index < m_numParameters)
+        if (index >= 0 && index < m_numParms)
             return m_parameters[index];
         return 0;
     }
@@ -104,7 +117,7 @@ public:
 private:
     void *m_vtable;
     Int m_conditionType;
-    Int m_numParameters;
+    Int m_numParms;
     Parameter *m_parameters[12];
     Condition *m_nextAndCondition;
 };
@@ -146,7 +159,9 @@ extern TeamFactory *TheTeamFactory;
 
 class BFMEScriptEngineFlagLookup
 {
-public:
+    friend class ScriptEngine;
+
+private:
     AsciiString canonicalFlagName(const AsciiString &name);
 };
 
@@ -221,14 +236,16 @@ void ScriptEngine::checkConditionsForTeamNames(Script *pScript, const AsciiStrin
                     }
                     else
                     {
-                        if (multiTeamName.isEmpty())
+                        if (isStringEmpty(multiTeamName))
                         {
                             multiTeamName = teamName;
                         }
-                        else if (multiTeamName != teamName)
+                        else if (multiTeamName.compare(teamName) != 0)
                         {
-                            BFMERetailAsciiString message((const char *)0x010E77C8);
-                            AppendDebugMessage(*(const AsciiString *)&message, false);
+                            {
+                                BFMERetailAsciiString message((const char *)0x010E77C8);
+                                AppendDebugMessage(*(const AsciiString *)&message, false);
+                            }
                             AppendDebugMessage(scriptName, false);
                             AppendDebugMessage(multiTeamName, false);
                             AppendDebugMessage(teamName, false);
@@ -239,9 +256,9 @@ void ScriptEngine::checkConditionsForTeamNames(Script *pScript, const AsciiStrin
         }
     }
 
-    if (multiTeamName.isEmpty())
+    if (isStringEmpty(multiTeamName))
     {
-        if (!singletonTeamName.isEmpty())
+        if (!isStringEmpty(singletonTeamName))
             pScript->setConditionTeamName(singletonTeamName);
     }
     else
