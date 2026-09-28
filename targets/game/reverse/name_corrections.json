@@ -9968,5 +9968,25 @@
   "after_sha256": "d049968e5d251cb414f0b04cc06a8314da43b8cbad7ee5437a1bdbe752a70405",
   "evidence": "targets/game/reverse/attempts/0x004b0d40.cpp",
   "reason": "Positional pairing across a cold rewrite: the old bank named the bfmeGo1073B argument BfmeN1073 and hung m_left/m_top on it, but retail reads those floats from the map value target record (+0x0C/+0x10) and passes that record's +0x08 block as the BfmeN1073 argument; BfmeN1073 is kept for that block (see the bank header)."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005ce090.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/System/ParticleSystemDestructor.cpp",
+  "old_name": "BFMERetailAsciiString",
+  "new_name": "Rva005CDFF0",
+  "before_sha256": "604bc27c1d2a182d87f3bfe57639f2026cb20e7428901e1f04a4f492ddfa829f",
+  "after_sha256": "735e1ed650169c50cff36d7a5136f51fc048b59dee7915b82ee57419b8158e79",
+  "evidence": "targets/game/reverse/identity_evidence/005CE090.md",
+  "reason": "False pairing: the stash used a TU-local 8-byte string stand-in; the landed body uses the real 4-byte BFME AsciiString from WWLib ascii_string.h (member at +0xBC; +0xC0 is m_localTransform). Rva005CDFF0 is an unrelated member type."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005ce090.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/System/ParticleSystemDestructor.cpp",
+  "old_name": "Gen_uwm_00031692",
+  "new_name": "Rva005CDFF0",
+  "before_sha256": "604bc27c1d2a182d87f3bfe57639f2026cb20e7428901e1f04a4f492ddfa829f",
+  "after_sha256": "735e1ed650169c50cff36d7a5136f51fc048b59dee7915b82ee57419b8158e79",
+  "evidence": "targets/game/reverse/identity_evidence/005CE090.md",
+  "reason": "Generated unwind-pin placeholder for ILT 0x00031692; that ILT jumps to 0x005CDFF0, matched as ??1Rva005CDFF0@@QAE@XZ in BigChainBaseDtors.cpp, and the landed source calls the matched body by its own name."
  }
 ]
