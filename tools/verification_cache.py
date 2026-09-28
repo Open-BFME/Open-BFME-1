@@ -101,7 +101,8 @@ def _tool_receipt(command):
     paths = set()
     for item in command:
         path = Path(item)
-        if path.is_file() and path.suffix.lower() in {".exe", ".dll"}:
+        if path.is_file() and (path.suffix.lower() in {".exe", ".dll"}
+                               or os.access(path, os.X_OK)):
             paths.add(path)
     try:
         root = B.vc71_root()
