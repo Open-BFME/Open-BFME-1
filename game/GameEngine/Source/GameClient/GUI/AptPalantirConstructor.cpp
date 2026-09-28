@@ -136,11 +136,11 @@ struct Coord2D
 	float y;
 };
 
-class Rva0079D1D0AptPalantir : public GameClient
+class AptPalantir : public GameClient
 {
 public:
-	virtual ~Rva0079D1D0AptPalantir();
-	Rva0079D1D0AptPalantir();
+	virtual ~AptPalantir();
+	AptPalantir();
 
 private:
 	void *m_510;
@@ -159,8 +159,7 @@ static char *bfmeString( const AsciiString &value )
 	return data ? data + 8 : (char *)0x0107388b;
 }
 
-// ??0AptPalantir@@QAE@XZ present-unmatched
-Rva0079D1D0AptPalantir::Rva0079D1D0AptPalantir()
+AptPalantir::AptPalantir()
 	: GameClient()
 	, m_510( 0 )
 	, m_514( 0 )
