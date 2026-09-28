@@ -43,6 +43,7 @@ if [ "$n" -eq "${FAIL_CHUNK:-0}" ]; then exit 23; fi
 set -euo pipefail
 git() {
         case "$*" in
+        'config --get merge.union.driver') printf '%s\n' 'python3 tools/merge_rows.py %O %A %B %P' ;;
         'rev-parse --show-toplevel') printf '%s\n' "$PWD" ;;
         'diff --cached --name-only --diff-filter=ACMRT')
             printf '%s\n' targets/game/reverse/functions.csv
