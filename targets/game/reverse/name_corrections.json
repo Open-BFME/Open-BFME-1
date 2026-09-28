@@ -8248,5 +8248,15 @@
   "after_sha256": "c72455aa64b7341a19cd0f4a46e7e1d420a3b4a378ae75e2e088fe70d8178514",
   "evidence": "targets/game/reverse/identity_evidence/005f8010-address-derived-attempt.md",
   "reason": "No address-specific caller, vtable slot, or string proves the old class name. The replacement keeps the retail RVA in the name."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/System/memory_pool.cpp",
+  "new_path": "game/GameEngine/Source/Common/System/MemoryPoolFree.cpp",
+  "old_name": "isValidBlock",
+  "new_name": "rva008839B0",
+  "before_sha256": "eb88ca9757e39c2eee52383fc9444e4fa1429a10647133e22786ff1022099181",
+  "after_sha256": "e6c7dcb46d28c89f477a2222becaba065d32f7f91aac11841d443d3d2c7fd73a",
+  "evidence": "targets/game/reverse/identity_evidence/00882ba0-free-tracker-callee.md",
+  "reason": "isValidBlock (0x00883AD0) and rva008839B0 (0x008839B0) are distinct methods; _Free calls 0x008839B0"
  }
 ]
