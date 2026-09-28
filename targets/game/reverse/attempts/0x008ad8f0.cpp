@@ -1,235 +1,210 @@
 // ?bfmeApply1236@BfmeB1236@@QAEXPAX@Z
-// partial score=0.2812 date=2026-09-23
-// ?bfmeApply1236@BfmeB1236@@QAEXPAX@Z
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// partial score=0.7645 date=2026-09-28
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// RVA 008AD8F0 (603 B): lays out an Apt text binding. BfmeConv1236.cpp calls it
+// as BfmeB1236::bfmeApply1236 with the value's parent scope. It refreshes the
+// binding's string (Rva008AD750StringBinding::refresh), releases the previous
+// text handle through the host callback at 0x01337874, fills the 0x70-byte
+// request the host callback at 0x01337870 lays out, and copies the resulting
+// rectangle back, re-anchoring the owner (bfmeSetAxis1289) for the centred and
+// right-aligned modes. Binding offsets follow Rva008AD750RefreshString.cpp; the
+// host callbacks and the null handle keep their addresses as names.
+
+struct BfmeStringData3AF0 { unsigned short m_refCount, m_length, m_capacity, m_unknown06; };
+extern BfmeStringData3AF0 g_bfmeDefaultString1284;
+
+class BfmeStrVKI {
+public:
+    const char *text() const { return (const char *)(m_data + 1); }
+    BfmeStringData3AF0 *m_data;
+};
 
 class Rva8CD130Value;
 
-class Rva008AD750StringBinding
-{
+struct Rva008AD8F0Source {
+    char m_gap00[0x18];
+    int m_index18;
+    char m_gap1c[0x2c - 0x1c];
+    int m_2c;
+    int m_30;
+};
+
+struct Rva008AD8F0Owner {
+    BfmeStrVKI m_string00;
+    char m_gap04[4];
+    int m_08;
+    char m_gap0c[4];
+    int m_rect[4];
+};
+
+struct Rva008AD8F0Handle;
+extern Rva008AD8F0Handle g_aptTextNull012D5598;
+
+class Rva008AD750StringBinding {
 public:
-	void refresh(Rva8CD130Value *scope);
-	char m_pad00[0x0c];
-	void *m_source0c;
-	char m_pad10[8];
-	void *m_string18;
-	void *m_key1c;
-	void *m_value20;
-	int m_fallback24;
-	int m_value28;
-	int m_value2c;
-	int m_value30;
-	int m_value34;
-	int m_mode38;
-	int m_value3c;
-	int m_value40;
-	int m_value44;
-	int m_value48;
-	int m_value4c;
-	float m_value50;
-	float m_value54;
-	float m_value58;
-	float m_value5c;
-	int m_value60;
-	int m_index64;
-	void *m_owner68;
-	unsigned m_flags6c;
-	int m_value70;
-	unsigned m_flags74;
-	int m_value78;
-	int m_value7c;
+    void refresh(Rva8CD130Value *scope);
+    char m_gap00[0x0c];
+    Rva008AD8F0Source *m_source0c;
+    char m_gap10[8];
+    BfmeStrVKI m_string18;
+    BfmeStrVKI m_string1c;
+    Rva008AD8F0Handle *m_handle20;
+    int m_fallback24;
+    int m_28;
+    int m_2c;
+    int m_30;
+    int m_34;
+    int m_mode38;
+    int m_3c;
+    char m_gap40[4];
+    int m_44;
+    int m_48;
+    int m_4c;
+    float m_left50, m_top54, m_right58, m_bottom5c;
+    int m_60;
+    int m_index64;
+    Rva008AD8F0Owner *m_owner68;
+    unsigned m_flags6c;
+    char m_gap70[4];
+    unsigned m_flags74;
 };
 
-struct BfmeApplyRecord1236
-{
-	void *m_value00;
-	float m_value04;
-	float m_value08;
-	float m_value0c;
-	float m_value10;
-	int m_value14;
-	int m_value18;
-	int m_value1c;
-	int m_value20;
-	int m_value24;
-	int m_value28;
-	int m_value2c;
-	int m_value30;
-	int m_value34;
-	int m_value38;
-	int m_value3c;
-	int m_value40;
-	int m_value44;
-	int m_value48;
-	int m_value4c;
-	int m_value50;
-	int m_value54;
-	int m_value58;
-	int m_value5c;
-	int m_value60;
-	int m_value64;
-	int m_value68;
-	int m_value6c;
+// The request the host layout callback fills in.
+struct BfmeApplyRecord1236 {
+    const char *m_text;
+    float m_left, m_top, m_right, m_bottom;
+    int m_14;
+    int m_mode;
+    int m_1c;
+    int m_20;
+    int m_sourceA;
+    int m_sourceB;
+    int m_2c;
+    int m_30;
+    int m_34;
+    int m_flagBit2;
+    int m_flagBit1;
+    int m_40;
+    int m_44;
+    int m_60;
+    int m_2cCopy;
+    int m_50;
+    const char *m_string;
+    unsigned m_flags;
+    Rva008AD8F0Handle *m_handle;
+    int m_ownerRect[4];
 };
 
-struct BfmeApplyMap1236
-{
-	char m_pad00[4];
-	void *m_base04;
-	char m_pad08[8];
-	void **m_entries;
-};
+extern void (__cdecl *g_aptTextRelease01337874)(Rva008AD8F0Handle *handle, unsigned flags);
+extern Rva008AD8F0Handle *(__cdecl *g_aptTextLayout01337870)(BfmeApplyRecord1236 *request);
 
-struct BfmeApplyNode1236
-{
-	char m_pad00[0x0c];
-	BfmeApplyMap1236 *m_map;
-};
+struct Rva008AD8F0Entry { char m_gap00[8]; const char *m_text08; };
+struct Rva008AD8F0Table { char m_gap00[0x10]; Rva008AD8F0Entry **m_entries; };
+struct BfmeApplyMap1236 { char m_gap00[4]; char *m_base04; };
+struct BfmeApplyNode1236 { char m_gap00[0x0c]; BfmeApplyMap1236 *m_movie; };
+struct BfmeApplyArgument1236 { char m_gap00[0x50]; BfmeApplyNode1236 *m_node; };
 
-struct BfmeApplyArgument1236
-{
-	char m_pad00[0x50];
-	BfmeApplyNode1236 *m_node;
-};
-
-class Rva00899770
-{
+class BfmeSlotState1289 {
 public:
-	virtual void addRef(void);
-	virtual void release(void);
-	unsigned m_flags;
-	union
-	{
-		bool m_boolean;
-		int m_integer;
-		float m_float;
-		void *m_string;
-	};
-	char m_gap0c[0x14];
-	float m_bfme20;
+    void bfmeSetAxis1289(int axis, float value, int enabled);
 };
 
-class BfmeB1236 : public Rva00899770
-{
+class BfmeB1236 {
 public:
-	void bfmeApply1236(void *argument);
-	char m_bfmePad24[0x24];
-	float *m_bfme48;
-	void *m_bfme4c;
-	Rva008AD750StringBinding *m_bfme50;
+    void bfmeApply1236(void *a);
+    char m_gap00[0x20];
+    float m_position20;
+    char m_gap24[0x50 - 0x24];
+    Rva008AD750StringBinding *m_binding50;
 };
 
-class BfmeSlotState1289
+// ?bfmeApply1236@BfmeB1236@@QAEXPAX@Z
+void BfmeB1236::bfmeApply1236(void *a)
 {
-public:
-	void bfmeSetAxis1289(int axis, float value, int enabled);
-};
+    Rva008AD750StringBinding *binding = m_binding50;
+    Rva008AD8F0Source *source = binding->m_source0c;
+    binding->refresh((Rva8CD130Value *)a);
+    if (binding->m_flags6c & 1)
+        return;
+    if (binding->m_handle20 && binding->m_handle20 != &g_aptTextNull012D5598)
+        g_aptTextRelease01337874(binding->m_handle20, binding->m_flags6c);
 
-typedef void (__cdecl *BfmeUpdate1236)(void *, int);
-typedef void *(__cdecl *BfmeCreate1236)(BfmeApplyRecord1236 *);
+    char *movieText = ((BfmeApplyArgument1236 *)a)->m_node->m_movie->m_base04 + 8;
+    BfmeStringData3AF0 *string = binding->m_string18.m_data;
+    if (string == &g_bfmeDefaultString1284) {
+        binding->m_handle20 = &g_aptTextNull012D5598;
+        if (binding->m_mode38 != 3) {
+            binding->m_right58 = binding->m_left50 + 4.0f;
+            binding->m_bottom5c = binding->m_top54 + 4.0f;
+        }
+        binding->m_44 = 0;
+        binding->m_48 = 0;
+        binding->m_flags6c = 1;
+        return;
+    }
 
-void BfmeB1236::bfmeApply1236(void *argument)
-{
-	BfmeB1236 *self = this;
-	Rva008AD750StringBinding *binding = self->m_bfme50;
-	void *bindingSource = binding->m_source0c;
-	BfmeApplyArgument1236 *source = (BfmeApplyArgument1236 *)argument;
-	binding->refresh((Rva8CD130Value *)argument);
-	unsigned flags = binding->m_flags6c;
-	if (flags & 1)
-		goto finish;
+    BfmeApplyRecord1236 request;
+    Rva008AD8F0Owner *owner = binding->m_owner68;
+    request.m_sourceB = source->m_30;
+    request.m_sourceA = source->m_2c;
+    request.m_mode = binding->m_mode38;
+    request.m_14 = binding->m_3c;
+    request.m_60 = binding->m_60;
+    if (owner && owner->m_08 != -1)
+        request.m_2c = owner->m_08;
+    else
+        request.m_2c = binding->m_fallback24;
+    request.m_2cCopy = binding->m_2c;
+    if (owner && owner->m_string00.m_data != &g_bfmeDefaultString1284)
+        request.m_text = owner->m_string00.text();
+    else if (source->m_index18 >= 0)
+        request.m_text = ((Rva008AD8F0Table *)movieText)->m_entries[binding->m_index64]->m_text08;
+    else
+        request.m_text = 0;
+    request.m_right = binding->m_right58;
+    request.m_left = binding->m_left50;
+    request.m_bottom = binding->m_bottom5c;
+    request.m_top = binding->m_top54;
+    request.m_34 = binding->m_34;
+    request.m_30 = binding->m_30;
+    unsigned styleFlags = binding->m_flags74;
+    request.m_flagBit2 = (styleFlags >> 2) & 1;
+    request.m_flagBit1 = (styleFlags >> 1) & 1;
+    request.m_string = (const char *)(string + 1);
+    request.m_flags = binding->m_flags6c;
+    request.m_handle = binding->m_handle20;
+    if (!owner) {
+        request.m_ownerRect[0] = 0;
+        request.m_ownerRect[1] = -1;
+        request.m_ownerRect[2] = -1;
+        request.m_ownerRect[3] = -1;
+    } else {
+        request.m_ownerRect[0] = owner->m_rect[0];
+        request.m_ownerRect[1] = owner->m_rect[1];
+        request.m_ownerRect[2] = owner->m_rect[2];
+        request.m_ownerRect[3] = owner->m_rect[3];
+    }
+    binding->m_handle20 = g_aptTextLayout01337870(&request);
 
-	void *old = binding->m_value20;
-	if (old != 0 && old != (void *)0x012D5598)
-		(*(BfmeUpdate1236 *)0x01337874)(old, flags);
-
-	BfmeApplyRecord1236 record;
-	BfmeApplyNode1236 *node = source->m_node;
-	BfmeApplyMap1236 *map = (BfmeApplyMap1236 *)((char *)node->m_map);
-	void *entry = (void *)((char *)map->m_base04 + 8);
-	void *string = binding->m_string18;
-	if (string == (void *)0x012D5298) {
-		binding->m_value20 = (void *)0x012D5598;
-		if (binding->m_mode38 != 3) {
-			binding->m_value58 = binding->m_value50 + *(const float *)0x01075340;
-		binding->m_value5c = binding->m_value54 + *(const float *)0x01075340;
-		}
-		binding->m_value44 = 0;
-		binding->m_value48 = 0;
-		binding->m_flags6c = 1;
-		goto finish;
-	} else {
-		if (*(int *)((char *)bindingSource + 0x18) >= 0)
-			entry = *(void **)((char *)map->m_entries + binding->m_index64 * 4);
-		if (binding->m_owner68 != 0)
-			record.m_value00 = *(void **)((char *)binding->m_owner68 + 8);
-		else
-			record.m_value00 = entry;
-	}
-
-	record.m_value04 = binding->m_value50;
-	record.m_value08 = binding->m_value54;
-	record.m_value0c = binding->m_value58;
-	record.m_value10 = binding->m_value5c;
-	record.m_value14 = binding->m_value60;
-	record.m_value18 = binding->m_mode38;
-	unsigned typeFlags = binding->m_flags74;
-	record.m_value38 = (typeFlags >> 2) & 1;
-	record.m_value3c = (typeFlags >> 1) & 1;
-	record.m_value28 = binding->m_mode38;
-	record.m_value34 = binding->m_value34;
-	record.m_value30 = binding->m_value30;
-	record.m_value24 = binding->m_fallback24;
-	record.m_value2c = binding->m_value2c;
-	record.m_value40 = (int)((char *)string + 8);
-	record.m_value48 = binding->m_value60;
-	record.m_value4c = binding->m_value2c;
-	record.m_value54 = (int)((char *)string + 8);
-	record.m_value58 = binding->m_flags6c;
-	record.m_value5c = (int)binding->m_value20;
-
-		if (binding->m_owner68 != 0) {
-			record.m_value60 = *(int *)((char *)binding->m_owner68 + 0x10);
-			record.m_value64 = *(int *)((char *)binding->m_owner68 + 0x14);
-			record.m_value68 = *(int *)((char *)binding->m_owner68 + 0x18);
-			record.m_value6c = *(int *)((char *)binding->m_owner68 + 0x1c);
-		} else {
-			record.m_value60 = -1;
-			record.m_value64 = -1;
-			record.m_value68 = -1;
-			record.m_value6c = -1;
-		}
-		record.m_value50 = binding->m_value44;
-		record.m_value44 = binding->m_value48;
-		record.m_value20 = binding->m_value4c;
-	binding->m_value20 = (*(BfmeCreate1236 *)0x01337870)(&record);
-
-	if (binding->m_mode38 == 2) {
-		float delta = binding->m_value58 - binding->m_value50;
-		float oldDelta = record.m_value0c - record.m_value04;
-		if (delta != oldDelta) {
-			((BfmeSlotState1289 *)self)->bfmeSetAxis1289(1, self->m_bfme20 - delta * *(const float *)0x0107533c, 0);
-		}
-	} else if (binding->m_mode38 == 1) {
-		float delta = binding->m_value58 - binding->m_value50;
-		float oldDelta = record.m_value0c - record.m_value04;
-		if (delta != oldDelta) {
-			((BfmeSlotState1289 *)self)->bfmeSetAxis1289(0, self->m_bfme20 + delta - oldDelta, 0);
-		}
-	}
-
-	binding->m_value50 = record.m_value04;
-	binding->m_value58 = record.m_value0c;
-	binding->m_value54 = record.m_value08;
-	binding->m_value5c = record.m_value10;
-	binding->m_value28 = record.m_value1c;
-	if (binding->m_value2c > record.m_value1c)
-		binding->m_value2c = record.m_value1c;
-	binding->m_value44 = record.m_value50;
-	binding->m_value48 = record.m_value54;
-	binding->m_value4c = record.m_value20;
-	binding->m_flags6c = 1;
-
-finish:
-	return;
+    int mode = binding->m_mode38;
+    if (mode != 3) {
+        float oldWidth = binding->m_right58 - binding->m_left50;
+        float newWidth = request.m_right - request.m_left;
+        if (mode == 2)
+            ((BfmeSlotState1289 *)this)->bfmeSetAxis1289(0, m_position20 - (newWidth - oldWidth) * 0.5f, 1);
+        else if (mode == 1)
+            ((BfmeSlotState1289 *)this)->bfmeSetAxis1289(0, oldWidth + m_position20 - newWidth, 1);
+    }
+    binding->m_left50 = request.m_left;
+    binding->m_right58 = request.m_right;
+    binding->m_bottom5c = request.m_bottom;
+    binding->m_top54 = request.m_top;
+    int lines = request.m_1c;
+    binding->m_28 = lines;
+    if (binding->m_2c > lines)
+        binding->m_2c = lines;
+    binding->m_44 = request.m_40;
+    binding->m_48 = request.m_44;
+    binding->m_4c = request.m_20;
+    binding->m_flags6c = 1;
 }
