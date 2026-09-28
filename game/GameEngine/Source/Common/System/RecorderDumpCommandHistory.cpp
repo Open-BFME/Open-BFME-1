@@ -1,32 +1,9 @@
-// ?d_0009a580@@YAXXZ
-// partial score=0.962 date=2026-09-27
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
-// Target: RVA 0x0009A580, 2308 bytes including the 12-entry switch table.
-// Compile symbol: ?dump@CommandHistory0009A580@@QAEXPAVCommandDumpFile0009A580@@I@Z
-// Complete semantic reconstruction; NOT byte exact and NOT a landed implementation.
-// Retail code ends at +0x8D2 (ret 8 at +0x8CF); +0x8D2..+0x8D4 is padding,
-// and +0x8D4..+0x904 is the switch table. Linear-disassembly boundary warnings
-// inside that table are not grounds to shorten the ledger extent.
-// Class identity remains unknown. The thiscall receiver is unused.
-// All direct call declarations below use the callee inventory's established names.
-// String literals NULL, UNKNOWN, TRUE, FALSE and N/A were read from retail.
-// Required global identities (VA; no new pins added for this partial):
-// CommandsAt012ED5F4=0x012ED5F4; first message is at receiver+8.
-// ClientAt012F1464=0x012F1464; lookup at vslot +0x2C.
-// FlagAt012ED4E5=0x012ED4E5; FlagAt012ED4E6=0x012ED4E6.
-// RelationshipsAt012A9FC8=0x012A9FC8 (array, not a pointer global).
-// Existing globals: ThePlayerList=0x012ED748, TheGameLogic=0x012F0898,
-// TheThingFactory=0x012EF1D8, TheScienceStore=0x012ED7AC,
-// TheSpecialPowerStore=0x012ED80C, OpenBFME5_netCRCInterval=0x012A7040.
-// These are witnessed partial ABI views, not full class layout declarations.
-// ThingTemplate's AsciiString at +0x20 is observed directly in this body;
-// Player's template pointer +4, AsciiString +0x1C and Team pointer +0x230
-// are used only at the retail-witnessed accesses. No ZH offset is assumed.
-// Keep the source's float varargs even in the %x positions: retail pushes
-// doubles there too. Reinterpreting those as integer bits would change behavior.
+// RecorderClass command-history dump (RVA 0x0009A580): the sole caller 0x00388C10 loads TheRecorder into ecx.
+// Globals by VA: CommandsAt012ED5F4 list head at +8, ClientAt012F1464 lookup at vslot +0x2C, RelationshipsAt012A9FC8 name table.
 #include "ascii_string.h"
 #include "unicode_string.h"
-// Inlining witnessed at every string access and scope exit in RVA 0009A580.
+// Retail inlines every string access and scope exit in this body.
 template<class T> inline StringBase<T>::~StringBase() { releaseBuffer(); }
 template<class T> inline const T* StringBase<T>::str() const { return m_data ? m_data->data : (const T*)""; }
 template<class T> inline int StringBase<T>::getLength() const { return m_data ? m_data->length : 0; }
@@ -37,7 +14,7 @@ class Team;
 enum Relationship { REL_INVALID = -1 };
 class Player { public: UnicodeString getPlayerDisplayName(); Relationship getRelationship(const Team*) const; };
 class PlayerList { public: Player* getNthPlayer(int); };
-class ThingTemplate { char rva0009A580_pad[32]; AsciiString rva0009A580_at20; public: const AsciiString& getName() const { return rva0009A580_at20; } };
+class ThingTemplate { char rva0009A580_pad[32]; public: AsciiString rva0009A580_at20; const AsciiString& getName() const { return rva0009A580_at20; } };
 class Thing { public: const ThingTemplate* getTemplate() const; };
 class Object : public Thing { public: Player* getControllingPlayer() const; };
 class GameLogic { public: Object* findObjectByID(int); };
@@ -80,10 +57,9 @@ extern const char* RelationshipsAt012A9FC8[];
 template<class T> __forceinline T& field0009A580(const void* p,int offset) { return *(T*)((char*)p+offset); }
 template<class T> __forceinline T read0009A580(const void* p,int offset) { return *(const T*)((const char*)p+offset); }
 __forceinline void write0009A580(CommandDumpFile0009A580* file,const AsciiString& text) { file->write(text.str(),text.getLength()); }
-// Proven by literal strings and retail calls: command-history diagnostic dump.
-// Receiver unused; ret 8 preserves the retail thiscall ABI.
-class CommandHistory0009A580 { public: void dump(CommandDumpFile0009A580*,unsigned); };
-void CommandHistory0009A580::dump(CommandDumpFile0009A580* file,unsigned maxFrame)
+// Receiver unused; the caller passes the file and the last frame to dump (ret 8).
+class RecorderClass { public: void dumpCommandHistory0009A580(CommandDumpFile0009A580*,unsigned); };
+void RecorderClass::dumpCommandHistory0009A580(CommandDumpFile0009A580* file,unsigned maxFrame)
 {
  if (!file) return;
  AsciiString text;
@@ -130,14 +106,14 @@ void CommandHistory0009A580::dump(CommandDumpFile0009A580* file,unsigned maxFram
      Object* object=TheGameLogic->findObjectByID(id);
      if (object) {
       int rel=player?player->getRelationship(read0009A580<Team*>(object->getControllingPlayer(),0x230)):-1;
-      text.format("    %02d: Object:%s(%d) Relationship:%s",i,object->getTemplate()->getName().str(),id,rel>=0?RelationshipsAt012A9FC8[rel]:"N/A");
+      text.format("    %02d: Object:%s(%d) Relationship:%s",i,object->getTemplate()->rva0009A580_at20.str(),id,rel>=0?RelationshipsAt012A9FC8[rel]:"N/A");
      } else text.format("    %02d: Object:INVALID(%d)",i,id);
      break;
     }
     case ARG_DRAWABLE: {
      int id=message->getArgument(i)->integer;
      Drawable0009A580* drawable=ClientAt012F1464->find(id);
-     if (drawable) text.format("    %02d: Drawable:%s(%d)",i,drawable->getTemplate()->getName().str(),id);
+     if (drawable) text.format("    %02d: Drawable:%s(%d)",i,drawable->getTemplate()->rva0009A580_at20.str(),id);
      else text.format("    %02d: Drawable:INVALID",i);
      break;
     }
@@ -152,9 +128,8 @@ void CommandHistory0009A580::dump(CommandDumpFile0009A580* file,unsigned maxFram
     case ARG_REGION: { const GameMessageArgumentType* a=message->getArgument(i); int x1=a->region.x1; int y1=a->region.y1; int x2=a->region.x2; int y2=a->region.y2; text.format("    %02d: Pixel Region: (x:%d,y:%d) to (x:%d,y:%d)",i,x1,y1,x2,y2); break; }
     case ARG_TIME: text.format("    %02d: TimeStamp:%d",i,message->getArgument(i)->timestamp); break;
     case ARG_CHAR: {
-     const GameMessageArgumentType* character=message->getArgument(i);
-     if (!string) text.format("    %02d: String:%C",i,character->character);
-     else text.format("%C",character->character);
+     if (!string) text.format("    %02d: String:%C",i,message->getArgument(i)->character);
+     else text.format("%C",message->getArgument(i)->character);
      string=true; break; }
     default: text.format("    %02d: UNKNOWN ARGUMENT TYPE:%d",i,message->getArgumentDataType(i)); break;
     }

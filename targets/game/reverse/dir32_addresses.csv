@@ -6131,9 +6131,11 @@ name,va
 ?CameraYawAngleKey@@3VStaticNameKey@@A,0x012A79D0
 ?Campaign00598950@@3PAXA,0x012F1024
 ?Carry@?$Int@$0EA@@@2_NA,0x0134F999
+?ClientAt012F1464@@3PAVClient0009A580@@A,0x012F1464
 ?ClientGlobal007629F0@@3PAVClient007629F0@@A,0x012F1464
 ?Clock00200420@@3PAUFrame00200420@@A,0x012F0898
 ?CmpFunc@@YAHPBX0@Z,0x00E068C7
+?CommandsAt012ED5F4@@3PADA,0x012ED5F4
 ?CompareIndex@CTReorderInstructions@D3DXShader@@KGHIIPBX@Z,0x00EBF19E
 ?CompareLoad@CTReorderInstructions@D3DXShader@@KGHIIPBX@Z,0x00EBF163
 ?CompareSemantic@CCompiler@D3DXShader@@KGHIIPBX@Z,0x00E4698F
@@ -6230,6 +6232,8 @@ name,va
 ?FeatureBits@CPUDetectClass@@0IA,0x0134ED20
 ?FireWeaponCollideFieldParse@@YAXAAVMultiIniFieldParse@@@Z,0x0043ABC0
 ?Flag0133F42F@@3_NA,0x0133F42F
+?FlagAt012ED4E5@@3_NA,0x012ED4E5
+?FlagAt012ED4E6@@3_NA,0x012ED4E6
 ?FogColor@DX8Wrapper@@1KA,0x0134052C
 ?FogColor@DX8Wrapper@@2IA,0x0134052C
 ?FogEnable@DX8Wrapper@@1_NA,0x01340528
@@ -6554,6 +6558,7 @@ name,va
 ?Rdata00CE75B4@@3HB,0x010E75B4
 ?Rdata00CE75C0@@3HB,0x010E75C0
 ?RecordNextFrame@WW3D@@0_NA,0x0133F410
+?RelationshipsAt012A9FC8@@3PAPBDA,0x012A9FC8
 ?Remainder@?$Int@$0EA@@@2V1@A,0x0134F9A0
 ?RenderStates@DX8Wrapper@@1PAIA,0x01340100
 ?RenderStates@DX8Wrapper@@2PAIA,0x01340100
