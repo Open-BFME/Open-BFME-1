@@ -48,9 +48,9 @@ extern void j_0002756b();
 extern void j_00026bcf();
 extern void j_000044f8();
 extern void j_00031e99();
-extern void d_00454b00();
 extern void resetMap();
 extern unsigned calcCRC(AsciiString,AsciiString);
+extern bool loadMap(AsciiString,MapMetaData *);
 // Calls retain the already-ledgered ILT identities; typed views model the
 // independently decoded ECX/stack ABI without inventing additional pins.
 template <class F> inline F rvaCall(void (*raw)()) { union {void (*p)(); F f;} u; u.p=raw; return u.f; }
@@ -72,8 +72,7 @@ bool MapCache::addMap(AsciiString dirName,AsciiString fname,FileInfo *fileInfo,b
   md = *(MapMetaData *)((char *)it+0x14);
   if(md.m_filesize==filesize && md.m_CRC!=0) return false;
  }
- typedef void (__cdecl *Load)(AsciiString,MapMetaData *);
- rvaCall<Load>(d_00454b00)(fname,&md);
+ loadMap(fname,&md);
  md.m_fileName=lowerFname;
  md.m_filesize=filesize; md.m_isOfficial=isOfficial;
  typedef void (WaypointMap::*Update)();
