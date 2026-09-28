@@ -9308,5 +9308,15 @@
   "after_sha256": "b2afa9e7990fe9eef6755444514af02fabc43660ebedf0af67de72df7f0f01ce",
   "evidence": "targets/game/reverse/identity_evidence/00431380-gameclient-vs-00597fc0-client.md",
   "reason": "The 0x0110C2D8 class (constructor 0x00597FC0; 12-slot vtable with _purecall at slots 9/10; members to +0x4DC; base of AptPalantir) was filed as GameClient. GameClient is the 0x010F37F0 class whose slots hold the matched reset/setFrame/registerDrawable/destroyDrawable/getFrame and whose destructor is 0x00431380. No string or caller names the 0x0110C2D8 class, so it and its TU-local member types keep the address token Rva00597FC0Client."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0019b030.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Map/Rva0019B030LoadBuildLists.cpp",
+  "old_name": "loadBuildLists",
+  "new_name": "rva0019B030",
+  "before_sha256": "a2ef9512772b6abffba465896a5ba695b667f05247366562c71dd6b449a69cb0",
+  "after_sha256": "172c2cf0397f562fa439fa03c5444966eaebdec98b89bf68af14127f74f0e896",
+  "evidence": "targets/game/reverse/identity_evidence/0019b030-caller-decided-name.md",
+  "reason": "Caller-decided identity: matched GameLogic::init links to ?rva0019B030@BfmeTableERJ@@QAEXXZ at this body; loadBuildLists was an unlanded stash guess with no caller or literal evidence."
  }
 ]
