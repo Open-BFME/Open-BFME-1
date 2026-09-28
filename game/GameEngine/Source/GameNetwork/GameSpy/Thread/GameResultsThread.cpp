@@ -112,15 +112,34 @@ GameResultsInterface *TheGameResultsQueue;
 
 //-------------------------------------------------------------------------
 
-class GameResultsThreadClass : public ThreadClass
+// BFME's ThreadClass is 0x50 bytes wide: Thread_Function reads its worker lock
+// pointer at this+0x50 (0x00641ED3), and the reference thread.h lays the base
+// out 8 bytes wider, so the base is redeclared here to keep that offset.
+class GameResultsThreadBase
+{
+public:
+	virtual ~GameResultsThreadBase();
+	void Execute();
+	bool Is_Running();
+
+protected:
+	virtual void Thread_Function() = 0;
+	char m_threadName[0x40];
+	void *m_auxHandle;
+	void *m_liveHandle;
+	int m_threadPriority;
+};
+
+class GameResultsThreadClass : public GameResultsThreadBase
 {
 
 public:
-	GameResultsThreadClass() : ThreadClass() {}
+	GameResultsThreadClass() : GameResultsThreadBase() {}
 
 	void Thread_Function();
 
 private:
+	MutexClass *m_lock;
 	Int sendGameResults( UnsignedInt IP, UnsignedShort port, const std::string& results );
 };
 
@@ -139,6 +158,7 @@ GameResultsQueue::GameResultsQueue() : m_requestCount(0), m_responseCount(0)
 	startThreads();
 }
 
+// ??1GameResultsQueue@@UAE@XZ present-unmatched
 GameResultsQueue::~GameResultsQueue()
 {
 	endThreads();
@@ -174,7 +194,10 @@ Bool GameResultsQueue::areThreadsRunning( void )
 	{
 		if (m_workerThreads[i])
 		{
-			if (m_workerThreads[i]->Is_Running())
+			// BFME's thread base is 0x50 bytes, narrower than the reference
+			// ThreadClass, so the base is called through its own type: retail
+			// reaches ThreadClass::Is_Running through this pointer.
+			if (((ThreadClass *)m_workerThreads[i])->Is_Running())
 				return true;
 		}
 	}
@@ -236,12 +259,35 @@ Bool GameResultsQueue::areGameResultsBeingSent( void )
 
 //-------------------------------------------------------------------------
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/GameResultsThreadClass_Thread_FunctionMethodThunk.cpp
-// ?Thread_Function@GameResultsThreadClass@@UAEXXZ present-unmatched
+// Retail asks the queue for a request through vtable slot 0x34 (0x00641F2E):
+// the Generals header reaches getRequest at 0x28, so BFME's
+// SubsystemInterface carries three more virtuals than the reference one. The
+// slots are named by index because nothing in the image names them; the shape
+// is fixed by the call site and by GameResultsQueue::getRequest (0x00642440)
+// which pops a request and returns the bool the caller tests.
+struct Rva00641F2EQueueSlots
+{
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0C();
+	virtual void slot10();
+	virtual void slot14();
+	virtual void slot18();
+	virtual void slot1C();
+	virtual void slot20();
+	virtual void slot24();
+	virtual void slot28();
+	virtual void slot2C();
+	virtual void slot30();
+	virtual Bool slot34(GameResultsRequest &req);
+};
+
+// Replaces the naked __emit lift that used to live in
+// game/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThreadClass_Thread_FunctionMethodThunk.cpp
 void GameResultsThreadClass::Thread_Function()
 {
 	try {
-	_set_se_translator( DumpExceptionInfo ); // Hook that allows stack trace.
 	GameResultsRequest req;
 
 	WSADATA wsaData;
@@ -250,10 +296,16 @@ void GameResultsThreadClass::Thread_Function()
 	WORD wVersionRequested = MAKEWORD(1, 1);
 	WSAStartup( wVersionRequested, &wsaData );
 
-	while ( running )
+	// The worker lock is held by whoever tears the thread down, so once we can
+	// take it ourselves the loop is over.
+	while (true)
 	{
+		MutexClass::LockClass lock(*m_lock, 1);
+		if (!lock.Failed())
+			break;
+
 		// deal with requests
-		if (TheGameResultsQueue && TheGameResultsQueue->getRequest(req))
+		if (TheGameResultsQueue && ((Rva00641F2EQueueSlots *)TheGameResultsQueue)->slot34(req))
 		{
 			// resolve the hostname
 			const char *hostnameBuffer = req.hostname.c_str();
@@ -273,7 +325,7 @@ void GameResultsThreadClass::Thread_Function()
 				if (hostStruct == NULL)
 				{
 					DEBUG_LOG(("sending game results to %s - host lookup failed\n", hostnameBuffer));
-					
+
 					// Even though this failed to resolve IP, still need to send a
 					//   callback.
 					IP = 0xFFFFFFFF;   // flag for IP resolve failed
@@ -283,16 +335,12 @@ void GameResultsThreadClass::Thread_Function()
 				DEBUG_LOG(("sending game results to %s IP = %s\n", hostnameBuffer, inet_ntoa(*hostNode) ));
 			}
 
-			int result = sendGameResults( IP, req.port, req.results );
+			Int result = sendGameResults( IP, req.port, req.results );
 			GameResultsResponse resp;
 			resp.hostname = req.hostname;
 			resp.port = req.port;
 			resp.sentOk = (result == req.results.length());
-
 		}
-
-		// end our timeslice
-		Switch_Thread();
 	}
 
 	WSACleanup();
