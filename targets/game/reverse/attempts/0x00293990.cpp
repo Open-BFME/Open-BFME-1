@@ -1,6 +1,9 @@
 // ?tryToIgnite@FlammableUpdate@@QAEXXZ
-// partial score=0.93 date=2026-09-28
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /FAsc /Fabuild/tryignite.cod
+// partial score=0.985 date=2026-09-28
+// ?tryToIgnite@FlammableUpdate@@QAEXXZ
+// Candidate only: 962 bytes versus 961; normalized instruction match 0.985.
+// Refined native FX wrappers; owner spill and cursor/element slots still differ.
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Source/GameLogic/Object
 // stlport
 //
 // Retail 0x00293990: FlammableUpdate::tryToIgnite, 961 bytes.
@@ -62,6 +65,7 @@ class Module;
 class FXList;
 class Drawable;
 class Object;
+class Rva001BE220Receiver { public: void dispatch(int, unsigned int); };
 class Matrix3D;
 
 struct Coord3D
@@ -102,7 +106,9 @@ public:
 	void doFXPos( const Coord3D *primary, const Matrix3D *primaryMtx,
 		Real primarySpeed, const Coord3D *secondary ) const;
 	void doFXObj( const Object *primary, const Object *secondary ) const;
-	Bool bfmeIsBlocked();
+	Bool bfmeIsBlocked() const;
+ static __forceinline void doFXPos(const FXList *, const Coord3D *, const Matrix3D *, float, const Coord3D *);
+ static __forceinline void doFXObj(const FXList *, const Object *, const Object *);
 };
 
 #define OBJECT_TU_MEMBERS \
@@ -113,7 +119,7 @@ public:
 	void setStatusBit( Int bit, Bool value ); \
 	void bfmeThunk1DC( Int damageType, UnsignedInt delay );
 
-#include "../object.h"
+#include "object.h"
 
 class Drawable
 {
@@ -263,6 +269,15 @@ private:
 };
 
 // ?tryToIgnite@FlammableUpdate@@QAEXXZ
+__forceinline void FXList::doFXPos(const FXList *fx, const Coord3D *pos, const Matrix3D *matrix, float speed, const Coord3D *secondary)
+{
+    if (fx) { if (!fx->bfmeIsBlocked()) fx->doFXPos(pos,matrix,speed,secondary); }
+}
+__forceinline void FXList::doFXObj(const FXList *fx, const Object *object, const Object *secondary)
+{
+    if (fx) { if (!fx->bfmeIsBlocked()) fx->doFXObj(object,secondary); }
+}
+
 void FlammableUpdate::tryToIgnite()
 {
 	if( m_status != 0 )
@@ -340,16 +355,12 @@ void FlammableUpdate::tryToIgnite()
 				pos.y = boneTransform.Get_Y_Translation();
 				pos.z = boneTransform.Get_Z_Translation();
 
-				if( elem.fx && !elem.fx->bfmeIsBlocked() )
-				{
-					elem.fx->doFXPos( &pos, &boneTransform, 0.0f, 0 );
-					goto next;
-				}
+				FXList::doFXPos(elem.fx, &pos, &boneTransform, 0.0f, 0);
+                goto next;
 			}
 		}
 		Object *obj = getObject();
-		if( elem.fx && !elem.fx->bfmeIsBlocked() )
-			elem.fx->doFXObj( obj, 0 );
+        FXList::doFXObj(elem.fx, obj, 0);
 	next: ;
 		// Retail steps the cursor at +030f, ahead of the element destructor
 		// at +0326, so the step is the last statement of the body rather
@@ -361,7 +372,7 @@ void FlammableUpdate::tryToIgnite()
 	{
 		// The +0x1DC member is a two-argument pointer tail thunk: the call
 		// hands it this, and the thunk loads its stored receiver itself.
-		me->bfmeThunk1DC( data->m_damageType, data->m_extra0 );
+		reinterpret_cast<Rva001BE220Receiver *>(me)->dispatch( data->m_damageType, data->m_extra0 );
 		me->setDisabledUntil( (DisabledType)4, TheBfmeGameLogic->m_frame + data->m_extra0 - 1 );
 		m_field44 = TheBfmeGameLogic->m_frame + data->m_extra0;
 		me->setStatusBit( 0x51, true );

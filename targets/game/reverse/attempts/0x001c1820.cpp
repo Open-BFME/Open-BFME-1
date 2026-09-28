@@ -1,5 +1,5 @@
 // ?getSingleLogicalBonePositionOnTurret@Object@@QBE_NW4WhichTurretType@@PBDPAUCoord3D@@PAVMatrix3D@@@Z
-// partial score=0.99 date=2026-09-27
+// partial score=0.9920634920634921 date=2026-09-28
 // STASH for ?getSingleLogicalBonePositionOnTurret@Object@@QBE_NW4WhichTurretType@@PBDPAUCoord3D@@PAVMatrix3D@@@Z @ 0x001C1820 (1008B).
 // Placement: game/GameEngine/Source/GameLogic/Object/Object.cpp, replacing the
 // present-unmatched ZH-literal body that precedes Object::getMultiLogicalBonePosition.

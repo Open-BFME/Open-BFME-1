@@ -1,27 +1,18 @@
 // ?update@AIAttackFireWeaponState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.948387 date=2026-09-27
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath
-// Banked reconstruction of retail 0017C250 (979 bytes), not a landed claim.
-// Current emission: 1004 bytes; normalized instruction shape 0.948387.
-// Same primary Thing vptr avoids an incorrect +4 Object receiver adjustment.
-// Filter temporary lifetimes and the nested map-filter scope reproduce the
-// retail cleanup ordering. The first 0x46 bytes match before return layout
-// diverges: early failure moves to the end, early success expands inline,
-// and notifyFired duplicates across the final firing arms.
-// EH annotation trials, return labels/result locals, status switch, reversed
-// firing arms and guard nesting did not improve this best structural score.
-// The address-derived Rva00149E60 constructor emission separately matched its
-// 39-byte retail body; no new pin or identity claim has been added. If the
-// update becomes exact, verify its constructor/filter-vtable and Coord3D
-// signature references against existing identities before landing.
+// partial score=0.975485188968335 date=2026-09-28
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/GameEngine/Source/GameLogic/Object
+// Retail 0017C250, 979 bytes. This bank emits 979 bytes with 24 masked
+// byte differences: only scratch-register choices in +00B2..+01E6.
+// Splitting the three initial failure guards recovered all retail return
+// placement and the shared notifyFired tail (formerly 1004 bytes).
+// Canonical object.h preserves the primary Thing vptr and witnessed fields.
+// EH/family and rotation sweeps did not eliminate the remaining allocation.
+// Before landing, validate the address-derived filter constructor, vtables,
+// and Coord3D callee signatures through the strict byte/address gate.
 #include "coord3d.h"
 inline Coord3D::Coord3D() {}
 inline Coord3D::~Coord3D() {}
-inline Coord3D::Coord3D(const Coord3D &v) {
-    x = v.x;
-    y = v.y;
-    z = v.z;
-}
+inline Coord3D::Coord3D(const Coord3D &v) {y = v.y; x = v.x; z = v.z;}
 
 enum StateReturnType { STATE_CONTINUE = 0, STATE_SUCCESS = -1, STATE_FAILURE = -2 };
 enum WeaponSlotType {};
@@ -182,6 +173,9 @@ struct WeaponTemplate {
     bool m_529;
     char pad_52a[9];
     bool m_533;
+ bool flag533()const{return m_533;}
+ bool flag529()const{return m_529;}
+ float getContinueAttackRange()const{return m_continueAttackRange;}
 };
 class Weapon {
   public:
@@ -192,47 +186,23 @@ class Weapon {
     bool flag529() const { return m_04->m_529; }
     float getContinueAttackRange() const { return m_04->m_continueAttackRange; }
 };
-class Thing {
-  public:
-    virtual void slot0();
-    bool isKindOf(KindOfType) const;
-};
-class BFMEActionObject {
-  public:
-    bool testStatus(int) const;
-};
-class Object : public Thing {
-  public:
-    virtual void slot1();
-    virtual void slot2();
-    virtual void slot3();
-    virtual void slot4();
-    virtual void slot5();
-    virtual void slot6();
-    virtual void slot7();
-    virtual void slot8();
-    virtual void slot9();
-    virtual void slot10();
-    virtual void fireCurrentWeapon(Object *, unsigned);
-    char pad_04[0x34];
-    Coord3D m_cachedPos;
-    char pad_44[0x4c];
-    unsigned m_status[3];
-    char pad_9c[0x168];
-    AIUpdateInterface *m_204;
-    char pad_208[0x13c];
-    unsigned char m_privateStatus;
-    Weapon *getCurrentWeapon(WeaponSlotType *);
-    void setStatusBit(int, bool);
-    void preFireCurrentWeapon(const Object *, const Coord3D *);
-    void setFiringConditionForCurrentWeapon() const;
-    void fireCurrentWeapon(const Coord3D *);
-    bool getWorldspaceBestContactPoint(Coord3D *, const Coord3D *, const char *, int, int,
-                                       bool) const;
-    Player *getControllingPlayer() const;
-    __forceinline bool isEffectivelyDead() const {
-        return (m_privateStatus & 1) || ((BFMEActionObject *)this)->testStatus(49);
-    }
+class BFMEActionObject {public: bool testStatus(int)const;};
+#define BFME_HAVE_COORD3D 1
+#define THING_TU_MEMBERS bool isKindOf(KindOfType)const;
+#define OBJECT_TU_MEMBERS \
+ Weapon* getCurrentWeapon(WeaponSlotType*); \
+ void setStatusBit(int,bool); \
+ void preFireCurrentWeapon(const Object*,const Coord3D*); \
+ void setFiringConditionForCurrentWeapon()const; \
+ void fireCurrentWeapon(const Coord3D*); \
+ bool getWorldspaceBestContactPoint(Coord3D*,const Coord3D*,const char*,int,int,bool)const; \
+ Player* getControllingPlayer()const; \
+ const Coord3D* getPosition()const{return &m_cachedPos;} \
+ __forceinline bool isEffectivelyDead()const{return (m_privateStatus&1)||((BFMEActionObject*)this)->testStatus(49);}
+#include "object.h"
+class Rva001CD990FireView {public:
+ virtual void s0();virtual void s1();virtual void s2();virtual void s3();virtual void s4();virtual void s5();virtual void s6();virtual void s7();virtual void s8();virtual void s9();virtual void s10();
+ virtual void invoke(Object*,unsigned);
 };
 class StateMachine {
   public:
@@ -257,6 +227,7 @@ class StateMachine {
     unsigned m_20;
     Coord3D m_goalPosition;
     Object *getGoalObject();
+ const Coord3D* getGoalPosition()const{return &m_goalPosition;}
 };
 class NotifyWeaponFiredInterface {
   public:
@@ -304,6 +275,7 @@ extern PartitionManager *ThePartitionManager;
 class AIAttackFireWeaponState {
   public:
     virtual StateReturnType update();
+ StateMachine* getMachine()const{return m_machine;}
     char pad_04[0x18];
     StateMachine *m_machine;
     char pad_20[4];
@@ -316,17 +288,18 @@ StateReturnType AIAttackFireWeaponState::update() {
     unsigned arg20 = m_machine->m_20;
     WeaponSlotType slot;
     Weapon *weapon = obj->getCurrentWeapon(&slot);
-    if (!weapon || (obj->m_privateStatus & 1) || (obj->m_status[2] & 0x20000))
-        return STATE_FAILURE;
+    if (!weapon) return STATE_FAILURE;
+    if (obj->m_privateStatus & 1) return STATE_FAILURE;
+    if (obj->m_status[2] & 0x20000) return STATE_FAILURE;
     bool atPosition;
     if (weapon->flag533() && !(victim && victim->isKindOf((KindOfType)2)))
         atPosition = true;
     else {
         atPosition = false;
         AIUpdateInterface *ai;
-        if (victim && (ai = obj->m_204) && ai->m_curLocomotor &&
+        if (victim && (ai = obj->m_ai) && ai->m_curLocomotor &&
             ai->getWhichTurretForCurWeapon() == -1) {
-            Coord3D pos = victim->m_cachedPos;
+            Coord3D pos = *victim->getPosition();
             if ((victim->isKindOf((KindOfType)59) || victim->isKindOf((KindOfType)136)) &&
                 (((BfmeSubEQT *)weapon->m_04)->bfmeBEQT() ||
                  ((BfmeSubEQT *)weapon->m_04)->bfmeAEQT()))
@@ -343,7 +316,7 @@ StateReturnType AIAttackFireWeaponState::update() {
     if (m_28) {
         m_28 = false;
         obj->setStatusBit(13, true);
-        obj->preFireCurrentWeapon(victim, &m_machine->m_goalPosition);
+        obj->preFireCurrentWeapon(victim, m_machine->getGoalPosition());
         return STATE_CONTINUE;
     }
     WeaponStatus status = weapon->getStatus();
@@ -355,13 +328,13 @@ StateReturnType AIAttackFireWeaponState::update() {
         return STATE_FAILURE;
     obj->setFiringConditionForCurrentWeapon();
     if (m_att && m_att->isAttackingObject() && !atPosition) {
-        obj->fireCurrentWeapon(victim, arg20);
+        ((Rva001CD990FireView*)obj)->invoke(victim,arg20);
         obj->setStatusBit(27, false);
         float range = weapon->getContinueAttackRange();
         if (range > 0.0f && victim && ((victim->m_status[0] & 1) || victim->isEffectivelyDead())) {
             const Coord3D *original = m_att ? m_att->getOriginalVictimPos() : 0;
             if (original) {
-                AIUpdateInterface *ai = obj->m_204;
+                AIUpdateInterface *ai = obj->m_ai;
                 int cmd = ai ? ai->getLastCommandSource() : 2;
                 {
                     PartitionFilterSameMapStatus mapFilter(obj);

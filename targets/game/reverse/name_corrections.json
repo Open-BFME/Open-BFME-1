@@ -8288,5 +8288,15 @@
   "after_sha256": "2aabc7c81fc530eab446ab4cd07c2f9d1fde05e2da10df6f141b4045f7a77801",
   "evidence": "targets/game/reverse/identity_evidence/0029a150-bank-build-placeholder.md",
   "reason": "build was a bank-only guess; matched caller rva0029AB10 and pre-existing pin name it PhysicsBehavior::rva0029A150"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0032d300.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishSupplies.cpp",
+  "old_name": "m_object",
+  "new_name": "m_value",
+  "before_sha256": "69b42dd5e926604a6826dd1bf2216f44d23655d1960c9c06539e55a1c77c6c10",
+  "after_sha256": "741fe6d16725e69cec21d88b5ec828043f15230e4e02933169ab22a85369c5f7",
+  "evidence": "targets/game/reverse/identity_evidence/0032d300-holder-member-not-renamed.md",
+  "reason": "ZH MemoryPoolObjectHolder (m_mpo) replaced by BFME BfmeWideResult ABI; different class, neither name witnessed"
  }
 ]
