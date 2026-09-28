@@ -1,23 +1,18 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/GameEngine/Source/Common/System /Igame/GameEngine/Include /Igame/GameEngine/Include/Precompiled /Igame/Libraries/Source/WWVegas/WWLib
 
-// Open-BFME5: STLport reallocating insert for an 8-byte vector element, retail
-// 0x000960A0, 306 bytes (also reached through ILT 0x0002AB44). Only
-// PartitionSolver::solve (0x00096570) and the push_back beside it call it, so it
-// is not the pair<ObjectID, unsigned int> instantiation (that is 0x002FED10);
-// Zero Hour's solve pushes only into its SolutionVec. The pair<ObjectID,
-// ObjectID> name is still held by 0x00771870, so the element keeps the address
-// of this body; see
-// targets/game/reverse/identity_evidence/000960a0-002fed10-objectid-pair-overflow.md.
+// Open-BFME5: STLport vector<pair<ObjectID, ObjectID> > (SolutionVec)
+// reallocating insert, retail 0x000960A0, 306 bytes (also reached through ILT
+// 0x0002AB44). PartitionSolver::solve, byte-exact from the Zero Hour source,
+// calls it from its inlined m_bestSolution.push_back; see
+// targets/game/reverse/identity_evidence/000960a0-00771870-objectid-pair-vector.md.
 //
-// Eight bytes is what the bytes say: the size arithmetic shifts the byte
-// distance right by three, every copy loop strides by eight, and the new
-// end-of-storage is a scale-8 lea. All three phases reach the out-of-line
-// _STL::_Construct through the ILT at 0x000267F6 (body 0x000952A0), and the
-// teardown is inlined rather than going through the vector's own clear.
+// The element is 8 bytes, so the size arithmetic shifts the byte distance
+// right by three, every copy loop strides by eight, and the new end-of-storage
+// is a scale-8 lea. All three phases reach the out-of-line _STL::_Construct
+// through the ILT at 0x000267F6 (body 0x000952A0), and the teardown is inlined.
 
-struct Rva000960A0Element
+enum ObjectID
 {
-	unsigned char m_data[8];
 };
 
 namespace _STL
@@ -43,8 +38,8 @@ void *__cdecl vectorSmallAllocate(unsigned int bytes);
 void __cdecl vectorLargeDeallocate(void *block);
 void __cdecl vectorSmallDeallocate(void *block, unsigned int bytes);
 
-void __cdecl BfmeRva000952A0Construct(Rva000960A0Element *destination,
-	const Rva000960A0Element &value);
+void __cdecl BfmeElementConstruct(pair<ObjectID, ObjectID> *destination,
+	const pair<ObjectID, ObjectID> &value);
 
 template <class Type>
 __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
@@ -53,7 +48,7 @@ __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
 	{
 		do
 		{
-			BfmeRva000952A0Construct(result, *first);
+			BfmeElementConstruct(result, *first);
 			++first;
 			++result;
 		}
@@ -67,7 +62,7 @@ __forceinline Type *uninitialized_fill_n(Type *result, unsigned int count, const
 {
 	for (; count > 0; --count)
 	{
-		BfmeRva000952A0Construct(result, value);
+		BfmeElementConstruct(result, value);
 		++result;
 	}
 	return result;
@@ -112,7 +107,7 @@ void vector<Type, Allocator>::_M_insert_overflow(
 
 	if (fillLength == 1)
 	{
-		BfmeRva000952A0Construct(newFinish, value);
+		BfmeElementConstruct(newFinish, value);
 		++newFinish;
 	}
 	else
@@ -128,7 +123,7 @@ void vector<Type, Allocator>::_M_insert_overflow(
 			Type *cur = position;
 			do
 			{
-				BfmeRva000952A0Construct(newFinish, *cur);
+				BfmeElementConstruct(newFinish, *cur);
 				++cur;
 				++newFinish;
 			}
@@ -150,5 +145,5 @@ void vector<Type, Allocator>::_M_insert_overflow(
 	_M_end_of_storage = newStart + length;
 }
 
-template class vector<Rva000960A0Element, allocator<Rva000960A0Element > >;
+template class vector<pair<ObjectID, ObjectID>, allocator<pair<ObjectID, ObjectID> > >;
 }

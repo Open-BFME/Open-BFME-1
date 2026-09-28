@@ -1,14 +1,20 @@
 // Five-byte incremental-link thunk at 0x0002AB44 into the solve-side 8-byte
-// element _M_insert_overflow at 0x000960A0; see
-// targets/game/reverse/identity_evidence/000960a0-002fed10-objectid-pair-overflow.md.
+// SolutionVec (pair<ObjectID, ObjectID>) _M_insert_overflow at 0x000960A0; see
+// targets/game/reverse/identity_evidence/000960a0-00771870-objectid-pair-vector.md.
 
-struct Rva000960A0Element
+enum ObjectID
 {
-	unsigned char m_data[8];
 };
 
 namespace _STL
 {
+template <class First, class Second>
+struct pair
+{
+	First first;
+	Second second;
+};
+
 template <class Type>
 class allocator
 {
@@ -27,19 +33,19 @@ protected:
 };
 
 class Rva0002AB44InsertOverflowThunk
-	: public vector<Rva000960A0Element,
-		allocator<Rva000960A0Element > >
+	: public vector<pair<ObjectID, ObjectID>,
+		allocator<pair<ObjectID, ObjectID> > >
 {
 public:
 	void insert_overflow(
-		Rva000960A0Element *position,
-		const Rva000960A0Element &value,
+		pair<ObjectID, ObjectID> *position,
+		const pair<ObjectID, ObjectID> &value,
 		const __false_type &tag, unsigned int fillLength, bool atEnd);
 };
 
 void Rva0002AB44InsertOverflowThunk::insert_overflow(
-	Rva000960A0Element *position,
-	const Rva000960A0Element &value,
+	pair<ObjectID, ObjectID> *position,
+	const pair<ObjectID, ObjectID> &value,
 	const __false_type &tag, unsigned int fillLength, bool atEnd)
 {
 	this->_M_insert_overflow(position, value, tag, fillLength, atEnd);

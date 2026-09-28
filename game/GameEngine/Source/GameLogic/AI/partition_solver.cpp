@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Igame/GameEngine/Include/Precompiled /Igame/GameEngine/Source/Common/System /Igame/GameEngine/Source/Common /Igame/Libraries/Source/WWVegas/WWMath
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Include/Precompiled /Igame/GameEngine/Source/Common/System /Igame/GameEngine/Source/Common /Igame/Libraries/Source/WWVegas/WWMath
 // stlport
 #include <algorithm>
 /*
@@ -56,6 +56,55 @@ Some info about partioning problems:
 #include "coord.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "partition_solver.h"
+
+// BFME's STLport build kept get_allocator() and _Vector_base(n, a) for the
+// pair<ObjectID, UnsignedInt> vector out of line (retail ILT 0x00019876 ->
+// 0x00095130 and ILT 0x000472DA -> 0x000955C0, the pair the out-of-line copy at
+// 0x00095A50 also calls) while inlining the copy constructor into solve(). The
+// vendored 4.5.3 headers do the opposite, so these explicit specializations
+// restore the retail split for this element type only. The count is the raw
+// finish-start difference: through size() MSVC hoists it above the
+// get_allocator() call.
+namespace _STL
+{
+template <>
+__declspec(noinline)
+vector<PairObjectIDAndUInt, allocator<PairObjectIDAndUInt> >::allocator_type
+vector<PairObjectIDAndUInt, allocator<PairObjectIDAndUInt> >::get_allocator() const
+{
+	return _STLP_CONVERT_ALLOCATOR((const allocator_type&)this->_M_end_of_storage,
+		PairObjectIDAndUInt);
+}
+
+template <>
+__declspec(noinline)
+_Vector_base<PairObjectIDAndUInt, allocator<PairObjectIDAndUInt> >::_Vector_base(
+	size_t __n, const allocator<PairObjectIDAndUInt>& __a)
+	: _M_start(0), _M_finish(0), _M_end_of_storage(__a, 0)
+{
+	_M_start = _M_end_of_storage.allocate(__n);
+	_M_finish = _M_start;
+	_M_end_of_storage._M_data = _M_start + __n;
+}
+
+template <>
+inline vector<PairObjectIDAndUInt, allocator<PairObjectIDAndUInt> >::vector(
+	const vector<PairObjectIDAndUInt, allocator<PairObjectIDAndUInt> >& __x)
+	: _Vector_base<PairObjectIDAndUInt, allocator<PairObjectIDAndUInt> >(
+		__x._M_finish - __x._M_start, __x.get_allocator())
+{
+	const PairObjectIDAndUInt* __last = __x._M_finish;
+	const PairObjectIDAndUInt* __cur = __x._M_start;
+	PairObjectIDAndUInt* __result = this->_M_start;
+	while (__cur != __last)
+	{
+		new (__result) PairObjectIDAndUInt(*__cur);
+		++__cur;
+		++__result;
+	}
+	this->_M_finish = __result;
+}
+}
 
 static Bool greater_than(PairObjectIDAndUInt a, PairObjectIDAndUInt b)
 {
