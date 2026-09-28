@@ -192,3 +192,55 @@ void MeshModelClass::install_materials(MeshLoadContextClass *context)
 		MatInfo->Add_Vertex_Material(context->Peek_Vertex_Material(i));
 	}
 }
+
+struct Rva00930070SubLayout
+{
+	char m_pad0[4];
+	BfmeHandleCX *m_values;
+	char m_pad8[8];
+	int m_count;
+};
+
+class Rva00930070Owner
+{
+public:
+	void method(BfmeHandleCX *value);
+
+private:
+	char m_pad0[0x30];
+	Rva00930070SubLayout m_sub;
+	char m_pad44[0xC];
+	TextureClass *m_texture50;
+};
+
+void Rva00930070Owner::method(BfmeHandleCX *value)
+{
+	TextureClass *selected = value->p;
+	if (selected != 0 && selected != m_texture50)
+	{
+		int index = 0;
+		if (m_sub.m_count > 0)
+		{
+			BfmeHandleCX *item = m_sub.m_values;
+			do
+			{
+				if (item->p == selected)
+				{
+					if (index != -1)
+						return;
+					break;
+				}
+				++index;
+				++item;
+			}
+			while (index < m_sub.m_count);
+		}
+
+		reinterpret_cast<BfmeSubBJE *>(&m_sub)->bfmeDoBJE(value);
+		if (value->p != 0)
+			value->p->Add_Ref();
+		if (m_texture50 != 0)
+			m_texture50->Release_Ref();
+		m_texture50 = value->p;
+	}
+}
