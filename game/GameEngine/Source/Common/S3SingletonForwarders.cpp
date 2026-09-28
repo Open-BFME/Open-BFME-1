@@ -660,6 +660,13 @@ public:
 };
 
 extern Gen_00C70E80Target TheBfmeObject_00C70E80;		// 0x12d4d04
+class Gen_00C70EB0Target
+{
+public:
+	void bfmeForward(void);
+};
+
+extern Gen_00C70EB0Target TheBfmeObject_00C70EB0;		// 0x130ea10
 class Gen_00C70F00Target
 {
 public:
@@ -1307,6 +1314,11 @@ void bfmeForward_00C70E60(void)
 void bfmeForward_00C70E80(void)
 {
 	TheBfmeObject_00C70E80.bfmeForward();
+}
+// ?bfmeForward_00C70EB0@@YAXXZ
+void bfmeForward_00C70EB0(void)
+{
+	TheBfmeObject_00C70EB0.bfmeForward();
 }
 // ?bfmeForward_00C70F00@@YAXXZ
 void bfmeForward_00C70F00(void)
