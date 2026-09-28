@@ -622,7 +622,12 @@ public:
 //-------------------------------------------------------------------------------------------------
 /** This is called when a shutdown is complete for this menu */
 //-------------------------------------------------------------------------------------------------
-static void shutdownComplete( WindowLayout *layout )
+// Retail 0x004D2440 (31 B): this menu static over isShuttingDown
+// (VA 0x012F3E9C); layout arrives in ESI beside NetworkDirectConnectUpdate
+// and Shutdown (vtable slot 0x10 hide(TRUE), then Shell::shutdownComplete
+// via ILT 0x2F1D). Update/Shutdown inline the same sequence; refs=0.
+// ?shutdownCompleteNetworkDirectConnect@@YAXPAVWindowLayout@@@Z
+static void shutdownCompleteNetworkDirectConnect( WindowLayout *layout )
 {
 
 	isShuttingDown = false;
@@ -647,7 +652,7 @@ void NetworkDirectConnectShutdown( WindowLayout *layout, void *userData )
 	if( popImmediate )
 	{
 
-		shutdownComplete( layout );
+		shutdownCompleteNetworkDirectConnect( layout );
 		return;
 
 	}  //end if
@@ -665,7 +670,7 @@ void NetworkDirectConnectUpdate( WindowLayout * layout, void *userData)
 {
 	// We'll only be successful if we've requested to 
 	if(isShuttingDown && TheShell->isAnimFinished() && TheTransitionHandler->isFinished())
-		shutdownComplete(layout);
+		shutdownCompleteNetworkDirectConnect(layout);
 }// NetworkDirectConnectUpdate
 
 //-------------------------------------------------------------------------------------------------
