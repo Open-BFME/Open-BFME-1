@@ -41,6 +41,7 @@ private:
 
 public:
 	void set( const StringBase<T> &other );
+	void set( const T *text, int length );
 	void trim();
 
 private:
@@ -73,6 +74,11 @@ public:
 	void set( const UnicodeString &other )
 	{
 		StringBase<unsigned short>::set( other );
+	}
+
+	void set( const WideChar *text, Int length )
+	{
+		StringBase<unsigned short>::set( text, length );
 	}
 
 	void trim()
@@ -331,4 +337,124 @@ void BfmeAptScreenInGameChat::rva00513E70( const char *name )
 			( send.call )( msg.str(), &selected );
 		}
 	}
+}
+
+struct BuddyRequest
+{
+	enum
+	{
+		BUDDYREQUEST_MESSAGE = 3
+	};
+
+	int buddyRequestType;
+	union
+	{
+		struct
+		{
+			Int recipient;
+			WideChar text[ 128 ];
+		} message;
+		char bytes[ 0x2B8 - 4 ];
+	} arg;
+};
+
+class GameSpyBuddyMessageQueueInterface
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot04() = 0;
+	virtual void slot08() = 0;
+	virtual void slot0C() = 0;
+	virtual void slot10() = 0;
+	virtual void slot14() = 0;
+	virtual void addRequest( const BuddyRequest &request ) = 0;
+};
+
+class GameSpyInfo
+{
+public:
+	virtual void slot00() = 0; virtual void slot04() = 0;
+	virtual void slot08() = 0; virtual void slot0C() = 0;
+	virtual void slot10() = 0; virtual void slot14() = 0;
+	virtual void slot18() = 0; virtual void slot1C() = 0;
+	virtual void slot20() = 0; virtual void slot24() = 0;
+	virtual void slot28() = 0; virtual void slot2C() = 0;
+	virtual void slot30() = 0; virtual void slot34() = 0;
+	virtual void slot38() = 0; virtual void slot3C() = 0;
+	virtual void slot40() = 0; virtual void slot44() = 0;
+	virtual void slot48() = 0; virtual void slot4C() = 0;
+	virtual void slot50() = 0; virtual void slot54() = 0;
+	virtual void slot58() = 0; virtual void slot5C() = 0;
+	virtual void slot60() = 0; virtual void slot64() = 0;
+	virtual void slot68() = 0; virtual void slot6C() = 0;
+	virtual Int getLocalProfileID() = 0;
+	virtual void slot74() = 0; virtual void slot78() = 0;
+	virtual void slot7C() = 0; virtual void slot80() = 0;
+	virtual void slot84() = 0;
+	virtual AsciiString getLocalBaseName() = 0;
+};
+
+extern GameSpyBuddyMessageQueueInterface *TheGameSpyBuddyMessageQueue;
+extern GameSpyInfo *TheGameSpyInfo;
+
+class BuddyMessage
+{
+public:
+	BuddyMessage() {}
+	BuddyMessage( const BuddyMessage &other );
+	~BuddyMessage() {}
+
+	unsigned int m_timestamp;
+	Int m_senderID;
+	AsciiString m_senderNick;
+	Int m_recipientID;
+	AsciiString m_recipientNick;
+	UnicodeString m_message;
+};
+
+extern "C" __declspec(dllimport) WideChar *__cdecl wcsncpy(
+	WideChar *destination, const WideChar *source, unsigned int count );
+extern __declspec(dllimport) unsigned int __cdecl bfmeLenVGI(
+	const WideChar *text );
+
+extern void j_0003e91e();
+extern void j_00037fc9();
+
+void dup_004EE1C0( const WideChar *text, std::vector<Int> *selected )
+{
+	BuddyRequest request;
+	request.buddyRequestType = BuddyRequest::BUDDYREQUEST_MESSAGE;
+	wcsncpy( request.arg.message.text, text, 128 );
+	request.arg.message.text[ 127 ] = 0;
+
+	for( std::vector<Int>::iterator id = selected->begin();
+		id != selected->end(); ++id )
+	{
+		request.arg.message.recipient = *id;
+		TheGameSpyBuddyMessageQueue->addRequest( request );
+	}
+
+	BuddyMessage message;
+	message.m_timestamp = 0;
+	message.m_recipientID = TheGameSpyInfo->getLocalProfileID();
+	message.m_recipientNick.set( TheGameSpyInfo->getLocalBaseName() );
+	message.m_senderNick.set( TheGameSpyInfo->getLocalBaseName() );
+	message.m_message.set( request.arg.message.text,
+		bfmeLenVGI( request.arg.message.text ) );
+
+	union
+	{
+		void (*untyped)();
+		void (__cdecl *call)( const BuddyMessage & );
+	} append;
+	append.untyped = j_0003e91e;
+	append.call( message );
+
+	union
+	{
+		void (*untyped)();
+		void (__cdecl *call)( BuddyMessage );
+	} notify;
+	notify.untyped = j_00037fc9;
+	notify.call( message );
 }
