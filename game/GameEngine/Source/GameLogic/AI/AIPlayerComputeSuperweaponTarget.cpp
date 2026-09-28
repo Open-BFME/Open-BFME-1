@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
+// readable body of ?getPlayerStructureBounds@AIPlayer@@SAXPAURegion2D@@H@Z: game/GameEngine/Source/GameLogic/AI/AIPlayer.cpp
 // readable body of ?computeSuperweaponTarget@AIPlayer@@UAE_NPBVSpecialPowerTemplate@@PAUCoord3D@@HM@Z: game/GameEngine/Source/GameLogic/AI/AIPlayer.cpp
 // Retail 0x00166A80 (898 bytes, ret 0x10): AIPlayer::computeSuperweaponTarget.
 // Identity: AIPlayer vtable slot 4, reached through ILT 0x0003F4F9 from the
@@ -16,8 +17,10 @@
 // st(0), caches width/height, and hoists pos.x/pos.z out of the inner grid
 // loop exactly as retail does. getPlayerSuperweaponValue is the matched
 // source of AIPlayerGetPlayerSuperweaponValue.cpp; getPlayerStructureBounds
-// is the Generals body on the same BFME team/object layouts (0x00163C70 is
-// still a dump; this copy is not claimed).
+// is the Generals body on the same BFME team/object layouts and is claimed
+// from this TU at 0x00163C70 (537 bytes; identity via the ILT 0x000362AA the
+// matched guardSupplyCenter and this function call, plus the Generals twin;
+// BFME zeroes all four bounds fields where Generals repeated lo.x).
 
 #include <math.h>
 
@@ -62,7 +65,7 @@ class ThingTemplate : public Overridable
 public:
 	Int calcCostToBuild(const Player *player, Int playerIndex = -1) const;
 
-	unsigned char m_pad[0xc0];
+	unsigned char m_beforeKindof[0xc0];
 	unsigned int m_kindof;
 };
 
@@ -120,7 +123,7 @@ public:
 class BfmeObjectDlinkPad
 {
 public:
-	unsigned char m_pad[0x60];
+	unsigned char m_beforeCarrier[0x60];
 };
 
 class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
@@ -215,7 +218,7 @@ public:
 		return BfmeTeamInstanceIterator(m_teamInstanceList);
 	}
 
-	unsigned char m_pad[0x274];
+	unsigned char m_beforeInstanceList[0x274];
 	Team *m_teamInstanceList;
 };
 
