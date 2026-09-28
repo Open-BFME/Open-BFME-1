@@ -1,4 +1,6 @@
 // ?updateAudioFlags@Rva005A00B0Owner@@QAEXXZ
+// stlport
+#include <list>
 struct Rva005A00B0Transition { char m_pad[0x30]; int m_pending; };
 struct Rva005A00B0AudioClient {
 	virtual void s0(); virtual void s1(); virtual void s2(); virtual void s3(); virtual void s4(); virtual void s5(); virtual void s6(); virtual void s7();
@@ -12,7 +14,59 @@ struct Rva005A00B0AudioClient {
 };
 extern Rva005A00B0Transition* TheTransitionHandler;
 extern Rva005A00B0AudioClient* TheAudioClientUpdate;
-float __cdecl Rva005A00B0FlagVolume(int index);
+class GameWindowTransitionsHandler
+{
+public:
+	void rva0048B690(void *destination);
+};
+
+struct Rva0059FF70Group
+{
+	char m_pad[0x18];
+	unsigned int m_flags;
+	char m_pad1[4];
+	float m_volume;
+};
+
+class Rva0059FF70Track
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual Rva0059FF70Group *rva0059FF70Group();
+};
+
+struct Rva0059FF70Window
+{
+	char m_pad[0x10];
+	Rva0059FF70Track *m_track;
+};
+
+float __cdecl Rva005A00B0FlagVolume(int index)
+{
+	unsigned int mask = 1 << index;
+	float volume = 1.0f;
+	if (TheTransitionHandler) {
+		_STL::list<Rva0059FF70Window *> windows;
+		reinterpret_cast<GameWindowTransitionsHandler *>(TheTransitionHandler)->rva0048B690(&windows);
+		for (_STL::list<Rva0059FF70Window *>::iterator it = windows.begin();
+			it != windows.end(); ++it) {
+			Rva0059FF70Window *window = *it;
+			if (window && window->m_track) {
+				Rva0059FF70Group *group = window->m_track->rva0059FF70Group();
+				if (group && (group->m_flags & mask))
+					volume *= group->m_volume;
+			}
+		}
+	}
+	return volume;
+}
+
 struct Rva005A00B0Owner { char m_pad[0x18]; int m_flags; void updateAudioFlags(); };
 void Rva005A00B0Owner::updateAudioFlags()
 {
