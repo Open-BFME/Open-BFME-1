@@ -8538,5 +8538,75 @@
   "after_sha256": "50008ecdcd93bcc8e3e109789b7d8c22bafe8bc2b134ddfa7806b61e7d6e28ae",
   "evidence": "targets/game/reverse/identity_evidence/008b2f50-native-property-dispatch.md",
   "reason": "The old stash declared typedef unsigned int Word as a raw DWORD storage spelling for reading the hash record and flags; it named no class. The rewrite models those reads with the typed value classes of the matched 0x008B3C40 sibling (Rva008A1110Value is the pooled integer value with vtable 0x01136400)."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00088480.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00088480.cpp",
+  "old_name": "BFMERetailAsciiString",
+  "new_name": "Rva00087750Ref",
+  "before_sha256": "42a6d8070bca0f39ce56767cf8d82fab6d8ebcbb7e4734869787f00bcdb24f24",
+  "after_sha256": "29fab3a6ab3874613328e02a0715be1607acc16c455b7c8c9c9bb8c0264b1996",
+  "evidence": "targets/game/reverse/identity_evidence/00088480-mapobject-ambient-audio.md",
+  "reason": "Whole-body rewrite of the 0x00088480 bank: the old token was scaffolding from the raw-thunk decomposition (guessed local roles and shim class names), not evidence about this member; the new name is the ledger symbol or the ref class member the rewrite actually uses. See the evidence file."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00088480.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00088480.cpp",
+  "old_name": "BFMERetailAsciiString",
+  "new_name": "Rva00087BD0",
+  "before_sha256": "42a6d8070bca0f39ce56767cf8d82fab6d8ebcbb7e4734869787f00bcdb24f24",
+  "after_sha256": "29fab3a6ab3874613328e02a0715be1607acc16c455b7c8c9c9bb8c0264b1996",
+  "evidence": "targets/game/reverse/identity_evidence/00088480-mapobject-ambient-audio.md",
+  "reason": "Whole-body rewrite of the 0x00088480 bank: the old token was scaffolding from the raw-thunk decomposition (guessed local roles and shim class names), not evidence about this member; the new name is the ledger symbol or the ref class member the rewrite actually uses. See the evidence file."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00088480.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00088480.cpp",
+  "old_name": "call",
+  "new_name": "gen00087C30",
+  "before_sha256": "42a6d8070bca0f39ce56767cf8d82fab6d8ebcbb7e4734869787f00bcdb24f24",
+  "after_sha256": "29fab3a6ab3874613328e02a0715be1607acc16c455b7c8c9c9bb8c0264b1996",
+  "evidence": "targets/game/reverse/identity_evidence/00088480-mapobject-ambient-audio.md",
+  "reason": "Whole-body rewrite of the 0x00088480 bank: the old token was scaffolding from the raw-thunk decomposition (guessed local roles and shim class names), not evidence about this member; the new name is the ledger symbol or the ref class member the rewrite actually uses. See the evidence file."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00088480.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00088480.cpp",
+  "old_name": "m_audioInfo",
+  "new_name": "m_ptr",
+  "before_sha256": "42a6d8070bca0f39ce56767cf8d82fab6d8ebcbb7e4734869787f00bcdb24f24",
+  "after_sha256": "29fab3a6ab3874613328e02a0715be1607acc16c455b7c8c9c9bb8c0264b1996",
+  "evidence": "targets/game/reverse/identity_evidence/00088480-mapobject-ambient-audio.md",
+  "reason": "Whole-body rewrite of the 0x00088480 bank: the old token was scaffolding from the raw-thunk decomposition (guessed local roles and shim class names), not evidence about this member; the new name is the ledger symbol or the ref class member the rewrite actually uses. See the evidence file."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00088480.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00088480.cpp",
+  "old_name": "m_current",
+  "new_name": "m_ptr",
+  "before_sha256": "42a6d8070bca0f39ce56767cf8d82fab6d8ebcbb7e4734869787f00bcdb24f24",
+  "after_sha256": "29fab3a6ab3874613328e02a0715be1607acc16c455b7c8c9c9bb8c0264b1996",
+  "evidence": "targets/game/reverse/identity_evidence/00088480-mapobject-ambient-audio.md",
+  "reason": "Whole-body rewrite of the 0x00088480 bank: the old token was scaffolding from the raw-thunk decomposition (guessed local roles and shim class names), not evidence about this member; the new name is the ledger symbol or the ref class member the rewrite actually uses. See the evidence file."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00088480.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00088480.cpp",
+  "old_name": "m_data",
+  "new_name": "m_ptr",
+  "before_sha256": "42a6d8070bca0f39ce56767cf8d82fab6d8ebcbb7e4734869787f00bcdb24f24",
+  "after_sha256": "29fab3a6ab3874613328e02a0715be1607acc16c455b7c8c9c9bb8c0264b1996",
+  "evidence": "targets/game/reverse/identity_evidence/00088480-mapobject-ambient-audio.md",
+  "reason": "Whole-body rewrite of the 0x00088480 bank: the old token was scaffolding from the raw-thunk decomposition (guessed local roles and shim class names), not evidence about this member; the new name is the ledger symbol or the ref class member the rewrite actually uses. See the evidence file."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00088480.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00088480.cpp",
+  "old_name": "slot",
+  "new_name": "Rva00087750Ref",
+  "before_sha256": "42a6d8070bca0f39ce56767cf8d82fab6d8ebcbb7e4734869787f00bcdb24f24",
+  "after_sha256": "29fab3a6ab3874613328e02a0715be1607acc16c455b7c8c9c9bb8c0264b1996",
+  "evidence": "targets/game/reverse/identity_evidence/00088480-mapobject-ambient-audio.md",
+  "reason": "Whole-body rewrite of the 0x00088480 bank: the old token was scaffolding from the raw-thunk decomposition (guessed local roles and shim class names), not evidence about this member; the new name is the ledger symbol or the ref class member the rewrite actually uses. See the evidence file."
  }
 ]

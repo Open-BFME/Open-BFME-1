@@ -1,435 +1,354 @@
-// ?validate@MapObject@@QAEXXZ
-// partial score=0.2 date=2026-09-17
-// Retail RVA 0x00088480, 1019 bytes.
+// ?ambientAudio00088480@MapObject@@QAEXXZ
+// partial score=0.42 date=2026-09-28
+// ?ambientAudio00088480@MapObject@@QAEXXZ -- retail RVA 0x00088480, 1019 bytes (banked, not matched).
 //
-// The duplicate caller reaches this body through ILT 0x00031FCF, and the
-// existing MapObject declaration names that operation validate().  The body
-// is the BFME audio-aware validation path; its stack-local layout is kept
-// address-qualified below where the retail witness is not represented by the
-// Zero Hour header.
+// IDENTITY: class MapObject is proven (matched MapObject::duplicate calls this
+// body on the new MapObject through ILT 0x00031FCF; bfmeGoEYE sets the mode
+// global 0x012ED5D8 and walks the MapObject list calling it; the +0x44/+0x54/
+// +0x58/+0x5C members agree with the matched MapObject destructor).  The method
+// name is opaque (address kept); the " MapObjectAmb %d %s" literal and the
+// AudioManager addAudioEvent calls only show it manages the map object's
+// ambient audio events.
 //
-// cl: /DNDEBUG /MD /EHsc
+// OPEN NAME WORK before landing (probe masks relocations):
+//   * the raw-pointer ctor 0x00087720 is ledgered ??0Rva00087720Ptr, the temp
+//     dtor 0x000877B0 ??1AudioEventInfoRef, clear 0x000877E0 ??1Rva000877E0Ref,
+//     op= 0x00087860 only ?dup_00087860: one ref class cannot reach all four,
+//     so the landing needs address-derived pins (pin_consistency before/after).
+//   * ready 0x000874E0 is ledgered as int ?bfmeReady@Gen_000874E0@@QBEHXZ but
+//     every caller tests AL: the (char) cast here keeps that shape.
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
-// Keep this TU independent of the Zero Hour aggregate headers.  The retail
-// symbol and the two callee signatures below are all that is needed for the
-// ABI; pulling in the donor MapObject header also pulls in incompatible STL
-// configuration and masks the body-level codegen being measured here.
-class MapObject
-{
-public:
-	void validate();
-};
+#include "ascii_string.h"
 
-typedef unsigned int UInt;
-typedef unsigned char Byte;
+template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
+template <> inline StringBase<char>::~StringBase() { releaseBuffer(); }
+
 typedef long Long;
+typedef int Int;
+typedef bool Bool;
+typedef unsigned int AudioHandle;
 
 extern "C" __declspec(dllimport) Long __stdcall InterlockedDecrement(Long volatile *addend);
+extern "C" __declspec(dllimport) Long __stdcall InterlockedIncrement(Long volatile *addend);
 
-class BFMERetailAsciiString
+struct Coord3D;
+
+class AudioEventInfo
 {
 public:
-	BFMERetailAsciiString() : m_data(0) {}
-	BFMERetailAsciiString(const char *text);
-	~BFMERetailAsciiString() { releaseBuffer(); }
-	void __cdecl format(BFMERetailAsciiString format, ...);
-	void releaseBuffer();
+	virtual ~AudioEventInfo();
+	Long m_refCount;			///< +0x04
+	AsciiString m_audioName;	///< +0x08
+};
+
+// Ready test on the referenced info (+0x84 / +0x3C), matched at 0x000874E0.
+class Gen_000874E0
+{
+public:
+	int bfmeReady() const;
+};
+
+// Info setter retail calls with the formatted name, matched at 0x000B5610.
+class BfmeThingWB
+{
+public:
+	void bfmeGoWB(void *what);
+};
+
+class Rva00087750Ref
+{
+public:
+	Rva00087750Ref() : m_ptr(0) {}
+	Rva00087750Ref(AudioEventInfo *info);
+	~Rva00087750Ref()
+	{
+		if (m_ptr)
+		{
+			AudioEventInfo *p = m_ptr;
+			if (InterlockedDecrement(&p->m_refCount) <= 0)
+				delete p;
+		}
+	}
+	Rva00087750Ref &operator=(const Rva00087750Ref &rhs);
+	void clear();
+
+	AudioEventInfo *m_ptr;
+};
+
+__declspec(noinline) Rva00087750Ref::Rva00087750Ref(AudioEventInfo *info) : m_ptr(info)
+{
+	if (m_ptr)
+		InterlockedIncrement(&m_ptr->m_refCount);
+}
+
+__declspec(noinline) Rva00087750Ref &Rva00087750Ref::operator=(const Rva00087750Ref &rhs)
+{
+	if (this != &rhs)
+	{
+		if (rhs.m_ptr)
+			InterlockedIncrement(&rhs.m_ptr->m_refCount);
+		if (m_ptr)
+		{
+			AudioEventInfo *p = m_ptr;
+			if (InterlockedDecrement(&p->m_refCount) <= 0)
+				delete p;
+		}
+		m_ptr = rhs.m_ptr;
+	}
+	return *this;
+}
+
+__declspec(noinline) void Rva00087750Ref::clear()
+{
+	if (m_ptr)
+	{
+		AudioEventInfo *p = m_ptr;
+		if (InterlockedDecrement(&p->m_refCount) <= 0)
+			delete p;
+		m_ptr = 0;
+	}
+}
+
+class Rva00087860Ref
+{
+public:
+	Rva00087860Ref() : m_ptr(0) {}
+	~Rva00087860Ref()
+	{
+		if (m_ptr)
+		{
+			AudioEventInfo *p = m_ptr;
+			if (InterlockedDecrement(&p->m_refCount) <= 0)
+				delete p;
+		}
+	}
+	Rva00087860Ref &operator=(const Rva00087860Ref &rhs);
+
+	AudioEventInfo *m_ptr;
+};
+
+__declspec(noinline) Rva00087860Ref &Rva00087860Ref::operator=(const Rva00087860Ref &rhs)
+{
+	if (this != &rhs)
+	{
+		if (rhs.m_ptr)
+			InterlockedIncrement(&rhs.m_ptr->m_refCount);
+		if (m_ptr)
+		{
+			AudioEventInfo *p = m_ptr;
+			if (InterlockedDecrement(&p->m_refCount) <= 0)
+				delete p;
+		}
+		m_ptr = rhs.m_ptr;
+	}
+	return *this;
+}
+
+class AudioEventRTS
+{
+public:
+	AudioEventRTS(const AsciiString &eventName, const Coord3D *positionOfAudio, int extra);
+	virtual ~AudioEventRTS();
+
+	AsciiString m_filenameToLoad;
+	Rva00087750Ref m_eventInfo;		///< +0x08
+	char m_pad0c[0x70 - 0x0C];
+};
+
+class Rva00087BD0
+{
+public:
+	void *get(int i);
+};
+
+static inline AudioEventRTS *soundAt(Rva00087BD0 *tt, int i)
+{
+	return static_cast<AudioEventRTS *>(tt->get(i));
+}
+
+class AudioManager
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03();
+	virtual void slot04(); virtual void slot05(); virtual void slot06(); virtual void slot07();
+	virtual void slot08(); virtual void slot09(); virtual void slot10(); virtual void slot11();
+	virtual void slot12(); virtual void slot13(); virtual void slot14(); virtual void slot15();
+	virtual void slot16();
+	virtual AudioHandle addAudioEvent(const AudioEventRTS *eventToAdd);			///< +0x44
+	virtual void slot18(); virtual void slot19();
+	virtual void slot20(); virtual void slot21(); virtual void slot22(); virtual void slot23();
+	virtual void slot24(); virtual void slot25(); virtual void slot26(); virtual void slot27();
+	virtual void slot28(); virtual void slot29(); virtual void slot30(); virtual void slot31();
+	virtual void slot32(); virtual void slot33(); virtual void slot34(); virtual void slot35();
+	virtual void slot36(); virtual void slot37(); virtual void slot38(); virtual void slot39();
+	virtual void slot40(); virtual void slot41(); virtual void slot42();
+	virtual void getInfoForAudioEvent(const AudioEventRTS *eventToFindAndFill);	///< +0xAC
+	virtual void slot44(); virtual void slot45(); virtual void slot46(); virtual void slot47();
+	virtual void slot48(); virtual void slot49(); virtual void slot50(); virtual void slot51();
+	virtual void slot52(); virtual void slot53(); virtual void slot54(); virtual void slot55();
+	virtual void slot56(); virtual void slot57(); virtual void slot58(); virtual void slot59();
+	virtual void slot60(); virtual void slot61(); virtual void slot62(); virtual void slot63();
+	virtual void slot64(); virtual void slot65(); virtual void slot66(); virtual void slot67();
+	virtual void slot68();
+	virtual void slot69(AudioEventInfo *info);									///< +0x114
+};
+
+extern AudioManager *TheAudio;
+extern void *g_bfmeCurEYE;
+extern Int g_mapObjectAmbSerial012ED5E8;
+
+class Dict
+{
 	void *m_data;
 };
 
-#define AUDIO_SLOT(n) virtual void slot##n() = 0;
-class Rva005A00B0AudioClient
+void parseAmbientAudioProperties_000B6030();
+
+class BfmeRetBWF;
+class BfmeThingBWF
 {
 public:
-	AUDIO_SLOT(0)  AUDIO_SLOT(1)  AUDIO_SLOT(2)  AUDIO_SLOT(3)
-	AUDIO_SLOT(4)  AUDIO_SLOT(5)  AUDIO_SLOT(6)  AUDIO_SLOT(7)
-	AUDIO_SLOT(8)  AUDIO_SLOT(9)  AUDIO_SLOT(10) AUDIO_SLOT(11)
-	AUDIO_SLOT(12) AUDIO_SLOT(13) AUDIO_SLOT(14) AUDIO_SLOT(15)
-	AUDIO_SLOT(16)
-	virtual UInt addAudioEvent(void *event) = 0;
-	AUDIO_SLOT(18) AUDIO_SLOT(19) AUDIO_SLOT(20) AUDIO_SLOT(21)
-	AUDIO_SLOT(22) AUDIO_SLOT(23) AUDIO_SLOT(24) AUDIO_SLOT(25)
-	AUDIO_SLOT(26) AUDIO_SLOT(27) AUDIO_SLOT(28) AUDIO_SLOT(29)
-	AUDIO_SLOT(30) AUDIO_SLOT(31) AUDIO_SLOT(32) AUDIO_SLOT(33)
-	AUDIO_SLOT(34) AUDIO_SLOT(35) AUDIO_SLOT(36) AUDIO_SLOT(37)
-	AUDIO_SLOT(38) AUDIO_SLOT(39) AUDIO_SLOT(40) AUDIO_SLOT(41)
-	AUDIO_SLOT(42)
-	virtual void refreshAudioEvent(void *event) = 0;
-	AUDIO_SLOT(44) AUDIO_SLOT(45) AUDIO_SLOT(46) AUDIO_SLOT(47)
-	AUDIO_SLOT(48) AUDIO_SLOT(49) AUDIO_SLOT(50) AUDIO_SLOT(51)
-	AUDIO_SLOT(52) AUDIO_SLOT(53) AUDIO_SLOT(54) AUDIO_SLOT(55)
-	AUDIO_SLOT(56) AUDIO_SLOT(57) AUDIO_SLOT(58) AUDIO_SLOT(59)
-	AUDIO_SLOT(60) AUDIO_SLOT(61) AUDIO_SLOT(62) AUDIO_SLOT(63)
-	AUDIO_SLOT(64) AUDIO_SLOT(65) AUDIO_SLOT(66) AUDIO_SLOT(67)
-	AUDIO_SLOT(68)
-	virtual void updateAudioEvent(void *event) = 0;
+	BfmeRetBWF *bfmeGoBWF();
 };
-#undef AUDIO_SLOT
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
-extern void *g_bfmeCurEYE;
-
-extern void j_00001005();
-extern void j_00004075();
-extern void j_000113c4();
-extern void j_000121ac();
-extern void j_0001325a();
-extern void j_0001d002();
-extern void j_00026f35();
-extern void j_0002940b();
-extern void j_0002c6d8();
-extern void j_000362ff();
-extern void j_0003e4d7();
-extern void j_00043c07();
-extern void j_00048522();
-
-class Rva00088480OneArgCall
+class Gen00087C30_00088480
 {
 public:
-	void call(void *argument);
+	void gen00087C30();
 };
 
-class Rva00088480NoArgCall
+class MapObject
 {
 public:
-	void call();
+	void ambientAudio00088480();
+	Bool isRuntimeFlag10() const { return (m_runtimeFlags & 0x10) != 0; }
+
+private:
+	void *m_vtable;
+	MapObject *m_nextMapObject;					///< +0x04
+	char m_pad08[0x0C];							///< +0x08
+	AsciiString m_objectName;					///< +0x14
+	Rva00087BD0 *m_thingTemplate;				///< +0x18
+	float m_angle;								///< +0x1C
+	Int m_flags;								///< +0x20
+	Dict m_properties;							///< +0x24
+	char m_pad28[0x1C];							///< +0x28
+	Int m_runtimeFlags;							///< +0x44
+	char m_pad48[0x0C];							///< +0x48
+	AudioHandle m_rva54;						///< +0x54
+	AudioHandle m_rva58;						///< +0x58
+	Rva00087860Ref m_rva5c;						///< +0x5C
 };
 
-class Rva00088480ReadyCall
+void MapObject::ambientAudio00088480()
 {
-public:
-	Byte call();
-};
-
-class Rva00088480GetCall
-{
-public:
-	void *call(int index);
-};
-
-class Rva00088480EventCall
-{
-public:
-	void *call();
-};
-
-class Rva00088480PositionalCtor
-{
-public:
-	void call(const void *name, const void *position, int extra);
-};
-
-static __forceinline void rvaAssign(void *self, void *source)
-{
-	union
-	{
-		void (*raw)();
-		void (Rva00088480OneArgCall::*member)(void *);
-	} call;
-	call.raw = j_0002c6d8;
-	(reinterpret_cast<Rva00088480OneArgCall *>(self)->*call.member)(source);
-}
-
-static __forceinline void rvaHold(void *self, void *source)
-{
-	union
-	{
-		void (*raw)();
-		void (Rva00088480OneArgCall::*member)(void *);
-	} call;
-	call.raw = j_00043c07;
-	(reinterpret_cast<Rva00088480OneArgCall *>(self)->*call.member)(source);
-}
-
-static __forceinline void rvaReleaseTemporary(void *self)
-{
-	union
-	{
-		void (*raw)();
-		void (Rva00088480NoArgCall::*member)();
-	} call;
-	call.raw = j_000362ff;
-	(reinterpret_cast<Rva00088480NoArgCall *>(self)->*call.member)();
-}
-
-static __forceinline void rvaDestroyMissing(void *self)
-{
-	union
-	{
-		void (*raw)();
-		void (Rva00088480NoArgCall::*member)();
-	} call;
-	call.raw = j_00048522;
-	(reinterpret_cast<Rva00088480NoArgCall *>(self)->*call.member)();
-}
-
-static __forceinline Byte rvaReady(void *self)
-{
-	union
-	{
-		void (*raw)();
-		Byte (Rva00088480ReadyCall::*member)();
-	} call;
-	call.raw = j_00001005;
-	return (reinterpret_cast<Rva00088480ReadyCall *>(self)->*call.member)();
-}
-
-static __forceinline void *rvaGet(void *self, int index)
-{
-	union
-	{
-		void (*raw)();
-		void *(Rva00088480GetCall::*member)(int);
-	} call;
-	call.raw = j_0003e4d7;
-	return (reinterpret_cast<Rva00088480GetCall *>(self)->*call.member)(index);
-}
-
-static __forceinline void *rvaEvent(void *self)
-{
-	union
-	{
-		void (*raw)();
-		void *(Rva00088480EventCall::*member)();
-	} call;
-	call.raw = j_0001325a;
-	return (reinterpret_cast<Rva00088480EventCall *>(self)->*call.member)();
-}
-
-static __forceinline void rvaMakeEvent(void *self, const void *name,
-	const void *position, int extra)
-{
-	union
-	{
-		void (*raw)();
-		void (Rva00088480PositionalCtor::*member)(
-			const void *, const void *, int);
-	} call;
-	call.raw = j_000113c4;
-	(reinterpret_cast<Rva00088480PositionalCtor *>(self)->*call.member)(
-		name, position, extra);
-}
-
-static __forceinline void rvaMakeRef(void *self, void *source)
-{
-	union
-	{
-		void (*raw)();
-		void (Rva00088480OneArgCall::*member)(void *);
-	} call;
-	call.raw = j_000121ac;
-	(reinterpret_cast<Rva00088480OneArgCall *>(self)->*call.member)(source);
-}
-
-static __forceinline void rvaDestroyEvent(void *self)
-{
-	union
-	{
-		void (*raw)();
-		void (Rva00088480NoArgCall::*member)();
-	} call;
-	call.raw = j_00026f35;
-	(reinterpret_cast<Rva00088480NoArgCall *>(self)->*call.member)();
-}
-
-static __forceinline void rvaUpdateThing(void *self, void *argument)
-{
-	union
-	{
-		void (*raw)();
-		void (Rva00088480OneArgCall::*member)(void *);
-	} call;
-	call.raw = j_0001d002;
-	(reinterpret_cast<Rva00088480OneArgCall *>(self)->*call.member)(argument);
-}
-
-static __forceinline void rvaReleaseMapObject(void *self)
-{
-	union
-	{
-		void (*raw)();
-		void (Rva00088480NoArgCall::*member)();
-	} call;
-	call.raw = j_00004075;
-	(reinterpret_cast<Rva00088480NoArgCall *>(self)->*call.member)();
-}
-
-struct Rva00088480State
-{
-	Byte m_reserved;
-	Byte m_ready;
-	Byte m_queryState;
-	Byte m_queryFlag;
-};
-
-struct Rva00088480Locals
-{
-	Rva00088480State m_state;
-	void *m_current;
-	void *m_alternate;
-	void *m_audioInfo;
-	Byte m_name[4];
-	Byte m_event[0x70];
-};
-
-struct Rva00088480MapObjectView
-{
-	Byte m_prefix[0x18];
-	void *m_thingTemplate;
-	Byte m_betweenTemplateAndProperties[8];
-	void *m_properties;
-	Byte m_betweenPropertiesAndFlags[0x1c];
-	UInt m_runtimeFlags;
-	Byte m_betweenFlagsAndHandles[0x0c];
-	UInt m_handleA;
-	UInt m_handleB;
-	void *m_audioInfo;
-};
-
-static __forceinline void rvaReleaseCounted(void *object)
-{
-	class Rva00088480DeleteTarget
-	{
-	public:
-		virtual void destroy(int flags) = 0;
-	};
-
-	if (object != 0)
-	{
-		Long *count = reinterpret_cast<Long *>(
-			reinterpret_cast<Byte *>(object) + 4);
-		if (InterlockedDecrement(count) <= 0)
-			reinterpret_cast<Rva00088480DeleteTarget *>(object)->destroy(1);
-	}
-}
-
-// ?validate@MapObject@@QAEXXZ
-void MapObject::validate()
-{
-	Rva00088480MapObjectView *self =
-		reinterpret_cast<Rva00088480MapObjectView *>(this);
-	Rva00088480Locals local;
-
-	if (TheAudioClientUpdate == 0 || self->m_thingTemplate == 0)
+	if (TheAudio == 0 || m_thingTemplate == 0)
 		return;
 
-	local.m_state.m_queryState = 0;
-	local.m_state.m_queryFlag = 0;
-	local.m_audioInfo = 0;
-	((void (__cdecl *)(void *, void *, void *, void *, void *, void *))j_0002940b)(
-		self->m_properties, 0, self->m_thingTemplate,
-		&local.m_state.m_queryState, &local.m_audioInfo,
-		&local.m_state.m_queryFlag);
+	Bool enable = false;
+	Bool disabled = false;
+	Rva00087860Ref info;
+	Bool modeTwo = false;
+	((void (__cdecl *)(Dict *, int, Rva00087BD0 *, Bool *, Rva00087860Ref *, Bool *))
+		parseAmbientAudioProperties_000B6030)(&m_properties, 0, m_thingTemplate,
+		&disabled, &info, &modeTwo);
 
-	if (local.m_audioInfo != 0)
+	if (info.m_ptr)
 	{
-		BFMERetailAsciiString *name =
-			reinterpret_cast<BFMERetailAsciiString *>(local.m_name);
-		name->m_data = 0;
-		const char *soundName = *reinterpret_cast<const char **>(
-			reinterpret_cast<Byte *>(local.m_audioInfo) + 8);
-		name->format(BFMERetailAsciiString(" MapObjectAmb %d %s"),
-			*(int *)0x012ED5E8, soundName != 0 ? soundName :
-			reinterpret_cast<const char *>(0x0107388B));
-		rvaUpdateThing(local.m_audioInfo, name);
-		++*(int *)0x012ED5E8;
-		TheAudioClientUpdate->updateAudioEvent(local.m_audioInfo);
-		name->releaseBuffer();
+		AsciiString name;
+		name.format(AsciiString(" MapObjectAmb %d %s"), g_mapObjectAmbSerial012ED5E8,
+			info.m_ptr->m_audioName.str());
+		++g_mapObjectAmbSerial012ED5E8;
+		reinterpret_cast<BfmeThingWB *>(info.m_ptr)->bfmeGoWB(&name);
+		TheAudio->slot69(info.m_ptr);
 	}
 
-	local.m_current = 0;
-	local.m_alternate = 0;
-	if (local.m_state.m_queryState != 0 || g_bfmeCurEYE == 0 ||
-		(self->m_runtimeFlags & 0x10) == 0)
-		return;
-
-	if (local.m_audioInfo == 0)
+	Rva00087750Ref current;
+	Rva00087750Ref alternate;
+	if (!disabled && g_bfmeCurEYE && isRuntimeFlag10())
 	{
-		void *sound = rvaGet(self->m_thingTemplate, 0x57);
-		if (sound != 0)
+		if (info.m_ptr == 0)
 		{
-			sound = reinterpret_cast<Byte *>(sound) + 8;
-			rvaAssign(&local.m_current, sound);
+			Rva00087BD0 *tt = m_thingTemplate;
+			if (tt->get(0x57) == 0)
+			{
+				enable = false;
+				current.clear();
+			}
+			else
+			{
+				current = soundAt(tt, 0x57)->m_eventInfo;
+				if (current.m_ptr == 0)
+				{
+					AudioManager *audio = TheAudio;
+					audio->getInfoForAudioEvent(soundAt(m_thingTemplate, 0x57));
+					current = soundAt(m_thingTemplate, 0x57)->m_eventInfo;
+				}
+			}
 		}
 		else
 		{
-			rvaDestroyMissing(&local.m_current);
-			local.m_state.m_ready = 0;
+			current = Rva00087750Ref(info.m_ptr);
 		}
-		if (local.m_current == 0)
+
+		Rva00087BD0 *tt = m_thingTemplate;
+		if (tt->get(0x5b))
 		{
-			sound = rvaGet(self->m_thingTemplate, 0x57);
-			TheAudioClientUpdate->refreshAudioEvent(sound);
-			rvaAssign(&local.m_current, reinterpret_cast<Byte *>(sound) + 8);
-		}
-	}
-	else
-	{
-		rvaMakeRef(&local.m_alternate, local.m_audioInfo);
-		rvaAssign(&local.m_current, &local.m_alternate);
-		rvaReleaseTemporary(&local.m_alternate);
-		void *sound = rvaGet(self->m_thingTemplate, 0x5b);
-		if (sound != 0)
-		{
-			rvaAssign(&local.m_alternate, reinterpret_cast<Byte *>(sound) + 8);
-			if (local.m_alternate == 0)
+			alternate = soundAt(tt, 0x5b)->m_eventInfo;
+			if (alternate.m_ptr == 0)
 			{
-				TheAudioClientUpdate->refreshAudioEvent(sound);
-				rvaAssign(&local.m_alternate, reinterpret_cast<Byte *>(sound) + 8);
+				AudioManager *audio = TheAudio;
+					audio->getInfoForAudioEvent(soundAt(m_thingTemplate, 0x5b));
+				alternate = soundAt(m_thingTemplate, 0x5b)->m_eventInfo;
 			}
 		}
-	}
 
-	if (local.m_current == 0 && local.m_alternate == 0)
-		return;
-
-	switch (*(int *)0x012ED5D8)
-	{
-	case 1:
-		local.m_state.m_ready = local.m_current != 0 && rvaReady(local.m_current);
-		break;
-	case 2:
-		local.m_state.m_ready = local.m_state.m_queryFlag;
-		break;
-	case 3:
-		local.m_state.m_ready = 0;
-		if (local.m_current != 0 && rvaReady(local.m_current))
-			local.m_state.m_ready = 1;
-		if (local.m_alternate != 0 && rvaReady(local.m_alternate))
-			local.m_state.m_ready = 1;
-		break;
-	default:
-		local.m_state.m_ready = 0;
-		break;
-	}
-
-	Byte playing = (self->m_handleA >= 5 || self->m_handleB >= 5) ? 1 : 0;
-	if (local.m_state.m_ready == playing)
-		return;
-	if (local.m_state.m_ready == 0)
-	{
-		rvaReleaseMapObject(this);
-		return;
-	}
-
-	rvaHold(&self->m_audioInfo, &local.m_audioInfo);
-	if (local.m_current != 0)
-	{
-		void *position = rvaEvent(this);
-		rvaMakeEvent(local.m_event, &local.m_current, position, 0);
-		self->m_handleA = TheAudioClientUpdate->addAudioEvent(local.m_event);
-		rvaDestroyEvent(local.m_event);
-		if (local.m_alternate != 0)
+		if (current.m_ptr || alternate.m_ptr)
 		{
-			position = rvaEvent(this);
-			rvaMakeEvent(local.m_event, &local.m_alternate, position, 0);
-			self->m_handleB = TheAudioClientUpdate->addAudioEvent(local.m_event);
-			rvaDestroyEvent(local.m_event);
+			switch ((Int)g_bfmeCurEYE)
+			{
+			case 1:
+				enable = true;
+				break;
+			case 2:
+				enable = modeTwo;
+				break;
+			case 3:
+				enable = false;
+				if (current.m_ptr && (char)reinterpret_cast<Gen_000874E0 *>(current.m_ptr)->bfmeReady())
+					enable = true;
+				else if (alternate.m_ptr && (char)reinterpret_cast<Gen_000874E0 *>(alternate.m_ptr)->bfmeReady())
+					enable = true;
+				break;
+			}
 		}
+		else
+			enable = false;
 	}
+	else
+		enable = false;
 
-	rvaReleaseMapObject(this);
-	rvaReleaseCounted(local.m_alternate);
-	rvaReleaseCounted(local.m_current);
-	rvaReleaseCounted(local.m_audioInfo);
+	Bool playing = m_rva54 >= 5 || m_rva58 >= 5;
+	if (enable != playing)
+	{
+		if (enable)
+		{
+			m_rva5c = info;
+			if (current.m_ptr)
+			{
+				m_rva54 = TheAudio->addAudioEvent(&AudioEventRTS(
+					reinterpret_cast<const AsciiString &>(current),
+					reinterpret_cast<const Coord3D *>(reinterpret_cast<BfmeThingBWF *>(this)->bfmeGoBWF()), 0));
+				if (alternate.m_ptr)
+				{
+					m_rva58 = TheAudio->addAudioEvent(&AudioEventRTS(
+						reinterpret_cast<const AsciiString &>(alternate),
+						reinterpret_cast<const Coord3D *>(reinterpret_cast<BfmeThingBWF *>(this)->bfmeGoBWF()), 0));
+				}
+			}
+		}
+		else
+			reinterpret_cast<Gen00087C30_00088480 *>(this)->gen00087C30();
+	}
 }
