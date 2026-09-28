@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "8beff4e7e9b3deb13770057ad348e557ce5582a2675918f897162e9a039afef6",
+  "symbol": "?d_000de160@@YAXXZ",
+  "score_kind": "measured",
+  "score": 0.8596,
+  "source": "// ?d_000de160@@YAXXZ\n// partial score=0.8596 date=2026-09-28\n// cl: /DNDEBUG /MD /EHsc\nstruct BfmeSwapTailCJ;\nvoid __cdecl bfmeSwapTailCJ(BfmeSwapTailCJ *first, BfmeSwapTailCJ *second);\n\nstruct Rva000DE160\n{\n\tunsigned int volatile m_word00;\n\tunsigned int volatile m_word04;\n\tunsigned int volatile m_word08;\n\tchar m_tail[4];\n\n\tvoid swap(Rva000DE160 * volatile other);\n};\n\nvoid Rva000DE160::swap(Rva000DE160 * volatile other)\n{\n\tRva000DE160 *otherObject = other;\n\tunsigned int thisValue = m_word00;\n\tunsigned int otherValue = otherObject->m_word00;\n\tm_word00 = otherValue;\n\totherObject->m_word00 = thisValue;\n\n\totherValue = otherObject->m_word04;\n\tthisValue = m_word04;\n\tm_word04 = otherValue;\n\totherObject->m_word04 = thisValue;\n\n\totherValue = otherObject->m_word08;\n\tthisValue = m_word08;\n\tm_word08 = otherValue;\n\totherObject->m_word08 = thisValue;\n\n\tbfmeSwapTailCJ(reinterpret_cast<BfmeSwapTailCJ *>(m_tail),\n\t\treinterpret_cast<BfmeSwapTailCJ *>(otherObject->m_tail));\n}\n"
+}
