@@ -89617,3 +89617,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??0AIAttackPursueTargetState@@QAE@PAVStateMachine@@_N11@Z,0x000046BA,route=0x0017F700; constructor literal 0x0109A620 and vtable 0x0109A5C8 identify the state registered by caller 0x00180810
 ??0ContinueState@@QAE@PAVStateMachine@@@Z,0x00046FBF,route=0x00170EA0; constructor literal 0x01097A0C and vtable 0x010979B8 identify the state registered by caller 0x00180810
 ??_7AttackStateMachine@@6B@,0x01097168,constructor 0x00180810 installs this table and slot 2 reaches matched name getter 0x0016AB10 returning AttackStateMachine
+??0?$vector@PAVGen_ve_001f9520@@V?$allocator@PAVGen_ve_001f9520@@@_STL@@@_STL@@QAE@ABV01@@Z,0x001F9520,existing constructor TU object-symbol; copy begin/end of 4-byte elements; ECX destination plus source reference ret4; independent retail jump and callee decoded for 009004A0; identity_evidence/009004A0-cdecl-render-object-factory.md

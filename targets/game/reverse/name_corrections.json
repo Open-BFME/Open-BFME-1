@@ -7728,5 +7728,15 @@
   "after_sha256": "ffec434e119c00fcb40bef55bace32ba3ed0d1d96a14e4b5ea5503ef679f5cf5",
   "evidence": "targets/game/reverse/identity_evidence/0x00541480_callee_name.md",
   "reason": "getSlot was invented for the bank; 0x00637D10 has no ledger identity (generated ILT thunk)."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "Create_Render_Obj",
+  "new_name": "Rva009004A0CreateRenderObject",
+  "before_sha256": "aa6e7fe0d3a7364f5163d29e394d134a02e299e434f2858fe93a21a7915a7f35",
+  "after_sha256": "601470a116f0ba57bd56568f44f6856f629b6fab5dd089f07742217328c38927",
+  "evidence": "targets/game/reverse/identity_evidence/009004A0-cdecl-render-object-factory.md",
+  "reason": "Retired thiscall name contradicted by the callee (no ECX use, plain ret) and two callers (six pushed arguments, add esp 0x18); address-derived factory name."
  }
 ]

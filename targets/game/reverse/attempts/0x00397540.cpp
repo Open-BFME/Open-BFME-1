@@ -1,5 +1,5 @@
 // ?logicMessageDispatcher@GameLogic@@QAEXPAVGameMessage@@PAX@Z
-// partial score=0.896386 date=2026-09-27
+// partial score=0.9209709286 date=2026-09-27
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringbaseascii /Iinputs/reference/shims/stringbaseunicode /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
@@ -104,6 +104,23 @@ static bool theBuildPlan;
 static Object *thePlanSubject[64];
 static int thePlanSubjectCount;
 
+// Resume notes for 2026-09-27 gpt-6-astra-medium:
+// Begin from this bank, not the native ZH dispatcher. Audited ABI corrections:
+// AudioEventRTS has a second ObjectID=0 argument; LookAtTranslator position is
+// const ICoord2D&; Eva takes message 3 plus null Coord3D; radar takes Object+0x38,
+// event 0 and radius 4.0f. Case 0x40f uses command-source 2 on BOTH branches.
+// All used rva-qualified thiscall declarations with an independently decoded
+// ret now agree on argument cleanup. Four tail/short extents remain undecoded.
+// EH has 24 retail states: 0/1 no cleanup, then seven key guards (states 2..8),
+// then PlaceBuilding guard/AsciiString (9/10). Ours lacks the first two empty
+// states and has PlaceBuilding first in lexical static order. Moving case 418
+// below the key cases fixes guard numbering but moves physical blocks farther
+// from retail; keep the original physical ordering until that is resolved.
+// Frame is 0x80 vs retail 0xac. Probe full normalized shape 0.9209709286;
+// code-only shape 0.972631579 excludes inline switch-table data. Neither is a
+// byte-match percentage. No dispatcher source/pins/ledger were landed.
+// Evidence and all finite-search variants: build/astra_seat/REPORT.md.
+
 // Scratch-only receiver declarations. The suffix is the retail body RVA;
 // no semantic identity or pin is claimed for these additional call signatures.
 // Receiver is used only for direct calls, never for a presumed data layout.
@@ -149,7 +166,7 @@ struct Dispatch397540Calls {
     void rva00603520();
     void rva00411BB0();
     void rva00418880(const UnicodeString&);
-    void rva004233A0(int);
+    bool rva004233A0(int,const Coord3D*);
     void rva0026EE30();
     void rva000D2B70(int,GameMessage*);
     void rva000D2A60(int,GameMessage*);
@@ -158,7 +175,7 @@ struct Dispatch397540Calls {
     void rva00155DA0(bool,Object*,int,int);
     void rva000CDD50(int,const ThingTemplate**,bool,int*,bool);
     bool rva005B53D0();
-    void rva005B5420(ICoord2D);
+    void rva005B5420(const ICoord2D&);
     void rva00108140(const Coord3D*,int,float);
     void rva00150D80(void*,int,void*);
     void rva00156B10();
@@ -296,7 +313,7 @@ void GameLogic::logicMessageDispatcher( GameMessage *msg, void *userData )
 	switch( msgType )
 	{
 case 0x1f: {
-    bool argument=msg->getArgument(0)->boolean; X(TheScriptEngine)->rva003C1AD0(argument); break;
+    const GameMessageArgumentType *argument=msg->getArgument(0); X(TheScriptEngine)->rva003C1AD0(argument->boolean); break;
 }
 case 0x1e: {
     int mode=msg->getArgument(0)->integer;
@@ -317,8 +334,10 @@ case 0x1e: {
 case 0x1d: {
     if (currentlySelectedGroup) TheAI->destroyGroup(currentlySelectedGroup);
     X(this)->rva00387A50();
-    bool shell = field<int>(TheGameLogic,0x10c)==2 || X(TheGameLogic)->rva0005C5E0();
-    X(TheGameLogic)->rva00396B00(shell,true);
+    GameLogic *logic=TheGameLogic;
+    bool shell=false;
+    if(field<int>(logic,0x10c)==2 || X(logic)->rva0005C5E0()) shell=true;
+    X(logic)->rva00396B00(shell,true);
     return;
 }
 case 0x70:
@@ -372,8 +391,9 @@ case 0x3ea: {
 case 0x3ec: {
     Player *player=ThePlayerList->getNthPlayer(msg->getPlayerIndex());
     if (player) for (int i=0;i<field<unsigned char>(msg,0x18);++i) {
+        ObjectID id=msg->getArgument(i)->objectID;
         GameLogic *logic=TheGameLogic;
-        Object *object=logic->findObjectByID(msg->getArgument(i)->objectID);
+        Object *object=logic->findObjectByID(id);
         if (object) X(logic)->rva00382F50(object,1u<<field<int>(player,0x24),false);
     }
     break;
@@ -518,7 +538,7 @@ case 0x40f:
 			{
 				if (!currentlySelectedGroup) return; 
 				{
-					X(currentlySelectedGroup)->rva00150BE0(specialPowerID,options,0);
+					X(currentlySelectedGroup)->rva00150BE0(specialPowerID,options,2);
 				}
 			}
 			break;
@@ -586,11 +606,12 @@ case 0x413: {
 }
 case 0x416: {
     Object *producer=((BfmeObjectReference*)currentlySelectedGroup)->resolve();
-    void *what=0; int id=-1;
-    if (msg->getArgument(0)->boolean) id=msg->getArgument(1)->integer;
+    void *what; int id;
+    if (msg->getArgument(0)->boolean) { id=msg->getArgument(1)->integer; what=0; }
     else {
+        id=-1;
         const ThingTemplate *t=TheThingFactory->findByTemplateID((unsigned short)msg->getArgument(1)->integer);
-        if (t) what=X(t)->rva00087A80();
+        what=t?X(t)->rva00087A80():0;
     }
     int production=msg->getArgument(2)->integer;
     bool flag=msg->getArgument(3)->boolean;
@@ -758,7 +779,7 @@ case 0x418: {
     dispatchPosition=msg->getArgument(1)->location;
     float angle=msg->getArgument(2)->real;
     v5<0x24,void>(TheBuildAssistant,object,what,&dispatchPosition,angle,owner);
-    static AudioEventRTS placeBuilding(AsciiString("PlaceBuilding"));
+    static AudioEventRTS placeBuilding(AsciiString("PlaceBuilding"),(ObjectID)0);
     placeBuilding.setObjectID((ObjectID)field<unsigned>(object,0x74));
     v1<0x44,void>(TheAudio,&placeBuilding);
     break;
@@ -824,8 +845,12 @@ case 0x45b: {
 case 0x456: {
     ObjectID referenceID=msg->getArgument(0)->objectID;
     Object *reference=TheGameLogic->findObjectByID(referenceID);
-    bool each=!referenceID || !reference;
-    bool enabled=each || !(field<unsigned char>(X(reference)->rva001BEF20(),3)&1);
+    bool each=true;
+    bool enabled=true;
+    if(referenceID && reference) {
+        each=false;
+        enabled=!(field<unsigned char>(X(reference)->rva001BEF20(),3)&1);
+    }
     if (!currentlySelectedGroup) return;
     const VecObjectID& ids=currentlySelectedGroup->getAllIDs();
     for (VecObjectID::const_iterator it=ids.begin();it!=ids.end();++it) {
@@ -1152,15 +1177,15 @@ case 0x443:
 					if (thisPlayer == field<Player*>(ThePlayerList,0xc))
 					{
 						((Rva397540Message<0x34>*)TheInGameUI)->invoke( ((VDispatch2<0x28,UnicodeString,const char*,bool*>*)TheGameText)->invoke("GUI:TooManyBeacons",0) );
-						static AudioEventRTS aSound("BeaconPlacementFailed");
+						static AudioEventRTS aSound("BeaconPlacementFailed",(ObjectID)0);
 						aSound.setPosition(&dispatchPosition);
 						aSound.setPlayerIndex(field<int>(thisPlayer,0x24));
 						v1<0x44,unsigned>(TheAudio,(const AudioEventRTS*)&aSound);
 					}
 					break;
 				}
-				unsigned flags[3]={0,0,0};
-Object *object=X(TheThingFactory)->rva00138520(thing,field<Team*>(thisPlayer,0x230),flags,0);
+				BitFlags<86> flags;
+Object *object=X(TheThingFactory)->rva00138520(thing,field<Team*>(thisPlayer,0x230),&flags,0);
 				object->setPosition( &dispatchPosition );
 				object->setProducer(NULL);
 				if (thisPlayer->getRelationship( field<Team*>(field<Player*>(ThePlayerList,0xc),0x230) ) == ALLIES || field<Player*>(ThePlayerList,0xc)->isPlayerObserver())
@@ -1168,13 +1193,13 @@ Object *object=X(TheThingFactory)->rva00138520(thing,field<Team*>(thisPlayer,0x2
 					UnicodeString s;
 					s.format(((VDispatch2<0x28,UnicodeString,const char*,bool*>*)TheGameText)->invoke("GUI:BeaconPlaced",0), dispatchUnicodeText(thisPlayer->getPlayerDisplayName()));
 					((Rva397540Message<0x40>*)TheInGameUI)->invoke(s);
-					static AudioEventRTS aSound("Gui_BeaconPlaced");
+					static AudioEventRTS aSound("Gui_BeaconPlaced",(ObjectID)0);
 					aSound.setPlayerIndex(field<int>(thisPlayer,0x24));
 					aSound.setPosition(&dispatchPosition);
 					v1<0x44,unsigned>(TheAudio,(const AudioEventRTS*)&aSound);
-					X(TheRadar)->rva00108140((const Coord3D*)((char*)object+0x44),1,0.0f);
+					X(TheRadar)->rva00108140((const Coord3D*)((char*)object+0x38),0,4.0f);
 					if (field<Player*>(ThePlayerList,0xc)->getRelationship(field<Team*>(thisPlayer,0x230)) == ALLIES)
-						X(TheEva)->rva004233A0(0);
+						X(TheEva)->rva004233A0(3,0);
 					field<bool>(TheControlBar,0x24)=true; 
 				}
 				else
@@ -1200,7 +1225,7 @@ Object *object=X(TheThingFactory)->rva00138520(thing,field<Team*>(thisPlayer,0x2
 			else
 			{
 				((Rva397540Message<0x34>*)TheInGameUI)->invoke( ((VDispatch2<0x28,UnicodeString,const char*,bool*>*)TheGameText)->invoke("GUI:BeaconPlacementFailed",0) );
-				static AudioEventRTS aSound("BeaconPlacementFailed");
+				static AudioEventRTS aSound("BeaconPlacementFailed",(ObjectID)0);
 				aSound.setPosition(&dispatchPosition);
 				aSound.setPlayerIndex(field<int>(thisPlayer,0x24));
 				v1<0x44,unsigned>(TheAudio,(const AudioEventRTS*)&aSound);
