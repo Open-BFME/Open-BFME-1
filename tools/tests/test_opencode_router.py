@@ -367,6 +367,11 @@ class RouterTests(unittest.TestCase):
         path.write_text(json.dumps(c))
         with self.assertRaises(ValueError):r.config(path)
 
+    def test_worker_config_disables_code_execution_tool(self):
+        env = r.worker_env('opencode/space-bunny-free', Path('.').resolve())
+        cfg = json.loads(env['OPENCODE_CONFIG_CONTENT'])
+        self.assertIs(cfg['tools']['execute'], False)
+
     def test_partial_and_blocked_reports_survive_as_failures(self):
         for word in ('partial', 'blocked'):
             ev = r.Events()

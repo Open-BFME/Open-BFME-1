@@ -321,6 +321,11 @@ def worker_env(model, cwd):
         env.pop(key, None)
     env['OPENCODE_CONFIG_CONTENT'] = json.dumps({
         'model': model, 'warming': False,
+        # The code-execution tool is a trap for workers: inside its JS sandbox only browser and
+        # OpenCode-internal tools are discoverable, so a model that starts there concludes it has
+        # no shell/read/edit and cannot compile (2026-09-28: 2 of ~10 Go Muse 1.2 attempts spent
+        # 33 and 83 calls this way). shell/read/write/edit stay available.
+        'tools': {'execute': False},
         'experimental': {'policies': [
             {'action': 'provider.use', 'resource': '*', 'effect': 'deny'},
             {'action': 'provider.use', 'resource': model.split('/')[0], 'effect': 'allow'},
