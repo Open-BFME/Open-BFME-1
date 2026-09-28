@@ -476,6 +476,14 @@ static void _adjustVariable(const AsciiString &str, Int value,
 	((void(__cdecl *)(const char *, const char *))proc)(str.str(), buff);
 }
 
+// Address-derived wrapper for retail 0x00341350. It forwards the caller's
+// string through _adjustVariable's private EDI convention.
+void __stdcall Rva00341350AdjustVariableForwarder(const AsciiString &str,
+	Int value, char shouldPause)
+{
+	_adjustVariable(str, value, shouldPause, false);
+}
+
 // ?applyNamed@ScriptEngine@@QAEXPAX0@Z
 // Retail 0x00340F10, 779 bytes: BFME's ScriptEngine::executeScript (the Zero
 // Hour twin at ScriptEngine.cpp:6950) with a second argument, the qualified
