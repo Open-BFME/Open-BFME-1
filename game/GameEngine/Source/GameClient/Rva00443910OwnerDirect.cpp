@@ -74,9 +74,11 @@ struct Rva00443910GlobalDataDirect
 	BfmeSubXW m_randomFrame;
 };
 
-#define TheAnim2DCollection (*(Anim2DCollection **)0x012f4ca8)
-#define TheGameClient (*(Rva00443910Client **)0x012f1464)
-#define TheWritableGlobalData (*(Rva00443910GlobalDataDirect **)0x012ed5c8)
+class GameClient;
+class GlobalData;
+extern Anim2DCollection *TheAnim2DCollection;
+extern GameClient *TheGameClient;
+extern GlobalData *TheWritableGlobalData;
 
 class Rva0043BBC0
 {
@@ -134,35 +136,35 @@ void Rva00443910OwnerDirect::addDirect(Anim2DTemplate *animTemplate,
 	Real zRisePerSecond)
 {
 	register const Rva00443910Coord *pos = position;
-	if (animTemplate == 0 || pos == 0 || duration <= *(const Real *)0x01075350)
+	if (animTemplate == 0 || pos == 0 || duration <= 0.0f)
 		return;
 
 	Anim2DDirect *anim = new Anim2DDirect(animTemplate, TheAnim2DCollection);
 
 	anim->m_tail2c = GetGameClientRandomValue(20, 30,
-		(char *)0x010f5978, 0x1ac4);
+		"F:\\bfme\\Code\\gameengine\\Source\\GameClient\\InGameUI.cpp", 0x1ac4);
 	anim->m_tail30 = anim->m_tail2c;
 
 	Rva0043BBC0 *value = new Rva0043BBC0;
 	if (value != 0)
 	{
 	value->m_anim = (Int)anim;
-	value->m_expireFrame = (Int)(TheGameClient->getFrame() + duration * *(const Real *)0x01075344);
+	value->m_expireFrame = (Int)(((Rva00443910Client *)TheGameClient)->getFrame() + duration * 5.0f);
 	value->m_options = options;
 	value->m_x = pos->m_x;
 	value->m_y = pos->m_y;
-	value->m_randomFrame = (Int)(TheWritableGlobalData->m_randomFrame.bfmeScaleXW() +
-		*(const Real *)0x0107533c);
+	value->m_randomFrame = (Int)(((Rva00443910GlobalDataDirect *)TheWritableGlobalData)->m_randomFrame.bfmeScaleXW() +
+		0.5f);
 
 	Rva00443910RandomPair random;
 	random.x = WWMath::Random_Float();
 	random.x += random.x;
-	random.x -= *(const Real *)0x01075334;
+	random.x -= 1.0f;
 	random.y = WWMath::Random_Float();
 	random.y += random.y;
-	random.y -= *(const Real *)0x01075334;
+	random.y -= 1.0f;
 	duration = random.y * random.y + random.x * random.x;
-	if (duration == *(const Real *)0x01075350)
+	if (duration == 0.0f)
 	{
 	}
 	else
@@ -172,9 +174,9 @@ void Rva00443910OwnerDirect::addDirect(Anim2DTemplate *animTemplate,
 		random.y *= duration;
 	}
 
-	value->m_xVelocity = TheWritableGlobalData->m_xVelocity.getValue() * random.x;
-	value->m_yVelocity = TheWritableGlobalData->m_yVelocity.getValue() * random.y;
-	value->m_zVelocity = TheWritableGlobalData->m_zVelocity.getValue();
+	value->m_xVelocity = ((Rva00443910GlobalDataDirect *)TheWritableGlobalData)->m_xVelocity.getValue() * random.x;
+	value->m_yVelocity = ((Rva00443910GlobalDataDirect *)TheWritableGlobalData)->m_yVelocity.getValue() * random.y;
+	value->m_zVelocity = ((Rva00443910GlobalDataDirect *)TheWritableGlobalData)->m_zVelocity.getValue();
 	value->m_x += zRisePerSecond * value->m_xVelocity;
 	value->m_y += zRisePerSecond * value->m_yVelocity;
 
