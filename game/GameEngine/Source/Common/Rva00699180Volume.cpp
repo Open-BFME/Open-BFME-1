@@ -34,6 +34,9 @@ void Rva00699430Owner::productClamp(int index)
 	*out = v;
 }
 
+extern float g_milesVolume012BA12C;
+extern unsigned char g_012BA144;
+
 class Rva00699180Owner
 {
 public:
@@ -70,9 +73,9 @@ void Rva00699180Owner::refreshPair(int a, int b)
 		slot[2] = 1.0f;
 		slot[3] = 1.0f;
 	}
-	else if (*(unsigned char *)0x012BA144)
+	else if (g_012BA144)
 	{
-		slot[0] = *((float *)((char *)this + 4 + idx * 4)) * ((float *)0x012BA12C)[a] * m_vol;
+		slot[0] = *((float *)((char *)this + 4 + idx * 4)) * (&g_milesVolume012BA12C)[a] * m_vol;
 		if (b == 1)
 			slot[0] = slot[0] * m_atten;
 		slot[1] = slot[0] * m_scale;
@@ -80,31 +83,31 @@ void Rva00699180Owner::refreshPair(int a, int b)
 		slot[3] = slot[2] * m_scale;
 
 		float x0 = slot[0];
-		if (x0 < *(const float *)0x01075350)
-			x0 = *(const float *)0x01075350;
-		else if (x0 > *(const float *)0x01075334)
-			x0 = *(const float *)0x01075334;
+		if (x0 < 0.0f)
+			x0 = 0.0f;
+		else if (x0 > 1.0f)
+			x0 = 1.0f;
 		slot[0] = x0;
 
 		float x1 = slot[1];
-		if (x1 < *(const float *)0x01075350)
-			x1 = *(const float *)0x01075350;
-		else if (x1 > *(const float *)0x01075334)
-			x1 = *(const float *)0x01075334;
+		if (x1 < 0.0f)
+			x1 = 0.0f;
+		else if (x1 > 1.0f)
+			x1 = 1.0f;
 		slot[1] = x1;
 
 		float x2 = slot[2];
-		if (x2 < *(const float *)0x01075350)
-			x2 = *(const float *)0x01075350;
-		else if (x2 > *(const float *)0x01075334)
-			x2 = *(const float *)0x01075334;
+		if (x2 < 0.0f)
+			x2 = 0.0f;
+		else if (x2 > 1.0f)
+			x2 = 1.0f;
 		slot[2] = x2;
 
 		float x3 = slot[3];
-		if (x3 < *(const float *)0x01075350)
-			x3 = *(const float *)0x01075350;
-		else if (x3 > *(const float *)0x01075334)
-			x3 = *(const float *)0x01075334;
+		if (x3 < 0.0f)
+			x3 = 0.0f;
+		else if (x3 > 1.0f)
+			x3 = 1.0f;
 		slot[3] = x3;
 	}
 	else
