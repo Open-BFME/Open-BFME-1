@@ -1,214 +1,390 @@
-// ?moveTowardsPositionOther@Locomotor@@IAEXPAVObject@@PBUCoord3D@@MM@Z
-// partial score=0.52 date=2026-09-10
-// Complete BFME-shaped reconstruction for retail 0x001B8D30.
-//
-// The retail thunk at 0x0001C7EC is currently labelled
-// BfmeA1282::bfmeFinish1282, but its receiver is the Locomotor object used by
-// the 0x001BC820 dispatcher and its three named callers.  This attempt uses
-// the actual four-argument movement ABI (Object*, Coord3D*, Real, Real) and
-// the BFME Object/Locomotor offsets observed in the body.  It is intentionally
-// banked until the real BFME declaration can be separated from the old
-// five-argument Zero Hour helper in Locomotor.cpp.
+// ?bfmeFinish1282@BfmeA1282@@QAEXPAVBfmeQ1282@@PBUCoord3D@@MM@Z
+// partial score=0.2118 date=2026-09-28
+// cl: /O2 /GR- /DNDEBUG /DWIN32 /MD /EHsc-
+// stlport
+// Retail 0x001B8D30, 1676 bytes, thiscall RET 0x10: the BFME locomotor
+// movement finisher that the matched helper 0x001BC560
+// (Locomotor_rva001BC560.cpp) calls as bfmeFinish1282 after its setup pair,
+// with the object, goal position, on-path distance and desired speed. It
+// ramps the locomotor's +0x3C speed toward a braking-limited goal speed
+// (LocomotorTemplate m_minSpeed +0x24, m_acceleration +0x40, m_braking +0x4C),
+// steers along the AI path (Path::computePointOnPath, as the matched
+// Locomotor_rva001B7200.cpp calls it) or straight at the goal, writes the
+// result into the transform's translation column (+0x70/+0x80/+0x90) and then
+// picks the object's movement model-condition bits 27, 31 and 32. The method
+// keeps the established pin name its matched caller uses.
 
-typedef float Real;
 typedef bool Bool;
+typedef int Int;
+typedef unsigned int UnsignedInt;
+typedef float Real;
 
-extern "C" double __cdecl sqrt(double);
+#define _STLP_NO_EXCEPTIONS 1
+#define _STLP_USE_STATIC_LIB 1
+#include <bitset>
+#include <math.h>
 
 struct Coord3D
 {
 	Real x;
 	Real y;
 	Real z;
+
+	Coord3D() {}
+	Coord3D(const Coord3D &other) : x(other.x), y(other.y), z(other.z) {}
+	void normalize();
 };
 
-class PhysicsBehavior
+template<int NUMBITS>
+class BfmeBitFlags
 {
 public:
-	Real getForwardSpeed2D() const;
-	Real getMass() const;
-	void setTurning(int turning);
-	void applyMotiveForce(const Coord3D *force);
+	Bool test(Int idx) const { return m_bits.test(idx); }
+	void set(Int idx) { m_bits.set(idx); }
+	void clear(Int idx) { m_bits.reset(idx); }
+
+private:
+	_STL::bitset<NUMBITS> m_bits;
+};
+
+typedef BfmeBitFlags<288> BfmeModelConditionFlags;
+
+// Movement model-condition bits this body drives; their names are unproven.
+enum BfmeModelConditionFlagType
+{
+	BFME_MODELCONDITION_BIT27 = 27,
+	BFME_MODELCONDITION_BIT31 = 31,
+	BFME_MODELCONDITION_BIT32 = 32
+};
+
+class BfmeObjectModelCondition
+{
+public:
+	void notifyModelConditionChanged();
+};
+
+class Object;
+class Rva001B7200Locomotor;
+
+// 36-byte out record of Path::computePointOnPath (Locomotor_rva001B7200.cpp).
+struct Rva001B7200PathPoint
+{
+	Rva001B7200PathPoint() : m_int20(0x7fffffff) {}
+
+	Real m_real00;
+	Coord3D m_coord04;
+	Real m_real10[3];
+	Int m_layer;
+	Int m_int20;
+};
+
+class Path
+{
+public:
+	void computePointOnPath(Object *object, Rva001B7200Locomotor *locomotor,
+		Rva001B7200PathPoint *out, Bool flag);
+
+	void addUse() { ++m_useCount; }
+	void releaseUse() { if (m_useCount) --m_useCount; }
+
+	Int m_useCount;
 };
 
 class AIUpdateInterface
 {
 public:
-	Bool validMovementPosition(const Coord3D *position) const;
+	Path *getPath() { return m_path; }
+
+	char m_pad000[0x140];
+	Path *m_path;
 };
 
 class Object
 {
 public:
-	Coord3D *getPosition();
-	const Coord3D *getPosition() const;
-	PhysicsBehavior *getPhysics() const;
-	AIUpdateInterface *getAI() const;
-	Bool isKindOf(int kind) const;
-	void setStatus(unsigned mask, Bool value);
-	void setPosition(const Coord3D *position);
+	const Coord3D *getPosition() const { return &m_cachedPos; }
+	AIUpdateInterface *getAIUpdateInterface() { return m_ai; }
+
+	Bool testModelConditionState(BfmeModelConditionFlagType bit) const
+	{
+		return m_modelConditionFlags.test(bit);
+	}
+
+	void setModelConditionState(BfmeModelConditionFlagType bit)
+	{
+		if (!m_modelConditionFlags.test(bit))
+		{
+			m_modelConditionFlags.set(bit);
+			((BfmeObjectModelCondition *)this)->notifyModelConditionChanged();
+		}
+	}
+
+	void clearModelConditionState(BfmeModelConditionFlagType bit)
+	{
+		if (m_modelConditionFlags.test(bit))
+		{
+			m_modelConditionFlags.clear(bit);
+			((BfmeObjectModelCondition *)this)->notifyModelConditionChanged();
+		}
+	}
+
+	const Coord3D *getSteerGoal178() const
+	{
+		return m_hasGoal186 ? &m_goal178 : getPosition();
+	}
+
+	void setSteerGoal178(const Coord3D &goal)
+	{
+		m_goal178 = goal;
+		m_hasGoal186 = true;
+	}
 
 	char m_pad000[0x38];
-	Coord3D m_position;                 // +0x38
-	char m_pad044[0x78];
-	unsigned m_statusBits;              // +0xBC in the local view
-	char m_pad0C0[0x3C];
-	unsigned m_motionBits;              // +0xFC in the local view
-	char m_pad100[0x04];
-	void *m_bodyModule;                 // +0x104
-	void *m_physicsModule;              // +0x108
-	char m_pad10C[0x10];
-	unsigned m_locomotorBits;           // +0x11C
-	unsigned m_locomotorState;          // +0x120
-	char m_pad124[0x54];
-	Coord3D m_savedGoal;                // +0x178
+	Coord3D m_cachedPos;
+	char m_pad044[0x11c - 0x44];
+	BfmeModelConditionFlags m_modelConditionFlags;
+	char m_pad140[0x178 - 0x140];
+	Coord3D m_goal178;
 	char m_pad184[2];
-	unsigned char m_hasSavedGoal;       // +0x186
-	char m_pad187[0x7D];
-	void *m_body;                       // +0x204
-	void *m_blocker;                    // +0x208
+	Bool m_hasGoal186;
+	char m_pad187[0x204 - 0x187];
+	AIUpdateInterface *m_ai;
 };
 
 class Overridable
 {
 public:
-	Overridable *getFinalOverride();
-	void *m_vtable;
-	Overridable *m_nextOverride;
-	int m_template24;
-	int m_template28;
-	int m_template2C;
-	char m_pad30[0x14];
-	Real m_template44;
-	Real m_template48;
-	char m_pad4C[0x10];
-	int m_template5C;
-	Real m_template60;
-	Real m_template64;
-	Real m_template68;
-	Real m_template6C;
-	Real m_template70;
-	Real m_template74;
-	Real m_template78;
-	Real m_template7C;
+	const Overridable *getFinalOverride() const;
+
+	unsigned char m_pad000[4];
+	const Overridable *m_nextOverride;
 };
 
-class Locomotor
+class LocomotorTemplate : public Overridable
 {
-protected:
-	void moveTowardsPositionOther(Object *object, const Coord3D *goal,
-		Real onPathDistance, Real desiredSpeed);
-
 public:
-	Real query(Object *object);
-	Real queryDivMin40(Object *object);
-	Bool rotateTowardsPosition(Object *object, const Coord3D *goal);
-	Bool validMovementPosition(Object *object, const Coord3D *goal) const;
-	void updateObjectMotion(Object *object);
-
-	void *m_vtable;                     // +0x00
-	Overridable *m_template;            // +0x04
-	char m_pad008[0x24];
-	Real m_closeEnoughDistance;         // +0x2C
-	Real m_maxAcceleration;             // +0x30
-	char m_pad034[8];
-	Real m_motionLimit;                 // +0x3C
-	unsigned m_flags;                   // +0x40
-	char m_pad044[0x2C];
-	Real m_speedScale;                  // +0x70
-	char m_pad074[0x0C];
-	Real m_acceleration;                // +0x80
-	char m_pad084[0x0C];
-	Real m_braking;                     // +0x90
-	unsigned char m_moving;             // +0x94
+	unsigned char m_pad008[0x24 - 0x08];
+	Real m_minSpeed;
+	unsigned char m_pad028[0x40 - 0x28];
+	UnsignedInt m_acceleration;
+	unsigned char m_pad044[0x4c - 0x44];
+	UnsignedInt m_braking;
+	unsigned char m_pad050[0x78 - 0x50];
+	Real m_real78;
+	Real m_real7C;
 };
 
-static const Real kZeroRange = 0.0001f;
-static const Real kDefaultAcceleration = 0.001f;
-
-void Locomotor::moveTowardsPositionOther(Object *object,
-	const Coord3D *goal, Real onPathDistance, Real desiredSpeed)
+class BfmeSub1CC_EC3
 {
-	// The retail prologue first queries the locomotor speed and clamps against
-	// the resolved template value.  Keep the two values separate: the query is
-	// the object-dependent cap while +0x30 is the receiver's local cap.
-	Real queriedSpeed = query(object);
-	if (desiredSpeed > queriedSpeed)
-		desiredSpeed = queriedSpeed;
+public:
+	Real effectiveMaxSpeed(void *objectArgument);
+	Real queryDivMin40(void *objectArgument);
+	Real queryDivMin4C(void *objectArgument);
+};
 
-	PhysicsBehavior *physics = object->getPhysics();
+class BfmeQ1282
+{
+};
 
-	Overridable *resolved = m_template;
-	if (resolved != 0 && resolved->m_nextOverride != 0)
-		resolved = resolved->m_nextOverride->getFinalOverride();
-	if (resolved != 0)
+class BfmeA1282
+{
+public:
+	void bfmeFinish1282(BfmeQ1282 *item, const Coord3D *goal,
+		Real onPathDistToGoal, Real desiredSpeed);
+
+private:
+	BfmeSub1CC_EC3 *query() { return (BfmeSub1CC_EC3 *)this; }
+
+	const LocomotorTemplate *finalTemplate() const
 	{
-		Real templateSpeed = resolved->m_template60;
-		if (templateSpeed > kZeroRange && desiredSpeed > templateSpeed)
-			desiredSpeed = templateSpeed;
+		const LocomotorTemplate *t = m_template;
+		if (t != 0 && t->m_nextOverride != 0)
+			t = static_cast<const LocomotorTemplate *>(
+				t->m_nextOverride->getFinalOverride());
+		return t;
 	}
 
-	if (!validMovementPosition(object, goal))
+	enum LocoFlag
 	{
-		m_flags &= ~1u;
-		return;
+		FLAG_BRAKING = 0,
+		FLAG_4 = 4
+	};
+
+	Bool getFlag(LocoFlag flag) const { return (m_flags >> flag) & 1; }
+
+	void setFlag(LocoFlag flag, Bool value)
+	{
+		if (value)
+			m_flags |= (1 << flag);
+		else
+			m_flags &= ~(1 << flag);
 	}
 
-	const Coord3D *position = object->getPosition();
-	Real dx = goal->x - position->x;
-	Real dy = goal->y - position->y;
-	Real dz = goal->z - position->z;
-	Real distanceSquared = dx * dx + dy * dy;
-	if (distanceSquared <= kZeroRange * kZeroRange)
+	void setTranslation(Real x, Real y, Real z)
 	{
-		m_flags &= ~1u;
-		m_moving = 0;
-		return;
+		m_transform[0][3] = x;
+		m_transform[1][3] = y;
+		m_transform[2][3] = z;
 	}
 
-	if (!rotateTowardsPosition(object, goal))
-		physics->setTurning(0);
+	void *m_vtable;
+	const LocomotorTemplate *m_template;
+	char m_pad008[0x2c - 0x08];
+	Real m_real2C;
+	Real m_real30;
+	char m_pad034[0x3c - 0x34];
+	Real m_speed;
+	UnsignedInt m_flags;
+	char m_pad044[0x64 - 0x44];
+	Real m_transform[3][4];
+	Bool m_byte94;
+};
 
-	Real currentSpeed = physics->getForwardSpeed2D();
+void BfmeA1282::bfmeFinish1282(BfmeQ1282 *item, const Coord3D *goalPos,
+	Real onPathDistToGoal, Real desiredSpeed)
+{
+	Object *obj = (Object *)item;
+
+	Real maxSpeed = query()->effectiveMaxSpeed(obj);
+	if (desiredSpeed > maxSpeed)
+		desiredSpeed = maxSpeed;
 	Real goalSpeed = desiredSpeed;
-	if (!(m_flags & (1u << 4)))
+	Real oldSpeed = m_speed;
+
+	Real brakeRate = query()->effectiveMaxSpeed(obj);
+	brakeRate /= (Real)finalTemplate()->m_braking;
+	if (brakeRate > m_real30)
+		brakeRate = m_real30;
+
+	Real minSpeed = finalTemplate()->m_minSpeed;
+	Real excess = oldSpeed - minSpeed;
+	Real brakeDist;
+	if (excess <= 0.0f)
+		brakeDist = 0.0f;
+	else
+		brakeDist = (excess / brakeRate + 1.0f) * (excess * 0.5f + minSpeed) * 1.05f;
+
+	if (3.0f * brakeDist < onPathDistToGoal)
+		setFlag(FLAG_BRAKING, false);
+
+	Real slowed = m_speed - brakeRate;
+	if (desiredSpeed < slowed)
 	{
-		Real brakingDistance = currentSpeed * currentSpeed /
-			((m_braking > kDefaultAcceleration) ? m_braking : kDefaultAcceleration);
-		if (onPathDistance < brakingDistance)
-			goalSpeed = (resolved != 0) ? resolved->m_template48 : 0.0f;
+		goalSpeed = slowed;
+		if (goalSpeed < brakeRate)
+			goalSpeed = brakeRate;
 	}
 
-	Real speedDelta = goalSpeed - currentSpeed;
-	if (speedDelta != 0.0f)
+	if (onPathDistToGoal < brakeDist)
 	{
-		Real acceleration = (speedDelta > 0.0f) ? m_maxAcceleration : -m_braking;
-		if (acceleration == 0.0f)
-			acceleration = speedDelta > 0.0f ? kDefaultAcceleration : -kDefaultAcceleration;
-		Real forceMagnitude = physics->getMass() * acceleration;
-		Real neededForce = physics->getMass() * speedDelta;
-		if (forceMagnitude > 0.0f && neededForce < forceMagnitude)
-			forceMagnitude = neededForce;
-		if (forceMagnitude < 0.0f && neededForce > forceMagnitude)
-			forceMagnitude = neededForce;
-
-		Real length = distanceSquared;
-		if (length > kZeroRange)
+		if (!getFlag(FLAG_4))
 		{
-			length = (Real)1.0f / (Real)sqrt((double)length);
-			Coord3D force;
-			force.x = dx * length * forceMagnitude;
-			force.y = dy * length * forceMagnitude;
-			force.z = dz * length * forceMagnitude;
-			physics->applyMotiveForce(&force);
+			setFlag(FLAG_BRAKING, true);
+			goalSpeed = m_speed - query()->queryDivMin4C(obj);
+			if (goalSpeed < brakeRate)
+				goalSpeed = brakeRate;
 		}
 	}
 
-	// BFME keeps a saved three-float destination and a valid bit in Object;
-	// these writes are also the state transition observed on every successful
-	// path through the retail body.
-	object->m_savedGoal = *goal;
-	object->m_hasSavedGoal = 1;
-	m_moving = 1;
-	updateObjectMotion(object);
+	Coord3D goal = *goalPos;
+	Rva001B7200PathPoint point;
+	const Coord3D *pos = obj->getPosition();
+
+	if (goalSpeed > m_speed && !getFlag(FLAG_BRAKING))
+		m_speed += query()->queryDivMin40(obj);
+
+	if (m_speed > goalSpeed)
+	{
+		m_speed -= brakeRate;
+		if (m_speed < goalSpeed)
+			m_speed = goalSpeed;
+	}
+
+	Real speed = m_speed;
+	AIUpdateInterface *ai = obj->getAIUpdateInterface();
+	Path *path = ai ? ai->getPath() : 0;
+	Coord3D moveTo;
+	if (path)
+	{
+		path->addUse();
+		path->computePointOnPath(obj, (Rva001B7200Locomotor *)this, &point, true);
+		moveTo = point.m_coord04;
+		path->computePointOnPath(obj, (Rva001B7200Locomotor *)this, &point, false);
+		path->releaseUse();
+		goal = point.m_coord04;
+		obj->setSteerGoal178(goal);
+	}
+	else
+	{
+		moveTo = *pos;
+		goal.x -= pos->x;
+		goal.y -= pos->y;
+		goal.z = 0.0f;
+		Real dist = (Real)sqrt(goal.x * goal.x + goal.y * goal.y);
+		if (speed < 2.0f)
+			speed = 2.0f;
+		if (speed > dist)
+			speed = dist;
+		if (dist > 0.001f)
+		{
+			goal.normalize();
+			moveTo.x += goal.x * speed;
+			moveTo.y += goal.y * speed;
+		}
+	}
+
+	const Coord3D *steer = obj->getSteerGoal178();
+	goal.x = steer->x;
+	goal.y = steer->y;
+	goal.z = pos->z;
+	obj->setSteerGoal178(goal);
+	setTranslation(moveTo.x, moveTo.y, pos->z);
+
+	Real speedDelta = m_speed - oldSpeed;
+	Real threshold = maxSpeed * finalTemplate()->m_real78;
+	Real accelRate = query()->effectiveMaxSpeed(obj) / (Real)finalTemplate()->m_acceleration;
+	if (accelRate > m_real2C)
+		accelRate = m_real2C;
+
+	if (speedDelta > 0.4f * accelRate && oldSpeed < threshold)
+	{
+		obj->clearModelConditionState(BFME_MODELCONDITION_BIT32);
+		if (onPathDistToGoal < finalTemplate()->m_real7C)
+		{
+			obj->clearModelConditionState(BFME_MODELCONDITION_BIT31);
+			obj->setModelConditionState(BFME_MODELCONDITION_BIT27);
+		}
+		else
+		{
+			obj->clearModelConditionState(BFME_MODELCONDITION_BIT27);
+			obj->setModelConditionState(BFME_MODELCONDITION_BIT31);
+		}
+		return;
+	}
+
+	if (getFlag(FLAG_BRAKING) && m_speed < threshold)
+	{
+		obj->clearModelConditionState(BFME_MODELCONDITION_BIT31);
+		if (m_byte94)
+		{
+			obj->clearModelConditionState(BFME_MODELCONDITION_BIT27);
+			obj->setModelConditionState(BFME_MODELCONDITION_BIT32);
+		}
+		else
+		{
+			obj->clearModelConditionState(BFME_MODELCONDITION_BIT32);
+			obj->setModelConditionState(BFME_MODELCONDITION_BIT27);
+		}
+		return;
+	}
+
+	obj->clearModelConditionState(BFME_MODELCONDITION_BIT31);
+	obj->clearModelConditionState(BFME_MODELCONDITION_BIT32);
+	if (oldSpeed > threshold)
+	{
+		if (onPathDistToGoal > finalTemplate()->m_real7C)
+			obj->clearModelConditionState(BFME_MODELCONDITION_BIT27);
+		if (!obj->testModelConditionState(BFME_MODELCONDITION_BIT27))
+			m_byte94 = true;
+	}
 }
