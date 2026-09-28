@@ -1,3 +1,5 @@
+// ?initW3DAssets@W3DMouse@@AAEXXZ
+// partial score=0.99 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/mouselayout /Iinputs/reference/shims/asciistring8 /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
@@ -33,6 +35,8 @@
 
 
 #include "Common/GameMemory.h"
+#include "../../../../Libraries/Source/WWVegas/WW3D2/rendobj.h"
+#include "../../../../Libraries/Source/WWVegas/WW3D2/camera.h"
 #include "WW3D2/DX8Wrapper.h"
 #include "WW3D2/RendObj.h"
 #include "WW3D2/HAnim.h"
@@ -269,72 +273,6 @@ void W3DMouse::freeD3DAssets(void)
 
 }
 
-void W3DMouse::initW3DAssets(void)
-{
-	CriticalSectionClass::LockClass m(mutex);
-
-	//don't allow the mouse thread to initialize
-	//wait for main app to do initialization.
-	if (isThread)
-		return;
-
-	//Check if model assets already loaded
-	if ((cursorModels[1] == NULL && W3DDisplay::m_assetManager))
-	{
-		for (Int i=1; i<NUM_MOUSE_CURSORS; i++)
-		{
-			if (!m_cursorInfo[i].W3DModelName.isEmpty())
-			{
-				if (m_orthoCamera)
-					cursorModels[i] = W3DDisplay::m_assetManager->Create_Render_Obj(m_cursorInfo[i].W3DModelName.str(), m_cursorInfo[i].W3DScale*m_orthoZoom, 0);
-				else
-					cursorModels[i] = W3DDisplay::m_assetManager->Create_Render_Obj(m_cursorInfo[i].W3DModelName.str(), m_cursorInfo[i].W3DScale, 0);
-				if (cursorModels[i])
-				{
-					cursorModels[i]->Set_Position(Vector3(0.0f, 0.0f, -1.0f));
-					//W3DDisplay::m_3DInterfaceScene->Add_Render_Object(cursorModels[i]);
-				}
-			}
-		}
-	}
-	if ((cursorAnims[1] == NULL && W3DDisplay::m_assetManager))
-	{
-		for (Int i=1; i<NUM_MOUSE_CURSORS; i++)
-		{
-			if (!m_cursorInfo[i].W3DAnimName.isEmpty())
-			{
-				DEBUG_ASSERTCRASH(cursorAnims[i] == NULL, ("hmm, leak festival"));
-				cursorAnims[i] = W3DDisplay::m_assetManager->Get_HAnim(m_cursorInfo[i].W3DAnimName.str());
-				if (cursorAnims[i] && cursorModels[i])
-				{
-					cursorModels[i]->Set_Animation(cursorAnims[i], 0, (m_cursorInfo[i].loop) ? RenderObjClass::ANIM_MODE_LOOP : RenderObjClass::ANIM_MODE_ONCE);
-				}
-			}
-		}
-	}
-
-	// create the camera
-	m_camera = NEW_REF( CameraClass, () );
-	m_camera->Set_Position( Vector3( 0, 1, 1 ) );
-	Vector2 min = Vector2( -1, -1 );
-	Vector2 max = Vector2( +1, +1 );
-	m_camera->Set_View_Plane( min, max );		
-	m_camera->Set_Clip_Planes( 0.995f, 20.0f );
-	if (m_orthoCamera)
-		m_camera->Set_Projection_Type( CameraClass::ORTHO );
-}
-
-// BFME reaches Remove_Render_Object at the interface scene's vtable +0x0c, one
-// slot ahead of where the ZH SceneClass declaration puts it.
-class BfmeInterfaceScene
-{
-public:
-	virtual void bfme_scene_0( void ) = 0;
-	virtual void bfme_scene_4( void ) = 0;
-	virtual void Add_Render_Object( RenderObjClass *obj ) = 0;
-	virtual void Remove_Render_Object( RenderObjClass *obj ) = 0;
-};
-
 // The BFME render-object ABI retains five virtual slots that the ZH header
 // omits before the animation overload used by the cursor models.
 class BfmeCursorRenderObject
@@ -362,7 +300,7 @@ public:
 	virtual void bfme_render_4c( void ) = 0;
 	virtual void bfme_render_50( void ) = 0;
 	virtual void bfme_render_54( void ) = 0;
-	virtual void bfme_render_58( void ) = 0;
+	virtual void Set_Position( const Vector3 &position ) = 0;
 	virtual void bfme_render_5c( void ) = 0;
 	virtual void bfme_render_60( void ) = 0;
 	virtual void bfme_render_64( void ) = 0;
@@ -386,6 +324,78 @@ public:
 	virtual void bfme_render_ac( void ) = 0;
 	virtual void Set_Animation( HAnimClass *anim, float frame, int mode ) = 0;
 };
+
+extern RenderObjClass *Create_Render_Obj(const char *, float, int);
+extern HAnimClass *Get_HAnim(const char *);
+
+void W3DMouse::initW3DAssets(void)
+{
+	CriticalSectionClass::LockClass m(mutex);
+
+	//don't allow the mouse thread to initialize
+	//wait for main app to do initialization.
+	if (isThread)
+		return;
+
+	//Check if model assets already loaded
+	if ((cursorModels[1] == NULL))
+	{
+		for (Int i=1; i<NUM_MOUSE_CURSORS; i++)
+		{
+			if (!m_cursorInfo[i].W3DModelName.isEmpty())
+			{
+				if (m_orthoCamera)
+					cursorModels[i] = Create_Render_Obj(m_cursorInfo[i].W3DModelName.str(), m_cursorInfo[i].W3DScale*m_orthoZoom, 0);
+				else
+					cursorModels[i] = Create_Render_Obj(m_cursorInfo[i].W3DModelName.str(), m_cursorInfo[i].W3DScale, 0);
+				if (cursorModels[i])
+				{
+					((BfmeCursorRenderObject *)cursorModels[i])->Set_Position(Vector3(0.0f, 0.0f, -1.0f));
+					//W3DDisplay::m_3DInterfaceScene->Add_Render_Object(cursorModels[i]);
+				}
+			}
+		}
+	}
+	if ((cursorAnims[1] == NULL))
+	{
+		for (Int i=1; i<NUM_MOUSE_CURSORS; i++)
+		{
+			if (!m_cursorInfo[i].W3DAnimName.isEmpty())
+			{
+				DEBUG_ASSERTCRASH(cursorAnims[i] == NULL, ("hmm, leak festival"));
+				cursorAnims[i] = Get_HAnim(m_cursorInfo[i].W3DAnimName.str());
+				if (cursorAnims[i] && cursorModels[i])
+				{
+					((BfmeCursorRenderObject *)cursorModels[i])->Set_Animation(cursorAnims[i], 0, (m_cursorInfo[i].loop) ? RenderObjClass::ANIM_MODE_LOOP : RenderObjClass::ANIM_MODE_ONCE);
+				}
+			}
+		}
+	}
+
+	// create the camera
+	m_camera = NEW_REF( CameraClass, () );
+	((BfmeCursorRenderObject *)m_camera)->Set_Position( Vector3( 0, 1, 1 ) );
+	Vector2 min = Vector2( -1, -1 );
+	Vector2 max = Vector2( +1, +1 );
+	m_camera->Set_View_Plane( min, max );		
+	m_camera->Set_Clip_Planes( 0.995f, 20.0f );
+	if (m_orthoCamera)
+		{
+		m_camera->Set_Projection_Type( CameraClass::ORTHO );
+	}
+}
+
+// BFME reaches Remove_Render_Object at the interface scene's vtable +0x0c, one
+// slot ahead of where the ZH SceneClass declaration puts it.
+class BfmeInterfaceScene
+{
+public:
+	virtual void bfme_scene_0( void ) = 0;
+	virtual void bfme_scene_4( void ) = 0;
+	virtual void Add_Render_Object( RenderObjClass *obj ) = 0;
+	virtual void Remove_Render_Object( RenderObjClass *obj ) = 0;
+};
+
 
 void W3DMouse::freeW3DAssets(void)
 {
@@ -527,12 +537,16 @@ struct BfmeMouseCameraDepth
 	Real depth;
 };
 
-// Keep the inline CameraClass accessor COMDAT available to the existing
-// same-TU alias row at 0x006E2440; draw itself uses the proven BFME +0xf4
-// field and must not call the shifted reference accessor.
-typedef Real (CameraClass::*BfmeMouseCameraDepthAccessor)( void ) const;
-static volatile BfmeMouseCameraDepthAccessor BfmeMouseCameraDepthMethod =
-	&CameraClass::Get_Depth;
+// This pre-existing opaque row reads +0xc0. It is not the BFME CameraClass
+// depth accessor (+0xf4); keep its witnessed field independent of that header.
+class Rva006E2440Field
+{
+    char pad00[0xc0];
+    float value;
+public:
+    float get() const;
+};
+float Rva006E2440Field::get() const { return value; }
 
 // The generated thunk is the proven direct route to Display::drawImage's
 // float-coordinate implementation.  Its placeholder declaration is void(),

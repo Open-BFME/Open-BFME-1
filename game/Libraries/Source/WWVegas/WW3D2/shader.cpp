@@ -1216,6 +1216,8 @@ const StringClass& ShaderClass::Get_Description(StringClass& str) const
 	case GRADIENT_BUMPENVMAP: str+="GRADIENT_BUMPENVMAP | "; break;
 	case GRADIENT_BUMPENVMAPLUMINANCE: str+="GRADIENT_BUMPENVMAPLUMINANCE | "; break;
 	case GRADIENT_MODULATE2X: str+="GRADIENT_MODULATE2X | "; break;
+	// BFME retail case 6, witnessed by the string at VA 0x0113A99C.
+	case 6: str+="GRADIENT_MODULATE_OR_2X | "; break;
 	}
 
 	switch (Get_Secondary_Gradient()) {

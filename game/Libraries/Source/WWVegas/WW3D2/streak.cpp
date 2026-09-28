@@ -776,10 +776,20 @@ void StreakLineClass::Render_Streak_Line(RenderInfoClass & rinfo)
 }
 
 
-// ?Cast_Ray@StreakLineClass@@ present-unmatched
+// BFME's collision-mask virtual is at +0x1dc (ZH declares +0x1b4).
+// A single-inheritance member pointer describes the four-byte vtable entry.
+struct BfmeStreakCollisionView
+{
+    typedef int (BfmeStreakCollisionView::*GetMask)();
+    struct Vtable { void *slots[119]; GetMask getMask; };
+    Vtable *vtable;
+    int collisionMask() { return (this->*(vtable->getMask))(); }
+};
+
 bool StreakLineClass::Cast_Ray(RayCollisionTestClass & raytest)
 {
-	if ((Get_Collision_Type() & raytest.CollisionType) == 0) return false;
+	const Matrix3D &transform = *(const Matrix3D *)((const char *)this + 0x18);
+	if ((((BfmeStreakCollisionView *)this)->collisionMask() & raytest.CollisionType) == 0) return false;
 
 	bool retval = false;
 
@@ -787,7 +797,7 @@ bool StreakLineClass::Cast_Ray(RayCollisionTestClass & raytest)
 	//	Check each line segment against the ray
 	//
 	float fraction = 1.0F;
-	for (uint32 index = 1; index < (unsigned int)PointLocations.Count(); index ++) 
+	for (uint32 index = 1; index < (unsigned int)*(const int *)((const char *)this + 0xe0); index ++) 
 	{
 #ifdef ALLOW_TEMPORARIES
 		Vector3 curr_start	= Transform * PointLocations[index-1];
@@ -795,7 +805,7 @@ bool StreakLineClass::Cast_Ray(RayCollisionTestClass & raytest)
 		LineSegClass line_seg (curr_start, curr_end);
 #else
 		Vector3 curr[2];
-		Transform.mulVector3Array(&PointLocations[index-1], curr, 2);
+		transform.mulVector3Array(&(*(Vector3 **)((char *)this + 0xd8))[index-1], curr, 2);
 		LineSegClass line_seg(curr[0], curr[1]);
 #endif
 		
@@ -808,7 +818,7 @@ bool StreakLineClass::Cast_Ray(RayCollisionTestClass & raytest)
 			// considered intersecting
 			//
 			float dist = (p0 - p1).Length ();
-			if (dist <= LineRenderer.Get_Width() && fraction >= 0 && fraction < raytest.Result->Fraction) {
+			if (dist <= *(const float *)((const char *)this + 0x10c) && fraction >= 0 && fraction < raytest.Result->Fraction) {
 			//if (dist <= Width && fraction < raytest.Result->Fraction) {
 				retval = true;
 				break;

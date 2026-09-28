@@ -1,5 +1,5 @@
 // ?logicMessageDispatcher@GameLogic@@QAEXPAVGameMessage@@PAX@Z
-// partial score=0.9209709286 date=2026-09-27
+// partial score=0.9212086981078791 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringbaseascii /Iinputs/reference/shims/stringbaseunicode /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
@@ -104,7 +104,22 @@ static bool theBuildPlan;
 static Object *thePlanSubject[64];
 static int thePlanSubjectCount;
 
-// Resume notes for 2026-09-27 gpt-6-astra-medium:
+// GAP-SEAT resume note, 2026-09-28:
+// Declaring the three witnessed movement-order records at function scope,
+// assigning their fields only in their cases, reproduces retail's 0xAC frame.
+// This is a lifetime lever, with no dummy padding. The old bank used 0x80.
+// Current full extent: 12024 vs retail 12044; 5704 masked positional byte
+// differences and 577 shifted relocation sites. First residue +0x53 is the
+// selected-group spill at esp+0x10 vs retail esp+0x14. Not byte-exact.
+// Keep the lexical-static/EH issue separate: retail has 24 unwind states,
+// two initially empty, with keys 2..8 before PlaceBuilding states 9/10;
+// this body still assigns the first audio guard states 0/1.
+// Separate camera-position storage and split top-level declarations were
+// measured and did not improve this candidate. An inline audio-event getter
+// improved normalized shape slightly but made positional agreement worse;
+// it is scratch only. No dispatcher source or ledger claim was changed.
+
+// Earlier resume notes for 2026-09-27 gpt-6-astra-medium:
 // Begin from this bank, not the native ZH dispatcher. Audited ABI corrections:
 // AudioEventRTS has a second ObjectID=0 argument; LookAtTranslator position is
 // const ICoord2D&; Eva takes message 3 plus null Coord3D; radar takes Object+0x38,
@@ -279,6 +294,7 @@ __forceinline const wchar_t* dispatchUnicodeText(const UnicodeString &s) {
 void GameLogic::logicMessageDispatcher( GameMessage *msg, void *userData )
 {
     Coord3D dispatchPosition;
+    Dispatch397540Move order430,order441,order431;
 
 	Player *thisPlayer = ThePlayerList->getNthPlayer( msg->getPlayerIndex() );
 	DEBUG_ASSERTCRASH( thisPlayer, ("logicMessageDispatcher: Processing message from unknown player (player index '%d')\n", 
@@ -826,8 +842,8 @@ case 0x430: {
     dispatchPosition=msg->getArgument(0)->location;
     if (!currentlySelectedGroup) return;
     X(currentlySelectedGroup)->rva00151130(LOCKED_TEMPORARILY);
-    Dispatch397540Move order={&dispatchPosition,false,0,0};
-    X(currentlySelectedGroup)->rva00159AD0(&order,0);
+    order430.position=&dispatchPosition; order430.append=false; order430.rva_8=0; order430.rva_c=0;
+    X(currentlySelectedGroup)->rva00159AD0(&order430,0);
     break;
 }
 case 0x439: {
@@ -965,16 +981,16 @@ case 0x441: {
     dispatchPosition=msg->getArgument(0)->location;
     if (!currentlySelectedGroup) return;
     X(currentlySelectedGroup)->rva00151130(LOCKED_TEMPORARILY);
-    Dispatch397540Move order={&dispatchPosition,false,0,0};
-    X(currentlySelectedGroup)->rva00159AD0(&order,0);
+    order441.position=&dispatchPosition; order441.append=false; order441.rva_8=0; order441.rva_c=0;
+    X(currentlySelectedGroup)->rva00159AD0(&order441,0);
     break;
 }
 case 0x431: {
     dispatchPosition=msg->getArgument(0)->location;
     if (!currentlySelectedGroup) return;
     X(currentlySelectedGroup)->rva00151130(LOCKED_TEMPORARILY);
-    Dispatch397540Move order={&dispatchPosition,true,0,0};
-    X(currentlySelectedGroup)->rva00159AD0(&order,0);
+    order431.position=&dispatchPosition; order431.append=true; order431.rva_8=0; order431.rva_c=0;
+    X(currentlySelectedGroup)->rva00159AD0(&order431,0);
     break;
 }
 case 0x432:
