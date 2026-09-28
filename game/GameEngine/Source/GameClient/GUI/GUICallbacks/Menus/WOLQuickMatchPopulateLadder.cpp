@@ -119,7 +119,7 @@ static bool isPopulatingLadderBox = false;
 extern void j_0001ccba();
 // Retail side-population call: menu receiver plus side and ladder pointer.
 extern void j_00035701();
-class Rva0062A7D0Owner {};
+class Rva0062A7D0Owner { public: bool method(); };
 inline bool rva0062A7D0Valid(const LadderInfo *p) {
  typedef bool (Rva0062A7D0Owner::*Method)();
  union { void (*raw)(); Method member; } f;
@@ -197,4 +197,53 @@ void BfmeQuickMatchLadderPanel::populateLadderList()
 	isPopulatingLadderBox = false;
 
 	(((Rva005082D0Owner*)this)->*rva005082D0Method())(pref.getSide(),rva00508C80LadderInfo());
+}
+
+
+typedef std::map<int, unsigned int> Rva0062A7D0Wins;
+class PSPlayerStats
+{
+public:
+	int id;
+	Rva0062A7D0Wins wins;
+	char m_rva0010[0x1b4];
+	~PSPlayerStats();
+};
+typedef char Rva0062A7D0StatsSize[sizeof(PSPlayerStats) == 0x1c4 ? 1 : -1];
+class BfmeQueueEUG
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03();
+	virtual void slot04(); virtual void slot05(); virtual void slot06(); virtual void slot07();
+	virtual void slot08();
+	virtual PSPlayerStats findPlayerStatsByID(int id);
+};
+extern BfmeQueueEUG *g_bfmeQueueEUG;
+
+bool Rva0062A7D0Owner::method()
+{
+	if (!this)
+		goto failed;
+	if (*(int *)((char *)this + 0x38) <= 0)
+		goto failed;
+	if (*(unsigned char *)((char *)this + 0x1a) == 0)
+		goto failed;
+
+	{
+		PSPlayerStats stats = g_bfmeQueueEUG->findPlayerStatsByID(TheGameSpyInfo->getLocalProfileID());
+		int totalWins = 0;
+		for (Rva0062A7D0Wins::const_iterator it = stats.wins.begin(); it != stats.wins.end(); ++it)
+			totalWins += it->second;
+
+		int maxWins = *(int *)((char *)this + 0x14);
+		if (maxWins != 0 && maxWins < totalWins)
+			goto failed;
+		int minWins = *(int *)((char *)this + 0x10);
+		if (minWins != 0 && minWins > totalWins)
+			goto failed;
+	}
+	return true;
+
+failed:
+	return false;
 }
