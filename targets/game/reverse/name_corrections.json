@@ -8618,5 +8618,15 @@
   "after_sha256": "cbec92633599d1dca81fcf5906d3c030ad4c2cb2d6dd365f94e8d6c80e9cbc77",
   "evidence": "targets/game/reverse/identity_evidence/0x0092c390-object84-alias.md",
   "reason": "object84 named a local copy of the value at +0x84. The layout witness has no member name for that offset, so the source reads it through m_field84. The direct field version matches retail through the virtual call and improves the probe from 0.826 to 0.870."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0074b480.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMapRva0074B480.cpp",
+  "old_name": "update",
+  "new_name": "rva006D1D80",
+  "before_sha256": "5b7eb16ffe7ac03066a491e1162824807e1815520f9349b3445ddd6b357c5b6a",
+  "after_sha256": "f396536c07fc0dbbe3c76a3f79e6552816eec6a5f7a2ba908c0b870755466d9f",
+  "evidence": "targets/game/reverse/identity_evidence/0x0074b480-terrain-slot137.md",
+  "reason": "The stash's update was an unevidenced placeholder for terrain render object vtable slot 137; the HeightMapRenderObjClass vtable routes that slot to the anonymous body 0x006D1D80 through ILT 0x0002E087 and nothing names it, so the rewrite keeps the address token. See the evidence file."
  }
 ]
