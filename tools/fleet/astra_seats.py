@@ -311,7 +311,9 @@ def gap_groups(count, budget=10000):
     for start, _, size in gaps:
         current.append(start)
         total += size
-        if total >= budget:
+        # the remaining fresh gaps are small and scattered; a seat handed 95 of
+        # them cannot map them all, so cap the count as well as the bytes
+        if total >= budget or len(current) >= 12:
             groups.append((f"gaps ({total:,} B)", current))
             current, total = [], 0
             if len(groups) >= count:
