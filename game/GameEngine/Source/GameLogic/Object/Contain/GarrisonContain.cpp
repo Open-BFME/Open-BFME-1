@@ -1562,7 +1562,6 @@ const Player* GarrisonContain::getApparentControllingPlayer( const Player* obser
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 #pragma comment(linker, "/alternatename:?recalcApparentControllingPlayer@GarrisonContain@@UAEXXZ=?recalcApparentControllingPlayer@BfmeGarrisonContain@@UAEXXZ")
-// ?recalcApparentControllingPlayer@BfmeGarrisonContain@@UAEXXZ absent-from-retail
 void BfmeGarrisonContain::recalcApparentControllingPlayer( void )
 {
 	BfmeGarrisonContain *self = this;
@@ -1663,7 +1662,7 @@ void BfmeGarrisonContain::recalcApparentControllingPlayer( void )
 // ------------------------------------------------------------------------------------------------
 /** Load the garrison point position data and save for use later */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainLoadGarrisonPointsThunk.cpp
+// BFME byte-verified body: game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainLoadGarrisonPoints.cpp
 // ?loadGarrisonPoints@GarrisonContain@@IAEXXZ present-unmatched
 void GarrisonContain::loadGarrisonPoints( void )
 {

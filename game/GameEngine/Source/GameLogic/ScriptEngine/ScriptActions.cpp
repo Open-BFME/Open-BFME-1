@@ -3256,7 +3256,7 @@ void ScriptActions::doTeamHunt(const AsciiString& teamName)
 //-------------------------------------------------------------------------------------------------
 /** doTeamHunt */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamHuntWithCommandButton_Thunk.cpp
+// BFME byte-verified body: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsTeamHuntWithCommandButton.cpp
 // ?doTeamHuntWithCommandButton@ScriptActions@@ present-unmatched
 void ScriptActions::doTeamHuntWithCommandButton(const AsciiString& teamName, const AsciiString& ability)
 {
