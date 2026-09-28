@@ -1,5 +1,5 @@
-// ?d_008b06c0@@YAXXZ
-// partial score=0.48082191780821915 date=2026-09-22
+// ?run@AssociateInstance008B06C0@@QAEXXZ
+// partial score=0.6397260273972603 date=2026-09-28
 // ?run@AssociateInstance008B06C0@@QAEXXZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // RVA 008B06C0: opaque owner; retail literal associateInstToClass describes the operation.
@@ -109,8 +109,9 @@ void AssociateInstance008B06C0::run()
     if(entries->m_28>0) {
         EntryPair008B06C0 *pairs=entries->m_2c;
         Entry008B06C0 **items=entries->m_10;
-        for(int i=0;i<entries->m_28;++i) {
-            if(entry==items[pairs[i].m_04]) {
+        char *cursor=(char *)&pairs[0].m_04;
+        for(int i=0;i<entries->m_28;++i,cursor+=8) {
+            if(entry==items[*(int *)cursor]) {
                 if(table01337A28) {
                     Value008B06C0 *function;
                     { BfmeStrVKI name(pairs[i].m_00); function=table01337A28->find(&name); }
