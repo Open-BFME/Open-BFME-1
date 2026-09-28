@@ -1,7 +1,6 @@
 // ?rva007F97B0@Rva007FA2C0@@QAEXPAVRva007E8810Message@@PAURva007F97B0State@@@Z
-// partial score=0.76 date=2026-09-25
-// ?rva007F97B0@Rva007FA2C0@@QAEXPAVRva007E8810Message@@PAURva007F97B0State@@@Z
-// Candidate built from the landed FESL message and transactor layouts.
+// partial score=0.94 date=2026-09-28
+// FESL transactor.cpp chunked "data" decode: append Base64 into the state record, send when complete.
 // cl: /O2 /GX- /GS
 
 typedef unsigned char Byte;
@@ -152,7 +151,7 @@ class Rva007FA2C0
 {
 public:
 	void rva007F97B0(Rva007E8810Message *message,
-		register Rva007F97B0State *state);
+		Rva007F97B0State *state);
 
 private:
 	char m_pad00[0x1c];
@@ -162,7 +161,7 @@ private:
 };
 
 void Rva007FA2C0::rva007F97B0(Rva007E8810Message *message,
-	register Rva007F97B0State *state)
+	Rva007F97B0State *state)
 {
 	Rva007F97B0Record *record = state->m_18;
 	if (!record)
@@ -177,22 +176,23 @@ void Rva007FA2C0::rva007F97B0(Rva007E8810Message *message,
 			record->m_00 + 4, 1);
 	}
 	char *text = (char *)Rva007EFFC0Get()->allocate(message->m_14, 0);
-	int messageSize = message->m_14;
-	message->getString((const char *)0x0112BAC4, text, messageSize);
+	message->getString("data", text, message->m_14);
 	unsigned int length = strlen(text);
 	if ((length & 3) != 0)
 	{
 		Rva007EB810Diag *diag = Rva007EB810Get();
-		diag->fail((const char *)0x0112BAB0,
-			(const char *)0x0112BA50, 0x13b);
+		diag->fail("(len & 0x3) == 0",
+			"\\views\\feslbuild_main\\jabba\\fesl\\source\\transactor.cpp",
+			0x13b);
 	}
 	unsigned int decodedSize = (length >> 2) * 3;
 	if (!rva007FF250Decode((int)length, text,
-		(unsigned char *)(record->m_04 + (unsigned int)record->m_08)))
+		(unsigned char *)(record->m_08 + *(volatile unsigned int *)&record->m_04)))
 	{
 		Rva007EB810Diag *diag = Rva007EB810Get();
-		diag->fail((const char *)0x0112BAA8,
-			(const char *)0x0112BA50, 0x13e);
+		diag->fail("result",
+			"\\views\\feslbuild_main\\jabba\\fesl\\source\\transactor.cpp",
+			0x13e);
 	}
 	record->m_04 += decodedSize;
 	Rva007EFFC0Get()->release(text, 0);
@@ -200,19 +200,22 @@ void Rva007FA2C0::rva007F97B0(Rva007E8810Message *message,
 	{
 		Rva007F93E0Envelope envelope;
 		int message20 = message->m_20;
-		int message04 = message->m_04;
-		envelope.m_prefix.m_00 = message->m_1c;
-		*(volatile int *)&envelope.m_tail = (int)&vftable_011296B0;
+		*(volatile int *)&envelope.m_prefix.m_00 =
+			*(volatile int *)&message->m_1c;
+		*(volatile int *)&envelope.m_prefix.m_04 = message20 & 0xdfffffff;
+		int message04 = *(volatile int *)&message->m_04;
 		envelope.m_1c = 0;
 		envelope.m_20 = 0;
-		envelope.m_tail.m_field04 = message04;
-		envelope.m_prefix.m_04 = message20 & 0xdfffffff;
-		envelope.m_prefix.m_08 = record->m_08;
-		int recordTotal = record->m_00;
+		*(volatile int *)&envelope.m_tail.m_field04 = 0;
+		*(volatile int *)&envelope.m_tail = (int)&vftable_011296B0;
+		*(char *volatile *)&envelope.m_prefix.m_08 =
+			*(char *volatile *)&record->m_08;
+		int recordTotal = *(volatile int *)&record->m_00;
+		int message08 = message->m_08;
 		envelope.m_prefix.m_0c = recordTotal;
-		envelope.m_prefix.m_10 = 0;
-		envelope.m_1c = message->m_08;
-		envelope.m_20 = message->m_0c;
-	((Rva007FA2C0Transport *)((char *)this + 4))->send(&envelope);
+		envelope.m_20 = *(volatile int *)&message->m_0c;
+		envelope.m_1c = message08;
+		*(volatile int *)&envelope.m_tail.m_field04 = message04;
+		((Rva007FA2C0Transport *)((char *)this + 4))->send(&envelope);
 	}
 }
