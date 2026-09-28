@@ -1,8 +1,20 @@
+// Retail 0x00609DA0 (107 B). Parameter types: identity_evidence/bfme_run_esm_00609da0.md.
+// The caller 0x006176A0 builds the two-float position in place in the argument
+// area ($T store) and reads the height back as a float. The (void **) cast only
+// satisfies bfmeDoESM's pinned placeholder decoration.
 class BfmeThingESM;
+
+struct BfmeCoordESM
+{
+	BfmeCoordESM(float x, float y) { m_x = x; m_y = y; }
+	BfmeCoordESM(const BfmeCoordESM &other) throw() { m_x = other.m_x; m_y = other.m_y; }
+	float m_x;
+	float m_y;
+};
 
 struct BfmePairESM
 {
-	BfmePairESM(int a, int b)
+	BfmePairESM(float a, float b)
 	{
 		m_bfmeAESM = a;
 		m_bfmeBESM = b;
@@ -16,8 +28,8 @@ struct BfmePairESM
 
 	~BfmePairESM();
 
-	int m_bfmeAESM;
-	int m_bfmeBESM;
+	float m_bfmeAESM;
+	float m_bfmeBESM;
 };
 
 class BfmeHostESM
@@ -53,16 +65,16 @@ public:
 	virtual void bfmeSlot27ESM();
 	virtual BfmeThingESM *bfmeSlot28ESM();
 
-	char bfmeRunESM(int a, int b, void **out);
+	char bfmeRunESM(BfmeCoordESM pos, float *height);
 	void bfmeMarkESM(BfmeThingESM *thing, int flag);
 	void bfmePrepESM(BfmeThingESM *thing);
 	char bfmeDoESM(BfmeThingESM *thing, BfmePairESM pair, void **out, int one,
 		int zero);
 };
 
-char BfmeHostESM::bfmeRunESM(int a, int b, void **out)
+char BfmeHostESM::bfmeRunESM(BfmeCoordESM pos, float *height)
 {
-	*out = 0;
+	*height = 0.0f;
 
 	BfmeThingESM *thing = bfmeSlot28ESM();
 
@@ -72,7 +84,7 @@ char BfmeHostESM::bfmeRunESM(int a, int b, void **out)
 	bfmeMarkESM(thing, 0);
 	bfmePrepESM(thing);
 
-	char ok = bfmeDoESM(thing, BfmePairESM(a, b), out, 1, 0);
+	char ok = bfmeDoESM(thing, BfmePairESM(pos.m_x, pos.m_y), (void **)height, 1, 0);
 
 	bfmeMarkESM(thing, 1);
 
