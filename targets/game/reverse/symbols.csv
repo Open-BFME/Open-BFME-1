@@ -89581,3 +89581,9 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??$_Construct@U?$pair@$$CBW4NameKeyType@@M@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBW4NameKeyType@@M@0@ABU10@@Z,0x0002487A,ILT thunk the NameKeyType-float tree _M_copy at 0x00567200 calls to build the pair in the freshly allocated 0x18 node; jmp 0x0007CD50
 ?Rva0074ACB0Load@WorldHeightMap@@AAEXAAVDataChunkInput@@_N@Z,0x0074ACB0,stream-ctor load helper; body is the matched ?d_0074acb0 gen-dump; ABI from call site ecx=this then DataChunkInput& and bool result unused
 ?rva006A56A0@Rva006A56A0@@QAEXHHH@Z,0x006A56A0,Retail call target at RVA 0x006A56A0 returns with ret 0x0C after three stack arguments. Caller 0x006A5870 sets ECX and pushes three stack arguments. EAX is unused.
+?rva005B5590@Calls004329D0@@QAEXXZ,0x005B5590,thiscall no stack arguments; ECX read; ret; caller 004329D0 via 0000B7A3;evidence=004329D0-client-update.md
+?rva005B4D40@Calls004329D0@@QAEXXZ,0x005B4D40,thiscall no stack arguments; ECX read; both ret exits; caller 004329D0 via 0003EC48;evidence=004329D0-client-update.md
+?rva0041BE60@Calls004329D0@@QAEXXZ,0x0041BE60,thiscall no stack arguments; ECX read; three ret exits; caller 004329D0 via 00031C55;evidence=004329D0-client-update.md
+?rva0040DE00@Calls004329D0@@QAEXXZ,0x0040DE00,thiscall no stack arguments; ECX read; four ret exits; caller 004329D0 via 0004ADB3;evidence=004329D0-client-update.md
+?rva0042F190@Rva0042F190Host@@QAEXI_N@Z,0x0042F190,two-word ABI view of matched forEach; ECX receiver; frame then bool; ret 8; caller 004329D0 via 0000C676;evidence=004329D0-client-update.md
+?populateGameFonts@HeaderTemplateManager@@AAEXXZ,0x00020243,route=0x0048C480;retail 004329D0 call follows 00020243 to 0048CA80 to 000065F0 to matched body;evidence=004329D0-client-update.md
