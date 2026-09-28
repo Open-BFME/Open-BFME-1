@@ -66,6 +66,21 @@ public:
 
 #undef BFME_REGION_DISPLAY_SLOT
 
+// These words are beyond the 0x70-byte empty AudioEventRTS at 0x012F1318.
+// No object membership or source-level names are witnessed for them.
+extern UnsignedInt g_012F13AC;
+extern UnsignedInt g_012F13B0;
+extern UnsignedInt g_012F13B4;
+extern UnsignedInt g_012F13B8;
+extern UnsignedInt g_012F13BC;
+extern UnsignedInt g_012F13C0;
+extern UnsignedInt g_012F13C4;
+extern UnsignedInt g_012F13C8;
+extern UnsignedInt g_012F13CC;
+extern UnsignedInt g_012F13D0;
+extern UnsignedInt g_012F13D4;
+extern UnsignedInt g_012F13D8;
+
 extern Display *TheDisplay;
 extern void j_00048b26();
 
@@ -83,24 +98,24 @@ void bfmeRegionRenderA( void *rawRegion, Int rawOffset, const Int rawValue )
 	Real regionWidth = (Real)(region->right - regionLeft);
 	((Rva00411220ColorCall)j_00048b26)( rawValue, colors );
 
-	UnsignedInt state = *(UnsignedInt *)0x012F13B8;
+	UnsignedInt state = g_012F13B8;
 	if( (state & 1) == 0 )
 	{
 		state |= 1;
-		*(UnsignedInt *)0x012F13B8 = state;
-		*(UnsignedInt *)0x012F13B4 = 0x7F000000;
+		g_012F13B8 = state;
+		g_012F13B4 = 0x7F000000;
 	}
 	if( (state & 2) == 0 )
 	{
 		state |= 2;
-		*(UnsignedInt *)0x012F13B8 = state;
-		*(UnsignedInt *)0x012F13B0 = 0xFFBA9252;
+		g_012F13B8 = state;
+		g_012F13B0 = 0xFFBA9252;
 	}
 	if( (state & 4) == 0 )
 	{
 		state |= 4;
-		*(UnsignedInt *)0x012F13B8 = state;
-		*(UnsignedInt *)0x012F13AC = 0xFF000000;
+		g_012F13B8 = state;
+		g_012F13AC = 0xFF000000;
 	}
 
 	// Retail float pool values: 0x010828C4 is 6.0f, 0x01075340 is 4.0f,
@@ -108,20 +123,20 @@ void bfmeRegionRenderA( void *rawRegion, Int rawOffset, const Int rawValue )
 	TheDisplay->drawOpenRect(
 		(Real)(regionLeft + *(const volatile Int *)&offset->x - 3),
 		(Real)(region->top + offset->y - 3),
-		regionWidth + *(const Real *)0x010828C4,
-		10.0f, 1.0f, *(UnsignedInt *)0x012F13B4 );
+		regionWidth + 6.0f,
+		10.0f, 1.0f, g_012F13B4 );
 
 	TheDisplay->drawOpenRect(
 		(Real)(region->left + offset->x - 2),
 		(Real)(region->top + offset->y - 2),
-		regionWidth + *(const Real *)0x01075340,
-		8.0f, 1.0f, *(UnsignedInt *)0x012F13B0 );
+		regionWidth + 4.0f,
+		8.0f, 1.0f, g_012F13B0 );
 
 	TheDisplay->drawFillRect(
 		(Real)(region->left + offset->x - 1),
 		(Real)(region->top + offset->y - 1),
-		regionWidth + *(const Real *)0x01088830,
-		6.0f, *(UnsignedInt *)0x012F13AC );
+		regionWidth + 2.0f,
+		6.0f, g_012F13AC );
 
 	const Real &rawValueReal = *(const Real *)&rawValue;
 	regionWidth = *(volatile Real *)&regionWidth * rawValueReal;
@@ -160,43 +175,43 @@ void bfmeRegionRenderB( void *rawRegion, Int rawOffset, const Int rawValue )
 	Real regionWidth = (Real)(region->right - regionLeft);
 	((Rva00411270ColorCall)j_00017256)( rawValue, colors );
 
-	UnsignedInt state = *(UnsignedInt *)0x012F13C8;
+	UnsignedInt state = g_012F13C8;
 	if( (state & 1) == 0 )
 	{
 		state |= 1;
-		*(UnsignedInt *)0x012F13C8 = state;
-		*(UnsignedInt *)0x012F13C4 = 0x7F000000;
+		g_012F13C8 = state;
+		g_012F13C4 = 0x7F000000;
 	}
 	if( (state & 2) == 0 )
 	{
 		state |= 2;
-		*(UnsignedInt *)0x012F13C8 = state;
-		*(UnsignedInt *)0x012F13C0 = 0xFFBA9252;
+		g_012F13C8 = state;
+		g_012F13C0 = 0xFFBA9252;
 	}
 	if( (state & 4) == 0 )
 	{
 		state |= 4;
-		*(UnsignedInt *)0x012F13C8 = state;
-		*(UnsignedInt *)0x012F13BC = 0xFF000000;
+		g_012F13C8 = state;
+		g_012F13BC = 0xFF000000;
 	}
 
 	TheDisplay->drawOpenRect(
 		(Real)(regionLeft + *(const volatile Int *)&offset->x - 3),
 		(Real)(region->top + offset->y - 3),
-		regionWidth + *(const Real *)0x010828C4,
-		10.0f, 1.0f, *(UnsignedInt *)0x012F13C4 );
+		regionWidth + 6.0f,
+		10.0f, 1.0f, g_012F13C4 );
 
 	TheDisplay->drawOpenRect(
 		(Real)(region->left + offset->x - 2),
 		(Real)(region->top + offset->y - 2),
-		regionWidth + *(const Real *)0x01075340,
-		8.0f, 1.0f, *(UnsignedInt *)0x012F13C0 );
+		regionWidth + 4.0f,
+		8.0f, 1.0f, g_012F13C0 );
 
 	TheDisplay->drawFillRect(
 		(Real)(region->left + offset->x - 1),
 		(Real)(region->top + offset->y - 1),
-		regionWidth + *(const Real *)0x01088830,
-		6.0f, *(UnsignedInt *)0x012F13BC );
+		regionWidth + 2.0f,
+		6.0f, g_012F13BC );
 
 	const Real &rawValueReal = *(const Real *)&rawValue;
 	regionWidth = *(volatile Real *)&regionWidth * rawValueReal;
@@ -235,43 +250,43 @@ void bfmeRegionRenderC( void *rawRegion, Int rawOffset, const Int rawValue )
 	Real regionWidth = (Real)(region->right - regionLeft);
 	((Rva00411400ColorCall)j_0003b390)( rawValue, colors );
 
-	UnsignedInt state = *(UnsignedInt *)0x012F13D8;
+	UnsignedInt state = g_012F13D8;
 	if( (state & 1) == 0 )
 	{
 		state |= 1;
-		*(UnsignedInt *)0x012F13D8 = state;
-		*(UnsignedInt *)0x012F13D4 = 0x7F000000;
+		g_012F13D8 = state;
+		g_012F13D4 = 0x7F000000;
 	}
 	if( (state & 2) == 0 )
 	{
 		state |= 2;
-		*(UnsignedInt *)0x012F13D8 = state;
-		*(UnsignedInt *)0x012F13D0 = 0xFFBA9252;
+		g_012F13D8 = state;
+		g_012F13D0 = 0xFFBA9252;
 	}
 	if( (state & 4) == 0 )
 	{
 		state |= 4;
-		*(UnsignedInt *)0x012F13D8 = state;
-		*(UnsignedInt *)0x012F13CC = 0xFF000000;
+		g_012F13D8 = state;
+		g_012F13CC = 0xFF000000;
 	}
 
 	TheDisplay->drawOpenRect(
 		(Real)(regionLeft + *(const volatile Int *)&offset->x - 3),
 		(Real)(region->top + offset->y - 3),
-		regionWidth + *(const Real *)0x010828C4,
-		9.0f, 1.0f, *(UnsignedInt *)0x012F13D4 );
+		regionWidth + 6.0f,
+		9.0f, 1.0f, g_012F13D4 );
 
 	TheDisplay->drawOpenRect(
 		(Real)(region->left + offset->x - 2),
 		(Real)(region->top + offset->y - 2),
-		regionWidth + *(const Real *)0x01075340,
-		7.0f, 1.0f, *(UnsignedInt *)0x012F13D0 );
+		regionWidth + 4.0f,
+		7.0f, 1.0f, g_012F13D0 );
 
 	TheDisplay->drawFillRect(
 		(Real)(region->left + offset->x - 1),
 		(Real)(region->top + offset->y - 1),
-		regionWidth + *(const Real *)0x01088830,
-		5.0f, *(UnsignedInt *)0x012F13CC );
+		regionWidth + 2.0f,
+		5.0f, g_012F13CC );
 
 	const Real &rawValueReal = *(const Real *)&rawValue;
 	regionWidth = *(volatile Real *)&regionWidth * rawValueReal;
