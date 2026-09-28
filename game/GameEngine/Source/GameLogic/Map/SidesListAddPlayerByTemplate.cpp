@@ -209,8 +209,9 @@ void SidesList::addPlayerByTemplate(AsciiString playerTemplateName)
 	d.setBool(TheKey_playerIsHuman.key(), isHuman);
 	d.setUnicodeString(TheKey_playerDisplayName.key(), playerDisplayName);
 	d.setAsciiString(TheKey_playerFaction.key(), playerTemplateName);
-	d.setAsciiString(TheKey_playerEnemies.key(), AsciiString::TheEmptyString);
+	// Retail 0x0019C590 stores the allies key first (0x012A7948), then enemies (0x012A7940).
 	d.setAsciiString(TheKey_playerAllies.key(), AsciiString::TheEmptyString);
+	d.setAsciiString(TheKey_playerEnemies.key(), AsciiString::TheEmptyString);
 
 	int side = m_numSides;
 	if (side < 32)
