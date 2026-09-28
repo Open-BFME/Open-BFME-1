@@ -517,6 +517,32 @@ void SimpleSceneClass::Visibility_Check(CameraClass * camera)
  * HISTORY:                                                                                    *
  *   6/13/2001  gth : Created.                                                                 *
  *=============================================================================================*/
+class BfmeSimpleSceneClassView
+{
+public:
+	virtual void slot00(void); virtual void slot01(void); virtual void slot02(void);
+	virtual void slot03(void); virtual void slot04(void); virtual void slot05(void);
+	virtual void slot06(void); virtual void slot07(void); virtual void slot08(void);
+	virtual void slot09(void); virtual void slot10(void); virtual void slot11(void);
+	virtual void slot12(void); virtual void slot13(void); virtual void slot14(void);
+	virtual void slot15(void); virtual void slot16(void); virtual void slot17(void);
+	virtual void slot18(void); virtual void slot19(void); virtual void slot20(void);
+	virtual void slot21(void); virtual void slot22(void); virtual void slot23(void);
+	virtual void slot24(void); virtual void slot25(void); virtual void slot26(void);
+	virtual void Visibility_Check(CameraClass *camera);
+
+	int m_refCount;
+	Vector3 AmbientLight;
+	char m_pad[0x48];
+	RefRenderObjListClass m_renderList;
+	RefRenderObjListClass m_updateList;
+	RefRenderObjListClass m_lightList;
+	RefRenderObjListClass m_releaseList;
+	RefRenderObjListClass m_listBC;
+	RefRenderObjListClass m_listD4;
+	RefRenderObjListClass m_visibleList;
+};
+
 float SimpleSceneClass::Compute_Point_Visibility
 (	
 	RenderInfoClass & rinfo,
@@ -527,7 +553,9 @@ float SimpleSceneClass::Compute_Point_Visibility
 	LineSegClass ray(rinfo.Camera.Get_Position(),point);
 	RayCollisionTestClass raytest(ray,&res,COLL_TYPE_PROJECTILE);
 
-	RefRenderObjListIterator it(&RenderList);
+	// Retail 0x00943A6B/0x00943A6E traverses the list at this+0x60, as Customized_Render does.
+	BfmeSimpleSceneClassView *self = (BfmeSimpleSceneClassView *)this;
+	RefRenderObjListIterator it(&self->m_renderList);
 	for (it.First(); !it.Is_Done(); it.Next()) {
 		RenderObjClass * robj = it.Peek_Obj();
 		robj->Cast_Ray(raytest);
@@ -556,32 +584,6 @@ float SimpleSceneClass::Compute_Point_Visibility
  *   12/10/98  GTH : Created.                                                                 *
  *   06/27/02	KM Shader system light environment updates                                       *
  *=============================================================================================*/
-class BfmeSimpleSceneClassView
-{
-public:
-	virtual void slot00(void); virtual void slot01(void); virtual void slot02(void);
-	virtual void slot03(void); virtual void slot04(void); virtual void slot05(void);
-	virtual void slot06(void); virtual void slot07(void); virtual void slot08(void);
-	virtual void slot09(void); virtual void slot10(void); virtual void slot11(void);
-	virtual void slot12(void); virtual void slot13(void); virtual void slot14(void);
-	virtual void slot15(void); virtual void slot16(void); virtual void slot17(void);
-	virtual void slot18(void); virtual void slot19(void); virtual void slot20(void);
-	virtual void slot21(void); virtual void slot22(void); virtual void slot23(void);
-	virtual void slot24(void); virtual void slot25(void); virtual void slot26(void);
-	virtual void Visibility_Check(CameraClass *camera);
-
-	int m_refCount;
-	Vector3 AmbientLight;
-	char m_pad[0x48];
-	RefRenderObjListClass m_renderList;
-	RefRenderObjListClass m_updateList;
-	RefRenderObjListClass m_lightList;
-	RefRenderObjListClass m_releaseList;
-	RefRenderObjListClass m_listBC;
-	RefRenderObjListClass m_listD4;
-	RefRenderObjListClass m_visibleList;
-};
-
 void SimpleSceneClass::Customized_Render(RenderInfoClass & rinfo)
 {
 	BfmeSimpleSceneClassView *self = (BfmeSimpleSceneClassView *)this;

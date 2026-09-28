@@ -452,6 +452,8 @@ DX8FVFCategoryContainer::DX8FVFCategoryContainer(unsigned FVF_,bool sorting_)
 	visible_matpass_tail(NULL),
 	index_buffer(0),
 	used_indices(0),
+	unknown_D8(NULL),
+	unknown_DC(0),
 	passes(MAX_PASSES),
 	uv_coordinate_channels(0),
 	AnythingToRender(false),

@@ -585,6 +585,7 @@ const OBBoxClass & CameraClass::Get_Near_Clip_Bounding_Box(void) const
  * HISTORY:                                                                                    *
  *   12/8/98    GTH : Created.                                                                 *
  *=============================================================================================*/
+// ?Cull_Box@CameraClass@@QBE_NABVAABoxClass@@@Z present-unmatched
 bool CameraClass::Cull_Box(const AABoxClass & box) const
 {
 	const FrustumClass & frustum = Get_Frustum();
@@ -838,4 +839,29 @@ float CameraClass::Compute_Projected_Sphere_Radius(float dist,float radius)
 {
 	Vector4 result = ProjectionTransform * Vector4(radius,0.0f,dist,1.0f);
 	return result.X / result.W;
+}
+
+// Retail boundary: int3 at 0x0092439F; ret 20 at 0x00924476; int3 at 0x00924479.
+// Address-derived identity: no named caller or vtable was found.
+class Rva009243A0 {
+    Vector4 Row[3];
+public:
+    void method(const Vector3 *a, const Rva009243A0 &other, const Vector3 *b, Vector3 *out, int count) const;
+};
+void Rva009243A0::method(const Vector3 *a, const Rva009243A0 &other, const Vector3 *b, Vector3 *out, int count) const
+{
+    // Keep the two transforms in one sum: VC7.1 reassociates this into
+    // retail's x87 order. Separate rounded vector temporaries change the body.
+    while (count--) {
+        out->X = other.Row[0].X*b->X + other.Row[0].Y*b->Y + other.Row[0].Z*b->Z
+                   + Row[0].X*a->X + Row[0].Y*a->Y + Row[0].Z*a->Z
+                   + other.Row[0].W + Row[0].W;
+        out->Y = other.Row[1].X*b->X + other.Row[1].Y*b->Y + other.Row[1].Z*b->Z
+                   + Row[1].X*a->X + Row[1].Y*a->Y + Row[1].Z*a->Z
+                   + other.Row[1].W + Row[1].W;
+        out->Z = other.Row[2].X*b->X + other.Row[2].Y*b->Y + other.Row[2].Z*b->Z
+                   + Row[2].X*a->X + Row[2].Y*a->Y + Row[2].Z*a->Z
+                   + other.Row[2].W + Row[2].W;
+        ++a; ++b; ++out;
+    }
 }

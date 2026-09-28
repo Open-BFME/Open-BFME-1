@@ -2,15 +2,6 @@
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define BFME_ASCIISTRING_CSTR_CTOR_NOINLINE
-#ifdef _STLP_USE_STATIC_LIB
-#undef _STLP_USE_STATIC_LIB
-#endif
-#ifdef BFME_STLP_NODE_ALLOC
-#undef BFME_STLP_NODE_ALLOC
-#endif
-#ifdef _STLP_NO_EXCEPTIONS
-#undef _STLP_NO_EXCEPTIONS
-#endif
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.

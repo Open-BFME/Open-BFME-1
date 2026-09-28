@@ -237,9 +237,9 @@ Animatable3DObjClass & Animatable3DObjClass::operator = (const Animatable3DObjCl
 		ModeAnim.animDirection=1.0;	// 020607 srj -- added
 		ModeInterp.Motion0 = NULL;
 		ModeInterp.Motion1 = NULL;
+		// BFME has no double-animation PrevFrame fields; these would overwrite
+		// the witnessed 1.0f stores at +0x11C and +0x120.
 		ModeInterp.Frame0 = 0.0f;
-		ModeInterp.PrevFrame0 = 0.0f;
-		ModeInterp.PrevFrame1 = 0.0f;
 		ModeInterp.Frame1 = 0.0f;
 		ModeInterp.Percentage = 0.0f;
 		ModeCombo.AnimCombo = NULL;
