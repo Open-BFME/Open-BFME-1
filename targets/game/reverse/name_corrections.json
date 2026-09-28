@@ -7859,5 +7859,15 @@
   "after_sha256": "d7126bb4aedd1edc0368c8db688707394c84aeb4e51ba3ec2f436b5a6f5f8edd",
   "evidence": "targets/game/reverse/symbols.csv",
   "reason": "The old bank typed this method's first argument as GameWindow* because it passed the value to GadgetListBoxGetItemData. The matched wrappers and the existing pin at ILT 0x00047807 call the method as Rva005329C0Obj*. The body now follows that caller signature and casts the pointer to GameWindow* only for the list-box helper."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003df580.cpp",
+  "new_path": "targets/game/reverse/attempts/0x003df580.cpp",
+  "old_name": "checkDestination",
+  "new_name": "rva003DF580",
+  "before_sha256": "eccc93af5942723461f6f61bf87e70226e71d775b396c9b4c74f79c906fdac07",
+  "after_sha256": "7c6de1f5ef059ad7bf5fe2f712317b8f33192c12bbacdf659d0b298a00663fe1",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "The ledger row for 0x003DD7A0 already holds ?checkDestination@Pathfinder@@QAE_NPBVObject@@HHW4PathfindLayerEnum@@H_N@Z (six arguments; Zero Hour twin plus the matched caller in PathfindAdjustDeab0.cpp). This 0x003DF580 body takes eight arguments and only its log literal says CheckDestination; no caller or vtable proves BFME kept a second C++ overload of that name, so the banked body keeps an address-derived method name until one does."
  }
 ]

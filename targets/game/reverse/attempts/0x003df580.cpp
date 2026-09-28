@@ -1,8 +1,15 @@
 // ?d_003df580@@YAXXZ
-// partial score=0.481 date=2026-09-28
+// partial score=0.5594 date=2026-09-28
 // ?d_003df580@@YAXXZ
-// partial score=0.4810 date=2026-09-28 model=opus-5.5
-// probe symbol: ?checkDestination@Pathfinder@@QAE_NPBVObject@@HHW4PathfindLayerEnum@@H_NPAH2@Z
+// partial score=0.5594 date=2026-09-28 model=opus-5.5
+// probe symbol: ?rva003DF580@Pathfinder@@QAE_NPBVObject@@HHW4PathfindLayerEnum@@H_NPAH2@Z
+// NAME: opaque on purpose.  The literal at 0x010EEA60 ("Pathfinder::CheckDestination
+// called with ...") names this body's role, but 0x003DD7A0 already holds the
+// six-argument ?checkDestination@Pathfinder@@ (ZH twin plus a matched caller in
+// PathfindAdjustDeab0.cpp), and nothing independent shows BFME kept two C++
+// overloads of that name (multi_name.py lists neither address as multiply
+// claimed; no caller or vtable spells an 8-argument checkDestination).  So the
+// method keeps the address token until an overload is proven.
 // cl: /DNDEBUG /MD
 //
 // Retail 0x003DF580, 2029 bytes, ret 0x20: the BFME Pathfinder::CheckDestination
@@ -25,9 +32,11 @@
 // OFF THE MAP is the else of if(cell), as in ZH, which puts its tail last.
 // The two IMPASSABLE tests (5, then 6) are separate ifs with the same log so
 // the merged tail lands after CELL_CLIFF as in retail (a 5||6 test put it last).
-// Remaining (6 structural diffs, 2015 vs 2029 bytes, 1025 differing): +264
-// radius/centre load order; +2CC retail reloads this into EDX and uses ECX as
-// temp; +3A7 retail reloads TheCRCParameterCheck for the BEGIN-iteration log;
+// The logical-extent range check is an inline IRegion2D::contains(x0,x1,y0,y1)
+// with its own this, which reproduces retail's reload of this into EDX at +2CC
+// (1025 -> 874 differing).
+// Remaining (5 structural diffs, 2019 vs 2029 bytes, 874 differing): +264
+// radius/centre load order; +3A7 retail reloads TheCRCParameterCheck for the BEGIN-iteration log;
 // +44C this-copy register choice in inlined getCell; the +3E7 loop-alignment
 // jmp/pad only follows from the earlier size deficit.
 typedef int Int;
@@ -38,7 +47,10 @@ typedef unsigned int ObjectID;
 const ObjectID INVALID_ID = 0;
 
 struct ICoord2D { Int x, y; };
-struct IRegion2D { ICoord2D lo, hi; };
+struct IRegion2D { ICoord2D lo, hi;
+	Bool isInRegion(Int x, Int y) const { return x >= lo.x && x <= hi.x && y >= lo.y && y <= hi.y; }
+	Bool contains(Int x0, Int x1, Int y0, Int y1) const { return !(x0 < lo.x || x1 > hi.x || y0 < lo.y || y1 > hi.y); }
+};
 struct Coord3D { Real x, y, z; };
 
 enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1, LAYER_LAST = 15 };
@@ -191,7 +203,7 @@ private:
 class Pathfinder
 {
 public:
-	Bool checkDestination(const Object *obj, Int cellX, Int cellY, PathfindLayerEnum layer,
+	Bool rva003DF580(const Object *obj, Int cellX, Int cellY, PathfindLayerEnum layer,
 		Int iRadius, Bool centerInCell, Int *allyGoalCount, Bool skipUnitCheck);
 
 	PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y)
@@ -222,7 +234,7 @@ public:
 	PathfindLayer m_layers[16];
 };
 
-Bool Pathfinder::checkDestination(const Object *obj, Int cellX, Int cellY, PathfindLayerEnum layer,
+Bool Pathfinder::rva003DF580(const Object *obj, Int cellX, Int cellY, PathfindLayerEnum layer,
 	Int iRadius, Bool centerInCell, Int *allyGoalCount, Bool skipUnitCheck)
 {
 	CHECKDEST_LOG((TheCRCParameterCheck,
@@ -278,8 +290,7 @@ Bool Pathfinder::checkDestination(const Object *obj, Int cellX, Int cellY, Pathf
 	if (RVA003DF580_CALL(Rva001BE410, obj, j_00010ea1)())
 	{
 		CHECKDEST_LOG((TheCRCParameterCheck, "          human controlled"));
-		if (cellX - iRadius < m_logicalExtent.lo.x || cellX + numCellsAbove > m_logicalExtent.hi.x ||
-			cellY - iRadius < m_logicalExtent.lo.y || cellY + numCellsAbove > m_logicalExtent.hi.y)
+		if (!m_logicalExtent.contains(cellX - iRadius, cellX + numCellsAbove, cellY - iRadius, cellY + numCellsAbove))
 		{
 			CHECKDEST_LOG((TheCRCParameterCheck, "            returning false"));
 			return false;
