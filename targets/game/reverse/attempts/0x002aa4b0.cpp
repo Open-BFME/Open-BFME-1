@@ -1,7 +1,16 @@
-// ?method@Rva002AA4B0Owner@@QAEXXZ
-// partial score=0.46 date=2026-09-26
+// ?finishAbility@SpecialAbilityUpdate@@QAEXXZ
+// partial score=0.78 date=2026-09-28
+// ?finishAbility@SpecialAbilityUpdate@@QAEXXZ
+// partial: retail 0x002AA4B0 734 B (RET at +0x2DD). Identity: SpecialAbilityUpdate vtable
+// 0x010C37B8 slot 17 (j_000392b1) points here, and the matched update() at 0x002AA9D0 calls
+// slot 17 exactly where Zero Hour's update() calls finishAbility(); the body is ZH finishAbility
+// (flee range, flip flags, own-mine avoidance, onExit at slot 11) with BFME's ignoreObstacle
+// moved before aiMoveToPosition and the physics bogus-force call removed.
+// Shape: two direction objects (the first in its own block, so its z store dies), filters as
+// temporaries in the getClosestObject call (matches the 0x00328A80 sibling).
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+#include <bitset>
 
 typedef bool Bool;
 typedef float Real;
@@ -67,7 +76,8 @@ template <int N> class BitFlags
 public:
 	enum BogusInitType { kInit = 0 };
 	BitFlags(BogusInitType, Int);
-	unsigned int bits[N / 32];
+private:
+	_STL::bitset<N> m_bits;
 };
 typedef BitFlags<192> KindOfMaskType;
 extern const KindOfMaskType KINDOFMASK_NONE;
@@ -76,35 +86,31 @@ class PartitionFilter
 {
 public:
 	PartitionFilter() : m_next(0) {}
-	PartitionFilter(unsigned int vptr) { m_next = 0; m_vptr = vptr; }
-	PartitionFilter *link(PartitionFilter *);
-	unsigned int m_vptr;
+	virtual ~PartitionFilter() {}
+	virtual bool allow(Object *) = 0;
+	virtual Int getPlayerMask();
+	PartitionFilter *link(PartitionFilter *next);
 	PartitionFilter *m_next;
 };
 
-class FilterSamePlayer002AA4B0 : public PartitionFilter
+class PartitionFilterSamePlayer : public PartitionFilter
 {
 public:
-	FilterSamePlayer002AA4B0(Player *player) : PartitionFilter(0x01097144), m_player(player) {}
-	~FilterSamePlayer002AA4B0() { m_vptr = 0x01083B5C; }
-	Player *m_player;
+	PartitionFilterSamePlayer(const Player *player) : m_player(player) {}
+	virtual bool allow(Object *);
+private:
+	const Player *m_player;
 };
 
 class PartitionFilterAcceptByKindOf : public PartitionFilter
 {
 public:
-	__declspec(noinline) PartitionFilterAcceptByKindOf(const KindOfMaskType &, const KindOfMaskType &);
-	~PartitionFilterAcceptByKindOf() { m_vptr = 0x01083B5C; }
+	PartitionFilterAcceptByKindOf(const KindOfMaskType &, const KindOfMaskType &);
+	virtual bool allow(Object *);
 private:
 	KindOfMaskType m_set;
 	KindOfMaskType m_clear;
 };
-
-PartitionFilterAcceptByKindOf::PartitionFilterAcceptByKindOf(
-	const KindOfMaskType &set, const KindOfMaskType &clear)
-	: PartitionFilter(0x01083B70), m_set(set), m_clear(clear)
-{
-}
 
 class PartitionManager
 {
@@ -113,7 +119,7 @@ public:
 };
 extern PartitionManager *ThePartitionManager;
 
-struct SpecialAbilityData002AA4B0
+struct SpecialAbilityUpdateModuleData
 {
 	char m_pad_000[0x1F8];
 	Real m_fleeRangeAfterCompletion;
@@ -122,7 +128,7 @@ struct SpecialAbilityData002AA4B0
 	Bool m_flipObjectAfterUnpacking;
 };
 
-class Rva002AA4B0Owner
+class SpecialAbilityUpdate
 {
 public:
 	virtual void slot00() = 0;
@@ -137,9 +143,9 @@ public:
 	virtual void slot09() = 0;
 	virtual void slot10() = 0;
 	virtual void onExit(Bool, Bool) = 0;
-	void method();
+	void finishAbility();
 private:
-	SpecialAbilityData002AA4B0 *m_data;
+	SpecialAbilityUpdateModuleData *m_data;
 	Object *m_object;
 	char m_pad_00c[0x30 - 0x0C];
 	Int m_packingState;
@@ -150,10 +156,10 @@ private:
 	Bool m_withinStartAbilityRange;
 };
 
-// ?method@Rva002AA4B0Owner@@QAEXXZ
-void Rva002AA4B0Owner::method()
+// ?finishAbility@SpecialAbilityUpdate@@QAEXXZ
+void SpecialAbilityUpdate::finishAbility()
 {
-	SpecialAbilityData002AA4B0 *data = m_data;
+	SpecialAbilityUpdateModuleData *data = m_data;
 	m_withinStartAbilityRange = false;
 	m_packingState = 0;
 	Bool validTarget = m_targetPos.x || m_targetPos.y || m_targetPos.z || m_targetID != 0;
@@ -164,6 +170,7 @@ void Rva002AA4B0Owner::method()
 		AIUpdateInterface *ai = m_object->getAI();
 		if (ai)
 		{
+			{
 			Coord3D dir = *m_object->getUnitDirectionVector2D();
 			dir.normalize();
 			dir.scale(data->m_fleeRangeAfterCompletion);
@@ -171,23 +178,20 @@ void Rva002AA4B0Owner::method()
 				pos.add(&dir);
 			else
 				pos.sub(&dir);
+			}
 			Object *obj = m_object;
 			if (obj)
 			{
 			Player *player = obj->getControllingPlayer();
 			if (player)
 			{
-				Object *mine;
-				{
-				FilterSamePlayer002AA4B0 filterPlayer(player);
-				PartitionFilterAcceptByKindOf filterKind(
-					KindOfMaskType(KindOfMaskType::kInit, 54), KINDOFMASK_NONE);
-				PartitionFilter *filters = filterKind.link(&filterPlayer);
-				mine = ThePartitionManager->getClosestObject(
-					&pos, data->m_fleeRangeAfterCompletion, 0, filters);
-				}
+				Object *mine = ThePartitionManager->getClosestObject(
+					&pos, data->m_fleeRangeAfterCompletion, 0,
+					PartitionFilterAcceptByKindOf(
+						KindOfMaskType(KindOfMaskType::kInit, 54), KINDOFMASK_NONE).link(&PartitionFilterSamePlayer(player)));
 				if (mine)
 				{
+					Coord3D dir;
 					dir.x = pos.x - mine->getPosition()->x;
 					dir.y = pos.y - mine->getPosition()->y;
 					dir.z = 0;
@@ -198,9 +202,9 @@ void Rva002AA4B0Owner::method()
 				}
 			}
 			}
-			ai->getCommandInterface()->aiMoveToPosition(&pos, CMD_FROM_AI);
 			Object *target = TheGameLogic->findObjectByID(m_targetID);
 			if (target) ai->ignoreObstacle(target);
+			ai->getCommandInterface()->aiMoveToPosition(&pos, CMD_FROM_AI);
 		}
 	}
 	else
