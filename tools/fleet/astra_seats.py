@@ -131,8 +131,14 @@ def claimed():
     return {int(r, 16) for s in seats() if not s.get("harvested") for r in s["rvas"]}
 
 
-def pick(count, lifts=False, lo=200, hi=1200, budget=5000, max_bodies=8):
-    """[(label, [rva, ...])] -- one file per seat, most fresh bytes first."""
+def pick(count, lifts=False, lo=200, hi=1200, budget=5000, max_bodies=8, retry=False):
+    """[(label, [rva, ...])] -- one file per seat, most fresh bytes first.
+
+    retry=True serves bodies attempted once or twice instead of never: on
+    2026-09-27 the never-tried pool was down to 107 mid and 6 big bodies while
+    1,566 tried-but-open bodies (1.4 MB) remained. Files whose bodies carry the
+    best banked scores come first, and a stash re-banked today is skipped (some
+    lane is on it)."""
     import eligibility
 
     rows = eligibility.load_rows()
@@ -140,8 +146,26 @@ def pick(count, lifts=False, lo=200, hi=1200, budget=5000, max_bodies=8):
     attempts = eligibility.attempt_counts()
     # our own seats (seats.json) plus every live claim on origin (tools/claims.py)
     busy = claimed() | {int(r, 16) for r in eligibility.busy_rvas()}
-    fresh = [r for r in eligibility.open_dumps(rows, latest, min_size=lo, max_size=hi)
-             if not attempts.get(eligibility.rva_of(r)) and eligibility.rva_of(r) not in busy]
+    import datetime as _dt
+    today = _dt.date.today()
+    score = {}
+
+    def wanted(r):
+        rva = eligibility.rva_of(r)
+        if rva in busy:
+            return False
+        tried = attempts.get(rva, 0)
+        if not retry:
+            return not tried
+        if not 1 <= tried <= 2:
+            return False
+        found = eligibility.stash(rva)
+        if found and eligibility.stash_date(found[0]) == today:
+            return False
+        score[rva] = found[1] if found else 0.0
+        return True
+
+    fresh = [r for r in eligibility.open_dumps(rows, latest, min_size=lo, max_size=hi) if wanted(r)]
     by_file = collections.defaultdict(list)
     for r in fresh:
         by_file[r["source"]].append((eligibility.rva_of(r), int(r["target_size"])))
@@ -161,10 +185,13 @@ def pick(count, lifts=False, lo=200, hi=1200, budget=5000, max_bodies=8):
             total += int(row["target_size"])
         if chosen:
             out.append(("lifts (ZH twins first)", chosen))
-    for source, bodies in sorted(by_file.items(), key=lambda kv: -sum(s for _, s in kv[1])):
+    def weight(kv):
+        # retry: bytes weighted by banked score, so near-finished files lead
+        return -sum(s * (0.5 + score.get(r, 0.0)) if retry else s for r, s in kv[1])
+    for source, bodies in sorted(by_file.items(), key=weight):
         if len(out) >= count + bool(lifts):
             break
-        bodies.sort()
+        bodies.sort(key=lambda b: (-score.get(b[0], 0.0), b[0]) if retry else b)
         chosen, total = [], 0
         for rva, size in bodies:
             if len(chosen) < max_bodies and total + size <= budget + hi:
@@ -181,6 +208,15 @@ GhidraSQL and write the WHOLE body first -- every call in retail order, every br
 and EH states; (2) only then work the first divergence with probe.py --shape; (3) a body that is not exact within
 the cap is BANKED with re_log.py partial --stash --score (a complete 0.9 body is worth far more to the next seat than
 nothing). Siblings in the same file share layouts: land or bank the most tractable one first.
+""" + NOTE.split("\n", 3)[3]
+
+
+RETRY_NOTE = """RETRY SEAT ({model}, {effort}, hard cap {hours} hours). Each body below was attempted once or twice
+before and is still open. Its brief shows the PREFERRED STASH (the best banked attempt, with its score) and the
+earlier verdicts. START FROM THE STASH, read every earlier verdict first, and try a lever nobody has tried --
+repeating a recorded dead end is the one wasted move. Probe the stash before editing it; if the earlier verdict
+blames a callee, run callees.py first (inferred ABI lines); if it is allocation-only, docs/shape_levers.md and
+rotation_sweep.py. Siblings in the same file share layouts: land the closest one first.
 """ + NOTE.split("\n", 3)[3]
 
 
@@ -357,6 +393,8 @@ def main(argv=None):
     ap.add_argument("action", choices=["pick", "launch", "status", "harvest", "harvested"])
     ap.add_argument("count", nargs="?", type=int, default=4)
     ap.add_argument("--lifts", action="store_true", help="add one seat on servable named lifts")
+    ap.add_argument("--retry", action="store_true",
+                    help="serve bodies attempted once or twice (start from the stash) instead of never-tried ones")
     ap.add_argument("--big", action="store_true",
                     help="serve never-attempted bodies of 1.2-8 KB, 1-3 per seat, 3 h cap (half the remaining bytes)")
     ap.add_argument("--seat", help="harvested: mark this seat id as reviewed, releasing its bodies")
@@ -384,14 +422,16 @@ def main(argv=None):
         return 0
     fresh_checkout()
     if args.big:
-        groups = pick(args.count, args.lifts, lo=1200, hi=8000, budget=8000, max_bodies=3)
+        groups = pick(args.count, args.lifts, lo=1200, hi=8000, budget=8000, max_bodies=3, retry=args.retry)
     else:
-        groups = pick(args.count, args.lifts)
+        groups = pick(args.count, args.lifts, retry=args.retry)
     if args.action == "pick":
         for label, rvas in groups:
             print(f"{label}: {' '.join(f'0x{r:08X}' for r in rvas)}")
         return 0
-    if args.big:
+    if args.retry:
+        launch(groups, 3.0 if args.big else 2.0, RETRY_NOTE)
+    elif args.big:
         launch(groups, 3.0, BIG_NOTE)
     else:
         launch(groups, 2.0)
