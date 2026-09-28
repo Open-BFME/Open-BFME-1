@@ -94,6 +94,39 @@ public:
 	Rva0112B7F0Base *m_0c;
 };
 
+class Rva007F0210;
+extern Rva007F0210 bfmeRva0130A9D4TagSlot;
+extern Rva007F0210 bfmeRva0130A9F8TagSlot;
+extern Rva007F0210 bfmeRva0130AAACTagSlot;
+extern Rva007F0210 bfmeRva0130AAA0TagSlot;
+extern Rva007F0210 bfmeRva0130AA58TagSlot;
+extern Rva007F0210 bfmeRva0130AB18TagSlot;
+extern Rva007F0210 bfmeRva0130AB30TagSlot;
+extern Rva007F0210 bfmeRva0130AB00TagSlot;
+extern Rva007F0210 bfmeRva0130AB24TagSlot;
+extern Rva007F0210 bfmeRva0130AA88TagSlot;
+extern Rva007F0210 bfmeRva0130AA7CTagSlot;
+
+class Rva007E8810Message;
+class Rva007F7980Browser;
+class BfmeDictESI;
+class BfmeHostESI;
+class BfmeThingVJK;
+void Rva007F6FA0BrowserRegionReply( Rva007E8810Message *msg, Rva007F7980Browser *browser );
+void Rva007F6FB0BrowserLobbyReply( Rva007E8810Message *msg, Rva007F7980Browser *browser );
+void Rva007F6FC0BrowserGameReply( Rva007E8810Message *msg, Rva007F7980Browser *browser );
+void Rva007F6FE0( Rva007E8810Message *message, Rva007F7980Browser *browser );
+void Rva007F6FF0( Rva007E8810Message *message, Rva007F7980Browser *browser );
+void Rva007F7000( void *message, Rva007F7980Browser *browser );
+void Rva007F7010( BfmeDictESI *message, BfmeHostESI *browser );
+void Rva007F7020( int message, BfmeThingVJK *browser );
+
+// Unlanded cdecl callbacks at retail 0x007F7970, 0x007F83E0 and 0x007F83F0,
+// named after their image addresses.
+void g_00BF7970();
+void g_00BF83E0();
+void g_00BF83F0();
+
 class Gen007F0130
 {
 public:
@@ -135,17 +168,17 @@ void BfmeThingDGD::rva007F8400( unsigned char arg34, int arg35, void *forwarded 
 	((BfmeThingRE *)m_0c)->bfmeRunRE( forwarded );
 	m_14 = m_10->v1();
 	m_14->m_6a8->v3( static_cast< Rva0112B7F8Base * >( this ), 0 );
-	m_14->v4( (void *)0x0130a9d4, (void *)0x00bf6fa0, this );
-	m_14->v4( (void *)0x0130a9f8, (void *)0x00bf6fb0, this );
-	m_14->v4( (void *)0x0130aaac, (void *)0x00bf6fc0, this );
-	m_14->v4( (void *)0x0130aaa0, (void *)0x00bf6fe0, this );
-	m_14->v4( (void *)0x0130aa58, (void *)0x00bf6ff0, this );
-	m_14->v4( (void *)0x0130ab18, (void *)0x00bf7000, this );
-	m_14->v4( (void *)0x0130ab30, (void *)0x00bf83e0, this );
-	m_14->v4( (void *)0x0130ab00, (void *)0x00bf7970, this );
-	m_14->v4( (void *)0x0130ab24, (void *)0x00bf7010, this );
-	m_14->v4( (void *)0x0130aa88, (void *)0x00bf7020, this );
-	m_14->v4( (void *)0x0130aa7c, (void *)0x00bf83f0, this );
+	m_14->v4( &bfmeRva0130A9D4TagSlot, (void *)Rva007F6FA0BrowserRegionReply, this );
+	m_14->v4( &bfmeRva0130A9F8TagSlot, (void *)Rva007F6FB0BrowserLobbyReply, this );
+	m_14->v4( &bfmeRva0130AAACTagSlot, (void *)Rva007F6FC0BrowserGameReply, this );
+	m_14->v4( &bfmeRva0130AAA0TagSlot, (void *)Rva007F6FE0, this );
+	m_14->v4( &bfmeRva0130AA58TagSlot, (void *)Rva007F6FF0, this );
+	m_14->v4( &bfmeRva0130AB18TagSlot, (void *)Rva007F7000, this );
+	m_14->v4( &bfmeRva0130AB30TagSlot, (void *)g_00BF83E0, this );
+	m_14->v4( &bfmeRva0130AB00TagSlot, (void *)g_00BF7970, this );
+	m_14->v4( &bfmeRva0130AB24TagSlot, (void *)Rva007F7010, this );
+	m_14->v4( &bfmeRva0130AA88TagSlot, (void *)Rva007F7020, this );
+	m_14->v4( &bfmeRva0130AA7CTagSlot, (void *)g_00BF83F0, this );
 
 	if( byte35 != 0 )
 	{
