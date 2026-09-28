@@ -386,3 +386,26 @@ uint32 ChunkSaveClass::Write(const IOQuaternionStruct & q)
 {
 	return Write(&q,sizeof(q));
 }
+
+extern char Rva006A16B0Empty[];
+
+struct Rva009E19A0Owner {
+	int unknown_00;
+	struct Slot {
+		int unknown_00;
+		char * volatile value;
+	} *slot;
+
+	char *get();
+};
+
+char *Rva009E19A0Owner::get()
+{
+	// Preserve the pointer-to-field step that emits retail's add +4 and load.
+	char * volatile *value_address = &slot->value;
+	char *value = *value_address;
+	if (value != 0) {
+		return value + 8;
+	}
+	return Rva006A16B0Empty;
+}
