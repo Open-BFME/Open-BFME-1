@@ -1,5 +1,5 @@
 // ?d_009add80@@YAXXZ
-// partial score=0.809 date=2026-09-27
+// partial score=0.81331 date=2026-09-28
 // Retail 0x009ADD80: interleaved variance-based eight-pixel edge filters.
 // Retail advances current twice after the first horizontal fragment; retain it.
 // The context offsets below are witnessed loads, not a claimed codec class.
@@ -88,8 +88,8 @@ void filterBand009ADD80(int context, byte *source, byte *destination,
         q = scale[(*(int **)(context + 0x24))[current]];
         limit = (q * q * 3) >> 5;
         for (unsigned j = 0; j < 8; ++j) {
-            x[1] = src[-4];
             x[2] = src[-3];
+            x[1] = src[-4];
             x[3] = src[-2];
             x[4] = src[-1];
             x[5] = src[0];
