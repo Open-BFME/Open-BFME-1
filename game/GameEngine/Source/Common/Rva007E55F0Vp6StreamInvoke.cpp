@@ -54,7 +54,7 @@ public:
 struct CodecState;
 
 int bfmeInitCodecJX(CodecState **p, int a, int b);
-void d_009a4e50();
+void Rva009A4E50Configure(void *context, unsigned selector, int value);
 void *bfmeMakeBlock(int tag, unsigned int size);
 void operator delete[](void *p);
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
@@ -171,13 +171,13 @@ char Rva007E3C20Vp6Stream::invoke(const AsciiString &name, int value, bool flag)
 		m_at54 = bfmeMakeBlock(0, m_at58);
 
 		bfmeInitCodecJX(&m_at14, m_at30, m_at34);
-		((void (__cdecl *)(CodecState *, int, int))d_009a4e50)(m_at14, 0, 0);
+		Rva009A4E50Configure(m_at14, 0, 0);
 
 		m_at38 = isAvp6 && flag;
 		if (m_at38)
 		{
 			bfmeInitCodecJX(&m_at18, m_at30, m_at34);
-			((void (__cdecl *)(CodecState *, int, int))d_009a4e50)(m_at18, 0, 0);
+			Rva009A4E50Configure(m_at18, 0, 0);
 		}
 
 		slot02();

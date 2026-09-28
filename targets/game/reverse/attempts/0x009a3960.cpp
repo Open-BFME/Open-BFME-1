@@ -1,5 +1,5 @@
 // ?insert@Rva009A3960PairTable@@QAEXPAURva009A3960PairOwner@@0@Z
-// partial score=0.14876 date=2026-09-25
+// partial score=0.369146 date=2026-09-28
 // Address-derived identity: pair-key hash insertion at 0x009A3960.
 extern "C" void *__cdecl memcpy(void *, const void *, unsigned int);
 void *__cdecl operator new(unsigned int);
@@ -50,6 +50,18 @@ struct Rva009A3770Node
     unsigned char bytes[0x2c];
 };
 
+
+static __forceinline Rva009A3960PairNode *lookup3960(
+    Rva009A3960PairTable *table, Rva009A3960PairKeyRecord &record, unsigned &bucket)
+{
+    bucket = ((record.key0 << 16) + record.key1) % 0x2b7b;
+    Rva009A3960PairNode *node = ((Rva009A3960PairNode **)((char *)table + 0x18))[bucket];
+    while (node != 0 && (*(unsigned int *)((char *)node + 8) != record.key0 ||
+                         *(unsigned int *)((char *)node + 0xc) != record.key1))
+        node = node->next30;
+    return node;
+}
+
 void Rva009A3960PairTable::insert(
     Rva009A3960PairOwner *a, Rva009A3960PairOwner *b)
 {
@@ -67,24 +79,18 @@ void Rva009A3960PairTable::insert(
 
     unsigned int key0 = *(unsigned int *)((char *)a + 0x9c);
     unsigned int key1 = *(unsigned int *)((char *)b + 0x9c);
-    unsigned int h = (key0 << 16) + key1;
-    unsigned int bucket = h % 0x2b7b;
+    unsigned int bucket;
     Rva009A3960PairKeyRecord record;
     record.key0 = key0;
     record.key1 = key1;
-    Rva009A3960PairNode *node = ((Rva009A3960PairNode **)((char *)this + 0x18))[bucket];
-    while (node != 0 && (*(unsigned int *)((char *)node + 8) != key0 ||
-                         *(unsigned int *)((char *)node + 0xc) != key1))
-        node = *(Rva009A3960PairNode **)((char *)node + 0x30);
+    Rva009A3960PairNode *node = lookup3960(this, record, bucket);
 
     if (node == 0)
     {
 
+    record.count = 1;
     record.first = a;
     record.second = b;
-    record.key0 = key0;
-    record.key1 = key1;
-    record.count = 1;
     Rva009A3960PairNode *freeNode = *(Rva009A3960PairNode **)((char *)this + 0xae04);
     if (freeNode != 0)
         *(Rva009A3960PairNode **)((char *)this + 0xae04) = freeNode->next30;
