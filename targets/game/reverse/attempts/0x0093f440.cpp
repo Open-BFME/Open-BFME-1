@@ -1,168 +1,214 @@
-// ?Rva0093F440_LoadCharacterData@Rva00941400Font@@QAEPBURva00941400CharRecord@@G@Z
-// partial score=0.07 date=2026-09-22
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// Array-backed BFME glyph rasterizer called by the 0x009412F0 lookup.
-
+// ?Store_GDI_Char@FontCharsClass@@AAEPBVFontCharsClassCharDataStruct@@G@Z
+// partial score=0.1843 date=2026-09-28
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug
+// stlport
+// Store_GDI_Char, BFME supersampled glyph rasterizer (retail 0x0093F440, 1329 bytes).
+// Identity: caller 0x009412F0 has Zero Hour Get_Char_Data's shape (ASCII
+// lookup / Grow_Unicode_Array / Unicode lookup, this call on NULL, -1 falls
+// back to AlternateUnicodeFont); the body does ZH Store_GDI_Char's work
+// (ExtTextOutW, GetTextExtentPoint32W, Update_Current_Buffer, CharData insert,
+// CurrPixelOffset += (width + PixelOverlap) * CharHeight) plus a
+// GetGlyphIndicesW missing-glyph check and supersampling.
+// Banked partial (opus-5.5): 1354/1329 bytes, frame 0xAC matches, shape 0.816.
+// Residue: retail does NOT strength-reduce the block_y loop (imul per
+// iteration, inc/cmp counter) while ours turns it into four IVs and a
+// count-down; the x loop header is duplicated where retail jumps in; and
+// ebx/ebp hold SelectObject/this swapped. Tried: while loop, function-scope
+// IVs, unsigned IV, origins in the outer body, /G6, family levers (13 trials).
 #include <windows.h>
+#include "always.h"
+#include "refcount.h"
+#include "wwstring.h"
+#include "vector.h"
+#include "bittype.h"
+#include <string.h>
 
+// Not declared by the SDK the build uses.
 extern "C" __declspec(dllimport) DWORD WINAPI GetGlyphIndicesW(
-	HDC dc, LPCWSTR text, int count, LPWORD glyphs, DWORD flags);
+	HDC hdc, LPCWSTR lpstr, int c, LPWORD pgi, DWORD fl);
+#ifndef GGI_MARK_NONEXISTING_GLYPHS
+#define GGI_MARK_NONEXISTING_GLYPHS 0x0001
+#endif
 
-struct FontCharsClassGDIState
+class FontCharsBuffer;
+
+class FontCharsClassGdiState
 {
-	int references;
-	HGDIOBJ old_bitmap;
-	HBITMAP bitmap;
-	unsigned char *bitmap_bits;
-	HDC dc;
+public:
+	int m_refs;
+	HBITMAP m_oldBitmap;
+	HBITMAP m_bitmap;
+	uint8 *m_bits;
+	HDC m_dc;
 };
 
-#define TheFontCharsGDIState (*(FontCharsClassGDIState **)0x0134AEAC)
+// VA 0x0134AEAC: the shared GDI state the constructor at 0x00940610 creates.
+extern FontCharsClassGdiState *g_fontCharsGdiState0134AEAC;
+#define g_fontCharsGdiState g_fontCharsGdiState0134AEAC
 
-struct Rva00941400CharRecord
+// BFME drops FontCharsClassCharDataStruct's W3DMPO vtable: operator new(0xC)
+// with Value at +0, Width at +2, a zeroed short at +4 and Buffer at +8.
+class FontCharsClassCharDataStruct
 {
-	unsigned short value;
-	short width;
-	short extra;
-	unsigned short *buffer;
+public:
+	WCHAR Value;
+	short Width;
+	short Offset04;
+	uint16 *Buffer;
 };
 
-struct Rva00941400Buffer
+// Restores the previous GDI object on scope exit; the EH funclet calls the
+// out-of-line copy at 0x0093C330.
+class FontCharsSelectObjectGuard
 {
-	unsigned short *buffer;
-};
-
-struct Rva0093F440SelectObjectGuard
-{
-	HDC device_context;
-	HGDIOBJ old_object;
-
-	~Rva0093F440SelectObjectGuard()
+public:
+	FontCharsSelectObjectGuard(HDC dc, HGDIOBJ object)
+		: m_dc(dc), m_oldObject(::SelectObject(dc, object))
 	{
-		SelectObject(device_context, old_object);
 	}
+	~FontCharsSelectObjectGuard()
+	{
+		::SelectObject(m_dc, m_oldObject);
+	}
+	HDC m_dc;
+	HGDIOBJ m_oldObject;
 };
 
-class FontCharsClass
+struct BfmeFontCharsBuffer
 {
-public:
-	void Update_Current_Buffer(int width);
+	uint16 *Buffer;
+	int BufferMax;
+	int BufferPosition;
 };
 
-class Rva00941400Font
+class FontCharsClass : public W3DMPO, public RefCountClass
 {
 public:
-	Rva00941400CharRecord const *Rva0093F440_LoadCharacterData(unsigned short character);
+	FontCharsClass();
+	virtual ~FontCharsClass();
+	FontCharsClass *AlternateUnicodeFont;
 
 private:
-	char fields_00[0x14];
-	Rva00941400Buffer **buffers;
-	char fields_18[8];
-	int buffer_count;
-	char fields_24[4];
-	int current_pixel_offset;
-	int character_height;
-	int character_ascent;
-	char fields_34[4];
-	int pixel_overlap;
-	char fields_3c[4];
-	int sample_width;
-	char fields_44[4];
-	HGDIOBJ font;
-	Rva00941400CharRecord *ascii[256];
-	Rva00941400CharRecord **unicode;
-	unsigned short first_unicode;
-	unsigned short last_unicode;
+	const FontCharsClassCharDataStruct *Store_GDI_Char(WCHAR ch);
+	void Update_Current_Buffer(int char_width);
+
+	StringClass Name;
+	DynamicVectorClass<FontCharsBuffer *> BufferList;
+	int CurrPixelOffset;
+	int CharHeight;
+	int CharAscent;
+	int CharOverhang;
+	int PixelOverlap;
+	float PointSize;
+	int ExtraSetting;	// Initialize_GDI_Font's fourth argument (ctor default 1); this body uses it as the supersampling factor (64/n cell, n*n samples)
+	StringClass GDIFontName;
+	HFONT GDIFont;
+	FontCharsClassCharDataStruct *ASCIICharArray[256];
+	FontCharsClassCharDataStruct **UnicodeCharArray;
+	unsigned int CharMap[3];
+	uint16 FirstUnicodeChar;
+	uint16 LastUnicodeChar;
+	bool IsBold;
 };
 
-Rva00941400CharRecord const *Rva00941400Font::Rva0093F440_LoadCharacterData(
-	unsigned short character)
+const FontCharsClassCharDataStruct *
+FontCharsClass::Store_GDI_Char(WCHAR ch)
 {
-	FontCharsClassGDIState *state = TheFontCharsGDIState;
-	HDC dc = state->dc;
-	Rva0093F440SelectObjectGuard old_font;
-	old_font.device_context = dc;
-	old_font.old_object = SelectObject(dc, font);
-	unsigned short glyph_index = 0xffff;
-	GetGlyphIndicesW(dc, &character, 1, &glyph_index, 1);
-	if (glyph_index == 0xffff)
-	{
-		if (character < 256)
-			ascii[character] = reinterpret_cast<Rva00941400CharRecord *>(-1);
-		else
-			unicode[character - first_unicode] = reinterpret_cast<Rva00941400CharRecord *>(-1);
-		return reinterpret_cast<Rva00941400CharRecord const *>(-1);
+	FontCharsSelectObjectGuard old_font(g_fontCharsGdiState->m_dc, GDIFont);
+
+	WORD glyph_index = 0xFFFF;
+	::GetGlyphIndicesW(g_fontCharsGdiState->m_dc, &ch, 1, &glyph_index, GGI_MARK_NONEXISTING_GLYPHS);
+	if (glyph_index == 0xFFFF) {
+		if (ch < 256) {
+			ASCIICharArray[ch] = (FontCharsClassCharDataStruct *)-1;
+		} else {
+			UnicodeCharArray[ch - FirstUnicodeChar] = (FontCharsClassCharDataStruct *)-1;
+		}
+		return (FontCharsClassCharDataStruct *)-1;
 	}
 
-	const int samples = sample_width;
-	const int sample_area = samples * samples;
-	const int half_sample_area = sample_area / 2;
-	const int sample_step = 64 / samples;
-	const int scaled_sample_width = samples * sample_step;
-	SIZE text_size = { 0, 0 };
-	if (!GetTextExtentPoint32W(dc, &character, 1, &text_size))
-	{
-		text_size.cx = 1;
-		text_size.cy = 1;
+	int sample_area = ExtraSetting * ExtraSetting;
+	int half_sample_area = sample_area >> 1;
+	int step = 64 / ExtraSetting;
+	SIZE cell;
+	cell.cx = ExtraSetting * step;
+	cell.cy = ExtraSetting * (64 / ExtraSetting);
+
+	SIZE char_size;
+	if (!::GetTextExtentPoint32W(g_fontCharsGdiState->m_dc, &ch, 1, &char_size)) {
+		char_size.cx = char_size.cy = 1;
 	}
 
-	const int glyph_width = (text_size.cx + samples - 1) / samples +
-		pixel_overlap;
-	const int glyph_height = (text_size.cy + samples - 1) / samples;
-	reinterpret_cast<FontCharsClass *>(this)->Update_Current_Buffer(glyph_width);
-	Rva00941400Buffer *current_buffer = buffers[buffer_count - 1];
-	unsigned short *glyph = current_buffer->buffer + current_pixel_offset;
+	int char_width = (char_size.cx + ExtraSetting - 1) / ExtraSetting + PixelOverlap;
+	int char_height = (char_size.cy + ExtraSetting - 1) / ExtraSetting;
 
-	const int upper_margin = character_ascent / 2;
-	const int lower_margin = character_ascent - upper_margin;
-	glyph += glyph_width * upper_margin;
-	ZeroMemory(glyph, glyph_width * upper_margin * sizeof(*glyph));
-	ZeroMemory(glyph + glyph_width * glyph_height,
-		glyph_width * lower_margin * sizeof(*glyph));
+	Update_Current_Buffer(char_width);
+	uint16 *curr_buffer_p = reinterpret_cast<BfmeFontCharsBuffer *>(BufferList[BufferList.Count() - 1])->Buffer;
+	curr_buffer_p += CurrPixelOffset;
 
-	const int horizontal_blocks = (glyph_width + sample_step - 1) / sample_step;
-	const int vertical_blocks = (glyph_height + sample_step - 1) / sample_step;
-	for (int block_y = 0; block_y < vertical_blocks; ++block_y)
-	{
-		for (int block_x = 0; block_x < horizontal_blocks; ++block_x)
-		{
-			RECT rect = { 0, 0, scaled_sample_width, text_size.cy };
-			ExtTextOutW(dc, -block_x * sample_step, -block_y * sample_step,
-				2, &rect, &glyph_index, 1, 0);
+	int top = CharAscent / 2;
+	int bottom = CharAscent - top;
+	uint16 *glyph_p = curr_buffer_p + top * char_width;
+	::memset(curr_buffer_p, 0, top * char_width * sizeof(uint16));
+	::memset(glyph_p + char_height * char_width, 0, bottom * char_width * sizeof(uint16));
 
-			int x_begin = block_x * sample_step;
-			int x_end = x_begin + sample_step;
-			if (x_end > text_size.cx)
-				x_end = text_size.cx;
-			int y_begin = block_y * sample_step;
-			int y_end = y_begin + sample_step;
-			if (y_end > text_size.cy)
-				y_end = text_size.cy;
-			unsigned int intensity = 0;
-			for (int y = y_begin; y < y_end; ++y)
-			{
-				unsigned char const *pixel = state->bitmap_bits + ((y * 64) + x_begin) * 3;
-				for (int x = x_begin; x < x_end; ++x)
-				{
-					intensity += *pixel >> 4;
-					pixel += 3;
+	int blocks_x = (char_width + step - 1) / step;
+	int blocks_y = (char_height + step - 1) / step;
+	for (int block_y = 0; block_y < blocks_y; block_y++) {
+		for (int block_x = 0; block_x < blocks_x; block_x++) {
+			RECT rect = { 0, 0, cell.cx, cell.cy };
+			::ExtTextOutW(g_fontCharsGdiState->m_dc, -(block_x * cell.cx), -(block_y * cell.cy),
+				ETO_OPAQUE, &rect, &ch, 1, NULL);
+
+			int x_begin = block_x * step;
+			int x_end = x_begin + step;
+			if (x_end > char_width) {
+				x_end = char_width;
+			}
+			int y_begin = block_y * step;
+			int y_end = y_begin + step;
+			if (y_end > char_height) {
+				y_end = char_height;
+			}
+
+			for (int y = y_begin; y < y_end; y++) {
+				uint16 *dest = glyph_p + y * char_width + x_begin;
+				int sy_begin = ExtraSetting * y;
+				int sy_end = ExtraSetting + sy_begin;
+				if (sy_end > char_size.cy) {
+					sy_end = char_size.cy;
+				}
+				for (int x = x_begin; x < x_end; x++) {
+					int sx_begin = ExtraSetting * x;
+					int sx_end = ExtraSetting + sx_begin;
+					if (sx_end > char_size.cx) {
+						sx_end = char_size.cx;
+					}
+					unsigned int total = 0;
+					for (int sy = sy_begin; sy < sy_end; sy++) {
+						for (int sx = sx_begin; sx < sx_end; sx++) {
+							uint8 pixel_value = g_fontCharsGdiState->m_bits[((sy - block_y * cell.cy) * 64 + sx - block_x * cell.cx) * 3];
+							total += pixel_value >> 4;
+						}
+					}
+					*dest++ = (uint16)((((total + half_sample_area) / sample_area) << 12) | 0x0FFF);
 				}
 			}
-			unsigned int alpha = (intensity + half_sample_area) / sample_area;
-			glyph[block_y * glyph_width + block_x] =
-				static_cast<unsigned short>((alpha << 12) | 0x0fff);
 		}
 	}
 
-	Rva00941400CharRecord *data = new Rva00941400CharRecord;
-	data->value = character;
-	data->width = static_cast<short>(glyph_width);
-	data->extra = 0;
-	data->buffer = current_buffer->buffer + current_pixel_offset;
-	if (character < 256)
-		ascii[character] = data;
-	else
-		unicode[character - first_unicode] = data;
-	current_pixel_offset += (glyph_width + pixel_overlap) * character_height;
-	return data;
+	FontCharsClassCharDataStruct *char_data = new FontCharsClassCharDataStruct;
+	char_data->Value = ch;
+	char_data->Width = char_width;
+	char_data->Offset04 = 0;
+	char_data->Buffer = reinterpret_cast<BfmeFontCharsBuffer *>(BufferList[BufferList.Count() - 1])->Buffer + CurrPixelOffset;
+
+	if (ch < 256) {
+		ASCIICharArray[ch] = char_data;
+	} else {
+		UnicodeCharArray[ch - FirstUnicodeChar] = char_data;
+	}
+
+	CurrPixelOffset += (char_width + PixelOverlap) * CharHeight;
+	return char_data;
 }
