@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "dfb67ccb101dad0792e062a085da82e2a194a6fdecab671988946789058598b2",
+  "symbol": "?isEqual@Rva009A2F40Box@@QAEEPBV1@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.68,
+  "source": "// ?isEqual@Rva009A2F40Box@@QAEEPBV1@@Z\n// partial score=0.68 date=2026-09-28\n// SYMBOL: ?isEqual@Rva009A2F40Box@@QAEEPBV1@@Z\n// SYMBOL: ?getKey@Rva009A2F40Box@@QBEIXZ\n// SIZE: 44\n// cl: /DNDEBUG /MD /G6 /EHsc\nclass Rva009A2F40Box\n{\npublic:\n\tint m_pad0;\n\tint m_pad4;\n\tint m_a;\n\tint m_b;\n\tunsigned char isEqual(const Rva009A2F40Box *o);\n\tunsigned int getKey() const;\n};\nunsigned char Rva009A2F40Box::isEqual(const Rva009A2F40Box *o)\n{\n\tif (m_a == o->m_a)\n\t{\n\t\tif (m_b == o->m_b)\n\t\t\tgoto yes;\n\t\tgoto no;\n\t}\nno:\n\treturn 0;\nyes:\n\treturn 1;\n}\nunsigned int Rva009A2F40Box::getKey() const\n{\n\treturn ((unsigned int)m_a << 16) + (unsigned int)m_b;\n}\n"
+}
