@@ -10188,5 +10188,35 @@
   "after_sha256": "ff2a5a8a475b9c7f610819cf81ca2cc2af4dc4da014858f2972eaaaced26716d",
   "evidence": "targets/game/reverse/identity_evidence/002fb170-helper-names.md",
   "reason": "The stash's local labels (construct, m_vptr, m_next) were invented for an unlanded draft; the landed body shows a kind-of PartitionFilter copying two 24-byte flag masks, so it uses address-derived names that assert nothing unproven."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005406e0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/OnlineCustomMatchRva005406E0.cpp",
+  "before_sha256": "2562aa6f9eba91fdd873583a045b08104363a9153d629982de99a773c5f82da7",
+  "after_sha256": "af3889ba76223e81a333459246edb6261e17c2743b265bf8e807953dd82c34e5",
+  "evidence": "targets/game/reverse/identity_evidence/0x005406e0-name-correction.md",
+  "old_name": "AptMovieHost",
+  "new_name": "Rva005406E0Field34",
+  "reason": "AptMovieHost was an unverified draft type. The oracle has no witnessed owner layout and retail only establishes this+0x34 and nested+0x250; the new name preserves those observed offsets without claiming a class identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005406e0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/OnlineCustomMatchRva005406E0.cpp",
+  "before_sha256": "2562aa6f9eba91fdd873583a045b08104363a9153d629982de99a773c5f82da7",
+  "after_sha256": "af3889ba76223e81a333459246edb6261e17c2743b265bf8e807953dd82c34e5",
+  "evidence": "targets/game/reverse/identity_evidence/0x005406e0-name-correction.md",
+  "old_name": "enterLobby",
+  "new_name": "Rva005406E0",
+  "reason": "enterLobby was a behavior guess from UI strings, not a caller, selector, vtable, or symbol identity. The constructor selector scan has no entry for 0x005406E0, so the method keeps its RVA until stronger identity evidence appears."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005406e0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/OnlineCustomMatchRva005406E0.cpp",
+  "before_sha256": "2562aa6f9eba91fdd873583a045b08104363a9153d629982de99a773c5f82da7",
+  "after_sha256": "af3889ba76223e81a333459246edb6261e17c2743b265bf8e807953dd82c34e5",
+  "evidence": "targets/game/reverse/identity_evidence/0x005406e0-name-correction.md",
+  "old_name": "prepareLobby",
+  "new_name": "Rva005406E0",
+  "reason": "The draft's unresolved prepareLobby stub targeted ILT 0x0002F4AF at 0x005397D0, whose matched body is rva005397D0PopulateGroupRoomListbox. That evidence refutes prepareLobby as the helper identity; the source calls the proven address-derived callee."
  }
 ]
