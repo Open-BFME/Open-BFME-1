@@ -83,15 +83,26 @@ def job_info(job):
 
 def changes(ws):
     """(path, status) for every changed path against the workspace base, staged or not."""
+    # Porcelain -z emits destination then origin for renames/copies. Never
+    # split on lines or decode Git's quoted display format.
+    fields = iter(git(ws, 'status', '--porcelain=v1', '-z',
+                      '--untracked-files=all', check=True).stdout.split('\0'))
+    paths = []
+    for entry in fields:
+        if not entry:
+            continue
+        status, path = entry[:2], entry[3:]
+        paths.append(path)
+        if 'R' in status or 'C' in status:
+            origin = next(fields)
+            if 'R' in status:
+                paths.append(origin)
     out = []
-    for line in git(ws, 'status', '--porcelain', '--untracked-files=all').stdout.splitlines():
-        path = line[3:]
-        if ' -> ' in path:
-            path = path.split(' -> ')[1]
+    for path in dict.fromkeys(paths):
         if path.startswith('build/'):
             continue
-        tracked = bool(git(ws, 'ls-tree', 'HEAD', '--', path).stdout.strip())
-        exists = (Path(ws) / path).exists()
+        tracked = bool(git(ws, 'ls-tree', '-z', 'HEAD', '--', path, check=True).stdout)
+        exists = os.path.lexists(Path(ws) / path)
         out.append((path, 'deleted' if not exists else ('modified' if tracked else 'added')))
     return out
 
@@ -125,7 +136,8 @@ def ledger_delta(ws, path):
 def gate(cwd, src):
     r = sh(['./build.sh', src], cwd, timeout=1800)
     lines = [l for l in (r.stdout + r.stderr).splitlines() if 'fixme' not in l and ('Functions:' in l or 'FAIL' in l)]
-    return (not any('FAIL' in l for l in lines)) and any('Functions: OK' in l for l in lines), ' | '.join(lines)[:300]
+    return (r.returncode == 0 and not any('FAIL' in l for l in lines)
+            and any('Functions: OK' in l for l in lines)), f'exit={r.returncode}: ' + ' | '.join(lines)[:300]
 
 
 def code_only(text):
@@ -162,6 +174,8 @@ def review(args):
             res['problems'].append(f'{path}: changed outside {", ".join(PORTED)}; the port does not carry it')
         if st != 'deleted' and path.endswith(('.cpp', '.asm')) and path.startswith('game/'):
             res['gates'][path] = gate(ws, path)
+            if not res['gates'][path][0]:
+                res['problems'].append(f'{path}: touched source gate fails ({res["gates"][path][1]})')
             if st == 'added' and NAKED.search(code_only((Path(ws) / path).read_text(errors='replace'))):
                 res['problems'].append(f'{path}: new source contains inline asm/__emit/naked code')
             elif st == 'modified' and path.endswith('.cpp') and added_naked(ws, path):
@@ -178,7 +192,9 @@ def review(args):
         if new:
             row = new[-1].split(',')
             src = row[4]
-            ok = res['gates'].get(src, gate(ws, src) if (Path(ws) / src).exists() else (False, 'source missing'))
+            if src not in res['gates']:
+                res['gates'][src] = gate(ws, src) if (Path(ws) / src).exists() else (False, 'source missing')
+            ok = res['gates'][src]
             t.update(landed=ok[0], name=row[0], size=row[3], source=src, gate=ok[1])
             if old and old[-1].split(',')[0] != row[0]:
                 t['renamed_from'] = old[-1].split(',')[0]
@@ -218,12 +234,20 @@ def port(j, dest):
             print(f'skipping top-level scratch file {p}')
     ch = [(p, s) for p, s in ch if route(p) == 'port']
     ledgers = set(LEDGERS) | {CORRECTIONS}
+    # Check every addition before applying any part of the worker patch.
+    for p, status in ch:
+        if status == 'added' and p not in ledgers and os.path.lexists(Path(dest) / p):
+            src, dst = Path(ws) / p, Path(dest) / p
+            if (src.is_symlink() or dst.is_symlink() or not src.is_file() or not dst.is_file()
+                    or src.read_bytes() != dst.read_bytes()
+                    or (src.stat().st_mode & 0o111) != (dst.stat().st_mode & 0o111)):
+                raise SystemExit(f'upstream addition conflicts with worker path: {p}')
     tracked = [p for p, s in ch if s != 'added' and p not in ledgers]
     if tracked:
         # bytes, never text: universal-newline decoding strips the CRs of a CRLF
         # source, and the patch then no longer applies to the identical blob
         patch = subprocess.run(['git', 'diff', '--binary', 'HEAD', '--', *tracked], cwd=ws,
-                               capture_output=True).stdout
+                               capture_output=True, check=True).stdout
         if patch.strip():
             r = subprocess.run(['git', 'apply', '-3', '--whitespace=nowarn'], cwd=dest, input=patch,
                                capture_output=True)
@@ -243,7 +267,7 @@ def port(j, dest):
         if not add and not rem:
             continue
         f = Path(dest) / led
-        raw = f.read_text(encoding='utf-8', errors='surrogateescape', newline='') if f.exists() else ''
+        raw = f.read_bytes().decode('utf-8', 'surrogateescape') if f.exists() else ''
         nl = '\r\n' if raw.count('\r\n') > raw.count('\n') / 2 else '\n'
         rows = raw.split(nl)
         trail = rows and rows[-1] == ''
@@ -276,7 +300,7 @@ def port(j, dest):
         added = [e for e in after if e not in before]
         if added:
             f = Path(dest) / CORRECTIONS
-            raw = f.read_text(encoding='utf-8', newline='')
+            raw = f.read_bytes().decode('utf-8')
             end = '\r\n]\r\n' if raw.endswith('\r\n]\r\n') else '\n]\n'
             nl = '\r\n' if end.startswith('\r') else '\n'
             ents = [nl.join(' ' + l for l in json.dumps(e, indent=1, ensure_ascii=False).split('\n')) for e in added]
@@ -346,7 +370,7 @@ def integrate(args):
         git(dest, 'reset', '-q', '--hard', base, check=True)
         git(dest, 'clean', '-qfd', '-e', 'build/')
     port(j, dest)
-    r = sh([sys.executable, 'tools/check_csv.py'], dest)
+    r = sh([sys.executable, 'tools/check_csv.py'], dest, check=True)
     print(r.stdout[-600:])
     status = [l[3:] for l in git(dest, 'status', '--porcelain', '--untracked-files=all').stdout.splitlines()]
     stray = [p for p in status if not p.startswith('build/') and route(p) != 'port']

@@ -164,3 +164,48 @@ class PortTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+def test_gate_rejects_late_nonzero_exit(monkeypatch):
+    monkeypatch.setattr(ri, 'sh', lambda *a, **k: subprocess.CompletedProcess([], 1, 'Functions: OK\n', 'late error'))
+    assert ri.gate('.', 'game/a.cpp')[0] is False
+
+
+def test_review_checks_each_source_once_and_blocks_other_failure(tmp_path, monkeypatch):
+    from types import SimpleNamespace
+    (tmp_path / 'game').mkdir()
+    for name in ('good', 'bad'):
+        (tmp_path / 'game' / (name + '.cpp')).write_text('void f() {}')
+    monkeypatch.setattr(ri, 'info', lambda _: ({'cwd': str(tmp_path), 'status': 'completed'}, [], ['0x00000010'], ''))
+    monkeypatch.setattr(ri, 'changes', lambda _: [('game/good.cpp', 'modified'), ('game/bad.cpp', 'modified')])
+    monkeypatch.setattr(ri, 'ledger_delta', lambda ws, path: (['?f,,0x00000010,1,game/good.cpp'], []) if path == LED else ([], []))
+    monkeypatch.setattr(ri, 'git', lambda *a, **k: subprocess.CompletedProcess([], 0, '', ''))
+    calls = []
+    def fake_gate(ws, src):
+        calls.append(src)
+        return (src.endswith('good.cpp'), 'fixture')
+    monkeypatch.setattr(ri, 'gate', fake_gate)
+    result = ri.review(SimpleNamespace(job='fixture'))
+    assert calls == ['game/good.cpp', 'game/bad.cpp']
+    assert any('game/bad.cpp' in p for p in result['problems'])
+
+
+class ConflictTest(PortTest):
+    def test_new_file_conflicts_with_upstream_addition(self):
+        for tree, content in ((self.ws, 'worker'), (self.dest, 'upstream')):
+            (tree / 'game/new.cpp').write_text(content)
+        git(self.dest, 'add', 'game/new.cpp'); git(self.dest, 'commit', '-qm', 'upstream')
+        with self.assertRaises(SystemExit):
+            ri.port({'cwd': str(self.ws)}, self.dest)
+        self.assertEqual((self.dest / 'game/new.cpp').read_text(), 'upstream')
+
+    def test_rename_with_edit_and_quoted_path(self):
+        name = 'game/a "quoted" name.cpp'
+        git(self.ws, 'mv', 'game/keep.cpp', name)
+        (self.ws / name).write_text('int keep() { return 3; }\n')
+        changed = ri.changes(self.ws)
+        self.assertIn(('game/keep.cpp', 'deleted'), changed)
+        self.assertIn((name, 'added'), changed)
+        ri.port({'cwd': str(self.ws)}, self.dest)
+        self.assertFalse((self.dest / 'game/keep.cpp').exists())
+        self.assertEqual((self.dest / name).read_text(), 'int keep() { return 3; }\n')
