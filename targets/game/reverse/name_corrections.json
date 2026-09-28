@@ -8628,5 +8628,15 @@
   "after_sha256": "f396536c07fc0dbbe3c76a3f79e6552816eec6a5f7a2ba908c0b870755466d9f",
   "evidence": "targets/game/reverse/identity_evidence/0x0074b480-terrain-slot137.md",
   "reason": "The stash's update was an unevidenced placeholder for terrain render object vtable slot 137; the HeightMapRenderObjClass vtable routes that slot to the anonymous body 0x006D1D80 through ILT 0x0002E087 and nothing names it, so the rewrite keeps the address token. See the evidence file."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00100690.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00100690.cpp",
+  "old_name": "getGeomType",
+  "new_name": "rva0087E8D0",
+  "before_sha256": "fc735a86e1adb73f08c17e36ad81fa018856ffb7c8b6707c2ad4391bd6ff8dfc",
+  "after_sha256": "9f9a8dff7260300e66e49209e362e6ca65daf81a337410ea9f512ef3b6538c1d",
+  "evidence": "targets/game/reverse/identity_evidence/00100690-buildassistant-location-clear.md",
+  "reason": "retail 0x00100690 calls the pinned single-box predicate 0x0087E8D0 (bool); getGeomType is the separate matched body 0x001F5AD0, so the Zero Hour port's getGeomType tests were not this function"
  }
 ]
