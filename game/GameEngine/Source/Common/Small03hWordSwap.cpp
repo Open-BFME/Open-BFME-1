@@ -24,3 +24,21 @@ unsigned int Rva009CC2C0Box::swap() const
 	hi <<= 8;
 	return a + hi + (v >> 24);
 }
+
+class Rva009CC2F0Box
+{
+public:
+	unsigned char m_pad[4];
+	unsigned int m_word;
+	unsigned int swap() const;
+};
+unsigned int Rva009CC2F0Box::swap() const
+{
+	unsigned int v = m_word;
+	unsigned int a = (v & 0xFF00) + (v << 16);
+	a <<= 8;
+	unsigned int hi = v >> 16;
+	hi &= 0xFF;
+	hi <<= 8;
+	return a + hi + (v >> 24);
+}
