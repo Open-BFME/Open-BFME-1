@@ -1,18 +1,28 @@
 // ?validate@Rva0076F9E0Owner@@QBEXPAURva0076F9E0Names@@@Z
-// partial score=0.33 date=2026-09-28
+// partial score=0.77 date=2026-09-28
 // ?validate@Rva0076F9E0Owner@@QBEXPAURva0076F9E0Names@@@Z -- retail 0x0076F9E0, 1603 bytes (banked, not matched).
 //
 // Zero Hour twin: ModelConditionInfo::validateWeaponBarrelInfo (W3DModelDraw.cpp),
-// written here as that source reads, with BFME's differences taken from the
+// written as that source reads, with BFME's differences taken from the
 // disassembly: the four bone-name arrays and the recoil/muzzle-flash flags live
 // in the object the caller (0x00774AA0) passes as the one stack argument; the
 // outer test is fx-or-launch-bone only; the unadorned fallback looks up only the
 // launch bone (inlined findPristineBone) and the fx bone (the out-of-line body at
-// 0x00769260).  Levers that moved it: the WWMath Vector4/Matrix3D copy
-// constructors and member-wise assignment (slots and the integer matrix copy),
-// a WeaponBarrelInfo constructor that zeroes only the three bone ints (retail
-// never writes an identity for the fallback record before its if/else), and the
-// out-of-line STLport _Construct retail calls.
+// 0x00769260).
+//
+// Levers, in the order they moved it (probe non-reloc diffs):
+//   1245 (old stash) -> 1081: WWMath Vector4/Matrix3D copy ctor + member-wise
+//     operator=, a WeaponBarrelInfo ctor that zeroes only the three bone ints,
+//     the out-of-line STLport _Construct retail calls.
+//   1081 -> 361: give _Construct a VISIBLE (noinline) body.  With every callee
+//     that receives &info visible and non-retaining, MSVC keeps info.m_fxBone in
+//     ebx across the sprintf/nameToKey/find calls and prevFxBone in memory,
+//     exactly as retail.
+// Remaining (361): the fallback's ternary `plbName.isEmpty() ? 0 :
+// findPristineBone(NAMEKEY(plbName), 0)` gives the inlined key parameter its own
+// $T slot (frame 0x1A4, retail 0x1A0 reuses the loop's key slot at esp+0x18);
+// the if-statement spellings fix the frame but reorder the key/wslot slots and
+// the fallback's branch layout (414-452 diffs).
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Iinputs/reference/shims/namekeygenerator /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas
 // stlport
 
@@ -52,6 +62,21 @@ public:
 	Vector4 Row[3];
 };
 
+struct Rva0076F9E0AsciiData
+{
+	int m_refCount;
+	unsigned short m_length;
+	unsigned short m_capacity;
+};
+
+struct Rva0076F9E0AsciiString
+{
+	Rva0076F9E0AsciiData *m_data;
+
+	bool isEmpty(void) const { return m_data == 0 || m_data->m_length == 0; }
+	const char *str(void) const { return m_data ? reinterpret_cast<const char *>(m_data) + 8 : ""; }
+};
+
 enum NameKeyType
 {
 	NAMEKEY_INVALID = 0,
@@ -62,6 +87,7 @@ class NameKeyGenerator
 {
 public:
 	NameKeyType nameToKey(const char *name);
+	NameKeyType nameToKey(const Rva0076F9E0AsciiString &name) { return nameToKey(name.str()); }
 };
 
 extern NameKeyGenerator *TheNameKeyGenerator;
@@ -88,21 +114,6 @@ inline Bool isValidTimeToCalcLogicStuff()
 {
 	return (TheBfmeGameLogic && TheBfmeGameLogic->m_flag) || (TheGameState && TheGameState->m_flag);
 }
-
-struct Rva0076F9E0AsciiData
-{
-	int m_refCount;
-	unsigned short m_length;
-	unsigned short m_capacity;
-};
-
-struct Rva0076F9E0AsciiString
-{
-	Rva0076F9E0AsciiData *m_data;
-
-	bool isEmpty(void) const { return m_data == 0 || m_data->m_length == 0; }
-	const char *str(void) const { return m_data ? reinterpret_cast<const char *>(m_data) + 8 : ""; }
-};
 
 enum { WEAPONSLOT_COUNT = 4 };
 
@@ -141,7 +152,10 @@ struct ModelConditionInfo
 
 namespace _STL
 {
-	template<> __declspec(noinline) void _Construct<ModelConditionInfo::WeaponBarrelInfo, ModelConditionInfo::WeaponBarrelInfo>(ModelConditionInfo::WeaponBarrelInfo *, const ModelConditionInfo::WeaponBarrelInfo &);
+	template<> __declspec(noinline) void _Construct<ModelConditionInfo::WeaponBarrelInfo, ModelConditionInfo::WeaponBarrelInfo>(ModelConditionInfo::WeaponBarrelInfo *p, const ModelConditionInfo::WeaponBarrelInfo &value)
+	{
+		new (p) ModelConditionInfo::WeaponBarrelInfo(value);
+	}
 }
 
 // STLport map<NameKeyType, PristineBoneInfo> node: value at +0x10, the matrix
@@ -290,7 +304,7 @@ void Rva0076F9E0Owner::validate(Rva0076F9E0Names *names) const
 			{
 				ModelConditionInfo::WeaponBarrelInfo info;
 
-				const Matrix3D *plbMtx = plbName.isEmpty() ? 0 : findPristineBone(NAMEKEY(plbName.str()), 0);
+				const Matrix3D *plbMtx = plbName.isEmpty() ? 0 : findPristineBone(NAMEKEY(plbName), 0);
 				if (plbMtx != 0)
 					info.m_projectileOffsetMtx = *plbMtx;
 				else
@@ -298,7 +312,7 @@ void Rva0076F9E0Owner::validate(Rva0076F9E0Names *names) const
 
 				if (!fxBoneName.isEmpty())
 					reinterpret_cast<Rva00769260Owner *>(const_cast<Rva0076F9E0Owner *>(this))->lookup(
-						reinterpret_cast<void *>(NAMEKEY(fxBoneName.str())), &info.m_fxBone);
+						reinterpret_cast<void *>(NAMEKEY(fxBoneName)), &info.m_fxBone);
 
 				if (info.m_fxBone != 0 || plbMtx != 0)
 					m_weaponBarrelInfoVec[wslot].push_back(info);
