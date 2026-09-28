@@ -30,13 +30,99 @@
 
 #include "GameClient/LanguageFilter.h"
 #include "Common/FileSystem.h"
-#include "Common/File.h"
 
 #ifdef _INTERNAL
 // for occasional debugging...
 //#pragma optimize("", off)
 //#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
 #endif
+
+
+// BFME's `File`, as this translation unit has to see it, declared here rather
+// than included.  The vendored GeneralsMD/Code/GameEngine/Include/Common/file.h
+// carries MEMORY_POOL_GLUE_ABC, which declares `virtual ~File()`, on top of
+// `class File : public MemoryPoolObject`, and that does not reproduce retail's
+// index arithmetic: the byte-matched LanguageFilter::readWord (0x0044CB40)
+// dispatches `File::read` through [vtable+0x0C], index 3, and retail 0x0044E7A0
+// dispatches `close()` through [vtable+0x08], index 2.  Every index below is
+// read straight out of the retail File vtables -- 0x01143AF8 (File, abstract),
+// 0x01143C10 (Win32LocalFile), 0x01143C58 (RAMFile), 0x01143CA8
+// (StreamingArchiveFile), 0x01143D38 (LocalFile) -- where one destructor entry
+// sits at 0, ?open@File at 1, ?close@File at 2, and LocalFile's own overrides
+// ?open@LocalFile, ?read@LocalFile, ?write@LocalFile, ?seek@LocalFile,
+// ?nextLine@LocalFile, ?scanInt@LocalFile, ?scanReal@LocalFile,
+// ?readEntireAndClose@LocalFile and ?convertToRAMFile@LocalFile land in exactly
+// slots 1, 3, 4, 5, 6, 7, 8, 13 and 14.  15 and 16 are BFME's two additions,
+// lock and unlock.
+//
+// The member offsets are retail's too, read off ?close@File@@UAEXXZ at
+// 0x009CB880 (`mov al, byte ptr [esi + 0xc]` then `lea ecx, [esi + 4]`) and
+// ?open@File@@UAE_NPBDH@Z at 0x009CB800, which probes the same +0xc byte: the
+// AsciiString name at +0x04, m_access at +0x08, m_open at +0x0C and
+// m_deleteOnClose at +0x0D.  `deleteOnClose()` is inline in ZH as well, and it
+// is the one statement in init() that compiles to a store rather than a call:
+// `mov byte ptr [ebp + 0xd], 1`.
+//
+// The `-Iinputs/reference/shims/languagefilter` directory is shared by ten
+// translation units, none of which is this one, so the declaration stays here.
+class AsciiString;
+
+class File
+{
+public:
+
+	enum access
+	{
+		NONE		= 0x00000000,
+		READ		= 0x00000001,
+		WRITE		= 0x00000002,
+		APPEND		= 0x00000004,
+		CREATE		= 0x00000008,
+		TRUNCATE	= 0x00000010,
+		TEXT		= 0x00000020,
+		BINARY		= 0x00000040,
+		READWRITE	= (READ | WRITE),
+		ONLYNEW		= 0x00000080,
+		STREAMING	= 0x00000100
+	};
+
+	enum seekMode
+	{
+		START,
+		CURRENT,
+		END
+	};
+
+	virtual ~File() { }														///< 0
+
+	virtual Bool	open(const Char *filename, Int access = 0) = 0;			///< 1
+	virtual void	close() = 0;												///< 2
+	virtual Int		read(void *buffer, Int bytes) = 0;						///< 3
+	virtual Int		write(const void *buffer, Int bytes) = 0;					///< 4
+	virtual Int		seek(Int bytes, seekMode mode = CURRENT) = 0;			///< 5
+	virtual void	nextLine(Char *buf = NULL, Int bufSize = 0) = 0;			///< 6
+	virtual Bool	scanInt(Int &newInt) = 0;									///< 7
+	virtual Bool	scanReal(Real &newReal) = 0;								///< 8
+	virtual Bool	scanString(AsciiString &newString) = 0;					///< 9
+	virtual Bool	print(const Char *format, ...) = 0;						///< 10
+	virtual Int		size() = 0;												///< 11
+	virtual Int		position() = 0;											///< 12
+	virtual char*	readEntireAndClose() = 0;									///< 13
+	virtual File*	convertToRAMFile() = 0;									///< 14
+	virtual void	lock() = 0;												///< 15 BFME
+	virtual void	unlock() = 0;												///< 16 BFME
+
+	void	deleteOnClose()		{ m_deleteOnClose = TRUE; }
+
+protected:
+	File() : m_nameStr(0), m_access(0), m_open(FALSE), m_deleteOnClose(FALSE) { }
+	File(const File &) : m_nameStr(0), m_access(0), m_open(FALSE), m_deleteOnClose(FALSE) { }
+
+	Int				m_nameStr;			///< +0x04  an AsciiString in retail; a dword for the offset
+	Int				m_access;			///< +0x08
+	Bool			m_open;				///< +0x0C
+	Bool			m_deleteOnClose;	///< +0x0D
+};
 
 
 LanguageFilter *TheLanguageFilter = NULL;
@@ -52,6 +138,12 @@ LanguageFilter::~LanguageFilter() {
 	m_wordList.clear();
 }
 
+// BFME diverges from the vendored ZH body here, and the binary says so three
+// ways: it calls the zero-argument File* returner convertToRAMFile() on the
+// opened file and reads through that instead, it sets the file's +0x0D
+// delete-on-close byte, and it closes through a vtable slot. See the notes in
+// inputs/reference/shims/languagefilter/Common/File.h for what each call site
+// measures.
 void LanguageFilter::init() {
 	m_wordList.clear();
 
@@ -61,23 +153,27 @@ void LanguageFilter::init() {
 		return;
 	}
 
-	wchar_t word[128];
-	while (readWord(file1, word)) {
-		Int wordLen = wcslen(word);
-		if (wordLen == 0) {
-			continue;
-		}
-		for (Int i = 0; i < wordLen; ++i) {
-			word[i] = word[i] ^ LANGUAGE_XOR_KEY;
-		}
-		UnicodeString uniword(word);
-		unHaxor(uniword);
-		//DEBUG_LOG(("Just read %ls from the bad word file.  Entered as %ls\n", word, uniword.str()));
-		m_wordList[uniword] = true;
-	}
+	File *file2 = file1->convertToRAMFile();
+	if (file2 != NULL) {
+		file2->deleteOnClose();
 
-	file1->close();
-	file1 = NULL;
+		wchar_t word[128];
+		while (readWord(file2, word)) {
+			Int wordLen = wcslen(word);
+			if (wordLen == 0) {
+				continue;
+			}
+			for (Int i = 0; i < wordLen; ++i) {
+				word[i] = word[i] ^ LANGUAGE_XOR_KEY;
+			}
+			UnicodeString uniword(word);
+			unHaxor(uniword);
+			//DEBUG_LOG(("Just read %ls from the bad word file.  Entered as %ls\n", word, uniword.str()));
+			m_wordList[uniword] = true;
+		}
+
+		file2->close();
+	}
 }
 
 void LanguageFilter::reset() {

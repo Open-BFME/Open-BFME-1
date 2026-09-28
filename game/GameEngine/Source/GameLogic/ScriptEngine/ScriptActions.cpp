@@ -2264,7 +2264,199 @@ void ScriptActions::doBuildBaseStructure(const AsciiString& buildingType, Bool f
 /** createUnitOnTeamAt */
 //-------------------------------------------------------------------------------------------------
 // ?createUnitOnTeamAt@ScriptActions@@IAEXABVAsciiString@@000@Z
-// Body in ScriptActions_createUnitOnTeamAt.asm (exact 604B retail).
+// Retail body is 0x002F9290, 625B: the 2026-08-11 lift started it 21 bytes in
+// (0x002F92A5, 604B) and so lost the whole SEH prologue.
+//
+// The Zero Hour body this descends from differs from retail in six places, each
+// read off the bytes and declared here so no reference header has to move: the
+// unit and team lookups take the name BY VALUE (BfmeAsciiStringArg above),
+// Object keeps the effectively-dead bit at +0x344 and the name at +0x84, the
+// unnamed-unit marker is at ScriptActions+0x0C, the object cache takes a
+// defaulted second string, the concatenation passes the length the eight-byte
+// data header carries, and the still-unnamed walk at retail 0x001BDEA0 is NOT
+// under the waypoint test -- the branch at 0x002F94C2 reaches it too, so a
+// missing waypoint still notifies.
+class BfmeConcatShim
+{
+public:
+	void concat( const char *str, int len );					///< retail 0x00887D60
+};
+
+// BFME asks the length word at data+4; the reference header has no accessor for
+// it (see BfmeAsciiStringData above).
+static int bfmeStringLength( const AsciiString &str )
+{
+	const BfmeAsciiStringData *data = *(const BfmeAsciiStringData * const *)&str;
+	return data ? data->m_numChars : 0;
+}
+
+class BfmeCreatedObject
+{
+public:
+	Bool isEffectivelyDead() const
+	{
+		return (*(unsigned char *)((char *)this + 0x344) & 1) != 0;
+	}
+};
+
+// BFME keeps Object::m_name at +0x84 where the reference header this TU
+// includes puts it earlier, and the name assignment is retail's out-of-line
+// StringBase<char>::set body at 0x00887C90 rather than the header's inlined
+// addref. Both are read off the call the bytes make, so the slot is declared
+// here instead of moving a reference header.
+struct BfmeObjectNameSlot
+{
+	char m_pad[0x84];
+	AsciiString m_name;
+};
+
+// The unnamed-unit marker is at ScriptActions+0x0C here, one word past where
+// the Zero Hour header this TU includes puts it.
+class BfmeScriptActionsUnitName
+{
+public:
+	const AsciiString &friend_unnamedUnit() const { return *(const AsciiString *)((const char *)this + 0xC); }
+};
+
+// retail's status mask is three DWORDs, the width
+// game/GameEngine/Source/Common/Thing/ThingFactory_newObject.cpp reads at the
+// callee; the reference BitFlags<86> this TU already has is a two-word
+// <bitset> because its ObjectStatusTypes enum is shorter, so the retail width
+// is declared here instead of moving a reference header. Passing it through a
+// `const BitFlags<86> &` instead materialises a two-word copy, so the shim
+// below takes the three-word type itself; the pin carries the retail name.
+struct BfmeObjectStatusMask
+{
+	unsigned int m_words[3];
+};
+
+// The same TU-local view the rest of this file already uses for the one-arg
+// findTemplate: retail's findTemplate takes only the name -- ZH's defaulted
+// `check` would add a `push 1` retail does not have -- and retail's newObject
+// takes a fourth word the Zero Hour header does not have.
+class BfmeThingFactory
+{
+public:
+	const ThingTemplate *findTemplate( const AsciiString &name );
+	Object *newObject( const ThingTemplate *thingTemplate, Team *team, const BfmeObjectStatusMask &statusBits, UnsignedInt extra );
+};
+
+// BFME's ScriptEngine vtable puts didUnitExist at slot 28, the object cache at
+// slot 29 with a defaulted name, and transferObjectName at slot 31.
+class BfmeScriptEngineVtbl_7c
+{
+public:
+	virtual void _se70_00() = 0;
+	virtual void _se70_01() = 0;
+	virtual void _se70_02() = 0;
+	virtual void _se70_03() = 0;
+	virtual void _se70_04() = 0;
+	virtual void _se70_05() = 0;
+	virtual void _se70_06() = 0;
+	virtual void _se70_07() = 0;
+	virtual void _se70_08() = 0;
+	virtual void _se70_09() = 0;
+	virtual void _se70_0a() = 0;
+	virtual void _se70_0b() = 0;
+	virtual void _se70_0c() = 0;
+	virtual void _se70_0d() = 0;
+	virtual void _se70_0e() = 0;
+	virtual void _se70_0f() = 0;
+	virtual void _se70_10() = 0;
+	virtual void _se70_11() = 0;
+	virtual void _se70_12() = 0;
+	virtual void _se70_13() = 0;
+	virtual void _se70_14() = 0;
+	virtual void _se70_15() = 0;
+	virtual void _se70_16() = 0;
+	virtual void _se70_17() = 0;
+	virtual void _se70_18() = 0;
+	virtual void _se70_19() = 0;
+	virtual void _se70_1a() = 0;
+	virtual void _se70_1b() = 0;
+	virtual Bool didUnitExist( const AsciiString &unitName ) = 0;
+	virtual void addObjectToCache( Object *pNewObject, const AsciiString &name = "" ) = 0;
+	virtual void _se78_00() = 0;
+	virtual void transferObjectName( const AsciiString &unitName, Object *pNewObject ) = 0;
+};
+
+// 0x001BDEA0 is a 47-byte Object method with no proven identity; it walks an
+// item array at this+0x1F0, see game/GameEngine/Source/Common/Bfme5IfaceWalk.cpp
+class Bfme5WalkOwner
+{
+public:
+	void bfmeNotifyAll( void );
+};
+
+void ScriptActions::createUnitOnTeamAt(const AsciiString& unitName, const AsciiString& objType,
+	const AsciiString& teamName, const AsciiString& waypoint)
+{
+	Object* pOldObj = ((BfmeScriptEngineVtbl_6c *)TheScriptEngine)->getUnitNamedByValue(unitName);
+
+	if (pOldObj && !((BfmeCreatedObject *)pOldObj)->isEffectivelyDead()) {
+		BFMERetailAsciiString str = "WARNING - Object with name ";
+		((BfmeConcatShim *)&str)->concat(bfmeStringChars(unitName), bfmeStringLength(unitName));
+		((BfmeConcatShim *)&str)->concat(" already exists. Failed Create.", 31);
+		TheScriptEngine->AppendDebugMessage((const AsciiString &)str, false);
+			// Unit by that name already exists
+		return;
+	}
+
+	Team *theTeam = ((BfmeScriptEngineVtbl_44 *)TheScriptEngine)->getTeamNamed(teamName, TRUE);
+
+	if (theTeam == NULL) {
+		// The warning string dies before the team name goes out, so it needs a
+		// scope of its own.
+		{
+			BFMERetailAsciiString str = "***WARNING - Team not found:***";
+			TheScriptEngine->AppendDebugMessage((const AsciiString &)str, false);
+		}
+		TheScriptEngine->AppendDebugMessage(teamName, true);
+		DEBUG_LOG(("WARNING - Team %s not found.\n", teamName.str()));
+		return;
+	}
+
+	const ThingTemplate *thingTemplate = ((BfmeThingFactory *)TheThingFactory)->findTemplate(objType);
+
+	if (thingTemplate) {
+		// create new object in the world
+		Object *obj = ((BfmeThingFactory *)TheThingFactory)->newObject(thingTemplate, theTeam, BfmeObjectStatusMask(), 0);
+		if( obj )
+		{
+			if (((const AsciiStringCompareShim *)&unitName)->compare(((const BfmeScriptActionsUnitName *)this)->friend_unnamedUnit()) != 0) {
+				BfmeObjectNameSlot *bfmeObj =
+					reinterpret_cast<BfmeObjectNameSlot *>(obj);
+				// The member must be bound as a reference first: bound inline, the
+				// compiler pushes the argument before forming `this + 0x84` and
+				// retail forms it after (see Bfme7NarrowSetterHeads.cpp).
+				AsciiString &objName = bfmeObj->m_name;
+				objName.set(unitName);
+				if (pOldObj || ((BfmeScriptEngineVtbl_7c *)TheScriptEngine)->didUnitExist(unitName)) {
+					((BfmeScriptEngineVtbl_7c *)TheScriptEngine)->transferObjectName(unitName, obj);
+				} else {
+					((BfmeScriptEngineVtbl_7c *)TheScriptEngine)->addObjectToCache(obj);
+				}
+			}
+
+			Waypoint *way = ((BfmeTerrainLogicVtbl_7c *)TheTerrainLogic)->getWaypointByName(waypoint);
+			if (way)
+			{
+				Coord3D destination;
+				BfmeWaypointLocation *bfmeWay =
+					reinterpret_cast<BfmeWaypointLocation *>(way);
+				destination.x = bfmeWay->m_location.x;
+				destination.y = bfmeWay->m_location.y;
+				destination.z = bfmeWay->m_location.z;
+				obj->setPosition(&destination);
+			}
+			// the walk notification is not under the waypoint test: the branch
+			// at retail 0x002F94C2 reaches it too.
+			((Bfme5WalkOwner *)obj)->bfmeNotifyAll();
+		}  // end if
+	} else {
+		DEBUG_LOG(("WARNING - ThingTemplate '%s' not found.\n", objType.str()));
+	}
+}
 
 //-------------------------------------------------------------------------------------------------
 /** updateNamedAttackPrioritySet */
@@ -7757,16 +7949,10 @@ void ScriptActions::doTeamGuardInTunnelNetwork(const AsciiString& teamName)
 // local to this body so the other MAX_COMMANDS_PER_SET uses in this TU, which
 // are already matched at 18, keep the value they verified with.
 #define MAX_COMMANDS_PER_SET 20
-// Two more BFME shapes read off the retail bytes: findTemplate takes only the
-// name (ZH's defaulted `check` would add the `push 1` retail does not have),
-// and the command set string is at ThingTemplate+0x2c, where ZH puts it at
-// +0x18. Declared TU-locally so neither reference header has to move.
-class BfmeThingFactory
-{
-public:
-	const ThingTemplate *findTemplate(const AsciiString &name);
-};
-
+// Two more BFME shapes read off the retail bytes: the command set string is at
+// ThingTemplate+0x2c, where ZH puts it at +0x18. Declared TU-locally so the
+// reference header does not have to move. BfmeThingFactory is declared above
+// createUnitOnTeamAt, the one place this TU needs it.
 class BfmeThingTemplate
 {
 public:

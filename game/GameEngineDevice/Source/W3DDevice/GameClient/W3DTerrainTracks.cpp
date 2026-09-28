@@ -821,7 +821,7 @@ void TerrainTracksRenderObjClassSystem::update()
 /** Draw all active track marks for this frame */
 //=============================================================================
 // ?flush@TerrainTracksRenderObjClassSystem@@QAEXXZ exact retail body is emitted by
-// W3DTerrainTracksFlushThunk.cpp.
+// TerrainTracksSystemFlush.cpp.
 // ?Reset@TerrainTracksRenderObjClassSystem@@ present-unmatched
 void TerrainTracksRenderObjClassSystem::Reset(void)
 {

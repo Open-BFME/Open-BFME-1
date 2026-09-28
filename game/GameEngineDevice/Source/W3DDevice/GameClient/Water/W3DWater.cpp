@@ -644,7 +644,7 @@ HRESULT WaterRenderObjClass::initBumpMap(LPDIRECT3DTEXTURE8 *pTex, TextureClass 
 /** Create and fill a D3D vertex buffer with water surface vertices */
 //-------------------------------------------------------------------------------------------------
 // ?generateVertexBuffer@WaterRenderObjClass@@IAEJHHH_N@Z exact retail body is emitted by
-// W3DWaterGenerateVertexBufferThunk.cpp.
+// WaterRenderObjGenerateVertexBuffer.cpp.
 //-------------------------------------------------------------------------------------------------
 /** Create and fill a D3D index buffer with water surface strip indices */
 //-------------------------------------------------------------------------------------------------

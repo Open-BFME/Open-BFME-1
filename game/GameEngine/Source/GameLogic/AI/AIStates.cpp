@@ -5266,25 +5266,101 @@ void AIFollowPathState::onExit( StateExitType status )
 }
 
 //----------------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AIFollowPathState_update_Thunk.cpp
-// ?update@AIFollowPathState@@UAE?AW4StateReturnType@@XZ present-unmatched
+// BFME retail implementation, including its AI layout and desync logging.
+class AIFollowPathStateUpdateCalls {};
+template<class T> __forceinline T AIFollowPathStateUpdateMember(void (*raw)())
+{
+	union { void (*raw)(); T member; } call;
+	call.raw = raw;
+	return call.member;
+}
+
+class AIFollowPathStateMachinePathView
+{
+public:
+	unsigned char m_pad00[0x44];
+	std::vector<Coord3D> m_goalPath;
+	const Coord3D *getGoalPathPosition(Int i) const
+	{
+		if (i < 0 || i >= m_goalPath.size())
+			return NULL;
+		return &m_goalPath[i];
+	}
+};
+
+class AIFollowPathStateAIPathView
+{
+public:
+	unsigned char m_pad00[0x30];
+	AIFollowPathStateMachinePathView *m_stateMachine;
+	const Coord3D *friend_getGoalPathPosition(Int i) const
+	{
+		return m_stateMachine->getGoalPathPosition(i);
+	}
+};
+
+static __forceinline Bool AIFollowPathStateRetailGroundMovement(AIUpdateInterface *ai)
+{
+	typedef Bool (__fastcall *GroundMovementCall)(AIUpdateInterface *);
+	return ((GroundMovementCall)(*(void ***)ai)[0x7B])(ai);
+}
+
+class AIFollowPathStateComputePathView
+{
+public:
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0C();
+	virtual void slot10();
+	virtual void slot14();
+	virtual void slot18();
+	virtual void slot1C();
+	virtual void slot20();
+	virtual void slot24();
+	virtual void slot28();
+	virtual void slot2C();
+	virtual void slot30();
+	virtual void slot34();
+	virtual void slot38();
+	virtual void slot3C();
+	virtual void slot40();
+	virtual Bool computePath();
+};
+
+class CRCParameterCheck;
 StateReturnType AIFollowPathState::update()
 {
-	getMachine()->setGoalPosition(&m_goalPosition);
+	extern Bool Glo012F0239;
+	extern CRCParameterCheck *TheCRCParameterCheck;
+	extern void j_0003a17a(void);
+	extern void j_0002f93c(void);
+	extern void j_0000a9d4(void);
+	extern void j_0000ebab(void);
+	extern void j_0001c675(void);
+	extern void j_000294e2(void);
+	typedef void (__cdecl *FollowPathCritterLog)(CRCParameterCheck *, const char *, ...);
+	typedef void (AIFollowPathStateUpdateCalls::*FollowPathIgnoreObstacle)(UnsignedInt);
+	typedef void (AIFollowPathStateUpdateCalls::*FollowPathSetExtraDistance)(Real);
+	typedef Coord3D *(AIFollowPathStateUpdateCalls::*FollowPathGetLaterPoint)(Int);
+	typedef PathfindLayerEnum (AIFollowPathStateUpdateCalls::*FollowPathGetLayer)(Object *, const Coord3D *);
+	typedef void (AIFollowPathStateUpdateCalls::*FollowPathUpdateGoal)(Object *, const Coord3D *, PathfindLayerEnum, const char *, Int);
+
+	((StateMachine *)(*(void **)((char *)this + 0x1C)))->setGoalPosition(&m_goalPosition);
 	// do movement
 	StateReturnType status = AIInternalMoveToState::update();
 	// if move to has finished, move to next point on path
 	if (status == STATE_SUCCESS || status == STATE_FAILURE)
 	{
-		Object *obj = getMachineOwner();
-		AIUpdateInterface *ai = obj->getAI();
+		Object *obj = *(Object **)((char *)*(void **)((char *)this + 0x1C) + 0x10);
+		AIUpdateInterface *ai = *(AIUpdateInterface **)((char *)obj + 0x204);
 		if (status == STATE_FAILURE && m_retryCount>0) { 
 			// If we failed, & haven't reached retry limit, try again.  jba.
 			m_retryCount--;
 		}	else {
 			++m_index;
 		}
-		const Coord3D *pos = ai->friend_getGoalPathPosition( m_index );
+		const Coord3D *pos = ((AIFollowPathStateAIPathView *)ai)->friend_getGoalPathPosition(m_index);
 
 		Bool tooClose=true;
 		while (pos && tooClose) {
@@ -5296,7 +5372,7 @@ StateReturnType AIFollowPathState::update()
 			}
 			if (tooClose) {
 				m_index++;
-				pos = ai->friend_getGoalPathPosition(m_index);
+				pos = ((AIFollowPathStateAIPathView *)ai)->friend_getGoalPathPosition(m_index);
 			}
 		}
 		
@@ -5304,7 +5380,7 @@ StateReturnType AIFollowPathState::update()
 		//Assign this value to the AIUpdateInterface so object's can access this value while
 		//determine which waypoints to plot in the waypoint renderer.
 		ai->friend_setCurrentGoalPathIndex( m_index ); 
-		ai->ignoreObstacleID(INVALID_ID); // we have exited whatever object we are leaving, if any.  jba.
+		(((AIFollowPathStateUpdateCalls *)ai)->*AIFollowPathStateUpdateMember<FollowPathIgnoreObstacle>(j_0002f93c))(INVALID_ID); // we have exited whatever object we are leaving, if any.  jba.
 		if (pos == NULL)
 		{
 			// reached the end of the path
@@ -5314,7 +5390,7 @@ StateReturnType AIFollowPathState::update()
 		ai->friend_startingMove();
 		// set next movement goal
 		m_goalPosition = *pos;
- 		const Coord3D *nextPos = ai->friend_getGoalPathPosition( m_index+1 );
+	 	const Coord3D *nextPos = ((AIFollowPathStateAIPathView *)ai)->friend_getGoalPathPosition(m_index+1);
 
  		if (nextPos) 
 		{
@@ -5322,31 +5398,53 @@ StateReturnType AIFollowPathState::update()
 			delta.x = nextPos->x - pos->x;
 			delta.y = nextPos->y - pos->y;
 			Real offset = delta.length();
- 			const Coord3D *followingPos = ai->friend_getGoalPathPosition( m_index+2 );
+	 		const Coord3D *followingPos = (((AIFollowPathStateUpdateCalls *)ai)->*AIFollowPathStateUpdateMember<FollowPathGetLaterPoint>(j_0000a9d4))(m_index+2);
 			if (followingPos) offset += 4*PATHFIND_CELL_SIZE_F;
-			ai->setPathExtraDistance(offset);
+			(((AIFollowPathStateUpdateCalls *)ai)->*AIFollowPathStateUpdateMember<FollowPathSetExtraDistance>(j_0000ebab))(offset);
 			// We are in the middle of a path, so don't set the final goal location yet.
+			if (Glo012F0239 && TheCRCParameterCheck)
+				((FollowPathCritterLog)j_0003a17a)(TheCRCParameterCheck,
+					"CritterDesync: setAdjustDestination(FALSE) 42");
 			setAdjustsDestination(false);
 		} 
 		else 
 		{
-			setAdjustsDestination(m_adjustFinal && (m_adjustFinalOverride || ai->isDoingGroundMovement()));
+			if (Glo012F0239 && TheCRCParameterCheck)
+				((FollowPathCritterLog)j_0003a17a)(TheCRCParameterCheck,
+					"CritterDesync: setAdjustDestination(m_adjustFinal=%s && (m_adjustFinalOverride=%s || ai->isDoingGroundMovement()=%s) 43",
+					m_adjustFinal ? "TRUE" : "FALSE",
+					m_adjustFinalOverride ? "TRUE" : "FALSE",
+					AIFollowPathStateRetailGroundMovement(ai) ? "TRUE" : "FALSE");
+			setAdjustsDestination(m_adjustFinal && (m_adjustFinalOverride || AIFollowPathStateRetailGroundMovement(ai)));
 			if (getAdjustsDestination()) 
 			{
-				if (!TheAI->pathfinder()->adjustDestination(getMachineOwner(), ai->getLocomotorSet(), &m_goalPosition)) {
+				Object *adjustOwner = *(Object **)((char *)*(void **)((char *)this + 0x1C) + 0x10);
+				Pathfinder *pathfinder = TheAI->pathfinder();
+				if (!pathfinder->adjustDestination(adjustOwner,
+					*(LocomotorSet *)((char *)ai + 0x1A8), &m_goalPosition)) {
 					return STATE_FAILURE;
 				}
-				TheAI->pathfinder()->updateGoal(getMachineOwner(), &m_goalPosition, TheTerrainLogic->getLayerForDestination(&m_goalPosition));
+				Object *goalOwner = *(Object **)((char *)*(void **)((char *)this + 0x1C) + 0x10);
+				pathfinder = TheAI->pathfinder();
+				(((AIFollowPathStateUpdateCalls *)pathfinder)->*AIFollowPathStateUpdateMember<FollowPathUpdateGoal>(j_000294e2))(
+					goalOwner, &m_goalPosition,
+					(((AIFollowPathStateUpdateCalls *)TheTerrainLogic)->*AIFollowPathStateUpdateMember<FollowPathGetLayer>(j_0001c675))(
+						goalOwner, &m_goalPosition),
+					(const char *)0x0109769C, 0x1EEB);
 			}
 
 			// urg. hacky. if we are a projectile on the last segment, turn on precise z-pos.
-			if (obj->isKindOf(KINDOF_PROJECTILE))
+			if (obj->isKindOf((KindOfType)0x19))
 			{
-				if (ai && ai->getCurLocomotor())
-					ai->getCurLocomotor()->setUsePreciseZPos(true);
+				Locomotor *curLoco = *(Locomotor **)((char *)ai + 0x1CC);
+				if (ai && curLoco)
+					*(UnsignedInt *)((char *)curLoco + 0x40) |= 8;
 			}
 		}
-		computePath();
+		if (Glo012F0239 && TheCRCParameterCheck)
+			((FollowPathCritterLog)j_0003a17a)(TheCRCParameterCheck,
+				"CritterDesync: ComputePath32");
+		((AIFollowPathStateComputePathView *)this)->computePath();
 		return STATE_CONTINUE;
 	}
 

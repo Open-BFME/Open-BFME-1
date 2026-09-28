@@ -526,21 +526,64 @@ void Radar::update( void )
 //-------------------------------------------------------------------------------------------------
 /** Reset the radar for the new map data being given to it */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/Radar_newMap_Thunk.cpp
-// ?newMap@Radar@@UAEXPAVTerrainLogic@@@Z present-unmatched
+//
+// 0x001078B0 opens with a DIRECT call to the out-of-line step that locates
+// m_radarWindow (retail target 0x001827D, an ILT thunk standing for 0x00107340 --
+// the window-manager lookup for "ControlBar.wnd:LeftHUD" that BfmeConv411.cpp
+// already carries under its Conv411 name).  It is not inlined here because
+// retail does not inline it, and the call is spelled through the same view
+// GameClientUpdate00598950.cpp already uses for it.
+class BfmeThingAOA
+{
+public:
+	void bfmeGoAOA();
+};
+
+// The Radar-as-SubsystemInterface vftable (0x01088880) the matched
+// ??0Radar@@QAE@XZ installs at this+4: slot 4 (+0x10) is the entry that jmps to
+// the matched ?reset@Radar@@UAEXXZ body.  The call site is spelled against this
+// view rather than through SubsystemInterface, whose sweep-shim slot order and
+// pure-virtual bases make VC7.1 emit a null guard and a different slot.
+class BfmeRadarSubsystemView
+{
+public:
+	virtual void unused0() = 0, unused1() = 0, unused2() = 0, unused3() = 0;
+	virtual void reset() = 0;
+};
+
+// BFME's TerrainLogic vftable as newMap's three call sites pin it.  The
+// snapshot vftable the matched ??0TerrainLogic@@QAE@XZ installs (0x0111D090)
+// carries the ground-height slot 6 (+0x18), getExtent at slot 9 (+0x24, whose
+// entry the ledger names ?getExtent@W3DTerrainLogic@@UBEXPAURegion3D@@@Z) and
+// isUnderwater at slot 19 (+0x4c, ?isUnderwater@TerrainLogic@@UAE_NMMPAM0@Z).
+// The sweep shim's TerrainLogic orders those three 7/10/18, so the calls cannot
+// go through it; the padding is named by the slot it occupies.  BfmeTerrainHeightView
+// above is the same slot-6 entry for the one call Radar::radarToWorld makes.
+class BfmeTerrainNewMapView
+{
+public:
+	virtual void unused0() = 0, unused1() = 0, unused2() = 0, unused3() = 0, unused4() = 0, unused5() = 0;
+	virtual Real getGroundHeight( Real x, Real y, Coord3D *normal = NULL ) = 0;
+	virtual void unused6() = 0, unused7() = 0;
+	virtual void getExtent( Region3D *extent ) const = 0;
+	virtual void unused8() = 0, unused9() = 0, unused10() = 0, unused11() = 0,
+		unused12() = 0, unused13() = 0, unused14() = 0, unused15() = 0, unused16() = 0;
+	virtual Bool isUnderwater( Real x, Real y, Real *waterZ = NULL, Real *terrainZ = NULL ) = 0;
+};
+
 void Radar::newMap( TerrainLogic *terrain )
 {
 
 	// keep a pointer for our radar window
-	Int id = NAMEKEY( "ControlBar.wnd:LeftHUD" );
-	m_radarWindow = TheWindowManager->winGetWindowFromId( NULL, id );
-	DEBUG_ASSERTCRASH( m_radarWindow, ("Radar::newMap - Unable to find radar game window\n") );
+	( (BfmeThingAOA *)this )->bfmeGoAOA();
 
-	// reset all the data in the radar
-	reset();
+	// reset all the data in the radar.  Retail dispatches through the
+	// SubsystemInterface subobject, so the call is spelled through it.
+	( (BfmeRadarSubsystemView *)( (char *)this + 4 ) )->reset();
 
 	// get the extents of the new map
-	terrain->getExtent( &m_mapExtent );
+	BfmeTerrainNewMapView *logic = (BfmeTerrainNewMapView *)terrain;
+	logic->getExtent( &m_mapExtent );
 
 	// we will sample at these intervals across the map
 	m_xSample = m_mapExtent.width() / RADAR_CELL_WIDTH;
@@ -552,20 +595,19 @@ void Radar::newMap( TerrainLogic *terrain )
 
 	m_terrainAverageZ = 0.0f;
 	m_waterAverageZ = 0.0f;
+
 	Coord3D worldPoint;
-  
-  // since we're averaging let's skip every second sample...
-  worldPoint.y=0;
-	for( y = 0; y < RADAR_CELL_HEIGHT; y+=2, worldPoint.y+=2.0*m_ySample )
-  {
-    worldPoint.x=0;
-    for( x = 0; x < RADAR_CELL_WIDTH; x+=2, worldPoint.x+=2.0*m_xSample )
+	ICoord2D radarPoint;
+	Real waterZ;
+	for( y = 0; y < RADAR_CELL_HEIGHT; y++ )
+	{
+		for( x = 0; x < RADAR_CELL_WIDTH; x++ )
 		{
-			// don't use this, we don't really need the 
-      // Z position by this function... radarToWorld( &radarPoint, &worldPoint );
-			// and this is done by isUnderwater anyway: z = terrain->getGroundHeight( worldPoint.x, worldPoint.y );
-			Real z,waterZ;
-			if( terrain->isUnderwater( worldPoint.x, worldPoint.y, &waterZ, &z ) )
+			radarPoint.x = x;
+			radarPoint.y = y;
+			radarToWorld( &radarPoint, &worldPoint );
+			Int z = (Int)logic->getGroundHeight( worldPoint.x, worldPoint.y, NULL );
+			if( logic->isUnderwater( worldPoint.x, worldPoint.y, &waterZ, NULL ) )
 			{
 				m_waterAverageZ += z;
 				waterSamples++;
@@ -577,7 +619,7 @@ void Radar::newMap( TerrainLogic *terrain )
 			}
 
 		}  // end for x
-  }
+	}  // end for y
 
 	// avoid divide by zeros
 	if( terrainSamples == 0 )
@@ -585,7 +627,10 @@ void Radar::newMap( TerrainLogic *terrain )
 	if( waterSamples == 0 )
 		waterSamples = 1;
 
-	// compute averages
+	// compute averages.  VC7.1 loads BOTH divisors from the terrainSamples slot
+	// (fild [esp+0xc] at +0x126 and again at +0x131) even though waterSamples
+	// is the divisor written here, so do not "fix" the spelling to make the two
+	// slots differ -- that costs 5 bytes and the water counter with them.
 	m_terrainAverageZ = m_terrainAverageZ / INT_TO_REAL( terrainSamples );
 	m_waterAverageZ = m_waterAverageZ / INT_TO_REAL( waterSamples );
 
@@ -1499,7 +1544,10 @@ Bool Radar::getLastEventLoc( Coord3D *eventPos )
 	* We don't want to create under attack events every time we are damaged and we also want
 	* to limit them based on time and local area of other recent attack events */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/RadarTryUnderAttackEventThunk.cpp
+// The lift that used to be filed here as a byte-exact reconstruction of this method
+// was 0x004271B0, which is Eva's constructor: it installs the Eva vtable pair and
+// seeds the Eva message-name table. See
+// targets/game/reverse/identity_evidence/004271b0-eva-constructor.md.
 // ?tryUnderAttackEvent@Radar@@ present-unmatched
 void Radar::tryUnderAttackEvent( const Object *obj )
 {

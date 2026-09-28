@@ -308,8 +308,8 @@ void PopulateCustomLadderListBox( GameWindow *win )
 	isPopulatingLadderBox = false;
 }
 
-// PopulateCustomLadderComboBox exact retail body is emitted by
-// PopulateCustomLadderComboBoxThunk.cpp.
+// PopulateCustomLadderComboBox exact retail body is recovered as clean C++
+// in PopulateCustomLadderComboBox.cpp.
 void PopulateCustomLadderComboBox(void);
 // Window Functions -----------------------------------------------------------------------
 

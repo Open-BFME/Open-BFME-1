@@ -1,8 +1,13 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/asciistring_copyctor_outofline /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
 // stlport
+// The asciistring_copyctor_outofline shim leaves AsciiString's C-string
+// constructor, copy constructor and releaseBuffer undefined on purpose, so
+// updateMapStartSpots below encodes retail's out-of-line bodies
+// (0x00088BC0, 0x00887B60, 0x00887940) exactly where retail calls them. The
+// Zero Hour header spells all three inline.
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -862,68 +867,15 @@ void positionStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[]
 	positionStartSpots(localMapFname, buttonMapStartPositions, mapWindow);	
 }
 
-void updateMapStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[], Bool onLoadScreen )
-{
-	AsciiString lowerMap = myGame->getMap();
-	lowerMap.toLower();
-	std::map<AsciiString, MapMetaData>::iterator it = TheMapCache->find(lowerMap);
-	if (it == TheMapCache->end())
-	{
-		for (Int i = 0; i < MAX_SLOTS; ++i)
-    {
-      if ( buttonMapStartPositions[i] != NULL )
-      {
-  			buttonMapStartPositions[i]->winHide(TRUE);
-      }
-    }
-		return;
-	}
-	MapMetaData mmd = it->second;
-
-	for(Int i = 0; i < MAX_SLOTS; ++i)
-	{
-    if ( buttonMapStartPositions[i] != NULL )
-    {
-		  GadgetButtonSetText(buttonMapStartPositions[i], UnicodeString::TheEmptyString);
-		  if (!onLoadScreen)
-		  {
-			  buttonMapStartPositions[i]->winSetTooltip(TheGameText->fetch("TOOLTIP:StartPosition"));
-		  }
-    }
-	}
-	for( i = 0; i < MAX_SLOTS; ++i)
-	{
-    if ( buttonMapStartPositions[i] == NULL )
-      continue;
-
-		GameSlot *gs =myGame->getSlot(i);
-		if(onLoadScreen)
-		{
-			if(gs->getApparentStartPos() >=0 && gs->getApparentStartPos() < mmd.m_numPlayers && gs->getPlayerTemplate() > PLAYERTEMPLATE_MIN )
-			{
-				AsciiString displayNumber;
-				displayNumber.format("NUMBER:%d",i + 1);
-				GadgetButtonSetText(buttonMapStartPositions[gs->getApparentStartPos()], TheGameText->fetch(displayNumber));
-			}
-		}
-		else
-		{
-			if(gs->getStartPos() >=0 && gs->getStartPos() < mmd.m_numPlayers && gs->getPlayerTemplate() > PLAYERTEMPLATE_MIN )
-			{
-				AsciiString displayNumber;
-				displayNumber.format("NUMBER:%d",i + 1);
-				GadgetButtonSetText(buttonMapStartPositions[gs->getStartPos()], TheGameText->fetch(displayNumber));
-				//Added By Sadullah Nader
-				//Fix for no tooltips at start positions
-				//added start position tooltip
-				//Fixed again to show the right number , ie "i + 1"
-				UnicodeString temp;
-				temp.format(TheGameText->fetch("TOOLTIP:StartPositionN"), i + 1);
-				buttonMapStartPositions[gs->getStartPos()]->winSetTooltip(temp);
-			}
-		}
-	}
-}
+// ?updateMapStartSpots@@YAXPAVGameInfo@@QAPAVGameWindow@@_N@Z is the byte-exact
+// reconstruction: game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/
+// UpdateMapStartSpotsBFME.cpp.  It is declared, not defined, here: the retail
+// body (0x004559A0, 838 B) is that file, and the by-value string temporaries it
+// builds need the StringInline shape (copy ctor and destructor as inline
+// forwarders to StringBase<T>), which the Zero Hour string headers this TU
+// compiles against do not give.  The Zero Hour twin of the function used to sit
+// here; its four BFME deltas and the levers are documented in that file.
+void updateMapStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[], Bool onLoadScreen );
 
 static void handlePlayerSelection(int index)
 {
