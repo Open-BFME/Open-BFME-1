@@ -1,6 +1,6 @@
-// ?d_006a28d0@@YAXXZ
-// partial score=0.48 date=2026-09-17
-// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline
+// ?xferAudioHandle@AudioManager@@UAEXPAVXfer@@PAI@Z
+// partial score=0.918 date=2026-09-28
+// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Source/Common/System
 
 // Open-BFME5: AudioManager::xferAudioHandle, retail 0x006A28D0, 502 bytes.
 // The MilesAudioManager vtable at 0x0111C0C0 names this slot 82.  The three
@@ -8,63 +8,12 @@
 // without claiming identities that are not present in the ledger.
 
 #define _STLP_NO_EXCEPTIONS 1
-#include "StringInline.h"
+#include "ascii_string.h"
 
 typedef unsigned int AudioHandle;
 typedef unsigned char UnsignedByte;
 
-struct XferVersion
-{
-	XferVersion(UnsignedByte version, UnsignedByte currentVersion) :
-		m_version(version), m_currentVersion(currentVersion)
-	{
-	}
-
-	UnsignedByte m_version;
-	UnsignedByte m_currentVersion;
-};
-
-class Xfer
-{
-public:
-	virtual void slot00();
-	virtual void slot01();
-	virtual bool IsStoring() const;
-	virtual bool IsCRC() const;
-	virtual bool IsLightCRC() const;
-	virtual void slot05();
-	virtual void slot06();
-	virtual void slot07();
-	virtual void slot08();
-	virtual void slot09();
-	virtual void xferVersion(XferVersion &version);
-	virtual void slot11();
-	virtual void slot12();
-	virtual void slot13();
-	virtual void slot14();
-	virtual void slot15();
-	virtual void slot16();
-	virtual void slot17();
-	virtual void slot18();
-	virtual void slot19();
-	virtual void slot20();
-	virtual void slot21();
-	virtual void slot22();
-	virtual void slot23();
-	virtual void slot24();
-	virtual void slot25();
-	virtual void slot26();
-	virtual void slot27();
-	virtual void slot28();
-	virtual void slot29();
-	virtual void slot30();
-	virtual void slot31();
-	virtual void slot32();
-	virtual void slot33();
-	virtual void slot34();
-	virtual void xferBool(bool &value);
-};
-
+#include "xfer.h"
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(
 	long volatile *value);
 extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
@@ -78,7 +27,8 @@ public:
 	{
 		m_held = 0;
 		m_mutex = mutex;
-		if (WaitForSingleObject(m_mutex, 0xFFFFFFFFu) != 0x102u)
+		unsigned long status = WaitForSingleObject(m_mutex, 0xFFFFFFFFu);
+		if (status != 0x102u)
 			m_held = 1;
 	}
 
@@ -128,6 +78,13 @@ public:
 	unsigned char m_flag34;
 };
 
+class AudioInfo006A28D0Ref {
+public:
+ AudioInfo006A28D0Ref() : ptr(0) {}
+ __forceinline ~AudioInfo006A28D0Ref() { if (ptr) ptr->Release_Ref(); }
+ Rva006AInfo *ptr;
+};
+
 class BfmeSeedTarget;
 
 class BfmeSubAccept_0002C41C
@@ -145,6 +102,8 @@ extern AsciiString TheBfmeCrateNameDefault;
 
 #pragma comment(linker, "/alternatename:??0AudioEventRTS@@QAE@ABVAsciiString@@H@Z=?j_00025306@@YAXXZ")
 #pragma comment(linker, "/alternatename:??1AudioEventRTS@@QAE@XZ=?j_00026f35@@YAXXZ")
+
+class MilesAudioManager { public: bool rva006A20D0(unsigned,void *,void *); };
 
 class AudioManager
 {
@@ -181,8 +140,9 @@ private:
 
 void AudioManager::xferAudioHandle(Xfer *xfer, AudioHandle *handle)
 {
-	XferVersion version(1, 1);
-	xfer->xferVersion(version);
+	Xfer::Version version;
+    version.data[0] = 1; version.data[1] = 1;
+    *xfer == version;
 	if (xfer->IsCRC())
 		return;
 
@@ -190,40 +150,36 @@ void AudioManager::xferAudioHandle(Xfer *xfer, AudioHandle *handle)
 	{
 		AudioManagerMutex guard(m_mutex);
 		bool accepted;
-		register Rva006AInfo *info = 0;
-		register AudioEventRTS *event;
-		typedef bool (AudioManager::*Resolve)(AudioHandle, AudioEventRTS **,
-			Rva006AInfo **);
-		union ResolveBits
-		{
-			void (*freeFunction)(void);
-			Resolve memberFunction;
-		} resolve;
-		resolve.freeFunction = j_00008549;
-		accepted = (this->*resolve.memberFunction)(*handle, &event, &info);
+		AudioInfo006A28D0Ref info;
+		AudioEventRTS *event;
+		typedef bool (AudioManager::*Resolve)(AudioHandle, AudioEventRTS **, AudioInfo006A28D0Ref &);
+        union { void (*address)(); Resolve method; } resolve;
+        resolve.address = j_00008549;
+        accepted = (this->*resolve.method)(*handle, &event, info);
+        Rva006AInfo *infoValue = info.ptr;
+        AudioEventRTS *eventValue = event;
 
 		if (accepted)
 		{
-			if (event != 0 && event->m_flag45)
+			if (eventValue == 0 || eventValue->m_flag45)
 				accepted = false;
-			if (info != 0 && info->m_flag34)
+			if (infoValue != 0 && infoValue->m_flag34)
 				accepted = false;
 		}
 
-		xfer->xferBool(accepted);
+		*xfer == accepted;
 		if (accepted)
 		{
-			reinterpret_cast<BfmeSubAccept_0002C41C *>(event)->bfmeAccept(
+			reinterpret_cast<BfmeSubAccept_0002C41C *>(eventValue)->bfmeAccept(
 				reinterpret_cast<BfmeSeedTarget *>(xfer));
 		}
-		if (info != 0)
-			info->Release_Ref();
+
 	}
 	else
 	{
 		AudioManagerMutex guard(m_mutex);
-		bool hasEvent = false;
-		xfer->xferBool(hasEvent);
+		bool hasEvent;
+		*xfer == hasEvent;
 		if (hasEvent)
 		{
 			AudioEventRTS event(TheBfmeCrateNameDefault, 0);

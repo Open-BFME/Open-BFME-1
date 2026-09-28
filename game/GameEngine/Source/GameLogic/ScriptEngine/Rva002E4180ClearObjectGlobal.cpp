@@ -1,0 +1,97 @@
+// Retail 0x002E4180: identity/ABI pinned by matched Object::setTeam.
+// Nonthrowing Lua lookup and early-return string lifetime follow the matched
+// sibling Rva002E42C0LuaGlobalIdCheck.cpp; both retain EH without state zero.
+// cl: /DNDEBUG /MD /EHsc
+//
+// Open-BFME5: retail 0x002E4180 (247 B), EH-framed. Clears a Lua global
+// that mirrors a game object, but only when the cached identity check
+// (Rva00990030Lookup) still matches the object's +0x74 id. Vendored Lua
+// 4.0.1 API (Code/Libraries/Source/Lua/lapi.c, lua.h): LUA_TNIL == 1.
+//
+// The name string is built by the already-landed Rva002E32A0ObjectIdAsStr
+// (0x002E32A0) into a local Rva002E32A0AsciiString (hidden-return-by-value);
+// its destructor is pinned to 0x00887940 (releaseBuffer), which is why the
+// exception frame exists at all -- to run that destructor if anything
+// between construction and the manual settop/pushnil/setglobal dance
+// throws.
+//
+// this+0x08 is the lua_State used for every call but the very first
+// settop, which instead reads this+0x0C (byte-proven from the retail
+// push order: the value pushed closest to that call is [esi+0xc], not
+// [esi+8]); identity of that second state is not recovered.
+
+struct lua_State;
+
+extern "C"
+{
+	void __cdecl lua_settop(lua_State *L, int index);
+	int __cdecl lua_type(lua_State *L, int index);
+	void __cdecl lua_getglobal(lua_State *L, const char *name);
+	void __cdecl lua_pushnil(lua_State *L);
+	void __cdecl lua_setglobal(lua_State *L, const char *name);
+}
+
+class Rva002E32A0AsciiString
+{
+public:
+
+	~Rva002E32A0AsciiString();
+
+	const char *str() const
+	{
+		return m_text ? (const char *)m_text + 8 : "";
+	}
+
+private:
+
+	void *m_text;
+
+};
+
+struct Rva002E32A0IdOwner
+{
+	unsigned char pad00[0x74];
+	int m_id;
+};
+
+Rva002E32A0AsciiString Rva002E32A0ObjectIdAsStr(const Rva002E32A0IdOwner *p);
+struct Rva00990030Range;
+unsigned int Rva00990030Lookup(Rva00990030Range *range, int index) throw();
+
+class Object;
+
+class Rva0012F060COwner
+{
+public:
+	void rva002E4180(Object *object);
+
+private:
+	unsigned char m_pad00[8];
+	void *m_L;
+	void *m_rootL;
+};
+
+void Rva0012F060COwner::rva002E4180(Object *object)
+{
+	if (m_L == 0)
+		return;
+
+	lua_settop((lua_State *)m_rootL, 0);
+
+	Rva002E32A0AsciiString text = Rva002E32A0ObjectIdAsStr((const Rva002E32A0IdOwner *)object);
+	int verify = ((const Rva002E32A0IdOwner *)object)->m_id;
+	const char *textPtr = text.str();
+
+	lua_getglobal((lua_State *)m_L, textPtr);
+
+    if (lua_type((lua_State *)m_L, 1) == 1 ||
+        verify != (int)Rva00990030Lookup((Rva00990030Range *)m_L, 1))
+    {
+        lua_settop((lua_State *)m_L, -2);
+        return;
+    }
+    lua_settop((lua_State *)m_L, -2);
+    lua_pushnil((lua_State *)m_L);
+    lua_setglobal((lua_State *)m_L, text.str());
+}
+

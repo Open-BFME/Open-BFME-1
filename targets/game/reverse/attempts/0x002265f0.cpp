@@ -1,5 +1,5 @@
 // ?add@ContainInsert2265F0@@QAEXPAVObject@@@Z
-// partial score=0.94 date=2026-09-27
+// partial score=0.951 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
@@ -130,15 +130,17 @@ void ContainInsert2265F0::add(Object *rider)
  if (rider->field_214) return;
  addToList(rider);
  field_54 = (unsigned short)(1 << rider->getControllingPlayer()->m_playerIndex);
- if ((*(Object **)((char *)this - 0x18))->m_contain)
-  (*(Object **)((char *)this - 0x18))->m_contain->onContaining(rider,wasSelected);
+ ContainDispatch2265F0 *contain = (*(Object **)((char *)this - 0x18))->m_contain;
+ if (contain) contain->onContaining(rider,wasSelected);
  PrimaryContain2265F0 *primary = (PrimaryContain2265F0 *)((char *)this - 0x20);
  primary->slot44();
  rider->onContainedBy(*(Object **)((char *)this - 0x18));
  primary->slot50();
  Template2265F0 *data = *(Template2265F0 **)((char *)this - 0x1c);
  if (!data->field_158.empty()) {
-  _STL::pair<int,unsigned> pair(rider->m_id, logic2265F0->frame);
+  unsigned id = rider->m_id;
+  unsigned frame = logic2265F0->frame;
+  _STL::pair<int,unsigned> pair(id,frame);
   ((Rva002253A0Tree *)((char *)this + 0xa8))->insert_unique(*(const Rva002253A0Pair *)&pair);
  }
  if (rider->field_94 & 0x10000000) primary->slot5C(rider,false,false);

@@ -8128,5 +8128,25 @@
   "after_sha256": "8dfbebfc4faa348a266a49c15a2849c10cb0c2c039b1159dda17476f70fdfb93",
   "evidence": "targets/game/reverse/identity_evidence/003a4c80-init-name-correction.md",
   "reason": "`init` is the lift's name for a function whose only parameter is an AsciiString, run through three StringBase<char>::compare calls against \"Small\", \"Medium\" and \"Large\"; no transition init(GameWindow*) body can omit the window calls this one does not make. No emitter, Zero Hour twin or matched caller supplies a source-level spelling, so the name keeps the address token rather than asserting a class method the evidence contradicts."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0061da30.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0061da30.cpp",
+  "old_name": "AsciiStringBG",
+  "new_name": "Rva0061DA30Base",
+  "before_sha256": "4bfd53b068f3458d3371aa242f8a89deb04282e7b46acb90ca8b6e464ea72f75",
+  "after_sha256": "eb7259beaf5a32a60fca5f6d7abf474be98dc31536aafbca8b2c646af4537b6a",
+  "evidence": "targets/game/reverse/identity_evidence/0061da30-bank-placeholder-names.md",
+  "reason": "Open-BFME5 TU-local placeholders: AsciiStringBG redeclares AsciiString (bank now includes ascii_string.h); bfmeBaseInitBG/BfmeNamedBG are absent from inputs/reference and misstate a polymorphic base constructor (0x0060BEB0 is its derived ctor), so the bank takes the address-derived Rva0061DA30Base"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0061da30.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0061da30.cpp",
+  "old_name": "bfmeBaseInitBG",
+  "new_name": "Rva0061DA30Base",
+  "before_sha256": "4bfd53b068f3458d3371aa242f8a89deb04282e7b46acb90ca8b6e464ea72f75",
+  "after_sha256": "eb7259beaf5a32a60fca5f6d7abf474be98dc31536aafbca8b2c646af4537b6a",
+  "evidence": "targets/game/reverse/identity_evidence/0061da30-bank-placeholder-names.md",
+  "reason": "Open-BFME5 TU-local placeholders: AsciiStringBG redeclares AsciiString (bank now includes ascii_string.h); bfmeBaseInitBG/BfmeNamedBG are absent from inputs/reference and misstate a polymorphic base constructor (0x0060BEB0 is its derived ctor), so the bank takes the address-derived Rva0061DA30Base"
  }
 ]

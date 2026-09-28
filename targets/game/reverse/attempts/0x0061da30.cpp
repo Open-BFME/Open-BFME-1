@@ -1,76 +1,12 @@
-// ?bfmeBaseInitBG@BfmeNamedBG@@QAEXVAsciiStringBG@@@Z
-// partial score=0.5 date=2026-09-21
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
-//
-// Open-BFME5: a named object constructor at retail 0x0060AAE0, 67 bytes.  The
-// caller's name is copied into the by-value argument the base initialiser
-// takes, and the vftable lands between two of the field stores.
-
-class StringBaseNarrowBG
-{
-protected:
-	StringBaseNarrowBG(const StringBaseNarrowBG &other);
-
-	~StringBaseNarrowBG(void);
-
-	char *m_bfmeNarrowBG;
-};
-
-class AsciiStringBG : public StringBaseNarrowBG
-{
+// ??0Rva0061DA30Base@@QAE@VAsciiString@@@Z
+// partial score=0.758 date=2026-09-28
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+#include "ascii_string.h"
+class Rva0061DA30Base {
 public:
-	AsciiStringBG(const AsciiStringBG &other) : StringBaseNarrowBG(other)
-	{
-	}
-
-	~AsciiStringBG(void)
-	{
-	}
-};
-
-extern "C" void *bfmeVftableBG[];
-
-// The temporary vtable bfmeBaseInitBG installs before the caller overwrites
-// it with its own (bfmeVftableBG here, rva0060bbd0Vftable in the sibling
-// Rva0060BBD0Ctor.cpp) -- same two-step GenBase-style install as the shared
-// texture-base ctor at 0x0090CF90.
-extern "C" void *bfmeBaseInitVftableBG[];
-
-inline void * __cdecl operator new(unsigned int, void *where) { return where; }
-
-// Non-throw() duplicates for bfmeBaseInitBG's own call site: its retail body
-// carries an SEH frame around the copy, so the callee it reaches there must
-// not be declared throw() the way the already-matched 67-byte outer
-// constructor's callee is.
-class StringBaseNarrowBGInit
-{
-protected:
-	StringBaseNarrowBGInit(const StringBaseNarrowBGInit &other);
-	~StringBaseNarrowBGInit(void);
-	char *m_bfmeNarrowBG;
-};
-
-class AsciiStringBGInit : public StringBaseNarrowBGInit
-{
-public:
-	AsciiStringBGInit(const AsciiStringBGInit &other) : StringBaseNarrowBGInit(other)
-	{
-	}
-
-	~AsciiStringBGInit(void)
-	{
-	}
-};
-
-class BfmeNamedBG
-{
-public:
-	BfmeNamedBG(const AsciiStringBG &name);
-
-	void bfmeBaseInitBG(AsciiStringBG name);
-
-	void *volatile m_bfmeVfptrBG;
-	int m_bfme04;					// +0x04 (AsciiStringBG placement-constructed here)
+ Rva0061DA30Base(AsciiString name);
+ virtual ~Rva0061DA30Base();
+ AsciiString m_name;
 	volatile int m_bfme08;
 	volatile int m_bfme0c;
 	volatile int m_bfme10;
@@ -95,33 +31,23 @@ public:
 	volatile int m_bfme5c;
 	volatile int m_bfme60;
 	volatile int m_bfme64;
-	volatile int m_bfme68;
+	float m_bfme68;
 	volatile char m_bfme6c;
-	volatile int m_bfme70;
-	volatile int m_bfme74;
-	volatile int m_bfme78;
+	float m_bfme70;
+	float m_bfme74;
+	float m_bfme78;
 	volatile char m_bfme7c;
 	volatile int m_bfme80;
-	volatile int m_bfme84;
-	volatile int m_bfme88;
-	volatile int m_bfme8c;
-	volatile int m_bfme90;
-	volatile int m_bfme94;
-	volatile int m_bfme98;
-	volatile int m_bfme9c;
-	volatile char m_bfmeFlagBG;
-	char m_bfmePadBBG[3];
-	volatile int m_bfmeABG;
-	volatile int m_bfmeBBG;
-	volatile int m_bfmeCBG;
+	float m_bfme84;
+	float m_bfme88;
+	float m_bfme8c;
+	float m_bfme90;
+	float m_bfme94;
+	float m_bfme98;
+	float m_bfme9c;
 };
-
-// ?bfmeBaseInitBG@BfmeNamedBG@@QAEXVAsciiStringBG@@@Z
-void BfmeNamedBG::bfmeBaseInitBG(AsciiStringBG name)
+Rva0061DA30Base::Rva0061DA30Base(AsciiString name) : m_name(name)
 {
-	((AsciiStringBG *)&m_bfme04)->AsciiStringBG::AsciiStringBG(name);
-	m_bfmeVfptrBG = bfmeBaseInitVftableBG;
-
 	m_bfme08 = 0;
 	m_bfme0c = 0;
 	m_bfme10 = 0;
@@ -152,19 +78,19 @@ void BfmeNamedBG::bfmeBaseInitBG(AsciiStringBG name)
 	m_bfme60 = 0;
 	m_bfme64 = 0;
 
-	m_bfme68 = 0x3dcccccd;
+	m_bfme68 = 0.1f;
 	m_bfme6c = 0;
 
 	{
-	int oneF = 0x3f800000;
+	float oneF = 1.0f;
 	m_bfme70 = oneF;
 	m_bfme74 = oneF;
-	m_bfme78 = 0x3a83126f;
+	m_bfme78 = 0.001f;
 	m_bfme7c = 0;
 
 	m_bfme80 = 0;
-	m_bfme84 = 0x40c8a3d7;
-	m_bfme88 = 0x3e99999a;
+	m_bfme84 = 6.27f;
+	m_bfme88 = 0.3f;
 	m_bfme8c = oneF;
 	m_bfme90 = oneF;
 	m_bfme94 = oneF;
@@ -173,32 +99,4 @@ void BfmeNamedBG::bfmeBaseInitBG(AsciiStringBG name)
 	}
 }
 
-BfmeNamedBG::BfmeNamedBG(const AsciiStringBG &name)
-{
-	bfmeBaseInitBG(name);
 
-	m_bfmeFlagBG = 0;
-
-	m_bfmeABG = 0;
-
-	m_bfmeBBG = 0;
-
-	m_bfmeVfptrBG = bfmeVftableBG;
-
-	m_bfmeCBG = 0;
-}
-
-// BfmeNamedBG's own destructor (BfmeNamedDtorBG.cpp, retail 0x0060AB40) calls
-// this base sibling's dtor last; it lives here, in the same TU as the
-// constructor, purely so the file keeps a matched row (check_orphans) while
-// staying out-of-line (undefined at the call site, so it cannot be elided).
-class BfmeNamedBaseBG
-{
-public:
-	virtual ~BfmeNamedBaseBG();
-};
-
-// ??1BfmeNamedBaseBG@@UAE@XZ present-unmatched
-BfmeNamedBaseBG::~BfmeNamedBaseBG()
-{
-}
