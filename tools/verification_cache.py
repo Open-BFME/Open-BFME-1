@@ -102,19 +102,22 @@ class Fingerprints:
         self.toolchains = {}
         self.rules_value = None
 
+    @staticmethod
+    def stamp(path):
+        # Not st_atime: reading the file to hash it updates that on relatime mounts.
+        stat = path.stat()
+        return (stat.st_dev, stat.st_ino, stat.st_size, stat.st_mtime_ns, stat.st_ctime_ns)
+
     def file(self, path):
         path = Path(path)
-        before = path.stat()
-        stamp = (before.st_dev, before.st_ino, before.st_size,
-                 before.st_mtime_ns, before.st_ctime_ns)
+        stamp = self.stamp(path)
         if path in self.files:
             old_stamp, receipt = self.files[path]
             if old_stamp != stamp:
                 raise RuntimeError(f'verification input changed: {path}')
             return receipt
         receipt = _file_receipt(path)
-        after = path.stat()
-        if before != after:
+        if stamp != self.stamp(path):
             raise RuntimeError(f'verification input changed while hashing: {path}')
         self.files[path] = (stamp, receipt)
         return receipt

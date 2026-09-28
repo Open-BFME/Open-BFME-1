@@ -2,6 +2,7 @@
 import hashlib
 import json
 import subprocess
+import types
 from pathlib import Path
 
 import pytest
@@ -287,6 +288,27 @@ def test_fingerprints_share_hashes_only_within_invocation(tmp_path, monkeypatch)
     with pytest.raises(RuntimeError, match='input changed'):
         context.validate()
 
+
+
+def test_fingerprint_ignores_access_time_updated_by_hashing(tmp_path, monkeypatch):
+    # relatime mounts (CI runners, tmpfs) bump st_atime on the first read after
+    # a write; that read is the hash itself and must not look like a mutation.
+    source = tmp_path / 'source'
+    source.write_bytes(b'unchanged')
+    real_stat, reads = cache.Path.stat, []
+    def stat(self, *args, **kwargs):
+        value = real_stat(self, *args, **kwargs)
+        if self != source:
+            return value
+        reads.append(self)
+        fields = {name: getattr(value, name) for name in dir(value) if name.startswith('st_')}
+        fields['st_atime'] += len(reads)
+        fields['st_atime_ns'] += len(reads) * 10**9
+        return types.SimpleNamespace(**fields)
+    monkeypatch.setattr(cache.Path, 'stat', stat)
+    context = cache.Fingerprints()
+    assert context.file(source) == context.file(source)
+    context.validate()
 
 def test_rule_and_tool_fingerprints_are_shared_per_configuration(monkeypatch):
     calls = []
