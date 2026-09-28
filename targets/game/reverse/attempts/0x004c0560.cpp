@@ -1,28 +1,40 @@
-// ?d_004c0560@@YAXXZ
-// partial score=0.37 date=2026-09-26
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/radar /Iinputs/reference/shims/mouselayout /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
-// BFME's callback adds slider-track handling and a common context-click tail to the Zero Hour twin.
+// ?ControlBarSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
+// partial score=0.438 date=2026-09-28
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// ControlBarSystem, retail 0x004C0560 (1459 B). Home: game/GameEngine/Source/GameClient/GUI/GUICallbacks/.
+// IDENTITY PROVEN: FunctionLexicon entry at VA 0x012A9648 pairs literal "ControlBarSystem"
+// (VA 0x010873F0) with ILT 0x004080E4 -> 0x004C0560, the same proof as LeftHUDInput (0x012A98E8).
+// String model: WWLib ascii_string/unicode_string as in ControlBarVisibility.cpp. Real extern globals.
+// Control flow read from retail: no common tail; slider-track tests 8 ids then
+// processContextSensitiveButtonClick decides HANDLED/IGNORED; BFME HideSaveLoadMenu/rva00569D80.
+// Residue (probe 1457/1459 B, shape 0.926): retail msg=ebp, zero=ebx (prologue/CREATE/EDIT),
+// -1=esi (statics only); ours msg=ebx, -1=ebp, no zero register. Retail also caches TheGameLogic
+// in edi across the else-chain and skips its reload after isInMultiplayerGame (callee memory
+// effects known) but not after isPlayerActive; a visible noinline isInMultiplayerGame body gives
+// that knowledge but also ecx-preservation knowledge retail lacks (1447 B, shape 0.928).
+#include "ascii_string.h"
+#include "unicode_string.h"
 
-#define ASCIISTRING_H
-#define __PLACEMENT_VEC_NEW_INLINE
-#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
-
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef unsigned short WideChar;
-typedef bool Bool;
-#ifndef NULL
-#define NULL 0
-#endif
-
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
-template <> inline const char *StringBase<char>::str() const
-{
+template <> inline const char *StringBase<char>::str() const {
     return m_data ? m_data->data : "";
 }
+template <> inline const unsigned short *StringBase<unsigned short>::str() const {
+    return m_data ? m_data->data : (const unsigned short *)L"";
+}
+template <> inline StringBase<unsigned short>::~StringBase() { releaseBuffer(); }
+inline UnicodeString::UnicodeString(const UnicodeString& s) {
+    ((StringBase<unsigned short>*)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short>*)&s);
+}
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->StringBase<unsigned short>::~StringBase(); }
 
+typedef int Int;
+typedef unsigned int UnsignedInt;
+typedef bool Bool;
+typedef unsigned short WideChar;
 typedef unsigned int WindowMsgData;
+
 enum WindowMsgHandledType { MSG_IGNORED, MSG_HANDLED };
+enum { GWM_CREATE = 1 };
 enum GadgetGameMessage
 {
     GBM_MOUSE_ENTERING = 0x4006,
@@ -33,292 +45,167 @@ enum GadgetGameMessage
     GEM_EDIT_DONE = 0x4030
 };
 enum NameKeyType { NAMEKEY_INVALID = 0 };
-enum CBCommandStatus { CBC_COMMAND_NOT_USED = 0, CBC_COMMAND_USED = 1 };
-enum { GWM_CREATE = 1 };
-
-class UnicodeString
-{
-public:
-    static UnicodeString TheEmptyString;
-    UnicodeString( const UnicodeString &source )
-    {
-        ((StringBase<WideChar> *)this)->StringBase<WideChar>::StringBase(
-            *(const StringBase<WideChar> *)&source );
-    }
-    ~UnicodeString();
-    const WideChar *str() const
-    {
-        return m_text ? (const WideChar *)((const char *)m_text + 8) : (const WideChar *)L"";
-    }
-private:
-    void *m_text;
-};
+enum CBCommandStatus { CBC_COMMAND_NOT_USED = 0, CBC_COMMAND_USED };
 
 class GameWindow
 {
 public:
-    int winGetWindowId();
+    Int winGetWindowId( void );
 };
+
 class CommandButton;
+
 class NameKeyGenerator
 {
 public:
     NameKeyType nameToKey( const char *name );
     NameKeyType nameToKey( const AsciiString &name ) { return nameToKey( name.str() ); }
 };
-#define TheNameKeyGenerator (*(NameKeyGenerator **)0x012ED600)
+extern NameKeyGenerator *TheNameKeyGenerator;
 inline NameKeyType NAMEKEY( const char *name ) { return TheNameKeyGenerator->nameToKey( name ); }
+
+WindowMsgHandledType ControlBarSystem( GameWindow *window, UnsignedInt msg,
+                                       WindowMsgData mData1, WindowMsgData mData2 );
 
 class ControlBar
 {
 public:
-    CBCommandStatus processCommandTransitionUI( GameWindow *control, GadgetGameMessage gadgetMessage );
     CBCommandStatus processContextSensitiveButtonClick( GameWindow *button, GadgetGameMessage gadgetMessage );
     const CommandButton *findCommandButton( const AsciiString &name );
-    void togglePurchaseScience();
-    void toggleControlBarStage();
+    void togglePurchaseScience( void );
+    void toggleControlBarStage( void );
+protected:
+    CBCommandStatus processCommandTransitionUI( GameWindow *control, GadgetGameMessage gadgetMessage );
+    friend WindowMsgHandledType ControlBarSystem( GameWindow *, UnsignedInt, WindowMsgData, WindowMsgData );
 };
-#define TheControlBar (*(ControlBar **)0x012F33F8)
+extern ControlBar *TheControlBar;
 
 class GameLogic
 {
 public:
-    bool isInMultiplayerGame();
+    Bool isInMultiplayerGame( void );
 };
-#define TheGameLogic (*(GameLogic **)0x012F0898)
+extern GameLogic *TheGameLogic;
 
 class Player
 {
 public:
-    bool isPlayerActive();
+    Bool isPlayerActive( void ) const;
 };
+
 class PlayerList
 {
 public:
-    Player *getLocalPlayer();
+    Player *getLocalPlayer( void ) { return m_local; }
+private:
+    Int m_unmodelled[3];
+    Player *m_local;
 };
-#define ThePlayerList (*(PlayerList **)0x012ED748)
+extern PlayerList *ThePlayerList;
 
-class GameWindowManager;
-class InGameUI;
-#define TheWindowManager (*(GameWindowManager **)0x012F1B40)
-#define TheInGameUI (*(InGameUI **)0x012F148C)
+class ScriptEngine
+{
+public:
+    Bool isGameEnding( void ) { return m_endGameTimer >= 0; }
+private:
+    unsigned char m_unreconstructed_00[0x17080];
+    Int m_endGameTimer;
+};
+extern ScriptEngine *TheScriptEngine;
 
 class LanguageFilter
 {
 public:
     void filterLine( UnicodeString &line );
 };
-#define TheLanguageFilter (*(LanguageFilter **)0x012F1570)
+extern LanguageFilter *TheLanguageFilter;
 
 class GameMessage
 {
 public:
-    typedef int Type;
+    enum Type { MSG_REMOVE_BEACON = 0x444, MSG_SET_BEACON_TEXT = 0x445 };
     void appendWideCharArgument( const WideChar &character );
 };
-class Rva004C0560MessageStream
+
+class MessageStream
 {
 public:
-    virtual void slot00() = 0;
-    virtual void slot01() = 0;
-    virtual void slot02() = 0;
-    virtual void slot03() = 0;
-    virtual void slot04() = 0;
-    virtual void slot05() = 0;
-    virtual void slot06() = 0;
-    virtual void slot07() = 0;
-    virtual void slot08() = 0;
-    virtual void slot09() = 0;
-    virtual void slot0A() = 0;
-    virtual void slot0B() = 0;
-    virtual void slot0C() = 0;
-    virtual GameMessage *appendMessage( GameMessage::Type type ) = 0;
+    virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03();
+    virtual void slot04(); virtual void slot05(); virtual void slot06(); virtual void slot07();
+    virtual void slot08(); virtual void slot09(); virtual void slot0A(); virtual void slot0B();
+    virtual void slot0C();
+    virtual GameMessage *appendMessage( GameMessage::Type type );
 };
-#define TheMessageStream (*(Rva004C0560MessageStream **)0x012ED5EC)
+extern MessageStream *TheMessageStream;
 
-struct ScriptEngine
+class GameWindowManager
 {
-    unsigned char m_unreconstructed_00[0x17080];
-    Int m_endGameTimer;
-    Bool isGameEnding() const { return m_endGameTimer >= 0; }
+public:
+    virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03();
+    virtual void slot04(); virtual void slot05(); virtual void slot06(); virtual void slot07();
+    virtual void slot08(); virtual void slot09(); virtual void slot0A(); virtual void slot0B();
+    virtual void slot0C(); virtual void slot0D(); virtual void slot0E(); virtual void slot0F();
+    virtual void slot10(); virtual void slot11(); virtual void slot12(); virtual void slot13();
+    virtual void slot14(); virtual void slot15(); virtual void slot16(); virtual void slot17();
+    virtual void slot18(); virtual void slot19(); virtual void slot1A(); virtual void slot1B();
+    virtual void slot1C(); virtual void slot1D(); virtual void slot1E(); virtual void slot1F();
+    virtual void slot20(); virtual void slot21(); virtual void slot22(); virtual void slot23();
+    virtual void slot24(); virtual void slot25(); virtual void slot26(); virtual void slot27();
+    virtual void slot28(); virtual void slot29(); virtual void slot2A(); virtual void slot2B();
+    virtual void slot2C(); virtual void slot2D(); virtual void slot2E(); virtual void slot2F();
+    virtual void slot30(); virtual void slot31(); virtual void slot32(); virtual void slot33();
+    virtual void slot34(); virtual void slot35(); virtual void slot36();
+    virtual GameWindow *winGetWindowFromId( GameWindow *window, Int id );
 };
-extern ScriptEngine *TheScriptEngine;
+extern GameWindowManager *TheWindowManager;
 
-UnicodeString GadgetTextEntryGetText( GameWindow *textEntry );
-void GadgetTextEntrySetText( GameWindow *textEntry, UnicodeString text );
+class InGameUI
+{
+public:
+    virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03();
+    virtual void slot04(); virtual void slot05(); virtual void slot06(); virtual void slot07();
+    virtual void slot08(); virtual void slot09(); virtual void slot0A(); virtual void slot0B();
+    virtual void slot0C(); virtual void slot0D(); virtual void slot0E(); virtual void slot0F();
+    virtual void slot10(); virtual void slot11(); virtual void slot12(); virtual void slot13();
+    virtual void slot14(); virtual void slot15(); virtual void slot16(); virtual void slot17();
+    virtual void slot18(); virtual void slot19(); virtual void slot1A(); virtual void slot1B();
+    virtual void slot1C(); virtual void slot1D(); virtual void slot1E(); virtual void slot1F();
+    virtual void slot20(); virtual void slot21(); virtual void slot22(); virtual void slot23();
+    virtual void slot24(); virtual void slot25(); virtual void slot26(); virtual void slot27();
+    virtual void slot28(); virtual void slot29(); virtual void slot2A(); virtual void slot2B();
+    virtual void slot2C(); virtual void slot2D();
+    virtual void setGUICommand( const CommandButton *command );
+    virtual void slot2F();
+    virtual void slot30(); virtual void slot31(); virtual void slot32(); virtual void slot33();
+    virtual void slot34(); virtual void slot35(); virtual void slot36(); virtual void slot37();
+    virtual void slot38(); virtual void slot39(); virtual void slot3A(); virtual void slot3B();
+    virtual Int getSelectCount( void );
+    virtual void slot3D(); virtual void slot3E(); virtual void slot3F();
+    virtual void slot40(); virtual void slot41(); virtual void slot42(); virtual void slot43();
+    virtual void slot44(); virtual void slot45(); virtual void slot46(); virtual void slot47();
+    virtual void slot48(); virtual void slot49(); virtual void slot4A(); virtual void slot4B();
+    virtual void slot4C(); virtual void slot4D(); virtual void slot4E(); virtual void slot4F();
+    virtual void slot50(); virtual void slot51(); virtual void slot52(); virtual void slot53();
+    virtual void slot54(); virtual void slot55(); virtual void slot56(); virtual void slot57();
+    virtual void slot58(); virtual void slot59(); virtual void slot5A(); virtual void slot5B();
+    virtual void slot5C(); virtual void slot5D(); virtual void slot5E(); virtual void slot5F();
+    virtual void slot60();
+    virtual void selectNextIdleWorker( void );
+};
+extern InGameUI *TheInGameUI;
+
+UnicodeString GadgetTextEntryGetText( GameWindow *textentry );
+void GadgetTextEntrySetText( GameWindow *textentry, UnicodeString text );
 void HideSaveLoadMenu( void );
+// UnicodeString::TheEmptyString; the WWLib UnicodeString model has no static member.
+extern const UnicodeString Rva01336E54EmptyUnicode;
 void rva00569D80( void );
-
-class Rva004C0560InGameUI
-{
-public:
-    virtual void slot00() = 0;
-    virtual void slot01() = 0;
-    virtual void slot02() = 0;
-    virtual void slot03() = 0;
-    virtual void slot04() = 0;
-    virtual void slot05() = 0;
-    virtual void slot06() = 0;
-    virtual void slot07() = 0;
-    virtual void slot08() = 0;
-    virtual void slot09() = 0;
-    virtual void slot0A() = 0;
-    virtual void slot0B() = 0;
-    virtual void slot0C() = 0;
-    virtual void slot0D() = 0;
-    virtual void slot0E() = 0;
-    virtual void slot0F() = 0;
-    virtual void slot10() = 0;
-    virtual void slot11() = 0;
-    virtual void slot12() = 0;
-    virtual void slot13() = 0;
-    virtual void slot14() = 0;
-    virtual void slot15() = 0;
-    virtual void slot16() = 0;
-    virtual void slot17() = 0;
-    virtual void slot18() = 0;
-    virtual void slot19() = 0;
-    virtual void slot1A() = 0;
-    virtual void slot1B() = 0;
-    virtual void slot1C() = 0;
-    virtual void slot1D() = 0;
-    virtual void slot1E() = 0;
-    virtual void slot1F() = 0;
-    virtual void slot20() = 0;
-    virtual void slot21() = 0;
-    virtual void slot22() = 0;
-    virtual void slot23() = 0;
-    virtual void slot24() = 0;
-    virtual void slot25() = 0;
-    virtual void slot26() = 0;
-    virtual void slot27() = 0;
-    virtual void slot28() = 0;
-    virtual void slot29() = 0;
-    virtual void slot2A() = 0;
-    virtual void slot2B() = 0;
-    virtual void slot2C() = 0;
-    virtual void slot2D() = 0;
-    virtual void setGUICommand( const CommandButton *command ) = 0;
-    virtual const CommandButton *getGUICommand() = 0;
-    virtual void slot30() = 0;
-    virtual void slot31() = 0;
-    virtual void slot32() = 0;
-    virtual void slot33() = 0;
-    virtual void slot34() = 0;
-    virtual void slot35() = 0;
-    virtual void slot36() = 0;
-    virtual void slot37() = 0;
-    virtual void slot38() = 0;
-    virtual void slot39() = 0;
-    virtual void slot3A() = 0;
-    virtual void slot3B() = 0;
-    virtual int getSelectCount() = 0;
-    virtual void slot3D() = 0;
-    virtual void slot3E() = 0;
-    virtual void slot3F() = 0;
-    virtual void slot40() = 0;
-    virtual void slot41() = 0;
-    virtual void slot42() = 0;
-    virtual void slot43() = 0;
-    virtual void slot44() = 0;
-    virtual void slot45() = 0;
-    virtual void slot46() = 0;
-    virtual void slot47() = 0;
-    virtual void slot48() = 0;
-    virtual void slot49() = 0;
-    virtual void slot4A() = 0;
-    virtual void slot4B() = 0;
-    virtual void slot4C() = 0;
-    virtual void slot4D() = 0;
-    virtual void slot4E() = 0;
-    virtual void slot4F() = 0;
-    virtual void slot50() = 0;
-    virtual void slot51() = 0;
-    virtual void slot52() = 0;
-    virtual void slot53() = 0;
-    virtual void slot54() = 0;
-    virtual void slot55() = 0;
-    virtual void slot56() = 0;
-    virtual void slot57() = 0;
-    virtual void slot58() = 0;
-    virtual void slot59() = 0;
-    virtual void slot5A() = 0;
-    virtual void slot5B() = 0;
-    virtual void slot5C() = 0;
-    virtual void slot5D() = 0;
-    virtual void slot5E() = 0;
-    virtual void slot5F() = 0;
-    virtual void slot60() = 0;
-    virtual void selectNextIdleWorker() = 0;
-};
-
-class Rva004C0560WindowManager
-{
-public:
-    virtual void slot00() = 0;
-    virtual void slot01() = 0;
-    virtual void slot02() = 0;
-    virtual void slot03() = 0;
-    virtual void slot04() = 0;
-    virtual void slot05() = 0;
-    virtual void slot06() = 0;
-    virtual void slot07() = 0;
-    virtual void slot08() = 0;
-    virtual void slot09() = 0;
-    virtual void slot0A() = 0;
-    virtual void slot0B() = 0;
-    virtual void slot0C() = 0;
-    virtual void slot0D() = 0;
-    virtual void slot0E() = 0;
-    virtual void slot0F() = 0;
-    virtual void slot10() = 0;
-    virtual void slot11() = 0;
-    virtual void slot12() = 0;
-    virtual void slot13() = 0;
-    virtual void slot14() = 0;
-    virtual void slot15() = 0;
-    virtual void slot16() = 0;
-    virtual void slot17() = 0;
-    virtual void slot18() = 0;
-    virtual void slot19() = 0;
-    virtual void slot1A() = 0;
-    virtual void slot1B() = 0;
-    virtual void slot1C() = 0;
-    virtual void slot1D() = 0;
-    virtual void slot1E() = 0;
-    virtual void slot1F() = 0;
-    virtual void slot20() = 0;
-    virtual void slot21() = 0;
-    virtual void slot22() = 0;
-    virtual void slot23() = 0;
-    virtual void slot24() = 0;
-    virtual void slot25() = 0;
-    virtual void slot26() = 0;
-    virtual void slot27() = 0;
-    virtual void slot28() = 0;
-    virtual void slot29() = 0;
-    virtual void slot2A() = 0;
-    virtual void slot2B() = 0;
-    virtual void slot2C() = 0;
-    virtual void slot2D() = 0;
-    virtual void slot2E() = 0;
-    virtual void slot2F() = 0;
-    virtual void slot30() = 0;
-    virtual void slot31() = 0;
-    virtual void slot32() = 0;
-    virtual void slot33() = 0;
-    virtual void slot34() = 0;
-    virtual void slot35() = 0;
-    virtual void slot36() = 0;
-    virtual GameWindow *winGetWindowFromId( GameWindow *parent, int id ) = 0;
-};
 
 WindowMsgHandledType ControlBarSystem( GameWindow *window, UnsignedInt msg,
                                        WindowMsgData mData1, WindowMsgData mData2 )
 {
     static NameKeyType buttonCommunicator = NAMEKEY_INVALID;
-    if( TheScriptEngine && TheScriptEngine->m_endGameTimer >= 0 )
+    if( TheScriptEngine && TheScriptEngine->isGameEnding() )
         return MSG_IGNORED;
 
     switch( msg )
@@ -358,28 +245,32 @@ WindowMsgHandledType ControlBarSystem( GameWindow *window, UnsignedInt msg,
                     controlID == beaconClearTextButtonID || controlID == buttonLargeID ||
                     controlID == buttonOptions || controlID == buttonIdleWorker )
                     break;
-
+                if( TheControlBar->processContextSensitiveButtonClick( control, (GadgetGameMessage)msg ) == CBC_COMMAND_NOT_USED )
+                    return MSG_IGNORED;
+                break;
             }
 
             if( controlID == buttonCommunicator )
-                break;
-
-            if( controlID == beaconPlacementButtonID && TheGameLogic->isInMultiplayerGame() &&
+            {
+            }
+            else if( controlID == beaconPlacementButtonID && TheGameLogic->isInMultiplayerGame() &&
                 ThePlayerList->getLocalPlayer()->isPlayerActive() )
             {
                 const CommandButton *commandButton = TheControlBar->findCommandButton( AsciiString("Command_PlaceBeacon") );
-                ((Rva004C0560InGameUI *)TheInGameUI)->setGUICommand( commandButton );
+                TheInGameUI->setGUICommand( commandButton );
             }
             else if( controlID == beaconDeleteButtonID && TheGameLogic->isInMultiplayerGame() )
             {
-                TheMessageStream->appendMessage( (GameMessage::Type)0x444 );
+                TheMessageStream->appendMessage( GameMessage::MSG_REMOVE_BEACON );
             }
             else if( controlID == beaconClearTextButtonID && TheGameLogic->isInMultiplayerGame() )
             {
                 static NameKeyType textID = NAMEKEY("ControlBar.wnd:EditBeaconText");
-                GameWindow *win = ((Rva004C0560WindowManager *)TheWindowManager)->winGetWindowFromId( NULL, textID );
+                GameWindow *win = TheWindowManager->winGetWindowFromId( 0, textID );
                 if( win )
-                    GadgetTextEntrySetText( win, UnicodeString::TheEmptyString );
+                {
+                    GadgetTextEntrySetText( win, Rva01336E54EmptyUnicode );
+                }
             }
             else if( controlID == beaconGeneralButtonID )
             {
@@ -397,13 +288,11 @@ WindowMsgHandledType ControlBarSystem( GameWindow *window, UnsignedInt msg,
             else if( controlID == buttonIdleWorker )
             {
                 HideSaveLoadMenu();
-                ((Rva004C0560InGameUI *)TheInGameUI)->selectNextIdleWorker();
+                TheInGameUI->selectNextIdleWorker();
             }
             else
             {
-                if( TheControlBar->processContextSensitiveButtonClick( control, (GadgetGameMessage)msg ) )
-                    break;
-                return MSG_IGNORED;
+                TheControlBar->processContextSensitiveButtonClick( control, (GadgetGameMessage)msg );
             }
             break;
         }
@@ -413,24 +302,27 @@ WindowMsgHandledType ControlBarSystem( GameWindow *window, UnsignedInt msg,
             GameWindow *control = (GameWindow *)mData1;
             Int controlID = control->winGetWindowId();
             static NameKeyType textID = NAMEKEY("ControlBar.wnd:EditBeaconText");
-            if( controlID == textID && ((Rva004C0560InGameUI *)TheInGameUI)->getSelectCount() == 1 )
+            if( controlID == textID )
             {
-                GameMessage *message = TheMessageStream->appendMessage( (GameMessage::Type)0x445 );
-                UnicodeString newText = GadgetTextEntryGetText( control );
-                TheLanguageFilter->filterLine( newText );
-                const WideChar *c = newText.str();
-                while( c && *c )
-                    message->appendWideCharArgument( *c++ );
-                message->appendWideCharArgument( (WideChar)L'\0' );
+                if( TheInGameUI->getSelectCount() == 1 )
+                {
+                    GameMessage *msg = TheMessageStream->appendMessage( GameMessage::MSG_SET_BEACON_TEXT );
+                    UnicodeString newText = GadgetTextEntryGetText( control );
+                    TheLanguageFilter->filterLine( newText );
+                    const WideChar *c = (const WideChar *)newText.str();
+                    while( c && *c )
+                    {
+                        msg->appendWideCharArgument( *c++ );
+                    }
+                    msg->appendWideCharArgument( L'\0' );
+                }
             }
             break;
         }
 
         default:
             return MSG_IGNORED;
-
     }
 
-    TheControlBar->processContextSensitiveButtonClick( (GameWindow *)mData1, (GadgetGameMessage)msg );
     return MSG_HANDLED;
 }
