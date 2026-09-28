@@ -271,7 +271,15 @@ def ensure(bodies, budget=8, cache=None):
     cache = load() if cache is None else cache
     fresh, retry = [], []
     for rva, path in bodies:
-        if current(cache, rva, path) is None:
+        try:
+            unmeasured = current(cache, rva, path) is None
+            hypothesis(rva, path)  # raises for an ambiguous ledger address
+        except ValueError as exc:
+            # Two ledger rows at one address (an over-claim under review) make
+            # the measurement ambiguous; skip it rather than abort the pass.
+            print(f"finish_measure: skipped {exc}", file=sys.stderr)
+            continue
+        if unmeasured:
             entry = cache.get(f"0x{rva:08x}", {})
             (retry if entry.get("version") == VERSION and entry.get("compiles") is False
              and entry.get("fingerprint") == hypothesis(rva, path) else fresh).append((rva, path))
