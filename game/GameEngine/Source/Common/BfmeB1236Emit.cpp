@@ -1,28 +1,6 @@
-// ?bfmeEmit1236@BfmeB1236@@QAEXPAXH0@Z
-// partial score=0.88 date=2026-09-28
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// ?bfmeEmit1236@BfmeB1236@@QAEXPAXH0@Z  (retail 0x008ADBD0, 1452 bytes, ret 12)
-// Rewrite (opus-5.5, 2026-09-28): 1452/1452 bytes, 173 non-reloc diffs.
-// Identity: matched callers bfmeGo1236 (0x008BDA00) and bfmeTransform1236
-// (0x008BDA70) plus the existing symbols.csv pin.  Apt render-emit body:
-// kind 0x0d/0x12 string callback, 0x0e bounds add, 0x0f callback, 0x10
-// glyph-run loop (lastX/lastY start at -1e8, advance*0.05), isKind11 alpha
-// pair, isKind0C single shape.  Frame table (/FAsc) now equals retail:
-// lastX 0x10 lastY 0x14 j 0x18 scale 0x1c i 0x20 font 0x24 tmp 0x28 matrix
-// 0x2c data 0x44; advance in dead a slot, name string in dead c slot.
-// Levers that moved it: full predicate per test (no shared kind local, else
-// MSVC jump-threads 0xd straight to isKind11); callbacks are the function
-// pointer globals g_bfmeSlot16/27/28/29VB (call [mem] each time, not a
-// cached dllimport); shape test is a one-case switch (mov/dec/jne);
-// __forceinline string operator=; lastX != rec.x operand order; ternary
-// left/right; matrix stores tx,ty,a,d; (unsigned char) on the int
-// isKind11/isKind0C results because the caller tests al.
-// Remaining: found must be ebp (the zero register) and context ebx -- ours
-// swaps them and adds xor ebx,ebx at +0xca; the find result compare at +0x8a
-// is cmp eax,ebp in retail; the left/right type tests narrow to and al/cmp al
-// here (retail dword and eax,0x3f/cmp eax,1) which also stops the early
-// context->m_tail load at +0x17b.  An int-typed type local un-narrows them
-// but flips found back to ebx.
+// Apt render-emit body, retail 0x008ADBD0 (1452 bytes); identity from the matched
+// callers bfmeGo1236 and bfmeTransform1236 in BfmeConv1236.cpp.
 
 struct BfmeStringData3AF0
 {
@@ -86,6 +64,11 @@ public:
 	enum Type { type1 = 1 };
 	int type() const { return m_flags & 0x3f; }
 	Type etype() const { return (Type)(m_flags & 0x3f); }
+	Rva8CD130String &string()
+	{
+		int type = m_flags & 0x3f;
+		return *(Rva8CD130String *)&((type == 1 ? this : m_indirect)->m_string);
+	}
 
 	unsigned m_flags;
 	BfmeStringData3AF0 *m_string;
@@ -105,6 +88,8 @@ public:
 };
 
 extern Rva008AE770Stack Rva008AE770TheStack;
+
+extern int key013384C0, key013384C8;
 
 class BfmeTab1024
 {
@@ -271,6 +256,11 @@ struct RvaEmitState1236
 	unsigned m_bits;
 	BfmeSubF1038 m_bfme20;
 	BfmeSubF1038 m_bfme24;
+
+	AptValue *getValue(void)
+	{
+		return m_table != 0 ? (AptValue *)m_table->bfmeFind1024((int)&key013384C8) : 0;
+	}
 };
 
 struct RvaEmitLerp1236
@@ -305,30 +295,26 @@ void BfmeB1236::bfmeEmit1236(void *a, int unused, void *c)
 		RvaEmitState1236 *state = m_bfme50;
 		if ((state->m_bits & 0x0c000000) == 0)
 		{
-			if (state->m_table != 0 && (Rva00899770 *)state->m_table->bfmeFind1024(0x013384c8) != 0)
+			if (state->getValue() != 0)
 				state->m_bits = (state->m_bits & 0xf7ffffff) | 0x04000000;
 			else
 				state->m_bits = (state->m_bits & 0xfbffffff) | 0x08000000;
 		}
 		if ((state->m_bits & 0x0c000000) == 0x04000000)
 		{
-			AptValue *found = 0;
-			if (state->m_table != 0)
-				found = (AptValue *)state->m_table->bfmeFind1024(0x013384c8);
+			AptValue *found = state->getValue();
 			RvaEmitContext1236 *context =
 				((RvaEmitOwnerTable1236 *)*(void **)state->m_bfme24.m_owner)->m_context;
 			if (context == 0)
 				return;
 			Rva00899770 *created = Rva008AE770TheStack.createString(
-				this, 0, (BfmeStrVKI *)0x013384c0, 1, 1, 0);
+				this, 0, (BfmeStrVKI *)&key013384C0, 1, 1, 0);
 			created->addRef();
 			Rva8CD130String name;
 			name = ((Fields00898F60 *)this)->underscoreFields00898F60();
-			AptValue *left = (created->m_flags & 0x3f) == 1 ? created : created->m_indirect;
-			AptValue *right = (found->m_flags & 0x3f) == 1 ? found : found->m_indirect;
-			((RvaEmitSink1236)g_bfmeSlot29VB)((const char *)right->m_string + 8,
-				(const char *)left->m_string + 8,
-				context->m_tail->m_ref0c->m_value, name.text());
+			RvaEmitTail1236 *tail = context->m_tail;
+			((RvaEmitSink1236)g_bfmeSlot29VB)(found->string().text(), created->string().text(),
+				tail->m_ref0c->m_value, name.text());
 			created->release();
 		}
 		else
@@ -348,9 +334,8 @@ void BfmeB1236::bfmeEmit1236(void *a, int unused, void *c)
 	if ((m_flags & 0x3f) == 0x0f && !((unsigned char)~(m_flags >> 15) & 1))
 	{
 		RvaEmitState1236 *state = m_bfme50;
-		void *value = state->m_bfme20.m_owner;
-		if (value != 0 && value != &g_bfmeSpecialBlock1286)
-			((RvaEmitNotify1236)g_bfmeSlot16VB)(value, c);
+		if (state->m_bfme20.m_owner != 0 && state->m_bfme20.m_owner != &g_bfmeSpecialBlock1286)
+			((RvaEmitNotify1236)g_bfmeSlot16VB)(state->m_bfme20.m_owner, c);
 		return;
 	}
 
