@@ -1,5 +1,5 @@
 // ?render@BfmeShadowBufferEntry@@QAEXPAXG0PAG@Z
-// partial score=0.98 date=2026-09-28
+// partial score=0.99 date=2026-09-28
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWDebug
 
 #include "vector3.h"
@@ -74,7 +74,7 @@ void BfmeShadowBufferEntry::render(void *vertex, unsigned short vertexBase,
 		*out++ = m_allocation0[i] + offset;
 
 	BfmeShadowEdge *edge = m_allocation2;
-	unsigned short *ib = (unsigned short *)index;
+	unsigned short *&ib = (unsigned short *&)index;
 	for (i = (int)m_reserved10; i > 0; i--)
 	{
 		ib[0] = edge->m_vertex0 + count + vertexBase;
@@ -87,10 +87,9 @@ void BfmeShadowBufferEntry::render(void *vertex, unsigned short vertexBase,
 		ib += 6;
 	}
 
-	BfmeShadowMeshModel *model = m_mesh->m_model;
+	BfmeShadowTriIndex *tri = m_mesh->m_model->m_poly->m_data;
 	unsigned char *front = m_allocation1;
-	BfmeShadowTriIndex *tri = model->m_poly->m_data;
-	for (i = model->m_polyCount; i > 0; i--)
+	for (i = m_mesh->m_model->m_polyCount; i > 0; i--)
 	{
 		if (*front)
 		{
