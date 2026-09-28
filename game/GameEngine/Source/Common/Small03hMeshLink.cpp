@@ -27,3 +27,31 @@ void Rva009455B0Box::link(void *node)
 		return;
 	*(void **)((char *)t + 0xBC) = (char *)this + 0xC0;
 }
+
+class Rva009455F0Box
+{
+public:
+	void unlink();
+	char m_pad[0xBC];
+	void *m_link;
+	void *m_tail;
+};
+// Link-reload spelling (m_link re-read for the back-pointer store) is what
+// emits retail's second mov-edx,[ecx+0xBC] load. Pairs with the 0x009455B0
+// link above.
+void Rva009455F0Box::unlink()
+{
+	void *link = m_link;
+	if (link != 0)
+	{
+		void *tail = m_tail;
+		*(void **)link = tail;
+		void *t2 = m_tail;
+		if (t2 != 0)
+		{
+			void *l2 = m_link;
+			*(void **)((char *)t2 + 0xBC) = l2;
+		}
+		m_link = 0;
+	}
+}
