@@ -1,0 +1,34 @@
+// Retail 0x0076EBE0, secondary interface this = primary owner +0xc.
+// ret 12 and three caller stack slots; vtable +8 name, +0x10 frames, +0x18 duration.
+// Format literals and 0x1c-stride track accesses establish behavior; owner identity stays address-qualified.
+// cl: /O2 /Ob2 /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWLib
+#include "ascii_string.h"
+template <> inline const char* StringBase<char>::str() const { return m_data ? m_data->data : ""; }
+class Animation0076EBE0 { public:
+ virtual void slot00(); virtual void slot04(); virtual const char* name(); virtual void slot0c();
+ virtual int frames(); virtual void slot14(); virtual float duration();
+};
+struct Track0076EBE0 { Animation0076EBE0* anim; float frame; float at08; float blend; int mode; int at14; bool at18,at19; };
+extern int g_Va012F8064;
+class Rva0076CAF0ConditionalDispatch { public: void target(); char pad00[0x9c]; int stamp; void synchronize() { if(g_Va012F8064!=stamp) target(); } };
+
+extern const char* AnimModeNames012BB5BC[];
+class AnimationInfo0076EBE0 { public:
+ char pad00[0x90]; int stamp; char pad94[0x3c]; Track0076EBE0 tracks[3];
+ void describe(int,AsciiString*,AsciiString*);
+};
+void AnimationInfo0076EBE0::describe(int index,AsciiString* info,AsciiString* state) {
+ ((Rva0076CAF0ConditionalDispatch*)((char*)this-0xc))->synchronize();
+ if(index>=0 && (unsigned int)index<3 && tracks[index].anim) {
+  if(info) {
+   float duration=tracks[index].anim->duration();
+   int frames=tracks[index].anim->frames();
+   int frame=(int)tracks[index].frame;
+   int blend=(int)tracks[index].blend;
+   int modeIndex=tracks[index].mode;
+   AsciiString mode(AnimModeNames012BB5BC[modeIndex]);
+   info->format("%s %d/%d frames(%.1fs), AnimMode:%s, BlendTime:%d",tracks[index].anim->name(),frame+1,frames,duration,mode.str(),blend);
+  }
+  if(state) state->format("(ModelState and AnimState info not available in release)");
+ }
+}
