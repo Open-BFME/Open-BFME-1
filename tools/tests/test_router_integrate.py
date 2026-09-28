@@ -132,6 +132,25 @@ class PortTest(unittest.TestCase):
                          b'name,export_rva,target_rva\r\n?a@@YAXXZ,,0x00000010\r\n?clean@@YAXXZ,,0x00000020\r\n'
                          b'?up@@YAXXZ,,0x00000030\r\n')
 
+    def test_bank_carries_only_the_targets_evidence(self):
+        log = 'targets/game/reverse/re_attempts.log'
+        (self.base / log).write_bytes(b'old\t0x00000001\r\n')
+        git(self.base, 'add', '-A'); git(self.base, 'commit', '-q', '-m', 'log')
+        for tree in (self.ws, self.dest):
+            git(tree, 'checkout', '-q', '--detach', 'master')
+        (self.ws / log).write_bytes(b'old\t0x00000001\r\n?f\t0x00000020\t9\tpartial\tnear miss\r\n'
+                                    b'?g\t0x00000030\t9\tpartial\tother target\r\n')
+        stash = self.ws / 'targets/game/reverse/attempts/0x00000020.cpp'
+        stash.parent.mkdir(parents=True); stash.write_text('int f;\n')
+        (self.ws / 'targets/game/reverse/attempts/0x00000030.cpp').write_text('int g;\n')
+        args = type('A', (), dict(job=None, workspace=str(self.ws), rva=['0x20'], worktree=str(self.dest),
+                                  base='master', force=False))()
+        ri.bank(args); ri.bank(args)  # idempotent
+        self.assertEqual((self.dest / log).read_bytes(),
+                         b'old\t0x00000001\r\n?f\t0x00000020\t9\tpartial\tnear miss\r\n')
+        self.assertTrue((self.dest / 'targets/game/reverse/attempts/0x00000020.cpp').exists())
+        self.assertFalse((self.dest / 'targets/game/reverse/attempts/0x00000030.cpp').exists())
+
     def test_route(self):
         self.assertEqual(ri.route('inputs/reference/shims/a/b.h'), 'port')
         self.assertEqual(ri.route('inputs/reference/CnC_Generals_Zero_Hour/x.h'), 'refuse')

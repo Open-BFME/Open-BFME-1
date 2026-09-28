@@ -283,6 +283,46 @@ def port(j, dest):
             f.write_text(raw, encoding='utf-8', newline='')
 
 
+BANKED = ('targets/game/reverse/attempts/', 'targets/game/reverse/attempt_history/')
+TERMINAL_JOB = ('completed', 'failed', 'cancelled')
+
+
+def bank(args):
+    """Carry a finished job's near-miss evidence to origin: its new re_attempts.log
+    verdict rows, its banked stash (attempts/<rva>.cpp) and attempt history. The
+    integrate path only takes jobs that LANDED a row, so before this every fleet
+    near-miss stayed in its worker worktree and the next seat started cold."""
+    j, attempts, rvas, _ = info(args)
+    if args.job and j['status'] not in TERMINAL_JOB and not args.force:
+        raise SystemExit(f'job is {j["status"]}: it may still land; bank only a finished job')
+    ws = j['cwd']
+    dest = Path(args.worktree).resolve()
+    if not dest.exists():
+        git(ROOT, 'fetch', '-q', 'origin', 'master', check=True)
+        git(ROOT, 'worktree', 'add', '-q', '--detach', str(dest), args.base, check=True)
+    keys = {r.lower() for r in rvas}
+    moved = []
+    for p, st in changes(ws):
+        if not p.startswith(BANKED) or st == 'deleted':
+            continue
+        if not any(f'/{k}' in p.lower() for k in keys):  # attempts/0x0012abcd.cpp, attempt_history/0x0012abcd/
+            continue  # another target's evidence
+        (dest / p).parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(Path(ws) / p, dest / p)
+        moved.append(p)
+    add, _ = ledger_delta(ws, LEDGERS[3])
+    add = [a for a in add if any(k in a.lower() for k in keys)]
+    f = dest / LEDGERS[3]
+    raw = f.read_bytes()
+    have = set(raw.replace(b'\r\n', b'\n').split(b'\n'))
+    nl = b'\r\n' if raw.count(b'\r\n') * 2 > raw.count(b'\n') else b'\n'
+    new = [a.encode('utf-8', 'surrogateescape') for a in add]
+    new = [a for a in new if a not in have]
+    if new:
+        f.write_bytes((raw if raw.endswith(b'\n') else raw + nl) + b''.join(a + nl for a in new))
+    print(json.dumps({'job': args.job, 'status': j['status'], 'files': moved, 'verdict_rows': len(new)}))
+
+
 def integrate(args):
     rev = review(args)
     print(json.dumps(rev, indent=1))
@@ -379,6 +419,12 @@ def main(argv=None):
     sub = ap.add_subparsers(dest='cmd', required=True)
     r = sub.add_parser('review')
     i = sub.add_parser('integrate')
+    bk = sub.add_parser('bank', help="port a finished job's verdict rows, stash and attempt history only")
+    bk.add_argument('job', nargs='?')
+    bk.add_argument('--workspace'); bk.add_argument('--rva', action='append', default=[])
+    bk.add_argument('--worktree', default=str(ROOT / 'build' / 'wt' / 'bank'))
+    bk.add_argument('--base', default='origin/master')
+    bk.add_argument('--force', action='store_true', help='bank a job that is not finished')
     for x in (r, i):
         x.add_argument('job', nargs='?')
         x.add_argument('--workspace', help='a prepared worktree instead of a router job')
@@ -395,6 +441,9 @@ def main(argv=None):
     i.add_argument('--force', action='store_true', help='integrate despite review problems you have checked')
     i.add_argument('--trailer', default='', help='extra commit message trailer lines (\\n separated)')
     a = ap.parse_args(argv)
+    if a.cmd == 'bank':
+        bank(a)
+        return 0
     if a.cmd == 'review':
         res = review(a)
         print(json.dumps(res, indent=1))
