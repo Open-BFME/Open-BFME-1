@@ -4,6 +4,7 @@
 #include <string.h>
 
 typedef char *(__cdecl *StrpbrkFunction)(const char *, const char *);
+extern "C" StrpbrkFunction _imp__strpbrk;
 
 char *nextParam(char *newSource, char *seps)
 {
@@ -20,7 +21,7 @@ char *nextParam(char *newSource, char *seps)
 	char *first = source;
 	if (first)
 	{
-		StrpbrkFunction find = *(StrpbrkFunction *)0x013594C4;
+		StrpbrkFunction find = _imp__strpbrk;
 		char *firstSep = find(first, seps);
 		char firstChar[2] = {0, 0};
 		if (firstSep == first)

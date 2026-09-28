@@ -336,6 +336,8 @@ extern char __cdecl bfmeUnlock1179();
 extern void __cdecl d_009064f0();
 extern volatile int g_bfmeOwnerVHM;
 extern volatile int g_bfmeDepthVHM;
+extern unsigned char g_0133F4A8[0x40];
+extern unsigned char g_0133F548[0x40];
 class BfmeAwakenDebug;
 extern BfmeAwakenDebug *TheBfmeAwakenDebug;
 struct BfmeDebug
@@ -370,32 +372,32 @@ bool DX8Wrapper::Init(void *hwnd, bool lite)
 
 	memset(Textures, 0, sizeof(Textures));
 
-	memset((void *)0x01340100, 0, 0x400);
-	memset((void *)0x0133F9E0, 0, 0x400);
-	memset((void *)0x01340600, 0, 0x600);
-	memset((void *)0x01341150, 0, 0x80);
-	memset((void *)0x01340EC0, 0, 0x270);
+	memset(RenderStates, 0, 0x400);
+	memset(TextureStageStates, 0, 0x400);
+	memset(Vertex_Shader_Constants, 0, 0x600);
+	memset(Pixel_Shader_Constants, 0, 0x80);
+	memset(&render_state, 0, 0x270);
 	_Hwnd = (HWND)hwnd;
 	BFME_RVA_G32(0x01340570) = GetCurrentThreadId();
 	InitializeCriticalSection((LPCRITICAL_SECTION)0x0133F4E8);
 	BFME_RVA_G32(0x0133F540) = (unsigned)CreateMutexA(0, 0, 0);
 	W3DRadarResetLock();
 
-	memset((void *)0x0133F4A8, 0, 0x40);
-	memset((void *)0x0133F548, 0, 0x40);
+	memset(g_0133F4A8, 0, 0x40);
+	memset(g_0133F548, 0, 0x40);
 	// Retail loads the count and destination before seven scalar stores, then runs rep stosd after them.
 	// The measured C++ variants kept the clear setup beside rep stosd, so this block splits those instructions.
 	__asm {
 		mov ecx, 16
 		mov edi, 0x0133F500
 	}
-	*(volatile unsigned *)0x012D6DB0 = -1;
-	*(volatile unsigned *)0x012D6DB4 = 640;
-	*(volatile unsigned *)0x012D6DB8 = 480;
-	*(volatile unsigned *)0x012D6DBC = 32;
-	*(volatile unsigned char *)0x0134050D = 0;
-	*(volatile unsigned char *)0x012D6DAC = 0;
-	*(volatile unsigned *)0x013400FC = 0;
+	CurRenderDevice = -1;
+	ResolutionWidth = 640;
+	ResolutionHeight = 480;
+	BitDepth = 32;
+	IsWindowed = false;
+	DX8Wrapper_IsWindowed = false;
+	*(unsigned *)CurrentDX8LightEnables = 0;
 	__asm rep stosd
 	BFME_RVA_G32(0x01340530) = 0;
 	BFME_RVA_G32(0x01340534) = 0;
