@@ -8,13 +8,24 @@
 #            grokbig | solbig | lunabig -> claim ONE large body (1KB..2.5KB) and stay on it
 #            for up to 3 sessions while it is still a dump and the last banked partial
 #            scored >= 0.5 (each session restarts from the stash)
-#   luna = codex gpt-5.6-luna at reasoning effort max; sol = codex gpt-5.6-sol medium
+#   luna* = codex gpt-6-astra (medium; high/xhigh variants), FLEET_LUNA=1 for gpt-5.6-luna; sol = codex gpt-5.6-sol medium
 cd "$(git -C "$(dirname "$0")" rev-parse --show-toplevel)" || exit 1  # works from tools/fleet/ or a build/ copy
 ENGINE="$1"; SEAT="$2"
 case "$ENGINE" in
-  lunahigh*) CMODEL=luna-high; CM="gpt-5.6-luna"; CE="high";;
-  lunaxhigh*) CMODEL=luna-xhigh; CM="gpt-5.6-luna"; CE="xhigh";;
-  luna*) CMODEL=luna-max; CM="gpt-5.6-luna"; CE="max";;
+  # The luna* lanes keep their names (the pickers key on them) but run
+  # gpt-6-astra by default. Tagged verdicts to 2026-09-28: luna landed ~12 B
+  # per verdict (99 KB over 8,217), astra ~204 B (328 KB over 1,612).
+  # FLEET_LUNA=1 restores gpt-5.6-luna for a deliberate comparison run.
+  lunahigh*|lunaxhigh*|luna*)
+    if [ "${FLEET_LUNA:-0}" = 1 ]; then
+      CM="gpt-5.6-luna"
+      case "$ENGINE" in lunahigh*) CE="high";; lunaxhigh*) CE="xhigh";; *) CE="max";; esac
+      CMODEL="luna-$CE"
+    else
+      CM="gpt-6-astra"
+      case "$ENGINE" in lunahigh*) CE="high";; lunaxhigh*) CE="xhigh";; *) CE="medium";; esac
+      CMODEL="astra-$CE"
+    fi;;
   solhigh*) CMODEL=sol-high; CM="gpt-5.6-sol"; CE="high";;
   sol*)  CMODEL=sol;      CM="gpt-5.6-sol";  CE="medium";;
   *)     CMODEL=grok;;

@@ -6,7 +6,7 @@ for ($i = 0; $i -lt $Seats.Count; $i++) {
   $eng = $seat -replace '\d+$',''; $num = $seat -replace '^\D+',''
   $loops = Get-CimInstance Win32_Process -Filter "Name='bash.exe'" | Where-Object { $_.CommandLine -match ("seat\.sh " + $eng + " " + $num + "$") }
   foreach ($l in $loops) { Stop-Process -Id $l.ProcessId -Force -ErrorAction SilentlyContinue }
-  $sess = Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match 'gpt-5\.6-luna' -and $_.CommandLine -match $stem -and $_.Name -match 'timeout|node|codex|cmd' }
+  $sess = Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match 'gpt-5\.6-luna|gpt-6-astra' -and $_.CommandLine -match $stem -and $_.Name -match 'timeout|node|codex|cmd' }
   foreach ($p in $sess) { Stop-Process -Id $p.ProcessId -Force -ErrorAction SilentlyContinue }
   "retired $seat ($stem): loops=$(@($loops).Count) session-procs=$(@($sess).Count)"
 }
