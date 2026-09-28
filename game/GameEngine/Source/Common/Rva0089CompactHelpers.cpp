@@ -277,3 +277,29 @@ void Rva00892390List::push(Rva00892390Item *item)
 	if ((flags & 1) == 0)
 		item->slot0();
 }
+
+class Rva00891920Item
+{
+public:
+	unsigned int m_head;
+	unsigned int m_flags;
+};
+class Rva00891A30List
+{
+public:
+	void push(Rva00891920Item *item);
+	int m_capacity;
+	int m_count;
+	void **m_slots;
+};
+// ?push@Rva00891A30List@@QAEXPAVRva00891920Item@@@Z
+void Rva00891A30List::push(Rva00891920Item *item)
+{
+	if (m_count >= m_capacity)
+	{
+		item->m_flags &= 0xBFFFFFFF;
+		return;
+	}
+	m_slots[m_count] = item;
+	++m_count;
+}
