@@ -8488,5 +8488,15 @@
   "after_sha256": "d59c44aade606e7afca4d3fc1615caf8f8fe4798feeebbf25b9285e68082535e",
   "evidence": "targets/game/reverse/identity_evidence/0x000d22a0-view-names.md",
   "reason": "The callers and ILT pin prove only the outer method. The helper views keep RVA tokens because their class identities remain unknown. Shared Object and Thing headers retain the witnessed members."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0053e390.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/OnlineStateUpdateCreateGame0053E390.cpp",
+  "old_name": "AptLivingWorldWindowIndex",
+  "new_name": "Rva0009B4B0",
+  "before_sha256": "6d2e6c05de4ba7ffbc7bd9efbbabc93afc5878fa2735540204eca1b070a6e4bc",
+  "after_sha256": "aa95a78a929524a271459f1f3faa1069808fdebd31abccba7f114d171787f496",
+  "evidence": "targets/game/reverse/identity_evidence/0053e390-create-game.md",
+  "reason": "ILT 0x000019F6 reaches 0x0009B4B0 which the ledger matches as the obfuscation-hook wrapper Rva0009B4B0 (BigObfHookWrappers.cpp); called here as (exeCRC exeCRC) for the request CRC; the APT Living World window-index name was a guess with no supporting evidence."
  }
 ]
