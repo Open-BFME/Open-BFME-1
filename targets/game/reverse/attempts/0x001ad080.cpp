@@ -1,16 +1,20 @@
 // ?placeAt001AD080@Rva001AD080TerrainLogic@@QAEXPBVThingTemplate@@PBUCoord3D@@PBVMatrix3D@@M@Z
-// partial score=0.8249158249 date=2026-09-28
-// cl: /DNDEBUG /MD /EHsc- /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
-// Retail RVA 0x001AD080, 594 bytes. Address-derived placement helper.
+// partial score=0.8266 date=2026-09-28
+// cl: /DNDEBUG /MD /EHsc- /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Iinputs/reference/shims/stringinline
+// stlport
+// Retail RVA 0x001AD080, 594 bytes. Tree placement: needs a W3DTreeDrawModule, links the record into its bucket.
+// Residue: retail keeps this in EBX and position in EDI; this form swaps them (see build/r1ad080 in the seat).
 
-#include <new>
+#include <vector>
+
+#include "StringInline.h"
 
 typedef unsigned short UnsignedShort;
 typedef unsigned int UnsignedInt;
 typedef int Int;
 typedef bool Bool;
 typedef float Real;
-typedef Int DrawableID;
+enum DrawableID { INVALID_DRAWABLE_ID = 0 };
 
 struct Coord3D
 {
@@ -55,7 +59,19 @@ public:
  }
 
 private:
-	char m_pad00[0x2a0];
+	char m_pad00[0x20];
+
+public:
+	AsciiString m_nameString;
+
+private:
+	char m_pad24[0x4c - 0x24];
+
+public:
+	AsciiString m_shadowTextureName;
+
+private:
+	char m_pad50[0x2a0 - 0x50];
 
 public:
 	Rva001AD080Entry *m_begin;
@@ -69,13 +85,15 @@ public:
 	unsigned char m_field48c;
 };
 
-class Rva001AD080GameClient
+class GameClient
 {
-public:
-	DrawableID allocDrawableID();
+	friend class Rva001AD080TerrainLogic;
+
+protected:
+	DrawableID allocDrawableID();	///< landed at 0x0042E520
 };
 
-extern Rva001AD080GameClient *TheGameClient;
+extern GameClient *TheGameClient;
 extern Bool _bfme_debugReportingEnabled();
 extern void _bfme_debugRecordCallsite(Int kind);
 
@@ -104,7 +122,7 @@ public:
 	virtual Rva001AD080DebugReport *slot4c(Int kind);
 };
 
-class Rva001AD080DebugManager
+class BfmeAwakenDebug
 {
 public:
 	virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0c();
@@ -116,10 +134,10 @@ public:
 	virtual void slot60();
 	virtual void slot64();
 	virtual void slot68();
-	virtual virtual Rva001AD080DebugReport *slot6c(Int first, Int second);
+	virtual Rva001AD080DebugReport *slot6c(Int first, Int second);
 };
 
-extern Rva001AD080DebugManager *TheBfmeAwakenDebug;
+extern BfmeAwakenDebug *TheBfmeAwakenDebug;
 
 class Rva001AD080TerrainVisual
 {
@@ -133,11 +151,11 @@ public:
 	virtual void slot24(); virtual void slot25(); virtual void slot26(); virtual void slot27();
 	virtual void slot28(); virtual void slot29(); virtual void slot30(); virtual void slot31();
 	virtual void slot32();
-	virtual void slot33(DrawableID, Coord3D, const Matrix3D *, Real,
-		Int, void *, Int, const void *, const void *);
+	virtual void slot33(DrawableID, Coord3D, Real, const Matrix3D *,
+		Int, void *, Int, const AsciiString &, const AsciiString &);
 };
 
-extern Rva001AD080TerrainVisual *g_bfmeTerrainVisual;
+extern "C" Rva001AD080TerrainVisual *g_bfmeTerrainVisual;
 
 class Rva001AD080Record
 {
@@ -164,96 +182,91 @@ public:
 	UnsignedShort m_field2e;
 };
 
-struct False001AD080 {False001AD080(){}};
-
-struct Rva001AD080RecordVector
+class GameLogic
 {
-	Rva001AD080Record *begin;
-	Rva001AD080Record *end;
-	Rva001AD080Record *capacity;
- int size()const{return int(end-begin);}
-	void insertOverflow(Rva001AD080Record *position, const Rva001AD080Record &value,
-		const False001AD080 &, unsigned int first, bool second);
- void push_back(const Rva001AD080Record &record) {
-		if (end != capacity)
-		{
-			if (end) ::new ((void *)end) Rva001AD080Record(record);
-			++end;
-		}
-		else
-		{
-			insertOverflow(end, record, False001AD080(), 1, true);
-		}
- }
+	char pad[0x3c];
 
+public:
+	UnsignedInt m_frame;
+	UnsignedInt getFrame() const { return m_frame; }
 };
 
-class Frame001AD080 {char pad[0x3c]; public: unsigned int value; unsigned int frame()const{return value;} };
-extern Frame001AD080 *g_Frame001AD080;
+extern GameLogic *TheGameLogic;
+
+class GlobalData
+{
+	char m_pad00[0xb28];
+
+public:
+	Int m_fieldB28;
+};
+
+extern GlobalData *TheWritableGlobalData;
+
+// Landed at 0x001A3060; the receiver is this object (ecx = this at the call).
+class Rva001A3060
+{
+public:
+	int getBucket(const Coord3D &position) const;
+};
 class Rva001AD080TerrainLogic
 {
 private:
 	char m_pad00[0x3c];
 	UnsignedInt m_value3c;
 	char m_pad40[0x51c];
-	Rva001AD080RecordVector m_records;
+	std::vector<Rva001AD080Record> m_records;
 	short m_words[2500];
 	UnsignedInt m_value18f0;
 
 public:
-	short gridIndex(const Coord3D *position);
 
-	__declspec(noinline) void placeAt001AD080(const ThingTemplate *thingTemplate, const Coord3D *position,
-		const Matrix3D *matrix, Real extra)
-	{
-		m_value18f0 = g_Frame001AD080->frame();
-		const ThingTemplate *templatePtr = thingTemplate;
-        void *found=0;
-        for(int i=0; i<templatePtr->count001AD080(); ++i) {
-            Rva001AD080Resource *resource=templatePtr->resource001AD080(0);
-            if(resource) {
-                void *candidate=(void*)resource->getID();
-                if(candidate) found=candidate;
-            }
-        }
-		if (!found)
-		{
-			if (_bfme_debugReportingEnabled())
-			{
-				_bfme_debugRecordCallsite(1);
-				TheBfmeAwakenDebug->slot60();
-				Rva001AD080DebugReport *report = TheBfmeAwakenDebug->slot6c(0, 0);
-				report=report->slot38((const char *)0x0109c3f0);
-				void *name = *(void **)((const char *)templatePtr + 0x20);
-				report=report->slot38(name ? (const char *)name + 8 : (const char *)0x0107388b);
-				report=report->slot38((const char *)0x0109c358);
-				report->slot4c(2);
-			}
-			return;
-		}
-
-		DrawableID id = TheGameClient->allocDrawableID();
-		short index = gridIndex(position);
-		short &bucket=m_words[index];
-        UnsignedShort oldWord=(UnsignedShort)bucket;
-        bucket=(short)m_records.size();
-		Int candidateLimit = templatePtr->m_field46c;
-        Int limit = *(Int *)((const char *)(*(void **)0x012ED5C8) + 0xb28);
-        if (candidateLimit > 0) limit=candidateLimit;
-		Int oldValue = m_value3c;
-		++m_value3c;
-        Rva001AD080Record record(*position,id,oldValue,templatePtr,limit,templatePtr->m_field48b,templatePtr->m_field48c,oldWord);
-        m_records.push_back(record);
-		g_bfmeTerrainVisual->slot33(id, *position, matrix, extra, 0, found,
-			templatePtr->m_field482, (void *)((const char *)templatePtr + 0x4c),
-			(void *)((const char *)templatePtr + 0x20));
-	}
+	void placeAt001AD080(const ThingTemplate *thingTemplate, const Coord3D *position,
+		const Matrix3D *matrix, Real extra);
 };
 
-
-__declspec(noinline) void rva001ad080ForceEmit(Rva001AD080TerrainLogic *self,
-	const ThingTemplate *thingTemplate, const Coord3D *position,
-	const Matrix3D *matrix, Real extra)
+void Rva001AD080TerrainLogic::placeAt001AD080(const ThingTemplate *thingTemplate, const Coord3D *position,
+		const Matrix3D *matrix, Real extra)
 {
-	self->placeAt001AD080(thingTemplate, position, matrix, extra);
+	m_value18f0 = TheGameLogic->getFrame();
+	const ThingTemplate *templatePtr = thingTemplate;
+	void *found=0;
+	for(int i=0; i<templatePtr->count001AD080(); ++i) {
+		Rva001AD080Resource *resource=templatePtr->resource001AD080(0);
+		if(resource) {
+			void *candidate=(void*)resource->getID();
+			if(candidate) found=candidate;
+		}
+	}
+	if (!found)
+	{
+		if (_bfme_debugReportingEnabled())
+		{
+			_bfme_debugRecordCallsite(1);
+			TheBfmeAwakenDebug->slot60();
+			Rva001AD080DebugReport *report = TheBfmeAwakenDebug->slot6c(0, 0);
+			report=report->slot38("Tree ");
+			report=report->slot38(templatePtr->m_nameString.str());
+			report=report->slot38(" requires a W3DTreeDrawModule.\n");
+			report->slot4c(2);
+		}
+		return;
+	}
+
+	DrawableID id = TheGameClient->allocDrawableID();
+	short index = ((const Rva001A3060 *)this)->getBucket(*position);
+	short &bucket=m_words[index];
+	UnsignedShort oldWord=(UnsignedShort)bucket;
+	bucket=(short)m_records.size();
+	Int candidateLimit = templatePtr->m_field46c;
+	Int limit = TheWritableGlobalData->m_fieldB28;
+	if (candidateLimit > 0) limit=candidateLimit;
+	Int oldValue = m_value3c;
+	++m_value3c;
+	unsigned char f2c=templatePtr->m_field48b; unsigned char f2d=templatePtr->m_field48c;
+	Rva001AD080Record record(*position,id,oldValue,templatePtr,limit,f2c,f2d,oldWord);
+	m_records.push_back(record);
+	g_bfmeTerrainVisual->slot33(id, *position, extra, matrix, 0, found,
+		templatePtr->m_field482, templatePtr->m_shadowTextureName,
+		templatePtr->m_nameString);
 }
