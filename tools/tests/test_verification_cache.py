@@ -123,6 +123,24 @@ def test_one_shot_boundary_requests_disable_reuse(monkeypatch):
     assert cache._boundary_request_active()
 
 
+def test_record_skips_rows_whose_evidence_cannot_be_keyed(tmp_path, monkeypatch):
+    # The build gate has already verified the row; evidence that cannot be keyed
+    # (uncacheable dependencies) must be a later miss, not a failed push.
+    manifest = tmp_path / "manifest.json"
+    row = {"name": "?a@@YAXXZ", "target_rva": "0x1000", "target_size": "4",
+           "source": "a.cpp", "status": "matched", "notes": ""}
+    manifest.write_text(json.dumps({"version": cache.VERSION, "commit": "c",
+                                    "rows": [row], "hits": [], "selectors": []}))
+    written = []
+    monkeypatch.setattr(cache, "exact_worktree", lambda _commit: None)
+    monkeypatch.setattr(cache, "_live_build_marker", lambda: None)
+    monkeypatch.setattr(cache.B, "load_symbol_map", lambda: {})
+    monkeypatch.setattr(cache, "_payload", lambda *_args: None)
+    monkeypatch.setattr(cache, "_write_entry", lambda *args: written.append(args))
+    assert cache.main(["record", "--manifest", str(manifest)]) == 0
+    assert written == []
+
+
 def test_concurrent_writers_leave_one_complete_entry(tmp_path, monkeypatch):
     from concurrent.futures import ThreadPoolExecutor
 

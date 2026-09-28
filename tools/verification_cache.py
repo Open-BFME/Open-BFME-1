@@ -399,12 +399,17 @@ def record(manifest):
         raise RuntimeError(f"build {marker} started during verification; evidence discarded")
     symbol_map = B.load_symbol_map()
     inventory_cache = {}
-    saved = 0
+    saved = skipped = 0
     for row in data.get("rows", []):
         payload = _payload(row, symbol_map, inventory_cache)
         key = _key(payload)
         if key is None:
-            raise RuntimeError(f"verification evidence is incomplete for {row['source']}")
+            # The build gate has just verified this row; evidence that cannot be
+            # keyed (e.g. uncacheable dependencies) is only a miss next time.
+            print(f"publish-verify: not recording {row['name']}: its evidence cannot be keyed",
+                  file=sys.stderr)
+            skipped += 1
+            continue
         target = B.read_target_bytes(int(row["target_rva"], 16), int(row["target_size"]))
         obj = B.row_object(row)
         try:
@@ -416,7 +421,8 @@ def record(manifest):
             raise RuntimeError(f"post-verification evidence failed for {row['name']}")
         _write_entry(key, payload)
         saved += 1
-    print(f"publish-verify: recorded {saved} successful row verification(s)", file=sys.stderr)
+    print(f"publish-verify: recorded {saved} successful row verification(s)"
+          + (f", {skipped} not recordable" if skipped else ""), file=sys.stderr)
 
 
 def main(argv=None):
