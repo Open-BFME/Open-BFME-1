@@ -1,7 +1,7 @@
 // ?rva0032C7F0@ScriptConditions@@IAE_NPAVParameter@@00@Z
-// partial score=0.89 date=2026-09-26
+// Condition 177 from the 0x0032D720 dispatcher: counts a player's team members whose +0x210
+// module level exceeds its getContainCount (0x000347E3), optionally skipping 0x02000000 templates.
 // stlport
-// ?rva0032C7F0@ScriptConditions@@IAE_NPAVParameter@@00@Z
 // cl: /D_STLP_USE_STATIC_LIB /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/objectdlink /Igame/Libraries/Source/WWVegas/WWLib
 
 #include "ObjectDlinkPmf.h"
@@ -53,8 +53,13 @@ public:
 	unsigned char m_beforeLevel[0x28];
 	int m_level;
 	void *m_nested;
+};
 
-	int rva000347E3() const;
+// Pinned spelling of the 0x000347E3 getter; called on the +0x210 module.
+class BfmeNamedContain
+{
+public:
+	int getContainCount() const;
 };
 
 
@@ -103,7 +108,6 @@ protected:
 #pragma comment(linker, "/alternatename:?unidentified_0034DB40@ScriptEngine@@QAEGPAVParameter@@@Z=?j_000230b5@@YAXXZ")
 #pragma comment(linker, "/alternatename:?getPlayerFromMask@PlayerList@@QAEPAVPlayer@@G@Z=?j_0001dde5@@YAXXZ")
 #pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva000347E3@Rva0032C7F0Module@@QBEHXZ=?j_000347e3@@YAXXZ")
 #pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@XZ=?j_00001140@@YAXXZ")
 #pragma comment(linker, "/alternatename:?_bfme_nextInInstanceList@BfmeTeamInstanceLink@@QBEPAV1@XZ=?j_00022a70@@YAXXZ")
 
@@ -136,6 +140,8 @@ Bool ScriptConditions::rva0032C7F0(Parameter *playerParameter,
 			for (; !objects.done(); objects.advance())
 			{
 				Object *object = objects.cur();
+				if (object == 0)
+					continue;
 				if ((*((unsigned char *)object + 0x94) & 0x20) != 0)
 					continue;
 
@@ -150,13 +156,13 @@ Bool ScriptConditions::rva0032C7F0(Parameter *playerParameter,
 					}
 					if ((thingTemplate->m_kind & 0x02000000) != 0)
 						continue;
-					}
+				}
 
 				Rva0032C7F0Module *module = (Rva0032C7F0Module *)*(void **)((char *)object + 0x210);
 				if (module != 0)
 				{
 					int level = module->m_level;
-					if (level > module->rva000347E3())
+					if (level > ((BfmeNamedContain *)module)->getContainCount())
 						++count;
 				}
 			}

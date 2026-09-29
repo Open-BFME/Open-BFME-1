@@ -393,8 +393,8 @@ extern void d_00329fb0(void);
 extern void j_0004463e(void);
 // ILT 00006537 -> body 0032C680; existing game/gen_asm/d_0032b730.asm.
 extern void d_0032c680(void);
-// ILT 0002B661 -> body 0032C7F0; existing game/gen_asm/d_0032b730.asm.
-extern void d_0032c7f0(void);
+// ILT 0002B661 -> body 0032C7F0 (ScriptConditions::rva0032C7F0).
+extern void j_0002b661(void);
 // ILT 0002769C -> body 0032C990; existing game/gen_asm/d_0032b730.asm.
 extern void d_0032c990(void);
 // ILT 0002A2DE -> body 003269C0; existing game/gen_small/thunks_020.cpp.
@@ -843,7 +843,7 @@ private:
     {
         typedef bool (Rva0032D720::*Function)(Parameter*, Parameter*, Parameter*);
         union { void (*raw)(void); Function member; } fn;
-        fn.raw = d_0032c7f0;
+        fn.raw = j_0002b661;
         return (this->*fn.member)(a0, a1, a2);
     }
     __forceinline bool rva0032C990(Parameter* a0, Parameter* a1, Parameter* a2)
