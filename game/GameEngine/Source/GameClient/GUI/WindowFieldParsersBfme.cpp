@@ -150,7 +150,6 @@ public:
 };
 
 // ?parseText@@YA_NPADPAVWinInstanceData@@0PAX@Z -- TEXT, retail 0x00485E30
-// ?parseText@@YA_NPADPAVWinInstanceData@@0PAX@Z present-unmatched
 Bool parseText(char *token, WinInstanceData *instData, char *buffer, void *data)
 {
 	char *ptr = buffer;
