@@ -48,13 +48,17 @@ public:
 
 void postTimedOp(LoadGameFadeHolder holder, void *key);
 
+extern unsigned fadeQueueKey;
+void j_000283df();
+void j_000470e1();
+
 // ?postLoadGameFadeSteps@@YAXXZ
 void postLoadGameFadeSteps()
 {
 	postTimedOp(
-		LoadGameFadeSlot(reinterpret_cast<void *>(0x004283DF)),
-		reinterpret_cast<void *>(0x012ED588));
+		LoadGameFadeSlot(reinterpret_cast<void *>(&j_000283df)),
+		&fadeQueueKey);
 	postTimedOp(
-		LoadGameFadeSlot(reinterpret_cast<void *>(0x004470E1)),
-		reinterpret_cast<void *>(0x012ED588));
+		LoadGameFadeSlot(reinterpret_cast<void *>(&j_000470e1)),
+		&fadeQueueKey);
 }

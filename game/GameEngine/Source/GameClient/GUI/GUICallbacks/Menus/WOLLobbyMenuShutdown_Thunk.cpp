@@ -84,10 +84,13 @@ public:
 // These are the BFME lobby TU's static objects. Their addresses are established
 // by the named WOLLobby callers and the retail relocation map; keeping the views
 // local avoids changing the existing WOLLobbyMenu.cpp storage or its siblings.
-#define g_WOLLobbyListboxChat (*(GameWindow **)0x012F4628)
+extern GameWindow *g_012F4628;
+extern Bool g_012F45C0;
+extern Bool DontShowMainMenu;
+#define g_WOLLobbyListboxChat g_012F4628
 #define g_WOLLobbyListboxPlayers (*(GameWindow **)0x012F4624)
-#define g_WOLLobbyIsShuttingDown (*(Bool *)0x012F45C0)
-#define g_WOLLobbyDontShowMainMenu (*(Bool *)0x012F45D4)
+#define g_WOLLobbyIsShuttingDown g_012F45C0
+#define g_WOLLobbyDontShowMainMenu DontShowMainMenu
 
 class Shell
 {

@@ -154,10 +154,10 @@ private:
     GameWindow *m_createPersonaEntry;
 };
 
-static const char *const kErrorSameName = (const char *)0x0110B35C;
-static const char *const kPopUpControl = (const char *)0x0110B2DC;
-static const char *const kClose = (const char *)0x0110B2EC;
-static const char *const kProfileAction = (const char *)0x01107BB4;
+static const char *const kErrorSameName = "ErrorSameName";
+static const char *const kPopUpControl = "PopUpControl";
+static const char *const kClose = "close";
+static const char *const kProfileAction = "open";
 
 // ?personaAccept@BfmeAptScreenSkirmish@@QAEXH@Z
 void BfmeAptScreenSkirmish::personaAccept( int )

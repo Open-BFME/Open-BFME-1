@@ -44,6 +44,8 @@ static inline void BFMEAssignWaterTrackTexture(
 	destination = texture.m_texture;
 }
 
+extern const char Rva006A16B0Empty[];
+
 class AsciiString
 {
 public:
@@ -54,7 +56,7 @@ public:
 	{
 		if (m_data)
 			return m_data + 8;
-		return (Char *)0x0107388b;
+		return (Char *)Rva006A16B0Empty;
 	}
 
 	Char *m_data;
@@ -124,9 +126,13 @@ public:
 	Int m_maxRoadIndex;
 };
 
-#define BFME_GLOBAL_DATA (*(GlobalData **)0x012ed5c8)
+extern GlobalData *TheWritableGlobalData;
 
-#define BFME_ROAD_DYNAMIC (*(volatile Bool *)0x012f9c31)
+#define BFME_GLOBAL_DATA TheWritableGlobalData
+
+extern Bool g_012F9C31;
+
+#define BFME_ROAD_DYNAMIC g_012F9C31
 
 class RoadType
 {
