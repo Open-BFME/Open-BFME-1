@@ -39,6 +39,27 @@ def literals(text):
     return found
 
 
+# Every hex literal inside the retail image, in any form: casts, BFME_AT-style
+# macros, vftable pointers stored as integers, returned code addresses. The
+# commit hook keeps to `literals` (casts); link_census.write_status and the
+# README count use this, and err towards calling a constant an address.
+IMAGE_HEX = re.compile(r"\b0x([0-9A-Fa-f]{6,8})[uUlL]{0,3}\b")
+IMAGE_LOW, IMAGE_HIGH = 0x00401000, 0x01416000  # lotrbfme.exe: ImageBase 0x400000 + SizeOfImage 0x1016000
+
+
+def addresses(text):
+    found = []
+    for match in IMAGE_HEX.finditer(COMMENTS.sub(" ", text or "")):
+        value = int(match.group(1), 16)
+        # Not addresses: low 12 bits clear (sizes, flag words), two or fewer bits
+        # set (flags), one repeated hex digit (masks and fill patterns: 0xffffff).
+        digits = match.group(1).lstrip("0").lower()
+        if (IMAGE_LOW <= value < IMAGE_HIGH and value & 0xFFF and bin(value).count("1") > 2
+                and len(set(digits)) > 1):
+            found.append(match.group(0))
+    return found
+
+
 def watched(path):
     return path.startswith("game/") and not path.startswith(SKIP) and path.endswith(SUFFIXES)
 
@@ -77,20 +98,25 @@ def staged():
     return 1
 
 
-def report():
-    total = files = 0
+def per_file(detect=None):
+    """[(count, path)] for every tracked game source holding a literal."""
+    detect = detect or literals
     rows = []
     for path in git("ls-files", "game").stdout.splitlines():
         if not watched(path):
             continue
         try:
-            count = len(literals((ROOT / path).read_text(encoding="utf-8", errors="replace")))
+            count = len(detect((ROOT / path).read_text(encoding="utf-8", errors="replace")))
         except OSError:
             continue
         if count:
-            files += 1
-            total += count
             rows.append((count, path))
+    return rows
+
+
+def report():
+    rows = per_file()
+    total, files = sum(count for count, _ in rows), len(rows)
     for count, path in sorted(rows, reverse=True)[:25]:
         print(f"  {count:5}  {path}")
     print(f"link_debt: {total:,} hard-coded image addresses in {files:,} game sources")

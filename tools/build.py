@@ -2486,32 +2486,36 @@ def select_function_rows(selectors, rows):
             or any(selector in row["source"] or selector in row["name"] for selector in fuzzy)]
 
 
-def verify_functions(only=None, selected_rows=None):
-    rows = load_function_rows() if selected_rows is None else selected_rows
-    if only and selected_rows is None:
-        function_selectors = [sel for sel in only if not sel.startswith("source:")]
-        rows = select_function_rows(function_selectors, rows)
-    if only:
-        if not rows:
-            raise SystemExit("no functions match: " + ", ".join(only))
-    total = len(rows)
-    symbol_map = load_symbol_map()
-    boundary_requests = _boundary_requests()
+def _pool_size():
+    return max(1, min(int(os.environ.get("BUILD_POOL", "1")), os.cpu_count() or 1))
 
-    sources = []
-    seen = set()
-    for row in rows:
-        source = ROOT / row["source"]
-        if source not in seen:
-            seen.add(source)
-            sources.append(source)
-    missing = [s for s in sources if not s.exists()]
-    if missing:
-        raise SystemExit("functions.csv references missing source file(s): "
-                         + ", ".join(str(m) for m in missing)
-                         + " - a commit added rows without adding the file")
-    # Split by kind BEFORE anything reaches the compiler: a .lib is a build
-    # input to read, not a translation unit, and cl.exe would choke on it.
+
+def _stale_chunk(pairs):
+    cache = {}
+    stale = [source for source, output in pairs if not compile_is_current(source, output, inventory_cache=cache)]
+    if not _inventory_cache_still_current(cache):
+        raise SystemExit("include search directories changed during cache selection; rerun build")
+    return stale
+
+
+def stale_sources(sources, source_outputs, workers=1):
+    """Sources whose object is not provably current (compile_is_current).
+
+    Hashing every source and recorded header is CPU-bound Python: one core
+    took ~5.5 minutes for 21,000 TUs on 2026-09-29. With BUILD_POOL > 1 the
+    check is split across that many processes; the answer is the same set.
+    """
+    pairs = [(source, source_outputs[source]) for source in sources]
+    if workers <= 1 or len(pairs) < 200:
+        return _stale_chunk(pairs)
+    with concurrent.futures.ProcessPoolExecutor(workers) as pool:
+        return [source for part in pool.map(_stale_chunk, [pairs[i::workers] for i in range(workers)])
+                for source in part]
+
+
+def compile_rows(rows, sources):
+    """Compile every source whose object is not current; return {source: object}.
+    The compile phase of verify_functions, callable on its own (link_census)."""
     extract_lib_members(rows)
     sources = [s for s in sources if s.suffix.lower() != LIB_SUFFIX]
     source_outputs = {s: obj_path(s) for s in sources}
@@ -2536,11 +2540,7 @@ def verify_functions(only=None, selected_rows=None):
         # no sidecar (first gate after this change, or flagged uncacheable)
         # recompiles. This is what turns a header-edit gate from ~17 min of
         # recompile-the-world into seconds-per-actual-includer.
-        inventory_cache = {}
-        to_compile = [s for s in sources if not compile_is_current(
-            s, source_outputs[s], inventory_cache=inventory_cache)]
-        if not _inventory_cache_still_current(inventory_cache):
-            raise SystemExit("include search directories changed during cache selection; rerun build")
+        to_compile = stale_sources(sources, source_outputs, _pool_size())
         cached = len(sources) - len(to_compile)
         if cached:
             print(f"Compile: {len(to_compile)} of {len(sources)} TU(s) "
@@ -2550,7 +2550,7 @@ def verify_functions(only=None, selected_rows=None):
     # must NOT fork an 8-way wine pool - dozens of concurrent callers would then
     # oversubscribe the cores into a stall. Only the full-suite periodic audit,
     # which runs alone, sets BUILD_POOL=8 to compile all 260+ TUs in parallel.
-    pool_size = max(1, min(int(os.environ.get("BUILD_POOL", "1")), os.cpu_count() or 1))
+    pool_size = _pool_size()
     # Host-wide wine/cl mutex: concurrent FULL builds thrash each other (and wine
     # cl fails at high concurrency), so a full build (>8 TUs) takes the lock
     # EXCLUSIVELY and they serialize against each other. Small per-file verifies
@@ -2579,6 +2579,36 @@ def verify_functions(only=None, selected_rows=None):
         if lock_file is not None:
             unlock(lock_file)
             lock_file.close()
+    return source_outputs
+
+
+def verify_functions(only=None, selected_rows=None):
+    rows = load_function_rows() if selected_rows is None else selected_rows
+    if only and selected_rows is None:
+        function_selectors = [sel for sel in only if not sel.startswith("source:")]
+        rows = select_function_rows(function_selectors, rows)
+    if only:
+        if not rows:
+            raise SystemExit("no functions match: " + ", ".join(only))
+    total = len(rows)
+    symbol_map = load_symbol_map()
+    boundary_requests = _boundary_requests()
+
+    sources = []
+    seen = set()
+    for row in rows:
+        source = ROOT / row["source"]
+        if source not in seen:
+            seen.add(source)
+            sources.append(source)
+    missing = [s for s in sources if not s.exists()]
+    if missing:
+        raise SystemExit("functions.csv references missing source file(s): "
+                         + ", ".join(str(m) for m in missing)
+                         + " - a commit added rows without adding the file")
+    # Split by kind BEFORE anything reaches the compiler: a .lib is a build
+    # input to read, not a translation unit, and cl.exe would choke on it.
+    source_outputs = compile_rows(rows, sources)
 
     failures = 0
     patches = []

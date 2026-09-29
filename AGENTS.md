@@ -37,7 +37,7 @@ ledger and verification are separate from the game's.
    function.
 4. When `next_work.py` is dry, `python3 tools/list_naked_candidates.py game`
    serves byte-true dumps from `game/gen_asm/` whose boundaries are proven.
-5. Replacing generator-written C++ scores +0 on the headline but raises the C++
+5. Replacing generator-written C++ scores +0 on the headline but recolours the
    bar. Only `gen-tgrid`/`gen-shim` rows have source to write; `gen-thunk`,
    `gen-funclet`, `gen-ehstub`, `gen-dtor` and `gen-import` never do. Take it
    after the lanes above.

@@ -63,3 +63,25 @@ def test_generated_roots_are_not_watched(repo):
 
 def test_masks_and_comments_are_not_addresses():
     assert L.literals("if (x & 0x80000000) {}  // *(int *)0x012ED5C8\n") == []
+
+
+def test_addresses_catch_every_form_of_an_image_address():
+    text = """
+    *(unsigned *)this = 0x0113C340;          // vftable stored as an integer
+    m_vptr = 0x0111ff78u;
+    float f = BFME_AT(float, 0x01076C24);
+    return reinterpret_cast<void (*)()>(0x0043c9cf);
+    """
+    assert L.addresses(text) == ["0x0113C340", "0x0111ff78u", "0x01076C24", "0x0043c9cf"]
+
+
+def test_addresses_skip_flags_masks_sizes_comments_and_strings():
+    text = """
+    m_flags |= 0x1000100;      // two bits: a flag word
+    unsigned m = v & 0xffffff; // one repeated digit: a mask
+    size_t n = 0x00401000;     // low 12 bits clear
+    const char *s = "0x0113C340";
+    /* 0x0113C340 */
+    int small = 0x3FC;
+    """
+    assert L.addresses(text) == []
