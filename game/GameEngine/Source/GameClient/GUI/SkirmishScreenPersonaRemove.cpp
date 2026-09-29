@@ -158,9 +158,9 @@ private:
 	GameWindow *m_createPersonaEntry;
 };
 
-static const char *const kPopUpControl = (const char *)0x0110B2DC;
-static const char *const kClose = (const char *)0x0110B2EC;
-static const char *const kPersonaAction = (const char *)0x0110B34C;
+static const char *const kPopUpControl = "PopUpControl";
+static const char *const kClose = "close";
+static const char *const kPersonaAction = "PopUpPersona";
 
 // ?personaRemove@BfmeAptScreenSkirmish@@QAEXH@Z
 void BfmeAptScreenSkirmish::personaRemove( int )

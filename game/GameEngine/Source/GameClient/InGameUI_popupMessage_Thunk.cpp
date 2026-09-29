@@ -154,7 +154,9 @@ extern BfmeGameText *TheGameText;
 extern BfmeDisplay *TheDisplay;
 extern BfmeWindowManager *TheWindowManager;
 
-#define TheBfmeGameLogic (*(BfmeGameLogicPause **)0x012F0898)
+class GameLogic;
+extern GameLogic *TheGameLogic;
+#define TheBfmeGameLogic ((BfmeGameLogicPause *)TheGameLogic)
 
 void UpdateDiplomacyBriefingText( const AsciiString &newText, Bool clear );
 
@@ -194,9 +196,9 @@ void InGameUI::popupMessage( const AsciiString &identifier, Int x, Int y,
 		y = 0;
 
 	self->m_popupMessageData->x = TheDisplay->getWidth() *
-		( (Real)x * *(const Real *)0x01076C24 );
+		( (Real)x * 0.01f );
 	self->m_popupMessageData->y = TheDisplay->getHeight() *
-		( (Real)y * *(const Real *)0x01076C24 );
+		( (Real)y * 0.01f );
 	if( width < 50 )
 		width = 50;
 	self->m_popupMessageData->width = width;

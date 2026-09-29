@@ -155,9 +155,12 @@ private:
 	Player *m_player;
 };
 
-#define TheThingFactory (*(ThingFactory00164750 **)0x012EF1D8)
-#define TheGameLogic (*(GameLogic00164750 **)0x012F0898)
-#define BFME_UINT32_SCALE (*(const float *)0x01075358)
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
+extern GameLogic *TheGameLogic;
+#define TheThingFactory ((ThingFactory00164750 *)TheThingFactory)
+#define TheGameLogic ((GameLogic00164750 *)TheGameLogic)
+#define BFME_UINT32_SCALE (4294967296.0f)
 
 extern void j_0002b62f();
 

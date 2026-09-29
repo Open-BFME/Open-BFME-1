@@ -93,18 +93,18 @@ void DefaultModuleTemplate<3>::writeINI(File &file, unsigned int flags) const
 	OutputStream stream(0x10);
 
 	if (gravity_ != BfmeZeroRange)
-		writePhysicsScalar((INI *)&stream, (void *)flags, (const void *)0x0107b92c, &gravity_);
+		writePhysicsScalar((INI *)&stream, (void *)flags, "Gravity", &gravity_);
 
 	RandomVariableWriteView *damping =
 		(RandomVariableWriteView *)((unsigned char *)this + 0x1c);
 	if (damping->minimum != BfmeZeroRange || damping->maximum != BfmeZeroRange)
-		writePhysicsPair((void *)&stream, (void *)flags, (const void *)0x0111459c,
+		writePhysicsPair((void *)&stream, (void *)flags, "VelocityDamping",
 			damping);
 
 	float *drift = (float *)((unsigned char *)this + 0x0c);
 	if (drift[0] != BfmeZeroRange || drift[1] != BfmeZeroRange ||
 		drift[2] != BfmeZeroRange)
-		writePhysicsVector((INI *)&stream, (void *)flags, (const void *)0x0111458c,
+		writePhysicsVector((INI *)&stream, (void *)flags, "DriftVelocity",
 			drift);
 
 	writeStreamText(file, reinterpret_cast<StreamTextAccessor *>(&stream)->getText());

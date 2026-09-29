@@ -124,9 +124,13 @@ public:
 	UnsignedByte m_drawIconUI;
 };
 
-#define TheBfmeGameLogic (*(Rva004435A0BfmeGameLogic **)0x012F0898)
-#define TheGameClient (*(Rva004435A0ClientRoot4120 **)0x012F1464)
-#define BfmeFloatingTextScale (*(const Real *)0x010F48DC)
+class GameLogic;
+class GameClient;
+extern GameLogic *TheGameLogic;
+extern GameClient *TheGameClient;
+#define TheBfmeGameLogic ((Rva004435A0BfmeGameLogic *)TheGameLogic)
+#define TheGameClient ((Rva004435A0ClientRoot4120 *)TheGameClient)
+#define BfmeFloatingTextScale (0.03f)
 
 extern Real BfmeZeroRange;
 extern Real g_bfmeUint32Scale;
