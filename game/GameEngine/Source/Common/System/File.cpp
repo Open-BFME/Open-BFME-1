@@ -324,8 +324,12 @@ public:
 	virtual Bool scanInt( Int &newInt );
 	virtual Bool scanReal( Real &newReal );
 	virtual Bool scanString( AsciiString &newString );
-	virtual Int size( void );
-	virtual Int position( void );
+	// Slots 11 and 12 are NOT re-declared: retail's RAMFile vtable 0x01143C58
+	// holds 0x009CB670 and 0x009CB6B0 there, which is ?size@File@@UAEHXZ and
+	// ?position@File@@UAEHXZ, so the class measures and locates by seeking and
+	// overrides neither. Declaring them here would put ?size@RAMFile@@UAEHXZ
+	// and ?position@RAMFile@@UAEHXZ in the vftable instead -- names no object
+	// defines, where retail's own image names File's.
 	virtual char *readEntireAndClose( void );
 	virtual File *convertToRAMFile( void );
 
@@ -400,7 +404,9 @@ public:
 	StreamingArchiveFile();
 
 	virtual Bool open( const char *filename, Int access = 0 );
-	virtual void close( void );
+	// close (slot 2) is not re-declared either: retail's vtable 0x01143CA8 holds
+	// 0x009D21E0 there, the ILT jump stub whose target= note is 0x009CB880, so it
+	// forwards to ?close@File@@UAEXXZ exactly as LocalFile's 0x009D2540 does.
 	virtual Int read( void *buffer, Int bytes );
 	virtual Int write( const void *buffer, Int bytes );
 	virtual Int seek( Int bytes, Int mode );
@@ -408,8 +414,8 @@ public:
 	virtual Bool scanInt( Int &newInt );
 	virtual Bool scanReal( Real &newReal );
 	virtual Bool scanString( AsciiString &newString );
-	virtual Int size( void );
-	virtual Int position( void );
+	// Slots 11 and 12 likewise: retail holds File::size and File::position there,
+	// so this subclass re-declares neither.
 	virtual char *readEntireAndClose( void );
 	virtual File *convertToRAMFile( void );
 
@@ -436,16 +442,28 @@ public:
 	LocalFile();
 
 	virtual Bool open( const char *filename, Int access = 0 );
-	virtual void close( void );
+	// close (slot 2) is deliberately not re-declared. Retail's LocalFile vtable
+	// 0x01143D38 holds 0x009D2540 there -- the ILT jump stub whose target= note
+	// is 0x009CB880 -- so it forwards to ?close@File@@UAEXXZ and this class owns
+	// no close of its own.
 	virtual Int read( void *buffer, Int bytes );
 	virtual Int write( const void *buffer, Int bytes );
-	virtual Int seek( Int bytes, Int mode );
+	// The mode is File::seekMode, not Int: retail's slot 5 is 0x009D25D0, which
+	// is ?seek@LocalFile@@UAEHHW4seekMode@File@@@Z, the spelling the
+	// LocalFile.cpp object defines. This TU's File::seek has to keep taking an
+	// Int so MemoryReadFile::seek and MemoryWriteFile::seek, matched here as
+	// ?seek@MemoryReadFile@@UAEHHH@Z and ?seek@MemoryWriteFile@@UAEHHH@Z at
+	// retail's own slot 5, still override it; the seek below is therefore a new
+	// virtual appended at slot 17 rather than an override. The symbol is the one
+	// the link needs; the slot is not retail's.
+	virtual Int seek( Int bytes, seekMode mode );
 	virtual void nextLine( char *buf, Int bufSize );
 	virtual Bool scanInt( Int &newInt );
 	virtual Bool scanReal( Real &newReal );
 	virtual Bool scanString( AsciiString &newString );
-	virtual Int size( void );
-	virtual Int position( void );
+	// size (slot 11) and position (slot 12) likewise: retail holds File::size
+	// and File::position there, and RAMFile, StreamingArchiveFile and
+	// Win32LocalFile inherit the same two through here.
 	virtual char *readEntireAndClose( void );
 	virtual File *convertToRAMFile( void );
 
@@ -469,19 +487,18 @@ class Win32LocalFile : public LocalFile
 public:
 	Win32LocalFile();
 
-	virtual Bool open( const char *filename, Int access = 0 );
-	virtual void close( void );
-	virtual Int read( void *buffer, Int bytes );
-	virtual Int write( const void *buffer, Int bytes );
-	virtual Int seek( Int bytes, Int mode );
-	virtual void nextLine( char *buf, Int bufSize );
-	virtual Bool scanInt( Int &newInt );
-	virtual Bool scanReal( Real &newReal );
+	// Retail's vtable 0x01143C10 is LocalFile's 0x01143D38 entry for entry except
+	// slot 0, so this class overrides exactly one thing and inherits the rest.
+	// Only scanString (slot 9, 0x009D26E0) is its own; the other twelve go
+	// through LocalFile, which is what spells ?open@LocalFile@@UAE_NPBDH@Z,
+	// ?read@LocalFile@@UAEHPAXH@Z, ?write@LocalFile@@UAEHPBXH@Z,
+	// ?seek@LocalFile@@UAEHHW4seekMode@File@@@Z, ?nextLine@LocalFile@@UAEXPADH@Z,
+	// ?scanInt@LocalFile@@UAE_NAAH@Z, ?scanReal@LocalFile@@UAE_NAAM@Z,
+	// ?readEntireAndClose@LocalFile@@UAEPADXZ,
+	// ?convertToRAMFile@LocalFile@@UAEPAVFile@@XZ, and -- through LocalFile not
+	// overriding them either -- ?close@File@@UAEXXZ, ?size@File@@UAEHXZ and
+	// ?position@File@@UAEHXZ, all of which are matched bodies.
 	virtual Bool scanString( AsciiString &newString );
-	virtual Int size( void );
-	virtual Int position( void );
-	virtual char *readEntireAndClose( void );
-	virtual File *convertToRAMFile( void );
 };
 
 Win32LocalFile::Win32LocalFile()
