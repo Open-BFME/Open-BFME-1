@@ -26,7 +26,7 @@ void bfmeGo912B(void)
 struct BfmeNode912C
 {
 	char m_bfmePad[0xc];
-	BfmeNode912C *m_bfmeNext;
+	BfmeNode912C *m_next;
 };
 
 class BfmeThing912C
@@ -43,7 +43,7 @@ void BfmeThing912C::bfmeGo912C()
 	BfmeNode912C *n = m_bfmeHead;
 	while (n) {
 		bfmeDo912C(n);
-		n = n->m_bfmeNext;
+		n = n->m_next;
 	}
 }
 
