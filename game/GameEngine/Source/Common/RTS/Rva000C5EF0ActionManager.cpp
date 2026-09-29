@@ -153,7 +153,7 @@ Bool ActionManager::queryRva000C5EF0(Object *object, Object *target, int)
 
 	power =
 		TheSpecialPowerStore->findSpecialPowerTemplate(
-			(const char *)0x01083C00);
+			"SpecialAbilityGiveUpgrade");
 	if (power == 0)
 		goto fail;
 

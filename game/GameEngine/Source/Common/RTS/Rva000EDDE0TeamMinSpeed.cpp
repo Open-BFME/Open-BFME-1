@@ -128,6 +128,6 @@ Real Rva000EDDE0Team::rva000EDDE0( Object *other ) const
 		}
 	}
 
-	Real scaledOtherSpeed = otherSpeed * *(const Real *)0x01083B6C;
+	Real scaledOtherSpeed = otherSpeed * 0.25f;
 	return ( bestSpeed < scaledOtherSpeed ) ? scaledOtherSpeed : bestSpeed;
 }

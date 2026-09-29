@@ -71,6 +71,7 @@ extern "C" XferException *__cdecl bfmeFormatText(
 	XferException *result, Int tag, const char *format, ...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
+extern "C" unsigned char g_xferExceptionThrowInfo[];
 
 class Snapshot
 {
@@ -170,7 +171,7 @@ void ScoreKeeper::xfer(Xfer *xfer)
 	{
 		XferException error;
 		bfmeFormatText(&error, 5, 0);
-		_CxxThrowException(&error, (void *)0x011DFE5C);
+		_CxxThrowException(&error, g_xferExceptionThrowInfo);
 	}
 
 	for (UnsignedShort i = 0; i < destroyedArraySize; ++i)

@@ -166,7 +166,7 @@ public:
 	Object *findObjectByID(int id);
 };
 
-#define TheGameLogic (*(GameLogic **)0x012F0898)
+extern GameLogic *TheGameLogic;
 
 class AIGroup
 {

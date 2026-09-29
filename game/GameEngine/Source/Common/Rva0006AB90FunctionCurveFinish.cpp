@@ -6,6 +6,8 @@
 
 typedef int Int;
 
+extern const float BfmeZeroRange;
+
 struct Rva0006AB10CurvePoint
 {
     float time;
@@ -52,7 +54,7 @@ void Rva0006AB90FunctionCurve::finish()
     {
         if (!m_haveInTangent)
             m_inTangent.value = m_haveOutTangent
-                ? m_outTangent.value : *(const float *)0x01075350;
+                ? m_outTangent.value : BfmeZeroRange;
     }
     else
     {
