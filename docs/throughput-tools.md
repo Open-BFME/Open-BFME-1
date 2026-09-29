@@ -280,6 +280,35 @@ This is not a full scheduler replacement. Big-lane retries require a changed pre
 source body, a live partial of at least 0.5, and a remaining dump. Merely
 changing the score/date no longer buys another session.
 
+## Per-file link check (2026-09-29)
+
+`python3 tools/link_check.py <source-or-object>...` answers, in seconds, whether
+one file would link cleanly (the LINKED test of `tools/link_census.py`) without
+running link.exe. It compiles the source when its object is stale, reads the
+object and checks it against the index the last census wrote
+(`build/link_census/link_index.pkl`):
+
+- **unresolved**: a name no other object defines and no import library in the
+  toolchain would supply for an import retail has (`link_census.excused`).
+- **duplicate**: link.exe compares each definition with the first one in link
+  order and reports the pair when either is exclusive (an ordinary section or
+  a `/Gy` NODUPLICATES COMDAT); two inline copies fold silently.
+- **comdat**: a COMDAT copy that is not retail's body. Retail truth decides
+  where the symbol has a retail address (bytes and relocation targets checked
+  against the image); otherwise the first copy in link order is the one kept.
+- **addresses**: a hard-coded image address in the source (`link_debt.py`).
+
+It prints the file's LINKED bytes at the census and after your change. The
+census stays the record; the check is a preview and can be stale by whatever
+other files changed since.
+
+`python3 tools/link_check.py --next` ranks blocker names by the bytes their fix
+alone would link: files where that name is the only thing left. Pick one, fix
+the name in every file it blocks, and re-check those files.
+
+No index yet? It is written by `python3 tools/link_census.py --build --history`
+(the daily census) or `--status` on the census's own tree.
+
 ## Publication and measurement
 
 Harvest stages fleet evidence and cited C++ sources explicitly. It refuses an

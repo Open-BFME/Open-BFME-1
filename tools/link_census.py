@@ -590,18 +590,6 @@ def _truth_init(rows):
     _TRUTH = RetailTruth(rows)
 
 
-def comdat_copies(obj, truth=None):
-    """[(name, digest, size, verdict)] for each external COMDAT symbol an
-    object defines; verdict is RetailTruth.verdict (None: no retail address)."""
-    truth = truth or _TRUTH
-    try:
-        data = obj.read_bytes()
-    except OSError:
-        return []
-    return [(symbol["name"], digest, size, truth.verdict(symbol, body, relocs, digest, size))
-            for symbol, body, relocs, digest, size in _comdat_sections(data)]
-
-
 def comdat_conflicts(objs):
     """{name: [(sha, size, obj), ...]} for COMDAT symbols whose copies differ.
 
@@ -645,7 +633,64 @@ def keep_rule(copies):
     return loses, "retail"
 
 
-def comdat_losers(objs, rows=None, stats=None):
+def _comdat_selections(data):
+    """{section number: COMDAT selection} from each section definition's aux
+    record (IMAGE_COMDAT_SELECT_NODUPLICATES = 1, _ANY = 2, ...)."""
+    import struct
+    table, count = struct.unpack_from("<II", data, 8)
+    found, index = {}, 0
+    while index < count:
+        record = table + 18 * index
+        value, section, _, storage, aux = struct.unpack_from("<IhHBB", data, record + 8)
+        if storage == 3 and aux and value == 0 and section > 0:  # IMAGE_SYM_CLASS_STATIC section symbol
+            found.setdefault(section, data[record + 18 + 14])
+        index += 1 + aux
+    return found
+
+
+def object_facts(obj, truth=None):
+    """(COMDAT copies [(name, digest, size, verdict)], exclusive definitions,
+    undefined externals) of one object: what a link needs to know about it.
+    A definition is exclusive when link.exe refuses a second one (LNK2005):
+    in an ordinary section, or in a COMDAT whose selection is NODUPLICATES,
+    which /Gy gives every non-inline function."""
+    truth = truth or _TRUTH
+    try:
+        data = obj.read_bytes()
+    except OSError:
+        return [], [], []
+    import struct
+    count = struct.unpack_from("<H", data, 2)[0]
+    optional = struct.unpack_from("<H", data, 16)[0]
+    comdat = {index + 1 for index in range(count)
+              if struct.unpack_from("<I", data, 20 + optional + index * 40 + 36)[0] & COMDAT}
+    selections = _comdat_selections(data)
+    strong, undefined = [], []
+    for symbol in _coff_symbols(data):
+        if symbol["storage"] != EXTERNAL:
+            continue
+        if symbol["section"] == 0:
+            if symbol["value"] == 0:  # a nonzero value is a common symbol: a definition that merges
+                undefined.append(symbol["name"])
+        elif symbol["section"] not in comdat or selections.get(symbol["section"]) == 1:
+            strong.append(symbol["name"])
+    copies = [(symbol["name"], digest, size, truth.verdict(symbol, body, relocs, digest, size))
+              for symbol, body, relocs, digest, size in _comdat_sections(data)]
+    return copies, strong, undefined
+
+
+def read_facts(objs, rows):
+    """object_facts for every object, in parallel (BUILD_POOL processes)."""
+    workers = build._pool_size()
+    if workers > 1:
+        import concurrent.futures
+        with concurrent.futures.ProcessPoolExecutor(workers, initializer=_truth_init, initargs=(rows,)) as pool:
+            return list(pool.map(object_facts, objs, chunksize=64))
+    truth = RetailTruth(rows)
+    return [object_facts(obj, truth) for obj in objs]
+
+
+def comdat_losers(objs, rows=None, stats=None, facts=None):
     """{object name: {symbol}} for COMDAT copies that are not retail's body.
 
     keep_rule() decides each symbol: by retail truth where the ledger gives it
@@ -653,20 +698,13 @@ def comdat_losers(objs, rows=None, stats=None):
     object whose copy differs from that one runs someone else's code). Before
     2026-09-29 every symbol used link order, so an arbitrary first object
     decided who lost: for ??1AsciiString@@QAE@XZ the first object held a
-    minority variant, and the retail-true copies were the ones charged. `stats`, when given, collects how many symbols and losing copies
-    each rule decided. Objects are read in parallel (BUILD_POOL processes);
-    the fold stays in link order."""
+    minority variant, and the retail-true copies were the ones charged.
+    `stats`, when given, collects how many symbols and losing copies each
+    rule decided. `facts` is read_facts(objs), read here when not given."""
     rows = ledger() if rows is None else rows
-    workers = build._pool_size()
-    if workers > 1:
-        import concurrent.futures
-        with concurrent.futures.ProcessPoolExecutor(workers, initializer=_truth_init, initargs=(rows,)) as pool:
-            bodies = list(pool.map(comdat_copies, objs, chunksize=64))
-    else:
-        truth = RetailTruth(rows)
-        bodies = [comdat_copies(obj, truth) for obj in objs]
+    facts = read_facts(objs, rows) if facts is None else facts
     copies = collections.defaultdict(list)
-    for obj, found in zip(objs, bodies):
+    for obj, (found, _, _) in zip(objs, facts):
         for name, digest, _, verdict in found:
             copies[name].append((obj.name, digest, verdict))
     losers = collections.defaultdict(set)
@@ -918,7 +956,7 @@ def excused(symbol, runtime, imported, thunks=None):
     return symbol in runtime
 
 
-def write_status(log, rows, present=None):
+def write_status(log, rows, present=None, meta=None):
     """One row per C/C++ source: does its object link cleanly on its own terms?
 
     Per file, not per program: a clean file may still call into one that is
@@ -933,6 +971,9 @@ def write_status(log, rows, present=None):
     its object (comdat_losers: retail truth where the symbol has a retail
     address, else the copy link.exe keeps, the first in link order). Any hard-coded image address counts too
     (link_debt.addresses): it links, but only while nothing moves.
+
+    It also writes build/link_census/link_index.pkl, which tools/link_check.py
+    reads to check one file in seconds (`meta` names the census).
     """
     import link_debt
     crt = build.vc71_root() / "Vc7" / "lib" / "msvcrt.lib"
@@ -941,7 +982,8 @@ def write_status(log, rows, present=None):
     if present is None:
         present, _ = objects(rows)
     stats = {}
-    losers = comdat_losers(present, rows, stats)
+    facts = read_facts(present, rows)
+    losers = comdat_losers(present, rows, stats, facts)
     print(f"link_census: COMDAT keeper: {stats.get('symbols_retail', 0):,} symbols judged by retail truth "
           f"({stats.get('losers_retail', 0):,} losing copies), {stats.get('symbols_first', 0):,} with no retail "
           f"address by link order ({stats.get('losers_first', 0):,} losing copies)")
@@ -960,7 +1002,7 @@ def write_status(log, rows, present=None):
             symbol = found.group(2) or found.group(3)
             duplicates[Path(found.group(1)).name].add(symbol)
             duplicates[Path(found.group(4)).name].add(symbol)
-    out = {}
+    out, blockers = {}, {}
     for row in rows:
         source = row["source"]
         if source in out or Path(source).suffix.lower() not in (".c", ".cpp"):
@@ -974,11 +1016,17 @@ def write_status(log, rows, present=None):
                   len(link_debt.addresses(text)))
         out[source] = {"source": source, "linked": "no" if any(counts) else "yes",
                        **dict(zip(STATUS_FIELDS[2:], counts))}
+        blockers[source] = {"object": obj, "linked": not any(counts), "unresolved": sorted(unresolved.get(obj, ())),
+                            "duplicates": sorted(duplicates.get(obj, ())), "losers": sorted(losers.get(obj, ())),
+                            "addresses": counts[3]}
     with STATUS.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, STATUS_FIELDS, lineterminator="\n")
         writer.writeheader()
         writer.writerows(out[s] for s in sorted(out))
     clean = {source for source, r in out.items() if r["linked"] == "yes"}
+    import link_check
+    link_check.write_index(present, facts, blockers, {"runtime": runtime, "imported": imported, "stubs": thunks},
+                           meta or {})
     print(f"link_census: wrote {STATUS.relative_to(ROOT).as_posix()} ({len(clean):,} of {len(out):,} sources link cleanly)")
     blocking = set().union(*unresolved.values()) if unresolved else set()
     return clean, len(out), len(blocking)
@@ -1082,7 +1130,7 @@ def record(census, rows, rerun=False, fresh=False):
                 or sum(dup_kinds.values()) != sum(census["duplicate_classes"].values())):
             raise SystemExit("link_census: census.log no longer reproduces census.json's counts; rerun the census")
     import link_debt
-    clean, files, blocking = write_status(log, rows, present)
+    clean, files, blocking = write_status(log, rows, present, {"date": census["when"], "commit": commit})
     figure = {"files": files, "files_linked": len(clean), "blocking_names": blocking,
               "addresses": sum(count for count, _ in link_debt.per_file(link_debt.addresses)),
               **linked_figures(clean)}

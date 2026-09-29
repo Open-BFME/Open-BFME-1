@@ -1,0 +1,237 @@
+#!/usr/bin/env python3
+"""Per-file LINKED check in seconds, without link.exe.
+
+The link census (tools/link_census.py) links every object and takes minutes.
+This answers the same question for one file against the last census: would
+this source's object link cleanly, and what stops it? It compiles the source
+(build.py's compile path, skipped when the object is current), reads its COFF
+and checks it against the index the census wrote
+(build/link_census/link_index.pkl: every object's strong definitions and
+COMDAT copies with their retail-truth verdicts, and every file's blockers):
+
+  unresolved  a name the object references that no other object defines and
+              the real link would not find in an import library (excused())
+  duplicate   a strong definition another object also defines
+  comdat      a COMDAT copy that is not retail's body (link_census.keep_rule:
+              retail truth where the symbol has a retail address, else the
+              first copy in link order)
+  addresses   hard-coded image addresses in the source (link_debt.addresses)
+
+It prints the file's LINKED bytes (its own authored + vendored bytes, 0xCC out,
+as progress.real_split counts them) at the census and now. The census is the
+record: this is a preview, and its answer is only as fresh as the index (a
+blocker another file fixed since then still shows). Replayed over every object
+of the 3361d5aec5 census it gave the census's verdict for 21,233 of 21,337
+files; the other 104 it calls blocked where the census does not, because it
+also counts names referenced only from a COMDAT copy link.exe discards.
+
+  python3 tools/link_check.py game/path/File.cpp [...]   # check files
+  python3 tools/link_check.py --next [--limit 30]         # names that unlock the most bytes
+"""
+import argparse
+import collections
+import pickle
+import sys
+import time
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+import build  # noqa: E402
+import link_census  # noqa: E402
+
+INDEX = link_census.OUT / "link_index.pkl"
+ADDRESSES = "<hard-coded image addresses>"
+
+
+def source_bytes(sources=None):
+    """{source: real bytes of its authored + vendored rows}, counted the way
+    progress.real_split counts LINKED (0xCC out). Per file: a byte two files
+    claim counts in both."""
+    import progress
+    matched, notes = progress.matched_at(None), progress.notes_at(None)
+    start, size = progress.retail_text()
+    naked = set(progress.naked_cpp_rows_at(matched, None))
+    image_start, image = progress._text_image()
+    intervals = collections.defaultdict(list)
+    for key, (length, source) in matched.items():
+        if sources is not None and source not in sources:
+            continue
+        if progress.source_lane(source, notes[key], key in naked) not in progress.DECOMPILED_LANES:
+            continue
+        low, high = max(int(key[1], 16), start), min(int(key[1], 16) + length, start + size)
+        if low < high:
+            intervals[source].append((low, high))
+    return {source: sum(high - low - image[low - image_start:high - image_start].count(0xCC)
+                        for low, high in progress.merge_intervals(found))
+            for source, found in intervals.items()}
+
+
+def write_index(present, facts, blockers, excuses, meta):
+    """Called by link_census.write_status: what a per-file check needs from the
+    census, in one pickle. `facts` is link_census.read_facts(present)."""
+    strong = collections.defaultdict(list)
+    comdat = collections.defaultdict(list)
+    for index, (copies, defined, _) in enumerate(facts):
+        for name in defined:
+            strong[name].append(index)
+        for name, digest, _, verdict in copies:
+            comdat[name].append((index, digest, verdict))
+    index = {"meta": meta, "objects": [obj.name for obj in present], "strong": dict(strong),
+             "comdat": dict(comdat), "blockers": blockers, "excuses": excuses,
+             "bytes": source_bytes(set(blockers))}
+    link_census.OUT.mkdir(parents=True, exist_ok=True)
+    temp = INDEX.with_suffix(".tmp")
+    with temp.open("wb") as handle:
+        pickle.dump(index, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    temp.replace(INDEX)
+
+
+def load_index():
+    if not INDEX.exists():
+        raise SystemExit(f"link_check: no index at {INDEX.relative_to(ROOT).as_posix()}; run "
+                         "`python3 tools/link_census.py --build --history` (or --status on the census's tree)")
+    with INDEX.open("rb") as handle:
+        return pickle.load(handle)
+
+
+def duplicate(name, position, exclusive, own, index):
+    """Does link.exe report this object's definition of `name` (LNK2005 /
+    LNK4006)? It compares every definition with the FIRST one in link order
+    and reports the pair when either is exclusive (an ordinary section or a
+    NODUPLICATES COMDAT); two SELECT_ANY copies fold silently. The census
+    charges both objects of a reported pair. Measured on the 2026-09-29 log:
+    2,183 of 2,183 sampled ANY/ANY pairs unreported, every pair with an
+    exclusive side reported."""
+    others = {i: True for i in index["strong"].get(name, ()) if i != own}
+    for i, _, _ in index["comdat"].get(name, ()):
+        if i != own:
+            others.setdefault(i, False)
+    if not others:
+        return False
+    first = min(others)
+    if position < first:  # this object is the first definition: every later one is compared with it
+        return exclusive or any(others.values())
+    return exclusive or others[first]
+
+
+def check_object(obj, index, truth, source=None):
+    """{unresolved, duplicates, comdat, addresses} for one object against the index."""
+    import link_debt
+    copies, defined, undefined = link_census.object_facts(obj, truth)
+    own = index["objects"].index(obj.name) if obj.name in index["objects"] else None
+    position = own if own is not None else len(index["objects"])
+    strong, comdat = index["strong"], index["comdat"]
+
+    def elsewhere(name):
+        return (any(i != own for i in strong.get(name, ())) or
+                any(i != own for i, _, _ in comdat.get(name, ())))
+
+    mine = set(defined) | {name for name, _, _, _ in copies}
+    excuses = index["excuses"]
+    unresolved = sorted(name for name in set(undefined) - mine
+                        if not elsewhere(name) and not link_census.excused(
+                            name, excuses["runtime"], excuses["imported"], excuses["stubs"]))
+    duplicates = sorted(name for name in mine if duplicate(name, position, name in set(defined), own, index))
+    losers = []
+    for name, digest, _, verdict in copies:
+        found = [(i, d, v) for i, d, v in comdat.get(name, ()) if i != own]
+        found.append((position, digest, verdict))
+        found.sort(key=lambda copy: copy[0])
+        loses, rule = link_census.keep_rule(found)
+        if loses[position]:
+            losers.append((name, rule, verdict))
+    addresses = []
+    if source is not None:
+        try:
+            addresses = link_debt.addresses((ROOT / source).read_text(encoding="utf-8", errors="replace"))
+        except OSError:
+            pass
+    return {"unresolved": unresolved, "duplicates": duplicates, "comdat": losers, "addresses": addresses}
+
+
+def resolve(argument, index):
+    """(source or None, object path) for a source path or an object path."""
+    path = Path(argument)
+    if path.suffix.lower() == ".obj":
+        obj = path if path.is_absolute() else ROOT / path
+        by_object = {entry["object"]: source for source, entry in index["blockers"].items()}
+        return by_object.get(obj.name), obj
+    source = (path if path.is_absolute() else ROOT / path).resolve().relative_to(ROOT.resolve()).as_posix()
+    outputs = build.compile_rows([], [ROOT / source])
+    return source, outputs[ROOT / source]
+
+
+def report(source, obj, result, index, now_bytes):
+    census = index["blockers"].get(source or "", {})
+    before = index["bytes"].get(source, 0) if census.get("linked") else 0
+    clean = not any(result[kind] for kind in ("unresolved", "duplicates", "comdat", "addresses"))
+    after = now_bytes if clean else 0
+    print(f"{source or obj.name}: {'LINKS' if clean else 'does not link'}  "
+          f"LINKED {before:,} -> {after:,} bytes (census {index['meta'].get('date', '?')} at "
+          f"{index['meta'].get('commit', '?')}; file's own bytes {now_bytes:,})")
+    for name in result["unresolved"]:
+        print(f"  unresolved  {name}")
+    for name in result["duplicates"]:
+        print(f"  duplicate   {name}")
+    for name, rule, verdict in result["comdat"]:
+        why = {"wrong": "not retail's body", "unknown": "unproven and differs from the kept copy",
+               None: "differs from the first copy in link order (no retail address)"}.get(verdict, verdict)
+        print(f"  comdat      {name}  ({rule}: {why})")
+    if result["addresses"]:
+        print(f"  addresses   {len(result['addresses'])} hard-coded image address(es), e.g. {result['addresses'][0]}")
+    return clean
+
+
+def next_names(index, limit):
+    """Blocker names whose fix alone would link the most bytes: files where
+    that name is the ONLY remaining blocker, bytes summed per name."""
+    gain, files = collections.Counter(), collections.Counter()
+    for source, entry in index["blockers"].items():
+        if entry["linked"]:
+            continue
+        names = set(entry["unresolved"]) | set(entry["duplicates"]) | set(entry["losers"])
+        if entry["addresses"]:
+            names.add(ADDRESSES)
+        if len(names) == 1:
+            name = names.pop()
+            gain[name] += index["bytes"].get(source, 0)
+            files[name] += 1
+    kinds = {}
+    for entry in index["blockers"].values():
+        for kind in ("unresolved", "duplicates", "losers"):
+            for name in entry[kind]:
+                kinds.setdefault(name, kind)
+    print(f"blocker names that are some file's only blocker (census {index['meta'].get('date', '?')} at "
+          f"{index['meta'].get('commit', '?')}):")
+    print(f"  {'bytes':>9} {'files':>5}  kind        name")
+    for name, count in gain.most_common(limit):
+        print(f"  {count:>9,} {files[name]:>5}  {kinds.get(name, 'addresses'):<10}  {name}")
+    print(f"  {len(gain):,} names in all, {sum(gain.values()):,} bytes")
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+    ap.add_argument("paths", nargs="*", help="sources (compiled when stale) or objects")
+    ap.add_argument("--next", action="store_true", help="rank blocker names by the bytes their fix alone unlocks")
+    ap.add_argument("--limit", type=int, default=30)
+    args = ap.parse_args(argv)
+    if not args.paths and not args.next:
+        ap.error("give sources or --next")
+    started = time.time()
+    index = load_index()
+    if args.next:
+        next_names(index, args.limit)
+    if not args.paths:
+        return 0
+    truth = link_census.RetailTruth(link_census.ledger())
+    resolved = [resolve(path, index) for path in args.paths]
+    now = source_bytes({source for source, _ in resolved if source})
+    clean = [report(source, obj, check_object(obj, index, truth, source), index, now.get(source, 0))
+             for source, obj in resolved]
+    print(f"link_check: {sum(clean)} of {len(clean)} link cleanly ({time.time() - started:.1f}s)")
+    return 0 if all(clean) else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -43,8 +43,8 @@ ledger and verification are separate from the game's.
    after the lanes above.
 6. **Linked build.** `python3 tools/link_debt.py --report` lists literal image
    addresses: replace each with a named extern (`dir32_addresses.csv`, else
-   `g_XXXXXXXX`) without changing a byte. `tools/link_census.py`, after a full
-   `BUILD_POOL=12 ./build.sh`, lists the rest.
+   `g_XXXXXXXX`) without changing a byte. `tools/link_check.py <file>` lists
+   blockers; `--next` ranks them (`docs/throughput-tools.md`).
 7. **EA renames.** `python3 tools/ea_queue.py next` serves one rename to EA's
    own name and every file it touches; follow its steps.
 8. **Names.** `python3 tools/name_lane.py next --model <your model>` serves one
