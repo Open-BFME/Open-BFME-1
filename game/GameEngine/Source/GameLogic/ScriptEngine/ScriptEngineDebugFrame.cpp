@@ -65,14 +65,14 @@ public:
 
 void _bfme_updateDebugWindowInputs(void);
 
-// The subsystems the debug window is handed each frame. Only the two the pumps
-// also touch are reached through the macros below; the rest keep their pinned
+// The subsystems the debug window is handed each frame, under their pinned
 // extern spellings.
 class AudioManager;
 class GlobalData;
 class NameKeyGenerator;
 class View;
 class TerrainLogic;
+class SidesList;
 
 extern ScriptEngine *TheScriptEngine;
 extern AudioManager *TheAudio;
@@ -83,12 +83,13 @@ extern TerrainLogic *TheTerrainLogic;
 // 0x012EF1D8 has only address-derived pins so far (placeBuildAvailable casts
 // it to a thing factory); keep the untyped pin rather than invent a class.
 extern void *g_global12EF1D8;
+extern SidesList *TheSidesList;
+extern void *TheScriptDebugWindowDLL;
+extern GameClient *TheGameClient;
+extern GameLogic *TheGameLogic;
 
-#define TheScriptDebugWindowDLL (*(void **)0x012F0758)
 #define ClientCanAppContinue (*(bool *)0x012F075C)
 #define LogicCanAppContinue (*(bool *)0x012F075D)
-#define TheGameClient (*(GameClient **)0x012F1464)
-#define TheGameLogic (*(GameLogic **)0x012F0898)
 
 bool ScriptEngine::isTimeFrozenDebug(void)
 {
@@ -127,9 +128,7 @@ void _bfme_updateDebugWindowInputs(void)
 	if (proc)
 	{
 		((SetTheSidesListProc)proc)(
-			// no symbols.csv pin names this global yet; the export name
-			// suggests TheSidesList but nothing in the ledger proves it
-			*(void **)0x012EF428,
+			TheSidesList,
 			TheScriptEngine,
 			TheAudio,
 			TheWritableGlobalData,

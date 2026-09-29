@@ -4,8 +4,10 @@
 // The surrounding blob service computes the output size and calls this helper
 // with (length, source, destination).  Retail indexes the executable's
 // encoder alphabet at VA 0x0112C178, emits '=' for one- and two-byte tails,
-// and appends a NUL after the four-character packet stream.  The table is an
-// address-backed retail table; no upstream-library identity is assumed here.
+// and appends a NUL after the four-character packet stream.  The alphabet is
+// that string constant; no upstream-library identity is assumed here.
+
+#define ENCODER_ALPHABET "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 
 void rva007FF100Encode(unsigned int length, const char *source, void *destination)
 {
@@ -18,18 +20,18 @@ void rva007FF100Encode(unsigned int length, const char *source, void *destinatio
 		do
 		{
 			((unsigned char *)destination)[outputOffset] =
-				((const unsigned char *)0x0112C178)[
+				((const unsigned char *)ENCODER_ALPHABET)[
 					((const unsigned char *)source)[inputOffset] >> 2];
 			((unsigned char *)destination)[outputOffset + 1] =
-				((const unsigned char *)0x0112C178)[
+				((const unsigned char *)ENCODER_ALPHABET)[
 					(((const unsigned char *)source)[inputOffset + 1] >> 4) |
 					 (((source)[inputOffset] & 3) << 4)];
 			((unsigned char *)destination)[outputOffset + 2] =
-				((const unsigned char *)0x0112C178)[
+				((const unsigned char *)ENCODER_ALPHABET)[
 					(((source)[inputOffset + 1] & 0xf) << 2) |
 					 (((const unsigned char *)source)[inputOffset + 2] >> 6)];
 			((unsigned char *)destination)[outputOffset + 3] =
-				((const unsigned char *)0x0112C178)[
+				((const unsigned char *)ENCODER_ALPHABET)[
 					(source)[inputOffset + 2] & 0x3f];
 			outputOffset += 4;
 			inputOffset += 3;
@@ -42,14 +44,14 @@ void rva007FF100Encode(unsigned int length, const char *source, void *destinatio
 		if (--length == 0)
 		{
 			((unsigned char *)destination)[outputOffset] =
-				((const unsigned char *)0x0112C178)[
+				((const unsigned char *)ENCODER_ALPHABET)[
 					((const unsigned char *)source)[inputOffset] >> 2];
 			((unsigned char *)destination)[outputOffset + 1] =
-				((const unsigned char *)0x0112C178)[
+				((const unsigned char *)ENCODER_ALPHABET)[
 					((source[inputOffset] & 3) << 4) |
 						 (((const unsigned char *)source)[inputOffset + 1] >> 4)];
 			((unsigned char *)destination)[outputOffset + 2] =
-				((const unsigned char *)0x0112C178)[(source[inputOffset + 1] & 0xf) << 2];
+				((const unsigned char *)ENCODER_ALPHABET)[(source[inputOffset + 1] & 0xf) << 2];
 			((unsigned char *)destination)[outputOffset + 3] = '=';
 			outputOffset += 4;
 		}
@@ -57,10 +59,10 @@ void rva007FF100Encode(unsigned int length, const char *source, void *destinatio
 	else
 	{
 		((unsigned char *)destination)[outputOffset] =
-			((const unsigned char *)0x0112C178)[
+			((const unsigned char *)ENCODER_ALPHABET)[
 				((const unsigned char *)source)[inputOffset] >> 2];
 		((unsigned char *)destination)[outputOffset + 1] =
-			((const unsigned char *)0x0112C178)[(source[inputOffset] & 3) << 4];
+			((const unsigned char *)ENCODER_ALPHABET)[(source[inputOffset] & 3) << 4];
 		((unsigned char *)destination)[outputOffset + 2] = '=';
 		((unsigned char *)destination)[outputOffset + 3] = '=';
 		outputOffset += 4;
