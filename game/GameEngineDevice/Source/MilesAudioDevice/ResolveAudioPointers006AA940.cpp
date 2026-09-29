@@ -14,6 +14,7 @@ BfmeEntryCN *__cdecl bfmeLookup(void*);
 struct XferException { char *text; int tag; };
 extern "C" XferException *__cdecl bfmeFormatText(XferException*,int,const char*,...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void*,void*);
+extern int g_guardTargetTypeThrowInfo;
 struct Pair006AA940 : _STL::pair<void*,float> {};
 struct Word006AA940 { int value; };
 class ResolveAudioPointers006AA940 {
@@ -34,7 +35,7 @@ void ResolveAudioPointers006AA940::resolve() {
         Pair006AA940 value; value.second=p->second; value.first=bfmeLookup(p->first);
         if(!value.first) {
             XferException error; bfmeFormatText(&error,5,0);
-            _CxxThrowException(&error,(void*)0x011DFE5C);
+            _CxxThrowException(&error,&g_guardTargetTypeThrowInfo);
         }
         vector_ad4.push_back(value);
     }

@@ -14,6 +14,9 @@ struct BaseHeightMapXferVersion
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
 
+// Retail 0x01239CE0: ThrowInfo for the xfer version throw (not in dir32_addresses.csv).
+extern int g_01239CE0;
+
 class Xfer
 {
 public:
@@ -57,7 +60,7 @@ void BaseHeightMapRenderObjClass::xfer(Xfer *xfer)
 	if (version.version < 3)
 	{
 		int error = 2;
-		_CxxThrowException(&error, (void *)0x01239ce0);
+		_CxxThrowException(&error, (void *)&g_01239CE0);
 	}
 
 	xfer->xferSnapshot(m_treeBuffer);

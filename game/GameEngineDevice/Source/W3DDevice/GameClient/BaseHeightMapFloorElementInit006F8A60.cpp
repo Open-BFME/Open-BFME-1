@@ -19,6 +19,8 @@ template <> inline const char *StringBase<char>::str() const { return m_data ? m
 template <> inline int StringBase<char>::getLength() const { return m_data ? m_data->length : 0; }
 template <> inline void StringBase<char>::clear() { releaseBuffer(); }
 template <> inline void StringBase<char>::concat(const StringBase<char> &s) { concat(s.str(),s.getLength()); }
+class GameLODManager;
+extern GameLODManager *TheGameLODManager;
 struct BfmeR1025;
 char bfmeGo1025F(BfmeR1025 *);
 RenderObjClass *Create_Render_Obj(const char *);
@@ -43,7 +45,7 @@ bool BaseHeightMapFloorElement::init006F8A60()
  AsciiString suffix;
  AsciiString filename;
  if (*((char *)this+0x7d)) {
-  switch (*(int *)(*(char **)0x012ED5AC+0x16c4)) {
+  switch (*(int *)((char *)TheGameLODManager+0x16c4)) {
   case 0: case 1: suffix="L"; break;
   case 2: suffix="M"; break;
   case 3: case 4: suffix.clear(); break;

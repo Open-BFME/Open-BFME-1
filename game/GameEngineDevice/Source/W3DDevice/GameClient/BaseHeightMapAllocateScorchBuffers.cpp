@@ -11,7 +11,7 @@ struct GlobalData
 	Bool m_useHalfHeightMap;
 };
 
-#define TheWritableGlobalData (*(GlobalData **)0x012ED5C8)
+extern GlobalData *TheWritableGlobalData;
 
 class DX8VertexBufferClass
 {

@@ -51,6 +51,9 @@ struct Rva007F14B0Record
 	int downloadCount;
 };
 
+// Retail 0x0130A5F4: this request's TXN name pointer (not in dir32_addresses.csv).
+extern const char *g_0130A5F4;
+
 class Rva007F14B0BlobWriter
 {
 public:
@@ -70,7 +73,7 @@ void __stdcall Rva007F14B0BlobWriter::write(Rva007E8810Message *message,
 	int removeCount,
 	const Rva007F14B0Record *record)
 {
-	const char *txn = *(const char **)0x0130A5F4;
+	const char *txn = g_0130A5F4;
 	message->reset();
 	message->m_category = 'blob';
 	message->addString("TXN", txn);
