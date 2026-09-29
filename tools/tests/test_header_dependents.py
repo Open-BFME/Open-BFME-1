@@ -218,3 +218,130 @@ def test_a_crash_fails_the_commit_instead_of_passing_it(hook_repo):
     assert result.returncode != 0
     assert "header_dependents (see above)" in result.stderr
     assert not (hook_repo / "built").exists()
+
+
+# Every include the scanner cannot read with certainty must still be selected or widen,
+# and selection must bind to the index or commit being verified, never the worktree.
+
+def one_includer(repo, includer, text, extra=None):
+    put(repo, "game/shared.h", "#define VALUE 1\n")
+    put(repo, includer, text)
+    for path, body in (extra or {}).items():
+        put(repo, path, body)
+    ledger(repo, includer)
+    git(repo, "commit", "-qm", "base")
+
+
+@pytest.mark.parametrize("suffix", ["cc", "cxx"])
+def test_other_cxx_suffixes_are_selected(repo, capsys, suffix):
+    one_includer(repo, f"game/a.{suffix}", '#include "shared.h"\n')
+    put(repo, "game/shared.h", "#define VALUE 2\n")
+    assert run(repo, capsys, "--staged") == (0, [f"game/a.{suffix}"])
+
+
+def test_a_chain_through_an_included_non_header_is_followed(repo, capsys):
+    one_includer(repo, "game/a.cpp", '#include "bridge.def"\n', {"game/bridge.def": '#include "shared.h"\n'})
+    put(repo, "game/shared.h", "#define VALUE 2\n")
+    assert run(repo, capsys, "--staged") == (0, ["game/a.cpp"])
+
+
+@pytest.mark.parametrize("text", ['#include \\\n"shared.h"\n', '#inc\\\nlude "shared.h"\n',
+                                  '#\\\ninclude "shared.h"\n', '/* x */ #include "shared.h"\n',
+                                  '#include /* x */ "shared.h"\n', '﻿#include "shared.h"\n',
+                                  '??=include "shared.h"\n', '#include \\\r\n"shared.h"\r\n'])
+def test_spliced_commented_or_bom_includes_are_seen(repo, capsys, text):
+    put(repo, "game/shared.h", "#define VALUE 1\n")
+    (repo / "game/a.cpp").write_bytes(text.encode("utf-8"))
+    git(repo, "add", "game/a.cpp")
+    ledger(repo, "game/a.cpp")
+    git(repo, "commit", "-qm", "base")
+    put(repo, "game/shared.h", "#define VALUE 2\n")
+    assert run(repo, capsys, "--staged") == (0, ["game/a.cpp"])
+
+
+@pytest.mark.parametrize("text", ['#include "shared.h"\n', '#inc\\\nlude "shared.h"\n', '#\\\ninclude "shared.h"\n'])
+def test_git_without_pcre_falls_back_to_the_same_selection(repo, capsys, monkeypatch, text):
+    monkeypatch.setattr(H, "GREP_PCRE", "(")  # git grep -P fails as it does without PCRE
+    one_includer(repo, "game/a.cpp", text)
+    put(repo, "game/shared.h", "#define VALUE 2\n")
+    assert run(repo, capsys, "--staged") == (0, ["game/a.cpp"])
+
+
+def test_a_binary_looking_source_is_still_scanned(repo, capsys):
+    one_includer(repo, "game/a.cpp", '#include "shared.h"\nchar z = 0;\0\n')
+    put(repo, "game/shared.h", "#define VALUE 2\n")
+    assert run(repo, capsys, "--staged") == (0, ["game/a.cpp"])
+
+
+def test_an_unparseable_include_needs_the_full_gate(repo, capsys):
+    one_includer(repo, "game/a.cpp", '#include "shared.h\n')
+    put(repo, "game/shared.h", "#define VALUE 2\n")
+    assert run(repo, capsys, "--staged")[0] == 2
+
+
+def test_a_utf16_source_needs_the_full_gate(repo, capsys):
+    put(repo, "game/shared.h", "#define VALUE 1\n")
+    (repo / "game/a.cpp").write_bytes('#include "shared.h"\n'.encode("utf-16"))
+    git(repo, "add", "game/a.cpp")
+    ledger(repo, "game/a.cpp")
+    git(repo, "commit", "-qm", "base")
+    put(repo, "game/shared.h", "#define VALUE 2\n")
+    assert run(repo, capsys, "--staged")[0] == 2
+
+
+def test_a_macro_include_reaches_a_changed_non_header(repo, capsys):
+    one_includer(repo, "game/a.cpp", '#define BODY "part.data"\nint f(){return\n#include BODY\n;}\n',
+                 {"game/part.data": "1\n"})
+    put(repo, "game/part.data", "2\n")
+    assert run(repo, capsys, "--staged") == (0, ["game/a.cpp"])
+
+
+def test_staged_selection_reads_the_index_not_the_worktree(repo, capsys):
+    one_includer(repo, "game/a.cpp", '#include "shared.h"\n')
+    put(repo, "game/shared.h", "#define VALUE 2\n")
+    (repo / "game/a.cpp").write_text("int f() { return 1; }\n")
+    (repo / "targets/game/reverse/functions.csv").write_text("name,export_rva,target_rva\n")
+    assert run(repo, capsys, "--staged") == (0, ["game/a.cpp"])
+
+
+def test_range_selection_reads_the_commits_not_the_worktree(repo, capsys):
+    one_includer(repo, "game/a.cpp", '#include "shared.h"\n')
+    old = head(repo)
+    put(repo, "game/shared.h", "#define VALUE 2\n")
+    git(repo, "commit", "-qm", "header")
+    (repo / "game/a.cpp").write_text("int f() { return 1; }\n")
+    (repo / "targets/game/reverse/functions.csv").write_text("name,export_rva,target_rva\n")
+    assert run(repo, capsys, "--range", old, head(repo)) == (0, ["game/a.cpp"])
+
+
+def test_range_sees_the_old_name_of_a_renamed_header(repo, capsys):
+    base(repo)
+    old = head(repo)
+    git(repo, "mv", "game/Inc/Low.h", "game/Inc/Lower.h")
+    git(repo, "commit", "-qm", "rename")
+    git(repo, "config", "diff.renames", "true")
+    assert run(repo, capsys, "--range", old, head(repo)) == (0, ["game/A.cpp"])
+
+
+def test_pre_commit_refuses_an_unstaged_edit_in_a_selected_source(hook_repo):
+    put(hook_repo, "game/Lib/henc.tbl", "4, 5, 6,\n")
+    (hook_repo / "game/Lib/Huff.cpp").write_text("void huff() {}\n")
+    result = hook(hook_repo, "pre-commit")
+    assert result.returncode != 0
+    assert "game/Lib/Huff.cpp" in result.stderr
+    assert not (hook_repo / "built").exists()
+
+
+def test_pre_push_refuses_a_dirty_includer_of_a_pushed_header(hook_repo):
+    put(hook_repo, "game/Lib/Shared.h", "int s;\n")
+    put(hook_repo, "game/Lib/Bridge.def", '#include "Shared.h"\n')
+    put(hook_repo, "game/Lib/Huff.inl", '#include "henc.tbl"\n#include "Bridge.def"\n')
+    git(hook_repo, "commit", "-qm", "bridge")
+    base_sha = head(hook_repo)
+    put(hook_repo, "game/Lib/Shared.h", "int s2;\n")
+    git(hook_repo, "commit", "-qm", "header")
+    (hook_repo / "game/Lib/Bridge.def").write_text("\n")
+    result = hook(hook_repo, "pre-push", f"refs/heads/main {head(hook_repo)} refs/heads/main {base_sha}\n")
+    assert result.returncode != 0
+    assert "working tree differs" in result.stderr
+    assert not (hook_repo / "built").exists()

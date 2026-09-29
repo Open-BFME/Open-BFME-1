@@ -225,6 +225,12 @@ if [ "$wide_change" -ne 0 ]; then
                     git diff --quiet -- "$path" || fail "unstaged edits in $path: the scoped header gate would verify the wrong bytes" ;;
             esac
         done
+        # The selection was read from the index; build.sh compiles the worktree copy.
+        declare -A unstaged=()
+        while IFS= read -r -d '' path; do unstaged["$path"]=1; done < <(git diff --name-only -z)
+        for path in "${header_deps[@]}"; do
+            [ -z "${unstaged[$path]:-}" ] || fail "unstaged edits in $path: the scoped header gate would verify the wrong bytes"
+        done
         echo "pre-commit: header/shim change — scoped gate over ${#header_deps[@]} dependent source(s)" >&2
         chunk=()
         chunk_bytes=0

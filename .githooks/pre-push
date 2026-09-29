@@ -153,9 +153,10 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
         if python3 tools/header_dependents.py --range "$base" "$local_sha" > "$header_deps_out"; then
             mapfile -t header_deps < "$header_deps_out"
             rm -f "$header_deps_out"
-            # build.sh verifies the files on disk: they must be the pushed ones.
+            # build.sh verifies the files on disk: they must be the pushed ones,
+            # including any non-header file (.def, .tbl) the dependents include.
             git diff --quiet "$local_sha" -- '*.h' '*.hpp' '*.hh' '*.hxx' '*.inl' '*.inc' \
-                    'inputs/reference/shims/*' "${header_deps[@]}" \
+                    'inputs/reference/shims/*' game inputs \
                 || fail "working tree differs from $local_sha in a header or dependent source; the scoped header gate would verify the wrong bytes"
             echo "pre-push: header/shim change — scoped gate over ${#header_deps[@]} dependent source(s)" >&2
             chunk=()
