@@ -143,6 +143,7 @@ public:
     RenderObjClass *m_prevRenderObj;
     const W3DTruckDrawModuleData *getW3DTruckDrawModuleData() const { return data; }
 protected:
+    virtual void onRenderObjRecreated(void);
     void updateBones();
 };
 void W3DTruckDraw::updateBones()
@@ -218,4 +219,30 @@ void W3DTruckDraw::updateBones()
     }
     m_prevRenderObj = getRenderObject();
     m_prevNumBones = m_prevRenderObj->Get_Num_Bones();
+}
+
+// W3DTruckDraw::onRenderObjRecreated, retail 0x00781440 (104 bytes): no ledger
+// row covered it; it fills the W3DTruckDraw vtable slot at rdata 0x00D22F98.
+// ZH's body with BFME's extra tire bones: forget the cached render object and
+// every bone index, then rebuild them (a tail jump into updateBones).
+void W3DTruckDraw::onRenderObjRecreated(void)
+{
+    m_prevRenderObj = NULL;
+    m_frontLeftTireBone = 0;
+    m_frontRightTireBone = 0;
+    m_rearLeftTireBone = 0;
+    m_rearRightTireBone = 0;
+    m_midFrontLeftTireBone = 0;
+    m_midFrontRightTireBone = 0;
+    m_midRearLeftTireBone = 0;
+    m_midRearRightTireBone = 0;
+    m_midMidLeftTireBone = 0;
+    m_midMidRightTireBone = 0;
+    m_secondaryFrontLeftTireBone = 0;
+    m_secondaryFrontRightTireBone = 0;
+    m_secondaryRearLeftTireBone = 0;
+    m_secondaryRearRightTireBone = 0;
+    m_secondaryMidMidLeftTireBone = 0;
+    m_secondaryMidMidRightTireBone = 0;
+    updateBones();
 }
