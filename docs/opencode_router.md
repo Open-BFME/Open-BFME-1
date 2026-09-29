@@ -592,6 +592,14 @@ disabled. Missing, malformed, nonzero, or unavailable price metadata blocks Zen
 assignments. A free-looking name alone never establishes free billing. Do not
 change local provider endpoints; these checks assume the trusted OpenCode catalog.
 
+Another OpenCode provider (for example `console-nvidia`, the OpenCode Console
+Nvidia connector) is routable only when the local config lists it in
+`free_providers` and its model entry is `metered: false` with evidence. Its
+models then face exactly the Zen rule: they are admitted only when the catalog
+read at scheduler startup lists the exact ID enabled with explicit zero prices,
+with no override. Model IDs keep the provider's own path
+(`console-nvidia/moonshotai/kimi-k3#high`).
+
 Each worker's provider policy allows only its selected provider. There is no
 switch to paid Zen on Go exhaustion. Explicit free Zen work can proceed while Go
 is exhausted; a quota/funds error on Zen cools down that model without falsely

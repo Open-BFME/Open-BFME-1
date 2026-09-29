@@ -106,3 +106,67 @@ class ZenTests(unittest.TestCase):
             self.assertFalse(r.budget_snapshot(state,self.c)['exhausted'])
 
 if __name__=='__main__':unittest.main()
+
+
+class FreeProviderTests(unittest.TestCase):
+    """An extra provider (e.g. console-nvidia) is admitted exactly like free Zen:
+    only from a read catalog that prices the exact model at zero."""
+    MID = 'console-nvidia/moonshotai/kimi-k3'
+
+    def setUp(self):
+        self.c = r.config(r.DEFAULT_CONFIG)
+        self.c['free_providers'] = ['console-nvidia']
+        self.model = dict(id=self.MID, tier='reasoning', enabled=True, concurrency=1, reserve=0, weight=1,
+                          metered=False, unmetered_evidence='catalog prices it at zero', escalation_only=True,
+                          relative_cost=50, variants=['none', 'low', 'high', 'max'])
+        self.c['models'].append(self.model)
+        self.job = dict(tier='reasoning', category='reasoning', model=self.MID + '#high', budget_justification='')
+
+    def load(self, c):
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp) / 'config.json'; p.write_text(json.dumps(c))
+            return r.config(p)
+
+    def catalog(self, entries):
+        def run(argv, **kwargs):
+            kwargs['stdout'].write(json.dumps({'data': entries}))
+        return run
+
+    def entry(self, cost):
+        return dict(id='moonshotai/kimi-k3', providerID='console-nvidia', enabled=True, cost=cost,
+                    variants=[dict(id=v) for v in ('none', 'low', 'high', 'max')])
+
+    def test_config_accepts_listed_provider_only(self):
+        self.load(self.c)
+        del self.c['free_providers']
+        with self.assertRaisesRegex(ValueError, 'free_providers IDs'):
+            self.load(self.c)
+        self.c['free_providers'] = ['opencode']
+        with self.assertRaisesRegex(ValueError, 'free_providers must list'):
+            self.load(self.c)
+
+    def test_metered_extra_provider_cannot_be_enabled(self):
+        self.model['metered'] = True
+        with self.assertRaisesRegex(ValueError, 'must remain disabled'):
+            self.load(self.c)
+
+    def test_admitted_only_when_catalog_prices_it_at_zero(self):
+        free = [dict(input=0, output=0, cache=dict(read=0, write=0))]
+        with patch.object(r.subprocess, 'run', side_effect=self.catalog([self.entry(free)])):
+            caps = r.discover_variants(self.c, r.ROOT)
+        self.assertIn(self.MID, self.c['_verified_free_zen'])
+        self.assertEqual(caps[self.MID], ['none', 'low', 'high', 'max'])
+        self.assertEqual(r.choose(self.c, self.job, {}, {}, [], 0), self.model)
+        for data in ([self.entry([dict(input=3, output=15, cache=dict(read=0.3, write=0))])], []):
+            with patch.object(r.subprocess, 'run', side_effect=self.catalog(data)):
+                r.discover_variants(self.c, r.ROOT)
+            self.assertNotIn(self.MID, self.c['_verified_free_zen'])
+            self.assertIsNone(r.choose(self.c, self.job, {}, {}, [], 0))
+        with patch.object(r.subprocess, 'run', side_effect=OSError('offline')):
+            r.discover_variants(self.c, r.ROOT)
+        self.assertIsNone(r.choose(self.c, self.job, {}, {}, [], 0))
+
+    def test_worker_policy_allows_only_that_provider(self):
+        policies = json.loads(r.worker_env(self.MID + '#high', r.ROOT)['OPENCODE_CONFIG_CONTENT'])['experimental']['policies']
+        self.assertIn({'action': 'provider.use', 'resource': 'console-nvidia', 'effect': 'allow'}, policies)
+        self.assertIn({'action': 'provider.use', 'resource': '*', 'effect': 'deny'}, policies)

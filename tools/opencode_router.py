@@ -33,7 +33,20 @@ TERMINAL = ('completed', 'failed', 'cancelled', 'needs_review')
 INTERRUPTED = 'interrupted'
 TASK_FAILURES = ('failure', 'timeout', 'output_limit')
 AVAILABILITY_FAILURES = ('quota', 'unavailable', 'variant_unavailable')
-MODEL_ID = re.compile(r'(?:opencode-go|opencode)/[a-z0-9][a-z0-9._-]*(?:#[a-z0-9._-]+)?\Z')
+MODEL_ID = re.compile(r'(?:(?:opencode-go|opencode)/[a-z0-9][a-z0-9._-]*|'
+                      r'[a-z0-9][a-z0-9-]*(?:/[a-z0-9][a-z0-9._-]*)+)(?:#[a-z0-9._-]+)?\Z')
+BUILTIN_PROVIDERS = ('opencode-go', 'opencode')
+
+
+def free_providers(c):
+    """Extra OpenCode providers (config `free_providers`) whose models, like Zen's, are
+    admitted only when the catalog read at scheduler start prices them at zero."""
+    return tuple(c.get('free_providers', ()))
+
+
+def needs_catalog_proof(c, mid):
+    provider = mid.split('/', 1)[0]
+    return provider == 'opencode' or provider in free_providers(c)
 VARIANT_ID = re.compile(r'[a-z0-9][a-z0-9._-]*\Z')
 VARIANT_ORDER = {
     'bulk': ('medium', 'low', 'minimal', 'none'),
@@ -82,11 +95,18 @@ def config(path):
     go_budget.config(c)
     cpu_admission.config(c)  # optional host CPU admission; no measurement while off
     seen = set()
+    extra = c.get('free_providers', [])
+    if (not isinstance(extra, list) or len(extra) != len(set(extra)) or any(
+            not isinstance(p, str) or not re.fullmatch(r'[a-z0-9][a-z0-9-]*', p) or p in BUILTIN_PROVIDERS
+            for p in extra)):
+        raise ValueError('free_providers must list unique provider IDs other than opencode-go and opencode')
     if type(c.get('variant_discovery', True)) is not bool:
         raise ValueError('variant_discovery must be a boolean')
     for m in c['models']:
-        if not MODEL_ID.fullmatch(m['id']) or m['id'] in seen:
-            raise ValueError('model IDs must be unique explicit opencode-go or opencode IDs')
+        if (not MODEL_ID.fullmatch(m['id']) or m['id'] in seen or
+                m['id'].split('/', 1)[0] not in (*BUILTIN_PROVIDERS, *extra) or
+                (m['id'].split('/', 1)[0] in BUILTIN_PROVIDERS and m['id'].count('/') != 1)):
+            raise ValueError('model IDs must be unique explicit opencode-go, opencode or free_providers IDs')
         seen.add(m['id'])
         if m['tier'] not in TIERS or type(m['enabled']) is not bool:
             raise ValueError('invalid model tier/enabled')
@@ -105,8 +125,8 @@ def config(path):
             raise ValueError('metered must be boolean')
         if not m.get('metered', True) and (not isinstance(m.get('unmetered_evidence'), str) or not m['unmetered_evidence'].strip()):
             raise ValueError('metered=false requires explicit unmetered_evidence')
-        if m['id'].startswith('opencode/') and m['enabled'] and m.get('metered', True):
-            raise ValueError('paid or unverified Zen models must remain disabled')
+        if needs_catalog_proof(c, m['id']) and m['enabled'] and m.get('metered', True):
+            raise ValueError('paid or unverified Zen and free_providers models must remain disabled')
         variants = m.get('variants')
         if 'variants' in m and (not isinstance(variants, list) or
                 any(not isinstance(v, str) or not VARIANT_ID.fullmatch(v) for v in variants) or
@@ -266,7 +286,7 @@ def choose(c, job, active, model_state, history, now, budget=None):
     candidates = []
     for m in c['models']:
         mid = m['id']
-        if mid.startswith('opencode/') and mid.split('#')[0] not in c.get('_verified_free_zen', set()):
+        if needs_catalog_proof(c, mid) and mid.split('#')[0] not in c.get('_verified_free_zen', set()):
             continue
         if not m['enabled'] or (job['model'] and mid != job['model'] and
                                 mid != job['model'].split('#')[0]):
@@ -338,7 +358,7 @@ def worker_env(model, cwd):
 def catalog_env(c, root):
     env = worker_env(c['models'][0]['id'], root)
     policy = json.loads(env['OPENCODE_CONFIG_CONTENT'])
-    for provider in ('opencode-go', 'opencode'):
+    for provider in (*BUILTIN_PROVIDERS, *free_providers(c)):
         policy['experimental']['policies'].append(
             {'action': 'provider.use', 'resource': provider, 'effect': 'allow'})
     env['OPENCODE_CONFIG_CONTENT'] = json.dumps(policy)
@@ -359,7 +379,7 @@ def zero_catalog_cost(cost):
 
 def discover_variants(c, root):
     """Read the location's catalog; never infer capabilities from model names."""
-    needs_zen = any(m['enabled'] and m['id'].startswith('opencode/') for m in c['models'])
+    needs_zen = any(m['enabled'] and needs_catalog_proof(c, m['id']) for m in c['models'])
     c['_verified_free_zen'] = []
     if (not c.get('variant_discovery', True) and not needs_zen) or not c['models']:
         return {}
@@ -378,10 +398,10 @@ def discover_variants(c, root):
         for m in data:
             if m.get('providerID') == 'opencode' and isinstance(m.get('id'), str):
                 listed.add('opencode/' + m['id'])
-            if m.get('providerID') not in ('opencode-go', 'opencode') or not isinstance(m.get('variants'), list):
+            if m.get('providerID') not in (*BUILTIN_PROVIDERS, *free_providers(c)) or not isinstance(m.get('variants'), list):
                 continue
             mid = m['providerID'] + '/' + m['id']
-            if m['providerID'] == 'opencode' and m.get('enabled') is True and zero_catalog_cost(m.get('cost')):
+            if (needs_catalog_proof(c, mid) and m.get('enabled') is True and zero_catalog_cost(m.get('cost'))):
                 c['_verified_free_zen'].append(mid)
             variants = [v['id'] for v in m['variants']]
             if MODEL_ID.fullmatch(mid) and all(isinstance(v, str) and VARIANT_ID.fullmatch(v) for v in variants):
@@ -859,7 +879,7 @@ def fleet(root, state, c, duration, workers=None, until=None):
                     model = choose(c, job, active, ms, history, time.time(), budget)
                     if not model:
                         unconstrained = choose(c, job, active, ms, history, time.time())
-                        if unconstrained or (job['model'] or '').startswith('opencode/'):
+                        if unconstrained or needs_catalog_proof(c, job['model'] or 'x/x'):
                             note = (go_budget.reason(unconstrained, job, budget, c) or 'budget.metered_concurrency'
                                     if unconstrained else 'routing.zen_free_unverified_or_unavailable')
                             with database(state) as db:
@@ -1184,7 +1204,7 @@ def main(argv=None):
         s.add_argument('--task-file', type=Path)
         s.add_argument('--target', help='canonical RVA or shared target key')
         s.add_argument('--cwd', type=Path, help='exclusive workspace; default retained detached worktree')
-        s.add_argument('--model', help='explicit configured Go or verified-free Zen model override')
+        s.add_argument('--model', help='explicit configured Go, verified-free Zen or free_providers model override')
         s.add_argument('--budget-justification', default='', help='expected verified gain / valuable blocker; required under low budget pressure')
         s.add_argument('--redundant', action='store_true')
         s.add_argument('--duration', type=fleet_run.parse_duration, default=3600)
