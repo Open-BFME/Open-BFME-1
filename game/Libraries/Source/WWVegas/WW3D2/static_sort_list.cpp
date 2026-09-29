@@ -45,7 +45,12 @@
 #include "static_sort_list.h"
 
 #include "rendobj.h"
+#define TheDX8MeshRenderer TheDX8MeshRendererObject
 #include "dx8renderer.h"
+#undef TheDX8MeshRenderer
+
+// BFME keeps the mesh renderer as a pointer global.
+extern DX8MeshRendererClass *TheDX8MeshRenderer;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Initialization Functions ////////////////////////////////////////////////////////////////////////
@@ -74,28 +79,20 @@ void DefaultStaticSortListClass::Add_To_List(RenderObjClass * robj, unsigned int
 	SortLists[sort_level].Add_Tail(robj, false);
 }
 
-// ?Render_And_Clear@DefaultStaticSortListClass@@UAEXAAVRenderInfoClass@@@Z present-unmatched
 void DefaultStaticSortListClass::Render_And_Clear(RenderInfoClass & rinfo)
 {
 	// We go from higher sort level to lower, since lower sort level means higher priority (in
 	// front), so lower sort level meshes need to be rendered later.
+	// BFME dropped the render-hook branch.
 	for(unsigned int sort_level = MaxSort; sort_level >= MinSort; sort_level--) {
 		bool render=false;
 		for (	RenderObjClass *robj = SortLists[sort_level].Remove_Head(); robj;
 				robj->Release_Ref(), robj = SortLists[sort_level].Remove_Head())
 		{
-			if (robj->Get_Render_Hook()) {
-				if (robj->Get_Render_Hook()->Pre_Render(robj, rinfo)) {
-					robj->Render(rinfo);
-					render = true;
-				}
-				robj->Get_Render_Hook()->Post_Render(robj, rinfo);
-			} else {
-				robj->Render(rinfo);
-				render = true;
-			}
+			robj->Render(rinfo);
+			render = true;
 		}
-		if (render) TheDX8MeshRenderer.Flush();
+		if (render) TheDX8MeshRenderer->Flush();
 	}
 }
 
