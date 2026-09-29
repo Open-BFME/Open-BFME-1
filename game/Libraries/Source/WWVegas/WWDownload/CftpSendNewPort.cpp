@@ -131,7 +131,7 @@ int Cftp::SendNewPort( void )
 			return( FTP_FAILED );
 		}
 
-		sprintf( command, (const char *)0x01132e9c,
+		sprintf( command, "PORT %d,%d,%d,%d,%d,%d\r\n",
 				i & 0xFF,
 				( i >> 8 ) & 0xFF,
 				( i >> 16 ) & 0xFF,

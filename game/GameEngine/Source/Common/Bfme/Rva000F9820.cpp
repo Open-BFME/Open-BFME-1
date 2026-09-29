@@ -53,6 +53,7 @@ struct BfmeGameLogic
 };
 
 extern BfmeOtherBN *g_bfmeOtherBN;
+extern BfmeGameLogic *TheGameLogic;
 
 class Rva000F9820 : public BfmeVecVLH
 {
@@ -74,7 +75,7 @@ float Rva000F9820::getValue(int divisor, int *out)
 		{
 			if (out)
 				*out = (int)((Rva000F9270FactoryLookup *)record)->evaluate((void *)value10);
-			return *(const float *)0x01075334;
+			return 1.0f;
 		}
 
 		key = (void *)value10;
@@ -84,10 +85,10 @@ float Rva000F9820::getValue(int divisor, int *out)
 			value = (int)product->bfmeApply980B((int)key, record->value34);
 			if (value > 0)
 			{
-				BfmeGameLogic *logic = *(BfmeGameLogic **)0x012F0898;
+				BfmeGameLogic *logic = TheGameLogic;
 				return ((float)(unsigned int)logic->frame - (float)record->value30) / value;
 			}
 		}
 	}
-	return *(const float *)0x01075350;
+	return 0.0f;
 }

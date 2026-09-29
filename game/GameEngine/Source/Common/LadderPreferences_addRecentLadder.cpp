@@ -9,6 +9,8 @@ extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);
 
 typedef bool Bool;
 
+extern const char Rva006A16B0Empty[];
+
 template <typename T>
 class StringBase
 {
@@ -43,9 +45,9 @@ template <typename T>
 __forceinline int StringBase<T>::compare(const StringBase<T> &right) const
 {
     const int rightLength = right.m_data ? right.m_data->length : 0;
-    const T *rightData = right.m_data ? &right.m_data->data[0] : (const T *)0x0107388B;
+    const T *rightData = right.m_data ? &right.m_data->data[0] : (const T *)Rva006A16B0Empty;
     const int leftLength = m_data ? m_data->length : 0;
-    const T *leftData = m_data ? &m_data->data[0] : (const T *)0x0107388B;
+    const T *leftData = m_data ? &m_data->data[0] : (const T *)Rva006A16B0Empty;
     const int length = leftLength < rightLength ? leftLength : rightLength;
     int result = memcmp(leftData, rightData, length);
     if (result != 0)
@@ -69,7 +71,7 @@ public:
 
     const char *str() const
     {
-        return m_data ? &m_data->data[0] : (const char *)0x0107388B;
+        return m_data ? &m_data->data[0] : Rva006A16B0Empty;
     }
 
     AsciiString &operator=(const AsciiString &source)

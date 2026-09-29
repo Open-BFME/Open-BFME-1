@@ -18,19 +18,19 @@
 // 0.017453292f (PI/180 = RADS_PER_DEGREE) -- exactly the three sibling
 // formulas in GameCommon.h, confirming both the constant and the family.
 //
-// SECONDS_PER_LOGICFRAME_REAL and RADS_PER_DEGREE are `extern const Real`
-// globals in the real header (their float payload lives in one defining TU,
-// at these retail data addresses); every OTHER translation unit that reads
-// them sees only an opaque memory operand, so the compiler cannot constant
-// -fold SECONDS_PER_LOGICFRAME_REAL*SECONDS_PER_LOGICFRAME_REAL down to a
+// SECONDS_PER_LOGICFRAME_REAL is a writable .data global at retail 0x012A86A8
+// (RADS_PER_DEGREE is the .rdata float constant 0x3C8EFA35); every TU that
+// reads the global sees only an opaque memory operand, so the compiler cannot
+// constant-fold SECONDS_PER_LOGICFRAME_REAL*SECONDS_PER_LOGICFRAME_REAL to a
 // single 0.04f literal the way it would for a same-TU local `const` -- which
 // is exactly why the retail bytes still show two separate loads of the same
-// address. Referencing them the same way (a known global at its retail
-// absolute address) reproduces that.
+// address. Referencing it the same way (a named extern) reproduces that.
 typedef float Real;
 
-#define SECONDS_PER_LOGICFRAME_REAL (*reinterpret_cast<const Real *>(0x012A86A8))
-#define RADS_PER_DEGREE (*reinterpret_cast<const Real *>(0x01082C40))
+extern const Real g_012A86A8;
+
+#define SECONDS_PER_LOGICFRAME_REAL (g_012A86A8)
+#define RADS_PER_DEGREE (0.017453292f)
 
 // Reading the SAME global through a `volatile`-qualified pointer forces the
 // compiler to treat each read as an observable side effect: it can neither
@@ -39,7 +39,7 @@ typedef float Real;
 // both of which the non-volatile macro above lets the optimizer do. The
 // read itself is the only volatile-qualified step; the value it produces is
 // then used as an ordinary float, so the rest of each expression is untouched.
-#define SECONDS_PER_LOGICFRAME_REAL_VOL (*reinterpret_cast<const volatile Real *>(0x012A86A8))
+#define SECONDS_PER_LOGICFRAME_REAL_VOL (*reinterpret_cast<const volatile Real *>(&g_012A86A8))
 
 Real ConvertVelocityInSecsToFrames(Real distPerMsec)
 {

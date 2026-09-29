@@ -21,6 +21,8 @@ extern "C" unsigned int __cdecl strlen(const char *text);
 
 typedef int Int;
 
+extern const char Rva006A16B0Empty[];
+
 template <typename T>
 class StringBase
 {
@@ -62,7 +64,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? (const char *)((const char *)m_data + 8) : (const char *)0x0107388B;
+		return m_data ? (const char *)((const char *)m_data + 8) : Rva006A16B0Empty;
 	}
 };
 
@@ -160,6 +162,8 @@ public:
 };
 
 extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern Rva000AF530Table *g_012ED648;
+extern const char g_0108132C[];
 extern void _bfme_debugRecordCallsite(int kind);
 
 void INI::parseWaterTextureListDefinition(INI *ini)
@@ -169,7 +173,7 @@ void INI::parseWaterTextureListDefinition(INI *ini)
 	name.set(token, token ? (int)strlen(token) : 0);
 
 	// retail [0x012ED648]
-	Rva000C2A30Owner *list = (*(Rva000AF530Table **)0x012ED648)->find(name);
+	Rva000C2A30Owner *list = g_012ED648->find(name);
 
 	if (list == 0)
 	{
@@ -182,7 +186,7 @@ void INI::parseWaterTextureListDefinition(INI *ini)
 	}
 	else
 	{
-		ini->initFromINI(list, (const void *)0x0108132C);
+		ini->initFromINI(list, g_0108132C);
 		list->dump();
 	}
 }
