@@ -8,21 +8,7 @@ typedef int Int;
 extern "C" int __cdecl strcmp(const char *, const char *);
 #pragma intrinsic(strcmp)
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-public:
-	void set(const StringBase<T> &source);
-
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase<T> &source);
-	~StringBase();
-
-	void *m_data;
-};
+#include "string_base.h"
 
 class INI
 {

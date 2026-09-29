@@ -1,49 +1,13 @@
-// cl: /EHsc
+// cl: /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME: BFME2 GenericObjectCreationNugget::parseAnimSet reconstruction.
 // The retail AnimSet is three inline AsciiString objects (12 bytes total).
 
 #include <vector>
 
-template <typename T>
-class StringBase
-{
-    friend class AsciiString;
+#include "string_base.h"
 
-public:
-    void set(const StringBase<T> &source);
-
-private:
-    StringBase(const StringBase<T> &source);
-    void releaseBuffer();
-    void *m_data;
-};
-
-class AsciiString
-{
-public:
-    AsciiString() : m_text(0) {}
-
-    AsciiString(const AsciiString &source)
-    {
-        ((StringBase<char> *)this)->StringBase<char>::StringBase(
-            *(const StringBase<char> *)&source);
-    }
-
-    ~AsciiString()
-    {
-        ((StringBase<char> *)this)->releaseBuffer();
-    }
-
-    AsciiString &operator=(const AsciiString &source)
-    {
-        ((StringBase<char> *)this)->set(*(const StringBase<char> *)&source);
-        return *this;
-    }
-
-private:
-    void *m_text;
-};
+#include "ascii_string.h"
 
 class INI
 {

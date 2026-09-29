@@ -1,21 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 typedef bool Bool;
 
 class INI;
 
-template <typename T>
-class StringBase
-{
-public:
-	StringBase() : m_data( 0 ) {}
-	StringBase( const StringBase &other );
-	~StringBase() { releaseBuffer(); }
-
-private:
-	void releaseBuffer();
-	void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

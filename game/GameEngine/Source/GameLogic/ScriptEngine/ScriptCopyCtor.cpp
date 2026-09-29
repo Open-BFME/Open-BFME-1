@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ??0Script@@QAE@ABV0@@Z: game/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp
 // BFME Script copy constructor. Same pre-ZH layout as ScriptCtor.cpp: three
 // AsciiString members, no action-comment field. Deep-copies the condition and
@@ -15,18 +15,7 @@ struct StringInlineData
 	T m_text[1];
 };
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-	StringInlineData<T> *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

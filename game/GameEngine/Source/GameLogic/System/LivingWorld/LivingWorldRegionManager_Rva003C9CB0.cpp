@@ -24,18 +24,7 @@
 
 #include <vector>
 
-template <typename Type>
-class StringBase
-{
-	friend class AsciiString;
-
-public:
-	void set(const StringBase<Type> &source);
-
-private:
-	void releaseBuffer();
-	void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

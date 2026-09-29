@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?getAsciiVersion@Version@@QAE?AVAsciiString@@XZ: game/GameEngine/Source/Common/version.cpp
 //
 // Retail 0x000AEC40, 144 bytes. NDEBUG ZH body: format("%d.%d", m_major, m_minor)
@@ -12,19 +12,7 @@ struct StringInlineData
 	T m_text[1];
 };
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-	StringInlineData<T> *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : private StringBase<char>

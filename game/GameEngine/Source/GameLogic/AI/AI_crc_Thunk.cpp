@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Igame/GameEngine/Source/Common/System
+// cl: /DNDEBUG /MD /EHsc /Igame/GameEngine/Source/Common/System /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // readable body of ?crc@AI@@UAEXPAVXfer@@@Z: game/GameEngine/Source/GameLogic/AI/ai.cpp
 // Open-BFME5: clean C++ reconstruction of the AI CRC/version serializer.
@@ -16,13 +16,7 @@ public:
 	virtual void loadPostProcess();
 };
 
-template <typename T>
-class StringBase
-{
-protected:
-	StringBase() : m_data(0) {}
-	void *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : public StringBase<char>

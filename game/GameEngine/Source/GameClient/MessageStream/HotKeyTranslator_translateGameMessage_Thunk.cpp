@@ -1,4 +1,4 @@
-// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /Igame/Libraries/Source/WWVegas/WWLib
 // ?translateGameMessage@HotKeyTranslator@@UAE?AW4GameMessageDisposition@@PBVGameMessage@@@Z
 // Clean C++ conversion of the HotKeyTranslator retail body.
 
@@ -47,20 +47,7 @@ public:
 
 extern Keyboard *TheKeyboard;
 
-template <typename T>
-class StringBase
-{
-friend class UnicodeString;
-friend class AsciiString;
-
-public:
-    StringBase() : m_data(0) {}
-    void set(const T *text, Int length);
-
-private:
-    ~StringBase();
-    void *m_data;
-};
+#include "string_base.h"
 
 class UnicodeString : private StringBase<WideChar>
 {

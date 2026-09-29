@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Gy /O2 /Ob1
+// cl: /DNDEBUG /MD /EHsc /Gy /O2 /Ob1 /Igame/Libraries/Source/WWVegas/WWLib
 // The two TeamPrototype bodies that deal in Scripts, adjacent in the image:
 //
 //   0x000ED6F0  getGenericScript            236B
@@ -59,17 +59,7 @@ private:
 
 // Temp cleanup at 0x00887940 is StringBase<char>::releaseBuffer (export
 // ?releaseBuffer@?$StringBase@D@@AAEXXZ), not UnicodeString::~ (0x005EEA0).
-template <typename T>
-class StringBase
-{
-protected:
-	StringBase() : m_data(0) {}
-	~StringBase() { releaseBuffer(); }
-	void *m_data;
-
-private:
-	void releaseBuffer();
-};
+#include "string_base.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : private StringBase<char>

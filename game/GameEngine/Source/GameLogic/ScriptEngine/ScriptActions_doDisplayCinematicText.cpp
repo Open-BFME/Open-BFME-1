@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // ScriptActions::doDisplayCinematicText, retail RVA 0x002F3BD0 (553 bytes).
 //
 // The retail body uses the BFME string and virtual layouts rather than the
@@ -15,21 +15,7 @@ typedef bool Bool;
 typedef unsigned short WideChar;
 typedef float Real;
 
-template <typename T>
-class StringBase
-{
-protected:
-
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-public:
-	void concat(const T *text, Int length);
-	Bool endsWith(const T *text, Int length) const;
-
-	void *m_data;
-};
+#include "string_base.h"
 
 class UnicodeString : private StringBase<WideChar>
 {

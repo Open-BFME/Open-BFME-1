@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // CampaignManager::parseMissionPart, retail 0x005BCB20, 161 bytes.
 // The authoritative CampaignManager source supplies the parser semantics and
@@ -11,19 +11,7 @@ class AsciiString;
 extern "C" unsigned int __cdecl strlen(const char *text);
 #pragma intrinsic(strlen)
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase<T> &other);
-	~StringBase() { releaseBuffer(); }
-	void releaseBuffer();
-
-	void *m_data;
-};
+#include "string_base.h"
 
 class RetailLayoutString
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Authentic body from version.cpp.  The narrow StringBase ABI is stated
 // locally because the shared BFME sweep shim intentionally uses a different
 // public AsciiString representation.
@@ -11,23 +11,7 @@ struct StringInlineData
 	T m_text[1];
 };
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-public:
-	void set(const StringBase<T> &other);
-
-private:
-	StringInlineData<T> *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

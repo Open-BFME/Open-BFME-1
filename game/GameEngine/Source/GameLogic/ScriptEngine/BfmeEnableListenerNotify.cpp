@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob1
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob1 /Igame/Libraries/Source/WWVegas/WWLib
 // BFME's script-engine listener watches the generic script names owned by the
 // current TeamPrototype.  The TeamPrototype and string views are local to this
 // TU so their BFME-only offsets do not alter the shared headers.
@@ -17,23 +17,7 @@ struct StringHeader
 	T data[1];
 };
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-	public:
-	void concat(const T *str, Int len);
-
-	protected:
-	StringBase() : m_data(0) {}
-	~StringBase() { releaseBuffer(); }
-	StringHeader<T> *m_data;
-
-	private:
-	StringBase(const StringBase<T> &other);
-	void releaseBuffer();
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

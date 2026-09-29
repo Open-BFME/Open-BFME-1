@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // BFME's lobby displays the base player name with the preorder and rank icons.
 
 typedef int Int;
@@ -10,19 +10,7 @@ inline const T &min(const T &left, const T &right)
 	return left < right ? left : right;
 }
 
-template <typename T>
-class StringBase
-{
-public:
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase &other);
-
-protected:
-	~StringBase();
-	void releaseBuffer();
-
-	void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 class BfmeMgr418
 {
@@ -22,18 +22,7 @@ void bfmeRunMgr418_6D0()
 
 class UnicodeString;
 
-template <typename T>
-class StringBase
-{
-	friend class UnicodeString;
-
-	private:
-	StringBase() : m_data(0) {}
-	~StringBase() { releaseBuffer(); }
-	void releaseBuffer();
-
-	void *m_data;
-};
+#include "string_base.h"
 
 class UnicodeString : private StringBase<unsigned short>
 {

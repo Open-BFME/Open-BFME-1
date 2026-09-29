@@ -1,4 +1,4 @@
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /Igame/Libraries/Source/WWVegas/WWLib
 //
 // Retail RVA 0x00367810, 164 bytes, thiscall, direct call through ILT thunk
 // RVA 0x000159C9.  The sole caller in the image is phase 5 of
@@ -60,19 +60,7 @@ static __forceinline unsigned int rva00367810Frame(
 	return logic->m_frame;
 }
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-	private:
-	StringBase() : m_data( 0 ) {}
-	StringBase( const T *text );
-	StringBase( const StringBase<T> &other );
-	~StringBase();
-
-	void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

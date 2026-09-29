@@ -1,27 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(const AsciiString &other);
-	~AsciiString();
+#include "ascii_string.h"
 
-private:
-	void *m_data;
-};
-
-template <typename Character>
-class StringBase
-{
-public:
-	StringBase() : m_data(0) {}
-	void set(const StringBase<Character> &text);
-
-protected:
-	void *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : public StringBase<unsigned short>

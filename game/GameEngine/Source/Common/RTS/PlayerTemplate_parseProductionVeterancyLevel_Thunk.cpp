@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME5: canonical production-veterancy parser with BFME retail layouts.
 
@@ -7,34 +7,9 @@ enum VeterancyLevel { VETERANCY_INVALID = 0 };
 
 class AsciiString;
 
-template <typename T>
-class StringBase
-{
-    T *m_text;
+#include "string_base.h"
 
-    friend class AsciiString;
-    StringBase(const T *text);
-
-public:
-    const T *str() const { return m_text ? m_text + 8 : ""; }
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-    char *m_text;
-
-public:
-    AsciiString(const char *text)
-    {
-        ((StringBase<char> *)this)->StringBase<char>::StringBase(text);
-    }
-    ~AsciiString();
-    const char *str() const
-    {
-        return ((const StringBase<char> *)this)->str();
-    }
-};
+#include "ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI

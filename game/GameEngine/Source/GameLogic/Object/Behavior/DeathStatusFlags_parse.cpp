@@ -1,24 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 typedef bool Bool;
 
 class AsciiString;
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase &other);
-	~StringBase() { releaseBuffer(); }
-
-protected:
-	void *m_data;
-
-private:
-	void releaseBuffer();
-};
+#include "string_base.h"
 
 extern const char Rva006A16B0Empty[];
 
