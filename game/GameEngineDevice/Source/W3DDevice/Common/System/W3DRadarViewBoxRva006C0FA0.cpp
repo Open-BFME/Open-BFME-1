@@ -1,11 +1,8 @@
-// ?method@Rva006C0FA0W3DRadar@@QAEXHHHHH@Z
-// partial score=0.75 date=2026-09-28
-// ?method@Rva006C0FA0W3DRadar@@QAEXHHHHH@Z
-// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// Retail 0x006C0FA0: W3DRadar view-box corners, the BFME form of Zero Hour's drawViewBox.
+// The four projected corners go to the owner at 0x012F4B98 instead of being drawn.
 
-#include <string.h>
 typedef float Real;
-struct Rva006C0FA0Point { float x,y; };
 typedef int Int;
 
 struct ICoord2D
@@ -19,12 +16,6 @@ struct Coord3D
 	Real x;
 	Real y;
 	Real z;
-};
-
-struct Rva006C0FA0Locals
-{
-	ICoord2D origin;
-	Coord3D world;
 };
 
 class Coord2D
@@ -137,6 +128,9 @@ struct RvaMapExtent
 {
 	Coord3D lo;
 	Coord3D hi;
+
+	Real width() const { return hi.x - lo.x; }
+	Real height() const { return hi.y - lo.y; }
 };
 
 struct Rva00592E10Pair
@@ -151,6 +145,8 @@ public:
 	void copy(const Rva00592E10Pair *source);
 };
 
+class Glo012F4B98Type;
+
 class Rva006C0FA0W3DRadar
 {
 private:
@@ -161,55 +157,62 @@ private:
 	unsigned char m_pad1454[0x14e8 - 0x1454];
 	Coord2D m_viewBox[4];
 
+	Real getTerrainAverageZ() const { return m_terrainAverageZ; }
+	// ?radarToPixel@Rva006C0FA0W3DRadar@@AAEXPBVCoord2D@@PAV2@HHHH@Z absent-from-retail
+	void radarToPixel(const Coord2D *radar, Coord2D *pixel,
+		Int radarUpperLeftX, Int radarUpperLeftY, Int radarWidth, Int radarHeight)
+	{
+		if (radar == 0 || pixel == 0)
+			return;
+		pixel->x = (radar->x * radarWidth / 128) + radarUpperLeftX;
+		pixel->y = ((127 - radar->y) * radarHeight / 128) + radarUpperLeftY;
+	}
+
 public:
 	void method(Int, Int, Int, Int, Int);
 };
 
-#define TheTacticalView (*(View **)0x012f1600)
-#define RvaRadarCellScale (*(const Real *)0x010888f4)
-#define RvaRadarCellOrigin (*(const Real *)0x0111d780)
-#define Glo012F4B98 (*(Rva00592E10Owner **)0x012f4b98)
+extern View *TheTacticalView;
+extern Glo012F4B98Type *Glo012F4B98;
 
 void Rva006C0FA0W3DRadar::method(Int pixelX, Int pixelY, Int width, Int height, Int unused)
 {
-	Rva006C0FA0Locals locals;
-	Real terrainZ;
+	ICoord2D ulScreen;
+	Coord2D ulRadar;
+	Coord3D ulWorld;
+	Coord2D ulStart;
 	Coord2D start, end;
 
-	TheTacticalView->getOrigin(&locals.origin.x, &locals.origin.y);
-	terrainZ = m_terrainAverageZ;
-	TheTacticalView->screenToWorldAtZ(&locals.origin, &locals.world, terrainZ);
+	TheTacticalView->getOrigin(&ulScreen.x, &ulScreen.y);
+	TheTacticalView->screenToWorldAtZ(&ulScreen, &ulWorld, getTerrainAverageZ());
 
-	Coord2D ulRadar, radar;
-	ulRadar.x = locals.world.x /
-		((m_mapExtent.hi.x - m_mapExtent.lo.x) * RvaRadarCellScale);
-	ulRadar.y = locals.world.y /
-		((m_mapExtent.hi.y - m_mapExtent.lo.y) * RvaRadarCellScale);
-	start.x = pixelX + (width * ulRadar.x) * RvaRadarCellScale;
-	start.y = pixelY + ((RvaRadarCellOrigin - ulRadar.y) * height) * RvaRadarCellScale;
+	ulRadar.x = ulWorld.x / (m_mapExtent.width() / 128);
+	ulRadar.y = ulWorld.y / (m_mapExtent.height() / 128);
 
-	{
-	Coord2D points[4];
+	radarToPixel(&ulRadar, &ulStart, pixelX, pixelY, width, height);
 
-	Coord2D first = start;
+	Coord2D box[4];
+	Coord2D radar;
+
+	start = ulStart;
 	radar.x = ulRadar.x + m_viewBox[1].x;
 	radar.y = ulRadar.y + m_viewBox[1].y;
-	end.x = pixelX + (width * radar.x) * RvaRadarCellScale;
-	end.y = pixelY + ((RvaRadarCellOrigin - radar.y) * height) * RvaRadarCellScale;
-	points[0] = first;
-	points[1] = end;
+	radarToPixel(&radar, &end, pixelX, pixelY, width, height);
+	box[0] = start;
+
+	start = end;
 	radar.x += m_viewBox[2].x;
 	radar.y += m_viewBox[2].y;
-	end.x = pixelX + (width * radar.x) * RvaRadarCellScale;
-	end.y = pixelY + ((RvaRadarCellOrigin - radar.y) * height) * RvaRadarCellScale;
-	points[2] = end;
+	radarToPixel(&radar, &end, pixelX, pixelY, width, height);
+	box[1] = start;
+
+	start = end;
 	radar.x += m_viewBox[3].x;
 	radar.y += m_viewBox[3].y;
-	end.x = pixelX + (width * radar.x) * RvaRadarCellScale;
-	end.y = pixelY + ((RvaRadarCellOrigin - radar.y) * height) * RvaRadarCellScale;
-	points[3] = end;
+	radarToPixel(&radar, &end, pixelX, pixelY, width, height);
+	box[2] = start;
+	box[3] = end;
 
 	if (Glo012F4B98)
-		Glo012F4B98->copy((const Rva00592E10Pair *)points);
-	}
+		((Rva00592E10Owner *)Glo012F4B98)->copy((const Rva00592E10Pair *)box);
 }
