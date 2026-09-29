@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "cec0061e8ca52c3d865c9a78bbf564187c08abad0e5894b3cc872a3bdd760438",
+  "symbol": "?d_0073df50@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.66,
+  "source": "// ?d_0073df50@@YAXXZ\r\n// partial score=0.66 date=2026-09-25\r\n// cl: /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Include /Igame/Libraries/Source /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad\r\n#include \"../../../../game/Libraries/Source/WWVegas/WWMath/sphere.h\"\r\n#include \"../../../../game/Libraries/Source/WWVegas/WWMath/frustum.h\"\r\n#include \"../../../../game/Libraries/Source/WWVegas/WWMath/colmath.h\"\r\n\r\nclass CameraClass\r\n{\r\nprotected:\r\n\tvoid Update_Frustum(void) const;\r\n\tunsigned char m_bfmeCameraHead[0x104];\r\n\tFrustumClass m_frustum;\r\n};\r\n\r\nclass Rva0073DF50Camera : public CameraClass\r\n{\r\npublic:\r\n\tusing CameraClass::Update_Frustum;\r\n\tusing CameraClass::m_frustum;\r\n};\r\n\r\nclass Rva0073DF50\r\n{\r\npublic:\r\n\tint isVisible(const Vector3 *position, float radius);\r\n\r\n\tunsigned char m_bfmeHead[0x104];\r\n\tRva0073DF50Camera *m_camera;\r\n};\r\n\r\nint Rva0073DF50::isVisible(const Vector3 *position, float radius)\r\n{\r\n\tVector3 center(position->X, position->Y, position->Z);\r\n\tSphereClass sphere(center, radius);\r\n\tRva0073DF50Camera *camera = m_camera;\r\n\r\n\tcamera->Update_Frustum();\r\n\treturn CollisionMath::Overlap_Test(camera->m_frustum, sphere) != 1;\r\n}\r\n"
+}

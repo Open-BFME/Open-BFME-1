@@ -1,5 +1,5 @@
 // ?rva0023D230@BfmeHordeContainOwner@@QAEPAVObject@@H@Z
-// partial score=0.76 date=2026-09-24
+// partial score=0.7604 date=2026-09-24
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc
 // stlport
 // Retail 0x0023D230 (409 bytes): a HordeContain-family query on the interface

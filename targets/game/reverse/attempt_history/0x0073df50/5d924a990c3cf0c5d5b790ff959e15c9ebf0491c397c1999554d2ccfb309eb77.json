@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "5d924a990c3cf0c5d5b790ff959e15c9ebf0491c397c1999554d2ccfb309eb77",
+  "symbol": "?isVisible@Rva0073DF50@@QAEHPBUCoord3D@@M@Z",
+  "score_kind": "measured",
+  "score": 0.6593,
+  "source": "// ?isVisible@Rva0073DF50@@QAEHPBUCoord3D@@M@Z\n// partial score=0.6593 date=2026-09-30\n// cl: /DNDEBUG /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/Wwutil /Igame/Libraries/Source/WWVegas/WWDownload /Igame/Libraries/Source/Compression /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep\n\n#include \"colmath.h\"\n#include \"colmathinlines.h\"\n#include \"frustum.h\"\n#include \"sphere.h\"\n\nstruct Coord3D\n{\n\tfloat x;\n\tfloat y;\n\tfloat z;\n};\n\nclass CameraClass\n{\npublic:\n\tconst FrustumClass &Get_Frustum(void) const { Update_Frustum(); return Frustum; }\n\nprotected:\n\tvoid Update_Frustum(void) const;\n\n\tchar m_pad000[0x104];\n\tFrustumClass Frustum;\n};\n\nclass Rva0073DF50\n{\npublic:\n\tint isVisible(const Coord3D *center, float radius);\n\nprivate:\n\tchar m_pad000[0x104];\n\tCameraClass *m_3DCamera;\n};\n\nint Rva0073DF50::isVisible(const Coord3D *center, float radius)\n{\n\tSphereClass sphere(Vector3(center->x, center->y, center->z), radius);\n\treturn CollisionMath::Overlap_Test(m_3DCamera->Get_Frustum(), sphere) != CollisionMath::OUTSIDE;\n}\n"
+}

@@ -1,5 +1,5 @@
 // ?d_0073df50@@YAXXZ
-// partial score=0.66 date=2026-09-25
+// partial score=0.6593 date=2026-09-25
 // cl: /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Include /Igame/Libraries/Source /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad
 #include "../../../../game/Libraries/Source/WWVegas/WWMath/sphere.h"
 #include "../../../../game/Libraries/Source/WWVegas/WWMath/frustum.h"
