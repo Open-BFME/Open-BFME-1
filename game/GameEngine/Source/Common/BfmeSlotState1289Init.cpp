@@ -6,18 +6,18 @@
 
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned int bytes);
 
-#define BfmeTwoPi (*(const double *)0x01126CE8)
-#define BfmeAngleUpper (*(const float *)0x01097114)
-#define BfmeAngleLower (*(const float *)0x01097108)
+#define BfmeTwoPi 3.1415927410125732
+#define BfmeAngleUpper 1.5707964f
+#define BfmeAngleLower (-1.5707964f)
 #define BfmeAngleSpan (*(const float *)0x01136850)
-#define BfmeAngleScale (*(const float *)0x0107533C)
-#define BfmeKTHE (*(const float *)0x0109ECC0)
-#define BfmeAxisScale (*(const float *)0x0107FAC4)
-#define BfmeAxisScaleY (*(const float *)0x01081810)
-#define BfmeOutputScale (*(const float *)0x01084068)
-#define BfmeAxisLimit (*(const float *)0x01136948)
-#define BfmeAxisLimitOther (*(const float *)0x0109BF40)
-#define BfmeUnit (*(const float *)0x01075334)
+#define BfmeAngleScale 0.5f
+#define BfmeKTHE 57.295776f
+#define BfmeAxisScale 100.0f
+#define BfmeAxisScaleY (-100.0f)
+#define BfmeOutputScale 255.0f
+#define BfmeAxisLimit (-1e-4f)
+#define BfmeAxisLimitOther 1e-4f
+#define BfmeUnit 1.0f
 
 extern "C" void *__cdecl memset(void *dst, int value, unsigned int count);
 #pragma intrinsic(memset)

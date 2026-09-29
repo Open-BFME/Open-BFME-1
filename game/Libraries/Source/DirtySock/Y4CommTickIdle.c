@@ -1306,9 +1306,9 @@ void __stdcall Rva0081BDCC( int lineApplication );
 __declspec(dllimport) int __stdcall Rva0135904CPostWorkerMessage(
 	unsigned int workerId, unsigned int message, int first, int second );
 __declspec(dllimport) void __stdcall Rva01358F30WorkerYield( int interval );
-typedef void *( __stdcall *Rva008139A0WorkerHandleProc )( void );
-typedef int ( __stdcall *Rva008139A0ReleaseHandleProc )( void *handle,
-	int value, struct Rva00814700Comm *comm );
+__declspec(dllimport) void *__stdcall GetProcessHeap( void );
+__declspec(dllimport) int __stdcall HeapFree( void *heap,
+	unsigned long flags, void *memory );
 
 void Rva008139A0( struct Rva00814700Comm *comm )
 {
@@ -1320,8 +1320,7 @@ void Rva008139A0( struct Rva00814700Comm *comm )
 	while ( comm->m_state == 9 )
 		Rva01358F30WorkerYield( 0 );
 
-	( *(Rva008139A0ReleaseHandleProc *)0x01358E44 )(
-		( *(Rva008139A0WorkerHandleProc *)0x01358DDC )(), 0, comm );
+	HeapFree( GetProcessHeap(), 0, comm );
 }
 
 struct Rva00812FD0Message
@@ -1351,7 +1350,7 @@ int Rva00812FD0( struct Rva00814700Comm *argument )
 	comm = argument;
 	Rva01359044DiscardMessage( &message, 0, 0, 0, 0 );
 	iResult = Rva0081BDA2( comm->m_endpoint + 4,
-		Rva01358DC8ModuleHandle( 0 ), (void *)0x00C13100, 0,
+		Rva01358DC8ModuleHandle( 0 ), (void *)Rva00813100, 0,
 		comm->m_endpoint );
 
 	if ( *(int *)comm->m_endpoint == 0 )
