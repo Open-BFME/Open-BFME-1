@@ -25,12 +25,12 @@ class Shadow
 {
 public:
 	char m_pad00[0x38];
-	int m_value38;
+	int m_opacityStartFrame;
 	int m_value3C;
 	int m_opacityStart;
-	int m_value44;
+	int m_opacityPeakFrame;
 	int m_opacityPeak;
-	int m_value4C;
+	int m_opacityPeakEndFrame;
 	int m_opacityEndFrame;
 	int m_opacityEnd;
 
@@ -40,24 +40,24 @@ public:
 void Shadow::rva00459960( int offset38, int offset3C, int value40, int offset44, int value48, int offset4C, int offset50, int value54 )
 {
 	int currentFrame = TheGameClientClientUpdate->getFrame();
-	m_value38 = currentFrame + offset38;
+	m_opacityStartFrame = currentFrame + offset38;
 	if( offset3C == -1 )
 		m_value3C = offset3C;
 	else
 		m_value3C = currentFrame + offset3C;
 	m_opacityStart = value40;
-	m_value44 = m_value38 + offset44;
+	m_opacityPeakFrame = m_opacityStartFrame + offset44;
 	m_opacityPeak = value48;
 	if( offset4C == -1 )
 	{
-		m_value4C = -1;
+		m_opacityPeakEndFrame = -1;
 		m_opacityEndFrame = offset50;
 		m_opacityEnd = value54;
 	}
 	else
 	{
-		m_value4C = m_value44 + offset4C;
-		m_opacityEndFrame = m_value4C + offset50;
+		m_opacityPeakEndFrame = m_opacityPeakFrame + offset4C;
+		m_opacityEndFrame = m_opacityPeakEndFrame + offset50;
 		m_opacityEnd = value54;
 	}
 }
