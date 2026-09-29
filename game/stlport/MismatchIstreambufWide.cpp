@@ -1,6 +1,8 @@
 // cl: /O2 /MD
 // STLport 4.5.3 mismatch(istreambuf_iterator<unsigned short>, const unsigned short*)
-// @ 0x0083E420 (99B). Retail without /Zc:wchar_t (mangling G).
+// @ 0x0083E420 (99B), and money_get's __get_string over the same types
+// @ 0x00848690 (75B), whose one call is that mismatch. Retail without
+// /Zc:wchar_t (mangling G).
 
 namespace _STL
 {
@@ -76,5 +78,24 @@ template pair<istreambuf_iterator<unsigned short, char_traits<unsigned short> >,
 	istreambuf_iterator<unsigned short, char_traits<unsigned short> >,
 	istreambuf_iterator<unsigned short, char_traits<unsigned short> >,
 	const unsigned short *);
+
+template <class T1, class T2>
+inline pair<T1, T2> make_pair(const T1 &a, const T2 &b)
+{
+	return pair<T1, T2>(a, b);
+}
+
+// money_get's helper, _monetary.c: match a punctuation string at the input.
+template <class InIt1, class InIt2>
+pair<InIt1, bool> __get_string(InIt1 first, InIt1 last, InIt2 str_first, InIt2 str_last)
+{
+	pair<InIt1, InIt2> pr = mismatch(first, last, str_first);
+	return make_pair(pr.first, pr.second == str_last);
+}
+
+template pair<istreambuf_iterator<unsigned short, char_traits<unsigned short> >, bool> __get_string(
+	istreambuf_iterator<unsigned short, char_traits<unsigned short> >,
+	istreambuf_iterator<unsigned short, char_traits<unsigned short> >,
+	const unsigned short *, const unsigned short *);
 
 } // namespace _STL

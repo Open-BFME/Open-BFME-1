@@ -1,5 +1,7 @@
 // cl: /O2 /MD
-// STLport 4.5.3 mismatch(istreambuf_iterator<char>, const char*) @ 0x0083D640 (95B).
+// STLport 4.5.3 mismatch(istreambuf_iterator<char>, const char*) @ 0x0083D640 (95B),
+// and money_get's __get_string over the same types @ 0x008485D0 (75B), whose one
+// call is that mismatch: retail passes the punctuation string as const char*.
 
 namespace _STL
 {
@@ -75,5 +77,24 @@ template pair<istreambuf_iterator<char, char_traits<char> >, const char *> misma
 	istreambuf_iterator<char, char_traits<char> >,
 	istreambuf_iterator<char, char_traits<char> >,
 	const char *);
+
+template <class T1, class T2>
+inline pair<T1, T2> make_pair(const T1 &a, const T2 &b)
+{
+	return pair<T1, T2>(a, b);
+}
+
+// money_get's helper, _monetary.c: match a punctuation string at the input.
+template <class InIt1, class InIt2>
+pair<InIt1, bool> __get_string(InIt1 first, InIt1 last, InIt2 str_first, InIt2 str_last)
+{
+	pair<InIt1, InIt2> pr = mismatch(first, last, str_first);
+	return make_pair(pr.first, pr.second == str_last);
+}
+
+template pair<istreambuf_iterator<char, char_traits<char> >, bool> __get_string(
+	istreambuf_iterator<char, char_traits<char> >,
+	istreambuf_iterator<char, char_traits<char> >,
+	const char *, const char *);
 
 } // namespace _STL
