@@ -507,7 +507,9 @@ def archive_attempt(directory, data, symbol, score, score_kind="author-estimate"
                "score_kind": score_kind, "score": score,
                "source": data.decode("utf-8", errors="strict")}
     if path.exists():
-        if json.loads(path.read_text(encoding="utf-8")) != payload:
+        existing = json.loads(path.read_text(encoding="utf-8"))
+        if any(existing.get(key) != payload[key]
+               for key in ("sha256", "symbol", "source")):
             raise ValueError(f"immutable attempt archive differs: {path}")
     else:
         atomic_bytes(path, json.dumps(payload, ensure_ascii=True, indent=2).encode())
