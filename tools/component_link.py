@@ -79,10 +79,13 @@ COMPONENTS = {
     },
     "lua": {
         "sources": ["game/Libraries/Source/Lua/"],
-        "driver": "lua_harness.c",
+        "driver": "lua_harness.cpp",
         "include": ["game/Libraries/Source/Lua"],
         # name -> why the driver defines it (reported as a TEST DOUBLE, never as resolved)
-        "doubles": {},
+        "doubles": {
+            "?bfmeLogMsg574@@YAXPBD@Z": "luaB_print's game logger; retail's body is only the gen_asm "
+                                        "dump ?d_002e5090, so the driver records the text instead",
+        },
     },
 }
 
@@ -173,10 +176,22 @@ class Placement:
             for s in symbols.values():
                 if s["storage"] == EXTERNAL and s["section"] > 0:
                     self.defined.setdefault(s["name"], (name, s["section"], s["value"]))
-        self.anchors = collections.defaultdict(set)
+        # A row anchors a symbol of ITS object only: two TUs' statics share
+        # names (_read_number in liolib.c and llex.c). A gen-alias row claims a
+        # second address for another row's body; it names no symbol here.
+        self.anchor_obj = collections.defaultdict(lambda: collections.defaultdict(set))
+        self.aliases = []
         for row in rows:
+            if "gen-alias" in (row.get("notes") or ""):
+                self.aliases.append(row)
+                continue
             for key in {row["name"], build.ledger_object_symbol(row)}:
-                self.anchors[key].add(int(row["target_rva"], 16))
+                self.anchor_obj[build.row_object(row).name][key].add(int(row["target_rva"], 16))
+        self.anchor_ext = collections.defaultdict(set)  # an external COMDAT: every object's copy is one symbol
+        for names in self.anchor_obj.values():
+            for key, rvas in names.items():
+                self.anchor_ext[key] |= rvas
+        self.anchors = collections.defaultdict(set)  # external names: dir32 data, other sources' rows
         with (ROOT / "targets/game/reverse/dir32_addresses.csv").open(newline="", encoding="utf-8") as handle:
             for row in csv.DictReader(handle):
                 self.anchors[row["name"]].add(int(row["va"], 16) - BASE)
@@ -215,8 +230,13 @@ class Placement:
         queue = []
         for name, (sections, symbols) in self.objs.items():
             for s in symbols.values():
-                if s["section"] > 0 and s["storage"] in (EXTERNAL, STATIC) and s["name"] in self.anchors:
-                    for rva in sorted(self.anchors[s["name"]]):
+                if s["section"] <= 0 or s["storage"] not in (EXTERNAL, STATIC):
+                    continue
+                known = self.anchor_obj[name].get(s["name"])
+                if not known and s["storage"] == EXTERNAL:
+                    known = self.anchor_ext.get(s["name"]) or self.anchors.get(s["name"])
+                if known:
+                    for rva in sorted(known):
                         key = (name, s["section"])
                         if self.place(key, rva - s["value"], f"ledger {s['name']}"):
                             queue.append(key)
@@ -228,8 +248,8 @@ class Placement:
                 continue
             start = self.base[(obj, number)]
             retail = self.read(start, section["size"])
-            if retail is None:
-                continue
+            if retail is None or self.masked_diff(section, retail):
+                continue  # a section that is not retail's says nothing about where its targets are
             for where, index, kind in section["relocs"]:
                 target = symbols.get(index)
                 if target is None or kind not in (DIR32, DIR32NB, REL32) or where + 4 > section["size"]:
@@ -248,9 +268,14 @@ class Placement:
                 elif target["storage"] == EXTERNAL and target["name"] in self.defined:
                     owner, sec, offset = self.defined[target["name"]]
                     key = (owner, sec)
+                else:
+                    key = None
+                if key is not None:
+                    address = self.through_stub(key, address)
                 elif target["name"].startswith("__imp_"):
                     bare = target["name"][len("__imp_"):]
-                    expected = self.slots.get(bare) or self.slots.get(link_census._undecorate(bare)) or set()
+                    # the C name first: __imp__exit is exit's slot, not _exit's
+                    expected = self.slots.get(link_census._undecorate(bare)) or self.slots.get(bare) or set()
                     self.imports.append((obj, target["name"], address, expected))
                     continue
                 else:
@@ -262,6 +287,38 @@ class Placement:
                     continue
                 if self.place(key, address - offset, evidence):
                     queue.append(key)
+
+    def through_stub(self, key, address):
+        """Retail was linked incrementally: a call or a function pointer may
+        name an ILT jump stub (`jmp body`) rather than the body. Follow it when
+        the target is code that does not itself start with a jmp."""
+        section = self.objs[key[0]][0][key[1] - 1]
+        head = self.read(address, 5)
+        starts_jmp = bool(section["body"]) and section["body"][0] == 0xE9
+        if section["name"].startswith(".text") and head and head[0] == 0xE9 and not starts_jmp:
+            return (address + 5 + struct.unpack_from("<i", head, 1)[0]) & 0xFFFFFFFF
+        return address
+
+    @staticmethod
+    def masked_diff(section, retail):
+        """Offsets where the section differs from retail outside relocation fields."""
+        ours, theirs = bytearray(section["body"]), bytearray(retail)
+        for where, _, kind in section["relocs"]:
+            width = 2 if kind == 0x000A else 4
+            ours[where:where + width] = theirs[where:where + width]
+        return [i for i in range(len(ours)) if ours[i] != theirs[i]]
+
+    def find_content(self, body):
+        """Retail RVAs outside .text holding exactly these bytes."""
+        found = []
+        for sec in self.pe:
+            if sec["name"] in (".rdata", ".data"):
+                data = self.image[sec["raw_pointer"]:sec["raw_pointer"] + sec["size"]]
+                at = data.find(body)
+                while at >= 0 and len(found) < 3:
+                    found.append(sec["rva"] + at)
+                    at = data.find(body, at + 1)
+        return found
 
     def compare(self):
         """[(obj, label, section name, size, rva or None, verdict)] for every section."""
@@ -275,6 +332,10 @@ class Placement:
                 rva = self.base.get(key)
                 if rva is None:
                     verdict = "unplaced"
+                    if section["body"] is not None and not section["relocs"] and section["size"] >= 8                             and not section["name"].startswith(".text"):
+                        hits = self.find_content(section["body"])
+                        if len(hits) == 1:
+                            rva, verdict = hits[0], "content only (no reference places it)"
                 elif section["body"] is None:
                     verdict = "bss (placed, no bytes)"
                 else:
@@ -282,11 +343,7 @@ class Placement:
                     if retail is None:
                         verdict = "outside retail's raw data"
                     else:
-                        ours, theirs = bytearray(section["body"]), bytearray(retail)
-                        for where, _, kind in section["relocs"]:
-                            width = 2 if kind == 0x000A else 4
-                            ours[where:where + width] = theirs[where:where + width]
-                        diff = [i for i in range(len(ours)) if ours[i] != theirs[i]]
+                        diff = self.masked_diff(section, retail)
                         verdict = "match" if not diff else f"MISMATCH ({len(diff)} bytes, first +0x{diff[0]:X})"
                 results.append((obj, label, section["name"], section["size"], rva, verdict,
                                 section_members(symbols, section["number"])))
@@ -330,10 +387,14 @@ def link(objs, driver, out):
     return result.returncode, log, exe, mapfile
 
 
-def map_publics(mapfile):
-    """{symbol: [lib:object, ...]} from the map's publics (static symbols included)."""
+def map_publics(mapfile, statics=False):
+    """{symbol: [lib:object, ...]} from the map's publics, or with `statics`
+    its static symbols too (a TU's static shares a name with another TU's
+    external: lbaselib.c's luaB_print)."""
     found = collections.defaultdict(list)
     for line in mapfile.read_text(errors="replace").splitlines():
+        if line.strip() == "Static symbols" and not statics:
+            break
         parts = line.split()
         if len(parts) >= 4 and re.fullmatch(r"[0-9a-f]{4}:[0-9a-f]{8}", parts[0]) \
                 and re.fullmatch(r"[0-9a-f]{8}", parts[2]):
@@ -377,7 +438,8 @@ def main(argv=None):
         for line in failures:
             print("FAIL", line)
         return 1
-    publics = map_publics(mapfile)
+    publics, in_image = map_publics(mapfile), map_publics(mapfile, statics=True)
+    _, driver_defines, _ = link_census.object_facts(driver, truth=_NoTruth())
 
     placement = Placement(objs, rows)
     placement.run()
@@ -385,8 +447,8 @@ def main(argv=None):
     stubs, imported = link_census.import_stubs(), link_census.retail_imports()
     print(f"\nexternals ({len(needs)}): name -> where the link resolved it; retail imports it?")
     for name in sorted(needs):
-        where = publics.get(name) or publics.get(name.replace("__imp_", "", 1)) or ["?"]
-        from_driver = any(Path(w).stem == driver.stem for w in where)
+        where = publics.get(name) or publics.get(name.replace("__imp_", "", 1)) or ["not in image (unreferenced)"]
+        from_driver = name in driver_defines
         ok = link_census.excused(name, runtime, imported, stubs)
         note = "yes" if ok else "NO"
         if from_driver:
@@ -397,6 +459,15 @@ def main(argv=None):
                 note = "DRIVER-DEFINED"
         elif not ok:
             failures.append(f"{name}: retail does not import it")
+        reached = placement.outside.get(name)
+        if reached:
+            shown = []
+            for address in sorted(reached):
+                head = placement.read(address, 5) or b""
+                stub = head[:1] == b"\xe9"
+                body = (address + 5 + struct.unpack_from("<i", head, 1)[0]) & 0xFFFFFFFF if stub else None
+                shown.append(f"0x{address:08X}" + (f" (jmp 0x{body:08X})" if stub else ""))
+            note += f"; retail calls {', '.join(shown)}"
         print(f"  {name:<40} {','.join(sorted(set(where))):<34} {note}   (from {', '.join(sorted(needs[name]))})")
     print("  import-library resolutions whose retail call target is a body, not an import thunk:")
     divergent = 0
@@ -453,14 +524,14 @@ def main(argv=None):
     counts = collections.Counter(r[5].split(" ")[0] for r in results)
     print(f"\nretail placement: {len(results)} sections; {dict(counts)}")
     code = [r for r in results if r[2].startswith(".text")]
-    print(f"  code: {len(code)} sections, {sum(r[5] == 'match' for r in code)} match retail at their ledger "
-          f"address with every relocation landing where retail's does")
+    print(f"  code: {len(code)} sections, {sum(r[5] == 'match' for r in code)} match retail (at a ledger "
+          f"address or one retail's own references give) with every relocation landing where retail's does")
     print(f"  data ({len(results) - len(code)} sections):")
     for obj, label, sname, size, rva, verdict, members in results:
         if verdict == "unplaced":
             # No retail evidence places it. Harmless only if the link dropped it
             # (an inline COMDAT retail never emitted out of line, a scaffold).
-            kept = [m for m in members if m in publics]
+            kept = [m for m in members if m in in_image]
             verdict = "unplaced, IN THE IMAGE" if kept else "unplaced, not in the image"
             if kept:
                 failures.append(f"{obj} {label}: linked into the image but no retail evidence places it")
@@ -475,6 +546,13 @@ def main(argv=None):
             failures.append(f"{obj}: {name} read through 0x{address:08X}, retail's slots {sorted(map(hex, expected))}")
     print(f"  imports read through retail's own IAT slot: "
           f"{sum(a in e for *_, a, e in placement.imports)} of {len(placement.imports)} references")
+    placed_at = {rva: set(section_members(placement.objs[o][1], n)) for (o, n), rva in placement.base.items()}
+    orphans = [r for r in placement.aliases
+               if build.ledger_object_symbol(r) not in placed_at.get(int(r["target_rva"], 16), ())]
+    if orphans:  # reported, not failed: the ledger's claim, not the link's
+        print(f"  gen-alias rows giving a component body a second retail address "
+              f"(a real link emits one copy; those addresses get none): "
+              + ", ".join(f"{r['target_rva']}={build.ledger_object_symbol(r)}" for r in orphans))
     for line in placement.conflicts:
         print("  CONFLICT", line)
         failures.append(f"placement conflict: {line}")

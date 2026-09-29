@@ -25,3 +25,10 @@ def test_zlib_links_runs_and_matches_retail(capsys):
     assert "COMDATs with differing copies across the linked objects: 0" in out
     assert "imports read through retail's own IAT slot: 2 of 2 references" in out
     assert "component zlib: PASS" in out
+
+
+def test_lzhl_takes_retails_operator_new_not_the_crts(capsys):
+    assert component_link.main(["lzhl"]) == 0
+    out = capsys.readouterr().out
+    assert "TEST DOUBLE in driver" in out
+    assert "component lzhl: PASS" in out

@@ -4,8 +4,20 @@
    component_link.py's COMPONENTS["lua"]["doubles"]; the script reports each. */
 #include <stdio.h>
 #include <string.h>
+extern "C" {
 #include "lua.h"
 #include "lualib.h"
+}
+
+/* TEST DOUBLE, the only one: luaB_print writes through the game's logger
+   (retail ILT 0x0003EBAD -> 0x002E5090, a body known only as the gen_asm
+   dump ?d_002e5090). This one records what print() sends it. */
+static char logged[1024];
+void bfmeLogMsg574(const char *message)
+{
+    if (strlen(logged) + strlen(message) < sizeof logged)
+        strcat(logged, message);
+}
 
 static int failures;
 
@@ -88,6 +100,9 @@ int main(void)
     lua_getglobal(L, "bt");
     check(lua_type(L, -1) == 6, "a comparison yields EA's boolean tag 6");
     lua_pop(L, 1);
+
+    run(L, "print('ring', 1, nil)", "print");
+    check(strcmp(logged, "ring\t1\tnil\n") == 0, "print sends tostring of each argument, tab-separated, to the logger");
 
     run(L, "n = 0 for i = 1, 20000 do local s = 'garbage' .. i n = n + strlen(s) end", "string churn");
     run(L, "collectgarbage()", "collectgarbage");
