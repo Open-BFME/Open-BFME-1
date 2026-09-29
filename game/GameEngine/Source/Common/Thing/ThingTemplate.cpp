@@ -1229,6 +1229,8 @@ struct BfmeThingTemplateCopyLayout
 	UnsignedShort m_id;
 };
 
+extern Bool TheBfmeOverrideCopyInProgress;			// 0x012ED611
+
 // copy the guts of that into this, but preserve this' name, id, and list-links.
 void ThingTemplate::copyFrom(const ThingTemplate* that)
 {
@@ -1244,9 +1246,9 @@ void ThingTemplate::copyFrom(const ThingTemplate* that)
 	UnsignedShort id = self->m_id;
 	BfmeThingTemplateCopyString name = self->m_name;
 
-	*(unsigned char *)0x012ED611 = 1;
+	TheBfmeOverrideCopyInProgress = true;
 	*this = *that;
-	*(unsigned char *)0x012ED611 = 0;
+	TheBfmeOverrideCopyInProgress = false;
 
 	self->m_next = next;
 	self->m_id = id;

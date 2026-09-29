@@ -1,3 +1,6 @@
+extern const char *const ModelConditionNames[];
+extern const char *const Rva00209130StatusNames[];
+
 struct Rva0022A1F0ConstantGetter
 {
 	void *get();
@@ -5,7 +8,7 @@ struct Rva0022A1F0ConstantGetter
 
 void *Rva0022A1F0ConstantGetter::get()
 {
-	return (void *)0x012A6918;
+	return (void *)ModelConditionNames;
 }
 
 struct Rva0022A200ConstantGetter
@@ -15,5 +18,5 @@ struct Rva0022A200ConstantGetter
 
 void *Rva0022A200ConstantGetter::get()
 {
-	return (void *)0x012A6670;
+	return (void *)Rva00209130StatusNames;
 }

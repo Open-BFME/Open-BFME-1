@@ -37,6 +37,8 @@ public:
 	Object *findObjectByID(int value);
 };
 
+extern GameLogic *TheGameLogic;
+
 int bfmeHelper6320(lua_State *state)
 {
 	void *value = (void *)Rva00990030Lookup((Rva00990030Range *)state, 1);
@@ -46,7 +48,7 @@ int bfmeHelper6320(lua_State *state)
 			return 0;
 	}
 
-	Object *record = (*(GameLogic **)0x012f0898)->findObjectByID((int)value);
+	Object *record = TheGameLogic->findObjectByID((int)value);
 	if (!record)
 		return 0;
 
@@ -57,7 +59,7 @@ int bfmeHelper6320(lua_State *state)
 			return 0;
 	}
 
-	Object *source = (*(GameLogic **)0x012f0898)->findObjectByID((int)value);
+	Object *source = TheGameLogic->findObjectByID((int)value);
 	if (!source)
 		return 0;
 

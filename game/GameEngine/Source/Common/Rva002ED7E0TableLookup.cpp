@@ -3,7 +3,11 @@
 
 typedef int (__cdecl *Rva002ED7E0Lookup)(void *entry, void *key);
 
-#define Rva002ED7E0LookupSlot (*(Rva002ED7E0Lookup *)0x0135933C)
+// The slot is MSVCR71's _strcmpi import (VA 0x0135933C).
+extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *, const char *);
+extern void *g_012AA008[];
+
+#define Rva002ED7E0LookupSlot ((Rva002ED7E0Lookup)_strcmpi)
 
 int __cdecl rva002ed7e0Find(void *key)
 {
@@ -11,7 +15,7 @@ int __cdecl rva002ed7e0Find(void *key)
 		return 4;
 
 	Rva002ED7E0Lookup lookup = Rva002ED7E0LookupSlot;
-	void **entries = (void **)0x012AA008;
+	void **entries = g_012AA008;
 	int index = 0;
 	for (; entries != 0; ++entries, ++index)
 	{
