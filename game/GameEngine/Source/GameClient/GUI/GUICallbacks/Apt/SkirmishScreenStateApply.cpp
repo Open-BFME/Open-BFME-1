@@ -2,6 +2,8 @@
 
 #include "ascii_string.h"
 
+extern const int acceptTrueColor;
+
 class GameWindow
 {
 public:
@@ -143,7 +145,7 @@ bool SkirmishScreenState::apply(void *gameInfo, int force)
 			if (index != 0)
 				m_fourth[index]->winHide(true);
 			else
-				m_fourth[index]->winSetEnabledColor(0, *(int *)0x012BA0D8);
+				m_fourth[index]->winSetEnabledColor(0, acceptTrueColor);
 		}
 		m_first[index]->winBringToTop();
 		m_elements[index]->winBringToTop();
