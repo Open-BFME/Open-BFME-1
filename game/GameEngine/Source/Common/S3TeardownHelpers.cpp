@@ -82,14 +82,16 @@ private:
 };
 
 extern void (*TheBfmeBufferFree)(void *buffer, int bytes);	// 0x01337830
+extern void *(__cdecl *Rva008C5D70Alloc)(unsigned int bytes);	// 0x01337828
 
 class Gen_008A0D60
 {
 public:
+	Gen_008A0D60(int count);
 	void bfmeFreeBuffer(void);
 
 private:
-	char m_bfmeHead[4];
+	int m_bfmeHead;
 	int m_bfmeCount;					// +0x04
 	void *m_bfmeBuffer;					// +0x08
 };
@@ -138,6 +140,16 @@ void Gen_007892D0::bfmeRun(void)
 	bfmeStep1();
 	bfmeStep2();
 	bfmeStep3();
+}
+
+// ??0Gen_008A0D60@@QAE@H@Z
+// 0x008A0D30, two bodies ahead of bfmeFreeBuffer: the allocating side of the
+// same buffer, with count*4 bytes from the allocator beside the free pointer.
+Gen_008A0D60::Gen_008A0D60(int count)
+{
+	m_bfmeHead = 0;
+	m_bfmeCount = count;
+	m_bfmeBuffer = Rva008C5D70Alloc(count * 4);
 }
 
 // ?bfmeFreeBuffer@Gen_008A0D60@@QAEXXZ
