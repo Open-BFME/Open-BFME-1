@@ -416,8 +416,10 @@ def bank(args):
     for p, st in changes(ws):
         if not p.startswith(BANKED) or st == 'deleted':
             continue
-        if not any(f'/{k}' in p.lower() for k in keys):  # attempts/0x0012abcd.cpp, attempt_history/0x0012abcd/
-            continue  # another target's evidence
+        # exactly attempts/0x0012abcd.cpp or attempt_history/0x0012abcd/...: not another
+        # target's evidence, nor a worker's scratch variant such as attempts/0x0012abcd_v2.cpp
+        if not any(p.lower() == f'{BANKED[0]}{k}.cpp' or p.lower().startswith(f'{BANKED[1]}{k}/') for k in keys):
+            continue
         safe_port_path(ws, p)
         safe_port_path(dest, p)
         src, dst = Path(ws) / p, dest / p

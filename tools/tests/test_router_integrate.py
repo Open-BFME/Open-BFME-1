@@ -148,7 +148,10 @@ class PortTest(PortFixture):
         (self.ws / 'targets/game/reverse/attempts/0x00000030.cpp').write_text('int g;\n')
         args = type('A', (), dict(job=None, workspace=str(self.ws), rva=['0x20'], worktree=str(self.dest),
                                   base='master', force=False))()
+        # a worker's scratch variants beside the stash are not banked evidence
+        (self.ws / 'targets/game/reverse/attempts/0x00000020_v2.cpp').write_text('int f2;\n')
         ri.bank(args); ri.bank(args)  # idempotent
+        self.assertFalse((self.dest / 'targets/game/reverse/attempts/0x00000020_v2.cpp').exists())
         self.assertEqual((self.dest / log).read_bytes(),
                          b'old\t0x00000001\r\n?f\t0x00000020\t9\tpartial\tnear miss\r\n')
         self.assertTrue((self.dest / 'targets/game/reverse/attempts/0x00000020.cpp').exists())
