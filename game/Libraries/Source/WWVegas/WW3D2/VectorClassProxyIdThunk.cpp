@@ -80,3 +80,15 @@ int VectorClass<T>::ID(T const &ptr)
 
 // Force emission of the ID instantiation.
 template int VectorClass<ProxyClass>::ID(ProxyClass const &);
+
+// DynamicVectorClass<ProxyClass>::ID(const ProxyClass *) at retail 0x00936D30:
+// vtable 0x0113C8AC slot 5, after the DynamicVectorClass deleting destructor.
+// ZH's inline override forwards to the base pointer-difference ID, so the
+// body equals 0x00933DF0.
+template <class T> class DynamicVectorClass : public VectorClass<T>
+{
+public:
+	virtual int ID(T const *ptr) { return VectorClass<T>::ID(*ptr); }
+};
+
+template int DynamicVectorClass<ProxyClass>::ID(ProxyClass const *);
