@@ -179,7 +179,7 @@ public:
 		AsciiString label) = 0;
 };
 
-#define TheTerrainLogic (*(TerrainLogic **)0x012EF4CC)
+extern TerrainLogic *TheTerrainLogic;
 
 
 Bool AISkirmishPlayer::computeSuperweaponTarget(const SpecialPowerTemplate *power,
@@ -188,25 +188,25 @@ Bool AISkirmishPlayer::computeSuperweaponTarget(const SpecialPowerTemplate *powe
 	Region2D bounds;
 	AIPlayer::getPlayerStructureBounds(&bounds, playerNdx);
 
-	if (power->getName().compare((const char *)0x010970E8) == 0)
+	if (power->getName().compare("SuperweaponClusterMines") == 0)
 	{
 		AsciiString pathLabel;
 		Int mode = GetGameLogicRandomValue(0, 2,
-			(char *)0x01097098, 0x46D);
+			"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AISkirmishPlayer.cpp", 0x46D);
 		if (mode == 1)
 		{
-			pathLabel.format(AsciiString((const char *)0x01085E68),
-				(const char *)0x0109708C, m_player->getMpStartIndex() + 1);
+			pathLabel.format(AsciiString("%s%d"),
+				"Flank", m_player->getMpStartIndex() + 1);
 		}
 		else if (mode == 2)
 		{
-			pathLabel.format(AsciiString((const char *)0x01085E68),
-				(const char *)0x01097080, m_player->getMpStartIndex() + 1);
+			pathLabel.format(AsciiString("%s%d"),
+				"Backdoor", m_player->getMpStartIndex() + 1);
 		}
 		else
 		{
-			pathLabel.format(AsciiString((const char *)0x01085E68),
-				(const char *)0x01097078, m_player->getMpStartIndex() + 1);
+			pathLabel.format(AsciiString("%s%d"),
+				"Center", m_player->getMpStartIndex() + 1);
 		}
 		Coord3D goalPos = m_baseCenter;
 		Waypoint *waypoint = TheTerrainLogic->getClosestWaypointOnPath(

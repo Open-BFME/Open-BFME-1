@@ -118,11 +118,10 @@ public:
 	UnsignedInt m_frame;
 };
 
-#define TheWritableGlobalData (*(Rva006C9270GlobalData **)0x012ED5C8)
-#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
-#define TheScriptEngine (*(ScriptEngine **)0x012F076C)
-#define ThePlayerList (*(PlayerList **)0x012ED748)
-#define g_bfmeK1266C (*(const Real *)0x01075344)
+extern Rva006C9270GlobalData *TheWritableGlobalData;
+extern GameLogic *TheBfmeGameLogic;
+extern ScriptEngine *TheScriptEngine;
+extern PlayerList *ThePlayerList;
 
 extern const KindOfMaskType KINDOFMASK_NONE;
 
@@ -132,7 +131,7 @@ Bool ScriptConditions::evaluatePlayerHasNOrFewerBases(
 	int baseCheckFrame;
 	if (TheWritableGlobalData)
 		baseCheckFrame = (int)(TheWritableGlobalData->m_secondsBeforeBaseCheckActive
-			* g_bfmeK1266C);
+			* 5.0f);
 	else
 		baseCheckFrame = (int)(*(const Real *)0x010E1F40);
 
