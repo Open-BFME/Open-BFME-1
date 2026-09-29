@@ -287,7 +287,7 @@ AIStateMachine* SupplyTruckAIUpdate::makeStateMachine()
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/SupplyTruckAIUpdateCtorThunk.cpp
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate_ctor.cpp
 // ??0SupplyTruckAIUpdate@@ present-unmatched
 SupplyTruckAIUpdate::SupplyTruckAIUpdate( Thing *thing, const ModuleData* moduleData ) : AIUpdateInterface( thing, moduleData )
 {
