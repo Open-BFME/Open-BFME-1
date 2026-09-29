@@ -10298,5 +10298,25 @@
   "after_sha256": "b876b8fa055434be14d5aa69984236022621dfc3ae141b5588f369c97afb1c84",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "the stash's local index_buffer is the global at VA 0x01341128, which dir32_addresses.csv and symbols.csv already record as ?Rva01341128IndexBuffer@@3PAVIndexBufferClass@@A"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00274e30.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00274e30.cpp",
+  "before_sha256": "613fd3376a8cefdf0eaff4013be58d6d0c1e01db65aa7068fe3fa455efed789d",
+  "after_sha256": "3f7a6616116a2f92b638b2d657325a7dbfa549b8226ca965f366447ef63f971d",
+  "evidence": "targets/game/reverse/identity_evidence/00274E30-compute-path.md",
+  "old_name": "Locomotor",
+  "new_name": "Rva001B7200Locomotor",
+  "reason": "The existing pin and inferred thiscall ABI identify the parameter as Rva001B7200Locomotor."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00274e30.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00274e30.cpp",
+  "before_sha256": "613fd3376a8cefdf0eaff4013be58d6d0c1e01db65aa7068fe3fa455efed789d",
+  "after_sha256": "3f7a6616116a2f92b638b2d657325a7dbfa549b8226ca965f366447ef63f971d",
+  "evidence": "targets/game/reverse/identity_evidence/00274E30-compute-path.md",
+  "old_name": "PathInfo",
+  "new_name": "Rva001B7200PathPoint",
+  "reason": "The matched locomotor TU names this 36-byte Path output record Rva001B7200PathPoint."
  }
 ]

@@ -1,5 +1,5 @@
-// ?computePath@AIUpdateInterface@@QAE_NPAVPathfindServicesInterface@@PAUCoord3D@@@Z
-// partial score=0.5552995391705069 date=2026-09-26
+// ?computePath@AIUpdateInterface@@AAE_NPAVPathfindServicesInterface@@PAUCoord3D@@@Z
+// partial score=0.5392 date=2026-09-26
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 struct Coord3D { Coord3D(){} Coord3D(const Coord3D& c):x(c.x),y(c.y),z(c.z){} Coord3D&operator=(const Coord3D&c){x=c.x;y=c.y;z=c.z;return *this;} float x,y,z; };
 struct Region3D{Coord3D lo,hi; bool isInRegionNoZ(const Coord3D*p)const{return lo.x<p->x&&p->x<hi.x&&lo.y<p->y&&p->y<hi.y;}};
@@ -20,9 +20,11 @@ class Object:public Thing{public:
  char pad44[0x74-0x44];int id;char pad78[0x94-0x78];unsigned flags94;
 };
 class Locomotor{public:bool isUltraAccurate()const{return(flags>>6)&1;}char prefix[0x40];unsigned flags;};
+class Rva001B7200Locomotor;
 struct LocomotorSet {char prefix[16];unsigned surfaces;char pad14[4];AsciiString name;};
 struct PathInfo {float distance;Coord3D position;float m_real10[3];PathfindLayerEnum layer;int portal;};
-class Path{public:void computePoint(Object*,Locomotor*,PathInfo*,bool);void updateLastNode(const Coord3D*);char prefix[0xd];bool blockedByAlly;};
+struct Rva001B7200PathPoint {float m_real00;Coord3D m_coord04;float m_real10[3];PathfindLayerEnum m_layer;int m_int20;};
+class Path{public:void computePointOnPath(Object*,Rva001B7200Locomotor*,Rva001B7200PathPoint*,bool);void updateLastNode(const Coord3D*);char prefix[0xd];bool blockedByAlly;};
 class PathfindServicesInterface{public:
  virtual Path*findPath(Object*,LocomotorSet&,const Coord3D*,const Coord3D*);
  virtual Path*findClosestPath(Object*,LocomotorSet&,const Coord3D*,const Coord3D*,bool,float,bool);
@@ -54,7 +56,9 @@ typedef void(__cdecl*DebugLog)(void*,const char*,...);
 struct State{char pad[4];int id;};struct AIStateMachine{char prefix[0x1c];State*fallback;};
 class UpdateModule{public:virtual void slot00();protected:UpdateSleepTime getWakeFrame()const;void setWakeFrame(Object*,UpdateSleepTime);};
 class AIUpdateInterface:public UpdateModule{public:
+private:
  bool computePath(PathfindServicesInterface*,Coord3D*);
+public:
  void destroyPath();bool computeQuickPath(const Coord3D*);void setGoalPositionClipped(const Coord3D*,CommandSourceType);void setFinalPosition(const Coord3D*);
 virtual void slot004();
 virtual void slot008();
@@ -194,7 +198,7 @@ bool AIUpdateInterface::computePath(PathfindServicesInterface*pathServices,Coord
  if(g_012F0239&&g_012ED4FC){
  ((DebugLog)j_0003a17a)(g_012ED4FC,"CritterDesync:  Object %s(%d) called AIUpdateInterface::computePath()",getObject()->getTemplate()->name.str(),getObject()->id);DETAIL();
  }
- if(path){PathInfo info;path->computePoint(getObject(),locomotor,&info,false);if(info.portal!=0x7fffffff){timestamp=TheBfmeGameLogic->frame;blockedFrames=0;stuck=false;TRACEDETAIL("CritterDesync:  return true because of portal.");return true;}}
+ if(path){PathInfo info;path->computePointOnPath(getObject(),(Rva001B7200Locomotor*)locomotor,(Rva001B7200PathPoint*)&info,false);if(info.portal!=0x7fffffff){timestamp=TheBfmeGameLogic->frame;blockedFrames=0;stuck=false;TRACEDETAIL("CritterDesync:  return true because of portal.");return true;}}
  if(!stuck){TRACEDETAIL("CritterDesync:  path destroyed.");destroyPath();}
  if((locomotorSet.surfaces&8)&&!isDoingGroundMovement()){
  if(computeQuickPath(destination)){TRACEDETAIL("CritterDesync:  computeQuickPath1 returned TRUE.");return true;}

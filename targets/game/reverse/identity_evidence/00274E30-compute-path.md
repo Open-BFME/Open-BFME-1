@@ -38,8 +38,18 @@ layer at+0x10; the overall size and tested final offset were already right.
 At retail+0x60F, isLinePassable's result is consumed through AL. Its full
 native131-byte body at0x003EE7A0 returns0/1; its older recovered view uses
 int, but the original Bool interface and this caller support the bool view.
-The bank uses bool. No new pin was added: this and other inherited callee
-aliases require strict resolution before a future landing.
+The bank uses bool. It adds no pin. Resolve this and other inherited callee
+aliases before a future landing.
+
+The existing pin at ILT 0x00008A9E names the candidate signature
+`Path::computePointOnPath(Object*, Rva001B7200Locomotor*,
+Rva001B7200PathPoint*, bool)`. `callees.py` reports a thiscall with four
+stack arguments and an unused result, which matches that signature. The
+matched TU `Locomotor_rva001B7200.cpp:43-57` declares the same receiver type
+and the 36-byte output record. `pin_consistency.py` reports a consistent route
+from 0x00008A9E to 0x003FD7D0. That target still has a generated dump owner,
+so the evidence establishes the call signature but not the implementation's
+final name.
 
 ## Bounded helper and lifetime experiments
 
@@ -74,7 +84,8 @@ The original source had3448 bytes,2085 differences,24 missing bytes,
 score0.39256912442396313. Its0.56 header was an author estimate. Exact
 original bytes were archived before correcting that metadata.
 
-Original archive: targets/game/reverse/attempt_history/0x00274e30/bd865bee2186fb750ba523c2e975f8bcf225e67216940e69b3c31c44fad6a53b.json
+The original bytes are in
+`targets/game/reverse/attempt_history/0x00274e30/bd865bee2186fb750ba523c2e975f8bcf225e67216940e69b3c31c44fad6a53b.json`.
 
 Alternatives:
 
