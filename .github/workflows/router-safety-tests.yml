@@ -51,8 +51,12 @@ jobs:
           tools/tests/test_opencode_go_budget.py
           tools/tests/test_delta_sources.py
           tools/tests/test_pre_commit_argv.py
-          -k 'not RouterTests'
+          --deselect tools/tests/test_opencode_router.py::RouterTests
   containment:
+    # RouterTests skip themselves without delegated cgroup v2, and a skipped
+    # run is green. This job therefore looks for delegation first, then
+    # accepts only: every test executed and passed, or every test skipped for
+    # the unavailability the probe itself observed, reported as UNTESTED.
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -63,5 +67,57 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -r tools/requirements.txt
-      - name: Fake workers requiring delegated cgroup v2 (skip when unavailable)
-        run: python -m pytest -q -rs tools/tests/test_opencode_router.py -k RouterTests
+      - name: Fake workers requiring delegated cgroup v2
+        shell: bash
+        run: |
+          set -u
+          py=$(command -v python)
+          probe='import sys, uuid; sys.path.insert(0, "tools"); import fleet_cgroup as f
+          try:
+              f.CgroupV2Unit.create("ci-probe-" + uuid.uuid4().hex).remove()
+          except f.ContainmentUnavailable as exc:
+              print(exc); sys.exit(3)'
+          wrappers=(
+            ''
+            'systemd-run --user --scope --quiet -p Delegate=yes'
+            "sudo -n --preserve-env systemd-run --scope --quiet -p Delegate=yes --uid=$(id -u) --gid=$(id -g)"
+          )
+          out_dir=${RUNNER_TEMP:-$(mktemp -d)}
+          export UNAVAILABLE=$out_dir/containment-unavailable.txt JUNIT=$out_dir/containment.xml
+          : > "$UNAVAILABLE"
+          wrapper='' available=0
+          for candidate in "${wrappers[@]}"; do
+            if out=$($candidate "$py" -c "$probe" 2>&1); then wrapper=$candidate available=1; break; fi
+            echo "[${candidate:-direct}] $out" | tee -a "$UNAVAILABLE"
+          done
+          [ "$available" = 0 ] || echo "delegated cgroup v2 via: ${wrapper:-direct}"
+          rc=0
+          $wrapper "$py" -m pytest -q -rs -p no:cacheprovider --junitxml="$JUNIT" \
+            tools/tests/test_opencode_router.py::RouterTests || rc=$?
+          AVAILABLE=$available PYTEST_RC=$rc "$py" - <<'EOF'
+          import os, re, sys, xml.etree.ElementTree as ET
+          from pathlib import Path
+          cases = list(ET.parse(os.environ['JUNIT']).iter('testcase'))
+          skipped = [c.find('skipped') for c in cases if c.find('skipped') is not None]
+          observed = Path(os.environ['UNAVAILABLE']).read_text()
+          run_id = lambda text: re.sub(r'bfme-fleet-[A-Za-z0-9_-]+', 'bfme-fleet-<run>', text)
+          summary = open(os.environ.get('GITHUB_STEP_SUMMARY', os.devnull), 'a')
+          rc, available = int(os.environ['PYTEST_RC']), os.environ['AVAILABLE'] == '1'
+          if rc or not cases:
+              sys.exit(f'containment tests failed or none collected (pytest rc={rc}, {len(cases)} cases)')
+          if available:
+              if skipped:
+                  sys.exit(f'delegation probe succeeded but {len(skipped)} of {len(cases)} tests skipped')
+              summary.write(f'Containment: {len(cases)} RouterTests executed and passed.\n')
+              sys.exit(0)
+          # Unavailable: acceptable only if every test skipped for the probed reason.
+          reasons = {run_id(s.get('message', '')) for s in skipped}
+          if len(skipped) != len(cases) or not all(r and r in run_id(observed) for r in reasons):
+              sys.exit(f'{len(skipped)} of {len(cases)} skipped; unexpected reasons '
+                       f'{sorted(reasons)[:3]} (probe observed: {observed!r})')
+          text = (f'UNTESTED: all {len(cases)} containment RouterTests were SKIPPED; delegated '
+                  f'cgroup v2 is unavailable on this runner ({"; ".join(sorted(reasons))}). '
+                  'This green job is not execution evidence; run them on a host with delegation.')
+          print(f'::warning title=Containment UNTESTED::{text}')
+          summary.write(f'**{text}**\n\nProbe attempts:\n```\n{observed}```\n')
+          EOF
