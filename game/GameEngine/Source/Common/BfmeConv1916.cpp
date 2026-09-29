@@ -47,7 +47,7 @@ class BfmePlayerBR
 {
 public:
 	unsigned char m_bfmeHeadBR[0x24];
-	int m_bfmeIdBR;
+	int m_playerIndex;
 };
 
 struct Rva002EE330PlayerList
@@ -63,7 +63,7 @@ public:
 	void xfer(Xfer *x);
 
 	unsigned char m_bfmeHeadBR[0xc];
-	BfmePlayerBR *m_bfmePlayerBR;
+	BfmePlayerBR *m_owner;
 };
 
 void BfmeHostBR::xfer(Xfer *x)
@@ -80,9 +80,9 @@ void BfmeHostBR::xfer(Xfer *x)
 	int id;
 
 	if (x->isSaving())
-		id = m_bfmePlayerBR->m_bfmeIdBR;
+		id = m_owner->m_playerIndex;
 
 	x->xferInt(&id);
 
-	m_bfmePlayerBR = Rva002EE330ThePlayers->bfmeFindBR(id);
+	m_owner = Rva002EE330ThePlayers->bfmeFindBR(id);
 }
