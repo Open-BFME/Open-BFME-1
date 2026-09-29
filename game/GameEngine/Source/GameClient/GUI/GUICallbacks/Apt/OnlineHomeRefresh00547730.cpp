@@ -7,7 +7,6 @@
 // Rva005466C0Tree::find returns a native iterator via a hidden result pointer.
 // The faction-rate helper at RVA 00545DE0 takes (int* counts, int category)
 // and returns float in ST0, as independently decoded from its full 345 bytes.
-// Absolute data operands below retain their observed addresses and identities.
 // GhidraSQL was requested but timed out; complete CFG checked from retail bytes.
 #define _STLP_NO_EXCEPTIONS 1
 #include "ascii_string.h"
@@ -116,6 +115,12 @@ extern WindowManager *g_theWindowManager;
 extern GameTextInterface *TheGameText;
 extern int g_bfmePeerReqE4, g_bfmePeerReqE8;
 extern const char *g_onlineHomeGadgetsImageLevelIconMain;
+extern unsigned int g_012F4A10[8];
+extern unsigned int g_012F4A30[8];
+extern unsigned int g_012F4A50[8];
+extern unsigned int g_012F4A70[8];
+class GlobalLanguageData;
+extern GlobalLanguageData *TheGlobalLanguageData;
 extern void j_0003cc54();
 extern void j_00022976();
 extern void j_00008b9d();
@@ -226,14 +231,14 @@ void BfmeAptScreenOnlineHome::rva00547730() {
   }
   setText("APT:TimeZone",initials);
   j_0000bbcc();
-  int gondor=(int)(((float(__cdecl*)(int*,int))j_00047974)((int*)0x12f4a10,3)*100.0f+0.5f);
-  int rohan=(int)(((float(__cdecl*)(int*,int))j_00047974)((int*)0x12f4a30,3)*100.0f+0.5f);
-  int isengard=(int)(((float(__cdecl*)(int*,int))j_00047974)((int*)0x12f4a50,3)*100.0f+0.5f);
-  int mordor=(int)(((float(__cdecl*)(int*,int))j_00047974)((int*)0x12f4a70,3)*100.0f+0.5f);
+  int gondor=(int)(((float(__cdecl*)(int*,int))j_00047974)((int*)g_012F4A10,3)*100.0f+0.5f);
+  int rohan=(int)(((float(__cdecl*)(int*,int))j_00047974)((int*)g_012F4A30,3)*100.0f+0.5f);
+  int isengard=(int)(((float(__cdecl*)(int*,int))j_00047974)((int*)g_012F4A50,3)*100.0f+0.5f);
+  int mordor=(int)(((float(__cdecl*)(int*,int))j_00047974)((int*)g_012F4A70,3)*100.0f+0.5f);
   int total=gondor+rohan+isengard+mordor;
   if(total>0) gondor=10000-(rohan+isengard+mordor);
   UnicodeString decimal(L".");
-  void *language=*(void**)0x12f1484;
+  void *language=TheGlobalLanguageData;
   if(language) decimal.translate(*(AsciiString*)((char*)language+8));
   UnicodeString percent;
   percent.format(UnicodeString(L"%d%s%02d%%"),gondor/100,decimal.str(),gondor%100);

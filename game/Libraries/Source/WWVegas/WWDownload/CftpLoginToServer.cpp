@@ -47,7 +47,7 @@ public:
         int sent = send(m_iCommandSocket, command, size, 0);
         if (sent > 0)
         {
-            Rva01358EA8((void *)0x01132E90);
+            Rva01358EA8("-->");
             Rva01358EA8((void *)command);
             return FTP_SUCCEEDED;
         }
@@ -136,7 +136,7 @@ HRESULT Cftp::LoginToServer(const char *userName, const char *password)
 HRESULT Cftp::RecvReply(const char *reply, int size, int *replyCode)
 {
 	char *pc = (char *)reply;
-	const char *debugPrefix = (const char *)0x01132E98;
+	const char *debugPrefix = "<--";
 	int readval;
 
 	while (1)
@@ -172,7 +172,7 @@ HRESULT Cftp::RecvReply(const char *reply, int size, int *replyCode)
 
 		Rva01358EA8(debugPrefix);
 		Rva01358EA8(pc);
-		const char *bogusResponse = (const char *)0x01132E94;
+		const char *bogusResponse = "500";
 		if (_strnicmp(pc, bogusResponse, strlen(bogusResponse)) == 0)
 			continue;
 
