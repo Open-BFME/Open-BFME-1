@@ -27,7 +27,7 @@ class Map00244680 {public: TreeNode00244680 *head;unsigned count;
  int &lookup(const int &key) {return *(int *)((BfmeSubDSU *)this)->bfmeTwoDSU((void **)&key);}
 };
 class Update00244680 {public: void wake(Member00244680 *o,int t) {((UpdateModule *)this)->setWakeFrame((Object *)o,(UpdateSleepTime)t);}};
-class MemberSelection00244680 {public:
+class HordeContain {public:
  virtual void unused0()=0;
  virtual void unused1()=0;
  virtual void unused2()=0;
@@ -125,9 +125,9 @@ class MemberSelection00244680 {public:
  virtual void unused94()=0;
  virtual void slot17C()=0;
  char pad004[0x6c-4];int field06C,field070;Packet00244680 field074,field09C;Map00244680 field0C4;
- void select(int low,int high,Packet00244680 packetA,Packet00244680 packetB);
+ void instigateQuarrel(int low,int high,Packet00244680 packetA,Packet00244680 packetB);
 };
-void MemberSelection00244680::select(int low,int high,Packet00244680 packetA,Packet00244680 packetB) {
+void HordeContain::instigateQuarrel(int low,int high,Packet00244680 packetA,Packet00244680 packetB) {
  field0C4.clear();
  _STL::list<Member00244680 *> &members=*(_STL::list<Member00244680 *> *)((char *)this-0xac);
  int count=members.size();
