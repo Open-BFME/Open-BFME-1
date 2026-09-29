@@ -6,7 +6,7 @@ void rva0082ADB0Fill(char *a, char *b, const char &c);
 void *bfmeBigAllocPR(unsigned n);
 void *bfmeNodeAllocV46(unsigned n);
 void bfmeFreeV46(void *p, unsigned n);
-static void *bfmeMemmoveSlotV46 = (void *)0x0135945C;
+extern "C" void *(__cdecl *bfme_memmove_ptr)(void *, const void *, unsigned int);
 
 class BfmeStrV48
 {
@@ -84,7 +84,7 @@ char *__stdcall bfmeInsertNChV48(char *pos, unsigned n, char ch)
 		push ecx
 		mov edx, dword ptr [ebp-0x28]
 		push edx
-		call dword ptr [bfmeMemmoveSlotV46]
+		call dword ptr [bfme_memmove_ptr]
 		add esp, 12
 		mov dword ptr [ebp-0x68], eax
 	L2:

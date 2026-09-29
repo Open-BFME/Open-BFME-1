@@ -5,7 +5,7 @@ void bfmeCopyOneV50(void *a, void *b);
 void *bfmeBigAllocPR(unsigned n);
 void *bfmeNodeAllocV46(unsigned n);
 void bfmeFreeV46(void *p, unsigned n);
-static void *bfmeMemmoveSlotV46 = (void *)0x0135945C;
+extern "C" void *(__cdecl *bfme_memmove_ptr)(void *, const void *, unsigned int);
 
 class BfmeStrV50
 {
@@ -87,7 +87,7 @@ void __stdcall bfmeInsertRangeV50(char *pos, char *first, char *last, char *tag)
 		push eax
 		mov ecx, dword ptr [ebp-0x34]
 		push ecx
-		call dword ptr [bfmeMemmoveSlotV46]
+		call dword ptr [bfme_memmove_ptr]
 		add esp, 12
 		mov dword ptr [ebp-0x88], eax
 	L2:

@@ -1,7 +1,7 @@
 // cl: /Od
 
 void bfmeCopyChV24(char *a, char *b);
-static void *bfmeMemmoveSlotV46 = (void *)0x0135945C;
+extern "C" void *(__cdecl *bfme_memmove_ptr)(void *, const void *, unsigned int);
 void *bfmeBigAllocPR(unsigned n);
 void *bfmeNodeAllocV46(unsigned n);
 void *bfmeCopyTrivialV46(void *a, void *b, void *c);
@@ -59,7 +59,7 @@ char *__stdcall bfmeInsertChV46(char *at, char ch)
 		push ecx
 		mov edx, dword ptr [ebp-0x28]
 		push edx
-		call dword ptr [bfmeMemmoveSlotV46]
+		call dword ptr [bfme_memmove_ptr]
 		add esp, 12
 		mov dword ptr [ebp-0x50], eax
 	L2:
