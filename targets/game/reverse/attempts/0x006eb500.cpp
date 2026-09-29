@@ -1,5 +1,5 @@
 // ?rva006EB500@W3DDisplay@@QAE_NI@Z
-// partial score=0.96 date=2026-09-28
+// partial score=0.9827 date=2026-09-30
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
 // Retail 0x006EB500 (1215 B, ret 4): the per-frame render pass of BFME's
@@ -42,7 +42,11 @@ public:
 	static bool End_Render(bool flip_frame);
 };
 
-class ShaderClass;
+class ShaderClass
+{
+public:
+	static ShaderClass _PresetOpaqueShader;
+};
 
 namespace Debug_Statistics
 {
@@ -50,7 +54,6 @@ namespace Debug_Statistics
 	void Record_DX8_Polys_And_Vertices(int polys, int vertices, const ShaderClass &shader);
 }
 
-extern const ShaderClass g_presetOpaqueShader012D6E08;
 
 // Debug_Statistics polygon / vertex getters (address-derived ledger names).
 Int Rva00937260Get(void);
@@ -528,7 +531,7 @@ Bool W3DDisplay::rva006EB500(UnsignedInt now)
 		g_couldRender012BAA54 = true;
 		if (numRenderTargetPolygons || numRenderTargetVertices)
 			Debug_Statistics::Record_DX8_Polys_And_Vertices(numRenderTargetPolygons,
-				numRenderTargetVertices, g_presetOpaqueShader012D6E08);
+				numRenderTargetVertices, ShaderClass::_PresetOpaqueShader);
 		g_bfmeGlobPB->m_868 = 0;
 
 		Bool fading = m_letterBoxFadeLevel > 0.0f;
@@ -573,7 +576,11 @@ Bool W3DDisplay::rva006EB500(UnsignedInt now)
 		{
 			((BfmeThing923E *)this)->bfmeGo923E(0, (void *)1);
 			((BfmeThing923E *)this)->bfmeGo923E(1, (void *)1);
-			slot0E0(m_34->slot03C(m_f8, m_fc, m_100, m_104, -1));
+			// Retail reads +0x104 and +0x100 before the panel call's other operands.
+			Int value104 = m_104;
+			Int value100 = m_100;
+			Int panelResult = m_34->slot03C(m_f8, m_fc, value100, value104, -1);
+			slot0E0(panelResult);
 			((BfmeThing923E *)this)->bfmeGo923E(2, (void *)1);
 			rva0040EE90();
 			((Gen_0040e1f0 *)this)->m();
