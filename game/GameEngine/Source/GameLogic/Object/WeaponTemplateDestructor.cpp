@@ -4,12 +4,19 @@
 
 namespace _STL
 {
-template <bool threads, int instance>
+// The node allocator's pool entry points are private STLport members
+// (_STL::__node_alloc<true, 0>::_M_allocate at 0x0082E540, _M_deallocate at
+// 0x0082E5F0); these TU-local helpers reach them under their real names.
+template <bool __threads, int __inst> class __node_alloc;
+static void nodePoolDeallocate(void *block, unsigned int bytes);
+template <bool __threads, int __inst>
 class __node_alloc
 {
-public:
-	static void _M_deallocate(void *node, unsigned int bytes);
+	friend void nodePoolDeallocate(void *, unsigned int);
+	static void *__cdecl _M_allocate(unsigned int __n);
+	static void __cdecl _M_deallocate(void *__p, unsigned int __n);
 };
+static inline void nodePoolDeallocate(void *block, unsigned int bytes) { __node_alloc<true, 0>::_M_deallocate(block, bytes); }
 }
 
 extern "C" void _ReadWriteBarrier();
@@ -39,7 +46,7 @@ public:
 			if (bytes > 0x80)
 				operator delete(m_start);
 			else
-				_STL::__node_alloc<true, 0>::_M_deallocate(m_start, bytes);
+				_STL::nodePoolDeallocate(m_start, bytes);
 		}
 	}
 
@@ -60,7 +67,7 @@ public:
 			if (bytes > 0x80)
 				operator delete(m_start);
 			else
-				_STL::__node_alloc<true, 0>::_M_deallocate(m_start, bytes);
+				_STL::nodePoolDeallocate(m_start, bytes);
 		}
 	}
 
@@ -122,7 +129,7 @@ public:
 		{
 			Rva001E3F90Node *current = node;
 			node = node->m_next;
-			_STL::__node_alloc<true, 0>::_M_deallocate(current, 0xc);
+			_STL::nodePoolDeallocate(current, 0xc);
 		}
 		m_node->m_next = m_node;
 		m_node->m_previous = m_node;
@@ -132,7 +139,7 @@ public:
 	{
 		clear();
 		if (m_node)
-			_STL::__node_alloc<true, 0>::_M_deallocate(m_node, 0xc);
+			_STL::nodePoolDeallocate(m_node, 0xc);
 	}
 };
 

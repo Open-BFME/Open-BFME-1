@@ -8,12 +8,19 @@
 // RECOVERED: the deallocator keeps its address token.
 namespace _STL
 {
-	template<bool THREADS, int INSTANCE>
+	// The node allocator's pool entry points are private STLport members
+	// (_STL::__node_alloc<true, 0>::_M_allocate at 0x0082E540, _M_deallocate at
+	// 0x0082E5F0); these TU-local helpers reach them under their real names.
+	template <bool __threads, int __inst> class __node_alloc;
+	static void nodePoolDeallocate(void *block, unsigned int bytes);
+	template <bool __threads, int __inst>
 	class __node_alloc
 	{
-	public:
-		static void _M_deallocate(void *node, unsigned int bytes);
+		friend void nodePoolDeallocate(void *, unsigned int);
+		static void *__cdecl _M_allocate(unsigned int __n);
+		static void __cdecl _M_deallocate(void *__p, unsigned int __n);
 	};
+	static inline void nodePoolDeallocate(void *block, unsigned int bytes) { __node_alloc<true, 0>::_M_deallocate(block, bytes); }
 }
 void __cdecl operator delete(void *block);
 void __stdcall Rva0093D480Free(void *p, unsigned int n)
@@ -27,7 +34,7 @@ void __stdcall Rva0093D480Free(void *p, unsigned int n)
 		::operator delete(p);
 		return;
 	}
-	_STL::__node_alloc<true, 0>::_M_deallocate(p, bytes);
+	_STL::nodePoolDeallocate(p, bytes);
 }
 // Retail 0x0094C0F0 scales x9 then x4 (36-byte elements); the same twin as
 // the landed Small03gStlAlloc Rva0094C1C0Alloc. 0x0094C170 and 0x009A3400
@@ -45,7 +52,7 @@ void __stdcall Rva0094C0F0Free(void *p, unsigned int n)
 		::operator delete(p);
 		return;
 	}
-	_STL::__node_alloc<true, 0>::_M_deallocate(p, bytes);
+	_STL::nodePoolDeallocate(p, bytes);
 }
 
 void __stdcall Rva0094C170Free(void *p, unsigned int n)
@@ -59,7 +66,7 @@ void __stdcall Rva0094C170Free(void *p, unsigned int n)
 		::operator delete(p);
 		return;
 	}
-	_STL::__node_alloc<true, 0>::_M_deallocate(p, bytes);
+	_STL::nodePoolDeallocate(p, bytes);
 }
 
 void __stdcall Rva009A3400Free(void *p, unsigned int n)
@@ -73,7 +80,7 @@ void __stdcall Rva009A3400Free(void *p, unsigned int n)
 		::operator delete(p);
 		return;
 	}
-	_STL::__node_alloc<true, 0>::_M_deallocate(p, bytes);
+	_STL::nodePoolDeallocate(p, bytes);
 }
 
 void __stdcall Rva009CEAC0Free(void *p, unsigned int n)
@@ -87,7 +94,7 @@ void __stdcall Rva009CEAC0Free(void *p, unsigned int n)
 		::operator delete(p);
 		return;
 	}
-	_STL::__node_alloc<true, 0>::_M_deallocate(p, bytes);
+	_STL::nodePoolDeallocate(p, bytes);
 }
 
 void __stdcall Rva009CEB00Free(void *p, unsigned int n)
@@ -101,5 +108,5 @@ void __stdcall Rva009CEB00Free(void *p, unsigned int n)
 		::operator delete(p);
 		return;
 	}
-	_STL::__node_alloc<true, 0>::_M_deallocate(p, bytes);
+	_STL::nodePoolDeallocate(p, bytes);
 }

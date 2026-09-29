@@ -26,12 +26,19 @@ class ArchivedDirectoryInfo
 namespace _STL
 {
 
-template <bool threads, int inst>
+// The node allocator's pool entry points are private STLport members
+// (_STL::__node_alloc<true, 0>::_M_allocate at 0x0082E540, _M_deallocate at
+// 0x0082E5F0); these TU-local helpers reach them under their real names.
+template <bool __threads, int __inst> class __node_alloc;
+static void nodePoolDeallocate(void *block, unsigned int bytes);
+template <bool __threads, int __inst>
 class __node_alloc
 {
-public:
-	static void _M_deallocate(void *p, unsigned int n);	// retail 0x0082E5F0
+	friend void nodePoolDeallocate(void *, unsigned int);
+	static void *__cdecl _M_allocate(unsigned int __n);
+	static void __cdecl _M_deallocate(void *__p, unsigned int __n);
 };
+static inline void nodePoolDeallocate(void *block, unsigned int bytes) { __node_alloc<true, 0>::_M_deallocate(block, bytes); }
 
 template <class T>
 class allocator
@@ -40,7 +47,7 @@ public:
 	void deallocate(T *p, unsigned int n)
 	{
 		if (p != 0)
-			__node_alloc<true, 0>::_M_deallocate(p, n * sizeof(T));
+			_STL::nodePoolDeallocate(p, n * sizeof(T));
 	}
 };
 

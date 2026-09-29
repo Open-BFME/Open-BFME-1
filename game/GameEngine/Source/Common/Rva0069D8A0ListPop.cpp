@@ -2,13 +2,20 @@
 // Pop the head of a circular list whose sentinel is the list object itself
 // (retail cmp [eax],eax). Unlink, free the 12-byte node, return the payload.
 
+class Open269D8A0;
+class Open269D8E0;
+
+// The pool free is STLport's private __node_alloc<true, 0>::_M_deallocate
+// (0x0082E5F0); /Ob0 keeps any forwarding helper out of line, so the two
+// callers are befriended instead.
 namespace _STL
 {
-	template <bool THREADS, int INSTANCE>
+	template <bool __threads, int __inst>
 	class __node_alloc
 	{
-	public:
-		static void _M_deallocate(void *node, unsigned int bytes);
+		friend class ::Open269D8A0;
+		friend class ::Open269D8E0;
+		static void __cdecl _M_deallocate(void *__p, unsigned int __n);
 	};
 }
 

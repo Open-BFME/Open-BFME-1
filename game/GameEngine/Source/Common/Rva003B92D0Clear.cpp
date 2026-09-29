@@ -4,12 +4,19 @@
 namespace _STL
 {
 
-template <int Threads, int Instance>
+// The node allocator's pool entry points are private STLport members
+// (_STL::__node_alloc<true, 0>::_M_allocate at 0x0082E540, _M_deallocate at
+// 0x0082E5F0); these TU-local helpers reach them under their real names.
+template <bool __threads, int __inst> class __node_alloc;
+static void nodePoolDeallocate(void *block, unsigned int bytes);
+template <bool __threads, int __inst>
 class __node_alloc
 {
-public:
-	static void _M_deallocate(void *node, unsigned int size);
+	friend void nodePoolDeallocate(void *, unsigned int);
+	static void *__cdecl _M_allocate(unsigned int __n);
+	static void __cdecl _M_deallocate(void *__p, unsigned int __n);
 };
+static inline void nodePoolDeallocate(void *block, unsigned int bytes) { __node_alloc<true, 0>::_M_deallocate(block, bytes); }
 
 struct _Rb_tree_node_base
 {
@@ -63,7 +70,7 @@ public:
 				{
 					_M_erase((Node *)(void *)node->m_right);
 					Node *left = (Node *)(void *)node->m_left;
-					__node_alloc<true, 0>::_M_deallocate(node, 0x14);
+					_STL::nodePoolDeallocate(node, 0x14);
 					node = left;
 				} while (node != 0);
 			}

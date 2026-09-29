@@ -17,11 +17,19 @@ struct Rva002581B0List
 
 namespace _STL
 {
-	template<bool threads, int instance> class __node_alloc
+	// The node allocator's pool entry points are private STLport members
+	// (_STL::__node_alloc<true, 0>::_M_allocate at 0x0082E540, _M_deallocate at
+	// 0x0082E5F0); these TU-local helpers reach them under their real names.
+	template <bool __threads, int __inst> class __node_alloc;
+	static void nodePoolDeallocate(void *block, unsigned int bytes);
+	template <bool __threads, int __inst>
+	class __node_alloc
 	{
-	public:
-		static void _M_deallocate( void *node, unsigned int bytes );
+		friend void nodePoolDeallocate(void *, unsigned int);
+		static void *__cdecl _M_allocate(unsigned int __n);
+		static void __cdecl _M_deallocate(void *__p, unsigned int __n);
 	};
+	static inline void nodePoolDeallocate(void *block, unsigned int bytes) { __node_alloc<true, 0>::_M_deallocate(block, bytes); }
 }
 
 extern void j_00020af9(void);
@@ -83,7 +91,7 @@ void Rva002581B0Owner::run()
 		{
 			Rva002581B0Node *old = node;
 			node = node->m_next;
-			_STL::__node_alloc<true, 0>::_M_deallocate( old, 0x0c );
+			_STL::nodePoolDeallocate( old, 0x0c );
 		}
 		while( node != (Rva002581B0Node *)self->m_list );
 	}

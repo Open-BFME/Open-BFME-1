@@ -16,13 +16,17 @@
 // to the pool. Four-byte elements are what make that divide and multiply a
 // matched pair of shifts.
 
+class BfmeMemberVector;
+
 namespace _STL
 {
 
+// The pool free is STLport's private __node_alloc<true, 0>::_M_deallocate
+// (0x0082E5F0); the vector that calls it is befriended.
 template <bool __threads, int __inst> class __node_alloc
 {
-public:
-	static void _M_deallocate(void *block, unsigned int bytes);
+	friend class ::BfmeMemberVector;
+	static void __cdecl _M_deallocate(void *__p, unsigned int __n);
 };
 
 }
