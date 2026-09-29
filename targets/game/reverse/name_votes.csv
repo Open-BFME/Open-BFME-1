@@ -348,3 +348,4 @@ game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value38,8176ed
 game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value44,2086a07dcfc31be72b0c9342,grok,20260929212948-93cd66,2026-09-29
 game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value4C,893c08b9644270643e5a73bf,grok,20260929212948-93cd66,2026-09-29
 game/GameEngine/Source/Common/BfmeConv572.cpp|type||BfmeOwnerCCA,266b66cff38a1651c01cef27,grok,20260929213653-49d360,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1916.cpp|type||BfmePlayerBR,6b892b920df4f076c29ca0c8,grok,20260929220826-1a78f9,2026-09-29
