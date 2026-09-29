@@ -28,6 +28,12 @@ struct Rva00511430OutElse
 	char m_08;
 };
 
+// The two source records the body copies raw bytes from. Neither address is
+// named in dir32_addresses.csv, so both keep the address-derived name; the
+// retail bytes are the NUL-terminated literals "GameChat" and "Buddy".
+extern const Rva00511430OutElse g_011052B8;
+extern const Rva00511430Out3 g_011052C4;
+
 // ?fill@Rva00511430Host@@QAEXPAX0E@Z
 void Rva00511430Host::fill(void *guard, void *out, unsigned char flag)
 {
@@ -38,14 +44,14 @@ void Rva00511430Host::fill(void *guard, void *out, unsigned char flag)
 	if (m_25C == 3)
 	{
 		Rva00511430Out3 *d = (Rva00511430Out3 *)out;
-		d->m_00 = *(int *)0x011052C4;
-		d->m_04 = *(unsigned short *)0x011052C8;
+		d->m_00 = g_011052C4.m_00;
+		d->m_04 = g_011052C4.m_04;
 	}
 	else
 	{
 		Rva00511430OutElse *d = (Rva00511430OutElse *)out;
-		d->m_00 = *(int *)0x011052B8;
-		d->m_04 = *(int *)0x011052BC;
-		d->m_08 = *(char *)0x011052C0;
+		d->m_00 = g_011052B8.m_00;
+		d->m_04 = g_011052B8.m_04;
+		d->m_08 = g_011052B8.m_08;
 	}
 }
