@@ -40,6 +40,7 @@ public:
 };
 
 extern NameKeyGenerator *TheNameKeyGenerator;
+extern GameLogic *TheGameLogic;
 
 class Gen_00374800
 {
@@ -60,12 +61,12 @@ struct Gen00374800Argument
 void Gen_00374800::check(void *argument)
 {
 	Gen00374800Argument *value = (Gen00374800Argument *)argument;
-	if (value->m_value > *(float *)0x01075350) {
-		Object *object = ((GameLogic *)*(GameLogic **)0x012f0898)->findObjectByID(
+	if (value->m_value > 0.0f) {
+		Object *object = TheGameLogic->findObjectByID(
 			m_objectID);
 		if (object != 0) {
 			static volatile NameKeyType key =
-				TheNameKeyGenerator->nameToKey((const char *)0x01083c50);
+				TheNameKeyGenerator->nameToKey("CastleBehavior");
 			NameKeyType lookup = key;
 			Module *module = object->findModule(lookup);
 			if (module != 0)

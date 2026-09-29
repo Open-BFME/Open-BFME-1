@@ -56,6 +56,8 @@ struct GlobalData
 	int m_timeOfDay;
 };
 
+extern GlobalData *TheWritableGlobalData;
+
 class BuildingBehaviorModuleData
 {
 private:
@@ -100,7 +102,7 @@ UpdateSleepTime BuildingBehavior::update()
 			sink->invoke(*name, false, 1, 0, 0);
 			++name;
 		}
-		GlobalData *global = *(GlobalData **)0x012ed5c8;
+		GlobalData *global = TheWritableGlobalData;
 		if (global->m_timeOfDay == 4)
 			sink->invoke(moduleData->m_names[0], true, 1, 0, 0);
 		((Rva001F6960 *)((char *)this - 0x10))->apply(sink, 0);
@@ -115,7 +117,7 @@ UpdateSleepTime BuildingBehavior::update()
 			m_started = true;
 			for (int i = 0; i < 4; ++i)
 			{
-				if ((*(GlobalData **)0x012ed5c8)->m_timeOfDay == 4 && i == 3)
+				if (TheWritableGlobalData->m_timeOfDay == 4 && i == 3)
 					sink->invoke(moduleData->m_names[i], true, 1, 0, 0);
 				else if (i == 1 || i == 2)
 					sink->invoke(moduleData->m_names[i], true, 1, 0, 0);
@@ -141,7 +143,7 @@ UpdateSleepTime BuildingBehavior::update()
 			sink->invoke(*name, false, 1, 0, 0);
 			++name;
 		}
-		GlobalData *global = *(GlobalData **)0x012ed5c8;
+		GlobalData *global = TheWritableGlobalData;
 		if (global->m_timeOfDay == 4)
 			sink->invoke(moduleData->m_names[0], true, 1, 0, 0);
 		((Rva001F6960 *)((char *)this - 0x10))->apply(sink, 0);

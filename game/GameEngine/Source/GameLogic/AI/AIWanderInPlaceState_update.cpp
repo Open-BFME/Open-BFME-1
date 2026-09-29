@@ -152,7 +152,7 @@ extern AI *TheAI;
 extern void j_000022bb();
 extern int GetGameLogicRandomValue(int low, int high, char *file, int line);
 
-#define BfmeScaleBK (*(const float *)0x01075c70)
+#define BfmeScaleBK (0.1f)
 
 StateReturnType AIWanderInPlaceState::update()
 {
@@ -202,9 +202,9 @@ StateReturnType AIWanderInPlaceState::update()
 		}
 		int negativeDelta = -delta;
 		Coord3D offset;
-		int offsetX = GetGameLogicRandomValue(negativeDelta, delta, (char *)0x0109769c, 0x2618);
+		int offsetX = GetGameLogicRandomValue(negativeDelta, delta, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp", 0x2618);
 		offset.x = (float)(offsetX * 10);
-		int offsetY = GetGameLogicRandomValue(negativeDelta, delta, (char *)0x0109769c, 0x2619);
+		int offsetY = GetGameLogicRandomValue(negativeDelta, delta, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp", 0x2619);
 		offset.y = (float)(offsetY * 10);
 		m_goalPosition = m_origin;
 		m_goalPosition.x += offset.x;

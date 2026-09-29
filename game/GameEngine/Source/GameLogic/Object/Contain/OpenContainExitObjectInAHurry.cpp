@@ -252,9 +252,11 @@ template <> inline const char *StringBase<char>::str() const { return m_data ? m
 template <> inline void StringBase<char>::concat(char c) { concat(&c, 1); }
 template <> inline void StringBase<char>::concat(const char *s) { concat(s, (int)strlen(s)); }
 
-#define TheAI (*(AI **)0x012EF214)
-#define TheTerrainLogic (*(TerrainLogic **)0x012EF4CC)
-#define TheBfmeGameLogic (*(Rva002289F0GameLogic **)0x012F0898)
+class GameLogic;
+extern AI *TheAI;
+extern TerrainLogic *TheTerrainLogic;
+extern GameLogic *TheGameLogic;
+#define TheBfmeGameLogic ((Rva002289F0GameLogic *)TheGameLogic)
 
 
 void OpenContain::exitObjectInAHurry(Object *exitObject)

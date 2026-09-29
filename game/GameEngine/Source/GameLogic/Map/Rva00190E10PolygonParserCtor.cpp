@@ -27,6 +27,9 @@ struct BfmePolygonTriggerTable { PolygonTrigger *head; };
 extern "C" BfmePolygonTriggerTable *g_bfmePolygonTriggerTable;
 extern int g_bfmeBFAE;
 extern unsigned int g_bfmeDirtyBG;
+class BfmeLinkNode;
+extern BfmeLinkNode *TheBfmeLinkHead;
+extern void *g_0109BFBC[];
 
 class Rva00190E10PolygonParser : public Rva00190610ParserRegistration
 {
@@ -39,10 +42,10 @@ private:
 
 Rva00190E10PolygonParser::Rva00190E10PolygonParser(
     DataChunkInput *table, AsciiString *label)
-    : Rva00190610ParserRegistration((void *)0x012EF41C, table, label)
+    : Rva00190610ParserRegistration(&TheBfmeLinkHead, table, label)
 {
-    m_vptr = (void *)0x0109BFBC;
-    m_10 = (void *)0x012EF41C;
+    m_vptr = g_0109BFBC;
+    m_10 = &TheBfmeLinkHead;
     m_14 = 0;
     PolygonTrigger *old = g_bfmePolygonTriggerTable->head;
     g_bfmePolygonTriggerTable->head = 0;
