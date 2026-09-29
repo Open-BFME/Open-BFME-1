@@ -1,24 +1,8 @@
-// ?rva0056D070@Rva56E070StateOwner@@QAEXXZ
-// partial score=0.9735 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
-// LANDING NEEDS a plain pin (admissible: pin_consistency OK): ?rva00522110@@YA_NHABVUnicodeString@@0@Z,0x00047307,opaque ABI alias for the cdecl bool message-box helper 0x00522110. Residue: this in esi (retail) vs edi (ours).
-// Retail 0x0056D070, 756 bytes through RET at +0x2F3: the save action of the
-// save/load screen object modelled by Rva56E070StateDispatch.cpp (state at
-// +0x258, listbox +0x264, text entry +0x26C, replay flag +0x278, mode +0x27C).
-// The generated dispatch 0x0056FD90 calls it through ILT 0x0002D6B9. With a
-// listbox and a text entry present it reads the typed description and the
-// selected item's file name, then either copies a replay (mode 4: in place
-// through the recorder at 0x00099A40 with an in-game message, or from the last
-// replay file name plus extension through 0x00099E10 with a message box), or
-// saves the game through GameState::saveGame and shows "GUI:GameSaved", and
-// finally sets the state to 8. Method name address-derived.
+// Save action of the save/load screen object (Rva56E070StateDispatch.cpp layout),
+// reached from the 0x0056FD90 dispatch through ILT 0x0002D6B9; method name address-derived.
 #include "ascii_string.h"
 #include "unicode_string.h"
-
-template <> inline const unsigned short *StringBase<unsigned short>::str() const
-{
-	return m_data ? m_data->data : (const unsigned short *)L"";
-}
 
 inline UnicodeString::UnicodeString()
 {
@@ -116,9 +100,8 @@ public:
 };
 extern GameState *TheGameState;
 
-// 0x00522110 (still a generated dump; ILT 0x00047307): cdecl, returns a bool,
-// stores its first word into the APT message-box state and reads the two
-// strings through pointers (title, then body).
+// APT message box at 0x00522110 (ILT 0x00047307): cdecl, returns a bool in al,
+// stores mode into the box state and reads both strings by reference.
 Bool rva00522110(Int mode, const UnicodeString &title, const UnicodeString &body);
 
 struct Rva56E070SelectedItem
@@ -193,12 +176,13 @@ void Rva56E070StateOwner::rva0056D070()
 				text = TheGameText->fetch("APT:ReplaySaveErrorMessageBox");
 			rva00522110(0, TheGameText->fetch("APT:SaveGameProgress"), text);
 		}
+		m_state = 8;
 	}
 	else
 	{
 		SaveFileType fileType = (SaveFileType)((const Rva0056AD10 *)this)->resolveMode();
 		TheGameState->saveGame(filename, description, fileType, SNAPSHOT_SAVELOAD, true);
 		rva00522110(0, TheGameText->fetch("APT:SaveGameProgress"), TheGameText->fetch("GUI:GameSaved"));
+		m_state = 8;
 	}
-	m_state = 8;
 }

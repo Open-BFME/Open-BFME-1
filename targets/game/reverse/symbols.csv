@@ -89884,3 +89884,4 @@ __imp___AIL_set_file_callbacks@16,0x0135966C,AudioManagerInit 0x006B8220 mss32 I
 ?bfmeCallDUL@@YG?AVRva0058C2B0RefPtr@@PBD@Z,0x0001D467,route=0x0058C2B0; the 5-byte ILT thunk the five matched callers in BfmeConv785.cpp encode; the callee at 0x0058C2B0 returns this class by value, so the former void*(void*,const void*) spelling of this pin was a placeholder no body has
 ?rva005FAC90@Rva005FAC90Owner@@QAE?AUCoord3D@@PAXPBU2@M0@Z,0x00008814,address-derived member sret call-site ABI decoded from the exact 0x005C3630 caller and the matched 0x005FAC90 body via this retail ILT
 ?run@Rva003FBBB0@@QAEXXZ,0x00013C0F,route=0x003FBBB0; E9 thunk at 0x00013C0F jumps to the matched body.
+?rva00522110@@YA_NHABVUnicodeString@@0@Z,0x00047307,ILT to the generated dump 0x00522110 that the sole caller 0x0056D070 encodes twice; address-derived cdecl ABI decoded from that body: mode dword stored into the APT message-box state then title and body read by reference; returns al=1 or 0
