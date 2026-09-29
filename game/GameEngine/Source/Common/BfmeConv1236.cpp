@@ -183,57 +183,47 @@ struct BfmeChild1236
 	int m_value6c;
 };
 
-typedef void (__cdecl *BfmeNode1236Function)(void *, int);
+extern void (__cdecl *g_bfmeFreePair1286)(void *storage, int count);
 
+#define BIT15(x) (((unsigned char)~((x) >> 15)) & 1)
+
+// Retail at 0x008ADB50 keeps `this` in the callee-saved ESI, the raw m_flags in
+// EAX and the masked kind in EDX, and repeats an unmerged
+// `mov ecx,eax; shr ecx,0xf; not cl; test cl,1` in both walk cases.  Hoisting the
+// mask into a named `kind` local lets MSVC 7.1 fold the tail of the 0x0d and
+// 0x12 blocks into the function's return and re-use the flags register for the
+// shift, which drops both copies and moves the child load to ECX.  Spelling
+// `flags & 0x3f` out at each compare keeps the three compares as independent
+// blocks and reproduces the register assignment.
 void BfmeNode1236::bfmeVisit1236()
 {
-	register BfmeNode1236 *self = this;
-	unsigned flags = self->m_flags;
-	unsigned kind = flags;
-	kind &= 0x3f;
+	unsigned flags = this->m_flags;
 
-	if (kind == 0x0d)
-		goto check_d;
-	goto check_12;
-
-check_d:
+	if ((flags & 0x3f) == 0x0d)
 	{
-		unsigned bit = flags;
-		bit >>= 15;
-		if ((((unsigned char)~bit) & 1) == 0)
+		if (!BIT15(flags))
 			goto do_walk;
 	}
-
-check_12:
-	if (kind != 0x12)
-		goto check_f;
+	if ((flags & 0x3f) == 0x12)
 	{
-		unsigned bit = flags;
-		bit >>= 15;
-		if ((((unsigned char)~bit) & 1) != 0)
-			goto check_f;
+		if (!BIT15(flags))
+			goto do_walk;
 	}
-
-do_walk:
-	self->m_child->m_walk.bfmeWalk1236();
+	if ((flags & 0x3f) == 0x0f)
+	{
+		if (BIT15(flags))
+			return;
+		BfmeChild1236 *child = this->m_child;
+		void *value = child->m_value20;
+		if (value != 0 && value != (void *)0x012D5598)
+		{
+			child->m_value6c = 6;
+			g_bfmeFreePair1286(value, 2);
+		}
+		child->m_value20 = 0;
+	}
 	return;
 
-check_f:
-	if (kind != 0x0f)
-		return;
-	{
-		unsigned bit = flags;
-		bit >>= 15;
-		if ((((unsigned char)~bit) & 1) != 0)
-			return;
-	}
-
-	BfmeChild1236 *child = self->m_child;
-	void *value = child->m_value20;
-	if (value != 0 && value != (void *)0x012D5598)
-	{
-		child->m_value6c = 6;
-		(*(BfmeNode1236Function)0x01337874)(value, 2);
-	}
-	child->m_value20 = 0;
+do_walk:
+	this->m_child->m_walk.bfmeWalk1236();
 }
