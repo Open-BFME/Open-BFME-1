@@ -10318,5 +10318,15 @@
   "old_name": "PathInfo",
   "new_name": "Rva001B7200PathPoint",
   "reason": "The matched locomotor TU names this 36-byte Path output record Rva001B7200PathPoint."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00893270.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/Rva00893270.cpp",
+  "old_name": "BfmeRegistryKind1",
+  "new_name": "Rva00899560Pool",
+  "before_sha256": "520b69e2db460d5f9a64c928a7d5eb8a598b8308a5a0cc27abe3f96c631239b2",
+  "after_sha256": "a7344c0be9dd52f1d6d790b0427f4f688862be9b74c14c4bf2cb31791b1e2d19",
+  "evidence": "targets/game/reverse/identity_evidence/00893270-registry-pool.md",
+  "reason": "The old type name came from an unsupported local layout guess. The pin at VA 0x01337810 and the matched constructor at 0x00899560 identify Rva00899560Pool as the type of the global this body reads."
  }
 ]
