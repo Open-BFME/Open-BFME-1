@@ -318,6 +318,19 @@ LUA_API void lua_newtable (lua_State *L) {
 }
 
 
+/* BFME reconstruction: retail 0x00990780 is lua_newtable with a requested
+   size. It sits between lua_getref and lua_setglobal, where upstream's
+   lua_newtable does, and f_luaopen and ldblib's getinfo call it with (L, 0)
+   where upstream calls lua_newtable(L). EA's name is not witnessed;
+   bfmeGoUPC is the name those callers already use. See
+   targets/game/reverse/identity_evidence/00990780-lua-sized-newtable.md. */
+void bfmeGoUPC (lua_State *L, int n) {
+  hvalue(L->top) = luaH_new(L, 0, n);
+  ttype(L->top) = LUA_TTABLE;
+  api_incr_top(L);
+}
+
+
 
 /*
 ** set functions (stack -> Lua)

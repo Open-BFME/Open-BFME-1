@@ -69,31 +69,12 @@ static int luaB__ERRORMESSAGE (lua_State *L) {
 }
 
 
-/*
-** If your system does not support `stdout', you can just remove this function.
-** If you need, you can define your own `print' function, following this
-** model but changing `fputs' to put the strings at a proper place
-** (a console window or a log file, for instance).
-*/
-static int luaB_print (lua_State *L) {
-  int n = lua_gettop(L);  /* number of arguments */
-  int i;
-  lua_getglobal(L, "tostring");
-  for (i=1; i<=n; i++) {
-    const char *s;
-    lua_pushvalue(L, -1);  /* function to be called */
-    lua_pushvalue(L, i);   /* value to print */
-    lua_rawcall(L, 1, 1);
-    s = lua_tostring(L, -1);  /* get result */
-    if (s == NULL)
-      lua_error(L, "`tostring' must return a string to `print'");
-    if (i>1) fputs("\t", stdout);
-    fputs(s, stdout);
-    lua_pop(L, 1);  /* pop result */
-  }
-  fputs("\n", stdout);
-  return 0;
-}
+/* BFME: `print' and `tostring' are EA's, compiled from luaB_print.cpp
+   (0x009945A0, the game logger) and luaB_tostring.c (0x00994E40, the
+   boolean tag); retail's base_funcs table points at those bodies. The
+   upstream static copies that stood here shadowed them in a real link. */
+int luaB_print (lua_State *L);
+int luaB_tostring (lua_State *L);
 
 
 static int luaB_tonumber (lua_State *L) {
@@ -320,33 +301,6 @@ static int luaB_call (lua_State *L) {
 }
 
 
-static int luaB_tostring (lua_State *L) {
-  char buff[64];
-  switch (lua_type(L, 1)) {
-    case LUA_TNUMBER:
-      lua_pushstring(L, lua_tostring(L, 1));
-      return 1;
-    case LUA_TSTRING:
-      lua_pushvalue(L, 1);
-      return 1;
-    case LUA_TTABLE:
-      sprintf(buff, "table: %p", lua_topointer(L, 1));
-      break;
-    case LUA_TFUNCTION:
-      sprintf(buff, "function: %p", lua_topointer(L, 1));
-      break;
-    case LUA_TUSERDATA:
-      sprintf(buff, "userdata(%d): %p", lua_tag(L, 1), lua_touserdata(L, 1));
-      break;
-    case LUA_TNIL:
-      lua_pushstring(L, "nil");
-      return 1;
-    default:
-      luaL_argerror(L, 1, "value expected");
-  }
-  lua_pushstring(L, buff);
-  return 1;
-}
 
 
 static int luaB_foreachi (lua_State *L) {

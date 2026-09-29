@@ -51,28 +51,4 @@ char BfmeThingUPB::bfmeGoUPB(void *a, char *out, void *c)
 	return 1;
 }
 
-struct BfmeValueUPC
-{
-	int m_bfmeType;
-	char m_bfmePad[4];
-	void *m_bfmeValue;
-};
-
-struct BfmeStateUPC
-{
-	BfmeValueUPC *m_bfmeTop;
-	char m_bfmePad[4];
-	BfmeValueUPC *m_bfmeLimit;
-};
-
-void *bfmeNewTableUPC(BfmeStateUPC *L, int a, int b);
-void bfmeGrowUPC(BfmeStateUPC *L, int n);
-
-void bfmeGoUPC(BfmeStateUPC *L, int n)
-{
-	L->m_bfmeTop->m_bfmeValue = bfmeNewTableUPC(L, 0, n);
-	L->m_bfmeTop->m_bfmeType = 4;
-	if (L->m_bfmeTop == L->m_bfmeLimit)
-		bfmeGrowUPC(L, 1);
-	L->m_bfmeTop = (BfmeValueUPC *)((char *)L->m_bfmeTop + 0x10);
-}
+// bfmeGoUPC (0x00990780) is Lua's sized lua_newtable: game/Libraries/Source/Lua/lapi.c.

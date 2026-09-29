@@ -278,7 +278,7 @@ static int parse_file (lua_State *L, const char *filename) {
   int c;    /* look ahead char */
   FILE *f = (filename == NULL) ? stdin : fopen(filename, "r");
   if (f == NULL) return LUA_ERRFILE;  /* unable to open file */
-  c = fgetc(f);
+  c = getc(f);
   ungetc(c, f);
   bin = (c == ID_CHUNK);
   if (bin && f != stdin) {

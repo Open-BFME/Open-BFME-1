@@ -340,10 +340,10 @@ static int read_word (lua_State *L, FILE *f) {
   int c;
   luaL_Buffer b;
   luaL_buffinit(L, &b);
-  do { c = fgetc(f); } while (isspace(c));  /* skip spaces */
+  do { c = getc(f); } while (isspace(c));  /* skip spaces */
   while (c != EOF && !isspace(c)) {
     luaL_putchar(&b, c);
-    c = fgetc(f);
+    c = getc(f);
   }
   ungetc(c, f);
   luaL_pushresult(&b);  /* close buffer */
@@ -538,12 +538,12 @@ static int io_execute (lua_State *L) {
 
 
 static int io_remove (lua_State *L) {
-  return pushresult(L, remove(luaL_check_string(L, 1)) == 0);
+  return pushresult_close(L, remove(luaL_check_string(L, 1)) == 0);
 }
 
 
 static int io_rename (lua_State *L) {
-  return pushresult(L, rename(luaL_check_string(L, 1),
+  return pushresult_close(L, rename(luaL_check_string(L, 1),
                     luaL_check_string(L, 2)) == 0);
 }
 

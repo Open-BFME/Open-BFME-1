@@ -62,11 +62,19 @@ change is marked at the point of change in the file itself as well as here.
     ltable.c     3   luaH_new takes and stores the caller's requested size
     ltable.h     2   luaH_new's declaration follows it
     lopcodes.h   2   OP_PUSHBOOL inserted after OP_POP
-    lapi.c       2   the luaH_new call site
+    lbaselib.c       `print` and `tostring` are EA's, in luaB_print.cpp and
+                     luaB_tostring.c; the upstream static copies are removed
+                     (retail's base_funcs table points at EA's bodies)
+    ldo.c        1   parse_file reads with getc, not fgetc (MSVCR71 getc slot)
+    lapi.c       2   the luaH_new call site; plus `bfmeGoUPC`, EA's sized
+                     lua_newtable at 0x00990780 (identity_evidence/
+                     00990780-lua-sized-newtable.md; EA's name unwitnessed)
     lstate.c     2   the luaH_new call site
-    liolib.c         `setreturn`, `io_open`, and `io_write` use retail's fixed
-                     generic error tuple (`pushresult_close`) instead of the
-                     errno-based `pushresult`. This is a BFME-specific
+    liolib.c         `setreturn`, `io_open`, `io_write`, `io_remove` and
+                     `io_rename` use retail's fixed generic error tuple
+                     (`pushresult_close`) instead of the errno-based
+                     `pushresult`; read_word reads with getc, not fgetc
+                     (retail's slot is MSVCR71 getc). This is a BFME-specific
                      reconstruction claim, not a claim about upstream Lua.
                      File opens and numeric output are upstream's fopen and
                      fprintf: the slots retail calls through are MSVCR71's
