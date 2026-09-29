@@ -236,7 +236,7 @@ void W3DSnowManager::transitionTBA(void)
 		}
 	}
 	fraction = (float)(from->m_5c - m_4c) / (float)to->m_5c;
-	if (fraction > *(const float *)0x01075334)
+	if (fraction > 1.0f)
 	{
 		// The real method is the same class's override reset operation.
 		copyFromOverride();
@@ -247,7 +247,7 @@ void W3DSnowManager::transitionTBA(void)
 	{
 		m_98 = 3;
 		float blend = (fraction - m_54) /
-			(*(const float *)0x01075334 - m_54);
+			(g_bfmeDefaultBU - m_54);
 		m_38f = m_5cf - (m_5cf - m_58f) * blend;
 		m_10f = m_64 - (m_64 - m_60) * blend;
 		return;
@@ -261,15 +261,15 @@ void W3DSnowManager::transitionTBA(void)
 		return;
 	}
 
-	if (fraction <= *(const float *)0x01075350)
+	if (fraction <= 0.0f)
 	{
 		copyFromOverride();
 		return;
 	}
 
 	m_98 = 1;
-	float blend = m_50 > *(const float *)0x0112100C ?
-		fraction / m_50 : *(const float *)0x01075334;
+	float blend = m_50 > 1e-5f ?
+		fraction / m_50 : 1.0f;
 	m_38f = m_58f + (m_5cf - m_58f) * blend;
 	m_10f = m_60 + (m_64 - m_60) * blend;
 }

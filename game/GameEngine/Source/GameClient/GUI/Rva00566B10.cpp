@@ -2,6 +2,9 @@
 // tooltip selectors at 0x0110A2E4, 0x0110A2B8, 0x0110A288, and 0x0110A258.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
+extern const char Rva006A16B0Empty[];
+extern const unsigned short BFMEEmptyUnicodeString;
+
 template <typename T> struct StringInlineData
 {
 	int m_refCount;
@@ -47,7 +50,7 @@ public:
 	}
 	const char *str() const
 	{
-		return m_data ? m_data->m_text : (const char *)0x0107388B;
+		return m_data ? m_data->m_text : Rva006A16B0Empty;
 	}
 	int length() const
 	{
@@ -65,7 +68,7 @@ public:
 	void format( UnicodeString format, ... );
 	const unsigned short *str() const
 	{
-		return m_data ? m_data->m_text : (const unsigned short *)0x0107388C;
+		return m_data ? m_data->m_text : &BFMEEmptyUnicodeString;
 	}
 };
 
@@ -141,6 +144,12 @@ private:
 
 extern GameTextInterface *TheGameText;
 extern Mouse *TheMouse;
+extern char g_bfmeSideNameA1294[];
+extern char g_bfmeSideNameB1294[];
+extern char g_bfmeSideNameC1294[];
+extern char g_bfmeSideNameD1294[];
+extern const char *g_012B7DAC[];
+extern const char *g_012B7DD4[];
 
 #include <string.h>
 
@@ -152,37 +161,37 @@ void Rva00566B10::method( void *selector )
 	const char *selectorName = (const char *)selector;
 	if( strcmp( selectorName,
 		"Skirmish/tooltipPlayerLevelIconGondor" ) == 0 )
-		side.set( (const char *)0x010804D8, 6 );
+		side.set( g_bfmeSideNameA1294, 6 );
 	else if( strcmp( selectorName,
 		"Skirmish/tooltipPlayerLevelIconRohan" ) == 0 )
-		side.set( (const char *)0x010804D0, 5 );
+		side.set( g_bfmeSideNameB1294, 5 );
 	else if( strcmp( selectorName,
 		"Skirmish/tooltipPlayerLevelIconIsengard" ) == 0 )
 	{
-		side = (const char *)0x010804C4;
+		side = g_bfmeSideNameD1294;
 		evilSide = true;
 	}
 	else if( strcmp( selectorName,
 		"Skirmish/tooltipPlayerLevelIconMordor" ) == 0 )
 	{
-		side = (const char *)0x010804BC;
+		side = g_bfmeSideNameC1294;
 		evilSide = true;
 	}
 	else
 		return;
 
-	AsciiString tooltipKey( (const char *)0x010F7308 );
+	AsciiString tooltipKey( "TOOLTIP:" );
 	int rank = honors.getRank( side );
 	AsciiString rankName;
 	if( evilSide )
 	{
-		const char *rankNameText = ((const char **)0x012B7DD0)[ rank ];
+		const char *rankNameText = g_012B7DD4[ rank - 1 ];
 		rankName.set( rankNameText,
 			rankNameText ? (int)strlen( rankNameText ) : 0 );
 	}
 	else
 	{
-		const char *rankNameText = ((const char **)0x012B7DA8)[ rank ];
+		const char *rankNameText = g_012B7DAC[ rank - 1 ];
 		rankName.set( rankNameText,
 			rankNameText ? (int)strlen( rankNameText ) : 0 );
 	}
@@ -192,6 +201,6 @@ void Rva00566B10::method( void *selector )
 	UnicodeString currentLevel = TheGameText->fetch( tooltipKey );
 	UnicodeString tooltip;
 	tooltip.format(
-		TheGameText->fetch( (const char *)0x01107C04 ), currentLevel.str() );
+		TheGameText->fetch( "APT:CurrentLevelStringFormat" ), currentLevel.str() );
 	TheMouse->setCursorTooltip( tooltip, -1, 0, 1.0f );
 }
