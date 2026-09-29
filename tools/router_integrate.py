@@ -39,7 +39,7 @@ step, and it trusts nothing the worker reported:
 
 Workspaces are never modified or deleted.
 """
-import argparse, hashlib, json, os, re, shutil, subprocess, sys, tempfile
+import argparse, collections, hashlib, json, os, re, shutil, subprocess, sys, tempfile
 from contextlib import contextmanager
 from functools import wraps
 from portable_lock import lock, unlock
@@ -589,6 +589,15 @@ def port_and_verify(rev, j, dest):
     return status
 
 
+HEX = re.compile(r'\b0x([0-9A-Fa-f]{1,8})\b')
+
+
+def image_constants(text):
+    """Every hex constant in code (comments and strings stripped) that lies in the image."""
+    return [f'0x{v:08X}' for v in (int(m.group(1), 16) for m in HEX.finditer(link_debt.COMMENTS.sub(' ', text)))
+            if link_debt.LOW <= v < link_debt.HIGH]
+
+
 def link_debt_delta(ws, rev):
     """(path, before, after) literal counts for a --link-debt job, HEAD blob against the
     workspace file, or SystemExit naming every reason it is not a pure literal cut."""
@@ -610,6 +619,11 @@ def link_debt_delta(ws, rev):
             old = git(ws, 'show', f'HEAD:{path}').stdout if status == 'modified' else ''
             new = (Path(ws) / path).read_text(encoding='utf-8', errors='replace')
             counts.append((path, len(link_debt.literals(old)), len(link_debt.literals(new))))
+            # link_debt counts only a cast applied to a literal: an address moved into an
+            # integer, a macro or arithmetic lowers the count without naming anything.
+            added = collections.Counter(image_constants(new)) - collections.Counter(image_constants(old))
+            problems += [f'{path}: introduces image address {va} outside a cast; name it instead'
+                         for va in sorted(added)]
     problems += [f'{p}: {b} -> {a} literals; no file may gain one' for p, b, a in counts if a > b]
     before, after = sum(c[1] for c in counts), sum(c[2] for c in counts)
     if not counts:

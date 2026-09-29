@@ -965,6 +965,22 @@ class LinkDebtTest(BatchFixture):
             ri.integrate(self.debt_args(**kw))
         self.assertEqual(snapshot(self.dest), before)  # nothing ported
 
+    def test_address_hidden_from_the_cast_counter_is_refused(self):
+        # link_debt counts only a cast applied to a literal; an address moved into an
+        # integer, a macro or arithmetic drops the count without naming anything
+        (self.ws3 / 'game/debt.cpp').write_text(
+            'static const unsigned g_addr = 0x012ED5C8;\n'
+            'int a() { return *(int *)g_addr + *(int *)(0x012ED5C0 + 0xC); }\n')
+        self.assert_refused('introduces image address 0x012ED5C0')
+
+    def test_existing_constant_moved_within_the_file_is_accepted(self):
+        # a VA that was already present (e.g. an untouched function-pointer table) may stay
+        (self.ws3 / 'game/debt.cpp').write_text(
+            'extern int g_012ED5C8; extern int g_012ED5CC;\n'
+            'int a() { return g_012ED5C8 + g_012ED5CC; }\n')
+        (self.ws3 / 'game/debt2.cpp').write_text('extern int g_00A00000;\nint b() { return g_00A00000; }\n')
+        ri.integrate(self.debt_args())
+
     def test_accepted_job_commits_exactly_the_source_change(self):
         self.named()
         ri.integrate(self.debt_args())
