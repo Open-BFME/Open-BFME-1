@@ -25,6 +25,7 @@ them into the classes the integration work has to clear:
   python3 tools/link_census.py --build --history   # compile what changed first (all cores), then census
   python3 tools/link_census.py --report   # summarise the last census
   python3 tools/link_census.py --status   # redo link_status.csv + LINKED from the last log
+  python3 tools/link_census.py --selected # which COMDAT copy the link selected (/MAP), vs retail truth
 
 `--history` records the census in link_census_history.csv, with LINKED
 (linked_bytes) measured on this tree, and writes
@@ -222,17 +223,41 @@ def alias_object(table, path):
     return path
 
 
+def stub_object(names, path):
+    """Write a COFF object defining each name at offset 0 of one 16-byte
+    section. It only lets link.exe finish: the census's ~95,000 unresolved
+    names are fatal (LNK1120, even under /FORCE) and a failed link writes an
+    empty /MAP; absolute symbols instead crash link.exe 7.1 (C0000005)."""
+    import struct
+    strings, symbols = bytearray(4), bytearray()
+    for name in sorted(names):
+        raw = name.encode("latin-1")
+        if len(raw) <= 8:
+            field = raw.ljust(8, bytes(1))
+        else:
+            field = struct.pack("<II", 0, len(strings))
+            strings.extend(raw + bytes(1))
+        symbols += field + struct.pack("<IhHBB", 0, 1, 0, EXTERNAL, 0)
+    strings[0:4] = struct.pack("<I", len(strings))
+    body = bytes([0xCC]) * 16
+    table = 20 + 40 + len(body)
+    header = struct.pack("<HHIIIHH", 0x14C, 1, 0, table, len(symbols) // 18, 0, 0)
+    section = b".text".ljust(8, bytes(1)) + struct.pack("<IIIIIIHHI", 0, 0, len(body), 60, 0, 0, 0, 0, 0x60500020)
+    path.write_bytes(header + section + body + bytes(symbols) + bytes(strings))
+    return path
+
+
 def _arg(path):
     """A repo-relative, forward-slash path, as build.py passes cl.exe: under Wine
     an absolute POSIX path (/home/...) would read as a link.exe option."""
     return Path(path).resolve().relative_to(ROOT.resolve()).as_posix()
 
 
-def link(objs, aliases=None, tag="census"):
+def link(objs, aliases=None, tag="census", extra=(), options=()):
     OUT.mkdir(parents=True, exist_ok=True)
     rsp = OUT / "objects.rsp"
     rsp.write_text("\n".join(f'"{_arg(o)}"' for o in objs) + "\n", encoding="utf-8")
-    extra = []
+    extra = [_arg(path) for path in extra] + list(options)
     if aliases:
         extra.append(_arg(alias_object(aliases, OUT / "aliases.obj")))
     root = build.vc71_root()
@@ -650,7 +675,8 @@ def _comdat_selections(data):
 
 def object_facts(obj, truth=None):
     """(COMDAT copies [(name, digest, size, verdict)], exclusive definitions,
-    undefined externals) of one object: what a link needs to know about it.
+    undefined externals, weak externals [(name, default)]) of one object:
+    what a link needs to know about it.
     A definition is exclusive when link.exe refuses a second one (LNK2005):
     in an ordinary section, or in a COMDAT whose selection is NODUPLICATES,
     which /Gy gives every non-inline function."""
@@ -658,7 +684,7 @@ def object_facts(obj, truth=None):
     try:
         data = obj.read_bytes()
     except OSError:
-        return [], [], []
+        return [], [], [], []
     import struct
     count = struct.unpack_from("<H", data, 2)[0]
     optional = struct.unpack_from("<H", data, 16)[0]
@@ -676,7 +702,23 @@ def object_facts(obj, truth=None):
             strong.append(symbol["name"])
     copies = [(symbol["name"], digest, size, truth.verdict(symbol, body, relocs, digest, size))
               for symbol, body, relocs, digest, size in _comdat_sections(data)]
-    return copies, strong, undefined
+    return copies, strong, undefined, _weak_externals(data)
+
+
+def _weak_externals(data):
+    """[(name, default)] for each weak external: the name resolves to
+    `default` when no object defines it (IMAGE_WEAK_EXTERN aux TagIndex)."""
+    import struct
+    names = {symbol["index"]: symbol["name"] for symbol in _coff_symbols(data)}
+    table, count = struct.unpack_from("<II", data, 8)
+    found, index = [], 0
+    while index < count:
+        storage, aux = data[table + 18 * index + 16], data[table + 18 * index + 17]
+        if storage == WEAK_EXTERNAL and aux:
+            tag = struct.unpack_from("<I", data, table + 18 * (index + 1))[0]
+            found.append((names.get(index, "?"), names.get(tag, "?")))
+        index += 1 + aux
+    return found
 
 
 def read_facts(objs, rows):
@@ -704,7 +746,7 @@ def comdat_losers(objs, rows=None, stats=None, facts=None):
     rows = ledger() if rows is None else rows
     facts = read_facts(objs, rows) if facts is None else facts
     copies = collections.defaultdict(list)
-    for obj, (found, _, _) in zip(objs, facts):
+    for obj, (found, _, _, _) in zip(objs, facts):
         for name, digest, _, verdict in found:
             copies[name].append((obj.name, digest, verdict))
     losers = collections.defaultdict(set)
@@ -717,6 +759,140 @@ def comdat_losers(objs, rows=None, stats=None, facts=None):
                 losers[obj].add(name)
                 stats[f"losers_{rule}"] = stats.get(f"losers_{rule}", 0) + 1
     return losers
+
+
+MAP_PUBLIC = re.compile(r"^\s*[0-9A-Fa-f]{4}:[0-9A-Fa-f]{8}\s+(\S+)\s+[0-9A-Fa-f]{8}\s+(?:f\s+)?(?:i\s+)?(.+?)\s*$")
+
+
+def selected_definitions(map_text):
+    """{symbol: object} for the definition link.exe put in the image, from
+    the /MAP file's "Publics by Value" (its Lib:Object column)."""
+    found = {}
+    for line in map_text.splitlines():
+        if line.lstrip().startswith("Static symbols"):
+            break
+        match = MAP_PUBLIC.match(line)
+        if match:
+            found.setdefault(match.group(1), match.group(2).split(":")[-1])
+    return found
+
+
+SELECTED = OUT / "selected.csv"
+ALIASED = OUT / "aliased.csv"
+SELECTION = OUT / "selection.json"
+
+
+def selection_report(present, facts, rows, clean_objects, map_text, log):
+    """What the link actually put in the image, against retail truth.
+
+    The per-file rule asks whether a file's OWN copy is retail's body. The
+    image holds one copy per COMDAT symbol, the one link.exe selected, so a
+    clean file can still run a wrong copy another object supplied. From the
+    /MAP, for every COMDAT symbol whose copies differ: which object's copy was
+    selected, its verdict, and whether it was the first in link order.
+    `clean_objects` are the objects of files counted as linked; one depends on
+    a symbol when it holds a copy of it or references it. Also every name
+    that only resolves to a DIFFERENT name: a weak external falling back to
+    its default, or an unresolved name the alias scaffold (a pin's address)
+    would point at another definition. Writes selected.csv, aliased.csv and
+    selection.json under build/link_census/; measures, changes no rule."""
+    kept = selected_definitions(map_text)
+    position = {obj.name: index for index, obj in enumerate(present)}
+    copies = collections.defaultdict(list)
+    users = collections.defaultdict(set)
+    defined = set()
+    weak = collections.defaultdict(set)
+    for obj, (found, strong, undefined, weaks) in zip(present, facts):
+        for name, digest, _, verdict in found:
+            copies[name].append((obj.name, digest, verdict))
+            users[name].add(obj.name)
+            defined.add(name)
+        defined.update(strong)
+        for name in undefined:
+            users[name].add(obj.name)
+        for name, default in weaks:
+            weak[(name, default)].add(obj.name)
+    table, counts = [], collections.Counter()
+    bad = collections.defaultdict(set)  # clean object -> (symbol, verdict of the selected copy)
+    for name, found in copies.items():
+        if len({digest for _, digest, _ in found}) < 2:
+            continue
+        holder = kept.get(name, "")
+        verdicts = {obj: verdict for obj, _, verdict in found}
+        verdict = verdicts[holder] if holder in verdicts else "not-in-map"
+        verdict = verdict or "no-address"
+        first = min(found, key=lambda copy: position[copy[0]])[0]
+        table.append({"symbol": name, "copies": len(found), "digests": len({d for _, d, _ in found}),
+                      "selected_object": holder, "selected_verdict": verdict,
+                      "selected_is_first": "yes" if holder == first else "no",
+                      "retail_true_copies": sum(1 for _, _, v in found if v == "retail")})
+        counts[f"selected_{verdict}"] += 1
+        counts["selected_first" if holder == first else "selected_not_first"] += 1
+        if verdict != "retail":
+            for obj in users[name] & clean_objects:
+                bad[obj].add((name, verdict))
+    with SELECTED.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, ["symbol", "copies", "digests", "selected_object", "selected_verdict",
+                                         "selected_is_first", "retail_true_copies"], lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(sorted(table, key=lambda row: row["symbol"]))
+    aliased = []
+    for (name, default), objs in sorted(weak.items()):
+        if name not in defined and default != name:
+            # ??_E (vector deleting dtor) falling back to ??_G (scalar) is how
+            # MSVC emits a class nobody deletes as an array: standard, listed.
+            aliased.append({"name": name, "via": "weak-external", "resolves_to": default, "excused": "no",
+                            "objects": len(objs), "linked_objects": len(objs & clean_objects)})
+    _, detail, _, _ = classify(log, rows)
+    wanted = [name for name, entry in detail.items() if entry["kind"] in ("alias", "dump", "pinned-elsewhere")]
+    referrers = collections.defaultdict(set)
+    for line in log.splitlines():
+        found, referrer = UNRESOLVED.search(line), REFERRER.match(line)
+        if found and referrer:
+            referrers[found.group(1) or found.group(2)].add(Path(referrer.group(1)).name)
+    crt = build.vc71_root() / "Vc7" / "lib" / "msvcrt.lib"
+    runtime, stubs, imported = library_symbols(crt), import_stubs(), retail_imports()
+    for name, target in sorted(alias_scaffold(rows, wanted).items()):
+        excuse = excused(name, runtime, imported, stubs)  # the real link finds it in an import library
+        aliased.append({"name": name, "via": f"pin ({detail[name]['kind']})", "resolves_to": target,
+                        "excused": "yes" if excuse else "no", "objects": len(referrers[name]),
+                        "linked_objects": len(referrers[name] & clean_objects)})
+    with ALIASED.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, ["name", "via", "resolves_to", "excused", "objects", "linked_objects"],
+                                lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(aliased)
+    wrong = {obj for obj, found in bad.items() if any(v == "wrong" for _, v in found)}
+    weak_rows = [row for row in aliased if row["via"] == "weak-external"]
+    summary = {"conflicted_symbols": len(table), **dict(counts), "linked_files": len(clean_objects),
+               "linked_files_on_wrong_selected_copy": len(wrong),
+               "linked_files_on_unproven_selected_copy": len(bad),
+               "weak_fallbacks": len(weak_rows),
+               "weak_fallbacks_not_deleting_dtor": sum(1 for row in weak_rows if not (
+                   row["name"].startswith("??_E") and row["resolves_to"].startswith("??_G"))),
+               "weak_fallbacks_in_linked_files": sum(1 for row in weak_rows if row["linked_objects"]),
+               "pin_aliases": len(aliased) - len(weak_rows),
+               "pin_aliases_in_linked_files": sum(1 for row in aliased if row["via"] != "weak-external"
+                                                  and row["excused"] == "no" and row["linked_objects"]),
+               "top_wrong_selected": collections.Counter(
+                   name for found in bad.values() for name, v in found if v == "wrong").most_common(10)}
+    return summary, bad
+
+
+def print_selection(summary):
+    print(f"  selected COMDAT copies (the /MAP), {summary['conflicted_symbols']:,} symbols whose copies differ:")
+    for key in ("retail", "unknown", "wrong", "no-address", "not-in-map", "first", "not_first"):
+        print(f"    {key:18} {summary.get('selected_' + key, 0):8,}")
+    print(f"  files counted as linked: {summary['linked_files']:,}; "
+          f"{summary['linked_files_on_wrong_selected_copy']:,} use a symbol whose selected copy is proven wrong, "
+          f"{summary['linked_files_on_unproven_selected_copy']:,} one whose selected copy is not proven retail")
+    print(f"  ... those files' LINKED bytes: {summary.get('linked_bytes_on_wrong_selected_copy', 0):,} "
+          f"(wrong), {summary.get('linked_bytes_on_unproven_selected_copy', 0):,} (not proven)")
+    print(f"  names resolved only through another name: {summary['weak_fallbacks']:,} weak-external fallbacks "
+          f"({summary['weak_fallbacks_not_deleting_dtor']:,} other than ??_E -> ??_G; "
+          f"{summary['weak_fallbacks_in_linked_files']:,} used by linked files), {summary['pin_aliases']:,} "
+          f"unresolved names a pin would alias ({summary['pin_aliases_in_linked_files']:,} not excused in "
+          "linked files)")
 
 
 def naked_rows():
@@ -774,13 +950,20 @@ def main(argv=None):
     ap.add_argument("--build", action="store_true",
                     help="first compile every matched source whose object is not current (build.compile_rows, "
                          "BUILD_POOL defaults to all cores but two); no byte verification")
+    ap.add_argument("--selected", action="store_true",
+                    help="relink the last census's objects with /MAP and report which COMDAT copy link.exe selected "
+                         "(selected.csv, aliased.csv); on the census's own commit, records nothing")
     ap.add_argument("--status", action="store_true",
                     help="redo link_status.csv and the last history row's LINKED from the last link log, on the census's own commit")
     args = ap.parse_args(argv)
     path = OUT / "census.json"
     if args.report:
         report(json.loads(path.read_text(encoding="utf-8")))
+        if SELECTION.exists():
+            print_selection(json.loads(SELECTION.read_text(encoding="utf-8")))
         return 0
+    if args.selected:
+        return selected_main()
     if args.status:
         record(json.loads(path.read_text(encoding="utf-8")), ledger(), rerun=True)
         return 0
@@ -830,6 +1013,58 @@ def main(argv=None):
         # full gate's own test), so record() need not hash them again.
         record(census, rows, fresh=args.build)
     return 0
+
+
+def selected_main():
+    """--selected: the selection report for the last recorded census, on its
+    own tree, from a fresh /MAP link of the same objects."""
+    history = read_history()
+    changed = subprocess.run(["git", "diff", "--quiet", history[-1]["commit"] if history else "HEAD", "--", "game",
+                              "targets/game/reverse/functions.csv", "targets/game/reverse/symbols.csv"],
+                             cwd=ROOT).returncode if history else 1
+    if changed:
+        raise SystemExit("link_census: --selected needs the last census's sources and ledger "
+                         f"({history[-1]['commit'] if history else 'no census'}); this tree differs")
+    rows = ledger()
+    present, missing = objects(rows)
+    if missing:
+        raise SystemExit(f"link_census: {len(missing):,} objects missing")
+    sources = _object_sources(rows)
+    stale = [obj for obj in present if obj in sources and not object_current(sources[obj], obj)]
+    if stale:
+        raise SystemExit(f"link_census: {len(stale):,} objects are not current for their source, "
+                         f"e.g. {stale[0].name}")
+    log = final_log(None)  # the census's own link says which names nothing defines
+    missing_names = {found.group(1) or found.group(2) for found in map(UNRESOLVED.search, log.splitlines()) if found}
+    # Every missing name defined in one stub section so the link can finish and
+    # write its map; /OPT:NOREF keeps every COMDAT the link selected in it.
+    stubs = stub_object(missing_names, OUT / "selected_stubs.obj")
+    relink, _, _ = link(present, tag="selected", extra=[stubs],
+                        options=["/OPT:NOREF", f"/MAP:{_arg(OUT / 'selected.map')}"])
+    link_map = OUT / "selected.map"
+    if FATAL.search(relink) or not link_map.exists() or not link_map.stat().st_size:
+        raise SystemExit(f"link_census: the /MAP link failed; see {_arg(OUT / 'selected.log')}")
+    with STATUS.open(newline="", encoding="utf-8") as handle:
+        clean = {row["source"] for row in csv.DictReader(handle) if row["linked"] == "yes"}
+    clean_objects = {build.row_object(row).name for row in rows if row["source"] in clean}
+    summary, bad = selection_report(present, read_facts(present, rows), rows, clean_objects,
+                                    link_map.read_text(encoding="latin-1"), log)
+    import link_check
+    sizes = link_check.source_bytes(clean)
+    by_object = {build.row_object(row).name: row["source"] for row in rows if row["source"] in clean}
+    wrong = {obj for obj, found in bad.items() if any(verdict == "wrong" for _, verdict in found)}
+    summary["linked_bytes_on_wrong_selected_copy"] = sum(sizes.get(by_object.get(obj), 0) for obj in wrong)
+    summary["linked_bytes_on_unproven_selected_copy"] = sum(sizes.get(by_object.get(obj), 0) for obj in bad)
+    summary["linked_bytes"] = sum(sizes.values())
+    SELECTION.write_text(json.dumps(summary, indent=1), encoding="utf-8")
+    print_selection(summary)
+    return 0
+
+
+def _object_sources(rows):
+    """{object: source} for every compiled (C/C++/MASM) row."""
+    return {build.row_object(row): ROOT / row["source"] for row in rows
+            if Path(row["source"]).suffix.lower() in (".c", ".cpp", ".asm")}
 
 
 STATUS = ROOT / "targets/game/reverse/link_status.csv"
@@ -1108,8 +1343,7 @@ def record(census, rows, rerun=False, fresh=False):
     # its source, recorded headers and compile command is last week's code
     # under this week's ledger.
     present, _ = objects(rows)
-    by_object = {build.row_object(row): ROOT / row["source"] for row in rows
-                 if Path(row["source"]).suffix.lower() in (".c", ".cpp", ".asm")}
+    by_object = _object_sources(rows)
     stale = [] if fresh else [obj for obj in present if obj in by_object and not object_current(by_object[obj], obj)]
     if stale:
         raise SystemExit(f"link_census: {len(stale):,} objects are not current for their source (a failed compile?), "

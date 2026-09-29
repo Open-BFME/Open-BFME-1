@@ -72,7 +72,7 @@ def write_index(present, facts, blockers, excuses, meta):
     census, in one pickle. `facts` is link_census.read_facts(present)."""
     strong = collections.defaultdict(list)
     comdat = collections.defaultdict(list)
-    for index, (copies, defined, _) in enumerate(facts):
+    for index, (copies, defined, _, _) in enumerate(facts):
         for name in defined:
             strong[name].append(index)
         for name, digest, _, verdict in copies:
@@ -118,7 +118,7 @@ def duplicate(name, position, exclusive, own, index):
 def check_object(obj, index, truth, source=None):
     """{unresolved, duplicates, comdat, addresses} for one object against the index."""
     import link_debt
-    copies, defined, undefined = link_census.object_facts(obj, truth)
+    copies, defined, undefined, _ = link_census.object_facts(obj, truth)
     own = index["objects"].index(obj.name) if obj.name in index["objects"] else None
     position = own if own is not None else len(index["objects"])
     strong, comdat = index["strong"], index["comdat"]
@@ -151,12 +151,20 @@ def check_object(obj, index, truth, source=None):
 
 
 def resolve(argument, index):
-    """(source or None, object path) for a source path or an object path."""
+    """(source or None, object path) for a source path or an object path. A
+    source is compiled when its object is not current (build.compile_rows); an
+    object given directly must be current for its source
+    (link_census.object_current): a stale object is last week's code, never
+    evidence."""
     path = Path(argument)
     if path.suffix.lower() == ".obj":
         obj = path if path.is_absolute() else ROOT / path
         by_object = {entry["object"]: source for source, entry in index["blockers"].items()}
-        return by_object.get(obj.name), obj
+        source = by_object.get(obj.name)
+        if source is not None and not link_census.object_current(ROOT / source, obj):
+            raise SystemExit(f"link_check: {obj.name} is not current for {source}; "
+                             f"check the source instead (it recompiles)")
+        return source, obj
     source = (path if path.is_absolute() else ROOT / path).resolve().relative_to(ROOT.resolve()).as_posix()
     outputs = build.compile_rows([], [ROOT / source])
     return source, outputs[ROOT / source]

@@ -43,3 +43,32 @@ def test_next_counts_only_files_with_a_single_blocker(capsys):
     out = capsys.readouterr().out
     assert "100     1  unresolved  _htons@4" in out
     assert C.ADDRESSES in out and "_x" not in out
+
+
+def test_stale_object_is_never_evidence(tmp_path, monkeypatch):
+    """A source edited after its object was compiled: link_census.object_current
+    says no (with or without a dependency record) and link_check refuses it."""
+    import json
+    import os
+    import link_census
+    source, obj = tmp_path / "f.cpp", tmp_path / "f.obj"
+    obj.write_bytes(b"old object")
+    source.write_text("int f() { return 2; }\n")
+    os.utime(obj, (1_000_000, 1_000_000))
+    assert not link_census.object_current(source, obj)  # no sidecar: older than its source
+    os.utime(obj, None)
+    os.utime(source, (1_000_000, 1_000_000))
+    assert link_census.object_current(source, obj)
+    monkeypatch.setattr(link_census.build, "compiler_command", lambda s, o: (["cl"], {}))
+    monkeypatch.setattr(link_census.build, "_cmd_fingerprint", lambda command, env: "cmd")
+    sidecar = link_census.build._deps_sidecar(obj)
+    sidecar.write_text(json.dumps({"source": link_census.build._hash_file(str(source)), "deps": {}, "cmd": "cmd"}))
+    assert link_census.object_current(source, obj)
+    source.write_text("int f() { return 3; }\n")  # edited after the compile
+    assert not link_census.object_current(source, obj)
+    monkeypatch.setattr(C, "ROOT", tmp_path)
+    ix = index(blockers={"f.cpp": {"object": "f.obj", "linked": True, "unresolved": [], "duplicates": [],
+                                   "losers": [], "addresses": 0}})
+    import pytest
+    with pytest.raises(SystemExit, match="not current"):
+        C.resolve(str(obj), ix)

@@ -179,3 +179,46 @@ def test_build_dump_reads_the_source_not_the_note():
     assert L.build_dump(cpp, {("?f@@YAXXZ", "0x0082B870")})  # progress.py's scan found a naked body
     assert L.build_dump({**cpp, "source": "game/masm_dumps/x.asm", "notes": ""})
     assert L.build_dump({**cpp, "notes": "gen-dump"})
+
+
+def test_two_padded_tail_jumps_to_one_body_are_two_identities():
+    """Retail 0x0005EE90 (~AsciiString) and 0x0005E490 (~StringBase<char>) are
+    both `jmp 0x00887940` (releaseBuffer), each padded with int3: two
+    functions, not incremental-link stubs. Neither may stand for the other or
+    for releaseBuffer, whatever symbols.csv pins (it pins both names to
+    0x00887940)."""
+    import build
+    t = object.__new__(L.RetailTruth)
+    t.image, t.sections = build.exe_image()
+    dtor, base, release = "??1AsciiString@@QAE@XZ", "??1?$StringBase@D@@AAE@XZ", "?releaseBuffer@?$StringBase@D@@AAEXXZ"
+    t.ledger = collections.defaultdict(set, {dtor: {0x5EE90}, base: {0x5E490}, release: {0x887940}})
+    t.pinned = collections.defaultdict(set, {dtor: {0x887940}, base: {0x887940}})
+    t.slots, t.shared, t._cache = collections.defaultdict(set), set(), {}
+    for address in (0x5EE90, 0x5E490):
+        assert t._read(address, 5) == jmp(address, 0x887940)
+        assert t._stub(address) is None  # padded: a function, not an ILT stub
+    assert t.addresses(dtor) == {0x5EE90} and t.addresses(base) == {0x5E490}  # the ledger, not the pins
+    body = b"\xe9\0\0\0\0"
+    assert t.verdict(symbol(dtor), body, [(1, L.RetailTruth.REL32, referent(base))], "m", 5) == "wrong"
+    assert t.verdict(symbol(dtor), body, [(1, L.RetailTruth.REL32, referent(release))], "n", 5) == "retail"
+    assert t.verdict(symbol(base), body, [(1, L.RetailTruth.REL32, referent(release))], "o", 5) == "retail"
+    assert t.verdict(symbol(base), body, [(1, L.RetailTruth.REL32, referent(dtor))], "p", 5) == "wrong"
+
+
+def test_map_names_the_object_whose_copy_was_selected():
+    text = "\n".join([
+        "  Address         Publics by Value              Rva+Base     Lib:Object",
+        "",
+        " 0000:00000000       ___safe_se_handler_count   00000000     <absolute>",
+        " 0001:00000840       ?__stl_new@_STL@@YAPAXI@Z  00401840 f i game_a.obj",
+        " 0001:00000489       ?_RTC_GetSrcLine@@YAHKPADHPAHPAPAD@Z 00401489 f   inputs_^program ^files_x.obj",
+        " 0003:00000010       ?g@@3HA                    00c00010     game_b.obj",
+        "",
+        " Static symbols",
+        " 0001:00000900       _local                     00401900 f   game_c.obj",
+    ])
+    found = L.selected_definitions(text)
+    assert found["?__stl_new@_STL@@YAPAXI@Z"] == "game_a.obj"
+    assert found["?_RTC_GetSrcLine@@YAHKPADHPAHPAPAD@Z"] == "inputs_^program ^files_x.obj"
+    assert found["?g@@3HA"] == "game_b.obj"
+    assert "_local" not in found
