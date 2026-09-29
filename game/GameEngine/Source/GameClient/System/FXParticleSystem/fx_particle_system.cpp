@@ -33,6 +33,10 @@ void bfmeEnsure005E86F0(void);
 void bfmeEnsure005E8720(void);
 void bfmeEnsure005E8750(void);
 
+// The shared single-destructor base vtable at VA 0x01073744 (dir32_addresses.csv).
+extern "C" void *bfmeVftSnapshotBase[4];
+#pragma comment(linker, "/alternatename:_bfmeVftSnapshotBase=??_7BfmeBaseVUQ@@6B@")
+
 namespace FXParticleSystem {
 
 struct ModuleCategoryEntry {
@@ -40,14 +44,16 @@ struct ModuleCategoryEntry {
     const char *key;
 };
 
+extern const ModuleCategoryEntry g_01110500[];
+
 const char *GetKey(ModuleCategory category)
 {
-    return reinterpret_cast<const ModuleCategoryEntry *>(0x01110500)[category].key;
+    return g_01110500[category].key;
 }
 
 const char *GetName(ModuleCategory category)
 {
-    return reinterpret_cast<const ModuleCategoryEntry *>(0x01110500)[category].name;
+    return g_01110500[category].name;
 }
 
 // The retail body is this exact initialization order. The final call is
@@ -281,7 +287,7 @@ LightningEmissionInfo &LightningEmissionInfo::operator=(const LightningEmissionI
 
 LightningEmissionInfo::~LightningEmissionInfo()
 {
-    *(void **)this = (void *)0x01073744;
+    *(void **)this = bfmeVftSnapshotBase;
 }
 
 EventModuleInfo::EventModuleInfo()
@@ -302,22 +308,22 @@ EventModuleInfo &EventModuleInfo::operator=(const EventModuleInfo &that)
 
 BoxEmissionVolumeInfo::~BoxEmissionVolumeInfo()
 {
-    *(void **)this = (void *)0x01073744;
+    *(void **)this = bfmeVftSnapshotBase;
 }
 
 SphereEmissionVolumeInfo::~SphereEmissionVolumeInfo()
 {
-    *(void **)this = (void *)0x01073744;
+    *(void **)this = bfmeVftSnapshotBase;
 }
 
 CylinderEmissionVolumeInfo::~CylinderEmissionVolumeInfo()
 {
-    *(void **)this = (void *)0x01073744;
+    *(void **)this = bfmeVftSnapshotBase;
 }
 
 LineEmissionVolumeInfo::~LineEmissionVolumeInfo()
 {
-    *(void **)this = (void *)0x01073744;
+    *(void **)this = bfmeVftSnapshotBase;
 }
 
 LineEmissionVolumeInfo &LineEmissionVolumeInfo::operator=(const LineEmissionVolumeInfo &that)

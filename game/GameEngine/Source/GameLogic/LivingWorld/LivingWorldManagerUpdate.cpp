@@ -155,12 +155,12 @@ private:
 	LivingWorldEyeTower *m_eyeTower;
 };
 
-#define TheBfmeGameLogic (*(Rva00367E30Logic **)0x012F0898)
-#define TheState (*(Rva006174D0State **)0x012F7048)
-#define TheGlobal012F1028 (*(Rva003BF540 **)0x012F1028)
-#define TheGlobal012F19E8 (*(BfmeC977 **)0x012F19E8)
-#define TheGlobal012F4B98 (*(Glo012F4B98Type **)0x012F4B98)
-#define CritterDesyncSink (*(void **)0x012ED4FC)
+extern Rva00367E30Logic *TheBfmeGameLogic;
+extern Rva006174D0State *g_bfmeStateDF;
+extern Rva003BF540 *TheLivingWorldLogic;
+extern BfmeC977 *g_theWindowManager;
+extern Glo012F4B98Type *Glo012F4B98;
+extern void *TheCRCParameterCheck;
 
 // ?update@BfmeLivingWorldManager@@QAEXXZ
 void BfmeLivingWorldManager::update()
@@ -171,11 +171,11 @@ void BfmeLivingWorldManager::update()
 		setFPMode();
 	++*fp;
 
-	void *desyncSinkEnter = CritterDesyncSink;
+	void *desyncSinkEnter = TheCRCParameterCheck;
 	if (desyncSinkEnter)
 	{
 		((void (__cdecl *)(void *, const char *))j_0003a17a)(
-			desyncSinkEnter, (const char *)0x01116C60);
+			desyncSinkEnter, "POTENTIAL DESYNC: Forced into EnterLogic State. (LivingWorldManager::update)");
 	}
 
 	((void (__fastcall *)(BfmeLivingWorldManager *))j_00004c3c)(this);
@@ -192,29 +192,29 @@ void BfmeLivingWorldManager::update()
 		((Rva006174D0Object *)it->second)->slot0C();
 	}
 
-	if (!m_flag288 && TheState->m_field04 == 1
+	if (!m_flag288 && g_bfmeStateDF->m_field04 == 1
 		&& Rva00563970GetFlag()
-		&& !TheGlobal012F1028->anyMatching(8))
+		&& !TheLivingWorldLogic->anyMatching(8))
 	{
 		ShowControlBar(1);
 		if (TheMouse)
 			TheMouse->_bfme_setEngineVisibility(true);
 	}
 
-	Glo012F4B98Type *global012F4B98 = TheGlobal012F4B98;
+	Glo012F4B98Type *global012F4B98 = Glo012F4B98;
 	global012F4B98->slot14();
 	Rva00367E30Logic *logicExit = TheBfmeGameLogic;
 	--logicExit->m_fp;
 
-	void *desyncSink = CritterDesyncSink;
+	void *desyncSink = TheCRCParameterCheck;
 	if (desyncSink)
 	{
 		((void (__cdecl *)(void *, const char *))j_0003a17a)(
-			desyncSink, (const char *)0x01116C40);
+			desyncSink, "LeaveLogic() called.");
 	}
 
-	if (TheState->m_field04 == 0
-		&& !TheGlobal012F19E8->bfmeGo977C())
+	if (g_bfmeStateDF->m_field04 == 0
+		&& !g_theWindowManager->bfmeGo977C())
 	{
 		TheMouse->slot38(0x28);
 	}
