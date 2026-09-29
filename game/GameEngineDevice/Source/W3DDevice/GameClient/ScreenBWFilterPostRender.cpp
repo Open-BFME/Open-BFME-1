@@ -41,7 +41,17 @@ struct BfmeDevice
 	BfmeDeviceVt *vt;
 };
 
-#define BfmeDeviceGlobal (*(BfmeDevice **)0x01340534)
+struct IDirect3DDevice8;
+
+class DX8Wrapper
+{
+	friend class ScreenBWFilter;
+
+protected:
+	static IDirect3DDevice8 *D3DDevice;
+};
+
+#define BfmeDeviceGlobal ((BfmeDevice *)DX8Wrapper::D3DDevice)
 
 class BfmeTacticalView
 {
@@ -68,7 +78,7 @@ public:
 	virtual void getOrigin(Int *, Int *) = 0;
 };
 
-#define TheTacticalView (*(BfmeTacticalView **)0x012F1600)
+extern BfmeTacticalView *TheTacticalView;
 
 void *__cdecl bfmeEndRenderToTexture(void);
 

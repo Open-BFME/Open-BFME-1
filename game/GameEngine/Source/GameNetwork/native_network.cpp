@@ -353,12 +353,15 @@ public:
 	virtual void dispatchEvents();
 };
 
+extern "C" const void *bfmeVftBFMENetworkInterfaceBase[];
+#pragma comment(linker, "/alternatename:_bfmeVftBFMENetworkInterfaceBase=??_7Rva00651690Deleting@@6B@")
+
 class BFMENetworkInterfaceBase
 {
 public:
 	virtual ~BFMENetworkInterfaceBase()
 	{
-		*(void **)this = reinterpret_cast<void *>(0x0111985c);
+		*(const void **)this = bfmeVftBFMENetworkInterfaceBase;
 	}
 };
 
@@ -402,9 +405,12 @@ public:
 
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
 
+class BfmeAwakenDebug;
+extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+
 extern "C" unsigned int __stdcall BFMENetworkBackendThreadStart(void *backend)
 {
-	BFMENetworkThreadRunner *globalNetwork = *reinterpret_cast<BFMENetworkThreadRunner **>(0x01336e5c);
+	BFMENetworkThreadRunner *globalNetwork = reinterpret_cast<BFMENetworkThreadRunner *>(TheBfmeAwakenDebug);
 	globalNetwork->threadTick();
 	reinterpret_cast<BFMENetworkBackendThreadRunner *>(backend)->dispatchEvents();
 	return 0;

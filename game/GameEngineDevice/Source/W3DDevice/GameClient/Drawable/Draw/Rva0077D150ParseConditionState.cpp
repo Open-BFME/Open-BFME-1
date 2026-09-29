@@ -19,8 +19,16 @@ extern "C" void _ReadWriteBarrier(void);
 
 typedef unsigned int UnsignedInt;
 
-struct FieldParse;
 class GenItem;
+class INI;
+
+struct FieldParse
+{
+	const char *token;
+	void (*parse)(INI *ini, void *instance, void *store, const void *userData);
+	const void *userData;
+	unsigned int offset;
+};
 
 class INI
 {
@@ -28,6 +36,8 @@ public:
 	const char *getNextTokenOrNull(const char *previous);
 	void initFromINI(void *instance, const FieldParse *fieldParse);
 };
+
+extern FieldParse g_012BB650[];
 
 #include "ascii_string.h"
 
@@ -69,7 +79,7 @@ void parseConditionState0077D150(INI *ini, void *instance, void *store,
 	const void *userData)
 {
 	register UnsignedInt mode = (UnsignedInt)userData;
-	*(reinterpret_cast<UnsignedInt *>(0x012BB658)) = mode;
+	g_012BB650[0].userData = reinterpret_cast<const void *>(mode);
 
 	Rva0077CC10Element element;
 	Gen000140D8 conditions = { };
@@ -100,8 +110,7 @@ void parseConditionState0077D150(INI *ini, void *instance, void *store,
 
 	element.m_name.set(stateName);
 	element.m_conditions = conditions;
-	ini->initFromINI(&element,
-		reinterpret_cast<const FieldParse *>(0x012BB650));
+	ini->initFromINI(&element, g_012BB650);
 
 	if (mode == 1)
 	{

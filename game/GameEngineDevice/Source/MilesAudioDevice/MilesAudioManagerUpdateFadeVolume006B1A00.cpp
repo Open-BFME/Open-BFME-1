@@ -43,8 +43,8 @@ extern "C" __declspec(dllimport) void __stdcall _AIL_stream_volume_pan(
 extern "C" __declspec(dllimport) void __stdcall _AIL_set_stream_volume_pan(
 	HSTREAM stream, Real volume, Real pan);
 
-#define Rva006B1B40One (*(const Real *)0x01075334)
-#define Rva006B1B40Zero (*(const Real *)0x01075350)
+#define Rva006B1B40One (1.0f)
+#define Rva006B1B40Zero (0.0f)
 
 class Rva006B1B40AudioEvent;
 

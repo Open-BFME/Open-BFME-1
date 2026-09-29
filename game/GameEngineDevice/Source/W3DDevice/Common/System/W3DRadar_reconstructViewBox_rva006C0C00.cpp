@@ -142,8 +142,11 @@ public:
 	void reconstructViewBox();
 };
 
-#define TheTacticalView (*(Rva006C0C00TacticalView **)0x012f1600)
-#define RvaRadarCellScale (*(const Real *)0x010888f4)
+class View;
+extern View *TheTacticalView;
+
+#define TheTacticalView ((Rva006C0C00TacticalView *)TheTacticalView)
+#define RvaRadarCellScale (0.0078125f)
 
 void Rva006C0C00W3DRadar::reconstructViewBox()
 {

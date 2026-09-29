@@ -66,8 +66,28 @@ public:
 	static void detect(void);
 };
 
-#define BfmeChipset (*(volatile int *)0x012F9CF8)
-#define BfmeD3D8Interface (*(BfmeD3D8 **)0x01340530)
+enum ChipsetType { DC_UNKNOWN = 0 };
+
+class W3DShaderManager
+{
+	friend class BfmeChipsetDetector;
+
+protected:
+	static ChipsetType m_currentChipset;
+};
+
+struct IDirect3D8;
+
+class DX8Wrapper
+{
+	friend class BfmeChipsetDetector;
+
+protected:
+	static IDirect3D8 *D3DInterface;
+};
+
+#define BfmeChipset (*(volatile int *)&W3DShaderManager::m_currentChipset)
+#define BfmeD3D8Interface ((BfmeD3D8 *)DX8Wrapper::D3DInterface)
 
 void BfmeChipsetDetector::detect(void)
 {
