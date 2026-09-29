@@ -1,5 +1,5 @@
 // ?bfmeRunEQT@BfmeObjEQT@@QAEDPAX@Z
-// partial score=0.91 date=2026-09-27
+// partial score=0.4811 date=2026-09-27
 struct Coord3D
 {
 	float x;
@@ -16,7 +16,7 @@ struct Coord3D
 
 #define BFME_HAVE_COORD3D
 #define THING_TU_MEMBERS const Coord3D *getPosition() const;
-#include "../GameLogic/Object/object.h"
+#include "../../../../game/GameEngine/Source/GameLogic/Object/object.h"
 
 inline const Coord3D *Thing::getPosition() const
 {
