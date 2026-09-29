@@ -10338,5 +10338,15 @@
   "after_sha256": "6d4382e33a15b12b9e9f815be06a61ffc76b67ce134b6aecc4e17df419edcb3a",
   "evidence": "targets/game/reverse/identity_evidence/00377550-method-name.md",
   "reason": "The bank's restorePlayer00377550 label came from behavior, but no named caller, retail pin, source string, or EA source witness names this private method. The generated ledger row remains ?d_00377550, so the corrected bank keeps its address in rva00377550."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/RestartMissionMenu.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/RestartMissionMenu.cpp",
+  "old_name": "TheManager",
+  "new_name": "Rva00579160TheManager",
+  "before_sha256": "e0813e3b98b588b23621652e3e4096f8eff65f3d28449228f50deed6532e98c1",
+  "after_sha256": "eca31375b56530604d82c1d5cdff15dc10248a75bbcb955f26c64cf473f48262",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "TheManager was a #define over the literal image address 0x012F19E8, not a symbol. Replacing the literal with a named extern (link debt, AGENTS.md lane 6) must use the name dir32_addresses.csv records for that address, ?Rva00579160TheManager@@3PAURva00579160Manager@@A; no witness names the global TheManager."
  }
 ]

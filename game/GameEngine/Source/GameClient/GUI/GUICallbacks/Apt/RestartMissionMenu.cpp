@@ -127,16 +127,25 @@ public:
 };
 
 extern BfmeObj947C *g_bfme947ObjC;
-#define TheShell (*(Shell **)0x012F4B58)
-#define TheManager (*(Rva00579160Manager **)0x012F19E8)
-#define TheBfmeGameLogic (*(BfmeGameLogicPause **)0x012F0898)
-#define TheWritableGlobalData (*(GlobalData **)0x012ED5C8)
-#define TheGameState (*(GameState **)0x012EF190)
-#define TheRecorder (*(RecorderClass **)0x012ED62C)
-#define TheGameEngine (*(GameEngine **)0x012ED524)
-#define TheLivingWorldLogic (*(Glo012F1028Type **)0x012F1028)
-#define TheMessageStream (*(MessageStream **)0x012ED5EC)
-#define TheInGameUI (*(InGameUI **)0x012F148C)
+
+// Retail singleton globals, named per targets/game/reverse/symbols.csv.
+extern Shell *TheShell;					// ?TheShell@@3PAVShell@@A @ 0x012F4B58
+extern Rva00579160Manager *Rva00579160TheManager;	// @ 0x012F19E8
+extern BfmeGameLogicPause *g_012F0898;	// ?TheBfmeGameLogic@@3PAVGameLogic@@A @ 0x012F0898
+extern GlobalData *TheWritableGlobalData;	// ?TheWritableGlobalData@@3PAVGlobalData@@A @ 0x012ED5C8
+extern GameState *TheGameState;			// ?TheGameState@@3PAVGameState@@A @ 0x012EF190
+extern RecorderClass *TheRecorder;		// ?TheRecorder@@3PAVRecorderClass@@A @ 0x012ED62C
+extern GameEngine *TheGameEngine;		// ?TheGameEngine@@3PAVGameEngine@@A @ 0x012ED524
+extern Glo012F1028Type *Glo012F1028;	// ?Glo012F1028@@3PAVGlo012F1028Type@@A @ 0x012F1028
+extern MessageStream *TheMessageStream;	// ?TheMessageStream@@3PAVMessageStream@@A @ 0x012ED5EC
+extern InGameUI *TheInGameUI;			// ?TheInGameUI@@3PAVInGameUI@@A @ 0x012F148C
+
+// The local spelling carries the pointer type the body needs; bind it to the
+// recorded game-logic singleton pin.
+#pragma comment(linker, "/alternatename:?g_012F0898@@3PAVBfmeGameLogicPause@@A=?TheBfmeGameLogic@@3PAVGameLogic@@A")
+
+#define TheBfmeGameLogic g_012F0898
+#define TheLivingWorldLogic Glo012F1028
 
 __declspec(noinline) void restartMissionMenu()
 {
@@ -146,7 +155,7 @@ __declspec(noinline) void restartMissionMenu()
 		menu->m_hidden = true;
 		g_bfme947ObjC->m_field25c = 2;
 		TheShell->m_isShellActive = true;
-		TheManager->notify();
+		Rva00579160TheManager->notify();
 	}
 
 	Int gameMode = TheBfmeGameLogic->getGameMode();
