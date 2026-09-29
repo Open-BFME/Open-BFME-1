@@ -1,5 +1,5 @@
 // ?d_003caeb0@@YAXXZ
-// partial score=0.995 date=2026-09-28
+// partial score=0.9297 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x003CB290 (747 bytes).  The receiver is the LivingWorldRegionManager
