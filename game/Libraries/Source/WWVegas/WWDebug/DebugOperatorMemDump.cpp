@@ -54,7 +54,7 @@ Debug &Debug::operator<<(const MemDump &dump)
 		return *this;
 
 	if (!m_lastWasCR[m_curType * 16])
-		(*this) << (const char *)0x01080294;
+		(*this) << "\n";
 
 	itemPerLine = (dump.m_withChars ? 64 : 65) /
 		(1 + 2 * dump.m_bytePerItem + (dump.m_withChars ? 1 : 0));
@@ -65,30 +65,30 @@ Debug &Debug::operator<<(const MemDump &dump)
 	for (i = 0; i < dump.m_numItems;
 		i += itemPerLine, cur += itemPerLine * dump.m_bytePerItem)
 	{
-		sprintf(buf, (const char *)0x011313dc,
+		sprintf(buf, "%08x",
 			dump.m_absAddr ? unsigned(cur) : cur - dump.m_startPtr);
 		(*this) << buf;
 
 		const unsigned char *curByte = cur;
 		for (k = 0; k < itemPerLine; ++k, curByte += dump.m_bytePerItem)
 		{
-			(*this) << (const char *)0x0108ed1c;
+			(*this) << " ";
 			if (k + i >= dump.m_numItems)
 			{
 				for (l = dump.m_bytePerItem; l; --l)
-					(*this) << (const char *)0x010e8b00;
+					(*this) << "  ";
 			}
 			else if (IsBadReadPtr(curByte, dump.m_bytePerItem))
 			{
 				for (l = dump.m_bytePerItem; l; --l)
-					(*this) << (const char *)0x01133114;
+					(*this) << "??";
 			}
 			else
 			{
 				curByte += dump.m_bytePerItem;
 				for (l = 0; l < dump.m_bytePerItem; ++l)
 				{
-					sprintf(buf, (const char *)0x01131468, *--curByte);
+					sprintf(buf, "%02x", *--curByte);
 					(*this) << buf;
 				}
 			}
@@ -96,7 +96,7 @@ Debug &Debug::operator<<(const MemDump &dump)
 
 		if (!dump.m_withChars)
 			continue;
-		(*this) << (const char *)0x0108ed1c;
+		(*this) << " ";
 		curByte = cur;
 		for (k = 0; k < itemPerLine; ++k, curByte += dump.m_bytePerItem)
 		{
@@ -105,7 +105,7 @@ Debug &Debug::operator<<(const MemDump &dump)
 			else if (IsBadReadPtr(curByte, dump.m_bytePerItem))
 			{
 				for (l = dump.m_bytePerItem; l; --l)
-					(*this) << (const char *)0x01076c14;
+					(*this) << "?";
 			}
 			else
 			{
@@ -117,7 +117,7 @@ Debug &Debug::operator<<(const MemDump &dump)
 				}
 			}
 		}
-		(*this) << (const char *)0x01080294;
+		(*this) << "\n";
 	}
 
 	return *this;

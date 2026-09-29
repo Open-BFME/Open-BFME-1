@@ -119,12 +119,25 @@ public:
 	virtual void slot024(void); virtual void slot025(void); virtual void slot026(void);
 };
 
-#define TheTerrainTracks (*(void **)0x012F9D98)
-#define TheShadow (*(void **)0x01306EEC)
-#define TheWater (*(GlobalDispatch **)0x012F9D88)
-#define TheSnow (*(void **)0x012F15F4)
-#define TheSmudge (*(GlobalDispatch **)0x012F12CC)
-#define TheDisplay (*(GlobalDispatch **)0x012F1270)
+class TerrainTracksRenderObjClassSystem;
+class W3DShadowManager;
+class SmudgeManager;
+class SnowManager;
+class DisplayStringManager;
+class Display;
+
+extern TerrainTracksRenderObjClassSystem *TheTerrainTracksRenderObjClassSystem;
+extern W3DShadowManager *TheW3DShadowManager;
+extern SmudgeManager *TheSmudgeManager;
+extern SnowManager *TheSnowManager;
+extern DisplayStringManager *TheDisplayStringManager;
+extern Display *TheDisplay;
+
+#define TheTerrainTracks TheTerrainTracksRenderObjClassSystem
+#define TheShadow TheW3DShadowManager
+#define TheWater (reinterpret_cast<GlobalDispatch *>(TheSmudgeManager))
+#define TheSnow TheSnowManager
+#define TheSmudge (reinterpret_cast<GlobalDispatch *>(TheDisplayStringManager))
 
 class BaseHeightMapRenderObjClass
 {
@@ -192,7 +205,7 @@ void BaseHeightMapRenderObjClass::ReleaseResources(void)
 	j_0004379d();
 	if (m_2FE4)
 		CALL_TARGET(j_00043469, m_2FE4);
-	GlobalDispatch *display = TheDisplay;
+	GlobalDispatch *display = reinterpret_cast<GlobalDispatch *>(TheDisplay);
 	if (display)
 		display->slot026();
 	complete->slot130();
