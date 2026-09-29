@@ -17,6 +17,8 @@ GrowPair<T> *grow_array(GrowPair<T> *, T *, unsigned int, unsigned int);
 typedef void (__cdecl *IosBaseErrorCall)(void *, void *);
 extern IosBaseErrorCall g_call;
 extern void *g_global;
+extern long g_0130BD24;
+extern void *g_0130BD28;
 
 class ios_base
 {
@@ -56,8 +58,8 @@ long &ios_base::iword(int index)
 
 	m_iostate |= 1;
 	if (m_iostate & m_exception_mask)
-		g_call((void *)0x0112EBAC, (char *)g_global + 0x40);
-	return *(long *)0x0130BD24;
+		g_call((void *)"ios failure", (char *)g_global + 0x40);
+	return g_0130BD24;
 }
 
 void *&ios_base::pword(int index)
@@ -73,8 +75,8 @@ void *&ios_base::pword(int index)
 
 	m_iostate |= 1;
 	if (m_iostate & m_exception_mask)
-		g_call((void *)0x0112EBAC, (char *)g_global + 0x40);
-	return *(void **)0x0130BD28;
+		g_call((void *)"ios failure", (char *)g_global + 0x40);
+	return g_0130BD28;
 }
 
 }

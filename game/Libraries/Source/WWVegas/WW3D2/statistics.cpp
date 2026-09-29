@@ -60,21 +60,27 @@ class DX8Wrapper
 	static void End_Statistics();
 };
 
+extern int g_rva009371E0;
+extern int g_bfmeBytesEA;
+extern int g_bfmeBlocksEA;
+extern unsigned char *BfmeCurrentCaps;
+extern unsigned NPatchesLevel;
+
 static int sorting_polygons;
 static int sorting_vertices;
 static int draw_calls;
 
 void Debug_Statistics::Begin_Statistics()
 {
-	*reinterpret_cast<int *>(0x01346e64) = 0;
-	*reinterpret_cast<int *>(0x01346df0) = 0;
-	*reinterpret_cast<int *>(0x01346e0c) = 0;
-	*reinterpret_cast<int *>(0x01346e14) = 0;
-	*reinterpret_cast<int *>(0x01346e18) = 0;
-	*reinterpret_cast<int *>(0x01346e60) = 0;
-	*reinterpret_cast<int *>(0x01346e58) = 0;
-	*reinterpret_cast<int *>(0x01346e6c) = 0;
-	*reinterpret_cast<int *>(0x01346e68) = 0;
+	dx8_polygons = 0;
+	dx8_vertices = 0;
+	dx8_skin_polygons = 0;
+	dx8_skin_vertices = 0;
+	g_rva009371E0 = 0;
+	dx8_skin_renders = 0;
+	g_bfmeBytesEA = 0;
+	g_bfmeBlocksEA = 0;
+	dx8_renders = 0;
 	::Record_Texture_Begin();
 	DX8Wrapper::Begin_Statistics();
 }
@@ -118,8 +124,8 @@ public:
 void Debug_Statistics::Record_DX8_Polys_And_Vertices(int pcount, int vcount, const ShaderClass &shader)
 {
 	if ((shader.bits & 0x20000) != 0
-		&& *reinterpret_cast<bool *>(*reinterpret_cast<unsigned char **>(0x01340578) + 0x13b)) {
-		unsigned level = *reinterpret_cast<unsigned *>(0x012d6d8c);
+		&& BfmeCurrentCaps[0x13b]) {
+		unsigned level = NPatchesLevel;
 		level *= level;
 		pcount *= level;
 	}
