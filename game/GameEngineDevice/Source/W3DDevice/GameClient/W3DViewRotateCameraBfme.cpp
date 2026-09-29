@@ -5,7 +5,8 @@ typedef float Real;
 typedef int Int;
 typedef bool Bool;
 
-#define TheAnimationMsPerStep (*(Int *)0x012BB1CC)
+extern Int TheW3DFrameLengthInMsec;
+#define TheAnimationMsPerStep (TheW3DFrameLengthInMsec)
 
 class BfmeThingBRD
 {
@@ -65,7 +66,7 @@ void W3DView::rotateCamera(Real rotations, Int milliseconds, Bool flag,
 	{
 		view->m_rcInfo.numFrames = 1;
 	}
-	view->m_rcInfo.endAngle = view->m_angle + (*(Real *)0x01087B10) * rotations;
+	view->m_rcInfo.endAngle = view->m_angle + 6.2831855f * rotations;
 	view->m_rcInfo.startAngle = view->m_angle;
 	view->m_doingRotateCamera = true;
 	view->m_rcInfo.curFrame = 0;

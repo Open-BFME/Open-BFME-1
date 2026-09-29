@@ -7,8 +7,9 @@ typedef float Real;
 typedef int Int;
 typedef bool Bool;
 
-#define TheAnimationMsPerStep (*(Int *)0x012BB1CC)
-#define BfmeKTHE (*(Real *)0x0109ECC0)
+extern Int TheW3DFrameLengthInMsec;
+#define TheAnimationMsPerStep (TheW3DFrameLengthInMsec)
+#define BfmeKTHE (57.295776f)
 
 class BfmeThingBRD
 {

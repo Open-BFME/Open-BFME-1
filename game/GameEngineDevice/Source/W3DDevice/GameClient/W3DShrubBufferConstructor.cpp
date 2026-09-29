@@ -97,6 +97,11 @@ private:
 	Int m_field1e3924;
 };
 
+class GameEngine;
+extern GameEngine *TheGameEngine;
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+
 W3DShrubBuffer::W3DShrubBuffer(Bool useSmallBuffers)
 	: m_resetList1458(0x800, 0x15),
 	  m_resetList1480(0x400, 0x35545844)
@@ -126,12 +131,12 @@ W3DShrubBuffer::W3DShrubBuffer(Bool useSmallBuffers)
 	m_needToUpdateTexture = 1;
 	m_curSwayVersion = -1;
 
-	Int *gameEngine = *(Int **)0x012ED524;
+	Int *gameEngine = (Int *)TheGameEngine;
 	if (gameEngine != 0)
 		m_swayPeriod = (Real)gameEngine[0x34 / sizeof(Int)];
 	else
 		m_swayPeriod = 1.0f;
 
-	unsigned char *globalData = *(unsigned char **)0x012ED5C8;
+	unsigned char *globalData = (unsigned char *)TheWritableGlobalData;
 	m_globalBufferCount = globalData[0x1b];
 }

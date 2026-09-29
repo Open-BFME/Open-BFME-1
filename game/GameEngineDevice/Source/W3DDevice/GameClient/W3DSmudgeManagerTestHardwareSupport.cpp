@@ -20,7 +20,7 @@ typedef char TCHAR;
 #define TRUE 1
 #define UNIQUE_COLOR (0x12345678)
 #define BLOCK_SIZE (8)
-#define Rva00722640BlockSize (*(const Real *)0x010A265C)
+#define Rva00722640BlockSize (8.0f)
 
 // vector4.h gives Vector4 a user-defined default constructor.  That matters:
 // with /EHsc the four-element vertex array then uses the retail vector
@@ -160,6 +160,7 @@ class W3DShaderManager
 {
 public:
 	static IDirect3DTexture8 *getRenderTexture(void);
+	static bool m_renderingToTexture;
 };
 
 class RefCountClass
@@ -397,7 +398,7 @@ bool Rva00722640W3DSmudgeManager::testHardwareSupport(void)
 			return false;
 		}
 
-		if (!*(unsigned char *)0x012F9D00)
+		if (!W3DShaderManager::m_renderingToTexture)
 			return false;
 
 		VertexMaterialClass *vmat =

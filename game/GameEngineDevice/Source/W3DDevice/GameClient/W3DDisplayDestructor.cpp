@@ -42,7 +42,9 @@ public:
 	virtual ~UpdateSubsystem(void);
 };
 
-#define FirstUpdateSubsystem (*(UpdateSubsystem **)0x0134FAA0)
+class Rva009EB960;
+extern Rva009EB960 *Rva0134FAA0;
+#define FirstUpdateSubsystem (*(UpdateSubsystem **)&Rva0134FAA0)
 
 class DisplayString;
 
@@ -112,7 +114,9 @@ public:
 	virtual ~W3DFileSystem(void);
 };
 
-#define TheW3DFileSystemPtr (*(W3DFileSystem **)0x012F8228)
+class Rva006F6330;
+extern Rva006F6330 *TheRva006F6330;
+#define TheW3DFileSystemPtr (*(W3DFileSystem **)&TheRva006F6330)
 
 class WW3D
 {

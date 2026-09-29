@@ -38,6 +38,7 @@ public:
 };
 
 extern BfmeOverride1137 *g_bfmeGlo012F15F8;
+extern const char Rva006A16B0Empty[];
 
 void j_00038c49(void);
 
@@ -111,7 +112,7 @@ void W3DSnowManager::updateIniSettings(void)
 		if (setting->m_snowTexture.m_data)
 			name = setting->m_snowTexture.m_data + 8;
 		else
-			name = (const char *)0x0107388B;
+			name = Rva006A16B0Empty;
 
 		TextureClass *texture = m_snowTexture;
 		const char *textureName = texture ? texture->Get_Texture_Name() : 0;
@@ -123,7 +124,7 @@ void W3DSnowManager::updateIniSettings(void)
 			if (replacementName)
 				replacementName += 8;
 			else
-				replacementName = (const char *)0x0107388B;
+				replacementName = Rva006A16B0Empty;
 
 			BFMEAssignSnowTexture(
 				m_snowTexture,
