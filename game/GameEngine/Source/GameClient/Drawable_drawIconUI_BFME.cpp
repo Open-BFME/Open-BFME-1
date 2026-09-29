@@ -211,15 +211,25 @@ union DrawableIconQueueCall
 	void (DrawableIconClientCall::*memberFunction)( Int, Drawable * );
 };
 
-#define DRAWABLE_ICON_GAME_LOGIC (*(DrawableIconGameLogic **)0x012F0898)
-#define DRAWABLE_ICON_SCRIPT_ENGINE (*(DrawableIconScriptEngine **)0x012F076C)
-#define DRAWABLE_ICON_TACTICAL_VIEW (*(DrawableIconTacticalView **)0x012F1600)
-#define DRAWABLE_ICON_CLIENT (*(DrawableIconClientCall **)0x012F1464)
-#define DRAWABLE_ICON_DEFAULT (*(const Real *)0x01075334)
-#define DRAWABLE_ICON_VERTICAL_SCALE (*(const Real *)0x010F15CC)
-#define DRAWABLE_ICON_WIDTH_SCALE (*(const Real *)0x010F1628)
-#define DRAWABLE_ICON_TWO (*(const Real *)0x01088830)
-#define DRAWABLE_ICON_FOUR (*(const Real *)0x01075340)
+class GameLogic;
+class ScriptEngine;
+class View;
+class GameClient;
+extern GameLogic *TheGameLogic;
+extern ScriptEngine *TheScriptEngine;
+extern View *TheTacticalView;
+extern GameClient *TheGameClient;
+extern float g_bfmeDefaultBU;
+
+#define DRAWABLE_ICON_GAME_LOGIC ((DrawableIconGameLogic *)TheGameLogic)
+#define DRAWABLE_ICON_SCRIPT_ENGINE ((DrawableIconScriptEngine *)TheScriptEngine)
+#define DRAWABLE_ICON_TACTICAL_VIEW ((DrawableIconTacticalView *)TheTacticalView)
+#define DRAWABLE_ICON_CLIENT ((DrawableIconClientCall *)TheGameClient)
+#define DRAWABLE_ICON_DEFAULT g_bfmeDefaultBU
+#define DRAWABLE_ICON_VERTICAL_SCALE 0.333f
+#define DRAWABLE_ICON_WIDTH_SCALE 0.45f
+#define DRAWABLE_ICON_TWO 2.0f
+#define DRAWABLE_ICON_FOUR 4.0f
 
 extern void j_000016a4();
 extern void j_0001ff91();

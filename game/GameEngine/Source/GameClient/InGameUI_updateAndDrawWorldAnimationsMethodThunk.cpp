@@ -36,9 +36,9 @@ public:
 	Int m_frame;
 };
 
-#define TheGameLogic (*(BfmeGameLogicPause **)0x012F0898)
-#define LOGICSECONDS_PER_FRAME (*(const Real *)0x01080BBC)
-#define BfmeZeroRange (*(const Real *)0x01075350)
+extern BfmeGameLogicPause *TheGameLogic;
+#define LOGICSECONDS_PER_FRAME 0.2f
+extern const Real BfmeZeroRange;
 
 class Player
 {
@@ -54,7 +54,7 @@ public:
 	Player *m_localPlayer;
 };
 
-#define ThePlayerList (*(PlayerList **)0x012ED748)
+extern PlayerList *ThePlayerList;
 
 class PartitionManager
 {
@@ -62,7 +62,7 @@ public:
 	CellShroudStatus getShroudStatusForPlayer( Int playerIndex, const Coord3D *position ) const;
 };
 
-#define TheShroudManager (*(PartitionManager **)0x012ED5BC)
+extern PartitionManager *TheShroudManager;
 
 class TacticalView
 {
@@ -159,7 +159,7 @@ public:
 #undef BFME_TACTICAL_SLOT
 };
 
-#define TheTacticalView (*(TacticalView **)0x012F1600)
+extern TacticalView *TheTacticalView;
 
 static Bool bfmeWorldToScreen( TacticalView *view, const Coord3D *world, ICoord2D *screen )
 {
