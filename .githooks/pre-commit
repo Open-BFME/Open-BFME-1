@@ -93,8 +93,11 @@ python3 tools/eol_guard.py || fail "staged change rewrites line endings (see abo
 python3 tools/retired_guard.py --staged || fail "retired path re-added (see above)"
 # The docs agents load may not grow back; written bans never held one.
 python3 tools/doc_budget.py --staged || fail "doc budget (see above)"
-python3 tools/ea_name_guard.py --staged || fail "a name contradicts EA evidence, or tools/ea_name_guard.py is missing and this tree needs a rebase (see above)"
-python3 tools/name_lane.py check --staged || fail "a placeholder was renamed outside the naming lane, or tools/name_lane.py is missing and this tree needs a rebase (see above)"
+# This hook runs from the main checkout for every worktree, so a tree older than a checker has
+# no copy of it until it rebases; say so instead of refusing every commit the tree makes.
+present() { [ -f "$1" ] || { echo "pre-commit: $1 is newer than this tree; rebase to enable its check" >&2; return 1; }; }
+present tools/ea_name_guard.py && { python3 tools/ea_name_guard.py --staged || fail "a name contradicts EA evidence (see above)"; }
+present tools/name_lane.py && { python3 tools/name_lane.py check --staged || fail "a placeholder was renamed outside the naming lane (see above)"; }
 # A literal image address matches bytes but breaks the linked build; name the global.
 python3 tools/link_debt.py --staged || fail "new hard-coded image address (see above)"
 
