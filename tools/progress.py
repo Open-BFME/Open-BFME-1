@@ -1,7 +1,14 @@
 #!/usr/bin/env python3
 """Report how much retail code we can rebuild from what the repository holds.
 
-The headline includes authored C++, vendored source, generated C++ and attached
+LINKED and DECOMPILED print first. DECOMPILED is authored C++ and vendored
+library source: recovered source that compiles to retail's bytes, checked a
+function at a time (generated C++ is not recovered; see source_lane). LINKED is
+the part of it whose files also linked cleanly, as measured and stored by the
+last tools/link_census.py run (link_census_history.csv, link_status.csv). Both
+count 0xCC bytes the way the denominator does.
+
+The REBUILDS headline includes authored C++, vendored source, generated C++ and attached
 prebuilt libraries; it excludes retail-byte dumps. Its denominator excludes
 0xCC padding. The breakdown reports each provenance separately, so ASM-to-C++
 work can also be measured by the change in authored bytes. Total exact uses
@@ -503,10 +510,101 @@ def rebuildable(split):
     return split["authored"] + split["vendored"] + split["generated"] + split["library"]
 
 
+LINK_STATUS = "targets/game/reverse/link_status.csv"
+LINK_HISTORY = "targets/game/reverse/link_census_history.csv"
+# Source somebody recovered: C++ written from the disassembly and upstream
+# library source. Generated C++ stays out, for the reason source_lane gives.
+DECOMPILED_LANES = ("authored", "vendored")
+
+
+def _text_at(ref, path):
+    if ref is None:
+        target = ROOT / path
+        return target.read_text(encoding="utf-8") if target.exists() else None
+    result = subprocess.run(["git", "show", f"{ref}:{path}"], cwd=ROOT, capture_output=True,
+                            text=True, encoding="utf-8", errors="replace")
+    return result.stdout if result.returncode == 0 else None
+
+
+@lru_cache(maxsize=None)
+def _text_image():
+    start, size = retail_text()
+    return start, build.read_target_bytes(start, size)
+
+
+def real_split(matched, notes, text_start, text_size, naked_rows=(), keep=None):
+    """source_split counted the way real_code_denominator counts: 0xCC bytes
+    excluded, so numerator and denominator agree (source_split counts a row's
+    0xCC bytes, about 0.16 pp of the headline). `keep(key, source)` filters rows."""
+    image_start, image = _text_image()
+    text_end = text_start + text_size
+    naked_rows = set(naked_rows)
+    lanes = {name: [] for name in SOURCE_LANES}
+    for key, (size, source) in matched.items():
+        if keep and not keep(key, source):
+            continue
+        start, end = max(int(key[1], 16), text_start), min(int(key[1], 16) + size, text_end)
+        if start < end:
+            lanes[source_lane(source, notes[key], key in naked_rows)].append((start, end))
+
+    def real(intervals):
+        return sum(end - start - image[start - image_start:end - image_start].count(0xCC)
+                   for start, end in merge_intervals(intervals))
+    split, claimed = {}, []
+    for name in SOURCE_LANES:
+        before = real(claimed)
+        claimed += lanes[name]
+        split[name] = real(claimed) - before
+    return split
+
+
+def decompiled(split):
+    """Recovered source that compiles to retail's bytes, a function at a time."""
+    return sum(split[lane] for lane in DECOMPILED_LANES)
+
+
+def census_at(ref):
+    """The last link census that measured LINKED, as of one state, or None.
+
+    LINKED is measured by tools/link_census.py on the tree it linked and stored
+    in the history row (linked_bytes); it is not recomputed here, so it holds
+    still between censuses instead of dropping with every edit since.
+    """
+    history = _text_at(ref, LINK_HISTORY)
+    rows = [row for row in csv.DictReader(history.splitlines()) if row.get("linked_bytes")] if history else []
+    return rows[-1] if rows else None
+
+
+def data_denominator():
+    """Bytes of .rdata and .data: the tables, strings and globals."""
+    return sum(s["size"] for s in build.pe_sections(build.EXE.read_bytes()) if s["name"] in (".rdata", ".data"))
+
+
+def print_realistic(denominator, old_split, new_split, old_census, new_census):
+    # The realistic figures go first: recovered source whose files linked
+    # cleanly at the last link census, then recovered source that compiles to
+    # retail's bytes one function at a time. REBUILDS below also counts
+    # generated C++ and attached prebuilt libraries, and says nothing about linking.
+    if new_census:
+        now = int(new_census["linked_bytes"])
+        # A range starting before any census has nothing to compare against;
+        # printing the whole figure as a gain would credit it to that range.
+        delta = (f"delta {format_delta(now, int(old_census['linked_bytes']), denominator)}" if old_census
+                 else "delta n/a (no census at the start of the range)")
+        print(f"LINKED                      {now:>10,} bytes ({percent(now, denominator):6.2f}%)  {delta}  "
+              f"<- files that link cleanly, census {new_census['date']} at {new_census['commit']} (daily)")
+    else:
+        print("LINKED                      not measured  <- no link census yet (tools/link_census.py --history)")
+    now, before = decompiled(new_split), decompiled(old_split)
+    print(f"DECOMPILED                  {now:>10,} bytes ({percent(now, denominator):6.2f}%)  delta "
+          f"{format_delta(now, before, denominator)}  <- our C++ and library source, compiling to retail's bytes")
+    print(f"GAME DATA                   not measured  <- {data_denominator():,} bytes of .rdata/.data; "
+          "no data is byte-verified yet\n")
+
+
 def print_real_code(padding, denominator, old_stats, new_stats, old_split, new_split):
-    # The headline goes first and alone: it is the one number the project is
-    # graded on, and everything below it is either its decomposition or a
-    # different question entirely.
+    # REBUILDS is the per-session delta agents and router_integrate read; the
+    # realistic LINKED/DECOMPILED lines above it are the project's progress.
     now, before = rebuildable(new_split), rebuildable(old_split)
     print(f"REBUILDS FROM WHAT WE HOLD  {now:>10,} bytes "
           f"({percent(now, denominator):6.2f}%)  delta "
@@ -625,10 +723,12 @@ def main():
 
     padding, denominator = real_code_denominator(text_start, text_size)
     old_notes, new_notes = notes_at(ref1), notes_at(ref2)
-    print_real_code(
-        padding, denominator, old_stats, new_stats,
-        source_split(old, old_notes, text_start, text_size, old_naked),
-        source_split(new, new_notes, text_start, text_size, new_naked))
+    old_split = source_split(old, old_notes, text_start, text_size, old_naked)
+    new_split = source_split(new, new_notes, text_start, text_size, new_naked)
+    print_realistic(denominator, real_split(old, old_notes, text_start, text_size, old_naked),
+                    real_split(new, new_notes, text_start, text_size, new_naked),
+                    census_at(ref1), census_at(ref2))
+    print_real_code(padding, denominator, old_stats, new_stats, old_split, new_split)
     print_scorecard(ref1, label2, old_stats, new_stats)
     if args.details:
         print_details(ref1, ref2, old, new, old_naked, new_naked)

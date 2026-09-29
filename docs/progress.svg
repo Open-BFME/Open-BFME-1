@@ -1,17 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="252" viewBox="0 0 880 252" role="img" aria-labelledby="title desc">
-  <title id="title">BFME 1 rebuilt from source: 81.66%</title>
-  <desc id="desc">7,922,505 of 9,702,173 code bytes rebuilt without copying the original; 5,386,090 of 8,331,384 bytes of the game's own code are C++. Ledger-derived; not a fresh build verification.</desc>
-  <rect x="1" y="1" width="878" height="250" rx="16" fill="#0d1117" stroke="#30363d"/>
-  <g font-family="Segoe UI,Arial,sans-serif">
-    <text x="28" y="37" fill="#c9d1d9" font-size="14" font-weight="600" letter-spacing="1.4">BFME 1 · REBUILT FROM SOURCE</text>
-    <text x="852" y="43" fill="#f0f6fc" font-size="30" font-weight="700" text-anchor="end">81.66%</text>
-    <rect x="28" y="62" width="824" height="20" rx="10" fill="#21262d"/>
-    <rect x="28" y="62" width="672.8538" height="20" rx="10" fill="#3fb950"/>
-    <text x="28" y="111" fill="#c9d1d9" font-size="14">7,922,505 / 9,702,173 bytes rebuilt without copying the original game exe (v1.03)</text>
-    <text x="28" y="157" fill="#c9d1d9" font-size="14" font-weight="600" letter-spacing="1.4">BFME 1 · GAME CODE IN C++</text>
-    <text x="852" y="163" fill="#f0f6fc" font-size="30" font-weight="700" text-anchor="end">64.65%</text>
-    <rect x="28" y="182" width="824" height="20" rx="10" fill="#21262d"/>
-    <rect x="28" y="182" width="532.7012" height="20" rx="10" fill="#58a6ff"/>
-    <text x="28" y="231" fill="#c9d1d9" font-size="14">5,386,090 / 8,331,384 bytes of the game's own code, now C++ (libraries not counted)</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="262" viewBox="0 0 880 262" role="img" aria-labelledby="title desc">
+  <title id="title">BFME 1: 81.96% byte-matched, 9.22% linked</title>
+  <desc id="desc">7,952,127 of 9,702,173 code bytes rebuild to the original exe's exact bytes; 894,965 of them are in files that link cleanly (measured 2026-09-29). Whole game 45.59%: 9.22% linked, 72.74% byte-matched but not linked yet, 18.04% still original bytes.</desc>
+  <style>
+    .card { fill: #0d1117; stroke: #30363d; } .track { fill: #21262d; }
+    .strong { fill: #f0f6fc; } .muted { fill: #8b949e; } .up { fill: #3fb950; } .down { fill: #f85149; }
+    @media (prefers-color-scheme: light) {
+      .card { fill: #ffffff; stroke: #d0d7de; } .track { fill: #eaeef2; }
+      .strong { fill: #1f2328; } .muted { fill: #59636e; } .up { fill: #1a7f37; } .down { fill: #cf222e; }
+    }
+  </style>
+  <defs>
+    <pattern id="dots" width="5" height="5" patternUnits="userSpaceOnUse">
+      <rect width="5" height="5" fill="#56d364"/><circle cx="2.5" cy="2.5" r="1.1" fill="#196c2e"/>
+    </pattern>
+    <clipPath id="whole"><rect x="28" y="180" width="824" height="18" rx="9"/></clipPath>
+  </defs>
+  <rect class="card" x="0.5" y="0.5" width="879" height="261" rx="12"/>
+  <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif">
+    <text x="28" y="30" class="muted" font-size="13" font-weight="600" letter-spacing="1.3">BFME 1 · REBUILD PROGRESS</text>
+    <text x="28" y="64" class="strong" font-size="15" font-weight="600">Byte-matched</text>
+    <text x="852" y="64" class="strong" font-size="20" font-weight="700" text-anchor="end">81.96%</text>
+    <rect class="track" x="28" y="74" width="824" height="14" rx="7"/>
+    <rect x="28" y="74" width="675.37" height="14" rx="7" fill="#2ea043"/>
+    <text x="28" y="116" class="strong" font-size="15" font-weight="600">Linked</text>
+    <text x="852" y="116" class="strong" font-size="20" font-weight="700" text-anchor="end">9.22%</text>
+    <rect class="track" x="28" y="126" width="824" height="14" rx="7"/>
+    <rect x="28" y="126" width="76.01" height="14" rx="7" fill="url(#dots)"/>
+    <text x="28" y="168" class="strong" font-size="15" font-weight="600">Whole game</text>
+    <text x="852" y="168" class="strong" font-size="20" font-weight="700" text-anchor="end">45.59%</text>
+    <rect class="track" x="28" y="180" width="824" height="18" rx="9"/>
+    <g clip-path="url(#whole)">
+      <rect x="28" y="180" width="375.69" height="18" fill="#2ea043"/>
+      <rect x="28" y="180" width="76.01" height="18" fill="url(#dots)"/>
+    </g>
+    <rect x="28" y="206" width="10" height="10" rx="2" fill="url(#dots)"/><text x="44" y="215" class="muted" font-size="12.5">linked 9.22%</text>
+    <rect x="303" y="206" width="10" height="10" rx="2" fill="#2ea043"/><text x="319" y="215" class="muted" font-size="12.5">byte-matched, not linked yet 72.74%</text>
+    <text x="28" y="246" class="muted" font-size="12.5">Byte-matched: code rebuilt to the original exe's exact bytes. Linked: the part that connects into one program (measured 2026-09-29).</text>
   </g>
 </svg>

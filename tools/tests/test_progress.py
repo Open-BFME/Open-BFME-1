@@ -355,33 +355,34 @@ def test_dump_pass_moved_zero_recovered_bytes():
 
 
 def test_readme_headline_is_a_recovered_figure():
-    """The percentage on the README's progress badge is its headline claim, and
-    it may never exceed what the tool calls recovered source.
+    """The badge makes two claims -- byte-matched and linked -- and neither may
+    exceed what progress.py prints for it (REBUILDS and LINKED).
 
-    Upper bound only, for the same reason as the test below: contributors land
-    functions continuously, so a README that lags is fine and a README that
-    flatters is not.
+    A README that lags is fine (contributors land continuously, the census is
+    daily) and a README that flatters is not.
     """
     printed = subprocess.run([sys.executable, str(TOOL)],
-                             cwd=ROOT, capture_output=True, text=True, check=True).stdout
-    line = next(l for l in printed.splitlines()
-                if "REBUILDS FROM WHAT WE HOLD" in l)
-    rebuilds = float(line.split("(")[1].split("%")[0])
+                             cwd=ROOT, capture_output=True, text=True, check=True).stdout.splitlines()
 
+    def figure(prefix):
+        line = next(l for l in printed if l.startswith(prefix))
+        # "not measured" (no census yet) is 0%: the badge may not claim more.
+        return float(line.split("(")[1].split("%")[0]) if "(" in line else 0.0
+
+    rebuilds, linked = figure("REBUILDS FROM WHAT WE HOLD"), figure("LINKED ")
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
-    # The badge IS the headline. 111a1fd697 deleted the "## Status" section this
-    # line used to be ordered against and left the badge as the README's only
-    # progress claim, so what must hold is that the README still shows it.
     assert "docs/progress.svg" in readme, "README no longer shows the progress badge"
     svg = (ROOT / "docs/progress.svg").read_text(encoding="utf-8")
-    headline = float(re.search(r"(\d+\.\d+)%", svg).group(1))
-    assert headline <= rebuilds + 0.005, (
-        f"README headlines {headline}% where progress.py says {rebuilds}%. "
-        f"The README may lag reality; it may never flatter it")
-    assert headline >= rebuilds - 5.0, (
-        f"README headlines {headline}% where the project is already at "
-        f"{rebuilds}% — more than five points stale. Update it")
-    print(f"PASS README headlines {headline}% against {rebuilds}%")
+    title = re.search(r"<title[^>]*>BFME 1: ([\d.]+)% byte-matched, ([\d.]+)% linked</title>", svg)
+    assert title, "the badge's title no longer states its two figures"
+    matched, badge_linked = float(title.group(1)), float(title.group(2))
+    assert matched <= rebuilds + 0.005, (
+        f"README says {matched}% byte-matched where progress.py says {rebuilds}%; it may lag, never flatter")
+    assert badge_linked <= linked + 0.005, (
+        f"README says {badge_linked}% linked where progress.py says {linked}%; it may lag, never flatter")
+    assert matched >= rebuilds - 5.0, (
+        f"README says {matched}% byte-matched where the project is at {rebuilds}%: more than five points stale")
+    print(f"PASS README {matched}% / {badge_linked}% against {rebuilds}% / {linked}%")
 
 
 def test_readme_never_overstates_coverage():

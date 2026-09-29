@@ -19,6 +19,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pages: write      # the interactive report on GitHub Pages
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.pages.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -26,13 +31,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Record today's byte-matched point for the chart
+        run: python tools/progress_site.py history --today
       - name: Generate bar and update the main Discord
         env:
           DISCORD_PROGRESS_WEBHOOK: ${{ secrets.DISCORD_MAIN_PROGRESS_WEBHOOK }}
         run: python tools/readme_progress.py --discord
+      - name: Render the chart, the map and the interactive report
+        run: python tools/progress_site.py render build/site/index.html --svg docs
       - name: Commit updated bar
         run: |
-          git add docs/progress.svg docs/discord-main-progress.json
+          git add docs/progress.svg docs/progress_chart.svg docs/progress_map.svg docs/discord-main-progress.json             targets/game/reverse/progress_history.csv
           if git diff --cached --quiet; then
             exit 0
           fi
@@ -41,3 +50,8 @@ jobs:
           git commit -m "docs: update README progress bar"
           git pull --rebase origin master
           git push origin HEAD:master
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/site
+      - id: pages
+        uses: actions/deploy-pages@v4
