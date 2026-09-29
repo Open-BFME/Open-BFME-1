@@ -739,10 +739,19 @@ struct Rva00943FF0Bounds
 // Retail calls the allocator's physical out-of-line free operation directly.
 // STLport's public deallocate wrapper imports it indirectly in this TU.
 namespace _STL {
-template <bool threads, int inst> class __node_alloc {
-public:
-	static void _M_deallocate(void *node, unsigned int size);
+// The node allocator's pool entry points are private STLport members
+// (_STL::__node_alloc<true, 0>::_M_allocate at 0x0082E540, _M_deallocate at
+// 0x0082E5F0); these TU-local helpers reach them under their real names.
+template <bool __threads, int __inst> class __node_alloc;
+static void nodePoolDeallocate(void *block, unsigned int bytes);
+template <bool __threads, int __inst>
+class __node_alloc
+{
+	friend void nodePoolDeallocate(void *, unsigned int);
+	static void *__cdecl _M_allocate(unsigned int __n);
+	static void __cdecl _M_deallocate(void *__p, unsigned int __n);
 };
+static inline void nodePoolDeallocate(void *block, unsigned int bytes) { __node_alloc<true, 0>::_M_deallocate(block, bytes); }
 }
 
 struct Rva00943FF0List
@@ -755,7 +764,7 @@ struct Rva00943FF0List
 		while (current) {
 			Gen_00943CF0_Node *old = current;
 			current = current->next;
-			_STL::__node_alloc<true, 0>::_M_deallocate(old, 8);
+			_STL::nodePoolDeallocate(old, 8);
 		}
 	}
 };

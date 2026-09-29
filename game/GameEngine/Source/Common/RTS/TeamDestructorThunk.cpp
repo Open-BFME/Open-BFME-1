@@ -130,12 +130,19 @@ public:
 // ordinary C++ lifetime operations reproduces the observed EH states.
 namespace _STL
 {
-template <bool threads, int instance>
+// The node allocator's pool entry points are private STLport members
+// (_STL::__node_alloc<true, 0>::_M_allocate at 0x0082E540, _M_deallocate at
+// 0x0082E5F0); these TU-local helpers reach them under their real names.
+template <bool __threads, int __inst> class __node_alloc;
+static void nodePoolDeallocate(void *block, unsigned int bytes);
+template <bool __threads, int __inst>
 class __node_alloc
 {
-public:
-	static void _M_deallocate( void *node, UnsignedInt bytes );
+	friend void nodePoolDeallocate(void *, unsigned int);
+	static void *__cdecl _M_allocate(unsigned int __n);
+	static void __cdecl _M_deallocate(void *__p, unsigned int __n);
 };
+static inline void nodePoolDeallocate(void *block, unsigned int bytes) { __node_alloc<true, 0>::_M_deallocate(block, bytes); }
 }
 
 struct Rva000F4250TransferNode
@@ -154,7 +161,7 @@ public:
 		{
 			Rva000F4250TransferNode *old = node;
 			node = node->m_next;
-			_STL::__node_alloc<true, 0>::_M_deallocate( old, 0xc );
+			_STL::nodePoolDeallocate( old, 0xc );
 		}
 		m_node->m_next = m_node;
 		m_node->m_previous = m_node;
@@ -167,12 +174,12 @@ public:
 		{
 			Rva000F4250TransferNode *old = node;
 			node = node->m_next;
-			_STL::__node_alloc<true, 0>::_M_deallocate( old, 0xc );
+			_STL::nodePoolDeallocate( old, 0xc );
 		}
 		m_node->m_next = m_node;
 		m_node->m_previous = m_node;
 		if (m_node != 0)
-			_STL::__node_alloc<true, 0>::_M_deallocate( m_node, 0xc );
+			_STL::nodePoolDeallocate( m_node, 0xc );
 	}
 
 	Rva000F4250TransferNode *m_node;

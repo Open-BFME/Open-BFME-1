@@ -61,12 +61,19 @@ struct _Rb_global
 		_Rb_tree_node_base *&leftmost, _Rb_tree_node_base *&rightmost);
 };
 
-template <bool threads, int inst>
+// The node allocator's pool entry points are private STLport members
+// (_STL::__node_alloc<true, 0>::_M_allocate at 0x0082E540, _M_deallocate at
+// 0x0082E5F0); these TU-local helpers reach them under their real names.
+template <bool __threads, int __inst> class __node_alloc;
+static void nodePoolDeallocate(void *block, unsigned int bytes);
+template <bool __threads, int __inst>
 class __node_alloc
 {
-public:
-	static void _M_deallocate(void *p, unsigned int n);
+	friend void nodePoolDeallocate(void *, unsigned int);
+	static void *__cdecl _M_allocate(unsigned int __n);
+	static void __cdecl _M_deallocate(void *__p, unsigned int __n);
 };
+static inline void nodePoolDeallocate(void *block, unsigned int bytes) { __node_alloc<true, 0>::_M_deallocate(block, bytes); }
 
 template <class Value, class Traits>
 struct _Rb_tree_iterator
@@ -88,7 +95,7 @@ public:
 		_Rb_tree_node_base *y = _Rb_global<bool>::_Rebalance_for_erase((_Rb_tree_node_base *)position._M_node,
 			_M_header._M_data->_M_parent, _M_header._M_data->_M_left, _M_header._M_data->_M_right);
 		if (y != 0)
-			__node_alloc<true, 0>::_M_deallocate(y, sizeof(_Rb_tree_node<Value>));
+			_STL::nodePoolDeallocate(y, sizeof(_Rb_tree_node<Value>));
 		--_M_node_count;
 	}
 	unsigned int _M_node_count;

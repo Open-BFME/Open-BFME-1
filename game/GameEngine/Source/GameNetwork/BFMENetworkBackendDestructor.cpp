@@ -14,12 +14,19 @@ struct pair
 };
 template <class Pair> struct _Select1st {};
 
-template <bool Threads, int Instance>
+// The node allocator's pool entry points are private STLport members
+// (_STL::__node_alloc<true, 0>::_M_allocate at 0x0082E540, _M_deallocate at
+// 0x0082E5F0); these TU-local helpers reach them under their real names.
+template <bool __threads, int __inst> class __node_alloc;
+static void nodePoolDeallocate(void *block, unsigned int bytes);
+template <bool __threads, int __inst>
 class __node_alloc
 {
-public:
-	static void _M_deallocate(void *node, unsigned int bytes);
+	friend void nodePoolDeallocate(void *, unsigned int);
+	static void *__cdecl _M_allocate(unsigned int __n);
+	static void __cdecl _M_deallocate(void *__p, unsigned int __n);
 };
+static inline void nodePoolDeallocate(void *block, unsigned int bytes) { __node_alloc<true, 0>::_M_deallocate(block, bytes); }
 
 struct _Rb_tree_node_base
 {
@@ -62,7 +69,7 @@ public:
 				{
 					_M_erase(reinterpret_cast<Node *>(node->right));
 					Node *left = reinterpret_cast<Node *>(node->left);
-					_STL::__node_alloc<true, 0>::_M_deallocate(node, 0x18);
+					_STL::nodePoolDeallocate(node, 0x18);
 					node = left;
 				} while (node != 0);
 			}

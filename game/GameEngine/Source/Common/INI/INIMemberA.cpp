@@ -18,14 +18,21 @@
 // 0x00881EB0 and the node allocator's deallocate at 0x0082E5F0.
 namespace _STL
 {
-void __cdecl vectorLargeDeallocate(void *p);
+static inline void vectorLargeDeallocate(void *block) { ::operator delete(block); }
 
-template <bool threads, int inst>
+// The node allocator's pool entry points are private STLport members
+// (_STL::__node_alloc<true, 0>::_M_allocate at 0x0082E540, _M_deallocate at
+// 0x0082E5F0); these TU-local helpers reach them under their real names.
+template <bool __threads, int __inst> class __node_alloc;
+static void nodePoolDeallocate(void *block, unsigned int bytes);
+template <bool __threads, int __inst>
 class __node_alloc
 {
-public:
-	static void _M_deallocate(void *p, unsigned int bytes);
+	friend void nodePoolDeallocate(void *, unsigned int);
+	static void *__cdecl _M_allocate(unsigned int __n);
+	static void __cdecl _M_deallocate(void *__p, unsigned int __n);
 };
+static inline void nodePoolDeallocate(void *block, unsigned int bytes) { __node_alloc<true, 0>::_M_deallocate(block, bytes); }
 }
 
 struct BfmeIniMemberEntry
@@ -71,7 +78,7 @@ INIMemberA::~INIMemberA(void)
 		if (bytes > 128)
 			_STL::vectorLargeDeallocate(m_bfmeStart);
 		else
-			_STL::__node_alloc<true, 0>::_M_deallocate(m_bfmeStart, bytes);
+			_STL::nodePoolDeallocate(m_bfmeStart, bytes);
 	}
 }
 

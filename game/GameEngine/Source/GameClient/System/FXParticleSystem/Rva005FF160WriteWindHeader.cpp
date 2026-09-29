@@ -11,12 +11,19 @@ template <class T> class allocator
 {
 };
 
-template <bool threads, int instance>
+// The node allocator's pool entry points are private STLport members
+// (_STL::__node_alloc<true, 0>::_M_allocate at 0x0082E540, _M_deallocate at
+// 0x0082E5F0); these TU-local helpers reach them under their real names.
+template <bool __threads, int __inst> class __node_alloc;
+static void nodePoolDeallocate(void *block, unsigned int bytes);
+template <bool __threads, int __inst>
 class __node_alloc
 {
-public:
-	static void _M_deallocate(void *, unsigned int);
+	friend void nodePoolDeallocate(void *, unsigned int);
+	static void *__cdecl _M_allocate(unsigned int __n);
+	static void __cdecl _M_deallocate(void *__p, unsigned int __n);
 };
+static inline void nodePoolDeallocate(void *block, unsigned int bytes) { __node_alloc<true, 0>::_M_deallocate(block, bytes); }
 
 template <class CharT, class Traits, class Allocator>
 class basic_string
@@ -31,7 +38,7 @@ public:
 			if (bytes > 128)
 				::operator delete(m_start);
 			else
-				__node_alloc<true, 0>::_M_deallocate(m_start, bytes);
+				_STL::nodePoolDeallocate(m_start, bytes);
 		}
 	}
 

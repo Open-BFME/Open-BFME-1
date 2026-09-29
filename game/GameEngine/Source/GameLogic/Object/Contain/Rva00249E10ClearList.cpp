@@ -3,11 +3,19 @@
 
 namespace _STL
 {
-template<int A, int B> class __node_alloc
+// The node allocator's pool entry points are private STLport members
+// (_STL::__node_alloc<true, 0>::_M_allocate at 0x0082E540, _M_deallocate at
+// 0x0082E5F0); these TU-local helpers reach them under their real names.
+template <bool __threads, int __inst> class __node_alloc;
+static void nodePoolDeallocate(void *block, unsigned int bytes);
+template <bool __threads, int __inst>
+class __node_alloc
 {
-public:
-	static void _M_deallocate(void *node, unsigned int size);
+	friend void nodePoolDeallocate(void *, unsigned int);
+	static void *__cdecl _M_allocate(unsigned int __n);
+	static void __cdecl _M_deallocate(void *__p, unsigned int __n);
 };
+static inline void nodePoolDeallocate(void *block, unsigned int bytes) { __node_alloc<true, 0>::_M_deallocate(block, bytes); }
 }
 
 struct Rva00249E10Node
@@ -70,7 +78,7 @@ void Rva00249E10Owner::clearList()
 	{
 		Rva00249E10Node *oldNode = node;
 		node = node->m_next;
-		_STL::__node_alloc<1, 0>::_M_deallocate(oldNode, 0xc);
+		_STL::nodePoolDeallocate(oldNode, 0xc);
 	}
 
 	m_list->m_next = m_list;
