@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "de6d4a7385b6d71b6d77a216bf0b32d3844e19aa80b3ee265272dbcf0441b734",
+  "symbol": "?bfmeFindNthPred@@YAHH@Z",
+  "score_kind": "measured",
+  "score": 0.5714,
+  "source": "// ?bfmeFindNthPred@@YAHH@Z\n// partial score=0.5714 date=2026-09-29\n// ?bfmeFindNthPred@@YAHH@Z\n// stlport\n// cl: /EHs-c-\n\nclass CampaignManager\n{\npublic:\n\tint getMissionObjectiveCount();\n\tbool isMissionObjectiveEligible( int index );\n};\n\nextern CampaignManager *TheCampaignManager;\n\n// Return the index of the n-th eligible mission objective, or -1 when the\n// campaign manager is absent or fewer than n eligible objectives exist.\nint bfmeFindNthPred( int n )\n{\n\tint remain = n;\n\n\tif ( TheCampaignManager == 0 )\n\t\treturn -1;\n\n\tint count = TheCampaignManager->getMissionObjectiveCount();\n\tint i = 0;\n\tint current;\n\nloop:\n\tif ( i >= count )\n\t\tgoto failed;\n\tcurrent = i++;\n\tif ( !TheCampaignManager->isMissionObjectiveEligible( current ) )\n\t\tgoto loop;\n\tif ( remain <= 0 )\n\t\tgoto succeeded;\n\t--remain;\n\tgoto loop;\n\nfailed:\n\treturn -1;\nsucceeded:\n\treturn current;\n}\n"
+}
