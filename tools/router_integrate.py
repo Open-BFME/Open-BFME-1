@@ -187,8 +187,9 @@ def head_matched(ws, key):
     return False
 
 
-def gate(cwd, src, env=None):
-    r = sh(['./build.sh', src], cwd, timeout=1800, env=env)
+def gate(cwd, src, env=None, rows=()):
+    """Scoped byte gate of `src`, plus any exact `rows` selectors in the same build.py run."""
+    r = sh(['./build.sh', src, *rows], cwd, timeout=1800, env=env)
     lines = [l for l in (r.stdout + r.stderr).splitlines() if 'fixme' not in l and ('Functions:' in l or 'FAIL' in l)]
     return (r.returncode == 0 and not any('FAIL' in l for l in lines)
             and any('Functions: OK' in l for l in lines)), f'exit={r.returncode}: ' + ' | '.join(lines)[:300]
@@ -224,11 +225,33 @@ def review(args):
     fadd, frem = ledger_delta(ws, LEDGERS[0])
     radd, _ = ledger_delta(ws, LEDGERS[3])
     res = {'job': job, 'workspace': ws, 'status': j['status'], 'targets': {}, 'problems': [], 'gates': {}}
+    # A matched target row's exact selector rides in its own source's gate: one
+    # build.py run on the same snapshot verifies every row of the source and the
+    # selector, including its exactly-one-matched-row check (the row is one of the
+    # source's rows, so nothing is added or dropped). A second run for the selector
+    # alone cost ~2 s of fixed ledger/symbol-map loading per review. A combined
+    # failure is re-run split, so which of the two failed is still reported.
+    exact_rows, exact = {}, {}
+    for rva in rvas:
+        new = [r for r in fadd if f',{rva.lower()},' in r.lower()]
+        row = new[-1].split(',') if new else []
+        if len(row) > 5 and row[5] == 'matched':
+            exact_rows.setdefault(row[4], []).append(f'row:{row[2]}:{row[3]}:{row[0]}')
+
+    def source_gate(src):
+        selectors = list(dict.fromkeys(exact_rows.get(src, ())))
+        if selectors:
+            combined = gate(ws, src, rows=selectors)
+            if combined[0]:
+                exact.update((selector, combined) for selector in selectors)
+                return combined
+        return gate(ws, src)
+
     for path, st in ch:
         if route(path) == 'refuse':
             res['problems'].append(f'{path}: changed outside {", ".join(PORTED)}; the port does not carry it')
         if st != 'deleted' and path.lower().endswith(SOURCE_SUFFIXES) and path.startswith('game/'):
-            res['gates'][path] = gate(ws, path)
+            res['gates'][path] = source_gate(path)
             if not res['gates'][path][0]:
                 res['problems'].append(f'{path}: touched source gate fails ({res["gates"][path][1]})')
             if st == 'added' and NAKED.search(code_only((Path(ws) / path).read_text(errors='replace'))):
@@ -249,7 +272,7 @@ def review(args):
             src = row[4]
             status = row[5] if len(row) > 5 else ''
             if src not in res['gates']:
-                res['gates'][src] = gate(ws, src) if (Path(ws) / src).exists() else (False, 'source missing')
+                res['gates'][src] = source_gate(src) if (Path(ws) / src).exists() else (False, 'source missing')
             ok = res['gates'][src]
             t.update(name=row[0], size=row[3], source=src, status=status, gate=ok[1])
             if old and old[-1].split(',')[0] != row[0]:
@@ -266,12 +289,12 @@ def review(args):
                 t['outcome'] = 'matched row but its source gate fails'
             else:
                 selector = f'row:{row[2]}:{row[3]}:{row[0]}'
-                exact = gate(ws, selector)
-                t['row_gate'] = exact[1]
-                t['landed'] = exact[0]
-                t['outcome'] = 'target newly matched' if exact[0] else 'matched row but its exact row selector fails'
-                if not exact[0]:
-                    res['problems'].append(f'{rva}: row says matched but {selector} fails ({exact[1]})')
+                row_gate = exact.get(selector) or gate(ws, selector)
+                t['row_gate'] = row_gate[1]
+                t['landed'] = row_gate[0]
+                t['outcome'] = 'target newly matched' if row_gate[0] else 'matched row but its exact row selector fails'
+                if not row_gate[0]:
+                    res['problems'].append(f'{rva}: row says matched but {selector} fails ({row_gate[1]})')
         else:
             t['outcome'] = ('existing match preserved' if head_matched(ws, key)
                             else 'no row change for the target')

@@ -241,9 +241,11 @@ def _review_fixture(tmp_path, monkeypatch, new_rows, gates, head_ledger=''):
     monkeypatch.setattr(ri, 'ledger_delta', lambda ws, path: (new_rows, []) if path == LED else ([], []))
     monkeypatch.setattr(ri, 'git', lambda *a, **k: subprocess.CompletedProcess([], 0, head_ledger, ''))
     calls = []
-    def fake_gate(ws, selector):
-        calls.append(selector)
-        return gates.get(selector, (False, 'fixture: unknown selector ' + selector))
+    def fake_gate(ws, selector, env=None, rows=()):
+        # one build.py run over several selectors passes only when each would
+        calls.extend((selector, *rows))
+        results = [gates.get(s, (False, 'fixture: unknown selector ' + s)) for s in (selector, *rows)]
+        return all(ok for ok, _ in results), ' | '.join(text for _, text in results)
     monkeypatch.setattr(ri, 'gate', fake_gate)
     return ri.review(SimpleNamespace(job='fixture')), calls
 
@@ -280,6 +282,94 @@ def test_review_distinguishes_a_preserved_existing_match(tmp_path, monkeypatch):
     result, _ = _review_fixture(tmp_path, monkeypatch, [], {'game/shared.cpp': (True, 'ok')}, head_ledger=head)
     assert result['landed'] == []
     assert result['targets']['0x00000020']['outcome'] == 'existing match preserved'
+
+
+def test_gate_passes_exact_rows_to_the_same_build_run(monkeypatch):
+    seen = []
+    monkeypatch.setattr(ri, 'sh', lambda cmd, *a, **k: seen.append(cmd) or subprocess.CompletedProcess(
+        cmd, 0, 'Functions: OK 3/3 matched\n', ''))
+    assert ri.gate('.', 'game/a.cpp', rows=['row:0x00000010:4:?f@@YAXXZ'])[0]
+    assert seen == [['./build.sh', 'game/a.cpp', 'row:0x00000010:4:?f@@YAXXZ']]
+
+
+def _counting_review(tmp_path, monkeypatch, rows, gates, changed=(('game/shared.cpp', 'modified'),)):
+    """review() whose fake build records each build.py invocation as a tuple of selectors."""
+    from types import SimpleNamespace
+    (tmp_path / 'game').mkdir(exist_ok=True)
+    for path, _ in changed:
+        (tmp_path / path).write_text('void f() {}')
+    (tmp_path / 'game/shared.cpp').write_text('void f() {}')
+    rvas = ['0x%08X' % int(r.split(',')[2], 16) for r in rows]
+    monkeypatch.setattr(ri, 'info', lambda _: ({'cwd': str(tmp_path), 'status': 'completed'}, [], rvas, ''))
+    monkeypatch.setattr(ri, 'changes', lambda _: list(changed))
+    monkeypatch.setattr(ri, 'ledger_delta', lambda ws, path: (rows, []) if path == LED else ([], []))
+    monkeypatch.setattr(ri, 'git', lambda *a, **k: subprocess.CompletedProcess([], 0, '', ''))
+    runs = []
+    def fake_gate(ws, selector, env=None, rows=()):
+        runs.append((selector, *rows))
+        results = [gates.get(s, (False, 'fixture: unknown selector ' + s)) for s in (selector, *rows)]
+        return all(ok for ok, _ in results), ' | '.join(text for _, text in results)
+    monkeypatch.setattr(ri, 'gate', fake_gate)
+    return ri.review(SimpleNamespace(job='fixture')), runs
+
+
+def test_review_verifies_the_target_selector_inside_its_source_gate(tmp_path, monkeypatch):
+    # Reuse only within one build run on one snapshot: the source's rows and the
+    # exact selector (with its exactly-one-row check) are both still verified.
+    rows = ['?t@@YAXXZ,,0x00000020,5,game/shared.cpp,matched,proof',
+            '?u@@YAXXZ,,0x00000030,7,game/shared.cpp,matched,proof']
+    sel = ['row:0x00000020:5:?t@@YAXXZ', 'row:0x00000030:7:?u@@YAXXZ']
+    result, runs = _counting_review(tmp_path, monkeypatch, rows,
+                                    {'game/shared.cpp': (True, 'ok'), sel[0]: (True, 'ok'), sel[1]: (True, 'ok')})
+    assert runs == [('game/shared.cpp', *sel)]
+    assert result['landed'] == ['0x00000020', '0x00000030']
+    assert result['problems'] == []
+    # a target whose row source the worker did not touch is gated with its selector too
+    result, runs = _counting_review(tmp_path, monkeypatch, rows[:1],
+                                    {'game/shared.cpp': (True, 'ok'), sel[0]: (True, 'ok')}, changed=())
+    assert runs == [('game/shared.cpp', sel[0])]
+    assert result['landed'] == ['0x00000020']
+
+
+def test_review_splits_a_failed_combined_gate_to_attribute_it(tmp_path, monkeypatch):
+    rows = ['?t@@YAXXZ,,0x00000020,5,game/shared.cpp,matched,proof']
+    sel = 'row:0x00000020:5:?t@@YAXXZ'
+    # the exact selector fails, the siblings pass: the old verdict and problem text
+    result, runs = _counting_review(tmp_path, monkeypatch, rows,
+                                    {'game/shared.cpp': (True, 'ok'), sel: (False, 'byte mismatch')})
+    assert runs == [('game/shared.cpp', sel), ('game/shared.cpp',), (sel,)]
+    assert result['landed'] == []
+    assert result['gates']['game/shared.cpp'][0] is True
+    assert result['targets']['0x00000020']['outcome'] == 'matched row but its exact row selector fails'
+    assert any(sel in p and 'byte mismatch' in p for p in result['problems'])
+    # a sibling fails: the source gate is red, the target never lands
+    result, runs = _counting_review(tmp_path, monkeypatch, rows,
+                                    {'game/shared.cpp': (False, 'sibling red'), sel: (True, 'ok')})
+    assert runs == [('game/shared.cpp', sel), ('game/shared.cpp',)]
+    assert result['landed'] == []
+    assert result['targets']['0x00000020']['outcome'] == 'matched row but its source gate fails'
+    assert any('touched source gate fails' in p for p in result['problems'])
+
+
+def test_review_detects_a_workspace_edit_during_the_combined_gate(tmp_path, monkeypatch):
+    from types import SimpleNamespace
+    ws = tmp_path / 'ws'
+    (ws / 'game').mkdir(parents=True)
+    git(tmp_path, 'init', '-q', str(ws))
+    git(ws, 'config', 'user.email', 't@t'); git(ws, 'config', 'user.name', 't')
+    (ws / 'game/shared.cpp').write_text('void f() {}\n')
+    git(ws, 'add', '-A'); git(ws, 'commit', '-q', '-m', 'base')
+    (ws / 'game/shared.cpp').write_text('void f() { }\n')
+    row = '?t@@YAXXZ,,0x00000020,5,game/shared.cpp,matched,proof'
+    monkeypatch.setattr(ri, 'info', lambda _: ({'cwd': str(ws), 'status': 'completed'}, [], ['0x00000020'], ''))
+    monkeypatch.setattr(ri, 'ledger_delta', lambda w, path: ([row], []) if path == LED else ([], []))
+    monkeypatch.setattr(ri, 'added_naked', lambda *a: False)
+    def editing_gate(cwd, selector, env=None, rows=()):
+        (ws / 'game/shared.cpp').write_text('void f() { /* concurrent editor */ }\n')
+        return True, 'fixture gate'
+    monkeypatch.setattr(ri, 'gate', editing_gate)
+    result = ri.review(SimpleNamespace(job='fixture'))
+    assert any('changed during review' in p for p in result['problems'])
 
 
 class PublishFixture(unittest.TestCase):
@@ -626,7 +716,7 @@ def test_rejected_push_preserves_commit_and_refuses_reset(tmp_path, monkeypatch)
         (ws / LED).write_bytes(raw)
         (ws / 'game/keep.cpp').write_text('int keep() { return 2; }\n')
         monkeypatch.setattr(ri, 'ROOT', fixture.base)
-        monkeypatch.setattr(ri, 'gate', lambda *a: (True, 'fixture gate'))
+        monkeypatch.setattr(ri, 'gate', lambda *a, **k: (True, 'fixture gate'))
         original_sh = ri.sh
         def fake_check(cmd, cwd, **kwargs):
             if cmd[-1] == 'tools/check_csv.py':
@@ -650,7 +740,7 @@ def test_rejected_push_preserves_commit_and_refuses_reset(tmp_path, monkeypatch)
         git(fixture.base, 'worktree', 'add', '-q', '--detach', str(fresh), 'origin/master')
         before = snapshot(fresh)
         args.worktree, args.push = str(fresh), False
-        def changing_gate(cwd, src, env=None):
+        def changing_gate(cwd, src, env=None, rows=()):
             if Path(cwd) == fresh:
                 (fresh / src).write_text('concurrent editor work\n')
             return True, 'fixture gate'
@@ -709,7 +799,7 @@ class BatchFixture(PortFixture):
         (self.ws2 / LED).write_bytes(self.base_led.replace(b'?lift@@YAXXZ,,0x00000020', self.ROW2))
         self.gates, self.tracked = [], []
         dest = self.dest
-        def fake_gate(cwd, src, env=None):
+        def fake_gate(cwd, src, env=None, rows=()):
             if Path(cwd) != Path(self.ws) and Path(cwd) != self.ws2:
                 self.gates.append((Path(cwd), src, (Path(cwd) / src).read_bytes(),
                                    bool(env and env.get('GIT_INDEX_FILE'))))
