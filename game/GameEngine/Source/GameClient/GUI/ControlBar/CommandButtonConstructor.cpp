@@ -20,10 +20,12 @@ private:
 	void *m_data;
 };
 
+extern const char g_Rva0107301CEmptyString[];
+
 struct BfmeCommandButtonCommandTrigger
 {
 	BfmeCommandButtonCommandTrigger() :
-		m_string((const char *)0x0107301c)
+		m_string(g_Rva0107301CEmptyString)
 	{
 	}
 

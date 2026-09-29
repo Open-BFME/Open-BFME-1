@@ -39,7 +39,9 @@ public:
     Int m_frame;
 };
 
-#define TheGameLogicRva000FA830 (*(GameLogicRva000FA830 **)0x012F0898)
+class GameLogic;
+extern GameLogic *TheGameLogic;
+#define TheGameLogicRva000FA830 ((GameLogicRva000FA830 *)TheGameLogic)
 
 #pragma comment(linker, "/alternatename:?getEntry@Rva000FA830PortraitList@@QAEPAVRva000FA830PortraitEntry@@H@Z=?j_000055e7@@YAXXZ")
 #pragma comment(linker, "/alternatename:?getPortrait@Rva000FA830PortraitEntry@@QAEPBVImage@@PAVPlayer@@@Z=?j_0000d2a6@@YAXXZ")

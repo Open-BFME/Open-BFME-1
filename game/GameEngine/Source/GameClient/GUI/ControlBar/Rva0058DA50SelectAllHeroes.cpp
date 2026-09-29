@@ -76,10 +76,9 @@ extern void j_00045949();
 // not expressed as a GameWindow member call.
 extern void j_0003e234();
 
-// The retail data slot is independently identified by the GameClient global
-// and by the two target loads.  Keep this TU-local until a canonical data
-// binding for the exact COFF global is proven.
-#define Rva0058DA50HotKeyManager (*(HotKeyManager **)0x012F4C7C)
+// The retail data slot is the GameClient global TheHotKeyManager.
+extern HotKeyManager *TheHotKeyManager;
+#define Rva0058DA50HotKeyManager TheHotKeyManager
 
 // The body at RVA 0x0049B010 is called with only the CommandButton receiver
 // in ECX and returns an AsciiString reference in EAX.  __fastcall expresses

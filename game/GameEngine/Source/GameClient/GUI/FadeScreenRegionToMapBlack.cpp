@@ -130,7 +130,7 @@ unsigned fade005651F0(float, Bool firstCall)
 		((Mouse *)TheMouse)->setCursor(1);
 		TheMouse->bfmeEnd1100(1);
 		((Mouse *)TheMouse)->setCursorTooltip(
-			*reinterpret_cast<const UnicodeString *>(0x01336E54), -1, 0, 1.0f);
+			UnicodeString::TheEmptyString, -1, 0, 1.0f);
 		Glo012F7048->setMode(1, false);
 	}
 

@@ -54,6 +54,7 @@ extern char g_bfmeSideNameA1294[];
 extern char g_bfmeSideNameB1294[];
 extern char g_bfmeSideNameC1294[];
 extern char g_bfmeSideNameD1294[];
+extern const char *Rva012B8058Image;
 
 class BfmeAptScreenSkirmish
 {
@@ -73,7 +74,7 @@ public:
 		union { void (*asFunction)(); SetLevelIcon asMember; } iconCast; \
 		iconCast.asFunction = j_00028c2c; \
 		(reinterpret_cast<LevelBarIconTarget *>( this )->*iconCast.asMember)( \
-			sideName, ((void **)0x012B8058)[ imageIndex ] ); \
+			sideName, ((void **)&Rva012B8058Image)[ imageIndex ] ); \
 	}
 
 void BfmeAptScreenSkirmish::levelBar()
