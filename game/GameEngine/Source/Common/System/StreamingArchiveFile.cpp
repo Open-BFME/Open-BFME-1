@@ -269,7 +269,6 @@ Int StreamingArchiveFile::read( void *buffer, Int bytes )
 // StreamingArchiveFile::write 
 //=================================================================
 
-// ?write@StreamingArchiveFile@@ present-unmatched
 Int StreamingArchiveFile::write( const void *buffer, Int bytes )
 {
 	DEBUG_CRASH(("Cannot write to streaming files.\n"));
