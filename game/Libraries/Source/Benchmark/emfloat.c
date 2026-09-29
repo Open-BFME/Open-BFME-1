@@ -434,15 +434,13 @@ return;
 ** minimum_exponent. (You have to do this often in order
 ** to perform additions and subtractions).
 */
+/* BFME's build has no zero-significand diagnostic here: retail contains no
+** "zero significand" string, and its out-of-line copy (0x008797D0) starts at
+** the exponent test. */
 static void denormalize(InternalFPF *ptr,
                 int minimum_exponent)
 {
 long exponent_difference;
-
-if (IsMantissaZero(ptr->mantissa))
-{
-        printf("Error:  zero significand in denormalize\n");
-}
 
 exponent_difference = ptr->exp-minimum_exponent;
 if (exponent_difference < 0)
@@ -478,20 +476,7 @@ void RoundInternalFPF(InternalFPF *ptr)
 if (ptr->type == IFPF_IS_NORMAL ||
         ptr->type == IFPF_IS_SUBNORMAL)
 {
-        int exponent_difference = ptr->exp - MIN_EXP;
-        if (exponent_difference < 0)
-        {
-                exponent_difference = -exponent_difference;
-                if (exponent_difference >= INTERNAL_FPF_PRECISION * 16)
-                {
-                        SetInternalFPFZero(ptr, ptr->sign);
-                }
-                else
-                {
-                        ptr->exp += exponent_difference;
-                        StickyShiftRightMant(ptr, exponent_difference);
-                }
-        }
+        denormalize(ptr, MIN_EXP);
         if (ptr->type != IFPF_IS_ZERO)
         {
                 ptr->mantissa[3] &= 0xfff8;
