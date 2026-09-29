@@ -157,3 +157,5 @@ game/Libraries/Source/partitionmanager/Rva009F59D0Method.cpp|type||Rva009F59D0,P
 game/Libraries/Source/partitionmanager/Rva009F59D0Method.cpp|member||m_00E4,m_objectList,claude-fable+claude-opus;audited-by=gpt-5.6-sol,stale,2026-09-29
 game/GameEngine/Source/Common/BfmeConv912.cpp|member||m_bfmeNext,m_next,claude-opus+grok,agreed,2026-09-29
 game/GameEngine/Source/Common/BfmeConv912.cpp|member||m_bfmeNext,m_next,claude-opus+grok,applied,2026-09-29
+game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|member||m_88,m_colorCombos,claude-opus+grok,agreed,2026-09-29
+game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeShutdown,shutdown,claude-fable+grok,agreed,2026-09-29
