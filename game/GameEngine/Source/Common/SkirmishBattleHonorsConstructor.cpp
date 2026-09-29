@@ -150,14 +150,14 @@ SkirmishBattleHonors::SkirmishBattleHonors(UnicodeString userName)
 		// The facade omits concat(text, length); retail calls StringBase's
 		// underlying native overload directly.
 		((StringBase<unsigned short> *)&filename)->concat(
-			(const unsigned short *)0x01080684,
-			(Int)wcslen((const wchar_t *)0x01080684));
+			(const unsigned short *)L"SkirmishStats.ini",
+			(Int)wcslen(L"SkirmishStats.ini"));
 		if (!UserPreferences::load(*(const UnicodeString *)&filename))
 		{
 			AsciiString asciiFilename;
 			asciiFilename.translate(userName);
 			((StringBase<char> *)&asciiFilename)->concat(
-				(const char *)0x0108066c, 0x11);
+				"SkirmishStats.ini", 0x11);
 			if (UserPreferences::load(asciiFilename))
 			{
 				Rva00003409Open2SlotOwner gameInfo;
@@ -168,11 +168,11 @@ SkirmishBattleHonors::SkirmishBattleHonors(UnicodeString userName)
 					(Rva0000F150GameSlot *)game->getSlot(0);
 				slot->setName(BfmeUnicodeStringArgumentView0009E130(userName));
 				UserPreferences::setAsciiString(
-					AsciiString((const char *)0x0108063c),
+					AsciiString("SlotList"),
 					GameInfoToAsciiString(&gameInfo, TRUE));
 			}
 			UserPreferences::load(*(const UnicodeString *)&filename);
 		}
-		UserPreferences::setBool(AsciiString((const char *)0x01080654), TRUE);
+		UserPreferences::setBool(AsciiString("UseMapListTooltips"), TRUE);
 	}
 }

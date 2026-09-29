@@ -103,7 +103,7 @@ Xfer &Xfer::operator==(Snapshot &snapshot)
 
 Xfer &Xfer::operator==(Coord3DBase& v)
 {
-    XferEnum((const char *)0x00633364, 0, 0);
+    XferEnum((const char *)'c3d', 0, 0);
     XferEnum(0, &v, 12);
     return *this;
 }
@@ -117,7 +117,7 @@ Xfer &Xfer::operator==(ICoord3D& v)
 
 Xfer &Xfer::operator==(Region3D& v)
 {
-    XferEnum((const char *)0x00723364, 0, 0);
+    XferEnum((const char *)'r3d', 0, 0);
     XferEnum(0, &v.x_min, 12);
     XferEnum(0, &v.x_max, 12);
     return *this;
@@ -133,7 +133,7 @@ Xfer &Xfer::operator==(IRegion3D& v)
 
 Xfer &Xfer::operator==(Coord2D& v)
 {
-    XferEnum((const char *)0x00633264, 0, 0);
+    XferEnum((const char *)'c2d', 0, 0);
     XferEnum(0, &v, 8);
     return *this;
 }
@@ -147,7 +147,7 @@ Xfer &Xfer::operator==(ICoord2D& v)
 
 Xfer &Xfer::operator==(Region2D& v)
 {
-    XferEnum((const char *)0x00723264, 0, 0);
+    XferEnum((const char *)'r2d', 0, 0);
     XferEnum(0, &v.x_min, 8);
     XferEnum(0, &v.x_max, 8);
     return *this;
@@ -170,7 +170,7 @@ Xfer &Xfer::operator==(RealRange& v)
 
 Xfer &Xfer::operator==(RGBColor& v)
 {
-    XferEnum((const char *)0x00726762, 0, 0);
+    XferEnum((const char *)'rgb', 0, 0);
     XferEnum(0, &v, 12);
     return *this;
 }

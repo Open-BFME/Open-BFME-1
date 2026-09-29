@@ -63,6 +63,13 @@ extern WindowMsgHandledType PopupReplayInput( GameWindow *window, UnsignedInt ms
 // Extended MessageBox ----------------------------------------------------------------------------------
 extern WindowMsgHandledType ExtendedMessageBoxSystem( GameWindow *window, UnsignedInt msg, WindowMsgData mData1, WindowMsgData mData2 );
 
+// BFME layout callback tables that live in the retail data image.
+extern FunctionLexicon::TableEntry g_012A9308[];
+extern FunctionLexicon::TableEntry g_012A9960[];
+extern FunctionLexicon::TableEntry g_012A9B10[];
+extern FunctionLexicon::TableEntry g_012A9C40[];
+extern FunctionLexicon::TableEntry g_012A93D4[];
+
 // game window draw table -----------------------------------------------------------------------
 static FunctionLexicon::TableEntry gameWinDrawTable[] = 
 {
@@ -588,11 +595,11 @@ void FunctionLexicon::init( void )
 	// addresses.  The first four tables above are the ordinary source tables;
 	// these five slots include the two BFME-only layout tables and the device
 	// layout table that the retail init routine registers between them.
-	loadTable( reinterpret_cast<TableEntry *>(0x012A9308), (TableIndex)6 );
-	loadTable( reinterpret_cast<TableEntry *>(0x012A9960), (TableIndex)7 );
-	loadTable( reinterpret_cast<TableEntry *>(0x012A9B10), (TableIndex)9 );
-	loadTable( reinterpret_cast<TableEntry *>(0x012A9C40), (TableIndex)10 );
-	loadTable( reinterpret_cast<TableEntry *>(0x012A93D4), (TableIndex)11 );
+	loadTable( g_012A9308, (TableIndex)6 );
+	loadTable( g_012A9960, (TableIndex)7 );
+	loadTable( g_012A9B10, (TableIndex)9 );
+	loadTable( g_012A9C40, (TableIndex)10 );
+	loadTable( g_012A93D4, (TableIndex)11 );
 
 	validate();
 
