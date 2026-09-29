@@ -8,12 +8,18 @@ Goal: rebuild BFME 1's retail executable byte for byte from source, and use that
 ## What?
 
 * We rewrite the game's code as C++, one small piece at a time.
-* Each piece must turn back into the exact same bytes as the original game exe (BFME 1, version 1.03).
+* Each piece must rebuild to the exact bytes of the original game exe (BFME 1, version 1.03).
 * When every piece matches and links, the whole game is open source, and we can fix bugs and make mods.
 
 [![BFME 1 rebuild progress](docs/progress.svg)](tools/progress.py)
 
-<details>
+### What the bars measure
+
+* **Rebuilt from source**: code that rebuilds to the original exe's exact bytes, part of it generated code or prebuilt libraries.
+* **Game code in C++**: the game's own code (no libraries) written as C++.
+* **Linking**: the part of that code in files that link cleanly (daily link census).
+
+<details open>
 <summary><b>Progress over time and code map</b></summary>
 
 [Interactive report](https://open-bfme.github.io/Open-BFME-1/)
@@ -26,13 +32,12 @@ Goal: rebuild BFME 1's retail executable byte for byte from source, and use that
 
 ## Status
 
-Game source lives in `game/`, WorldBuilder source in `worldbuilder/`, and their
-separate recovery ledgers in `targets/`. Original binaries, toolchains and
-reference sources live in `inputs/`; mods remain in `mods/`.
+Source: `game/` and `worldbuilder/`, with their ledgers in `targets/`. Original
+binaries, toolchains and references: `inputs/`. Mods: `mods/`.
 
 ## Roadmap
 
-* [ ] BFME 1 Source Code (see the live progress bar above)
+* [ ] BFME 1 Source Code
 * [x] Network delay fix
 * [ ] Memory fix
 * [ ] Better crash logs
@@ -44,8 +49,8 @@ reference sources live in `inputs/`; mods remain in `mods/`.
 
 ## How You Can Help
 
-Clone the repo and give your AI agent this exact prompt — measured on six agent
-sessions, a vaguer prompt reliably produces zero progress:
+Give your AI agent this exact prompt; in six measured sessions a vaguer one
+produced zero progress:
 
 > Read AGENTS.md and follow it. Loop: take the served candidate's whole file,
 > convert bodies to byte-exact C++, bank each verified body as its own commit,
@@ -58,19 +63,18 @@ Each commit in the PR is one verified function, and I will be able to merge it.
 
 ## Build
 
-The MSVC 7.1 toolchain and baseline executables are committed directly (plain git, no LFS), so a normal `git clone` gets everything. Then:
+The MSVC 7.1 toolchain and baseline executables are committed (no LFS), so `git clone` gets everything. Then:
 
 ```bash
 ./tools/setup_hooks.sh   # enable the pre-commit byte-check (git won't do this from a clone)
 ./build.sh               # verify every tracked function against retail   (.\build.cmd on Windows, same arguments)
 ```
 
-On Linux, use WineHQ's Wine 11 (`winehq-stable`), not a distro package, with a
-32-bit prefix (`WINEARCH=win32 wineboot -i`). Ubuntu 24.04's Wine 9.0 hangs
-`cl.exe` on a few files, so a full gate never finishes; under Wine 11 it takes
-about 30 minutes on four cores.
+On Linux, use WineHQ's Wine 11 (`winehq-stable`) with a 32-bit prefix
+(`WINEARCH=win32 wineboot -i`); Ubuntu 24.04's Wine 9.0 hangs `cl.exe`. A full
+gate takes about 30 minutes on four cores.
 
-To check a single function while iterating, pass its file or name — a few seconds instead of the full run:
+To check one function in seconds, pass its file or name:
 
 ```bash
 ./build.sh game/Libraries/Source/WWVegas/WWMath/color.cpp
