@@ -1,12 +1,11 @@
+// ?_M_decrement@?$_Rb_global@_N@_STL@@SAPAU_Rb_tree_node_base@2@PAU32@@Z
 // cl: /DNDEBUG /MD /EHsc /Od
 
-// _STL::_Rb_global<bool>::_M_decrement — STLport's red-black tree iterator
-// decrement helper, verbatim from inputs/vendor/stlport/stl/_tree.c.  Retail built the
-// STLport tree helpers unoptimised (frame pointer kept, both locals spilled),
+// Retail 0x0082B8E0 is STLport's _STL::_Rb_global<bool>::_M_decrement, the
+// red-black tree iterator decrement helper, verbatim from
+// inputs/vendor/stlport/stl/_tree.c and defined under its real name. Retail built
+// the STLport tree helpers unoptimised (frame pointer kept, both locals spilled),
 // hence the /Od above.
-//
-// The row pins object-symbol=_bfme_RbGlobalBoolDecrement_82B8E0, so the body
-// carries that extern "C" name; the shape below is the real template member.
 
 namespace _STL {
 
@@ -26,13 +25,19 @@ struct _Rb_tree_node_base
   _Base_ptr _M_right;
 };
 
-}
+typedef _Rb_tree_node_base* _Base_ptr;
 
-extern "C" _STL::_Rb_tree_node_base* __cdecl
-bfme_RbGlobalBoolDecrement_82B8E0(_STL::_Rb_tree_node_base* _M_node)
+template <class _Dummy>
+class _Rb_global
 {
-  typedef _STL::_Rb_tree_node_base* _Base_ptr;
+public:
+  static _Rb_tree_node_base* __cdecl _M_decrement(_Rb_tree_node_base*);
+};
 
+template <class _Dummy>
+_Rb_tree_node_base* __cdecl
+_Rb_global<_Dummy>::_M_decrement(_Rb_tree_node_base* _M_node)
+{
   if (_M_node->_M_color == _S_rb_tree_red && _M_node->_M_parent->_M_parent == _M_node)
     _M_node = _M_node->_M_right;
   else if (_M_node->_M_left != 0) {
@@ -50,4 +55,8 @@ bfme_RbGlobalBoolDecrement_82B8E0(_STL::_Rb_tree_node_base* _M_node)
     _M_node = __y;
   }
   return _M_node;
+}
+
+template class _Rb_global<bool>;
+
 }
