@@ -56,7 +56,7 @@ public:
 	const CommandSet *findCommandSet(const AsciiString &name);
 };
 
-#define TheControlBar (*(ControlBar **)0x012F33F8)
+extern ControlBar *TheControlBar;
 
 struct BfmeWritableGlobalData
 {
@@ -64,7 +64,9 @@ struct BfmeWritableGlobalData
 	unsigned char m_flag;
 };
 
-#define TheWritableGlobalData (*(BfmeWritableGlobalData **)0x012ED5C8)
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+#define TheWritableGlobalData ((BfmeWritableGlobalData *)TheWritableGlobalData)
 
 struct BfmeModuleInfo
 {

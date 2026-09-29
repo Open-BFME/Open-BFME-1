@@ -74,9 +74,10 @@ Xfer &Xfer::operator==(Version &v)
     Rva009D6430XferView *receiver =
         reinterpret_cast<Rva009D6430XferView *>(this);
 
+    // The transfer tag is the four-character constant 'ver', not an address.
     if (receiver->isStoring())
     {
-        receiver->transfer(reinterpret_cast<void *>(0x00766572),
+        receiver->transfer(reinterpret_cast<void *>('ver'),
                             &v.data[1], 1);
     }
     else
@@ -86,7 +87,7 @@ Xfer &Xfer::operator==(Version &v)
         unsigned char earliestVersion;
         {
             previousVersion = v.data[1];
-            receiver->transfer(reinterpret_cast<void *>(0x00766572), &v.data[1], 1);
+            receiver->transfer(reinterpret_cast<void *>('ver'), &v.data[1], 1);
             loadedVersion = v.data[1];
             earliestVersion = v.data[0];
         }

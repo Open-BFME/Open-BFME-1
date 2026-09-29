@@ -39,6 +39,10 @@ public:
 };
 
 extern const FieldParse *getVoiceFieldParse();
+extern const FieldParse g_011159E8[];
+
+class UpgradeCenter;
+extern UpgradeCenter *TheUpgradeCenter;
 
 class Rva006083A0SoundUpgrade
 {
@@ -85,11 +89,11 @@ void Rva00608FE0Element::parse(INI *ini)
 	}
 
 	MultiIniFieldParse fields;
-	fields.add(reinterpret_cast<const FieldParse *>(0x011159E8));
+	fields.add(g_011159E8);
 	fields.add(getVoiceFieldParse(), 0x48);
 	ini->initFromINIMulti(this, fields);
 
-	if (*(void **)0x012EF188 != 0)
+	if (TheUpgradeCenter != 0)
 	{
 		unsigned int localA[6];
 		unsigned int localB[6];

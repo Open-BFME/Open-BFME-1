@@ -41,6 +41,8 @@ public:
 	void setCopiedFromDefault();
 };
 
+extern bool TheBfmeOverrideCopyInProgress;
+
 class SubsystemInterface
 {
 public:
@@ -62,9 +64,9 @@ ThingTemplate *ThingFactory::newOverride(ThingTemplate *thingTemplate)
 		(ThingTemplate *)thingTemplate->friend_getFinalOverride();
 
 	ThingTemplate *newTemplate = new ThingTemplate;
-	*(unsigned char *)0x012ed611 = 1;
+	TheBfmeOverrideCopyInProgress = true;
 	*newTemplate = *child;
-	*(unsigned char *)0x012ed611 = 0;
+	TheBfmeOverrideCopyInProgress = false;
 	newTemplate->setCopiedFromDefault();
 	newTemplate->markAsOverride();
 	child->setNextOverride(newTemplate);
