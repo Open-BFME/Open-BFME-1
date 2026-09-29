@@ -132,7 +132,7 @@ static __forceinline void BFME_DX8_ErrorCode(int result)
 	{
 		_bfme_debugRecordCallsite(1);
 		g_BFMEIndexBufferDebug->slot60();
-		g_BFMEIndexBufferDebug->slot6c(0, 0)->slot38((const void *)0x111d770)
+		g_BFMEIndexBufferDebug->slot6c(0, 0)->slot38("DX8 error ")
 			->slot00((const void *)result)->slot4c(1);
 	}
 }

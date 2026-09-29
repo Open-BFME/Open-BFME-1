@@ -1,5 +1,7 @@
 // cl: /O2 /Ob0
 
+extern void *g_01128B24[];
+
 class Rva007D6B70
 {
 	void *m_vptr;
@@ -27,7 +29,7 @@ public:
 
 Rva007D6B70::Rva007D6B70()
 {
-	m_vptr = (void *)0x01128B24;
+	m_vptr = g_01128B24;
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;

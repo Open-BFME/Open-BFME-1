@@ -49,7 +49,9 @@ public:
 	Rva00741830NamedCamera *m_namedCameras;
 };
 
-#define TheTacticalView (*(Rva00747E80View **)0x012F1600)
+class View;
+extern View *TheTacticalView;
+#define TheTacticalView ((Rva00747E80View *)TheTacticalView)
 
 void Rva00747E80(DataChunkOutput *output, Rva00747E80Filter *filter)
 {

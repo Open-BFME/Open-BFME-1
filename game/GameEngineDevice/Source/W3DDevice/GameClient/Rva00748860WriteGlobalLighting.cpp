@@ -23,6 +23,8 @@ extern Rva00748860Triple g_lighting012B4FC8;
 extern Rva00748860Triple g_lighting012B4FD8;
 extern Rva00748860Triple g_lighting012B4FE8;
 extern Rva00748860LightingData *lightingData;
+class W3DShadowManager;
+extern W3DShadowManager *TheW3DShadowManager;
 void WriteGlobalLighting00748860(DataChunkOutput *output)
 {
     output->openDataChunk("GlobalLighting", 7);
@@ -96,6 +98,6 @@ void WriteGlobalLighting00748860(DataChunkOutput *output)
       output->writeReal(x);
       output->writeReal(y);
       output->writeReal(z);
-    output->writeInt(*(int*)(*(char**)0x01306EEC + 4));
+    output->writeInt(*(int*)((char*)TheW3DShadowManager + 4));
     output->closeDataChunk();
 }
