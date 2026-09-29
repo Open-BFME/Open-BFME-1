@@ -477,6 +477,25 @@ GHTTPBool ghiSetProxy(const char *server)
     return GHTTPTrue;
 }
 
+/* Per-request proxy override (later SDKs' ghiSetRequestProxy; BFME's
+   GHIConnection carries proxyAddress/proxyPort). ghttpSetRequestProxy in
+   ghttpMain.c forwards here with a tail jump (0x0087AD50). */
+GHTTPBool ghiSetRequestProxy(GHTTPRequest request, const char *server)
+{
+    GHIConnection * connection = ghiRequestToConnection(request);
+    if(!connection)
+        return GHTTPFalse;
+    if(connection->proxyAddress)
+    {
+        gsifree(connection->proxyAddress);
+        connection->proxyAddress = NULL;
+        connection->proxyPort = GHI_DEFAULT_PORT;
+    }
+    if(server && *server)
+        return bfmeParseProxy_87C8A0(server, &connection->proxyAddress, &connection->proxyPort);
+    return GHTTPTrue;
+}
+
 void ghiThrottleSettings
 (
 	int bufferSize,
