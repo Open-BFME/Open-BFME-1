@@ -259,13 +259,9 @@ protected:
 	int m_timer;
 };
 
-#define TheAI (*(AI **)0x012EF214)
-#define CritterDesyncFlag (*(unsigned char *)0x012F0239)
-#define CritterDesyncSink (*(void **)0x012ED4FC)
-#define BfmeZeroRange (*(const float *)0x01075350)
-#define BfmeK1253 (*(const float *)0x0107533C)
-#define BfmeRandomFile ((char *)0x0109769C)
-#define BfmeWanderMessage ((const char *)0x0109A064)
+extern AI *TheAI;
+extern "C" unsigned char bfmeRetailCritterDesyncFlag;
+extern "C" void *bfmeRetailCritterDesyncSink;
 
 typedef void (__cdecl *DebugLogFunction)(void *, const char *);
 
@@ -320,28 +316,28 @@ StateReturnType AIWanderState::update()
 				overrideCast.asVoid = (void *)j_000022bb;
 				locoTemplate = (locoTemplate->m_nextOverride->*overrideCast.asMember)();
 			}
-			if (locoTemplate->getWanderWidthFactor() > BfmeZeroRange)
+			if (locoTemplate->getWanderWidthFactor() > 0.0f)
 			{
 				typedef float (BfmeLocomotor::*WanderWidthCall)();
 				union { void *asVoid; WanderWidthCall asMember; } widthCast;
 				widthCast.asVoid = (void *)j_00012ebd;
 				float width = (curLoco->*widthCast.asMember)();
-				delta = REAL_TO_INT_FLOOR(width + BfmeK1253);
+				delta = REAL_TO_INT_FLOOR(width + 0.5f);
 				if (delta < 1)
 					delta = 1;
 				int negativeDelta = -delta;
 				int offsetX = GetGameLogicRandomValue(
-					negativeDelta, delta, BfmeRandomFile, 0x25ab);
+					negativeDelta, delta, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp", 0x25ab);
 				m_groupOffset.x = (float)(offsetX * 10);
 				int offsetY = GetGameLogicRandomValue(
-					negativeDelta, delta, BfmeRandomFile, 0x25ac);
+					negativeDelta, delta, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp", 0x25ac);
 				m_groupOffset.y = (float)(offsetY * 10);
 			}
 		}
 
 		computeGoal(0);
-		if (CritterDesyncFlag && CritterDesyncSink)
-			((DebugLogFunction)j_0003a17a)(CritterDesyncSink, BfmeWanderMessage);
+		if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink)
+			((DebugLogFunction)j_0003a17a)(bfmeRetailCritterDesyncSink, "CritterDesync: ComputePath39");
 		computePath();
 		return STATE_CONTINUE;
 	}

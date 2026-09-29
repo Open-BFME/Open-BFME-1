@@ -16,8 +16,8 @@
 //
 // The two device buffers live at fixed addresses rather than in the object,
 // and the pair is what ties these two bodies together: ReAcquireResources
-// creates the index buffer into 0x01306E08 and the vertex buffer into
-// 0x01306E04, and ReleaseResources releases and clears exactly those two.
+// creates the index buffer into g_01306E08 and the vertex buffer into
+// g_01306E04, and ReleaseResources releases and clears exactly those two.
 
 typedef long HRESULT;
 
@@ -50,6 +50,21 @@ public:
 };
 
 #undef DEVICE_SLOT
+
+class W3DProjectedShadowManager;
+struct IDirect3DDevice8;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
+class DX8Wrapper
+{
+	friend class W3DProjectedShadowManager;
+
+protected:
+	static IDirect3DDevice8 *D3DDevice;
+};
+
+extern ShadowBuffer *g_01306E04;
+extern ShadowBuffer *g_01306E08;
 
 class ShadowLightEnvironment007AF5A0
 {
@@ -153,14 +168,14 @@ void W3DProjectedShadowManager::removeAllShadows(void)
 // ?ReAcquireResources@W3DProjectedShadowManager@@QAE_NXZ
 bool W3DProjectedShadowManager::ReAcquireResources()
 {
-	ShadowDevice *device = *(ShadowDevice **)0x01340534;
-	ShadowBuffer **indexBuffer = (ShadowBuffer **)0x01306E08;
+	ShadowDevice *device = (ShadowDevice *)DX8Wrapper::D3DDevice;
+	ShadowBuffer **indexBuffer = &g_01306E08;
 	if (device->createIndexBuffer(0x20000, 0x208, 101, 0, indexBuffer, 0) < 0)
 		return false;
 
-	if (*(ShadowBuffer **)0x01306E04 == 0
+	if (g_01306E04 == 0
 		&& device->createVertexBuffer(0x100000, 0x208, 0, 0,
-			(ShadowBuffer **)0x01306E04, 0) < 0)
+			&g_01306E04, 0) < 0)
 		return false;
 
 	return true;
@@ -172,13 +187,13 @@ void W3DProjectedShadowManager::ReleaseResources(void)
 	W3DShadowContainerShim *container = m_24C;
 	container->release();
 	ShadowBuffer *first =
-		*(ShadowBuffer **)0x01306E08;
+		g_01306E08;
 	if (first)
 		((ShadowBufferRelease)(*(void ***)first)[2])(first);
 	ShadowBuffer *second =
-		*(ShadowBuffer **)0x01306E04;
+		g_01306E04;
 	if (second)
 		((ShadowBufferRelease)(*(void ***)second)[2])(second);
-	*(ShadowBuffer **)0x01306E08 = 0;
-	*(ShadowBuffer **)0x01306E04 = 0;
+	g_01306E08 = 0;
+	g_01306E04 = 0;
 }
