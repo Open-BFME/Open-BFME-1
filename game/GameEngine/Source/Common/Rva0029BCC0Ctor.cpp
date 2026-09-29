@@ -1,5 +1,7 @@
 // cl: /O2 /Ob0
 
+extern "C" unsigned char bfmeVftVG[];
+
 class Rva0029BCC0
 {
 	void *m_vptr;
@@ -27,7 +29,7 @@ public:
 
 Rva0029BCC0::Rva0029BCC0()
 {
-	m_vptr = (void *)0x010C0D90;
+	m_vptr = bfmeVftVG;
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;

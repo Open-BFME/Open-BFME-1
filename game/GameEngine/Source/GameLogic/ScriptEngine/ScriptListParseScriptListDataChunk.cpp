@@ -125,15 +125,15 @@ public:
 	void bfmeCloseCN( void *value );
 };
 
+// Retail vtable 0x0107C7D0, pinned as _bfmeVftVE (targets/game/reverse/symbols.csv).
+extern "C" int _bfmeVftVE[];
+
 class BfmeParserRegistrationVE
 {
 public:
 	~BfmeParserRegistrationVE()
 	{
-		// retail 0x0107C7D0 is ??_7BfmeParserBindingBaseVE@@6B@, but a named
-		// extern compiles to a memory load where retail folds the vtable into
-		// an immediate, so this literal stays until a vptr-install shape lands.
-		m_vftable = (void *)0x0107C7D0;
+		m_vftable = _bfmeVftVE;
 		((BfmeInnerCN *)m_table)->bfmeCloseCN( m_parser );
 	}
 protected:

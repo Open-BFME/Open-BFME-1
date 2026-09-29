@@ -1,5 +1,7 @@
 // cl: /O2 /Ob0
 
+extern int Gen010E855C;
+
 class Rva003525E0Pair
 {
 public:
@@ -25,7 +27,7 @@ public:
 Rva003529B0::Rva003529B0(const Rva003529B0 *other)
 	: m_04(*(other ? &other->m_04 : 0))
 {
-	m_vptr = (void *)0x010E855C;
+	m_vptr = &Gen010E855C;
 	m_0C = other->m_0C;
 	m_0D = other->m_0D;
 	m_0E = 0;

@@ -43,6 +43,8 @@ public:
 	Object *findObjectByID(int value);
 };
 
+extern GameLogic *TheGameLogic;
+
 int bfmeHelper6AA0(lua_State *state)
 {
 	if (lua_gettop(state) < 2)
@@ -55,7 +57,7 @@ int bfmeHelper6AA0(lua_State *state)
 			return 0;
 	}
 
-	Object *object = (*(GameLogic **)0x012f0898)->findObjectByID((int)value);
+	Object *object = TheGameLogic->findObjectByID((int)value);
 	if (!object)
 		return 0;
 

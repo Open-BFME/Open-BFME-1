@@ -4,6 +4,8 @@
 // the record. The method name remains address-derived because retail exposes no
 // named caller or vtable slot for this non-virtual copy operation.
 
+extern int Gen010E855C;
+
 class Rva003525E0Pair
 {
 public:
@@ -20,7 +22,7 @@ public:
 	Rva003529B0(const Rva003529B0 *other)
 		: m_pair(*(other ? &other->m_pair : 0))
 	{
-		m_vptr = (void *)0x010E855C;
+		m_vptr = &Gen010E855C;
 		m_0C = other->m_0C;
 		m_0D = other->m_0D;
 		m_0E = 0;
