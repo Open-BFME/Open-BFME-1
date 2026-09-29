@@ -187,7 +187,7 @@ bool Rva00435270Layout::isReady( void )
 		_bfme_debugRecordCallsite( result );
 		TheBfmeAwakenDebug->slot60();
 		TheBfmeAwakenDebug->slot6c( 0, 0 )
-			->slot38( (const char *)0x010F3950 )
+			->slot38( "Unrecognized SubTitleRenderState!" )
 			->slot4c( result );
 		return FALSE;
 	}

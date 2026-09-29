@@ -76,6 +76,8 @@ public:
 };
 
 extern GameWindowManager *TheWindowManager;
+extern void j_00037e89();
+extern void j_00012fc6();
 
 class __single_inheritance FunctorTargetSingle
 {
@@ -149,14 +151,14 @@ void AptPalantirHeroSelector::rva00595d40()
 		info.m_field0C = -128;
 		info.m_field10 = -128;
 		info.m_field14 = -128;
-		info.m_field1C = (void *)0x00437E89;
+		info.m_field1C = (void *)j_00037e89;
 
 		m_window = TheWindowManager->winCreate( &info );
 		if( m_window != 0 )
 		{
 			m_window->winGetInstanceData()->m_owner = m_window;
 
-			callback.raw = (void (*)( void ))0x00412FC6;
+			callback.raw = j_00012fc6;
 			m_window->winSetUserData( new Rva00590EF0FunctorSingleHolder(
 				FunctorBindingSingle( callback.member, this ) ) );
 		}
