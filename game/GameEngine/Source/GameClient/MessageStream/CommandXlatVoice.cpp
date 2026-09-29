@@ -23,7 +23,8 @@ struct ICoord2D { int x,y; };
 struct IRegion2D { ICoord2D lo,hi; int width() const { return hi.x-lo.x; } int height() const { return hi.y-lo.y; } };
 
 // Existing ledger declarations. These are symbol bindings, not new identity claims.
-void d_00417060();
+// Retail 0x00417060, landed as ?rva00417060@Rva00417060@@QBEPAXXZ (address-keyed).
+class Rva00417060 { public: void *rva00417060() const; };
 void d_00416fe0();
 void dup_001cb020();
 struct Q3IndexedItem;
@@ -220,8 +221,7 @@ __forceinline const AudioEventRTS* rva00416FA0(int a) const {
 }
 __forceinline int rva00417060() const {
  typedef int (Drawable::*Function)() const;
- union { void (*raw)(); Function member; } fn; fn.raw=d_00417060;
- return (this->*fn.member)();
+ return (this->*reinterpret_cast<Function>(&Rva00417060::rva00417060))();
 }
 __forceinline const AudioEventRTS* rva005A6D10() {
  typedef const AudioEventRTS* (Drawable::*Function)();
