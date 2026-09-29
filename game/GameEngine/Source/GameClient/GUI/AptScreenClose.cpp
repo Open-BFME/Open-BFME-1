@@ -69,8 +69,13 @@ struct NameClearFunctor00462540 {
     AsciiString m_name;
 };
 
-WindowTable *const g_windowTable = (WindowTable *)0x012F19A4;
-AptScreenRefTable *const g_theAptScreenRefMap = (AptScreenRefTable *)0x012F1990;
+class Gen_00C700A0Target;
+class Gen_00C70090Target;
+extern Gen_00C700A0Target TheBfmeObject_00C700A0;
+extern Gen_00C70090Target TheBfmeObject_00C70090;
+
+WindowTable *const g_windowTable = (WindowTable *)&TheBfmeObject_00C700A0;
+AptScreenRefTable *const g_theAptScreenRefMap = (AptScreenRefTable *)&TheBfmeObject_00C70090;
 
 void _bfme_closeAptScreen(const AsciiString &name)
 {
