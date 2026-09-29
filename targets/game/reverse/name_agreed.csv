@@ -136,3 +136,13 @@ game/GameEngine/Source/GameLogic/AI/Rva001515C0Xfer.cpp|member||m_value14,m_id,c
 game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|member||m_1C,m_costSoFar,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|member||m_24,m_totalCost,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/GameLogic/Object/SpecialPower/SpecialPowerModule_initiateIntentToDoSpecialPower.cpp|member||m_dword204,m_ai,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateModuleDataCtorThunk.cpp|member||m_unknown20,m_autoAcquireEnemiesWhenIdle,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateModuleDataCtorThunk.cpp|member||m_flag28,m_standGround,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateModuleDataCtorThunk.cpp|member||m_flag29,m_canAttackWhileContained,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateModuleDataCtorThunk.cpp|member||m_unknown2c,m_holdGroundCloseRangeDistance,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateModuleDataCtorThunk.cpp|member||m_unknown34,m_maxCowerTime,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateModuleDataCtorThunk.cpp|member||m_unknown38,m_minCowerTime,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateModuleDataCtorThunk.cpp|member||m_unknown3c,m_rampageTime,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateModuleDataCtorThunk.cpp|member||m_flag40,m_rampageRequiresAflame,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateModuleDataCtorThunk.cpp|member||m_unknown48,m_timeToEjectPassengersOnRampage,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateModuleDataCtorThunk.cpp|member||m_flag54,m_fadeOnPortals,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29

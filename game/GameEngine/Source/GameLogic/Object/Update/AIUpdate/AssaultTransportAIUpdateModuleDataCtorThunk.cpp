@@ -102,23 +102,23 @@ private:
 	ModuleDataTreeStandIn m_tree;
 	int *m_owned[2];
 	int m_delay;
-	int m_unknown20;
+	int m_autoAcquireEnemiesWhenIdle;
 	float m_distance;
-	bool m_flag28;
-	bool m_flag29;
+	bool m_standGround;
+	bool m_canAttackWhileContained;
 	unsigned char m_pad2a[2];
-	int m_unknown2c;
+	int m_holdGroundCloseRangeDistance;
 	AsciiString m_name30;
-	int m_unknown34;
-	int m_unknown38;
-	int m_unknown3c;
-	bool m_flag40;
+	int m_maxCowerTime;
+	int m_minCowerTime;
+	int m_rampageTime;
+	bool m_rampageRequiresAflame;
 	unsigned char m_pad41[3];
 	AsciiString m_machineName;
-	int m_unknown48;
+	int m_timeToEjectPassengersOnRampage;
 	float m_angle;
 	ZeroInt m_unknown50;
-	bool m_flag54;
+	bool m_fadeOnPortals;
 	unsigned char m_pad55[3];
 	std::vector<AsciiString> m_strings;
 };
@@ -128,21 +128,21 @@ AssaultTransportAIUpdateModuleData::AssaultTransportAIUpdateModuleData()
 {
 	for (int i = 0; i < 2; ++i)
 		m_owned[i] = 0;
-	m_unknown20 = 0;
+	m_autoAcquireEnemiesWhenIdle = 0;
 	m_distance = 500.0f;
-	m_flag28 = false;
+	m_standGround = false;
 	m_delay = 10;
-	m_flag29 = false;
-	m_unknown2c = 0;
-	m_unknown38 = 0;
-	m_unknown34 = 0;
-	m_unknown3c = 0;
-	m_flag40 = false;
-	m_unknown48 = 0;
+	m_canAttackWhileContained = false;
+	m_holdGroundCloseRangeDistance = 0;
+	m_minCowerTime = 0;
+	m_maxCowerTime = 0;
+	m_rampageTime = 0;
+	m_rampageRequiresAflame = false;
+	m_timeToEjectPassengersOnRampage = 0;
 
 	AsciiStringVectorLayout &strings = *(AsciiStringVectorLayout *)&m_strings;
 	eraseAsciiStringRange(strings, strings.m_begin, strings.m_finish);
-	m_flag54 = false;
+	m_fadeOnPortals = false;
 	m_angle = 80.0f;
 	m_machineName.set("DefaultAttackPriority", 21);
 }
