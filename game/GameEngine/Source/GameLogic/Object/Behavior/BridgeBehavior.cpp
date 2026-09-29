@@ -233,7 +233,7 @@ static void parseTimeAndLocationInfo( INI *ini, void *instance,
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/BridgeBehaviorCtorThunk.cpp
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehaviorCtorThunk.cpp
 // ??0BridgeBehavior@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 BridgeBehavior::BridgeBehavior( Thing *thing, const ModuleData *moduleData )
 							: UpdateModule( thing, moduleData )
