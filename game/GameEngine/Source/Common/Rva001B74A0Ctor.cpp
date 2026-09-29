@@ -15,9 +15,13 @@ public:
 	Rva001B74A0(int dummy);
 };
 
+// Retail vtable VA 0x0109DF3C; the alternate name defines no table.
+extern "C" void *bfmeVftGen_001BA9E0[];
+#pragma comment(linker, "/alternatename:_bfmeVftGen_001BA9E0=??_7Gen_001BA9E0@@6B@")
+
 Rva001B74A0::Rva001B74A0(int)
 {
-	m_vptr = (void *)0x0109DF3C;
+	m_vptr = bfmeVftGen_001BA9E0;
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;

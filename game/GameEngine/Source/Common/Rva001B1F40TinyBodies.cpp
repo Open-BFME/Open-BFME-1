@@ -148,7 +148,7 @@ int Rva001B3FD0DwordField::get() const
 // ?Rva001B4050Get@@YAMXZ
 float Rva001B4050Get()
 {
-	return *(const float *)0x01084C3C;
+	return 3.402823466e+38f;
 }
 
 struct Rva001B40B0DwordSlot

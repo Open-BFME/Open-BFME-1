@@ -114,7 +114,8 @@ Bool Rva0016D5F0PathTest::run(Object *target)
 	{
 		((BfmeCritterDesyncLog)j_0003a17a)(
 			TheCRCParameterCheck,
-			(const char *)0x01097758,
+			"FUCK OFF DESYNC: AIAttackFireDuringApproachState::computePath will call "
+			"FindMeleeEngagmentLocation with pos=%f,%f",
 			(double)position.x,
 			(double)position.y);
 	}

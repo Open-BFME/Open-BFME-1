@@ -21,9 +21,13 @@ public:
 	Rva00161220();
 };
 
+// Retail vtable VA 0x01096940; the alternate name defines no table.
+extern "C" void *bfmeVftTeamInQueue[];
+#pragma comment(linker, "/alternatename:_bfmeVftTeamInQueue=??_7TeamInQueue@@6B@")
+
 Rva00161220::Rva00161220()
 {
-	m_vptr = (void *)0x01096940;
+	m_vptr = bfmeVftTeamInQueue;
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;
