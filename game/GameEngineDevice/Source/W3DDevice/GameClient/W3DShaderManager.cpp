@@ -504,11 +504,9 @@ Int ScreenDefaultFilter::set(enum FilterModes mode)
 	return true;
 }
 
-// ?reset@ScreenDefaultFilter@@MAEXXZ present-unmatched
 void ScreenDefaultFilter::reset(void)
 {
-// ?_Get_D3D_Device8@DX8Wrapper@@SAPAUIDirect3DDevice8@@XZ present-unmatched
-	DX8Wrapper::_Get_D3D_Device8()->SetTexture(0,NULL);	//previously rendered frame inside this texture
+	bfmeSetTexture(0,NULL);	//previously rendered frame inside this texture
 	DX8Wrapper::Invalidate_Cached_Render_States();
 }
 
@@ -1197,13 +1195,11 @@ Int ScreenCrossFadeFilter::set(enum FilterModes mode)
 	return false;
 }
 
-// ?reset@ScreenCrossFadeFilter@@MAEXXZ present-unmatched
 void ScreenCrossFadeFilter::reset(void)
 {
 	DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_COLOROP,   D3DTOP_DISABLE );
 	DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_ALPHAOP,   D3DTOP_DISABLE );
-// ?_Get_D3D_Device8@DX8Wrapper@@SAPAUIDirect3DDevice8@@XZ present-unmatched
-	DX8Wrapper::_Get_D3D_Device8()->SetTexture(0,NULL);	//previously rendered frame inside this texture
+	bfmeSetTexture(0,NULL);	//previously rendered frame inside this texture
 	DX8Wrapper::Invalidate_Cached_Render_States();
 }
 
@@ -1481,11 +1477,9 @@ Int ScreenMotionBlurFilter::set(enum FilterModes mode)
 	return TRUE;
 }
 
-// ?reset@ScreenMotionBlurFilter@@UAEXXZ present-unmatched
 void ScreenMotionBlurFilter::reset(void)
 {
-// ?_Get_D3D_Device8@DX8Wrapper@@SAPAUIDirect3DDevice8@@XZ present-unmatched
-	DX8Wrapper::_Get_D3D_Device8()->SetTexture(0,NULL);	//previously rendered frame inside this texture
+	bfmeSetTexture(0,NULL);	//previously rendered frame inside this texture
 	DX8Wrapper::Invalidate_Cached_Render_States();
 }
 

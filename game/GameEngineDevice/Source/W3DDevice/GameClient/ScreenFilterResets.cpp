@@ -5,10 +5,13 @@
 //   ScreenHilightFilter 0x007D7480  vtable 0x01128B88
 //   Rva007D85C0         0x007D75E0  vtable 0x01128BAC
 //   Rva007DCA80         0x007DB9D0  vtable 0x01128C5C
+//   Rva007D1AA0         0x007D0C80  vtable 0x011289B0
+//   Rva007D31C0         0x007D2310  vtable 0x01128A2C
 // Like ScreenBWFilter::reset they clear stage 0 and the pixel shader through
 // the D3D9 device (SetTexture slot 65, SetPixelShader slot 107), then tail
 // into DX8Wrapper::Invalidate_Cached_Render_States. Only the zoom filter keeps
-// ScreenBWFilter's texture-first order.
+// ScreenBWFilter's texture-first order; the last two twins only clear the
+// texture, like ScreenDefaultFilter::reset.
 
 enum FilterModes { FM_NULL_MODE };
 
@@ -68,6 +71,20 @@ protected:
 	virtual void reset(void);
 };
 
+class Rva007D1AA0
+{
+protected:
+	virtual int set(FilterModes mode);
+	virtual void reset(void);
+};
+
+class Rva007D31C0
+{
+protected:
+	virtual int set(FilterModes mode);
+	virtual void reset(void);
+};
+
 void ScreenZoomFilter::reset(void)
 {
 	filterSetTexture(0, 0);
@@ -92,6 +109,18 @@ void Rva007D85C0::reset(void)
 void Rva007DCA80::reset(void)
 {
 	filterSetPixelShader(0);
+	filterSetTexture(0, 0);
+	DX8Wrapper::Invalidate_Cached_Render_States();
+}
+
+void Rva007D1AA0::reset(void)
+{
+	filterSetTexture(0, 0);
+	DX8Wrapper::Invalidate_Cached_Render_States();
+}
+
+void Rva007D31C0::reset(void)
+{
 	filterSetTexture(0, 0);
 	DX8Wrapper::Invalidate_Cached_Render_States();
 }
