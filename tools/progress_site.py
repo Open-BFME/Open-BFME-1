@@ -294,8 +294,8 @@ def render(out, svg_dir=None):
     # Chart.
     history = read_history()
     census_rows = [r for r in csv.DictReader((progress._text_at(None, progress.LINK_HISTORY) or "").splitlines())
-                   if r.get("linked_bytes")]
-    chart = _chart(history, census_rows, total)
+                   if r.get("linked_authored") and r.get("game_code")]
+    chart = _chart(history, census_rows)
 
     data = json.dumps({t["key"]: t for t in tabs})
     tab_buttons = "".join(f'<button data-key="{t["key"]}"{" class=on" if t["key"] == "all" else ""}>'
@@ -353,7 +353,7 @@ def chart_svg(chart):
     """The page's chart as a standalone, theme-aware image for the README."""
     inner = chart.replace('class="chart" ', "").replace("<svg ", '<svg x="28" y="44" width="824" height="144" ', 1)
     return _frame(880, 202, "BFME 1 \u00b7 OVER TIME",
-                  [(200, OWN, "byte-matched, daily"), (360, "url(#dots)", "linked, per census")], inner,
+                  [(200, OWN, "byte-matched, daily"), (360, "url(#dots)", "linking, per census")], inner,
                   "BFME 1 progress over time")
 
 
@@ -403,8 +403,10 @@ def map_svg(tiles, W, H):
                   "\n".join(body), "Map of BFME 1's code by folder")
 
 
-def _chart(history, census_rows, total):
-    """An SVG line chart: byte-matched per day (blue), linked per census (green)."""
+def _chart(history, census_rows):
+    """An SVG line chart: byte-matched per day (blue) and, per census, Linking
+    (green): the game's own linked C++ over that census tree's game code, the
+    README card's Linking bar."""
     if not history:
         return '<p class="muted">No history yet.</p>'
     W, H, L, R, T, B = 1100, 190, 40, 8, 10, 24
@@ -429,14 +431,14 @@ def _chart(history, census_rows, total):
     x0, y0 = px(days[0], 0)
     xn, _ = px(days[-1], 0)
     area = f"{x0:.1f},{y0:.1f} {line} {xn:.1f},{y0:.1f}"
-    linked_line = " ".join(
-        "{:.1f},{:.1f}".format(*px(date.fromisoformat(r["date"][:10]), 100 * int(r["linked_bytes"]) / total))
-        for r in census_rows)
+    def linking(r):
+        return 100 * int(r["linked_authored"]) / int(r["game_code"])
+    points = [(px(date.fromisoformat(r["date"][:10]), linking(r)), r) for r in census_rows]
+    linked_line = " ".join(f"{x:.1f},{y:.1f}" for (x, y), _ in points)
     dots = (f'<polyline points="{linked_line}" fill="none" stroke="{LINKED}" stroke-width="2.5" '
-            f'stroke-dasharray="0.1 6" stroke-linecap="round"/>' if len(census_rows) > 1 else "") + "".join(f'<circle cx="{px(date.fromisoformat(r["date"][:10]), 100 * int(r["linked_bytes"]) / total)[0]:.1f}" '
-                   f'cy="{px(first, 100 * int(r["linked_bytes"]) / total)[1]:.1f}" r="4" fill="{LINKED}">'
-                   f'<title>{r["date"][:10]}: linked {100 * int(r["linked_bytes"]) / total:.2f}%</title></circle>'
-                   for r in census_rows)
+            f'stroke-dasharray="0.1 6" stroke-linecap="round"/>' if len(points) > 1 else "") + "".join(
+        f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4" fill="{LINKED}">'
+        f'<title>{r["date"][:10]}: linking {linking(r):.2f}%</title></circle>' for (x, y), r in points)
     tips = "".join(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="7" class="hit"><title>{d}: byte-matched '
                    f'{100 * int(r["byte_matched"]) / int(r["total"]):.2f}%</title></circle>'
                    for d, r, (x, y) in ((d, r, px(d, 100 * int(r["byte_matched"]) / int(r["total"])))
@@ -482,7 +484,7 @@ footer{{margin-top:22px;color:var(--muted);font-size:12px;line-height:1.6}} foot
 <div class="key"><span><i class="dots"></i>Linked</span><span><i style="background:{own_c}"></i>Byte-matched: our own source</span><span><i style="background:{other_c}"></i>Byte-matched: generated code, Microsoft libraries</span><span><i style="background:var(--rest)"></i>Still original</span><span>Code <b id="codemb">{code_mb} MB</b> · Data {data_mb} MB, not measured yet</span></div>
 <div class="tabs" id="tabs">{tabs}</div>
 <div class="note" id="note"></div>
-<h2>Over time <span class="key"><span><i style="background:{own_c}"></i>byte-matched, daily</span><span><i class="dots"></i>linked, per census</span></span></h2>
+<h2>Over time <span class="key"><span><i style="background:{own_c}"></i>byte-matched, daily</span><span><i class="dots"></i>linking, per census</span></span></h2>
 {chart}
 <h2>Map <span class="key">folders sized by code · hover for numbers</span></h2>
 <div class="map" id="map">{tiles}</div>

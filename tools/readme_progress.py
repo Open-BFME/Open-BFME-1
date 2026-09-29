@@ -11,15 +11,16 @@ Each measure has its own stated denominator:
                        game's own code: all code minus vendored library source
                        and prebuilt libraries.
   LINKING              the part of that C++ in files that link cleanly, over
-                       the same game's-own-code denominator. The link census
-                       (tools/link_census.py) stores it as linked_authored; it
-                       is never recomputed here, so it holds still between
-                       censuses.
+                       the game's own code on the census tree. The link census
+                       (tools/link_census.py) stores both (linked_authored,
+                       game_code); they are never recomputed here, so Linking
+                       is one snapshot and holds still between censuses.
 
 The card and the post draw the same numbers. The change shown beside a number
-is against the last posted state (docs/discord-main-progress.json), and only
-when that post used the same denominator, so output depends only on the
-repository: no clock enters the card. progress.py prints the full breakdown.
+is the change in that bar's percentage since the last post, measured from the
+figures the post saved (docs/discord-main-progress.json), so output depends
+only on the repository: no clock enters the card. progress.py prints the full
+breakdown.
 """
 import argparse
 import json
@@ -39,9 +40,6 @@ README = "https://github.com/Open-BFME/Open-BFME-1#readme"
 ROWS = (("matched", "Rebuilt from source", f"rebuilt without copying {EXE}"),
         ("cpp", "Game code in C++", "of the game's own code, now C++ (libraries not counted)"),
         ("linked", "Linking", "of the game's own code linked"))
-# Where the last post keeps each value and its denominator.
-PREVIOUS_KEYS = {"matched": ("matched_total", "total"), "cpp": ("cpp_total", "game_total"),
-                 "linked": ("linked_game_total", "game_total")}
 CARD_FILL = {"matched": "#2ea043", "cpp": "#388bfd", "linked": "#d29922"}
 # Discord draws each bar as ten square emoji (a wider row wraps on a phone).
 BLOCK = {"matched": "\U0001f7e9", "cpp": "\U0001f7e6", "linked": "\U0001f7e8"}
@@ -56,14 +54,18 @@ def game_code(current):
 
 
 def measures(current):
-    """{key: (bytes, denominator)}; linked bytes are None when the last census
-    stored no linked_authored."""
+    """{key: (bytes, denominator)}. Linking is one census snapshot: its bytes
+    and its denominator (the census tree's game code) both come from the
+    census; (None, None) when the last census stored neither."""
     total, game = current["total"], game_code(current)
-    matched, cpp, linked = progress.rebuildable(current), current["authored"], current.get("linked_authored")
+    matched, cpp = progress.rebuildable(current), current["authored"]
+    linked, linked_game = current.get("linked_authored"), current.get("linked_game_code")
+    if (linked is None) != (linked_game is None):
+        raise ValueError("A census stored linked_authored without game_code, or the reverse")
     if not 0 <= cpp <= game <= total or not 0 <= matched <= total or (
-            linked is not None and not 0 <= linked <= cpp):
+            linked is not None and not 0 <= linked <= linked_game <= total):
         raise ValueError("Invalid progress split")
-    return {"matched": (matched, total), "cpp": (cpp, game), "linked": (linked, game)}
+    return {"matched": (matched, total), "cpp": (cpp, game), "linked": (linked, linked_game)}
 
 
 def measured(current):
@@ -77,12 +79,16 @@ def detail(current, key, value, denominator, what):
 
 
 def delta_since(previous, key, value, denominator):
-    """Percentage-point change since the last post over the same denominator,
-    or None when not comparable or when it rounds to 0.00."""
-    value_key, denominator_key = PREVIOUS_KEYS[key]
-    if not previous or previous.get(denominator_key) != denominator or previous.get(value_key) is None:
+    """The change in the bar's percentage since the last post, in points,
+    measured from the figures that post saved; None when that post has no
+    such figure or the change rounds to 0.00."""
+    try:
+        was, was_over = measures(previous)[key] if previous else (None, None)
+    except KeyError:
+        return None  # a state saved before these figures existed
+    if was is None:
         return None
-    delta = progress.percent(value - previous[value_key], denominator)
+    delta = progress.percent(value, denominator) - progress.percent(was, was_over)
     return delta if round(abs(delta), 2) else None
 
 
@@ -114,8 +120,8 @@ def render(current, previous=None):
     <rect x="28" y="{y + 10}" width="{width:.2f}" height="14" rx="7" fill="{CARD_FILL[key]}"/>
     <text x="28" y="{y + 44}" class="muted" font-size="12.5">{text}</text>
 ''')
-    (matched, total), (cpp, game), (linked, _) = rows["matched"], rows["cpp"], rows["linked"]
-    linking = f"{progress.percent(linked, game):.2f}% linking" if linked is not None else "linking not measured"
+    (matched, total), (cpp, game), (linked, linked_game) = rows["matched"], rows["cpp"], rows["linked"]
+    linking = f"{progress.percent(linked, linked_game):.2f}% linking" if linked is not None else "linking not measured"
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="880" height="{height}" viewBox="0 0 880 {height}" role="img" aria-labelledby="title desc">
   <title id="title">{TITLE}: {progress.percent(matched, total):.2f}% rebuilt from source, {progress.percent(cpp, game):.2f}% game code in C++, {linking}</title>
   <desc id="desc">{matched:,} of {total:,} code bytes rebuild to the original's exact bytes; {cpp:,} of the game's own {game:,} bytes are C++.</desc>
@@ -189,11 +195,7 @@ def notify(current):
         raise SystemExit(f"Discord update failed: HTTP {exc.code}") from None
     except URLError:
         raise SystemExit("Discord update failed: connection error") from None
-    rows = measures(current)
-    state_path.write_text(json.dumps({**current, "matched_total": rows["matched"][0],
-                                      "cpp_total": rows["cpp"][0], "game_total": rows["cpp"][1],
-                                      "linked_game_total": rows["linked"][0],
-                                      "updated_at": datetime.now(timezone.utc).isoformat(),
+    state_path.write_text(json.dumps({**current, "updated_at": datetime.now(timezone.utc).isoformat(),
                                       "message_id": message["id"], "run_id": run_id}, indent=2) + "\n",
                           encoding="utf-8")
     print("Discord: new progress message posted")
@@ -213,6 +215,7 @@ def main():
     current = {"total": total, "census": census,
                "linked": int(census["linked_bytes"]) if census else None,
                "linked_authored": int(census["linked_authored"]) if census and census.get("linked_authored") else None,
+               "linked_game_code": int(census["game_code"]) if census and census.get("game_code") else None,
                **{lane: split[lane] for lane in ("authored", "vendored", "generated", "library")}}
     output = progress.ROOT / "docs" / "progress.svg"
     output.write_text(render(current, previous_state()), encoding="utf-8", newline="\n")

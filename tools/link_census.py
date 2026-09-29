@@ -995,12 +995,19 @@ def linked_split(clean):
 
 
 def linked_figures(clean):
-    """The stored LINKED figures: linked_bytes (authored + vendored, the
-    README card's LINKED) and linked_authored (the game's own C++ only, the
-    daily post's Linking bar, over the game's own code)."""
+    """The stored LINKED figures: linked_bytes (authored + vendored, over all
+    code: the chart's LINKED) and linked_authored over game_code (the game's
+    own code on this tree: all code minus vendored source and prebuilt
+    libraries), the README card's and daily post's Linking bar. Storing the
+    denominator keeps Linking one snapshot."""
     import progress
     split = linked_split(clean)
-    return {"linked_bytes": progress.decompiled(split), "linked_authored": split["authored"]}
+    start, size = progress.retail_text()
+    _, total = progress.real_code_denominator(start, size)
+    matched, notes = progress.matched_at(None), progress.notes_at(None)
+    full = progress.real_split(matched, notes, start, size, progress.naked_cpp_rows_at(matched, None))
+    return {"linked_bytes": progress.decompiled(split), "linked_authored": split["authored"],
+            "game_code": progress.game_code(full, total)}
 
 
 def head():
@@ -1093,7 +1100,7 @@ HISTORY_FIELDS = ["date", "commit", "objects", "unresolved", "alias", "pinned_el
                   "import", "unpinned", "duplicates", "comdat_conflicts", "comdat_vtables",
                   "scaffold_aliases", "scaffold_unresolved", "scaffold_crashed",
                   "files", "files_linked", "blocking_names", "addresses", "linked_bytes",
-                  "linked_authored"]
+                  "linked_authored", "game_code"]
 
 
 def read_history():

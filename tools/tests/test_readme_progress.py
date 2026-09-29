@@ -13,13 +13,16 @@ import readme_progress as daily
 UP = "▲"
 
 
-def sample(linked_authored=9):
-    # rebuilt 60 of 100; game's own code = 100 - 5 vendored - 5 library = 90; our C++ 40; 9 of it links.
-    return {"total": 100, "linked": 12, "linked_authored": linked_authored,
-            "authored": 40, "vendored": 5, "generated": 10, "library": 5, "census": None}
+def sample(authored=40, linked_authored=9, linked_game_code=90):
+    # rebuilt 60 of 100; game's own code = 100 - 5 vendored - 5 library = 90;
+    # our C++ 40; the census measured 9 of it linked, over its tree's 90.
+    return {"total": 100, "linked": 12, "linked_authored": linked_authored, "linked_game_code": linked_game_code,
+            "authored": authored, "vendored": 5, "generated": 50 - authored, "library": 5, "census": None}
 
 
-PREVIOUS = {"total": 100, "matched_total": 55, "game_total": 90, "cpp_total": 40, "linked_game_total": 9}
+def previous(**changes):
+    """A saved post state: the figures the last post was drawn from."""
+    return {**sample(), **changes, "message_id": "1", "run_id": "old"}
 
 
 def setup_state(tmp_path, monkeypatch, state=None):
@@ -38,7 +41,7 @@ def test_retry_does_not_duplicate_post(tmp_path, monkeypatch):
     daily.notify(sample())
 
 
-def test_success_posts_the_bars_and_disables_mentions(tmp_path, monkeypatch):
+def test_success_posts_the_bars_and_saves_the_figures(tmp_path, monkeypatch):
     path = setup_state(tmp_path, monkeypatch)
     monkeypatch.setenv("DISCORD_PROGRESS_WEBHOOK", "https://discord.com/api/webhooks/test/token\n")
 
@@ -51,13 +54,13 @@ def test_success_posts_the_bars_and_disables_mentions(tmp_path, monkeypatch):
     monkeypatch.setattr(daily, "urlopen", send)
     daily.notify(sample())
     state = json.loads(path.read_text())
-    assert (state["message_id"], state["matched_total"], state["cpp_total"], state["game_total"],
-            state["linked_game_total"]) == ("123", 60, 40, 90, 9)
+    assert state["message_id"] == "123"
+    assert daily.measures(state) == daily.measures(sample())  # the next post's arrows start from these
 
 
 def test_each_run_posts_new_message_even_if_unchanged(tmp_path, monkeypatch):
     monkeypatch.setenv("GITHUB_RUN_ID", "new-run")
-    path = setup_state(tmp_path, monkeypatch, {**PREVIOUS, "message_id": "123", "run_id": "old-run"})
+    path = setup_state(tmp_path, monkeypatch, previous())
     monkeypatch.setenv("DISCORD_PROGRESS_WEBHOOK", "https://discord.com/api/webhooks/test/token")
     monkeypatch.setattr(daily, "urlopen", lambda request, timeout: io.BytesIO(b'{"id":"456"}'))
     daily.notify(sample())
@@ -77,15 +80,15 @@ def test_failed_post_does_not_advance_state_or_leak_url(tmp_path, monkeypatch):
 
 
 def test_discord_posts_three_measures_and_links_the_readme():
-    embed = daily.announcement(sample(), PREVIOUS)["embeds"][0]
+    embed = daily.announcement(sample(), previous(authored=36, generated=14))["embeds"][0]
     M, C, L = (daily.BLOCK[key] for key in ("matched", "cpp", "linked"))
     R = daily.REST_BLOCK
     assert embed["description"].split("\n") == [
-        f"**Rebuilt from source: 60.00%**  {UP} 5.00",
+        "**Rebuilt from source: 60.00%**",
         f"{M * 6}{R * 4}",
         f"60 / 100 bytes rebuilt without copying {daily.EXE}",
         "",
-        "**Game code in C++: 44.44%**",
+        f"**Game code in C++: 44.44%**  {UP} 4.44",
         f"{C * 4}{R * 6}",
         "40 / 90 bytes of the game's own code, now C++ (libraries not counted)",
         "",
@@ -98,33 +101,55 @@ def test_discord_posts_three_measures_and_links_the_readme():
 
 
 def test_card_shows_the_same_three_measures():
-    svg = daily.render(sample(), PREVIOUS)
+    svg = daily.render(sample(), previous(authored=36, generated=14))
     for text in (">Rebuilt from source<", ">60.00%<", ">Game code in C++<", ">44.44%<", ">Linking<", ">10.00%<",
-                 f"60 / 100 bytes rebuilt without copying {daily.EXE}", f">{UP} 5.00<"):
+                 f"60 / 100 bytes rebuilt without copying {daily.EXE}", f">{UP} 4.44<",
+                 "60.00% rebuilt from source, 44.44% game code in C++, 10.00% linking"):
         assert text in svg
     assert "prefers-color-scheme: light" in svg and "Whole game" not in svg
 
 
+def test_linking_is_one_census_snapshot():
+    # The census tree's game code (80) is the denominator, not today's (90).
+    current = sample(linked_authored=8, linked_game_code=80)
+    assert daily.measures(current)["linked"] == (8, 80)
+    assert "8 / 80 bytes of the game's own code linked" in daily.announcement(current, None)["embeds"][0]["description"]
+    with pytest.raises(ValueError):
+        daily.measures(sample(linked_game_code=None))  # bytes without their denominator
+    with pytest.raises(ValueError):
+        daily.measures(sample(linked_authored=91))  # more linked than there is code
+
+
 def test_linking_without_a_census_figure_says_so():
-    current = sample(linked_authored=None)
+    current = sample(linked_authored=None, linked_game_code=None)
     assert "**Linking:** not measured yet" in daily.announcement(current, None)["embeds"][0]["description"]
     assert ">not measured<" in daily.render(current)
-    with pytest.raises(ValueError):
-        daily.measures(sample(linked_authored=41))  # more linked than written
 
 
-def test_change_needs_the_same_denominator_and_a_visible_move():
-    lines = daily.announcement(sample(), {**PREVIOUS, "matched_total": 60, "cpp_total": 36})["embeds"][0][
-        "description"].split("\n")
-    assert lines[0] == "**Rebuilt from source: 60.00%**" and lines[4] == f"**Game code in C++: 44.44%**  {UP} 4.44"
-    for previous in ({**PREVIOUS, "matched_total": 60, "cpp_total": 39.999},    # rounds to 0.00
-                     {**PREVIOUS, "matched_total": 60, "game_total": 91}):     # other denominator
-        assert UP not in daily.announcement(sample(), previous)["embeds"][0]["description"]
-        assert UP not in daily.render(sample(), previous)
+def test_arrow_is_the_change_in_the_bars_percentage():
+    # Linking went from 9/90 = 10.00% to 8/80 = 10.00%: same share, no arrow,
+    # though the bytes and the denominator both moved.
+    text = daily.announcement(sample(linked_authored=8, linked_game_code=80), previous())["embeds"][0]["description"]
+    assert UP not in text and "▼" not in text
+    # 9/90 -> 12/90: +3.33 points.
+    assert f"**Linking: 13.33%**  {UP} 3.33" in daily.announcement(sample(linked_authored=12), previous())[
+        "embeds"][0]["description"]
+    # A move that rounds to 0.00 shows nothing.
+    assert UP not in daily.announcement(sample(), previous(authored=39.999, generated=10.001))["embeds"][0][
+        "description"]
+
+
+def test_old_state_without_figures_gives_no_arrow():
+    old = {"total": 100, "matched_total": 55, "message_id": "1", "run_id": "old"}  # before these figures existed
+    assert UP not in daily.announcement(sample(), old)["embeds"][0]["description"]
+    # A state from before the census stored Linking: the other bars still compare.
+    text = daily.announcement(sample(), previous(authored=36, generated=14, linked_authored=None,
+                                                 linked_game_code=None))["embeds"][0]["description"]
+    assert f"44.44%**  {UP} 4.44" in text and "**Linking: 10.00%**\n" in text
 
 
 def test_nothing_claims_the_game_is_100_percent_done():
-    text = daily.announcement(sample(), PREVIOUS)["embeds"][0]["description"] + daily.render(sample(), PREVIOUS)
+    text = daily.announcement(sample(), previous())["embeds"][0]["description"] + daily.render(sample(), previous())
     assert "100%" not in text
 
 
