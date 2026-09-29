@@ -253,6 +253,11 @@ public:
 extern Gen0090F680 *TheGen012F6D88;
 extern Gen0090F680 *TheGen012F6DFC;
 
+class DX8IndexBufferClass;
+class SortingIndexBufferClass;
+extern DX8IndexBufferClass *Rva01341214IndexBuffer;
+extern SortingIndexBufferClass *Rva01341218SortingIndexBuffer;
+
 Gen0090F680::~Gen0090F680()
 {
 	if( m_00 )
@@ -276,19 +281,19 @@ Gen0090F680::~Gen0090F680()
 		m_0c = 0;
 	}
 
-	RefCountClass *globalA = *(RefCountClass **)0x01341214;
+	RefCountClass *globalA = (RefCountClass *)Rva01341214IndexBuffer;
 	if( globalA )
 		globalA->Release_Ref();
 
-	RefCountClass *globalB = *(RefCountClass **)0x01341218;
+	RefCountClass *globalB = (RefCountClass *)Rva01341218SortingIndexBuffer;
 	if( globalB )
 	{
 		bool last = globalB->NumRefs == 1;
 		globalB->Release_Ref();
 		if( last )
 		{
-			*(RefCountClass **)0x01341214 = 0;
-			*(RefCountClass **)0x01341218 = 0;
+			Rva01341214IndexBuffer = 0;
+			Rva01341218SortingIndexBuffer = 0;
 		}
 	}
 }

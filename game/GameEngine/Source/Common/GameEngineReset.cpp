@@ -107,10 +107,10 @@ public:
 
 void InitGameLogicRandom(UnsignedInt seed);
 
-#define TheWindowManager (*(GameWindowManager **)0x012F1B40)
-#define TheGameLogic (*(GameLogic **)0x012F0898)
-#define TheSubsystemList (*(SubsystemInterfaceList **)0x0134C6C8)
-#define TheNetwork (*(NetworkInterface **)0x012F7714)
+extern GameWindowManager *TheWindowManager;
+extern GameLogic *TheGameLogic;
+extern SubsystemInterfaceList *TheSubsystemList;
+extern NetworkInterface *TheNetwork;
 extern CRCParameterCheck *TheCRCParameterCheck;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameEngine.h
