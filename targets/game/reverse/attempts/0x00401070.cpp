@@ -1,5 +1,5 @@
 // ?bfmeOptimizeDir@Path@@QAEXPBVObject@@PBUCoord3D@@H_N@Z
-// partial score=0.95 date=2026-09-28
+// partial score=0.349 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc
 //
 // Retail 0x00401070 (ILT 0x00049DEB): Path::bfmeOptimizeDir, the BFME-only
