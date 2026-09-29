@@ -77,12 +77,12 @@ public:
 
 	void *m_vptr;
 	_STL::list<Object *> m_objects;
-	UnsignedInt m_value08;
-	Bool m_value0c;
+	UnsignedInt m_memberListSize;
+	Bool m_speed;
 	Bool m_pad0d[3];
-	Bool m_value10;
+	Bool m_dirty;
 	Bool m_pad11[3];
-	UnsignedInt m_value14;
+	UnsignedInt m_id;
 	char m_pad18[4];
 	void *m_value1c;
 	char m_pad20[8];
@@ -109,10 +109,10 @@ void Rva001515C0::xfer(Xfer *xfer)
 		node = (_STL::_List_node<Object *> *)node->_M_next;
 	}
 
-	xfer->xferUnsignedInt(&self->m_value08);
-	xfer->slot27(&self->m_value0c);
-	xfer->xferBool(&self->m_value10);
-	xfer->xferUnsignedInt(&self->m_value14);
+	xfer->xferUnsignedInt(&self->m_memberListSize);
+	xfer->slot27(&self->m_speed);
+	xfer->xferBool(&self->m_dirty);
+	xfer->xferUnsignedInt(&self->m_id);
 	xfer->slot24(&self->m_value1c);
 	xfer->slot24(&self->m_value28);
 }
