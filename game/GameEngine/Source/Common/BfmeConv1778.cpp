@@ -15,7 +15,7 @@ class BfmeInfoDB
 {
 public:
 	unsigned char m_bfmeHeadDB[0x24];
-	int m_bfmeIndexDB;
+	int m_playerIndex;
 };
 
 class BfmeItemDB
@@ -148,13 +148,13 @@ public:
 	virtual void bfmeSlot102DB(void);
 	virtual int bfmeRejectDB(class BfmeItemDB *item);
 
-	void bfmeAddDB(BfmeItemDB *item);
+	void addIdleWorker(BfmeItemDB *item);
 
 	unsigned char m_bfmeHeadDB[0x1318];
-	BfmeNodeDB *m_bfmeListsDB[1];
+	BfmeNodeDB *m_idleWorkers[1];
 };
 
-void BfmeOwnDB::bfmeAddDB(BfmeItemDB *item)
+void BfmeOwnDB::addIdleWorker(BfmeItemDB *item)
 {
 	if (item == 0)
 		return;
@@ -162,7 +162,7 @@ void BfmeOwnDB::bfmeAddDB(BfmeItemDB *item)
 	if (bfmeRejectDB(item) != 0)
 		return;
 
-	BfmeNodeDB *head = m_bfmeListsDB[item->bfmeInfoDB()->m_bfmeIndexDB];
+	BfmeNodeDB *head = m_idleWorkers[item->bfmeInfoDB()->m_playerIndex];
 	BfmeNodeDB *node = (BfmeNodeDB *)_STL::__new_alloc::allocate(0xc);
 
 	new (&node->m_bfmeValueDB) BfmeValDB(item);

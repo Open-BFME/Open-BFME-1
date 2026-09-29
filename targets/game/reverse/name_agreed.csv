@@ -88,3 +88,6 @@ game/GameEngine/Source/Common/BfmeConv1081.cpp|member||m_bfme0c,m_pathfinder,cla
 game/GameEngine/Source/Common/BfmeConv1653.cpp|member||m_bfme1c,m_condition,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/Common/BfmeConv1653.cpp|member||m_bfme20,m_action,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/Common/BfmeConv1653.cpp|member||m_bfme24,m_actionFalse,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1778.cpp|member||m_bfmeIndexDB,m_playerIndex,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1778.cpp|member||m_bfmeListsDB,m_idleWorkers,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1778.cpp|function|BfmeOwnDB@|bfmeAddDB,addIdleWorker,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
