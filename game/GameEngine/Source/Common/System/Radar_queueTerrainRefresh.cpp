@@ -8,7 +8,10 @@ struct GameLogicFrameSource
 	UnsignedInt m_frame;
 };
 
-#define TheBfmeGameLogic (*(GameLogicFrameSource **)0x012F0898)
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+#define TheBfmeGameLogic ((GameLogicFrameSource *)TheGameLogic)
 
 class Radar
 {

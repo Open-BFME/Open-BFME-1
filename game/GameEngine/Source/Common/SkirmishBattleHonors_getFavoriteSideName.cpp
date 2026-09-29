@@ -6,6 +6,8 @@ typedef bool Bool;
 
 #include "string_base.h"
 
+extern const char Rva006A16B0Empty[];
+
 class AsciiString
 {
 public:
@@ -28,7 +30,7 @@ public:
 	Int compare(const AsciiString &other) const;
 	const char *str() const
 	{
-		return m_data ? (const char *)m_data + 8 : (const char *)0x0107388b;
+		return m_data ? (const char *)m_data + 8 : Rva006A16B0Empty;
 	}
 
 	static AsciiString TheEmptyString;
