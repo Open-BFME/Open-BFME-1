@@ -41,6 +41,11 @@ struct GenrepBuffer
 	char text[12];
 };
 
+// The shared AsciiString empty-string slot at 0x0107388B; the tree already
+// spells it this way elsewhere (game/.../Common/Audio/AudioEventRTSAdjustForLocalization.cpp),
+// and dir32_addresses.csv records ?g_bfmeEmptyAscii@@3PADA at that address.
+extern const char g_bfmeEmptyAscii[];
+
 // The BFME string headers expose the StringBase bodies at these call sites,
 // while the object itself is still one data pointer.  Keep the forwarding
 // classes local so this TU does not change the shared ZH-facing headers.
@@ -60,7 +65,7 @@ public:
 
 	const char *str(void) const
 	{
-		return m_data ? &m_data->data[0] : (const char *)0x0107388B;
+		return m_data ? &m_data->data[0] : g_bfmeEmptyAscii;
 	}
 
 	void concat(const char *text, int length)

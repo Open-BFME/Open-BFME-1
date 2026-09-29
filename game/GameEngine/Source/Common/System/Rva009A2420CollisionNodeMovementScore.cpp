@@ -17,10 +17,10 @@
 // The node caches the source's slot05 int at +0xA0 and six Reals: slot01's
 // Real[3] output at +0x34/+0x5C/+0x84 (the first two are diffed against the
 // fresh output before being overwritten) and slot00's Real[3] output at
-// +0x48/+0x70/+0x98.  The 50.0f threshold at 0x0107FAA8 has no ledger pin, so
-// it is referenced through its absolute address the same way
-// Rva006FCC10NormalizedRange.cpp does; the scale at 0x010F0ADC is the pinned
-// BfmeShadowZLimit global (symbols.csv ?BfmeShadowZLimit@@3MB).
+// +0x48/+0x70/+0x98.  The 50.0f threshold constant at 0x0107FAA8 has no
+// symbols.csv pin, so it is declared as an extern bound to the pool symbol
+// dir32_addresses.csv records there (__real@42480000); the scale at 0x010F0ADC
+// is the pinned BfmeShadowZLimit global (symbols.csv ?BfmeShadowZLimit@@3MB).
 //
 // cl: /O2 /DNDEBUG /MD /EHs-c-
 
@@ -42,9 +42,12 @@ public:
 	virtual int slot05() = 0;
 };
 
-// 0x0107FAA8 carries no symbols.csv pin; reference it by address rather than
-// invent one (see game/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp).
-#define Rva009A2420MoveThreshold (*(const Real *)0x0107FAA8)
+// 0x0107FAA8 carries no symbols.csv pin; the constant-pool slot is named
+// address-derived and bound to the symbol dir32_addresses.csv records there.
+extern const Real g_0107FAA8;
+#pragma comment(linker, "/alternatename:?g_0107FAA8@@3PB=__real@42480000")
+
+#define Rva009A2420MoveThreshold g_0107FAA8
 
 extern const Real BfmeShadowZLimit;
 
@@ -113,3 +116,7 @@ unsigned int Rva009A2420CollisionNode::getMovementScore(bool allowCache)
 	m_value84 = previous[2];
 	return score;
 }
+
+// Address-derived names whose address dir32_addresses.csv records: bind each to the
+// recorded symbol so the linked build resolves one object, not two.
+#pragma comment(linker, "/alternatename:?g_0107FAA8@@3MB=__real@42480000")
