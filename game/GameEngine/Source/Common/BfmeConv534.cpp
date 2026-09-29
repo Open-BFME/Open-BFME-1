@@ -1,5 +1,7 @@
 class BFMERetailAsciiString;
 
+extern const char g_Rva0107301CEmptyString[];
+
 template <typename T> class StringBase
 {
 	friend class BFMERetailAsciiString;
@@ -106,5 +108,5 @@ BFMERetailAsciiString BfmeThingBUE::bfmeGetBUE()
 {
 	return ((BfmeOuterBUE *)((char *)this - 0x10))->bfmeAskBUE()
 		? m_bfmeSub->m_bfmeInner.bfmeGetBUE()
-		: (const char *)0x0107301c;
+		: g_Rva0107301CEmptyString;
 }

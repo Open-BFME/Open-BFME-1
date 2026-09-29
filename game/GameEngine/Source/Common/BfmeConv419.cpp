@@ -6,6 +6,8 @@
 extern "C" unsigned char bfmeVftASAa[];
 extern "C" unsigned char bfmeVftASAb[];
 extern "C" unsigned char bfmeVftASAc[];
+extern "C" unsigned char bfmeVftFXList[];
+#pragma comment(linker, "/alternatename:_bfmeVftFXList=??_7FXList@@6B@")
 
 void *bfmeAllocNode(unsigned int bytes);
 void __cdecl bfmeDeallocate(void *block, unsigned int bytes);
@@ -52,7 +54,7 @@ class BfmeThingASABase
 public:
 	BfmeThingASABase(void)
 	{
-		m_bfmeVftA = (void *)0x010F3550;
+		m_bfmeVftA = bfmeVftFXList;
 	}
 
 	void *volatile m_bfmeVftA;

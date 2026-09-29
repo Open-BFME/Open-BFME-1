@@ -20,6 +20,7 @@ class ShaderClass
 {
 public:
 	unsigned int ShaderBits;
+	static ShaderClass _PresetAdditiveSpriteShader;
 };
 
 class Vector3
@@ -48,7 +49,7 @@ private:
 // ??0BfmeThingVGX@@QAE@ABV0@@Z
 BfmeThingVGX::BfmeThingVGX(const BfmeThingVGX &that) :
 	m_tex(0),
-	m_shader(*(const ShaderClass *)0x012D6E2C),
+	m_shader(ShaderClass::_PresetAdditiveSpriteShader),
 	m_width(0.0f),
 	m_color(Vector3(1, 1, 1)),
 	m_opacity(1.0f),

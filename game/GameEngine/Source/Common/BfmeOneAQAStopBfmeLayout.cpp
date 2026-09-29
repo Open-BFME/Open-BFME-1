@@ -12,6 +12,9 @@ public:
 
 extern BfmeSingletonH *g_bfmeSingletonH;
 
+class CampaignManager;
+extern CampaignManager *TheLivingWorldLogic;
+
 class BfmeOneAQA
 {
 public:
@@ -46,7 +49,7 @@ void BfmeOneAQA::bfmeStopAQA(void)
 	if (g_bfmeSingletonH != 0)
 		g_bfmeSingletonH->j_0001d6c4();
 
-	BfmeStateDO *state = *reinterpret_cast<BfmeStateDO **>(0x012F1028);
+	BfmeStateDO *state = reinterpret_cast<BfmeStateDO *>(TheLivingWorldLogic);
 	if (state != 0)
 		state->notify();
 }
