@@ -1,5 +1,7 @@
 // cl: /O2 /Ob0
 
+extern void *g_0110DDFC[];
+
 class Rva005B1A00
 {
 	void *m_vptr;
@@ -24,7 +26,7 @@ public:
 
 Rva005B1A00::Rva005B1A00()
 {
-	m_vptr = (void *)0x0110DDFC;
+	m_vptr = (void *)g_0110DDFC;
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;

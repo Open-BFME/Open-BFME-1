@@ -11,6 +11,13 @@ extern "C" int __cdecl memcmp(const void *left, const void *right, unsigned int 
 
 extern const char g_bfmeEmptyAscii[];
 
+namespace FXParticleSystem
+{
+template <int N> class DefaultModuleTag;
+template <class Tag> class ConcreteModuleClass;
+extern ConcreteModuleClass<DefaultModuleTag<2> > *defaultModuleTag2RegistryHead;
+}
+
 class INI
 {
 public:
@@ -76,7 +83,7 @@ void Rva005C7B50Parse::parse(INI *ini, void *data, void *, const void *)
 {
 	const char *token = ini->getNextToken(0);
 	BFMERetailAsciiString name(token);
-	Rva005C7B50Factory *factory = *reinterpret_cast<Rva005C7B50Factory **>(0x012F64F0);
+	Rva005C7B50Factory *factory = reinterpret_cast<Rva005C7B50Factory *>(FXParticleSystem::defaultModuleTag2RegistryHead);
 
 	for (;;)
 	{
