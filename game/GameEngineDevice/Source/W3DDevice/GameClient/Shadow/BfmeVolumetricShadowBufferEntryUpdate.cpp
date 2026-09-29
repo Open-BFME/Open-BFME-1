@@ -1,6 +1,7 @@
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWDebug
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad
 
 #include "matrix4.h"
+#include "rendobj.h"
 
 struct BfmeShadowShareBuffer
 {
@@ -26,6 +27,15 @@ struct BfmeShadowMeshModel
 	{
 		return m_vertexCount;
 	}
+};
+
+// Direct helper called by BfmeShadowMesh::Get_Deformed_Vertices.
+// Address-keyed shim: the helper body at 0x00925860 is still a dump, so the
+// name and the two-pointer thiscall ABI come from the symbols.csv pin
+// ?method@Rva00925860@@QAEXPAX0@Z (stack cleanup of 8 bytes).
+struct Rva00925860
+{
+	void method(void *dst, void *tree);
 };
 
 class BfmeShadowMesh
@@ -55,7 +65,9 @@ public:
 
 	unsigned char m_beforeTransform[0x14];
 	Matrix3D m_transform;
-	unsigned char m_betweenTransformAndModel[0x80];
+	unsigned char m_betweenTransformAndField84[0x3c];
+	unsigned int m_field84;
+	unsigned char m_betweenField84AndModel[0x40];
 	BfmeShadowMeshModel *m_model;
 
 	const Matrix3D &Get_Transform() const
@@ -69,7 +81,9 @@ public:
 		return m_model;
 	}
 
-	void Get_Deformed_Vertices(Vector3 *dst);
+	// noinline: retail keeps the call from BfmeShadowBufferEntry::update
+	// instead of expanding this 67-byte body there.
+	__declspec(noinline) void Get_Deformed_Vertices(Vector3 *dst);
 };
 
 struct _D3DXMATRIX
@@ -109,4 +123,17 @@ void BfmeShadowBufferEntry::update()
 		m_mesh->Peek_Model()->Get_Vertex_Array(), 0xc,
 		(D3DXMATRIX *)&matrix.Transpose(),
 		m_mesh->Peek_Model()->Get_Vertex_Count());
+}
+
+// Defined after its caller so the compiler does not inline it: retail keeps
+// the call at 0x007C1DC0. Skin the mesh's vertices into dst; when m_field84
+// names a container the deformed pass is driven by that container's HTree,
+// otherwise the model is asked for its vertices with no tree. Retail spells
+// this as one conditional argument, which is what keeps the two helper call
+// sites in the order observed in the binary.
+void BfmeShadowMesh::Get_Deformed_Vertices(Vector3 *dst)
+{
+	((Rva00925860 *)m_model)->method(
+		dst,
+		m_field84 ? (void *)((RenderObjClass *)m_field84)->Get_HTree() : (void *)0);
 }
