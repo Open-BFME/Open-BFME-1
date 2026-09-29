@@ -40,7 +40,9 @@ public:
 
 extern void j_0002a05e(void);
 
-#define TheGameLogic (*(BfmeGlob940E **)0x012F0898)
+class GameLogic;
+extern GameLogic *TheGameLogic;
+#define TheGameLogic ((BfmeGlob940E *)TheGameLogic)
 
 void Rva0022B540Owner::clearList()
 {

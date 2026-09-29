@@ -3496,6 +3496,7 @@ extern "C" BfmeWeaponFormattedText *__cdecl bfmeFormatText(
 	BfmeWeaponFormattedText *result, int tag, const char *format, ...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
+extern int g_guardTargetTypeThrowInfo;
 
 class BfmeWeaponXferView
 {
@@ -3600,7 +3601,7 @@ void Weapon::xfer( Xfer *xfer )
 		{
 			BfmeWeaponFormattedText error;
 			bfmeFormatText(&error, 5, 0);
-			_CxxThrowException(&error, (void *)0x011DFE5C);
+			_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 		}
 	}
 

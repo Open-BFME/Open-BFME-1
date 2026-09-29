@@ -58,7 +58,7 @@ public:
 	ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-#define TheThingFactory (*(ThingFactory **)0x012EF1D8)
+extern ThingFactory *TheThingFactory;
 
 class RiderChangeContain
 {

@@ -19,6 +19,9 @@ void j_0001b8c4();
 void j_0002f919();
 void j_000480cc();
 
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
 class Rva0021D4A0Secondary
 {
 public:
@@ -45,7 +48,7 @@ int Rva0021D4A0::check()
 	if (!secondary->predicate())
 		goto done;
 
-	void *logic = *reinterpret_cast<void **>(0x012F0898);
+	void *logic = TheGameLogic;
 	if (*reinterpret_cast<unsigned int *>(reinterpret_cast<char *>(logic) + 0x3c) >=
 		*reinterpret_cast<unsigned int *>(reinterpret_cast<char *>(this) + 0x9c4))
 	{

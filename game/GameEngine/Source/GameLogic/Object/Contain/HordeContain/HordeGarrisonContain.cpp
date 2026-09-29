@@ -1,6 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME: Horde contain member admission hook, retail 0x002489E0.
 
+class ControlBar;
+extern ControlBar *TheControlBar;
+
 class BfmeRva489E0Object
 {
 };
@@ -131,5 +134,5 @@ void Rva002489E0::admit(BfmeRva489E0Object *object)
 	((BfmeRva489E0Base *)((char *)this + 0x20))->notify(object, 0);
 	primary->post();
 	if (ai->admissionComplete())
-		((BfmeRva489E0State *)*(void **)0x012F33F8)->m_flag = 1;
+		((BfmeRva489E0State *)TheControlBar)->m_flag = 1;
 }
