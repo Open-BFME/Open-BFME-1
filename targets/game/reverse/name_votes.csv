@@ -256,3 +256,5 @@ game/GameEngine/Source/GameLogic/Object/Behavior/DualWeaponBehaviorModuleDataCon
 game/GameEngine/Source/GameLogic/Object/Behavior/DualWeaponBehaviorModuleDataConstructorThunk.cpp|member||m_u10,68cf9e97eaf24644b4b39984,claude-opus,20260929144514-f0aa47,2026-09-29
 game/GameEngine/Source/GameLogic/Object/Behavior/DualWeaponBehaviorModuleDataConstructorThunk.cpp|member||m_b14,8016dc7d461d5adb2d8172de,claude-opus,20260929144514-f0aa47,2026-09-29
 game/GameEngine/Source/GameLogic/Object/Behavior/DualWeaponBehaviorModuleDataConstructorThunk.cpp|member||m_b15,b725acd313de0e69d93b73a3,claude-opus,20260929144514-f0aa47,2026-09-29
+game/GameEngine/Source/Common/BfmeHostABD_bfmeAllocABD.cpp|member||m_bfme0CABD,2ffbe30bcce5463172348175,grok,20260929192130-c5117a,2026-09-29
+game/GameEngine/Source/Common/BfmeHostABD_bfmeAllocABD.cpp|member||m_bfme4CABD,6d9c69e09b487b5d3da6415f,grok,20260929192130-c5117a,2026-09-29
