@@ -90,8 +90,12 @@ extern RecorderClass *TheRecorder;
 extern Shell *TheShell;
 
 // ReplayMenu.cpp's two file-local cells are at these proven retail globals.
-#define listboxReplayFiles (*(GameWindow **)0x012F4118)
-#define parentReplayMenu (*(GameWindow **)0x012F410C)
+// Neither address has a recorded symbol, so each keeps its address.
+extern GameWindow *g_012F4118;	// listboxReplayFiles
+extern GameWindow *g_012F410C;	// parentReplayMenu
+
+#define listboxReplayFiles (g_012F4118)
+#define parentReplayMenu (g_012F410C)
 
 void GadgetListBoxGetSelected( GameWindow *listbox, Int *selected );
 UnicodeString GetReplayFilenameFromListbox( GameWindow *listbox, Int index );

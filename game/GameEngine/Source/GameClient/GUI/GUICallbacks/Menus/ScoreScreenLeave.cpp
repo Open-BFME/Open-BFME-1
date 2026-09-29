@@ -19,6 +19,13 @@ extern void j_000290d2();
 extern void j_0003950e();
 extern void j_0003e56d();
 
+// The timed-operation pump's firstCall binding, retail 0x00435D6E
+// (?fade005651F0@@YAIM_N@Z: int __cdecl (bool)), and the serial key it
+// writes, retail 0x012ED588 (?fadeQueueKey@@3IA).
+extern "C" int __cdecl fade005651F0( bool );
+extern unsigned fadeQueueKey;
+#pragma comment(linker, "/alternatename:_fade005651F0=?fade005651F0@@YAIM_N@Z")
+
 class AudioEventRTS
 {
 public:
@@ -188,8 +195,8 @@ void _bfme_leaveScoreScreen()
 		g_theWindowManager->returnToShell();
 		TheMouse->returnToShell();
 		g_theWindowManager->hideBackgroundForLeave( true );
-		postTimedOp( LoadGameFadeHolder( reinterpret_cast<void *>( 0x00435d6e ) ),
-			reinterpret_cast<void *>( 0x012ed588 ) );
+		postTimedOp( LoadGameFadeHolder( (void *)fade005651F0 ),
+			(void *)&fadeQueueKey );
 		return;
 	}
 

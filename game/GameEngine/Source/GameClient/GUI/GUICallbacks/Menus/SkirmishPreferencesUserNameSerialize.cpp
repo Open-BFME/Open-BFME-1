@@ -10,6 +10,13 @@
 typedef bool Bool;
 typedef unsigned short WideChar;
 
+// The shared empty UnicodeString payload, retail 0x0107388C
+// (?g_bfmeEmptyUnicode@@3QBDB), and the wide separator this loop appends
+// between user names, retail 0x010806D8 (no recorded name, so the address
+// keeps it).
+extern const char g_bfmeEmptyUnicode[];
+extern const WideChar g_010806D8[];
+
 template <class T> struct StringInlineData
 {
 	unsigned short m_refCount;
@@ -74,7 +81,7 @@ public:
 	{
 		StringInlineData<WideChar> *data =
 			m_data;
-		return data ? data->m_text : (const WideChar *)0x0107388C;
+		return data ? data->m_text : (const WideChar *)g_bfmeEmptyUnicode;
 	}
 
 	void concat(const WideChar *text, int length)
@@ -144,7 +151,7 @@ void Gen0009FC90Owner::Rva0009FC90(void)
 	{
 		names.concat(it->m_value.str(), it->m_value.getLength());
 
-		const WideChar *comma = (const WideChar *)0x010806D8;
+		const WideChar *comma = g_010806D8;
 		names.concat(comma, bfmeLenVGI(comma));
 		it = it->m_next;
 	}

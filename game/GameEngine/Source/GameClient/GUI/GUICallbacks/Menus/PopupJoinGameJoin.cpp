@@ -6,6 +6,12 @@ typedef int Int;
 
 extern "C" size_t __cdecl strlen( const char *s );
 
+// The shared empty string payloads: the narrow one at retail 0x0107388B
+// (?Rva006A16B0Empty@@3PADA / ?g_bfmeEmptyAscii@@3QBDB) and the wide one
+// immediately after it at 0x0107388C (?g_bfmeEmptyUnicode@@3QBDB).
+extern const char Rva006A16B0Empty[];
+extern const char g_bfmeEmptyUnicode[];
+
 template <typename T> class StringBase
 {
 	friend class AsciiString;
@@ -37,7 +43,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? m_data->m_text : (const char *)0x0107388B;
+		return m_data ? m_data->m_text : Rva006A16B0Empty;
 	}
 };
 
@@ -54,7 +60,7 @@ public:
 		if ( p )
 			p += 8;
 		else
-			p = (char *)0x0107388C;
+			p = (char *)g_bfmeEmptyUnicode;
 		return (const WideChar *)p;
 	}
 };
