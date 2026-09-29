@@ -115,15 +115,18 @@ static __forceinline BuildListCallback0019B030 callbackAt0019B030(unsigned addre
 }
 
 typedef bool (*CallbackBase0019B030)(DataChunkInput &, DataChunkInfo *, void *);
+extern "C" int _bfmeVftVE[];
+extern "C" const void *bfmeVftBfmeParserBindingVE[];
+#pragma comment(linker, "/alternatename:_bfmeVftBfmeParserBindingVE=??_7BfmeParserBindingVE@@6B@")
 class ParserBase0019B030 {
 public:
   ParserBase0019B030(DataChunkInput *table, const AsciiString &name, const AsciiString &parent) {
-    vtable_ = (void *)0x0107C7D0;
+    vtable_ = _bfmeVftVE;
     table_ = table;
     parser_ = table->registerParser(name, parent, (CallbackBase0019B030)0x0041579E, this);
   }
   ~ParserBase0019B030() {
-    vtable_ = (void *)0x0107C7D0;
+    vtable_ = _bfmeVftVE;
     reinterpret_cast<BfmeSubVE *>(table_)->bfmeDropVE(parser_);
   }
 protected:
@@ -139,7 +142,7 @@ public:
   BfmeParserBindingVE(SidesList *owner, BuildListCallback0019B030 callback, DataChunkInput *table,
                       const AsciiString &name, const AsciiString &parent)
       : ParserBase0019B030(table, name, parent) {
-    vtable_ = (void *)0x0109BFD4;
+    vtable_ = bfmeVftBfmeParserBindingVE;
     owner_ = owner;
     callback_ = callback;
   }

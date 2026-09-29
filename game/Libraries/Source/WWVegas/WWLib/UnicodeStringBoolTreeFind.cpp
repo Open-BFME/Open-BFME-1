@@ -19,6 +19,8 @@ typedef int Int;
 typedef bool Bool;
 typedef unsigned short WideChar;
 
+extern const unsigned short BFMEEmptyUnicodeString;
+
 struct Rva0009ECA0NoCaseTraits
 {
 	int compareNoCaseRaw(const WideChar *a, const WideChar *b, int n) const throw();
@@ -61,9 +63,9 @@ public:
 	int compareNoCase(const UnicodeString &other) const throw()
 	{
 		const int otherLength = other.m_data ? other.m_data->length : 0;
-		const WideChar *otherText = other.m_data ? other.m_data->text : (const WideChar *)0x0107388C;
+		const WideChar *otherText = other.m_data ? other.m_data->text : &BFMEEmptyUnicodeString;
 		const int thisLength = m_data ? m_data->length : 0;
-		const WideChar *thisText = m_data ? m_data->text : (const WideChar *)0x0107388C;
+		const WideChar *thisText = m_data ? m_data->text : &BFMEEmptyUnicodeString;
 		const int commonLength = thisLength < otherLength ? thisLength : otherLength;
 		// the receiver base is 8 pointers above the string object in this body
 		// (retail `lea ecx, [esp + 0x40]`); the _M_lower_bound TU at 0x0044D370
