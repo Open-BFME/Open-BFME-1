@@ -75,6 +75,7 @@ extern "C" BfmeSubTwoExceptionBH *__cdecl bfmeFormatText(
 	BfmeSubTwoExceptionBH *exception, int reserved, const char *format, ...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *exception, void *throwInfo);
+extern int g_guardTargetTypeThrowInfo;
 
 class BfmeAgentBH
 {
@@ -199,7 +200,7 @@ void BfmeSubTwoBH::bfmeSaveBH(BfmeAgentBH *ag)
 			{
 				BfmeSubTwoExceptionBH exception;
 				bfmeFormatText(&exception, 0, 0);
-				_CxxThrowException(&exception, reinterpret_cast<void *>(0x011DFE5C));
+				_CxxThrowException(&exception, &g_guardTargetTypeThrowInfo);
 			}
 			bits->_Unchecked_set(bit);
 		}
