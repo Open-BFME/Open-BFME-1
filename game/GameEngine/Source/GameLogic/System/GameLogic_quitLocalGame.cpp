@@ -103,7 +103,7 @@ extern GameInfo *TheGameInfo;
 extern MessageStream *TheMessageStream;
 extern Mouse *TheMouse;
 extern InGameUI *TheInGameUI;
-#define TheAudio (*(AudioManager **)0x012ED668)
+extern AudioManager *TheAudio;
 extern "C" BfmeOneAQA *g_bfmeStateDF;
 
 class GameLogic

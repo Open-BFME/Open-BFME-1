@@ -4,6 +4,8 @@ class AsciiString;
 AsciiString GetBasePathFromPath(AsciiString path);
 AsciiString GetAssetUsageFromMap(AsciiString path);
 
+extern const char Rva006A16B0Empty[];
+
 template <typename T>
 class StringBase
 {
@@ -34,7 +36,7 @@ public:
 	~AsciiString() {}
 	const char *str() const
 	{
-		return m_data ? &m_data->data[0] : (const char *)0x0107388B;
+		return m_data ? &m_data->data[0] : Rva006A16B0Empty;
 	}
 	void format(AsciiString format, ...);
 };

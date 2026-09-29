@@ -186,6 +186,9 @@ public:
 };
 #pragma comment(linker, "/alternatename:?append@Rva003B4250StoreThunk@@QAEXPBURva00366890Element@@ABVAsciiString@@1@Z=?invoke@Rva00383820@@QAEXXZ")
 
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
 struct Rva003B4250StringData
 {
 	int m_refCount;
@@ -260,7 +263,7 @@ void BfmeLivingWorldCampaignManager::rva003B4250(
 		if( m_playerArmies[ i ].getName().compare( guard ) == 0 )
 		{
 			Rva003B4250StoreThunk *store =
-				*reinterpret_cast<Rva003B4250StoreThunk **>( 0x012F0898 );
+				reinterpret_cast<Rva003B4250StoreThunk *>( TheGameLogic );
 			store->append(
 				reinterpret_cast<const Rva00366890Element *>(
 					&m_playerArmies[ i ] ),
