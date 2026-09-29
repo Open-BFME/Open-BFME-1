@@ -218,7 +218,6 @@ private:
 
 // Thunked bodies whose ledger names are address-derived placeholders.
 extern void j_00017512();
-extern void j_0003e59f();
 extern void j_00044ebd();
 extern void j_00002153();
 
@@ -242,17 +241,9 @@ public:
 
 	void destroy();
 	void setLocalTransform( const Matrix3D *matrix );
+	void emit( const Coord3D *pos, Int priority, Bool isIdentity, const Matrix3D *transform );
 
 private:
-	// Emission step at 0x005D0950 (ILT 0x0003E59F).
-	void emit( const Coord3D *pos, Int priority, Bool isIdentity, const Matrix3D *transform )
-	{
-		typedef void ( Rva005D1140Call::*Function )( const Coord3D *, Int, Bool, const Matrix3D * );
-		union { void ( *raw )(); Function member; } fn;
-		fn.raw = j_0003e59f;
-		( reinterpret_cast<Rva005D1140Call *>( this )->*fn.member )( pos, priority, isIdentity, transform );
-	}
-
 	// Particle update tail at 0x005CCA10 (ILT 0x00002153).
 	Bool updateParticles()
 	{

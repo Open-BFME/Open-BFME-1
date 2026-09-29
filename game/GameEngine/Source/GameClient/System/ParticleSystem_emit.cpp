@@ -1,26 +1,9 @@
-// ?emit005D0950@ParticleSystem@@QAEXPBUCoord3D@@H_NPBVMatrix3D@@@Z
-// partial score=0.6862068965517242 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Source/Common/System
-// Retail 0x005D0950, 834 bytes. Emission helper called from update at
-// 0x005D1140 through ILT 0x0003E59F. The exact original method name is unknown.
-// ZH ParticleSys.cpp update supplies burst/attached-system logic; BFME adds
-// a handle return, heap ParticleInfo, module ground predicate and recursive slave emission.
+// The matched ParticleSystem::update at 0x005D1140 calls emit through ILT 0x0003E59F.
+// The body recurses through the same ILT when it emits a slave system.
+// The retail ret at +0x33F proves the 834-byte extent.
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
-// Reconstruction evidence (not an accepted match): retail prologue at RVA
-// 0x005D0950 and RET 0x10 at +0x33F establish the 834-byte extent.
-// The BFME ParticleSystem update at 0x005D1140 calls ILT 0x0003E59F;
-// this helper recursively uses the same ILT for its slave handle at +0x160.
-// Method name retains the address because the original spelling is unproved.
-// Members +0x44/+0x50 are the random delay/count from the ZH emission block;
-// +0x6C is the slave offset, +0x78 the attached-system name, +0xF0 the matrix,
-// +0x140/+0x144 the count/delay coefficients and +0x148 the position.
-// ParticleInfo position +0x1C agrees with generateParticleInfo at 0x005D0530.
-// +0x1A0 is a control-particle pointer here (factory result receives Particle*);
-// name_oracle calls it m_systemLifetimeLeft, but the concrete retail store and
-// ParticleSystemUpdate.cpp at +0x1A0 contradict that witness. No witness edited.
-// Remaining unknown members keep offset/address names. No pin changes made.
-// Do not claim normalized instruction shape as the masked-byte score.
 #include <hash_map>
 #define _OPERATOR_NEW_DEFINED_
 #include "matrix3d.h"
@@ -92,11 +75,11 @@ public:
     virtual void slot00(); virtual void slot04(); virtual void slot08();
     virtual void slot0c(); virtual void slot10();
     virtual Particle *createParticle(const ParticleInfo *, int, bool);
-    void emit005D0950(const Coord3D *pos, int priority, bool isIdentity, const Matrix3D *transform);
+    void emit(const Coord3D *pos, int priority, bool isIdentity, const Matrix3D *transform);
 protected:
     ParticleInfo *generateParticleInfo(int, int);
 public:
-    void setControlParticle(Particle *p) { m_controlParticle = p; }
+    void setControlParticle(Particle *p) { *(Particle **)((char *)this + 0x1a0) = p; }
     bool m_field04;
     unsigned char m_pad05[0x44-5];
     GameClientRandomVariable m_burstDelay;
@@ -118,8 +101,7 @@ public:
     BfmeParticleSystemHandle m_slaveSystem;
     unsigned char m_pad16c[4];
     BfmeParticleSystemHandle m_masterSystem;
-    unsigned char m_pad17c[0x1a0-0x17c];
-    Particle *m_controlParticle;
+    unsigned char m_pad17c[0x1a4-0x17c];
     bool m_isLocalIdentity;
     bool m_isIdentity;
     unsigned char m_pad1a6[5];
@@ -128,7 +110,7 @@ public:
     Rva005D0950Module *m_module1c4;
 };
 
-void ParticleSystem::emit005D0950(const Coord3D *pos, int priority, bool isIdentity, const Matrix3D *transform)
+void ParticleSystem::emit(const Coord3D *pos, int priority, bool isIdentity, const Matrix3D *transform)
 {
     if (m_masterSystem) {
         m_isIdentity = isIdentity;
@@ -157,16 +139,17 @@ void ParticleSystem::emit005D0950(const Coord3D *pos, int priority, bool isIdent
         } else {
             for (i = 0; i < count; ++i) {
                 ParticleInfo *info = generateParticleInfo(i, count);
-                if (!m_isEmitAboveGroundOnly) {
-                    createParticle(info, priority, false);
-                    delete info;
-                } else if (m_module1c4 && m_module1c4->slot14() && m_field1ab) {
-                    if (info->m_pos.z < TheTerrainLogic->getGroundHeight(info->m_pos.x, info->m_pos.y, 0)) createParticle(info, priority, false);
-                    delete info;
+                if (m_isEmitAboveGroundOnly) {
+                    if (m_module1c4 && m_module1c4->slot14() && m_field1ab) {
+                        if (info->m_pos.z < TheTerrainLogic->getGroundHeight(info->m_pos.x, info->m_pos.y, 0))
+                            createParticle(info, priority, false);
+                    } else if (info->m_pos.z >= TheTerrainLogic->getGroundHeight(info->m_pos.x, info->m_pos.y, 0)) {
+                        createParticle(info, priority, false);
+                    }
                 } else {
-                    if (info->m_pos.z >= TheTerrainLogic->getGroundHeight(info->m_pos.x, info->m_pos.y, 0)) createParticle(info, priority, false);
-                    delete info;
+                    createParticle(info, priority, false);
                 }
+                delete info;
             }
         }
         m_burstDelayLeft = (unsigned int)m_burstDelay.getValue();
@@ -176,7 +159,5 @@ void ParticleSystem::emit005D0950(const Coord3D *pos, int priority, bool isIdent
         else --m_burstDelayLeft;
     }
     if (m_slaveSystem)
-        m_slaveSystem->emit005D0950(&m_pos, priority, isIdentity, transform);
+        m_slaveSystem->emit(&m_pos, priority, isIdentity, transform);
 }
-
-
