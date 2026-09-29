@@ -60,6 +60,14 @@ struct Gen_t_0055cfc0_m4pod
 
 typedef BfmeAptScreenRef *(*BfmeAptScreenFactory)( void *context );
 
+struct Gen_t_012b7c58_entry
+{
+    const char *m_name;
+    BfmeAptScreenFactory m_factory;
+};
+
+extern Gen_t_012b7c58_entry g_012B7C58[];
+
 class BfmeAptScreenOnlineShell : public _bfme_AptGameWindow
 {
 public:
@@ -85,7 +93,7 @@ void BfmeAptScreenOnlineShell::openScreen( const char *name )
     }
 
     const char *screenName =
-        *(const char **)( 0x012B7C58 );
+        g_012B7C58[ 0 ].m_name;
     unsigned int index = 0;
     if( screenName == 0 )
         return;
@@ -94,8 +102,7 @@ void BfmeAptScreenOnlineShell::openScreen( const char *name )
     {
         if( strcmp( screenName, name ) == 0 )
         {
-            m_current.m_value = (*(BfmeAptScreenFactory *)(
-                0x012B7C5C + index * 8 ))( this );
+            m_current.m_value = g_012B7C58[ index ].m_factory( this );
             if( m_current.m_value == 0 )
                 return;
 
@@ -105,6 +112,6 @@ void BfmeAptScreenOnlineShell::openScreen( const char *name )
             return;
         }
 
-        screenName = *(const char **)( 0x012B7C60 + index * 8 );
+        screenName = g_012B7C58[ index + 1 ].m_name;
     }
 }

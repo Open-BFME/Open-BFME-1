@@ -8,6 +8,9 @@ typedef int Int;
 typedef bool Bool;
 typedef unsigned short WideChar;
 
+extern const char Rva006A16B0Empty[];
+extern const unsigned short BFMEEmptyUnicodeString;
+
 template <typename T> class StringBase
 {
 	friend class AsciiString;
@@ -45,12 +48,12 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? m_data->m_text : (const char *)0x0107388B;
+		return m_data ? m_data->m_text : Rva006A16B0Empty;
 	}
 
 	const char *reverseFind( char c ) const
 	{
-		const char *start = m_data ? m_data->m_text : (const char *)0x0107388B;
+		const char *start = m_data ? m_data->m_text : Rva006A16B0Empty;
 		const char *p = start + ( m_data ? m_data->m_length : 0 );
 		while ( p != start )
 		{
@@ -73,7 +76,7 @@ public:
 
 	const WideChar *str() const
 	{
-		return m_data ? m_data->m_text : (const WideChar *)0x0107388C;
+		return m_data ? m_data->m_text : &BFMEEmptyUnicodeString;
 	}
 
 	void __cdecl format( UnicodeString fmt, ... );

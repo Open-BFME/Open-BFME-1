@@ -16,6 +16,9 @@ class GameWindow;
 
 void GadgetTextEntrySetText(GameWindow *window, UnicodeString text);
 
+class Rva005127A0InGameChat;
+extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
+
 struct InGameChat
 {
 	unsigned char m_head[0x260];
@@ -25,7 +28,7 @@ struct InGameChat
 // ?ResetInGameChat@@YAXXZ
 void ResetInGameChat(void)
 {
-	InGameChat *chat = *(InGameChat **)0x012F4988;
+	InGameChat *chat = (InGameChat *)g_Rva005127A0InGameChat;
 
 	if (!chat)
 		return;
@@ -33,6 +36,6 @@ void ResetInGameChat(void)
 	if (!chat->m_textEntry)
 		return;
 
-	GadgetTextEntrySetText((*(InGameChat **)0x012F4988)->m_textEntry,
-		*(const UnicodeString *)0x01336E54);
+	GadgetTextEntrySetText(((InGameChat *)g_Rva005127A0InGameChat)->m_textEntry,
+		UnicodeString::TheEmptyString);
 }

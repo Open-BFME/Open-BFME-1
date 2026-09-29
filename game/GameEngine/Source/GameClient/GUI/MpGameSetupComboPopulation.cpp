@@ -105,6 +105,7 @@ public:
 };
 
 extern GameTextInterface *TheGameText;
+extern int g_012B76F4;
 
 void GadgetComboBoxReset( GameWindow *comboBox );
 int GadgetComboBoxAddEntry( GameWindow *comboBox, UnicodeString text, Color color );
@@ -134,7 +135,7 @@ void MpGameSetup::populateGameType()
 
 	GadgetComboBoxReset( m_gameType );
 	GadgetComboBoxAddEntry( m_gameType, TheGameText->fetch( "Apt:HeadToHead" ),
-		*(int *)0x012B76F4 );
+		g_012B76F4 );
 	GadgetComboBoxSetSelectedPos( m_gameType, 0, false );
 	m_gameType->winEnable( false );
 }
@@ -146,9 +147,9 @@ void MpGameSetup::populateMapType()
 
 	GadgetComboBoxReset( m_mapType );
 	GadgetComboBoxAddEntry( m_mapType, TheGameText->fetch( "Apt:OfficialMaps" ),
-		*(int *)0x012B76F4 );
+		g_012B76F4 );
 	GadgetComboBoxAddEntry( m_mapType, TheGameText->fetch( "Apt:PlayerMadeMaps" ),
-		*(int *)0x012B76F4 );
+		g_012B76F4 );
 
 	bool useSystemMapDir = m_preferences->getPreferences()->getBool(
 		AsciiString( "UseSystemMapDir" ), true );

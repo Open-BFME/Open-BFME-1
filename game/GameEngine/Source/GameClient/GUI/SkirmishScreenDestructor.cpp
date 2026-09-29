@@ -110,6 +110,12 @@ private:
 
 extern WindowManager *g_theWindowManager;
 extern void *g_obj12F4B54;
+extern "C" const void *bfmeVftBfmeAptScreenSkirmishPrimary[];
+extern "C" const void *bfmeVftBfmeAptScreenSkirmishGameWindow[];
+extern "C" const void *bfmeVftBfmeAptScreenSkirmish[];
+#pragma comment(linker, "/alternatename:_bfmeVftBfmeAptScreenSkirmishPrimary=??_7BfmeAptScreenSkirmish@@6BRva0057DA50Primary@@@")
+#pragma comment(linker, "/alternatename:_bfmeVftBfmeAptScreenSkirmishGameWindow=??_7BfmeAptScreenSkirmish@@6BRva00465200GameWindow@@@")
+#pragma comment(linker, "/alternatename:_bfmeVftBfmeAptScreenSkirmish=??_7BfmeAptScreenSkirmish@@6B@")
 
 class __declspec(novtable) BfmeAptScreenSkirmish
 	: public _bfme_AptGameWindow, public BfmeAptFunctorMarker,
@@ -130,9 +136,9 @@ private:
 
 BfmeAptScreenSkirmish::~BfmeAptScreenSkirmish()
 {
-	*(const void ***)this = (const void **)0x0110B030;
-	*(const void ***)((char *)this + 0x218) = (const void **)0x0110B02C;
-	*(const void ***)((char *)this + 0x258) = (const void **)0x0110AFE0;
+	*(const void ***)this = bfmeVftBfmeAptScreenSkirmishPrimary;
+	*(const void ***)((char *)this + 0x218) = bfmeVftBfmeAptScreenSkirmishGameWindow;
+	*(const void ***)((char *)this + 0x258) = bfmeVftBfmeAptScreenSkirmish;
 
 	if( g_obj12F4B54 == this )
 	{
