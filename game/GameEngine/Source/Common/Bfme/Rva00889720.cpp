@@ -4,6 +4,9 @@ extern "C" __declspec(dllimport) void __stdcall Rva01358E74Leave( void* );
 extern "C" __declspec(dllimport) void __stdcall Rva01358E54( void* );
 extern "C" __declspec(dllimport) void __stdcall Rva01358ECC( void* );
 
+struct BfmeCsDWA;
+extern BfmeCsDWA g_bfmeCsDWC;
+
 class Rva00889720Class
 {
 public:
@@ -19,7 +22,7 @@ public:
 bool Rva00889720Class::d_00889720( void )
 {
 	m_field9DFC = 0;
-	Rva01358E74Leave( (void*)0x01336E60 );
+	Rva01358E74Leave( &g_bfmeCsDWC );
 	Rva01358E54( &m_field9DF8 );
 	Rva01358ECC( (void*)m_field9F50 );
 	return false;
