@@ -404,7 +404,10 @@ void StructureToppleUpdate::beginStructureTopple(const DamageInfo *damageInfo)
 		Real majorRadius = buildingView->geometry.boxMajorRadius();
 		Real minorRadius = buildingView->geometry.boxMinorRadius();
 		Real averageRadius = (majorRadius + minorRadius) / 2;
-		Real explosionRadius = averageRadius * *(const double *)0x010af378;
+		// The topple scale factor is the pooled double 0.9 (__real@3feccccccccccccd,
+		// retail 0x010AF378); the compiler emits the same named constant for the
+		// literal, so the read no longer hard-codes an image address.
+		Real explosionRadius = averageRadius * 0.9;
 		self->delayBurstLocation.x = buildingView->position.x +
 			explosionRadius * Cos(toppleAngle);
 		self->delayBurstLocation.y = buildingView->position.y +

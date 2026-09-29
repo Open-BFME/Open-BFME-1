@@ -26,7 +26,10 @@ public:
 	Object *findObjectByID(int id);
 };
 
-#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
+// The game logic global at retail 0x012F0898
+// (?TheBfmeGameLogic@@3PAVGameLogic@@A), the same object other retail TUs
+// reach through `extern GameLogic *TheBfmeGameLogic;`.
+extern GameLogic *TheBfmeGameLogic;
 
 class Object
 {

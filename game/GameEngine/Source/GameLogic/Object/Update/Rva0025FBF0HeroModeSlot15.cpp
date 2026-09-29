@@ -21,7 +21,10 @@ class Rva0025FBF0LayoutString
 public:
     const char *str() const
     {
-        return m_data ? (const char *)m_data + 8 : (const char *)0x0107388B;
+        // AsciiString::TheNullChr: the null byte a retail StringBase<char>
+        // hands back for an unset string, as in the other BFME StringBase views.
+        static const char TheNullChr = 0;
+        return m_data ? (const char *)m_data + 8 : &TheNullChr;
     }
 
     void *m_data;

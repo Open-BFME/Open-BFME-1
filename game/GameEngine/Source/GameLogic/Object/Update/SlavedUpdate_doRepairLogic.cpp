@@ -150,7 +150,9 @@ void SlavedUpdate::doRepairLogic()
     // The decoded 0x000ED3B0 callee subtracts the two objects' XY positions
     // and their bounding radii before squaring the resulting distance.
     Real distanceSq = me->getDistanceSquared(master);
-    Bool closeEnough = distanceSq < *(const Real *)0x010C2D30;
+    // The repair proximity threshold is the pooled float at retail 0x010C2D30,
+    // which holds exactly 144.0f; the literal keeps the same read.
+    Bool closeEnough = distanceSq < 144.0f;
     if (closeEnough)
     {
         switch (m_repairState)

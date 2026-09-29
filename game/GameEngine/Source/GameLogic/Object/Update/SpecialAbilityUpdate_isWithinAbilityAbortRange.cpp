@@ -12,7 +12,9 @@ typedef int Int;
 typedef bool Bool;
 typedef int ObjectID;
 
-#define BFME_ZERO (*(const Real *)0x01075350)
+// The zero range BFME compares against is the pooled float at retail
+// 0x01075350, which holds exactly 0.0f.
+#define BFME_ZERO 0.0f
 #define BFME_OFFSET_DF 2.5f
 #define __max(a, b) (((a) > (b)) ? (a) : (b))
 

@@ -45,6 +45,10 @@ public:
 	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
 };
 
+// The interned empty AsciiString at retail 0x01336E50, defined by
+// game/GameEngine/Source/Common/Bfme/Rva00C6DC10StaticInit.cpp.
+extern AsciiString Rva01336E50EmptyString;
+
 class FXList;
 class AIUpdateInterface;
 
@@ -430,7 +434,7 @@ void StealthUpdate::changeVisualDisguise()
 			successfulReveal = 1;
 
 		{
-			AudioEventRTS sound((void *)0x01336e50, 0);
+			AudioEventRTS sound((void *)&Rva01336E50EmptyString, 0);
 			if (successfulReveal)
 			{
 				BFMERetailAsciiString eventName("DisguiseRevealedSuccess");

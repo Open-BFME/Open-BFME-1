@@ -8,6 +8,14 @@
 
 #include <list>
 
+class AsciiString;
+
+// The interned empty AsciiString at retail 0x01336E50, defined by
+// game/GameEngine/Source/Common/Bfme/Rva00C6DC10StaticInit.cpp.  Only its
+// address is taken here, so the incomplete declaration is enough and this
+// TU keeps its recorded /I set.
+extern AsciiString Rva01336E50EmptyString;
+
 class Thing;
 class ModuleData;
 class Object;
@@ -137,7 +145,7 @@ SpecialAbilityUpdate::SpecialAbilityUpdate( Thing *thing, const ModuleData *modu
 	  m_28( 0 ),
 	  m_2c( 0 ),
 	  m_30( 0 ),
-	  m_prepSoundLoop( reinterpret_cast<void *>( 0x01336e50 ), 0 ),
+	  m_prepSoundLoop( reinterpret_cast<void *>( &Rva01336E50EmptyString ), 0 ),
 	  m_prepFrames( 1 ),
 	  m_animFrames( 0 ),
 	  m_targetID( 0 ),

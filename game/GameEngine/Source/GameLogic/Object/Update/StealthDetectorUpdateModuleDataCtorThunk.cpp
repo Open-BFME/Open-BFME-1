@@ -5,6 +5,10 @@
 
 #include "ascii_string.h"
 
+// The interned empty AsciiString at retail 0x01336E50, defined by
+// game/GameEngine/Source/Common/Bfme/Rva00C6DC10StaticInit.cpp.
+extern AsciiString Rva01336E50EmptyString;
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
@@ -12,7 +16,7 @@ private:
 	unsigned char m_data[0x6c];
 
 public:
-	AudioEventRTS(void *allocator = (void *)0x01336e50, int zero = 0);
+	AudioEventRTS(void *allocator = (void *)&Rva01336E50EmptyString, int zero = 0);
 	virtual ~AudioEventRTS();
 };
 
