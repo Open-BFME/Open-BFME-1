@@ -152,7 +152,7 @@ W3DLightDraw::W3DLightDraw(Thing *thing, const ModuleData *moduleData)
 	m_radius = 0.0f;
 	m_angle = 0.0f;
 	m_height = 0.0f;
-	m_phase = WWMath::Random_Float() * (*(const float *)0x0108615c);
+	m_phase = WWMath::Random_Float() * 30.0f;
 	m_light = W3DDisplay::m_3DScene->getADynamicLight();
 	if (m_light)
 	{

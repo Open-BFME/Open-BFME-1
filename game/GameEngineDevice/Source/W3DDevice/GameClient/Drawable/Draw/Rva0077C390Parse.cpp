@@ -111,6 +111,7 @@ void parseModelConditionFlags(
 	Rva0076A580ModelConditionFlags *positive);
 
 struct FieldParse;
+extern const FieldParse g_01124420[];
 
 class INI
 {
@@ -171,7 +172,7 @@ void Rva0077C390::parse(INI *ini, void *instance, void *, const void *)
 	info.offset.y = 0;
 	info.offset.z = 0;
 	parseModelConditionFlags(ini, &info.all, &info.positive);
-	ini->initFromINI(&info, (const FieldParse *)0x01124420);
+	ini->initFromINI(&info, g_01124420);
 
 	if (info.bone.isEmpty())
 		throw INIException(3,

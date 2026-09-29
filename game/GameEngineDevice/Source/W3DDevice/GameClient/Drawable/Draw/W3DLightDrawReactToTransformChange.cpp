@@ -18,6 +18,8 @@ struct BfmeAsciiStringData
 	char text[1];
 };
 
+extern const char Rva006A16B0Empty[];
+
 class AsciiString
 {
 public:
@@ -30,7 +32,7 @@ public:
 
 	__forceinline const char *str() const
 	{
-		return data ? data->text : (const char *)0x0107388B;
+		return data ? data->text : Rva006A16B0Empty;
 	}
 };
 

@@ -92,15 +92,20 @@ public:
 };
 
 // Retail directly indexes the seven-entry decal-name table at VA 0x012BB604.
+extern const char *const g_012BB604[];
+
 static const char *const *bfmeTerrainDecalNamesAt012BB604()
 {
-	return (const char *const *)0x012BB604;
+	return g_012BB604;
 }
 
 // The source global TheProjectedShadowManager lives at VA 0x01306DEC.
+class ProjectedShadowManager;
+extern ProjectedShadowManager *TheProjectedShadowManager;
+
 static BfmeProjectedShadowManager *bfmeProjectedShadowManagerAt01306DEC()
 {
-	return *(BfmeProjectedShadowManager **)0x01306DEC;
+	return (BfmeProjectedShadowManager *)TheProjectedShadowManager;
 }
 
 extern "C" char *__cdecl strcpy(char *, const char *);
