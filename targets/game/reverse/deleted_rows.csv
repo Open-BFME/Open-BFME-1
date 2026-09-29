@@ -31384,3 +31384,8 @@ dup_930180,0x00930180,claim superseded by the gate-required claim for ??4Texture
 ?Q3Partition004775D0@@YAPAUQ3SortElem16@@PAU1@0U1@UQ3SortCompare@@@Z,0x004747F0,renamed to ?__unguarded_partition@@YAPAUQ3SortElem16@@PAU1@0U1@UQ3SortCompare@@@Z by tools/name_lane.py apply: two models agreed
 ?Q3PushHeap00473D60@@YAXPAUQ3SortElem16@@HHU1@UQ3SortCompare@@@Z,0x00473D60,renamed to ?__push_heap@@YAXPAUQ3SortElem16@@HHU1@UQ3SortCompare@@@Z by tools/name_lane.py apply: two models agreed
 ?Q3UnguardedLinearInsert00473CA0@@YAXPAUQ3SortElem16@@U1@UQ3SortCompare@@@Z,0x00473CA0,renamed to ?__unguarded_linear_insert@@YAXPAUQ3SortElem16@@U1@UQ3SortCompare@@@Z by tools/name_lane.py apply: two models agreed
+?Rva00565D00@@YAXPBVGenString@@@Z,0x00565D00,renamed to ?SetPlayerFaction@@YAXPBVGenString@@@Z by tools/name_lane.py apply: two models agreed
+?Rva00565D50@@YAXPBVGenString@@@Z,0x00565D50,renamed to ?CreateButtonFlash@@YAXPBVGenString@@@Z by tools/name_lane.py apply: two models agreed
+?Rva00565DA0@@YAXPBVGenString@@@Z,0x00565DA0,renamed to ?DeleteButtonFlash@@YAXPBVGenString@@@Z by tools/name_lane.py apply: two models agreed
+?Rva00565E90@@YAXPBVGenString@@@Z,0x00565E90,renamed to ?ShowButtonFlash@@YAXPBVGenString@@@Z by tools/name_lane.py apply: two models agreed
+?Rva00565EE0@@YAXPBVGenString@@@Z,0x00565EE0,renamed to ?HideButtonFlash@@YAXPBVGenString@@@Z by tools/name_lane.py apply: two models agreed

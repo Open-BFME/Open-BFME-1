@@ -114,3 +114,8 @@ game/GameEngine/Source/Common/Q3IntrosortLoop004775D0.cpp|function||Q3PartialSor
 game/GameEngine/Source/Common/Q3IntrosortLoop004775D0.cpp|function||Q3Partition004775D0,__unguarded_partition,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/Common/Q3IntrosortLoop004775D0.cpp|function||Q3PushHeap00473D60,__push_heap,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/Common/Q3IntrosortLoop004775D0.cpp|function||Q3UnguardedLinearInsert00473CA0,__unguarded_linear_insert,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/S3ActionSinkStringForwarders.cpp|function||Rva00565D00,SetPlayerFaction,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/S3ActionSinkStringForwarders.cpp|function||Rva00565D50,CreateButtonFlash,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/S3ActionSinkStringForwarders.cpp|function||Rva00565DA0,DeleteButtonFlash,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/S3ActionSinkStringForwarders.cpp|function||Rva00565E90,ShowButtonFlash,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/S3ActionSinkStringForwarders.cpp|function||Rva00565EE0,HideButtonFlash,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29

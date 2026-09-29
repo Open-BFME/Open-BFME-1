@@ -56,8 +56,8 @@ extern void *TheGenActionContext;
 			value->str(), 0, 0, 0, 0 );                                   \
 	}
 
-S3_ACTION( Rva00565D00, "SetPlayerFaction" )
-S3_ACTION( Rva00565D50, "CreateButtonFlash" )
-S3_ACTION( Rva00565DA0, "DeleteButtonFlash" )
-S3_ACTION( Rva00565E90, "ShowButtonFlash" )
-S3_ACTION( Rva00565EE0, "HideButtonFlash" )
+S3_ACTION( SetPlayerFaction, "SetPlayerFaction" )
+S3_ACTION( CreateButtonFlash, "CreateButtonFlash" )
+S3_ACTION( DeleteButtonFlash, "DeleteButtonFlash" )
+S3_ACTION( ShowButtonFlash, "ShowButtonFlash" )
+S3_ACTION( HideButtonFlash, "HideButtonFlash" )

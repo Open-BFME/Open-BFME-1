@@ -11,8 +11,8 @@ class GenString
 	void *m_data;
 };
 
-extern void Rva00565D50(const GenString *value);
-extern void Rva00565E90(const GenString *value);
+extern void CreateButtonFlash(const GenString *value);
+extern void ShowButtonFlash(const GenString *value);
 
 extern int g_buttonFlashNumber;
 
@@ -44,6 +44,6 @@ Gen_ctor_004b02a0::Gen_ctor_004b02a0()
 	m_field10 = 0;
 	int flashNumber = g_buttonFlashNumber++;
 	m_flashName.format(AsciiString("Flash%d"), flashNumber);
-	Rva00565D50((const GenString *)&m_flashName);
-	Rva00565E90((const GenString *)&m_flashName);
+	CreateButtonFlash((const GenString *)&m_flashName);
+	ShowButtonFlash((const GenString *)&m_flashName);
 }

@@ -38,7 +38,7 @@ int bfmeQuiet();
 int Rva00589320();
 void bfmeGo1021G(int);
 void Rva00564E40();void Rva00564EA0();void Rva00564E70();void Rva00564ED0();void Rva00564F00();void Rva00564F30();
-void Rva00564F60(bool);void Rva00564B00(bool);void bfmePowerCapZB(int);void Rva00565D00(const GenString*);
+void Rva00564F60(bool);void Rva00564B00(bool);void bfmePowerCapZB(int);void SetPlayerFaction(const GenString*);
 void j_0003f198();void j_00034a86();void j_0001bc70();void j_00035431();void j_0002f51d();
 typedef void (__fastcall *Call00598950)(void*);
 template<class T> inline T &at00598950(void *p,int offset) { return *(T*)((char*)p+offset); }
@@ -139,7 +139,7 @@ void Rva00597FC0Client::update()
  if(((StringBase<char>*)&side)->compare(*(StringBase<char>*)&field_4d8)!=0) {
   resourceSlot->cacheResourceImage(side);
   helpSlot->cacheResourceImage(side);
-  Rva00565D00((const GenString*)&side);
+  SetPlayerFaction((const GenString*)&side);
   field_4d8=side;
  }
 }

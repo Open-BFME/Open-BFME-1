@@ -18,7 +18,7 @@ public:
 	GenStringData *m_data;
 };
 
-extern void Rva00565DA0(const GenString *value);
+extern void DeleteButtonFlash(const GenString *value);
 
 #include "ascii_string.h"
 
@@ -42,5 +42,5 @@ private:
 
 Gen_dtor_004b05d0::~Gen_dtor_004b05d0()
 {
-	Rva00565DA0((const GenString *)&m_flashName);
+	DeleteButtonFlash((const GenString *)&m_flashName);
 }
