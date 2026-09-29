@@ -6,6 +6,12 @@
 typedef unsigned int UnsignedInt;
 typedef unsigned short UnsignedShort;
 
+// g_bfmeEmptyAE is the pooled empty string at 0x0107388B (dir32_addresses.csv,
+// ?g_bfmeEmptyAE@@3QBDB).  0x00418F52 is the matched 5-byte ILT thunk
+// ?j_00018f52@@YAXXZ (functions.csv), used here as a function-pointer value.
+extern const char g_bfmeEmptyAE[];
+extern void j_00018f52();
+
 template <typename T> class StringBase
 {
 public:
@@ -53,7 +59,7 @@ public:
 	}
 	const char *str() const
 	{
-		return m_data ? (const char *)((const char *)m_data + 8) : (const char *)0x0107388b;
+		return m_data ? (const char *)((const char *)m_data + 8) : g_bfmeEmptyAE;
 	}
 };
 
@@ -234,7 +240,7 @@ GameWindow *Rva0046A870Manager::createMainWindow( const AsciiString &filename,
 	StringBase<char> *storedName = &result->m_name;
 	storedName->set( *(const StringBase<char> *)&filename );
 	AsciiString name( filename );
-	name.concat( (const char *)0x010f7284, 0xb );
+	name.concat( ":MainWindow", 0xb );
 	UnicodeString title;
 	title.translate( name );
 	window->GameWindow::winSetText( title );
@@ -248,7 +254,7 @@ GameWindow *Rva0046A870Manager::createMainWindow( const AsciiString &filename,
 			FunctionLexicon::TABLE_MAIN_WINDOW );
 		info->m_callback = function;
 		if ( function == 0 )
-			info->m_callback = (void *)0x00418f52;
+			info->m_callback = (void *)j_00018f52;
 	}
 
 	return (GameWindow *)result;
