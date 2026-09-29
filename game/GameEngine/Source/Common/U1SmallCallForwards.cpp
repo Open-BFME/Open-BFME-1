@@ -84,6 +84,8 @@ public:
 	void add( const char *text );
 };
 
+extern const char g_u4Separator[];
+
 class U1CallReceiver_005C47D0
 {
 public:
@@ -106,7 +108,7 @@ void u1Call_005C7110( void *a, void *b, void *c, void **element )
 	}
 
 	sink->add( (const char *)c );
-	sink->add( (const char *)0x0110FCA8 );
+	sink->add( g_u4Separator );
 	sink->add( (const char *)*element );
 	((U1CallReceiver_005C47D0 *)a)->apply(
 		(U1CallReceiver_005C47D0::Argument *)0x0A );
