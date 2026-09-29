@@ -59,9 +59,9 @@ public:
 extern "C" int peerGetPlayerInfoNoWaitA(PEER, const char *, UnsignedInt *, Int *);
 extern "C" int peerGetPlayerFlagsA(PEER, const char *, RoomType, Int *);
 
-#define BFME_RANK1V1_KEY ((const char *)0x011193E0)
-#define BFME_RANK2V2_KEY ((const char *)0x011193D4)
-#define BFME_LAST_LADDER_KEY ((const char *)0x01119568)
+#define BFME_RANK1V1_KEY "b_rank1v1"
+#define BFME_RANK2V2_KEY "b_rank2v2"
+#define BFME_LAST_LADDER_KEY "b_lastLadder"
 
 class PeerResponse
 {
