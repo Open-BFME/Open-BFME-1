@@ -44,6 +44,8 @@ public:
 		bool clear_stencil, const Vector3 &color, float dest_alpha,
 		float z, UnsignedInt stencil);
 	static void Begin_Scene_Inner(void);
+
+	static void *D3DDevice;
 };
 
 class DynamicVBAccessClass
@@ -75,20 +77,31 @@ public:
 	static void Get_Render_Target_Resolution(int &, int &, int &, bool &);
 	static void Update_Movie_Capture(void);
 	static bool Begin_Render(bool, bool, const Vector3 &, float, void (*)(void));
+
+	static bool IsInitted;
+	static bool IsRendering;
+	static bool IsCapturing;
+
+private:
+	static bool PauseRecord;
+	static bool RecordNextFrame;
 };
+
+extern int g_0133F414;
+extern int g_0133F41C;
 
 bool WW3D::Begin_Render(bool clear, bool clearz, const Vector3 &color,
 	float dest_alpha, void (*network_callback)(void))
 {
 
-	if (!*(unsigned char *)0x0133F428)
+	if (!IsInitted)
 		return true;
 
-	if (*(unsigned char *)0x0133F429)
+	if (IsRendering)
 		return false;
 
 	{
-		BfmeD3DDevice *device = *(BfmeD3DDevice **)0x01340534;
+		BfmeD3DDevice *device = (BfmeD3DDevice *)DX8Wrapper::D3DDevice;
 		if (device)
 		{
 			long hr = device->TestCooperativeLevel();
@@ -104,27 +117,26 @@ bool WW3D::Begin_Render(bool clear, bool clearz, const Vector3 &color,
 		}
 	}
 
-	*(int *)0x0133F41C = Rva00AFE950Get();
-	*(int *)0x0133F414 = Rva00AFE960Get();
+	g_0133F41C = Rva00AFE950Get();
+	g_0133F414 = Rva00AFE960Get();
 	Rva00AFE940();
 	DynamicVBAccessClass::_Reset(true);
 	DynamicIBAccessClass::_Reset(true);
 	((Gen_00944c50 *)1)->m();
 	Debug_Statistics::Begin_Statistics();
 
-	if (*(unsigned char *)0x0133F42A &&
-		(!*(unsigned char *)0x0133F418 || *(unsigned char *)0x0133F410))
+	if (IsCapturing && (!PauseRecord || RecordNextFrame))
 	{
 		WW3D::Update_Movie_Capture();
-		*(unsigned char *)0x0133F410 = 0;
+		RecordNextFrame = false;
 	}
 
 	if (clear)
 	{
-		*(unsigned char *)0x0133F429 = 1;
+		IsRendering = true;
 		goto clear_viewport;
 	}
-	*(unsigned char *)0x0133F429 = 1;
+	IsRendering = true;
 	if (clearz)
 		goto clear_viewport;
 	goto begin_scene;

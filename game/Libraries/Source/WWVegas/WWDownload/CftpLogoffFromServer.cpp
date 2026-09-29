@@ -4,6 +4,7 @@
 typedef long HRESULT;
 
 extern "C" int __stdcall send(int, const char *, int, int);
+extern "C" __declspec(dllimport) void __stdcall OutputDebugStringA(const char *);
 
 class Rva00885390Class
 {
@@ -33,7 +34,7 @@ private:
 	void ZeroStuff(void);
 };
 
-typedef void (__stdcall *Rva01358EA8Function)(void *);
+typedef void (__stdcall *Rva01358EA8Function)(const char *);
 HRESULT Cftp::LogoffFromServer(void)
 {
 	char reply[50];
@@ -42,12 +43,11 @@ HRESULT Cftp::LogoffFromServer(void)
 	switch (m_iStatus)
 	{
 	case 70:
-		if (send(m_iCommandSocket, (const char *)0x01132EE8, 6, 0) > 0)
+		if (send(m_iCommandSocket, "QUIT\r\n", 6, 0) > 0)
 		{
-			Rva01358EA8Function callback =
-				*(Rva01358EA8Function *)0x01358EA8;
-			callback((void *)0x01132E90);
-			callback((void *)0x01132EE8);
+			Rva01358EA8Function callback = OutputDebugStringA;
+			callback("-->");
+			callback("QUIT\r\n");
 			m_iStatus = 80;
 		}
 		else
