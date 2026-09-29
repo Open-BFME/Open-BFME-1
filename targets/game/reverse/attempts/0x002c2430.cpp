@@ -1,5 +1,5 @@
 // ??0GiantBirdAIUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
-// partial score=0.97 date=2026-09-27
+// partial score=0.9402 date=2026-09-27
 // cl: /DNDEBUG /MD /EHsc
 
 // BANKED CANDIDATE for retail 0x002C2430 (418 B), GiantBirdAIUpdate's public

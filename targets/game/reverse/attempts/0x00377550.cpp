@@ -1,5 +1,5 @@
-// ?d_00377550@@YAXXZ
-// partial score=0.9311224489795918 date=2026-09-27
+// ?rva00377550@CastleBehavior@@QAE_NXZ
+// partial score=0.9311 date=2026-09-27
 // Retail 0x00377550..0x003776D8. CastleBehavior ownership is supported by
 // data04/object08 layout and calls into the landed CastleBehavior status helper.
 // Original private method name unproved; address retained.
@@ -46,13 +46,13 @@ extern BfmeThingFactory *TheThingFactory;
 enum ObjectStatusTypes { Status78 = 78 };
 class CastleBehavior {
 public:
-    bool restorePlayer00377550();
+    bool rva00377550();
     void rva00376590(bool);
     Object *rva00372FA0(const ThingTemplate *, int, bool);
     void rva00371ee0(ObjectStatusTypes, bool);
     void *vtable; Data00377550 *data04; Object *object08; char pad0c[0x98]; bool pendingA4;
 };
-bool CastleBehavior::restorePlayer00377550()
+bool CastleBehavior::rva00377550()
 {
     if (pendingA4) {
     Data00377550 *data = data04;

@@ -10328,5 +10328,15 @@
   "after_sha256": "a7344c0be9dd52f1d6d790b0427f4f688862be9b74c14c4bf2cb31791b1e2d19",
   "evidence": "targets/game/reverse/identity_evidence/00893270-registry-pool.md",
   "reason": "The old type name came from an unsupported local layout guess. The pin at VA 0x01337810 and the matched constructor at 0x00899560 identify Rva00899560Pool as the type of the global this body reads."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00377550.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00377550.cpp",
+  "old_name": "restorePlayer00377550",
+  "new_name": "rva00377550",
+  "before_sha256": "7784a8a9641f25ebb5838539b6b7100d6083a4d9af6d2882c2add3917bf719c1",
+  "after_sha256": "6d4382e33a15b12b9e9f815be06a61ffc76b67ce134b6aecc4e17df419edcb3a",
+  "evidence": "targets/game/reverse/identity_evidence/00377550-method-name.md",
+  "reason": "The bank's restorePlayer00377550 label came from behavior, but no named caller, retail pin, source string, or EA source witness names this private method. The generated ledger row remains ?d_00377550, so the corrected bank keeps its address in rva00377550."
  }
 ]
