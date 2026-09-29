@@ -1,11 +1,58 @@
 // ??1PlayerTemplate@@QAE@XZ
-// partial score=0.99 date=2026-09-27
-// The probe normalizes every instruction to retail, but VC7.1 assigns the second vector pointers to opposite registers.
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// partial score=0.7792 date=2026-09-28
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_NO_EXCEPTIONS /DBFME_STLP_NODE_ALLOC /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // This source uses STLport interfaces and pinned BFME headers.
-// The constructors and INI name table establish the 0x124-byte PlayerTemplate layout.
-// The destructor releases both vectors and every string member.
-
+// stlport
+// 701 of 702 bytes; probe reports shape 1.000 and all 31 EH state stores match.
+// The whole residue is one register swap in the FIRST vector destructor (+0x1C7):
+// retail holds _M_start in EAX and the byte count in ECX (a 6-byte
+// `81 f9 80 00 00 00`), VC7.1 here holds them in ECX and EAX (5-byte
+// `3d 80 00 00 00`), which also makes the body 1 byte short. The SECOND vector
+// destructor matches retail exactly.
+// 2026-09-28 (opencode/space-bunny-free) NEW EVIDENCE, and the reason the block
+// below is now the real container instead of a hand-rolled class:
+//  * Common/STLTypedefs.h (pulled in by Common/INI.h) defines _STLP_USE_NEWALLOC,
+//    so in a default TU `std::vector<int>` deallocates with a bare
+//    `::operator delete` and VC7.1 FOLDS retail's `cmp bytes,0x80` away: the
+//    vector cleanup collapses to `if (start) operator delete(start)` (measured:
+//    663 B for one member, 625 B for two). Retail's body needs the other arm,
+//    so the node allocator is mandatory here.
+//  * inputs/reference/shims/stlp_nodealloc/Common/STLTypedefs.h is the repo's
+//    shim for exactly this (guarded by BFME_STLP_NODE_ALLOC); the cl: line below
+//    is the flag set already matched at
+//    game/GameEngine/Source/Common/Bfme5UnwoundDestructors.cpp.
+//  * With that configuration the members are declared `_STL::vector<int>` and the
+//    emitted code is byte-identical to the hand-rolled class (701 B, 153 non-reloc
+//    diffs, first at +0x1C8, shape 1.000) while the two `__node_alloc` call sites
+//    now carry retail's own symbol
+//    `?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z` directly, so the
+//    Rva00082E5F0NodeAllocator shim and its /alternatename pragma are gone.
+//    The `sar ecx,2 / shl ecx,2` pair is STLport's own
+//    `allocator<T>::deallocate` (`__n * sizeof(value_type)`), not a hand spelling.
+//  * The residue is therefore NOT a source-shape problem: the genuine container
+//    spelling reproduces it. Ruled out again, all byte-identical at 701 B with
+//    start in ECX: two distinct element types; an explicit `allocator<int>`
+//    template argument; `_STL::vector` at one site and the modelled class at the
+//    other, in both directions; a `_STLP_alloc_proxy` deriving from a node
+//    allocator; the destructor split into a base class; a nested `{ }`; a
+//    `do{}while(0)`; `size_t` counts; direct member use instead of locals; an
+//    out-of-line forceinline `destroy()`; a member subobject struct; /O1 /Os /Ot
+//    /Ob0 /Ob1 /Ob2 /G4 /G5 /G6 /G7 /Fr /Gs /Gy on the cl: line (all 701 B, and
+//    /G7 makes it 703 B).
+//  * Retail really does alternate these two sites: only 9 sites in the whole image
+//    load _M_start into EAX (0x0E297C, 0x147109, 0x1DAFD9, 0x2660C7, 0x2CC122,
+//    0x2CC4D9, 0x3495F3, 0x52A7AD, 0x64638A) and only 0x3492A0 contains both an
+//    EAX-start and an ECX-start cleanup, in the opposite order to this body.
+//  * blocker=regalloc. The honest next lever is a differently-patched VC7.1 or an
+//    inline-asm move, not another C++ spelling.
+// NOTE: keep `// cl:` and `// stlport` inside the first 2048 bytes of this file;
+// tools/crosslink.py only scans that window, and dropping the cl: line silently
+// rebuilds this TU with the wrong allocator and a 25-byte-shorter body.
+// NOTE: with the long cl: line the markers must not be pushed past 2048 bytes by
+// header prose; putting the markers first (as here) is what makes the node-alloc
+// configuration compile at all.
+// The constructors and INI name table establish the 0x124-byte PlayerTemplate
+// layout. The destructor releases both vectors and every string member.
 #include "Common/INI.h"
 #define ANIM2D_INLINE_SNAPSHOT_DTOR
 #include "Common/Money.h"
@@ -68,36 +115,7 @@ public:
 	char m_data[0x0c];
 };
 
-class Rva00082E5F0NodeAllocator
-{
-public:
-	static void deallocate( void *pointer, unsigned int bytes );
-};
-#pragma comment(linker, "/alternatename:?deallocate@Rva00082E5F0NodeAllocator@@SAXPAXI@Z=?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")
 
-class Rva000BB6C0VectorBase
-{
-public:
-	__forceinline ~Rva000BB6C0VectorBase()
-	{
-		int *first = begin();
-		if ( first != 0 )
-		{
-			unsigned int bytes = size() * sizeof( int );
-			if ( bytes > 0x80 )
-				::operator delete( first );
-			else
-				Rva00082E5F0NodeAllocator::deallocate( first, bytes );
-		}
-	}
-
-private:
-	__forceinline int *begin() const { return m_first; }
-	__forceinline unsigned int size() const { return (unsigned int)( m_end - m_first ); }
-	int *m_first;
-	int *m_last;
-	int *m_end;
-};
 
 #pragma comment(linker, "/alternatename:??1Rva000E27A0Object060@@QAE@XZ=?j_000032b5@@YAXXZ")
 #pragma comment(linker, "/alternatename:??1Rva000E27A0Object06C@@QAE@XZ=?j_00032227@@YAXXZ")
@@ -147,8 +165,8 @@ private:
 	Rva000E27A0Object060 m_at_060;             // +0x060
 	Rva000E27A0Object06C m_at_06c;             // +0x06c
 	Rva000E27A0Object080 m_at_080;         // +0x080
-	Rva000BB6C0VectorBase m_intrinsicSciences;         // +0x08c
-	Rva000BB6C0VectorBase m_at_098;       // +0x098
+	_STL::vector<int> m_intrinsicSciences;         // +0x08c
+	_STL::vector<int> m_at_098;       // +0x098
 	Rva000E27A0StringView m_at_0a4;       // +0x0a4
 	Rva000E27A0StringView m_at_0a8;     // +0x0a8
 	Rva000E27A0StringView m_at_0ac;  // +0x0ac
