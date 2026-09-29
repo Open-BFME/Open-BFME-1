@@ -1,5 +1,5 @@
 // ?rva00742920@W3DView@@QAEHPAUCoord2D@@@Z
-// partial score=0.92 date=2026-09-27
+// partial score=0.4904 date=2026-09-27
 // BFME camera scroll reconstruction candidate.
 // Target: 0x00742920, 726 bytes.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath
@@ -213,7 +213,7 @@ Bool W3DView::rva00742920(Coord2D *delta)
 		locals.world.Z = position.Z;
 		locals.world.X = position.X;
 		locals.world.Y = position.Y;
-		Real scale = zoomLimits.slot10() * cameraZoom * globalReal(0x01083b6c);
+		volatile Real scale = zoomLimits.slot10() * (cameraZoom * globalReal(0x01083b6c));
 		Real horizontal = locals.rayStart.X * delta->x;
 		horizontal += locals.screen.direction.X * delta->y;
 		locals.world.X += horizontal * scale;
