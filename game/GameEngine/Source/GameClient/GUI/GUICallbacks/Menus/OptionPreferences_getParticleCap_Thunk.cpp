@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib
 // Lift the OptionPreferences::getParticleCap naked dump to clean C++.
 //
 // Preferences getter whose default is computed rather than read: a missing key
@@ -26,17 +26,7 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(const char *);
-	~AsciiString();
-
-	const char *str(void) const { return m_data ? m_data->m_chars : ""; }
-
-private:
-	AsciiStringData *m_data;
-};
+#include "ascii_string.h"
 
 struct PreferenceNode
 {

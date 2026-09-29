@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD
+// cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWLib
 // BFME's expanded ThingTemplate copy assignment.  The Zero Hour twin is the
 // compiler-generated ThingTemplate::operator= in ThingFactory.cpp; the BFME
 // record keeps that order but adds the fields visible in the retail body.
@@ -12,25 +12,10 @@ private:
 	char m_bfmeHead[0x0c];
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	UnicodeString &operator=(const UnicodeString &other);
-
-private:
-	void *m_data;
-};
+#include "unicode_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString &operator=(const AsciiString &other);
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct KindOfBlock
 {

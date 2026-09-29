@@ -22,27 +22,7 @@
 typedef int Int;
 typedef bool Bool;
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString( const char *s )
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase( s );
-	}
-
-	~AsciiString()
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-
-	// StringBase's Header is { int ref_count; short length; short capacity; }
-	// ahead of the characters, which is the +8 retail adds after the null test.
-	const char *str( void ) const { return m_data ? m_data + 8 : ""; }
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 // Six bytes off the front of an archived entry. Splitting the size into its own
 // four byte array is what makes retail's two loads: MSVC pairs adjacent byte

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME7: Zero Hour's CommandSet::parseCommandButton (retail 0x0049C7C0
 // 207 B) as a standalone TU.  The token names a command button looked up
 // through TheControlBar (VA 0x012F33F8) with a temporary AsciiString; an
@@ -12,18 +12,7 @@ typedef int Int;
 
 extern const char g_bfmeEmptyAscii[];
 
-class AsciiString
-{
-public:
-	AsciiString( const char *text );
-	~AsciiString() { releaseBuffer(); }
-
-	const char *str( void ) const { return m_data ? ((const char *)m_data) + 8 : g_bfmeEmptyAscii; }
-
-private:
-	void releaseBuffer( void );
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class INIException
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib
 // ABI-local reconstruction of OptionPreferences::getCampaignDifficulty.
 // The public OptionsMenu declaration uses the game's full headers; this TU
 // keeps the retail preference-node and StringBase layout explicit so MSVC 7.1
@@ -15,17 +15,7 @@ public:
 	char m_chars[1];
 };
 
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	~AsciiString();
-
-	const char *str(void) const { return m_data ? m_data->m_chars : ""; }
-
-private:
-	AsciiStringData *m_data;
-};
+#include "ascii_string.h"
 
 struct PreferenceNode
 {

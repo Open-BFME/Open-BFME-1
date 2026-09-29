@@ -1,6 +1,6 @@
 // ActiveBody::createParticleSystems, retail 0x0020ED10 (virtual slot +0x40, ILT 0x0004237A).
 // ZH twin: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameLogic/Object/Body/ActiveBody.cpp
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 #include <string.h>
 
@@ -25,16 +25,7 @@ struct Coord3D
 
 class Matrix3D;
 
-class AsciiString
-{
-public:
-	void *m_data;
-
-	const char *str() const
-	{
-		return m_data ? reinterpret_cast<const char *>(m_data) + 8 : "";
-	}
-};
+#include "ascii_string.h"
 
 class Object
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: FXListAtBonePosFXNugget::doFxAtBones, retail 0x0042D8E0, 356B.
 // Layout matches the landed ctor thunk: m_fx at +0xB4, m_boneName at +0xB8.
 // BFME uses getPristineBonePositions (not ZH getCurrentClientBonePositions)
@@ -63,18 +63,7 @@ struct BfmeAsciiStringData
 	unsigned short m_pad;
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	const char *str() const
-	{
-		return m_data ? (const char *)(m_data + 1) : "";
-	}
-
-private:
-	BfmeAsciiStringData *m_data;
-};
+#include "ascii_string.h"
 
 class FXList
 {

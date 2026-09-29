@@ -1,4 +1,4 @@
-// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 // The name is reconstruction-scoped and address-derived.  The matched caller
 // at 0x003BB8F0 proves this helper's two-argument ABI: an Xfer interface and a
@@ -9,13 +9,7 @@ extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(
 	long volatile *value);
 
-class AsciiString
-{
-public:
-	static const AsciiString TheEmptyString;
-
-	char *m_data;
-};
+#include "ascii_string.h"
 
 // Reconstruction aliases for the same one-word StringBase<char> layout.  The
 // distinct names select the already-verified retail copy and const-char

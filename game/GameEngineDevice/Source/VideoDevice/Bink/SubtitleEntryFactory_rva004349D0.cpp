@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib
 // BFME's video-player setup installs this callback beside the registry-language
 // and SUBTITLE: lookup callbacks.  SubtitleManager::addSubtitle proves the
 // nine-argument callback ABI; the called 0x00434810 constructor proves the
@@ -9,17 +9,9 @@ typedef float Real;
 typedef unsigned int UnsignedInt;
 typedef unsigned char Bool;
 
-class AsciiString
-{
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
-class UnicodeString
-{
-private:
-	void *m_data;
-};
+#include "unicode_string.h"
 
 class GameFont;
 

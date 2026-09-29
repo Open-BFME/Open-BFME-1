@@ -1,3 +1,4 @@
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
 // Byte-matched BFME Object world-space contact-point query.
 
 typedef bool Bool;
@@ -102,17 +103,7 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	const char *str() const
-	{
-		return m_data ? m_data + 8 : "";
-	}
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate : public Overridable

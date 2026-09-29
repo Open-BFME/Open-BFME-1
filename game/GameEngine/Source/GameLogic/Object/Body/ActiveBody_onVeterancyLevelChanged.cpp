@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?onVeterancyLevelChanged@ActiveBody@@: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameLogic/Object/Body/ActiveBody.cpp
 // Open-BFME: ActiveBody::onVeterancyLevelChanged, retail 0x0020E580, 520 bytes (jump table included).
 //
@@ -16,15 +16,7 @@
 // The method is a virtual of the body interface, which sits at +0x10 inside
 // the module, so this points there: the module's object is this-0x08.
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	static const AsciiString TheEmptyString;
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 typedef int Int;
 typedef bool Bool;

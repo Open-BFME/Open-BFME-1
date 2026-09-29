@@ -1,29 +1,13 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 typedef unsigned int UnsignedInt;
 
 extern "C" void * __cdecl memset(void *destination, int value, unsigned int count);
 #pragma intrinsic(memset)
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString &operator=(const AsciiString &other);
+#include "ascii_string.h"
 
-private:
-	char *m_data;
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	UnicodeString &operator=(const UnicodeString &other);
-
-private:
-	unsigned short *m_data;
-};
+#include "unicode_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable

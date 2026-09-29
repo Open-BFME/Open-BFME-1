@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 typedef bool Bool;
 typedef unsigned short UnsignedShort;
@@ -8,10 +8,7 @@ enum NameKeyType
 	NAMEKEY_INVALID = 0
 };
 
-class AsciiString
-{
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class Parameter;
 class Player;

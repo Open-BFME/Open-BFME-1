@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?releaseData@Dict@@: game/GameEngine/Source/Common/Dict.cpp
 // Open-BFME: Dict::releaseData, retail 0x000681C0, 156 bytes. The body carried
 // no ledger row; its name sat on a 5-byte thunk.
@@ -21,23 +21,9 @@ typedef bool Bool;
 
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	~UnicodeString();
-private:
-	unsigned short *m_data;
-};
+#include "unicode_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Dict.h
 class Dict

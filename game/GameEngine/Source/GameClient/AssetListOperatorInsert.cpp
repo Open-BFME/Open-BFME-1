@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 
 // Open-BFME5: AssetList prototype insertion, retail 0x00141D00, 77 bytes.
@@ -10,18 +10,7 @@
 
 extern const char Rva006A16B0Empty[];
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	const char *str() const
-	{
-		return m_data ? m_data + 8 : Rva006A16B0Empty;
-	}
-
-private:
-	const char *m_data;
-};
+#include "ascii_string.h"
 
 struct Rva001408C0Target;
 

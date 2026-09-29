@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -53,25 +53,7 @@ extern const char g_010EAB48[];
 // The retail parser's token temporary calls the shared BFME narrow-string
 // constructor and releaseBuffer body.  The local spelling is AsciiString so
 // the already-proven findLevel ABI remains the ordinary AsciiString reference.
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	AsciiString &operator=(const AsciiString &source);
-	~AsciiString() { releaseBuffer(); }
-
-	const char *str() const
-	{
-		return m_data != 0
-			? reinterpret_cast<const char *>(m_data) + 8
-			: "";
-	}
-
-	void *m_data;
-
-private:
-	void releaseBuffer();
-};
+#include "ascii_string.h"
 
 class INIException
 {

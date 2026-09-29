@@ -1,25 +1,12 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Retail 0x00361030. The adjacent BfmeOwnVUM destructor at 0x00360F90
 // fixes the class vftable and the five string fields used by this method.
 
 typedef unsigned char UnsignedByte;
 
-class AsciiString
-{
-public:
-	AsciiString() : m_data(0) {}
-	~AsciiString();
+#include "ascii_string.h"
 
-	char *m_data;
-};
-
-class UnicodeString
-{
-public:
-	void translate(const AsciiString &source);
-
-	char *m_data;
-};
+#include "unicode_string.h"
 
 struct BfmeInfoBH
 {

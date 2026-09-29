@@ -10,38 +10,9 @@ extern "C" __declspec(dllimport) int __cdecl fgetc(FILE *stream);
 extern "C" __declspec(dllimport) unsigned int __cdecl fread(void *buffer, unsigned int size, unsigned int count, FILE *stream);
 extern "C" __declspec(dllimport) int __cdecl fclose(FILE *stream);
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString {
-public:
-    AsciiString() { base()->StringBase<char>::StringBase(); }
-    AsciiString(const AsciiString &that) { base()->StringBase<char>::StringBase(*that.base()); }
-    AsciiString(const char *str) { base()->StringBase<char>::StringBase(str); }
-    ~AsciiString() { base()->releaseBuffer(); }
-    void clear() { base()->releaseBuffer(); }
+#include "ascii_string.h"
 
-private:
-    StringBase<char> *base() { return (StringBase<char> *)this; }
-    const StringBase<char> *base() const { return (const StringBase<char> *)this; }
-
-private:
-    StringBase<char>::Header *m_data;
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString {
-public:
-    UnicodeString() { base()->StringBase<wchar_t>::StringBase(); }
-    UnicodeString(const UnicodeString &that) { base()->StringBase<wchar_t>::StringBase(*that.base()); }
-    UnicodeString(const wchar_t *str) { base()->StringBase<wchar_t>::StringBase(str); }
-    ~UnicodeString() { base()->releaseBuffer(); }
-
-private:
-    StringBase<wchar_t> *base() { return (StringBase<wchar_t> *)this; }
-    const StringBase<wchar_t> *base() const { return (const StringBase<wchar_t> *)this; }
-
-private:
-    StringBase<wchar_t>::Header *m_data;
-};
+#include "unicode_string.h"
 
 UnicodeString readUnicodeString(FILE *file);
 

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME: TransportContain::createPayload, retail 0x0022D2A0.
 // Identity is anchored by TransportContain's vtable slot 27 and the matched
 // HordeContain::createPayload caller at retail 0x0023C000.
@@ -10,17 +10,7 @@ extern "C" void _ReadWriteBarrier(void);
 
 extern const char g_bfmeEmptyAscii[];
 
-class AsciiString
-{
-public:
-	const char *str() const
-	{
-		const char *data = m_data;
-		return data ? data + 8 : g_bfmeEmptyAscii;
-	}
-
-	const char *m_data;
-};
+#include "ascii_string.h"
 
 class ThingTemplate;
 class Object;

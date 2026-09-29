@@ -11,32 +11,7 @@
 #include <string.h>
 #include "string_base.h"
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString() { m_data = 0; }
-
-	AsciiString( const char *str )
-	{
-		if (str != 0) {
-			((StringBase<char> *)this)->StringBase<char>::StringBase( str );
-		} else {
-			((StringBase<char> *)this)->StringBase<char>::StringBase( str );
-		}
-	}
-
-	// Declared only: retail's `return commandName` calls the copy constructor
-	// out of line rather than expanding StringBase's.
-	AsciiString( const AsciiString &that );
-
-	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
-
-	void __cdecl format( AsciiString fmt, ... );
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage

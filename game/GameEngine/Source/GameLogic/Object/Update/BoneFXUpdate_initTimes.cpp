@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHs-c- /Oi
+// cl: /DNDEBUG /MD /EHs-c- /Oi /Igame/Libraries/Source/WWVegas/WWLib
 // BoneFXUpdateInitTimesShim::initTimes — ILT target of BoneFXUpdate::initTimes,
 // retail 0x00288540 / 614B.
 // Dump sibling of awardInitialCaptureBonus in game/gen_asm/d_0027db50.asm.
@@ -15,27 +15,7 @@ struct AsciiStringHeader
 	char data[1];
 };
 
-class AsciiString
-{
-public:
-	static const AsciiString TheEmptyString;
-
-	int compare(const AsciiString &stringSrc) const
-	{
-		int thatLen = stringSrc.m_data ? stringSrc.m_data->length : 0;
-		const char *thatData = stringSrc.m_data ? &stringSrc.m_data->data[0] : (const char *)"";
-		int thisLen = m_data ? m_data->length : 0;
-		const char *thisData = m_data ? &m_data->data[0] : (const char *)"";
-		int n = thisLen < thatLen ? thisLen : thatLen;
-		int c = memcmp(thisData, thatData, n);
-		if (c != 0)
-			return c;
-		return thisLen - thatLen;
-	}
-
-private:
-	AsciiStringHeader *m_data;
-};
+#include "ascii_string.h"
 
 const AsciiString AsciiString::TheEmptyString;
 

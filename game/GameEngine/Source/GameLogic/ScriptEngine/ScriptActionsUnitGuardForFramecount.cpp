@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /O2 /EHsc
+// cl: /DNDEBUG /MD /O2 /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 typedef bool Bool;
 typedef int Int;
 extern "C" void _ReadWriteBarrier(void);
@@ -8,7 +8,7 @@ enum GuardMode { GUARDMODE_NORMAL = 0 };
 #include "../command_source_type.h"
 
 struct Coord3D { int x; int y; int z; };
-class AsciiString { char *m_data; };
+#include "ascii_string.h"
 
 class AICommandInterface
 {

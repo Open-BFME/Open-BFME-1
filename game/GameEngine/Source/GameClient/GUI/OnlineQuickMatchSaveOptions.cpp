@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Retail RVA 0x005585B0 (372 bytes).
 //
 // The receiver is the OnlineQuickMatch APT object identified by its
@@ -8,12 +8,7 @@
 // proven by the neighbouring methods.  The body saves the five gadget
 // selections into a temporary QuickMatchPreferences object.
 
-class AsciiString
-{
-public:
-	static const AsciiString TheEmptyString;
-	void *m_data;
-};
+#include "ascii_string.h"
 
 
 class UserPreferences

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME7: the shared INI option-definition registration helper at
 // retail RVA 0x00094010.  The two scalar definition parsers at 0x000940F0
 // and 0x00094470 both call this routine through ILT 0x00023344.
@@ -7,22 +7,7 @@ typedef int Int;
 
 extern const char Rva006A16B0Empty[];
 
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-
-	~AsciiString() { releaseBuffer(); }
-
-	const char *str() const
-	{
-		return m_data ? static_cast<const char *>(m_data) + 8 : Rva006A16B0Empty;
-	}
-
-private:
-	void releaseBuffer();
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class INI
 {

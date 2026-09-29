@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /O2 /GX
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /O2 /GX /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?canAffordBuild@Player@@QBE_NPBVThingTemplate@@@Z: game/GameEngine/Source/Common/RTS/Player.cpp
 
 // The two questions a Player answers about what production costs it:
@@ -34,18 +34,7 @@ typedef float Real;
 
 class Player;
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	const char *str(void) const
-	{
-		return m_data ? (const char *)((unsigned char *)m_data + 8) : "";
-	}
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Money.h
 class Money

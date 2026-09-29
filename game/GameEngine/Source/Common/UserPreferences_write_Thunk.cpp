@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHs-c-
+// cl: /DNDEBUG /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib
 // UserPreferences::write uses a UTF-16 filename and narrow preference entries.
 // Retail calls MSVCR71 _wfopen at IAT0x01359368 with a wide mode literal.
 typedef int Int;
@@ -18,17 +18,7 @@ struct StringDataHeaderShim
 	unsigned char m_unreconstructed_06[2];
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	Bool isEmpty(void) const { return m_data == 0 || m_data->m_length == 0; }
-	const char *str(void) const
-	{
-		return m_data ? (const char *)((unsigned char *)m_data + 8) : "";
-	}
-	StringDataHeaderShim *m_data;
-};
+#include "ascii_string.h"
 
 // Retail opens the filename through _wfopen; the path is a UTF-16 string.
 // Map keys and values remain narrow strings consumed by fprintf.

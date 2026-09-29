@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // readable body of ?store@AICommandParmsStorage@@QAEXABUAICommandParms@@@Z: game/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // readable body of ?reconstitute@AICommandParmsStorage@@QBEXAAUAICommandParms@@@Z: game/GameEngine/Source/GameLogic/AI/AIStates.cpp
@@ -28,17 +28,7 @@ struct Coord3D
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	static AsciiString TheEmptyString;
-
-	void set(const AsciiString &source);
-	void clear();
-
-private:
-	void *m_buffer;
-};
+#include "ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object

@@ -6,23 +6,9 @@
 
 #include "string_base.h"
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString() {}
+#include "ascii_string.h"
 
-	StringBase<char> m_data;
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	~UnicodeString() {}
-
-	StringBase<unsigned short> m_string;
-};
+#include "unicode_string.h"
 
 template <int N>
 class BfmeGapF6D0

@@ -1,3 +1,4 @@
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
 // ?rva00610d60@BfmeLivingWorldManager@@QAEXXZ
 // Walks both Living World target lists and creates missing particle systems.
 
@@ -38,11 +39,7 @@ private:
 	void releaseBuffer();
 };
 
-class AsciiString
-{
-public:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class ParticleSystemTemplate;
 

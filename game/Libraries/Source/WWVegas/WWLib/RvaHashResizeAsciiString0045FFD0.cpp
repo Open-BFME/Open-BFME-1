@@ -6,18 +6,7 @@
 
 #include "string_base.h"
 
-class AsciiString
-{
-public:
-    AsciiString(const AsciiString &other) : m_data(other.m_data) {}
-
-    const char *str() const
-    {
-        return m_data.m_data ? &m_data.m_data->data[0] : "";
-    }
-
-    StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 namespace rts
 {

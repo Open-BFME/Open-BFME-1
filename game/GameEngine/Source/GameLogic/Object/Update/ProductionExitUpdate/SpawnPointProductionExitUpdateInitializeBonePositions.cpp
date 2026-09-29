@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /GX- /O2 /Ob2
+// cl: /DNDEBUG /MD /GX- /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib
 // Reloc-named body of SpawnPointProductionExitUpdate::initializeBonePositions,
 // incremental-link target of the 5-byte thunk at 0x0003B566.
 // Retail 0x002D18F0, 1457 bytes: 10x Matrix3D on the stack, getObject at
@@ -23,14 +23,7 @@ struct BfmeAsciiStringData
 	unsigned short m_pad;
 };
 
-class AsciiString
-{
-public:
-	const char *str(void) const { return m_data ? (const char *)(m_data + 1) : ""; }
-
-private:
-	BfmeAsciiStringData *m_data;
-};
+#include "ascii_string.h"
 
 class SpawnBoneRow
 {

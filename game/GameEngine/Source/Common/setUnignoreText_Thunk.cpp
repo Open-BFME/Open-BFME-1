@@ -20,33 +20,7 @@ private:
     ~BfmeStringLiteralBase();
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-    AsciiString() : m_data(0) {}
-    AsciiString(const AsciiString &other)
-    {
-        ((StringBase<char> *)this)->StringBase<char>::StringBase(
-            *(const StringBase<char> *)&other);
-    }
-    AsciiString(const char *text)
-    {
-        ((BfmeStringLiteralBase *)this)->BfmeStringLiteralBase::BfmeStringLiteralBase(text);
-    }
-    ~AsciiString();
-
-    void __cdecl format(AsciiString format, ...);
-
-    const char *str() const
-    {
-        return m_data ? m_data + 8 : Rva006A16B0Empty;
-    }
-
-private:
-    void releaseBuffer();
-    char *m_data;
-};
+#include "ascii_string.h"
 
 typedef int Int;
 typedef bool Bool;
@@ -140,15 +114,7 @@ public:
 
 extern GameSpyInfoInterface *TheGameSpyInfo;
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-    UnicodeString(const UnicodeString &other);
-
-private:
-    void *m_data;
-};
+#include "unicode_string.h"
 
 class GameTextInterface
 {

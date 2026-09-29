@@ -1,21 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ??0Mission@@QAE@XZ: game/GameEngine/Source/GameClient/System/CampaignManager.cpp
 // Retail Mission constructor (RVA005BB9B0), destructor (RVA005BBA80),
 // and scalar deleting destructor (RVA005BBDF0), with the verified BFME layout.
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString() : m_data(0) {}
-	~AsciiString() { releaseBuffer(); }
-
-	static const AsciiString TheEmptyString;
-
-private:
-	void releaseBuffer();
-	char *m_data;
-};
+#include "ascii_string.h"
 
 enum ObjectID {};
 

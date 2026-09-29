@@ -45,17 +45,7 @@ extern "C" void _ReadWriteBarrier();
 
 // The empty-string global the six audio members take. Declared here the way
 // MiscAudio::MiscAudio declares it, because ascii_string.h does not carry it.
-class AsciiString
-{
-public:
-	AsciiString();
-	~AsciiString();
-
-	static const AsciiString TheEmptyString;
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 class FXList;
 

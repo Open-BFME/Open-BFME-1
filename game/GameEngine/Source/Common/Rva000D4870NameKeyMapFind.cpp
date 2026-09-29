@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 //
 // 0x000D4870: AsciiString -> NameKeyType via TheNameKeyGenerator (ILT
@@ -12,15 +12,7 @@
 
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	const char *str() const { return m_data ? (const char *)m_data + 8 : ""; }
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator

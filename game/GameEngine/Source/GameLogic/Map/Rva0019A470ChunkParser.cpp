@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Retail 0x0019A470: address-derived DataChunk callback with BuildListInfo payloads.
 
 typedef int Int;
@@ -22,16 +22,7 @@ struct Coord3D
 	float z;
 };
 
-class AsciiString
-{
-public:
-	AsciiString(const AsciiString &other) : m_data(other.m_data) {}
-	void set(const AsciiString &other);
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class DataChunkInput
 {

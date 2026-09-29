@@ -1,20 +1,7 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 #include <string.h>
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();
-
-	const char *str() const
-	{
-		return m_data ? reinterpret_cast<const char *>(m_data) + 8 : "";
-	}
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class WeaponTemplate;
 enum NameKeyType { INVALID_NAME_KEY = 0 };

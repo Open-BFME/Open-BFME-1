@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib
 // SkirmishPreferences::getPreferredColor at retail RVA 0x0009E3D0.
 
 extern "C" __declspec(dllimport) int __cdecl atoi(const char *);
@@ -36,20 +36,7 @@ public:
 	char m_text[1];
 };
 
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	~AsciiString();
-
-	const char *str() const
-	{
-		return m_data ? m_data->m_text : "";
-	}
-
-private:
-	AsciiStringData *m_data;
-};
+#include "ascii_string.h"
 
 struct PreferenceNode
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME: SpecialAbilityUpdate::initLaser, retail 0x002A7010.
 // The BFME LaserUpdate interface takes the four-argument positional form;
 // this is the BFME-era twin of the Zero Hour helper.
@@ -36,18 +36,7 @@ struct BfmeAsciiStringData
 
 extern const char g_emptyString[];
 
-class AsciiString
-{
-public:
-	const char *str() const
-	{
-		return m_data ? reinterpret_cast<const char *>(m_data + 1)
-			: g_emptyString;
-	}
-
-private:
-	BfmeAsciiStringData *m_data;
-};
+#include "ascii_string.h"
 
 class NameKeyGenerator
 {

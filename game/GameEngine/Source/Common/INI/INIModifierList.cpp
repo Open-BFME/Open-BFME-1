@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /GX /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /GX /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 //
 // The INI `ModifierList` block parser -- what a Leadership/attribute-bonus mod
@@ -18,27 +18,7 @@
 
 struct FieldParse;
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString( const char *text );
-	~AsciiString();
-	AsciiString &operator=( const AsciiString &other )
-	{
-		set( other );
-		return *this;
-	}
-	void set( const AsciiString &other );
-
-	const char *str() const
-	{
-		return m_data ? m_data + 8 : "";
-	}
-
-private:
-	const char *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI

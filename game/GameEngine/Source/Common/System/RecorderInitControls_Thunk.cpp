@@ -1,22 +1,8 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 extern const char Rva006A16B0Empty[];
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(const char *);
-	~AsciiString();
-
-	const char *str() const
-	{
-		return m_data ? m_data + 8 : Rva006A16B0Empty;
-	}
-
-private:
-	const char *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator

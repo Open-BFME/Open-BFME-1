@@ -1,4 +1,4 @@
-// cl: /O2 /Ob0
+// cl: /O2 /Ob0 /Igame/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x004F15B0: GameSpyStagingRoom::operator=.  Base GameInfo assign,
 // then eight 0x78-byte GameSpyGameSlot assigns from this+0x58, then the
@@ -23,25 +23,10 @@ private:
 	char m_pad[0x78];
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	UnicodeString &operator=(const UnicodeString &other);
-
-private:
-	void *m_data;
-};
+#include "unicode_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString &operator=(const AsciiString &other);
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/StagingRoomGameInfo.h
 class GameSpyStagingRoom : public GameInfo

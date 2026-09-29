@@ -1,21 +1,10 @@
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // StringLookUp ordering predicate used by the BFME GameTextManager sort.
 
 extern const char g_bfmeEmptyAscii[];
 extern "C" __declspec(dllimport) int __cdecl _stricmp(const char *left, const char *right);
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	const char *str() const
-	{
-		return m_data ? (const char *)m_data + 8 : g_bfmeEmptyAscii;
-	}
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct StringLookUp
 {

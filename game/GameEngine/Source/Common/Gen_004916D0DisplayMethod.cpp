@@ -2,13 +2,9 @@
 // Vtable 0x010F9B94 and the matched 0x00491580 constructor establish the receiver.
 // The address-derived method name preserves the unresolved semantic identity.
 
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib
 
-class AsciiString
-{
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct StringData
 {

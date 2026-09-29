@@ -13,20 +13,7 @@ typedef bool Bool;
 extern "C" __declspec(dllimport) int __cdecl fclose(FILE *file);
 extern "C" __declspec(dllimport) int __cdecl fflush(FILE *file);
 
-class AsciiString
-{
-public:
-	AsciiString() { base()->StringBase<char>::StringBase(); }
-	AsciiString(const AsciiString &that) { base()->StringBase<char>::StringBase(*that.base()); }
-	AsciiString(const char *text) { base()->StringBase<char>::StringBase(text); }
-	~AsciiString() { base()->releaseBuffer(); }
-	void clear() { base()->releaseBuffer(); }
-
-private:
-	StringBase<char> *base() { return (StringBase<char> *)this; }
-	const StringBase<char> *base() const { return (const StringBase<char> *)this; }
-	StringBase<char>::Header *m_data;
-};
+#include "ascii_string.h"
 
 union GameMessageArgumentType
 {

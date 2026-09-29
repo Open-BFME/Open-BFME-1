@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: versioned record xfer at 0x000F9CF0, 438 bytes.
 // Neighbour copy-ctor Gen_000F9C60 / xfer Rva001C2E50 sits at +0x44.
 // Image* at +4 is saved/loaded by name through TheMappedImageCollection.
@@ -6,16 +6,7 @@
 typedef unsigned char UnsignedByte;
 typedef unsigned int UnsignedInt;
 
-class AsciiString
-{
-public:
-	AsciiString() : m_data(0) {}
-	~AsciiString();
-	void set(const AsciiString &other);
-	static const AsciiString TheEmptyString;
-
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class XferVersion
 {

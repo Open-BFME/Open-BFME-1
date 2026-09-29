@@ -1,4 +1,4 @@
-// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc- /D_STLP_USE_STATIC_LIB
+// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc- /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 //
 // BFME retail 0x00380270.  The sole caller is the ExperienceLevel INI parser
@@ -52,21 +52,7 @@ struct BfmeAsciiStringData
 	char m_text[1];
 };
 
-class AsciiString
-{
-public:
-	AsciiString();
-	AsciiString(const AsciiString &that);
-	~AsciiString();
-
-	const char *str() const
-	{
-		return m_data != 0 ? m_data->m_text : g_bfmeEmptyAscii;
-	}
-
-private:
-	BfmeAsciiStringData *m_data;
-};
+#include "ascii_string.h"
 
 class Overridable
 {

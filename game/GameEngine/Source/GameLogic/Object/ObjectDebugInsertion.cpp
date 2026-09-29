@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: Debug stream insertion for an Object pointer, retail
 // 0x001C45E0, 112 bytes.  Retail materializes DescribeObject's AsciiString
@@ -9,20 +9,7 @@ class Object;
 
 extern const char Rva006A16B0Empty[];
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();
-
-	const char *str() const
-	{
-		return m_data ? m_data + 8 : Rva006A16B0Empty;
-	}
-
-private:
-	const char *m_data;
-};
+#include "ascii_string.h"
 
 AsciiString DescribeObject(const Object *object);
 

@@ -1,5 +1,5 @@
 // ?embedInUseMap@@YAXVAsciiString@@PAVXfer@@@Z
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Clean C++ reconstruction of the BFME "in use" map embed helper at retail
 // RVA 0x00112BF0, the sibling of the landed
 // GameStateMap_extractAndSaveMap.cpp.  The retail parent keeps its Xfer object
@@ -45,22 +45,7 @@ public:
 	void releaseBuffer();
 };
 
-class AsciiString
-{
-public:
-	const char *str() const
-	{
-		return m_data ? m_data + 8 : Rva006A16B0Empty;
-	}
-
-	~AsciiString()
-	{
-		((BFMERetailAsciiString *)this)->releaseBuffer();
-	}
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class Xfer
 {

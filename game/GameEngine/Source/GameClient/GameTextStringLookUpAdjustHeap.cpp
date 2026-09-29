@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 
 // STLport's sift-down helper for BFME's GameText StringLookUp records. The
 // comparator's original spelling is unavailable; its name records the matched
@@ -8,17 +8,7 @@ extern "C" __declspec(dllimport) int __cdecl _stricmp(
 	const char *left, const char *right);
 
 class AsciiStringData;
-class AsciiString
-{
-public:
-	__forceinline const char *str() const
-	{
-		return m_data ? (const char *)m_data + 8 : g_bfmeEmptyAscii;
-	}
-
-private:
-	AsciiStringData *m_data;
-};
+#include "ascii_string.h"
 
 struct StringInfo;
 

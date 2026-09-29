@@ -1,4 +1,4 @@
-// cl: /O2 /Ob2 /G6 /D_STLP_USE_STATIC_LIB
+// cl: /O2 /Ob2 /G6 /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // Address-derived asset-gather helper at retail RVA 0x0042C5A0.
 
@@ -10,18 +10,7 @@
 // declaration mangles to exactly that name.
 extern const char g_bfmeEmptyAscii[];
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	const char *str() const
-	{
-		return m_data ? m_data + 8 : g_bfmeEmptyAscii;
-	}
-
-private:
-	const char *m_data;
-};
+#include "ascii_string.h"
 
 struct Rva001408C0Target;
 typedef Rva001408C0Target *Rva001408C0Key;

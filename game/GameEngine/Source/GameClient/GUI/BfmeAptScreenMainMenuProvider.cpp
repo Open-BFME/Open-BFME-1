@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // MainMenu.apt provider at retail 0x0051E9B0.  The MainMenu constructor at
 // 0x0051F3A0 binds the callback thunk at 0x0002BC2E to this body and owns the
@@ -7,22 +7,7 @@
 #include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 extern const char Rva006A16B0Empty[];
-class AsciiString
-{
-public:
-	AsciiString( const char *text ) : m_data( text ) {}
-	~AsciiString() {}
-	AsciiString &operator=( const char *text );
-
-	const char *str() const
-	{
-		return m_data.m_data ?
-			(const char *)m_data.m_data + 8 : Rva006A16B0Empty;
-	}
-
-private:
-	StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 class GameState
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ??0W3DTankDrawModuleData@@: game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTankDraw.cpp
 // Open-BFME5: W3DTankDrawModuleData::W3DTankDrawModuleData at retail 0x0077EA70.
 //
@@ -26,14 +26,7 @@
 
 typedef float Real;
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	void *m_data;
-	AsciiString( const char *s );
-	~AsciiString( void );
-};
+#include "ascii_string.h"
 
 class W3DTankDrawModuleDataBase
 {

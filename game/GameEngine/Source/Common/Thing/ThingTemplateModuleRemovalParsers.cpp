@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 // The two INI callbacks that take a module away before parsing continues:
 //
@@ -44,24 +44,7 @@ typedef bool Bool;
 // The empty-string constant at retail 0x0107388B.
 extern const char g_bfmeEmptyAscii[];
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString() : m_data(0) {}
-	AsciiString(const char *text);
-	~AsciiString() { releaseBuffer(); }
-
-	const char *str(void) const { return m_data ? ((const char *)m_data) + 8 : g_bfmeEmptyAscii; }
-	AsciiString &operator=(const AsciiString &other) { set(other); return *this; }
-	AsciiString &operator=(const char *text);
-	void set(const AsciiString &other);
-	void clear(void) { releaseBuffer(); }
-
-private:
-	void releaseBuffer(void);
-	void *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INIException.h
 class INIException

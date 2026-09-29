@@ -1,5 +1,5 @@
 // ?isPlayerAllowedToPackOrUnpack@CastleBehavior@@QAE_NPAVPlayer@@_N@Z
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /GX
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /GX /Igame/Libraries/Source/WWVegas/WWLib
 #pragma optimize("a", on)
 
 typedef bool Bool;
@@ -7,19 +7,7 @@ typedef int Int;
 
 extern const char Rva006A16B0Empty[];
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	const char *str() const
-	{
-		return m_data ? (const char *)((unsigned char *)m_data + 8) :
-			Rva006A16B0Empty;
-	}
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player

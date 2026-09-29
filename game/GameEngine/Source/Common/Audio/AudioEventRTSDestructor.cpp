@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ??1AudioEventRTS@@: game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp
 
 // Open-BFME5: AudioEventRTS' destructor, retail 0x000CFA40, 77 bytes. The body
@@ -12,25 +12,9 @@
 // that is __declspec(novtable), the same shape the ModuleData destructors in
 // the ledger carry.
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();						// retail 0x00887940
+#include "ascii_string.h"
 
-private:
-	char *m_bfmeData;
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	~UnicodeString();					// retail 0x008881D0
-
-private:
-	void *m_bfmeData;
-};
+#include "unicode_string.h"
 
 class __declspec(novtable) AudioEventRTS
 {

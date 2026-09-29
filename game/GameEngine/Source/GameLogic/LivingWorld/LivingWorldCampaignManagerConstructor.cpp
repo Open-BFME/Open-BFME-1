@@ -1,21 +1,7 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 #include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
-class AsciiString
-{
-public:
-	static const AsciiString TheEmptyString;
-	__forceinline AsciiString(void) : m_data(0) {}
-	__forceinline AsciiString(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(*(const StringBase<char> *)&other);
-	}
-	void clear(void);
-	~AsciiString();
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class LivingWorldFlags
 {

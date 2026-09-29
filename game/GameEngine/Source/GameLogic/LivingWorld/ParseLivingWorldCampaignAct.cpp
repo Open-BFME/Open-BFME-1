@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME7: ParseLivingWorldCampaignAct (retail 0x003B2BB0 286 B; a gap
 // claimed through its exception texts).  With no INI or instance it throws
 // INIException(3 "ParseLivingWorldCampaignAct::Invalid data passed in.") --
@@ -24,18 +24,7 @@ struct Rva003B2BB0StringData
 	unsigned short m_pad;
 };
 
-class AsciiString
-{
-public:
-	AsciiString( const char *text );
-	~AsciiString() { releaseBuffer(); }
-	Int getLength( void ) const { return m_data ? m_data->m_length : 0; }
-	bool isEmpty( void ) const { return m_data == 0 || getLength() == 0; }
-
-private:
-	void releaseBuffer( void );
-	Rva003B2BB0StringData *m_data;
-};
+#include "ascii_string.h"
 
 class INIException
 {

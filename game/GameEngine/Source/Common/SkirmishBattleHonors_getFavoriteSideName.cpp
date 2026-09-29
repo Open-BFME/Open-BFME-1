@@ -8,36 +8,7 @@ typedef bool Bool;
 
 extern const char Rva006A16B0Empty[];
 
-class AsciiString
-{
-public:
-	AsciiString() : m_data(0) {}
-	AsciiString(const char *text)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(text);
-	}
-	AsciiString(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&other);
-	}
-	~AsciiString()
-	{
-		((StringBase<char> *)this)->~StringBase();
-	}
-
-	void __cdecl format(AsciiString format, ...);
-	Int compare(const AsciiString &other) const;
-	const char *str() const
-	{
-		return m_data ? (const char *)m_data + 8 : Rva006A16B0Empty;
-	}
-
-	static AsciiString TheEmptyString;
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class UnicodeString : private StringBase<unsigned short>
 {

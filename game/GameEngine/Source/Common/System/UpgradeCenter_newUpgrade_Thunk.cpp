@@ -1,20 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?newUpgrade@UpgradeCenter@@QAEPAVUpgradeTemplate@@ABVAsciiString@@@Z: game/GameEngine/Source/Common/System/Upgrade.cpp
 // Open-BFME5: lift the retail upgrade allocation/link path to standalone C++.
 
 typedef int NameKeyType;
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	~AsciiString();
-	AsciiString &operator=(const AsciiString &other);
-	const char *str() const { return m_data ? m_data + 8 : ""; }
-private:
-	const char *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator

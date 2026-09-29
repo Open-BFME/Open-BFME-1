@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // ProductionSpeedBonus::doSpecialPower at retail 0x002645D0, 144 bytes.
 //
 // The constructor installs the ProductionSpeedBonus vtables immediately before
@@ -9,7 +9,7 @@
 
 typedef unsigned int UnsignedInt;
 
-class AsciiString { private: void *m_data; };
+#include "ascii_string.h"
 
 class Rva00010A23Target
 {

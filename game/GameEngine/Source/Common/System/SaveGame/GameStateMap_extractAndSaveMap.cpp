@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Clean C++ reconstruction of the BFME map-extraction helper at retail RVA
 // 0x00112DA0.  The caller keeps its Xfer object live in ESI across this
 // internal static helper; the local views below preserve the retail virtual
@@ -35,22 +35,7 @@ public:
 	void releaseBuffer();
 };
 
-class AsciiString
-{
-public:
-	const char *str() const
-	{
-		return m_data ? m_data + 8 : Rva006A16B0Empty;
-	}
-
-	~AsciiString()
-	{
-		((BFMERetailAsciiString *)this)->releaseBuffer();
-	}
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class Xfer
 {
