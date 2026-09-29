@@ -88,8 +88,10 @@ extern void *TheScriptDebugWindowDLL;
 extern GameClient *TheGameClient;
 extern GameLogic *TheGameLogic;
 
-#define ClientCanAppContinue (*(bool *)0x012F075C)
-#define LogicCanAppContinue (*(bool *)0x012F075D)
+extern bool g_012F075C;
+extern bool g_012F075D;
+#define ClientCanAppContinue g_012F075C
+#define LogicCanAppContinue g_012F075D
 
 bool ScriptEngine::isTimeFrozenDebug(void)
 {
