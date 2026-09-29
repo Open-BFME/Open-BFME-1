@@ -352,3 +352,4 @@ game/GameEngine/Source/Common/BfmeConv1916.cpp|type||BfmePlayerBR,6b892b920df4f0
 game/GameEngine/Source/Common/BfmeConv930.cpp|type||BfmeThing930D,b0f9fc96a7ac81b8c9bf7aad,grok,20260929223147-344184,2026-09-29
 game/GameEngine/Source/Common/BfmeConv930.cpp|member||m_bfmeQ,e296b66d89aa93a28e3ce673,grok,20260929223147-344184,2026-09-29
 game/GameEngine/Source/Common/BfmeConv930.cpp|local|BfmeThing930D::bfmeGo930D|s,f652cec8d7bcfe80c2bbeed2,grok,20260929223147-344184,2026-09-29
+game/GameEngine/Source/GameLogic/System/GameLogicGetLoadScreen.cpp|param|still00386190|p,74991974a13cc97682da1f55,grok,20260929225114-6087e1,2026-09-29
