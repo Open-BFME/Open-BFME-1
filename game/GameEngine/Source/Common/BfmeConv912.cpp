@@ -55,12 +55,12 @@ public:
 	virtual void bfmeSlot912F0();
 	virtual void bfmeSlot912F1();
 	virtual void bfmeDone912F();
-	void *bfmeGo912F();
+	void *readEntireAndClose();
 	char m_bfmePad[0x10];
 	void *m_bfmeP;
 };
 
-void *BfmeThing912F::bfmeGo912F()
+void *BfmeThing912F::readEntireAndClose()
 {
 	void *s = m_bfmeP;
 	if (!s)

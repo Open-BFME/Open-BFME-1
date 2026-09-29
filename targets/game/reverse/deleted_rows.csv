@@ -31374,3 +31374,4 @@ dup_930180,0x00930180,claim superseded by the gate-required claim for ??4Texture
 ?bfmeReplaceDots@@YAXPAD0D@Z,0x008490B0,renamed to ?__adjust_float_buffer@@YAXPAD0D@Z by tools/name_lane.py apply: two models agreed
 ?bfmeAddDB@BfmeOwnDB@@QAEXPAVBfmeItemDB@@@Z,0x004438A0,renamed to ?addIdleWorker@BfmeOwnDB@@QAEXPAVBfmeItemDB@@@Z by tools/name_lane.py apply: two models agreed
 ?bfmeGoCCA@BfmeThingCCA@@QAEXPAX@Z,0x001601B0,renamed to ?onExit@BfmeThingCCA@@QAEXPAX@Z by tools/name_lane.py apply: two models agreed
+?bfmeGo912F@BfmeThing912F@@QAEPAXXZ,0x009D1BF0,renamed to ?readEntireAndClose@BfmeThing912F@@QAEPAXXZ by tools/name_lane.py apply: two models agreed
