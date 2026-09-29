@@ -31,7 +31,7 @@ them into the classes the integration work has to clear:
 targets/game/reverse/link_status.csv: one row per C/C++
 source, `linked=yes` when, in the plain link (no alias scaffold), its object
 has no unresolved reference beyond imports and msvcrt.lib, no duplicate, and
-no COMDAT copy discarded for a different body, and the file holds no
+no COMDAT copy that differs from retail's body (comdat_losers), and the file holds no
 hard-coded image address. LINKED is progress.py's DECOMPILED restricted to
 those sources; progress.py and the README print the last census's figure.
 
@@ -314,8 +314,8 @@ WEAK_EXTERNAL = 105  # IMAGE_SYM_CLASS_WEAK_EXTERNAL: a vftable slot's ??_E dele
 
 
 def _coff_symbols(data):
-    """[{index, name, section, storage}] for every symbol record, by raw index
-    (aux records occupy indices too, which relocations count)."""
+    """[{index, name, section, storage, value}] for every symbol record, by raw
+    index (aux records occupy indices too, which relocations count)."""
     import struct
     table, count = struct.unpack_from("<II", data, 8)
     strings = table + 18 * count
@@ -327,28 +327,28 @@ def _coff_symbols(data):
             name = data[strings + offset:data.index(b"\0", strings + offset)]
         else:
             name = record[:8].rstrip(b"\0")
-        section, _, storage, aux = struct.unpack_from("<hHBB", record, 12)
-        out.append({"index": index, "name": name.decode("latin-1"), "section": section, "storage": storage})
+        value, section, _, storage, aux = struct.unpack_from("<IhHBB", record, 8)
+        out.append({"index": index, "name": name.decode("latin-1"), "section": section, "storage": storage,
+                    "value": value})
         index += 1 + aux
     return out
 
 
-def comdat_bodies(obj):
-    """[(name, digest, size)] for each external COMDAT symbol an object defines.
+def _comdat_sections(data):
+    """(symbol, body, relocs, digest, size) for each external COMDAT symbol
+    in one COFF object. `body` is the section's raw bytes (None when
+    uninitialized); `relocs` is [(offset, type, referent symbol)], a
+    content-named referent (RetailTruth.CONSTANT) carrying its bytes.
 
     The digest covers the section's bytes AND its relocations (offset, type,
     target, weak externals included): two vftables with identical bytes whose
-    slots point at different functions are different copies. A TU-local target (a string literal, a
-    static) is named per TU, so it counts only as "local"; an anonymous
-    namespace's per-TU hash is normalised. An uninitialized section has no
-    bytes to hash, only a size.
+    slots point at different functions are different copies. A TU-local target
+    (a string literal, a static) is named per TU, so it counts only as "local";
+    an anonymous namespace's per-TU hash is normalised. An uninitialized section
+    has no bytes to hash, only a size.
     """
     import hashlib
     import struct
-    try:
-        data = obj.read_bytes()
-    except OSError:
-        return []
     count = struct.unpack_from("<H", data, 2)[0]
     optional = struct.unpack_from("<H", data, 16)[0]
     symbols = _coff_symbols(data)
@@ -360,7 +360,6 @@ def comdat_bodies(obj):
         nrelocs = struct.unpack_from("<H", data, offset + 32)[0]
         flags = struct.unpack_from("<I", data, offset + 36)[0]
         sections.append((size, pointer, relocs, nrelocs, flags))
-    found = []
     for symbol in symbols:
         section = symbol["section"]
         if symbol["storage"] != EXTERNAL or section <= 0 or section > count:
@@ -368,15 +367,238 @@ def comdat_bodies(obj):
         size, pointer, relocs, nrelocs, flags = sections[section - 1]
         if not flags & COMDAT:
             continue
-        digest = hashlib.sha1(data[pointer:pointer + size] if pointer else b"uninitialized %d" % size)
+        body = data[pointer:pointer + size] if pointer else None
+        digest = hashlib.sha1(body if body is not None else b"uninitialized %d" % size)
+        found = []
         for at in range(relocs, relocs + 10 * nrelocs, 10):
             where, target, kind = struct.unpack_from("<IIH", data, at)
-            referent = by_index.get(target, {"name": "?", "storage": 0})
-            label = (re.sub(r"\?A0x[0-9A-Fa-f]{8}", "?A0xHASH", referent["name"])
-                     if referent["storage"] in (EXTERNAL, WEAK_EXTERNAL) else "local")
+            referent = by_index.get(target, {"name": "?", "storage": 0, "section": 0, "value": 0})
+            if referent["name"].startswith(RetailTruth.CONSTANT) and 0 < referent["section"] <= count:
+                length, start = sections[referent["section"] - 1][:2]
+                referent = {**referent, "content": data[start + referent["value"]:start + length] if start else None}
+            label = (_normal(referent["name"]) if referent["storage"] in (EXTERNAL, WEAK_EXTERNAL) else "local")
             digest.update(b"%d:%d:" % (where, kind) + label.encode("latin-1") + b";")
-        found.append((symbol["name"], digest.hexdigest()[:12], size))
-    return found
+            found.append((where, kind, referent))
+        yield symbol, body, found, digest.hexdigest()[:12], size
+
+
+def _normal(name):
+    """A name with its anonymous namespace's per-TU hash normalised."""
+    return re.sub(r"\?A0x[0-9A-Fa-f]{8}", "?A0xHASH", name)
+
+
+def comdat_bodies(obj):
+    """[(name, digest, size)] for each external COMDAT symbol an object defines
+    (see _comdat_sections for what the digest covers)."""
+    try:
+        data = obj.read_bytes()
+    except OSError:
+        return []
+    return [(symbol["name"], digest, size) for symbol, _, _, digest, size in _comdat_sections(data)]
+
+
+class RetailTruth:
+    """Is a COMDAT copy the body retail shipped?
+
+    A COMDAT symbol whose ledger row (functions.csv, else a symbols.csv pin)
+    gives a retail address is judged against retail itself: its bytes must
+    equal retail's at that address outside the relocation fields, and every
+    relocation must land where retail's instruction lands. A relocation's
+    target NAME is resolved the way an identity is, not the way the byte gate
+    resolves a call: a ledger row first (never an icf-owner= over-claim:
+    __purecall's row sits on one of many `xor eax,eax; ret` bodies), and a
+    symbols.csv pin only for a name with no row (plus its route=), because
+    symbols.csv is an ADDITIVE candidate list and a pin on the wrong body
+    still byte-matches. That is exactly how
+    ??1AsciiString@@QAE@XZ's owner copy passed the gate: retail 0x5EE90 is
+    `jmp 0x887940` (releaseBuffer), the owner's copy jumps to
+    ??1?$StringBase@D@@AAE@XZ, whose row is 0x5E490, and a pin of that name to
+    0x887940 hid the difference. Data names resolve through
+    dir32_addresses.csv, __imp_ names to retail's import slot, and a label in
+    the copy's own section to the same offset in retail. An incremental-link
+    stub (a `jmp` packed between other `jmp`s) stands for its target on either
+    side; a padded 5-byte `jmp` is a function that tail-jumps (0x5E490 is
+    ~StringBase's own body, not a stub) and is never followed. symbols.csv
+    holds VAs and RVAs alike, so a pin at or above the image base is read both
+    ways. A TU-local referent (a static, `_$E2`, `$S1`) is named per TU, so it
+    has no address to check; a string literal or float constant (`??_C@`,
+    `__real@`) is named by its content and retail holds several copies of
+    some ("" at least twice), so it is checked by content: retail's bytes at
+    the target must be the constant's own.
+
+    An address several ledger names claim (0x5E6F0 for ??8 of eight
+    VectorClass instances) proves nothing when it disagrees: retail had no
+    ICF, so most of those claims are wrong, and the mismatch is the ledger's.
+
+    verdict() returns "retail" (every byte and relocation proven), "wrong"
+    (a byte or a resolvable relocation differs from a single-claim address),
+    "unknown" (nothing disproves it, but a relocation names something with no
+    known address, or only a shared claim disagrees) or None (the symbol
+    itself has no retail address: retail truth cannot judge it).
+    """
+
+    DIR32, DIR32NB, REL32 = 0x0006, 0x0007, 0x0014
+    ABSOLUTE = {"__except_list": 0}  # msvcrt.lib's absolute symbols (fs:[0])
+    CONSTANT = ("??_C@", "__real@")  # content-named: retail may hold several copies
+
+    @staticmethod
+    def _rvas(address):
+        """symbols.csv mixes RVAs and VAs: 0x0044A061 is VA 0x0044A061 of
+        RVA 0x4A061. Both readings are candidates; a pin is only a candidate."""
+        return {address, address - BASE} if address >= BASE else {address}
+
+    def __init__(self, rows):
+        routes = {}
+        pinned = pins(routes)
+        self.ledger = collections.defaultdict(set)
+        names_at = collections.defaultdict(set)
+        for row in rows:
+            notes = row.get("notes") or ""
+            if "icf-owner=" in notes:
+                continue  # a second name on an address: an over-claim to retire, not an identity
+            address = int(row["target_rva"], 16)
+            names = {row["name"]} if "gen-alias" in notes else {row["name"], build.ledger_object_symbol(row)}
+            for name in names:  # a gen-alias twin's object symbol names its original, not the twin
+                self.ledger[_normal(name)].add(address)
+            names_at[address].add(row["name"])
+        # An address several names claim is an unresolved over-claim (retail
+        # had no ICF, so at most one of them is right): a mismatch against it
+        # proves nothing about the copy, only about the ledger.
+        self.shared = {address for address, names in names_at.items() if len(names) > 1}
+        self.pinned = collections.defaultdict(set)
+        for name, address in pinned.items():
+            self.pinned[_normal(name)] |= self._rvas(address)
+        for name, address in routes.items():  # where calls ENCODE the name: an ILT or import stub
+            key = _normal(name)
+            (self.ledger[key] if key in self.ledger else self.pinned[key]).update(self._rvas(address))
+        with (ROOT / "targets/game/reverse/dir32_addresses.csv").open(newline="", encoding="utf-8") as handle:
+            for row in csv.DictReader(handle):  # a data name: pin or dir32 entry, either may be right
+                self.pinned[_normal(row["name"])].add(int(row["va"], 16) - BASE)
+        self.slots = collections.defaultdict(set)
+        for name, address in retail_import_slots():
+            self.slots[name].add(address)
+        self.image, self.sections = build.exe_image()
+        self._cache = {}
+
+    def addresses(self, name):
+        """Retail addresses a name may resolve to, or None when none is known."""
+        key = _normal(name)
+        if key in self.ledger:
+            return self.ledger[key]
+        if key in self.pinned:
+            return self.pinned[key]
+        if name.startswith("__imp_"):
+            bare = name[len("__imp_"):]
+            found = self.slots.get(bare) or self.slots.get(_undecorate(bare))
+            return found or None
+        return None
+
+    def _read(self, rva, size):
+        try:
+            offset = build.rva_to_file_offset(self.sections, rva)
+        except ValueError:  # outside every section: nothing there to compare
+            return None
+        chunk = self.image[offset:offset + size]
+        return chunk if len(chunk) == size else None
+
+    def _stub(self, address):
+        """Where an incremental-link stub at `address` jumps, else None. A stub
+        sits in a packed table: another `jmp` right before or after it."""
+        import struct
+        around = self._read(address - 5, 15)
+        if around is None or around[5] != 0xE9 or (around[0] != 0xE9 and around[10] != 0xE9):
+            return None
+        return address + 5 + struct.unpack_from("<i", around, 6)[0]
+
+    def _lands(self, target, expected):
+        if target in expected or self._stub(target) in expected:
+            return True
+        return any(self._stub(address) == target for address in expected)
+
+    def verdict(self, symbol, body, relocs, digest, size):
+        home = self.ledger.get(_normal(symbol["name"])) or self.pinned.get(_normal(symbol["name"]))
+        if not home:
+            return None
+        home = set(home) | {self._stub(address) for address in home} - {None}  # a row on an ILT stub
+        key = (symbol["name"], digest)
+        if key not in self._cache:
+            results = [self._judge(address - symbol["value"], symbol, body, relocs, size) for address in sorted(home)]
+            if all(address in self.shared for address in home):
+                results = ["unknown" if result == "wrong" else result for result in results]
+            self._cache[key] = ("retail" if "retail" in results else "unknown" if "unknown" in results else "wrong")
+        return self._cache[key]
+
+    def _judge(self, start, symbol, body, relocs, size):
+        import struct
+        if body is None:
+            return "unknown"
+        retail = self._read(start, size)
+        if retail is None:
+            return "wrong"
+        mask = bytearray(body)
+        fields = []
+        for where, kind, referent in relocs:
+            width = 2 if kind == 0x000A else 4  # IMAGE_REL_I386_SECTION is 16-bit
+            if where + width > size:
+                return "wrong"
+            mask[where:where + width] = retail[where:where + width]
+            fields.append((where, kind, referent))
+        if bytes(mask) != retail:
+            return "wrong"
+        result = "retail"
+        for where, kind, referent in fields:
+            addend = struct.unpack_from("<i", body, where)[0] if kind != 0x000A else 0
+            value = struct.unpack_from("<i", retail, where)[0] if kind != 0x000A else 0
+            if kind == self.DIR32 and referent["name"] in self.ABSOLUTE:
+                if (value - addend) & 0xFFFFFFFF != self.ABSOLUTE[referent["name"]]:
+                    return "wrong"
+                continue
+            if kind == self.DIR32:
+                target = (value - addend - BASE) & 0xFFFFFFFF
+            elif kind == self.DIR32NB:
+                target = (value - addend) & 0xFFFFFFFF
+            elif kind == self.REL32:
+                target = start + where + 4 + value - addend
+            else:
+                result = "unknown"
+                continue
+            if referent.get("content") is not None:
+                if self._read(target, len(referent["content"])) != referent["content"]:
+                    return "wrong"
+                continue
+            if referent["section"] == symbol["section"] and referent["storage"] != EXTERNAL:
+                expected = {start + referent["value"]}  # a label in this very section
+            elif referent["storage"] in (EXTERNAL, WEAK_EXTERNAL):
+                expected = self.addresses(referent["name"])
+            else:  # a static's name is per TU (_$E2, $SG1234): no address to check
+                expected = None
+            if not expected:
+                result = "unknown"
+            elif not self._lands(target, expected):
+                if not all(address in self.shared for address in expected):
+                    return "wrong"
+                result = "unknown"
+        return result
+
+
+_TRUTH = None
+
+
+def _truth_init(rows):
+    global _TRUTH
+    _TRUTH = RetailTruth(rows)
+
+
+def comdat_copies(obj, truth=None):
+    """[(name, digest, size, verdict)] for each external COMDAT symbol an
+    object defines; verdict is RetailTruth.verdict (None: no retail address)."""
+    truth = truth or _TRUTH
+    try:
+        data = obj.read_bytes()
+    except OSError:
+        return []
+    return [(symbol["name"], digest, size, truth.verdict(symbol, body, relocs, digest, size))
+            for symbol, body, relocs, digest, size in _comdat_sections(data)]
 
 
 def comdat_conflicts(objs):
@@ -396,23 +618,65 @@ def comdat_conflicts(objs):
             for name, found in copies.items() if len(found) > 1}
 
 
-def comdat_losers(objs):
-    """{object name: {symbol}} for COMDAT copies the link discards for a
-    different body: link.exe keeps the first copy in link order, so an object
-    whose copy differs from that one runs someone else's code. Objects are
-    read in parallel (BUILD_POOL processes); the fold stays in link order."""
+def keep_rule(copies):
+    """({object: loses?}, rule) for one COMDAT symbol's copies [(object, digest,
+    verdict)] in link order.
+
+    `retail` when retail truth can judge the symbol (it has a retail address):
+    a copy proven wrong loses; a proven copy never does; a copy whose bytes
+    match but whose relocations cannot all be resolved loses only when it
+    differs from the kept copy (the first proven one, else the first
+    unresolved one), since nothing shows it is right. `first` when it cannot:
+    link.exe keeps the first copy in link order, so a copy that differs from
+    that one loses. Majority is never used: it would let the most-copied
+    private class decide what retail shipped.
+    """
+    verdicts = [verdict for _, _, verdict in copies]
+    if all(verdict is None for verdict in verdicts):
+        kept = copies[0][1]
+        return {obj: digest != kept for obj, digest, _ in copies}, "first"
+    proven = [digest for _, digest, verdict in copies if verdict == "retail"]
+    unknown = [digest for _, digest, verdict in copies if verdict == "unknown"]
+    kept = proven[0] if proven else unknown[0] if unknown else None
+    loses = {}
+    for obj, digest, verdict in copies:
+        loses[obj] = verdict == "wrong" or (verdict == "unknown" and digest != kept and digest not in proven)
+    return loses, "retail"
+
+
+def comdat_losers(objs, rows=None, stats=None):
+    """{object name: {symbol}} for COMDAT copies that are not retail's body.
+
+    keep_rule() decides each symbol: by retail truth where the ledger gives it
+    a retail address, else by link order (link.exe keeps the first copy, so an
+    object whose copy differs from that one runs someone else's code). Before
+    2026-09-29 every symbol used link order, so an arbitrary first object
+    decided who lost: for ??1AsciiString@@QAE@XZ the first object held a
+    minority variant, and the retail-true copies were the ones charged. `stats`, when given, collects how many symbols and losing copies
+    each rule decided. Objects are read in parallel (BUILD_POOL processes);
+    the fold stays in link order."""
+    rows = ledger() if rows is None else rows
     workers = build._pool_size()
     if workers > 1:
         import concurrent.futures
-        with concurrent.futures.ProcessPoolExecutor(workers) as pool:
-            bodies = list(pool.map(comdat_bodies, objs, chunksize=64))
+        with concurrent.futures.ProcessPoolExecutor(workers, initializer=_truth_init, initargs=(rows,)) as pool:
+            bodies = list(pool.map(comdat_copies, objs, chunksize=64))
     else:
-        bodies = [comdat_bodies(obj) for obj in objs]
-    kept, losers = {}, collections.defaultdict(set)
+        truth = RetailTruth(rows)
+        bodies = [comdat_copies(obj, truth) for obj in objs]
+    copies = collections.defaultdict(list)
     for obj, found in zip(objs, bodies):
-        for name, digest, _ in found:
-            if kept.setdefault(name, digest) != digest:
-                losers[obj.name].add(name)
+        for name, digest, _, verdict in found:
+            copies[name].append((obj.name, digest, verdict))
+    losers = collections.defaultdict(set)
+    stats = stats if stats is not None else {}
+    for name, found in copies.items():
+        loses, rule = keep_rule(found)
+        stats[f"symbols_{rule}"] = stats.get(f"symbols_{rule}", 0) + 1
+        for obj, lost in loses.items():
+            if lost:
+                losers[obj].add(name)
+                stats[f"losers_{rule}"] = stats.get(f"losers_{rule}", 0) + 1
     return losers
 
 
@@ -538,12 +802,29 @@ def library_symbols(path):
     return {name.decode("latin-1") for name in body[4 + 4 * count:].split(b"\0")[:count]}
 
 
-def retail_imports():
-    """Names retail's import table lists (every entry is imported by name)."""
+def _retail_import_entries():
+    """[(dll, name, slot rva)] from retail's import table (every entry is
+    imported by name)."""
     import pefile
     pe = pefile.PE(data=build.EXE.read_bytes(), fast_load=True)
     pe.parse_data_directories(directories=[pefile.DIRECTORY_ENTRY["IMAGE_DIRECTORY_ENTRY_IMPORT"]])
-    return {entry.name.decode("latin-1") for dll in pe.DIRECTORY_ENTRY_IMPORT for entry in dll.imports if entry.name}
+    return [(dll.dll.decode("latin-1"), entry.name.decode("latin-1"), entry.address - pe.OPTIONAL_HEADER.ImageBase)
+            for dll in pe.DIRECTORY_ENTRY_IMPORT for entry in dll.imports if entry.name]
+
+
+def retail_imports():
+    """Names retail's import table lists (every entry is imported by name)."""
+    return {name for _, name, _ in _retail_import_entries()}
+
+
+def retail_import_slots():
+    """[(name, IAT slot rva)]: where retail's `call [__imp_name]` reads."""
+    return [(name, slot) for _, name, slot in _retail_import_entries()]
+
+
+def _undecorate(name):
+    """`_socket@12` -> `socket`: one decoration underscore and a stdcall @N off."""
+    return re.sub(r"@\d+$", "", name[1:] if name.startswith("_") else name)
 
 
 def library_import_thunks(path):
@@ -595,8 +876,9 @@ def write_status(log, rows, present=None):
     MSVCR71.dll, and the ledger's CRT rows are msvcrt.lib members), which the
     real link searches by default -- __except_list alone is referenced by 3,088
     objects. See excused() for exactly which names. A duplicate counts against both definers, since the log cannot say
-    which copy is wrong. A COMDAT copy the linker discards for a different body
-    counts against its object. Any hard-coded image address counts too
+    which copy is wrong. A COMDAT copy that is not retail's body counts against
+    its object (comdat_losers: retail truth where the symbol has a retail
+    address, else the copy link.exe keeps, the first in link order). Any hard-coded image address counts too
     (link_debt.addresses): it links, but only while nothing moves.
     """
     import link_debt
@@ -605,7 +887,11 @@ def write_status(log, rows, present=None):
     imported = retail_imports()
     if present is None:
         present, _ = objects(rows)
-    losers = comdat_losers(present)
+    stats = {}
+    losers = comdat_losers(present, rows, stats)
+    print(f"link_census: COMDAT keeper: {stats.get('symbols_retail', 0):,} symbols judged by retail truth "
+          f"({stats.get('losers_retail', 0):,} losing copies), {stats.get('symbols_first', 0):,} with no retail "
+          f"address by link order ({stats.get('losers_first', 0):,} losing copies)")
     unresolved = collections.defaultdict(set)
     duplicates = collections.defaultdict(set)
     for line in log.splitlines():
