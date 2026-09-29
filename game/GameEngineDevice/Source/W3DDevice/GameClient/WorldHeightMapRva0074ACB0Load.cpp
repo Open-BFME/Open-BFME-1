@@ -50,6 +50,9 @@ public:
 
 typedef Bool (*ChunkParserCallback)(DataChunkInput &, DataChunkInfo *, void *);
 
+extern "C" int _bfmeVftVE[];
+extern int g_0109BFD4[];
+
 // ---- parser registrations ---------------------------------------------
 
 class BfmeParserRegistrationVE
@@ -58,7 +61,7 @@ public:
 	BfmeParserRegistrationVE(DataChunkInput *file, const AsciiString &label,
 		const AsciiString &parent)
 	{
-		m_vftable = (void *)0x0107C7D0;
+		m_vftable = _bfmeVftVE;
 		m_file = file;
 		m_parser = file->registerParser(label, parent,
 			(ChunkParserCallback)0x0041579E, this);
@@ -66,7 +69,7 @@ public:
 
 	~BfmeParserRegistrationVE()
 	{
-		m_vftable = (void *)0x0107C7D0;
+		m_vftable = _bfmeVftVE;
 		((BfmeSubVE *)m_file)->bfmeDropVE(m_parser);
 	}
 
@@ -104,7 +107,7 @@ public:
 		DataChunkInput *file, const AsciiString &label)
 		: BfmeParserRegistrationVE(file, label, AsciiString::TheEmptyString)
 	{
-		m_vftable = (void *)0x0109BFD4;
+		m_vftable = g_0109BFD4;
 		m_owner = owner;
 		m_callback = callback;
 	}

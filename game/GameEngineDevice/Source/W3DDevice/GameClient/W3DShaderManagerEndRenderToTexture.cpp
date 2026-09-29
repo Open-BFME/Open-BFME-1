@@ -28,21 +28,26 @@ class W3DShaderManager
 {
 public:
 	static IDirect3DTexture8 *endRenderToTexture(void);
+
+protected:
+	static bool m_renderingToTexture;
+	static IDirect3DSurface8 *m_oldRenderSurface;
+	static IDirect3DTexture8 *m_renderTexture;
 };
 
 IDirect3DTexture8 *W3DShaderManager::endRenderToTexture(void)
 {
-	if (!*(unsigned char *)0x012F9D00)
+	if (!m_renderingToTexture)
 		return 0;
 
-	DX8Wrapper::Set_Render_Target(*(IDirect3DSurface8 **)0x012F9D04, true);
+	DX8Wrapper::Set_Render_Target(m_oldRenderSurface, true);
 	BFME_SET_SAMP(0, 1, 3);
 	BFME_SET_SAMP(0, 2, 3);
 	BFME_SET_SAMP(0, 3, 3);
 	BFME_SET_SAMP(0, 5, 2);
 	BFME_SET_SAMP(0, 6, 2);
 	BFME_SET_SAMP(0, 7, 0);
-	IDirect3DTexture8 *texture = *(IDirect3DTexture8 **)0x012F9D08;
-	*(unsigned char *)0x012F9D00 = 0;
+	IDirect3DTexture8 *texture = m_renderTexture;
+	m_renderingToTexture = false;
 	return texture;
 }

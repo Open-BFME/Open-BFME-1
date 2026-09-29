@@ -65,7 +65,9 @@ int Rva00800920Owner::rva00800a40(
 	Rva00800A40Input &record = *(Rva00800A40Input *)input;
 	if (record.m_04 != 0)
 		reinterpret_cast<Rva00800A40Diag *>(Rva007EB810Get())->fail(
-			(const char *)0x0112c31c, (const char *)0x0112c2b0, 0x4d);
+			"addr->GetType() == AddressInternet",
+			"\\views\\feslbuild_main\\jabba\\fesl\\source\\gamebrowser\\gamebrowserdemangler.cpp",
+			0x4d);
 
 	int index;
 	for (index = 0; index < 8; ++index)
@@ -86,7 +88,9 @@ int Rva00800920Owner::rva00800a40(
 	if (slot == 0)
 	{
 		reinterpret_cast<Rva00800A40Diag *>(Rva007EB810Get())->fail(
-			(const char *)0x0111c2a0, (const char *)0x0112c2b0, 0x54);
+			"false",
+			"\\views\\feslbuild_main\\jabba\\fesl\\source\\gamebrowser\\gamebrowserdemangler.cpp",
+			0x54);
 		m_0c->send(-0x65, value);
 	}
 	slot->m_00 = m_18;

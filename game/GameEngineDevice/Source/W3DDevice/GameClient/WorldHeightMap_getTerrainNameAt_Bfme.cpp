@@ -41,8 +41,8 @@ public:
 AsciiString Rva0074A0D0WorldHeightMap::getTerrainNameAt(Real x, Real y)
 {
 	unsigned char *self = (unsigned char *)this;
-	Int xIndex = Rva0074A0D0FloorToInt((Real)floor((double)(x * *(const Real *)0x01075C70)));
-	Int yIndex = Rva0074A0D0FloorToInt((Real)floor((double)(y * *(const Real *)0x01075C70)));
+	Int xIndex = Rva0074A0D0FloorToInt((Real)floor((double)(x * 0.1f)));
+	Int yIndex = Rva0074A0D0FloorToInt((Real)floor((double)(y * 0.1f)));
 	xIndex += *(Int *)(self + 0x10);
 	yIndex += *(Int *)(self + 0x10);
 	if (xIndex < 0) xIndex = 0;
@@ -53,7 +53,7 @@ AsciiString Rva0074A0D0WorldHeightMap::getTerrainNameAt(Real x, Real y)
 	if (yIndex >= height) yIndex = height - 1;
 	Int ndx = (yIndex * width) + xIndex;
 	if (ndx < 0 || ndx >= *(Int *)(self + 0x20))
-		return *(const AsciiString *)0x01336E50;
+		return AsciiString::TheEmptyString;
 	Int tileNdx = (*(Short **)(self + 0x8c))[ndx];
 	tileNdx = tileNdx >> 2;
 	Rva0074A0D0TextureClass *textureClasses =
@@ -65,5 +65,5 @@ AsciiString Rva0074A0D0WorldHeightMap::getTerrainNameAt(Real x, Real y)
 			tileNdx < textureClasses[i].firstTile + textureClasses[i].numTiles)
 			return textureClasses[i].name;
 	}
-	return *(const AsciiString *)0x01336E50;
+	return AsciiString::TheEmptyString;
 }
