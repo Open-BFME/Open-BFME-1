@@ -47,7 +47,7 @@ public:
 	virtual void Prepare_LOD(CameraClass &camera);
 	virtual void Dummy72();
 	virtual void Dummy73();
-	virtual void Dummy74();
+	virtual void Decrement_LOD(void);
 	virtual float Get_Cost(void) const;
 	virtual float Get_Value(void) const;
 	virtual float Get_Post_Increment_Value(void) const;
@@ -100,3 +100,9 @@ float RingRenderObjClass::Get_Post_Increment_Value(void) const
 }
 
 #undef BFME_VIRTUAL_EIGHT
+
+// Retail 0x00919960: vtable slot 74, after Increment_LOD.
+void RingRenderObjClass::Decrement_LOD(void)
+{
+	if (CurrentLOD != 0) CurrentLOD--;
+}
