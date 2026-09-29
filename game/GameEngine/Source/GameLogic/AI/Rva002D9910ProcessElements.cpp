@@ -75,6 +75,15 @@ struct Rva002D9890Global
     void *m_value;
 };
 
+// The game-logic singleton this body reads a field from. It is a real global,
+// so name it: dir32_addresses.csv records 0x012F0898 for
+// ?TheGameLogic@@3PAVGameLogic@@A. Rva002D9890Global is only this TU's view of
+// the object, so it mangles to a different symbol and is bound to the canonical
+// one the rest of the tree defines.
+extern Rva002D9890Global *TheGameLogic;
+
+#pragma comment(linker, "/alternatename:?TheGameLogic@@3PARva002D9890Global@@A=?TheGameLogic@@3PAVGameLogic@@A")
+
 void Rva002D9910::process()
 {
     Rva002D9910Owner *owner = *(Rva002D9910Owner **)((char *)this - 8);
@@ -103,7 +112,7 @@ void Rva002D9890::process()
             {
                 result->apply(0);
                 if (!(*(Rva002D9910State **)((char *)this - 0x0C))->m_flag)
-                    result->slot24((*(Rva002D9890Global **)0x012F0898)->m_value);
+                    result->slot24(TheGameLogic->m_value);
             }
         }
     }

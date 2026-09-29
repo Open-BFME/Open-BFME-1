@@ -1004,6 +1004,8 @@ Real Path::computeFlightDistToGoal( const Coord3D *pos, Coord3D& goalPos )
 
 enum { PATHFIND_CELLS_PER_FRAME=5000}; // Number of cells we will search pathfinding per frame.
 enum {CELL_INFOS_TO_ALLOCATE = 30000};
+extern PathfindCellInfo *g_bfmePathfindFreeList; // retail 0x012F1094
+
 PathfindCellInfo *PathfindCellInfo::s_infoArray = NULL;
 PathfindCellInfo *PathfindCellInfo::s_firstFree = NULL;						
 /**
@@ -1041,11 +1043,15 @@ void PathfindCellInfo::allocateCellInfos(void)
 			slot[0] = 0;
 		}
 
-		slot[1] = 0x012F1094;
-		slot[0] = *(UnsignedInt *)0x012F1094;
+		// The free list is the intrusive PathfindCellInfo list whose head sits at
+		// retail 0x012F1094; symbols.csv pins it as g_bfmePathfindFreeList and the
+		// sibling AI TUs already declare that name, so use it here too instead of
+		// hard-coding the image address.
+		slot[1] = (UnsignedInt)&g_bfmePathfindFreeList;
+		slot[0] = *(UnsignedInt *)&g_bfmePathfindFreeList;
 		if (slot[0] != 0)
 			*(UnsignedInt *)(slot[0] + 0x30) = (UnsignedInt)slot;
-		*(UnsignedInt *)0x012F1094 = (UnsignedInt)((char *)slot - 0x2C);
+		g_bfmePathfindFreeList = (PathfindCellInfo *)((char *)slot - 0x2C);
 		slot = (UnsignedInt *)((char *)slot + 0x34);
 	}
 }
