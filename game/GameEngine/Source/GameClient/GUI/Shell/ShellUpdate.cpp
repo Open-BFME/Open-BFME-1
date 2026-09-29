@@ -7,6 +7,7 @@ typedef int Int;
 typedef bool Bool;
 
 extern int(__cdecl *g_bfmeNowVNH)();
+extern Int g_012F4B5C;
 
 class WindowLayout
 {
@@ -106,11 +107,11 @@ void Shell::update()
 	if (!(*(unsigned char *)&updateState & 1))
 	{
 		updateState |= 1;
-		*(Int *)0x012F4B5C = nowFunction();
+		g_012F4B5C = nowFunction();
 	}
 
 	Int now = nowFunction();
-	if (now - *(Int *)0x012F4B5C >= *(const float *)0x0110B598)
+	if (now - g_012F4B5C >= 32.333332f)
 	{
 		for (Int i = self->m_screenCount - 1; i >= 0; --i)
 		{
@@ -121,7 +122,7 @@ void Shell::update()
 		AnimateWindowManager *animateWindowManager = self->m_animateWindowManager;
 		animateWindowManager->update();
 		self->m_schemeManager->update();
-		*(Int *)0x012F4B5C = now;
+		g_012F4B5C = now;
 	}
 
 	if (!self->m_flags[3] && self->m_flags[2] && !self->m_flags[13])

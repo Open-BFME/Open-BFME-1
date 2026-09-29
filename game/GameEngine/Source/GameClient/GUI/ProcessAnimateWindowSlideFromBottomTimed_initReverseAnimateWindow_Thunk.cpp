@@ -73,19 +73,22 @@ public:
 };
 
 extern Display *TheDisplay;
+extern char g_bfmeInitDYB;
+extern unsigned __int64 g_bfmeElapsedDYB;
+extern unsigned __int64 g_012ED898;
 extern "C" __declspec(dllimport) UnsignedInt __stdcall timeGetTime( void );
 
 extern "C" __declspec(noinline) UnsignedInt __stdcall bfme_timeGetTime( void )
 {
 	// BFME's pause-clock state predates the shared Zero Hour declarations.
-	if (!*reinterpret_cast<volatile unsigned char *>(0x012ed8b0)) {
+	if (!g_bfmeInitDYB) {
 		const unsigned __int64 elapsed =
 			static_cast<unsigned __int64>(timeGetTime()) -
-			*reinterpret_cast<const unsigned __int64 *>(0x012ed8a8);
-		*reinterpret_cast<unsigned __int64 *>(0x012ed898) = elapsed;
+			g_bfmeElapsedDYB;
+		g_012ED898 = elapsed;
 		return static_cast<UnsignedInt>(elapsed);
 	}
-	return *reinterpret_cast<UnsignedInt *>(0x012ed898);
+	return static_cast<UnsignedInt>(g_012ED898);
 }
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ProcessAnimateWindow.h

@@ -49,7 +49,7 @@ struct BfmeDevice
 };
 
 #define BfmeDeviceGlobal (*(BfmeDevice **)0x01340534)
-#define BfmeSkipRender (*(Bool *)0x01307210)
+#define BfmeSkipRender (ScreenCrossFadeFilter::m_skipRender)
 
 class DX8Wrapper
 {
@@ -86,7 +86,7 @@ public:
 	virtual void getOrigin(Int *, Int *) = 0;
 };
 
-#define TheTacticalView (*(BfmeTacticalView **)0x012F1600)
+extern BfmeTacticalView *TheTacticalView;
 
 class TextureBaseClass
 {
@@ -120,6 +120,9 @@ public:
 	virtual Bool setup(FilterModes);
 	virtual Int set(FilterModes);
 	virtual void reset();
+
+protected:
+	static Bool m_skipRender;
 };
 
 // ?postRender@ScreenCrossFadeFilter@@UAE_NW4FilterModes@@AAUCoord2D@@AA_NPAU3@@Z
