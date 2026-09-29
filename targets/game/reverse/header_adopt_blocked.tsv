@@ -736,3 +736,4 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdate
 game/GameEngine/Source/GameLogic/Object/Update/StructureToppleUpdateModuleData_ctor_Thunk.cpp	AsciiString	game\GameEngine\Source\GameLogic\Object\Update\StructureToppleUpdateModuleData_ctor_Thunk.cpp(215) : error C2661: 'AsciiString::set' : no overloaded function takes 2 arguments
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp	UnicodeString	game\GameEngine\Source\GameLogic\Object\Behavior\CastleBehaviorInitiateUnpack.cpp(153) : error C2039: 'set' : is not a member of 'UnicodeString'
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp	UnicodeString	game\GameEngine\Source\GameLogic\Object\Behavior\CastleBehaviorInitiateUnpack.cpp(153) : error C2039: 'set' : is not a member of 'UnicodeString'
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanLobbyMenuPlayerTooltip.cpp	UnicodeString	Functions: FAIL 1/1
