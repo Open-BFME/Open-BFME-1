@@ -195,9 +195,11 @@ private:
 	BfmeVecMemberV m_bfmeVector;				// +0x24
 };
 
+extern const char g_Rva0107301CEmptyString[];
+
 // ??0Gen_00366B90@@QAE@XZ
 Gen_00366B90::Gen_00366B90(void)
-	: m_bfmeA((const char *)0x0107301C)
+	: m_bfmeA(g_Rva0107301CEmptyString)
 	, m_bfmeFlag(false)
 	, m_bfmeB()
 	, m_bfmeVector()

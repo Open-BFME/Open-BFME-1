@@ -210,10 +210,12 @@ extern WindowManager *g_theWindowManager;
 extern GameTextInterface *TheGameText;
 extern BfmeAptScreenMapTransfer *TheBfmeAptScreenMapTransfer;
 extern const unsigned short BFMEEmptyString[];
+extern "C" void *bfmeVftRva0050FD90[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva0050FD90=??_7Rva0050FD90@@6B@")
 
 BfmeAptScreenMapTransfer::BfmeAptScreenMapTransfer( void *context )
 {
-	*(void **)this = (void *)0x01104FF8;
+	*(void **)this = bfmeVftRva0050FD90;
 	m_game = (GameInfo *)context;
 	if( TheBfmeAptScreenMapTransfer )
 		return;

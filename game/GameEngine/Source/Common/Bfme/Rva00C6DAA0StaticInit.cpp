@@ -10,7 +10,7 @@ public:
 		typedef void *(Rva00C6DAA0Init::*Member)(const unsigned short *, void *);
 		union { void (*function)(void); Member method; } call;
 		call.function = (void (*)(void))j_000203ce;
-		(this->*call.method)((const unsigned short *)0x0112F3A4, &allocator);
+		(this->*call.method)(L"false", &allocator);
 	}
 	~Rva00C6DAA0Init();
 };

@@ -146,7 +146,7 @@ templateDone:
 		return 1;
 
 	static NameKeyType key =
-		TheNameKeyGenerator->nameToKey((const char *)0x01083c50);
+		TheNameKeyGenerator->nameToKey("CastleBehavior");
 	module = object->findModule(key);
 	if (module == 0)
 		return 1;

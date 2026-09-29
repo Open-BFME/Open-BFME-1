@@ -3,7 +3,7 @@
 
 typedef float Real;
 
-#define BfmeZero (*(const Real *)0x01084C3C)
+#define BfmeZero (3.402823466e+38f)
 
 struct BfmePointF0
 {
