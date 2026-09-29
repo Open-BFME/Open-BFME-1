@@ -15,8 +15,6 @@
 #define _WCTYPE_INLINE_DEFINED
 #include "ascii_string.h"
 #include "unicode_string.h"
-template<class T> inline StringBase<T>::~StringBase() { releaseBuffer(); }
-template<class T> inline int StringBase<T>::getLength() const { return m_data ? m_data->length : 0; }
 template<class T> inline T StringBase<T>::getCharAt(int i) const { if(m_data) return m_data->data[i]; return 0; }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->releaseBuffer(); }
 #undef iswalnum

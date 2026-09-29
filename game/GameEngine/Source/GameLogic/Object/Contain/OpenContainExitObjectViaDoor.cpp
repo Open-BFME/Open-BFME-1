@@ -256,7 +256,6 @@ public:
 	}
 };
 
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 template <> inline void StringBase<char>::concat(char c) { concat(&c, 1); }
 template <> inline void StringBase<char>::concat(const char *s) { concat(s, (int)strlen(s)); }
 
@@ -265,7 +264,6 @@ extern AI *TheAI;
 extern TerrainLogic *TheTerrainLogic;
 extern GameLogic *TheGameLogic;
 #define TheBfmeGameLogic ((Rva002284D0GameLogic *)TheGameLogic)
-
 
 void OpenContain::exitObjectViaDoor(Object *exitObject, ExitDoorType)
 {

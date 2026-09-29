@@ -9,10 +9,6 @@
 #include "GameClient/GameWindow.h"
 #include "GameClient/GameWindowManager.h"
 
-template <> inline const char *StringBase<char>::str() const {
-    return m_data ? m_data->data : "";
-}
-
 class BFMEWindowManagerVTable
 {
 public:

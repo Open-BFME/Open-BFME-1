@@ -31,9 +31,6 @@
 #include <vector>
 #include "Common/AsciiString.h"
 #include "Common/UnicodeString.h"
-template <class T> inline int StringBase<T>::getLength() const { return m_data ? m_data->length : 0; }
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
-template <> inline const wchar_t *StringBase<wchar_t>::str() const { return m_data ? m_data->data : L""; }
 template <class T> inline T StringBase<T>::getCharAt(int i) const { return m_data ? m_data->data[i] : 0; }
 template <class T> inline void StringBase<T>::concat(T c) { concat(&c, 1); }
 template <> inline void StringBase<char>::concat(const char *s) { concat(s,strlen(s)); }

@@ -18,17 +18,9 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 
-template <> inline const unsigned short *StringBase<unsigned short>::str() const
-{
-	return m_data ? m_data->data : (const unsigned short *)L"";
-}
 template <> inline bool StringBase<unsigned short>::isEmpty() const
 {
 	return !m_data || m_data->length == 0;
-}
-template <> inline void StringBase<unsigned short>::clear()
-{
-	releaseBuffer();
 }
 template <> inline void StringBase<unsigned short>::concat(const unsigned short *s)
 {
@@ -230,7 +222,6 @@ public:
 		UnicodeString *summaryOut);
 	virtual void slot10();
 	virtual void slot14();
-
 
 private:
 	UnicodeString m_at04;

@@ -7,10 +7,6 @@
 #include "string_base.h"
 #include "ascii_string.h"
 
-// Retail inlines the null-checked data pointer read at every str() site.
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
-
-
 enum NameKeyType
 {
 	NAMEKEY_INVALID = 0

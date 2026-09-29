@@ -7,18 +7,6 @@ extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int c
 
 class UnicodeString;
 
-// BFME's StringBase<char> default constructor is inline: its explicitly
-// instantiated COMDAT at 0x00061D90 (`mov eax,ecx; mov [eax],0; ret`) has no
-// direct caller in the retail image, and every AsciiString default
-// construction stores the zero in place. string_base.h keeps the member out of
-// line for StringBase.cpp's explicit instantiation, so specialize it here for
-// the AsciiString side. docs/analysis/ascii_string_layout.md has the evidence.
-template <>
-inline StringBase<char>::StringBase()
-{
-    m_data = 0;
-}
-
 // BFME's AsciiString is `class AsciiString : public StringBase<char>` and adds
 // no data: the retail copy, C-string and default constructors are the
 // StringBase<char> ones, and a constructor that runs code after the base is
@@ -26,6 +14,9 @@ inline StringBase<char>::StringBase()
 // upstream (ZH, a standalone class): inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : public StringBase<char> {
 public:
+    // Exported as ?TheEmptyString@AsciiString@@2V1@B (0x00F36E50).
+    static const AsciiString TheEmptyString;
+
     // Retail inlines the default ctor (the entry ctor at 0x009A1390 zeroes
     // m_data with a single store rather than calling out); ascii_string.cpp
     // still emits the out-of-line COMDAT at 0x00062030 for its 10 callers.
@@ -45,7 +36,8 @@ public:
     AsciiString(const AsciiString &that, int start, int len);
     AsciiString(const UnicodeString &that);
     // Inline and empty: ??1AsciiString (0x0005EE90) is a bare `jmp 0x00887940`,
-    // the base destructor body, and scope exits call 0x00887940 directly. An
+    // releaseBuffer through the inline base destructor, and scope exits call
+    // 0x00887940 directly. An
     // out-of-line declaration also transposes the EH saved-esp store at
     // by-value call sites (docs/shape_levers.md row 2).
     ~AsciiString() {}

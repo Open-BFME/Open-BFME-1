@@ -5,8 +5,6 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 #include "ascii_string.h"
 #include "basetype.h"
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
-template<> inline void StringBase<char>::clear() { releaseBuffer(); }
 enum NameKeyType { NAMEKEY_INVALID=0 };
 enum AttitudeType { AI_NORMAL=0 };
 enum VeterancyLevel { LEVEL_REGULAR=0 };
@@ -272,7 +270,6 @@ TeamTemplateInfo::TeamTemplateInfo(Dict *d) :
 			m_teamGenericScripts[i].clear();
 		}
 	}
-
 
 	// reinforcement team info.
 	m_transportUnitType = d->getAsciiString(TheKey_teamTransport, &exists);

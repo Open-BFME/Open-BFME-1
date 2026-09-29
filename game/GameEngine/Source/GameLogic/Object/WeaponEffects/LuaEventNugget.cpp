@@ -47,8 +47,6 @@ public:
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
-
 class Object
 {
 public:
@@ -136,7 +134,6 @@ public:
 };
 
 extern GameLogic *TheGameLogic;
-
 
 struct BfmeDelayedLuaEvent
 {

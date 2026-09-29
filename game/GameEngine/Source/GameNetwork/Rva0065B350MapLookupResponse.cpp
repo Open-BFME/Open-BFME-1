@@ -13,7 +13,6 @@ typedef struct in_addr IN_ADDR;
 #include <string>
 #include <stdlib.h>
 #include "GameNetwork/GameSpy/PersistentStorageThread.h"
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 
 // The response deque has a independently witnessed 1F0-byte stride. This
 // BFME tail is not described by the smaller upstream PSResponse declaration.

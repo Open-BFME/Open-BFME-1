@@ -3,10 +3,6 @@
 // Reference algorithm: ControlBar.cpp::init, with BFME overlay creation and
 // 20 command slots. See docs/analysis/control_bar_init_004a0f70.md.
 #include "ascii_string.h"
-template <> inline const char *StringBase<char>::str() const
-{
-    return m_data ? m_data->data : "";
-}
 #include "Common/INI/INI.h"
 #include <string.h>
 

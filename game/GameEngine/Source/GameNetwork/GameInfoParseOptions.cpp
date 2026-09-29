@@ -13,8 +13,6 @@
 #include <string.h>
 #include <string>
 #pragma intrinsic(strlen)
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
-template <> inline int StringBase<char>::getLength() const { return m_data ? m_data->length : 0; }
 template <> inline bool StringBase<char>::isEmpty() const { return !m_data || m_data->length == 0; }
 template <> inline int StringBase<char>::compare(const char *other) const {
     int otherLength = other ? strlen(other) : 0;

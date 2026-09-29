@@ -11,7 +11,6 @@
 #include "ascii_string.h"
 #include "rendobj.h"
 #include "debug.h"
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 template<> inline bool StringBase<char>::isEmpty() const { return !m_data || m_data->length == 0; }
 class TruckBoneCrashMessage
 {

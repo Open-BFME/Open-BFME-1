@@ -11,8 +11,6 @@
 #include <hash_map>
 #include "string_base.h"
 
-template<class T> inline StringBase<T>::StringBase() : m_data(0) {}
-template<class T> inline StringBase<T>::~StringBase() { releaseBuffer(); }
 class AsciiString : private StringBase<char> {
 public:
     AsciiString() {}
@@ -170,5 +168,4 @@ Player::Player(int playerIndex)
     m_skillPointsScalarTable=TheExperienceLevelSystem->findExperienceScalarTable(AsciiString("PlayerSkillPointsScalarTable"));
     init(0);
 }
-
 

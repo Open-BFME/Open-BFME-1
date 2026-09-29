@@ -30,11 +30,6 @@
 #include <map>
 #include <string>
 
-template <> inline const char *StringBase<char>::str() const
-{
-	return m_data ? m_data->data : "";
-}
-
 #include "PreRTS.h"
 #include "GameNetwork/GameSpy/PersistentStorageThread.h"
 #include "GameClient/ShellHooks.h"

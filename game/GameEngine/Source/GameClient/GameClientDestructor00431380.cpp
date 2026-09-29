@@ -21,7 +21,6 @@
 // 0x00430CA0 out of line), and a plain `delete TheDrawGroupInfo`.
 
 #include "string_base.h"
-template<> inline StringBase<char>::~StringBase() { releaseBuffer(); }
 #include "ascii_string.h"
 #include <list>
 #include <vector>

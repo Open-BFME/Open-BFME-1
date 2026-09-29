@@ -232,12 +232,6 @@ void StringBase<T>::set(const StringBase<T> &src, int start, int len)
 
 
 template <typename T>
-StringBase<T>::StringBase()
-{
-    m_data = 0;
-}
-
-template <typename T>
 void StringBase<T>::debugIgnoreLeaks()
 {
 }
@@ -252,18 +246,6 @@ template <typename T>
 bool StringBase<T>::isNotEmpty() const
 {
     return !isEmpty();
-}
-
-template <typename T>
-int StringBase<T>::getLength() const
-{
-    return m_data ? m_data->length : 0;
-}
-
-template <typename T>
-const T *StringBase<T>::str() const
-{
-    return m_data ? &m_data->data[0] : (const T *)"";
 }
 
 template <typename T>
@@ -282,20 +264,9 @@ const T *StringBase<T>::find(T c) const
 }
 
 template <typename T>
-T *StringBase<T>::peek() const
-{
-    return &m_data->data[0];
-}
-
-template <typename T>
 T StringBase<T>::getCharAt(int index) const
 {
     return m_data ? m_data->data[index] : 0;
-}
-
-template <typename T>
-void StringBase<T>::validate() const
-{
 }
 
 int StringBase<char>::compare(const char *str) const
@@ -316,14 +287,6 @@ template <typename T>
 void StringBase<T>::concat(T c)
 {
     concat(&c, 1);
-}
-
-template <typename T>
-void StringBase<T>::swap(StringBase<T> &other)
-{
-    Header *tmp = m_data;
-    m_data = other.m_data;
-    other.m_data = tmp;
 }
 
 template <typename T>
@@ -767,18 +730,6 @@ template <typename T>
 void StringBase<T>::format_va(const StringBase<T> &fmt, char *args)
 {
     format_va(fmt.str(), args);
-}
-
-template <typename T>
-void StringBase<T>::clear()
-{
-    releaseBuffer();
-}
-
-template <typename T>
-StringBase<T>::~StringBase()
-{
-    releaseBuffer();
 }
 
 template <typename T>

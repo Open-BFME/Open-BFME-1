@@ -13,7 +13,6 @@
 #include <string.h>
 #include "string_base.h"
 template<class T> inline bool StringBase<T>::isEmpty() const { return !m_data || !m_data->length; }
-template<class T> inline const T *StringBase<T>::str() const { return m_data ? m_data->data : (const T*)""; }
 template<> inline int StringBase<char>::compare(const char *s) const {
  int n=(int)strlen(s);
  int len=m_data?m_data->length:0;

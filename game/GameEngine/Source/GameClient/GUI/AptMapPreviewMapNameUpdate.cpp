@@ -28,15 +28,6 @@ extern "C" __declspec(dllimport) char *__cdecl strrchr(const char *, int);
 // Retail's inline str() falls back to the empty text at 0x0107388B.
 extern char g_bfmeEmptyAscii[];
 
-template <typename T> inline int StringBase<T>::getLength() const
-{
-	return m_data ? m_data->length : 0;
-}
-template <> inline const char *StringBase<char>::str() const
-{
-	return m_data ? &m_data->data[0] : g_bfmeEmptyAscii;
-}
-
 inline UnicodeString::UnicodeString() { m_text = 0; }
 inline UnicodeString::~UnicodeString()
 {

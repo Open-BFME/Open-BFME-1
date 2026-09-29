@@ -6,7 +6,6 @@
 // BFME repair-state setter reconstructed from the ZH twin and retail offsets.
 
 #include "ascii_string.h"
-template<> inline const char* StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 
 typedef bool Bool;
 typedef float Real;

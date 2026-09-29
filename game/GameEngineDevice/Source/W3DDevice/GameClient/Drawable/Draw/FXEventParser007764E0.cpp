@@ -11,7 +11,6 @@
 // The nextToken local separator is significant to MSVC's scratch allocation.
 // Separate zero stores preserve the record constructor's field order.
 #include "string_base.h"
-template<> inline StringBase<char>::~StringBase() { releaseBuffer(); }
 #include "ascii_string.h"
 #include "Common/INI/INI.h"
 #include <string.h>

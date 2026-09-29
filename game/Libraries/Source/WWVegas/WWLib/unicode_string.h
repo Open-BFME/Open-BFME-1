@@ -8,6 +8,9 @@ class AsciiString;
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString {
 public:
+    // Exported as ?TheEmptyString@UnicodeString@@2V1@B (0x00F36E54).
+    static const UnicodeString TheEmptyString;
+
     UnicodeString();
     UnicodeString(wchar_t c);
     UnicodeString(const wchar_t *str);

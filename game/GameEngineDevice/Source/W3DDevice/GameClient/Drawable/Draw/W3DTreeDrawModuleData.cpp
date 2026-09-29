@@ -6,14 +6,6 @@
 
 #include "ascii_string.h"
 
-// Canonical bodies from ascii_string.cpp and string_base.cpp, visible here
-// to preserve retail's direct calls to StringBase<char>::releaseBuffer.
-
-template <typename T> inline void StringBase<T>::clear()
-{
-	releaseBuffer();
-}
-
 class FXList;
 
 class W3DTreeDrawModuleDataBase

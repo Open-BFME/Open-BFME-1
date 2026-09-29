@@ -38,10 +38,6 @@
 #include "Common/Recorder.h"		// GlobalData, TheGlobalData, getPath_UserData
 #include "Common/INI/INI.h"		// BFME's INI, whose loadDirectory takes five arguments
 
-// Retail inlines StringBase<char>::str() as `m_data ? m_data->data : ""`, and
-// its header is eight bytes wide, so the character data is at +8.
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
-
 typedef int Int;
 
 class ImageCollection

@@ -22,10 +22,6 @@ template <> inline void StringBase<char>::concat(const StringBase<char> &s)
     const char *data = s.m_data ? &s.m_data->data[0] : "";
     concat(data, len);
 }
-template <typename T> inline void StringBase<T>::clear()
-{
-    releaseBuffer();
-}
 extern const AsciiString Rva01336E50EmptyString;
 class Team;
 class Player

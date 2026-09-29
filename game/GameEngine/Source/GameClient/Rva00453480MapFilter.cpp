@@ -53,7 +53,6 @@ public:
 
 typedef _STL::vector<Rva00453480MapMetaData *> Rva00453480Vector;
 
-
 extern "C" __declspec(dllexport) void Rva00453480Collect(
     unsigned int flags, Rva00453480Vector *out)
 {
@@ -108,8 +107,6 @@ append:
 #include "ascii_string.h"
 #include "unicode_string.h"
 #include <algorithm>
-template<typename T> inline const T *StringBase<T>::str() const {return m_data ? m_data->data : (const T *)"";}
-template<typename T> inline StringBase<T>::~StringBase() {releaseBuffer();}
 class GameWindow;
 struct ICoord2D {int x,y;};
 class Image {public:char field00[0x24];ICoord2D m_imageSize;int getImageWidth()const{return m_imageSize.x;}};

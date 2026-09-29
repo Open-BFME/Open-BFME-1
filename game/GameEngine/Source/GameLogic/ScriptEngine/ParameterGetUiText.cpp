@@ -24,7 +24,6 @@ extern "C" unsigned __cdecl strlen(const char *);
 #include "basetype.h"
 #include "Common/BorderColors.h"
 
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 template<> inline bool StringBase<char>::isNotEmpty() const { return m_data && m_data->length != 0; }
 template<> inline void StringBase<char>::set(const char *s) { set(s,s ? (int)strlen(s) : 0); }
 

@@ -8,19 +8,6 @@
 #include <vector>
 #include "Common/INIException.h"
 
-template <>
-inline int StringBase<char>::getLength() const
-{
-	return m_data ? m_data->length : 0;
-}
-
-template <>
-inline const char *StringBase<char>::str() const
-{
-	return m_data ? m_data->data : "";
-}
-
-
 // ObjectFilter's name resolution, retail 0x0039E2B0 (907 bytes).
 //
 // Identity: its four INIException messages name it --

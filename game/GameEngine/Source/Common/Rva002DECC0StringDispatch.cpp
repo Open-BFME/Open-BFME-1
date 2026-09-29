@@ -6,13 +6,6 @@
 // Retail 0x002DECC0. Its owner identity is unresolved, so keep it RVA-qualified.
 #include "ascii_string.h"
 
-template <>
-inline const char *StringBase<char>::str() const
-{
-	return m_data ? (const char *)m_data + 8 : "";
-}
-
-
 class Rva002DECC0Owner
 {
 public:

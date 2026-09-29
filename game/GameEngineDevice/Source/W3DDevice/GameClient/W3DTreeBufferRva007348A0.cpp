@@ -5,7 +5,6 @@
 // not known, so retain its address. See targets/game/reverse/identity_evidence/007348a0.md.
 
 #include "ascii_string.h"
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 
 class TextureClass { public: void Release_Ref(); };
 class BFMEWaterTrackTextureHandle {
@@ -71,7 +70,6 @@ public:
 extern BfmeAwakenDebug *TheBfmeAwakenDebug;
 extern bool _bfme_debugReportingEnabled(void);
 extern void _bfme_debugRecordCallsite(int kind);
-
 
 struct Rva007348A0Type {
  char prefix[0x24];

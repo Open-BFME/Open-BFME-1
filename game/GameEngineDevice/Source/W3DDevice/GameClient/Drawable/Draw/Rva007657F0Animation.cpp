@@ -15,10 +15,7 @@
 #include <string.h>
 #pragma intrinsic(strlen)
 
-template<> inline StringBase<char>::~StringBase() { releaseBuffer(); }
 template<> inline bool StringBase<char>::isEmpty() const { return !m_data || m_data->length == 0; }
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
-template<> inline int StringBase<char>::getLength() const { return m_data ? m_data->length : 0; }
 template<> inline void StringBase<char>::concat(char c) { concat(&c, 1); }
 template<> inline void StringBase<char>::concat(const char *s) { concat(s, s ? strlen(s) : 0); }
 template<> inline void StringBase<char>::concat(const StringBase<char> &s) { concat(s.str(), s.getLength()); }

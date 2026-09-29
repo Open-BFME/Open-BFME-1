@@ -12,14 +12,6 @@ inline AsciiString::~AsciiString()
     ((StringBase<char> *)this)->releaseBuffer();
 }
 
-template<> inline int StringBase<char>::getLength() const
-{
-    return m_data ? m_data->length : 0;
-}
-template<> inline const char *StringBase<char>::str() const
-{
-    return m_data ? m_data->data : "";
-}
 template<> inline void StringBase<char>::concat(char c)
 {
     concat(&c, 1);

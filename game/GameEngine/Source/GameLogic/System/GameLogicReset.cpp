@@ -15,7 +15,6 @@
 #include <list>
 #include <vector>
 #include "ascii_string.h"
-template<> inline StringBase<char>::~StringBase() {releaseBuffer();}
 typedef bool Bool;
 #include "subsystem_interface.h"
 #include "snapshot.h"

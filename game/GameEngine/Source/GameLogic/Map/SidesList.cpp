@@ -292,8 +292,6 @@ void SidesList::clear(void)
 	emptyTeams();
 }
 
-
-
 /**
 * SidesList::ParseSidesDataChunk - read a Sides chunk.
 * Format is the newer CHUNKY format.
@@ -379,7 +377,6 @@ Bool SidesList::ParseSidesDataChunk(DataChunkInput &file, DataChunkInfo *info, v
 	DEBUG_ASSERTCRASH(file.atEndOfChunk(), ("Incorrect data file length."));
 	return true;
 }
-
 
 /**
 * SidesList::WriteSidesDataChunk - Writes a Sides chunk.
@@ -663,13 +660,11 @@ public:
     void addSide(const Dict* dict) { if(rva28<32) { int i=rva28; ++rva28; rva2C[i].init(dict); } }
 };
 
-
 typedef char Rva001A0390SideSize[(sizeof(Rva001A0390Side)==0x18)?1:-1];
 typedef char Rva001A0390TeamSize[(sizeof(Rva001A0390Teams)==0x1c)?1:-1];
 typedef char Rva001A0390LayoutSize[(sizeof(Rva001A0390Layout)==0x9ec)?1:-1];
 typedef void (Rva001A0390Layout::*Rva001A0390MemberPointer)();
 typedef char Rva001A0390MemberPointerSize[(sizeof(Rva001A0390MemberPointer)==sizeof(void(*)()))?1:-1];
-template<class T> inline const T* StringBase<T>::str() const { return m_data ? m_data->data : ""; }
 void SidesList::prepareForMP_or_Skirmish() {
     Rva001A0390Layout temp;
     Rva001A0390Layout* self=(Rva001A0390Layout*)this;
@@ -730,11 +725,6 @@ void SidesList::prepareForMP_or_Skirmish() {
     for(int n=0;n<32;++n) self->rva330[n].swap(temp.rva2C[n]);
     self->rva64C.swap(temp.rva630);
 }
-
-
-
-
-
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/SidesList_isPlayerDefaultTeam_Thunk.cpp
 // ?isPlayerDefaultTeam@SidesList@@QAE_NPAVTeamsInfo@@@Z present-unmatched
@@ -2751,7 +2741,6 @@ m_buildingName(AsciiString::TheEmptyString)
 	}
 }
 
-
 /**
  BuildListInfo - Destructor - note - if linked, deletes linked items.
 */
@@ -2793,7 +2782,6 @@ void BuildListInfo::parseStructure(INI *ini, void *instance, void* /*store*/, co
 	ini->initFromINI(buildInfo, myFieldParse);
 	((AISideBuildList*)instance)->addInfo(buildInfo);
 }
-
 
 /**
  BuildListInfo - Duplicate - note - if linked, duplicates linked items.

@@ -280,9 +280,6 @@ typedef char CheckTimerMapOffset[(offsetof(InGameUI, m_namedTimers) == 0x77c) ? 
 typedef char CheckRadiusOffset[(offsetof(InGameUI, m_radiusCursors) == 0x894) ? 1 : -1];
 typedef char CheckIdleWorkersOffset[(offsetof(InGameUI, m_idleWorkers) == 0x131c) ? 1 : -1];
 
-// clear() is inlined to the actual StringBase releaseBuffer entry in retail.
-template<class T> inline void StringBase<T>::clear() { releaseBuffer(); }
-
 InGameUI::InGameUI()
 {
   m_inputEnabled = true;

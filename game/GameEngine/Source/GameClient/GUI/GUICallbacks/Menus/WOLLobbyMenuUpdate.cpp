@@ -14,14 +14,6 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 
-template <> inline const char *StringBase<char>::str() const {
-  return m_data ? m_data->data : "";
-}
-template <>
-inline const unsigned short *StringBase<unsigned short>::str() const {
-  return m_data ? m_data->data : (const unsigned short *)L"";
-}
-
 inline UnicodeString::UnicodeString() { m_text = 0; }
 inline UnicodeString::UnicodeString(const wchar_t *s) {
   ((StringBase<unsigned short> *)this)
@@ -584,9 +576,6 @@ static void fillPlayerInfo_004F9920(const PeerResponse *resp, PlayerInfo *info) 
   bfmeInfo->m_preorder = resp->player.preorder;
 }
 
-template <> inline int StringBase<char>::getLength() const {
-  return m_data ? m_data->length : 0;
-}
 template <> inline void StringBase<char>::concat(char c) { concat(&c, 1); }
 // The real 91-byte comparison remains visible for exception analysis.
 // Its independent emitted body exactly matches 00090570.

@@ -39,7 +39,6 @@
 
 // INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
 
-
 // for now we maintain old legacy files
 // #define MAINTAIN_LEGACY_FILES
 
@@ -48,8 +47,6 @@
 // Use BFME StringBase layout; the ZH string class is a different type.
 #define ASCIISTRING_H
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
-template <typename T> inline const T *StringBase<T>::str() const { return m_data ? m_data->data : (const T *)""; }
-template <typename T> inline StringBase<T>::~StringBase() { releaseBuffer(); }
 // Retail accessor returns an owned value; the ZH header returns a reference.
 // No GlobalData fields are read through this declaration.
 class GlobalData { public: AsciiString getPath_UserData() const; };
@@ -95,7 +92,6 @@ typedef enum
 	FILE_TYPE_JPG,
 	FILE_TYPE_PNG,
 } GameFileType;
-
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -153,7 +149,6 @@ inline static Bool isImageFileType( GameFileType fileType )
 //-------------------------------------------------------------------------------------------------
 /** 
 	Sets the file name, and finds the GDI asset if present. 
-
 
 	Well, that is the worst comment ever for the most important function there is.
 	Everything comes through this.  This builds the directory and tests for the file
@@ -220,8 +215,6 @@ char const * GameFileClass::Set_Name( char const *filename )
 	else if( stricmp( extension, ".jpg" ) == 0 )
 		fileType = FILE_TYPE_JPG;
 
-
-
 	// Now try the main lookup of hitting local files and big files
 	{
 		// all .w3d files are in W3D_DIR_PATH, all .tga files are in TGA_DIR_PATH
@@ -245,8 +238,6 @@ char const * GameFileClass::Set_Name( char const *filename )
 		// see if the file exists
 		m_fileExists = TheFileSystem->doesFileExist( m_filePath );
 	}
-
-
 
 	// if file is still not found, try the test art folders
 	if( m_fileExists == FALSE )
@@ -295,7 +286,6 @@ char const * GameFileClass::Set_Name( char const *filename )
 
 	}  // end if
 
-
 	// We Need to be able to "temporarily copy over the map preview for whichever directory it came from
 	if( m_fileExists == FALSE  && TheGlobalData)
 	{
@@ -319,7 +309,6 @@ char const * GameFileClass::Set_Name( char const *filename )
 	return m_filename;
 
 }
-
 
 //-------------------------------------------------------------------------------------------------
 /** If we found a gdi asset, the file is available. */
@@ -443,7 +432,6 @@ void GameFileClass::Close(void)
 		m_theFile = NULL;
 	}
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // W3DFileSystem Class ////////////////////////////////////////////////////////////////////////////

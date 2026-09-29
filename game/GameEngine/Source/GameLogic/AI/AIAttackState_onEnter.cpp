@@ -6,8 +6,6 @@
 // The BFME extensions select an attack machine and adjust victim/model flags.
 // Both native StringBase cleanup wrappers inline the same releaseBuffer call.
 #include "string_base.h"
-template<> inline StringBase<char>::~StringBase() { releaseBuffer(); }
-template<> inline void StringBase<char>::clear() { releaseBuffer(); }
 #include "ascii_string.h"
 struct Coord3D { float x,y,z; };
 #define BFME_HAVE_COORD3D 1

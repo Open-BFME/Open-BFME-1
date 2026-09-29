@@ -79,8 +79,6 @@ char *LANnextScreen = NULL;
 static Int	initialGadgetDelay = 2;
 static Bool justEntered = FALSE;
 
-
-
 // ??0LANPreferences@@ is implemented by the exact retail thunk in
 // LANPreferencesCtorThunk.cpp.
 
@@ -289,7 +287,6 @@ void LANPreferences::setStartingCash( const Money & startingCash )
 
 // PRIVATE DATA ///////////////////////////////////////////////////////////////////////////////////
 
-
 // window ids ------------------------------------------------------------------------------
 static NameKeyType parentLanLobbyID = NAMEKEY_INVALID;
 static NameKeyType buttonBackID = NAMEKEY_INVALID;
@@ -303,7 +300,6 @@ static NameKeyType textEntryPlayerNameID = NAMEKEY_INVALID;
 static NameKeyType textEntryChatID = NAMEKEY_INVALID;
 static NameKeyType listboxPlayersID = NAMEKEY_INVALID;
 static NameKeyType staticTextGameInfoID = NAMEKEY_INVALID;
-
 
 // Window Pointers ------------------------------------------------------------------------
 static GameWindow *parentLanLobby = NULL;
@@ -372,7 +368,6 @@ static void playerTooltip(GameWindow *window,
 	TheMouse->setCursorTooltip( tooltip );
 }
 
-
 //-------------------------------------------------------------------------------------------------
 /** Initialize the Lan Lobby Menu */
 //-------------------------------------------------------------------------------------------------
@@ -397,7 +392,6 @@ void LanLobbyMenuInit( WindowLayout *layout, void *userData )
 	listboxChatWindowID = TheNameKeyGenerator->nameToKey( AsciiString( "LanLobbyMenu.wnd:ListboxChatWindowLanLobby" ) );
 	listboxGamesID = TheNameKeyGenerator->nameToKey( AsciiString( "LanLobbyMenu.wnd:ListboxGames" ) );
 	staticTextGameInfoID = TheNameKeyGenerator->nameToKey( AsciiString( "LanLobbyMenu.wnd:StaticTextGameInfo" ) );
-
 
 	// Get pointers to the window buttons
 	parentLanLobby = TheWindowManager->winGetWindowFromId( NULL, parentLanLobbyID );
@@ -607,7 +601,6 @@ void LanLobbyMenuShutdown( WindowLayout *layout, void *userData )
 //		TheShell->showShellMap(TRUE);
 }  // LanLobbyMenuShutdown
 
-
 //-------------------------------------------------------------------------------------------------
 /** Lan Lobby menu update method */
 //-------------------------------------------------------------------------------------------------
@@ -753,8 +746,6 @@ virtual LANGameInfo *LookupGameByListOffset(int);
 };
 
 template <typename T> inline bool StringBase<T>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
-template <typename T> inline int StringBase<T>::getLength() const { return m_data ? m_data->length : 0; }
-template <typename T> inline const T *StringBase<T>::str() const { static const T TheNullChr=0; return m_data ? m_data->data : &TheNullChr; }
 template <typename T> inline T StringBase<T>::getCharAt(int i) const { return m_data ? m_data->data[i] : 0; }
 
 void Rva004C8B40GameInfoWindowRefresh(GameInfo *, UnicodeString);

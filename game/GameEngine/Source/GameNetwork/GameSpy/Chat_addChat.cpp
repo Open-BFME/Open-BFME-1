@@ -40,8 +40,6 @@ template <> __declspec(noinline) int StringBase<char>::compare(const StringBase<
     if (result == 0) result = myLen-len;
     return result;
 }
-template <class T> inline int StringBase<T>::getLength() const { return m_data ? m_data->length : 0; }
-template <> inline const wchar_t *StringBase<wchar_t>::str() const { return m_data ? m_data->data : L""; }
 typedef bool Bool;
 typedef int Int;
 typedef wchar_t WideChar;
@@ -192,7 +190,6 @@ void GameSpyInfo::addChat( PlayerInfo p, UnicodeString msg, Bool isPublic, Bool 
 	Bool isOwner = p.m_flags & 0x20;
 	Bool isBuddy = getBuddyMap()->find(p.m_profileID) != getBuddyMap()->end();
 
-
 	if(!isMe)
 	{
 		if(m_disallowAsainText)
@@ -232,7 +229,6 @@ void GameSpyInfo::addChat( PlayerInfo p, UnicodeString msg, Bool isPublic, Bool 
 			}  // end if
 		}
 	}
-
 
 	if (isBuddy)
 	{

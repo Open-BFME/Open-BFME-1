@@ -21,8 +21,6 @@
 // Retail inlines these StringBase<char> accessors at every use in this body.
 inline AsciiString &AsciiString::operator=(const char *s) { ((StringBase<char> *)this)->set(s); return *this; }
 template<> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
-template<> inline int StringBase<char>::getLength() const { return m_data ? m_data->length : 0; }
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 template<> inline void StringBase<char>::set(const char *s) { set(s, s ? strlen(s) : 0); }
 template<> inline void StringBase<char>::concat(char c) { concat(&c, 1); }
 template<> inline bool StringBase<char>::endsWith(const char *s) const { return endsWith(s, strlen(s)); }

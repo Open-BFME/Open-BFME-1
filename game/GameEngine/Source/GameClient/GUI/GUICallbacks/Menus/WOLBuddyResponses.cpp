@@ -12,15 +12,6 @@
 #include <map>
 #include <string>
 
-template <> inline const char *StringBase<char>::str() const
-{
-	return m_data ? m_data->data : "";
-}
-template <> inline const unsigned short *StringBase<unsigned short>::str() const
-{
-	return m_data ? m_data->data : (const unsigned short *)L"";
-}
-
 inline UnicodeString::UnicodeString()
 {
 	m_text = 0;

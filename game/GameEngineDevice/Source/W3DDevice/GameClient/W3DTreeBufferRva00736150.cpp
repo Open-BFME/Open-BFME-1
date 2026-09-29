@@ -7,8 +7,6 @@
 #include "scene.h"
 #include "ascii_string.h"
 
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
-
 typedef int Int;
 typedef float Real;
 

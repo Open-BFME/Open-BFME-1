@@ -24,9 +24,6 @@
 #include <map>
 #include <vector>
 
-template<> inline const char *StringBase<char>::str() const
-{ return m_data ? m_data->data : ""; }
-
 enum LocomotorSetType { LOCOMOTORSET_INVALID = -1 };
 class LocomotorTemplate;
 typedef std::map<LocomotorSetType, std::vector<const LocomotorTemplate *> > LocomotorTemplateMap;

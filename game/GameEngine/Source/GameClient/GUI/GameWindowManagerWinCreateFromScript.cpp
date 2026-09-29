@@ -9,8 +9,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-template<typename T> inline const T *StringBase<T>::str() const {return m_data ? m_data->data : (const T *)"";}
-template<typename T> inline StringBase<T>::~StringBase() {releaseBuffer();}
 template<typename T> inline void StringBase<T>::set(const T *s) {set(s,s ? strlen(s):0);}
 template<typename T> inline int StringBase<T>::compare(const T *s) const {
  int a=m_data ? m_data->length:0;const T *d=m_data ? m_data->data:(const T *)"";

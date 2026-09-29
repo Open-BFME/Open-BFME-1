@@ -15,17 +15,6 @@ template<> inline bool StringBase<char>::isEmpty() const
 	return m_data == 0 || m_data->length == 0;
 }
 
-template<> inline int StringBase<char>::getLength() const
-{
-	return m_data ? m_data->length : 0;
-}
-
-template<> inline const char *StringBase<char>::str() const
-{
-	return m_data ? &m_data->data[0] : (const char *)"";
-}
-
-
 class INI {
 public:
 	static bool __cdecl isDeclarationOfType(AsciiString blockType,

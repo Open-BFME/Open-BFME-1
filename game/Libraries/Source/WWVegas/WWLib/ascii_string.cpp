@@ -16,23 +16,9 @@ AsciiString bfme_force_ascii_string_default_ctor_emission()
 }
 #pragma auto_inline(on)
 
-// UnicodeString::str() is inline in retail: the ctor below tests m_data in
-// place and falls back to the shared wide "" at 0x0107388C instead of calling
-// the StringBase<unsigned short>::str COMDAT.
-template <>
-inline const unsigned short *StringBase<unsigned short>::str() const
-{
-    return m_data ? &m_data->data[0] : (const unsigned short *)L"";
-}
-
-// StringBase<char>::str() lives out of line in StringBase.cpp; retail inlines
-// it in operator+= below (the m_data test falling back to the shared narrow
-// "" at 0x0107388B), same as it inlines the wide one for the ctor.
-template <>
-inline const char *StringBase<char>::str() const
-{
-    return m_data ? m_data->data : "";
-}
+// str() is inline (string_base.h): the ctor below tests m_data in place and
+// falls back to the wide TheNullChr at 0x0107388C, operator+= to the narrow one
+// at 0x0107388B.
 
 // 0x00889090: the base StringBase<char> is built first (inline, one zero
 // store) and is protected by an EH state while format() runs -- retail's

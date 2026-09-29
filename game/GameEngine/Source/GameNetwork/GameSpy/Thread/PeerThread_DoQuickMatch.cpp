@@ -9,8 +9,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "ascii_string.h"
-// TU inline definition from the observed buffer/null string access at 64BBB8.
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 typedef int Int;
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
@@ -400,7 +398,6 @@ public:
 };
 
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
-
 
 typedef char RequestSize[sizeof(PeerRequest)==0x194 ? 1:-1];
 typedef char ResponseSize[sizeof(PeerResponse)==0x330 ? 1:-1];

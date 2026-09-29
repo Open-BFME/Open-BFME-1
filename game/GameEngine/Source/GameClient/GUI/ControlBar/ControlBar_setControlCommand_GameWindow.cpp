@@ -27,7 +27,6 @@
 #include "ascii_string.h"
 #include "Common/UnicodeString.h"
 
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 template <> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
 template <> inline bool StringBase<char>::isNotEmpty() const { return m_data != 0 && m_data->length != 0; }
 

@@ -14,7 +14,6 @@
 // witnesses (GameClientDestructor00431380.cpp).  Members that no matched body
 // names keep address tokens.
 #include "string_base.h"
-template<> inline StringBase<char>::~StringBase() { releaseBuffer(); }
 #include "ascii_string.h"
 #include <list>
 #include <vector>
@@ -202,7 +201,6 @@ public:
 	DrawableTOCList m_drawableTOC;				// +0xf0
 	_STL::list<Drawable *> m_rva00431380Lists0F4[ 10 ];	// +0xf4
 };
-
 
 // ??0GameClient@@QAE@XZ
 GameClient::GameClient()

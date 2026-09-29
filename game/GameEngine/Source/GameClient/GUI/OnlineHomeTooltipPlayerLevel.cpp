@@ -7,11 +7,6 @@
 #include <string.h>
 #pragma intrinsic(strlen)
 
-template <typename T> inline StringBase<T>::~StringBase() { releaseBuffer(); }
-template <typename T> inline const T *StringBase<T>::str() const {
-    static const T TheNullChr = 0;
-    return m_data ? m_data->data : &TheNullChr;
-}
 template <typename T> inline void StringBase<T>::set(const T *s) { set(s, s ? strlen((const char*)s) : 0); }
 template <typename T> inline void StringBase<T>::concat(const StringBase<T>& s) {
     concat(s.m_data ? s.m_data->data : (const T*)"", s.m_data ? s.m_data->length : 0);
@@ -113,5 +108,4 @@ void BfmeAptScreenOnlineHome::tooltipPlayerLevelIcon(void*) {
     tooltip.format(TheGameText->fetch("APT:CurrentLevelStringFormat"),level.str());
     TheMouse->setCursorTooltip(tooltip,-1,0,1.0f);
 }
-
 

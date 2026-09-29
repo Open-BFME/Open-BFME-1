@@ -5,8 +5,6 @@
 #define UNICODESTRING_H
 #include "ascii_string.h"
 #include "unicode_string.h"
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
-template<> inline const unsigned short *StringBase<unsigned short>::str() const { return m_data ? m_data->data : (const unsigned short *)L""; }
 inline UnicodeString::UnicodeString() : m_text(0) {}
 inline UnicodeString::UnicodeString(const UnicodeString &s) { ((StringBase<unsigned short>*)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short>*)&s); }
 inline UnicodeString::UnicodeString(const wchar_t *s) { ((StringBase<unsigned short>*)this)->StringBase<unsigned short>::StringBase((const unsigned short*)s); }

@@ -12,10 +12,6 @@
 extern const AsciiString Rva01336E50EmptyString;
 #include "Common/UnicodeString.h"
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
-template <> inline const unsigned short *StringBase<unsigned short>::str() const {
-    static const unsigned short TheNullChr = 0;
-    return m_data ? m_data->data : &TheNullChr;
-}
 enum Relationship { ALLIES = 2 };
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 enum EvaMessage {};

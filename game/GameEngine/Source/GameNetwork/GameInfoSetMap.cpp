@@ -6,12 +6,6 @@
 // BFME retains two map metadata predicates not named by the existing layout
 // witness.
 #define NULL 0
-template <> inline const char *StringBase<char>::str() const {
-  return m_data ? m_data->data : "";
-}
-template <> inline int StringBase<char>::getLength() const {
-  return m_data ? m_data->length : 0;
-}
 template <> inline const char *StringBase<char>::find(char c) const {
   const char *start = m_data ? m_data->data : "";
   const char *end = start + (m_data ? m_data->length : 0);

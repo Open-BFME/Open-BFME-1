@@ -26,7 +26,6 @@
 #include "Common/INI.h"
 #include "Common/INIException.h"
 #pragma intrinsic(strlen)
-template<> inline const char* StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 template<> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
 inline AsciiString::~AsciiString() { ((StringBase<char>*)this)->releaseBuffer(); }
 inline AsciiString::AsciiString(const char* str, int len) {

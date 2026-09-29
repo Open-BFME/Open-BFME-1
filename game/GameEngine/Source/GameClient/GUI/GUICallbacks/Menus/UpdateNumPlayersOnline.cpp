@@ -17,12 +17,8 @@
 #include <stdlib.h>
 #include <string.h>
 #pragma intrinsic(strlen)
-template<class T> inline StringBase<T>::~StringBase() {releaseBuffer();}
-template<class T> inline int StringBase<T>::getLength() const {return m_data?m_data->length:0;}
 template<class T> inline T StringBase<T>::getCharAt(int i) const {return m_data?m_data->data[i]:0;}
 template<class T> inline bool StringBase<T>::isEmpty() const {return !m_data || m_data->length==0;}
-template<> inline const char *StringBase<char>::str() const {return m_data?m_data->data:"";}
-template<> inline const wchar_t *StringBase<wchar_t>::str() const {return m_data?m_data->data:L"";}
 template<> inline bool StringBase<char>::startsWith(const char *s) const {return startsWith(s,strlen(s));}
 inline AsciiString::~AsciiString() { ((StringBase<char>*)this)->~StringBase<char>(); }
 inline UnicodeString::~UnicodeString() { ((StringBase<wchar_t>*)this)->~StringBase<wchar_t>(); }

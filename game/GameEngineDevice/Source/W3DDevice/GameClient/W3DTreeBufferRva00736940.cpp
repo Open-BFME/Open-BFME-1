@@ -5,7 +5,6 @@
 #include "ascii_string.h"
 
 template<> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 
 typedef int Int;
 typedef unsigned int UnsignedInt;

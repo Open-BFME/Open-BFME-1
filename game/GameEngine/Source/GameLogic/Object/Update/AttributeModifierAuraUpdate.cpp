@@ -11,8 +11,6 @@
 #include <bitset>
 #include "game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
 template<> inline bool StringBase<char>::isEmpty() const {return m_data == 0 || m_data->length == 0;}
-template<> inline const char *StringBase<char>::str() const {return m_data ? m_data->data : "";}
-template<> inline StringBase<char>::~StringBase() {releaseBuffer();}
 typedef bool Bool;
 typedef int Int;
 typedef unsigned UnsignedInt;
@@ -150,7 +148,6 @@ public:
 };
 
 extern PartitionManager *ThePartitionManager;
-
 
 // Retail 0x002803F0..0x002809AF (1471 bytes). Mislabelled destructor in the old lift.
 // Named ctor 0x002800D0 installs 0x010BAFA0 at primary+0x10;

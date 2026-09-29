@@ -4,13 +4,7 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 template <> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
-template <> inline StringBase<char>::~StringBase() { releaseBuffer(); }
-template <> inline const unsigned short *StringBase<unsigned short>::str() const
-{
-	return m_data ? m_data->data : (const unsigned short *)L"";
-}
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
 struct _iobuf;

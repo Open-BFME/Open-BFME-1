@@ -16,11 +16,6 @@ struct StringHeader
 
 extern char Rva006A16B0Empty[];
 
-template <> inline const char *StringBase<char>::str() const
-{
-	return m_data ? &m_data->data[ 0 ] : Rva006A16B0Empty;
-}
-
 // ?nullStringAI@@YAXXZ absent-from-retail
 void nullStringAI();
 

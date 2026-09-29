@@ -28,9 +28,6 @@ typedef int GPProfile;
 typedef wchar_t WideChar;
 
 // Retail inlines the null-checked data pointer read at every str() site.
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
-template <> inline const wchar_t *StringBase<wchar_t>::str() const { return m_data ? m_data->data : L""; }
-
 
 inline UnicodeString::UnicodeString()
 {

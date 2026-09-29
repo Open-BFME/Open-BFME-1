@@ -15,10 +15,7 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 #include "ascii_string.h"
 #include <string.h>
-template<typename T> inline const T *StringBase<T>::str() const { return m_data ? m_data->data : (const T *)""; }
-template<typename T> inline int StringBase<T>::getLength() const { return m_data ? m_data->length : 0; }
 template<typename T> inline T StringBase<T>::getCharAt(int i) const {return m_data ? m_data->data[i] : 0;}
-template<typename T> inline StringBase<T>::~StringBase() { releaseBuffer(); }
 template<typename T> inline void StringBase<T>::concat(T c) {concat(&c,1);}
 template<typename T> inline void StringBase<T>::concat(const T *s) {concat(s,s ? strlen(s) : 0);}
 template<typename T> inline void StringBase<T>::concat(const StringBase<T> &s) {concat(s.str(),s.getLength());}

@@ -9,14 +9,6 @@
 #define UNICODESTRING_H
 #include "ascii_string.h"
 #include "unicode_string.h"
-template <> inline const char *StringBase<char>::str() const
-{
-	return m_data ? m_data->data : "";
-}
-template <> inline const unsigned short *StringBase<unsigned short>::str() const
-{
-	return m_data ? m_data->data : (const unsigned short *)L"";
-}
 
 inline UnicodeString::UnicodeString()
 {
@@ -41,7 +33,6 @@ inline UnicodeString &UnicodeString::operator=(const UnicodeString &s)
 	return *this;
 }
 
-
 #include "Common/GameType.h"
 #include <algorithm>
 #include <list>
@@ -51,10 +42,8 @@ inline UnicodeString &UnicodeString::operator=(const UnicodeString &s)
 #include "GameNetwork/GameSpy/GSConfig.h"
 #define DEBUG_LOG(x)
 #define NEW new
-template <> inline int StringBase<char>::getLength()const {return m_data?m_data->length:0;}
 template <> inline bool StringBase<char>::isEmpty()const {return !m_data||m_data->length==0;}
 template <> inline char StringBase<char>::getCharAt(int n)const {return m_data?m_data->data[n]:0;}
-template <> inline int StringBase<unsigned short>::getLength()const {return m_data?m_data->length:0;}
 inline UnicodeString& UnicodeString::operator=(const wchar_t *s) {
  ((StringBase<unsigned short>*)this)->set((const unsigned short*)s,s?wcslen(s):0);return *this;
 }
@@ -65,7 +54,6 @@ template <> inline void StringBase<char>::set(const char *s) {set(s,s?strlen(s):
 inline AsciiString& AsciiString::operator=(const char *s) {StringBase<char>::set(s);return *this;}
 
 LadderInfo *parseLadder(AsciiString);
-template <> inline void StringBase<char>::clear() {releaseBuffer();}
 template <> inline void StringBase<char>::concat(char c) {concat(&c,1);}
 template <> inline void StringBase<char>::concat(const StringBase<char>&s) {
  const int len=s.m_data?s.m_data->length:0;

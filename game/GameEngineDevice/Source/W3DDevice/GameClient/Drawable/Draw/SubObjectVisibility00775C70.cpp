@@ -13,8 +13,6 @@
 // register allocation. The two record scopes preserve the two unwind states.
 #include "string_base.h"
 template<> inline bool StringBase<char>::isEmpty() const { return !m_data || m_data->length == 0; }
-template<> inline const char* StringBase<char>::str() const { return m_data ? m_data->data : ""; }
-template<> inline StringBase<char>::~StringBase() { releaseBuffer(); }
 #include "ascii_string.h"
 #include <string.h>
 namespace _STL {

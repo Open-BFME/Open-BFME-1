@@ -14,7 +14,6 @@ static OverallStats s_statsUSA, s_statsChina, s_statsGLA;
 // StringBase accessor. Keep this static helper with updateOverallStats:
 // MSVC uses a private ESI argument convention shared by their exact bodies.
 template <class T> inline const T &percentMax(const T &a, const T &b) { return a > b ? a : b; }
-template <> inline const unsigned short *StringBase<unsigned short>::str() const { return m_data ? m_data->data : L""; }
 
 static UnicodeString calcPercent(const OverallStats& stats, Int n, UnicodeString sideStr)
 {

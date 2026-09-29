@@ -29,7 +29,6 @@
 #include <bitset>
 #include "string_base.h"
 template<> inline bool StringBase<char>::isEmpty()const{return !m_data||!m_data->length;}
-template<> inline const char* StringBase<char>::str()const{return m_data?m_data->data:"";}
 #include "ascii_string.h"
 struct Coord3D {float x,y,z;};
 class Matrix3D;
@@ -318,7 +317,6 @@ private:
 			const_cast<char *>(reinterpret_cast<const char *>(this)) + 0xb8);
 	}
 };
-
 
 class BFMEDrawableBoneQuery { public:int getPristineBonePositions(const char*,int,Coord3D*,Matrix3D*,int,int)const;};
 enum CommandSourceType { COMMANDSOURCE_SCRIPT=2 };

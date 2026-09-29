@@ -11,14 +11,6 @@
 #include <vector>
 #include <string.h>
 
-// Canonical inline definition from string_base.cpp, visible here for the
-// retail lookup loop's guarded character-buffer access.
-template <typename T>
-inline const T *StringBase<T>::str() const
-{
-	return m_data ? &m_data->data[0] : (const T *)"";
-}
-
 struct Rva007701C0Element
 {
 	AsciiString m_string00;

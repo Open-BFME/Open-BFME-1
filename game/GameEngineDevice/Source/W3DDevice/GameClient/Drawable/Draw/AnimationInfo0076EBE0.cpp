@@ -3,7 +3,6 @@
 // Format literals and 0x1c-stride track accesses establish behavior; owner identity stays address-qualified.
 // cl: /O2 /Ob2 /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWLib
 #include "ascii_string.h"
-template <> inline const char* StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 class Animation0076EBE0 { public:
  virtual void slot00(); virtual void slot04(); virtual const char* name(); virtual void slot0c();
  virtual int frames(); virtual void slot14(); virtual float duration();

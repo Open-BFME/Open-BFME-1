@@ -16,14 +16,6 @@
 #include "ascii_string.h"
 #include "basetype.h"
 
-// Existing canonical implementation from string_base.cpp, kept visible for
-// the retail inlined accessor; the class itself comes from string_base.h.
-template <typename T>
-inline const T *StringBase<T>::str() const
-{
-    return m_data ? &m_data->data[0] : (const T *)"";
-}
-
 typedef unsigned int size_t;
 void *__cdecl operator new(size_t);
 void __cdecl operator delete(void *);
@@ -76,7 +68,6 @@ private:
     Rva0044F4D0 *m_texture;
     unsigned int m_status;
 };
-
 
 Image *_bfme_createMapPictureImage(const AsciiString &mapName)
 {

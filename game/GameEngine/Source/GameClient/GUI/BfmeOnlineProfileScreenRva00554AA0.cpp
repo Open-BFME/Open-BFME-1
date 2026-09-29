@@ -7,10 +7,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <wchar.h>
-template <> inline const unsigned short *StringBase<unsigned short>::str() const {
-    static const unsigned short TheNullChr = 0;
-    return m_data ? m_data->data : &TheNullChr;
-}
 #include "Common/UnicodeString.h"
 #include <algorithm>
 #include <map>

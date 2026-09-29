@@ -20,9 +20,6 @@
 #include "coord.h"
 #include "matrix3d.h"
 
-
-template<> inline const char *StringBase<char>::str() const { const char *text=(const char *)m_data; if(text) text+=8; else text=""; return text; }
-
 #include "geometry.h"
 class Rva00603BB0ObjectView {
 public:

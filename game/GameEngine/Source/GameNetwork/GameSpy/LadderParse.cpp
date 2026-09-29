@@ -9,14 +9,6 @@
 #define UNICODESTRING_H
 #include "ascii_string.h"
 #include "unicode_string.h"
-template <> inline const char *StringBase<char>::str() const
-{
-	return m_data ? m_data->data : "";
-}
-template <> inline const unsigned short *StringBase<unsigned short>::str() const
-{
-	return m_data ? m_data->data : (const unsigned short *)L"";
-}
 
 inline UnicodeString::UnicodeString()
 {
@@ -41,7 +33,6 @@ inline UnicodeString &UnicodeString::operator=(const UnicodeString &s)
 	return *this;
 }
 
-
 #include "Common/GameType.h"
 #include <algorithm>
 #include <list>
@@ -60,10 +51,8 @@ extern GameState *TheGameState;
 class MapMetaData {public:char rvaFields00[0x20];int m_numPlayers;};
 class MapCache {public:AsciiString getMapDir()const;const MapMetaData *findMap(AsciiString);};
 extern MapCache *TheMapCache;
-template <> inline int StringBase<char>::getLength()const {return m_data?m_data->length:0;}
 template <> inline bool StringBase<char>::isEmpty()const {return !m_data||m_data->length==0;}
 template <> inline char StringBase<char>::getCharAt(int n)const {return m_data?m_data->data[n]:0;}
-template <> inline int StringBase<unsigned short>::getLength()const {return m_data?m_data->length:0;}
 inline UnicodeString& UnicodeString::operator=(const wchar_t *s) {
  ((StringBase<unsigned short>*)this)->set((const unsigned short*)s,s?wcslen(s):0);return *this;
 }

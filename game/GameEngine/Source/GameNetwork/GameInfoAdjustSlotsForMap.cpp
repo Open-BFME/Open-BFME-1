@@ -140,7 +140,6 @@ inline void GameSlot::reset() {
   m_origColor = -1;
   m_slotNameKeyText.clear();
 }
-template <> inline void StringBase<char>::clear() { releaseBuffer(); }
 class MapMetaData {
 public:
   char m_unrecovered00[0x20];

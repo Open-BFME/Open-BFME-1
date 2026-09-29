@@ -6,24 +6,10 @@
 #include "ascii_string.h"
 
 // Retail inlines the AsciiString concat and clear at their call sites.
-template <> inline int StringBase<char>::getLength() const
-{
-	return m_data ? m_data->length : 0;
-}
-
-template <> inline const char *StringBase<char>::str() const
-{
-	return m_data ? &m_data->data[0] : "";
-}
 
 template <> inline void StringBase<char>::concat(const StringBase<char> &s)
 {
 	concat(s.str(), s.getLength());
-}
-
-template <> inline void StringBase<char>::clear()
-{
-	releaseBuffer();
 }
 
 extern int GetGameLogicRandomValue(int,int,char*,int);

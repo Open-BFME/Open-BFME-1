@@ -9,8 +9,6 @@
 
 #include "string_base.h"
 
-template<> inline StringBase<unsigned short>::StringBase() : m_data(0) {}
-
 class AsciiString;
 
 class UnicodeString : private StringBase<unsigned short>

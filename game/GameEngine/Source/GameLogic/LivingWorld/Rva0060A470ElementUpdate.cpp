@@ -2,7 +2,6 @@
 #include "ascii_string.h"
 #include "hanim.h"
 #include "vector3.h"
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 class Rva0060A470Target {
 public:
     virtual void slot00();

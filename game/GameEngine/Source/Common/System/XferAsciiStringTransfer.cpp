@@ -2,25 +2,6 @@
 #include "xfer.h"
 #include "ascii_string.h"
 
-// Retail exposes these small StringBase operations inline at this caller.
-template <typename T>
-inline int StringBase<T>::getLength() const
-{
-    return m_data ? m_data->length : 0;
-}
-
-template <>
-inline const char *StringBase<char>::str() const
-{
-    return m_data ? m_data->data : "";
-}
-
-template <typename T>
-inline void StringBase<T>::clear()
-{
-    releaseBuffer();
-}
-
 class Rva009D6940TransferView
 {
 public:

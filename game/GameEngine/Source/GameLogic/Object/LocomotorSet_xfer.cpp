@@ -4,8 +4,6 @@
 #include <vector>
 #include <map>
 #include "ascii_string.h"
-template <> inline StringBase<char>::~StringBase() { releaseBuffer(); }
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 struct LocomotorVersion001BAAA0 { unsigned char version,current; unsigned char padding[2]; };
 struct LocomotorError001BAAA0 { char *text; int tag; };
 extern "C" LocomotorError001BAAA0 *__cdecl bfmeFormatText(LocomotorError001BAAA0*,int,const char*,...);

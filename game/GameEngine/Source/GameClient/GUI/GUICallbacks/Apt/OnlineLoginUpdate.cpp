@@ -19,10 +19,7 @@
 #include <string.h>
 #include "Common/UnicodeString.h"
 #include <string>
-template<class T> inline StringBase<T>::StringBase() : m_data(0) {}
-template<class T> inline StringBase<T>::~StringBase() { releaseBuffer(); }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->releaseBuffer(); }
-template<class T> inline const T *StringBase<T>::str() const { return m_data?m_data->data:(const T*)""; }
 
 typedef int Int;
 typedef unsigned int UnsignedInt;

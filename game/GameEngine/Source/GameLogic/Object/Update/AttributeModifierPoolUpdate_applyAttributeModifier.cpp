@@ -46,9 +46,6 @@ template <int NUMBITS> class BitFlags {
     _STL::bitset<NUMBITS> m_bits;
 };
 typedef BitFlags<320> ModelConditionFlags;
-template<> inline const char *StringBase<char>::str()const {
-    return m_data?m_data->data:"";
-}
 class NameKeyGenerator {
     public:
     NameKeyType nameToKey(const char *name);

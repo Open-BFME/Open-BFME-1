@@ -12,10 +12,6 @@ typedef bool Bool;
 
 // Retail inlines these narrow StringBase accessors at the call sites below; the
 // bodies are the ones matched in game/Libraries/Source/string/StringBase.cpp.
-template<> inline const char *StringBase<char>::str() const
-{
-	return m_data ? &m_data->data[0] : "";
-}
 
 template<> inline bool StringBase<char>::isEmpty() const
 {

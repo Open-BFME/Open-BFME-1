@@ -12,9 +12,7 @@
 #include "ascii_string.h"
 #include "matrix3d.h"
 
-template<> inline StringBase<char>::~StringBase() { releaseBuffer(); }
 template<> inline bool StringBase<char>::isEmpty() const { return !m_data || m_data->length == 0; }
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 
 struct Coord3D { float x, y, z; };
 class Object;

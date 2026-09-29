@@ -18,7 +18,6 @@
 #include <new>
 #include "string_base.h"
 template<typename T> inline bool StringBase<T>::isEmpty() const { return !m_data || m_data->length == 0; }
-template<typename T> inline const T* StringBase<T>::str() const { return m_data ? m_data->data : (const T*)L""; }
 template<> int StringBase<char>::compareNoCase(const StringBase<char>&) const throw();
 #include "Common/AsciiString.h"
 #include "Common/UnicodeString.h"

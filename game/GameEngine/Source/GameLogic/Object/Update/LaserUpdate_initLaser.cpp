@@ -15,7 +15,6 @@
 #include "coord.h"
 #include "matrix3d.h"
 
-template<> inline const char *StringBase<char>::str() const { const char *text=(const char *)m_data; if(text) text+=8; else text=""; return text; }
 template<> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
 #include "ascii_string.h"
 

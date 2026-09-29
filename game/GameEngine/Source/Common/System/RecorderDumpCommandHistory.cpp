@@ -4,9 +4,6 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 // Retail inlines every string access and scope exit in this body.
-template<class T> inline StringBase<T>::~StringBase() { releaseBuffer(); }
-template<class T> inline const T* StringBase<T>::str() const { return m_data ? m_data->data : (const T*)""; }
-template<class T> inline int StringBase<T>::getLength() const { return m_data ? m_data->length : 0; }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->releaseBuffer(); }
 
 class PlayerTemplate { public: AsciiString getName() const; };

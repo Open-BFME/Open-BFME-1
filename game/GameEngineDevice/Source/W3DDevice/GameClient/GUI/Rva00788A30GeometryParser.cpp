@@ -15,8 +15,6 @@
 #include <stdio.h>
 
 #include "string_base.h"
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
-template<> inline StringBase<char>::~StringBase() { releaseBuffer(); }
 #include "ascii_string.h"
 typedef AsciiString BFMERetailAsciiString;
 
@@ -69,7 +67,6 @@ static File *Open2OpenPastSeparators(const AsciiString &name) throw()
 	}
 	return file;
 }
-
 
 const char *parsePathNumber007861E0(const AsciiString&,int*,bool);
 enum Relationship { BfmeLookupValue0=0 };

@@ -13,9 +13,6 @@ extern "C" unsigned int __cdecl strlen(const char *);
 template<> inline bool StringBase<char>::isEmpty() const {
     return m_data==0 || m_data->length==0;
 }
-template<> inline const char *StringBase<char>::str() const {
-    return m_data ? m_data->data : "";
-}
 template<> inline void StringBase<char>::set(const char *s) {
     set(s,s ? strlen(s) : 0);
 }

@@ -21,7 +21,6 @@
 #include "Common/AsciiString.h"
 #include "GameLogic/TerrainLogic.h"
 #pragma intrinsic(strlen)
-template<> inline const char* StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 template<> inline void StringBase<char>::set(const char* s) { set(s, s ? strlen(s) : 0); }
 template<> inline int StringBase<char>::compareNoCase(const char* s, int len) const {
     const int myLen = m_data ? m_data->length : 0;
@@ -31,7 +30,6 @@ template<> inline int StringBase<char>::compareNoCase(const char* s, int len) co
 }
 template<> inline int StringBase<char>::compareNoCase(const char* s) const { return compareNoCase(s, s ? strlen(s) : 0); }
 inline AsciiString::~AsciiString() { ((StringBase<char>*)this)->releaseBuffer(); }
-
 
 class Rva001A8820GlobalData {
 public:

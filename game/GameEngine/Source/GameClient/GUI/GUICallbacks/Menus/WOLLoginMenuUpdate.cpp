@@ -14,15 +14,6 @@
 #include <map>
 namespace _STL { template<> struct less<AsciiString> { bool operator()(const AsciiString &a, const AsciiString &b)const {return a.compare(b)<0;} }; }
 
-template <> inline const char *StringBase<char>::str() const
-{
-	return m_data ? m_data->data : "";
-}
-template <> inline const unsigned short *StringBase<unsigned short>::str() const
-{
-	return m_data ? m_data->data : (const unsigned short *)L"";
-}
-
 inline UnicodeString::UnicodeString()
 {
 	m_text = 0;
@@ -71,10 +62,8 @@ extern Color GameSpyColor[];
 enum {GSCOLOR_DEFAULT=0};
 #include "GameNetwork/GameSpyOverlay.h"
 #include "GameNetwork/WOLBrowser/WebBrowser.h"
-template <> inline int StringBase<char>::getLength() const { return m_data ? m_data->length : 0; }
 template <> inline bool StringBase<unsigned short>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
 template <> inline unsigned short StringBase<unsigned short>::getCharAt(int index) const { return m_data ? m_data->data[index] : 0; }
-template <> inline int StringBase<unsigned short>::getLength() const { return m_data ? m_data->length : 0; }
 #undef iswspace
 extern "C" __declspec(dllimport) int __cdecl iswspace(unsigned short);
 
@@ -102,7 +91,6 @@ private:
 	NickMap m_emailNickMap;
 	DateMap m_emailDateMap;
 };
-
 
 #include "Common/GameSpyMiscPreferences.h"
 #include "GameClient/GameWindowTransitions.h"

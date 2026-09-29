@@ -7,8 +7,6 @@
 // the existing BFME_STLP_NODE_ALLOC shim preserves that allocator.
 #define ASCIISTRING_H
 #include "ascii_string.h"
-template <> inline const char *StringBase<char>::str() const {return m_data ? m_data->data : "";}
-template <> inline int StringBase<char>::getLength() const {return m_data ? m_data->length : 0;}
 template <> inline bool StringBase<char>::isEmpty() const {return m_data == 0 || m_data->length == 0;}
 template <> inline char StringBase<char>::getCharAt(int n) const {return m_data ? m_data->data[n] : 0;}
 #include <string.h>

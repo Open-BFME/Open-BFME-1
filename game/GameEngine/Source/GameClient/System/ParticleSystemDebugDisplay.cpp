@@ -20,8 +20,6 @@
 #include <map>
 namespace _STL { template<> struct less<AsciiString> { bool operator()(const AsciiString &a,const AsciiString &b) const { return a.compare(b)<0; } }; }
 
-template<class T> inline StringBase<T>::~StringBase() { releaseBuffer(); }
-template<class T> inline const T *StringBase<T>::str() const { return m_data ? m_data->data : ""; }
 class DebugDisplayInterface;
 struct _iobuf;
 class ParticleSystemManager;
@@ -125,5 +123,4 @@ void ParticleSystemDebugDisplay(DebugDisplayInterface *display, void *, _iobuf *
   dd->print("\n");
  }
 }
-
 

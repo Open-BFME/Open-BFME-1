@@ -95,7 +95,6 @@
 #include "GameNetwork/RankPointValue.h"
 #include "GameClient/GadgetProgressBar.h"
 
-
 extern RankPoints *TheRankPointValues;
 extern GameWindow* findWindow(GameWindow*,AsciiString,AsciiString);
 
@@ -147,8 +146,6 @@ static const Image *lookupRankImage(AsciiString side, Int rank)
 		fullImageName = "Rank";
 	return TheMappedImageCollection->findImageByName(fullImageName);
 }
-
-
 
 class Rva004DBE80Display
 {
@@ -498,7 +495,6 @@ static void Rva004D9DF0(const PSPlayerStats& stats, Int battleHonors, Int gamesI
 #undef InsertBattleHonor
 
 template<class T> inline const T& rvaMax(const T& a,const T& b) { return a>b?a:b; }
-template<> inline const wchar_t *StringBase<wchar_t>::str() const {return m_data ? &m_data->data[0] : L"";}
 
 void PopulatePlayerInfoWindows( AsciiString parentWindowName )
 {

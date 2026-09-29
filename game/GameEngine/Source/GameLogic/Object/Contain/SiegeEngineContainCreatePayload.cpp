@@ -3,8 +3,6 @@
 #include <bitset>
 #include "string_base.h"
 template<> inline bool StringBase<char>::isEmpty() const { return !m_data || !m_data->length; }
-template<> inline const char* StringBase<char>::str() const { return m_data ? m_data->data : ""; }
-template<> inline StringBase<char>::~StringBase() { releaseBuffer(); }
 #include "ascii_string.h"
 extern "C" __declspec(dllimport) int __cdecl sprintf(char*,const char*,...);
 // RVA 0x0022BA20 / 441 bytes. SiegeEngineContain constructor 0x0022BC50

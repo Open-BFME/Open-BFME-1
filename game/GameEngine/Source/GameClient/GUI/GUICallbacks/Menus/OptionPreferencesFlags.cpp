@@ -19,14 +19,6 @@ extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *, const char *
 
 #include "ascii_string.h"
 
-// The retail getters inline this canonical StringBase accessor. Keep its
-// definition visible here without duplicating the shared string layout.
-template <typename T>
-inline const T *StringBase<T>::str() const
-{
-	return m_data ? &m_data->data[0] : (const T *)"";
-}
-
 struct PreferenceNode
 {
 	unsigned char m_unreconstructed_00[0x14];

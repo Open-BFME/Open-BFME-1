@@ -43,7 +43,6 @@ struct Rva001D4010Template;
 #include "snapshot.h"
 #include "ascii_string.h"
 #include "unicode_string.h"
-template<class T> inline StringBase<T>::~StringBase() { releaseBuffer(); }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 #include <vector>
 #include <list>

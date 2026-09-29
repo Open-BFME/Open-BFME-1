@@ -15,9 +15,6 @@
 #include "texture.h"
 #include "sphere.h"
 // Canonical string storage; these are the inlines witnessed in 006F8A60.
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
-template <> inline int StringBase<char>::getLength() const { return m_data ? m_data->length : 0; }
-template <> inline void StringBase<char>::clear() { releaseBuffer(); }
 template <> inline void StringBase<char>::concat(const StringBase<char> &s) { concat(s.str(),s.getLength()); }
 class GameLODManager;
 extern GameLODManager *TheGameLODManager;

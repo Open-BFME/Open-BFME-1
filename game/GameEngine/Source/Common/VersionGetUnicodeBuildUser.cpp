@@ -7,10 +7,6 @@
 
 #include "string_base.h"
 
-// Retail zeroes a default-constructed UnicodeString in line (no call); same
-// specialization as the landed NetworkDirectConnectSystem.cpp.
-template<> inline StringBase<unsigned short>::StringBase() : m_data(0) {}
-
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : private StringBase<char>
 {

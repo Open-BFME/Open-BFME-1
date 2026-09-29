@@ -14,14 +14,6 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 
-template <> inline const char *StringBase<char>::str() const {
-  return m_data ? m_data->data : "";
-}
-template <>
-inline const unsigned short *StringBase<unsigned short>::str() const {
-  return m_data ? m_data->data : (const unsigned short *)L"";
-}
-
 inline UnicodeString::UnicodeString() { m_text = 0; }
 inline UnicodeString::UnicodeString(const wchar_t *s) {
   ((StringBase<unsigned short> *)this)
@@ -198,7 +190,6 @@ void BfmeQuickMatchLadderPanel::populateLadderList()
 
 	(((Rva005082D0Owner*)this)->*rva005082D0Method())(pref.getSide(),rva00508C80LadderInfo());
 }
-
 
 typedef std::map<int, unsigned int> Rva0062A7D0Wins;
 class PSPlayerStats

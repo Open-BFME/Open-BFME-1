@@ -14,7 +14,6 @@ inline int clamp779(int v,int lo,int hi) { if(v<lo)return lo; if(v>hi)return hi;
 // Named string scopes preserve retail unwind states. The value-taking clamp
 // preserves one pre-loop decrement and its first-iteration register lifetime.
 #include "string_base.h"
-template<> inline const char* StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 #include "ascii_string.h"
 #include <string>
 #include <vector>

@@ -9,7 +9,6 @@
 // 0051BF30 installs vtable 01106070; stores its one stack arg at +14;
 // returns this with RET 4. Both identities remain address-derived.
 #include "ascii_string.h"
-template<> inline StringBase<char>::~StringBase(){releaseBuffer();}
 void* __cdecl operator new(unsigned);
 void __cdecl operator delete(void*) throw();
 class LoadScreen {};

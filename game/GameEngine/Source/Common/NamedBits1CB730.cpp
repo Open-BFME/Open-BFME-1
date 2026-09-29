@@ -9,7 +9,6 @@
 // stlport
 #include <bitset>
 #include "Libraries/Source/WWVegas/WWLib/ascii_string.h"
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 struct XferException { char *text; int tag; };
 extern "C" XferException *__cdecl bfmeFormatText(XferException *,int,const char *,...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void *,void *);

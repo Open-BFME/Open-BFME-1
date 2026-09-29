@@ -8,12 +8,6 @@
 
 #include "string_base.h"
 
-template <typename T> inline StringBase<T>::StringBase() : m_data( 0 ) {}
-template <typename T> inline StringBase<T>::~StringBase() { releaseBuffer(); }
-template <typename T> inline int StringBase<T>::getLength() const
-{
-	return m_data ? m_data->length : 0;
-}
 template <typename T> inline T StringBase<T>::getCharAt( int index ) const
 {
 	return m_data ? m_data->data[index] : 0;
@@ -25,10 +19,6 @@ template <typename T> inline bool StringBase<T>::isEmpty() const
 template <typename T> inline void StringBase<T>::concat( T c )
 {
 	concat( &c, 1 );
-}
-template <typename T> inline void StringBase<T>::clear()
-{
-	releaseBuffer();
 }
 
 class UnicodeString : public StringBase<unsigned short>

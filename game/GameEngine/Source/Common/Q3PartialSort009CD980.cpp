@@ -15,12 +15,6 @@ extern "C" __declspec(dllimport) int __cdecl _memicmp(
 	const void *left, const void *right, unsigned int count);
 
 template <>
-inline const char *StringBase<char>::str() const
-{
-	return m_data ? &m_data->data[0] : "";
-}
-
-template <>
 inline int StringBase<char>::compareNoCase(const char *str, int len) const
 {
 	int myLen = m_data ? m_data->length : 0;

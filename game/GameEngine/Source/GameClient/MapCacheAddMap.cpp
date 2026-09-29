@@ -4,8 +4,6 @@
 // the 0xfc-byte layout. The standalone prologue and ret 16 prove the boundary.
 #include <string.h>
 #include "string_base.h"
-template <class T> inline const T *StringBase<T>::str() const { return m_data ? m_data->data : (const T *)""; }
-template <class T> inline int StringBase<T>::getLength() const { return m_data ? m_data->length : 0; }
 template <class T> inline bool StringBase<T>::isEmpty() const { return !m_data || m_data->length == 0; }
 template <class T> inline const T *StringBase<T>::reverseFind(T c) const {
  const T *start = str(); const T *p = start + getLength();

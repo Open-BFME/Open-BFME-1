@@ -11,9 +11,6 @@
 // Use the canonical string declarations with the inline forwarding bodies
 // witnessed here: char destruction -> 0x00887940; wide -> 0x008881D0.
 // This retains retail's by-value argument construction and EH state schedule.
-template <typename T> inline StringBase<T>::~StringBase() { releaseBuffer(); }
-template <typename T> inline const T *StringBase<T>::str() const { return m_data ? m_data->data : (const T*)L""; }
-template <typename T> inline int StringBase<T>::getLength() const { return m_data ? m_data->length : 0; }
 template <typename T> inline void StringBase<T>::concat(const StringBase<T> &s) { concat(s.str(), s.getLength()); }
 inline UnicodeString::UnicodeString() { *(void**)this = 0; }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->releaseBuffer(); }

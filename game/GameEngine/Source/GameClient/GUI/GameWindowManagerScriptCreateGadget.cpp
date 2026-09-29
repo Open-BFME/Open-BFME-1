@@ -22,7 +22,6 @@
 // createWindow and retail. Opaque auxiliary views retain the target address.
 #include "ascii_string.h"
 #include <string.h>
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 class GameWindow { public: char pad[0x6c]; void *dword_6c; GameWindow *winGetChild(); };
 class WinInstanceData { public: char pad[12]; unsigned m_style; unsigned m_status; GameWindow *m_owner; char pad18[0x184-0x18]; void *m_font; AsciiString m_textLabelString; AsciiString m_decoratedNameString; };
 class Open2479440Record { public: GameWindow *dword_0; char pad[0x2c]; WinInstanceData *dword_30; };

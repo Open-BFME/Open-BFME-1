@@ -12,8 +12,6 @@ struct FlagError0020F000
 };
 
 #include "ascii_string.h"
-template <> inline StringBase<char>::~StringBase() { releaseBuffer(); }
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 
 extern "C" FlagError0020F000 *__cdecl bfmeFormatText(
 	FlagError0020F000 *, int, const char *, ...);
@@ -72,7 +70,6 @@ public:
 extern unsigned char g_bfmeTableDH[];
 extern int g_bfmeTableDJb[];
 int __cdecl bfmeLookupC(void *name);
-
 
 class BitFlagSnapshot0020F000
 {
@@ -142,5 +139,4 @@ void BitFlagSnapshot0020F000::xfer(FlagXfer0020F000 *xfer)
 		}
 	}
 }
-
 

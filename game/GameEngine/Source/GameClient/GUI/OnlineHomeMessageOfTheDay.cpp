@@ -11,11 +11,6 @@
 #include <string.h>
 #pragma intrinsic(strlen)
 
-template <typename T> inline StringBase<T>::~StringBase() { releaseBuffer(); }
-template <typename T> inline const T *StringBase<T>::str() const {
-    static const T TheNullChr = 0;
-    return m_data ? m_data->data : &TheNullChr;
-}
 template <typename T> inline void StringBase<T>::set(const T *s) { set(s, s ? strlen((const char*)s) : 0); }
 template <typename T> inline void StringBase<T>::concat(const StringBase<T>& s) {
     concat(s.m_data ? s.m_data->data : (const T*)"", s.m_data ? s.m_data->length : 0);
@@ -26,8 +21,6 @@ inline UnicodeString::UnicodeString(const UnicodeString& s) {
 }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->StringBase<unsigned short>::~StringBase(); }
 
-
-template<class T> inline int StringBase<T>::getLength() const {return m_data?m_data->length:0;}
 template<class T> inline T StringBase<T>::getCharAt(int i) const {return m_data?m_data->data[i]:0;}
 template<class T> inline bool StringBase<T>::isEmpty() const {return !m_data || m_data->length==0;}
 template<> inline bool StringBase<char>::startsWith(const char *s) const {return startsWith(s,strlen(s));}
@@ -150,5 +143,4 @@ void BfmeAptScreenOnlineHome::bfmeRefreshMessageOfTheDay() {
   }
  }
 }
-
 

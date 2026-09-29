@@ -14,11 +14,8 @@
 #include <wchar.h>
 #include <string.h>
 #include "Common/UnicodeString.h"
-template<class T> inline StringBase<T>::StringBase() : m_data(0) {}
-template<class T> inline StringBase<T>::~StringBase() { releaseBuffer(); }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->releaseBuffer(); }
 template<class T> inline bool StringBase<T>::isEmpty() const { return m_data==0 || m_data->length==0; }
-template<class T> inline const T *StringBase<T>::str() const { return m_data?m_data->data:(const T*)""; }
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 bool GetStringFromRegistry(AsciiString,AsciiString,AsciiString&);
 void GSMessageBoxOk(UnicodeString,UnicodeString,void (*)()=0);

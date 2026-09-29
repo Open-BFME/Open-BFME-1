@@ -1,18 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/objectdlink
 #include <string.h>
 #include "string_base.h"
-template <> inline StringBase<char>::~StringBase()
-{
-    releaseBuffer();
-}
-template <> inline const char *StringBase<char>::str() const
-{
-    return m_data ? m_data->data : "";
-}
-template <> inline int StringBase<char>::getLength() const
-{
-    return m_data ? m_data->length : 0;
-}
 template <> inline void StringBase<char>::concat(const char *s)
 {
     concat(s, s ? strlen(s) : 0);

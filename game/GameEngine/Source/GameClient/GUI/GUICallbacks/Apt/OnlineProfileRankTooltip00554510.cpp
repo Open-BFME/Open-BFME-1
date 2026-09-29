@@ -14,12 +14,9 @@
 #include <wchar.h>
 #include <string.h>
 #include "Common/UnicodeString.h"
-template<class T> inline StringBase<T>::StringBase() : m_data(0) {}
-template<class T> inline StringBase<T>::~StringBase() { releaseBuffer(); }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->releaseBuffer(); }
 template<class T> inline void StringBase<T>::set(const T *s) { set(s,s?strlen((const char*)s):0); }
 template<class T> inline void StringBase<T>::concat(const StringBase<T>& s) { int n=s.m_data?s.m_data->length:0; const T* p=s.m_data?s.m_data->data:(const T*)""; concat(p,n); }
-template<> inline const unsigned short *StringBase<unsigned short>::str() const { static const unsigned short TheNullChr=0; return m_data?m_data->data:&TheNullChr; }
 class Gen_uw_00025c1b { public: ~Gen_uw_00025c1b(); char field00[0x1c4]; };
 int bfmeRankPointsFromStats(Gen_uw_00025c1b*,int);
 int bfmeBand(int);

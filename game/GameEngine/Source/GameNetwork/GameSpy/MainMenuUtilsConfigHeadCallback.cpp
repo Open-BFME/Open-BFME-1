@@ -29,10 +29,6 @@ typedef GHTTPBool (__cdecl *GHTTPCompletedCallback)(int, GHTTPResult, char *, __
 extern "C" int __cdecl ghttpGetA(const char *, int, GHTTPCompletedCallback, void *);
 GHTTPBool __cdecl configCallback(int request, GHTTPResult result, char *buffer, __int64 bufferLen, void *param);
 extern const char Rva006A16B0Empty[];
-template <> inline const char *StringBase<char>::str() const
-{
-    return m_data ? m_data->data : Rva006A16B0Empty;
-}
 struct Rva0062F130Header {
     int refs;
     unsigned short length, capacity;

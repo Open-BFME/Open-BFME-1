@@ -4,8 +4,6 @@
 // Thing::m_template is OVERRIDE<ThingTemplate>; its inlined operator* reads through &obj->m_template.
 #include "ascii_string.h"
 
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
-
 typedef int ObjectID;
 static const ObjectID INVALID_ID = 0;
 

@@ -3,7 +3,6 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 #include "ascii_string.h"
-template<> inline StringBase<char>::~StringBase() { releaseBuffer(); }
 
 class Display { public:
  virtual void slot00(); virtual void slot04(); virtual void slot08();

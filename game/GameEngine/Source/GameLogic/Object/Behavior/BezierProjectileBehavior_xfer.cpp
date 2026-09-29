@@ -5,7 +5,6 @@
 // stlport
 #include <vector>
 #include "ascii_string.h"
-template <> inline StringBase<char>::~StringBase() { releaseBuffer(); }
 struct ProjectileVersion001F1860 { unsigned char version,current; unsigned char padding[2]; };
 struct ProjectileError001F1860 { char *text; int tag; };
 extern "C" ProjectileError001F1860 *__cdecl bfmeFormatText(ProjectileError001F1860*,int,const char*,...);

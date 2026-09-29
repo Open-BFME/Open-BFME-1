@@ -29,7 +29,6 @@
 #include <vector>
 #include "Common/AsciiString.h"
 #include "Common/UnicodeString.h"
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 typedef int Int;
 typedef bool Bool;
 typedef float Real;

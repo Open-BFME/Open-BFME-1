@@ -12,14 +12,6 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 #include "string_base.h"
-template <> inline const char *StringBase<char>::str() const
-{
-    return m_data ? m_data->data : "";
-}
-template <> inline StringBase<char>::~StringBase()
-{
-    releaseBuffer();
-}
 #include "ascii_string.h"
 struct Coord3D
 {

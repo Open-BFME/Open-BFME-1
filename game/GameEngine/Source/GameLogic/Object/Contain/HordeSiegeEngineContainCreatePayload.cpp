@@ -9,9 +9,7 @@
 // matched ThingFactoryFindTemplate / ThingFactory_newObject / Object.cpp /
 // TransportContain.cpp and dispatch pin evidence at RVA 001BE220.
 #include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 template <> inline bool StringBase<char>::isEmpty() const { return !m_data || m_data->length == 0; }
-template <> inline StringBase<char>::~StringBase() { releaseBuffer(); }
 
 #define __PLACEMENT_VEC_NEW_INLINE
 #define ASCIISTRING_H

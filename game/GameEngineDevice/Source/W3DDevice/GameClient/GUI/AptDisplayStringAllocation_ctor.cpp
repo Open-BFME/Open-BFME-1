@@ -17,14 +17,9 @@
 #include <string.h>
 #include <new>
 #include "string_base.h"
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
-template<> inline int StringBase<char>::getLength() const { return m_data ? m_data->length : 0; }
 template<> inline char StringBase<char>::getCharAt(int i) const { return m_data ? m_data->data[i] : 0; }
 template<> inline bool StringBase<char>::isEmpty() const { return !m_data || m_data->length==0; }
 template<> inline void StringBase<char>::set(const char *s) { set(s,s?strlen(s):0); }
-template<> inline StringBase<char>::~StringBase() { releaseBuffer(); }
-template<> inline StringBase<unsigned short>::StringBase() { m_data=0; }
-template<> inline StringBase<unsigned short>::~StringBase() { releaseBuffer(); }
 #include "ascii_string.h"
 inline AsciiString::AsciiString(const char *s,int n):StringBase<char>(s,n) {}
 #include "unicode_string.h"

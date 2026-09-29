@@ -13,8 +13,6 @@
 // by address because the canonical unicode_string.h omits that static member.
 #include "ascii_string.h"
 #include "unicode_string.h"
-template<class T> inline StringBase<T>::~StringBase() { releaseBuffer(); }
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 inline UnicodeString::UnicodeString() { m_text=0; }
 inline UnicodeString::UnicodeString(const UnicodeString& s) { ((StringBase<unsigned short>*)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short>*)&s); }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->releaseBuffer(); }
@@ -182,7 +180,6 @@ void PopupHostGameInit( WindowLayout *layout, void *userData )
 	if (comboBoxLadderName)
 		GadgetComboBoxReset(comboBoxLadderName);
 	PopulateCustomLadderComboBox();
-
 
  TheWindowManager->winSetFocus(parentPopup);
  TheWindowManager->winSetModal(parentPopup);

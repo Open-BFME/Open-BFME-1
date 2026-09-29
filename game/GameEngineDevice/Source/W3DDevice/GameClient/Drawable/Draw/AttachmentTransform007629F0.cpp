@@ -9,9 +9,6 @@
 
 // Retail expands both accessors: the canonical Header has a 16-bit length
 // at +4 and its characters at +8. Keep the canonical class and layout.
-template <> inline const char *StringBase<char>::str() const {
-    return m_data ? m_data->data : "";
-}
 template <> inline bool StringBase<char>::isNotEmpty() const {
     return m_data && m_data->length != 0;
 }

@@ -20,7 +20,6 @@ typedef struct in_addr IN_ADDR;
 #include "GameNetwork/GameSpy/PersistentStorageThread.h"
 #pragma intrinsic(strlen)
 #undef isdigit
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 template <> inline bool StringBase<char>::isEmpty() const { return !m_data || m_data->length == 0; }
 template <> inline char StringBase<char>::getCharAt(int n) const { return m_data ? m_data->data[n] : 0; }
 template <> inline void StringBase<char>::set(const char *s) { set(s, s ? strlen(s) : 0); }

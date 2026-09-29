@@ -16,7 +16,6 @@
 // allocator rather than _STLP_USE_NEWALLOC, which inlines operator new.
 #include <set>
 #include "ascii_string.h"
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 
 typedef bool Bool;
 typedef int Int;

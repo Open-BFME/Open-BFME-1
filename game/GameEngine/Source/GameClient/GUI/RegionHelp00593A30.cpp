@@ -10,7 +10,6 @@
 #include <set>
 #include "ascii_string.h"
 #include "unicode_string.h"
-template<> inline void StringBase<unsigned short>::clear() { releaseBuffer(); }
 inline UnicodeString::UnicodeString() { m_text=0; }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->~StringBase(); }
 inline UnicodeString &UnicodeString::operator=(const UnicodeString &s) { ((StringBase<unsigned short>*)this)->set(*(const StringBase<unsigned short>*)&s);return *this; }

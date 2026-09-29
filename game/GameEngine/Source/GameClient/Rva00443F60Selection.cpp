@@ -14,7 +14,6 @@
 inline UnicodeString::UnicodeString() { m_text=0; }
 inline UnicodeString::UnicodeString(const UnicodeString& that) { ((StringBase<unsigned short>*)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short>*)&that); }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->releaseBuffer(); }
-template<class T> inline const T *StringBase<T>::str() const { static const T TheNullChr=0;return m_data?m_data->data:&TheNullChr; }
 class Object; class Drawable; class ThingTemplate;
 enum KindOfType { Rva00443F60Kind108=108 };
 enum ObjectID { INVALID_ID=0 };

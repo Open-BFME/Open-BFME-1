@@ -7,7 +7,6 @@
 // retail calls StringBase<unsigned short> directly for both operations.
 #include "ascii_string.h"
 #include "unicode_string.h"
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 inline UnicodeString::~UnicodeString() { reinterpret_cast<StringBase<unsigned short> *>(this)->~StringBase(); }
 inline UnicodeString &UnicodeString::operator=(const UnicodeString &other) {
  reinterpret_cast<StringBase<unsigned short> *>(this)->set(*reinterpret_cast<const StringBase<unsigned short> *>(&other)); return *this;

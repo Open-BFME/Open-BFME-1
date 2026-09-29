@@ -171,11 +171,7 @@ static GameWindow *createWindow( char *type, Int id, Open2479440Record *record, 
 	return window;
 }
 
-
 // Native BFME StringBase inlines at this caller.
-template<> inline int StringBase<char>::getLength() const { return m_data ? m_data->length : 0; }
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
-template<> inline void StringBase<char>::clear() { releaseBuffer(); }
 template<> inline int StringBase<char>::compare(const char *s) const {
  int n = s ? strlen(s) : 0;
  int len = getLength(); const char *text = str();

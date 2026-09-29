@@ -7,12 +7,6 @@
 // per subsystem; its method identity remains address-derived.
 #include "Lib/BaseType.h"
 #include "subsystem_interface.h"
-// Retail inlines the two buffer-or-empty accesses (see ascii_string.cpp).
-template <>
-inline const char *StringBase<char>::str() const
-{
-    return m_data ? m_data->data : "";
-}
 
 class Rva009A1B70Dispatch
 {
@@ -32,7 +26,6 @@ class Rva009A1B70
 public:
     void call();
 };
-
 
 // ?call@Rva009A1B70@@QAEXXZ
 void Rva009A1B70::call()
