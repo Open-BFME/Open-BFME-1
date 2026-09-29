@@ -133,8 +133,8 @@ extern Real g_millisecondsToSeconds;
 extern Real Cos(Real radians);
 extern Real Sin(Real radians);
 
-#define g_rva001B59AnglePositive (*(const Real *)0x0109df8c)
-#define g_rva001B59AngleNegative (*(const Real *)0x0109df88)
+#define g_rva001B59AnglePositive 2.7488937f
+#define g_rva001B59AngleNegative (-2.7488937f)
 
 void Locomotor::maintainCurrentPositionWings(Object *object)
 {

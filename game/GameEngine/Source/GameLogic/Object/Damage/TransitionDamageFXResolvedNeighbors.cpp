@@ -111,8 +111,10 @@ private:
 	Rva002523E0Record *m_recordEnd;
 };
 
-#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
-#define TheNameKeyGenerator (*(NameKeyGenerator **)0x012ED600)
+extern GameLogic *TheGameLogic;
+extern NameKeyGenerator *TheNameKeyGenerator;
+
+#define TheBfmeGameLogic TheGameLogic
 
 void TransitionDamageFX::rva002523E0(Bool applyTransition)
 {

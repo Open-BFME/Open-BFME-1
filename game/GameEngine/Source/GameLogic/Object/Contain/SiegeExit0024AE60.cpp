@@ -79,8 +79,10 @@ class TerrainLogic {public: PathfindLayerEnum getLayerForDestination(Object *,co
 class AI {public: char pad[0xC]; Pathfinder *m_pathfinder; Pathfinder *pathfinder() const {return m_pathfinder;}};
 struct GameLogic0024AE60 {char pad[0x3C]; unsigned int frame;};
 extern AI *TheAI;
-#define TheTerrainLogic (*(TerrainLogic **)0x012EF4CC)
-#define TheGameLogic0024AE60 (*(GameLogic0024AE60 **)0x012F0898)
+extern TerrainLogic *TheTerrainLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic;
+#define TheGameLogic0024AE60 ((GameLogic0024AE60 *)TheGameLogic)
 class Rva00266340 {public: bool is() const;};
 class Rva00227B60ContainDispatch {public: void dispatch(Object *,bool);};
 class Rva0024C2A0Owner {public: void processNested(Object *,void *);};

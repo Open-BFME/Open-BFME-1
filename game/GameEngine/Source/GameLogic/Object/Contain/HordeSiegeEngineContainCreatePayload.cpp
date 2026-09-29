@@ -32,6 +32,7 @@ class ThingTemplate;
 // Callee identities and ABI are established by the byte-matched bodies.
 class BfmeThingFactory { public: const ThingTemplate *findTemplate(const AsciiString &); };
 class ThingFactory { public: Object *newObject(const ThingTemplate *, Team *, const ObjectStatusMaskType &, unsigned int); };
+extern ThingFactory *TheThingFactory;
 class Rva001BE220Receiver { public: void dispatch(int condition, unsigned int duration); };
 extern void j_00004d63();
 class Rva0024A350MapCall { public: void invoke(Object *object) { union { void (*entry)(); void (Rva0024A350MapCall::*method)(Object *); } call; call.entry=j_00004d63; (this->*call.method)(object); } };
@@ -80,7 +81,7 @@ void HordeSiegeEngineContain::createPayload()
 	int count = *(int *)(moduleData + 0x230);
 
 	const ThingTemplate *payloadTemplate =
-		(*(BfmeThingFactory **)0x012EF1D8)->findTemplate(*(AsciiString *)(moduleData + 0x22c));
+		((BfmeThingFactory *)TheThingFactory)->findTemplate(*(AsciiString *)(moduleData + 0x22c));
 	Object *owner = *(Object **)(self + 8);
 	ContainModuleInterface *contain = owner->m_contain;
 	if (contain)
@@ -91,7 +92,7 @@ void HordeSiegeEngineContain::createPayload()
 			ObjectStatusMaskType status;
 			Player *player = owner->getControllingPlayer();
 			Team *team = *(Team **)((char *)player + 0x230);
-			Object *payload = (*(ThingFactory **)0x012EF1D8)->newObject(payloadTemplate, team, status, 0);
+			Object *payload = TheThingFactory->newObject(payloadTemplate, team, status, 0);
 			if (contain->isValidContainerFor(payload, true))
 			{
 				int scaledCount = (int)(*(float *)((char *)payloadTemplate + 0x2f4) * 5.0f);
