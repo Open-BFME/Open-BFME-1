@@ -47,6 +47,9 @@ ledger and verification are separate from the game's.
    `BUILD_POOL=12 ./build.sh`, lists the rest.
 7. **EA renames.** `python3 tools/ea_queue.py next` serves one rename to EA's
    own name and every file it touches; follow its steps.
+8. **Names.** `python3 tools/name_lane.py next --model <your model>` serves one
+   file's placeholder names. A name lands only when another vendor's model
+   proposes it too; never rename placeholders by hand.
 
 Whether a body is open work is decided in one place, `tools/eligibility.py`;
 never re-derive it in a new tool.

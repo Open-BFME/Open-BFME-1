@@ -1,8 +1,7 @@
 # Where names come from
 
 A byte match proves nothing about names: `m_pitchShift` compiles to the same bytes
-as `m_priority`. The identity detectors are keyed on addresses, and a member name
-has none, so none of them can see a wrong one.
+as `m_priority`, and no detector can see a wrong member name.
 
 ## The rule
 
@@ -16,8 +15,8 @@ catches it.
 | a SHAPE (`FiveDwordElem`, `PooledNodeHeader`) | the body itself | when identity is unproven; **keep the address token** |
 | an IDENTITY (`Player`, `AudioEventRTS`) | caller, vtable, string literal, ZH twin | only with evidence, and cite it |
 
-- Drop the address only when evidence proves the identity. An unproven name without
-  its address turns a visible unknown into an invisible one.
+- Drop the address only when evidence proves the identity, or when two vendors'
+  models agree on the name through `tools/name_lane.py`.
 - With several retail copies of one template body, keep the address in each
   copy's name, and count call sites before giving one copy the plain name.
 
@@ -41,7 +40,6 @@ prints is a hint, not proof.
 | `lotrbfme.exe` strings | EA's `\bfme\Code\...` source paths; they anchor nearby vftables |
 | `targets/game/reverse/ea_evidence.csv` | EA's names and files from WorldBuilder builds; not proof |
 
-Function identity is thin and capped by evidence; more agents do not raise it.
 
 ## One body, one name
 

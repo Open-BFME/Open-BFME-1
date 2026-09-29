@@ -216,7 +216,7 @@ def hook_fixture(repo):
     for name in ("check_case_collisions", "conversion_gate", "name_regression", "name_oracle",
                  "name_history", "eol_guard", "retired_guard", "check_csv", "pin_consistency",
                  "one_identity", "b_pin_check", "identity_guard", "adopt_header", "delta_sources",
-                 "doc_budget", "link_debt", "ea_name_guard", "header_dependents"):
+                 "doc_budget", "link_debt", "ea_name_guard", "name_lane", "header_dependents"):
         put(repo, "tools/" + name + ".py", "raise SystemExit(0)\n")
     put(repo, "tools/find_declared_unmatched.py", "open('game-parser', 'w').write('called')\n")
     put(repo, "build.sh", "#!/usr/bin/env bash\nprintf '%s\\n' \"$@\" > game-build\n")
