@@ -2345,7 +2345,7 @@ Bool ScriptConditions::evaluatePlayerDestroyedNOrMoreBuildings(Parameter *pPlaye
 Bool ScriptConditions::evaluateUnitHasEmptied(Parameter *pUnitParm)
 {
 	BfmeScriptConditionEngine *scriptEngine =
-		*(BfmeScriptConditionEngine **)0x012F076C;
+		reinterpret_cast<BfmeScriptConditionEngine *>(TheScriptEngine);
 	BfmeEvaluateUnitObject *object = reinterpret_cast<BfmeEvaluateUnitObject *>(
 		scriptEngine->getUnitNamed(*(const AsciiString *)pUnitParm));
 	if (!object) {
@@ -2366,7 +2366,7 @@ Bool ScriptConditions::evaluateUnitHasEmptied(Parameter *pUnitParm)
 	Int numPeeps = cmi ? cmi->getContainCount(0) : 0;
 
 	UnsignedInt frameNum = reinterpret_cast<BfmeScriptConditionGameLogic *>(
-		*(void **)0x012F0898)->m_frame;
+		TheGameLogic)->m_frame;
 
 
 	if (stats == NULL) 

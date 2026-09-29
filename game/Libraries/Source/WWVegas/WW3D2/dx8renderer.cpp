@@ -254,13 +254,17 @@ void DX8TextureCategoryClass::Add_Polygon_Renderer(DX8PolygonRendererClass* p_re
 	p_renderer->Set_Texture_Category(this);
 }
 
+// BFME holds the mesh renderer behind a pointer; this TU defines the ZH object name.
+extern "C" DX8MeshRendererClass *bfmeTheDX8MeshRendererPtr;
+#pragma comment(linker, "/alternatename:_bfmeTheDX8MeshRendererPtr=?TheDX8MeshRenderer@@3PAVDX8MeshRendererClass@@A")
+
 void DX8TextureCategoryClass::Remove_Polygon_Renderer(DX8PolygonRendererClass* p_renderer)
 {
 	PolygonRendererList.Remove(p_renderer);
 	p_renderer->Set_Texture_Category(NULL);
 	if (PolygonRendererList.Peek_Head() == NULL) {
 		container->Remove_Texture_Category(this);
-		DX8MeshRendererClass *renderer = *(DX8MeshRendererClass **)0x0134b0e8;
+		DX8MeshRendererClass *renderer = bfmeTheDX8MeshRendererPtr;
 		if (renderer)
 			renderer->texture_category_delete_list.Add_Tail(this);
 	}
@@ -276,7 +280,7 @@ void DX8FVFCategoryContainer::Remove_Texture_Category(DX8TextureCategoryClass* t
 		// If any of the texture category lists has anything in it, no need to delete this container
 		if (texture_category_list[pass].Peek_Head() != NULL) return;
 	}
-	DX8MeshRendererClass *renderer = *(DX8MeshRendererClass **)0x0134b0e8;
+	DX8MeshRendererClass *renderer = bfmeTheDX8MeshRendererPtr;
 	if (renderer)
 		renderer->fvf_category_container_delete_list.Add_Tail(this);
 }

@@ -79,6 +79,7 @@ struct BfmeFormattedText
 extern "C" BfmeFormattedText *__cdecl bfmeFormatText(
 	BfmeFormattedText *, int, const char *, ...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void *, void *);
+extern int g_guardTargetTypeThrowInfo;
 extern void __cdecl bfmeCalcTGC(void *, int *);
 
 class BfmeSubAccept_0002C41C
@@ -146,7 +147,7 @@ void Rva002C87B0Worker::xfer(Xfer *xfer)
 	{
 		BfmeFormattedText error;
 		bfmeFormatText(&error, 5, 0);
-		_CxxThrowException(&error, (void *)0x011DFE5C);
+		_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 	}
 
 	UnsignedInt *taskOrderFrame = &m_task[0].m_taskOrderFrame;
@@ -166,7 +167,7 @@ void Rva002C87B0Worker::xfer(Xfer *xfer)
 	{
 		BfmeFormattedText error;
 		bfmeFormatText(&error, 5, 0);
-		_CxxThrowException(&error, (void *)0x011DFE5C);
+		_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 	}
 
 	for (int i = 0; i < 3; ++i)

@@ -142,8 +142,8 @@ class CameraClass;
 #include "sphere.h"
 #include "boxrobj.h"
 
-#define BfmeZeroRange (*(const float *)0x01075350)
-#define g_bfmeDefaultBU (*(float *)0x01075334)
+extern const float BfmeZeroRange;
+extern float g_bfmeDefaultBU;
 
 
 /*

@@ -123,8 +123,9 @@ public:
 		const ObjectStatusMaskType &statusBits, UnsignedInt extra);
 };
 
-#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
-#define TheThingFactory (*(ThingFactory **)0x012EF1D8)
+extern GameLogic *TheGameLogic;
+#define TheBfmeGameLogic TheGameLogic
+extern ThingFactory *TheThingFactory;
 
 class Rva00295D70AIHead
 {

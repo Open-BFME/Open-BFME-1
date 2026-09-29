@@ -31,6 +31,7 @@ struct BfmeFormattedText
 
 extern "C" BfmeFormattedText *__cdecl bfmeFormatText(BfmeFormattedText *, int, const char *, ...);
 extern void __stdcall _CxxThrowException(void *, void *);
+extern int g_guardTargetTypeThrowInfo;
 
 class BroadcastStealthUpdate : public BfmeA987
 {
@@ -53,7 +54,7 @@ void BroadcastStealthUpdate::loadPostProcess()
 	{
 		BfmeFormattedText error;
 		bfmeFormatText(&error, 5, 0);
-		_CxxThrowException(&error, (void *)0x011DFE5C);
+		_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 		__assume(0);
 	}
 
@@ -64,7 +65,7 @@ void BroadcastStealthUpdate::loadPostProcess()
 		{
 			BfmeFormattedText error;
 			bfmeFormatText(&error, 5, 0);
-			_CxxThrowException(&error, (void *)0x011DFE5C);
+			_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 			__assume(0);
 		}
 		m_objects.push_back(object);
