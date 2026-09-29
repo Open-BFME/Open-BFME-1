@@ -1,5 +1,6 @@
 // ?method@Rva00365C20Owner@@QAEXABURva00365C20SourceRecord@@HHURva00365C20Payload6@@HABURva00365C20Tail@@@Z
-// partial score=0.6793 date=2026-09-27
+// Retail 0x00365C20: appends a BfmeOwnVUM record built from the caller's
+// arguments to the selected 0x58-byte player-army entry (callback of 0x000F99C0).
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 
@@ -124,10 +125,10 @@ void Rva00365C20Owner::method( const Rva00365C20SourceRecord &source00,
 
 	BfmeOwnVUM record;
 	record.m_04.set( source00.m_00 );
-	record.m_0c = source0c;
 	record.m_08 = source08;
-	record.m_10 = source14;
+	record.m_0c = source0c;
 	record.m_39 = source44.m_10;
+	record.m_10 = source14;
 	record.m_3c = source44.m_00 + 1;
 	record.m_44 = source44.m_08;
 	record.m_40 = source44.m_04;
@@ -137,6 +138,6 @@ void Rva00365C20Owner::method( const Rva00365C20SourceRecord &source00,
 	record.m_4c.set( source44.m_18 );
 	record.m_28 = Rva00365C20ThreeWords();
 	record.m_34 = 1;
-	((Gen00365520 &)m_playerArmies[ index ]).bfmeAppend(
-		(const P6Elem00365520 *)&record );
+	Rva00365C20PlayerArmy &army = m_playerArmies[ index ];
+	((Gen00365520 &)army).bfmeAppend( (const P6Elem00365520 *)&record );
 }
