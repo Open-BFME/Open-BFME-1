@@ -31,28 +31,28 @@ public:
 	BfmeStrVUQ m_bfme08;
 	BfmeStrVUQ m_bfme0c;
 	char m_bfmePad10[0xc];
-	BfmeSinkVUQ *m_bfme1c;
-	BfmeSinkVUQ *m_bfme20;
-	BfmeSinkVUQ *m_bfme24;
+	BfmeSinkVUQ *m_condition;
+	BfmeSinkVUQ *m_action;
+	BfmeSinkVUQ *m_actionFalse;
 	char m_bfmePad28[8];
 	BfmeStrVUQ m_bfme30;
 };
 
 BfmeOwnVUQ::~BfmeOwnVUQ()
 {
-	BfmeSinkVUQ *first = m_bfme1c;
+	BfmeSinkVUQ *first = m_condition;
 	BfmeSinkVUQ *second;
 	BfmeSinkVUQ *third;
 
 	if (first != 0)
 		first->bfmeSlot0VUQ(1);
 
-	second = m_bfme20;
+	second = m_action;
 
 	if (second != 0)
 		second->bfmeSlot0VUQ(1);
 
-	third = m_bfme24;
+	third = m_actionFalse;
 
 	if (third != 0)
 		third->bfmeSlot0VUQ(1);

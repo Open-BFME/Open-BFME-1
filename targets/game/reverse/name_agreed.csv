@@ -85,3 +85,6 @@ game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_001506E0@|bfm
 game/GameEngine/Source/Common/Bfme5ThirtyThree.cpp|function||bfmeReplaceDots,__adjust_float_buffer,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/Common/BfmeConv1081.cpp|member||m_bfme38,m_cachedPos,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/Common/BfmeConv1081.cpp|member||m_bfme0c,m_pathfinder,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1653.cpp|member||m_bfme1c,m_condition,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1653.cpp|member||m_bfme20,m_action,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1653.cpp|member||m_bfme24,m_actionFalse,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
