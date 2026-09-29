@@ -8,7 +8,7 @@
 class BfmeNodeBG
 {
 public:
-	BfmeNodeBG *m_bfmeNext;					// +0x00
+	BfmeNodeBG *m_next;					// +0x00
 };
 
 class Gen_001506E0
@@ -26,7 +26,7 @@ bool Gen_001506E0::isEmpty(void) const
 {
 	BfmeNodeBG *node = m_memberList;
 
-	return node->m_bfmeNext == node;
+	return node->m_next == node;
 }
 
 class BfmeThingBG
