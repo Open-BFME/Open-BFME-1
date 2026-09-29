@@ -93,7 +93,7 @@ def render(current, previous=None):
                     f'<text x="{x + 16}" y="215" class="muted" font-size="12.5">{label}</text>')
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="880" height="{height}" viewBox="0 0 880 {height}" role="img" aria-labelledby="title desc">
   <title id="title">BFME 1: {mp:.2f}% byte-matched, {lp:.2f}% linked</title>
-  <desc id="desc">{matched:,} of {total:,} code bytes rebuild to the original exe's exact bytes; {linked:,} of them are in files that link cleanly ({measured(current)}). Whole game {wp:.2f}%: {lp:.2f}% linked, {mp - lp:.2f}% byte-matched but not linked yet, {rest:.2f}% still original bytes.</desc>
+  <desc id="desc">{matched:,} of {total:,} code bytes rebuild to the original exe's exact bytes; {linked:,} of them are in files that link cleanly ({measured(current)}). Whole game {wp:.2f}%.</desc>
   <style>
     .card {{ fill: #0d1117; stroke: #30363d; }} .track {{ fill: #21262d; }}
     .strong {{ fill: #f0f6fc; }} .muted {{ fill: #8b949e; }} .up {{ fill: #3fb950; }} .down {{ fill: #f85149; }}
