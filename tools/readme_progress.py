@@ -52,7 +52,7 @@ UP, DOWN, DOT = "▲", "▼", "·"
 
 def game_code(current):
     """The game's own code: all code minus vendored library source and prebuilt libraries."""
-    return current["total"] - current["vendored"] - current["library"]
+    return progress.game_code(current, current["total"])
 
 
 def measures(current):
@@ -114,9 +114,10 @@ def render(current, previous=None):
     <rect x="28" y="{y + 10}" width="{width:.2f}" height="14" rx="7" fill="{CARD_FILL[key]}"/>
     <text x="28" y="{y + 44}" class="muted" font-size="12.5">{text}</text>
 ''')
-    (matched, total), (cpp, game) = rows["matched"], rows["cpp"]
+    (matched, total), (cpp, game), (linked, _) = rows["matched"], rows["cpp"], rows["linked"]
+    linking = f"{progress.percent(linked, game):.2f}% linking" if linked is not None else "linking not measured"
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="880" height="{height}" viewBox="0 0 880 {height}" role="img" aria-labelledby="title desc">
-  <title id="title">{TITLE}: {progress.percent(matched, total):.2f}% rebuilt from source, {progress.percent(cpp, game):.2f}% of the game's own code in C++</title>
+  <title id="title">{TITLE}: {progress.percent(matched, total):.2f}% rebuilt from source, {progress.percent(cpp, game):.2f}% game code in C++, {linking}</title>
   <desc id="desc">{matched:,} of {total:,} code bytes rebuild to the original's exact bytes; {cpp:,} of the game's own {game:,} bytes are C++.</desc>
   <style>
     .card {{ fill: #0d1117; stroke: #30363d; }} .track {{ fill: #21262d; }}

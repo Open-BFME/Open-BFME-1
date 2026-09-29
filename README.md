@@ -15,9 +15,9 @@ Goal: rebuild BFME 1's retail executable byte for byte from source, and use that
 
 ### What the bars measure
 
-* **Rebuilt from source**: code that rebuilds to the original exe's exact bytes, part of it generated code or prebuilt libraries.
-* **Game code in C++**: the game's own code (no libraries) written as C++.
-* **Linking**: the part of that code in files that link cleanly (daily link census).
+* **Rebuilt from source**: code rebuilding to the original exe's exact bytes, partly generated code or prebuilt libraries.
+* **Game code in C++**: the game's own code (no libraries) in C++.
+* **Linking**: the part of that code in files that link cleanly (link census).
 
 <details open>
 <summary><b>Progress over time and code map</b></summary>
@@ -71,7 +71,7 @@ The MSVC 7.1 toolchain and baseline executables are committed (no LFS), so `git 
 ```
 
 On Linux, use WineHQ's Wine 11 (`winehq-stable`) with a 32-bit prefix
-(`WINEARCH=win32 wineboot -i`); Ubuntu 24.04's Wine 9.0 hangs `cl.exe`. A full
+(`WINEARCH=win32 wineboot -i`); Ubuntu 24.04's Wine 9.0 hangs `cl.exe` on a few files. A full
 gate takes about 30 minutes on four cores.
 
 To check one function in seconds, pass its file or name:

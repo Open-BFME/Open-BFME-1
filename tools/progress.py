@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 """Report how much retail code we can rebuild from what the repository holds.
 
-BYTE-MATCHED, LINKED and WHOLE GAME print first: the three numbers on the
+BYTE-MATCHED, GAME CODE C++ and LINKING print first: the three numbers on the
 README card and in the daily Discord post (tools/readme_progress.py), computed
-the same way. BYTE-MATCHED is everything that rebuilds to the original exe's
-exact bytes (authored and generated C++, vendored source, attached prebuilt
-libraries; dumps excluded). LINKED is the part of our own source whose files
-also link cleanly, as measured and stored by the last tools/link_census.py run
-(link_census_history.csv). WHOLE GAME counts two steps per byte, byte-matched
-then linked. Every figure counts 0xCC padding out, the way the denominator
+the same way. BYTE-MATCHED ("rebuilt from source") is everything that rebuilds
+to the original exe's exact bytes (authored and generated C++, vendored source,
+attached prebuilt libraries; dumps excluded), over all code. GAME CODE C++ is
+the C++ we wrote over the game's own code (all code minus vendored source and
+prebuilt libraries); LINKING is the part of it whose files also link cleanly,
+over the same denominator, as measured and stored by the last
+tools/link_census.py run (link_census_history.csv, linked_authored). LINKED,
+under them, is all our own source in clean files over all code (the chart's
+linked dots). Every figure counts 0xCC padding out, the way the denominator
 does, so the breakdown under them adds up to them. Total exact, at the end,
 uses the full .text and includes dumps: bounded coverage, not progress.
 
@@ -577,11 +580,10 @@ def data_denominator():
     return sum(s["size"] for s in build.pe_sections(build.EXE.read_bytes()) if s["name"] in (".rdata", ".data"))
 
 
-def whole(linked, matched):
-    """WHOLE GAME in bytes: every byte needs two steps, byte-matched and then
-    linked, so this is the steps done over the steps there are (half of each).
-    100% only when everything is matched and linked."""
-    return (matched + linked) / 2
+def game_code(split, denominator):
+    """The game's own code: all real code minus vendored library source and
+    prebuilt libraries (readme_progress.game_code, the C++ and Linking bars)."""
+    return denominator - split["vendored"] - split["library"]
 
 
 def _line(label, value, denominator, delta, note):
@@ -593,26 +595,28 @@ def print_headline(padding, denominator, old_split, new_split, old_census, new_c
     the same way, then what they are made of. Every figure counts 0xCC out,
     so the lines below add up to the lines above."""
     matched, before = rebuildable(new_split), rebuildable(old_split)
+    game, game_before = game_code(new_split, denominator), game_code(old_split, denominator)
     print(_line("BYTE-MATCHED", matched, denominator, f"delta {format_delta(matched, before, denominator)}",
-                "rebuilds to the original exe's exact bytes"))
-    if new_census:
-        linked = int(new_census["linked_bytes"])
+                "rebuilt from source: rebuilds to the original exe's exact bytes"))
+    print(_line("GAME CODE C++", new_split["authored"], game,
+                f"delta {format_delta(new_split['authored'], old_split['authored'], game)}"
+                if game == game_before else "delta n/a (the game's own code changed size)",
+                f"C++ we wrote, over the game's own code ({game:,} bytes: no library source or .lib)"))
+
+    def census_line(label, field, over, note):
+        value = new_census.get(field) if new_census else None
+        if not value:
+            print(f"{label:<14} not measured  <- no census stored {field} yet (tools/link_census.py --history)")
+            return
         # A range that starts before any census has nothing to compare with;
         # showing the whole figure as a gain would credit it to that range.
-        if old_census:
-            was = int(old_census["linked_bytes"])
-            linked_delta = f"delta {format_delta(linked, was, denominator)}"
-            whole_delta = f"delta {format_delta(round(whole(linked, matched)), round(whole(was, before)), denominator)}"
-        else:
-            linked_delta = whole_delta = "delta n/a (no census at the start of the range)"
-        print(_line("LINKED", linked, denominator, linked_delta,
-                    f"files that link cleanly, census {new_census['date']} at {new_census['commit']}"))
-        print(_line("WHOLE GAME", whole(linked, matched), denominator, whole_delta,
-                    "two steps per byte, byte-matched then linked: the share done"))
-    else:
-        print(f"{'LINKED':<14} not measured  <- no link census yet (tools/link_census.py --history)")
-        print(f"{'WHOLE GAME':<14} not measured  <- needs LINKED")
+        was = old_census.get(field) if old_census else None
+        delta = f"delta {format_delta(int(value), int(was), over)}" if was else "delta n/a (no census at the start of the range)"
+        print(_line(label, int(value), over, delta,
+                    f"{note}, census {new_census['date']} at {new_census['commit']}"))
+    census_line("LINKING", "linked_authored", game, "that C++ in files that link cleanly, over the game's own code")
     print("               (the three figures on the README card and in the daily Discord post)")
+    census_line("LINKED", "linked_bytes", denominator, "all our own source in files that link cleanly (the chart)")
 
     print(f"\nreal code = .text minus {padding:,} bytes of 0xCC padding = {denominator:,} bytes")
     print("  byte-matched, by where its source comes from:")

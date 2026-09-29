@@ -355,8 +355,9 @@ def test_dump_pass_moved_zero_recovered_bytes():
 
 
 def test_readme_headline_is_a_recovered_figure():
-    """The badge makes two claims -- byte-matched and linked -- and neither may
-    exceed what progress.py prints for it (BYTE-MATCHED and LINKED).
+    """The badge makes three claims -- rebuilt from source, game code in C++ and
+    linking -- and none may exceed what progress.py prints for it
+    (BYTE-MATCHED, GAME CODE C++ and LINKING).
 
     A README that lags is fine (contributors land continuously, the census is
     daily) and a README that flatters is not.
@@ -369,20 +370,20 @@ def test_readme_headline_is_a_recovered_figure():
         # "not measured" (no census yet) is 0%: the badge may not claim more.
         return float(line.split("(")[1].split("%")[0]) if "(" in line else 0.0
 
-    rebuilds, linked = figure("BYTE-MATCHED "), figure("LINKED ")
+    tool = {"rebuilt": figure("BYTE-MATCHED "), "cpp": figure("GAME CODE C++ "), "linking": figure("LINKING ")}
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     assert "docs/progress.svg" in readme, "README no longer shows the progress badge"
     svg = (ROOT / "docs/progress.svg").read_text(encoding="utf-8")
-    title = re.search(r"<title[^>]*>BFME 1: ([\d.]+)% byte-matched, ([\d.]+)% linked</title>", svg)
-    assert title, "the badge's title no longer states its two figures"
-    matched, badge_linked = float(title.group(1)), float(title.group(2))
-    assert matched <= rebuilds + 0.005, (
-        f"README says {matched}% byte-matched where progress.py says {rebuilds}%; it may lag, never flatter")
-    assert badge_linked <= linked + 0.005, (
-        f"README says {badge_linked}% linked where progress.py says {linked}%; it may lag, never flatter")
-    assert matched >= rebuilds - 5.0, (
-        f"README says {matched}% byte-matched where the project is at {rebuilds}%: more than five points stale")
-    print(f"PASS README {matched}% / {badge_linked}% against {rebuilds}% / {linked}%")
+    title = re.search(r"<title[^>]*>BFME 1: ([\d.]+)% rebuilt from source, ([\d.]+)% game code in C\+\+, "
+                      r"(?:([\d.]+)% linking|linking not measured)</title>", svg)
+    assert title, "the badge's title no longer states its three figures"
+    badge = {"rebuilt": float(title.group(1)), "cpp": float(title.group(2)), "linking": float(title.group(3) or 0)}
+    for key, value in badge.items():
+        assert value <= tool[key] + 0.005, (
+            f"README says {value}% {key} where progress.py says {tool[key]}%; it may lag, never flatter")
+    assert badge["rebuilt"] >= tool["rebuilt"] - 5.0, (
+        f"README says {badge['rebuilt']}% rebuilt where the project is at {tool['rebuilt']}%: more than five points stale")
+    print(f"PASS README {badge} against {tool}")
 
 
 def test_readme_never_overstates_coverage():
