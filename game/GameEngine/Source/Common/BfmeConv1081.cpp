@@ -10,7 +10,7 @@ class BfmeE1081
 {
 public:
 	char m_bfmePad[0x38];
-	char m_bfme38;
+	char m_cachedPos;
 	char m_bfmePad1[0x1d7];
 	BfmeG1081 *m_bfme210;
 };
@@ -83,7 +83,7 @@ public:
 struct BfmeQ1081
 {
 	char m_bfmePad[0xc];
-	BfmeD1081 *m_bfme0c;
+	BfmeD1081 *m_pathfinder;
 };
 
 extern BfmeQ1081 *g_bfmeQ1081;
@@ -99,8 +99,8 @@ char __stdcall bfmeGo1081B(int a, int b)
 	if (!f)
 		return 0;
 	{
-		BfmeD1081 *d = g_bfmeQ1081->m_bfme0c;
+		BfmeD1081 *d = g_bfmeQ1081->m_pathfinder;
 
-		return d->bfmeDo1081(e, &e->m_bfme38, &f->m_bfme38, 0);
+		return d->bfmeDo1081(e, &e->m_cachedPos, &f->m_cachedPos, 0);
 	}
 }
