@@ -29,6 +29,11 @@ step, and it trusts nothing the worker reported:
       unstaged, so several reviewed jobs become one batch commit.
       --dry-run ports and verifies in a throwaway worktree at the base and
       leaves the destination untouched.
+      --link-debt accepts a job that lands no row because it only replaces
+      hard-coded image addresses with named externs (AGENTS.md lane 6): it
+      must change nothing under targets/ and only game/ sources or headers,
+      every touched source's gate must pass, and tools/link_debt.py's literal
+      count must fall in total and rise in no file.
       Checks read a private copy of the index with the port staged; the
       worktree's own index is only written by the final commit.
 
@@ -38,6 +43,7 @@ import argparse, hashlib, json, os, re, shutil, subprocess, sys, tempfile
 from contextlib import contextmanager
 from functools import wraps
 from portable_lock import lock, unlock
+import link_debt
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -214,7 +220,7 @@ def workspace_info(ws, rvas):
 
 def info(args):
     if args.workspace:
-        if not args.rva:
+        if not args.rva and not getattr(args, 'link_debt', False):
             raise SystemExit('--workspace needs at least one --rva')
         return workspace_info(args.workspace, args.rva)
     if not args.job:
@@ -583,15 +589,55 @@ def port_and_verify(rev, j, dest):
     return status
 
 
+def link_debt_delta(ws, rev):
+    """(path, before, after) literal counts for a --link-debt job, HEAD blob against the
+    workspace file, or SystemExit naming every reason it is not a pure literal cut."""
+    problems, counts = [], []
+    for path, status in changes(ws):
+        where = route(path)
+        if where == 'scratch':
+            continue
+        if path.startswith('targets/'):
+            problems.append(f'{path}: a link-debt job changes no file under targets/')
+        elif where != 'port' or not link_debt.watched(path):
+            problems.append(f'{path}: a link-debt job changes only game/ sources and headers')
+        elif status == 'deleted':
+            problems.append(f'{path}: a link-debt job deletes no file (a deletion is not a named extern)')
+        else:
+            if path.lower().endswith(SOURCE_SUFFIXES) and not rev['gates'].get(path, (False,))[0]:
+                problems.append(f'{path}: its gate did not pass in review '
+                                f'({rev["gates"].get(path, (False, "not gated"))[1]})')
+            old = git(ws, 'show', f'HEAD:{path}').stdout if status == 'modified' else ''
+            new = (Path(ws) / path).read_text(encoding='utf-8', errors='replace')
+            counts.append((path, len(link_debt.literals(old)), len(link_debt.literals(new))))
+    problems += [f'{p}: {b} -> {a} literals; no file may gain one' for p, b, a in counts if a > b]
+    before, after = sum(c[1] for c in counts), sum(c[2] for c in counts)
+    if not counts:
+        problems.append('no game/ source or header changed')
+    elif after >= before:
+        problems.append(f'link debt does not fall ({before} -> {after} literals)')
+    tolerated = ('renamed', 'mutating git', 'no target RVA found')
+    problems += [p for p in rev['problems'] if not any(t in p for t in tolerated)]
+    if problems:
+        raise SystemExit('not a link-debt integration; nothing ported:\n  ' + '\n  '.join(dict.fromkeys(problems)))
+    return counts
+
+
 @serialized_destination
 def integrate(args):
     rev = review(args)
     print(json.dumps(rev, indent=1))
-    if not rev['landed']:
+    debt = None
+    if getattr(args, 'link_debt', False):
+        # A job without a row: every other check below still runs on it.
+        debt = link_debt_delta(info(args)[0]['cwd'], rev)
+        print('link debt: ' + '; '.join(f'{p} {b} -> {a}' for p, b, a in debt))
+    elif not rev['landed']:
         raise SystemExit('nothing landed in this workspace; nothing to integrate')
     if any(not result[0] for result in rev['gates'].values()):
         raise SystemExit('source verification failed; cannot integrate')
-    blocking = [p for p in rev['problems'] if 'renamed' not in p and 'mutating git' not in p]
+    blocking = [p for p in rev['problems'] if 'renamed' not in p and 'mutating git' not in p
+                and not (debt is not None and 'no target RVA found' in p)]
     if blocking and not args.force:
         raise SystemExit('review found problems (rerun with --force after checking them):\n  ' + '\n  '.join(blocking))
     j, attempts, rvas, _ = info(args)
@@ -633,6 +679,9 @@ def integrate(args):
     models = sorted({a['model'] for a in attempts if a.get('model')})
     origin = f'router job {args.job}' if args.job else 'prepared workspace'
     title = args.title or f'Integrate {origin}: {len(landed)} byte-exact conversion(s)'
+    if debt is not None:
+        title = args.title or f'link-debt: name the globals in {len(debt)} files'
+        names = '\n'.join(f'{p}: {b} -> {a} literals' for p, b, a in debt)
     msg = (f'{title}\n\n{names}\n\n'
            + (f'Worker model(s): {", ".join(models)}. ' if models else '')
            + 'Verified independently with tools/router_integrate.py (scoped gates on '
@@ -665,7 +714,15 @@ def integrate(args):
     sha = git(dest, 'rev-parse', 'HEAD', check=True).stdout.strip()
     print('pushed', sha)
     git(dest, 'pull', '-q', '--rebase', 'origin', 'master', check=True)
-    if args.measure and attempts and args.job:
+    if args.measure and attempts and args.job and debt is not None:
+        # no row changes, so no byte is gained and no target matched
+        cmd = [sys.executable, 'tools/opencode_router.py', 'measure', attempts[-1]['id'], '--exact-match', 'no',
+               '--bytes-gained', '0', '--evidence',
+               f'tools/router_integrate.py integrate {args.job} --link-debt: link debt '
+               f'{sum(d[1] for d in debt)} -> {sum(d[2] for d in debt)} literals in {len(debt)} files, '
+               f'scoped gates + commit hooks, pushed {sha[:10]}']
+        print(sh(cmd, ROOT, check=True).stdout)
+    elif args.measure and attempts and args.job:
         delta = sh([sys.executable, 'tools/progress.py', f'{sha}^..{sha}'], dest, check=True).stdout
         m = re.search(r'REBUILDS FROM.*?delta ([+-][\d,]+) bytes', delta)
         # exact-match is the TARGET's verdict (review's landed list), never the
@@ -763,6 +820,11 @@ def main(argv=None):
     i.add_argument('--measure', action='store_true', help='after --push, record the verified result on the job')
     i.add_argument('--force', action='store_true', help='integrate despite review problems you have checked')
     i.add_argument('--trailer', default='', help='extra commit message trailer lines (\\n separated)')
+    i.add_argument('--link-debt', action='store_true',
+                   help='accept a job that lands no row because it only replaces hard-coded image addresses '
+                        'with named externs: nothing under targets/ may change, only game/ sources and headers, '
+                        'every touched gate must pass and the link_debt.py literal count must fall in total '
+                        'and rise in no file (--force does not waive these)')
     a = ap.parse_args(argv)
     if a.cmd == 'bank':
         bank(a)

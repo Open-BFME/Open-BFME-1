@@ -763,6 +763,18 @@ stale-info rejection, or the pre-push hook's `PUSH RACE` ancestry guard), up to
 stop at once with the push output, keeping the commit locally. `--measure` records the verified result on the job's last attempt.
 Neither command modifies or deletes the job workspace.
 
+A linked-build job (AGENTS.md lane 6) lands no row, so `integrate` refuses it
+unless you pass `--link-debt`. That flag skips only the "nothing landed" refusal
+(and a missing target RVA); the port, `check_csv`, scoped gates, hooks and
+`--keep`/`--dry-run`/`--push` behave as usual. Nothing is ported unless the
+workspace changes no file under `targets/` and only `game/` sources or headers
+(no deletions), every touched source's gate passed in review, and
+`tools/link_debt.py`'s literal count (HEAD blob against the workspace file) falls
+in total and rises in no file. `--force` does not waive these. The default title
+is `link-debt: name the globals in N files`, with each file's
+`before -> after literals` in the body; `--measure` records exact-match `no`,
+0 bytes gained and the literal delta.
+
 ## Evidence and performance records
 
 Every attempt preserves `prompt.txt`, raw `events.jsonl`, `stderr.txt`, model, variant,

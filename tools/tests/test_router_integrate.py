@@ -927,3 +927,111 @@ class BatchTest(BatchFixture):
         with self.assertRaisesRegex(SystemExit, 'cannot combine with --keep'):
             ri.integrate(self.args(self.ws2, '0x20', keep=True, dry_run=True))
         self.assertEqual(snapshot(self.dest), before)
+
+
+class LinkDebtTest(BatchFixture):
+    """integrate --link-debt: a job that replaces hard-coded image addresses with
+    named externs lands no row, so it is accepted only as a pure literal cut."""
+    DEBT = 'int a() { return *(int *)0x012ED5C8 + *(int *)0x012ED5CC; }\n'
+    DEBT2 = 'int b() { return *(int *)0x00A00000; }\n'
+
+    def setUp(self):
+        super().setUp()
+        (self.base / 'game/debt.cpp').write_text(self.DEBT)
+        (self.base / 'game/debt2.cpp').write_text(self.DEBT2)
+        git(self.base, 'add', '-A'); git(self.base, 'commit', '-q', '-m', 'debt')
+        git(self.base, 'push', '-q', 'origin', 'master')
+        git(self.base, 'fetch', '-q', 'origin')
+        self.origin_head = git_out(self.base, 'rev-parse', 'origin/master')
+        self.ws3 = Path(self.tmp.name) / 'ws3'
+        git(self.base, 'worktree', 'add', '-q', '--detach', str(self.ws3), 'master')
+
+    def debt_args(self, **kw):
+        rva = kw.pop('rva', [])
+        a = dict(keep=False, title='', link_debt=True)
+        a.update(kw)
+        args = self.args(self.ws3, '0x10', **a)
+        args.rva = rva
+        return args
+
+    def named(self):
+        (self.ws3 / 'game/debt.cpp').write_text(
+            'extern int g_012ED5C8;\nint a() { return g_012ED5C8 + *(int *)0x012ED5CC; }\n')
+        (self.ws3 / 'game/debt2.cpp').write_text('extern int g_00A00000;\nint b() { return g_00A00000; }\n')
+
+    def assert_refused(self, pattern, **kw):
+        before = snapshot(self.dest)
+        with self.assertRaisesRegex(SystemExit, pattern):
+            ri.integrate(self.debt_args(**kw))
+        self.assertEqual(snapshot(self.dest), before)  # nothing ported
+
+    def test_accepted_job_commits_exactly_the_source_change(self):
+        self.named()
+        ri.integrate(self.debt_args())
+        self.assertEqual(git_out(self.dest, 'rev-parse', 'HEAD~1'), self.origin_head)
+        self.assertEqual(sorted(git_out(self.dest, 'diff-tree', '--no-commit-id', '-r', '--name-status',
+                                        'HEAD').splitlines()),
+                         ['M\tgame/debt.cpp', 'M\tgame/debt2.cpp'])
+        msg = git_out(self.dest, 'log', '-1', '--format=%B')
+        self.assertEqual(msg.splitlines()[0], 'link-debt: name the globals in 2 files')
+        self.assertIn('game/debt.cpp: 2 -> 1 literals', msg)
+        self.assertIn('game/debt2.cpp: 1 -> 0 literals', msg)
+        self.assertEqual(snapshot(self.dest)['status'], [])
+
+    def test_title_trailer_push_and_measure(self):
+        self.named()
+        from unittest import mock
+        info = ({'cwd': str(self.ws3), 'status': 'completed', 'target': 'game/debt.cpp'},
+                [{'id': 'att-1', 'model': 'fixture/model'}], [], '')
+        measured, original_sh = [], ri.sh
+        def fake_sh(cmd, cwd, **kwargs):
+            if 'measure' in cmd:
+                measured.append(cmd)
+                return subprocess.CompletedProcess(cmd, 0, 'measured', '')
+            if cmd[-1] == 'tools/check_csv.py':
+                return subprocess.CompletedProcess(cmd, 0, 'fixture ledger OK', '')
+            if 'tools/progress.py' in cmd:
+                raise AssertionError('link-debt measure must not read a byte delta')
+            return original_sh(cmd, cwd, **kwargs)
+        with mock.patch.object(ri, 'info', lambda _: info), mock.patch.object(ri, 'sh', fake_sh):
+            ri.integrate(self.debt_args(job='job-1', workspace=None, title='link-debt: custom',
+                                        trailer='Co-Authored-By: X <x@x>', push=True, measure=True))
+        msg = git_out(self.dest, 'log', '-1', '--format=%B')
+        self.assertEqual(msg.splitlines()[0], 'link-debt: custom')
+        self.assertIn('Worker model(s): fixture/model.', msg)
+        self.assertTrue(msg.endswith('Co-Authored-By: X <x@x>'))
+        self.assertEqual(git_out(self.base, 'rev-parse', 'origin/master'), git_out(self.dest, 'rev-parse', 'HEAD'))
+        (cmd,) = measured
+        self.assertEqual(cmd[cmd.index('--exact-match') + 1], 'no')
+        self.assertEqual(cmd[cmd.index('--bytes-gained') + 1], '0')
+        self.assertIn('link debt 3 -> 1 literals', cmd[cmd.index('--evidence') + 1])
+
+    def test_refused_when_any_targets_file_changes(self):
+        self.named()
+        (self.ws3 / LED).write_bytes(self.base_led + b'?new@@YAXXZ,,0x00000040\r\n')
+        self.assert_refused('targets/game/reverse/functions.csv')
+
+    def test_refused_when_a_file_count_rises(self):
+        (self.ws3 / 'game/debt.cpp').write_text('int a() { return 0; }\n')  # 2 -> 0
+        (self.ws3 / 'game/debt2.cpp').write_text(self.DEBT2 + 'int c() { return *(int *)0x00A00004; }\n')  # 1 -> 2
+        self.assert_refused(r'game/debt2.cpp: 1 -> 2')
+
+    def test_refused_when_the_total_does_not_fall(self):
+        (self.ws3 / 'game/debt.cpp').write_text('// comment only\n' + self.DEBT)
+        self.assert_refused(r'does not fall')
+
+    def test_refused_when_a_gate_fails(self):
+        self.named()
+        from unittest import mock
+        with mock.patch.object(ri, 'gate', lambda *a, **k: (False, 'fixture FAIL')):
+            self.assert_refused(r'game/debt2?\.cpp: .*gate')
+
+    def test_refused_for_a_path_outside_game_sources(self):
+        self.named()
+        shim = self.ws3 / 'inputs/reference/shims/x/X.h'
+        shim.parent.mkdir(parents=True); shim.write_text('int a;\n')
+        self.assert_refused('inputs/reference/shims/x/X.h')
+
+    def test_without_the_flag_the_refusal_is_unchanged(self):
+        self.named()
+        self.assert_refused('^nothing landed in this workspace; nothing to integrate$', link_debt=False, rva=['0x10'])
