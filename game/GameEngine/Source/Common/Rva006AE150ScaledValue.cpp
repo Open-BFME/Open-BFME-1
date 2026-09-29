@@ -1,7 +1,7 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 // Clean reconstruction of the 0x006AE150 scaled value query.
 
-#define Rva006AE150Zero (*(const float *)0x01075350)
+#define Rva006AE150Zero (0.0f)
 
 class Rva006AE150Argument
 {

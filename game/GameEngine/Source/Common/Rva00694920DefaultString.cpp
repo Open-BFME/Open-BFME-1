@@ -5,6 +5,8 @@ struct Rva002E5FF0Str
 {
 };
 
+extern Rva002E5FF0Str Rva01336E50Str;
+
 class Rva00694920
 {
 public:
@@ -17,5 +19,5 @@ Rva002E5FF0Str *Rva00694920::get()
 {
 	if (m_pointee)
 		return m_pointee;
-	return reinterpret_cast<Rva002E5FF0Str *>(0x01336E50);
+	return &Rva01336E50Str;
 }
