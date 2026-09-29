@@ -46,10 +46,10 @@ public:
 	virtual Object *getUnitNamed(const AsciiString &) = 0;
 };
 
-// These are the retail VAs corresponding to the proven symbols
-// TheScriptEngine (RVA 0x00EF076C) and g_bfmeK1266C (RVA 0x00C75344).
-#define TheScriptEngine (*(ScriptEngine **)0x012F076C)
-#define g_bfmeK1266C (*(float *)0x01075344)
+// TheScriptEngine is retail 0x012F076C; g_bfmeK1266C is the 5.0f constant
+// the compiler places at 0x01075344.
+extern ScriptEngine *TheScriptEngine;
+#define g_bfmeK1266C 5.0f
 
 class ScriptActions
 {

@@ -42,7 +42,9 @@ public:
 	virtual void executeAction(ScriptAction *action);
 };
 
-#define TheScriptActions (*(ScriptActions **)0x012F0620)
+class ScriptActionsInterface;
+extern ScriptActionsInterface *TheScriptActions;
+#define TheScriptActions ((ScriptActions *)TheScriptActions)
 
 class ScriptEngine
 {
@@ -72,7 +74,7 @@ protected:
 
 extern "C" __declspec(dllimport) double __cdecl bfmeMathVE(double value);
 int GetGameClientRandomValue(int low, int high, char *file, int line);
-#define g_bfmeK1266C (*(const float *)0x01075344)
+#define g_bfmeK1266C 5.0f
 
 // MSVC 7.1 casts call __ftol2; /QIfist changes the frame and conversion width.
 // Retail reloads a rounded float and uses FISTP under the active x87 control word.

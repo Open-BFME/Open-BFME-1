@@ -201,7 +201,7 @@ void ScriptActions::doBuildBaseBuilding(const AsciiString &buildingType,
 		return;
 
 	static volatile NameKeyType baseModuleKey =
-		TheNameKeyGenerator->nameToKey((const char *)0x01083c50);
+		TheNameKeyGenerator->nameToKey("CastleBehavior");
 	Gen_00371340 *base =
 		(Gen_00371340 *)baseObject->findModule(baseModuleKey);
 	if (!base)
@@ -243,7 +243,7 @@ void ScriptActions::doBuildBaseBuildingInSlot(const AsciiString &buildingType,
 		return;
 
 	static volatile NameKeyType baseModuleKey =
-		TheNameKeyGenerator->nameToKey((const char *)0x01083c50);
+		TheNameKeyGenerator->nameToKey("CastleBehavior");
 	Gen_00371340 *base =
 		(Gen_00371340 *)baseObject->findModule(baseModuleKey);
 	if (!base)

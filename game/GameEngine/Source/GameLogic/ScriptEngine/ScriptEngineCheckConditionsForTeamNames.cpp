@@ -203,7 +203,7 @@ void ScriptEngine::checkConditionsForTeamNames(Script *pScript, const AsciiStrin
     if (pScript->getDelayEvalSeconds() > 0)
     {
         extern Int GetGameLogicRandomValue(Int, Int, char *, Int);
-        pScript->setFrameToEvaluate(GetGameLogicRandomValue(0, 10, (char *)0x010E7820, 0x979));
+        pScript->setFrameToEvaluate(GetGameLogicRandomValue(0, 10, (char *)"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\ScriptEngine\\ScriptEngine.cpp", 0x979));
     }
     else
     {
@@ -243,7 +243,7 @@ void ScriptEngine::checkConditionsForTeamNames(Script *pScript, const AsciiStrin
                         else if (multiTeamName.compare(teamName) != 0)
                         {
                             {
-                                BFMERetailAsciiString message((const char *)0x010E77C8);
+                                BFMERetailAsciiString message("***WARNING: Script contains multiple non-singleton team conditions::***");
                                 AppendDebugMessage(*(const AsciiString *)&message, false);
                             }
                             AppendDebugMessage(scriptName, false);

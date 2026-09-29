@@ -211,7 +211,7 @@ protected:
 Bool ScriptConditions::evaluateHasUnits(Parameter *pTeamParm)
 {
 	AsciiString desiredTeamName = pTeamParm->getString();
-	if (desiredTeamName.compare((const char *)0x010E1FD0) == 0)
+	if (desiredTeamName.compare("<This Team>") == 0)
 	{
 		Team *theTeam = TheScriptEngine->getTeamNamed(desiredTeamName, false);
 		if (theTeam)
@@ -220,7 +220,7 @@ Bool ScriptConditions::evaluateHasUnits(Parameter *pTeamParm)
 	}
 
 	Team *thisTeam = TheScriptEngine->getTeamNamed(
-		AsciiString((const char *)0x010E1FD0), false);
+		AsciiString("<This Team>"), false);
 	if (thisTeam)
 	{
 		const AsciiString *thisTeamName =
