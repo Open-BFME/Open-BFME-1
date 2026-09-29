@@ -143,8 +143,9 @@ private:
 
 extern const float g_bfmeK1253;
 
-#define TheAI (*(AI **)0x012EF214)
-#define TheThingFactory (*(BfmeThingFactory **)0x012EF1D8)
+extern AI *TheAI;
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
 
 #pragma comment(linker, "/alternatename:?calcCostToBuild@ThingTemplate@@QBEHPBVPlayer@@H@Z=?j_0000da8a@@YAXXZ")
 
@@ -158,7 +159,7 @@ static const ThingTemplate *bfmeFindTemplate(const AsciiString *name)
 		const AsciiString &);
 	union { void (*raw)(void); FindTemplateCall member; } call;
 	call.raw = j_00028560;
-	return (TheThingFactory->*call.member)(*name);
+	return (((BfmeThingFactory *)TheThingFactory)->*call.member)(*name);
 }
 
 static Object *bfmeFindFactory(AIPlayer *player, const ThingTemplate *thing,

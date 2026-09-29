@@ -70,8 +70,8 @@ public:
     }
     int enter();
 };
-#define Zero0017AEC0 (*(const float*)0x01075350)
-#define Half0017AEC0 (*(const float*)0x0107533C)
+#define Zero0017AEC0 0.0f
+#define Half0017AEC0 0.5f
 
 int WanderWaypointEntry0017AEC0::enter()
 {

@@ -157,7 +157,7 @@ StateReturnType Rva001775A0::method()
 			{
 				if (g_012F0239 && g_012ED4FC)
 					((Rva001775A0CritterLog)j_0003a17a)(g_012ED4FC,
-						(const char *)0x0109964c);
+						"CritterDesync: setAdjustDestination(FALSE) 33");
 
 				m_field4c = 0;
 				m_field50 = 0;
@@ -176,7 +176,7 @@ StateReturnType Rva001775A0::method()
 
 							if (g_012F0239 && g_012ED4FC)
 								((Rva001775A0CritterLog)j_0003a17a)(g_012ED4FC,
-									(const char *)0x01099628);
+									"CritterDesync: ComputePath22");
 
 							if (rvaSlot17())
 							{

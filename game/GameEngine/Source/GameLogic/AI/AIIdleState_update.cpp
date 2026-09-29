@@ -182,8 +182,10 @@ extern void j_0003251f();
 extern void j_0003fb1b();
 extern void j_00041074();
 
-#define TheAI (*(AI **)0x012EF214)
-#define TheBfmeGameLogic (*(BfmeGameLogic **)0x012F0898)
+class GameLogic;
+extern AI *TheAI;
+extern GameLogic *TheGameLogic;
+#define TheBfmeGameLogic ((BfmeGameLogic *)TheGameLogic)
 
 typedef Weapon *(Object::*GetCurrentWeaponCall)(WeaponSlotType *);
 typedef Bool (__fastcall *WeaponWindowCall)(Weapon *);

@@ -41,6 +41,9 @@ public:
 	void finish(BfmeRvaB7E0Object *object, Bool flag);
 };
 
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
+
 class Rva0024B7E0
 {
 public:
@@ -56,14 +59,14 @@ void Rva0024B7E0::dispatch(BfmeRvaB7E0Object *object, Bool flag)
 		{
 			if (ai->isReady() == true)
 			{
-				((BfmeRvaB7E0Manager *)*(void **)0x012ED5B8)->notifyReady(
+				((BfmeRvaB7E0Manager *)ThePartitionManager)->notifyReady(
 					(void *)&object->m_slot);
 			}
 		}
 		else
 		{
 			if (!ai->isReady())
-				((BfmeRvaB7E0Manager *)*(void **)0x012ED5B8)->notifyNotReady(
+				((BfmeRvaB7E0Manager *)ThePartitionManager)->notifyNotReady(
 					(void *)&object->m_slot);
 		}
 		((BfmeRvaB7E0Owner *)this)->finish(object, flag);

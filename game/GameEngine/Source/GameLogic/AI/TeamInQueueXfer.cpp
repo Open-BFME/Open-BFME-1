@@ -48,6 +48,7 @@ extern "C" XferException *__cdecl bfmeFormatText(
 	XferException *result, Int tag, const char *format, ...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
+extern int g_guardTargetTypeThrowInfo;
 
 class Snapshot;
 
@@ -94,11 +95,13 @@ public:
 
 // Retail WorkOrder's installed BFME snapshot table at 0x01096964 is
 // destructor/post-load/name/transfer; this TU stores that existing vptr and emits no table.
+extern int Gen01096964;
+
 class WorkOrder
 {
 public:
 	WorkOrder()
-		: m_vptr((void *)0x01096964), m_thing(0), m_factoryID(0), m_next(0),
+		: m_vptr((void *)&Gen01096964), m_thing(0), m_factoryID(0), m_next(0),
 		  m_numCompleted(0), m_numRequired(1), m_isResourceGatherer(false)
 	{
 	}
@@ -193,7 +196,7 @@ void TeamInQueue::xfer(Xfer *xfer)
 		if (m_workOrders != 0)
 		{
 			bfmeFormatText(&local.error, 5, 0);
-			_CxxThrowException(&local.error, (void *)0x011DFE5C);
+			_CxxThrowException(&local.error, &g_guardTargetTypeThrowInfo);
 		}
 
 		for (UnsignedShort i = 0; i < workOrderCount; ++i)
