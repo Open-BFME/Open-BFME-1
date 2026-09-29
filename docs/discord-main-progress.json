@@ -20,18 +20,20 @@
     "scaffold_crashed": "",
     "files": "21337",
     "files_linked": "7809",
-    "blocking_names": "94958",
+    "blocking_names": "94966",
     "addresses": "1170",
     "linked_bytes": "894965"
   },
-  "authored": 5420038,
+  "declared_names": 452961,
+  "readable_names": 322194,
+  "authored": 5422256,
   "vendored": 316789,
-  "generated": 1162838,
+  "generated": 1162859,
   "library": 1052622,
   "linked_total": 894965,
-  "matched_total": 7952287,
-  "whole_total": 4423626.0,
-  "updated_at": "2026-09-29T14:26:30.886481+00:00",
-  "message_id": "1554499619571105882",
-  "run_id": "36582605804"
+  "matched_total": 7954526,
+  "whole_total": 4424745.5,
+  "updated_at": "2026-09-29T18:13:51.085126+00:00",
+  "message_id": "1554556831542808677",
+  "run_id": "36610451719"
 }
