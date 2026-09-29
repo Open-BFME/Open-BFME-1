@@ -1,0 +1,120 @@
+// ?rva8D0C60NewObject@@YAXPAVRva8D0D80State@@PAURva8D0D80Context@@@Z
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// EA Apt ActionScript NewObject (opcode 0x40), retail 0x008D0C60: slot 0x40
+// of the opcode table based at 0x00ED5A68 (see
+// AptActionInterpreterStoreRegister.cpp), at 0x00ED5B68.  The class name on
+// top of the value stack and the argument count below it are popped, the
+// object is built through the same Rva8D0D80State::create helper the landed
+// InitObject handler (Rva8D0D80BuildObject.cpp, 0x008D0D80) uses, and the
+// result -- or the fallback value when creation fails -- is pushed.  Layout
+// below is that file's.
+
+struct Rva8D0D80StringBlock { unsigned short m_refs; };
+extern Rva8D0D80StringBlock g_bfmeDefaultString1284;
+extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
+
+class Rva8D0D80String
+{
+public:
+	Rva8D0D80String()
+	{
+		m_block = &g_bfmeDefaultString1284;
+		++m_block->m_refs;
+	}
+	~Rva8D0D80String()
+	{
+		Rva8D0D80StringBlock *block = m_block;
+		--block->m_refs;
+		if (block->m_refs == 0)
+			Rva01337A30ReleaseTable[1](block);
+	}
+private:
+	Rva8D0D80StringBlock *m_block;
+};
+
+class Rva8D0D80Value
+{
+public:
+	virtual void addRef();
+	virtual void release();
+	virtual void slot2();
+	virtual void slot3();
+	virtual void slot4();
+	virtual void slot5();
+	void getName(Rva8D0D80String *name);
+	int toInteger();
+	unsigned m_flags;
+};
+
+class BfmeTab1024
+{
+public:
+	int bfmeFind1024(int key);
+};
+
+class Rva8D0D80Table
+{
+public:
+	void add(Rva8D0D80String *name, Rva8D0D80Value *value);
+	void addIfAbsent(Rva8D0D80String *name, Rva8D0D80Value *value);
+};
+
+void Rva8D0D80Table::addIfAbsent(Rva8D0D80String *name, Rva8D0D80Value *value)
+{
+	if (!((BfmeTab1024 *)this)->bfmeFind1024((int)name))
+		add(name, value);
+}
+
+class Rva8D0D80Result : public Rva8D0D80Value
+{
+public:
+	Rva8D0D80Table m_table;
+};
+
+class Rva8D0D80State
+{
+public:
+	Rva8D0D80Result *create(void *, void *, void *, int, int);
+	void popValues(int count);
+	int m_count;
+	int m_unused;
+	Rva8D0D80Value **m_stack;
+};
+
+struct Rva8D0D80Context { void *m_zero; void *m_owner; void *m_scope; };
+extern char g_rva8D0D80CreateTag;
+extern Rva8D0D80Value *g_bfmeFallbackDB;
+
+void rva8D0C60NewObject(Rva8D0D80State *state, Rva8D0D80Context *context)
+{
+	Rva8D0D80Value *nameValue = state->m_stack[state->m_count - 1];
+	Rva8D0D80Value *countValue = state->m_stack[state->m_count - 2];
+	Rva8D0D80String name;
+	nameValue->getName(&name);
+	int count = countValue->toInteger();
+
+	for (int index = 1; index <= 2; ++index)
+	{
+		Rva8D0D80Value *old = state->m_stack[state->m_count - index];
+		if (!((unsigned char)(old->m_flags >> 30) & 1))
+			old->release();
+	}
+	state->m_count -= 2;
+
+	Rva8D0D80Result *result = state->create(context->m_owner, context->m_scope,
+		&name, count, 1);
+	if (result != 0)
+	{
+		state->m_stack[state->m_count++] = result;
+		if (!((unsigned char)(result->m_flags >> 30) & 1))
+			result->addRef();
+		result->release();
+	}
+	else
+	{
+		Rva8D0D80Value *fallback = g_bfmeFallbackDB;
+		state->m_stack[state->m_count++] = fallback;
+		if (!((unsigned char)(fallback->m_flags >> 30) & 1))
+			fallback->addRef();
+	}
+}
