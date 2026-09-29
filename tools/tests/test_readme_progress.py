@@ -115,6 +115,7 @@ def test_discord_draws_the_cards_three_bars_in_green_blocks():
         f"{M * 6}{R * 4}  **60.00%**  Byte-matched  \u25b2 5.00",
         f"{L * 1}{R * 9}  **10.00%**  Code linked",
         f"{L * 1}{M * 3}{R * 6}  **35.00%**  Whole game",
+        "",
         f"{L} linked 10.00%  \u00b7  {M} byte-matched, not linked yet 50.00%",
         f"[Full progress report: chart and map]({daily.REPORT})"]
     assert "footer" not in embed  # no definitions, no extra measures: the card and the report have them

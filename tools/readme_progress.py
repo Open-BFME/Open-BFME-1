@@ -128,10 +128,10 @@ def render(current, previous=None):
 '''
 
 
-# Discord draws the card's three bars in green blocks, ten to a row (a wider
-# row wraps on a phone). Discord has one plain green square, so linked is the
-# green check block: done, it connects. Dark = still original bytes.
-LINKED_BLOCK, MATCHED_BLOCK, REST_BLOCK = "\u2705", "\U0001f7e9", "\u2b1b"
+# Discord draws the card's three bars in square emoji, ten to a row (a wider
+# row wraps on a phone). Discord draws them with no gap, so each part needs its
+# own colour: yellow = linked, green = byte-matched, dark = still original.
+LINKED_BLOCK, MATCHED_BLOCK, REST_BLOCK = "\U0001f7e8", "\U0001f7e9", "\u2b1b"
 WIDTH = 10
 REPORT = "https://open-bfme.github.io/Open-BFME-1/"
 
@@ -167,6 +167,7 @@ def announcement(current, previous):
         f"{blocks([(LINKED_BLOCK, linked), (MATCHED_BLOCK, (matched - linked) / 2)], total)}  "
         f"**{progress.percent(whole(linked, matched), total):.2f}%**  Whole game"
         + moved(change(whole(linked, matched), previous, "whole_total", total)),
+        "",  # a blank line between the bars and the key
         f"{LINKED_BLOCK} linked {lp:.2f}%  \u00b7  {MATCHED_BLOCK} byte-matched, not linked yet {mp - lp:.2f}%",
         f"[Full progress report: chart and map]({REPORT})",
     ]
