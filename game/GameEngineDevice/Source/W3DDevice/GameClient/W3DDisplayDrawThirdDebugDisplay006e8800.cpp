@@ -121,6 +121,9 @@ class Rva00367E30Logic : public GameLogic
 
 extern Rva00367E30Logic *TheBfmeGameLogic;
 
+extern int g_012F8054;
+extern unsigned char g_012F81A9;
+
 class W3DDisplay
 {
 public:
@@ -184,7 +187,7 @@ void W3DDisplay::drawThirdDebugDisplay()
 				case 7: color = 0xff7878ff; break;
 				case 8: color = 0xff6e6eff; break;
 				default:
-					color = (*(unsigned char *)0x012F81A9) ? -1 : 0xffff0000;
+					color = g_012F81A9 ? -1 : 0xffff0000;
 					flip = true;
 					break;
 				}
@@ -229,17 +232,17 @@ void W3DDisplay::drawThirdDebugDisplay()
 					case 8: color = 0xff7878ff; break;
 					case 9: color = 0xff6e6eff; break;
 					case 0:
-						if ((unsigned int)*(int *)0x012F8054 + 5 <
+						if ((unsigned int)g_012F8054 + 5 <
 							(unsigned int)TheBfmeGameLogic->m_frame)
 							color = 0xffff0000;
 						else
 						{
-							color = (*(unsigned char *)0x012F81A9) ? -1 : 0xffff0000;
+							color = g_012F81A9 ? -1 : 0xffff0000;
 							flip = true;
 						}
 						break;
 					default:
-						color = (*(unsigned char *)0x012F81A9) ? -1 : 0xffff0000;
+						color = g_012F81A9 ? -1 : 0xffff0000;
 						flip = true;
 						break;
 					}
@@ -251,11 +254,11 @@ void W3DDisplay::drawThirdDebugDisplay()
 			}
 			else if (i == 9)
 			{
-				if ((unsigned int)*(int *)0x012F8054 + 5 <
+				if ((unsigned int)g_012F8054 + 5 <
 					(unsigned int)TheBfmeGameLogic->m_frame)
 					color = -1;
 				else
-					color = (*(unsigned char *)0x012F81A9) ? -1 : 0xffff0000;
+					color = g_012F81A9 ? -1 : 0xffff0000;
 			}
 			else if (i == 7)
 			{
@@ -277,6 +280,5 @@ void W3DDisplay::drawThirdDebugDisplay()
 	}
 
 	if (flip)
-		*(unsigned char *)0x012F81A9 =
-			*(unsigned char *)0x012F81A9 ? 0 : 1;
+		g_012F81A9 = g_012F81A9 ? 0 : 1;
 }

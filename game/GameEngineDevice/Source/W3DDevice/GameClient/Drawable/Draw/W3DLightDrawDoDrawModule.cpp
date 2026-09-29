@@ -83,7 +83,7 @@ void W3DLightDraw::doDrawModule(const Matrix3D *)
 {
 	Real phase = m_phase;
 	W3DDynamicLight *light = m_light;
-	phase += *(const Real *)0x01080bbc;
+	phase += 0.2f;
 	m_phase = phase;
 	if (light == 0)
 		return;
@@ -118,20 +118,20 @@ void W3DLightDraw::doDrawModule(const Matrix3D *)
 		m_light->Set_Transform(transform);
 	}
 
-	if (data->m_34 > *(const Real *)0x01075350)
+	if (data->m_34 > 0.0f)
 	{
-		if (m_radius <= *(const Real *)0x01075350)
+		if (m_radius <= 0.0f)
 		{
-			m_radius = *(const Real *)0x01075344 / data->m_38;
+			m_radius = 5.0f / data->m_38;
 			Real minimum = -data->m_34;
 			Real maximum = data->m_34;
 			m_angle = ((WWMath::Random_Float() * (maximum - minimum) + minimum) + height - m_height) / m_radius;
 		}
-		m_radius -= *(const Real *)0x01075334;
+		m_radius -= 1.0f;
 		height = m_angle + m_height;
 		m_height = height;
 	}
-	if (data->m_3c > *(const Real *)0x01075350)
-		height = WWMath::Sin(m_phase * data->m_40 * *(const Real *)0x01087b10) * data->m_3c + height;
+	if (data->m_3c > 0.0f)
+		height = WWMath::Sin(m_phase * data->m_40 * 6.2831855f) * data->m_3c + height;
 	*(unsigned int *)((char *)m_light + 0xd4) = *(const unsigned int *)&height;
 }
