@@ -45,6 +45,9 @@ public:
 
 extern char g_bfmeFmt1029[];
 
+class LargeGroupAudio;
+extern LargeGroupAudio *TheLargeGroupAudio;
+
 int GetGameLogicRandomValue(int low, int high, char *file, int line);
 
 class Gen00296F90 : public UpdateModule
@@ -72,7 +75,7 @@ void Gen00296F90::handle()
 		return;
 
 	m_initialized = 1;
-	(*reinterpret_cast<Rva004A66AOwner **>(0x012F1044))->registerUpdate(this);
+	reinterpret_cast<Rva004A66AOwner *>(TheLargeGroupAudio)->registerUpdate(this);
 
 	Object *object = m_object;
 	LargeGroupAudioUpdateModuleData *moduleData = m_moduleData;

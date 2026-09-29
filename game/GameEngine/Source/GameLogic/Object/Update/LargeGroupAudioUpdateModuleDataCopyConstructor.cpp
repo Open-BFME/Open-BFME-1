@@ -31,6 +31,9 @@ typedef _STL::_Rb_tree<Rva00296ED0Key, Rva00296ED0Key,
 	_STL::_Identity<Rva00296ED0Key>, _STL::less<Rva00296ED0Key>,
 	_STL::allocator<Rva00296ED0Key> > Rva00296ED0Tree;
 
+class LGA_Global;
+extern LGA_Global g_lgaGlobal;
+
 class LargeGroupAudioUpdateModuleData : public LargeGroupAudioUpdateModuleDataBase
 {
 public:
@@ -52,5 +55,5 @@ LargeGroupAudioUpdateModuleData::LargeGroupAudioUpdateModuleData(
 	m_a(other.m_a),
 	m_enabled(other.m_enabled)
 {
-	((Rva00296ED0Tree *)0x012EFFA0)->insert_unique((Rva00296ED0Key)this);
+	((Rva00296ED0Tree *)&g_lgaGlobal)->insert_unique((Rva00296ED0Key)this);
 }

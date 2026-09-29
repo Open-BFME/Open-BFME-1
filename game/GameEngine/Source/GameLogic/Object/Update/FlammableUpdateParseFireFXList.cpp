@@ -44,6 +44,8 @@ private:
 
 class FXList;
 
+extern const char g_Rva0107301CEmptyString[];
+
 namespace _STL
 {
 struct Rva002949D0Element
@@ -51,7 +53,7 @@ struct Rva002949D0Element
 	const FXList *fx;
 	AsciiString boneName;
 
-	Rva002949D0Element() : fx(0), boneName((const char *)0x0107301c) {}
+	Rva002949D0Element() : fx(0), boneName(g_Rva0107301CEmptyString) {}
 };
 }
 

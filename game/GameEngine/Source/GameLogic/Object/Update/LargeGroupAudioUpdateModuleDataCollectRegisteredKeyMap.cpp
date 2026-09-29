@@ -36,6 +36,9 @@ typedef _STL::_Rb_tree<LargeGroupAudioUpdateModuleDataPtr,
 	_STL::allocator<LargeGroupAudioUpdateModuleDataPtr> >
 	LargeGroupAudioUpdateModuleDataRegistry;
 
+class LGA_Global;
+extern LGA_Global g_lgaGlobal;
+
 // The independently matched constructors insert `this` into the tree at
 // 0x012EFFA0 and the matched destructor removes it.  Each node's object has the
 // LargeGroupAudioKeyMap member at +0x08, proving both the owner and operation.
@@ -45,7 +48,7 @@ LargeGroupAudioUpdateModuleData::bfmeCollectRegisteredKeyMap(void)
 	LargeGroupAudioKeyMap result;
 	typedef _STL::_Rb_tree_node<LargeGroupAudioUpdateModuleDataPtr> RegistryNode;
 	_STL::_Rb_tree_node_base *end =
-		*(_STL::_Rb_tree_node_base **)0x012EFFA0;
+		*(_STL::_Rb_tree_node_base **)&g_lgaGlobal;
 	RegistryNode *it = (RegistryNode *)end->_M_left;
 
 	for (; it != end; it = (RegistryNode *)_STL::_Rb_global<bool>::_M_increment(it))

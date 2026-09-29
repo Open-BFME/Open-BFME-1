@@ -112,7 +112,7 @@ public:
 };
 
 extern GameLogic *TheGameLogic;
-#define BfmeZeroRange (*(const float *)0x01075350)
+#define BfmeZeroRange 0.0f
 
 #pragma comment(linker, "/alternatename:?update@UpdateModuleInterface@@QAE?AW4UpdateSleepTime@@XZ=?j_00044b0c@@YAXXZ")
 #pragma comment(linker, "/alternatename:?advanceUpdate@SpecialAbilityUpdate@@QAEXXZ=?j_0003d0eb@@YAXXZ")

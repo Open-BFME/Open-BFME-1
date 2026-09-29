@@ -156,7 +156,7 @@ Object *bfmeQueryRallyOverride(Object *object, const Coord3D *position)
 			object->getRelationship(found) == (Relationship)2 &&
 			((Rva000CBA20 *)found)->distSq(
 				(const Rva000CBA20Point *)position) <
-			*(const Real *)0x010CB798)
+			225.0f)
 			return found;
 	}
 	return 0;
