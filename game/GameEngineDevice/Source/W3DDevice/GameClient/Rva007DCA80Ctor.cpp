@@ -1,5 +1,7 @@
 // cl: /O2 /Ob0
 
+extern const void *g_01128C5C[];
+
 class Rva007DCA80
 {
 	void *m_00;
@@ -33,7 +35,7 @@ public:
 
 Rva007DCA80::Rva007DCA80()
 {
-	m_00 = (void *)0x01128C5C;
+	m_00 = (void *)g_01128C5C;
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;

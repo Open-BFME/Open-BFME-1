@@ -75,6 +75,8 @@ static __forceinline Bool BFMEWaterTrackIndexInRange(Int index)
 	return (unsigned)index < 6;
 }
 
+extern const char Rva006A16B0Empty[];
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
@@ -90,7 +92,7 @@ public:
 	{
 		if (m_data)
 			return m_data + 8;
-		return (Char *)0x0107388b;
+		return (Char *)Rva006A16B0Empty;
 	}
 
 	Bool isEmpty(void) const

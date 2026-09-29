@@ -1,5 +1,7 @@
 // cl: /O2 /Ob0
 
+extern const void *g_01128C0C[];
+
 class Rva007DB820
 {
 	void *m_vptr;
@@ -30,7 +32,7 @@ public:
 
 Rva007DB820::Rva007DB820()
 {
-	m_vptr = (void *)0x01128C0C;
+	m_vptr = (void *)g_01128C0C;
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;
