@@ -31,6 +31,10 @@ struct Rva00899560Pool {
 };
 extern Rva008CD8E0Integer *Rva013387D0Head;
 extern Rva00899560Pool *g_rva8CD130IdleHook;
+extern "C" const void *bfmeVftAptValue[];
+#pragma comment(linker, "/alternatename:_bfmeVftAptValue=??_7AptValue@@6B@")
+extern "C" const void *bfmeVftAptInteger[];
+#pragma comment(linker, "/alternatename:_bfmeVftAptInteger=??_7AptInteger@@6B@")
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned);
 __forceinline Rva8CD130Value *integerOne008CD8E0() {
  Rva008CD8E0Integer *v=Rva013387D0Head;
@@ -42,10 +46,10 @@ __forceinline Rva8CD130Value *integerOne008CD8E0() {
  }
  v=(Rva008CD8E0Integer *)Rva008C5D70Alloc(12);
  if(v) {
-  v->m_vtable=(void *)0x01135D68;
+  v->m_vtable=(void *)bfmeVftAptValue;
   v->m_flags=(v->m_flags&0xf0008007)|0x40008007;
   g_rva8CD130IdleHook->add(v);
-  v->m_vtable=(void *)0x01136400;
+  v->m_vtable=(void *)bfmeVftAptInteger;
   v->m_value=1;
   return (Rva8CD130Value *)v;
  }

@@ -40,6 +40,10 @@ struct Rva00899560Pool
 // AptBoolean and the Rva008D2A30 chain use the distinct 0x013387D4 head.
 extern Rva008D2A30Node *Rva013387D0Head;
 extern Rva00899560Pool *g_rva8CD130IdleHook;
+extern "C" const void *bfmeVftAptValue[];
+#pragma comment(linker, "/alternatename:_bfmeVftAptValue=??_7AptValue@@6B@")
+extern "C" const void *bfmeVftAptInteger[];
+#pragma comment(linker, "/alternatename:_bfmeVftAptInteger=??_7AptInteger@@6B@")
 extern void *(*Rva008C5D70Alloc)(unsigned int bytes);
 
 class AptValue
@@ -77,10 +81,10 @@ AptInteger *AptInteger::Create(int value)
 
 	if (object != 0)
 	{
-		*(void **)object = (void *)0x01135D68;
+		*(void **)object = (void *)bfmeVftAptValue;
 		object->m_flags = (object->m_flags & 0xf0008007) | 0x40008007;
 		g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
-		*(void **)object = (void *)0x01136400;
+		*(void **)object = (void *)bfmeVftAptInteger;
 		object->m_value = value;
 		return object;
 	}

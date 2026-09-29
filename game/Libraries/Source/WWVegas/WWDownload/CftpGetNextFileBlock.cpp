@@ -149,9 +149,8 @@ HRESULT Cftp::GetNextFileBlock(LPCSTR szLocalFileName, int *piTotalRead)
 		sprintf(command, "TYPE I\r\n");
 		if (send(m_iCommandSocket, command, strlen(command), 0) <= 0)
 			return FTP_TRYING;
-		Rva01358EA8Function callback =
-			*(Rva01358EA8Function *)0x01358EA8;
-		callback((const char *)0x01132E90);
+		Rva01358EA8Function callback = OutputDebugStringA;
+		callback("-->");
 		callback(command);
 		m_iStatus = FTPSTAT_SENDINGTYPE;
 	}
