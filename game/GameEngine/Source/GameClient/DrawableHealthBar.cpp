@@ -180,9 +180,9 @@ struct BfmeGlobalData
 	unsigned char m_showObjectHealthSecondary; // unnamed second retail flag
 };
 
-#define TheWritableGlobalData (*(BfmeGlobalData **)0x012ED5C8)
-#define TheInGameUI (*(InGameUI **)0x012F148C)
-#define BfmeZeroRange (*(const Real *)0x01075350)
+extern BfmeGlobalData *TheWritableGlobalData;
+extern InGameUI *TheInGameUI;
+extern const Real BfmeZeroRange;
 
 class ModuleInterface
 {

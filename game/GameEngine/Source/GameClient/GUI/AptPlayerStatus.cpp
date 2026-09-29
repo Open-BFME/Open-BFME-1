@@ -13,11 +13,16 @@ struct AptPlayerStatusWindow
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shell.h
-struct Shell
+class Shell
 {
+public:
 	unsigned char m_head[0x50];
 	bool m_playerStatusHidden;
 };
+
+extern void *g_obj12F49E4;
+extern Shell *TheShell;
+extern WindowManager *g_theWindowManager;
 
 class AptPlayerStatus
 {
@@ -30,7 +35,7 @@ public:
 // ?ReturnToGame@AptPlayerStatus@@QAEXPBD@Z
 void AptPlayerStatus::ReturnToGame(const char *)
 {
-	AptPlayerStatusWindow *window = *(AptPlayerStatusWindow **)0x012F49E4;
+	AptPlayerStatusWindow *window = (AptPlayerStatusWindow *)g_obj12F49E4;
 
 	if (!window)
 		return;
@@ -39,7 +44,7 @@ void AptPlayerStatus::ReturnToGame(const char *)
 		return;
 
 	window->m_hidden = true;
-	(*(Shell **)0x012F4B58)->m_playerStatusHidden = true;
+	TheShell->m_playerStatusHidden = true;
 
-	(*(WindowManager **)0x012F19E8)->hideQuitMenu();
+	g_theWindowManager->hideQuitMenu();
 }

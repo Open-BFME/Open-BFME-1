@@ -93,9 +93,9 @@ struct SaveGameCallTarget
 typedef SaveCode (SaveGameCallTarget::*SaveGameCall)(AsciiString,
 	UnicodeString, SaveFileType, SnapshotType, Bool);
 
-#define TheGameState (*(GameState **)0x012EF190)
-#define TheGameText (*(GameTextInterface **)0x012F147C)
-#define TheInGameUI (*(InGameUI **)0x012F148C)
+extern GameState *TheGameState;
+extern GameTextInterface *TheGameText;
+extern InGameUI *TheInGameUI;
 
 class Rva003BDB80GameState
 {

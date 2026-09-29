@@ -149,7 +149,9 @@ extern InGameUI *TheInGameUI;
 extern BfmeGameLogicPause *TheGameLogic;
 extern Shell *TheShell;
 extern BfmeOtherYH *g_bfmeOtherYH;
-#define g_obj12F49E4 (*(void **)0x012F49E4)
+extern void *g_obj12F49E4;
+extern const void *BfmeAptScreenObjectivesVftable[];
+extern const void *BfmeAptScreenObjectivesSecondaryVftable[];
 
 class AptPlayerStatus : public _bfme_AptGameWindow
 {
@@ -164,9 +166,9 @@ private:
 // ??1AptPlayerStatus@@UAE@XZ
 AptPlayerStatus::~AptPlayerStatus()
 {
-	*(const void ***)(this) = (const void **)0x01106DEC;
+	*(const void ***)(this) = BfmeAptScreenObjectivesVftable;
 	*(const void ***)(reinterpret_cast<unsigned char *>(this) + 0x218) =
-		(const void **)0x01106DE8;
+		BfmeAptScreenObjectivesSecondaryVftable;
 
 	if (this == g_obj12F49E4)
 	{

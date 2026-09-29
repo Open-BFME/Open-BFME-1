@@ -29,12 +29,12 @@ void UpgradeCenter::init()
 {
 	UpgradeTemplate *up;
 
-	up = newUpgrade((const char *)0x0107301C);
+	up = newUpgrade("");
 	up->friend_makeVeterancyUpgrade(LEVEL_VETERAN);
 
-	up = newUpgrade((const char *)0x0107301C);
+	up = newUpgrade("");
 	up->friend_makeVeterancyUpgrade(LEVEL_ELITE);
 
-	up = newUpgrade((const char *)0x0107301C);
+	up = newUpgrade("");
 	up->friend_makeVeterancyUpgrade(LEVEL_HEROIC);
 }
