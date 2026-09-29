@@ -27,12 +27,12 @@ public:
 	char m_pad00[0x38];
 	int m_value38;
 	int m_value3C;
-	int m_value40;
+	int m_opacityStart;
 	int m_value44;
-	int m_value48;
+	int m_opacityPeak;
 	int m_value4C;
-	int m_value50;
-	int m_value54;
+	int m_opacityEndFrame;
+	int m_opacityEnd;
 
 	void rva00459960( int offset38, int offset3C, int value40, int offset44, int value48, int offset4C, int offset50, int value54 );
 };
@@ -45,19 +45,19 @@ void Shadow::rva00459960( int offset38, int offset3C, int value40, int offset44,
 		m_value3C = offset3C;
 	else
 		m_value3C = currentFrame + offset3C;
-	m_value40 = value40;
+	m_opacityStart = value40;
 	m_value44 = m_value38 + offset44;
-	m_value48 = value48;
+	m_opacityPeak = value48;
 	if( offset4C == -1 )
 	{
 		m_value4C = -1;
-		m_value50 = offset50;
-		m_value54 = value54;
+		m_opacityEndFrame = offset50;
+		m_opacityEnd = value54;
 	}
 	else
 	{
 		m_value4C = m_value44 + offset4C;
-		m_value50 = m_value4C + offset50;
-		m_value54 = value54;
+		m_opacityEndFrame = m_value4C + offset50;
+		m_opacityEnd = value54;
 	}
 }

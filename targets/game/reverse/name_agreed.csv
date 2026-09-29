@@ -123,3 +123,7 @@ game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfme
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeApplyStartPosition,handleStartPositionSelection,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeApplyTeam,handleTeamSelection,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeFindAvailableStartPosition,getNextSelectablePlayer,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value40,m_opacityStart,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value48,m_opacityPeak,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value50,m_opacityEndFrame,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value54,m_opacityEnd,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
