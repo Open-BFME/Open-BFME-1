@@ -423,7 +423,16 @@ def bank(args):
         src, dst = Path(ws) / p, dest / p
         if os.path.lexists(dst) and (dst.is_symlink() or not dst.is_file()
                                     or src.is_symlink() or src.read_bytes() != dst.read_bytes()):
-            raise SystemExit(f'retained bank evidence conflicts at {p}')
+            if not p.startswith(BANKED[0]):
+                raise SystemExit(f'retained bank evidence conflicts at {p}')
+            # Both sides re-banked this target: re_log keeps the better MEASURED body,
+            # so keep whichever header ranks higher (the destination on a tie).
+            ours, theirs = stash_score(dst), stash_score(src)
+            if ours is None or theirs is None:
+                raise SystemExit(f'retained bank evidence conflicts at {p}; a side has no score header')
+            if theirs <= ours:
+                print(f'{p}: kept the destination bank (score {ours} >= worker {theirs})')
+                continue
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, dst)
         moved.append(p)
@@ -438,6 +447,14 @@ def bank(args):
     if new:
         f.write_bytes((raw if raw.endswith(b'\n') else raw + nl) + b''.join(a + nl for a in new))
     print(json.dumps({'job': args.job, 'status': j['status'], 'files': moved, 'verdict_rows': len(new)}))
+
+
+def stash_score(path):
+    """A banked stash's measured score from its header (tools/re_log.py), else None."""
+    from re_log import _STASH_SCORE
+    lines = Path(path).read_text(encoding='utf-8-sig', errors='replace').splitlines()
+    m = _STASH_SCORE.match(lines[1]) if len(lines) > 1 else None
+    return float(m.group(1)) if m else None
 
 
 def serialized_destination(function):

@@ -154,6 +154,38 @@ class PortTest(PortFixture):
         self.assertTrue((self.dest / 'targets/game/reverse/attempts/0x00000020.cpp').exists())
         self.assertFalse((self.dest / 'targets/game/reverse/attempts/0x00000030.cpp').exists())
 
+    def test_bank_keeps_the_better_measured_stash_and_always_ports_verdicts(self):
+        # re_log keeps the better measured stash in attempts/<rva>.cpp (header line 2),
+        # so a worker's stash conflicts with origin's whenever either side re-banked.
+        # Before: bank refused every such job and its verdict rows never reached origin.
+        log = 'targets/game/reverse/re_attempts.log'
+        stash = 'targets/game/reverse/attempts/0x00000020.cpp'
+        body = lambda score: f'// ?f\n// partial score={score} date=2026-09-28\nint f;\n'
+        (self.base / log).write_bytes(b'old\t0x00000001\r\n')
+        (self.base / stash).parent.mkdir(parents=True)
+        (self.base / stash).write_text(body('0.8'))
+        git(self.base, 'add', '-A'); git(self.base, 'commit', '-q', '-m', 'bank')
+        for tree in (self.ws, self.dest):
+            git(tree, 'checkout', '-q', '--detach', 'master')
+        args = type('A', (), dict(job=None, workspace=str(self.ws), rva=['0x20'], worktree=str(self.dest),
+                                  base='master', force=False))()
+        row = b'?f\t0x00000020\t9\tpartial\tworse\r\n'
+        (self.ws / log).write_bytes(b'old\t0x00000001\r\n' + row)
+        (self.ws / stash).write_text(body('0.5'))
+        ri.bank(args)
+        self.assertEqual((self.dest / stash).read_text(), body('0.8'))  # origin's better bank kept
+        self.assertTrue((self.dest / log).read_bytes().endswith(row))
+        better = b'?f\t0x00000020\t9\tpartial\tbetter\r\n'
+        (self.ws / log).write_bytes(b'old\t0x00000001\r\n' + row + better)
+        (self.ws / stash).write_text(body('0.97'))
+        ri.bank(args)
+        self.assertEqual((self.dest / stash).read_text(), body('0.97'))  # worker's better bank taken
+        self.assertTrue((self.dest / log).read_bytes().endswith(row + better))
+        (self.ws / stash).write_text('int f; // no score header\n')
+        with self.assertRaises(SystemExit):  # an unranked body is never chosen by guess
+            ri.bank(args)
+        self.assertEqual((self.dest / stash).read_text(), body('0.97'))
+
     def test_route(self):
         self.assertEqual(ri.route('inputs/reference/shims/a/b.h'), 'port')
         self.assertEqual(ri.route('inputs/reference/CnC_Generals_Zero_Hour/x.h'), 'refuse')
