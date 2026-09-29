@@ -314,3 +314,10 @@ game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|member||field2
 game/GameEngine/Source/GameLogic/AI/Rva001515C0Xfer.cpp|member||m_value1c,5b63d6f741e56e268a5ba2b2,grok,20260929202157-ae76bb,2026-09-29
 game/GameEngine/Source/GameLogic/AI/Rva001515C0Xfer.cpp|member||m_value28,bcf1defd051907ef25c1279b,grok,20260929202157-ae76bb,2026-09-29
 game/GameEngine/Source/GameNetwork/V2FeslBrowserEvents.cpp|function||Rva007F79F0Callback,f98ae198f7f98a33573c1c61,grok,20260929202829-a3abc6,2026-09-29
+game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_flag58,dd09ef1c75a75fcc29a587c2,grok,20260929203224-f6cd9d,2026-09-29
+game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_4c,566fce7218b9e77b87e01bd3,grok,20260929203224-f6cd9d,2026-09-29
+game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_50,52b9fa66e91877ca5edf55e7,grok,20260929203224-f6cd9d,2026-09-29
+game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_54,f6ae8790781d5d41190a5bdb,grok,20260929203224-f6cd9d,2026-09-29
+game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_58,3ee275618ae24ea65e352957,grok,20260929203224-f6cd9d,2026-09-29
+game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_98,95b87040c9bfacbd61c8927d,grok,20260929203224-f6cd9d,2026-09-29
+game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|function|BfmeThingTBA@|rva007243A0,e53f313bf58cc9e2ced7a8f1,grok,20260929203224-f6cd9d,2026-09-29
