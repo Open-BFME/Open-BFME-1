@@ -14,6 +14,8 @@ typedef unsigned short UnsignedShort;
 typedef bool Bool;
 typedef unsigned short WideChar;
 
+extern const WideChar g_Rva01088AF4EmptyWideString[];
+
 template <typename T> struct BfmeStringData
 {
 	Int m_refCount;
@@ -223,6 +225,6 @@ void bfmeAltAAV(void)
 
 	TheLAN->RequestSetName(userName);
 	TheLAN->RequestLocations();
-	TheLAN->RequestGameCreate(UnicodeString((const WideChar *)0x01088AF4), false);
+	TheLAN->RequestGameCreate(UnicodeString(g_Rva01088AF4EmptyWideString), false);
 	TheGameEngine->Rva0006C180(g_bfmePtrAAV);
 }
