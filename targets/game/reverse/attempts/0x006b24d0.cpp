@@ -1,5 +1,5 @@
 // ?rva006B24D0@MilesAudioManager@@QAEXABVAsciiString@@MH@Z
-// partial score=0.9915 date=2026-09-29
+// partial score=0.9966 date=2026-09-29
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 //
@@ -35,6 +35,11 @@ extern "C" __declspec(dllimport) void __stdcall _AIL_stream_volume_pan(
 	HSTREAM stream, Real *volume, Real *pan);
 extern "C" __declspec(dllimport) void __stdcall _AIL_set_stream_volume_pan(
 	HSTREAM stream, Real volume, Real pan);
+__forceinline void queryStreamPan(Real *pan, HSTREAM stream)
+{
+	_AIL_stream_volume_pan(stream, 0, pan);
+}
+
 extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(
 	long volatile *value);
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(
@@ -61,6 +66,7 @@ public:
 	char m_pad00c[0x28 - 0xc];
 	TimeOfDay m_timeOfDay;
 	TimeOfDay getTimeOfDay() const { return m_timeOfDay; }
+	bool isTimeOfDay(int value) const { return m_timeOfDay == value; }
 	char m_pad02c[0x78 - 0x2c];
 };
 
@@ -263,7 +269,7 @@ void MilesAudioManager::rva006B24D0(const AsciiString &eventName, Real unused, i
 			if (candidateName.compare(eventName) != 0)
 				continue;
 		}
-		if (playing->m_audioEventRTS->getTimeOfDay() != category)
+		if (!playing->m_audioEventRTS->isTimeOfDay(category))
 			continue;
 		H3DSAMPLE sample3D;
 		switch (playing->m_type)
@@ -318,7 +324,7 @@ void MilesAudioManager::rva006B24D0(const AsciiString &eventName, Real unused, i
 			fade = Rva006B24D0One;
 		volume = volume * fade;
 		HSTREAM streamHandle = playing->m_milesHandle;
-		_AIL_stream_volume_pan(streamHandle, 0, &pan);
+		queryStreamPan(&pan, streamHandle);
 		_AIL_set_stream_volume_pan(playing->m_milesHandle, volume, pan);
 	}
 
