@@ -8,7 +8,52 @@ extern void j_0002c8f9();
 extern void j_00031313();
 extern void j_00048068();
 
-class Rva00361D10Sub {};
+typedef int Int;
+
+class BfmeSharedString
+{
+public:
+	BfmeSharedString(const BfmeSharedString &other);
+	~BfmeSharedString();
+	void *m_data;
+};
+
+class Rva00361960
+{
+public:
+	BfmeSharedString copyString();
+	unsigned char m_bfmeBody[0x58];
+};
+
+class Rva00361D10Vector
+{
+public:
+	int size() const { return m_end - m_begin; }
+	Rva00361960 *begin() const { return m_begin; }
+
+	Rva00361960 *m_begin;
+	Rva00361960 *m_end;
+};
+
+class Rva003C0350
+{
+public:
+	void run(void *key, void *src);
+	void run(const BfmeSharedString &key, void *src)
+	{
+		run((void *)&key, src);
+	}
+};
+
+class Rva00361D10Sub
+{
+public:
+	void method_00361D10() const;
+
+private:
+	unsigned char m_bfmeHead[0x18];
+	Rva00361D10Vector m_bfmeVectorTwo;
+};
 class BfmeLivingWorldManager
 {
 public:
@@ -70,4 +115,25 @@ void Rva003855F0Owner::reset_003855F0()
 	reinterpret_cast<BfmeSubBZF *>(sub)->bfmeOneBZF();
 	reinterpret_cast<Rva003BDC50 *>(Glo012F1028)->run();
 	reinterpret_cast<Rva003BFAB0 *>(Glo012F1028)->run(false);
+}
+
+void Rva00361D10Sub::method_00361D10() const
+{
+	Int matchCount = 0;
+	unsigned int i = 0;
+	if (m_bfmeVectorTwo.size() != 0)
+	{
+		Int offset = 0;
+		do
+		{
+			Rva00361960 *elem = (Rva00361960 *)((char *)m_bfmeVectorTwo.begin() + offset);
+			int type = *(int *)((char *)elem + 0x20);
+			if (type == 3 || (type == 4 && *(unsigned char *)((char *)elem + 8) == 0))
+			{
+				reinterpret_cast<Rva003C0350 *>(Glo012F1028)->run(elem->copyString(), (void *)matchCount), ++matchCount;
+			}
+			++i;
+			offset += sizeof(Rva00361960);
+		} while (i < m_bfmeVectorTwo.size());
+	}
 }
