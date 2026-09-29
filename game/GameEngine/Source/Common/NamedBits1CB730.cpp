@@ -13,6 +13,7 @@ template<> inline const char *StringBase<char>::str() const { return m_data ? m_
 struct XferException { char *text; int tag; };
 extern "C" XferException *__cdecl bfmeFormatText(XferException *,int,const char *,...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void *,void *);
+extern int g_guardTargetTypeThrowInfo;
 struct __declspec(align(4)) Version1CB730 { unsigned char version,current; };
 class Xfer { public:
  virtual void pad00();
@@ -80,7 +81,7 @@ void NamedBits1CB730::transfer(Xfer *xfer)
    if (bit<0) {
     XferException error;
     bfmeFormatText(&error,0,0);
-    _CxxThrowException(&error,(void *)0x011DFE5C);
+    _CxxThrowException(&error,&g_guardTargetTypeThrowInfo);
    }
    bits._Unchecked_set(bit);
   }

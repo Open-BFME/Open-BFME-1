@@ -216,7 +216,9 @@ public:
 	unsigned int m_r2B4;
 };
 
-#define R2TheGameClient (*(R2GameClient **)0x012F1464)
+class GameClient;
+extern GameClient *TheGameClient;
+#define R2TheGameClient ((R2GameClient *)TheGameClient)
 
 class Rva00417240
 {

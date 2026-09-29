@@ -8,6 +8,7 @@
 #include "ascii_string.h"
 
 struct FieldParse;
+extern const FieldParse g_01084130[];
 
 class INI
 {
@@ -32,5 +33,5 @@ LibraryMap::LibraryMap(INI *ini)
 	const char *name = source->getNextToken();
 	int length = name != 0 ? (int)strlen(name) : 0;
 	((StringBase<char> *)this)->set(name, length);
-	source->initFromINI(this, (const FieldParse *)0x01084130);
+	source->initFromINI(this, g_01084130);
 }

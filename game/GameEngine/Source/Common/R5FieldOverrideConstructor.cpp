@@ -12,6 +12,8 @@ public:
 	int m_0C;
 };
 
+extern int g_s4Head0059CB30;
+
 class Rva0059CAC0 : public Rva00489210
 {
 public:
@@ -21,7 +23,7 @@ public:
 
 Rva0059CAC0::Rva0059CAC0()
 {
-	m_00 = reinterpret_cast<int *>( 0x0110C744 );
+	m_00 = &g_s4Head0059CB30;
 	m_04 = 8;
 	m_0C = 0;
 	m_20 = -1;
