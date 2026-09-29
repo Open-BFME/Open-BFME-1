@@ -1047,11 +1047,10 @@ public:
 	VertexMaterialClass* Peek_Material(unsigned idx,unsigned pass)
 	{
 		if (mmc->Has_Material_Array(pass)) {
-			if (idx>=unsigned(mmc->Get_Polygon_Count())) {
-				WWASSERT(mmc->Get_Gap_Filler());
-				return mmc->Get_Gap_Filler()->Get_Material_Array(pass)[idx-mmc->Get_Polygon_Count()];
-			}
-			return mmc->Peek_Material(mmc->Get_Polygon_Array()[idx][0],pass);
+			// BFME drops Zero Hour's gap-filler branch, and its MeshGeometry
+			// keeps the polygon buffer at this+0x2C (see Peek_Shader).
+			const TriIndex *polys=(*reinterpret_cast<ShareBufferClass<TriIndex> * const *>(reinterpret_cast<const char *>(mmc)+0x2c))->Get_Array();
+			return mmc->Peek_Material(polys[idx][0],pass);
 		}
 		return mmc->Peek_Single_Material(pass);
 	}
