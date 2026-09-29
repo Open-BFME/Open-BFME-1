@@ -75,7 +75,7 @@ static NameKeyType buttonMapStartPositionID[MAX_SLOTS] = { NAMEKEY_INVALID,NAMEK
 
 
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////////////////////////
-void positionStartSpots( AsciiString mapName, GameWindow *buttonMapStartPositions[], GameWindow *mapWindow, Bool onLoadScreen);
+void positionStartSpots( AsciiString mapName, GameWindow *buttonMapStartPositions[], GameWindow *mapWindow, GameWindow *errorListBox);
 static const char *layoutFilename = "LanGameOptionsMenu.wnd";
 static const char *parentName = "LanGameOptionsMenuParent";
 static const char *gadgetsToHide[] =

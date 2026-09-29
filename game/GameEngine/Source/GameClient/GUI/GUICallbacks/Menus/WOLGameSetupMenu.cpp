@@ -1531,7 +1531,7 @@ void PopBackToLobby( void )
 
 void updateMapStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[], Bool onLoadScreen = FALSE );
 void positionStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[], GameWindow *mapWindow, Bool onLoadScreen = FALSE);
-void positionStartSpots(AsciiString mapName, GameWindow *buttonMapStartPositions[], GameWindow *mapWindow, Bool onLoadScreen = FALSE);
+void positionStartSpots(AsciiString mapName, GameWindow *buttonMapStartPositions[], GameWindow *mapWindow, GameWindow *errorListBox = NULL);
 void WOLPositionStartSpots( void )
 {
 	GameWindow *win = windowMap;

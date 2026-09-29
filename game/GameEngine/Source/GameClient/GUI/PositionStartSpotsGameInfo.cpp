@@ -63,7 +63,7 @@ public:
 class GameWindow;
 
 void positionStartSpots( AsciiString mapName, GameWindow *buttonMapStartPositions[],
-	GameWindow *mapWindow, Bool onLoadScreen );
+	GameWindow *mapWindow, GameWindow *errorListBox );
 
 // ?positionStartSpots@@YAXPAVGameInfo@@QAPAVGameWindow@@PAV2@_N@Z
 void positionStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[],
@@ -79,5 +79,5 @@ void positionStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[]
 			localMapFname = AsciiString::TheEmptyString;
 	}
 	positionStartSpots( localMapFname, buttonMapStartPositions, mapWindow,
-		onLoadScreen );
+		*(GameWindow**)&onLoadScreen );
 }
