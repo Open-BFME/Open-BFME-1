@@ -55,27 +55,27 @@ void Rva006DF550::rva006DF110(BfmeCoord6DF110 *out, Real *angle)
 	{
 		if (out)
 		{
-			Real scale = m_08 * *(const Real *)0x0111e184;
+			Real scale = m_08 * 1.642665f;
 			Real radians = m_0C;
 			out->x = 0.0f;
-			radians *= *(const Real *)0x01087b14;
-			radians *= *(const double *)0x0111e178;
+			radians *= 3.1415927f;
+			radians *= 0.005555555555555556;
 			volatile Real cosine = (Real)cos(radians);
 			Real sine = (Real)sin(radians);
 			out->z = sine * scale;
 			out->y = -cosine * scale;
 		}
 		if (angle)
-			*angle = m_10 * *(const Real *)0x01087b14 *
-				*(const double *)0x0111e178;
+			*angle = m_10 * 3.1415927f *
+				0.005555555555555556;
 	}
 	else
 	{
 		if (out)
 		{
 			out->z = m_08;
-			out->y = -out->z / (Real)tan(m_0C * *(const double *)0x0111e168);
-			out->x = -(tan(m_10 * *(const double *)0x0111e168) * out->y);
+			out->y = -out->z / (Real)tan(m_0C * 0.017453293005625408);
+			out->x = -(tan(m_10 * 0.017453293005625408) * out->y);
 		}
 		if (angle)
 			*angle = 0.0f;

@@ -187,6 +187,11 @@ public:
     LoadGameFadeWrapper *m_ptr;
 };
 void postTimedOp(LoadGameFadeHolder,void *);
+extern unsigned fadeQueueKey;
+void j_00048b03();
+void j_00049977();
+void j_00012ac6();
+void j_0000743c();
 class Shell: public Dispatch004329D0 {
 public:
     Shell();
@@ -246,10 +251,10 @@ void ClientUpdate004329D0::update() {
     ((Calls004329D0 *)g_012F4C84)->rva005B5590();
     ((Calls004329D0 *)g_012F4C80)->rva005B4D40();
     if (g_012B534C) {
-        postTimedOp(LoadGameFadeSlot((void *)0x00448B03),(void *)0x012ED588);
-        postTimedOp(LoadGameFadeSlot((void *)0x00449977),(void *)0x012ED588);
-        postTimedOp(LoadGameFadeSlot((void *)0x00412AC6),(void *)0x012ED588);
-        postTimedOp(LoadGameFadeSlot((void *)0x0040743C),(void *)0x012ED588);
+        postTimedOp(LoadGameFadeSlot((void *)j_00048b03),&fadeQueueKey);
+        postTimedOp(LoadGameFadeSlot((void *)j_00049977),&fadeQueueKey);
+        postTimedOp(LoadGameFadeSlot((void *)j_00012ac6),&fadeQueueKey);
+        postTimedOp(LoadGameFadeSlot((void *)j_0000743c),&fadeQueueKey);
     }
     g_012B534C = false;
     if (g_012F15F4) g_012F15F4->v14();
