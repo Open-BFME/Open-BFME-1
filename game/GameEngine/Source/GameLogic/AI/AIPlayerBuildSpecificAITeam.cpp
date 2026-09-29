@@ -216,6 +216,8 @@ private:
 	Bool m_canBuildUnits;						// +0x294
 };
 
+extern int Gen01096964;
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class WorkOrder
 {
@@ -223,7 +225,7 @@ public:
 	// Retail WorkOrder's installed table at 0x01096964, stored as
 	// TeamInQueueXfer.cpp does; this TU emits no table.
 	WorkOrder()
-		: m_vptr((void *)0x01096964), m_thing(NULL), m_factoryID(0), m_next(NULL),
+		: m_vptr((void *)&Gen01096964), m_thing(NULL), m_factoryID(0), m_next(NULL),
 		  m_numCompleted(0), m_numRequired(1), m_isResourceGatherer(false)
 	{
 	}

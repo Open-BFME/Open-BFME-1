@@ -24,7 +24,7 @@ public:
 };
 
 extern GameLogic *TheGameLogic;
-#define BfmeZeroRange (*(const Real *)0x01075350)
+#define BfmeZeroRange 0.0f
 
 class TeamFactory
 {

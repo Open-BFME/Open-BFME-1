@@ -182,7 +182,7 @@ public:
 };
 
 extern TerrainLogic *TheTerrainLogic;
-#define TheAI (*(AI **)0x012EF214)
+extern AI *TheAI;
 extern Real GetGameLogicRandomValueReal(Real, Real, char *, int);
 
 

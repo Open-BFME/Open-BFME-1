@@ -18,7 +18,7 @@ struct GameLogic
 	int m_frame;
 };
 
-#define TheGameLogic (*(GameLogic **)0x012f0898)
+extern GameLogic *TheGameLogic;
 
 class AIPlayer
 {

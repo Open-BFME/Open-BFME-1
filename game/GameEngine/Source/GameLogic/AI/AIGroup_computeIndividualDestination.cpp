@@ -240,7 +240,7 @@ void AIGroup::computeIndividualDestination(Coord3D *individualDestination, const
 				*aiUpdate->getLocomotorSet(), individualDestination, groupDestination);
 		if (!destinationAdjusted)
 			*individualDestination = *groupDestination;
-		TheAI->pathfinder()->updateGoal(object, individualDestination, 1, (const char *)0x1095f44,
+		TheAI->pathfinder()->updateGoal(object, individualDestination, 1, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIGroup.cpp",
 			0x233);
 	}
 }
