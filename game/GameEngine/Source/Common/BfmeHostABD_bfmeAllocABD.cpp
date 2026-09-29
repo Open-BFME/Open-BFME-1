@@ -40,20 +40,20 @@ public:
 
 	unsigned char m_bfmeHeadABD[4];
 	Rva00803080 *m_bfme04ABD;
-	BfmeSlotABD m_bfmeSlotsABD[4];
-	int m_bfme48ABD;
+	BfmeSlotABD m_lookups[4];
+	int m_numLookups;
 	Rva007EAServiceList *m_bfme4CABD;
 };
 
 int BfmeHostABD::bfmeAllocABD(const char *name, void *a, void *b, void *c)
 {
-	if (m_bfme48ABD < 4)
+	if (m_numLookups < 4)
 	{
 		int idx;
 
 		for (int i = 0; i < 4; ++i)
 		{
-			if (m_bfmeSlotsABD[i].m_bfme00ABD == 0)
+			if (m_lookups[i].m_bfme00ABD == 0)
 			{
 				idx = i;
 				goto selected;
@@ -65,12 +65,12 @@ int BfmeHostABD::bfmeAllocABD(const char *name, void *a, void *b, void *c)
 		if (idx == -1)
 			Rva007EB810Get()->registerService(g_bfmeNameABD, g_bfmeKindABD, 0x60);
 
-		m_bfmeSlotsABD[idx].m_bfme00ABD = b;
-		m_bfmeSlotsABD[idx].m_bfme04ABD = c;
-		m_bfmeSlotsABD[idx].m_bfme08ABD = a;
-		m_bfmeSlotsABD[idx].m_bfme0CABD = Rva00807920(name, 0x2710);
+		m_lookups[idx].m_bfme00ABD = b;
+		m_lookups[idx].m_bfme04ABD = c;
+		m_lookups[idx].m_bfme08ABD = a;
+		m_lookups[idx].m_bfme0CABD = Rva00807920(name, 0x2710);
 
-		++m_bfme48ABD;
+		++m_numLookups;
 
 		m_bfme4CABD->add((Rva00803080 *)&m_bfme04ABD);
 
