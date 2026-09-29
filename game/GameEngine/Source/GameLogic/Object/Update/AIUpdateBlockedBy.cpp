@@ -242,10 +242,10 @@ bool AIUpdateInterface::blockedBy(Object*blockingObject)
 }
 
 extern float ACos(float);
-#define BFME_ZERO_RANGE (*(const float *)0x01075350)
-#define BFME_DEFAULT_BU (*(const float *)0x01075334)
-#define BFME_MINUS_ONE (*(const double *)0x01095f18)
-#define BFME_ONE (*(const double *)0x0107c640)
+#define BFME_ZERO_RANGE 0.0f
+#define BFME_DEFAULT_BU 1.0f
+#define BFME_MINUS_ONE -1.0
+#define BFME_ONE 1.0
 
 // ?bfmeRelativeAngleTo@Thing@@QBEMPBUCoord3D@@@Z
 float Thing::bfmeRelativeAngleTo(const Coord3D *point) const

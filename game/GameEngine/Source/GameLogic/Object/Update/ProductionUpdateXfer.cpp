@@ -102,8 +102,8 @@ public:
 	const UpgradeTemplate *findUpgrade(const AsciiString &name) const;
 };
 
-#define TheThingFactory (*(BfmeThingFactory **)0x012EF1D8)
-#define TheUpgradeCenter (*(UpgradeCenter **)0x012EF188)
+extern BfmeThingFactory *TheThingFactory;
+extern UpgradeCenter *TheUpgradeCenter;
 
 extern void j_00028560();
 extern void j_00026dd7();
@@ -140,6 +140,8 @@ extern void *__cdecl operator new(unsigned int size);
 class BfmeSeedTarget;
 extern void __cdecl bfmeHandOver_0000C9B4(BfmeSeedTarget *target, void *item);
 
+extern "C" void *bfmeVftVG[];
+
 struct ProductionEntryLayout
 {
 	void *m_vptr;
@@ -169,7 +171,7 @@ struct ProductionEntryLayout
 
 	__forceinline void initialize()
 	{
-		m_vptr = (void *)0x010C0D90;
+		m_vptr = bfmeVftVG;
 		m_type = 0;
 		m_objectToProduce = 0;
 		m_upgradeToResearch = 0;
@@ -236,7 +238,7 @@ static __forceinline void bfmeXferFlags(BfmeModelConditionFlags *flags,
 }
 
 class __single_inheritance AudioManager;
-#define TheAudio (*(AudioManager **)0x012ED668)
+extern AudioManager *TheAudio;
 
 #define PRODUCTION_UPDATE_XFER_ERROR() \
 	do { \

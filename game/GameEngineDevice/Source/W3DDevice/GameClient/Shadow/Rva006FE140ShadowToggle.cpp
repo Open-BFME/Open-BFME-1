@@ -6,9 +6,9 @@
 // mismatch), so this object shares layout with those callees' "this". The
 // g_bfmeGameCW singleton (0x012F706C, already named) is used only as the
 // implicit "this" for two BfmeLivingWorldManager particle-system calls; a
-// second global at 0x01306EEC (no existing symbol; called as the implicit
+// second global at 0x01306EEC (TheW3DShadowManager; called as the implicit
 // "this" for the landed W3DShadowManager::setTimeOfDay/setLightPosition) is
-// declared address-derived here. No caller or vtable slot proves the owning
+// reached through the file's g_bfmeTheShadowManager macro. No caller or vtable slot proves the owning
 // method name, so the class and method stay address-derived.
 
 typedef int Int;
@@ -24,9 +24,15 @@ extern void j_0002412c(void); // BfmeThingEMH::bfmeGoEMHb(void), ecx=this
 extern void j_0004248d(void); // BfmeThingEMH::bfmeGoEMHa(void), ecx=this
 extern void j_00031840(void); // W3DShadowManager::setLightPosition(int,float,float,float), ecx=g_bfmeTheShadowManager
 
-#define g_bfmeGameCW (*(void **)0x012F706C)
-#define g_bfmeTheShadowManager (*(void **)0x01306EEC)
-#define TheWritableGlobalData (*(unsigned char **)0x012ED5C8)
+class BfmeGameCW;
+extern BfmeGameCW *g_bfmeGameCW;
+#define g_bfmeGameCW ((void *)g_bfmeGameCW)
+class W3DShadowManager;
+extern W3DShadowManager *TheW3DShadowManager;
+#define g_bfmeTheShadowManager ((void *)TheW3DShadowManager)
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+#define TheWritableGlobalData ((unsigned char *)TheWritableGlobalData)
 
 class Rva006FE140Owner
 {

@@ -507,12 +507,18 @@ static __forceinline Rva002C96D0Money *bfmeGetMoney(Player *player)
 	return (Rva002C96D0Money *)((char *)player + 0x48);
 }
 
-#define TheBuildAssistant (*(Rva002C96D0BuildAssistant **)0x012ED83C)
-#define TheThingFactory (*(Rva002C96D0ThingFactory **)0x012EF1D8)
+class BuildAssistant;
+extern BuildAssistant *TheBuildAssistant;
+#define TheBuildAssistant ((Rva002C96D0BuildAssistant *)TheBuildAssistant)
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
+#define TheThingFactory ((Rva002C96D0ThingFactory *)TheThingFactory)
 extern Rva002C96D0TerrainLogicPre *TheTerrainLogic;
-#define TheAI (*(Rva002C96D0AI **)0x012EF214)
+class AI;
+extern AI *TheAI;
+#define TheAI ((Rva002C96D0AI *)TheAI)
 extern const Real g_bfmeUint32Scale;
-#define BFME_DEFAULT_HEALTH (*(const Real *)0x01075334)
+#define BFME_DEFAULT_HEALTH 1.0f
 
 // ?construct@WorkerAIUpdate@@WDEA@AEPAVObject@@PBVThingTemplate@@PBUCoord3D@@MPAVPlayer@@_N@Z
 Object *Rva002C96D0WorkerAIUpdate::construct(const ThingTemplate *buildTemplate,
