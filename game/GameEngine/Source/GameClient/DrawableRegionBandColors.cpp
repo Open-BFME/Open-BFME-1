@@ -26,6 +26,18 @@
 
 typedef Int Color;
 
+static const RGBAColorInt s_colors00CF11D0[4] =
+{
+	{ 0x15, 0x56, 0xad, 0xff }, { 0x6b, 0xe0, 0xf5, 0xff },
+	{ 0x12, 0x9a, 0xdc, 0xff }, { 0x08, 0x27, 0x75, 0xff },
+};
+
+static const RGBAColorInt s_colors00CF1220[4] =
+{
+	{ 0x1c, 0xcf, 0xfb, 0xff }, { 0xac, 0xff, 0xfe, 0xff },
+	{ 0x10, 0xdf, 0xe5, 0xff }, { 0x03, 0xa5, 0xba, 0xff },
+};
+
 static const RGBAColorInt s_redColors00CF1270[4] =
 {
 	{ 0xdf, 0x03, 0x20, 0xff }, { 0xff, 0xb7, 0x6c, 0xff },
@@ -156,4 +168,11 @@ void bfmeColorLookup00411400( Real value, Color *colors )
 		colors[1] = 0xffff836c;
 		colors[2] = 0xffcc0001;
 	}
+}
+
+// ?bfmeColorLookup00411220@@YAXMPAH@Z
+void bfmeColorLookup00411220( Real value, Color *colors )
+{
+	for( Int i = 0; i < 4; ++i )
+		colors[i] = lerpColor00411110( s_colors00CF11D0[i], s_colors00CF1220[i], value );
 }
