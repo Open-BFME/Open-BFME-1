@@ -87,6 +87,7 @@ public:
 	UnicodeString(const UnicodeString &that) : StringBase<unsigned short>(that) {}
 	UnicodeString(const unsigned short *text) : StringBase<unsigned short>(text) {}
 	~UnicodeString() {}
+	int compare(const UnicodeString &that) const throw();
 
 	UnicodeString &operator=(const UnicodeString &that)
 	{
@@ -106,6 +107,22 @@ struct RvaSystemTime
 	unsigned short minute;
 	unsigned short second;
 	unsigned short milliseconds;
+};
+
+struct RvaAsciiString
+{
+	void *m_data;
+	RvaAsciiString() : m_data(0) {}
+	void operator=(const AsciiString &that)
+	{
+		((StringBase<char> *)this)->set(*(const StringBase<char> *)&that);
+	}
+};
+
+struct RvaUnicodeString
+{
+	void *m_data;
+	RvaUnicodeString() : m_data(0) {}
 };
 
 struct RvaReplayIP
@@ -166,6 +183,35 @@ public:
 	protected:
 	AsciiString readAsciiString(void);
 	UnicodeString readUnicodeString(void);
+	struct ReplayHeader
+	{
+		~ReplayHeader();
+		Int startTime;
+		Int endTime;
+		UnsignedInt frameDuration;
+		Int networkCRCInterval;
+		Int originalGameMode;
+		Bool quitEarly;
+		Bool playerDiscons[MAX_SLOTS];
+		char gap1[3];
+		RvaAsciiString gameOptions;
+		Int localPlayerIndex;
+		RvaAsciiString filename;
+		Bool forPlayback;
+		RvaUnicodeString replayName;
+		RvaSystemTime timeVal;
+		RvaUnicodeString versionString;
+		RvaUnicodeString versionTimeString;
+		UnsignedInt versionNumber;
+		UnsignedInt exeCRC;
+		UnsignedInt iniCRC;
+		Bool desyncGame;
+		char gap2[3];
+		UnsignedInt headerTail;
+	};
+	public:
+	Bool readReplayHeader(ReplayHeader &header);
+	Bool testVersionPlayback(AsciiString filename);
 };
 
 extern Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options, Bool includeSlots) throw();
@@ -309,4 +355,35 @@ Bool Rva00099490RecorderClass::readReplayHeader(ReplayHeader &header)
 	}
 	m_seedOrDesync = header.localPlayerIndex;
 	return TRUE;
+}
+
+class UnicodeStringAL : public UnicodeString {};
+class BfmeVersionAL { public: UnicodeStringAL bfmeVersionTextAL(void); };
+class Version { public: UnicodeString getUnicodeBuildTime(void); UnsignedInt getVersionNumber(void); };
+extern Version *TheVersion;
+class GlobalData { public: char pad[0xBC8]; UnsignedInt m_iniCRC; char pad2[4]; UnsignedInt m_exeCRC; };
+extern GlobalData *TheWritableGlobalData;
+Int Rva0009B4B0(Int, Int);
+
+Bool RecorderClass::testVersionPlayback(AsciiString filename)
+{
+	ReplayHeader header;
+	header.forPlayback = TRUE;
+	header.filename = filename;
+	Bool success = readReplayHeader(header);
+	if (!success)
+		return FALSE;
+	Bool versionStringDiff = ((UnicodeString &)header.versionString).compare(
+		((BfmeVersionAL *)TheVersion)->bfmeVersionTextAL()) != 0;
+	Bool versionTimeStringDiff = ((UnicodeString &)header.versionTimeString).compare(
+		TheVersion->getUnicodeBuildTime()) != 0;
+	Bool versionNumberDiff = header.versionNumber != TheVersion->getVersionNumber();
+	Bool exeCRCDiff = header.exeCRC != Rva0009B4B0(
+		TheWritableGlobalData->m_exeCRC, TheWritableGlobalData->m_exeCRC);
+	Bool exeDifferent = versionStringDiff || versionTimeStringDiff ||
+		versionNumberDiff || exeCRCDiff;
+	Bool iniDifferent = header.iniCRC != TheWritableGlobalData->m_iniCRC;
+	if (exeDifferent || iniDifferent)
+		return TRUE;
+	return FALSE;
 }
