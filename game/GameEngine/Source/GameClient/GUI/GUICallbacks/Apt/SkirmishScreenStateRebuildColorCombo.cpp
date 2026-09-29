@@ -83,6 +83,7 @@ public:
 
 extern MultiplayerSettings *TheMultiplayerSettings;
 extern ImageCollection *TheMappedImageCollection;
+extern Color g_012B76F4;
 
 extern Int GadgetListBoxGetNumEntries(GameWindow *listbox);
 extern void *GadgetListBoxGetItemData(GameWindow *listbox, Int row, Int column);
@@ -234,7 +235,7 @@ Bool SkirmishScreenState::rebuildColorCombo005284F0(Int index)
 	MultiplayerColorDefinition *def = TheMultiplayerSettings->getColor(-1);
 	static const Image *randomImage =
 		TheMappedImageCollection->findImageByName(AsciiString("AptRandomColor"));
-	Int newIndex = ((Rva004B5AA0 *)&combo)->m(randomImage, 20, 20, *(Color *)0x012B76F4);
+	Int newIndex = ((Rva004B5AA0 *)&combo)->m(randomImage, 20, 20, g_012B76F4);
 	combo.setItemData(newIndex, -1);
 
 	if (m_game->getConstSlot(index)->getPlayerTemplate() == -2)

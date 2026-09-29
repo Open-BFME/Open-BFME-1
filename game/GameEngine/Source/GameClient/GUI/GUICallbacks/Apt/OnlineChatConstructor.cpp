@@ -76,13 +76,16 @@ struct OnlineChatBinding
 	FunctorMethod m_method;
 };
 
+extern "C" const void *bfmeVftOnlineChatGlobalFunctorWrapper[];
+#pragma comment(linker, "/alternatename:_bfmeVftOnlineChatGlobalFunctorWrapper=??_7BannerAptCallbackWrapper@@6B@")
+
 class OnlineChatGlobalFunctorWrapper
 {
 public:
 	OnlineChatGlobalFunctorWrapper( unsigned int method )
 	{
 		m_refCount = 0;
-		m_vft = (void *)0x010F6F90;
+		m_vft = (void *)bfmeVftOnlineChatGlobalFunctorWrapper;
 		m_method = method;
 	}
 

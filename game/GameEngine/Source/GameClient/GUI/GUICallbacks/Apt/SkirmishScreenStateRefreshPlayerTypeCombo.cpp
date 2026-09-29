@@ -180,7 +180,8 @@ private:
 };
 
 // The white entry colour every combo population in this screen passes.
-#define Rva012B76F4Color (*(Color *)0x012B76F4)
+extern Color g_012B76F4;
+#define Rva012B76F4Color g_012B76F4
 
 // Retail 0x00527220 (911 B), reached through ILT 0x00029C35 from the matched
 // SkirmishScreenState::refreshAllPlayerControls (once per slot) and ::apply.
