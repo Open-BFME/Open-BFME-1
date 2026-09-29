@@ -1,6 +1,6 @@
-// ?rva0074C4F0@Rva0074C4F0Owner@@QAE?AVRva0074C4F0Handle@@HHHHI@Z
-// partial score=0.824074 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc
+// Retail 0x0074C4F0: BFME WorldHeightMap flat-texture builder, the Zero Hour
+// getFlatTexture twin, returning an owning texture handle through hidden storage.
 
 struct Rva006C9270GlobalData
 {
@@ -43,20 +43,18 @@ public:
 	int Rva006D5750Update(WorldHeightMap *, int, int, int, int);
 };
 
-// This is scratch-only. tools/build.py does not honor /alternatename, so the
-// masked probe is not a strict relocation gate. The three ILT routes below
-// need independently validated resolver candidates before this can land.
-#pragma comment(linker, "/alternatename:??0Rva006D5280@@QAE@III@Z=?j_000279ee@@YAXXZ")
-#pragma comment(linker, "/alternatename:?Rva006D53A0Update@Rva006D53A0TextureClass@@QAEHPAVWorldHeightMap@@HHHH@Z=?j_0000c761@@YAXXZ")
-#pragma comment(linker, "/alternatename:?Rva006D5750Update@Rva006D5750TextureClass@@QAEHPAVWorldHeightMap@@HHHH@Z=?j_00031e30@@YAXXZ")
-
-class Rva0074C4F0Handle
+class ShroudTexture
 {
 public:
-	explicit Rva0074C4F0Handle(TextureBaseClass *texture) : m_texture(texture)
+	explicit ShroudTexture(TextureBaseClass *texture) : m_texture(texture)
 	{
 		if (texture)
 			++texture->refCount;
+	}
+	~ShroudTexture()
+	{
+		if (m_texture)
+			m_texture->Release_Ref();
 	}
 	TextureBaseClass *m_texture;
 };
@@ -123,17 +121,17 @@ extern BfmeAwakenDebug *TheBfmeAwakenDebug;
 extern bool _bfme_debugReportingEnabled();
 extern void _bfme_debugRecordCallsite(int);
 
-class Rva0074C4F0Owner
+class WorldHeightMap
 {
 public:
-	Rva0074C4F0Handle rva0074C4F0(int xCell, int yCell,
-		int cellWidth, int pixelsPerCell, unsigned format);
+	ShroudTexture rva0074C4F0(int xCell, int yCell,
+		int cellWidth, int pixelsPerCell, int format);
 };
 
-Rva0074C4F0Handle Rva0074C4F0Owner::rva0074C4F0(int xCell, int yCell,
-	int cellWidth, int pixelsPerCell, unsigned format)
+// ?rva0074C4F0@WorldHeightMap@@QAE?AVShroudTexture@@HHHHH@Z
+ShroudTexture WorldHeightMap::rva0074C4F0(int xCell, int yCell,
+	int cellWidth, int pixelsPerCell, int format)
 {
-	volatile int state = 0;
 	int reduction = TheWritableGlobalData->textureReductionFactor;
 	if (reduction)
 	{
@@ -151,12 +149,12 @@ Rva0074C4F0Handle Rva0074C4F0Owner::rva0074C4F0(int xCell, int yCell,
 	if (format == 0x19)
 	{
 		reinterpret_cast<Rva006D53A0TextureClass *>(&texture)->Rva006D53A0Update(
-			reinterpret_cast<WorldHeightMap *>(this), xCell, yCell, cellWidth, pixelsPerCell);
+			this, xCell, yCell, cellWidth, pixelsPerCell);
 	}
 	else if (format == 0x31545844)
 	{
 		reinterpret_cast<Rva006D5750TextureClass *>(&texture)->Rva006D5750Update(
-			reinterpret_cast<WorldHeightMap *>(this), xCell, yCell, cellWidth, pixelsPerCell);
+			this, xCell, yCell, cellWidth, pixelsPerCell);
 	}
 	else if (_bfme_debugReportingEnabled())
 	{
@@ -165,5 +163,5 @@ Rva0074C4F0Handle Rva0074C4F0Owner::rva0074C4F0(int xCell, int yCell,
 		TheBfmeAwakenDebug->slot6c(0, 0)->slot38(
 			"Unsupported format for terrain texture")->slot4c(2);
 	}
-	return Rva0074C4F0Handle(texture.m_texture);
+	return ShroudTexture(texture.m_texture);
 }
