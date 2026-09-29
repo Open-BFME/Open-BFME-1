@@ -113,7 +113,6 @@ void PushStringGetVariable008CEB20(Stack008C7950 *state, const char **cursor)
     rva8CD130NamedDispatch((Rva8CD130State *)state, (Rva8CD130Context *)cursor);
 }
 
-// ?PushStringStoreMember008CEC60@@YAXPAUStack008C7950@@PAPBD@Z present-unmatched
 void PushStringStoreMember008CEC60(Stack008C7950 *state, const char **cursor)
 {
     const char **literal = (const char **)(((unsigned)*cursor + 3) & ~3);
