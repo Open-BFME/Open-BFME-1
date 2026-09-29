@@ -53,7 +53,9 @@ struct BfmeElemBE
 	char padding[3];
 };
 
-// ?bfmeFillBE@@YAPAUBfmeElemBE@@PAU1@IABU1@ABUBfmeFalseBE@@@Z present-unmatched
+// A TU-local stand-in for the fill helper this TU calls. The byte-verified
+// body is matched at 0x0087F020 in Rva0087F020FillBE.cpp; this copy exists
+// only so _M_fill_insert's own relocation resolves at scoped-build time.
 __declspec(noinline) BfmeElemBE *bfmeFillBE(BfmeElemBE *first, unsigned count,
 	const BfmeElemBE &value, const BfmeFalseBE &)
 {
@@ -77,5 +79,3 @@ namespace _STL
 
 template void _STL::vector<Rva0087FDC0Element>::_M_fill_insert(
 	Rva0087FDC0Element *, unsigned, const Rva0087FDC0Element &);
-
-
