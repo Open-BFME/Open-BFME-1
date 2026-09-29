@@ -1,6 +1,6 @@
 // ?after@TaintSpecialPower@@QAEXPBVCoord3D@@@Z
-// partial score=0.962 date=2026-09-28
-// ?after@TaintSpecialPower@@QAEXPBVCoord3D@@@Z
+// Retail identity is proven by caller 0x0026BF40 through ILT 0x00033C62.
+// Retail extent: 1109 bytes (ret 4 at RVA +0x452).
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /DBFME_STLP_NODE_ALLOC
 // stlport
 
@@ -127,12 +127,12 @@ public:
 	UnsignedInt m_status98;
 };
 
-class BfmeGameLogic
+class GameLogic
 {
 public:
 	void destroyObject(Object *object);
 };
-extern BfmeGameLogic *TheBfmeGameLogic;
+extern GameLogic *TheBfmeGameLogic;
 
 struct BfmePointFC;
 
@@ -158,6 +158,12 @@ public:
 
 extern void j_00042cd0(void);
 extern void j_00037330(void);
+
+class TerrainArea001ACCC0
+{
+public:
+	void clearOne001AC3D0(const void *, Int);
+};
 
 struct Rva003FD060TerrainLogic
 {
@@ -186,11 +192,12 @@ struct TaintSpecialPowerModuleData
 	BfmeThingFB *m_taintOCL;
 };
 
+extern void j_000262bf(void);
+
 class TaintSpecialPower
 {
 public:
 	void after(const Coord3D *loc);
-	void rva0026B950(const Coord3D *loc, void *name);
 
 	unsigned char m_pad00[4];
 	TaintSpecialPowerModuleData *m_moduleData;
@@ -214,7 +221,7 @@ void TaintSpecialPower::after(const Coord3D *loc)
 		if (candidate->getControllingPlayer() == owner->getControllingPlayer())
 			continue;
 		matches.insert(*(Rva0025BD30Key *)&candidate);
-		TheTerrainLogic->rva001AC3D0(candidate->getPosition(), radius);
+		((TerrainArea001ACCC0 *)TheTerrainLogic)->clearOne001AC3D0(candidate->getPosition(), *(Int *)&radius);
 		TheBfmeGameLogic->destroyObject(candidate);
 	}
 
@@ -227,8 +234,11 @@ void TaintSpecialPower::after(const Coord3D *loc)
 			continue;
 		if (matches.find((Rva0025BD30Key)candidate) != matches.end())
 			continue;
-		Coord3D point = *candidate->getPosition();
-		Int amount = (UnsignedByte)((candidate->m_status98 & 0x80000) ? 0xff : 0);
+		UnsignedByte amount = (candidate->m_status98 & 0x80000) ? 0xff : 0;
+		Coord3D point;
+		point.x = candidate->m_position.x;
+		point.y = candidate->m_position.y;
+		point.z = candidate->m_position.z;
 		TheTaintManager->bfmeApplyCircleWorld((const BfmePointFC *)&point, radius, amount, true);
 	}
 
@@ -242,9 +252,14 @@ void TaintSpecialPower::after(const Coord3D *loc)
 	BfmeThingFB *ocl = data->m_taintOCL;
 	if (ocl != 0)
 	{
-		Coord3D oclPoint = *loc;
+		Coord3D oclPoint;
+		oclPoint.x = loc->x;
+		oclPoint.y = loc->y;
+		oclPoint.z = loc->z;
 		ocl->bfmeTellFB(owner, &oclPoint, 0, 0);
 	}
-	rva0026B950(loc, &data->m_taintObject);
+	union { void *raw; void (TaintSpecialPower::*fn)(const Coord3D *, void *); } bind;
+	bind.raw = (void *)j_000262bf;
+	(this->*bind.fn)(loc, &data->m_taintObject);
 	TheTaintManager->bfmeApplyCircleWorld((const BfmePointFC *)loc, radius, 0, true);
 }
