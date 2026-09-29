@@ -744,3 +744,4 @@ game/GameEngine/Source/GameClient/MessageStream/HotKeyTranslator_translateGameMe
 game/GameEngine/Source/GameClient/GUI/Rva00517720ClientStateName.cpp	StringBase	Functions: FAIL 1/1
 game/GameEngine/Source/GameClient/GUI/WindowFieldParsersBfme.cpp	UnicodeString	game\GameEngine\Source\GameClient\GUI\WindowFieldParsersBfme.cpp(77) : error C2661: 'AsciiString::set' : no overloaded function takes 2 arguments
 game/GameEngine/Source/GameClient/GUI/WindowFieldParsersBfme.cpp	UnicodeString	game\GameEngine\Source\GameClient\GUI\WindowFieldParsersBfme.cpp(77) : error C2661: 'AsciiString::set' : no overloaded function takes 2 arguments
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenQuitMenuConstructor.cpp	UnicodeString	c:\Users\vvval\desktop\BFME\Open-BFME-1\game\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined

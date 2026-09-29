@@ -328,13 +328,7 @@ BfmeAptScreenQuitMenu::BfmeAptScreenQuitMenu( void *context )
 
 		g_theWindowManager->bfme_showBackground( 2 );
 
-		struct QuitMenuGameLogic
-		{
-			char m_unmodelled[ 0x10C ];
-			int m_gameMode;
-		};
-		QuitMenuGameLogic *gameLogic =
-			*(QuitMenuGameLogic **)0x012F0898;
+		GameLogic *gameLogic = TheBfmeGameLogic;
 		if( gameLogic && ( gameLogic->m_gameMode == 1 ||
 			gameLogic->m_gameMode == 5 ) )
 		{
