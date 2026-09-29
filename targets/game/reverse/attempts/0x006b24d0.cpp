@@ -1,5 +1,5 @@
 // ?rva006B24D0@MilesAudioManager@@QAEXABVAsciiString@@MH@Z
-// partial score=0.14 date=2026-09-28
+// partial score=0.9819 date=2026-09-28
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 //
@@ -16,6 +16,7 @@
 
 #include <list>
 #include <deque>
+#include <vector>
 #include "ascii_string.h"
 
 typedef float Real;
@@ -157,12 +158,7 @@ struct Rva006B24D0Slot
 	char m_pad8[0x38];
 };
 
-struct Rva006B24D0EventVector
-{
-	AudioEventRTS *m_start;
-	AudioEventRTS *m_finish;
-	AudioEventRTS *m_endOfStorage;
-};
+typedef _STL::vector<AudioEventRTS> Rva006B24D0EventVector;
 
 class Rva006AE150Argument;
 class Rva006AE150Owner
@@ -195,7 +191,8 @@ private:
 	__forceinline Real fadedVolume(PlayingAudio *playing)
 	{
 		Real volume = compute((Rva006AE150Argument *)playing->m_audioEventRTS, 1);
-		Real fade = 1.0f - (playing->m_fadeFrame / (Real)m_settings->m_fadeAudioFrames);
+		Rva006B24D0Settings *settings = m_settings;
+		Real fade = 1.0f - (playing->m_fadeFrame / (Real)settings->m_fadeAudioFrames);
 		if (fade < Rva006B24D0Zero)
 			fade = Rva006B24D0Zero;
 		else if (fade > Rva006B24D0One)
@@ -230,14 +227,19 @@ void MilesAudioManager::rva006B24D0(const AsciiString &eventName, Real unused, i
 		playing = *it;
 		if (!playing)
 			continue;
-		if (name.isSet() &&
-			((const StringBase<char> &)playing->m_audioEventRTS->m_eventInfo->getName()).compare(eventName) != 0)
-			continue;
+		if (name.isSet())
+		{
+			AudioEventRTS *event = playing->m_audioEventRTS;
+			const AsciiString &candidateName = event->m_eventInfo->getName();
+			if (((const StringBase<char> &)candidateName).compare(eventName) != 0)
+				continue;
+		}
 		if (playing->m_audioEventRTS->m_category != category)
 			continue;
 		((Rva006AD590Owner *)this)->bfmeAdjustPriorityAndVolume(playing->m_audioEventRTS);
 		Real volume = compute((Rva006AE150Argument *)playing->m_audioEventRTS, 1);
-		Real fade = 1.0f - (playing->m_fadeFrame / (Real)m_settings->m_fadeAudioFrames);
+		Rva006B24D0Settings *settings = m_settings;
+		Real fade = 1.0f - (playing->m_fadeFrame / (Real)settings->m_fadeAudioFrames);
 		if (fade < Rva006B24D0Zero)
 			fade = Rva006B24D0Zero;
 		else if (fade > Rva006B24D0One)
@@ -252,9 +254,13 @@ void MilesAudioManager::rva006B24D0(const AsciiString &eventName, Real unused, i
 		playing = *it;
 		if (!playing)
 			continue;
-		if (name.isSet() &&
-			playing->m_audioEventRTS->m_eventInfo->getName().compare(eventName) != 0)
-			continue;
+		if (name.isSet())
+		{
+			AudioEventRTS *event = playing->m_audioEventRTS;
+			const AsciiString &candidateName = event->m_eventInfo->getName();
+			if (candidateName.compare(eventName) != 0)
+				continue;
+		}
 		if (playing->m_audioEventRTS->m_category != category)
 			continue;
 		H3DSAMPLE sample3D;
@@ -273,7 +279,8 @@ void MilesAudioManager::rva006B24D0(const AsciiString &eventName, Real unused, i
 			continue;
 		((Rva006AD590Owner *)this)->bfmeAdjustPriorityAndVolume(playing->m_audioEventRTS);
 		Real volume = compute((Rva006AE150Argument *)playing->m_audioEventRTS, 1);
-		Real fade = 1.0f - (playing->m_fadeFrame / (Real)m_settings->m_fadeAudioFrames);
+		Rva006B24D0Settings *settings = m_settings;
+		Real fade = 1.0f - (playing->m_fadeFrame / (Real)settings->m_fadeAudioFrames);
 		if (fade < Rva006B24D0Zero)
 			fade = Rva006B24D0Zero;
 		else if (fade > Rva006B24D0One)
@@ -287,16 +294,22 @@ void MilesAudioManager::rva006B24D0(const AsciiString &eventName, Real unused, i
 		playing = *it;
 		if (!playing)
 			continue;
-		if (name.isSet() &&
-			playing->m_audioEventRTS->m_eventInfo->getName().compare(eventName) != 0)
-			continue;
+		if (name.isSet())
+		{
+			AudioEventRTS *event = playing->m_audioEventRTS;
+			const AsciiString &candidateName = event->m_eventInfo->getName();
+			if (candidateName.compare(eventName) != 0)
+				continue;
+		}
 		if (playing->m_audioEventRTS->m_category != category)
 			continue;
 		if (playing->m_audioEventRTS->m_eventInfo->m_type84 == 3)
 			continue;
 		((Rva006AD590Owner *)this)->bfmeAdjustPriorityAndVolume(playing->m_audioEventRTS);
-		Real volume = compute((Rva006AE150Argument *)playing->m_audioEventRTS, 1);
-		Real fade = 1.0f - (playing->m_fadeFrame / (Real)m_settings->m_fadeAudioFrames);
+		AudioEventRTS *event = playing->m_audioEventRTS;
+		Real volume = compute((Rva006AE150Argument *)event, 1);
+		Rva006B24D0Settings *settings = m_settings;
+		Real fade = 1.0f - (playing->m_fadeFrame / (Real)settings->m_fadeAudioFrames);
 		if (fade < Rva006B24D0Zero)
 			fade = Rva006B24D0Zero;
 		else if (fade > Rva006B24D0One)
@@ -325,9 +338,9 @@ void MilesAudioManager::rva006B24D0(const AsciiString &eventName, Real unused, i
 		}
 	}
 
-	Rva006B24D0EventVector &pending = m_pendingEvents[category];
-	AudioEventRTS *end = pending.m_finish;
-	for (AudioEventRTS *event = pending.m_start; event != end; ++event)
+	Rva006B24D0EventVector::iterator end = m_pendingEvents[category].end();
+	Rva006B24D0EventVector::iterator event = m_pendingEvents[category].begin();
+	for (; event != end; ++event)
 	{
 		if (name.isSet() && event->m_eventInfo->getName().compare(eventName) != 0)
 			continue;
