@@ -222,7 +222,7 @@ class Object
 public:
 	ObjectID getID(void) const { return m_id; }
 	Player *getControllingPlayer(void) const;
-	AIUpdateInterface *getAI(void) const { return m_dword204; }
+	AIUpdateInterface *getAI(void) const { return m_ai; }
 	BehaviorModule **getBehaviorModules(void) const { return m_behaviors; }
 	SpecialAbilityUpdate *findSpecialAbilityUpdate(SpecialPowerType type) const;
 
@@ -232,7 +232,7 @@ private:
 	unsigned char m_unmodelled_078[0x1f0 - 0x78];
 	BehaviorModule **m_behaviors;						// +0x1f0 layout_witness
 	unsigned char m_unmodelled_1f4[0x204 - 0x1f4];
-	AIUpdateInterface *m_dword204;						// +0x204 unwitnessed
+	AIUpdateInterface *m_ai;						// +0x204 unwitnessed
 };
 
 // address-derived: retail 0x000E5B30, stdcall (object, out position)
