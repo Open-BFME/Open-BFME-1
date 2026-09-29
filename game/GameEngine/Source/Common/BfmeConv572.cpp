@@ -8,20 +8,20 @@ struct BfmeSubCCA
 struct BfmeOwnerCCA
 {
 	unsigned char m_bfmeHead[0x10];
-	BfmeSubCCA *m_bfmeMid;
+	BfmeSubCCA *m_owner;
 };
 
 class BfmeThingCCA
 {
 public:
-	void bfmeGoCCA(void *spare);
+	void onExit(void *spare);
 	unsigned char m_bfmeHead[0x1c];
-	BfmeOwnerCCA *m_bfmeOwner;
+	BfmeOwnerCCA *m_machine;
 };
 
-void BfmeThingCCA::bfmeGoCCA(void *spare)
+void BfmeThingCCA::onExit(void *spare)
 {
-	BfmeSubCCA *sub = m_bfmeOwner->m_bfmeMid;
+	BfmeSubCCA *sub = m_machine->m_owner;
 	if (sub->m_bfmeFlags & 0x200000u)
 	{
 		sub->m_bfmeFlags &= ~0x200000u;
