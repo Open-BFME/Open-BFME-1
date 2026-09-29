@@ -19,6 +19,10 @@ public:
 
 typedef void DebugDisplayCallback(DebugDisplayInterface *, void *, void *);
 
+extern void j_0002f9f0();
+extern void j_0003413f();
+extern void j_0000d779();
+
 class W3DDisplay
 {
 public:
@@ -42,21 +46,21 @@ private:
 void W3DDisplay::drawCurrentDebugDisplay()
 {
 	if (m_debugDisplayCallback ==
-		reinterpret_cast<DebugDisplayCallback *>(0x0042f9f0))
+		reinterpret_cast<DebugDisplayCallback *>(j_0002f9f0))
 	{
 		drawDisplayStrings();
 		return;
 	}
 
 	if (m_debugDisplayCallback ==
-		reinterpret_cast<DebugDisplayCallback *>(0x0043413f))
+		reinterpret_cast<DebugDisplayCallback *>(j_0003413f))
 	{
 		drawDebugStats();
 		return;
 	}
 
 	if (m_debugDisplayCallback ==
-		reinterpret_cast<DebugDisplayCallback *>(0x0040d779))
+		reinterpret_cast<DebugDisplayCallback *>(j_0000d779))
 	{
 		drawThirdDebugDisplay();
 		return;

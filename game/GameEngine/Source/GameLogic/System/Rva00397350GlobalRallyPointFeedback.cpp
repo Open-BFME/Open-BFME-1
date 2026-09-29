@@ -171,10 +171,12 @@ struct Rva00397350ResolveState
 	Int m_resolvedCount;
 };
 
-#define TheGameText (*(GameTextInterface **)0x012F147C)
-#define TheInGameUI (*(InGameUI **)0x012F148C)
-#define TheAudioClientUpdate (*(AudioClient **)0x012ED668)
-#define TheControlBar (*(ControlBar **)0x012F33F8)
+extern GameTextInterface *TheGameText;
+extern InGameUI *TheInGameUI;
+class AudioManager;
+extern AudioManager *TheAudio;
+#define TheAudioClientUpdate ((AudioClient *)TheAudio)
+extern ControlBar *TheControlBar;
 
 void Rva00397350GlobalRallyPointFeedback(
 	Object *object, const Coord3D &position)

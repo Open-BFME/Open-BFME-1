@@ -217,10 +217,14 @@ private:
 	int m_stallCount;
 };
 
-#define TheBFMEGameLogicFrame (*(BFMEGameLogicFrame **)0x012F0898)
-#define BFMEStallStartTime (*(unsigned int *)0x012F7718)
-#define BFMELastAdvanceTime (*(unsigned int *)0x012F771C)
-#define BFMELastStallFrame (*(unsigned int *)0x012F7728)
+#define TheBFMEGameLogicFrame ((BFMEGameLogicFrame *)TheGameLogic)
+extern unsigned int g_012F7718;
+extern unsigned int g_012F771C;
+extern unsigned int g_012F7728;
+
+#define BFMEStallStartTime g_012F7718
+#define BFMELastAdvanceTime g_012F771C
+#define BFMELastStallFrame g_012F7728
 
 int BFMENativeNetwork::getFrameAdvanceCount(void)
 {

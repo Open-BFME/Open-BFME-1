@@ -3,8 +3,10 @@
 //
 // The blob-service caller supplies an encoded length, encoded input, and an
 // output buffer. Retail accepts complete four-character packets, translates
-// through the executable's reverse table at VA 0x0112C195, and treats '=' as
+// through the executable's reverse table at VA 0x0112C1C0 (indexed from '+'), and treats '=' as
 // the terminator for one- and two-byte tails.
+
+extern const char g_0112C1C0[];
 
 int rva007FF250Decode(int length, const char *source, unsigned char *destination)
 {
@@ -25,10 +27,10 @@ int rva007FF250Decode(int length, const char *source, unsigned char *destination
 			if (code0 > 'z' || code1 > 'z' || code2 > 'z' || code3 > 'z')
 				return 0;
 
-			code0 = ((const char *)0x0112C195)[code0];
-			code1 = ((const char *)0x0112C195)[code1];
-			code2 = ((const char *)0x0112C195)[code2];
-			code3 = ((const char *)0x0112C195)[code3];
+			code0 = g_0112C1C0[code0 - '+'];
+			code1 = g_0112C1C0[code1 - '+'];
+			code2 = g_0112C1C0[code2 - '+'];
+			code3 = g_0112C1C0[code3 - '+'];
 			length -= 4;
 			if (code0 < 0 || code1 < 0)
 				return 0;
