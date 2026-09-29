@@ -94,7 +94,7 @@ void CastleBehaviorModuleData::parseFactionDecal(INI *ini, void *instance, void 
 		_bfme_debugRecordCallsite(1);
 		TheBfmeAwakenDebug->slot60();
 		BfmeAwakenLog *log = TheBfmeAwakenDebug->slot6C(0, 0);
-		log->slot38((const char *)0x010E9C68)->slot4C(2);
+		log->slot38("A CastleBehavior entry calls for a FactionDecal.\n This is an obsolete feature, which will be removed soon. \nYou should expect bad results. \nPlease use an object with W3DFloorDraw, instead. -MLo")->slot4C(2);
 	}
 
 	Gen_uw_00012cbf entry;

@@ -9,6 +9,9 @@ public:
 	UpdateSleepTime helper(int, void *, int, int);
 };
 
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
 class PoisonedBehavior { public: virtual UpdateSleepTime update(void); };
 
 // ?update@PoisonedBehavior@@UAE?AW4UpdateSleepTime@@XZ
@@ -17,7 +20,7 @@ UpdateSleepTime PoisonedBehavior::update(void)
 	void *object = *(void **)((unsigned char *)this + 0x18);
 	PoisonedBehaviorOwnerShim *owner = (PoisonedBehaviorOwnerShim *)this;
 	owner = (PoisonedBehaviorOwnerShim *)((unsigned char *)owner - 0x10);
-	if (object && object != *(void **)((unsigned char *)(*(void **)0x012F0898) + 0x3C))
+	if (object && object != *(void **)((unsigned char *)TheGameLogic + 0x3C))
 		return owner->helper(*(int *)((unsigned char *)owner + 0x24), object,
 			0x3FFFFFFF, 0x3FFFFFFF);
 	return (UpdateSleepTime)0x3FFFFFFF;

@@ -58,7 +58,7 @@ private:
 	SpawnIDNode *m_spawnIDs;
 };
 
-#define TheGameLogic (*(GameLogic **)0x012f0898)
+extern GameLogic *TheGameLogic;
 
 #pragma comment(linker, "/alternatename:?destroyObject@GameLogic@@QAEXPAVObject@@@Z=?j_0001d0de@@YAXXZ")
 

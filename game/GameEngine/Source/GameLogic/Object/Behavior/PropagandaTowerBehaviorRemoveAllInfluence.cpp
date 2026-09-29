@@ -53,7 +53,10 @@ private:
     Rva00203570Tracker *m_insideList;
 };
 
-#define TheLogic (*(Rva00203570Logic **)0x012F0898)
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+#define TheLogic ((Rva00203570Logic *)TheGameLogic)
 
 void PropagandaTowerBehavior::removeAllInfluence()
 {
