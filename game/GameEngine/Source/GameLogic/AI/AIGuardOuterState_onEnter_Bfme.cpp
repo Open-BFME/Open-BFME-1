@@ -109,7 +109,7 @@ class FactorsR0015C7A0
 {
 public:
 	unsigned char m_pad00[0x3c];
-	UnsignedInt m_field3c;
+	UnsignedInt m_guardChaseUnitFrames;
 };
 
 class AIRootR0015C7A0
@@ -136,7 +136,7 @@ public:
 	Int m_conditionsToConsider;
 	Coord3D m_center;
 	Real m_radiusSqr;
-	UnsignedInt m_field18;
+	UnsignedInt m_attackGiveUpFrame;
 };
 
 // Retail calls AIAttackState through ILT 0x0000BF3C.
@@ -288,9 +288,9 @@ StateReturnType AIGuardOuterState::onEnter()
 
 	m_exitConditions.m_center = position;
 	m_exitConditions.m_radiusSqr = range * range;
-	m_exitConditions.m_field18 =
+	m_exitConditions.m_attackGiveUpFrame =
 		TheGameLogic->getFrame() +
-		((AIRootR0015C7A0 *)TheAI)->getAiData()->m_field3c;
+		((AIRootR0015C7A0 *)TheAI)->getAiData()->m_guardChaseUnitFrames;
 	m_exitConditions.m_conditionsToConsider = 7;
 
 	m_attackState = new CtorTargetR0015C7A0(

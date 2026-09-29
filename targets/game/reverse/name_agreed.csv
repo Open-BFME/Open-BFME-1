@@ -127,3 +127,5 @@ game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value40,m_opac
 game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value48,m_opacityPeak,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value50,m_opacityEndFrame,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value54,m_opacityEnd,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|member||m_field3c,m_guardChaseUnitFrames,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|member||m_field18,m_attackGiveUpFrame,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
