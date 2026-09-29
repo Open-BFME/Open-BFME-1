@@ -1,15 +1,28 @@
-// ?_bfme_loadMenu@BfmeAptScreenQuitMenu@@QAEXPBD@Z
-// partial score=0.79 date=2026-09-16
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// BfmeAptScreenQuitMenu::_bfme_loadMenu and _bfme_saveMenu, retail 0x005694E0
-// and 0x00569420, 154 bytes each. The constructor in
-// BfmeAptScreenQuitMenuConstructor.cpp pushes the selector strings
-// "AptQuitMenu::LoadMenu" and "AptQuitMenu::SaveMenu" and loads each body's
-// ILT thunk right after, which is what names the two bodies. They differ in
-// one byte: the first argument to showAptSaveLoad is 2 for load and 3 for save.
+// partial score=0.474 date=2026-09-29
 //
-// Each callback picks the APT save/load screen when the shift key agrees with
-// the global flag at GlobalData+0xA9E, and the old window layout otherwise.
+// BfmeAptScreenQuitMenu::_bfme_saveMenu, retail 0x00569420, 154 bytes, and
+// BfmeAptScreenQuitMenu::_bfme_loadMenu, retail 0x005694E0, 154 bytes.
+// The Apt selector scanner names both: the QuitMenu constructor pushes the
+// selector strings "AptQuitMenu::SaveMenu" and "AptQuitMenu::LoadMenu" and
+// loads each body's ILT thunk within about eighty bytes, the same shape as
+// the landed BfmeAptScreenMainMenu::_bfme_credits row. Neither body touches
+// `this`, so the class carries no modelled members here; AptQuitMenu.cpp
+// keeps the full layout for the destructor.
+//
+// The bodies are structurally identical apart from one literal: 3 for save,
+// 2 for load, passed as showAptSaveLoad's first argument. Both read a debug
+// toggle byte off TheWritableGlobalData at +0xA9E and XOR it against
+// Keyboard::isShift(); when that combined flag is set they pick a
+// showAptSaveLoad mode from TheGameLogic's m_gameMode (LAN/Internet -> 4,
+// Skirmish -> 2, else -> 1) and return without touching the window layout.
+// Otherwise they pull Shell's save/load screen layout and run its normal
+// open sequence (runInit, hide(false), bringForward). ShowAptSaveLoad.cpp
+// and Shell_popImmediate.cpp already witness showAptSaveLoad and the
+// WindowLayout vtable order this reuses.
+
+typedef int Int;
+typedef bool Bool;
 
 class Keyboard
 {
@@ -17,103 +30,114 @@ public:
 	bool isShift();
 };
 
-struct Rva006C9270GlobalData
+extern Keyboard *TheKeyboard;	// ?TheKeyboard@@3PAVKeyboard@@A @ 0x012F4C50
+
+// Address-derived: BFME adds this byte past ZH's GlobalData layout, so no ZH
+// member name witnesses offset 0xA9E.
+class GlobalData
 {
-	unsigned char m_head[ 0xA9E ];
+public:
+	char m_head[ 0xa9e ];
 	bool m_flagA9E;
+};
+
+extern GlobalData *TheWritableGlobalData;	// ?TheWritableGlobalData@@3PAVGlobalData@@A @ 0x012ED5C8
+
+enum GameMode
+{
+	GAME_SINGLE_PLAYER,
+	GAME_LAN,
+	GAME_SKIRMISH,
+	GAME_REPLAY,
+	GAME_SHELL,
+	GAME_INTERNET
 };
 
 class GameLogic
 {
 public:
-	char m_unmodelled[ 0x10C ];
+	char m_unmodelled[ 0x10c ];
 	int m_gameMode;
 };
 
-class GameWindow;
-class WindowLayout;
+extern GameLogic * const TheGameLogic;
+
+void showAptSaveLoad( void *arg0, int flags, const volatile char extra );
 
 class WindowLayout
 {
 public:
-	virtual void runInit( void *userData );
+	virtual void runInit( void * ) = 0;
 	virtual ~WindowLayout();
-	virtual void runUpdate( void *userData );
-	virtual void runShutdown( void *userData );
-	virtual void hide( int hide );
-	virtual void bringForward( void );
-	virtual void addWindow( GameWindow *window );
-	virtual void removeWindow( GameWindow *window );
-	virtual void destroyWindows( void );
+	virtual void runUpdate( void * ) = 0;
+	virtual void runShutdown( void * ) = 0;
+	virtual void hide( Bool ) = 0;
+	virtual void bringForward() = 0;
 };
 
 class Shell
 {
 public:
-	WindowLayout *getSaveLoadMenuLayout( void );
+	WindowLayout *getSaveLoadMenuLayout();
 };
 
-extern Keyboard *TheKeyboard;
-extern Rva006C9270GlobalData *TheWritableGlobalData;
-extern GameLogic *TheBfmeGameLogic;
 extern Shell *TheShell;
-
-// Code/GameEngine/Source/GameClient/GUI/ShowAptSaveLoad.cpp, retail 0x0056BFA0.
-void showAptSaveLoad( void *arg0, int flags, const volatile char extra );
 
 class BfmeAptScreenQuitMenu
 {
 public:
-	void _bfme_loadMenu( const char *name );
 	void _bfme_saveMenu( const char *name );
+	void _bfme_loadMenu( const char *name );
 };
-
-void BfmeAptScreenQuitMenu::_bfme_loadMenu( const char *name )
-{
-	(void)name;
-	bool useApt = ( TheWritableGlobalData->m_flagA9E == 0 );
-	if ( TheKeyboard->isShift() )
-		useApt = ( useApt == 0 );
-	if ( useApt )
-	{
-		int mode = TheBfmeGameLogic->m_gameMode;
-		int flags;
-		if ( mode == 1 || mode == 5 )
-			flags = 4;
-		else
-			flags = ( mode == 2 ) ? 2 : 1;
-		showAptSaveLoad( (void *)2, flags, 1 );
-	}
-	else
-	{
-		WindowLayout *layout = TheShell->getSaveLoadMenuLayout();
-		layout->runInit( 0 );
-		layout->hide( 0 );
-		layout->bringForward();
-	}
-}
 
 void BfmeAptScreenQuitMenu::_bfme_saveMenu( const char *name )
 {
 	(void)name;
-	bool useApt = ( TheWritableGlobalData->m_flagA9E == 0 );
+	Bool useShift = ( TheWritableGlobalData->m_flagA9E == 0 );
 	if ( TheKeyboard->isShift() )
-		useApt = ( useApt == 0 );
-	if ( useApt )
+		useShift = !useShift;
+
+	if ( useShift )
 	{
-		int mode = TheBfmeGameLogic->m_gameMode;
-		int flags;
-		if ( mode == 1 || mode == 5 )
-			flags = 4;
-		else
-			flags = ( mode == 2 ) ? 2 : 1;
-		showAptSaveLoad( (void *)3, flags, 1 );
+		Int gameMode = TheGameLogic->m_gameMode;
+		if ( gameMode != GAME_LAN && gameMode != GAME_INTERNET )
+		{
+			int flags = ( gameMode == GAME_SKIRMISH ) ? 2 : 1;
+			showAptSaveLoad( (void *)3, flags, 1 );
+			return;
+		}
+		showAptSaveLoad( (void *)3, 4, 1 );
+		return;
 	}
-	else
+
+	WindowLayout *layout = TheShell->getSaveLoadMenuLayout();
+	layout->runInit( 0 );
+	layout->hide( false );
+	layout->bringForward();
+}
+
+void BfmeAptScreenQuitMenu::_bfme_loadMenu( const char *name )
+{
+	(void)name;
+	Bool useShift = ( TheWritableGlobalData->m_flagA9E == 0 );
+	if ( TheKeyboard->isShift() )
+		useShift = !useShift;
+
+	if ( useShift )
 	{
-		WindowLayout *layout = TheShell->getSaveLoadMenuLayout();
-		layout->runInit( 0 );
-		layout->hide( 0 );
-		layout->bringForward();
+		Int gameMode = TheGameLogic->m_gameMode;
+		if ( gameMode == GAME_LAN || gameMode == GAME_INTERNET )
+		{
+			showAptSaveLoad( (void *)2, 4, 1 );
+			return;
+		}
+		int flags = ( gameMode == GAME_SKIRMISH ) ? 2 : 1;
+		showAptSaveLoad( (void *)2, flags, 1 );
+		return;
 	}
+
+	WindowLayout *layout = TheShell->getSaveLoadMenuLayout();
+	layout->runInit( 0 );
+	layout->hide( false );
+	layout->bringForward();
 }
