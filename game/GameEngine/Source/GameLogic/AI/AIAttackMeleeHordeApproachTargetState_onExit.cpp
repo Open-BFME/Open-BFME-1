@@ -110,7 +110,7 @@ public:
 extern void j_0002181e();
 extern void j_00048ca7();
 
-#define BFME_ATTACK_MELEE_HORDE_APPROACH_DISTANCE_SQUARED (*(Real *)0x01099378)
+#define BFME_ATTACK_MELEE_HORDE_APPROACH_DISTANCE_SQUARED (12.5f)
 
 class AIAttackMeleeHordeApproachTargetState : public AIInternalMoveToState
 {

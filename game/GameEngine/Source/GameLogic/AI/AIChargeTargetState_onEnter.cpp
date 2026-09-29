@@ -188,7 +188,7 @@ StateReturnType AIChargeTargetState::onEnter()
 				sound.setObjectID(source->getID());
 				if (source->getControllingPlayer())
 					sound.setPlayerIndex(source->getControllingPlayer()->getPlayerIndex());
-				(*reinterpret_cast<AudioManager **>(0x012ED668))->addAudioEvent(&sound);
+				TheAudio->addAudioEvent(&sound);
 			}
 		}
 	}

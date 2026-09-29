@@ -67,6 +67,7 @@ extern "C" BfmeFormattedText *__cdecl bfmeFormatText(
 	BfmeFormattedText *result, int tag, const char *format, ...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
+extern "C" unsigned char g_xferExceptionThrowInfo[];
 
 class Particle
 {
@@ -91,7 +92,7 @@ void Particle::loadPostProcess()
 		{
 			BfmeFormattedText error;
 			bfmeFormatText(&error, 5, 0);
-			_CxxThrowException(&error, (void *)0x011DFE5C);
+			_CxxThrowException(&error, g_xferExceptionThrowInfo);
 		}
 	}
 }

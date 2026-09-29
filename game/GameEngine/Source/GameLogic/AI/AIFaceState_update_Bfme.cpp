@@ -112,7 +112,7 @@ StateReturnType AIFaceState::update()
 	} relativeAngleCast;
 	relativeAngleCast.asVoid = (void *)j_00049413;
 	Real relativeAngle = (owner->*relativeAngleCast.asMember)(position);
-	if (fabs(relativeAngle) < *(const Real *)0x010977F0)
+	if (fabs(relativeAngle) < 0.035f)
 		return STATE_SUCCESS;
 
 	if (m_canTurnInPlace)

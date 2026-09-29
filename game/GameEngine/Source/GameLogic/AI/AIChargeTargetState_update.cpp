@@ -240,7 +240,8 @@ static __forceinline void clearAdjustDestinationFlag(AIChargeTargetState *state)
 	(reinterpret_cast<unsigned char *>(state))[0x4c] = 0;
 }
 
-#define BFME_THE_AI (*(AI **)0x012EF214)
+extern AI *TheAI;
+#define BFME_THE_AI (TheAI)
 
 
 
