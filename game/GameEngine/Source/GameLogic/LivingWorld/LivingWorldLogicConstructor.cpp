@@ -1,62 +1,18 @@
-// ??0LivingWorldLogic@@QAE@XZ
-// partial score=0.6 date=2026-09-26
-// ?d_003c2fc0@@YAXXZ
-// Retry body for retail 0x003C2FC0, with the EH-proven Snapshot base.
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
+// LivingWorldLogic constructor, retail 0x003C2FC0 (394 bytes); bases and members follow the retail unwind map.
 
+#include <string.h>
 #include <list>
 #include <vector>
 #include "ascii_string.h"
+#include "unicode_string.h"
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-class SubsystemInterface
-{
-public:
-	SubsystemInterface();
-	virtual ~SubsystemInterface();
-	virtual void init() = 0;
-	virtual Bool loadIniFilesFromLegend() { return false; }
-	virtual void postProcessLoad() {}
-	virtual void reset() = 0;
-	virtual void update() = 0;
-	virtual void draw() {}
-	virtual void slot7() {}
-	virtual void slot8() {}
-
-private:
-	AsciiString m_name;
-};
-
-class Snapshot
-{
-public:
-	Snapshot() {}
-	virtual ~Snapshot();
-	virtual const char *getSnapshotName() = 0;
-	virtual void loadPostProcess() = 0;
-	virtual void doXfer(void *) = 0;
-};
-
-class UnicodeString
-{
-public:
-	UnicodeString() : m_text(0) {}
-	UnicodeString(const UnicodeString &that)
-	{
-		((StringBase<wchar_t> *)this)->StringBase<wchar_t>::StringBase(
-			*(const StringBase<wchar_t> *)&that);
-	}
-	~UnicodeString()
-	{
-		((StringBase<wchar_t> *)this)->releaseBuffer();
-	}
-
-private:
-	void *m_text;
-};
+#include "GameEngine/Source/Common/System/subsystem_interface.h"
+#include "GameEngine/Source/Common/System/snapshot.h"
 
 struct Rva003C15C0Element
 {
@@ -73,6 +29,7 @@ struct Rva003C15C0Element
 
 typedef _STL::list<Rva003C15C0Element> Rva003C15C0List;
 
+// Region manager; its constructor 0x003C8880 is landed under this name.
 class Rva003C8880
 {
 	void *m_vptr;
@@ -123,6 +80,8 @@ struct Rva000DD310Entry
 	~Rva000DD310Entry();
 };
 
+// Retail destroys +0x0C, +0x38, +0x50/+0x5C and +0x94 through four distinct
+// 4-byte-element vector instantiations whose element types are not recovered.
 typedef _STL::vector<int> Rva003C38Vector;
 typedef _STL::vector<int> Rva003C0CVector;
 typedef _STL::vector<int> Rva003C50Vector;
@@ -147,46 +106,29 @@ private:
 	UnsignedInt m_wordC;
 };
 
-class Rva003CA0Tail
+// Six words at +0xA8 cleared as one block before the list is built.
+struct Rva003CA8Block
 {
-public:
-	Rva003CA0Tail()
-		: m_a0(1), m_a4(0), m_a8(0), m_ac(0)
-		, m_b0(0), m_b4(0), m_b8(0), m_bc(0)
-		, m_list(0), m_c4(0), m_c8(0), m_cc(0)
-		, m_d0(0), m_d4(0), m_d8(0)
-	{
-	}
-
-private:
-	UnsignedInt m_a0;
-	UnsignedInt m_a4;
 	UnsignedInt m_a8;
 	UnsignedInt m_ac;
 	UnsignedInt m_b0;
 	UnsignedInt m_b4;
 	UnsignedInt m_b8;
 	UnsignedInt m_bc;
-	Rva003C15C0List m_list;
-	UnsignedInt m_c4;
-	unsigned char m_c8;
-	unsigned char m_padC9[3];
-	UnsignedInt m_cc;
-	UnsignedInt m_d0;
-	UnsignedInt m_d4;
-	UnsignedInt m_d8;
+
+	Rva003CA8Block() { memset(this, 0, sizeof(*this)); }
 };
 
 class LivingWorldLogic : public SubsystemInterface, public Snapshot
 {
 public:
 	LivingWorldLogic();
-	virtual void init() {}
-	virtual void reset() {}
-	virtual void update() {}
-	virtual const char *getSnapshotName() { return 0; }
-	virtual void loadPostProcess() {}
-	virtual void doXfer(void *) {}
+	virtual void init();
+	virtual void reset();
+	virtual void update();
+	virtual const char *GetSnapshotName();
+	virtual void LoadPostProcess();
+	virtual void DoXfer(Xfer &xfer);
 
 private:
 	Rva003C0CVector m_at0c;
@@ -218,7 +160,17 @@ private:
 	Rva003C84Vector m_at84;
 	UnsignedInt m_at90;
 	Rva003C94Vector m_at94;
-	Rva003CA0Tail m_atA0;
+	UnsignedInt m_a0;
+	UnsignedInt m_a4;
+	Rva003CA8Block m_atA8;
+	Rva003C15C0List m_list;
+	UnsignedInt m_c4;
+	unsigned char m_c8;
+	unsigned char m_padC9[3];
+	UnsignedInt m_cc;
+	UnsignedInt m_d0;
+	UnsignedInt m_d4;
+	UnsignedInt m_d8;
 };
 
 // ??0LivingWorldLogic@@QAE@XZ
@@ -247,7 +199,16 @@ LivingWorldLogic::LivingWorldLogic()
 	, m_at84()
 	, m_at90(1)
 	, m_at94()
-	, m_atA0()
+	, m_a0(1)
+	, m_a4(0)
+	, m_atA8()
+	, m_list(0)
+	, m_c4(0)
+	, m_c8(0)
+	, m_cc(0)
+	, m_d0(0)
+	, m_d4(0)
+	, m_d8(0)
 {
 	m_regionManager = new Rva003C8880();
 }
