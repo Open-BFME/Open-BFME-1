@@ -10388,5 +10388,15 @@
   "after_sha256": "469fed3b624b46c009e3e4b7113d2bed70f49fc3d233af21c0a1df066a3018e8",
   "evidence": "targets/game/reverse/identity_evidence/0x009f63d0-wide-result-abi.md",
   "reason": "The edited source replaces the synthetic owner BfmeWideResultSource with the EA-named PartitionManagerImpl. The token matcher pairs that removed declaration with the added Rva009F2AB0Mask filter helper, but those types have different roles."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "TooltipUpgrade",
+  "new_name": "Rva00418B50Owner",
+  "before_sha256": "f7f22c8a57509a71318cedc890d050bcbe32a252f7fb53c637e4dce6b2fe9fff",
+  "after_sha256": "3c0a0999f79552e7a2cd0f8b118d9226dbb6f794dcfd2970a7c135a75e737b5b",
+  "evidence": "targets/game/reverse/identity_evidence/0x00418b50.md",
+  "reason": "The body ends in ret 4, installs no vftable and compares its argument with the literal ReferenceDisplayName, so it is not the TooltipUpgrade destructor. The owning class is unproven, so it takes an address-derived name."
  }
 ]
