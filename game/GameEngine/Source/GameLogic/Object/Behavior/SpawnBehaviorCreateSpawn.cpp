@@ -1,3 +1,4 @@
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
 // SpawnBehavior::createSpawn, RVA 0x0020C3B0..0x0020C6EB (740 bytes).
 //
 // IDENTITY. The matched caller SpawnBehaviorUpdate.cpp:212 spells the call
@@ -44,11 +45,7 @@ typedef float Real;
 class Team;
 class Object;
 class Drawable;
-class AsciiString
-{
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 class ThingTemplate
 {
 public:
@@ -276,7 +273,7 @@ public:
 	unsigned char m_canReclaimOrphans;
 	unsigned char m_aggregateHealth;
 	unsigned char m_exitByBudding;
-	unsigned char m_pad18;
+	unsigned char m_spawnedRequireSpawner;
 	unsigned char m_unknown19;
 	unsigned char m_pad1a[6];
 	AsciiString *m_spawnTemplateNameData;
