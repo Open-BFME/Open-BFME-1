@@ -100,7 +100,8 @@ static const CategoryNameRecord CategoryListName[] =
 	{"DEBUG", 7}
 };
 
-#define comboBoxCategoryList (*(GameWindow **)0x012F3AC0)
+extern GameWindow *g_012F3AC0;
+#define comboBoxCategoryList g_012F3AC0
 
 void populateCategoryBox()
 {

@@ -233,7 +233,9 @@ public:
 	virtual void slot2C() = 0;
 	virtual void slot30(unsigned int, int, int) = 0;
 };
-#define TheAudioClientUpdate (*(Rva0111C0C0AudioSlotView **)0x012ED668)
+class AudioManager;
+extern AudioManager *TheAudio;
+#define TheAudioClientUpdate (*(Rva0111C0C0AudioSlotView **)&TheAudio)
 
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////////////////////////
 extern Bool DontShowMainMenu; //KRIS

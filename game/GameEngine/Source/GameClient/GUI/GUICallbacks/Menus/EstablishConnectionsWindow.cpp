@@ -61,6 +61,8 @@ private:
 	void *m_data;
 };
 
+extern const char Rva006A16B0Empty[];
+
 class BFMERetailAsciiString : private StringBase<char>
 {
 public:
@@ -71,7 +73,7 @@ public:
 	~BFMERetailAsciiString() {}
 	const char *str() const
 	{
-		return m_data ? (const char *)((const char *)m_data + 8) : (const char *)0x0107388b;
+		return m_data ? (const char *)((const char *)m_data + 8) : Rva006A16B0Empty;
 	}
 };
 
