@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="880" height="262" viewBox="0 0 880 262" role="img" aria-labelledby="title desc">
   <title id="title">BFME 1: 81.96% byte-matched, 9.22% linked</title>
-  <desc id="desc">7,952,127 of 9,702,173 code bytes rebuild to the original exe's exact bytes; 894,965 of them are in files that link cleanly (measured 2026-09-29). Whole game 45.59%: 9.22% linked, 72.74% byte-matched but not linked yet, 18.04% still original bytes.</desc>
+  <desc id="desc">7,952,287 of 9,702,173 code bytes rebuild to the original exe's exact bytes; 894,965 of them are in files that link cleanly (measured 2026-09-29). Whole game 45.59%: 9.22% linked, 72.74% byte-matched but not linked yet, 18.04% still original bytes.</desc>
   <style>
     .card { fill: #0d1117; stroke: #30363d; } .track { fill: #21262d; }
     .strong { fill: #f0f6fc; } .muted { fill: #8b949e; } .up { fill: #3fb950; } .down { fill: #f85149; }
@@ -21,7 +21,7 @@
     <text x="28" y="64" class="strong" font-size="15" font-weight="600">Byte-matched</text>
     <text x="852" y="64" class="strong" font-size="20" font-weight="700" text-anchor="end">81.96%</text>
     <rect class="track" x="28" y="74" width="824" height="14" rx="7"/>
-    <rect x="28" y="74" width="675.37" height="14" rx="7" fill="#2ea043"/>
+    <rect x="28" y="74" width="675.38" height="14" rx="7" fill="#2ea043"/>
     <text x="28" y="116" class="strong" font-size="15" font-weight="600">Linked</text>
     <text x="852" y="116" class="strong" font-size="20" font-weight="700" text-anchor="end">9.22%</text>
     <rect class="track" x="28" y="126" width="824" height="14" rx="7"/>
@@ -30,7 +30,7 @@
     <text x="852" y="168" class="strong" font-size="20" font-weight="700" text-anchor="end">45.59%</text>
     <rect class="track" x="28" y="180" width="824" height="18" rx="9"/>
     <g clip-path="url(#whole)">
-      <rect x="28" y="180" width="375.69" height="18" fill="#2ea043"/>
+      <rect x="28" y="180" width="375.70" height="18" fill="#2ea043"/>
       <rect x="28" y="180" width="76.01" height="18" fill="url(#dots)"/>
     </g>
     <rect x="28" y="206" width="10" height="10" rx="2" fill="url(#dots)"/><text x="44" y="215" class="muted" font-size="12.5">linked 9.22%</text>
