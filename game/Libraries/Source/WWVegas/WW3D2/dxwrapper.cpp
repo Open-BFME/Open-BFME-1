@@ -452,29 +452,30 @@ bool DX8Wrapper::Init(void *hwnd, bool lite)
 #undef BFME_RVA_G8
 
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/DX8Wrapper_ShutdownMethodThunk.cpp
-// ?Shutdown@DX8Wrapper@@ present-unmatched
+class Rva00949D00Renderer { public: ~Rva00949D00Renderer(); };
+struct BfmeDX8CapsMaxTexturesView
+{
+	char unused[0x278];
+	int max_textures;
+};
+
+// Retail DX8Wrapper::Shutdown starts at RVA 0x0090B640.
 void DX8Wrapper::Shutdown(void)
 {
 	if (D3DDevice) {
-
-		Set_Render_Target ((IDirect3DSurface8 *)NULL);
+		Set_Render_Target((IDirect3DSurface8 *)NULL);
 		Release_Device();
 	}
 
 	if (D3DInterface) {
 		D3DInterface->Release();
-		D3DInterface=NULL;
-
+		D3DInterface = NULL;
 	}
 
-	if (CurrentCaps)
-	{
-		int max=CurrentCaps->Get_Max_Textures_Per_Pass();
-		for (int i = 0; i < max; i++) 
-		{
-			if (Textures[i]) 
-			{
+	if (CurrentCaps) {
+		int max = ((BfmeDX8CapsMaxTexturesView *)CurrentCaps)->max_textures;
+		for (int i = 0; i < max; i++) {
+			if (Textures[i]) {
 				Textures[i]->Release();
 				Textures[i] = NULL;
 			}
@@ -482,8 +483,8 @@ void DX8Wrapper::Shutdown(void)
 	}
 
 	if (D3DInterface) {
-		UINT newRefCount=D3DInterface->Release();
-		D3DInterface=NULL;
+		UINT newRefCount = D3DInterface->Release();
+		D3DInterface = NULL;
 	}
 
 	if (D3D8Lib) {
@@ -491,12 +492,13 @@ void DX8Wrapper::Shutdown(void)
 		D3D8Lib = NULL;
 	}
 
-	_RenderDeviceNameTable.Clear();		 // note - Delete_All() resizes the vector, causing a reallocation.  Clear is better. jba.
+	_RenderDeviceNameTable.Clear();
 	_RenderDeviceShortNameTable.Clear();
-	_RenderDeviceDescriptionTable.Clear();	
+	_RenderDeviceDescriptionTable.Clear();
 
-	DX8Caps::Shutdown();
-	IsInitted = false;		// 010803 srj
+	delete *reinterpret_cast<Rva00949D00Renderer **>(&TheDX8MeshRenderer);
+	*reinterpret_cast<Rva00949D00Renderer **>(&TheDX8MeshRenderer) = NULL;
+	IsInitted = false;
 }
 
 // ?Do_Onetime_Device_Dependent_Inits@DX8Wrapper@@ present-unmatched
@@ -1019,45 +1021,6 @@ bool DX8Wrapper::Reset_Device(bool reload_assets)
 	}
 	WWDEBUG_SAY(("Device reset failed\n"));
 	return false;
-}
-
-// ?Release_Device@DX8Wrapper@@ present-unmatched
-void DX8Wrapper::Release_Device(void)
-{
-	if (D3DDevice) {
-
-		for (int a=0;a<MAX_TEXTURE_STAGES;++a)
-		{	//release references to any textures that were used in last rendering call
-			DX8CALL(SetTexture(a,NULL));
-		}
-
-		DX8CALL(SetStreamSource(0, NULL, 0));	//release reference count on last rendered vertex buffer
-		DX8CALL(SetIndices(NULL,0));	//release reference count on last rendered index buffer
-
-
-		/*
-		** Release the current vertex and index buffers
-		*/
-		for (unsigned i=0;i<MAX_VERTEX_STREAMS;++i) 
-		{
-			if (render_state.vertex_buffers[i]) render_state.vertex_buffers[i]->Release_Engine_Ref();
-			REF_PTR_RELEASE(render_state.vertex_buffers[i]);
-		}
-		if (render_state.index_buffer) render_state.index_buffer->Release_Engine_Ref();
-		REF_PTR_RELEASE(render_state.index_buffer);
-
-		/*
-		** Shutdown all subsystems
-		*/
-		Do_Onetime_Device_Dependent_Shutdowns();
-
-		/*
-		** Release the device
-		*/
-
-		D3DDevice->Release();
-		D3DDevice=NULL;
-	}
 }
 
 // ?Enumerate_Devices@DX8Wrapper@@ present-unmatched

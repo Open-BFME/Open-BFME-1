@@ -1,37 +1,6 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /Iinputs/reference/shims/dx8wrapper /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+#include "dx8wrapper.h"
 // The Shutdown caller at 0x0090B640 invokes this device-release helper.
-
-class VertexBufferClass
-{
-public:
-	void Release_Engine_Ref() const;
-	void Release_Ref()
-	{
-		--m_numRefs;
-		if( m_numRefs == 0 )
-			Delete_This();
-	}
-	virtual void Delete_This() = 0;
-
-private:
-	int m_numRefs;
-};
-
-class IndexBufferClass
-{
-public:
-	void Release_Engine_Ref() const;
-	void Release_Ref()
-	{
-		--m_numRefs;
-		if( m_numRefs == 0 )
-			Delete_This();
-	}
-	virtual void Delete_This() = 0;
-
-private:
-	int m_numRefs;
-};
 
 struct Rva006C9270Device;
 
@@ -60,8 +29,8 @@ extern void d_00907960( void );
 extern VertexBufferClass *Rva01341120VertexBuffers[];
 extern IndexBufferClass *Rva01341128IndexBuffer;
 
-// ?d_00907b00@@YAXXZ
-void d_00907b00( void )
+// ?Release_Device@DX8Wrapper@@KAXXZ
+void DX8Wrapper::Release_Device( void )
 {
 	void *zero = 0;
 	if( Rva01340534Device == (Rva006C9270Device *)zero )

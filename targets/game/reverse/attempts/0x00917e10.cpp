@@ -1,12 +1,12 @@
 // ?d_00917e10@@YAXXZ
-// partial score=0.9873949579831933 date=2026-09-27
+// partial score=0.9874 date=2026-09-27
 // cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/Wwutil /Igame/Libraries/Source/WWVegas/WWDownload /Igame/Libraries/Source/Compression /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
 // BFME renamed GeneralsMD Matrix4x4 -> Matrix4 (see pointgr.cpp).
 #define Matrix4x4 Matrix4
 
 // Native bank for 0x00917E10, complete 952-byte entry (ret 12 at +0x393
 // and fallback tail ret 12 at +0x3B5). The address-derived method keeps its
-// semantic identity open. Its volume-layer algorithm follows the official
+// semantic identity open. Its volume rendering algorithm follows the official
 // PointGroup twin; the already-matched compression helper remains visible
 // because its nonescaping output arguments affect this caller's codegen.
 // Residue: twelve x87 operand bytes in the transformed Y/Z dot products.
