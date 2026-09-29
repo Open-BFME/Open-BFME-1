@@ -48,8 +48,11 @@ public:
 
 void _bfme_debugRecordCallsite(Int kind);
 
-#define TheDebugManager (*(DebugManager **)0x01336E5C)
-#define CELL_GRID_ALLOCATION_FAILURE ((const char *)0x0109C958)
+class BfmeAwakenDebug;
+extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+
+#define TheDebugManager ((DebugManager *)TheBfmeAwakenDebug)
+#define CELL_GRID_ALLOCATION_FAILURE "Could not create Cell Grid for VictorySystem!"
 
 #define REPORT_CRASH(reason) do { \
 	_bfme_debugRecordCallsite(1); \

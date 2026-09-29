@@ -14,6 +14,8 @@ typedef unsigned int UnsignedInt;
 extern "C" int __cdecl memcmp(const void *left, const void *right, unsigned int count);
 #pragma intrinsic(memcmp)
 
+extern const char Rva006A16B0Empty[];
+
 template <class T>
 struct BfmeStringHeader
 {
@@ -54,9 +56,9 @@ public:
 	int compare(const AsciiString &that) const
 	{
 		int otherLength = that.m_data ? that.m_data->length : 0;
-		const char *otherData = that.m_data ? that.m_data->data : (const char *)0x0107388B;
+		const char *otherData = that.m_data ? that.m_data->data : Rva006A16B0Empty;
 		int selfLength = m_data ? m_data->length : 0;
-		const char *selfData = m_data ? m_data->data : (const char *)0x0107388B;
+		const char *selfData = m_data ? m_data->data : Rva006A16B0Empty;
 		int count = selfLength < otherLength ? selfLength : otherLength;
 		int result = memcmp(selfData, otherData, count);
 		if (result != 0)

@@ -4,6 +4,8 @@
 extern "C" unsigned int __cdecl strlen(const char *text);
 #pragma intrinsic(strlen)
 
+extern const char Rva006A16B0Empty[];
+
 template <typename T>
 class StringBase
 {
@@ -45,7 +47,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? (const char *)((const char *)m_data + 8) : (const char *)0x0107388B;
+		return m_data ? (const char *)((const char *)m_data + 8) : Rva006A16B0Empty;
 	}
 };
 
@@ -58,6 +60,7 @@ public:
 
 class VictorySystem;
 extern VictorySystem *TheVictorySystem;
+extern const char g_0109FC28[]; // VictorySystem field-parse table
 
 class Debug
 {
@@ -153,6 +156,6 @@ void __cdecl iniParseVictorySystemDefinition(INI *ini)
 	}
 	else
 	{
-		ini->initFromINI(TheVictorySystem, (const void *)0x0109FC28);
+		ini->initFromINI(TheVictorySystem, g_0109FC28);
 	}
 }
