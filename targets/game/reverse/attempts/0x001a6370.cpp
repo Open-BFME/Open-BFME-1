@@ -1,28 +1,28 @@
-// ?rvaHelper@Rva001A6370Owner@@QAEHPAX@Z
-// partial score=0.82 date=2026-09-21
-// cl: /DNDEBUG /MD /EHsc
-
-// Retail 0x001A6370, 126 bytes, __thiscall taking one pointer param and
-// cleaning 4 bytes (ret 4). No caller or vtable evidence names the owning
-// class, so both this function and the object it operates on stay
-// address-derived; landed neighbours are only address-adjacent, not proven
-// siblings.
-//
-// Calls two already-landed opaque views of the SAME parameter object:
-// BfmeA1263::bfmeGet1263 (a center-point accessor: average of two coordinate
-// pairs scaled by a shared constant, BfmeConv1263.cpp) and
-// BfmeThingCMB::bfmeGoCMB (a cached bounds accessor, four ints, that lazily
-// refreshes before copying, BfmeConv621.cpp). It then computes the larger of
-// the bounds rectangle's two extents (hi-lo per axis) and passes the center
-// point, that extent as a float, and a small {int result; void *self;}
-// output block to a still-unresolved dump at 0x001A4DD0 (thiscall on this
-// function's OWN this, not the parameter). The result field of that output
-// block, pre-set to 0, becomes this function's own return value -- read back
-// after the call rather than taken from EAX, so the callee returns void and
-// reports through the pointer.
+// ?countTrees@TerrainLogic@@QAEHPAVPolygonTrigger@@@Z
+// partial score=0.8254 date=2026-09-29
+// ?countTrees@TerrainLogic@@QAEHPAVPolygonTrigger@@@Z
+// Retail 0x001A6370. The matched condition caller names this call countTrees.
+// The typed IRegion2D extent form emits the best measured scratch shape, with
+// 22 non-relocation byte differences in the extent compare.
 
 typedef float Real;
 typedef int Int;
+class PolygonTrigger;
+
+
+struct ICoord2D
+{
+	Int x;
+	Int y;
+};
+
+struct IRegion2D
+{
+	ICoord2D lo;
+	ICoord2D hi;
+	Int width( void ) const { return hi.x - lo.x; }
+	Int height( void ) const { return hi.y - lo.y; }
+};
 
 struct BfmeVec1263
 {
@@ -68,14 +68,14 @@ public:
 	void rva001A4DD0(BfmeVec1263 *center, Real maxDelta, Rva001A6370Result *outResult, int paramB, int paramA);
 };
 
-class Rva001A6370Owner
+class TerrainLogic
 {
 public:
-	Int rvaHelper(void *param);
+	Int countTrees(PolygonTrigger *param);
 };
 
 // ?rvaHelper@Rva001A6370Owner@@QAEHPAX@Z
-Int Rva001A6370Owner::rvaHelper(void *param)
+Int TerrainLogic::countTrees(PolygonTrigger *param)
 {
 	Rva001A6370Result result;
 	result.m_result = 0;
@@ -84,17 +84,18 @@ Int Rva001A6370Owner::rvaHelper(void *param)
 	BfmeVec1263 center;
 	((BfmeA1263 *)param)->bfmeGet1263(&center);
 
-	BfmeVec4CMB bounds;
-	((BfmeThingCMB *)param)->bfmeGoCMB(&bounds);
+	IRegion2D bounds;
+	((BfmeThingCMB *)param)->bfmeGoCMB((BfmeVec4CMB *)&bounds);
 
-	int *fields = (int *)&bounds;
-	Int deltaY = fields[2] - fields[0];
-	Int deltaX = fields[3] - fields[1];
-	Int *maxDeltaPtr = &deltaY;
-	if (deltaY <= deltaX)
-		maxDeltaPtr = &deltaX;
+	{
+		Int deltaX = bounds.width();
+		Int deltaY = bounds.height();
+		Int *maxDeltaPtr = &deltaY;
+		if (deltaY <= deltaX)
+			maxDeltaPtr = &deltaX;
 
-	((Rva001A6370Helper *)this)->rva001A4DD0(&center, (Real)*maxDeltaPtr, &result, 0, 0);
+		((Rva001A6370Helper *)this)->rva001A4DD0(&center, (Real)*maxDeltaPtr, &result, 0, 0);
+	}
 
 	return result.m_result;
 }

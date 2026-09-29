@@ -1,10 +1,10 @@
-// ?rva001C86B0@Object@@QAEPAUCoord3D@@PAU2@0@Z
-// partial score=0.65 date=2026-09-23
+// ?bfmeGetPosition421AE@Object@@QAEPBUCoord3D@@PAU2@0@Z
+// partial score=0.8874 date=2026-09-29
 // cl: /DNDEBUG /MD /EHs-c- /Iinputs/reference/shims/sweep /Igame/GameEngine/Include /Igame/GameEngine/Source/Common/System /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 #include "../../../../game/GameEngine/Include/GameLogic/TerrainLogic.h"
 #include "GameClient/Drawable.h"
-// ?rva001C86B0@Object@@QAEPAVCoord3D@@PAU1@0@Z
+// Object::bfmeGetPosition421AE is named by DrawableUpdateDrawable.cpp.
 
 class HordeContainInterface
 {
@@ -25,7 +25,7 @@ public:
 	HC_SLOT(72) HC_SLOT(73) HC_SLOT(74) HC_SLOT(75) HC_SLOT(76) HC_SLOT(77)
 	HC_SLOT(78) HC_SLOT(79) HC_SLOT(80) HC_SLOT(81) HC_SLOT(82) HC_SLOT(83)
 	HC_SLOT(84) HC_SLOT(85) HC_SLOT(86) HC_SLOT(87)
-	virtual Coord3D *rva001C86B0(Coord3D *position, Coord3D *normal);
+	virtual void slot88(Coord3D *position, Coord3D *normal);
 #undef HC_SLOT
 };
 
@@ -64,10 +64,10 @@ public:
 	unsigned char m_pad200[0x114];
 	PathfindLayerEnum m_layer;
 
-	Coord3D *rva001C86B0(Coord3D *position, Coord3D *normal);
+	const Coord3D *bfmeGetPosition421AE(Coord3D *position, Coord3D *normal);
 };
 
-Coord3D *Object::rva001C86B0(Coord3D *position, Coord3D *normal)
+const Coord3D *Object::bfmeGetPosition421AE(Coord3D *position, Coord3D *normal)
 {
 	ContainModuleInterface *contain = m_contain;
 	if (contain != 0)
@@ -75,7 +75,7 @@ Coord3D *Object::rva001C86B0(Coord3D *position, Coord3D *normal)
 		HordeContainInterface *horde = contain->getHordeContainInterface();
 		if (horde != 0)
 		{
-			horde->rva001C86B0(position, normal);
+			horde->slot88(position, normal);
 			return position;
 		}
 	}
@@ -108,7 +108,9 @@ Coord3D *Object::rva001C86B0(Coord3D *position, Coord3D *normal)
 				sampleX, sampleY[0], m_layer, normal, true);
 		}
 
-		*position = sample;
+		position->x = sample.x;
+		position->y = sample.y;
+		position->z = sample.z;
 		return position;
 	}
 
