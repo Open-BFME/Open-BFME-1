@@ -20,7 +20,7 @@ int Rva00886A20Class::d_00886a20( const char* name, int dummy )
 	char buf[256];
 	d_008859d0( name, buf );
 
-	int file = (int)fopen( buf, (const char*)0x0107FF20 );
+	int file = (int)fopen( buf, "rb" );
 	if ( !file )
 	{
 		m_size2C = file;

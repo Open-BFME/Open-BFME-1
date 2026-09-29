@@ -119,11 +119,15 @@ public:
 	int volatile m_138;
 };
 
-static long long *const g_bfmeClock = (long long *)0x012F1278;
-static volatile long long *const g_bfmeClockResult = (volatile long long *)0x012F1290;
-static double *const g_bfmeClockScale = (double *)0x010F0D58;
-static double *const g_bfmeClockFactor = (double *)0x010EE5F0;
-static double *const g_bfmeClockSeconds = (double *)0x012F12A8;
+extern __int64 Counter0040F780;
+extern volatile __int64 g_012F1290;
+extern double Interval0040F780;
+
+#define g_bfmeClock Counter0040F780
+#define g_bfmeClockResult g_012F1290
+static const double g_bfmeClockScale = 1.0 / 30.0;
+static const double g_bfmeClockFactor = 1000.0;
+#define g_bfmeClockSeconds Interval0040F780
 
 void BfmeStrVM0::bfmeGoVM0(int state)
 {
@@ -133,9 +137,9 @@ void BfmeStrVM0::bfmeGoVM0(int state)
 	if (state != 5)
 	{
 		int divisor = m_34->Slot40() - 2;
-		long long quotient = *g_bfmeClock / divisor;
+		long long quotient = g_bfmeClock / divisor;
 		__asm fild qword ptr [g_bfmeClock]
-		*g_bfmeClockResult = quotient;
+		g_bfmeClockResult = quotient;
 		__asm fdivr qword ptr [g_bfmeClockScale]
 		__asm fmul qword ptr [g_bfmeClockFactor]
 		__asm fstp qword ptr [g_bfmeClockSeconds]
@@ -157,7 +161,7 @@ void BfmeStrVM0::bfmeGoVM0(int state)
 		_bfme_debugRecordCallsite(1);
 		g_BFMEIndexBufferDebug->Begin_Report();
 		BFMEIndexBufferDebugStream *stream = g_BFMEIndexBufferDebug->Get_Stream(0, 0);
-		stream->Put_String((const char *)0x010F0D90)->Finish(1);
+		stream->Put_String("Could not set Movie Thread Priority")->Finish(1);
 	}
 
 	unsigned long result;

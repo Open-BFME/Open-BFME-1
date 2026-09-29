@@ -79,14 +79,24 @@ struct ClientFrameState
 	unsigned char m_advanceFrame;
 };
 
-#define FirstUpdateSubsystem (*(UpdateSubsystem **)0x0134FAA0)
-#define SecondUpdateSubsystem (*(UpdateSubsystem **)0x012F1028)
-#define TheScriptEngine (*(ScriptEngine **)0x012F076C)
-#define TheGameClient (*(ClientFrameState **)0x012F1464)
-#define TheDebugManager (*(DebugManager **)0x01336E5C)
-#define Zero (*(const float *)0x01075350)
-#define One (*(const float *)0x01075334)
-#define MillisecondsToSeconds (*(const double *)0x01075D80)
+class Rva009EB960;
+class Glo012F1028Type;
+class GameClient;
+class BfmeAwakenDebug;
+extern Rva009EB960 *Rva0134FAA0;
+extern Glo012F1028Type *Glo012F1028;
+extern ScriptEngine *TheScriptEngine;
+extern GameClient *TheGameClient;
+extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern double g_bfmeFactorBW;
+
+#define FirstUpdateSubsystem ((UpdateSubsystem *)Rva0134FAA0)
+#define SecondUpdateSubsystem ((UpdateSubsystem *)Glo012F1028)
+#define TheGameClient ((ClientFrameState *)TheGameClient)
+#define TheDebugManager ((DebugManager *)TheBfmeAwakenDebug)
+#define Zero 0.0f
+#define One 1.0f
+#define MillisecondsToSeconds g_bfmeFactorBW
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameEngine.h
 class GameEngine
