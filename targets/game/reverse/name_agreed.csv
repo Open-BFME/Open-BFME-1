@@ -149,3 +149,5 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdate
 game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00784090AptItemBounds.cpp|function|Rva00785FD0Item@|rva00784090Bounds,getRenderRegion,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|member||field24,m_capacity,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|function||concatArray008B9CC0,aptArrayConcat,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/Libraries/Source/WWVegas/WWLib/stlport_classic_locale_impl.cpp|member||m_bfmeFacets,m_facets,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/Libraries/Source/WWVegas/WWLib/stlport_classic_locale_impl.cpp|member||m_bfmeName,m_name,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29

@@ -22,11 +22,11 @@ public:
 	virtual void _bfme_incr(void);
 	virtual void _bfme_decr(void);
 
-	__forceinline _Locale_impl(const char *name) : m_bfmeName(name) {}
+	__forceinline _Locale_impl(const char *name) : m_name(name) {}
 
-	locale::facet **m_bfmeFacets;
+	locale::facet **m_facets;
 	unsigned int m_bfmeCount;
-	string m_bfmeName;
+	string m_name;
 };
 
 }
@@ -126,7 +126,7 @@ void *bfmeTwoTB()
 	void *buffer = &g_classic0130B2A0;
 	_STL::_Locale_impl *classic = new (buffer) _STL::_Locale_impl("C");
 	classic->m_bfmeCount = g_classicFacetCount012C7428;
-	classic->m_bfmeFacets = g_classicFacets012C7388;
+	classic->m_facets = g_classicFacets012C7388;
 
 	new (&g_classic0130BC78) _STL::ctype<char>(0, false, 1);
 	new (&g_classic0130BC90) _STL::collate<char>(1);
