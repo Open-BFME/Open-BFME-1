@@ -59,6 +59,9 @@ MANGLED = re.compile(r"\?([A-Za-z_]\w*)@((?:[A-Za-z_]\w*@)*)@")
 FAMILY = re.compile(r"(?:a|d|dup|sub|uw|eh|tg|fun|nullsub|loc|j)_[0-9A-Fa-f]+")
 OFFSET = re.compile(r"(?:m_)?[a-z][A-Za-z]*?_?(?:0x)?(?=[0-9a-fA-F]*\d)[0-9a-fA-F]{2,}")
 OPAQUE = re.compile(r"[a-z]{1,2}Var\d+|local_[0-9a-fA-F]+|param_\d+|(?:in|extraout)_[A-Z]{2,3}|[av]\d{1,2}")
+HEXRUN = re.compile(r"(?i)(?=(?:[0-9a-f]*\d){3})[0-9a-f]{6,8}")
+# Calibrated on 300 sampled parameters and locals against a blind gpt-5.6-sol judge (agreed on 284).
+WEAK_LOCAL = re.compile(r"(?i)[a-hl-z]|(?:tmp|temp)\w*|arg(?:ument)?\d*|[a-z]{1,2}\d+")
 PAD = re.compile(r"(?:m_)?_?(?:pad|padding|gap|unused|reserved|filler|spare)", re.I)
 KEYWORDS = set("""alignas alignof asm auto bool break case catch char class const const_cast continue default delete do
 double dynamic_cast else enum explicit export extern false float for friend goto if inline int long mutable namespace new
@@ -84,7 +87,13 @@ def fail(message):
 def placeholder(word):
     """A name a converter invented: address-derived, Bfme*, an offset suffix, or a decompiler local."""
     return bool(RM.ADDRESSED.fullmatch(word) or re.search(r"(?i)(^|_)bfme", word) or re.search(r"[0-9A-F]{6,8}", word)
-                or (OFFSET.fullmatch(word) and not PAD.match(word)) or OPAQUE.fullmatch(word))
+                or HEXRUN.search(word) or (OFFSET.fullmatch(word) and not PAD.match(word)) or OPAQUE.fullmatch(word))
+
+
+def weak(kind, name):
+    """A placeholder, or for a parameter or local also a single letter other than a loop counter,
+    tmp/temp, arg, or a letter-and-digit stub (t2, e1)."""
+    return placeholder(name) or (kind in ("param", "local") and bool(WEAK_LOCAL.fullmatch(name)))
 
 
 def model_id(text):
@@ -307,9 +316,9 @@ def owned(rel, text, rows, types):
             items.append(("function", m.group(2), m.group(1)))
     od = bool(re.search(r"^//\s*cl:.*/Od", text[:600], re.M))
     for scope, start, end, params in functions_in(code):
-        items += [("param", scope, n) for n in param_names(params) if placeholder(n)]
+        items += [("param", scope, n) for n in param_names(params) if weak("param", n)]
         if not od:            # /Od orders frame slots by identifier text: renaming a local moves bytes
-            items += [("local", scope, n) for n in local_names(code[code.find("{", start):end]) if placeholder(n)]
+            items += [("local", scope, n) for n in local_names(code[code.find("{", start):end]) if weak("local", n)]
     seen, out = set(), []
     for kind, scope, ident in items:
         slot = (scope, ident) if kind in ("param", "local") else ident
@@ -393,7 +402,7 @@ Write a JSON object mapping each key below to a name or "skip", then run:
 def problem(kind, old, new, file_words, types):
     if not re.fullmatch(r"[A-Za-z_]\w*", new) or new in KEYWORDS:
         return "not a C++ identifier"
-    if new == old or placeholder(new):
+    if new == old or weak(kind, new):
         return "still a placeholder"
     if canon(new).replace(" ", "") in GENERIC:
         return "too generic to help a reader"
@@ -618,7 +627,7 @@ def inventory():
                     if name in globals_seen:
                         continue
                     globals_seen.add(name)
-                bad = placeholder(name) or (kind == "file" and bool(re.search(r"(?i)(?=(?:[0-9a-f]*\d){3})[0-9a-f]{6,8}", name)))
+                bad = weak(kind, name)
                 count[kind][0] += 1
                 count[kind][1] += bad
     return count

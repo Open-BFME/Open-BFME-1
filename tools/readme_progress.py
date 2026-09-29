@@ -77,11 +77,9 @@ def announcement(current, previous):
                               previous.get("cpp") if same_game else None,
                               "bytes of the game's own code, now C++ (libraries not counted)"))
     if current.get("names") is not None:
-        kinds = sorted(current["name_kinds"].items(), key=lambda kv: kv[1][1] / kv[1][0], reverse=True)
         parts.append(_section("Readable names", current["readable"], current["names"], "🟨", None,
                               "declared names (files, types, functions, members, globals, parameters, locals) "
-                              f"that are not converter placeholders; {current['names_landed']:,} named by two models "
-                              "(tools/name_lane.py)\n" + " · ".join(f"{k}s {progress.percent(n - b, n):.0f}%" for k, (n, b) in kinds)))
+                              "that are not placeholders"))
     return {
         "allowed_mentions": {"parse": []},
         "embeds": [{
@@ -132,9 +130,7 @@ def main():
     # The game's own code: vendored library source and prebuilt .libs are
     # third-party code that will never be rewritten, so blue leaves them out.
     game_total = total - split["vendored"] - split["library"]
-    kinds = name_lane.inventory()
-    names, placeholders = sum(n for n, _ in kinds.values()), sum(b for _, b in kinds.values())
-    names_landed = sum(a["status"] == "applied" for a in name_lane.agreed_state().values())
+    names, placeholders = name_lane.readable()
     output = progress.ROOT / "docs" / "progress.svg"
     output.write_text(render(rebuilt, total, cpp, game_total), encoding="utf-8", newline="\n")
     print(f"{output.relative_to(progress.ROOT)}: {progress.percent(rebuilt, total):.2f}% rebuilt, "
@@ -142,8 +138,7 @@ def main():
           f"{progress.percent(names - placeholders, names):.2f}% of names readable")
     if args.discord:
         notify({"rebuilt": rebuilt, "total": total, "cpp": cpp, "game_total": game_total,
-                "names": names, "readable": names - placeholders, "names_landed": names_landed,
-                "name_kinds": {kind: list(counts) for kind, counts in kinds.items()}})
+                "names": names, "readable": names - placeholders})
 
 
 if __name__ == "__main__":
