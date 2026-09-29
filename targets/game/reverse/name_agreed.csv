@@ -187,3 +187,4 @@ game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value4C,m_opac
 game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value38,m_opacityStartFrame,claude-opus+grok,applied,2026-09-29
 game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value44,m_opacityPeakFrame,claude-opus+grok,applied,2026-09-29
 game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value4C,m_opacityPeakEndFrame,claude-fable+grok,applied,2026-09-29
+game/GameEngine/Source/Common/BfmeConv930.cpp|member||m_bfmeQ,m_vertexBuffer,claude-fable+grok,agreed,2026-09-29
