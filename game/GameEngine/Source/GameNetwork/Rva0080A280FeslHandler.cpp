@@ -104,7 +104,7 @@ void Rva0080A280Owner::rva0080A280( Rva0080A280Input *input )
 
 	char name[ 0x100 ];
 	reinterpret_cast< BfmeThingUPB * >( input )->bfmeGoUPB(
-		(void *)0x112C018, name, (void *)0x100 );
+		(void *)"FAV-GAME-UID", name, (void *)0x100 );
 	if( m_state->m_text != 0 )
 	{
 		int length = strlen( name );
@@ -112,10 +112,10 @@ void Rva0080A280Owner::rva0080A280( Rva0080A280Input *input )
 		{
 			char shortName[ 0x20 ];
 			reinterpret_cast< BfmeThingUPB * >( input )->bfmeGoUPB(
-				(void *)0x112BE6C, shortName, (void *)0x20 );
+				(void *)"I", shortName, (void *)0x20 );
 			reinterpret_cast< Rva008091C0Owner * >( this )->handle(
 				&message,
-				(int)( long )source->bfmeGoRF( (void *)0x112B568, (void *)0 ),
+				(int)( long )source->bfmeGoRF( (void *)"GID", (void *)0 ),
 				shortName );
 			goto send;
 		}
@@ -124,5 +124,5 @@ void Rva0080A280Owner::rva0080A280( Rva0080A280Input *input )
 	message.m_field20 = 0x6e67616d;
 
 send:
-	Rva007F93E0( &message, (void *)0x112C7C0, m_routeOwner );
+	Rva007F93E0( &message, (void *)"->L", m_routeOwner );
 }

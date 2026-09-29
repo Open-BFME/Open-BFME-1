@@ -10,6 +10,8 @@ typedef int Int;
 typedef float Real;
 typedef bool Bool;
 
+struct Coord3D;
+
 struct Coord2D
 {
 	Real x;
@@ -43,7 +45,9 @@ struct BfmeDevice
 	BfmeDeviceVt *vt;
 };
 
-#define BfmeDeviceGlobal (*(BfmeDevice **)0x01340534)
+struct IDirect3DDevice8;
+
+#define BfmeDeviceGlobal ((BfmeDevice *)DX8Wrapper::D3DDevice)
 
 class BfmeTacticalView
 {
@@ -72,7 +76,7 @@ public:
 	virtual void lookAt(void *) = 0;
 };
 
-#define TheTacticalView (*(BfmeTacticalView **)0x012F1600)
+extern BfmeTacticalView *TheTacticalView;
 
 struct BfmeSubsystem
 {
@@ -98,14 +102,15 @@ private:
 };
 
 extern GameLogic *TheGameLogic;
-#define ZoomToValid (*(Bool *)0x013072F8)
-#define ZoomToPosition ((void *)0x01307318)
+#define ZoomToValid (ScreenMotionBlurFilter::m_zoomToValid)
+#define ZoomToPosition ((void *)&ScreenMotionBlurFilter::m_zoomToPos)
 
 class DX8Wrapper
 {
 public:
 	static void Set_DX8_Render_State(unsigned long, unsigned int);
 	static void Apply_Render_State_Changes(void);
+	static IDirect3DDevice8 *D3DDevice;
 };
 
 void *__cdecl bfmeEndRenderToTexture(void);
@@ -129,6 +134,10 @@ public:
 	Bool m_doZoomTo;
 	Coord2D m_priorDelta;
 	Int m_panFactor;
+
+protected:
+	static Coord3D m_zoomToPos;
+	static Bool m_zoomToValid;
 };
 
 // ?postRender@ScreenMotionBlurFilter@@UAE_NW4FilterModes@@AAUCoord2D@@AA_NPAU3@@Z

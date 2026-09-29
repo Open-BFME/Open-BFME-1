@@ -468,13 +468,13 @@ public:
 
 void W3DGameClient::setTimeOfDay( TimeOfDay tod )
 {
-	void *water = *(void **)0x01306D7C;
+	void *water = TheWaterRenderObj;
 	if (water)
 		((W3DGameClientWaterShim *)water)->setTimeOfDay(tod);
-	void *shadow = *(void **)0x01306EEC;
+	void *shadow = TheW3DShadowManager;
 	if (shadow)
 		((W3DGameClientShadowShim *)shadow)->setTimeOfDay(tod);
-	void *display = *(void **)0x012F1270;
+	void *display = TheDisplay;
 	((W3DGameClientDisplayShim *)display)->setTimeOfDay(tod);
 }  // end setTimeOfDay
 

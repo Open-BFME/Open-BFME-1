@@ -69,6 +69,18 @@ public:
 		unsigned format, unsigned pool, void **indexBuffer, void *sharedHandle);
 };
 
+struct IDirect3DDevice8;
+struct IDirect3DIndexBuffer8;
+struct IDirect3DVertexBuffer8;
+
+class DX8Wrapper
+{
+public:
+	static IDirect3DDevice8 *D3DDevice;
+};
+
+extern IDirect3DIndexBuffer8 *shadowIndexBufferD3D;
+extern IDirect3DVertexBuffer8 *shadowVertexBufferD3D;
 extern W3DBufferManager *TheBfmeReleaseOwner; // 0x01306DE8
 extern unsigned BfmeShadowIndexCount; // 0x012BBEC4
 extern unsigned BfmeShadowVertexCount; // 0x012BBEC0
@@ -84,16 +96,16 @@ Bool W3DShadowHelperManager::ReAcquireResources(void)
 	BfmeRadarResetLock guard;
 	reinterpret_cast<GenAlpha *>(this)->h00024D2A();
 
-	BfmeD3DDevice *device = *(BfmeD3DDevice **)0x01340534;
+	BfmeD3DDevice *device = (BfmeD3DDevice *)DX8Wrapper::D3DDevice;
 	if (device->CreateIndexBuffer(BfmeShadowIndexCount + BfmeShadowIndexCount,
 		0x208, 101, 0,
-		(void **)0x01306F20, 0) < 0)
+		(void **)&shadowIndexBufferD3D, 0) < 0)
 		return FALSE;
 
-	if (*(void **)0x01306F1C == 0)
+	if (shadowVertexBufferD3D == 0)
 	{
 		if (device->CreateVertexBuffer(BfmeShadowVertexCount * 3 * 4, 0x208, 0, 0,
-			(void **)0x01306F1C, 0) < 0)
+			(void **)&shadowVertexBufferD3D, 0) < 0)
 			return FALSE;
 	}
 
