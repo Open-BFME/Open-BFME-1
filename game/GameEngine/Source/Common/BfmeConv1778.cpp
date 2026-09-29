@@ -35,8 +35,8 @@ public:
 class BfmeNodeDB
 {
 public:
-	BfmeNodeDB *m_bfmeNextDB;
-	BfmeNodeDB *m_bfmePrevDB;
+	BfmeNodeDB *m_next;
+	BfmeNodeDB *m_prev;
 	BfmeValDB m_bfmeValueDB;
 };
 
@@ -167,10 +167,10 @@ void BfmeOwnDB::addIdleWorker(BfmeItemDB *item)
 
 	new (&node->m_bfmeValueDB) BfmeValDB(item);
 
-	BfmeNodeDB *prev = head->m_bfmePrevDB;
+	BfmeNodeDB *prev = head->m_prev;
 
-	node->m_bfmeNextDB = head;
-	node->m_bfmePrevDB = prev;
-	prev->m_bfmeNextDB = node;
-	head->m_bfmePrevDB = node;
+	node->m_next = head;
+	node->m_prev = prev;
+	prev->m_next = node;
+	head->m_prev = node;
 }
