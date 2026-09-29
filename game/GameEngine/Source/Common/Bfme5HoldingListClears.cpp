@@ -10,10 +10,7 @@
 // without one compiles to. The second null test folds away because the holder
 // sits in a register the calls cannot touch.
 
-void __cdecl bfmeFreeScalar(void *block);			// retail 0x00881EB0
 void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
-
-inline void __cdecl operator delete(void *block) { bfmeFreeScalar(block); }
 
 class BfmeInner
 {

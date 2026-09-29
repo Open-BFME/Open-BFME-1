@@ -12,10 +12,7 @@
 // The state word is byte-wide for the inner transitions and dword-wide for the
 // outer ones, which is the usual "only the low byte changes" saving.
 
-void __cdecl bfmeFreeScalar(void *block);			// retail 0x00881EB0
 void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
-
-inline void __cdecl operator delete(void *block) { bfmeFreeScalar(block); }
 
 class BfmeSubF
 {

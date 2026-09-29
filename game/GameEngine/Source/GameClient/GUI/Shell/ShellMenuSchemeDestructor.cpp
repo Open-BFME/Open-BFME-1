@@ -9,13 +9,6 @@
 typedef int Int;
 typedef unsigned short UnsignedShort;
 
-void __cdecl bfmeFreeScalar(void *block);
-
-inline void __cdecl operator delete(void *block)
-{
-	bfmeFreeScalar(block);
-}
-
 struct BfmeAsciiStringData
 {
 	UnsignedShort m_refCount;

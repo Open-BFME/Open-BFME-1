@@ -3378,52 +3378,12 @@ void STLSpecialAlloc::deallocate(void* __p, size_t)
 }
 
 //-----------------------------------------------------------------------------
-/**
-	overload for global operator new; send requests to TheDynamicMemoryAllocator.
-*/
-void *operator new(size_t size)
-{
-	++theLinkTester;
-	preMainInitMemoryManager();
-	DEBUG_ASSERTCRASH(TheDynamicMemoryAllocator != NULL, ("must init memory manager before calling global operator new"));
-	return TheDynamicMemoryAllocator->allocateBytes(size, "global operator new");
-}
-
-//-----------------------------------------------------------------------------
-/**
-	overload for global operator new[]; send requests to TheDynamicMemoryAllocator.
-*/
-void *operator new[](size_t size)
-{
-	++theLinkTester;
-	preMainInitMemoryManager();
-	DEBUG_ASSERTCRASH(TheDynamicMemoryAllocator != NULL, ("must init memory manager before calling global operator new"));
-	return TheDynamicMemoryAllocator->allocateBytes(size, "global operator new[]");
-}
- 
-//-----------------------------------------------------------------------------
-/**
-	overload for global operator delete; send requests to TheDynamicMemoryAllocator.
-*/
-void operator delete(void *p)
-{
-	++theLinkTester;
-	preMainInitMemoryManager();
-	DEBUG_ASSERTCRASH(TheDynamicMemoryAllocator != NULL, ("must init memory manager before calling global operator delete"));
-	TheDynamicMemoryAllocator->freeBytes(p);
-}
-
-//-----------------------------------------------------------------------------
-/**
-	overload for global operator delete[]; send requests to TheDynamicMemoryAllocator.
-*/
-void operator delete[](void *p)
-{
-	++theLinkTester;
-	preMainInitMemoryManager();
-	DEBUG_ASSERTCRASH(TheDynamicMemoryAllocator != NULL, ("must init memory manager before calling global operator delete"));
-	TheDynamicMemoryAllocator->freeBytes(p);
-}
+// No global operator new, new[], delete or delete[] here. Retail BFME's are
+// WWLib mem_ops.cpp's (0x00881F30, 0x00881F70, 0x00881EB0, 0x00881EF0), which
+// call through the memory manager's function pointers. Zero Hour's versions,
+// which bumped theLinkTester and called TheDynamicMemoryAllocator, have no
+// body anywhere in retail's .text, and linked ahead of mem_ops.obj they
+// replaced the retail bodies in every caller.
 
 //-----------------------------------------------------------------------------
 /**
@@ -3550,37 +3510,6 @@ void initMemoryManager()
 		{
 			DEBUG_CRASH(("memory manager is already inited"));
 		}
-	}
-
-	char* linktest;
-	
-	theLinkTester = 0; 
-
-	linktest = new char;
-	delete linktest;
-
-	linktest = new char[8];
-	delete [] linktest;
-
-	linktest = new char("",1);
-	delete linktest;
-
-#ifdef MEMORYPOOL_OVERRIDE_MALLOC
-	linktest = (char*)malloc(1);
-	free(linktest);
-
-	linktest = (char*)calloc(1,1);
-	free(linktest);
-#endif
-
-#ifdef MEMORYPOOL_OVERRIDE_MALLOC
-	if (theLinkTester != 10)
-#else
-	if (theLinkTester != 6)
-#endif
-	{
-		DEBUG_CRASH(("Wrong operator new/delete linked in! Fix this...\n"));
-		exit(-1);
 	}
 
 	theMainInitFlag = true;
