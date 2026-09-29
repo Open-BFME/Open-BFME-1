@@ -11,14 +11,14 @@ class BfmeThingFactory { public: const ThingTemplate *findTemplate(const AsciiSt
 extern BfmeThingFactory *TheThingFactory;
 extern const StaticNameKey TheKey_playerFaction;
 struct SideEntry00198A10 {
- BuildListInfo *field00; Dict field04; char field08[16];
- Dict* getDict() {return &field04;} BuildListInfo* getBuildList() {return field00;}
+ BuildListInfo *field00; Dict m_dict; char field08[16];
+ Dict* getDict() {return &m_dict;} BuildListInfo* getBuildList() {return field00;}
 };
 class BuildListsWriter00198A10 {
- char field00[0x28]; int field28;
+ char field00[0x28]; int m_numSides;
 public:
- int getNumSides() {return field28;}
- SideEntry00198A10 *getSide(int i) {if (i>=0 && i<field28) return ((SideEntry00198A10*)((char*)this+0x2c))+i; return 0;}
+ int getNumSides() {return m_numSides;}
+ SideEntry00198A10 *getSide(int i) {if (i>=0 && i<m_numSides) return ((SideEntry00198A10*)((char*)this+0x2c))+i; return 0;}
  void write(DataChunkOutput &chunkWriter);
 };
 void BuildListsWriter00198A10::write(DataChunkOutput &chunkWriter) {
