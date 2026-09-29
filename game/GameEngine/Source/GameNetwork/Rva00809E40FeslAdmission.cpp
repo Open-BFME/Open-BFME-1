@@ -149,6 +149,25 @@ Rva007EB810Diag *Rva007EB810Get();
 void *Rva007F93E0( void *message, void *route, void *owner );
 extern int g_bfmeKeyVHE;
 
+// Named globals behind the former image-address literals. The three with a
+// recorded identity keep it (targets/game/reverse/dir32_addresses.csv); the
+// rest have none, so they take the honest address-derived name.
+extern int g_bfmeKeyDVHD;			// 0x0112B588
+extern "C" char bfmeInfoDFI[];		// 0x0112B554 (aliases bfmeInfoDFJ)
+extern char g_bfmeStr1279A[];		// 0x01118E50
+extern void *g_0112C7C0;			// route slot handed to Rva007F93E0
+extern const char g_010F91BC[];
+extern const char g_01102DE0[];
+extern const char g_0112B568[];
+extern const char g_0112B590[];
+extern const char g_0112C878[];
+extern const char g_0112C7D8[];
+extern const char g_0112C88C[];
+extern const char g_0112C89C[];
+extern const char g_0112C8A0[];
+extern const char g_0112C8B4[];
+extern const char g_0112C8B8[];
+
 class Gen007F0130
 {
 public:
@@ -173,41 +192,39 @@ void Rva00809E40Owner::rva00809E40( Rva007E8810Message *input )
 	if( manager == 0 )
 	{
 		message.m_field20 = 'ngam';
-		Rva007F93E0( &message, (void *)0x0112C7C0, m_routeOwner );
+		Rva007F93E0( &message, (void *)&g_0112C7C0, m_routeOwner );
 		return;
 	}
 
 	Rva00802680Owner *slot = manager->findFree();
 	if( slot == 0 )
 	{
-		Rva007EB810Get()->report( (const char *)0x0112C8B8 );
+		Rva007EB810Get()->report( g_0112C8B8 );
 		message.m_field20 = 'jden';
-		message.addString(
-			(const char *)0x0112B588, (const char *)0x0112C8B4 );
-		Rva007F93E0( &message, (void *)0x0112C7C0, m_routeOwner );
+		message.addString( (const char *)&g_bfmeKeyDVHD, g_0112C8B4 );
+		Rva007F93E0( &message, (void *)&g_0112C7C0, m_routeOwner );
 		return;
 	}
 	if( manager->rva00801460() != 0 )
 	{
-		Rva007EB810Get()->report( (const char *)0x0112C8A0 );
+		Rva007EB810Get()->report( g_0112C8A0 );
 		message.m_field20 = 'jden';
-		message.addString(
-			(const char *)0x0112B588, (const char *)0x0112C89C );
-		Rva007F93E0( &message, (void *)0x0112C7C0, m_routeOwner );
+		message.addString( (const char *)&g_bfmeKeyDVHD, g_0112C89C );
+		Rva007F93E0( &message, (void *)&g_0112C7C0, m_routeOwner );
 		return;
 	}
 
 	int index = slot->getIndex();
 	if( m_game == 0 )
 		Rva007EB810Get()->fail(
-			(const char *)0x0112C88C,
-			(const char *)0x0112C7D8,
+			g_0112C88C,
+			g_0112C7D8,
 			0x307 );
 	Rva00809E40Record **players = m_game->m_players;
 	if( players[ index ] != 0 )
 		Rva007EB810Get()->fail(
-			(const char *)0x0112C878,
-			(const char *)0x0112C7D8,
+			g_0112C878,
+			g_0112C7D8,
 			0x309 );
 
 	void *raw = Gen007F0130::operator new( 0x38 );
@@ -222,30 +239,30 @@ void Rva00809E40Owner::rva00809E40( Rva007E8810Message *input )
 	++m_game->m_state;
 	record->m_powerSabotagedTillFrame = state;
 	record->m_field14 = reinterpret_cast< Rva007E8810Message * >( input )->getInt(
-		(const char *)0x0112B568, 0 );
-	Rva007F93E0( &message, (void *)0x0112C7C0, m_routeOwner );
+		g_0112B568, 0 );
+	Rva007F93E0( &message, (void *)&g_0112C7C0, m_routeOwner );
 
 	{
 		char first[ 0x20 ];
-		input->getString( (const char *)0x010F91BC, first, 0x20 );
+		input->getString( g_010F91BC, first, 0x20 );
 		{
 			char second[ 0x20 ];
-			input->getString( (const char *)0x01102DE0, second, 0x20 );
+			input->getString( g_01102DE0, second, 0x20 );
 			ji_009f70ba( record->m_field18, second, 0x20 );
 		}
 
 		BfmeC994 request( buffer, 0x40 );
 		request.m_category = 'EGRQ';
-		request.addString( (const char *)0x010F91BC, first );
-		request.addInt( (const char *)0x0112B554, record->m_powerSabotagedTillFrame );
-		request.addString( (const char *)0x0112B590, (const char *)0x01118E50 );
+		request.addString( g_010F91BC, first );
+		request.addInt( bfmeInfoDFI, record->m_powerSabotagedTillFrame );
+		request.addString( g_0112B590, g_bfmeStr1279A );
 		m_sender->send( &request );
 	}
 }
 
 // Retail 0x00808C60 (25 B): forward one message on the admission route. Reads
 // the route owner at +0x10 and sends the caller's message through Rva007F93E0
-// with the same (void *)0x0112C7C0 route literal this TU already uses.
+// with the same &g_0112C7C0 route global this TU already uses.
 // Identity of the owning forwarder is not recovered, so the name is
 // address-derived.
 class Rva00808C60Owner
@@ -258,7 +275,7 @@ public:
 
 void Rva00808C60Owner::rva00808C60( void *message )
 {
-	Rva007F93E0( message, (void *)0x0112C7C0, m_routeOwner );
+	Rva007F93E0( message, (void *)&g_0112C7C0, m_routeOwner );
 }
 
 // @?rva00808C60@Rva00808C60Owner@@QAEXPAX@Z 0x00808C60
