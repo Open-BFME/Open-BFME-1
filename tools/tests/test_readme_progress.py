@@ -163,5 +163,7 @@ def test_discord_change_needs_the_same_denominator():
     moved = {"total": 100, "matched_total": 60, "game_total": 90, "cpp_total": 36, "linked_game_total": 9}
     lines = daily.announcement(current, moved)["embeds"][0]["description"].split("\n")
     assert lines[4] == "**Game code in C++: 44.44%**  \u25b2 4.44" and lines[0].endswith("60.00%**")
+    tiny = {**moved, "cpp_total": 39.999}  # moved, but by less than 0.005 points
+    assert "▲" not in daily.announcement(current, tiny)["embeds"][0]["description"]
     rebased = {**moved, "game_total": 91}  # vendored/library split moved: not comparable
     assert "\u25b2" not in daily.announcement(current, rebased)["embeds"][0]["description"]

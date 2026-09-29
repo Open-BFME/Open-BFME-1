@@ -157,9 +157,10 @@ def game_code(current):
 
 def moved(value, denominator, previous, key, denominator_key):
     """'  ▲ 0.21' when the share moved since the last post over the same denominator, else ''."""
-    if not previous or previous.get(denominator_key) != denominator or previous.get(key) in (None, value):
+    if not previous or previous.get(denominator_key) != denominator or previous.get(key) is None:
         return ""
-    return f"  {arrow(progress.percent(value - previous[key], denominator))}"
+    delta = progress.percent(value - previous[key], denominator)
+    return f"  {arrow(delta)}" if round(abs(delta), 2) else ""  # never "0.00"
 
 
 def _section(label, value, denominator, block, change_text, what):
