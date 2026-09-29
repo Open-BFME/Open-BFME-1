@@ -261,3 +261,4 @@ game/GameEngine/Source/Common/BfmeHostABD_bfmeAllocABD.cpp|member||m_bfme4CABD,6
 game/GameEngine/Source/Common/BfmeConv815.cpp|type||BfmeThing171,af6b26134d759a4f4717fb9f,grok,20260929192324-89bc1c,2026-09-29
 game/GameEngine/Source/Common/BfmeConv815.cpp|type||BfmeMgrEB2,947cc3cf4f98ea75efdd4e78,grok,20260929192324-89bc1c,2026-09-29
 game/GameEngine/Source/Common/BfmeConv815.cpp|member||f10,391da6953da452d10c780c37,grok,20260929192324-89bc1c,2026-09-29
+game/Libraries/Source/EA/Apt/Rva8CDA60StackDispatch.cpp|function||rva8CDA60StackDispatch,80cd718735ae63db37878efd,grok,20260929192535-02bcc9,2026-09-29
