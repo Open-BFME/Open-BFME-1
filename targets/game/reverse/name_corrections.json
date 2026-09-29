@@ -10398,5 +10398,25 @@
   "after_sha256": "3c0a0999f79552e7a2cd0f8b118d9226dbb6f794dcfd2970a7c135a75e737b5b",
   "evidence": "targets/game/reverse/identity_evidence/0x00418b50.md",
   "reason": "The body ends in ret 4, installs no vftable and compares its argument with the literal ReferenceDisplayName, so it is not the TooltipUpgrade destructor. The owning class is unproven, so it takes an address-derived name."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionPreferences_useCameraInReplays.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionPreferencesGetIdealStaticGameDetail.cpp",
+  "old_name": "useCameraInReplays",
+  "new_name": "rva00090900IdealStaticGameDetail",
+  "before_sha256": "7c842f899da91dce88805147f7bc7f435c8a7353ab32ef5260751e5e4feddc54",
+  "after_sha256": "427d0e136f546d377c344b67522788220198fc7fb801ff1ea567898b7578cbee",
+  "evidence": "targets/game/reverse/identity_evidence/0x00090900.md",
+  "reason": "The body reads the key IdealStaticGameLOD and returns minus one on a miss, so it is not the bool getter useCameraInReplays. The proven name getIdealStaticGameDetail is held by another row, so the body takes an address-derived method name."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "useCameraInReplays",
+  "new_name": "rva00090900IdealStaticGameDetail",
+  "before_sha256": "633a2a6f9487b333b6f46ea425484777015c8f35f227c6a25b5497f8115362be",
+  "after_sha256": "b045d5b1d3611c150454bae9717afe5362c56324c2b2c5a1083e08c050061c7a",
+  "evidence": "targets/game/reverse/identity_evidence/0x00090900.md",
+  "reason": "The body reads the key IdealStaticGameLOD and returns minus one on a miss, so it is not the bool getter useCameraInReplays. The proven name getIdealStaticGameDetail is held by another row, so the body takes an address-derived method name."
  }
 ]
