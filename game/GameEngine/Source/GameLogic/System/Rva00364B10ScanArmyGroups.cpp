@@ -5,6 +5,8 @@
 // scan. Address-derived names: no matched caller names the method.
 #include "Common/AsciiString.h"
 
+extern char Rva006A16B0Empty[];
+
 class UnicodeString
 {
 public:
@@ -43,7 +45,7 @@ public:
 	int compare( const char *text, int length ) const
 	{
 		int valueLength = m_data != 0 ? m_data->m_length : 0;
-		const char *valueText = m_data != 0 ? reinterpret_cast<const char *>( m_data ) + 8 : reinterpret_cast<const char *>( 0x0107388B );
+		const char *valueText = m_data != 0 ? reinterpret_cast<const char *>( m_data ) + 8 : Rva006A16B0Empty;
 		int result = memcmp( valueText, text, valueLength < length ? valueLength : length );
 		if( result == 0 )
 			result = valueLength - length;

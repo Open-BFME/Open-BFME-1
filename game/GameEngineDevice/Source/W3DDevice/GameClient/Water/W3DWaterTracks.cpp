@@ -1173,7 +1173,9 @@ public:
 extern const char Rva010896AC[];	// ".wak", the suffix loadTracks copies inline
 extern void *bfmeGoEMEb(void *);
 extern void Rva009EBAC0(int);
-#define FirstUpdateSubsystem (*(void **)0x0134FAA0)
+class Rva009EB960;
+extern Rva009EB960 *Rva0134FAA0;
+#define FirstUpdateSubsystem ((void *)Rva0134FAA0)
 extern const char Rva006A16B0Empty[];
 
 struct Rva001408C0Target;

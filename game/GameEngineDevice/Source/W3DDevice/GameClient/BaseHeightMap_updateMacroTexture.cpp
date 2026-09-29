@@ -5,6 +5,7 @@
 typedef bool Bool;
 
 class AsciiString;
+extern char Rva006A16B0Empty[];
 
 template <class CharType>
 class StringBase
@@ -123,7 +124,7 @@ void BaseHeightMapRenderObjClass::updateMacroTexture(
 	if (macroTextureName.m_data)
 		name = (const char *)macroTextureName.m_data + 8;
 	else
-		name = (const char *)0x0107388b;
+		name = (const char *)Rva006A16B0Empty;
 
 	BFMEAssignWaterTrackTexture(
 		stageThreeTexture,
