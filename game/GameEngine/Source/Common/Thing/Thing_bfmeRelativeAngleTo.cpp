@@ -25,9 +25,9 @@ private:
 };
 
 #define BFME_ZERO_RANGE (*(const Real *)0x01075350)
-#define BFME_DEFAULT_BU (*(const Real *)0x01075334)
-#define BFME_MINUS_ONE (*(const double *)0x01095f18)
-#define BFME_ONE (*(const double *)0x0107c640)
+#define BFME_DEFAULT_BU (1.0f)
+#define BFME_MINUS_ONE (-1.0)
+#define BFME_ONE (1.0)
 
 // ?bfmeRelativeAngleTo@Thing@@QBEMPBUCoord3D@@@Z
 Real Thing::bfmeRelativeAngleTo(const Coord3D *point) const

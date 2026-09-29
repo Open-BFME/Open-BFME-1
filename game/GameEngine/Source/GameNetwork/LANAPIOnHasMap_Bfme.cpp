@@ -76,6 +76,9 @@ public:
 	Rva0068D3E0Slot *at(Int index);
 };
 
+extern const char Rva006A16B0Empty[];
+extern const unsigned short BFMEEmptyUnicodeString;
+
 class StringBaseWideAP
 {
 protected:
@@ -97,7 +100,7 @@ public:
 	const unsigned short *bfmeTextAP(void) const
 	{
 		return m_bfmeWideAP != 0 ? m_bfmeWideAP + 4
-			: (const unsigned short *)0x0107388C;
+			: &BFMEEmptyUnicodeString;
 	}
 };
 
@@ -209,14 +212,14 @@ inline const wchar_t *Rva00688CD0WideText(const UnicodeString &text)
 {
 	const void *data = *(void *const *)&text;
 	return data != 0 ? (const wchar_t *)((const unsigned char *)data + 8)
-		: (const wchar_t *)0x0107388C;
+		: (const wchar_t *)&BFMEEmptyUnicodeString;
 }
 
 inline const char *Rva00688CD0AsciiText(const AsciiString &text)
 {
 	const void *data = *(void *const *)&text;
 	return data != 0 ? (const char *)((const unsigned char *)data + 8)
-		: (const char *)0x0107388B;
+		: Rva006A16B0Empty;
 }
 
 void LANAPI::OnHasMap(BfmeNetAddress *sender, Bool status)

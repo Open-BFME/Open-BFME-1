@@ -20,6 +20,9 @@ extern "C" XferException *__cdecl bfmeFormatText(
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
 
+extern int g_guardTargetTypeThrowInfo;
+extern const char Rva006A16B0Empty[];
+
 extern "C" __declspec(dllimport) void *__cdecl bfmeFopenVIF(
 	const char *name, const char *mode);
 extern "C" __declspec(dllimport) unsigned int __cdecl fwrite(
@@ -37,7 +40,7 @@ class AsciiString
 public:
 	const char *str() const
 	{
-		return m_data ? m_data + 8 : (const char *)0x0107388B;
+		return m_data ? m_data + 8 : Rva006A16B0Empty;
 	}
 
 	~AsciiString()
@@ -94,7 +97,7 @@ static __declspec(noinline) void extractAndSaveMap(AsciiString mapToSave, Xfer *
 	{
 		XferException error;
 		bfmeFormatText(&error, 5, 0);
-		_CxxThrowException(&error, (void *)0x011DFE5C);
+		_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 	}
 
 	xfer->beginBlock("EmbeddedMap");
@@ -105,7 +108,7 @@ static __declspec(noinline) void extractAndSaveMap(AsciiString mapToSave, Xfer *
 	{
 		XferException error;
 		bfmeFormatText(&error, 5, 0);
-		_CxxThrowException(&error, (void *)0x011DFE5C);
+		_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 	}
 
 	xfer->xferUser(buffer, dataSize);
@@ -114,7 +117,7 @@ static __declspec(noinline) void extractAndSaveMap(AsciiString mapToSave, Xfer *
 		::operator delete[](buffer);
 		XferException error;
 		bfmeFormatText(&error, 5, 0);
-		_CxxThrowException(&error, (void *)0x011DFE5C);
+		_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 	}
 
 	bfmeFreeUXB(fp);

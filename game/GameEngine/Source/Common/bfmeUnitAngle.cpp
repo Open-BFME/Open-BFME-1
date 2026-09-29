@@ -11,10 +11,10 @@ struct Coord3D
 
 extern float ACos(float);
 
-#define BFME_UNIT_ANGLE_ONE (*(const float *)0x01075334)
-#define BFME_UNIT_ANGLE_MINUS_ONE (*(const float *)0x0109BF3C)
-#define BFME_UNIT_ANGLE_LIMIT (*(const float *)0x01083BFC)
-#define BFME_UNIT_ANGLE_ZERO (*(const float *)0x01075350)
+#define BFME_UNIT_ANGLE_ONE (1.0f)
+#define BFME_UNIT_ANGLE_MINUS_ONE (-1.0f)
+#define BFME_UNIT_ANGLE_LIMIT (0.99f)
+#define BFME_UNIT_ANGLE_ZERO (0.0f)
 
 float bfmeUnitAngle(const Coord3D *a, const Coord3D *b)
 {
