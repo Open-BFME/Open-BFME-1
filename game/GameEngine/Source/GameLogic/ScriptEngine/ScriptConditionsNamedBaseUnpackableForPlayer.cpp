@@ -143,7 +143,7 @@ Bool ScriptConditions::evaluateNamedBaseUnpackableForPlayer(
 			if (player) {
 				if (baseObject->getControllingPlayer() == player) {
 					static volatile NameKeyType baseModuleKey =
-						TheNameKeyGenerator->nameToKey((const char *)0x01083c50);
+						TheNameKeyGenerator->nameToKey("CastleBehavior");
 					CastleBehavior *castle = (CastleBehavior *)baseObject->findModule(
 						baseModuleKey);
 					if (castle &&

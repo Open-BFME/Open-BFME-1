@@ -6,6 +6,7 @@ typedef unsigned short UnsignedShort;
 typedef bool Bool;
 
 extern "C" int __cdecl memcmp(const void *left, const void *right, unsigned int count);
+extern const char Rva006A16B0Empty[];
 
 // BFME's AsciiString data header is eight bytes; the reference header's
 // StringBase<char> header is four bytes.
@@ -31,7 +32,7 @@ public:
 
 	const char *str(void) const
 	{
-		return m_data ? (const char *)(m_data + 1) : (const char *)0x0107388B;
+		return m_data ? (const char *)(m_data + 1) : Rva006A16B0Empty;
 	}
 
 	Int compare(const AsciiString &other) const

@@ -79,7 +79,7 @@ void ScriptActions::doUnitSetModelConditionForDuration(
 		AsciiString name(bfmeGlobalTable12A6918[condition]);
 		if (conditionName.compare(name) == 0)
 		{
-			frames = (Int)(duration * (*(const Real *)0x01075344));
+			frames = (Int)(duration * 5.0f);
 			goto matched;
 		}
 	}
