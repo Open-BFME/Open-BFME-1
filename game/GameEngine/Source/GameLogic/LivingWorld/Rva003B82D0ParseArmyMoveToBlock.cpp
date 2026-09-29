@@ -34,6 +34,8 @@ public:
 	void initFromINI( void *what, const FieldParse *parseTable );
 };
 
+extern const char g_Rva0107301CEmptyString[];
+
 class BFMERetailAsciiString;
 
 template <typename T> class StringBase
@@ -58,7 +60,7 @@ public:
 class Rva003B82D0Record
 {
 public:
-	Rva003B82D0Record() : m_token( (const char *)0x0107301c ), m_flag08( false ) {}
+	Rva003B82D0Record() : m_token( g_Rva0107301CEmptyString ), m_flag08( false ) {}
 	virtual ~Rva003B82D0Record() {}
 
 private:

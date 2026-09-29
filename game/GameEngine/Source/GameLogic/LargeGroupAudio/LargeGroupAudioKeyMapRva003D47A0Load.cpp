@@ -67,6 +67,7 @@ extern "C" XferException *__cdecl bfmeFormatText(
 	XferException *result, int tag, const char *format, ...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
+extern int g_guardTargetTypeThrowInfo;
 
 class LargeGroupAudioKeyMap : public _STL::vector<void *, _STL::allocator<void *> >
 {
@@ -88,7 +89,7 @@ void LargeGroupAudioKeyMap::rva003D47A0Load(Xfer *xfer)
 	{
 		XferException error;
 		bfmeFormatText(&error, 5, 0);
-		_CxxThrowException(&error, (void *)0x011DFE5C);
+		_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 	}
 
 	AsciiString value;

@@ -8,6 +8,8 @@
 typedef bool Bool;
 typedef int Int;
 
+extern const char Rva006A16B0Empty[];
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
@@ -15,7 +17,7 @@ public:
 	const char *str() const
 	{
 		return m_data ? (const char *)((unsigned char *)m_data + 8) :
-			(const char *)0x0107388B;
+			Rva006A16B0Empty;
 	}
 
 private:

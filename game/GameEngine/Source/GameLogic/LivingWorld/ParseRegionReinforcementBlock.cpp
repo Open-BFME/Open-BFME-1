@@ -16,6 +16,8 @@
 extern "C" int __cdecl memcmp( const void *, const void *, unsigned int );
 #pragma intrinsic(memcmp)
 
+extern const char Rva006A16B0Empty[];
+
 class AsciiString
 {
 public:
@@ -29,7 +31,7 @@ public:
 
 	const char *str() const
 	{
-		return m_text ? m_text + 8 : (const char *)0x0107388B;
+		return m_text ? m_text + 8 : Rva006A16B0Empty;
 	}
 
 	int getLength() const

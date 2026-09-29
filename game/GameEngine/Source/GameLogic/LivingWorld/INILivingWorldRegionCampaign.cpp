@@ -77,6 +77,8 @@ public:
 
 extern Glo012F1028Type *Glo012F1028;
 
+extern const FieldParse g_010EDC48[];
+
 // ?Rva003C9B60Parse@@YAXPAVINI@@@Z
 void Rva003C9B60Parse( INI *ini )
 {
@@ -86,7 +88,7 @@ void Rva003C9B60Parse( INI *ini )
 
 	Rva003C9670 *object = new Rva003C9670( AsciiString( token ) );
 
-	ini->initFromINI( object, (const FieldParse *)0x010EDC48 );
+	ini->initFromINI( object, g_010EDC48 );
 
 	( (Rva003C7A40Owner *)object )->rva003C7A40();
 	( (Gen003C7B10Owner *)object )->step();

@@ -3,6 +3,8 @@
 // Open-BFME5: LargeGroupAudioKeyMap key-string builder, retail 0x003D37E0,
 // 264 bytes. The xfer method at 0x003D3930 calls this helper while saving.
 
+extern const char Rva006A16B0Empty[];
+
 template <typename T>
 class StringBase
 {
@@ -21,7 +23,7 @@ public:
 	int getLength() const { return m_data ? m_data->length : 0; }
 	const T *str() const
 	{
-		return m_data ? &m_data->data[0] : (const T *)0x0107388b;
+		return m_data ? &m_data->data[0] : (const T *)Rva006A16B0Empty;
 	}
 	bool isNotEmpty() const
 	{
