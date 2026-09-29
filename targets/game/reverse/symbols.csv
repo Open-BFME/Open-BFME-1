@@ -3588,6 +3588,7 @@ name,address,notes
 ??0Rva0042D170Member04@@QAE@ABU0@@Z,0x00033EC4,4-byte member copy ctor ILT from 0x0042D170
 ??0Rva0042D170Member18@@QAE@ABU0@@Z,0x0002D49D,4-byte member copy ctor ILT from 0x0042D170
 ??0Rva00434810SubtitleEntry@@QAE@PAVGameFont@@ABVUnicodeString@@IHHHHH@Z,0x00434810,neutral direct-body derived SubtitleEntry constructor: matched base-ctor call then vtable 0x010F3920 and three owned display strings; target call encodes ILT 0x0004A7AA which retail routes here; campaign=luna36h-20260907;lane=expand17;model=gpt-5.6-sol-ultra
+??0Rva00435A40Sink@@QAE@PAVGameFont@@MMHHHH@Z,0x004354F0,Rva00695B80 allocates 0x6c bytes and calls this body with seven stack arguments; it initializes fields through +0x68 and returns this; publish@Rva00435A40Sink reads +0x5c and +0x64 on that object
 ??0Rva00489210@@QAE@XZ,0x0001B522,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0059D9E0 calls; autopin
 ??0Rva004B2300Base@@QAE@ABV0@@Z,0x0004AAD4,Open-BFME5 fresh thiscall copy ctor at ILT of derived copy 0x004B2300
 ??0Rva004C1590Base@@QAE@ABV0@@Z,0x0003FAF8,Open-BFME5 fresh thiscall copy ctor at ILT of derived copy 0x004C1590

@@ -1,0 +1,3 @@
+The matched `rva006AF840` body in `MilesAudioManagerRva006AF840.cpp` calls ILT `0x0003F6FC` twice with the manager in ECX and one `UnicodeString` reference. Those calls prove the owner and parameter type for the body at RVA `0x00695B80`. Retail returns at `+0x17B` with `ret 4` and begins `INT3` padding at `+0x17E`, so the body has 382 bytes.
+
+Retail allocates 0x6C bytes before it calls RVA `0x004354F0` with seven stack arguments. That body writes fields through `+0x68` and returns with `ret 0x1C`; the pinned `publish@Rva00435A40Sink` method reads `+0x5C` and `+0x64` on that object, identifying the seven-argument body as its constructor.

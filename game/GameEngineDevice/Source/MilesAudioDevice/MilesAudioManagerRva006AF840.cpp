@@ -146,6 +146,92 @@ struct Rva006C9270GlobalData
 
 extern Rva006C9270GlobalData *TheWritableGlobalData;
 
+class Xfer;
+class SubsystemInterface
+{
+public:
+	virtual ~SubsystemInterface();
+	virtual void init() = 0;
+
+private:
+	void *m_name;
+};
+
+class Snapshot
+{
+public:
+	Snapshot();
+	~Snapshot();
+
+protected:
+	virtual void crc(Xfer *xfer) = 0;
+	virtual void xfer(Xfer *xfer) = 0;
+	virtual void loadPostProcess() = 0;
+};
+
+class Rva00694E00 : public SubsystemInterface, public Snapshot
+{
+};
+
+struct Rva00695B80AudioSettings
+{
+	unsigned char m_before58[0x58];
+	Int m_58;
+	Int m_5c;
+	Int m_60;
+	Int m_64;
+	unsigned int m_68;
+};
+
+struct Rva00695B80FontOptions
+{
+	unsigned char m_before58[0x58];
+	unsigned char m_58[4];
+	Int m_5c;
+	unsigned char m_60;
+};
+
+class Glo012F1028Type
+{
+public:
+	unsigned char m_before2c[0x2c];
+	unsigned char m_2c;
+	unsigned char m_2d;
+};
+
+class GameFont;
+class Display;
+class FontLibraryBFMERetail
+{
+public:
+	GameFont *getFont(AsciiString *name, float size, unsigned char bold);
+};
+
+class Rva00695B80DisplayView
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot04() = 0;
+	virtual void slot08() = 0;
+	virtual void slot0c() = 0;
+	virtual void slot10() = 0;
+	virtual void slot14() = 0;
+	virtual void slot18() = 0;
+	virtual void slot1c() = 0;
+	virtual void slot20() = 0;
+	virtual void slot24() = 0;
+	virtual void slot28() = 0;
+	virtual unsigned int getWidth() = 0;
+	virtual unsigned int getHeight() = 0;
+};
+
+extern Display *TheDisplay;
+extern FontLibraryBFMERetail *TheFontLibrary;
+extern void *Rva012F1484;
+extern Glo012F1028Type *Glo012F1028;
+extern float g_010FA1F8;
+extern float g_010FA1FC;
+
 class MilesAudioScopedMutex
 {
 public:
@@ -194,6 +280,8 @@ struct Rva006AF840InsertResult
 extern void j_0001547e();
 extern void j_00038555();
 extern void j_0003f6fc();
+extern void j_0000abc3();
+extern void j_0001ccce();
 
 class Rva006AF840Call
 {
@@ -231,14 +319,18 @@ private:
 	unsigned int m_numElements;
 };
 
-class MilesAudioManager
+class Rva00435A40Sink;
+
+class MilesAudioManager : public Rva00694E00
 {
 public:
 	void rva006AF840();
 
 private:
-	// Handler at 0x00695B80 (ILT 0x0003F6FC) for one line of text.
-	void rva00695B80( const UnicodeString &text )
+	void rva00695B80( const UnicodeString &text );
+
+	// The handler call in this translation unit must keep using its retail ILT.
+	void rva00695B80Thunk( const UnicodeString &text )
 	{
 		typedef void ( Rva006AF840Call::*Function )( const UnicodeString & );
 		union { void ( *raw )(); Function member; } fn;
@@ -246,13 +338,72 @@ private:
 		( reinterpret_cast<Rva006AF840Call *>( this )->*fn.member )( text );
 	}
 
-	char m_pad000[ 0x95c ];
+	Rva00695B80AudioSettings *m_audioSettings;
+	char m_pad010[ 0x94c ];
 	void *m_mutex;									// +0x95c
 	unsigned int m_960, m_964, m_968;
 	Rva006AF840RealMap m_subtitles;				// +0x96c
 	_STL::vector<UnicodeString> m_pendingText;		// +0x980
 	_STL::vector<AsciiString> m_pendingFiles;		// +0x98c
+	char m_beforeSink[ 0x1c0 ];
+	Rva00435A40Sink *m_b58;
 };
+
+class Rva00435A40Sink
+{
+public:
+	Rva00435A40Sink(GameFont *font, float width, float height,
+		Int scaledWidth, Int value60, Int value58, Int value64);
+
+	void publish(const UnicodeString &text, unsigned int color)
+	{
+		typedef void (Rva00435A40Sink::*Publish)(const UnicodeString &, unsigned int);
+		union { void (*raw)(); Publish member; } fn;
+		fn.raw = j_0001ccce;
+		(this->*fn.member)(text, color);
+	}
+
+	char m_storage[0x6c];
+};
+
+void MilesAudioManager::rva00695B80(const UnicodeString &text)
+{
+	if (m_b58 == 0)
+	{
+		Rva00695B80FontOptions *fontOptions =
+			(Rva00695B80FontOptions *)Rva012F1484;
+		if (fontOptions != 0)
+		{
+			GameFont *font;
+			typedef GameFont *(FontLibraryBFMERetail::*GetFont)(AsciiString *, float,
+				unsigned char);
+			union { void (*raw)(); GetFont member; } fn;
+			fn.raw = j_0000abc3;
+			font = (TheFontLibrary->*fn.member)((AsciiString *)&fontOptions->m_58,
+				(float)fontOptions->m_5c, fontOptions->m_60);
+
+			float scale;
+			if (Glo012F1028->m_2c)
+			{
+				scale = 0.9765625f;
+				if (!Glo012F1028->m_2d)
+					scale = 0.88932294f;
+			}
+			else
+				scale = 0.88932294f;
+
+			Int width = (Int)((float)((Rva00695B80DisplayView *)TheDisplay)->getWidth() * g_010FA1FC);
+			Int height = (Int)((float)((Rva00695B80DisplayView *)TheDisplay)->getHeight() * scale);
+			Int scaledWidth = (Int)((float)((Rva00695B80DisplayView *)TheDisplay)->getWidth() * g_010FA1F8);
+			m_b58 = new Rva00435A40Sink(font, (float)width, (float)height,
+				scaledWidth, m_audioSettings->m_60, m_audioSettings->m_58,
+				m_audioSettings->m_64);
+		}
+	}
+
+	if (m_b58 != 0)
+		m_b58->publish(text, m_audioSettings->m_68);
+}
 
 void MilesAudioManager::rva006AF840()
 {
@@ -260,7 +411,7 @@ void MilesAudioManager::rva006AF840()
 
 	_STL::vector<UnicodeString>::iterator text;
 	for( text = m_pendingText.begin(); text != m_pendingText.end(); ++text )
-		rva00695B80( *text );
+		rva00695B80Thunk( *text );
 	m_pendingText.clear();
 
 	_STL::vector<AsciiString>::iterator file;
@@ -299,7 +450,7 @@ void MilesAudioManager::rva006AF840()
 		m_subtitles.insert( Rva006AF840RealMap::value_type( *file, subtitle ) );
 
 		if( !subtitle.isEmpty() )
-			rva00695B80( subtitle );
+			rva00695B80Thunk( subtitle );
 	}
 	m_pendingFiles.clear();
 }
