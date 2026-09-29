@@ -124,6 +124,7 @@ extern ScriptEngine *TheScriptEngine;
 extern PlayerList *ThePlayerList;
 
 extern const KindOfMaskType KINDOFMASK_NONE;
+extern const Real g_010E1F40;
 
 Bool ScriptConditions::evaluatePlayerHasNOrFewerBases(
 	Parameter *baseCountParm, Parameter *playerParm)
@@ -133,7 +134,7 @@ Bool ScriptConditions::evaluatePlayerHasNOrFewerBases(
 		baseCheckFrame = (int)(TheWritableGlobalData->m_secondsBeforeBaseCheckActive
 			* 5.0f);
 	else
-		baseCheckFrame = (int)(*(const Real *)0x010E1F40);
+		baseCheckFrame = (int)g_010E1F40;
 
 	if (TheBfmeGameLogic->m_frame < (UnsignedInt)baseCheckFrame)
 		return false;
