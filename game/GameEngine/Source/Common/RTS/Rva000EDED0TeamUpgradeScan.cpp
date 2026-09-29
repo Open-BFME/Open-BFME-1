@@ -1,5 +1,3 @@
-// ?d_000eded0@@YAXXZ
-// partial score=0.94 date=2026-09-27
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/objectdlink
 // Retail RVA 0x000EDED0, 132 bytes through the int3 run at +0x84 (Ghidra split
 // it at the null-argument exit, +0x0D).  ScriptActions::doTeamGiveTeamUpgrade
@@ -118,20 +116,23 @@ Bool Rva000EDED0Team::method(const UpgradeTemplate *upgrade) const
 	if (!upgrade)
 		return false;
 
-	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList();
-		!iter.done(); iter.advance())
+	DLINK_ITERATOR<Object> iter = iterate_TeamMemberList();
+	while (!iter.done())
 	{
 		Object *object = iter.cur();
-		Rva000EDED0Contain *contain = object->m_contain;
-		Rva000EDED0Rider *rider = contain ? contain->slot68() : 0;
-		if (rider)
+		if (object)
 		{
-			if (rider->slotA4(upgrade))
+			Rva000EDED0Contain *contain = object->m_contain;
+			Rva000EDED0Rider *rider = contain ? contain->slot68() : 0;
+			if (rider)
+			{
+				if (rider->slotA4(upgrade))
+					return true;
+			}
+			else if (object->affectedByUpgrade(upgrade) == 1)
 				return true;
 		}
-		else if (object->affectedByUpgrade(upgrade) == 1)
-			return true;
+		iter.advance();
 	}
-
 	return false;
 }
