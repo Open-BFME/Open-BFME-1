@@ -121,7 +121,7 @@ public:
 		SaveGameInfo *saveGameInfo);
 };
 
-#define TheGameState (*(GameState **)0x012EF190)
+extern GameState *TheGameState;
 
 // ?addGameToAvailableList@@YAXVAsciiString@@PAX@Z
 void addGameToAvailableList(AsciiString filename, void *userData)

@@ -122,10 +122,7 @@ extern WindowManager *g_theWindowManager;
 extern unsigned char g_bfmeFlagMD;					// retail 0x012F4AFC
 extern unsigned char g_aptPalantirJewelBrightened;		// retail 0x012F4AFD
 extern bool g_bfmeFlagDMc;							// retail 0x012F4AFE
-// retail 0x012B7D7C: a player-side name pointer.  Naming it (const char *,
-// const char **, const char *[1], void *, all by address) costs a byte in this
-// body -- the ctor argument moves out of eax and the function grows by one --
-// so the literal stays here until that shape is understood.
+extern const char *volatile g_012B7D7C;	// retail 0x012B7D7C, player-side name; volatile keeps retail's eax load
 extern int g_aptPalantirWindow;						// retail 0x012B7D80
 extern unsigned char g_aptPalantirInitialized;		// retail 0x012B7D84
 
@@ -242,7 +239,7 @@ void d_00565f30()
 	}
 
 	{
-		const char *playerSide = *reinterpret_cast<const char **>( 0x012B7D7C );
+		const char *playerSide = g_012B7D7C;
 		BFMERetailAsciiString name( playerSide );
 		g_theWindowManager->registerPalantirPlayerSide( name, 0,
 			PalantirFunctorSlot( reinterpret_cast<void *>( &g_00415253 ) ) );

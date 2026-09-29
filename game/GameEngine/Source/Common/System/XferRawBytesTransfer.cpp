@@ -49,7 +49,7 @@ Xfer &Xfer::XferRawBytes(void *data, unsigned int size)
     Rva009D63C0TransferView *receiver = reinterpret_cast<Rva009D63C0TransferView *>(this);
     if (size == 0 || data != 0)
     {
-        receiver->transfer(reinterpret_cast<void *>(0x726177), &size, 4);
+        receiver->transfer(reinterpret_cast<void *>('raw'), &size, 4);
         receiver->transfer(0, data, size);
     }
     return *this;

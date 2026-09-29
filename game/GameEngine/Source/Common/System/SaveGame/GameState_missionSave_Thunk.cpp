@@ -6,6 +6,8 @@ typedef bool Bool;
 typedef char Char;
 typedef unsigned short WideChar;
 
+extern const unsigned short BFMEEmptyUnicodeString;
+
 template <typename T>
 class StringBase
 {
@@ -47,7 +49,7 @@ public:
 
 	const WideChar *str() const
 	{
-		return m_data ? &m_data->data[0] : (const WideChar *)0x0107388C;
+		return m_data ? &m_data->data[0] : &BFMEEmptyUnicodeString;
 	}
 
 	void format(UnicodeString format, ...);
