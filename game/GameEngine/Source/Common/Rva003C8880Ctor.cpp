@@ -25,9 +25,12 @@ public:
 	Rva003C8880();
 };
 
+extern "C" const void *bfmeVftLivingWorldRegionManager[];
+#pragma comment(linker, "/alternatename:_bfmeVftLivingWorldRegionManager=??_7LivingWorldRegionManager@@6B@")
+
 Rva003C8880::Rva003C8880()
 {
-	m_vptr = (void *)0x010EE010;
+	m_vptr = bfmeVftLivingWorldRegionManager;
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;

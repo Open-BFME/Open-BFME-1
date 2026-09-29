@@ -5,6 +5,7 @@ extern void j_0002e14a();
 extern void j_00044df5();
 extern void j_00013b51();
 extern void j_0004115a();
+extern "C" void bfmeHook1052(void);
 
 class Rva003C3AE0Record
 {
@@ -70,7 +71,7 @@ void Rva003C3AE0Owner::dispatch( void *value )
 	record = (this->*create.memberFunction)( value );
 	if ( record != 0 )
 	{
-		Glo012F4B98->report( (void *)((char *)record + 0x0C), (const char *)0x0043695D );
+		Glo012F4B98->report( (void *)((char *)record + 0x0C), (const char *)bfmeHook1052 );
 		m_value = record->m_value;
 
 		typedef void (Rva003C3AE0Owner::*Finish)( Rva003C3AE0Record * );

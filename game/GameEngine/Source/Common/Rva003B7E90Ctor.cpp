@@ -20,9 +20,12 @@ public:
 	Rva003B7E90();
 };
 
+extern "C" const void *bfmeVftBfmeOwnVUO[];
+#pragma comment(linker, "/alternatename:_bfmeVftBfmeOwnVUO=??_7BfmeOwnVUO@@6B@")
+
 Rva003B7E90::Rva003B7E90()
 {
-	m_vptr = (void *)0x010EC774;
+	m_vptr = bfmeVftBfmeOwnVUO;
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;

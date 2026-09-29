@@ -25,7 +25,10 @@ public:
     Rva0040E990KeySlot *m_end;
 };
 
-#define TheKeyboard (*(Rva0040E990Keyboard **)0x012F4C50)
+class Keyboard;
+extern Keyboard *TheKeyboard;
+
+#define TheKeyboard ((Rva0040E990Keyboard *)TheKeyboard)
 
 Bool rva0040E990(Bool want)
 {
