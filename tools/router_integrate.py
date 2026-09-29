@@ -24,12 +24,18 @@ step, and it trusts nothing the worker reported:
       prints what a reviewer must decide (docs/naming_evidence.md).
       --push rebases and pushes with retries; --measure then records the
       parent-verified result on the job's last attempt.
-      --keep ports on top of whatever the worktree already holds and stops
-      before committing, so several reviewed jobs become one batch commit.
+      --keep ports on top of the unstaged batch the worktree already holds,
+      re-verifies the whole batch and stops before committing, leaving it
+      unstaged, so several reviewed jobs become one batch commit.
+      --dry-run ports and verifies in a throwaway worktree at the base and
+      leaves the destination untouched.
+      Checks read a private copy of the index with the port staged; the
+      worktree's own index is only written by the final commit.
 
 Workspaces are never modified or deleted.
 """
-import argparse, hashlib, json, os, re, shutil, subprocess, sys
+import argparse, hashlib, json, os, re, shutil, subprocess, sys, tempfile
+from contextlib import contextmanager
 from functools import wraps
 from portable_lock import lock, unlock
 from pathlib import Path
@@ -49,15 +55,16 @@ SOURCE_SUFFIXES = ('.c', '.cc', '.cpp', '.cxx', '.asm')
 GUTTED_INDEX = 200  # staged deletions of files still on disk: a worker emptied its index
 
 
-def sh(cmd, cwd, check=False, timeout=None):
-    r = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, errors='surrogateescape', timeout=timeout)
+def sh(cmd, cwd, check=False, timeout=None, env=None):
+    r = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, errors='surrogateescape', timeout=timeout,
+                       env=env)
     if check and r.returncode:
         raise SystemExit(f'{" ".join(map(str, cmd))} failed:\n{r.stdout}{r.stderr}')
     return r
 
 
-def git(cwd, *args, check=False):
-    return sh(['git', *args], cwd, check=check)
+def git(cwd, *args, check=False, env=None):
+    return sh(['git', *args], cwd, check=check, env=env)
 
 
 def job_info(job):
@@ -110,15 +117,25 @@ def changes(ws):
     return out
 
 
-def workspace_fingerprint(ws):
-    digest = hashlib.sha256(git(ws, 'rev-parse', 'HEAD', check=True).stdout.encode())
+def path_digests(ws):
+    """HEAD and one digest per changed path (status, mode, bytes or link target)."""
+    paths = {}
     for path, status in changes(ws):
-        digest.update(os.fsencode(path) + b'\0' + status.encode() + b'\0')
+        digest = hashlib.sha256(status.encode() + b'\0')
         file = Path(ws) / path
         if file.is_symlink():
             digest.update(b'link\0' + os.fsencode(os.readlink(file)))
         elif file.is_file():
             digest.update(str(file.stat().st_mode).encode() + b'\0' + file.read_bytes())
+        paths[path] = digest.hexdigest()
+    return git(ws, 'rev-parse', 'HEAD', check=True).stdout.strip(), paths
+
+
+def workspace_fingerprint(ws):
+    head, paths = path_digests(ws)
+    digest = hashlib.sha256(head.encode())
+    for path, value in paths.items():
+        digest.update(os.fsencode(path) + b'\0' + value.encode() + b'\0')
     return digest.hexdigest()
 
 
@@ -170,8 +187,8 @@ def head_matched(ws, key):
     return False
 
 
-def gate(cwd, src):
-    r = sh(['./build.sh', src], cwd, timeout=1800)
+def gate(cwd, src, env=None):
+    r = sh(['./build.sh', src], cwd, timeout=1800, env=env)
     lines = [l for l in (r.stdout + r.stderr).splitlines() if 'fixme' not in l and ('Functions:' in l or 'FAIL' in l)]
     return (r.returncode == 0 and not any('FAIL' in l for l in lines)
             and any('Functions: OK' in l for l in lines)), f'exit={r.returncode}: ' + ' | '.join(lines)[:300]
@@ -305,6 +322,10 @@ def port(j, dest):
                     or src.read_bytes() != dst.read_bytes()
                     or (src.stat().st_mode & 0o111) != (dst.stat().st_mode & 0o111)):
                 raise SystemExit(f'upstream addition conflicts with worker path: {p}')
+        # a --keep batch or an editor may hold a change to a file the worker deleted: never unlink it
+        if status == 'deleted' and p not in ledgers and os.path.lexists(Path(dest) / p) and git(
+                dest, 'status', '--porcelain=v1', '-z', '--', p, check=True).stdout:
+            raise SystemExit(f'worker deleted {p}, which holds a retained change in {dest}; nothing ported')
     tracked = [p for p, s in ch if s != 'added' and p not in ledgers]
     if tracked:
         # bytes, never text: universal-newline decoding strips the CRs of a CRLF
@@ -456,6 +477,62 @@ def safe_destination(dest, base, keep=False):
 bank = serialized_destination(bank)
 
 
+@contextmanager
+def staged_view(dest):
+    """An environment whose GIT_INDEX_FILE is a private copy of dest's index with the
+    ported directories staged. check_csv lists tracked files, so a lift or stash the worker
+    deleted (unlinked by port() but still indexed) crashed it with FileNotFoundError, and a
+    new source must count as tracked (ada39cafc9). Staging in the real index instead left
+    every --keep batch, dry run and aborted integration staged, which the next run refused."""
+    index = Path(dest) / git(dest, 'rev-parse', '--git-path', 'index', check=True).stdout.strip()
+    fd, private = tempfile.mkstemp(prefix='router-integrate-index.', dir=index.parent)
+    os.close(fd)
+    try:
+        shutil.copyfile(index, private)
+        env = dict(os.environ, GIT_INDEX_FILE=private)
+        git(dest, 'add', '-A', '--', *(d.rstrip('/') for d in PORTED if (Path(dest) / d).exists()),
+            check=True, env=env)
+        yield env
+    finally:
+        for leftover in (private, private + '.lock'):
+            if os.path.lexists(leftover):
+                os.unlink(leftover)
+
+
+def port_and_verify(rev, j, dest):
+    """Port the reviewed workspace into dest and verify it there; returns dest's changed paths.
+    dest's own index and HEAD are never written, so on any refusal the port (and anything a
+    concurrent editor did) is left exactly as it is in the worktree, unstaged."""
+    if rev.get('fingerprint') != workspace_fingerprint(j['cwd']):
+        raise SystemExit('workspace changed since review; review again before porting')
+    port(j, dest)
+    if rev['fingerprint'] != workspace_fingerprint(j['cwd']):
+        raise SystemExit('workspace changed during port; destination retained for inspection')
+    with staged_view(dest) as env:
+        ported = path_digests(dest)
+        r = sh([sys.executable, 'tools/check_csv.py'], dest, check=True, env=env)
+        print(r.stdout[-600:])
+        status = list(ported[1])
+        stray = [p for p in status if not p.startswith('build/') and route(p) != 'port']
+        if stray:
+            raise SystemExit('integration worktree has changes outside the ported set:\n  ' + '\n  '.join(stray))
+        touched = [p for p in status
+                   if p.lower().endswith(SOURCE_SUFFIXES) and (Path(dest) / p).exists() and not p.startswith('build/')]
+        for src in touched:
+            ok, text = gate(str(dest), src, env)
+            print(f'gate {src}: {text}')
+            if not ok:
+                raise SystemExit(f'scoped gate fails on origin/master for {src}; not committing')
+    after = path_digests(dest)
+    if after != ported:
+        moved = sorted(p for p in set(ported[1]) | set(after[1]) if ported[1].get(p) != after[1].get(p))
+        raise SystemExit(f'destination changed during verification; the integrator staged and committed nothing. Retained '
+                         f'unstaged in {dest} as the editor left them:\n  ' + '\n  '.join(moved or ['HEAD'])
+                         + '\nthe rest of the port is unstaged there too:\n  '
+                         + '\n  '.join(p for p in status if p not in moved))
+    return status
+
+
 @serialized_destination
 def integrate(args):
     rev = review(args)
@@ -471,38 +548,35 @@ def integrate(args):
     dest = Path(args.worktree).resolve()
     git(ROOT, 'fetch', '-q', 'origin', 'master', check=True)
     base = args.base
+    if args.dry_run:
+        if args.keep:
+            raise SystemExit('--dry-run never touches the destination, so it cannot combine with --keep')
+        # A throwaway checkout at the base: the destination's HEAD, index and files stay as they are.
+        scratch = Path(tempfile.mkdtemp(prefix='.' + dest.name + '.dry-run.', dir=dest.parent))
+        try:
+            git(ROOT, 'worktree', 'add', '-q', '--detach', str(scratch), base, check=True)
+            port_and_verify(rev, j, scratch)
+        finally:
+            git(ROOT, 'worktree', 'remove', '--force', str(scratch))  # only ever this call's own scratch
+            shutil.rmtree(scratch, ignore_errors=True)
+        print(f'dry run: ported and gated in a scratch worktree on {base}; {dest} untouched, nothing committed')
+        return
     if not dest.exists():
         git(ROOT, 'worktree', 'add', '-q', '--detach', str(dest), base, check=True)
     safe_destination(dest, base, args.keep)
-    if not args.keep:
+    if args.keep:
+        retained = [p for p, _ in changes(dest)]
+        stray = [p for p in retained if route(p) != 'port']
+        if stray:
+            raise SystemExit(f'{dest} holds changes outside the ported set; nothing ported, all retained '
+                             'unstaged as found:\n  ' + '\n  '.join(stray))
+        if retained:
+            print(f'--keep: combining with the unstaged batch in {dest}:\n  ' + '\n  '.join(retained))
+    else:
         git(dest, 'checkout', '-q', '--detach', base, check=True)
-    if rev.get('fingerprint') != workspace_fingerprint(j['cwd']):
-        raise SystemExit('workspace changed since review; review again before porting')
-    port(j, dest)
-    if rev['fingerprint'] != workspace_fingerprint(j['cwd']):
-        raise SystemExit('workspace changed during port; destination retained for inspection')
-    # Stage the port before any check reads the index: check_csv lists tracked files, so a
-    # lift or stash the worker deleted (unlinked by port() but still indexed) crashed it with
-    # FileNotFoundError and aborted every landing that retired a banked attempt.
-    git(dest, 'add', '-A', '--', *(d.rstrip('/') for d in PORTED if (dest / d).exists()), check=True)
-    ported_fingerprint = workspace_fingerprint(dest)
-    r = sh([sys.executable, 'tools/check_csv.py'], dest, check=True)
-    print(r.stdout[-600:])
-    status = [path for path, _ in changes(dest)]
-    stray = [p for p in status if not p.startswith('build/') and route(p) != 'port']
-    if stray:
-        raise SystemExit('integration worktree has changes outside the ported set:\n  ' + '\n  '.join(stray))
-    touched = [p for p in status
-               if p.lower().endswith(SOURCE_SUFFIXES) and (dest / p).exists() and not p.startswith('build/')]
-    for src in touched:
-        ok, text = gate(str(dest), src)
-        print(f'gate {src}: {text}')
-        if not ok:
-            raise SystemExit(f'scoped gate fails on origin/master for {src}; not committing')
-    if ported_fingerprint != workspace_fingerprint(dest):
-        raise SystemExit('destination changed during verification; work retained for inspection')
-    if args.dry_run or args.keep:
-        print('dry run: ported and gated, not committed')
+    status = port_and_verify(rev, j, dest)
+    if args.keep:
+        print(f'--keep: batch ported and gated, left unstaged in {dest}; not committed')
         return
     landed = rev['landed']
     names = '; '.join(f'{rev["targets"][r]["name"]} at {r} ({rev["targets"][r]["size"]} bytes)' for r in landed)
@@ -629,9 +703,11 @@ def main(argv=None):
     i.add_argument('--title', default='', help='commit title (default: generic)')
     i.add_argument('--base', default='origin/master', help='integration base (default origin/master)')
     i.add_argument('--worktree', default=str(ROOT / 'build' / 'wt' / 'integrate'))
-    i.add_argument('--dry-run', action='store_true')
+    i.add_argument('--dry-run', action='store_true',
+                   help='port and gate in a throwaway worktree; the destination is left untouched')
     i.add_argument('--keep', action='store_true',
-                   help='port on top of the worktree as it is (batch several jobs; implies --dry-run)')
+                   help='port on top of the unstaged batch in the worktree and stop before committing '
+                        '(batch several jobs; the batch stays unstaged)')
     i.add_argument('--push', action='store_true')
     i.add_argument('--push-retries', type=int, default=8)
     i.add_argument('--measure', action='store_true', help='after --push, record the verified result on the job')

@@ -843,7 +843,14 @@ new inference or deliberate allowance consumption is required.
 and push. It requires a clean detached destination whose HEAD is already
 contained in the chosen base. Retained edits, staged work, unfinished Git
 operations and unpushed commits are refused and left recoverable. `--keep`
-explicitly combines unstaged work and stops before committing. Conflicting
+explicitly combines unstaged work, re-gates the whole batch and stops before
+committing with the batch still unstaged, so the next `--keep` job joins it;
+it refuses retained changes outside the ported set and a worker deletion of a
+file the batch changed. check_csv and the gates read a private copy of the
+index with the port staged; only the final commit writes the destination's
+index, so an aborted run leaves the port and any concurrent edit unstaged and
+names them. `--dry-run` ports and gates in a throwaway worktree at the base and
+leaves the destination byte-identical. Conflicting
 upstream additions and symlinked port paths require manual review. Source
 changes during review or port require a new review; every touched-source gate
 and ledger check must exit successfully.

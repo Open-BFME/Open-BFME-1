@@ -449,6 +449,18 @@ def git_out(cwd, *a):
     return subprocess.run(['git', *a], cwd=cwd, check=True, capture_output=True, text=True).stdout.strip()
 
 
+def snapshot(tree):
+    """Exact HEAD, index entries, status and file bytes of a worktree."""
+    tree = Path(tree)
+    status = subprocess.run(['git', 'status', '--porcelain=v1', '-z', '--untracked-files=all'], cwd=tree,
+                            check=True, capture_output=True, text=True).stdout
+    return {'head': git_out(tree, 'rev-parse', 'HEAD'),
+            'index': git_out(tree, 'ls-files', '-s'),
+            'status': sorted(e for e in status.split('\0') if e),
+            'files': {p.relative_to(tree).as_posix(): p.read_bytes() for p in sorted(tree.rglob('*'))
+                      if p.is_file() and p.name != '.git'}}
+
+
 class ConflictTest(PortFixture):
     def test_new_file_conflicts_with_upstream_addition(self):
         for tree, content in ((self.ws, 'worker'), (self.dest, 'upstream')):
@@ -499,7 +511,9 @@ def test_check_csv_failure_blocks_integration(tmp_path, monkeypatch):
     monkeypatch.setattr(ri, 'port', lambda *a: None)
     monkeypatch.setattr(ri, 'workspace_fingerprint', lambda *a: 'stable')
     monkeypatch.setattr(ri, 'git', lambda *a, **k: subprocess.CompletedProcess([], 0, '', ''))
-    def run(cmd, cwd, check=False):
+    from contextlib import nullcontext
+    monkeypatch.setattr(ri, 'staged_view', lambda *a: nullcontext())
+    def run(cmd, cwd, check=False, **_):
         assert cmd[-1] == 'tools/check_csv.py'
         if check:
             raise SystemExit('fixture invalid ledger')
@@ -507,7 +521,7 @@ def test_check_csv_failure_blocks_integration(tmp_path, monkeypatch):
     monkeypatch.setattr(ri, 'sh', run)
     import pytest
     with pytest.raises(SystemExit, match='invalid ledger'):
-        ri.integrate(SimpleNamespace(worktree=str(dest), force=False, keep=False, base='master'))
+        ri.integrate(SimpleNamespace(worktree=str(dest), force=False, keep=False, dry_run=False, base='master'))
 
 
 def test_destination_mutations_are_serialized(tmp_path):
@@ -599,15 +613,180 @@ def test_rejected_push_preserves_commit_and_refuses_reset(tmp_path, monkeypatch)
         # still change the destination during a gate. Never stage that edit.
         fresh = tmp_path / 'fresh'
         git(fixture.base, 'worktree', 'add', '-q', '--detach', str(fresh), 'origin/master')
+        before = snapshot(fresh)
         args.worktree, args.push = str(fresh), False
-        def changing_gate(cwd, src):
+        def changing_gate(cwd, src, env=None):
             if Path(cwd) == fresh:
                 (fresh / src).write_text('concurrent editor work\n')
             return True, 'fixture gate'
         monkeypatch.setattr(ri, 'gate', changing_gate)
-        with pytest.raises(SystemExit, match='destination changed during verification'):
+        with pytest.raises(SystemExit, match='destination changed during verification') as aborted:
             ri.integrate(args)
-        assert (fresh / 'game/keep.cpp').read_text() == 'concurrent editor work\n'
-        assert ri.git(fresh, 'diff', '--cached', '--quiet').returncode == 0
+        # the message names what the editor changed and where it is retained
+        assert f'Retained unstaged in {fresh}' in str(aborted.value)
+        assert '\n  game/keep.cpp\n' in str(aborted.value)
+        # HEAD and the index are exactly as before: nothing of the port or the
+        # editor's work was staged or committed ...
+        after = snapshot(fresh)
+        assert after['head'] == before['head'] == git_out(fixture.base, 'rev-parse', 'origin/master')
+        assert after['index'] == before['index']
+        assert git_out(fresh, 'diff', '--cached', '--name-status') == ''
+        # ... and the worktree holds the editor's bytes plus the rest of the port, unstaged
+        assert after['status'] == [' M game/keep.cpp', ' M ' + LED]
+        assert after['files'] == dict(before['files'], **{
+            'game/keep.cpp': b'concurrent editor work\n',
+            # the fixture's 3-field rows carry no size (rva_of), so the changed row is appended
+            LED: b'name,export_rva,target_rva\r\n?lift@@YAXXZ,,0x00000020\r\n'
+                 b'?a@@YAXXZ,,0x00000010,8,game/keep.cpp,matched,\r\n'})
+        # no private index was left behind in the worktree's git dir
+        gitdir = Path(git_out(fresh, 'rev-parse', '--absolute-git-dir'))
+        assert not list(gitdir.glob('router-integrate-index.*'))
     finally:
         fixture.tearDown()
+
+
+class BatchFixture(PortFixture):
+    """The real integrate() over two prepared workspaces and a bare origin, with
+    the byte gates and check_csv faked. Both fakes record what they saw through
+    the environment integrate() gives them."""
+    ROW1 = b'?a@@YAXXZ,,0x00000010,8,game/keep.cpp,matched,'
+    ROW2 = b'?lift@@YAXXZ,,0x00000020,8,game/two.cpp,matched,'
+
+    def setUp(self):
+        super().setUp()
+        from unittest import mock
+        root = Path(self.tmp.name)
+        remote = root / 'remote.git'
+        git(self.base, 'init', '--bare', '-q', str(remote))
+        git(self.base, 'remote', 'add', 'origin', str(remote))
+        git(self.base, 'push', '-q', 'origin', 'master')
+        git(self.base, 'fetch', '-q', 'origin')
+        self.origin_head = git_out(self.base, 'rev-parse', 'origin/master')
+        self.base_led = (self.base / LED).read_bytes()
+        # job 1 improves keep.cpp and matches its row
+        (self.ws / 'game/keep.cpp').write_text('int keep() { return 2; }\n')
+        (self.ws / LED).write_bytes(self.base_led.replace(b'?a@@YAXXZ,,0x00000010', self.ROW1))
+        # job 2 replaces the lift with clean source and matches the lift's row
+        self.ws2 = root / 'ws2'
+        git(self.base, 'worktree', 'add', '-q', '--detach', str(self.ws2), 'HEAD')
+        (self.ws2 / 'game/two.cpp').write_text('void lift() {}\n')
+        (self.ws2 / 'game/lift.cpp').unlink()
+        (self.ws2 / LED).write_bytes(self.base_led.replace(b'?lift@@YAXXZ,,0x00000020', self.ROW2))
+        self.gates, self.tracked = [], []
+        dest = self.dest
+        def fake_gate(cwd, src, env=None):
+            if Path(cwd) != Path(self.ws) and Path(cwd) != self.ws2:
+                self.gates.append((Path(cwd), src, (Path(cwd) / src).read_bytes(),
+                                   bool(env and env.get('GIT_INDEX_FILE'))))
+            return True, 'fixture gate'
+        original_sh = ri.sh
+        def fake_sh(cmd, cwd, **kwargs):
+            if cmd[-1] == 'tools/check_csv.py':
+                # check_csv lists tracked files: it must see the port staged
+                self.tracked.append(subprocess.run(['git', 'ls-files', 'game'], cwd=cwd, check=True, text=True,
+                                                   capture_output=True, env=kwargs.get('env')).stdout.split())
+                return subprocess.CompletedProcess(cmd, 0, 'fixture ledger OK', '')
+            return original_sh(cmd, cwd, **kwargs)
+        for name, value in (('ROOT', self.base), ('gate', fake_gate), ('sh', fake_sh)):
+            patcher = mock.patch.object(ri, name, value)
+            patcher.start()
+            self.addCleanup(patcher.stop)
+
+    def args(self, ws, rva, **kw):
+        from types import SimpleNamespace
+        a = dict(job=None, workspace=str(ws), rva=[rva], worktree=str(self.dest), base='origin/master',
+                 force=False, keep=True, dry_run=False, push=False, push_retries=1, title='batch',
+                 trailer='', measure=False)
+        a.update(kw)
+        return SimpleNamespace(**a)
+
+    def assert_clean_index(self, snap):
+        self.assertEqual(snap['head'], self.origin_head)
+        self.assertEqual(snap['index'], git_out(self.base, 'ls-files', '-s'))  # the base commit's index
+        self.assertEqual(git_out(self.dest, 'diff', '--cached', '--name-status'), '')
+
+
+class BatchTest(BatchFixture):
+    def test_successive_keep_batches_commit_exactly_both_jobs(self):
+        ri.integrate(self.args(self.ws, '0x10'))
+        snap = snapshot(self.dest)
+        self.assert_clean_index(snap)
+        self.assertEqual(snap['status'], [' M game/keep.cpp', ' M ' + LED])
+        self.assertEqual(snap['files']['game/keep.cpp'], b'int keep() { return 2; }\n')
+        # the fixture's 3-field rows carry no size (rva_of), so a changed row is appended
+        self.assertEqual(snap['files'][LED], b'name,export_rva,target_rva\r\n?lift@@YAXXZ,,0x00000020\r\n'
+                                             + self.ROW1 + b'\r\n')
+        self.assertEqual(self.tracked[-1], ['game/keep.cpp', 'game/lift.cpp'])
+        # the second batch is accepted on top of the first and re-verifies the whole batch
+        self.gates.clear()
+        ri.integrate(self.args(self.ws2, '0x20'))
+        snap = snapshot(self.dest)
+        self.assert_clean_index(snap)
+        self.assertEqual(snap['status'], [' D game/lift.cpp', ' M game/keep.cpp', ' M ' + LED, '?? game/two.cpp'])
+        both = b'name,export_rva,target_rva\r\n' + self.ROW1 + b'\r\n' + self.ROW2 + b'\r\n'
+        self.assertEqual(snap['files'][LED], both)
+        self.assertEqual(snap['files']['game/two.cpp'], b'void lift() {}\n')
+        self.assertNotIn('game/lift.cpp', snap['files'])
+        self.assertEqual(self.tracked[-1], ['game/keep.cpp', 'game/two.cpp'])  # staged view: lift gone, two added
+        self.assertEqual(sorted((src, staged) for _, src, _, staged in self.gates),
+                         [('game/keep.cpp', True), ('game/two.cpp', True)])
+        # the reviewer commits the batch: it holds exactly both jobs
+        git(self.dest, 'add', '-A'); git(self.dest, 'commit', '-qm', 'batch')
+        self.assertEqual(git_out(self.dest, 'rev-parse', 'HEAD~1'), self.origin_head)
+        self.assertEqual(sorted(git_out(self.dest, 'diff-tree', '--no-commit-id', '-r', '--name-status',
+                                        'HEAD').splitlines()),
+                         ['A\tgame/two.cpp', 'D\tgame/lift.cpp', 'M\tgame/keep.cpp', 'M\t' + LED])
+        self.assertEqual(subprocess.run(['git', 'show', 'HEAD:' + LED], cwd=self.dest, check=True,
+                                        capture_output=True).stdout, both)
+        self.assertEqual(snapshot(self.dest)['status'], [])
+
+    def test_edits_between_keep_batches_are_retained_not_staged(self):
+        ri.integrate(self.args(self.ws, '0x10'))
+        # an editor touches a ported file and an unrelated file between batches
+        (self.dest / 'game/keep.cpp').write_text('editor\n')
+        (self.dest / 'docs').mkdir()
+        (self.dest / 'docs/notes.md').write_text('editor notes\n')
+        before = snapshot(self.dest)
+        with self.assertRaisesRegex(SystemExit, 'outside the ported set; nothing ported') as cm:
+            ri.integrate(self.args(self.ws2, '0x20'))
+        self.assertIn('docs/notes.md', str(cm.exception))
+        after = snapshot(self.dest)
+        self.assertEqual(after, before)
+        self.assert_clean_index(after)
+        self.assertEqual(after['status'], [' M game/keep.cpp', ' M ' + LED, '?? docs/notes.md'])
+        self.assertEqual(after['files']['game/keep.cpp'], b'editor\n')
+        # the editor also changes the lift job 2 deletes: that edit is never unlinked
+        (self.dest / 'docs/notes.md').unlink(); (self.dest / 'docs').rmdir()
+        (self.dest / 'game/lift.cpp').write_text('editor lift\n')
+        before = snapshot(self.dest)
+        with self.assertRaisesRegex(SystemExit, 'worker deleted game/lift.cpp, which holds a retained change'):
+            ri.integrate(self.args(self.ws2, '0x20'))
+        self.assertEqual(snapshot(self.dest), before)
+        # with the lift restored, the edited ported file joins the batch and is gated with the editor's bytes
+        (self.dest / 'game/lift.cpp').write_bytes((self.base / 'game/lift.cpp').read_bytes())
+        self.gates.clear()
+        ri.integrate(self.args(self.ws2, '0x20'))
+        snap = snapshot(self.dest)
+        self.assert_clean_index(snap)
+        self.assertEqual(snap['status'], [' D game/lift.cpp', ' M game/keep.cpp', ' M ' + LED, '?? game/two.cpp'])
+        self.assertEqual(snap['files']['game/keep.cpp'], b'editor\n')
+        self.assertIn((self.dest, 'game/keep.cpp', b'editor\n', True), self.gates)
+
+    def test_dry_run_leaves_the_destination_byte_identical(self):
+        # a clean destination, then one holding a --keep batch: neither is touched
+        for keep_first in (False, True):
+            if keep_first:
+                ri.integrate(self.args(self.ws, '0x10'))
+            before = snapshot(self.dest)
+            worktrees = git_out(self.base, 'worktree', 'list', '--porcelain')
+            self.gates.clear()
+            ri.integrate(self.args(self.ws2, '0x20', keep=False, dry_run=True))
+            self.assertEqual(snapshot(self.dest), before)
+            self.assertEqual(git_out(self.base, 'worktree', 'list', '--porcelain'), worktrees)
+            self.assertEqual(sorted(p.name for p in self.dest.parent.iterdir() if 'dry-run' in p.name), [])
+            # it really ported and gated, elsewhere, on the base
+            self.assertEqual([(src, staged) for _, src, _, staged in self.gates], [('game/two.cpp', True)])
+            self.assertNotEqual(self.gates[0][0], self.dest)
+        with self.assertRaisesRegex(SystemExit, 'cannot combine with --keep'):
+            ri.integrate(self.args(self.ws2, '0x20', keep=True, dry_run=True))
+        self.assertEqual(snapshot(self.dest), before)
