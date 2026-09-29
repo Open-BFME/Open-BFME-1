@@ -56,6 +56,15 @@ public:
 	void pop();
 };
 
+// g_ names stand for vftables whose ??_7 names cannot be declared.
+extern const char g_0110912C[], g_01109128[];
+extern void *g_quitMenuLayout;
+extern void *g_obj12F4B40;
+extern Shell *TheShell;
+
+class GameClient;
+extern GameClient *TheGameClient;
+
 class __declspec(novtable) __multiple_inheritance BfmeAptScreenOptions
 	: public _bfme_AptGameWindow, public BfmeAptFunctorMarker
 {
@@ -80,12 +89,12 @@ private:
 
 BfmeAptScreenOptions::~BfmeAptScreenOptions()
 {
-	*(const void ***)( (char *)this ) = (const void **)0x0110912C;
-	*(const void ***)( (char *)this + 0x218 ) = (const void **)0x01109128;
+	*(const void ***)( (char *)this ) = (const void **)g_0110912C;
+	*(const void ***)( (char *)this + 0x218 ) = (const void **)g_01109128;
 
-	if( *(void **)0x012F4AD4 == this )
+	if( g_quitMenuLayout == this )
 	{
-		*(void **)0x012F4AD4 = 0;
+		g_quitMenuLayout = 0;
 		{
 			BFMERetailAsciiString name( "AptOptions::InitGadgets" );
 			_bfme_closeAptScreen( reinterpret_cast<const AsciiString &>( name ) );
@@ -93,18 +102,18 @@ BfmeAptScreenOptions::~BfmeAptScreenOptions()
 
 		if( m_field308 )
 		{
-			(*(Gen_0042E7C0 **)0x012F1464)->bfmeSet(
+			((Gen_0042E7C0 *)TheGameClient)->bfmeSet(
 				m_fields274[ 0 ], m_fields274[ 1 ], m_fields274[ 2 ] );
 		}
 
-		void *menu = *(void **)0x012F4B40;
+		void *menu = g_obj12F4B40;
 		if( menu != 0 && *(unsigned char *)( (char *)menu + 0x254 ) )
 		{
-			char *shell = (char *)*(volatile void **)0x012F4B58;
+			char *shell = (char *)*(volatile void **)&TheShell;
 			if( shell != 0 )
 			{
 				shell[ 0x50 ] = 1;
-				((Shell *)*(volatile Shell **)0x012F4B58)->pop();
+				((Shell *)*(volatile Shell **)&TheShell)->pop();
 			}
 		}
 	}

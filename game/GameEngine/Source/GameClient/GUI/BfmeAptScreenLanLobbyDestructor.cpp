@@ -142,12 +142,16 @@ private:
 	char m_unmodelled[0x3c];
 };
 
+// g_ names stand for vftables whose ??_7 names cannot be declared.
+extern const char g_01105690[];
+extern const char g_01105A78[], g_01105A74[], g_01105A28[];
+
 class BfmeAptScreenSecondary
 {
 public:
 	virtual ~BfmeAptScreenSecondary()
 	{
-		*(const void **)this = (const void **)0x01105690;
+		*(const void **)this = (const void **)g_01105690;
 	}
 };
 
@@ -165,7 +169,7 @@ void _bfme_closeAptScreen(const AsciiString &name);
 
 
 class BfmeAptScreenLanLobby;
-#define g_bfme935GlobC (*(BfmeAptScreenLanLobby **)0x012f4998)
+extern BfmeObj935C *g_bfme935GlobC;
 
 class __declspec(novtable) BfmeAptScreenLanLobby
 	: public _bfme_AptGameWindow, public BfmeAptFunctorMarker,
@@ -185,11 +189,11 @@ private:
 // ??1BfmeAptScreenLanLobby@@UAE@XZ
 BfmeAptScreenLanLobby::~BfmeAptScreenLanLobby()
 {
-	*(const void ***)this = (const void **)0x01105a78;
-	*(const void ***)((char *)this + 0x218) = (const void **)0x01105a74;
-	*(const void ***)((char *)this + 0x258) = (const void **)0x01105a28;
+	*(const void ***)this = (const void **)g_01105A78;
+	*(const void ***)((char *)this + 0x218) = (const void **)g_01105A74;
+	*(const void ***)((char *)this + 0x258) = (const void **)g_01105A28;
 
-	if (g_bfme935GlobC == this)
+	if (reinterpret_cast<BfmeAptScreenLanLobby *>(g_bfme935GlobC) == this)
 	{
 		m_subStop.stop();
 		if (TheLAN)
@@ -199,7 +203,7 @@ BfmeAptScreenLanLobby::~BfmeAptScreenLanLobby()
 		{
 			TheLAN->shutdown(1);
 		}
-		*(volatile unsigned int *)0x012f7730 = 0;
+		*(volatile unsigned int *)&TheLAN = 0;
 
 		m_tail.m_state = 0;
 		{
@@ -210,6 +214,6 @@ BfmeAptScreenLanLobby::~BfmeAptScreenLanLobby()
 		m_prefs.slot03();
 		if (TheWindowManager)
 			TheWindowManager->slot40();
-		*(volatile unsigned int *)0x012f4998 = 0;
+		*(volatile unsigned int *)&g_bfme935GlobC = 0;
 	}
 }
