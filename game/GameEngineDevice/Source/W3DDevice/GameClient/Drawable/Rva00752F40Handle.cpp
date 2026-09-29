@@ -43,5 +43,5 @@ Int Gen00752F40::handle(Int upperBound)
 		level = 2;
 
 	return m_rows[level].m_value * GetGameClientRandomValue(0, upperBound - 1,
-		(char *)0x011225a8, 0x272) / 100;
+		"F:\\bfme\\Code\\gameenginedevice\\Source\\W3DDevice\\GameClient\\Drawable\\W3DHordeModelDraw.cpp", 0x272) / 100;
 }
