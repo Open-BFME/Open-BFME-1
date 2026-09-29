@@ -1,6 +1,21 @@
 // cl: /O2 /MD /D_STLP_USE_STATIC_LIB
 // STLport 4.5.3 narrow time_get name matcher, second copy at 0x00836980 (the int difference-type
 // instantiation): byte-twin of TimeGetNarrowMatch.cpp (tools/twin_scan.py), no relocations differ.
+// Its caller __get_short_or_long_dayname (0x008469E0, 83 B) lives here too: retail
+// calls this int copy straight from it, with the four-argument wrapper inlined.
+
+struct tm
+{
+    int tm_sec;
+    int tm_min;
+    int tm_hour;
+    int tm_mday;
+    int tm_mon;
+    int tm_year;
+    int tm_wday;
+    int tm_yday;
+    int tm_isdst;
+};
 
 namespace _STL
 {
@@ -154,5 +169,29 @@ __match(
     basic_string<char, char_traits<char>, allocator<char> > *,
     basic_string<char, char_traits<char>, allocator<char> > *,
     int *);
+
+typedef basic_string<char, char_traits<char>, allocator<char> > string;
+
+class _Time_Info
+{
+public:
+    string _M_dayname[14];
+    string _M_monthname[24];
+};
+
+template <class InputIter>
+bool __get_short_or_long_dayname(
+    InputIter &first, InputIter &last, const _Time_Info &table, tm *t)
+{
+    const string *pr =
+        __match(first, last, (string *)table._M_dayname + 0, (string *)table._M_dayname + 14, (int *)0);
+    t->tm_wday = (int)(pr - table._M_dayname) % 7;
+    return pr != table._M_dayname + 14;
+}
+
+template bool __get_short_or_long_dayname(
+    istreambuf_iterator<char, char_traits<char> > &,
+    istreambuf_iterator<char, char_traits<char> > &,
+    const _Time_Info &, tm *);
 
 } // namespace _STL
