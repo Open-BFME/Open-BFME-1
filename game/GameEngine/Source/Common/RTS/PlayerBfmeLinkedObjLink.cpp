@@ -320,18 +320,21 @@ struct BfmeNodeND
 // existing StringBase<char>::compare callee, so keep this tiny view local to
 // the inlined branch rather than routing every name through that callee.
 extern "C" unsigned int __cdecl strlen(const char *);
+extern const char Rva006A16B0Empty[];
 #pragma intrinsic(strlen)
 template <> inline int StringBase<char>::compare(const char *text) const {
     int length = text ? (int)strlen(text) : 0;
     int thisLength = m_data ? m_data->length : 0;
-    const char *data = m_data ? m_data->data : (const char *)0x0107388B;
+    const char *data = m_data ? m_data->data : Rva006A16B0Empty;
     int count = thisLength < length ? thisLength : length;
     int result = memcmp(data, text, count);
     if (result != 0) return result;
     return thisLength - length;
 }
 
-#define TheUpgradeCenter (*(BfmeThingND **)0x012EF188)
+class UpgradeCenter;
+extern UpgradeCenter *TheUpgradeCenter;
+#define TheUpgradeCenter ((BfmeThingND *)TheUpgradeCenter)
 
 
 class UpgradeMaskType

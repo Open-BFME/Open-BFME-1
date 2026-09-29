@@ -46,7 +46,8 @@ public:
 
     const char *str() const
     {
-        return m_data ? &m_data->data[0] : (const char *)0x0107388B;
+        static const char TheNullChr = 0;
+        return m_data ? &m_data->data[0] : &TheNullChr;
     }
 
     void __cdecl format(AsciiString format, ...);
@@ -57,6 +58,8 @@ public:
         return *this;
     }
 };
+
+extern const unsigned short BFMEEmptyUnicodeString;
 
 class UnicodeString : private StringBase<wchar_t>
 {
@@ -70,7 +73,7 @@ public:
 
     const wchar_t *str() const
     {
-        return m_data ? &m_data->data[0] : (const wchar_t *)0x0107388C;
+        return m_data ? &m_data->data[0] : (const wchar_t *)&BFMEEmptyUnicodeString;
     }
 };
 

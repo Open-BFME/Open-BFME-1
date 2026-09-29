@@ -83,7 +83,7 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-#define TheThingFactory (*(ThingFactory **)0x012EF1D8)
+extern ThingFactory *TheThingFactory;
 
 extern int __cdecl findClosestOrphan(Object *object, void *userData);
 
@@ -163,7 +163,7 @@ Object *Rva0020B860SpawnBehavior::reclaimOrphanSpawn()
 	Player *player = getObject()->getControllingPlayer();
 	const Rva0020B860SpawnBehaviorModuleData *md = getSpawnBehaviorModuleData();
 	OrphanData orphanData;
-	AsciiString prevName((const char *)0x0107301C);
+	AsciiString prevName("");
 	for (AsciiString *tempName = md->m_spawnTemplateNameData.begin();
 		tempName != md->m_spawnTemplateNameData.end(); ++tempName)
 	{

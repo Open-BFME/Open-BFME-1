@@ -6,6 +6,9 @@
 
 #include "AsciiString.h"
 
+// Retail vtable 0x0107C7D0, pinned as _bfmeVftVE (targets/game/reverse/symbols.csv).
+extern "C" int _bfmeVftVE[];
+
 class UserParser;
 class DataChunkInput;
 struct DataChunkInfo;
@@ -24,7 +27,7 @@ public:
     BfmeParserRegistrationVE(DataChunkInput *table, AsciiString *name,
         AsciiString *label)
     {
-        m_vftable = (void *)0x0107C7D0;
+        m_vftable = _bfmeVftVE;
         m_table = table;
         m_parser = table->registerParser(*name, *label,
             (BfmeParserCallback)0x0041579E, this);
@@ -36,6 +39,9 @@ protected:
     DataChunkInput *m_table;
     UserParser *m_parser;
 };
+
+// Derived vtable 0x0107C810: no dir32_addresses.csv symbol names it.
+extern void *g_0107C810[];
 
 class Rva00088F50ParserRegistration : public BfmeParserRegistrationVE
 {
@@ -55,5 +61,5 @@ Rva00088F50ParserRegistration::Rva00088F50ParserRegistration(
 {
     Rva00088F50ParserRegistration *self = this;
     self->m_0c = extra;
-    self->m_vftable = (void *)0x0107C810;
+    self->m_vftable = g_0107C810;
 }

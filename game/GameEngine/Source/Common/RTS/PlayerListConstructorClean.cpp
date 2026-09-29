@@ -62,13 +62,18 @@ private:
 
 #pragma comment(linker, "/alternatename:?init@PlayerList@@UAEXXZ=?j_00030e90@@YAXXZ")
 
+extern "C" void *bfmeVftPlayerListSubsystemInterface[];
+extern "C" void *bfmeVftPlayerListSnapshot[];
+#pragma comment(linker, "/alternatename:_bfmeVftPlayerListSubsystemInterface=??_7PlayerList@@6BSubsystemInterface@@@")
+#pragma comment(linker, "/alternatename:_bfmeVftPlayerListSnapshot=??_7PlayerList@@6BSnapshot@@@")
+
 // ??0PlayerList@@QAE@XZ
 PlayerList::PlayerList()
 {
 	// Snapshot's base vtable is installed by its inlined constructor, then
 	// replaced by the derived PlayerList pair at +8 and +0.
-	*(volatile void **)((char *)this + 0) = (void *)0x0108417c;
-	*(volatile void **)((char *)this + 8) = (void *)0x01084168;
+	*(volatile void **)((char *)this + 0) = bfmeVftPlayerListSubsystemInterface;
+	*(volatile void **)((char *)this + 8) = bfmeVftPlayerListSnapshot;
 	m_local = 0;
 	m_playerCount = 0;
 
