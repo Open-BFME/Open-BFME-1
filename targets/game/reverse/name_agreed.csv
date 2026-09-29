@@ -133,3 +133,5 @@ game/GameEngine/Source/GameLogic/AI/Rva001515C0Xfer.cpp|member||m_value08,m_memb
 game/GameEngine/Source/GameLogic/AI/Rva001515C0Xfer.cpp|member||m_value0c,m_speed,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/GameLogic/AI/Rva001515C0Xfer.cpp|member||m_value10,m_dirty,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/GameLogic/AI/Rva001515C0Xfer.cpp|member||m_value14,m_id,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|member||m_1C,m_costSoFar,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|member||m_24,m_totalCost,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
