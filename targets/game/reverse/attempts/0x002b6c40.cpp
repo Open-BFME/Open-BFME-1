@@ -1,5 +1,5 @@
 // ?findGoodBuildOrRepairPosition@DozerAIUpdate@@SA_NPBVObject@@0AAUCoord3D@@@Z
-// partial score=0.95 date=2026-09-27
+// partial score=0.9573 date=2026-09-27
 // cl: /DNDEBUG /MD /EHsc
 // DozerAIUpdate::findGoodBuildOrRepairPosition, retail RVA 0x002B6C40 (445
 // bytes); real C++ body replacing the naked __emit lift that stood there.
