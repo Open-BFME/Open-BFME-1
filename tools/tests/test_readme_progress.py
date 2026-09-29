@@ -144,3 +144,11 @@ def test_whole_game_counts_two_steps_per_byte():
     assert "**35.00%**  Whole game  \u25b2 2.50" in embed["description"]
     assert daily.whole(100, 100) == 100  # only everything matched and linked is the whole game
 
+
+
+def test_discord_adds_readable_names_as_one_blue_row():
+    current = {**sample(), "declared_names": 200, "readable_names": 142}
+    previous = {"total": 100, "matched_total": 55, "linked_total": 10, "declared_names": 200, "readable_names": 140}
+    rows = daily.announcement(current, previous)["embeds"][0]["description"].split("\n")
+    assert rows[3] == f"{daily.NAMES_BLOCK * 7}{daily.REST_BLOCK * 3}  **71.00%**  Readable names  \u25b2 1.00"
+    assert rows[5].endswith(f"{daily.NAMES_BLOCK} readable names")

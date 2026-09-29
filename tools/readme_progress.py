@@ -24,6 +24,7 @@ from datetime import datetime, timezone
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
+import name_lane
 import progress
 
 STATE = "docs/discord-main-progress.json"
@@ -128,6 +129,7 @@ def render(current, previous=None):
 # row wraps on a phone). Discord draws them with no gap, so each part needs its
 # own colour: yellow = linked, green = byte-matched, dark = still original.
 LINKED_BLOCK, MATCHED_BLOCK, REST_BLOCK = "\U0001f7e8", "\U0001f7e9", "\u2b1b"
+NAMES_BLOCK = "\U0001f7e6"  # blue: readable names measure declarations, not bytes
 WIDTH = 10
 REPORT = "https://open-bfme.github.io/Open-BFME-1/"
 
@@ -163,8 +165,18 @@ def announcement(current, previous):
         f"{blocks([(LINKED_BLOCK, linked), (MATCHED_BLOCK, (matched - linked) / 2)], total)}  "
         f"**{progress.percent(whole(linked, matched), total):.2f}%**  Whole game"
         + moved(change(whole(linked, matched), previous, "whole_total", total)),
+    ]
+    if current.get("declared_names"):
+        names, readable = current["declared_names"], current["readable_names"]
+        now = progress.percent(readable, names)
+        before = (progress.percent(previous["readable_names"], previous["declared_names"])
+                  if previous and previous.get("declared_names") else None)
+        rows.append(f"{blocks([(NAMES_BLOCK, readable)], names)}  **{now:.2f}%**  Readable names"
+                    + moved(now - before if before is not None and abs(now - before) >= 0.005 else None))
+    rows += [
         "",  # a blank line between the bars and the key
-        f"{LINKED_BLOCK} linked  ·  {MATCHED_BLOCK} byte-matched",  # a colour key: the numbers are on the rows
+        f"{LINKED_BLOCK} linked  ·  {MATCHED_BLOCK} byte-matched"  # a colour key: the numbers are on the rows
+        + (f"  ·  {NAMES_BLOCK} readable names" if current.get("declared_names") else ""),
         f"[Full progress report: chart and map]({REPORT})",
     ]
     return {"allowed_mentions": {"parse": []},
@@ -218,14 +230,17 @@ def main():
     census = progress.census_at(None)
     linked = int(census["linked_bytes"]) if census else 0
     _, total = progress.real_code_denominator(start, size)
+    names, placeholders = name_lane.readable()
     current = {"total": total, "linked": linked, "census": census,
+               "declared_names": names, "readable_names": names - placeholders,
                **{lane: split[lane] for lane in ("authored", "vendored", "generated", "library")}}
     previous = previous_state()
     output = progress.ROOT / "docs" / "progress.svg"
     svg = render(current, previous)
     output.write_text(svg, encoding="utf-8", newline="\n")
     print(f"{output.relative_to(progress.ROOT)}: {progress.percent(progress.rebuildable(current), total):.2f}% "
-          f"byte-matched, {progress.percent(linked, total):.2f}% linked")
+          f"byte-matched, {progress.percent(linked, total):.2f}% linked, "
+          f"{progress.percent(names - placeholders, names):.2f}% of declared names readable")
     if args.discord:
         notify(current)
 
