@@ -41,7 +41,7 @@ public:
 class MpGameSetup
 {
 public:
-	void bfmeShutdown();
+	void shutdown();
 
 private:
 	unsigned char m_data[ 0x134 ];
@@ -89,7 +89,7 @@ private:
 
 void BfmeAptScreenOnlineCustomMatch::unregisterInitGadgets()
 {
-	m_setup.bfmeShutdown();
+	m_setup.shutdown();
 	void *staging = m_stagingObject;
 	m_clearedFlag = 0;
 	if( staging )

@@ -23,7 +23,7 @@ public:
 class MpGameSetup
 {
 public:
-	void bfmeShutdown(void);
+	void shutdown(void);
 };
 
 class Rva00579390Owner
@@ -42,5 +42,5 @@ void Rva00579390Owner::bfmeNestedShutdown(void)
 {
 	m_first.v3();
 	m_second.v1();
-	reinterpret_cast<MpGameSetup *>(&m_second)->bfmeShutdown();
+	reinterpret_cast<MpGameSetup *>(&m_second)->shutdown();
 }

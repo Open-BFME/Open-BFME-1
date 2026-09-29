@@ -14,7 +14,7 @@ public:
 class MpGameSetup
 {
 public:
-	void bfmeShutdown( void );
+	void shutdown( void );
 };
 
 class Rva0051A5A0Host : public BfmeQ1078
@@ -32,5 +32,5 @@ void Rva0051A5A0Host::apply( void )
 {
 	setup( 0 );
 	bfmeGo1078A();
-	m_sub.bfmeShutdown();
+	m_sub.shutdown();
 }

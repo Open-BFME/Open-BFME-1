@@ -117,7 +117,7 @@ class MpGameSetup
 public:
 	void bfmeRefresh(void);
 	const StartPositionInfo *bfmeGetStartPositionInfo(int slotIndex);
-	void bfmeShutdown(void);
+	void shutdown(void);
 	void bfmeDispatchWindow(GameWindow *window);
 	int bfmeFindRepresentativeSlot(void);
 	int getNextSelectablePlayer(int firstIndex);
@@ -166,7 +166,7 @@ private:
 	GameWindow *m_3C[8];
 	char m_5C[0x0c];
 	GameWindow *m_68[8];
-	void *m_88[8];
+	void *m_colorCombos[8];
 	GameWindow *m_A8[8];
 	GameWindow *m_C8[8];
 	char m_E8[0x3c];
@@ -201,7 +201,7 @@ void Rva00526660Body::run(int enable, int slotIndex)
 
 	bool empty;
 	empty = m_08->getConstSlot(slotIndex)->getPlayerTemplate() == -2;
-	Rva00526660Adapter adapter(&m_88[slotIndex]);
+	Rva00526660Adapter adapter(&m_colorCombos[slotIndex]);
 	if (adapter.m_00)
 	{
 		if (empty)
@@ -276,8 +276,8 @@ void MpGameSetup::bfmeRefresh(void)
 }
 
 // Tear down the preview state and close the setup APT screen.
-// ?bfmeShutdown@MpGameSetup@@QAEXXZ
-void MpGameSetup::bfmeShutdown(void)
+// ?shutdown@MpGameSetup@@QAEXXZ
+void MpGameSetup::shutdown(void)
 {
 	if (m_backgroundVisible)
 	{
