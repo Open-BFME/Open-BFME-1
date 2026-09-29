@@ -56,7 +56,7 @@ extern "C" void __cdecl bfmeAppend(BfmeAppendStream *stream,
 	{
 		int count = stream->m_end - stream->m_begin;
 		for (int remaining = count; remaining != 0; --remaining)
-			stream->m_sink->append(reinterpret_cast<const char *>(0x010E8B00), 2);
+			stream->m_sink->append("  ", 2);
 	}
 	else
 	{

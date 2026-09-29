@@ -18,6 +18,10 @@ public:
 		const AsciiString &label, BfmeParserCallback callback, void *userData);
 };
 
+// Retail vtable 0x0107C7D0, pinned as _bfmeVftVE.
+extern "C" int _bfmeVftVE[];
+void j_0001579e();
+
 class BfmeParserRegistrationVE
 {
 public:
@@ -33,8 +37,8 @@ private:
 BfmeParserRegistrationVE::BfmeParserRegistrationVE(
 	DataChunkInput *table, AsciiString *name, AsciiString *label)
 {
-	m_vftable = (void *)0x0107C7D0;
+	m_vftable = _bfmeVftVE;
 	m_table = table;
 	m_parser = table->registerParser(*name, *label,
-		(BfmeParserCallback)0x0041579E, this);
+		(BfmeParserCallback)j_0001579e, this);
 }

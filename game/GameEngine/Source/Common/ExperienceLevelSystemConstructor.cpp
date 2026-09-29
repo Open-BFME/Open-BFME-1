@@ -70,6 +70,6 @@ ExperienceLevelSystem::ExperienceLevelSystem()
 	  m_scalarTables()
 {
 	m_defaultLevel = new ExperienceScalarTable(
-		AsciiString((const char *)0x010EA974));
+		AsciiString("NOTFOUND_DEFAULT_ScalarTable"));
 	m_defaultLevel->m_scalars.push_back(1.0f);
 }

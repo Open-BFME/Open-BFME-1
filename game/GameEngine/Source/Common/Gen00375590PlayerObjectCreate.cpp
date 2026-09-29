@@ -30,6 +30,9 @@ class Gen00375590PlayerList
 {
 };
 
+class SidesList;
+extern SidesList *TheSidesList;
+
 struct Gen00375590AcceptReceiver
 {
 	bool accept(void *, int, Gen00375590EntryStorage *);
@@ -91,7 +94,7 @@ void Gen_00375590::createPlayerObject()
 		} acceptFunction;
 		acceptFunction.asVoid = (void *)j_0000bf2d;
 		if (!(reinterpret_cast<Gen00375590AcceptReceiver *>(
-			((Gen00375590PlayerList **)0x012ef428)[0])->*acceptFunction.asMember)(
+			(Gen00375590PlayerList *)TheSidesList)->*acceptFunction.asMember)(
 			templateObject, index, entry))
 			break;
 		owner->remove(entry);

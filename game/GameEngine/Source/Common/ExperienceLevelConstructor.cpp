@@ -21,6 +21,8 @@ typedef unsigned int UnsignedInt;
 typedef int Int;
 typedef float Real;
 
+extern const char g_Rva0107301CEmptyString[];
+
 // BFME's one-pointer AsciiString is the vendor WWLib wrapper around
 // StringBase<char>, not a derived StringBase subobject.  The existing
 // ascii_string.h/string_base.h declarations model the real Header as
@@ -145,7 +147,7 @@ private:
 
 // ??0ExperienceLevel@@QAE@XZ
 ExperienceLevel::ExperienceLevel()
-	: m_name((const char *)0x0107301c),
+	: m_name(g_Rva0107301CEmptyString),
 	  m_requiredExperience(0),
 	  m_experienceAward(0),
 	  m_experienceAwardOwnGuysDie(-1),
