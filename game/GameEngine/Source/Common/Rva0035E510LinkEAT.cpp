@@ -1,11 +1,5 @@
-// ?bfmeLinkEAT@BfmeNodeEAT@Rva0035E510@@QAEXPAV12@PAH1@Z
-// partial score=1.0 date=2026-09-28
 // stlport
-// ?bfmeLinkEAT@BfmeNodeEAT@Rva0035E510@@QAEXPAV12@PAH1@Z
 // cl: /DNDEBUG /MD /O2 /EHsc /D_STLP_USE_STATIC_LIB
-// Byte-exact modulo relocations (probe EXACT 518/518). add_match fails only on
-// the two rel32 slots of _M_initialize_map (ILT 0x00048838) and _M_reallocate_map
-// (ILT 0x00031E08): their pins carry other placeholder element types.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <deque>
