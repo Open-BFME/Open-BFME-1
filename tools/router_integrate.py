@@ -738,7 +738,7 @@ def integrate(args):
         print(sh(cmd, ROOT, check=True).stdout)
     elif args.measure and attempts and args.job:
         delta = sh([sys.executable, 'tools/progress.py', f'{sha}^..{sha}'], dest, check=True).stdout
-        m = re.search(r'REBUILDS FROM.*?delta ([+-][\d,]+) bytes', delta)
+        m = re.search(r'BYTE-MATCHED.*?delta ([+-][\d,]+) bytes', delta)
         # exact-match is the TARGET's verdict (review's landed list), never the
         # fact that the batch was accepted: a pushed unmatched investigation is
         # useful work but not an exact match.

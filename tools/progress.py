@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
 """Report how much retail code we can rebuild from what the repository holds.
 
-LINKED and DECOMPILED print first. DECOMPILED is authored C++ and vendored
-library source: recovered source that compiles to retail's bytes, checked a
-function at a time (generated C++ is not recovered; see source_lane). LINKED is
-the part of it whose files also linked cleanly, as measured and stored by the
-last tools/link_census.py run (link_census_history.csv, link_status.csv). Both
-count 0xCC bytes the way the denominator does.
-
-The REBUILDS headline includes authored C++, vendored source, generated C++ and attached
-prebuilt libraries; it excludes retail-byte dumps. Its denominator excludes
-0xCC padding. The breakdown reports each provenance separately, so ASM-to-C++
-work can also be measured by the change in authored bytes. Total exact uses
-the full .text denominator and includes dumps: it measures bounded coverage,
-not conversion progress.
+BYTE-MATCHED, LINKED and WHOLE GAME print first: the three numbers on the
+README card and in the daily Discord post (tools/readme_progress.py), computed
+the same way. BYTE-MATCHED is everything that rebuilds to the original exe's
+exact bytes (authored and generated C++, vendored source, attached prebuilt
+libraries; dumps excluded). LINKED is the part of our own source whose files
+also link cleanly, as measured and stored by the last tools/link_census.py run
+(link_census_history.csv). WHOLE GAME counts two steps per byte, byte-matched
+then linked. Every figure counts 0xCC padding out, the way the denominator
+does, so the breakdown under them adds up to them. Total exact, at the end,
+uses the full .text and includes dumps: bounded coverage, not progress.
 
 Every retail byte is counted once. Clean C++ ownership wins when it overlaps an
 assembly-backed row (including ICF aliases), leaving "ASM-only" as actionable
@@ -580,54 +577,59 @@ def data_denominator():
     return sum(s["size"] for s in build.pe_sections(build.EXE.read_bytes()) if s["name"] in (".rdata", ".data"))
 
 
-def print_realistic(denominator, old_split, new_split, old_census, new_census):
-    # The realistic figures go first: recovered source whose files linked
-    # cleanly at the last link census, then recovered source that compiles to
-    # retail's bytes one function at a time. REBUILDS below also counts
-    # generated C++ and attached prebuilt libraries, and says nothing about linking.
+def whole(linked, matched):
+    """WHOLE GAME in bytes: every byte needs two steps, byte-matched and then
+    linked, so this is the steps done over the steps there are (half of each).
+    100% only when everything is matched and linked."""
+    return (matched + linked) / 2
+
+
+def _line(label, value, denominator, delta, note):
+    return (f"{label:<14} {value:>12,.0f} bytes ({percent(value, denominator):6.2f}%)  {delta}  <- {note}")
+
+
+def print_headline(padding, denominator, old_split, new_split, old_census, new_census):
+    """The README card's and the daily Discord post's three numbers, computed
+    the same way, then what they are made of. Every figure counts 0xCC out,
+    so the lines below add up to the lines above."""
+    matched, before = rebuildable(new_split), rebuildable(old_split)
+    print(_line("BYTE-MATCHED", matched, denominator, f"delta {format_delta(matched, before, denominator)}",
+                "rebuilds to the original exe's exact bytes"))
     if new_census:
-        now = int(new_census["linked_bytes"])
-        # A range starting before any census has nothing to compare against;
-        # printing the whole figure as a gain would credit it to that range.
-        delta = (f"delta {format_delta(now, int(old_census['linked_bytes']), denominator)}" if old_census
-                 else "delta n/a (no census at the start of the range)")
-        print(f"LINKED                      {now:>10,} bytes ({percent(now, denominator):6.2f}%)  {delta}  "
-              f"<- files that link cleanly, census {new_census['date']} at {new_census['commit']} (daily)")
+        linked = int(new_census["linked_bytes"])
+        # A range that starts before any census has nothing to compare with;
+        # showing the whole figure as a gain would credit it to that range.
+        if old_census:
+            was = int(old_census["linked_bytes"])
+            linked_delta = f"delta {format_delta(linked, was, denominator)}"
+            whole_delta = f"delta {format_delta(round(whole(linked, matched)), round(whole(was, before)), denominator)}"
+        else:
+            linked_delta = whole_delta = "delta n/a (no census at the start of the range)"
+        print(_line("LINKED", linked, denominator, linked_delta,
+                    f"files that link cleanly, census {new_census['date']} at {new_census['commit']}"))
+        print(_line("WHOLE GAME", whole(linked, matched), denominator, whole_delta,
+                    "two steps per byte, byte-matched then linked: the share done"))
     else:
-        print("LINKED                      not measured  <- no link census yet (tools/link_census.py --history)")
-    now, before = decompiled(new_split), decompiled(old_split)
-    print(f"DECOMPILED                  {now:>10,} bytes ({percent(now, denominator):6.2f}%)  delta "
-          f"{format_delta(now, before, denominator)}  <- our C++ and library source, compiling to retail's bytes")
-    print(f"GAME DATA                   not measured  <- {data_denominator():,} bytes of .rdata/.data; "
-          "no data is byte-verified yet\n")
+        print(f"{'LINKED':<14} not measured  <- no link census yet (tools/link_census.py --history)")
+        print(f"{'WHOLE GAME':<14} not measured  <- needs LINKED")
+    print("               (the three figures on the README card and in the daily Discord post)")
 
-
-def print_real_code(padding, denominator, old_stats, new_stats, old_split, new_split):
-    # REBUILDS is the per-session delta agents and router_integrate read; the
-    # realistic LINKED/DECOMPILED lines above it are the project's progress.
-    now, before = rebuildable(new_split), rebuildable(old_split)
-    print(f"REBUILDS FROM WHAT WE HOLD  {now:>10,} bytes "
-          f"({percent(now, denominator):6.2f}%)  delta "
-          f"{format_delta(now, before, denominator)}")
-    print(f"\nreal code = .text minus {padding:,} bytes of 0xCC padding "
-          f"= {denominator:,} bytes")
-    print(f"  {'still only retail bytes':<26} {new_split['dump']:>10,} bytes "
+    print(f"\nreal code = .text minus {padding:,} bytes of 0xCC padding = {denominator:,} bytes")
+    print("  byte-matched, by where its source comes from:")
+    for label, key in (("C++ we wrote", "authored"), ("vendored library source", "vendored"),
+                       ("generator-written C++", "generated"), ("prebuilt .lib attached", "library")):
+        print(f"    {label:<24} {new_split[key]:>10,} bytes ({percent(new_split[key], denominator):6.2f}%)"
+              f"  delta {format_delta(new_split[key], old_split[key], denominator)}")
+    unclaimed = denominator - sum(new_split[lane] for lane in SOURCE_LANES)
+    print("  not byte-matched:")
+    print(f"    {'still only retail bytes':<24} {new_split['dump']:>10,} bytes "
           f"({percent(new_split['dump'], denominator):6.2f}%)  <- dumps: a boundary, nothing more")
-    # new_stats["unmatched"] is padding-inclusive; the real-code view must not be.
-    unclaimed = denominator - new_stats["exact"]
-    print(f"  {'unclaimed':<26} {unclaimed:>10,} bytes "
-          f"({percent(unclaimed, denominator):6.2f}%)  <- no boundary proven yet")
-
-    print("\n  breakdown of what we hold (diagnostic, not the headline):")
-    for label, key in (
-        ("C++ we wrote", "authored"),
-        ("vendored library source", "vendored"),
-        ("generator-written C++", "generated"),
-        ("prebuilt .lib attached", "library"),
-    ):
-        value, previous = new_split[key], old_split[key]
-        print(f"    {label:<24} {value:>10,} bytes ({percent(value, denominator):6.2f}%)"
-              f"  delta {format_delta(value, previous, denominator)}")
+    print(f"    {'unclaimed':<24} {unclaimed:>10,} bytes ({percent(unclaimed, denominator):6.2f}%)"
+          "  <- no boundary proven yet")
+    own, own_before = decompiled(new_split), decompiled(old_split)
+    print(f"  our own source (C++ we wrote + library source) {own:,} bytes ({percent(own, denominator):.2f}%)"
+          f"  delta {format_delta(own, own_before, denominator)}")
+    print(f"GAME DATA      not measured  <- {data_denominator():,} bytes of .rdata/.data; no data is byte-verified yet")
 
 
 def marker_delta(ref1, ref2):
@@ -723,12 +725,8 @@ def main():
 
     padding, denominator = real_code_denominator(text_start, text_size)
     old_notes, new_notes = notes_at(ref1), notes_at(ref2)
-    old_split = source_split(old, old_notes, text_start, text_size, old_naked)
-    new_split = source_split(new, new_notes, text_start, text_size, new_naked)
-    print_realistic(denominator, real_split(old, old_notes, text_start, text_size, old_naked),
-                    real_split(new, new_notes, text_start, text_size, new_naked),
-                    census_at(ref1), census_at(ref2))
-    print_real_code(padding, denominator, old_stats, new_stats, old_split, new_split)
+    print_headline(padding, denominator, real_split(old, old_notes, text_start, text_size, old_naked),
+                   real_split(new, new_notes, text_start, text_size, new_naked), census_at(ref1), census_at(ref2))
     print_scorecard(ref1, label2, old_stats, new_stats)
     if args.details:
         print_details(ref1, ref2, old, new, old_naked, new_naked)

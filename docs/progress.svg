@@ -33,8 +33,8 @@
       <rect x="28" y="180" width="375.70" height="18" fill="#2ea043"/>
       <rect x="28" y="180" width="76.01" height="18" fill="url(#dots)"/>
     </g>
-    <rect x="28" y="206" width="10" height="10" rx="2" fill="url(#dots)"/><text x="44" y="215" class="muted" font-size="12.5">linked 9.22%</text>
-    <rect x="303" y="206" width="10" height="10" rx="2" fill="#2ea043"/><text x="319" y="215" class="muted" font-size="12.5">byte-matched, not linked yet 72.74%</text>
+    <rect x="28" y="206" width="10" height="10" rx="2" fill="url(#dots)"/><text x="44" y="215" class="muted" font-size="12.5">linked</text>
+    <rect x="303" y="206" width="10" height="10" rx="2" fill="#2ea043"/><text x="319" y="215" class="muted" font-size="12.5">byte-matched</text>
     <text x="28" y="246" class="muted" font-size="12.5">Byte-matched: code rebuilt to the original exe's exact bytes. Linked: the part that connects into one program (measured 2026-09-29).</text>
   </g>
 </svg>

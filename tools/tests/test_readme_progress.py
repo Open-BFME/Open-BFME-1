@@ -102,7 +102,7 @@ def test_whole_game_bar_ends_at_its_number_and_its_parts_add_up_to_100():
     svg = daily.render(sample())
     assert "BFME 1: 60.00% byte-matched, 10.00% linked" in svg
     assert 'width="{:.2f}" height="18" fill="{}"'.format(824 * 0.35, daily.MATCHED) in svg
-    assert "linked 10.00%" in svg and "byte-matched, not linked yet 50.00%" in svg
+    assert ">linked<" in svg and ">byte-matched<" in svg and "72.73" not in svg
     with pytest.raises(ValueError):
         daily.render(sample(linked=61))
 
@@ -116,7 +116,7 @@ def test_discord_draws_the_cards_three_bars_in_green_blocks():
         f"{L * 1}{R * 9}  **10.00%**  Code linked",
         f"{L * 1}{M * 3}{R * 6}  **35.00%**  Whole game",
         "",
-        f"{L} linked 10.00%  \u00b7  {M} byte-matched, not linked yet 50.00%",
+        f"{L} linked  ·  {M} byte-matched",
         f"[Full progress report: chart and map]({daily.REPORT})"]
     assert "footer" not in embed  # no definitions, no extra measures: the card and the report have them
 

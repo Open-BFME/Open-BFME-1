@@ -356,7 +356,7 @@ def test_dump_pass_moved_zero_recovered_bytes():
 
 def test_readme_headline_is_a_recovered_figure():
     """The badge makes two claims -- byte-matched and linked -- and neither may
-    exceed what progress.py prints for it (REBUILDS and LINKED).
+    exceed what progress.py prints for it (BYTE-MATCHED and LINKED).
 
     A README that lags is fine (contributors land continuously, the census is
     daily) and a README that flatters is not.
@@ -369,7 +369,7 @@ def test_readme_headline_is_a_recovered_figure():
         # "not measured" (no census yet) is 0%: the badge may not claim more.
         return float(line.split("(")[1].split("%")[0]) if "(" in line else 0.0
 
-    rebuilds, linked = figure("REBUILDS FROM WHAT WE HOLD"), figure("LINKED ")
+    rebuilds, linked = figure("BYTE-MATCHED "), figure("LINKED ")
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     assert "docs/progress.svg" in readme, "README no longer shows the progress badge"
     svg = (ROOT / "docs/progress.svg").read_text(encoding="utf-8")
@@ -399,7 +399,7 @@ def test_readme_never_overstates_coverage():
     printed = subprocess.run([sys.executable, str(TOOL)],
                              cwd=ROOT, capture_output=True, text=True, check=True).stdout
     line = next(l for l in printed.splitlines()
-                if "REBUILDS FROM WHAT WE HOLD" in l)
+                if l.startswith("BYTE-MATCHED "))
     rebuilds = float(line.split("(")[1].split("%")[0])
 
     readme = (ROOT / "README.md").read_text(encoding="utf-8")

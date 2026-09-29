@@ -42,11 +42,7 @@ def figures(current):
     return linked, matched
 
 
-def whole(linked, matched):
-    """Whole-game progress in bytes: every byte needs two steps, byte-matched
-    and then linked, so this is the steps done over the steps there are (half
-    of each). 100% only when everything is matched and linked."""
-    return (matched + linked) / 2
+whole = progress.whole  # one definition, shared with tools/progress.py
 
 
 def change(value, previous, key, total):
@@ -87,7 +83,7 @@ def render(current, previous=None):
     moved_whole = (f'<tspan class="{"up" if delta > 0 else "down"}" dx="10" font-size="13" font-weight="600">'
                    f'{arrow(delta)}</tspan>' if delta is not None else "")
     height = 262
-    split = [("url(#dots)", f"linked {lp:.2f}%"), (MATCHED, f"byte-matched, not linked yet {mp - lp:.2f}%")]
+    split = [("url(#dots)", "linked"), (MATCHED, "byte-matched")]  # a colour key: the numbers are on the rows
     keys = []
     for index, (colour, label) in enumerate(split):
         x = 28 + 275 * index
@@ -168,7 +164,7 @@ def announcement(current, previous):
         f"**{progress.percent(whole(linked, matched), total):.2f}%**  Whole game"
         + moved(change(whole(linked, matched), previous, "whole_total", total)),
         "",  # a blank line between the bars and the key
-        f"{LINKED_BLOCK} linked {lp:.2f}%  \u00b7  {MATCHED_BLOCK} byte-matched, not linked yet {mp - lp:.2f}%",
+        f"{LINKED_BLOCK} linked  ·  {MATCHED_BLOCK} byte-matched",  # a colour key: the numbers are on the rows
         f"[Full progress report: chart and map]({REPORT})",
     ]
     return {"allowed_mentions": {"parse": []},
