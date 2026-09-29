@@ -28,6 +28,32 @@ private:
 	int m_bfmeObjectID;
 };
 
+// The caller passes the owner object through EAX, which this function reads directly.
+__declspec(noinline) BfmeDestroyable *bfmeFindModule(void)
+{
+	__asm
+	{
+		mov esi, dword ptr [eax + 1F0h]
+		mov eax, dword ptr [esi]
+		test eax, eax
+		je noModule
+		align 16
+	loopModules:
+		mov edx, dword ptr [eax + 0Ch]
+		lea ecx, [eax + 0Ch]
+		call dword ptr [edx + 78h]
+		test eax, eax
+		jne foundModule
+		mov eax, dword ptr [esi + 4]
+		add esi, 4
+		test eax, eax
+		jne loopModules
+	noModule:
+		xor eax, eax
+	foundModule:
+	}
+}
+
 // ?bfmeRelease@Gen_0028CF50@@QAEXXZ
 void Gen_0028CF50::bfmeRelease(void)
 {
