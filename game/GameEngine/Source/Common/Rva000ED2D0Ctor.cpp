@@ -1,5 +1,8 @@
 // cl: /O2 /Ob0
 
+extern "C" const void *bfmeVftDamageInfoInput[];
+#pragma comment(linker, "/alternatename:_bfmeVftDamageInfoInput=??_7DamageInfoInput@@6B@")
+
 class Rva000ED2D0
 {
 	void *m_00;
@@ -28,7 +31,7 @@ public:
 
 Rva000ED2D0::Rva000ED2D0()
 {
-	m_00 = (void *)0x01085DE0;
+	m_00 = (void *)bfmeVftDamageInfoInput;
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0x16;

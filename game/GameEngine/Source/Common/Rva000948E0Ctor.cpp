@@ -1,5 +1,8 @@
 // cl: /O2 /Ob0
 
+extern "C" const void *bfmeVftOverridable[];
+#pragma comment(linker, "/alternatename:_bfmeVftOverridable=??_7Overridable@@6B@")
+
 class Rva000948E0
 {
 	void *m_vptr;
@@ -12,7 +15,7 @@ public:
 
 Rva000948E0::Rva000948E0(int)
 {
-	m_vptr = (void *)0x0107FCB0;
+	m_vptr = (void *)bfmeVftOverridable;
 	m_04 = 0;
 	m_08 = 0;
 }

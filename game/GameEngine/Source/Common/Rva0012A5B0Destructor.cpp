@@ -12,11 +12,14 @@
 // from the offsets with out-of-line destructors except AudioEventRTS which
 // resolves by its real matched name.
 
+extern "C" const void *bfmeVftSnapshot[];
+#pragma comment(linker, "/alternatename:_bfmeVftSnapshot=??_7Snapshot@@6B@")
+
 struct BfmeVftSlot0012A5B0
 {
 	~BfmeVftSlot0012A5B0()
 	{
-		m_p = (void *)0x01073744;
+		m_p = (void *)bfmeVftSnapshot;
 	}
 
 	void *m_p;

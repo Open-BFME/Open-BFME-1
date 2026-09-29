@@ -1,5 +1,7 @@
 // cl: /O2 /Ob0
 
+extern const void *g_010956C4[];
+
 class Rva00149E60
 {
 	void *m_00;
@@ -16,7 +18,7 @@ Rva00149E60 &Rva00149E60::set(int a, int b, int c)
 {
 	m_08 = b;
 	m_04 = 0;
-	m_00 = (void *)0x010956C4;
+	m_00 = (void *)g_010956C4;
 	m_0C = c;
 	m_10 = a;
 	return *this;
