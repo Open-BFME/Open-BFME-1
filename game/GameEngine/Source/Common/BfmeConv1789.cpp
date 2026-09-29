@@ -10,7 +10,7 @@ class BfmeThingLU
 {
 public:
 	int m_bfmeSpareLU;
-	BfmeInnerLU *m_bfmeInnerLU;
+	BfmeInnerLU *m_nextOverride;
 };
 
 class BfmeOwnerLU
@@ -20,8 +20,8 @@ public:
 	{
 		BfmeThingLU *thing = m_bfmeSlotLU;
 
-		if (thing && thing->m_bfmeInnerLU)
-			thing = thing->m_bfmeInnerLU->bfmeResolveLU();
+		if (thing && thing->m_nextOverride)
+			thing = thing->m_nextOverride->bfmeResolveLU();
 
 		return thing;
 	}
@@ -39,8 +39,8 @@ BfmeThingLU *BfmeOwnerLU::bfmeTopLU(void)
 
 	BfmeThingLU *thing = bfmeThingLU();
 
-	if (thing->m_bfmeInnerLU)
-		return thing->m_bfmeInnerLU->bfmeResolveLU();
+	if (thing->m_nextOverride)
+		return thing->m_nextOverride->bfmeResolveLU();
 
 	return thing;
 }
