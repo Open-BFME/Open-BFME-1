@@ -71,7 +71,9 @@ public:
 #undef BFME_AUDIO_SLOT
 };
 
-#define TheAudioClientUpdate (*(Rva005A00B0AudioClient **)0x012ED668)
+class AudioManager;
+extern AudioManager *TheAudio;
+#define TheAudioClientUpdate ((Rva005A00B0AudioClient *)TheAudio)
 
 struct Rva00367E30Logic
 {
@@ -83,8 +85,11 @@ extern const Real g_bfmeUint32Scale;
 extern const Real g_bfmeDefaultBU;
 extern const Real g_bfmeK1253;
 
-#define Rva0107C6EC (*(const Real *)0x0107C6EC)
-#define TheBfmeGameLogic (*(Rva00367E30Logic **)0x012F0898)
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+#define Rva0107C6EC 0.02f
+#define TheBfmeGameLogic ((Rva00367E30Logic *)TheGameLogic)
 
 enum UpdateSleepTime
 {

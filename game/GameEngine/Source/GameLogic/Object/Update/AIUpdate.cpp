@@ -801,7 +801,7 @@ static __forceinline Bool rva00279A50BodyResultTest(void *result)
 static __forceinline Int rva00279A50RandomValue(Int low, Int high)
 {
 	typedef Int (__cdecl *Function)(Int, Int, const char *, Int);
-	return ((Function)j_00001bae)(low, high, (const char *)0x010B97D8, 0x1D67);
+	return ((Function)j_00001bae)(low, high, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\AIUpdate.cpp", 0x1D67);
 }
 
 static __forceinline Bool rva00279A50PairTest(Object *first, Object *second)
@@ -936,14 +936,21 @@ public:
 	virtual void slot30(Coord3D *, Real, UnsignedInt, Int) = 0;
 };
 
+// C-linkage views of the retail tables ??_7Rva0026FA60FunctorValueWrapper@@6B@
+// and ??_7PartitionFilter@@6B@; the alternate names define no table.
+extern "C" void *bfmeVftRva0026FA60FunctorValueWrapper[];
+extern "C" void *bfmeVftPartitionFilter[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva0026FA60FunctorValueWrapper=??_7Rva0026FA60FunctorValueWrapper@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilter=??_7PartitionFilter@@6B@")
+
 class Rva00279A50FunctorFilter
 {
 public:
 	Rva00279A50FunctorFilter(Object *object)
-		: m_vtable((void *)0x010B9340), m_zero(0), m_object(object) {}
+		: m_vtable(bfmeVftRva0026FA60FunctorValueWrapper), m_zero(0), m_object(object) {}
 	~Rva00279A50FunctorFilter()
 	{
-		m_vtable = (void *)0x01083B5C;
+		m_vtable = bfmeVftPartitionFilter;
 	}
 
 private:

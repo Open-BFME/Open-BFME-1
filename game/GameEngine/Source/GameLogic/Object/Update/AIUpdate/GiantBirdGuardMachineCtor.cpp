@@ -60,6 +60,14 @@ private:
  unsigned char m_guardFields44[0x34];
 };
 
+extern int g_GiantBirdGuardOuterStateVTable;
+// C-linkage views of the retail tables ??_7Rva002C0470State@@6B@ and
+// ??_7Rva002BBCF0TailDtor@@6B@; the alternate names define no table.
+extern "C" int bfmeVftRva002C0470State[];
+extern "C" int bfmeVftRva002BBCF0TailDtor[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva002C0470State=??_7Rva002C0470State@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva002BBCF0TailDtor=??_7Rva002BBCF0TailDtor@@6B@")
+
 class GiantBirdGuardReturnState : public State
 {
 public:
@@ -67,7 +75,7 @@ public:
 		: State( (StateMachine *)machine, AsciiString( "GiantBirdNormalFlightState" ) )
 	{
 		m_byte24 = 1;
-		m_vftable = reinterpret_cast<int *>( 0x010C7CB8 );
+		m_vftable = &g_GiantBirdGuardOuterStateVTable;
 		m_int28 = 0;
 		m_int2c = 0;
 		m_int30 = 0;
@@ -89,7 +97,7 @@ public:
 	GiantBirdGuardIdleState( void *machine )
 		: State( (StateMachine *)machine, AsciiString( "GiantBirdGuardIdleState" ) )
 	{
-		m_vftable = reinterpret_cast<int *>( 0x010C7BB8 );
+		m_vftable = bfmeVftRva002C0470State;
 		m_int24 = 0;
 	}
 
@@ -141,7 +149,7 @@ public:
 GiantBirdGuardMachine::GiantBirdGuardMachine( Object *owner )
 	: AIGuardMachine( owner, AsciiString( "GiantBirdGuardMachine" ) )
 {
-	*reinterpret_cast<int **>( this ) = reinterpret_cast<int *>( 0x010C74D8 );
+	*reinterpret_cast<int **>( this ) = bfmeVftRva002BBCF0TailDtor;
 
 	defineState( 0xB79B, (State *)new GiantBirdGuardReturnState( this ),
 		0xB799, 0xB798, 0 );

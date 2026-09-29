@@ -51,13 +51,22 @@ extern void j_0002cbc9();
 extern void j_00031ceb();
 extern void j_000355fd();
 
+// C-linkage views of the retail tables these constructors install; the
+// alternate names define no table.
+extern "C" int bfmeVftDozerPrimaryIdleState[];
+extern "C" int bfmeVftRva002B77F0State[];
+extern "C" int bfmeVftRva002B6420TailDtor[];
+#pragma comment(linker, "/alternatename:_bfmeVftDozerPrimaryIdleState=??_7DozerPrimaryIdleState@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva002B77F0State=??_7Rva002B77F0State@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva002B6420TailDtor=??_7Rva002B6420TailDtor@@6B@")
+
 class DozerPrimaryIdleState : public Rva000A19E0StateBase
 {
 public:
     DozerPrimaryIdleState(void *machine)
         : Rva000A19E0StateBase(machine, AsciiString("DozerPrimaryIdleState"))
     {
-        m_vftable = reinterpret_cast<int *>(0x010C6F00);
+        m_vftable = bfmeVftDozerPrimaryIdleState;
         m_idleTooLongTimestamp = 0;
         m_idlePlayerNumber = 0;
         m_isMarkedAsIdle = false;
@@ -97,7 +106,7 @@ public:
         : Rva000A19E0StateBase(machine,
             AsciiString("DozerPrimaryGoingHomeState"))
     {
-        m_vftable = reinterpret_cast<int *>(0x010C6FD8);
+        m_vftable = bfmeVftRva002B77F0State;
     }
 
 private:
@@ -114,7 +123,7 @@ public:
 DozerPrimaryStateMachine::DozerPrimaryStateMachine(Object *owner)
     : StateMachine(owner, AsciiString("DozerPrimaryStateMachine"), false)
 {
-    *reinterpret_cast<int **>(this) = reinterpret_cast<int *>(0x010C6790);
+    *reinterpret_cast<int **>(this) = bfmeVftRva002B6420TailDtor;
 
     static const StateConditionInfo idleConditions[] =
     {
