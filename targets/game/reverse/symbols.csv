@@ -76035,7 +76035,6 @@ name,address,notes
 ?bfmeCallDSI@BfmeSubDSI@@QAEXPAPAX@Z,0x000013ED,pin
 ?bfmeCallDSP@BfmeOwnerDSP@@QAEXPAX@Z,0x0003DB77,pin
 ?bfmeCallDUB@BfmeSubDUB@@QAEXXZ,0x0002DF65,pin
-?bfmeCallDUL@@YGXPAXPBX@Z,0x0001D467,pin
 ?bfmeCallDXB@BfmeSubDXB@@QAEXXZ,0x009F68C6,pin
 ?bfmeCallDXH@@YAXPAVBfmeSubDXH@@PAX0@Z,0x008D2D10,pin
 ?bfmeCallEBC@BfmeOwnerEBC@@QAEXXZ,0x0003C740,pin
@@ -89882,3 +89881,4 @@ __imp___AIL_set_file_callbacks@16,0x0135966C,AudioManagerInit 0x006B8220 mss32 I
 ?createShadow@BfmeShadowBufferManager007C3260@@QAEPAVBfmeVolumetricShadowBufferOwner@@PAVBfmeShadowResource@@PAUShadowTypeInfo@Shadow@@PAVDrawable@@@Z,0x00044882,route=0x007C3260; W3DShadowManager::addShadow at 0x007B76C0 tail-jumps here for the volume-new arm; the 5-byte ILT thunk E9 0x007C3260 carries this identity
 ??0?$map@PBVThingTemplate@@HU?$less@PBVThingTemplate@@@_STL@@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAE@XZ,0x0000C928, map<const ThingTemplate*,Int>::map() the default ctor AttackPriorityInfo::setPriority calls at +0x45; 0x0000C928 is an E9 stub the image resolves to the 54-byte _Rb_tree header ctor 0x000E9C30 (matched tg_000e9c30) and no other thunk reaches that body; pin_consistency --check DIR32 count rises 3168->3169 against dir32_addresses.csv, which already records this mangled name at VA 0x0040C928; mangled name read out of the compiled object, never from the target)
 ?positionStartSpots@@YAXVAsciiString@@QAPAVGameWindow@@PAV2@2@Z,0x0003D901,BFME map preview helper thunk used by the GameInfo wrapper
+?bfmeCallDUL@@YG?AVRva0058C2B0RefPtr@@PBD@Z,0x0001D467,route=0x0058C2B0; the 5-byte ILT thunk the five matched callers in BfmeConv785.cpp encode; the callee at 0x0058C2B0 returns this class by value, so the former void*(void*,const void*) spelling of this pin was a placeholder no body has
