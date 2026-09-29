@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "d63162d3a0b896cc09351efa7a012990075631e93ae0c720eb067ec99948f10e",
+  "symbol": "?GetRegistryUseLocalUserMaps@@YA_NXZ",
+  "score_kind": "measured",
+  "score": 0.9485,
+  "source": "// ?GetRegistryUseLocalUserMaps@@YA_NXZ\n// partial score=0.9485 date=2026-09-29\n// ?GetRegistryUseLocalUserMaps@@YA_NXZ\n// Started from reverse/attempts/0x00109eb0.cpp; first probe lever: guard assignment shape.\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/asciistring_downloadmanager /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib\n\n#include \"Common/AsciiString.h\"\n\nbool GetUnsignedIntFromRegistry(AsciiString path, AsciiString key, unsigned int &val);\n\nbool GetRegistryUseLocalUserMaps(void)\n{\n\tstatic int value = -1;\n\tif (value < 0)\n\t{\n\t\tunsigned int registryValue;\n\t\tvalue = GetUnsignedIntFromRegistry(\"\", \"UseLocalUserMaps\", registryValue)\n\t\t\t? registryValue\n\t\t\t: 1;\n\t}\n\n\treturn value != 0;\n}\n"
+}

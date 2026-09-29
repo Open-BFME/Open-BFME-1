@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "d3c288f11db2250eb26525f050cb55eeb65a67e854a858f22b868f78617531f4",
+  "symbol": "?GetRegistryUseLocalUserMaps@@YA_NXZ",
+  "score_kind": "measured",
+  "score": 0.9485,
+  "source": "// ?GetRegistryUseLocalUserMaps@@YA_NXZ\n// partial score=0.9485 date=2026-09-29\n// ?GetRegistryUseLocalUserMaps@@YA_NXZ\n// Started from reverse/attempts/0x00109eb0.cpp; first probe lever: guard assignment shape.\n// Re-probed 2026-09-29: 136 B, 11 relocations, 7 non-reloc bytes, all frame displacements.\n// build/w7/search_alias.py scanned every retail body for a lea of a frame slot that\n// coincides with an EH saved-esp record store: 366 sites, none with sub esp,8 and two\n// records, so no matched sibling teaches retail's frame. The out-param home is frame\n// offset 0, the same dword as the first by-value AsciiString record; VC7.1 gives the\n// address-taken local its own dword (frame 0xc) and shifts seven operands by four.\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/asciistring_downloadmanager /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib\n\n#include \"Common/AsciiString.h\"\n\nbool GetUnsignedIntFromRegistry(AsciiString path, AsciiString key, unsigned int &val);\n\nbool GetRegistryUseLocalUserMaps(void)\n{\n\tstatic int value = -1;\n\tif (value < 0)\n\t{\n\t\tunsigned int registryValue;\n\t\tvalue = GetUnsignedIntFromRegistry(\"\", \"UseLocalUserMaps\", registryValue)\n\t\t\t? registryValue\n\t\t\t: 1;\n\t}\n\n\treturn value != 0;\n}\n"
+}
