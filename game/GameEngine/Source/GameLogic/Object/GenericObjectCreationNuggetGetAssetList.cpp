@@ -69,6 +69,8 @@ class ParticleSystemManager
 {
 };
 
+extern ParticleSystemManager *TheParticleSystemManager;
+
 struct GenericObjectCreationNuggetAnimSet
 {
 	AsciiString m_initial;
@@ -126,7 +128,7 @@ void GenericObjectCreationNugget::GetAssetList(AssetList &assets, void *context)
 	if (m_particleSysName.m_data != 0 &&
 		*(const unsigned short *)(m_particleSysName.m_data + 4) != 0)
 	{
-		(*(Rva003392B0TemplateStore **)0x012F64BC)->findTemplate(m_particleSysName);
+		((Rva003392B0TemplateStore *)TheParticleSystemManager)->findTemplate(m_particleSysName);
 	}
 
 	for (GenericObjectCreationNuggetAnimSet *animSet = m_animSets.m_begin;

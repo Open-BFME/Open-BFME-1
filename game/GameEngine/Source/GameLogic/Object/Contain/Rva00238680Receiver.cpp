@@ -23,7 +23,7 @@ public:
 };
 
 extern GameLogic *TheGameLogic;
-#define Rva00238680Limit (*(float *)0x010AEBB8)
+#define Rva00238680Limit 10000.0f
 
 class Rva00238680Receiver
 {

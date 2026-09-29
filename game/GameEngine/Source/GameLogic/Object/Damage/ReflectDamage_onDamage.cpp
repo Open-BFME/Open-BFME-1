@@ -78,7 +78,8 @@ public:
 	virtual void onDamage(BFMEDamageInfo *damageInfo);
 };
 
-#define TheGameLogic (*(GameLogic **)0x012F0898)
+extern GameLogic *TheGameLogic;
+#define TheGameLogic TheGameLogic
 
 void ReflectDamage::onDamage(BFMEDamageInfo *damageInfo)
 {

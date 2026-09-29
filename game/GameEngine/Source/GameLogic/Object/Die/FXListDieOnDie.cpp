@@ -64,7 +64,8 @@ struct FXListDieModuleData
 	bool m_orientToObject;
 };
 
-#define TheGameLogic (*(GameLogic **)0x012F0898)
+extern GameLogic *TheGameLogic;
+#define TheGameLogic TheGameLogic
 
 extern void j_00011f77();
 extern void j_00022bba();

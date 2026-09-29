@@ -82,7 +82,8 @@ public:
 	_STL::list<EvacuationRecord> m_pendingEvacuations;
 };
 
-#define TheGameLogic (*(GameLogic **)0x012F0898)
+extern GameLogic *TheGameLogic;
+#define TheGameLogic TheGameLogic
 
 // ?onDamage@EvacuateDamage@@UAEXPAUDamageInfo@@@Z
 void EvacuateDamage::onDamage(DamageInfo *damageInfo)
