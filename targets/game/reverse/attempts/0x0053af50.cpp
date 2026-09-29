@@ -1,5 +1,5 @@
 // ?Rva0053AF50PlayerTooltip@@YGXPAVGameSpyGameSlot@@@Z
-// partial score=0.982039 date=2026-09-28
+// partial score=0.9985 date=2026-09-29
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringbaseunicode /Iinputs/reference/shims/stringbaseascii /Iinputs/reference/shims/psplayerstats /Iinputs/reference/shims/nat /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4
@@ -224,6 +224,8 @@ extern BfmeQueueEUG *g_bfmeQueueEUG;
 extern GameTextInterface *TheGameText;
 extern Mouse *TheMouse;
 extern int *g_bfmeLimitsDF;
+extern const char *const g_012B7888[];
+extern const char *const g_012B7860[];
 
 void __stdcall Rva0053AF50PlayerTooltip(GameSpyGameSlot *slot)
 {
@@ -302,16 +304,16 @@ void __stdcall Rva0053AF50PlayerTooltip(GameSpyGameSlot *slot)
 	AsciiString rankKey("TOOLTIP:");
 	AsciiString rankName;
 	if (evil)
-		{ const char *name = ((const char *const *)0x012B7888)[rank]; ((StringBase<char> *)&rankName)->set(name, name ? strlen(name) : 0); }
+		{ const char *name = g_012B7888[rank]; ((StringBase<char> *)&rankName)->set(name, name ? strlen(name) : 0); }
 	else
-		{ const char *name = ((const char *const *)0x012B7860)[rank]; ((StringBase<char> *)&rankName)->set(name, name ? strlen(name) : 0); }
+		{ const char *name = g_012B7860[rank]; ((StringBase<char> *)&rankName)->set(name, name ? strlen(name) : 0); }
 	((StringBase<char> *)&rankKey)->concat(rankName.str(), *(char **)&rankName ? *(unsigned short *)(*(char **)&rankName + 4) : 0);
 	UnicodeString ladder1, ladder2;
 	ladder1 = formatLadderRankText(player->m_rank1);
 	ladder2 = formatLadderRankText(player->m_rank2);
 
 	playerInfo.format(TheGameText->fetch("TOOLTIP:StagingPlayerInfo"),
-		TheGameText->fetch(rankKey).str(), TheGameText->fetch(localeIdentifier).str(),
+		TheGameText->fetch(localeIdentifier).str(), TheGameText->fetch(rankKey).str(),
 		slot->getPingAsInt(), totalWins, totalLosses, favoriteSide.str(), ladder1.str(), ladder2.str());
 
 	UnicodeString tooltip = UnicodeString::TheEmptyString;
@@ -327,9 +329,7 @@ void __stdcall Rva0053AF50PlayerTooltip(GameSpyGameSlot *slot)
 
 	tooltip.concat(playerInfo);
 	TheMouse->setCursorTooltip(tooltip, -1, NULL, 1.0f);
+	return;
 	}
-	else
-	{
-		TheMouse->setCursorTooltip(uName, -1, NULL, 1.5f);
-	}
+	TheMouse->setCursorTooltip(uName, -1, NULL, 1.5f);
 }
