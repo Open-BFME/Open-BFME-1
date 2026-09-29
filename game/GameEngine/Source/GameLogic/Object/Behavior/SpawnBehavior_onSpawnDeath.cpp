@@ -57,7 +57,7 @@ public:
 	Object *findObjectByID(ObjectID id);
 };
 
-#define TheGameLogic (*(GameLogic **)0x012f0898)
+extern GameLogic *TheGameLogic;
 
 class SpawnBehavior
 {

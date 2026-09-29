@@ -6,6 +6,8 @@ typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
+extern const char g_bfmeEmptyAscii[];
+
 class ObjectStatus
 {
 public:
@@ -31,7 +33,7 @@ public:
 	const char *str() const
 	{
 		return m_data ? (const char *)((unsigned char *)m_data + 8) :
-			(const char *)0x0107388B;
+			g_bfmeEmptyAscii;
 	}
 
 private:
@@ -145,8 +147,8 @@ private:
 	OwnedObjectTree m_ownedObjects;
 };
 
-#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
-#define g_012ED4FC (*(void **)0x012ED4FC)
+extern GameLogic *TheBfmeGameLogic;
+extern void *g_012ED4FC;
 extern void j_000084d6(void);
 extern void j_0002191d(void);
 extern void j_000022bb(void);
@@ -224,7 +226,8 @@ void CastleBehavior::initiateUnpack(Bool unpack,
 		const char *castleName = finalTemplate->m_name.str();
 
 		((DebugLogFunction)j_0003a17a)(g_012ED4FC,
-			(const char *)0x010E9D90, TheBfmeGameLogic->m_frame,
+			"CAMP: Frame %d: Castle %s(%d) ::initiateUnpack() called by %s",
+			TheBfmeGameLogic->m_frame,
 			castleName, castleID, callerName);
 	}
 }
