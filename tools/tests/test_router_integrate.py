@@ -196,6 +196,10 @@ class PortTest(PortFixture):
         # attempt_history is evidence (JSON, notes), never a source: a worker's compilable
         # copy there was gated as a touched source and stopped job 0bbbe3cc's landing
         self.assertEqual(ri.route('targets/game/reverse/attempt_history/0x00927360/winning-landing.cpp'), 'scratch')
+        # attempts/ holds exactly one stash per target, named by its RVA (check_csv refuses others):
+        # a worker's sweep files there (job cd56dcbf left eight _rotsweep_*.cpp) are scratch
+        self.assertEqual(ri.route('targets/game/reverse/attempts/_rotsweep_170344cfe2.cpp'), 'scratch')
+        self.assertEqual(ri.route('targets/game/reverse/attempts/0x0036a570.cpp'), 'port')
         self.assertEqual(ri.route('targets/game/reverse/attempt_history/0x00927360/' + 'a' * 64 + '.json'), 'port')
         self.assertEqual(ri.route('targets/game/reverse/attempt_history/0x0019bf40/20260922-review.md'), 'port')
         self.assertEqual(ri.route('inputs/reference/shims/a/b.h'), 'port')

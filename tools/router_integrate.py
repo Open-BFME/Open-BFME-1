@@ -157,6 +157,8 @@ def route(path):
     if (path.startswith(BANKED[1]) and
             path.lower().endswith((*SOURCE_SUFFIXES, '.h', '.hpp', '.hh', '.hxx', '.inl', '.inc'))):
         return 'scratch'
+    if path.startswith(BANKED[0]) and not re.fullmatch(r'0x[0-9a-f]{8}\.cpp', path[len(BANKED[0]):]):
+        return 'scratch'  # check_csv accepts only attempts/<rva>.cpp; anything else is a worker's scratch
     if path.startswith(PORTED):
         return 'port'
     return 'scratch' if '/' not in path else 'refuse'
