@@ -181,3 +181,6 @@ game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeNext,m_next,
 game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeNext,m_next,claude-opus+grok,applied,2026-09-29
 game/GameEngine/Source/GameLogic/Object/Update/Rva002A59F0BfmeReady.cpp|function|Gen_002A59F0@|bfmeReady,needToFace,claude-opus+grok,agreed,2026-09-29
 game/GameEngine/Source/GameLogic/Object/Update/Rva002A59F0BfmeReady.cpp|function|Gen_002A59F0@|bfmeReady,needToFace,claude-opus+grok,applied,2026-09-29
+game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value38,m_opacityStartFrame,claude-opus+grok,agreed,2026-09-29
+game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value44,m_opacityPeakFrame,claude-opus+grok,agreed,2026-09-29
+game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value4C,m_opacityPeakEndFrame,claude-fable+grok,agreed,2026-09-29

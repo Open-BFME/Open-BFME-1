@@ -344,3 +344,6 @@ game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||Rva
 game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||FactorsR0015C7A0,a05001e9ab801bf9fd571659,grok,20260929211400-0c4cc3,2026-09-29
 game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||QR0015C7A0,77b88cd1f02d0c7abdfe99c6,grok,20260929211400-0c4cc3,2026-09-29
 game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||CtorTargetR0015C7A0,8d0ee96fcb39428e36ffdd02,grok,20260929211400-0c4cc3,2026-09-29
+game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value38,8176ed47c895c525f1fa3ba3,grok,20260929212948-93cd66,2026-09-29
+game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value44,2086a07dcfc31be72b0c9342,grok,20260929212948-93cd66,2026-09-29
+game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value4C,893c08b9644270643e5a73bf,grok,20260929212948-93cd66,2026-09-29
