@@ -748,3 +748,4 @@ game/GameEngine/Source/GameClient/GUI/BfmeAptScreenQuitMenuConstructor.cpp	Unico
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/doSingleBoneName.cpp	StringBase	game\GameEngineDevice\Source\W3DDevice\GameClient\Drawable\Draw\doSingleBoneName.cpp(41) : error C2039: 'm_length' : is not a member of 'StringBase<T>::Header'
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenLanLobbyRefreshGame.cpp	UnicodeString	c:\Users\vvval\Desktop\BFME\Open-BFME-1\game\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
 game/GameEngine/Source/GameClient/GUI/Rva0046F910RankDisplay.cpp	AsciiString	Functions: FAIL 1/1
+game/GameEngine/Source/GameLogic/System/Rva00382460ExperienceLevelParser.cpp	AsciiString	Functions: FAIL 1/1

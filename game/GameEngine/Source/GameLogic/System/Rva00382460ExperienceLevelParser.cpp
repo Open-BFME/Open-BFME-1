@@ -48,6 +48,7 @@ typedef bool Bool;
 typedef int Int;
 
 struct FieldParse;
+extern const char g_010EAB48[];
 
 // The retail parser's token temporary calls the shared BFME narrow-string
 // constructor and releaseBuffer body.  The local spelling is AsciiString so
@@ -131,7 +132,7 @@ public:
 extern ExperienceLevelSystem *TheExperienceLevelSystem;
 
 static const FieldParse *const experienceLevelFieldParse =
-	reinterpret_cast<const FieldParse *>(0x010EAB48);
+	reinterpret_cast<const FieldParse *>(g_010EAB48);
 
 void rva00382460(INI *ini)
 {
