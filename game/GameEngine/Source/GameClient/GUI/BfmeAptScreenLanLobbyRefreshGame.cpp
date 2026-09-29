@@ -6,6 +6,8 @@
 // Only the guest branch sends RequestHasMap before applying the game state.
 // AmIHost's actual body returns32 bits; this caller consumes its low byte.
 
+extern const char Rva006A16B0Empty[];
+
 template <typename T> class StringBase
 {
 	friend class AsciiString;
@@ -76,7 +78,7 @@ public:
 	void toLower() { ((StringBase<char>*)this)->toLower(); }
 	const char *str() const
 	{
-		return m_data ? (const char *)m_data + 8 : (const char *)0x0107388B;
+		return m_data ? (const char *)m_data + 8 : Rva006A16B0Empty;
 	}
 };
 
