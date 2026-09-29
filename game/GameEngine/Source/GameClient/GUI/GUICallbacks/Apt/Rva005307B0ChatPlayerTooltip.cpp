@@ -1,11 +1,11 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringbaseunicode /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
-// ?chatPlayerTooltip@Rva005307B0Owner@@QAEXVAsciiString@@@Z
+// ?MpOwnerUpdatePlayerTooltip@AptOnlineCustomMatch@@QAEXVAsciiString@@@Z
 // Retail 0x005307B0: 2117 bytes of code (ret 4 at +0x842) followed by the
 // four-entry side switch table, 2136 bytes in the ledger.  The only caller,
 // 0x005369A0, calls it through ILT 0x00002E1E with its own object in ECX
-// (esi, whose +0xAC/+0xB0 it writes afterwards), so the owner keeps the
-// address token.  The body builds the GameSpy chat-player tooltip from the
+// (esi, whose +0xAC/+0xB0 it writes afterwards). EA names that owner
+// AptOnlineCustomMatch and this method MpOwnerUpdatePlayerTooltip. The body builds the GameSpy chat-player tooltip from the
 // literals TOOLTIP:ChatPlayerInfo / LocalPlayer / BuddyPlayer / ProfiledPlayer
 // / GenericPlayer, which names the method.  It is BFME's version of the Zero
 // Hour WOLGameSetupMenu playerTooltip: PlayerInfoMap find (the pinned
@@ -217,13 +217,13 @@ UnicodeString Rva0052DEB0RankText(Int value);
 extern const char *g_rva012B7828EvilRanks[];
 extern const char *g_rva012B7800GoodRanks[];
 
-class Rva005307B0Owner
+class AptOnlineCustomMatch
 {
 public:
-	void chatPlayerTooltip(AsciiString name);
+	void MpOwnerUpdatePlayerTooltip(AsciiString name);
 };
 
-void Rva005307B0Owner::chatPlayerTooltip(AsciiString name)
+void AptOnlineCustomMatch::MpOwnerUpdatePlayerTooltip(AsciiString name)
 {
 	if (!TheGameSpyInfo)
 		return;
