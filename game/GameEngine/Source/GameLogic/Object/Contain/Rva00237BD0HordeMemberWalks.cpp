@@ -139,6 +139,20 @@ public:
 	unsigned int m_bfmeFlags90;
 };
 
+struct BfmeBoxAFB
+{
+	void *first;
+	void *second;
+	void go(void *a, void *b);
+};
+
+class BfmeThingAFB
+{
+public:
+	void bfmeGoAFB();
+	BfmeBoxAFB *bfmeGetBoxAFB();
+};
+
 class Rva00237BD0HordeContain
 {
 public:
@@ -146,6 +160,7 @@ public:
 	void notifyMembers(void *arg);
 	bool hasLiveIndexedMember();
 	void removeMembersFromPathfindMap();
+	void refreshMemberAttributeModifiers();
 
 private:
 	void *m_vtbl;
@@ -260,5 +275,44 @@ void Rva00237BD0HordeContain::removeMembersFromPathfindMap()
 		}
 		entry = (BfmeMemberIndexNode *)_STL::_Rb_global<bool>::_M_increment(
 			(_STL::_Rb_tree_node_base *)entry);
+	}
+}
+
+// Retail 0x00247E80 (195 bytes): interface slot 110 (rdata 0x00CAE3E8 via ILT
+// 0x0003330C).  Runs the per-object attribute-modifier refresh
+// (BfmeThingAFB::bfmeGoAFB, as in Object_containPairDispatch.cpp) on every
+// contained member -- the list holds no nulls -- and every live indexed
+// member, then clears the horde owner's own modifier pair the same way the
+// refresh's fallback does.
+void Rva00237BD0HordeContain::refreshMemberAttributeModifiers()
+{
+	const BfmeMemberList &contained =
+		((Rva00238AE0OpenContainInterface *)((char *)this - 0xc4))
+			->getMemberList();
+	for (BfmeMemberList::const_iterator it = contained.begin();
+		it != contained.end(); ++it)
+	{
+		((BfmeThingAFB *)*it)->bfmeGoAFB();
+	}
+
+	BfmeMemberIndexNode *entry = m_memberIndex->m_next;
+	while (entry != m_memberIndex)
+	{
+		UnsignedInt id = entry->m_key;
+		if (id != 0)
+		{
+			BfmeThingAFB *member = (BfmeThingAFB *)TheGameLogic->findObjectByID(id);
+			if (member != 0)
+				member->bfmeGoAFB();
+		}
+		entry = (BfmeMemberIndexNode *)_STL::_Rb_global<bool>::_M_increment(
+			(_STL::_Rb_tree_node_base *)entry);
+	}
+
+	BfmeBoxAFB *helper = (*(BfmeThingAFB **)((char *)this - 0xdc))->bfmeGetBoxAFB();
+	if (helper)
+	{
+		BfmeBoxAFB *pair = reinterpret_cast<BfmeBoxAFB *>(reinterpret_cast<char *>(helper) + 0x20);
+		pair->go(pair->first, pair->second);
 	}
 }
