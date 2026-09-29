@@ -8,8 +8,9 @@ to the original exe's exact bytes (authored and generated C++, vendored source,
 attached prebuilt libraries; dumps excluded), over all code. GAME CODE C++ is
 the C++ we wrote over the game's own code (all code minus vendored source and
 prebuilt libraries); LINKING is the part of it whose files also link cleanly,
-over the same denominator, as measured and stored by the last
-tools/link_census.py run (link_census_history.csv, linked_authored). LINKED,
+over the census tree's game code, both measured and stored by the last
+tools/link_census.py run (link_census_history.csv: linked_authored,
+game_code). LINKED,
 under them, is all our own source in clean files over all code (the chart's
 linked dots). Every figure counts 0xCC padding out, the way the denominator
 does, so the breakdown under them adds up to them. Total exact, at the end,
@@ -618,7 +619,7 @@ def print_headline(padding, denominator, old_split, new_split, old_census, new_c
         # showing the whole figure as a gain would credit it to that range.
         was = figure(old_census)
         delta = (f"delta {now[0] - was[0]:+,} bytes, {percent(*now) - percent(*was):+.2f} pp" if was
-                 else f"delta n/a (no census {field} at the start of the range)")
+                 else f"delta n/a (no {label} figure stored at the start of the range)")
         print(_line(label, now[0], now[1], delta, f"{note}, census {new_census['date']} at {new_census['commit']}"))
     census_line("LINKING", "linked_authored", "game_code",
                 "that C++ in files that link cleanly, over the census tree's game code")
