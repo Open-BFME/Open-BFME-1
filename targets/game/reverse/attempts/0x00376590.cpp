@@ -1,5 +1,5 @@
 // ?unpack@CastleBehavior@@QAEX_N@Z
-// partial score=0.9846 date=2026-09-28
+// partial score=0.9964 date=2026-09-29
 // ?unpack@CastleBehavior@@QAEX_N@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
@@ -344,7 +344,11 @@ void CastleBehavior::unpack(Bool unpack)
 			static NameKeyType key = TheNameKeyGenerator->nameToKey("CastleMemberBehavior");
 			CastleMemberBehavior *cmb = (CastleMemberBehavior *)member->findModule(key);
 			if (cmb)
-				cmb->setCastle(m_castleID0A0, getObject()->getID());
+			{
+				*(volatile Int *)&cmb->m_castleID014 = m_castleID0A0;
+				Object *owner = *(Object * volatile *)&m_object;
+				cmb->m_castleObjectID018 = owner->getID();
+			}
 		}
 	}
 
