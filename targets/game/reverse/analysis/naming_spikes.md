@@ -87,4 +87,26 @@ took about 16 minutes. The Claude agents used 100-200K tokens each, mostly on re
 in chunks. A full pass over the 17,300 affected files is about 25-40M tokens, plus about 20% for
 audits.
 
-Scripts, prompts and raw outputs were in that session's scratchpad (`naming/`).
+
+## Spike 6: a hands-off orchestrator
+
+A headless Claude Code session in a disposable clone got one prompt, "Improve the naming progress
+in this repo", and the `tools/name_lane.py` line in AGENTS.md.
+
+- It found the lane and ran blind Opus and Fable worker sides on the same files. The briefs banned
+  reading votes or reporting names. It serialized commits and never bypassed a hook.
+- It served 84 files in about 50 minutes, and 78 names landed byte-exact. When both models named an
+  item they agreed 81 times in 93, but about 74% of items were skipped, so about 13% of what is
+  served lands. A blind gpt-5.6-sol audit rated all 78 accurate.
+- It cost about 36K tokens per landed name. The orchestrator scaled itself from 6 to 16 agents and
+  would have kept going.
+- The applier bugs it hit are fixed in the tool: missing tombstones, headers to adopt, one refused
+  file blocking the batch, EA-labelled rows and method names several classes share.
+- Parallel workers on one machine can read each other's answers from process command lines, so
+  answers go in a file, never inline in a shell command.
+- Same-vendor models share recall, so the lane now requires two vendors. The test's names carry the
+  cross-vendor audit instead.
+- The hand-rename check refuses only a pure placeholder rename. Replayed over 3000 master commits,
+  it refused none.
+
+Scripts, prompts and raw outputs were in that session's scratchpad (`naming/`, `lane_test/`).
