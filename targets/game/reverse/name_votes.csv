@@ -307,3 +307,7 @@ game/GameEngine/Source/Common/Bfme5ThirtyThree.cpp|member||m_bfmeFlags,3dfab275f
 game/GameEngine/Source/Common/BfmeConv1789.cpp|type||BfmeInnerLU,ffb7c73bf12a3c73f5527c28,grok,20260929201108-9369d5,2026-09-29
 game/GameEngine/Source/Common/BfmeConv1789.cpp|type||BfmeThingLU,020936da52ba39c9825cdf97,grok,20260929201108-9369d5,2026-09-29
 game/GameEngine/Source/Common/BfmeConv1789.cpp|function|BfmeOwnerLU@|bfmeTopLU,550a6ed5b3bbe6344de5149c,grok,20260929201108-9369d5,2026-09-29
+game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|type||SideEntry00198A10,2b422cfb1784ce15b718a2a5,grok,20260929201635-5dd492,2026-09-29
+game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|type||BuildListsWriter00198A10,288ecd9c44bdd8da932cc309,grok,20260929201635-5dd492,2026-09-29
+game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|member||field04,03c75a5fac491737bf11e135,grok,20260929201635-5dd492,2026-09-29
+game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|member||field28,f7f8540b89d5ba3f0314bdb3,grok,20260929201635-5dd492,2026-09-29
