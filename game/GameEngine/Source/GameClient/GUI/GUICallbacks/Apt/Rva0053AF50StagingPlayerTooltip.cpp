@@ -1,7 +1,8 @@
-// ?Rva0053AF50PlayerTooltip@@YGXPAVGameSpyGameSlot@@@Z
-// partial score=0.9985 date=2026-09-29
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringbaseunicode /Iinputs/reference/shims/stringbaseascii /Iinputs/reference/shims/psplayerstats /Iinputs/reference/shims/nat /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
+// ?Rva0053AF50PlayerTooltip@@YGXPAVGameSpyGameSlot@@@Z
+// Retail 0x0053AF50: GameSpy staging-room player tooltip (TOOLTIP:StagingPlayerInfo), stdcall ret 4 at +0x7F9,
+// then the four-entry side switch table (2060 bytes in the ledger). Sibling of Rva005307B0ChatPlayerTooltip.cpp.
 #define Matrix4x4 Matrix4
 #define __PLACEMENT_VEC_NEW_INLINE
 #include <string>
@@ -11,17 +12,17 @@
 #include "Common/UnicodeString.h"
 
 template<> inline const char *StringBase<char>::str() const
-{ return m_data ? &m_data->data[0] : ""; }
+{ static const char TheNullChr = 0; return m_data ? &m_data->data[0] : &TheNullChr; }
 
 template<> inline const wchar_t *StringBase<wchar_t>::str() const
-{ return m_data ? &m_data->data[0] : L""; }
+{ static const wchar_t TheNullChr = 0; return m_data ? &m_data->data[0] : &TheNullChr; }
 
 typedef int Int;
 typedef bool Bool;
 typedef float Real;
 typedef unsigned int UnsignedInt;
 
-class RGBColor;
+struct RGBColor;
 
 class RetailLayoutString : public AsciiString
 {
@@ -80,7 +81,8 @@ struct Rva0053AF50PlayerInfo
 	Int m_rank2;
 };
 
-typedef _STL::map<Int, unsigned char> BuddyInfoMap;
+class BuddyInfo { char m_body[4]; };
+typedef _STL::map<Int, BuddyInfo> BuddyInfoMap;
 
 class GameSpyInfo
 {
@@ -279,16 +281,16 @@ void __stdcall Rva0053AF50PlayerTooltip(GameSpyGameSlot *slot)
 		}
 	}
 	if (numGames == 0)
-		favoriteSide = TheGameText->fetch("GUI:None");
+		favoriteSide = TheGameText->fetch("APT:Gondor");
 	else
 	{
 		AsciiString sideName;
 		switch (favorite)
 		{
-		case 0: sideName = "Gondor"; break;
-		case 1: sideName = "Rohan"; break;
-		case 2: sideName = "Isengard"; break;
-		case 3: sideName = "Mordor"; break;
+		case 1: sideName = "Gondor"; break;
+		case 3: sideName = "Isengard"; break;
+		case 0: sideName = "Rohan"; break;
+		case 2: sideName = "Mordor"; break;
 		}
 		AsciiString sideKey;
 		sideKey.format("SIDE:%s", sideName.str());
@@ -311,6 +313,13 @@ void __stdcall Rva0053AF50PlayerTooltip(GameSpyGameSlot *slot)
 	UnicodeString ladder1, ladder2;
 	ladder1 = formatLadderRankText(player->m_rank1);
 	ladder2 = formatLadderRankText(player->m_rank2);
+	// Retail FuncInfo 0x00E215E0 (tools/eh_info.py 0x0053AF50) has null-action states 16 and 17 (parent 13) that no
+	// surviving code enters; this constant-false arm reproduces them and is not recovered behaviour.
+	if (false)
+	{
+		ladder1 = TheGameText->fetch("TOOLTIP:LadderRankUnavailable");
+		ladder2 = TheGameText->fetch("TOOLTIP:LadderRankUnavailable");
+	}
 
 	playerInfo.format(TheGameText->fetch("TOOLTIP:StagingPlayerInfo"),
 		TheGameText->fetch(localeIdentifier).str(), TheGameText->fetch(rankKey).str(),
