@@ -8,6 +8,13 @@ extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
 extern void __stdcall initializeRva006B3C50(void *buffer);
 extern void j_00047f3c();
 
+// Miles channel volume globals, declared as AudioManagerInit.cpp declares them.
+extern float g_milesVolume012BA12C;
+extern float g_milesVolume012BA130;
+extern float g_milesVolume012BA134;
+extern float g_milesVolume012BA138;
+extern float g_milesVolume012BA13C;
+
 class Rva006B4970MutexGuard
 {
 public:
@@ -52,7 +59,7 @@ void Rva006B3C50ClientOwner::set006B4970(int value)
 	Rva006B3C50ClientOwner *self = this;
 	void *handle = self->m_mutex;
 	Rva006B4970MutexGuard guard(handle);
-	*reinterpret_cast<int *>(0x012BA12C) = value;
+	*reinterpret_cast<int *>(&g_milesVolume012BA12C) = value;
 	typedef void (__cdecl *Rva006B4970Helper)(...);
 	Rva006B4970Helper helper = reinterpret_cast<Rva006B4970Helper>(j_00047f3c);
 	helper(0);
@@ -73,7 +80,7 @@ void Rva006B3C50ClientOwner::set006B4A30(int value)
 	Rva006B3C50ClientOwner *self = this;
 	void *handle = self->m_mutex;
 	Rva006B4970MutexGuard guard(handle);
-	*reinterpret_cast<int *>(0x012BA130) = value;
+	*reinterpret_cast<int *>(&g_milesVolume012BA130) = value;
 	typedef void (__cdecl *Rva006B4970Helper)(...);
 	Rva006B4970Helper helper = reinterpret_cast<Rva006B4970Helper>(j_00047f3c);
 	helper(1);
@@ -94,7 +101,7 @@ void Rva006B3C50ClientOwner::set006B4AF0(int value)
 	Rva006B3C50ClientOwner *self = this;
 	void *handle = self->m_mutex;
 	Rva006B4970MutexGuard guard(handle);
-	*reinterpret_cast<int *>(0x012BA134) = value;
+	*reinterpret_cast<int *>(&g_milesVolume012BA134) = value;
 	typedef void (__cdecl *Rva006B4970Helper)(...);
 	Rva006B4970Helper helper = reinterpret_cast<Rva006B4970Helper>(j_00047f3c);
 	helper(2);
@@ -115,7 +122,7 @@ void Rva006B3C50ClientOwner::set006B4BB0(int value)
 	Rva006B3C50ClientOwner *self = this;
 	void *handle = self->m_mutex;
 	Rva006B4970MutexGuard guard(handle);
-	*reinterpret_cast<int *>(0x012BA13C) = value;
+	*reinterpret_cast<int *>(&g_milesVolume012BA13C) = value;
 	typedef void (__cdecl *Rva006B4970Helper)(...);
 	Rva006B4970Helper helper = reinterpret_cast<Rva006B4970Helper>(j_00047f3c);
 	helper(4);
@@ -136,7 +143,7 @@ void Rva006B3C50ClientOwner::set006B4C70(int value)
 	Rva006B3C50ClientOwner *self = this;
 	void *handle = self->m_mutex;
 	Rva006B4970MutexGuard guard(handle);
-	*reinterpret_cast<int *>(0x012BA138) = value;
+	*reinterpret_cast<int *>(&g_milesVolume012BA138) = value;
 	typedef void (__cdecl *Rva006B4970Helper)(...);
 	Rva006B4970Helper helper = reinterpret_cast<Rva006B4970Helper>(j_00047f3c);
 	helper(3);

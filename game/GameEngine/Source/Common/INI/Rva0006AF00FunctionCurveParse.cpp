@@ -31,6 +31,9 @@ class Rva0006AB10Curve
 
 extern void j_0003a562();
 
+// Null-terminated padding-name list (HOLD, EXTRAPOLATE, CYCLE, ...).
+extern const char *g_012A718C[];
+
 class Rva0006AB90FunctionCurve
 {
 public:
@@ -74,9 +77,9 @@ void Rva0006AF00FunctionCurve::parse( INI *ini )
 	Rva0006AB90FunctionCurve accumulator( (Rva0006AB10Curve *)this );
 	FieldParse fields[] =
 	{
-		{ (const char *)0x01075AB8, INI::parseIndexList, (const void *)0x012A718C, 0 },
-		{ (const char *)0x01075AA8, INI::parseIndexList, (const void *)0x012A718C, 4 },
-		{ (const char *)0x01075AA4, (INIFieldParseProc)j_0003a562, &accumulator, 8 },
+		{ "InPadding", INI::parseIndexList, g_012A718C, 0 },
+		{ "OutPadding", INI::parseIndexList, g_012A718C, 4 },
+		{ "Key", (INIFieldParseProc)j_0003a562, &accumulator, 8 },
 		{ 0, 0, 0, 0 }
 	};
 
