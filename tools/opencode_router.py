@@ -627,17 +627,30 @@ def _check_retained(cwd, job, require_root=False):
 
     `require_root` (the scheduler-created worktrees under --state) also demands
     that the directory is the worktree root; an explicitly submitted cwd may be
-    a subdirectory of a checkout."""
+    a subdirectory of a checkout.
+
+    enqueue() records an explicit Git cwd with its own worktree top as
+    `submission_root`, and an explicit scratch cwd (outside any repository)
+    with the submitting checkout's, which cannot contain it. So a cwd inside
+    its recorded submission root was a Git workspace: it must still resolve to
+    exactly that worktree, never be taken for scratch or for an enclosing one."""
+    recorded = job.get('submission_root')
+    git_workspace = require_root or bool(recorded and job.get('repository') and
+                                         Path(cwd).resolve().is_relative_to(Path(recorded).resolve()))
     try:
         top = subprocess.check_output(['git', 'rev-parse', '--show-toplevel'], cwd=cwd, text=True,
                                       stderr=subprocess.DEVNULL).strip()
     except (subprocess.CalledProcessError, OSError) as error:
-        if require_root:
-            raise WorkspaceReview(f'retained workspace {cwd} is not a git worktree; review required') from error
+        if git_workspace:
+            raise WorkspaceReview(f'retained workspace {cwd} is no longer a readable git worktree; '
+                                  'unfinished edits are kept, review required') from error
         # An explicit scratch cwd outside any repository: the recorded snapshot
         # came from the submitting checkout, so there is nothing here that can
         # have moved; it is accepted as submitted.
         return
+    if git_workspace and not require_root and Path(top).resolve() != Path(recorded).resolve():
+        raise WorkspaceReview(f'retained workspace {cwd} now resolves to worktree {top}, not the submitted '
+                              f'{recorded}; unfinished edits are kept, review required')
     try:
         identity = repository_identity(cwd)
         head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=cwd, text=True,
@@ -660,8 +673,10 @@ def prepare_workspace(root, state, job):
             raise WorkspaceReview(f'workspace does not exist: {cwd}')
         # Legacy jobs with retained workspaces may retry there. Their original
         # base remains unknown; never manufacture one from today's HEAD. A job
-        # that recorded its snapshot is held to it.
-        _check_retained(cwd, job)
+        # that recorded its snapshot is held to it. A retry of a scheduler-created
+        # worktree arrives here too and keeps its worktree-root requirement.
+        owned = Path(cwd).resolve() == (state / 'worktrees' / job['id']).resolve()
+        _check_retained(cwd, job, require_root=owned)
         return cwd
     if not job.get('repository') or not job.get('base_sha'):
         raise ValueError('legacy job has no submission snapshot; review evidence and resubmit explicitly')

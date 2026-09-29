@@ -169,3 +169,68 @@ def test_explicit_retained_workspace_records_its_own_base(repo, tmp_path, monkey
     row = r.show(state, job)['jobs'][0]
     assert row['base_sha'] == first
     assert r.prepare_workspace(repo, state, row) == worker
+
+
+def _outside(tmp_path, name):
+    # tmp_path IS the `repo` fixture; this directory is in no repository.
+    path = tmp_path.parent / f'{tmp_path.name}-{name}'
+    path.mkdir()
+    return path
+
+
+@pytest.mark.parametrize('where', ['outside', 'common-dir', 'checkout'])
+def test_scheduler_worktree_that_lost_its_git_file_is_a_review_case(repo, tmp_path, monkeypatch, where):
+    # Retries reach prepare_workspace with the persisted cwd. A router worktree
+    # whose .git FILE is gone is no longer the recorded snapshot: it must not
+    # be accepted as scratch, nor resolve to the enclosing checkout.
+    monkeypatch.setattr(r, 'ROOT', repo)
+    state = {'outside': _outside(tmp_path, 'state'), 'common-dir': repo / '.git' / 'opencode-router',
+             'checkout': repo / 'build' / 'state'}[where]
+    job = r.enqueue(state, 'bulk', 'task')
+    cwd = r.prepare_workspace(repo, state, r.show(state, job)['jobs'][0])
+    row = r.show(state, job)['jobs'][0]
+    assert row['cwd'] == str(cwd)
+    assert r.prepare_workspace(repo, state, row) == cwd
+    (cwd / '.git').unlink()
+    (cwd / 'edit').write_text('unfinished')
+    with pytest.raises(r.WorkspaceReview):
+        r.prepare_workspace(repo, state, row)
+    assert (cwd / 'edit').read_text() == 'unfinished'
+
+
+def test_explicit_git_workspace_that_lost_its_metadata_is_a_review_case(repo, tmp_path, monkeypatch):
+    monkeypatch.setattr(r, 'ROOT', repo)
+    base = git(repo, 'rev-parse', 'HEAD')
+    state = tmp_path / 'state'
+    for name, parent in (('outside', _outside(tmp_path, 'workers')), ('nested', repo / 'workers')):
+        worker = parent / name
+        git(repo, 'worktree', 'add', '-q', '--detach', str(worker), base)
+        job = r.enqueue(state, 'bulk', f'task {name}', cwd=worker)
+        row = r.show(state, job)['jobs'][0]
+        assert r.prepare_workspace(repo, state, row) == worker
+        (worker / '.git').unlink()
+        (worker / 'edit').write_text('unfinished')
+        # 'nested' now resolves to `repo` at the same base: still not the workspace
+        with pytest.raises(r.WorkspaceReview):
+            r.prepare_workspace(repo, state, row)
+        assert (worker / 'edit').read_text() == 'unfinished'
+    # a broken .git file (its gitdir is gone) is the same case
+    worker = _outside(tmp_path, 'broken') / 'w'
+    git(repo, 'worktree', 'add', '-q', '--detach', str(worker), base)
+    job = r.enqueue(state, 'bulk', 'task broken', cwd=worker)
+    row = r.show(state, job)['jobs'][0]
+    (worker / '.git').write_text('gitdir: /nonexistent/worktrees/w\n')
+    with pytest.raises(r.WorkspaceReview):
+        r.prepare_workspace(repo, state, row)
+
+
+def test_explicit_scratch_workspace_is_still_accepted(repo, tmp_path, monkeypatch):
+    # A job submitted with a cwd outside any repository never had a Git
+    # workspace: its recorded repository is the submitting checkout's.
+    monkeypatch.setattr(r, 'ROOT', repo)
+    scratch = _outside(tmp_path, 'scratch')
+    state = tmp_path / 'state'
+    job = r.enqueue(state, 'bulk', 'task', cwd=scratch)
+    row = r.show(state, job)['jobs'][0]
+    assert row['submission_root'] == str(repo.resolve()) and row['repository']
+    assert r.prepare_workspace(repo, state, row) == scratch

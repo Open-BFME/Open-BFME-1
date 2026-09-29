@@ -117,7 +117,10 @@ whichever scheduler dispatches it creates the workspace from THAT clone at that
 base, so a scheduler running in another clone does not reject it. A submission
 root that has moved, a recorded workspace that is no longer a worktree root of
 its repository, or one whose HEAD left the recorded base, parks the job as
-`needs_review` with its edits intact instead of failing it. Use one configuration
+`needs_review` with its edits intact instead of failing it. A recorded Git
+workspace (a router worktree, or a `--cwd` inside a checkout) whose `.git` is
+missing or broken, or that now resolves to another worktree, is also parked;
+only a `--cwd` that was outside every repository at submission is scratch. Use one configuration
 for all clients. State is local SQLite/WAL, not a network-filesystem service.
 A durable identity marker rejects a missing/replaced database. Do not delete
 state while workers exist. Back up SQLite with its backup API or while stopped.
