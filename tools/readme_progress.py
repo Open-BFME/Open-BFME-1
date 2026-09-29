@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
+import name_lane
 import progress
 
 
@@ -75,6 +76,10 @@ def announcement(current, previous):
         parts.append(_section("Game code in C++", current["cpp"], game_total, "🟦",
                               previous.get("cpp") if same_game else None,
                               "bytes of the game's own code, now C++ (libraries not counted)"))
+    if current.get("names") is not None:
+        parts.append(_section("Readable names", current["readable"], current["names"], "🟨", None,
+                              f"identifiers, counted per file, that are not converter placeholders; "
+                              f"{current['names_landed']:,} named by two models (tools/name_lane.py)"))
     return {
         "allowed_mentions": {"parse": []},
         "embeds": [{
@@ -125,12 +130,16 @@ def main():
     # The game's own code: vendored library source and prebuilt .libs are
     # third-party code that will never be rewritten, so blue leaves them out.
     game_total = total - split["vendored"] - split["library"]
+    names, placeholders = name_lane.readable()
+    names_landed = sum(a["status"] == "applied" for a in name_lane.agreed_state().values())
     output = progress.ROOT / "docs" / "progress.svg"
     output.write_text(render(rebuilt, total, cpp, game_total), encoding="utf-8", newline="\n")
     print(f"{output.relative_to(progress.ROOT)}: {progress.percent(rebuilt, total):.2f}% rebuilt, "
-          f"{progress.percent(cpp, game_total):.2f}% of game code in C++")
+          f"{progress.percent(cpp, game_total):.2f}% of game code in C++, "
+          f"{progress.percent(names - placeholders, names):.2f}% of names readable")
     if args.discord:
-        notify({"rebuilt": rebuilt, "total": total, "cpp": cpp, "game_total": game_total})
+        notify({"rebuilt": rebuilt, "total": total, "cpp": cpp, "game_total": game_total,
+                "names": names, "readable": names - placeholders, "names_landed": names_landed})
 
 
 if __name__ == "__main__":
