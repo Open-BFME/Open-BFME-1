@@ -113,7 +113,7 @@ void ScriptActions::doNamedBaseUnpack(const AsciiString &baseName,
 		return;
 
 	static volatile NameKeyType baseModuleKey =
-		TheNameKeyGenerator->nameToKey((const char *)0x01083c50);
+		TheNameKeyGenerator->nameToKey("CastleBehavior");
 	CastleBehavior *base =
 		(CastleBehavior *)baseObject->findModule(baseModuleKey);
 	if (!base)

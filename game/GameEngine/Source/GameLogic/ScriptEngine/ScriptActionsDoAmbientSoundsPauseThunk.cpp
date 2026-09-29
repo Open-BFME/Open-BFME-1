@@ -9,10 +9,7 @@ protected:
     void doAmbientSoundsPause(bool);
 };
 
-// The BFME audio client keeps the pause/resume entry at vtable slot 28.  The
-// global is written as an absolute overlay so this TU emits the same DIR32
-// literal as the retail call site (and does not require a guessed global
-// declaration or a new linker alias).
+// The BFME audio client keeps the pause/resume entry at vtable slot 28.
 class BfmeAudioClient
 {
 public:
@@ -29,7 +26,9 @@ public:
     virtual void pauseAmbient(int first, int second, int third);
 };
 
-#define TheAudioClientUpdate (*(BfmeAudioClient **)0x012ED668)
+class AudioManager;
+extern AudioManager *TheAudio;
+#define TheAudioClientUpdate ((BfmeAudioClient *)TheAudio)
 
 void ScriptActions::doAmbientSoundsPause(bool pause)
 {

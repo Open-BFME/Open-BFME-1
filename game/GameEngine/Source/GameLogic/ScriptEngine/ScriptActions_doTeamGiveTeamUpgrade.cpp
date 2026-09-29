@@ -199,7 +199,7 @@ void ScriptActions::doTeamGiveTeamUpgrade(Parameter *sourceTeam,
 
 	const SpecialPowerTemplate *power =
 		((BfmeSpecialPowerStoreView *)TheSpecialPowerStore)
-			->findSpecialPowerTemplate((const char *)0x01083C00);
+			->findSpecialPowerTemplate("SpecialAbilityGiveUpgrade");
 	if (!power)
 		return;
 

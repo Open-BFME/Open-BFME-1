@@ -25,7 +25,9 @@ public:
 	bool *findFlag(AsciiString name);
 };
 
-#define TheAudioClientUpdate (*(ClientSubsystem **)0x012ED668)
+class AudioManager;
+extern AudioManager *TheAudio;
+#define TheAudioClientUpdate ((ClientSubsystem *)TheAudio)
 extern BFMEScriptEngineFlagLookup *TheScriptEngine;
 
 class ScriptActions
