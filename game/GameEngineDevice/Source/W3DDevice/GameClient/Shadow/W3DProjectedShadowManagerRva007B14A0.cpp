@@ -1,7 +1,7 @@
 // ?flush007B14A0@W3DProjectedShadowManager@@QAEXIPAUShadowTexture007B6D30@@0H@Z
-// partial score=0.998 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc
-// Retail 0x007B14A0, 3124 bytes, ret 0x10 at +0xC31 then int3.
+// Retail 0x007B14A0, 3124 bytes, ret 0x10 at +0xC31 then int3. Byte-exact
+// under the repo's relocation-masked gate.
 //
 // BFME's four-argument form of Zero Hour W3DProjectedShadowManager::flushDecals
 // (GeneralsMD W3DProjectedShadow.cpp, EA GPL-3.0-or-later). The matched
@@ -28,10 +28,17 @@
 // bracket are BFME's. Release-build snapshot diagnostics stay inline in
 // DX8Wrapper's render-state and shader setters, as in the other BFME bodies.
 //
-// NEAR MISS (banked, not landed): 3123 of 3124 bytes. The one residue is
-// the register choice inside the StringClass constructor of the Set_Shader
-// tail that the tex2 0x20 and no-tex2 0x20/0x40 cases share (+0x385):
-// retail `mov dl,[m_NullChar]; mov eax,[buf]`, ours `mov al; mov edx`.
+// Codegen note: the StringClass terminator store picks its registers per
+// site. The inlined Set_Shader body merged for the tex2 0x20/0x400 and the
+// no-tex2 alpha/additive arms (retail 0x0341..0x0391, five call sites) keeps
+// the terminator in DL (`mov dl,[m_NullChar]; mov eax,[buf]; mov [eax],dl`);
+// the plain ctor put it in AL there, one byte short. Reading the terminator
+// through a volatile pointer forces that merged body to DL, and reading
+// m_Buffer through a volatile pointer keeps the no-tex2 multiplicative site
+// (retail 0x0618..0x066F) pointer-first in AL instead of merging it into the
+// multiplicative tex2 site (docs/shape_levers.md, per-site inline-ctor load
+// order; same LateTag spelling landed 0x00717E90). Both tags are codegen
+// adapters only; the volatile reads touch the same single bytes.
 
 class TextureBaseClass;
 
@@ -55,13 +62,25 @@ public:
 		Get_String(n, temp);
 		m_Buffer[0] = m_NullChar;
 	}
-	// The one value_name whose buffer retail reads before the null
-	// character (docs/shape_levers.md, per-site inline-ctor load order).
+	// Two sites where retail reads the buffer pointer before the null
+	// character: the second stencil value_name (+0x480) and the no-tex2
+	// multiplicative Set_Shader (+0x618). The volatile buffer read fixes
+	// the load order there (docs/shape_levers.md, per-site inline-ctor
+	// load order).
 	struct BufferFirst {};
 	StringClass(int n, bool temp, BufferFirst) : m_Buffer(m_EmptyString)
 	{
 		Get_String(n, temp);
 		(*(char *volatile *)&m_Buffer)[0] = m_NullChar;
+	}
+	// The merged alpha/additive/tex2-0x20 ctor keeps the terminator in DL
+	// rather than AL (retail 6-byte mov dl); the volatile read keeps it out
+	// of the accumulator short form. Same spelling that landed 0x00717E90.
+	struct LateTag {};
+	StringClass(int n, bool temp, LateTag) : m_Buffer(m_EmptyString)
+	{
+		Get_String(n, temp);
+		m_Buffer[0] = *(volatile char *)&m_NullChar;
 	}
 	~StringClass() throw()
 	{
@@ -220,6 +239,24 @@ public:
 		}
 	}
 
+	static __forceinline void Set_Shader(const ShaderClass &shader, StringClass::LateTag tag)
+	{
+		if (ShaderClass::ShaderDirty || shader.ShaderBits != render_state.shader.ShaderBits) {
+			render_state.shader = shader;
+			Rva0133F49CChanged |= 0x8000;
+			StringClass str(0, false, tag);
+		}
+	}
+
+	static __forceinline void Set_Shader(const ShaderClass &shader, StringClass::BufferFirst tag)
+	{
+		if (ShaderClass::ShaderDirty || shader.ShaderBits != render_state.shader.ShaderBits) {
+			render_state.shader = shader;
+			Rva0133F49CChanged |= 0x8000;
+			StringClass str(0, false, tag);
+		}
+	}
+
 	static __forceinline void Set_DX8_Render_State(D3DRENDERSTATETYPE state, unsigned int value)
 	{
 		if (RenderStates[state] == value)
@@ -340,7 +377,7 @@ void W3DProjectedShadowManager::flush007B14A0(unsigned type, ShadowTexture007B6D
 		case 0x20:
 		case 0x400:
 			BoxSetTexture(1, ((const Gen_007AE6B0 *)texture2)->bfmeGet());
-			DX8Wrapper::Set_Shader(ShaderClass(0x005198B3));
+			DX8Wrapper::Set_Shader(ShaderClass(0x005198B3), StringClass::LateTag());
 			break;
 		case 0x40:
 		case 0x800:
@@ -351,15 +388,15 @@ void W3DProjectedShadowManager::flush007B14A0(unsigned type, ShadowTexture007B6D
 	} else {
 		switch ((int)type) {
 		case 1:
-			DX8Wrapper::Set_Shader(ShaderClass::_PresetMultiplicativeShader);
+			DX8Wrapper::Set_Shader(ShaderClass::_PresetMultiplicativeShader, StringClass::BufferFirst());
 			break;
 		case 0x20:
 		case 0x400:
-			DX8Wrapper::Set_Shader(ShaderClass::_PresetAlphaShader);
+			DX8Wrapper::Set_Shader(ShaderClass::_PresetAlphaShader, StringClass::LateTag());
 			break;
 		case 0x40:
 		case 0x800:
-			DX8Wrapper::Set_Shader(ShaderClass::_PresetAdditiveShader);
+			DX8Wrapper::Set_Shader(ShaderClass::_PresetAdditiveShader, StringClass::LateTag());
 			break;
 		}
 	}
@@ -402,8 +439,7 @@ void W3DProjectedShadowManager::flush007B14A0(unsigned type, ShadowTexture007B6D
 	m_pDev->SetFVF(SHADOW_DECAL_FVF);
 
 	if (DX8Wrapper::_EnableTriangleDraw) {
-		Debug_Statistics::Record_DX8_Polys_And_Vertices(nShadowDecalPolysInBatch,
-			nShadowDecalVertsInBatch, ShaderClass::_PresetOpaqueShader);
+		Debug_Statistics::Record_DX8_Polys_And_Vertices(nShadowDecalPolysInBatch, nShadowDecalVertsInBatch, ShaderClass::_PresetOpaqueShader);
 		m_pDev->DrawIndexedPrimitive(4, nShadowDecalStartBatchVertex, 0,
 			nShadowDecalVertsInBatch, nShadowDecalStartBatchIndex, nShadowDecalPolysInBatch);
 	}
