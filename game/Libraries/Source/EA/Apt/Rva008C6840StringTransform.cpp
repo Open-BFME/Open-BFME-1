@@ -31,6 +31,7 @@ public:
         if (--old->m_refCount == 0)
             g_bfmeStringPool1284->free(old);
     }
+    Rva8CD130String &rva0089EA60Append(const char *text);
     BfmeStringData3AF0 *m_data;
 };
 class Rva8CD130Value
@@ -90,7 +91,11 @@ extern Rva00899560Pool *g_rva8CD130IdleHook;
 extern Rva008A9B00 *Rva008C3B60Head;
 extern Rva8CD130Value **g_bfmeArr1233;
 extern int g_bfmeCount1233;
-extern void d_008c54a0();
+extern "C" unsigned long strtoul(const char *text, char **end, int base);
+namespace Rva008C54A0
+{
+void method(Rva8CD130String *text);
+}
 
 Rva008A9B00 *rva008C6840StringTransform()
 {
@@ -111,7 +116,7 @@ Rva008A9B00 *rva008C6840StringTransform()
         {
             Rva8CD130String text;
             value->getName(&text);
-            ((void (__cdecl *)(Rva8CD130String *))d_008c54a0)(&text);
+            Rva008C54A0::method(&text);
             ++text.m_data->m_refCount;
             BfmeStringData3AF0 *old = result->m_data;
             if (--old->m_refCount == 0)
@@ -120,4 +125,44 @@ Rva008A9B00 *rva008C6840StringTransform()
         }
     }
     return result;
+}
+
+namespace Rva008C54A0
+{
+void method(Rva8CD130String *text)
+{
+    char decoded[2] = "*";
+    Rva8CD130String output;
+    unsigned int length = text->m_data->m_length;
+    ((BfmeStrVKK *)&output)->bfmeTruncVKK(length);
+
+    const char *source = (const char *)text->m_data + 8;
+    char current = *source++;
+    while (current)
+    {
+        if (current == '+')
+            decoded[0] = ' ';
+        else if (current == '%' && source[0] != 0)
+        {
+            char secondDigit = source[1];
+            char hex[3];
+            hex[0] = source[0];
+            hex[1] = secondDigit;
+            hex[2] = 0;
+            decoded[0] = (char)strtoul(hex, 0, 16);
+            source += 2;
+        }
+        else
+            decoded[0] = current;
+
+        output.rva0089EA60Append(decoded);
+        current = *source++;
+    }
+
+    ++output.m_data->m_refCount;
+    BfmeStringData3AF0 *old = text->m_data;
+    if (--old->m_refCount == 0)
+        g_bfmeStringPool1284->free(old);
+    text->m_data = output.m_data;
+}
 }
