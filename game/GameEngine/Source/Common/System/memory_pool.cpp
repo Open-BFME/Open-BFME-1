@@ -28,6 +28,8 @@ class Rva008838F0Owner
 public:
 	bool isValidBlock(int type, void *block);
 };
+extern Rva008838F0Owner g_bfmeRva0130EA10Owner;
+extern unsigned char g_rva0130E9F9;
 
 #pragma intrinsic(memcpy)
 
@@ -63,8 +65,8 @@ bool MemoryPool::_IsValidBlock(void *block)
 	if (block == 0)
 		return false;
 
-	if (*(volatile unsigned char *)0x0130E9F9 != 0)
-		return ((Rva008838F0Owner *)0x0130EA10)->isValidBlock(-1, block);
+	if (g_rva0130E9F9 != 0)
+		return g_bfmeRva0130EA10Owner.isValidBlock(-1, block);
 
 	return true;
 }
@@ -904,31 +906,35 @@ public:
     unsigned char check();
 };
 extern unsigned int g_rva00883040Count;
+struct Rva00882BA0Block;
+extern Rva00882BA0Block **g_rva0130E9CC, **g_rva0130E9D4;
+extern Rva00882580Block **g_0130E9D0;
+extern unsigned int g_rva0130EA04;
 
 void MemoryPool::_VerifyIntegrity()
 {
     unsigned int i;
     for (i = 0; i < g_rva00883040Count; ++i) {
-        Rva00882580Block *block = (*(Rva00882580Block ***)0x0130E9D0)[i];
+        Rva00882580Block *block = g_0130E9D0[i];
         while (block) {
             block->check();
-            if (*(unsigned char *)0x0130E9F9)
-                ((Rva008838F0Owner *)0x0130EA10)->isValidBlock(-1, (char *)block + 0x0c);
+            if (g_rva0130E9F9)
+                g_bfmeRva0130EA10Owner.isValidBlock(-1, (char *)block + 0x0c);
             block = *(Rva00882580Block **)((char *)block + 4);
         }
     }
-    unsigned int count = *(unsigned int *)0x0130EA04;
+    unsigned int count = g_rva0130EA04;
     if (count) {
         for (unsigned int j = 0; j < count; ++j) {
-            Rva00882580Block *block = (*(Rva00882580Block ***)0x0130E9CC)[j];
+            Rva00882580Block *block = (Rva00882580Block *)g_rva0130E9CC[j];
             if (block) {
                 block->check();
-                count = *(unsigned int *)0x0130EA04;
+                count = g_rva0130EA04;
             }
         }
     }
     for (i = 0; i < g_rva00883040Count; ++i) {
-        Rva00882580Block *block = (*(Rva00882580Block ***)0x0130E9D4)[i];
+        Rva00882580Block *block = (Rva00882580Block *)g_rva0130E9D4[i];
         while (block) {
             block->check();
             block = *(Rva00882580Block **)((char *)block + 4);

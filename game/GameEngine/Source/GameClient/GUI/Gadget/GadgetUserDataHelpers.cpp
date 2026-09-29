@@ -215,7 +215,7 @@ void gen004BC7E0(void *self, void *event, void *arg2, void *arg3)
 		case 13:
 			{
 				if ((window->winGetStatus() & 8) != 0)
-					((Rva004BC7E0StringCall)j_00002e0f)((void *)0x010FD8D4);
+					((Rva004BC7E0StringCall)j_00002e0f)((void *)"Gui_PalantirCommandButtonClick");
 				else
 				{
 					Rva004BC7E0UserData *data =
@@ -223,20 +223,20 @@ void gen004BC7E0(void *self, void *event, void *arg2, void *arg3)
 					if (data != 0 && data->m_nested != 0)
 					{
 						if ((data->m_nested->m_value & 0x80000000) == 0)
-							((Rva004BC7E0StringCall)j_00002e0f)((void *)0x010FD8A4);
+							((Rva004BC7E0StringCall)j_00002e0f)((void *)"Gui_PalantirCommandButtonDisabledClick");
 						else
-							((Rva004BC7E0StringCall)j_00002e0f)((void *)0x010FD8D4);
+							((Rva004BC7E0StringCall)j_00002e0f)((void *)"Gui_PalantirCommandButtonClick");
 					}
 					else
-						((Rva004BC7E0StringCall)j_00002e0f)((void *)0x010FD8A4);
+						((Rva004BC7E0StringCall)j_00002e0f)((void *)"Gui_PalantirCommandButtonDisabledClick");
 				}
 				break;
 			}
 		case 5:
 			if ((window->winGetStatus() & 8) != 0)
-				((Rva004BC7E0StringCall)j_00002e0f)((void *)0x010FD8D4);
+				((Rva004BC7E0StringCall)j_00002e0f)((void *)"Gui_PalantirCommandButtonClick");
 			else
-				((Rva004BC7E0StringCall)j_00002e0f)((void *)0x010FD8A4);
+				((Rva004BC7E0StringCall)j_00002e0f)((void *)"Gui_PalantirCommandButtonDisabledClick");
 			break;
 		}
 	}
