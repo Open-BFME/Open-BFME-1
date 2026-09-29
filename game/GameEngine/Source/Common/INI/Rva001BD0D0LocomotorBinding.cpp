@@ -68,6 +68,8 @@ public:
     AsciiString m_condition;
     float m_speed;
 };
+extern const char *TheLocomotorSetNames[];
+
 void BfmeThingANB::bfmeFinishANB(BfmeSinkANB *sink, void *what)
 {
     INI *ini = reinterpret_cast<INI *>(sink);
@@ -76,7 +78,7 @@ void BfmeThingANB::bfmeFinishANB(BfmeSinkANB *sink, void *what)
     if (!data)
         throw INIException(3, "Attempted to specify a locomotor for object %s without an AIUpdate\tblock.", thing->m_name.str());
     LocomotorSetType set = (LocomotorSetType)INI::scanIndexList(m_condition.str(),
-        reinterpret_cast<const char *const *>(0x012B1220));
+        TheLocomotorSetNames);
     const LocomotorTemplate *locomotor = TheRva001B70E0LocomotorStore->lookup(m_locomotor);
     if (!data->m_locomotorTemplates[set].empty() && ini->m_loadType != 2 && ini->m_loadType != 4)
         throw INIException(3, "re-specifying a LocomotorSet\tis no longer allowed");
