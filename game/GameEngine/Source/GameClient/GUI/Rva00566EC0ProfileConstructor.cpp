@@ -109,6 +109,8 @@ private:
 	SkirmishPreferences m_prefs;
 };
 
+extern Rva00566EC0Profile *Rva012F4B3CProfile;
+
 static FunctorMethodSingle rawFunctorMethod( unsigned int address )
 {
 	union
@@ -124,10 +126,10 @@ static FunctorMethodSingle rawFunctorMethod( unsigned int address )
 Rva00566EC0Profile::Rva00566EC0Profile( void )
 	: m_prefs()
 {
-	if( *(Rva00566EC0Profile **)0x012F4B3C != 0 )
+	if( Rva012F4B3CProfile != 0 )
 		return;
 
-	*(Rva00566EC0Profile **)0x012F4B3C = this;
+	Rva012F4B3CProfile = this;
 
 	{
 		// "Skirmish/tooltipPlayerLevelIconGondor" (also used by the destructor).

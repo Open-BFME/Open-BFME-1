@@ -1,8 +1,8 @@
 // cl: /O2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD
 // Clean reconstruction of the 0x006B07B0 bounded multiplier helper.
 
-#define Rva006B07B0Zero (*(const float *)0x01075350)
-#define Rva006B07B0One (*(const float *)0x01075334)
+#define Rva006B07B0Zero 0.0f
+#define Rva006B07B0One 1.0f
 
 struct Rva006B07B0Data
 {

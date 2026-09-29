@@ -9,6 +9,8 @@
 class UserParser;
 class DataChunkInput;
 struct DataChunkInfo;
+extern "C" int _bfmeVftVE[];
+extern "C" int g_010F5E84[];
 typedef bool (*BfmeParserCallback)(DataChunkInput &, DataChunkInfo *, void *);
 
 class DataChunkInput
@@ -24,7 +26,7 @@ public:
     BfmeParserRegistrationVE(DataChunkInput *table, AsciiString *name,
         AsciiString *label)
     {
-        m_vftable = (void *)0x0107C7D0;
+        m_vftable = _bfmeVftVE;
         m_table = table;
         m_parser = table->registerParser(*name, *label,
             (BfmeParserCallback)0x0041579E, this);
@@ -55,5 +57,5 @@ Rva00450460ParserRegistration::Rva00450460ParserRegistration(
 {
     Rva00450460ParserRegistration *self = this;
     self->m_0c = extra;
-    self->m_vftable = (void *)0x010F5E84;
+    self->m_vftable = g_010F5E84;
 }

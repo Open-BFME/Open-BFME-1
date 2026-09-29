@@ -4,6 +4,8 @@
 
 #include <vector>
 
+extern const char Rva006A16B0Empty[];
+
 template <typename T> class StringBase
 {
     friend class AsciiString;
@@ -29,7 +31,7 @@ public:
 
     const char *str() const
     {
-        return m_data ? (const char *)m_data + 8 : (const char *)0x0107388B;
+        return m_data ? (const char *)m_data + 8 : Rva006A16B0Empty;
     }
 
     void clear();
@@ -150,7 +152,7 @@ int BfmeAptScreenOnlineShell::shutdown()
         int owner = *(volatile int *)( (char *)this + 0x250 );
         g_mgr12F19E8->add(
             (void *)owner,
-            (const char *)0x01109084, 1,
+            "LoadScreen", 1,
             name, 0, 0, 0, 0 );
         m_name.clear();
 

@@ -91,10 +91,14 @@ public:
 	void notify( const AsciiString &message );
 };
 
+class CampaignManager;
+extern CampaignManager *TheLivingWorldLogic;
+extern const char Rva006A16B0Empty[];
+
 extern void j_00026fc1();
 extern void j_0003fe09();
 
-#define Rva00367810TheCampaign (*(Rva00367810Campaign **)0x012F1028)
+#define Rva00367810TheCampaign ((Rva00367810Campaign *)TheLivingWorldLogic)
 
 static __forceinline void rva00367810Notify(
 	const AsciiString &message, Rva00367810Campaign *campaign )
@@ -149,7 +153,7 @@ void Rva00367810Entry::update()
 	case 0:
 		message.format( AsciiString( "Auto-Summoning army %s into battle" ),
 			m_name != 0 ? (const char *)m_name + 8 :
-			(const char *)0x0107388B );
+			Rva006A16B0Empty );
 		rva00367810Notify( message, Rva00367810TheCampaign );
 		if( m_state == 0 )
 		{
