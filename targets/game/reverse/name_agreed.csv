@@ -191,3 +191,5 @@ game/GameEngine/Source/Common/BfmeConv930.cpp|member||m_bfmeQ,m_vertexBuffer,cla
 game/GameEngine/Source/Common/BfmeConv930.cpp|member||m_bfmeQ,m_vertexBuffer,claude-fable+grok,blocked: hook: PRE-COMMIT FAILED: staged sources define functions the ledger does not declare (see above),2026-09-29
 game/GameEngine/Source/GameNetwork/V2FeslArrayBlocks.cpp|member||m_value0c,m_name,claude-fable+grok,agreed,2026-09-29
 game/GameEngine/Source/GameNetwork/V2FeslArrayBlocks.cpp|member||m_value14,m_locale,claude-fable+grok,agreed,2026-09-29
+game/GameEngine/Source/GameNetwork/V2FeslArrayBlocks.cpp|member||m_value0c,m_name,claude-fable+grok,applied,2026-09-29
+game/GameEngine/Source/GameNetwork/V2FeslArrayBlocks.cpp|member||m_value14,m_locale,claude-fable+grok,applied,2026-09-29
