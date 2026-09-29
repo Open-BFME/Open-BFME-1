@@ -332,3 +332,7 @@ game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|type||BfmeObserverYV,271
 game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|type||BfmeRegistryYV,be86cd1edf4afbdb2fe11671,grok,20260929204446-fe8877,2026-09-29
 game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|function||bfmeOptionsYV,e021ef3cdb2700f7ee1ee3f5,grok,20260929204446-fe8877,2026-09-29
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva0077C390Parse.cpp|type||Rva0077C390,757a2c0c3e8c12fe4c398d04,grok,20260929204659-f2c5c5,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1081.cpp|type||BfmeG1081,9d4d29a84b149b259940ea67,grok,20260929205704-651cac,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1081.cpp|type||BfmeP1081,5d7c37b4293f5411f99bfac5,grok,20260929205704-651cac,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1081.cpp|type||BfmeJ1081,dd6e13b6e1c270099c0e49e6,grok,20260929205704-651cac,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1081.cpp|type||BfmeQ1081,ed538649e6df413078f3cd87,grok,20260929205704-651cac,2026-09-29
