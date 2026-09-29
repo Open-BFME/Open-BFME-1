@@ -1,5 +1,5 @@
 // ?d_009f63d0@@YAXXZ
-// partial score=0.946 date=2026-09-28
+// partial score=0.8342 date=2026-09-29
 // cl: /O2 /Ob2 /FAsc /Fabuild/Rva009F63D0Probe.cod /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 
@@ -94,7 +94,7 @@ public:
 };
 
 typedef _STL::vector<Rva009F4130NodeList> Rva009F63D0NodeVector;
-class Rva009F63D0
+class BfmeWideResultSource
 {
 public:
 	float m_field00;
@@ -104,17 +104,17 @@ public:
 	unsigned char m_padE4[4];
 	float m_fieldE8;
 	unsigned int m_fieldEC;
-	BfmeWideResult method(int a, int b, int c, int d, int e, int f);
+	BfmeWideResult bfmeMakeWideResult(int a, int b, int c, int d, int e, int f);
 };
 
-BfmeWideResult Rva009F63D0::method(int position, int radius, int bounds,
+BfmeWideResult BfmeWideResultSource::bfmeMakeWideResult(int position, int radius, int bounds,
 	int distanceType, int filters, int sortMode)
 {
 	BfmeWideResult result;
 	if (distanceType != 0 && distanceType != 2 && distanceType != 1 &&
 		distanceType != 3 && distanceType != 4)
 		distanceType = 0;
-	int filterMask;
+	unsigned int filterMask;
 	if (filters != 0)
 		filterMask = ((Rva009F2AB0Mask *)filters)->getMask() * 2 + 1;
 	else
@@ -139,25 +139,25 @@ BfmeWideResult Rva009F63D0::method(int position, int radius, int bounds,
 		yMax = ((BfmeHostES *)this)->bfmeIndexES(range->y1);
 	}
 
-	float radiusSquared = *(float *)&radius;
-	radiusSquared *= radiusSquared;
+	*(float *)&radius *= *(float *)&radius;
 	Rva009F63D0NodeVector *nodes = m_vectors;
-	int remaining = 17;
+	int remaining[2];
+	remaining[1] = 17;
 	do
 	{
 		if ((filterMask & 1) != 0)
 		{
 			((Rva009F4130Owner *)this)->query(
 				(Rva009F39F0Result *)&result, nodes->begin(),
-				nodes->size() / 4,
+				m_vectors[0].size() / 4,
 				xMin, yMin, xMax, yMax, 0, 0, m_fieldEC,
-				(void *)point, radiusSquared, range,
+				(void *)point, *(float *)&radius, range,
 				((Rva009F4130Distance *)0x012DBD60)[distanceType],
 				(BfmeThingEQ *)filters);
 		}
-		filterMask >>= 1;
 		++nodes;
-	} while (--remaining != 0);
+		filterMask >>= 1;
+	} while (--remaining[1] != 0);
 
 	if (sortMode != 0)
 		((BfmeThingVJX *)&result)->bfmeGoVJX(sortMode);
@@ -167,7 +167,7 @@ BfmeWideResult Rva009F63D0::method(int position, int radius, int bounds,
 class BfmeWideForwardA
 {
 	char m_pad[0x0C];
-	Rva009F63D0 *m_source;
+	BfmeWideResultSource *m_source;
 
 public:
 	BfmeWideResult bfmeForwardWideA(int a, int b, int c, int d);
@@ -176,7 +176,7 @@ public:
 class BfmeWideForwardB
 {
 	char m_pad[0x0C];
-	Rva009F63D0 *m_source;
+	BfmeWideResultSource *m_source;
 
 public:
 	BfmeWideResult bfmeForwardWideB(int a, int b, int c, int d);
@@ -185,7 +185,7 @@ public:
 class BfmeWideForwardC
 {
 	char m_pad[0x0C];
-	Rva009F63D0 *m_source;
+	BfmeWideResultSource *m_source;
 
 public:
 	BfmeWideResult bfmeForwardWideC(int a, int b, int c, int d, int e);
@@ -194,7 +194,7 @@ public:
 class BfmeWideForward009F29A0
 {
 	char m_pad[0x0C];
-	Rva009F63D0 *m_source;
+	BfmeWideResultSource *m_source;
 
 public:
 	BfmeWideResult forward009F29A0(int a, int b, int c);
@@ -202,20 +202,20 @@ public:
 
 BfmeWideResult BfmeWideForward009F29A0::forward009F29A0(int a, int b, int c)
 {
-	return m_source->method(0, 0, a, b, 0, c);
+	return m_source->bfmeMakeWideResult(0, 0, a, b, 0, c);
 }
 
 BfmeWideResult BfmeWideForwardA::bfmeForwardWideA(int a, int b, int c, int d)
 {
-	return m_source->method(a, b, 0, c, 0, d);
+	return m_source->bfmeMakeWideResult(a, b, 0, c, 0, d);
 }
 
 BfmeWideResult BfmeWideForwardB::bfmeForwardWideB(int a, int b, int c, int d)
 {
-	return m_source->method(0, 0, a, b, c, d);
+	return m_source->bfmeMakeWideResult(0, 0, a, b, c, d);
 }
 
 BfmeWideResult BfmeWideForwardC::bfmeForwardWideC(int a, int b, int c, int d, int e)
 {
-	return m_source->method(a, b, 0, c, d, e);
+	return m_source->bfmeMakeWideResult(a, b, 0, c, d, e);
 }
