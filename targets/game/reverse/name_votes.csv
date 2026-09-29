@@ -278,3 +278,8 @@ game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfme
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeGetStartPositionInfo,051d5adf893ef227b2280615,grok,20260929193552-06270b,2026-09-29
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeRefresh,039fe87239d75c9e5e10f6aa,grok,20260929193552-06270b,2026-09-29
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeShutdown,a81dbd33e5ed9d2b45ab8466,grok,20260929193552-06270b,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1778.cpp|type||BfmeInfoDB,bbedb7ef023245ec2eadaf9f,grok,20260929193936-784781,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1778.cpp|type||BfmeOwnDB,02f79a5e8fa60c290e8fd179,grok,20260929193936-784781,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1778.cpp|member||m_bfmeItemDB,fb3b432b40b17400f8ddb0f3,grok,20260929193936-784781,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1778.cpp|member||m_bfmeNextDB,6af7a1c667d38d68172a240a,grok,20260929193936-784781,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1778.cpp|member||m_bfmePrevDB,b8751a73e4971bcf13eca120,grok,20260929193936-784781,2026-09-29

@@ -161,3 +161,5 @@ game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|member||m_88,m_colorCombos
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeShutdown,shutdown,claude-fable+grok,agreed,2026-09-29
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|member||m_88,m_colorCombos,claude-opus+grok,applied,2026-09-29
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeShutdown,shutdown,claude-fable+grok,applied,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1778.cpp|member||m_bfmeNextDB,m_next,claude-fable+grok,agreed,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1778.cpp|member||m_bfmePrevDB,m_prev,claude-fable+grok,agreed,2026-09-29
