@@ -1511,6 +1511,50 @@ toggle. The `__fastcall` dummy-EDX adapter (RegallocLever-2/3) is the same
 mechanism seen from the other side: its dummy argument is one more
 allocation.
 
+## An accessor the front end can inline is not a cast, and not an out-of-line inline (measured 2026-09-28)
+
+The paragraph above rules the lever out of the callee-saved class, and for a
+*letter* mirror (two values that took each other's register) that still holds.
+It does not hold for a callee-saved **order**: two correctly-assigned
+registers whose reloads at a loop back edge come out the other way round.
+`ControlBarSchemeManager::setControlBarSchemeByPlayer` (0x004AE080, 590 B) sat
+at exactly that for four seats -- `mov esi,[esp+0x2c]` before
+`mov edi,[esp+0x18]` where retail has them the other way, four bytes, shape
+1.000, everything else identical.
+
+The address of the player's side string has to come out of a **call**, not a
+cast:
+
+```cpp
+AsciiString side = *(const AsciiString *)((const char *)p + 0x28);   // 4 bytes off
+AsciiString side = p->getSide();                                      // exact
+```
+
+Fourteen other spellings of the same expression do nothing: a named local for
+the pointer, a `static`/`inline`/`__inline` accessor around the pointer instead
+of a member, a dereferenced receiver, a cast to the same type, a comma
+operator. Two details are load-bearing and both are front end, not codegen:
+
+* **in the class body.** The same accessor defined out of line as `inline`
+  after the class leaves the four bytes; only the definition site changes.
+* **returns a reference.** Generals' `inline AsciiString getSide() const
+  { return m_side; }` builds 587 bytes and 311 differences, because it
+  constructs a temporary and copies twice. Retail's single copy constructor
+  with one `releaseBuffer` is the witness that BFME's returns a reference.
+
+The same four bytes also fall to a named member at that offset
+(`p->m_side` behind a padded shim), which is the same node wearing a
+different name.
+
+Nothing about this is visible in the object file: the identity inline
+`rotation_sweep.py` proposes, the cast and the accessor all emit **identical**
+code, and only the `/FAsc` label counter moves (temporaries numbered from 3701
+become 3707, 3712 becomes 3718, 4081 becomes 4095). So `rotation_sweep.py`
+reporting EXACT on a **callee-saved-order** residue is not a probe artefact to
+be discarded: respell it as the Zero Hour accessor and it lands. When Zero Hour
+writes `p->getSide()` and you wrote the offset by hand, that is the difference.
+Full table and evidence: `targets/game/reverse/analysis/0x004ae080-string-slot.md`.
+
 ## BFME FXListDie callback uses a compact ABI view
 
 The 143-byte retail `FXListDie::onDie` at `0x002554C0` is identified by vtable
