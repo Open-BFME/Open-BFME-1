@@ -16,7 +16,7 @@ class BfmeObserverYV
 {
 public:
 	char m_bfmePadYV[0x10c];
-	int m_bfmeModeYV;
+	int m_gameMode;
 };
 
 class BfmeRegistryYV
@@ -36,7 +36,7 @@ void __stdcall bfmeOptionsYV(int unused)
 	AsciiStringYV *name;
 
 	if (g_bfmeObserverYV != 0
-			&& (g_bfmeObserverYV->m_bfmeModeYV == 1 || g_bfmeObserverYV->m_bfmeModeYV == 5))
+			&& (g_bfmeObserverYV->m_gameMode == 1 || g_bfmeObserverYV->m_gameMode == 5))
 	{
 		static AsciiStringYV s_bfmeMultiplayerYV("NonCommand_MultiplayerOptions");
 

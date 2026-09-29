@@ -102,3 +102,4 @@ game/GameEngine/Source/Common/BfmeConv815.cpp|member||m_arg10,m_attackType,claud
 game/GameEngine/Source/Common/BfmeConv912.cpp|function|BfmeThing912F@|bfmeGo912F,readEntireAndClose,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/Common/BfmeHostABD_bfmeAllocABD.cpp|member||m_bfmeSlotsABD,m_lookups,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/Common/BfmeHostABD_bfmeAllocABD.cpp|member||m_bfme48ABD,m_numLookups,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|member||m_bfmeModeYV,m_gameMode,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
