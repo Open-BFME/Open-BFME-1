@@ -1,5 +1,5 @@
 // ??0BfmeAptScreenOnlineQuickMatch@@QAE@H@Z
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // BfmeAptScreenOnlineQuickMatch constructor, retail 0x00559400, 755 bytes.
 // The vtable, callback selector strings, and guarded 124-byte factory identify
@@ -17,10 +17,7 @@ private:
 	void *m_data;
 };
 
-class AsciiString
-{
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class BfmeAptWindowContext
 {
@@ -134,13 +131,13 @@ public:
 };
 
 class Image;
-class Rva0001D606ImageCollection
+class MappedImageCollection
 {
 public:
 	const Image *findImageByName( const AsciiString &name );
 };
 
-class Rva00018F0CMapCache
+class MapCache
 {
 public:
 	void updateCache();
@@ -197,16 +194,18 @@ private:
 #pragma comment(linker, "/alternatename:??0Rva0050F840FunctorHolder@@QAE@UFunctorBindingSingle@@@Z=?j_000367ff@@YAXXZ")
 #pragma comment(linker, "/alternatename:?_bfme_showAptScreenOnlineQuickMatch@_bfme_AptGameWindow@@QAEXABVAsciiString@@VRva0050F8B0FunctorHolder@@@Z=?j_000338ed@@YAXXZ")
 #pragma comment(linker, "/alternatename:?_bfme_setAptScreenRefOnlineQuickMatch@@YAXABVAsciiString@@VRva0050F840FunctorHolder@@@Z=?j_0003df14@@YAXXZ")
-#pragma comment(linker, "/alternatename:?findImageByName@Rva0001D606ImageCollection@@QAEPBVImage@@ABVAsciiString@@@Z=?j_0001d606@@YAXXZ")
-#pragma comment(linker, "/alternatename:?updateCache@Rva00018F0CMapCache@@QAEXXZ=?j_00018f0c@@YAXXZ")
+#pragma comment(linker, "/alternatename:?findImageByName@MappedImageCollection@@QAEPBVImage@@ABVAsciiString@@@Z=?j_0001d606@@YAXXZ")
+#pragma comment(linker, "/alternatename:?updateCache@MapCache@@QAEXXZ=?j_00018f0c@@YAXXZ")
 
-#define TheBfmeOnlineQuickMatch (*(BfmeAptScreenOnlineQuickMatch **)0x012F4ABC)
-#define TheMappedImageCollection (*(Rva0001D606ImageCollection **)0x012F6924)
-#define TheMapCache (*(Rva00018F0CMapCache **)0x012F1594)
-#define TheGameSpyGame (*(GameSpyStagingRoom **)0x012F7198)
-#define TheGameSpyStagingRoom (*(GameSpyStagingRoom **)0x012F770C)
-#define TheGameSpyInfo (*(GameSpyInfo **)0x012F7194)
-#define TheWindowManager (*(void **)0x012F19E8)
+class NAT;
+class WindowManager;
+extern void *g_obj12F4ABC;
+extern MappedImageCollection *TheMappedImageCollection;
+extern MapCache *TheMapCache;
+extern GameSpyStagingRoom *TheGameSpyGame;
+extern NAT *TheNAT;
+extern GameSpyInfo *TheGameSpyInfo;
+extern WindowManager *g_theWindowManager;
 
 
 void _bfme_setAptScreenRefOnlineQuickMatch( const AsciiString &name,
@@ -223,9 +222,9 @@ BfmeAptScreenOnlineQuickMatch::BfmeAptScreenOnlineQuickMatch( int context )
 	m_slot70 = 0;
 	m_slot74 = 0;
 	m_slot78 = 0;
-	if( TheWindowManager != 0 && TheBfmeOnlineQuickMatch == 0 )
+	if( g_theWindowManager != 0 && g_obj12F4ABC == 0 )
 	{
-		TheBfmeOnlineQuickMatch = this;
+		g_obj12F4ABC = this;
 
 		{
 			BFMERetailAsciiString name( "AptCustomMatchSelected" );
@@ -324,10 +323,10 @@ BfmeAptScreenOnlineQuickMatch::BfmeAptScreenOnlineQuickMatch( int context )
 
 		TheMapCache->updateCache();
 		TheGameSpyGame->slot08();
-		if( GameSpyStagingRoom *room = TheGameSpyStagingRoom )
+		if( GameSpyStagingRoom *room = reinterpret_cast<GameSpyStagingRoom *>( TheNAT ) )
 		{
 			room->slot00( 1 );
-			TheGameSpyStagingRoom = 0;
+			TheNAT = 0;
 		}
 		if( GameSpyInfo *info = TheGameSpyInfo )
 			info->slotB0();
