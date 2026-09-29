@@ -57,9 +57,9 @@ public:
 
 private:
 	char m_unmodelled00[0x10];
-	float m_10;
+	float m_velocity;
 	char m_unmodelled14[0x38 - 0x14];
-	float m_38;
+	float m_emitterSpacing;
 	char m_unmodelled3c[0x4c - 0x3c];
 	int m_4c;
 	float m_50;
@@ -87,21 +87,21 @@ void BfmeThingTBA::rva007243A0(void)
 	{
 		m_98 = 3;
 		float blend = (fraction - m_54) / (1.0f - m_54);
-		m_38 = m_5c - (m_5c - m_58) * blend;
-		m_10 = m_64 - (m_64 - m_60) * blend;
+		m_emitterSpacing = m_5c - (m_5c - m_58) * blend;
+		m_velocity = m_64 - (m_64 - m_60) * blend;
 	}
 	else if (fraction > m_50)
 	{
 		m_98 = 2;
-		m_38 = m_5c;
-		m_10 = m_64;
+		m_emitterSpacing = m_5c;
+		m_velocity = m_64;
 	}
 	else if (fraction > 0.0f)
 	{
 		m_98 = 1;
 		float blend = m_50 > 0.00001f ? fraction / m_50 : 1.0f;
-		m_38 = m_58 + (m_5c - m_58) * blend;
-		m_10 = m_60 + (m_64 - m_60) * blend;
+		m_emitterSpacing = m_58 + (m_5c - m_58) * blend;
+		m_velocity = m_60 + (m_64 - m_60) * blend;
 	}
 	else
 	{
