@@ -13,6 +13,7 @@ struct Rva00882BA0Block {
     Rva00882BA0Block *m_field04;
     unsigned int m_size08;
 };
+extern Rva008838F0Owner g_bfmeRva0130EA10Owner;
 extern int g_rva0130E9FC;
 extern unsigned int g_rva0130E9F4;
 extern unsigned int g_rva00883040Count;
@@ -29,7 +30,7 @@ void MemoryPool::_Free(void *ptr, AllocType type)
     unsigned int size = *large;
     g_rva0130E9F4 -= size;
     if (size > g_rva00883040Count * 4) {
-        if (g_rva0130E9F9) ((Rva008838F0Owner *)0x0130EA10)->rva008839B0(type, ptr);
+        if (g_rva0130E9F9) g_bfmeRva0130EA10Owner.rva008839B0(type, ptr);
         EnterCriticalSection(g_rva0130E9D8);
         HeapFree(g_rva0130E9C4, 0, large);
         LeaveCriticalSection(g_rva0130E9D8);
@@ -37,7 +38,7 @@ void MemoryPool::_Free(void *ptr, AllocType type)
     }
     Rva00882BA0Block *block = (Rva00882BA0Block *)ptr - 1;
     --g_rva0130E9BC[(block->m_size08 - 1) >> 2];
-    if (g_rva0130E9F9) ((Rva008838F0Owner *)0x0130EA10)->rva008839B0(-666, block + 1);
+    if (g_rva0130E9F9) g_bfmeRva0130EA10Owner.rva008839B0(-666, block + 1);
     EnterCriticalSection(g_rva0130E9D8);
     *block->m_field00 = block->m_field04;
     if (block->m_field04) block->m_field04->m_field00 = block->m_field00;

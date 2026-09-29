@@ -11,6 +11,8 @@
 typedef bool Bool;
 typedef unsigned short UnsignedShort;
 
+extern const char Rva006A16B0Empty[];
+
 template <typename T> struct BfmeStringData
 {
 	int m_refs;
@@ -48,7 +50,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? m_data->m_text : (const char *)0x0107388B;
+		return m_data ? m_data->m_text : Rva006A16B0Empty;
 	}
 
 	int compareNoCase(const char *text) const;
@@ -127,7 +129,8 @@ public:
 	File *openFile(const char *filename, int access);
 };
 
-#define TheFileSystem (*(FileSystem **)0x0134CB48)
+extern FileSystem *TheFileSystem;
+#define TheFileSystem TheFileSystem
 
 // This is the BFME Xfer layout used by the neighboring landed body.  The
 // three block operations below are qualified direct calls in this reader;

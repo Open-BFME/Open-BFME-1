@@ -43,7 +43,7 @@ extern void GameGetColorComponentsReal(int color, float *red, float *green,
 	float *blue, float *alpha);
 extern void RGB_To_HSV(Vector3 &hsv, const Vector3 &rgb);
 extern void HSV_To_RGB(Vector3 &rgb, const Vector3 &hsv);
-#define g_bfmeScaleB3 (*(float *)0x01084068)
+#define g_bfmeScaleB3 255.0f
 
 struct Rva00107A50ColorLocals
 {
@@ -65,7 +65,7 @@ unsigned rva00107A50MakeColor(void *colorData)
 	local.rgb.Y = local.green;
 	local.rgb.Z = local.blue;
 	RGB_To_HSV(local.hsv, local.rgb);
-	local.hsv.Y *= *(const float *)0x0108887C;
+	local.hsv.Y *= 1.6f;
 	if (local.hsv.Y > 1.0f)
 		local.hsv.Y = 1.0f;
 	HSV_To_RGB(local.rgb, local.hsv);
