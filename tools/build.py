@@ -527,6 +527,26 @@ def stlport_include_dir():
     return None
 
 
+# BFME's own changes to STLport, searched ahead of the pristine vendored tree
+# for every `// stlport` TU. It holds only headers retail proves BFME changed:
+# stl/_range_errors.h (the __stl_throw_* hooks are inline no-ops; the header
+# cites the evidence). A TU whose matched rows still depend on the vendored
+# extern hooks opts out with a `// stlport-range-errors: vendored` line; each
+# one is debt, listed by `rg "stlport-range-errors: vendored" game`.
+STLPORT_OVERLAY = ROOT / "inputs/reference/shims/stlport_bfme"
+STLPORT_OVERLAY_OPT_OUT = "// stlport-range-errors: vendored"
+
+
+def stlport_overlay_dirs(source):
+    """[STLPORT_OVERLAY], or [] for a TU that opts out of it."""
+    try:
+        with Path(source).open("r", encoding="utf-8", errors="replace") as handle:
+            head = handle.read(8192)
+    except (OSError, TypeError):
+        return [STLPORT_OVERLAY]
+    return [] if STLPORT_OVERLAY_OPT_OUT in head else [STLPORT_OVERLAY]
+
+
 def nbench_include_dir():
     """Directory of vendored nbench-byte 2.2.3 sources, or None.
 
@@ -688,7 +708,7 @@ def compiler_environment(root, source=None):
         include = str(root / "Vc7" / "include")
         extras = []
         if stlport:
-            extras.extend([str(stlport), str(stlport / "src")])
+            extras.extend([*map(str, stlport_overlay_dirs(source)), str(stlport), str(stlport / "src")])
         if nbench:
             extras.append(str(nbench))
         if extras:
@@ -703,7 +723,7 @@ def compiler_environment(root, source=None):
     include = wine_path(root / "Vc7" / "include")
     extras = []
     if stlport:
-        extras.extend([wine_path(stlport), wine_path(stlport / "src")])
+        extras.extend([*map(wine_path, stlport_overlay_dirs(source)), wine_path(stlport), wine_path(stlport / "src")])
     if nbench:
         extras.append(wine_path(nbench))
     if extras:

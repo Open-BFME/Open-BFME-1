@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline
 // stlport
+// stlport-range-errors: vendored (these rows match only with STLport's extern __stl_throw_* calls, which offset another shape difference; see inputs/reference/shims/stlport_bfme/stl/_range_errors.h)
 // Retail ScriptActions::doTeamUseCommandButtonOnNearestEnemy at 0x002FB170
 // (713B). Twin of Zero Hour's ScriptActions::doTeamUseCommandButtonOnNearestEnemy
 // (GeneralsMD/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp)

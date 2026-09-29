@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// stlport-range-errors: vendored (these rows match only with STLport's extern __stl_throw_* calls, which offset another shape difference; see inputs/reference/shims/stlport_bfme/stl/_range_errors.h)
 // Retail 0x002A8CE0, 637 bytes: SpecialAbilityUpdate::startUnpacking.
 // ZH twin plus BFME unpack state 2, module-data unpackTime +0x220,
 // animation frames +0x28 and condition bits 93/95 prove the identity.

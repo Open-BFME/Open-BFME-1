@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline
 // stlport
+// stlport-range-errors: vendored (these rows match only with STLport's extern __stl_throw_* calls, which offset another shape difference; see inputs/reference/shims/stlport_bfme/stl/_range_errors.h)
 // Retail team command-button queries: 0x002FBC90 (760B), 0x002FB8D0 (766B),
 // 0x002FB4F0 (782B) and 0x002FC050 (849B). The dispatcher reaches these through ILT thunks;
 // action identities remain address-derived rather than inferred from adjacency.

@@ -6,6 +6,7 @@
 // Native bitset accessors preserve the retail mask materialization and tests.
 // cl: /DNDEBUG /MD /Igame/GameEngine/Source/GameLogic/Object
 // stlport
+// stlport-range-errors: vendored (these rows match only with STLport's extern __stl_throw_* calls, which offset another shape difference; see inputs/reference/shims/stlport_bfme/stl/_range_errors.h)
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 #include <vector>

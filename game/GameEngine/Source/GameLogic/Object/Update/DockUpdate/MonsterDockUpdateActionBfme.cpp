@@ -1,5 +1,6 @@
 // cl: /O2 /Ob1 /DNDEBUG /MD /EHsc- /D_STLP_USE_STATIC_LIB
 // stlport
+// stlport-range-errors: vendored (these rows match only with STLport's extern __stl_throw_* calls, which offset another shape difference; see inputs/reference/shims/stlport_bfme/stl/_range_errors.h)
 // MonsterDockUpdateInterface vtable VA 0x010CA9F0 slot12 -> ILT00036C1E
 // -> RVA002CDF70. The constructor installs that table and initializes
 // the one-shot docking timer at full-object offsets 0x89 and 0x8C.

@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD
 // stlport
+// stlport-range-errors: vendored (these rows match only with STLport's extern __stl_throw_* calls, which offset another shape difference; see inputs/reference/shims/stlport_bfme/stl/_range_errors.h)
 // Address-qualified reconstruction of retail body 0x0026E380 (173 bytes).
 // Caller evidence identifies no semantic owner class for this body.
 #define _STLP_NO_EXCEPTIONS 1
