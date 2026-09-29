@@ -20,7 +20,7 @@ class GlobalData
 
 extern GlobalData *TheWritableGlobalData;
 
-#define BFME_WRITABLE_GLOBAL_DATA (*(GlobalData **)0x012ED5C8)
+#define BFME_WRITABLE_GLOBAL_DATA TheWritableGlobalData
 
 enum KindOfType
 {
@@ -151,7 +151,7 @@ void W3DShrubBuffer::unitMoved(Object *unit)
 
 	Real radius = unit->getGeometryInfo().getMajorRadius();
 	Real posX = unit->m_position.x;
-	radius += *(const Real *)0x0109C34C;
+	radius += 7.0f;
 	Real posY = unit->m_position.y;
 	Real posZ = unit->m_position.z;
 	Rva00721B20Coord3D pos;
@@ -165,9 +165,9 @@ void W3DShrubBuffer::unitMoved(Object *unit)
 	if (x>m_bounds.hi.x) x = m_bounds.hi.x;
 	if (y>m_bounds.hi.y) y = m_bounds.hi.y;
 	Real xRatio = x/(m_bounds.hi.x-m_bounds.lo.x);
-	Int xIndex = REAL_TO_INT_FLOOR ( xRatio * *(const Real *)0x0109C348 );
+	Int xIndex = REAL_TO_INT_FLOOR ( xRatio * 49.9f );
 	Real yRatio = y/(m_bounds.hi.y-m_bounds.lo.y);
-	Int yIndex = REAL_TO_INT_FLOOR ( yRatio * *(const Real *)0x0109C348 );
+	Int yIndex = REAL_TO_INT_FLOOR ( yRatio * 49.9f );
 
 	x = pos.x+radius;
 	y = pos.y+radius;
@@ -176,9 +176,9 @@ void W3DShrubBuffer::unitMoved(Object *unit)
 	if (x>m_bounds.hi.x) x = m_bounds.hi.x;
 	if (y>m_bounds.hi.y) y = m_bounds.hi.y;
 	Real xMaxRatio = x/(m_bounds.hi.x-m_bounds.lo.x);
-	Int xMax = REAL_TO_INT_CEIL ( xMaxRatio * *(const Real *)0x0109C348 );
+	Int xMax = REAL_TO_INT_CEIL ( xMaxRatio * 49.9f );
 	Real yMaxRatio = y/(m_bounds.hi.y-m_bounds.lo.y);
-	Int yMax = REAL_TO_INT_CEIL ( yMaxRatio * *(const Real *)0x0109C348 );
+	Int yMax = REAL_TO_INT_CEIL ( yMaxRatio * 49.9f );
 
 	Int i, j;
 	for (i=xIndex; i<xMax; i++) {

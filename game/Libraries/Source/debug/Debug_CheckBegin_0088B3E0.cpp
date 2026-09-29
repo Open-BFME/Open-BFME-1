@@ -75,7 +75,10 @@ public:
     Debug &CheckBegin(const char *, int, const char *);
 };
 
-#define TheDebug (*(Debug **)0x01336E5C)
+class BfmeAwakenDebug;
+extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern const char g_Rva0107301CEmptyString[];
+#define TheDebug ((Debug *)TheBfmeAwakenDebug)
 
 // ?CheckBegin@Debug@@QAEAAV1@PBDH0@Z
 Debug &Debug::CheckBegin(const char *file, int line, const char *expr)
@@ -89,12 +92,12 @@ Debug &Debug::CheckBegin(const char *file, int line, const char *expr)
     if (curFrameEntry->status==2 || curFrameEntry->status==3 ||
         curFrameEntry->status==0)
     {
-        StartOutput((const char *)0x0107301C,10);
-        bfmeLogQO((BfmeThingQO *)this,0,(const char *)0x01133164,
+        StartOutput(g_Rva0107301CEmptyString,10);
+        bfmeLogQO((BfmeThingQO *)this,0,"%s(%i)",
                   curFrameEntry->fileOrGroup,curFrameEntry->line);
         ++curFrameEntry->hits;
 
-        const char *p=strstr(file,(const char *)0x0113338C);
+        const char *p=strstr(file,"\\code\\");
         if (p)
             p+=6;
         else
@@ -103,15 +106,15 @@ Debug &Debug::CheckBegin(const char *file, int line, const char *expr)
         GetTimeFormatA(0x400,0,0,0,help,0x80);
         Debug *debug=TheDebug;
         help[128]=0;
-        (*debug) << (const char *)0x01080294
+        (*debug) << "\n"
                  << RepeatChar('=',80)
-                 << (const char *)0x01133374
+                 << "\nAssertion failed in "
                  << p
-                 << (const char *)0x0113336C
+                 << ", line "
                  << line
-                 << (const char *)0x01096AB4
+                 << " at "
                  << help
-                 << (const char *)0x0113335C
+                 << ",\nexpression "
                  << expr;
     }
 
