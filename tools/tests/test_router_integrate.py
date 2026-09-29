@@ -150,8 +150,11 @@ class PortTest(PortFixture):
                                   base='master', force=False))()
         # a worker's scratch variants beside the stash are not banked evidence
         (self.ws / 'targets/game/reverse/attempts/0x00000020_v2.cpp').write_text('int f2;\n')
+        hist = self.ws / 'targets/game/reverse/attempt_history/0x00000020'
+        hist.mkdir(parents=True); (hist / 'retired-landing.cpp').write_text('int f3;\n')
         ri.bank(args); ri.bank(args)  # idempotent
         self.assertFalse((self.dest / 'targets/game/reverse/attempts/0x00000020_v2.cpp').exists())
+        self.assertFalse((self.dest / 'targets/game/reverse/attempt_history/0x00000020/retired-landing.cpp').exists())
         self.assertEqual((self.dest / log).read_bytes(),
                          b'old\t0x00000001\r\n?f\t0x00000020\t9\tpartial\tnear miss\r\n')
         self.assertTrue((self.dest / 'targets/game/reverse/attempts/0x00000020.cpp').exists())
@@ -190,6 +193,11 @@ class PortTest(PortFixture):
         self.assertEqual((self.dest / stash).read_text(), body('0.97'))
 
     def test_route(self):
+        # attempt_history is evidence (JSON, notes), never a source: a worker's compilable
+        # copy there was gated as a touched source and stopped job 0bbbe3cc's landing
+        self.assertEqual(ri.route('targets/game/reverse/attempt_history/0x00927360/winning-landing.cpp'), 'scratch')
+        self.assertEqual(ri.route('targets/game/reverse/attempt_history/0x00927360/' + 'a' * 64 + '.json'), 'port')
+        self.assertEqual(ri.route('targets/game/reverse/attempt_history/0x0019bf40/20260922-review.md'), 'port')
         self.assertEqual(ri.route('inputs/reference/shims/a/b.h'), 'port')
         self.assertEqual(ri.route('inputs/reference/CnC_Generals_Zero_Hour/x.h'), 'refuse')
         self.assertEqual(ri.route('tools/opencode_router.py'), 'refuse')

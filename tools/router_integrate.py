@@ -152,7 +152,11 @@ def safe_port_path(root, path):
 
 
 def route(path):
-    """'port', 'scratch' (an untracked top-level file such as aim.cod) or 'refuse'."""
+    """'port', 'scratch' (an untracked top-level file such as aim.cod, or a compilable
+    copy a worker left in attempt_history, which holds evidence, never sources) or 'refuse'."""
+    if (path.startswith(BANKED[1]) and
+            path.lower().endswith((*SOURCE_SUFFIXES, '.h', '.hpp', '.hh', '.hxx', '.inl', '.inc'))):
+        return 'scratch'
     if path.startswith(PORTED):
         return 'port'
     return 'scratch' if '/' not in path else 'refuse'
@@ -442,6 +446,8 @@ def bank(args):
         # exactly attempts/0x0012abcd.cpp or attempt_history/0x0012abcd/...: not another
         # target's evidence, nor a worker's scratch variant such as attempts/0x0012abcd_v2.cpp
         if not any(p.lower() == f'{BANKED[0]}{k}.cpp' or p.lower().startswith(f'{BANKED[1]}{k}/') for k in keys):
+            continue
+        if route(p) == 'scratch':  # a compilable copy left in attempt_history is not evidence
             continue
         safe_port_path(ws, p)
         safe_port_path(dest, p)
