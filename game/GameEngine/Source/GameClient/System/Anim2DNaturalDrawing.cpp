@@ -77,7 +77,7 @@ public:
 };
 
 extern Display *TheDisplay;
-#define g_bfmeScaleB3 (*(Real *)0x01084068)
+#define g_bfmeScaleB3 (255.0f)
 
 inline Int GameMakeColor(UnsignedByte red, UnsignedByte green,
 	UnsignedByte blue, UnsignedByte alpha)

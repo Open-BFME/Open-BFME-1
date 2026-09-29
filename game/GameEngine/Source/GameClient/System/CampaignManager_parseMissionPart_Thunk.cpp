@@ -46,6 +46,7 @@ public:
 };
 
 struct FieldParse;
+extern const FieldParse g_0110F778[];
 
 class INI
 {
@@ -75,5 +76,5 @@ void CampaignManager::parseMissionPart(INI *ini, void *instance, void *store, co
 	const char *token = ini->getNextToken();
 	name.set(token);
 	Mission *mission = ((Campaign *)instance)->newMission(name);
-	ini->initFromINI(mission, (const FieldParse *)0x0110F778);
+	ini->initFromINI(mission, g_0110F778);
 }

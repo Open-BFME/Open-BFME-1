@@ -74,7 +74,9 @@ private:
 class ParticleSystemZA;
 extern ParticleSystemZA *bfmeNullSystemZA();
 extern void Rva009EBAC0(int value);
-#define Rva0134FAA0 (*(void **)0x0134faa0)
+class Rva009EB960;
+extern Rva009EB960 *Rva0134FAA0;
+#define Rva0134FAA0 ((void *)::Rva0134FAA0)
 
 class T1Base_005F3750
     : public ::ParticleModule005F2CA0,

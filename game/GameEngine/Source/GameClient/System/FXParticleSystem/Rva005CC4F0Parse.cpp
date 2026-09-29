@@ -14,6 +14,34 @@ extern "C" int __cdecl memcmp(const void *left, const void *right, unsigned int 
 
 extern const char g_bfmeEmptyAscii[];
 
+namespace FXParticleSystem
+{
+
+class LifeEventModule;
+class LifeEventModuleTemplate;
+class ParticleLifeEventModule;
+class ParticleLifeEventModuleTemplate;
+
+extern const char LIFE_EVENT_MODULE_KEY[1];
+extern const char LIFE_EVENT_MODULE_NAME[1];
+
+template <int Category, const char (&Key)[1], const char (&Name)[1],
+	class Module, class ModuleTemplate, class ParticleModule,
+	class ParticleModuleTemplate>
+class ModuleTag;
+
+template <class Tag>
+class ConcreteModuleClass;
+
+typedef ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME,
+	LifeEventModule, LifeEventModuleTemplate,
+	ParticleLifeEventModule, ParticleLifeEventModuleTemplate> LifeEventTag;
+
+// Retail 0x012F6508, the category-8 factory chain head.
+extern ConcreteModuleClass<LifeEventTag> *lifeEventRegistryHead;
+
+}
+
 class INI
 {
 public:
@@ -84,7 +112,7 @@ void Rva005CC4F0Parse::parse(INI *ini, void *data, void *, const void *)
 	const char *token = ini->getNextToken(0);
 	AsciiString name(token);
 	Rva005CC4F0Factory *factory =
-		*reinterpret_cast<Rva005CC4F0Factory **>(0x012F6508);
+		reinterpret_cast<Rva005CC4F0Factory *>(FXParticleSystem::lifeEventRegistryHead);
 
 	for (;;)
 	{

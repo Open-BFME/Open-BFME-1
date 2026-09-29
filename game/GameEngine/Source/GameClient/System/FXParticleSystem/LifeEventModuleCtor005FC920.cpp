@@ -24,6 +24,8 @@ private:
 
 class FXList;
 
+extern const char Rva006A16B0Empty[];
+
 class GameClientRandomVariable
 {
 public:
@@ -149,7 +151,7 @@ Rva005FC920LifeEventModule::Rva005FC920LifeEventModule(
 		const char *text = sourceImage->m_eventName;
 		mutableSourceImage->m_cached =
 			g_terrainCollisionEventFXListStore->findFXList(
-				text ? text + 8 : reinterpret_cast<const char *>( 0x0107388b ) );
+				text ? text + 8 : Rva006A16B0Empty );
 	}
 	m_cached = sourceImage->m_cached;
 
