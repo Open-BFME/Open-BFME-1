@@ -33,7 +33,14 @@ struct Rva00453480MapCache {
     Rva00453480MapTree *m_tree;
 };
 
-#define TheMapCache (*(Rva00453480MapCache **)0x012F1594)
+// The map cache global at VA 0x012F1594 is recorded as
+// ?TheMapCache@@3PAVMapCache@@A in targets/game/reverse/dir32_addresses.csv;
+// this declaration mangles to exactly that name.
+class MapCache {
+public:
+    Rva00453480MapTree *m_tree;
+};
+extern MapCache *TheMapCache;
 
 namespace _STL {
 struct _Rb_tree_node_base;
@@ -98,12 +105,9 @@ append:
 // Retail map-list population (0x00456A90), sharing the native map filter above.
 // Its old MapCache::addMap lift identity is refuted by the GUI callees and cdecl ABI.
 // See targets/game/reverse/identity_evidence/00456A90-map-list-population.md.
-#undef TheMapCache
 #include "ascii_string.h"
 #include "unicode_string.h"
 #include <algorithm>
-class MapCache;
-extern MapCache *TheMapCache;
 template<typename T> inline const T *StringBase<T>::str() const {return m_data ? m_data->data : (const T *)"";}
 template<typename T> inline StringBase<T>::~StringBase() {releaseBuffer();}
 class GameWindow;

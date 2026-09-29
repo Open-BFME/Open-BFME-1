@@ -30,6 +30,11 @@ private:
 };
 
 extern const Real g_0107C64C;
+// The INIException ThrowInfo at VA 0x011DFC30 is already named by the landed
+// siblings (game/GameEngine/Source/Common/INI/
+// AudioEventInfoParseVolumeSliderMultiplier.cpp:43) and is recorded as
+// ?g_INIExceptionThrowInfo@@3HA in targets/game/reverse/dir32_addresses.csv.
+extern int g_INIExceptionThrowInfo;
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void *object, void *throwInfo);
 
 class TintDrawableFXNugget
@@ -47,7 +52,7 @@ void TintDrawableFXNugget::parseColor(INI *ini, void *, void *store, const void 
 		colors[i] = INI::scanInt(ini->getNextSubToken(names[i]));
 		if (colors[i] < -255 || colors[i] > 255) {
 			INIException error(3, "color value %s=%i out of range (0..255)", names[i], colors[i]);
-			_CxxThrowException(&error, (void *)0x011DFC30);
+			_CxxThrowException(&error, (void *)&g_INIExceptionThrowInfo);
 		}
 	}
 

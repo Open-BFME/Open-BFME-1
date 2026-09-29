@@ -52,6 +52,14 @@ class S4Holder0046DBB0
 {
 };
 
+// The held-string table at VA 0x012F19E8 is recorded as
+// ?g_s4Holder@@3PAUS4Holder0046DBB0@@A in
+// targets/game/reverse/dir32_addresses.csv; MSVC spells the same type `V`
+// (class) where that record says `U` (struct), so the extern is bound to the
+// recorded symbol.
+extern S4Holder0046DBB0 *g_s4Holder;
+#pragma comment(linker, "/alternatename:?g_s4Holder@@3PAVS4Holder0046DBB0@@A=?g_s4Holder@@3PAUS4Holder0046DBB0@@A")
+
 typedef void (S4Holder0046DBB0::*S4HolderStringMember)(
 	const AsciiString *);
 
@@ -99,7 +107,7 @@ Rva00592640Owner::~Rva00592640Owner()
 	{
 		AsciiString text("HelpBoxText");
 		callS4HolderString(
-			(reinterpret_cast<S4Holder0046DBB0 **>(0x012f19e8))[0],
+			g_s4Holder,
 			j_000347d9, &text);
 	}
 }

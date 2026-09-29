@@ -5,13 +5,18 @@
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #include <set>
 
+// The empty-string fallback at VA 0x0107388B is recorded as
+// ?g_bfmeEmptyAscii@@3QBDB (pinned in targets/game/reverse/symbols.csv) and this
+// declaration mangles to exactly that name.
+extern const char g_bfmeEmptyAscii[];
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
 	const char *str() const
 	{
-		return m_data ? m_data + 8 : (const char *)0x0107388B;
+		return m_data ? m_data + 8 : g_bfmeEmptyAscii;
 	}
 
 private:

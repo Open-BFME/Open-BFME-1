@@ -235,9 +235,13 @@ extern BfmePlayerList *Rva002EE330ThePlayers;
 #define TheGlobalData TheWritableGlobalData
 #define ThePlayerList Rva002EE330ThePlayers
 
-// 0x012F12D4 / 0x012F12D8 carry no ledger pin: address-derived, kept literal.
-#define s_fullAmmo (*(const Image **)0x012f12d4)
-#define s_emptyAmmo (*(const Image **)0x012f12d8)
+// The two ammo pip images (VA 0x012F12D4 / 0x012F12D8) are recorded in
+// targets/game/reverse/dir32_addresses.csv as Drawable's static members, so the
+// externs below are bound to those decorated symbols.
+extern const Image *const s_fullAmmo;
+#pragma comment(linker, "/alternatename:?s_fullAmmo@@3QBUImage@@B=?s_fullAmmo@Drawable@@0PBVImage@@B")
+extern const Image *const s_emptyAmmo;
+#pragma comment(linker, "/alternatename:?s_emptyAmmo@@3QBUImage@@B=?s_emptyAmmo@Drawable@@0PBVImage@@B")
 
 class Drawable
 {

@@ -104,6 +104,8 @@ public:
 };
 
 extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+// The diagnostic text at VA 0x0112CD30 has no recorded name; address-derived.
+extern const char g_0112CD30[];
 extern void _bfme_debugRecordCallsite(int kind);
 
 
@@ -146,6 +148,6 @@ SubtitleManager *VideoPlayer::getSubTitleMgrForVideo(const AsciiString &title)
 	_bfme_debugRecordCallsite(1);
 	TheBfmeAwakenDebug->slot60();
 	BfmeAwakenLog *report = TheBfmeAwakenDebug->slot6C(0, 0);
-	report->slot38((const char *)0x0112CD30)->slot4C(1);
+	report->slot38(g_0112CD30)->slot4C(1);
 	return 0;
 }

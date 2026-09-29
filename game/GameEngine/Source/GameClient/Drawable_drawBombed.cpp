@@ -49,8 +49,14 @@ public:
 	UnsignedInt m_keepTillFrame[14];
 };
 
-#define g_iconTemplates (*(void ***)0x012F12EC)
-#define g_animCollection (*(void **)0x012F4CA8)
+// The icon-template table (VA 0x012F12EC) and the Anim2D collection
+// (VA 0x012F4CA8) are recorded globals in
+// targets/game/reverse/dir32_addresses.csv, so both externs are bound to the
+// recorded decorated symbols: a literal address here reads the wrong memory the
+// moment the data moves in a linked build.
+extern Anim2DTemplate *const *const s_animationTemplates;
+#pragma comment(linker, "/alternatename:?s_animationTemplates@@3QBQAVAnim2DTemplate@@B=?s_animationTemplates@Drawable@@0PAPAVAnim2DTemplate@@A")
+extern Anim2DCollection *TheAnim2DCollection;
 
 #pragma comment(linker, "/alternatename:?getIconInfo@Drawable@@QAEPAVDrawableIconInfo@@XZ=?j_000102a8@@YAXXZ")
 #pragma comment(linker, "/alternatename:??0Anim2D@@QAE@PAVAnim2DTemplate@@PAVAnim2DCollection@@@Z=?j_00015b09@@YAXXZ")
@@ -110,8 +116,8 @@ void Drawable::drawBombed()
 		if (getIconInfo()->m_icon[6] == 0)
 		{
 			getIconInfo()->m_icon[6] = new Anim2D(
-				(Anim2DTemplate *)g_iconTemplates[6],
-				(Anim2DCollection *)g_animCollection);
+				s_animationTemplates[6],
+				TheAnim2DCollection);
 		}
 
 		const IRegion2D *region = (const IRegion2D *)((unsigned char *)self + 0x3C4);
