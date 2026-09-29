@@ -74,21 +74,22 @@ public:
 	Bool m_clientQuiet;
 };
 
-#define g_obj12F4B40 (*(QuitMenu **)0x012F4B40)
-#define TheShell (*(Shell **)0x012F4B58)
-#define g_theWindowManager (*(WindowManager **)0x012F19E8)
-#define TheVictoryConditions (*(VictoryConditionsInterface **)0x012F079C)
-#define TheMessageStream (*(MessageStream **)0x012ED5EC)
-#define TheInGameUI (*(InGameUI **)0x012F148C)
+extern void *g_obj12F4B40;
+extern Shell *TheShell;
+extern WindowManager *Rva00579160TheManager;
+extern VictoryConditionsInterface *TheVictoryConditions;
+extern MessageStream *TheMessageStream;
+extern InGameUI *TheInGameUI;
+#define g_theWindowManager Rva00579160TheManager
 
 // ?surrenderQuitMenu@@YAXXZ
 void surrenderQuitMenu()
 {
-	QuitMenu *menu = g_obj12F4B40;
+	QuitMenu *menu = static_cast<QuitMenu *>(g_obj12F4B40);
 	if (menu && !menu->m_hidden)
 	{
 		menu->m_hidden = true;
-		g_obj12F4B40->m_field25C = 0;
+		static_cast<QuitMenu *>(g_obj12F4B40)->m_field25C = 0;
 		TheShell->m_isShellActive = true;
 		g_theWindowManager->hideQuitMenu();
 	}

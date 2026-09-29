@@ -11,6 +11,9 @@
 typedef unsigned short UnsignedShort;
 typedef bool Bool;
 
+extern const char Rva006A16B0Empty[];
+extern const unsigned short BFMEEmptyUnicodeString;
+
 template <typename T> struct BfmeStringData
 {
 	int refs;
@@ -67,7 +70,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? m_data->text : (const char *)0x0107388B;
+		return m_data ? m_data->text : Rva006A16B0Empty;
 	}
 };
 
@@ -95,7 +98,7 @@ public:
 
 	const UnsignedShort *str() const
 	{
-		return m_data ? m_data->text : (const UnsignedShort *)0x0107388C;
+		return m_data ? m_data->text : &BFMEEmptyUnicodeString;
 	}
 };
 
@@ -274,13 +277,16 @@ class GameWindow;
 GameWindow *MessageBoxOk(UnicodeString title, UnicodeString body,
 	void (*callback)(void));
 
-#define TheFileSystem (*(FileSystem **)0x0134CB48)
-#define TheCampaignManager (*(CampaignManager **)0x012F1028)
-#define TheWatchdog (*(Watchdog **)0x012EF18C)
-#define TheGameText (*(GameTextInterface **)0x012F147C)
-#define TheInGameUI (*(InGameUI **)0x012F148C)
-#define TheInGameUIAscii (*(InGameUIAscii **)0x012F148C)
-#define TheWriterFlag (*(Bool *)0x012ED4DB)
+extern FileSystem *TheFileSystem;
+extern CampaignManager *TheBfmeLivingWorldCampaignState;
+extern Watchdog *Watchdog0040F780;
+extern GameTextInterface *TheGameText;
+extern InGameUI *TheInGameUI;
+extern char g_rva00061150;
+#define TheCampaignManager TheBfmeLivingWorldCampaignState
+#define TheWatchdog Watchdog0040F780
+#define TheInGameUIAscii (reinterpret_cast<InGameUIAscii *>(TheInGameUI))
+#define TheWriterFlag (*reinterpret_cast<Bool *>(&g_rva00061150))
 
 class GameState : public SubsystemInterface, public Snapshot
 {
