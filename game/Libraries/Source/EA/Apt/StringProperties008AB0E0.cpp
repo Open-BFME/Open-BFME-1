@@ -93,7 +93,10 @@ public:
     char field08[0x18];
     int field20;
 };
-class Rva008B8B80Releasable {
+// The defining declaration of this class lives in
+// game/GameEngine/Source/Common/Rva008A98B0ReleaseAll.cpp (no header covers it);
+// the layout members this TU needs are TU-local extensions of that name.
+class Rva008A98B0Releasable {
 public:
     virtual void slot00();
     virtual void slot04();
@@ -117,22 +120,24 @@ extern char Va00CAAEC0[];
 extern char Va00CAAFD0[];
 
 // Retail 0x01337AC8..0x01337AF4: one cached callable per string method.
-extern Rva008B8B80Releasable *g_rva01337AC8Method;
-extern Rva008B8B80Releasable *g_rva01337ACCMethod;
-extern Rva008B8B80Releasable *g_rva01337AD0Method;
-extern Rva008B8B80Releasable *g_rva01337AD4Method;
-extern Rva008B8B80Releasable *g_rva01337AD8Method;
-extern Rva008B8B80Releasable *g_rva01337ADCMethod;
-extern Rva008B8B80Releasable *g_rva01337AE0Method;
-extern Rva008B8B80Releasable *g_rva01337AE4Method;
-extern Rva008B8B80Releasable *g_rva01337AE8Method;
-extern Rva008B8B80Releasable *g_rva01337AECMethod;
-extern Rva008B8B80Releasable *g_rva01337AF0Method;
-extern Rva008B8B80Releasable *g_rva01337AF4Method;
+// These are the twelve release-loop slots released by
+// ?rva008A98B0ReleaseAll@@YAXXZ, so they carry its defining names.
+extern Rva008A98B0Releasable *g_rva008A98B0_0;
+extern Rva008A98B0Releasable *g_rva008A98B0_1;
+extern Rva008A98B0Releasable *g_rva008A98B0_2;
+extern Rva008A98B0Releasable *g_rva008A98B0_3;
+extern Rva008A98B0Releasable *g_rva008A98B0_4;
+extern Rva008A98B0Releasable *g_rva008A98B0_5;
+extern Rva008A98B0Releasable *g_rva008A98B0_6;
+extern Rva008A98B0Releasable *g_rva008A98B0_7;
+extern Rva008A98B0Releasable *g_rva008A98B0_8;
+extern Rva008A98B0Releasable *g_rva008A98B0_9;
+extern Rva008A98B0Releasable *g_rva008A98B0_10;
+extern Rva008A98B0Releasable *g_rva008A98B0_11;
 
 #define CACHED_METHOD(cache, callback) \
     if (!cache) { \
-        cache = (Rva008B8B80Releasable *)new Rva00899FC0((int)callback); \
+        cache = (Rva008A98B0Releasable *)new Rva00899FC0((int)callback); \
         cache->flags = (cache->flags & 0xffffc07f) | 0x40; \
         cache->slot00(); \
     } \
@@ -149,18 +154,18 @@ void *__stdcall Rva008AB0E0StringProperties(Rva8CD130Value *owner, String008AB0E
                 owner->getName(&name);
                 return pooledInteger(((EAStringC *)&name)->bfmeUtf8Length());
             }
-            case 2: CACHED_METHOD(g_rva01337AC8Method, Va00CA9E20)
-            case 3: CACHED_METHOD(g_rva01337ACCMethod, Va00CA9F70)
-            case 4: CACHED_METHOD(g_rva01337AD0Method, Va00CAA130)
-            case 5: CACHED_METHOD(g_rva01337AD4Method, Va00CAA2B0)
-            case 6: CACHED_METHOD(g_rva01337AD8Method, Va00CA9C30)
-            case 7: CACHED_METHOD(g_rva01337ADCMethod, Va00CA99C0)
-            case 8: CACHED_METHOD(g_rva01337AE0Method, Va00CAA420)
-            case 9: CACHED_METHOD(g_rva01337AE4Method, Va00CAA650)
-            case 10: CACHED_METHOD(g_rva01337AE8Method, Va00CAAB20)
-            case 11: CACHED_METHOD(g_rva01337AECMethod, Va00CAACF0)
-            case 12: CACHED_METHOD(g_rva01337AF0Method, Va00CAAEC0)
-            case 13: CACHED_METHOD(g_rva01337AF4Method, Va00CAAFD0)
+            case 2: CACHED_METHOD(g_rva008A98B0_0, Va00CA9E20)
+            case 3: CACHED_METHOD(g_rva008A98B0_1, Va00CA9F70)
+            case 4: CACHED_METHOD(g_rva008A98B0_2, Va00CAA130)
+            case 5: CACHED_METHOD(g_rva008A98B0_3, Va00CAA2B0)
+            case 6: CACHED_METHOD(g_rva008A98B0_4, Va00CA9C30)
+            case 7: CACHED_METHOD(g_rva008A98B0_5, Va00CA99C0)
+            case 8: CACHED_METHOD(g_rva008A98B0_6, Va00CAA420)
+            case 9: CACHED_METHOD(g_rva008A98B0_7, Va00CAA650)
+            case 10: CACHED_METHOD(g_rva008A98B0_8, Va00CAAB20)
+            case 11: CACHED_METHOD(g_rva008A98B0_9, Va00CAACF0)
+            case 12: CACHED_METHOD(g_rva008A98B0_10, Va00CAAEC0)
+            case 13: CACHED_METHOD(g_rva008A98B0_11, Va00CAAFD0)
             }
         }
     }
