@@ -98,6 +98,11 @@ struct GameLogicFrame_001A6410
 	int frame;
 };
 
+class TerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
 class TerrainLogicP48ClearNear
 {
 public:
@@ -135,10 +140,10 @@ void TerrainLogicP48ClearNear::clearNear(const Coord3D *position, Real radius)
 				record->m2c = 1;
 				record->m2d = 1;
 				TerrainVisualNotify_001A6410 *visual =
-					*(TerrainVisualNotify_001A6410 **)0x012F7014;
+					(TerrainVisualNotify_001A6410 *)TheTerrainVisual;
 				visual->notify(key);
 				GameLogicFrame_001A6410 *logic =
-					*(GameLogicFrame_001A6410 **)0x012F0898;
+					(GameLogicFrame_001A6410 *)TheGameLogic;
 				m_frameStamp = logic->frame;
 			}
 		}

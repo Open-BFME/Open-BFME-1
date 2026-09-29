@@ -63,6 +63,11 @@ public:
 	virtual void notify(int key);
 };
 
+class TerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
 class TerrainLogicP48Clear
 {
 public:
@@ -78,7 +83,7 @@ private:
 
 void TerrainLogicP48Clear::clear(int key)
 {
-	m_frameStamp = (*(GameLogicFrame_001A61F0 **)0x012F0898)->frame;
+	m_frameStamp = ((GameLogicFrame_001A61F0 *)TheGameLogic)->frame;
 
 	TerrainLogicP48ClearRec *first = m_begin;
 	while (first != m_end)
@@ -100,6 +105,6 @@ void TerrainLogicP48Clear::clear(int key)
 		++first;
 	}
 	TerrainVisualNotify_001A61F0 *visual =
-		*(TerrainVisualNotify_001A61F0 **)0x012F7014;
+		(TerrainVisualNotify_001A61F0 *)TheTerrainVisual;
 	visual->notify(key);
 }

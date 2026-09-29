@@ -63,8 +63,13 @@ public:
 	Rva00615B10Map m_objects;
 };
 
-#define TheState (*(Rva00615B10State **)0x012F7048)
-#define TheMouse (*(Rva00615B10Mouse **)0x012F4C5C)
+class Glo012F7048Type;
+extern Glo012F7048Type *Glo012F7048;
+class Mouse;
+extern Mouse *TheMouse;
+
+#define TheState ((Rva00615B10State *)Glo012F7048)
+#define TheMouse ((Rva00615B10Mouse *)TheMouse)
 
 // ?rva00615b10@BfmeLivingWorldManager@@QAEXXZ
 void BfmeLivingWorldManager::rva00615b10()

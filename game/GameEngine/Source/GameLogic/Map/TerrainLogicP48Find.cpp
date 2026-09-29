@@ -78,6 +78,11 @@ struct GameLogicFrame_001A6550
 	int frame;
 };
 
+class TerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
 class TerrainLogicP48Owner
 {
 public:
@@ -102,7 +107,7 @@ int TerrainLogicP48Owner::onMatch(TerrainLogicP48Rec *record, int value)
 	if (record->m_field28 <= 0)
 	{
 		TerrainVisualNotify_001A6550 *visual =
-			*(TerrainVisualNotify_001A6550 **)0x012F7014;
+			(TerrainVisualNotify_001A6550 *)TheTerrainVisual;
 		visual->notify(record->m_key);
 		record->m0 = 0;
 		record->m4 = 0;
@@ -115,7 +120,7 @@ int TerrainLogicP48Owner::onMatch(TerrainLogicP48Rec *record, int value)
 		record->m2c = 1;
 		record->m2d = 1;
 		GameLogicFrame_001A6550 *logic =
-			*(GameLogicFrame_001A6550 **)0x012F0898;
+			(GameLogicFrame_001A6550 *)TheGameLogic;
 		self->m_frameStamp = logic->frame;
 	}
 	return take;
