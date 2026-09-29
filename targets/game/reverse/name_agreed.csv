@@ -147,3 +147,5 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdate
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateModuleDataCtorThunk.cpp|member||m_unknown48,m_timeToEjectPassengersOnRampage,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateModuleDataCtorThunk.cpp|member||m_flag54,m_fadeOnPortals,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00784090AptItemBounds.cpp|function|Rva00785FD0Item@|rva00784090Bounds,getRenderRegion,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|member||field24,m_capacity,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|function||concatArray008B9CC0,aptArrayConcat,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29

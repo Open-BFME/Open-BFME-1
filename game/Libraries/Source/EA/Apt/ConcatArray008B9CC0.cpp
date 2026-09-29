@@ -27,10 +27,10 @@ class BfmeN1242 { public: void bfmeReserve1242(int); };
 class Rva008B9C90HeaderedDeleting : public Rva00899F00Base {
 public:
     unsigned *field20;
-    int field24, field28;
+    int m_capacity, field28;
     virtual ~Rva008B9C90HeaderedDeleting();
     Rva008B9C90HeaderedDeleting() : Rva00899F00Base(0x16,8) {
-        field24=0; field20=0; field28=0;
+        m_capacity=0; field20=0; field28=0;
     }
     static void *operator new(unsigned n) {
         void *raw=WideAllocPtr(n+8); void *p=(char *)raw+8;
@@ -58,7 +58,7 @@ public:
 extern Value008B9CC0 **g_bfmeArr1233;
 extern int g_bfmeCount1233;
 extern void *g_bfmeResult1233;
-void *concatArray008B9CC0(Value008B9CC0 *self,int count) {
+void *aptArrayConcat(Value008B9CC0 *self,int count) {
     if (self->isType(0x16)) {
         Rva008B9C90HeaderedDeleting *source=(Rva008B9C90HeaderedDeleting *)self;
         Rva008B9C90HeaderedDeleting *out=new Rva008B9C90HeaderedDeleting;
