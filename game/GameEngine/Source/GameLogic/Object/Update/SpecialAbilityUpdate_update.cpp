@@ -231,8 +231,8 @@ int SpecialAbilityUpdateUpdateInterface002AA9D0::update(){
  }
  }else if(base->isWithinStartAbilityRange()){
  withinRange=true;
- if(!((BfmeA999*)base)->bfmeGo999A()&&(unsigned char)((Gen_002A59F0*)base)->bfmeReady()){base->startFacing();return ((BfmeThingFEC*)base)->bfmeGoFEC();}
- if(((BfmeA999*)base)->bfmeGo999A()&&(unsigned char)((Gen_002A59F0*)base)->bfmeReady())return ((BfmeThingFEC*)base)->bfmeGoFEC();
+ if(!((BfmeA999*)base)->bfmeGo999A()&&(unsigned char)((Gen_002A59F0*)base)->needToFace()){base->startFacing();return ((BfmeThingFEC*)base)->bfmeGoFEC();}
+ if(((BfmeA999*)base)->bfmeGo999A()&&(unsigned char)((Gen_002A59F0*)base)->needToFace())return ((BfmeThingFEC*)base)->bfmeGoFEC();
  if(((BfmeThingXR*)base)->bfmeReadyXR()){base->startUnpacking();return ((BfmeThingFEC*)base)->bfmeGoFEC();}
  if(packingState==4){base->startPreparation();if(!prepFrames){base->triggerAbilityEffect();base->endPreparation();if(((BfmeThing5F30*)base)->bfmeReady5F30())base->startPacking(true);else base->finishAbility();}}
  }else if(ai->isIdle())base->approachTarget();

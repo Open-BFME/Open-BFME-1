@@ -14,7 +14,7 @@ public:
 class Gen_002A59F0
 {
 public:
-	int bfmeReady(void) const;
+	int needToFace(void) const;
 
 private:
 	unsigned char m_gap00[8];
@@ -24,7 +24,7 @@ private:
 	unsigned char m_working;
 };
 
-int Gen_002A59F0::bfmeReady(void) const
+int Gen_002A59F0::needToFace(void) const
 {
 	BfmeAi59F0 *ai = m_ai;
 	if (ai->m_work == 0)

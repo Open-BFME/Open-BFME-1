@@ -31415,3 +31415,4 @@ dup_930180,0x00930180,claim superseded by the gate-required claim for ??4Texture
 ?bfmeOnXB@BfmeHolderXB@@QAEXPAVBfmeItemXB@@@Z,0x00616E80,renamed to ?DoXfer@BfmeHolderXB@@QAEXPAVBfmeItemXB@@@Z by tools/name_lane.py apply: two models agreed
 ?run@Rva002C44B0@@QAE_NPAX0PAH@Z,0x002C44B0,claim superseded by the gate-required claim for ?reserveApproachPosition@HordeAIUpdate@@QAE_NPAX0PAH@Z at 0x002C44B0/94B from game/GameEngine/Source/Common/Rva002C44B0Dock.cpp. The prior claim at 0x002C44B0/94B from game/GameEngine/Source/Common/Rva002C44B0Dock.cpp was retired.
 ?bfmeTopLU@BfmeOwnerLU@@QAEPAVBfmeThingLU@@XZ,0x0049B2A0,renamed to ?getThingTemplate@BfmeOwnerLU@@QAEPAVBfmeThingLU@@XZ by tools/name_lane.py apply: two models agreed
+?bfmeReady@Gen_002A59F0@@QBEHXZ,0x002A59F0,renamed to ?needToFace@Gen_002A59F0@@QBEHXZ by tools/name_lane.py apply: two models agreed
