@@ -91,10 +91,10 @@ class MpGameSetup
 {
 public:
 	int bfmeFindRepresentativeSlot( void );
-	int bfmeFindAvailableStartPosition( int firstIndex );
-	bool bfmeApplyStartPosition( int index, int startPosition );
-	bool bfmeApplyPlayerTemplate( int index );
-	bool bfmeApplyTeam( int index );
+	int getNextSelectablePlayer( int firstIndex );
+	bool handleStartPositionSelection( int index, int startPosition );
+	bool handlePlayerTemplateSelection( int index );
+	bool handleTeamSelection( int index );
 	bool rva00525D10( int index );
 	void bfmeSetMap( const AsciiString &mapName );
 };
@@ -193,13 +193,13 @@ int Rva00529EC0State::dispatch( int message, void *argument, void *data )
 				}
 				else if( control == m_playerTemplateCombos[ i ] )
 				{
-					( (MpGameSetup *)this )->bfmeApplyPlayerTemplate( i );
+					( (MpGameSetup *)this )->handlePlayerTemplateSelection( i );
 					m_flag10 = true;
 					break;
 				}
 				else if( control == m_teamCombos[ i ] )
 				{
-					( (MpGameSetup *)this )->bfmeApplyTeam( i );
+					( (MpGameSetup *)this )->handleTeamSelection( i );
 					m_flag10 = true;
 					break;
 				}
@@ -251,18 +251,18 @@ int Rva00529EC0State::dispatch( int message, void *argument, void *data )
 				GameSlot *slot = m_first->getSlot( playerIdxInPos );
 				if( playerIdxInPos == m_first->getLocalSlotNum() || ( m_first->amIHost() && slot && slot->isAI() ) )
 				{
-					int nextPlayer = ( (MpGameSetup *)this )->bfmeFindAvailableStartPosition( playerIdxInPos + 1 );
-					( (MpGameSetup *)this )->bfmeApplyStartPosition( playerIdxInPos, -1 );
+					int nextPlayer = ( (MpGameSetup *)this )->getNextSelectablePlayer( playerIdxInPos + 1 );
+					( (MpGameSetup *)this )->handleStartPositionSelection( playerIdxInPos, -1 );
 					if( nextPlayer >= 0 )
-						( (MpGameSetup *)this )->bfmeApplyStartPosition( nextPlayer, pos );
+						( (MpGameSetup *)this )->handleStartPositionSelection( nextPlayer, pos );
 				}
 			}
 			else
 			{
-				int nextPlayer = ( (MpGameSetup *)this )->bfmeFindAvailableStartPosition( 0 );
+				int nextPlayer = ( (MpGameSetup *)this )->getNextSelectablePlayer( 0 );
 				if( nextPlayer < 0 )
 					nextPlayer = ( (MpGameSetup *)this )->bfmeFindRepresentativeSlot();
-				( (MpGameSetup *)this )->bfmeApplyStartPosition( nextPlayer, pos );
+				( (MpGameSetup *)this )->handleStartPositionSelection( nextPlayer, pos );
 			}
 			break;
 		}

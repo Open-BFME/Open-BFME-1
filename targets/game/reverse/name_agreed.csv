@@ -119,3 +119,7 @@ game/GameEngine/Source/Common/S3ActionSinkStringForwarders.cpp|function||Rva0056
 game/GameEngine/Source/Common/S3ActionSinkStringForwarders.cpp|function||Rva00565DA0,DeleteButtonFlash,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/Common/S3ActionSinkStringForwarders.cpp|function||Rva00565E90,ShowButtonFlash,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/Common/S3ActionSinkStringForwarders.cpp|function||Rva00565EE0,HideButtonFlash,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeApplyPlayerTemplate,handlePlayerTemplateSelection,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeApplyStartPosition,handleStartPositionSelection,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeApplyTeam,handleTeamSelection,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeFindAvailableStartPosition,getNextSelectablePlayer,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29

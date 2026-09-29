@@ -120,10 +120,10 @@ public:
 	void bfmeShutdown(void);
 	void bfmeDispatchWindow(GameWindow *window);
 	int bfmeFindRepresentativeSlot(void);
-	int bfmeFindAvailableStartPosition(int firstIndex);
-	bool bfmeApplyStartPosition(int index, int startPosition);
-	bool bfmeApplyPlayerTemplate(int index);
-	bool bfmeApplyTeam(int index);
+	int getNextSelectablePlayer(int firstIndex);
+	bool handleStartPositionSelection(int index, int startPosition);
+	bool handlePlayerTemplateSelection(int index);
+	bool handleTeamSelection(int index);
 	unsigned short bfmeCountReadyPlayers(void);
 
 private:
@@ -335,8 +335,8 @@ int MpGameSetup::bfmeFindRepresentativeSlot(void)
 }
 
 // Find the next unassigned local/AI slot whose start position can be changed.
-// ?bfmeFindAvailableStartPosition@MpGameSetup@@QAEHH@Z
-int MpGameSetup::bfmeFindAvailableStartPosition(int firstIndex)
+// ?getNextSelectablePlayer@MpGameSetup@@QAEHH@Z
+int MpGameSetup::getNextSelectablePlayer(int firstIndex)
 {
 	if (m_first && !m_owner->bfmeContains(m_first))
 		m_first = 0;
@@ -365,8 +365,8 @@ int MpGameSetup::bfmeFindAvailableStartPosition(int firstIndex)
 }
 
 // Apply a unique start position and remember changes that need propagation.
-// ?bfmeApplyStartPosition@MpGameSetup@@QAE_NHH@Z
-bool MpGameSetup::bfmeApplyStartPosition(int index, int startPosition)
+// ?handleStartPositionSelection@MpGameSetup@@QAE_NHH@Z
+bool MpGameSetup::handleStartPositionSelection(int index, int startPosition)
 {
 	if (m_first && !m_owner->bfmeContains(m_first))
 		m_first = 0;
@@ -407,8 +407,8 @@ bool MpGameSetup::bfmeApplyStartPosition(int index, int startPosition)
 }
 
 // Apply the selected player-template value when it differs from the slot.
-// ?bfmeApplyPlayerTemplate@MpGameSetup@@QAE_NH@Z
-bool MpGameSetup::bfmeApplyPlayerTemplate(int index)
+// ?handlePlayerTemplateSelection@MpGameSetup@@QAE_NH@Z
+bool MpGameSetup::handlePlayerTemplateSelection(int index)
 {
 	if (m_first && !m_owner->bfmeContains(m_first))
 		m_first = 0;
@@ -438,9 +438,9 @@ bool MpGameSetup::bfmeApplyPlayerTemplate(int index)
 // Named callback 0x00525AB0 binds the Team literal to this+0xA8; Color
 // uses +0x88 instead. This body compares GameSlot+0x18 and calls owner slot 5.
 // LAN slot 5 at 0x00516F00 writes that field and serializes "Team=%d".
-// bfmeApplyTeam describes the witnessed behavior, not an original spelling.
-// ?bfmeApplyTeam@MpGameSetup@@QAE_NH@Z
-bool MpGameSetup::bfmeApplyTeam(int index)
+// handleTeamSelection describes the witnessed behavior, not an original spelling.
+// ?handleTeamSelection@MpGameSetup@@QAE_NH@Z
+bool MpGameSetup::handleTeamSelection(int index)
 {
 	if (m_first && !m_owner->bfmeContains(m_first))
 		m_first = 0;
