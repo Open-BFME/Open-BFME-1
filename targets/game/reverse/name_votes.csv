@@ -311,3 +311,5 @@ game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|type||SideEntr
 game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|type||BuildListsWriter00198A10,288ecd9c44bdd8da932cc309,grok,20260929201635-5dd492,2026-09-29
 game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|member||field04,03c75a5fac491737bf11e135,grok,20260929201635-5dd492,2026-09-29
 game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|member||field28,f7f8540b89d5ba3f0314bdb3,grok,20260929201635-5dd492,2026-09-29
+game/GameEngine/Source/GameLogic/AI/Rva001515C0Xfer.cpp|member||m_value1c,5b63d6f741e56e268a5ba2b2,grok,20260929202157-ae76bb,2026-09-29
+game/GameEngine/Source/GameLogic/AI/Rva001515C0Xfer.cpp|member||m_value28,bcf1defd051907ef25c1279b,grok,20260929202157-ae76bb,2026-09-29
