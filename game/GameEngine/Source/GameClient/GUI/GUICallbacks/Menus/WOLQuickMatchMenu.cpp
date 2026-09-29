@@ -2216,6 +2216,10 @@ public:
 
 extern BfmeQuickMatchLadderPanel *TheQuickMatchLadderPanel;
 
+// The empty AsciiString fallback, retail 0x0107388B
+// (targets/game/reverse/symbols.csv: ?g_bfmeEmptyAscii@@3QBDB).
+extern const char g_bfmeEmptyAscii[];
+
 class Gen_00505530
 {
 public:
@@ -2241,7 +2245,7 @@ public:
 
 	const char *str( void ) const
 	{
-		return m_data ? (const char *)m_data + 8 : (const char *)0x0107388B;
+		return m_data ? (const char *)m_data + 8 : g_bfmeEmptyAscii;
 	}
 };
 

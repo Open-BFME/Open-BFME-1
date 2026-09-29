@@ -9,6 +9,10 @@
 
 extern "C" int (__cdecl *__imp__atoi)( const char * );
 
+// The empty AsciiString fallback, retail 0x0107388B
+// (targets/game/reverse/symbols.csv: ?g_bfmeEmptyAscii@@3QBDB).
+extern const char g_bfmeEmptyAscii[];
+
 template <typename T> struct StringInlineData
 {
 	int m_refCount;
@@ -38,7 +42,7 @@ public:
 	~AsciiString() {}
 	const char *str( void ) const
 	{
-		return m_data ? m_data->m_text : (const char *)0x0107388B;
+		return m_data ? m_data->m_text : g_bfmeEmptyAscii;
 	}
 	void format( AsciiString fmt, ... ) throw();
 };
@@ -52,7 +56,7 @@ struct PreferenceNode
 __forceinline const char *prefStr( PreferenceNode *node )
 {
 	StringInlineData<char> *data = node->m_data;
-	return data ? data->m_text : (const char *)0x0107388B;
+	return data ? data->m_text : g_bfmeEmptyAscii;
 }
 
 class PreferenceMap

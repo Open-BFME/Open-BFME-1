@@ -9,6 +9,11 @@
 typedef bool Bool;
 typedef unsigned short WideChar;
 
+// "SkirmishStats.ini" appended to the translated profile name, retail
+// 0x0108066C.  No dir32 record names this address, so it keeps an
+// address-derived name.
+extern const char g_0108066C[];
+
 class UnicodeString;
 class AsciiString;
 
@@ -84,6 +89,6 @@ void SkirmishPreferences::Rva0009F560(UnicodeString value)
 
 	AsciiString filename;
 	filename.translate(value);
-	filename.concat((const char *)0x0108066c, 0x11);
+	filename.concat(g_0108066C, 0x11);
 	slot14(filename);
 }

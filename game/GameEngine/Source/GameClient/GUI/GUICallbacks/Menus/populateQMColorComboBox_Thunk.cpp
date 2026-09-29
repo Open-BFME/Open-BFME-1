@@ -11,6 +11,10 @@ typedef bool Bool;
 typedef int Int;
 typedef int Color;
 
+// The empty AsciiString fallback, retail 0x0107388B
+// (targets/game/reverse/symbols.csv: ?g_bfmeEmptyAscii@@3QBDB).
+extern const char g_bfmeEmptyAscii[];
+
 template <typename T> struct Rva006239C0StringData
 {
 	int m_refCount;
@@ -43,7 +47,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? m_data->m_text : (const char *)0x0107388B;
+		return m_data ? m_data->m_text : g_bfmeEmptyAscii;
 	}
 };
 
@@ -151,7 +155,7 @@ extern void GadgetComboBoxSetSelectedPos(GameWindow *comboBox, Int item,
 // putting a second implementation in the large WOL TU.
 #pragma comment(linker, "/alternatename:?populateQMColorComboBox@@YAXAAVQuickMatchPreferences@@@Z=?populateQMColorComboBox@BfmeAptScreenQuickMatchMenu@@QAEXAAVQuickMatchPreferences@@@Z")
 
-// ?populateQMColorComboBox@BfmeAptScreenQuickMatchMenu@@QAEXAAVQuickMatchPreferences@@@Z present-unmatched
+// ?populateQMColorComboBox@BfmeAptScreenQuickMatchMenu@@QAEXAAVQuickMatchPreferences@@@Z
 void BfmeAptScreenQuickMatchMenu::populateQMColorComboBox(
 	QuickMatchPreferences &pref)
 {

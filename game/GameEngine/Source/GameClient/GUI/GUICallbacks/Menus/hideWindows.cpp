@@ -6,6 +6,10 @@
 
 typedef int Int;
 
+// The empty AsciiString fallback, retail 0x0107388B
+// (targets/game/reverse/symbols.csv: ?g_bfmeEmptyAscii@@3QBDB).
+extern const char g_bfmeEmptyAscii[];
+
 template <typename T> class StringBase
 {
 	friend class AsciiString;
@@ -30,7 +34,7 @@ public:
 	void format( AsciiString format, ... );
 	const char *str( void ) const
 	{
-		return m_data ? (const char *)m_data + 8 : (const char *)0x0107388B;
+		return m_data ? (const char *)m_data + 8 : g_bfmeEmptyAscii;
 	}
 };
 

@@ -6,6 +6,10 @@
 #include <windows.h>
 #include <stdlib.h>
 
+// The empty AsciiString fallback, retail 0x0107388B
+// (targets/game/reverse/symbols.csv: ?g_bfmeEmptyAscii@@3QBDB).
+extern const char g_bfmeEmptyAscii[];
+
 typedef bool Bool;
 typedef int Int;
 
@@ -47,7 +51,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? (const char *)m_data + 8 : (const char *)0x0107388B;
+		return m_data ? (const char *)m_data + 8 : g_bfmeEmptyAscii;
 	}
 
 	void format(AsciiString format, ...);
