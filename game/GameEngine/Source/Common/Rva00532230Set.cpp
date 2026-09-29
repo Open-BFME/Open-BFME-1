@@ -1,5 +1,8 @@
 // cl: /O2 /Ob0
 
+extern "C" void *bfmeVftBfmeAptGameWindow[];
+#pragma comment(linker, "/alternatename:_bfmeVftBfmeAptGameWindow=??_7BfmeAptGameWindow@@6B@")
+
 class Rva00532230
 {
 	void *m_00;
@@ -36,7 +39,7 @@ Rva00532230 &Rva00532230::set(void *p)
 	m_28 = 0;
 	m_2C = 0;
 	m_30 = 0;
-	m_00 = (void *)0x01106F08;
+	m_00 = bfmeVftBfmeAptGameWindow;
 	m_34 = p;
 	m_38 = 0;
 	return *this;

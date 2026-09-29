@@ -1,3 +1,5 @@
+extern void j_00038870();
+
 struct Rva00465730ConstantGetter
 {
 	void *get();
@@ -5,5 +7,5 @@ struct Rva00465730ConstantGetter
 
 void *Rva00465730ConstantGetter::get()
 {
-	return (void *)0x00438870;
+	return (void *)j_00038870;
 }

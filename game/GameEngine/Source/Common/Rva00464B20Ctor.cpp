@@ -1,5 +1,8 @@
 // cl: /O2 /Ob0
 
+extern "C" void *bfmeVftS4Owner[];
+#pragma comment(linker, "/alternatename:_bfmeVftS4Owner=??_7S4Owner@@6B@")
+
 class Rva00464B20
 {
 	void *m_vptr;
@@ -22,7 +25,7 @@ public:
 
 Rva00464B20::Rva00464B20()
 {
-	m_vptr = (void *)0x010F7114;
+	m_vptr = bfmeVftS4Owner;
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;

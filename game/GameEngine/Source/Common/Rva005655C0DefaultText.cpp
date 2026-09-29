@@ -13,6 +13,7 @@ struct Rva005655C0PlayerList
 };
 
 extern Rva005655C0PlayerList *g_rva005655C0PlayerList;
+extern const char Rva006A16B0Empty[];
 
 void __cdecl rva005655C0CopyDefaultText(void *value, char *output,
 	unsigned char preserveText)
@@ -30,7 +31,7 @@ void __cdecl rva005655C0CopyDefaultText(void *value, char *output,
 		g_rva005655C0PlayerList->m_localPlayer != 0) {
 		char *storage = g_rva005655C0PlayerList->m_localPlayer->m_nameStorage;
 		const char *text = storage != 0 ? storage + 8 :
-			reinterpret_cast<const char *>(0x0107388B);
+			Rva006A16B0Empty;
 		char character;
 		do {
 			character = *text++;

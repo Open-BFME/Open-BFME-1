@@ -29,6 +29,6 @@ public:
 // ??1Rva0050FD90@@UAE@XZ
 Rva0050FD90::~Rva0050FD90()
 {
-	g_mgr12F19E8->add((void *)0xb, (const char *)0x1104fdc, 0, 0, 0, 0, 0, 0);
+	g_mgr12F19E8->add((void *)0xb, "FileTransferPopUpClose", 0, 0, 0, 0, 0, 0);
 	g_glob12F496C = 0;
 }
