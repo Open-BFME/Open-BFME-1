@@ -487,3 +487,65 @@ game/Libraries/Source/WWVegas/WWLib/stlport_rb_tree_asciistring_hotkey_insert.cp
 game/GameEngine/Source/Common/GiantBirdNestedTailDestructor.cpp	AsciiString	PRE-COMMIT FAILED: staged sources define functions the ledger does not declare (see above)
 game/GameEngine/Source/GameClient/GUI/GameWindowTransitionGroupInit.cpp	AsciiString	PRE-COMMIT FAILED: staged sources define functions the ledger does not declare (see above)
 game/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions_create.cpp	AsciiString	PRE-COMMIT FAILED: staged sources define functions the ledger does not declare (see above)
+game/GameEngine/Source/Common/Bfme5PanelClear.cpp	UnicodeString	game\GameEngine\Source\Common\Bfme5PanelClear.cpp(46) : error C2039: 'm_bfmeData' : is not a member of 'UnicodeString'
+game/GameEngine/Source/Common/BfmeConv1926.cpp	UnicodeString	game\GameEngine\Source\Common\BfmeConv1926.cpp(25) : error C2039: 'set' : is not a member of 'UnicodeString'
+game/GameEngine/Source/Common/BfmeConv1938.cpp	UnicodeString	game\GameEngine\Source\Common\BfmeConv1938.cpp(170) : error C2039: 'set' : is not a member of 'UnicodeString'
+game/GameEngine/Source/Common/RTS/PlayerInit.cpp	UnicodeString	game\GameEngine\Source\Common\RTS\PlayerInit.cpp(383) : error C2039: 'clear' : is not a member of 'UnicodeString'
+game/GameEngine/Source/Common/RTS/PlayerTemplateCopyConstructor.cpp	UnicodeString	Functions: FAIL 1/1
+game/GameEngine/Source/Common/Rva003B6D70CopyRange.cpp	UnicodeString	game\GameEngine\Source\Common\Rva003B6D70CopyRange.cpp(53) : error C2039: 'set' : is not a member of 'UnicodeString'
+game/GameEngine/Source/Common/Rva00416BD0GetName.cpp	UnicodeString	Functions: FAIL 1/1
+game/GameEngine/Source/Common/SmallGaps/Rva003AECC0CopyBackward.cpp	UnicodeString	game\GameEngine\Source\Common\SmallGaps\Rva003AECC0CopyBackward.cpp(23) : error C2039: 'set' : is not a member of 'UnicodeString'
+game/GameEngine/Source/Common/SmallGaps/Rva003B22E0CopyBackward.cpp	UnicodeString	game\GameEngine\Source\Common\SmallGaps\Rva003B22E0CopyBackward.cpp(43) : error C2039: 'set' : is not a member of 'UnicodeString'
+game/GameEngine/Source/Common/SmallGaps/Rva003B34D0CopyBackward.cpp	UnicodeString	game\GameEngine\Source\Common\SmallGaps\Rva003B34D0CopyBackward.cpp(17) : error C2039: 'set' : is not a member of 'UnicodeString'
+game/GameEngine/Source/Common/SmallGaps/Rva003B3720CopyBackward.cpp	UnicodeString	game\GameEngine\Source\Common\SmallGaps\Rva003B3720CopyBackward.cpp(24) : error C2039: 'set' : is not a member of 'UnicodeString'
+game/GameEngine/Source/Common/SmallGaps/Rva003B5EA0CopyBackward.cpp	UnicodeString	game\GameEngine\Source\Common\SmallGaps\Rva003B5EA0CopyBackward.cpp(43) : error C2039: 'set' : is not a member of 'UnicodeString'
+game/GameEngine/Source/Common/System/RegistryGetUnicodeString.cpp	UnicodeString	c:\Users\Jonathan\Desktop\reverse bfme\build\wt_step2b\game\Libraries\Source\WWVegas\WWLib\string_base.h(120) : error C2953: 'StringBase' : template class has already been defined
+game/GameEngine/Source/Common/System/RegistryGetUnicodeStringPublic.cpp	UnicodeString	c:\Users\Jonathan\Desktop\reverse bfme\build\wt_step2b\game\Libraries\Source\WWVegas\WWLib\string_base.h(120) : error C2953: 'StringBase' : template class has already been defined
+game/GameEngine/Source/Common/System/RegistryUserDataLeafNameUnicode.cpp	UnicodeString	c:\Users\Jonathan\Desktop\reverse bfme\build\wt_step2b\game\Libraries\Source\WWVegas\WWLib\string_base.h(120) : error C2953: 'StringBase' : template class has already been defined
+game/GameEngine/Source/Common/TGridPayloadCopy.cpp	UnicodeString	game\GameEngine\Source\Common\TGridPayloadCopy.cpp(22) : error C2039: 'set' : is not a member of 'UnicodeString'
+game/GameEngine/Source/GameClient/FloatingTextDataCtorThunk.cpp	UnicodeString	game\GameEngine\Source\GameClient\FloatingTextDataCtorThunk.cpp(54) : error C2039: 'clear' : is not a member of 'UnicodeString'
+game/GameEngine/Source/GameClient/GUI/AptChatFriendLogInMessage.cpp	UnicodeString	c:\Users\Jonathan\Desktop\reverse bfme\build\wt_step2b\game\Libraries\Source\WWVegas\WWLib\string_base.h(120) : error C2953: 'StringBase' : template class has already been defined
+game/GameEngine/Source/GameClient/GUI/AptMainMenuConstructor.cpp	UnicodeString	c:\Users\Jonathan\Desktop\reverse bfme\build\wt_step2b\game\Libraries\Source\WWVegas\WWLib\string_base.h(120) : error C2953: 'StringBase' : template class has already been defined
+game/GameEngine/Source/GameClient/GUI/AptScreenFactories.cpp	UnicodeString	c:\Users\Jonathan\Desktop\reverse bfme\build\wt_step2b\game\Libraries\Source\WWVegas\WWLib\string_base.h(120) : error C2953: 'StringBase' : template class has already been defined
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenLanLobbyConstructor.cpp	UnicodeString	c:\Users\Jonathan\Desktop\reverse bfme\build\wt_step2b\game\Libraries\Source\WWVegas\WWLib\string_base.h(120) : error C2953: 'StringBase' : template class has already been defined
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenLanLobbyRefreshGame.cpp	UnicodeString	c:\Users\Jonathan\Desktop\reverse bfme\build\wt_step2b\game\Libraries\Source\WWVegas\WWLib\string_base.h(120) : error C2953: 'StringBase' : template class has already been defined
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOnlineShellConstructor.cpp	UnicodeString	c:\Users\Jonathan\Desktop\reverse bfme\build\wt_step2b\game\Libraries\Source\WWVegas\WWLib\string_base.h(120) : error C2953: 'StringBase' : template class has already been defined
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsConstructor.cpp	UnicodeString	c:\Users\Jonathan\Desktop\reverse bfme\build\wt_step2b\game\Libraries\Source\WWVegas\WWLib\string_base.h(120) : error C2953: 'StringBase' : template class has already been defined
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenQuitMenuConstructor.cpp	UnicodeString	c:\Users\Jonathan\Desktop\reverse bfme\build\wt_step2b\game\Libraries\Source\WWVegas\WWLib\string_base.h(120) : error C2953: 'StringBase' : template class has already been defined
+game/GameEngine/Source/GameClient/GUI/EstablishConnectionsMenu/Rva006709F0SetPlayerStatus.cpp	UnicodeString	Functions: FAIL 1/1
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/IMECandidateTextAreaDraw.cpp	UnicodeString	Functions: FAIL 1/1
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LANPreferences_getUserName.cpp	UnicodeString	game\GameEngine\Source\GameClient\GUI\GUICallbacks\Menus\LANPreferences_getUserName.cpp(92) : error C2039: 'trim' : is not a member of 'UnicodeString'
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanLobbyMenuPlayerTooltip.cpp	UnicodeString	Functions: FAIL 1/1
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/NetworkDirectConnectJoin.cpp	UnicodeString	game\GameEngine\Source\GameClient\GUI\GUICallbacks\Menus\NetworkDirectConnectJoin.cpp(114) : error C2039: 'removeLastChar' : is not a member of 'UnicodeString'
+game/GameEngine/Source/GameClient/GUI/OnlineLoginPopulateCachedLogins0054FF80.cpp	UnicodeString	Functions: FAIL 1/1
+game/GameEngine/Source/GameClient/GUI/OnlineLoginRegister.cpp	UnicodeString	c:\Users\Jonathan\Desktop\reverse bfme\build\wt_step2b\game\Libraries\Source\WWVegas\WWLib\string_base.h(120) : error C2953: 'StringBase' : template class has already been defined
+game/GameEngine/Source/GameClient/GUI/TextTypeTransitionConstructor.cpp	UnicodeString	Functions: FAIL 1/1
+game/GameEngine/Source/GameClient/Input/Mouse_init.cpp	UnicodeString	game\GameEngine\Source\GameClient\Input\Mouse_init.cpp(85) : error C2039: 'clear' : is not a member of 'UnicodeString'
+game/GameEngine/Source/GameClient/Input/Rva005A4BF0MouseTooltipClear.cpp	UnicodeString	game\GameEngine\Source\GameClient\Input\Rva005A4BF0MouseTooltipClear.cpp(33) : error C2039: 'm_data' : is not a member of 'UnicodeString'
+game/GameEngine/Source/GameClient/MapMetaData_assign.cpp	UnicodeString	game\GameEngine\Source\GameClient\MapMetaData_assign.cpp(122) : error C2039: 'set' : is not a member of 'UnicodeString'
+game/GameEngine/Source/GameClient/MessageStream/MetaMap_getMetaMapRecThunk.cpp	UnicodeString	game\GameEngine\Source\GameClient\MessageStream\MetaMap_getMetaMapRecThunk.cpp(81) : error C2039: 'clear' : is not a member of 'UnicodeString'
+game/GameEngine/Source/GameClient/MessageStream/SelectionTranslator_killThemKillThemAll.cpp	UnicodeString	Functions: FAIL 1/1
+game/GameEngine/Source/GameClient/MessageStream/SelectionTranslator_selectFriends.cpp	UnicodeString	Functions: FAIL 1/1
+game/GameEngine/Source/GameClient/PopupMessageData.cpp	UnicodeString	Functions: FAIL 1/3
+game/GameEngine/Source/GameLogic/AI/TAiDataAssign.cpp	UnicodeString	game\GameEngine\Source\GameLogic\AI\TAiDataAssign.cpp(162) : error C2039: 'set' : is not a member of 'UnicodeString'
+game/GameEngine/Source/GameLogic/LivingWorld/Rva003C15C0LivingWorldListCtor.cpp	UnicodeString	Functions: FAIL 1/1
+game/GameEngine/Source/GameLogic/Object/Behavior/RunOffMapBehaviorModuleDataCtor.cpp	UnicodeString	game\GameEngine\Source\GameLogic\Object\Behavior\RunOffMapBehaviorModuleDataCtor.cpp(61) : error C2039: 'set' : is not a member of 'UnicodeString'
+game/GameEngine/Source/GameLogic/Object/Die/RefundDieOnDie.cpp	UnicodeString	c:\Users\Jonathan\Desktop\reverse bfme\build\wt_step2b\game\Libraries\Source\WWVegas\WWLib\string_base.h(120) : error C2953: 'StringBase' : template class has already been defined
+game/GameEngine/Source/GameLogic/Object/Update/CritterEmitterUpdateModuleDataCtorThunk.cpp	UnicodeString	game\GameEngine\Source\GameLogic\Object\Update\CritterEmitterUpdateModuleDataCtorThunk.cpp(90) : error C2039: 'set' : is not a member of 'UnicodeString'
+game/GameEngine/Source/GameLogic/System/RankInfoConstructorThunk.cpp	UnicodeString	Functions: FAIL 1/1
+game/GameEngine/Source/GameLogic/System/Rva00364B10ScanArmyGroups.cpp	UnicodeString	game\GameEngine\Source\GameLogic\System\Rva00364B10ScanArmyGroups.cpp(195) : error C2039: 'set' : is not a member of 'UnicodeString'
+game/GameEngine/Source/GameLogic/System/Rva00397350GlobalRallyPointFeedback.cpp	UnicodeString	Functions: FAIL 1/1
+game/GameEngine/Source/GameNetwork/ConnectionManagerProcessDisconnectChat.cpp	UnicodeString	c:\Users\Jonathan\Desktop\reverse bfme\build\wt_step2b\game\Libraries\Source\WWVegas\WWLib\string_base.h(120) : error C2953: 'StringBase' : template class has already been defined
+game/GameEngine/Source/GameNetwork/GameSlotIsPlayerAsciiThunk.cpp	UnicodeString	Functions: FAIL 1/1
+game/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfoHandleText.cpp	UnicodeString	game\GameEngine\Source\GameNetwork\GameSpy\GameSpyInfoHandleText.cpp(54) : error C2039: 'trim' : is not a member of 'UnicodeString'
+game/GameEngine/Source/GameNetwork/GameSpy/GameSpyStagingRoom_getGameName_Thunk.cpp	UnicodeString	Functions: FAIL 1/1
+game/GameEngine/Source/GameNetwork/GameSpy/Rva000E92B0SetWideString.cpp	UnicodeString	Functions: FAIL 1/1
+game/GameEngine/Source/GameNetwork/LANAPIHandleRequestLocationsThunk.cpp	UnicodeString	game\GameEngine\Source\GameNetwork\LANAPIHandleRequestLocationsThunk.cpp(194) : error C2039: 'set' : is not a member of 'UnicodeString'
+game/GameEngine/Source/GameNetwork/LANAPIOnGameStartTimer.cpp	UnicodeString	c:\Users\Jonathan\Desktop\reverse bfme\build\wt_step2b\game\Libraries\Source\WWVegas\WWLib\string_base.h(120) : error C2953: 'StringBase' : template class has already been defined
+game/GameEngine/Source/GameNetwork/LANAPIhandlers_handleGameAnnounce_Thunk.cpp	UnicodeString	Functions: FAIL 1/1
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Gen_007639E0_ObjectDrawLookup.cpp	UnicodeString	game\GameEngineDevice\Source\W3DDevice\GameClient\Drawable\Draw\Gen_007639E0_ObjectDrawLookup.cpp(72) : error C2039: 'set' : is not a member of 'UnicodeString'
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00767B30ObjectDrawLookup.cpp	UnicodeString	game\GameEngineDevice\Source\W3DDevice\GameClient\Drawable\Draw\Rva00767B30ObjectDrawLookup.cpp(202) : error C2039: 'set' : is not a member of 'UnicodeString'
+game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DPushButtonDrawNumber00794B70.cpp	UnicodeString	c:\Users\Jonathan\Desktop\reverse bfme\build\wt_step2b\game\Libraries\Source\WWVegas\WWLib\string_base.h(120) : error C2953: 'StringBase' : template class has already been defined
+game/GameEngineDevice/Source/W3DDevice/GameClient/Gen_006CBA30_UpdateTexture.cpp	UnicodeString	game\GameEngineDevice\Source\W3DDevice\GameClient\Gen_006CBA30_UpdateTexture.cpp(90) : error C2039: 'm_data' : is not a member of 'UnicodeString'
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayStringBaseDestructor.cpp	UnicodeString	game\GameEngineDevice\Source\W3DDevice\GameClient\W3DDisplayStringBaseDestructor.cpp(29) : error C2039: 'clear' : is not a member of 'UnicodeString'
+game/Libraries/Source/WWVegas/WWLib/Z1ListAssign.cpp	UnicodeString	Functions: FAIL 1/1

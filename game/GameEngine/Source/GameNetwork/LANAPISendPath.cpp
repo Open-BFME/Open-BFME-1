@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHs-c-
+// cl: /DNDEBUG /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?RequestAccept@LANAPI@@UAEXXZ: game/GameEngine/Source/GameNetwork/lanapi.cpp
 // readable body of ?sendMessage@LANAPI@@IAEXPAULANMessage@@I@Z: game/GameEngine/Source/GameNetwork/lanapi.cpp
 // readable body of ?RequestGameAnnounce@LANAPI@@UAEXXZ: game/GameEngine/Source/GameNetwork/lanapi.cpp
@@ -59,22 +59,7 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	~UnicodeString() { releaseBuffer(); }
-
-	const WideChar *str( void ) const
-	{
-		return m_data ? m_data->m_stringdata : L"";
-	}
-
-protected:
-	void releaseBuffer( void );								///< ?releaseBuffer@UnicodeString@@IAEXXZ
-
-private:
-	UnicodeStringData *m_data;
-};
+#include "unicode_string.h"
 
 // The address pair vtable slot 55 hands back, and what a LANPlayer and a game
 // slot store. BfmeTransportAddress below is the same pair packed to six bytes,
