@@ -77430,6 +77430,7 @@ name,address,notes
 ?bfmeGoDPB@@YA?AVBfmeOtherDPB@@ABVAsciiString@@AB_N@Z,0x00023A33,ILT thunk called by ScriptEngine::setHumanImpassableArea 0x003476F0 (record helper returning by value)
 ?bfmeGoDQF@BfmeThingDQF@@QAE?AVBfmeOtherDQF@@XZ,0x0097E2C0,by-value return mangling of the landed ?bfmeGoDQF@BfmeThingDQF@@QAEPAVBfmeOtherDQF@@PAV2@@Z at the same address; ParticleEmitterClass Build_Definition 0x0097FD70 calls 0x0097E2C0 directly at +0x67 and MSVC mangles the hidden sret slot as a by-value return there; same body same ABI
 ?bfmeGoDST@ThingTemplate@@QAEXW4LocomotorSetType@@M@Z,0x000174FE,001BD0D0 set then Speed value; FieldParse names Speed with parseReal; ILT to146270 stores map at340; ret8
+?bfmeGoDVBb@BfmeThingDVB@@QAE?AVBfmeSharedString@@H@Z,0x00048653,route=0x00387160; ILT 0x00048653 reaches the matched BfmeThingDVB::bfmeGoDVBb body at 0x00387160.
 ?bfmeGoEBF@W3DView@@QAEXXZ,0x0045CB70,neutral direct W3DView ABI view; verified body pin for the BFME EBF reset helper; constructor 0x00745B10/vftable 0x011217A0 proves owner identity; campaign=luna36h-20260907;lane=particle
 ?bfmeGoFBAThunk@BfmeThingFBA@@QAEMPAX@Z,0x0000B816,ILT alias for the cached-float helper used by the 0x00323B70 condition
 ?bfmeGoHI@BfmeThingHI@@QAEXHHH@Z,0x000378F8,ILT to BfmeThingHI::bfmeGoHI body at 0x00609800; called by Rva003BDC50
