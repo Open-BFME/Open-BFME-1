@@ -47,6 +47,8 @@ public:
 	Object *findObjectByID(int value);
 };
 
+extern GameLogic *TheGameLogic;
+
 int ObjectHideSubObjectPermanently(lua_State *state)
 {
 	unsigned objectID;
@@ -54,7 +56,7 @@ int ObjectHideSubObjectPermanently(lua_State *state)
 	if (lua_gettop(state) != 3
 		|| ((objectID = Rva00990030Lookup((Rva00990030Range *)state, 1)) == 0
 			&& lua_type(state, 1) != 1)
-		|| (object = (*(GameLogic **)0x012f0898)->findObjectByID((int)objectID)) == 0)
+		|| (object = TheGameLogic->findObjectByID((int)objectID)) == 0)
 		return 0;
 
 	{

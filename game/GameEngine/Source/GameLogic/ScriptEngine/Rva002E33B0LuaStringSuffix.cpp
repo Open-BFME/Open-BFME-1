@@ -36,7 +36,7 @@ public:
 int Rva002E33B0LuaStringSuffix(lua_State *state)
 {
 	const char *text = lua_tostring(state, 1);
-	BFMERetailAsciiString message((const char *)0x010CF500);
+	BFMERetailAsciiString message("LUA Alert: ");
 	if (text)
 		message.concat(text, (int)strlen(text));
 	return 0;

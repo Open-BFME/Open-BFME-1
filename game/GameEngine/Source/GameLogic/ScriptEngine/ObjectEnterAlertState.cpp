@@ -43,6 +43,8 @@ public:
 	Object *findObjectByID(int value);
 };
 
+extern GameLogic *TheGameLogic;
+
 int ObjectEnterAlertState(lua_State *state)
 {
 	void *value = (void *)Rva00990030Lookup((Rva00990030Range *)state, 1);
@@ -52,7 +54,7 @@ int ObjectEnterAlertState(lua_State *state)
 			return 0;
 	}
 
-	Object *object = (*(GameLogic **)0x012f0898)->findObjectByID((int)value);
+	Object *object = TheGameLogic->findObjectByID((int)value);
 	if (object)
 		object->bfmeApplySpecialModelCondition(9, 0, 1);
 	return 0;

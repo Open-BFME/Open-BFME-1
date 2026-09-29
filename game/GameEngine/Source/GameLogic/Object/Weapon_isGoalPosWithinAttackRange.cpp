@@ -107,7 +107,9 @@ struct Rva001E6930ObjectFields
 struct Rva001E6930Module { char m_00[0x3c]; bool m_3c; };
 struct Rva001E6930AIData { char m_00[0xcc]; float m_cc; };
 struct Rva001E6930AI { char m_00[0xc]; void *m_0c; char m_10[4]; Rva001E6930AIData *m_14; };
-#define ai001E6930 (*(Rva001E6930AI**)0x012ef214)
+class AI;
+extern AI *TheAI;
+#define ai001E6930 ((Rva001E6930AI*)TheAI)
 extern float g_bfmeOffsetDF;
 extern const float BfmeZeroRange;
 struct Rva001E6930WeaponTemplate

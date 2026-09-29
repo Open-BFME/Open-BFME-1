@@ -31,6 +31,8 @@ public:
 	void set(AsciiString value);
 };
 
+extern const char g_Rva0107301CEmptyString[];
+
 class ControlBar;
 extern ControlBar *TheControlBar;
 
@@ -103,7 +105,7 @@ void CommandSetUpgrade::upgradeRemovalImplementation()
 	Object *object = m_object;
 	if (object->m_commandSetStringOverride.compare(*(const AsciiString *)
 		((const char *)m_moduleData + 0x70)) == 0)
-		((Rva0022A620Obj *)object)->set((const char *)0x0107301C);
+		((Rva0022A620Obj *)object)->set(g_Rva0107301CEmptyString);
 	*(Bool *)((char *)TheControlBar + 0x24) = true;
 	setUpgradeExecuted(false);
 }
