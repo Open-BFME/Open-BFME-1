@@ -4,13 +4,14 @@
 // helper according to the distance between source rows. The packed
 // coefficient pairs are 32-byte records at retail address 0x012D8C10.
 
+extern const unsigned char g_012D8C10[];
 extern void __cdecl rva009C7060BinkSse(const void *, void *, int, int, int, int, const void *);
 extern void __cdecl rva009C70D0BinkSse(const void *, void *, int, int, int, int, const void *);
 extern void __cdecl rva009C7140BinkSse(const void *, void *, int, const void *, const void *);
 
 static const void *rva009C7380Weights(int index)
 {
-	return (const void *)(0x012D8C10 + index * 32);
+	return g_012D8C10 + index * 32;
 }
 
 void __cdecl rva009C7380BinkSse(const unsigned char *rowA, const unsigned char *rowB,

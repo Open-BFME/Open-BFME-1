@@ -98,6 +98,14 @@ char *Rva000BE6D0::get(void)
 	return m_pad + 8;
 }
 
+struct FieldParse;
+
+class MapMetaDataReader
+{
+public:
+	static const FieldParse m_mapFieldParseTable[];
+};
+
 class Rva000BE730
 {
 public:
@@ -107,7 +115,7 @@ public:
 // ?get@Rva000BE730@@QAEPAXXZ
 void *Rva000BE730::get(void)
 {
-	return (void *)0x01082F58;
+	return (void *)MapMetaDataReader::m_mapFieldParseTable;
 }
 
 class Rva000BE850

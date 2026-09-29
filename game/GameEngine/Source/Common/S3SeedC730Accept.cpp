@@ -87,7 +87,7 @@ public:
 	virtual void *bfmeTerrainGet(int value) = 0;
 };
 
-#define TheTerrainLogic (*(TerrainLogic **)0x012EF4CC)
+extern TerrainLogic *TheTerrainLogic;
 
 class Gen_0016B250;
 

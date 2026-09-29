@@ -1,3 +1,6 @@
+extern "C" const void *bfmeVftPipe[];
+#pragma comment(linker, "/alternatename:_bfmeVftPipe=??_7Pipe@@6B@")
+
 struct Rva009E1E90Owner
 {
 	void *vftable;
@@ -8,6 +11,6 @@ struct Rva009E1E90Owner
 };
 
 Rva009E1E90Owner::Rva009E1E90Owner()
-	: vftable(reinterpret_cast<void *>(0x011453D0)), field4(0), field8(0)
+	: vftable(reinterpret_cast<void *>(bfmeVftPipe)), field4(0), field8(0)
 {
 }
