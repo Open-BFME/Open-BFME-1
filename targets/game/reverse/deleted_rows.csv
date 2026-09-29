@@ -31393,3 +31393,4 @@ dup_930180,0x00930180,claim superseded by the gate-required claim for ??4Texture
 ?bfmeApplyStartPosition@MpGameSetup@@QAE_NHH@Z,0x00524DE0,renamed to ?handleStartPositionSelection@MpGameSetup@@QAE_NHH@Z by tools/name_lane.py apply: two models agreed
 ?bfmeApplyTeam@MpGameSetup@@QAE_NH@Z,0x00524D10,renamed to ?handleTeamSelection@MpGameSetup@@QAE_NH@Z by tools/name_lane.py apply: two models agreed
 ?bfmeFindAvailableStartPosition@MpGameSetup@@QAEHH@Z,0x00524ED0,renamed to ?getNextSelectablePlayer@MpGameSetup@@QAEHH@Z by tools/name_lane.py apply: two models agreed
+?rva00784090Bounds@Rva00785FD0Item@@QAEXPAURva00784090Point@@0@Z,0x00784090,renamed to ?getRenderRegion@Rva00785FD0Item@@QAEXPAURva00784090Point@@0@Z by tools/name_lane.py apply: two models agreed

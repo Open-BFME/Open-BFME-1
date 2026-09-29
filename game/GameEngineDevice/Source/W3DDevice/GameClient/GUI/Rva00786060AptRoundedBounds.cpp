@@ -5,7 +5,7 @@ struct Rva00784090Point { float x, y; };
 struct Rva007845D0Transform { float m[6]; };
 class Rva00785FD0Item {
 public:
- void rva00784090Bounds(Rva00784090Point *, Rva00784090Point *);
+ void getRenderRegion(Rva00784090Point *, Rva00784090Point *);
  char m_prefix[0x10];
  Rva007845D0Transform m_xform;
 };
@@ -34,7 +34,7 @@ void applyRoundedBounds00786060(const char *name, int first, BoundsSource0078606
  g_bfmeHub982->bfmeBegin982C();
  item->m_xform = g_Rva00F0692CTransform;
  Rva00784090Point minPt, extent;
- item->rva00784090Bounds(&minPt, &extent);
+ item->getRenderRegion(&minPt, &extent);
  minPt.x = (float)(int)(minPt.x + 0.5f);
  minPt.y = (float)(int)(minPt.y + 0.5f);
  extent.x = (float)(int)(extent.x + 0.5f);

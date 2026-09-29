@@ -70,7 +70,7 @@ struct Rva00784090Affine
 class Rva00785FD0Item
 {
 public:
-	void rva00784090Bounds(Rva00784090Point *minPt, Rva00784090Point *maxPt);
+	void getRenderRegion(Rva00784090Point *minPt, Rva00784090Point *maxPt);
 
 private:
 	void *m_vtbl;
@@ -80,7 +80,7 @@ private:
 	Rva00784090Affine m_xform;
 };
 
-void Rva00785FD0Item::rva00784090Bounds(Rva00784090Point *minPt, Rva00784090Point *maxPt)
+void Rva00785FD0Item::getRenderRegion(Rva00784090Point *minPt, Rva00784090Point *maxPt)
 {
 	minPt->x = 99999.0f;
 	minPt->y = 99999.0f;
