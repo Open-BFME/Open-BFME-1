@@ -4,6 +4,7 @@ extern "C" __declspec(dllimport) int __cdecl _snprintf(char *buffer,
 	int count, const char *format, ...);
 
 int AptLivingWorldWindowIndex(int low, int high);
+extern int g_aptLivingWorldWindowIndex;
 
 class WindowManager
 {
@@ -20,7 +21,7 @@ void bfmeSendATB(int what)
 	_snprintf(text, 16, "%d", what);
 
 	g_theWindowManager->unidentified_00015235(
-		AptLivingWorldWindowIndex(*(int *)0x012F49A8, *(int *)0x012F49A8),
+		AptLivingWorldWindowIndex(g_aptLivingWorldWindowIndex, g_aptLivingWorldWindowIndex),
 		"CloseRegionConqueredNotice", 1, text, 0, 0, 0, 0);
 }
 

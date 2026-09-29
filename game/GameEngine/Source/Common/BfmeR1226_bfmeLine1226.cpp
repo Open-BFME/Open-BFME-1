@@ -61,8 +61,8 @@ void BfmeR1226::bfmeLine1226(char *text)
 	{
 		BfmeString1226 name;
 		pending->bfmeName1233((BfmeStr1233 *)&name);
-		g_bfmeCallback1226((const void *)0x011363b8, text);
-		g_bfmeCallback1226((const void *)0x01136388,
+		g_bfmeCallback1226("<WARNING> Actionscript un-caught exception encountered during \"%s\"\n", text);
+		g_bfmeCallback1226("<WARNING> Actionscript error message: \"%s\"\n",
 			(char *)name.m_block + 8);
 		m_pending->release();
 		m_pending = 0;

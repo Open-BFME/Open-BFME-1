@@ -28,9 +28,9 @@ void Gen009D9AD0::closeTag(void)
 	m_tags.pop_back();
 	if (m_pending)
 	{
-		bfmeAppend(this, reinterpret_cast<const char *>(0x01080294));
+		bfmeAppend(this, "\n");
 		m_pending = false;
 	}
 	bfmeAppend(this, 0);
-	bfmeAppend(this, reinterpret_cast<const char *>(0x01144530), tag.c_str());
+	bfmeAppend(this, "</%s>\n", tag.c_str());
 }

@@ -38,8 +38,11 @@ public:
 
 extern void j_0000f763();
 
-#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
-#define ThePlayers (*(PlayerList **)0x012ED748)
+extern GameLogic *TheGameLogic;
+extern PlayerList *ThePlayerList;
+
+#define TheBfmeGameLogic TheGameLogic
+#define ThePlayers ThePlayerList
 
 class BfmeOwnFCB
 {

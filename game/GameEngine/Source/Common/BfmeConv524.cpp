@@ -1,5 +1,6 @@
 extern "C" __declspec(dllimport) char *__cdecl strncpy(char *destination, const char *source,
 	unsigned int count);
+extern const char g_Rva0107301CEmptyString[];
 
 template <typename T> class StringBase
 {
@@ -33,7 +34,7 @@ BFMERetailAsciiString bfmeDoBSD(void *what)
 	const char *source = (const char *)what;
 
 	if (source == 0)
-		source = (const char *)0x0107301c;
+		source = g_Rva0107301CEmptyString;
 	else if (*source == '.')
 		++source;
 
@@ -63,7 +64,7 @@ BFMERetailAsciiString Rva0046F6F0SlashToDot(void *what)
 	const char *source = (const char *)what;
 
 	if (source == 0)
-		source = (const char *)0x0107301c;
+		source = g_Rva0107301CEmptyString;
 	else if (*source == '/')
 		++source;
 
