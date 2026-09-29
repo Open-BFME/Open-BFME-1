@@ -1,5 +1,5 @@
 // ?unpack@CastleBehavior@@QAEX_N@Z
-// partial score=0.997 date=2026-09-28
+// partial score=0.9846 date=2026-09-28
 // ?unpack@CastleBehavior@@QAEX_N@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
