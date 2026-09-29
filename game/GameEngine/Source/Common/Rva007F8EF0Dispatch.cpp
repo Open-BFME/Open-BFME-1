@@ -1,3 +1,5 @@
+extern void *g_012C3B30;
+
 class BfmeThingRF
 {
 public:
@@ -6,5 +8,5 @@ public:
 
 void * __stdcall rva007F8EF0Dispatch(BfmeThingRF *owner)
 {
-    return owner->bfmeGoRF(*reinterpret_cast<void **>(0x012C3B30), 0);
+    return owner->bfmeGoRF(g_012C3B30, 0);
 }

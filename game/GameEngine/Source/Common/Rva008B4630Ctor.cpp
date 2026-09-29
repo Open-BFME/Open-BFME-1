@@ -1,5 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 
+extern "C" const void *bfmeVftRva008B46D0HeaderedDeleting[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva008B46D0HeaderedDeleting=??_7Rva008B46D0HeaderedDeleting@@6B@")
+
 class Rva899F00Base
 {
 public:
@@ -30,7 +33,7 @@ private:
 Rva008B4630::Rva008B4630(Rva008B4630Callback *callback) :
 	Rva899F00Base(reinterpret_cast<const char *>(0x1a), 8)
 {
-	*reinterpret_cast<void **>(this) = reinterpret_cast<void *>(0x01136A90);
+	*reinterpret_cast<void **>(this) = (void *)bfmeVftRva008B46D0HeaderedDeleting;
 
 	unsigned int flags = callback->m_flags;
 	int kind = flags & 0x3f;

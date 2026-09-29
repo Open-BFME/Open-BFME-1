@@ -1,5 +1,8 @@
 // cl: /O2 /Ob0
 
+extern "C" const void *bfmeVftBfmeBaseCC[];
+#pragma comment(linker, "/alternatename:_bfmeVftBfmeBaseCC=??_7BfmeBaseCC@@6B@")
+
 class Rva0081C2F0
 {
 	void *m_vt;
@@ -15,7 +18,7 @@ public:
 Rva0081C2F0 &Rva0081C2F0::set(int n)
 {
 	m_20 = 1.0f;
-	m_vt = (void *)0x0112162C;
+	m_vt = (void *)bfmeVftBfmeBaseCC;
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;

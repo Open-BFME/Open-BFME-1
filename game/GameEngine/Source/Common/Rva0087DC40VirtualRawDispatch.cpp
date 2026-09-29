@@ -17,5 +17,5 @@ public:
 
 void Rva0087DC40DispatchRaw(Rva0087DC40VirtualOwner *owner, void *value)
 {
-    owner->slot90((const void *)0x01132A70, value, 4);
+    owner->slot90("GeometryType", value, 4);
 }

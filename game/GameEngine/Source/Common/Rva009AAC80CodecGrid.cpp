@@ -37,7 +37,7 @@ void __cdecl Rva009AAC80CodecGrid(Rva009AAC80Context *self)
 					int value = ((const signed char *)self->m_at6F0)[self->m_at230 * row + column];
 					int offset = self->m_at1B8 * rowOffset + columnOffset + 5;
 					((Rva009B4390Four)Rva009B4390CodecCall)(
-						self, offset, (void *)0x0107C7B4, value);
+						self, offset, (void *)"%d", value);
 					++column;
 					columnOffset += 0x10;
 				} while (column < width);
