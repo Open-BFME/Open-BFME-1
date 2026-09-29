@@ -5,6 +5,10 @@
 // slot 63 (byte offset 0xFC).  The callback address is the code pointer used
 // by the surrounding retail dispatch family.
 
+class BfmeItem1005;
+struct Rva00220820Pair;
+void __cdecl rva00220820Forward(BfmeItem1005 *receiver, const Rva00220820Pair *value);
+
 struct Rva00220890Request
 {
 	int m_zero;
@@ -89,5 +93,5 @@ void Rva00220890Dispatch::bfmeDispatch(int value)
 	request.m_zero = 0;
 	request.m_flag = 0;
 	request.m_value = value;
-	dispatch(reinterpret_cast<void *>(0x00620820), &request, 1);
+	dispatch(reinterpret_cast<void *>(rva00220820Forward), &request, 1);
 }

@@ -196,6 +196,9 @@ public:
 		int filter, int flags);
 };
 
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
+
 class BfmeThingEQ
 {
 public:
@@ -312,7 +315,7 @@ int Rva00203DB0AI::compare(int left, int right, int mask)
 		}
 	}
 
-	return ((BfmeWideForwardC *)*(void **)0x012ED5B8)->bfmeForwardWideC(
+	return ((BfmeWideForwardC *)ThePartitionManager)->bfmeForwardWideC(
 		(int)((char *)object + 0x38), right, 1,
 		(int)reinterpret_cast<PartitionFilter *>(&obvious), 0).value->entries.size();
 }

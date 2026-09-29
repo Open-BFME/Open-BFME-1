@@ -7,6 +7,8 @@
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #include <set>
 
+extern const char Rva006A16B0Empty[];
+
 template <typename T>
 class StringBase
 {
@@ -29,7 +31,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? m_data + 8 : (const char *)0x0107388B;
+		return m_data ? m_data + 8 : Rva006A16B0Empty;
 	}
 
 	bool isNotEmpty() const
