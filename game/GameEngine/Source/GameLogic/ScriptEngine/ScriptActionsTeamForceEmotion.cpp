@@ -1,7 +1,3 @@
-// ?doTeamForceEmotion@ScriptActions@@IAEXPAVParameter@@W4EmotionType@@M@Z
-// partial score=0.95 date=2026-09-04
-// ?doTeamForceEmotion@ScriptActions@@IAEXPAVParameter@@W4EmotionType@@M@Z
-// partial score=0.95 date=2026-09-03
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringinline
 // Open-BFME: TEAM_FORCE_EMOTION at retail RVA 0x002F75D0.
 
@@ -83,7 +79,8 @@ public:
 
 	void advance()
 	{
-		m_cur = (m_cur->*m_getNextFunc)();
+		if (m_cur)
+			m_cur = (m_cur->*m_getNextFunc)();
 	}
 
 	Bool done() const { return m_cur == 0; }
@@ -157,10 +154,13 @@ void ScriptActions::doTeamForceEmotion(Parameter *team, EmotionType emotion,
 	Team *theTeam = TheScriptEngine->getTeamNamed(team->m_string, false);
 	if (theTeam)
 	{
-		for (DLINK_ITERATOR<Object> iter = theTeam->iterate_TeamMemberList();
-			!iter.done(); iter.advance())
+		DLINK_ITERATOR<Object> iter = theTeam->iterate_TeamMemberList();
+		while (iter.cur())
 		{
-			iter.cur()->forceEmotion(emotion, duration, 0);
+			Object *object = iter.cur();
+			if (object)
+				object->forceEmotion(emotion, duration, 0);
+			iter.advance();
 		}
 	}
 }
