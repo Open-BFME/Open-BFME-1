@@ -12,6 +12,8 @@ typedef void (*chatGetChannelBasicUserInfoCallback)(CHAT chat, int success,
 	const char *address, void *param);
 typedef void (*chatGetChannelModeCallback)(CHAT chat, int success,
 	const char *channel, const void *mode, void *param);
+typedef void (*chatGetUserModeCallback)(CHAT chat, CHATBool success,
+	const char *channel, const char *user, int mode, void *param);
 typedef void (*chatEnumChannelBansCallback)(CHAT chat, int success,
 	const char *channel, int numBans, const char **bans, void *param);
 typedef void (*chatChangeNickCallback)(CHAT chat, int success,
@@ -191,6 +193,12 @@ int ciAddCMODEFilter(CHAT chat, const char *channel,
 	chatGetChannelModeCallback callback, void *param)
 {
 	return ciAddFilter(chat, 5, channel, 0, (void *)callback, 0, param, 0);
+}
+
+int ciAddUMODEFilter(CHAT chat, const char *user, const char *channel,
+	chatGetUserModeCallback callback, void *param)
+{
+	return ciAddFilter(chat, 6, user, channel, (void *)callback, 0, param, 0);
 }
 
 int ciAddBANFilter(CHAT chat, const char *user, const char *channel)
