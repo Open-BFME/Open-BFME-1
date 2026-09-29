@@ -3,6 +3,9 @@
 extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(void *);
 extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(void *);
 
+struct BfmeCsDWA;
+extern BfmeCsDWA g_bfmeCsDWC;
+
 class Debug
 {
 public:
@@ -45,28 +48,28 @@ bool Debug::frameStatus(unsigned address, bool reset)
     if (m_fastPath != 0)
         return true;
 
-    EnterCriticalSection((void *)0x1336e60);
+    EnterCriticalSection(&g_bfmeCsDWC);
     m_prefix[5] = address;
     FrameHashEntry *entry = LookupFrame(address);
     if (reset)
     {
         if (entry != 0)
             entry->status = 0;
-        LeaveCriticalSection((void *)0x1336e60);
+        LeaveCriticalSection(&g_bfmeCsDWC);
         return false;
     }
     if (entry == 0)
     {
-        LeaveCriticalSection((void *)0x1336e60);
+        LeaveCriticalSection(&g_bfmeCsDWC);
         return false;
     }
     if (entry->status == 2 || entry->status == 3)
     {
-        LeaveCriticalSection((void *)0x1336e60);
+        LeaveCriticalSection(&g_bfmeCsDWC);
         return false;
     }
     if (entry->status == 0)
         UpdateFrameStatus(*entry);
-    LeaveCriticalSection((void *)0x1336e60);
+    LeaveCriticalSection(&g_bfmeCsDWC);
     return entry->status == 1;
 }

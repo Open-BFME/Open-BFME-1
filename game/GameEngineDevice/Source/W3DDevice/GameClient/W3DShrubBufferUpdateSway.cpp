@@ -62,40 +62,40 @@ void W3DShrubBuffer::updateSway(const BreezeInfo& info)
 	Int i = 0;
 	char *sway = (char *)this + 0x1e33e8;
 	for (; i < 100; ) {
-		Real factor = bfmeCosVNB((Real)i * *(Real *)0x01120dbc);
+		Real factor = bfmeCosVNB((Real)i * 0.06220976f);
 		Real angle = info.m_lean + (info.m_intensity * factor);
 		Real S = bfmeSinVNB(angle);
 		Real C = bfmeCosVNB(angle);
 
 		*(Real *)(sway - 0x04) = info.m_directionVecX * S;
 		*(Real *)sway = info.m_directionVecY * S;
-		*(Real *)(sway + 0x04) = C - *(Real *)0x01075334;
+		*(Real *)(sway + 0x04) = C - 1.0f;
 		++i;
 		sway += 0xc;
 	}
 
-	Real delta = info.m_randomness * *(Real *)0x0107533c;
+	Real delta = info.m_randomness * 0.5f;
 	register Int j = 0;
 	if (*(Int *)((char *)this + 0x1e1cc8) > 0) {
 		for (; j < m_numShrubs; j++) {
 			m_shrubs[j].m_swayType = 1 + GetGameClientRandomValue(
-				0, 9, (char *)0x01120d60, 0xf9);
+				0, 9, "F:\\bfme\\Code\\gameenginedevice\\Source\\W3DDevice\\GameClient\\W3DShrubBuffer.cpp", 0xf9);
 		}
 	}
 
-	Real high = *(Real *)0x01075334 + delta;
-	Real low = *(Real *)0x01075334 - delta;
+	Real high = 1.0f + delta;
+	Real low = 1.0f - delta;
 	char *step = (char *)this + 0x1e38c0;
 	for (i = 0; i < 10; i++) {
-		*(Real *)step = *(Real *)0x0107fac4 /
+		*(Real *)step = 100.0f /
 			((Real)info.m_breezePeriod * *(Real *)((char *)this + 0x1e3910));
 		*(Real *)step *= GetGameClientRandomValueReal(
-				low, high, (char *)0x01120d60, 0xfd);
-		if (*(Real *)step < *(Real *)0x01075350)
+				low, high, "F:\\bfme\\Code\\gameenginedevice\\Source\\W3DDevice\\GameClient\\W3DShrubBuffer.cpp", 0xfd);
+		if (*(Real *)step < 0.0f)
 			*(Real *)step = 0.0f;
 		*(Real *)(step - 0x28) = 0;
 		*(Real *)(step + 0x28) = GetGameClientRandomValueReal(
-				low, high, (char *)0x01120d60, 0x102);
+				low, high, "F:\\bfme\\Code\\gameenginedevice\\Source\\W3DDevice\\GameClient\\W3DShrubBuffer.cpp", 0x102);
 		step += 4;
 	}
 	*(Int *)((char *)this + 0x1e3894) = (Int)info.m_breezeVersion;
