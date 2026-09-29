@@ -10288,5 +10288,15 @@
   "after_sha256": "73896925d83e7706f7a5580f625b44863f4c7503f21f50be0f1d5c7e067dcd17",
   "evidence": "targets/game/reverse/identity_evidence/00163030-filter-names.md",
   "reason": "filter classes named by their installed vtable; ZH names without a BFME vtable witness replaced by address-keyed names; padding placeholders renamed"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00908fe0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00908fe0.cpp",
+  "old_name": "index_buffer",
+  "new_name": "Rva01341128IndexBuffer",
+  "before_sha256": "df54d699cccdd6985b25137e9be0a6145fdbdc3dceaf746dffd63854ddaccfb3",
+  "after_sha256": "b876b8fa055434be14d5aa69984236022621dfc3ae141b5588f369c97afb1c84",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "the stash's local index_buffer is the global at VA 0x01341128, which dir32_addresses.csv and symbols.csv already record as ?Rva01341128IndexBuffer@@3PAVIndexBufferClass@@A"
  }
 ]

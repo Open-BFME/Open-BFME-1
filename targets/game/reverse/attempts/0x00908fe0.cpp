@@ -1,5 +1,5 @@
 // ?End_Scene@DX8Wrapper@@SAX_N@Z
-// partial score=0.83 date=2026-09-23
+// partial score=0.6867 date=2026-09-28
 // cl: /Igame/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/shims/dx8wrapper /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
@@ -94,9 +94,43 @@
 
 extern void bfmeEndSceneTouch00958910(void *);
 // ?End_Scene@DX8Wrapper@@SAX_N@Z
-// partial score=0.82 date=2026-09-10
-// ?End_Scene@DX8Wrapper@@SAX_N@Z
-// Best bounded reconstruction banked by lane20; source fragment only.
+// partial score=0.87 date=2026-09-28
+// Identity: the only caller is ?End_Render@WW3D@@SA?AW4WW3DErrorType@@_N@Z
+// (one call site), and the retail frame is the D3D9 EndScene/Present pair, so
+// the ZH twin's name is the retail name here.
+// Shape notes (all measured with tools/probe.py, 607B ours vs 616B retail):
+//  - the two unsigned-short clears precede the Cur_VB test: retail hoists the
+//    test's load/cmp above them, so the clears are written first;
+//  - `IsDeviceLost = false;` precedes `++FrameCount;`, which is what splits
+//    retail's increment into load/inc/.../store around the byte store;
+//  - render_state_changed (0x0133F49C, proven static) is written through the
+//    named static, not a cast pointer: the cast form made MSVC fuse every
+//    |= into one `or [mem],imm`, while retail splits all but the first;
+//  - the per-iteration BfmeHandleCX is the object in retail's single unwind
+//    state (tools/eh_info.py 0x00908FE0 -> cleanup tail-jumps the matched
+//    ??1BfmeHandleCX@@QAE@XZ at 0x0005CC00), so its null ctor store and the
+//    -1/0 state pair belong to the loop body.
+// Remaining 175 diffs, in the order probe --shape reports them (do NOT retry
+// these shapes blind, each was measured):
+//  1 +0x0E  retail emits the first statement's `mov eax,[0x13405c4]` BETWEEN
+//    `push eax` and `mov fs:[0],esp`; VC7.1 in this TU always installs the
+//    frame first. Same length either way (12 bytes of permutation).
+//  2 +0x20  retail hoists the D3DDevice load/vtable load/`push esi` above the
+//    `xor ebx,ebx` + `mov [0x13405c4],ebx` pair; ours keeps source order.
+//  3 +0x112 retail hoists the Cur_VB test's load/cmp above the two word
+//    clears; VC7.1 does not hoist a compare that feeds a branch. Same for the
+//    index-buffer group at +0x159 (the `mov esi,4` materialisation).
+//  4 +0x193 retail keeps the hoisted flag load together with `or edx,0x20000`
+//    above the three index-buffer stores; ours sinks the `or`.
+//  5 +0x1df retail has a SECOND null test in the loop
+//    (`mov ecx,eax; cmp ecx,ebx; je`, the REF_PTR_SET `if (dst)` guard that
+//    MSVC folds away here even when it re-reads the array element).
+//  6 the material release takes the in-memory `dec [ecx+4]` form in ours and
+//    the register form in retail; the identical inline Release_Ref takes the
+//    register form for the vertex and index buffers, so it is register
+//    pressure at that point, not the spelling.
+//  7 the epilogue pieces MSVC hoists (the `mov ecx,[esp+8]` frame-chain load,
+//    `pop esi`) land in a different order in the material block.
 struct BfmeEndSceneDeviceVtable { void *slots0to2[3]; long (__stdcall *TestCooperativeLevel)(void *); void *slots4to16[13]; long (__stdcall *Present)(void *, const void *, const void *, void *, const void *); void *slots18to41[24]; long (__stdcall *EndScene)(void *); };
 struct BfmeEndSceneDevice { BfmeEndSceneDeviceVtable *vtable; };
 class BfmeAwakenLog { public: virtual BfmeAwakenLog *slot00(int); virtual void slot04(void); virtual void slot08(void); virtual void slot0c(void); virtual void slot10(void); virtual void slot14(void); virtual void slot18(void); virtual void slot1c(void); virtual void slot20(void); virtual void slot24(void); virtual void slot28(void); virtual void slot2c(void); virtual void slot30(void); virtual void slot34(void); virtual BfmeAwakenLog *slot38(const char *); virtual void slot3c(void); virtual void slot40(void); virtual void slot44(void); virtual void slot48(void); virtual BfmeAwakenLog *slot4c(int); };
@@ -111,13 +145,22 @@ class BfmeHandleCX
 {
 public:
     TextureClass *p;
+    BfmeHandleCX(void) : p(0) {}
     ~BfmeHandleCX(void) { if (p) p->Release_Ref(); }
+};
+
+// The loop bound is a signed dword at +0x278 of the caps object the
+// CurrentCaps pointer names (retail reads [CurrentCaps+0x278] at +0x1BD and
+// +0x20B). The game's dx8caps.h is the D3D8 layout (+0x124), so the field is
+// read through this TU-local view instead of the header accessor.
+struct BfmeD3D9CapsMaxTextures {
+    unsigned char pad[0x278];
+    int MaxTexturesPerPass;
 };
 
 void DX8Wrapper::End_Scene(bool flip_frames)
 {
-    unsigned saved_scene_state = *reinterpret_cast<unsigned *>(0x013405c4);
-    *reinterpret_cast<unsigned *>(0x013405c8) = saved_scene_state;
+    *reinterpret_cast<unsigned *>(0x013405c8) = *reinterpret_cast<unsigned *>(0x013405c4);
     *reinterpret_cast<unsigned *>(0x013405c4) = 0;
     reinterpret_cast<BfmeEndSceneDevice *>(D3DDevice)->vtable->EndScene(reinterpret_cast<BfmeEndSceneDevice *>(D3DDevice));
     ++number_of_DX8_calls;
@@ -125,7 +168,7 @@ void DX8Wrapper::End_Scene(bool flip_frames)
     if (flip_frames) {
         int result = reinterpret_cast<BfmeEndSceneDevice *>(D3DDevice)->vtable->Present(reinterpret_cast<BfmeEndSceneDevice *>(D3DDevice), 0, 0, 0, 0);
         ++number_of_DX8_calls;
-        if (result >= 0) { ++FrameCount; IsDeviceLost = false; } else IsDeviceLost = true;
+        if (result >= 0) { IsDeviceLost = false; ++FrameCount; } else IsDeviceLost = true;
         if (result == D3DERR_DEVICELOST) {
             result = reinterpret_cast<BfmeEndSceneDevice *>(D3DDevice)->vtable->TestCooperativeLevel(reinterpret_cast<BfmeEndSceneDevice *>(D3DDevice));
             if (result == D3DERR_DEVICENOTRESET) Reset_Device(true); else Rva009DB560Sleep(200);
@@ -135,33 +178,36 @@ void DX8Wrapper::End_Scene(bool flip_frames)
             TheBfmeAwakenDebug->slot6c(0, 0)->slot38("DX8 error ")->slot00(result)->slot4c(1);
         }
     }
-    if (Rva01341120VertexBuffers[0]) Rva01341120VertexBuffers[0]->Release_Engine_Ref();
     *reinterpret_cast<unsigned short *>(0x01341118) = 0;
     *reinterpret_cast<unsigned short *>(0x0134111a) = 0;
+    if (Rva01341120VertexBuffers[0]) Rva01341120VertexBuffers[0]->Release_Engine_Ref();
     if (Rva01341120VertexBuffers[0]) Rva01341120VertexBuffers[0]->Release_Ref();
-    *reinterpret_cast<unsigned *>(0x0133f49c) |= 0x10000;
-    IndexBufferClass *index_buffer = Rva01341128IndexBuffer;
-    if (index_buffer) Rva01341128IndexBuffer->Release_Engine_Ref();
+    render_state_changed |= 0x10000;
     Rva01341120VertexBuffers[0] = 0;
     *reinterpret_cast<unsigned *>(0x0134110c) = 4;
     *reinterpret_cast<unsigned short *>(0x0134111c) = 0;
-    if (index_buffer) index_buffer->Release_Ref();
+    if (Rva01341128IndexBuffer) Rva01341128IndexBuffer->Release_Engine_Ref();
+    if (Rva01341128IndexBuffer) Rva01341128IndexBuffer->Release_Ref();
+    unsigned ib_changed = render_state_changed | 0x20000;
     *reinterpret_cast<unsigned *>(0x01341114) = 4;
     Rva01341128IndexBuffer = 0;
     *reinterpret_cast<unsigned short *>(0x0134112c) = 0;
-    *reinterpret_cast<unsigned *>(0x0133f49c) |= 0x20000;
+    render_state_changed = ib_changed;
     TextureBaseClass **textures = reinterpret_cast<TextureBaseClass **>(0x01340ec8);
-    for (int i = 0; i < CurrentCaps->Get_Max_Textures_Per_Pass(); ++i) {
-        BfmeHandleCX texture;
-        texture.p = reinterpret_cast<TextureClass *>(textures[i]);
-        if (texture.p) texture.p->Release_Ref();
-        texture.p = 0;
-        textures[i] = 0;
-        *reinterpret_cast<unsigned *>(0x0133f49c) |= 0x40 << i;
+    for (int i = 0; i < reinterpret_cast<BfmeD3D9CapsMaxTextures *>(CurrentCaps)->MaxTexturesPerPass; ++i) {
+        BfmeHandleCX binding;
+        TextureClass *slot = reinterpret_cast<TextureClass *>(textures[i]);
+        if (slot != 0) {
+            if (textures[i]) reinterpret_cast<TextureClass *>(textures[i])->Release_Ref();
+            unsigned tex_changed = render_state_changed | (0x40u << i);
+            textures[i] = 0;
+            render_state_changed = tex_changed;
+        }
     }
-    VertexMaterialClass **material = reinterpret_cast<VertexMaterialClass **>(0x01340ec4);
-    if (*material) (*material)->Release_Ref();
-    *reinterpret_cast<unsigned *>(0x0133f49c) |= 0x4000;
-    *material = 0;
+    VertexMaterialClass *mat = *reinterpret_cast<VertexMaterialClass **>(0x01340ec4);
+    if (mat) mat->Release_Ref();
+    unsigned mat_changed = render_state_changed | 0x4000;
+    *reinterpret_cast<VertexMaterialClass **>(0x01340ec4) = 0;
     *reinterpret_cast<unsigned *>(0x0134051c) = 0;
+    render_state_changed = mat_changed;
 }
