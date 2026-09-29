@@ -25,10 +25,12 @@ typedef int (__stdcall *FarProc)(void);
 extern "C" __declspec(dllimport) FarProc __stdcall GetProcAddress(
 	void *module, const char *name);
 
-#define TheScriptDebugWindowDLL (*(void **)0x012F0758)
-#define AppIsFast (*(bool *)0x012F0768)
-#define TheGameLogic (*(BfmeGameLogicPause **)0x012F0898)
-#define TheGlobalData (*(GlobalData **)0x012ED5C8)
+extern void *TheScriptDebugWindowDLL;
+extern bool g_012F0768;
+extern BfmeGameLogicPause *TheGameLogic;
+extern GlobalData *TheWritableGlobalData;
+#define AppIsFast g_012F0768
+#define TheGlobalData ((const GlobalData *)TheWritableGlobalData)
 
 bool ScriptEngine::isTimeFast(void)
 {

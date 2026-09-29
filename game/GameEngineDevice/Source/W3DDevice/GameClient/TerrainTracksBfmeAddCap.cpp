@@ -65,12 +65,15 @@ class WW3D
 public:
 	static unsigned int Get_Sync_Time(void)
 	{
-		return *(unsigned int *)0x0133F420;
+		return SyncTime;
 	}
+
+private:
+	static unsigned int SyncTime;
 };
 
-#define TheTerrainLogic (*(TerrainLogic **)0x012EF4CC)
-#define TheTerrainTracksRenderObjClassSystem (*(TerrainTracksRenderObjClassSystem **)0x012F9D98)
+extern TerrainLogic *TheTerrainLogic;
+extern TerrainTracksRenderObjClassSystem *TheTerrainTracksRenderObjClassSystem;
 
 static inline float sqr(float value)
 {

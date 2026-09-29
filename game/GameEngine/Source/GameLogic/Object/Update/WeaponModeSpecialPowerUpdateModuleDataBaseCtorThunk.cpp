@@ -8,6 +8,8 @@ typedef int Int;
 
 #include "ascii_string.h"
 
+extern AsciiString TheEmptyString;
+
 class BfmeNamedSlot
 {
 public:
@@ -48,10 +50,10 @@ private:
 // ??0WeaponModeSpecialPowerUpdateModuleDataBase@@QAE@XZ
 WeaponModeSpecialPowerUpdateModuleDataBase::WeaponModeSpecialPowerUpdateModuleDataBase()
 	: m_zero08( 0 ),
-	  m_packSound( *reinterpret_cast<const AsciiString *>( 0x01336e50 ), 0 ),
-	  m_unpackSound( *reinterpret_cast<const AsciiString *>( 0x01336e50 ), 0 ),
-	  m_prepSoundLoop( *reinterpret_cast<const AsciiString *>( 0x01336e50 ), 0 ),
-	  m_triggerSound( *reinterpret_cast<const AsciiString *>( 0x01336e50 ), 0 )
+	  m_packSound( TheEmptyString, 0 ),
+	  m_unpackSound( TheEmptyString, 0 ),
+	  m_prepSoundLoop( TheEmptyString, 0 ),
+	  m_triggerSound( TheEmptyString, 0 )
 {
 	m_zero1cc = 0;
 }

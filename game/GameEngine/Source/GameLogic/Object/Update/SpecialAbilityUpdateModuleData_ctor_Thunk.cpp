@@ -14,6 +14,9 @@ __forceinline void specialAbilityStoreZero( volatile unsigned int *address )
 	*address = 0;
 }
 
+class AsciiString;
+extern AsciiString TheEmptyString;
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
@@ -56,10 +59,10 @@ private:
 
 // ??0SpecialAbilityUpdateModuleData@@QAE@XZ
 SpecialAbilityUpdateModuleData::SpecialAbilityUpdateModuleData()
-	: m_packSound( (void *)0x01336e50, 0 ),
-	  m_unpackSound( (void *)0x01336e50, 0 ),
-	  m_prepSoundLoop( (void *)0x01336e50, 0 ),
-	  m_triggerSound( (void *)0x01336e50, 0 )
+	: m_packSound( (void *)&TheEmptyString, 0 ),
+	  m_unpackSound( (void *)&TheEmptyString, 0 ),
+	  m_prepSoundLoop( (void *)&TheEmptyString, 0 ),
+	  m_triggerSound( (void *)&TheEmptyString, 0 )
 {
 	specialAbilityStoreZero( reinterpret_cast<volatile unsigned int *>( (unsigned char *)this + 0x1d4 ) );
 	specialAbilityStoreZero( reinterpret_cast<volatile unsigned int *>( (unsigned char *)this + 0x1e0 ) );
