@@ -169,7 +169,7 @@ extern "C" void __stdcall Rva00813100( int port, int kind,
 			}
 			else
 			{
-				wsprintfA( addr, (const char *)0x012C4A50,
+				wsprintfA( addr, "TAPI%d:",
 					firstResult );
 				if ( active->m_state == 3 )
 					Rva0081B910( active->m_transport, addr );
@@ -193,7 +193,7 @@ extern "C" void __stdcall Rva00813100( int port, int kind,
 			}
 			else
 			{
-				wsprintfA( addr, (const char *)0x012C4A58,
+				wsprintfA( addr, "TAPI%d:",
 					secondResult );
 				Rva0081B010( active->m_transport, addr );
 				active->m_state = 5;

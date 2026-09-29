@@ -125,8 +125,8 @@ Bool WorldHeightMap::ParseSizeOnly(DataChunkInput &file, DataChunkInfo *info)
 		for (Int i = 0; i < m_dataSize; ++i)
 		{
 			sample = source[i];
-			m_data[i] = (UnsignedShort)(sample * *(const float *)0x01121BA0
-				+ *(const float *)0x0107533C);
+			m_data[i] = (UnsignedShort)(sample * 16.0f
+				+ 0.5f);
 		}
 		operator delete((void *)source);
 	}

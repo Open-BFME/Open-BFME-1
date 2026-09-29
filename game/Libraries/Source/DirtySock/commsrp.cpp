@@ -34,6 +34,7 @@ extern "C" {
 	int Rva007FD510(void *socket, const void *address, int length);
 	int Rva007FDE80(void *socket, int flags, int interval, void *ref, void *callback);
 	void Rva007FD3F0(void *socket);
+	int Rva00815B50(unsigned int socket, int flags, void *ref);
 }
 
 extern void Rva00815780(void);
@@ -206,7 +207,7 @@ int CommSRPListen(void *ref, const char *text)
 		Rva008154F0(ref, 0);
 		return -5;
 	}
-	Rva007FDE80(*(void **)((char *)ref + 0x7C), 2, 0x64, ref, (void *)0x00C15B50);
+	Rva007FDE80(*(void **)((char *)ref + 0x7C), 2, 0x64, ref, (void *)Rva00815B50);
 	if (address != 0) {
 		if (peerPort == 0) {
 			peerPort = bindPort + 1;
@@ -280,7 +281,7 @@ int CommSRPConnect(void *ref, const char *text)
 	*((unsigned char *)ref + 0x84) = (unsigned char)temp;
 	*((unsigned char *)ref + 0x82) = (unsigned char)(peerPort >> 8);
 	*((unsigned char *)ref + 0x83) = (unsigned char)peerPort;
-	Rva007FDE80(*(void **)((char *)ref + 0x7C), 2, 0x64, ref, (void *)0x00C15B50);
+	Rva007FDE80(*(void **)((char *)ref + 0x7C), 2, 0x64, ref, (void *)Rva00815B50);
 	*(int *)((char *)ref + 0x90) = 1;
 	return 0;
 }

@@ -39,6 +39,7 @@ struct Rva00899560Pool
 extern Rva008D2A30Node *Rva008D2A30Head;
 extern Rva00899560Pool *g_rva8CD130IdleHook;
 extern void *(*Rva008C5D70Alloc)(unsigned int bytes);
+extern const char vtable01135D68[], vtable011360A8[];
 
 class AptValue
 {
@@ -75,10 +76,10 @@ AptBoolean *AptBoolean::Create(bool value)
 
     if (object != 0)
     {
-        *(void **)object = (void *)0x01135D68;
+        *(void **)object = (void *)vtable01135D68;
         object->m_flags = (object->m_flags & 0xf0008005) | 0x40008005;
         g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
-        *(void **)object = (void *)0x011360A8;
+        *(void **)object = (void *)vtable011360A8;
         object->m_value = value;
         return object;
     }
