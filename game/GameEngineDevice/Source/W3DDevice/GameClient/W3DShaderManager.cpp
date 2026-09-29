@@ -756,13 +756,10 @@ Int ScreenBWFilter::set(enum FilterModes mode)
 	return false;
 }
 
-// ?reset@ScreenBWFilter@@MAEXXZ present-unmatched
 void ScreenBWFilter::reset(void)
 {
-// ?_Get_D3D_Device8@DX8Wrapper@@SAPAUIDirect3DDevice8@@XZ present-unmatched
-	DX8Wrapper::_Get_D3D_Device8()->SetTexture(0,NULL);	//previously rendered frame inside this texture
-// ?_Get_D3D_Device8@DX8Wrapper@@SAPAUIDirect3DDevice8@@XZ present-unmatched
-	DX8Wrapper::_Get_D3D_Device8()->SetPixelShader(0);	//turn off pixel shader
+	bfmeSetTexture(0,NULL);	//previously rendered frame inside this texture
+	bfmeSetPixelShader(0);	//turn off pixel shader
 	DX8Wrapper::Invalidate_Cached_Render_States();
 }
 
