@@ -10368,5 +10368,15 @@
   "after_sha256": "0353b522e1ce307229edd3256d3d62607dfa6793939fcb798934f23cd0735671",
   "evidence": "targets/game/reverse/identity_evidence/005c3630-computeParticleVelocity.md",
   "reason": "The call site needs the struct-return view of 0x005FAC90: calling the matched void+out-pointer scale() emits 147 B against retail's 104, and every struct-return spelling of the callee body measures 100-102 B against its 78, so no single spelling reproduces both. The caller's view is the address-keyed rva005FAC90 pinned on its ILT 0x00008814 (as sibling 0x005C36C0 does); the callee row keeps scale."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00699af0.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva00699B40RefreshChannel.cpp",
+  "old_name": "sweep_Rva00699AF0",
+  "new_name": "rva00699B40RefreshChannel",
+  "before_sha256": "8812745148f4ef41047468b38530b8524cae7cc1b5292838448fc03e64b9801c",
+  "after_sha256": "e20cf1880d9062a80a1b846a555022aa206a94f87f594ac8cdbcdff7de407c53",
+  "evidence": "targets/game/reverse/identity_evidence/00699af0-address-name.md",
+  "reason": "The deleted attempt names RVA 0x00699AF0, but the name checker paired it with the preexisting RVA 0x00699B40 function because both appear in one source file. The new RVA 0x00699AF0 body has its own address-derived name. Its callers prove only a void(int) ABI, so the ledger does not claim an unsupported method identity."
  }
 ]
