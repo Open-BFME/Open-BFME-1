@@ -214,13 +214,17 @@ protected:
 	int m_timer;
 };
 
-#define TheAI (*(AI **)0x012EF214)
-#define CritterDesyncFlag (*(unsigned char *)0x012F0239)
-#define CritterDesyncSink (*(void **)0x012ED4FC)
-#define BfmeZeroRange (*(const float *)0x01075350)
-#define BfmeK1253 (*(const float *)0x0107533C)
-#define BfmeRandomFile ((char *)0x0109769C)
-#define BfmePanicMessage ((const char *)0x0109A088)
+class CRCParameterCheck;
+extern AI *TheAI;
+extern bool Glo012F0239;
+extern CRCParameterCheck *TheCRCParameterCheck;
+
+#define CritterDesyncFlag Glo012F0239
+#define CritterDesyncSink TheCRCParameterCheck
+#define BfmeZeroRange 0.0f
+#define BfmeK1253 0.5f
+#define BfmeRandomFile ((char *)"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp")
+#define BfmePanicMessage "CritterDesync: ComputePath40"
 
 typedef void (__cdecl *DebugLogFunction)(void *, const char *);
 

@@ -74,14 +74,10 @@ public:
 #pragma comment(linker, "/alternatename:?setHeight@Rva002BCB60Thing@@QAEXM@Z=?j_000281ff@@YAXXZ")
 #pragma comment(linker, "/alternatename:?run@Rva002BC260GoalOwner@@QAEXPAX000@Z=?j_0000795a@@YAXXZ")
 
-#define g_Rva012EF1F8 (*(Rva002BCB60AerialPathfinder **)0x012EF1F8)
-#define g_Rva0107533C (*(float *)0x0107533C)
-#define g_Rva01075C74 (*(float *)0x01075C74)
-#define g_Rva01088830 (*(float *)0x01088830)
-#define g_Rva01075344 (*(float *)0x01075344)
-#define g_Rva01075334 (*(float *)0x01075334)
-#define g_Rva012F02D4 (*(int *)0x012F02D4)
-#define g_Rva012F02D8 (*(int *)0x012F02D8)
+class AerialPathfinder;
+extern AerialPathfinder *TheAerialPathfinder;
+extern int g_012F02D4;
+extern int g_012F02D8;
 
 // ?choose@Rva002BCB60Owner@@QAEHPAXH@Z
 int Rva002BCB60Owner::choose(void *mode, int fullRange)
@@ -95,17 +91,17 @@ int Rva002BCB60Owner::choose(void *mode, int fullRange)
 	if ((unsigned char)fullRange != 0)
 	{
 		float range = thing->m_heightC0 + thing->m_heightC0 + m_height468;
-		if (!g_Rva012EF1F8->query(thing, &m_queryObject400, range, mode))
+		if (!((Rva002BCB60AerialPathfinder *)TheAerialPathfinder)->query(thing, &m_queryObject400, range, mode))
 			return 1;
 	}
 	else
 	{
 		float twiceHeight = m_height468 + m_height468;
-		if (!g_Rva012EF1F8->query(thing, &m_queryObject400,
+		if (!((Rva002BCB60AerialPathfinder *)TheAerialPathfinder)->query(thing, &m_queryObject400,
 			twiceHeight
-				- thing->m_heightC0 * g_Rva0107533C, mode))
+				- thing->m_heightC0 * 0.5f, mode))
 			return 1;
-		if (g_Rva012EF1F8->query(thing, &m_queryObject400,
+		if (((Rva002BCB60AerialPathfinder *)TheAerialPathfinder)->query(thing, &m_queryObject400,
 			twiceHeight, mode))
 		{
 			// Continue to the height check below.
@@ -121,10 +117,10 @@ int Rva002BCB60Owner::choose(void *mode, int fullRange)
 
 	// Preserve the retail x87 load of the current height before the offset.
 	Coord3D result;
-	if (!g_Rva012EF1F8->tryQuery(&m_queryObject400,
-		(volatile float &)m_height468 + g_Rva01075C74, &result))
+	if (!((Rva002BCB60AerialPathfinder *)TheAerialPathfinder)->tryQuery(&m_queryObject400,
+		(volatile float &)m_height468 + 10.0f, &result))
 		return 0;
-	if (result.z - g_Rva01088830 > thing->m_height40)
+	if (result.z - 2.0f > thing->m_height40)
 	{
 		if (m_goalRange478 < thing->m_height40)
 			return 2;
@@ -148,15 +144,15 @@ void Rva002BCB60Owner::route(void *mode, Coord3D *position, int source)
 	if (state == 1)
 	{
 		Rva002BCB60Thing *thing = m_thing;
-		thing->setHeight(thing->m_height40 + g_Rva01075344);
+		thing->setHeight(thing->m_height40 + 5.0f);
 		((Rva002BC260GoalOwner *)this)->run(&goal,
-			&g_Rva012F02D8, 0, (void *)source);
+			&g_012F02D8, 0, (void *)source);
 	}
 	else if (state == 2)
 	{
 		Rva002BCB60Thing *thing = m_thing;
-		thing->setHeight(thing->m_height40 - g_Rva01075334);
+		thing->setHeight(thing->m_height40 - 1.0f);
 		((Rva002BC260GoalOwner *)this)->run(&goal,
-			&g_Rva012F02D4, 0, (void *)source);
+			&g_012F02D4, 0, (void *)source);
 	}
 }
