@@ -7,6 +7,7 @@ struct BfmeStringPool3AF0 { void *m_unknown00; void (__cdecl *free)(void *); };
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
 extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned int);
+extern void (__cdecl *TheBfmeFree)(void *, unsigned int);
 
 class BfmeStrVKI {
 public:
@@ -43,8 +44,7 @@ public:
     // Retail unwind 00C58540 passes (allocation,16) to 00891A80,
     // the six-byte jump through callback VA 01337830. Caller removes 8.
     __forceinline static void operator delete(void *memory, unsigned bytes) {
-        typedef void (__cdecl *SizedDelete)(void *, unsigned);
-        (*(SizedDelete *)0x01337830)(memory, bytes);
+        TheBfmeFree(memory, bytes);
     }
     void *m_unknown00;
     unsigned m_flags;

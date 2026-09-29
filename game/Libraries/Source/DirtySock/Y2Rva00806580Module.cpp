@@ -70,6 +70,7 @@ extern "C" unsigned int strlen( const char *text );
 
 // The empty string this module hands back for a block with no payload.
 extern char g_Rva0130ACE0Empty[];
+extern char g_0130ACF8[];
 unsigned int Rva007FEA00Tick( void );                       // 0x007FEA00
 
 // The tick this module first ran at, filled in once and never again.
@@ -524,7 +525,7 @@ extern "C" int Rva0080B1B0( Rva0080B1B0Comm *comm, int secu, char *name,
 	comm->m_field114 = 0;
 
 	if( name == 0 )
-		name = (char *)0x0130ACF8;
+		name = g_0130ACF8;
 
 	if( port <= 0 )
 		port = comm->m_backend != 0 ? 0x1BB : 0x50;

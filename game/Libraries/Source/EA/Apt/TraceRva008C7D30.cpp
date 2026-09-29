@@ -17,6 +17,7 @@ struct BfmeStringPool3AF0
 
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
 extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringData3AF0 *g_stringBlock01338724;
 
 class BfmeStrVKI
 {
@@ -151,7 +152,7 @@ void TraceRva008C7D30(TraceStateRva008C7D30 *state)
     {
         fallback = CreateStringRva008C7D30();
         // The global holds a string block, whose characters begin at +8.
-        ((Rva008B2EA0Node *)fallback)->append((char *)*(void **)0x01338724 + 8);
+        ((Rva008B2EA0Node *)fallback)->append((char *)g_stringBlock01338724 + 8);
         ((Rva8CD130Value *)fallback)->getName(&text);
         if (fallback)
             goto converted;
