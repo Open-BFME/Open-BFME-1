@@ -648,6 +648,15 @@ typedef struct piPingPlayerLeftRoomData
 	const char *nick;
 } piPingPlayerLeftRoomData;
 
+/* 0x00862EF0: file-static remover inlined into the map function below. Retail
+ * keeps its out-of-line copy (compiler-private ABI: peer in ECX, xping in EAX)
+ * right here with no remaining references. Address-keeping name. */
+static void piRemoveXpingRva00862EF0(PEER peer, piXping *xping)
+{
+	piConnection *connection = (piConnection *)peer;
+	TableRemove(connection->xpings, xping);
+}
+
 void piPingPlayerLeftRoomTableMapFn(void *elem, void *clientData)
 {
 	piXping *xping = (piXping *)elem;
@@ -656,7 +665,7 @@ void piPingPlayerLeftRoomTableMapFn(void *elem, void *clientData)
 	if(strcmp(xping->nicks[0], data->nick) == 0 ||
 		strcmp(xping->nicks[1], data->nick) == 0)
 	{
-		TableRemove(((piConnection *)data->peer)->xpings, xping);
+		piRemoveXpingRva00862EF0(data->peer, xping);
 	}
 }
 
