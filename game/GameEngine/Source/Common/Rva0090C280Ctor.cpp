@@ -1,5 +1,9 @@
 // cl: /O2 /Ob0
 
+// Retail vtable 0x0113A56C, pinned as ?g_bfme927Vft@@3PADA
+// (targets/game/reverse/symbols.csv); BfmeConv927.cpp already names it.
+extern char g_bfme927Vft[];
+
 class Rva0090C280
 {
 	void *m_vptr;
@@ -28,7 +32,7 @@ public:
 
 Rva0090C280::Rva0090C280()
 {
-	m_vptr = (void *)0x0113A56C;
+	m_vptr = g_bfme927Vft;
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;
@@ -50,7 +54,7 @@ Rva0090C280::Rva0090C280()
 
 void Rva0090C280::releaseResource0090C2D0()
 {
-	m_vptr = (void *)0x0113A56C;
+	m_vptr = g_bfme927Vft;
 	void *resource = m_08;
 	if (resource) {
 		void (__stdcall *destroy)(void *) = ((void (__stdcall **)(void *))*(void **)resource)[2];

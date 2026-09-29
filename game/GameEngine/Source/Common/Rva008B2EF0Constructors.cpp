@@ -3,6 +3,11 @@ extern "C" void _WriteBarrier(void);
 #pragma intrinsic(_WriteBarrier)
 
 struct Rva00899560Value;
+struct Rva008B38F0Global;
+
+// Retail 0x01337820: the global table pointer both constructors load. No
+// symbol in dir32_addresses.csv names it, so it stays address-derived.
+extern Rva008B38F0Global *g_01337820;
 
 struct Rva00899560Pool
 {
@@ -131,11 +136,11 @@ Rva008B38D0::Rva008B38D0(const Rva008B38F0Input *argument0)
             source = (Rva008B38F0Nested *)argument0->m_value20;
         }
         _WriteBarrier();
-        value = (*(Rva008B38F0Global **)0x01337820)->get(source->m_value08 + 2);
+        value = g_01337820->get(source->m_value08 + 2);
     }
     else
     {
-        value = (*(Rva008B38F0Global **)0x01337820)->get(0);
+        value = g_01337820->get(0);
     }
     if (value)
     {
