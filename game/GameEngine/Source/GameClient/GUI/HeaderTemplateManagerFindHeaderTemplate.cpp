@@ -8,6 +8,10 @@
 // ushort length/data with that name, then releases the automatic query on
 // both the match and no-match exits.
 
+// The shared empty AsciiString sentinel (targets/game/reverse/symbols.csv
+// pins _g_bfmeEmptyAscii at retail 0x0107388B); a null StringBase reads it.
+extern "C" const char g_bfmeEmptyAscii[];
+
 template <typename T> class StringBase
 {
 friend class AsciiString;
@@ -46,9 +50,9 @@ public:
 	int compare( const AsciiString &other ) const
 	{
 		int otherLength = other.m_data ? other.m_data->length : 0;
-		const char *otherText = other.m_data ? other.m_data->data : (const char *)0x0107388B;
+		const char *otherText = other.m_data ? other.m_data->data : g_bfmeEmptyAscii;
 		int thisLength = m_data ? m_data->length : 0;
-		const char *thisText = m_data ? m_data->data : (const char *)0x0107388B;
+		const char *thisText = m_data ? m_data->data : g_bfmeEmptyAscii;
 		int length = thisLength < otherLength ? thisLength : otherLength;
 		int result = memcmp( thisText, otherText, length );
 		if( result != 0 )

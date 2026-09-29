@@ -9,6 +9,12 @@
 typedef int Int;
 typedef unsigned short WideChar;
 
+// The shared empty-string sentinels (targets/game/reverse/symbols.csv:
+// _g_bfmeEmptyAscii at 0x0107388B, ?g_bfmeEmptyUnicode at 0x0107388C).  A
+// null StringBase reads them instead of a literal image address.
+extern "C" const char g_bfmeEmptyAscii[];
+extern "C" const WideChar g_bfmeEmptyUnicode;
+
 class AsciiString;
 class UnicodeString;
 
@@ -51,7 +57,7 @@ public:
     {
         if (m_data)
             return reinterpret_cast<const char *>(m_data) + 8;
-        return reinterpret_cast<const char *>(0x0107388B);
+        return g_bfmeEmptyAscii;
     }
 };
 
@@ -73,7 +79,7 @@ public:
     {
         if (m_data)
             return reinterpret_cast<const WideChar *>(reinterpret_cast<const char *>(m_data) + 8);
-        return reinterpret_cast<const WideChar *>(0x0107388C);
+        return &g_bfmeEmptyUnicode;
     }
 };
 

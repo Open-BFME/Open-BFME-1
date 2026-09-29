@@ -9,6 +9,10 @@
 // StringInlineData preserves the BFME eight-byte string header locally; the
 // source below is the real leaf scan and APT text update, not a byte lift.
 
+// The shared empty AsciiString sentinel (targets/game/reverse/symbols.csv
+// pins _g_bfmeEmptyAscii at retail 0x0107388B); a null StringBase reads it.
+extern "C" const char g_bfmeEmptyAscii[];
+
 template <typename T> struct StringInlineData
 {
 	int m_refCount;
@@ -37,7 +41,7 @@ public:
 	StringInlineData<char> *data() const { return m_data; }
 	const char *str() const
 	{
-		return m_data ? m_data->m_text : (const char *)0x0107388B;
+		return m_data ? m_data->m_text : g_bfmeEmptyAscii;
 	}
 	unsigned int getLength() const
 	{
@@ -75,7 +79,7 @@ void BfmeAptScreenMapTransfer::setCurrentFilename( const AsciiString &filename )
 					goto found;
 			} while( end != start );
 		}
-		start = data ? (const char *)data + 8 : (const char *)0x0107388B;
+		start = data ? (const char *)data + 8 : g_bfmeEmptyAscii;
 		goto got_leaf;
 found:
 		start = end + 1;

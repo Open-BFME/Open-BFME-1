@@ -31,6 +31,17 @@ public:
 // with 0/1 before storing the same bool state at this+0x9F.
 extern WindowManager *g_theWindowManager;
 
+// The OnlineLogin singleton slot, read at the end of this callback.  Retail
+// 0x012F4AAC; dir32_addresses.csv records ?TheBfmeOnlineLogin@@3PAVBfmeAptScreen
+// OnlineLogin@@A, and the matched destructor proves that class, so the local
+// declaration of it below is the same type the pin expects.
+class BfmeAptScreenOnlineLogin;
+extern BfmeAptScreenOnlineLogin *TheBfmeOnlineLogin;
+
+// Address-derived: retail 0x012F4AB0 is not recorded in dir32_addresses.csv.
+// A one-byte flag the no-selection path raises before the close action runs.
+extern unsigned char g_012F4AB0;
+
 struct BfmeOnlineLoginContext
 {
 	unsigned char m_unmodelled[ 0x250 ];
@@ -70,11 +81,11 @@ void BfmeAptScreenOnlineLogin::_bfme_acceptLocale( const char * )
 	}
 	else
 	{
-		*(unsigned char *)0x012F4AB0 = 1;
+		g_012F4AB0 = 1;
 	}
 
 	g_theWindowManager->add( m_context->m_window,
 		"CallChild", 1, (void *)"DoCloseLocale", 0, 0, 0, 0 );
 
-	(*(BfmeAptScreenOnlineLogin **)0x012F4AAC)->rva00552C40( m_closeLocaleArgument );
+	TheBfmeOnlineLogin->rva00552C40( m_closeLocaleArgument );
 }

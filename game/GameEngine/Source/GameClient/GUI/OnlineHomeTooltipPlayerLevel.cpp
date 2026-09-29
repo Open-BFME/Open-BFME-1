@@ -68,6 +68,11 @@ public:
     virtual PSPlayerStats getCachedLocalPlayerStats();
 };
 extern GameSpyInfo *TheGameSpyInfo;
+// Retail's per-rank APT label tables for the player-level tooltip, indexed by
+// rank 0..9.  Neither address is recorded in dir32_addresses.csv, so they keep
+// address-derived names; the pointer-to-const-char shape is what the body reads.
+extern "C" const char *g_012B78F0[];
+extern "C" const char *g_012B78C8[];
 class Gen_uw_00025c1b;
 int bfmeRankPointsFromStats(Gen_uw_00025c1b*,int);
 extern "C" int *g_bfmeLimitsDF;
@@ -100,8 +105,8 @@ void BfmeAptScreenOnlineHome::tooltipPlayerLevelIcon(void*) {
     for(;rank < 10; ++rank) if(points < g_bfmeLimitsDF[rank+1]) break;
     AsciiString key("TOOLTIP:");
     AsciiString name;
-    if(Rva004D8F50(side)) name.set(((const char**)0x012B78F0)[rank]);
-    else name.set(((const char**)0x012B78C8)[rank]);
+    if(Rva004D8F50(side)) name.set(g_012B78F0[rank]);
+    else name.set(g_012B78C8[rank]);
     key.concat(name);
     UnicodeString level = TheGameText->fetch(key);
     UnicodeString tooltip;
