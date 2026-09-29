@@ -916,7 +916,6 @@ AggregateDefClass::Save_Subobject
 //	Save_Class_Info
 //
 bool
-// ?Save_Class_Info@AggregateDefClass@@MAE_NAAVChunkSaveClass@@@Z present-unmatched
 AggregateDefClass::Save_Class_Info (ChunkSaveClass &chunk_save)
 {
 	// BFME returns the byte-sized success result, like the other Save members.
