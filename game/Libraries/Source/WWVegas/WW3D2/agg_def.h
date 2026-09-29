@@ -108,7 +108,9 @@ class AggregateDefClass
 		//
 		//	Public methods
 		//		
-		virtual WW3DErrorType	Load_W3D (ChunkLoadClass &chunk_load);
+		// BFME: Load_W3D (retail 0x00980340) returns a byte bool too; it keeps
+		// each sub-read's result in bl and finishes with "mov al,bl" or "mov al,1".
+		virtual bool				Load_W3D (ChunkLoadClass &chunk_load);
 		// BFME: the whole Save family returns a byte bool, not WW3DErrorType.
 		// Retail 0x00980590 (Save_W3D) tests every sub-save with "cmp al,1",
 		// 0x009805E0 (Save_Header) and 0x00980680 (Save_Class_Info) each finish
@@ -154,9 +156,9 @@ class AggregateDefClass
 		//	Loading methods
 		//
 		virtual bool				Read_Header (ChunkLoadClass &chunk_load);
-		virtual WW3DErrorType		Read_Info (ChunkLoadClass &chunk_load);
+		virtual bool				Read_Info (ChunkLoadClass &chunk_load);
 		virtual bool				Read_Subobject (ChunkLoadClass &chunk_load);
-		virtual WW3DErrorType		Read_Class_Info (ChunkLoadClass &chunk_load);
+		virtual bool				Read_Class_Info (ChunkLoadClass &chunk_load);
 
 		//
 		//	Saving methods

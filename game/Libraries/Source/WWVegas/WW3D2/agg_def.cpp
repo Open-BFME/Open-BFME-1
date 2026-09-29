@@ -603,8 +603,7 @@ AggregateDefClass::Is_Object_In_List
 //
 //	Load
 //
-WW3DErrorType
-// ?Load_W3D@AggregateDefClass@@UAE?AW4WW3DErrorType@@AAVChunkLoadClass@@@Z present-unmatched
+bool
 AggregateDefClass::Load_W3D (ChunkLoadClass &chunk_load)
 {
 	W3dTextureReplacerHeaderStruct header = { 0 };
@@ -612,12 +611,13 @@ AggregateDefClass::Load_W3D (ChunkLoadClass &chunk_load)
 	
 	while (chunk_load.Open_Chunk()) {
 
-		WW3DErrorType error = WW3D_ERROR_OK;
+		// BFME: every sub-read reports a byte bool, true on success.
+		bool error = true;
 
 		switch (chunk_load.Cur_Chunk_ID()) {
 
 			case W3D_CHUNK_AGGREGATE_HEADER:
-				error = (WW3DErrorType)Read_Header(chunk_load);
+				error = Read_Header(chunk_load);
 				break;
 
 			case W3D_CHUNK_AGGREGATE_INFO:
@@ -642,10 +642,10 @@ AggregateDefClass::Load_W3D (ChunkLoadClass &chunk_load)
 				break;
 		}	
 		chunk_load.Close_Chunk();
-		if (error != WW3D_ERROR_OK) return (error);
+		if (error != true) return (error);
 	}
 	
-	return WW3D_ERROR_OK;
+	return true;
 }
 
 
@@ -679,27 +679,27 @@ AggregateDefClass::Read_Header (ChunkLoadClass &chunk_load)
 //
 //	Read_Info
 //
-WW3DErrorType
-// ?Read_Info@AggregateDefClass@@MAE?AW4WW3DErrorType@@AAVChunkLoadClass@@@Z present-unmatched
+bool
+// ?Read_Info@AggregateDefClass@@MAE_NAAVChunkLoadClass@@@Z present-unmatched
 AggregateDefClass::Read_Info (ChunkLoadClass &chunk_load)
 {
 	// Assume error
-	WW3DErrorType ret_val = WW3D_ERROR_LOAD_FAILED;
+	bool ret_val = false;
 
 	// Read the chunk straight into our member structure
 	::memset (&m_Info, 0, sizeof (m_Info));
 	if (chunk_load.Read (&m_Info, sizeof (m_Info)) == sizeof (m_Info)) {
 
 		// Success!
-		ret_val = WW3D_ERROR_OK;
+		ret_val = true;
 
 		// Read all the subobjects from the file
 		for (UINT isubobject = 0;
-			  (isubobject < m_Info.SubobjectCount) && (ret_val == WW3D_ERROR_OK);
+			  (isubobject < m_Info.SubobjectCount) && (ret_val == true);
 			  isubobject ++) {
 
 			// Read this subobject's definition from the file
-				ret_val = (WW3DErrorType)Read_Subobject (chunk_load);
+				ret_val = Read_Subobject (chunk_load);
 		}				
 	}
 
@@ -755,19 +755,19 @@ AggregateDefClass::Add_Subobject (const W3dAggregateSubobjectStruct &subobj_info
 //
 //	Read_Class_Info
 //
-WW3DErrorType
-// ?Read_Class_Info@AggregateDefClass@@MAE?AW4WW3DErrorType@@AAVChunkLoadClass@@@Z present-unmatched
+bool
+// ?Read_Class_Info@AggregateDefClass@@MAE_NAAVChunkLoadClass@@@Z present-unmatched
 AggregateDefClass::Read_Class_Info (ChunkLoadClass &chunk_load)
 {
 	// Assume error
-	WW3DErrorType ret_val = WW3D_ERROR_LOAD_FAILED;
+	bool ret_val = false;
 
 	// Read the chunk straight into our header structure
 	::memset (&m_MiscInfo, 0, sizeof (m_MiscInfo));
 	if (chunk_load.Read (&m_MiscInfo, sizeof (m_MiscInfo)) == sizeof (m_MiscInfo)) {
 
 		// Success!
-		ret_val = WW3D_ERROR_OK;
+		ret_val = true;
 	}
 
 	// Return the WW3D_ERROR_TYPE return code
@@ -956,7 +956,7 @@ AggregateLoaderClass::Load_W3D (ChunkLoadClass &chunk_load)
 	if (pdefinition != NULL) {
 		
 		// Ask the definition object to load the aggregate data
-		if (pdefinition->Load_W3D (chunk_load) != WW3D_ERROR_OK) {
+		if (pdefinition->Load_W3D (chunk_load) != true) {
 			
 			// Error!  Free the definition
 			delete pdefinition;
