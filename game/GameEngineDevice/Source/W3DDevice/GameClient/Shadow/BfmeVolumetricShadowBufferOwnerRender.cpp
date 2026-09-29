@@ -181,6 +181,9 @@ extern void j_00045b83();
 extern void j_00028baa();
 extern void j_0003d253();
 
+class W3DShadowHelperManager;
+extern W3DShadowHelperManager *TheW3DShadowHelperManager;
+
 struct BfmeVolumetricShadowBufferOwner : public Rva007B12F0Base
 {
 	unsigned char m_prefix[0x20];
@@ -214,7 +217,7 @@ void BfmeVolumetricShadowBufferOwner::renderBuffer()
 		if (vertexTotal <= 30000)
 		{
 			BfmeShadowBufferManager *buffers =
-				*(BfmeShadowBufferManager **)0x01307178;
+				(BfmeShadowBufferManager *)TheW3DShadowHelperManager;
 			if (buffers->m_vertexLock != 0 &&
 				buffers->m_indexCapacity < (unsigned)vertexTotal)
 			{
@@ -223,12 +226,12 @@ void BfmeVolumetricShadowBufferOwner::renderBuffer()
 				releaseCast.asVoid = (void *)j_00045b83;
 				release = releaseCast.asMember;
 				(reinterpret_cast<BfmeShadowCall1Int *>(buffers)->*release)(1);
-				buffers = *(BfmeShadowBufferManager **)0x01307178;
+				buffers = (BfmeShadowBufferManager *)TheW3DShadowHelperManager;
 			}
 			if (buffers->m_vertexLock == 0)
 			{
 				j_00028baa();
-				buffers = *(BfmeShadowBufferManager **)0x01307178;
+				buffers = (BfmeShadowBufferManager *)TheW3DShadowHelperManager;
 			}
 
 			unsigned short *indexWrite = buffers->m_indexLock->m_indices;
@@ -241,11 +244,11 @@ void BfmeVolumetricShadowBufferOwner::renderBuffer()
 				scratch);
 
 			BfmeShadowBufferManager *updatedBuffers =
-				*(BfmeShadowBufferManager **)0x01307178;
+				(BfmeShadowBufferManager *)TheW3DShadowHelperManager;
 			int otherCount = entry->mesh->m_meshData->m_otherCount;
 			updatedBuffers->m_vertexCapacity -= otherCount * 2;
 			BfmeShadowBufferManager *updatedBuffers2 =
-				*(BfmeShadowBufferManager **)0x01307178;
+				(BfmeShadowBufferManager *)TheW3DShadowHelperManager;
 			updatedBuffers2->m_indexCapacity -=
 				vertexCount * 3 + (int)entry->reserved10 * 6;
 		}

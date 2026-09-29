@@ -244,6 +244,7 @@ private:
 extern "C" BfmeWeaponFormattedText *__cdecl bfmeFormatText(
 	BfmeWeaponFormattedText *, int, const char *, ...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void *, void *);
+extern int g_guardTargetTypeThrowInfo;
 
 class BfmeWeaponSetXferView
 {
@@ -332,8 +333,8 @@ struct BfmeWeaponSetView
 	Weapon *weapons[4];
 };
 
-#define BfmeThingFactoryGlobal (*(BfmeThingFactory **)0x012EF1D8)
-#define BfmeWeaponStoreGlobal (*(BfmeWeaponStore **)0x012EF738)
+#define BfmeThingFactoryGlobal ((BfmeThingFactory *)TheThingFactory)
+#define BfmeWeaponStoreGlobal ((BfmeWeaponStore *)TheWeaponStore)
 
 typedef const ThingTemplate *(WeaponTemplateSet::*BfmeWeaponTemplateGetter)() const;
 // The matched inline accessor must remain emitted while this TU owns its row.
@@ -382,7 +383,7 @@ void WeaponSet::xfer(Xfer *xfer)
 			{
 				BfmeWeaponFormattedText error;
 				bfmeFormatText(&error, 5, 0);
-				_CxxThrowException(&error, (void *)0x011DFE5C);
+				_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 			}
 
 			weaponSet->templateSet = reinterpret_cast<const WeaponTemplateSet *>(
@@ -391,7 +392,7 @@ void WeaponSet::xfer(Xfer *xfer)
 			{
 				BfmeWeaponFormattedText error;
 				bfmeFormatText(&error, 5, 0);
-				_CxxThrowException(&error, (void *)0x011DFE5C);
+				_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 			}
 		}
 	}
@@ -407,7 +408,7 @@ void WeaponSet::xfer(Xfer *xfer)
 			{
 				BfmeWeaponFormattedText error;
 				bfmeFormatText(&error, 5, 0);
-				_CxxThrowException(&error, (void *)0x011DFE5C);
+				_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 			}
 			reinterpret_cast<AsciiString &>(templateName) = *reinterpret_cast<const AsciiString *>(
 				reinterpret_cast<const unsigned char *>(thingTemplate) + 0x20);

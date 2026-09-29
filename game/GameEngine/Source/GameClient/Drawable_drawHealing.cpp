@@ -10,11 +10,11 @@ extern void j_0003b0b1();
 extern void j_000369a8();
 extern void j_00011df1();
 
-#define TheBfmeGameLogic (*(BfmeGameLogic **)0x012F0898)
-#define g_iconTemplates (*(void ***)0x012F12EC)
-#define g_animCollection (*(void **)0x012F4CA8)
-#define g_iconWidthScale (*(const float *)0x0109F748)
-#define g_iconHalfScale (*(const float *)0x0107533C)
+#define TheBfmeGameLogic ((BfmeGameLogic *)TheGameLogic)
+#define g_iconTemplates (Drawable::s_animationTemplates)
+#define g_animCollection (TheAnim2DCollection)
+#define g_iconWidthScale 0.75f
+#define g_iconHalfScale 0.5f
 
 struct BfmeGameLogic
 {
@@ -83,6 +83,10 @@ class DrawableIconInfo
 
 class Anim2DTemplate;
 class Anim2DCollection;
+class GameLogic;
+
+extern GameLogic *TheGameLogic;
+extern Anim2DCollection *TheAnim2DCollection;
 
 class Anim2D
 {
@@ -109,6 +113,7 @@ public:
 
 private:
 	void drawHealing();
+	static Anim2DTemplate **s_animationTemplates;
 	char pad00[0xf8];
 	BfmeObject *object;
 	char pad100[0x2c4];
