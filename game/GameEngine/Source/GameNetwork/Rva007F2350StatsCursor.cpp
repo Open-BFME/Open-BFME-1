@@ -30,6 +30,7 @@ class Rva007F2350StatsCursor
 public:
 	bool next( Rva007F2350StatsRecord *record );
 	bool rva007F2230( Rva007F2350StatsRecord *record );
+	bool rva007F24A0( Rva007F2350StatsRecord *record );
 
 	Rva007E8810Message *m_msg;
 	int m_index;
@@ -95,5 +96,31 @@ bool Rva007F2350StatsCursor::rva007F2230(Rva007F2350StatsRecord *record)
  sprintf(name, "stats.%d.text", m_index);
  m_msg->getString(name, record->m_addStat, 0xff);
  ++m_index;
+ return true;
+}
+
+// Retail 0x007F24A0: the per-stat addStats reader.  It formats the keys with
+// the index the cursor has already stepped past (m_index - 1, read once) and
+// the addStats counter in m_state, which it advances instead of m_index.
+bool Rva007F2350StatsCursor::rva007F24A0(Rva007F2350StatsRecord *record)
+{
+ char name[0x40];
+ char valueText[0x40];
+ union { float number; int bits; } value;
+ record->m_name[0] = 0;
+ record->m_30 = 0;
+ record->m_value = 0;
+ record->m_addStat[0] = 0;
+ record->m_rank = 0;
+ int stat = m_index - 1;
+ sprintf(name, "stats.%d.addStats.%d.value", stat, m_state);
+ if (!m_msg->getString(name, valueText, 0x40)) return false;
+ sscanf(valueText, "%f", &value.number);
+ record->m_value = value.bits;
+ sprintf(name, "stats.%d.addStats.%d.key", stat, m_state);
+ m_msg->getString(name, &record->m_30, 0x20);
+ sprintf(name, "stats.%d.addStats.%d.text", stat, m_state);
+ m_msg->getString(name, record->m_addStat, 0xff);
+ ++m_state;
  return true;
 }
