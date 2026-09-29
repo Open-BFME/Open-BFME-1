@@ -184,6 +184,7 @@ struct BfmeChild1236
 };
 
 extern void (__cdecl *g_bfmeFreePair1286)(void *storage, int count);
+extern char g_bfmeSpecialBlock1286;
 
 #define BIT15(x) (((unsigned char)~((x) >> 15)) & 1)
 
@@ -215,7 +216,7 @@ void BfmeNode1236::bfmeVisit1236()
 			return;
 		BfmeChild1236 *child = this->m_child;
 		void *value = child->m_value20;
-		if (value != 0 && value != (void *)0x012D5598)
+		if (value != 0 && value != &g_bfmeSpecialBlock1286)
 		{
 			child->m_value6c = 6;
 			g_bfmeFreePair1286(value, 2);
