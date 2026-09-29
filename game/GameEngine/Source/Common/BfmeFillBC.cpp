@@ -4,10 +4,10 @@
 
 #include "vector3.h"
 
-#define g_01075954 (*(const float *)0x01075954)
-#define g_bfmeDefaultEG (*(const float *)0x01097114)
-#define BfmeZeroRange (*(const float *)0x01075350)
-#define g_010AEBB8 (*(const float *)0x010AEBB8)
+#define g_01075954 (0.0174532924f)
+extern const float BfmeZeroRange;
+#define g_bfmeDefaultEG (1.57079637f)
+#define g_010AEBB8 (10000.0f)
 
 struct BfmeVecBC
 {

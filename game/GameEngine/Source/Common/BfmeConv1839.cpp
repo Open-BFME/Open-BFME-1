@@ -112,7 +112,7 @@ void BfmeStateXC::bfmeNotifyXC(int kind)
 	case 0:
 	{
 		g_mgr12F19E8->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, g_bfmeFmt1057, 1,
-			(char *)0x011053C8, 0, 0, 0, 0);
+			"addFriend", 0, 0, 0, 0);
 		GadgetTextEntrySetText(m_bfmeWindow70XC, UnicodeString::TheEmptyString);
 		TheWindowManager->winSetFocus(m_bfmeWindow70XC);
 		break;
@@ -120,7 +120,7 @@ void BfmeStateXC::bfmeNotifyXC(int kind)
 	case 1:
 	{
 		g_mgr12F19E8->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, g_bfmeFmt1057, 1,
-			(char *)0x01106F84, 0, 0, 0, 0);
+			"addIgnore", 0, 0, 0, 0);
 		GadgetTextEntrySetText(m_bfmeWindow60XC, UnicodeString::TheEmptyString);
 		TheWindowManager->winSetFocus(m_bfmeWindow60XC);
 		break;
@@ -128,7 +128,7 @@ void BfmeStateXC::bfmeNotifyXC(int kind)
 	case 2:
 	{
 		g_mgr12F19E8->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, g_bfmeFmt1057, 1,
-			(char *)0x011053E0, 0, 0, 0, 0);
+			"removeFriend", 0, 0, 0, 0);
 		GadgetTextEntrySetText(m_bfmeWindow90XC, UnicodeString::TheEmptyString);
 		TheWindowManager->winSetFocus(m_bfmeWindow90XC);
 		break;
@@ -136,7 +136,7 @@ void BfmeStateXC::bfmeNotifyXC(int kind)
 	case 3:
 	{
 		g_mgr12F19E8->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, g_bfmeFmt1057, 1,
-			(char *)0x01106F74, 0, 0, 0, 0);
+			"removeIgnore", 0, 0, 0, 0);
 		GadgetTextEntrySetText(m_bfmeWindow80XC, UnicodeString::TheEmptyString);
 		TheWindowManager->winSetFocus(m_bfmeWindow80XC);
 		break;

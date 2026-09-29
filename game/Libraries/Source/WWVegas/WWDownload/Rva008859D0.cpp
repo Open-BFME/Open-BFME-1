@@ -24,6 +24,6 @@ void Rva008859D0Class::d_008859d0( const char* name, char* outBuf )
 		}
 	}
 
-	sprintf( outBuf, (const char*)0x01132EB8, dupName, m_dir34 );
+	sprintf( outBuf, "download\\%s_%d.tmp", dupName, m_dir34 );
 	free( dupName );
 }
