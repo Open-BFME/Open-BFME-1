@@ -97,7 +97,7 @@ public:
 	virtual WindowLayout *winCreateLayout(AsciiString filename);
 };
 
-#define TheWindowManager (*(GameWindowManager **)0x012F1B40)
+extern GameWindowManager *TheWindowManager;
 
 class InGameUI
 {
@@ -190,8 +190,10 @@ public:
 	virtual Bool slot154();
 };
 
-#define TheInGameUI (*(InGameUI **)0x012F148C)
-#define TheDisconnectMenu (*(void **)0x012F4964)
+extern InGameUI *TheInGameUI;
+
+class DisconnectMenu;
+extern DisconnectMenu *TheDisconnectMenu;
 
 struct Rva00367E30Logic
 {
@@ -223,7 +225,7 @@ public:
 	virtual Bool slot02C();
 };
 
-#define TheGameInfo (*(GameInfo **)0x012F708C)
+extern GameInfo *TheGameInfo;
 
 class Rva006C9270GlobalData
 {
@@ -234,7 +236,7 @@ public:
 	int m_fieldB0C;
 };
 
-#define TheWritableGlobalData (*(Rva006C9270GlobalData **)0x012ED5C8)
+extern Rva006C9270GlobalData *TheWritableGlobalData;
 
 class Rva005127A0InGameChat
 {
@@ -243,7 +245,7 @@ public:
 	int m_chatType;
 };
 
-#define g_Rva005127A0InGameChat (*(Rva005127A0InGameChat **)0x012F4988)
+extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
 
 class Player
 {
@@ -260,7 +262,7 @@ public:
 	}
 };
 
-#define ThePlayers (*(PlayerList **)0x012ED748)
+extern PlayerList *ThePlayers;
 
 class GameTextInterface
 {
@@ -277,7 +279,7 @@ public:
 	virtual UnicodeString fetch(AsciiString label, Bool *exists = 0);
 };
 
-#define TheGameText (*(GameTextInterface **)0x012F147C)
+extern GameTextInterface *TheGameText;
 
 class WindowManager
 {
@@ -285,7 +287,7 @@ public:
 	void bfme_setAptText(const AsciiString &name, const UnicodeString &text);
 };
 
-#define g_theWindowManager (*(WindowManager **)0x012F19E8)
+extern WindowManager *g_theWindowManager;
 
 enum InGameChatType
 {

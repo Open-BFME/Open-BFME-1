@@ -70,18 +70,18 @@ void Gen0000C955::handle(bool accepted)
 			while (index < 8)
 			{
 				{
-					UnicodeString emptyName((const unsigned short *)0x01084C34);
+					UnicodeString emptyName(L" ");
 					setConnectingPlayerName(index, emptyName);
 				}
 				{
-					UnicodeString emptyStatus((const unsigned short *)0x01084C34);
+					UnicodeString emptyStatus(L" ");
 					setConnectingPlayerStatus(index, emptyStatus);
 				}
 				++index;
 			}
 
 			g_mgr12F19E8->add(m_owner->m_actionOwner,
-				(const char *)0x011053D4, 1, (const char *)0x011074E4,
+				"CallChild", 1, "PopUpConnectingOpen",
 				0, 0, 0, 0);
 		}
 		++m_acceptCount;
@@ -91,7 +91,7 @@ void Gen0000C955::handle(bool accepted)
 		--m_acceptCount;
 		if (m_acceptCount == 0)
 			g_mgr12F19E8->add(m_owner->m_actionOwner,
-				(const char *)0x011053D4, 1, (const char *)0x011074C8,
+				"CallChild", 1, "PopUpConnectingClose",
 				0, 0, 0, 0);
 	}
 }
