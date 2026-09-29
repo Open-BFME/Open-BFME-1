@@ -15,6 +15,12 @@ public:
 };
 void *__cdecl operator new(unsigned int);
 
+// Retail vtables 0x0113C614 and 0x0113C62C; the alternate names define no table.
+extern "C" void *bfmeVftDynamicVectorClassVertexMaterialClass[];
+extern "C" void *bfmeVftDynamicVectorClassBfmeHandleCX[];
+#pragma comment(linker, "/alternatename:_bfmeVftDynamicVectorClassVertexMaterialClass=??_7?$DynamicVectorClass@PAVVertexMaterialClass@@@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftDynamicVectorClassBfmeHandleCX=??_7?$DynamicVectorClass@VBfmeHandleCX@@@@6B@")
+
 class TextureClass
 {
 public:
@@ -64,7 +70,7 @@ public:
   VectorMax = 0;
   IsValid = true;
   IsAllocated = false;
-  Vtable = 0x0113c614;
+  Vtable = (unsigned)bfmeVftDynamicVectorClassVertexMaterialClass;
   GrowthStep = 10;
   ActiveCount = 0;
  }
@@ -97,7 +103,7 @@ public:
 	__forceinline TextureVector()
 		: TextureVectorBaseCtorShim(0, 0)
 	{
-		*(unsigned int *)this = 0x0113c62c;
+		*(unsigned int *)this = (unsigned int)bfmeVftDynamicVectorClassBfmeHandleCX;
   GrowthStep = 10;
   ActiveCount = 0;
 	}

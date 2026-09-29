@@ -37,6 +37,7 @@ extern "C" int __cdecl strcmp(const char *a, const char *b);
 #pragma intrinsic(strcmp)
 
 extern Rva00899FC0 *g_rva01337abc;
+extern void d_008a62a0();
 
 struct Rva00891B80Block
 {
@@ -165,7 +166,7 @@ void *Rva008A78D0Owner::bfmeGetOrCreateDefault(int unused, void **arg2)
 	{
 		if (g_rva01337abc == 0)
 		{
-			g_rva01337abc = new Rva00899FC0(0xca62a0);
+			g_rva01337abc = new Rva00899FC0((int)d_008a62a0);
 			g_rva01337abc->m_bfmeFlags = (g_rva01337abc->m_bfmeFlags & 0xffffc07f) | 0x40;
 			((Rva008A78D0VBase *)g_rva01337abc)->bfmeNotify();
 		}

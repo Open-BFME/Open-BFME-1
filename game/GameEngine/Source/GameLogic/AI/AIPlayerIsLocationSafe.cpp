@@ -114,15 +114,11 @@
 // ============================================================================
 // filter identities
 // ============================================================================
-// The four small filters store their vtable as a literal rather than through a
-// vtable symbol.  That is deliberate: dir32_addresses.csv records
-// ??_7PartitionFilterPlayer@@6B@ at 0x0109688C while retail stores 0x0109685C,
-// and it has no entry at all for 0x010956E4, 0x01083B80 or 0x0109689C, so a
-// vtable symbol here would be a name whose address the gate would derive from
-// this very body and therefore could not check.  tools/vtable_lookup.py names
-// none of those four, so their classes keep address-derived names; what IS
-// proved is the layout each one must have, from its stores in this body plus
-// the frame map above.
+// Every filter stores its vtable through a C-linkage alias of the ??_7 name
+// dir32_addresses.csv records at that address.  tools/vtable_lookup.py names
+// none of the four small filters' tables, so their classes keep address-derived
+// names; what IS proved is the layout each one must have, from its stores in
+// this body plus the frame map above.
 //
 // 0x0109686C, the reject-by-KindOf vtable, is different: vtable_lookup ties it
 // to PartitionFilterRejectByKindOf (its destructor ILT 0x00034F04 and its
@@ -267,6 +263,21 @@ enum DistanceCalculationType
 	FROM_BOUNDINGSPHERE_3D = 3
 };
 
+// Retail vtables 0x01083B5C, 0x0109686C, 0x010956E4, 0x0109685C, 0x01083B80 and
+// 0x0109689C; the alternate names define no table.
+extern "C" void *bfmeVftPartitionFilter[];
+extern "C" void *bfmeVftRva00160BE0VptrZeroBlockObject[];
+extern "C" void *bfmeVftRva00149F20VptrZeroObject[];
+extern "C" void *bfmeVftRva001DCBB0Filter[];
+extern "C" void *bfmeVftRva0025ED50RootFilter[];
+extern "C" void *bfmeVftPartitionFilterPlayerAffiliation[];
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilter=??_7PartitionFilter@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva00160BE0VptrZeroBlockObject=??_7Rva00160BE0VptrZeroBlockObject@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva00149F20VptrZeroObject=??_7Rva00149F20VptrZeroObject@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva001DCBB0Filter=??_7Rva001DCBB0Filter@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva0025ED50RootFilter=??_7Rva0025ED50RootFilter@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterPlayerAffiliation=??_7PartitionFilterPlayerAffiliation@@6B@")
+
 class PartitionFilter
 {
 public:
@@ -293,12 +304,12 @@ public:
 		: m_first(first), m_second(second)
 	{
 		m_next = 0;
-		m_vptr = 0x0109686C;
+		m_vptr = (unsigned int)bfmeVftRva00160BE0VptrZeroBlockObject;
 	}
 
 	~PartitionFilterRejectByKindOf(void)
 	{
-		m_vptr = 0x01083B5C;
+		m_vptr = (unsigned int)bfmeVftPartitionFilter;
 	}
 
 	VptrZeroBlock24 m_first;							// +0x08
@@ -315,14 +326,14 @@ public:
 		: PartitionFilter()
 	{
 		m_next = 0;
-		m_vptr = 0x010956E4;
+		m_vptr = (unsigned int)bfmeVftRva00149F20VptrZeroObject;
 		m_allowNonBuildings = allowNonBuildings;
 		m_allowInsignificant = allowInsignificant;
 	}
 
 	~Rva010956E4Filter(void)
 	{
-		m_vptr = 0x01083B5C;
+		m_vptr = (unsigned int)bfmeVftPartitionFilter;
 	}
 
 	Bool m_allowNonBuildings;							// +0x08
@@ -340,14 +351,14 @@ public:
 		: PartitionFilter()
 	{
 		m_next = 0;
-		m_vptr = 0x0109685C;
+		m_vptr = (unsigned int)bfmeVftRva001DCBB0Filter;
 		m_player = player;
 		m_match = match;
 	}
 
 	~Rva0109685CFilter(void)
 	{
-		m_vptr = 0x01083B5C;
+		m_vptr = (unsigned int)bfmeVftPartitionFilter;
 	}
 
 	const Player *m_player;							// +0x08
@@ -362,12 +373,12 @@ public:
 	Rva01083B80Filter(void) : PartitionFilter()
 	{
 		m_next = 0;
-		m_vptr = 0x01083B80;
+		m_vptr = (unsigned int)bfmeVftRva0025ED50RootFilter;
 	}
 
 	~Rva01083B80Filter(void)
 	{
-		m_vptr = 0x01083B5C;
+		m_vptr = (unsigned int)bfmeVftPartitionFilter;
 	}
 };
 
@@ -380,7 +391,7 @@ public:
 		: PartitionFilter()
 	{
 		m_next = 0;
-		m_vptr = 0x0109689C;
+		m_vptr = (unsigned int)bfmeVftPartitionFilterPlayerAffiliation;
 		m_player = player;
 		m_match = match;
 		m_affiliation = affiliation;
@@ -388,7 +399,7 @@ public:
 
 	~PartitionFilterPlayerAffiliation(void)
 	{
-		m_vptr = 0x01083B5C;
+		m_vptr = (unsigned int)bfmeVftPartitionFilter;
 	}
 
 	const Player *m_player;							// +0x08

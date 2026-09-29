@@ -36,6 +36,10 @@ class RTS2DScene;
 class RTS3DInterfaceScene;
 extern BfmeGlobPB *g_bfmeGlobPB;
 
+// Declared as an object by camerashakesystem.cpp; BFME holds a pointer at its first dword.
+class CameraShakeSystemClass;
+extern CameraShakeSystemClass CameraShakerSystem;
+
 #define RVA006EF850_PTR(type, address) (*reinterpret_cast<type **>(address))
 
 // Display base: ctor 0x0040F260 (ILT 0x0003198F) and dtor 0x0040F6D0 install the same vtable.
@@ -143,7 +147,7 @@ Gen006EF850::Gen006EF850(void) :
 
 	m_field270 = 0;
 	m_field274 = 0;
-	RVA006EF850_PTR(TextureCategoryList, 0x012F7FEC) = new TextureCategoryList;
+	RVA006EF850_PTR(TextureCategoryList, &CameraShakerSystem) = new TextureCategoryList;
 
 	m_renderState.reset();
 }
