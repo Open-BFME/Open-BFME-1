@@ -45,16 +45,19 @@ public:
     void push(AsciiString filename, Bool shutdownImmediate);
 };
 
+extern Shell *TheShell;
+extern const char *g_012F4804;
+
 static Bool isShuttingDown = false;
 
 void WindowLayout::shutdownComplete(void)
 {
     isShuttingDown = false;
     slot4(true);
-    (*(Shell **)0x012F4B58)->shutdownComplete(
-        this, *(const char **)0x012F4804 != 0);
-    if (*(const char **)0x012F4804 != 0)
-        (*(Shell **)0x012F4B58)->push(
-            AsciiString(*(const char **)0x012F4804), false);
-    *(const char **)0x012F4804 = 0;
+    TheShell->shutdownComplete(
+        this, g_012F4804 != 0);
+    if (g_012F4804 != 0)
+        TheShell->push(
+            AsciiString(g_012F4804), false);
+    g_012F4804 = 0;
 }
