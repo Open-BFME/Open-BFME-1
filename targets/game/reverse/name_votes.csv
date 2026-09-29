@@ -328,3 +328,6 @@ game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeNext,cb6bc26
 game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeFieldB,5fc6e83aa1696fff69c4ca03,grok,20260929203623-9b2453,2026-09-29
 game/GameEngine/Source/GameLogic/Object/Update/Rva002A59F0BfmeReady.cpp|type||Gen_002A59F0,57fb07507b87839dd62f7dea,grok,20260929204024-7a9285,2026-09-29
 game/GameEngine/Source/GameLogic/Object/Update/Rva002A59F0BfmeReady.cpp|function|Gen_002A59F0@|bfmeReady,e4faa4a75c57fbc8887a1eca,grok,20260929204024-7a9285,2026-09-29
+game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|type||BfmeObserverYV,271340a38f0b494f9a5dfefe,grok,20260929204446-fe8877,2026-09-29
+game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|type||BfmeRegistryYV,be86cd1edf4afbdb2fe11671,grok,20260929204446-fe8877,2026-09-29
+game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|function||bfmeOptionsYV,e021ef3cdb2700f7ee1ee3f5,grok,20260929204446-fe8877,2026-09-29
