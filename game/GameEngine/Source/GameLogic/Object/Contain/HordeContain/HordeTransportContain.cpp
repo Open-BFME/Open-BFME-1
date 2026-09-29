@@ -50,14 +50,14 @@ void HordeTransportContain::update(void)
 			HordeTransportContainBase *self =
 				(HordeTransportContainBase *)((char *)this - 0x10);
 			m_framesUntilNextCall =
-				GetGameLogicRandomValue(3, 5, (char *)0x010B0710, 0x350);
+				GetGameLogicRandomValue(3, 5, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Contain\\HordeContain\\HordeTransportContain.cpp", 0x350);
 			self->first();
 		}
 		if (m_framesUntilNextCall <= 0)
 		{
 			((HordeTransportContainBase *)((char *)this - 0x10))->second();
 			m_framesUntilNextCall =
-				GetGameLogicRandomValue(0, 4, (char *)0x010B0710, 0x35d);
+				GetGameLogicRandomValue(0, 4, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Contain\\HordeContain\\HordeTransportContain.cpp", 0x35d);
 		}
 		--m_framesUntilNextCall;
 	}

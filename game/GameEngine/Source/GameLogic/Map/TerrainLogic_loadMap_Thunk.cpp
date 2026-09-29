@@ -61,8 +61,11 @@ public:
 	}
 };
 
+struct MapObjectList;
+extern MapObjectList *BfmeTheMapObjectListHolder;
+
 static MapObject ***const TheMapObjectListPtr =
-	reinterpret_cast<MapObject ***>(0x012ED5DC);
+	reinterpret_cast<MapObject ***>(&BfmeTheMapObjectListHolder);
 
 class ChunkInputStream
 {
@@ -109,8 +112,7 @@ public:
 	virtual Bool load(AsciiString filename) = 0;
 };
 
-static TerrainVisual *const TheTerrainVisual =
-	reinterpret_cast<TerrainVisual *>(0x012F7014);
+extern TerrainVisual *TheTerrainVisual;
 
 class __declspec(novtable) TerrainLogic
 {

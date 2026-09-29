@@ -229,8 +229,9 @@ public:
 
 extern WeaponStore *TheWeaponStore;
 extern Real g_bfmeScaleBC;
-#define BfmeZeroRange (*(const Real *)0x01075350)
-#define BfmeObjectCreationRange (*(const Real *)0x012ADC90)
+extern const Real BfmeZeroRange;
+extern Real g_012ADC90;
+#define BfmeObjectCreationRange g_012ADC90
 
 Module *__cdecl rva0036BB10FindCastleMemberBehavior(const Object *object);
 
