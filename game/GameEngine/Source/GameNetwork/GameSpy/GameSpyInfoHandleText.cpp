@@ -8,6 +8,8 @@
 #include <new>
 
 #define UNICODESTRING_H
+extern const unsigned short BFMEEmptyUnicodeString;
+
 struct UnicodeStringData
 {
 	int m_refCount;
@@ -25,7 +27,7 @@ public:
 
 	const unsigned short *str() const
 	{
-		return m_data ? m_data->m_text : reinterpret_cast<const unsigned short *>( 0x0107388C );
+		return m_data ? m_data->m_text : &BFMEEmptyUnicodeString;
 	}
 
 	bool isEmpty() const

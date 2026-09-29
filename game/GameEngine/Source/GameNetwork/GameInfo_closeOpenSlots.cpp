@@ -170,6 +170,8 @@ public:
 };
 
 extern GameTextInterface *TheGameText;
+extern "C" const void *bfmeVftGameSlot[];
+#pragma comment(linker, "/alternatename:_bfmeVftGameSlot=??_7GameSlot@@6B@")
 
 class GameSlot
 {
@@ -261,7 +263,7 @@ private:
 };
 
 GameSlot::GameSlot()
-	: m_vtable((void *)0x01075D50),
+	: m_vtable((void *)bfmeVftGameSlot),
 	  m_name(),
 	  m_slotNameKeyText()
 {
