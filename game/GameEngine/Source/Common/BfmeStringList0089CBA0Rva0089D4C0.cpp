@@ -67,8 +67,10 @@ private:
 	BfmeStringEntry0089CBA0 *m_array;
 };
 
-#define g_bfmeRouteKeys1282Ref (*(const BfmeString0089CBA0 *)0x01338480)
-#define g_bfmeRouteKeys1282SecondRef (*(const BfmeString0089CBA0 *)0x01338660)
+// 0x01338480 is g_bfmeRouteKeys1282, 0xB2 four-byte string slots; 0x01338660 is slot 120.
+extern int g_bfmeRouteKeys1282[];
+#define g_bfmeRouteKeys1282Ref (*(const BfmeString0089CBA0 *)&g_bfmeRouteKeys1282[0])
+#define g_bfmeRouteKeys1282SecondRef (*(const BfmeString0089CBA0 *)&g_bfmeRouteKeys1282[120])
 
 // ?Rva0089D4C0@BfmeStringList0089CBA0@@QAE_NXZ
 bool BfmeStringList0089CBA0::Rva0089D4C0()

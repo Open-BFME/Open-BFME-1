@@ -43,19 +43,19 @@ class GameLogic
 	ObjectPtrHash m_objectMap;
 };
 
+extern GameLogic *TheGameLogic;
+
 void __stdcall gen00370200Process(Gen00370200Range *range, void *argument)
 {
 	register Gen00370200Range *list = range;
 	ObjectID *it = (ObjectID *)list->m_begin;
 	if (it != (ObjectID *)list->m_end) {
-		GameLogic *logic =
-			(GameLogic *)*(BfmeGlobFEA **)0x012f0898;
+		GameLogic *logic = TheGameLogic;
 		do {
 			Object *value = logic->findObjectByIDInline(*it);
 			if (value != 0) {
 				((BfmeGlobFEA *)logic)->bfmeCallFEA(value, (int)argument);
-				logic =
-					(GameLogic *)*(BfmeGlobFEA **)0x012f0898;
+				logic = TheGameLogic;
 			}
 			++it;
 		} while (it != (ObjectID *)list->m_end);

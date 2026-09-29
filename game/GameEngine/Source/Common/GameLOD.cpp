@@ -235,6 +235,9 @@ void INI::parseBenchProfile( INI* ini)
 	}
 }
 
+// Retail video-name table 0x012A742C; its entries differ from the ZH VideoNames above.
+extern char *g_012A742C[];
+
 /**Parse a description of all the LOD settings for a given detail level*/
 // ?parseLODPreset@INI@@SAXPAV1@@Z
 
@@ -283,9 +286,9 @@ void INI::parseLODPreset(INI *ini)
 				((RetailGameLODManager *)TheGameLODManager)->newLODPreset(index);
 			if (preset)
 			{
-				INI::parseIndexList(ini, NULL, preset, (const void *)0x012a7418);
+				INI::parseIndexList(ini, NULL, preset, CPUNames);
 				INI::parseInt(ini, NULL, (char *)preset + 4, NULL);
-				INI::parseIndexList(ini, NULL, (char *)preset + 0x0c, (const void *)0x012a742c);
+				INI::parseIndexList(ini, NULL, (char *)preset + 0x0c, g_012A742C);
 				INI::parseInt(ini, NULL, (char *)preset + 0x14, NULL);
 				INI::parseInt(ini, NULL, (char *)preset + 0x10, NULL);
 				INI::parseInt(ini, NULL, (char *)preset + 0x18, NULL);

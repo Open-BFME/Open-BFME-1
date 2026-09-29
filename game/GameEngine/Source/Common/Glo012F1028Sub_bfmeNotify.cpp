@@ -20,13 +20,15 @@
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
+extern const char Rva006A16B0Empty[];
+
 class Glo012F1028Name
 {
 public:
 	const char *str(void) const
 	{
 		return m_data ? (const char *)m_data + 8 :
-			(const char *)0x0107388B;
+			Rva006A16B0Empty;
 	}
 
 	void *m_data;
@@ -123,6 +125,6 @@ void Glo012F1028Item::bfmeRun(void)
 	mapName.format(AsciiString("maps\\%s\\%s.map"),
 		name, name);
 	char *mapData = *(char **)&mapName;
-	const char *mapText = mapData ? mapData + 8 : (const char *)0x0107388B;
+	const char *mapText = mapData ? mapData + 8 : Rva006A16B0Empty;
 	m_bfmeEnabled = TheFileSystem->doesFileExist(mapText);
 }
