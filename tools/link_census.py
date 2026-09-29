@@ -813,8 +813,12 @@ def _retail_import_entries():
 
 
 def retail_imports():
-    """Names retail's import table lists (every entry is imported by name)."""
-    return {name for _, name, _ in _retail_import_entries()}
+    """{name: {dll, lower case}} for every function retail's import table
+    lists (every entry is imported by name)."""
+    found = collections.defaultdict(set)
+    for dll, name, _ in _retail_import_entries():
+        found[name].add(dll.lower())
+    return dict(found)
 
 
 def retail_import_slots():
@@ -828,35 +832,71 @@ def _undecorate(name):
 
 
 def library_import_thunks(path):
-    """Names an import library defines as call stubs (short import objects of
-    CODE type): `_strcpy` in msvcrt.lib forwards to MSVCR71's strcpy. Such a
-    name resolves in the real link only if the image imports that function."""
+    """{call stub: {(dll, imported name)}} for the short import objects of CODE
+    type an import library holds: `_strcpy` in msvcrt.lib forwards to
+    MSVCR71's strcpy, `_socket@12` in WSock32.Lib to WSOCK32's socket. Such a
+    name resolves in the real link only if the image imports that function.
+    The imported name follows the object's name type (IMPORT_OBJECT_NAME,
+    _NO_PREFIX, _UNDECORATE); an import by ordinal names its function by the
+    undecorated stub name."""
     import struct
-    data, at, thunks = path.read_bytes(), 8, set()
+    data, at, thunks = path.read_bytes(), 8, collections.defaultdict(set)
     while at + 60 <= len(data):
-        size = int(data[at + 48:at + 58].decode("ascii").strip())
+        try:
+            size = int(data[at + 48:at + 58].decode("ascii").strip())
+        except ValueError:
+            break
         body = data[at + 60:at + 60 + size]
         if body[:4] == b"\0\0\xff\xff" and len(body) > 20:
-            if struct.unpack_from("<H", body, 18)[0] & 3 == 0:  # IMPORT_OBJECT_CODE
-                thunks.add(body[20:body.index(b"\0", 20)].decode("latin-1"))
+            kind = struct.unpack_from("<H", body, 18)[0]
+            if kind & 3 == 0:  # IMPORT_OBJECT_CODE
+                end = body.index(b"\0", 20)
+                symbol = body[20:end].decode("latin-1")
+                dll = body[end + 1:body.index(b"\0", end + 1)].decode("latin-1").lower()
+                name_type = (kind >> 2) & 7
+                if name_type == 1:
+                    name = symbol
+                elif name_type == 2:
+                    name = symbol[1:] if symbol[:1] in "?@_" else symbol
+                else:
+                    name = _undecorate(symbol).split("@")[0] if name_type == 3 else _undecorate(symbol)
+                thunks[symbol].add((dll, name))
         at += 60 + size + (size & 1)
     return thunks
 
 
-def excused(symbol, runtime, imported, thunks=frozenset()):
+def import_stubs():
+    """Every call stub the committed toolchain's import libraries define:
+    Vc7/lib (msvcrt.lib, kernel32.lib) and Vc7/PlatformSDK/Lib (WSock32.Lib,
+    WS2_32.Lib, User32.Lib, ...). Static libraries in those directories hold
+    no short import objects and add nothing."""
+    root = build.vc71_root() / "Vc7"
+    stubs = collections.defaultdict(set)
+    for directory in (root / "lib", root / "PlatformSDK" / "Lib"):
+        for path in sorted(directory.glob("*")):
+            if path.suffix.lower() == ".lib" and path.read_bytes()[:8] == b"!<arch>\n":
+                for symbol, targets in library_import_thunks(path).items():
+                    stubs[symbol] |= targets
+    return dict(stubs)
+
+
+def excused(symbol, runtime, imported, thunks=None):
     """True for a name the real link resolves without this tree defining it.
 
     An __imp_ name only when retail imports that function: strip the prefix,
     one decoration underscore and a stdcall @N (__imp__GetModuleFileNameA@12,
     __imp___iob); MSVCR71 exports a few C++ names mangled, so a ?name must
     match as is (??1exception@@UAE@XZ). An address-named slot or a name
-    retail does not import is a declaration defect. A call stub msvcrt.lib
-    defines (`_strcpy`) counts as its import. Any other name only when msvcrt.lib
-    (MSVCR71's import library and CRT statics: __except_list, __fltused)
-    defines it.
+    retail does not import is a declaration defect. A call stub an import
+    library in the toolchain defines (`_strcpy` in msvcrt.lib, `_socket@12` in
+    WSock32.Lib, import_stubs()) counts only when retail imports that function
+    from that DLL: `_htons@4` is a WSock32.Lib stub, but retail imports only
+    htonl and ntohs, so a direct htons call stays a defect. Any other name
+    only when msvcrt.lib (MSVCR71's import library and CRT statics:
+    __except_list, __fltused) defines it. `imported` is retail_imports().
     """
-    if symbol in thunks:  # a call stub: only as good as the import behind it
-        return excused("__imp_" + symbol, runtime, imported)
+    if thunks and symbol in thunks:  # a call stub: only as good as the import behind it
+        return any(dll in imported.get(name, ()) for dll, name in thunks[symbol])
     if symbol.startswith("__imp_"):
         name = symbol[len("__imp_"):]
         if name in imported or name.startswith("?"):
@@ -871,8 +911,8 @@ def write_status(log, rows, present=None):
     Per file, not per program: a clean file may still call into one that is
     not. Read from the full plain-link log, not census.json, which keeps five
     referrers per name. The census links /NODEFAULTLIB, so two kinds of
-    unresolved name are not held against a file: __imp_ entries, which want
-    the import libraries, and names msvcrt.lib defines (retail imports
+    unresolved name are not held against a file: __imp_ entries and call stubs
+    (`_socket@12`) retail imports, which want the import libraries, and names msvcrt.lib defines (retail imports
     MSVCR71.dll, and the ledger's CRT rows are msvcrt.lib members), which the
     real link searches by default -- __except_list alone is referenced by 3,088
     objects. See excused() for exactly which names. A duplicate counts against both definers, since the log cannot say
@@ -883,7 +923,7 @@ def write_status(log, rows, present=None):
     """
     import link_debt
     crt = build.vc71_root() / "Vc7" / "lib" / "msvcrt.lib"
-    runtime, thunks = library_symbols(crt), library_import_thunks(crt)
+    runtime, thunks = library_symbols(crt), import_stubs()
     imported = retail_imports()
     if present is None:
         present, _ = objects(rows)

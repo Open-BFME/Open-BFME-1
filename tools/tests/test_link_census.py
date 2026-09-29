@@ -137,3 +137,36 @@ def test_shared_claim_mismatch_is_unknown_not_wrong():
     t = truth(IMAGE, LEDGER, shared={0x1010})
     body = b"\xe9\0\0\0\0"
     assert t.verdict(symbol("dtor"), body, [(1, L.RetailTruth.REL32, referent("base_dtor"))], "l", 5) == "unknown"
+
+
+def import_library(tmp_path, entries):
+    """A COFF archive of short import objects [(stub, dll, name type)] (CODE)."""
+    data = bytearray(b"!<arch>\n")
+    for stub, dll, name_type in entries:
+        names = stub.encode() + b"\0" + dll.encode() + b"\0"
+        body = struct.pack("<HHHHIIHH", 0, 0xFFFF, 0, 0x14C, 0, len(names), 0, name_type << 2) + names
+        header = b"stub/".ljust(16) + b"0".ljust(12) + b"0".ljust(6) + b"0".ljust(6) + b"0".ljust(8)
+        data += header + str(len(body)).encode().ljust(10) + b"`\n" + body + (b"\n" if len(body) & 1 else b"")
+    path = tmp_path / "import.lib"
+    path.write_bytes(bytes(data))
+    return path
+
+
+def test_call_stub_is_excused_only_when_retail_imports_it_from_that_dll(tmp_path):
+    stubs = L.library_import_thunks(import_library(tmp_path, [
+        ("_socket@12", "WSOCK32.dll", 0),        # by ordinal: the undecorated stub names it
+        ("_htons@4", "WSOCK32.dll", 0),
+        ("_GetCurrentThreadId@0", "KERNEL32.dll", 3),
+        ("_strcpy", "MSVCR71.dll", 2),
+    ]))
+    assert stubs["_socket@12"] == {("wsock32.dll", "socket")}
+    assert stubs["_strcpy"] == {("msvcr71.dll", "strcpy")}
+    imported = {"socket": {"wsock32.dll"}, "GetCurrentThreadId": {"kernel32.dll"}, "strcpy": {"msvcr71.dll"},
+                "htonl": {"wsock32.dll"}, "ntohs": {"wsock32.dll"}}
+    assert L.excused("_socket@12", set(), imported, stubs)
+    assert L.excused("_GetCurrentThreadId@0", set(), imported, stubs)
+    assert L.excused("_strcpy", set(), imported, stubs)
+    assert not L.excused("_htons@4", set(), imported, stubs)  # retail imports htonl and ntohs, not htons
+    assert not L.excused("_socket@12", set(), {"socket": {"ws2_32.dll"}}, stubs)  # another DLL's socket
+    assert L.excused("__imp__socket@12", set(), imported, stubs)
+    assert not L.excused("__imp__htons@4", set(), imported, stubs)
