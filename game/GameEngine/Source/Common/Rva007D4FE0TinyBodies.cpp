@@ -178,9 +178,10 @@ int Rva007E7840Body::body() const
 
 extern "C" char *__cdecl strcpy(char *, const char *);
 #pragma intrinsic(strcpy)
+extern char byte_134CA48[];
 
 // ?Rva009C8660Body@@YAXPBD@Z
 void __cdecl Rva009C8660Body(const char *source)
 {
-	strcpy((char *)0x0134CA48, source);
+	strcpy(byte_134CA48, source);
 }
