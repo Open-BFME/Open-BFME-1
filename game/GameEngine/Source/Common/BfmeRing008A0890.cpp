@@ -23,6 +23,7 @@ class BfmeRing008A0890
 {
 public:
 	void insert(int arg1, BfmeRingRef0890 *arg2, int arg3);
+	BfmeRingSlot0890 *nextSlot(BfmeRingSlot0890 *slot) const;
 
 	BfmeRingSlot0890 *m_begin;
 	BfmeRingSlot0890 *m_write;
@@ -30,6 +31,20 @@ public:
 	char m_gap[0x12b0 - 0x0c];
 	int m_capacity;
 };
+
+// ?nextSlot@BfmeRing008A0890@@QBEPAVBfmeRingSlot0890@@PAV2@@Z
+// 0x008A0610, the first of two bodies in one 61-byte dump (int3 run at +0x1E):
+// steps a slot pointer forward through the same m_begin/m_capacity ring as
+// insert(), wrapping to m_begin at the end. The second body, 0x008A0630, is
+// the backward step insert() does inline, but retail spells its decrement
+// `add eax,-14h` where every C form tried here gives `sub eax,14h`.
+BfmeRingSlot0890 *BfmeRing008A0890::nextSlot(BfmeRingSlot0890 *slot) const
+{
+	++slot;
+	if (slot == m_begin + m_capacity)
+		slot = m_begin;
+	return slot;
+}
 
 void BfmeRing008A0890::insert(int arg1, BfmeRingRef0890 *arg2, int arg3)
 {
