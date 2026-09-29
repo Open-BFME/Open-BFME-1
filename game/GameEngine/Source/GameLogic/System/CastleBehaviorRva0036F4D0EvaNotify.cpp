@@ -1,4 +1,4 @@
-// ?rva0036F4D0@CastleBehavior@@QAEXXZ
+// ?playEvaEventsForCastlePacking@CastleBehavior@@QAEXXZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
@@ -158,7 +158,7 @@ protected:
 class CastleBehavior : public FoundationAIUpdate
 {
 public:
-	void rva0036F4D0();
+	void playEvaEventsForCastlePacking();
 
 private:
 	unsigned char m_pad0c[0x9c - 0x0c];
@@ -184,7 +184,7 @@ extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
 
 // Plays the local, allied or enemy Eva message configured on the +0xA0 object's
 // CastleMemberBehavior module; the local message also raises a radar event.
-void CastleBehavior::rva0036F4D0()
+void CastleBehavior::playEvaEventsForCastlePacking()
 {
 	Object *self = m_object;
 	Team *team = self->m_team;
