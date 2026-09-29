@@ -74,7 +74,8 @@ public:
 	void format( AsciiString format, ... );
 	const char *str() const
 	{
-		return m_data ? (const char *)m_data + 8 : (const char *)0x0107388B;
+		static const char TheNullChr = 0;
+		return m_data ? (const char *)m_data + 8 : &TheNullChr;
 	}
 };
 
@@ -188,6 +189,9 @@ private:
  char m_extent[0x10];
 };
 class BfmeThingTC { public: void bfmeBaseTC(); };
+// C-linkage view of the retail table ??_7Rva005166B0@@6B@; defines no table.
+extern "C" void *bfmeVftRva005166B0[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva005166B0=??_7Rva005166B0@@6B@")
 // Opaque gadget hook. Existing17B base route479230 initializes the first
 // twelve bytes; real table11056DC has deleting-destructor/input/system slots.
 // The screen configures the remaining payload after this constructor returns.
@@ -197,7 +201,7 @@ public:
  LanLobbyTail()
  {
   ((BfmeThingTC *)this)->bfmeBaseTC();
-  m_vptr=(void *)0x011056DC;
+  m_vptr=bfmeVftRva005166B0;
  }
  ~LanLobbyTail();
 public:
@@ -287,6 +291,7 @@ extern void j_00031818();
 extern void j_00043734();
 extern void j_0002cf84();
 extern void j_0001acee();
+extern void *g_Va012F4998;
 typedef char LanSize[(sizeof(BfmeAptScreenLanLobby)==0x3DC)?1:-1];
 BfmeAptScreenLanLobby::BfmeAptScreenLanLobby(void *context)
  :_bfme_AptGameWindow(context),m_state((Gen00529110Owner *)(BfmeAptScreenSecondary *)this,0),
@@ -295,9 +300,9 @@ BfmeAptScreenLanLobby::BfmeAptScreenLanLobby(void *context)
  m_tail.m_value=0;
  m_tail.m_flag0=false; m_tail.m_flag1=false; m_tail.m_flag2=false; m_tail.m_flag3=false;
  m_tail.m_kind=2; m_tail.m_flag4=false;
- if(*(BfmeAptScreenLanLobby **)0x012F4998==0)
+ if(g_Va012F4998==0)
  {
-  *(BfmeAptScreenLanLobby **)0x012F4998=this;
+  g_Va012F4998=this;
   LanRegistry *registry=(LanRegistry *)((char *)this+0x218);
   {
    LanMethodBits callback;callback.words[0]=(unsigned int)j_00017094;callback.words[1]=0;

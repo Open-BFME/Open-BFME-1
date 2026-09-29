@@ -64,7 +64,8 @@ void Rva007FA340::process(void *item)
 
 	Rva007EB810Diag *diag = Rva007EB810Get();
 	diag->v4(Rva007F93E0(
-		first, (void *)0x0112bb94, m_handler),
-		(void *)0x0112bb98, (void *)0x0112ba50, (void *)0x2d6);
+		first, (void *)"->Q", m_handler),
+		(void *)"SendTransaction(t, \"->Q\", mTransport)",
+		(void *)"\\views\\feslbuild_main\\jabba\\fesl\\source\\transactor.cpp", (void *)0x2d6);
 	chain->popFront();
 }

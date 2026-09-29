@@ -106,10 +106,12 @@ public:
 	int values[6];
 };
 
-#define TheGameLogic (*(GameLogicPortraitShim **)0x012F0898)
-#define TheScienceStore (*(ScienceStore **)0x012ED7AC)
-#define TheMappedImageCollection (*(MappedImageCollection **)0x012F6924)
-#define TheThingFactory (*(ThingFactory **)0x012EF1D8)
+class GameLogic;
+extern GameLogic *TheGameLogic;
+extern ScienceStore *TheScienceStore;
+extern MappedImageCollection *TheMappedImageCollection;
+extern ThingFactory *TheThingFactory;
+#define TheGameLogic ((GameLogicPortraitShim *)TheGameLogic)
 
 class Rva000FA610
 {

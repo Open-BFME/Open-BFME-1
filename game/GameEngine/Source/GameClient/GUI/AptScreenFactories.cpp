@@ -156,8 +156,9 @@ public:
 	bool isEmpty() const { return !m_data || m_data->m_length == 0; }
 const unsigned short *str() const
 {
+	static const unsigned short TheNullChr = 0;
 	return m_data ? (const unsigned short *)((char *)m_data + 8)
-		: (const unsigned short *)0x0107388C;
+		: &TheNullChr;
 }
 
 private:
@@ -176,7 +177,8 @@ public:
 	void concat( const char *text, int length );
 	const char *str() const
 	{
-		return m_data ? (const char *)m_data + 8 : (const char *)0x0107388B;
+		static const char TheNullChr = 0;
+		return m_data ? (const char *)m_data + 8 : &TheNullChr;
 	}
 };
 
@@ -1250,7 +1252,7 @@ void BfmeAptScreenCampaignReview::_bfme_initGadgets()
 	{
 		g_theWindowManager->bfme_setAptText(
 			AsciiString( "APT:CmpgnRevResult" ),
-			*(const UnicodeString *)0x01336E54 );
+			UnicodeString::TheEmptyString );
 		return;
 	}
 
@@ -1277,7 +1279,7 @@ void BfmeAptScreenCampaignReview::_bfme_initGadgets()
 	{
 		AsciiString variableName( "APT:CmpgnRevResult" );
 		g_theWindowManager->bfme_setAptText(
-			variableName, *(const UnicodeString *)0x01336E54 );
+			variableName, UnicodeString::TheEmptyString );
 	}
 }
 
