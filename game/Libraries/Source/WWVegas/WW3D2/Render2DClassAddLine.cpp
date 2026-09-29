@@ -56,6 +56,7 @@ struct BfmeRenderVertex
 
 typedef BfmeUInt32 (__cdecl *BfmeColorConverter)(BfmeUInt32 color);
 
+extern const float BfmeZeroRange;
 extern "C" float g_BfmeRender2DZ;
 extern "C" BfmeColorConverter g_BfmeColorConverter;
 
@@ -94,7 +95,7 @@ void Render2DClass::Add_Line(const Vector2 &a, const Vector2 &b, float width, Bf
 	BfmeUInt32 baseVertexPair;
 	BfmeUInt32 *indices;
 	BfmeRenderVertex *vertices;
-	if (*(volatile const float *)0x01075350 == len2)
+	if (*(volatile const float *)&BfmeZeroRange == len2)
 		return;
 
 	float oolen = WWMath::Inv_Sqrt(len2);
@@ -141,7 +142,7 @@ void Render2DClass::Add_Line(const Vector2 &a, const Vector2 &b, float width, Bf
 	BfmeUInt32 baseVertexPair;
 	BfmeUInt32 *indices;
 	BfmeRenderVertex *vertices;
-	if (*(volatile const float *)0x01075350 == len2)
+	if (*(volatile const float *)&BfmeZeroRange == len2)
 		return;
 
 	float oolen = WWMath::Inv_Sqrt(len2);

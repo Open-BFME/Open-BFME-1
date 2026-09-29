@@ -40,6 +40,8 @@ private:
 };
 
 extern void __declspec(noreturn) __stdcall _CxxThrowException( void *object, void *throwInfo );
+extern int g_INIExceptionThrowInfo;
+extern const char *const g_012A8280[];
 
 struct Gen_t_000b0910_p8pod
 {
@@ -67,12 +69,12 @@ void AudioEventInfo::parseVolumeSliderMultiplier( INI *ini, void *, void *store,
 		goto slider_error;
 
 	compare = g_lookup;
-	if ( compare( token, (const char *)0x010818C4 ) == 0 )
+	if ( compare( token, "Slider" ) == 0 )
 	{
 		const char *slider = ini->getNextToken( ini->getSepsColon() );
-		entry.m_slider = INI::scanIndexList( slider, (const char *const *)0x012A8280 );
+		entry.m_slider = INI::scanIndexList( slider, g_012A8280 );
 		token = ini->getNextTokenOrNull( ini->getSepsColon() );
-		if ( token != 0 && compare( token, (const char *)0x010818B4 ) == 0 )
+		if ( token != 0 && compare( token, "Multiplier" ) == 0 )
 		{
 			entry.m_multiplier = INI::scanPercentToReal(
 				ini->getNextToken( ini->getSepsColon() ) );
@@ -85,13 +87,13 @@ void AudioEventInfo::parseVolumeSliderMultiplier( INI *ini, void *, void *store,
 
 slider_error:
 	{
-		INIException error( 3, (const char *)0x01081814 );
-		_CxxThrowException( &error, (void *)0x011DFC30 );
+		INIException error( 3, "Slider:slidername expected after VolumeSliderMultiplier" );
+		_CxxThrowException( &error, &g_INIExceptionThrowInfo );
 	}
 
 multiplier_error:
 	{
-		INIException error( 3, (const char *)0x01081858 );
-		_CxxThrowException( &error, (void *)0x011DFC30 );
+		INIException error( 3, "Multiplier:number expected after VolumeSliderMultiplier = Slider:slidername" );
+		_CxxThrowException( &error, &g_INIExceptionThrowInfo );
 	}
 }

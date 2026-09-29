@@ -178,6 +178,9 @@ typedef void (BfmeShadowCall1Int::*BfmeShadowCall1IntFn)(int);
 typedef unsigned int (BfmeShadowCall4::*BfmeShadowCall4Fn)(
 	void *, unsigned short, void *, unsigned int);
 
+class W3DShadowHelperManager;
+extern W3DShadowHelperManager *TheW3DShadowHelperManager;
+
 extern void j_00021030();
 extern void j_00034be9();
 extern void j_000494fe();
@@ -223,7 +226,7 @@ void BfmeVolumetricShadowBufferOwner::buildBuffer()
 		if (indexCount <= 30000)
 		{
 			BfmeShadowBufferManager *buffers =
-				*(BfmeShadowBufferManager **)0x01307178;
+				(BfmeShadowBufferManager *)TheW3DShadowHelperManager;
 			if (buffers->m_vertexLock != 0 && buffers->m_indexCapacity < indexCount)
 			{
 				BfmeShadowCall1IntFn release;
@@ -231,7 +234,7 @@ void BfmeVolumetricShadowBufferOwner::buildBuffer()
 				releaseCast.asVoid = (void *)j_00045b83;
 				release = releaseCast.asMember;
 				(reinterpret_cast<BfmeShadowCall1Int *>(buffers)->*release)(0);
-				buffers = *(BfmeShadowBufferManager **)0x01307178;
+				buffers = (BfmeShadowBufferManager *)TheW3DShadowHelperManager;
 			}
 			if (buffers->m_vertexLock == 0)
 			{
@@ -240,7 +243,7 @@ void BfmeVolumetricShadowBufferOwner::buildBuffer()
 				lockCast.asVoid = (void *)j_00028baa;
 				lock = lockCast.asMember;
 				(reinterpret_cast<BfmeShadowCall0 *>(buffers)->*lock)();
-				buffers = *(BfmeShadowBufferManager **)0x01307178;
+				buffers = (BfmeShadowBufferManager *)TheW3DShadowHelperManager;
 			}
 
 			unsigned short *indexWrite = buffers->m_indexLock->m_indices;
@@ -254,10 +257,10 @@ void BfmeVolumetricShadowBufferOwner::buildBuffer()
 				owner->m_scratch);
 
 		BfmeShadowBufferManager *updatedBuffers =
-			*(BfmeShadowBufferManager **)0x01307178;
+			(BfmeShadowBufferManager *)TheW3DShadowHelperManager;
 		updatedBuffers->m_vertexCapacity -= written;
 		BfmeShadowBufferManager *updatedBuffers2 =
-			*(BfmeShadowBufferManager **)0x01307178;
+			(BfmeShadowBufferManager *)TheW3DShadowHelperManager;
 		updatedBuffers2->m_indexCapacity +=
 			-(int)entry->reserved10 * 6;
 		}
