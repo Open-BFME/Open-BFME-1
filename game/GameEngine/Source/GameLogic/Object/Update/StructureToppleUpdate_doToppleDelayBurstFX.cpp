@@ -155,6 +155,10 @@ public:
 
 extern ParticleSystemManager *TheParticleSystemManager;
 
+// Retail's empty-string sentinel, ?bfmeEmptyStr107388B@@3QBDB
+// (targets/game/reverse/dir32_addresses.csv, 0x0107388B).
+extern const char bfmeEmptyStr107388B[];
+
 struct AsciiString
 {
 	void *m_data;
@@ -162,7 +166,7 @@ struct AsciiString
 	const char *str() const
 	{
 		return m_data ? reinterpret_cast<const char *>(m_data) + 8 :
-			reinterpret_cast<const char *>(0x0107388B);
+			bfmeEmptyStr107388B;
 	}
 };
 

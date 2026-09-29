@@ -6,6 +6,10 @@
 // Identity is fixed by the StructureTopple module factory at 0x0012C250 and
 // its field parser at 0x002A4190.
 
+// Retail's empty-string sentinel at 0x0107301C, ?g_Rva0107301CEmptyString@@3QBDB
+// (targets/game/reverse/dir32_addresses.csv).
+extern const char g_Rva0107301CEmptyString[];
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class __declspec(novtable) ModuleData
 {
@@ -223,7 +227,7 @@ StructureToppleUpdateModuleData::StructureToppleUpdateModuleData()
 	m_toppleDoneFXList = 0;
 	m_toppleFXList = 0;
 	m_crushingFXList = 0;
-	m_crushingWeaponName.set((const char *)0x0107301c, 0);
+	m_crushingWeaponName.set(g_Rva0107301CEmptyString, 0);
 	m_bfmeUnknown44 = 0.06f;
 	m_bfmeUnknownB4 = -9.876540f;
 	// This is the source-level three-element initialization loop. MSVC 7.1
