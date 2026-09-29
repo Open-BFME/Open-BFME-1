@@ -1,8 +1,8 @@
 // Two more: a character replacement over a range and a two-bit readiness
 // test.
 
-// ?bfmeReplaceDots@@YAXPAD0D@Z
-void __cdecl bfmeReplaceDots(char *first, char *last, char replacement)
+// ?__adjust_float_buffer@@YAXPAD0D@Z
+void __cdecl __adjust_float_buffer(char *first, char *last, char replacement)
 {
 	if (replacement == '.')
 		return;

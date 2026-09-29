@@ -31371,3 +31371,4 @@ dup_930180,0x00930180,claim superseded by the gate-required claim for ??4Texture
 ?d_003d6210@@YAXXZ,0x003D6210,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?checkForPossible@Pathfinder@@QAE_NABUPathfindMovementProfile@@H_NHHW4PathfindLayerEnum@@PAUCoord3D@@1@Z, a gate-required claim from game/GameEngine/Source/GameLogic/AI/PathfinderCheckForPossible.cpp over the same 181-byte range. The game/gen_asm/d_003d51a0.asm scaffold reproduces those bytes but carries no identity."
 ?bfmeFieldA@Gen_000EC5E0@@QBEPAHXZ,0x000EC5E0,renamed to ?getName@Gen_000EC5E0@@QBEPAHXZ by tools/name_lane.py apply: two models agreed
 ?bfmeIsEmpty@Gen_001506E0@@QBE_NXZ,0x001506E0,renamed to ?isEmpty@Gen_001506E0@@QBE_NXZ by tools/name_lane.py apply: two models agreed
+?bfmeReplaceDots@@YAXPAD0D@Z,0x008490B0,renamed to ?__adjust_float_buffer@@YAXPAD0D@Z by tools/name_lane.py apply: two models agreed

@@ -82,3 +82,4 @@ game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeFieldA,m_nam
 game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeThing,m_proto,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_000EC5E0@|bfmeFieldA,getName,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_001506E0@|bfmeIsEmpty,isEmpty,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/Bfme5ThirtyThree.cpp|function||bfmeReplaceDots,__adjust_float_buffer,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
