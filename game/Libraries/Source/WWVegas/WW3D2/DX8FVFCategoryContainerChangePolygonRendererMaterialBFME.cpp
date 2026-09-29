@@ -137,6 +137,9 @@ public:
     MultiListClass<DX8TextureCategoryClass> texture_category_delete_list;
 };
 
+// Retail global 0x0134B0E8 (targets/game/reverse/dir32_addresses.csv).
+extern DX8MeshRendererClass *TheDX8MeshRenderer;
+
 inline void DX8TextureCategoryClass::Remove_Polygon_Renderer(
     DX8PolygonRendererClass *p_renderer)
 {
@@ -146,8 +149,7 @@ inline void DX8TextureCategoryClass::Remove_Polygon_Renderer(
         DX8FVFCategoryContainer *owner=*reinterpret_cast<DX8FVFCategoryContainer **>(
             reinterpret_cast<char *>(this)+0x34);
         owner->Remove_Texture_Category(this);
-        DX8MeshRendererClass *renderer=*
-            reinterpret_cast<DX8MeshRendererClass **>(0x0134b0e8);
+        DX8MeshRendererClass *renderer=TheDX8MeshRenderer;
         if (renderer)
             renderer->texture_category_delete_list.Add_Tail(this);
     }

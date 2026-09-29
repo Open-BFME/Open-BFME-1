@@ -21,7 +21,8 @@ public:
 	void *m_dc;
 };
 
-#define g_fontCharsGdiState (*(FontCharsClassGdiState **)0x0134aeac)
+// Retail global 0x0134AEAC (targets/game/reverse/dir32_addresses.csv).
+extern FontCharsClassGdiState *g_fontCharsGdiState0134AEAC;
 
 namespace _STL
 {
@@ -109,11 +110,11 @@ FontCharsClass::FontCharsClass()
 	  m_lastUnicodeChar(0),
 	  m_isBold(false)
 {
-	FontCharsClassGdiState *gdiState = g_fontCharsGdiState;
+	FontCharsClassGdiState *gdiState = g_fontCharsGdiState0134AEAC;
 	if (gdiState == 0)
 	{
 		gdiState = new FontCharsClassGdiState;
-		g_fontCharsGdiState = gdiState;
+		g_fontCharsGdiState0134AEAC = gdiState;
 	}
 
 	++gdiState->m_refs;

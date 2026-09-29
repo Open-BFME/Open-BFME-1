@@ -39,6 +39,13 @@ class DX8Wrapper
 public:
 	static void Set_Render_Target(IDirect3DSwapChain8 *swap_chain);
 	static void Set_Render_Target(IDirect3DSurface8 *render_target, bool use_default_depth_buffer);
+
+private:
+	// Retail static 0x01340548 (targets/game/reverse/dir32_addresses.csv records
+	// ?IsRenderToTexture@DX8Wrapper@@0_NA).  MSVC encodes a data member's access
+	// in the mangled name (private 0, protected 1, public 2), so this local
+	// replica must declare it private to resolve to the recorded symbol.
+	static bool IsRenderToTexture;
 };
 
 // ?Set_Render_Target@DX8Wrapper@@SAXPAUIDirect3DSwapChain8@@@Z
@@ -63,5 +70,5 @@ void DX8Wrapper::Set_Render_Target(IDirect3DSwapChain8 *swap_chain)
 		render_target = 0;
 	}
 
-	*reinterpret_cast<bool *>(0x01340548) = false; // DX8Wrapper::IsRenderToTexture
+	DX8Wrapper::IsRenderToTexture = false;
 }

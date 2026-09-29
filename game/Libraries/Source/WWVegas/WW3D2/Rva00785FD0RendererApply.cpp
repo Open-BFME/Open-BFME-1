@@ -40,6 +40,9 @@ private:
     unsigned m_reserved;
 };
 
+// Retail global 0x012D7180 (targets/game/reverse/dir32_addresses.csv).
+extern int g_bfmeBlendSrc;
+
 void __fastcall j_0001569f(void *renderer);
 void Rva00933810StencilStateA(void);
 void Rva00933B80StencilBlendA(void);
@@ -63,5 +66,5 @@ void Rva00785FD0Renderer::Rva0078C440(void)
         Rva00933B80StencilBlendA();
     else if (m_mode == 1)
         Rva00933BF0StencilBlendB();
-    *(unsigned *)0x012D7180 = m_stencilGeneration;
+    g_bfmeBlendSrc = m_stencilGeneration;
 }

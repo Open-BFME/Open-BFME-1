@@ -12,8 +12,14 @@ public:
 	void clear();
 };
 
-// ?clear@AnonymousGlobalFlagCleanup_00C51A90@@QAEXXZ absent-from-retail
+// Retail global 0x01306D4C (targets/game/reverse/dir32_addresses.csv records
+// ?g_Va01306D4C@@3IA).
+extern unsigned int g_Va01306D4C;
+
+// ?clear@AnonymousGlobalFlagCleanup_00C51A90@@QAEXXZ
 void AnonymousGlobalFlagCleanup_00C51A90::clear()
 {
-	*reinterpret_cast<unsigned int *>(0x01306D4C) &= 0xFFFFFFFEu;
+	// The mask result is dead here, so a plain read-modify-write folds into
+	// memory; the volatile access keeps retail's load/mask/store.
+	*reinterpret_cast<volatile unsigned int *>(&g_Va01306D4C) &= 0xFFFFFFFEu;
 }

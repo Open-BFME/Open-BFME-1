@@ -144,7 +144,8 @@ void Record_Texture_End()
 	if ( recordTextureMode == Debug_Statistics::RECORD_TEXTURE_DETAILS )
 	{
 		char temporary[ 1024 ];
-		bfmeFmt1064( temporary, 0x400, (char *)0x0113cac0,
+		bfmeFmt1064( temporary, 0x400,
+			"Set_DX8_Texture count: %d\nactual changes: %d\n\nid      refs changes  size      name\n--------------------------------------\n",
 			lastFrameRecordCount, lastFrameTextureChangeCount );
 		textureStatisticsString += temporary;
 		for ( int index = 0; index < textureCount; ++index )
