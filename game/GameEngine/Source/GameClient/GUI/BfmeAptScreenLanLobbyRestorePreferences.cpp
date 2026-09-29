@@ -19,6 +19,7 @@ template<class T> class StringBase
  void set(const StringBase &);
  StringData<T> *m_data;
 };
+extern const char Rva006A16B0Empty[];
 class AsciiString:private StringBase<char>
 {
 public:
@@ -33,7 +34,7 @@ public:
  {
   int otherLength=other?(int)strlen(other):0;
   int length=m_data?m_data->length:0;
-  const char *source=m_data?(const char *)m_data+8:(const char *)0x0107388B;
+  const char *source=m_data?(const char *)m_data+8:Rva006A16B0Empty;
   int n=length<otherLength?length:otherLength;
   int result=memcmp(source,other,n);
   if(result==0)result=length-otherLength;

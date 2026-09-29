@@ -33,7 +33,10 @@ public:
 	Rva0050F840FunctorHolder *findOrInsert( const AsciiString &name );
 };
 
-AptScreenRefMap *const g_theAptScreenRefMap = (AptScreenRefMap *)0x012F1990;
+class Gen_00C70090Target;
+extern Gen_00C70090Target TheBfmeObject_00C70090;
+
+AptScreenRefMap *const g_theAptScreenRefMap = (AptScreenRefMap *)&TheBfmeObject_00C70090;
 
 void _bfme_setAptScreenRef( const AsciiString &name,
 	Rva0050F840FunctorHolder incoming )

@@ -6,6 +6,7 @@
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
+extern const char Rva006A16B0Empty[];
 class AsciiString
 {
 public:
@@ -16,7 +17,7 @@ public:
 	const char *str() const
 	{
 		return m_data.m_data ?
-			(const char *)m_data.m_data + 8 : (const char *)0x0107388B;
+			(const char *)m_data.m_data + 8 : Rva006A16B0Empty;
 	}
 
 private:

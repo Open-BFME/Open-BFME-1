@@ -40,6 +40,7 @@ public:
 extern Glo012F3344Type *Glo012F3344;
 extern void HideInGameChat( void );
 extern void j_00023cc7( void );
+extern int g_012F4994;
 
 class BfmeAptScreenInGameChat
 {
@@ -59,7 +60,7 @@ void forceBfmeAptScreenInGameChatDeletingDestructor()
 
 int BfmeAptScreenInGameChat::update( void )
 {
-	if( ++*(int *)0x012F4994 > 20 )
+	if( ++g_012F4994 > 20 )
 		j_00023cc7();
 
 	if( m_state == 2 )

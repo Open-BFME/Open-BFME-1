@@ -24,6 +24,7 @@ class GameWindow;
 void GadgetTextEntrySetText( GameWindow *window, UnicodeString text );
 bool GetStringFromRegistry( AsciiString path, AsciiString key,
 	AsciiString &value );
+extern const char g_Rva0107301CEmptyString[];
 
 struct PreferenceNode
 {
@@ -99,7 +100,7 @@ void BfmeAptScreenOnlineLogin::_bfme_refreshLoginState()
 	else
 	{
 		GetStringFromRegistry(
-			AsciiString( (const char *)0x0107301C ),
+			AsciiString( g_Rva0107301CEmptyString ),
 			AsciiString( "MemberName" ), lastEmail );
 	}
 
