@@ -659,7 +659,10 @@ def integrate(args):
         return
     if args.base != 'origin/master':
         raise SystemExit('--push only integrates onto origin/master')
-    publish(dest, args.push_retries, checks=[[sys.executable, 'tools/check_csv.py']])
+    # check_csv before each push attempt, unless the pre-push hook runs it on that
+    # exact commit anyway (~2.3 s per attempt saved); a missing or edited hook keeps it.
+    publish(dest, args.push_retries,
+            checks=[] if hook_verifies_ledger(dest) else [[sys.executable, 'tools/check_csv.py']])
     sha = git(dest, 'rev-parse', 'HEAD', check=True).stdout.strip()
     print('pushed', sha)
     git(dest, 'pull', '-q', '--rebase', 'origin', 'master', check=True)
@@ -699,6 +702,22 @@ def is_push_race(output):
     if any(not RACE.search('PRE-PUSH FAILED: ' + f) for f in HOOK_FAIL.findall(output)):
         return False
     return bool(RACE.search(output))
+
+
+# The pre-push hook's first check (.githooks/pre-push) is check_csv on the exact
+# commit being pushed, stricter than a worktree check_csv (it reads the commit).
+HOOK_LEDGER_GATE = re.compile(r'^\s*python3 tools/check_csv\.py --ref "\$local_sha" \|\| fail', re.M)
+
+
+def hook_verifies_ledger(dest):
+    """True when the pre-push hook git will actually run for `dest` (honouring
+    core.hooksPath) is executable and runs check_csv on the pushed commit."""
+    path = git(dest, 'rev-parse', '--git-path', 'hooks/pre-push').stdout.strip()
+    hook = Path(dest) / path
+    try:
+        return os.access(hook, os.X_OK) and bool(HOOK_LEDGER_GATE.search(hook.read_text(errors='replace')))
+    except OSError:
+        return False
 
 
 def publish(dest, retries, checks=()):
