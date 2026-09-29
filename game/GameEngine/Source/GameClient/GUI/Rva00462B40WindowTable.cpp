@@ -43,7 +43,10 @@ template <class T> struct equal_to {
 typedef _STL::hash_map<AsciiString, WindowRecord, rts::hash<AsciiString>,
     rts::equal_to<AsciiString> > WindowTable;
 
-WindowTable *const g_windowTable = (WindowTable *)0x012F19A4;
+class Gen_00C700A0Target;
+extern Gen_00C700A0Target TheBfmeObject_00C700A0;
+
+WindowTable *const g_windowTable = (WindowTable *)&TheBfmeObject_00C700A0;
 
 void bfmeFinish991() {
     WindowTable *table = g_windowTable;

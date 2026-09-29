@@ -77,7 +77,9 @@ public:
 
 #pragma comment(linker, "/alternatename:?loadLayout@BfmeAptManager@@QAEPAXPAVAsciiString@@PAVWindowLayoutInfo@@@Z=?j_000429a6@@YAXXZ")
 
-#define TheAptManager (*(BfmeAptManager **)0x012F19E8)
+struct Rva00579160Manager;
+extern Rva00579160Manager *Rva00579160TheManager;
+#define TheAptManager (*(BfmeAptManager **)&Rva00579160TheManager)
 extern GameWindowManager *TheWindowManager;
 
 class WindowLayoutInfo

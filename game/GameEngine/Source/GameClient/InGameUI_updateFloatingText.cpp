@@ -52,7 +52,9 @@ public:
 };
 
 extern Rva0043F110ClientRoot4120 *TheGameClient;
-#define TheGameEngine (*(Rva0043F110GameEngine **)0x012ED524)
+class GameEngine;
+extern GameEngine *TheGameEngine;
+#define TheGameEngine (*(Rva0043F110GameEngine **)&TheGameEngine)
 
 class Rva0043F110FloatingTextData
 {

@@ -5289,7 +5289,7 @@ StateReturnType AIFollowPathState::update()
 					goalOwner, &m_goalPosition,
 					(((AIFollowPathStateUpdateCalls *)TheTerrainLogic)->*AIFollowPathStateUpdateMember<FollowPathGetLayer>(j_0001c675))(
 						goalOwner, &m_goalPosition),
-					(const char *)0x0109769C, 0x1EEB);
+					"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp", 0x1EEB);
 			}
 
 			// urg. hacky. if we are a projectile on the last segment, turn on precise z-pos.

@@ -9,6 +9,7 @@
 typedef int Int;
 
 struct FieldParse;
+extern "C" unsigned char bfmeStrEBJ[];
 
 // The retail wrapper is a four-byte StringBase pointer.  Its constructor and
 // release helper are already matched in string_base.cpp; keeping the wrapper
@@ -195,5 +196,5 @@ void Rva00425C90PredefinedEvaEvent::parse( INI *ini )
 		record = *source;
 	}
 
-	ini->initFromINI( &record, (const FieldParse *)0x010F1B68 );
+	ini->initFromINI( &record, (const FieldParse *)bfmeStrEBJ );
 }
