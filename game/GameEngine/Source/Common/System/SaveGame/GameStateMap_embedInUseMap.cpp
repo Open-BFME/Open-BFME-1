@@ -27,6 +27,7 @@ extern "C" XferException *__cdecl bfmeFormatText(
 	XferException *result, int tag, const char *format, ...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
+extern int g_guardTargetTypeThrowInfo;
 
 extern "C" __declspec(dllimport) void *__cdecl bfmeFopenVIF(
 	const char *name, const char *mode);
@@ -35,6 +36,8 @@ extern "C" __declspec(dllimport) Int __cdecl ftell(void *stream);
 extern "C" __declspec(dllimport) unsigned int __cdecl fread(
 	void *buffer, unsigned int size, unsigned int count, void *stream);
 extern "C" __declspec(dllimport) void __cdecl bfmeFreeUXB(void *stream);
+
+extern const char Rva006A16B0Empty[];
 
 class BFMERetailAsciiString
 {
@@ -47,7 +50,7 @@ class AsciiString
 public:
 	const char *str() const
 	{
-		return m_data ? m_data + 8 : (const char *)0x0107388B;
+		return m_data ? m_data + 8 : Rva006A16B0Empty;
 	}
 
 	~AsciiString()
@@ -103,7 +106,7 @@ static __declspec(noinline) void embedInUseMap(AsciiString map, Xfer *xfer)
 	{
 		XferException error;
 		bfmeFormatText(&error, 5, 0);
-		_CxxThrowException(&error, (void *)0x011DFE5C);
+		_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 	}
 
 	// how big is the map file
@@ -118,7 +121,7 @@ static __declspec(noinline) void embedInUseMap(AsciiString map, Xfer *xfer)
 	{
 		XferException error;
 		bfmeFormatText(&error, 5, 0);
-		_CxxThrowException(&error, (void *)0x011DFE5C);
+		_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 	}
 
 	if (fread(buffer, 1, size, fp) != size)
@@ -126,7 +129,7 @@ static __declspec(noinline) void embedInUseMap(AsciiString map, Xfer *xfer)
 		::operator delete[](buffer);
 		XferException error;
 		bfmeFormatText(&error, 5, 0);
-		_CxxThrowException(&error, (void *)0x011DFE5C);
+		_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 	}
 
 	xfer->beginBlock("InUseMap");

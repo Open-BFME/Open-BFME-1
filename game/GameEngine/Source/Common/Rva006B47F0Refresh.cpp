@@ -8,6 +8,10 @@ extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
 extern void __stdcall initializeRva006B3C50(void *buffer);
 extern void j_0002fbbc();
 
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+extern unsigned char g_012BA144;
+
 class Rva006B47F0MutexGuard
 {
 public:
@@ -50,9 +54,9 @@ void Rva006B47F0Owner::refresh006B47F0()
 	void *handle = self->m_mutex;
 	Rva006B47F0MutexGuard guard(handle);
 	if (*reinterpret_cast<unsigned char *>(
-			reinterpret_cast<unsigned char *>(*reinterpret_cast<void **>(0x012ED5C8)) + 0xA94))
+			reinterpret_cast<unsigned char *>(TheWritableGlobalData) + 0xA94))
 	{
-		*reinterpret_cast<unsigned char *>(0x012BA144) = 0;
+		g_012BA144 = 0;
 		::j_0002fbbc();
 		self->m_state = 0;
 		typedef void (Rva006B47F0Owner::*RvaInit)(void *);
@@ -73,9 +77,9 @@ void Rva006B47F0Owner::refresh006B48B0()
 	void *handle = self->m_mutex;
 	Rva006B47F0MutexGuard guard(handle);
 	if (*reinterpret_cast<unsigned char *>(
-			reinterpret_cast<unsigned char *>(*reinterpret_cast<void **>(0x012ED5C8)) + 0xA94))
+			reinterpret_cast<unsigned char *>(TheWritableGlobalData) + 0xA94))
 	{
-		*reinterpret_cast<unsigned char *>(0x012BA144) = 1;
+		g_012BA144 = 1;
 		::j_0002fbbc();
 		self->m_state = 0;
 		typedef void (Rva006B47F0Owner::*RvaInit)(void *);

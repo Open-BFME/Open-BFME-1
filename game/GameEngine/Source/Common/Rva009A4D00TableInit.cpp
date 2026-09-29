@@ -13,10 +13,13 @@ extern void __cdecl initBlocksRva009B3E40(void *self);
 
 typedef int (__cdecl *Fn009A8430)();
 
-static int *const g_013571E0 = (int *)0x013571E0;
-static int *const g_0134C6D8 = (int *)0x0134C6D8;
-static const short *const g_01141D08 = (const short *)0x01141D08;
-static const short *const g_01141D88 = (const short *)0x01141D88;
+extern int g_bfmeSharedJX;
+extern int g_0134C6D8[];
+extern short g_Rva01141D08[];
+
+static int *const g_013571E0 = &g_bfmeSharedJX;
+static const short *const g_01141D08 = g_Rva01141D08;
+static const short *const g_01141D88 = g_Rva01141D08 + 64;
 
 typedef void (__cdecl *Rva009A8550Fn)(void *);
 extern Rva009A8550Fn volatile g_rva01356DA0;
