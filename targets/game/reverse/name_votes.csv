@@ -340,3 +340,7 @@ game/GameEngine/Source/Common/Rva001B74A0Ctor.cpp|type||Rva001B74A0,126bca82243d
 game/GameEngine/Source/Common/Rva0087EA20Copy.cpp|type||BfmeTailA2,c3f363bf42d691c730ac3419,grok,20260929210442-4edad1,2026-09-29
 game/GameEngine/Source/Common/BfmeConv1907.cpp|type||BfmeInfoBA,c1c66bde2c90b2bd72dd340e,grok,20260929210827-052376,2026-09-29
 game/GameEngine/Source/Common/BfmeConv1907.cpp|type||BfmeAgentBA,1a15c19f5be217ee46fc36f2,grok,20260929210827-052376,2026-09-29
+game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||Rva0015C7A0GuardMachine,0e5d1df8cef11fcbeb2e3f46,grok,20260929211400-0c4cc3,2026-09-29
+game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||FactorsR0015C7A0,a05001e9ab801bf9fd571659,grok,20260929211400-0c4cc3,2026-09-29
+game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||QR0015C7A0,77b88cd1f02d0c7abdfe99c6,grok,20260929211400-0c4cc3,2026-09-29
+game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||CtorTargetR0015C7A0,8d0ee96fcb39428e36ffdd02,grok,20260929211400-0c4cc3,2026-09-29
