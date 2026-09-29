@@ -119,6 +119,7 @@ class Rva00237BD0HordeContain
 public:
 	bool hasMemberKeyedTo(void *key);
 	void notifyMembers(void *arg);
+	bool hasLiveIndexedMember();
 
 private:
 	void *m_vtbl;
@@ -185,4 +186,20 @@ void Rva00237BD0HordeContain::notifyMembers(void *arg)
 		entry = (BfmeMemberIndexNode *)_STL::_Rb_global<bool>::_M_increment(
 			(_STL::_Rb_tree_node_base *)entry);
 	}
+}
+
+// Retail 0x00237CD0 (121 bytes): true as soon as one key in the member index
+// still resolves to a live object through TheGameLogic.
+bool Rva00237BD0HordeContain::hasLiveIndexedMember()
+{
+	BfmeMemberIndexNode *entry = m_memberIndex->m_next;
+	while (entry != m_memberIndex)
+	{
+		UnsignedInt id = entry->m_key;
+		if (id != 0 && TheGameLogic->findObjectByID(id) != 0)
+			return true;
+		entry = (BfmeMemberIndexNode *)_STL::_Rb_global<bool>::_M_increment(
+			(_STL::_Rb_tree_node_base *)entry);
+	}
+	return false;
 }
