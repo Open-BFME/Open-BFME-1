@@ -62,3 +62,54 @@ Rva0094C060Box *Rva0094C060Box::copyFrom(const Rva0094C060Head *a, const Rva0094
 	m_tail = *b;
 	return this;
 }
+struct Rva0094C2F0Key
+{
+	int m_value;
+};
+struct Rva0094C2F0Head
+{
+	void *m_handle;
+};
+class Rva0094C2F0Box
+{
+public:
+	Rva0094C2F0Box *copyFrom(const Rva0094C2F0Key *a, const Rva0094C2F0Head *b);
+	int m_key;
+	void *m_handle;
+};
+// mov eax,ecx / plain key word off the first pointer / handle off the second with the null-guarded halfword inc.
+Rva0094C2F0Box *Rva0094C2F0Box::copyFrom(const Rva0094C2F0Key *a, const Rva0094C2F0Head *b)
+{
+	m_key = a->m_value;
+	m_handle = b->m_handle;
+	if (m_handle)
+		++*(unsigned short *)((char *)m_handle + 4);
+	return this;
+}
+struct Rva0094C310Tail
+{
+	int m_b;
+	int m_c;
+	int m_d;
+	int m_e;
+};
+struct Rva0094C310Head
+{
+	void *m_handle;
+};
+class Rva0094C310Box
+{
+public:
+	Rva0094C310Box *copyFrom(const Rva0094C310Head *a, const Rva0094C310Tail *b);
+	void *m_handle;
+	Rva0094C310Tail m_tail;
+};
+// Byte-identical to 0x0094C060: handle off the first pointer, 16-byte tail off the second.
+Rva0094C310Box *Rva0094C310Box::copyFrom(const Rva0094C310Head *a, const Rva0094C310Tail *b)
+{
+	m_handle = a->m_handle;
+	if (m_handle)
+		++*(unsigned short *)((char *)m_handle + 4);
+	m_tail = *b;
+	return this;
+}
