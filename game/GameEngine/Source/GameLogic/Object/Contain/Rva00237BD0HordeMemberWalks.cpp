@@ -114,12 +114,38 @@ public:
 	virtual const BfmeMemberList &getMemberList() const = 0;
 };
 
+class Pathfinder
+{
+public:
+	void removeObjectFromPathfindMap(Object *obj);
+};
+
+class AI
+{
+public:
+	Pathfinder *pathfinder() { return m_pathfinder; }
+
+private:
+	unsigned char m_head[0x0c];
+	Pathfinder *m_pathfinder;
+};
+
+extern AI *TheAI;
+
+class Rva0023C200Member
+{
+public:
+	unsigned char m_head[0x90];
+	unsigned int m_bfmeFlags90;
+};
+
 class Rva00237BD0HordeContain
 {
 public:
 	bool hasMemberKeyedTo(void *key);
 	void notifyMembers(void *arg);
 	bool hasLiveIndexedMember();
+	void removeMembersFromPathfindMap();
 
 private:
 	void *m_vtbl;
@@ -202,4 +228,37 @@ bool Rva00237BD0HordeContain::hasLiveIndexedMember()
 			(_STL::_Rb_tree_node_base *)entry);
 	}
 	return false;
+}
+
+// Retail 0x0023C200 (208 bytes): interface slot 46 (rdata 0x00CAE2E8 via ILT
+// 0x0000BE9C) -- the slot the formation snap at 0x0023D850 calls first.  Every
+// contained and indexed member without flag 0x10000000 at +0x90 is taken off
+// the pathfind map.
+void Rva00237BD0HordeContain::removeMembersFromPathfindMap()
+{
+	const BfmeMemberList &contained =
+		((Rva00238AE0OpenContainInterface *)((char *)this - 0xc4))
+			->getMemberList();
+	for (BfmeMemberList::const_iterator it = contained.begin();
+		it != contained.end(); ++it)
+	{
+		Rva0023C200Member *member = (Rva0023C200Member *)*it;
+		if (member != 0 && !(member->m_bfmeFlags90 & 0x10000000))
+			TheAI->pathfinder()->removeObjectFromPathfindMap((Object *)member);
+	}
+
+	BfmeMemberIndexNode *entry = m_memberIndex->m_next;
+	while (entry != m_memberIndex)
+	{
+		UnsignedInt id = entry->m_key;
+		if (id != 0)
+		{
+			Rva0023C200Member *member =
+				(Rva0023C200Member *)TheGameLogic->findObjectByID(id);
+			if (member != 0 && !(member->m_bfmeFlags90 & 0x10000000))
+				TheAI->pathfinder()->removeObjectFromPathfindMap((Object *)member);
+		}
+		entry = (BfmeMemberIndexNode *)_STL::_Rb_global<bool>::_M_increment(
+			(_STL::_Rb_tree_node_base *)entry);
+	}
 }
