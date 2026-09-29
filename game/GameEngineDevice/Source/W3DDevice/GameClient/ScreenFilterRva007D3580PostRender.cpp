@@ -43,9 +43,11 @@ struct BfmeDevice
 	BfmeDeviceVtable *v;
 };
 
-#define BfmeDeviceGlobal (*(BfmeDevice **)0x01340534)
-#define BfmeTacticalViewGlobal (*(class BfmeTacticalView **)0x012F1600)
-#define BfmeCurrentCapsGlobal (*(struct BfmeCaps **)0x01340578)
+class BfmeTacticalView;
+extern BfmeTacticalView *TheTacticalView;
+#define BfmeDeviceGlobal ((BfmeDevice *)DX8Wrapper::D3DDevice)
+#define BfmeTacticalViewGlobal (TheTacticalView)
+#define BfmeCurrentCapsGlobal ((struct BfmeCaps *)DX8Wrapper::CurrentCaps)
 // Retail 0x013071BC. ScreenBWFilter::m_curFadeValue is a different static at
 // 0x013071A8 (Rva007D1E60 postRender); naming both ScreenBWFilter collides.
 extern float Rva007D3580FadeValue;
@@ -95,13 +97,22 @@ public:
 // DX8Wrapper::Set_Shader target behind that thunk.
 void BaseHeightMapScorchSetShader(const ShaderClass &);
 
+struct IDirect3DDevice8;
+class DX8Caps;
+
 class DX8Wrapper
 {
+	friend class Rva007D3580;
+
 public:
 	static void Set_DX8_Render_State(unsigned long, unsigned int);
 	static void Set_DX8_Texture_Stage_State(unsigned int, unsigned long,
 		unsigned int);
 	static void Apply_Render_State_Changes();
+
+protected:
+	static DX8Caps *CurrentCaps;
+	static IDirect3DDevice8 *D3DDevice;
 };
 
 void *__cdecl bfmeEndRenderToTexture();

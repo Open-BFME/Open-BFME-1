@@ -10,7 +10,7 @@
 // dispatch 0x1579E -> 0x1028D0. The binding stores an 8-byte member pointer
 // (entry and zero this-adjustment). Constructing those witnessed words keeps
 // the callback materialization after the AsciiString temporary construction.
-// Vtables are literal retail addresses: base 0x107C7D0; binding 0x109BFD4;
+// Vtables are externs at the retail addresses: base 0x107C7D0; binding 0x109BFD4;
 // scripts 0x109BFC8, independently witnessed by BfmeOwnCP at 0x191640.
 // The native pair/vector callees copy an AsciiString plus a four-byte pointer;
 // their bodies and this caller establish the payload, not old generated names.
@@ -113,19 +113,22 @@ static __forceinline Callback0019EC80 callbackAt0019EC80(unsigned address) {
  bits.words.address=address;bits.words.adjustment=0;return bits.method;
 }
 typedef bool (*CallbackBase0019EC80)(DataChunkInput&,DataChunkInfo*,void*);
+extern "C" int _bfmeVftVE[];
+extern "C" int _bfmeVftXB[];
+extern int g_0109BFD4[];
 class ParserBase0019EC80 {
 public:
  ParserBase0019EC80(DataChunkInput *file,const AsciiString &label,const AsciiString &parent) {
-   vtable_=(void*)0x0107C7D0;file_=file;token_=file->registerParser(label,parent,(CallbackBase0019EC80)0x0041579E,this);
+   vtable_=_bfmeVftVE;file_=file;token_=file->registerParser(label,parent,(CallbackBase0019EC80)0x0041579E,this);
  }
- ~ParserBase0019EC80() {vtable_=(void*)0x0107C7D0;((BfmeSubVE*)file_)->bfmeDropVE(token_);}
+ ~ParserBase0019EC80() {vtable_=_bfmeVftVE;((BfmeSubVE*)file_)->bfmeDropVE(token_);}
 protected:
  void *vtable_; DataChunkInput *file_;UserParser *token_;
 };
 class ParserBinding0019EC80:public ParserBase0019EC80 {
  SidesList *owner_; Callback0019EC80 callback_;
 public:
- __forceinline ParserBinding0019EC80(SidesList *owner,Callback0019EC80 cb,DataChunkInput *file,const AsciiString &label):ParserBase0019EC80(file,label,AsciiString::TheEmptyString) {vtable_=(void*)0x0109BFD4;owner_=owner;callback_=cb;}
+ __forceinline ParserBinding0019EC80(SidesList *owner,Callback0019EC80 cb,DataChunkInput *file,const AsciiString &label):ParserBase0019EC80(file,label,AsciiString::TheEmptyString) {vtable_=g_0109BFD4;owner_=owner;callback_=cb;}
 };
 class Rva00352810ParserRegistration {
 protected:
@@ -136,7 +139,7 @@ public:
 class BfmeOwnCP:public Rva00352810ParserRegistration {
  SidesList *owner_;void *items_[32];int count_;
 public:
- BfmeOwnCP(SidesList *owner,DataChunkInput *file):Rva00352810ParserRegistration(items_,&count_,file,0) {vtable_=(void*)0x0109BFC8;owner_=owner;count_=0;}
+ BfmeOwnCP(SidesList *owner,DataChunkInput *file):Rva00352810ParserRegistration(items_,&count_,file,0) {vtable_=_bfmeVftXB;owner_=owner;count_=0;}
  ~BfmeOwnCP();
 };
 typedef _STL::pair<AsciiString,SidesList*> CacheEntry0019EC80;

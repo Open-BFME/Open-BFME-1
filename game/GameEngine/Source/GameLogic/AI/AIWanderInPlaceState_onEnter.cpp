@@ -169,16 +169,16 @@ StateReturnType AIWanderInPlaceState::onEnter()
 		BfmeLocomotorTemplate *locoTemplate = locomotor->getFinalTemplate();
 		float rounded = (float)floor((double)(
 			locoTemplate->m_wanderAboutPointRadius *
-			*(const float *)0x01075c70 + *(const float *)0x0107533c));
+			0.1f + 0.5f));
 		delta = fast_float2long_round(rounded);
 	}
 
 	int negativeDelta = -delta;
 	Coord3D offset;
 	offset.x = (float)(GetGameLogicRandomValue(negativeDelta, delta,
-		(char *)0x0109769c, 0x25f1) * 10);
+		"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp", 0x25f1) * 10);
 	offset.y = (float)(GetGameLogicRandomValue(negativeDelta, delta,
-		(char *)0x0109769c, 0x25f2) * 10);
+		"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp", 0x25f2) * 10);
 	m_goalPosition = m_origin;
 	m_goalPosition.x += offset.x;
 	m_goalPosition.y += offset.y;
