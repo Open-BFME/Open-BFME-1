@@ -26,10 +26,15 @@ struct InGameUI
 	bool m_menuHidden;
 };
 
+class Shell;
+extern void *g_obj12F4B40;
+extern Shell *TheShell;
+extern WindowManager *g_theWindowManager;
+
 // ?HideSaveLoadMenu@@YAXXZ
 void HideSaveLoadMenu(void)
 {
-	SaveLoadMenu *menu = *(SaveLoadMenu **)0x012F4B40;
+	SaveLoadMenu *menu = static_cast<SaveLoadMenu *>(g_obj12F4B40);
 
 	if (!menu)
 		return;
@@ -38,8 +43,8 @@ void HideSaveLoadMenu(void)
 		return;
 
 	menu->m_hidden = true;
-	(*(SaveLoadMenu **)0x012F4B40)->m_25c = 0;
-	(*(InGameUI **)0x012F4B58)->m_menuHidden = true;
+	static_cast<SaveLoadMenu *>(g_obj12F4B40)->m_25c = 0;
+	((InGameUI *)TheShell)->m_menuHidden = true;
 
-	(*(WindowManager **)0x012F19E8)->hideQuitMenu();
+	g_theWindowManager->hideQuitMenu();
 }

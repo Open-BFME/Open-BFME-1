@@ -70,10 +70,16 @@ public:
 	virtual void resumeAudio(unsigned int which, int a, int b);
 };
 
-#define TheInGameUI (*(BfmeInGameUI_setInputEnabled **)0x012F148C)
-#define TheMouse (*(Win32Mouse **)0x012F4C5C)
-#define TheMouseVis (*(Mouse **)0x012F4C5C)
-#define TheAudio (*(BfmeAudioPause **)0x012ED668)
+class InGameUI;
+class AudioManager;
+extern InGameUI *TheInGameUI;
+extern Mouse *TheMouse;
+extern AudioManager *TheAudio;
+
+#define TheInGameUI ((BfmeInGameUI_setInputEnabled *)TheInGameUI)
+#define TheMouse ((Win32Mouse *)TheMouse)
+#define TheMouseVis ((Mouse *)TheMouse)
+#define TheAudio ((BfmeAudioPause *)TheAudio)
 
 class BfmeGameLogicPause
 {

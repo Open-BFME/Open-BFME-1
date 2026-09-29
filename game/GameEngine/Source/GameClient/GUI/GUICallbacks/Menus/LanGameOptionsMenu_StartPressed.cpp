@@ -21,6 +21,9 @@ enum { MAX_SLOTS = 8, PLAYERTEMPLATE_OBSERVER = -2 };
 
 #include <set>
 
+extern const char Rva006A16B0Empty[];
+extern const unsigned short BFMEEmptyUnicodeString;
+
 template <typename T> struct BfmeStartStringData
 {
 	Int m_refCount;
@@ -63,7 +66,7 @@ public:
 	const char *str(void) const
 	{
 		void *data = *(void *const *)this;
-		return data ? (const char *)data + 8 : (const char *)0x0107388B;
+		return data ? (const char *)data + 8 : Rva006A16B0Empty;
 	}
 	Int getLength(void) const
 	{
@@ -85,7 +88,7 @@ public:
 	{
 		void *data = *(void *const *)this;
 		return data ? (const WCHAR *)((const char *)data + 8)
-				: (const WCHAR *)0x0107388C;
+				: &BFMEEmptyUnicodeString;
 	}
 	void format(UnicodeString format, ...);
 };
@@ -306,7 +309,7 @@ static __forceinline const char *BfmeStartAsciiString(
 	const AsciiString &string)
 {
 	void *data = *(void *const *)&string;
-	return data ? (const char *)data + 8 : (const char *)0x0107388B;
+	return data ? (const char *)data + 8 : Rva006A16B0Empty;
 }
 
 static __forceinline const unsigned short *BfmeStartUnicodeString(
@@ -314,7 +317,7 @@ static __forceinline const unsigned short *BfmeStartUnicodeString(
 {
 	void *data = *(void *const *)&string;
 	return data ? (const unsigned short *)((const char *)data + 8)
-				: (const unsigned short *)0x0107388C;
+				: &BFMEEmptyUnicodeString;
 }
 
 // Identity is established by the two exact callers through ILT 0x00040AF7:

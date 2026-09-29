@@ -142,9 +142,17 @@ public:
 extern TacticalView *TheTacticalView;
 extern Display *TheDisplay;
 
-#define TheTerrainTracks (*(void **)0x012f9d98)
-#define TheShadow (*(void **)0x01306eec)
-#define TheSnow (*(void **)0x012f15f4)
+class TerrainTracksRenderObjClassSystem;
+class W3DShadowManager;
+class SnowManager;
+
+extern TerrainTracksRenderObjClassSystem *TheTerrainTracksRenderObjClassSystem;
+extern W3DShadowManager *TheW3DShadowManager;
+extern SnowManager *TheSnowManager;
+
+#define TheTerrainTracks ((void *)TheTerrainTracksRenderObjClassSystem)
+#define TheShadow ((void *)TheW3DShadowManager)
+#define TheSnow ((void *)TheSnowManager)
 
 void BaseHeightMapRenderObjClass::ReAcquireResources(void)
 {
