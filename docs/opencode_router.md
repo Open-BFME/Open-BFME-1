@@ -746,7 +746,10 @@ the hooks run the full verification. A hook request for
 `tools/adopt_header.py --fix-staged` is applied once; a name regression is never
 documented automatically -- read the worker's identity evidence and record the
 correction yourself (`docs/naming_evidence.md`). `--push` rebases and retries
-pushes; `--measure` records the verified result on the job's last attempt.
+a push only on a proven stale-base race (Git's fetch-first, non-fast-forward or
+stale-info rejection, or the pre-push hook's `PUSH RACE` ancestry guard), up to
+`--push-retries` attempts; validator, auth, transport and bare lock failures
+stop at once with the push output, keeping the commit locally. `--measure` records the verified result on the job's last attempt.
 Neither command modifies or deletes the job workspace.
 
 ## Evidence and performance records

@@ -555,10 +555,28 @@ def integrate(args):
         print(sh(cmd, ROOT, check=True).stdout)
 
 
-# Push outputs that mean "the remote moved under you": a rebase fixes these and
-# nothing else. Hook rejections, auth and transport failures are reported as is.
-RACE = re.compile(r'non-fast-forward|fetch first|cannot lock ref|failed to lock|'
-                  r'is at [0-9a-f]+ but expected|Updates were rejected because the (?:remote|tip)', re.I)
+# Push outputs that prove "the destination moved under you": a rebase fixes
+# these and nothing else.  Git's own non-fast-forward / lease rejections, a
+# remote ref update that found the ref at a different tip, and the pre-push
+# hook's advertised-tip guard (.githooks/pre-push) when it asserts the tip
+# moved or is not an ancestor.  Not races, reported as is: validator failures,
+# auth and transport failures, a bare lock error (a stale .lock file does not
+# show the ref moved), and the hook's "cannot inspect destination" (its fetch
+# failed: transport) and "tip ... is unavailable" (fetched but unreadable).
+RACE = re.compile(r'\[rejected\].*\((?:fetch first|non-fast-forward|stale info)\)|'
+                  r'is at [0-9a-f]+ but expected [0-9a-f]+|'
+                  r'Updates were rejected because the (?:remote contains work|tip of your current branch is behind)|'
+                  r'PRE-PUSH FAILED: PUSH RACE: destination \S+ (?:advanced before verification|'
+                  r'at [0-9a-f]+ is not an ancestor of)', re.I)
+HOOK_FAIL = re.compile(r'^PRE-PUSH FAILED: (.*)$', re.M)
+
+
+def is_push_race(output):
+    """True only when the push output proves a stale base; any other hook
+    failure in the same output (a validator) wins, so it is never retried."""
+    if any(not RACE.search('PRE-PUSH FAILED: ' + f) for f in HOOK_FAIL.findall(output)):
+        return False
+    return bool(RACE.search(output))
 
 
 def publish(dest, retries, checks=()):
@@ -585,7 +603,7 @@ def publish(dest, retries, checks=()):
         if p.returncode == 0:
             return attempt
         last = (p.stdout + p.stderr).strip()
-        if not RACE.search(last):
+        if not is_push_race(last):
             raise SystemExit(f'push rejected on attempt {attempt}; this is not a stale-base race, so retrying '
                              f'cannot fix it. Integration commit kept locally in {dest}. Push output:\n'
                              + last[-3000:])

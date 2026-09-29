@@ -312,6 +312,139 @@ class PublishTest(PublishFixture):
         self.assertIn('not a stale-base race', str(cm.exception))
 
 
+REAL_HOOK = Path(__file__).resolve().parents[2] / '.githooks/pre-push'
+
+
+def real_race_guard():
+    """The real pre-push hook up to and including its advertised-tip ancestry
+    guard; the expensive validators after it are omitted."""
+    lines = REAL_HOOK.read_text().splitlines(keepends=True)
+    end = next(i for i, l in enumerate(lines) if l.strip() == 'base="$remote_sha"')
+    assert lines[end + 1].strip() == 'fi'
+    return ''.join(lines[:end + 2]) + '    echo "PRE-PUSH OK"\ndone <<< "$refs"\n'
+
+
+class PublishRealHookTest(PublishFixture):
+    """publish() against the real hook's PUSH RACE guard, with a racer landing
+    a commit after publish()'s pull and before its push."""
+    def setUp(self):
+        super().setUp()
+        shebang, rest = real_race_guard().split('\n', 1)
+        script = self.dest / '.git/hooks/pre-push'
+        script.write_text('%s\nprintf x >> "%s"\n%s' % (shebang, self.counter, rest))
+        script.chmod(0o755)
+
+    def racer_lands(self, times):
+        """A publish() check that advances origin on its first `times` calls."""
+        left = Path(self.tmp.name) / 'left'
+        left.write_text('x' * times)
+        return [['sh', '-c', 'if [ -s "%s" ]; then printf %%s "$(tail -c +2 "%s")" > "%s"; '
+                 'git -C "%s" pull -q --rebase origin master && '
+                 'git -C "%s" commit -q --allow-empty -m race && git -C "%s" push -q origin HEAD:master; fi'
+                 % (left, left, left, self.racer, self.racer, self.racer)]]
+
+    def assert_integration_kept_locally(self):
+        self.assertEqual((self.dest / 'a').read_text(), 'integration\n')
+        self.assertEqual(git_out(self.dest, 'log', '-1', '--format=%s'), 'integration')
+        self.assertEqual(git_out(self.dest, 'show', 'HEAD:a'), 'integration')
+
+    def test_advertised_tip_race_is_rebased_and_retried(self):
+        self.assertEqual(ri.publish(self.dest, 8, checks=self.racer_lands(1)), 2)
+        self.assertEqual(self.attempts(), 2)
+        log = git_out(self.origin, 'log', '--format=%s', 'master')
+        self.assertEqual(log.split('\n'), ['integration', 'race', 'base'])
+        self.assertEqual(git_out(self.origin, 'show', 'master:a'), 'integration')
+        self.assert_integration_kept_locally()
+
+    def test_consecutive_races_stop_at_the_bound(self):
+        with self.assertRaises(SystemExit) as cm:
+            ri.publish(self.dest, 3, checks=self.racer_lands(5))
+        message = str(cm.exception)
+        self.assertIn('kept losing the race over 3 attempt(s)', message)
+        self.assertIn('integration commit kept locally', message)
+        self.assertIn('PUSH RACE', message)
+        self.assertEqual(self.attempts(), 3)
+        self.assert_integration_kept_locally()
+        self.assertNotIn('integration', git_out(self.origin, 'log', '--format=%s', 'master'))
+
+    def test_validation_failure_after_the_guard_stops_once(self):
+        script = self.dest / '.git/hooks/pre-push'
+        script.write_text(script.read_text().replace(
+            'echo "PRE-PUSH OK"', 'fail "byte verification failed for game/x.cpp"'))
+        with self.assertRaises(SystemExit) as cm:
+            ri.publish(self.dest, 8)
+        message = str(cm.exception)
+        self.assertIn('PRE-PUSH FAILED: byte verification failed for game/x.cpp', message)
+        self.assertIn('not a stale-base race', message)
+        self.assertEqual(self.attempts(), 1)
+        self.assert_integration_kept_locally()
+
+
+@pytest.mark.parametrize('output', [
+    ' ! [rejected]        HEAD -> master (fetch first)\nerror: failed to push some refs\n'
+    'hint: Updates were rejected because the remote contains work that you do not\n',
+    ' ! [rejected]        HEAD -> master (non-fast-forward)\nerror: failed to push some refs\n'
+    'hint: Updates were rejected because the tip of your current branch is behind\n',
+    ' ! [rejected]        HEAD -> master (stale info)\nerror: failed to push some refs\n',
+    " ! [remote rejected] HEAD -> master (cannot lock ref 'refs/heads/master': is at "
+    "1111111111111111111111111111111111111111 but expected 2222222222222222222222222222222222222222)\n",
+    'PRE-PUSH FAILED: PUSH RACE: destination refs/heads/master at 1111111 is not an ancestor of 2222222; '
+    'rebase and retry (validation not run)\nerror: failed to push some refs\n',
+    'PRE-PUSH FAILED: PUSH RACE: destination refs/heads/master advanced before verification; retry\n',
+])
+def test_proven_stale_base_output_is_a_race(output):
+    assert ri.is_push_race(output)
+
+
+@pytest.mark.parametrize('output', [
+    'PRE-PUSH FAILED: byte verification failed\nerror: failed to push some refs\n',
+    'PRE-PUSH FAILED: ledger integrity at 2222222 (see above)\n',
+    "remote: Permission to o/r.git denied to u.\n"
+    "fatal: unable to access 'https://x/': The requested URL returned error: 403\n",
+    'git@host: Permission denied (publickey).\nfatal: Could not read from remote repository.\n',
+    "fatal: could not read Username for 'https://github.com': terminal prompts disabled\n",
+    "fatal: unable to access 'https://x/': Could not resolve host: x\n",
+    'error: RPC failed; curl 56 Recv failure: Connection reset by peer\nfatal: early EOF\n',
+    # the hook could not fetch the advertised tip: a transport failure, not proof it moved
+    "fatal: unable to access 'https://x/': Could not resolve host: x\n"
+    'PRE-PUSH FAILED: PUSH RACE: cannot inspect destination refs/heads/master at 1111111; retry\n',
+    'PRE-PUSH FAILED: PUSH RACE: destination tip 1111111 is unavailable; retry\n',
+    # a lock error without "is at X but expected Y" does not show the ref moved
+    " ! [remote rejected] HEAD -> master (cannot lock ref 'refs/heads/master': "
+    "Unable to create '/srv/o.git/refs/heads/master.lock': File exists.)\n",
+    "fatal: Unable to create '/w/.git/index.lock': File exists.\n",
+    'error: failed to lock refs/heads/master\n',
+    # a validator failure alongside a race-looking line is still a validation failure
+    ' ! [rejected]        HEAD -> master (non-fast-forward)\nPRE-PUSH FAILED: byte verification failed\n',
+])
+def test_other_push_failures_are_not_races(output):
+    assert not ri.is_push_race(output)
+
+
+@pytest.mark.parametrize('text, diagnosis', [
+    ("fatal: could not read Username for 'https://github.com': terminal prompts disabled", 'could not read Username'),
+    ('fatal: unable to access: Could not resolve host: example.invalid', 'Could not resolve host'),
+    ('error: RPC failed; curl 56 Connection reset by peer', 'Connection reset by peer'),
+    ('PRE-PUSH FAILED: PUSH RACE: cannot inspect destination refs/heads/master at 1111111; retry', 'cannot inspect'),
+    ("fatal: Unable to create '/w/.git/index.lock': File exists.", 'index.lock'),
+])
+def test_auth_transport_and_lock_failures_stop_once_with_diagnosis(text, diagnosis):
+    fixture = PublishFixture()
+    fixture.setUp()
+    try:
+        fixture.hook('cat >/dev/null\necho "%s" >&2\nexit 1' % text.replace('"', '\\"'))
+        with pytest.raises(SystemExit) as cm:
+            ri.publish(fixture.dest, 8)
+        message = str(cm.value)
+        assert diagnosis in message
+        assert 'not a stale-base race' in message
+        assert fixture.attempts() == 1
+        assert git_out(fixture.dest, 'show', 'HEAD:a') == 'integration'
+        assert git_out(fixture.dest, 'log', '-1', '--format=%s') == 'integration'
+    finally:
+        fixture.tearDown()
+
+
 def git_out(cwd, *a):
     return subprocess.run(['git', *a], cwd=cwd, check=True, capture_output=True, text=True).stdout.strip()
 
