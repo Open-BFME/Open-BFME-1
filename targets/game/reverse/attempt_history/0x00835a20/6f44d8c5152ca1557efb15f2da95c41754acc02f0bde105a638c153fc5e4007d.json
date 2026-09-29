@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "6f44d8c5152ca1557efb15f2da95c41754acc02f0bde105a638c153fc5e4007d",
+  "symbol": "??$__write_decimal_backward@J@_STL@@YAPADPADJHABU__true_type@0@@Z",
+  "score_kind": "measured",
+  "score": 0.3051,
+  "source": "// ??$__write_decimal_backward@J@_STL@@YAPADPADJHABU__true_type@0@@Z\n// partial score=0.3051 date=2026-09-29\n// cl: /O2 /EHsc /MD\nnamespace _STL {\nstruct __true_type {};\nstruct ios_base { typedef int fmtflags; static const fmtflags showpos = 0x0800; };\ntypedef long long __max_int_t;\ntemplate <class _Integer>\nchar *__cdecl __write_decimal_backward(char *, _Integer,\n    ios_base::fmtflags, const __true_type &);\ntemplate char *__cdecl __write_decimal_backward<long>(char *, long,\n    ios_base::fmtflags, const __true_type &);\n\ntemplate <class _Integer>\nchar *__cdecl __write_decimal_backward(char *__ptr, _Integer __x,\n    ios_base::fmtflags __flags, const __true_type &)\n{\n    __max_int_t __temp = __x;\n    const bool __negative = __x < 0;\n    if (__negative) __temp = -__temp;\n    for (; __temp != 0; __temp /= 10)\n        *--__ptr = (int)(__temp % 10) + '0';\n    if (__negative) *--__ptr = '-';\n    else if (__flags & ios_base::showpos) *--__ptr = '+';\n    return __ptr;\n}\n\n} // namespace _STL\n"
+}
