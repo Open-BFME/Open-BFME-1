@@ -26,13 +26,13 @@ public:
 		return thing;
 	}
 
-	BfmeThingLU *bfmeTopLU(void);
+	BfmeThingLU *getThingTemplate(void);
 
 	unsigned char m_bfmeHeadLU[0x1c];
 	BfmeThingLU *m_bfmeSlotLU;
 };
 
-BfmeThingLU *BfmeOwnerLU::bfmeTopLU(void)
+BfmeThingLU *BfmeOwnerLU::getThingTemplate(void)
 {
 	if (!bfmeThingLU())
 		return 0;

@@ -165,7 +165,7 @@ public:
 class BfmeOwnerLU
 {
 public:
-	BfmeThingLU *bfmeTopLU( void );
+	BfmeThingLU *getThingTemplate( void );
 };
 
 class ControlBar
@@ -214,7 +214,7 @@ void Rva004BCCE0( GameWindow *window )
 
 		if( purpose == 3 )
 		{
-			BfmeCheckFH *thing = (BfmeCheckFH *)command->bfmeTopLU();
+			BfmeCheckFH *thing = (BfmeCheckFH *)command->getThingTemplate();
 
 			Rva0029BBC0 *item = pui->slot18();
 			while( item != 0 )
