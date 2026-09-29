@@ -4,6 +4,12 @@ typedef unsigned short WideChar;
 typedef unsigned int UnsignedInt;
 typedef int Int;
 
+// The empty wide payload at 0x0107388C is the recorded
+// ?BFMEEmptyUnicodeString@@3GB.  The wcstok delimiter string at 0x01084C10
+// is not in dir32_addresses.csv, so it keeps an address-derived name.
+extern const WideChar BFMEEmptyUnicodeString[];
+extern const WideChar g_01084C10[];
+
 class UnicodeString;
 class Rva00434810SubtitleEntry;
 
@@ -40,7 +46,7 @@ public:
 
 	const WideChar *str() const
 	{
-		return m_data ? m_data->data : reinterpret_cast<const WideChar *>(0x0107388C);
+		return m_data ? m_data->data : BFMEEmptyUnicodeString;
 	}
 };
 
@@ -125,15 +131,14 @@ Rva00434810SubtitleEntry::Rva00434810SubtitleEntry(GameFont *font,
 	m_displayStrings[2] = 0;
 	WideChar buffer[0x400];
 	wcscpy(buffer, text.str());
-	WideChar *token = wcstok(buffer,
-		reinterpret_cast<const WideChar *>(0x01084C10));
+	WideChar *token = wcstok(buffer, g_01084C10);
 	while (token)
 	{
 		m_displayStrings[m_displayStringCount] =
 			Rva0048EC80TheManager->newDisplayString();
 		m_displayStrings[m_displayStringCount]->setFont(font);
 		m_displayStrings[m_displayStringCount]->setText(UnicodeString(token));
-		token = wcstok(0, reinterpret_cast<const WideChar *>(0x01084C10));
+		token = wcstok(0, g_01084C10);
 		++m_displayStringCount;
 	}
 }

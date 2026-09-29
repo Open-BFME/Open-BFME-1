@@ -1467,10 +1467,10 @@ static __forceinline Bool drawablePhysicsScriptFrozen(DrawablePhysicsScriptEngin
 typedef Bool (__fastcall *DrawablePhysicsViewBoolCall)(void *);
 
 // The retail zero storage is the existing ?BfmeZeroRange@@3MB at VA
-// 0x01075350.  An address view is used here because spelling it as an
-// external variable changes MSVC 7.1's x87 grouping. The absolute operand
-// addresses that proven zero storage and has no COFF relocation.
-#define DRAWABLE_PHYSICS_ZERO (*(const Real *)0x01075350)
+// 0x01075350, whose four bytes are 00 00 00 00 -- exactly 0.0f.  The literal
+// replaces the address view: an external variable spelling changes MSVC 7.1's
+// x87 grouping, and the constant pool read carries no COFF relocation either.
+#define DRAWABLE_PHYSICS_ZERO (0.0f)
 
 static __forceinline void drawablePhysicsTranslateRow0(Real *row, Real z)
 {
@@ -3714,12 +3714,12 @@ void Drawable::friend_bindToObject( Object *obj ) ///< bind this drawable to an 
 	if (obj)
 	{
 		const BfmeGameLogicIndicatorFields *logic =
-			*(const BfmeGameLogicIndicatorFields **)0x012F0898;
+			reinterpret_cast<const BfmeGameLogicIndicatorFields *>(TheGameLogic);
 		if (logic->m_indicatorOverride == 1)
 		{
 			setIndicatorColor(logic->m_indicatorColor);
 		}
-		else if (*(const Int *)((const char *)*(const void **)0x012ED5C8 + 0x218) == 4)
+		else if (*(const Int *)(reinterpret_cast<const char *>(TheGlobalData) + 0x218) == 4)
 		{
 			setIndicatorColor(obj->getNightIndicatorColor());
 		}
