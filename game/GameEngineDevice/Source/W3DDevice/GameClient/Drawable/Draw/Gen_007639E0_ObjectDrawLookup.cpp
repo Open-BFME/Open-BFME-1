@@ -9,6 +9,8 @@
 // retail image does not prove. The local string view uses the ledger's
 // UnicodeString spelling for the one-pointer copy body at 0x00887C90.
 
+extern const char Rva006A16B0Empty[];
+
 class BFMERetailAsciiString
 {
 public:
@@ -75,7 +77,7 @@ int Gen_007639E0::method()
         UnicodeString local;
         self = (char *)*(void **)(self - 8);
         local.set(*(UnicodeString *)(self + 0xE4));
-        text = local.m_data ? (const char *)local.m_data + 8 : (const char *)0x0107388B;
+        text = local.m_data ? (const char *)local.m_data + 8 : Rva006A16B0Empty;
         result = result->slot31(text, 0);
         if (result)
         {

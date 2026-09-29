@@ -6,6 +6,7 @@ typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
 struct FieldParse;
+extern const FieldParse g_011240A0[];
 
 template <typename T>
 class StringBase
@@ -170,7 +171,7 @@ __declspec(noinline) static void parseAnimation(INI *ini, void *instance, void *
         *(const StringBase<char> *)&originalAnimationName;
     if ((UnsignedInt)userData == 1)
         animation.m_mode.m_bits = 2.80259693e-45f;
-    ini->initFromINI(&animation, (const FieldParse *)0x011240A0);
+    ini->initFromINI(&animation, g_011240A0);
 
     if (animation.m_priority < 0)
         animation.m_priority = 0;

@@ -25,6 +25,8 @@ public:
     void set(const char *text, int len);
 };
 
+extern const char g_Rva0107301CEmptyString[];
+
 class BfmeBaseHelper060600
 {
 public:
@@ -57,5 +59,5 @@ void Gen_00760600::m(int param1)
     }
     m_flag78 = 1;
     m_unreconstructed_7c = 0;
-    m_name.set((const char *)0x0107301C, 0);
+    m_name.set(g_Rva0107301CEmptyString, 0);
 }
