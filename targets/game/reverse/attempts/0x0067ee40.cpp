@@ -1,7 +1,39 @@
 // ?ConstructNetCommandMsgFromRawData@NetPacket@@SAPAVNetCommandRef@@PAEG@Z
-// partial score=0.88 date=2026-09-09
+// partial score=0.98 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc
-// BANKED RECONSTRUCTION: instruction shape is not yet exact (944 vs 940 B).
+// BANKED RECONSTRUCTION: 940 vs 940 B, 19 non-reloc diffs at tail (vs 187 before).
+// PROGRESS 2026-09-28: tail perm O,N,S,D (offset, null, setRelay, detach) fixes prologue
+// to retail's ESI=offset, EDI=data, EBP=commandType, EBX=ref (vs bank's EDI/EBP/EBX/slot).
+// The extra `msg = NULL` before setRelay/detach makes `offset` and `msg` not overlap,
+// allowing the allocator to give `offset` ESI and keep AL for tag byte (`cmp al,imm8`).
+// Remaining 19 tail bytes are the EH/store interleaving around setRelay/detach/offset:
+// retail does `mov ecx,esi; mov [esp+30],-1; mov ebx,eax; mov [eax+0xc],dl; call detach; mov esi,[esp+14]`
+// ours does `mov esi,[esp+14]; xor ecx,ecx; mov [esp+30],-1; mov ebx,eax; mov [eax+0xc],dl; call detach(NULL)`.
+// The extra store fixes the 187-byte prologue but makes detach target NULL vs msg.
+// Next lever: make the extra store dead (affect allocation but not detach's receiver),
+// e.g., via a union or volatile alias that shares msg's slot without killing its value.
+// 2026-09-29: 6 more tail variants probed, all confirm the wall. S,D,O (pure retail
+// order, with or without trailing msg=NULL) reverts to 946B/725 diffs: offset not live
+// across any call becomes scratch EAX and the dead trailing NULL is deleted. O,S,D,N
+// (trailing NULL) reverts to 944B/186: the LEADING NULL before setRelay is what wins
+// offset=ESI, a trailing one is deleted with no effect. det-copy variant (offset, copy,
+// NULL, setRelay, detach via copy) also 944B/186: the live copy re-creates the pressure.
+// N,O,S,D and O,S,N,D both stay 940B/19: store order within the cluster is irrelevant.
+// Diagnosis: offset must be live across detach() to win callee-saved ESI, but then msg
+// (detach's receiver) overlaps it and loses ESI; retail has offset NOT live across
+// detach (reloaded after) yet keeps ESI, a coloring VC7.1 clean C++ does not reproduce.
+// Do NOT retry tail permutations, detach copies, or trailing-NULL stores on this body.
+// 2026-09-29b: 30+ further variants, all probe-measured, no byte progress (see the
+// game/ TU header for the full list). New result: the 940-byte size and the 19-byte
+// tail gap are ONE lever. `offset` takes callee-saved ESI exactly when
+// `offset = payloadOffset;` precedes detach() in the source, because then its value
+// must survive that call; the load is then emitted before the call (+035b), and ESI
+// is free there only because `msg = NULL` killed msg. Retail reloads AFTER detach
+// (+036f) yet still holds offset in ESI (sharing msg's vacated range, with EDX idle),
+// a non-cost-minimal choice no clean spelling reproduced. The mirror N,D,S,O form
+// does give retail's tail ORDER and reload position but permutes the allocation
+// (offset=EAX, frame=EBX, ref sharing ESI, frame 0x14 -> 925 B). Still 940/19,
+// still semantically wrong (detach on NULL): MUST NOT land under the real name.
 // Real body RVA 0x0067EE40 ends at 0x0067F1EB inclusive. Ghidra's 937-byte
 // extent truncates the last add esp,0x24; ret epilogue (actual size 940).
 // NetCommandWrapperList::getReadyCommands calls the parser through ILT
@@ -263,11 +295,10 @@ NetCommandRef * NetPacket::ConstructNetCommandMsgFromRawData(UnsignedByte *data,
 
 			ref = new NetCommandRef(msg);
 
-			ref->setRelay(relay);
-
 			offset = payloadOffset;
-			msg->detach();
 			msg = NULL;
+			ref->setRelay(relay);
+			msg->detach();
 
 			notDone = FALSE;
 		}
