@@ -77886,7 +77886,7 @@ name,address,notes
 ?bfmeMakeW2@@YAIII@Z,0x00025225,Open-BFME5 ILT the variant ctor at 0x0054F770 calls
 ?bfmeMakeW3@@YAIII@Z,0x0000403E,Open-BFME5 ILT the variant ctor at 0x0054F7C0 calls
 ?bfmeMakeW4@@YAIII@Z,0x000283D5,Open-BFME5 ILT the variant ctor at 0x00596C40 calls
-?bfmeMakeWideResult@BfmeWideResultSource@@QAE?AUBfmeWideResult@@HHHHHH@Z,0x009F63D0,retail callee decoded from the assigned wide class value forwarders
+?GetObjectsInRange@PartitionManagerImpl@@QAE?AUBfmeWideResult@@HHHHHH@Z,0x009F63D0,EA name corroborated by strong chain+direct evidence at 0x009F63D0
 ?bfmeMakeXU@BfmeMakerXU@@QAEPAVBfmeShownXU@@H@Z,0x00034991
 ?bfmeMake_00002b8f@@YAPAXPAX0@Z,0x00002B8F,Open-BFME5 ILT the pointer-pair maker reached from the bodies around 0x003CA460
 ?bfmeMake_0000403e@@YAPAXPAX0@Z,0x0000403E,Open-BFME5 ILT the pointer-pair maker reached from the bodies around 0x0054F370

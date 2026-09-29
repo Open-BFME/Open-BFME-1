@@ -10378,5 +10378,15 @@
   "after_sha256": "e20cf1880d9062a80a1b846a555022aa206a94f87f594ac8cdbcdff7de407c53",
   "evidence": "targets/game/reverse/identity_evidence/00699af0-address-name.md",
   "reason": "The deleted attempt names RVA 0x00699AF0, but the name checker paired it with the preexisting RVA 0x00699B40 function because both appear in one source file. The new RVA 0x00699AF0 body has its own address-derived name. Its callers prove only a void(int) ABI, so the ledger does not claim an unsupported method identity."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeWideResultForward.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeWideResultForward.cpp",
+  "old_name": "BfmeWideResultSource",
+  "new_name": "Rva009F2AB0Mask",
+  "before_sha256": "8c20edac9210866947fb791ef440d32141f3ff1cbcc589a5524c174ce4feff15",
+  "after_sha256": "469fed3b624b46c009e3e4b7113d2bed70f49fc3d233af21c0a1df066a3018e8",
+  "evidence": "targets/game/reverse/identity_evidence/0x009f63d0-wide-result-abi.md",
+  "reason": "The edited source replaces the synthetic owner BfmeWideResultSource with the EA-named PartitionManagerImpl. The token matcher pairs that removed declaration with the added Rva009F2AB0Mask filter helper, but those types have different roles."
  }
 ]
