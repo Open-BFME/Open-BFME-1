@@ -1041,36 +1041,37 @@ struct Rva001704D0Object
 	Rva001704D0AIUpdate *m_ai;
 };
 
-class Rva001704D0AIStateMachine
+// Header AIStateMachine stores m_goalSquad at +0x48. Retail's temporary state
+// for this body is at +0x58, so the member spellings cannot be the header's.
+struct Rva001704D0View
 {
+	void *m_vptr;
 	char m_unknown[0x0c];
 	Rva001704D0Object *m_owner;
 	char m_gap14[0x44];
 	void *m_temporaryState;
 	int m_temporaryStateFrameEnd;
-
-public:
-	virtual StateReturnType resetToDefaultState();
 };
 
 void j_00027566();
 void j_0000705e();
 
-typedef void (__fastcall *Rva001704D0Clear)(Rva001704D0AIStateMachine *);
-typedef StateReturnType (__fastcall *Rva001704D0Reset)(Rva001704D0AIStateMachine *);
+typedef void (__fastcall *Rva001704D0Clear)(AIStateMachine *);
+typedef StateReturnType (__fastcall *Rva001704D0Reset)(AIStateMachine *);
 
-StateReturnType Rva001704D0AIStateMachine::resetToDefaultState()
+StateReturnType AIStateMachine::resetToDefaultState()
 {
-	if (m_temporaryState)
+	Rva001704D0View *self = (Rva001704D0View *)this;
+	if (self->m_temporaryState)
 	{
-		if (m_temporaryStateFrameEnd == -1)
+		if (self->m_temporaryStateFrameEnd == -1)
 			return STATE_CONTINUE;
 
 		((Rva001704D0Clear)j_00027566)(this);
 	}
 	{
 		StateReturnType result = ((Rva001704D0Reset)j_0000705e)(this);
-		Rva001704D0Object *owner = m_owner;
+		Rva001704D0Object *owner = self->m_owner;
 		Rva001704D0AIUpdate *ai = owner->m_ai;
 		if (ai)
 			ai->notifyStateMachineChanged();
@@ -1161,19 +1162,6 @@ void AIStateMachine::clear()
 	AIUpdateInterface* ai = getOwner()->getAI();
 	if (ai)
 		ai->friend_notifyStateMachineChanged();
-}
-
-//----------------------------------------------------------------------------------------------------------
-// ?resetToDefaultState@AIStateMachine@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType AIStateMachine::resetToDefaultState()
-{
-	StateReturnType tmp = StateMachine::resetToDefaultState();
-
-	AIUpdateInterface* ai = getOwner()->getAI();
-	if (ai)
-		ai->friend_notifyStateMachineChanged();
-
-	return tmp;
 }
 
 //----------------------------------------------------------------------------------------------------------
