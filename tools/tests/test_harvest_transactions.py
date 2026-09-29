@@ -26,6 +26,7 @@ def repository(tmp_path):
     shutil.copy2(TOOLS / "fleet/harvest.py", root / "tools/fleet/harvest.py")
     shutil.copy2(TOOLS / "bash_path.py", root / "tools/bash_path.py")
     shutil.copy2(TOOLS / "portable_lock.py", root / "tools/portable_lock.py")
+    shutil.copy2(TOOLS / "router_integrate.py", root / "tools/router_integrate.py")
     # harvest.py imports fleet_run (in-flight leases) and re_log (quarantine
     # verdicts) and runs retired_guard; without them every test here died on
     # ModuleNotFoundError before reaching what it meant to test
@@ -171,3 +172,30 @@ def test_hands_needed_exit_writes_an_alarm_line(repository):
     git(root, "add", "private.txt")
     assert harvest(root).returncode != 0
     assert "another writer" in (root / "build/fleet_logs/harvest_alarm.log").read_text()
+
+
+@pytest.mark.parametrize("output, raced", [
+    ("! [rejected]        HEAD -> master (fetch first)", True),
+    ("PRE-PUSH FAILED: PUSH RACE: destination refs/heads/master at 1111111 is not an ancestor of 2222222; "
+     "rebase and retry (validation not run)", True),
+    # A failed fetch inside the hook is transport, and a stale lock file is not a moved ref:
+    # both stay as reported instead of burning the retry budget on rebases.
+    ("fatal: unable to access 'https://x/': Could not resolve host: x\n"
+     "PRE-PUSH FAILED: PUSH RACE: cannot inspect destination refs/heads/master at 1111111; retry", False),
+    ("error: cannot lock ref 'refs/remotes/origin/master': Unable to create "
+     "'/r/.git/refs/remotes/origin/master.lock': File exists.", False),
+    ("PRE-PUSH FAILED: byte verification failed", False),
+])
+def test_push_race_classification_matches_publisher(output, raced):
+    # harvest.py does its work at import time; compile only push_raced.
+    import ast
+    tree = ast.parse((TOOLS / "fleet/harvest.py").read_text())
+    func = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == "push_raced")
+    namespace = {}
+    sys.path.insert(0, str(TOOLS))
+    try:
+        exec(compile(ast.Module([func], []), "harvest.py", "exec"), namespace)
+        result = subprocess.CompletedProcess([], 1, "", output)
+        assert namespace["push_raced"](result) is raced
+    finally:
+        sys.path.remove(str(TOOLS))

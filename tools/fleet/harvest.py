@@ -36,10 +36,10 @@ def out(*cmd, cwd=ROOT):
 
 
 def push_raced(result):
-    """Whether a failed push was an ordinary destination race."""
-    text = (result.stdout or "") + (result.stderr or "")
-    return any(marker in text for marker in
-               ("PUSH RACE", "fetch first", "non-fast-forward", "cannot lock ref", "stale info"))
+    """Whether a failed push was an ordinary destination race. One classifier
+    for every publisher: a hook fetch failure or a stale lock file is not one."""
+    from router_integrate import is_push_race
+    return is_push_race((result.stdout or "") + (result.stderr or ""))
 
 def show(rev, f):
     return subprocess.run(["git", "show", f"{rev}:{f}"], cwd=ROOT, capture_output=True).stdout
