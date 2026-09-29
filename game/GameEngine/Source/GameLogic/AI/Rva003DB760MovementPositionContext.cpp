@@ -25,6 +25,12 @@ public:
 	char m_bfme4CCYY;
 };
 
+class Gen_0026f940
+{
+public:
+	int m();
+};
+
 class Object
 {
 public:
@@ -32,6 +38,8 @@ public:
 
 	unsigned char m_bfmeHeadYY[4];
 	LocomotorOverridable *m_bfme04YY;
+	unsigned char m_bfmeMidYY[0x1fc];
+	Gen_0026f940 *m_bfme204YY;
 };
 
 class Rva003DB760Config
@@ -101,4 +109,44 @@ Rva003DB760Context::Rva003DB760Context(void *a, Object *o, Rva003DB760Config *c,
 	m_bfme1AYY = 1;
 	m_bfme1BYY = 0;
 	m_bfme1CYY = e;
+}
+
+// Retail 0x003DB820 (175 bytes): a second, wider context built the same way.
+// Its only caller (0x003E6EE0, through ILT 0x00049EE0) passes eight
+// arguments; the same 12-byte BfmeMovementPositionInfo record now sits at
+// +0x04, and +0x20 caches the Object's +0x204 sub-object's +0x164 dword
+// (Gen_0026f940::m) or zero when that sub-object is missing.
+class Rva003DB820Context
+{
+public:
+	Rva003DB820Context(void *a, Rva003DB760Config *c, char d, int e, Object *o,
+		char f, int g, int h);
+
+	void *m_bfme00YY;
+	BfmeMovementPositionInfo m_bfme04YY;
+	char m_bfme10YY;
+	char m_bfme11YY;
+	int m_bfme14YY;
+	Object *m_bfme18YY;
+	int m_bfme1CYY;
+	int m_bfme20YY;
+	unsigned char m_bfme24YY[8];
+	int m_bfme2CYY;
+};
+
+Rva003DB820Context::Rva003DB820Context(void *a, Rva003DB760Config *c, char d,
+	int e, Object *o, char f, int g, int h)
+{
+	m_bfme00YY = a;
+
+	int n = bfmeFinalYY(o->m_bfme04YY)->m_bfme444YY;
+	char flag = bfmeFinalYY(o->m_bfme04YY)->m_bfme4CCYY;
+	m_bfme04YY.set(c->m_bfme10YY, flag, o->bfmeIsComputerControlled(), n);
+	m_bfme10YY = d;
+	m_bfme11YY = f;
+	m_bfme14YY = e;
+	m_bfme18YY = o;
+	m_bfme1CYY = g;
+	m_bfme2CYY = h;
+	m_bfme20YY = o->m_bfme204YY != 0 ? o->m_bfme204YY->m() : 0;
 }
