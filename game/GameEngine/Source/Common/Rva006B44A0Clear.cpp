@@ -67,6 +67,9 @@ extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
 extern void j_0004412a();
 extern void j_00023d21();
 
+class AsciiString;
+extern AsciiString TheEmptyString;
+
 struct Rva006B44A0Entry
 {
 	Rva006B44A0ServerTree m_tree;
@@ -120,6 +123,6 @@ void Rva006B44A0Owner::clear006B44A0(int index)
 			Finalize memberFinalize;
 		} finalize;
 		finalize.freeFinalize = ::j_00023d21;
-		(this->*finalize.memberFinalize)(reinterpret_cast<const void *>(0x01336E50), -1.0f, index);
+		(this->*finalize.memberFinalize)(reinterpret_cast<const void *>(&TheEmptyString), -1.0f, index);
 	}
 }

@@ -2,6 +2,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
+extern unsigned char g_01309838;
 
 class Rva007E4820FrameClock
 {
@@ -77,7 +78,7 @@ int Rva007E4B80Vp6Stream::update(int flags)
     }
 
     local.frame = ((Rva007E4820FrameClock *)this)->frame(flags);
-    if (*(volatile unsigned char *)0x01309838 || local.flag4 || (flags & 0x40)) {
+    if (*(volatile unsigned char *)&g_01309838 || local.flag4 || (flags & 0x40)) {
         local.rate = m_period;
         local.period = m_rate;
         int now = (int)timeGetTime();

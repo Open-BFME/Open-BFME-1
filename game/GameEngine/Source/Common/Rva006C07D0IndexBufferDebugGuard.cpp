@@ -80,6 +80,6 @@ void __cdecl Rva006C07D0(void *param)
 	{
 		bfmeRecordVHJ(1);
 		g_BFMEIndexBufferDebug->bfmeOwn60IBD();
-		g_BFMEIndexBufferDebug->bfmeOwn6cIBD(0, 0)->bfmeSlot38IBD((const void *)0x111d770)->bfmeSlot00IBD(param)->bfmeSlot4cIBD(1);
+		g_BFMEIndexBufferDebug->bfmeOwn6cIBD(0, 0)->bfmeSlot38IBD((const void *)"DX8 error ")->bfmeSlot00IBD(param)->bfmeSlot4cIBD(1);
 	}
 }

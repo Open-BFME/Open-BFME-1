@@ -13,7 +13,7 @@ extern "C" __declspec(dllimport) double __cdecl floor(double value);
 extern const float BfmeZeroRange;
 extern float g_bfmeDefaultBU;
 
-#define Rva006FCC10Scale50 (*(const float *)0x0107FAA8)
+#define Rva006FCC10Scale50 (50.0f)
 
 int __stdcall Rva006FCC10(float value, float lower, float upper, float *fraction)
 {

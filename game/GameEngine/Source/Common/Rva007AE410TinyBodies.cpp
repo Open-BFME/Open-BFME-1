@@ -5,7 +5,7 @@
 
 #pragma intrinsic(tan)
 
-#define BfmeKTHE (*(const float *)0x0109ECC0)
+#define BfmeKTHE (57.295776f)
 
 class Rva007AE410ByteField
 {
