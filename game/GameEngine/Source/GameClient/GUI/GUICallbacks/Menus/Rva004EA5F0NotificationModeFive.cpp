@@ -83,7 +83,8 @@ public:
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime( void );
 
-#define TheGameText004EA5F0 (*(GameTextInterface **)0x012F147C)
+extern GameTextInterface *TheGameText;
+#define TheGameText004EA5F0 (TheGameText)
 extern BfmeAptChatFriendLogIn *volatile g_d_012F4ACC;
 extern unsigned int g_Va012F423C;
 extern unsigned char g_Va012F4240;

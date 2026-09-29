@@ -27,11 +27,13 @@ static __forceinline void bfmeUnicodeStringSet(UnicodeString &dest, const Unicod
 	((StringBase<unsigned short> *)&dest)->set(*(const StringBase<unsigned short> *)&source);
 }
 
+extern const unsigned short BFMEEmptyUnicodeString;
+
 static __forceinline const unsigned short *bfmeUnicodeStringText(const UnicodeString &text)
 {
 	void *data = *(void *const *)&text;
 	return data ? (const unsigned short *)((const char *)data + 8)
-				: (const unsigned short *)0x0107388C;
+				: &BFMEEmptyUnicodeString;
 }
 
 // ?Rva006315E0RequestBuddyAdd@@YGXH@Z

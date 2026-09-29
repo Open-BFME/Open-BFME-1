@@ -10,6 +10,8 @@ typedef int Int;
 typedef bool Bool;
 typedef unsigned short WideChar;
 
+extern const unsigned short BFMEEmptyUnicodeString;
+
 template <typename T> class StringBase
 {
 	friend class AsciiString;
@@ -68,7 +70,7 @@ public:
 		const Int length = other.m_data ? other.m_data->m_length : 0;
 		const WideChar *text = other.m_data
 			? other.m_data->m_text
-			: (const WideChar *)0x0107388C;
+			: &BFMEEmptyUnicodeString;
 		StringBase<WideChar>::concat( text, length );
 	}
 

@@ -50,7 +50,10 @@ public:
 	int m_gameType;
 };
 
-#define TheGameLogic004EBA70 (*(GameLogicRva004EBA70 **)0x012F0898)
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
+#define TheGameLogic004EBA70 ((GameLogicRva004EBA70 *)TheGameLogic)
 
 void bfme_notificationModeFive(AsciiString, UnicodeString);
 void bfme_notificationOtherMode(AsciiString, UnicodeString);
