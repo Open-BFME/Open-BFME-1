@@ -1,4 +1,4 @@
-// 217 __cdecl free functions that walk an array and hand each slot to one
+// 221 __cdecl free functions that walk an array and hand each slot to one
 // direct call.  Two loop shapes over 20 element strides:
 //
 //     45 bytes -- bounded by an end pointer, one call per slot, two cursors:
@@ -278,6 +278,7 @@ BFME_ELEMENT_FILL_WALK( Elem12, rva0052EC60FillWalk, gen0052EBB0 )
 BFME_ELEMENT_FILL_WALK( Elem12, rva00582800FillWalk, gen00582750 )
 BFME_ELEMENT_FILL_WALK( Elem12, rva006FA230FillWalk, gen005C2930 )
 BFME_ELEMENT_FILL_WALK( Elem12, rva00754BC0FillWalk, gen00754B20 )
+BFME_ELEMENT_FILL_WALK( Elem12, rva008FF9A0FillWalk, gen00754B20 )
 BFME_ELEMENT_COPY_WALK( Elem16, rva00069A50CopyWalk, gen000699F0 )
 BFME_ELEMENT_COPY_WALK( Elem16, rva00069DB0CopyWalk, gen000699F0 )
 BFME_ELEMENT_COPY_WALK( Elem16, rva000DE550CopyWalk, gen000DE4F0 )
