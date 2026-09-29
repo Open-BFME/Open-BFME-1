@@ -32,8 +32,10 @@ them into the classes the integration work has to clear:
 targets/game/reverse/link_status.csv: one row per C/C++
 source, `linked=yes` when, in the plain link (no alias scaffold), its object
 has no unresolved reference beyond imports and msvcrt.lib, no duplicate, and
-no COMDAT copy that differs from retail's body (comdat_losers), and the file holds no
-hard-coded image address. LINKED is progress.py's DECOMPILED restricted to
+no COMDAT copy that differs from retail's body (comdat_losers), no name it
+defines or references resolves in the link to a kept definition proven not
+retail's (wrong_selected; the /MAP of a second link says which it kept), and
+the file holds no hard-coded image address. LINKED is progress.py's DECOMPILED restricted to
 those sources; progress.py and the README print the last census's figure.
 
 The census is diagnostic. The image it writes is not expected to run.
@@ -761,6 +763,92 @@ def comdat_losers(objs, rows=None, stats=None, facts=None):
     return losers
 
 
+def ledger_owners(rows):
+    """{name: {object}}: the object of each ledger row naming it (its object
+    symbol too), never an icf-owner over-claim or a scaffold row. For a name
+    several objects define, the owner's is retail's definition."""
+    owners = collections.defaultdict(set)
+    for row in rows:
+        if "icf-owner=" not in (row.get("notes") or "") and not build.is_scaffold_row(row):
+            for name in {row["name"], build.ledger_object_symbol(row)}:
+                owners[name].add(build.row_object(row).name)
+    return owners
+
+
+def judge_selected(holder, copies, definers, exclusive, owners):
+    """Is the definition the link kept for one name retail's?
+
+    `holder` is the object whose definition the link kept (None when the map
+    does not say); `copies` {object: (digest, verdict)} the name's COMDAT
+    copies with their retail-truth verdicts; `definers` every object defining
+    it; `exclusive` those whose definition is exclusive (an ordinary section or
+    a NODUPLICATES COMDAT); `owners` the ledger owner objects.
+
+    "wrong" when the kept copy is proven not retail's body, or when two or
+    more objects define the name, one exclusively, and the kept definition is
+    not a ledger owner's (operator new/delete kept from GameMemory.obj while
+    the retail body is mem_ops.obj's). Proven bytes decide before ownership.
+    "ok" when it is proven (its bytes, or the owner's matched row); "unknown"
+    when the choice matters (copies differ, or a duplicate) and nothing proves
+    it either way; None when there is nothing to choose between."""
+    if holder is None or holder not in definers:
+        return "unknown" if len(definers) > 1 else None
+    _, verdict = copies.get(holder, (None, None))
+    if verdict == "wrong":
+        return "wrong"
+    if verdict == "retail":
+        return "ok"
+    if len(definers) > 1 and exclusive:
+        mine = owners & definers
+        if mine:
+            return "ok" if holder in mine else "wrong"
+        return "unknown"
+    if len({digest for digest, _ in copies.values()}) > 1:
+        return "unknown"
+    return None
+
+
+def touched_names(fact):
+    """Every name one object's facts define or reference (weak externals and
+    their defaults included)."""
+    copies, strong, undefined, weaks = fact
+    names = {name for name, _, _, _ in copies} | set(strong) | set(undefined)
+    for name, default in weaks:
+        names.update((name, default))
+    return names
+
+
+def selection_verdicts(present, facts, owners, kept):
+    """({name: result}, {name: holder index or None}) for every name the census
+    objects define, judged on the definition the link kept (`kept`, from the
+    /MAP: selected_definitions). The second map lists only the names whose
+    kept definition is NOT the first definer in link order (link.exe keeps the
+    first for all but a handful), so link_check can predict the holder the way
+    the census saw it."""
+    position = {obj.name: index for index, obj in enumerate(present)}
+    copies = collections.defaultdict(dict)
+    definers = collections.defaultdict(set)
+    exclusive = collections.defaultdict(set)
+    for obj, (found, strong, _, _) in zip(present, facts):
+        for name, digest, _, verdict in found:
+            copies[name].setdefault(obj.name, (digest, verdict))
+            definers[name].add(obj.name)
+        for name in strong:
+            definers[name].add(obj.name)
+            exclusive[name].add(obj.name)
+    results, exceptions = {}, {}
+    for name, objs in definers.items():
+        holder = kept.get(name)
+        holder = holder if holder in objs else None
+        first = min(objs, key=position.__getitem__)
+        if holder != first:
+            exceptions[name] = position[holder] if holder is not None else None
+        result = judge_selected(holder, copies[name], objs, exclusive[name], owners.get(name, set()))
+        if result is not None:
+            results[name] = result
+    return results, exceptions
+
+
 MAP_PUBLIC = re.compile(r"^\s*[0-9A-Fa-f]{4}:[0-9A-Fa-f]{8}\s+(\S+)\s+[0-9A-Fa-f]{8}\s+(?:f\s+)?(?:i\s+)?(.+?)\s*$")
 
 
@@ -849,11 +937,7 @@ def selection_report(present, facts, rows, clean_objects, map_text, log):
                                          "selected_is_first", "retail_true_copies"], lineterminator="\n")
         writer.writeheader()
         writer.writerows(sorted(table, key=lambda row: row["symbol"]))
-    owners = collections.defaultdict(set)
-    for row in rows:
-        if "icf-owner=" not in (row.get("notes") or "") and not build.is_scaffold_row(row):
-            for name in {row["name"], build.ledger_object_symbol(row)}:
-                owners[name].add(build.row_object(row).name)
+    owners = ledger_owners(rows)
     duplicates, owner_misses = [], collections.defaultdict(set)
     for name, objs in exclusive.items():
         if len(definers[name]) < 2:
@@ -1083,20 +1167,12 @@ def selected_main():
         raise SystemExit(f"link_census: {len(stale):,} objects are not current for their source, "
                          f"e.g. {stale[0].name}")
     log = final_log(None)  # the census's own link says which names nothing defines
-    missing_names = {found.group(1) or found.group(2) for found in map(UNRESOLVED.search, log.splitlines()) if found}
-    # Every missing name defined in one stub section so the link can finish and
-    # write its map; /OPT:NOREF keeps every COMDAT the link selected in it.
-    stubs = stub_object(missing_names, OUT / "selected_stubs.obj")
-    relink, _, _ = link(present, tag="selected", extra=[stubs],
-                        options=["/OPT:NOREF", f"/MAP:{_arg(OUT / 'selected.map')}"])
-    link_map = OUT / "selected.map"
-    if FATAL.search(relink) or not link_map.exists() or not link_map.stat().st_size:
-        raise SystemExit(f"link_census: the /MAP link failed; see {_arg(OUT / 'selected.log')}")
+    map_text = selection_link(present, log)
     with STATUS.open(newline="", encoding="utf-8") as handle:
         clean = {row["source"] for row in csv.DictReader(handle) if row["linked"] == "yes"}
     clean_objects = {build.row_object(row).name for row in rows if row["source"] in clean}
     summary, bad, owner_misses = selection_report(present, read_facts(present, rows), rows, clean_objects,
-                                    link_map.read_text(encoding="latin-1"), log)
+                                    map_text, log)
     import link_check
     sizes = link_check.source_bytes(clean)
     by_object = {build.row_object(row).name: row["source"] for row in rows if row["source"] in clean}
@@ -1110,6 +1186,23 @@ def selected_main():
     return 0
 
 
+def selection_link(present, log):
+    """The /MAP text of a relink of `present` in which every name the plain
+    link (`log`) left unresolved is defined in one stub section, so the link
+    finishes and the map says which definition it kept for every name.
+    /OPT:NOREF keeps every selected COMDAT in the map."""
+    missing_names = {found.group(1) or found.group(2) for found in map(UNRESOLVED.search, log.splitlines()) if found}
+    stubs = stub_object(missing_names, OUT / "selected_stubs.obj")
+    link_map = OUT / "selected.map"
+    if link_map.exists():
+        link_map.unlink()  # a failed link leaves an empty map, never last run's
+    relink, _, _ = link(present, tag="selected", extra=[stubs],
+                        options=["/OPT:NOREF", f"/MAP:{_arg(link_map)}"])
+    if FATAL.search(relink) or not link_map.exists() or not link_map.stat().st_size:
+        raise SystemExit(f"link_census: the /MAP link failed; see {_arg(OUT / 'selected.log')}")
+    return link_map.read_text(encoding="latin-1")
+
+
 def _object_sources(rows):
     """{object: source} for every compiled (C/C++/MASM) row."""
     return {build.row_object(row): ROOT / row["source"] for row in rows
@@ -1117,7 +1210,7 @@ def _object_sources(rows):
 
 
 STATUS = ROOT / "targets/game/reverse/link_status.csv"
-STATUS_FIELDS = ["source", "linked", "unresolved", "duplicates", "comdat_losers", "addresses"]
+STATUS_FIELDS = ["source", "linked", "unresolved", "duplicates", "comdat_losers", "addresses", "wrong_selected"]
 
 
 def final_log(census):
@@ -1240,7 +1333,7 @@ def excused(symbol, runtime, imported, thunks=None):
     return symbol in runtime
 
 
-def write_status(log, rows, present=None, meta=None):
+def write_status(log, rows, present, meta, kept):
     """One row per C/C++ source: does its object link cleanly on its own terms?
 
     Per file, not per program: a clean file may still call into one that is
@@ -1256,7 +1349,17 @@ def write_status(log, rows, present=None, meta=None):
     address, else the copy link.exe keeps, the first in link order). Any hard-coded image address counts too
     (link_debt.addresses): it links, but only while nothing moves.
 
-    It also writes build/link_census/link_index.pkl, which tools/link_check.py
+    And since 2026-09-29 (wrong_selected), a file is not linked when any name
+    it defines or references resolves, in the actual link, to a definition
+    proven not retail's: the COMDAT copy link.exe kept is proven wrong, or the
+    kept one of several definitions is not the ledger owner's
+    (judge_selected). `kept` is the /MAP's {name: object}
+    (selected_definitions of selection_link). A name with no retail address or
+    owner is not held against anyone; the files that depend on such a choice
+    are counted (`unknown_only`).
+
+    Returns (clean, files, blocking names, clean under the rule before
+    wrong_selected, stats). It also writes build/link_census/link_index.pkl, which tools/link_check.py
     reads to check one file in seconds (`meta` names the census).
     """
     import link_debt
@@ -1268,6 +1371,16 @@ def write_status(log, rows, present=None, meta=None):
     stats = {}
     facts = read_facts(present, rows)
     losers = comdat_losers(present, rows, stats, facts)
+    owners = ledger_owners(rows)
+    results, exceptions = selection_verdicts(present, facts, owners, kept)
+    wrong_selected, unknown_selected = {}, {}
+    for obj, fact in zip(present, facts):
+        touched = touched_names(fact)
+        wrong_selected[obj.name] = sorted(name for name in touched if results.get(name) == "wrong")
+        unknown_selected[obj.name] = sum(1 for name in touched if results.get(name) == "unknown")
+    print(f"link_census: selected definitions: {sum(1 for r in results.values() if r == 'wrong'):,} names proven "
+          f"wrong, {sum(1 for r in results.values() if r == 'unknown'):,} unproven, "
+          f"{sum(1 for r in results.values() if r == 'ok'):,} proven; {len(exceptions):,} not the first in link order")
     print(f"link_census: COMDAT keeper: {stats.get('symbols_retail', 0):,} symbols judged by retail truth "
           f"({stats.get('losers_retail', 0):,} losing copies), {stats.get('symbols_first', 0):,} with no retail "
           f"address by link order ({stats.get('losers_first', 0):,} losing copies)")
@@ -1286,7 +1399,7 @@ def write_status(log, rows, present=None, meta=None):
             symbol = found.group(2) or found.group(3)
             duplicates[Path(found.group(1)).name].add(symbol)
             duplicates[Path(found.group(4)).name].add(symbol)
-    out, blockers = {}, {}
+    out, blockers, clean_prev, unknown_only = {}, {}, set(), set()
     for row in rows:
         source = row["source"]
         if source in out or Path(source).suffix.lower() not in (".c", ".cpp"):
@@ -1297,12 +1410,16 @@ def write_status(log, rows, present=None, meta=None):
         except OSError:
             continue
         counts = (len(unresolved.get(obj, ())), len(duplicates.get(obj, ())), len(losers.get(obj, ())),
-                  len(link_debt.addresses(text)))
+                  len(link_debt.addresses(text)), len(wrong_selected.get(obj, ())))
         out[source] = {"source": source, "linked": "no" if any(counts) else "yes",
                        **dict(zip(STATUS_FIELDS[2:], counts))}
+        if not any(counts[:4]):
+            clean_prev.add(source)
+        if not any(counts) and unknown_selected.get(obj):
+            unknown_only.add(source)
         blockers[source] = {"object": obj, "linked": not any(counts), "unresolved": sorted(unresolved.get(obj, ())),
                             "duplicates": sorted(duplicates.get(obj, ())), "losers": sorted(losers.get(obj, ())),
-                            "addresses": counts[3]}
+                            "addresses": counts[3], "wrong_selected": wrong_selected.get(obj, [])}
     with STATUS.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, STATUS_FIELDS, lineterminator="\n")
         writer.writeheader()
@@ -1310,10 +1427,12 @@ def write_status(log, rows, present=None, meta=None):
     clean = {source for source, r in out.items() if r["linked"] == "yes"}
     import link_check
     link_check.write_index(present, facts, blockers, {"runtime": runtime, "imported": imported, "stubs": thunks},
-                           meta or {})
-    print(f"link_census: wrote {STATUS.relative_to(ROOT).as_posix()} ({len(clean):,} of {len(out):,} sources link cleanly)")
+                           meta or {}, {"exceptions": exceptions, "owners": dict(owners)})
+    print(f"link_census: wrote {STATUS.relative_to(ROOT).as_posix()} ({len(clean):,} of {len(out):,} sources link cleanly; "
+          f"{len(clean_prev):,} before wrong_selected; {len(unknown_only):,} of the clean ones use a selected "
+          "definition nothing proves or disproves)")
     blocking = set().union(*unresolved.values()) if unresolved else set()
-    return clean, len(out), len(blocking)
+    return clean, len(out), len(blocking), clean_prev, {"unknown_only": unknown_only}
 
 
 def linked_split(clean):
@@ -1413,16 +1532,21 @@ def record(census, rows, rerun=False, fresh=False):
                 or sum(dup_kinds.values()) != sum(census["duplicate_classes"].values())):
             raise SystemExit("link_census: census.log no longer reproduces census.json's counts; rerun the census")
     import link_debt
-    clean, files, blocking = write_status(log, rows, present, {"date": census["when"], "commit": commit})
+    kept = selected_definitions(selection_link(present, log))
+    clean, files, blocking, clean_prev, _ = write_status(log, rows, present, {"date": census["when"], "commit": commit},
+                                                         kept)
+    before = linked_figures(clean_prev)
     figure = {"files": files, "files_linked": len(clean), "blocking_names": blocking,
               "addresses": sum(count for count, _ in link_debt.per_file(link_debt.addresses)),
-              **linked_figures(clean)}
+              **linked_figures(clean), "files_linked_prev_rule": len(clean_prev),
+              "linked_bytes_prev_rule": before["linked_bytes"], "linked_authored_prev_rule": before["linked_authored"]}
     if rerun:
         history[-1].update(figure)
     else:
         history.append({**history_row(census, commit), **figure})
     write_history(history)
-    print(f"link_census: LINKED {figure['linked_bytes']:,} bytes; "
+    print(f"link_census: LINKED {figure['linked_bytes']:,} bytes ({figure['linked_bytes_prev_rule']:,} before "
+          f"wrong_selected), authored {figure['linked_authored']:,} ({figure['linked_authored_prev_rule']:,}); "
           f"{'updated' if rerun else 'appended'} {HISTORY.relative_to(ROOT).as_posix()}")
 
 
@@ -1431,7 +1555,8 @@ HISTORY_FIELDS = ["date", "commit", "objects", "unresolved", "alias", "pinned_el
                   "import", "unpinned", "duplicates", "comdat_conflicts", "comdat_vtables",
                   "scaffold_aliases", "scaffold_unresolved", "scaffold_crashed",
                   "files", "files_linked", "blocking_names", "addresses", "linked_bytes",
-                  "linked_authored", "game_code"]
+                  "linked_authored", "game_code", "files_linked_prev_rule", "linked_bytes_prev_rule",
+                  "linked_authored_prev_rule"]
 
 
 def read_history():

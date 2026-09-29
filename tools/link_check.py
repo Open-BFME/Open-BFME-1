@@ -16,6 +16,11 @@ COMDAT copies with their retail-truth verdicts, and every file's blockers):
               retail truth where the symbol has a retail address, else the
               first copy in link order)
   addresses   hard-coded image addresses in the source (link_debt.addresses)
+  selected    a name the object defines or references whose definition the
+              link keeps is proven not retail's (link_census.judge_selected:
+              the kept COMDAT copy is wrong, or the kept one of several
+              definitions is not the ledger owner's). The holder is the one
+              the census's /MAP showed, else the first definer in link order
 
 It prints the file's LINKED bytes (its own authored + vendored bytes, 0xCC out,
 as progress.real_split counts them) at the census and now. The census is the
@@ -67,9 +72,24 @@ def source_bytes(sources=None):
             for source, found in intervals.items()}
 
 
-def write_index(present, facts, blockers, excuses, meta):
+def write_index(present, facts, blockers, excuses, meta, selection):
     """Called by link_census.write_status: what a per-file check needs from the
-    census, in one pickle. `facts` is link_census.read_facts(present)."""
+    census, in one pickle. `facts` is link_census.read_facts(present);
+    `selection` holds link_census.selection_verdicts' results, holder
+    exceptions and ledger owners."""
+    index = {"meta": meta, **index_tables(present, facts, selection), "blockers": blockers, "excuses": excuses,
+             "bytes": source_bytes(set(blockers))}
+    link_census.OUT.mkdir(parents=True, exist_ok=True)
+    temp = INDEX.with_suffix(".tmp")
+    with temp.open("wb") as handle:
+        pickle.dump(index, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    temp.replace(INDEX)
+
+
+def index_tables(present, facts, selection):
+    """The index's definition tables: every object's exclusive definitions and
+    COMDAT copies by name, and the census's selection (holder exceptions,
+    ledger owners)."""
     strong = collections.defaultdict(list)
     comdat = collections.defaultdict(list)
     for index, (copies, defined, _, _) in enumerate(facts):
@@ -77,14 +97,8 @@ def write_index(present, facts, blockers, excuses, meta):
             strong[name].append(index)
         for name, digest, _, verdict in copies:
             comdat[name].append((index, digest, verdict))
-    index = {"meta": meta, "objects": [obj.name for obj in present], "strong": dict(strong),
-             "comdat": dict(comdat), "blockers": blockers, "excuses": excuses,
-             "bytes": source_bytes(set(blockers))}
-    link_census.OUT.mkdir(parents=True, exist_ok=True)
-    temp = INDEX.with_suffix(".tmp")
-    with temp.open("wb") as handle:
-        pickle.dump(index, handle, protocol=pickle.HIGHEST_PROTOCOL)
-    temp.replace(INDEX)
+    return {"objects": [obj.name for obj in present], "strong": dict(strong), "comdat": dict(comdat),
+            "selection": selection}
 
 
 def load_index():
@@ -118,7 +132,7 @@ def duplicate(name, position, exclusive, own, index):
 def check_object(obj, index, truth, source=None):
     """{unresolved, duplicates, comdat, addresses} for one object against the index."""
     import link_debt
-    copies, defined, undefined, _ = link_census.object_facts(obj, truth)
+    copies, defined, undefined, weaks = link_census.object_facts(obj, truth)
     own = index["objects"].index(obj.name) if obj.name in index["objects"] else None
     position = own if own is not None else len(index["objects"])
     strong, comdat = index["strong"], index["comdat"]
@@ -147,7 +161,45 @@ def check_object(obj, index, truth, source=None):
             addresses = link_debt.addresses((ROOT / source).read_text(encoding="utf-8", errors="replace"))
         except OSError:
             pass
-    return {"unresolved": unresolved, "duplicates": duplicates, "comdat": losers, "addresses": addresses}
+    return {"unresolved": unresolved, "duplicates": duplicates, "comdat": losers, "addresses": addresses,
+            "selected": wrong_selected(obj, (copies, defined, undefined, weaks), own, position, index)}
+
+
+def wrong_selected(obj, fact, own, position, index):
+    """Names this object defines or references whose kept definition is proven
+    not retail's, judged as the census judges them (link_census.judge_selected)
+    with this object's current definitions in place of the census's. The
+    holder is the census's /MAP holder while it still defines the name, else
+    the first definer in link order."""
+    copies, defined, _, _ = fact
+    selection = index["selection"]
+    exceptions, owners, objects = selection["exceptions"], selection["owners"], index["objects"]
+    mine_copies = {name: (digest, verdict) for name, digest, _, verdict in copies}
+    mine_strong = set(defined)
+    found = []
+    for name in sorted(link_census.touched_names(fact)):
+        found_copies = {i: (d, v) for i, d, v in index["comdat"].get(name, ()) if i != own}
+        exclusive = {i for i in index["strong"].get(name, ()) if i != own}
+        if name in mine_copies:
+            found_copies[position] = mine_copies[name]
+        if name in mine_strong:
+            exclusive.add(position)
+        definers = set(found_copies) | exclusive
+        if not definers:
+            continue
+        if name in exceptions:
+            holder = exceptions[name]
+            holder = holder if holder in definers else (min(definers) if holder is not None else None)
+        else:
+            holder = min(definers)
+        label = {i: objects[i] if i < len(objects) else obj.name for i in definers}
+        result = link_census.judge_selected(
+            label[holder] if holder is not None else None,
+            {label[i]: copy for i, copy in found_copies.items()}, set(label.values()),
+            {label[i] for i in exclusive}, owners.get(name, set()))
+        if result == "wrong":
+            found.append(name)
+    return found
 
 
 def resolve(argument, index):
@@ -173,7 +225,7 @@ def resolve(argument, index):
 def report(source, obj, result, index, now_bytes):
     census = index["blockers"].get(source or "", {})
     before = index["bytes"].get(source, 0) if census.get("linked") else 0
-    clean = not any(result[kind] for kind in ("unresolved", "duplicates", "comdat", "addresses"))
+    clean = not any(result[kind] for kind in ("unresolved", "duplicates", "comdat", "addresses", "selected"))
     after = now_bytes if clean else 0
     print(f"{source or obj.name}: {'LINKS' if clean else 'does not link'}  "
           f"LINKED {before:,} -> {after:,} bytes (census {index['meta'].get('date', '?')} at "
@@ -186,6 +238,8 @@ def report(source, obj, result, index, now_bytes):
         why = {"wrong": "not retail's body", "unknown": "unproven and differs from the kept copy",
                None: "differs from the first copy in link order (no retail address)"}.get(verdict, verdict)
         print(f"  comdat      {name}  ({rule}: {why})")
+    for name in result["selected"]:
+        print(f"  selected    {name}  (the definition the link keeps is not retail's)")
     if result["addresses"]:
         print(f"  addresses   {len(result['addresses'])} hard-coded image address(es), e.g. {result['addresses'][0]}")
     return clean
@@ -198,7 +252,8 @@ def next_names(index, limit):
     for source, entry in index["blockers"].items():
         if entry["linked"]:
             continue
-        names = set(entry["unresolved"]) | set(entry["duplicates"]) | set(entry["losers"])
+        names = (set(entry["unresolved"]) | set(entry["duplicates"]) | set(entry["losers"])
+                 | set(entry.get("wrong_selected", ())))
         if entry["addresses"]:
             names.add(ADDRESSES)
         if len(names) == 1:
@@ -207,8 +262,8 @@ def next_names(index, limit):
             files[name] += 1
     kinds = {}
     for entry in index["blockers"].values():
-        for kind in ("unresolved", "duplicates", "losers"):
-            for name in entry[kind]:
+        for kind in ("unresolved", "duplicates", "losers", "wrong_selected"):
+            for name in entry.get(kind, ()):
                 kinds.setdefault(name, kind)
     print(f"blocker names that are some file's only blocker (census {index['meta'].get('date', '?')} at "
           f"{index['meta'].get('commit', '?')}):")

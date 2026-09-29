@@ -222,3 +222,71 @@ def test_map_names_the_object_whose_copy_was_selected():
     assert found["?_RTC_GetSrcLine@@YAHKPADHPAHPAPAD@Z"] == "inputs_^program ^files_x.obj"
     assert found["?g@@3HA"] == "game_b.obj"
     assert "_local" not in found
+
+
+# wrong_selected: a file does not link when a name it touches resolves, in the
+# link, to a kept definition proven not retail's. Facts are object_facts'
+# (copies [(name, digest, size, verdict)], strong, undefined, weaks).
+def _selection(facts, owners, kept):
+    present = [Path(name) for name in facts]
+    results, exceptions = L.selection_verdicts(present, list(facts.values()), owners, kept)
+    wrong = {obj: sorted(n for n in L.touched_names(fact) if results.get(n) == "wrong") for obj, fact in facts.items()}
+    return present, results, exceptions, wrong
+
+
+def test_wrong_kept_comdat_charges_every_user():
+    facts = {"a.obj": ([("f", "x", 5, "wrong")], [], [], []),
+             "b.obj": ([("f", "y", 5, "retail")], [], [], []),
+             "c.obj": ([], [], ["f"], [])}
+    _, results, _, wrong = _selection(facts, {}, {"f": "a.obj"})
+    assert results["f"] == "wrong" and wrong == {"a.obj": ["f"], "b.obj": ["f"], "c.obj": ["f"]}
+    _, results, _, wrong = _selection(facts, {}, {"f": "b.obj"})  # the link kept retail's copy
+    assert results["f"] == "ok" and not any(wrong.values())
+
+
+def test_wrong_kept_duplicate_is_not_the_owners():
+    # operator new: GameMemory.obj first in link order, retail's body is mem_ops.obj's
+    facts = {"gm.obj": ([], ["new"], [], []), "mem.obj": ([], ["new"], [], []), "user.obj": ([], [], ["new"], [])}
+    owners = {"new": {"mem.obj"}}
+    _, results, _, wrong = _selection(facts, owners, {"new": "gm.obj"})
+    assert results["new"] == "wrong" and wrong["user.obj"] == ["new"]
+    _, results, _, wrong = _selection(facts, owners, {"new": "mem.obj"})
+    assert results["new"] == "ok" and not wrong["user.obj"]
+    # proven bytes decide before ownership: a kept copy proven retail is fine
+    facts["gm.obj"] = ([("new", "x", 5, "retail")], ["new"], [], [])
+    _, results, _, _ = _selection(facts, owners, {"new": "gm.obj"})
+    assert results["new"] == "ok"
+
+
+def test_unknown_selection_is_not_penalised():
+    facts = {"a.obj": ([("g", "x", 5, None)], [], [], []),        # no retail address, copies differ
+             "b.obj": ([("g", "y", 5, None)], ["h"], [], []),      # h: duplicate with no ledger owner
+             "c.obj": ([], ["h"], ["g"], []),
+             "d.obj": ([("u", "z", 5, "unknown")], [], [], [])}   # one copy, unproven: nothing to choose
+    _, results, _, wrong = _selection(facts, {}, {"g": "a.obj", "h": "b.obj", "u": "d.obj"})
+    assert results == {"g": "unknown", "h": "unknown"}
+    assert not any(wrong.values())
+    assert L.judge_selected(None, {}, {"a.obj", "b.obj"}, {"a.obj"}, set()) == "unknown"  # not in the map
+
+
+def test_link_check_agrees_with_the_census(monkeypatch):
+    import link_check as C
+    facts = {"gm.obj": ([("new", "x", 5, "wrong")], ["new"], [], []),
+             "a.obj": ([("f", "p", 5, "wrong")], [], ["new"], []),
+             "mem.obj": ([("new", "y", 5, "retail")], ["new"], [], []),
+             "b.obj": ([("f", "q", 5, "retail")], [], ["f"], []),
+             "c.obj": ([], [], ["f", "g"], [("??_Ec", "??_Gc")]),
+             "d.obj": ([("??_Gc", "r", 5, "wrong")], [], [], [])}
+    owners = {"new": {"mem.obj"}}
+    kept = {"new": "gm.obj", "f": "b.obj", "??_Gc": "d.obj"}  # f: the map kept the second copy
+    present, _, exceptions, wrong = _selection(facts, owners, kept)
+    assert exceptions == {"f": 3}
+    ix = C.index_tables(present, list(facts.values()), {"exceptions": exceptions, "owners": owners})
+    ix["excuses"] = {"runtime": set(), "imported": {}, "stubs": {}}
+    monkeypatch.setattr(L, "object_facts", lambda obj, truth=None: facts[obj.name])
+    for obj in present:
+        assert C.check_object(obj, ix, None)["selected"] == wrong[obj.name], obj
+    assert wrong["c.obj"] == ["??_Gc"] and wrong["a.obj"] == ["new"]
+    # the file that fixes the kept copy links: its own current copy replaces the census's
+    facts["gm.obj"] = ([("new", "y", 5, "retail")], ["new"], [], [])
+    assert C.check_object(present[0], ix, None)["selected"] == []

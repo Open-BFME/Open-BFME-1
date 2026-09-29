@@ -420,10 +420,10 @@ def main(argv=None):
     # What the component needs from outside itself, from the objects.
     facts = {obj.name: link_census.object_facts(obj, truth=_NoTruth()) for obj in objs}
     defines = set()
-    for copies, strong, _ in facts.values():
+    for copies, strong, _, _ in facts.values():
         defines |= set(strong) | {name for name, *_ in copies}
     needs = collections.defaultdict(set)
-    for obj, (_, _, undefined) in facts.items():
+    for obj, (_, _, undefined, _) in facts.items():
         for name in undefined:
             if name not in defines:
                 needs[name].add(obj)
@@ -439,7 +439,7 @@ def main(argv=None):
             print("FAIL", line)
         return 1
     publics, in_image = map_publics(mapfile), map_publics(mapfile, statics=True)
-    _, driver_defines, _ = link_census.object_facts(driver, truth=_NoTruth())
+    _, driver_defines, _, _ = link_census.object_facts(driver, truth=_NoTruth())
 
     placement = Placement(objs, rows)
     placement.run()
@@ -491,7 +491,7 @@ def main(argv=None):
     print("\nselected definitions:")
     names = {obj.name: obj.stem for obj in objs}
     elsewhere, shared = [], collections.defaultdict(set)
-    for obj, (copies, strong, _) in facts.items():
+    for obj, (copies, strong, _, _) in facts.items():
         for name in strong:
             where = publics.get(name)
             if where and not any(Path(w).name == obj for w in where):
@@ -499,7 +499,7 @@ def main(argv=None):
         for name, *_ in copies:
             shared[name].add(obj)
     driver_comdats = {name for name, *_ in link_census.comdat_bodies(driver)}
-    strong_total = sum(len(s) for _, s, _ in facts.values())
+    strong_total = sum(len(s) for _, s, _, _ in facts.values())
     print(f"  {strong_total} exclusive definitions; {strong_total - len(elsewhere)} taken from their own object")
     for line in elsewhere:
         print("  ELSEWHERE", line)
@@ -515,7 +515,7 @@ def main(argv=None):
     for name, copies in sorted(conflicts.items()):
         print(f"    {name}: {copies}")
         failures.append(f"differing COMDAT {name}")
-    strong_by = collections.Counter(n for _, s, _ in facts.values() for n in s)
+    strong_by = collections.Counter(n for _, s, _, _ in facts.values() for n in s)
     dupes = [n for n, c in strong_by.items() if c > 1]
     print(f"  duplicate strong definitions: {len(dupes)}")
     failures += [f"duplicate {n}" for n in dupes]

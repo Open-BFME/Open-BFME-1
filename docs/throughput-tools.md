@@ -297,6 +297,13 @@ object and checks it against the index the last census wrote
   where the symbol has a retail address (bytes and relocation targets checked
   against the image); otherwise the first copy in link order is the one kept.
 - **addresses**: a hard-coded image address in the source (`link_debt.py`).
+- **selected** (`wrong_selected` in `link_status.csv`): a name the file defines
+  or references whose definition the link KEEPS is proven not retail's: the
+  kept COMDAT copy fails retail truth, or two objects define the name and the
+  kept one is not the ledger owner's. The census reads the kept definition
+  from a `/MAP` relink; the check uses the census's holder, else the first
+  definer in link order. A name with no retail address or owner counts
+  against no one.
 
 It prints the file's LINKED bytes at the census and after your change. The
 census stays the record; the check is a preview and can be stale by whatever
