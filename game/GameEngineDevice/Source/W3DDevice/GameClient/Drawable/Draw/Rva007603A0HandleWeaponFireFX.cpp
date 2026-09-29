@@ -74,7 +74,7 @@ struct Rva007603A0ModuleDataView
 	Real m_initialRecoil;
 };
 
-class Rva007603A0
+class W3DScriptedModelDraw
 {
 public:
 	Bool handleWeaponFireFX(WeaponSlotType wslot, Int specificBarrelToUse,
@@ -89,7 +89,7 @@ private:
 	Rva007603A0RecoilVector m_weaponRecoilInfoVec[4];
 };
 
-Bool Rva007603A0::handleWeaponFireFX(WeaponSlotType wslot, Int specificBarrelToUse,
+Bool W3DScriptedModelDraw::handleWeaponFireFX(WeaponSlotType wslot, Int specificBarrelToUse,
 	const FXList *fxl, Real weaponSpeed, const Coord3D *victimPos)
 {
 	if (!m_curState || !(m_curState->m_validStuff & 8))
