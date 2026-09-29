@@ -170,7 +170,6 @@ Bool parseText(char *token, WinInstanceData *instData, char *buffer, void *data)
 
 
 // ?parseHeaderTemplate@@YA_NPADPAVWinInstanceData@@0PAX@Z
-// ?parseHeaderTemplate@@YA_NPADPAVWinInstanceData@@0PAX@Z present-unmatched
 Bool parseHeaderTemplate(char *token, WinInstanceData *instData, char *buffer, void *data)
 {
 	char *c, *ptr;
