@@ -125,9 +125,11 @@ public:
     Int getSciencePurchaseCost(ScienceType science) const;
 };
 
-#define TheBfmeGameLogic (*(GameLogicPortraitShim **)0x012F0898)
-#define TheControlBar (*(ControlBar **)0x012F33F8)
-#define TheScienceStore (*(ScienceStore **)0x012ED7AC)
+class GameLogic;
+extern GameLogic *TheGameLogic;
+extern ControlBar *TheControlBar;
+extern ScienceStore *TheScienceStore;
+#define TheBfmeGameLogic ((GameLogicPortraitShim *)TheGameLogic)
 
 // ?bfmeQueryWD@ControlBar@@QAEXPAVPlayer@@HPAPBVCommandButton@@PA_N11@Z
 void ControlBar::bfmeQueryWD(

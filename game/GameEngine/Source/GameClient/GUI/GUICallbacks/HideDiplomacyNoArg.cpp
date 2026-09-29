@@ -3,7 +3,7 @@
 // The no-argument overload: bail if the window is absent or already hidden,
 // otherwise set both flags and hand off to the window manager.
 //
-// Globals are read as addresses, which is this tree's idiom for them. Both flags
+// Globals are the named externs dir32_addresses.csv records. Both flags
 // are set to true and retail keeps the 1 in a register across the two stores,
 // which falls out of writing them as two assignments of the same value.
 //
@@ -28,10 +28,15 @@ struct InGameUI
 	bool m_diplomacyHidden;
 };
 
+class Shell;
+extern void *g_obj12F49E4;
+extern Shell *TheShell;
+extern WindowManager *g_theWindowManager;
+
 // ?HideDiplomacy@@YAXXZ
 void HideDiplomacy(void)
 {
-	DiplomacyWindow *window = *(DiplomacyWindow **)0x012F49E4;
+	DiplomacyWindow *window = (DiplomacyWindow *)g_obj12F49E4;
 
 	if (!window)
 		return;
@@ -40,7 +45,7 @@ void HideDiplomacy(void)
 		return;
 
 	window->m_hidden = true;
-	(*(InGameUI **)0x012F4B58)->m_diplomacyHidden = true;
+	((InGameUI *)TheShell)->m_diplomacyHidden = true;
 
-	(*(WindowManager **)0x012F19E8)->hideQuitMenu();
+	g_theWindowManager->hideQuitMenu();
 }

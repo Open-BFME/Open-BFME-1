@@ -75,7 +75,8 @@ public:
 	void format( AsciiString format, ... );
 	const char *str() const
 	{
-		return m_data ? (const char *)m_data + 8 : (const char *)0x0107388B;
+		static const char TheNullChr = 0;
+		return m_data ? (const char *)m_data + 8 : &TheNullChr;
 	}
 };
 
@@ -176,6 +177,9 @@ class BfmeVersionAL
 public:
  UnicodeStringAL bfmeVersionTextAL();
 };
+class Version;
+extern Version *TheVersion;
+extern void *g_Va012F4AE4;
 
 class Rva0055F140FunctorHolder
 {
@@ -363,12 +367,12 @@ BfmeAptScreenOptions::BfmeAptScreenOptions( void *context )
 				Rva0055F1B0FunctorHolder( FunctorBinding( callback.member, (FunctorTarget *)this ) ) );
 		}
 
-		UnicodeStringAL version = (*(BfmeVersionAL **)0x012ED644)->bfmeVersionTextAL();
+		UnicodeStringAL version = ((BfmeVersionAL *)TheVersion)->bfmeVersionTextAL();
 		{
 			AsciiString versionName( "APT:VersionNum" );
 			g_theWindowManager->bfme_setAptText( versionName, UnicodeString( version ) );
 		}
-		*(int *)0x012F4AE4 = 0;
+		g_Va012F4AE4 = 0;
 	}
 }
 

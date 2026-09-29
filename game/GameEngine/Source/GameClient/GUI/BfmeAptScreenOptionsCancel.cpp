@@ -128,6 +128,7 @@ extern WindowManager *g_theWindowManager;
 extern Display *TheDisplay;
 extern Rva005A00B0AudioClient *TheAudioClientUpdate;
 extern Rva006C9270GlobalData *TheWritableGlobalData;
+extern void *g_Va012F4AE4;
 
 enum
 {
@@ -167,10 +168,10 @@ private:
 // ?_bfme_cancel@BfmeAptScreenOptions@@QAEXPBD@Z
 void BfmeAptScreenOptions::_bfme_cancel( const char * )
 {
-	if( *(void **)0x012F4AE4 != 0 )
+	if( g_Va012F4AE4 != 0 )
 	{
-		TheAudioClientUpdate->stopAudioEvent( *(void **)0x012F4AE4 );
-		*(void **)0x012F4AE4 = 0;
+		TheAudioClientUpdate->stopAudioEvent( g_Va012F4AE4 );
+		g_Va012F4AE4 = 0;
 	}
 
 	if( m_page == 4 )
