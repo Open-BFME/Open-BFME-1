@@ -546,17 +546,36 @@ def retail_imports():
     return {entry.name.decode("latin-1") for dll in pe.DIRECTORY_ENTRY_IMPORT for entry in dll.imports if entry.name}
 
 
-def excused(symbol, runtime, imported):
+def library_import_thunks(path):
+    """Names an import library defines as call stubs (short import objects of
+    CODE type): `_strcpy` in msvcrt.lib forwards to MSVCR71's strcpy. Such a
+    name resolves in the real link only if the image imports that function."""
+    import struct
+    data, at, thunks = path.read_bytes(), 8, set()
+    while at + 60 <= len(data):
+        size = int(data[at + 48:at + 58].decode("ascii").strip())
+        body = data[at + 60:at + 60 + size]
+        if body[:4] == b"\0\0\xff\xff" and len(body) > 20:
+            if struct.unpack_from("<H", body, 18)[0] & 3 == 0:  # IMPORT_OBJECT_CODE
+                thunks.add(body[20:body.index(b"\0", 20)].decode("latin-1"))
+        at += 60 + size + (size & 1)
+    return thunks
+
+
+def excused(symbol, runtime, imported, thunks=frozenset()):
     """True for a name the real link resolves without this tree defining it.
 
     An __imp_ name only when retail imports that function: strip the prefix,
     one decoration underscore and a stdcall @N (__imp__GetModuleFileNameA@12,
     __imp___iob); MSVCR71 exports a few C++ names mangled, so a ?name must
     match as is (??1exception@@UAE@XZ). An address-named slot or a name
-    retail does not import is a declaration defect. Any other name only when msvcrt.lib
+    retail does not import is a declaration defect. A call stub msvcrt.lib
+    defines (`_strcpy`) counts as its import. Any other name only when msvcrt.lib
     (MSVCR71's import library and CRT statics: __except_list, __fltused)
     defines it.
     """
+    if symbol in thunks:  # a call stub: only as good as the import behind it
+        return excused("__imp_" + symbol, runtime, imported)
     if symbol.startswith("__imp_"):
         name = symbol[len("__imp_"):]
         if name in imported or name.startswith("?"):
@@ -581,7 +600,8 @@ def write_status(log, rows, present=None):
     (link_debt.addresses): it links, but only while nothing moves.
     """
     import link_debt
-    runtime = library_symbols(build.vc71_root() / "Vc7" / "lib" / "msvcrt.lib")
+    crt = build.vc71_root() / "Vc7" / "lib" / "msvcrt.lib"
+    runtime, thunks = library_symbols(crt), library_import_thunks(crt)
     imported = retail_imports()
     if present is None:
         present, _ = objects(rows)
@@ -593,7 +613,7 @@ def write_status(log, rows, present=None):
         if found:
             symbol = found.group(1) or found.group(2)
             referrer = REFERRER.match(line)
-            if referrer and not excused(symbol, runtime, imported):
+            if referrer and not excused(symbol, runtime, imported, thunks):
                 unresolved[Path(referrer.group(1)).name].add(symbol)
             continue
         found = DUPLICATE.match(line)

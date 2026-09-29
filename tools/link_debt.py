@@ -25,8 +25,8 @@ ROOT = Path(__file__).resolve().parents[1]
 SKIP = ("game/gen_small/", "game/gen_asm/")
 SUFFIXES = (".cpp", ".c", ".h", ".hpp", ".inl")
 COMMENTS = re.compile(r'//[^\n]*|/\*.*?\*/|"(?:\\.|[^"\\])*"', re.S)
-CAST = re.compile(r'\(\s*(?:(?:const|volatile)\s+)*[\w:<>\s]+\*+\s*(?:const\s*)?\)\s*\(?\s*(0x[0-9A-Fa-f]{7,8})\b'
-                  r'|reinterpret_cast\s*<[^>]*\*\s*>\s*\(\s*(0x[0-9A-Fa-f]{7,8})\b')
+CAST = re.compile(r'\(\s*(?:(?:const|volatile)\s+)*[\w:<>\s]+\*+\s*(?:const\s*)?\)\s*\(?\s*(0x[0-9A-Fa-f]{6,8})\b'
+                  r'|reinterpret_cast\s*<[^>]*\*\s*>\s*\(\s*(0x[0-9A-Fa-f]{6,8})\b')
 LOW, HIGH = 0x00400000, 0x02000000  # the image: masks and flag words fall outside
 
 
