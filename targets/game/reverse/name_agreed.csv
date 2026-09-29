@@ -77,3 +77,8 @@ game/GameEngine/Source/Common/BfmeConv1081.cpp|member||m_bfme0c,m_pathfinder,cla
 game/GameEngine/Source/Common/BfmeConv1916.cpp|member||m_bfmeIdBR,m_playerIndex,claude-fable+claude-opus;audited-by=gpt-5.6-sol,agreed,2026-09-29
 game/GameEngine/Source/Common/BfmeConv1916.cpp|member||m_bfmePlayerBR,m_owner,claude-fable+claude-opus;audited-by=gpt-5.6-sol,agreed,2026-09-29
 game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|member||m_bfmeModeYV,m_gameMode,claude-fable+claude-opus;audited-by=gpt-5.6-sol,agreed,2026-09-29
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeNode,m_memberList,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeFieldA,m_name,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeThing,m_proto,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_000EC5E0@|bfmeFieldA,getName,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|function|Gen_001506E0@|bfmeIsEmpty,isEmpty,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29

@@ -14,17 +14,17 @@ public:
 class Gen_001506E0
 {
 public:
-	bool bfmeIsEmpty(void) const;
+	bool isEmpty(void) const;
 
 private:
 	int m_bfmeHead;						// +0x00
-	BfmeNodeBG *m_bfmeNode;					// +0x04
+	BfmeNodeBG *m_memberList;					// +0x04
 };
 
-// ?bfmeIsEmpty@Gen_001506E0@@QBE_NXZ
-bool Gen_001506E0::bfmeIsEmpty(void) const
+// ?isEmpty@Gen_001506E0@@QBE_NXZ
+bool Gen_001506E0::isEmpty(void) const
 {
-	BfmeNodeBG *node = m_bfmeNode;
+	BfmeNodeBG *node = m_memberList;
 
 	return node->m_bfmeNext == node;
 }
@@ -33,7 +33,7 @@ class BfmeThingBG
 {
 public:
 	int m_bfmeHead[4];					// +0x00
-	int m_bfmeFieldA;					// +0x10
+	int m_name;					// +0x10
 	int m_bfmeFieldB;					// +0x14
 };
 
@@ -42,29 +42,29 @@ extern int g_bfmeDefaultBG[2];					// retail 0x01336E50
 class Gen_000EC5E0
 {
 public:
-	int *bfmeFieldA(void) const;
+	int *getName(void) const;
 	int *bfmeFieldB(void) const;
 
 private:
 	int m_bfmeHead;						// +0x00
-	BfmeThingBG *m_bfmeThing;				// +0x04
+	BfmeThingBG *m_proto;				// +0x04
 };
 
-// ?bfmeFieldA@Gen_000EC5E0@@QBEPAHXZ
-int *Gen_000EC5E0::bfmeFieldA(void) const
+// ?getName@Gen_000EC5E0@@QBEPAHXZ
+int *Gen_000EC5E0::getName(void) const
 {
-	BfmeThingBG *thing = m_bfmeThing;
+	BfmeThingBG *thing = m_proto;
 
 	if (!thing)
 		return g_bfmeDefaultBG;
 
-	return &thing->m_bfmeFieldA;
+	return &thing->m_name;
 }
 
 // ?bfmeFieldB@Gen_000EC5E0@@QBEPAHXZ
 int *Gen_000EC5E0::bfmeFieldB(void) const
 {
-	BfmeThingBG *thing = m_bfmeThing;
+	BfmeThingBG *thing = m_proto;
 
 	if (!thing)
 		return g_bfmeDefaultBG;
