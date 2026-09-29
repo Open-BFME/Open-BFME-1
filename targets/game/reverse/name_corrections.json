@@ -10418,5 +10418,55 @@
   "after_sha256": "b045d5b1d3611c150454bae9717afe5362c56324c2b2c5a1083e08c050061c7a",
   "evidence": "targets/game/reverse/identity_evidence/0x00090900.md",
   "reason": "The body reads the key IdealStaticGameLOD and returns minus one on a miss, so it is not the bool getter useCameraInReplays. The proven name getIdealStaticGameDetail is held by another row, so the body takes an address-derived method name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008ad8f0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x008ad8f0.cpp",
+  "old_name": "BfmeB1236",
+  "new_name": "Rva008AD750StringBinding",
+  "before_sha256": "d0dcfbbb69c71ffbaf37d25d9c401bd98aeb9c6a58a53188589b36a35c305508",
+  "after_sha256": "e95af579fa7111cf38dc186c0c094ef5948e00ff8a395e9286532372f6d2b3bf",
+  "evidence": "targets/game/reverse/attempts/0x008ad8f0.cpp",
+  "reason": "token-alignment artifact: reordered statements pair BfmeB1236 with Rva008AD750StringBinding; BfmeB1236 is kept and still appears 6 times in the new bank, and Rva008AD750StringBinding is a separate identifier"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008ad8f0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x008ad8f0.cpp",
+  "old_name": "m_owner68",
+  "new_name": "m_2c",
+  "before_sha256": "d0dcfbbb69c71ffbaf37d25d9c401bd98aeb9c6a58a53188589b36a35c305508",
+  "after_sha256": "e95af579fa7111cf38dc186c0c094ef5948e00ff8a395e9286532372f6d2b3bf",
+  "evidence": "targets/game/reverse/attempts/0x008ad8f0.cpp",
+  "reason": "token-alignment artifact: reordered statements pair m_owner68 with m_2c; m_owner68 is kept and still appears 2 times in the new bank, and m_2c is a separate identifier"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008ad8f0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x008ad8f0.cpp",
+  "old_name": "m_sourceA",
+  "new_name": "m_14",
+  "before_sha256": "d0dcfbbb69c71ffbaf37d25d9c401bd98aeb9c6a58a53188589b36a35c305508",
+  "after_sha256": "e95af579fa7111cf38dc186c0c094ef5948e00ff8a395e9286532372f6d2b3bf",
+  "evidence": "targets/game/reverse/attempts/0x008ad8f0.cpp",
+  "reason": "token-alignment artifact: reordered statements pair m_sourceA with m_14; m_sourceA is kept and still appears 2 times in the new bank, and m_14 is a separate identifier"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008ad8f0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x008ad8f0.cpp",
+  "old_name": "m_top",
+  "new_name": "m_30",
+  "before_sha256": "d0dcfbbb69c71ffbaf37d25d9c401bd98aeb9c6a58a53188589b36a35c305508",
+  "after_sha256": "e95af579fa7111cf38dc186c0c094ef5948e00ff8a395e9286532372f6d2b3bf",
+  "evidence": "targets/game/reverse/attempts/0x008ad8f0.cpp",
+  "reason": "token-alignment artifact: reordered statements pair m_top with m_30; m_top is kept and still appears 3 times in the new bank, and m_30 is a separate identifier"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008ad8f0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x008ad8f0.cpp",
+  "old_name": "request",
+  "new_name": "Rva008AD8F0Owner",
+  "before_sha256": "d0dcfbbb69c71ffbaf37d25d9c401bd98aeb9c6a58a53188589b36a35c305508",
+  "after_sha256": "e95af579fa7111cf38dc186c0c094ef5948e00ff8a395e9286532372f6d2b3bf",
+  "evidence": "targets/game/reverse/attempts/0x008ad8f0.cpp",
+  "reason": "token-alignment artifact: reordered statements pair request with Rva008AD8F0Owner; request is kept and still appears 45 times in the new bank, and Rva008AD8F0Owner is a separate identifier"
  }
 ]
