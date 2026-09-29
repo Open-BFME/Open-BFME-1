@@ -4,7 +4,7 @@
 // Retail keeps an ordered waypoint cache in the TerrainTree member at +0x550.
 // Its incremental-link calls are the existing 0x000124EF lower-bound helper
 // and 0x0002DCA9 value-slot helper.  A cache miss walks the process-global
-// waypoint chain at 0x012EF4D0, whose id and next fields are at +0x04 and
+// waypoint chain at g_rva012EF4D0, whose id and next fields are at +0x04 and
 // +0x1c, then records either the found waypoint or NULL in the cache.
 
 typedef unsigned int UnsignedInt;
@@ -28,6 +28,11 @@ struct Rva001ACE10Tree
 
 extern void j_000124ef();
 extern void j_0002dca9();
+
+// Head of the process-global waypoint chain at 0x012EF4D0. The pin spells it
+// as an Rva001A2D50Node *; the chain is walked as a Waypoint * here.
+class Rva001A2D50Node;
+extern Rva001A2D50Node *g_rva012EF4D0;
 
 class Rva001ACE10TreeCall
 {
@@ -63,7 +68,7 @@ Waypoint *TerrainLogic::getWaypointByID(UnsignedInt id)
 			reinterpret_cast<unsigned char *>(this) + 0x550)->m_header)
 		return node->m_value;
 
-	Waypoint *waypoint = *reinterpret_cast<Waypoint **>(0x012EF4D0);
+	Waypoint *waypoint = reinterpret_cast<Waypoint *>(g_rva012EF4D0);
 	while (waypoint != 0)
 	{
 		if (*reinterpret_cast<UnsignedInt *>(

@@ -21,6 +21,9 @@ class DataChunkInfo
 
 #include "ascii_string.h"
 
+// Retail vftable of BfmeParserBindingBaseVE; _bfmeVftVE is pinned to 0x0107C7D0.
+extern "C" int _bfmeVftVE[];
+
 class LibraryMapsParser
 {
 public:
@@ -28,7 +31,7 @@ public:
 
 	~LibraryMapsParser()
 	{
-		m_vftable = (void *)0x0107C7D0;
+		m_vftable = _bfmeVftVE;
 		m_table->bfmeDropVE(m_parser);
 	}
 

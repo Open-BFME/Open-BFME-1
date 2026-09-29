@@ -54,7 +54,9 @@ extern Bool LineInRegion(const Coord2D *p1, const Coord2D *p2,
 	const Region2D *clipRegion);
 #pragma comment(linker, "/alternatename:?LineInRegion@@YA_NPBUCoord2D@@0PBURegion2D@@@Z=?j_0001ffe1@@YAXXZ")
 
-#define BRIDGE_SIDE_SCALE (*(const Real *)0x0109C344)
+// Retail reads the scale from the constant pool at 0x0109C344, which stores
+// exactly this float.
+#define BRIDGE_SIDE_SCALE 5.1f
 
 class Bridge
 {
