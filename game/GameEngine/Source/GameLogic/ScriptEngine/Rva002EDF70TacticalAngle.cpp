@@ -6,8 +6,7 @@
 // The +0xFC return is kept as a float because the retail x87 stack uses it as
 // the second operand of the normalized angle calculation.  The +0xC8 ABI is
 // the five-argument view operation proven by the adjacent camera wrappers.
-// The three anonymous retail constants are deliberately addressed by their
-// independently observed retail VAs rather than given unproven global names.
+// The three anonymous retail constants are written as their float values.
 
 typedef float Real;
 typedef int Int;
@@ -22,8 +21,8 @@ class Rva002EDF70Receiver {};
 extern View *TheTacticalView;
 extern Real normalizeAngle(Real angle);
 
-#define RVA_01075C68 (*(const Real *)0x01075C68)
-#define RVA_010D0010 (*(const Real *)0x010D0010)
+#define RVA_01075C68 1000.0f
+#define RVA_010D0010 0.15915494f
 
 void __stdcall rva002EDF70(Real angle, Real seconds, Real easeIn, Real easeOut)
 {
@@ -32,7 +31,7 @@ void __stdcall rva002EDF70(Real angle, Real seconds, Real easeIn, Real easeOut)
     typedef char ReadSlotIsOneWord[sizeof(ReadSlot) == sizeof(void *) ? 1 : -1];
     ReadSlot *readSlot = *(ReadSlot **)view;
     Real current = (((Rva002EDF70Receiver *)view)->*readSlot[63].method)();
-    Real scaledAngle = angle * (*(const Real *)0x01075954);
+    Real scaledAngle = angle * 0.017453292f;
     Real normalized = normalizeAngle(scaledAngle - current);
     view = TheTacticalView;
     union ApplySlot { void *address; void (Rva002EDF70Receiver::*method)(Real, Int, bool, Real, Real); };

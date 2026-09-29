@@ -66,9 +66,12 @@ public:
 	const SpecialPowerTemplate *findSpecialPowerTemplate(AsciiString name);
 };
 
-#define TheGameLogic (*(GameLogic **)0x012F0898)
-#define TheAudioClientUpdate (*(void **)0x012ED668)
-#define TheSpecialPowerStore (*(SpecialPowerStore **)0x012ED80C)
+class AudioManager;
+extern GameLogic *TheGameLogic;
+extern AudioManager *TheAudio;
+extern SpecialPowerStore *TheSpecialPowerStore;
+
+#define TheAudioClientUpdate ((void *)TheAudio)
 
 // ?ObjectDoSpecialPower@@YAHPAUlua_State@@@Z
 int ObjectDoSpecialPower(lua_State *state)

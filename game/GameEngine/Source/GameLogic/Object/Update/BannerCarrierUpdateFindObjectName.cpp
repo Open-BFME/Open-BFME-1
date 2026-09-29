@@ -6,6 +6,7 @@
 
 extern "C" __declspec(dllimport) int __cdecl _memicmp(
 	const void *left, const void *right, unsigned int count );
+extern const char Rva006A16B0Empty[];
 extern "C" void *__cdecl memset( void *destination, int value,
 	unsigned int size );
 
@@ -26,10 +27,10 @@ public:
 	{
 		const int length = that.m_data ? that.m_data->m_length : 0;
 		const char *data = that.m_data ? that.m_data->m_text
-			: (const char *)0x0107388b;
+			: Rva006A16B0Empty;
 		const int thisLength = m_data ? m_data->m_length : 0;
 		const char *thisData = m_data ? m_data->m_text
-			: (const char *)0x0107388b;
+			: Rva006A16B0Empty;
 		int difference = _memicmp( thisData, data,
 			thisLength < length ? thisLength : length );
 		if (difference != 0)
@@ -116,5 +117,5 @@ AsciiString BannerCarrierUpdateModuleData::rva00283A20FindLocomotorName(
 			return *(const AsciiString *)&m_objectNames[i]->m_objectTemplateName;
 	}
 
-	return (const char *)0x0107301c;
+	return "";
 }

@@ -140,9 +140,13 @@ private:
 
 extern float g_bfmeDirectionWeight1285;
 
-#define TheBfmeGameLogic ( *(GameLogic **)0x012F0898 )
-#define TheBfmeAI ( *(AI **)0x012EF214 )
-#define TheBfmeTeamFactory ( *(TeamFactory **)0x012ED810 )
+extern GameLogic *TheGameLogic;
+extern AI *TheAI;
+extern TeamFactory *TheTeamFactory;
+
+#define TheBfmeGameLogic TheGameLogic
+#define TheBfmeAI TheAI
+#define TheBfmeTeamFactory TheTeamFactory
 
 extern void j_0000314d();
 extern void j_0001284b();

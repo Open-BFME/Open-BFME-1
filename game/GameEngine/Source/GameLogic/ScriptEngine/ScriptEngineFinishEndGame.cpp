@@ -35,9 +35,14 @@ public:
 	void _bfme_finishEndGame(void);
 };
 
-#define TheGameLogic (*(Rva00367810GameLogic **)0x012F0898)
-#define TheCampaignManager (*(CampaignManager **)0x012F1024)
-#define TheMessageStream (*(MessageStream **)0x012ED5EC)
+class GameLogic;
+extern GameLogic *TheGameLogic;
+class BfmeLivingWorldCampaignManager;
+extern BfmeLivingWorldCampaignManager *TheLivingWorldCampaignManager;
+extern MessageStream *TheMessageStream;
+
+#define TheGameLogic ((Rva00367810GameLogic *)TheGameLogic)
+#define TheCampaignManager ((CampaignManager *)TheLivingWorldCampaignManager)
 
 void ScriptEngine::_bfme_finishEndGame(void)
 {
