@@ -25,6 +25,10 @@ struct Coord3D
 	Real z;
 };
 
+// Retail string literal at VA 0x01121748, "AltCamera".  Unnamed in
+// dir32_addresses.csv, so it keeps its address-derived name.
+extern const char g_01121748[];
+
 // The embedded scalar field at this+0x2448.  The ledger spells its two entry
 // points on two different address-derived classes, so both are declared here
 // and the object is cast to whichever one owns the call:
@@ -218,7 +222,7 @@ void W3DView::initHeightForMap()
 	m_cameraConstraintValid = false;
 	setCameraTransform();
 
-	// 0x01121748 is the retail literal "AltCamera".
+	// g_01121748 is the retail literal "AltCamera".
 	m_altCameraTrigger = TheTerrainLogic->getTriggerAreaByName(
-		AsciiString((const char *)0x01121748));
+		AsciiString(g_01121748));
 }

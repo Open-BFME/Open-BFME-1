@@ -6,7 +6,8 @@ typedef float Real;
 typedef int Int;
 typedef bool Bool;
 
-#define TheAnimationMsPerStep (*(Int *)0x012BB1CC)
+extern Int TheW3DFrameLengthInMsec;
+#define TheAnimationMsPerStep (TheW3DFrameLengthInMsec)
 
 struct ParabolicEase
 {

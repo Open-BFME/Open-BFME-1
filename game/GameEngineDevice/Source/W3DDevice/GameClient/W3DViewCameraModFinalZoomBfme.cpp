@@ -7,7 +7,8 @@ typedef float Real;
 typedef int Int;
 typedef bool Bool;
 
-#define TheAnimationMsPerStep (*(Int *)0x012BB1CC)
+extern Int TheW3DFrameLengthInMsec;
+#define TheAnimationMsPerStep (TheW3DFrameLengthInMsec)
 
 extern void d_0073a9b0(void);
 typedef Real (*TerrainHeight)(Real, Real);

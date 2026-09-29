@@ -50,7 +50,7 @@ public:
 	void clear(Int key);
 };
 
-#define TheTerrainLogic (*(Rva00733FD0TerrainLogic **)0x012EF4CC)
+extern Rva00733FD0TerrainLogic *TheTerrainLogic;
 extern void j_0001d0ac(void);
 
 struct Rva00733FD0Tree

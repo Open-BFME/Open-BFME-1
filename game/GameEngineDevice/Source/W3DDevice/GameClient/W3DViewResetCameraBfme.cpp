@@ -6,6 +6,8 @@ typedef float Real;
 typedef int Int;
 typedef bool Bool;
 
+extern Int TheW3DFrameLengthInMsec;
+
 struct Coord3D
 {
 	Real x;
@@ -183,7 +185,7 @@ void W3DView::resetCamera(const Coord3D *location, Int milliseconds,
 	if (milliseconds > 1)
 	{
 		m_cameraMovementMode = 3;
-		Int frameCount = milliseconds / (*(Int *)0x012BB1CC);
+		Int frameCount = milliseconds / TheW3DFrameLengthInMsec;
 		m_cameraFrames = frameCount;
 		if (frameCount < 1)
 			frameCount = 1;
