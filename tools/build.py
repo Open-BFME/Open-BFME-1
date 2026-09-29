@@ -969,7 +969,9 @@ def _recorded_inventory(meta, inventory_cache=None):
 
 _STLPORT_NATIVE_INCLUDE = re.compile(
     r"^_STLP_NATIVE_(?:C_HEADER|CPP_C_HEADER|CPP_RUNTIME_HEADER|HEADER|OLD_STREAMS_HEADER)\(([^)]*)\)$")
-_COMMENT_OR_LITERAL = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|/\*[\s\S]*?\*/|//[^\n]*')
+# A literal ends at its line (splices are joined first): an apostrophe in #error or
+# #pragma text must not pair with a later quote and turn a string's "/*" into a comment.
+_COMMENT_OR_LITERAL = re.compile(r'"(?:\\.|[^"\\\n])*"|\'(?:\\.|[^\'\\\n])*\'|/\*[\s\S]*?\*/|//[^\n]*')
 _INCLUDE_DIRECTIVE = re.compile(r"^[ \t]*#[ \t]*include\b[ \t]*(.+)$", re.MULTILINE)
 
 

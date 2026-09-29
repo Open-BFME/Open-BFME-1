@@ -226,3 +226,19 @@ def test_unknown_asm_receipt_version_and_legacy_includes_are_misses(tmp_path, mo
             'version': version, 'cmd': 'command', 'source': build._hash_file(str(source)), 'deps': {},
         }))
         assert not build.compile_is_current(source, output)
+
+
+def test_unterminated_quote_cannot_hide_an_escaping_include(tmp_path, monkeypatch):
+    # A literal ends at its line: an apostrophe in #error/#pragma text used to open a
+    # multi-line "char literal" that shifted comment parsing and blanked the include below.
+    monkeypatch.setattr(build, "ROOT", tmp_path)
+    header = tmp_path / "game" / "a.h"
+    header.parent.mkdir(parents=True)
+    # The apostrophe in "don't" paired with the one inside the later string "'/*", so
+    # the string's /* opened a fake comment that blanked the real include up to "*/".
+    for text in ("#if 0\n#error don't\n#endif\nconst char *p = \"'/*\";\n"
+                 "#include \"../../outside.h\"\nconst char *q = \"*/\";\n",
+                 "#if 0\n#error don't\n#endif\nconst char *p = \"'/*\";\n"
+                 "#include BODY\nconst char *q = \"*/\";\n"):
+        header.write_text(text)
+        assert build._include_escapes_search_roots(header, False), text
