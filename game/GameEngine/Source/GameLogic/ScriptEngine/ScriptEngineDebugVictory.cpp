@@ -16,14 +16,21 @@ private:
 	char m_data[0x48];
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
-class ScriptActions
+// The image declares the global at 0x012F0620 as a ScriptActionsInterface
+// pointer, so the extern carries that exact type (and the vtable slot index
+// of executeAction stays where the literal load put it).
+class ScriptActionsInterface
 {
 public:
 	virtual void slot00(void); virtual void slot01(void); virtual void slot02(void);
 	virtual void slot03(void); virtual void slot04(void); virtual void slot05(void);
 	virtual void slot06(void); virtual void slot07(void); virtual void slot08(void);
 	virtual void executeAction(ScriptAction *action);
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
+class ScriptActions : public ScriptActionsInterface
+{
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
@@ -34,7 +41,8 @@ public:
 	void debugDefeat(void);
 };
 
-#define TheScriptActions (*(ScriptActions **)0x012F0620)
+// retail 0x012F0620: ?TheScriptActions@@3PAVScriptActionsInterface@@A
+extern ScriptActionsInterface *TheScriptActions;
 
 void ScriptEngine::debugVictory(void)
 {

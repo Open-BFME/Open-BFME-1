@@ -16,6 +16,9 @@ struct BfmeAsciiStringData
 	char m_text[1];
 };
 
+// retail 0x0107388B, the shared empty AsciiString buffer
+extern const char g_bfmeEmptyAscii[];
+
 template <class T> class StringBase
 {
 	friend class AsciiString;
@@ -47,7 +50,9 @@ public:
 
 	const char *str(void) const
 	{
-		return m_data ? m_data->m_text : (const char *)0x0107388B;
+		// retail 0x0107388B: the image's shared empty AsciiString buffer,
+		// recorded as ?g_bfmeEmptyAscii@@3PADA / _g_bfmeEmptyAscii.
+		return m_data ? m_data->m_text : g_bfmeEmptyAscii;
 	}
 
 	void __cdecl format(AsciiString format, ...);
