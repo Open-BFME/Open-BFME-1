@@ -1859,6 +1859,9 @@ struct BfmeModalWindowLayout
 	BfmeModalWindowLayout *volatile next;
 };
 
+extern "C" const void *bfmeVftRva0047CF90[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva0047CF90=??_7Rva0047CF90@@6B@")
+
 class BfmeModalWindowDelete
 {
 public:
@@ -1883,7 +1886,7 @@ Int GameWindowManager::winSetModal( GameWindow *window )
 	if( modal != NULL )
 	{
 		// Put new entry at top of list
-		modal->vtable = (void *)0x010F77D0;
+		modal->vtable = (void *)bfmeVftRva0047CF90;
 		modal->window = window;
 		modal->next = (BfmeModalWindowLayout *)m_modalHead;
 		m_modalHead = (ModalWindow *)modal;

@@ -246,7 +246,7 @@ int __fastcall readAdditionalDisconnectsFromUserFile(int playerID);
 
 static BfmeDisconnectQueue *getDisconnectQueue()
 {
-	return *reinterpret_cast<BfmeDisconnectQueue **>(0x012F7194);
+	return reinterpret_cast<BfmeDisconnectQueue *>(TheGameSpyInfo);
 }
 
 Int GetAdditionalDisconnectsFromUserFile(Int playerID)

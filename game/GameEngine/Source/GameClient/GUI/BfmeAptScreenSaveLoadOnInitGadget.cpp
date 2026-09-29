@@ -40,6 +40,8 @@ public:
 
 void GadgetTextEntrySetText(GameWindow *window, UnicodeString text);
 
+extern const unsigned short g_Rva01088AF4EmptyWideString[];
+
 class BfmeAptScreenSaveLoad
 {
 public:
@@ -73,7 +75,7 @@ void BfmeAptScreenSaveLoad::_bfme_onInitGadget(
 		{
 			m_fileNameTextEntry = window;
 			GadgetTextEntrySetText(window,
-				UnicodeString((const unsigned short *)0x01088AF4));
+				UnicodeString(g_Rva01088AF4EmptyWideString));
 			WinInstanceData *instanceData =
 				(WinInstanceData *)window->winGetUserData();
 			if (instanceData != 0)

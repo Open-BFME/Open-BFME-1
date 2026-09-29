@@ -89,7 +89,8 @@ struct RawVecBuffer
 };
 
 class BfmeAptScreenScoreScreen;
-#define TheScoreScreen (*(BfmeAptScreenScoreScreen **)0x012f4b50)
+extern BfmeAptScreenScoreScreen *Rva012F4B50ScoreScreen;
+#define TheScoreScreen Rva012F4B50ScoreScreen
 
 class BfmeAptScreenScoreScreen : public _bfme_AptGameWindow, public BfmeAptScreenScoreSecondary
 {

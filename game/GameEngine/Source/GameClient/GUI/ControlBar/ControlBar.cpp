@@ -3489,6 +3489,7 @@ class BfmeGlobal_012f19e8
 public:
 	void bfmeCall_000290d2();
 };
+extern BfmeGlobal_012f19e8 *TheBfmeGlobal_012f19e8;
 
 void ControlBar::hidePurchaseScience( void )
 {
@@ -3498,7 +3499,7 @@ void ControlBar::hidePurchaseScience( void )
 		return;
 	purchaseWindow->m_hidden = TRUE;
 	reinterpret_cast<BfmeShellStateView *>(TheShell)->m_isShellActive = TRUE;
-	reinterpret_cast<BfmeGlobal_012f19e8 **>(0x012f19e8)[0]->bfmeCall_000290d2();
+	TheBfmeGlobal_012f19e8->bfmeCall_000290d2();
 }
 
 // byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_togglePurchaseScience.cpp
