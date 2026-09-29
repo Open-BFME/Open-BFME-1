@@ -193,6 +193,10 @@ class W3DShaderManager
   public:
 	static int setShroudTex(int);
 };
+// Retail 0x012BAF40: the fixed-function fog ShaderClass handed to
+// DX8Wrapper::Set_Shader. Not recorded in dir32_addresses.csv, so it keeps an
+// address-derived name.
+extern const ShaderClass g_012BAF40;
 extern unsigned Rva01340594DX8Calls;
 class DX8Wrapper
 {
@@ -416,7 +420,7 @@ void W3DShrubBuffer::rva0071EEC0(CameraClass *camera, RefMultiListIterator<Rende
 	}
 	if (!numIndices[0])
 		return;
-	DX8Wrapper::Set_Shader(*(const ShaderClass *)0x012BAF40);
+	DX8Wrapper::Set_Shader(g_012BAF40);
 	BoxSetTexture(0, texture1450);
 	DX8Wrapper::Set_DX8_Texture_Stage_State(0, 11, 0);
 	DX8Wrapper::Set_DX8_Texture_Stage_State(1, 11, 1);

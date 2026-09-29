@@ -1716,7 +1716,10 @@ public:
 
 extern void Rva009EBAC0(int value);
 
-#define FirstUpdateSubsystem (*(void **)0x0134faa0)
+// Retail 0x0134FAA0: ?Rva0134FAA0@@3PAVRva009EB960@@A
+class Rva009EB960;
+extern Rva009EB960 *Rva0134FAA0;
+#define FirstUpdateSubsystem Rva0134FAA0
 
 // Compares the map-object name against a getPath() word through the WWLib
 // StringBase<char> compare, then releases the untracked POD temp. The const-ref

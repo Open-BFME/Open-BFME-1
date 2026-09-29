@@ -14,6 +14,10 @@ struct XferVersion
 
 __declspec(noreturn) void __stdcall _CxxThrowException(void *, void *);
 
+// Retail 0x01239CE0: the ThrowInfo for the "xfer version too new" throw. The
+// address is not in dir32_addresses.csv, so it keeps an address-derived name.
+extern int g_01239CE0;
+
 class Xfer
 {
 public:
@@ -83,7 +87,7 @@ void TBuff::xfer(Xfer *xfer)
 	if (version.m_currentVersion < 5)
 	{
 		int error = 2;
-		_CxxThrowException(&error, (void *)0x01239ce0);
+		_CxxThrowException(&error, (void *)&g_01239CE0);
 	}
 
 	UnsignedInt value = m_04;

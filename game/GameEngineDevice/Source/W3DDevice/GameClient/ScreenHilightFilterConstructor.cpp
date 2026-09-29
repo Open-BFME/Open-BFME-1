@@ -1,5 +1,10 @@
 // cl: /O2 /Ob0
 
+// Retail 0x01128B88: the highlight filter's vtable, installed by every retail
+// constructor of this class. Not recorded in dir32_addresses.csv, so it keeps
+// an address-derived name.
+extern void *g_01128B88[];
+
 class ScreenHilightFilter
 {
 	void *m_vptr;
@@ -22,7 +27,7 @@ public:
 
 ScreenHilightFilter::ScreenHilightFilter()
 {
-	m_vptr = (void *)0x01128B88;
+	m_vptr = (void *)g_01128B88;
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;

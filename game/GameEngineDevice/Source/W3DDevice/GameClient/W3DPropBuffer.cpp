@@ -70,12 +70,14 @@
 
 RenderObjClass *Create_Render_Obj(const char *name);
 
+extern const char Rva006A16B0Empty[]; // retail 0x0107388B
+
 class PropNameString
 {
 public:
 	const char *str( void ) const
 	{
-		return m_data ? (const char *)m_data + 8 : (const char *)0x0107388b;
+		return m_data ? (const char *)m_data + 8 : Rva006A16B0Empty;
 	}
 
 	void *m_data;
