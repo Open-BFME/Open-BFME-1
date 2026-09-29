@@ -115,7 +115,9 @@ public:
 	UnsignedInt m_frame;
 };
 
-#define TheBfmeGameLogic (*(GameLogicFrameSource **)0x012F0898)
+class GameLogic;
+extern GameLogic *TheGameLogic;
+#define TheBfmeGameLogic ((GameLogicFrameSource *)TheGameLogic)
 
 template <bool threads, int instance>
 class BfmeNodeAllocator

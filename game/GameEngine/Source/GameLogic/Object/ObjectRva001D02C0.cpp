@@ -103,7 +103,8 @@ void Object::rva001D02C0(Int condition, Int frames, Real percent)
 			it != objects.end(); ++it)
 		{
 			Int random = GetGameLogicRandomValue(1, remaining,
-				(char *)0x0109EC20, 0xAA6);
+				(char *)"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Object.cpp",
+				0xAA6);
 			--remaining;
 			if (random <= selected)
 			{

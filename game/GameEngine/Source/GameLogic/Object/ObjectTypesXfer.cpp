@@ -65,6 +65,7 @@ struct XferException
 
 extern "C" XferException *__cdecl bfmeFormatText(
 	XferException *result, int tag, const char *format, ...);
+extern int g_guardTargetTypeThrowInfo;
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
 
@@ -136,7 +137,7 @@ void ObjectTypes::xfer(Xfer *xfer)
 		{
 			XferException error;
 			bfmeFormatText(&error, 5, 0);
-			_CxxThrowException(&error, (void *)0x011DFE5C);
+			_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 		}
 
 		AsciiString typeName;
