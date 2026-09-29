@@ -117,6 +117,10 @@ public:
 	void bfmeVisitCells(void);
 	int bfmeValueAtWorld(const BfmePointFC *point) const;
 	void bfmeApplyCircle(int x, int y, int radius, int amount, bool absolute);
+	int rva00880E70(Real worldX) const;
+	int rva00880EA0(Real worldY) const;
+	int rva00880ED0(Real distance) const;
+	int rva00881500(const BfmePointFC *point) const;
 
 	friend class BfmeRangeUpdaterFC;
 	friend class BfmeTaintManager;
@@ -288,6 +292,32 @@ void Gen_008812D0::bfmeGetCellRange(BfmeCellFC **first,
 	*last += x2 < m_bfmeWidth ? x2 + 1 : m_bfmeWidth;
 }
 
+// 0x00880E70, 0x00880EA0 and 0x00880ED0 are out-of-line Gen_008812D0 helpers
+// with no direct callers; each is the expression bfmeCellAtWorld and
+// BfmeTaintManager::bfmeApplyCircleWorld inline (lo.x/lo.y at +0x00/+0x04,
+// m_bfmeCellSizeInv at +0x1C, CRT floor/ceil then fistp). Retail places them
+// right after this class's ??_G at 0x00880DD0. Names keep the address.
+
+// ?rva00880E70@Gen_008812D0@@QBEHM@Z
+int Gen_008812D0::rva00880E70(Real worldX) const
+{
+	return bfmeFloatToLongFC(bfmeFloatFloorFC(
+		(worldX - m_bfmeRegion.lo.x) * m_bfmeCellSizeInv));
+}
+
+// ?rva00880EA0@Gen_008812D0@@QBEHM@Z
+int Gen_008812D0::rva00880EA0(Real worldY) const
+{
+	return bfmeFloatToLongFC(bfmeFloatFloorFC(
+		(worldY - m_bfmeRegion.lo.y) * m_bfmeCellSizeInv));
+}
+
+// ?rva00880ED0@Gen_008812D0@@QBEHM@Z
+int Gen_008812D0::rva00880ED0(Real distance) const
+{
+	return bfmeFloatToLongFC(bfmeFloatCeilFC(distance * m_bfmeCellSizeInv));
+}
+
 // ?bfmeCellAtWorld@Gen_008812D0@@QBEPAVBfmeCellFC@@MM@Z
 BfmeCellFC *Gen_008812D0::bfmeCellAtWorld(Real worldX, Real worldY) const
 {
@@ -328,6 +358,15 @@ int Gen_008812D0::bfmeValueAtWorld(const BfmePointFC *point) const
 {
 	BfmeCellFC *cell = bfmeCellAtWorld(point->x, point->y);
 	return cell ? cell->m_bfmeValue : 0;
+}
+
+// ?rva00881500@Gen_008812D0@@QBEHPBUBfmePointFC@@@Z
+// The m_bfmeKind twin of bfmeValueAtWorld: same call to the matched
+// bfmeCellAtWorld, and 0x80 (BfmeCellFC's default kind) when outside.
+int Gen_008812D0::rva00881500(const BfmePointFC *point) const
+{
+	BfmeCellFC *cell = bfmeCellAtWorld(point->x, point->y);
+	return cell ? cell->m_bfmeKind : 0x80;
 }
 
 // ??RBfmeRangeUpdaterFC@@QAEXHHH@Z
