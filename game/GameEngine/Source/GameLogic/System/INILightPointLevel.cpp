@@ -44,6 +44,9 @@
 
 struct FieldParse;
 
+extern const char Rva006A16B0Empty[];
+extern const FieldParse g_010EBE44[];
+
 template <typename T>
 class StringBase
 {
@@ -78,7 +81,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? (const char *)( (const char *)m_data + 8 ) : (const char *)0x0107388B;
+		return m_data ? (const char *)( (const char *)m_data + 8 ) : Rva006A16B0Empty;
 	}
 
 	void setInto( void *target ) const
@@ -199,7 +202,7 @@ void INI::parseLightPointLevel( INI *ini )
 		base->m_bfmeNextOverride = level;
 		level->m_bfmeIsOverride = 1;
 
-		ini->initFromINI( level, (const FieldParse *)0x010EBE44 );
+		ini->initFromINI( level, g_010EBE44 );
 	}
 	else
 	{
@@ -207,7 +210,7 @@ void INI::parseLightPointLevel( INI *ini )
 
 		level->m_bfmeName = name;
 
-		ini->initFromINI( level, (const FieldParse *)0x010EBE44 );
+		ini->initFromINI( level, g_010EBE44 );
 
 		g_bfmeSinkBRB->addLevel( level );
 	}

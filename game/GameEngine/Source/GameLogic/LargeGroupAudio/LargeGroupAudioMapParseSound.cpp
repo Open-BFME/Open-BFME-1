@@ -51,6 +51,9 @@ private:
 extern void __declspec( noreturn ) __stdcall _CxxThrowException(
 	void *, void * ) throw();
 
+extern int g_INIExceptionThrowInfo;
+extern const FieldParse g_010EE088[];
+
 // ?parseSound@LargeGroupAudioMap@@SAXPAVINI@@PAX1PBX@Z
 void __cdecl LargeGroupAudioMap::parseSound(
 	INI *ini, void *instance, void *, const void * )
@@ -60,7 +63,7 @@ void __cdecl LargeGroupAudioMap::parseSound(
 	std::vector<SoundKeyPair *> &sounds = map->m_sounds;
 	sound = new SoundKeyPair( map );
 	sounds.push_back( sound );
-	ini->initFromINI( sound, (const FieldParse *)0x010EE088 );
+	ini->initFromINI( sound, g_010EE088 );
 
 	std::vector<SoundKeyPair *>::iterator it = sounds.begin();
 	std::vector<SoundKeyPair *>::iterator end = sounds.end();
@@ -70,8 +73,8 @@ void __cdecl LargeGroupAudioMap::parseSound(
 			continue;
 		if ( ( (const Rva003D3250 *)sound )->equals( (const Rva003D3250 *)*it ) )
 		{
-			INIException error( 3, (const char *)0x010EE190 );
-			_CxxThrowException( &error, (void *)0x011DFC30 );
+			INIException error( 3, "LargeGroupAudio: You cannot use the same key list for two Sound blocks within the same LargeGroupAudioMap" );
+			_CxxThrowException( &error, &g_INIExceptionThrowInfo );
 		}
 	}
 }

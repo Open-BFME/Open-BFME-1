@@ -66,6 +66,7 @@ private:
 	INILineBuffer m_lines;
 };
 
+extern void *g_0130CE54;
 extern void setFPMode();
 extern bool __cdecl rva00851BF0(BFMERetailAsciiString block,
 	BFMERetailAsciiString name, const char *line);
@@ -77,14 +78,14 @@ inline void INI::unPrepFile()
 	m_lineNum = 0;
 	m_lineCount = 0;
 	m_endOfFile = 0;
-	*(void **)0x0130CE54 = 0;
+	g_0130CE54 = 0;
 }
 
 bool INI::load(BFMERetailAsciiString file, BFMERetailAsciiString block,
 	BFMERetailAsciiString name, int loadType, int reload)
 {
 	setFPMode();
-	*(void **)0x0130CE54 = (void *)reload;
+	g_0130CE54 = (void *)reload;
 	prepFile(file, loadType);
 	bool eof = false;
 

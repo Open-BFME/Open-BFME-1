@@ -10,6 +10,11 @@ extern "C" __declspec(dllimport) RvaProcAddress __stdcall GetProcAddress(
 extern __declspec(noreturn) void __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
 
+extern "C" unsigned char bfmeVftDWL[];
+extern "C" void *bfmeVft1043P[];
+extern "C" const void *bfmeVftShellGameLoadScreen[];
+#pragma comment(linker, "/alternatename:_bfmeVftShellGameLoadScreen=??_7ShellGameLoadScreen@@6B@")
+
 class __declspec(dllimport) exception
 {
 public:
@@ -22,7 +27,7 @@ class Rva0033AF00Exception : public exception
 public:
 	Rva0033AF00Exception() : exception()
 	{
-		*reinterpret_cast<void **>(this) = reinterpret_cast<void *>(0x010E75B4);
+		*reinterpret_cast<void **>(this) = bfmeVftDWL;
 	}
 
 private:
@@ -34,7 +39,7 @@ class Rva0033AF00Base
 public:
 	Rva0033AF00Base()
 	{
-		*reinterpret_cast<void **>(this) = reinterpret_cast<void *>(0x010E7520);
+		*reinterpret_cast<void **>(this) = bfmeVft1043P;
 		m_module = LoadLibraryA("FXParticleEditorI.dll");
 		if (m_module == 0)
 		{
@@ -67,7 +72,7 @@ private:
 Rva0033AF00::Rva0033AF00(int unused)
 {
 	(void)unused;
-	*reinterpret_cast<void **>(this) = reinterpret_cast<void *>(0x010E7530);
+	*reinterpret_cast<void **>(this) = bfmeVftShellGameLoadScreen;
 	typedef Rva0033AF00Editor *(__cdecl *GetEditorProc)(void);
 	GetEditorProc getEditor = (GetEditorProc)GetProcAddress(
 		*reinterpret_cast<RvaModuleHandle *>(reinterpret_cast<char *>(this) + 4),

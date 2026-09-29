@@ -122,6 +122,9 @@ extern "C" BfmeXferException *__cdecl bfmeFormatText(
 	BfmeXferException *result, Int tag, const char *format, ...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
+extern int g_guardTargetTypeThrowInfo;
+extern "C" void *bfmeVftTeamInQueue[];
+#pragma comment(linker, "/alternatename:_bfmeVftTeamInQueue=??_7TeamInQueue@@6B@")
 extern void j_0002fee6();
 extern void j_00008224();
 extern void j_0003e81f();
@@ -207,7 +210,7 @@ private:
 
 	static void clearNode(BfmeNode_00161220 *node)
 	{
-		node->m_vptr = (void *)0x01096940;
+		node->m_vptr = bfmeVftTeamInQueue;
 		node->m_next04 = 0;
 		node->m_previous08 = 0;
 		node->m_next0C = 0;
@@ -262,7 +265,7 @@ void Gen_00168910::bfmeAccept(BfmeSeedTarget *target)
 		{
 			BfmeXferException error;
 			bfmeFormatText(&error, 5, 0);
-			_CxxThrowException(&error, (void *)0x011DFE5C);
+			_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 		}
 
 		for (UnsignedShort i = 0; i < firstCount; ++i)
@@ -316,7 +319,7 @@ void Gen_00168910::bfmeAccept(BfmeSeedTarget *target)
 		{
 			BfmeXferException error;
 			bfmeFormatText(&error, 5, 0);
-			_CxxThrowException(&error, (void *)0x011DFE5C);
+			_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 		}
 
 		for (UnsignedShort i = 0; i < secondCount; ++i)
@@ -349,7 +352,7 @@ void Gen_00168910::bfmeAccept(BfmeSeedTarget *target)
 	{
 		BfmeXferException error;
 		bfmeFormatText(&error, 5, 0);
-		_CxxThrowException(&error, (void *)0x011DFE5C);
+		_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 	}
 
 	target->xferBool((Bool *)&m_field10);
