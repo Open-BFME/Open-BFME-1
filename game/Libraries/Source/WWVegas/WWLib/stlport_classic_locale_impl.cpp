@@ -6,8 +6,9 @@
 // in _Bfme_classic_locale (0x0130BCA0). It placement-constructs the "C"
 // _Locale_impl and every standard facet into static storage, one new-expression
 // each, so each throwing constructor gets its own unwind state. The storage
-// objects have no recovered names and keep their addresses. The body name stays
-// the existing address-derived pin.
+// objects keep their addresses; only the one at 0x130bcac carries a recovered
+// name, TheBfmeObject_00C70C80. The body name stays the existing address-derived
+// pin.
 
 #include <locale>
 #include <new>
@@ -61,6 +62,22 @@ public:
 
 struct BfmeSubE1124
 {
+	char m_bfmePad[4];
+	char m_bfme04;
+};
+
+// The 0x130bcac storage object is the singleton TheBfmeObject_00C70C80: the
+// byte-matched builder above takes its address twice, dir32_addresses.csv records
+// that name at 0x130bcac, and the matched forwarder TU
+// (game/GameEngine/Source/Common/S3SingletonForwarders.cpp) reads the same object
+// through the same name. Its layout stays TU-local; only the type and the object
+// name are the real ones, so the DIR32 spells
+// ?TheBfmeObject_00C70C80@@3VGen_00C70C80Target@@A and links. BfmeSubE1124 stays
+// because ??0BfmeE1124@@QAE@PAUBfmeSubE1124@@@Z (game/GameEngine/Source/Common/
+// BfmeConv1124.cpp) is defined under that parameter type.
+class Gen_00C70C80Target
+{
+public:
 	char m_bfmePad[4];
 	char m_bfme04;
 };
@@ -119,7 +136,7 @@ extern _STL::money_get<wchar_t, BfmeWideInput> g_classic0130B2D8;
 extern _STL::money_put<wchar_t, BfmeWideOutput> g_classic0130B7B8;
 extern _STL::locale::facet *g_classicFacets012C7388[];
 extern unsigned int g_classicFacetCount012C7428;
-extern BfmeSubE1124 g_classicMessagesImpl0130BCAC;
+extern Gen_00C70C80Target TheBfmeObject_00C70C80;
 
 void *bfmeTwoTB()
 {
@@ -140,7 +157,7 @@ void *bfmeTwoTB()
 	new (&g_classic0130B538) BfmeChannelPair847F90(reinterpret_cast<void *>(1));
 	new (&g_classic0130BA18) _STL::money_get<char, BfmeNarrowInput>(1);
 	new (&g_classic0130BA40) _STL::money_put<char, BfmeNarrowOutput>(1);
-	new (&g_classic0130B290) BfmeE1124(&g_classicMessagesImpl0130BCAC);
+	new (&g_classic0130B290) BfmeE1124(reinterpret_cast<BfmeSubE1124 *>(&TheBfmeObject_00C70C80));
 
 	new (&g_classic0130B280) _STL::ctype<wchar_t>(1);
 	new (&g_classic0130B798) _STL::collate<wchar_t>(1);
@@ -150,7 +167,7 @@ void *bfmeTwoTB()
 	new (&g_classic0130B2C8) _STL::num_put<wchar_t, BfmeWideOutput>(1);
 	new (&g_classic0130B310) _STL::time_get<wchar_t, BfmeWideInput>(1);
 	new (&g_classic0130B7F0) _STL::time_put<wchar_t, BfmeWideOutput>(1);
-	new (&g_classic0130B260) BfmeF1124(reinterpret_cast<BfmeSubF1124 *>(&g_classicMessagesImpl0130BCAC));
+	new (&g_classic0130B260) BfmeF1124(reinterpret_cast<BfmeSubF1124 *>(&TheBfmeObject_00C70C80));
 	new (&g_classic0130B2F8) BfmeChannelPair848030(reinterpret_cast<void *>(1));
 	new (&g_classic0130B7C8) BfmeChannelPair8480D0(reinterpret_cast<void *>(1));
 	new (&g_classic0130B2D8) _STL::money_get<wchar_t, BfmeWideInput>(1);

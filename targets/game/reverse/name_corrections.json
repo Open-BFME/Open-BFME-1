@@ -10348,5 +10348,15 @@
   "after_sha256": "eca31375b56530604d82c1d5cdff15dc10248a75bbcb955f26c64cf473f48262",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "TheManager was a #define over the literal image address 0x012F19E8, not a symbol. Replacing the literal with a named extern (link debt, AGENTS.md lane 6) must use the name dir32_addresses.csv records for that address, ?Rva00579160TheManager@@3PAURva00579160Manager@@A; no witness names the global TheManager."
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WWLib/stlport_classic_locale_impl.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WWLib/stlport_classic_locale_impl.cpp",
+  "old_name": "BfmeSubE1124",
+  "new_name": "Gen_00C70C80Target",
+  "before_sha256": "4e9b457c039ab95023defcb3dcf7e890b5d4e9dc6ea4aac2fbdb8d89b53db3e2",
+  "after_sha256": "55c806685a87033ddb648e13efc9c023021e0d8a5c750e5e30ef650e58a88514",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "The extern storage object at 0x0130BCAC must spell the recorded symbol ?TheBfmeObject_00C70C80@@3VGen_00C70C80Target@@A (dir32_addresses.csv; also read by the matched S3SingletonForwarders.cpp) to link, and that mangling carries the type Gen_00C70C80Target. BfmeSubE1124 is kept for the BfmeE1124 constructor parameter, which is defined under that type; only this object's declared type changes."
  }
 ]
