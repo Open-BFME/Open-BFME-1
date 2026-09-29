@@ -34,7 +34,7 @@ class BfmeOverride1137 : public Overridable
 {
 public:
 	char m_unmodelled08[0x58 - 8];
-	char m_flag58;
+	char m_spellEnabled;
 	char m_unmodelled59[3];
 	int m_5c;
 };
@@ -74,7 +74,7 @@ private:
 
 void BfmeThingTBA::rva007243A0(void)
 {
-	if (!finalOverride1137(g_bfmeGlo012F15F8)->m_flag58 || m_98 == 0)
+	if (!finalOverride1137(g_bfmeGlo012F15F8)->m_spellEnabled || m_98 == 0)
 		return;
 
 	float fraction = (float)(finalOverride1137(g_bfmeGlo012F15F8)->m_5c - m_4c) /

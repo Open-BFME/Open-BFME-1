@@ -176,3 +176,4 @@ game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|member||field2
 game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|member||field04,m_dict,claude-opus+grok,applied,2026-09-29
 game/GameEngine/Source/GameLogic/Map/BuildListsWriter00198A10.cpp|member||field28,m_numSides,claude-opus+grok,applied,2026-09-29
 game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_flag58,m_spellEnabled,claude-opus+grok,agreed,2026-09-29
+game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_flag58,m_spellEnabled,claude-opus+grok,applied,2026-09-29
