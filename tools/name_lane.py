@@ -284,7 +284,34 @@ def ea_labelled():
 
 def servable(rel, rows, ea):
     """Vendored files take their upstream's names, and EA-labelled rows belong to tools/ea_queue.py."""
-    return not any("vendored=" in (r["notes"] or "") or int(r["target_rva"], 16) in ea for r in rows.get(rel, []))
+    return "stlport" not in rel.lower() and not any(
+        "vendored=" in (r["notes"] or "") or int(r["target_rva"], 16) in ea for r in rows.get(rel, []))
+
+
+@functools.lru_cache(maxsize=None)
+def real_types():
+    """Classes some header declares, in game/ or the Zero Hour reference: the names a stand-in may take."""
+    names = set()
+    for f in git("ls-files", "game").split():
+        if f.endswith((".h", ".inl")) and not f.startswith(GENERATED):
+            names |= set(DECL.findall(strip(read(f))))
+    for p in ZH.rglob("*.h"):
+        names |= set(DECL.findall(strip(p.read_text(encoding="latin1"))))
+    return names
+
+
+@functools.lru_cache(maxsize=None)
+def witnessed_members():
+    """class -> member names name_oracle's layout witness puts in it."""
+    import name_oracle
+    out = collections.defaultdict(set)
+    for (owner, _), (member, _, _) in name_oracle.load_witness().items():
+        out[owner].add(member)
+    return out
+
+
+def member_owners(code):
+    return {n: m.group(1) for m in DECL.finditer(code) for n in members(code[m.end():close(code, m.end() - 1)])}
 
 
 def type_counts():
@@ -350,19 +377,28 @@ def cmd_next(args):
     random.shuffle(files)
     # another vendor named it: this vote is the one that can land names
     files.sort(key=lambda f: not {vendor(m) for m in voted[f]} - {vendor(model)})
+    served = 0
     for rel in files:
         text = read(rel)
         if len(text) > 15000:
             continue
         items = [i for i in owned(rel, text, rows, types) if key_of(rel, *i) not in state]
         if len(items) >= (1 if voted[rel] else 3):
-            break
-    else:
+            brief(rel, text, items, model, rows)
+            served += 1
+            if served == args.count:
+                break
+    if not served:
         print(f"No file is left for {model} to name.")
-        return 0
+    return 0
+
+
+def brief(rel, text, items, model, rows):
     sys.path.insert(0, str(ROOT / "tools/fleet"))
     import context_pack
-    evidence = [line for r in rows[rel][:8] for line in context_pack.pack(int(r["target_rva"], 16))]
+    # neighbours say nothing about names, and every line here is paid for by the session reading it
+    evidence = [line for r in rows[rel][:8] for line in context_pack.pack(int(r["target_rva"], 16))
+                if not line.lstrip().startswith("landed neighbours")][:40]
     session = f"{datetime.datetime.now():%Y%m%d%H%M%S}-{random.randrange(16 ** 6):06x}"
     SESSIONS.mkdir(parents=True, exist_ok=True)
     (SESSIONS / f"{session}.json").write_text(json.dumps(
@@ -385,7 +421,8 @@ Answer "skip" when you cannot justify a name: a skip costs nothing, a wrong name
 A name lands only when a model from a DIFFERENT VENDOR independently proposes the same one, so
 your proposal must be your own: do not take names from, or show yours to, another model or session.
 Write your answer with a file-writing tool, never inline in a shell command: other sessions on
-this machine can read command lines.
+this machine can read command lines. If a stand-in type IS a real class that a game or Zero Hour
+header declares, answer that class's name.
 
 Write a JSON object mapping each key below to a name or "skip", then run:
   python3 tools/name_lane.py submit <that file> --session {session}
@@ -395,16 +432,15 @@ Write a JSON object mapping each key below to a name or "skip", then run:
 --- {rel}
 {text}
 --- evidence
-""" + "\n".join(evidence))
-    return 0
+""" + "\n".join(evidence) + "\n")
 
 
-def problem(kind, old, new, file_words, types):
+def problem(kind, old, new, file_words, types, owner=""):
     if not re.fullmatch(r"[A-Za-z_]\w*", new) or new in KEYWORDS:
         return "not a C++ identifier"
     if new == old or weak(kind, new):
         return "still a placeholder"
-    if canon(new).replace(" ", "") in GENERIC:
+    if canon(new).replace(" ", "") in GENERIC and new not in witnessed_members().get(owner, ()):
         return "too generic to help a reader"
     if kind == "type" and not new[0].isupper():
         return "types are CamelCase"
@@ -412,8 +448,8 @@ def problem(kind, old, new, file_words, types):
         return "members are m_camelCase"
     if kind in ("param", "local") and not new[0].islower():
         return "params and locals are camelCase"
-    if kind == "type" and types[new]:
-        return f"{new} is a type defined elsewhere; if this IS that type, adopt its header instead (docs/header_adoption.md)"
+    if kind == "type" and types[new] and new not in real_types():
+        return f"{new} is another file's stand-in, not a class any header declares"
     if kind in NAMED and new in file_words:
         return "collides with a name already in the file"
     return None
@@ -432,7 +468,7 @@ def cmd_submit(args):
     unknown = set(answers) - {answer_key(*i) for i in session["items"]}
     if unknown:
         fail(f"keys not in this session: {', '.join(sorted(unknown)[:8])}")
-    file_words, types = set(WORD.findall(strip(text))), type_counts()
+    file_words, types, owners = set(WORD.findall(strip(text))), type_counts(), member_owners(strip(text))
     earlier = collections.defaultdict(set)
     for v in table(VOTES):
         earlier[(v["key"], v["hash"])].add(v["model"])
@@ -443,7 +479,7 @@ def cmd_submit(args):
         answer = str(answers.get(answer_key(kind, scope, ident), "skip")).strip()
         if answer.lower() == "skip":
             continue
-        why = problem(kind, ident, answer, file_words, types)
+        why = problem(kind, ident, answer, file_words, types, owners.get(ident, "") if kind == "member" else "")
         if not why and kind in NAMED and canon(answer) in taken:
             why = "the same name as another placeholder in this file"
         if why:
@@ -521,10 +557,18 @@ def gate(rel):
 
 
 def rename(text, old, new, span=None):
-    pattern = re.compile(rf"(?<![A-Za-z0-9_]){re.escape(old)}(?![A-Za-z0-9_])")
-    if span is None:
-        return pattern.sub(new, text)
-    return text[:span[0]] + pattern.sub(new, text[span[0]:span[1]]) + text[span[1]:]
+    """old -> new in code and in mangled names quoted in comments. Prose keeps the words it was
+    written with, and a string literal keeps its bytes."""
+    lo, hi = span or (0, len(text))
+    quoted = [m.span() for m in NONCODE.finditer(text)]
+    out, last = [], 0
+    for m in re.finditer(rf"(?<![A-Za-z0-9_]){re.escape(old)}(?![A-Za-z0-9_])", text):
+        mangled = text[m.end():m.end() + 1] == "@" or text[m.start() - 1:m.start()] in ("?", "@")
+        if not lo <= m.start() < hi or (any(s <= m.start() < e for s, e in quoted) and not mangled):
+            continue
+        out.append(text[last:m.start()] + new)
+        last = m.end()
+    return "".join(out) + text[last:]
 
 
 def land(rel, renames, now):
@@ -553,6 +597,10 @@ def land(rel, renames, now):
                 text = rename(text, ident, new, spans[scope])
         (ROOT / f).write_bytes(text.encode("utf-8", "surrogateescape"))
     rewrite_stored([(k, s, i, n) for k, s, i, n, _, _ in renames if k in ("type", "function")])
+    if any(k == "type" and n in real_types() for k, s, i, n, _, _ in renames):
+        # the stand-in now carries its real class name, so name_oracle's witness can name its members
+        subprocess.run([sys.executable, str(ROOT / "tools/name_oracle.py"), "--todo", "--apply", rel],
+                       cwd=ROOT, capture_output=True, check=True)
     why = next((f"{f}: {w}" for f in sorted(spread) if f.endswith((".cpp", ".c")) and (w := gate(f))), None)
     if not why:
         append(AGREED, [{"key": key, "name": new, "models": models, "status": "applied", "date": now}
@@ -700,6 +748,7 @@ def main():
     n = sub.add_parser("next")
     n.add_argument("--model", required=True, help="the model you are: opus, sonnet, gpt-5.6-sol, grok...")
     n.add_argument("--file", help="name this file instead of the next one in the queue")
+    n.add_argument("--count", type=int, default=1, help="serve this many files in one go")
     s = sub.add_parser("submit")
     s.add_argument("answer")
     s.add_argument("--session", required=True)
