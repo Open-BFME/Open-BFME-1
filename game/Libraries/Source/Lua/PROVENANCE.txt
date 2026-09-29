@@ -66,12 +66,12 @@ change is marked at the point of change in the file itself as well as here.
     lstate.c     2   the luaH_new call site
     liolib.c         `setreturn`, `io_open`, and `io_write` use retail's fixed
                      generic error tuple (`pushresult_close`) instead of the
-                     errno-based `pushresult`; numeric `io_write` output uses
-                     the reconstructed `bfmeLogSF` import; `io_open`,
-                     `io_fromto`, and `io_appendto` route regular file opens
-                     through the reconstructed `bfmeFopenVIF` import.
-                     These are BFME-specific reconstruction claims, not claims
-                     about upstream Lua source.
+                     errno-based `pushresult`. This is a BFME-specific
+                     reconstruction claim, not a claim about upstream Lua.
+                     File opens and numeric output are upstream's fopen and
+                     fprintf: the slots retail calls through are MSVCR71's
+                     (an earlier "bfmeFopenVIF"/"bfmeLogSF" import was a
+                     pin on those slots under invented names).
 
 For any file not listed above, compare it with the pinned Lua artifact before
 describing it as pristine; no additional whole-tree audit is claimed here.
