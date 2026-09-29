@@ -58,8 +58,9 @@ public:
 };
 
 extern NetworkInterface *TheNetwork;
-#define LogicTimeScale (*(float *)0x012A72A4)
-#define One (*(const float *)0x01075334)
+extern float g_012A72A4;
+#define LogicTimeScale g_012A72A4
+#define One 1.0f
 
 class BfmeGameLogicPause
 {
@@ -79,8 +80,10 @@ public:
 	int m_gameMode;
 };
 
-#define TheGameLogic (*(BfmeGameLogicPause **)0x012F0898)
-#define TheGameClient (*(unsigned char **)0x012F1464)
+extern BfmeGameLogicPause *TheGameLogic;
+class GameClient;
+extern GameClient *TheGameClient;
+#define TheGameClient ((unsigned char *)TheGameClient)
 
 void j_00014e25(void);
 
@@ -216,19 +219,30 @@ public:
 
 unsigned int updateTimedOperations(void);
 
-#define GameLogicClient (*(GameLogicClientUpdate **)0x012F0898)
+#define GameLogicClient ((GameLogicClientUpdate *)TheGameLogic)
 extern ClientFrameSubsystem *TheGameClientClientUpdate;
 #define GameClientSubsystem TheGameClientClientUpdate
-#define WindowManagerSubsystem (*(ClientSubsystem **)0x012F19E8)
+class WindowManager;
+extern WindowManager *g_theWindowManager;
+#define WindowManagerSubsystem ((ClientSubsystem *)g_theWindowManager)
 extern RadarSubsystem *TheRadarClientUpdate;
 #define Radar TheRadarClientUpdate
-#define MessageStreamSubsystem (*(MessageStream **)0x012ED5EC)
-#define InputLockSubsystem (*(ClientSubsystem **)0x012F4C50)
-#define InGameUISubsystem (*(BfmeInGameUI_setInputEnabled **)0x012F148C)
-#define MouseSubsystem (*(Mouse **)0x012F4C5C)
+extern MessageStream *TheMessageStream;
+#define MessageStreamSubsystem TheMessageStream
+class Keyboard;
+extern Keyboard *TheKeyboard;
+#define InputLockSubsystem ((ClientSubsystem *)TheKeyboard)
+class InGameUI;
+extern InGameUI *TheInGameUI;
+#define InGameUISubsystem ((BfmeInGameUI_setInputEnabled *)TheInGameUI)
+extern Mouse *TheMouse;
+#define MouseSubsystem TheMouse
 extern ClientSubsystem *TheAudioClientUpdate;
 #define AudioSubsystem TheAudioClientUpdate
-#define AuxiliarySubsystem (*(ClientSubsystem **)0x012ED84C)
+class CDManagerInterface;
+extern CDManagerInterface *TheCDManager;
+#define AuxiliarySubsystem ((ClientSubsystem *)TheCDManager)
+extern int *g_012A7244;
 extern int BfmeSavedClientFrame;
 extern int BfmeSkippedClientFrames;
 #define SavedClientFrame BfmeSavedClientFrame
@@ -328,7 +342,7 @@ void GameEngine::_bfme_updateClientSubsystems(void)
 	}
 
 	WindowManagerSubsystem->update();
-	if (**(int **)0x012A7244 == 0 && _bfme_shouldSkipClientFrameCall())
+	if (*g_012A7244 == 0 &&_bfme_shouldSkipClientFrameCall())
 	{
 		int skippedClientFrames = SkippedClientFrames;
 		ClientFrameSubsystem *client = GameClientSubsystem;

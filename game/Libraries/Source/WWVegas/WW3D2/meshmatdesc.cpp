@@ -1036,11 +1036,15 @@ void MeshMatDescClass::Configure_Material(VertexMaterialClass * mtl,int pass,boo
 	}
 }
 
+extern bool g_0134050C;
+extern unsigned char *BfmeCurrentCaps;
+extern unsigned int NPatchesLevel;
+
 bool MeshMatDescClass::Do_Mappers_Need_Normals(void)
 {
-	if (*reinterpret_cast<bool *>(0x0134050c)
-		&& *reinterpret_cast<bool *>(*reinterpret_cast<unsigned char **>(0x01340578) + 0x13b)
-		&& *reinterpret_cast<unsigned int *>(0x012d6d8c) > 1) {
+	if (g_0134050C
+		&& *reinterpret_cast<bool *>(BfmeCurrentCaps + 0x13b)
+		&& NPatchesLevel > 1) {
 		return true;
 	}
 
