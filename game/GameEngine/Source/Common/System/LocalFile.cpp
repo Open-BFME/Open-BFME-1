@@ -28,7 +28,7 @@
 //   slot  6  0x009D2610  nextLine                     landed here
 //   slot  7  0x009D2850  scanInt                      open, needs AsciiString
 //   slot  8  0x009D2970  scanReal                     open, needs AsciiString
-//   slot  9  0x009D26E0  scanString                   open, needs AsciiString
+//   slot  9  0x009D26E0  scanString                   landed here
 //   slot 10  0x009CB6C0  print                        File's, already matched
 //   slot 11  0x009CB670  size                         File's, already matched
 //   slot 12  0x009CB6B0  position                     File's, already matched
@@ -81,6 +81,7 @@ class AsciiString : private StringBase<char>
 public:
     AsciiString() : StringBase<char>() {}
     ~AsciiString() { releaseBuffer(); }
+    void clear() { releaseBuffer(); }
 
     void concat(const char *text, int length)
     {
@@ -101,6 +102,7 @@ public:
 };
 
 extern "C" __declspec(dllimport) int __cdecl atoi(const char *text);
+extern "C" __declspec(dllimport) int __cdecl isspace(int c);
 extern "C" __declspec(dllimport) double __cdecl atof(const char *text);
 
 extern "C" __declspec(dllimport) int __cdecl _write(int fd, const void *buffer, unsigned int count);
@@ -488,6 +490,35 @@ bool LocalFile::scanInt( int &newInt )
 	}
 
 	newInt = atoi( tempstr.str() );
+	return true;
+}
+
+// ?scanString@LocalFile@@UAE_NAAVAsciiString@@@Z
+bool LocalFile::scanString( AsciiString &newString )
+{
+	char c;
+	int val;
+
+	newString.clear();
+
+	// skip the preceding whitespace
+	do {
+		val = _read( m_handle, &c, 1 );
+	} while ((val != 0) && (isspace(c)));
+
+	if (val == 0) {
+		return false;
+	}
+
+	do {
+		newString.concat(c);
+		val = _read( m_handle, &c, 1 );
+	} while ((val != 0) && (!isspace(c)));
+
+	if (val != 0) {
+		_lseek( m_handle, -1, 1 /* SEEK_CUR */ );
+	}
+
 	return true;
 }
 
