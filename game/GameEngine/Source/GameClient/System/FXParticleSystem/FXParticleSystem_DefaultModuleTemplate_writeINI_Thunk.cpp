@@ -60,6 +60,8 @@ void u1Call_005C7110(void *stream, void *flags, void *name, void **value);
 
 namespace FXParticleSystem {
 
+extern const char *const RotationTypeNames[];
+
 template <int Category> class DefaultModuleTemplate {};
 template <> class DefaultModuleTemplate<2> { public: virtual void writeINI(File &file, unsigned int flags) const; };
 
@@ -73,24 +75,24 @@ void DefaultModuleTemplate<2>::writeINI(File &file, unsigned int flags) const
 
 	U1Pair *sizeRate = (U1Pair *)((unsigned char *)this + 0x0c);
 	if (sizeRate->minimum != BfmeZeroRange || sizeRate->maximum != BfmeZeroRange)
-		u1Do_005C9030(&stream, (void *)flags, (void *)0x0111494c, sizeRate);
+		u1Do_005C9030(&stream, (void *)flags, (void *)"SizeRate", sizeRate);
 	U1Pair *sizeRateDamping = (U1Pair *)((unsigned char *)this + 0x18);
 	if (sizeRateDamping->minimum != BfmeZeroRange || sizeRateDamping->maximum != BfmeZeroRange)
-		u1Do_005C9030(&stream, (void *)flags, (void *)0x01114938, sizeRateDamping);
+		u1Do_005C9030(&stream, (void *)flags, (void *)"SizeRateDamping", sizeRateDamping);
 	U1Pair *angleZ = (U1Pair *)((unsigned char *)this + 0x24);
 	if (angleZ->minimum != BfmeZeroRange || angleZ->maximum != BfmeZeroRange)
-		u1Do_005C9030(&stream, (void *)flags, (void *)0x01114930, angleZ);
+		u1Do_005C9030(&stream, (void *)flags, (void *)"AngleZ", angleZ);
 	U1Pair *angularRateZ = (U1Pair *)((unsigned char *)this + 0x30);
 	if (angularRateZ->minimum != BfmeZeroRange || angularRateZ->maximum != BfmeZeroRange)
-		u1Do_005C9030(&stream, (void *)flags, (void *)0x01114920, angularRateZ);
+		u1Do_005C9030(&stream, (void *)flags, (void *)"AngularRateZ", angularRateZ);
 	U1Pair *angularDamping = (U1Pair *)((unsigned char *)this + 0x3c);
 	if (angularDamping->minimum != BfmeZeroRange || angularDamping->maximum != BfmeZeroRange)
-		u1Do_005C9030(&stream, (void *)flags, (void *)0x0111490c, angularDamping);
+		u1Do_005C9030(&stream, (void *)flags, (void *)"AngularDamping", angularDamping);
 
 	unsigned int rotation = *(const unsigned int *)((const unsigned char *)this + 0x48);
 	if (rotation != 1)
-		u1Call_005C7110(&stream, (void *)flags, (void *)0x01114900,
-			(void **)(0x01110258 + rotation * 4));
+		u1Call_005C7110(&stream, (void *)flags, (void *)"Rotation",
+			(void **)(RotationTypeNames + rotation));
 
 	writeStreamText(file, reinterpret_cast<StreamTextAccessor *>(&stream)->getText());
 	reinterpret_cast<FinishWriteFunction>(::b_005ee1d0)(&file, &flags);

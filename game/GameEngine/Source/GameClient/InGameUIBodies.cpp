@@ -114,6 +114,8 @@ public:
 		Int unknown);
 };
 
+extern BFMEThingFactory *TheThingFactory;
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
@@ -123,6 +125,8 @@ private:
 public:
 	Int m_timeOfDay;
 };
+
+extern GlobalData *TheWritableGlobalData;
 
 class Mouse
 {
@@ -203,7 +207,8 @@ public:
 
 	const char *str() const
 	{
-		return m_text ? m_text + 8 : (const char *)0x0107388B;
+		static const char TheNullChr = 0;
+		return m_text ? m_text + 8 : &TheNullChr;
 	}
 
 private:
@@ -637,7 +642,7 @@ void InGameUI::placeBuildAvailable(const ThingTemplate *build,
 	if (sourceObject != 0)
 		m_pendingPlaceSourceObjectID = sourceObject->m_id;
 
-	Mouse *mouse = *(Mouse **)0x012F4C5C;
+	Mouse *mouse = TheMouse;
 	if (mouse == 0)
 		return;
 
@@ -645,9 +650,9 @@ void InGameUI::placeBuildAvailable(const ThingTemplate *build,
 	{
 		m_mouseMode = 1;
 		m_mouseModeCursor = Mouse::CROSS;
-		(*(Mouse **)0x012F4C5C)->capture();
+		TheMouse->capture();
 
-		mouse = *(Mouse **)0x012F4C5C;
+		mouse = TheMouse;
 		if (mouse != 0)
 		{
 			mouse->setCursor(Mouse::CROSS);
@@ -655,11 +660,11 @@ void InGameUI::placeBuildAvailable(const ThingTemplate *build,
 				m_mouseModeCursor = Mouse::CROSS;
 		}
 
-		Drawable *draw = (*(BFMEThingFactory **)0x012EF1D8)->newDrawable(
+		Drawable *draw = TheThingFactory->newDrawable(
 			build, DRAWABLE_STATUS_NO_STATE_PARTICLES, -1);
 		if (sourceObject != 0)
 		{
-			if ((*(GlobalData **)0x012ED5C8)->m_timeOfDay == 4)
+			if (TheWritableGlobalData->m_timeOfDay == 4)
 				draw->setIndicatorColor(
 					sourceObject->getControllingPlayer()->m_playerNightColor);
 			else
@@ -676,11 +681,11 @@ void InGameUI::placeBuildAvailable(const ThingTemplate *build,
 		{
 			m_mouseMode = 0;
 			m_mouseModeCursor = Mouse::ARROW;
-			mouse = *(Mouse **)0x012F4C5C;
+			mouse = TheMouse;
 		}
 		mouse->releaseCapture();
 
-		mouse = *(Mouse **)0x012F4C5C;
+		mouse = TheMouse;
 		if (mouse != 0)
 			mouse->setCursor(Mouse::ARROW);
 
