@@ -723,7 +723,7 @@ def cmd_check(args):
     allowed = {a["name"] for a in agreed_state().values()}
     allowed |= {w for r in csv.DictReader(io.StringIO(EA.read_text(encoding="utf-8"))) if r["kind"] == "name"
                 for w in WORD.findall(r["value"])}
-    allowed |= {w for pin in STORED[1:] for w in WORD.findall(git("show", f":{pin.relative_to(ROOT)}"))}
+    allowed |= {w for pin in STORED[1:] for w in WORD.findall(git("show", f":{pin.relative_to(ROOT).as_posix()}"))}
 
     def declared(word):
         if not (word[0].isupper() or word.startswith("m_")):
