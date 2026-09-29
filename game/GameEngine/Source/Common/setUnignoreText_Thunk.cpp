@@ -9,6 +9,8 @@
 
 #include "string_base.h"
 
+extern const char Rva006A16B0Empty[];
+
 class BfmeStringLiteralBase
 {
     friend class AsciiString;
@@ -38,7 +40,7 @@ public:
 
     const char *str() const
     {
-        return m_data ? m_data + 8 : (const char *)0x0107388B;
+        return m_data ? m_data + 8 : Rva006A16B0Empty;
     }
 
 private:

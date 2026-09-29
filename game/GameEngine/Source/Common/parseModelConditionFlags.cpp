@@ -40,6 +40,8 @@ class BitFlags
 
 typedef BitFlags<304> Rva0076A580ModelConditionFlags;
 
+extern const char *const ModelConditionNames[];
+
 void parseModelConditionFlags(
 	INI *ini,
 	Rva0076A580ModelConditionFlags *all,
@@ -54,7 +56,7 @@ void parseModelConditionFlags(
 		bool notCondition = _strnicmp( token, "NOT_", 4 ) == 0;
 		const char *name = token + (notCondition ? 4 : 0);
 		Int bitIndex = INI::scanIndexList( name,
-			reinterpret_cast< const char *const * >( 0x012A6918 ) );
+			ModelConditionNames );
 		all->set( bitIndex );
 		if (!notCondition)
 			positive->set( bitIndex );

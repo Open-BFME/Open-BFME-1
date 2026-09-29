@@ -1,7 +1,9 @@
 // BFME Drawable linear interpolation body at retail 0x0041D150.
 // This is kept separate from the Hermite rope getter at 0x0041D090.
 
-#define BFME_ONE (*(const float *)0x01075334)
+extern float g_bfmeDefaultBU;
+
+#define BFME_ONE (g_bfmeDefaultBU)
 
 struct BfmeLinearCoord3D
 {
