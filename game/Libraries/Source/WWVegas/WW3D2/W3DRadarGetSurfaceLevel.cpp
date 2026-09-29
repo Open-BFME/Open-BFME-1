@@ -124,13 +124,17 @@ public:
 extern BFMEIndexBufferDebugClass *g_BFMEIndexBufferDebug;
 extern void _bfme_debugRecordCallsite( int kind );
 
+// retail VA 0x0111D770: the "DX8 error " literal the debug stream reports.
+// Not recorded in dir32_addresses.csv, so it keeps an address-derived name.
+extern const char g_111d770[];
+
 static __forceinline void W3DRadarDX8ErrorCode( int result )
 {
 	if( result != 0 )
 	{
 		_bfme_debugRecordCallsite( 1 );
 		g_BFMEIndexBufferDebug->slot60();
-		g_BFMEIndexBufferDebug->slot6c( 0, 0 )->slot38( (const void *)0x111d770 )
+		g_BFMEIndexBufferDebug->slot6c( 0, 0 )->slot38( (const void *)g_111d770 )
 			->slot00( result )->slot4c( 1 );
 	}
 }

@@ -83,6 +83,10 @@ struct BfmeVertexMaterialCaps
 	unsigned int vendor_id;
 };
 
+// retail VA 0x01340578, the shared device caps pointer, under the name
+// W3DSnow.cpp already uses for this global.
+extern BfmeVertexMaterialCaps *g_bfmeCaps1340578;
+
 VertexMaterialClass* VertexMaterialClass::Presets[VertexMaterialClass::PRESET_COUNT];
 
 #ifdef DYN_MAT8
@@ -1083,8 +1087,7 @@ void VertexMaterialClass::Apply(void) const
 		}
 	}
 
-	BfmeVertexMaterialCaps *caps =
-		*(BfmeVertexMaterialCaps **)0x01340578;
+	BfmeVertexMaterialCaps *caps = g_bfmeCaps1340578;
 	if (caps && caps->vendor_id == 2 &&
 		(caps->device_id == 0x5144 ||
 		 (caps->device_id >= 0x5157 && caps->device_id <= 0x515a))) {

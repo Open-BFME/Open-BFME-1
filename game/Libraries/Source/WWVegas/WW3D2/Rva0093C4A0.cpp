@@ -14,7 +14,9 @@ struct FontCharsGDIState
 	void *dc;
 };
 
-#define TheFontCharsGDIState (*(FontCharsGDIState **)0x0134AEAC)
+// retail VA 0x0134AEAC: the shared GDI state, under the name
+// FontCharsClassDestructorBFME.cpp already uses for this global.
+extern FontCharsGDIState *g_fontCharsGdiState0134AEAC;
 
 class Rva0093C4A0Target
 {
@@ -35,12 +37,12 @@ bool Rva0093C4A0Target::Check(
 	if (count != 0)
 	{
 		HGDIOBJ font = m_font;
-		register HDC dc = TheFontCharsGDIState->dc;
+		register HDC dc = g_fontCharsGdiState0134AEAC->dc;
 		missing = false;
 		// Two handle slots preserve the retail 8-byte frame; only slot1 is used.
 		HGDIOBJ old_font[2];
 		old_font[1] = SelectObject(dc, font);
-		GetGlyphIndicesW(TheFontCharsGDIState->dc, first, count, second, 1);
+		GetGlyphIndicesW(g_fontCharsGdiState0134AEAC->dc, first, count, second, 1);
 
 		i = 0;
 		for (; i < count; ++i)

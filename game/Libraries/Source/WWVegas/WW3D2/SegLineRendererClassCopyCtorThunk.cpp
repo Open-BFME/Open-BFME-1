@@ -35,6 +35,9 @@ class ShaderClass
 {
 public:
 	unsigned int ShaderBits;
+	// retail VA 0x012D6E2C; the same static as StreakRendererCtor.cpp and
+	// StreakRendererCopyCtor.cpp use for this global.
+	static ShaderClass _PresetAdditiveSpriteShader;
 };
 
 class Vector3
@@ -88,7 +91,7 @@ private:
 // ??0SegLineRendererClass@@QAE@ABV0@@Z
 SegLineRendererClass::SegLineRendererClass(const SegLineRendererClass &that) :
 	Texture(0),
-	Shader(*(const ShaderClass *)0x012D6E2C),
+	Shader(ShaderClass::_PresetAdditiveSpriteShader),
 	Width(0.0f),
 	Color(Vector3(1, 1, 1)),
 	Opacity(1.0f),

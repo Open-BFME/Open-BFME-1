@@ -2,6 +2,7 @@
 // ?Convert_Color_Clamp@Rva0090F460@@SAIVVector4@@@Z, retail 0x0090F460.
 
 #include "vector3.h"
+#include "cpudetect.h"
 
 class Vector4
 {
@@ -88,7 +89,10 @@ unsigned int Rva0090F460::Convert_Color_Clamp(Vector4 color)
 {
 	Vector4 *clamped_color = &color;
 
-	if (!(*(volatile bool *)0x0134EDE8)) {
+	// CPUDetectClass::HasCMOVSupport, retail VA 0x0134EDE8 (set by
+	// Init_Processor_Features, 0x009DF1C0 +0x45).  Same accessor the sibling
+	// Rva0090FBA0ConvertColors.cpp uses for this flag.
+	if (!CPUDetectClass::Has_CMOV_Instruction()) {
 		for (int i = 0; i < 4; ++i) {
 			(*clamped_color)[i] = ((*clamped_color)[i] <= 0.0f) ? 0.0f :
 				(((*clamped_color)[i] > 1.0f) ? 1.0f : (*clamped_color)[i]);
