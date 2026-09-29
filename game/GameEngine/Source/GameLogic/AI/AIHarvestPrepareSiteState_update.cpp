@@ -187,8 +187,8 @@ public:
 #pragma comment(linker, "/alternatename:?process@TerrainLogic@@QAEXPAVHarvestRecord@@PAX@Z=?j_0001acbc@@YAXXZ")
 #pragma comment(linker, "/alternatename:?notifyModelConditionChanged@Object@@QAEXXZ=?j_0002191d@@YAXXZ")
 
-#define TheTerrainLogic (*(TerrainLogic **)0x012EF4CC)
-#define TheGameLogic (*(GameLogic **)0x012F0898)
+extern TerrainLogic *TheTerrainLogic;
+extern GameLogic *TheGameLogic;
 
 class StateBase
 {

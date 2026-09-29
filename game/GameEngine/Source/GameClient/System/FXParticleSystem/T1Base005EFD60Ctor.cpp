@@ -87,7 +87,7 @@ T1Base_005EFD60::T1Base_005EFD60(void *a, void *b)
         *(ColorKeyBlock *)&m_colorKey[i] = *(const ColorKeyBlock *)&info->m_colorKey[i];
 
     m_colorScale.setRange(
-        info->m_colorScale.minimum * *(const float *)0x0107c64c,
-        info->m_colorScale.maximum * *(const float *)0x0107c64c,
+        info->m_colorScale.minimum * (1.0f / 255.0f),
+        info->m_colorScale.maximum * (1.0f / 255.0f),
         GameClientRandomVariable::UNIFORM);
 }

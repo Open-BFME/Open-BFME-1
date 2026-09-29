@@ -19,12 +19,14 @@ static char *bfmeStringData(const AsciiString &value)
     return *(char **)&value;
 }
 
+extern const char Rva006A16B0Empty[];
+
 static char *bfmeString(const AsciiString &value)
 {
     char *data = bfmeStringData(value);
     if (data)
         return data + 8;
-    return (char *)0x0107388b;
+    return (char *)Rva006A16B0Empty;
 }
 
 static __forceinline Bool bfmeIsEmpty(const AsciiString &value)
@@ -134,7 +136,9 @@ private:
 
 extern void Rva009EBAC0(int value);
 
-#define FirstUpdateSubsystem (*(void **)0x0134faa0)
+class Rva009EB960;
+extern Rva009EB960 *Rva0134FAA0;
+#define FirstUpdateSubsystem ((void *)Rva0134FAA0)
 
 // The retail Image getter is the 32-byte StringBase<char> copy accessor at
 // 0x00520640, reached by its existing incremental-link thunk 0x000336AE.

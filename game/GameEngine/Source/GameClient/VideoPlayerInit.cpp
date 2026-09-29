@@ -67,6 +67,8 @@ extern Video *g_bfmeVideoTableEnd;   // retail 0x0130B1A0
 // sizeof(INI) is 0x848: the two locals sit at [esp+0x20] and [esp+0x868].
 // The third load argument is the parse callback; the second is a flag the
 // pinned spelling carries as an int and retail pushes as zero.
+extern void j_0001bb4e();
+
 class INI
 {
 public:
@@ -148,9 +150,9 @@ void VideoPlayer::init(void)
 	{
 		INI ini;
 		ini.load(AsciiString("Data\\INI\\Default\\Video.ini"),
-			INI_LOAD_OVERWRITE, 0, (void *)0x0041BB4E);
+			INI_LOAD_OVERWRITE, 0, (void *)j_0001bb4e);
 		ini.load(AsciiString("Data\\INI\\Video.ini"),
-			INI_LOAD_OVERWRITE, 0, (void *)0x0041BB4E);
+			INI_LOAD_OVERWRITE, 0, (void *)j_0001bb4e);
 
 		for (unsigned int index = 0;
 			index < (unsigned int)(g_bfmeVideoTableEnd - g_bfmeVideoTableBegin);

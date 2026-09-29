@@ -73,6 +73,7 @@ public:
 };
 
 extern ClientFrameSubsystem *TheGameClientClientUpdate;
+extern const void *g_0110F29C[];
 extern Int __cdecl GetGameClientRandomValue(Int lo, Int hi, char *file, Int line);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
@@ -144,7 +145,7 @@ Anim2D::Anim2D(Anim2DTemplate *animTemplate, Anim2DCollection *collectionSystem)
 {
 	const unsigned int zero = 0;
 
-	m_vtable = (void *)0x0110F29C;
+	m_vtable = (void *)g_0110F29C;
 	m_currentFrame = zero;
 	m_minFrame = zero;
 	m_template = animTemplate;
@@ -154,7 +155,7 @@ Anim2D::Anim2D(Anim2DTemplate *animTemplate, Anim2DCollection *collectionSystem)
 	if (m_template->m_randomizeStartFrame)
 	{
 		m_currentFrame = (UnsignedShort)GetGameClientRandomValue(
-			0, m_template->getNumFrames() - 1, (char *)0x0110F228, 0x1AF);
+			0, m_template->getNumFrames() - 1, (char *)"F:\\bfme\\Code\\gameengine\\Source\\GameClient\\System\\Anim2D.cpp", 0x1AF);
 		m_lastUpdateFrame = TheGameClientClientUpdate->getFrame();
 	}
 	else

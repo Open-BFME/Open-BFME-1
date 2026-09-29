@@ -101,8 +101,11 @@ public:
 	Team *findTeam(const AsciiString &name, const AsciiString &owner);
 };
 
-#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
-#define TheBfmeTeamFactory (*(TeamFactory **)0x012ED810)
+extern GameLogic *TheGameLogic;
+extern TeamFactory *TheTeamFactory;
+
+#define TheBfmeGameLogic TheGameLogic
+#define TheBfmeTeamFactory TheTeamFactory
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfoInput
