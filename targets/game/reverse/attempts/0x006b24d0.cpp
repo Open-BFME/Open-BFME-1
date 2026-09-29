@@ -1,5 +1,5 @@
 // ?rva006B24D0@MilesAudioManager@@QAEXABVAsciiString@@MH@Z
-// partial score=0.9887 date=2026-09-28
+// partial score=0.9915 date=2026-09-29
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 //
@@ -18,6 +18,7 @@
 #include <deque>
 #include <vector>
 #include "ascii_string.h"
+enum TimeOfDay { TIME_OF_DAY_INVALID = 0, TIME_OF_DAY_FIRST = 1, TIME_OF_DAY_MORNING = TIME_OF_DAY_FIRST, TIME_OF_DAY_AFTERNOON, TIME_OF_DAY_EVENING, TIME_OF_DAY_NIGHT, TIME_OF_DAY_COUNT };
 
 typedef float Real;
 typedef void *HSAMPLE;
@@ -58,7 +59,8 @@ public:
 	char m_pad000[8];
 	Rva006B24D0EventInfo *m_eventInfo;
 	char m_pad00c[0x28 - 0xc];
-	int m_category;
+	TimeOfDay m_timeOfDay;
+	TimeOfDay getTimeOfDay() const { return m_timeOfDay; }
 	char m_pad02c[0x78 - 0x2c];
 };
 
@@ -234,7 +236,7 @@ void MilesAudioManager::rva006B24D0(const AsciiString &eventName, Real unused, i
 			if (((const StringBase<char> &)candidateName).compare(eventName) != 0)
 				continue;
 		}
-		if (playing->m_audioEventRTS->m_category != category)
+		if (playing->m_audioEventRTS->getTimeOfDay() != category)
 			continue;
 		((Rva006AD590Owner *)this)->bfmeAdjustPriorityAndVolume(playing->m_audioEventRTS);
 		Real volume = compute((Rva006AE150Argument *)playing->m_audioEventRTS, 1);
@@ -261,7 +263,7 @@ void MilesAudioManager::rva006B24D0(const AsciiString &eventName, Real unused, i
 			if (candidateName.compare(eventName) != 0)
 				continue;
 		}
-		if (playing->m_audioEventRTS->m_category != category)
+		if (playing->m_audioEventRTS->getTimeOfDay() != category)
 			continue;
 		H3DSAMPLE sample3D;
 		switch (playing->m_type)
@@ -301,7 +303,7 @@ void MilesAudioManager::rva006B24D0(const AsciiString &eventName, Real unused, i
 			if (candidateName.compare(eventName) != 0)
 				continue;
 		}
-		if (playing->m_audioEventRTS->m_category != category)
+		if (playing->m_audioEventRTS->getTimeOfDay() != category)
 			continue;
 		if (playing->m_audioEventRTS->m_eventInfo->m_type84 == 3)
 			continue;
@@ -333,7 +335,7 @@ void MilesAudioManager::rva006B24D0(const AsciiString &eventName, Real unused, i
 			if (name.isSet() &&
 				playing->m_audioEventRTS->m_eventInfo->getName().compare(eventName) != 0)
 				continue;
-			if (playing->m_audioEventRTS->m_category != category)
+			if (playing->m_audioEventRTS->getTimeOfDay() != category)
 				continue;
 			((Rva006AD590Owner *)this)->bfmeAdjustPriorityAndVolume(playing->m_audioEventRTS);
 		}
@@ -345,6 +347,7 @@ void MilesAudioManager::rva006B24D0(const AsciiString &eventName, Real unused, i
 	{
 		if (name.isSet() && event->m_eventInfo->getName().compare(eventName) != 0)
 			continue;
-		((Rva006AD590Owner *)this)->bfmeAdjustPriorityAndVolume(playing->m_audioEventRTS);
+		AudioEventRTS *adjustedEvent = playing->m_audioEventRTS;
+		((Rva006AD590Owner *)this)->bfmeAdjustPriorityAndVolume(adjustedEvent);
 	}
 }
