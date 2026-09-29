@@ -1,7 +1,6 @@
-// ?Rva00303670@ScriptActions@@IAEXABVAsciiString@@M@Z
-// partial score=0.68 date=2026-09-27
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringinline
 // stlport
+// ScriptActions arm for TEAM_REPAIR_NEAREST (action template 479), retail RVA 0x00303670 (534 B).
 
 #define _STLP_USE_STATIC_LIB 1
 #define BFME_STLP_NODE_ALLOC 1
@@ -363,10 +362,12 @@ void ScriptActions::Rva00303670(const AsciiString &teamName, Real radius)
 			*(void **)((char *)candidate + 0x200);
 		if (body && body->RvaBodySlot05() < g_bfmeDefaultBU)
 		{
-			BfmeDlinkIterator<Object> members = team->iterate_TeamMemberList();
-			while (!members.done())
+			for (BfmeDlinkIterator<Object> members = team->iterate_TeamMemberList();
+				!members.done(); members.advance())
 			{
 				Object *member = members.cur();
+				if (!member)
+					continue;
 				const ThingTemplate *thing = member->m_template;
 				if (thing && thing->m_nextOverride)
 					thing = (const ThingTemplate *)thing->m_nextOverride->getFinalOverride();
@@ -376,7 +377,6 @@ void ScriptActions::Rva00303670(const AsciiString &teamName, Real radius)
 					if (ai)
 						ai->m_command.aiRepair(candidate, CMD_FROM_SCRIPT);
 				}
-				members.advance();
 			}
 			break;
 		}
