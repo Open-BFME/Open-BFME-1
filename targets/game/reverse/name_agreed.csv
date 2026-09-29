@@ -179,3 +179,4 @@ game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_flag58,m_spe
 game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_flag58,m_spellEnabled,claude-opus+grok,applied,2026-09-29
 game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeNext,m_next,claude-opus+grok,agreed,2026-09-29
 game/GameEngine/Source/Common/Bfme5SmallAccessors.cpp|member||m_bfmeNext,m_next,claude-opus+grok,applied,2026-09-29
+game/GameEngine/Source/GameLogic/Object/Update/Rva002A59F0BfmeReady.cpp|function|Gen_002A59F0@|bfmeReady,needToFace,claude-opus+grok,agreed,2026-09-29
