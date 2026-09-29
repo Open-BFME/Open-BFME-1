@@ -45,7 +45,7 @@ public:
     WideChar getPrintableKey(UnsignedByte key, Int state);
 };
 
-#define TheKeyboard (*(Keyboard **)0x012F4C50)
+extern Keyboard *TheKeyboard;
 
 template <typename T>
 class StringBase
