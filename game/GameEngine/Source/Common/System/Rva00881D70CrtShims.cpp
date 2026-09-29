@@ -19,6 +19,10 @@ extern void rva008821d0LoaderPatch( void );
 typedef void *( __stdcall *RvaLoadLibraryExA00881FF0 )( const char *, void *, unsigned long );
 typedef void *( __stdcall *RvaLoadLibraryExW00882020 )( const unsigned short *, void *, unsigned long );
 
+extern void *( __stdcall *g_0130E984 )( const unsigned short *name );
+extern RvaLoadLibraryExA00881FF0 g_0130E980;
+extern RvaLoadLibraryExW00882020 g_0130E97C;
+
 // ?d_00881d20@@YAXPAX@Z
 void d_00881d20( void *ptr )
 {
@@ -101,7 +105,7 @@ void * __stdcall d_00881fb0( const char *name )
 // ?d_00881fd0@@YGPAXPBG@Z
 void * __stdcall d_00881fd0( const unsigned short *name )
 {
-	void *mod = ( (void *( __stdcall * )( const unsigned short * ))*(void **)0x0130E984 )( name );
+	void *mod = g_0130E984( name );
 	void *saved = mod;
 	rva008821d0LoaderPatch();
 	return saved;
@@ -110,7 +114,7 @@ void * __stdcall d_00881fd0( const unsigned short *name )
 // ?d_00881ff0@@YGPAXPBDPAXK@Z
 void * __stdcall d_00881ff0( const char *a, void *b, unsigned long c )
 {
-	void *mod = ( (RvaLoadLibraryExA00881FF0)*(void **)0x0130E980 )( a, b, c );
+	void *mod = g_0130E980( a, b, c );
 	void *saved = mod;
 	rva008821d0LoaderPatch();
 	return saved;
@@ -119,7 +123,7 @@ void * __stdcall d_00881ff0( const char *a, void *b, unsigned long c )
 // ?d_00882020@@YGPAXPBGPAXK@Z
 void * __stdcall d_00882020( const unsigned short *a, void *b, unsigned long c )
 {
-	void *mod = ( (RvaLoadLibraryExW00882020)*(void **)0x0130E97C )( a, b, c );
+	void *mod = g_0130E97C( a, b, c );
 	void *saved = mod;
 	rva008821d0LoaderPatch();
 	return saved;

@@ -48,12 +48,13 @@ private:
 	void *m_previousOwner;
 	void *m_lock;
 };
+extern Rva008838F0Owner *g_01336CE0;
 
 Rva008838F0Owner::Rva008838F0Owner(void *owner, void **table)
 {
 	m_owner = owner;
-	m_previousOwner = *(void **)0x01336CE0;
-	*(void **)0x01336CE0 = this;
+	m_previousOwner = g_01336CE0;
+	g_01336CE0 = this;
 	if (table == 0)
 		table = (void **)g_rva01336CE8;
 	m_table = table;
@@ -185,7 +186,7 @@ Rva008838F0Owner::~Rva008838F0Owner()
 
 void Rva008838F0Owner::rva00883c0(void)
 {
-	Rva008838F0Owner *owner = *(Rva008838F0Owner **)0x01336CE0;
+	Rva008838F0Owner *owner = g_01336CE0;
 	while (owner != 0)
 	{
 		owner->~Rva008838F0Owner();

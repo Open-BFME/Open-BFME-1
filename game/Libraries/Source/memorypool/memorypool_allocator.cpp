@@ -7,12 +7,15 @@ unsigned char bfmeAllSame(
 extern void __cdecl memset32(void *ptr, int value, unsigned int bytesToFill);
 // Address-derived guard-word count global at 0x0130EA00.
 extern int Rva0130EA00GuardWords;
+extern unsigned int g_rva0130EA04;
+extern unsigned char g_rva0130E9F9;
 
 class Rva008838F0Owner
 {
 public:
 	void rva008836F0(void *block, char *diagnostic, unsigned int limit);
 };
+extern Rva008838F0Owner g_bfmeRva0130EA10Owner;
 
 class Rva00882580Block
 {
@@ -30,7 +33,7 @@ unsigned char Rva00882580Block::check(void)
 {
 	char diagnostic[0x1000];
 	unsigned char good = 1;
-	unsigned int guardWords = *(volatile unsigned int *)0x0130EA00;
+	unsigned int guardWords = *(volatile unsigned int *)&Rva0130EA00GuardWords;
 
 	if (guardWords != 0)
 	{
@@ -45,7 +48,7 @@ unsigned char Rva00882580Block::check(void)
 			good = 0;
 	}
 
-	if (m_field00 == 0 && *(volatile unsigned int *)0x0130EA04 != 0)
+	if (m_field00 == 0 && *(volatile unsigned int *)&g_rva0130EA04 != 0)
 	{
 		if (bfmeAllSame(
 			(const unsigned int *)((unsigned int)this + 0x0c),
@@ -57,8 +60,8 @@ unsigned char Rva00882580Block::check(void)
 		return 1;
 
 report:
-	if (*(volatile unsigned char *)0x0130E9F9 != 0)
-		((Rva008838F0Owner *)0x0130EA10)->rva008836F0(
+	if (*(volatile unsigned char *)&g_rva0130E9F9 != 0)
+		g_bfmeRva0130EA10Owner.rva008836F0(
 			(unsigned char *)this + 0x0c, diagnostic, 0x1000);
 	return 1;
 }

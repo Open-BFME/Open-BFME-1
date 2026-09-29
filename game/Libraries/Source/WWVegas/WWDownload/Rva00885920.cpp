@@ -43,7 +43,7 @@ int Rva00885920Class::d_00885530( const char* command, int size )
 {
 	if ( send( m_socket4, command, size, 0 ) > 0 )
 	{
-		Rva01358EA8( (void*)0x01132E90 );
+		Rva01358EA8( (void*)"-->" );
 		Rva01358EA8( (void*)command );
 		return 0;
 	}
