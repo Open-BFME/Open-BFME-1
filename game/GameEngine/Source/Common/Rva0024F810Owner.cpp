@@ -9,7 +9,7 @@ public:
 	bool isInMultiplayerOrSkirmishGame(void);
 };
 
-#define TheGameLogic (*(GameLogicPortraitShim **)0x012F0898)
+extern GameLogicPortraitShim *TheGameLogic;
 
 class ExperienceTracker
 {

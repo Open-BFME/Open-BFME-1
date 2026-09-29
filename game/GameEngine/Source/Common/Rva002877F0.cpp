@@ -33,7 +33,7 @@ struct Rva002877F0Info
 	bool m_onlyOnce;
 };
 
-#define TheGameLogic (*(GameLogic **)0x012f0898)
+extern GameLogic *TheGameLogic;
 
 #pragma comment(linker, "/alternatename:?getValue@GameLogicRandomVariable@@QBEMXZ=?j_000188cc@@YAXXZ")
 

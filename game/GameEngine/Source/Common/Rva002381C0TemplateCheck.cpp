@@ -13,7 +13,7 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-#define TheThingFactory (*(ThingFactory **)0x012EF1D8)
+extern ThingFactory *TheThingFactory;
 
 typedef _STL::list<int> Rva002381C0List;
 
