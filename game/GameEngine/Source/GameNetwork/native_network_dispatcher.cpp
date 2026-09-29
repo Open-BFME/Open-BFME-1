@@ -3451,7 +3451,12 @@ __declspec(naked) void BFMENetworkBackend::dispatchEvents()
 	}
 }
 
+// The address this catch trampoline returns, 0x00A5CAEB. No name is recorded
+// for it yet, so the address-derived g_00A5CAEB stands in; declaring it keeps
+// the return value relocatable in a linked build.
+extern char g_00A5CAEB[];
+
 extern "C" void *BFMENetworkBackendDispatchCatch()
 {
-	return reinterpret_cast<void *>(0x00a5caeb);
+	return g_00A5CAEB;
 }

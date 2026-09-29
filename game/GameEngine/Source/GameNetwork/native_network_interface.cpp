@@ -3,6 +3,11 @@
 extern "C" __declspec(dllimport) int __stdcall QueryPerformanceFrequency(__int64 *frequency);
 extern "C" __declspec(dllimport) int __stdcall QueryPerformanceCounter(__int64 *counter);
 
+// Retail vtable at 0x0111A968, recorded as ??_7Network@@6B@; the extern binds
+// that symbol so the store relocates with the data in a linked build.
+extern "C" const void *bfmeVftNetwork[];
+#pragma comment(linker, "/alternatename:_bfmeVftNetwork=??_7Network@@6B@")
+
 class BFMENativeNetwork
 {
 public:
@@ -32,7 +37,7 @@ private:
 void *BFMENativeNetwork::construct()
 {
 	baseConstruct();
-	m_vtable = (void *)0x0111A968;
+	m_vtable = (void *)bfmeVftNetwork;
 	m_connectionManager = 0;
 	m_state = 0;
 	m_accumulator = 0;

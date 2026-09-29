@@ -110,6 +110,10 @@ public:
 
 extern int Rva007EB810Get();
 
+// The empty NUL-terminated literal in retail .rdata, pinned as
+// ?g_Rva0107301CEmptyString@@3QBDB (targets/game/reverse/symbols.csv).
+extern const char g_Rva0107301CEmptyString[];
+
 class Rva00800920Owner
 {
 public:
@@ -171,7 +175,7 @@ void BfmeThingZI::rva007F7DA0( Rva007E8810Message *msg )
 			entry->m_value10 = 0;
 			entry->m_value14 = 0;
 			entry->m_value18 = 0;
-			entry->m_buffer.append( (const char *)0x0107301c );
+			entry->m_buffer.append( g_Rva0107301CEmptyString );
 			entry->m_bfmeOther = 0;
 			entry->m_bfmeKey = 0;
 			entry->m_ugid[ 0 ] = 0;

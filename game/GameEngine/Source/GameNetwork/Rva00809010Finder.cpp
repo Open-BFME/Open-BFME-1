@@ -4,6 +4,11 @@ public:
 	void *bfmeGoRF( void *key, void *defaultValue );
 };
 
+// The lookup key passed to bfmeGoRF lives at 0x0112B568. No name is recorded
+// for it yet, so the address-derived g_0112B568 stands in; declaring it keeps
+// the argument relocatable in a linked build.
+extern char g_0112B568[];
+
 struct Rva00809500Sink
 {
 	char m_pad00[ 0x10 ];
@@ -27,7 +32,7 @@ public:
 Rva00809500Sink *Rva00809010Finder::find( Rva00809500Entry *entry )
 {
 	void *match = reinterpret_cast< BfmeThingRF * >( entry )->bfmeGoRF(
-		reinterpret_cast< void * >( 0x0112B568 ), 0 );
+		g_0112B568, 0 );
 	for( int index = 0; index < 16; ++index )
 	{
 		Rva00809500Sink *sink = m_sinks[ index ];
