@@ -292,3 +292,8 @@ game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|local|aptArrayConcat|v,3851
 game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|local|aptArrayConcat|a,0e1e0ee3644295dc529162b5,grok,20260929194232-26d0db,2026-09-29
 game/GameEngine/Source/Common/BfmeConv2137.cpp|member||m_bfmePtrXT,17b3b68f839cb710edfd71b6,grok,20260929194531-5088e0,2026-09-29
 game/GameEngine/Source/Common/BfmeConv2137.cpp|member||m_bfmeRefXT,c6d7b1264d3aa13291dd3d7c,grok,20260929194531-5088e0,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1838.cpp|type||BfmeMarkXB,e5e99486a0698d9c8bde5b09,grok,20260929194650-877c82,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1838.cpp|type||BfmeSinkXB,92165566e5bc5cd3d64e2aba,grok,20260929194650-877c82,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1838.cpp|type||BfmeHolderXB,fcfc412660bcc8541ca89d0f,grok,20260929194650-877c82,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1838.cpp|member||m_bfmeSinkXB,aa31afb758e9c850f4f32dbf,grok,20260929194650-877c82,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1838.cpp|function|BfmeHolderXB@|bfmeOnXB,d050495b19c7a1f0e7f0ec9d,grok,20260929194650-877c82,2026-09-29
