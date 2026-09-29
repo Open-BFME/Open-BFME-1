@@ -5,6 +5,8 @@
 
 typedef unsigned short WideChar;
 
+extern const unsigned short BFMEEmptyUnicodeString;
+
 template <typename T> class StringBase
 {
 	friend class UnicodeString;
@@ -44,7 +46,7 @@ public:
 
 	const WideChar *str() const
 	{
-		return m_data ? m_data->m_text : (const WideChar *)0x0107388C;
+		return m_data ? m_data->m_text : &BFMEEmptyUnicodeString;
 	}
 
 	void set(const UnicodeString &other)

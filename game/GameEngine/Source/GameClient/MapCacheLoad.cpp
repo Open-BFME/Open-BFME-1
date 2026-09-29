@@ -85,6 +85,7 @@ public:
 extern GlobalData *TheWritableGlobalData;
 
 bool bfmeLocalUserMapsReady(void);
+extern void j_000312eb();
 
 class Xfer;
 
@@ -139,8 +140,8 @@ AsciiString MapCache::getUserMapDir() const
 
 // ?loadStandardMaps@MapCache@@AAEXXZ
 // Retail 0x004507A0, 234 bytes. INI::load here is the four-argument overload
-// at 0x00853CB0 (file, loadType, reload, xfer); the xfer slot is retail's own
-// code-mid immediate 0x004312EB, and a parse failure is swallowed.
+// at 0x00853CB0 (file, loadType, reload, xfer); the xfer slot is the ILT thunk
+// j_000312eb (0x004312EB), and a parse failure is swallowed.
 void MapCache::loadStandardMaps()
 {
 	INI ini;
@@ -148,7 +149,7 @@ void MapCache::loadStandardMaps()
 	fname.format(AsciiString("%s\\%s"), getMapDir().str(), "MapCache.ini");
 	try
 	{
-		ini.load(fname, INI_LOAD_OVERWRITE, 0, (void *)0x004312EB);
+		ini.load(fname, INI_LOAD_OVERWRITE, 0, (void *)j_000312eb);
 	}
 	catch (...)
 	{

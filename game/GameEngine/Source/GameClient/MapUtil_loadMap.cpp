@@ -85,6 +85,10 @@ public:
 	void bfmeDropVE(void *what);
 };
 
+// Retail vtable 0x0107C7D0, declared as the sibling ctor
+// Rva00450460ParserRegistrationCtor.cpp does.
+extern "C" int _bfmeVftVE[];
+
 class Rva00450460ParserRegistration
 {
 public:
@@ -93,7 +97,7 @@ public:
 
 	~Rva00450460ParserRegistration(void)
 	{
-		m_vftable = (void *)0x0107C7D0;
+		m_vftable = _bfmeVftVE;
 		((BfmeSubVE *)m_table)->bfmeDropVE(m_parser);
 	}
 

@@ -16,6 +16,8 @@ typedef bool Bool;
 typedef int Int;
 typedef unsigned short UnsignedShort;
 
+extern const char Rva006A16B0Empty[];
+
 template <typename T>
 class StringBase
 {
@@ -55,7 +57,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? &m_data->m_text[0] : (const char *)0x0107388b;
+		return m_data ? &m_data->m_text[0] : Rva006A16B0Empty;
 	}
 
 	Bool startsWithNoCase(const char *text) const

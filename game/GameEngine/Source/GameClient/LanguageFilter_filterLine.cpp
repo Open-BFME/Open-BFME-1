@@ -32,6 +32,7 @@ typedef unsigned short WideChar;
 extern "C" __declspec(dllimport) WideChar *__cdecl wcscpy(WideChar *dest, const WideChar *src);
 extern "C" __declspec(dllimport) WideChar *__cdecl wcsstr(const WideChar *haystack, const WideChar *needle);
 __declspec(dllimport) unsigned __cdecl bfmeLenVGI(const unsigned short *s);
+extern const unsigned short BFMEEmptyUnicodeString;
 
 // BFME's StringBase keeps the 2-argument set (retail 0x008885C0) and the
 // raw-separator nextToken (retail 0x008889B0) out of line; string_base.h
@@ -59,7 +60,7 @@ public:
 	// retail +0x03C: m_data ? m_data->data : the shared empty text
 	const WideChar *str() const
 	{
-		return m_data ? &m_data->data[0] : (const WideChar *)0x0107388C;
+		return m_data ? &m_data->data[0] : &BFMEEmptyUnicodeString;
 	}
 
 	// retail +0x147: the length is fetched through the same null guard, then
