@@ -378,7 +378,7 @@ void Drawable::drawConstructPercent()
 	constructCenter( this, &center );
 	Real z = constructPosition( this )->z;
 	TacticalView *view = DRAWABLE_CONSTRUCT_GLOBAL( TacticalView, 0x012f1600 );
-	center.z = center.z - (center.z - z) * *reinterpret_cast<const Real *>( 0x010f15cc );
+	center.z = center.z - (center.z - z) * 0.333f;
 	if ( view->worldToScreen( &center, &screen ) != 0 )
 		return;
 

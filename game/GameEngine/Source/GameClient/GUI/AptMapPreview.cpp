@@ -87,6 +87,9 @@ public:
 	void take0046DEF0(const AsciiString &name);
 };
 
+extern S4Holder0046DBB0 *g_s4Holder;
+#pragma comment(linker, "/alternatename:?g_s4Holder@@3PAVS4Holder0046DBB0@@A=?g_s4Holder@@3PAUS4Holder0046DBB0@@A")
+
 // The gadget callback witnesses windows at +04/+08/+0C/+10 and children at
 // +14..+30. AptMapPreviewImages.cpp witnesses the Image at +34 and owned flag
 // at +38. The first four bytes and the unused tail stay explicitly opaque.
@@ -124,7 +127,7 @@ void AptMapPreview::bfmeReset(void)
 {
 	{
 		AsciiString name("AptMapPreview::Picture");
-		(reinterpret_cast<S4Holder0046DBB0 **>(0x012f19e8))[0]->take0046DEF0(name);
+		g_s4Holder->take0046DEF0(name);
 	}
 	{
 		AsciiString name("AptMapPreview::MapGadgetInit");

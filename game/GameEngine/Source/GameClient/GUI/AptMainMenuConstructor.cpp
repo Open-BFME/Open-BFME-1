@@ -36,6 +36,8 @@ private:
 	void *m_data;
 };
 
+extern const unsigned short BFMEEmptyUnicodeString;
+
 struct UnicodeStringData
 {
 	unsigned int m_refCount;
@@ -52,7 +54,7 @@ public:
 	const unsigned short *str() const
 	{
 		return m_data ? (const unsigned short *)((char *)m_data + 8)
-			: (const unsigned short *)0x0107388C;
+			: &BFMEEmptyUnicodeString;
 	}
 
 private:

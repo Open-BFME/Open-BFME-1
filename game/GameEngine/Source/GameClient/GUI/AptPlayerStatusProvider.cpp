@@ -9,6 +9,9 @@ struct Gen_0052B440GameLogic
 	int m_gameMode;
 };
 
+class GameLogic;
+extern GameLogic *TheGameLogic;
+
 class Gen_0052B440
 {
 public:
@@ -51,7 +54,7 @@ void Gen_0052B440::bfmeProvide(const char *selector, void *value, bool setting)
 		if (!setting)
 		{
 			Gen_0052B440GameLogic *gameLogic =
-				*(Gen_0052B440GameLogic **)0x012F0898;
+				(Gen_0052B440GameLogic *)TheGameLogic;
 			strcpy(output,
 				gameLogic && gameLogic->m_gameMode == BFME_GAME_SKIRMISH ? "1" : "0");
 		}

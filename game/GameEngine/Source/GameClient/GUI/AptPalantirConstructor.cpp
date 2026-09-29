@@ -146,10 +146,12 @@ private:
 	Coord2D m_coords564[4];
 };
 
+extern const char Rva006A16B0Empty[];
+
 static char *bfmeString( const AsciiString &value )
 {
 	char *data = *(char **)&value;
-	return data ? data + 8 : (char *)0x0107388b;
+	return data ? data + 8 : (char *)Rva006A16B0Empty;
 }
 
 AptPalantir::AptPalantir()

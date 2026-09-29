@@ -19,6 +19,9 @@ struct EvaSideSound0089C900
 	unsigned int m_value;
 };
 
+struct EAStringData;
+extern EAStringData g_emptyStringData;
+
 extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
 extern void (*Rva008A30A0ReleasePtr)(void *);
 
@@ -59,7 +62,7 @@ Q3EhMember0089C900::~Q3EhMember0089C900()
 				EvaStringData0089C900 *string = *(EvaStringData0089C900 **)((char *)self->m_elements + offset);
 				if (string != 0)
 					{
-						if (string != reinterpret_cast<EvaStringData0089C900 *>(0x012D5298))
+						if (string != reinterpret_cast<EvaStringData0089C900 *>(&g_emptyStringData))
 						{
 							EvaTaggedValue0089C900 *sound = (EvaTaggedValue0089C900 *)((unsigned int)*(unsigned int *)((char *)self->m_elements + offset + 4) & ~1u);
 							if (sound != 0 && (*(unsigned int *)((char *)self->m_elements + offset + 4) & 1) == 0)
