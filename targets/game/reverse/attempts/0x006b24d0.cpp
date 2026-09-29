@@ -1,5 +1,5 @@
 // ?rva006B24D0@MilesAudioManager@@QAEXABVAsciiString@@MH@Z
-// partial score=0.9819 date=2026-09-28
+// partial score=0.9887 date=2026-09-28
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 //
@@ -315,7 +315,8 @@ void MilesAudioManager::rva006B24D0(const AsciiString &eventName, Real unused, i
 		else if (fade > Rva006B24D0One)
 			fade = Rva006B24D0One;
 		volume = volume * fade;
-		_AIL_stream_volume_pan(playing->m_milesHandle, 0, &pan);
+		HSTREAM streamHandle = playing->m_milesHandle;
+		_AIL_stream_volume_pan(streamHandle, 0, &pan);
 		_AIL_set_stream_volume_pan(playing->m_milesHandle, volume, pan);
 	}
 
