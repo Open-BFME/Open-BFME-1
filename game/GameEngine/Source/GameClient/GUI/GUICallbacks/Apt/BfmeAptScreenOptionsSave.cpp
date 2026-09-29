@@ -151,6 +151,7 @@ extern GameSpyInfo *TheGameSpyInfo;
 // Retail reads 0x012F4AD0 here, the byte ShowOptions stores beside g_bfmeD1072 (0x012F4AD1).
 extern unsigned char g_optByte12F4AD0;
 extern void *g_quitMenuLayout;
+extern void *g_Va012F4AE4;
 struct Rva006C9270GlobalData
 {
     char field00[0x1b];
@@ -233,10 +234,10 @@ void BfmeAptScreenOptions::_bfme_save(const char *)
 {
     // These locals span all pages, as in the shared preference-saving code.
     int val, index;
-    if (*(void **)0x012F4AE4)
+    if (g_Va012F4AE4)
     {
-        TheAudioClientUpdate->stopAudioEvent(*(void **)0x012F4AE4);
-        *(void **)0x012F4AE4 = 0;
+        TheAudioClientUpdate->stopAudioEvent(g_Va012F4AE4);
+        g_Va012F4AE4 = 0;
     }
     // Standard and network pages share graphics and audio preferences.
     if (field258 == 2 || field258 == 3)

@@ -6,6 +6,8 @@ typedef int Int;
 typedef bool Bool;
 typedef unsigned short WideChar;
 
+extern const unsigned short BFMEEmptyUnicodeString;
+
 template <typename T>
 class StringBase
 {
@@ -40,7 +42,7 @@ public:
 
 	const WideChar *str() const
 	{
-		return m_data ? m_data->data : reinterpret_cast<const WideChar *>(0x0107388C);
+		return m_data ? m_data->data : &BFMEEmptyUnicodeString;
 	}
 
 	Int getLength() const
@@ -158,7 +160,7 @@ void Rva00518150LanLobbyTooltip(GameWindow *window, WinInstanceData *,
 		if (slot->isHuman())
 		{
 			if (tooltip.getLength() != 0)
-				tooltip += reinterpret_cast<const WideChar *>(0x01084C10);
+				tooltip += reinterpret_cast<const WideChar *>(L"\n");
 			appendLanTooltipName(tooltip, slot->getName());
 		}
 	}

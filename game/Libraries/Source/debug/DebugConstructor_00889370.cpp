@@ -140,7 +140,7 @@ Debug::Debug()
 	}
 	else
 	{
-		deletePath = (const char *)0x01133040;
+		deletePath = "errors.txt";
 	}
 	DeleteFileA(deletePath);
 }
