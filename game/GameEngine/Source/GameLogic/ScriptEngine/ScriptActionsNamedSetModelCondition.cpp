@@ -119,22 +119,28 @@ static void applyModelCondition_002FDEF0(
 		default: condition = MODELCONDITION_USER_1; break;
 	}
 
-	UnsignedInt mask = 1u << ((UnsignedInt)condition & 31);
-	UnsignedInt &word = obj->m_modelConditionFlags.m_bits[
-		(UnsignedInt)condition >> 5];
+	// Binding the whole flag array and indexing it directly (rather than
+	// binding one UnsignedInt& element) is what reproduces retail's register
+	// choice: retail loads the element into ECX and re-materialises the element
+	// address with a LEA into EAX for the store, instead of keeping the element
+	// address in a register across the test.  The mask is also built inside
+	// each arm, which is why retail repeats the AND/SHR/SHL pair per arm.
+	ModelConditionFlags &flags = obj->m_modelConditionFlags;
 	if (set)
 	{
-		if (!(word & mask))
+		UnsignedInt mask = 1u << ((UnsignedInt)condition & 31);
+		if (!(flags.m_bits[(UnsignedInt)condition >> 5] & mask))
 		{
-			word |= mask;
+			flags.m_bits[(UnsignedInt)condition >> 5] |= mask;
 			obj->notifyModelConditionChanged();
 		}
 	}
 	else
 	{
-		if (word & mask)
+		UnsignedInt mask = 1u << ((UnsignedInt)condition & 31);
+		if (flags.m_bits[(UnsignedInt)condition >> 5] & mask)
 		{
-			word &= ~mask;
+			flags.m_bits[(UnsignedInt)condition >> 5] &= ~mask;
 			obj->notifyModelConditionChanged();
 		}
 	}
