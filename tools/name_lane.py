@@ -48,6 +48,11 @@ COLUMNS = {VOTES: ["key", "hash", "model", "session", "date"], AGREED: ["key", "
 NONCODE = re.compile(r'//[^\n]*|/\*.*?\*/|"(?:\\.|[^"\\\n])*"|\'(?:\\.|[^\'\\\n])*\'', re.S)
 WORD = re.compile(r"\b[A-Za-z_]\w*\b")
 DECL = re.compile(r"^[ \t]*(?:class|struct)[ \t]+([A-Za-z_]\w*)\b[^;{()]*\{", re.M)
+ENUM = re.compile(r"^[ \t]*enum[ \t]+([A-Za-z_]\w*)\b[^;{()]*\{", re.M)
+BRACE = re.compile(r"[{}]")
+PREPROCESSOR = re.compile(r"^[ \t]*#(?:[^\n]*\\\n)*[^\n]*", re.M)
+LOCAL = re.compile(r"(?:^|[;{}(])\s*(?:(?:const|static|unsigned|signed|struct|class)\s+)*"
+                   r"([A-Za-z_][\w:]*)[\s*&]+([A-Za-z_]\w*)\s*(?=[=;\[,)])")
 FUNC = re.compile(r"^[ \t]*(?:[A-Za-z_][\w:<>,*& \t]*?[\s*&])?((?:[A-Za-z_]\w*::)*)(~?[A-Za-z_]\w*)[ \t]*"
                   r"\(([^;{}()]*(?:\([^()]*\)[^;{}()]*)*)\)\s*(?:const\s*)?(?::[^;{]*)?\{", re.M)
 MANGLED = re.compile(r"\?([A-Za-z_]\w*)@((?:[A-Za-z_]\w*@)*)@")
@@ -171,10 +176,10 @@ def spelling(name, kind):
 
 def close(code, brace):
     depth = 0
-    for j in range(brace, len(code)):
-        depth += {"{": 1, "}": -1}.get(code[j], 0)
+    for m in BRACE.finditer(code, brace):
+        depth += 1 if m.group() == "{" else -1
         if depth == 0:
-            return j
+            return m.start()
     return len(code)
 
 
@@ -203,6 +208,56 @@ def members(body):
             m = re.search(r"([A-Za-z_]\w*)\s*(?:\[[^\]]*\]\s*)*(?::\s*\w+\s*)?$", d.strip())
             if m:
                 yield m.group(1)
+
+
+def param_names(params):
+    for p in params.split(","):
+        ids = [t for t in WORD.findall(p.split("=")[0]) if t not in KEYWORDS]
+        if len(ids) >= 2:
+            yield ids[-1]
+
+
+def local_names(body):
+    statements = {"return", "delete", "goto", "throw", "case", "new", "else", "do", "typedef", "using", "sizeof"}
+    return [m.group(2) for m in LOCAL.finditer(body) if m.group(1) not in statements and m.group(2) not in KEYWORDS]
+
+
+def global_names(code):
+    """Variables declared at file scope, outside every brace block."""
+    code, top, depth, last = PREPROCESSOR.sub("", code), [], 0, 0
+    for m in BRACE.finditer(code):
+        if m.group() == "{":
+            depth += 1
+            if depth == 1:
+                top.append(code[last:m.start()])
+        elif depth:
+            depth -= 1
+            if depth == 0:
+                last = m.end()
+                top.append(";")
+    top.append(code[last:] if depth == 0 else "")
+    for stmt in "".join(top).split(";"):
+        if "(" in stmt or re.match(r"\s*(?:typedef|using|class|struct|enum|union|namespace|template|friend)\b", stmt):
+            continue
+        ids = [t for t in WORD.findall(stmt.split("=")[0].split("[")[0]) if t not in KEYWORDS]
+        if len(ids) >= 2 or (ids and re.search(r"\b(?:int|char|bool|float|double|long|short|unsigned|void)\b", stmt)):
+            yield ids[-1]
+
+
+def declared(rel, text):
+    """(kind, name) for everything a file names: itself, its types and their members, its functions
+    with their parameters and locals, and its file-scope variables."""
+    code = strip(text)
+    out = [("file", Path(rel).stem)]
+    for m in DECL.finditer(code):
+        out.append(("type", m.group(1)))
+        out += [("member", n) for n in members(code[m.end():close(code, m.end() - 1)]) if not PAD.match(n)]
+    out += [("type", m.group(1)) for m in ENUM.finditer(code)]
+    for scope, start, end, params in functions_in(code):
+        out.append(("function", scope.split("#")[0].split("::")[-1]))
+        out += [("param", n) for n in param_names(params)]
+        out += [("local", n) for n in local_names(code[code.find("{", start):end])]
+    return out + [("global", n) for n in global_names(code)]
 
 
 def ledger_rows():
@@ -252,17 +307,9 @@ def owned(rel, text, rows, types):
             items.append(("function", m.group(2), m.group(1)))
     od = bool(re.search(r"^//\s*cl:.*/Od", text[:600], re.M))
     for scope, start, end, params in functions_in(code):
-        for p in params.split(","):
-            ids = [t for t in WORD.findall(p.split("=")[0]) if t not in KEYWORDS]
-            if len(ids) >= 2 and placeholder(ids[-1]):
-                items.append(("param", scope, ids[-1]))
-        if od:
-            continue          # /Od orders frame slots by identifier text: renaming a local moves bytes
-        body = code[code.find("{", start):end]
-        for m in re.finditer(r"(?:^|[;{}(])\s*(?:(?:const|static|unsigned|signed|struct|class)\s+)*"
-                             r"([A-Za-z_][\w:]*)[\s*&]+([A-Za-z_]\w*)\s*(?=[=;\[,)])", body):
-            if m.group(1) not in KEYWORDS | {"return", "delete", "goto", "throw", "case", "new"} and placeholder(m.group(2)):
-                items.append(("local", scope, m.group(2)))
+        items += [("param", scope, n) for n in param_names(params) if placeholder(n)]
+        if not od:            # /Od orders frame slots by identifier text: renaming a local moves bytes
+            items += [("local", scope, n) for n in local_names(code[code.find("{", start):end]) if placeholder(n)]
     seen, out = set(), []
     for kind, scope, ident in items:
         slot = (scope, ident) if kind in ("param", "local") else ident
@@ -558,24 +605,40 @@ def cmd_apply(args):
     return 0
 
 
-def readable():
-    """(identifiers, placeholders), each counted once per file: a name landed in one file counts even
-    though the same placeholder text survives in others."""
-    total = bad = 0
+def inventory():
+    """kind -> [names, placeholders] over every declaration in game/ source. Files, types, functions,
+    members, parameters and locals count per declaration; a global counts once, however many
+    files declare it extern."""
+    count = collections.defaultdict(lambda: [0, 0])
+    globals_seen = set()
     for f in git("ls-files", "game").split():
         if f.endswith((".cpp", ".c", ".h", ".inl")) and not f.startswith(GENERATED):
-            words = set(WORD.findall(strip(read(f)))) - KEYWORDS
-            total += len(words)
-            bad += sum(1 for w in words if placeholder(w))
-    return total, bad
+            for kind, name in declared(f, read(f)):
+                if kind == "global":
+                    if name in globals_seen:
+                        continue
+                    globals_seen.add(name)
+                bad = placeholder(name) or (kind == "file" and bool(re.search(r"(?i)(?=(?:[0-9a-f]*\d){3})[0-9a-f]{6,8}", name)))
+                count[kind][0] += 1
+                count[kind][1] += bad
+    return count
+
+
+def readable():
+    """(names, placeholders) summed over every kind of declaration."""
+    count = inventory().values()
+    return sum(c[0] for c in count), sum(c[1] for c in count)
 
 
 def cmd_status(args):
-    total, bad = readable()
+    kinds = inventory()
+    total, bad = sum(c[0] for c in kinds.values()), sum(c[1] for c in kinds.values())
     state = agreed_state().values()
     count = collections.Counter(a["status"].split(":")[0] for a in state)
-    print(f"Readable names: {100 * (1 - bad / total):.3f}% ({total - bad:,} of {total:,} identifiers, counted per file); "
+    print(f"Readable names: {100 * (1 - bad / total):.2f}% ({total - bad:,} of {total:,} declared names); "
           f"placeholders left: {bad:,}")
+    for kind, (n, b) in sorted(kinds.items(), key=lambda kv: -kv[1][1]):
+        print(f"  {kind:9} {100 * (1 - b / n):6.2f}% readable  ({b:,} placeholders of {n:,})")
     print(f"votes: {len(table(VOTES)):,}; agreed: {len(state)} (landed {count['applied']}, waiting {count['agreed']}, "
           f"blocked {count['blocked']}, stale {count['stale']})")
     return 0
