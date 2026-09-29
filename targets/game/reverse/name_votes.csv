@@ -353,3 +353,6 @@ game/GameEngine/Source/Common/BfmeConv930.cpp|type||BfmeThing930D,b0f9fc96a7ac81
 game/GameEngine/Source/Common/BfmeConv930.cpp|member||m_bfmeQ,e296b66d89aa93a28e3ce673,grok,20260929223147-344184,2026-09-29
 game/GameEngine/Source/Common/BfmeConv930.cpp|local|BfmeThing930D::bfmeGo930D|s,f652cec8d7bcfe80c2bbeed2,grok,20260929223147-344184,2026-09-29
 game/GameEngine/Source/GameLogic/System/GameLogicGetLoadScreen.cpp|param|still00386190|p,74991974a13cc97682da1f55,grok,20260929225114-6087e1,2026-09-29
+game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00784090AptItemBounds.cpp|local|Rva00785FD0Item::getRenderRegion|p,7931564ac33a7fa41e155bff,grok,20260929230320-258847,2026-09-29
+game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00784090AptItemBounds.cpp|local|Rva00785FD0Item::getRenderRegion|t,6c1ce827757e7ebfe21b9825,grok,20260929230320-258847,2026-09-29
+game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00784090AptItemBounds.cpp|local|Rva00785FD0Item::getRenderRegion|q,eeed74f3db5cce216df81631,grok,20260929230320-258847,2026-09-29
