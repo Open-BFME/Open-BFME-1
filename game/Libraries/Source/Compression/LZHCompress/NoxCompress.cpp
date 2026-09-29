@@ -65,7 +65,7 @@ Bool DecompressFile(char *infile, char *outfile)
 	if ((infile == 0) || (outfile == 0))
 		return false;
 
-	inFilePtr = fopen(infile, (const char *)0x0107FF20);
+	inFilePtr = fopen(infile, "rb");
 	if (inFilePtr)
 	{
 		fseek(inFilePtr, 0, 2);
@@ -100,7 +100,7 @@ Bool DecompressFile(char *infile, char *outfile)
 		}
 
 		LZHLDestroyDecompressor(decompress);
-		outFilePtr = fopen(outfile, (const char *)0x0107FF60);
+		outFilePtr = fopen(outfile, "wb");
 		if (outFilePtr)
 		{
 			fwrite(outBlock, rawSize, 1, outFilePtr);
@@ -131,7 +131,7 @@ Bool CompressFile(char *infile, char *outfile)
 	if ((infile == 0) || (outfile == 0))
 		return false;
 
-	inFilePtr = fopen(infile, (const char *)0x0107FF20);
+	inFilePtr = fopen(infile, "rb");
 	if (inFilePtr)
 	{
 		fseek(inFilePtr, 0, 2);
@@ -157,7 +157,7 @@ Bool CompressFile(char *infile, char *outfile)
 
 		LZHLDestroyCompressor(compressor);
 
-		outFilePtr = fopen(outfile, (const char *)0x0107FF60);
+		outFilePtr = fopen(outfile, "wb");
 		if (outFilePtr)
 		{
 			fwrite(&rawSize, sizeof(unsigned int), 1, outFilePtr);

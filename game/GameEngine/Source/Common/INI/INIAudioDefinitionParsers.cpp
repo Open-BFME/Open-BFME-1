@@ -11,6 +11,7 @@ extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(
 	long volatile *value);
 
 struct FieldParse;
+extern const FieldParse g_010813F8[];
 
 #include "ascii_string.h"
 template <> inline void StringBase<char>::set(const char *text)
@@ -162,7 +163,7 @@ void INI::parseMusicTrackDefinition(INI *ini)
 	}
 	audioInfo->m_audioName = name;
 	audioInfo->m_soundType = 0;
-	ini->initFromINI(audioInfo, (const FieldParse *)0x010813F8);
+	ini->initFromINI(audioInfo, g_010813F8);
 }
 
 void INI::parseDialogDefinition(INI *ini)
@@ -189,7 +190,7 @@ void INI::parseDialogDefinition(INI *ini)
 	}
 	audioInfo->m_audioName = name;
 	audioInfo->m_soundType = 1;
-	ini->initFromINI(audioInfo, (const FieldParse *)0x010813F8);
+	ini->initFromINI(audioInfo, g_010813F8);
 }
 
 void INI::parseStreamedSoundDefinition(INI *ini)
@@ -216,7 +217,7 @@ void INI::parseStreamedSoundDefinition(INI *ini)
 	}
 	audioInfo->m_audioName = name;
 	audioInfo->m_soundType = 4;
-	ini->initFromINI(audioInfo, (const FieldParse *)0x010813F8);
+	ini->initFromINI(audioInfo, g_010813F8);
 }
 
 void INI::parseAmbientStreamDefinition(INI *ini)
@@ -243,7 +244,7 @@ void INI::parseAmbientStreamDefinition(INI *ini)
 	}
 	audioInfo->m_audioName = name;
 	audioInfo->m_soundType = 3;
-	ini->initFromINI(audioInfo, (const FieldParse *)0x010813F8);
+	ini->initFromINI(audioInfo, g_010813F8);
 }
 
 // Retail diagnostics use the BFME debug vtable: start +0x60; stream +0x6C;
@@ -337,7 +338,7 @@ void INI::parseAudioEventDefinition(INI *ini)
 	}
 	audioInfo->m_audioName = name;
 	audioInfo->m_soundType = 2;
-	ini->initFromINI(audioInfo, (const FieldParse *)0x010813F8);
+	ini->initFromINI(audioInfo, g_010813F8);
 
 	if (audioInfo->m_control & 4) {
 		if (_bfme_debugReportingEnabled()) {

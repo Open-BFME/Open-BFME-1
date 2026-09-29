@@ -2,6 +2,7 @@
 
 extern "C" int __stdcall closesocket( int );
 extern "C" __declspec(dllimport) int __cdecl fclose( void* );
+extern const void *g_01132ECC[];
 
 class Rva00885AF0Class
 {
@@ -17,7 +18,7 @@ public:
 
 void Rva00885AF0Class::d_00885af0()
 {
-	*(void**)this = (void*)0x01132ECC;
+	*(const void ***)this = g_01132ECC;
 	if ( m_socket8 )
 	{
 		closesocket( m_socket8 );
