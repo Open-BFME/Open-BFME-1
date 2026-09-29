@@ -1,3 +1,6 @@
+void g_00BEFFE0();
+void g_00BEFFF0();
+
 class Rva007F0080Owner
 {
 public:
@@ -10,6 +13,6 @@ private:
 
 Rva007F0080Owner::Rva007F0080Owner(void *first, void *second)
 {
-    m_first = first ? first : reinterpret_cast<void *>(0x00BEFFE0);
-    m_second = second ? second : reinterpret_cast<void *>(0x00BEFFF0);
+    m_first = first ? first : reinterpret_cast<void *>(g_00BEFFE0);
+    m_second = second ? second : reinterpret_cast<void *>(g_00BEFFF0);
 }

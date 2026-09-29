@@ -56,6 +56,7 @@ static int gThreadState;
 
 extern "C" __declspec(dllimport) void *__stdcall CreateThread(
     void *, unsigned long, void *, void *, unsigned long, unsigned long *);
+int __stdcall resolveHostAddress(const char *name);
 
 enum
 {
@@ -97,7 +98,7 @@ int Cftp::AsyncGetHostByName( char *szName, struct sockaddr_in &address )
         gThreadFlag = 0;
         memset( &gThreadAddress, 0, sizeof( gThreadAddress ) );
 
-        if ( CreateThread( NULL, 0, (void *)0x00C85430, szName, 0,
+        if ( CreateThread( NULL, 0, (void *)resolveHostAddress, szName, 0,
                 &gThreadId ) == NULL )
         {
             return 0x80040001;

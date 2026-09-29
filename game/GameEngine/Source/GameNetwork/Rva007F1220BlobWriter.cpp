@@ -68,7 +68,8 @@ struct Rva007F1220Record
 	int downloadCount;
 };
 
-#define g_Rva0130A5D0 (*(void **)0x0130A5D0)
+extern void *g_0130A5D0;
+#define g_Rva0130A5D0 g_0130A5D0
 
 class Rva007F1220BlobWriter
 {
@@ -88,7 +89,7 @@ void Rva007F1220BlobWriter::write(Rva007E8810Message *message,
 	void *contentSize,
 	const Rva007F1220Record *record)
 {
-	const char *txn = *(const char **)0x0130A5D0;
+	const char *txn = (const char *)g_Rva0130A5D0;
 	message->reset();
 	message->m_category = 'blob';
 	message->addString("TXN", txn);
