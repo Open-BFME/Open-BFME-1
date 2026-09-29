@@ -290,3 +290,5 @@ game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|param|put|v,dc6eb0b88998f6b
 game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|param|set|v,6761dba7afe897265a24ebbe,grok,20260929194232-26d0db,2026-09-29
 game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|local|aptArrayConcat|v,3851d0de044359035e92c9ac,grok,20260929194232-26d0db,2026-09-29
 game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|local|aptArrayConcat|a,0e1e0ee3644295dc529162b5,grok,20260929194232-26d0db,2026-09-29
+game/GameEngine/Source/Common/BfmeConv2137.cpp|member||m_bfmePtrXT,17b3b68f839cb710edfd71b6,grok,20260929194531-5088e0,2026-09-29
+game/GameEngine/Source/Common/BfmeConv2137.cpp|member||m_bfmeRefXT,c6d7b1264d3aa13291dd3d7c,grok,20260929194531-5088e0,2026-09-29
