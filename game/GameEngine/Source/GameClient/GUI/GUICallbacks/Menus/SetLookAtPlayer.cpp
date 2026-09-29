@@ -12,6 +12,8 @@
 
 typedef int Int;
 
+extern const char Rva006A16B0Empty[];
+
 template <typename T> class StringBase
 {
 	friend class AsciiString;
@@ -35,7 +37,7 @@ public:
 	~AsciiString() {}
 	const char *str( void ) const
 	{
-		return m_data ? (const char *)m_data + 8 : (const char *)0x0107388B;
+		return m_data ? (const char *)m_data + 8 : Rva006A16B0Empty;
 	}
 };
 

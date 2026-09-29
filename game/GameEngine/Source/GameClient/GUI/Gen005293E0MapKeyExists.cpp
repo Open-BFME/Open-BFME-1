@@ -6,6 +6,8 @@
 // parameter is the BFME AsciiString value passed by value; it is represented
 // as its one-word string handle here so VC7.1 keeps the retail copy shape.
 
+extern const char Rva006A16B0Empty[];
+
 template <typename T> class StringBase
 {
 protected:
@@ -17,7 +19,7 @@ protected:
 
 	const char *str() const
 	{
-		return m_data ? (const char *)m_data + 8 : (const char *)0x0107388b;
+		return m_data ? (const char *)m_data + 8 : Rva006A16B0Empty;
 	}
 
 	int length() const

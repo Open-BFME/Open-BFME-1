@@ -180,7 +180,7 @@ GameWindow *GameWindow::winPointInChild(Int x, Int y, Bool ignoreEnableCheck, Bo
 				}
 				else if (playDisabledSound)
 				{
-					AudioEventRTS disabledClick((const char *)0x010f77bc, (ObjectID)2);
+					AudioEventRTS disabledClick("GUIClickDisabled", (ObjectID)2);
 					if (TheAudio)
 					{
 						TheAudio->addAudioEvent(&disabledClick);

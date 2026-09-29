@@ -3,6 +3,8 @@
 typedef int Int;
 typedef int NameKeyType;
 
+extern const char Rva006A16B0Empty[];
+
 template <typename T> struct StringInlineData
 {
     int m_refCount;
@@ -33,7 +35,7 @@ public:
 	void format(AsciiString format, ...);
 	const char *str() const
 	{
-		return m_data ? m_data->m_text : (const char *)0x0107388B;
+		return m_data ? m_data->m_text : Rva006A16B0Empty;
 	}
 };
 

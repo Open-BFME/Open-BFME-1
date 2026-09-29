@@ -32,6 +32,9 @@ public:
 	int current( void );
 };
 
+class PlayerList;
+extern PlayerList *ThePlayerList;
+
 extern void j_00010e88( void );
 extern void j_000330dc( void );
 extern void j_00038a23( void );
@@ -56,7 +59,7 @@ int Rva004A8F10::dispatch( void *window, int mode )
 		return 0;
 	if ( data == 0 )
 		return 0;
-	if ( (*(Rva004A8F10Gate **)0x012ED748)->isSet() )
+	if ( ((Rva004A8F10Gate *)ThePlayerList)->isSet() )
 		return 0;
 
 	*(void **)((char *)data + 0xA4) = window;
