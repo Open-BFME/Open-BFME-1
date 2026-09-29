@@ -83,6 +83,8 @@ struct Campaign367470 {
     _STL::bitset<192> fielda8;
 };
 extern Campaign367470 *Campaign;
+class UpgradeCenter;
+extern UpgradeCenter *TheUpgradeCenter;
 class Rva000C9870DwordSlot {
     public: void set(int);
 };
@@ -141,7 +143,7 @@ void Rva00367810Entries::startNewGame() {
         call1<void>(j_0001e056,campaign,&Campaign->field94);
         _STL::bitset<192> bits=Campaign->fielda8;
         while((int)bits.count()>0) {
-            Upgrade367470 *upgrade=call1<Upgrade367470*>(j_0001df16,*(void**)0x012EF188,&bits);
+            Upgrade367470 *upgrade=call1<Upgrade367470*>(j_0001df16,TheUpgradeCenter,&bits);
             if(!upgrade) break;
             campaign->addUpgrade((const UpgradeTemplate*)upgrade,UPGRADE_STATUS_COMPLETE);
             bits._Unchecked_reset(upgrade->field20);

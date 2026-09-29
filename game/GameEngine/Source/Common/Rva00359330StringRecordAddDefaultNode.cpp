@@ -2,6 +2,8 @@
 
 #include "ascii_string.h"
 
+extern int Gen010E855C;
+
 class Rva00354BC0
 {
 	public:
@@ -18,7 +20,7 @@ public:
 	Rva00354BC0()
 		: m_link(0), m_pair0(0), m_pair1(0)
 	{
-		m_vptr = (void *)0x010E855C;
+		m_vptr = &Gen010E855C;
 		m_10 = 1;
 		m_11 = 0;
 		m_12 = 0;

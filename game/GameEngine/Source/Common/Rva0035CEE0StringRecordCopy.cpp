@@ -23,6 +23,8 @@
 
 class Rva00354BC0;
 
+extern int Gen010E855C;
+
 struct Rva00359330Record
 {
 	int m_previous;
@@ -52,7 +54,7 @@ public:
 	Rva003529B0(const Rva003529B0 *other)
 		: m_pair(*(other ? &other->m_pair : 0))
 	{
-		m_vptr = (void *)0x010E855C;
+		m_vptr = &Gen010E855C;
 		m_10 = other->m_10;
 		m_11 = other->m_11;
 		m_12 = 0;

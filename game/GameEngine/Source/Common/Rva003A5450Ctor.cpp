@@ -1,5 +1,7 @@
 // cl: /O2 /Ob0
 
+extern int g_010EC738;
+
 class Rva003A5450
 {
 	void *m_00;
@@ -33,7 +35,7 @@ public:
 
 Rva003A5450::Rva003A5450()
 {
-	m_00 = (void *)0x010EC738;
+	m_00 = &g_010EC738;
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;
