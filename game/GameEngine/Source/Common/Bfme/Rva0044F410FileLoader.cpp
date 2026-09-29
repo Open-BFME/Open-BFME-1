@@ -17,7 +17,9 @@ public:
     File *openFile(const char *filename, int mode);
 };
 
-#define Rva0044F410TheFileSystem (*(FileSystem **)0x0134CB48)
+extern FileSystem *TheFileSystem;
+
+#define Rva0044F410TheFileSystem (TheFileSystem)
 
 class Rva0090C280 {
 public:

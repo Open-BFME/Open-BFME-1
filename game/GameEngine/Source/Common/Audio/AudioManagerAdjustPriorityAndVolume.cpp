@@ -10,7 +10,7 @@
 // here. AudioEventRTS::m_eventInfo at +0x08 is proven by
 // game/GameEngine/Source/Common/Audio/AudioEventRTS_bfmeGenerateFilename.cpp.
 
-#define BfmeZeroRange (*(const float *)0x01075350)
+#define BfmeZeroRange 0.0f
 
 enum AudioPriority { AP_RVA006AD590_PLACEHOLDER };
 

@@ -30,6 +30,6 @@ public:
 
 Rva008830D0Class *Rva008830D0Class::d_008830d0( int dummy )
 {
-	v50( (void *)0x01132DD4, 0x10 );
+	v50( (void *)"0x", 0x10 );
 	return this;
 }
