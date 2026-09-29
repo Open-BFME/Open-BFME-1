@@ -6,6 +6,8 @@
 typedef unsigned int UnsignedInt;
 typedef int ArmorSetType;
 
+extern UnsignedInt g_012B2C98[];
+
 #pragma comment(linker, "/alternatename:?notifyModelConditionChanged@Object@@QAEXXZ=?j_0002191d@@YAXXZ")
 #pragma comment(linker, "/alternatename:?bfmeClearZJ@BfmeBaseZJ@@QAEXXZ=?j_00041970@@YAXXZ")
 
@@ -107,7 +109,7 @@ void ArmorUpgrade::upgradeImplementation()
 			body->setArmorSetFlag(data->armorSetFlag);
 
 			UnsignedInt condition =
-				reinterpret_cast<const UnsignedInt *>(0x012B2C98)[data->armorSetFlag];
+				g_012B2C98[data->armorSetFlag];
 			if (object->hasModelCondition(condition))
 			{
 				object->clearModelCondition(condition);
@@ -119,7 +121,7 @@ void ArmorUpgrade::upgradeImplementation()
 			body->clearArmorSetFlag(data->armorSetFlag);
 
 			UnsignedInt condition =
-				reinterpret_cast<const UnsignedInt *>(0x012B2C98)[data->armorSetFlag];
+				g_012B2C98[data->armorSetFlag];
 			if (!object->hasModelCondition(condition))
 			{
 				object->setModelCondition(condition);

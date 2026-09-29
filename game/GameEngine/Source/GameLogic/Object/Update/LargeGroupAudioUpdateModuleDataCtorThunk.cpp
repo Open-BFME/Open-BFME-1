@@ -16,10 +16,9 @@
 // +0x04, the key map sits at +0x08 and the three trailing scalars at +0x14,
 // +0x18 and +0x1C (a dword, a dword and a word).
 //
-// The +0x14 scalar is ceil() of the eight bytes of .rdata at 0x010BFA50, passed
-// through the MSVCR71.dll ceil import at 0x01359394 and truncated by __ftol2.
-// Nothing in the evidence names that constant, so the body quotes the address
-// and no name is invented for it.
+// The +0x14 scalar is ceil() of the double constant at .rdata 0x010BFA50
+// (2.4999999441206455), passed through the MSVCR71.dll ceil import at
+// 0x01359394 and truncated by __ftol2.
 
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #include <set>
@@ -55,6 +54,9 @@ typedef _STL::_Rb_tree<Rva00296ED0Key, Rva00296ED0Key,
 	_STL::_Identity<Rva00296ED0Key>, _STL::less<Rva00296ED0Key>,
 	_STL::allocator<Rva00296ED0Key> > Rva00296ED0Tree;
 
+class LGA_Global;
+extern LGA_Global g_lgaGlobal;
+
 class LargeGroupAudioUpdateModuleData : public LargeGroupAudioUpdateModuleDataBase
 {
 public:
@@ -70,9 +72,9 @@ private:
 // ??0LargeGroupAudioUpdateModuleData@@QAE@XZ
 LargeGroupAudioUpdateModuleData::LargeGroupAudioUpdateModuleData() :
 	m_keys(),
-	m_b((int)ceil(*(const double *)0x010BFA50)),
+	m_b((int)ceil(2.4999999441206455)),
 	m_a(1),
 	m_enabled(1)
 {
-	((Rva00296ED0Tree *)0x012EFFA0)->insert_unique((Rva00296ED0Key)this);
+	((Rva00296ED0Tree *)&g_lgaGlobal)->insert_unique((Rva00296ED0Key)this);
 }

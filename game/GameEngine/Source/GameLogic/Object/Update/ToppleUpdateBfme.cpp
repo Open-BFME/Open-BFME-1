@@ -140,8 +140,8 @@ static __declspec(noinline) void deathByToppling(Object *obj)
  reinterpret_cast<Rva002B1610ObjectView *>(obj)->attemptDamage(&damageInfo);
 }
 
-#define RVA002B1610_BOUNCE_STEP (*(const Real *)0x010C51AC)
-#define RVA002B1610_BOUNCE_FLOOR (*(const Real *)0x010BA670)
+#define RVA002B1610_BOUNCE_STEP (0.025f)
+#define RVA002B1610_BOUNCE_FLOOR (0.05f)
 
 #define RVA002B1610_BASE ((Rva002B1610Base *)((char *)this - 0x10))
 

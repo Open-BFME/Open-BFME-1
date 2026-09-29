@@ -36,6 +36,7 @@ private:
 
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void *object,
 	void *throwInfo);
+extern int g_INIExceptionThrowInfo;
 
 struct BfmeAttributeHandle
 {
@@ -82,13 +83,13 @@ public:
 #define THROW_FILTER_ERROR(format, token) \
 	do { \
 		INIException error(3, format, token); \
-		_CxxThrowException(&error, (void *)0x011DFC30); \
+		_CxxThrowException(&error, (void *)&g_INIExceptionThrowInfo); \
 	} while (0)
 
 #define THROW_FILTER_ERROR_NO_TOKEN(format) \
 	do { \
 		INIException error(3, format); \
-		_CxxThrowException(&error, (void *)0x011DFC30); \
+		_CxxThrowException(&error, (void *)&g_INIExceptionThrowInfo); \
 	} while (0)
 
 void IniParseObjectFilterShim::run(INI *ini, void *, void *store, const void *)
