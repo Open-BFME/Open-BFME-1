@@ -35,6 +35,7 @@ public:
 	~StringBase() { releaseBuffer(); }
 
 	void concat(const T *source, int length);
+	void concat(const StringBase<T> &source);
 	void appendChar(T character)
 	{
 		T inserted = character;
@@ -72,6 +73,7 @@ public:
 	virtual void slot0();
 	virtual void setText(BfmeEntryString text);
 	virtual BfmeEntryString getText();
+	virtual int getTextLength();
 };
 
 class BfmeEntryMaskedText
@@ -98,7 +100,7 @@ public:
 	virtual void slot18();
 	virtual void slot19();
 	virtual void slot20();
-	virtual void slot21();
+	virtual void removeLastChar();
 	virtual void appendChar(int character);
 };
 
@@ -172,4 +174,54 @@ bool __cdecl GadgetTextEntryInsertCharacter(
 	entry->drawTextFromStart = 1;
 
 	return true;
+}
+
+static __forceinline unsigned short *chooseHigherPosition(
+	unsigned short *left, unsigned short *right)
+{
+	return *left > *right ? left : right;
+}
+
+// ?GadgetTextEntryUpdateComposition@@YAXPAVGameWindow@@@Z
+void __cdecl GadgetTextEntryUpdateComposition(GameWindow *window)
+{
+	volatile unsigned char changed;
+	BfmeEntryData *entry = (BfmeEntryData *)window->winGetUserData();
+	unsigned short *composition = &entry->conCharPos;
+	unsigned short *cursor = &entry->charPos;
+	unsigned short *lowerPosition;
+	unsigned short *upperPosition = cursor;
+	volatile unsigned short *compositionRead = composition;
+	volatile unsigned short *cursorRead = cursor;
+	changed = 0;
+	if (entry->conCharPos < entry->charPos)
+		lowerPosition = composition;
+	else
+		lowerPosition = cursor;
+	unsigned int lower = *lowerPosition;
+	upperPosition = chooseHigherPosition(composition, cursor);
+	unsigned int upper = *upperPosition;
+
+	unsigned int textLength = entry->text->getTextLength();
+	if (upper > textLength)
+		upper = entry->text->getTextLength();
+
+	if (upper > 0 && upper != lower) {
+		BfmeEntryString current = entry->text->getText();
+		BfmeEntryString prefix(current, 0, lower);
+		{
+			BfmeEntryString suffix(current, upper,
+				(current.m_data ? current.m_data->length : 0) - upper);
+			((StringBase<WideChar> *)&prefix)->concat(
+				*(const StringBase<WideChar> *)&suffix);
+		}
+		entry->text->setText(prefix);
+		changed = 1;
+		GadgetTextEntrySetCursorPosition(window, lower);
+		entry->conCharPos = lower;
+		for (unsigned int remaining = upper - lower; remaining != 0; --remaining)
+			entry->secretTextDisplay->removeLastChar();
+	}
+
+	entry->drawTextFromStart |= changed;
 }
