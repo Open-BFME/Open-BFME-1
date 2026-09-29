@@ -3,6 +3,9 @@
 // as Skirmish/tooltipPlayerLevelIcon.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline
 
+extern const char Rva006A16B0Empty[];
+extern const unsigned short BFMEEmptyUnicodeString;
+
 template <typename T> struct StringInlineData
 {
 	int m_refCount;
@@ -37,7 +40,7 @@ public:
 	AsciiString &operator=( const char *text );
 	const char *str() const
 	{
-		return m_data ? m_data->m_text : (const char *)0x0107388B;
+		return m_data ? m_data->m_text : Rva006A16B0Empty;
 	}
 };
 
@@ -51,7 +54,7 @@ public:
 	void format( UnicodeString format, ... );
 	const unsigned short *str() const
 	{
-		return m_data ? m_data->m_text : (const unsigned short *)0x0107388C;
+		return m_data ? m_data->m_text : &BFMEEmptyUnicodeString;
 	}
 };
 
@@ -122,6 +125,10 @@ public:
 
 extern Mouse *TheMouse;
 
+// Rank-name tables indexed by getRank(): evil sides at 0x012B8018, good at 0x012B7FF0.
+extern const char *g_012B8018[];
+extern const char *g_012B7FF0[];
+
 class BfmeAptScreenSkirmish
 {
 public:
@@ -151,9 +158,9 @@ void BfmeAptScreenSkirmish::tooltipPlayerLevelIcon( void * )
 		int rank = m_honors.getRank( side );
 		AsciiString rankName;
 		if( player->m_isEvil )
-			rankName = ((const char **)0x012B8018)[ rank ];
+			rankName = g_012B8018[ rank ];
 		else
-			rankName = ((const char **)0x012B7FF0)[ rank ];
+			rankName = g_012B7FF0[ rank ];
 		((StringBase<char> *)&tooltipKey)->concat(
 			*(const StringBase<char> *)&rankName );
 

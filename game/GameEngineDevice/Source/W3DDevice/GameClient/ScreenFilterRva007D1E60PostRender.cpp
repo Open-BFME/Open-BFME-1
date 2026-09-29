@@ -43,9 +43,12 @@ struct BfmeDevice
 	BfmeDeviceVtable *v;
 };
 
-#define BfmeDeviceGlobal (*(BfmeDevice **)0x01340534)
-#define BfmeTacticalViewGlobal (*(class BfmeTacticalView **)0x012F1600)
-#define BfmeCurrentCapsGlobal (*(struct BfmeCaps **)0x01340578)
+class View;
+extern View *TheTacticalView;
+
+#define BfmeDeviceGlobal ((BfmeDevice *)DX8Wrapper::D3DDevice)
+#define BfmeTacticalViewGlobal ((class BfmeTacticalView *)TheTacticalView)
+#define BfmeCurrentCapsGlobal ((struct BfmeCaps *)DX8Wrapper::CurrentCaps)
 // Retail 0x013071A8. Rva007D3580 postRender's fade static is 0x013071BC; both
 // were spelled ScreenBWFilter::m_curFadeValue.
 extern float Rva007D1E60FadeValue;
@@ -95,8 +98,18 @@ public:
 // DX8Wrapper::Set_Shader target behind that thunk.
 void BaseHeightMapScorchSetShader(const ShaderClass &);
 
+struct IDirect3DDevice8;
+class DX8Caps;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
+	friend class Rva007D1E60;
+
+protected:
+	static IDirect3DDevice8 *D3DDevice;
+	static DX8Caps *CurrentCaps;
+
 public:
 	static void Set_DX8_Render_State(unsigned long, unsigned int);
 	static void Set_DX8_Texture_Stage_State(unsigned int, unsigned long,

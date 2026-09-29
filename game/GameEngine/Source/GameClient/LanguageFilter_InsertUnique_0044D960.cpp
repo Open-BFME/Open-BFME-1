@@ -18,6 +18,8 @@ struct Rva0009ECA0NoCaseTraits
 
 class UnicodeString;
 
+extern const unsigned short BFMEEmptyUnicodeString;
+
 template <typename T>
 class StringBase
 {
@@ -39,9 +41,9 @@ public:
     int compareNoCase(const StringBase<T> &other) const throw()
     {
         const int otherLength = other.m_data ? other.m_data->length : 0;
-        const T *otherText = other.m_data ? other.m_data->text : (const T *)0x0107388C;
+        const T *otherText = other.m_data ? other.m_data->text : (const T *)&BFMEEmptyUnicodeString;
         const int thisLength = m_data ? m_data->length : 0;
-        const T *thisText = m_data ? m_data->text : (const T *)0x0107388C;
+        const T *thisText = m_data ? m_data->text : (const T *)&BFMEEmptyUnicodeString;
         const int commonLength = thisLength < otherLength ? thisLength : otherLength;
         Rva0009ECA0NoCaseTraits traits;
         int result = traits.compareNoCaseRaw(thisText, otherText,
@@ -68,9 +70,9 @@ public:
     int compareNoCase(const UnicodeString &other) const throw()
     {
         const int otherLength = other.m_data ? other.m_data->length : 0;
-        const WideChar *otherText = other.m_data ? other.m_data->text : (const WideChar *)0x0107388C;
+        const WideChar *otherText = other.m_data ? other.m_data->text : &BFMEEmptyUnicodeString;
         const int thisLength = m_data ? m_data->length : 0;
-        const WideChar *thisText = m_data ? m_data->text : (const WideChar *)0x0107388C;
+        const WideChar *thisText = m_data ? m_data->text : &BFMEEmptyUnicodeString;
         const int commonLength = thisLength < otherLength ? thisLength : otherLength;
         int result = ((const Rva0009ECA0NoCaseTraits *)((const char *)this + 0x20))->compareNoCaseRaw(
             thisText, otherText, commonLength);

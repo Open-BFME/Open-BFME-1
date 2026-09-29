@@ -48,6 +48,17 @@ protected:
 
 #pragma comment(linker, "/alternatename:??0Rva000A19E0StateBase@@QAE@PAXVAsciiString@@@Z=?j_000035b2@@YAXXZ")
 
+// C-linkage views of the retail vtables these constructors install (VA 0x010966F8,
+// 0x01096770, 0x010967E8 and 0x01096650); the alternate names define no table.
+extern "C" void *bfmeVftAIHarvestApproachSiteState[];
+extern "C" void *bfmeVftRva0015FDB0State[];
+extern "C" void *bfmeVftRva0015FE20State[];
+extern "C" void *bfmeVftAIHarvestMachine[];
+#pragma comment(linker, "/alternatename:_bfmeVftAIHarvestApproachSiteState=??_7AIHarvestApproachSiteState@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva0015FDB0State=??_7Rva0015FDB0State@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva0015FE20State=??_7Rva0015FE20State@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftAIHarvestMachine=??_7AIHarvestMachine@@6B@")
+
 class Rva0015FD00State : public AIInternalMoveToState
 {
 public:
@@ -57,7 +68,7 @@ public:
 Rva0015FD00State::Rva0015FD00State(void *machine)
 	: AIInternalMoveToState(machine, AsciiString("AIHarvestApproachSiteState"))
 {
-	m_vptr = reinterpret_cast<void *>(0x010966f8);
+	m_vptr = bfmeVftAIHarvestApproachSiteState;
 }
 
 class Rva0015FDB0State : public Rva000A19E0StateBase
@@ -72,7 +83,7 @@ private:
 Rva0015FDB0State::Rva0015FDB0State(void *machine)
 	: Rva000A19E0StateBase(machine, AsciiString("AIHarvestPrepareSiteState"))
 {
-	m_vptr = reinterpret_cast<void *>(0x01096770);
+	m_vptr = bfmeVftRva0015FDB0State;
 	m_stateField24 = 0;
 }
 
@@ -88,7 +99,7 @@ private:
 Rva0015FE20State::Rva0015FE20State(void *machine)
 	: Rva000A19E0StateBase(machine, AsciiString("AIHarvestWorkSiteState"))
 {
-	m_vptr = reinterpret_cast<void *>(0x010967e8);
+	m_vptr = bfmeVftRva0015FE20State;
 	m_stateField24 = 0;
 }
 
@@ -103,7 +114,7 @@ public:
 AIHarvestMachine::AIHarvestMachine(Object *owner)
 	: StateMachine(owner, AsciiString("AIHarvestMachine"), false)
 {
-	*reinterpret_cast<void **>(this) = reinterpret_cast<void *>(0x01096650);
+	*reinterpret_cast<void **>(this) = bfmeVftAIHarvestMachine;
 
 	defineState(0, (State *)new Rva0015FD00State(this), 1, 9999, 0);
 	defineState(1, (State *)new Rva0015FDB0State(this), 2, 0, 0);
