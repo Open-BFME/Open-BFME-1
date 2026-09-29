@@ -21,6 +21,12 @@ public:
 	void bfmeCall_000290d2();
 };
 
+class WindowManager;
+extern WindowManager *g_theWindowManager;
+
+class AptSaveLoad;
+extern AptSaveLoad *TheAptSaveLoad;
+
 void Rva56A8StateOwner::applyZeroState(int)
 {
 	if (m_state == 0) {
@@ -48,7 +54,7 @@ void Rva56A8StateOwner::applyDefaultState(int)
 
 void Rva56A8StateOwner::applyGlobalCall(int)
 {
-	if (m_state == 0 && *reinterpret_cast<volatile int *>(0x012f4b44) != 0) {
-		reinterpret_cast<BfmeGlobal_012f19e8 **>(0x012f19e8)[0]->bfmeCall_000290d2();
+	if (m_state == 0 && *reinterpret_cast<volatile int *>(&TheAptSaveLoad) != 0) {
+		reinterpret_cast<BfmeGlobal_012f19e8 *>(g_theWindowManager)->bfmeCall_000290d2();
 	}
 }

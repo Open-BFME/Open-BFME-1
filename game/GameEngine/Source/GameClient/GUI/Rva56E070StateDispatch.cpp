@@ -38,6 +38,9 @@ public:
 
 extern Rva005121A0Service *TheRva005121A0Service;
 
+extern const char Rva006A16B0Empty[];
+extern unsigned long g_012F4B48;
+
 class Rva56E070StateOwner : public BfmeThingME
 {
 public:
@@ -132,9 +135,9 @@ void Rva56E070StateOwner::finishState16()
 
 			void *pathData = *(void **)&path;
 			const char *pathText = pathData != 0
-				? (const char *)pathData + 8 : (const char *)0x0107388B;
+				? (const char *)pathData + 8 : Rva006A16B0Empty;
 			DeleteFileA(pathText);
-			*(unsigned long *)0x012F4B48 = GetLastError();
+			g_012F4B48 = GetLastError();
 		}
 		m_state = 2;
 	}

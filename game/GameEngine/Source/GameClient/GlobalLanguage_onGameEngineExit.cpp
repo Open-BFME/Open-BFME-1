@@ -14,6 +14,8 @@ typedef char *LPSTR;
 #define MAX_PATH 260
 #define INVALID_HANDLE_VALUE ((HANDLE)-1)
 
+extern const char *g_012B53A8;
+
 extern "C" __declspec(dllimport) HMODULE __stdcall LoadLibraryA( LPCSTR );
 extern "C" __declspec(dllimport) void * __stdcall GetProcAddress( HMODULE, LPCSTR );
 extern "C" __declspec(dllimport) Bool __stdcall FreeLibrary( HMODULE );
@@ -68,10 +70,12 @@ public:
 
 	__forceinline void clear()
 	{
-		m_data.set( *(const StringBase<char> *)0x01336E50 );
+		m_data.set( TheEmptyString.m_data );
 	}
 
 	void format( AsciiString format, ... );
+
+	static const AsciiString TheEmptyString;
 
 private:
 	StringBase<char> m_data;
@@ -134,7 +138,7 @@ void GlobalLanguage::onGameEngineExit()
 	if( GetTempPathA( MAX_PATH, tempPath ) )
 	{
 		AsciiString fontDirectory;
-		fontDirectory.format( "%s\\%s", tempPath, *(const char **)0x012B53A8 );
+		fontDirectory.format( "%s\\%s", tempPath, g_012B53A8 );
 
 		AsciiString searchPath;
 		searchPath.format( "%s\\lrf*.*", fontDirectory.str() );

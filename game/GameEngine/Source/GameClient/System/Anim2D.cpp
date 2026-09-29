@@ -206,10 +206,13 @@ const Image* Anim2DTemplate::getFrame( UnsignedShort frameNumber ) const
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // ??1Anim2D@@MAE@XZ
+extern const void *g_0110F29C[];
+extern "C" const void *bfmeVftSnapshot[];
+#pragma comment(linker, "/alternatename:_bfmeVftSnapshot=??_7Snapshot@@6B@")
 Anim2D::~Anim2D( void )
 {
 	Anim2DCollection *collectionSystem = m_collectionSystem;
-	*(volatile void **)this = (void *)0x0110F29C;
+	*(volatile void **)this = (void *)g_0110F29C;
 
 	if( collectionSystem )
 	{
@@ -222,7 +225,7 @@ Anim2D::~Anim2D( void )
 			*(Anim2D **)((unsigned char *)collectionSystem + 0x0C) = m_collectionSystemNext;
 	}
 
-	*(volatile void **)this = (void *)0x01073744;
+	*(volatile void **)this = (void *)bfmeVftSnapshot;
 }
 
 // ------------------------------------------------------------------------------------------------

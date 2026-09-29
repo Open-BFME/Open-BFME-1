@@ -9,6 +9,9 @@
 typedef bool Bool;
 typedef unsigned short WideChar;
 
+extern const char Rva006A16B0Empty[];
+extern const unsigned short BFMEEmptyUnicodeString;
+
 template <typename T> class StringBase
 {
 	friend class AsciiString;
@@ -52,7 +55,7 @@ public:
 	~AsciiString() {}
 
 	Bool isEmpty() const { return m_data == 0 || m_data->length == 0; }
-	const char *str() const { return m_data ? m_data->text : (const char *)0x0107388B; }
+	const char *str() const { return m_data ? m_data->text : Rva006A16B0Empty; }
 	int getLength() const { return m_data ? m_data->length : 0; }
 
 	const char *reverseFind(char needle) const
@@ -85,7 +88,7 @@ public:
 	~UnicodeString() {}
 
 	Bool isEmpty() const { return m_data == 0 || m_data->length == 0; }
-	const WideChar *str() const { return m_data ? m_data->text : (const WideChar *)0x0107388C; }
+	const WideChar *str() const { return m_data ? m_data->text : &BFMEEmptyUnicodeString; }
 	int getLength() const { return m_data ? m_data->length : 0; }
 	Bool startsWithDollar() const { return m_data != 0 && m_data->text[0] == '$'; }
 
