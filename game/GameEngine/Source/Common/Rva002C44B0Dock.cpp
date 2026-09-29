@@ -39,7 +39,7 @@ public:
 	ContainRva002C44B0 *m_contain;
 };
 
-class Rva002C44B0
+class HordeAIUpdate
 {
 public:
 	virtual void pad00();
@@ -49,10 +49,10 @@ public:
 	virtual void pad10();
 	virtual void usePair(void *a, void *b); // +0x14
 
-	bool run(void *a, void *b, int *out);
+	bool reserveApproachPosition(void *a, void *b, int *out);
 };
 
-bool Rva002C44B0::run(void *a, void *b, int *out)
+bool HordeAIUpdate::reserveApproachPosition(void *a, void *b, int *out)
 {
 	ContainRva002C44B0 *inner =
 		(*(ObjRva002C44B0 **)((char *)this - 0x338))->m_contain->getInner();
