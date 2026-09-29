@@ -168,3 +168,4 @@ game/GameEngine/Source/Common/BfmeConv1778.cpp|member||m_bfmePrevDB,m_prev,claud
 game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|member||field20,m_elements,claude-opus+grok,agreed,2026-09-29
 game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|member||field20,m_elements,claude-opus+grok,applied,2026-09-29
 game/GameEngine/Source/Common/BfmeConv1838.cpp|function|BfmeHolderXB@|bfmeOnXB,DoXfer,claude-fable+grok,agreed,2026-09-29
+game/GameEngine/Source/Common/BfmeConv1838.cpp|function|BfmeHolderXB@|bfmeOnXB,DoXfer,claude-fable+grok,applied,2026-09-29
