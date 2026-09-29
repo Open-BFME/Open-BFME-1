@@ -258,6 +258,7 @@ def link(objs, aliases=None, tag="census"):
 def classify(log, rows):
     pinned = pins()
     data = data_names()
+    naked = naked_rows()
     by_address = collections.defaultdict(list)
     for row in rows:
         by_address[int(row["target_rva"], 16)].append(row)
@@ -287,9 +288,9 @@ def classify(log, rows):
             kind = "data"
         elif address is not None:
             owners = [r for r in by_address.get(address, []) if not r["name"].startswith("?j_")]
-            if owners and any(not build_dump(r) for r in owners):
+            if owners and any(not build_dump(r, naked) for r in owners):
                 kind = "alias"
-                entry["defined_as"] = sorted(r["name"] for r in owners if not build_dump(r))[:3]
+                entry["defined_as"] = sorted(r["name"] for r in owners if not build_dump(r, naked))[:3]
             elif owners:
                 kind = "dump"
             else:
@@ -680,9 +681,21 @@ def comdat_losers(objs, rows=None, stats=None):
     return losers
 
 
-def build_dump(row):
-    """Not a C++ definition: a gen-dump row (349 live in gen_small C++), MASM, or an __emit lift."""
-    return build.is_scaffold_row(row) or row["source"].endswith(".asm") or "__emit" in row.get("notes", "")
+def naked_rows():
+    """{(name, target_rva)} of the C/C++ rows whose body is naked or __emit
+    assembly, by progress.py's scan of the source itself (the rows it counts
+    as dumps)."""
+    import progress
+    return set(progress.naked_cpp_rows_at(progress.matched_at(None), None))
+
+
+def build_dump(row, naked=frozenset()):
+    """Not a C++ definition: a gen-dump row (349 live in gen_small C++), MASM,
+    or a naked/__emit body (`naked`, from naked_rows()). Decided from the
+    source, never from the note: "exact C++ __emit thunk converted from MASM
+    dump" is the note of real C++ (STLRbGlobalBoolIncrementThunk.cpp)."""
+    return (build.is_scaffold_row(row) or row["source"].endswith(".asm")
+            or (row["name"], row["target_rva"]) in naked)
 
 
 def report(census):

@@ -170,3 +170,12 @@ def test_call_stub_is_excused_only_when_retail_imports_it_from_that_dll(tmp_path
     assert not L.excused("_socket@12", set(), {"socket": {"ws2_32.dll"}}, stubs)  # another DLL's socket
     assert L.excused("__imp__socket@12", set(), imported, stubs)
     assert not L.excused("__imp__htons@4", set(), imported, stubs)
+
+
+def test_build_dump_reads_the_source_not_the_note():
+    cpp = {"name": "?f@@YAXXZ", "target_rva": "0x0082B870", "source": "game/x/Thunk.cpp",
+           "notes": "exact C++ __emit thunk converted from MASM dump"}
+    assert not L.build_dump(cpp)  # real C++ whose note mentions __emit
+    assert L.build_dump(cpp, {("?f@@YAXXZ", "0x0082B870")})  # progress.py's scan found a naked body
+    assert L.build_dump({**cpp, "source": "game/masm_dumps/x.asm", "notes": ""})
+    assert L.build_dump({**cpp, "notes": "gen-dump"})
