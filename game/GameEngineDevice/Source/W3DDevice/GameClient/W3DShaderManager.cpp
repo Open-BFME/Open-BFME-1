@@ -1957,8 +1957,8 @@ void TerrainShader2Stage::reset(void)
 extern const Real g_bfmeK1266B;
 extern Real g_millisecondsToSeconds;
 
-#define BFME_DEFAULT_BU (*(const Real *)0x01075334)
-#define BFME_SHADOW_SCALE (*(const Real *)0x0109BF3C)
+#define BFME_DEFAULT_BU (1.0f)
+#define BFME_SHADOW_SCALE (-1.0f)
 
 struct Rva007DCCE0GlobalData
 {
@@ -3067,11 +3067,11 @@ typedef W3DFilterInterface **BfmeMasterFilterEntry;
 typedef BfmeMasterShaderEntry BfmeMasterShaderList[100];
 typedef BfmeMasterFilterEntry BfmeMasterFilterList[100];
 
-#define BFME_MASTER_SHADER_LIST (*(BfmeMasterShaderList *)0x012BAE40)
-#define BFME_MASTER_FILTER_LIST (*(BfmeMasterFilterList *)0x012BAE60)
-#define BFME_GLOW_VERTEX_DECLARATION (*(DWORD *)0x012F9D24)
-#define BFME_GLOW_VERTEX_SHADER (*(DWORD *)0x012F9D18)
-#define BFME_GLOW_PIXEL_SHADER (*(DWORD *)0x012F9D14)
+#define BFME_MASTER_SHADER_LIST MasterShaderList
+#define BFME_MASTER_FILTER_LIST MasterFilterList
+#define BFME_GLOW_VERTEX_DECLARATION (g_bfmeShaderManager.m_glowVertexDeclaration)
+#define BFME_GLOW_VERTEX_SHADER (g_bfmeShaderManager.m_glowVertexShader)
+#define BFME_GLOW_PIXEL_SHADER (g_bfmeShaderManager.m_glowPixelShader)
 
 // W3DShaderManager::init =======================================================
 void W3DShaderManager::init(void)
@@ -3097,8 +3097,8 @@ void W3DShaderManager::init(void)
 		}
 	}
 
-	if (*(unsigned char *)((char *)*(void **)0x012ED5C8 + 0x28) == 0 &&
-		*(Int *)0x012F9CF8 >= 3) {
+	if (*(unsigned char *)((char *)TheWritableGlobalData + 0x28) == 0 &&
+		m_currentChipset >= BFME_DC_GENERIC_PIXEL_SHADER_1_1) {
 		BfmeVertexElement declaration[] = {
 			{ 0, 0, 3, 0, 0, 0 },
 			{ 0, 0x10, 4, 0, 0x0a, 0 },
@@ -3106,7 +3106,7 @@ void W3DShaderManager::init(void)
 			{ 0xff, 0, 0x11, 0, 0, 0 }
 		};
 		if (g_bfmeShaderManager.m_glowVertexDeclaration == 0) {
-			BfmeShaderD3DDevice *device = *(BfmeShaderD3DDevice **)0x01340534;
+			BfmeShaderD3DDevice *device = (BfmeShaderD3DDevice *)DX8Wrapper::_Get_D3D_Device8();
 			if (device->CreateVertexShader(
 				declaration, &g_bfmeShaderManager.m_glowVertexDeclaration) < 0)
 				g_bfmeShaderManager.m_glowVertexDeclaration = 0;
