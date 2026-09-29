@@ -55,6 +55,7 @@ jobs:
           tools/tests/test_header_dependents.py
           tools/tests/test_pre_push_lists_fail_closed.py
           tools/tests/test_pre_push_source_selection.py
+          tools/tests/test_post_commit_ledger_skip.py
           tools/tests/test_harvest_transactions.py
           --deselect tools/tests/test_opencode_router.py::RouterTests
   containment:

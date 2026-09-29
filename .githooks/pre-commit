@@ -290,8 +290,10 @@ fi
 #     a8ad18240f replaced one with the target's real name instead of adding the
 #     name beside it; check_csv, pin_consistency and one_identity all passed and
 #     the full gate went red. No compiler, ~1.5s.
+b_pin_ran=0
 if [ "$ledger_changed" -ne 0 ] || [ "${#staged_sources[@]}" -ne 0 ]; then
     python3 tools/b_pin_check.py --staged || fail "a b_<rva> call lost its pin (see above)"
+    b_pin_ran=1
 fi
 # The baseline is a debt register that may only shrink. --write-baseline refuses
 # to grow it, but a hand-typed line is the same anti-pattern, so the committed
@@ -455,4 +457,14 @@ if [ "${#verify_chunk[@]}" -ne 0 ]; then
         || fail "byte-verify of changed sources/rows (see above)"
 fi
 
+# post-commit re-runs check_csv + b_pin_check for commits that skipped this hook
+# (cherry-pick, rebase). Record the tree both just passed on, so a normal commit
+# of exactly this tree is not checked twice (~4 s each). Any other tree -- or
+# no record at all -- is still re-checked there.
+record="$(git rev-parse --git-path bfme-ledger-verified-tree)"
+if [ "$b_pin_ran" -eq 1 ] && tree="$(git write-tree 2>/dev/null)"; then
+    printf '%s\n' "$tree" > "$record"
+else
+    rm -f "$record"
+fi
 echo "PRE-COMMIT OK (ledger integrity + ${#verify_set[@]} verification selector(s) checked)"

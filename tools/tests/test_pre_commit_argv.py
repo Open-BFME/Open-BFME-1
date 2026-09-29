@@ -45,6 +45,8 @@ git() {
         case "$*" in
         'config --get merge.union.driver') printf '%s\n' 'python3 tools/merge_rows.py %O %A %B %P' ;;
         'rev-parse --show-toplevel') printf '%s\n' "$PWD" ;;
+        'rev-parse --git-path bfme-ledger-verified-tree') printf '%s\n' ledger-verified-tree ;;
+        'write-tree') printf '%s\n' 0123456789abcdef0123456789abcdef01234567 ;;
         'diff --cached --name-only --diff-filter=ACMRT')
             printf '%s\n' targets/game/reverse/functions.csv
             [ -z "${STAGED_SOURCE:-}" ] || printf '%s\n' "$STAGED_SOURCE"
@@ -153,6 +155,7 @@ def test_failed_chunk_stops_without_success_or_later_chunks(hook_runner):
     assert 'byte-verify of changed sources/rows' in result.stderr
     assert 'PRE-COMMIT OK' not in result.stdout
     assert all(p.read_text().strip() == '4' for p in (root / 'calls').glob('*.pool'))
+    assert not (root / 'ledger-verified-tree').exists()  # a failed hook never records
 
 
 def test_filter_error_fails_closed_without_build(hook_runner):
@@ -188,9 +191,11 @@ def test_individually_oversized_path_is_rejected(hook_runner):
 
 def test_small_delta_remains_one_build(hook_runner):
     paths = ['game/GameEngine/a.cpp', 'game/GameEngine/folder with spaces/b.cpp']
-    result, chunks, _ = hook_runner(paths)
+    result, chunks, root = hook_runner(paths)
     assert result.returncode == 0, result.stderr
     assert len(chunks) == 1
+    # both ledger checks ran on this tree: post-commit may skip its re-check
+    assert (root / 'ledger-verified-tree').read_text().strip() == '0123456789abcdef0123456789abcdef01234567'
     assert set(chunks[0]) == {f'row:0x{i + 0x1000:08X}:16:{p}'
                               for i, p in enumerate(paths)}
 
