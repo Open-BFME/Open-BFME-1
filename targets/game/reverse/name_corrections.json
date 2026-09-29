@@ -10358,5 +10358,15 @@
   "after_sha256": "55c806685a87033ddb648e13efc9c023021e0d8a5c750e5e30ef650e58a88514",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "The extern storage object at 0x0130BCAC must spell the recorded symbol ?TheBfmeObject_00C70C80@@3VGen_00C70C80Target@@A (dir32_addresses.csv; also read by the matched S3SingletonForwarders.cpp) to link, and that mangling carries the type Gen_00C70C80Target. BfmeSubE1124 is kept for the BfmeE1124 constructor parameter, which is defined under that type; only this object's declared type changes."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005c3630.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/System/ParticleSystemComputeParticleVelocity.cpp",
+  "old_name": "scale",
+  "new_name": "rva005FAC90",
+  "before_sha256": "0ed33c293b9c47f6e94f915d64acebd3d7bb112f0820ed62dcd452d6cbffc468",
+  "after_sha256": "0353b522e1ce307229edd3256d3d62607dfa6793939fcb798934f23cd0735671",
+  "evidence": "targets/game/reverse/identity_evidence/005c3630-computeParticleVelocity.md",
+  "reason": "The call site needs the struct-return view of 0x005FAC90: calling the matched void+out-pointer scale() emits 147 B against retail's 104, and every struct-return spelling of the callee body measures 100-102 B against its 78, so no single spelling reproduces both. The caller's view is the address-keyed rva005FAC90 pinned on its ILT 0x00008814 (as sibling 0x005C36C0 does); the callee row keeps scale."
  }
 ]

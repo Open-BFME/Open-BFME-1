@@ -101,6 +101,46 @@ void *extra)`. Retail pushes the sret pointer, the forwarded `pos`, the
 this+0x134 Coord3D, the x87 amount and the +0x18 slot address in exactly that
 order. Nothing about the callee's identity is open.
 
+## The one spelling for 0x005FAC90: the call-site ABI is pinned at the ILT
+
+A session was asked to pick ONE spelling for 0x005FAC90, because this caller
+emits the call in a struct-return (sret) form while the matched row at
+0x005FAC90 is `void` + an explicit out pointer. Both were measured.
+
+**Option (a), call the existing `scale()` spelling: refuted.** Declaring the
+callee `void scale(Coord3D *out, ...)` and returning a local emits 147 bytes
+against retail's 104. The documented lever from `docs/shape_levers.md`
+("A float pair written through an out pointer: return it by value" -- give the
+result type a field-wise copy constructor) does not rescue it either: the same
+spelling with that copy constructor is still 147. MSVC materialises a local and
+copies it into the return slot, which is precisely the code retail does not
+have.
+
+**Option (b), re-spell 0x005FAC90 itself to the sret form: refuted.** The two
+views are indistinguishable from the callee's own bytes -- its stack layout and
+its `ret 0x14` are identical either way -- so the re-spelling has to be tested
+against the callee's 78 bytes. Three sret bodies (named local field-wise; a
+3-arg constructor return; a named local with separate `float` temporaries)
+measure 101, 100 and 102 bytes. The `void` + out-pointer body is the only
+spelling that reproduces 78/78, so the matched row is correct as it stands and
+must not be re-spelled. Re-spelling it would also have had to update every
+matched caller, and `python3 tools/callers_of.py 0x005FAC90` reports none.
+
+**What is actually landed, and why it is not a second name.** The sret form is
+a property of the CALL SITE's ABI view, not of the callee's identity, so it is
+pinned where the call site is: at the ILT thunk 0x00008814, in a row of its
+own,
+
+    ?rva005FAC90@Rva005FAC90Owner@@QAE?AUCoord3D@@PAXPBU2@M0@Z,0x00008814
+
+That is the shape the landed sibling 0x005C36C0 already uses for its callee
+0x005FAE40 (`?rva005FAE40@Rva005FAE40Receiver@@...`, pinned at 0x0002F4AA).
+`python3 tools/pin_consistency.py` judges both rows `consistent` and resolves
+0x00008814 -> 0x005FAC90, `extent=78 (matched)`, owned by the single
+`?scale@Rva005FAC90Owner@@...` row. One name per body is intact: 0x005FAC90
+keeps exactly its one real identity, and the sret spelling is a distinct,
+address-keyed, ILT-addressed row rather than a second claim on the body.
+
 ## Conversion notes
 
 See the header comment of
@@ -108,3 +148,9 @@ See the header comment of
 The load-bearing result: the +0x18 slot helper takes the pointer **by
 reference**. Every by-value spelling folds retail's redundant second null
 test; the by-reference one does not, and all 104 bytes match.
+
+Landed 2026-09-29 as
+`?computeParticleVelocity@ParticleSystem@@IAE?AUCoord3D@@PBU2@@Z` over
+`game/GameEngine/Source/GameClient/System/ParticleSystemComputeParticleVelocity.cpp`,
+replacing the `game/gen_asm/d_005b3e30.asm` scaffold row at the same 104-byte
+extent.
