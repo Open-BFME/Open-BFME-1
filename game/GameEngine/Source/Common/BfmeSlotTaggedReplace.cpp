@@ -17,17 +17,17 @@ struct BfmeSlotC680
 	void *m_bfmeHeld;
 };
 
-class BfmeStoreC680
+class AptNativeHash
 {
 public:
-	void bfmePutC680(int index, BfmeHeldC680 *obj);
+	void SetAt(int index, BfmeHeldC680 *obj);
 
 private:
 	int m_bfmeHead;
 	BfmeSlotC680 *m_bfmeSlots;
 };
 
-void BfmeStoreC680::bfmePutC680(int index, BfmeHeldC680 *obj)
+void AptNativeHash::SetAt(int index, BfmeHeldC680 *obj)
 {
 	BfmeHeldC680 *old = (BfmeHeldC680 *)((unsigned)m_bfmeSlots[index].m_bfmeHeld & ~1u);
 	obj->bfmeAddRefC680();
