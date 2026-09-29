@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/shims/sweep
-// ?rva00729F60@Rva00729F60Owner@@QAEXPAMHHHHPBVVector3@@11@Z
+// ?getTriangleIntersection@W3DTerrainBackground@@QAEXPAMHHHHPBVVector3@@11@Z
 // Open-BFME: retail 0x00729F60, 897 bytes, ret 0x20 (eight stack arguments).
 //
 // For every cell of an (outerEnd+1) x (innerEnd+1) block, clamped to the
@@ -8,9 +8,8 @@
 // into the X or Y slot of the cell's 12-byte record (mode +0xb8 == 1 or 2).
 // The owner reads origin +0x40/+0x44, grid width +0x48 and the height map
 // +0x4c, the BFME W3DTerrainBackground offsets that the matched setFlip
-// (0x00729F00) witnesses, but no caller is matched yet (d_0072a3d0 and
-// d_0072b580 reach it through ILT 0x000453F9), so the class and method keep
-// address-derived names.
+// (0x00729F00) witnesses. Callers d_0072a3d0 and d_0072b580 still reach it
+// through ILT 0x000453F9. EA names the body getTriangleIntersection.
 //
 // Codegen notes: 1.0f and MAP_XY_FACTOR (10.0f) are literals, which lets
 // VC7.1 hoist the two segment-end Z stores out of the inner loop as retail
@@ -44,7 +43,7 @@ public:
 	}
 };
 
-class Rva00729F60Owner
+class W3DTerrainBackground
 {
 public:
 	int originX(void) const
@@ -72,12 +71,12 @@ public:
 		return *(const int *)((const char *)this + 0xb8);
 	}
 
-	void rva00729F60(float *records, int xOrigin, int yOrigin,
+	void getTriangleIntersection(float *records, int xOrigin, int yOrigin,
 		int outerEnd, int innerEnd, const Vector3 *first,
 		const Vector3 *second, const Vector3 *third);
 };
 
-void Rva00729F60Owner::rva00729F60(float *records, int xOrigin, int yOrigin,
+void W3DTerrainBackground::getTriangleIntersection(float *records, int xOrigin, int yOrigin,
 	int outerEnd, int innerEnd, const Vector3 *first,
 	const Vector3 *second, const Vector3 *third)
 {
