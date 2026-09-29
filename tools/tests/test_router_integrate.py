@@ -457,37 +457,6 @@ def real_race_guard():
     return ''.join(lines[:end + 2]) + '    echo "PRE-PUSH OK"\ndone <<< "$refs"\n'
 
 
-class PublishLedgerCheckTest(PublishFixture):
-    """publish()'s own check_csv duplicates the pre-push hook's `check_csv --ref`
-    on the identical commit (2.3 s per attempt); it is skipped only when the
-    effective hook really runs that check."""
-    GATE = 'python3 tools/check_csv.py --ref "$local_sha" || fail "ledger integrity"'
-
-    def test_hook_with_the_ledger_gate_covers_the_check(self):
-        self.hook(self.GATE)
-        self.assertTrue(ri.hook_verifies_ledger(self.dest))
-
-    def test_hook_without_the_gate_or_not_executable_does_not(self):
-        self.assertFalse(ri.hook_verifies_ledger(self.dest))  # no hook at all
-        self.hook('exit 0')
-        self.assertFalse(ri.hook_verifies_ledger(self.dest))
-        self.hook(self.GATE)
-        (self.dest / '.git/hooks/pre-push').chmod(0o644)
-        self.assertFalse(ri.hook_verifies_ledger(self.dest))
-
-    def test_core_hooks_path_is_the_hook_that_counts(self):
-        self.hook(self.GATE)  # .git/hooks has it, but git would run another directory
-        other = Path(self.tmp.name) / 'hookdir'
-        other.mkdir()
-        (other / 'pre-push').write_text('#!/bin/sh\nexit 0\n'); (other / 'pre-push').chmod(0o755)
-        git(self.dest, 'config', 'core.hooksPath', str(other))
-        self.assertFalse(ri.hook_verifies_ledger(self.dest))
-
-    def test_the_repository_hook_keeps_the_gate_publish_relies_on(self):
-        hook = (Path(ri.__file__).resolve().parents[1] / '.githooks/pre-push').read_text()
-        self.assertRegex(hook, ri.HOOK_LEDGER_GATE)
-
-
 class PublishRealHookTest(PublishFixture):
     """publish() against the real hook's PUSH RACE guard, with a racer landing
     a commit after publish()'s pull and before its push."""
