@@ -112,11 +112,11 @@ extern void j_0004a327();
 typedef Bool (Pathfinder::*Rva0004A327Call)(
 	Object *, const Coord3D *, const Coord3D *, UnsignedInt);
 
-// The following two data references retain their retail address tokens.
-// Their semantic GlobalData field names and shipped values are not established
-// by this candidate.
+// The zero range is a data reference; the height tolerance is the compiler
+// constant __real@42480000. Their semantic names are not established by this
+// candidate.
 extern const Real BfmeZeroRange;
-#define Rva003F1690HeightTolerance (*(const Real *)0x0107FAA8)
+#define Rva003F1690HeightTolerance (50.0f)
 
 Bool Pathfinder::rva003f1690(
 	Int objectWord,
@@ -172,7 +172,7 @@ Bool Pathfinder::rva003f1690(
 	{
 		// Retail skips this height delta check when the first address-backed
 		// value is at least referenceHeight. Otherwise the absolute difference
-		// must be no greater than the second address-backed value.
+		// must be no greater than the height tolerance.
 		if (referenceHeight > BfmeZeroRange &&
 			(Real)fabs(candidate.z - referenceHeight) >
 			Rva003F1690HeightTolerance)

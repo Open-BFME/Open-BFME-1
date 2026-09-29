@@ -47,6 +47,8 @@ public:
 	AINamedListNode *m_namedLists;
 };
 
+extern const char g_010959F4[];
+
 class AI
 {
 public:
@@ -75,5 +77,5 @@ void AI::parseAttackPriority( INI *ini, void *instance, void *, const void * )
 		data->m_namedLists = node;
 	}
 
-	ini->initFromINI( node, (const void *)0x010959F4 );
+	ini->initFromINI( node, g_010959F4 );
 }

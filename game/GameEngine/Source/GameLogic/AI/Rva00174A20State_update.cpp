@@ -167,6 +167,7 @@ public:
 
 extern UnsignedByte g_012F0239;
 extern void *g_012ED4FC;
+extern AudioManager *TheAudio;
 extern void j_0003a17a();
 
 typedef void (__cdecl *Rva00174A20CritterDesyncLog)(void *, const char *);
@@ -257,7 +258,7 @@ StateReturnType Rva00174A20State::update()
 				sound.setObjectID(source->getID());
 				if (source->m_team && source->m_team->bfmeGetControllingPlayer())
 					sound.setPlayerIndex(source->m_team->bfmeGetControllingPlayer()->getPlayerIndex());
-				(*(AudioManager **)0x012ED668)->addAudioEvent(&sound);
+				TheAudio->addAudioEvent(&sound);
 			}
 		}
 		return STATE_SUCCESS;

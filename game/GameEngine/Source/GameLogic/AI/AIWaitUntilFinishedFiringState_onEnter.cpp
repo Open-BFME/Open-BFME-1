@@ -95,7 +95,8 @@ public:
 	unsigned int m_frame;
 };
 
-#define TheGameLogic (*(GameLogic **)0x012F0898)
+extern GameLogic *TheGameLogic;
+#define TheGameLogic (TheGameLogic)
 
 class AIWaitUntilFinishedFiringState : public State
 {

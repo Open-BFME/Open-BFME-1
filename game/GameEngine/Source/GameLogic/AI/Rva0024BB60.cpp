@@ -51,6 +51,9 @@ public:
 	void notify(void *value);
 };
 
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
+
 class Rva0024BB60
 {
 public:
@@ -67,7 +70,7 @@ void Rva0024BB60::notifyMember(BfmeRvaBB60Object *object)
 	else
 		value = 0;
 
-	((BfmeRvaBB60Manager *)*(void **)0x012ED5B8)->notify(value);
+	((BfmeRvaBB60Manager *)ThePartitionManager)->notify(value);
 	object->action(0x14);
 	object->setStatus(ObjectStatusMaskType(ObjectStatusMaskType::kInit, 3), false);
 }

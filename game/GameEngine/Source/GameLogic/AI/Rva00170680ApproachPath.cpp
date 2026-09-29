@@ -145,7 +145,7 @@ bool Rva00170680ApproachPath::computePath()
         void *pathfinder = TheAI->m_pathfinder;
         CALL(Rva003E9720,pathfinder,j_000294e2)(source,&m_goalPosition,
             CALL(Rva001A7C20,TheTerrainLogic,j_0001c675)(source,&m_goalPosition),
-            (const char*)0x0109769c,0x1812);
+            "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp",0x1812);
         CALL(Rva00270470,ai,j_00015d93)(&m_goalPosition);
         flag4d = ai->flag31e;
         return true;
