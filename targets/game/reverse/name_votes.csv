@@ -262,3 +262,8 @@ game/GameEngine/Source/Common/BfmeConv815.cpp|type||BfmeThing171,af6b26134d759a4
 game/GameEngine/Source/Common/BfmeConv815.cpp|type||BfmeMgrEB2,947cc3cf4f98ea75efdd4e78,grok,20260929192324-89bc1c,2026-09-29
 game/GameEngine/Source/Common/BfmeConv815.cpp|member||f10,391da6953da452d10c780c37,grok,20260929192324-89bc1c,2026-09-29
 game/Libraries/Source/EA/Apt/Rva8CDA60StackDispatch.cpp|function||rva8CDA60StackDispatch,80cd718735ae63db37878efd,grok,20260929192535-02bcc9,2026-09-29
+game/GameEngine/Source/Common/S3FlagPairRefreshes.cpp|type||Gen_005ee5a0Sub,22ffd0b217fa8fa7b391c2b1,grok,20260929192814-61e3e7,2026-09-29
+game/GameEngine/Source/Common/S3FlagPairRefreshes.cpp|type||Gen_005ef8b0Sub,784cad73dad64e7966f1a9ca,grok,20260929192814-61e3e7,2026-09-29
+game/GameEngine/Source/Common/S3FlagPairRefreshes.cpp|type||Gen_005fe880Sub,56f9f1f64b98d10ff9395dfa,grok,20260929192814-61e3e7,2026-09-29
+game/GameEngine/Source/Common/S3FlagPairRefreshes.cpp|type||Gen_005ff8d0Sub,10c758994a5e1b5a9542ef75,grok,20260929192814-61e3e7,2026-09-29
+game/GameEngine/Source/Common/S3FlagPairRefreshes.cpp|type||Gen_00600710Sub,6050e4d7eae0bf6e243f70fa,grok,20260929192814-61e3e7,2026-09-29
