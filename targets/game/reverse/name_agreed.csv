@@ -105,3 +105,12 @@ game/GameEngine/Source/Common/BfmeHostABD_bfmeAllocABD.cpp|member||m_bfme48ABD,m
 game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|member||m_bfmeModeYV,m_gameMode,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_10,m_velocity,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_38,m_emitterSpacing,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/Q3IntrosortLoop004775D0.cpp|function||Gen004775D0,__introsort_loop,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/Q3IntrosortLoop004775D0.cpp|function||Q3InsertionSort004761D0,__insertion_sort,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/Q3IntrosortLoop004775D0.cpp|function||Q3IterSwap00473BC0,iter_swap,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/Q3IntrosortLoop004775D0.cpp|function||Q3LinearInsert004757B0,__linear_insert,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/Q3IntrosortLoop004775D0.cpp|function||Q3MakeHeap004749F0,__make_heap,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/Q3IntrosortLoop004775D0.cpp|function||Q3PartialSort004775D0,__partial_sort,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/Q3IntrosortLoop004775D0.cpp|function||Q3Partition004775D0,__unguarded_partition,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/Q3IntrosortLoop004775D0.cpp|function||Q3PushHeap00473D60,__push_heap,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/Q3IntrosortLoop004775D0.cpp|function||Q3UnguardedLinearInsert00473CA0,__unguarded_linear_insert,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29

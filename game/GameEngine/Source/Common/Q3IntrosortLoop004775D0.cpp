@@ -61,31 +61,31 @@ struct Q3SortCompare
 	}
 };
 
-__declspec(noinline) Q3SortElem16 *Q3Partition004775D0(Q3SortElem16 *, Q3SortElem16 *,
+__declspec(noinline) Q3SortElem16 *__unguarded_partition(Q3SortElem16 *, Q3SortElem16 *,
 	Q3SortElem16, Q3SortCompare);
 
-void Q3PartialSort004775D0(Q3SortElem16 *, Q3SortElem16 *, Q3SortElem16 *,
+void __partial_sort(Q3SortElem16 *, Q3SortElem16 *, Q3SortElem16 *,
 	Q3SortElem16 *, Q3SortCompare);
-void Q3MakeHeap004749F0(Q3SortElem16 *, Q3SortElem16 *, Q3SortCompare,
+void __make_heap(Q3SortElem16 *, Q3SortElem16 *, Q3SortCompare,
 	Q3SortElem16 *, int *);
 void Q3PopHeap004748F0(Q3SortElem16 *, Q3SortElem16 *, Q3SortElem16 *,
 	Q3SortElem16, Q3SortCompare, int *);
 void Q3SortHeap00476250(Q3SortElem16 *, Q3SortElem16 *, Q3SortCompare);
 
-// ?Q3PartialSort004775D0@@YAXPAUQ3SortElem16@@000UQ3SortCompare@@@Z
-__declspec(noinline) void Q3PartialSort004775D0(Q3SortElem16 *first,
+// ?__partial_sort@@YAXPAUQ3SortElem16@@000UQ3SortCompare@@@Z
+__declspec(noinline) void __partial_sort(Q3SortElem16 *first,
 	Q3SortElem16 *middle, Q3SortElem16 *last, Q3SortElem16 *,
 	Q3SortCompare incomingComp)
 {
 	Q3SortCompare comp = incomingComp;
-	Q3MakeHeap004749F0(first, middle, comp, (Q3SortElem16 *)0, (int *)0);
+	__make_heap(first, middle, comp, (Q3SortElem16 *)0, (int *)0);
 	for (Q3SortElem16 *current = middle; current < last; ++current)
 		if (comp(*current, *first))
 			Q3PopHeap004748F0(first, middle, current, *current, comp, (int *)0);
 	Q3SortHeap00476250(first, middle, comp);
 }
 
-__declspec(noinline) void Q3IterSwap00473BC0(Q3SortElem16 *, Q3SortElem16 *);
+__declspec(noinline) void iter_swap(Q3SortElem16 *, Q3SortElem16 *);
 
 static __forceinline const Q3SortElem16 *Q3SortElem16Median(
 	const Q3SortElem16 *a, const Q3SortElem16 *b,
@@ -106,8 +106,8 @@ static __forceinline const Q3SortElem16 *Q3SortElem16Median(
 	return b;
 }
 
-// ?Q3Partition004775D0@@YAPAUQ3SortElem16@@PAU1@0U1@UQ3SortCompare@@@Z
-__declspec(noinline) Q3SortElem16 *Q3Partition004775D0(Q3SortElem16 *first,
+// ?__unguarded_partition@@YAPAUQ3SortElem16@@PAU1@0U1@UQ3SortCompare@@@Z
+__declspec(noinline) Q3SortElem16 *__unguarded_partition(Q3SortElem16 *first,
 	Q3SortElem16 *last, Q3SortElem16 value, Q3SortCompare comp)
 {
 	for (;;)
@@ -119,35 +119,35 @@ __declspec(noinline) Q3SortElem16 *Q3Partition004775D0(Q3SortElem16 *first,
 			--last;
 		if (!(first < last))
 			return first;
-		Q3IterSwap00473BC0(first, last);
+		iter_swap(first, last);
 		++first;
 	}
 }
 
-// ?Gen004775D0@@YAXPAUQ3SortElem16@@00HUQ3SortCompare@@@Z
-void Gen004775D0(Q3SortElem16 *first, Q3SortElem16 *last,
+// ?__introsort_loop@@YAXPAUQ3SortElem16@@00HUQ3SortCompare@@@Z
+void __introsort_loop(Q3SortElem16 *first, Q3SortElem16 *last,
 	Q3SortElem16 *, int depthLimit, const Q3SortCompare comp)
 {
 	while ((last - first) > 16)
 	{
 		if (depthLimit == 0)
 		{
-			Q3PartialSort004775D0(first, last, last, 0, comp);
+			__partial_sort(first, last, last, 0, comp);
 			return;
 		}
 
 		--depthLimit;
-		Q3SortElem16 *cut = Q3Partition004775D0(first, last,
+		Q3SortElem16 *cut = __unguarded_partition(first, last,
 			*Q3SortElem16Median(first, first + (last - first) / 2,
 				last - 1, comp), comp);
-		Gen004775D0(cut, last,
+		__introsort_loop(cut, last,
 			(Q3SortElem16 *)0, depthLimit, comp);
 		last = cut;
 	}
 }
 
 // Retail 0x00473BC0/170: ordinary value swap with owning string copies.
-__declspec(noinline) void Q3IterSwap00473BC0(Q3SortElem16 *first, Q3SortElem16 *last)
+__declspec(noinline) void iter_swap(Q3SortElem16 *first, Q3SortElem16 *last)
 {
 	Q3SortElem16 temporary = *first;
 	*first = *last;
@@ -160,7 +160,7 @@ __declspec(noinline) void Q3IterSwap00473BC0(Q3SortElem16 *first, Q3SortElem16 *
 // 283-byte body at 0x00474330, reached here through ILT 0x18ABB.
 void Q3AdjustHeap00474330(Q3SortElem16 *, int, int, Q3SortElem16, Q3SortCompare);
 
-void Q3MakeHeap004749F0(Q3SortElem16 *first, Q3SortElem16 *last,
+void __make_heap(Q3SortElem16 *first, Q3SortElem16 *last,
     Q3SortCompare comp, Q3SortElem16 *, int *)
 {
     if (last - first < 2)
@@ -177,7 +177,7 @@ void Q3MakeHeap004749F0(Q3SortElem16 *first, Q3SortElem16 *last,
 
 // STLport __push_heap; the matched adjust_heap body calls ILT0x49657
 // to this full207B body at0x00473D60, ending ret0x00473E2E.
-void Q3PushHeap00473D60(Q3SortElem16 *first, int holeIndex,
+void __push_heap(Q3SortElem16 *first, int holeIndex,
     int topIndex, Q3SortElem16 value, Q3SortCompare comp)
 {
     int parent = (holeIndex - 1) / 2;
@@ -189,17 +189,17 @@ void Q3PushHeap00473D60(Q3SortElem16 *first, int holeIndex,
     first[holeIndex] = value;
 }
 
-__declspec(noinline) void Q3LinearInsert004757B0(Q3SortElem16 *, Q3SortElem16 *, Q3SortElem16, Q3SortCompare);
+__declspec(noinline) void __linear_insert(Q3SortElem16 *, Q3SortElem16 *, Q3SortElem16, Q3SortCompare);
 
 // Retail92B ends at ret0x0047622B; matched final split0x00476880
 // calls through ILT0x20D65. Linear insertion uses the same owning record.
-void Q3InsertionSort004761D0(Q3SortElem16 *first, Q3SortElem16 *last,
+void __insertion_sort(Q3SortElem16 *first, Q3SortElem16 *last,
     Q3SortCompare comp)
 {
     if (first == last)
         return;
     for (Q3SortElem16 *current = first + 1; current != last; ++current)
-        Q3LinearInsert004757B0(first, current, *current, comp);
+        __linear_insert(first, current, *current, comp);
 }
 
 // STLport random-access iterator tag inheritance (_iterator_base.h).
@@ -213,10 +213,10 @@ inline Q3IteratorCategory Q3IteratorCategoryOf(Q3SortElem16 *const &)
 }
 Q3SortElem16 *Q3CopyBackward00473440(Q3SortElem16 *, Q3SortElem16 *,
     Q3SortElem16 *, const Q3IteratorCategory &, int *);
-__declspec(noinline) void Q3UnguardedLinearInsert00473CA0(Q3SortElem16 *, Q3SortElem16, Q3SortCompare);
+__declspec(noinline) void __unguarded_linear_insert(Q3SortElem16 *, Q3SortElem16, Q3SortCompare);
 
 // Full retail191B ends at ret0x0047586E (exclusive0x0047586F).
-void Q3LinearInsert004757B0(Q3SortElem16 *first, Q3SortElem16 *last,
+void __linear_insert(Q3SortElem16 *first, Q3SortElem16 *last,
     Q3SortElem16 value, Q3SortCompare comp)
 {
     if (comp(value, *first)) {
@@ -224,12 +224,12 @@ void Q3LinearInsert004757B0(Q3SortElem16 *first, Q3SortElem16 *last,
             Q3IteratorCategoryOf(first), (int *)0);
         *first = value;
     } else {
-        Q3UnguardedLinearInsert00473CA0(last, value, comp);
+        __unguarded_linear_insert(last, value, comp);
     }
 }
 
 // Full retail152B through ret0x00473D37, exclusive0x00473D38.
-void Q3UnguardedLinearInsert00473CA0(Q3SortElem16 *last,
+void __unguarded_linear_insert(Q3SortElem16 *last,
     Q3SortElem16 value, Q3SortCompare comp)
 {
     Q3SortElem16 *next = last;

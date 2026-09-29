@@ -31375,3 +31375,12 @@ dup_930180,0x00930180,claim superseded by the gate-required claim for ??4Texture
 ?bfmeAddDB@BfmeOwnDB@@QAEXPAVBfmeItemDB@@@Z,0x004438A0,renamed to ?addIdleWorker@BfmeOwnDB@@QAEXPAVBfmeItemDB@@@Z by tools/name_lane.py apply: two models agreed
 ?bfmeGoCCA@BfmeThingCCA@@QAEXPAX@Z,0x001601B0,renamed to ?onExit@BfmeThingCCA@@QAEXPAX@Z by tools/name_lane.py apply: two models agreed
 ?bfmeGo912F@BfmeThing912F@@QAEPAXXZ,0x009D1BF0,renamed to ?readEntireAndClose@BfmeThing912F@@QAEPAXXZ by tools/name_lane.py apply: two models agreed
+?Gen004775D0@@YAXPAUQ3SortElem16@@00HUQ3SortCompare@@@Z,0x004775D0,renamed to ?__introsort_loop@@YAXPAUQ3SortElem16@@00HUQ3SortCompare@@@Z by tools/name_lane.py apply: two models agreed
+?Q3InsertionSort004761D0@@YAXPAUQ3SortElem16@@0UQ3SortCompare@@@Z,0x004761D0,renamed to ?__insertion_sort@@YAXPAUQ3SortElem16@@0UQ3SortCompare@@@Z by tools/name_lane.py apply: two models agreed
+?Q3IterSwap00473BC0@@YAXPAUQ3SortElem16@@0@Z,0x00473BC0,renamed to ?iter_swap@@YAXPAUQ3SortElem16@@0@Z by tools/name_lane.py apply: two models agreed
+?Q3LinearInsert004757B0@@YAXPAUQ3SortElem16@@0U1@UQ3SortCompare@@@Z,0x004757B0,renamed to ?__linear_insert@@YAXPAUQ3SortElem16@@0U1@UQ3SortCompare@@@Z by tools/name_lane.py apply: two models agreed
+?Q3MakeHeap004749F0@@YAXPAUQ3SortElem16@@0UQ3SortCompare@@0PAH@Z,0x004749F0,renamed to ?__make_heap@@YAXPAUQ3SortElem16@@0UQ3SortCompare@@0PAH@Z by tools/name_lane.py apply: two models agreed
+?Q3PartialSort004775D0@@YAXPAUQ3SortElem16@@000UQ3SortCompare@@@Z,0x004768F0,renamed to ?__partial_sort@@YAXPAUQ3SortElem16@@000UQ3SortCompare@@@Z by tools/name_lane.py apply: two models agreed
+?Q3Partition004775D0@@YAPAUQ3SortElem16@@PAU1@0U1@UQ3SortCompare@@@Z,0x004747F0,renamed to ?__unguarded_partition@@YAPAUQ3SortElem16@@PAU1@0U1@UQ3SortCompare@@@Z by tools/name_lane.py apply: two models agreed
+?Q3PushHeap00473D60@@YAXPAUQ3SortElem16@@HHU1@UQ3SortCompare@@@Z,0x00473D60,renamed to ?__push_heap@@YAXPAUQ3SortElem16@@HHU1@UQ3SortCompare@@@Z by tools/name_lane.py apply: two models agreed
+?Q3UnguardedLinearInsert00473CA0@@YAXPAUQ3SortElem16@@U1@UQ3SortCompare@@@Z,0x00473CA0,renamed to ?__unguarded_linear_insert@@YAXPAUQ3SortElem16@@U1@UQ3SortCompare@@@Z by tools/name_lane.py apply: two models agreed
