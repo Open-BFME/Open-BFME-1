@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "5218d8088dbaab66e69ed430514890eea0b01b42d491e69f67d40a01619e8df0",
+  "symbol": "?d_008b90f0@@YAXXZ",
+  "score_kind": "measured",
+  "score": 0.212,
+  "source": "// ?d_008b90f0@@YAXXZ\n// partial score=0.212 date=2026-09-29\n// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n// The caller at 0x008B91F0 and pin at 0x008B90F0 identify this tagged-value comparator.\nstruct BfmeStringData3AF0\n{\n    unsigned short m_refCount, m_length, m_capacity, m_flags;\n};\n\nstruct BfmeStringPool3AF0\n{\n    void *m_unused;\n    void (__cdecl *free)(void *);\n};\n\nextern BfmeStringData3AF0 g_bfmeDefaultString1284;\nextern BfmeStringPool3AF0 *g_bfmeStringPool1284;\nextern \"C\" int __cdecl strcmp(const char *, const char *);\n#pragma intrinsic(strcmp)\n\nclass Rva8CD130String\n{\npublic:\n    Rva8CD130String()\n    {\n        m_data = &g_bfmeDefaultString1284;\n        ++m_data->m_refCount;\n    }\n\n    ~Rva8CD130String()\n    {\n        BfmeStringData3AF0 *old = m_data;\n        if (--old->m_refCount == 0)\n            g_bfmeStringPool1284->free(old);\n    }\n\n    BfmeStringData3AF0 *m_data;\n};\n\nclass Rva8CD130Value\n{\npublic:\n    void getName(Rva8CD130String *);\n};\n\nint __cdecl dup_008B90F0(unsigned *left, unsigned *right)\n{\n    Rva8CD130Value *rightValue = (Rva8CD130Value *)(*right & ~1u);\n    Rva8CD130Value *leftValue = (Rva8CD130Value *)(*left & ~1u);\n    Rva8CD130String leftName;\n    Rva8CD130String rightName;\n    leftValue->getName(&leftName);\n    rightValue->getName(&rightName);\n    return strcmp((const char *)leftName.m_data + 8,\n                  (const char *)rightName.m_data + 8);\n}\n"
+}
