@@ -263,7 +263,8 @@ public:
 
 #pragma comment(linker, "/alternatename:?run@Rva002BC260GoalOwner@@QAEXPAX000@Z=?j_0000795a@@YAXXZ")
 
-#define g_Rva012F02D4 (*(int *)0x012F02D4)
+extern int g_012F02D4;
+#define g_Rva012F02D4 g_012F02D4
 
 extern void j_0002191d();
 extern "C" void _ReadWriteBarrier(void);

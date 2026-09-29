@@ -204,7 +204,7 @@ void Rva002CE900RailedTransportDockUpdate::doPullInDocking()
 			Real dx = dockerPos->x - dockPos->x;
 			Real dy = dockerPos->y - dockPos->y;
 			Real distSq = dx * dx + dy * dy;
-			if (distSq <= *(const Real *)0x010CAE24)
+			if (distSq <= 36.0f)
 			{
 				docker->clearModelConditionState();
 				m_dockInterface.cancelDock(docker);

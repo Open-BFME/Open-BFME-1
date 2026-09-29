@@ -70,6 +70,7 @@ extern "C" BfmeFormattedText *__cdecl bfmeFormatText(
 	BfmeFormattedText *result, Int tag, const char *format, ...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
+extern int g_guardTargetTypeThrowInfo;
 extern void j_0000240a();
 
 static __forceinline void xferParticleSystemID(Xfer *xfer, void *value)
@@ -180,7 +181,7 @@ void BoneFXUpdate::xfer(Xfer *xfer)
 		if (m_particleSystemIDs.empty() == false)
 		{
 			bfmeFormatText(&local.error, 5, 0);
-			_CxxThrowException(&local.error, (void *)0x011DFE5C);
+			_CxxThrowException(&local.error, &g_guardTargetTypeThrowInfo);
 		}
 		for (UnsignedShort i = 0; i < particleSystemCount; ++i)
 		{

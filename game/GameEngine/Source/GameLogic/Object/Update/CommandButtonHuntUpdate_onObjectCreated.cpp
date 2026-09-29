@@ -118,7 +118,7 @@ public:
 	virtual void updateValue(void *value) = 0;
 };
 
-#define TheControlBar (*(ControlBar **)0x012F33F8)
+extern ControlBar *TheControlBar;
 
 class CommandButtonHuntUpdate
 {
