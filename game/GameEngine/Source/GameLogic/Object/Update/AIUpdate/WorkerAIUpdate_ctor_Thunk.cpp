@@ -110,10 +110,15 @@ public:
 	Coord3D location;
 };
 
+// The allocator every AudioEventRTS shares at retail VA 0x01336E50 is the
+// empty AsciiString; dir32_addresses.csv records it as
+// ?Rva01336E50EmptyString@@3VAsciiString@@A, the tree's existing name for it.
+extern const AsciiString Rva01336E50EmptyString;
+
 class AudioEventRTS
 {
 public:
-	AudioEventRTS(void *allocator = (void *)0x01336e50, int zero = 0);
+	AudioEventRTS(void *allocator = (void *)&Rva01336E50EmptyString, int zero = 0);
 	virtual ~AudioEventRTS();
 	AudioEventRTS &operator=(const AudioEventRTS &right);
 

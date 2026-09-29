@@ -191,7 +191,9 @@ public:
 	UnsignedInt m_frame;
 };
 
-#define TheGameLogic (*(GameLogic **)0x012F0898)
+// The retail global at 0x012F0898; dir32_addresses.csv records it as
+// ?TheGameLogic@@3PAVGameLogic@@A, the name the rest of the tree uses.
+extern GameLogic *TheGameLogic;
 
 class AIUpdateInterface
 {

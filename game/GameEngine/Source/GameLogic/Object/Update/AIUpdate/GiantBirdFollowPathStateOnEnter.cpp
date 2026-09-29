@@ -68,7 +68,9 @@ public:
 	void run(void *position, void *goalData, void *unused, unsigned char source);
 };
 
-#define g_Rva012F02D4 (*(int *)0x012F02D4)
+// The goal data every AI goal sink shares, retail VA 0x012F02D4.  No recorded
+// name, so it keeps its address (Rva002BCB60GoalRouting.cpp declares the same).
+extern int g_012F02D4;
 
 class GiantBirdAIUpdate
 {
@@ -168,7 +170,7 @@ __declspec(noinline) bool GiantBirdFollowPathState::rva002BDBF0()
 	goals.goal.z = TheTerrainLogic->getGroundHeight(
 		goals.goal.x, goals.goal.y, 0) + height;
 	((Rva002BC260GoalOwner *)ai)->run(&goals.goal,
-		&g_Rva012F02D4, nextGoalPointer, nextGoalPointer == 0);
+		&g_012F02D4, nextGoalPointer, nextGoalPointer == 0);
 	return true;
 }
 
