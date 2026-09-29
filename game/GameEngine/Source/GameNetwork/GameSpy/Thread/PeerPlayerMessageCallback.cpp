@@ -127,10 +127,9 @@ public:
 		char *playerNAT[MAX_SLOTS], char *playerExtra[MAX_SLOTS]);
 };
 
-// PeerThread.cpp's static matchbotProfileID is placed at this proven retail
-// address.  A direct TU-local view keeps the callback tied to that state
-// without exporting or inventing a second variable.
-#define BFME_MATCHBOT_PROFILE_ID (*(Int *)0x012F750C)
+// PeerThread.cpp's static matchbotProfileID, at retail VA 0x012F750C.
+extern Int g_012F750C;
+#define BFME_MATCHBOT_PROFILE_ID g_012F750C
 
 #pragma optimize("y", on)
 void playerMessageCallback(PEER peer, const char *nick, const char *message,

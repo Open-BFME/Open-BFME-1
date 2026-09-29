@@ -159,7 +159,8 @@ public:
 };
 
 // This is the static PeerThread.cpp variable at retail VA 0x012F750C.
-#define MATCHBOT_PROFILE_ID (*(Int *)0x012F750C)
+extern Int g_012F750C;
+#define MATCHBOT_PROFILE_ID g_012F750C
 
 #pragma comment(linker, "/alternatename:??0PeerResponse@@QAE@XZ=?j_00042069@@YAXXZ")
 #pragma comment(linker, "/alternatename:??1PeerResponse@@QAE@XZ=?j_00044733@@YAXXZ")

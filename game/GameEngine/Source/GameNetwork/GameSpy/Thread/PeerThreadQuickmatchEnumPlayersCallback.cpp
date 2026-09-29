@@ -130,7 +130,8 @@ extern "C" void peerGetPlayerProfileIDA(PEER peer, const char *nick,
 extern void qmProfileIDCallback(PEER peer, PEERBool success, const char *nick,
 	int profileID, void *param);
 
-#define MATCHBOT_PROFILE_ID (*(Int *)0x012F750C)
+extern Int g_012F750C;
+#define MATCHBOT_PROFILE_ID g_012F750C
 
 
 #pragma optimize("y", on)

@@ -66,7 +66,8 @@ protected:
 	Int m_field38;
 };
 
-#define StallStartTime (*(UnsignedInt *)0x012F7718)
+extern UnsignedInt g_012F7718;
+#define StallStartTime g_012F7718
 
 void Network::init(void)
 {
