@@ -97,3 +97,5 @@ game/GameEngine/Source/Common/BfmeConv1916.cpp|member||m_bfmePlayerBR,m_owner,cl
 game/GameEngine/Source/Common/BfmeConv572.cpp|member||m_bfmeMid,m_owner,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/Common/BfmeConv572.cpp|member||m_bfmeOwner,m_machine,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
 game/GameEngine/Source/Common/BfmeConv572.cpp|function|BfmeThingCCA@|bfmeGoCCA,onExit,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/BfmeConv815.cpp|member||m_val500,m_preAttackDelay,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29
+game/GameEngine/Source/Common/BfmeConv815.cpp|member||m_arg10,m_attackType,claude-fable+claude-opus;audited-by=gpt-5.6-sol,applied,2026-09-29

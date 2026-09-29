@@ -20,13 +20,13 @@ struct BfmeArg171
 struct BfmeThing171
 {
 	unsigned char pad[0x500];
-	int m_val500;
+	int m_preAttackDelay;
 	int scaleToInt(BfmeArg171 *arg);
 };
 
 int BfmeThing171::scaleToInt(BfmeArg171 *arg)
 {
-	return (int)((float)m_val500 * arg->f10);
+	return (int)((float)m_preAttackDelay * arg->f10);
 }
 
 class BfmeFinderD02
@@ -124,13 +124,13 @@ struct BfmeThingCAB
 	unsigned char m_pad[0x8];
 	BfmeSubHelperCAB *m_helper;
 	void *m_argC;
-	void *m_arg10;
+	void *m_attackType;
 	bool isMatch(void *param);
 };
 
 bool BfmeThingCAB::isMatch(void *param)
 {
-	int res = m_helper->checkState(m_arg10, param, m_argC);
+	int res = m_helper->checkState(m_attackType, param, m_argC);
 	if (res == 3 || res == 2)
 		return true;
 	return false;
