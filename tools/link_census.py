@@ -645,15 +645,23 @@ def write_status(log, rows, present=None):
     return clean, len(out), len(blocking)
 
 
-def linked_bytes(clean):
-    """progress.py's DECOMPILED figure restricted to sources that link cleanly,
+def linked_split(clean):
+    """progress.py's lane split restricted to sources that link cleanly,
     measured on this tree: the one the census just linked."""
     import progress
     matched, notes = progress.matched_at(None), progress.notes_at(None)
     start, size = progress.retail_text()
     naked = progress.naked_cpp_rows_at(matched, None)
-    return progress.decompiled(progress.real_split(matched, notes, start, size, naked,
-                                                   keep=lambda key, source: source in clean))
+    return progress.real_split(matched, notes, start, size, naked, keep=lambda key, source: source in clean)
+
+
+def linked_figures(clean):
+    """The stored LINKED figures: linked_bytes (authored + vendored, the
+    README card's LINKED) and linked_authored (the game's own C++ only, the
+    daily post's Linking bar, over the game's own code)."""
+    import progress
+    split = linked_split(clean)
+    return {"linked_bytes": progress.decompiled(split), "linked_authored": split["authored"]}
 
 
 def head():
@@ -731,7 +739,7 @@ def record(census, rows, rerun=False, fresh=False):
     clean, files, blocking = write_status(log, rows, present)
     figure = {"files": files, "files_linked": len(clean), "blocking_names": blocking,
               "addresses": sum(count for count, _ in link_debt.per_file(link_debt.addresses)),
-              "linked_bytes": linked_bytes(clean)}
+              **linked_figures(clean)}
     if rerun:
         history[-1].update(figure)
     else:
@@ -745,7 +753,8 @@ HISTORY = ROOT / "targets/game/reverse/link_census_history.csv"
 HISTORY_FIELDS = ["date", "commit", "objects", "unresolved", "alias", "pinned_elsewhere", "dump", "data",
                   "import", "unpinned", "duplicates", "comdat_conflicts", "comdat_vtables",
                   "scaffold_aliases", "scaffold_unresolved", "scaffold_crashed",
-                  "files", "files_linked", "blocking_names", "addresses", "linked_bytes"]
+                  "files", "files_linked", "blocking_names", "addresses", "linked_bytes",
+                  "linked_authored"]
 
 
 def read_history():

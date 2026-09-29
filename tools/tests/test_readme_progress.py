@@ -47,7 +47,7 @@ def test_success_posts_the_bars_and_disables_mentions(tmp_path, monkeypatch):
         assert request.full_url.endswith("token?wait=true")
         payload = payload_of(request)
         assert payload["allowed_mentions"] == {"parse": []}
-        assert "**60.00%**  Byte-matched" in payload["embeds"][0]["description"]
+        assert "**Rebuilt from source: 60.00%**" in payload["embeds"][0]["description"]
         return io.BytesIO(b'{"id":"123"}')
     monkeypatch.setattr(daily, "urlopen", send)
     daily.notify(sample())
@@ -107,18 +107,34 @@ def test_whole_game_bar_ends_at_its_number_and_its_parts_add_up_to_100():
         daily.render(sample(linked=61))
 
 
-def test_discord_draws_the_cards_three_bars_in_green_blocks():
-    previous = {"total": 100, "matched_total": 55, "linked_total": 10}
-    embed = daily.announcement(sample(), previous)["embeds"][0]
-    L, M, R = daily.LINKED_BLOCK, daily.MATCHED_BLOCK, daily.REST_BLOCK
+def test_discord_posts_three_measures_and_links_the_readme():
+    # game's own code = 100 - 5 vendored - 5 library = 90; our C++ 40; 9 of it links.
+    current = {**sample(), "linked_authored": 9}
+    previous = {"total": 100, "matched_total": 55, "game_total": 90, "cpp_total": 40, "linked_game_total": 9}
+    embed = daily.announcement(current, previous)["embeds"][0]
+    L, M, C, R = daily.LINKED_BLOCK, daily.MATCHED_BLOCK, daily.CPP_BLOCK, daily.REST_BLOCK
     assert embed["description"].split("\n") == [
-        f"{M * 6}{R * 4}  **60.00%**  Byte-matched  \u25b2 5.00",
-        f"{L * 1}{R * 9}  **10.00%**  Code linked",
-        f"{L * 1}{M * 3}{R * 6}  **35.00%**  Whole game",
+        "**Rebuilt from source: 60.00%**  \u25b2 5.00",
+        f"{M * 6}{R * 4}",
+        "60 / 100 bytes rebuilt without copying the original game exe (v1.03)",
         "",
-        f"{L} linked  ·  {M} byte-matched",
-        f"[Full progress report: chart and map]({daily.REPORT})"]
-    assert "footer" not in embed  # no definitions, no extra measures: the card and the report have them
+        "**Game code in C++: 44.44%**",
+        f"{C * 4}{R * 6}",
+        "40 / 90 bytes of the game's own code, now C++ (libraries not counted)",
+        "",
+        "**Linking: 10.00%**",
+        f"{L * 1}{R * 9}",
+        "9 / 90 bytes of the game's own code linked (not measured yet)",
+        "",
+        f"[What each bar measures, with charts: README]({daily.README})"]
+    assert "footer" not in embed and "Whole game" not in embed["description"]
+
+
+def test_discord_linking_without_a_census_figure_says_so():
+    lines = daily.announcement(sample(), None)["embeds"][0]["description"].split("\n")
+    assert "**Linking:** not measured yet" in lines
+    with pytest.raises(ValueError):
+        daily.announcement({**sample(), "linked_authored": 41}, None)  # more linked than written
 
 
 @pytest.mark.parametrize("parts", [[(1, 0)], [(1, 1), (2, 1)], [(1, 33), (2, 34)], [(2, 100)], [(1, 49), (2, 1)],
@@ -139,16 +155,13 @@ def test_whole_game_counts_two_steps_per_byte():
     # 60% byte-matched, 10% linked: 70 of 200 steps done.
     svg = daily.render(sample())
     assert ">35.00%<" in svg
-    previous = {"total": 100, "matched_total": 55, "linked_total": 10, "whole_total": 32.5}
-    embed = daily.announcement(sample(), previous)["embeds"][0]
-    assert "**35.00%**  Whole game  \u25b2 2.50" in embed["description"]
     assert daily.whole(100, 100) == 100  # only everything matched and linked is the whole game
 
 
-
-def test_discord_adds_readable_names_as_one_blue_row():
-    current = {**sample(), "declared_names": 200, "readable_names": 142}
-    previous = {"total": 100, "matched_total": 55, "linked_total": 10, "declared_names": 200, "readable_names": 140}
-    rows = daily.announcement(current, previous)["embeds"][0]["description"].split("\n")
-    assert rows[3] == f"{daily.NAMES_BLOCK * 7}{daily.REST_BLOCK * 3}  **71.00%**  Readable names  \u25b2 1.00"
-    assert rows[5].endswith(f"{daily.NAMES_BLOCK} readable names")
+def test_discord_change_needs_the_same_denominator():
+    current = {**sample(), "linked_authored": 9}
+    moved = {"total": 100, "matched_total": 60, "game_total": 90, "cpp_total": 36, "linked_game_total": 9}
+    lines = daily.announcement(current, moved)["embeds"][0]["description"].split("\n")
+    assert lines[4] == "**Game code in C++: 44.44%**  \u25b2 4.44" and lines[0].endswith("60.00%**")
+    rebased = {**moved, "game_total": 91}  # vendored/library split moved: not comparable
+    assert "\u25b2" not in daily.announcement(current, rebased)["embeds"][0]["description"]

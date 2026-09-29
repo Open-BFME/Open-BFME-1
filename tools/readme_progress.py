@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the README card and the daily Discord post: two numbers, three bars.
+"""Render the README card and the daily Discord post.
 
 BYTE-MATCHED is everything that rebuilds to the original's exact bytes (our
 C++, library source, generated C++, attached prebuilt libraries: progress.py's
@@ -10,6 +10,13 @@ progress.py prints the full breakdown.
 The change shown beside each number is against the last posted state
 (docs/discord-main-progress.json), so card and post always agree, and output
 depends only on the repository: no clock enters the card.
+
+The Discord post shows three measures, each with its own denominator, and links
+to the README for the card, chart and map: REBUILT FROM SOURCE (byte-matched,
+over all code), GAME CODE IN C++ (our own C++, over the game's own code: all
+code minus vendored library source and prebuilt libraries) and LINKING (the
+part of the game's own C++ in files that link cleanly, stored by the census as
+linked_authored, over the same game's-own-code denominator).
 
 The card has a bar for each number and a WHOLE GAME bar: every byte needs two
 steps, byte-matched then linked, and WHOLE GAME is the share of steps done
@@ -125,13 +132,10 @@ def render(current, previous=None):
 '''
 
 
-# Discord draws the card's three bars in square emoji, ten to a row (a wider
-# row wraps on a phone). Discord draws them with no gap, so each part needs its
-# own colour: yellow = linked, green = byte-matched, dark = still original.
-LINKED_BLOCK, MATCHED_BLOCK, REST_BLOCK = "\U0001f7e8", "\U0001f7e9", "\u2b1b"
-NAMES_BLOCK = "\U0001f7e6"  # blue: readable names measure declarations, not bytes
+# Discord draws each bar as ten square emoji (a wider row wraps on a phone).
+MATCHED_BLOCK, CPP_BLOCK, LINKED_BLOCK, REST_BLOCK = "\U0001f7e9", "\U0001f7e6", "\U0001f7e8", "⬛"
 WIDTH = 10
-REPORT = "https://open-bfme.github.io/Open-BFME-1/"
+README = "https://github.com/Open-BFME/Open-BFME-1#readme"
 
 
 def blocks(parts, total, width=WIDTH):
@@ -146,41 +150,47 @@ def blocks(parts, total, width=WIDTH):
     return "".join(cells) + REST_BLOCK * (width - done)
 
 
+def game_code(current):
+    """The game's own code: all code minus vendored library source and prebuilt libraries."""
+    return current["total"] - current["vendored"] - current["library"]
+
+
+def moved(value, denominator, previous, key, denominator_key):
+    """'  ▲ 0.21' when the share moved since the last post over the same denominator, else ''."""
+    if not previous or previous.get(denominator_key) != denominator or previous.get(key) in (None, value):
+        return ""
+    return f"  {arrow(progress.percent(value - previous[key], denominator))}"
+
+
+def _section(label, value, denominator, block, change_text, what):
+    return [f"**{label}: {progress.percent(value, denominator):.2f}%**{change_text}",
+            blocks([(block, value)], denominator),
+            f"{value:,} / {denominator:,} {what}"]
+
+
 def announcement(current, previous):
-    """The daily post: the README card's three bars as green blocks, a one-line
-    key and the link to the full report. Nothing else: the definitions live on
-    the card and the report."""
-    total = current["total"]
-    linked, matched = figures(current)
-    lp, mp = progress.percent(linked, total), progress.percent(matched, total)
-
-    def moved(delta):
-        return f"  {arrow(delta)}" if delta is not None else ""
-
-    rows = [
-        f"{blocks([(MATCHED_BLOCK, matched)], total)}  **{mp:.2f}%**  Byte-matched"
-        + moved(change(matched, previous, "matched_total", total)),
-        f"{blocks([(LINKED_BLOCK, linked)], total)}  **{lp:.2f}%**  Code linked"
-        + moved(change(linked, previous, "linked_total", total)),
-        f"{blocks([(LINKED_BLOCK, linked), (MATCHED_BLOCK, (matched - linked) / 2)], total)}  "
-        f"**{progress.percent(whole(linked, matched), total):.2f}%**  Whole game"
-        + moved(change(whole(linked, matched), previous, "whole_total", total)),
-    ]
-    if current.get("declared_names"):
-        names, readable = current["declared_names"], current["readable_names"]
-        now = progress.percent(readable, names)
-        before = (progress.percent(previous["readable_names"], previous["declared_names"])
-                  if previous and previous.get("declared_names") else None)
-        rows.append(f"{blocks([(NAMES_BLOCK, readable)], names)}  **{now:.2f}%**  Readable names"
-                    + moved(now - before if before is not None and abs(now - before) >= 0.005 else None))
-    rows += [
-        "",  # a blank line between the bars and the key
-        f"{LINKED_BLOCK} linked  ·  {MATCHED_BLOCK} byte-matched"  # a colour key: the numbers are on the rows
-        + (f"  ·  {NAMES_BLOCK} readable names" if current.get("declared_names") else ""),
-        f"[Full progress report: chart and map]({REPORT})",
-    ]
+    """The daily post: three measures as in the README, then a link to the README."""
+    total, game = current["total"], game_code(current)
+    _, matched = figures(current)
+    cpp, linked = current["authored"], current.get("linked_authored")
+    if not 0 <= cpp <= game <= total or (linked is not None and not 0 <= linked <= cpp):
+        raise ValueError("Invalid progress split")
+    lines = _section("Rebuilt from source", matched, total, MATCHED_BLOCK,
+                     moved(matched, total, previous, "matched_total", "total"),
+                     "bytes rebuilt without copying the original game exe (v1.03)")
+    lines += [""] + _section("Game code in C++", cpp, game, CPP_BLOCK,
+                             moved(cpp, game, previous, "cpp_total", "game_total"),
+                             "bytes of the game's own code, now C++ (libraries not counted)")
+    lines.append("")
+    if linked is None:
+        lines += ["**Linking:** not measured yet", REST_BLOCK * WIDTH]
+    else:
+        lines += _section("Linking", linked, game, LINKED_BLOCK,
+                          moved(linked, game, previous, "linked_game_total", "game_total"),
+                          f"bytes of the game's own code linked ({measured(current)})")
+    lines += ["", f"[What each bar measures, with charts: README]({README})"]
     return {"allowed_mentions": {"parse": []},
-            "embeds": [{"title": "BFME 1 \u00b7 Daily progress", "color": 0x2EA043, "description": "\n".join(rows)}]}
+            "embeds": [{"title": "BFME 1 · Rebuild progress", "color": 0x2EA043, "description": "\n".join(lines)}]}
 
 
 def previous_state():
@@ -212,6 +222,8 @@ def notify(current):
     linked, matched = figures(current)
     state_path.write_text(json.dumps({**current, "linked_total": linked, "matched_total": matched,
                                       "whole_total": whole(linked, matched),
+                                      "cpp_total": current["authored"], "game_total": game_code(current),
+                                      "linked_game_total": current.get("linked_authored"),
                                       "updated_at": datetime.now(timezone.utc).isoformat(),
                                       "message_id": message["id"], "run_id": run_id}, indent=2) + "\n",
                           encoding="utf-8")
@@ -231,7 +243,8 @@ def main():
     linked = int(census["linked_bytes"]) if census else 0
     _, total = progress.real_code_denominator(start, size)
     names, placeholders = name_lane.readable()
-    current = {"total": total, "linked": linked, "census": census,
+    linked_authored = int(census["linked_authored"]) if census and census.get("linked_authored") else None
+    current = {"total": total, "linked": linked, "census": census, "linked_authored": linked_authored,
                "declared_names": names, "readable_names": names - placeholders,
                **{lane: split[lane] for lane in ("authored", "vendored", "generated", "library")}}
     previous = previous_state()
