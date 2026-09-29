@@ -281,6 +281,7 @@ extern "C" __declspec(dllimport) int __cdecl _snprintf( char *buffer,
 	int count, const char *format, ... );
 
 int AptLivingWorldWindowIndex( int low, int high );
+extern int g_aptLivingWorldWindowIndex;
 
 class Open2WindowManager
 {
@@ -298,7 +299,7 @@ void Open2SendNotice51B050( int what )
 	_snprintf( text, 16, "%d", what );
 
 	g_theWindowManager->unidentified_00015235(
-		AptLivingWorldWindowIndex( *(int *)0x012F49A8, *(int *)0x012F49A8 ),
+		AptLivingWorldWindowIndex( g_aptLivingWorldWindowIndex, g_aptLivingWorldWindowIndex ),
 		"DestroyRegionPopup", 1, text, 0, 0, 0, 0 );
 }
 
@@ -309,7 +310,7 @@ void Open2SendNotice51B0C0( int what )
 	_snprintf( text, 16, "%d", what );
 
 	g_theWindowManager->unidentified_00015235(
-		AptLivingWorldWindowIndex( *(int *)0x012F49A8, *(int *)0x012F49A8 ),
+		AptLivingWorldWindowIndex( g_aptLivingWorldWindowIndex, g_aptLivingWorldWindowIndex ),
 		"CloseRegionPopup", 1, text, 0, 0, 0, 0 );
 }
 
@@ -320,6 +321,6 @@ void Open2SendNotice51B2F0( int what )
 	_snprintf( text, 16, "%d", what );
 
 	g_theWindowManager->unidentified_00015235(
-		AptLivingWorldWindowIndex( *(int *)0x012F49A8, *(int *)0x012F49A8 ),
+		AptLivingWorldWindowIndex( g_aptLivingWorldWindowIndex, g_aptLivingWorldWindowIndex ),
 		"DestroyRegionConqueredNotice", 1, text, 0, 0, 0, 0 );
 }

@@ -162,9 +162,11 @@ public:
 
 extern ArchiveFileSystem *TheArchiveFileSystem;
 
-#define BFME_DRIVE_PATH_EMPTY ((const char *)0x0107388B)
-#define BFME_FILE_SYSTEM_STATE (*(void **)0x0134CB48)
-#define BFME_MUSIC_BIG ((const char *)0x0111BFB0)
+extern const char Rva006A16B0Empty[];
+
+#define BFME_DRIVE_PATH_EMPTY (Rva006A16B0Empty)
+#define BFME_FILE_SYSTEM_STATE ((void *)TheFileSystem)
+#define BFME_MUSIC_BIG ("Music.big")
 
 CDManagerInterface* CreateCDManager( void )
 {
