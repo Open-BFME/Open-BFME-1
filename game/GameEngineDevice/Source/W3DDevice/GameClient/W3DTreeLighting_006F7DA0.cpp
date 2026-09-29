@@ -2,12 +2,12 @@ typedef float Real;
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-#define Rva006F7DA0ZeroRange (*(const Real *)0x01075350)
-#define Rva006F7DA0One (*(const Real *)0x01075334)
-#define Rva006F7DA0Uint32Scale (*(const Real *)0x01075358)
-#define Rva006F7DA0OneOver255 (*(const Real *)0x0107C64C)
-#define Rva006F7DA0OneDouble (*(const double *)0x0107C640)
-#define Rva006F7DA0Scale255 (*(const Real *)0x01084068)
+#define Rva006F7DA0ZeroRange 0.0f
+#define Rva006F7DA0One 1.0f
+#define Rva006F7DA0Uint32Scale 4294967296.0f
+#define Rva006F7DA0OneOver255 (1.0f / 255.0f)
+#define Rva006F7DA0OneDouble 1.0
+#define Rva006F7DA0Scale255 255.0f
 
 class Vector3;
 

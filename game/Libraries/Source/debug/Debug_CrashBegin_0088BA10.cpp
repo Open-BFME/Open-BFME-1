@@ -87,16 +87,16 @@ Debug &Debug::CrashBegin(const char *file, int line)
     if (curFrameEntry->status==2 || curFrameEntry->status==3 ||
         curFrameEntry->status==0)
     {
-        StartOutput((const char *)0x0107301C,10);
-        bfmeLogQO((BfmeThingQO *)this,2,(const char *)0x01133164,file,line);
+        StartOutput("",10);
+        bfmeLogQO((BfmeThingQO *)this,2,"%s(%i)",file,line);
         ++curFrameEntry->hits;
 
-        *this << (const char *)0x01080294 << RepeatChar('=',80)
-              << (const char *)0x01080294;
+        *this << "\n" << RepeatChar('=',80)
+              << "\n";
 
         if (file)
         {
-            const char *p=strstr(file,(const char *)0x0113338C);
+            const char *p=strstr(file,"\\code\\");
             if (p)
                 p+=6;
             else
@@ -104,13 +104,13 @@ Debug &Debug::CrashBegin(const char *file, int line)
 
             GetTimeFormatA(0x400,0,0,0,help,0x80);
             help[128]=0;
-            *this << (const char *)0x01133434
+            *this << "Error in "
                   << p
-                  << (const char *)0x0113336C
+                  << ", line "
                   << line
-                  << (const char *)0x01096AB4
+                  << " at "
                   << help
-                  << (const char *)0x01133428;
+                  << ", reason:\n";
         }
     }
 
