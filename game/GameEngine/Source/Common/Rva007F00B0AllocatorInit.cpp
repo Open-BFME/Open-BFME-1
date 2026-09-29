@@ -12,6 +12,9 @@ struct Rva007F00B0Allocator
 typedef void *(__cdecl *Rva007F00B0Allocate)(unsigned int, int);
 
 extern Rva007F00B0Allocator *g_Rva0130A5B0;
+extern void *g_0112A5C4[];
+void g_00BEFFE0();
+void g_00BEFFF0();
 
 void *operator new(unsigned int size);
 
@@ -34,14 +37,14 @@ void Rva007F00B0(void *allocate, void *release)
 	{
 		p = (Rva007F00B0Allocator *)::operator new(12);
 		if (p)
-			p->m_allocate = (void *)0x00BEFFE0;
+			p->m_allocate = (void *)g_00BEFFE0;
 		else
 			goto clear;
 	}
 
-	p->m_vtable = (void *)0x0112A5C4;
+	p->m_vtable = g_0112A5C4;
 	if (!release)
-		release = (void *)0x00BEFFF0;
+		release = (void *)g_00BEFFF0;
 	p->m_release = release;
 	g_Rva0130A5B0 = p;
 	return;

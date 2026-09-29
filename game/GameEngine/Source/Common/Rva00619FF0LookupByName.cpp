@@ -20,6 +20,8 @@ struct BfmeAsciiStringData
 	char m_text[1];
 };
 
+extern const char Rva006A16B0Empty[];
+
 class AsciiString
 {
 public:
@@ -29,7 +31,7 @@ public:
 	{
 		int rightLength = text ? (int)strlen(text) : 0;
 		int leftLength = m_data ? m_data->m_length : 0;
-		const char *leftText = m_data ? m_data->m_text : (const char *)0x0107388B;
+		const char *leftText = m_data ? m_data->m_text : Rva006A16B0Empty;
 		int length = leftLength < rightLength ? leftLength : rightLength;
 		int difference = memcmp(leftText, text, length);
 		if (difference != 0)
@@ -44,11 +46,13 @@ struct LookupListRec
 	int value;
 };
 
+extern LookupListRec g_01116F40[];
+
 // ?Rva00619FF0LookupByName@@YAHABVAsciiString@@@Z
 int __cdecl Rva00619FF0LookupByName(const AsciiString &name)
 {
-	const char *recordName = *(const char **)0x01116F40;
-	LookupListRec *record = (LookupListRec *)0x01116F40;
+	const char *recordName = g_01116F40[0].name;
+	LookupListRec *record = g_01116F40;
 	for (; recordName; ++record)
 	{
 		if (name.compare(recordName) == 0)

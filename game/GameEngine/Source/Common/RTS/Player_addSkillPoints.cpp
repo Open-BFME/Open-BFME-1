@@ -81,9 +81,13 @@ public:
 	Bool addSkillPoints(Real delta, Bool fromScript);
 };
 
-#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
-#define TheRankInfoStore (*(RankInfoStore **)0x012F1014)
-#define BfmeZeroRange (*(const Real *)0x01075350)
+extern GameLogic *TheGameLogic;
+extern RankInfoStore *TheRankInfoStore;
+extern const Real BfmeZeroRange;
+
+#define TheBfmeGameLogic TheGameLogic
+#define TheRankInfoStore TheRankInfoStore
+#define BfmeZeroRange BfmeZeroRange
 
 extern "C" __declspec(dllimport) double BfmeFloorER(double value);
 

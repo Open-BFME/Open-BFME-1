@@ -73,9 +73,14 @@ public:
 
 void __cdecl bfmeNamedAudio0046F1A0(const char *text);
 
-#define TheThingAZB (*(BfmeThingAZB **)0x012F4B78)
-#define TheThingATB (*(BfmeThingATB **)0x012F4B78)
-#define TheLivingWorld (*(BfmeOneCHF **)0x012F1024)
+class Gen00587600;
+extern Gen00587600 *TheGen00587600;
+class BfmeLivingWorldCampaignManager;
+extern BfmeLivingWorldCampaignManager *TheLivingWorldCampaignManager;
+
+#define TheThingAZB ((BfmeThingAZB *)TheGen00587600)
+#define TheThingATB ((BfmeThingATB *)TheGen00587600)
+#define TheLivingWorld ((BfmeOneCHF *)TheLivingWorldCampaignManager)
 
 class Rva003C1A50Tick
 {

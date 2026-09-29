@@ -53,6 +53,8 @@ public:
 	static Int scanIndexList( const char *, const char *const * );
 };
 
+extern const char *const ModelConditionNames[];
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INIException.h
 class INIException
 {
@@ -91,8 +93,7 @@ __declspec( noinline ) bool Gen000140D8::handle( GenItem *item, bool *foundNorma
 	{
 		if ( *foundNormal )
 			throw INIException( 2, "you may not mix normal and +- ops in bitstring lists" );
-		unsigned int bitIndex = INI::scanIndexList( token + 1,
-			reinterpret_cast< const char *const * >( 0x012A6918 ) );
+		unsigned int bitIndex = INI::scanIndexList( token + 1, ModelConditionNames );
 		m_bits._Unchecked_set( bitIndex );
 		*foundAddOrSub = true;
 		return true;
@@ -102,8 +103,7 @@ __declspec( noinline ) bool Gen000140D8::handle( GenItem *item, bool *foundNorma
 	{
 		if ( *foundNormal )
 			throw INIException( 2, "you may not mix normal and +- ops in bitstring lists" );
-		unsigned int bitIndex = INI::scanIndexList( token + 1,
-			reinterpret_cast< const char *const * >( 0x012A6918 ) );
+		unsigned int bitIndex = INI::scanIndexList( token + 1, ModelConditionNames );
 		m_bits._Unchecked_reset( bitIndex );
 		*foundAddOrSub = true;
 		return true;
@@ -113,8 +113,7 @@ __declspec( noinline ) bool Gen000140D8::handle( GenItem *item, bool *foundNorma
 		throw INIException( 2, "you may not mix normal and +- ops in bitstring lists" );
 	if ( !*foundNormal )
 		m_bits.reset();
-	unsigned int bitIndex = INI::scanIndexList( token,
-		reinterpret_cast< const char *const * >( 0x012A6918 ) );
+	unsigned int bitIndex = INI::scanIndexList( token, ModelConditionNames );
 	m_bits._Unchecked_set( bitIndex );
 	*foundNormal = true;
 	return true;
