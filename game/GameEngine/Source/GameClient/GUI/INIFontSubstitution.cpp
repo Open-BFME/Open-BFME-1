@@ -17,7 +17,7 @@
 // reads a field of it.
 //
 // The "Size" field parser is still an unconverted dump at 0x008776E0, so the
-// FieldParse row carries the address of its ILT thunk rather than a name.
+// FieldParse row names its ILT thunk j_0001eb4b.
 //
 // Retail zeroes all four bytes of the comparator before parsing and writes its
 // first byte afterwards, so the comparator is written here as a union of an int
@@ -41,6 +41,7 @@ struct Q3SortElem16 { int m_a, m_b, m_c, m_d; };
 struct Q3SortCompare { union { int m_word; char m_flag; }; };
 
 void Rva00477960( Q3SortElem16 *first, Q3SortElem16 *last, Q3SortCompare comp );
+extern void j_0001eb4b();
 
 class Rva004779C0Vector
 {
@@ -99,7 +100,7 @@ void __cdecl parseFontSubstitution( INI *ini )
 
 	const FieldParse fieldParse[ 2 ] =
 	{
-		{ "Size", (void *)0x0041EB4B, 0, 0 },
+		{ "Size", (void *)j_0001eb4b, 0, 0 },
 		{ 0, 0, 0, 0 }
 	};
 

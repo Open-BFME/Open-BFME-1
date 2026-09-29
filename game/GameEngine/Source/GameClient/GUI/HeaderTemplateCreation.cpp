@@ -41,6 +41,7 @@ public:
 typedef char AsciiStringSizeCheck[(sizeof(AsciiString) == 4) ? 1 : -1];
 
 class GameFont;
+extern const unsigned char g_010F9830[];
 
 class HeaderTemplate
 {
@@ -64,7 +65,7 @@ public:
 	// The owning table uses BFME's Font/Point/Bold offsets at +8/+C/+10.
 	const void *getFieldParse( void ) const
 	{
-		return (const void *)0x010F9830;
+		return g_010F9830;
 	}
 
 private:

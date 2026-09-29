@@ -9,6 +9,8 @@
 typedef char Bool;
 typedef unsigned short WideChar;
 
+extern const WideChar BFMEEmptyUnicodeString;
+
 template <typename T> class StringBase
 {
 	friend class AsciiString;
@@ -47,7 +49,7 @@ public:
 		if( m_data )
 			return reinterpret_cast<const WideChar *>(
 				reinterpret_cast<const char *>( m_data ) + 8 );
-		return reinterpret_cast<const WideChar *>( 0x0107388C );
+		return &BFMEEmptyUnicodeString;
 	}
 };
 

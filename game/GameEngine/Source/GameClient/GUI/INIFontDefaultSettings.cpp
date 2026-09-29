@@ -9,6 +9,7 @@
 typedef float Real;
 
 struct FieldParse;
+extern const FieldParse g_010F76AC[];
 
 class INIException
 {
@@ -169,7 +170,7 @@ void __cdecl parseFontDefaultSettings( INI *ini )
 
 	FontDefaultSettingsRef settings( new FontDefaultSettings );
 	settings.m_value->m_antialiased = 1;
-	ini->initFromINI( settings.m_value, (const FieldParse *)0x010F76AC );
+	ini->initFromINI( settings.m_value, g_010F76AC );
 
 	union { void (*address)(); FontNameMapRoute::Call member; } findName =
 		{ j_0002e622 };
