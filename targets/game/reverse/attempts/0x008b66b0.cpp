@@ -1,5 +1,5 @@
 // ?rva008B66B0@Rva008B6880@@QAEHHHH@Z
-// partial score=0.7711111111111111 date=2026-09-28
+// partial score=0.84 date=2026-09-30
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // RVA 008B66B0; matched invoke() passes year month day and uses result as weekday index.
 extern "C" double __cdecl floor(double);
@@ -41,7 +41,8 @@ int Rva008B6880::rva008B66B0(int year,int month,int day) {
         }
     }
     if(anchor<0 || reference<0) return -1;
-    if(reference>day) day=reference-(reference-day)%7+7;
+    int adjusted=day;
+    if(reference>day) adjusted=reference-(reference-day)%7+7;
     int value=((int)floor((year-base)*0.25f)-base+anchor+year)%7;
-    return (value+(day-reference)%7)%7;
+    return (value+(adjusted-reference)%7)%7;
 }
