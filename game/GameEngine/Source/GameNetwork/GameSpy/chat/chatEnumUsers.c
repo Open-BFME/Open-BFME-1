@@ -22,7 +22,6 @@ typedef struct ciConnection
 
 void ciSocketSendf(void *socket, const char *format, ...);
 int ciInChannel(CHAT chat, const char *channel);
-void ciEnumUsersCallback(void);
 void ciChannelListUsers(
 	CHAT chat, const char *channel, void *callback, void *param);
 int ciAddNAMESFilter(
@@ -35,6 +34,20 @@ int ciCheckCallbacksForID(CHAT chat, int ID);
 static int ciCheckForID(CHAT chat, int ID)
 {
 	return ciCheckFiltersForID(chat, ID) || ciCheckCallbacksForID(chat, ID);
+}
+
+typedef struct ciEnumUsersData
+{
+	chatEnumUsersCallback callback;
+	void *param;
+} ciEnumUsersData;
+
+/* 0x00861100: adapter handed to ciChannelListUsers below. */
+static void ciEnumUsersCallback(CHAT chat, const char *channel, int numUsers,
+	const char **users, int *modes, void *param)
+{
+	ciEnumUsersData *data = (ciEnumUsersData *)param;
+	data->callback(chat, CHATTrue, channel, numUsers, users, modes, data->param);
 }
 
 void chatEnumUsersA(
