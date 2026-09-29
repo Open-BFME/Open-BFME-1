@@ -84,7 +84,7 @@ public:
     Bool dispatch(AsciiString *key, Bool shiftOnly);
 };
 
-#define g_bfmeTransitionMD (*(BfmeTransitionMD **)0x012F4C7C)
+extern BfmeTransitionMD *g_bfmeTransitionMD;
 
 class HotKeyTranslator
 {
