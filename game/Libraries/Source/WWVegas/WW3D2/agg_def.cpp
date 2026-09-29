@@ -816,7 +816,6 @@ AggregateDefClass::Save_W3D (ChunkSaveClass &chunk_save)
 //	Save_Header
 //
 bool
-// ?Save_Header@AggregateDefClass@@MAE_NAAVChunkSaveClass@@@Z present-unmatched
 AggregateDefClass::Save_Header (ChunkSaveClass &chunk_save)
 {
 	// BFME returns the byte-sized success result, like the other Save members.
