@@ -92,6 +92,10 @@ private:
 	char field9F58;
 };
 
+extern unsigned g_0113304C;
+extern unsigned g_01133050;
+extern unsigned g_01133054;
+
 Debug::Debug()
 	: stackWalk()
 {
@@ -133,9 +137,9 @@ Debug::Debug()
 	const char *deletePath;
 	if (slash)
 	{
-		*(unsigned *)slash = *(unsigned *)0x0113304C;
-		*(unsigned *)(slash + 4) = *(unsigned *)0x01133050;
-		*(unsigned *)(slash + 8) = *(unsigned *)0x01133054;
+		*(unsigned *)slash = g_0113304C;
+		*(unsigned *)(slash + 4) = g_01133050;
+		*(unsigned *)(slash + 8) = g_01133054;
 		deletePath = path;
 	}
 	else
