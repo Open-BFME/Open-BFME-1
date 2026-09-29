@@ -109,7 +109,7 @@ void Object::onDisabledEdge(bool becomingDisabled)
 	controller = self->m_team ? self->m_team->getControllingPlayer() : 0;
 	if (controller)
 	{
-		static NameKeyType radar = TheNameKeyGenerator->nameToKey((const char *)0x0108ff50);
+		static NameKeyType radar = TheNameKeyGenerator->nameToKey("RadarUpgrade");
 		mod = self->findModule(radar);
 		if (mod)
 		{

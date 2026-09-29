@@ -215,7 +215,8 @@ public:
 	Object *findObjectByID(ObjectID id);
 };
 
-#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
+extern GameLogic *TheGameLogic;
+#define TheBfmeGameLogic (TheGameLogic)
 
 class Object
 {

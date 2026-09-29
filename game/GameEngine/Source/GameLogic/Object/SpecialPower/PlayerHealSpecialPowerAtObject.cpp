@@ -294,7 +294,7 @@ void PlayerHealSpecialPower::doSpecialPowerAtObject(Object *target,
 		{
 			if (other->m_constructionPercent >= BfmeZeroRange)
 			{
-				if (other->m_constructionPercent < *(const Real *)0x010B6554)
+				if (other->m_constructionPercent < 99.0f)
 					continue;
 			}
 		}

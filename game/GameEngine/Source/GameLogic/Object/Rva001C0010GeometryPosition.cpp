@@ -46,7 +46,9 @@ public:
 	virtual void drawMarker001C0010Slot30( const Coord3D *pos, float size, unsigned int color, int flag );
 };
 
-#define TheTacticalView ( *(Rva001C0010View **)0x012F1600 )
+class View;
+extern View *TheTacticalView;
+#define TheTacticalView ((Rva001C0010View *)TheTacticalView)
 
 class Rva00027BC9Object
 {

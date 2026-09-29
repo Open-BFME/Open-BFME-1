@@ -5,7 +5,7 @@
 typedef bool Bool;
 typedef float Real;
 
-#define BfmeZeroRange (*(const Real *)0x01075350)
+#define BfmeZeroRange 0.0f
 
 class BfmeDeltaOwner
 {
