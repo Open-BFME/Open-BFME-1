@@ -108,8 +108,11 @@ Debug &operator<<(Debug &, const DebugStackwalk::Signature &);
 class BfmeAwakenDebug;
 extern BfmeAwakenDebug *TheBfmeAwakenDebug;
 #define TheDebug ((Debug *)TheBfmeAwakenDebug)
-#define DebugLock ((LPCRITICAL_SECTION)0x01336E60)
-#define DebugFlag (*(bool *)0x01336E79)
+struct BfmeCsDWA;
+extern BfmeCsDWA g_bfmeCsDWC;
+extern bool g_01336E79;
+#define DebugLock ((LPCRITICAL_SECTION)&g_bfmeCsDWC)
+#define DebugFlag g_01336E79
 bool Debug::finishAssert0088B530(int mode)
 {
     if (curType == 0)

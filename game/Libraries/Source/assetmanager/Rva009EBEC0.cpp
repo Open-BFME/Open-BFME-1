@@ -50,12 +50,14 @@ public:
 	AssetReference Find_Asset( const char *name );
 };
 
+extern const char Rva006A16B0Empty[];
+
 class AssetName
 {
 public:
 	const char *Peek_Buffer() const
 	{
-		return m_data ? m_data + 8 : (const char *)0x0107388B;
+		return m_data ? m_data + 8 : Rva006A16B0Empty;
 	}
 
 private:

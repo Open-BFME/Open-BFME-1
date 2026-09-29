@@ -12,4 +12,6 @@ public:
     ~Rva008838F0Owner();
 };
 
-Rva008838F0Owner g_bfmeRva0130EA10Owner((void *)0x01132DC8, (void **)0x012D4D14);
+extern void *g_012D4D14[];
+
+Rva008838F0Owner g_bfmeRva0130EA10Owner((void *)"heap memory", g_012D4D14);
