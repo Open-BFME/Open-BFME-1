@@ -43,13 +43,13 @@ struct Rva005A6470MouseEvent
 	unsigned char m_flags;
 };
 
-class Rva005A6470MouseEventQueue
+class AptTranslator
 {
 public:
-	void emit(Rva005A6470MouseEvent *event);
+	void CreatePassThroughMessage(Rva005A6470MouseEvent *event);
 };
 
-void Rva005A6470MouseEventQueue::emit(Rva005A6470MouseEvent *event)
+void AptTranslator::CreatePassThroughMessage(Rva005A6470MouseEvent *event)
 {
 	if (event->m_flags & 1)
 		return;
