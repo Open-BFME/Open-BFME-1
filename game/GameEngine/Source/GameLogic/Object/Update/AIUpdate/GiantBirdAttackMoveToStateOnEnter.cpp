@@ -327,6 +327,7 @@ class GiantBirdAttackMoveToState : public GiantBirdNormalFlightState
 public:
 	virtual StateReturnType onEnter();
 	virtual StateReturnType update();
+	virtual Bool isAttack() const;
 
 private:
 	Int m_unreconstructed20;
@@ -335,6 +336,14 @@ private:
 	StateMachine *m_attackMachine;
 	Int m_retryCount;
 };
+
+// Retail 0x002BBB80, State vtable slot 8 of GiantBirdAttackMoveToState (rdata
+// 0x00CC7A80 through ILT 0x00008D2D, between the inherited isIdle and
+// isGuardIdle defaults): attacking whenever the attack machine is not idle.
+Bool GiantBirdAttackMoveToState::isAttack() const
+{
+	return !m_attackMachine->isInIdleState();
+}
 
 StateReturnType GiantBirdAttackMoveToState::onEnter()
 {
