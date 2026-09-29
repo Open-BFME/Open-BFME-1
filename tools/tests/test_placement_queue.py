@@ -499,3 +499,24 @@ def test_ea_paths_need_every_row_of_a_file_to_agree(tmp_path):
     (root / queue.EA_EVIDENCE).write_text(
         "rva,kind,value,route,basis\n0x00300000,file,GameEngine/Source/GameLogic/AI/A.cpp,wb1,\n")
     assert queue.build(root)[0] == []
+
+
+def test_a_placeholder_file_takes_eas_file_name_when_it_alone_claims_it(tmp_path):
+    root = tmp_path / "repo"
+    stray, quoted, kept = (f"{queue.DUMPING_GROUND}/Rva00600000Thing.cpp", f"{queue.DUMPING_GROUND}/Rva00600010Pinned.cpp",
+                           f"{queue.DUMPING_GROUND}/Includer.cpp")
+    _write(root, stray)
+    _write(root, quoted)
+    _write(root, kept, '#include "Rva00600010Pinned.cpp"\n')
+    _write(root, "targets/game/reverse/functions.csv",
+           "name,export_rva,target_rva,target_size,source,status,notes\n"
+           f"?go@Rva00600000Thing@@QAEXXZ,,0x00600000,16,{stray},matched,\n"
+           f"?go@Rva00600010Pinned@@QAEXXZ,,0x00600010,16,{quoted},matched,\n")
+    (root / queue.EA_EVIDENCE).write_text(
+        "rva,kind,value,route,basis\n"
+        "0x00600000,file,GameEngine/Source/GameLogic/Object/CellGrid.cpp,wb1,\n"
+        "0x00600010,file,GameEngine/Source/GameLogic/Object/Pinned.cpp,wb1,\n")
+    got = {s: d for s, d, _ in queue.build(root)[0]}
+    # the included one keeps its name: renaming it would break Includer.cpp, which the batch never builds
+    assert got.get(stray) == "game/GameEngine/Source/GameLogic/Object/CellGrid.cpp"
+    assert quoted not in got or got[quoted].endswith("/Rva00600010Pinned.cpp")

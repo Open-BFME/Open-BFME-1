@@ -42,6 +42,8 @@ import re
 import sys
 from pathlib import Path
 
+import name_lane  # its readable-names test decides which file names are placeholders
+
 ROOT = Path(__file__).resolve().parents[1]
 ZH = "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code"
 AREAS = ("game/GameEngine", "game/Libraries", "game/GameEngineDevice")
@@ -358,12 +360,13 @@ def blocked_sources(root):
 
 
 def ea_directories(root):
-    """source -> the one directory EA's own paths give every row the source owns."""
+    """source -> (the one directory EA's own paths give every row the source owns, EA's file
+    name when those rows also agree on the file, else None)."""
     where = {}
     with open(root / EA_EVIDENCE, newline="", encoding="utf-8") as fh:
         for r in csv.DictReader(fh):
             if r["kind"] == "file" and r["route"] in EA_ROUTES:
-                where[int(r["rva"], 16)] = posixpath.dirname(r["value"])
+                where[int(r["rva"], 16)] = r["value"]
     dirs, claims = collections.defaultdict(set), collections.Counter()
     rows = []
     with open(root / "targets/game/reverse/functions.csv", newline="") as fh:
@@ -385,9 +388,23 @@ def ea_directories(root):
         # An address two rows claim is an over-claim: which file owns the body is
         # exactly what is unsettled, so neither moves on the address's evidence.
         dirs[source].add(where.get(rva) if claims[row["target_rva"]] == 1 else None)
-    cased = {}
-    return {s: existing_case(root, "game/" + next(iter(d)), cased)
-            for s, d in dirs.items() if len(d) == 1 and None not in d}
+    cased, out = {}, {}
+    for s, paths in dirs.items():
+        folders = {posixpath.dirname(p) for p in paths if p}
+        if None not in paths and len(folders) == 1:
+            out[s] = (existing_case(root, "game/" + folders.pop(), cased),
+                      posixpath.basename(next(iter(paths))) if len(paths) == 1 else None)
+    return out
+
+
+def included_names(root):
+    """Every file name some source #includes: renaming such a file breaks includers the batch gate never builds."""
+    names = set()
+    for path in glob.glob(str(root / "game") + "/**/*.*", recursive=True):
+        if path.endswith((".cpp", ".h", ".c", ".inl")):
+            text = Path(path).read_text(encoding="utf-8", errors="replace")
+            names |= {posixpath.basename(n).lower() for n in QUOTED_INCLUDE.findall(text)}
+    return names
 
 
 def existing_case(root, path, cache):
@@ -410,6 +427,14 @@ def build(root):
     refused = blocked_sources(root)
     zh, zh_hdr = zh_directories(root), zh_header_directories(root)
     queue, skipped = [], collections.Counter()
+    included = included_names(root)
+    # a placeholder file name takes EA's own when no file has that name yet, exactly one source claims
+    # it (several would be a merge) and nothing includes the old name
+    wants = {s: posixpath.join(d, n) for s, (d, n) in ea.items()
+             if n and name_lane.weak("file", Path(s).stem) and os.path.basename(s).lower() not in included}
+    claimants = collections.Counter(wants.values())
+    taken = {Path(f).name.lower() for f in glob.glob(str(root / "game") + "/**/*.*", recursive=True)}
+    renames = {s: t for s, t in wants.items() if claimants[t] == 1 and posixpath.basename(t).lower() not in taken}
     for source in sorted(set(single) | set(ea)):
         if source in refused:
             skipped["a previous placement gate rejected the source"] += 1
@@ -417,8 +442,8 @@ def build(root):
         if source in ea:
             # EA's path is the original's own statement, so it outranks every class
             # rule, including when it says the file is already home. Never UP, as below.
-            cls, dest, here = "EA", ea[source], os.path.dirname(source)
-            if dest == here or here.startswith(dest + "/"):
+            cls, (dest, _), here = "EA", ea[source], os.path.dirname(source)
+            if source not in renames and (dest == here or here.startswith(dest + "/")):
                 skipped["EA's own source path says it is home"] += 1
                 continue
         else:
@@ -434,7 +459,7 @@ def build(root):
         if zh_keeps_source_here(root, source):
             skipped["ZH keeps this source at its current path"] += 1
             continue
-        target = (Path(dest) / os.path.basename(source)).as_posix()
+        target = renames.get(source) or (Path(dest) / os.path.basename(source)).as_posix()
         if (root / target).exists():
             skipped["a file of that name is already there"] += 1
             continue
