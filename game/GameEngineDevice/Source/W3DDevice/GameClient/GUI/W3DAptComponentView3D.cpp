@@ -94,7 +94,9 @@ public:
 
 extern void Rva009EBAC0(int value);
 
-#define FirstUpdateSubsystem (*(void **)0x0134FAA0)
+class Rva009EB960;
+extern Rva009EB960 *Rva0134FAA0;
+#define FirstUpdateSubsystem ((void *)Rva0134FAA0)
 
 class Rva007896C0
 {

@@ -739,3 +739,4 @@ game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cp
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanLobbyMenuPlayerTooltip.cpp	UnicodeString	Functions: FAIL 1/1
 game/GameEngine/Source/GameLogic/System/Rva00364B10ScanArmyGroups.cpp	UnicodeString	game\GameEngine\Source\GameLogic\System\Rva00364B10ScanArmyGroups.cpp(195) : error C2039: 'set' : is not a member of 'UnicodeString'
 game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_updateMacroTexture.cpp	StringBase	game\GameEngineDevice\Source\W3DDevice\GameClient\BaseHeightMap_updateMacroTexture.cpp(93) : error C2248: 'StringBase<T>::m_data' : cannot access private member declared in class 'StringBase<T>'
+game/GameEngine/Source/GameLogic/LargeGroupAudio/LargeGroupAudioKeyMapXfer.cpp	AsciiString	c:\Users\vvval\desktop\BFME\Open-BFME-1\game\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
