@@ -31,8 +31,8 @@ private:
 typedef int (__cdecl *LookupFn)(const char *, const char *);
 extern "C" LookupFn g_lookup;
 
-// BFME's retail logic rate is the global float at VA 0x01075344.
-#define BFME_LOGIC_FRAMES_PER_SECOND (*(const Real *)0x01075344)
+// BFME's retail logic rate.
+#define BFME_LOGIC_FRAMES_PER_SECOND 5.0f
 
 // BFME layout: INIExceptionCtor.cpp at retail 0x00850600 stores the message
 // pointer at +0 and argument count at +4. The direct noreturn throw helper
@@ -49,6 +49,7 @@ private:
 	int m_argCount;
 };
 
+extern int g_INIExceptionThrowInfo;
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void *object, void *throwInfo);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
@@ -75,22 +76,22 @@ void FXList::parseCullingInfo(INI *ini, void *instance, void *store, const void 
 		LookupFn compare = g_lookup;
 		do
 		{
-			if (compare(token, (const char *)0x010F3330) == 0)
+			if (compare(token, "TrackingSeconds") == 0)
 			{
 				list->m_trackingFrames = (UnsignedInt)(INI::scanReal(ini->getNextToken(0)) * BFME_LOGIC_FRAMES_PER_SECOND);
 			}
-			else if (compare(token, (const char *)0x010F3318) == 0)
+			else if (compare(token, "StartCullingAbove") == 0)
 			{
 				list->m_cullTrackingMin = INI::scanUnsignedInt(ini->getNextToken(0));
 			}
-			else if (compare(token, (const char *)0x010F3308) == 0)
+			else if (compare(token, "CullAllAbove") == 0)
 			{
 				list->m_cullTrackingMax = INI::scanUnsignedInt(ini->getNextToken(0));
 			}
 			else
 			{
-				INIException error(3, (const char *)0x010F3278);
-				_CxxThrowException(&error, (void *)0x011DFC30);
+				INIException error(3, "bad colon spacing, or unexpected token in FXList::parseCullingInfo");
+				_CxxThrowException(&error, &g_INIExceptionThrowInfo);
 			}
 			token = ini->getNextTokenOrNull(ini->getSepsColon());
 		} while (token != 0);
@@ -98,13 +99,13 @@ void FXList::parseCullingInfo(INI *ini, void *instance, void *store, const void 
 
 	if (list->m_cullTrackingMax == 0)
 	{
-		INIException error(3, (const char *)0x010F32C8);
-		_CxxThrowException(&error, (void *)0x011DFC30);
+		INIException error(3, "m_cullTrackingMax == 0 in FXList::parseCullingInfo");
+		_CxxThrowException(&error, &g_INIExceptionThrowInfo);
 	}
 	if (list->m_cullTrackingMin == 0)
 	{
-		INIException error(3, (const char *)0x010F3238);
-		_CxxThrowException(&error, (void *)0x011DFC30);
+		INIException error(3, "m_cullTrackingMin == 0 in FXList::parseCullingInfo");
+		_CxxThrowException(&error, &g_INIExceptionThrowInfo);
 	}
 	if (list->m_cullTrackingMax <= list->m_cullTrackingMin)
 		list->m_cullTrackingMax = list->m_cullTrackingMin + 1;

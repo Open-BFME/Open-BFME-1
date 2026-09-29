@@ -92,7 +92,8 @@ public:
 
 #pragma comment(linker, "/alternatename:?notify@PartitionManager@@QAEXXZ=?m@Gen_008f7420@@QAEXXZ")
 
-#define ThePartitionManager (*(PartitionManager **)0x012ED5BC)
+extern PartitionManager *TheShroudManager;
+#define ThePartitionManager TheShroudManager
 
 class Rva0071A150W3DShroud
 {
@@ -135,19 +136,19 @@ void Rva0071A150W3DShroud::init(Rva0071A150WorldHeightMap *map,
 	{
 		m_numCellsX = Rva0071A150FloatToLong(Rva0071A150Ceil(
 			(Real)(map->m_xExtent - 1 - map->m_borderSize * 2)
-				/ worldCellSizeX * *(const Real *)0x01075C74));
+				/ worldCellSizeX * 10.0f));
 		m_numCellsY = Rva0071A150FloatToLong(Rva0071A150Ceil(
 			(Real)(map->m_yExtent - 1 - map->m_borderSize * 2)
-				/ m_cellHeight * *(const Real *)0x01075C74));
+				/ m_cellHeight * 10.0f));
 
 		dstTextureWidth = m_numMaxVisibleCellsX =
 			Rva0071A150FloatToLong(Rva0071A150Floor(
 				(Real)(map->m_drawWidth - 1) / m_cellWidth
-					* *(const Real *)0x01075C74)) + 1;
+					* 10.0f)) + 1;
 		dstTextureHeight = m_numMaxVisibleCellsY =
 			Rva0071A150FloatToLong(Rva0071A150Floor(
 				(Real)(map->m_drawHeight - 1) / m_cellHeight
-					* *(const Real *)0x01075C74)) + 1;
+					* 10.0f)) + 1;
 
 		dstTextureWidth = m_numCellsX + 2;
 		dstTextureHeight = m_numCellsY + 2;
