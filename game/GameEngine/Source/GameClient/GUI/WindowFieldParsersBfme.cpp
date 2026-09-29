@@ -1,11 +1,14 @@
-// cl: /DNDEBUG /MD /EHs-c-
+// cl: /DNDEBUG /MD /EHsc
 // Window-file field parsers named by the gameWindowFieldList table in .data
-// (0x00EB5AE0..): TOOLTIPCALLBACK (retail 0x004869B0), TEXT (0x00485E30)
-// and BFME's HEADERTEMPLATE (0x00485CE0).  Same quoted-string skeleton as the
+// (0x00EB5AE0..): TOOLTIPCALLBACK (retail 0x004869B0), TEXT (0x00485E30),
+// TOOLTIPTEXT (0x00485D60) and BFME's HEADERTEMPLATE (0x00485CE0).  Same quoted-string skeleton as the
 // landed parseDrawCallback (0x00486A60) and the ZH GameWindowManagerScript
 // parsers: skip to the opening quote, strtok to the closing one, store the
 // text.  The member stores go through AsciiString's inline operator=, which
-// is why retail forms the member address before the null test.
+// is why retail forms the member address before the null test.  TOOLTIPTEXT
+// hands the fetched UnicodeString to setTooltipText by value; built in the
+// argument slot (user copy constructor) under /EHsc it keeps retail's store
+// of that slot's address.
 
 typedef int Int;
 typedef bool Bool;
@@ -109,6 +112,7 @@ Bool parseTooltipCallback(char *token, WinInstanceData *instData, char *buffer, 
 class UnicodeString
 {
 public:
+	UnicodeString(const UnicodeString &other);
 	~UnicodeString();
 
 	void *m_data;
@@ -168,6 +172,28 @@ Bool parseText(char *token, WinInstanceData *instData, char *buffer, void *data)
 	return true;
 }
 
+
+// ?parseTooltipText@@YA_NPADPAVWinInstanceData@@0PAX@Z -- TOOLTIPTEXT, retail 0x00485D60
+Bool parseTooltipText(char *token, WinInstanceData *instData, char *buffer, void *data)
+{
+	char *ptr = buffer;
+	char *c;
+	char *stringSeps = "\n\r\t\"";
+
+	// scan to the first " mark
+	while (*ptr != '"')
+		ptr++;
+	ptr++;  // skip the "
+	if (strlen(ptr) == 1)
+		return true;
+	c = strtok(ptr, stringSeps);  // value
+	if (strlen(c) >= MAX_TEXT_LABEL)
+		return false;
+	instData->m_tooltipString.set(c);
+	instData->setTooltipText(TheGameText->fetch(c));
+
+	return true;
+}
 
 // ?parseHeaderTemplate@@YA_NPADPAVWinInstanceData@@0PAX@Z
 Bool parseHeaderTemplate(char *token, WinInstanceData *instData, char *buffer, void *data)
