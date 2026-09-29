@@ -778,6 +778,7 @@ def selected_definitions(map_text):
 
 
 SELECTED = OUT / "selected.csv"
+DUPLICATES = OUT / "duplicates_selected.csv"
 ALIASED = OUT / "aliased.csv"
 SELECTION = OUT / "selection.json"
 
@@ -794,20 +795,32 @@ def selection_report(present, facts, rows, clean_objects, map_text, log):
     a symbol when it holds a copy of it or references it. Also every name
     that only resolves to a DIFFERENT name: a weak external falling back to
     its default, or an unresolved name the alias scaffold (a pin's address)
-    would point at another definition. Writes selected.csv, aliased.csv and
-    selection.json under build/link_census/; measures, changes no rule."""
+    would point at another definition. And every name with more than one
+    definition at least one of which is exclusive (an ordinary section or a
+    NODUPLICATES COMDAT: LNK2005, a warning LNK4006 under /FORCE): which
+    object's definition the link kept, and whether that object is the ledger
+    row's own (operator new/delete: mem_ops.cpp holds the retail body,
+    GameMemory.cpp another, and link order keeps GameMemory.cpp's). Writes
+    selected.csv, duplicates_selected.csv, aliased.csv and selection.json
+    under build/link_census/; measures, changes no rule."""
     kept = selected_definitions(map_text)
     position = {obj.name: index for index, obj in enumerate(present)}
     copies = collections.defaultdict(list)
     users = collections.defaultdict(set)
     defined = set()
     weak = collections.defaultdict(set)
+    definers, exclusive = collections.defaultdict(set), collections.defaultdict(set)
     for obj, (found, strong, undefined, weaks) in zip(present, facts):
         for name, digest, _, verdict in found:
             copies[name].append((obj.name, digest, verdict))
             users[name].add(obj.name)
             defined.add(name)
+            definers[name].add(obj.name)
         defined.update(strong)
+        for name in strong:
+            definers[name].add(obj.name)
+            exclusive[name].add(obj.name)
+            users[name].add(obj.name)
         for name in undefined:
             users[name].add(obj.name)
         for name, default in weaks:
@@ -836,6 +849,31 @@ def selection_report(present, facts, rows, clean_objects, map_text, log):
                                          "selected_is_first", "retail_true_copies"], lineterminator="\n")
         writer.writeheader()
         writer.writerows(sorted(table, key=lambda row: row["symbol"]))
+    owners = collections.defaultdict(set)
+    for row in rows:
+        if "icf-owner=" not in (row.get("notes") or "") and not build.is_scaffold_row(row):
+            for name in {row["name"], build.ledger_object_symbol(row)}:
+                owners[name].add(build.row_object(row).name)
+    duplicates, owner_misses = [], collections.defaultdict(set)
+    for name, objs in exclusive.items():
+        if len(definers[name]) < 2:
+            continue
+        holder = kept.get(name, "")
+        first = min(definers[name], key=lambda obj: position[obj])
+        mine = owners.get(name, set()) & definers[name]
+        state = "no-owner" if not mine else "owner" if holder in mine else "not-owner"
+        duplicates.append({"symbol": name, "definers": len(definers[name]), "exclusive": len(objs),
+                           "selected_object": holder, "selected_is_first": "yes" if holder == first else "no",
+                           "owner_objects": " ".join(sorted(mine)), "selected": state})
+        counts[f"duplicate_{state}"] += 1
+        if state == "not-owner":
+            for obj in users[name] & clean_objects:
+                owner_misses[obj].add(name)
+    with DUPLICATES.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, ["symbol", "definers", "exclusive", "selected_object", "selected_is_first",
+                                         "owner_objects", "selected"], lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(sorted(duplicates, key=lambda row: row["symbol"]))
     aliased = []
     for (name, default), objs in sorted(weak.items()):
         if name not in defined and default != name:
@@ -867,6 +905,10 @@ def selection_report(present, facts, rows, clean_objects, map_text, log):
     summary = {"conflicted_symbols": len(table), **dict(counts), "linked_files": len(clean_objects),
                "linked_files_on_wrong_selected_copy": len(wrong),
                "linked_files_on_unproven_selected_copy": len(bad),
+               "duplicated_symbols": len(duplicates),
+               "linked_files_on_non_owner_duplicate": len(owner_misses),
+               "top_non_owner_duplicates": collections.Counter(
+                   name for found in owner_misses.values() for name in found).most_common(10),
                "weak_fallbacks": len(weak_rows),
                "weak_fallbacks_not_deleting_dtor": sum(1 for row in weak_rows if not (
                    row["name"].startswith("??_E") and row["resolves_to"].startswith("??_G"))),
@@ -876,7 +918,7 @@ def selection_report(present, facts, rows, clean_objects, map_text, log):
                                                   and row["excused"] == "no" and row["linked_objects"]),
                "top_wrong_selected": collections.Counter(
                    name for found in bad.values() for name, v in found if v == "wrong").most_common(10)}
-    return summary, bad
+    return summary, bad, owner_misses
 
 
 def print_selection(summary):
@@ -888,6 +930,12 @@ def print_selection(summary):
           f"{summary['linked_files_on_unproven_selected_copy']:,} one whose selected copy is not proven retail")
     print(f"  ... those files' LINKED bytes: {summary.get('linked_bytes_on_wrong_selected_copy', 0):,} "
           f"(wrong), {summary.get('linked_bytes_on_unproven_selected_copy', 0):,} (not proven)")
+    print(f"  names defined more than once with an exclusive definition: {summary.get('duplicated_symbols', 0):,}; "
+          f"the kept definition is the ledger owner's for {summary.get('duplicate_owner', 0):,}, another object's "
+          f"for {summary.get('duplicate_not-owner', 0):,}, no owner {summary.get('duplicate_no-owner', 0):,}")
+    print(f"  files counted as linked that use a symbol whose kept definition is not its owner's: "
+          f"{summary.get('linked_files_on_non_owner_duplicate', 0):,} "
+          f"({summary.get('linked_bytes_on_non_owner_duplicate', 0):,} LINKED bytes)")
     print(f"  names resolved only through another name: {summary['weak_fallbacks']:,} weak-external fallbacks "
           f"({summary['weak_fallbacks_not_deleting_dtor']:,} other than ??_E -> ??_G; "
           f"{summary['weak_fallbacks_in_linked_files']:,} used by linked files), {summary['pin_aliases']:,} "
@@ -1047,7 +1095,7 @@ def selected_main():
     with STATUS.open(newline="", encoding="utf-8") as handle:
         clean = {row["source"] for row in csv.DictReader(handle) if row["linked"] == "yes"}
     clean_objects = {build.row_object(row).name for row in rows if row["source"] in clean}
-    summary, bad = selection_report(present, read_facts(present, rows), rows, clean_objects,
+    summary, bad, owner_misses = selection_report(present, read_facts(present, rows), rows, clean_objects,
                                     link_map.read_text(encoding="latin-1"), log)
     import link_check
     sizes = link_check.source_bytes(clean)
@@ -1055,6 +1103,7 @@ def selected_main():
     wrong = {obj for obj, found in bad.items() if any(verdict == "wrong" for _, verdict in found)}
     summary["linked_bytes_on_wrong_selected_copy"] = sum(sizes.get(by_object.get(obj), 0) for obj in wrong)
     summary["linked_bytes_on_unproven_selected_copy"] = sum(sizes.get(by_object.get(obj), 0) for obj in bad)
+    summary["linked_bytes_on_non_owner_duplicate"] = sum(sizes.get(by_object.get(obj), 0) for obj in owner_misses)
     summary["linked_bytes"] = sum(sizes.values())
     SELECTION.write_text(json.dumps(summary, indent=1), encoding="utf-8")
     print_selection(summary)
