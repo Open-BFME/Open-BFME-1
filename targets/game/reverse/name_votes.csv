@@ -331,3 +331,4 @@ game/GameEngine/Source/GameLogic/Object/Update/Rva002A59F0BfmeReady.cpp|function
 game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|type||BfmeObserverYV,271340a38f0b494f9a5dfefe,grok,20260929204446-fe8877,2026-09-29
 game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|type||BfmeRegistryYV,be86cd1edf4afbdb2fe11671,grok,20260929204446-fe8877,2026-09-29
 game/GameEngine/Source/Common/BfmeOptionsDispatchYV.cpp|function||bfmeOptionsYV,e021ef3cdb2700f7ee1ee3f5,grok,20260929204446-fe8877,2026-09-29
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva0077C390Parse.cpp|type||Rva0077C390,757a2c0c3e8c12fe4c398d04,grok,20260929204659-f2c5c5,2026-09-29
