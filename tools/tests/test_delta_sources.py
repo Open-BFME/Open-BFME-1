@@ -261,6 +261,10 @@ def test_hooks_check_selector_status_before_using_output(tmp_path, hook, mode, o
 a = sys.argv[1:]
 if a[:2] == ["rev-parse", "--show-toplevel"]:
     print(os.environ["FIXTURE_ROOT"])
+elif a[:2] == ["rev-parse", "--git-path"]:
+    print(os.path.join(os.environ["FIXTURE_ROOT"], ".git-" + a[2].replace("/", "-")))
+elif a == ["write-tree"]:
+    print("0123456789abcdef0123456789abcdef01234567")
 elif a and a[0] == "diff":
     if "--name-only" in a and "--diff-filter=ACMRT" in a:
         print("targets/game/reverse/functions.csv")

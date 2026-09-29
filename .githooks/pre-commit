@@ -10,6 +10,11 @@ unset BFME_TARGET BFME_TARGET_SHA256
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 
+# Ledger receipt for post-commit (see the end of this hook). Clear any stale one
+# first: every exit path below except a fully verified stable tree leaves none.
+receipt="$(git rev-parse --git-path bfme-ledger-verified-tree 2>/dev/null || true)"
+[ -z "$receipt" ] || rm -f "$receipt" 2>/dev/null || true
+
 fail() {
     echo "PRE-COMMIT FAILED: $*" >&2
     exit 1
@@ -274,6 +279,9 @@ fi
 # 1) Static ledger integrity (<1s): duplicate rows, conflicting or overlapping
 #    claims, malformed rows, missing sources. Turns union-merge corruption into
 #    an immediate loud failure instead of someone else's red build later.
+# The index the reused ledger checks read; the receipt is valid only if the index
+# still equals it when this hook succeeds (a late `git add` must void it).
+checked_tree="$(git write-tree 2>/dev/null || true)"
 python3 tools/check_csv.py --staged || fail "ledger integrity (see above)"
 
 # 1b) Identity, not bytes. targets/game/reverse/symbols.csv is an ADDITIVE candidate list:
@@ -458,13 +466,15 @@ if [ "${#verify_chunk[@]}" -ne 0 ]; then
 fi
 
 # post-commit re-runs check_csv + b_pin_check for commits that skipped this hook
-# (cherry-pick, rebase). Record the tree both just passed on, so a normal commit
-# of exactly this tree is not checked twice (~4 s each). Any other tree -- or
-# no record at all -- is still re-checked there.
-record="$(git rev-parse --git-path bfme-ledger-verified-tree)"
-if [ "$b_pin_ran" -eq 1 ] && tree="$(git write-tree 2>/dev/null)"; then
-    printf '%s\n' "$tree" > "$record"
-else
-    rm -f "$record"
+# (cherry-pick, rebase). Record the tree both passed on, so a normal commit of
+# exactly that tree is not checked twice (~4 s each) -- but only when the index
+# is still the tree they read and both checkers ran as staged (no unstaged edits
+# to their sources). Anything uncertain records nothing, and post-commit then
+# checks as before; this optional receipt never fails an otherwise good commit.
+if [ -n "$receipt" ] && [ -n "$checked_tree" ] && [ "$b_pin_ran" -eq 1 ] \
+   && [ "$(git write-tree 2>/dev/null || true)" = "$checked_tree" ] \
+   && git diff --quiet -- tools/check_csv.py tools/b_pin_check.py 2>/dev/null; then
+    { printf '%s\n' "$checked_tree" > "$receipt.tmp.$$" && mv -f "$receipt.tmp.$$" "$receipt"; } 2>/dev/null \
+        || rm -f "$receipt.tmp.$$" "$receipt" 2>/dev/null || true
 fi
 echo "PRE-COMMIT OK (ledger integrity + ${#verify_set[@]} verification selector(s) checked)"

@@ -72,7 +72,11 @@ def test_record_of_another_tree_does_not_skip(tmp_path):
 def test_pre_commit_records_only_after_both_ledger_checks():
     # the record must be written at the final OK and only when b_pin_check ran
     text = (HOOK.parent / "pre-commit").read_text()
-    write = text.index("bfme-ledger-verified-tree")
-    assert text.index("python3 tools/check_csv.py --staged || fail \"ledger integrity") < write
+    cleared = text.index('rm -f "$receipt"')
+    snapshot = text.index('checked_tree="$(git write-tree')
+    write = text.index('mv -f "$receipt.tmp.$$" "$receipt"')
+    # stale receipts go first; the tree is captured before the reused checks read it
+    # (the layout-migration path runs its own checks earlier and exits without a receipt)
+    assert cleared < snapshot < text.rindex("python3 tools/check_csv.py --staged || fail \"ledger integrity")
     assert text.index("b_pin_ran=1") < write
     assert write < text.index('echo "PRE-COMMIT OK (ledger integrity')

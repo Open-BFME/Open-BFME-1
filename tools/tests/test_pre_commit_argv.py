@@ -46,7 +46,8 @@ git() {
         'config --get merge.union.driver') printf '%s\n' 'python3 tools/merge_rows.py %O %A %B %P' ;;
         'rev-parse --show-toplevel') printf '%s\n' "$PWD" ;;
         'rev-parse --git-path bfme-ledger-verified-tree') printf '%s\n' ledger-verified-tree ;;
-        'write-tree') printf '%s\n' 0123456789abcdef0123456789abcdef01234567 ;;
+        'write-tree') if [ -f index-tree ]; then cat index-tree; else printf '%s\n' 0123456789abcdef0123456789abcdef01234567; fi ;;
+        'diff --quiet -- tools/check_csv.py tools/b_pin_check.py') return "${DIRTY_CHECKER:-0}" ;;
         'diff --cached --name-only --diff-filter=ACMRT')
             printf '%s\n' targets/game/reverse/functions.csv
             [ -z "${STAGED_SOURCE:-}" ] || printf '%s\n' "$STAGED_SOURCE"
@@ -74,7 +75,8 @@ python3() {
         tools/delta_sources.py) cat deltas ;;
         tools/find_declared_unmatched.py|tools/adopt_header.py|tools/name_oracle.py|tools/name_regression.py|tools/retired_guard.py) return 0 ;;
         tools/check_case_collisions.py|tools/conversion_gate.py|tools/check_csv.py|tools/pin_consistency.py|tools/identity_guard.py|tools/gate_baseline.py) return 0 ;;
-        tools/target_hooks.py|tools/eol_guard.py|tools/b_pin_check.py|tools/doc_budget.py|tools/link_debt.py|tools/ea_name_guard.py) return 0 ;;
+        tools/b_pin_check.py) [ -z "${LATE_STAGE:-}" ] || printf '%s\n' feedfacefeedfacefeedfacefeedfacefeedface > index-tree; return 0 ;;
+        tools/target_hooks.py|tools/eol_guard.py|tools/doc_budget.py|tools/link_debt.py|tools/ea_name_guard.py) return 0 ;;
         tools/header_dependents.py) if [ -f header_deps ]; then cat header_deps; fi; return "${HEADER_RC:-0}" ;;
         *) printf 'unexpected Python test invocation: %s\n' "$*" >&2; return 93 ;;
     esac
@@ -83,7 +85,8 @@ source ./hook
 ''', encoding='utf-8', newline='\n')
 
     def run(paths, claimed=None, fail_chunk=0, broken_csv=False, build_pool=None,
-            raw_selectors=False, staged_source=None, header_deps=None, header_rc=0):
+            raw_selectors=False, staged_source=None, header_deps=None, header_rc=0,
+            late_stage=False, dirty_checker=False, stale_receipt=False):
         claimed = paths if claimed is None else claimed
         if raw_selectors:
             selectors = paths
@@ -108,6 +111,11 @@ source ./hook
             (root / 'header_deps').write_text(''.join(p + '\n' for p in header_deps),
                                               encoding='utf-8', newline='\n')
         env['HEADER_RC'] = str(header_rc)
+        if late_stage:
+            env['LATE_STAGE'] = '1'
+        env['DIRTY_CHECKER'] = '1' if dirty_checker else '0'
+        if stale_receipt:
+            (root / 'ledger-verified-tree').write_text('0123456789abcdef0123456789abcdef01234567\n')
         env.pop('BUILD_POOL', None)
         if build_pool is not None:
             env['BUILD_POOL'] = build_pool
@@ -232,3 +240,34 @@ def test_unbounded_header_change_runs_the_full_gate(hook_runner):
     assert result.returncode == 0, result.stderr
     assert 'running FULL gate' in result.stderr
     assert 'tools/gate_baseline.py --check' in (root / 'guards').read_text()
+
+
+RECEIPT_TREE = '0123456789abcdef0123456789abcdef01234567'
+PATHS = ['game/GameEngine/a.cpp']
+
+
+def test_receipt_records_the_tree_the_checks_read(hook_runner):
+    result, _, root = hook_runner(PATHS)
+    assert result.returncode == 0, result.stderr
+    assert (root / 'ledger-verified-tree').read_text().strip() == RECEIPT_TREE
+    assert not list(root.glob('ledger-verified-tree.tmp.*'))  # written atomically, nothing left over
+
+
+def test_index_changed_after_the_checks_leaves_no_receipt(hook_runner):
+    # review 2026-09-29: a pin deletion staged after b_pin_check passed was committed
+    # as tree B while the receipt named B, and post-commit skipped its re-check
+    result, _, root = hook_runner(PATHS, late_stage=True)
+    assert result.returncode == 0, result.stderr
+    assert not (root / 'ledger-verified-tree').exists()
+
+
+def test_checker_with_unstaged_edits_leaves_no_receipt(hook_runner):
+    result, _, root = hook_runner(PATHS, dirty_checker=True)
+    assert result.returncode == 0, result.stderr
+    assert not (root / 'ledger-verified-tree').exists()
+
+
+def test_stale_receipt_is_cleared_even_when_the_hook_fails(hook_runner):
+    result, _, root = hook_runner(long_paths(), fail_chunk=2, stale_receipt=True)
+    assert result.returncode != 0
+    assert not (root / 'ledger-verified-tree').exists()
