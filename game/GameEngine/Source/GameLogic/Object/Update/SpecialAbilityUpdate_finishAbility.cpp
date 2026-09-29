@@ -1,37 +1,16 @@
-// ?finishAbility@SpecialAbilityUpdate@@QAEXXZ
-// partial score=0.78 date=2026-09-28
-// ?finishAbility@SpecialAbilityUpdate@@QAEXXZ
-// partial: retail 0x002AA4B0 734 B (RET at +0x2DD). Identity: SpecialAbilityUpdate vtable
-// 0x010C37B8 slot 17 (j_000392b1) points here, and the matched update() at 0x002AA9D0 calls
-// slot 17 exactly where Zero Hour's update() calls finishAbility(); the body is ZH finishAbility
-// (flee range, flip flags, own-mine avoidance, onExit at slot 11) with BFME's ignoreObstacle
-// moved before aiMoveToPosition and the physics bogus-force call removed.
-// Shape: two direction objects (the first in its own block, so its z store dies), filters as
-// temporaries in the getClosestObject call (matches the 0x00328A80 sibling).
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Include /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
+// Open-BFME: SpecialAbilityUpdate::finishAbility, retail 0x002AA4B0, 734 bytes.
+// Identity: SpecialAbilityUpdate vtable 0x010C37B8 slot 17; update() at 0x002AA9D0 calls slot 17 at Zero Hour's finishAbility sites.
 #include <bitset>
-
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
-enum CommandSourceType { CMD_FROM_AI = 2 };
-
-struct Coord3D
-{
-	Real x, y, z;
-	void normalize();
-	void set(const Coord3D *other) { *this = *other; }
-	void zero() { x = y = z = 0.0f; }
-	void scale(Real value) { x *= value; y *= value; z *= value; }
-	void add(const Coord3D *other) { x += other->x; y += other->y; z += other->z; }
-	void sub(const Coord3D *other) { x -= other->x; y -= other->y; z -= other->z; }
-};
+#include "basetype.h"
+#include "../../command_source_type.h"
 
 class Player;
 class Object;
 class PartitionFilter;
 
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:
@@ -156,6 +135,7 @@ private:
 	Bool m_withinStartAbilityRange;
 };
 
+
 // ?finishAbility@SpecialAbilityUpdate@@QAEXXZ
 void SpecialAbilityUpdate::finishAbility()
 {
@@ -192,9 +172,7 @@ void SpecialAbilityUpdate::finishAbility()
 				if (mine)
 				{
 					Coord3D dir;
-					dir.x = pos.x - mine->getPosition()->x;
-					dir.y = pos.y - mine->getPosition()->y;
-					dir.z = 0;
+					dir.set(pos.x - mine->getPosition()->x, pos.y - mine->getPosition()->y, 0);
 					dir.normalize();
 					dir.scale(data->m_fleeRangeAfterCompletion);
 					pos = *mine->getPosition();
