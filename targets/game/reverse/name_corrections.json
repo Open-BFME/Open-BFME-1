@@ -10688,5 +10688,15 @@
   "after_sha256": "07adb1885bdb604907c2756c30683f4149cfc42103aec57446ad6d5d2e4e3e1d",
   "evidence": "targets/game/reverse/attempt_history/0x003c5270/07adb1885bdb604907c2756c30683f4149cfc42103aec57446ad6d5d2e4e3e1d.json",
   "reason": "The old token __forceinline is an MSVC language keyword rather than a descriptive function identity. The new borrowed string view is a scratch helper with the actual body address; measured bank metadata identifies the decoded leaf and extent."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00273000.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdateTurretUpdate00273000.cpp",
+  "old_name": "bfmeMinAF",
+  "new_name": "rva00273000",
+  "before_sha256": "955015ddc99b8bd8594edc5f6e55ca7b682ea49ba49a8f82ff074fb475644064",
+  "after_sha256": "f524f2dd7e2aaa357edf5ad36a9ad4c51a55d2e7368ca404f138cebbed90942c",
+  "evidence": "targets/game/reverse/identity_evidence/00273000.md",
+  "reason": "bfmeMinAF/BfmeOwnerAF was an invented placeholder in a banked attempt marked identity unknown; no caller, vtable or source names the method. The landed body keeps the witnessed AIUpdateInterface owner and fields and an address-derived method name; no semantic identity is lost."
  }
 ]
