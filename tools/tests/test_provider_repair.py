@@ -1,8 +1,10 @@
 """provider_repair: source surgery, serving rules, and one synthetic conflict end to end."""
 import os
+import hashlib
 import shutil
 import subprocess
 import sys
+import types
 from pathlib import Path
 
 import pytest
@@ -88,6 +90,19 @@ def owner_row(name, source):
             "status": "matched", "notes": ""}
 
 
+def repo_scratch(path, label):
+    """Put compiler inputs under ROOT; build.compiler_command needs repo paths."""
+    path = Path(path).resolve()
+    try:
+        path.relative_to(build.ROOT.resolve())
+        return path
+    except ValueError:
+        key = hashlib.sha1(str(path).encode()).hexdigest()[:12]
+        result = build.ROOT / "build" / "provider_repair_tests" / label / key
+        result.mkdir(parents=True, exist_ok=True)
+        return result
+
+
 @pytest.fixture
 def rows(monkeypatch):
     monkeypatch.setattr(pr, "is_lift", lambda source: "Lift" in source)
@@ -146,14 +161,12 @@ LEGACY_CPP = ("struct C { int b, a; int get(); int other(); };\n"
 
 
 def compile_to(tmp_path, name, text):
-    src = tmp_path / f"{name}.cpp"
-    src.write_text(text)
-    obj = tmp_path / f"{name}.obj"
-    root = build.vc71_root()
-    cmd = [str(root / "Vc7/bin/cl.exe"), "/nologo", "/c", "/O2", "/Gy", "/GR-", "/Zl", f"/Fo{obj}", str(src)]
-    if sys.platform != "win32":
-        cmd.insert(0, "wine")
-    subprocess.run(cmd, check=True, capture_output=True, env=build.compiler_environment(root))
+    work = repo_scratch(tmp_path, "synthetic")
+    src = work / f"{name}.cpp"
+    src.write_text("// cl: /Gy /Zl\n" + text)
+    obj = work / f"{name}.obj"
+    compiled, output, _ = build.try_compile_source(src, obj)
+    assert compiled, output
     return obj
 
 
@@ -169,6 +182,53 @@ def test_synthetic_conflict_positive_negative_and_duplicate(tmp_path):
     assert result["duplicate_LNK2005"] and result["pass"]
     # a wrong provider can never pass: the negative control flips the verdict
     assert not pr.harness(name, legacy, owner, expected, tmp_path / "h2")["pass"]
+
+
+@pytest.mark.skipif(sys.platform == "win32", reason="path defect is specific to Wine")
+@toolchain
+def test_wine_strict_link_uses_inputs_and_validates_pe(tmp_path, monkeypatch):
+    """LINK can exit zero after treating /home/...obj as an option."""
+    work = repo_scratch(tmp_path, "wine_strict_link") / "folder with spaces"
+    work.mkdir()
+    src = work / "entry.cpp"
+    src.write_text('extern "C" int __cdecl entry(void) { return 7; }\n', encoding="ascii")
+    obj = work / "entry.obj"
+    compiled, output, _ = build.try_compile_source(src, obj)
+    assert compiled, output
+
+    root = build.vc71_root()
+    raw_out = work / "raw.dll"
+    raw = subprocess.run(["wine", str(root / "Vc7/bin/link.exe"), "/NOLOGO", "/NODEFAULTLIB",
+                          "/INCREMENTAL:NO", "/MACHINE:X86", "/DLL", "/NOENTRY",
+                          f"/OUT:{raw_out}", str(obj)], capture_output=True, text=True,
+                         errors="replace", env=build.compiler_environment(root), cwd=build.ROOT)
+    assert raw.returncode == 0
+    assert "LNK4001: no object files specified" in raw.stdout + raw.stderr
+
+    fixed_out = work / "fixed.dll"
+    response_dir = tmp_path / "response path with spaces"
+    response_dir.mkdir()
+    response = response_dir / "objects with spaces.rsp"
+    response.write_text(f'"{build.wine_path(obj)}"\n', encoding="utf-8")
+    fixed = pr._link(["/DLL", "/NOENTRY", f"/OUT:{fixed_out}", f"@{response}"])
+    assert fixed.returncode == 0, fixed.stdout + fixed.stderr
+    assert pr._valid_link_image(fixed_out) == (True, "")
+    assert pr._link_input_path(build.wine_path(obj)) == obj.resolve()
+
+    empty = work / "empty.obj"
+    empty.write_bytes(b"")
+    rejected = pr._link(["/DLL", "/NOENTRY", f"/OUT:{work / 'empty.dll'}", empty])
+    assert rejected.returncode != 0
+    assert "input missing or empty" in rejected.stderr
+
+    stale = work / "stale.dll"
+    stale.write_bytes(fixed_out.read_bytes())
+    fake_result = subprocess.CompletedProcess([], 0, "", "")
+    monkeypatch.setattr(pr, "subprocess", types.SimpleNamespace(
+        run=lambda *args, **kwargs: fake_result, CompletedProcess=subprocess.CompletedProcess))
+    no_new_image = pr._link(["/DLL", "/NOENTRY", f"/OUT:{stale}", obj])
+    assert no_new_image.returncode != 0
+    assert "no valid PE image" in no_new_image.stderr
 
 
 @toolchain

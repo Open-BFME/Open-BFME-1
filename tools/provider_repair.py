@@ -392,14 +392,127 @@ def slice_object(data, names):
     return bytes(header + headers + payload + blob + strings)
 
 
+def _link_path(path):
+    """Spell a filesystem path the way Wine's link.exe accepts it.
+
+    An absolute POSIX path starts with `/`, so LINK treats it as a switch and
+    can exit zero after ignoring it. Prefer checkout-relative paths; external
+    paths need their Wine drive spelling.
+    """
+    path = Path(path)
+    if sys.platform != "win32" and re.match(r"^[A-Za-z]:[\\/]", str(path)):
+        host = build._host_path(str(path))
+        if host is None:
+            raise ValueError(f"cannot map Wine path to a host path: {path}")
+        path = Path(host)
+    if not path.is_absolute():
+        return path.as_posix()
+    try:
+        return path.resolve().relative_to(ROOT.resolve()).as_posix()
+    except ValueError:
+        return build.wine_path(path)
+
+
+def _link_input_path(value):
+    if sys.platform != "win32" and re.match(r"^[A-Za-z]:[\\/]", str(value)):
+        host = build._host_path(str(value))
+        if host is None:
+            raise ValueError(f"cannot map Wine path to a host path: {value}")
+        return Path(host)
+    path = Path(value)
+    if not path.is_absolute():
+        path = ROOT / path
+    return path
+
+
+def _valid_link_image(path):
+    try:
+        data = Path(path).read_bytes()
+        if len(data) < 0x40 or data[:2] != b"MZ":
+            return False, "missing or truncated DOS header"
+        pe = struct.unpack_from("<I", data, 0x3C)[0]
+        if pe + 4 > len(data) or data[pe:pe + 4] != b"PE\0\0":
+            return False, "missing or truncated PE signature"
+    except OSError as exc:
+        return False, str(exc)
+    return True, ""
+
+
 def _link(args):
     root = build.vc71_root()
+    args = list(map(str, args))
+    output_arg = next((arg.split(":", 1)[1] for arg in args
+                       if arg.upper().startswith("/OUT:")), None)
+    output = _link_input_path(output_arg) if output_arg is not None else None
+    if output is not None:
+        output.unlink(missing_ok=True)
+    if sys.platform == "win32":
+        command = [str(root / "Vc7" / "bin" / "link.exe"), "/NOLOGO", "/NODEFAULTLIB", "/INCREMENTAL:NO",
+                   "/MACHINE:X86", "/SUBSYSTEM:CONSOLE", *args]
+        return subprocess.run(command, capture_output=True, text=True, errors="replace",
+                              env=build.compiler_environment(root), cwd=ROOT)
+    inputs = []
+    normalized = []
+    for arg in args:
+        upper = arg.upper()
+        if upper.startswith(("/OUT:", "/MAP:")):
+            key, value = arg.split(":", 1)
+            converted = _link_path(value)
+            normalized.append(f"{key}:{converted}")
+        elif arg.startswith("@"):
+            rsp = _link_input_path(arg[1:])
+            try:
+                lines = rsp.read_text(encoding="utf-8").splitlines()
+            except OSError as exc:
+                lines = []
+                response_error = f"cannot read response file {rsp}: {exc}"
+            else:
+                response_error = None
+            rewritten = []
+            for line in lines:
+                token = line.strip()
+                if not token:
+                    continue
+                if token.startswith('"') and token.endswith('"'):
+                    token = token[1:-1]
+                if token.lower().endswith((".obj", ".lib", ".res")):
+                    inputs.append(_link_input_path(token))
+                    token = _link_path(token)
+                rewritten.append('"' + token.replace('"', '\\"') + '"')
+            rsp_wine = rsp.with_name(rsp.stem + ".wine.rsp")
+            rsp_wine.write_text("\n".join(rewritten) + "\n", encoding="utf-8")
+            normalized.append("@" + _link_path(rsp_wine))
+            if response_error:
+                command = ["wine", str(root / "Vc7" / "bin" / "link.exe")]
+                return subprocess.CompletedProcess(command, 2, "", response_error)
+        elif arg.lower().endswith((".obj", ".lib", ".res")):
+            inputs.append(_link_input_path(arg))
+            normalized.append(_link_path(arg))
+        else:
+            normalized.append(arg)
     command = [str(root / "Vc7" / "bin" / "link.exe"), "/NOLOGO", "/NODEFAULTLIB", "/INCREMENTAL:NO",
-               "/MACHINE:X86", "/SUBSYSTEM:CONSOLE", *map(str, args)]
-    if sys.platform != "win32":
-        command.insert(0, "wine")
-    return subprocess.run(command, capture_output=True, text=True, errors="replace",
-                          env=build.compiler_environment(root), cwd=ROOT)
+               "/MACHINE:X86", "/SUBSYSTEM:CONSOLE", *normalized]
+    command.insert(0, "wine")
+    if not inputs:
+        return subprocess.CompletedProcess(command, 2, "", "strict link has no object or library inputs")
+    for path in inputs:
+        if not path.is_file() or path.stat().st_size == 0:
+            return subprocess.CompletedProcess(command, 2, "", f"strict link input missing or empty: {path}")
+    result = subprocess.run(command, capture_output=True, text=True, errors="replace",
+                            env=build.compiler_environment(root), cwd=ROOT)
+    if result.returncode == 0:
+        log = (result.stdout or "") + (result.stderr or "")
+        if re.search(r"LNK4001:.*no object files specified", log, re.IGNORECASE):
+            return subprocess.CompletedProcess(command, 2, result.stdout,
+                                               (result.stderr or "") + "\nstrict link ignored every input object")
+        if output is None:
+            return subprocess.CompletedProcess(command, 2, result.stdout,
+                                               (result.stderr or "") + "\nstrict link omitted /OUT:")
+        valid, reason = _valid_link_image(output)
+        if not valid:
+            return subprocess.CompletedProcess(command, 2, result.stdout,
+                                               (result.stderr or "") + f"\nstrict link produced no valid PE image at {output}: {reason}")
+    return result
 
 
 MAP_LINE = re.compile(r"\s*[0-9a-fA-F]{4}:[0-9a-fA-F]{8}\s+(\S+)\s+([0-9a-fA-F]{8})\s")
