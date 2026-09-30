@@ -1,8 +1,8 @@
 // ?findGoodBuildOrRepairPosition@DozerAIUpdate@@SA_NPBVObject@@0AAUCoord3D@@@Z
-// partial score=0.9573 date=2026-09-27
+// partial score=0.9596 date=2026-09-30
 // cl: /DNDEBUG /MD /EHsc
 // DozerAIUpdate::findGoodBuildOrRepairPosition, retail RVA 0x002B6C40 (445
-// bytes); real C++ body replacing the naked __emit lift that stood there.
+// bytes); real C++ body replacing the generated assembly lift that stood there.
 //
 // IDENTITY: the only callers are the two call sites inside
 // DozerAIUpdate::findGoodBuildOrRepairPositionAndTarget (retail 0x002B8890,
@@ -129,8 +129,8 @@ bool Rva002B8890DozerAIUpdate::findGoodBuildOrRepairPosition(const Object *me,
 
 	FindPositionOptions fpOptions;
 	fpOptions.minRadius = 0.0f;
+	fpOptions.sourceToPathToDest = me;
 	fpOptions.maxRadius = 100.0f;
-	fpOptions.sourceToPathToDest = me;	// This makes it find a place for Whom can get to.
 	if (!me->isUsingAirborneLocomotor())
 		fpOptions.maxZDelta = MAX_Z_DELTA;
 	if (me->isUsingAirborneLocomotor())
