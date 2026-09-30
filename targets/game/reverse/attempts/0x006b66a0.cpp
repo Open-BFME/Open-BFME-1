@@ -1,5 +1,5 @@
-// ?d_006b66a0@@YAXXZ
-// partial score=0.5434343434 date=2026-09-28
+// ?rva006B66A0@Rva006B66A0AudioOwner@@QAE_NPAVRva006B66A0AudioHolder@@HH@Z
+// partial score=0.996 date=2026-09-30
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc- /D_STLP_USE_STATIC_LIB
 //
 // Retail 0x006B66A0 is the Miles audio-event dispatch reached by the
@@ -56,7 +56,8 @@ public:
 			{
 				Rva006B66A0RefBase *ref =
 					(Rva006B66A0RefBase *)((char *)m_pointer + 0x70);
-				if (InterlockedDecrement(&ref->m_refCount) <= 0)
+				long count = InterlockedDecrement(&ref->m_refCount);
+				if (count <= 0)
 					delete ref;
 			}
 
