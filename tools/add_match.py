@@ -338,6 +338,19 @@ def main():
         if not MODEL_TOKEN.fullmatch(model):
             fail(f"--model {model!r} is not a model token")
         args.notes = f"{args.notes};model={model}" if args.notes else f"model={model}"
+    # Record, don't trust: model= is whatever the caller typed. The model the
+    # fleet runner LAUNCHED (BFME_MODEL) is kept beside it when they differ,
+    # and host= names the machine, so a yield can be audited per host and
+    # run. Neither is authenticated -- see tools/landing_service.py.
+    launched = os.environ.get("BFME_MODEL", "")
+    if (args.model and launched and launched != args.model and MODEL_TOKEN.fullmatch(launched)
+            and not re.search(r"(?:^|[\s;])launched=", args.notes)):
+        args.notes = f"{args.notes};launched={launched}"
+    if not re.search(r"(?:^|[\s;])host=", args.notes):
+        from fleet_run import host_tag
+        host = host_tag()
+        if host:
+            args.notes = f"{args.notes};host={host}" if args.notes else f"host={host}"
     if (args.root.resolve() == DEFAULT_ROOT.resolve()
             and not re.search(r"(?:^|[\s;])model=(?!MODEL\b)\S", args.notes)):
         fail("a landing needs its model: pass --model <model> (fleet workers get BFME_MODEL "

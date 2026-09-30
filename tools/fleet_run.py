@@ -623,6 +623,16 @@ def run_tag(text):
     return text
 
 
+def host_tag():
+    """The machine a landing came from, as a ledger-safe token: BFME_HOST_TAG
+    (an alias for a contributor who would rather not publish a hostname),
+    else the hostname. '' when neither is a clean token."""
+    import socket
+    host = os.environ.get("BFME_HOST_TAG") or socket.gethostname()
+    host = re.sub(r"[^A-Za-z0-9_.-]", "-", host.strip())[:40]
+    return host if re.fullmatch(r"[A-Za-z0-9_.-]+", host or "") else ""
+
+
 ABORT_SECONDS = int(os.environ.get("FLEET_ABORT_SECONDS", "300"))
 
 
@@ -867,7 +877,7 @@ def execute(root, brief, legacy_log, engine, seat, command):
         (directory / "brief.txt").write_bytes(body)
         head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True)
         record_path = directory / "record.json"
-        record = dict(id=run, engine=engine, seat=seat, source_head=head.stdout.strip(),
+        record = dict(id=run, engine=engine, seat=seat, host=host_tag(), source_head=head.stdout.strip(),
                       brief_sha256=hashlib.sha256(body).hexdigest(), targets=targets,
                       start=time.time(), status="starting", legacy_log=str(legacy_log),
                       cgroup_path=str(unit.path), cgroup_empty_verified=False,

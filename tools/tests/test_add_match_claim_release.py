@@ -61,3 +61,28 @@ def test_claims_off_queues_nothing(landing, monkeypatch):
     monkeypatch.setenv("BFME_CLAIMS", "off")
     add_match.main()
     assert not (landing / claims.PENDING).exists()
+
+
+def _landed_notes(root):
+    rows = (root / "targets/game/reverse/functions.csv").read_text(encoding="utf-8").splitlines()
+    return [r for r in rows if r.startswith(REAL)][0].split(",", 6)[6]
+
+
+def test_the_receipt_records_host_run_and_a_disagreeing_launched_model(landing, monkeypatch):
+    monkeypatch.setenv("BFME_HOST_TAG", "seat-host-7")
+    monkeypatch.setenv("BFME_RUN_ID", "20260929T010203Z-abcdef012345")
+    monkeypatch.setenv("BFME_MODEL", "gpt-6-astra")        # what fleet_run launched
+    add_match.main()                                        # the worker typed test-model
+    notes = _landed_notes(landing)
+    assert "model=test-model" in notes
+    assert "launched=gpt-6-astra" in notes
+    assert "host=seat-host-7" in notes
+    assert "run=20260929T010203Z-abcdef012345" in notes
+
+
+def test_an_agreeing_model_adds_no_launched_tag(landing, monkeypatch):
+    monkeypatch.setenv("BFME_HOST_TAG", "bad host!")
+    monkeypatch.setenv("BFME_MODEL", "test-model")
+    add_match.main()
+    notes = _landed_notes(landing)
+    assert "launched=" not in notes and "host=bad-host-" in notes
