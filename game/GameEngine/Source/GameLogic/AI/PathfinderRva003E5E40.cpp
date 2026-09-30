@@ -204,10 +204,25 @@ __declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *object, 
 }
 
 // Retail 0x003D7EC0; logic of pathfind_getcell.cpp.
-__declspec(noinline) Bool Pathfinder::worldToCell( const Coord3D *worldPosition, ICoord2D *cellIndex )
+// Retail worldToCell floors through CRT floor and rounds with fistp (the BFME
+// REAL_TO_INT_FLOOR), not this file's _ftol cast; its own copy follows it.
+static __forceinline Int worldToCellFloor(Real f)
 {
-	cellIndex->x = REAL_TO_INT_FLOOR(worldPosition->x/PATHFIND_CELL_SIZE);
-	cellIndex->y = REAL_TO_INT_FLOOR(worldPosition->y/PATHFIND_CELL_SIZE);
+	Real floored = (Real)floor((double)f);
+	Int i;
+	__asm {
+		fld [floored]
+		fistp [i]
+	}
+	return i;
+}
+
+// One ANY-COMDAT copy per TU: every emission of worldToCell (retail 0x003D7EC0)
+// is this same inline, never-inlined body, so link.exe may keep any of them.
+inline __declspec(noinline) Bool Pathfinder::worldToCell( const Coord3D *worldPosition, ICoord2D *cellIndex )
+{
+	cellIndex->x = worldToCellFloor(worldPosition->x/PATHFIND_CELL_SIZE);
+	cellIndex->y = worldToCellFloor(worldPosition->y/PATHFIND_CELL_SIZE);
 	Bool overflow = false;
 	if (cellIndex->x < m_extent.lo.x) {overflow = true; cellIndex->x = m_extent.lo.x;}
 	if (cellIndex->y < m_extent.lo.y) {overflow = true; cellIndex->y = m_extent.lo.y;}

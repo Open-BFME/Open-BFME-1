@@ -37,7 +37,9 @@ public:
 	void bfmeSetWaypoint(Int cellX, Int cellY, Bool shouldInsert, Waypoint *waypoint);
 };
 
-Bool Pathfinder::worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex)
+// One ANY-COMDAT copy per TU: every emission of worldToCell (retail 0x003D7EC0)
+// is this same inline, never-inlined body, so link.exe may keep any of them.
+inline __declspec(noinline) Bool Pathfinder::worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex)
 {
 	cellIndex->x = REAL_TO_INT_FLOOR(worldPosition->x/PATHFIND_CELL_SIZE);
 	cellIndex->y = REAL_TO_INT_FLOOR(worldPosition->y/PATHFIND_CELL_SIZE);
