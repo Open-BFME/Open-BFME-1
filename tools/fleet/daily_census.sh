@@ -64,22 +64,22 @@ echo "daily census pushed"
 # figure never waits for it: typed scalar evidence (reloc_ledger, 10 min), the
 # whole-image check (image_check, 58 min, 4 GB) and the ranking (2 min), measured
 # 2026-09-30 on a busy host, in a checkout of the census commit reading this census's
-# objects. image_check takes the census lock itself. A failure leaves the last
+# objects, all under this run's census lock (an overlapping census would
+# rebuild the objects mid-check); image_check runs as $wt's own tool, so it does
+# not take that lock a second time. A failure leaves the last
 # worklist, whose rows name their census (`next` warns when it is behind).
 commit=$(tail -1 targets/game/reverse/link_census_history.csv | cut -d, -f2)
 cwt="$main/build/wt_census_worklist"
 [ -d "$cwt" ] || git -C "$main" worktree add -q --detach "$cwt" "$commit" || exit 1
-rmdir "$lock"
-trap - EXIT
 regenerate() {
     git -C "$cwt" checkout -q --force --detach "$commit" || return 1
     cd "$cwt" || return 1
     export PYTHONUNBUFFERED=1
     python3 tools/reloc_ledger.py --objects-root "$wt" --objects-rsp "$wt/build/link_census/objects.rsp" \
         || return 1
-    python3 tools/image_check.py --tree . --census "$wt" --scalars build/reloc_ledger/proven_scalars.csv \
+    python3 "$wt/tools/image_check.py" --tree . --census "$wt" --scalars build/reloc_ledger/proven_scalars.csv \
         || return 1
-    python3 tools/image_compose.py worklist --image-check build/image_check --tree . \
+    python3 tools/image_compose.py worklist --image-check "$wt/build/image_check" --tree . \
         --publish "$wt/targets/game/reverse/linking_worklist.csv" || return 1
     cd "$wt" || return 1
     git add targets/game/reverse/linking_worklist.csv

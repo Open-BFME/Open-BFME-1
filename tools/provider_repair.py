@@ -524,7 +524,7 @@ def cmd_next(args):
             busy.add(int(str(token), 16))
         except ValueError:
             pass
-    done = {p.parent.name.lower() for p in OUT.glob("0x*/receipt.json")}
+    done = {p.parent.name.lower() for p in OUT.glob("0x*/receipt.json") if receipt_valid(p)}
     tally = {}
     for verdict, facts in candidates(index):
         if args.symbol and facts["symbol"] != args.symbol:
@@ -698,6 +698,21 @@ def cmd_abandon(args):
     (d / "abandoned").write_text(evidence)
     print(f"abandoned {facts['symbol']}: sources restored, verdict recorded, claim released")
     return 0
+
+
+def receipt_valid(path, root=ROOT):
+    """THE receipt predicate (next here, image_compose next): a receipt counts
+    only when it says PASS and every input still has the SHA-256 it recorded.
+    Unreadable or malformed JSON is unverified, never a crash."""
+    try:
+        data = json.loads(Path(path).read_text(encoding="utf-8"))
+        inputs = data.get("inputs") or {}
+        return data.get("pass") is True and bool(inputs) and all(
+            (Path(root) / source).is_file()
+            and hashlib.sha256((Path(root) / source).read_bytes()).hexdigest() == digest
+            for source, digest in inputs.items())
+    except (OSError, ValueError, AttributeError, TypeError):
+        return False
 
 
 def recorded(rva):

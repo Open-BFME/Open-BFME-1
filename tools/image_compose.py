@@ -560,13 +560,16 @@ def exact_command(family, rule, verdict, blocker, claim, source, referrer):
         return f"python3 tools/provider_repair.py data-next --symbol {name}"
     if rule.startswith(TYPED):
         return f"python3 tools/reloc_ledger.py  # prove {claim}'s words scalar or pointer"
+    from import_binding import editable  # the one generated-source rule: "" = the fix would edit one
     if family == "import" and referrer:
-        return f"python3 tools/import_binding.py apply '{referrer}'; python3 tools/import_binding.py check '{referrer}'"
+        return (f"python3 tools/import_binding.py apply '{referrer}'; python3 tools/import_binding.py check "
+                f"'{referrer}'" if editable(referrer) else "")
     if family == "bridge" and claim:
         return f"python3 tools/brief.py --rvas {claim}"
     if family in ("body", "eh") and source:
-        return f"./build.sh '{source}'"
-    return f"python3 tools/link_check.py '{referrer or source}'"
+        return f"./build.sh '{source}'" if editable(source) else ""
+    target = referrer or source  # the fix edits it (a rename or a definition at the referrer)
+    return f"python3 tools/link_check.py '{target}'" if editable(target) else ""
 WORKLIST_FIELDS = ["rank", "blocker", "node", "family", "rule", "fix_site", "object", "source", "home", "claim_rva",
                    "verdict", "reason", "unlock_files", "unlock_authored_bytes", "unlock_vendored_bytes",
                    "unlock_census_linked_files", "unlock_functions", "unlock_function_bytes", "group_unlock_files",
@@ -967,11 +970,13 @@ def write_published(path, work, census, scalars):
     """The tracked worklist every host serves from: the rows whose fix alone
     closes at least one authored file, in rank order, minimal columns."""
     import csv
-    rows = [row for row in work if row["unlock_authored_bytes"] > 0]
+    closing = [row for row in work if row["unlock_authored_bytes"] > 0]
+    rows = [row for row in closing if row["command"]]  # "": its fix would edit a generated source
     with Path(path).open("w", newline="", encoding="utf-8") as handle:
         handle.write(f"# linking worklist, census {census['commit']} ({census['date']}), image_check with {scalars:,} "
                      "proven-scalar data words; rows: blockers whose fix alone closes >= 1 authored file (the full "
-                     "list: build/image_compose/worklist.csv). Serve: python3 tools/image_compose.py next\n")
+                     f"list: build/image_compose/worklist.csv), less {len(closing) - len(rows)} whose fix would edit "
+                     "game/gen_asm or game/gen_small. Serve: python3 tools/image_compose.py next\n")
         handle.write(f"# {SINGLE_FIX}\n")
         writer = csv.DictWriter(handle, PUBLISHED_FIELDS, lineterminator="\n", extrasaction="ignore")
         writer.writeheader()
@@ -1058,14 +1063,10 @@ class Freshness:
         name = row.get("blocker", "")
         if name and any(line.startswith((name + ",", f'"{name}"')) for line in self.lines):
             return "a row, pin or data row naming it changed since the census"
+        import provider_repair
         receipt = self.root / "build" / "provider_repair" / f"0x{int(rva, 16):08X}" / "receipt.json" if rva else None
-        if receipt is not None and receipt.exists():
-            data = json.loads(receipt.read_text(encoding="utf-8"))
-            inputs = data.get("inputs") or {}
-            if data.get("pass") is True and inputs and all(
-                    (self.root / path).exists() and sha_file(self.root / path) == digest
-                    for path, digest in inputs.items()):
-                return "a PASS provider_repair receipt matches this tree"
+        if receipt is not None and provider_repair.receipt_valid(receipt, self.root):
+            return "a PASS provider_repair receipt matches this tree"
         return None
 
 
@@ -1091,6 +1092,9 @@ def cmd_next(args):
         if args.family and row["family"] != args.family:
             continue
         if not int(row["unlock_authored_bytes"]) and not int(row["unlock_function_bytes"]):
+            continue
+        if not row["command"]:
+            skipped["its fix would edit a generated source"] += 1
             continue
         if not row["claim_rva"]:
             skipped["no address to claim"] += 1

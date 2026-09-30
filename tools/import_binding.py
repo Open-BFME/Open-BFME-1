@@ -68,6 +68,12 @@ EXTERNAL, STATIC, WEAK_EXTERNAL = 2, 3, 105
 RVA_TOKEN = re.compile(r"Rva([0-9A-Fa-f]{8})")
 DECL = re.compile(r'(?m)^[ \t]*[^;{}\n/"]*(?:"C"[^;{}\n/"]*)?__declspec\s*\(\s*dllimport\s*\)[^;{}]*;')
 NOT_CODE = re.compile(r'//[^\n]*|/\*.*?\*/|"(?:\\.|[^"\\\n])*"|' + r"'(?:\\.|[^'\\\n])*'", re.S)
+GENERATED = ("game/gen_asm/", "game/gen_small/")
+
+
+def editable(source):
+    """False for a generated source: AGENTS.md forbids hand edits under game/gen_asm and game/gen_small."""
+    return bool(source) and not source.replace("\\", "/").startswith(GENERATED)
 
 
 def sub_code(old, new, text):
@@ -767,7 +773,7 @@ def cmd_next(args):
         if not (kinds or facts["duplicate_thunks"]) or not kinds <= set(REPAIRABLE):
             continue
         source = sources.get(name)
-        if source is None or Path(source).stem in done or source.startswith(("game/gen_asm/", "game/gen_small/")):
+        if source is None or Path(source).stem in done or not editable(source):
             continue
         print(source)
         for symbol, kind in sorted(facts["imports"].items()):

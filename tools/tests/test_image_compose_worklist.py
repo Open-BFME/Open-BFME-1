@@ -167,3 +167,38 @@ def test_freshness_skips_what_changed_since_the_census(tmp_path):
     assert C.Freshness.stale(fresh, row) is None  # a PASS on another tree neither
     receipt.write_text(json.dumps({"pass": True, "inputs": {"game/b.cpp": C.sha_file(source)}}))
     assert C.Freshness.stale(fresh, row).startswith("a PASS provider_repair receipt")
+
+
+def test_receipt_validity_is_one_predicate(tmp_path):
+    import provider_repair
+    source = tmp_path / "game" / "b.cpp"
+    source.parent.mkdir(parents=True)
+    source.write_text("int x;")
+    digest = C.sha_file(source)
+    receipt = tmp_path / "receipt.json"
+    for text, valid in (("{not json", False), ("[]", False), (json.dumps({"pass": True}), False),
+                        (json.dumps({"pass": False, "inputs": {"game/b.cpp": digest}}), False),
+                        (json.dumps({"pass": True, "inputs": {"game/b.cpp": "0" * 64}}), False),
+                        (json.dumps({"pass": True, "inputs": {"game/gone.cpp": digest}}), False),
+                        (json.dumps({"pass": True, "inputs": {"game/b.cpp": digest}}), True)):
+        receipt.write_text(text)
+        assert provider_repair.receipt_valid(receipt, tmp_path) is valid, text
+
+
+def test_generated_destinations_are_not_published(tmp_path):
+    assert C.exact_command("import", "unresolved import", "unresolved", "__imp__X@4", "0x2", "",
+                           "game/gen_small/imports_000.cpp") == ""
+    assert C.exact_command("body", "wrong body", "wrong", "?f", "0x1", "game/gen_asm/x.asm", "") == ""
+    path = tmp_path / "linking_worklist.csv"
+    work = [published_row("__imp__X@4", "0x00000020", 70, "name:__imp__X@4", family="import",
+                          rule="unresolved import")]
+    work[0]["command"] = C.exact_command("import", "unresolved import", "unresolved", "__imp__X@4", "0x00000020", "",
+                                         "game/gen_small/imports_000.cpp")
+    assert C.write_published(path, work, {"commit": "abc1234", "date": "d"}, 0) == 0
+    assert "less 1 whose fix would edit" in path.read_text(encoding="utf-8")
+
+
+def test_daily_census_holds_its_lock_through_the_worklist():
+    script = (Path(__file__).resolve().parents[1] / "fleet" / "daily_census.sh").read_text(encoding="utf-8")
+    assert script.count('rmdir "$lock"') == 1 and "trap 'rmdir \"$lock\"' EXIT" in script
+    assert 'python3 "$wt/tools/image_check.py"' in script  # $wt's own tool: no second lock
