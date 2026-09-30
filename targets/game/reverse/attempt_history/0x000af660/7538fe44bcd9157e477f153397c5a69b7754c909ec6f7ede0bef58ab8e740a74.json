@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "7538fe44bcd9157e477f153397c5a69b7754c909ec6f7ede0bef58ab8e740a74",
+  "symbol": "?method@Rva000AF660Owner@@QAEXXZ",
+  "score_kind": "measured",
+  "score": 0.6909,
+  "source": "// ?method@Rva000AF660Owner@@QAEXXZ\n// partial score=0.6909 date=2026-09-30\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib /I.\r\n// stlport\r\n#define _STLP_NO_EXCEPTIONS 1\r\n#include <vector>\r\n#include <string.h>\r\n#include \"ascii_string.h\"\r\n#pragma intrinsic(strlen)\r\ntemplate<> inline void StringBase<char>::set(const char *s) { set(s,s ? (int)strlen(s):0); }\r\n#include \"game/GameEngine/Source/Common/CarvedBFMERetailAsciiStringDestructor.cpp\"\r\nstruct Rva000AF660Record { AsciiString name; int index; _STL::vector<BFMERetailAsciiString> values; };\r\nclass Rva000AF660Owner { public: void method(); private: char head[8]; Rva000AF660Record records[6]; };\r\nvoid Rva000AF660Owner::method() {\r\n struct Entry { int index; const char *name; } entries[6] = {\r\n  {0,\"RiverTextures\"},{1,\"WaterBumpMapTextures\"},{2,\"RiverAlphaEdgeTextures\"},{3,\"WaterSkyTextures\"},{5,\"RiverSparkleTextures\"},{4,\"RiverNoiseTextures\"}\r\n };\r\n for(int i=0;i<6;++i) {\r\n  Rva000AF660Record &record=records[entries[i].index];\r\n  record.values.erase(record.values.begin(),record.values.end());\r\n  ((StringBase<char> *)&record.name)->set(entries[i].name);\r\n  record.index=entries[i].index;\r\n }\r\n}\r\n"
+}
