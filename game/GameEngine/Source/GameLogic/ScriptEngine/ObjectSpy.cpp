@@ -24,8 +24,8 @@ extern NameKeyGenerator *TheNameKeyGenerator;
 NameKeyType NAMEKEY(const char *name);
 
 void bfmeLogMsg574(const char *message);
-void bfmeNotify2_574(void *state, void *parameter);
-extern "C" void io_debug(lua_State *state);
+int bfmeNotify2_574(void *state, void *parameter);
+extern "C" int io_debug(lua_State *state);
 
 struct BfmeArgED8
 {

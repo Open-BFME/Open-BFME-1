@@ -603,7 +603,7 @@ static int io_exit (lua_State *L) {
 
 
 /* EA replaced Lua's stdin debugger with the game's debug console. */
-extern void io_debug (lua_State *L);
+extern int io_debug (lua_State *L);
 
 
 #define LEVELS1	12	/* size of the first part of the stack */
@@ -683,7 +683,7 @@ static const struct luaL_reg iolib[] = {
   {LUA_ERRORMESSAGE, errorfb},
   {"clock",     io_clock},
   {"date",     io_date},
-  {"debug",    (lua_CFunction)io_debug},
+  {"debug",    io_debug},
   {"execute",  io_execute},
   {"exit",     io_exit},
   {"getenv",   io_getenv},

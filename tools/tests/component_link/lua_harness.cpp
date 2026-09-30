@@ -24,13 +24,12 @@ void bfmeLogMsg574(const char *message)
 static int debug_calls;
 static void *debug_state;
 static void *debug_parameter;
-void bfmeNotify2_574(void *state, void *parameter)
+int bfmeNotify2_574(void *state, void *parameter)
 {
     debug_calls++;
     debug_state = state;
-    /* Keep this store last: retail's helper returns EAX=0 on every path, and
-       io_debug deliberately reuses that value as Lua's result count. */
     debug_parameter = parameter;
+    return 0;
 }
 
 static int failures;

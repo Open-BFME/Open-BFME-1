@@ -78024,7 +78024,7 @@ name,address,notes
 ?bfmeNotify1280@BfmeA1280@@QAEXH@Z,0x00019574,pin
 ?bfmeNotify1281@BfmeA1281@@QAEXH@Z,0x0003E85B,pin
 ?bfmeNotify1_574@@YAXPAX0@Z,0x00034B67,pin
-?bfmeNotify2_574@@YAXPAX0@Z,0x0000630C,pin
+?bfmeNotify2_574@@YAHPAX0@Z,0x002E5390,body 0x002E5390; retail callers route through ILT 0x0000630C; all three returns xor eax eax; _io_debug uses the result as Lua's result count; three matched callers prove two cdecl pointer arguments
 ?bfmeNotify@BfmeOwnedE@@QAEXXZ,0x000263EB,Open-BFME5 the ICF thunk (to 0x003C9320) the clear at 0x003C0EF0 tail-calls
 ?bfmeNotify@Gen_000946D0Manager@@QAEXPAX@Z,0x0001A7DF,Open-BFME5 the manager member the notify-setter at 0x000946D0 tail-jumps to
 ?bfmeNotify@Gen_00094700Manager@@QAEXPAX@Z,0x0001A7DF,Open-BFME5 the manager member the notify-setter at 0x00094700 tail-jumps to

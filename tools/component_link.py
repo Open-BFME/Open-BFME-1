@@ -85,7 +85,7 @@ COMPONENTS = {
         "doubles": {
             "?bfmeLogMsg574@@YAXPBD@Z": "luaB_print's game logger; retail's body is only the gen_asm "
                                         "dump ?d_002e5090, so the driver records the text instead",
-            "?bfmeNotify2_574@@YAXPAX0@Z": "io_debug's game-console helper; retail's body is only "
+            "?bfmeNotify2_574@@YAHPAX0@Z": "io_debug's game-console helper; retail's body is only "
                                            "the gen_asm dump ?d_002e5390, so the driver records the call",
         },
     },

@@ -3,7 +3,7 @@ extern void *g_activeObj12F0610;
 extern const char bfmeString10CF748[];
 void __cdecl bfmeLogMsg574(const char *msg);
 void __cdecl bfmeNotify1_574(void *obj, void *param);
-void __cdecl bfmeNotify2_574(void *obj, void *param);
+int __cdecl bfmeNotify2_574(void *obj, void *param);
 
 void __cdecl bfmeHandleDeactivation574(void *obj, void *param)
 {
