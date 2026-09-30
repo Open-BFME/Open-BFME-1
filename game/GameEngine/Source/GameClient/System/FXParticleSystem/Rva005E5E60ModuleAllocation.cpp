@@ -12,6 +12,13 @@
 // recovered -- address-derived naming, per the near-twin lane's IDENTITY
 // POLICY.
 
+extern "C" const void *bfmeVftRva005EA560_V3Slot0N[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva005EA560_V3Slot0N=??_7Rva005EA560@@6BV3Slot0N@@@")
+extern "C" const void *bfmeVftRva005EA560_V3Slot1[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva005EA560_V3Slot1=??_7Rva005EA560@@6BV3Slot1@@@")
+extern "C" const void *bfmeVftRva005EA560_V3Slot2[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva005EA560_V3Slot2=??_7Rva005EA560@@6BV3Slot2@@@")
+
 struct Rva005E5E60Sys;
 
 class Rva005E5E60CtorShim
@@ -26,9 +33,9 @@ public:
 	__forceinline Rva005E5E60Allocation(Rva005E5E60Sys &sys, const void *source)
 	{
 		((Rva005E5E60CtorShim *)this)->construct(sys, source);
-		*(volatile unsigned int *)this = 0x01111f6c;
-		*(volatile unsigned int *)((unsigned char *)this + 0x08) = 0x01111f68;
-		*(volatile unsigned int *)((unsigned char *)this + 0x0c) = 0x01111f54;
+		*(volatile unsigned int *)this = (unsigned int)bfmeVftRva005EA560_V3Slot0N;
+		*(volatile unsigned int *)((unsigned char *)this + 0x08) = (unsigned int)bfmeVftRva005EA560_V3Slot1;
+		*(volatile unsigned int *)((unsigned char *)this + 0x0c) = (unsigned int)bfmeVftRva005EA560_V3Slot2;
 	}
 
 private:
