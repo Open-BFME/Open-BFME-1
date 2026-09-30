@@ -95,10 +95,10 @@ covers that run and its touched rvas include the unit's rows.
 
 WINDOW. For header-wide units `run-once --window` holds refs/landing/window
 (tools/publish_window.py) for the pass; every pre-push hook refuses pushes to
-master while someone else holds it, so the gated tip still fast-forwards,
-and the publishing push reuses this host's gate evidence for the identical
-tree (tools/gate_evidence.py, BFME_REUSE_GATE_EVIDENCE=1) instead of a second
-17-minute gate. Cooperative only: see publish_window.py.
+master while someone else holds it, so the gated tip still fast-forwards.
+The batch is gated once OUTSIDE the window first (run_once PREGATE), so the
+in-window gate recompiles only TUs whose dependency fingerprints changed.
+Cooperative only: see publish_window.py.
 
 STATUS. Prototype: queue, bisect, am-based batching, two-point fencing with
 an atomic leased push, exact-tip publication, receipts and recovery are
@@ -379,27 +379,49 @@ class Service:
         records.pop(unit, None)
 
     def run_once(self, max_batch=20, publish=True, attempts=3, window=False, window_minutes=None,
-                 max_hold=300):
+                 max_hold=300, pregate=True):
         """Land up to `max_batch` queued units. Returns {landed, rejected}.
 
         window=True holds the cooperative publish window (publish_window.py)
         for the pass: master is quiet while the batch is gated, so the
-        verified tip still fast-forwards afterwards, and the publishing push
-        reuses this host's gate evidence for the identical tree. The window
-        is a short lease (publish_window.LEASE_MINUTES) renewed every third
-        of it while the pass works, closed in `finally` on success or
-        failure; no new pass starts after `max_hold` seconds of holding
-        (the rest stays queued), and the hold time is in the result."""
+        verified tip still fast-forwards afterwards. The window is a short
+        lease (publish_window.LEASE_MINUTES) renewed every third of it while
+        the pass works, closed in `finally` on success or failure; no new
+        pass starts after `max_hold` seconds of holding (the rest stays
+        queued), and the hold time is in the result.
+
+        PREGATE (window=True): the batch is first gated OUTSIDE the window on
+        the current snapshot, in the same service worktree. That compile
+        leaves every object with its deps sidecar (tools/build.py: the
+        compiler's own /showIncludes set -- tracked and untracked files --
+        plus the command fingerprint and the include-search inventory).
+        Inside the window, after rebasing onto the newer master, the SAME
+        full gate runs, but build.py recompiles only the TUs whose recorded
+        fingerprints no longer match (compile_is_current); every row is
+        still byte-verified and every ledger/identity/string/constant/DIR32
+        check still runs. Nothing is reused that the fingerprints do not
+        prove. Measured need: a header-wide full gate held master 28+ min
+        compiling inside the window (2026-09-30)."""
         if not window:
             return self._run_once(max_batch, publish, attempts)
+        pre = {}
+        if pregate and publish:
+            started = time.time()
+            pre = self._run_once(max_batch, publish=False, attempts=1)
+            pre_seconds = round(time.time() - started, 1)
+            if not pre.get("would_land"):
+                return dict(pre, pregate_seconds=pre_seconds)
+            pre = {"pregate_seconds": pre_seconds, "pregate_rejected": pre.get("rejected", [])}
+        return dict(self._windowed(max_batch, publish, attempts, window_minutes, max_hold), **pre)
+
+    def _windowed(self, max_batch, publish, attempts, window_minutes, max_hold):
         import publish_window
         minutes = window_minutes or publish_window.LEASE_MINUTES
         opened = time.time()
         nonce = publish_window.open_window(minutes, purpose="landing_service batch",
                                            remote=self.remote, root=self.repo)
-        saved = {k: os.environ.get(k) for k in (publish_window.TOKEN_ENV, "BFME_REUSE_GATE_EVIDENCE")}
+        saved = {publish_window.TOKEN_ENV: os.environ.get(publish_window.TOKEN_ENV)}
         os.environ[publish_window.TOKEN_ENV] = nonce
-        os.environ["BFME_REUSE_GATE_EVIDENCE"] = "1"
         done = threading.Event()
         lost = []
 

@@ -483,7 +483,7 @@ def test_a_transient_close_error_is_retried_and_the_window_closes(world, monkeyp
     import publish_window as pw
     service, unit, origin = world
     monkeypatch.delenv(pw.TOKEN_ENV, raising=False)
-    service._run_once = lambda *a, **k: {"landed": ["fixture-unit"], "rejected": []}
+    service._run_once = lambda *a, **k: {"landed": ["fixture-unit"], "rejected": [], "would_land": ["fixture-unit"]}
     real_close = pw.close_window
     attempts = []
 
@@ -504,7 +504,7 @@ def test_an_unreadable_window_after_a_failed_delete_is_reported_open(world, monk
     import publish_window as pw
     service, unit, origin = world
     monkeypatch.delenv(pw.TOKEN_ENV, raising=False)
-    service._run_once = lambda *a, **k: {"landed": ["fixture-unit"], "rejected": []}
+    service._run_once = lambda *a, **k: {"landed": ["fixture-unit"], "rejected": [], "would_land": ["fixture-unit"]}
     service.queued = lambda: [{"id": "fixture-unit"}]
     service.recover = lambda **k: []
     real_git = pw._git
@@ -590,3 +590,30 @@ def test_invalid_window_metadata_blocks_only_for_one_lease(world, monkeypatch, a
         return
     monkeypatch.setattr(pw, "_git", real_git)
     assert pw.close_window(nonce, root=service.repo)
+
+
+def test_the_batch_is_gated_outside_the_window_first(world, monkeypatch):
+    import publish_window as pw
+    service, unit, origin = world
+    monkeypatch.delenv(pw.TOKEN_ENV, raising=False)
+    uid = service.enqueue(unit("pregated"))
+    windows = []
+    real_gate = service._gate
+
+    def gate(base, tip):
+        windows.append(pw.read(root=service.repo)[0] is not None)   # was a window held?
+        return real_gate(base, tip)
+    service._gate = gate
+    result = service.run_once(window=True)
+    assert result["landed"] == [uid] and windows == [False, True]    # pregate, then in-window
+    assert "pregate_seconds" in result and "window_held_seconds" in result
+
+
+def test_a_unit_that_fails_the_pregate_never_opens_a_window(world, monkeypatch):
+    import publish_window as pw
+    service, unit, origin = world
+    opened = []
+    monkeypatch.setattr(pw, "open_window", lambda *a, **k: opened.append(1) or "x" * 32)
+    bad = service.enqueue(unit("bad_pregate"))
+    result = service.run_once(window=True)
+    assert result["rejected"] == [bad] and opened == []

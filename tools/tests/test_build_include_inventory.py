@@ -242,3 +242,29 @@ def test_unterminated_quote_cannot_hide_an_escaping_include(tmp_path, monkeypatc
                  "#include BODY\nconst char *q = \"*/\";\n"):
         header.write_text(text)
         assert build._include_escapes_search_roots(header, False), text
+
+
+def test_an_untracked_included_header_change_forces_that_tu_to_recompile(tmp_path, monkeypatch):
+    # The landing service's in-window gate recompiles only TUs whose recorded
+    # dependency fingerprints changed (compile_is_current). An included header
+    # counts by CONTENT whatever git thinks of it: ignored/untracked included.
+    source, output, early, original, _, _ = _fixture(tmp_path, monkeypatch)
+    root = original.parents[4]
+    (root / ".gitignore").write_text(original.relative_to(root).as_posix() + "\n")
+    assert build.compile_is_current(source, output)
+    original.write_text("#define PACKET_RANGE 7\n")
+    assert not build.compile_is_current(source, output)
+
+
+def test_an_unrelated_change_keeps_the_tu_current(tmp_path, monkeypatch):
+    source, output, early, original, _, _ = _fixture(tmp_path, monkeypatch)
+    root = original.parents[4]
+    (root / "targets" / "game" / "reverse").mkdir(parents=True)
+    (root / "targets" / "game" / "reverse" / "functions.csv").write_text("name\n")
+    # outside every include search root of the TU (a NEW file inside one, even
+    # an unrelated one, conservatively invalidates via the search inventory)
+    (root / "tools").mkdir()
+    (root / "tools" / "unrelated.py").write_text("x = 1\n")
+    (root / "docs").mkdir()
+    (root / "docs" / "notes.md").write_text("upstream prose\n")
+    assert build.compile_is_current(source, output)

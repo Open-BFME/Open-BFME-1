@@ -139,15 +139,17 @@ def test_a_multi_commit_unit_lands_whole_under_the_window(world, monkeypatch):
     real_gate = service._gate
 
     def gate(base_sha, tip):
-        # while the service gates, anybody else's push to master is refused
-        saved = os.environ.pop(pw.TOKEN_ENV)
+        # the pregate runs outside the window (others may push); the in-window
+        # gate runs while anybody else's push to master is refused
+        saved = os.environ.pop(pw.TOKEN_ENV, None)
         seen.append(pw.check(root=seat)[0])
-        os.environ[pw.TOKEN_ENV] = saved
-        assert os.environ.get(gate_evidence.ENABLE) == "1"
+        if saved is not None:
+            os.environ[pw.TOKEN_ENV] = saved
         return real_gate(base_sha, tip)
     service._gate = gate
     result = service.run_once(window=True)
-    assert result["landed"] == [uid] and seen == [False]
+    assert result["landed"] == [uid] and seen == [True, False]
+    assert result["pregate_seconds"] >= 0
     assert {"header.h", "user.cpp"} <= set(origin_files(origin))
     receipt = json.loads((service.state / "receipts" / f"{uid}.json").read_text())
     assert len(receipt["commits"]) == 2 and receipt["commit"] == receipt["commits"][-1]
