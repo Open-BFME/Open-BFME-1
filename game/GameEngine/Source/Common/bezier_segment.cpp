@@ -94,14 +94,7 @@ BezierSegment::BezierSegment(const Coord3D& cp0, const Coord3D& cp1, const Coord
 	m_controlPoints[3] = cp3;
 }
 
-// ?BezierSegment::BezierSegment present-unmatched
-BezierSegment::BezierSegment(Coord3D cp[4])
-{
-	m_controlPoints[0] = cp[0];
-	m_controlPoints[1] = cp[1];
-	m_controlPoints[2] = cp[2];
-	m_controlPoints[3] = cp[3];
-}
+// Retail BezierSegment::BezierSegment (0x000B6F00) is implemented in BezierSegmentConstructionAndLength.cpp.
 
 
 //-------------------------------------------------------------------------------------------------
