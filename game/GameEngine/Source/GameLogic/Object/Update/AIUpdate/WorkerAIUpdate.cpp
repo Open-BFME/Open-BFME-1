@@ -180,37 +180,7 @@ WorkerAIUpdate::~WorkerAIUpdate( void )
 
 }
 
-//-------------------------------------------------------------------------------------------------
-// One instruction away, and the instruction is the class. With the three offsets
-// below corrected by views -- the supply machine at WorkerAIUpdate+0xE0 against
-// the vendored +0xCC, its current state at StateMachine+0x1C against +0x20, and
-// the state's id at State+0x04 against +0x08 -- the whole body matches except the
-// very first read: retail is `mov eax,[ecx+0xe0]` and this tree emits
-// `mov eax,[ecx-0x124]`. That is -0x204 + 0xE0: MSVC enters this override with
-// the SupplyTruckAIInterface sub-object, which the vendored
-// `WorkerAIUpdate : AIUpdateInterface, DozerAIInterface, SupplyTruckAIInterface,
-// WorkerAIInterface` puts at +0x204, and folds the adjustment into the
-// displacement. Retail enters it with the object itself, so BFME declares that
-// interface first. No cast reaches a this-adjustment; this is a header change.
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate_isCurrentlyFerryingSupplies_Thunk.cpp
-// ?isCurrentlyFerryingSupplies@WorkerAIUpdate@@UBE_NXZ present-unmatched
-Bool WorkerAIUpdate::isCurrentlyFerryingSupplies() const
-{
-	if (m_supplyTruckStateMachine)
-	{
-		switch (m_supplyTruckStateMachine->getCurrentStateID())
-		{
-			case ST_IDLE:
-			case ST_BUSY:
-			case ST_REGROUPING:
-				return false;
-			case ST_WANTING:
-			case ST_DOCKING:
-				return true;
-		}
-	}
-	return false;
-}
+// Retail WorkerAIUpdate::isCurrentlyFerryingSupplies (0x002C7E30) is implemented in WorkerAIUpdate_isCurrentlyFerryingSupplies_Thunk.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?isAvailableForSupplying@WorkerAIUpdate@@UBE_NXZ present-unmatched
@@ -639,62 +609,7 @@ void WorkerAIUpdate::exitingSupplyTruckState()
 }
   
 
-// ------------------------------------------------------------------------------------------------
-/** Given our current task and repair target, can we accept this as a new repair target */
-// ------------------------------------------------------------------------------------------------
-// ?canAcceptNewRepair@WorkerAIUpdate@@UAE_NPAVObject@@@Z present-unmatched
-Bool WorkerAIUpdate::canAcceptNewRepair( Object *obj )
-{
-
-	// sanity
-	if( obj == NULL )
-		return FALSE;
-
-	// if we're not repairing right now, we don't have any accept restrictions
-	if( getCurrentTask() != DOZER_TASK_REPAIR )
-		return TRUE;
-
-	// get current repair target
-	Object *currentRepair = TheGameLogic->findObjectByID( m_task[ DOZER_TASK_REPAIR ].m_targetObjectID );
-
-	if( currentRepair )
-	{
-
-		// check for same object
-		if( currentRepair == obj )
-			return FALSE;
-
-		// check for repairing any tower on the same bridge
-		if( currentRepair->isKindOf( KINDOF_BRIDGE_TOWER ) && 
-				obj->isKindOf( KINDOF_BRIDGE_TOWER ) )
-		{
-			BridgeTowerBehaviorInterface *currentTowerInterface = NULL;
-			BridgeTowerBehaviorInterface *newTowerInterface = NULL;
-
-			currentTowerInterface = BridgeTowerBehavior::getBridgeTowerBehaviorInterfaceFromObject( currentRepair );
-			newTowerInterface = BridgeTowerBehavior::getBridgeTowerBehaviorInterfaceFromObject( obj );
-
-			// sanity
-			if( currentTowerInterface == NULL || newTowerInterface == NULL )
-			{
-
-				DEBUG_CRASH(( "Unable to find bridge tower interface on object\n" ));
-				return FALSE;
-
-			}  // end if
-
-			// if they are part of the same bridge, ignore this repair command
-			if( currentTowerInterface->getBridgeID() == newTowerInterface->getBridgeID() )
-				return FALSE;
-
-		}  // end if
-
-	}  // end if, currentRepair object exists
-
-	// all is well
-	return TRUE;
-
-}  // end canAcceptNewRepair
+// Retail WorkerAIUpdate::canAcceptNewRepair (0x002C99C0) is implemented in WorkerAIUpdate_canAcceptNewRepair.cpp.
 
 //----------------------------------------------------------------------------------------
 // ?privateIdle@WorkerAIUpdate@@MAEXW4CommandSourceType@@@Z present-unmatched
@@ -774,85 +689,7 @@ void WorkerAIUpdate::privateResumeConstruction( Object *obj, CommandSourceType c
 
 }  // end privateResumeConstruction
 
-//-------------------------------------------------------------------------------------------------
-/** Issue and order to the dozer */
-//-------------------------------------------------------------------------------------------------
-// ?newTask@WorkerAIUpdate@@UAEXW4DozerTask@@PAVObject@@@Z present-unmatched
-void WorkerAIUpdate::newTask( DozerTask task, Object* target )
-{
-
-	// sanity
-	DEBUG_ASSERTCRASH( task >= 0 && task < DOZER_NUM_TASKS, ("Illegal dozer task '%d'\n", task) );
-
-	// sanity
-	if( target == NULL )
-		return;
-
-	m_preferredDock = INVALID_ID; // If we are dozing, we don't want any supply truck stuff going on. jba.
-
-	//
-	// special check for the build task, we should never be given more than one of them ...
-	// for the other tasks we just forget what we were doing and the new target takes
-	// precedence for the task
-	//
-	if( task == DOZER_TASK_BUILD || task == DOZER_TASK_REPAIR )
-	{
-
-		// handle getting two tasks
-		if( isTaskPending( task ) == TRUE )
-			cancelTask( task );
-
-		// get our object
-		Object *me = getObject();
-
-		Coord3D position;
-		target = DozerAIUpdate::findGoodBuildOrRepairPositionAndTarget(me, target, position);
-		if (target == NULL)
-			return;	// could happen for some bridges
-
-		//
-		// for building, we say that even "thinking" about building or rebuilding an object
-		// sets us as the current builder of that object.  this allows any dozers that are 
-		// ordered later to resume construction on something to see that somebody is already taking
-		// care of it and then they won't be even try to resume a build since we don't allow
-		// multiple dozers/workers to double up on construction efforts
-		//
-		if( task == DOZER_TASK_BUILD )
-			target->setBuilder( me );
-
-		m_dockPoint[ task ][ DOZER_DOCK_POINT_START ].valid			= TRUE;
-		m_dockPoint[ task ][ DOZER_DOCK_POINT_START ].location	= position;
-		m_dockPoint[ task ][ DOZER_DOCK_POINT_ACTION ].valid		= TRUE;
-		m_dockPoint[ task ][ DOZER_DOCK_POINT_ACTION ].location = position;
-		m_dockPoint[ task ][ DOZER_DOCK_POINT_END ].valid				= TRUE;
-		m_dockPoint[ task ][ DOZER_DOCK_POINT_END ].location		= position;
-
-	}  // end if, build task
-
-	// set the new task target and the frame in which we got this order
-	m_task[ task ].m_targetObjectID = target->getID();
-	m_task[ task ].m_taskOrderFrame = TheGameLogic->getFrame();
-
-	// reset the dozer behavior so that it can re-evluate which task to continue working on
-	m_dozerMachine->resetToDefaultState();
-
-	// reset the workermachine, if we've been acting like a supply truck
-	if( m_workerMachine->getCurrentStateID() == AS_SUPPLY_TRUCK )
-	{
-		// We've been given a Dozer specific order that the Supply Truck machine doesn't recognize
-		// as BUSY (because this command also recognizes its own busy and is likewise waiting).
-		// Explicitly slap it upside the head.
-		if( getObject()->getAIUpdateInterface() )
-		{
-			getObject()->getAIUpdateInterface()->aiIdle(CMD_FROM_AI);
-		}
-		m_workerMachine->setState( AS_DOZER );
-		// To clarify, I leave supply truck mode when I notice I am doing something not supply
-		// truck related.  When given a construct command, I wait to do anything until I notice
-		// I'm not busy.  Both states are being polite, so I must force the switch.
-	}
-
-} 
+// Retail WorkerAIUpdate::newTask (0x002CA130) is implemented in WorkerAIUpdateNewTaskBfme.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Cancel a task and reset the dozer behavior state machine so that it can 
@@ -933,41 +770,7 @@ void WorkerAIUpdate::internalTaskComplete( DozerTask task )
 
 } 
 
-//-------------------------------------------------------------------------------------------------
-/** Clear a task from the Dozer for consideration, we can use this when a goal object becomes
-	* invalid/destroyed etc. */
-//-------------------------------------------------------------------------------------------------
-// ?internalCancelTask@WorkerAIUpdate@@UAEXW4DozerTask@@@Z present-unmatched
-void WorkerAIUpdate::internalCancelTask( DozerTask task )
-{
-
-	// sanity
-	DEBUG_ASSERTCRASH( task >= 0 && task < DOZER_NUM_TASKS, ("Illegal dozer task '%d'\n", task) );
-	
-	if(task < 0 || task >= DOZER_NUM_TASKS)
-		return;  //DAMNIT!  You CANNOT assert and then not handle the damn error!  The.  Code.  Must.  Not.  Crash.
-
-	// call the single method that gets called for completing and canceling tasks
-	internalTaskCompleteOrCancelled( task );
-
-	// remove the info for this task
-	m_task[ task ].m_targetObjectID = INVALID_ID;
-	m_task[ task ].m_taskOrderFrame = 0;
-	
-	// remove dock point info for this task
-	for( Int i = 0; i < DOZER_NUM_DOCK_POINTS; i++ )
-		m_dockPoint[ task ][ i ].valid = FALSE;
-	
-	// stop the dozer from moving
-	AIUpdateInterface *ai = getObject()->getAIUpdateInterface();
-	if( !ai )
-	{
-		return;
-	}
-	/// @todo we really need a stop command instead of making it move to it's current location
-	ai->aiMoveToPosition( getObject()->getPosition(), CMD_FROM_AI );
-
-}  
+// Retail WorkerAIUpdate::internalCancelTask (0x002CA510) is implemented in WorkerAIUpdate_internalCancelTask.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
@@ -1049,33 +852,7 @@ void WorkerAIUpdate::internalTaskCompleteOrCancelled( DozerTask task )
 
 }
 
-//-------------------------------------------------------------------------------------------------
-/** If we were building something, kill the active-construction flag on it */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdateOnDelete.cpp
-// ?onDelete@WorkerAIUpdate@@ present-unmatched
-void WorkerAIUpdate::onDelete( void )
-{
-	Int i;
-
-	// cancel any of the tasks we had queued up
-	for( i = DOZER_TASK_FIRST; i < DOZER_NUM_TASKS; ++i )
-	{
-		
-		if( isTaskPending( (DozerTask)i ) )
-			cancelTask( (DozerTask)i );
-			
-	}  // end for i
-
-	for( i = 0; i < DOZER_NUM_TASKS; i++ )
-	{
-		Object* goalObject = TheGameLogic->findObjectByID(m_task[i].m_targetObjectID);
-		if (goalObject != NULL)
-		{
-			goalObject->clearModelConditionState(MODELCONDITION_ACTIVELY_BEING_CONSTRUCTED);
-		}
-	}
-}
+// Retail WorkerAIUpdate::onDelete (0x002C9090) is implemented in WorkerAIUpdateOnDelete.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Get the most recently issued task */
@@ -1129,86 +906,7 @@ const Coord3D* WorkerAIUpdate::getDockPoint( DozerTask task, DozerDockPoint poin
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 
-//-------------------------------------------------------------------------------------------------
-// ?aiDoCommand@WorkerAIUpdate@@UAEXPBUAICommandParms@@@Z present-unmatched
-void WorkerAIUpdate::aiDoCommand(const AICommandParms* parms)
-{
-
-	//
-	// anytime we get a command, just remove any model condition that has us actively building
-	// if we need to show that, that bit will be set anyway again during the build process
-	//
-	getObject()->clearModelConditionState( MODELCONDITION_ACTIVELY_CONSTRUCTING );
-
-	if (!isAllowedToRespondToAiCommands(parms))
-		return;
-	
-	// create our machines if they don't yet exist
-	createMachines();
-
-	switch( parms->m_cmd )
-	{
-
-		// --------------------------------------------------------------------------------------------
-		case AICMD_REPAIR:
-		{
-
-			// if we have no task right now, go idle so we can immediately respond to this
-			if( getCurrentTask() == DOZER_TASK_INVALID )
-				aiIdle( CMD_FROM_AI );
-
-			// do the repair
-			privateRepair(parms->m_obj, parms->m_cmdSource);
-			break;
-
-		}  // end repair
-
-		// --------------------------------------------------------------------------------------------
-		case AICMD_RESUME_CONSTRUCTION:
-		{
-
-			// if we have no task right now, go idle so we can immediately respond to this
-			if( getCurrentTask() == DOZER_TASK_INVALID )
-				aiIdle( CMD_FROM_AI );
-
-			// do the command
-			privateResumeConstruction( parms->m_obj, parms->m_cmdSource );
-			break;
-
-		}  // end resume construction
-
-		// --------------------------------------------------------------------------------------------
-		default:
-		{
-
-			// if this is from the player, cancel our current task
-			if( parms->m_cmdSource == CMD_FROM_PLAYER && getCurrentTask() != DOZER_TASK_INVALID )
-				cancelTask( getCurrentTask() );
-
-			// issue the command
-			AIUpdateInterface::aiDoCommand(parms);
-
-			// when a player issues commands, this will cause the dozer to re-evaluate what it's doing
-			if( parms->m_cmdSource == CMD_FROM_PLAYER )
-				m_dozerMachine->resetToDefaultState();
-			break;
-
-		}  // end default
-
-	}  // end switch
-
-	if (isClearingMines() && m_numberBoxes > 0 )
-	{
-		// if clearing mines, we drop any boxes we were carrying
-		m_numberBoxes = 0;
-		Drawable *draw = getObject()->getDrawable();
-		if( draw )
-		{
-			draw->updateDrawableSupplyStatus( getWorkerAIUpdateModuleData()->m_maxBoxesData, m_numberBoxes );
-		}
-	}
-
-}
+// Retail WorkerAIUpdate::aiDoCommand (0x002CA580) is implemented in WorkerAIUpdate_aiDoCommand.cpp.
 
 
 // ------------------------------------------------------------------------------------------------
@@ -1238,50 +936,7 @@ Bool WorkerAIUpdate::loseOneBox()
 	return TRUE;
 }
 
-// ------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------
-// ?gainOneBox@WorkerAIUpdate@@UAE_NH@Z present-unmatched
-Bool WorkerAIUpdate::gainOneBox( Int remainingStock )
-{
-	if( getWorkerAIUpdateModuleData() && m_numberBoxes >= getWorkerAIUpdateModuleData()->m_maxBoxesData )
-		return FALSE;
-
-	++m_numberBoxes;
-
-	//if I just took the last box, 
-	//i will announce that this supply source is now empty
-	if (remainingStock == 0)
-	{
-		Object* bestWarehouse = getObject()->getControllingPlayer()->getResourceGatheringManager()->findBestSupplyWarehouse( getObject() );
-		
-		Bool playDepleted = FALSE;
-		if ( bestWarehouse )
-		{
-			//figure out whether the best one is considerably far from the previous one (current position)
-			Coord3D delta = *getObject()->getPosition();
-			delta.sub( bestWarehouse->getPosition() ); 
-			if ( delta.length() > getWarehouseScanDistance()/4)
-			playDepleted = TRUE;
-		}
-		else
-			playDepleted = TRUE;
-
-		if (playDepleted && m_suppliesDepletedVoice.getEventName().isEmpty() == false)
-		{
-			m_suppliesDepletedVoice.setObjectID(getObject()->getID());
-			m_suppliesDepletedVoice.setPlayingHandle(TheAudio->addAudioEvent(&m_suppliesDepletedVoice));
-		}
-	}
-
-
-	Drawable *draw = getObject()->getDrawable();
-	if( draw )
-	{
-		draw->updateDrawableSupplyStatus( getWorkerAIUpdateModuleData()->m_maxBoxesData, m_numberBoxes );
-	}
-
-	return TRUE;
-}
+// Retail WorkerAIUpdate::gainOneBox (0x002C85F0) is implemented in WorkerAIUpdate_gainOneBox.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
@@ -1385,57 +1040,11 @@ void WorkerStateMachine::xfer( Xfer *xfer )
 	StateMachine::xfer(xfer);
 }  // end xfer
 
-// ------------------------------------------------------------------------------------------------
-/** Load post process */
-// ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@WorkerStateMachine@@MAEXXZ present-unmatched
-void WorkerStateMachine::loadPostProcess( void )
-{
-	StateMachine::loadPostProcess();
-}  // end loadPostProcess
+// Retail WorkerStateMachine::loadPostProcess (0x002C8170) is implemented in WorkerStateMachine_loadPostProcess.cpp.
 
-// ------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/WorkerStateMachineSupplyPredicate.cpp
-// ?supplyTruckSubMachineWantsToEnter@WorkerStateMachine@@SA_NPAVState@@PAX@Z present-unmatched
-Bool WorkerStateMachine::supplyTruckSubMachineWantsToEnter( State *thisState, void* userData )
-{
-	Object *owner = thisState->getMachineOwner();
-	WorkerAIUpdate *update = (WorkerAIUpdate*)owner->getAIUpdateInterface();
-	if( !update )
-	{
-		return false;
-	}
-	AIStateType masterState = update->getAIStateType();
+// Retail WorkerStateMachine::supplyTruckSubMachineWantsToEnter (0x002C8180) is implemented in WorkerStateMachineSupplyPredicate.cpp.
 
-	//If I detect a Supply force message, or if I have been put straight in dock,
-	//then the worker master part of me wants to switch to the Supply sub-brain
-
-	return update->isForcedIntoWantingState() || (masterState == AI_DOCK);
-}
-
-// ------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/WorkerStateMachineReadyToLeave.cpp
-// ?supplyTruckSubMachineReadyToLeave@WorkerStateMachine@@SA_NPAVState@@PAX@Z present-unmatched
-Bool WorkerStateMachine::supplyTruckSubMachineReadyToLeave( State *thisState, void* userData )
-{
-	Object *owner = thisState->getMachineOwner();
-	WorkerAIUpdate *update = (WorkerAIUpdate*)owner->getAIUpdateInterface();
-	if( !update )
-	{
-		return false;
-	}
-//	AIStateType masterState = update->getAIStateType();
-
-	// It isn't ready to leave if it is on its way in.  The first clause
-	// allow a latch for a moment
-	// so there is no transition out on the way in.  Active and Busy means it isn't doing
-	// anything Supply related.
-
-	return !supplyTruckSubMachineWantsToEnter( thisState, NULL )
-				&& update->isSupplyTruckBrainActiveAndBusy();
-}
+// Retail WorkerStateMachine::supplyTruckSubMachineReadyToLeave (0x002C81E0) is implemented in WorkerStateMachineReadyToLeave.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
