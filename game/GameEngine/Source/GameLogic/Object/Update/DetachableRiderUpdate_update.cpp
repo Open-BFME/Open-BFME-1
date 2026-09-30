@@ -1,13 +1,11 @@
-// ?update@DetachableRiderUpdate@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.45 date=2026-09-10
-// cl: /DNDEBUG /MD /EHsc
-// DetachableRiderUpdate::update, retail 0x0028DFF0, 720 bytes.
-//
-// The retail entry is the UpdateModuleInterface subobject at complete-object
-// offset +0x10.  Consequently the module-data and ObjectModule pointers are
-// at this-0x0c and this-0x08, while the two per-instance flags are at +0x10
-// and +0x11 in this interface view.  The module-data record array is a
-// 0x30-byte BFME extension; its +0x2c field is the optional rider OCL.
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
+// DetachableRiderUpdate::update, retail 0x0028DFF0, 720 bytes; slot 0 of the class's
+// +0x10 vtable 0x010BDBBC (installed by ctor 0x0028D580) reaches it through ILT 0x00013EE9.
+
+#include "ascii_string.h"
+#include <string.h>
+#include <vector>
 
 typedef unsigned int UnsignedInt;
 typedef int Int;
@@ -27,17 +25,34 @@ enum CommandSourceType
 	COMMAND_SOURCE_AI = 2
 };
 
+// Bit indices read off the retail masks: status word 1 bit 6, condition word 8 bit 8.
+enum
+{
+	OBJECT_STATUS_BIT_38 = 38,
+	MODELCONDITION_BIT_264 = 264
+};
+
 template <int NUMBITS>
 class BitFlags
 {
 public:
+	BitFlags(Int bit)
+	{
+		memset(m_bits, 0, sizeof(m_bits));
+		m_bits[bit >> 5] |= 1 << (bit & 31);
+	}
 	UnsignedInt m_bits[(NUMBITS + 31) / 32];
 };
 
-class AsciiString
+// 320-bit model-condition mask, zeroed wholesale like the 0x0028DDC0 parser's.
+class BfmeConditionFlags
 {
 public:
-	unsigned char m_data[4];
+	BfmeConditionFlags()
+	{
+		memset(m_bits, 0, sizeof(m_bits));
+	}
+	UnsignedInt m_bits[10];
 };
 
 class S4Sink004135C0
@@ -52,16 +67,24 @@ public:
 	void aiIdle(CommandSourceType source);
 };
 
-class BfmeSubBPB
+class Object;
+
+class ObjectCreationList
 {
 public:
-	void bfmeDoBPB(void *a, void *b, void *c);
+	void createInternal(const Object *primary, const Object *secondary, UnsignedInt frame) const;
 };
 
 class BfmeUnitCN
 {
 public:
-	void bfmeDoneCN();
+	bool bfmeDoneCN();
+};
+
+class BfmeItem1005
+{
+public:
+	void bfmeDoD1005(Int value);
 };
 
 class RiderCarrier;
@@ -82,15 +105,24 @@ public:
 	virtual S4Sink004135C0 *getSink();
 
 	bool clearDisabled(DisabledType type);
-	void clearAndSetModelConditionFlags(const BitFlags<320> &clear,
-		const BitFlags<320> &set);
+	void clearAndSetModelConditionFlags(const BfmeConditionFlags &clear,
+		const BfmeConditionFlags &set);
 	void setWeaponLock(Int weaponSlot, Int lockType);
 	void setStatus(const BitFlags<86> &status, bool set);
 	void notifyModelConditionChanged();
+	RiderCarrier *getContain() const { return m_contain; }
 
-	unsigned char m_pad000[0x130 - 4];
-	UnsignedInt m_modelConditionFlags;
-	unsigned char m_pad134[0x1fc - 0x134];
+	struct ModelConditionFlags
+	{
+		UnsignedInt test(Int i) const { return m_bits[i >> 5] & (1u << (i & 31)); }
+		void set(Int i) { m_bits[i >> 5] |= (1u << (i & 31)); }
+		void reset(Int i) { m_bits[i >> 5] &= ~(1u << (i & 31)); }
+		UnsignedInt m_bits[10];
+	};
+
+	unsigned char m_pad000[0x110 - 4];
+	ModelConditionFlags m_modelConditionFlags;
+	unsigned char m_pad138[0x1fc - 0x138];
 	RiderCarrier *m_contain;
 	unsigned char m_pad200[0x204 - 0x200];
 	AICommandInterface *m_ai;
@@ -179,7 +211,6 @@ public:
 	virtual void slot88() = 0;
 	virtual void slot8c() = 0;
 	virtual void notifyRider(Object *object, Int mode) = 0;
-	virtual void slot90() = 0;
 	virtual void slot94() = 0;
 	virtual void slot98() = 0;
 	virtual void slot9c() = 0;
@@ -211,37 +242,24 @@ public:
 	virtual RiderList *getRiderList() = 0;
 };
 
+// 48-byte rider record (AnimState, AnimTime, RiderOCL) parsed by 0x0028DDC0.
 class DetachableRiderRecord
 {
 public:
-	unsigned char m_conditionData[0x2c];
-	BfmeSubBPB *m_riderOCL;
+	BfmeConditionFlags m_conditionData;
+	UnsignedInt m_animTime;
+	const ObjectCreationList *m_riderOCL;
 };
 
 class DetachableRiderUpdateModuleData
 {
 public:
 	unsigned char m_pad000[8];
-	DetachableRiderRecord *m_riderRecords;
-	unsigned char m_pad00c[8];
-	AsciiString *m_riderSubObjectsBegin;
-	AsciiString *m_riderSubObjectsEnd;
-	unsigned char m_pad01c[4];
+	std::vector<DetachableRiderRecord> m_riderRecords;
+	std::vector<AsciiString> m_riderSubObjects;
 	Int m_weaponLock;
 	bool m_ejectRiderIfApplicable;
 	bool m_riderlessDeathChance;
-};
-
-union DetachableRiderLocalFlags
-{
-	BitFlags<320> m_modelConditions;
-	BitFlags<86> m_status;
-};
-
-class BfmeItem1005
-{
-public:
-	void bfmeDoD1005(Int value);
 };
 
 class GameLogic
@@ -250,12 +268,20 @@ public:
 	void deselectObject(Object *object, unsigned short playerMask, bool affectClient);
 };
 
-#define TheGameLogic (*(GameLogic **)0x012f0898)
+extern GameLogic *TheGameLogic;
 
 class DetachableRiderUpdate
 {
 public:
 	virtual UpdateSleepTime update();
+	DetachableRiderUpdateModuleData *getData() const
+	{
+		return *(DetachableRiderUpdateModuleData **)((char *)this - 0x0c);
+	}
+	Object *getObject() const
+	{
+		return *(Object **)((char *)this - 0x08);
+	}
 	unsigned char m_pad000[0x0c];
 	unsigned char m_flag20;
 	unsigned char m_flag21;
@@ -264,133 +290,106 @@ public:
 // ?update@DetachableRiderUpdate@@UAE?AW4UpdateSleepTime@@XZ
 UpdateSleepTime DetachableRiderUpdate::update()
 {
-	register S4Sink004135C0 *sink;
-	DetachableRiderUpdate *update = this;
-	unsigned char *self = (unsigned char *)update;
-	DetachableRiderUpdateModuleData *data =
-		*(DetachableRiderUpdateModuleData * volatile *)(self - 0x0c);
-	Object *object = *(Object * volatile *)(self - 0x08);
-	sink = object->getSink();
+	DetachableRiderUpdateModuleData *data = getData();
+	Object *object = getObject();
+	S4Sink004135C0 *sink = object->getSink();
 	object->clearDisabled(DISABLED_DETACHABLE_RIDER);
 
-	if (update->m_flag20 != 0)
+	if (m_flag20)
 	{
-		if (sink != 0)
+		if (sink)
 		{
-			for (Int i = 0; i < data->m_riderSubObjectsEnd -
-				data->m_riderSubObjectsBegin; ++i)
-				sink->invoke(data->m_riderSubObjectsBegin[i], false, 0, 0, 0);
+			for (UnsignedInt i = 0; i < data->m_riderSubObjects.size(); ++i)
+				sink->invoke(data->m_riderSubObjects[i], false, 0, 0, 0);
 		}
 
-		unsigned char riderIndex = update->m_flag21;
-		DetachableRiderRecord *record = data->m_riderRecords + riderIndex;
-		if (record->m_riderOCL != 0)
-			record->m_riderOCL->bfmeDoBPB(object, object, 0);
+		if (data->m_riderRecords[m_flag21].m_riderOCL)
+			data->m_riderRecords[m_flag21].m_riderOCL->createInternal(object, object, 0);
 
-		{
-			DetachableRiderLocalFlags flags = {};
-			object->clearAndSetModelConditionFlags(
-				*reinterpret_cast<const BitFlags<320> *>(record),
-				flags.m_modelConditions);
-		}
+		object->clearAndSetModelConditionFlags(
+			data->m_riderRecords[m_flag21].m_conditionData, BfmeConditionFlags());
 		object->setWeaponLock(data->m_weaponLock, 2);
+		object->setStatus(BitFlags<86>(OBJECT_STATUS_BIT_38), true);
 
+		if (!object->m_modelConditionFlags.test(MODELCONDITION_BIT_264))
 		{
-			DetachableRiderLocalFlags flags;
-			flags.m_status.m_bits[0] = 0;
-			flags.m_status.m_bits[1] = 0x40;
-			flags.m_status.m_bits[2] = 0;
-			object->setStatus(flags.m_status, true);
-		}
-
-		if ((object->m_modelConditionFlags & 0x100) == 0)
-		{
-			object->m_modelConditionFlags |= 0x100;
+			object->m_modelConditionFlags.set(MODELCONDITION_BIT_264);
 			object->notifyModelConditionChanged();
 		}
 
 		if (data->m_riderlessDeathChance)
 		{
 			Object *container = object->m_containedBy;
-			RiderCarrier *carrier = container->m_contain;
-			if (carrier != 0)
+			if (container)
 			{
-				RiderAction *action = carrier->getRiderAction();
-				if (action != 0)
+				RiderAction *action;
+				if (container->getContain() && (action = container->getContain()->getRiderAction()) != 0)
 					action->apply(object);
-				else
-					carrier->notifyRider(object, 0);
+				else if (container->getContain())
+					container->getContain()->notifyRider(object, 0);
+
+				if (object->m_ai)
+				{
+					AICommandInterface *ai =
+						(AICommandInterface *)((unsigned char *)object->m_ai + 0x20);
+					ai->aiIdle(COMMAND_SOURCE_AI);
+				}
 			}
-
-			if (object->m_ai != 0)
-			{
-				AICommandInterface *ai =
-					(AICommandInterface *)((unsigned char *)object->m_ai + 0x20);
-				ai->aiIdle(COMMAND_SOURCE_AI);
-			}
-		}
-
-		TheGameLogic->deselectObject(object, 0xffff, true);
-		return UPDATE_SLEEP_FOREVER;
-	}
-
-	if (sink != 0)
-	{
-		for (Int i = 0; i < data->m_riderSubObjectsEnd -
-			data->m_riderSubObjectsBegin; ++i)
-			sink->invoke(data->m_riderSubObjectsBegin[i], true, 0, 0, 0);
-	}
-
-	((BfmeItem1005 *)object)->bfmeDoD1005(2);
-
-	{
-		DetachableRiderLocalFlags flags;
-		flags.m_status.m_bits[0] = 0;
-		flags.m_status.m_bits[1] = 0x40;
-		flags.m_status.m_bits[2] = 0;
-		object->setStatus(flags.m_status, true);
-	}
-
-	if ((object->m_modelConditionFlags & 0x100) != 0)
-	{
-		object->m_modelConditionFlags &= ~0x100;
-		object->notifyModelConditionChanged();
-	}
-
-	if (data->m_ejectRiderIfApplicable)
-	{
-		Object *container = object->m_containedBy;
-		if (container == 0)
-		{
-			((BfmeUnitCN *)object)->bfmeDoneCN();
+			TheGameLogic->deselectObject(object, 0xffff, true);
 			return UPDATE_SLEEP_FOREVER;
 		}
 
-		RiderCarrier *carrier = container->m_contain;
-		if (carrier != 0 && carrier->getRiderAction() != 0)
+		if (data->m_ejectRiderIfApplicable)
 		{
-			Int expected = carrier->getRiderCount(0);
-			RiderList *list = carrier->getRiderList();
-			RiderListNode *end = list->m_sentinel;
-			RiderListNode *first = end->m_next;
-			RiderListNode *it = first;
-			Int matching = 0;
-			while (it != end)
+			Object *container = object->m_containedBy;
+			if (container != 0)
 			{
-				if ((reinterpret_cast<RiderFlagObject *>(it->m_object)->m_riderFlag94 & 0x40) != 0)
-					++matching;
-				it = it->m_next;
-			}
-
-			if (matching == expected && first != end)
-			{
-				it = first;
-				do
+				if (container->getContain() && container->getContain()->getRiderAction())
 				{
-					((BfmeUnitCN *)it->m_object)->bfmeDoneCN();
-					it = it->m_next;
-				} while (it != end);
+					Int expected = container->getContain()->getRiderCount(0);
+					Int matching = 0;
+					RiderList *list = container->getContain()->getRiderList();
+					RiderListNode *it;
+					for (it = list->m_sentinel->m_next; it != list->m_sentinel; it = it->m_next)
+					{
+						if ((reinterpret_cast<RiderFlagObject *>(it->m_object)->m_riderFlag94 & 0x40) != 0)
+							++matching;
+					}
+
+					if (matching == expected)
+					{
+						for (it = list->m_sentinel->m_next; it != list->m_sentinel; )
+						{
+							Object *rider = it->m_object;
+							it = it->m_next;
+							((BfmeUnitCN *)rider)->bfmeDoneCN();
+						}
+						return UPDATE_SLEEP_FOREVER;
+					}
+				}
 			}
+			else
+			{
+				((BfmeUnitCN *)object)->bfmeDoneCN();
+				return UPDATE_SLEEP_FOREVER;
+			}
+		}
+	}
+	else
+	{
+		if (sink)
+		{
+			for (UnsignedInt i = 0; i < data->m_riderSubObjects.size(); ++i)
+				sink->invoke(data->m_riderSubObjects[i], true, 0, 0, 0);
+		}
+
+		((BfmeItem1005 *)object)->bfmeDoD1005(2);
+		object->setStatus(BitFlags<86>(OBJECT_STATUS_BIT_38), false);
+
+		if (object->m_modelConditionFlags.test(MODELCONDITION_BIT_264))
+		{
+			object->m_modelConditionFlags.reset(MODELCONDITION_BIT_264);
+			object->notifyModelConditionChanged();
 		}
 	}
 
