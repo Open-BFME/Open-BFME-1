@@ -58,7 +58,7 @@ def test_stale_object_is_never_evidence(tmp_path, monkeypatch):
     assert not link_census.object_current(source, obj)  # no sidecar: older than its source
     os.utime(obj, None)
     os.utime(source, (1_000_000, 1_000_000))
-    assert link_census.object_current(source, obj)
+    assert not link_census.object_current(source, obj)  # timestamps do not replace a receipt
     monkeypatch.setattr(link_census.build, "compiler_command", lambda s, o: (["cl"], {}))
     monkeypatch.setattr(link_census.build, "_cmd_fingerprint", lambda command, env: "cmd")
     sidecar = link_census.build._deps_sidecar(obj)

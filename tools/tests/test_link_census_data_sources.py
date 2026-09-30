@@ -52,7 +52,7 @@ def test_data_provider_byte_failure_is_not_ignored(monkeypatch, tmp_path):
 def test_stale_data_provider_is_refused_before_byte_verification(monkeypatch, tmp_path):
     monkeypatch.setattr(data_rows, "DATA_ROWS", tmp_path / "no_rows.csv")
     monkeypatch.setattr(census, "data_sources", lambda: [census.ROOT / "game/data.cpp"])
-    monkeypatch.setattr(census.build, "compile_is_current", lambda source, obj: False)
+    monkeypatch.setattr(census.build, "compile_is_current", lambda source, obj, **kwargs: False)
     monkeypatch.setattr(data_rows, "verify", lambda **kwargs: pytest.fail("reached data byte verification"))
     with pytest.raises(SystemExit, match="data provider objects are missing or stale"):
         census.verify_data_objects()

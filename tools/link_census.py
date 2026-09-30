@@ -42,6 +42,7 @@ The census is diagnostic. The image it writes is not expected to run.
 """
 import argparse
 import collections
+import concurrent.futures
 import csv
 import json
 import os
@@ -62,6 +63,10 @@ DUPLICATE = re.compile(r'^(\S+\.obj) : (?:error LNK2005|warning LNK4006): (?:"[^
                        r'already defined in (\S+\.obj)')
 FATAL = re.compile(r"fatal error (LNK(?!1120)\d+).*")  # LNK1120 is only the unresolved count
 REFERRER = re.compile(r"^(\S+\.obj) : error LNK20(?:01|19)")
+# These are compiler inputs, including the headers reached through TU shims.
+CENSUS_INPUTS = ("game", "inputs/reference", "inputs/vendor",
+                 "targets/game/reverse/functions.csv", "targets/game/reverse/symbols.csv",
+                 "targets/game/reverse/dir32_addresses.csv", "targets/game/reverse/data_rows.csv")
 
 
 def ledger():
@@ -89,7 +94,7 @@ def verify_data_objects():
     if problems:
         raise SystemExit("link_census: invalid data rows:\n  " + "\n  ".join(problems))
     stale = [source for source in data_sources()
-             if not build.compile_is_current(source, build.obj_path(source))]
+             if not object_current(source, build.obj_path(source))]
     if stale:
         raise SystemExit(f"link_census: {len(stale):,} data provider objects are missing or stale, "
                          f"e.g. {stale[0].relative_to(ROOT)}; rerun with --build")
@@ -1237,6 +1242,7 @@ def report(census):
 
 
 def main(argv=None):
+    global _INPUT_RECEIPTS
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--report", action="store_true", help="summarise build/link_census/census.json")
     ap.add_argument("--scaffold", action="store_true",
@@ -1274,16 +1280,26 @@ def main(argv=None):
         os.environ.pop("BUILD_RECOMPILE_ONLY", None)
         started = time.time()
         build.ensure_case_shims()
-        build.compile_rows(rows, compile_sources(rows))
+        import census_receipts
+        _INPUT_RECEIPTS = census_receipts.Receipts(OUT / "compile_inputs.json")
+        _INPUT_RECEIPTS.path.unlink(missing_ok=True)
+        build.compile_rows(rows, compile_sources(rows), input_proof=_INPUT_RECEIPTS)
+        _INPUT_RECEIPTS.save()
         print(f"link_census: compile {time.time() - started:.0f}s", flush=True)
     verify_data_objects()
     present, missing = objects(rows)
+    sources = _object_sources(rows)
+    stale = stale_objects(present, sources)
+    if stale:
+        raise SystemExit(f"link_census: {len(stale):,} source objects are stale, e.g. {stale[0].name}; rerun with --build")
     if missing:
         print(f"link_census: {len(missing):,} objects missing (run the full ./build.sh first); "
               f"linking the {len(present):,} present", file=sys.stderr)
     fresh_outputs(OUT / "census.exe")
     log, seconds, code = link(present)
     unexplained_exit(code, log, OUT / "census.exe")
+    if stale_objects(present, sources):
+        raise SystemExit("link_census: compiler inputs or objects changed during link; nothing recorded")
     crashed = FATAL.search(log)
     if crashed:
         # A linker that dies prints no per-symbol errors, which would read as
@@ -1294,6 +1310,9 @@ def main(argv=None):
               "seconds": seconds, "unresolved_classes": dict(classes), "duplicate_classes": dict(dup_kinds),
               "unresolved": detail, "duplicates": dups, "comdat_conflicts": comdat_conflicts(present),
               "missing_objects": [str(p.relative_to(ROOT)) for p in missing[:200]]}
+    receipts = input_receipts()
+    if receipts is not None:
+        census["compile_input_run"] = receipts.run
     if args.scaffold:
         wanted = [name for name, entry in detail.items() if entry["kind"] in ("alias", "dump", "pinned-elsewhere")]
         table = alias_scaffold(rows, wanted)
@@ -1313,8 +1332,7 @@ def main(argv=None):
     path.write_text(json.dumps(census, indent=1), encoding="utf-8")
     report(census)
     if args.history:
-        # --build just proved every object current (compile_is_current, the
-        # full gate's own test), so record() need not hash them again.
+        # record rechecks currency after the link, which can take minutes.
         record(census, rows, fresh=args.build)
     return 0
 
@@ -1323,9 +1341,8 @@ def selected_main():
     """--selected: the selection report for the last recorded census, on its
     own tree, from a fresh /MAP link of the same objects."""
     history = read_history()
-    changed = subprocess.run(["git", "diff", "--quiet", history[-1]["commit"] if history else "HEAD", "--", "game",
-                              "targets/game/reverse/functions.csv", "targets/game/reverse/symbols.csv",
-                              "targets/game/reverse/data_rows.csv"],
+    changed = subprocess.run(["git", "diff", "--quiet", history[-1]["commit"] if history else "HEAD", "--",
+                              *CENSUS_INPUTS],
                              cwd=ROOT).returncode if history else 1
     if changed:
         raise SystemExit("link_census: --selected needs the last census's sources and ledger "
@@ -1336,12 +1353,15 @@ def selected_main():
     if missing:
         raise SystemExit(f"link_census: {len(missing):,} objects missing")
     sources = _object_sources(rows)
-    stale = [obj for obj in present if obj in sources and not object_current(sources[obj], obj)]
+    stale = stale_objects(present, sources)
     if stale:
         raise SystemExit(f"link_census: {len(stale):,} objects are not current for their source, "
                          f"e.g. {stale[0].name}")
     log = final_log(None)  # the census's own link says which names nothing defines
     map_text = selection_link(present, log)
+    if subprocess.run(["git", "diff", "--quiet", history[-1]["commit"], "--", *CENSUS_INPUTS],
+                      cwd=ROOT).returncode or stale_objects(present, sources):
+        raise SystemExit("link_census: source inputs or objects changed during the selection link; rerun the census")
     with STATUS.open(newline="", encoding="utf-8") as handle:
         clean = {row["source"] for row in csv.DictReader(handle) if row["linked"] == "yes"}
     clean_objects = {build.row_object(row).name for row in rows if row["source"] in clean}
@@ -1642,25 +1662,58 @@ def head():
                           capture_output=True, text=True, check=True).stdout.strip()
 
 
-def object_current(source, obj):
-    """The object is what this source, its recorded headers and this compile
-    command produce. This is build.compile_is_current without the include-
-    directory inventory: that fingerprint moves with unrelated files (a scratch
-    file in the repo root, another checkout's build/include) and flipped 18
-    provably identical objects to "stale" and back on 2026-09-28, which would
-    make the census refuse at random. An object with no dependency record must
-    at least be newer than its source."""
-    sidecar = build._deps_sidecar(obj)
-    if not sidecar.exists():
-        return obj.stat().st_mtime >= source.stat().st_mtime
-    meta = json.loads(sidecar.read_text())
-    if meta.get("source") != build._hash_file(str(source)):
+_INPUT_RECEIPTS = None
+
+
+def input_receipts():
+    """Only the recorded census's fresh proof, never a reusable build cache."""
+    global _INPUT_RECEIPTS
+    if _INPUT_RECEIPTS is not None:
+        return _INPUT_RECEIPTS
+    import census_receipts
+    try:
+        run = json.loads((OUT / "census.json").read_text()).get("compile_input_run")
+    except (OSError, ValueError, TypeError):
+        return None
+    _INPUT_RECEIPTS = census_receipts.Receipts.load(OUT / "compile_inputs.json", run)
+    return _INPUT_RECEIPTS
+
+
+def object_current(source, obj, *, inventory_cache=None, allow_fresh=True):
+    """Use the full gate's receipt, including new higher-priority headers.
+
+    Object timestamps alone cannot prove source or header bytes, and recorded
+    dependencies alone miss a header newly added in an earlier include path.
+    """
+    if build.compile_is_current(source, obj, inventory_cache=inventory_cache):
+        return True
+    if not allow_fresh:
         return False
-    for dep, digest in (meta.get("deps") or {}).items():
-        if build._hash_file(dep if os.path.isabs(dep) else str(ROOT / dep)) != digest:
-            return False
-    command, env = build.compiler_command(source, obj)
-    return meta.get("cmd") == build._cmd_fingerprint(command, env)
+    receipts = input_receipts()
+    return receipts is not None and receipts.current(source, obj)
+
+
+def stale_objects(present, sources):
+    """Check only selected source objects, sharing each include inventory."""
+    inventory_cache = {}
+    uncached = [obj for obj in present if obj in sources
+                and not object_current(sources[obj], obj, inventory_cache=inventory_cache,
+                                       allow_fresh=False)]
+    if not build._inventory_cache_still_current(inventory_cache):
+        raise SystemExit("link_census: include search directories changed while checking objects; retry")
+    receipts = input_receipts()
+    if receipts is None:
+        return uncached
+    def check(obj):
+        return receipts.current(sources[obj], obj)
+    # The fresh proof runs cl /E, so honor BUILD_POOL and bound Wine fanout.
+    # The reusable-cache inventory above remains one serial shared snapshot.
+    workers = min(8, build._pool_size(), max(1, len(uncached)))
+    with concurrent.futures.ThreadPoolExecutor(workers) as pool:
+        stale = [obj for obj, current in zip(uncached, pool.map(check, uncached)) if not current]
+    if not build._inventory_cache_still_current(inventory_cache):
+        raise SystemExit("link_census: include search directories changed while checking objects; retry")
+    return stale
 
 
 def record(census, rows, rerun=False, fresh=False):
@@ -1679,8 +1732,7 @@ def record(census, rows, rerun=False, fresh=False):
     if census["missing"]:
         raise SystemExit(f"link_census: {census['missing']:,} objects were missing from the link; "
                          "nothing recorded (build everything and rerun)")
-    dirty = subprocess.run(["git", "status", "--porcelain", "-uno", "--", "game", "targets/game/reverse/functions.csv",
-                            "targets/game/reverse/symbols.csv", "targets/game/reverse/data_rows.csv"],
+    dirty = subprocess.run(["git", "status", "--porcelain", "-uno", "--", *CENSUS_INPUTS],
                            cwd=ROOT, capture_output=True, text=True).stdout
     if dirty.strip():
         raise SystemExit(f"link_census: uncommitted source or ledger edits; the census would not match its commit:\n{dirty}")
@@ -1693,7 +1745,7 @@ def record(census, rows, rerun=False, fresh=False):
         raise SystemExit(f"link_census: {len(missing):,} objects are missing now, e.g. {missing[0].name}; "
                          "nothing recorded")
     by_object = _object_sources(rows)
-    stale = [] if fresh else [obj for obj in present if obj in by_object and not object_current(by_object[obj], obj)]
+    stale = stale_objects(present, by_object)
     if stale:
         raise SystemExit(f"link_census: {len(stale):,} objects are not current for their source (a failed compile?), "
                          f"e.g. {stale[0].name}; nothing recorded")
@@ -1714,6 +1766,9 @@ def record(census, rows, rerun=False, fresh=False):
             raise SystemExit("link_census: census.log no longer reproduces census.json's counts; rerun the census")
     import link_debt
     kept = selected_definitions(selection_link(present, log))
+    if subprocess.run(["git", "diff", "--quiet", commit, "--", *CENSUS_INPUTS], cwd=ROOT).returncode \
+            or stale_objects(present, by_object):
+        raise SystemExit("link_census: source inputs or objects changed during the selection link; nothing recorded")
     clean, files, blocking, clean_prev, _ = write_status(log, rows, present, {"date": census["when"], "commit": commit},
                                                          kept)
     before = linked_figures(clean_prev)

@@ -1462,7 +1462,7 @@ def first_cl_error(text):
     return "(unrecognized compiler output)"
 
 
-def try_compile_source(source, output):
+def try_compile_source(source, output, *, input_proof=None):
     """Compile `source` to `output`. Return (ok, filtered_output, returncode).
 
     Same retries as compile_source (sweep-include path, transient Wine launch)
@@ -1481,6 +1481,7 @@ def try_compile_source(source, output):
     filtered = ""
     code = 1
     for attempt in range(3):
+        before = input_proof.before(source, output, command, env) if input_proof else None
         result = subprocess.run(
             command + (["-showIncludes"] if is_cl else []),
             cwd=ROOT,
@@ -1496,6 +1497,8 @@ def try_compile_source(source, output):
         if code == 0:
             _write_deps_sidecar(source, output, fingerprint, stdout, is_cl,
                                 command, env, inventory_before, retry_dirs)
+            if input_proof:
+                input_proof.after(source, output, command, env, before, stdout)
             return True, filtered, 0
         # Retry once with the sweep include dirs on the path (header resolution
         # only — never affects codegen of already-matched sources).
@@ -1519,8 +1522,11 @@ def try_compile_source(source, output):
     return False, filtered, code
 
 
-def compile_source(source, output):
-    ok, text, code = try_compile_source(source, output)
+def compile_source(source, output, *, input_proof=None):
+    if input_proof is None:
+        ok, text, code = try_compile_source(source, output)
+    else:
+        ok, text, code = try_compile_source(source, output, input_proof=input_proof)
     if ok:
         return
     print(f"compile failed: {source.relative_to(ROOT)}", file=sys.stderr)
@@ -2551,7 +2557,7 @@ def stale_sources(sources, source_outputs, workers=1):
                 for source in part]
 
 
-def compile_rows(rows, sources):
+def compile_rows(rows, sources, *, input_proof=None):
     """Compile every source whose object is not current; return {source: object}.
     The compile phase of verify_functions, callable on its own (link_census)."""
     extract_lib_members(rows)
@@ -2607,10 +2613,14 @@ def compile_rows(rows, sources):
     try:
         if pool_size == 1 or len(to_compile) <= 1:
             for s in to_compile:
-                compile_source(s, source_outputs[s])
+                if input_proof is None:
+                    compile_source(s, source_outputs[s])
+                else:
+                    compile_source(s, source_outputs[s], input_proof=input_proof)
         else:
             with concurrent.futures.ThreadPoolExecutor(pool_size) as pool:
-                futures = {pool.submit(compile_source, s, source_outputs[s]): s for s in to_compile}
+                kwargs = {} if input_proof is None else {"input_proof": input_proof}
+                futures = {pool.submit(compile_source, s, source_outputs[s], **kwargs): s for s in to_compile}
                 for future in concurrent.futures.as_completed(futures):
                     future.result()
     finally:
