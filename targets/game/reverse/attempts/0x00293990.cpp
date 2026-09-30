@@ -1,5 +1,5 @@
 // ?tryToIgnite@FlammableUpdate@@QAEXXZ
-// partial score=0.985 date=2026-09-28
+// partial score=0.5911 date=2026-09-28
 // ?tryToIgnite@FlammableUpdate@@QAEXXZ
 // Candidate only: 962 bytes versus 961; normalized instruction match 0.985.
 // Refined native FX wrappers; owner spill and cursor/element slots still differ.
@@ -39,12 +39,6 @@ typedef unsigned char UnsignedByte;
 typedef float Real;
 typedef int Int;
 typedef bool Bool;
-
-template <>
-inline const char *StringBase<char>::str() const
-{
-	return m_data ? (const char *)m_data + 8 : "";
-}
 
 template <>
 inline bool StringBase<char>::isNotEmpty() const
@@ -166,6 +160,11 @@ public:
 	FXList *fx;
 	AsciiString boneName;
 };
+
+static __forceinline void advanceFireFXCursor( FireFXElement **cursor )
+{
+	++*cursor;
+}
 
 class FlammableUpdateModuleData
 {
@@ -365,7 +364,7 @@ void FlammableUpdate::tryToIgnite()
 		// Retail steps the cursor at +030f, ahead of the element destructor
 		// at +0326, so the step is the last statement of the body rather
 		// than the for-increment.
-		++e;
+		advanceFireFXCursor( &e );
 	}
 
 	if( data->m_extra0 > 0 )
