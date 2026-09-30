@@ -412,286 +412,9 @@ void W3DView::setOrigin( Int x, Int y)
 /** @todo This is inefficient. We should construct the matrix directly using vectors. */
 //-------------------------------------------------------------------------------------------------
 #define MIN_CAPPED_ZOOM (0.5f) //WST 10.19.2002. JSC integrated 5/20/03.
-// ?buildCameraTransform@W3DView@@ present-unmatched
-void W3DView::buildCameraTransform( Matrix3D *transform )
-{
-	Vector3 sourcePos, targetPos;
+// Retail W3DView::buildCameraTransform (0x00741D30) is implemented in W3DViewBuildCameraTransformBfme.cpp.
 
-	Real groundLevel = m_groundLevel; // 93.0f; 
-
-	Real zoom = getZoom();
-	Real angle = getAngle();
-	Real pitch = getPitch();
-	Coord3D pos = *getPosition();
-
-	// add in the camera shake, if any
-	pos.x += m_shakeOffset.x;
-	pos.y += m_shakeOffset.y;
-
-	if (m_cameraConstraintValid)
-	{
-		pos.x = maxf(m_cameraConstraint.lo.x, pos.x);
-		pos.x = minf(m_cameraConstraint.hi.x, pos.x);
-		pos.y = maxf(m_cameraConstraint.lo.y, pos.y);
-		pos.y = minf(m_cameraConstraint.hi.y, pos.y);
-	}
-
-	// set position of camera itself
-	if (m_useRealZoomCam) //WST 10/10/2002 Real Zoom using FOV
-	{
-		sourcePos.X = m_cameraOffset.x;
-		sourcePos.Y = m_cameraOffset.y;
-		sourcePos.Z = m_cameraOffset.z;
-		Real capped_zoom = zoom;
-		if (capped_zoom > 1.0f)
-		{
-			capped_zoom= 1.0f;
-		}
-		if (capped_zoom < MIN_CAPPED_ZOOM)
-		{
-			capped_zoom = MIN_CAPPED_ZOOM;
-		}
-		m_FOV = 50.0f * PI/180.0f * capped_zoom * capped_zoom;
-	}
-	else
-	{
-		sourcePos.X = m_cameraOffset.x*zoom;
-		sourcePos.Y = m_cameraOffset.y*zoom;
-		sourcePos.Z = m_cameraOffset.z*zoom;
-	}
-
-#ifdef NOT_IN_USE
-	if (TheGlobalData->m_isOffsetCameraZ && TheTerrainLogic)
-	{
-		sourcePos.Z += TheTerrainLogic->getGroundHeight(pos.x, pos.y);
-		if (m_prevSourcePosZ != SOURCEPOS_INVALID)
-		{
-			const Real MAX_SPZ_VARIATION = 0.05f;
-			Real spzMin = m_prevSourcePosZ*(1.0-MAX_SPZ_VARIATION);
-			Real spzMax			Coord3D center;
- = m_prevSourcePosZ*(1.0+MAX_SPZ_VARIATION);
-			if (sourcePos.Z < spzMin) sourcePos.Z = spzMin;
-			if (sourcePos.Z > spzMax) sourcePos.Z = spzMax;
-		}
-		m_prevSourcePosZ = sourcePos.Z;
-	}
-#endif
-
-	// camera looking at origin
-	targetPos.X = 0;
-	targetPos.Y = 0;
-	targetPos.Z = 0;
-
-
-	Real factor = 1.0 - (groundLevel/sourcePos.Z );
-
-	// construct a matrix to rotate around the up vector by the given angle
-	Matrix3D angleTransform( Vector3( 0.0f, 0.0f, 1.0f ), angle );
-
-	// construct a matrix to rotate around the horizontal vector by the given angle
-	Matrix3D pitchTransform( Vector3( 1.0f, 0.0f, 0.0f ), pitch );
-
-	// rotate camera position (pitch, then angle)
-#ifdef ALLOW_TEMPORARIES
-	sourcePos = pitchTransform * sourcePos;
-	sourcePos = angleTransform * sourcePos;
-#else
-	pitchTransform.mulVector3(sourcePos);
-	angleTransform.mulVector3(sourcePos);
-#endif
-	sourcePos *= factor;
-
-	// translate to current XY position
-	sourcePos.X += pos.x;
-	sourcePos.Y += pos.y;
-	sourcePos.Z += groundLevel;
-	
-	targetPos.X += pos.x;
-	targetPos.Y += pos.y;
-	targetPos.Z += groundLevel;
-
-	// do m_FXPitch adjustment.
-	//WST Real height = sourcePos.Z - targetPos.Z;
-	//WST height *= m_FXPitch;
-	//WST targetPos.Z = sourcePos.Z - height;
-
-
-	// The following code moves camera down and pitch up when player zooms in.
-	// Use scripts to switch to useRealZoomCam
-	if (m_useRealZoomCam)
-	{	
-		Real pitch_adjust = 1.0f;
-
-		if (!TheDisplay->isLetterBoxed())
-		{
-			Real capped_zoom = zoom;
-			if (capped_zoom > 1.0f)
-			{
-				 capped_zoom= 1.0f;
-			}
-			if (capped_zoom < MIN_CAPPED_ZOOM)
-			{
-				capped_zoom = MIN_CAPPED_ZOOM;
-			}
-			sourcePos.Z = sourcePos.Z * ( 0.5f + capped_zoom * 0.5f); // move camera down physically
-			pitch_adjust = capped_zoom;	// adjust camera to pitch up
-		}
-		m_FXPitch = 1.0f * (0.25f + pitch_adjust*0.75f);
-	}
-
-
-	// do fxPitch adjustment
-	if (m_useRealZoomCam)
-	{
-		sourcePos.X = targetPos.X + ((sourcePos.X - targetPos.X) / m_FXPitch);
-		sourcePos.Y = targetPos.Y + ((sourcePos.Y - targetPos.Y) / m_FXPitch);
-	}
-	else
-	{
-		if (m_FXPitch <= 1.0f)
-		{
-			Real height = sourcePos.Z - targetPos.Z;
-			height *= m_FXPitch;
-			targetPos.Z = sourcePos.Z - height;
-		}
-		else
-		{
-			sourcePos.X = targetPos.X + ((sourcePos.X - targetPos.X) / m_FXPitch);
-			sourcePos.Y = targetPos.Y + ((sourcePos.Y - targetPos.Y) / m_FXPitch);
-		}
-	}
-
-	//m_3DCamera->Set_View_Plane(DEG_TO_RADF(50.0f));
-	//DEBUG_LOG(("zoom %f, SourceZ %f, posZ %f, groundLevel %f CamOffZ %f\n",
-	//			zoom, sourcePos.Z, pos.z, groundLevel,m_cameraOffset.z));
-
-	// build new camera transform
-	transform->Make_Identity();
-	transform->Look_At( sourcePos, targetPos, 0 );
-
-	//WST 11/12/2002 New camera shaker system 
-	CameraShakerSystem.Timestep(1.0f/30.0f); 
-	CameraShakerSystem.Update_Camera_Shaker(sourcePos, &m_shakerAngles);
-	transform->Rotate_X(m_shakerAngles.X);
-	transform->Rotate_Y(m_shakerAngles.Y);
-	transform->Rotate_Z(m_shakerAngles.Z);
-
-	//if (m_shakerAngles.X >= 0.0f)
-	//{
-	//	DEBUG_LOG(("m_shakerAngles %f, %f, %f\n", m_shakerAngles.X, m_shakerAngles.Y, m_shakerAngles.Z));
-	//}
-
-	// (gth) check if the camera is being controlled by an animation
-	if (m_isCameraSlaved) {
-		// find object named m_cameraSlaveObjectName
-		Object * obj = TheScriptEngine->getUnitNamed(m_cameraSlaveObjectName);
-		
-		if (obj != NULL) {
-			// dig out the drawable
-			Drawable * draw = obj->getDrawable();
-			if (draw != NULL) {
-
-				// dig out the first draw module with an ObjectDrawInterface
-				for (DrawModule ** dm = draw->getDrawModules(); *dm; ++dm) {
-					const ObjectDrawInterface* di = (*dm)->getObjectDrawInterface();
-					if (di) {
-						Matrix3D tm;
-						di->clientOnly_getRenderObjBoneTransform(m_cameraSlaveObjectBoneName,&tm);
-
-						// Ok, slam it into the camera!
-						*transform = tm;
-
-						//--------------------------------------------------------------------
-						// WST 10.22.2002. Update the Listener positions used by audio system
-						//--------------------------------------------------------------------
-						Vector3 position = transform->Get_Translation();
-						m_pos.x = position.X; 
-						m_pos.y = position.Y; 
-						m_pos.z = position.Z; 
-						
-
-						//DEBUG_LOG(("mpos x%f, y%f, z%f\n", m_pos.x, m_pos.y, m_pos.z ));
-
-						break;
-					}
-				}
-
-			} else {
-				m_isCameraSlaved = false;
-			}
-		} else {
-			m_isCameraSlaved = false;
-		}
-	}
-}
-
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ?calcCameraConstraints@W3DView@@ present-unmatched
-void W3DView::calcCameraConstraints()
-{
-//	const Matrix3D& cameraTransform = m_3DCamera->Get_Transform();
-
-//	DEBUG_LOG(("*** rebuilding cam constraints\n"));
-
-	// ok, now check to ensure that we can't see outside the map region,
-	// and twiddle the camera if needed
-	if (TheTerrainLogic)
-	{
-		Region3D mapRegion;
-		TheTerrainLogic->getExtent( &mapRegion );
-		
-	/*
-		Note the following restrictions on camera constraints!
-
-		-- they assume that all maps are height 'm_groundLevel' at the edges.
-				(since you need to add some "buffer" around the edges of your map
-				anyway, this shouldn't be an issue.)
-
-		-- for angles/pitches other than zero, it may show boundaries.
-				since we currently plan the game to be restricted to this,
-				it shouldn't be an issue.
-
-	*/
-		Real maxEdgeZ = m_groundLevel;
-//		const Real BORDER_FUDGE = MAP_XY_FACTOR * 1.414f;
-		Coord3D center, bottom;
-		ICoord2D screen;
-
-		//Pick at the center
-		screen.x=0.5f*getWidth()+m_originX;
-		screen.y=0.5f*getHeight()+m_originY;
-
-		Vector3 rayStart,rayEnd;
-
-		getPickRay(&screen,&rayStart,&rayEnd);
-
-		center.x = Vector3::Find_X_At_Z(maxEdgeZ, rayStart, rayEnd);
-		center.y = Vector3::Find_Y_At_Z(maxEdgeZ, rayStart, rayEnd);
-		center.z = maxEdgeZ;
-
-		screen.y = m_originY+ 0.95f*getHeight();
- 		getPickRay(&screen,&rayStart,&rayEnd);
- 		bottom.x = Vector3::Find_X_At_Z(maxEdgeZ, rayStart, rayEnd);
-		bottom.y = Vector3::Find_Y_At_Z(maxEdgeZ, rayStart, rayEnd);
-		bottom.z = maxEdgeZ;
-		center.x -= bottom.x;
-		center.y -= bottom.y;
-
-		Real offset = center.length();
-
-		if (TheGlobalData->m_debugAI) {
-			offset = -1000; // push out the constraints so we can look at staging areas.
-		}
-
-		m_cameraConstraint.lo.x = mapRegion.lo.x + offset;
-		m_cameraConstraint.hi.x = mapRegion.hi.x - offset;
-		// this looks inverted, but is correct
-		m_cameraConstraint.lo.y = mapRegion.lo.y + offset;
-		m_cameraConstraint.hi.y = mapRegion.hi.y - offset;
-		m_cameraConstraintValid = true;
-	}
-}
+// Retail W3DView::calcCameraConstraints (0x00740CF0) is implemented in W3DViewCalcCameraConstraintsBfme.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Returns a world-space ray originating at a given screen pixel position
@@ -794,45 +517,7 @@ void W3DView::setCameraTransform( void )
 	TheScriptEngine->notifyCameraChange();
 }
 
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/W3DView_initMethodThunk.cpp
-// ?init@W3DView@@ present-unmatched
-void W3DView::init( void )
-{
-	// extend View functionality
-	View::init();
-	setName("W3DView");
-	// set default camera "lookat" point
-	Coord3D pos;
-	pos.x = 87.0f;
-	pos.y = 77.0f;
-	pos.z = 0;
-
-	pos.x *= MAP_XY_FACTOR;
-	pos.y *= MAP_XY_FACTOR;
-
-	setPosition(&pos);
-
-	// create our 3D camera
-	m_3DCamera = NEW_REF( CameraClass, () );
-
-
-	setCameraTransform();
-
-	// create our 2D camera for the GUI overlay
-	m_2DCamera = NEW_REF( CameraClass, () );
-	m_2DCamera->Set_Position( Vector3( 0, 0, 1 ) );
-	Vector2 min = Vector2( -1, -0.75f );
-	Vector2 max = Vector2( +1, +0.75f );
-	m_2DCamera->Set_View_Plane( min, max );		
-	m_2DCamera->Set_Clip_Planes( 0.995f, 2.0f );
-
-	m_cameraConstraintValid = false;
-
-	m_scrollAmountCutoff = TheGlobalData->m_scrollAmountCutoff;
-
-}  // end init
+// Retail W3DView::init (0x00742700) is implemented in W3DView_initBfme.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?get3DCameraPosition@W3DView@@ present-unmatched
@@ -844,26 +529,7 @@ const Coord3D& W3DView::get3DCameraPosition() const
 	return pos;
 }
 
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ?reset@W3DView@@ present-unmatched
-void W3DView::reset( void )
-{
-	View::reset();
-
-	// Just in case...
-	setTimeMultiplier(1); // Set time rate back to 1.
-
-	Coord3D arbitraryPos = { 0, 0, 0 };
-	// Just move the camera to 0, 0, 0. It'll get repositioned at the beginning of the next game
-	// anyways.
-	resetCamera(&arbitraryPos, 1, 0.0f, 0.0f);
-
-	setViewFilter(FT_VIEW_DEFAULT);
-
-	Coord2D gb = { 0,0 };
-	setGuardBandBias( &gb );
-}
+// Retail W3DView::reset (0x0073AC90) is implemented in W3DViewResetBfme.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** draw worker for drawables in the view region */
@@ -1204,39 +870,7 @@ static void renderAIDebug( void )
 {
 }
 
-// ------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewUpdateCameraMovementsBfme.cpp
-// ?updateCameraMovements@W3DView@@ present-unmatched
-Bool W3DView::updateCameraMovements()
-{
-	Bool didUpdate = false;
-
-	if (m_doingZoomCamera)
-	{
-		zoomCameraOneFrame();
-		didUpdate = true;
-	}
-	if (m_doingPitchCamera)
-	{
-		pitchCameraOneFrame();
-		didUpdate = true;
-	}
-	if (m_doingRotateCamera) {	
-		m_previousLookAtPosition = *getPosition();
-		rotateCameraOneFrame();
-		didUpdate = true;
-	} else if (m_doingMoveCameraOnWaypointPath) {
-		m_previousLookAtPosition = *getPosition();
-		moveAlongWaypointPath(TheW3DFrameLengthInMsec);
-		didUpdate = true;
-	}
-	if (m_doingScriptedCameraLock)
-	{
-		didUpdate = true;
-	}
-	return didUpdate;
-}
+// Retail W3DView::updateCameraMovements (0x00744530) is implemented in W3DViewUpdateCameraMovementsBfme.cpp.
 
 
 /** This function performs all actions which affect the camera transform or 3D objects
@@ -1567,53 +1201,7 @@ void W3DView::update(void)
 		TheGameClient->iterateDrawablesInRegion( &axisAlignedRegion, drawDrawable, this );
 }
 
-//-------------------------------------------------------------------------------------------------
-/** Find region which contains all drawables in 3D space. */
-//-------------------------------------------------------------------------------------------------
-// ?getAxisAlignedViewRegion@W3DView@@ present-unmatched
-void W3DView::getAxisAlignedViewRegion(Region3D &axisAlignedRegion)
-{
-	//
-	// get the 4 points in 3D space of the 4 corners of the view, we will use a z = 0.0f
-	// value so that we can get everything ... even stuff below the terrain
-	//
-	Coord3D box[ 4 ];
-	getScreenCornerWorldPointsAtZ( &box[ 0 ], &box[ 1 ], &box[ 2 ], &box[ 3 ], 0.0f );
-
-	//
-	// take those 4 corners projected into the world and create an axis aligned bounding
-	// box, we will use this box to iterate the drawables in 3D space
-	//
-	axisAlignedRegion.lo = box[ 0 ];
-	axisAlignedRegion.hi = box[ 0 ];
-	for( Int i = 0; i < 4; i++ )
-	{
-
-		if( box[ i ].x < axisAlignedRegion.lo.x )
-			axisAlignedRegion.lo.x = box[ i ].x;
-		if( box[ i ].y < axisAlignedRegion.lo.y )
-			axisAlignedRegion.lo.y = box[ i ].y;
-		if( box[ i ].x > axisAlignedRegion.hi.x )
-		  axisAlignedRegion.hi.x = box[ i ].x;
-		if( box[ i ].y > axisAlignedRegion.hi.y )
-		  axisAlignedRegion.hi.y = box[ i ].y;
-
-	}  // end for i
-
-	// low and high regions will be based of the extent of the map
-	Region3D mapExtent;
-	Real safeValue = 999999;
-	TheTerrainLogic->getExtent( &mapExtent );
-	axisAlignedRegion.lo.z = mapExtent.lo.z - safeValue;
-	axisAlignedRegion.hi.z = mapExtent.hi.z + safeValue;
-
-	// we want to overscan a little bit so that we get objects that are partially offscreen
-	axisAlignedRegion.lo.x -= (DRAWABLE_OVERSCAN + m_guardBandBias.x);
-	axisAlignedRegion.lo.y -= (DRAWABLE_OVERSCAN + m_guardBandBias.y + 60.0f );
-	axisAlignedRegion.hi.x += (DRAWABLE_OVERSCAN + m_guardBandBias.x);
-	axisAlignedRegion.hi.y += (DRAWABLE_OVERSCAN + m_guardBandBias.y);
-
-}
+// Retail W3DView::getAxisAlignedViewRegion (0x0073AFA0) is implemented in W3DViewGetAxisAlignedViewRegion.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
@@ -2078,18 +1666,7 @@ void W3DView::setAngleAndPitchToDefault( void )
 	setCameraTransform();
 }
 
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ?setDefaultView@W3DView@@ present-unmatched
-void W3DView::setDefaultView(Real pitch, Real angle, Real maxHeight)
-{
-	// MDC - we no longer want to rotate maps (design made all of them right to begin with)
-	//	m_defaultAngle = angle * M_PI/180.0f;
-	m_defaultPitchAngle = pitch;
-	m_maxHeightAboveGround = TheGlobalData->m_maxCameraHeight*maxHeight;
-	if (m_minHeightAboveGround > m_maxHeightAboveGround)
-		m_maxHeightAboveGround = m_minHeightAboveGround;
-}
+// Retail W3DView::setDefaultView (0x0073F9C0) is implemented in W3DViewSetDefaultViewBfme.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -2120,28 +1697,7 @@ void W3DView::setHeightAboveGround(Real z)
 	setCameraTransform();
 }
 
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ?setZoom@W3DView@@ present-unmatched
-void W3DView::setZoom(Real z)
-{
-	m_zoom = z;
-
-	if (m_zoom < m_minZoom)
-		m_zoom = m_minZoom;
-
-	if (m_zoom > m_maxZoom)
-		m_zoom = m_maxZoom;
-
-	m_doingMoveCameraOnWaypointPath = false;
-	m_CameraArrivedAtWaypointOnPathFlag = false;
-	m_doingRotateCamera = false;
-	m_doingPitchCamera = false;
-	m_doingZoomCamera = false;
-	m_doingScriptedCameraLock = false;
-	m_cameraConstraintValid = false; // recalc it.
-	setCameraTransform();
-}
+// Retail W3DView::setZoom (0x00742E60) is implemented in W3DViewSetZoomBfme.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -2190,54 +1746,7 @@ void W3DView::setFieldOfView( Real angle )
 /** Using the W3D camera translate the world coordinate to a screen coord.
 	Screen coordinates returned in absolute values relative to full display resolution.  
   Returns if the point is on screen, off screen, or not transformable */
-//-------------------------------------------------------------------------------------------------
-// ?worldToScreenTriReturn@W3DView@@ present-unmatched
-View::WorldToScreenReturn W3DView::worldToScreenTriReturn( const Coord3D *w, ICoord2D *s )
-{
-	// sanity
-	if( w == NULL || s == NULL )
-    return WTS_INVALID;
-
-	if( m_3DCamera )
-	{
-		Vector3 world;
-		Vector3 screen;
-
-		world.Set( w->x, w->y, w->z );
-		enum CameraClass::ProjectionResType projection = m_3DCamera->Project( screen, world );
-		if (projection != CameraClass::INSIDE_FRUSTUM && projection!=CameraClass::OUTSIDE_FRUSTUM)
-		{
-			// Can't get a valid number if it's beyond the clip planes.  jba
-			s->x = 0;
-			s->y = 0;
-      return WTS_INVALID;
-		}
-
-		//
-		// note that the screen coord returned from the project W3D camera 
-		// gave us a screen coords that range from (-1,-1) bottom left to
-		// (1,1) top right ... we are turning that into (0,0) upper left
-		// coords now
-		//
-		W3DLogicalScreenToPixelScreen( screen.X, screen.Y,
-																	 &s->x, &s->y,
-																	 getWidth(), getHeight());
-		s->x += m_originX;	//convert viewport coordinates to full screen coordinates
-		s->y += m_originY;
-
-//		s->x = (getWidth()  * (screen.X + 1.0f)) / 2.0f;
-//		s->y = (getHeight() * (-screen.Y + 1.0f)) / 2.0f;
-		if (projection != CameraClass::INSIDE_FRUSTUM)
-		{
-      return WTS_OUTSIDE_FRUSTUM;
-		}
-
-    return WTS_INSIDE_FRUSTUM;
-
-	}  // end if
-
-  return WTS_INVALID;
-}  // end worldToScreenTriReturn
+// Retail W3DView::worldToScreenTriReturn (0x0073BA10) is implemented in W3DViewWorldToScreenBfme.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Using the W3D camera translate the screen coord to world coord */
@@ -2262,118 +1771,7 @@ void W3DView::screenToWorld( const ICoord2D *s, Coord3D *w )
 	* will call the callback function.  The number of drawables that passed
 	* the test are returned.
 	Screen coordinates assumed in absolute values relative to full display resolution. */
-//-------------------------------------------------------------------------------------------------
-// ?iterateDrawablesInRegion@W3DView@@ present-unmatched
-Int W3DView::iterateDrawablesInRegion( IRegion2D *screenRegion,
-																			 Bool (*callback)( Drawable *draw, void *userData ),
-																			 void *userData )
-{
-	Bool inside = FALSE;
-	Int count = 0;
-	Drawable *draw;
-	Vector3 screen, world;
-	Coord3D pos;
-	Region2D normalizedRegion;
-
-	/** @todo we need to have partitions of which drawables are in the
-	view so we don't have to march through the whole list */
-
-	//
-	// to do this we are projecting the drawable centers onto the screen,
-	// the W3D camera->project method is used to do this and that method
-	// will return normalized screen coords from (-1,-1) bottom left to 
-	// (1,1) top right, normalize our screen region for comparison
-	//
-	/// @todo use fast int->real type casts here later
-
-	Bool regionIsPoint = FALSE;
-
-	if( screenRegion )
-	{
-		if (screenRegion->height() == 0 && screenRegion->width() == 0)
-		{
-			regionIsPoint = TRUE;
-		} 
-
-		normalizedRegion.lo.x = ((Real)(screenRegion->lo.x - m_originX) / (Real)getWidth()) * 2.0f - 1.0f;
-		normalizedRegion.lo.y = -(((Real)(screenRegion->hi.y - m_originY) / (Real)getHeight()) * 2.0f - 1.0f);
-		normalizedRegion.hi.x = ((Real)(screenRegion->hi.x - m_originX) / (Real)getWidth()) * 2.0f - 1.0f;
-		normalizedRegion.hi.y = -(((Real)(screenRegion->lo.y - m_originY) / (Real)getHeight()) * 2.0f - 1.0f);
-
-	}  // end if
-
-
-	Drawable *onlyDrawableToTest = NULL;
-	if (regionIsPoint)
-	{
-		// Allow all drawables to be picked.
-		onlyDrawableToTest = pickDrawable(&screenRegion->lo, TRUE, (PickType) getPickTypesForContext(TheInGameUI->isInForceAttackMode()));
-		if (onlyDrawableToTest == NULL) {
-			return 0;
-		}
-	}
-
-	for( draw = TheGameClient->firstDrawable();
-			 draw;
-			 draw = draw->getNextDrawable() )
-	{
-		if (onlyDrawableToTest)
-		{
-		 draw = onlyDrawableToTest;
-		 inside = TRUE;
-		}
-		else
-		{
-
-			// not inside	
-			inside = FALSE;
-
-			// no screen region, means all drawbles
-			if( screenRegion == NULL )
-				inside = TRUE;
-			else
-			{
-
-				// project the center of the drawable to the screen
-				/// @todo use a real 3D position in the drawable
-				pos = *draw->getPosition();
-				world.X = pos.x;
-				world.Y = pos.y;
-				world.Z = pos.z;
-
-				// project the world point to the screen
-				if( m_3DCamera->Project( screen, world ) == CameraClass::INSIDE_FRUSTUM &&
-						screen.X >= normalizedRegion.lo.x && 
-						screen.X <= normalizedRegion.hi.x &&
-						screen.Y >= normalizedRegion.lo.y && 
-						screen.Y <= normalizedRegion.hi.y )
-				{
-
-					inside = TRUE;
-
-				}  // end if
-			}
-	
-		}  //end else
-
-		// if inside do the callback and count up
-		if( inside )
-		{
-			
-			if( callback( draw, userData ) )
-				++count;
-
-		}  // end if
-
-		// If onlyDrawableToTest, then we should bail out now.
-		if (onlyDrawableToTest != NULL)
-			break;
-
-	}  // end for draw
-
-	return count;
-
-}  // end iterateDrawablesInRegion
+// Retail W3DView::iterateDrawablesInRegion (0x0073BB10) is implemented in W3DViewIterateDrawablesInRegionBfme.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** cast a ray from the screen coords into the scene and return a drawable
@@ -2552,24 +1950,7 @@ void W3DView::lookAt( const Coord3D *o )
 
 }
 
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ?initHeightForMap@W3DView@@ present-unmatched
-void W3DView::initHeightForMap( void ) 
-{
-	m_groundLevel = TheTerrainLogic->getGroundHeight(m_pos.x, m_pos.y);
-	const Real MAX_GROUND_LEVEL = 120.0; // jba - starting ground level can't exceed this height.
-	if (m_groundLevel>MAX_GROUND_LEVEL) {
-		m_groundLevel = MAX_GROUND_LEVEL;
-	}
-
-	m_cameraOffset.z = m_groundLevel+TheGlobalData->m_cameraHeight;
-	m_cameraOffset.y = -(m_cameraOffset.z / tan(TheGlobalData->m_cameraPitch * (PI / 180.0)));
-	m_cameraOffset.x = -(m_cameraOffset.y * tan(TheGlobalData->m_cameraYaw * (PI / 180.0)));
-	m_cameraConstraintValid = false;	// possible ground level change invalidates cam constraints
-	setCameraTransform();
-
-}
+// Retail W3DView::initHeightForMap (0x00743520) is implemented in W3DViewInitHeightForMapBfme.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Move camera to in an interesting fashion.  Sets up parameters that get
@@ -2707,67 +2088,11 @@ void W3DView::rotateCameraTowardPosition(const Coord3D *pLoc, Int milliseconds, 
 	m_CameraArrivedAtWaypointOnPathFlag = false;
 }
 
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ?zoomCamera@W3DView@@ present-unmatched
-void W3DView::zoomCamera( Real finalZoom, Int milliseconds, Real easeIn, Real easeOut )
-{
-	if (milliseconds<1) milliseconds = 1;
-	m_zcInfo.numFrames = milliseconds/TheW3DFrameLengthInMsec;
-	if (m_zcInfo.numFrames < 1) {
-		m_zcInfo.numFrames = 1;
-	}
-	m_zcInfo.curFrame = 0;
-	m_doingZoomCamera = TRUE;
-	m_zcInfo.startZoom = m_zoom;
-	m_zcInfo.endZoom = finalZoom;
-	m_zcInfo.ease.setEaseTimes(easeIn/milliseconds, easeOut/milliseconds);
-}
+// Retail W3DView::zoomCamera (0x0073FC40) is implemented in W3DViewZoomCameraBfme.cpp.
 
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ?pitchCamera@W3DView@@ present-unmatched
-void W3DView::pitchCamera( Real finalPitch, Int milliseconds, Real easeIn, Real easeOut )
-{
-	if (milliseconds<1) milliseconds = 1;
-	m_pcInfo.numFrames = milliseconds/TheW3DFrameLengthInMsec;
-	if (m_pcInfo.numFrames < 1) {
-		m_pcInfo.numFrames = 1;
-	}
-	m_pcInfo.curFrame = 0;
-	m_doingPitchCamera = TRUE;
-	m_pcInfo.startPitch = m_FXPitch;
-	m_pcInfo.endPitch = finalPitch;
-	m_pcInfo.ease.setEaseTimes(easeIn/milliseconds, easeOut/milliseconds);
-}
+// Retail W3DView::pitchCamera (0x0073FCF0) is implemented in W3DViewPitchCameraBfme.cpp.
 
-//-------------------------------------------------------------------------------------------------
-/** Sets the final zoom for a camera movement. */
-//-------------------------------------------------------------------------------------------------
-// ?cameraModFinalZoom@W3DView@@ present-unmatched
-void W3DView::cameraModFinalZoom( Real finalZoom, Real easeIn, Real easeOut ) 
-{
-
-	if (m_doingRotateCamera) 
-	{
-		Real terrainHeightMax = getHeightAroundPos(m_pos.x, m_pos.y);
-		Real maxHeight = (terrainHeightMax + m_maxHeightAboveGround);
-		Real maxZoom = maxHeight / m_cameraOffset.z;
-
-		Real time = (m_rcInfo.numFrames + m_rcInfo.numHoldFrames - m_rcInfo.curFrame)*TheW3DFrameLengthInMsec;
-		zoomCamera( finalZoom*maxZoom, time, time*easeIn, time*easeOut );
-	}
-	if (m_doingMoveCameraOnWaypointPath) 
-	{
-		Coord3D pos = m_mcwpInfo.waypoints[m_mcwpInfo.numWaypoints];
-		Real terrainHeightMax = getHeightAroundPos(pos.x, pos.y);
-		Real maxHeight = (terrainHeightMax + m_maxHeightAboveGround);
-		Real maxZoom = maxHeight / m_cameraOffset.z;
-
-		Real time = m_mcwpInfo.totalTimeMilliseconds - m_mcwpInfo.elapsedTimeMilliseconds;
-		zoomCamera( finalZoom*maxZoom, time, time*easeIn, time*easeOut );
-	}
-}
+// Retail W3DView::cameraModFinalZoom (0x0073BF80) is implemented in W3DViewCameraModFinalZoomBfme.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Sets the final zoom for a camera movement. */
@@ -2791,168 +2116,13 @@ void W3DView::cameraModFreezeAngle(void)
 	}
 }
 
-// ------------------------------------------------------------------------------------------------
-/** Sets the look toward point for a camera movement. */
-// ------------------------------------------------------------------------------------------------
-// ?cameraModLookToward@W3DView@@ present-unmatched
-void W3DView::cameraModLookToward(Coord3D *pLoc) 
-{
-	if (m_doingRotateCamera) {
-		return; // Doesn't apply to rotate about a point.
-	}
-	if (m_doingMoveCameraOnWaypointPath) {
-		Int i;
-//		Real curDistance = 0;
-		for (i=2; i<=m_mcwpInfo.numWaypoints; i++) {
-			Coord3D start, mid, end;
-			Real factor = 0.5;
-			start = m_mcwpInfo.waypoints[i-1];
-			start.x += m_mcwpInfo.waypoints[i].x;
-			start.y += m_mcwpInfo.waypoints[i].y;
-			start.x /= 2;
-			start.y /= 2;
-			mid = m_mcwpInfo.waypoints[i];
-			end = m_mcwpInfo.waypoints[i];
-			end.x += m_mcwpInfo.waypoints[i+1].x;
-			end.y += m_mcwpInfo.waypoints[i+1].y;
-			end.x /= 2;
-			end.y /= 2;
-			Coord3D result = start;
-			result.x += factor*(end.x-start.x);
-			result.y += factor*(end.y-start.y);
-			result.x += (1-factor)*factor*(mid.x-end.x + mid.x-start.x);
-			result.y += (1-factor)*factor*(mid.y-end.y + mid.y-start.y);
-			result.z = 0;
-			Vector2 dir(pLoc->x-result.x, pLoc->y-result.y);
-			const Real dirLength = dir.Length();
-			if (dirLength<0.1f) continue;
-			Real angle = WWMath::Acos(dir.X/dirLength);
-			if (dir.Y<0.0f) {
-				angle = -angle;
-			}
-			// Default camera is rotated 90 degrees, so match.
-			angle -= PI/2;
-			normAngle(angle);
-			m_mcwpInfo.cameraAngle[i] = angle;
-		}
-		if (m_mcwpInfo.totalTimeMilliseconds==1) {
-			// do it instantly.
-			moveAlongWaypointPath(1);
-			m_doingMoveCameraOnWaypointPath = true;
-			m_CameraArrivedAtWaypointOnPathFlag = false;
-		}
-	}
-}
+// Retail W3DView::cameraModLookToward (0x0073FF30) is implemented in W3DViewCameraModLookTowardBfme.cpp.
 
-// ------------------------------------------------------------------------------------------------
-/** Sets the look toward point for the end of a camera movement. */
-// ------------------------------------------------------------------------------------------------
-// ?cameraModFinalMoveTo@W3DView@@ present-unmatched
-void W3DView::cameraModFinalMoveTo(Coord3D *pLoc) 
-{
-	if (m_doingRotateCamera) {
-		return; // Doesn't apply to rotate about a point.
-	}
-	if (m_doingMoveCameraOnWaypointPath) {
-		Int i;
-		Coord3D start, delta;
-		start = m_mcwpInfo.waypoints[m_mcwpInfo.numWaypoints];
-		delta.x = pLoc->x - start.x;
-		delta.y = pLoc->y - start.y;
-		delta.z = pLoc->z - start.z;
-		for (i=2; i<=m_mcwpInfo.numWaypoints; i++) {
-			Coord3D result = m_mcwpInfo.waypoints[i];
-			result.x += delta.x;
-			result.y += delta.y;
-			result.z += delta.z;
-			m_mcwpInfo.waypoints[i] = result;
-		}
-	}
-}
+// Retail W3DView::cameraModFinalMoveTo (0x0073C1B0) is implemented in W3DViewCameraModFinalMoveToBfme.cpp.
 
-// ------------------------------------------------------------------------------------------------
-/** Sets the look toward point for the end of a camera movement. */
-// ------------------------------------------------------------------------------------------------
-// ?cameraModFinalLookToward@W3DView@@ present-unmatched
-void W3DView::cameraModFinalLookToward(Coord3D *pLoc) 
-{
-	if (m_doingRotateCamera) {
-		return; // Doesn't apply to rotate about a point.
-	}
-	if (m_doingMoveCameraOnWaypointPath) {
-		Int i;
-		Int min = m_mcwpInfo.numWaypoints-1;
-		if (min<2) min=2;
-//		Real curDistance = 0;
-		for (i=min; i<=m_mcwpInfo.numWaypoints; i++) {
-			Coord3D start, mid, end;
-			Real factor = 0.5;
-			start = m_mcwpInfo.waypoints[i-1];
-			start.x += m_mcwpInfo.waypoints[i].x;
-			start.y += m_mcwpInfo.waypoints[i].y;
-			start.x /= 2;
-			start.y /= 2;
-			mid = m_mcwpInfo.waypoints[i];
-			end = m_mcwpInfo.waypoints[i];
-			end.x += m_mcwpInfo.waypoints[i+1].x;
-			end.y += m_mcwpInfo.waypoints[i+1].y;
-			end.x /= 2;
-			end.y /= 2;
-			Coord3D result = start;
-			result.x += factor*(end.x-start.x);
-			result.y += factor*(end.y-start.y);
-			result.x += (1-factor)*factor*(mid.x-end.x + mid.x-start.x);
-			result.y += (1-factor)*factor*(mid.y-end.y + mid.y-start.y);
-			result.z = 0;
-			Vector2 dir(pLoc->x-result.x, pLoc->y-result.y);
-			const Real dirLength = dir.Length();
-			if (dirLength<0.1f) continue;
-			Real angle = WWMath::Acos(dir.X/dirLength);
-			if (dir.Y<0.0f) {
-				angle = -angle;
-			}
-			// Default camera is rotated 90 degrees, so match.
-			angle -= PI/2;
-			normAngle(angle);
-			if (i==m_mcwpInfo.numWaypoints) { 
-				m_mcwpInfo.cameraAngle[i] = angle;
-			} else {
-				Real deltaAngle = angle - m_mcwpInfo.cameraAngle[i];
-				normAngle(deltaAngle);
-				angle = m_mcwpInfo.cameraAngle[i] + deltaAngle/2;
-				normAngle(angle);
-				m_mcwpInfo.cameraAngle[i] = angle;
-			}
-		}
-	}
-}
+// Retail W3DView::cameraModFinalLookToward (0x007401A0) is implemented in W3DViewCameraModFinalLookTowardBfme.cpp.
 
-// ------------------------------------------------------------------------------------------------
-/** Sets the final time multiplier for a camera movement. */
-// ------------------------------------------------------------------------------------------------
-// ?cameraModFinalTimeMultiplier@W3DView@@ present-unmatched
-void W3DView::cameraModFinalTimeMultiplier(Int finalMultiplier) 
-{
-	if (m_doingZoomCamera)
-		m_zcInfo.endTimeMultiplier = finalMultiplier;
-	if (m_doingPitchCamera)
-		m_pcInfo.endTimeMultiplier = finalMultiplier;
-	if (m_doingRotateCamera) {
-		m_rcInfo.endTimeMultiplier = finalMultiplier;
-	} else if (m_doingMoveCameraOnWaypointPath) {
-		Int i;
-		Real curDistance = 0;
-		for (i=0; i<m_mcwpInfo.numWaypoints; i++) {
-			curDistance += m_mcwpInfo.waySegLength[i];
-			Real factor2 = curDistance / m_mcwpInfo.totalDistance;
-			Real factor1 = 1.0-factor2;
-			m_mcwpInfo.timeMultiplier[i+1] = REAL_TO_INT_FLOOR(0.5+m_mcwpInfo.timeMultiplier[i+1]*factor1 + finalMultiplier*factor2);
-		}
-	} else {
-		// If we aren't doing a camera movement, just set the time.
-		m_timeMultiplier = finalMultiplier;
-	}
-}
+// Retail W3DView::cameraModFinalTimeMultiplier (0x0073C2D0) is implemented in W3DViewCameraModFinalTimeMultiplierBfme.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** Sets the number of frames to average motion for a camera movement */
@@ -2964,46 +2134,9 @@ void W3DView::cameraModRollingAverage(Int framesToAverage)
 	m_mcwpInfo.rollingAverageFrames = framesToAverage;
 }
  
-// ------------------------------------------------------------------------------------------------
-/** Sets the final pitch for a camera movement. */
-// ------------------------------------------------------------------------------------------------
-// ?cameraModFinalPitch@W3DView@@ present-unmatched
-void W3DView::cameraModFinalPitch(Real finalPitch, Real easeIn, Real easeOut) {
-	if (m_doingRotateCamera) {
-		Real time = (m_rcInfo.numFrames + m_rcInfo.numHoldFrames - m_rcInfo.curFrame)*TheW3DFrameLengthInMsec;
-		pitchCamera( finalPitch, time, time*easeIn, time*easeOut );
-	}
-	if (m_doingMoveCameraOnWaypointPath) {
-		Real time = m_mcwpInfo.totalTimeMilliseconds - m_mcwpInfo.elapsedTimeMilliseconds;
-		pitchCamera( finalPitch, time, time*easeIn, time*easeOut );
-	}
-}
+// Retail W3DView::cameraModFinalPitch (0x0073C440) is implemented in W3DViewCameraModFinalPitchBfme.cpp.
 
-// ------------------------------------------------------------------------------------------------
-/** Move camera to a waypoint, resetting the default angle, pitch & zoom along the way.. */
-// ------------------------------------------------------------------------------------------------
-// ?resetCamera@W3DView@@ present-unmatched
-void W3DView::resetCamera(const Coord3D *location, Int milliseconds, Real easeIn, Real easeOut)
-{
-	moveCameraTo(location, milliseconds, 0, false, easeIn, easeOut);
-	m_mcwpInfo.cameraAngle[2] = 0.0; // default angle.
-	// m_mcwpInfo.cameraAngle[2] = m_defaultAngle;
-	m_angle = m_mcwpInfo.cameraAngle[0];
-
-	// terrain height + desired height offset == cameraOffset * actual zoom
-	// find best approximation of max terrain height we can see
-	//Real terrainHeightMax = getHeightAroundPos(m_pos.x, m_pos.y);
-	Real terrainHeightMax = getHeightAroundPos(location->x, location->y);
-	Real desiredHeight = (terrainHeightMax + m_maxHeightAboveGround);
-	Real desiredZoom = desiredHeight / m_cameraOffset.z;
-
-	zoomCamera( desiredZoom, milliseconds, easeIn, easeOut );	// this isn't right... or is it?
-
-	pitchCamera( 1.0, milliseconds, easeIn, easeOut );
-	// pitchCamera( m_defaultPitchAngle, milliseconds, easeIn, easeOut );
-	//DEBUG_LOG(("W3DView::resetCamera() Current zoom: %g  Desired zoom: %g  Current pitch: %g  Desired pitch: %g\n",
-	//	m_zoom, desiredZoom, m_pitchAngle, m_defaultPitchAngle));
-}
+// Retail W3DView::resetCamera (0x00743640) is implemented in W3DViewResetCameraBfme.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
@@ -3171,131 +2304,11 @@ static Real makeQuadraticS(Real t)
 	return tPrime*0.5 + t*0.5;
 }
 
-// ------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------
-// ?rotateCameraOneFrame@W3DView@@ present-unmatched
-void W3DView::rotateCameraOneFrame(void)
-{
-	m_rcInfo.curFrame++;
-	if (TheGlobalData->m_disableCameraMovement) {
-		if (m_rcInfo.curFrame >= m_rcInfo.numFrames + m_rcInfo.numHoldFrames) {
-			m_doingRotateCamera = false;
-			m_freezeTimeForCameraMovement = false;
-		}
-		return;
-	}
+// Retail W3DView::rotateCameraOneFrame (0x00743860) is implemented in W3DViewRotateCameraOneFrameBfme.cpp.
 
-	if (m_rcInfo.trackObject)
-	{
-		if (m_rcInfo.curFrame <= m_rcInfo.numFrames + m_rcInfo.numHoldFrames)
-		{
-			const Object *obj = TheGameLogic->findObjectByID(m_rcInfo.target.targetObjectID);
-			if (obj)
-			{
-				// object has not been destroyed
-				m_rcInfo.target.targetObjectPos = *obj->getPosition();
-			}
+// Retail W3DView::zoomCameraOneFrame (0x0073C7C0) is implemented in W3DViewZoomCameraOneFrame.cpp.
 
-			const Vector2 dir(m_rcInfo.target.targetObjectPos.x - m_pos.x, m_rcInfo.target.targetObjectPos.y - m_pos.y);
-			const Real dirLength = dir.Length();
-			if (dirLength>=0.1f)
-			{
-				Real angle = WWMath::Acos(dir.X/dirLength);
-				if (dir.Y<0.0f) {
-					angle = -angle;
-				}
-				// Default camera is rotated 90 degrees, so match.
-				angle -= PI/2;
-				normAngle(angle);
-
-				if (m_rcInfo.curFrame <= m_rcInfo.numFrames)
-				{
-					Real factor = m_rcInfo.ease(((Real)m_rcInfo.curFrame)/m_rcInfo.numFrames);
-					Real angleDiff = angle - m_angle;
-					normAngle(angleDiff);
-					angleDiff *= factor;
-					m_angle += angleDiff;
-					normAngle(m_angle);
-					m_timeMultiplier = m_rcInfo.startTimeMultiplier + REAL_TO_INT_FLOOR(0.5 + (m_rcInfo.endTimeMultiplier-m_rcInfo.startTimeMultiplier)*factor);
-				}
-				else
-				{
-					m_angle = angle;
-				}
-			}
-		}
-	}
-	else if (m_rcInfo.curFrame <= m_rcInfo.numFrames)
-	{
-		Real factor = m_rcInfo.ease(((Real)m_rcInfo.curFrame)/m_rcInfo.numFrames);
-		m_angle = WWMath::Lerp(m_rcInfo.angle.startAngle, m_rcInfo.angle.endAngle, factor);
-		normAngle(m_angle);
-		m_timeMultiplier = m_rcInfo.startTimeMultiplier + REAL_TO_INT_FLOOR(0.5 + (m_rcInfo.endTimeMultiplier-m_rcInfo.startTimeMultiplier)*factor);
-	}
-
-
-	if (m_rcInfo.curFrame >= m_rcInfo.numFrames + m_rcInfo.numHoldFrames) {
-		m_doingRotateCamera = false;
-		m_freezeTimeForCameraMovement = false;
-		if (! m_rcInfo.trackObject)
-		{
-			m_angle = m_rcInfo.angle.endAngle;
-		}
-	}
-}
-
-// ------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewZoomCameraOneFrame.cpp
-// ?zoomCameraOneFrame@W3DView@@ present-unmatched
-void W3DView::zoomCameraOneFrame(void)
-{
-	m_zcInfo.curFrame++;
-	if (TheGlobalData->m_disableCameraMovement) {
-		if (m_zcInfo.curFrame >= m_zcInfo.numFrames) {
-			m_doingZoomCamera = false;
-		}
-		return;
-	}
-	if (m_zcInfo.curFrame <= m_zcInfo.numFrames)
-	{
-		// not just holding; do the camera adjustment
-		Real factor = m_zcInfo.ease(((Real)m_zcInfo.curFrame)/m_zcInfo.numFrames);
-		m_zoom = WWMath::Lerp(m_zcInfo.startZoom, m_zcInfo.endZoom, factor);
-	}
-
-	if (m_zcInfo.curFrame >= m_zcInfo.numFrames) {
-		m_doingZoomCamera = false;
-		m_zoom = m_zcInfo.endZoom;
-	}
-
-	//DEBUG_LOG(("W3DView::zoomCameraOneFrame() - m_zoom = %g\n", m_zoom));
-}
-
-// ------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------
-// ?pitchCameraOneFrame@W3DView@@ present-unmatched
-void W3DView::pitchCameraOneFrame(void)
-{
-	m_pcInfo.curFrame++;
-	if (TheGlobalData->m_disableCameraMovement) {
-		if (m_pcInfo.curFrame >= m_pcInfo.numFrames) {
-			m_doingPitchCamera = false;
-		}
-		return;
-	}
-	if (m_pcInfo.curFrame <= m_pcInfo.numFrames)
-	{
-		// not just holding; do the camera adjustment
-		Real factor = m_pcInfo.ease(((Real)m_pcInfo.curFrame)/m_pcInfo.numFrames);
-		m_FXPitch = WWMath::Lerp(m_pcInfo.startPitch, m_pcInfo.endPitch, factor);
-	}
-
-	if (m_pcInfo.curFrame >= m_pcInfo.numFrames) {
-		m_doingPitchCamera = false;
-		m_FXPitch = m_pcInfo.endPitch;
-	}
-}
+// Retail W3DView::pitchCameraOneFrame (0x0073C890) is implemented in W3DViewPitchCameraOneFrame.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
