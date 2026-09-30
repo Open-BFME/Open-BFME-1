@@ -48,6 +48,8 @@ public:
 
 extern GameSpyInfo *TheGameSpyInfo;
 extern Shell *TheShell;
+extern unsigned char g_012F4801;
+extern const char *g_012F4804;
 
 void Rva505C80WindowVisibilityThunk::updateAt00505B40()
 {
@@ -55,10 +57,10 @@ void Rva505C80WindowVisibilityThunk::updateAt00505B40()
 	{
 		GameSpyInfo *info = TheGameSpyInfo;
 		void **vtable = *reinterpret_cast<void ***>(info);
-		*reinterpret_cast<unsigned char *>(0x012F4801u) = 1;
+		g_012F4801 = 1;
 		reinterpret_cast<void (__fastcall *)(GameSpyInfo *)>(vtable[7])(info);
 		Shell *shell = TheShell;
-		*reinterpret_cast<volatile void **>(0x012F4804u) = reinterpret_cast<void *>(0x011033C0u);
+		g_012F4804 = "Menus/WOLWelcomeMenu.wnd";
 		shell->pop();
 		return;
 	}
