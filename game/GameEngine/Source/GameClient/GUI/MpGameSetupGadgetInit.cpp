@@ -79,6 +79,7 @@ void _bfme_setAptScreenRef(const AsciiString &name,
     Rva0050F840FunctorHolder callback);
 
 extern void j_00021cfb();
+extern void j_0004529b();
 
 class AptMapPreview
 {
@@ -113,7 +114,7 @@ void MpGameSetup::GadgetInit()
         void (*raw)(void);
         FunctorMethodSingle member;
     } callback;
-    callback.raw = (void (*)(void))0x44529B;
+    callback.raw = j_0004529b;
     MpGameSetup *self = this;
     EnableSlotListUpdates(false);
     {

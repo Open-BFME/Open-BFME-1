@@ -39,6 +39,7 @@ public:
 extern BfmeStrVM0 *TheDisplay;
 extern Rva0051D690Audio *TheAudio;
 extern Shell *TheShell;
+extern const void *g_01105FCC[];
 
 class Gen_0051b720Base
 {
@@ -55,7 +56,7 @@ public:
 // ??1Gen_0051b720@@QAE@XZ
 Gen_0051b720::~Gen_0051b720()
 {
-	*(unsigned *)this = 0x1105FCCu;
+	*(unsigned *)this = (unsigned)g_01105FCC;
 	TheDisplay->bfmeFlagVM0(0);
 	TheAudio->slot6c(2, 1, 0);
 	TheShell->showShell(true);

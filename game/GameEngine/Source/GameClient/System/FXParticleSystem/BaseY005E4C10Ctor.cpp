@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 
 class FXList;
+extern "C" const void *bfmeVftCategoryModuleInfo8[];
+#pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo8=??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@")
 
 namespace FXParticleSystem
 {
@@ -51,7 +53,7 @@ class __declspec(novtable) CategoryInfoY005E4C10
 public:
 	__declspec(nothrow) CategoryInfoY005E4C10()
 	{
-		*(volatile unsigned int *)this = 0x0107375c;
+		*(volatile unsigned int *)this = (unsigned int)bfmeVftCategoryModuleInfo8;
 		*(volatile unsigned char *)((unsigned char *)this + 4) = true;
 	}
 	virtual void unused();

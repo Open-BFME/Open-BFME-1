@@ -614,6 +614,8 @@ public:
 // Address-derived name of the retail callback registration helper (pinned at ILT 0x0002FCB1).
 typedef void (*ScoreScreenRvaGameStartCallback)( void );
 void bfmeReg1033( ScoreScreenRvaGameStartCallback callback, ScoreScreenRvaGameStartCallback other );
+// Unlanded one-byte ret callback at retail 0x008E25E0, named after its image address.
+void g_008E25E0();
 
 class ScoreScreenRvaLanApiView
 {
@@ -720,7 +722,7 @@ WindowMsgHandledType ScoreScreenSystem( GameWindow *window, UnsignedInt msg,
 					else
 					{
 						bfmeReg1033( startNextCampaignGame,
-							(ScoreScreenRvaGameStartCallback)0x8e25e0 );
+							(ScoreScreenRvaGameStartCallback)g_008E25E0 );
 					}
 				}
 			}

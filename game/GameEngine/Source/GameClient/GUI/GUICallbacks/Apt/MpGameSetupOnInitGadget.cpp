@@ -19,6 +19,7 @@ void GadgetComboBoxReset( GameWindow *window );
 GameWindow *GadgetComboBoxGetEditBox( GameWindow *window );
 void GadgetListBoxSetColumnWidths( GameWindow *window, int count, int *widths );
 const char *bfmePathLeafAfterMarker( const char *path );
+void j_0002d727(void);
 
 extern "C" __declspec( dllimport ) int __cdecl bfmeScanDYG(
 	const char *source, const char *format, void *output );
@@ -94,7 +95,7 @@ void MpGameSetup::_bfme_onInitGadget(
 		GadgetComboBoxReset( window );
 		m_player[ index ] = window;
 		GadgetComboBoxGetEditBox( window )->winSetTooltipFunc(
-			(GameWinTooltipFunc)0x0042D727 );
+			(GameWinTooltipFunc)j_0002d727 );
 		return;
 	}
 
