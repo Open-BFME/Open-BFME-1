@@ -1,4 +1,5 @@
 """image_compose worklist: single-fix unlocks per file, and the negative cases that must rank 0."""
+import json
 import random
 import sys
 from pathlib import Path
@@ -91,17 +92,21 @@ def test_families():
     assert C.fix_site(item("?f@@YAXXZ", ""), "body", {"a.obj": "game/a.cpp"}) == "source:game/a.cpp"
 
 
+def published_row(name, rva, size, site, family="data", verdict="unresolved", rule="unresolved data name"):
+    return {"rank": 0, "family": family, "rule": rule, "verdict": verdict, "blocker": name, "claim_rva": rva,
+            "unlock_files": 1, "unlock_authored_bytes": size, "unlock_function_bytes": 5, "_files": ["game/a.cpp"],
+            "fix_site": site, "reason": "r", "census": "abc1234",
+            "command": C.exact_command(family, rule, verdict, name, rva, "", "game/a.cpp")}
+
+
 def test_next_serves_the_first_open_claimable_row(tmp_path, monkeypatch, capsys):
     import eligibility
     path = tmp_path / "linking_worklist.csv"
-    work = [{"rank": 0, "family": "data", "blocker": name, "claim_rva": rva, "unlock_files": 1,
-             "unlock_authored_bytes": size, "unlock_function_bytes": 5, "_files": ["game/a.cpp"],
-             "fix_site": site, "reason": "r", "command": C.COMMAND["data"][0], "census": "abc1234"}
-            for name, rva, size, site in (("_nowhere", "", 90, "name:_nowhere"),
-                                          ("_retired", "0x00000010", 80, "name:_retired"),
-                                          ("_changed", "0x00000030", 75, "source:game/b.cpp"),
-                                          ("_served", "0x00000020", 70, "name:_served"),
-                                          ("_no_file", "0x00000040", 0, "name:_no_file"))]
+    work = [published_row(*spec) for spec in (("_nowhere", "", 90, "name:_nowhere"),
+                                              ("_retired", "0x00000010", 80, "name:_retired"),
+                                              ("_changed", "0x00000030", 75, "source:game/b.cpp"),
+                                              ("_served", "0x00000020", 70, "name:_served"),
+                                              ("_no_file", "0x00000040", 0, "name:_no_file"))]
     assert C.write_published(path, work, {"commit": "abc1234", "date": "d"}, 0) == 4  # 0 authored bytes: not published
     text = path.read_text(encoding="utf-8")
     assert text.startswith("# linking worklist, census abc1234") and C.SINGLE_FIX in text
@@ -115,6 +120,30 @@ def test_next_serves_the_first_open_claimable_row(tmp_path, monkeypatch, capsys)
     out = capsys.readouterr().out
     assert "rank 4" in out and "_served" in out and "NOT claimed" in out
     assert "its source changed since the census 1" in out and "dead-end verdict 1" in out
+    assert "provider_repair.py data-next --symbol '_served'" in out  # this blocker, not another picker
+
+
+def test_published_schema_feeds_provider_repair_data_next(tmp_path):
+    import provider_repair
+    path = tmp_path / "linking_worklist.csv"
+    work = [published_row("_g_unresolved", "0x00000020", 70, "name:_g_unresolved"),
+            published_row("?t@@3PAGA", "0x00000030", 60, "source:game/t.cpp", verdict="unknown",
+                          rule=C.TYPED + ": scalar or pointer"),
+            published_row("?f@@YAXXZ", "0x00000040", 50, "source:game/f.cpp", family="body", verdict="wrong",
+                          rule="wrong body")]
+    C.write_published(path, work, {"commit": "abc1234", "date": "d"}, 0)
+    tally = {}
+    served = provider_repair.data_candidates(path, tally)
+    assert [row["name"] for row in served] == ["_g_unresolved"] and tally == {"typed-evidence-lane": 1}
+
+
+def test_exact_commands_name_the_blocker():
+    assert C.exact_command("provider", "no single retail home", "unknown", "?f@@YAXXZ", "0x1", "game/a.cpp", "")         == "python3 tools/provider_repair.py next --symbol '?f@@YAXXZ'"
+    assert "import_binding.py apply 'game/r.cpp'" in C.exact_command("import", "unresolved import", "unresolved",
+                                                                        "__imp__X@4", "0x2", "", "game/r.cpp")
+    assert C.exact_command("bridge", "dump body", "wrong", "?d_1", "0x00001000", "", "") ==         "python3 tools/brief.py --rvas 0x00001000"
+    assert "link_check.py 'game/r.cpp'" in C.exact_command("provider", "alias", "unresolved", "?g", "", "",
+                                                           "game/r.cpp")
 
 
 def test_freshness_skips_what_changed_since_the_census(tmp_path):
@@ -128,5 +157,13 @@ def test_freshness_skips_what_changed_since_the_census(tmp_path):
                                      "fix_site": "source:game/b.cpp"}) is None
     receipt = tmp_path / "build" / "provider_repair" / "0x00600000" / "receipt.json"
     receipt.parent.mkdir(parents=True)
-    receipt.write_text("{}")
-    assert C.Freshness.stale(fresh, {"claim_rva": "0x00600000"}).startswith("a provider_repair receipt")
+    source = tmp_path / "game" / "b.cpp"
+    source.parent.mkdir()
+    source.write_text("int x;")
+    row = {"claim_rva": "0x00600000"}
+    receipt.write_text(json.dumps({"pass": False, "inputs": {"game/b.cpp": C.sha_file(source)}}))
+    assert C.Freshness.stale(fresh, row) is None  # a FAIL receipt suppresses nothing
+    receipt.write_text(json.dumps({"pass": True, "inputs": {"game/b.cpp": "0" * 64}}))
+    assert C.Freshness.stale(fresh, row) is None  # a PASS on another tree neither
+    receipt.write_text(json.dumps({"pass": True, "inputs": {"game/b.cpp": C.sha_file(source)}}))
+    assert C.Freshness.stale(fresh, row).startswith("a PASS provider_repair receipt")

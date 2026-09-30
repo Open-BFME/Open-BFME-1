@@ -43,11 +43,11 @@ ledger and verification are separate from the game's.
    after the lanes above.
 6. **Linked build.** `python3 tools/image_compose.py next [--family F]` claims
    the blocker whose fix alone closes the most authored files and prints its
-   tool: `provider` -> `tools/provider_repair.py next`, `apply`, `check` (fleet
-   lane `provider`); `data` -> `provider_repair.py data-next`, `data-check`,
-   `tools/add_data_match.py`; `import` -> `tools/import_binding.py next`,
-   `apply`, `check`. `tools/link_check.py <file>` lists one file's blockers;
-   `tools/link_debt.py --report` lists image addresses to name.
+   command: `provider` -> `tools/provider_repair.py next --symbol S`, `apply`,
+   `check` (fleet lane `provider`); `data` -> its `data-next --symbol S`,
+   `tools/add_data_match.py`; `import` -> `tools/import_binding.py apply`,
+   `check`. `tools/link_check.py <file>` lists its blockers;
+   `tools/link_debt.py --report` lists addresses to name.
 7. **EA renames.** `python3 tools/ea_queue.py next` serves one rename to EA's
    own name and every file it touches; follow its steps.
 8. **Names.** `python3 tools/name_lane.py next --model <your model>` serves one

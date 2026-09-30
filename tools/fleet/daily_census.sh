@@ -4,7 +4,8 @@
 # the README and the daily Discord post show a measured figure. Schedule it on
 # a host with the MSVC toolchain before the daily README job (12:37 UTC); the
 # deps cache keeps the daily compile incremental. Runs in its own worktree (build/wt_link) so
-# no lane's checkout is disturbed; commits ONLY the history and status files.
+# no lane's checkout is disturbed; commits ONLY the history and status files,
+# then the linking worklist in a second commit.
 # The worktree is the census's own: tracked edits in it are build products
 # (reloc_names.csv) and are discarded.
 #
@@ -48,10 +49,45 @@ git add targets/game/reverse/link_census_history.csv targets/game/reverse/link_s
 git commit -q -m "link_census: daily census $(date +%F)" \
     -m "Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>" || exit 1
 git reset -q --hard HEAD  # drop build products so the rebase can run
-for attempt in 1 2 3 4 5; do
-    git fetch -q origin master
-    git rebase -q origin/master || { git rebase --abort; exit 1; }
-    git push -q origin HEAD:master && { echo "daily census pushed"; exit 0; }
-done
-echo "daily census: push lost five races; this run's record is not on origin (the next run starts from origin again)" >&2
+push() {
+    for attempt in 1 2 3 4 5; do
+        git fetch -q origin master
+        git rebase -q origin/master || { git rebase --abort; return 1; }
+        git push -q origin HEAD:master && return 0
+    done
+    return 1
+}
+push || { echo "daily census: push failed; this run's record is not on origin" >&2; exit 1; }
+echo "daily census pushed"
+# The linking worklist (targets/game/reverse/linking_worklist.csv, served by
+# `tools/image_compose.py next`), AFTER the census is on origin so the README
+# figure never waits for it: typed scalar evidence (reloc_ledger, 10 min), the
+# whole-image check (image_check, 58 min, 4 GB) and the ranking (2 min), measured
+# 2026-09-30 on a busy host, in a checkout of the census commit reading this census's
+# objects. image_check takes the census lock itself. A failure leaves the last
+# worklist, whose rows name their census (`next` warns when it is behind).
+commit=$(tail -1 targets/game/reverse/link_census_history.csv | cut -d, -f2)
+cwt="$main/build/wt_census_worklist"
+[ -d "$cwt" ] || git -C "$main" worktree add -q --detach "$cwt" "$commit" || exit 1
+rmdir "$lock"
+trap - EXIT
+regenerate() {
+    git -C "$cwt" checkout -q --force --detach "$commit" || return 1
+    cd "$cwt" || return 1
+    export PYTHONUNBUFFERED=1
+    python3 tools/reloc_ledger.py --objects-root "$wt" --objects-rsp "$wt/build/link_census/objects.rsp" \
+        || return 1
+    python3 tools/image_check.py --tree . --census "$wt" --scalars build/reloc_ledger/proven_scalars.csv \
+        || return 1
+    python3 tools/image_compose.py worklist --image-check build/image_check --tree . \
+        --publish "$wt/targets/game/reverse/linking_worklist.csv" || return 1
+    cd "$wt" || return 1
+    git add targets/game/reverse/linking_worklist.csv
+    git commit -q -m "image_compose: linking worklist for census $commit" \
+        -m "Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>" || return 1
+    push
+}
+regenerate && { echo "linking worklist pushed"; exit 0; }
+echo "daily census: linking worklist NOT regenerated (the census is recorded); run the three commands of" \
+    "regenerate() in a checkout of $commit" >&2
 exit 1

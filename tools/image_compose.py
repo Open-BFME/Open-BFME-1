@@ -542,22 +542,31 @@ EH_SECTIONS = (".xdata", ".text$x")
 EH_NAMES = ("__ehhandler$", "__unwindfunclet$", "__catch$", "__ehfuncinfo$", "__tryblocktable$",
             "__unwindtable$", "__catchsym$")
 CLASS_NAMES = ("??_7", "??_8", "??_R")
-COMMAND = {  # the tool each family goes to: (published `command`, what `next` prints)
-    "provider": ("tools/provider_repair.py", "provider_repair.py next|apply|check <symbol> (fleet lane provider)"),
-    "data": ("tools/provider_repair.py data-next", "provider_repair.py data-next, tools/add_data_match.py, "
-             "provider_repair.py data-check <symbol>"),
-    "import": ("tools/import_binding.py", "import_binding.py next, then apply|check <source>"),
-    "eh": ("tools/probe.py", "fix the owning function's source; tools/probe.py"),
-    "class-copy": ("tools/adopt_header.py", "one class definition: tools/adopt_header.py"),
-    "bridge": ("tools/next_work.py", "convert the body to C++: tools/next_work.py, tools/lift_lane.py"),
-    "body": ("tools/probe.py", "fix the function's source; tools/probe.py"),
-    "other": ("tools/link_check.py", "tools/link_check.py <file>: find the definition"),
-    "typed": ("tools/reloc_ledger.py", "prove each word scalar or pointer: tools/reloc_ledger.py proven_scalars.csv, "
-              "image_check --scalars")}
 TYPED = "words need typed evidence"
 PUBLISHED = ROOT / "targets" / "game" / "reverse" / "linking_worklist.csv"
-PUBLISHED_FIELDS = ["rank", "family", "blocker", "claim_rva", "unlock_files", "unlock_authored_bytes",
-                    "unlock_function_bytes", "files", "fix_site", "reason", "command", "census"]
+# The one queue schema: `next` here and provider_repair.py data-next read these columns (tests pin both).
+PUBLISHED_FIELDS = ["rank", "family", "rule", "verdict", "blocker", "claim_rva", "unlock_files",
+                    "unlock_authored_bytes", "unlock_function_bytes", "files", "fix_site", "reason", "command",
+                    "census"]
+
+
+def exact_command(family, rule, verdict, blocker, claim, source, referrer):
+    """The command that works on THIS blocker (never another picker, which
+    would skip the claim `next` just took for this worker)."""
+    name = f"'{blocker}'"
+    if family == "provider" and rule not in ("alias", "pinned-elsewhere"):  # those two: rename at the referrer
+        return f"python3 tools/provider_repair.py next --symbol {name}"
+    if family == "data" and verdict == "unresolved":
+        return f"python3 tools/provider_repair.py data-next --symbol {name}"
+    if rule.startswith(TYPED):
+        return f"python3 tools/reloc_ledger.py  # prove {claim}'s words scalar or pointer"
+    if family == "import" and referrer:
+        return f"python3 tools/import_binding.py apply '{referrer}'; python3 tools/import_binding.py check '{referrer}'"
+    if family == "bridge" and claim:
+        return f"python3 tools/brief.py --rvas {claim}"
+    if family in ("body", "eh") and source:
+        return f"./build.sh '{source}'"
+    return f"python3 tools/link_check.py '{referrer or source}'"
 WORKLIST_FIELDS = ["rank", "blocker", "node", "family", "rule", "fix_site", "object", "source", "home", "claim_rva",
                    "verdict", "reason", "unlock_files", "unlock_authored_bytes", "unlock_vendored_bytes",
                    "unlock_census_linked_files", "unlock_functions", "unlock_function_bytes", "group_unlock_files",
@@ -592,7 +601,7 @@ def family_of(node, section):
         return "bridge", f"{lane} body"
     if not section.startswith(".text"):
         if "unrelocated in-image dword" in reason:
-            return "data", f"{TYPED}: scalar or pointer (image_check --scalars)"
+            return "data", TYPED
         return "data", f"{section or '?'} item"
     if ("no retail address" in reason or "placements disagree" in reason or "several candidate" in reason
             or reason.startswith("shared address")):
@@ -884,22 +893,25 @@ def worklist(ic_dir, tree, status_path=None, out=OUT, publish=None):
         example = max(by_node_fns.get(node, ()), key=lambda n: (fn_bytes[n], -n), default=None)
         chain = []
         while example is not None:
-            chain.append(nodes[example][1])
+            chain.append(example)
             if example == node or len(chain) > 64:
                 break
             example = graph["hop"][example]
+        referrer = source_of.get(nodes[chain[-2]][2], "") if len(chain) > 1 and chain[-1] == node else ""
+        source = source_of.get(entry[2], "") if is_item else ""
         group = groups.get(site[node], {})
         work.append({"blocker": entry[1], "node": node, "family": family[node][0], "rule": family[node][1],
                      "fix_site": site[node], "object": entry[2] if is_item else "",
-                     "source": source_of.get(entry[2], "") if is_item else "",
-                     "home": f"0x{home:08X}" if home is not None else "",
+                     "source": source, "home": f"0x{home:08X}" if home is not None else "",
                      "claim_rva": f"0x{claim:08X}" if claim is not None else "",
                      "verdict": entry[5] if is_item else entry[2], "reason": entry[4],
                      **unlock(by_node_files.get(node, ()), by_node_fns.get(node, ())),
                      "group_unlock_files": group.get("unlock_files", 0),
                      "group_unlock_authored_bytes": group.get("unlock_authored_bytes", 0),
-                     "example": " -> ".join(chain), "census": census["commit"],
-                     "command": COMMAND["typed" if family[node][1].startswith(TYPED) else family[node][0]][0]})
+                     "example": " -> ".join(nodes[n][1] for n in chain), "census": census["commit"],
+                     "command": exact_command(family[node][0], family[node][1], entry[5] if is_item else entry[2],
+                                              entry[1], f"0x{claim:08X}" if claim is not None else "", source,
+                                              referrer)})
     work.sort(key=rank_key)
     for rank, row in enumerate(work, 1):
         row["rank"] = rank
@@ -1014,8 +1026,9 @@ class Freshness:
     """Is a worklist row still open on this tree? A cheap, honest subset:
     the row is skipped when, since its census commit, its fix site's source
     changed, a functions.csv / symbols.csv / data_rows.csv line naming its
-    address or its name was added or removed, or this checkout holds a
-    provider_repair receipt for the address. NOT_RECHECKED says the rest."""
+    address or its name was added or removed, or this checkout holds a PASS
+    provider_repair receipt whose inputs match this tree. NOT_RECHECKED says
+    the rest."""
     LEDGERS = ("targets/game/reverse/functions.csv", "targets/game/reverse/symbols.csv",
                "targets/game/reverse/data_rows.csv")
 
@@ -1045,8 +1058,14 @@ class Freshness:
         name = row.get("blocker", "")
         if name and any(line.startswith((name + ",", f'"{name}"')) for line in self.lines):
             return "a row, pin or data row naming it changed since the census"
-        if rva and (self.root / "build" / "provider_repair" / f"0x{int(rva, 16):08X}" / "receipt.json").exists():
-            return "a provider_repair receipt for it exists in this checkout"
+        receipt = self.root / "build" / "provider_repair" / f"0x{int(rva, 16):08X}" / "receipt.json" if rva else None
+        if receipt is not None and receipt.exists():
+            data = json.loads(receipt.read_text(encoding="utf-8"))
+            inputs = data.get("inputs") or {}
+            if data.get("pass") is True and inputs and all(
+                    (self.root / path).exists() and sha_file(self.root / path) == digest
+                    for path, digest in inputs.items()):
+                return "a PASS provider_repair receipt matches this tree"
         return None
 
 
@@ -1107,8 +1126,7 @@ def cmd_next(args):
         print(f"  files     {row['files']}")
         if row.get("example"):
             print(f"  path      {row['example']}")
-        hint = COMMAND["typed" if row["command"] == COMMAND["typed"][0] else row["family"]][1]
-        print(f"  command   {row['command']}  ({hint})")
+        print(f"  command   {row['command']}")
         print(f"  model     {SINGLE_FIX}")
         print(f"  open      {NOT_RECHECKED}")
         if skipped:

@@ -6,12 +6,12 @@ the name comes first, and a legacy ZH-layout body left in an old TU is often
 that copy (census 22a5be53d9: 4,003 selected copies proven wrong). A pin does
 not fix it; removing the competing definition does, if nothing verified moves.
 
-  python3 tools/provider_repair.py next [--model M]   # serve + claim ONE conflict, write its brief
+  python3 tools/provider_repair.py next [--model M] [--symbol S]  # serve + claim ONE conflict, write its brief
   python3 tools/provider_repair.py apply <symbol>      # snapshot the competitors, remove their definitions
   python3 tools/provider_repair.py check <symbol>      # verify; one PASS/FAIL and a JSON receipt
   python3 tools/provider_repair.py abandon <symbol> --model M   # restore, record blocked, release
   python3 tools/provider_repair.py status              # briefs and receipts in this checkout
-  python3 tools/provider_repair.py data-next [--model M]  # data mode: serve ONE unresolved global with its
+  python3 tools/provider_repair.py data-next [--symbol S]  # data mode: serve ONE unresolved global with its
                                # one ZH definition; land it with tools/add_data_match.py
   python3 tools/provider_repair.py data-check <symbol>    # its data_rows.csv row verifies: PASS/FAIL + receipt
 
@@ -518,8 +518,8 @@ def cmd_next(args):
     index = load_index(args.index)
     import claims
     import eligibility
-    busy = set()
-    for token in (eligibility.busy_rvas() if not args.no_claim else ()):
+    busy = set()  # --symbol: the caller (image_compose next) holds the claim; claims.claim decides
+    for token in (eligibility.busy_rvas() if not (args.no_claim or args.symbol) else ()):
         try:
             busy.add(int(str(token), 16))
         except ValueError:
@@ -527,6 +527,8 @@ def cmd_next(args):
     done = {p.parent.name.lower() for p in OUT.glob("0x*/receipt.json")}
     tally = {}
     for verdict, facts in candidates(index):
+        if args.symbol and facts["symbol"] != args.symbol:
+            continue
         tally[verdict] = tally.get(verdict, 0) + 1
         if verdict != "serve" or int(facts["rva"], 16) in busy or f"0x{int(facts['rva'], 16):08x}" in done                 or recorded(facts["rva"]):
             continue
@@ -546,7 +548,8 @@ def cmd_next(args):
         path = write_brief(facts)
         print_brief(facts, path)
         return 0
-    print("provider_repair: nothing to serve; " + ", ".join(f"{k} {v}" for k, v in sorted(tally.items())))
+    print("provider_repair: nothing to serve; " + (", ".join(f"{k} {v}" for k, v in sorted(tally.items()))
+                                                   or f"{args.symbol} is no provider conflict in the census index"))
     return 1
 
 
@@ -750,7 +753,7 @@ def reference_definitions(qualified):
     return reloc_ledger.reference_definitions(qualified, roots=REFERENCE_ROOTS or reloc_ledger.REFERENCE_ROOTS)
 
 
-WORKLIST = ROOT / "build" / "image_compose" / "worklist.csv"
+WORKLIST = ROOT / "targets" / "game" / "reverse" / "linking_worklist.csv"  # image_compose.PUBLISHED
 
 
 def type_agrees(symbol, definition):
@@ -801,7 +804,7 @@ def cmd_data_next(args):
     dir32 = {r["name"]: int(r["va"], 16) for r in reloc_ledger.read_csv_rows(build.DIR32_ADDRESSES)}
     owned = {r["name"] for r in data_rows.load()}
     busy = set()
-    for token in (eligibility.busy_rvas() if not args.no_claim else ()):
+    for token in (eligibility.busy_rvas() if not (args.no_claim or args.symbol) else ()):
         try:
             busy.add(int(str(token), 16))
         except ValueError:
@@ -811,6 +814,8 @@ def cmd_data_next(args):
     chosen = args.queue if args.queue else (args.worklist or str(WORKLIST))
     for row in data_candidates(chosen, tally):
         name = row["name"]
+        if args.symbol and name != args.symbol:
+            continue
         ident = data_identifier(name)
         va = dir32.get(name)
         verdict = ("owned" if name in owned else "no-dir32-address" if va is None
@@ -898,6 +903,7 @@ def main(argv=None):
     n.add_argument("--index")
     n.add_argument("--model", default="")
     n.add_argument("--no-claim", action="store_true", help="list without claiming (dry run)")
+    n.add_argument("--symbol", help="serve exactly this name (the claim image_compose next took)")
     a = sub.add_parser("apply")
     a.add_argument("symbol")
     c = sub.add_parser("check")
@@ -913,11 +919,12 @@ def main(argv=None):
     dn = sub.add_parser("data-next", help="serve + claim ONE global the link cannot find, with its ZH definition")
     source = dn.add_mutually_exclusive_group()
     source.add_argument("--worklist", default=None,
-                        help="tools/image_compose.py worklist.csv (the default input: build/image_compose/"
-                             "worklist.csv): family data, verdict unresolved")
+                        help="the linking worklist (default: targets/game/reverse/linking_worklist.csv): family "
+                             "data, verdict unresolved")
     source.add_argument("--queue", default=None, help="instead: tools/data_scaffold.py --trial-link's queue.csv")
     dn.add_argument("--model", default="")
     dn.add_argument("--no-claim", action="store_true", help="list without claiming (dry run)")
+    dn.add_argument("--symbol", help="serve exactly this name (the claim image_compose next took)")
     dc = sub.add_parser("data-check", help="verify the symbol's data_rows.csv row; one PASS/FAIL and a receipt")
     dc.add_argument("symbol")
     args = ap.parse_args(argv)
