@@ -58,14 +58,7 @@
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AssaultTransportAIUpdateCtorThunk.cpp
-// ??0AssaultTransportAIUpdate@@ present-unmatched
-AssaultTransportAIUpdate::AssaultTransportAIUpdate( Thing *thing, const ModuleData* moduleData ) : AIUpdateInterface( thing, moduleData )
-{
-	m_currentMembers = MAX_TRANSPORT_SLOTS; //First time, max it out, to ensure clearing arrays in reset.
-	reset();
-} 
+// Retail AssaultTransportAIUpdate::AssaultTransportAIUpdate (0x002B46F0) is implemented in AssaultTransportAIUpdateCtorThunk.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?reset@AssaultTransportAIUpdate@@ present-unmatched
