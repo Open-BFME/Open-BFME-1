@@ -48,6 +48,8 @@ PROTECTED = (
     "build.sh", "build.cmd", "tools/build.py", "tools/gate_baseline.py",
     "tools/verification_cache.py", "tools/delta_sources.py", "tools/header_dependents.py",
     "tools/layout_migration.py", "tools/find_declared_unmatched.py",
+    # evidence reuse and the publish window both decide whether a gate runs
+    "tools/gate_evidence.py", "tools/publish_window.py",
     # the linked-build rules
     "tools/link_census.py", "tools/link_debt.py",
     # ledger, identity and direction guards the hooks call

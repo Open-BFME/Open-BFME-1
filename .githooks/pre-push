@@ -21,19 +21,31 @@ fail() {
 refs="$(cat || true)"
 remote_name="${1:-origin}"
 
+# A cooperative publish window (tools/publish_window.py): while a landing
+# publisher holds refs/landing/window, pushes to master wait. Checked before
+# the gates and again after them, so a window opened meanwhile is honoured.
+window_check() {
+    [ "${_remote_ref:-}" = refs/heads/master ] || return 0
+    [ -f tools/publish_window.py ] || return 0
+    python3 tools/publish_window.py check --remote "$remote_name" \
+        || fail "publish window (see above)"
+}
+
 ZERO=0000000000000000000000000000000000000000
 
 while read -r _local_ref local_sha _remote_ref remote_sha; do
     [ -z "${local_sha:-}" ] && continue
     # Shared body claims (tools/claims.py) are parentless marker commits with an
     # empty tree, not code: there is no ledger or source in them to verify.
-    case "${_remote_ref:-}" in refs/claims/*) continue ;; esac
+    # The publish window ref (tools/publish_window.py) is a lock marker of the same kind.
+    case "${_remote_ref:-}" in refs/claims/*|refs/landing/*) continue ;; esac
     # A fleet run whose shared claim was lost or expired (tools/fleet_run.py
     # Heartbeat) may not publish: another worker owns those bodies now.
     if [ -n "${BFME_RUN_DIR:-}" ] && [ -f "$BFME_RUN_DIR/claim_lost" ]; then
         fail "this fleet run lost its claim ($(head -1 "$BFME_RUN_DIR/claim_lost")); nothing from it may be pushed"
     fi
     [ "$local_sha" = "$ZERO" ] && continue   # deleting a remote ref
+    window_check
 
     # The SHA on stdin is the destination tip advertised by THIS push
     # negotiation.  Never substitute a possibly stale origin/master here: an
@@ -176,6 +188,12 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
                     'inputs/reference/shims/*' game inputs \
                 || fail "working tree differs from $local_sha in a header or dependent source; the scoped header gate would verify the wrong bytes"
             echo "pre-push: header/shim change — scoped gate over ${#header_deps[@]} dependent source(s)" >&2
+            # tools/gate_evidence.py: reuse only when BFME_REUSE_GATE_EVIDENCE=1
+            # (the landing service's own publishing push of a tip it gated here)
+            if [ -f tools/gate_evidence.py ] \
+               && python3 tools/gate_evidence.py check --commit "$local_sha" --kind scoped; then
+                header_deps=()
+            fi
             chunk=()
             chunk_bytes=0
             for path in "${header_deps[@]}"; do
@@ -190,10 +208,20 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
             if [ "${#chunk[@]}" -ne 0 ]; then
                 BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${chunk[@]}" || fail "scoped header gate (see above)"
             fi
+            if [ "${#header_deps[@]}" -ne 0 ] && [ -f tools/gate_evidence.py ]; then
+                python3 tools/gate_evidence.py record --commit "$local_sha" --kind scoped > /dev/null \
+                    || echo "pre-push: could not record scoped gate evidence (gate still passed)" >&2
+            fi
             wide_change=0
         else
             rm -f "$header_deps_out"
         fi
+    fi
+    if [ "$wide_change" -ne 0 ] && [ -f tools/gate_evidence.py ] \
+       && python3 tools/gate_evidence.py check --commit "$local_sha" --kind full; then
+        window_check
+        echo "PRE-PUSH OK (full gate evidence for this exact tree reused)"
+        continue
     fi
     if [ "$wide_change" -ne 0 ]; then
         wide_empty=$(mktemp)
@@ -210,6 +238,11 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
             || { rm -f "$wide_empty" "$wide_manifest"; \
                  fail "post-gate snapshot verification (see above)"; }
         rm -f "$wide_empty" "$wide_manifest"
+        if [ -f tools/gate_evidence.py ]; then
+            python3 tools/gate_evidence.py record --commit "$local_sha" --kind full > /dev/null \
+                || echo "pre-push: could not record full gate evidence (gate still passed)" >&2
+        fi
+        window_check
         echo "PRE-PUSH OK (full gate after wide dependency change)"
         continue
     fi
@@ -361,5 +394,6 @@ PY
                  fail "verification evidence recording (see above)"; }
         rm -f "$selector_in" "$selector_out" "$cache_manifest"
     fi
+    window_check
     echo "PRE-PUSH OK (${#verify[@]} outgoing verification selector(s) checked)"
 done <<< "$refs"

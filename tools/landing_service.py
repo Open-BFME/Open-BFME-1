@@ -93,6 +93,13 @@ or a signing daemon outside the cgroup), and pushes it to refs/receipts/<run>;
 the service accepts a unit's model/run only when a verifying signature
 covers that run and its touched rvas include the unit's rows.
 
+WINDOW. For header-wide units `run-once --window` holds refs/landing/window
+(tools/publish_window.py) for the pass; every pre-push hook refuses pushes to
+master while someone else holds it, so the gated tip still fast-forwards,
+and the publishing push reuses this host's gate evidence for the identical
+tree (tools/gate_evidence.py, BFME_REUSE_GATE_EVIDENCE=1) instead of a second
+17-minute gate. Cooperative only: see publish_window.py.
+
 STATUS. Prototype: queue, bisect, am-based batching, two-point fencing with
 an atomic leased push, exact-tip publication, receipts and recovery are
 tested on fixture repositories (tools/tests/test_landing_service.py,
@@ -101,7 +108,8 @@ seats still push directly.
 
   python3 tools/landing_service.py enqueue <patch-file | commit> [--claim 0xRVA=LEASE ...]
   python3 tools/landing_service.py status
-  python3 tools/landing_service.py run-once [--max-batch 20] [--gate CMD] [--no-publish]
+  python3 tools/landing_service.py enqueue A..B          # a multi-commit (header-wide) unit
+  python3 tools/landing_service.py run-once [--max-batch 20] [--gate CMD] [--no-publish] [--window]
 """
 import argparse
 import datetime
@@ -109,6 +117,7 @@ import hashlib
 import json
 import os
 import platform
+import re
 import socket
 import subprocess
 import sys
@@ -116,6 +125,7 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
 STATE = ROOT / "build" / "landing"
 # keep an SSH push alive through a long pre-push hook (see LESSONS above)
 SSH_KEEPALIVE = "ssh -o ServerAliveInterval=30 -o ServerAliveCountMax=60"
@@ -183,13 +193,20 @@ class Service:
     def enqueue(self, patch, meta=None):
         """Store a unit; returns its id. The same bytes are one unit, whatever
         its state: re-enqueueing a landed or rejected unit changes nothing."""
-        data = Path(patch).read_bytes() if Path(patch).exists() else git(
-            "format-patch", "-1", "--stdout", patch, cwd=self.repo).stdout
+        if Path(patch).exists():
+            data = Path(patch).read_bytes()
+        elif ".." in str(patch):
+            # a multi-commit unit (a header-wide stack): the whole range, applied
+            # and gated as one; `git am` takes the mbox of several patches
+            data = git("format-patch", "--stdout", str(patch), cwd=self.repo).stdout
+        else:
+            data = git("format-patch", "-1", "--stdout", patch, cwd=self.repo).stdout
+        commits = len(re.findall(rb"^From [0-9a-f]{40} ", data, re.MULTILINE)) or 1
         unit = hashlib.sha256(data).hexdigest()[:20]
         if any((self.state / d / f"{unit}.json").exists() for d in ("queue", "landed", "rejected")):
             return unit
         (self.state / "queue" / f"{unit}.patch").write_bytes(data)
-        record = dict(meta or {}, id=unit, enqueued=time.time())
+        record = dict(meta or {}, id=unit, enqueued=time.time(), commits=commits)
         self._write(self.state / "queue" / f"{unit}.json", record)
         return unit
 
@@ -301,8 +318,33 @@ class Service:
         result["rejected"].append(unit)
         records.pop(unit, None)
 
-    def run_once(self, max_batch=20, publish=True, attempts=3):
-        """Land up to `max_batch` queued units. Returns {landed, rejected}."""
+    def run_once(self, max_batch=20, publish=True, attempts=3, window=False, window_minutes=90):
+        """Land up to `max_batch` queued units. Returns {landed, rejected}.
+
+        window=True holds the cooperative publish window (publish_window.py)
+        for the whole pass: master is quiet while the batch is gated, so the
+        verified tip still fast-forwards afterwards, and the publishing
+        push reuses this host's gate evidence for the identical tree
+        (gate_evidence.py) instead of gating it a second time."""
+        if not window:
+            return self._run_once(max_batch, publish, attempts)
+        import publish_window
+        token = publish_window.open_window(window_minutes, purpose="landing_service batch",
+                                           remote=self.remote, root=self.repo)
+        saved = {k: os.environ.get(k) for k in (publish_window.TOKEN_ENV, "BFME_REUSE_GATE_EVIDENCE")}
+        os.environ[publish_window.TOKEN_ENV] = token
+        os.environ["BFME_REUSE_GATE_EVIDENCE"] = "1"
+        try:
+            return dict(self._run_once(max_batch, publish, attempts), window=token)
+        finally:
+            for k, v in saved.items():
+                if v is None:
+                    os.environ.pop(k, None)
+                else:
+                    os.environ[k] = v
+            publish_window.close_window(token, remote=self.remote, root=self.repo)
+
+    def _run_once(self, max_batch=20, publish=True, attempts=3):
         recovered = self.recover(note="recovered after a crash")
         records = {r["id"]: r for r in self.queued()[:max_batch]}
         result = {"landed": recovered, "rejected": []}
@@ -386,6 +428,13 @@ class Service:
             # master moved or a claim changed under the lease: re-read, redo
         return result
 
+    def _commits_of(self, unit):
+        for where in ("queue", "landed", "rejected"):
+            path = self.state / where / f"{unit}.json"
+            if path.exists():
+                return int(json.loads(path.read_text(encoding="utf-8")).get("commits", 1))
+        return 1
+
     def _receipts(self, units, base, tip, evidence, note=""):
         commits = out("rev-list", "--reverse", f"{base}..{tip}", cwd=self.repo).split()
         tree = out("rev-parse", f"{tip}^{{tree}}", cwd=self.repo)
@@ -400,8 +449,15 @@ class Service:
         (self.state / "receipts" / f"{tip}.artifacts.json").write_bytes(manifest)
         versions = dict(python=platform.python_version(),
                         git=out("--version", cwd=self.repo))
-        for unit, commit in zip(units, commits):
-            receipt = dict(unit=unit, snapshot=base, batch_tip=tip, commit=commit, tree=tree,
+        spans, at = [], 0
+        for unit in units:
+            count = self._commits_of(unit)
+            spans.append((unit, commits[at:at + count]))
+            at += count
+        for unit, own in spans:
+            commit = own[-1] if own else None
+            receipt = dict(unit=unit, snapshot=base, batch_tip=tip, commit=commit, commits=own,
+                           tree=tree,
                            inputs=inputs, gate=self.gate, gate_exit=0,
                            gate_log_sha256=hashlib.sha256(log.read_bytes()).hexdigest()
                            if log.exists() else None,
@@ -419,7 +475,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     sub = ap.add_subparsers(dest="action", required=True)
     en = sub.add_parser("enqueue")
-    en.add_argument("units", nargs="+", help="format-patch files or commits")
+    en.add_argument("units", nargs="+", help="format-patch files, commits, or A..B ranges (one unit each)")
     en.add_argument("--claim", action="append", default=[], metavar="0xRVA=LEASE",
                     help="a claim the unit was built under: its lease id (claims.ClaimResult.leases)")
     sub.add_parser("status")
@@ -427,6 +483,8 @@ def main(argv=None):
     run.add_argument("--max-batch", type=int, default=20)
     run.add_argument("--gate", default=DEFAULT_GATE)
     run.add_argument("--no-publish", action="store_true")
+    run.add_argument("--window", action="store_true",
+                     help="hold the cooperative publish window for the pass (header-wide units)")
     args = ap.parse_args(argv)
     service = Service(gate=getattr(args, "gate", DEFAULT_GATE))
     if args.action == "enqueue":
@@ -438,7 +496,8 @@ def main(argv=None):
         for sub_dir in ("queue", "landed", "rejected"):
             print(f"{sub_dir}: {len(list((service.state / sub_dir).glob('*.json')))}")
         return 0
-    print(json.dumps(service.run_once(args.max_batch, publish=not args.no_publish), indent=1))
+    print(json.dumps(service.run_once(args.max_batch, publish=not args.no_publish,
+                                      window=args.window), indent=1))
     return 0
 
 
