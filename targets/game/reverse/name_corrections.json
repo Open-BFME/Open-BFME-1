@@ -10698,5 +10698,45 @@
   "after_sha256": "f524f2dd7e2aaa357edf5ad36a9ad4c51a55d2e7368ca404f138cebbed90942c",
   "evidence": "targets/game/reverse/identity_evidence/00273000.md",
   "reason": "bfmeMinAF/BfmeOwnerAF was an invented placeholder in a banked attempt marked identity unknown; no caller, vtable or source names the method. The landed body keeps the witnessed AIUpdateInterface owner and fields and an address-derived method name; no semantic identity is lost."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00205a20.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Behavior/Rva00205A20.cpp",
+  "old_name": "BfmeHostBU",
+  "new_name": "Rva00205A20Owner",
+  "before_sha256": "75da71c7befa99315c12046e583fe1b72730572e77d5f89f705422833de374e6",
+  "after_sha256": "0c65d7e8b9db5f23dabdca0de5bdd4dc80f6ebadd8a2ae5d855b7661f483417d",
+  "evidence": "targets/game/reverse/re_attempts.log",
+  "reason": "The bank's Bfme<Role>BU names are generated placeholders, not proven retail identities. The prior verdict proves receiver offsets and arithmetic but no class spelling. Retain the RVA in the exact source."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00205a20.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Behavior/Rva00205A20.cpp",
+  "old_name": "BfmeInfoBU",
+  "new_name": "Rva00205A20Info",
+  "before_sha256": "75da71c7befa99315c12046e583fe1b72730572e77d5f89f705422833de374e6",
+  "after_sha256": "0c65d7e8b9db5f23dabdca0de5bdd4dc80f6ebadd8a2ae5d855b7661f483417d",
+  "evidence": "targets/game/reverse/re_attempts.log",
+  "reason": "BfmeInfoBU is an unproven generated placeholder; retail establishes range and scale offsets, not this record's spelling."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00205a20.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Behavior/Rva00205A20.cpp",
+  "old_name": "BfmePosBU",
+  "new_name": "Rva00205A20Pos",
+  "before_sha256": "75da71c7befa99315c12046e583fe1b72730572e77d5f89f705422833de374e6",
+  "after_sha256": "0c65d7e8b9db5f23dabdca0de5bdd4dc80f6ebadd8a2ae5d855b7661f483417d",
+  "evidence": "targets/game/reverse/re_attempts.log",
+  "reason": "BfmePosBU is an unproven generated placeholder. Preserve its proven three-float ABI while using an address-derived identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00205a20.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Behavior/Rva00205A20.cpp",
+  "old_name": "BfmeThingBU",
+  "new_name": "Rva00205A20Thing",
+  "before_sha256": "75da71c7befa99315c12046e583fe1b72730572e77d5f89f705422833de374e6",
+  "after_sha256": "0c65d7e8b9db5f23dabdca0de5bdd4dc80f6ebadd8a2ae5d855b7661f483417d",
+  "evidence": "targets/game/reverse/re_attempts.log",
+  "reason": "BfmeThingBU is an unproven generated placeholder; the prior verdict establishes three position fields at +0x38 but no retail type name."
  }
 ]
