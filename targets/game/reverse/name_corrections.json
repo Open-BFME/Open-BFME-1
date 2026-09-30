@@ -10498,5 +10498,15 @@
   "after_sha256": "398f07b0612d3d148d94b6778c90e06765cf90e81b25f36f5ad6719bbe0e5a9e",
   "evidence": "targets/game/reverse/identity_evidence/aiupdate-identity-corrections.md",
   "reason": "Retail body stores+154; eight matched callers and true setter/getter bodies prove AI ignored-obstacle field+164. The physical body and exact extent are preserved under an address-derived owner; no new semantic identity is claimed."
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WWLib/RvaTreeMInsertPair.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WWLib/RvaTreeMInsertPair.cpp",
+  "old_name": "insert_unique",
+  "new_name": "rva0094CD90",
+  "before_sha256": "fcea57c49d878a5e3d5ce308141c3a65b32a7512a03237f0e70eb1850f749072",
+  "after_sha256": "5df24be9bda1c710257e656d369f4b231e06697052f813515747bcf00577a1fb",
+  "evidence": "targets/game/reverse/identity_evidence/0094cd90.md",
+  "reason": "False declaration pairing after adding an adjacent method with identical parameter tokens. insert_unique remains declared, defined, instantiated and matched at 00064F70; all 50 existing bodies retain bytes and relocations. Only the separate 0094CD90 dump is replaced by the new address-derived member."
  }
 ]
