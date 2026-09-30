@@ -55,9 +55,9 @@ Whether a body is open work is decided in one place, `tools/eligibility.py`;
 never re-derive it in a new tool.
 
 **Claim a body before you start it:** `python3 tools/claims.py claim 0xRVA`. If
-someone else holds it, take another. Claims expire after 4 h. `add_match`
-releases yours when you land; run `python3 tools/claims.py release 0xRVA` if you
-bank, block or abandon the body.
+someone else holds it, take another. Claims expire after 4 h. After your push,
+`python3 tools/claims.py release --landed` frees what landed; `release 0xRVA`
+frees a banked, blocked or abandoned body.
 
 **Before writing a body**, run `python3 tools/callees.py <rva> <size>` and use
 the callee names it prints. A link failure against a real retail body usually

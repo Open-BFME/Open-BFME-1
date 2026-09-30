@@ -585,14 +585,17 @@ def main():
              "marker strip REVERTED; nothing was changed")
     print("add_match: verified OK — row is live")
     remove_stash(rva, args.root)
-    # The body is landed, whoever claimed it: free the shared claim on origin
-    # (tools/claims.py). Advisory -- an unreachable origin just lets it expire.
-    if os.environ.get("BFME_CLAIMS", "on") != "off":
-        try:
-            import claims
-            claims.release([rva], force=True)
-        except Exception:  # noqa: BLE001
-            pass
+    # Verified HERE is not landed: the commit may never be pushed, or be
+    # rejected. Releasing now (force, anyone's claim -- the old behaviour) let
+    # another worker take a body whose conversion was still unpublished. Queue
+    # the exact row; `claims.py release --landed` (fleet_run runs it when a
+    # seat ends) releases the claim once origin/master holds that row, and an
+    # unsettled claim simply expires.
+    if os.environ.get("BFME_CLAIMS", "on") != "off" and root == DEFAULT_ROOT.resolve():
+        import claims
+        claims.queue_landed(rva, ledger_row, root=root)
+        print("add_match: claim kept until the row is on origin/master; after your push run "
+              "`python3 tools/claims.py release --landed`")
 
 
 if __name__ == "__main__":

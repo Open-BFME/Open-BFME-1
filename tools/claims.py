@@ -366,10 +366,16 @@ def queue_landed(rva, row, who=None, root=None):
     try:
         path = _pending_path(root)
         path.parent.mkdir(parents=True, exist_ok=True)
+        now = int(time.time())
         entry = {"rva": f"0x{int(rva):08X}", "row": row.strip(), "owner": who or owner(root),
-                 "queued": int(time.time())}
-        with path.open("a", encoding="utf-8") as handle:
-            handle.write(json.dumps(entry, sort_keys=True) + "\n")
+                 "queued": now}
+        # a checkout nobody settles must not grow the queue forever: entries
+        # past two days describe claims that have long expired
+        keep = [e for e in pending(root) if now - e.get("queued", 0) < 2 * 86400]
+        tmp = path.with_suffix(".tmp")
+        tmp.write_text("".join(json.dumps(e, sort_keys=True) + "\n" for e in keep + [entry]),
+                       encoding="utf-8")
+        os.replace(tmp, path)
     except (OSError, ValueError) as error:
         print(f"claims: could not queue landed body {rva}: {error}", file=sys.stderr)
 
