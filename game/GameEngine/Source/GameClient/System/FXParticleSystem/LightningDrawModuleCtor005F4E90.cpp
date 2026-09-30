@@ -2,6 +2,13 @@
 
 #include "game_client_random_variable.h"
 
+extern "C" const void *bfmeVftRva005EBD40_V3Head14[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva005EBD40_V3Head14=??_7Rva005EBD40@@6BV3Head14@@@")
+extern "C" const void *bfmeVftRva005EBD40_V3Vt0110F97C[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva005EBD40_V3Vt0110F97C=??_7Rva005EBD40@@6BV3Vt0110F97C@@@")
+extern "C" const void *bfmeVftRva005EBD40[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva005EBD40=??_7Rva005EBD40@@6B@")
+
 class Rva005F4E90RandomVariable
 {
 public:
@@ -117,9 +124,9 @@ Rva005F4E90LightningDrawModule::Rva005F4E90LightningDrawModule(
 {
 	unsigned char *destination = reinterpret_cast<unsigned char *>( this );
 
-	*(volatile unsigned int *)destination = 0x01112fd0;
-	*(volatile unsigned int *)( destination + 0x14 ) = 0x01112fcc;
-	*(volatile unsigned int *)( destination + 0x18 ) = 0x01112ff4;
+	*(volatile unsigned int *)destination = (unsigned int)bfmeVftRva005EBD40_V3Head14;
+	*(volatile unsigned int *)( destination + 0x14 ) = (unsigned int)bfmeVftRva005EBD40_V3Vt0110F97C;
+	*(volatile unsigned int *)( destination + 0x18 ) = (unsigned int)bfmeVftRva005EBD40;
 
 	m_gcrv1 = source->m_gcrv1;
 	m_gcrv2 = source->m_gcrv2;

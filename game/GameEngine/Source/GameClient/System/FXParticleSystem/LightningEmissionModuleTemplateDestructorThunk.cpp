@@ -5,6 +5,13 @@
 // destructor family neighbour and landed ctor/copy/assign (0x005D6AD0,
 // 0x005D6BA0, 0x005D6C00) sit either side in the same TU family.
 
+extern "C" void *bfmeVftSnapshotBase[4];
+#pragma comment(linker, "/alternatename:_bfmeVftSnapshotBase=??_7BfmeBaseVUQ@@6B@")
+extern "C" const void *bfmeVftModuleTemplate[];
+#pragma comment(linker, "/alternatename:_bfmeVftModuleTemplate=??_7ModuleTemplate@FXParticleSystem@@6B@")
+extern "C" const void *bfmeVftCategoryModuleInfo5[];
+#pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo5=??_7?$CategoryModuleInfo@$04@FXParticleSystem@@6B@")
+
 namespace FXParticleSystem
 {
 
@@ -18,11 +25,11 @@ public:
 LightningEmissionModuleTemplate::~LightningEmissionModuleTemplate()
 {
 	unsigned char *info = this ? (unsigned char *)this + 8 : 0;
-	*(volatile unsigned int *)info = 0x01073744;
+	*(volatile unsigned int *)info = (unsigned int)bfmeVftSnapshotBase;
 
 	unsigned char *base = this ? (unsigned char *)this + 4 : 0;
-	*(volatile unsigned int *)base = 0x0110f9ac;
-	*(volatile unsigned int *)this = 0x01073758;
+	*(volatile unsigned int *)base = (unsigned int)bfmeVftCategoryModuleInfo5;
+	*(volatile unsigned int *)this = (unsigned int)bfmeVftModuleTemplate;
 }
 
 }

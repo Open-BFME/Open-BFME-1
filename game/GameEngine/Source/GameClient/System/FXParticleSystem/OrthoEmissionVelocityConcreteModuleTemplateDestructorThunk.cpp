@@ -6,6 +6,13 @@
 // same ILT; landed neighbours (ctor 0x005DB6C0, copy ctor 0x005DB730,
 // operator= 0x005DB760) sit either side in the same TU family.
 
+extern "C" void *bfmeVftSnapshotBase[4];
+#pragma comment(linker, "/alternatename:_bfmeVftSnapshotBase=??_7BfmeBaseVUQ@@6B@")
+extern "C" const void *bfmeVftModuleTemplate[];
+#pragma comment(linker, "/alternatename:_bfmeVftModuleTemplate=??_7ModuleTemplate@FXParticleSystem@@6B@")
+extern "C" const void *bfmeVftCategoryModuleInfo4[];
+#pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo4=??_7?$CategoryModuleInfo@$03@FXParticleSystem@@6B@")
+
 namespace FXParticleSystem
 {
 
@@ -24,11 +31,11 @@ typedef ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> OrthoEmissionVelo
 OrthoEmissionVelocityConcreteTemplate::~OrthoEmissionVelocityConcreteTemplate()
 {
 	unsigned char *info = this ? (unsigned char *)this + 8 : 0;
-	*(volatile unsigned int *)info = 0x01073744;
+	*(volatile unsigned int *)info = (unsigned int)bfmeVftSnapshotBase;
 
 	unsigned char *base = this ? (unsigned char *)this + 4 : 0;
-	*(volatile unsigned int *)base = 0x0110f9cc;
-	*(volatile unsigned int *)this = 0x01073758;
+	*(volatile unsigned int *)base = (unsigned int)bfmeVftCategoryModuleInfo4;
+	*(volatile unsigned int *)this = (unsigned int)bfmeVftModuleTemplate;
 }
 
 }
