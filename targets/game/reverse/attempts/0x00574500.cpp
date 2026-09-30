@@ -1,4 +1,4 @@
-// ?handleMessage00574500@BfmeAptScreenScoreScreen@@QAEHHPAX0@Z
+// ?_bfme_checkMsg@BfmeAptScreenScoreScreen@@QAEHHPAX0@Z
 // partial score=0.9583 date=2026-09-28
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 #include "ascii_string.h"
@@ -87,13 +87,13 @@ class Mouse { public: void setCursorTooltip(UnicodeString,int,const RGBColor*,fl
 extern Mouse* TheMouse;
 class BfmeAptScreenScoreScreen : public BfmeMsgHandler {
 public:
- int handleMessage00574500(int message,void* argument,void* data);
+ int _bfme_checkMsg(int message,void* argument,void* data);
  void _bfme_renameAccept(const char*);
  char at00[0x250]; int m_movie; char at254[0xbc];
  GameWindow* m_listBox; GameWindow* m_textEntry; ScoreRecord00574500* m_record; int m_row;
  int at320; int m_x; int m_y; int m_hoverTicks; AsciiString m_tooltip;
 };
-int BfmeAptScreenScoreScreen::handleMessage00574500(int message,void* argument,void* data) {
+int BfmeAptScreenScoreScreen::_bfme_checkMsg(int message,void* argument,void* data) {
  switch(message) {
  case 0x18:
   if(argument==m_listBox) {
