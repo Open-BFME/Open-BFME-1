@@ -180,8 +180,88 @@ def test_scalar_access_needs_a_byte_word_or_float_element():
     assert not reloc_ledger.element_access(None, site)[0]
 
 
-def test_only_all_vendored_objects_count_as_upstream_declarations(monkeypatch):
+def test_an_object_is_vendored_when_its_rows_name_one_upstream_library(monkeypatch):
     monkeypatch.setattr(reloc_ledger.build, "row_object", lambda row: row["obj"])
     rows = [{"obj": "a.obj", "notes": "vendored=zlib-1.1.4"}, {"obj": "a.obj", "notes": "vendored=zlib-1.1.4;x"},
-            {"obj": "b.obj", "notes": "vendored=lua-4.0.1"}, {"obj": "b.obj", "notes": "authored"}]
-    assert reloc_ledger.vendored_objects(rows) == {"a.obj": "zlib-1.1.4"}
+            {"obj": "b.obj", "notes": "vendored=lua-4.0.1"}, {"obj": "b.obj", "notes": ""},
+            {"obj": "c.obj", "notes": "vendored=lua-4.0.1"}, {"obj": "c.obj", "notes": "vendored=zlib-1.1.4"},
+            {"obj": "d.obj", "notes": "authored"}]
+    assert reloc_ledger.vendored_objects(rows) == {"a.obj": "zlib-1.1.4", "b.obj": "lua-4.0.1"}
+
+
+def scalar_fixture():
+    # a section of two words at 0x402000: code reads ONE byte of the first word
+    addr = BASE + 0x2000
+    code = b"\x0f\xb6\x05" + struct.pack("<I", addr) + b"\xc3"
+    img = image_with(text=code, rdata=struct.pack("<2I", BASE + 0x2010, BASE + 0x1000))
+    key = ("fixture.obj", 1)
+    comp = {"unrelocated": [(key, addr, 8, addr, BASE + 0x2010, ("_first", 0)),
+                            (key, addr, 8, addr + 4, BASE + 0x1000, ("_second", 4))],
+            "verdicts": {key: (addr, "verified")}}
+    ledger = reloc_ledger.Ledger(img)
+    ledger.add(BASE + 0x1003, reloc_ledger.DIR32, addr, "compiler", "code-dir32", "exact")
+    return img, comp, ledger, {BASE + 0x1000: len(code)}
+
+
+def test_one_byte_access_proves_neither_word():
+    img, comp, ledger, bodies = scalar_fixture()
+    counts, _ = reloc_ledger.prove_scalars(img, comp, ledger, [], bodies)
+    assert counts == {"unproven": 2}
+    assert BASE + 0x2004 not in ledger.rows
+
+
+def test_every_byte_of_a_word_read_proves_that_word_only():
+    img, comp, ledger, bodies = scalar_fixture()
+    code = b"".join(b"\x0f\xb6\x05" + struct.pack("<I", BASE + 0x2000 + k) for k in range(4)) + b"\xc3"
+    img = image_with(text=code, rdata=struct.pack("<2I", BASE + 0x2010, BASE + 0x1000))
+    ledger = reloc_ledger.Ledger(img)
+    for k in range(4):
+        ledger.add(BASE + 0x1003 + 7 * k, reloc_ledger.DIR32, BASE + 0x2000 + k, "compiler", "code-dir32", "exact")
+    counts, _ = reloc_ledger.prove_scalars(img, comp, ledger, [], {BASE + 0x1000: len(code)})
+    assert counts == {"element-access": 1, "unproven": 1}
+    assert ledger.rows[BASE + 0x2000]["provenance"] == "proven-scalar"
+
+
+def test_vendored_tag_without_a_declaration_proves_nothing(monkeypatch, tmp_path):
+    img, comp, ledger, _ = scalar_fixture()
+    monkeypatch.setattr(reloc_ledger.build, "row_object", lambda row: Path("fixture.obj"))
+    rows = [{"source": "nonexistent_upstream.c", "notes": "vendored=zlib-1.1.4"}]
+    counts, _ = reloc_ledger.prove_scalars(img, comp, reloc_ledger.Ledger(img), rows, {})
+    assert counts == {"unproven": 2}
+
+
+def test_upstream_declaration_lays_out_the_element_type(tmp_path):
+    (tmp_path / "zconf.h").write_text("typedef unsigned char uch;\ntypedef unsigned short ush;\n"
+                                      "typedef int (*compress_func)(int);\n")
+    src = tmp_path / "t.c"
+    src.write_text("local const uch tab[4] = {1,2,3,4};\nconst char *names[] = {\"a\"};\n"
+                   "typedef struct config_s { ush good; ush lazy; compress_func func; } config;\n"
+                   "local const config configuration_table[2] = {{1,2,0},{3,4,0}};\n"
+                   "/* uch fake[1] = {0}; */\n")
+    tab = reloc_ledger.upstream_declaration(src, "tab")
+    assert tab == ("local const uch", (1, 1, [(0, 1, "scalar")]))
+    assert reloc_ledger.scalar_bytes(tab[1], 0)
+    names = reloc_ledger.upstream_declaration(src, "names")
+    assert not reloc_ledger.scalar_bytes(names[1], 0)
+    config = reloc_ledger.upstream_declaration(src, "configuration_table")[1]
+    assert config[0] == 8 and reloc_ledger.scalar_bytes(config, 0) and not reloc_ledger.scalar_bytes(config, 4)
+    assert reloc_ledger.upstream_declaration(src, "fake") is None
+    assert reloc_ledger.c_name("?primeTable@@3PAGA") == "primeTable" and reloc_ledger.c_name("?a@B@@2HA") is None
+
+
+def test_vendored_declaration_proves_only_arithmetic_words(tmp_path, monkeypatch):
+    src = tmp_path / "up.c"
+    src.write_text("typedef struct { unsigned short a; unsigned short b; int *p; } pair;\n"
+                   "const pair tbl[1] = {{1, 2, 0}};\n")
+    addr = BASE + 0x2000
+    img = image_with(rdata=struct.pack("<2I", BASE + 0x1000, BASE + 0x1000))
+    key = ("up.obj", 1)
+    comp = {"unrelocated": [(key, addr, 8, addr, BASE + 0x1000, ("_tbl", 0)),
+                            (key, addr, 8, addr + 4, BASE + 0x1000, ("_tbl", 0))],
+            "verdicts": {key: (addr, "verified")}}
+    monkeypatch.setattr(reloc_ledger.build, "row_object", lambda row: Path("up.obj"))
+    monkeypatch.setattr(reloc_ledger, "ROOT", tmp_path)
+    ledger = reloc_ledger.Ledger(img)
+    counts, _ = reloc_ledger.prove_scalars(img, comp, ledger, [{"source": "up.c", "notes": "vendored=x-1"}], {})
+    assert counts == {"vendored-declaration": 1, "unproven": 1}
+    assert "sha256" in ledger.rows[addr]["origin"] and addr + 4 not in ledger.rows

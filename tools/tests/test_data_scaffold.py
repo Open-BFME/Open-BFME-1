@@ -149,3 +149,22 @@ def test_an_incomplete_trial_fails_the_run(tmp_path, monkeypatch):
     monkeypatch.setattr(data_scaffold.RL, "Image", lambda: img)
     monkeypatch.setattr(data_scaffold, "trial_link", lambda *a, **k: {"complete": False})
     assert data_scaffold.main(["--out", str(tmp_path), "--trial-link"]) == 1
+
+
+def test_queue_reports_a_va_rva_ambiguous_pin_instead_of_picking(tmp_path, monkeypatch):
+    (tmp_path / "targets/game/reverse").mkdir(parents=True)
+    (tmp_path / "targets/game/reverse/symbols.csv").write_text("name,address\n?call@@YAXXZ,0x00401010\n")
+    (tmp_path / "dir32.csv").write_text("name,va\n")
+    monkeypatch.setattr(data_scaffold, "ROOT", tmp_path)
+    monkeypatch.setattr(data_scaffold, "LEDGER", tmp_path)
+    monkeypatch.setattr(data_scaffold.build, "DIR32_ADDRESSES", tmp_path / "dir32.csv")
+    log = "x.obj : error LNK2001: unresolved external symbol ?call@@YAXXZ"
+    detail = {"?call@@YAXXZ": {"kind": "alias"}}
+    actual = {"name": "?actual@@YAXXZ", "target_rva": "0x00001010", "source": "actual.cpp"}
+    decoy = {"name": "?decoy@@YAXXZ", "target_rva": "0x00401010", "source": "decoy.cpp"}
+    data_scaffold.write_queue(tmp_path / "q.csv", log, detail, [actual, decoy], image_with())
+    row = reloc_ledger.read_csv_rows(tmp_path / "q.csv")[0]
+    assert row["suggested_owner_row"] == "" and "ambiguous-va-rva" in row["evidence"]
+    data_scaffold.write_queue(tmp_path / "q.csv", log, detail, [actual], image_with())
+    row = reloc_ledger.read_csv_rows(tmp_path / "q.csv")[0]
+    assert row["suggested_owner_row"] == "?actual@@YAXXZ" and "read as VA" in row["evidence"]

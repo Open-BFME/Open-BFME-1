@@ -76,5 +76,20 @@ def test_code_aliases_follow_ilt_stubs_and_need_an_exported_definer(tmp_path, mo
     table, why = code_scaffold.code_aliases(img, rows, undefined, {"?real@@YAXXZ"}, {})
     assert table == {"?called@@YAXXZ": "?real@@YAXXZ", "?direct@@YAXXZ": "?real@@YAXXZ",
                      "g_00401000": "?real@@YAXXZ"}
-    assert why["pinned:via-ilt"] == 1 and why["pinned:no-exported-definer"] == 1
+    assert why["pinned:via-ilt"] == 1 and why["pinned:no-owner"] == 1
     assert BASE == 0x400000
+
+
+def test_a_pin_is_read_as_rva_or_va_only_where_a_row_lives():
+    owned = {0x1010}.__contains__
+    assert code_scaffold.resolve_pin("?f@@YAXXZ", 0x00401010, owned) == (0x1010, "va")
+    both = {0x1010, 0x401010}.__contains__
+    assert code_scaffold.resolve_pin("?f@@YAXXZ", 0x00401010, both) == (None, "ambiguous-va-rva")
+    assert code_scaffold.resolve_pin("?f@@YAXXZ", 0x00401010, both, {"?f@@YAXXZ": 0x00401010}) == (0x1010, "dir32")
+    assert code_scaffold.resolve_pin("?f@@YAXXZ", 0x2000, both) == (None, "no-owner")
+
+
+def test_where_verified_calls_land_decides_an_ambiguous_pin():
+    both = {0x1010, 0x401010}.__contains__
+    calls = {"?f@@YAXXZ": {0x1010}}
+    assert code_scaffold.resolve_pin("?f@@YAXXZ", 0x00401010, both, {}, calls) == (0x1010, "call-target")

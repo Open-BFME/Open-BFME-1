@@ -40,10 +40,12 @@ Provenance (one row per site; the strongest evidence wins):
   proven-scalar  NOT a relocation: an in-image dword one of our matching object
                  sections holds with no relocation, typed as a number by
                  evidence other than our own source -- a prebuilt upstream
-                 library member (`library-member`), vendored upstream C source
-                 (`vendored-declaration`), or every retail reference into the
-                 section reading an 8/16-bit or x87 element and nothing in data
-                 pointing into it (`element-access`). proven_scalars.csv lists
+                 library member (`library-member`), the arithmetic-typed
+                 declaration of the covering symbol in vendored upstream C source
+                 (`vendored-declaration`, file hash recorded), or retail's direct
+                 8/16-bit or x87 accesses covering every byte of the word with
+                 every reference into the section such an access and nothing in
+                 data pointing into it (`element-access`). proven_scalars.csv lists
                  them for tools/image_check.py.
   scan-candidate an aligned dword in a scaffold data item whose value lies in
                  the image and that no row above explains. NEVER linked; the
@@ -62,7 +64,9 @@ referenced at its start; otherwise `inferred` (runs to the next boundary).
 
 Outputs (build/reloc_ledger/): ledger.csv, items.csv, names.csv (the name
 each caller spells, per address), placements.csv, review_scan.csv,
-review_size.csv, review_types.csv, review_conflicts.csv, summary.json.
+review_size.csv, review_types.csv, review_conflicts.csv, proven_scalars.csv,
+call_targets.csv (where byte-verified code's calls to each undefined name go in
+retail), summary.json.
 """
 import argparse
 import bisect
@@ -275,7 +279,7 @@ def scan_code(task):
     obj = Path(path).name
     data = Path(path).read_bytes()
     sections, symbols = parse_coff(data)
-    out = {"obj": obj, "rows": [], "literals": [], "places": [], "names": [], "mismatch": 0, "missing": 0, "rows_ok": 0,
+    out = {"obj": obj, "rows": [], "literals": [], "places": [], "names": [], "calls": [], "mismatch": 0, "missing": 0, "rows_ok": 0,
            "data_sections": {}, "defined": []}
     for s in sections:
         if is_data_section(s):
@@ -306,6 +310,12 @@ def scan_code(task):
         out["rows_ok"] += 1
         base = va - lo
         for where, index, kind in relocs:
+            referent = symbols.get(index)
+            if kind == REL32 and referent is not None and referent["storage"] == EXTERNAL \
+                    and referent["section"] == 0 and where + 4 <= hi:
+                # where retail's own call goes: independent evidence for the name's address
+                disp = struct.unpack("<i", img.read(base + where, 4))[0]
+                out["calls"].append((referent["name"], (base + where + 4 + disp) & 0xFFFFFFFF))
             fact = _dir32_fact(img, obj, sections, symbols, section, base, where, index, kind)
             if fact is None:
                 continue
@@ -357,12 +367,19 @@ def scan_data(task):
         covered = set()
         for where, _, kind in section["relocs"]:
             covered.update(range(where, where + (2 if kind == 0x000A else 4)))
-        for off in range((-base) % 4, size - 3, 4):
-            if off in covered or off + 3 in covered:
+        members = sorted((x["value"], x["name"]) for x in symbols.values()
+                         if x["section"] == number and x["storage"] in (EXTERNAL, STATIC)
+                         and x["name"] and not x["name"].startswith("."))
+
+        def covering(off, members=members):
+            i = bisect.bisect_right(members, (off, chr(0x10FFFF))) - 1
+            return (members[i][1], members[i][0]) if i >= 0 else None
+        for off in range(0, size - 3):
+            if any(off + k in covered for k in range(4)):
                 continue
             value = struct.unpack_from("<I", retail, off)[0]
             if img.in_image(value):
-                out["unrelocated"].append((number, base, size, base + off, value))
+                out["unrelocated"].append((number, base, size, base + off, value, covering(off)))
         for where, index, kind in section["relocs"]:
             fact = _dir32_fact(img, obj, sections, symbols, section, base, where, index, kind)
             if fact is None:
@@ -402,6 +419,7 @@ def compiler_phase(objects, anchors, workers, log=print):
     """Rows, section verdicts and name addresses from every object."""
     rows, verdicts, literals, unrelocated = [], {}, [], []
     absolute = {}                                # name -> value of an absolute COFF symbol
+    calls = collections.defaultdict(collections.Counter)  # undefined external -> retail call targets
     names = collections.defaultdict(dict)        # name -> {va: evidence}
     placed = collections.defaultdict(dict)       # obj path -> {section: base}
     why = {}
@@ -440,6 +458,8 @@ def compiler_phase(objects, anchors, workers, log=print):
             for name, number, value, typ in result["defined"]:
                 defined[name].append((path, number, value, typ))
             absolute.update(result["absolute"])
+            for name, target in result["calls"]:
+                calls[name][target] += 1
             for key in ("mismatch", "missing", "rows_ok"):
                 stats["code_" + key] += result[key]
             absorb(result)
@@ -475,8 +495,8 @@ def compiler_phase(objects, anchors, workers, log=print):
                 path = by_name[result["obj"]]
                 for number, base, verdict in result["verdicts"]:
                     verdicts[(path, number)] = (base, verdict)
-                for number, base, size, va, value in result["unrelocated"]:
-                    unrelocated.append(((path, number), base, size, va, value))
+                for number, base, size, va, value, symbol in result["unrelocated"]:
+                    unrelocated.append(((path, number), base, size, va, value, symbol))
                 absorb(result)
             log(f"reloc_ledger: data round {round_no}: {len(work):,} objects, {len(verdicts):,} sections judged, "
                 f"{len(rows):,} rows")
@@ -494,7 +514,7 @@ def compiler_phase(objects, anchors, workers, log=print):
         if len(vas) > 1:
             conflicts.append(("name", name, " ".join(f"{v:#010x}" for v in sorted(vas)), "",
                               "; ".join(vas[v] for v in sorted(vas))[:300]))
-    return {"unrelocated": unrelocated, "literals": literals, "why": why, "rows": rows, "verdicts": verdicts, "names": names, "conflicts": conflicts, "defined": defined,
+    return {"calls": calls, "unrelocated": unrelocated, "literals": literals, "why": why, "rows": rows, "verdicts": verdicts, "names": names, "conflicts": conflicts, "defined": defined,
             "data_sections": data_sections, "stats": stats}
 
 
@@ -1274,29 +1294,12 @@ class AccessReader:
         return None
 
 
-def element_access(insn, site):
-    """(True, how) when the instruction reads or writes the item through a memory
-    operand whose disp32 is the site and whose element is not a 4-byte integer
-    (8/16-bit integer or x87 float); else (False, why)."""
-    from capstone.x86 import X86_OP_MEM
-    if insn is None:
-        return False, "site not inside a decoded ledger body"
-    if insn.disp_size != 4 or insn.address + insn.disp_offset != site:
-        return False, f"`{insn.mnemonic} {insn.op_str}` takes the address (not a memory operand)"
-    mem = [op for op in insn.operands if op.type == X86_OP_MEM]
-    if not mem:
-        return False, f"`{insn.mnemonic} {insn.op_str}` has no memory operand"
-    size = mem[0].size
-    if insn.mnemonic.startswith("f") and size in (4, 8, 10):
-        return True, f"x87 {size}-byte float `{insn.mnemonic}`"
-    if size in (1, 2) and insn.mnemonic != "lea":
-        return True, f"{8 * size}-bit `{insn.mnemonic}`"
-    return False, f"`{insn.mnemonic} {insn.op_str}` accesses {size} bytes"
-
-
 def vendored_objects(rows):
-    """{object path: tag} for objects every one of whose ledger rows is vendored
-    upstream code (`vendored=<lib>-<ver>`), a prebuilt library member included."""
+    """{object path: tag} for objects whose ledger rows name exactly one upstream
+    library (`vendored=<lib>-<ver>`), a prebuilt library member included. Rows
+    with no tag do not disqualify (EA-patched Lua keeps some untagged); the tag
+    is only a gate -- a vendored-declaration still needs the declaration read
+    from the source file itself."""
     tags = collections.defaultdict(set)
     for row in rows:
         try:
@@ -1305,31 +1308,186 @@ def vendored_objects(rows):
             continue
         m = re.search(r"vendored=([^;,\s]+)", row.get("notes") or "")
         tags[obj].add(m.group(1) if m else None)
-    return {obj: sorted(t)[0] for obj, t in tags.items() if None not in t}
+    return {obj: next(iter(t - {None})) for obj, t in tags.items() if len(t - {None}) == 1}
+
+
+def element_access(insn, site):
+    """(True, how, (start, width, direct)) when the instruction reads or writes
+    the item through a memory operand whose disp32 is the site and whose element
+    is not a 4-byte integer (8/16-bit integer or x87 float); `direct` is False
+    when a base or index register moves the access; else (False, why, None)."""
+    from capstone.x86 import X86_OP_MEM, X86_REG_INVALID
+    if insn is None:
+        return False, "site not inside a decoded ledger body", None
+    if insn.disp_size != 4 or insn.address + insn.disp_offset != site:
+        return False, f"`{insn.mnemonic} {insn.op_str}` takes the address (not a memory operand)", None
+    mem = [op for op in insn.operands if op.type == X86_OP_MEM]
+    if not mem:
+        return False, f"`{insn.mnemonic} {insn.op_str}` has no memory operand", None
+    size, m = mem[0].size, mem[0].mem
+    span = (m.disp & 0xFFFFFFFF, size, m.base == X86_REG_INVALID and m.index == X86_REG_INVALID)
+    if insn.mnemonic.startswith("f") and size in (4, 8, 10):
+        return True, f"x87 {size}-byte float `{insn.mnemonic}`", span
+    if size in (1, 2) and insn.mnemonic != "lea":
+        return True, f"{8 * size}-bit `{insn.mnemonic}`", span
+    return False, f"`{insn.mnemonic} {insn.op_str}` accesses {size} bytes", None
+
+
+SCALAR_WORDS = frozenset(("char", "short", "int", "long", "float", "double", "signed", "unsigned", "__int8",
+                          "__int16", "__int32", "__int64", "const", "volatile", "static", "extern", "local"))
+QUALIFIERS = frozenset(("const", "volatile", "static", "extern", "local", "signed", "unsigned"))
+C_COMMENT = re.compile(r"/\*.*?\*/|//[^\n]*", re.S)
+BASE_SIZES = (("__int64", 8), ("double", 8), ("__int8", 1), ("char", 1), ("__int16", 2), ("short", 2),
+              ("__int32", 4), ("long", 4), ("float", 4), ("int", 4))
+
+
+class CTypes:
+    """Just enough of C's type system to lay out an upstream declaration:
+    arithmetic types, typedefs, structs of them, pointers (4 bytes) and arrays.
+    Anything it cannot read makes the answer None (unproven), never a guess."""
+
+    def __init__(self, source):
+        texts = []
+        for path in sorted(source.parent.glob("*.h")) + [source]:
+            try:
+                texts.append(C_COMMENT.sub(" ", path.read_text(encoding="latin-1")))
+            except OSError:
+                continue
+        self.text = "\n".join(texts)
+        self.source = C_COMMENT.sub(" ", source.read_text(encoding="latin-1")) if source.is_file() else ""
+
+    def layout(self, words, depth=0):
+        """(size, align, [(offset, size, 'scalar'|'pointer')]) of a type given as words."""
+        if depth > 6:
+            return None
+        words = [w for w in words if w not in QUALIFIERS or w in ("signed", "unsigned")]
+        rest = [w for w in words if w not in ("signed", "unsigned")]
+        if not rest and words:
+            return 4, 4, [(0, 4, "scalar")]
+        if rest and rest[0] == "struct" and len(rest) == 2:
+            return self.struct(rest[1], depth)
+        if all(w in SCALAR_WORDS for w in rest):
+            for name, size in BASE_SIZES:
+                if name in rest:
+                    return size, size, [(0, size, "scalar")]
+            return None
+        if len(rest) != 1:
+            return None
+        m = re.search(r"typedef\s+([\w \t]+?)[ \t]+(\**)\s*" + re.escape(rest[0]) + r"\s*;", self.text)
+        if m:
+            if m.group(2):
+                return 4, 4, [(0, 4, "pointer")]
+            return self.layout(m.group(1).split(), depth + 1)
+        if re.search(r"typedef[^;]*\(\s*\*\s*" + re.escape(rest[0]) + r"\s*\)", self.text):
+            return 4, 4, [(0, 4, "pointer")]  # a function-pointer typedef
+        m = re.search(r"typedef\s+struct\s*\w*\s*\{([^{}]*)\}\s*" + re.escape(rest[0]) + r"\s*;", self.text)
+        if m:
+            return self.members(m.group(1), depth)
+        return None
+
+    def struct(self, tag, depth):
+        m = re.search(r"struct\s+" + re.escape(tag) + r"\s*\{([^{}]*)\}", self.text)
+        return self.members(m.group(1), depth) if m else None
+
+    def members(self, body, depth):
+        fields, offset, align = [], 0, 1
+        for decl in (d.strip() for d in body.split(";")):
+            if not decl:
+                continue
+            m = re.fullmatch(r"([\w \t]+?)[ \t]+(\**)\s*(\w+)\s*((?:\[\s*\d+\s*\]\s*)*)", decl)
+            if not m:
+                return None
+            count = 1
+            for n in re.findall(r"\d+", m.group(4)):
+                count *= int(n)
+            inner = (4, 4, [(0, 4, "pointer")]) if m.group(2) else self.layout(m.group(1).split(), depth + 1)
+            if inner is None:
+                return None
+            size, a, sub = inner
+            offset = (offset + a - 1) // a * a
+            for k in range(count):
+                fields += [(offset + k * size + o, s, kind) for o, s, kind in sub]
+            offset += size * count
+            align = max(align, a)
+        return (offset + align - 1) // align * align, align, fields
+
+    def declaration(self, cname):
+        """(declared type text, element layout) of the one initialised definition
+        of `cname` in the source file, or None."""
+        found = re.findall(r"(?:^|[;{}])\s*([A-Za-z_][\w \t]*?)[ \t]+(\**)\s*" + re.escape(cname)
+                           + r"\s*((?:\[[^\]]*\]\s*)*)=", self.source, flags=re.M)
+        if len(found) != 1:
+            return None
+        if found[0][1]:
+            return found[0][0].strip() + " *", (4, 4, [(0, 4, "pointer")])
+        element = self.layout(found[0][0].split())
+        return (found[0][0].strip(), element) if element else None
+
+
+def upstream_declaration(source, cname):
+    """(declared type, element layout) of `cname` in an upstream source, or None."""
+    return CTypes(source).declaration(cname) if source.is_file() else None
+
+
+def scalar_bytes(layout, offset):
+    """True when every byte of the dword at `offset` (from the array start) falls in
+    an arithmetic field or padding of the element layout, never in a pointer."""
+    size, _, fields = layout
+    for b in range(offset, offset + 4):
+        o = b % size
+        if any(kind == "pointer" and f <= o < f + s for f, s, kind in fields):
+            return False
+    return True
+
+
+def c_name(symbol):
+    """The C identifier a data symbol spells: `_name` (C) or `?name@@...` at global
+    scope (C++); None for anything else (string literals, scoped names)."""
+    if symbol.startswith("?"):
+        m = re.match(r"\?(\w+)@@", symbol)
+        return m.group(1) if m else None
+    if symbol.startswith(("$", ".")):
+        return None
+    return symbol[1:] if symbol.startswith("_") else symbol
 
 
 def prove_scalars(img, comp, L, rows, bodies, objects_root=None):
     """proven-scalar rows for the in-image dwords our objects' matching data
-    sections hold WITHOUT a relocation. Evidence, per section: its object is
-    vendored upstream code (the upstream C declaration types the element, and
-    the compiler emitted no relocation there), or every retail reference into
-    it is a memory operand whose element is an 8/16-bit integer or an x87
-    float and nothing in data points into it. Anything else stays unproven.
-    Returns {section key: verdict} counts."""
+    sections hold WITHOUT a relocation, word by word. A word is a number when:
+
+      library-member        the section is a prebuilt upstream library member
+                            (its own relocation table has none there); the
+                            member's sha256 is recorded
+      vendored-declaration  every row of the object is vendored upstream code
+                            and the source file in the repo (sha256 recorded)
+                            holds the one initialised definition of the symbol
+                            covering the word, and every byte of the word falls
+                            in an arithmetic field (or padding) of its element
+                            type as laid out from that source (typedefs and
+                            structs resolved; anything unreadable is unproven)
+      element-access        every retail reference into the section is an
+                            8/16-bit integer or x87 float access, nothing in
+                            data points into it, and direct (unindexed)
+                            accesses cover every byte of the word
+
+    Anything else stays unproven. Returns (counts, disagreements)."""
+    import hashlib
     vendored = vendored_objects(rows)
-    tag_sources = {}
+    sources = {}
     for row in rows:
         try:
-            tag_sources.setdefault(str(build.row_object(row)), row["source"].lower())
+            sources.setdefault(str(build.row_object(row)), row["source"])
         except SystemExit:
             continue
     if objects_root:
         vendored = {str(remap(k, objects_root)): v for k, v in vendored.items()}
-        tag_sources = {str(remap(k, objects_root)): v for k, v in tag_sources.items()}
+        sources = {str(remap(k, objects_root)): v for k, v in sources.items()}
     reader = AccessReader(img, bodies)
     by_section = collections.defaultdict(list)
-    for key, base, size, va, value in comp["unrelocated"]:
-        by_section[(key, base, size)].append((va, value))
+    for entry in comp["unrelocated"]:
+        key, base, size, va, value = entry[:5]
+        symbol = entry[5] if len(entry) > 5 else None
+        by_section[(key, base, size)].append((va, value, symbol))
     refs = sorted((r["site"], r["sym_va"], r["target"]) for r in L.rows.values()
                   if r["provenance"] not in NOT_A_RELOCATION)
     targets = collections.defaultdict(list)   # referenced address -> sites
@@ -1338,40 +1496,56 @@ def prove_scalars(img, comp, L, rows, bodies, objects_root=None):
         if target != sym_va:
             targets[target].append(site)
     target_keys = sorted(targets)
+    digests, types = {}, {}
+
+    def sha(path):
+        if path not in digests:
+            digests[path] = hashlib.sha256(Path(path).read_bytes()).hexdigest()[:16]
+        return digests[path]
+
     verdicts, disagreements = collections.Counter(), []
     for (key, base, size), words in sorted(by_section.items()):
         path, _ = key
         if comp["verdicts"].get(key, (0, ""))[1] != "verified":
             continue
-        evidence = None
+        source = sources.get(path, "")
         tag = vendored.get(path)
-        if tag:
-            member = ".lib" in (tag_sources.get(path) or "")
-            evidence = (("library-member", f"{tag}: the prebuilt upstream member carries no relocation there")
-                        if member else
-                        ("vendored-declaration", f"{tag}: upstream C declaration, the compiler emitted no relocation"))
-        else:
-            lo, hi = bisect.bisect_left(target_keys, base), bisect.bisect_left(target_keys, base + size)
-            sites = sorted({s for t in target_keys[lo:hi] for s in targets[t]})
-            why = None
-            if not sites:
-                why = "no retail reference found"
-            for site in sites:
-                if img.section(site) != ".text":
-                    if not base <= site < base + size:
-                        why = f"data at {site:#010x} points into it"
-                        break
-                    continue
-                ok, how = element_access(reader.insn_at(site), site)
-                if not ok:
-                    why = f"{site:#010x}: {how}"
+        lo, hi = bisect.bisect_left(target_keys, base), bisect.bisect_left(target_keys, base + size)
+        sites = sorted({s for t in target_keys[lo:hi] for s in targets[t]})
+        covered, access_why = set(), None if sites else "no retail reference found"
+        for site in sites:
+            if img.section(site) != ".text":
+                if not base <= site < base + size:
+                    access_why = f"data at {site:#010x} points into it"
                     break
-            if why is None:
-                evidence = ("element-access", f"{len(sites)} reference(s), each an 8/16-bit or x87 element access")
-        if evidence is None:
-            verdicts["unproven"] += len(words)
-            continue
-        for va, value in words:
+                continue
+            ok, how, span = element_access(reader.insn_at(site), site)
+            if not ok:
+                access_why = f"{site:#010x}: {how}"
+                break
+            if span[2]:
+                covered.update(range(span[0], span[0] + span[1]))
+        for va, value, symbol in words:
+            evidence = None
+            if tag and source.lower().endswith(".lib"):
+                evidence = ("library-member", f"{tag}: prebuilt member {Path(path).name} sha256 {sha(path)} "
+                                              "carries no relocation there")
+            elif tag and symbol and c_name(symbol[0]):
+                src = ROOT / source
+                cname = c_name(symbol[0])
+                if src not in types:
+                    types[src] = CTypes(src) if src.is_file() else None
+                decl = types[src].declaration(cname) if types[src] else None
+                if decl is not None and scalar_bytes(decl[1], va - (base + symbol[1])):
+                    evidence = ("vendored-declaration", f"{tag}: {source} sha256 {sha(src)} declares "
+                                                        f"`{decl[0]} {cname}`; +{va - base - symbol[1]:#x} lies in "
+                                                        "arithmetic fields of its element")
+            if evidence is None and access_why is None and all(b in covered for b in range(va, va + 4)):
+                evidence = ("element-access", f"{len(sites)} reference(s) into the section, each an 8/16-bit "
+                                              "or x87 element access; direct accesses cover every byte")
+            if evidence is None:
+                verdicts["unproven"] += 1
+                continue
             if L.add(va, KIND_SCALAR, value, "proven-scalar", evidence[0], "high", origin=evidence[1]):
                 verdicts[evidence[0]] += 1
             elif L.rows[va]["provenance"] == "proven-scalar":
@@ -1596,6 +1770,9 @@ def write_outputs(out, img, L, part, namer, comp, S, use_bad, unaligned, types, 
         [hx(r["site"]), hx(r["target"]), img.section(r["target"]) or "", r["rule"].split("-")[0], r["origin"],
          hx(part.scaffold_item(r["site"])["start"]), part.scaffold_item(r["site"])["kind"],
          part.scaffold_item(r["site"]).get("label", "")] for r in rows if r["provenance"] == "scan-candidate"))
+    write_csv(out / "call_targets.csv", ["name", "target_va", "sites"], (
+        [name, hx(target), n] for name, targets in sorted(comp["calls"].items())
+        for target, n in sorted(targets.items())))
     write_csv(out / "proven_scalars.csv", ["va", "value", "rule", "evidence"], (
         [hx(r["site"]), hx(r["target"]), r["rule"], r["origin"]] for r in rows if r["provenance"] == "proven-scalar"))
     write_csv(out / "review_size.csv", ["start", "size", "section", "kind", "proof", "label"], (

@@ -773,18 +773,29 @@ def write_queue(path, text, detail, rows, img):
     for row in rows:
         at[int(row["target_rva"], 16)].append(row)
         by_qualified[qualified(row["name"])].append(row)
+    import code_scaffold
+    calls = code_scaffold.call_targets(img, LEDGER / "call_targets.csv")
     out = []
     for name, entry in sorted(detail.items()):
         kind = entry["kind"]
         cause = next(c for c, rx in RESIDUE_CAUSES if rx.search(name)) if kind == "unpinned" else kind
         suggestion, evidence = "", ""
         m = re.fullmatch(r"g_([0-9A-F]{8})", name)
-        rva = int(m.group(1), 16) - img.base if m else pinned.get(name)
+        rva, how = (int(m.group(1), 16) - img.base, "address-derived name") if m else (None, "")
+        if not m and name in pinned:
+            rva, how = code_scaffold.resolve_pin(name, pinned[name], lambda r: bool(at.get(r)), dir32, calls)
+            if rva is None:
+                readings = " or ".join(f"0x{r:08X}" for r in code_scaffold.pin_readings(pinned[name]))
+                out.append([name, entry["kind"], cause, len(referrers.get(name, [])),
+                            " ".join(sorted(set(referrers.get(name, [])))[:5]), "",
+                            f"symbols.csv pin 0x{pinned[name]:08X}: {how} (RVA {readings})"])
+                continue
+            how = "symbols.csv pin read as " + {"rva": "RVA", "va": "VA", "dir32": "the dir32 address",
+                                                "call-target": "where verified calls land"}[how]
         if rva is not None:
             owners = [r for r in at.get(rva, []) if not r["name"].startswith("?j_")] or at.get(rva, [])
             if owners:
                 suggestion = owners[0]["name"]
-                how = "address-derived name" if m else "symbols.csv pin"
                 evidence = f"address 0x{rva:08X} ({how}); row source {owners[0]['source']}"
             else:
                 evidence = f"address 0x{rva:08X} has no ledger row"

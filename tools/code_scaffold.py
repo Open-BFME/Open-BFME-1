@@ -101,6 +101,51 @@ def find_funclet(sections, symbols, row, target):
     return None, f"parent-group-{len(hits)}-hits"
 
 
+IMAGE_BASE = 0x400000
+
+
+def pin_readings(value):
+    """The RVAs a symbols.csv address can mean: most pins are RVAs, some are
+    written as VAs (pin_consistency.verify_dir32_pins reads both the same way)."""
+    return [value] + ([value - IMAGE_BASE] if value >= IMAGE_BASE else [])
+
+
+def resolve_pin(name, value, has_owner, dir32=None, calls=None):
+    """(rva, how) for a pin, or (None, reason). A reading counts only if a
+    ledger row lives there; when both readings have one, independent evidence
+    decides: where byte-verified code's calls to the name go in retail
+    (call_targets.csv, an ILT stub followed to its body), else the address
+    matched references give the name (dir32_addresses.csv); else ambiguous."""
+    owned = [r for r in pin_readings(value) if has_owner(r)]
+    if len(owned) == 1:
+        return owned[0], "rva" if owned[0] == value else "va"
+    if not owned:
+        return None, "no-owner"
+    called = {rva for rva in (calls or {}).get(name, ())}
+    hit = [r for r in owned if r in called]
+    if len(hit) == 1:
+        return hit[0], "call-target"
+    if dir32 is not None and name in dir32 and dir32[name] - IMAGE_BASE in owned:
+        return dir32[name] - IMAGE_BASE, "dir32"
+    return None, "ambiguous-va-rva"
+
+
+def call_targets(img, path=None):
+    """{name: {rva}} where byte-verified code's calls to each name land in retail,
+    each ILT stub (E9 rel32) also standing for the body it jumps to."""
+    path = path or ROOT / "build" / "reloc_ledger" / "call_targets.csv"
+    out = collections.defaultdict(set)
+    if not Path(path).exists():
+        return out
+    for row in RL.read_csv_rows(path):
+        va = int(row["target_va"], 16)
+        out[row["name"]].add(va - img.base)
+        head = img.read(va, 5) if img.section(va) == ".text" else None
+        if head and head[0] == 0xE9:
+            out[row["name"]].add((va + 5 + struct.unpack_from("<i", head, 1)[0] - img.base) & 0xFFFFFFFF)
+    return out
+
+
 def funclet_labels(img, rows, census, out, eh_targets, log=print):
     """Patched copies of the census objects holding gen-funclet rows.
 
@@ -224,8 +269,11 @@ def object_externals(paths):
     return defined, referenced
 
 
-def code_aliases(img, rows, undefined, defined, funclets, skip=frozenset()):
+def code_aliases(img, rows, undefined, defined, funclets, skip=frozenset(), dir32=None):
     """{undefined name: defining name} for names with a retail code address."""
+    if dir32 is None:
+        dir32 = {r["name"]: int(r["va"], 16) for r in RL.read_csv_rows(build.DIR32_ADDRESSES)}
+    calls = call_targets(img)
     routes = {}
     pinned = link_census.pins(routes)
     by_address = collections.defaultdict(list)
@@ -289,8 +337,13 @@ def code_aliases(img, rows, undefined, defined, funclets, skip=frozenset()):
             address = va - img.base
             kind = "g_text"
         else:
-            address = routes.get(name, pinned.get(name))
-            kind = "pinned"
+            address, kind = routes.get(name), "pinned"
+            if address is None and name in pinned:
+                address, how = resolve_pin(name, pinned[name],
+                                           lambda rva: defining(rva) is not None, dir32, calls)
+                if address is None:
+                    why["pinned:" + how] += 1
+                    continue
             if address is None and len(homes.get(name, ())) == 1:
                 address, kind = next(iter(homes[name])), "row-symbol"
             if address is None:
