@@ -103,3 +103,49 @@ def test_queue_suggests_an_owner_by_address_or_by_qualified_name(tmp_path):
     assert out[0]["referring_objects"] == "2" and out[0]["cause"] == "ctor/dtor (private class copies)"
     assert out[0]["suggested_owner_row"] == "??0Foo@@QAE@XZ" and "same-qualified-name" in out[0]["evidence"]
     assert out[1]["suggested_owner_row"] == "?body@@YAXXZ" and "address-derived" in out[1]["evidence"]
+
+
+def original_dump(tmp_path, monkeypatch, body, relocs=()):
+    """A dump source's own object holding `body` at retail 0x401000 (retail = body)."""
+    img = image_with(text=body)
+    source = tmp_path / "raw.asm"
+    source.write_text("; fixture\n")
+    obj = tmp_path / "raw.obj"
+    coff = data_scaffold.Coff()
+    n = coff.add_section(".text", 0x60500020, body, len(body))
+    coff.symbol("_WinMainCRTStartup", 0, n)
+    target = coff.symbol("_g_target")
+    coff.sections[n - 1]["relocs"] = [(off, target) for off in relocs]
+    coff.write(obj)
+    row = {"name": "_WinMainCRTStartup", "target_rva": "0x00001000", "target_size": str(len(body)),
+           "source": str(source), "notes": ""}
+    monkeypatch.setattr(data_scaffold.build, "load_function_rows", lambda: [row])
+    import link_census
+    monkeypatch.setattr(link_census, "object_current", lambda s, o: True)
+    return img, source, obj
+
+
+def test_symbolic_masm_object_with_a_literal_address_is_rejected(tmp_path, monkeypatch):
+    # retail and object: mov eax, 00401234h ; ret -- no relocation on the address
+    img, source, obj = original_dump(tmp_path, monkeypatch, b"\xb8\x34\x12\x40\x00\xc3")
+    verdict = data_scaffold.verify_original_dump(img, source, obj)
+    assert not verdict["ok"] and "no relocation" in verdict["why"] and verdict["object_sha256"]
+
+
+def test_relocated_original_object_is_kept(tmp_path, monkeypatch):
+    img, source, obj = original_dump(tmp_path, monkeypatch, b"\xb8\x34\x12\x40\x00\xc3", relocs=(1,))
+    assert data_scaffold.verify_original_dump(img, source, obj)["ok"]
+
+
+def test_missing_original_object_is_rejected(tmp_path, monkeypatch):
+    img, source, obj = original_dump(tmp_path, monkeypatch, b"\xc3")
+    obj.unlink()
+    assert data_scaffold.verify_original_dump(img, source, obj)["why"] == "object or source missing"
+
+
+def test_an_incomplete_trial_fails_the_run(tmp_path, monkeypatch):
+    monkeypatch.setattr(data_scaffold, "load", lambda ledger: ([], {}, set(), []))
+    img = image_with()
+    monkeypatch.setattr(data_scaffold.RL, "Image", lambda: img)
+    monkeypatch.setattr(data_scaffold, "trial_link", lambda *a, **k: {"complete": False})
+    assert data_scaffold.main(["--out", str(tmp_path), "--trial-link"]) == 1

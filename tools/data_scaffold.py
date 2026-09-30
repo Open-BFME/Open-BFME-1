@@ -509,6 +509,55 @@ def retail_libraries(out):
     return paths, report
 
 
+def verify_original_dump(img, source, obj, ctx=None):
+    """Whether a dump source's OWN object is relocatable: current for its source,
+    every ledger row's body equal to retail outside relocation fields, and every
+    operand of its reached code that holds an in-image address (a branch leaving
+    the body, a disp32, an imm32) covered by a relocation. Bound to the exact
+    source and object by sha256. {"ok": bool, "why": str, ...}"""
+    import hashlib
+    import dump_relocs
+    import link_census
+    verdict = {"source": source.relative_to(ROOT).as_posix() if source.is_relative_to(ROOT) else str(source),
+               "ok": False}
+    if not obj.exists() or not source.exists():
+        return {**verdict, "why": "object or source missing"}
+    verdict["source_sha256"] = hashlib.sha256(source.read_bytes()).hexdigest()
+    verdict["object_sha256"] = hashlib.sha256(obj.read_bytes()).hexdigest()
+    if not link_census.object_current(source, obj):
+        return {**verdict, "why": "object is not current for its source"}
+    rel_source = verdict["source"]
+    rows = [r for r in build.load_function_rows() if r["source"] == rel_source and r["target_rva"].startswith("0x")]
+    if not rows:
+        return {**verdict, "why": "no matched ledger row names this source"}
+    sections, symbols = RL.parse_coff(obj.read_bytes())
+    for row in rows:
+        name = build.ledger_object_symbol(row)
+        sym = next((x for x in symbols.values() if x["name"] == name and x["section"] > 0), None)
+        if sym is None:
+            return {**verdict, "why": f"{name} not defined in the object"}
+        sec = sections[sym["section"] - 1]
+        size, va = int(row["target_size"]), img.base + int(row["target_rva"], 16)
+        lo = sym["value"]
+        body = (sec["body"] or b"")[lo:lo + size]
+        relocs = [(w - lo, k) for w, _, k in sec["relocs"] if lo <= w < lo + size]
+        retail = img.read(va, size)
+        if retail is None or len(body) != size or not RL.masked_equal(body, retail, [(w, 0, k) for w, k in relocs]):
+            return {**verdict, "why": f"{name} differs from retail outside relocation fields"}
+        fields = {w for w, _ in relocs}
+        result = dump_relocs.analyze(retail, va, ctx)
+        for problem, off, text in result["problems"]:
+            if problem != "falls-off-end":
+                return {**verdict, "why": f"{name}+{off:#x} {problem} {text}".strip()}
+        for ref in result["refs"]:
+            inside = va <= ref.value < va + size
+            needs = (ref.kind == "branch" and not inside) or (ref.kind != "branch" and img.in_image(ref.value))
+            if needs and ref.off not in fields:
+                return {**verdict, "why": f"{name}+{ref.insn_off:#x} `{ref.text}` holds {ref.value:#010x} "
+                                          "with no relocation"}
+    return {**verdict, "ok": True, "why": f"{len(rows)} body(ies) equal retail; every in-image operand relocated"}
+
+
 def dump_sources():
     """{census object path (repo-relative): .asm source} for every dump source."""
     return {build.row_object(row).resolve().relative_to(ROOT.resolve()).as_posix(): row["source"]
@@ -538,11 +587,8 @@ REFERRER = re.compile(r"^(\S+\.obj) : error LNK20(?:01|19)")
 def trial_link(img, objects, rsp, out, log=print, code=True, libraries=True):
     swap = dump_objects()
     census = [line.strip().strip('"') for line in rsp.read_text(encoding="utf-8").splitlines() if line.strip()]
-    linked, swapped, missing, raw_dumps = [], 0, [], 0
-    symbolic_sources = {r["source"] for r in RL.read_csv_rows(ROOT / "build" / "dump_relocs" / "bodies.csv")
-                        if r["status"] == "symbolic"} - {r["source"] for r in RL.read_csv_rows(
-                            ROOT / "build" / "dump_relocs" / "bodies.csv") if r["status"] != "symbolic"}
-    symbolic = {rel for rel, source in dump_sources().items() if source in symbolic_sources}
+    linked, swapped, kept, rejected = [], 0, [], []
+    sources = dump_sources()
     for rel in census:
         path = swap.get(rel)
         if path is not None and path.exists():
@@ -550,10 +596,12 @@ def trial_link(img, objects, rsp, out, log=print, code=True, libraries=True):
             swapped += 1
             continue
         if path is not None:
-            # dump_relocs wrote no object: an already-symbolic MASM source (bodies.csv
-            # `symbolic`) links its own object; anything else stays raw and is counted
-            missing.append(str(path))
-            raw_dumps += rel not in symbolic
+            # dump_relocs wrote no relocatable object for this dump source: its own
+            # object links only if it proves relocatable itself
+            verdict = verify_original_dump(img, ROOT / sources[rel], ROOT / rel)
+            (kept if verdict["ok"] else rejected).append({"object": rel, **verdict})
+            if not verdict["ok"]:
+                continue
         linked.append(ROOT / rel)
     linked = list(dict.fromkeys(linked))
     work = out / "trial"
@@ -615,8 +663,8 @@ def trial_link(img, objects, rsp, out, log=print, code=True, libraries=True):
     text = proc.stdout + proc.stderr
     (work / "trial.log").write_text(text, encoding="utf-8")
     meta = {"when": time.strftime("%Y-%m-%d %H:%M"), "objects": len(linked), "dump_objects_swapped": swapped,
-            "dump_sources_kept_symbolic": len(missing) - raw_dumps,
-            "dump_sources_left_raw": raw_dumps, "seconds": round(seconds), "exit": proc.returncode, **counts}
+            "original_dump_objects_kept": kept, "original_dump_objects_rejected": rejected,
+            "complete": not rejected, "seconds": round(seconds), "exit": proc.returncode, **counts}
     (work / "trial_meta.json").write_text(json.dumps(meta), encoding="utf-8")
     return classify_trial(img, objects, text, meta, work, log)
 
@@ -823,6 +871,9 @@ def main(argv=None):
         report["trial"] = classify_trial(img, objects, (work / "trial.log").read_text(encoding="utf-8"),
                                          json.loads((work / "trial_meta.json").read_text(encoding="utf-8")), work)
     (args.out / "verify.json").write_text(json.dumps(report, indent=1), encoding="utf-8")
+    if report.get("trial") and not report["trial"].get("complete", True):
+        print("data_scaffold: trial INCOMPLETE -- a dump source's object was rejected (not relocatable)")
+        return 1
     print(json.dumps({k: v for k, v in report.items() if k != "failures"}, indent=1))
     bad = checks.get("retail_differs", 0) or checks.get("field_not_moved", 0) or checks.get("byte_changed", 0) \
         or checks.get("unlisted_literals", 0) or (args.link_check and not report["link_check"].get("linked"))
