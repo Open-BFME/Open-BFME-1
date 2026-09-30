@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 
+extern const char *names1CB730[];
+
 void *Rva000EB110Get()
 {
-	return reinterpret_cast<void *>(0x012A8D40u);
+	return names1CB730;
 }
