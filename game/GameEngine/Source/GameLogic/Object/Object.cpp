@@ -726,37 +726,9 @@ Object::~Object()
 	TheScriptEngine->notifyOfObjectDestruction(this);
 }
 
-//-------------------------------------------------------------------------------------------------
-/// this object now contained in "containedBy"
-//-------------------------------------------------------------------------------------------------
-// ?onContainedBy@Object@@QAEXPAV1@@Z present-unmatched
-void Object::onContainedBy( Object *containedBy )
-{
-	setStatus( MAKE_OBJECT_STATUS_MASK( OBJECT_STATUS_UNSELECTABLE ) );
-	if (containedBy && containedBy->getContain()->isEnclosingContainerFor(this))
-		setStatus( MAKE_OBJECT_STATUS_MASK( OBJECT_STATUS_MASKED ) );
-	else
-		clearStatus( MAKE_OBJECT_STATUS_MASK( OBJECT_STATUS_MASKED ) );
-	m_containedBy = containedBy;
-	m_containedByFrame = TheGameLogic->getFrame();
+// Retail Object::onContainedBy (0x001CB9F0) is implemented in ObjectOnContainedBy.cpp.
 
-  handlePartitionCellMaintenance(); // which should unlook me now that I am contained
-  
-}
-
-//-------------------------------------------------------------------------------------------------
-/// this object no longer contained in "containedBy"
-//-------------------------------------------------------------------------------------------------
-// ?onRemovedFrom@Object@@QAEXPAV1@@Z present-unmatched
-void Object::onRemovedFrom( Object *removedFrom )
-{
-	clearStatus( MAKE_OBJECT_STATUS_MASK2( OBJECT_STATUS_MASKED, OBJECT_STATUS_UNSELECTABLE ) );
-	m_containedBy = NULL;
-	m_containedByFrame = 0;
-
-  handlePartitionCellMaintenance(); // get a clean look, now that I am outdoors, again
-
-}
+// Retail Object::onRemovedFrom (0x001CBAE0) is implemented in ObjectOnRemovedFrom.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -836,37 +808,9 @@ void Object::onDestroy()
 	handlePartitionCellMaintenance();
 }  // end onDestroy
 
-//=============================================================================
-//=============================================================================
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Object_setGeometryInfo_Thunk.cpp
-// ?setGeometryInfo@Object@@QAEXABVGeometryInfo@@@Z present-unmatched
-void Object::setGeometryInfo(const GeometryInfo& geom) 
-{ 
-	m_geometryInfo = geom; 
-	if( m_partitionData )
-	{
-		// if our geometry changes, we unregister and re-register with the partitionmgr
-		// so that our size gets updated appropriately. this shouldn't be a problem 
-		// unless setGeometryInfo gets called frequently. (srj)
-		ThePartitionManager->unRegisterObject( this );
-		ThePartitionManager->registerObject( this );
-	}
+// Retail Object::setGeometryInfo (0x001D5D20) is implemented in ObjectGeometry.cpp.
 
-	if (m_drawable)
-		m_drawable->reactToGeometryChange();
-}
-
-//=============================================================================
-//=============================================================================
-// ?setGeometryInfoZ@Object@@QAEXM@Z present-unmatched
-void Object::setGeometryInfoZ( Real newZ ) 
-{ 
-	// A Z change only does not need to un/register with the PartitionManager
-	m_geometryInfo.setMaxHeightAbovePosition( newZ );
-
-	if (m_drawable)
-		m_drawable->reactToGeometryChange();
-}
+// Retail Object::setGeometryInfoZ (0x001BDF70) is implemented in ObjectGeometry.cpp.
 
 //=============================================================================
 // BFME: m_privateStatus lives at +0x344.
@@ -880,29 +824,7 @@ void Object::friend_setUndetectedDefector( Bool status )
 		privateStatus &= ~UNDETECTED_DEFECTOR;
 }
 
-//=============================================================================
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Object_restoreOriginalTeam.cpp
-// ?restoreOriginalTeam@Object@@QAEXXZ present-unmatched
-void Object::restoreOriginalTeam()
-{
-	if( m_team == NULL || m_originalTeamName.isEmpty() )
-		return;
-	
-	Team* origTeam = TheTeamFactory->findTeam(m_originalTeamName);
-	if (origTeam == NULL)
-	{
-		DEBUG_CRASH(("Object original team (%s) could not be found or created! (srj)\n",m_originalTeamName.str()));
-		return;
-	}
-
-	if (m_team == origTeam)
-	{
-		DEBUG_CRASH(("Object appears to still be on its original team, so why are we attempting to restore it? (srj)\n"));
-		return;
-	}
-
-	setTeam(origTeam);
-}
+// Retail Object::restoreOriginalTeam (0x001C4670) is implemented in ObjectTeamAndPlayer.cpp.
 
 //=============================================================================
 //=============================================================================
@@ -1056,72 +978,7 @@ Bool Object::checkAndDetonateBoobyTrap(const Object *victim)
 	return FALSE;
 }
 
-//=============================================================================
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WWLib/ObjectSetStatusThunk.cpp
-// ?setStatus@Object@@QAEXV?$BitFlags@$0CN@@@_N@Z present-unmatched
-void Object::setStatus( ObjectStatusMaskType objectStatus, Bool set )
-{
-	ObjectStatusMaskType oldStatus = m_status;
-
-	if (set)
-		m_status.set( objectStatus );
-	else
-		m_status.clear( objectStatus );
-
-	if (m_status != oldStatus)
-	{
-		if( set && objectStatus.test( OBJECT_STATUS_REPULSOR ) && m_repulsorHelper != NULL )
-		{
-			// Damaged repulsable civilians scare (repulse) other civs, but only
-			// for a short amount of time... use the repulsor helper to turn off repulsion shortly.
-			m_repulsorHelper->sleepUntil(TheGameLogic->getFrame() + 2*LOGICFRAMES_PER_SECOND);
-		}
-
-		if( objectStatus.test( OBJECT_STATUS_STEALTHED ) || objectStatus.test( OBJECT_STATUS_DETECTED ) || objectStatus.test( OBJECT_STATUS_DISGUISED ) )
-		{
-			//Kris: Aug 20, 2003
-			//When any of the three key status bits for stealth go on or off, then handle partition updates for vision.
-			if( getTemplate()->getShroudRevealToAllRange() > 0.0f )
-			{
-				handlePartitionCellMaintenance();
-			}
-		}
-
-
-		// when an object's construction status changes, it needs to have its partition data updated,
-		// in order to maintain the shroud correctly.
-		if( m_status.test( OBJECT_STATUS_UNDER_CONSTRUCTION ) != oldStatus.test( OBJECT_STATUS_UNDER_CONSTRUCTION ) )
-		{
-
-			// CHECK FOR MINES, AND DETONATE THEM NOW 
-			ObjectIterator *iter = 
-					ThePartitionManager->iteratePotentialCollisions( getPosition(), getGeometryInfo(), getOrientation() );
-			MemoryPoolObjectHolder hold( iter );
-			Object *them;
-			for( them = iter->first(); them; them = iter->next() )
-			{
-				if (them->isKindOf( KINDOF_MINE ))
-				{
-					//DETONATE ANY ENEMY MINES, OR DELETE FRIENDLY ONES
-					Relationship r = getRelationship(them);
-					if (r == ENEMIES)
-					{
-						them->kill(); // detonate mine 
-					}
-					else
-					{
-						TheGameLogic->destroyObject(them); 
-					}
-				}
-			}// next object
-
-			if (m_partitionData)
-				m_partitionData->makeDirty(true);
-		}
-
-	}
-
-}
+// Retail Object::setStatus (0x0001366F) is implemented in ObjectSetStatusThunk.cpp.
 
 //=============================================================================
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
@@ -1182,87 +1039,7 @@ void Object::setScriptStatus( ObjectScriptStatusBit bit, Bool set )
 	}
 }
 
-//=============================================================================
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Object_canCrushOrSquish_Thunk.cpp
-// ?canCrushOrSquish@Object@@ present-unmatched
-Bool Object::canCrushOrSquish(Object *otherObj, CrushSquishTestType testType ) const
-{
-	DEBUG_ASSERTCRASH(this, ("null this in canCrushOrSquish"));
-
-	if( !otherObj ) 
-	{
-		//Can't crush anything.
-		return false;  
-	}
-
-	if( isDisabledByType( DISABLED_UNMANNED ) )
-	{
-		//Unmanned vehicles cannot crush troops. This was happening when Jarmen Kell sniped
-		//the vehicle and booted the guys out while still moving, as the vehicle is now
-		//on a different team.
-		return false;
-	}
-
-	UnsignedByte crusherLevel = getCrusherLevel();
-	
-	// order matters: we want to know if I consider it to be an ally, not vice versa
-	if( getRelationship( otherObj ) == ALLIES ) 
-	{
-		//Friends don't let friends crush friends.
-		return false; 
-	}
-
-	if( !crusherLevel )
-	{
-		//Can't crush anything!
-		return false;
-	}
-
-	//Test this case for generic infantry getting squished by vehicles!
-	if( testType == TEST_SQUISH_ONLY || testType == TEST_CRUSH_OR_SQUISH )
-	{
-
-		//****************************************************************************************
-		//NOTE: This section of code is used by the pathfinder to determine if the object should
-		//      move to the target. I don't think it's the right place to check for this because
-		//      the semantics check to see if we can squish something -- not approach it. However
-		//      I'm not moving it for fear of some major breakage! -- KM
-		//Bool squisher = crusherLevel > 0;
-		//if( !squisher )
-		//{
-		//	Weapon *weapon = getCurrentWeapon();
-		//	if( weapon && weapon->isContactWeapon() )
-		//	{
-		//		squisher = true;
-		//	}
-		//}
-		//if( squisher )
-		//NOTE2: *** IF YOU REENABLE THIS CODE -- Move the "if( !crusherLevel ) return false" below
-		//                                        this squish section.
-		//****************************************************************************************
-		{
-			// See if other is squishable
-			static NameKeyType key_squish = NAMEKEY( "SquishCollide" );
-			if( otherObj->findModule( key_squish ) ) 
-			{
-				return true; // squishable.
-			}
-		}
-	}
-
-
-	UnsignedByte crushableLevel = otherObj->getCrushableLevel();
-
-	if( testType == TEST_CRUSH_ONLY || testType == TEST_CRUSH_OR_SQUISH )
-	{
-		if( crusherLevel > crushableLevel )
-		{
-			return true;
-		}
-	}
-		
-	return false;
-}
+// Retail Object::canCrushOrSquish (0x001C7600) is implemented in ObjectCanCrushOrSquish.cpp.
 
 // BFME's ThingTemplate carries FOUR crush levels at +0x499..+0x49c, not two:
 // a mounted pair that is used when the object's mounted-condition word at
@@ -1761,34 +1538,7 @@ ObjectID Object::getLastVictimID() const
 	return m_firingTracker ? m_firingTracker->getLastShotVictim() : INVALID_ID;
 } 
 
-//=============================================================================
-// Object::getRelationship
-//=============================================================================
-// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/ObjectGetRelationshipThunk.cpp
-// ?getRelationship@Object@@QBE?AW4Relationship@@PBV1@@Z present-unmatched
-Relationship Object::getRelationship(const Object *that) const
-{ 
-	const Team *myTeam = getTeam();
-
-	if (myTeam && that)
-	{
-		if (getIsUndetectedDefector())
-		{
-			return NEUTRAL; // so my AI does not give away my position by auto acquire
-		}
-		else if (that->getIsUndetectedDefector())
-		{
-			return ALLIES; // so I treat undetecteddefectors like they were my very own
-		}
-		else
-		{
-			return myTeam->getRelationship( that->getTeam() );
-		}
-	}
-
-	return NEUTRAL;
-
-}
+// Retail Object::getRelationship (0x0004A719) is implemented in ObjectGetRelationshipThunk.cpp.
 
 //=============================================================================
 // Object::getControllingPlayer
@@ -2075,74 +1825,7 @@ ObjectShroudStatus Object::getShroudedStatus(Int playerIndex) const
 	return OBJECTSHROUD_CLEAR;
 }
 
-//-------------------------------------------------------------------------------------------------
-/** Something is attempting to damage this object */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/Object_attemptDamage_Thunk.cpp
-// ?attemptDamage@Object@@QAEXPAVDamageInfo@@@Z present-unmatched
-void Object::attemptDamage( DamageInfo *damageInfo )
-{
-	BodyModuleInterface* body = getBodyModule();
-	if (body)
-		body->attemptDamage( damageInfo );
-			
-	// Process any shockwave forces that might affect this object due to the incurred damage
-	if (damageInfo->in.m_shockWaveAmount > 0.0f && damageInfo->in.m_shockWaveRadius > 0.0f)
-	{
-	  //KindOfMaskType immuneToShockwaveKindofs;                                                                      //NEW RESTRICTIONS ADDED
-	  //immuneToShockwaveKindofs.set(KINDOF_PROJECTILE);// projectiles go idle in midair when they get sw'd           //NEW RESTRICTIONS ADDED
-	  //immuneToShockwaveKindofs.set(KINDOF_PRODUCED_AT_HELIPAD);//helicopters go all wonky when they get shockwaved  //NEW RESTRICTIONS ADDED
-
-		PhysicsBehavior *behavior = getPhysics();
-		if ( behavior && (isAirborneTarget() == FALSE) && (! isKindOf(KINDOF_PROJECTILE) ) )
-//		if (behavior && isAnyKindOf( immuneToShockwaveKindofs ) == FALSE )//NEW RESTRICTIONS ADDED
-		{ 
-			// Calculate the shockwave taperoff amount due to distance from ground zero
-			Real shockWaveScalar = damageInfo->in.m_shockWaveVector.length();
-			Real distanceFromCenter = min(1.0f, shockWaveScalar / damageInfo->in.m_shockWaveRadius); 
-			Real distanceTaper = (distanceFromCenter) * (1.0f - damageInfo->in.m_shockWaveTaperOff);
-			Real shockTaperMult = 1.0f - distanceTaper;
-
-			// Set up the shockwave force to use apply on object
-			Coord3D shockWaveForce;
-			shockWaveForce.set( &damageInfo->in.m_shockWaveVector );
-			shockWaveForce.normalize();
-			shockWaveForce.scale( damageInfo->in.m_shockWaveAmount * shockTaperMult );
-			shockWaveForce.z = shockWaveForce.length(); // Apply up force equal to the lateral force for dramatic effect
-
-			// Apply the shock to the object
-			behavior->applyShock(&shockWaveForce);
-
-			// Add random rotation to the object for drama
-      
-			behavior->applyRandomRotation();
-
-			// Set stunned state due to the shock for the object
-      behavior->setStunned(true);
-			
-      setModelConditionState(MODELCONDITION_STUNNED_FLAILING);
-		}
-	}
-
-	
-	/// @todo track damage dealt/attempted
-
-	//
-	// if actual damage occurred, and this is an object owned by the local player we 
-	// might do a radar event for under attack. Note that we do not even try
-	// to do radar events for DAMAGE_PENALTY as that damage type is a type of damage
-	// that occurs with explicit player knowledge
-	//
-	if( damageInfo->out.m_actualDamageDealt > 0.0f &&
-			damageInfo->in.m_damageType != DAMAGE_PENALTY &&
-			damageInfo->in.m_damageType != DAMAGE_HEALING &&
-			getControllingPlayer() &&
-			!BitTest(damageInfo->in.m_sourcePlayerMask, getControllingPlayer()->getPlayerMask()) && 
-			m_radarData != NULL &&
-			getControllingPlayer() == ThePlayerList->getLocalPlayer() )
-		TheRadar->tryUnderAttackEvent( this );
-
-}
+// Retail Object::attemptDamage (0x001D0490) is implemented in Object_attemptDamage_Thunk.cpp.
 
 // BFME's DamageInfo is 0x5c bytes with its input half at the front -- source id
 // at +0x08, damage type at +0x10, death type at +0x18, amount at +0x1c and the
@@ -2458,148 +2141,7 @@ void Object::setDisabled( DisabledType type )
 	setDisabledUntil(type, FOREVER);
 }
 
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WWLib/MoneyObjectThunks.cpp
-// ?setDisabledUntil@Object@@ present-unmatched
-void Object::setDisabledUntil( DisabledType type, UnsignedInt frame )
-{
-	Bool edgeCase = !isDisabled();
-
-	if( type < 0 || type >= DISABLED_COUNT )
-	{
-		DEBUG_CRASH( ("Invalid disabled type value %d specified -- doesn't not exist!", type ) );
-		return;
-	}
-
-	//Handle audio events!
- 	AudioEventRTS sound;
-	if( type == DISABLED_UNMANNED && !isKindOf( KINDOF_DRONE ) )
-	{
-		//We've been sniped! Play a splatter sound for the pilot losing his face.
-		sound = TheAudio->getMiscAudio()->m_splatterVehiclePilotsBrain;
-		sound.setPosition( getPosition() );
-		TheAudio->addAudioEvent( &sound );
-	}
-	else if( type == DISABLED_UNDERPOWERED || type == DISABLED_EMP || type == DISABLED_SUBDUED || type == DISABLED_HACKED )
-	{
-		//We've lost power -- make sure we aren't already out of power as the sounds shouldn't happen
-		//if you were already disabled.
-		if( !isDisabledByType( DISABLED_UNDERPOWERED ) && 
-				!isDisabledByType( DISABLED_EMP ) &&
-				!isDisabledByType( DISABLED_SUBDUED ) &&
-				!isDisabledByType( DISABLED_HACKED ) )
-		{
-			if( isKindOf( KINDOF_STRUCTURE ) )
-			{
-				sound = TheAudio->getMiscAudio()->m_buildingDisabled;
-				sound.setPosition( getPosition() );
-				TheAudio->addAudioEvent( &sound );
-			}
-			else if( isKindOf( KINDOF_VEHICLE ) )
-			{
-				sound = TheAudio->getMiscAudio()->m_vehicleDisabled;
-				sound.setPosition( getPosition() );
-				TheAudio->addAudioEvent( &sound );
-			}
-		}
-	}
-
-	if( m_disabledTillFrame[ type ] != frame )
-	{
-		// an edge-test for disabledness, for type. This INCREMENTS m_pauseCount
-		// srj sez: HELD nevers disables special powers.
-		if ( type != DISABLED_HELD && !isDisabledByType( type ) )
-			pauseAllSpecialPowers( TRUE );
-		
-		m_disabledTillFrame[ type ] = frame;
-		m_disabledMask.set( type, frame > TheGameLogic->getFrame() );
-
-		if( m_drawable )
-		{
-			if( isDisabled() )
-			{
-				// Held does not tint anybody.  If we are multiply disabled, the other setting will hit the tint,
-				// and in clear, only-held and not-disabled are both causes to untint.
-				// Doh. Also shouldn't be tinting when disabled by scripting.
-				// Doh^2. Also shouldn't be CLEARING tinting if we're disabling by held or script disabledness
-				// Doh^3. Unmanned is no tint too
-				if( type != DISABLED_HELD && type != DISABLED_SCRIPT_DISABLED && type != DISABLED_UNMANNED )
-				{
-					m_drawable->setTintStatus( TINT_STATUS_DISABLED );
-				}
-			}
-		}
-
-		ContainModuleInterface *contain = getContain();
-		if ( contain )
-		{
-			Object *rider = (Object*)contain->friend_getRider();
-			if ( rider )
-			{
-				rider->setDisabledUntil(type, frame);
-			}
-		}
-
-		if ( isKindOf( KINDOF_SPAWNS_ARE_THE_WEAPONS ) )
-		{
-			SpawnBehaviorInterface *sbi = this->getSpawnBehaviorInterface();
-			if ( sbi )
-			{
-				//Kris: Patch 1.01 - November 12, 2003
-				//Actually, we want to disable the slaves, not order them to go idle! This fix was made to
-				//stinger sites getting hit by an EMP to prevent the soldiers from attacking.
-				//sbi->orderSlavesToGoIdle( CMD_FROM_AI ); // the canattack() will take care of any future attempts to fire
-				sbi->orderSlavesDisabledUntil( type, frame );
-			}
-
-		}
-
-	}
-
-	if( type == DISABLED_UNMANNED && !isKindOf( KINDOF_DRONE ) )
-	{
-		//strange but true: If I am a carbomb, 
-		//my driver actually has a dead-man's 
-		//trigger for my dynamite... 
-		//If he gets sniped, I blow up! Wheeee!
-
-		WeaponSetFlags flags;
-		flags.set( WEAPONSET_CARBOMB );
-		const WeaponTemplateSet* set = getTemplate()->findWeaponTemplateSet( flags );
-		if( set && set->testWeaponSetFlag( WEAPONSET_CARBOMB ) )
-		{
-			Object* sniper = TheGameLogic->findObjectByID( getBodyModule()->getLastDamageInfo()->in.m_sourceID );
-			if ( sniper )
-				sniper->scoreTheKill( this );
-			
-			kill();
-		}
-		else
-		{
-			//This vehicle's pilot has been sniped, so we want to clear the veterancy rating (if any)
-			ExperienceTracker *xpTracker = getExperienceTracker();
-			if( xpTracker )
-			{
-				xpTracker->setExperienceAndLevel( 0, FALSE );
-			}
-			//Not only that, but it also loses any healing bonuses it may have earned in its prior life
-			{
-				static const NameKeyType key_AutoHealBehavior = NAMEKEY("AutoHealBehavior");
-				AutoHealBehavior* autoHeal = (AutoHealBehavior*)(findUpdateModule( key_AutoHealBehavior ));
-				if (autoHeal)
-					autoHeal->undoUpgrade();
-				
-
-			}
-		}
-		
-	}
-  
-	// This will only be called if we were NOT disabled before coming into this function.
-	if (edgeCase) {
-		onDisabledEdge(true);
-	}
-}
+// Retail Object::setDisabledUntil (0x0003364A) is implemented in MoneyObjectThunks.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?getDisabledUntil@Object@@QBEIW4DisabledType@@@Z present-unmatched
@@ -2728,26 +2270,7 @@ Bool Object::clearDisabled( DisabledType type )
 }
 
 
-//-------------------------------------------------------------------------------------------------
-//Checks any timers and clears disabled statii that have expired.
-//-------------------------------------------------------------------------------------------------
-// ?checkDisabledStatus@Object@@QAEXXZ present-unmatched
-void Object::checkDisabledStatus()
-{
-	UnsignedInt now = TheGameLogic->getFrame();
-	for( int i = 0; i < DISABLED_COUNT; i++ )
-	{
-		DisabledType type = (DisabledType)i;
-		if( isDisabledByType( type ) )
-		{
-			if ( now >= m_disabledTillFrame[ i ] )
-			{
-				clearDisabled( type ); // This will also DECREMENT m_pauseCount in all specialpowers
-				m_disabledMask.set( type, 0 );
-			}
-		}
-	}
-}
+// Retail Object::checkDisabledStatus (0x001C5780) is implemented in ObjectCheckDisabledStatus.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // BFME: m_behaviors sits at +0x1f0, each module carries a second (interface)
@@ -2823,30 +2346,7 @@ void Object::updateTriggerAreaFlags()
 	m_numTriggerAreasActive = j;
 }
 
-//-------------------------------------------------------------------------------------------------
-// ?onCollide@Object@@QAEXPAV1@PBUCoord3D@@1@Z present-unmatched
-void Object::onCollide( Object *other, const Coord3D *loc, const Coord3D *normal )
-{
-	for (BehaviorModule** m = m_behaviors; *m; ++m)
-	{
-		CollideModuleInterface* collide = (*m)->getCollide();
-		if (!collide)
-			continue;
-
-		// check each time thru the loop, in case a collide module sets it
-		if( getStatusBits().test( OBJECT_STATUS_NO_COLLISIONS ) )
-		{
-#ifdef DEBUG_CRC
-			//DEBUG_LOG(("Object::onCollide() - OBJECT_STATUS_NO_COLLISIONS set\n"));
-#endif
-			break;
-		}
-#ifdef DEBUG_CRC
-		//DEBUG_LOG(("Object::onCollide() - calling collide module\n"));
-#endif
-		collide->onCollide(other, loc, normal);
-	}
-}
+// Retail Object::onCollide (0x001C8A80) is implemented in Object_onCollide.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // BFME: BehaviorModuleInterface::getCollide is slot 1 (+0x04) of the interface
@@ -2890,42 +2390,7 @@ Bool Object::isSalvageCrate() const
 	return false;
 }
 
-//-------------------------------------------------------------------------------------------------
-/** 
-	Our owning player is telling us to recheck our UpgradeModules, as an upgrade has completed
- */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/ObjectUpdateUpgradeModulesThunk.cpp
-// ?updateUpgradeModules@Object@@QAEXXZ present-unmatched
-void Object::updateUpgradeModules()
-{
-	if( testStatus(OBJECT_STATUS_UNDER_CONSTRUCTION) )
-		return; // No upgrade can run if we are under construction.  The three places that clear UnderConstruction will re-update us.
-	
-	if( testStatus( OBJECT_STATUS_DESTROYED ) )
-		return; // Patch 1.03 -- Fixes crash when you upgrade a fake GLA command center to a real one if (toxic or demo).
-	
-	if( getControllingPlayer() == NULL )
-		return;  // This can only happen in game teardown.  No upgrades for you without a player.  Weird crashes are bad.
-
-	UpgradeMaskType playerMask = getControllingPlayer()->getCompletedUpgradeMask();
-	UpgradeMaskType objectMask = getObjectCompletedUpgradeMask();
-	UpgradeMaskType maskToCheck = playerMask;
-	maskToCheck.set( objectMask );
-	// We need to add in all of the already owned upgrades to handle "AND" requiring upgrades.
-	// We combine all the masks in case someone has a Object AND Player combination
-
-	for (BehaviorModule** module = m_behaviors; *module; ++module)
-	{
-		UpgradeModuleInterface* upgrade = (*module)->getUpgrade();
-		if (!upgrade)
-			continue;
-
-		if( !upgrade->isAlreadyUpgraded() )
-		{
-			upgrade->attemptUpgrade( maskToCheck );
-		}
-	}
-}
+// Retail Object::updateUpgradeModules (0x00027FCF) is implemented in ObjectUpdateUpgradeModulesThunk.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //This function sucks.
@@ -2986,64 +2451,11 @@ void Object::forceRefreshSubObjectUpgradeStatus()
 	}
 }
 
-//-------------------------------------------------------------------------------------------------
-/** Returns whether an object entered or exited an area. */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
-// ?didEnterOrExit@Object@@IBE_NXZ present-unmatched
-Bool Object::didEnterOrExit() const
-{
-	if (isKindOf(KINDOF_INERT)) {
-		return FALSE;
-	}
-	// note that this needs to return true if we
-	// entered or exited on the current frame OR
-	// the previous frame... since the current execution
-	// order is ScriptEngine, then ObjectUpdates,
-	// enter/exits detected in ObjectUpdate on frame N
-	// won't be noticed by the ScriptEngine till frame N+1.
-	UnsignedInt now = TheGameLogic->getFrame();
-	return m_enteredOrExitedFrame == now || m_enteredOrExitedFrame == now - 1;
-}
+// Retail Object::didEnterOrExit (0x001C8BE0) is implemented in ObjectFields.cpp.
 
-//-------------------------------------------------------------------------------------------------
-/** Returns whether an object entered an area. */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
-// ?didEnter@Object@@QBE_NPBVPolygonTrigger@@@Z present-unmatched
-Bool Object::didEnter(const PolygonTrigger *pTrigger) const
-{
-	if (!didEnterOrExit()) 
-		return false;
+// Retail Object::didEnter (0x001C8C40) is implemented in ObjectFields.cpp.
 
-	DEBUG_ASSERTCRASH(!isKindOf(KINDOF_INERT), ("Asking whether an inert object entered or exited. This is invalid.\n"));
-
-	for (Int i=0; i<m_numTriggerAreasActive; i++) 
-	{
-		if (m_triggerInfo[i].entered && m_triggerInfo[i].pTrigger == pTrigger) 
-			return true;
-	}
-	return false;
-}
-
-//-------------------------------------------------------------------------------------------------
-/** Returns whether an object entered an area. */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
-// ?didExit@Object@@QBE_NPBVPolygonTrigger@@@Z present-unmatched
-Bool Object::didExit(const PolygonTrigger *pTrigger) const
-{
-	if (!didEnterOrExit()) 
-		return false;
-
-	DEBUG_ASSERTCRASH(!isKindOf(KINDOF_INERT), ("Asking whether an inert object entered or exited. This is invalid.\n"));
-	for (Int i=0; i<m_numTriggerAreasActive; i++) 
-	{
-		if (m_triggerInfo[i].exited && m_triggerInfo[i].pTrigger == pTrigger) 
-			return true;
-	}
-	return false;
-}
+// Retail Object::didExit (0x001C8CE0) is implemented in ObjectFields.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Returns whether an object is inside an area. */
@@ -3616,13 +3028,7 @@ void Object::clearWeaponSetFlag(WeaponSetType wst)
 	}
 }
 
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
-// ?hasSpecialPower@Object@@QBE_NW4SpecialPowerType@@@Z present-unmatched
-Bool Object::hasSpecialPower( SpecialPowerType type ) const
-{
-	return TEST_SPECIALPOWERMASK( m_specialPowerBits, type );
-}
+// Retail Object::hasSpecialPower (0x001C9BD0) is implemented in ObjectFields.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?hasAnySpecialPower@Object@@QBE_NXZ present-unmatched
@@ -3817,29 +3223,7 @@ afterWeaponCheck:
 		return TRUE;
 	return FALSE;
 }
-//-------------------------------------------------------------------------------------------------
-/**
-	* Mask/Un-Mask an object
-	*/
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Object_maskObject.cpp
-// ?maskObject@Object@@QAEX_N@Z present-unmatched
-void Object::maskObject( Bool mask )
-{
-
-	// set or clear the mask bit
-	setStatus( MAKE_OBJECT_STATUS_MASK( OBJECT_STATUS_MASKED ), mask );
-
-	//
-	// when masking objects they become unselected ... we do this in any situation for
-	// any player cause you aren't allowed to select masked objects, if the object is not
-	// selected (ie, belongs to another player) it's no big deal cause it won't be selected
-	// anyway
-	//
-
-	if (mask)
-		TheGameLogic->deselectObject(this, ~getControllingPlayer()->getPlayerMask(), TRUE);
-
-}  // end maskObject
+// Retail Object::maskObject (0x001BEFB0) is implemented in Object_maskObject.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /*
@@ -4239,23 +3623,7 @@ void Object::updateObjValuesFromMapProperties(Dict* properties)
   }
 }
 
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/ObjectFriendAdjustPower.cpp
-// ?friend_adjustPowerForPlayer@Object@@QAEX_N@Z present-unmatched
-void Object::friend_adjustPowerForPlayer( Bool incoming )
-{
-	if (isDisabled() && getTemplate()->getEnergyProduction() > 0) 
-	{
-		// Disabledness only affects Producers, not Consumers.
-		return;
-	}
-
-	if (incoming) {
-		getControllingPlayer()->getEnergy()->objectEnteringInfluence(this);
-	} else {
-		getControllingPlayer()->getEnergy()->objectLeavingInfluence(this);
-	}
-}
+// Retail Object::friend_adjustPowerForPlayer (0x001C34D0) is implemented in ObjectFriendAdjustPower.cpp.
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4934,76 +4302,11 @@ Bool Object::hasUpgrade( const UpgradeTemplate *upgradeT ) const
 		reinterpret_cast<const BfmeUpgradeTemplateMask *>(upgradeT)->m_upgradeMask );
 }  // end hasUpgrade
 
-//-------------------------------------------------------------------------------------------------
-/** Is this object capable of having this upgrade */
-//-------------------------------------------------------------------------------------------------
-// ?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z present-unmatched
-Bool Object::affectedByUpgrade( const UpgradeTemplate *upgradeT ) const 
-{
-	UpgradeMaskType objectMask = getObjectCompletedUpgradeMask();
-	UpgradeMaskType playerMask = getControllingPlayer()->getCompletedUpgradeMask();
-	UpgradeMaskType maskToCheck = playerMask;
-	maskToCheck.set( objectMask );
-	maskToCheck.set( upgradeT->getUpgradeMask() );
+// Retail Object::affectedByUpgrade (0x001C5A30) is implemented in ObjectUpgrades.cpp.
 
-	// We need to add in all of the already owned upgrades to handle "AND" requiring upgrades.
-	// We combine all the masks in case someone has a Object AND Player combination
+// Retail Object::giveUpgrade (0x001C9F70) is implemented in ObjectFields.cpp.
 
-	for (BehaviorModule** module = m_behaviors; *module; ++module)
-	{
-		UpgradeModuleInterface* upgrade = (*module)->getUpgrade();
-		if (!upgrade)
-			continue;
-
-		if( upgrade->wouldUpgrade( maskToCheck ) )
-		{
-			// if any of my many upgrade modules would execute in response to this flag, say yes.
-			return TRUE;
-		}
-	}
-	return FALSE;
-
-}  // end affectedByUpgrade
-
-//-------------------------------------------------------------------------------------------------
-/** Give this upgrade to this object */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
-// ?giveUpgrade@Object@@QAEXPBVUpgradeTemplate@@@Z present-unmatched
-// (the matched BFME body lives in ObjectFields.cpp at 0x001C9F70)
-void Object::giveUpgrade( const UpgradeTemplate *upgradeT )
-{
-	if (upgradeT)
-	{
-		m_objectUpgradesCompleted.set( upgradeT->getUpgradeMask() );
-
-		//
-		// iterate through all the upgrade modules of this object and call the method to
-		// grant a new upgrade
-		//
-		updateUpgradeModules();
-	}
-}  // end giveUpgrade
-
-//-------------------------------------------------------------------------------------------------
-/** Remove this upgrade from this object */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
-// ?removeUpgrade@Object@@QAEXPBVUpgradeTemplate@@@Z present-unmatched
-void Object::removeUpgrade( const UpgradeTemplate *upgradeT )
-{
-	m_objectUpgradesCompleted.clear( upgradeT->getUpgradeMask() );
-	for (BehaviorModule** module = m_behaviors; *module; ++module)
-	{
-		UpgradeModuleInterface* upgrade = (*module)->getUpgrade();
-		if (!upgrade)
-			continue;
-
-		// Whoa, please note that while the function is called Object::RemoveUpgrade, it is not removing anything
-		// in the sense of undoing the effects.  It is just resetting the upgrade so it may be run again.
-		upgrade->resetUpgrade( upgradeT->getUpgradeMask() );
-	}
-}
+// Retail Object::removeUpgrade (0x001CA020) is implemented in ObjectFields.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Central point for onCapture logic */
@@ -5140,95 +4443,7 @@ void Object::clearWeaponBonusCondition(WeaponBonusConditionType wst)
 	}
 }
 
-//-------------------------------------------------------------------------------------------------
-/** 
-	A weapon cannot be in charge of maintaining condition flags as it is all event driven.
-	I will maintain my ModelCondition myself if it should change.  Firing is set by firing logic,
-	so I don't include it here.  It is only the states that expire on timers that noone watches
-	that I am concerned with.
-*/
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/ObjectAdjustModelConditionThunk.cpp
-// ?adjustModelConditionForWeaponStatus@Object@@ present-unmatched
-void Object::adjustModelConditionForWeaponStatus()
-{
-	UnsignedInt now = TheGameLogic->getFrame();
-
-	for (int i = 0; i < WEAPONSLOT_COUNT; ++i)
-	{
-		const Weapon* w = m_weaponSet.getWeaponInWeaponSlot((WeaponSlotType)i);
-		if (!w)
-		{
-			m_lastWeaponCondition[i] = WSF_NONE;
-			continue;
-		}
-		
-		WeaponSetConditionType conditionToSet = WSF_INVALID;
-		if (i != m_weaponSet.getCurWeaponSlot())
-		{
-			// if this isn't the current weapon, then we never set ANYTHING for it.
-			conditionToSet = WSF_NONE;
-		}
-		else if (w->getLastShotFrame() == now)
-		{
-			// yep, this overrides any weapon-status condition!
-			conditionToSet = WSF_FIRING;
-		}
-		else if (!testStatus( OBJECT_STATUS_IS_ATTACKING ))
-		{
-			// srj sez: not 100% sure about this one, but the problem is: say we were attacking,
-			// then issue a move command. if we didn't do this here, we might still have a 'firing'
-			// pose, because his weapon might be in 'reloading' mode. since we're not attacking, however,
-			// we really don't care, so we just force the issue here. (This might still need tweaking for the pursue state.)
-			conditionToSet = WSF_NONE;
-		}
-		else
-		{
-			WeaponStatus newStatus = w->getStatus();
-
-			const static WeaponSetConditionType s_wsfLookup[WEAPON_STATUS_COUNT] =
-			{
-				WSF_NONE,				// READY_TO_FIRE,
-				WSF_NONE,				// OUT_OF_AMMO,
-				WSF_BETWEEN,		// BETWEEN_FIRING_SHOTS,
-				WSF_RELOADING,	// RELOADING_CLIP,
-				WSF_PREATTACK		// PRE_ATTACK,
-			};
-			conditionToSet = s_wsfLookup[newStatus];
-
-			// special case this: say we are firing in bursts: pow-pow-pow-pause, etc.
-			// then we might have a frame where we have reloaded and are ready-to-fire,
-			// but haven't fired yet this frame. in that case, use 'between' so we still have
-			// a firing pose, 'cuz if we use 'none' we will 'pop' back to idle for a frame. (srj)
-			// additional note: only do if aiming or firing, since we could also be in this state if 
-			// we are approaching or pursuing a target! (srj)
-			if (newStatus == READY_TO_FIRE && conditionToSet == WSF_NONE && testStatus( OBJECT_STATUS_IS_ATTACKING ) &&
-					(testStatus( OBJECT_STATUS_IS_AIMING_WEAPON ) || testStatus( OBJECT_STATUS_IS_FIRING_WEAPON )))
-			{
-				conditionToSet = WSF_BETWEEN;
-			}
-
-		}
-
-		if (m_drawable)
-		{
-			m_drawable->updateDrawableClipStatus( w->getRemainingAmmo(), w->getClipSize(), w->getWeaponSlot() );
-			if (conditionToSet != WSF_INVALID && conditionToSet != m_lastWeaponCondition[i])
-			{
-				m_lastWeaponCondition[i] = conditionToSet;
-				ModelConditionFlags c = m_weaponSet.getModelConditionForWeaponSlot((WeaponSlotType)i, conditionToSet);
-				m_drawable->clearAndSetModelConditionFlags(s_allWeaponFireFlags[i], c);
-				if (conditionToSet == WSF_PREATTACK)
-				{
-					// in the preattack state, adjust the speed of the preattack anim to match the actual time it will take
-					UnsignedInt preAttackDone = w->getPreAttackFinishedFrame();
-					if (preAttackDone > now)
-						m_drawable->setAnimationLoopDuration(preAttackDone - now);
-				}
-			}
-		}
-	}
-}
+// Retail Object::adjustModelConditionForWeaponStatus (0x000276D3) is implemented in ObjectAdjustModelConditionThunk.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /// We have moved a 'significant' amount, so do maintenence that can be considered 'cell-based'
@@ -6388,46 +5603,9 @@ void Object::clearLeechRangeModeForAllWeapons()
 	m_weaponSet.clearLeechRangeModeForAllWeapons();
 }
 
-// ------------------------------------------------------------------------------------------------
-/** Search our update modules for a production update interface and return it if one is found */
-// ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
-// ?getProductionUpdateInterface@Object@@QAEPAVProductionUpdateInterface@@XZ present-unmatched
-ProductionUpdateInterface* Object::getProductionUpdateInterface( void )
-{
-	ProductionUpdateInterface *pui;
+// Retail Object::getProductionUpdateInterface (0x001BF570) is implemented in ObjectFields.cpp.
 
-	// tell our update modules that we intend to do this special power.
-	for( BehaviorModule** u = m_behaviors; *u; ++u )
-	{
-
-		pui = (*u)->getProductionUpdateInterface();
-		if( pui )
-			return pui;
-
-	}  // end for
-
-	return NULL;
-
-}  // end getProductionUpdateInterface
-
-// ------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
-// ?getDockUpdateInterface@Object@@QAEPAVDockUpdateInterface@@XZ present-unmatched
-DockUpdateInterface *Object::getDockUpdateInterface( void )
-{
-	DockUpdateInterface *dock = NULL;
-
-	for( BehaviorModule **u = m_behaviors; *u; ++u )
-	{
-		if( (dock = (*u)->getDockUpdateInterface()) != NULL )
-			return dock;
-	}
-
-	return NULL;
-
-}  // end getDockUpdateInterface
+// Retail Object::getDockUpdateInterface (0x001BF5B0) is implemented in ObjectFields.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // Search our special power modules for a specific one.
@@ -6567,42 +5745,9 @@ SpawnBehaviorInterface* Object::getSpawnBehaviorInterface() const
 	return NULL;
 }  // end getSpawnBehaviorInterfaceFromObject
 
-// ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
-// ?getProjectileUpdateInterface@Object@@QBEPAVProjectileUpdateInterface@@XZ present-unmatched
-ProjectileUpdateInterface* Object::getProjectileUpdateInterface() const
-{
-	for (BehaviorModule** m = m_behaviors; *m; ++m)
-	{
-		ProjectileUpdateInterface *pui = (*m)->getProjectileUpdateInterface();
-		if( pui )
-		{
-			return pui;
-		}
-	}
-	return NULL;
-}
+// Retail Object::getProjectileUpdateInterface (0x001BF630) is implemented in ObjectFields.cpp.
 
-// ------------------------------------------------------------------------------------------------
-// Simply find the special power module that is currently allowing plotting of positions to target.
-// ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
-// ?findSpecialPowerWithOverridableDestinationActive@Object@@QBEPAVSpecialPowerUpdateInterface@@W4SpecialPowerType@@@Z present-unmatched
-SpecialPowerUpdateInterface* Object::findSpecialPowerWithOverridableDestinationActive( SpecialPowerType type ) const
-{
-	for( BehaviorModule** u = m_behaviors; *u; ++u )
-	{
-		SpecialPowerUpdateInterface *spInterface = (*u)->getSpecialPowerUpdateInterface();
-		if( spInterface )
-		{
-			if( spInterface->doesSpecialPowerHaveOverridableDestinationActive() )
-			{
-				return spInterface;
-			}
-		}
-	}  // end for
-	return NULL;
-}
+// Retail Object::findSpecialPowerWithOverridableDestinationActive (0x001BF6F0) is implemented in ObjectFields.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // Simply find the special power module that is potentially allowed to plot positions to target.
@@ -7144,48 +6289,7 @@ void Object::goInvulnerable( UnsignedInt time )
 
 }
 
-// ------------------------------------------------------------------------------------------------
-/** Return the radar priority for this object type */
-// ------------------------------------------------------------------------------------------------
-// ?getRadarPriority@Object@@QBE?AW4RadarPriorityType@@XZ present-unmatched
-RadarPriorityType Object::getRadarPriority( void ) const 
-{
-	RadarPriorityType priority = RADAR_PRIORITY_INVALID;
-
-	// first, get the priority at the thing template level
-	priority = getTemplate()->getDefaultRadarPriority();
-
-	//
-	// there are some objects that we want to show up on the radar when they have
-	// certain properties ... here we will check for those properties unless the INI
-	// setting of "not on radar" has been manually entered which explicitly forbids an
-	// object from being on the radar ... by default objects get an "invalid" priority
-	// on the radar and this means that we are free to decide one here if we want
-	//
-	if( priority == RADAR_PRIORITY_INVALID )
-	{
-
-		// objects that are "garrisonable" show up on the radar
-		ContainModuleInterface *cmi = getContain();
-		if( cmi && cmi->isGarrisonable() )
-			priority = RADAR_PRIORITY_STRUCTURE;
-
-		// objects that are "capturable" show up on the radar
-		if( isKindOf( KINDOF_CAPTURABLE ) )
-			priority = RADAR_PRIORITY_STRUCTURE;
-
-
-	}  // end if
-
-	// Carbombs will show up as units regardless of their default priority
-	if ( testStatus( OBJECT_STATUS_IS_CARBOMB ) )
-		priority = RADAR_PRIORITY_UNIT;
-
-
-	// return the priority we're going to use
-	return priority;
-
-}  // end getRadarPriority
+// Retail Object::getRadarPriority (0x001CA4D0) is implemented in ObjectTemplateQueries.cpp.
 
 // ------------------------------------------------------------------------------------------------
 
