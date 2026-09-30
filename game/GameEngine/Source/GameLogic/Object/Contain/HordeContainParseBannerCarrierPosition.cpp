@@ -10,8 +10,8 @@
 // 'Pos' exception its own slot, which is what the guard-then-success-block
 // spelling below produces: the Coord2D lives only in the success block that
 // returns, and the 'Pos' throw sits after it.
-// Full body extent is 328 bytes: the former 327-byte generated claim omitted
-// the last byte of the final _CxxThrowException call displacement.
+// Retail's final _CxxThrowException call ends at +0x147 (327 bytes);
+// the following int3 byte is alignment padding, not part of the body.
 
 typedef float Real;
 
