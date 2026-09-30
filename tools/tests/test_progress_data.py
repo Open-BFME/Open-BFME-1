@@ -34,7 +34,7 @@ class StaticDataTests(unittest.TestCase):
         self.assertEqual(stats["bytes"], 16)
         self.assertEqual(stats["rows"], 2)
         line = progress.static_data_line(stats, 4096)
-        self.assertIn("16 bytes in 2 matched rows", line)
+        self.assertIn("16 bytes in 2 matched data items", line)
         self.assertIn("0.39% of .rdata/.data", line)
         self.assertIn("initial image values", line)
 

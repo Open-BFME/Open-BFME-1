@@ -612,7 +612,7 @@ def static_data_at(ref):
 def static_data_line(stats, denominator):
     coverage = (f" ({percent(stats['bytes'], denominator):.2f}% of .rdata/.data)"
                 if denominator and stats["sections"] <= {".rdata", ".data"} else "")
-    return (f"STATIC DATA    {stats['bytes']:,} bytes in {stats['rows']:,} matched rows{coverage}"
+    return (f"STATIC DATA    {stats['bytes']:,} bytes in {stats['rows']:,} matched data items{coverage}"
             "  <- initial image values; ledger-derived, separate from code")
 
 
