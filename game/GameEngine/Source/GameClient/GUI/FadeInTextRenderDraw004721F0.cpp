@@ -1,5 +1,3 @@
-// ?d_004721f0@@YAXXZ
-// partial score=0.699659 date=2026-09-28
 // cl: /O2 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 #include "unicode_string.h"
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->releaseBuffer(); }
@@ -25,10 +23,13 @@ public:
  virtual void size(int*,int*);
 };
 class Anim2D { public: void setCurrentFrame(unsigned short); };
-struct Template004721F0 { char field00[16]; unsigned short field10; };
+struct Template004721F0 { char field00[16]; unsigned short field10;
+ unsigned short getNumFrames() const { return field10; } };
 class Rva005BA9E0Anim2D { public:
  void draw(int,int,int,int);
  char field00[12]; Template004721F0* field0c; char field10[12]; float field1c;
+ const Template004721F0* getAnimTemplate() const { return field0c; }
+ void setAlpha(float a) { field1c = a; }
 };
 class TextEffect004721F0 { public:
  void draw(Text004721F0*, const Point004721F0*, unsigned);
@@ -37,7 +38,8 @@ class TextEffect004721F0 { public:
  char field20[8]; unsigned field28; char field2c[8];
  unsigned field34[3], field40[3]; int field4c, field50;
 };
-// RVA 004721F0: three timed text/animation phases; semantic owner unknown.
+// RVA 004721F0: three timed text/animation phases (EA evidence: FadeInTextRender::Render).
+// Both colour locals keep the dword alpha load and unsigned x87 conversion retail shows.
 void TextEffect004721F0::draw(Text004721F0* text, const Point004721F0* pos, unsigned frame) {
  int w, h;
  text->size(&w, &h);
@@ -58,10 +60,11 @@ void TextEffect004721F0::draw(Text004721F0* text, const Point004721F0* pos, unsi
    float progress=float(frame-start)/float(end-start);
    switch(i) {
    case 0: {
-    unsigned frames=field1c->field0c->field10;
+    unsigned frames=field1c->getAnimTemplate()->getNumFrames();
     if(frames) {
      ((Anim2D*)field1c)->setCurrentFrame(((frame-start)/4)%frames);
-     field1c->field1c=float(field18>>24)*(1.0f/255.0f);
+     unsigned color=field18;
+     field1c->setAlpha(float(color>>24)/255.0f);
      field1c->draw(x-width/2,y,width*2,field50);
      field1c->draw(x-width/2,y,width*2,field50);
     }
@@ -69,7 +72,8 @@ void TextEffect004721F0::draw(Text004721F0* text, const Point004721F0* pos, unsi
    }
    case 1: {
     unsigned alpha=(unsigned)(int)((1.0f<progress ? 1.0f:progress)*255.0f)<<24;
-    text->colors((field28&0xffffff)|alpha,alpha);
+    unsigned color=(field28&0xffffff)|alpha;
+    text->colors(color,alpha);
     text->draw(pos->x,pos->y,1,1);
     break;
    }
