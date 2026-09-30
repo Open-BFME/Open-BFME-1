@@ -1,7 +1,6 @@
-// ?rva008A9F70CodepointStringValue@@YAPAVRva008A9B00@@PAVAptValue@@@Z
-// partial score=0.34 date=2026-09-26
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// RVA 008A9F70: cdecl value pointer to codepoint string value.
+// ?rva008A9F70CodepointStringValue@@YAPAVRva008A9B00@@PAVAptValue@@@Z
+// RVA 008A9F70: decimal code point at an index of a UTF-8 Apt string, as a new string value.
 struct BfmeStringData3AF0 {
     unsigned short m_refCount, m_length, m_capacity, m_unknown06;
 };
@@ -79,8 +78,10 @@ Rva008A9B00 *rva008A9F70CodepointStringValue(AptValue *value) {
     AptValue *source = value;
     if (type != 1) source = value->m_indirect;
     const BfmeUtf8Cursor0089F810 *cursor = (const BfmeUtf8Cursor0089F810 *)&source->m_string;
-    if (index < 0) return g_fallback013379BC;
-    volatile const unsigned char *p = cursor->after(index);
+    if (index < 0) {
+        return g_fallback013379BC;
+    } else {
+    const unsigned char *p = cursor->after(index);
     if (!p) return g_fallback013379BC;
     unsigned char c = *p;
     int code;
@@ -90,12 +91,17 @@ Rva008A9B00 *rva008A9F70CodepointStringValue(AptValue *value) {
         code <<= 6;
         code |= p[1] & 0x3f;
     } else if ((c & 0xf0) == 0xe0) {
-        code = ((c & 0x0f) << 6) | (p[1] & 0x3f);
-        code = (p[2] & 0x3f) | (code << 6);
+        unsigned char b1 = p[1];
+        unsigned char b2 = p[2];
+        code = c & 0x0f;
+        code <<= 6;
+        code |= b1 & 0x3f;
+        code <<= 6;
+        code |= b2 & 0x3f;
     } else {
-        unsigned int b1 = p[1];
-        unsigned int b2 = p[2];
-        unsigned int b3 = p[3];
+        unsigned char b1 = p[1];
+        unsigned char b2 = p[2];
+        unsigned char b3 = p[3];
         code = c & 7;
         code <<= 6;
         code |= b1 & 0x3f;
@@ -115,12 +121,14 @@ Rva008A9B00 *rva008A9F70CodepointStringValue(AptValue *value) {
         if (obj->m_string.m_data != &g_bfmeDefaultString1284)
             ((BfmeStrVKK *)&obj->m_string)->bfmeTruncVKK(0);
     } else {
-        obj = new Rva008A9B00;
+        Rva008A9B00 *fresh = new Rva008A9B00;
+        obj = fresh;
     }
     ++result.m_data->m_refCount;
     BfmeStringData3AF0 *old = obj->m_string.m_data;
     if (--old->m_refCount == 0) g_bfmeStringPool1284->free(old);
     obj->m_string.m_data = result.m_data;
     return obj;
+    }
     }
 }
