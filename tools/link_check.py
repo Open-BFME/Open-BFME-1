@@ -32,12 +32,24 @@ also counts names referenced only from a COMDAT copy link.exe discards.
 
   python3 tools/link_check.py game/path/File.cpp [...]   # check files
   python3 tools/link_check.py --next [--limit 30]         # names that unlock the most bytes
+  python3 tools/link_check.py --publish                   # write targets/game/reverse/link_queue.csv
+  python3 tools/link_check.py next [--no-claim]           # serve + claim the top open queue row
+
+THE QUEUE. The daily census publishes --next's ranking as link_queue.csv (no
+index needed to read it), and `next` serves its best row that is not claimed,
+not landed since the census (a Claim-Lease trailer for its key) and whose
+files have not changed since the census. Names in a family (FAMILIES) have one
+owner each and are served only with `next --family F`.
 """
 import argparse
 import collections
+import csv
 import pickle
+import re
+import subprocess
 import sys
 import time
+import zlib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -247,10 +259,35 @@ def report(source, obj, result, index, now_bytes):
     return clean
 
 
-def next_names(index, limit):
-    """Blocker names whose fix alone would link the most bytes: files where
-    that name is the ONLY remaining blocker, bytes summed per name."""
-    gain, files = collections.Counter(), collections.Counter()
+QUEUE = ROOT / "targets" / "game" / "reverse" / "link_queue.csv"
+QUEUE_FIELDS = ["rank", "name", "kind", "family", "bytes_unlocked", "files", "hint", "census"]
+QUEUE_LIMIT = 500  # measured 2026-09-30: past ~500 names a fix unlocks under 100 B
+# One owner each (AGENTS.md): `next` serves these only with --family, which claims the family.
+# Matched on the name's own scope, not its parameter types. `plain` is a
+# function of a global or non-STL class scope, whatever its arguments.
+FAMILIES = (("stlport", re.compile(r"_STL@")),
+            ("strings", re.compile(r"^\?(\?[0-9A-Z_]|\w+@)(\?\$StringBase@|\w*(AsciiString|UnicodeString)@)")),
+            ("globals", re.compile(r"^\?The[A-Z]\w*@@3")))
+PLAIN = re.compile(r"^\?(\?[0-9A-Z_])?\w+@(\w+@)?@")
+HINTS = {
+    "unresolved": "nothing defines it: define the datum once (add_data_match.py), map the import to retail's "
+                  "IAT name, or fix the callee's name",
+    "duplicates": "two strong definitions: keep the retail-proven one, remove the definition nothing verified needs",
+    "losers": "a COMDAT copy that is not retail's body: fix or remove the wrong emitter",
+    "wrong_selected": "the link keeps a non-retail definition: fix or remove the wrong emitter ahead of retail's copy",
+    "addresses": "hard-coded image addresses: name them (tools/link_debt.py)",
+}
+
+
+def family_of(name):
+    return next((family for family, pattern in FAMILIES
+                 if pattern.search(name) and not (family == "stlport" and PLAIN.match(name))), "")
+
+
+def queue_rows(index):
+    """The one linking queue: every blocker name that is some unlinked file's
+    ONLY blocker, ranked by the bytes those files would link."""
+    gain, files = collections.Counter(), collections.defaultdict(list)
     for source, entry in index["blockers"].items():
         if entry["linked"]:
             continue
@@ -261,30 +298,142 @@ def next_names(index, limit):
         if len(names) == 1:
             name = names.pop()
             gain[name] += index["bytes"].get(source, 0)
-            files[name] += 1
+            files[name].append(source)
     kinds = {}
     for entry in index["blockers"].values():
         for kind in ("unresolved", "duplicates", "losers", "wrong_selected"):
             for name in entry.get(kind, ()):
                 kinds.setdefault(name, kind)
+    census = index["meta"].get("commit", "")
+    return [{"rank": rank, "name": name, "kind": kinds.get(name, "addresses"), "family": family_of(name),
+             "bytes_unlocked": count, "files": ";".join(sorted(files[name])),
+             "hint": HINTS[kinds.get(name, "addresses")], "census": census}
+            for rank, (name, count) in enumerate(sorted(gain.items(), key=lambda kv: (-kv[1], kv[0])), 1)]
+
+
+def next_names(index, limit):
+    """Print the head of the queue (queue_rows)."""
+    rows = queue_rows(index)
     print(f"blocker names that are some file's only blocker (census {index['meta'].get('date', '?')} at "
           f"{index['meta'].get('commit', '?')}):")
     print(f"  {'bytes':>9} {'files':>5}  kind        name")
-    for name, count in gain.most_common(limit):
-        print(f"  {count:>9,} {files[name]:>5}  {kinds.get(name, 'addresses'):<10}  {name}")
-    print(f"  {len(gain):,} names in all, {sum(gain.values()):,} bytes")
+    for row in rows[:limit]:
+        family = f"  [family {row['family']}]" if row["family"] else ""
+        print(f"  {row['bytes_unlocked']:>9,} {row['files'].count(';') + 1:>5}  {row['kind']:<10}  {row['name']}{family}")
+    print(f"  {len(rows):,} names in all, {sum(row['bytes_unlocked'] for row in rows):,} bytes")
+
+
+def publish(index, path=QUEUE, limit=QUEUE_LIMIT):
+    """Write the queue's top `limit` rows as the tracked CSV every host serves from."""
+    rows = queue_rows(index)[:limit]
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, QUEUE_FIELDS, lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(rows)
+    print(f"link_check: {len(rows)} queue rows, {sum(r['bytes_unlocked'] for r in rows):,} bytes, "
+          f"census {index['meta'].get('commit', '?')} -> {path}")
+
+
+def claim_key(name):
+    """The claims.py key for a queue name: refs are keyed by a 32-bit number,
+    and 0xF0000000 and up is far past any image RVA, so a name never shares a
+    ref with a body."""
+    return 0xF0000000 | (zlib.crc32(name.encode("utf-8")) & 0x0FFFFFFF)
+
+
+def _git(*args):
+    return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True).stdout
+
+
+def serve(argv):
+    """`link_check.py next`: claim and print the best open queue row."""
+    import claims
+    ap = argparse.ArgumentParser(prog="link_check.py next", description=serve.__doc__)
+    ap.add_argument("--family", choices=[family for family, _ in FAMILIES],
+                    help="family owner: claim the family and list its open rows")
+    ap.add_argument("--no-claim", action="store_true", help="show the pick without claiming it (dry run)")
+    ap.add_argument("--queue", default=str(QUEUE))
+    args = ap.parse_args(argv)
+    with open(args.queue, newline="", encoding="utf-8") as handle:
+        rows = list(csv.DictReader(handle))
+    if not rows:
+        print("link_check next: the queue is empty")
+        return 1
+    census = rows[0]["census"]
+    tip = claims._fetch_master() or "HEAD"
+    changed = set(_git("diff", "--name-only", census, tip).split())
+    landed = {int(key, 16) for key, _ in claims.LEASE_TRAILER.findall(
+        _git("log", "--format=%B", "--grep=^Claim-Lease:", f"{census}..{tip}"))}
+    held = claims.active()
+    who = claims.owner()
+    if args.family:
+        key = claim_key(f"family:{args.family}")
+        holder = held.get(key, {}).get("owner", who)
+        if holder != who:
+            print(f"link_check next: family {args.family} is owned by {holder}; leave its names alone")
+            return 1
+        if not args.no_claim:
+            got = claims.claim([key], note=f"link_queue family:{args.family}")
+            if not got.claimed:
+                print(f"link_check next: could not claim family {args.family}")
+                return 1
+            print(f"you own family {args.family} (claim 0x{key:08X}, renew by rerunning within 4 h)")
+    skipped = collections.Counter()
+    shown = 0
+    for row in rows:
+        key, files = claim_key(row["name"]), row["files"].split(";")
+        if row["family"] != (args.family or ""):
+            skipped[f"family {row['family']}" if row["family"] else "not in family"] += 1
+        elif key in landed:
+            skipped["landed since the census"] += 1
+        elif changed.intersection(files):
+            skipped["file changed since the census"] += 1
+        elif not args.family and key in held:
+            skipped["claimed"] += 1
+        else:
+            if args.family:
+                print(f"#{row['rank']} {int(row['bytes_unlocked']):,} B {row['kind']} {row['name']}")
+                shown += 1
+                continue
+            lease = ""
+            if not args.no_claim:
+                got = claims.claim([key], note=f"link_queue {row['name'][:80]}")
+                if not got.claimed:
+                    skipped["claimed"] += 1
+                    continue
+                lease = got.leases[key]
+            print(f"link queue #{row['rank']} (census {census}): {row['name']}\n"
+                  f"  {row['kind']}; unlocks {int(row['bytes_unlocked']):,} B in {len(files)} file(s)\n"
+                  f"  fix: {row['hint']}\n  files: {' '.join(files[:8])}{' ...' if len(files) > 8 else ''}")
+            if lease:
+                print(f"  claimed 0x{key:08X}. Commit-message trailer:  Claim-Lease: 0x{key:08X}={lease}\n"
+                      f"  after the push: python3 tools/claims.py release --landed <sha>")
+            print(f"  ({', '.join(f'{n} {why}' for why, n in skipped.items()) or 'nothing'} skipped)")
+            return 0
+    if shown:
+        return 0
+    print(f"link_check next: no open row in {len(rows)} ({dict(skipped)}); the next census refreshes the queue")
+    return 1
 
 
 def main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    if argv[:1] == ["next"]:
+        return serve(argv[1:])
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("paths", nargs="*", help="sources (compiled when stale) or objects")
+    ap.add_argument("paths", nargs="*", help="sources (compiled when stale) or objects; or `next [-h]`")
     ap.add_argument("--next", action="store_true", help="rank blocker names by the bytes their fix alone unlocks")
     ap.add_argument("--limit", type=int, default=30)
+    ap.add_argument("--publish", metavar="CSV", nargs="?", const=str(QUEUE),
+                    help=f"write the queue's top {QUEUE_LIMIT} rows (default {QUEUE.relative_to(ROOT).as_posix()})")
     args = ap.parse_args(argv)
-    if not args.paths and not args.next:
-        ap.error("give sources or --next")
+    if not args.paths and not args.next and not args.publish:
+        ap.error("give sources, --next, --publish or `next`")
     started = time.time()
     index = load_index()
+    if args.publish:
+        publish(index, Path(args.publish))
     if args.next:
         next_names(index, args.limit)
     if not args.paths:

@@ -88,3 +88,34 @@ def test_a_missing_object_is_never_an_empty_clean_one(tmp_path):
         C.check_object(missing, ix, None)
     with pytest.raises(SystemExit):
         C.resolve(str(missing), ix)
+
+
+def test_families_follow_the_name_scope_not_its_arguments():
+    assert C.family_of("?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z") == "stlport"
+    assert C.family_of("??1facet@locale@_STL@@MAE@XZ") == "stlport"
+    assert C.family_of("?bfmeBitVectorEqual@@YA_NABV?$vector@_NV?$allocator@_N@_STL@@@_STL@@0@Z") == ""
+    assert C.family_of("??1AsciiString@@QAE@XZ") == "strings"
+    assert C.family_of("?compareNoCase@?$StringBase@D@@QBEHABV1@@Z") == "strings"
+    assert C.family_of("?getPingValue@GameSpyInfo@@UAEHABVAsciiString@@@Z") == ""
+    assert C.family_of("?TheScriptEngine@@3PAVScriptEngine@@A") == "globals"
+    assert C.claim_key("x") >= 0xF0000000
+
+
+def test_publish_and_serve_skip_changed_landed_and_family_rows(tmp_path, monkeypatch, capsys):
+    import claims
+    blockers = {name + ".cpp": {"object": "a.obj", "linked": False, "unresolved": [name], "duplicates": [],
+                                "losers": [], "addresses": 0}
+                for name in ("changed", "landed", "open", "??1AsciiString@@QAE@XZ")}
+    sizes = {"changed.cpp": 400, "landed.cpp": 300, "??1AsciiString@@QAE@XZ.cpp": 250, "open.cpp": 100}
+    queue = tmp_path / "q.csv"
+    C.publish(index(blockers=blockers, sizes=sizes), queue)
+    monkeypatch.setattr(claims, "_fetch_master", lambda: "tip")
+    monkeypatch.setattr(C, "_git", lambda *a: "changed.cpp\n" if a[0] == "diff"
+                        else f"Claim-Lease: 0x{C.claim_key('landed'):08X}=abcdef12\n")
+    monkeypatch.setattr(claims, "owner", lambda: "me")
+    monkeypatch.setattr(claims, "active", lambda: {})
+    assert C.main(["next", "--no-claim", "--queue", str(queue)]) == 0
+    out = capsys.readouterr().out
+    assert "link queue #4 (census c): open" in out and "1 family strings" in out
+    assert C.main(["next", "--no-claim", "--family", "strings", "--queue", str(queue)]) == 0
+    assert "??1AsciiString@@QAE@XZ" in capsys.readouterr().out
