@@ -49,7 +49,15 @@ Finding = collections.namedtuple("Finding", "name rva size offset symbol source"
 
 def _read(row, size):
     obj = B.require_row_object(row)
-    return B.read_object_symbol_bytes(obj, B.ledger_object_symbol(row), size)
+    object_symbol = B.ledger_object_symbol(row)
+    if B.is_funclet_row(row, object_symbol):
+        # Compiler-local $L ordinals can change on any edit to the TU. Use the
+        # same parent-scoped, retail-checked reader as the byte verifier, so a
+        # stale pin neither loses coverage nor scans a neighbouring funclet.
+        target = _retail(int(row["target_rva"], 16), size)
+        body, relocs, _ = B.read_funclet(row, object_symbol, obj, target)
+        return body, relocs
+    return B.read_object_symbol_bytes(obj, object_symbol, size)
 
 
 def _retail(rva, size):
