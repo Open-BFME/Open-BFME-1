@@ -3452,7 +3452,6 @@ name,address,notes
 ??0PropagandaTowerBehaviorModuleData@@QAE@XZ,0x00010B2C
 ??0Q1ReceiverTreeStorage@@QAE@ABV?$set@UGen_t_009ee8e0_k4@@U?$less@UGen_t_009ee8e0_k4@@@_STL@@V?$allocator@UGen_t_009ee8e0_k4@@@3@@_STL@@@Z,0x009EE8E0,ABI view of canonical 12-byte set copy constructor called at 0x009F0D40+0x26; same stack reference and receiver; existing generated template body proves header-count-comparator layout
 ??0QuadDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x0002218D,QuadDrawModuleTemplate clone copy-ctor pin
-??0QueueProductionExitUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002D40C,pinharvest x1 (thunk)
 ??0QueuedDownload@@QAE@ABV0@@Z,0x000451D3,"exact retail rel32 target of the byte-verified caller; replaces a harvested pin at 0x0001005F, which is the pair<const AsciiString,ArchivedFileInfo> constructor's body"
 ??0QuickMatchPreferences@@QAE@XZ,0x0002E802
 ??0QuitMenuHolder@@QAE@UFunctorBinding@@@Z,0x00015870,0x0056A2F0 assigned callback-holder constructor ILT
@@ -3478,7 +3477,6 @@ name,address,notes
 ??0RankInfo@@QAE@XZ,0x00026FDA,harvested from friend_parseRankDefinition (thunk)
 ??0RayCollisionTestClass@@QAE@ABV0@ABVMatrix3D@@@Z,0x0092C8B0,additive: retail call target of the red row ?Cast_Ray@MeshClass@@UAE_NAAVRayCollisionTestClass@@@Z
 ??0RayEffectFXNugget@@QAE@XZ,0x00428BC0,constructor run on the 0xD0-byte allocation in RayEffectFXNugget::parse at 0x0042BD10; the INI keyword table at 0x00CF2130 names that parse callback RayEffect
-??0RebuildHoleBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002D40C,pinharvest x1 (thunk)
 ??0RebuildHoleBehaviorModuleData@@QAE@XZ,0x000261CA,ModuleFactory ILT thunk to 0x0020D580; the byte-verified retail caller encodes it
 ??0RebuildHoleExposeDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
 ??0RebuildHoleExposeDieModuleData@@QAE@XZ,0x0002AE6E,ModuleFactory ILT thunk to 0x0036CDD0; the byte-verified retail caller encodes it

@@ -277,6 +277,8 @@ extern void __cdecl d_008c64c0();
 extern void __cdecl d_008c66a0();
 class AptBoolean;
 extern AptBoolean *__cdecl rva008C6800(void *, int);
+class AptValue;
+extern AptValue *__cdecl rva008C4F90(void *, int);
 extern void __cdecl d_008c6ad0();
 Rva008A9B00 *rva008C6840StringTransform();
 Rva008A9B00 *rva008C6990StringTransform(void *unknown, int count);
@@ -423,7 +425,7 @@ void Rva0089BBF0InitGlobals()
 	value->m_bits.m_bits16to27 = 100;
 	rva0089BBF0ResetBits6to13(g_Va013379B0);
 
-	value = new BfmeA1029(0x00CC4F90);
+	value = new BfmeA1029(reinterpret_cast<int>(&rva008C4F90));
 	g_Va01337A2C = value;
 	value->m_bits.m_bits16to27 = 100;
 	rva0089BBF0ResetBits6to13(g_Va01337A2C);

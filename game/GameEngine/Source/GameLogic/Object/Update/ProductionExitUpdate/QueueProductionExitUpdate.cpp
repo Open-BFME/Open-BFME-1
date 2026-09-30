@@ -45,8 +45,8 @@
 #include "GameLogic/Module/QueueProductionExitUpdate.h"
 
 //-------------------------------------------------------------------------------------------------
-// ??0QueueProductionExitUpdate@@ is implemented by the exact retail thunk in
-// QueueProductionExitUpdateCtorThunk.cpp.
+// Retail module registration places this constructor at RVA 0x002D0620.
+// The former alias at 0x001F8B80 belongs to DynamicPortalBehaviour.
 
 //-------------------------------------------------------------------------------------------------
 // ??1QueueProductionExitUpdate@@MAE@XZ present-unmatched
