@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "3ec575ce8e77d07427741bfa12595f614e2815fba2bc4b15c40920e62c191882",
+  "symbol": "?erase@Rva0094CB40@@QAEXABI@Z",
+  "score_kind": "measured",
+  "score": 0.951,
+  "source": "// ?erase@Rva0094CB40@@QAEXABI@Z\n// partial score=0.951 date=2026-09-30\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\nnamespace _STL {\nstruct _Rb_tree_node_base { int color; _Rb_tree_node_base *parent,*left,*right; };\ntemplate<class T> struct _Rb_global { static _Rb_tree_node_base *_Rebalance_for_erase(_Rb_tree_node_base *,_Rb_tree_node_base *&,_Rb_tree_node_base *&,_Rb_tree_node_base *&); };\ntemplate<bool T,int N> class __node_alloc { public: static void _M_deallocate(void *,unsigned int); };\n}\nstruct Rva0094BFD0Pair { int m_0[5]; ~Rva0094BFD0Pair(); };\nstruct Rva0094CB40Node : _STL::_Rb_tree_node_base { Rva0094BFD0Pair payload; };\nstruct Rva0094C5E0Iterator { Rva0094CB40Node *node; Rva0094C5E0Iterator() {} };\nstruct Rva0094C5E0Tree { Rva0094CB40Node *head; unsigned count; Rva0094C5E0Iterator find(const unsigned&); };\nclass Rva0094CB40 {\n unsigned m_0[2]; Rva0094C5E0Tree m_tree; unsigned m_10; Rva0094CB40Node *m_14; unsigned m_18; bool m_1c;\npublic: void erase(const unsigned &key);\n};\nvoid Rva0094CB40::erase(const unsigned &key) {\n Rva0094C5E0Tree *tree=&m_tree;\n Rva0094C5E0Iterator it = tree->find(key);\n if(it.node != tree->head) {\n  Rva0094CB40Node *node=static_cast<Rva0094CB40Node*>(_STL::_Rb_global<bool>::_Rebalance_for_erase(it.node,tree->head->parent,tree->head->left,tree->head->right));\n  node->payload.~Rva0094BFD0Pair();\n  if(node) _STL::__node_alloc<false,0>::_M_deallocate(node,0x24);\n  --tree->count;\n  m_14=static_cast<Rva0094CB40Node*>(tree->head->left);\n  m_1c=true;\n }\n}\n"
+}
