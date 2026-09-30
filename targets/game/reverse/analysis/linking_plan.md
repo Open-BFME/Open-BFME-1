@@ -63,7 +63,7 @@ G. **Swarm infrastructure**: fail-closed claims with unique worker ids, heartbea
    Status 2026-09-29: fail-closed claims + per-worker owner + fencing tokens + heartbeat (89cbfe7263);
    release on origin/master landing (07e7fb1df0); host/launched-model receipts, unauthenticated
    (5e7b12a8a0); Verifier-Change trailer + shrink-only baselines (b9eaa9c709); landing service
-   designed and prototyped in tools/landing_service.py (c67d8ce1a0), not yet in use.
+   designed and prototyped in tools/landing_service.py (b0926cee30), not yet in use.
 H. **Test hosts**: Linux workers that fleet_cgroup accepts; a separate boot host (windowed, timeout, logs, crash
    capture). Nothing launches the game on the owner's desktop.
 
