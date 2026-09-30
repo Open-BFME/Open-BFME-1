@@ -53,6 +53,7 @@ class Gen_006616A0
 {
 public:
 	void bfmeAssign(const short *first, const short *last, void *tag);
+	void Rva00661730(const short *first, const short *last);
 
 private:
 	short *m_bfmeStart;					// +0x00
@@ -119,4 +120,12 @@ void Gen_006616A0::bfmeAssign(const short *first, const short *last, void *tag)
 
 	m_bfmeFinish = cursor;
 	*cursor = 0;
+}
+
+// Retail 0x00661730 forwards a pointer range and the unused iterator-tag
+// address to the same thiscall range initializer at ILT 0x00042BB8.
+// ECX is the string owner, not a third stdcall argument.
+void Gen_006616A0::Rva00661730(const short *first, const short *last)
+{
+	bfmeAssign(first, last, &last);
 }
