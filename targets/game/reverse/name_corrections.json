@@ -10618,5 +10618,15 @@
   "after_sha256": "ffd402583342a176b747f22f9061d3c6aae8dc68a79925c20a348b375b7bc30e",
   "evidence": "targets/game/reverse/functions.csv",
   "reason": "targets/game/reverse/functions.csv names the body at 0x0016B010 ?rva0016B010@@YAEPAVObject@@@Z; the old spelling permitted0016B010 matches no ledger row or pin, so the source uses the ledger name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x007f63f0.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/Rva007F7980BrowserRva007F63F0.cpp",
+  "old_name": "handleTicket",
+  "new_name": "rva007f63f0",
+  "before_sha256": "529044414221ddf445815839ae6f24a7d3045f34c4714193ac37deb0e4c5d149",
+  "after_sha256": "d2a7ff084bc0d6055950b684be62c8ea5acda97b48353f783fd841a01c63b244",
+  "evidence": "targets/game/reverse/identity_evidence/0x007f63f0-browser-owner.md",
+  "reason": "Rva007F7000 calls the body as a member of Rva007F7980Browser, which refutes the banked Rva007F63F0Owner class. The callback gives no behavior name, so the new method keeps the address."
  }
 ]

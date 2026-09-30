@@ -8,11 +8,11 @@ class Rva007F7980Browser {
 public:
     void onGame(Rva007E8810Message *);
     void onPlayer(Rva007E8810Message *);
+    void rva007f63f0(void *message);
 };
 class BfmeDictESI;
 class BfmeHostESI { public: void bfmeApplyESI(BfmeDictESI *); };
 class BfmeThingVJK { public: void bfmeGoVJK(int); };
-extern void d_007f63f0();
 
 void Rva007F6FE0(Rva007E8810Message *message, Rva007F7980Browser *browser)
 {
@@ -24,10 +24,7 @@ void Rva007F6FF0(Rva007E8810Message *message, Rva007F7980Browser *browser)
 }
 void Rva007F7000(void *message, Rva007F7980Browser *browser)
 {
-    typedef void (Rva007F7980Browser::*Callback)(void *);
-    union { void (*function)(); Callback member; } callback;
-    callback.function = d_007f63f0;
-    (browser->*callback.member)(message);
+    browser->rva007f63f0(message);
 }
 void Rva007F7010(BfmeDictESI *message, BfmeHostESI *browser)
 {
