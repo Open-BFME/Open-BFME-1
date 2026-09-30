@@ -1,5 +1,5 @@
 // ?d_001676a0@@YAXXZ
-// partial score=0.26 date=2026-09-23
+// partial score=0.263 date=2026-09-30
 // cl: /O2 /Ob2 /DNDEBUG /MD /EHs-c-
 
 struct Rva001676A0Coord3D
@@ -218,8 +218,8 @@ void Rva001676A0Owner::processRepair(void)
 
 	bridgePos.x = bridgeObj->m_position.x;
 	bridgePos.y = bridgeObj->m_position.y;
-	bridgePos.z = bridgeObj->m_position.z;
 	bridgeState = bridgeObj->getBodyModule()->getDamageState();
+	bridgePos.z = bridgeObj->m_position.z;
 	Rva001676A0Object *dozer = 0;
 	if (m_repairDozer == 0) {
 		m_dozerIsRepairing = false;
