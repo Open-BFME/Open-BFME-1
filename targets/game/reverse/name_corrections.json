@@ -10608,5 +10608,15 @@
   "after_sha256": "8de7057103a6db2e197364e0cef9c545b7393718e97b9ce7ed803e27147fd268",
   "evidence": "targets/game/reverse/symbols.csv",
   "reason": "targets/game/reverse/symbols.csv pins ?rva001A3D30@TerrainLogic@@QAE_NABVVector3@@PAV2@@Z at 0x0002CF4D, which spells the name rva001A3D30; the source uses that pinned spelling instead of sample."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00174e10.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIAttackApproachTargetState_onEnter.cpp",
+  "old_name": "permitted0016B010",
+  "new_name": "rva0016B010",
+  "before_sha256": "7d12d385317715827570f42e3e549dd4a087ce00648bae77468040124c4c1cd2",
+  "after_sha256": "ffd402583342a176b747f22f9061d3c6aae8dc68a79925c20a348b375b7bc30e",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "targets/game/reverse/functions.csv names the body at 0x0016B010 ?rva0016B010@@YAEPAVObject@@@Z; the old spelling permitted0016B010 matches no ledger row or pin, so the source uses the ledger name."
  }
 ]
