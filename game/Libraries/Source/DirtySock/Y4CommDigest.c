@@ -405,7 +405,8 @@ void Rva00810120( struct Rva00810060Context *context )
  * dword from this address and indexes through it, so the table can be
  * retargeted at run time.  It points into the same short run of writable data
  * that holds the module's other configurable bytes. */
-extern char *g_Rva012C4998HexDigits;
+static char g_Rva012C4998Digits[17] = "0123456789abcdef";
+char *g_Rva012C4998HexDigits = g_Rva012C4998Digits;
 
 /* 0x00810FF0 FINISHES THE DIGEST AND FORMATS IT, padding the block, appending
  * the length, running the final transform and writing the result out.

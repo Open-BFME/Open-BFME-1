@@ -3,7 +3,7 @@
 
 typedef float Real;
 
-extern const Real BfmeZeroRange;
+extern const Real BfmeZeroRange = 0.0f;
 
 struct Rva005BDBC0Point
 {
