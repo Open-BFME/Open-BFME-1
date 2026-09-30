@@ -49,7 +49,42 @@ extern "C" __declspec(dllimport) long __stdcall D3DXAssembleShader(const char *,
 #include "../../../../../Libraries/Source/WWVegas/WW3D2/texture.h"
 #include "W3DDevice/GameClient/W3DWater.h"
 #include "W3DDevice/GameClient/heightmap.h"
-#include "W3DDevice/GameClient/W3DShroud.h"
+// BFME's W3DShroud hands out a counted TextureHandle (0x006D2630), not the upstream raw pointer.
+class TextureHandle
+{
+public:
+	TextureHandle(void) : m_ptr(0) { }
+	TextureHandle(const TextureHandle &that) : m_ptr(that.m_ptr)
+	{
+		if (m_ptr != 0)
+			m_ptr->Add_Ref();
+	}
+	~TextureHandle(void)
+	{
+		if (m_ptr != 0)
+			m_ptr->Release_Ref();
+	}
+	TextureHandle &operator=(const TextureHandle &that)
+	{
+		if (that.m_ptr != 0)
+			that.m_ptr->Add_Ref();
+		if (m_ptr != 0)
+			m_ptr->Release_Ref();
+		m_ptr = that.m_ptr;
+		return *this;
+	}
+
+	TextureBaseClass *get(void) const { return m_ptr; }
+	operator TextureClass *(void) const { return (TextureClass *)m_ptr; }
+
+	TextureBaseClass *m_ptr;
+};
+
+class W3DShroud
+{
+public:
+	TextureHandle getShroudTexture(void);
+};
 #include "W3DDevice/GameClient/W3DWaterTracks.h"
 #include "W3DDevice/GameClient/W3DAssetManager.h"
 #include "assetmgr.h"
@@ -1528,9 +1563,108 @@ Bool WaterRenderObjClass::getClippedWaterPlane(CameraClass *cam, AABoxClass *box
 /** Draws the water surface using a custom D3D vertex/pixel shader and a
 	* reflection texture.  Only tested to work on GeForce3. */
 //-------------------------------------------------------------------------------------------------
-// ?drawSea@WaterRenderObjClass@@IAEXAAVRenderInfoClass@@@Z present-unmatched
+void BoxSetTexture(unsigned stage, TextureBaseClass *&texture);
+
+// Device view in the D3D9 vtable order retail dispatches on; unused slots stay unnamed.
+#define SEA_SLOT(n) virtual void __stdcall slot##n() = 0;
+struct WaterSeaDevice
+{
+	SEA_SLOT(00) SEA_SLOT(01) SEA_SLOT(02) SEA_SLOT(03) SEA_SLOT(04) SEA_SLOT(05) SEA_SLOT(06) SEA_SLOT(07)
+	SEA_SLOT(08) SEA_SLOT(09) SEA_SLOT(10) SEA_SLOT(11) SEA_SLOT(12) SEA_SLOT(13) SEA_SLOT(14) SEA_SLOT(15)
+	SEA_SLOT(16) SEA_SLOT(17) SEA_SLOT(18) SEA_SLOT(19) SEA_SLOT(20) SEA_SLOT(21) SEA_SLOT(22) SEA_SLOT(23)
+	SEA_SLOT(24) SEA_SLOT(25) SEA_SLOT(26) SEA_SLOT(27) SEA_SLOT(28) SEA_SLOT(29) SEA_SLOT(30) SEA_SLOT(31)
+	SEA_SLOT(32) SEA_SLOT(33) SEA_SLOT(34) SEA_SLOT(35) SEA_SLOT(36) SEA_SLOT(37) SEA_SLOT(38) SEA_SLOT(39)
+	SEA_SLOT(40) SEA_SLOT(41) SEA_SLOT(42) SEA_SLOT(43) SEA_SLOT(44) SEA_SLOT(45) SEA_SLOT(46) SEA_SLOT(47)
+	SEA_SLOT(48) SEA_SLOT(49) SEA_SLOT(50) SEA_SLOT(51) SEA_SLOT(52) SEA_SLOT(53) SEA_SLOT(54) SEA_SLOT(55)
+	SEA_SLOT(56)
+	virtual HRESULT __stdcall SetRenderState(DWORD state, DWORD value) = 0;			// 0xe4
+	SEA_SLOT(58) SEA_SLOT(59) SEA_SLOT(60) SEA_SLOT(61) SEA_SLOT(62) SEA_SLOT(63) SEA_SLOT(64)
+	virtual HRESULT __stdcall SetTexture(DWORD stage, void *texture) = 0;				// 0x104
+	SEA_SLOT(66)
+	virtual HRESULT __stdcall SetTextureStageState(DWORD stage, DWORD type, DWORD value) = 0;	// 0x10c
+	SEA_SLOT(68)
+	virtual HRESULT __stdcall SetSamplerState(DWORD sampler, DWORD type, DWORD value) = 0;	// 0x114
+	SEA_SLOT(70) SEA_SLOT(71) SEA_SLOT(72) SEA_SLOT(73) SEA_SLOT(74) SEA_SLOT(75) SEA_SLOT(76) SEA_SLOT(77)
+	SEA_SLOT(78) SEA_SLOT(79) SEA_SLOT(80) SEA_SLOT(81)
+	virtual HRESULT __stdcall DrawIndexedPrimitive(DWORD type, int baseVertex, UINT minIndex,
+		UINT numVertices, UINT startIndex, UINT primitiveCount) = 0;						// 0x148
+	SEA_SLOT(83) SEA_SLOT(84) SEA_SLOT(85) SEA_SLOT(86)
+	virtual HRESULT __stdcall SetVertexDeclaration(DWORD declaration) = 0;				// 0x15c
+	SEA_SLOT(88)
+	virtual HRESULT __stdcall SetFVF(DWORD fvf) = 0;									// 0x164
+	SEA_SLOT(90) SEA_SLOT(91)
+	virtual HRESULT __stdcall SetVertexShader(DWORD shader) = 0;						// 0x170
+	SEA_SLOT(93)
+	virtual HRESULT __stdcall SetVertexShaderConstantF(UINT reg, const void *data, UINT count) = 0;	// 0x178
+	SEA_SLOT(95) SEA_SLOT(96) SEA_SLOT(97) SEA_SLOT(98) SEA_SLOT(99)
+	virtual HRESULT __stdcall SetStreamSource(UINT stream, void *buffer, UINT offset, UINT stride) = 0;	// 0x190
+	SEA_SLOT(101) SEA_SLOT(102) SEA_SLOT(103)
+	virtual HRESULT __stdcall SetIndices(void *buffer) = 0;								// 0x1a0
+	SEA_SLOT(105) SEA_SLOT(106)
+	virtual HRESULT __stdcall SetPixelShader(DWORD shader) = 0;						// 0x1ac
+
+	// Stands in for the real D3DXVECTOR4's conversion to const float *, which the shim lacks.
+	HRESULT SetVertexShaderConstantF(UINT reg, const D3DXVECTOR4 &data, UINT count)
+	{
+		return SetVertexShaderConstantF(reg, (const void *)&data, count);
+	}
+};
+#undef SEA_SLOT
+
+// Retail keeps the sea buffers and shaders at these offsets; BFME drops the upstream m_pDev member.
+struct BFMEWaterSeaView
+{
+	char BeforeOffset124[0x124];
+	LPDIRECT3DVERTEXBUFFER8 m_vertexBuffer;			// +0x124
+	LPDIRECT3DINDEXBUFFER8 m_indexBuffer;			// +0x128
+	DWORD m_12c;
+	DWORD m_130;									// pixel shader
+	DWORD m_134;									// vertex shader
+	DWORD m_138;									// vertex declaration
+};
+
+// BaseHeightMapRenderObjClass keeps its W3DShroud at +0x30B8 (BaseHeightMapConstructor.cpp).
+struct BFMEWaterTerrainShroudView
+{
+	W3DShroud *getShroud(void) { return m_shroud; }
+	char BeforeOffset30B8[0x30B8];
+	W3DShroud *m_shroud;
+};
+
+// W3DShaderManager's texture slots (retail 0x012F9D28).
+extern TextureHandle g_bfmeTableDU[];
+
+static __forceinline void BfmeSetTexture(unsigned stage)
+{
+	TextureHandle texture;
+	BoxSetTexture(stage, texture.m_ptr);
+}
+
+static __forceinline void BfmeSetTextureCache(Int stage, const TextureHandle &texture)
+{
+	g_bfmeTableDU[stage] = texture;
+}
+
+// BFME's _Set_DX8_Transform no longer mirrors the matrix into DX8Transforms.
+class WaterSeaTransform : public DX8Wrapper
+{
+public:
+	static __forceinline void Set(D3DTRANSFORMSTATETYPE transform, const Matrix4x4 &m)
+	{
+		DX8_RECORD_MATRIX_CHANGE();
+		DX8CALL(SetTransform(transform,(D3DMATRIX*)&m));
+	}
+	static __forceinline void Set_Vertex_Declaration(DWORD declaration)
+	{
+		((WaterSeaDevice *)_Get_D3D_Device8())->SetVertexDeclaration(declaration);
+		number_of_DX8_calls++;
+	}
+};
+
+// ?drawSea@WaterRenderObjClass@@IAEXAAVRenderInfoClass@@@Z
 void WaterRenderObjClass::drawSea(RenderInfoClass & rinfo)
 {
+	BFMEWaterSeaView *sea = (BFMEWaterSeaView *)this;
 	AABoxClass	seaBox;
 
 	if (!getClippedWaterPlane(&rinfo.Camera,&seaBox))
@@ -1547,16 +1681,10 @@ void WaterRenderObjClass::drawSea(RenderInfoClass & rinfo)
 
 	Matrix3D tm(Transform);
 
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWaterTracks.cpp
-// ?Set_Transform@DX8Wrapper@@SAXW4_D3DTRANSFORMSTATETYPE@@ABVMatrix3D@@@Z present-unmatched
 	DX8Wrapper::Set_Transform(D3DTS_WORLD,tm);	//position the water surface
-// ?Set_Texture@DX8Wrapper@@SAXIPAVTextureBaseClass@@@Z present-unmatched
-	DX8Wrapper::Set_Texture(0,NULL);	//we'll be setting our own textures, so reset W3D
-// ?Set_Texture@DX8Wrapper@@SAXIPAVTextureBaseClass@@@Z present-unmatched
-	DX8Wrapper::Set_Texture(1,NULL);	//we'll be setting our own textures, so reset W3D
+	BfmeSetTexture(0);
+	BfmeSetTexture(1);
 
-
-// ?Apply_Render_State_Changes@DX8Wrapper@@ present-unmatched
 	DX8Wrapper::Apply_Render_State_Changes();	//force update of view and projection matrices
 
 	Vector3 camTran;
@@ -1566,58 +1694,48 @@ void WaterRenderObjClass::drawSea(RenderInfoClass & rinfo)
 	DX8Wrapper::_Get_DX8_Transform(D3DTS_VIEW, *(Matrix4x4*)&matView);
 	DX8Wrapper::_Get_DX8_Transform(D3DTS_PROJECTION, *(Matrix4x4*)&matProj);
 
+	WaterSeaDevice *dev = (WaterSeaDevice *)DX8Wrapper::_Get_D3D_Device8();
+
 	//default setup from Kenny's demo
-	m_pDev->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
-	m_pDev->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
-	m_pDev->SetTextureStageState( 0, D3DTSS_COLOROP,   D3DTOP_MODULATE);
-	m_pDev->SetTextureStageState( 0, D3DTSS_ALPHAOP,   D3DTOP_DISABLE );
-	m_pDev->SetTextureStageState( 0, D3DTSS_TEXCOORDINDEX, 0 );
+	dev->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
+	dev->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
+	dev->SetTextureStageState( 0, D3DTSS_COLOROP,   D3DTOP_MODULATE);
+	dev->SetTextureStageState( 0, D3DTSS_ALPHAOP,   D3DTOP_DISABLE );
+	dev->SetTextureStageState( 0, D3DTSS_TEXCOORDINDEX, 0 );
 
-	m_pDev->SetTextureStageState( 1, D3DTSS_COLORARG1, D3DTA_TEXTURE );
-	m_pDev->SetTextureStageState( 1, D3DTSS_COLORARG2, D3DTA_CURRENT );
-	m_pDev->SetTextureStageState( 1, D3DTSS_COLOROP,   D3DTOP_MODULATE);
-	m_pDev->SetTextureStageState( 1, D3DTSS_ALPHAOP,   D3DTOP_DISABLE );
-	m_pDev->SetTextureStageState( 1, D3DTSS_TEXCOORDINDEX, 1 );
+	dev->SetTextureStageState( 1, D3DTSS_COLORARG1, D3DTA_TEXTURE );
+	dev->SetTextureStageState( 1, D3DTSS_COLORARG2, D3DTA_CURRENT );
+	dev->SetTextureStageState( 1, D3DTSS_COLOROP,   D3DTOP_MODULATE);
+	dev->SetTextureStageState( 1, D3DTSS_ALPHAOP,   D3DTOP_DISABLE );
+	dev->SetTextureStageState( 1, D3DTSS_TEXCOORDINDEX, 1 );
 
-	m_pDev->SetTextureStageState( 2, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
-	m_pDev->SetTextureStageState( 2, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_PASSTHRU|2);
+	dev->SetTextureStageState( 2, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
+	dev->SetTextureStageState( 2, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_PASSTHRU|2);
 
-	m_pDev->SetTextureStageState( 3, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
-	m_pDev->SetTextureStageState( 3, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_PASSTHRU|3);
+	dev->SetTextureStageState( 3, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
+	dev->SetTextureStageState( 3, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_PASSTHRU|3);
 
-//	m_pDev->SetTextureStageState( 0, D3DTSS_MINFILTER, D3DTEXF_LINEAR );
-//	m_pDev->SetTextureStageState( 0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR );
-//	m_pDev->SetTextureStageState( 0, D3DTSS_MIPFILTER, D3DTEXF_POINT );
+	dev->SetSamplerState(0, 1, D3DTADDRESS_WRAP);	// ADDRESSU
+	dev->SetSamplerState(0, 2, D3DTADDRESS_WRAP);	// ADDRESSV
+	dev->SetSamplerState(1, 1, D3DTADDRESS_CLAMP);
+	dev->SetSamplerState(1, 2, D3DTADDRESS_CLAMP);
+	dev->SetRenderState( D3DRS_WRAP0, D3DWRAP_U | D3DWRAP_V);
 
-//	m_pDev->SetTextureStageState( 1, D3DTSS_MINFILTER, D3DTEXF_POINT );
-//	m_pDev->SetTextureStageState( 1, D3DTSS_MAGFILTER, D3DTEXF_POINT );
-//	m_pDev->SetTextureStageState( 1, D3DTSS_MIPFILTER, D3DTEXF_NONE );
-	//end of default setup
+	dev->SetTexture( 0, m_pBumpTexture[m_iBumpFrame]);
+	dev->SetSamplerState( 0, 7, D3DTEXF_POINT );	// MIPFILTER
+	dev->SetSamplerState( 0, 6, D3DTEXF_LINEAR );	// MINFILTER
+	dev->SetSamplerState( 0, 5, D3DTEXF_LINEAR );	// MAGFILTER
+	dev->SetTextureStageState( 1, D3DTSS_BUMPENVMAT00, F2DW(m_fBumpScale) );
+	dev->SetTextureStageState( 1, D3DTSS_BUMPENVMAT01, F2DW(0.0f) );
+	dev->SetTextureStageState( 1, D3DTSS_BUMPENVMAT10, F2DW(0.0f) );
+	dev->SetTextureStageState( 1, D3DTSS_BUMPENVMAT11, F2DW(m_fBumpScale) );
+	dev->SetTextureStageState( 1, D3DTSS_BUMPENVLSCALE, F2DW(1.0f) );
+	dev->SetTextureStageState( 1, D3DTSS_BUMPENVLOFFSET, F2DW(0.0f) );
 
-	m_pDev->SetTextureStageState(0, D3DTSS_ADDRESSU, D3DTADDRESS_WRAP);
-	m_pDev->SetTextureStageState(0, D3DTSS_ADDRESSV, D3DTADDRESS_WRAP);
-	m_pDev->SetRenderState( D3DRS_WRAP0, D3DWRAP_U | D3DWRAP_V);
+	dev->SetTextureStageState( 2, D3DTSS_COLOROP,   D3DTOP_DISABLE );
+	dev->SetTextureStageState( 2, D3DTSS_ALPHAOP,   D3DTOP_DISABLE );
 
-	m_pDev->SetTextureStageState(1, D3DTSS_ADDRESSU, D3DTADDRESS_CLAMP);
-	m_pDev->SetTextureStageState(1, D3DTSS_ADDRESSV, D3DTADDRESS_CLAMP);
-
-	m_pDev->SetTexture( 0, m_pBumpTexture[m_iBumpFrame]);
-#ifdef MIPMAP_BUMP_TEXTURE
-	m_pDev->SetTextureStageState( 0, D3DTSS_MIPFILTER, D3DTEXF_POINT );
-	m_pDev->SetTextureStageState( 0, D3DTSS_MINFILTER, D3DTEXF_LINEAR );
-	m_pDev->SetTextureStageState( 0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR );
-#endif
-	m_pDev->SetTextureStageState( 1, D3DTSS_BUMPENVMAT00, F2DW(m_fBumpScale) );
-	m_pDev->SetTextureStageState( 1, D3DTSS_BUMPENVMAT01, F2DW(0.0f) );
-	m_pDev->SetTextureStageState( 1, D3DTSS_BUMPENVMAT10, F2DW(0.0f) );
-	m_pDev->SetTextureStageState( 1, D3DTSS_BUMPENVMAT11, F2DW(m_fBumpScale) );
-	m_pDev->SetTextureStageState( 1, D3DTSS_BUMPENVLSCALE, F2DW(1.0f) );
-	m_pDev->SetTextureStageState( 1, D3DTSS_BUMPENVLOFFSET, F2DW(0.0f) );
-
-	m_pDev->SetTextureStageState( 2, D3DTSS_COLOROP,   D3DTOP_DISABLE );
-	m_pDev->SetTextureStageState( 2, D3DTSS_ALPHAOP,   D3DTOP_DISABLE );
-
-	m_pDev->SetRenderState(D3DRS_ZWRITEENABLE , FALSE);
+	dev->SetRenderState(D3DRS_ZWRITEENABLE , FALSE);
 
 	D3DXMATRIX mat;
 	memset(&mat,0,sizeof(D3DXMATRIX));
@@ -1627,26 +1745,21 @@ void WaterRenderObjClass::drawSea(RenderInfoClass & rinfo)
 	mat._31 = 0.0f; mat._32 = 0.0f; mat._33 = 0.0f;   mat._34=1.0f;
 	mat._41 = 0.0f; mat._42 = 0.0f; mat._43 = 0.0f;   mat._44=1.0f;
 
-	m_pDev->SetVertexShaderConstant(CV_TEXPROJ_0, &mat, 4);
+	dev->SetVertexShaderConstantF(CV_TEXPROJ_0, &mat, 4);
 
 	// Setup constants
-	D3DXVECTOR4 cvZero(0.0f, 0.0f, 0.0f, 0.0f); m_pDev->SetVertexShaderConstant(CV_ZERO, &cvZero, 1);
-	D3DXVECTOR4 cvOne(1.0f, 1.0f, 1.0f, 1.0f); m_pDev->SetVertexShaderConstant(CV_ONE, &cvOne, 1);
+	dev->SetVertexShaderConstantF(CV_ZERO,   D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f), 1);
+	dev->SetVertexShaderConstantF(CV_ONE,    D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f), 1);
 
-	m_pDev->SetVertexShader(m_dwWaveVertexShader);
-	m_pDev->SetPixelShader(m_dwWavePixelShader);
+	WaterSeaTransform::Set_Vertex_Declaration(sea->m_138);
+	dev->SetVertexShader(sea->m_134);
+	dev->SetPixelShader(sea->m_130);
 
-//	Make reflection brighter to compensate for darker coloring on sea floor
-//	m_pDev->SetRenderState( D3DRS_SRCBLEND, D3DBLEND_ONE );
-//	m_pDev->SetRenderState( D3DRS_DESTBLEND, D3DBLEND_SRCCOLOR );
+	dev->SetRenderState( D3DRS_SRCBLEND, D3DBLEND_SRCALPHA );
+	dev->SetRenderState( D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA );
 
-	m_pDev->SetRenderState( D3DRS_SRCBLEND, D3DBLEND_SRCALPHA );
-	m_pDev->SetRenderState( D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA );
-
-	m_pDev->SetRenderState(D3DRS_ALPHABLENDENABLE , TRUE);
-	m_pDev->SetTexture( 1, m_pReflectionTexture->Peek_D3D_Texture());
-
-//	m_pDev->SetRenderState(D3DRS_FILLMODE,D3DFILL_WIREFRAME);//LORENZEN
+	dev->SetRenderState(D3DRS_ALPHABLENDENABLE , TRUE);
+	dev->SetTexture( 1, ((TextureClass *)&m_pReflectionTexture)->Peek_D3D_Base_Texture());
 
 	Int patchX,patchY,startX,startY;
 
@@ -1657,8 +1770,8 @@ void WaterRenderObjClass::drawSea(RenderInfoClass & rinfo)
 	patchMatrix._33=PATCH_SCALE;
 	patchMatrix._44=1.0f;
 
-	m_pDev->SetStreamSource(0,m_vertexBufferD3D,sizeof(WaterRenderObjClass::SEA_PATCH_VERTEX));
-	m_pDev->SetIndices(m_indexBufferD3D,0);
+	dev->SetStreamSource(0,sea->m_vertexBuffer,0,0x18);
+	dev->SetIndices(sea->m_indexBuffer);
 
 	for (startY=patchY=(seaBox.Center.Y-seaBox.Extent.Y)/(PATCH_WIDTH*PATCH_SCALE); (patchY*PATCH_WIDTH*PATCH_SCALE)<(seaBox.Center.Y+seaBox.Extent.Y); patchY++)
 	{
@@ -1674,51 +1787,51 @@ void WaterRenderObjClass::drawSea(RenderInfoClass & rinfo)
 			D3DXMatrixMultiply(&matWorldViewProj, &matTemp, &matProj);
 			//matrices must be transposed before loading into vertex shader registers
 			D3DXMatrixTranspose(&matWorldViewProj, &matWorldViewProj);
-			m_pDev->SetVertexShaderConstant(CV_WORLDVIEWPROJ_0, &matWorldViewProj, 4);	//pass transform matrix into shader
+			dev->SetVertexShaderConstantF(CV_WORLDVIEWPROJ_0, &matWorldViewProj, 4);	//pass transform matrix into shader
 
-			m_pDev->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP,0,m_numVertices,0,m_numIndices);
+			dev->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP,0,0,m_numVertices,0,m_numIndices);
 		}
 	}
-//	m_pDev->SetRenderState(D3DRS_FILLMODE,D3DFILL_SOLID);
-	m_pDev->SetRenderState(D3DRS_ALPHABLENDENABLE , FALSE);
-	m_pDev->SetTexture( 0, NULL);	//release reference to bump texture
-	m_pDev->SetTexture( 1, NULL);	//release reference to reflection texture
-	m_pDev->SetTexture( 2, NULL);	//release reference to reflection texture
+	dev->SetRenderState(D3DRS_ALPHABLENDENABLE , FALSE);
+	dev->SetTexture( 0, NULL);	//release reference to bump texture
+	dev->SetTexture( 1, NULL);	//release reference to reflection texture
+	dev->SetTexture( 2, NULL);	//release reference to reflection texture
 
-	m_pDev->SetTextureStageState( 0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
-	m_pDev->SetTextureStageState( 0, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_PASSTHRU|0);
-	m_pDev->SetTextureStageState( 1, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
-	m_pDev->SetTextureStageState( 1, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_PASSTHRU|1);
-	m_pDev->SetRenderState(D3DRS_ZWRITEENABLE , TRUE);
+	dev->SetTextureStageState( 0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
+	dev->SetTextureStageState( 0, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_PASSTHRU|0);
+	dev->SetTextureStageState( 1, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
+	dev->SetTextureStageState( 1, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_PASSTHRU|1);
+	dev->SetRenderState(D3DRS_ZWRITEENABLE , TRUE);
 
-	m_pDev->SetTextureStageState(1, D3DTSS_ADDRESSU, D3DTADDRESS_WRAP);
-	m_pDev->SetTextureStageState(1, D3DTSS_ADDRESSV, D3DTADDRESS_WRAP);
+	dev->SetSamplerState(1, 1, D3DTADDRESS_WRAP);
+	dev->SetSamplerState(1, 2, D3DTADDRESS_WRAP);
 
-	m_pDev->SetRenderState( D3DRS_WRAP0, 0);	//turn off texture wrapping
+	dev->SetRenderState( D3DRS_WRAP0, 0);	//turn off texture wrapping
 
-	m_pDev->SetTextureStageState( 0, D3DTSS_COLOROP,   D3DTOP_DISABLE );
-	m_pDev->SetTextureStageState( 0, D3DTSS_ALPHAOP,   D3DTOP_DISABLE );
-	m_pDev->SetTextureStageState( 1, D3DTSS_COLOROP,   D3DTOP_DISABLE );
-	m_pDev->SetTextureStageState( 1, D3DTSS_ALPHAOP,   D3DTOP_DISABLE );
-	m_pDev->SetTextureStageState( 2, D3DTSS_COLOROP,   D3DTOP_DISABLE );
-	m_pDev->SetTextureStageState( 2, D3DTSS_ALPHAOP,   D3DTOP_DISABLE );
+	dev->SetTextureStageState( 0, D3DTSS_COLOROP,   D3DTOP_DISABLE );
+	dev->SetTextureStageState( 0, D3DTSS_ALPHAOP,   D3DTOP_DISABLE );
+	dev->SetTextureStageState( 1, D3DTSS_COLOROP,   D3DTOP_DISABLE );
+	dev->SetTextureStageState( 1, D3DTSS_ALPHAOP,   D3DTOP_DISABLE );
+	dev->SetTextureStageState( 2, D3DTSS_COLOROP,   D3DTOP_DISABLE );
+	dev->SetTextureStageState( 2, D3DTSS_ALPHAOP,   D3DTOP_DISABLE );
 
 	//Restore old transforms
-	DX8Wrapper::_Set_DX8_Transform(D3DTS_VIEW, *(Matrix4x4*)&matView);
-	DX8Wrapper::_Set_DX8_Transform(D3DTS_PROJECTION, *(Matrix4x4*)&matProj);
+	WaterSeaTransform::Set(D3DTS_VIEW, *(Matrix4x4*)&matView);
+	WaterSeaTransform::Set(D3DTS_PROJECTION, *(Matrix4x4*)&matProj);
 
-	m_pDev->SetPixelShader(0);	//turn off pixel shader
-	m_pDev->SetVertexShader(DX8_FVF_XYZDUV1);	//turn off custom vertex shader
+	dev->SetPixelShader(0);	//turn off pixel shader
+	dev->SetVertexShader(0);	//turn off custom vertex shader
+	dev->SetFVF(DX8_FVF_XYZDUV1);
 
 	DX8Wrapper::Invalidate_Cached_Render_States();
 
-	if (TheTerrainRenderObject->getShroud())
+	if (((BFMEWaterTerrainShroudView *)TheTerrainRenderObject)->getShroud())
 	{
 		//do second pass to apply the shroud on water plane
-		W3DShaderManager::setTexture(0,TheTerrainRenderObject->getShroud()->getShroudTexture());
+		BfmeSetTextureCache(0, ((BFMEWaterTerrainShroudView *)TheTerrainRenderObject)->getShroud()->getShroudTexture());
 		W3DShaderManager::setShader(W3DShaderManager::ST_SHROUD_TEXTURE, 0);
-		m_pDev->SetStreamSource(0,m_vertexBufferD3D,sizeof(WaterRenderObjClass::SEA_PATCH_VERTEX));
-		m_pDev->SetIndices(m_indexBufferD3D,0);
+		dev->SetStreamSource(0,sea->m_vertexBuffer,0,0x18);
+		dev->SetIndices(sea->m_indexBuffer);
 		for (startY=patchY=(seaBox.Center.Y-seaBox.Extent.Y)/(PATCH_WIDTH*PATCH_SCALE); (patchY*PATCH_WIDTH*PATCH_SCALE)<(seaBox.Center.Y+seaBox.Extent.Y); patchY++)
 		{
 			for (startX=patchX=(seaBox.Center.X-seaBox.Extent.X)/(PATCH_WIDTH*PATCH_SCALE); (patchX*PATCH_WIDTH*PATCH_SCALE)<(seaBox.Center.X+seaBox.Extent.X); patchX++)
@@ -1729,14 +1842,13 @@ void WaterRenderObjClass::drawSea(RenderInfoClass & rinfo)
 
 				D3DXMatrixMultiply(&matTemp, &patchMatrix, &matWW3D);
 
-				DX8Wrapper::_Set_DX8_Transform(D3DTS_WORLD, *(Matrix4x4*)&matTemp);
+				WaterSeaTransform::Set(D3DTS_WORLD, *(Matrix4x4*)&matTemp);
 
-				m_pDev->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP,0,m_numVertices,0,m_numIndices);
+				dev->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP,0,0,m_numVertices,0,m_numIndices);
 			}
 		}
 		W3DShaderManager::resetShader(W3DShaderManager::ST_SHROUD_TEXTURE);
 	}
-
 }
 
 
