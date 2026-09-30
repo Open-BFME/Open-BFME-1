@@ -24,6 +24,7 @@
 
 extern void j_00048b67();
 extern void j_00011356();
+extern const void *g_011207C0[];
 
 class Rva006FD550RefCounted
 {
@@ -104,7 +105,7 @@ struct Rva006FD550BaseDtorGuard
     void *m_self;
     Rva006FD550BaseDtorGuard(void *self) : m_self(self)
     {
-        *(unsigned int *)self = 0x011207C0u;
+        *(unsigned int *)self = (unsigned int)g_011207C0;
     }
     ~Rva006FD550BaseDtorGuard() { callBaseDtor(m_self); }
 };

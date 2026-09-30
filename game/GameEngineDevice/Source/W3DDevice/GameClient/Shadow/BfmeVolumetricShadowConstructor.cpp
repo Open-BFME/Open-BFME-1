@@ -5,6 +5,9 @@
 typedef unsigned char Bool;
 typedef unsigned char UnsignedByte;
 
+extern "C" const void *bfmeVftW3DVolumetricShadow[];
+#pragma comment(linker, "/alternatename:_bfmeVftW3DVolumetricShadow=??_7W3DVolumetricShadow@@6B@")
+
 class Rva007B12F0Base
 {
 public:
@@ -72,7 +75,7 @@ W3DVolumetricShadow::W3DVolumetricShadow()
 	m_field5c = 0;
 	m_field60 = 20.0f;
 	m_field64 = 0;
-	*(unsigned int *)this = 0x011284CC;
+	*(unsigned int *)this = (unsigned int)bfmeVftW3DVolumetricShadow;
 	m_next = 0;
 	m_geometry = 0;
 	m_shadowLengthScale = 0.0f;

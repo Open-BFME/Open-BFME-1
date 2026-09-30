@@ -6,6 +6,7 @@
 #include <string.h>
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
+extern const void *g_011207C0[];
 
 class Rva006092D0State
 {
@@ -57,7 +58,7 @@ private:
 
 Rva006FC970::Rva006FC970()
 {
-	m_vtable = 0x011207C0u;
+	m_vtable = (unsigned)g_011207C0;
 	_ReadWriteBarrier();
 	m_field88 = 1.0f;
 	m_field8C = 1.0f;

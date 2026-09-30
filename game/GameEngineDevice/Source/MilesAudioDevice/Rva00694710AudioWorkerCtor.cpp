@@ -6,6 +6,8 @@
 #include <list>
 #include <set>
 
+extern void j_000193f8();
+
 struct Gen_t_006939d0_p12cd
 {
 	int words[3];
@@ -49,6 +51,6 @@ Rva00694710AudioWorker::Rva00694710AudioWorker(void *context)
 	m_thread = 0;
 	m_stop = 0;
 	m_context = context;
-	m_thread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)0x004193F8,
+	m_thread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)j_000193f8,
 		this, 0, NULL);
 }
