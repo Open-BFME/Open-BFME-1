@@ -1,4 +1,6 @@
+extern void j_00021bbb();
+
 unsigned int rva_007920c0_constant()
 {
-	return 0x00421BBB;
+	return (unsigned int)j_00021bbb;
 }
