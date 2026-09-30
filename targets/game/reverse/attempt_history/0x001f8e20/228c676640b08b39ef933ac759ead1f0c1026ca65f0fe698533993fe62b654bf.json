@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "228c676640b08b39ef933ac759ead1f0c1026ca65f0fe698533993fe62b654bf",
+  "symbol": "?method@Rva001F8E20Owner@@QAEXPAUCoord3D@@@Z",
+  "score_kind": "measured",
+  "score": 0.5861,
+  "source": "// ?method@Rva001F8E20Owner@@QAEXPAUCoord3D@@@Z\n// partial score=0.5861 date=2026-09-30\n// stlport\n// cl: /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib\n#include \"Common/Thing.h\"\n#include <math.h>\nextern float g_bfmeDefaultBU;\nextern const float BfmeZeroRange;\nstruct Rva001F8E20Data { char pad[0xcc]; Coord3D pos; };\nclass Rva001F8E20Owner {\npublic:\n void *vptr; Rva001F8E20Data *data; Thing *object;\n void method(Coord3D *out);\n};\nvoid Rva001F8E20Owner::method(Coord3D *out) {\n Rva001F8E20Data *d=data;\n Coord3D in = {1.0f,0.0f,0.0f};\n Coord3D delta;\n object->transformPoint(&in,&delta);\n delta.x -= object->getPosition()->x;\n delta.y -= object->getPosition()->y;\n float ay=(float)fabs(delta.y), ax=(float)fabs(delta.x);\n const float &maximum=ax>ay?ax:ay;\n float scale=g_bfmeDefaultBU/maximum;\n delta.x*=scale;\n delta.y*=scale;\n delta.z=BfmeZeroRange*scale;\n in=d->pos;\n float len=(float)sqrt(delta.z*delta.z+delta.x*delta.x+delta.y*delta.y);\n in.x*=len;\n in.y*=len;\n Coord3D result;\n object->transformPoint(&in,&result);\n out->x=result.x;\n out->y=result.y;\n out->z=result.z;\n}\n"
+}
