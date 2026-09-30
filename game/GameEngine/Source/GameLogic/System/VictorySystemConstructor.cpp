@@ -89,6 +89,9 @@ private:
 	unsigned int m_currentPlayer;
 };
 
+// GameEngine::init passes this slot by reference to initSubsystem<VictorySystem>.
+VictorySystem *TheVictorySystem = 0;
+
 VictorySystem::VictorySystem()
 	: m_cellSize(0)
 	, m_field10(0)
