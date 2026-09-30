@@ -74,13 +74,20 @@ public:
 	void *bfmeGoECKb( void );
 };
 
+extern "C" const void *bfmeVftRva0063A8D0[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva0063A8D0=??_7Rva0063A8D0@@6B@")
+extern const void *g_0112B680[];
+extern const void *g_0112B800[];
+extern const void *g_0112B7F8[];
+extern const void *g_0112B7F0[];
+
 class Rva007F8090Root
 {
 public:
 	Rva007F8090Root()
 	{
-		*(volatile unsigned *)&m_v4 = 0x01118e58;
-		*(volatile unsigned *)&m_v8 = 0x0112b680;
+		*(volatile unsigned *)&m_v4 = (unsigned)bfmeVftRva0063A8D0;
+		*(volatile unsigned *)&m_v8 = (unsigned)g_0112B680;
 	}
 
 	unsigned m_v0;
@@ -93,9 +100,9 @@ class Rva007F8090Base : public Rva007F8090Root
 public:
 	Rva007F8090Base()
 	{
-		m_v0 = 0x0112b800;
-		m_v4 = 0x0112b7f8;
-		m_v8 = 0x0112b7f0;
+		m_v0 = (unsigned)g_0112B800;
+		m_v4 = (unsigned)g_0112B7F8;
+		m_v8 = (unsigned)g_0112B7F0;
 	}
 };
 
