@@ -1,4 +1,7 @@
-extern "C" __declspec(dllimport) int __stdcall bfmeTickDYA();
+// cl: /MD
+#include <windows.h>
+#include <mmsystem.h>
+#include <stdio.h>
 
 struct BfmeThingDYA
 {
@@ -15,7 +18,7 @@ void BfmeThingDYA::bfmeGoDYA(void *a)
 {
 	m_bfmeFlags |= 4;
 	m_bfmeA = a;
-	m_bfmeT = bfmeTickDYA();
+	m_bfmeT = timeGetTime();
 	m_bfmeX = -1;
 }
 
@@ -30,7 +33,7 @@ void bfmeGoDYB()
 	if (!g_bfmeInitDYB)
 	{
 		g_bfmeInitDYB = 1;
-		g_bfmeT0DYB = bfmeTickDYA();
+		g_bfmeT0DYB = timeGetTime();
 		g_bfmeAccDYB = 0;
 	}
 }
@@ -41,14 +44,10 @@ void Rva001057C0()
 	{
 		g_bfmeInitDYB = 0;
 		g_bfmeElapsedDYB +=
-			static_cast<unsigned __int64>(static_cast<unsigned int>(bfmeTickDYA())) -
+			static_cast<unsigned __int64>(static_cast<unsigned int>(timeGetTime())) -
 			g_bfmeStartDYB;
 	}
 }
-
-extern "C" __declspec(dllimport) void __cdecl bfmeCpyDYC(void *a, void *b);
-extern "C" __declspec(dllimport) void __cdecl bfmeFreeDYC(void *a);
-
 struct BfmeThingDYC
 {
 	void bfmeGoDYC(void *a);
@@ -60,7 +59,7 @@ void BfmeThingDYC::bfmeGoDYC(void *a)
 {
 	if (m_bfmeP)
 	{
-		bfmeCpyDYC(a, m_bfmeP);
-		bfmeFreeDYC(m_bfmeP);
+		fputs(static_cast<const char *>(a), static_cast<FILE *>(m_bfmeP));
+		fflush(static_cast<FILE *>(m_bfmeP));
 	}
 }
