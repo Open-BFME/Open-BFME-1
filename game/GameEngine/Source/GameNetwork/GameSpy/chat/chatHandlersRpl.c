@@ -1,4 +1,4 @@
-// cl: /Igame/GameEngine/Source/GameNetwork/GameSpy/chat /DNDEBUG /MD -Iinputs/reference/shims/gamespy
+// cl: /Igame/GameEngine/Source/GameNetwork/GameSpy/chat /DNDEBUG /MD -Iinputs/reference/shims/gamespy /D_stricmp=_strcmpi
 /* GameSpy Chat SDK -- matching filter helpers and RPL handlers at retail 0x0086F070,
    0x0086F210 and 0x0086F300.  This TU keeps the authentic file-static
    filter helpers visible to the handlers so MSVC 7.1 can use the private
