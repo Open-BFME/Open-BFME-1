@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "528d30f741a66841b77dd3093513bf575b48218aecb2bc085990c736e2fe493d",
+  "symbol": "?d_0082eb30@@YAXXZ",
+  "score_kind": "measured",
+  "score": 1.0,
+  "source": "// ?d_0082eb30@@YAXXZ\n// partial score=1.0 date=2026-09-30\n// cl: /Od /Ob2 /MD /EHsc /D_STLP_USE_STATIC_LIB\n// stlport\n#pragma inline_depth(255)\n#pragma inline_recursion(on)\nnamespace _STL {\n__declspec(noinline) void *__copy_trivial(const void *, const void *, void *) throw();\n}\n#include <stl/_algobase.h>\n#define inline __forceinline\n#include <stl/_uninitialized.h>\n#undef inline\n#include <vector>\ntemplate _STL::vector<int, _STL::allocator<int> >::vector(const _STL::vector<int, _STL::allocator<int> > &);\n"
+}
