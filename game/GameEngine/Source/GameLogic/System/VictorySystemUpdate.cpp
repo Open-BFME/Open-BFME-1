@@ -48,11 +48,11 @@ private:
 	unsigned char m_unreconstructed_04[0x24 - 4];
 	int m_playerParameterIndex[(0xec - 0x24) / 4];
 	FactionVictoryParametersVector m_parameters;
-	BfmeCellGrid *m_gridF8[2];
-	bool m_byte100;
+	BfmeCellGrid *m_cellGrids[2];
+	bool m_initialized;
 	unsigned char m_pad101[3];
-	unsigned int m_dword104;
-	int m_dword108;
+	unsigned int m_activeGrid;
+	int m_currentPlayer;
 };
 
 FactionVictoryParameters *VictorySystem::bfmeParametersForPlayer( int playerIndex )
@@ -66,25 +66,26 @@ FactionVictoryParameters *VictorySystem::bfmeParametersForPlayer( int playerInde
 	return 0;
 }
 
-// ?rva001DF850@VictorySystem@@QAEXXZ present-unmatched
 void VictorySystem::rva001DF850( void )
 {
-	switch( m_dword104 )
+	switch( m_activeGrid )
 	{
 		case 0:
-			if( m_gridF8[0] )
-				m_gridF8[0]->rva001B1AD0( m_dword108, bfmeParametersForPlayer( m_dword108 ) );
+			if( !m_cellGrids[0] )
+				return;
+			m_cellGrids[0]->rva001B1AD0( m_currentPlayer, bfmeParametersForPlayer( m_currentPlayer ) );
 			break;
 		case 1:
-			if( m_gridF8[1] )
-				m_gridF8[1]->rva001B1AD0( m_dword108, bfmeParametersForPlayer( m_dword108 ) );
+			if( !m_cellGrids[1] )
+				return;
+			m_cellGrids[1]->rva001B1AD0( m_currentPlayer, bfmeParametersForPlayer( m_currentPlayer ) );
 			break;
 	}
 }
 
 void VictorySystem::update( void )
 {
-	if( !m_byte100 )
+	if( !m_initialized )
 		return;
 
 	rva001DF850();
