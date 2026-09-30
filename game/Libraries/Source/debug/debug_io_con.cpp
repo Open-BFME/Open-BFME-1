@@ -35,6 +35,7 @@
 #include <stdlib.h>
 #include <new>      // needed for placement new prototype
 
+// byte-exact reconstruction: game/Libraries/Source/debug/DebugIOConConstructor.cpp
 // ??0DebugIOCon@@QAE@XZ present-unmatched
 DebugIOCon::DebugIOCon(void):
   m_inputUsed(0), m_inputRead(0)
