@@ -208,15 +208,18 @@ def test_a_landing_releases_only_once_origin_master_holds_the_row(hosts):
     assert base != sha
 
 
-def test_release_landed_sha_releases_the_rows_that_commit_adds(hosts):
+def test_release_landed_sha_releases_the_leases_the_commit_names(hosts):
     a = hosts("a")
     _commit_ledger(a, [], "base")
-    claims.claim([0x300])
-    sha = _commit_ledger(a, ["?g@@YAXXZ,,0x00000300,8,game/y.cpp,matched,"], "land")
+    got = claims.claim([0x300, 0x400])
+    sha = _commit_ledger(a, ["?g@@YAXXZ,,0x00000300,8,game/y.cpp,matched,",
+                             "?h@@YAXXZ,,0x00000400,8,game/y.cpp,matched,"],
+                         f"land\n\nClaim-Lease: 0x00000300={got.leases[0x300]}\n")
     _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
-    assert claims.landed_rvas(sha) == [0x300]
+    assert claims.landed_rvas(sha) == [0x300, 0x400]
+    assert claims.lease_trailers(sha) == {0x300: got.leases[0x300]}
     assert claims.main(["release", "--landed", sha]) == 0
-    assert claims.active() == {}
+    assert set(claims.active()) == {0x400}          # no trailer, no evidence: untouched
 
 
 def test_an_old_published_row_does_not_release_an_unpublished_source_change(hosts):
@@ -415,16 +418,28 @@ def test_a_renewal_keeps_the_lease_so_the_landing_still_releases(hosts):
     assert claims.active() == {}
 
 
-def test_release_landed_sha_spares_a_claim_taken_after_that_commit(hosts, monkeypatch):
+def test_release_landed_sha_never_releases_on_timing(hosts, monkeypatch):
+    # review 2026-09-30 (test_ca142ff_review.py): a claim taken 0.9 s AFTER the
+    # commit passed the whole-second `since <= commit time` test and was freed.
     a = hosts("a")
     _commit_ledger(a, [], "base")
     sha = _commit_ledger(a, ["?g@@YAXXZ,,0x00000300,8,game/y.cpp,matched,"], "land")
     _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
-    commit_time = int(_git(a, "log", "-1", "--format=%ct", sha))
-    monkeypatch.setattr(claims.time, "time", lambda: commit_time + 60)   # a later, fresh claim
-    claims.claim([0x300])
-    monkeypatch.undo()
-    monkeypatch.setenv("BFME_CLAIM_OWNER", "a")
-    monkeypatch.setattr(claims, "ROOT", a)
+    committed = int(_git(a, "log", "-1", "--format=%ct", sha))
+    monkeypatch.setattr(claims.time, "time", lambda: committed + 0.9)
+    fresh = claims.claim([0x300])
+    released, _ = claims.release_landed(sha)
+    assert released == [] and claims.holds(0x300, fresh.tokens[0x300])
+
+
+def test_a_trailer_naming_an_old_lease_does_not_release_a_fresh_claim(hosts):
+    a = hosts("a")
+    _commit_ledger(a, [], "base")
+    old = claims.claim([0x300])
+    sha = _commit_ledger(a, ["?g@@YAXXZ,,0x00000300,8,game/y.cpp,matched,"],
+                         f"land\n\nClaim-Lease: 0x00000300={old.leases[0x300]}\n")
+    _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
+    fresh = claims.claim([0x300])                    # same owner, new lease
+    assert fresh.leases[0x300] != old.leases[0x300]
     assert claims.release_landed(sha)[0] == []
-    assert 0x300 in claims.active()
+    assert claims.holds(0x300, fresh.tokens[0x300])

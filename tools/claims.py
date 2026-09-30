@@ -27,7 +27,7 @@ claimed bodies. fleet_run and astra_seats claim what they serve.
   python3 tools/claims.py claim 0xRVA [...]    # claim for this worker (TTL 4 h)
   python3 tools/claims.py release 0xRVA [...]  # release your own claims
   python3 tools/claims.py release --landed [SHA]
-      # release claims whose rows are ON origin/master (SHA: that commit's rows)
+      # release claims whose rows are ON origin/master (SHA: rows it names by Claim-Lease trailer)
 
 FAIL-CLOSED (2026-09-29, linking_plan.md workstream G). claim() used to
 return ([], []) when origin was unreachable, which a caller cannot tell from
@@ -55,6 +55,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import socket
 import subprocess
 import sys
@@ -592,12 +593,25 @@ def landed_rvas(sha, root=None, tip=None):
     return sorted(out)
 
 
+LEASE_TRAILER = re.compile(r"^Claim-Lease:[ \t]*0x([0-9A-Fa-f]{1,8})=([0-9a-f]{8,64})[ \t]*$",
+                           re.MULTILINE)
+
+
+def lease_trailers(sha, root=None):
+    """{rva: lease} from `Claim-Lease: 0xRVA=<lease>` trailer lines of commit
+    `sha`: the explicit evidence that this commit landed the body under that
+    lease. `release --landed SHA` releases nothing without it."""
+    body = _git("log", "-1", "--format=%B", sha, cwd=root).stdout
+    return {int(rva, 16): lease for rva, lease in LEASE_TRAILER.findall(body)}
+
+
 def release_landed(sha=None, root=None, who=None, keep_days=1.0):
     """Release claims for bodies that have landed on origin/master.
 
     Every queued landing (queue_landed) whose exact row origin/master now
     holds is released under the owner that queued it and dropped from the
-    queue; with `sha`, the matched rows that commit adds are released under
+    queue; with `sha`, the matched rows that commit adds whose lease the
+    commit names in a `Claim-Lease: 0xRVA=<lease>` trailer are released under
     `who` -- except any body that still has an unsettled queued landing,
     which stays claimed whatever selected it. Unsettled entries older than `keep_days` are dropped (their claims
     have long expired). Returns (released, still_pending) lists of ints.
@@ -630,7 +644,11 @@ def release_landed(sha=None, root=None, who=None, keep_days=1.0):
             return False
         return all(published.get(path, "") == blob for path, blob in deps.items())
     extra = landed_rvas(sha, root, tip) if sha else []
-    sha_time = int(_git("log", "-1", "--format=%ct", sha, cwd=root).stdout.strip() or 0) if sha else 0
+    # SHA path: only bodies whose lease the commit names in a Claim-Lease
+    # trailer. A timestamp comparison was unsound (whole-second commit times,
+    # clock skew between hosts: review 2026-09-30 released a claim taken 0.9 s
+    # after the commit), so no evidence means the claim is left untouched.
+    trailers = lease_trailers(sha, root) if sha else {}
     # holder -> {rva: set of leases a landed entry was built under}
     by_owner, waiting, keep, unsettled = {}, [], [], set()
     now = time.time()
@@ -649,7 +667,8 @@ def release_landed(sha=None, root=None, who=None, keep_days=1.0):
                 waiting.append(rva)
     sha_holder = who or owner(root)
     for rva in extra:
-        by_owner.setdefault(sha_holder, {}).setdefault(rva, set()).add(("before", sha_time))
+        if rva in trailers:
+            by_owner.setdefault(sha_holder, {}).setdefault(rva, set()).add(trailers[rva])
     # A body with ANY queued landing whose row and blobs are not all on
     # origin/master stays claimed, however it was selected: an older commit
     # that adds the same RVA (release --landed SHA), or an earlier queued
@@ -689,8 +708,7 @@ def release_landed(sha=None, root=None, who=None, keep_days=1.0):
                     continue
                 token, info = generation[rva]
                 lease = info.get("lease") or token
-                since = info.get("since") or info.get("created") or 0
-                if lease in leases or any(isinstance(x, tuple) and since <= x[1] for x in leases):
+                if lease in leases:
                     tokens[rva] = token
             if tokens:
                 released += release(sorted(tokens), who=holder, root=root, tokens=tokens)
@@ -708,7 +726,7 @@ def main(argv=None):
     ap.add_argument("--force", action="store_true", help="release: also claims owned by others")
     ap.add_argument("--landed", nargs="?", const="", default=None, metavar="SHA",
                     help="release: claims whose rows origin/master holds (this checkout's queued "
-                         "landings; with SHA also the matched rows that commit adds)")
+                         "landings; with SHA also rows that commit adds under a Claim-Lease: 0xRVA=<lease> trailer)")
     args = ap.parse_args(argv)
     if args.action == "whoami":
         print(owner())
