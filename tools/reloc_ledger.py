@@ -37,6 +37,14 @@ Provenance (one row per site; the strongest evidence wins):
                  memory base, a call target or `this` for a call), or
                  `call/jmp [X + r*4]` indexes a table, or the CRT hands a
                  range to _initterm (every entry up to the next item start).
+  proven-scalar  NOT a relocation: an in-image dword one of our matching object
+                 sections holds with no relocation, typed as a number by
+                 evidence other than our own source -- a prebuilt upstream
+                 library member (`library-member`), vendored upstream C source
+                 (`vendored-declaration`), or every retail reference into the
+                 section reading an 8/16-bit or x87 element and nothing in data
+                 pointing into it (`element-access`). proven_scalars.csv lists
+                 them for tools/image_check.py.
   scan-candidate an aligned dword in a scaffold data item whose value lies in
                  the image and that no row above explains. NEVER linked; the
                  scaffold keeps it literal and lists it for review.
@@ -75,7 +83,7 @@ import build  # noqa: E402
 OUT = ROOT / "build" / "reloc_ledger"
 REVERSE = ROOT / "targets" / "game" / "reverse"
 DIR32, DIR32NB, REL32 = 0x0006, 0x0007, 0x0014
-KIND_NAME = {DIR32: "DIR32", DIR32NB: "DIR32NB", REL32: "REL32"}
+KIND_NAME = {DIR32: "DIR32", DIR32NB: "DIR32NB", REL32: "REL32", 0: "SCALAR"}
 CNT_CODE, UNINIT, LNK_INFO, LNK_REMOVE, COMDAT_FLAG, DISCARDABLE = 0x20, 0x80, 0x200, 0x800, 0x1000, 0x02000000
 NRELOC_OVFL = 0x01000000
 EXTERNAL, STATIC, WEAK_EXTERNAL = 2, 3, 105
@@ -83,7 +91,9 @@ DATA_SECTIONS = (".rdata", ".data", ".idata", "STLPORT_")
 SCAFFOLD_SECTIONS = (".rdata", ".data", "STLPORT_")
 EH_MAGIC = 0x19930520
 PROVENANCE_RANK = {"compiler": 0, "structure": 1, "dump-analysis": 2, "vtable": 3, "use-proven": 4,
-                   "scan-candidate": 9}
+                   "proven-scalar": 5, "scan-candidate": 9}
+NOT_A_RELOCATION = ("proven-scalar", "scan-candidate")  # rows the scaffold keeps literal
+KIND_SCALAR = 0
 # CRT absolutes no census object defines: libc's exsup.asm `__except_list equ 0` (the fs:[0] offset)
 KNOWN_ABSOLUTE = {"__except_list": 0}
 ANON = re.compile(r"\?A0x[0-9A-Fa-f]{8}")
@@ -326,7 +336,7 @@ def scan_data(task):
     img = _image()
     obj = Path(path).name
     sections, symbols = parse_coff(Path(path).read_bytes())
-    out = {"obj": obj, "rows": [], "literals": [], "places": [], "names": [], "verdicts": []}
+    out = {"obj": obj, "rows": [], "literals": [], "places": [], "names": [], "verdicts": [], "unrelocated": []}
     for number, base in placed.items():
         section = sections[number - 1]
         size = section["size"]
@@ -342,6 +352,17 @@ def scan_data(task):
             out["verdicts"].append((number, base, "contradicted"))
             continue
         out["verdicts"].append((number, base, "verified"))
+        # in-image dwords the compiler did NOT relocate: numbers in our source,
+        # but only typed evidence says retail's element is a number too
+        covered = set()
+        for where, _, kind in section["relocs"]:
+            covered.update(range(where, where + (2 if kind == 0x000A else 4)))
+        for off in range((-base) % 4, size - 3, 4):
+            if off in covered or off + 3 in covered:
+                continue
+            value = struct.unpack_from("<I", retail, off)[0]
+            if img.in_image(value):
+                out["unrelocated"].append((number, base, size, base + off, value))
         for where, index, kind in section["relocs"]:
             fact = _dir32_fact(img, obj, sections, symbols, section, base, where, index, kind)
             if fact is None:
@@ -379,7 +400,7 @@ def object_anchors(rows):
 
 def compiler_phase(objects, anchors, workers, log=print):
     """Rows, section verdicts and name addresses from every object."""
-    rows, verdicts, literals = [], {}, []
+    rows, verdicts, literals, unrelocated = [], {}, [], []
     absolute = {}                                # name -> value of an absolute COFF symbol
     names = collections.defaultdict(dict)        # name -> {va: evidence}
     placed = collections.defaultdict(dict)       # obj path -> {section: base}
@@ -454,6 +475,8 @@ def compiler_phase(objects, anchors, workers, log=print):
                 path = by_name[result["obj"]]
                 for number, base, verdict in result["verdicts"]:
                     verdicts[(path, number)] = (base, verdict)
+                for number, base, size, va, value in result["unrelocated"]:
+                    unrelocated.append(((path, number), base, size, va, value))
                 absorb(result)
             log(f"reloc_ledger: data round {round_no}: {len(work):,} objects, {len(verdicts):,} sections judged, "
                 f"{len(rows):,} rows")
@@ -471,7 +494,7 @@ def compiler_phase(objects, anchors, workers, log=print):
         if len(vas) > 1:
             conflicts.append(("name", name, " ".join(f"{v:#010x}" for v in sorted(vas)), "",
                               "; ".join(vas[v] for v in sorted(vas))[:300]))
-    return {"literals": literals, "why": why, "rows": rows, "verdicts": verdicts, "names": names, "conflicts": conflicts, "defined": defined,
+    return {"unrelocated": unrelocated, "literals": literals, "why": why, "rows": rows, "verdicts": verdicts, "names": names, "conflicts": conflicts, "defined": defined,
             "data_sections": data_sections, "stats": stats}
 
 
@@ -950,7 +973,7 @@ class Partition:
                 self.bounds.add(va + n)
 
     def row_bounds(self, row):
-        if row["provenance"] == "scan-candidate":
+        if row["provenance"] in NOT_A_RELOCATION:
             return
         for va in (row["sym_va"], row["target"]):
             if self.img.is_data(va):
@@ -1048,6 +1071,7 @@ class Partition:
         cover = set()
         for row in ledger.rows.values():
             if row["provenance"] != "scan-candidate" and self.gap_of(row["site"]) is not None:
+                # a proven scalar covers its dword too: it is settled, not a candidate
                 cover.update(range(row["site"], row["site"] + 4))
         return cover
 
@@ -1225,6 +1249,140 @@ def img_is_data_global(va):
     return _image().section(va) in SCAFFOLD_SECTIONS
 
 
+# --------------------------------------------------------------------------- proven scalars
+
+class AccessReader:
+    """The instruction holding a relocation site, by linear sweep of its ledger body."""
+
+    def __init__(self, img, bodies):
+        self.img = img
+        self.starts = sorted(bodies)
+        self.bodies = bodies
+        self.cache = {}
+
+    def insn_at(self, site):
+        i = bisect.bisect_right(self.starts, site) - 1
+        if i < 0 or site >= self.starts[i] + self.bodies[self.starts[i]]:
+            return None
+        start = self.starts[i]
+        if start not in self.cache:
+            body = self.img.read(start, self.bodies[start]) or b""
+            self.cache[start] = list(_md().disasm(body, start))
+        for insn in self.cache[start]:
+            if insn.address <= site < insn.address + insn.size:
+                return insn
+        return None
+
+
+def element_access(insn, site):
+    """(True, how) when the instruction reads or writes the item through a memory
+    operand whose disp32 is the site and whose element is not a 4-byte integer
+    (8/16-bit integer or x87 float); else (False, why)."""
+    from capstone.x86 import X86_OP_MEM
+    if insn is None:
+        return False, "site not inside a decoded ledger body"
+    if insn.disp_size != 4 or insn.address + insn.disp_offset != site:
+        return False, f"`{insn.mnemonic} {insn.op_str}` takes the address (not a memory operand)"
+    mem = [op for op in insn.operands if op.type == X86_OP_MEM]
+    if not mem:
+        return False, f"`{insn.mnemonic} {insn.op_str}` has no memory operand"
+    size = mem[0].size
+    if insn.mnemonic.startswith("f") and size in (4, 8, 10):
+        return True, f"x87 {size}-byte float `{insn.mnemonic}`"
+    if size in (1, 2) and insn.mnemonic != "lea":
+        return True, f"{8 * size}-bit `{insn.mnemonic}`"
+    return False, f"`{insn.mnemonic} {insn.op_str}` accesses {size} bytes"
+
+
+def vendored_objects(rows):
+    """{object path: tag} for objects every one of whose ledger rows is vendored
+    upstream code (`vendored=<lib>-<ver>`), a prebuilt library member included."""
+    tags = collections.defaultdict(set)
+    for row in rows:
+        try:
+            obj = str(build.row_object(row))
+        except SystemExit:
+            continue
+        m = re.search(r"vendored=([^;,\s]+)", row.get("notes") or "")
+        tags[obj].add(m.group(1) if m else None)
+    return {obj: sorted(t)[0] for obj, t in tags.items() if None not in t}
+
+
+def prove_scalars(img, comp, L, rows, bodies, objects_root=None):
+    """proven-scalar rows for the in-image dwords our objects' matching data
+    sections hold WITHOUT a relocation. Evidence, per section: its object is
+    vendored upstream code (the upstream C declaration types the element, and
+    the compiler emitted no relocation there), or every retail reference into
+    it is a memory operand whose element is an 8/16-bit integer or an x87
+    float and nothing in data points into it. Anything else stays unproven.
+    Returns {section key: verdict} counts."""
+    vendored = vendored_objects(rows)
+    tag_sources = {}
+    for row in rows:
+        try:
+            tag_sources.setdefault(str(build.row_object(row)), row["source"].lower())
+        except SystemExit:
+            continue
+    if objects_root:
+        vendored = {str(remap(k, objects_root)): v for k, v in vendored.items()}
+        tag_sources = {str(remap(k, objects_root)): v for k, v in tag_sources.items()}
+    reader = AccessReader(img, bodies)
+    by_section = collections.defaultdict(list)
+    for key, base, size, va, value in comp["unrelocated"]:
+        by_section[(key, base, size)].append((va, value))
+    refs = sorted((r["site"], r["sym_va"], r["target"]) for r in L.rows.values()
+                  if r["provenance"] not in NOT_A_RELOCATION)
+    targets = collections.defaultdict(list)   # referenced address -> sites
+    for site, sym_va, target in refs:
+        targets[sym_va].append(site)
+        if target != sym_va:
+            targets[target].append(site)
+    target_keys = sorted(targets)
+    verdicts, disagreements = collections.Counter(), []
+    for (key, base, size), words in sorted(by_section.items()):
+        path, _ = key
+        if comp["verdicts"].get(key, (0, ""))[1] != "verified":
+            continue
+        evidence = None
+        tag = vendored.get(path)
+        if tag:
+            member = ".lib" in (tag_sources.get(path) or "")
+            evidence = (("library-member", f"{tag}: the prebuilt upstream member carries no relocation there")
+                        if member else
+                        ("vendored-declaration", f"{tag}: upstream C declaration, the compiler emitted no relocation"))
+        else:
+            lo, hi = bisect.bisect_left(target_keys, base), bisect.bisect_left(target_keys, base + size)
+            sites = sorted({s for t in target_keys[lo:hi] for s in targets[t]})
+            why = None
+            if not sites:
+                why = "no retail reference found"
+            for site in sites:
+                if img.section(site) != ".text":
+                    if not base <= site < base + size:
+                        why = f"data at {site:#010x} points into it"
+                        break
+                    continue
+                ok, how = element_access(reader.insn_at(site), site)
+                if not ok:
+                    why = f"{site:#010x}: {how}"
+                    break
+            if why is None:
+                evidence = ("element-access", f"{len(sites)} reference(s), each an 8/16-bit or x87 element access")
+        if evidence is None:
+            verdicts["unproven"] += len(words)
+            continue
+        for va, value in words:
+            if L.add(va, KIND_SCALAR, value, "proven-scalar", evidence[0], "high", origin=evidence[1]):
+                verdicts[evidence[0]] += 1
+            elif L.rows[va]["provenance"] == "proven-scalar":
+                verdicts["same-word-another-copy"] += 1  # a second object's copy of the section
+            else:
+                old = L.rows[va]
+                verdicts["pointer-row-disagrees"] += 1
+                disagreements.append((va, value, evidence[0], old["provenance"], old["rule"], path))
+    return verdicts, disagreements
+
+
 # --------------------------------------------------------------------------- driver
 
 def remap(path, objects_root):
@@ -1336,6 +1494,10 @@ def run(args, log=print):
         test = is_code_ptr if code_table else img.in_image
         for va in part.run_of(start, test, allow_zero=not code_table):
             L.add(va, DIR32, img.u32(va), "use-proven", "table-" + rule, "medium", origin=f"{site:#010x}")
+    summary_extra = {}
+    scalars, disagreements = prove_scalars(img, comp, L, ledger_rows, bodies, args.objects_root)
+    comp["scalar_disagreements"] = disagreements
+    log(f"reloc_ledger: object-section in-image dwords without a relocation: {dict(scalars)}")
     part.finish(L)
     def evidence(value, raw):
         if is_code_ptr(value):
@@ -1359,9 +1521,25 @@ def run(args, log=print):
     namer = Namer(img, part, comp, dump_rows, L)
     namer.assign()
     for row in L.rows.values():
+        if row["provenance"] == "proven-scalar":
+            row["link_symbol"], row["link_addend"], row["link_class"] = "", 0, "scalar"
+            continue
         row["link_symbol"], row["link_addend"], row["link_class"] = namer.link_name(row["target"])
+    settle = collections.Counter()
+    for row in L.rows.values():
+        if img.section(row["site"]) not in SCAFFOLD_SECTIONS or row["provenance"] == "compiler":
+            continue
+        if row["provenance"] == "proven-scalar":
+            settle["scalar"] += 1
+        elif row["provenance"] == "scan-candidate":
+            settle["unproven-scaffold-aligned" if row["rule"] == "aligned-scan" else "unproven-scaffold-unaligned"] += 1
+        else:
+            settle["pointer"] += 1
+    settle["unproven-object-section"] = scalars.get("unproven", 0)
+    summary_extra["candidate_words"] = dict(settle)
+    summary_extra["object_unrelocated_in_image_dwords"] = dict(scalars)
     types = type_review(namer, comp, L, part)
-    return write_outputs(args.out, img, L, part, namer, comp, S, use_bad, unaligned, types, log)
+    return write_outputs(args.out, img, L, part, namer, comp, S, use_bad, unaligned, types, log, summary_extra)
 
 
 # --------------------------------------------------------------------------- outputs
@@ -1386,7 +1564,7 @@ def write_csv(path, fields, rows):
         w.writerows(rows)
 
 
-def write_outputs(out, img, L, part, namer, comp, S, use_bad, unaligned, types, log=print):
+def write_outputs(out, img, L, part, namer, comp, S, use_bad, unaligned, types, log=print, extra=None):
     out.mkdir(parents=True, exist_ok=True)
     rows = sorted(L.rows.values(), key=lambda r: r["site"])
     write_csv(out / "ledger.csv", LEDGER_FIELDS, (
@@ -1418,6 +1596,8 @@ def write_outputs(out, img, L, part, namer, comp, S, use_bad, unaligned, types, 
         [hx(r["site"]), hx(r["target"]), img.section(r["target"]) or "", r["rule"].split("-")[0], r["origin"],
          hx(part.scaffold_item(r["site"])["start"]), part.scaffold_item(r["site"])["kind"],
          part.scaffold_item(r["site"]).get("label", "")] for r in rows if r["provenance"] == "scan-candidate"))
+    write_csv(out / "proven_scalars.csv", ["va", "value", "rule", "evidence"], (
+        [hx(r["site"]), hx(r["target"]), r["rule"], r["origin"]] for r in rows if r["provenance"] == "proven-scalar"))
     write_csv(out / "review_size.csv", ["start", "size", "section", "kind", "proof", "label"], (
         [hx(it["start"]), it["end"] - it["start"], it["section"], it["kind"], it["proof"], it.get("label", "")]
         for it in part.scaffold if it["proof"] in ("inferred", "structure-split")))
@@ -1437,6 +1617,8 @@ def write_outputs(out, img, L, part, namer, comp, S, use_bad, unaligned, types, 
                   for site, old, new in L.clashes]
     conflicts += [["literal-where-object-relocates", hx(f["site"]), hx(f["literal"]), f["symbol"], f["origin"]]
                   for f in comp["literals"]]
+    conflicts += [["scalar-evidence-vs-pointer-row", hx(va), hx(value), f"{ev} vs {prov}:{rule}", Path(obj).name]
+                  for va, value, ev, prov, rule, obj in comp.get("scalar_disagreements", [])]
     conflicts += [["use-loads-non-address", hx(x), hx(v), rule, hx(site)] for x, v, rule, site in use_bad]
     conflicts += [["unaliasable-name", hx(va), n, "", "caller name inside an object section with no external label"]
                   for n, va in namer.unaliasable]
@@ -1476,6 +1658,7 @@ def write_outputs(out, img, L, part, namer, comp, S, use_bad, unaligned, types, 
         "review": dict(collections.Counter(c[0] for c in conflicts)),
         "types": dict(collections.Counter(t[0] for t in types)),
     }
+    summary.update(extra or {})
     (out / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True), encoding="utf-8")
     log(json.dumps(summary, indent=1, sort_keys=True))
     return 0

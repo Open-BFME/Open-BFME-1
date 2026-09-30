@@ -92,8 +92,8 @@ def load(ledger_dir):
             if row["site_section"] not in RL.SCAFFOLD_SECTIONS:
                 continue
             site = int(row["site_va"], 16)
-            if row["provenance"] == "scan-candidate":
-                scan.add(site)
+            if row["provenance"] in RL.NOT_A_RELOCATION:
+                scan.add(site)  # stays literal: listed, never a relocation
                 continue
             relocs[site] = row
     names = RL.read_csv_rows(ledger_dir / "names.csv")

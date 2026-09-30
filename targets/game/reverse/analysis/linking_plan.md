@@ -59,7 +59,10 @@ B. **Typed relocation ledger** (code + data): target, addend, kind, provenance (
    involving the scaffold. Round 3 (+ msvcrt.lib, 18 import libraries (mss32, DINPUT8 generated from retail's
    import table), retail .res, /SAFESEH:NO; the four CRT initializer tables, 6,008 B, left to the linker):
    18,586 unresolved (13,810 unpinned, 1,947 pinned-elsewhere, 491 `__imp_` names retail does not import under
-   that spelling), duplicates unchanged at 5,601. Work queue: build/data_scaffold/queue.csv.
+   that spelling), duplicates unchanged at 5,601. Work queue: build/data_scaffold/queue.csv. In-image data words
+   not relocated by a compiler: 72,307 proven pointers, 58,294 proven scalars (58,214 prebuilt library members,
+   78 vendored upstream C, 2 by element access), 24,599 unproven (21,205 scaffold, 3,394 game object sections)
+   plus 15,478 unaligned scaffold dwords.
 C. **Whole-image comparator** (COFF-level, extends component_link): statics, section-relative labels, unmatched
    extents, aliases, padding, scaffold provenance; verifies at a shifted placement.
 D. **Loader/startup lanes**: CRT entry and initializer order, EH and SafeSEH tables, imports/IAT order, exports,

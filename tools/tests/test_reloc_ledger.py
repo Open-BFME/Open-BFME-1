@@ -163,3 +163,25 @@ def test_crt_initializer_tables_are_linker_built(tmp_path):
     tables.write_text('{"XC": {"begin": "0x00403000", "end": "0x00403010"}, "XI": {"begin": null}}')
     ranges = reloc_ledger.linker_ranges(image_with(), tables)
     assert (BASE + 0x3000, BASE + 0x3014, "crt-table-XC") in ranges and len(ranges) == 1
+
+
+def decoded(code, va=BASE + 0x1000):
+    return next(reloc_ledger._md().disasm(code, va))
+
+
+def test_scalar_access_needs_a_byte_word_or_float_element():
+    addr = struct.pack("<I", BASE + 0x2000)
+    site = BASE + 0x1003
+    assert reloc_ledger.element_access(decoded(b"\x0f\xb6\x05" + addr), site)[0]          # movzx eax, byte
+    assert reloc_ledger.element_access(decoded(b"\x66\x8b\x0d" + addr), site)[0]          # mov cx, word
+    assert reloc_ledger.element_access(decoded(b"\xd9\x05" + addr), BASE + 0x1002)[0]     # fld dword
+    assert not reloc_ledger.element_access(decoded(b"\xa1" + addr), BASE + 0x1001)[0]     # mov eax, dword
+    assert not reloc_ledger.element_access(decoded(b"\x68" + addr), BASE + 0x1001)[0]     # push address
+    assert not reloc_ledger.element_access(None, site)[0]
+
+
+def test_only_all_vendored_objects_count_as_upstream_declarations(monkeypatch):
+    monkeypatch.setattr(reloc_ledger.build, "row_object", lambda row: row["obj"])
+    rows = [{"obj": "a.obj", "notes": "vendored=zlib-1.1.4"}, {"obj": "a.obj", "notes": "vendored=zlib-1.1.4;x"},
+            {"obj": "b.obj", "notes": "vendored=lua-4.0.1"}, {"obj": "b.obj", "notes": "authored"}]
+    assert reloc_ledger.vendored_objects(rows) == {"a.obj": "zlib-1.1.4"}
