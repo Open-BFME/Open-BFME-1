@@ -1,15 +1,16 @@
-// ?d_00168320@@YAXXZ
-// partial score=0.27 date=2026-09-26
-// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
-// ?onUnitProduced@AIPlayer@@UAEXPAVObject@@0@Z retail 0x00168320, 595 bytes
+// AIPlayer::onUnitProduced, retail 0x00168320 (595 bytes), AIPlayer vtable slot 7.
+// Zero Hour body plus BFME's bfmeBlocksFormationRefresh test before the goal-position push.
+// Build-list, team-queue and template views keep only the offsets this body reads.
 
 #include <vector>
+#include <hash_map>
 
 typedef bool Bool;
 typedef float Real;
 typedef int Int;
-typedef unsigned int ObjectID;
+typedef int ObjectID;
 typedef unsigned int UnsignedInt;
 
 struct Coord3D
@@ -25,15 +26,21 @@ enum CommandSourceType
 	CMD_FROM_AI = 2
 };
 
+// Mask of the kind-of bit retail tests at ThingTemplate+0xC8.
 enum KindOfType
 {
-	KINDOF_DOZER = 0x40000000
+	KINDOF_DOZER = 0x4000
 };
 
 class Overridable
 {
 public:
-	const Overridable *getFinalOverride() const;
+	const Overridable *getFinalOverride() const
+	{
+		if (m_nextOverride)
+			return m_nextOverride->getFinalOverride();
+		return this;
+	}
 
 	void *m_vtable;
 	Overridable *m_nextOverride;
@@ -45,6 +52,20 @@ class ThingTemplate : public Overridable
 public:
 	Bool isEquivalentTo(const ThingTemplate *other) const;
 	UnsignedInt m_kindOf;
+};
+
+template <class T> class OVERRIDE
+{
+public:
+	operator const T *() const
+	{
+		if (!m_overridable)
+			return 0;
+		return (T *)m_overridable->getFinalOverride();
+	}
+
+private:
+	const T *m_overridable;
 };
 
 class Thing
@@ -71,22 +92,14 @@ public:
 	virtual void slot48() = 0;
 	virtual void slot4c() = 0;
 
-	ThingTemplate *getTemplate() const
-	{
-		if (m_template == 0)
-			return 0;
-		if (m_template->m_nextOverride != 0)
-			return (ThingTemplate *)m_template->getFinalOverride();
-		return m_template;
-	}
+	const ThingTemplate *getTemplate() const { return m_template; }
 
 	Bool isKindOf(KindOfType kind) const
 	{
-		ThingTemplate *thingTemplate = getTemplate();
-		return thingTemplate != 0 && (thingTemplate->m_kindOf & kind) != 0;
+		return (getTemplate()->m_kindOf & kind) != 0;
 	}
 
-	ThingTemplate *m_template;
+	OVERRIDE<ThingTemplate> m_template;
 	unsigned char m_pad08[0x74 - 0x08];
 	ObjectID m_id;
 	unsigned char m_pad78[0x204 - 0x78];
@@ -101,7 +114,7 @@ public:
 	virtual void setTeam(Team *team);
 
 	ObjectID getID() const { return m_id; }
-	class AIUpdateInterface *getAIUpdateInterface() const;
+	class AIUpdateInterface *getAIUpdateInterface() const { return (class AIUpdateInterface *)m_ai; }
 };
 
 class StateMachine
@@ -178,6 +191,7 @@ public:
 class AIUpdateInterface : public AIUpdatePrimary, public AICommandInterface
 {
 public:
+	Bool bfmeBlocksFormationRefresh();
 	virtual SupplyTruckAIInterface *getSupplyTruckAIInterface() = 0;
 
 	StateMachine *getStateMachine() const
@@ -191,10 +205,22 @@ public:
 	}
 };
 
-AIUpdateInterface *Object::getAIUpdateInterface() const
+
+template <class OBJCLASS> class DLINK_ITERATOR
 {
-	return *(AIUpdateInterface *const *)((const char *)this + 0x204);
-}
+public:
+	typedef OBJCLASS *(OBJCLASS::*GetNextFunc)() const;
+
+private:
+	OBJCLASS *m_cur;
+	GetNextFunc m_getNextFunc;
+
+public:
+	DLINK_ITERATOR(OBJCLASS *cur, GetNextFunc getNextFunc) : m_cur(cur), m_getNextFunc(getNextFunc) {}
+	void advance() { if (m_cur) m_cur = (m_cur->*m_getNextFunc)(); }
+	Bool done() const { return m_cur == 0; }
+	OBJCLASS *cur() const { return m_cur; }
+};
 
 class WorkOrder
 {
@@ -214,7 +240,7 @@ class TeamInQueue
 public:
 	virtual ~TeamInQueue();
 
-	TeamInQueue *next() const;
+	TeamInQueue *dlink_next_TeamBuildQueue() const;
 
 	TeamInQueue *m_dlinkPreviousBuild;
 	TeamInQueue *m_dlinkNextBuild;
@@ -269,10 +295,27 @@ public:
 	}
 };
 
+typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>, _STL::equal_to<ObjectID> > ObjectPtrHash;
+
 class GameLogic
 {
 public:
-	Object *findObjectByID(ObjectID objectID);
+	// Visible but out of line, so MSVC keeps the gatherer count across the call.
+	__declspec(noinline) Object *findObjectByID(ObjectID id)
+	{
+		if (id == 0)
+			return 0;
+
+		ObjectPtrHash::iterator it = m_objHash.find(id);
+		if (it == m_objHash.end())
+			return 0;
+
+		return (*it).second;
+	}
+
+private:
+	unsigned char m_pad00[0xb0];
+	ObjectPtrHash m_objHash;
 };
 
 extern GameLogic *TheGameLogic;
@@ -293,6 +336,11 @@ class AIPlayer : public AIPlayerVtable
 {
 public:
 	virtual void onUnitProduced(Object *factory, Object *unit);
+
+	DLINK_ITERATOR<TeamInQueue> iterate_TeamBuildQueue() const
+	{
+		return DLINK_ITERATOR<TeamInQueue>(m_teamBuildQueue, &TeamInQueue::dlink_next_TeamBuildQueue);
+	}
 
 	TeamInQueue *m_teamBuildQueue;
 	unsigned char m_pad08[4];
@@ -316,84 +364,74 @@ void AIPlayer::onUnitProduced(Object *factory, Object *unit)
 	if (factory == 0)
 		return;
 
-	for (TeamInQueue *team = m_teamBuildQueue; team; team = team->next())
+	for (DLINK_ITERATOR<TeamInQueue> iter = iterate_TeamBuildQueue(); !iter.done(); iter.advance())
 	{
+		TeamInQueue *team = iter.cur();
+		WorkOrder *order;
 		if (found)
 			break;
-
-		for (WorkOrder *order = team->m_workOrders; order; order = order->m_next)
+		for (order = team->m_workOrders; order; order = order->m_next)
 		{
-			if (factory->m_id == order->m_factoryID &&
-				order->m_numCompleted < order->m_numRequired)
+			if (order->m_factoryID == factory->getID() && order->m_numCompleted < order->m_numRequired &&
+				unit->getTemplate()->isEquivalentTo(order->m_thing))
 			{
-				ThingTemplate *unitTemplate = unit->m_template;
-				if (unitTemplate != 0 && unitTemplate->m_nextOverride != 0)
-					unitTemplate = (ThingTemplate *)unitTemplate->getFinalOverride();
-				if (unitTemplate->isEquivalentTo(order->m_thing))
+				order->m_numCompleted++;
+				if (team->m_team)
+					unit->setTeam(team->m_team);
+				if (team->m_reinforcement)
+					team->m_reinforcementID = unit->getID();
+				AIUpdateInterface *ai = unit->getAIUpdateInterface();
+				if (team->m_team->getPrototype()->m_hasHomeLocation)
 				{
-					order->m_numCompleted++;
-					if (team->m_team)
-						unit->setTeam(team->m_team);
-					if (team->m_reinforcement)
-						team->m_reinforcementID = unit->m_id;
-
-					AIUpdateInterface *ai = (AIUpdateInterface *)unit->m_ai;
-					TeamPrototype *prototype = team->m_team->m_prototype;
-					if (prototype->m_hasHomeLocation && ai)
-					{
-						std::vector<Coord3D> path;
-						const StateMachine *machine = *(StateMachine *const *)((const char *)ai + 0x30);
-						path.push_back(*(const Coord3D *)((const char *)machine + 0x24));
-						path.push_back(prototype->m_homeLocation);
-						ai->aiFollowExitProductionPath(&path, 0, CMD_FROM_AI);
-					}
-
-					order->m_factoryID = 0;
 					if (ai)
 					{
-						SupplyTruckAIInterface *supplyTruckAI = ai->getSupplyTruckAIInterface();
-						if (supplyTruckAI)
+						std::vector<Coord3D> path;
+						if (ai->bfmeBlocksFormationRefresh())
+							path.push_back(*ai->getGoalPosition());
+						path.push_back(team->m_team->getPrototype()->m_homeLocation);
+						ai->aiFollowExitProductionPath(&path, 0, CMD_FROM_AI);
+					}
+				}
+
+				order->m_factoryID = 0;
+				if (ai)
+				{
+					SupplyTruckAIInterface *supplyTruckAI = ai->getSupplyTruckAIInterface();
+					if (supplyTruckAI)
+					{
+						if (order->m_isResourceGatherer)
+							supplyTruck = true;
+						else
+							supplyTruck = false;
+						supplyTruckAI->setForceWantingState(supplyTruck);
+						if (supplyTruck)
 						{
-							if (order->m_isResourceGatherer)
-								supplyTruck = true;
-							else
-								supplyTruck = false;
-							supplyTruckAI->setForceWantingState(supplyTruck);
-							if (supplyTruck)
+							for (BuildListInfo *info = m_player->getBuildList(); info; info = info->getNext())
 							{
-								for (BuildListInfo *info = *(BuildListInfo **)((char *)m_player + 0x1c0); info;
-									info = *(BuildListInfo **)((char *)info + 0x2c))
+								if (info->isSupplyBuilding() && info->getDesiredGatherers() > 0 &&
+									info->getDesiredGatherers() > info->getCurrentGatherers())
 								{
-									if (*(Bool *)((char *)info + 0x7c) &&
-										*(Int *)((char *)info + 0x80) > 0 &&
-										*(Int *)((char *)info + 0x80) > *(Int *)((char *)info + 0x84))
+									Object *obj = TheGameLogic->findObjectByID(info->getObjectID());
+									if (obj)
 									{
-										Object *object = TheGameLogic->findObjectByID(*(ObjectID *)((char *)info + 0x48));
-										if (object)
-										{
-											++*(Int *)((char *)info + 0x84);
-											ai->aiDock(object, CMD_FROM_PLAYER);
-										}
+										info->setCurrentGatherers(info->getCurrentGatherers() + 1);
+										ai->aiDock(obj, CMD_FROM_PLAYER);
 									}
 								}
 							}
 						}
 					}
-					found = true;
-					break;
 				}
+				found = true;
+				break;
 			}
 		}
 	}
-
-	ThingTemplate *unitTemplate = unit->m_template;
-	if (unitTemplate != 0 && unitTemplate->m_nextOverride != 0)
-		unitTemplate = (ThingTemplate *)unitTemplate->getFinalOverride();
-	if (!supplyTruck && (unitTemplate->m_kindOf & KINDOF_DOZER) != 0)
+	if (!supplyTruck && unit->isKindOf(KINDOF_DOZER))
 	{
 		if (m_dozerQueuedForRepair)
 		{
-			m_repairDozer = unit->m_id;
+			m_repairDozer = unit->getID();
 			m_dozerQueuedForRepair = false;
 		}
 		else
