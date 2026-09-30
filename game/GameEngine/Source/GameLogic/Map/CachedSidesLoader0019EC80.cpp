@@ -116,10 +116,13 @@ typedef bool (*CallbackBase0019EC80)(DataChunkInput&,DataChunkInfo*,void*);
 extern "C" int _bfmeVftVE[];
 extern "C" int _bfmeVftXB[];
 extern int g_0109BFD4[];
+void j_0001579e();
+void j_0004a755();
+void j_000283a3();
 class ParserBase0019EC80 {
 public:
  ParserBase0019EC80(DataChunkInput *file,const AsciiString &label,const AsciiString &parent) {
-   vtable_=_bfmeVftVE;file_=file;token_=file->registerParser(label,parent,(CallbackBase0019EC80)0x0041579E,this);
+   vtable_=_bfmeVftVE;file_=file;token_=file->registerParser(label,parent,(CallbackBase0019EC80)j_0001579e,this);
  }
  ~ParserBase0019EC80() {vtable_=_bfmeVftVE;((BfmeSubVE*)file_)->bfmeDropVE(token_);}
 protected:
@@ -173,9 +176,9 @@ SidesList *CachedSidesLoader0019EC80::load(const AsciiString &name) {
   SidesList *sides=new SidesList;
   sides->addEmptySide();sides->addEmptySide();
   DataChunkInput input(&file);
-  ParserBinding0019EC80 teams(sides,callbackAt0019EC80(0x0044A755),&input,AsciiString("Teams"));
+  ParserBinding0019EC80 teams(sides,callbackAt0019EC80((unsigned)j_0004a755),&input,AsciiString("Teams"));
   BfmeOwnCP scripts(sides,&input);
-  ParserBinding0019EC80 libraries(sides,callbackAt0019EC80(0x004283A3),&input,AsciiString("LibraryMapLists"));
+  ParserBinding0019EC80 libraries(sides,callbackAt0019EC80((unsigned)j_000283a3),&input,AsciiString("LibraryMapLists"));
   if(!input.parse(0)) return 0;
   file.close();
   entries_.push_back(_STL::make_pair(name,sides));

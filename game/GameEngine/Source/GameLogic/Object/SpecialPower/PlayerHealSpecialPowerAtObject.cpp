@@ -100,16 +100,21 @@ public:
 	PartitionFilter *m_next;
 };
 
+extern "C" void *bfmeVftRva0025ED50RootFilter[];
+extern "C" void *bfmeVftPartitionFilter[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva0025ED50RootFilter=??_7Rva0025ED50RootFilter@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilter=??_7PartitionFilter@@6B@")
+
 struct Rva00263CA0RootFilter
 {
 	Rva00263CA0RootFilter()
 	{
 		m_next = 0;
-		m_vtable = 0x01083B80;
+		m_vtable = (UnsignedInt)bfmeVftRva0025ED50RootFilter;
 	}
 	~Rva00263CA0RootFilter()
 	{
-		m_vtable = 0x01083B5C;
+		m_vtable = (UnsignedInt)bfmeVftPartitionFilter;
 	}
 	Rva00263CA0RootFilter *link()
 	{

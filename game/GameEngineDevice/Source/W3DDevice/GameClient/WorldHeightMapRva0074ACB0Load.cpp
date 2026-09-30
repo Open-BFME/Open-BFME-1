@@ -52,6 +52,10 @@ typedef Bool (*ChunkParserCallback)(DataChunkInput &, DataChunkInfo *, void *);
 
 extern "C" int _bfmeVftVE[];
 extern int g_0109BFD4[];
+void j_0001579e();
+void j_0004a755();
+void j_00043c93();
+void j_000283a3();
 
 // ---- parser registrations ---------------------------------------------
 
@@ -64,7 +68,7 @@ public:
 		m_vftable = _bfmeVftVE;
 		m_file = file;
 		m_parser = file->registerParser(label, parent,
-			(ChunkParserCallback)0x0041579E, this);
+			(ChunkParserCallback)j_0001579e, this);
 	}
 
 	~BfmeParserRegistrationVE()
@@ -360,12 +364,12 @@ void WorldHeightMap::Rva0074ACB0Load(DataChunkInput &file, Bool parseSizeOnly)
 		Rva00190E10PolygonParser polygonTriggers(&file, 0);
 		((Rva0019BE80SidesList *)TheSidesList)->clearSideStorageAt0019B4C0();
 
-		BfmeParserBindingVE teams(TheSidesList, rva0074ACB0Callback(0x0044A755),
+		BfmeParserBindingVE teams(TheSidesList, rva0074ACB0Callback((unsigned int)j_0004a755),
 			&file, AsciiString("Teams"));
 		BfmeOwnCP scripts(TheSidesList, &file, 0);
-		BfmeParserBindingVE sides(TheSidesList, rva0074ACB0Callback(0x00443C93),
+		BfmeParserBindingVE sides(TheSidesList, rva0074ACB0Callback((unsigned int)j_00043c93),
 			&file, AsciiString("SidesList"));
-		BfmeParserBindingVE libraries(TheSidesList, rva0074ACB0Callback(0x004283A3),
+		BfmeParserBindingVE libraries(TheSidesList, rva0074ACB0Callback((unsigned int)j_000283a3),
 			&file, AsciiString("LibraryMapLists"));
 
 		if (!file.parse(this))

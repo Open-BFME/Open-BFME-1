@@ -11,6 +11,7 @@
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 extern void j_00047767( void );
+extern void j_0004219f( void );
 
 class __declspec(novtable) SkirmishPreferences
 {
@@ -135,7 +136,7 @@ Rva00566EC0Profile::Rva00566EC0Profile( void )
 		// "Skirmish/tooltipPlayerLevelIconGondor" (also used by the destructor).
 		AsciiString name( "Skirmish/tooltipPlayerLevelIconGondor" );
 		FunctorBindingSingle binding(
-			rawFunctorMethod( 0x0044219F ),
+			rawFunctorMethod( (unsigned int)j_0004219f ),
 			(FunctorTargetSingle *)this );
 		g_theWindowManager->bfmeBindRva004650F0( name,
 			Rva0050F8B0FunctorHolder( binding ) );
@@ -144,7 +145,7 @@ Rva00566EC0Profile::Rva00566EC0Profile( void )
 		// "Skirmish/tooltipPlayerLevelIconRohan".
 		AsciiString name( "Skirmish/tooltipPlayerLevelIconRohan" );
 		FunctorBindingSingle binding(
-			rawFunctorMethod( 0x0044219F ),
+			rawFunctorMethod( (unsigned int)j_0004219f ),
 			(FunctorTargetSingle *)this );
 		g_theWindowManager->bfmeBindRva004650F0( name,
 			Rva0050F8B0FunctorHolder( binding ) );
@@ -153,7 +154,7 @@ Rva00566EC0Profile::Rva00566EC0Profile( void )
 		// "Skirmish/tooltipPlayerLevelIconIsengard".
 		AsciiString name( "Skirmish/tooltipPlayerLevelIconIsengard" );
 		FunctorBindingSingle binding(
-			rawFunctorMethod( 0x0044219F ),
+			rawFunctorMethod( (unsigned int)j_0004219f ),
 			(FunctorTargetSingle *)this );
 		g_theWindowManager->bfmeBindRva004650F0( name,
 			Rva0050F8B0FunctorHolder( binding ) );
@@ -162,7 +163,7 @@ Rva00566EC0Profile::Rva00566EC0Profile( void )
 		// "Skirmish/tooltipPlayerLevelIconMordor".
 		AsciiString name( "Skirmish/tooltipPlayerLevelIconMordor" );
 		FunctorBindingSingle binding(
-			rawFunctorMethod( 0x0044219F ),
+			rawFunctorMethod( (unsigned int)j_0004219f ),
 			(FunctorTargetSingle *)this );
 		g_theWindowManager->bfmeBindRva004650F0( name,
 			Rva0050F8B0FunctorHolder( binding ) );
