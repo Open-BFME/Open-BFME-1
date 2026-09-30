@@ -1,92 +1,30 @@
-// ?d_00239e00@@YAXXZ
-// partial score=0.9668 date=2026-09-28
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Source
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Igame/GameEngine/Source /Igame/GameEngine/Source/Common/System /Igame/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
-// Retail 0x00239E00 (603 bytes): a HordeContain virtual reached through the
-// interface subobject at +0xE4.
+// The matched HordeContain constructor at RVA 0x0023EAF0 installs vtable
+// 0x010AED58 at this+0xE4. Vtable slot 118 points through ILT 0x00003008
+// to this body at RVA 0x00239E00. AODHordeContain and HorseHordeContain use
+// the same slot. No caller or string names the method, so it keeps its
+// address-derived name.
 //
-// Owner: ??0HordeContain (0x0023EAF0) installs vtable VA 0x010AED58 at
-// this+0xE4; its slot 118 is ILT 0x00003008 -> 0x00239E00. AODHordeContain
-// (VA 0x010AE230) and HorseHordeContain (VA 0x010B07E0) keep the same slot.
-// The body reads the owning Object at interface-0xDC (module +0x08), sets the
-// interface's byte at +0x04 (HordeContain +0xE8) and ends with
-// UpdateModule::setWakeFrame on interface-0xE4. No caller or string names the
-// method, so it keeps an address-derived name.
+// The body checks whether the owning object stands on walkable ground or a
+// bridge. It then finds the closest WALK_ON_TOP_OF_WALL object within 150
+// units. If that object has a SiegeDockingBehavior module with dock points,
+// the body turns away from the nearest point using an octagonal distance
+// weighted by 0.25. Otherwise, the body adds the wall's orientation to the
+// owning template's angle at offset 0x404 when the object is off a bridge.
+// The body sets the interface flag and wakes the module after it finds a wall.
 //
-// What it does, read from the retail body: when the object stands on ground
-// the pathfinder accepts, or on a bridge, it looks for the closest
-// WALK_ON_TOP_OF_WALL object (KindOf name table VA 0x012AA068, index 59)
-// within 150. If that object has a SiegeDockingBehavior module with dock
-// points, the object turns to face away from the nearest one (0.25 octagonal
-// distance); otherwise, off a bridge, it takes the wall's orientation plus a
-// template angle at ThingTemplate+0x404. Either way the flag is set, and the
-// module is woken.
+// The shared UpdateModule accessor reads the Object pointer at this-0xD8.
+// Retail reads the module's Object pointer at module+0x08, or interface-0xDC.
+// The local accessor reads that measured retail field.
 
 #define _STLP_NO_EXCEPTIONS 1
-#include <bitset>
 #include <math.h>
+#include "GameLogic/Module/UpdateModule.h"
+#include "Common/Overridable.h"
+#include "Common/BitFlags.h"
 
-typedef bool Bool;
-typedef float Real;
-
-#define NULL 0
-
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
 #define BFME_HAVE_COORD3D
-
-struct Coord2D
-{
-	Real x;
-	Real y;
-
-	Real toAngle() const;
-};
-
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
-
-enum KindOfType
-{
-	KINDOF_WALK_ON_TOP_OF_WALL = 59
-};
-
-class Module;
-
-// Zero Hour Common/Override.h: Thing reaches its template through the final
-// override of the chain.
-class Overridable
-{
-public:
-	virtual ~Overridable();
-
-	const Overridable *getFinalOverride() const
-	{
-		if (m_nextOverride)
-			return m_nextOverride->getFinalOverride();
-		return this;
-	}
-
-private:
-	Overridable *m_nextOverride;
-};
-
-class ThingTemplate : public Overridable
-{
-public:
-	Real getReal404() const { return m_real404; }
-
-private:
-	unsigned char m_unmodelled008[0x404 - 0x08];
-	Real m_real404;										///< +0x404, unnamed
-};
-
 #define THING_TU_MEMBERS \
 	const Coord3D *getPosition() const { return &m_cachedPos; } \
 	Real getOrientation() const { return m_cachedAngle; } \
@@ -94,29 +32,14 @@ private:
 	const ThingTemplate *getTemplate() const \
 	{ \
 		if (!m_template) \
-			return NULL; \
-		return (const ThingTemplate *)m_template->getFinalOverride(); \
-	}
+			return 0; \
+		return (const ThingTemplate *)((const Overridable *)m_template)->getFinalOverride(); \
+	} \
+	Real getTemplateReal404() const { return *(const Real *)((const char *)getTemplate() + 0x404); }
 #define OBJECT_TU_MEMBERS \
 	Module *findModule(NameKeyType key) const;
 #include "GameLogic/Object/object.h"
 
-template <int NUMBITS>
-class BitFlags
-{
-public:
-	enum BogusInitType
-	{
-		kInit = 0
-	};
-
-	BitFlags() {}
-	BitFlags(BogusInitType k, Int idx1);
-	void set(Int i) { m_bits.set(i); }
-
-private:
-	_STL::bitset<NUMBITS> m_bits;
-};
 
 typedef BitFlags<192> KindOfMaskType;
 extern const KindOfMaskType KINDOFMASK_NONE;
@@ -159,12 +82,6 @@ public:
 		DistanceCalculationType dc, PartitionFilter *filter);
 };
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
-
 class Pathfinder
 {
 public:
@@ -191,7 +108,6 @@ private:
 
 extern AI *TheAI;
 extern PartitionManager *ThePartitionManager;
-extern NameKeyGenerator *TheNameKeyGenerator;
 
 // The SiegeDockingBehavior module's dock-point helpers, ledgered under
 // address-derived owners: 0x00207230 (point count), 0x002060B0 and
@@ -231,30 +147,14 @@ public:
 	Rva00206100Point point(Int index);
 };
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
-
-class UpdateModule
-{
-public:
-	virtual ~UpdateModule();
-	Object *getObject() const { return m_object; }
-
-protected:
-	void setWakeFrame(Object *obj, UpdateSleepTime wakeDelay);
-
-private:
-	unsigned char m_unmodelled04[0x04];
-	Object *m_object;									///< +0x08
-};
-
 // Whatever HordeContain's primary chain adds up to its +0xE4 interface.
 class Rva00239E00HordeHead : public UpdateModule
 {
+protected:
+	Object *getObject() const { return *(Object **)((const char *)this + 8); }
+
 private:
-	unsigned char m_unmodelled0C[0xE4 - 0x0C];
+	unsigned char m_unmodelled[0xE4 - sizeof(UpdateModule)];
 };
 
 // The interface HordeContain carries at +0xE4 (vtable VA 0x010AED58).
@@ -276,19 +176,19 @@ public:
 void Rva00239E00HordeContain::rva00239E00()
 {
 	Object *obj = getObject();
-	const Coord3D *pos = obj->getPosition();
 	Bool onBridge = false;
-	if (!TheAI->pathfinder()->bfmeGroundCellThreshold(pos, false))
+	if (!TheAI->pathfinder()->bfmeGroundCellThreshold(obj->getPosition(), false))
 	{
-		if (!((Bfme5BridgeList *)TheAI->pathfinder())->bfmeAnyBridgeAt(pos))
+		if (!((Bfme5BridgeList *)TheAI->pathfinder())->bfmeAnyBridgeAt(obj->getPosition()))
 			return;
 		onBridge = true;
 	}
+	const Coord3D *pos = obj->getPosition();
 
 	Object *wall;
 	{
 		KindOfMaskType mask;
-		mask.set(KINDOF_WALK_ON_TOP_OF_WALL);
+		mask.set(59);
 		wall = ThePartitionManager->getClosestObject(pos, 150.0f, FROM_CENTER_3D,
 			&PartitionFilterAcceptByKindOf(mask, KINDOFMASK_NONE));
 	}
@@ -330,7 +230,7 @@ void Rva00239E00HordeContain::rva00239E00()
 		}
 		else if (!onBridge)
 		{
-			obj->setOrientation(wall->getOrientation() + wall->getTemplate()->getReal404());
+			obj->setOrientation(wall->getOrientation() + wall->getTemplateReal404());
 		}
 		m_flag04 = true;
 	}
