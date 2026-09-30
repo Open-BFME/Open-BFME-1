@@ -153,6 +153,9 @@ public:
 	typedef _Rb_tree_iterator<Value, _Nonconst_traits<Value> > iterator;
 	pair<iterator, bool> insert_unique(const Value &v);
 	iterator rva0094CD90(const Value &v);
+	iterator rva0094CF50(const Value &v);
+	iterator rva009EE260(const Value &v);
+	iterator rva009EE850(const Value &v);
 	__forceinline iterator begin() const { return iterator(_M_leftmost()); }
 
 private:
@@ -260,6 +263,48 @@ _Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::insert_unique(const Value &v)
 template <class Key, class Value, class KeyOfValue, class Compare, class Alloc>
 typename _Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator
 _Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::rva0094CD90(const Value &v)
+{
+	_Link_type y = (_Link_type)this->_M_header._M_data;
+	_Link_type x = (_Link_type)_M_root();
+	while (x != 0)
+	{
+		y = x;
+		x = (_Link_type)(_M_key_compare(KeyOfValue()(v), _S_key(x)) ? x->_M_left : x->_M_right);
+	}
+	return _M_insert(x, y, v, 0);
+}
+
+template <class Key, class Value, class KeyOfValue, class Compare, class Alloc>
+typename _Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator
+_Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::rva0094CF50(const Value &v)
+{
+	_Link_type y = (_Link_type)this->_M_header._M_data;
+	_Link_type x = (_Link_type)_M_root();
+	while (x != 0)
+	{
+		y = x;
+		x = (_Link_type)(_M_key_compare(KeyOfValue()(v), _S_key(x)) ? x->_M_left : x->_M_right);
+	}
+	return _M_insert(x, y, v, 0);
+}
+
+template <class Key, class Value, class KeyOfValue, class Compare, class Alloc>
+typename _Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator
+_Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::rva009EE260(const Value &v)
+{
+	_Link_type y = (_Link_type)this->_M_header._M_data;
+	_Link_type x = (_Link_type)_M_root();
+	while (x != 0)
+	{
+		y = x;
+		x = (_Link_type)(_M_key_compare(KeyOfValue()(v), _S_key(x)) ? x->_M_left : x->_M_right);
+	}
+	return _M_insert(x, y, v, 0);
+}
+
+template <class Key, class Value, class KeyOfValue, class Compare, class Alloc>
+typename _Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator
+_Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::rva009EE850(const Value &v)
 {
 	_Link_type y = (_Link_type)this->_M_header._M_data;
 	_Link_type x = (_Link_type)_M_root();
@@ -1149,6 +1194,10 @@ typedef _STL::pair<const unsigned int, Rva0094CA90Value> Rva0094CA90Pair;
 typedef _STL::_Rb_tree<unsigned int, Rva0094CA90Pair, _STL::_Select1st<Rva0094CA90Pair>,
 	_STL::less<unsigned int>, _STL::allocator<Rva0094CA90Pair> > Rva0094CA90Tree;
 
+// Retail 0x0094CF50 is a separate address-derived body.
+template Rva0094CA90Tree::iterator Rva0094CA90Tree::rva0094CF50(const Rva0094CA90Pair &);
+
+
 // Retail 0x0094CD90 uses this exact opaque pair/key instantiation.
 template Rva0094CA90Tree::iterator Rva0094CA90Tree::rva0094CD90(const Rva0094CA90Pair &);
 
@@ -1169,6 +1218,14 @@ typedef _STL::pair<const unsigned int, Rva009EDBE0Value> Rva009EDBE0Pair;
 
 typedef _STL::_Rb_tree<unsigned int, Rva009EDBE0Pair, _STL::_Select1st<Rva009EDBE0Pair>,
 	_STL::less<unsigned int>, _STL::allocator<Rva009EDBE0Pair> > Rva009EDBE0Tree;
+
+// Retail 0x009EE850 is a separate address-derived body.
+template Rva009EDBE0Tree::iterator Rva009EDBE0Tree::rva009EE850(const Rva009EDBE0Pair &);
+
+
+// Retail 0x009EE260 is a separate address-derived body.
+template Rva009EDBE0Tree::iterator Rva009EDBE0Tree::rva009EE260(const Rva009EDBE0Pair &);
+
 
 // retail 0x009EDBE0, a 24-byte node
 Rva009EDBE0Tree::iterator BfmeRbTreeInsertAnchor009EDBE0( Rva009EDBE0Tree *tree,
