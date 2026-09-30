@@ -1,10 +1,12 @@
 // ?rva006A6080@MilesAudioManager@@QAE_NABVAsciiString@@HHI@Z
-// partial score=0.57803 date=2026-09-28
+// partial score=0.9942 date=2026-09-30
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Source/Common
 // stlport
 // Retail 006A6080: stream and indexed-deque loop-budget predicate.
 // Shared MilesAudioManager mutex/list/cell layouts witnessed by 006A5600,
 // 006A57D0 and 0069D2C0. No evidence supplies this method's semantic name.
+// The inline event and playing-audio accessors set retail's register choices
+// (loop 1 and the loop-2 compare); 5 register bytes remain at +0x25B/+0x293.
 
 #include <list>
 #include <deque>
@@ -108,6 +110,8 @@ public:
     int dword28;
     char m_pad2c[0x64-0x2c];
     unsigned int dword64;
+    Rva006990E0Kind *getEventInfo() const { return m_eventInfo; }
+    int getDword28() const { return dword28; }
 };
 
 class RefCountedPlayingAudio
@@ -137,6 +141,7 @@ public:
 	PlayingAudioType m_type;
 	volatile PlayingStatus m_status;
 	AudioEventRTS *m_audioEventRTS;
+    void *getHandle() const { return m_milesHandle; }
 };
 
 class PlayingAudioRef
@@ -197,26 +202,6 @@ private:
 
 typedef _STL::list<PlayingAudioRef> PlayingAudioList;
 
-struct Rva006A6080StringData { int references; unsigned short length, capacity; char data[1]; };
-struct Rva006A6080StringView {
-    Rva006A6080StringData *m_data;
-    __forceinline int compare(const Rva006A6080StringView &str) const {
-        const int len = str.m_data ? str.m_data->length : 0;
-        const char *data = str.m_data ? &str.m_data->data[0] : "";
-        return compare(data, len);
-    }
-    __forceinline int compare(const char *str, int len) const {
-        const int myLen = m_data ? m_data->length : 0;
-        const char *data = m_data ? &m_data->data[0] : "";
-        int result = memcmp(data, str, myLen < len ? myLen : len);
-        if (result != 0) return result;
-        return myLen - len;
-    }
-};
-static __forceinline int compareRequestNames(const AsciiString &left, const AsciiString &right) {
-    return ((const Rva006A6080StringView *)&left)->compare(*(const Rva006A6080StringView *)&right);
-}
-
 
 typedef _STL::deque<PlayingAudioRef> PlayingAudioDeque006A6080;
 class MilesAudioManager {
@@ -239,7 +224,7 @@ bool MilesAudioManager::rva006A6080(const AsciiString &name, int threshold, int 
         playing = *listIt;
         if (playing) {
             AudioEventRTS *event = playing->m_audioEventRTS;
-            if (event->m_eventInfo->m_kind == 0 && event->dword28 == index && event->dword64 == layer &&
+            if (event->getEventInfo()->m_kind == 0 && event->dword28 == index && event->dword64 == layer &&
                 event->m_eventName.StringBase<char>::compare(name) == 0) {
                 if (rva006990E0((Rva006990E0Request *)event) - AIL_stream_loop_count(playing->m_milesHandle) >= threshold) return true;
             }
@@ -250,9 +235,9 @@ bool MilesAudioManager::rva006A6080(const AsciiString &name, int threshold, int 
         playing = *it;
         if (playing) {
             AudioEventRTS *event = playing->m_audioEventRTS;
-            if (event->m_eventInfo->m_kind == 0 && event->dword28 == index &&
-                compareRequestNames(event->m_eventName, name) == 0) {
-                if (rva006990E0((Rva006990E0Request *)event) - AIL_stream_loop_count(playing->m_milesHandle) >= threshold) return true;
+            if (event->getEventInfo()->m_kind == 0 && event->getDword28() == index &&
+                event->m_eventName.compare(name) == 0) {
+                if (rva006990E0((Rva006990E0Request *)event) - AIL_stream_loop_count(playing->getHandle()) >= threshold) return true;
             }
         }
     }
