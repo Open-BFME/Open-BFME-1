@@ -1,6 +1,8 @@
 // ?d_003ca0e0@@YAXXZ
-// partial score=0.37 date=2026-09-23
+// partial score=0.3547 date=2026-09-30
+// ?d_003ca0e0@@YAXXZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// LivingWorldRegionManager slot 3 (vtable 0x010EE010) xfer; 682 of 685 bytes, frame 0x0C matches.
 
 #include "ascii_string.h"
 
@@ -46,19 +48,28 @@ struct LivingWorldRegionVector
 class LivingWorldRegionCampaign
 {
 public:
-	char m_unmodelled00[0x30];
-	LivingWorldRegionVector m_regions;
+	void *m_vtable;
 	AsciiString m_name;
+	char m_unmodelled00[0x28];
+	LivingWorldRegionVector m_regions;
 };
+
+struct LivingWorldRegionArmy
+{
+	char m_unmodelled00[0x24];
+};
+
+extern void j_00002e46();
 
 class LivingWorldRegion
 {
 public:
 	void *m_vtable;
 	AsciiString m_name;
-	char m_unmodelled0c[0x94];
-	void **m_armyBegin;
-	void **m_armyEnd;
+	AsciiString m_mapName;
+	char m_unmodelled0c[0x90];
+	LivingWorldRegionArmy *m_armyBegin;
+	LivingWorldRegionArmy *m_armyEnd;
 	char m_unmodelleda4[0x14];
 	AsciiString m_fieldB8;
 };
@@ -71,16 +82,48 @@ public:
 	UnsignedByte m_flag2d;
 	char m_unmodelled2e[2];
 	AsciiString m_field30;
-
-	Bool test();
 };
 
 extern Glo012F1028Type *Glo012F1028;
+
+class Rva003968A0
+{
+public:
+	bool test();
+};
+
+class Rva003C0110Owner
+{
+public:
+	struct Rva003C0110ElementResult
+	{
+		char m_unmodelled00[0x40];
+		AsciiString m_name;
+	};
+	Rva003C0110ElementResult *findByName(StringBase<char> *key);
+};
+
+class GameInfo
+{
+public:
+	void setMap(AsciiString mapName);
+};
+
+extern GameInfo *g_012F7090;
+
+class Glo012F1028Sub
+{
+public:
+	void consume(AsciiString *campaignName);
+};
 
 class LivingWorldRegionManager
 {
 public:
 	void rva003CA0E0(Xfer *xfer);
+	LivingWorldRegion *rva003C8A50(const AsciiString &regionName);
+	void rva003C8D50(Xfer *xfer);
+	void transfer003C9EF0(Xfer *xfer);
 
 private:
 	void *m_vtable;
@@ -96,77 +139,14 @@ private:
 	void *m_campaignEnd;
 };
 
-extern void j_00002e46();
-extern void j_0000bb81();
-extern void j_0001b5db();
-extern void j_00028bb9();
-extern void j_0002bf0d();
-extern void j_00032a56();
-extern void j_0003ac9c();
-extern void j_00045b88();
-extern void j_0004704b();
-
-typedef void (LivingWorldRegionManager::*ManagerAsciiCall)(AsciiString *);
-typedef LivingWorldRegion *(LivingWorldRegionManager::*ManagerLookupCall)(const AsciiString &);
-typedef void (LivingWorldRegionManager::*ManagerXferCall)(Xfer *);
-typedef Bool (Glo012F1028Type::*GuardCall)();
-typedef void *(Glo012F1028Type::*FindCall)(AsciiString *);
 typedef void (LivingWorldRegion::*RegionAsciiCall)(const AsciiString &);
-typedef void (Glo012F1028Type::*MapCall)(AsciiString);
 
-static __forceinline void managerAsciiCall(
-	LivingWorldRegionManager *manager, void (*raw)(), AsciiString *value)
-{
-	union { void (*plain)(); ManagerAsciiCall member; } call;
-	call.plain = raw;
-	(manager->*call.member)(value);
-}
-
-static __forceinline LivingWorldRegion *managerLookupCall(
-	LivingWorldRegionManager *manager, void (*raw)(), const AsciiString &value)
-{
-	union { void (*plain)(); ManagerLookupCall member; } call;
-	call.plain = raw;
-	return (manager->*call.member)(value);
-}
-
-static __forceinline void managerXferCall(
-	LivingWorldRegionManager *manager, void (*raw)(), Xfer *xfer)
-{
-	union { void (*plain)(); ManagerXferCall member; } call;
-	call.plain = raw;
-	(manager->*call.member)(xfer);
-}
-
-static __forceinline Bool guardCall(Glo012F1028Type *guard, void (*raw)())
-{
-	union { void (*plain)(); GuardCall member; } call;
-	call.plain = raw;
-	return (guard->*call.member)();
-}
-
-static __forceinline void *findCall(
-	Glo012F1028Type *owner, void (*raw)(), AsciiString *value)
-{
-	union { void (*plain)(); FindCall member; } call;
-	call.plain = raw;
-	return (owner->*call.member)(value);
-}
-
-static __forceinline void regionAsciiCall(
-	LivingWorldRegion *region, void (*raw)(), const AsciiString &value)
+static __forceinline void regionAsciiCall(LivingWorldRegion *region, void (*raw)(),
+	const AsciiString &value)
 {
 	union { void (*plain)(); RegionAsciiCall member; } call;
 	call.plain = raw;
 	(region->*call.member)(value);
-}
-
-static __forceinline void mapCall(Glo012F1028Type *owner, void (*raw)(),
-	AsciiString value)
-{
-	union { void (*plain)(); MapCall member; } call;
-	call.plain = raw;
-	(owner->*call.member)(value);
 }
 
 // ?rva003CA0E0@LivingWorldRegionManager@@QAEXPAVXfer@@@Z
@@ -179,81 +159,67 @@ void LivingWorldRegionManager::rva003CA0E0(Xfer *xfer)
 	xfer->xferByte(&m_enabled);
 	xfer->xferInt(&m_nextHandle);
 
-	if (version.m_currentVersion >= 2 && xfer->isLoading())
+	if (version.m_currentVersion >= 2 && xfer->isLoading() && Glo012F1028 != 0
+		&& Glo012F1028->m_flag2c && !Glo012F1028->m_flag2d)
 	{
-		if (Glo012F1028 != 0 && Glo012F1028->m_flag2c != 0
-			&& Glo012F1028->m_flag2d == 0)
-		{
-			m_enabled = 0;
-		}
+		m_enabled = 0;
 	}
 
 	AsciiString campaignName;
 	if (xfer->isLoading())
 	{
+		m_currentCampaign = 0;
 		xfer->xferAsciiString(&campaignName);
-		managerAsciiCall(this, j_00045b88, &campaignName);
+		((Glo012F1028Sub *)this)->consume(&campaignName);
 	}
 	else
 	{
-		if (m_currentCampaign != 0)
-			campaignName = m_currentCampaign->m_name;
+		campaignName = m_currentCampaign->m_name;
 		xfer->xferAsciiString(&campaignName);
 	}
 
 	if (xfer->isLoading())
 	{
 		xfer->xferAsciiString(&campaignName);
-		m_selectedRegion = managerLookupCall(this, j_0002bf0d,
-			campaignName);
+		m_selectedRegion = rva003C8A50(campaignName);
 
-		if (version.m_currentVersion >= 2 && m_selectedRegion == 0
-			&& Glo012F1028 != 0 && Glo012F1028->m_flag2c != 0
-			&& !guardCall(Glo012F1028, j_0000bb81))
+		if (version.m_currentVersion >= 2 && m_selectedRegion == 0)
 		{
-			campaignName = Glo012F1028->m_field30;
-			m_selectedRegion = managerLookupCall(this, j_0002bf0d,
-				campaignName);
+			Glo012F1028Type *logic = Glo012F1028;
+			if (logic != 0 && logic->m_flag2c
+				&& !((Rva003968A0 *)logic)->test())
+			{
+				campaignName = logic->m_field30;
+				m_selectedRegion = rva003C8A50(campaignName);
+			}
 		}
 
-		managerXferCall(this, j_0003ac9c, xfer);
+		rva003C8D50(xfer);
 
 		LivingWorldRegion *region = m_selectedRegion;
 		if (region != 0)
 		{
-			unsigned int count = (unsigned int)(
-				((char *)region->m_armyEnd - (char *)region->m_armyBegin)
-				/ 0x40);
-			if (count != 0 && Glo012F1028 != 0
-				&& Glo012F1028->m_flag2c != 0
-				&& !guardCall(Glo012F1028, j_0000bb81))
+			if (region->m_armyEnd - region->m_armyBegin != 0
+				&& Glo012F1028 != 0 && Glo012F1028->m_flag2c
+				&& !((Rva003968A0 *)Glo012F1028)->test())
 			{
-				AsciiString roomName(region->m_fieldB8);
-				void *found = findCall(Glo012F1028, j_00032a56, &roomName);
+				Rva003C0110Owner::Rva003C0110ElementResult *found;
+				{
+					AsciiString key(region->m_fieldB8);
+					found = ((Rva003C0110Owner *)Glo012F1028)->findByName(&key);
+				}
 				if (found != 0)
-					regionAsciiCall(region, j_00002e46,
-						*(const AsciiString *)((char *)found + 0x40));
+					regionAsciiCall(m_selectedRegion, j_00002e46, found->m_name);
 				else
-					regionAsciiCall(region, j_00002e46,
-						*(const AsciiString *)0x01336E50);
+					regionAsciiCall(m_selectedRegion, j_00002e46, AsciiString::TheEmptyString);
 			}
 
-			if (*(void **)0x012F7090 != 0)
+			if (g_012F7090 != 0)
 			{
-				void *value = *(void **)((char *)region + 8);
-				const char *first = (const char *)0x0107388B;
-				if (value != 0)
-				{
-					value = *(void **)((char *)value + 8);
-					if (value != 0)
-						first = (const char *)((char *)value + 8);
-				}
-
-				AsciiString mapName;
-				mapName.format(AsciiString((const char *)0x010EE048),
-					(const char *)0x0107388B, (const char *)0x0107388B,
-					first);
-				mapCall(*(Glo012F1028Type **)0x012F7090, j_0001b5db, mapName);
+				const char *mapName = m_selectedRegion->m_mapName.str();
+				AsciiString path;
+				path.format("maps\\%s\\%s.map", mapName, mapName);
+				g_012F7090->setMap(path);
 			}
 		}
 	}
@@ -262,10 +228,10 @@ void LivingWorldRegionManager::rva003CA0E0(Xfer *xfer)
 		if (m_selectedRegion != 0)
 			campaignName = m_selectedRegion->m_name;
 		else
-			campaignName = (const char *)0x0107301C;
+			campaignName = "";
 		xfer->xferAsciiString(&campaignName);
-		managerXferCall(this, j_0003ac9c, xfer);
+		rva003C8D50(xfer);
 	}
 
-	managerXferCall(this, j_0004704b, xfer);
+	transfer003C9EF0(xfer);
 }

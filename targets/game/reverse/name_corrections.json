@@ -10638,5 +10638,25 @@
   "after_sha256": "cb9efae73f817ee96830ca2ff1e1974ac40599dc10d85c3b5194218a9a277a07",
   "evidence": "targets/game/reverse/identity_evidence/009f7256-import-stub.md",
   "reason": "_CIacos is the import library's own call stub for this import; the TU's definition of the same name collides with it (LNK2005), so the body at 0x009F7256 keeps its bytes under an address-owned name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003ca0e0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x003ca0e0.cpp",
+  "old_name": "managerLookupCall",
+  "new_name": "rva003C8A50",
+  "before_sha256": "a680a2cf204caf6a90b2d8ad168db74566c15a36a3c41b11a8a343143800ba8b",
+  "after_sha256": "2f7a84a253ce0ee7c59b4d65547dd2133f85df67aee98d07fd7d4f9e1242e88b",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "targets/game/reverse/functions.csv names the body at 0x003C8A50 ?rva003C8A50@LivingWorldRegionManager@@QAEPAVLivingWorldRegion@@ABVAsciiString@@@Z; the old spelling managerLookupCall matches no ledger row or pin, so the source uses the ledger name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003ca0e0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x003ca0e0.cpp",
+  "old_name": "managerXferCall",
+  "new_name": "rva003C8D50",
+  "before_sha256": "a680a2cf204caf6a90b2d8ad168db74566c15a36a3c41b11a8a343143800ba8b",
+  "after_sha256": "2f7a84a253ce0ee7c59b4d65547dd2133f85df67aee98d07fd7d4f9e1242e88b",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "targets/game/reverse/functions.csv names the body at 0x003C8D50 ?rva003C8D50@LivingWorldRegionManager@@QAEXPAVXfer@@@Z; the old spelling managerXferCall matches no ledger row or pin, so the source uses the ledger name."
  }
 ]
