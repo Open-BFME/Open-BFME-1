@@ -658,14 +658,12 @@ public: \
 #include "GameClient/Module/BeaconClientUpdate.h"
 
 ModuleData* bfmeFactoryAnchorAutoDepositUpdateModuleData() { return ::new AutoDepositUpdateModuleData; }
-ModuleData* bfmeFactoryAnchorCommandSetUpgradeModuleData() { return ::new CommandSetUpgradeModuleData; }
 ModuleData* bfmeFactoryAnchorCreateCrateDieModuleData() { return ::new CreateCrateDieModuleData; }
 ModuleData* bfmeFactoryAnchorFireWeaponWhenDeadBehaviorModuleData() { return ::new FireWeaponWhenDeadBehaviorModuleData; }
 ModuleData* bfmeFactoryAnchorStealthDetectorUpdateModuleData() { return ::new StealthDetectorUpdateModuleData; }
 ModuleData* bfmeFactoryAnchorStructureCollapseUpdateModuleData() { return ::new StructureCollapseUpdateModuleData; }
 ModuleData* bfmeFactoryAnchorStructureToppleUpdateModuleData() { return ::new StructureToppleUpdateModuleData; }
 ModuleData* bfmeFactoryAnchorSupplyTruckAIUpdateModuleData() { return ::new SupplyTruckAIUpdateModuleData; }
-ModuleData* bfmeFactoryAnchorUnitCrateCollideModuleData() { return ::new UnitCrateCollideModuleData; }
 ModuleData* bfmeFactoryAnchorUpgradeDieModuleData() { return ::new UpgradeDieModuleData; }
 ModuleData* bfmeFactoryAnchorBoneFXUpdateModuleData() { return ::new BoneFXUpdateModuleData; }
 ModuleData* bfmeFactoryAnchorCrushDieModuleData() { return ::new CrushDieModuleData; }

@@ -6953,7 +6953,7 @@ void AIUpdateInterface::xfer( Xfer *xfer )
 		//LocomotorSet			m_locomotorSet;
 		AsciiString setName;
 		if (m_curLocomotorSet > LOCOMOTORSET_INVALID && m_curLocomotorSet < LOCOMOTORSET_COUNT) 
-			setName = TheLocomotorSetNames[m_curLocomotorSet];
+			setName.set(TheLocomotorSetNames[m_curLocomotorSet]);
 
 		xfer->xferAsciiString(&setName);
 
