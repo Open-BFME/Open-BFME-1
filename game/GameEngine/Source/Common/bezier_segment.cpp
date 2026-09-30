@@ -33,13 +33,7 @@
 
 #include "d3dx8math.h"
 
-//-------------------------------------------------------------------------------------------------
-// ?BezierSegment::BezierSegment present-unmatched
-BezierSegment::BezierSegment()
-{ 
-	for(int i=0; i < 4; i++)
-		m_controlPoints[i].zero();
-}
+// Retail BezierSegment::BezierSegment (0x000B6D00) is implemented in BezierSegmentConstructionAndLength.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?BezierSegment::BezierSegment present-unmatched
