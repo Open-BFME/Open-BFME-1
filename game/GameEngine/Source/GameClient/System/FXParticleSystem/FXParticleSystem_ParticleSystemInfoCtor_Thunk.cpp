@@ -7,6 +7,8 @@
 // store groups without embedding retail instructions.
 extern "C" void _ReadWriteBarrier();
 #pragma intrinsic(_ReadWriteBarrier)
+extern "C" const void *bfmeVftParticleSystemInfo[];
+#pragma comment(linker, "/alternatename:_bfmeVftParticleSystemInfo=??_7ParticleSystemInfo@FXParticleSystem@@6B@")
 
 namespace FXParticleSystem { class ParticleSystemInfo; }
 class FXParticleSystem::ParticleSystemInfo
@@ -22,7 +24,7 @@ FXParticleSystem::ParticleSystemInfo::ParticleSystemInfo()
 	unsigned char *bytes = reinterpret_cast<unsigned char *>( this );
 	unsigned int zero = 0;
 
-	dwords[0] = 0x01073878;
+	dwords[0] = (unsigned int)bfmeVftParticleSystemInfo;
 	dwords[4] = zero;
 	dwords[5] = zero;
 	dwords[6] = zero;

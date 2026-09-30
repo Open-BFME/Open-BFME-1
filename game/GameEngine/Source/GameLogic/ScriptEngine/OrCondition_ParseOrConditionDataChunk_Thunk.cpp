@@ -3,12 +3,15 @@
 
 #include "ascii_string.h"
 
+extern "C" const void *bfmeVftOrCondition[];
+#pragma comment(linker, "/alternatename:_bfmeVftOrCondition=??_7OrCondition@@6B@")
+
 class OrConditionAllocation
 {
 public:
 	__forceinline OrConditionAllocation()
 	{
-		m_vtable = 0x010e84d8;
+		m_vtable = (unsigned int)bfmeVftOrCondition;
 		m_next = 0;
 		m_first = 0;
 	}

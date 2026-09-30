@@ -194,7 +194,8 @@ public:
 	Pathfinder *m_pathfinder;
 };
 
-#define TheAI (*(AI *volatile *)0x012EF214)
+extern AI *TheAI;
+#define TheAI (*(AI *volatile *)&TheAI)
 
 static __forceinline AI &getGlobalAI()
 {

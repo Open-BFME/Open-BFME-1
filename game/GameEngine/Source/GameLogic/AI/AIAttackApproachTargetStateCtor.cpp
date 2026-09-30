@@ -7,6 +7,8 @@ typedef bool Bool;
 
 class StateMachine;
 
+extern const UnsignedInt g_0109A4C0[];
+
 class State
 {
 public:
@@ -41,7 +43,7 @@ AIAttackApproachTargetState::AIAttackApproachTargetState(
 	StateMachine *machine, Bool follow, Bool attackingObject, Bool forceAttacking )
 	: AIInternalMoveToState(machine, AsciiString("AIAttackApproachTargetState"))
 {
-	*(volatile UnsignedInt *)this = 0x0109A4C0;
+	*(volatile UnsignedInt *)this = (UnsignedInt)g_0109A4C0;
 	m_unreconstructed0050[0] = 0;
 	m_unreconstructed0050[1] = 0;
 	m_unreconstructed0050[2] = 0;
