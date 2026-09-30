@@ -3,6 +3,8 @@
 and a gate that never reached byte comparison proves nothing."""
 import io
 import sys
+import threading
+import time
 from contextlib import redirect_stdout, redirect_stderr
 from pathlib import Path
 
@@ -186,3 +188,62 @@ def test_abnormal_exit_after_a_verdict_never_passes():
         code, out = run(gb.check, GATE_OK_SHAPE, KNOWN_ROWS, None, None, status)  # known-red FAIL
         assert code == 2 and "nothing is proven" in out
         assert run(gb.check, GATE_OK, [], None, None, status)[0] == 2
+
+
+@pytest.mark.parametrize("exit_code, transcript, expected_check", [
+    (0, GATE_OK, 0),
+    (1, "  FAIL ?new@@YAXXZ (game/New.cpp)\nFunctions: FAIL 1/1\n"
+        "FULL GATE: FAIL — 1 red: functions\n", 1),
+    (7, GATE_OK, 2),
+])
+def test_run_gate_finishes_while_grandchild_holds_output(
+        monkeypatch, tmp_path, exit_code, transcript, expected_check):
+    ready = tmp_path / "grandchild-ready"
+    release = tmp_path / "release-grandchild"
+    done = tmp_path / "grandchild-done"
+    grandchild = """
+import pathlib, sys, time
+ready, release, done = map(pathlib.Path, sys.argv[1:])
+ready.touch()
+deadline = time.monotonic() + 10
+while not release.exists() and time.monotonic() < deadline:
+    time.sleep(0.01)
+done.touch()
+"""
+    child = """
+import pathlib, subprocess, sys, time
+subprocess.Popen([sys.executable, '-c', sys.argv[1], *sys.argv[2:5]])
+deadline = time.monotonic() + 2
+while not pathlib.Path(sys.argv[2]).exists():
+    if time.monotonic() > deadline:
+        raise SystemExit('grandchild did not start')
+    time.sleep(0.01)
+print('compiler diagnostic', file=sys.stderr)
+sys.stdout.write(sys.argv[5])
+sys.exit(int(sys.argv[6]))
+"""
+    monkeypatch.setattr(gb, "ROOT", tmp_path)
+    monkeypatch.setattr(gb, "gate_command", lambda: [
+        sys.executable, "-c", child, grandchild, str(ready), str(release),
+        str(done), transcript, str(exit_code)])
+    # Release the fixture even with the old EOF-dependent implementation, so
+    # a regression fails this test promptly instead of hanging the test suite.
+    watchdog = threading.Timer(3, release.touch)
+    watchdog.start()
+    forwarded = io.StringIO()
+    started = time.monotonic()
+    try:
+        with redirect_stdout(forwarded):
+            status, captured = gb.run_gate()
+        assert time.monotonic() - started < 2
+        assert ready.exists() and not release.exists() and not done.exists()
+        assert status == exit_code
+        assert captured == forwarded.getvalue() == "compiler diagnostic\n" + transcript
+        assert run(gb.check, captured, [], None, None, status)[0] == expected_check
+    finally:
+        watchdog.cancel()
+        release.touch()
+        deadline = time.monotonic() + 2
+        while not done.exists() and time.monotonic() < deadline:
+            time.sleep(0.01)
+    assert done.exists()

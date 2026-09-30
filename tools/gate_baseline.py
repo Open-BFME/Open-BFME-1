@@ -21,10 +21,15 @@ Rows that went green are printed so the fixer can shrink the baseline in the
 same commit as the fix, which is the only allowed edit.
 """
 import argparse
+import codecs
+import io
+import locale
 import os
 import re
 import subprocess
 import sys
+import tempfile
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,12 +51,29 @@ def run_gate():
     env.setdefault("BUILD_POOL", env.get("BUILD_POOL", "4"))
     env["PYTHONUNBUFFERED"] = "1"
     output = []
-    with subprocess.Popen(gate_command(), cwd=ROOT, env=env, text=True,
-                          stdout=subprocess.PIPE, stderr=subprocess.STDOUT) as process:
-        for line in process.stdout:
-            output.append(line)
-            print(line, end="", flush=True)
-        return process.wait(), "".join(output)
+    # Wine services can inherit stdout/stderr and outlive the direct gate
+    # child. A pipe reader would wait for their EOF even after a final verdict.
+    # Separate regular-file handles let us forward progress and stop on the
+    # direct child's exit, preserving its actual status and complete output.
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as directory:
+        path = Path(directory) / "gate-output"
+        with path.open("wb") as sink, path.open("rb") as reader:
+            decoder = io.IncrementalNewlineDecoder(
+                codecs.getincrementaldecoder(locale.getpreferredencoding(False))(), True)
+            with subprocess.Popen(gate_command(), cwd=ROOT, env=env,
+                                  stdout=sink, stderr=subprocess.STDOUT) as process:
+                while True:
+                    data = reader.read()
+                    finished = process.poll() is not None
+                    if finished:
+                        data += reader.read()  # drain bytes written before the child exited
+                    text = decoder.decode(data, final=finished)
+                    if text:
+                        output.append(text)
+                        print(text, end="", flush=True)
+                    if finished:
+                        return process.wait(), "".join(output)
+                    time.sleep(0.1)
 
 
 def gate_command():
