@@ -29,7 +29,7 @@ switch-table entry:
          (`jumptable-external`, sized by the entries that point into the body
          and by the `cmp reg, N / ja` bound; a byte-index table by that bound).
   imm32  an in-image immediate is AMBIGUOUS unless the instruction is
-         push/mov/cmp AND one of these holds: the value starts a matched ledger
+         push/mov AND one of these holds: the value starts a matched ledger
          row, a Ghidra function, a dir32_addresses.csv name (a DIR32 compiled
          code emits), an exports.csv entry, a vtables.tsv vtable or an IAT
          slot; it is this body's start, one of its tables or one of its
@@ -40,8 +40,10 @@ switch-table entry:
          both) (`string`); or its use says address: `mov reg, imm` whose reg is
          then a memory base (`deref`), `mov ecx, imm` before a call
          (`this-call`), `mov eax, imm; ret` into .text (`catch-continuation`).
-         Anything else stays literal and is listed in ambiguous.csv. Values
-         such as `cmp eax, 454E44h` ("END") are exactly why.
+         A cmp, test or arithmetic immediate is always listed, never
+         relocated: `cmp [esp+24h], 0F00000h` equals a function start and is
+         a number. Anything else stays literal and is listed in ambiguous.csv;
+         `cmp eax, 454E44h` ("END") is exactly why.
 
 Target symbol for an address: the defining object symbol of the matched row
 that contains it (+addend when interior); for an IAT slot, the one
@@ -51,7 +53,9 @@ the unique dir32_addresses.csv name at the address; else the address-derived
 (never picked) or when a row's symbol is claimed at two addresses.
 
 Failures: rel8 leaving the body, a body ending mid-instruction or falling
-through its end (after anything but a call), undecodable or unreached bytes
+through its end (a trailing call counts only when it reaches a no-return
+import such as _CxxThrowException, directly or through ILT/import thunks),
+undecodable or unreached bytes
 (int3, nop and MSVC's `mov r,r` / `lea r,[r+0]` fillers are padding), a
 table that cannot be bounded, or any verification error.
 
@@ -103,7 +107,11 @@ PADDING = frozenset(b"\xcc\x90")
 JCC = {0x80: "jo", 0x81: "jno", 0x82: "jb", 0x83: "jae", 0x84: "je", 0x85: "jne", 0x86: "jbe",
        0x87: "ja", 0x88: "js", 0x89: "jns", 0x8A: "jp", 0x8B: "jnp", 0x8C: "jl", 0x8D: "jge",
        0x8E: "jle", 0x8F: "jg"}
-IMM_ADDRESS_MNEMONICS = frozenset({"push", "mov", "cmp"})
+IMM_ADDRESS_MNEMONICS = frozenset({"push", "mov"})
+# imports that never return; a body may end in a call to one of these, reached
+# directly (`call [IAT]`) or through ILT jumps and a `jmp [IAT]` import thunk
+NORETURN_IMPORTS = frozenset({"_CxxThrowException", "exit", "_exit", "abort", "_amsg_exit", "ExitProcess",
+                              "ExitThread", "_endthreadex", "longjmp"})
 CODE_CLASSES = frozenset({"row", "row-interior", "code-unowned", "row-multiname", "row-name-multibody"})
 SAFE_NAME = re.compile(r"^[A-Za-z_?@$][A-Za-z0-9_?@$]*$")
 MASM_NAME_LIMIT = 240
@@ -536,9 +544,13 @@ def classify(body, va, ctx, symbol, extra_entries=()):
             if whole is not None and off + whole.size > size:
                 kind, text = "ends-mid-instruction", f"{whole.mnemonic} {whole.op_str}"
         elif kind == "falls-off-end" and text.startswith("call "):
-            # a trailing call to a no-return helper (throw, abort) is how MSVC ends such bodies
-            info["falls-off-end-after-call"] += 1
-            continue
+            # MSVC ends a body with a call only when the callee never returns;
+            # any other trailing call means the row stops short of its code
+            proof = noreturn_call(ctx, result["insns"][off])
+            if proof:
+                info["falls-off-end-after-noreturn"] += 1
+                continue
+            kind, text = "falls-off-end-after-call", text + " (callee not proven no-return)"
         failures.append((kind, off, text))
     for ref in result["refs"]:
         target = ref.value
@@ -628,6 +640,31 @@ def classify(body, va, ctx, symbol, extra_entries=()):
             failures.append(("overlapping-relocations", a, ""))
     return {"relocs": relocs, "ambiguous": sorted(ambiguous), "failures": failures, "info": info,
             "analysis": result, "tables": tables}
+
+
+def noreturn_call(ctx, insn):
+    """The no-return import a call reaches, or None when that is not proven."""
+    if ctx is None or not insn.operands:
+        return None
+    op = insn.operands[0]
+    if op.type == X86_OP_MEM and op.mem.base == X86_REG_INVALID and op.mem.index == X86_REG_INVALID:
+        slot = op.mem.disp & 0xFFFFFFFF
+    elif op.type == X86_OP_IMM:
+        target, slot = op.imm & 0xFFFFFFFF, None
+        for _ in range(4):
+            raw = ctx.read(target, 6)
+            if raw[:1] == b"\xe9" and len(raw) >= 5:
+                target = (target + 5 + struct.unpack_from("<i", raw, 1)[0]) & 0xFFFFFFFF
+            elif raw[:2] == b"\xff\x25" and len(raw) == 6:
+                slot = struct.unpack_from("<I", raw, 2)[0]
+                break
+            else:
+                return None
+    else:
+        return None
+    imported = ctx.iat.get(slot, "")
+    name = imported.split("!", 1)[-1]
+    return imported if name in NORETURN_IMPORTS else None
 
 
 def use_evidence(insns, ref, va, ctx):

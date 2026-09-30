@@ -144,7 +144,40 @@ def test_unreached_bytes_are_reported_with_their_address_like_dwords():
 
 def test_body_that_stops_mid_instruction_or_falls_through_fails():
     assert [f[0] for f in run(b"\x5e", context())["failures"]] == ["falls-off-end"]
-    assert run(b"\x6a\x00" + call(BODY + 2, 0x401800), context(rows=[(0x401800, 1, "f")]))["failures"] == []
+
+
+def test_trailing_call_to_a_returning_function_is_a_boundary_defect():
+    """Regression (review of cb480bffec): a truncated body ending in a call was `exact`."""
+    code = b"\x6a\x00" + call(BODY + 2, 0x401800)
+    ctx = context(rows=[(0x401800, 1, "?returning@@YAXXZ")])
+    ctx.data = ctx.data[:0x800] + b"\xc3" + ctx.data[0x801:]          # the callee is `ret`
+    assert [f[0] for f in run(code, ctx)["failures"]] == ["falls-off-end-after-call"]
+
+
+def test_trailing_call_to_a_noreturn_import_ends_the_body():
+    slot = IDATA + 8
+    thunk = 0x401800                                                    # jmp [slot]
+    ilt = 0x401810                                                      # jmp thunk
+    ctx = context(iat={slot: "MSVCR71.dll!_CxxThrowException"})
+    image = bytearray(ctx.data)
+    image[0x800:0x806] = b"\xff\x25" + struct.pack("<I", slot)
+    image[0x810:0x815] = b"\xe9" + struct.pack("<i", thunk - (ilt + 5))
+    ctx.data = bytes(image)
+    for code in (b"\x6a\x00" + call(BODY + 2, ilt),                     # through ILT and import thunk
+                 b"\x6a\x00\xff\x15" + struct.pack("<I", slot)):        # call [IAT] directly
+        c = run(code, ctx)
+        assert c["failures"] == [] and c["info"]["falls-off-end-after-noreturn"] == 1
+    ctx.iat[slot] = "KERNEL32.dll!Sleep"
+    assert [f[0] for f in run(b"\x6a\x00\xff\x15" + struct.pack("<I", slot), ctx)["failures"]] == \
+        ["falls-off-end-after-call"]
+
+
+def test_cmp_against_a_known_function_address_is_listed_not_relocated():
+    """Regression (review of cb480bffec): `cmp [esp+24h], 0F00000h` was relocated to a function."""
+    code = b"\x3d" + struct.pack("<I", 0x401800) + b"\xc3"             # cmp eax, <row start>
+    c = run(code, context(rows=[(0x401800, 1, "?fn@@YAXXZ")]))
+    assert c["relocs"] == []
+    assert [(a[0], a[3], a[5]) for a in c["ambiguous"]] == [(1, "imm-cmp", "start:row")]
 
 
 toolchain = pytest.mark.skipif(sys.platform != "win32" or not (build.DEFAULT_VC71_ROOT / "Vc7" / "bin" / "ml.exe").exists(),
