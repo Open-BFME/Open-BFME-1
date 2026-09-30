@@ -10,7 +10,7 @@ void __cdecl fillRandom008747F0(int *arr)
 	{
 		for (int inner = 0x65; inner; --inner)
 		{
-			*arr = bfmeRandomPositive(0x4c4b40);
+			*arr = bfmeRandomPositive(5000000);
 			++arr;
 		}
 	}
