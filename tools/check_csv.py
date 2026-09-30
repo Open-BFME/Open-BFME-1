@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fast integrity check for targets/game/reverse/functions.csv and targets/game/reverse/symbols.csv (<1s).
+"""Fast integrity check for targets/game/reverse/functions.csv, symbols.csv and data_rows.csv (<1s).
 
 Catches the corruption classes that break the full gate long after the fact:
 duplicate rows from union merges, two agents claiming overlapping bytes,
@@ -491,7 +491,26 @@ def worldbuilder_claims(spec, sources_ok):
     return target_hooks.validated_worldbuilder_sources(ROOT)
 
 
-def check_orphans(spec, problems, *, functions_raw=None, sources_ok=None):
+def read_data_rows(spec):
+    """data_rows.csv at `spec` (b"" when that state has none)."""
+    path = ROOT / "targets/game/reverse" / "data_rows.csv"
+    if spec is None:
+        return path.read_bytes() if path.exists() else b""
+    rel = "targets/game/reverse/data_rows.csv"
+    out = subprocess.run(["git", "-C", str(ROOT), "show", f"{spec}:{rel}"], capture_output=True)
+    return out.stdout if out.returncode == 0 else b""
+
+
+def data_row_sources(raw):
+    """Sources owning a matched data row (tools/data_rows.py): a data-only TU."""
+    import data_rows
+    try:
+        return {row["source"] for _, row in data_rows.parse(raw) if row.get("status") == "matched"}
+    except ValueError:
+        return set()
+
+
+def check_orphans(spec, problems, *, functions_raw=None, sources_ok=None, data_raw=None):
     """Refuse a NEW game/*.cpp that owns no matched row.
 
     A source with no row is presence pretending to be progress: nothing compiles
@@ -510,6 +529,8 @@ def check_orphans(spec, problems, *, functions_raw=None, sources_ok=None):
             claimed.add(row[4])
     if sources_ok is None:
         sources_ok = known_sources(spec)
+    # a data-only TU owns its globals in data_rows.csv (tools/data_rows.py)
+    claimed.update(data_row_sources(read_data_rows(spec) if data_raw is None else data_raw))
     try:
         claimed.update(worldbuilder_claims(spec, sources_ok))
     except (ValueError, OSError, KeyError, subprocess.CalledProcessError) as error:
@@ -555,8 +576,13 @@ def main():
     n_syms = check_symbols(read_ledger(SYMBOLS, spec), problems)
     check_attempts(spec, problems, functions_raw=functions_raw,
                    sources_ok=sources_ok)
+    data_raw = read_data_rows(spec)
+    n_data = 0
+    if data_raw:
+        import data_rows
+        n_data = data_rows.check(data_raw, problems, sources_ok)
     n_orphans = check_orphans(spec, problems, functions_raw=functions_raw,
-                              sources_ok=sources_ok)
+                              sources_ok=sources_ok, data_raw=data_raw)
 
     if problems:
         print(f"check_csv: {len(problems)} problem(s):", file=sys.stderr)
@@ -564,6 +590,7 @@ def main():
             print(f"  - {p}", file=sys.stderr)
         raise SystemExit(1)
     print(f"check_csv: OK (functions.csv {n_funcs} rows, symbols.csv {n_syms} rows"
+          + (f", data_rows.csv {n_data} rows" if n_data else "")
           + (f", {n_orphans} known row-less source(s))" if n_orphans else ")"))
 
 

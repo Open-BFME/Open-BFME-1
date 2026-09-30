@@ -242,6 +242,16 @@ def main():
     (declared, matched, matched_by_source, matched_sources,
      matched_aliases_by_source) = read_function_names(FUNCTIONS_CSV, args.staged)
     whitelist = load_claims_whitelist()
+    # a data-only TU owns its globals in data_rows.csv (tools/data_rows.py, byte-verified by the gate)
+    data_ledger = Path("targets/game/reverse/data_rows.csv")
+    data_text = git_show(data_ledger) if args.staged else (
+        (ROOT / data_ledger).read_text(encoding="utf-8") if (ROOT / data_ledger).exists() else None)
+    if data_text:
+        sys.path.insert(0, str(ROOT / "tools"))
+        import data_rows
+        for _, row in data_rows.parse(data_text.encode("utf-8")):
+            if row.get("status") == "matched":
+                matched_by_source[row["source"]] = matched_by_source.get(row["source"], 0) + 1
 
     unmatched = []
     violations = []
@@ -263,7 +273,7 @@ def main():
         file_matched = matched_by_source.get(rel_path.as_posix(), 0)
         if file_matched == 0 and rel_path.as_posix() not in whitelist:
             violations.append(
-                f"{rel_path}: ZERO matched functions.csv rows — match at least one "
+                f"{rel_path}: ZERO matched functions.csv / data_rows.csv rows — match at least one "
                 f"function before committing this file, or whitelist it with a reason "
                 f"(targets/game/reverse/unclaimed_sources_whitelist.txt)"
             )

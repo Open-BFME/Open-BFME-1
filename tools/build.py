@@ -3057,7 +3057,8 @@ UNMATCHED_MARKER_RE = re.compile(
 
 def verify_source_claims(only=None):
     """Progress is matched rows, nothing else: every .cpp under game/ must own at
-    least one byte-verified matched row, and no marker may contradict the ledger
+    least one byte-verified matched row (a function row, or a data_rows.csv row
+    for a data-only TU), and no marker may contradict the ledger
     (a symbol both matched and marked unmatched is a stale annotation lying about
     state). There is deliberately NO exception list: a source file nothing has
     ever byte-verified is a reconstruction, not a port, and must not live here.
@@ -3070,6 +3071,12 @@ def verify_source_claims(only=None):
     matched_by_source = {}
     matched_sources = {}
     for row in load_function_rows():
+        matched_by_source[row["source"]] = matched_by_source.get(row["source"], 0) + 1
+        matched_sources.setdefault(row["name"], set()).add(row["source"])
+    # A data-only TU owns its globals in data_rows.csv; those rows are byte-verified
+    # by data_rows.verify (below in main, and in the full gate), not taken on trust.
+    import data_rows
+    for row in data_rows.load():
         matched_by_source[row["source"]] = matched_by_source.get(row["source"], 0) + 1
         matched_sources.setdefault(row["name"], set()).add(row["source"])
 
@@ -3151,10 +3158,20 @@ def main(only=None):
         # selector names a source that owns no rows, which is exactly the case the
         # zero-row check exists to catch, so it has to run before that exit.
         verify_source_claims(only)
+        # data rows of the named sources: byte-verified whether or not the
+        # source also owns functions (a data-only TU owns nothing else)
+        import data_rows
+        data_sources = {row["source"] for row in data_rows.load()
+                        if any(sel.removeprefix("source:") in row["source"] for sel in only
+                               if not sel.startswith("row:"))}
+        if data_sources:
+            data_rows.verify(sources=sorted(data_sources))
         function_selectors = [sel for sel in only if not sel.startswith("source:")]
         if not function_selectors:
             return
         function_rows = select_function_rows(function_selectors, load_function_rows())
+        if not function_rows and data_sources:
+            return  # the selectors named data-only sources, verified above
         if not function_rows:
             raise SystemExit("no functions match: " + ", ".join(function_selectors))
         verify_functions(function_selectors, selected_rows=function_rows)
@@ -3216,6 +3233,8 @@ def main(only=None):
     run("dir32 consistency", lambda: verify_dir32_consistency(rows))
     run("pin consistency", pin_consistency.verify)
     run("source claims", verify_source_claims)
+    import data_rows
+    run("data rows", data_rows.verify)
     run("null relocs", null_reloc.verify)
     if patches is None:
         # The no-op patch needs the compiled patch set, so a failed

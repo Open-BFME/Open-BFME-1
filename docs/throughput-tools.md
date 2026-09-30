@@ -324,6 +324,15 @@ masking a pointer does not prove it. Exit 0 means all examined data is proved,
 unplaced sections). Run it when defining a global or table. It does not prove
 the declared extent, alignment, startup behavior, or whole-program linkage.
 
+A data-only TU (ZH's `Common/Language.cpp` defines only `OurLanguage`) owns
+its globals in `targets/game/reverse/data_rows.csv`: land one with
+`python3 tools/add_data_match.py <symbol> <address> --va|--rva <source> --model M
+--evidence TEXT`. The size must be proven from the object. An initialised symbol
+must equal retail with every relocation on retail's pointer; a zero-filled one
+must be zero at its own address, since MSVC orders a TU's .bss by name.
+check_csv validates the ledger. `./build.sh <source>` and the full gate re-verify
+it (`tools/data_rows.py`).
+
 `python3 tools/reloc_ledger.py` (~2 min, after `tools/dump_relocs.py --all`)
 writes `build/reloc_ledger/`: one typed row per reference into or pointer
 held by .rdata/.data/STLPORT_, with provenance (compiler relocation of a placed

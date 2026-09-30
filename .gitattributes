@@ -17,6 +17,8 @@ mods/dist/** -text
 # claiming one shared COMDAT address is an identity question, not a merge one.
 targets/game/reverse/functions.csv merge=union
 targets/game/reverse/symbols.csv merge=union
+# data_rows.csv (tools/data_rows.py): one owner per address, appended like the others
+targets/game/reverse/data_rows.csv merge=union
 # The counterweight to functions.csv being union-merged: a deletion there is
 # invisible to a merge, and this file is the only record of one. It has to
 # union-merge too, or retracting a batch of rows conflicts with every branch in

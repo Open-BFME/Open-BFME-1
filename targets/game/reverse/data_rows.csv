@@ -1,0 +1,2 @@
+name,address,address_kind,size,section,source,status,evidence,model
+?OurLanguage@@3W4LanguageID@@A,0x012ED5D4,va,4,.data,game/GameEngine/Source/Common/Language.cpp,matched,"ZH GeneralsMD Common/Language.cpp defines it (LanguageID OurLanguage = LANGUAGE_ID_US); dir32_addresses.csv places it at 0x012ED5D4, where retail .data holds 0; re_attempts.log blocked verdict for want of a data ledger",claude-opus-5.5
