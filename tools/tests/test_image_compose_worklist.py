@@ -91,26 +91,42 @@ def test_families():
     assert C.fix_site(item("?f@@YAXXZ", ""), "body", {"a.obj": "game/a.cpp"}) == "source:game/a.cpp"
 
 
-def test_next_serves_the_first_claimable_row(tmp_path, monkeypatch, capsys):
+def test_next_serves_the_first_open_claimable_row(tmp_path, monkeypatch, capsys):
     import eligibility
-    path = tmp_path / "worklist.csv"
-    header = ",".join(C.WORKLIST_FIELDS)
-    blank = {field: "" for field in C.WORKLIST_FIELDS}
-
-    def line(**values):
-        row = {**blank, "unlock_files": "0", "unlock_authored_bytes": "0", "unlock_vendored_bytes": "0",
-               "unlock_census_linked_files": "0", "unlock_functions": "0", "unlock_function_bytes": "0",
-               "group_unlock_files": "0", "group_unlock_authored_bytes": "0", **values}
-        return ",".join(str(row[f]) for f in C.WORKLIST_FIELDS)
-    path.write_text("\n".join([f"# {C.SINGLE_FIX}", header,
-                               line(rank=1, blocker="_nowhere", family="data", unlock_authored_bytes=90),
-                               line(rank=2, blocker="_retired", family="data", claim_rva="0x00000010",
-                                    unlock_authored_bytes=80),
-                               line(rank=3, blocker="_served", family="data", claim_rva="0x00000020",
-                                    unlock_authored_bytes=70)]) + "\n", encoding="utf-8")
+    path = tmp_path / "linking_worklist.csv"
+    work = [{"rank": 0, "family": "data", "blocker": name, "claim_rva": rva, "unlock_files": 1,
+             "unlock_authored_bytes": size, "unlock_function_bytes": 5, "_files": ["game/a.cpp"],
+             "fix_site": site, "reason": "r", "command": C.COMMAND["data"][0], "census": "abc1234"}
+            for name, rva, size, site in (("_nowhere", "", 90, "name:_nowhere"),
+                                          ("_retired", "0x00000010", 80, "name:_retired"),
+                                          ("_changed", "0x00000030", 75, "source:game/b.cpp"),
+                                          ("_served", "0x00000020", 70, "name:_served"),
+                                          ("_no_file", "0x00000040", 0, "name:_no_file"))]
+    assert C.write_published(path, work, {"commit": "abc1234", "date": "d"}, 0) == 4  # 0 authored bytes: not published
+    text = path.read_text(encoding="utf-8")
+    assert text.startswith("# linking worklist, census abc1234") and C.SINGLE_FIX in text
     monkeypatch.setattr(eligibility, "latest_verdicts", lambda: {0x10: "no-match"})
     monkeypatch.setattr(eligibility, "retired", lambda rva, latest: rva in latest)
+    fresh = object.__new__(C.Freshness)
+    fresh.root, fresh.changed, fresh.lines = tmp_path, {"game/b.cpp"}, []
+    monkeypatch.setattr(C, "Freshness", lambda census: fresh)
     args = type("Args", (), {"worklist": path, "family": None, "no_claim": True})()
     assert C.cmd_next(args) == 0
     out = capsys.readouterr().out
-    assert "rank 3" in out and "_served" in out and "NOT claimed" in out
+    assert "rank 4" in out and "_served" in out and "NOT claimed" in out
+    assert "its source changed since the census 1" in out and "dead-end verdict 1" in out
+
+
+def test_freshness_skips_what_changed_since_the_census(tmp_path):
+    fresh = object.__new__(C.Freshness)
+    fresh.root, fresh.changed = tmp_path, {"game/a.cpp"}
+    fresh.lines = ["?f@@YAXXZ,,0x00401000,12,game/c.cpp,matched,", "_g_x,0x00500000,,"]
+    assert C.Freshness.stale(fresh, {"fix_site": "source:game/a.cpp"}).startswith("its source")
+    assert C.Freshness.stale(fresh, {"claim_rva": "0x00401000"}).startswith("a ledger line")
+    assert C.Freshness.stale(fresh, {"blocker": "_g_x"}).startswith("a row, pin")
+    assert C.Freshness.stale(fresh, {"blocker": "_g", "claim_rva": "0x00600000",
+                                     "fix_site": "source:game/b.cpp"}) is None
+    receipt = tmp_path / "build" / "provider_repair" / "0x00600000" / "receipt.json"
+    receipt.parent.mkdir(parents=True)
+    receipt.write_text("{}")
+    assert C.Freshness.stale(fresh, {"claim_rva": "0x00600000"}).startswith("a provider_repair receipt")

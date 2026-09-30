@@ -7,8 +7,8 @@ reduce the file count or fix redeclared types (`docs/header_adoption.md`).
 
 ## Move, don't merge
 
-Merging fragments into one TU per class does not work today: every group that
-passed the static checks then failed to compile. Do not plan around it. Treat
+Merging fragments into one TU per class failed: every group that passed the
+static checks failed to compile. Treat
 `tools/mergeable_groups.py` as an upper bound and the compiler as the oracle. A
 merge is blocked when:
 
@@ -20,9 +20,8 @@ merge is blocked when:
 - two donors, or a donor and the destination's includes, declare the same type
   (`error C2011`). Header adoption has to come first.
 
-Moving has none of these problems. The `// cl:` line travels with the file, almost
-no source has a relative include, and nothing is reconciled against a sibling. A
-move is byte-neutral.
+Moving avoids all three: the `// cl:` line travels with the file, almost no
+source has a relative include, and a move is byte-neutral.
 
 ## The tools
 
@@ -32,8 +31,8 @@ move is byte-neutral.
 
 `placement_batch.py` repoints the ledger, returns files that are red, and records
 sources the hook refuses in `targets/game/reverse/placement_blocked.tsv`, which the
-queue then skips. The regenerated queue and its skip summary are the current state.
-An empty queue means the lane is exhausted, not broken.
+queue then skips. An empty regenerated queue means the lane is exhausted, not
+broken.
 
 ## Where a file belongs
 

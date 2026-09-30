@@ -54,10 +54,14 @@ placement is retail's; bridges keep every unknown reference where it was.
 The LINKING WORKLIST ranks every bad node on a decompiled function's closure
 by the authored files it alone would source-close (every counted function of
 the file closed strict), groups them by family and by fix site, and serves one
-at a time through tools/claims.py (single-fix model: see SINGLE_FIX):
+at a time through tools/claims.py (single-fix model: see SINGLE_FIX). The
+daily census (tools/fleet/daily_census.sh) regenerates the tracked
+targets/game/reverse/linking_worklist.csv; `next` serves from it on any host
+and first skips rows the tree has moved past since that census (Freshness).
 
   python3 tools/image_compose.py worklist --image-check <image_check out dir> --tree build/wt_census_<commit>
-  python3 tools/image_compose.py next [--family data] [--no-claim]
+      [--status link_status.csv] [--publish targets/game/reverse/linking_worklist.csv]
+  python3 tools/image_compose.py next [--family data] [--no-claim] [--worklist build/image_compose/worklist.csv]
 """
 import argparse
 import bisect
@@ -538,20 +542,26 @@ EH_SECTIONS = (".xdata", ".text$x")
 EH_NAMES = ("__ehhandler$", "__unwindfunclet$", "__catch$", "__ehfuncinfo$", "__tryblocktable$",
             "__unwindtable$", "__catchsym$")
 CLASS_NAMES = ("??_7", "??_8", "??_R")
-LANE_HINT = {
-    "provider": "make the link select the proven body / give it a row or pin: tools/provider_repair.py",
-    "data": "define the global: tools/provider_repair.py data-next, tools/add_data_match.py",
-    "import": "declare it the way retail imports it (link_census.excused)",
-    "eh": "EH metadata: fix the owning function's source",
-    "class-copy": "one class definition, one header: tools/adopt_header.py",
-    "bridge": "convert the dump/generated body to real C++ (tools/next_work.py, tools/lift_lane.py)",
-    "body": "the function's own bytes or relocations: fix its source (tools/probe.py)",
-    "other": "a name nothing defines or pins: find its definition"}
-TYPED_HINT = "prove each word scalar or pointer: tools/reloc_ledger.py proven_scalars.csv, image_check --scalars"
+COMMAND = {  # the tool each family goes to: (published `command`, what `next` prints)
+    "provider": ("tools/provider_repair.py", "provider_repair.py next|apply|check <symbol> (fleet lane provider)"),
+    "data": ("tools/provider_repair.py data-next", "provider_repair.py data-next, tools/add_data_match.py, "
+             "provider_repair.py data-check <symbol>"),
+    "import": ("tools/import_binding.py", "import_binding.py next, then apply|check <source>"),
+    "eh": ("tools/probe.py", "fix the owning function's source; tools/probe.py"),
+    "class-copy": ("tools/adopt_header.py", "one class definition: tools/adopt_header.py"),
+    "bridge": ("tools/next_work.py", "convert the body to C++: tools/next_work.py, tools/lift_lane.py"),
+    "body": ("tools/probe.py", "fix the function's source; tools/probe.py"),
+    "other": ("tools/link_check.py", "tools/link_check.py <file>: find the definition"),
+    "typed": ("tools/reloc_ledger.py", "prove each word scalar or pointer: tools/reloc_ledger.py proven_scalars.csv, "
+              "image_check --scalars")}
+TYPED = "words need typed evidence"
+PUBLISHED = ROOT / "targets" / "game" / "reverse" / "linking_worklist.csv"
+PUBLISHED_FIELDS = ["rank", "family", "blocker", "claim_rva", "unlock_files", "unlock_authored_bytes",
+                    "unlock_function_bytes", "files", "fix_site", "reason", "command", "census"]
 WORKLIST_FIELDS = ["rank", "blocker", "node", "family", "rule", "fix_site", "object", "source", "home", "claim_rva",
                    "verdict", "reason", "unlock_files", "unlock_authored_bytes", "unlock_vendored_bytes",
                    "unlock_census_linked_files", "unlock_functions", "unlock_function_bytes", "group_unlock_files",
-                   "group_unlock_authored_bytes", "files", "example"]
+                   "group_unlock_authored_bytes", "files", "example", "command", "census"]
 GROUP_FIELDS = ["rank", "fix_site", "families", "blockers_listed", "unlock_files", "unlock_authored_bytes",
                 "unlock_vendored_bytes", "unlock_census_linked_files", "unlock_functions", "unlock_function_bytes",
                 "files"]
@@ -582,7 +592,7 @@ def family_of(node, section):
         return "bridge", f"{lane} body"
     if not section.startswith(".text"):
         if "unrelocated in-image dword" in reason:
-            return "data", "words need typed evidence: scalar or pointer (image_check --scalars)"
+            return "data", f"{TYPED}: scalar or pointer (image_check --scalars)"
         return "data", f"{section or '?'} item"
     if ("no retail address" in reason or "placements disagree" in reason or "several candidate" in reason
             or reason.startswith("shared address")):
@@ -763,7 +773,7 @@ def reconcile(progress, real, counted, status, closed, census):
             "counted_function_bytes": total(counted_spans)}
 
 
-def worklist(ic_dir, tree, status_path=None, out=OUT):
+def worklist(ic_dir, tree, status_path=None, out=OUT, publish=None):
     """Rank every blocker by the authored files it alone would close; write
     worklist.csv, worklist_groups.csv and worklist_summary.json to `out`."""
     import csv
@@ -888,7 +898,8 @@ def worklist(ic_dir, tree, status_path=None, out=OUT):
                      **unlock(by_node_files.get(node, ()), by_node_fns.get(node, ())),
                      "group_unlock_files": group.get("unlock_files", 0),
                      "group_unlock_authored_bytes": group.get("unlock_authored_bytes", 0),
-                     "example": " -> ".join(chain)})
+                     "example": " -> ".join(chain), "census": census["commit"],
+                     "command": COMMAND["typed" if family[node][1].startswith(TYPED) else family[node][0]][0]})
     work.sort(key=rank_key)
     for rank, row in enumerate(work, 1):
         row["rank"] = rank
@@ -935,7 +946,28 @@ def worklist(ic_dir, tree, status_path=None, out=OUT):
             writer.writeheader()
             writer.writerows(data)
     (out / "worklist_summary.json").write_text(json.dumps(result, indent=1), encoding="utf-8")
+    if publish is not None:
+        write_published(publish, work, census, summary.get("proven_scalar_data_dwords", 0))
     return result, work, group_rows
+
+
+def write_published(path, work, census, scalars):
+    """The tracked worklist every host serves from: the rows whose fix alone
+    closes at least one authored file, in rank order, minimal columns."""
+    import csv
+    rows = [row for row in work if row["unlock_authored_bytes"] > 0]
+    with Path(path).open("w", newline="", encoding="utf-8") as handle:
+        handle.write(f"# linking worklist, census {census['commit']} ({census['date']}), image_check with {scalars:,} "
+                     "proven-scalar data words; rows: blockers whose fix alone closes >= 1 authored file (the full "
+                     "list: build/image_compose/worklist.csv). Serve: python3 tools/image_compose.py next\n")
+        handle.write(f"# {SINGLE_FIX}\n")
+        writer = csv.DictWriter(handle, PUBLISHED_FIELDS, lineterminator="\n", extrasaction="ignore")
+        writer.writeheader()
+        for rank, row in enumerate(rows, 1):
+            more = len(row["_files"]) - 1
+            writer.writerow({**row, "rank": rank, "reason": row["reason"][:60],
+                             "files": row["_files"][0] + (f"; +{more} more" if more > 0 else "")})
+    return len(rows)
 
 
 def read_worklist(path):
@@ -974,11 +1006,65 @@ def print_worklist(result, work, groups, limit):
               + (f"; {len(parts) - 4} more in worklist_summary.json" if len(parts) > 4 else ""))
 
 
+NOT_RECHECKED = ("not re-checked (needs a relink and image_check): whether the fix made the blocker retail-true "
+                 "and movable, blockers a fix adds, and callers, selection or files changed elsewhere since the census")
+
+
+class Freshness:
+    """Is a worklist row still open on this tree? A cheap, honest subset:
+    the row is skipped when, since its census commit, its fix site's source
+    changed, a functions.csv / symbols.csv / data_rows.csv line naming its
+    address or its name was added or removed, or this checkout holds a
+    provider_repair receipt for the address. NOT_RECHECKED says the rest."""
+    LEDGERS = ("targets/game/reverse/functions.csv", "targets/game/reverse/symbols.csv",
+               "targets/game/reverse/data_rows.csv")
+
+    def __init__(self, census, root=ROOT):
+        import subprocess
+
+        def git(*args):
+            done = subprocess.run(["git", *args], cwd=root, capture_output=True, text=True, encoding="utf-8",
+                                  errors="replace")
+            if done.returncode:
+                raise SystemExit(f"image_compose: git {' '.join(args[:2])} failed; is census {census} fetched? "
+                                 f"(git fetch origin) {done.stderr.strip()}")
+            return done.stdout
+        git("cat-file", "-e", f"{census}^{{commit}}")
+        self.root = root
+        self.changed = set(git("diff", "--name-only", census, "--", "game", "inputs/reference").splitlines())
+        self.lines = [line[1:] for line in git("diff", "--no-color", "-U0", census, "--", *self.LEDGERS).splitlines()
+                      if line[:1] in "+-" and not line.startswith(("+++", "---"))]
+
+    def stale(self, row):
+        site = row.get("fix_site", "")
+        if site.startswith("source:") and site[len("source:"):] in self.changed:
+            return "its source changed since the census"
+        rva = row.get("claim_rva", "")
+        if rva and any(rva.casefold() in line.casefold() for line in self.lines):
+            return "a ledger line at its address changed since the census"
+        name = row.get("blocker", "")
+        if name and any(line.startswith((name + ",", f'"{name}"')) for line in self.lines):
+            return "a row, pin or data row naming it changed since the census"
+        if rva and (self.root / "build" / "provider_repair" / f"0x{int(rva, 16):08X}" / "receipt.json").exists():
+            return "a provider_repair receipt for it exists in this checkout"
+        return None
+
+
 def cmd_next(args):
-    """Serve and claim the best unclaimed blocker with its evidence."""
+    """Serve and claim the best unclaimed blocker that is still open, with its evidence."""
     import claims
     import eligibility
     rows = read_worklist(args.worklist)
+    census = {row["census"] for row in rows}
+    if len(census) != 1:
+        raise SystemExit(f"image_compose: {args.worklist} names {len(census)} census commits; regenerate it")
+    census = census.pop()
+    fresh = Freshness(census)
+    history = (ROOT / "targets/game/reverse/link_census_history.csv").read_text(encoding="utf-8").splitlines()
+    last = history[-1].split(",")[1] if len(history) > 1 else census
+    if last != census:
+        print(f"image_compose next: the worklist is from census {census}; the last census is {last} "
+              "(regenerate: tools/fleet/daily_census.sh, or the worklist command)", file=sys.stderr)
     busy = set() if args.no_claim else {int(t, 16) for t in eligibility.busy_rvas() if t.startswith("0x")}
     latest = eligibility.latest_verdicts()
     skipped = collections.Counter()
@@ -997,6 +1083,10 @@ def cmd_next(args):
         if eligibility.retired(rva, latest):
             skipped["dead-end verdict"] += 1
             continue
+        why = fresh.stale(row)
+        if why:
+            skipped[why] += 1
+            continue
         if not args.no_claim:
             try:
                 got = claims.claim([rva], note=f"image_compose worklist {row['family']}")
@@ -1006,21 +1096,23 @@ def cmd_next(args):
             if not got.claimed:
                 skipped["claim refused"] += 1
                 continue
-        print(f"image_compose next: rank {row['rank']} {row['family']} ({row['rule']}) "
-              f"{'claimed' if not args.no_claim else 'NOT claimed (--no-claim)'} {row['claim_rva']}")
-        for key in ("blocker", "object", "source", "home", "verdict", "reason", "fix_site"):
-            if row[key]:
+        print(f"image_compose next: rank {row['rank']} {row['family']} "
+              f"{'claimed' if not args.no_claim else 'NOT claimed (--no-claim)'} {row['claim_rva']} "
+              f"(census {census})")
+        for key in ("blocker", "rule", "object", "source", "home", "verdict", "reason", "fix_site"):
+            if row.get(key):
                 print(f"  {key:<9} {row[key]}")
-        print(f"  unlocks   {row['unlock_files']} files, {int(row['unlock_authored_bytes']):,} authored + "
-              f"{int(row['unlock_vendored_bytes']):,} vendored bytes ({row['unlock_census_linked_files']} of the "
-              f"files already census-linked); {row['unlock_functions']} functions, "
-              f"{int(row['unlock_function_bytes']):,} bytes; its fix site alone: {row['group_unlock_files']} files, "
-              f"{int(row['group_unlock_authored_bytes']):,} bytes")
+        print(f"  unlocks   {row['unlock_files']} files, {int(row['unlock_authored_bytes']):,} authored bytes; "
+              f"{int(row['unlock_function_bytes']):,} bytes of functions closed")
         print(f"  files     {row['files']}")
-        print(f"  path      {row['example']}")
-        typed = "typed evidence" in row["rule"]
-        print(f"  lane      {TYPED_HINT if typed else LANE_HINT[row['family']]}")
+        if row.get("example"):
+            print(f"  path      {row['example']}")
+        hint = COMMAND["typed" if row["command"] == COMMAND["typed"][0] else row["family"]][1]
+        print(f"  command   {row['command']}  ({hint})")
         print(f"  model     {SINGLE_FIX}")
+        print(f"  open      {NOT_RECHECKED}")
+        if skipped:
+            print("  skipped   " + ", ".join(f"{w} {n}" for w, n in sorted(skipped.items())))
         return 0
     print("image_compose next: nothing to serve" + (": " if skipped else "") +
           ", ".join(f"{why} {count}" for why, count in sorted(skipped.items())))
@@ -1086,13 +1178,18 @@ def main(argv=None):
     w.add_argument("--status", type=Path, help="that census's link_status.csv (default: from origin/master)")
     w.add_argument("--out", type=Path, default=OUT)
     w.add_argument("--limit", type=int, default=15)
+    w.add_argument("--publish", type=Path, help="also write the tracked worklist (targets/game/reverse/"
+                                                "linking_worklist.csv)")
     n = sub.add_parser("next", help="claim the best unclaimed worklist blocker and print its evidence")
-    n.add_argument("--worklist", type=Path, default=OUT / "worklist.csv")
+    n.add_argument("--worklist", type=Path, default=PUBLISHED,
+                   help="default: the tracked targets/game/reverse/linking_worklist.csv; "
+                        "build/image_compose/worklist.csv for the full local list")
     n.add_argument("--family", choices=FAMILIES)
     n.add_argument("--no-claim", action="store_true", help="show it without claiming (and without skipping claims)")
     args = ap.parse_args(argv)
     if args.command == "worklist":
-        result, work, groups = worklist(args.image_check.resolve(), args.tree.resolve(), args.status, args.out)
+        result, work, groups = worklist(args.image_check.resolve(), args.tree.resolve(), args.status, args.out,
+                                        args.publish)
         print_worklist(result, work, groups, args.limit)
         return 0
     if args.command == "next":

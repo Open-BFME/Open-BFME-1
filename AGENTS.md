@@ -41,11 +41,13 @@ ledger and verification are separate from the game's.
    bar. Only `gen-tgrid`/`gen-shim` rows have source to write; `gen-thunk`,
    `gen-funclet`, `gen-ehstub`, `gen-dtor` and `gen-import` never do. Take it
    after the lanes above.
-6. **Linked build.** `python3 tools/link_debt.py --report` lists literal image
-   addresses: name each (`dir32_addresses.csv`, else `g_XXXXXXXX`), byte-neutral.
-   `tools/link_check.py <file>` lists blockers; `--next` ranks them.
-   `tools/provider_repair.py next` serves one wrong linked copy to `apply`, `check`;
-   fleet lane `provider` runs it end to end.
+6. **Linked build.** `python3 tools/image_compose.py next [--family F]` claims
+   the blocker whose fix alone closes the most authored files and prints its
+   tool: `provider` -> `tools/provider_repair.py next`, `apply`, `check` (fleet
+   lane `provider`); `data` -> `provider_repair.py data-next`, `data-check`,
+   `tools/add_data_match.py`; `import` -> `tools/import_binding.py next`,
+   `apply`, `check`. `tools/link_check.py <file>` lists one file's blockers;
+   `tools/link_debt.py --report` lists image addresses to name.
 7. **EA renames.** `python3 tools/ea_queue.py next` serves one rename to EA's
    own name and every file it touches; follow its steps.
 8. **Names.** `python3 tools/name_lane.py next --model <your model>` serves one
