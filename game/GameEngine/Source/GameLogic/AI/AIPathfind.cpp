@@ -8384,28 +8384,7 @@ Bool Pathfinder::slowDoesPathExist( Object *obj,
 	return found;
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/pathfind_getcell.cpp
-// ?clip@Pathfinder@@QAEXPAUCoord3D@@0@Z present-unmatched
-void Pathfinder::clip( Coord3D *from, Coord3D *to )
-{
-	ICoord2D fromCell, toCell;
-	ICoord2D clipFromCell, clipToCell;
-	fromCell.x = REAL_TO_INT_FLOOR(from->x/PATHFIND_CELL_SIZE);
-	fromCell.y = REAL_TO_INT_FLOOR(from->y/PATHFIND_CELL_SIZE);
-	toCell.x = REAL_TO_INT_FLOOR(to->x/PATHFIND_CELL_SIZE);
-	toCell.y = REAL_TO_INT_FLOOR(to->y/PATHFIND_CELL_SIZE);
-	if (ClipLine2D(&fromCell, &toCell, &clipFromCell, &clipToCell,&m_extent)) {
-		if (fromCell.x!=clipFromCell.x || fromCell.y != clipFromCell.y) {
-			from->x = clipFromCell.x*PATHFIND_CELL_SIZE_F + 0.05f;
-			from->y = clipFromCell.y*PATHFIND_CELL_SIZE_F + 0.05f;
-		}
-		if (toCell.x!=clipToCell.x || toCell.y != clipToCell.y) {
-			to->x = clipToCell.x*PATHFIND_CELL_SIZE_F + 0.05f;
-			to->y = clipToCell.y*PATHFIND_CELL_SIZE_F + 0.05f;
-		}
-	}
-
-}
+// Retail Pathfinder::clip (0x003D5DE0) is implemented in pathfind_getcell.cpp.
 
 // ?pathDestination@Pathfinder@@ present-unmatched
 Bool Pathfinder::pathDestination( 	Object *obj, const LocomotorSet& locomotorSet, Coord3D *dest, 
