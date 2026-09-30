@@ -1,87 +1,139 @@
-// ?d_0021cd60@@YAXXZ
-// partial score=0.68 date=2026-09-11
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME6: 0x0021CD60. Six-arg continuation, then count the circular list
-// at +0x99C and tally payloads whose override has bit 0x100 at +0xC8.
-// Folding the early "if (!ok) return ok;" into a positive "if (ok) { ... }"
-// tail (one return, no duplicate epilogue) matches retail's je/fallthrough
-// shape and drops diff bytes from 122/166 to 77/165. Residual wall is the
-// prologue register assignment: retail keeps `this` in ebx (materialized by
-// `mov ebx,ecx` right before the bfmeInner call, reused after the call for
-// two m_list loads) while MSVC always keeps `this` in edi and cycles a,
-// count, copy through ebp/esi/edi instead. Reordering local definitions
-// (bits/b/a/count/copy/this-as-local) before the call produces byte-identical
-// output to the original order -- MSVC's stack-arg-to-register assignment
-// here is independent of local declaration order, ruling out the
-// definition-order lever for this shape. Not attempted: forcing edi's
-// mid-function reuse from `copy` to `bits` (retail reloads bits from its
-// original stack slot after the call instead of keeping it live across it).
+// ?bfmeCount@Gen_0021CD60@@QAE_NAAH00000@Z
+// partial score=0.8084 date=2026-09-30
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
 
-struct BfmeNodeD60
+#include <list>
+
+typedef bool Bool;
+typedef int Int;
+typedef unsigned int UnsignedInt;
+
+enum KindOfType
 {
-	BfmeNodeD60 *next;
-	BfmeNodeD60 *prev;
-	void *value;
+	KINDOF_INFANTRY = 8
 };
 
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
+	virtual void overridableAnchor();
 	const Overridable *getFinalOverride() const;
 
-	void *m_vtable;
-	Overridable *m_next;
+	Overridable *m_nextOverride;
 };
 
-class Gen_0021CD60
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
+class ThingTemplate : public Overridable
 {
 public:
-	bool bfmeInner(void *a, void *b, void *c, void *d, int *count, int *bits);
-	bool bfmeCount(void *a, void *b, void *c, void **copy, int *count, int *bits);
+	Bool isKindOf(KindOfType kind) const
+	{
+		return (m_kindOf[(UnsignedInt)kind >> 5] & (1 << ((UnsignedInt)kind & 31))) != 0;
+	}
 
-	char m_pad[0x99C];
-	BfmeNodeD60 *m_list;
+private:
+	unsigned char m_unreconstructed08[0xC8 - 0x08];
+	UnsignedInt m_kindOf[3];
 };
 
-// ?bfmeCount@Gen_0021CD60@@QAE_NPAX00PAPAXPAH2@Z
-bool Gen_0021CD60::bfmeCount(void *a, void *b, void *c, void **copy, int *count, int *bits)
+template <class T>
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Override.h
+class OVERRIDE
 {
-	void *a1 = a;
-	int *cnt = count;
-	void **cp = copy;
-	int *bt = bits;
-	bool ok = bfmeInner(a1, b, c, cp, cnt, bt);
-	if (ok)
+public:
+	const T *operator->() const
 	{
-		BfmeNodeD60 *sent = m_list;
-		int n = 0;
-		BfmeNodeD60 *p;
-		for (p = sent->next; p != sent; p = p->next)
-			++n;
-		*cnt = n;
-		*cp = *(void **)a1;
-		*bt = 0;
-
-		p = m_list->next;
-		if (p != m_list)
-		{
-			unsigned mask = 0x100;
-			do
-			{
-				char *payload = (char *)p->value;
-				Overridable **ovrp = (Overridable **)(payload + 4);
-				Overridable *ovr = *ovrp;
-				if (ovr != 0)
-				{
-					Overridable *next = ovr->m_next;
-					if (next != 0)
-						ovr = (Overridable *)next->getFinalOverride();
-				}
-				if ((*(unsigned *)((char *)ovr + 0xC8) & mask) != 0)
-					++*bt;
-				p = p->next;
-			} while (p != m_list);
-		}
+		const T *value = m_overridable;
+		if (value == 0)
+			return 0;
+		if (value->m_nextOverride)
+			value = static_cast<const T *>(value->m_nextOverride->getFinalOverride());
+		return value;
 	}
-	return ok;
+
+private:
+	// Retail materializes the OVERRIDE member address before loading it; this keeps VC7.1
+	// from folding that access into its owner's addressing mode.
+	const T *volatile m_overridable;
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
+class Thing
+{
+public:
+	virtual ~Thing();
+	Bool isKindOf(KindOfType kind) const { return m_template->isKindOf(kind); }
+
+private:
+	OVERRIDE<ThingTemplate> m_template;
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
+class Object : public Thing
+{
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/OpenContain.h
+class OpenContainModuleData
+{
+public:
+	unsigned char m_unreconstructed00[0x150];
+	Bool m_showPips;
+};
+
+#define OPEN_CONTAIN_SLOT(N) virtual void openContainSlot##N() = 0
+
+class OpenContain
+{
+public:
+	OPEN_CONTAIN_SLOT(00); OPEN_CONTAIN_SLOT(01); OPEN_CONTAIN_SLOT(02); OPEN_CONTAIN_SLOT(03);
+	OPEN_CONTAIN_SLOT(04); OPEN_CONTAIN_SLOT(05); OPEN_CONTAIN_SLOT(06); OPEN_CONTAIN_SLOT(07);
+	OPEN_CONTAIN_SLOT(08); OPEN_CONTAIN_SLOT(09); OPEN_CONTAIN_SLOT(10); OPEN_CONTAIN_SLOT(11);
+	OPEN_CONTAIN_SLOT(12); OPEN_CONTAIN_SLOT(13); OPEN_CONTAIN_SLOT(14); OPEN_CONTAIN_SLOT(15);
+	OPEN_CONTAIN_SLOT(16); OPEN_CONTAIN_SLOT(17); OPEN_CONTAIN_SLOT(18); OPEN_CONTAIN_SLOT(19);
+	OPEN_CONTAIN_SLOT(20); OPEN_CONTAIN_SLOT(21); OPEN_CONTAIN_SLOT(22);
+	virtual Int getContainMax() const = 0;                         // vtable +0x5C
+	OPEN_CONTAIN_SLOT(24); OPEN_CONTAIN_SLOT(25); OPEN_CONTAIN_SLOT(26); OPEN_CONTAIN_SLOT(27);
+	OPEN_CONTAIN_SLOT(28); OPEN_CONTAIN_SLOT(29); OPEN_CONTAIN_SLOT(30); OPEN_CONTAIN_SLOT(31);
+	OPEN_CONTAIN_SLOT(32); OPEN_CONTAIN_SLOT(33); OPEN_CONTAIN_SLOT(34); OPEN_CONTAIN_SLOT(35);
+	OPEN_CONTAIN_SLOT(36); OPEN_CONTAIN_SLOT(37); OPEN_CONTAIN_SLOT(38); OPEN_CONTAIN_SLOT(39);
+	OPEN_CONTAIN_SLOT(40); OPEN_CONTAIN_SLOT(41); OPEN_CONTAIN_SLOT(42); OPEN_CONTAIN_SLOT(43);
+	OPEN_CONTAIN_SLOT(44); OPEN_CONTAIN_SLOT(45);
+	virtual Int getExtraSlotsInUse() = 0;                         // vtable +0xB8
+	OPEN_CONTAIN_SLOT(47); OPEN_CONTAIN_SLOT(48); OPEN_CONTAIN_SLOT(49); OPEN_CONTAIN_SLOT(50);
+	OPEN_CONTAIN_SLOT(51); OPEN_CONTAIN_SLOT(52); OPEN_CONTAIN_SLOT(53); OPEN_CONTAIN_SLOT(54);
+	OPEN_CONTAIN_SLOT(55); OPEN_CONTAIN_SLOT(56); OPEN_CONTAIN_SLOT(57); OPEN_CONTAIN_SLOT(58);
+	OPEN_CONTAIN_SLOT(59); OPEN_CONTAIN_SLOT(60); OPEN_CONTAIN_SLOT(61); OPEN_CONTAIN_SLOT(62);
+	OPEN_CONTAIN_SLOT(63);
+	virtual Int getContainCount(Bool countRiders) const = 0;      // vtable +0x100
+
+	virtual Bool getContainerPipsToShow(Int &numTotal, Int &numFull, Int &numInfantry,
+		Int &secondTotal, Int &secondFull, Int &secondInfantry);
+
+private:
+	unsigned char m_unreconstructed04[0x14];
+	_STL::list<Object *> m_containList;                           // interface this+0x18
+};
+
+#undef OPEN_CONTAIN_SLOT
+
+class Gen_0021CD60 : public OpenContain {
+public:
+    Bool bfmeCount(Int &a,Int &b,Int &c,Int &copy,Int &count,Int &bits);
+private:
+    char pad[0x99c-0x1c];
+    _STL::list<Object*> objects;
+};
+Bool Gen_0021CD60::bfmeCount(Int &a,Int &b,Int &c,Int &copy,Int &count,Int &bits) {
+    Bool ok=OpenContain::getContainerPipsToShow(a,b,c,copy,count,bits);
+    if (ok) {
+        count=objects.size();
+        copy=a;
+        bits=0;
+        for (_STL::list<Object*>::const_iterator it=objects.begin();it!=objects.end();++it)
+            if ((*it)->isKindOf(KINDOF_INFANTRY)) ++bits;
+    }
+    return ok;
 }
