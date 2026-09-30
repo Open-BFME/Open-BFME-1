@@ -1,5 +1,16 @@
 // cl: /DNDEBUG /MD /EHsc
 
+extern "C" const void *bfmeVftCategoryModuleInfo8[];
+#pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo8=??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@")
+extern "C" char CategoryModuleTemplate8_vtbl0;
+extern "C" char CategoryModuleTemplate8_vtbl4;
+extern "C" const void *bfmeVftTerrainCollisionModuleTemplate[];
+#pragma comment(linker, "/alternatename:_bfmeVftTerrainCollisionModuleTemplate=??_7TerrainCollisionModuleTemplate@FXParticleSystem@@6B@")
+extern "C" const void *bfmeVftTerrainCollisionModuleTemplate_TerrainCollisionCategoryBaseA[];
+#pragma comment(linker, "/alternatename:_bfmeVftTerrainCollisionModuleTemplate_TerrainCollisionCategoryBaseA=??_7TerrainCollisionModuleTemplate@FXParticleSystem@@6BTerrainCollisionCategoryBaseA@1@@")
+extern "C" const void *bfmeVftTerrainCollisionModuleTemplate_TerrainCollisionCategoryBaseB[];
+#pragma comment(linker, "/alternatename:_bfmeVftTerrainCollisionModuleTemplate_TerrainCollisionCategoryBaseB=??_7TerrainCollisionModuleTemplate@FXParticleSystem@@6BTerrainCollisionCategoryBaseB@1@@")
+
 namespace FXParticleSystem
 {
 
@@ -20,7 +31,7 @@ class __declspec(novtable) CategoryModuleInfo<8>
 public:
     CategoryModuleInfo()
     {
-        *(volatile unsigned int *)this = 0x0107375c;
+        *(volatile unsigned int *)this = (unsigned int)bfmeVftCategoryModuleInfo8;
         m_a = true;
         m_b = true;
     }
@@ -67,8 +78,8 @@ public:
     CategoryModuleTemplate()
         : CategoryModuleTemplateBase<8>()
     {
-        *(unsigned int *)((unsigned char *)this + 0) = 0x01073848;
-        *(unsigned int *)((unsigned char *)this + 4) = 0x01073844;
+        *(unsigned int *)((unsigned char *)this + 0) = (unsigned int)&CategoryModuleTemplate8_vtbl0;
+        *(unsigned int *)((unsigned char *)this + 4) = (unsigned int)&CategoryModuleTemplate8_vtbl4;
     }
     virtual ~CategoryModuleTemplate();
 };
@@ -93,9 +104,9 @@ TerrainCollisionModuleTemplate::TerrainCollisionModuleTemplate()
     : CategoryModuleTemplate<8>(),
       TerrainCollisionModuleInfo()
 {
-    *(unsigned int *)((unsigned char *)this + 0xc) = 0x01111324;
-    *(unsigned int *)((unsigned char *)this + 0) = 0x01111310;
-    *(unsigned int *)((unsigned char *)this + 4) = 0x0111130c;
+    *(unsigned int *)((unsigned char *)this + 0xc) = (unsigned int)bfmeVftTerrainCollisionModuleTemplate;
+    *(unsigned int *)((unsigned char *)this + 0) = (unsigned int)bfmeVftTerrainCollisionModuleTemplate_TerrainCollisionCategoryBaseA;
+    *(unsigned int *)((unsigned char *)this + 4) = (unsigned int)bfmeVftTerrainCollisionModuleTemplate_TerrainCollisionCategoryBaseB;
 }
 
 }

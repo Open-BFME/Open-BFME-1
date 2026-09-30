@@ -35,6 +35,9 @@ class Open2Counted;
 class Rva00710FF0 { public: void store(Open2Counted *,int); };
 class Rva00712F60 { char data[0x8a0]; public: Rva00712F60(); };
 extern Rva006F6330 *TheRva006F6330;
+extern void j_0002f9f0();
+extern void j_00048658();
+extern void j_0003413f();
 extern Rva00711B00 *Rva012F8060;
 extern RTS2DScene *Rva012F805C;
 extern Rva00712F60 *Rva012F8058;
@@ -215,7 +218,7 @@ void W3DDisplay::init(void)
         rvaF<int>(debug274,0x24)=9;
     }
     rvaF<unsigned char>(this,0x140)=1;
-    if (rvaF<bool>(TheGlobalData,0xa92)) rvaF<unsigned>(this,0x2c)=0x0042f9f0;
-    else if (rvaF<bool>(TheGlobalData,0xa93)) rvaF<unsigned>(this,0x2c)=0x00448658;
-    else rvaF<unsigned>(this,0x2c)=rvaF<bool>(TheGlobalData,0xa97) ? 0x0043413f : 0;
+    if (rvaF<bool>(TheGlobalData,0xa92)) rvaF<unsigned>(this,0x2c)=(unsigned)j_0002f9f0;
+    else if (rvaF<bool>(TheGlobalData,0xa93)) rvaF<unsigned>(this,0x2c)=(unsigned)j_00048658;
+    else rvaF<unsigned>(this,0x2c)=rvaF<bool>(TheGlobalData,0xa97) ? (unsigned)j_0003413f : 0;
 }
