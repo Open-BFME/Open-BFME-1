@@ -284,6 +284,12 @@ public:
 	PartitionFilter *m_next;
 };
 
+extern "C" void *bfmeVftPartitionFilterRelationship[];
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterRelationship=??_7PartitionFilterRelationship@@6B@")
+extern const void *g_010956C4[];
+extern "C" void *bfmeVftPartitionFilterSameMapStatus[];
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterSameMapStatus=??_7PartitionFilterSameMapStatus@@6B@")
+
 static __forceinline void setFilterVptr(void *filter, UnsignedInt value)
 {
 	*reinterpret_cast<UnsignedInt *>(filter) = value;
@@ -295,7 +301,7 @@ class __declspec(novtable) PartitionFilterRelationship : public PartitionFilter
 public:
 	PartitionFilterRelationship(Object *object, Int flags, Bool match)
 	{
-		setFilterVptr(this, 0x01085DC0);
+		setFilterVptr(this, (UnsignedInt)bfmeVftPartitionFilterRelationship);
 		m_object = object;
 		m_flags = flags;
 		m_match = match;
@@ -317,7 +323,7 @@ class __declspec(novtable) Rva0017D2F0DwordTailFilter : public PartitionFilter
 public:
 	Rva0017D2F0DwordTailFilter(const Object *object, Int flags, int state)
 	{
-		setFilterVptr(this, 0x010956C4);
+		setFilterVptr(this, (UnsignedInt)g_010956C4);
 		m_object = object;
 		m_flags = flags;
 		m_state = state;
@@ -335,7 +341,7 @@ class __declspec(novtable) Rva0025ED50ObjectFilter : public PartitionFilter
 public:
 	Rva0025ED50ObjectFilter(Object *object)
 	{
-		setFilterVptr(this, 0x01085DD0);
+		setFilterVptr(this, (UnsignedInt)bfmeVftPartitionFilterSameMapStatus);
 		m_object = object;
 	}
 	virtual ~Rva0025ED50ObjectFilter() {}
