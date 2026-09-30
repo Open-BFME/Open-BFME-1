@@ -1,4 +1,7 @@
+struct FieldParse;
+extern const FieldParse GenericObjectCreationNuggetCommonFields[];
+
 unsigned int rva_001d5f70_constant()
 {
-	return 0x0109F320;
+	return (unsigned int)GenericObjectCreationNuggetCommonFields;
 }

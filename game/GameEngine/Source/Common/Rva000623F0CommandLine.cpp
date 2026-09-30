@@ -15,6 +15,7 @@ private:
 };
 
 extern bool g_aiTargetDispatchSuppressed;
+extern StringBase<char> g_012F08A8;
 
 struct Rva006C9270GlobalData
 {
@@ -34,7 +35,7 @@ int __cdecl Rva000623F0(char **argv, int argc)
 
 		{
 			const StringBase<char> &text = StringBase<char>(argument);
-			reinterpret_cast<StringBase<char> *>(0x012F08A8u)->set(text);
+			g_012F08A8.set(text);
 		}
 
 		g_aiTargetDispatchSuppressed = true;

@@ -223,6 +223,9 @@ void *Rva002ED500::getField10() const
 	return (void *)((const char *)this + 0x10);
 }
 
+extern "C" void *bfmeVftPartitionFilterThing[];
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterThing=??_7PartitionFilterThing@@6B@")
+
 class Rva002ED550
 {
 public:
@@ -238,7 +241,7 @@ public:
 Rva002ED550::Rva002ED550( void *value, unsigned char flag )
 {
 	m_zero = 0;
-	m_vptr = 0x010CFFD0;
+	m_vptr = (unsigned int)bfmeVftPartitionFilterThing;
 	m_value = value;
 	m_flag = flag;
 }
