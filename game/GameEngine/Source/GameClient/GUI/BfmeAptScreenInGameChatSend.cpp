@@ -414,7 +414,7 @@ public:
 
 extern "C" __declspec(dllimport) WideChar *__cdecl wcsncpy(
 	WideChar *destination, const WideChar *source, unsigned int count );
-extern __declspec(dllimport) unsigned int __cdecl bfmeLenVGI(
+extern "C" extern __declspec(dllimport) unsigned int __cdecl wcslen(
 	const WideChar *text );
 
 extern void j_0003e91e();
@@ -440,7 +440,7 @@ void dup_004EE1C0( const WideChar *text, std::vector<Int> *selected )
 	message.m_recipientNick.set( TheGameSpyInfo->getLocalBaseName() );
 	message.m_senderNick.set( TheGameSpyInfo->getLocalBaseName() );
 	message.m_message.set( request.arg.message.text,
-		bfmeLenVGI( request.arg.message.text ) );
+		wcslen( request.arg.message.text ) );
 
 	union
 	{

@@ -237,7 +237,7 @@ extern "C" BfmeFormattedText *__cdecl bfmeFormatText(
 extern int g_guardTargetTypeThrowInfo;
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
-extern "C" __declspec(dllimport) int __cdecl _stricmp(
+extern "C" __declspec(dllimport) int __cdecl _strcmpi(
 	const char *left, const char *right);
 
 static const char *SAVE_FILE_EOF = "SG_EOF";
@@ -293,7 +293,7 @@ Bool GameState::getSaveGameInfoFromFile(AsciiString filename,
 					_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 				}
 
-				if (_stricmp(token.str(), "CHUNK_GameState") == 0)
+				if (_strcmpi(token.str(), "CHUNK_GameState") == 0)
 				{
 					GameState tempGameState;
 					try

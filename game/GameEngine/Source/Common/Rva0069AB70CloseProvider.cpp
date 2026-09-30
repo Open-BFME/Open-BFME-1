@@ -1,10 +1,10 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 // Close selected 3D provider: restore speaker type, close listener+provider.
 
-extern "C" __declspec(dllimport) void __stdcall _AIL_set_3D_speaker_type(
+extern "C" __declspec(dllimport) void __stdcall AIL_set_3D_speaker_type(
 	int handle, int speaker_type);
-extern "C" __declspec(dllimport) void __stdcall _AIL_close_3D_listener(void *listener);
-extern "C" __declspec(dllimport) void __stdcall _AIL_close_3D_provider(int provider);
+extern "C" __declspec(dllimport) void __stdcall AIL_close_3D_listener(void *listener);
+extern "C" __declspec(dllimport) void __stdcall AIL_close_3D_provider(int provider);
 
 class VideoPlayer
 {
@@ -57,16 +57,16 @@ void Rva0069AB70Owner::closeProvider()
 	{
 		int index = *(int *)(m_bytes + 0x958);
 		int scaled = index + index * 2;
-		_AIL_set_3D_speaker_type(
+		AIL_set_3D_speaker_type(
 			*(int *)(m_bytes + 0x658 + scaled * 4),
 			*(int *)(m_bytes + 0xb60));
 	}
 
-	_AIL_close_3D_listener(*(void **)(m_bytes + 0x964));
+	AIL_close_3D_listener(*(void **)(m_bytes + 0x964));
 
 	int index = *(int *)(m_bytes + 0x958);
 	int scaled = index + index * 2;
 	*(void **)(m_bytes + 0x964) = 0;
-	_AIL_close_3D_provider(*(int *)(m_bytes + 0x658 + scaled * 4));
+	AIL_close_3D_provider(*(int *)(m_bytes + 0x658 + scaled * 4));
 	*(int *)(m_bytes + 0x958) = -1;
 }

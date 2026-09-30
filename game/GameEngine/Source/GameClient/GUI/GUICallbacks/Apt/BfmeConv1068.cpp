@@ -14,7 +14,7 @@ extern char g_bfmeFmtD1068[];
 extern char g_bfmeFmtA1068[];
 extern char g_bfmeFmtB1068[];
 
-__declspec(dllimport) int __cdecl bfmeSpf1068(char *b, char *f, int a);
+extern "C" __declspec(dllimport) int __cdecl sprintf(char *b, char *f, int a);
 
 void bfmeGo1068A(int a, int b)
 {
@@ -22,8 +22,8 @@ void bfmeGo1068A(int a, int b)
 
 	if (!v)
 		v = 1;
-	bfmeSpf1068((char *)&b, g_bfmeFmtD1068, a + 1);
-	bfmeSpf1068((char *)&a, g_bfmeFmtD1068, v);
+	sprintf((char *)&b, g_bfmeFmtD1068, a + 1);
+	sprintf((char *)&a, g_bfmeFmtD1068, v);
 	g_bfmeR1068->bfmeRun1068(g_bfmeX1068, g_bfmeFmtA1068, 2, (char *)&b, (char *)&a, 0, 0, 0);
 }
 
@@ -33,7 +33,7 @@ void bfmeGo1068B(int a, int b)
 
 	if (!v)
 		v = 1;
-	bfmeSpf1068((char *)&b, g_bfmeFmtD1068, a + 1);
-	bfmeSpf1068((char *)&a, g_bfmeFmtD1068, v);
+	sprintf((char *)&b, g_bfmeFmtD1068, a + 1);
+	sprintf((char *)&a, g_bfmeFmtD1068, v);
 	g_bfmeR1068->bfmeRun1068(g_bfmeX1068, g_bfmeFmtB1068, 2, (char *)&b, (char *)&a, 0, 0, 0);
 }

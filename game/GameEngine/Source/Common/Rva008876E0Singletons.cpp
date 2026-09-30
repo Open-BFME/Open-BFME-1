@@ -4,8 +4,8 @@
 // kept in ONE TU so their compiler-generated atexit thunks get distinct $E
 // names (two TUs would both emit $E2 and the pins would collide).
 
-extern "C" __declspec(dllimport) void __stdcall Rva01358E4CInit(void *body);
-extern "C" __declspec(dllimport) void __stdcall Rva01358D0CReset(void *body);
+extern "C" __declspec(dllimport) void __stdcall InitializeCriticalSection(void *body);
+extern "C" __declspec(dllimport) void __stdcall DeleteCriticalSection(void *body);
 
 class Rva008877A0Type
 {
@@ -16,11 +16,11 @@ public:
 	Rva008877A0Type()
 	{
 		m_flag18 = true;
-		Rva01358E4CInit(this);
+		InitializeCriticalSection(this);
 	}
 	~Rva008877A0Type()
 	{
-		Rva01358D0CReset(this);
+		DeleteCriticalSection(this);
 		m_flag18 = false;
 	}
 };
@@ -34,11 +34,11 @@ public:
 	Rva008876E0Type()
 	{
 		m_flag18 = true;
-		Rva01358E4CInit(this);
+		InitializeCriticalSection(this);
 	}
 	~Rva008876E0Type()
 	{
-		Rva01358D0CReset(this);
+		DeleteCriticalSection(this);
 		m_flag18 = false;
 	}
 };

@@ -3,7 +3,7 @@
 // vector at +8 into a stack buffer with "%s %s\n" and hands the buffer to the
 // imported reporting call. Nothing names the owner, so it is address-derived.
 
-__declspec(dllimport) void __stdcall Rva01358EA8( void *text );
+extern "C" __declspec(dllimport) void __stdcall OutputDebugStringA( void *text );
 
 extern "C" __declspec(dllimport) int __cdecl sprintf( char *, const char *, ... );
 
@@ -45,6 +45,6 @@ void Rva000C2A30Owner::dump()
 		char buffer[ 0x100 ];
 
 		sprintf( buffer, "%s %s\n", m_bfmeName.str(), entry->str() );
-		Rva01358EA8( buffer );
+		OutputDebugStringA( buffer );
 	}
 }

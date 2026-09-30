@@ -6,19 +6,19 @@ struct Rva009AA970Info
 	int m_lenHi;
 };
 
-__declspec(dllimport) int __cdecl sprintf(char *buf, const char *fmt, ...);
-__declspec(dllimport) unsigned int __cdecl fwrite(const void *buf, unsigned int size, unsigned int count, void *stream);
-__declspec(dllimport) void *__cdecl bfmeFopenVIF(const char *name, const char *mode);
-__declspec(dllimport) void __cdecl bfmeFreeUXB(void *p);
+extern "C" __declspec(dllimport) int __cdecl sprintf(char *buf, const char *fmt, ...);
+extern "C" __declspec(dllimport) unsigned int __cdecl fwrite(const void *buf, unsigned int size, unsigned int count, void *stream);
+extern "C" __declspec(dllimport) void *__cdecl fopen(const char *name, const char *mode);
+extern "C" __declspec(dllimport) void __cdecl fclose(void *p);
 
 void Rva009AA970DumpRaw(Rva009AA970Info *info, void *buf, int index)
 {
 	char name[0x100];
 	sprintf(name, "y%04d.raw", index);
-	void *fp = bfmeFopenVIF(name, "wb");
+	void *fp = fopen(name, "wb");
 	unsigned int size = info->m_lenLo + info->m_lenHi * 2;
 	fwrite(buf, size, 1, fp);
-	bfmeFreeUXB(fp);
+	fclose(fp);
 }
 
 struct Rva009AA9E0Info
@@ -32,9 +32,9 @@ void Rva009AA9E0DumpRaw(const Rva009AA9E0Info *info, const void *bytes, int inde
 {
 	char name[0x100];
 	sprintf(name, "y%d.raw", index);
-	void *fp = bfmeFopenVIF(name, "wb");
+	void *fp = fopen(name, "wb");
 	fwrite(bytes, info->m_length, 1, fp);
-	bfmeFreeUXB(fp);
+	fclose(fp);
 }
 
 // ?Rva009AAA40DumpRaw@@YAXPBDHPBXI@Z
@@ -42,9 +42,9 @@ void Rva009AAA40DumpRaw(const char *prefix, int index, const void *bytes, unsign
 {
 	char name[0x100];
 	sprintf(name, "%s%04d.raw", prefix, index);
-	void *fp = bfmeFopenVIF(name, "wb");
+	void *fp = fopen(name, "wb");
 	fwrite(bytes, length, 1, fp);
-	bfmeFreeUXB(fp);
+	fclose(fp);
 }
 
 // ?Rva009AAAA0DumpRawLoop@@YAXPBDH0IIH@Z
@@ -53,22 +53,22 @@ void Rva009AAAA0DumpRawLoop(const char *prefix, int index, const char *bytes,
 {
 	char name[0x100];
 	sprintf(name, "%s%04d.raw", prefix, index);
-	void *fp = bfmeFopenVIF(name, "wb");
+	void *fp = fopen(name, "wb");
 	for (int i = 0; i < count; ++i) {
 		fwrite(bytes, length, 1, fp);
 		bytes += stride;
 	}
-	bfmeFreeUXB(fp);
+	fclose(fp);
 }
 
 // ?Rva009AAB40AppendRaw@@YAXPBD0IIH@Z
 void Rva009AAB40AppendRaw(const char *filename, const char *bytes,
 	unsigned stride, unsigned length, int count)
 {
-	void *fp = bfmeFopenVIF(filename, "ab");
+	void *fp = fopen(filename, "ab");
 	for (int i = 0; i < count; ++i) {
 		fwrite(bytes, length, 1, fp);
 		bytes += stride;
 	}
-	bfmeFreeUXB(fp);
+	fclose(fp);
 }

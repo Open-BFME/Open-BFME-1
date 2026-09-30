@@ -14,25 +14,25 @@
 // SEPARATE FUNCTIONS, NOT ALIASES. Three distinct addresses that coincide in
 // bytes only because a guarded free has nothing else to say.
 
-__declspec(dllimport) void __cdecl bfmeFree1035(void *p);
+extern "C" __declspec(dllimport) void __cdecl free(void *p);
 
 // ?dup_0084d220@@YAXPAX@Z
 void dup_0084d220(void *p)
 {
 	if (p != 0)
-		bfmeFree1035(p);
+		free(p);
 }
 
 // ?dup_0084d2f0@@YAXPAX@Z
 void dup_0084d2f0(void *p)
 {
 	if (p != 0)
-		bfmeFree1035(p);
+		free(p);
 }
 
 // ?dup_0084d340@@YAXPAX@Z
 void dup_0084d340(void *p)
 {
 	if (p != 0)
-		bfmeFree1035(p);
+		free(p);
 }

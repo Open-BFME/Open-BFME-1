@@ -28,19 +28,19 @@
 // of a four-byte-element range has nothing to distinguish; they are two
 // addresses, so they are two functions.
 
-extern "C" __declspec(dllimport) void *__cdecl u2_import_0135944C(unsigned int bytes);
-extern "C" __declspec(dllimport) void *__cdecl u2_import_0135945C(void *dst, const void *src, unsigned int bytes);
+extern "C" __declspec(dllimport) void *__cdecl malloc(unsigned int bytes);
+extern "C" __declspec(dllimport) void *__cdecl memmove(void *dst, const void *src, unsigned int bytes);
 
 void *Rva0083F2F0Duplicate(const void *src, unsigned int count)
 {
 	unsigned int bytes = count * 4;
-	void *p = u2_import_0135944C(bytes);
+	void *p = malloc(bytes);
 	if (p != 0)
 	{
 		const char *low = (const char *)src;
 		const char *high = low + bytes;
 		if (high != low)
-			u2_import_0135945C(p, low, (unsigned int)(high - low));
+			memmove(p, low, (unsigned int)(high - low));
 	}
 	return p;
 }
@@ -48,13 +48,13 @@ void *Rva0083F2F0Duplicate(const void *src, unsigned int count)
 void *Rva0083F330Duplicate(const void *src, unsigned int count)
 {
 	unsigned int bytes = count * 4;
-	void *p = u2_import_0135944C(bytes);
+	void *p = malloc(bytes);
 	if (p != 0)
 	{
 		const char *low = (const char *)src;
 		const char *high = low + bytes;
 		if (high != low)
-			u2_import_0135945C(p, low, (unsigned int)(high - low));
+			memmove(p, low, (unsigned int)(high - low));
 	}
 	return p;
 }

@@ -1,4 +1,4 @@
-extern "C" __declspec(dllimport) int __cdecl bfmeCvtDXI( void *text );
+extern "C" __declspec(dllimport) int __cdecl atoi( void *text );
 
 class AptPalantirRegionPanel
 {
@@ -17,5 +17,5 @@ extern AptPalantirRegionOwner *g_bfmeObjDXJ;
 // ?aptPalantirOnRegionPortraitClosed@@YAXPAX@Z
 void aptPalantirOnRegionPortraitClosed( void *regionText )
 {
-	g_bfmeObjDXJ->m_regionPanel.closePortrait( bfmeCvtDXI( regionText ) );
+	g_bfmeObjDXJ->m_regionPanel.closePortrait( atoi( regionText ) );
 }

@@ -4,7 +4,7 @@
 extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 	void *hHandle, unsigned long dwMilliseconds);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *hMutex);
-extern "C" __declspec(dllimport) void __stdcall _AIL_set_3D_speaker_type(
+extern "C" __declspec(dllimport) void __stdcall AIL_set_3D_speaker_type(
 	int handle, int speaker_type);
 
 class Rva0069AC20Owner
@@ -28,7 +28,7 @@ void Rva0069AC20Owner::toggle()
 	{
 		int index = *(int *)(m_bytes + 0x958);
 		int scaled = index + index * 2;
-		_AIL_set_3D_speaker_type(*(int *)(m_bytes + 0x658 + scaled * 4), 1);
+		AIL_set_3D_speaker_type(*(int *)(m_bytes + 0x658 + scaled * 4), 1);
 	}
 	else
 	{
@@ -37,13 +37,13 @@ void Rva0069AC20Owner::toggle()
 		{
 			int index = *(int *)(m_bytes + 0x958);
 			int scaled = index + index * 2;
-			_AIL_set_3D_speaker_type(*(int *)(m_bytes + 0x658 + scaled * 4), 5);
+			AIL_set_3D_speaker_type(*(int *)(m_bytes + 0x658 + scaled * 4), 5);
 		}
 		else
 		{
 			int index = *(int *)(m_bytes + 0x958);
 			int scaled = index + index * 2;
-			_AIL_set_3D_speaker_type(*(int *)(m_bytes + 0x658 + scaled * 4), speaker);
+			AIL_set_3D_speaker_type(*(int *)(m_bytes + 0x658 + scaled * 4), speaker);
 		}
 	}
 

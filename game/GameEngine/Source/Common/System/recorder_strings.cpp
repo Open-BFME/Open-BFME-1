@@ -6,7 +6,7 @@
 struct _iobuf;
 typedef _iobuf FILE;
 typedef unsigned short wchar_t;
-extern "C" __declspec(dllimport) int __cdecl fgetc(FILE *stream);
+extern "C" __declspec(dllimport) int __cdecl getc(FILE *stream);
 extern "C" __declspec(dllimport) unsigned int __cdecl fread(void *buffer, unsigned int size, unsigned int count, FILE *stream);
 extern "C" __declspec(dllimport) int __cdecl fclose(FILE *stream);
 
@@ -239,7 +239,7 @@ AsciiString RecorderClass::readAsciiString()
     char str[1024] = "";
     int index = 0;
 
-    int c = fgetc(m_file);
+    int c = getc(m_file);
     if (c == EOF) {
         str[index] = 0;
     }
@@ -247,7 +247,7 @@ AsciiString RecorderClass::readAsciiString()
 
     while (index < 1024 && str[index] != 0) {
         ++index;
-        int c = fgetc(m_file);
+        int c = getc(m_file);
         if (c == EOF) {
             str[index] = 0;
             break;

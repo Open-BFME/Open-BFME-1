@@ -13,8 +13,8 @@
 extern "C" unsigned strlen( const char *s );
 #pragma intrinsic( strlen )
 
-__declspec(dllimport) int __cdecl bfmeCmp1026( char *left, char *right, int count );
-__declspec(dllimport) int __cdecl bfmeAtoi1027( char *text );
+extern "C" __declspec(dllimport) int __cdecl strncmp( char *left, char *right, int count );
+extern "C" __declspec(dllimport) int __cdecl atoi( char *text );
 
 class GameWindow
 {
@@ -68,11 +68,11 @@ void AptPlayerStatus::InitGadgets( const char *name, void *userData, GameWindow 
 	static const int prefixLength = strlen( prefix );
 
 	(void)userData;
-	if ( bfmeCmp1026( (char *)name, (char *)prefix, prefixLength ) != 0 )
+	if ( strncmp( (char *)name, (char *)prefix, prefixLength ) != 0 )
 		return;
 
 	name += prefixLength;
-	int index = bfmeAtoi1027( (char *)name );
+	int index = atoi( (char *)name );
 	if ( index < 0 || index >= 8 )
 		return;
 

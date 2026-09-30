@@ -6,7 +6,7 @@
 
 typedef int Int;
 
-extern "C" __declspec(dllimport) int __cdecl bfmeAtoi1027(char *text);
+extern "C" __declspec(dllimport) int __cdecl atoi(char *text);
 
 class AsciiStringData
 {
@@ -66,7 +66,7 @@ Int OptionPreferences::getCampaignDifficulty(void)
 	if (it == m_prefs.end())
 		return TheScriptEngine->getGlobalDifficulty();
 
-	Int factor = bfmeAtoi1027((char *)it->m_value.str());
+	Int factor = atoi((char *)it->m_value.str());
 	if (factor < 0)
 		return 0;
 	if (factor > 2)

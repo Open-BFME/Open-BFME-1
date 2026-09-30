@@ -4,7 +4,7 @@
 // body calls the WSOCK32 ntohs import indirectly (slot 0x0135972C) and keeps
 // the full return dword in a stack local, reading back only its low word.
 
-__declspec(dllimport) int __stdcall ntohs( int netshort );
+extern "C" __declspec(dllimport) int __stdcall ntohs( int netshort );
 
 union Rva0068D620Converted
 {

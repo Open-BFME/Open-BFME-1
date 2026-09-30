@@ -1,8 +1,8 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 // Set Miles 3D/digital room type; LOD may force room off; update +0x633/+0x634.
 
-extern "C" __declspec(dllimport) void __stdcall _AIL_set_3D_room_type(int handle, int room);
-extern "C" __declspec(dllimport) void __stdcall _AIL_set_digital_master_room_type(
+extern "C" __declspec(dllimport) void __stdcall AIL_set_3D_room_type(int handle, int room);
+extern "C" __declspec(dllimport) void __stdcall AIL_set_digital_master_room_type(
 	void *dig, int room);
 
 class GameLODManager
@@ -50,8 +50,8 @@ void Rva00695AB0Owner::setRoomType(int room)
 	if (index != -1)
 	{
 		int scaled = index + index * 2;
-		_AIL_set_3D_room_type(*(int *)(m_bytes + 0x658 + scaled * 4), value);
-		_AIL_set_digital_master_room_type(*(void **)(m_bytes + 0x960), value);
+		AIL_set_3D_room_type(*(int *)(m_bytes + 0x658 + scaled * 4), value);
+		AIL_set_digital_master_room_type(*(void **)(m_bytes + 0x960), value);
 	}
 
 	unsigned char flag = m_bytes[0x633];

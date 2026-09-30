@@ -8,7 +8,7 @@
 // AsciiString at +0x1C, the AsciiString at +0x10, then the SubsystemInterface
 // base.
 
-__declspec(dllimport) void __cdecl bfmeFreeUXB(void *p) throw();
+extern "C" __declspec(dllimport) void __cdecl fclose(void *p) throw();
 
 template <typename T>
 class StringBase
@@ -65,5 +65,5 @@ private:
 RecorderClass::~RecorderClass()
 {
     if (m_bfmeFile)
-        bfmeFreeUXB(m_bfmeFile);
+        fclose(m_bfmeFile);
 }

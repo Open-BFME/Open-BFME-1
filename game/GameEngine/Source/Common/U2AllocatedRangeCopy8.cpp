@@ -4,7 +4,7 @@
 // for the allocation, arithmetic-shifts it back, and walks the destination
 // with the source-minus-destination offset hoisted out of the loop.
 
-extern "C" __declspec(dllimport) void *__cdecl u2_import_0135944C(unsigned int bytes);
+extern "C" __declspec(dllimport) void *__cdecl malloc(unsigned int bytes);
 
 struct U2Elem8
 {
@@ -15,7 +15,7 @@ struct U2Elem8
 void *Rva0083F3B0Duplicate(const U2Elem8 *src, int count)
 {
 	unsigned int bytes = (unsigned int)count << 3;
-	U2Elem8 *p = (U2Elem8 *)u2_import_0135944C(bytes);
+	U2Elem8 *p = (U2Elem8 *)malloc(bytes);
 	if (p != 0)
 	{
 		int n = (int)bytes >> 3;

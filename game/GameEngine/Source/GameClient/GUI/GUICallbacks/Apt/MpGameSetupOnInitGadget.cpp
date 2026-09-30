@@ -21,7 +21,7 @@ void GadgetListBoxSetColumnWidths( GameWindow *window, int count, int *widths );
 const char *bfmePathLeafAfterMarker( const char *path );
 void j_0002d727(void);
 
-extern "C" __declspec( dllimport ) int __cdecl bfmeScanDYG(
+extern "C" __declspec( dllimport ) int __cdecl sscanf(
 	const char *source, const char *format, void *output );
 
 extern char g_aptPalantirNumberFormat[];
@@ -86,7 +86,7 @@ void MpGameSetup::_bfme_onInitGadget(
 	}
 
 	unsigned int index;
-	if( bfmeScanDYG( name, g_aptPalantirNumberFormat, &index ) != 1 || index > 8 )
+	if( sscanf( name, g_aptPalantirNumberFormat, &index ) != 1 || index > 8 )
 		return;
 
 	const char *leaf = bfmePathLeafAfterMarker( name );

@@ -24,7 +24,7 @@ extern "C" RvaModuleHandle __stdcall CreateToolhelp32Snapshot(RvaDword flags, Rv
 extern "C" int __stdcall Module32First(RvaModuleHandle snapshot, RvaModuleEntry32 *entry);
 extern "C" int __stdcall Module32Next(RvaModuleHandle snapshot, RvaModuleEntry32 *entry);
 extern "C" __declspec(dllimport) void *__stdcall GetProcAddress(RvaModuleHandle module, const char *name);
-__declspec(dllimport) void __stdcall bfmeClose1033(int h);
+extern "C" __declspec(dllimport) void __stdcall CloseHandle(int h);
 
 extern "C" RvaModuleHandle (__stdcall *g_rva0130E988LoadLibraryA)(const char *name);
 
@@ -46,7 +46,7 @@ void *rva00882140PatchAllModules(const char *dllName, const char *functionName, 
         } while (Module32Next(snapshot, &entry));
     }
 
-    bfmeClose1033((int)snapshot);
+    CloseHandle((int)snapshot);
 
     return GetProcAddress(g_rva0130E988LoadLibraryA(dllName), functionName);
 }

@@ -72,7 +72,7 @@ public:
 // unsigned short, so the literal's element type is G in the mangled callee.
 extern const unsigned short g_Rva01088AF4EmptyWideString[];
 extern const char g_Rva0107301CEmptyString[];
-extern __declspec(dllimport) unsigned __cdecl bfmeLenVGI(const UnsignedShort *text);
+extern "C" extern __declspec(dllimport) unsigned __cdecl wcslen(const UnsignedShort *text);
 
 // Layout witnessed by AptMapPreview.cpp: windows at +04..+10, the image at
 // +34 and its owned flag at +38. +39 stays unmodelled; +3C is the metadata
@@ -118,10 +118,10 @@ AptMapPreview::AptMapPreview()
 	m_mapData = new MapMetaData;
 	StringBase<UnsignedShort> *description = &m_mapData->m_description;
 	description->set(g_Rva01088AF4EmptyWideString,
-		bfmeLenVGI(g_Rva01088AF4EmptyWideString));
+		wcslen(g_Rva01088AF4EmptyWideString));
 	MapMetaData *map = m_mapData;
 	map->m_displayName.set(g_Rva01088AF4EmptyWideString,
-		bfmeLenVGI(g_Rva01088AF4EmptyWideString));
+		wcslen(g_Rva01088AF4EmptyWideString));
 	m_mapData->m_isOfficial = 0;
 	m_mapData->m_fileName.set(g_Rva0107301CEmptyString, 0);
 	m_mapData->m_numPlayers = 8;

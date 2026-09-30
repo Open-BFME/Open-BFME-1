@@ -11,7 +11,7 @@ extern const unsigned int t2_mask_table[256];
 
 // The block copy is an indirect call through an import slot, so it is declared
 // as an imported function rather than the intrinsic the compiler would inline.
-extern "C" __declspec(dllimport) void *__cdecl t2_block_copy(void *dst, const void *src, unsigned int n);
+extern "C" __declspec(dllimport) void *__cdecl memmove(void *dst, const void *src, unsigned int n);
 
 struct T2NarrowCtype
 {
@@ -39,14 +39,14 @@ const char *T2NarrowCtype::toLowerRange(char *low, char *high) const
 const char *T2NarrowCtype::widenRange(const char *low, const char *high, char *to) const
 {
 	if (high != low)
-		t2_block_copy(to, low, (unsigned int)(high - low));
+		memmove(to, low, (unsigned int)(high - low));
 	return high;
 }
 
 const char *T2NarrowCtype::narrowRange(const char *low, const char *high, char, char *to) const
 {
 	if (high != low)
-		t2_block_copy(to, low, (unsigned int)(high - low));
+		memmove(to, low, (unsigned int)(high - low));
 	return high;
 }
 

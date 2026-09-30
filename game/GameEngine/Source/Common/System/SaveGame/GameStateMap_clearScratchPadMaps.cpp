@@ -71,7 +71,7 @@ void GameStateMap::clearScratchPadMaps( void )
 		if( !(item.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) )
 		{
 			Char *c = strrchr( item.cFileName, '.' );
-			if( c && (stricmp( c, ".map" ) == 0 || stricmp( c, ".wak" ) == 0) )
+			if( c && (_strcmpi( c, ".map" ) == 0 || _strcmpi( c, ".wak" ) == 0) )
 				fileToDelete.set( item.cFileName, static_cast<Int>( strlen( item.cFileName ) ) );
 		}
 

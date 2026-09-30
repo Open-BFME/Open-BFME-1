@@ -6,7 +6,7 @@
 // decrements the finish pointer. The class and method stay address-derived
 // because the retail body has no named caller or declaration.
 
-extern "C" __declspec(dllimport) void *__cdecl BfmeMemMove(
+extern "C" __declspec(dllimport) void *__cdecl memmove(
 	void *destination, const void *source, unsigned int bytes);
 
 #include <algorithm>
@@ -45,7 +45,7 @@ void Rva003BF4C0Owner::remove(Rva003BF4C0Item *item)
 
 	Rva003BF4C0Item **next = found + 1;
 	if (m_finish != next)
-		BfmeMemMove(found, next,
+		memmove(found, next,
 			(unsigned int)((char *)m_finish - (char *)next));
 
 	--m_finish;

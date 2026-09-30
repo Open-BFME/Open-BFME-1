@@ -14,7 +14,7 @@
 
 #include <string.h>
 
-__declspec(dllimport) void *__cdecl malloc(unsigned int);
+extern "C" __declspec(dllimport) void *__cdecl malloc(unsigned int);
 
 struct Rva0084D200Rec
 {

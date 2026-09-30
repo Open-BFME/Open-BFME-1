@@ -1,5 +1,5 @@
 // ?erase@Gen006449B0Str@@QAEPAV1@II@Z
-extern "C" __declspec(dllimport) void * __cdecl BfmeMemMove(void *dst, const void *src, unsigned int count);
+extern "C" __declspec(dllimport) void * __cdecl memmove(void *dst, const void *src, unsigned int count);
 
 static inline const unsigned int &bfmeMinGen006449B0(const unsigned int &a, const unsigned int &b)
 {
@@ -23,7 +23,7 @@ inline char *Gen006449B0Str::eraseRange(char *first, char *last)
 		unsigned int len = (unsigned int)(m_end - last) + 1;
 
 		if (len != 0)
-			BfmeMemMove(first, last, len);
+			memmove(first, last, len);
 
 		m_end += first - last;
 	}

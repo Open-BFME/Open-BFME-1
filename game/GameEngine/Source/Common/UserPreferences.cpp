@@ -703,7 +703,7 @@ Bool CustomMatchPreferences::usesSystemMapDir( void )
 
 	CustomStringDataShim *data = node->m_value;
 	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
-	if (stricmp(text, "1") == 0) {
+	if (_strcmpi(text, "1") == 0) {
 		return TRUE;
 	}
 	return FALSE;
@@ -723,7 +723,7 @@ Bool CustomMatchPreferences::usesLongGameList(void)
 	if (it == end())
 		return FALSE;
 
-	if (stricmp(it->second.str(), "1") == 0) {
+	if (_strcmpi(it->second.str(), "1") == 0) {
 		return TRUE;
 	}
 	return FALSE;
@@ -752,7 +752,7 @@ Bool CustomMatchPreferences::allowsObservers( void )
 
 	CustomStringDataShim *data = node->m_value;
 	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
-	if (stricmp(text, "1") == 0) {
+	if (_strcmpi(text, "1") == 0) {
 		return TRUE;
 	}
 	return FALSE;
@@ -782,7 +782,7 @@ Bool CustomMatchPreferences::getDisallowAsianText( void )
 
 	CustomStringDataShim *data = node->m_value;
 	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
-	if (stricmp(text, "1") == 0) {
+	if (_strcmpi(text, "1") == 0) {
 		return TRUE;
 	}
 	return FALSE;
@@ -813,7 +813,7 @@ Bool CustomMatchPreferences::getDisallowNonAsianText( void )
 
 	CustomStringDataShim *data = node->m_value;
 	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
-	if (stricmp(text, "1") == 0) {
+	if (_strcmpi(text, "1") == 0) {
 		return TRUE;
 	}
 	return FALSE;

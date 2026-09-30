@@ -62,7 +62,7 @@ public:
 	void iterateSaveFiles( IterateSaveFileCallback callback, void *userData );
 };
 
-extern "C" __declspec(dllimport) int __cdecl _stricmp( const char *left, const char *right );
+extern "C" __declspec(dllimport) int __cdecl _strcmpi( const char *left, const char *right );
 
 void GameState::iterateSaveFiles( IterateSaveFileCallback callback, void *userData )
 {
@@ -83,7 +83,7 @@ void GameState::iterateSaveFiles( IterateSaveFileCallback callback, void *userDa
 		if( !(item.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) )
 		{
 			Char *c = strrchr( item.cFileName, '.' );
-			if( c && !_stricmp( c, ".sav" ) )
+			if( c && !_strcmpi( c, ".sav" ) )
 			{
 				AsciiString filename;
 				filename.set( item.cFileName );

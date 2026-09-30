@@ -60,7 +60,7 @@ struct OSVERSIONINFO_
 extern "C" __declspec(dllimport) int __stdcall GetVersionExA(OSVERSIONINFO_ *);
 extern "C" __declspec(dllimport) int __stdcall GetDateFormatA(unsigned long, unsigned long, const _SYSTEMTIME *, const char *, char *, int);
 extern "C" __declspec(dllimport) int __stdcall GetDateFormatW(unsigned long, unsigned long, const _SYSTEMTIME *, const WideChar *, WideChar *, int);
-__declspec(dllimport) unsigned int bfmeLenVGI(const WideChar *);
+extern "C" __declspec(dllimport) unsigned int wcslen(const WideChar *);
 
 enum { LOCALE_SYSTEM_DEFAULT_ = 0x0800 };
 enum { DATE_SHORTDATE_ = 1 };
@@ -91,6 +91,6 @@ UnicodeString getUnicodeDateBuffer(_SYSTEMTIME timeVal)
 	WideChar dateBuffer[DATE_BUFFER_SIZE_];
 	GetDateFormatW(LOCALE_SYSTEM_DEFAULT_, DATE_SHORTDATE_, &timeVal, NULL,
 					   dateBuffer, sizeof(dateBuffer));
-	displayDateBuffer.set(dateBuffer, bfmeLenVGI(dateBuffer));
+	displayDateBuffer.set(dateBuffer, wcslen(dateBuffer));
 	return displayDateBuffer;
 }

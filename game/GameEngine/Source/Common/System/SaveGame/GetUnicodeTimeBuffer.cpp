@@ -67,7 +67,7 @@ struct OSVERSIONINFO_
 extern "C" __declspec(dllimport) int __stdcall GetVersionExA(OSVERSIONINFO_ *);
 extern "C" __declspec(dllimport) int __stdcall GetTimeFormatA(unsigned long, unsigned long, const _SYSTEMTIME *, const char *, char *, int);
 extern "C" __declspec(dllimport) int __stdcall GetTimeFormatW(unsigned long, unsigned long, const _SYSTEMTIME *, const WideChar *, WideChar *, int);
-__declspec(dllimport) unsigned int bfmeLenVGI(const WideChar *);
+extern "C" __declspec(dllimport) unsigned int wcslen(const WideChar *);
 
 enum { LOCALE_SYSTEM_DEFAULT_ = 0x0800 };
 enum { TIME_NOSECONDS_ = 2, TIME_NOTIMEMARKER_ = 4, TIME_FORCE24HOURFORMAT_ = 8 };
@@ -106,6 +106,6 @@ UnicodeString getUnicodeTimeBuffer(_SYSTEMTIME timeVal)
 								 NULL,
 								 timeBuffer,
 								 sizeof(timeBuffer));
-	displayTimeBuffer.set(timeBuffer, bfmeLenVGI(timeBuffer));
+	displayTimeBuffer.set(timeBuffer, wcslen(timeBuffer));
 	return displayTimeBuffer;
 }

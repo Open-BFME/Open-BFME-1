@@ -9,18 +9,18 @@ struct BfmeLockTEA {
 	void enter();
 	void leave();
 };
-extern "C" __declspec(dllimport) void __stdcall bfmeEnterTEA(BfmeLockTEA* lock);
-extern "C" __declspec(dllimport) void __stdcall bfmeLeaveTEA(BfmeLockTEA* lock);
+extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(BfmeLockTEA* lock);
+extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(BfmeLockTEA* lock);
 void BfmeLockTEA::enter()
 {
 	if (m_armed)
-		bfmeEnterTEA(this);
+		EnterCriticalSection(this);
 }
 // ?leave@BfmeLockTEA@@QAEXXZ
 void BfmeLockTEA::leave()
 {
 	if (m_armed)
-		bfmeLeaveTEA(this);
+		LeaveCriticalSection(this);
 }
 // ??0Rva00886F60Class@@QAE@PAUBfmeLockTEA@@@Z
 class Rva00886F60Class {
@@ -33,5 +33,5 @@ Rva00886F60Class::Rva00886F60Class(BfmeLockTEA* lock)
 {
 	m_lock = lock;
 	if (lock && lock->m_armed)
-		bfmeEnterTEA(lock);
+		EnterCriticalSection(lock);
 }

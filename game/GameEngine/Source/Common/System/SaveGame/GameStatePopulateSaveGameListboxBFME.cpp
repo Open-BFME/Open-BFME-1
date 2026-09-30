@@ -51,7 +51,7 @@ public:
 	}
 };
 
-__declspec(dllimport) unsigned int __cdecl bfmeLenVGI(const unsigned short *);
+extern "C" __declspec(dllimport) unsigned int __cdecl wcslen(const unsigned short *);
 
 class UnicodeString : private StringBase<UnsignedShort>
 {
@@ -83,7 +83,7 @@ public:
 static __forceinline int compareChars(const unsigned short *p,const unsigned short *other,int count) { int result = 0; while (count > 0) { if (*p != *other) { result = (int)*p - (int)*other; break; } ++p; ++other; --count; } return result; }
     __forceinline int compare(const unsigned short *other) const
     {
-        int otherLen = bfmeLenVGI(other);
+        int otherLen = wcslen(other);
         int myLen = m_data ? m_data->length : 0;
         const unsigned short *p = m_data ? m_data->text : (const unsigned short *)L"";
         int count = myLen < otherLen ? myLen : otherLen;

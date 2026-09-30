@@ -19,7 +19,7 @@ extern "C"
 	__declspec(dllimport) int __stdcall WideCharToMultiByte(UINT codePage,
 		DWORD flags, const WCHAR *wide, int wideCount, char *narrow,
 		int narrowCount, const char *defaultChar, int *usedDefaultChar);
-	__declspec(dllimport) int __stdcall GetStringTypeExA(LCID locale,
+	extern "C" __declspec(dllimport) int __stdcall GetStringTypeA(LCID locale,
 		DWORD infoType, const char *source, int count, WORD *charType);
 }
 
@@ -112,7 +112,7 @@ namespace ATL
 		if (count == -1)
 			narrowCount = -1;
 
-		return GetStringTypeExA(locale, infoType, narrow, narrowCount,
+		return GetStringTypeA(locale, infoType, narrow, narrowCount,
 			charType);
 	}
 }
