@@ -31658,3 +31658,4 @@ __CIacos,0x009F7256,claim superseded by the gate-required claim for ?Rva009F7256
 
 ?d_00851e00@@YAXXZ,0x00851E00,"rebase retire: scaffold superseded by conversion"
 ?d_00442fd0@@YAXXZ,0x00442FD0,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?rva00442fd0@InGameUI@@QAEHP6A_NPAVDrawable@@PAX@Z1@Z, a gate-required claim from game/GameEngine/Source/GameClient/InGameUIRva00442FD0.cpp over the same 380-byte range. The game/gen_asm/d_00435170.asm scaffold reproduces those bytes but carries no identity."
+?d_00592280@@YAXXZ,0x00592280,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ??0Rva00592570ResourceImageSlot@@QAE@XZ, a gate-required claim from game/GameEngine/Source/GameClient/GUI/AptPalantirResourceImageSlotConstructor.cpp over the same 597-byte range. The game/gen_asm/d_0058b1f0.asm scaffold reproduces those bytes but carries no identity."
