@@ -65,6 +65,26 @@ service lands them.
             `publishing` tip that is an ancestor of origin/master is recorded
             as landed with its receipts; anything else returns to the queue.
 
+LESSONS FROM THE 2026-09-30 LANDING WINDOW (a header-wide stack published by
+hand while master was frozen):
+  SSH       A push whose pre-push hook runs ~15 minutes lost its SSH
+            connection after "PRE-PUSH OK" (broken pipe) because the
+            connection sat idle through the hook. The service pushes with
+            ServerAliveInterval set (SSH_KEEPALIVE below; an existing
+            GIT_SSH_COMMAND is left alone). HTTPS remotes are unaffected.
+  TRACKED   The full gate regenerates targets/game/reverse/reloc_names.csv
+            (tools/build.py), and the push hook's post-gate snapshot check
+            refuses a tree whose tracked files the gate changed. So a gate
+            that writes tracked files cannot verify the tip it runs on.
+            Preferred fix: the gate writes generated tables under build/ and
+            a separate, reviewed commit updates the tracked copy. Until
+            then the service must not publish a tip the gate dirtied: it
+            either (a) commits the regenerated file on top and gates THAT
+            tip again (twice the gate time), or (b) refuses the batch with
+            the dirty list. Publishing the pre-gate tip with a stale table
+            would contradict the receipt. Not implemented yet: today the
+            push hook refuses such a push, which is (b) after the fact.
+
 AUTHENTICATION IS NOT SOLVED. model=, run= and host= in a receipt are values
 a worker process could have set. Proposal: fleet_run signs a run receipt
 (run id, host, the model parsed from the command it launched, brief sha,
@@ -97,13 +117,17 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 STATE = ROOT / "build" / "landing"
+# keep an SSH push alive through a long pre-push hook (see LESSONS above)
+SSH_KEEPALIVE = "ssh -o ServerAliveInterval=30 -o ServerAliveCountMax=60"
 DEFAULT_GATE = ('printf "refs/heads/master %s refs/heads/master %s\\n" "$LANDING_TIP" "$LANDING_BASE" '
                 '| bash .githooks/pre-push origin origin')
 
 
 def git(*args, cwd, check=True, input_bytes=None, timeout=600):
+    env = dict(os.environ)
+    env.setdefault("GIT_SSH_COMMAND", SSH_KEEPALIVE)
     got = subprocess.run(["git", *args], cwd=cwd, capture_output=True, input=input_bytes,
-                         timeout=timeout)
+                         timeout=timeout, env=env)
     if check and got.returncode:
         raise RuntimeError(f"git {' '.join(args)}: {got.stderr.decode(errors='replace').strip()}")
     return got
