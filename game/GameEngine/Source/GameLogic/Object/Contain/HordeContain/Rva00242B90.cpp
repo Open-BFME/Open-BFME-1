@@ -1,9 +1,7 @@
-// ?rva00242B90@Rva00242B90This@@QAEXPAVBfmeObjAS@@@Z
-// partial score=0.92 date=2026-09-28
 // cl: /DNDEBUG /MD
-// Retail vtable evidence identifies the unit predicates at +0x184/+0x18c and
-// this interface's slots at +0x10/+0x114.  The primary list owner is the
-// 0xac-byte base immediately preceding this secondary interface.
+// Retail reads the unit predicates from slots +0x184 and +0x18C.
+// This address-derived interface calls slots +0x10 and +0x114.
+// The list head sits at this interface's address minus 0xAC.
 typedef int Int;
 typedef unsigned char Bool;
 
@@ -83,11 +81,6 @@ struct Rva00242B90Node
 	Rva00242B90Member *m_member08;
 };
 
-struct Rva00242B90Primary
-{
-	Rva00242B90Node *m_listHead;
-	unsigned char m_unobserved04[0xa8];
-};
 
 class Rva00242B90This
 {
@@ -121,22 +114,21 @@ private:
 	Bool m_field118;
 };
 
-class Rva00242B90Owner : public Rva00242B90Primary, public Rva00242B90This
-{
-};
 
 void Rva00242B90This::rva00242B90(BfmeObjAS *param)
 {
-	if (m_field34 != 0)
-		callAt10(0);
+	Rva00242B90This *savedThis = this;
+	if (savedThis->m_field34 != 0)
+		savedThis->callAt10(0);
 
-	if (m_field118 != 0)
-		callAt114();
+	if (savedThis->m_field118 != 0)
+		savedThis->callAt114();
 
-	Rva00242B90Owner *owner = static_cast<Rva00242B90Owner *>(this);
-	Rva00242B90Node *head = owner->m_listHead;
+	Rva00242B90Node *head = *reinterpret_cast<Rva00242B90Node **>(
+		reinterpret_cast<char *>(savedThis) - 0xac);
 	Rva00242B90Node *node = head->m_next;
-	if (node != head)
+	if (node != *reinterpret_cast<Rva00242B90Node **>(
+		reinterpret_cast<char *>(savedThis) - 0xac))
 	{
 		for (;;)
 		{
@@ -149,11 +141,13 @@ void Rva00242B90This::rva00242B90(BfmeObjAS *param)
 					if (unit->testAt184())
 					{
 						BfmeItemHM *goal = unit->m_holder30->bfmeGetHM();
-						if (goal != 0 && static_cast<BfmeObjAS *>(goal) != param)
+						if (goal != 0)
 						{
-						BfmeObjAS *parentOfGoal = goal->bfmeParentAS(0);
-						if (parentOfGoal != 0 && parentOfGoal == parentOfParam)
-							goto next_member;
+							if (param == static_cast<BfmeObjAS *>(goal))
+								goto next_member;
+							BfmeObjAS *parentOfGoal = goal->bfmeParentAS(0);
+							if (parentOfGoal != 0 && parentOfParam == parentOfGoal)
+								goto next_member;
 						}
 					}
 				}
@@ -164,7 +158,8 @@ void Rva00242B90This::rva00242B90(BfmeObjAS *param)
 
 		next_member:
 			node = node->m_next;
-			if (node == head)
+			if (node == *reinterpret_cast<Rva00242B90Node **>(
+					reinterpret_cast<char *>(savedThis) - 0xac))
 				break;
 		}
 	}
