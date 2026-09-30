@@ -1,10 +1,10 @@
-"""The provider fleet lane: one scripted pass serves, checks, lands or abandons.
+"""The provider fleet lane: one scripted pass serves, checks, hands off or abandons.
 
 tools/provider_repair.py is replaced by a fake with the same CLI, so these
-tests pin the seat's own decisions: nothing served -> idle; FAIL -> sources
-restored and abandoned; PASS -> exactly the competitor sources committed,
-pushed, confirmed on origin/master by ancestry, the claim released through
-its Claim-Lease trailer; unpushable -> patch kept inside the seat worktree.
+tests pin the seat's decisions (nothing served -> idle; FAIL -> restored and
+abandoned; PASS -> committed and handed to the landing queue with its lease,
+never pushed) and the drainer's (rebase, re-check on the published tree,
+land, release the claim only once on master).
 """
 import json
 import shutil
@@ -95,64 +95,56 @@ def seat(tmp_path, monkeypatch):
     return ps.worktree(wt), origin
 
 
-def test_nothing_to_serve_idles(seat, monkeypatch):
+@pytest.fixture
+def queue(seat, tmp_path, monkeypatch):
+    """This host's landing service, pointed at the fixture origin."""
+    import landing_service as ls
+    wt, origin = seat
+    service = ls.Service(repo=wt, state=tmp_path / "landing", gate="true")
+    monkeypatch.setattr(ps, "landing", lambda: service)
+    return service
+
+
+def test_nothing_to_serve_idles(seat, queue, monkeypatch):
     wt, origin = seat
     monkeypatch.setenv("FAKE_MODE", "nothing")
-    before = git(origin, "rev-parse", "master")
     assert ps.once(wt) == ps.NOTHING
-    assert git(origin, "rev-parse", "master") == before
+    assert queue.queued() == []
 
 
-def test_a_failed_check_is_abandoned_and_restored(seat, monkeypatch):
+def test_a_failed_check_is_abandoned_and_restored(seat, queue, monkeypatch):
     wt, origin = seat
     monkeypatch.setenv("FAKE_MODE", "fail")
-    before = git(origin, "rev-parse", "master")
     assert ps.once(wt) == ps.FAILED
     assert (wt / "game/legacy.cpp").read_text().startswith("void Legacy::f()")
     assert "?f@Legacy@@QAEXXZ --model script/provider_repair" in (wt / "abandoned.txt").read_text()
-    assert git(origin, "rev-parse", "master") == before
+    assert queue.queued() == []
 
 
-def test_a_pass_lands_on_master_with_receipt_and_releases_the_claim(seat, monkeypatch):
+def test_a_pass_is_handed_to_the_landing_queue_not_pushed(seat, queue, monkeypatch):
     wt, origin = seat
     monkeypatch.setenv("FAKE_MODE", "pass")
-    assert ps.once(wt) == ps.LANDED
-    head = git(origin, "rev-parse", "master")
-    assert git(wt, "merge-base", "--is-ancestor", git(wt, "rev-parse", "HEAD"), head) == ""
-    changed = git(origin, "diff-tree", "--no-commit-id", "--name-only", "-r", head)
-    assert changed.split() == ["game/legacy.cpp"]         # exactly the competitor source
-    message = git(origin, "log", "-1", "--format=%B", head)
-    assert "check PASS; Functions: OK 2/2" in message
-    assert "Model: script/provider_repair" in message
-    assert "Claim-Lease: 0x00000100=" in message
-    claims.active.cache_clear()
-    assert claims.active(wt) == {}                        # released by its lease
-
-
-def test_a_pass_that_cannot_be_pushed_keeps_its_patch_in_the_worktree(seat, monkeypatch):
-    wt, origin = seat
-    monkeypatch.setenv("FAKE_MODE", "pass")
-    monkeypatch.setattr(ps, "PUSH_ATTEMPTS", 1)
-    real_git = ps.git
-
-    def refusing(cwd, *args, check=False):
-        if args[:1] == ("push",):
-            return subprocess.CompletedProcess(args, 1, "", "rejected")
-        return real_git(cwd, *args, check=check)
-    monkeypatch.setattr(ps, "git", refusing)
     before = git(origin, "rev-parse", "master")
-    assert ps.once(wt) == ps.UNPUSHED
-    assert (wt / "build/provider_seat/unpushed/0x00000100.patch").read_bytes()
-    assert git(origin, "rev-parse", "master") == before
+    assert ps.once(wt) == ps.QUEUED
+    assert git(origin, "rev-parse", "master") == before          # the seat never races master
+    [unit] = queue.queued()
+    lease = claims.current_lease(0x100, root=wt)
+    assert unit["claims"] == {"0x00000100": lease} and unit["model"] == "script/provider_repair"
+    assert "provider_repair.py check" in unit["verify"] and "?f@Legacy@@QAEXXZ" in unit["verify"]
+    assert list(unit["attach"]) == ["build/provider_repair/0x00000100"]
+    patch = (queue.state / "queue" / f"{unit['id']}.patch").read_text()
+    assert f"Claim-Lease: 0x00000100={lease}" in patch and "game/legacy.cpp" in patch
+    claims.active.cache_clear()
+    assert 0x100 in claims.active(wt)                              # kept until it lands
     assert git(wt, "status", "--porcelain") == ""
+    assert git(wt, "rev-parse", "HEAD") == git(wt, "rev-parse", ps.MASTER)
 
 
-def test_the_lane_exists_and_is_off_by_default():
-    launch = (TOOLS / "fleet" / "launch_fleet.sh").read_text(encoding="utf-8")
-    seat_sh = (TOOLS / "fleet" / "seat.sh").read_text(encoding="utf-8")
-    assert "P=${10:-0}" in launch and 'launch provider "$i"' in launch
-    assert 'if [ "$ENGINE" = provider ]; then' in seat_sh
-    assert "tools/fleet/provider_seat.py" in seat_sh and "FLEET_DRY_PAUSE" in seat_sh
+def test_no_lease_means_nothing_is_handed_off(seat, queue, monkeypatch):
+    wt, origin = seat
+    monkeypatch.setenv("FAKE_MODE", "noclaim")
+    assert ps.once(wt) == ps.FAILED
+    assert queue.queued() == [] and git(wt, "status", "--porcelain") == ""
 
 
 def _peer(origin, tmp_path):
@@ -164,165 +156,40 @@ def _peer(origin, tmp_path):
     return peer
 
 
-def _after_first_check(monkeypatch, action):
-    real = ps.tool
-    done = []
-
-    def tool(wt, *args):
-        got = real(wt, *args)
-        if args[0] == "check" and got.returncode == 0 and not done:
-            done.append(1)
-            action()
-        return got
-    monkeypatch.setattr(ps, "tool", tool)
-
-
-def test_a_rebase_that_changes_the_owner_is_checked_again_and_refused(seat, tmp_path, monkeypatch):
-    # review 2026-09-30 (test_adversarial.py): an owner-source change arrived in
-    # the rebase after `check`, and the seat pushed on the stale receipt.
+def test_the_drainer_lands_it_checks_again_and_releases_the_claim(seat, queue, monkeypatch):
     wt, origin = seat
     monkeypatch.setenv("FAKE_MODE", "pass")
-    peer = _peer(origin, tmp_path)
-
-    def concurrent_owner_change():
-        (peer / "game/owner.cpp").write_text("void Legacy::f() { /* wrong linked provider */ }\n")
-        git(peer, "commit", "-q", "-am", "concurrent owner change")
-        git(peer, "push", "-q", "origin", "HEAD:master")
-    _after_first_check(monkeypatch, concurrent_owner_change)
-    assert ps.once(wt) == ps.FAILED
-    assert (wt / "checks.txt").read_text().count("check") == 2          # checked again
+    assert ps.once(wt) == ps.QUEUED
+    result = queue.run_once()
+    assert len(result["landed"]) == 1 and result["rejected"] == []
     head = git(origin, "rev-parse", "master")
-    assert git(origin, "log", "-1", "--format=%s", head) == "concurrent owner change"
-    assert "check FAIL after rebase" in (wt / "abandoned.txt").read_text()
-    assert git(wt, "status", "--porcelain") == ""
-    assert (wt / "game/legacy.cpp").read_text().startswith("void Legacy::f()")
+    assert git(origin, "diff-tree", "--no-commit-id", "--name-only", "-r", head).split() == \
+        ["game/legacy.cpp"]
+    assert "check" in (queue.work / "checks.txt").read_text()     # re-checked on the landed tree
+    assert git(origin, "for-each-ref", "refs/claims/") == ""       # released once on master
 
 
-def test_an_unrelated_upstream_change_needs_no_second_check(seat, tmp_path, monkeypatch):
+def test_an_upstream_change_after_the_seats_check_is_caught_by_the_drainer(
+        seat, queue, tmp_path, monkeypatch):
+    # The races fixed in f3806f101a..fa8ff653ae (owner source, ledger, an
+    # included .cpp changing after the seat's check) are now structural: the
+    # drainer rebases first and runs the unit's own check on the exact tree
+    # it would publish.
     wt, origin = seat
     monkeypatch.setenv("FAKE_MODE", "pass")
+    assert ps.once(wt) == ps.QUEUED
     peer = _peer(origin, tmp_path)
-
-    def unrelated():
-        # prose only: any game source, even one the check never named, rechecks
-        (peer / "docs").mkdir()
-        (peer / "docs/notes.md").write_text("unrelated\n")
-        git(peer, "add", "docs/notes.md")
-        git(peer, "commit", "-q", "-m", "unrelated")
-        git(peer, "push", "-q", "origin", "HEAD:master")
-    _after_first_check(monkeypatch, unrelated)
-    assert ps.once(wt) == ps.LANDED
-    assert (wt / "checks.txt").read_text().count("check") == 1
+    (peer / "game/owner.cpp").write_text("void Legacy::f() { /* wrong linked provider */ }\n")
+    git(peer, "commit", "-q", "-am", "owner changed after the seat's check")
+    git(peer, "push", "-q", "origin", "HEAD:master")
+    result = queue.run_once()
+    assert result["landed"] == [] and len(result["rejected"]) == 1
+    assert git(origin, "log", "-1", "--format=%s", "master") == "owner changed after the seat's check"
 
 
-def test_an_upstream_header_change_forces_a_second_check(seat, tmp_path, monkeypatch):
-    wt, origin = seat
-    monkeypatch.setenv("FAKE_MODE", "pass")
-    peer = _peer(origin, tmp_path)
-
-    def header():
-        (peer / "game/legacy.h").write_text("struct Legacy;\n")
-        git(peer, "add", "game/legacy.h")
-        git(peer, "commit", "-q", "-m", "header")
-        git(peer, "push", "-q", "origin", "HEAD:master")
-    _after_first_check(monkeypatch, header)
-    assert ps.once(wt) == ps.LANDED
-    assert (wt / "checks.txt").read_text().count("check") == 2
-
-
-def test_a_claim_lost_before_the_push_publishes_nothing(seat, monkeypatch):
-    wt, origin = seat
-    monkeypatch.setenv("FAKE_MODE", "pass")
-    before = git(origin, "rev-parse", "master")
-
-    def taken_over():
-        claims.release([0x100], force=True, root=wt)
-        monkeypatch.setenv("BFME_CLAIM_OWNER", "rival")
-        claims.claim([0x100], root=wt)
-        monkeypatch.setenv("BFME_CLAIM_OWNER", "provider-seat-1")
-    _after_first_check(monkeypatch, taken_over)
-    assert ps.once(wt) == ps.FAILED
-    assert git(origin, "rev-parse", "master") == before
-    assert git(wt, "status", "--porcelain") == ""
-    assert not (wt / "abandoned.txt").exists()          # not a verdict: someone else owns it
-
-
-def test_no_lease_means_no_landing(seat, monkeypatch):
-    wt, origin = seat
-    monkeypatch.setenv("FAKE_MODE", "noclaim")
-    before = git(origin, "rev-parse", "master")
-    assert ps.once(wt) == ps.FAILED
-    assert git(origin, "rev-parse", "master") == before
-
-
-def test_an_upstream_ledger_change_forces_a_second_check(seat, tmp_path, monkeypatch):
-    # review 2026-09-30 cycle 2: a symbols.csv change after check landed with
-    # one check; every ledger is a verification input.
-    wt, origin = seat
-    monkeypatch.setenv("FAKE_MODE", "pass")
-    peer = _peer(origin, tmp_path)
-
-    def upstream():
-        path = peer / "targets/game/reverse/symbols.csv"
-        path.parent.mkdir(parents=True)
-        path.write_text("name,address\ncallee,0x00401234\n")
-        git(peer, "add", str(path))
-        git(peer, "commit", "-q", "-m", "new resolver inputs")
-        git(peer, "push", "-q", "origin", "HEAD:master")
-    _after_first_check(monkeypatch, upstream)
-    assert ps.once(wt) == ps.LANDED
-    assert (wt / "checks.txt").read_text().count("check") == 2
-
-
-def test_the_published_digest_is_the_final_receipt(seat, tmp_path, monkeypatch):
-    # review 2026-09-30 cycle 2: the message kept the first receipt's digest
-    # after a re-check rewrote the receipt.
-    import hashlib
-    wt, origin = seat
-    monkeypatch.setenv("FAKE_MODE", "pass")
-    fake = wt / "tools/provider_repair.py"
-    fake.write_text(FAKE.replace('"pass": True, "inputs": inputs,',
-                                 '"pass": True, "check_number": (ROOT / "checks.txt").read_text()'
-                                 '.count("check"), "inputs": inputs,'), encoding="utf-8")
-    git(wt, "commit", "-q", "-am", "fixture receipt includes check number")
-    git(wt, "push", "-q", "origin", "HEAD:master")
-    peer = _peer(origin, tmp_path)
-
-    def upstream():
-        (peer / "game/new.h").write_text("struct Added;\n")
-        git(peer, "add", "game/new.h")
-        git(peer, "commit", "-q", "-m", "new header")
-        git(peer, "push", "-q", "origin", "HEAD:master")
-    _after_first_check(monkeypatch, upstream)
-    assert ps.once(wt) == ps.LANDED
-    receipt = wt / "build/provider_repair/0x00000100/receipt.json"
-    assert json.loads(receipt.read_text())["check_number"] == 2
-    message = git(origin, "log", "-1", "--format=%B", "master")
-    assert "receipt sha256: " + hashlib.sha256(receipt.read_bytes()).hexdigest() in message
-
-
-def test_an_upstream_change_to_an_included_cpp_is_checked_again(seat, tmp_path, monkeypatch):
-    # review 2026-09-30 cycle 3 (test_review_rechecks.py): the receipt names only
-    # top-level sources, and a .cpp can #include another .cpp; a change to the
-    # included one landed on one check. No game source is exempt now.
-    wt, origin = seat
-    monkeypatch.setenv("FAKE_MODE", "pass")
-    (wt / "game/dependency.cpp").write_text("/* retail dependency */\n")
-    (wt / "game/owner.cpp").write_text('#include "dependency.cpp"\n')
-    fake = wt / "tools/provider_repair.py"
-    fake.write_text(FAKE.replace('owner = (ROOT / "game/owner.cpp").read_text()',
-                                 'owner = (ROOT / "game/owner.cpp").read_text()'
-                                 ' + (ROOT / "game/dependency.cpp").read_text()'), encoding="utf-8")
-    git(wt, "add", "game/dependency.cpp", "game/owner.cpp", "tools/provider_repair.py")
-    git(wt, "commit", "-q", "-m", "fixture included source")
-    git(wt, "push", "-q", "origin", "HEAD:master")
-    peer = _peer(origin, tmp_path)
-
-    def upstream():
-        (peer / "game/dependency.cpp").write_text("/* wrong provider */\n")
-        git(peer, "commit", "-q", "-am", "dependency changes after verification")
-        git(peer, "push", "-q", "origin", "HEAD:master")
-    _after_first_check(monkeypatch, upstream)
-    assert ps.once(wt) == ps.FAILED
-    assert (wt / "checks.txt").read_text().count("check") == 2
-    assert git(origin, "log", "-1", "--format=%s", "master") == "dependency changes after verification"
+def test_the_lane_exists_and_is_off_by_default():
+    launch = (TOOLS / "fleet" / "launch_fleet.sh").read_text(encoding="utf-8")
+    seat_sh = (TOOLS / "fleet" / "seat.sh").read_text(encoding="utf-8")
+    assert "P=${10:-0}" in launch and 'launch provider "$i"' in launch
+    assert 'if [ "$ENGINE" = provider ]; then' in seat_sh
+    assert "tools/fleet/provider_seat.py" in seat_sh and "FLEET_DRY_PAUSE" in seat_sh

@@ -271,14 +271,73 @@ def test_a_takeover_after_ref_advertisement_blocks_publication(claimed):
     assert git(origin, "rev-parse", "refs/claims/0x00000100") == rival
 
 
-def test_publication_rewrites_the_claim_and_the_owner_keeps_renewing(claimed):
+def test_publication_rewrites_the_claim_and_releases_it_once_landed(claimed):
     service, unit, origin, claims, got = claimed
     uid = service.enqueue(unit("published"), {"claims": {"0x100": got.leases[0x100]}})
+    pushed = []
+    real_git = ls.git
+
+    def spy(*args, **kwargs):
+        if args[:1] == ("push",) and any(a.endswith(":refs/claims/0x00000100") and not a.startswith(":")
+                                         for a in args):
+            pushed.append(args)
+        return real_git(*args, **kwargs)
+    ls.git = spy
+    try:
+        assert service.run_once()["landed"] == [uid]
+    finally:
+        ls.git = real_git
+    # the atomic publication rewrote the claim (lease kept, publication recorded) ...
+    assert pushed and any("refs/heads/master" in " ".join(a) for a in pushed)
+    # ... and the claim is released only after the landing is on the branch
+    assert git(origin, "for-each-ref", "refs/claims/") == ""
+
+
+def test_a_claim_retaken_after_publication_survives_the_release(claimed, monkeypatch):
+    service, unit, origin, claims, got = claimed
+    uid = service.enqueue(unit("retaken"), {"claims": {"0x100": got.leases[0x100]}})
+    real_release = service._release
+
+    def retake_first(published):
+        claims.release([0x100], force=True, root=service.repo)
+        monkeypatch.setenv("BFME_CLAIM_OWNER", "next-worker")
+        claims.claim([0x100], root=service.repo)
+        return real_release(published)
+    service._release = retake_first
     assert service.run_once()["landed"] == [uid]
-    now = git(origin, "rev-parse", "refs/claims/0x00000100")
-    assert now != got.tokens[0x100]
-    body = json.loads(git(origin, "log", "-1", "--format=%B", now))
-    assert body["published"] == git(origin, "rev-parse", "master")
-    assert body["lease"] == got.leases[0x100] and body["owner"] == "worker"
-    renewed, lost = claims.renew(got.tokens, root=service.repo)   # the worker's old token
-    assert lost == [] and 0x100 in renewed
+    claims.active.cache_clear()
+    assert claims.active(service.repo)[0x100]["owner"] == "next-worker"
+
+
+def test_a_units_own_check_runs_on_the_rebased_tree_and_can_reject_it(world, tmp_path):
+    service, unit, origin = world
+    attach = tmp_path / "evidence"
+    attach.mkdir()
+    (attach / "brief.json").write_text("{}")
+    good = service.enqueue(unit("checked_ok"), {
+        "verify": "test -f build/provider_repair/X/brief.json && test -f checked_ok.txt",
+        "attach": {"build/provider_repair/X": str(attach)}})
+    bad = service.enqueue(unit("checked_bad"), {"verify": "exit 7"})
+    result = service.run_once()
+    assert result == {"landed": [good], "rejected": [bad]}
+    assert "checked_ok.txt" in origin_files(origin) and "checked_bad.txt" not in origin_files(origin)
+
+
+def test_the_drainer_runs_a_windowed_pass_only_when_the_queue_is_non_empty(tmp_path, capsys):
+    calls = []
+
+    class Fake:
+        work = tmp_path / "wt"
+
+        def __init__(self, queued):
+            self._queued = queued
+
+        def queued(self):
+            return self._queued
+
+        def run_once(self, max_batch, window):
+            calls.append((max_batch, window))
+            return {"landed": ["u"], "rejected": []}
+    assert ls.drain(Fake([]), once=True) == 0 and calls == []
+    assert ls.drain(Fake([{"id": "u"}]), once=True, max_batch=5) == 0
+    assert calls == [(5, True)] and '"landed": ["u"]' in capsys.readouterr().out

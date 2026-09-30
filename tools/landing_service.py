@@ -109,6 +109,7 @@ seats still push directly.
   python3 tools/landing_service.py enqueue <patch-file | commit> [--claim 0xRVA=LEASE ...]
   python3 tools/landing_service.py status
   python3 tools/landing_service.py enqueue A..B          # a multi-commit (header-wide) unit
+  python3 tools/landing_service.py drain [--interval 10] [--once] [--seed-cache DIR]
   python3 tools/landing_service.py run-once [--max-batch 20] [--gate CMD] [--no-publish] [--window]
 """
 import argparse
@@ -118,6 +119,7 @@ import json
 import os
 import platform
 import re
+import shutil
 import socket
 import subprocess
 import sys
@@ -262,6 +264,30 @@ class Service:
         (self.state / "logs" / f"{tip}.log").write_bytes(got.stdout or b"")
         return got.returncode
 
+    def _unit_checks(self, base, tip, units):
+        """A unit may carry its own check (`verify`, a command run in the
+        service worktree at the batch tip) with the files it needs
+        (`attach`: {worktree-relative dest: source dir}); provider_seat hands
+        in `provider_repair.py check` with its brief and before-snapshot, so
+        the provider verdict is re-derived on the exact rebased tree. The
+        first failure fails the batch, and bisect isolates the unit."""
+        for record in units:
+            if not record.get("verify"):
+                continue
+            for dest, src in (record.get("attach") or {}).items():
+                target = self.work / dest
+                if target.exists():
+                    shutil.rmtree(target)
+                shutil.copytree(src, target)
+            env = dict(os.environ, LANDING_BASE=base, LANDING_TIP=tip)
+            got = subprocess.run(["bash", "-c", record["verify"]], cwd=self.work, env=env,
+                                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=6 * 3600)
+            with (self.state / "logs" / f"{tip}.log").open("ab") as handle:
+                handle.write(f"\n--- unit {record['id']}: {record['verify']}\n".encode() + got.stdout)
+            if got.returncode:
+                return got.returncode
+        return 0
+
     def _artifacts(self, since):
         """{path: sha256} of build products the gate wrote in the worktree."""
         found = {}
@@ -310,8 +336,17 @@ class Service:
                 self._receipts(data["units"], data["base"], data["tip"], data.get("verified") or {},
                                note=note)
                 done = list(data["units"])
+                self._release(data.get("claims") or {})
         path.unlink()
         return done
+
+    def _release(self, published):
+        """The landing is on the branch: delete each claim ref we rewrote at
+        publication, compare-and-swap on the exact commit we wrote, so a
+        claim anyone took since is untouched. A failed delete just expires."""
+        for ref, sha in sorted(published.items()):
+            git("push", "-q", f"--force-with-lease={ref}:{sha}", self.remote, f":{ref}",
+                cwd=self.repo, check=False)
 
     def _reject(self, result, records, unit, reason, **extra):
         self._finish(unit, "rejected", reason=reason, **extra)
@@ -374,6 +409,8 @@ class Service:
                 started = time.time()
                 code = self._gate(base, tip)
                 if code == 0:
+                    code = self._unit_checks(base, tip, [records[u] for u in prefix])
+                if code == 0:
                     verified[tuple(prefix)] = dict(tip=tip, started=started,
                                                    artifacts=self._artifacts(started))
                 return code == 0
@@ -412,11 +449,13 @@ class Service:
             # update makes the server check every old value in one transaction.
             import claims
             spec = [f"--force-with-lease={ref}:{token}" for ref, token in sorted(leases.items())]
-            refs = [f"{claims.publication(token, tip, root=self.repo)}:{ref}"
-                    for ref, token in sorted(leases.items())]
+            published = {ref: claims.publication(token, tip, root=self.repo)
+                         for ref, token in sorted(leases.items())}
+            refs = [f"{sha}:{ref}" for ref, sha in published.items()]
             # The journal outlives the push until receipts and queue
             # settlement are written; recover() finishes an interrupted one.
-            self._phase(phase="publishing", base=base, tip=tip, units=good, verified=evidence)
+            self._phase(phase="publishing", base=base, tip=tip, units=good, verified=evidence,
+                        claims=published)
             git("push", "-q", "--atomic", *spec, self.remote,
                 f"{tip}:refs/heads/{self.branch}", *refs, cwd=self.work, check=False)
             landed = self.recover()
@@ -485,6 +524,13 @@ def main(argv=None):
     run.add_argument("--no-publish", action="store_true")
     run.add_argument("--window", action="store_true",
                      help="hold the cooperative publish window for the pass (header-wide units)")
+    drain = sub.add_parser("drain", help="land the queue under the window, now and every N minutes")
+    drain.add_argument("--interval", type=float, default=10, help="minutes between passes")
+    drain.add_argument("--once", action="store_true", help="one pass, then exit")
+    drain.add_argument("--max-batch", type=int, default=20)
+    drain.add_argument("--gate", default=DEFAULT_GATE)
+    drain.add_argument("--seed-cache", metavar="DIR",
+                       help="a warm build/match to copy into the service worktree once")
     args = ap.parse_args(argv)
     service = Service(gate=getattr(args, "gate", DEFAULT_GATE))
     if args.action == "enqueue":
@@ -496,9 +542,33 @@ def main(argv=None):
         for sub_dir in ("queue", "landed", "rejected"):
             print(f"{sub_dir}: {len(list((service.state / sub_dir).glob('*.json')))}")
         return 0
+    if args.action == "drain":
+        return drain(service, args.interval, args.once, args.max_batch, args.seed_cache)
     print(json.dumps(service.run_once(args.max_batch, publish=not args.no_publish,
                                       window=args.window), indent=1))
     return 0
+
+
+def drain(service, interval=10, once=False, max_batch=20, seed=None):
+    """The landing drainer: whenever the queue is non-empty, one windowed
+    pass lands up to `max_batch` units with ONE gate. The service worktree
+    (state/wt) persists between passes, so its object cache stays warm;
+    `seed` copies a warm build/match into it the first time."""
+    while True:
+        if service.queued():
+            if seed and not (service.work / "build" / "match").exists():
+                base = service.snapshot()
+                service._worktree(base)
+                shutil.copytree(seed, service.work / "build" / "match")
+            started = time.time()
+            try:
+                result = service.run_once(max_batch, window=True)
+            except Exception as error:  # noqa: BLE001 -- a held window is closed by run_once
+                result = {"error": str(error)}
+            print(json.dumps(dict(result, seconds=round(time.time() - started, 1))), flush=True)
+        if once:
+            return 0
+        time.sleep(interval * 60)
 
 
 if __name__ == "__main__":

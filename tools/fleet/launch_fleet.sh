@@ -33,6 +33,8 @@ for i in $(seq 1 "$C"); do launch lunaclass "$i"; done
 for i in $(seq 1 "$K"); do launch lunablock "$i"; done
 for i in $(seq 1 "$E"); do launch lunaea "$i"; done
 for i in $(seq 1 "$P"); do launch provider "$i"; done
+# provider seats hand their commits to the landing queue; one drainer lands it
+[ "$P" -gt 0 ] && { nohup python tools/landing_service.py drain --interval 10 > build/fleet_logs/landing_drain.log 2>&1 < /dev/null & disown; }
 nohup python tools/fleet/ledger_watchdog.py --interval 300 > build/fleet_logs/watchdog.supervisor.log 2>&1 < /dev/null & disown
 nohup bash tools/fleet/harvest_loop.sh > /dev/null 2>&1 < /dev/null & disown
 echo "launched $N luna + $B lunabig + $F lunafin + $M lunamid + $A lunaanon + $R lunareview + $C lunaclass + $K lunablock + $E lunaea + $P provider, watchdog, harvest loop"

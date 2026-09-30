@@ -97,8 +97,9 @@ dry_check() {
 while true; do
   if [ "$ENGINE" = provider ]; then
     # provider lane (tools/fleet/provider_seat.py): a script, not a model session.
-    # provider_repair.py next -> apply -> check; PASS lands (commit, push,
-    # ancestry, release --landed), FAIL abandons. Its own worktree, never this one.
+    # provider_repair.py next -> apply -> check; PASS commits and hands the commit
+    # to the landing queue (landing_service.py drain lands it under the publish
+    # window), FAIL abandons. Its own worktree, never this one.
     python tools/fleet/provider_seat.py --seat "$SEAT"; rc=$?
     echo "$(date '+%H:%M') seat $ENGINE$SEAT provider pass exit $rc" >> build/fleet_logs/seats.log
     case "$rc" in
