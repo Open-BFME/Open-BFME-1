@@ -288,3 +288,58 @@ def test_no_new_pass_starts_after_the_hold_cap(world, monkeypatch):
     assert result["landed"] == [] and result["deferred"] == [uid]
     assert [r["id"] for r in service.queued()] == [uid]       # stays queued
     assert pw.read(root=service.repo) == (None, None)
+
+
+def test_the_publishing_push_reuses_the_batch_gate_only_for_the_same_tree(tmp_path):
+    # A window should pay for one gate, not two: the push of the tip the
+    # batch gate just verified reuses that evidence (BFME_REUSE_GATE_EVIDENCE),
+    # keyed on the exact tree and selector set; a changed tree gates again.
+    repo = tmp_path / "repo"
+    _git(tmp_path, "init", "-q", str(repo))
+    for key, value in (("user.name", "t"), ("user.email", "t@example.com"), ("core.hooksPath", "no-hooks")):
+        _git(repo, "config", key, value)
+    for sub_dir in ("tools", ".githooks", "game", "targets/game/reverse"):
+        (repo / sub_dir).mkdir(parents=True)
+    (repo / "targets/game/reverse/functions.csv").write_text("name,source,status\nf,game/a.cpp,matched\n")
+    shutil.copy(REPO / ".githooks" / "pre-push", repo / ".githooks" / "pre-push")
+    shutil.copy(TOOLS / "gate_evidence.py", repo / "tools" / "gate_evidence.py")
+    for name in ("check_csv", "one_identity", "target_hooks", "conversion_gate", "name_regression",
+                 "name_history", "name_oracle", "retired_guard", "doc_budget", "ea_name_guard",
+                 "pin_consistency", "b_pin_check", "delta_sources", "header_dependents"):
+        (repo / f"tools/{name}.py").write_text("import sys\nsys.exit(0)\n")
+    (repo / "tools/layout_migration.py").write_text("import sys\nsys.exit(1)\n")
+    (repo / "tools/verification_cache.py").write_text(
+        "import sys\nargs = sys.argv\n"
+        "if 'prepare' in args:\n    print(open(args[args.index('--selectors-file') + 1]).read(), end='')\n")
+    (repo / "build.sh").write_text('#!/usr/bin/env bash\nprintf "%s\\n" "$@" >> gate_calls.txt\n'
+                                   'grep -q bad game/a.cpp && exit 1\nexit 0\n')
+    (repo / ".gitignore").write_text("gate_calls.txt\n")
+    (repo / "game/a.cpp").write_text("int a;\n")
+    _git(repo, "add", ".")
+    _git(repo, "update-index", "--chmod=+x", "build.sh")
+    _git(repo, "commit", "-q", "-m", "base")
+    base = _git(repo, "rev-parse", "HEAD")
+    (repo / "game/a.cpp").write_text("int a = 1;\n")
+    _git(repo, "commit", "-q", "-am", "good change")
+    good = _git(repo, "rev-parse", "HEAD")
+
+    def hook(tip, reuse=True):
+        env = {k: v for k, v in os.environ.items() if k != gate_evidence.ENABLE}
+        if reuse:
+            env[gate_evidence.ENABLE] = "1"
+        return subprocess.run(["bash", ".githooks/pre-push", "origin", "unused"], cwd=repo, env=env,
+                              input=f"refs/heads/topic {tip} refs/heads/topic {base}\n",
+                              capture_output=True, text=True)
+
+    def gates():
+        calls = repo / "gate_calls.txt"
+        return calls.read_text().count("game/a.cpp") if calls.exists() else 0
+    assert hook(good).returncode == 0 and gates() == 1          # the batch gate: runs, recorded
+    second = hook(good)
+    assert second.returncode == 0 and gates() == 1              # the publishing push: reused
+    assert "gate evidence for this exact tree reused" in second.stdout
+    assert hook(good, reuse=False).returncode == 0 and gates() == 2   # off unless opted in
+    (repo / "game/a.cpp").write_text("int a = 1; // bad\n")
+    _git(repo, "commit", "-q", "-am", "changed tree")
+    changed = _git(repo, "rev-parse", "HEAD")
+    assert hook(changed).returncode != 0 and gates() == 3       # a changed tree gates again

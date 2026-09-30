@@ -366,6 +366,22 @@ PY
     # record also checks ancillary evidence over the combined set across chunks.
     # The helper refuses a dirty relevant worktree, so build.sh cannot verify a
     # different tree from the pushed commit.
+    # The landing service's publishing push of a tip its batch gate just
+    # verified (BFME_REUSE_GATE_EVIDENCE=1): reuse that evidence only for the
+    # identical tree and a covered selector set (tools/gate_evidence.py);
+    # anything else gates as usual. Every push records what it verified.
+    requested=""
+    if [ "${#verify[@]}" -ne 0 ] && [ -f tools/gate_evidence.py ]; then
+        requested=$(mktemp)
+        printf '%s\n' "${verify[@]}" > "$requested"
+        if python3 tools/gate_evidence.py check --commit "$local_sha" --kind scoped \
+                --base "$base" --selectors-file "$requested"; then
+            rm -f "$requested"
+            window_check
+            echo "PRE-PUSH OK (${#verify[@]} selector(s): gate evidence for this exact tree reused)"
+            continue
+        fi
+    fi
     if [ "${#verify[@]}" -ne 0 ]; then
         selector_in=$(mktemp)
         selector_out=$(mktemp)
@@ -405,7 +421,13 @@ PY
             || { rm -f "$selector_in" "$selector_out" "$cache_manifest"; \
                  fail "verification evidence recording (see above)"; }
         rm -f "$selector_in" "$selector_out" "$cache_manifest"
+        if [ -n "$requested" ]; then
+            python3 tools/gate_evidence.py record --commit "$local_sha" --kind scoped \
+                    --base "$base" --selectors-file "$requested" > /dev/null \
+                || echo "pre-push: could not record gate evidence (gate still passed)" >&2
+        fi
     fi
+    [ -z "$requested" ] || rm -f "$requested"
     window_check
     echo "PRE-PUSH OK (${#verify[@]} outgoing verification selector(s) checked)"
 done <<< "$refs"
