@@ -1,8 +1,3 @@
-// ?slot98@HordeContainInterface@@QAE_NXZ
-// partial score=0.9447 date=2026-09-24
-// ?slot98@HordeContainInterface@@QAE_NXZ
-// Started from reverse/attempts/0x0023c4d0.cpp (score 0.94); corrected after
-// the vtable and layout review below.
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc
 // stlport
 
@@ -14,6 +9,11 @@
 // the interface subobject, so its set word at local +0x30 is complete-object
 // +0x114.  The Object word at +0x114 is a condition/flags word, not Object's
 // canonical status field at +0x90.
+//
+// Retail RVA 0x0023C4D0, 217 bytes.  The member test reads the +0x1c pointer
+// once per comparison through a null-guarded accessor that yields 999999 for a
+// null pointer (the shape of StateMachine::getCurrentStateID in the Generals
+// reference); two separate expansions give retail's reload of that pointer.
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
@@ -60,15 +60,15 @@ public:
 class BfmeMemberSlotState
 {
 public:
+	UnsignedInt bfmeCountOrInvalid() const
+	{
+		return m_bfmeQueue ? m_bfmeQueue->m_bfmeCount : 999999;
+	}
+
 	char m_bfmeHead[ 0x1c ];
 	BfmeMemberQueue *m_bfmeQueue;
 };
 
-struct BfmeMemberSlotStateVolatile
-{
-	char m_bfmeHead[ 0x1c ];
-	BfmeMemberQueue * volatile m_bfmeQueue;
-};
 
 class BfmeMemberAI
 {
@@ -116,21 +116,10 @@ Bool HordeContainInterface::slot98( void )
 		Object *member = TheGameLogic->findObjectByID( id );
 		if ( member != 0 )
 		{
-			BfmeMemberSlotState *state = bfmeGetSlotState( member );
-			BfmeMemberQueue *queue = state->m_bfmeQueue;
-
 			anyResolved = true;
-
-			if ( queue != 0 )
-			{
-				if ( queue->m_bfmeCount == 0 )
-					continue;
-			}
-
-			queue = ((BfmeMemberSlotStateVolatile *)state)->m_bfmeQueue;
-
-			if ( queue == 0 || queue->m_bfmeCount != 1 ||
-				( member->m_bfmeFlags114 & 0x10000000 ) )
+			if ( bfmeGetSlotState( member )->bfmeCountOrInvalid() == 0 )
+				continue;
+			if ( bfmeGetSlotState( member )->bfmeCountOrInvalid() != 1 || ( member->m_bfmeFlags114 & 0x10000000 ) )
 				blocked = true;
 		}
 	}
