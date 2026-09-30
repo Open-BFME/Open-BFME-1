@@ -2,7 +2,7 @@
 // stlport
 // Open-BFME: clean reconstruction of the Model field parser at retail 0x00773170.
 
-extern "C" __declspec(dllimport) int __cdecl _stricmp( const char *left, const char *right );
+extern "C" __declspec(dllimport) int __cdecl _strcmpi( const char *left, const char *right );
 
 #include "ascii_string.h"
 
@@ -56,7 +56,7 @@ static __declspec(noinline) void parseModel( INI *ini, void *instance, void *, c
 	const char *separators = ini->m_separators;
 	if( const char *mesh = ini->getNextTokenOrNull( separators ) )
 	{
-		if( _stricmp( mesh, "ExtraMesh" ) == 0 )
+		if( _strcmpi( mesh, "ExtraMesh" ) == 0 )
 		{
 			const char *flag = ini->getNextTokenOrNull( 0 );
 			if( flag && INI::scanBool( flag ) )

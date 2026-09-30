@@ -28,7 +28,7 @@ struct in_addr
 
 extern "C" __declspec(dllimport) int __cdecl isdigit(int c);
 extern "C" __declspec(dllimport) unsigned long __stdcall inet_addr(const char *cp);
-extern "C" __declspec(dllimport) unsigned long __stdcall ntohl(unsigned long netlong);
+extern "C" __declspec(dllimport) unsigned long __stdcall htonl(unsigned long netlong);
 extern "C" __declspec(dllimport) struct hostent * __stdcall gethostbyname(const char *name);
 
 typedef unsigned int UnsignedInt;
@@ -72,7 +72,7 @@ UnsignedInt ResolveIP(AsciiString host)
   // String such as "127.0.0.1"
   if (isdigit(host.getCharAt(0)))
   {
-    return ( ntohl(inet_addr(host.str())) );
+    return ( htonl(inet_addr(host.str())) );
   }
 
   // String such as "localhost"
@@ -82,5 +82,5 @@ UnsignedInt ResolveIP(AsciiString host)
 	  return 0;
   }
   hostNode = (struct in_addr *) hostStruct->h_addr_list[0];
-  return ( ntohl(hostNode->s_addr) );
+  return ( htonl(hostNode->s_addr) );
 }

@@ -123,7 +123,7 @@ Rva00788290Allocation::Rva00788290Allocation(Rva00788290Object *source):
  m_displayString->setFont(font);
  AsciiString text(source->m_at54);
  for(int i=0;i<text.getLength();++i) {
-  if(text.getCharAt(i)=='&' && !_stricmp(text.str()+i+1,"dropShadow")) {
+  if(text.getCharAt(i)=='&' && !_strcmpi(text.str()+i+1,"dropShadow")) {
    text=AsciiString(text.str(),i);
    m_dropShadow=true;
    break;

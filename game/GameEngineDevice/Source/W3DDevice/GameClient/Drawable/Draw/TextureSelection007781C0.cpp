@@ -57,7 +57,7 @@ void TextureSelection007781C0::collect(int count,_STL::vector<_STL::string>* ori
    int pick=(seed+(seed/3)+(seed/5)+ordinal+(seed&15)*(ordinal+1)) % it->m_vector04.size();
    if(pick<0) pick=0;
    else if(pick>upper) pick=upper;
-   if(_stricmp(it->m_vector04[pick].str(),it->m_name.str())!=0) {
+   if(_strcmpi(it->m_vector04[pick].str(),it->m_name.str())!=0) {
     { _STL::string replacement(it->m_vector04[pick].str()); replacements->push_back(replacement); }
     { _STL::string original(it->m_name.str()); originals->push_back(original); }
     values->push_back(it->m_word10);

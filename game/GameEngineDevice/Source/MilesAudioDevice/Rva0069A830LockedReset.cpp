@@ -4,8 +4,8 @@
 extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 	void *hHandle, unsigned long dwMilliseconds);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *hMutex);
-extern "C" __declspec(dllimport) void __stdcall _AIL_set_3D_room_type(int handle, int room);
-extern "C" __declspec(dllimport) void __stdcall _AIL_set_digital_master_room_type(
+extern "C" __declspec(dllimport) void __stdcall AIL_set_3D_room_type(int handle, int room);
+extern "C" __declspec(dllimport) void __stdcall AIL_set_digital_master_room_type(
 	void *dig, int room);
 
 class Rva0069A830Owner
@@ -28,8 +28,8 @@ void Rva0069A830Owner::reset()
 	if (index != -1)
 	{
 		int scaled = index + index * 2;
-		_AIL_set_3D_room_type(*(int *)(m_bytes + 0x658 + scaled * 4), 0);
-		_AIL_set_digital_master_room_type(*(void **)(m_bytes + 0x960), 0);
+		AIL_set_3D_room_type(*(int *)(m_bytes + 0x658 + scaled * 4), 0);
+		AIL_set_digital_master_room_type(*(void **)(m_bytes + 0x960), 0);
 	}
 	if (m_bytes[0x633])
 	{

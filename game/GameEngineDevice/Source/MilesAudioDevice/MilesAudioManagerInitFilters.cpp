@@ -7,17 +7,17 @@ typedef unsigned char Bool;
 typedef void *HSAMPLE;
 typedef void *HPROVIDER;
 
-extern "C" __declspec(dllimport) void __stdcall _AIL_set_sample_volume_pan(
+extern "C" __declspec(dllimport) void __stdcall AIL_set_sample_volume_pan(
 	HSAMPLE sample, Real volume, Real pan);
-extern "C" __declspec(dllimport) int __stdcall _AIL_sample_playback_rate(
+extern "C" __declspec(dllimport) int __stdcall AIL_sample_playback_rate(
 	HSAMPLE sample);
-extern "C" __declspec(dllimport) void __stdcall _AIL_set_sample_playback_rate(
+extern "C" __declspec(dllimport) void __stdcall AIL_set_sample_playback_rate(
 	HSAMPLE sample, int rate);
-extern "C" __declspec(dllimport) void __stdcall _AIL_set_sample_processor(
+extern "C" __declspec(dllimport) void __stdcall AIL_set_sample_processor(
 	HSAMPLE sample, int effect, HPROVIDER provider);
-extern "C" __declspec(dllimport) void __stdcall _AIL_set_filter_sample_preference(
+extern "C" __declspec(dllimport) void __stdcall AIL_set_filter_sample_preference(
 	HSAMPLE sample, const char *name, Real *value);
-extern "C" __declspec(dllimport) void __stdcall _AIL_set_sample_reverb_levels(
+extern "C" __declspec(dllimport) void __stdcall AIL_set_sample_reverb_levels(
 	HSAMPLE sample, Real dry, Real wet);
 
 // Miles takes (dry, wet); retail passes +0x80 as dry and +0x7c as wet.
@@ -123,7 +123,7 @@ void Rva006B1B40MilesAudioManager::rva006B1B40InitFilters(
 	else if (fade > 1.0f)
 		fade = 1.0f;
 
-	_AIL_set_sample_volume_pan(sample, volume * fade, 0.5f);
+	AIL_set_sample_volume_pan(sample, volume * fade, 0.5f);
 
 	Real pitchScale =
 		((const Rva000B21C0Owner *)playing->m_event)->body();
@@ -132,23 +132,23 @@ void Rva006B1B40MilesAudioManager::rva006B1B40InitFilters(
 	}
 	else
 	{
-		_AIL_set_sample_playback_rate(sample, (int)(_AIL_sample_playback_rate(sample) * pitchScale));
+		AIL_set_sample_playback_rate(sample, (int)(AIL_sample_playback_rate(sample) * pitchScale));
 	}
 
 	if (playing->m_event->m_delay > 0.0f)
 	{
 		Real value;
 		value = playing->m_event->m_delay;
-		_AIL_set_sample_processor(sample, 1, m_delayFilter);
-		_AIL_set_filter_sample_preference(sample, "Mono Delay Time", &value);
+		AIL_set_sample_processor(sample, 1, m_delayFilter);
+		AIL_set_filter_sample_preference(sample, "Mono Delay Time", &value);
 		value = 0.0f;
-		_AIL_set_filter_sample_preference(sample, "Mono Delay", &value);
-		_AIL_set_filter_sample_preference(sample, "Mono Delay Mix", &value);
+		AIL_set_filter_sample_preference(sample, "Mono Delay", &value);
+		AIL_set_filter_sample_preference(sample, "Mono Delay Mix", &value);
 	}
 
 	if (m_reverbEnabled)
-		_AIL_set_sample_reverb_levels(sample, playing->m_event->m_info->m_reverbDry,
+		AIL_set_sample_reverb_levels(sample, playing->m_event->m_info->m_reverbDry,
 			playing->m_event->m_info->m_reverbWet);
 	else
-		_AIL_set_sample_reverb_levels(sample, 1.0f, 0.0f);
+		AIL_set_sample_reverb_levels(sample, 1.0f, 0.0f);
 }

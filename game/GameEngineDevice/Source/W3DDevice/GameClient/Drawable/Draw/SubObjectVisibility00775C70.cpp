@@ -40,7 +40,7 @@ void SubObjectVisibility00775C70::update(const AsciiString& name,bool show,bool 
   if(fade) {
    bool found=false;
    for(_STL::Rva00771B10Element* it=at4c.begin();it!=at4c.end();++it) {
-    if(_stricmp(it->name.str(),name.str())==0) {
+    if(_strcmpi(it->name.str(),name.str())==0) {
      at165=true; it->hide=!show; it->at08=value08; it->at10=value10; it->at14=1.0f; found=true;
     }
    }
@@ -53,7 +53,7 @@ void SubObjectVisibility00775C70::update(const AsciiString& name,bool show,bool 
   } else {
    bool found=false;
    for(_STL::Rva00771B10Element* it=at40.begin();it!=at40.end();++it) {
-    if(_stricmp(it->name.str(),name.str())==0) {
+    if(_strcmpi(it->name.str(),name.str())==0) {
      bool wasShown = !it->hide;
      if(wasShown != show) { at164=true; it->hide=!show; }
      found=true;

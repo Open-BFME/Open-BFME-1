@@ -32,15 +32,15 @@ typedef void *HSAMPLE;
 typedef void *H3DSAMPLE;
 typedef void *HSTREAM;
 
-extern "C" __declspec(dllimport) void __stdcall _AIL_sample_volume_pan(
+extern "C" __declspec(dllimport) void __stdcall AIL_sample_volume_pan(
 	HSAMPLE sample, Real *volume, Real *pan);
-extern "C" __declspec(dllimport) void __stdcall _AIL_set_sample_volume_pan(
+extern "C" __declspec(dllimport) void __stdcall AIL_set_sample_volume_pan(
 	HSAMPLE sample, Real volume, Real pan);
-extern "C" __declspec(dllimport) void __stdcall _AIL_set_3D_sample_volume(
+extern "C" __declspec(dllimport) void __stdcall AIL_set_3D_sample_volume(
 	H3DSAMPLE sample, Real volume);
-extern "C" __declspec(dllimport) void __stdcall _AIL_stream_volume_pan(
+extern "C" __declspec(dllimport) void __stdcall AIL_stream_volume_pan(
 	HSTREAM stream, Real *volume, Real *pan);
-extern "C" __declspec(dllimport) void __stdcall _AIL_set_stream_volume_pan(
+extern "C" __declspec(dllimport) void __stdcall AIL_set_stream_volume_pan(
 	HSTREAM stream, Real volume, Real pan);
 
 #define Rva006B1B40One (1.0f)
@@ -132,9 +132,9 @@ void Rva006B1B40MilesAudioManager::rva006B1A00(
 	if (type == 0)
 	{
 		HSAMPLE sample = playingRef->m_ptr->m_sample;
-		_AIL_sample_volume_pan(sample, 0, &pan);
+		AIL_sample_volume_pan(sample, 0, &pan);
 		sample = playingRef->m_ptr->m_sample;
-		_AIL_set_sample_volume_pan(sample, volume, pan);
+		AIL_set_sample_volume_pan(sample, volume, pan);
 		return;
 	}
 
@@ -156,15 +156,15 @@ void Rva006B1B40MilesAudioManager::rva006B1A00(
 			return;
 		}
 		if (sample3D)
-			_AIL_set_3D_sample_volume(sample3D, volume);
+			AIL_set_3D_sample_volume(sample3D, volume);
 		return;
 	}
 
 	if (type == 3)
 	{
 		HSTREAM stream = (HSTREAM)playingRef->m_ptr->m_sample;
-		_AIL_stream_volume_pan(stream, 0, &pan);
+		AIL_stream_volume_pan(stream, 0, &pan);
 		stream = (HSTREAM)playingRef->m_ptr->m_sample;
-		_AIL_set_stream_volume_pan(stream, volume, pan);
+		AIL_set_stream_volume_pan(stream, volume, pan);
 	}
 }

@@ -218,7 +218,7 @@ Bool Transport::doRecv()
 		// The reference fills these in on the m_inBuffer slot it picks. BFME
 		// fills in the local and copies the whole struct into the slot, which is
 		// why the slot store below is an assignment rather than a memcpy.
-		incomingMessage.addr = ntohl(from.sin_addr.S_un.S_addr);
+		incomingMessage.addr = htonl(from.sin_addr.S_un.S_addr);
 		incomingMessage.port = ntohs(from.sin_port);
 
 		UnsignedInt msgLen = len - sizeof(TransportMessageHeader);

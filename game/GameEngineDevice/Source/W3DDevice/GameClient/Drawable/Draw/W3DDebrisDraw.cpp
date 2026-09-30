@@ -217,7 +217,7 @@ void W3DDebrisDraw::setAnimNames(AsciiString initial, AsciiString flying, AsciiS
 
 	m_anims[INITIAL] = initial.isEmpty() ? NULL : Get_HAnim(initial.str());
 	m_anims[FLYING] = flying.isEmpty() ? NULL : Get_HAnim(flying.str());
-	if (stricmp(final.str(), "STOP") == 0)
+	if (_strcmpi(final.str(), "STOP") == 0)
 	{
 		m_finalStop = true;
 		final = flying;
