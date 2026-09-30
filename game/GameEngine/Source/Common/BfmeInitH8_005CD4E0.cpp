@@ -5,6 +5,12 @@
 // the cdecl B tail. 0x005CD990 is H7+H8 with no tail.
 
 int bfmeMake1054( int n );
+extern void j_000410dd();
+extern void j_00008b39();
+extern void j_00041c09();
+extern void j_0003c9cf();
+extern void j_000391a8();
+extern void j_00011897();
 
 struct BfmeA1054H8
 {
@@ -19,7 +25,7 @@ void __cdecl bfmeInitH8_005CD4E0( BfmeA1054H8 *p )
 {
 	int z = 0;
 	p->m_h8 = bfmeMake1054( 8 );
-	p->m_fn8 = reinterpret_cast<void ( * )( void )>( 0x0043c9cf );
+	p->m_fn8 = j_0003c9cf;
 	p->m_88 = z;
 	p->m_8c = z;
 }
@@ -74,11 +80,11 @@ void __cdecl bfmeInitH45_005CEF60( BfmeB1054 *p )
 {
 	int z = 0;
 	p->m_h4 = bfmeMake1054( 4 );
-	p->m_fn4 = reinterpret_cast<void ( * )( void )>( 0x004410dd );
+	p->m_fn4 = j_000410dd;
 	p->m_48 = z;
 	p->m_4c = z;
 	p->m_h5 = bfmeMake1054( 5 );
-	p->m_fn5 = reinterpret_cast<void ( * )( void )>( 0x00408b39 );
+	p->m_fn5 = j_00008b39;
 	p->m_58 = z;
 	p->m_5c = z;
 	bfmeTailA1054Cdecl( reinterpret_cast<BfmeA1054 *>( p ) );
@@ -105,11 +111,11 @@ void __cdecl bfmeInitKey12_005D10E0( BfmeCategoryHead1054 *p )
 {
 	int z = 0;
 	p->m_key1 = bfmeMake1054( 1 );
-	p->m_callback1 = reinterpret_cast<void ( * )( void )>( 0x004391a8 );
+	p->m_callback1 = j_000391a8;
 	p->m_zero18 = z;
 	p->m_zero1c = z;
 	p->m_key2 = bfmeMake1054( 2 );
-	p->m_callback2 = reinterpret_cast<void ( * )( void )>( 0x00411897 );
+	p->m_callback2 = j_00011897;
 	p->m_zero28 = z;
 	p->m_zero2c = z;
 	bfmeTailB1054Cdecl( reinterpret_cast<BfmeB1054 *>( p ) );
@@ -122,12 +128,12 @@ void __cdecl bfmeInitH78_005CD990( BfmeA1054 *p )
 {
 	int z = 0;
 	p->m_h7 = bfmeMake1054( 7 );
-	p->m_fn7 = reinterpret_cast<void ( * )( void )>( 0x00441c09 );
+	p->m_fn7 = j_00041c09;
 	p->m_78 = z;
 	p->m_7c = z;
 	int h8 = bfmeMake1054( 8 );
 	p->m_88 = z;
 	p->m_8c = z;
 	p->m_h8 = h8;
-	p->m_fn8 = reinterpret_cast<void ( * )( void )>( 0x0043c9cf );
+	p->m_fn8 = j_0003c9cf;
 }

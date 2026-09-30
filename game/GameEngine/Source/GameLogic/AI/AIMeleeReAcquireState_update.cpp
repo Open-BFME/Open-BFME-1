@@ -211,6 +211,14 @@ protected:
 	PartitionFilter *m_next;
 };
 
+extern "C" void *bfmeVftPartitionFilter[];
+extern "C" void *bfmeVftRva00149F20VptrZeroObject[];
+extern "C" void *bfmeVftRva0016D590VptrZeroObject[];
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilter=??_7PartitionFilter@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva00149F20VptrZeroObject=??_7Rva00149F20VptrZeroObject@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva0016D590VptrZeroObject=??_7Rva0016D590VptrZeroObject@@6B@")
+extern const void *g_010956C4[];
+
 static __forceinline void setFilterVptr(void *filter, UnsignedInt value)
 {
 	*reinterpret_cast<UnsignedInt *>(filter) = value;
@@ -222,7 +230,7 @@ public:
 	Rva001DCBB0Filter(Object *object, unsigned char match);
 	~Rva001DCBB0Filter()
 	{
-		setFilterVptr(this, 0x01083B5C);
+		setFilterVptr(this, (UnsignedInt)bfmeVftPartitionFilter);
 	}
 
 	Player *m_player;
@@ -236,13 +244,13 @@ public:
 	PartitionFilterInsignificantBuildings(Bool allowNonBuildings,
 		Bool allowInsignificant)
 	{
-		setFilterVptr(this, 0x010956E4);
+		setFilterVptr(this, (UnsignedInt)bfmeVftRva00149F20VptrZeroObject);
 		m_allowNonBuildings = allowNonBuildings;
 		m_allowInsignificant = allowInsignificant;
 	}
 	~PartitionFilterInsignificantBuildings()
 	{
-		setFilterVptr(this, 0x01083B5C);
+		setFilterVptr(this, (UnsignedInt)bfmeVftPartitionFilter);
 	}
 
 
@@ -255,7 +263,7 @@ class __declspec(novtable) PartitionFilterRelationship : public PartitionFilter
 public:
 	PartitionFilterRelationship(Object *object, Int flags, Int state)
 	{
-		setFilterVptr(this, 0x010956C4);
+		setFilterVptr(this, (UnsignedInt)g_010956C4);
 		m_object = object;
 		m_flags = flags;
 		m_state = state;
@@ -263,7 +271,7 @@ public:
 
 	~PartitionFilterRelationship()
 	{
-		setFilterVptr(this, 0x01083B5C);
+		setFilterVptr(this, (UnsignedInt)bfmeVftPartitionFilter);
 	}
 
 	Object *m_object;
@@ -277,7 +285,7 @@ public:
 	PartitionFilterRejectBuildings(const Object *object);
 	~PartitionFilterRejectBuildings()
 	{
-		setFilterVptr(this, 0x01083B5C);
+		setFilterVptr(this, (UnsignedInt)bfmeVftPartitionFilter);
 	}
 
 
@@ -291,7 +299,7 @@ public:
 	Rva0017DDA0PairFilter(Object *object, Weapon *weapon,
 		TAiData **aiDataOut)
 	{
-		setFilterVptr(this, 0x01097744);
+		setFilterVptr(this, (UnsignedInt)bfmeVftRva0016D590VptrZeroObject);
 		m_object = object;
 		m_weapon = weapon;
 		_ReadWriteBarrier();
@@ -300,7 +308,7 @@ public:
 
 	~Rva0017DDA0PairFilter()
 	{
-		setFilterVptr(this, 0x01083B5C);
+		setFilterVptr(this, (UnsignedInt)bfmeVftPartitionFilter);
 	}
 
 
