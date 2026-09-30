@@ -423,6 +423,7 @@ def test_rerun_refuses_an_object_missing_now(tmp_path, monkeypatch):
     census = {"missing": 0, "when": "2026-09-29 00:00", "unresolved_classes": {}, "duplicate_classes": {}}
     monkeypatch.setattr(L.subprocess, "run", lambda *a, **k: SimpleNamespace(stdout=""))
     monkeypatch.setattr(L, "objects", lambda rows: ([], [tmp_path / "gone.obj"]))
+    monkeypatch.setattr(L, "verify_data_objects", lambda: None)
     monkeypatch.setattr(L, "write_status", lambda *a, **k: pytest.fail("reached write_status"))
     with pytest.raises(SystemExit, match="missing now"):
         L.record(census, [], rerun=True)
@@ -434,6 +435,7 @@ def test_an_unexplained_linker_exit_records_nothing(tmp_path, monkeypatch):
     monkeypatch.setattr(L, "OUT", tmp_path)
     monkeypatch.setattr(L, "ledger", lambda: [])
     monkeypatch.setattr(L, "objects", lambda rows: ([], []))
+    monkeypatch.setattr(L, "verify_data_objects", lambda: None)
     monkeypatch.setattr(L, "link", lambda *a, **k: ("", 0, 7))
     with pytest.raises(SystemExit, match="no linker diagnostic"):
         L.main([])
@@ -447,6 +449,7 @@ def test_a_crashed_linker_records_nothing_whatever_it_printed(tmp_path, monkeypa
     monkeypatch.setattr(L, "OUT", tmp_path)
     monkeypatch.setattr(L, "ledger", lambda: [])
     monkeypatch.setattr(L, "objects", lambda rows: ([], []))
+    monkeypatch.setattr(L, "verify_data_objects", lambda: None)
     monkeypatch.setattr(L, "link", lambda *a, **k: ("x.obj : warning LNK4099: PDB was not found\n", 0, 0xC0000005))
     with pytest.raises(SystemExit, match="abnormally"):
         L.main([])
@@ -468,6 +471,7 @@ def test_a_stale_output_is_never_this_links_image(tmp_path, monkeypatch):
     monkeypatch.setattr(L, "OUT", tmp_path)
     monkeypatch.setattr(L, "ledger", lambda: [])
     monkeypatch.setattr(L, "objects", lambda rows: ([], []))
+    monkeypatch.setattr(L, "verify_data_objects", lambda: None)
     stale = tmp_path / "census.exe"
     stale.write_bytes(b"MZ OLD IMAGE FROM A PREVIOUS LINK")
     os.utime(stale, (time.time() - 1, time.time() - 1))
@@ -544,6 +548,7 @@ def test_malformed_link_output_never_records_a_census(tmp_path, monkeypatch):
     monkeypatch.setattr(L, "OUT", tmp_path)
     monkeypatch.setattr(L, "ledger", lambda: [])
     monkeypatch.setattr(L, "objects", lambda rows: ([], []))
+    monkeypatch.setattr(L, "verify_data_objects", lambda: None)
     monkeypatch.setattr(L, "comdat_conflicts", lambda objs: {})
     for broken in (valid_pe(optional=96, directories=16), valid_pe(headers=0x800), valid_pe(pointer=0x100), b"MZ"):
         def link(*a, _image=broken, **k):

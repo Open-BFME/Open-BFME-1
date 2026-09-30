@@ -70,6 +70,32 @@ def ledger():
                 and (r.get("target_rva") or "").startswith("0x")]
 
 
+def data_sources():
+    """Sources owned by byte-verified data rows; these are not function rows."""
+    import data_rows
+    return list(dict.fromkeys(ROOT / row["source"] for row in data_rows.load()))
+
+
+def compile_sources(rows):
+    return list(dict.fromkeys([ROOT / row["source"] for row in rows] + data_sources()))
+
+
+def verify_data_objects():
+    """Require the existing data byte gate before using these providers."""
+    import data_rows
+    problems = []
+    if data_rows.DATA_ROWS.exists():
+        data_rows.check(data_rows.DATA_ROWS.read_bytes(), problems)
+    if problems:
+        raise SystemExit("link_census: invalid data rows:\n  " + "\n  ".join(problems))
+    stale = [source for source in data_sources()
+             if not build.compile_is_current(source, build.obj_path(source))]
+    if stale:
+        raise SystemExit(f"link_census: {len(stale):,} data provider objects are missing or stale, "
+                         f"e.g. {stale[0].relative_to(ROOT)}; rerun with --build")
+    data_rows.verify(compile=False)
+
+
 def pins(routes=None):
     """{name: address} from symbols.csv (first pin for diagnostic identity).
     The byte resolver checks additive candidates. `routes`, when given,
@@ -205,8 +231,9 @@ def objects(rows):
     """Unique object per matched row; (present, missing)."""
     build.extract_lib_members([r for r in rows if r["source"].lower().endswith(build.LIB_SUFFIX)])
     seen, present, missing = set(), [], []
-    for row in rows:
-        obj = build.row_object(row)
+    candidates = [build.row_object(row) for row in rows]
+    candidates.extend(build.obj_path(source) for source in data_sources())
+    for obj in candidates:
         if obj in seen:
             continue
         seen.add(obj)
@@ -1247,8 +1274,9 @@ def main(argv=None):
         os.environ.pop("BUILD_RECOMPILE_ONLY", None)
         started = time.time()
         build.ensure_case_shims()
-        build.compile_rows(rows, list(dict.fromkeys(ROOT / row["source"] for row in rows)))
+        build.compile_rows(rows, compile_sources(rows))
         print(f"link_census: compile {time.time() - started:.0f}s", flush=True)
+    verify_data_objects()
     present, missing = objects(rows)
     if missing:
         print(f"link_census: {len(missing):,} objects missing (run the full ./build.sh first); "
@@ -1296,12 +1324,14 @@ def selected_main():
     own tree, from a fresh /MAP link of the same objects."""
     history = read_history()
     changed = subprocess.run(["git", "diff", "--quiet", history[-1]["commit"] if history else "HEAD", "--", "game",
-                              "targets/game/reverse/functions.csv", "targets/game/reverse/symbols.csv"],
+                              "targets/game/reverse/functions.csv", "targets/game/reverse/symbols.csv",
+                              "targets/game/reverse/data_rows.csv"],
                              cwd=ROOT).returncode if history else 1
     if changed:
         raise SystemExit("link_census: --selected needs the last census's sources and ledger "
                          f"({history[-1]['commit'] if history else 'no census'}); this tree differs")
     rows = ledger()
+    verify_data_objects()
     present, missing = objects(rows)
     if missing:
         raise SystemExit(f"link_census: {len(missing):,} objects missing")
@@ -1349,8 +1379,10 @@ def selection_link(present, log):
 
 def _object_sources(rows):
     """{object: source} for every compiled (C/C++/MASM) row."""
-    return {build.row_object(row): ROOT / row["source"] for row in rows
-            if Path(row["source"]).suffix.lower() in (".c", ".cpp", ".asm")}
+    sources = {build.row_object(row): ROOT / row["source"] for row in rows
+               if Path(row["source"]).suffix.lower() in (".c", ".cpp", ".asm")}
+    sources.update({build.obj_path(source): source for source in data_sources()})
+    return sources
 
 
 STATUS = ROOT / "targets/game/reverse/link_status.csv"
@@ -1643,11 +1675,13 @@ def record(census, rows, rerun=False, fresh=False):
     only runs on the census's own commit, so a log is never paired with
     another tree's ledger or sources.
     """
+    verify_data_objects()
     if census["missing"]:
         raise SystemExit(f"link_census: {census['missing']:,} objects were missing from the link; "
                          "nothing recorded (build everything and rerun)")
     dirty = subprocess.run(["git", "status", "--porcelain", "-uno", "--", "game", "targets/game/reverse/functions.csv",
-                            "targets/game/reverse/symbols.csv"], cwd=ROOT, capture_output=True, text=True).stdout
+                            "targets/game/reverse/symbols.csv", "targets/game/reverse/data_rows.csv"],
+                           cwd=ROOT, capture_output=True, text=True).stdout
     if dirty.strip():
         raise SystemExit(f"link_census: uncommitted source or ledger edits; the census would not match its commit:\n{dirty}")
     # cl.exe leaves the previous .obj in place when a compile fails, and the
