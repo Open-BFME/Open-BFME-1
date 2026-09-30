@@ -82,7 +82,7 @@ def truth(image, ledger=None, pinned=None, shared=()):
     return t
 
 
-def build(objects, kept, retail, ledger, excused=None, statics=None, pinned=None):
+def build(objects, kept, retail, ledger, excused=None, statics=None, pinned=None, scalars=None):
     objs = [I.parse_object(name, data, i) for i, (name, data) in enumerate(objects)]
     image = bytes(retail)
 
@@ -90,7 +90,7 @@ def build(objects, kept, retail, ledger, excused=None, statics=None, pinned=None
         return image[rva:rva + size] if 0 <= rva and rva + size <= len(image) else None
     lanes = {name: {None: "authored"} for name, _ in objects}
     return I.Image(objs, kept, truth(image, ledger, pinned), statics or {}, read, excused or (lambda n: None),
-                   lanes, (TEXT, DATA), len(image)).run()
+                   lanes, (TEXT, DATA), len(image), scalars=scalars).run()
 
 
 def call(at, to):
@@ -457,3 +457,47 @@ def test_pointer_payload_reached_by_code_is_not_proven_movable():
     image = build([("F.obj", obj)], {"_f": "F.obj", "_p": "F.obj"}, retail, {"_f": {0x1040}, "_p": {0x2040}})
     summary = I.results(image)[0]
     assert summary["closed_strict_bytes"] == 0 and summary["closed_bytes"] == 6
+
+
+def test_a_proven_scalar_is_no_pointer_candidate():
+    retail = bytearray(RETAIL)
+    retail[0x2040:0x2044] = struct.pack("<I", I.BASE + 0x2800)
+    table = coff([(".rdata", RDATA_FLAGS, struct.pack("<I", I.BASE + 0x2800), [], None)],
+                 [("_table", 1, 0, I.EXTERNAL, 0, None)])
+    image = build([("T.obj", table)], {"_table": "T.obj"}, retail, {"_table": {0x2040}},
+                  scalars={(I.BASE + 0x2040, I.BASE + 0x2800)})
+    assert item(image, "_table").verdict == "retail" and image.proven_scalars == 1
+    # the evidence names a value: a different word at that address is still unproven
+    image = build([("T.obj", table)], {"_table": "T.obj"}, retail, {"_table": {0x2040}},
+                  scalars={(I.BASE + 0x2040, 7)})
+    assert item(image, "_table").verdict == "unknown"
+
+
+# review of 7791457f07 (build/rtreview_scratch/test_ca142ff_review.py)
+
+def test_packed_unrelocated_pointer_blocks_strict_closure():
+    retail = bytearray(RETAIL)
+    retail[0x1040:0x1046] = b"\xa1" + struct.pack("<I", I.BASE + 0x2041) + b"\xc3"
+    raw = b"\0" + struct.pack("<I", I.BASE + 0x2000)  # a pointer at offset 1 of a packed struct
+    retail[0x2040:0x2045] = raw
+    obj = coff([(".text", CODE_FLAGS, b"\xa1\x01\0\0\0\xc3", [(1, "_p", I.DIR32)], None),
+                (".data", DATA_FLAGS, raw, [], None)],
+               [("_f", 1, 0, I.EXTERNAL, 0x20, None), ("_p", 2, 0, I.EXTERNAL, 0, None)])
+    image = build([("F.obj", obj)], {"_f": "F.obj", "_p": "F.obj"}, retail, {"_f": {0x1040}, "_p": {0x2040}})
+    assert item(image, "_p").verdict == "unknown" and I.results(image)[0]["closed_strict_bytes"] == 0
+
+
+def test_an_interior_entry_from_another_item_is_inspected():
+    retail = bytearray(RETAIL)
+    # _f: ret; an embedded self-pointer; a second entry point doing mov eax, [0x402000] (no relocation)
+    raw = b"\xc3" + struct.pack("<I", I.BASE + 0x1040) + b"\xa1" + struct.pack("<I", I.BASE + 0x2000) + b"\xc3"
+    retail[0x1040:0x1040 + len(raw)] = raw
+    retail[0x1080:0x1086] = call(0x1080, 0x1045) + b"\xc3"
+    f = coff([(".text", CODE_FLAGS, raw[:1] + bytes(4) + raw[5:], [(1, "_f", I.DIR32)], None)],
+             [("_f", 1, 0, I.EXTERNAL, 0x20, None)])
+    caller = function("_caller", b"\xe8\x05\0\0\0\xc3", [(1, "_f", I.REL32)])
+    image = build([("F.obj", f), ("C.obj", caller)], {"_f": "F.obj", "_caller": "C.obj"}, retail,
+                  {"_f": {0x1040}, "_caller": {0x1080}})
+    assert item(image, "_f").entries == {5}
+    assert item(image, "_f").verdict == "wrong" and "0x00402000" in item(image, "_f").reason
+    assert I.results(image)[0]["closed_strict_bytes"] == 0

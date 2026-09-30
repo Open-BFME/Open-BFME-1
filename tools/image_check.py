@@ -196,14 +196,14 @@ class Item:
     """One definition in the image: [start, end) of a section of an object."""
     __slots__ = ("id", "obj", "sec", "start", "end", "names", "relocs", "code", "candidates", "home", "derived",
                  "verdict", "reason", "edges", "lane", "bound", "constant", "bytes_ok", "pending", "homes",
-                 "retail_verdict", "indirect", "literals")
+                 "retail_verdict", "indirect", "literals", "entries")
 
     def __init__(self, obj, sec, start, end, names):
         self.obj, self.sec, self.start, self.end, self.names = obj, sec, start, end, names
         self.relocs, self.edges, self.pending = [], [], []
         self.code = bool(sec.flags & CODE)
         self.candidates, self.home, self.derived, self.homes = set(), None, False, set()
-        self.retail_verdict, self.indirect, self.literals = None, 0, 0
+        self.retail_verdict, self.indirect, self.literals, self.entries = None, 0, 0, set()
         self.verdict, self.reason, self.lane, self.bound = None, "", None, False
         self.constant = any(name.startswith(CONSTANT) for name, _, _ in names)
         self.bytes_ok = False
@@ -279,7 +279,9 @@ class Image:
     lane, None: default lane}}; `text` retail .text (start, end)."""
 
     def __init__(self, objs, kept, truth, statics, read, excused, lanes, text, image_size, unresolved_kinds=None,
-                 row_homes=None):
+                 row_homes=None, scalars=None):
+        # {(retail VA, value)} data words typed evidence proves scalar (workstream B's proven_scalars.csv)
+        self.scalars, self.proven_scalars = scalars or set(), 0
         self.image_size, self._md, self._known, self.numbers = image_size, None, None, 0
         self.objs, self.kept, self.truth, self.statics = objs, kept, truth, statics
         self.row_homes = row_homes  # matched ledger addresses: the metric counts only these
@@ -383,6 +385,11 @@ class Image:
                 self._edges(item)
                 if item.code and len(item.sec.items) > 1 and item.sec.body is not None:
                     self._decoded_edges(item)
+        for item in self.items:  # where other items enter a function: every one is a descent root
+            for _, _, target, position, _ in item.edges:
+                if isinstance(target, Item) and target is not item and target.code \
+                        and target.start < position < target.end:
+                    target.entries.add(position - target.start)
         for index, leaf in enumerate(self.leaves.values()):
             leaf.id = len(self.items) + index
 
@@ -639,9 +646,11 @@ class Image:
         addresses (wrong); a push/mov imm32 inside the image is ambiguous
         (unknown), and wrong when a ledger row, pin or placed item starts at
         it; any other imm32 (cmp, test, arithmetic) is a number. Data has no
-        operand to read: an item holding an unrelocated in-image dword is
+        operand to read: an item holding an unrelocated in-image dword, at
+        any offset (a packed struct's pointer need not be aligned), is
         unknown (`literals`, items.csv) until typed evidence says pointer or
-        scalar. Retail has no base relocations to say which dwords are
+        scalar (`--scalars`: a (retail VA, value) pair listed there is a
+        number). Retail has no base relocations to say which dwords are
         pointers, and on 2026-09-30 all 16 data dwords that hit the
         ledger-start evidence were byte or short tables (Lua's opcode
         properties 0x01000000, zlib's configuration_table, D3DX shader
@@ -654,11 +663,14 @@ class Image:
         covered = self._covered(fields)
         if not item.code:
             first = None
-            for off in range((-item.start) % 4, len(body) - 3, 4):
-                if off in covered or off + 3 in covered:
+            for off in range(len(body) - 3):  # packed structs put pointers at any offset
+                if any(at in covered for at in range(off, off + 4)):
                     continue
                 value = struct.unpack_from("<I", body, off)[0]
                 if self.in_image(value) and value >= BASE + 0x1000:
+                    if (BASE + item.home + off, value) in self.scalars:
+                        self.proven_scalars += 1  # typed evidence: a number, not a pointer
+                        continue
                     item.literals += 1
                     self.numbers += 1
                     first = first or (off, value)
@@ -697,7 +709,8 @@ class Image:
 
     def _instructions(self, item, body, fields, covered):
         """([(offset, instruction)], problem) by recursive descent from the
-        item's start: fall-through, rel branch and call targets inside the
+        item's start and every interior point another item's edge enters
+        (item.entries): fall-through, rel branch and call targets inside the
         item, and the entries of its own switch tables (a relocation back
         into the item that is no instruction's operand). A table sits where
         code reaches it only as data, so code after a table is decoded
@@ -716,7 +729,7 @@ class Image:
         own = {where - item.start: position - item.start
                for where, kind, target, position, _ in item.edges if target is item and kind != DECODED}
         found, operands, problem = {}, set(), None
-        pending, seen_entries = [0], {0}
+        pending, seen_entries = [0] + sorted(item.entries), {0} | item.entries
         while True:
             while pending:
                 off = pending.pop()
@@ -1125,6 +1138,7 @@ def results(image, linked=None):
         "derived_items": sum(1 for i in image.items if i.derived),
         "weak_fallbacks": len(image.weak_fallbacks),
         "unproven_in_image_data_dwords": image.numbers,
+        "proven_scalar_data_dwords": image.proven_scalars,
         "data_items_with_unproven_dwords": sum(1 for i in image.items if i.literals),
         "leaf_kinds": dict(collections.Counter(leaf.kind for leaf in image.leaves.values())),
         "functions": len(functions),
@@ -1282,7 +1296,15 @@ def census_guard(tree, census_tree):
     return row
 
 
-def load(tree, census_tree):
+def read_scalars(path):
+    """{(va, value)} from a proven-scalar CSV; None without one."""
+    if path is None:
+        return None
+    with path.open(newline="", encoding="utf-8") as handle:
+        return {(int(row["va"], 16), int(row["value"], 16)) for row in csv.DictReader(handle)}
+
+
+def load(tree, census_tree, scalars_path=None):
     build, link_census, progress = load_tree(tree)
     history = census_guard(tree, census_tree)
     commit = history["commit"]
@@ -1333,7 +1355,7 @@ def load(tree, census_tree):
                  json.loads(census_json.read_text(encoding="utf-8")).get("unresolved", {}).items()}
     read, text, size = retail_reader(build)
     image = Image(objs, kept, truth, statics, read, excused, lanes, text, size, kinds,
-                  {int(row["target_rva"], 16) for row in rows})
+                  {int(row["target_rva"], 16) for row in rows}, read_scalars(scalars_path))
     linked = {"commit": commit, "date": history.get("date"), "linked_bytes": int(history.get("linked_bytes") or 0),
               "linked_authored": int(history.get("linked_authored") or 0)}
     return image, linked
@@ -1434,6 +1456,9 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--tree", type=Path, default=ROOT,
                     help="checkout of the census commit: ledger, pins and tools (default: this one)")
+    ap.add_argument("--scalars", type=Path,
+                    help="CSV (va,value,...) of data words typed evidence proves scalar (workstream B's "
+                         "build/reloc_ledger/proven_scalars.csv)")
     ap.add_argument("--census", type=Path,
                     help="checkout holding the census's build/link_census artefacts and objects (default: --tree)")
     ap.add_argument("--path", metavar="SYMBOL", help="why a function is not closed (from the last run's graph)")
@@ -1463,7 +1488,7 @@ def main(argv=None):
         raise SystemExit(f"image_check: {census_tree}.census-lock is held (a census is running); try later")
     try:
         started = time.time()
-        image, linked = load(tree, census_tree)
+        image, linked = load(tree, census_tree, args.scalars)
         image.run()
         print(f"image_check: verified and closed ({time.time() - started:.0f}s)", flush=True)
     finally:

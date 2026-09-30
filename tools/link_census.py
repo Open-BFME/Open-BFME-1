@@ -306,20 +306,40 @@ def link(objs, aliases=None, tag="census", extra=(), options=()):
     return result.stdout + result.stderr, time.time() - started, result.returncode
 
 
-def unexplained_exit(code, log, output=None, started=None):
+def fresh_outputs(*paths):
+    """Delete a link's outputs before it runs, so any that exist afterwards
+    were written by this invocation (a timestamp window cannot prove that)."""
+    for path in paths:
+        try:
+            path.unlink()
+        except FileNotFoundError:
+            pass
+        except OSError as exc:
+            raise SystemExit(f"link_census: cannot remove the previous {path.name} ({exc}); a stale output "
+                             "would read as this link's")
+
+
+def unexplained_exit(code, log, output=None):
     """Refuse a link that did not complete: a termination by exception or
     signal (an NTSTATUS such as 0xC0000005, a negative code) whatever the log
     says before it; a failing exit the linker's own diagnostics do not
     explain (under /FORCE, the LNK errors and warnings the census counts);
-    and, given `output` and `started`, no output image written by this run.
-    Nothing is ever recorded as a census with nothing wrong."""
+    and, given `output` (removed by fresh_outputs before the link), no PE
+    image written there by this run. Nothing is ever recorded as a census
+    with nothing wrong."""
     if code < 0 or code > 0xFFFF:
         raise SystemExit(f"link_census: link.exe terminated abnormally (exit 0x{code & 0xFFFFFFFF:08X}); "
                          "no counts recorded")
     if code and not re.search(r"\b(?:error|warning) LNK\d+", log):
         raise SystemExit(f"link_census: link.exe exited {code} with no linker diagnostic; no counts recorded")
-    if output is not None and (not output.exists() or output.stat().st_mtime < started - 2):
-        raise SystemExit(f"link_census: link.exe exited {code} but wrote no {output.name}; no counts recorded")
+    if output is not None:
+        try:
+            head = output.read_bytes()[:2]
+        except OSError:
+            head = b""
+        if head != b"MZ":
+            raise SystemExit(f"link_census: link.exe exited {code} but wrote no image at {output.name}; "
+                             "no counts recorded")
 
 
 def classify(log, rows):
@@ -1198,9 +1218,9 @@ def main(argv=None):
     if missing:
         print(f"link_census: {len(missing):,} objects missing (run the full ./build.sh first); "
               f"linking the {len(present):,} present", file=sys.stderr)
-    started = time.time()
+    fresh_outputs(OUT / "census.exe")
     log, seconds, code = link(present)
-    unexplained_exit(code, log, OUT / "census.exe", started)
+    unexplained_exit(code, log, OUT / "census.exe")
     crashed = FATAL.search(log)
     if crashed:
         # A linker that dies prints no per-symbol errors, which would read as
@@ -1216,9 +1236,9 @@ def main(argv=None):
         table = alias_scaffold(rows, wanted)
         if args.scaffold_limit:
             table = dict(sorted(table.items())[:args.scaffold_limit])
-        started = time.time()
+        fresh_outputs(OUT / "scaffold.exe")
         log, seconds, code = link(present, table, tag="scaffold")
-        unexplained_exit(code, log, OUT / "scaffold.exe", started)
+        unexplained_exit(code, log, OUT / "scaffold.exe")
         crashed = FATAL.search(log)
         after, after_detail, after_dup_kinds, _ = classify(log, rows)
         census["scaffold"] = {"aliases": len(table), "seconds": seconds,
@@ -1283,10 +1303,10 @@ def selection_link(present, log):
     missing_names = {found.group(1) or found.group(2) for found in map(UNRESOLVED.search, log.splitlines()) if found}
     stubs = stub_object(missing_names, OUT / "selected_stubs.obj")
     link_map = OUT / "selected.map"
-    if link_map.exists():
-        link_map.unlink()  # a failed link leaves an empty map, never last run's
-    relink, _, _ = link(present, tag="selected", extra=[stubs],
-                        options=["/OPT:NOREF", f"/MAP:{_arg(link_map)}"])
+    fresh_outputs(link_map, OUT / "selected.exe")  # a failed link leaves an empty map, never last run's
+    relink, _, code = link(present, tag="selected", extra=[stubs],
+                           options=["/OPT:NOREF", f"/MAP:{_arg(link_map)}"])
+    unexplained_exit(code, relink, OUT / "selected.exe")  # a crash can leave a partial map
     if FATAL.search(relink) or not link_map.exists() or not link_map.stat().st_size:
         raise SystemExit(f"link_census: the /MAP link failed; see {_arg(OUT / 'selected.log')}")
     return link_map.read_text(encoding="latin-1")

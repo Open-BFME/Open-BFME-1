@@ -1,6 +1,7 @@
 """link_census: which COMDAT copies lose, judged by retail truth."""
 import collections
 import struct
+import time
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -455,6 +456,43 @@ def test_a_crashed_linker_records_nothing_whatever_it_printed(tmp_path, monkeypa
         L.main([])
     # a clean exit with no image written is no completed link either
     monkeypatch.setattr(L, "link", lambda *a, **k: ("", 0, 0))
-    with pytest.raises(SystemExit, match="wrote no census.exe"):
+    with pytest.raises(SystemExit, match="wrote no image"):
         L.main([])
     assert not (tmp_path / "census.json").exists()
+
+
+def test_a_stale_output_is_never_this_links_image(tmp_path, monkeypatch):
+    # review of 7791457f07: a one-second-old non-image census.exe passed a 2 s freshness window
+    import os
+    import pytest
+    monkeypatch.setattr(L, "OUT", tmp_path)
+    monkeypatch.setattr(L, "ledger", lambda: [])
+    monkeypatch.setattr(L, "objects", lambda rows: ([], []))
+    stale = tmp_path / "census.exe"
+    stale.write_bytes(b"MZ OLD IMAGE FROM A PREVIOUS LINK")
+    os.utime(stale, (time.time() - 1, time.time() - 1))
+    monkeypatch.setattr(L, "link", lambda *a, **k: ("", 0, 0))  # writes nothing
+    with pytest.raises(SystemExit, match="wrote no image"):
+        L.main([])
+    assert not stale.exists() and not (tmp_path / "census.json").exists()
+
+
+def test_the_selection_link_is_checked_like_every_link(tmp_path, monkeypatch):
+    # review of 7791457f07: the /MAP link's exit code was discarded; a crash with a partial map passed
+    import pytest
+    monkeypatch.setattr(L, "OUT", tmp_path)
+    monkeypatch.setattr(L, "_arg", str)
+
+    def crash_with_map(*a, **k):
+        (tmp_path / "selected.map").write_text("PARTIAL MAP FROM CRASH")
+        return "warning LNK4099: PDB was not found\n", 0, 0xC0000005
+    monkeypatch.setattr(L, "link", crash_with_map)
+    with pytest.raises(SystemExit, match="abnormally"):
+        L.selection_link([], "")
+
+    def map_but_no_image(*a, **k):
+        (tmp_path / "selected.map").write_text("A MAP")
+        return "", 0, 0
+    monkeypatch.setattr(L, "link", map_but_no_image)
+    with pytest.raises(SystemExit, match="wrote no image"):
+        L.selection_link([], "")
