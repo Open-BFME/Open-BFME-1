@@ -1,15 +1,6 @@
-// ?disconnectedCallback@@YAXPAXPBD0@Z
-// partial score=0.72 date=2026-09-10
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Oy /Iinputs/reference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Oy
 // stlport
-//
-// TU-local reconstruction of the callback installed in the disconnected slot
-// by PeerThreadClass::Thread_Function.  Retail stores this callback at
-// 0x00646F50 and its complete body ends at 0x006470A8 (345 bytes).  The direct
-// assignment at Thread_Function+0xAE (0x0064FC3E) supplies the ownership edge.
-// The callback uses the BFME 0x330-byte PeerResponse, not the smaller public
-// response layout.  The peer RoomType enum is unrelated to this callback and
-// remains TitleRoom=0, GroupRoom=1, StagingRoom=2 in the shared ABI.
+// PeerThread disconnected callback, stored by Thread_Function 0x0064FB90 at +0xAE.
 
 #include <string>
 
@@ -151,7 +142,12 @@ void disconnectedCallback(PEER peer, const char *reason, void *param)
 
 	PeerResponse resp;
 	resp.peerResponseType = PeerResponse::PEERRESPONSE_DISCONNECT;
-	resp.discon.reason = DISCONNECT_LOSTCON;
+	std::string reasonStr(reason);
+	// 21 is a BFME disconnect reason past Zero Hour's DISCONNECT_MAX.
+	if ((Int)reasonStr.find("CDKEYSERVER", 0, 11) >= 0)
+		resp.discon.reason = (DisconnectReason)21;
+	else
+		resp.discon.reason = DISCONNECT_LOSTCON;
 	SerialAuthResult res = TheGameSpyPeerMessageQueue->getSerialAuthResult();
 	switch (res)
 	{
