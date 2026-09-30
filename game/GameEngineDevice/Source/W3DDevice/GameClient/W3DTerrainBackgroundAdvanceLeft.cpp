@@ -12,6 +12,9 @@ struct ICoord2D
 	int y;
 };
 
+// Keep the inline view local; the out-of-line retail test is owned by
+// Rva00729300BitPlanes.cpp.
+namespace {
 struct Rva00729300Bytes
 {
 	Byte *m_begin;
@@ -57,6 +60,7 @@ public:
 	Rva00729300Bytes m_bits;
 };
 
+}
 class W3DTerrainBackground
 {
 protected:
