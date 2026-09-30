@@ -1,5 +1,5 @@
-// ??0Rva003A35A0Element@@QAE@PBVWaypoint@@@Z
-// partial score=0.14 date=2026-09-21
+// ?rva003A25A0@Rva003A35A0Element@@QAEPAV1@PBVWaypoint@@@Z
+// partial score=0.6383 date=2026-09-30
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
 //
 // A second constructor for the 184-byte Rva003A35A0Element already pinned
@@ -18,10 +18,6 @@
 #include "ascii_string.h"
 #include "coord3d.h"
 
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 
 class Gen003A25A0StringData
 {
@@ -32,6 +28,7 @@ public:
 	unsigned short m_pad;
 };
 
+struct Rva003A25A0Location { float x,y,z; };
 class Waypoint
 {
 public:
@@ -40,35 +37,29 @@ public:
 	void *m_vptr;   // +0x00
 	int m_id;       // +0x04
 	void *m_namePad; // +0x08 (AsciiString m_name, read only via getName())
-	int m_locX;     // +0x0c
-	int m_locY;     // +0x10
-	int m_locZ;     // +0x14
+	Rva003A25A0Location m_location;
 };
 
 class Rva003A35A0Element
 {
 public:
-	Rva003A35A0Element(const Waypoint *source);
+	Rva003A35A0Element *rva003A25A0(const Waypoint *source);
 
 private:
 	int m_key;
 	int m_prefix[10];
 	Coord3D m_points[10];
-	int m_wordA;
-	int m_wordB;
-	int m_wordC;
+	Rva003A25A0Location m_location;
 	AsciiString m_name;
-	int m_tail;
+	volatile int m_tail;
 };
 
 // ??0Rva003A35A0Element@@QAE@PBVWaypoint@@@Z
-Rva003A35A0Element::Rva003A35A0Element(const Waypoint *source)
+Rva003A35A0Element *Rva003A35A0Element::rva003A25A0(const Waypoint *source)
 {
 	m_name.set(source->getName());
 
-	m_wordA = source->m_locX;
-	m_wordB = source->m_locY;
-	m_wordC = source->m_locZ;
+	m_location = source->m_location;
 	m_tail = source->m_id;
 
 	m_key = 0;
@@ -122,4 +113,5 @@ Rva003A35A0Element::Rva003A35A0Element(const Waypoint *source)
 	m_points[9].x = 0.0f;
 	m_points[9].y = 0.0f;
 	m_points[9].z = 0.0f;
+	return this;
 }
