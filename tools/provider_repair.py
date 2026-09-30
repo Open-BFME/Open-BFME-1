@@ -728,11 +728,14 @@ def cmd_status(_args):
 # owner and lands it with tools/add_data_match.py (data_rows.csv).
 REFERENCE = ROOT / "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code"
 DATA_QUEUE = ROOT / "build" / "data_scaffold" / "queue.csv"
+REFERENCE_ROOTS = None  # the game's ZH source (reloc_ledger.REFERENCE_ROOTS); tests point it elsewhere
 
 
 def data_identifier(symbol):
-    """(qualified C++ name, bare identifier) a mangled global or static data member
-    spells, or None: `?x@@3HA` -> ("x", "x"), `?x@C@@2HA` -> ("C::x", "x")."""
+    """(qualified C++ name, bare identifier) a data symbol spells, or None:
+    `?x@@3HA` -> ("x", "x"), `?x@C@@2HA` -> ("C::x", "x"), a C `_x` -> ("x", "x")."""
+    if re.fullmatch(r"_[A-Za-z_]\w*", symbol):
+        return symbol[1:], symbol[1:]
     m = re.match(r"^\?(\w+)@(?:(\w+)@)?@[23]", symbol)
     if not m:
         return None
@@ -740,40 +743,42 @@ def data_identifier(symbol):
 
 
 def reference_definitions(qualified):
-    """[(file, line, text)] of every file- or namespace-scope definition of
-    `qualified` in the ZH tree, by FULL name (enclosing namespaces + written
-    qualifier): rg finds the files that spell it, then each file -- preprocessed
-    by the reference build's own command when possible (cl -E, lines of this
-    file only), else raw with only literal #if 0/1 branches trusted -- is
-    scanned brace by brace, so a function-local, class-member, other-namespace
-    or inactive-branch line never counts. None when a candidate file's scope
-    cannot be established (unbalanced braces, a match in an unknown branch)."""
+    """reloc_ledger.reference_definitions over the game's ZH source: ([(file, line, text)],
+    None) or (None, why). No raw-text fallback: a candidate file that does not
+    preprocess refuses the lookup (AGENTS.md: no fallback paths)."""
     import reloc_ledger
-    proc = subprocess.run(["rg", "-l", "-g", "*.cpp", "-w", "-F", qualified.split("::")[-1],
-                           REFERENCE.relative_to(ROOT).as_posix()],
-                          capture_output=True, text=True, errors="replace", cwd=str(ROOT))
-    out = []
-    for path in sorted(proc.stdout.splitlines()):
-        path = path.replace("\\", "/")
-        # the unit as the reference build preprocesses it (conditionals and macros
-        # resolved), counting only lines of this file; the raw text otherwise,
-        # where a definition in a non-literal #if branch leaves scope unknown
-        unit = reloc_ledger.preprocess(ROOT / path)
-        if unit is not None:
-            found = reloc_ledger.file_scope_definitions(unit, qualified, origin=path)
-        else:
-            found = reloc_ledger.file_scope_definitions((ROOT / path).read_text(encoding="latin-1"), qualified)
-        if found is None:
-            return None
-        out += [(path.replace("\\", "/"), number, line) for number, line in found]
-    return out
+    return reloc_ledger.reference_definitions(qualified, roots=REFERENCE_ROOTS or reloc_ledger.REFERENCE_ROOTS)
 
 
-def data_candidates(queue):
-    """Queue rows naming a data global, most-referenced first."""
-    with Path(queue).open(newline="", encoding="utf-8") as fh:
-        rows = [r for r in csv.DictReader(fh)
-                if r["class"].startswith("data:") or r["cause"] == "static/global data"]
+WORKLIST = ROOT / "build" / "image_compose" / "worklist.csv"
+
+
+def data_candidates(path, tally=None):
+    """Data definitions to serve, best first, from ONE named input:
+    tools/image_compose.py's worklist (family `data`, verdict `unresolved`:
+    nothing defines the name; ranked by what it alone would close) -- the
+    default -- or the trial link's queue.csv (class data:* and the unpinned
+    static/global data group, most-referenced first). A worklist data blocker
+    of another verdict belongs to another lane and is only counted: `unknown`
+    words need typed evidence (tools/reloc_ledger.py proven_scalars.csv),
+    `code-literal` is a referencing source that should use the literal."""
+    tally = {} if tally is None else tally
+    with Path(path).open(newline="", encoding="utf-8") as fh:
+        rows = list(csv.DictReader(line for line in fh if not line.startswith("#")))
+    if rows and "blocker" in rows[0]:
+        out = []
+        for r in rows:
+            if r.get("family") != "data":
+                continue
+            if r["verdict"] != "unresolved":
+                key = {"unknown": "typed-evidence-lane", "code-literal": "code-literal-lane"}.get(
+                    r["verdict"], "verdict-" + r["verdict"])
+                tally[key] = tally.get(key, 0) + 1
+                continue
+            out.append({"name": r["blocker"], "referring_objects": r.get("unlock_files", ""),
+                        "rank": int(r["rank"])})
+        return sorted(out, key=lambda r: r["rank"])
+    rows = [r for r in rows if r["class"].startswith("data:") or r["cause"] == "static/global data"]
     rows.sort(key=lambda r: (-int(r["referring_objects"] or 0), r["name"]))
     return rows
 
@@ -793,7 +798,7 @@ def cmd_data_next(args):
             pass
     img = reloc_ledger.Image()
     tally = {}
-    for row in data_candidates(args.queue):
+    for row in data_candidates(args.worklist or args.queue, tally):
         name = row["name"]
         ident = data_identifier(name)
         va = dir32.get(name)
@@ -801,9 +806,10 @@ def cmd_data_next(args):
                    else "not-a-simple-global" if ident is None
                    else "busy" if (va - 0x400000) in busy or recorded(hex(va - 0x400000)) else None)
         if verdict is None:
-            found = reference_definitions(ident[0])
+            found, refused = reference_definitions(ident[0])
             if found is None:
-                tally["reference-scope-unknown"] = tally.get("reference-scope-unknown", 0) + 1
+                key = refused.split()[0]
+                tally[key] = tally.get(key, 0) + 1
                 continue
             # a ZH `static` is TU-local: the external name our code spells cannot be
             # landed from that definition without changing its linkage -- not served
@@ -823,6 +829,7 @@ def cmd_data_next(args):
         game_path = "game/" + ref_file.split("/Code/", 1)[1]
         facts = {"mode": "data", "symbol": name, "rva": rva, "va": f"0x{va:08X}", "section": img.section(va),
                  "retail_bytes": (img.read(va, 16) or b"").hex(), "referring_objects": row["referring_objects"],
+                 "worklist_rank": row.get("rank", ""),
                  "reference": {"file": ref_file, "line": ref_line, "definition": ref_text},
                  "owner": game_path, "owner_exists": (ROOT / game_path).exists(),
                  "steps": [f"write the definition in {game_path} (ZH's own file; copy its `// cl:` line "
@@ -892,7 +899,10 @@ def main(argv=None):
     b.add_argument("--reason", default="")
     sub.add_parser("status")
     dn = sub.add_parser("data-next", help="serve + claim ONE global the link cannot find, with its ZH definition")
-    dn.add_argument("--queue", default=str(DATA_QUEUE), help="tools/data_scaffold.py --trial-link's queue.csv")
+    source = dn.add_mutually_exclusive_group()
+    source.add_argument("--worklist", default=str(WORKLIST),
+                        help="tools/image_compose.py worklist.csv (default): family data, verdict unresolved")
+    source.add_argument("--queue", help="instead: tools/data_scaffold.py --trial-link's queue.csv")
     dn.add_argument("--model", default="")
     dn.add_argument("--no-claim", action="store_true", help="list without claiming (dry run)")
     dc = sub.add_parser("data-check", help="verify the symbol's data_rows.csv row; one PASS/FAIL and a receipt")

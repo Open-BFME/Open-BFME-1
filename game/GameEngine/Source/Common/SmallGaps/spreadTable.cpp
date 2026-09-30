@@ -1,6 +1,8 @@
 // ?spreadTable@@YAXXZ
 extern unsigned short* Rva009C0D10Src;
-extern unsigned short Rva009C0D10Table[0x100];
+// Defined here, the one routine that fills it: retail keeps it zero-filled in
+// .bss at VA 0x013566C0, and this loop writes exactly 0x100 entries.
+unsigned short Rva009C0D10Table[0x100];
 void spreadTable()
 {
 	unsigned short* src = Rva009C0D10Src;

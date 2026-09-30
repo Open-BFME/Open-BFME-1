@@ -1699,6 +1699,45 @@ class CTypes:
         return (found[0][0].strip(), element) if element else None
 
 
+# the game executable's own source (Code/Tools/ holds GUIEdit, WorldBuilder, ... -- other programs)
+REFERENCE_ROOTS = tuple(ROOT / "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code" / part
+                        for part in ("GameEngine", "GameEngineDevice", "Libraries", "Main"))
+
+
+def reference_definitions(qualified, roots=REFERENCE_ROOTS):
+    """([(file, line, text)], None) of every file- or namespace-scope definition
+    of `qualified` in the Zero Hour reference, by FULL name (enclosing
+    namespaces + written qualifier); or (None, reason) when that cannot be
+    established. rg finds the .cpp files that spell the name; a file whose raw
+    text has no line that could define it is skipped; every other one must be
+    preprocessed by the reference build's own command (cl -E, only this file's
+    lines counted) -- there is no raw-text fallback: a file that does not
+    preprocess refuses the lookup, as do unbalanced braces."""
+    bare = qualified.split("::")[-1]
+    loose = re.compile(r"^(?!\s*extern\b)[^;(]*\b" + re.escape(bare) + r"\s*(\[[^\]]*\]\s*)*(=|;)", re.M)
+    out = []
+    for root in roots:
+        proc = subprocess.run(["rg", "-l", "-g", "*.cpp", "-w", "-F", bare, root.relative_to(ROOT).as_posix()],
+                              capture_output=True, text=True, errors="replace", cwd=str(ROOT))
+        for path in sorted(proc.stdout.splitlines()):
+            path = path.replace("\\", "/")
+            if not loose.search((ROOT / path).read_text(encoding="latin-1")):
+                continue
+            unit = preprocess(ROOT / path)
+            if unit is None:
+                return None, f"reference-not-preprocessable {path}"
+            found = file_scope_definitions(unit, qualified, origin=path)
+            if found is None:
+                return None, f"reference-scope-unknown {path}"
+            out += [(path, number, line) for number, line in found]
+    return out, None
+
+
+def definition_text(line):
+    """A definition's declared text, whitespace-normalised, up to its initializer."""
+    return " ".join(line.split("=")[0].split())
+
+
 def upstream_declaration(source, cname):
     """(declared type, element layout) of `cname` in an upstream source, or None."""
     return CTypes(source).declaration(cname) if source.is_file() else None
@@ -1726,6 +1765,55 @@ def c_name(symbol):
     return symbol[1:] if symbol.startswith("_") else symbol
 
 
+def reference_evidence(source, symbol, base, va, cache, sizer=None):
+    """("reference-declaration", why) when the word's covering symbol is defined
+    at file scope in our source by exactly the text the Zero Hour reference uses
+    for its one definition of that name (so upstream declared the same type), the
+    compiler's sizeof of it (probe TU, our build command) covers the whole word,
+    and -- the caller's premise -- our matching object holds no relocation there.
+    Else None."""
+    if source is None or not source.is_file():
+        return None
+    name, value = symbol
+    key = (str(source), name)
+    if key not in cache:
+        cache[key] = _reference_match(source, name, sizer)
+    match = cache[key]
+    if match is None:
+        return None
+    size, text, ref = match
+    offset = va - (base + value)
+    if not (0 <= offset and offset + 4 <= size):
+        return None
+    return ("reference-declaration", f"`{text}` is the Zero Hour reference's own definition ({ref}); "
+                                     f"sizeof {size} (compiler, our build command) covers +{offset:#x}")
+
+
+def _reference_match(source, name, sizer=None):
+    import data_rows
+    expression = data_rows.cpp_name(name)
+    if expression is None:
+        return None
+    qualified = expression.lstrip(":")
+    ours = CTypes(source)
+    if not ours.exact:
+        return None
+    try:
+        origin = source.resolve().relative_to(ROOT.resolve()).as_posix()
+    except ValueError:
+        return None
+    mine = file_scope_definitions(ours.source, qualified, origin=origin)
+    if not mine or len(mine) != 1:
+        return None
+    theirs, _ = reference_definitions(qualified)
+    if not theirs or len(theirs) != 1 or definition_text(theirs[0][2]) != definition_text(mine[0][1]):
+        return None
+    size, _ = (sizer or data_rows.compiled_size)(source, name)
+    if size is None:
+        return None
+    return size, definition_text(mine[0][1]), f"{theirs[0][0]}:{theirs[0][1]}"
+
+
 def prove_scalars(img, comp, L, rows, bodies, objects_root=None):
     """proven-scalar rows for the in-image dwords our objects' matching data
     sections hold WITHOUT a relocation, word by word. A word is a number when:
@@ -1740,6 +1828,9 @@ def prove_scalars(img, comp, L, rows, bodies, objects_root=None):
                             in an arithmetic field (or padding) of its element
                             type as laid out from that source (typedefs and
                             structs resolved; anything unreadable is unproven)
+      reference-declaration our source defines the covering symbol with exactly
+                            the text of the Zero Hour reference's one definition
+                            of it, and the compiler's sizeof covers the word
       element-access        every retail reference into the section is an
                             8/16-bit integer or x87 float access, nothing in
                             data points into it, and direct (unindexed)
@@ -1771,7 +1862,7 @@ def prove_scalars(img, comp, L, rows, bodies, objects_root=None):
         if target != sym_va:
             targets[target].append(site)
     target_keys = sorted(targets)
-    digests, types = {}, {}
+    digests, types, reference_cache = {}, {}, {}
 
     def sha(path):
         if path not in digests:
@@ -1815,6 +1906,8 @@ def prove_scalars(img, comp, L, rows, bodies, objects_root=None):
                     evidence = ("vendored-declaration", f"{tag}: {source} sha256 {sha(src)} declares "
                                                         f"`{decl[0]} {cname}`; +{va - base - symbol[1]:#x} lies in "
                                                         "arithmetic fields of its element")
+            if evidence is None and symbol and not tag:
+                evidence = reference_evidence(ROOT / source if source else None, symbol, base, va, reference_cache)
             if evidence is None and access_why is None and all(b in covered for b in range(va, va + 4)):
                 evidence = ("element-access", f"{len(sites)} reference(s) into the section, each an 8/16-bit "
                                               "or x87 element access; direct accesses cover every byte")

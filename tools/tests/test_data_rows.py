@@ -162,19 +162,23 @@ def test_data_check_fails_closed_when_verification_exits_or_says_nothing(tmp_pat
     assert provider_repair.cmd_data_check(SimpleNamespace(symbol="?OurLanguage@@3W4LanguageID@@A")) == 0
 
 
-def test_reference_definitions_count_only_file_scope(tmp_path, monkeypatch):
+def test_reference_definitions_count_only_file_scope(monkeypatch):
+    _toolchain()
     import provider_repair
-    ref = tmp_path / "Code"
-    ref.mkdir()
+    ref = data_rows.ROOT / "build" / "data_rows" / "test_provider" / "Code"
+    ref.mkdir(parents=True, exist_ok=True)
     (ref / "Local.cpp").write_text("void f() {\nint OurLanguage = 0;\n}\nstruct S { int OurLanguage; };\n")
     (ref / "Global.cpp").write_text("namespace N {\n}\n#if 0\nint OurLanguage = 2;\n#endif\n"
                                     "LanguageID OurLanguage = LANGUAGE_ID_US;\n")
-    monkeypatch.setattr(provider_repair, "ROOT", tmp_path)
-    monkeypatch.setattr(provider_repair, "REFERENCE", ref)
-    found = provider_repair.reference_definitions("OurLanguage")
-    assert found == [("Code/Global.cpp", 6, "LanguageID OurLanguage = LANGUAGE_ID_US;")]
-    (ref / "Two.cpp").write_text("int OurLanguage;\n")
-    assert len(provider_repair.reference_definitions("OurLanguage")) == 2  # two definitions: not served
+    (ref / "Two.cpp").write_text("namespace Other {\nint OurLanguage;\n}\n")
+    monkeypatch.setattr(provider_repair, "REFERENCE_ROOTS", (ref,))
+    found, why = provider_repair.reference_definitions("OurLanguage")
+    assert why is None and [(Path(f).name, n, t) for f, n, t in found] == [
+        ("Global.cpp", 6, "LanguageID OurLanguage = LANGUAGE_ID_US;")]
+    (ref / "Three.cpp").write_text("int OurLanguage;\n")
+    found, _ = provider_repair.reference_definitions("OurLanguage")
+    assert len(found) == 2  # two definitions: not served
+    (ref / "Three.cpp").unlink()
 
 
 def test_hooks_keep_a_data_only_source_under_verification(tmp_path):
@@ -228,3 +232,55 @@ def test_the_compiler_sizes_what_a_textual_lookup_gets_wrong():
                       "using namespace B;\nElement values[2] = {0,0};\n")
     size, how = data_rows.compiled_size(source, "?values@@3PAJA")
     assert size == 8, how
+
+
+def _toolchain():
+    import pytest
+    build = data_rows._tools()[0]
+    if not (build.vc71_root() / "Vc7" / "bin" / "cl.exe").exists():
+        pytest.skip("MSVC 7.1 toolchain not present")
+
+
+def test_reference_lookup_refuses_a_file_it_cannot_preprocess_no_raw_fallback():
+    _toolchain()
+    import reloc_ledger
+    work = data_rows.ROOT / "build" / "data_rows" / "test_reference"
+    (work / "good").mkdir(parents=True, exist_ok=True)
+    (work / "bad").mkdir(parents=True, exist_ok=True)
+    (work / "good" / "g.cpp").write_text("unsigned short refTable[3] = { 67, 61, 59 };\n")
+    (work / "bad" / "b.cpp").write_text('#include "missing_header.h"\nunsigned short refTable[3] = { 1, 2, 3 };\n')
+    found, why = reloc_ledger.reference_definitions("refTable", roots=(work / "good",))
+    assert why is None and [(line, text) for _, line, text in found] == [(1, "unsigned short refTable[3] = { 67, 61, 59 };")]
+    found, why = reloc_ledger.reference_definitions("refTable", roots=(work / "good", work / "bad"))
+    assert found is None and why.startswith("reference-not-preprocessable")
+
+
+def test_prime_table_words_are_upstream_declared_unsigned_shorts():
+    """The worklist's #1 data blocker: mpmath.cpp's primeTable holds 16-bit primes
+    (0x0043003D = 67, 61) that read as in-image dwords. Our definition is the
+    Zero Hour reference's own text and the compiler sizes it 3511 x 2."""
+    _toolchain()
+    import reloc_ledger
+    source = data_rows.ROOT / "game/Libraries/Source/WWVegas/WWLib/mpmath.cpp"
+    match = reloc_ledger._reference_match(source, "?primeTable@@3PAGA")
+    assert match is not None and match[0] == 7022 and match[1] == "unsigned short primeTable[3511]"
+    evidence = reloc_ledger.reference_evidence(source, ("?primeTable@@3PAGA", 0), 0x012DA1F0, 0x012DA212, {})
+    assert evidence[0] == "reference-declaration"
+    assert reloc_ledger.reference_evidence(source, ("?primeTable@@3PAGA", 0), 0x012DA1F0, 0x012DA1F0 + 7020, {}) is None
+
+
+def test_data_next_reads_the_worklist_and_names_c_globals(tmp_path):
+    import provider_repair
+    assert provider_repair.data_identifier("___gameMemFreePtr") == ("__gameMemFreePtr", "__gameMemFreePtr")
+    worklist = tmp_path / "worklist.csv"
+    worklist.write_text("# model note\n"
+                        "rank,blocker,family,verdict,unlock_files\n"
+                        "1,?primeTable@@3PAGA,data,unknown,2\n"
+                        "4,___gameMemFreePtr,data,unresolved,29\n"
+                        "2,?compare@AsciiString@@QBEHABV1@@Z,provider,wrong,11\n"
+                        "10,?g_bfmeDefaultBU@@3MA,data,code-literal,16\n"
+                        "12,?TheWritableGlobalData@@3PAVGlobalData@@A,data,unresolved,14\n")
+    tally = {}
+    rows = provider_repair.data_candidates(worklist, tally)
+    assert [r["name"] for r in rows] == ["___gameMemFreePtr", "?TheWritableGlobalData@@3PAVGlobalData@@A"]
+    assert tally == {"typed-evidence-lane": 1, "code-literal-lane": 1}
