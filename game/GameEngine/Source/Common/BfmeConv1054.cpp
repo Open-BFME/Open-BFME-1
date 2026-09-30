@@ -2,6 +2,15 @@
 
 extern "C" void bfmeHookA1054(void);
 extern "C" void bfmeHookB1054(void);
+extern void j_00041de9();
+extern void j_000410dd();
+extern void j_00008b39();
+extern void j_0002ed75();
+extern void j_00041c09();
+extern void j_0003c9cf();
+extern void j_00014556();
+extern void j_000391a8();
+extern void j_00011897();
 
 struct BfmeA1054
 {
@@ -79,15 +88,15 @@ void bfmeTailB1054Impl(BfmeB1054 *p)
 {
 	int z = 0;
 	p->m_bfmeH3 = bfmeMake1054(3);
-	p->m_bfmeFn3 = reinterpret_cast<void (*)(void)>(0x00441de9);
+	p->m_bfmeFn3 = j_00041de9;
 	p->m_bfme38 = z;
 	p->m_bfme3c = z;
 	p->m_bfmeH4 = bfmeMake1054(4);
-	p->m_bfmeFn4 = reinterpret_cast<void (*)(void)>(0x004410dd);
+	p->m_bfmeFn4 = j_000410dd;
 	p->m_bfme48 = z;
 	p->m_bfme4c = z;
 	p->m_bfmeH5 = bfmeMake1054(5);
-	p->m_bfmeFn5 = reinterpret_cast<void (*)(void)>(0x00408b39);
+	p->m_bfmeFn5 = j_00008b39;
 	p->m_bfme58 = z;
 	p->m_bfme5c = z;
 	bfmeTailA1054Cdecl(reinterpret_cast<BfmeA1054 *>(p));
@@ -97,15 +106,15 @@ void bfmeTailA1054Impl(BfmeA1054 *p)
 {
 	int z = 0;
 	p->m_bfmeH6 = bfmeMake1054(6);
-	p->m_bfmeFn6 = reinterpret_cast<void (*)(void)>(0x0042ed75);
+	p->m_bfmeFn6 = j_0002ed75;
 	p->m_bfme68 = z;
 	p->m_bfme6c = z;
 	p->m_bfmeH7 = bfmeMake1054(7);
-	p->m_bfmeFn7 = reinterpret_cast<void (*)(void)>(0x00441c09);
+	p->m_bfmeFn7 = j_00041c09;
 	p->m_bfme78 = z;
 	p->m_bfme7c = z;
 	p->m_bfmeH8 = bfmeMake1054(8);
-	p->m_bfmeFn8 = reinterpret_cast<void (*)(void)>(0x0043c9cf);
+	p->m_bfmeFn8 = j_0003c9cf;
 	p->m_bfme88 = z;
 	p->m_bfme8c = z;
 }
@@ -130,15 +139,15 @@ void bfmeCategoryHead1054(BfmeCategoryHead1054 *p)
 {
 	int z = 0;
 	p->m_key0 = bfmeMake1054(z);
-	p->m_callback0 = reinterpret_cast<void (*)(void)>(0x00414556);
+	p->m_callback0 = j_00014556;
 	p->m_zero08 = z;
 	p->m_zero0c = z;
 	p->m_key1 = bfmeMake1054(1);
-	p->m_callback1 = reinterpret_cast<void (*)(void)>(0x004391a8);
+	p->m_callback1 = j_000391a8;
 	p->m_zero18 = z;
 	p->m_zero1c = z;
 	p->m_key2 = bfmeMake1054(2);
-	p->m_callback2 = reinterpret_cast<void (*)(void)>(0x00411897);
+	p->m_callback2 = j_00011897;
 	p->m_zero28 = z;
 	p->m_zero2c = z;
 	bfmeTailB1054Cdecl(reinterpret_cast<BfmeB1054 *>(p));

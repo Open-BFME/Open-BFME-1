@@ -154,6 +154,15 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
+extern "C" void *bfmeVftPartitionFilter[];
+extern "C" void *bfmeVftPartitionFilterThing[];
+extern "C" void *bfmeVftPartitionFilterPolygonTrigger[];
+extern "C" void *bfmeVftPartitionFilterSameMapStatus[];
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilter=??_7PartitionFilter@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterThing=??_7PartitionFilterThing@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterPolygonTrigger=??_7PartitionFilterPolygonTrigger@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterSameMapStatus=??_7PartitionFilterSameMapStatus@@6B@")
+
 class PartitionFilter
 {
 public:
@@ -171,14 +180,14 @@ public:
 		: PartitionFilter()
 	{
 		m_next = 0;
-		m_vptr = 0x010CFFD0;
+		m_vptr = (unsigned int)bfmeVftPartitionFilterThing;
 		m_thingTemplate = thingTemplate;
 		m_match = match;
 	}
 
 	~PartitionFilterThing(void)
 	{
-		m_vptr = 0x01083B5C;
+		m_vptr = (unsigned int)bfmeVftPartitionFilter;
 	}
 
 	const ThingTemplate *m_thingTemplate;
@@ -192,13 +201,13 @@ public:
 		: PartitionFilter()
 	{
 		m_next = 0;
-		m_vptr = 0x01095714;
+		m_vptr = (unsigned int)bfmeVftPartitionFilterPolygonTrigger;
 		m_trigger = trigger;
 	}
 
 	~PartitionFilterPolygonTrigger(void)
 	{
-		m_vptr = 0x01083B5C;
+		m_vptr = (unsigned int)bfmeVftPartitionFilter;
 	}
 
 	const PolygonTrigger *m_trigger;
@@ -211,13 +220,13 @@ public:
 		: PartitionFilter()
 	{
 		m_next = 0;
-		m_vptr = 0x01085DD0;
+		m_vptr = (unsigned int)bfmeVftPartitionFilterSameMapStatus;
 		m_object = object;
 	}
 
 	~PartitionFilterSameMapStatus(void)
 	{
-		m_vptr = 0x01083B5C;
+		m_vptr = (unsigned int)bfmeVftPartitionFilter;
 	}
 
 	const Object *m_object;
