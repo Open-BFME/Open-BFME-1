@@ -83,7 +83,7 @@ static const Int MAX_SAVE_FILE_NUMBER  =  99999999;
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-SaveGameInfo::SaveGameInfo( void )
+__declspec(noinline) SaveGameInfo::SaveGameInfo( void )
 {
 
 	date.day					= 0;
@@ -1558,3 +1558,12 @@ void GameState::xfer( Xfer *xfer )
 	}  // end else
 
 }  // end xfer
+
+// Preserve the implicit constructor as a separate body; its callee is visible
+// here so MSVC can retain this in EDX across SaveGameInfo construction.
+#pragma auto_inline(off)
+AvailableGameInfo *forceAvailableGameInfoConstruction()
+{
+	return new AvailableGameInfo;
+}
+#pragma auto_inline(on)
