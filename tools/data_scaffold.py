@@ -713,6 +713,13 @@ def write_queue(path, text, detail, rows, img):
         for row in csv.reader(handle):
             if len(row) >= 2 and row[1].startswith("0x"):
                 pinned.setdefault(row[0], int(row[1], 16))
+    dir32 = {}
+    for row in RL.read_csv_rows(build.DIR32_ADDRESSES):
+        dir32.setdefault(row["name"], int(row["va"], 16))
+    roles = {}
+    if (LEDGER / "names.csv").exists():
+        for row in RL.read_csv_rows(LEDGER / "names.csv"):
+            roles.setdefault(row["name"], row["role"])
     at = collections.defaultdict(list)
     by_qualified = collections.defaultdict(list)
     for row in rows:
@@ -733,6 +740,12 @@ def write_queue(path, text, detail, rows, img):
                 evidence = f"address 0x{rva:08X} ({how}); row source {owners[0]['source']}"
             else:
                 evidence = f"address 0x{rva:08X} has no ledger row"
+        elif name in dir32:
+            va = dir32[name]
+            owners = at.get(va - img.base, [])
+            suggestion = owners[0]["name"] if owners else ""
+            evidence = f"dir32_addresses.csv 0x{va:08X} ({img.section(va) or 'outside'}); " \
+                       f"ledger names.csv role {roles.get(name, 'none')}"
         else:
             same = [r for r in by_qualified.get(qualified(name), []) if r["name"] != name]
             if same:
