@@ -42,6 +42,19 @@ extern void j_000338ed();
 extern void j_0000acfe();
 extern void j_0003df14();
 extern void j_0000f31c();
+extern void j_00014c4a();
+extern void j_0004711d();
+extern void j_00035e13();
+extern void j_000394f5();
+extern void j_0000a155();
+extern void j_00018e3a();
+extern void j_0000a655();
+extern void j_00021e4f();
+extern void j_0003ffda();
+extern void j_0001ebb9();
+extern void j_0002aced();
+extern void j_0000f074();
+extern void j_000095ac();
 class __multiple_inheritance BfmeAptScreenSkirmish;
 class __multiple_inheritance FunctorTarget;
 // Storage-only PMF representation; callbacks are not invoked through this type.
@@ -368,24 +381,24 @@ BfmeAptScreenSkirmish::BfmeAptScreenSkirmish(void *context)
     }
     RegistryView *registry = (RegistryView *)(Rva00465200GameWindow *)this;
     registerPlain(this, registry, "AptSkirmish::OnInitialized",
-                  rawMethod(0x414c4a));
-    registerPlain(this, registry, "AptSkirmish::OnClosed", rawMethod(0x44711d));
-    registerPlain(this, registry, "AptSkirmish::Exit", rawMethod(0x435e13));
-    registerPlain(this, registry, "AptSkirmish::Back", rawMethod(0x4394f5));
+                  rawMethod((unsigned)j_00014c4a));
+    registerPlain(this, registry, "AptSkirmish::OnClosed", rawMethod((unsigned)j_0004711d));
+    registerPlain(this, registry, "AptSkirmish::Exit", rawMethod((unsigned)j_00035e13));
+    registerPlain(this, registry, "AptSkirmish::Back", rawMethod((unsigned)j_000394f5));
     registerPlain(this, registry, "AptSkirmish::StartGame",
-                  rawMethod(0x40a155));
-    registerPlain(this, registry, "AptSkirmish::Profile", rawMethod(0x418e3a));
+                  rawMethod((unsigned)j_0000a155));
+    registerPlain(this, registry, "AptSkirmish::Profile", rawMethod((unsigned)j_00018e3a));
     registerPlain(this, registry, "AptSkirmish::SkirmishProfile",
-                  rawMethod(0x40a655));
+                  rawMethod((unsigned)j_0000a655));
     registerPlain(this, registry, "AptSkirmish::Skirmish::PersonaCancel",
-                  rawMethod(0x421e4f));
+                  rawMethod((unsigned)j_00021e4f));
     registerPlain(this, registry, "AptSkirmish::Skirmish::PersonaAccept",
-                  rawMethod(0x43ffda));
+                  rawMethod((unsigned)j_0003ffda));
     registerPlain(this, registry, "AptSkirmish::Skirmish::PersonaRemove",
-                  rawMethod(0x41ebb9));
+                  rawMethod((unsigned)j_0001ebb9));
     registerPlain(this, registry, "AptSkirmish::Skirmish::PersonaOk",
-                  rawMethod(0x42aced));
-    registerBind(this, "Skirmish/tooltipPlayerLevelIcon", rawMethod(0x40f074));
+                  rawMethod((unsigned)j_0002aced));
+    registerBind(this, "Skirmish/tooltipPlayerLevelIcon", rawMethod((unsigned)j_0000f074));
     registerArg(this, registry, "LevelBarCurrent", (void *)0,
                 rawMethod((unsigned)j_00010924));
     registerArg(this, registry, "LevelBarA", (void *)1,
@@ -396,7 +409,7 @@ BfmeAptScreenSkirmish::BfmeAptScreenSkirmish(void *context)
                 rawMethod((unsigned)j_00010924));
     registerArg(this, registry, "LevelBarD", (void *)4,
                 rawMethod((unsigned)j_00010924));
-    registerRef(this, "AptSkirmish::InitGadgets", rawMethod(0x4095ac));
+    registerRef(this, "AptSkirmish::InitGadgets", rawMethod((unsigned)j_000095ac));
     {
       AsciiString key("APT:OnlineOrNetwork");
       g_theWindowManager->bfme_setAptText(key,
