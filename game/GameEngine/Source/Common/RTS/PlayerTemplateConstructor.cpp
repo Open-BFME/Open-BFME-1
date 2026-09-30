@@ -1,22 +1,20 @@
-// ??0PlayerTemplate@@QAE@XZ
-// partial score=1.0 date=2026-09-30
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 //
-// BFME PlayerTemplate copy constructor, retail 0x000E2E50. The two named
-// callers are _STL::_Construct<PlayerTemplate> and
-// PlayerTemplateStore::parsePlayerTemplateDefinition. The layout is shared
-// with the exact assignment body at 0x000E32D0. In particular, the three
-// sound-event members have out-of-line destructors: that preserves their
-// unwind states without emitting a state store around each nonthrowing retain.
+// BFME PlayerTemplate default constructor, retail 0x000E3760. The named
+// caller is PlayerTemplateStore::parsePlayerTemplateDefinition (0x000E4210).
+// The layout is shared with the exact copy body at 0x000E2E50 and the exact
+// assignment body at 0x000E32D0. In particular, the three sound-event members
+// have out-of-line destructors: that preserves their unwind states without
+// emitting a state store around each nonthrowing retain. No private/public
+// macro: the node allocator and bucket initializer resolve under their
+// canonical private spellings (0x0082E540, 0x000D8450).
 
 #include "Lib/BaseType.h"
 #define _STLP_NO_EXCEPTIONS 1
-#define private public
 #include <map>
 #include <hash_map>
 #include <vector>
-#undef private
 #include "ascii_string.h"
 
 extern "C" __declspec(dllimport) __declspec(nothrow) long __stdcall
@@ -190,11 +188,6 @@ public:
 	AsciiString m_spellStoreCurrentPowerLabel;
 	AsciiString m_spellStoreMaximumPowerLabel;
 };
-
-PlayerTemplate makePlayerTemplateCopy(const PlayerTemplate &source)
-{
-	return source;
-}
 
 PlayerTemplate::PlayerTemplate()
 	: m_nameKey(0),
