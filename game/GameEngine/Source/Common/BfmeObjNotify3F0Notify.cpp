@@ -49,6 +49,8 @@ struct Rva000D22A0ObjectDlinkPmf
 	int vbindex;
 };
 
+extern void j_00001140(void);
+
 class Overridable
 {
 public:
@@ -172,7 +174,7 @@ void BfmeObjNotify3F0::notify(void *param, int flag)
 			if (!team)
 				continue;
 
-			Rva000D22A0ObjectDlinkPmf pmf = {(Rva000D22A0ObjectDlinkNext)0x00401140, -100, 0};
+			Rva000D22A0ObjectDlinkPmf pmf = {(Rva000D22A0ObjectDlinkNext)j_00001140, -100, 0};
 			Rva000D22A0ObjectDlinkIterator<Rva000D22A0ObjectView> iterObj(team->m_head, pmf);
 			for (; !iterObj.done(); iterObj.advance())
 			{

@@ -17,6 +17,7 @@
 // would make the compiler reload ecx that retail does not reload.
 
 void b_00490420(void);
+extern const void *g_01105FCC[];
 
 struct Gen_0051b690
 {
@@ -26,6 +27,6 @@ struct Gen_0051b690
 void *Gen_0051b690::ctorTail(void)
 {
 	b_00490420();
-	*(unsigned *)this = 0x1105FCCu;
+	*(unsigned *)this = (unsigned)g_01105FCC;
 	return this;
 }

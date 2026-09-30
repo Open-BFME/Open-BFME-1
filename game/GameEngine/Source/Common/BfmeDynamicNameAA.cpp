@@ -92,6 +92,8 @@ public:
 	void set(int first, int second);
 };
 
+extern void j_000103b6();
+
 class Matrix3D;
 
 class Rva0018F660
@@ -141,7 +143,7 @@ void BfmeOwnerAA::rva00375060(Rva00375060Entry *entry)
 	if (entry == 0)
 		return;
 
-	((Rva0018F030PairSlot *)entry)->set(0x4103b6, (int)this);
+	((Rva0018F030PairSlot *)entry)->set((int)j_000103b6, (int)this);
 	((Rva0018F660 *)entry)->transformPoints(
 		(const Matrix3D *)((const char *)m_bfmePartAA + 8));
 	m_rva00375060Vector.push_back(
