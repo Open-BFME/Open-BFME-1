@@ -30,6 +30,22 @@
 /*  Internal Functions                                          */
 /****************************************************************/
 
+// Retail's BTree-local endian reader uses a 1/2/4/3 comparison chain, not
+// gimex.h's switch. Its real callers make VC7.1 pass memory in EAX and count
+// in ECX; no explicit calling-convention shim is needed.
+namespace Rva00822F20
+{
+static unsigned long ggetm(const void *memory, int count)
+{
+    const unsigned char *p = static_cast<const unsigned char *>(memory);
+    if (count == 1) return (unsigned long)p[0];
+    if (count == 2) return ((unsigned long)p[0] << 8) | p[1];
+    if (count == 4) return ((((((unsigned long)p[0] << 8) | p[1]) << 8) | p[2]) << 8) | p[3];
+    if (count == 3) return ((((unsigned long)p[0] << 8) | p[1]) << 8) | p[2];
+    return 0;
+}
+}
+
 struct BTreeDecodeContext
 {
     signed char    cluetbl[256];
@@ -67,14 +83,14 @@ static int BTREE_decompress(unsigned char *packbuf,unsigned char *unpackbuf)
 
     if (s)
     {
-        type = ggetm(s,2);
+        type = Rva00822F20::ggetm(s,2);
         s += 2;
 
         /* (skip nothing for 0x46fb) */
         if (type==0x47fb)                       /* skip ulen */
             s += 3;
 
-        ulen = ggetm(s,3);
+        ulen = Rva00822F20::ggetm(s,3);
         s += 3;
 
         for (i=0;i<256;++i)                     /* 0 means a code is a leaf */
@@ -129,8 +145,8 @@ bool GCALL BTREE_is(const void *compresseddata)
 {
     bool ok=false;
 
-    if (ggetm(compresseddata,2)==0x46fb
-     || ggetm(compresseddata,2)==0x47fb)
+    if (Rva00822F20::ggetm(compresseddata,2)==0x46fb
+     || Rva00822F20::ggetm(compresseddata,2)==0x47fb)
         ok = true;
 
     return(ok);
@@ -145,13 +161,13 @@ int GCALL BTREE_size(const void *compresseddata)
 {
     int len=0;
 
-    if (ggetm(compresseddata,2)==0x46fb)
+    if (Rva00822F20::ggetm(compresseddata,2)==0x46fb)
     {
-        len = ggetm((char *)compresseddata+2,3);
+        len = Rva00822F20::ggetm((char *)compresseddata+2,3);
     }
     else
     {
-        len = ggetm((char *)compresseddata+2+3,3);
+        len = Rva00822F20::ggetm((char *)compresseddata+2+3,3);
     }
 
     return(len);
