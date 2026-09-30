@@ -89898,3 +89898,8 @@ __imp___AIL_set_file_callbacks@16,0x0135966C,AudioManagerInit 0x006B8220 mss32 I
 ?bfmeFlag@Gen_0039B020@@QBEEXZ,0x00049FDA,0x006E2540 witnessed caller ABI;route=0x0039B020
 _ntohs@4,0x0081BE14,route=WSOCK32.dll!ntohs
 ?rva008C4A30@@YA_NPAVAptValue@@@Z,0x008C4A30,Opaque typed ASM bridge;008C6800 caller pushes AptValue pointer and performs cdecl cleanup;callee returns bool in AL
+__initterm,0x009F7F92,MSVCR71 _initterm import jump FF 25 [0x013592EC]; crtexew.obj _WinMainCRTStartup REL32 at +220 and +299 reaches it
+__amsg_exit,0x009F7EFE,MSVCR71 _amsg_exit import jump FF 25 [0x0135928C]; crtexew.obj _WinMainCRTStartup REL32 at +283 reaches it
+___security_error_handler,0x009F802E,MSVCR71 __security_error_handler import jump FF 25 [0x01359274]; secchk.obj report_failure REL32 at +21 reaches it
+_WinMain@16,0x0004AC0A,ILT jmp 0x000600F0; crtexew.obj _WinMainCRTStartup REL32 at +385 encodes this ILT jump
+_WinMain@16,0x000600F0,genuine msvcrt.lib crtexew.obj calls _WinMain@16 at +385 and retail's call reaches ILT 0x0004AC0A = jmp 0x000600F0; body ends ret 10h (four stdcall args); body is still the anonymous dump row
