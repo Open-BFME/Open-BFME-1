@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "2c30b3cf424ffbf14594fdb80927b86c33fd6b1c3d9ab6e0232c6f0219df7c04",
+  "symbol": "?Rva009A9980@@YAXPBEHIIPAEHII@Z",
+  "score_kind": "measured",
+  "score": 0.5871,
+  "source": "// ?Rva009A9980@@YAXPBEHIIPAEHII@Z\n// partial score=0.5871 date=2026-09-30\nvoid __cdecl Rva009A9980(const unsigned char *source, int sourcePitch, unsigned int step, unsigned int sourceCount, unsigned char *destination, int destinationPitch, unsigned int ratio, unsigned int outputCount)\n{\n unsigned int denominator = ratio;\n unsigned int half = denominator >> 1;\n unsigned char left = *source;\n source += sourcePitch;\n unsigned char *right = (unsigned char *)&ratio;\n *right = *source;\n unsigned int total = destinationPitch * outputCount;\n unsigned int output = 0;\n unsigned int phase = 0;\n unsigned int leftWeight = denominator;\n if (total > 0) {\n  do {\n   destination[output] = (unsigned char)((*right * phase + half + left * leftWeight) / denominator);\n   phase += step;\n   while (phase > denominator) {\n    left = *source;\n    *right = source[sourcePitch];\n    source += sourcePitch;\n    phase -= denominator;\n   }\n   output += destinationPitch;\n   leftWeight = denominator - phase;\n  } while (output < total);\n }\n}\n"
+}
