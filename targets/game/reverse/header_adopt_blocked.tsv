@@ -750,3 +750,6 @@ game/GameEngine/Source/GameClient/GUI/BfmeAptScreenLanLobbyRefreshGame.cpp	Unico
 game/GameEngine/Source/GameClient/GUI/Rva0046F910RankDisplay.cpp	AsciiString	Functions: FAIL 1/1
 game/GameEngine/Source/GameLogic/System/Rva00382460ExperienceLevelParser.cpp	AsciiString	Functions: FAIL 1/1
 game/GameEngine/Source/GameLogic/Object/Contain/Rva00239AF0.cpp	AsciiString	game\GameEngine\Source\GameLogic\Object\Contain\Rva00239AF0.cpp(169) : error C2248: 'StringBase<T>::m_data' : cannot access private member declared in class 'StringBase<T>'
+game/GameEngine/Source/GameClient/Drawable/Behavior/UpgradeSoundSelectorClientBehaviorInterface.cpp	AsciiString	Functions: FAIL 1/3
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/CreditsMenuInit_Thunk.cpp	StringBase	game\GameEngine\Source\GameClient\GUI\GUICallbacks\Menus\CreditsMenuInit_Thunk.cpp(39) : error C2446: ':' : no conversion from 'const char *' to 'StringBase<T>::Header *const '
+game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManagerRva006169D0.cpp	StringBase	game\GameEngine\Source\GameLogic\LivingWorld\LivingWorldManagerRva006169D0.cpp(25) : error C2248: 'StringBase<T>::__ctor' : cannot access private member declared in class 'StringBase<T>'
