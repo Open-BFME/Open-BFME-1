@@ -19,7 +19,7 @@ An explicit request or assigned lane overrides the queue. WorldBuilder work
 uses `python3 tools/worldbuilder.py next` and `docs/worldbuilder.md`; its
 ledger and verification are separate from the game's.
 
-1. `python3 tools/next_work.py` is the default work, and it explains its own
+1. `python3 tools/next_work.py` is the default work and explains its
    tiers. The first, `finish`, serves a body whose banked attempt already
    scores 0.90+: start from that stash, even if a later session recorded
    `blocked`.
@@ -30,13 +30,13 @@ ledger and verification are separate from the game's.
    guessed name: no gate can see it. `docs/carving.md` and
    `tools/carve_unclaimed.py` serve bodies found by boundary evidence.
 3. Named `__emit` lifts are dumps too; `python3 tools/lift_lane.py` lists them.
-   Their names are often wrong, so follow the brief's EXTENT and IDENTITY CHECK
+   Names are often wrong; follow the brief's EXTENT and IDENTITY CHECK
    lines. Convert one by writing the real body in the TU its
    `// readable body of` comment names, landing it with
    `add_match --replace-existing` at the proven extent, and deleting the naked
    function.
 4. When `next_work.py` is dry, `python3 tools/list_naked_candidates.py game`
-   serves byte-true dumps from `game/gen_asm/` whose boundaries are proven.
+   serves byte-true dumps from `game/gen_asm/` with proven boundaries.
 5. Replacing generator-written C++ scores +0 on the headline but recolours the
    bar. Only `gen-tgrid`/`gen-shim` rows have source to write; `gen-thunk`,
    `gen-funclet`, `gen-ehstub`, `gen-dtor` and `gen-import` never do. Take it
@@ -44,7 +44,8 @@ ledger and verification are separate from the game's.
 6. **Linked build.** `python3 tools/link_debt.py --report` lists literal image
    addresses: name each (`dir32_addresses.csv`, else `g_XXXXXXXX`), byte-neutral.
    `tools/link_check.py <file>` lists blockers; `--next` ranks them.
-   `tools/provider_repair.py next` serves one wrong linked copy to `apply`, `check`.
+   `tools/provider_repair.py next` serves one wrong linked copy to `apply`, `check`;
+   fleet lane `provider` runs it end to end.
 7. **EA renames.** `python3 tools/ea_queue.py next` serves one rename to EA's
    own name and every file it touches; follow its steps.
 8. **Names.** `python3 tools/name_lane.py next --model <your model>` serves one
@@ -55,7 +56,7 @@ Whether a body is open work is decided in one place, `tools/eligibility.py`;
 never re-derive it in a new tool.
 
 **Claim a body before you start it:** `python3 tools/claims.py claim 0xRVA`. If
-someone else holds it, take another. Claims expire after 4 h. After your push,
+held, take another. Claims expire after 4 h. After your push,
 `python3 tools/claims.py release --landed` frees what landed; `release 0xRVA`
 frees a banked, blocked or abandoned body.
 

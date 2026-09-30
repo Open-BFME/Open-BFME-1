@@ -19,7 +19,9 @@
 cd "$(git -C "$(dirname "$0")" rev-parse --show-toplevel)" || exit 1  # works from tools/fleet/ or a build/ copy
 mkdir -p build/fleet_logs
 python tools/source_donors.py --refresh || exit 1
-N=${1:-6}; B=${2:-0}; F=${3:-0}; M=${4:-14}; A=${5:-11}; R=${6:-2}; C=${7:-4}; K=${8:-1}; E=${9:-0}
+# $10 provider-lane seats (tools/fleet/provider_seat.py, script-only link-selection repairs): 0 by
+# default -- the owner enables it; each seat keeps its own worktree build/wt_provider_seat<N>.
+N=${1:-6}; B=${2:-0}; F=${3:-0}; M=${4:-14}; A=${5:-11}; R=${6:-2}; C=${7:-4}; K=${8:-1}; E=${9:-0}; P=${10:-0}
 launch() { nohup bash tools/fleet/seat.sh "$1" "$2" > "build/fleet_logs/seat_$1$2.supervisor.log" 2>&1 < /dev/null & disown; sleep 2; }
 for i in $(seq 1 "$N"); do launch luna "$i"; done
 for i in $(seq 1 "$B"); do launch lunabig "$i"; done
@@ -30,6 +32,7 @@ for i in $(seq 1 "$R"); do launch lunareview "$i"; done
 for i in $(seq 1 "$C"); do launch lunaclass "$i"; done
 for i in $(seq 1 "$K"); do launch lunablock "$i"; done
 for i in $(seq 1 "$E"); do launch lunaea "$i"; done
+for i in $(seq 1 "$P"); do launch provider "$i"; done
 nohup python tools/fleet/ledger_watchdog.py --interval 300 > build/fleet_logs/watchdog.supervisor.log 2>&1 < /dev/null & disown
 nohup bash tools/fleet/harvest_loop.sh > /dev/null 2>&1 < /dev/null & disown
-echo "launched $N luna + $B lunabig + $F lunafin + $M lunamid + $A lunaanon + $R lunareview + $C lunaclass + $K lunablock + $E lunaea, watchdog, harvest loop"
+echo "launched $N luna + $B lunabig + $F lunafin + $M lunamid + $A lunaanon + $R lunareview + $C lunaclass + $K lunablock + $E lunaea + $P provider, watchdog, harvest loop"

@@ -643,12 +643,17 @@ def release_landed(sha=None, root=None, who=None, keep_days=1.0):
         if not deps.get(entry["row"].split(",")[4]):
             return False
         return all(published.get(path, "") == blob for path, blob in deps.items())
-    extra = landed_rvas(sha, root, tip) if sha else []
+    if sha:
+        landed_rvas(sha, root, tip)        # raises unless the commit is on origin/master
+    # The trailer IS the landing evidence: a ledger conversion names the body
+    # it adds, and a commit that adds no row (a provider_repair link-selection
+    # fix removes a competing definition) can still name what it landed.
     # SHA path: only bodies whose lease the commit names in a Claim-Lease
     # trailer. A timestamp comparison was unsound (whole-second commit times,
     # clock skew between hosts: review 2026-09-30 released a claim taken 0.9 s
     # after the commit), so no evidence means the claim is left untouched.
     trailers = lease_trailers(sha, root) if sha else {}
+    extra = sorted(trailers)
     # holder -> {rva: set of leases a landed entry was built under}
     by_owner, waiting, keep, unsettled = {}, [], [], set()
     now = time.time()
@@ -667,8 +672,7 @@ def release_landed(sha=None, root=None, who=None, keep_days=1.0):
                 waiting.append(rva)
     sha_holder = who or owner(root)
     for rva in extra:
-        if rva in trailers:
-            by_owner.setdefault(sha_holder, {}).setdefault(rva, set()).add(trailers[rva])
+        by_owner.setdefault(sha_holder, {}).setdefault(rva, set()).add(trailers[rva])
     # A body with ANY queued landing whose row and blobs are not all on
     # origin/master stays claimed, however it was selected: an older commit
     # that adds the same RVA (release --landed SHA), or an earlier queued
