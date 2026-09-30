@@ -64,11 +64,27 @@ def test_ilt_stub_is_followed_but_a_padded_jmp_is_not():
     image[0x08:0x0D] = b"\xe8" + struct.pack("<i", 0x1040 - 0x100D)  # call through the stub
     ledger = {**LEDGER, "caller": {0x1008}}
     body = b"\xe8\0\0\0\0"
+    assert truth(image, ledger)._stub(0x1040) == 0x1020
+    assert truth(image, ledger)._stub(0x1010) is None
     assert truth(image, ledger).verdict(symbol("caller"), body, [(1, L.RetailTruth.REL32, referent("release"))],
                                         "c", 5) == "retail"
     image[0x08:0x0D] = b"\xe8" + struct.pack("<i", 0x1010 - 0x100D)  # call ~StringBase: padded, a function
     assert truth(image, ledger).verdict(symbol("caller"), body, [(1, L.RetailTruth.REL32, referent("release"))],
                                         "d", 5) == "wrong"
+
+
+def test_packed_jumps_in_data_are_not_ilt_stubs():
+    image = bytearray(IMAGE) + bytearray(0x20)
+    raw = len(IMAGE)
+    image[raw:raw + 5] = jmp(0x2000, 0x1020)
+    image[raw + 5:raw + 10] = jmp(0x2005, 0x1020)
+    image[0x08:0x0D] = b"\xe8" + struct.pack("<i", 0x2005 - 0x100D)
+    ledger = {**LEDGER, "caller": {0x1008}}
+    t = truth(image, ledger)
+    t.sections.append({"name": ".rdata", "rva": 0x2000, "size": 0x20, "raw_pointer": raw})
+    assert t._stub(0x2005) is None
+    assert t.verdict(symbol("caller"), b"\xe8\0\0\0\0",
+                     [(1, L.RetailTruth.REL32, referent("release"))], "data-jumps", 5) == "wrong"
 
 
 def test_static_referent_is_unknown_and_absolute_symbol_is_checked():

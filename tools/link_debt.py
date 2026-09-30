@@ -96,9 +96,9 @@ def staged():
         new = [] if status.startswith("D") else literals(blob("", path))
         before += len(old_literals)
         after += len(new)
-        old_addresses = collections.Counter(re.search(r"0x[0-9A-Fa-f]{6,8}", item).group().lower()
+        old_addresses = collections.Counter(int(re.search(r"0x[0-9A-Fa-f]{6,8}", item).group(), 16)
                                              for item in old_literals)
-        new_addresses = collections.Counter(re.search(r"0x[0-9A-Fa-f]{6,8}", item).group().lower()
+        new_addresses = collections.Counter(int(re.search(r"0x[0-9A-Fa-f]{6,8}", item).group(), 16)
                                              for item in new)
         added = list((new_addresses - old_addresses).elements())
         if added:
@@ -109,7 +109,7 @@ def staged():
     print(f"link_debt: this commit adds {added} hard-coded image address(es) to staged source(s) "
           f"({before} -> {after} in total across the staged sources):")
     for path, old, new, found in grew:
-        print(f"  {path}: {old} -> {len(new)}   new address e.g. {found[-1]}")
+        print(f"  {path}: {old} -> {len(new)}   new address e.g. 0x{found[-1]:08X}")
     print("  Declare the global as a named extern instead (dir32_addresses.csv names most; "
           "g_XXXXXXXX otherwise). A literal breaks the linked build the moment data moves.")
     return 1

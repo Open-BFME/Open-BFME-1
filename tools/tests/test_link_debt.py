@@ -85,6 +85,13 @@ def test_generated_roots_are_not_watched(repo):
     assert L.staged() == 0
 
 
+def test_same_address_with_different_hex_format_is_allowed(repo):
+    put(repo, "game/A.cpp", LITERAL)
+    git(repo, "commit", "-qm", "base")
+    put(repo, "game/A.cpp", LITERAL.replace("0x012ED5C8", "0x12ed5c8"))
+    assert L.staged() == 0
+
+
 def test_masks_and_comments_are_not_addresses():
     assert L.literals("if (x & 0x80000000) {}  // *(int *)0x012ED5C8\n") == []
 

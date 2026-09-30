@@ -316,6 +316,14 @@ the name in every file it blocks, and re-check those files.
 No index yet? It is written by `python3 tools/link_census.py --build --history`
 (the daily census) or `--status` on the census's own tree.
 
+`python3 tools/data_check.py <source>` checks the current object's initialized
+data against retail, using ledger anchors and addresses independently derived
+from retail references. It compares initializer bytes and relocation targets;
+masking a pointer does not prove it. Exit 0 means all examined data is proved,
+1 means a contradiction, and 2 means insufficient evidence (including BSS or
+unplaced sections). Run it when defining a global or table. It does not prove
+the declared extent, alignment, startup behavior, or whole-program linkage.
+
 ## Publication and measurement
 
 Harvest stages fleet evidence and cited C++ sources explicitly. It refuses an

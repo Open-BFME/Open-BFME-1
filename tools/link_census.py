@@ -531,12 +531,17 @@ class RetailTruth:
 
     def _stub(self, address):
         """Where an incremental-link stub at `address` jumps, else None. A stub
-        sits in a packed table: another `jmp` right before or after it."""
+        sits in a packed .text table: another `jmp` right before or after it.
+        The same byte pattern in data is not executable and proves no route."""
         import struct
+        text = next((section for section in self.sections if section["name"] == ".text"), None)
+        if text is None or not text["rva"] <= address < text["rva"] + text["size"]:
+            return None
         around = self._read(address - 5, 15)
         if around is None or around[5] != 0xE9 or (around[0] != 0xE9 and around[10] != 0xE9):
             return None
-        return address + 5 + struct.unpack_from("<i", around, 6)[0]
+        target = address + 5 + struct.unpack_from("<i", around, 6)[0]
+        return target if text["rva"] <= target < text["rva"] + text["size"] else None
 
     def _lands(self, target, expected):
         if target in expected or self._stub(target) in expected:
