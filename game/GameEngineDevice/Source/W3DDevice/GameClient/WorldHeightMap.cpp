@@ -360,9 +360,7 @@ void MapObject::setName(AsciiString name)
 WaypointID MapObject::getWaypointID() { return (WaypointID)getProperties()->getInt(TheKey_waypointID); }
 AsciiString MapObject::getWaypointName() { return getProperties()->getAsciiString(TheKey_waypointName); }
 void MapObject::setWaypointID(Int i) { getProperties()->setInt(TheKey_waypointID, i); }
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/MapObjectSetWaypointNameThunk.cpp
-// ?setWaypointName@MapObject@@QAEXVAsciiString@@@Z present-unmatched
-void MapObject::setWaypointName(AsciiString n) { getProperties()->setAsciiString(TheKey_waypointName, n); }
+// Retail MapObject::setWaypointName (0x00087E50) is implemented in MapObjectSetWaypointNameThunk.cpp.
 
 struct BfmeOwnerStringData
 {
@@ -1798,18 +1796,7 @@ void WorldHeightMap::getUVForNdx(Int tileNdx, float *minU, float *minV, float *m
 	}
 }
 
-/** getUVData - Gets the texture coordinates to use.  See getTerrainTexture.
-*/
-// ?getUVForBlend@WorldHeightMap@@QAEXHPAURegion2D@@@Z present-unmatched
-void WorldHeightMap::getUVForBlend(Int edgeClass, Region2D *range)
-{
-	ICoord2D pos = m_edgeTextureClasses[edgeClass].positionInTexture;
-	Int width = m_edgeTextureClasses[edgeClass].width;
-	range->lo.x = (Real)pos.x/TEXTURE_WIDTH;
-	range->lo.y = (Real)pos.y/m_alphaEdgeHeight;
-	range->hi.x = ((Real)pos.x + width*TILE_PIXEL_EXTENT)/TEXTURE_WIDTH;
-	range->hi.y = ((Real)pos.y + width*TILE_PIXEL_EXTENT)/m_alphaEdgeHeight;
-}
+// Retail WorldHeightMap::getUVForBlend (0x007475D0) is implemented in WorldHeightMapGetUVForBlend.cpp.
 
 /// Get whether something is cliff indexed with the offset that HeightMapRenderObjClass uses built in.
 // The five fields this body touches are at retail's offsets, not the reference
@@ -2223,85 +2210,7 @@ Bool WorldHeightMap::getUVForTileIndex(Int ndx, Short tileNdx, float U[4], float
 }
 #endif
 
-///@todo: Are the different "if" cases mutually exclusive?  If so, should add else statements.
-// ?getExtraAlphaUVData@WorldHeightMap@@QAE_NHHQAM0QAEPA_N2@Z present-unmatched
-Bool WorldHeightMap::getExtraAlphaUVData(Int xIndex, Int yIndex, float U[4], float V[4], UnsignedByte alpha[4], Bool *needFlip, Bool *cliff)
-{
-	Int ndx = (yIndex*m_width)+xIndex;
-	*needFlip = FALSE;
-	*cliff = FALSE;
-
-	if ( (ndx>=0) && (ndx<m_dataSize) && m_tileNdxes) {
-		Short blendNdx = m_extraBlendTileNdxes[ndx];
-		if (blendNdx == 0) {
-			return FALSE;
-		} else {
-			*cliff = getUVForTileIndex(ndx, m_blendedTiles[blendNdx].blendNdx, U, V, FALSE);
-			alpha[0] = alpha[1] = alpha[2] = alpha[3] = 0;
-			if (m_blendedTiles[blendNdx].horiz) {
-				// Horizontals don't need flipping unless forced because of 3way blend
-				// and a diagonal in base blend layer.
-				*needFlip = m_blendedTiles[blendNdx].inverted & FLIPPED_MASK;
-				if (m_blendedTiles[blendNdx].inverted & INVERTED_MASK) {
-					alpha[0] = alpha[3] = 255;
-				} else {
-					alpha[1] = alpha[2] = 255;
-				}
-			}
-			if (m_blendedTiles[blendNdx].vert) {
-				// Verticals don't need flipping unless forced because of 3way blend
-				// and a diagonal in base blend layer.
-				*needFlip = m_blendedTiles[blendNdx].inverted & FLIPPED_MASK;
-				if (m_blendedTiles[blendNdx].inverted & INVERTED_MASK) {
-					alpha[0] = alpha[1] = 255;
-				} else {
-					alpha[2] = alpha[3]  = 255;
-				}
-			}
-			if (m_blendedTiles[blendNdx].rightDiagonal) {
-				if (m_blendedTiles[blendNdx].inverted & INVERTED_MASK) {
-					alpha[1] = 255;
-					if (m_blendedTiles[blendNdx].longDiagonal) {
-						alpha[0] = 255;
-						alpha[2] = 255;
-					}
-				} else {
-					// Uninverted right diagonals need flipping.
-					*needFlip = TRUE;
-					alpha[2] = 255;
-					if (m_blendedTiles[blendNdx].longDiagonal) {
-						alpha[1] = 255;
-						alpha[3] = 255;
-					}
-				}
-			}
-			if (m_blendedTiles[blendNdx].leftDiagonal) {
-				if (m_blendedTiles[blendNdx].inverted & INVERTED_MASK) {
-					// Inverted left diagonals need flipping.
-					*needFlip = TRUE;
-					alpha[0] = 255;
-					if (m_blendedTiles[blendNdx].longDiagonal) {
-						alpha[1] = 255;
-						alpha[3] = 255;
-					}
-				} else {
-					alpha[3] = 255;
-					if (m_blendedTiles[blendNdx].longDiagonal) {
-						alpha[0] = 255;
-						alpha[2] = 255;
-					}
-				}
-			}
-			if (m_blendedTiles[blendNdx].customBlendEdgeClass>=0) {
-				alpha[0] = alpha[1] = alpha[2] = alpha[3] = 0;
-				// No alpha blend, so never need to flip.
-				*needFlip = FALSE;
-			}
-		}
-	}
-
-	return TRUE;
-}
+// Retail WorldHeightMap::getExtraAlphaUVData (0x0074C140) is implemented in WorldHeightMapGetExtraAlphaUVData.cpp.
 
 /** getUVData - Gets the texture coordinates to use with the alpha texture.  
 		xIndex and yIndex are the integer coorddinates into the height map.
