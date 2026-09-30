@@ -10508,5 +10508,55 @@
   "after_sha256": "5df24be9bda1c710257e656d369f4b231e06697052f813515747bcf00577a1fb",
   "evidence": "targets/game/reverse/identity_evidence/0094cd90.md",
   "reason": "False declaration pairing after adding an adjacent method with identical parameter tokens. insert_unique remains declared, defined, instantiated and matched at 00064F70; all 50 existing bodies retain bytes and relocations. Only the separate 0094CD90 dump is replaced by the new address-derived member."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006b2230.cpp",
+  "new_path": "game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerStopChain.cpp",
+  "old_name": "AudioListRetirer006B2230",
+  "new_name": "Rva006ABDA0Call",
+  "before_sha256": "b43c87abcdf97441e2afd29d2ddcae90c58f3a029563bc19c4a3f430216c265e",
+  "after_sha256": "dc03467da760c5129b0ebb6477165edfcd97e20a4322f637e0a3b23a9bf7b57a",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "The bank's stand-in owner class AudioListRetirer006B2230 is replaced by the real owner MilesAudioManager, as the landed symbol ?rva006B2230@MilesAudioManager@@QAE_NPAVAudioEventRTS@@@Z shows; Rva006ABDA0Call is the TU's existing thunk-call helper class, and the pairing is a token-alignment artifact between the small bank and the whole TU."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006b2230.cpp",
+  "new_path": "game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerStopChain.cpp",
+  "old_name": "loop",
+  "new_name": "rva006AE250",
+  "before_sha256": "b43c87abcdf97441e2afd29d2ddcae90c58f3a029563bc19c4a3f430216c265e",
+  "after_sha256": "dc03467da760c5129b0ebb6477165edfcd97e20a4322f637e0a3b23a9bf7b57a",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "The bank's invented helper name loop is replaced by the ledger name of its body: functions.csv matches 0x006AE250 as ?rva006AE250@MilesAudioManager@@QAEXPAVPlayingAudioRef@@@Z in this same TU."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006b2230.cpp",
+  "new_path": "game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerStopChain.cpp",
+  "old_name": "release",
+  "new_name": "rva006A59F0",
+  "before_sha256": "b43c87abcdf97441e2afd29d2ddcae90c58f3a029563bc19c4a3f430216c265e",
+  "after_sha256": "dc03467da760c5129b0ebb6477165edfcd97e20a4322f637e0a3b23a9bf7b57a",
+  "evidence": "targets/game/reverse/symbols.csv",
+  "reason": "The bank's invented helper name release is replaced by the pinned name of its body: symbols.csv pins ?rva006A59F0@MilesAudioManager@@QAEXPAVPlayingAudio@@@Z at ILT 0x0002669D (body 0x006A59F0)."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006b2230.cpp",
+  "new_path": "game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerStopChain.cpp",
+  "old_name": "retire",
+  "new_name": "rva006ABFD0",
+  "before_sha256": "b43c87abcdf97441e2afd29d2ddcae90c58f3a029563bc19c4a3f430216c265e",
+  "after_sha256": "dc03467da760c5129b0ebb6477165edfcd97e20a4322f637e0a3b23a9bf7b57a",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "The bank's invented helper name retire is replaced by the ledger name of its body: functions.csv matches 0x006ABFD0 as ?rva006ABFD0@MilesAudioManager@@QAE_NPAVPlayingAudioRef@@@Z in this same TU."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006b2230.cpp",
+  "new_path": "game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerStopChain.cpp",
+  "old_name": "sweep",
+  "new_name": "rva006A5570",
+  "before_sha256": "b43c87abcdf97441e2afd29d2ddcae90c58f3a029563bc19c4a3f430216c265e",
+  "after_sha256": "dc03467da760c5129b0ebb6477165edfcd97e20a4322f637e0a3b23a9bf7b57a",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "The bank's invented helper name sweep is replaced by the ledger name of its body: functions.csv matches 0x006A5570 as ?rva006A5570@Rva006A9800This@@QAEXXZ."
  }
 ]

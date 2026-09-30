@@ -1,7 +1,7 @@
 // cl: /O2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB
 // stlport
 //
-// MilesAudioManager bodies 0x006ABDA0..0x006AFD00, kept in one TU in retail
+// MilesAudioManager bodies 0x006ABDA0..0x006AFD00 and 0x006B2230, kept in one TU in retail
 // address order. Retail compiled them together: 0x006AFD00 passes the address
 // of its local PlayingAudioRef to 0x006ADD50, which forwards it to 0x006ABFD0
 // and 0x006ABDA0, and still keeps the ref pointer in ESI across the call; VC7.1
@@ -39,6 +39,9 @@ extern void j_00001b77();
 extern void j_00023911();
 extern void j_0001ee7a();
 extern void j_00023a38();
+extern void j_00002f13();
+extern void j_000280f6();
+extern void j_00020d24();
 
 extern "C" __declspec(dllimport) void __stdcall AIL_set_stream_loop_count(void *stream, int count);
 extern "C" __declspec(dllimport) void __stdcall AIL_start_stream(void *stream);
@@ -124,6 +127,7 @@ class AudioEventRTS
 {
 public:
 	void setIsLogicalAudio(bool value);
+	bool isPositionalAudio(void) const;
 	bool hasMoreLoops(void) const;
 	void advanceNextPlayPortion(void);
 	void bfmeGenerateFilename(void);
@@ -398,6 +402,9 @@ private:
 };
 
 
+// list<PlayingAudioRef>::erase stays out of line: 0x0069DBE0 via ILT 0x00020D24.
+#pragma comment(linker, "/alternatename:?erase@?$list@VPlayingAudioRef@@V?$allocator@VPlayingAudioRef@@@_STL@@@_STL@@QAE?AU?$_List_iterator@VPlayingAudioRef@@U?$_Nonconst_traits@VPlayingAudioRef@@@_STL@@@2@U32@@Z=?j_00020d24@@YAXXZ")
+
 class AudioSettings
 {
 public:
@@ -419,6 +426,8 @@ public:
 	void rva006ADD50(PlayingAudioRef *playing);
 	void rva006AE250(PlayingAudioRef *playing);
 	void rva006AFD00(unsigned int handle);
+	bool rva006B2230(AudioEventRTS *event);
+	void rva006A59F0(PlayingAudio *playing);
 
 private:
 	// 0x006955C0 via ILT 0x00023F79: a new 0x18-byte request.
@@ -437,7 +446,22 @@ private:
 	_STL::vector<InlineEvent006AFD00> m_vectors094[3];	// +0x094
 	char m_pad0b8[0x624 - 0xb8];
 	unsigned int flags624;				// +0x624, affect mask
-	char m_pad628[0x9c8 - 0x628];
+	// 0x006A5570 via ILT 0x00002F13.
+	void rva006A5570(void)
+	{
+		typedef void (Rva006ABDA0Call::*Function)();
+		(reinterpret_cast<Rva006ABDA0Call *>(this)->*thunk006ABDA0<Function>(j_00002f13))();
+	}
+
+	// 0x006B1FC0 via ILT 0x000280F6: ZH findLowestPrioritySound, the playing event of lowest priority.
+	AudioEventRTS *findLowestPrioritySound(AudioEventRTS *event)
+	{
+		typedef AudioEventRTS *(Rva006ABDA0Call::*Function)(AudioEventRTS *);
+		return (reinterpret_cast<Rva006ABDA0Call *>(this)->*thunk006ABDA0<Function>(j_000280f6))(event);
+	}
+
+	char m_pad628[0x9c4 - 0x628];
+	_STL::list<void *> m_list9c4;				// +0x9c4
 	_STL::list<PlayingAudioRef> m_list9c8;		// +0x9c8
 	_STL::list<PlayingAudioRef> m_list9cc;		// +0x9cc
 	_STL::list<PlayingAudioRef> m_list9d0;		// +0x9d0
@@ -649,4 +673,56 @@ void MilesAudioManager::rva006AFD00(unsigned int handle)
 		else
 			++it;
 	}
+}
+
+// 0x006B2230: make room for an event by stopping the lowest-priority sound
+// (Zero Hour killLowestPrioritySoundImmediately twin, plus the +0x9C4 check).
+bool MilesAudioManager::rva006B2230(AudioEventRTS *event)
+{
+	if (event->isPositionalAudio())
+	{
+		rva006A5570();
+		if (!m_list9c4.empty())
+			return true;
+	}
+	AudioEventRTS *lowest = findLowestPrioritySound(event);
+	if (lowest)
+	{
+		_STL::list<PlayingAudioRef>::iterator it;
+		if (event->isPositionalAudio())
+		{
+			for (it = m_list9cc.begin(); it != m_list9cc.end(); ++it)
+			{
+				PlayingAudioRef playing = *it;
+				if (!playing)
+					continue;
+				if (playing->m_audioEventRTS.ptr == lowest)
+				{
+					if (playing->m_audioEventRTS->hasMoreLoops())
+						rva006AE250(&playing);
+					rva006A59F0(playing);
+					m_list9cc.erase(it);
+					return true;
+				}
+			}
+		}
+		else
+		{
+			for (it = m_list9c8.begin(); it != m_list9c8.end(); ++it)
+			{
+				PlayingAudioRef playing = *it;
+				if (!playing)
+					continue;
+				if (playing->m_audioEventRTS.ptr == lowest)
+				{
+					if (playing->m_audioEventRTS->hasMoreLoops())
+						rva006AE250(&playing);
+					rva006A59F0(playing);
+					m_list9c8.erase(it);
+					return true;
+				}
+			}
+		}
+	}
+	return false;
 }
