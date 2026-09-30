@@ -6,6 +6,9 @@
 // and passes that module to ILT 0x0001ABE5 -> this body. The method spelling
 // and member meanings are unproven, so their names remain address-derived.
 // The matched constructor confirms the module-data/object slots and +0x2C.
+// Include the game Module header before UpdateModule: the generic sweep
+// Module shim has different base offsets. Native game accessors reproduce
+// retail module-data +4, Object +8, and UpdateModule extent 0x20.
 // Existing BfmeThingVKP::bfmeSetVKP is the one ledger identity at 0x001C7720.
 // Its two integer ABI slots carry addresses of 40-byte condition masks.
 // This caller reuses that exact signature without claiming another identity.
@@ -23,20 +26,8 @@ public:
     void bfmeSetVKP(int, int);
 };
 
-enum UpdateSleepTime
-{
-    UPDATE_SLEEP_FOREVER = 0x3fffffff
-};
-
-class UpdateModule
-{
-protected:
-    void setWakeFrame(Object *, UpdateSleepTime);
-    char m_rva002A21F0Pad00[4];
-    const void *m_rva002A21F0Data;
-    Object *m_rva002A21F0Object;
-    char m_rva002A21F0Pad0C[0x14];
-};
+#include "GameEngine/Include/Common/Module.h"
+#include "GameEngine/Include/GameLogic/Module/UpdateModule.h"
 
 struct Rva002A21F0Data
 {
@@ -58,8 +49,8 @@ private:
 void RespawnUpdate::rva002A21F0()
 {
     const Rva002A21F0Data *data =
-        static_cast<const Rva002A21F0Data *>(m_rva002A21F0Data);
-    Object *object = m_rva002A21F0Object;
+        reinterpret_cast<const Rva002A21F0Data *>(getModuleData());
+    Object *object = getObject();
     if (m_rva002A21F0Field2C)
     {
         {
