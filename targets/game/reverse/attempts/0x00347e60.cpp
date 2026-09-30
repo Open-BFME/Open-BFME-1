@@ -15,7 +15,7 @@
 // 0x00340B80) and the Snapshot-side vtable 0x010E7A18, after the inline
 // Snapshot constructor. Its tail is the Zero Hour constructor's body
 // (st_CanAppCont, the two frame counters, setGlobalDifficulty(NORMAL)).
-//
+
 // Layout: every member with a destructor is pinned by the retail unwind table
 // (FuncInfo 0x00E086DC, 24 states). ActionTemplate[543] and
 // ConditionTemplate[184] follow Zero Hour's order; m_attackPriorityInfo[256]

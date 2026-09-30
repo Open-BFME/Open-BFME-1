@@ -1,67 +1,57 @@
 // ?onEnter@AIFollowWaypointPathState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.98 date=2026-09-28
+// partial score=0.9839 date=2026-09-30
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /MD /EHsc
 //
-// BFME retail 0x0017A8E0, 622 bytes.  The identity is proven, not guessed: the
-// constructor at 0x0017F980 installs vtable VA 0x0109A7B0, its slot +0x10 holds
-// the ILT thunk at RVA 0x000306BB, and that thunk's E9 target is 0x0017A8E0.
-// The 2026-08-11 Open-BFME5 lift carried the name with the dump, so this is a
-// real body under a real name rather than an opaque address-keyed one.
-//
-// This TU is deliberately self-contained: it carries a measured BFME view of
-// the state and of every callee it touches.  The shared Zero Hour declarations
-// put several of these members at different offsets, while this body reads the
+// The constructor at 0x0017F980 installs vtable 0x0109A7B0.
+// Slot +0x10 points to ILT RVA 0x000306BB, which jumps to 0x0017A8E0.
+// The Open-BFME5 lift dated 2026-08-11 uses this name for the same body.
+
+// This translation unit declares the measured BFME layout and callee signatures.
+// The shared Zero Hour declarations place several members at different offsets.
+// This body reads the
 // BFME state at +0x1c (machine), +0x24 (goal position), +0x30 (goal layer),
-// +0x4c (adjusts-destination flag) and +0x50..+0x69 (the waypoint-path block),
+// +0x4c (adjusts-destination flag) and +0x50..+0x69 (the waypoint fields),
 // the AIUpdateInterface at +0x1a8/+0x1cc, and the owner Object at +0x38
 // (position), +0x204 (AI), +0x23c (team).
-//
+
 // Two behaviours here have no Zero Hour counterpart and are reproduced from
 // the disassembly alone:
 //   * the formation offset may be taken from owner+0x320/+0x324 behind the
-//     owner+0x31c gate instead of from AIGroup::getCenter, and
+//     owner+0x31c condition instead of from AIGroup::getCenter, and
 //   * the offset taken from the group centre is shortened to 150.0f whenever it
 //     is LONGER than that: retail's `fdivr m32fp` is ST(0) <- m32fp / ST(0), so
 //     the constant is the numerator and the guard is `length > 150.0f`, which is
 //     the only spelling that emits retail's `test ah, 0x41 / jne`.  150.0f is a
 //     .rdata float with no ledger name (0x0109A028), so it is declared here
 //     under an address-derived name.
+
 // The 0x31c/0x320/0x324 owner fields are read by exactly one body in the image
 // (AIMoveToPositionAndEnterState::onEnter tests 0x31c alone) and written by no
 // body at all, so they keep address-derived names rather than invented ones.
-//
+
 // The body shape follows GeneralsMD/Code/GameEngine/Source/GameLogic/AI/
 // AIStates.cpp:4050-4096 (AIFollowWaypointPathState::onEnter) as written there:
 // `Real speed` is declared at the middle of the body, not at the top, and
 // `StateReturnType ret` is initialised in place after computeGoal().
-//
-// MEASURED RESIDUE, 9 bytes (probe: 12 non-reloc, shape 1.000, 622/622):
-//   1. Frame.  Retail's `sub esp, 0x10` is four dwords and holds `speed` at
-//      E-0x10 plus the three dwords of `Coord3D center` at E-0xc..E-0x4; the
-//      value of `ret` is spilled onto a DEAD slot (written at E-0x10, re-read at
-//      E-0xc), so retail's `ret` has no frame slot of its own.  Every spelling
-//      tried here gives `ret` a slot and a 0x14 frame: `ret` at the top of the
-//      body, `ret` block-scoped around the whole tail, `ret` block-scoped with
-//      `speed` in an enclosing block, `speed` block-scoped so it could overlay
-//      `ret`, `center` at function scope, every declaration permutation of
-//      {speed, ret, center}, and `int ret` instead of the enum.  Deleting `ret`
-//      alone gives 0x10 (as does deleting `speed` alone), which is what fixes the
-//      diagnosis: retail must have carried the base result as a compiler `$T`
-//      temporary rather than as a user local, and no C++ spelling of
-//      `StateReturnType ret = base::onEnter();` that survives the 0x13e/0x143
-//      call order produces one.
-//   2. x87 operand order in the length.  Retail loads m_groupOffset.x and then
-//      m_groupOffset.y into the square pair; this build always loads y first.
-//      MSVC 7.1 canonicalises the commutative sum, so the source order does not
-//      reach it: `x*x + y*y`, `y*y + x*x`, a swapped-member alias struct, a
-//      `Real *` alias, a `Coord2D::Length2()` member, a free inline helper, named
-//      product temporaries, an accumulating `len2`, parenthesised products,
-//      individual `const Real &` member references, a by-value copy and a
-//      __forceinline sqrt were all measured and all still load y first.  It is
-//      compiler-internal in this build.
-// Both residues are register/stack-slot ALLOCATION only: once registers and
-// constants are normalised the two bodies are instruction-identical, and the
-// `sub/add esp` bytes are the frame-size consequence, not a separate fault.
+
+// MEASURED RESIDUE, 10 bytes (probe: 10 non-reloc, shape 1.000, 622/622):
+//   1. Frame. Retail reserves 16 bytes; this source reserves 20. Its /FAsc
+//      table names `_speed$ = -20`, `_ret$ = -16`, and `_center$2615 = -12`.
+//      Those negative offsets show that this source gives each value a local
+//      slot. The table shows no reused positive incoming-argument slot. Moving
+//      and scoping speed, ret, and center did not reduce the frame. A union
+//      overlay reduced the frame to 16 bytes and introduced 192 byte differences.
+//      A reference return did not reduce the frame. Deleting ret or speed did,
+//      but neither version preserves the complete body.
+
+//   2. x87 order. Retail loads m_groupOffset.x, then m_groupOffset.y. This
+//      source reads x through a volatile pointer before the sum. MSVC then loads
+//      x before y, which cuts two differences from the previous 12-byte result.
+//      Source order, aliases, temporaries, Length2(), and __forceinline sqrt
+//      did not change the load order.
+
+// The remaining differences come from frame allocation. The instruction shapes
+// match after register and constant names are normalised.
 
 #include <math.h>
 
@@ -383,7 +373,8 @@ StateReturnType AIFollowWaypointPathState::onEnter()
 				m_groupOffset.x = object->getPosition()->x - center.x;
 				m_groupOffset.y = object->getPosition()->y - center.y;
 				const Coord2D &off = m_groupOffset;
-				Real length = bfmeSqrt(off.y * off.y + off.x * off.x);
+				Real x = *(const volatile Real *)&off.x;
+				Real length = bfmeSqrt(x * x + off.y * off.y);
 				if (length > g_bfmeRva0109A028)
 				{
 					Real scale = g_bfmeRva0109A028 / length;
