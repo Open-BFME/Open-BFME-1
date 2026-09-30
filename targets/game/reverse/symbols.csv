@@ -89927,3 +89927,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?set@Rva003860F0@@QAEXPAVRva0036CA00Str@@00@Z,0x00001569,route=0x003860F0; independently decoded ILT target and matched callee ABI for LivingWorldLogic 0x003C3760; resize uses opaque lower-word by-value ABI view
 ?resize@?$vector@GV?$allocator@G@Gen003C2EE0Stl@@@Gen003C2EE0Stl@@QAEXIG@Z,0x000299CE,route=0x003C2EE0; exact existing matched lower-word by-value resize ABI; ILT decoded independently for caller 0x003C3760
 ?get@Rva00618E60FieldAddress@@QBEPBXXZ,0x00040D31,route=0x00618E60; independent LEA ECX+0x14 RET leaf and retail LivingWorldLogic caller; replaces gen-alias borrowed object identity
+?setDisabled@Object@@QAEXW4DisabledType@@@Z,0x0001E402,route=0x001CE790; independently matched Object disabled-state callee and retail callback 0x000D5980 call operand
