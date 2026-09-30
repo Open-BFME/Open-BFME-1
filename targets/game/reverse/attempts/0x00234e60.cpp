@@ -1,5 +1,5 @@
 // ?d_00234e60@@YAXXZ
-// partial score=0.6 date=2026-09-23
+// partial score=0.2863 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/GameEngine/Include/Precompiled /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep
 // stlport
 // Open-BFME: address-derived HordeContain formation refresh body, retail 0x00234E60.
