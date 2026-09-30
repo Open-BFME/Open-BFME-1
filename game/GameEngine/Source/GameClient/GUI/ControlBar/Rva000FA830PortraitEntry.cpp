@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
 // The portrait-entry list uses the adjacent Rva000FA610 selector bodies.
+#include "../../../Common/Bfme/BfmeVecVLH.h"
 
 typedef int Int;
 
@@ -23,6 +24,7 @@ class Rva000FA830PortraitList
 public:
     Rva000FA830PortraitEntry *getEntry(Int index);
     bool updateEntry(Int index, Int key, const Image **image);
+    const Image *rva000FA800(Int index);
 
 private:
     void *m_vtable;
@@ -76,4 +78,16 @@ bool Rva000FA830PortraitList::updateEntry(
 
     *image = entry->getPortrait(m_player);
     return true;
+}
+
+// The bounds-checked getter at 0x000F94B0 shares this list's 0x60-byte
+// entries. The null path returns an Image pointer, not void.
+const Image *Rva000FA830PortraitList::rva000FA800(Int index)
+{
+    Rva000FA830PortraitEntry *entry =
+        reinterpret_cast<Rva000FA830PortraitEntry *>(
+            reinterpret_cast<BfmeVecVLH *>(this)->bfmeAtVLH(index));
+    if (!entry)
+        return 0;
+    return entry->getPortrait(m_player);
 }
