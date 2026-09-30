@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "7a74be9054e38214ea319934fc6d5c7a5e31300d2ddd13bab37e597ee4785e7c",
+  "symbol": "?rva003504e0@@YAPAURva003504E0Node@@PAU1@@Z",
+  "score_kind": "measured",
+  "score": 1.0,
+  "source": "// ?rva003504e0@@YAPAURva003504E0Node@@PAU1@@Z\n// partial score=1.0 date=2026-09-30\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\nstruct Rva003504E0Node { Rva003504E0Node *next; };\nstatic __declspec(noinline) Rva003504E0Node *rva003504e0(Rva003504E0Node *node)\n{\n    if (node) {\n        Rva003504E0Node *next = node->next;\n        if (next) {\n            do { node = next; next = next->next; } while (next);\n        }\n    }\n    return node;\n}\nRva003504E0Node *rva003504e0Caller(Rva003504E0Node *node) { return rva003504e0(node); }\n"
+}
