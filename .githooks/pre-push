@@ -28,6 +28,11 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
     # Shared body claims (tools/claims.py) are parentless marker commits with an
     # empty tree, not code: there is no ledger or source in them to verify.
     case "${_remote_ref:-}" in refs/claims/*) continue ;; esac
+    # A fleet run whose shared claim was lost or expired (tools/fleet_run.py
+    # Heartbeat) may not publish: another worker owns those bodies now.
+    if [ -n "${BFME_RUN_DIR:-}" ] && [ -f "$BFME_RUN_DIR/claim_lost" ]; then
+        fail "this fleet run lost its claim ($(head -1 "$BFME_RUN_DIR/claim_lost")); nothing from it may be pushed"
+    fi
     [ "$local_sha" = "$ZERO" ] && continue   # deleting a remote ref
 
     # The SHA on stdin is the destination tip advertised by THIS push

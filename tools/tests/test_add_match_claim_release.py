@@ -7,6 +7,7 @@ now queues the exact row, and the claim is released only once origin/master
 holds it (claims.release_landed).
 """
 import json
+import subprocess
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -34,8 +35,14 @@ def landing(tmp_path, monkeypatch):
     (reverse / "deleted_rows.csv").write_bytes(b"name,target_rva,reason\n")
     (tmp_path / "build.sh").write_text("#!/bin/sh\nexit 0\n", encoding="utf-8")
     monkeypatch.setattr(add_match, "DEFAULT_ROOT", tmp_path)
-    monkeypatch.setattr(add_match.subprocess, "run",
-                        lambda command, *, cwd, env: SimpleNamespace(returncode=0))
+    real_run = subprocess.run
+    subprocess.run(["git", "init", "-q", str(tmp_path)], check=True)
+
+    def run(command, *args, **kwargs):     # the byte gate passes; git stays real
+        if command[0] == "git":
+            return real_run(command, *args, **kwargs)
+        return SimpleNamespace(returncode=0)
+    monkeypatch.setattr(add_match.subprocess, "run", run)
     monkeypatch.setenv("BFME_CLAIM_OWNER", "worker-a")
     monkeypatch.delenv("BFME_CLAIMS", raising=False)
 
@@ -55,6 +62,7 @@ def test_local_verification_queues_instead_of_releasing(landing):
     assert len(queued) == 1
     assert queued[0]["rva"] == "0x00ABCD00" and queued[0]["owner"] == "worker-a"
     assert queued[0]["row"].startswith(f"{REAL},,0x00ABCD00,32,{SOURCE_REL},matched,")
+    assert queued[0]["deps"][SOURCE_REL]            # bound to the verified source blob
 
 
 def test_claims_off_queues_nothing(landing, monkeypatch):
@@ -86,3 +94,39 @@ def test_an_agreeing_model_adds_no_launched_tag(landing, monkeypatch):
     add_match.main()
     notes = _landed_notes(landing)
     assert "launched=" not in notes and "host=bad-host-" in notes
+
+
+def _with_notes(monkeypatch, notes):
+    monkeypatch.setattr(sys, "argv", sys.argv + ["--notes", notes])
+
+
+def test_a_note_cannot_supply_or_mask_the_receipt(landing, monkeypatch):
+    # review 2026-09-29: --notes model=other-model overrode the recorded model
+    # and hid its disagreement with the launched model.
+    monkeypatch.setattr(sys, "argv", [a for a in sys.argv if a not in ("--model", "test-model")])
+    monkeypatch.setenv("BFME_MODEL", "test-model")
+    monkeypatch.setenv("BFME_HOST_TAG", "real-host")
+    _with_notes(monkeypatch, "evidence here;model=other-model;host=fake-host launched=test-model")
+    add_match.main()
+    notes = _landed_notes(landing)
+    assert notes == "evidence here;model=other-model;launched=test-model;host=real-host"
+
+
+def test_the_final_model_is_compared_with_the_launch(landing, monkeypatch):
+    monkeypatch.setenv("BFME_MODEL", "test-model")
+    _with_notes(monkeypatch, "model=ignored-because-flag-wins")
+    add_match.main()                                         # --model test-model
+    notes = _landed_notes(landing)
+    assert "model=test-model" in notes and "launched=" not in notes
+    assert "ignored-because-flag-wins" not in notes
+
+
+def test_a_fleet_run_that_lost_its_claim_cannot_land(landing, monkeypatch, tmp_path):
+    run_dir = tmp_path / "run"
+    run_dir.mkdir()
+    (run_dir / "claim_lost").write_text("claim taken over by another worker: 0x00ABCD00\n")
+    monkeypatch.setenv("BFME_RUN_DIR", str(run_dir))
+    before = (landing / "targets/game/reverse/functions.csv").read_bytes()
+    with pytest.raises(SystemExit):
+        add_match.main()
+    assert (landing / "targets/game/reverse/functions.csv").read_bytes() == before

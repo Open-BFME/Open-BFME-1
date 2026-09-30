@@ -101,6 +101,9 @@ def test_settle_keeps_an_unpublished_landing_and_frees_the_rest(repo, monkeypatc
     record = {}
     fleet_run.claim_shared(repo, "run5", TARGETS, "test", "1", record).stop()
     row = "?f@@YAXXZ,,0x00000100,16,game/x.cpp,matched,model=m"
+    (repo / "game").mkdir()
+    (repo / "game/x.cpp").write_text("void f() {}\n", encoding="utf-8")
+    _git(repo, "add", "game/x.cpp")
     _commit_ledger(repo, [row], "land 0x100 locally")
     claims.queue_landed(0x100, row, who="fleet:run5", root=repo)
     fleet_run.settle_shared(repo, "run5", record)
@@ -112,3 +115,49 @@ def test_settle_keeps_an_unpublished_landing_and_frees_the_rest(repo, monkeypatc
     assert claims.release_landed(root=repo) == ([0x100], [])
     claims.active.cache_clear()
     assert claims.active(repo) == {}
+
+
+def test_a_lost_claim_stops_the_worker_and_fences_publication(tmp_path, monkeypatch):
+    # review 2026-09-29: the heartbeat only recorded the loss; status stayed
+    # "running" and the worker kept going.
+    import threading
+    stopped = []
+    record = {"shared_claim_tokens": {"0x00000100": "old"}, "status": "running",
+              "run_dir": str(tmp_path)}
+    monkeypatch.setattr(claims, "renew", lambda *a, **kw: ({}, [0x100]))
+    beat = fleet_run.Heartbeat(tmp_path, "run", record, threading.RLock(), 60,
+                               on_lost=stopped.append, ttl_seconds=3600)
+    beat.beat()
+    assert record["status"] == "claim_lost" and record["shared_claims_lost"] == ["0x00000100"]
+    assert stopped and "0x00000100" in stopped[0]
+    assert "taken over" in fleet_run.fenced(str(tmp_path))
+    assert beat.done.is_set()
+
+
+def test_claims_that_expire_unrenewed_count_as_lost(tmp_path, monkeypatch):
+    import threading
+    record = {"shared_claim_tokens": {"0x00000100": "tok"}, "status": "running",
+              "run_dir": str(tmp_path)}
+
+    def offline(*a, **kw):
+        raise claims.ClaimsUnavailable("offline")
+    monkeypatch.setattr(claims, "renew", offline)
+    beat = fleet_run.Heartbeat(tmp_path, "run", record, threading.RLock(), 60, ttl_seconds=3600)
+    beat.beat()                                    # still inside the TTL: keep working
+    assert record["status"] == "running" and fleet_run.fenced(str(tmp_path)) is None
+    beat.valid_until = 0                           # the TTL has passed
+    beat.beat()
+    assert record["status"] == "claim_lost" and "expired" in fleet_run.fenced(str(tmp_path))
+
+
+def test_the_pre_push_hook_refuses_a_fenced_run(tmp_path):
+    hook = Path(__file__).resolve().parents[2] / ".githooks" / "pre-push"
+    (tmp_path / "claim_lost").write_text("claim taken over\n")
+    repo = tmp_path / "r"
+    _git(tmp_path, "init", "-q", str(repo))
+    import os
+    env = dict(os.environ, BFME_RUN_DIR=str(tmp_path))
+    line = "refs/heads/master " + "1" * 40 + " refs/heads/master " + "0" * 40 + "\n"
+    got = subprocess.run(["bash", str(hook), "origin", "url"], cwd=repo, env=env, input=line,
+                         capture_output=True, text=True)
+    assert got.returncode != 0 and "lost its claim" in got.stderr

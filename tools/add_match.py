@@ -329,30 +329,40 @@ def main():
             fail("--boundary-evidence must not be empty")
         if set(args.boundary_evidence) & set("\r\n"):
             fail("--boundary-evidence must be one line")
-    from fleet_run import MODEL_TOKEN, run_tag
+    from fleet_run import MODEL_TOKEN, fenced, host_tag, run_tag
+    lost = fenced()
+    if lost:
+        fail(f"this fleet run lost its shared claim ({lost})",
+             "another worker owns the body now; nothing from this run may land")
     args.notes = run_tag(args.notes)
     # ~80% of the 637 landings between efdc0c4dd7 and 9c9c8b35d0 had no model
     # anywhere, so nobody could say which seats were worth paying for.
-    model = args.model or os.environ.get("BFME_MODEL", "")
-    if model and not re.search(r"(?:^|[\s;])model=", args.notes):
+    # Record, don't trust: model= is what the caller claims; launched= keeps
+    # the model the fleet runner LAUNCHED (BFME_MODEL) whenever the two
+    # differ, and host= names the machine. These receipt keys are RESERVED:
+    # a model=/launched=/host= typed into --notes is read as the caller's
+    # claim and rewritten, never allowed to stand in for the receipt (review
+    # 2026-09-29: notes model=X masked a launch/claim disagreement). None of
+    # it is authenticated -- see tools/landing_service.py.
+    receipt_key = re.compile(r"(?:^|(?<=[\s;]))(model|launched|host)=([^\s;]*)")
+    typed = dict(receipt_key.findall(args.notes))
+    notes = receipt_key.sub("", args.notes)
+    notes = re.sub(r";(?:\s*;)+", ";", re.sub(r"[ \t]{2,}", " ", notes)).strip(" ;")
+    launched = os.environ.get("BFME_MODEL", "")
+    noted = typed.get("model", "") if typed.get("model", "") != "MODEL" else ""
+    model = args.model or noted or launched
+    tags = []
+    if model:
         if not MODEL_TOKEN.fullmatch(model):
             fail(f"--model {model!r} is not a model token")
-        args.notes = f"{args.notes};model={model}" if args.notes else f"model={model}"
-    # Record, don't trust: model= is whatever the caller typed. The model the
-    # fleet runner LAUNCHED (BFME_MODEL) is kept beside it when they differ,
-    # and host= names the machine, so a yield can be audited per host and
-    # run. Neither is authenticated -- see tools/landing_service.py.
-    launched = os.environ.get("BFME_MODEL", "")
-    if (args.model and launched and launched != args.model and MODEL_TOKEN.fullmatch(launched)
-            and not re.search(r"(?:^|[\s;])launched=", args.notes)):
-        args.notes = f"{args.notes};launched={launched}"
-    if not re.search(r"(?:^|[\s;])host=", args.notes):
-        from fleet_run import host_tag
-        host = host_tag()
-        if host:
-            args.notes = f"{args.notes};host={host}" if args.notes else f"host={host}"
-    if (args.root.resolve() == DEFAULT_ROOT.resolve()
-            and not re.search(r"(?:^|[\s;])model=(?!MODEL\b)\S", args.notes)):
+        tags.append(f"model={model}")
+    if model and launched and launched != model and MODEL_TOKEN.fullmatch(launched):
+        tags.append(f"launched={launched}")
+    host = host_tag()
+    if host:
+        tags.append(f"host={host}")
+    args.notes = ";".join(([notes] if notes else []) + tags)
+    if args.root.resolve() == DEFAULT_ROOT.resolve() and not model:
         fail("a landing needs its model: pass --model <model> (fleet workers get BFME_MODEL "
              "from fleet_run)")
 

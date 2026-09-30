@@ -366,7 +366,7 @@ def _recorded_live_pids(root):
         pid = data.get("pid")
         if pid is not None and (not isinstance(pid, int) or isinstance(pid, bool) or pid <= 0):
             raise CoordinationUnavailable(f"cannot establish run-record liveness at {path}: invalid PID")
-        if pid is None and data.get("status") not in ("finished", "failed", "aborted"):
+        if pid is None and data.get("status") not in ("finished", "failed", "aborted", "claim_lost"):
             raise CoordinationUnavailable(f"cannot establish run-record liveness at {path}: nonterminal run has no PID")
         if pid and pid_alive(pid):
             yield pid
@@ -743,20 +743,63 @@ def shared_claims_enabled():
     return os.environ.get("BFME_CLAIMS", "on") != "off"
 
 
+CLAIM_LOST = "claim_lost"          # marker in the run directory; see fenced()
+
+
+def fenced(run_dir=None):
+    """Why this run may not publish, or None. A run whose shared claim was
+    lost or expired leaves CLAIM_LOST in its directory; add_match and the
+    pre-push hook read it through BFME_RUN_DIR and refuse to land."""
+    run_dir = run_dir or os.environ.get("BFME_RUN_DIR", "")
+    if not run_dir:
+        return None
+    try:
+        return (Path(run_dir) / CLAIM_LOST).read_text(encoding="utf-8").strip() or "claim lost"
+    except OSError:
+        return None
+
+
 class Heartbeat:
     """Renews a run's shared claims every `interval` seconds (claims.renew).
-    A claim reported lost (expired and taken over) is recorded, never
-    re-taken: the other worker owns the body now."""
 
-    def __init__(self, root, run, record, lock, interval):
+    A claim reported lost (expired and taken over), or one that has passed
+    its expiry because renewals kept failing, is never re-taken: the run is
+    marked status=claim_lost, the CLAIM_LOST marker fences its publication,
+    and `on_lost` (fleet_run: kill the worker's cgroup unit) stops the
+    worker, which would otherwise keep converting a body someone else owns."""
+
+    def __init__(self, root, run, record, lock, interval, on_lost=None, ttl_seconds=None):
         self.root, self.run, self.record, self.lock = root, run, record, lock
         self.interval = interval
+        self.on_lost = on_lost
+        self.ttl = ttl_seconds
+        self.valid_until = time.time() + ttl_seconds if ttl_seconds else None
         self.done = threading.Event()
         self.thread = threading.Thread(target=self.loop, daemon=True)
 
     def start(self):
         self.thread.start()
         return self
+
+    def lose(self, rvas, why):
+        with self.lock:
+            self.record.setdefault("shared_claims_lost", []).extend(f"0x{r:08x}" for r in rvas)
+            self.record["status"] = "claim_lost"
+            self.record["claim_lost_reason"] = why
+            directory = self.record.get("run_dir")
+        if directory:
+            try:
+                (Path(directory) / CLAIM_LOST).write_text(why + "\n", encoding="utf-8")
+            except OSError as error:
+                with self.lock:
+                    self.record["claim_lost_marker_error"] = str(error)
+        if self.on_lost:
+            try:
+                self.on_lost(why)
+            except Exception as error:  # noqa: BLE001
+                with self.lock:
+                    self.record["claim_lost_stop_error"] = str(error)
+        self.done.set()
 
     def beat(self):
         import claims
@@ -766,15 +809,19 @@ class Heartbeat:
             return
         try:
             renewed, lost = claims.renew(tokens, who=f"fleet:{self.run}", root=self.root)
-        except Exception as error:  # noqa: BLE001 -- the claim just expires
+        except Exception as error:  # noqa: BLE001
             with self.lock:
                 self.record["shared_claims_heartbeat_error"] = str(error)
+            if self.valid_until is not None and time.time() >= self.valid_until:
+                self.lose([int(r, 16) for r in tokens], f"claims expired unrenewed: {error}")
             return
         with self.lock:
             self.record["shared_claim_tokens"] = {f"0x{r:08x}": t for r, t in renewed.items()}
             self.record["shared_claims_renewed"] = time.time()
-            if lost:
-                self.record.setdefault("shared_claims_lost", []).extend(f"0x{r:08x}" for r in lost)
+        if self.ttl:
+            self.valid_until = time.time() + self.ttl
+        if lost:
+            self.lose(lost, "claim taken over by another worker: " + " ".join(f"0x{r:08X}" for r in lost))
 
     def loop(self):
         while not self.done.wait(self.interval):
@@ -782,11 +829,11 @@ class Heartbeat:
 
     def stop(self):
         self.done.set()
-        if self.thread.is_alive():
+        if self.thread.is_alive() and self.thread is not threading.current_thread():
             self.thread.join(timeout=5)
 
 
-def claim_shared(root, run, targets, engine, seat, record, lock=None):
+def claim_shared(root, run, targets, engine, seat, record, lock=None, on_lost=None):
     """Claim a run's targets on origin before any worker starts.
 
     Raises ClaimConflict (exit 75: seat.sh repicks at once) when another
@@ -819,8 +866,10 @@ def claim_shared(root, run, targets, engine, seat, record, lock=None):
             "shared claim not granted for "
             + " ".join(f"0x{r:08X}" for r in result.refused)
             + (" (held by another worker)" if held else " (origin did not confirm)"))
-    interval = max(60.0, claims.TTL_HOURS * 3600 / 4)
-    return Heartbeat(root, run, record, lock or threading.RLock(), interval).start()
+    ttl = claims.TTL_HOURS * 3600
+    interval = max(60.0, ttl / 4)
+    return Heartbeat(root, run, record, lock or threading.RLock(), interval,
+                     on_lost=on_lost, ttl_seconds=ttl).start()
 
 
 def settle_shared(root, run, record):
@@ -911,7 +960,14 @@ def execute(root, brief, legacy_log, engine, seat, command):
         # origin is what other hosts see (tools/claims.py). Fail-closed: a
         # target another worker holds, or one origin never confirmed, means
         # no worker starts on this brief.
-        heartbeat = claim_shared(root, run, targets, engine, seat, record, record_lock)
+        record["run_dir"] = str(directory)
+
+        def stop_worker(why):
+            # the unit may not hold a worker yet; the marker still fences it
+            if unit.populated():
+                unit.kill()
+        heartbeat = claim_shared(root, run, targets, engine, seat, record, record_lock,
+                                 on_lost=stop_worker)
         save_record()
         validate_targets(root, targets)
         record["status"] = "running"
@@ -1022,7 +1078,8 @@ def execute(root, brief, legacy_log, engine, seat, command):
                 timer.cancel()
                 timer.join()
                 timer = None
-        record.update(status="finished", exit_code=code)
+        record.update(status="claim_lost" if record.get("shared_claims_lost") else "finished",
+                      exit_code=code)
         return code
     except BaseException as error:
         with record_lock:

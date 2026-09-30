@@ -58,8 +58,10 @@ import os
 import socket
 import subprocess
 import sys
+import threading
 import time
 import uuid
+from contextlib import contextmanager
 from functools import lru_cache
 from pathlib import Path
 
@@ -111,9 +113,15 @@ def _git(*args, cwd=None, input_text=None, timeout=60):
     # whose hooksPath names an older checkout would run a pre-push that tries
     # to verify a claim marker as if it were code. The hooks still run.
     extra = ["-c", f"core.hooksPath={hooks.as_posix()}"] if args[:1] == ("push",) and hooks.is_dir() else []
+    # Never let git discover a repository ABOVE `cwd`: a fixture directory
+    # inside a real checkout (pytest's basetemp under build/) otherwise
+    # inherits that checkout's origin, and a "no remote" test created real
+    # claims on Open-BFME-1 (review 2026-09-29). Every caller passes a
+    # checkout root, so discovery may start there and nowhere else.
+    env = dict(os.environ, GIT_CEILING_DIRECTORIES=str(Path(cwd).resolve().parent))
     try:
         return subprocess.run(["git", *extra, *args], cwd=cwd, capture_output=True, text=True,
-                              input=input_text, timeout=timeout)
+                              input=input_text, timeout=timeout, env=env)
     except subprocess.TimeoutExpired as error:
         return subprocess.CompletedProcess(error.cmd, 124, "", f"timed out after {timeout}s")
 
@@ -160,10 +168,14 @@ def _record(who, ttl_hours, note="", root=None):
 
 
 def configured(root=None):
-    """Whether `root` is a checkout with the claims remote configured. A
-    fixture directory without one has nobody to coordinate with; a real
-    checkout whose origin is unreachable is configured and fails closed."""
-    return _git("remote", "get-url", REMOTE, cwd=root).returncode == 0
+    """Whether `root` is itself a checkout (not a directory inside one) with
+    the claims remote configured. A fixture directory without one has nobody
+    to coordinate with; a real checkout whose origin is unreachable is
+    configured and fails closed."""
+    top = _git("rev-parse", "--show-toplevel", cwd=root)
+    same = os.path.normcase(os.path.realpath(top.stdout.strip() or "?")) == \
+        os.path.normcase(os.path.realpath(str(root or ROOT)))
+    return top.returncode == 0 and same and _git("remote", "get-url", REMOTE, cwd=root).returncode == 0
 
 
 def fetch(root=None):
@@ -359,31 +371,30 @@ def _pending_path(root=None):
     return Path(root or ROOT) / PENDING
 
 
-def queue_landed(rva, row, who=None, root=None):
-    """add_match calls this after LOCAL verification: remember the exact
-    ledger row so its claim is released once origin/master carries it, not
-    before. Never raises -- bookkeeping must not fail a landing."""
-    try:
-        path = _pending_path(root)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        now = int(time.time())
-        entry = {"rva": f"0x{int(rva):08X}", "row": row.strip(), "owner": who or owner(root),
-                 "queued": now}
-        # a checkout nobody settles must not grow the queue forever: entries
-        # past two days describe claims that have long expired
-        keep = [e for e in pending(root) if now - e.get("queued", 0) < 2 * 86400]
-        tmp = path.with_suffix(".tmp")
-        tmp.write_text("".join(json.dumps(e, sort_keys=True) + "\n" for e in keep + [entry]),
-                       encoding="utf-8")
-        os.replace(tmp, path)
-    except (OSError, ValueError) as error:
-        print(f"claims: could not queue landed body {rva}: {error}", file=sys.stderr)
+DEP_PREFIXES = ("game/", "inputs/reference/")
+DEP_LIMIT = 200
+_QUEUE_THREADS = threading.Lock()
 
 
-def pending(root=None):
-    """Queued landings of this checkout (see queue_landed)."""
+@contextmanager
+def _queue_lock(root=None):
+    """Serialize queue rewrites across threads and processes (fcntl locks do
+    not exclude threads of one process, hence the thread lock as well)."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from portable_lock import lock, unlock
+    path = _pending_path(root)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with _QUEUE_THREADS, open(path.with_suffix(".lock"), "a+b") as handle:
+        lock(handle, exclusive=True)
+        try:
+            yield path
+        finally:
+            unlock(handle)
+
+
+def _read_queue(path):
     try:
-        text = _pending_path(root).read_text(encoding="utf-8")
+        text = path.read_text(encoding="utf-8")
     except OSError:
         return []
     out = []
@@ -393,6 +404,73 @@ def pending(root=None):
         except ValueError:
             continue
     return out
+
+
+def _write_queue(path, entries):
+    tmp = path.with_name(f"{path.name}.{os.getpid()}.{threading.get_ident()}.tmp")
+    tmp.write_text("".join(json.dumps(e, sort_keys=True) + "\n" for e in entries), encoding="utf-8")
+    os.replace(tmp, path)
+
+
+def _blobs(root, paths):
+    """{path: blob sha of the working file as git would store it, '' if absent}."""
+    base = Path(root or ROOT)
+    present = [p for p in paths if (base / p).is_file()]
+    out = {p: "" for p in paths}
+    if present:
+        got = _git("hash-object", "--", *present, cwd=root)
+        if got.returncode:
+            raise RuntimeError(got.stderr.strip())
+        out.update(zip(present, got.stdout.split()))
+    return out
+
+
+def landing_deps(source, root=None):
+    """What a landing's verification read that origin/master must also hold
+    before its claim is released: the row's source plus every changed game/
+    or inputs/reference/ file of this checkout (uncommitted, untracked, or
+    committed but not on the local origin/master). ({path: blob}, truncated)."""
+    changed = set()
+    for args in (("diff", "--name-only", "HEAD"),
+                 ("ls-files", "--others", "--exclude-standard"),
+                 ("diff", "--name-only", "refs/remotes/origin/master", "HEAD")):
+        got = _git(*args, "--", *DEP_PREFIXES, cwd=root)
+        if got.returncode == 0:
+            changed.update(line.strip() for line in got.stdout.splitlines() if line.strip())
+    changed.discard(source)
+    changed = sorted(changed)
+    truncated = len(changed) > DEP_LIMIT
+    return _blobs(root, [source] + changed[:DEP_LIMIT]), truncated
+
+
+def queue_landed(rva, row, who=None, root=None, deps=None):
+    """add_match calls this after LOCAL verification: remember the exact
+    ledger row AND the blobs of the source and changed dependencies it
+    verified, so the claim is released only once origin/master carries all
+    of them -- an old published row with the same key is not this landing
+    (review 2026-09-29). Never raises: bookkeeping must not fail a landing."""
+    try:
+        fields = row.strip().split(",")
+        source = fields[4] if len(fields) >= 6 else ""
+        truncated = False
+        if deps is None:
+            deps, truncated = landing_deps(source, root) if source else ({}, True)
+        now = int(time.time())
+        entry = {"rva": f"0x{int(rva):08X}", "row": row.strip(), "owner": who or owner(root),
+                 "queued": now, "deps": deps, "deps_truncated": truncated,
+                 "id": uuid.uuid4().hex}
+        with _queue_lock(root) as path:
+            # a checkout nobody settles must not grow the queue forever: entries
+            # past two days describe claims that have long expired
+            keep = [e for e in _read_queue(path) if now - e.get("queued", 0) < 2 * 86400]
+            _write_queue(path, keep + [entry])
+    except Exception as error:  # noqa: BLE001
+        print(f"claims: could not queue landed body {rva}: {error}", file=sys.stderr)
+
+
+def pending(root=None):
+    """Queued landings of this checkout (see queue_landed)."""
+    return _read_queue(_pending_path(root))
 
 
 def _row_key(row):
@@ -455,6 +533,24 @@ def release_landed(sha=None, root=None, who=None, keep_days=1.0):
     rows = _rows_at(tip, root) if queue else set()
     if rows is None:
         raise ClaimsUnavailable("claims: cannot read origin/master's ledger")
+    wanted = sorted({p for e in queue for p in (e.get("deps") or {})})
+    published = {}
+    if wanted:
+        listed = _git("ls-tree", "-r", tip, "--", *wanted, cwd=root, timeout=120)
+        if listed.returncode:
+            raise ClaimsUnavailable("claims: cannot read origin/master's tree")
+        for line in listed.stdout.splitlines():
+            meta, _, path = line.partition("\t")
+            published[path] = meta.split()[2]
+
+    def landed(entry):
+        deps = entry.get("deps")
+        if entry.get("deps_truncated") or not deps or _row_key(entry.get("row", "")) not in rows:
+            return False
+        # a source missing locally proves nothing about what was verified
+        if not deps.get(entry["row"].split(",")[4]):
+            return False
+        return all(published.get(path, "") == blob for path, blob in deps.items())
     extra = landed_rvas(sha, root, tip) if sha else []
     by_owner, waiting, keep = {}, [], []
     now = time.time()
@@ -463,7 +559,7 @@ def release_landed(sha=None, root=None, who=None, keep_days=1.0):
             rva = int(entry["rva"], 16)
         except (KeyError, ValueError):
             continue
-        if _row_key(entry.get("row", "")) in rows:
+        if landed(entry):
             by_owner.setdefault(entry.get("owner") or who or owner(root), set()).add(rva)
         elif now - entry.get("queued", 0) < keep_days * 86400:
             keep.append(entry)
@@ -474,10 +570,13 @@ def release_landed(sha=None, root=None, who=None, keep_days=1.0):
     for holder, rvas in by_owner.items():
         released += release(sorted(rvas), who=holder, root=root)
     if queue:
-        path = _pending_path(root)
-        tmp = path.with_suffix(".tmp")
-        tmp.write_text("".join(json.dumps(e, sort_keys=True) + "\n" for e in keep), encoding="utf-8")
-        os.replace(tmp, path)
+        # drop only the entries settled here: ones queued while we were on
+        # the network survive the rewrite
+        kept = {json.dumps(e, sort_keys=True) for e in keep}
+        settled = {json.dumps(e, sort_keys=True) for e in queue} - kept
+        with _queue_lock(root) as path:
+            _write_queue(path, [e for e in _read_queue(path)
+                                if json.dumps(e, sort_keys=True) not in settled])
     return sorted(set(released)), sorted(set(waiting))
 
 

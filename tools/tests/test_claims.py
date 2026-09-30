@@ -34,6 +34,8 @@ def hosts(tmp_path, monkeypatch):
         monkeypatch.setattr(claims, "ROOT", clones[name])
         monkeypatch.setenv("BFME_CLAIM_OWNER", name)
         claims.active.cache_clear()
+        # never the real origin: every claim these tests push lands in the fixture
+        assert Path(claims._git("remote", "get-url", "origin").stdout.strip()) == origin
         return clones[name]
     act.origin = origin
     return act
@@ -173,11 +175,15 @@ def test_heartbeat_renews_and_fencing_detects_a_takeover(hosts):
     assert claims.active()[0x200]["owner"] == "b"
 
 
-def _commit_ledger(clone, rows, message):
+def _commit_ledger(clone, rows, message, files=None):
     ledger = clone / claims.LEDGER
     ledger.parent.mkdir(parents=True, exist_ok=True)
     ledger.write_text("name,export_rva,target_rva,target_size,source,status,notes\n"
                       + "".join(r + "\n" for r in rows), encoding="utf-8")
+    for path, text in (files or {}).items():
+        (clone / path).parent.mkdir(parents=True, exist_ok=True)
+        (clone / path).write_text(text, encoding="utf-8")
+        _git(clone, "add", path)
     _git(clone, "add", claims.LEDGER)
     _git(clone, "commit", "-q", "-m", message)
     return _git(clone, "rev-parse", "HEAD").strip()
@@ -189,7 +195,7 @@ def test_a_landing_releases_only_once_origin_master_holds_the_row(hosts):
     _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
     claims.claim([0x100])
     row = "?f@@YAXXZ,,0x00000100,16,game/x.cpp,matched,model=m"
-    sha = _commit_ledger(a, [row], "land")
+    sha = _commit_ledger(a, [row], "land", {"game/x.cpp": "void f() {}\n"})
     claims.queue_landed(0x100, row)
     # verified and committed locally, not pushed: the claim must hold
     assert claims.release_landed() == ([], [0x100])
@@ -211,3 +217,62 @@ def test_release_landed_sha_releases_the_rows_that_commit_adds(hosts):
     assert claims.landed_rvas(sha) == [0x300]
     assert claims.main(["release", "--landed", sha]) == 0
     assert claims.active() == {}
+
+
+def test_an_old_published_row_does_not_release_an_unpublished_source_change(hosts):
+    # review 2026-09-29: the same row key was already on origin (an earlier
+    # lift); the new source existed only locally, and release_landed released.
+    a = hosts("a")
+    row = "?f@@YAXXZ,,0x00000100,16,game/x.cpp,matched,gen-dump"
+    _commit_ledger(a, [row], "existing lift", {"game/x.cpp": "__asm { emit }\n"})
+    _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
+    claims.claim([0x100])
+    (a / "game/x.cpp").write_text("void f() { real(); }\n", encoding="utf-8")
+    (a / "game/x.h").write_text("struct X;\n", encoding="utf-8")          # a new dependency
+    claims.queue_landed(0x100, row.replace("gen-dump", "model=m"))
+    entry = claims.pending()[0]
+    assert set(entry["deps"]) == {"game/x.cpp", "game/x.h"}
+    assert claims.release_landed() == ([], [0x100])
+    _commit_ledger(a, [row.replace("gen-dump", "model=m")], "real body",
+                   {"game/x.cpp": "void f() { real(); }\n"})
+    _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
+    assert claims.release_landed() == ([], [0x100])        # the header is still local
+    _commit_ledger(a, [row.replace("gen-dump", "model=m")], "header",
+                   {"game/x.h": "struct X;\n"})
+    _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
+    assert claims.release_landed() == ([0x100], [])
+
+
+def test_a_missing_source_never_releases(hosts):
+    a = hosts("a")
+    row = "?f@@YAXXZ,,0x00000100,16,game/x.cpp,matched,model=m"
+    _commit_ledger(a, [row], "row only")
+    _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
+    claims.claim([0x100])
+    claims.queue_landed(0x100, row)
+    assert claims.release_landed() == ([], [0x100])
+
+
+def test_concurrent_queue_appends_all_survive(tmp_path):
+    import threading
+    jobs = [threading.Thread(target=claims.queue_landed,
+                             args=(r, f"f,,0x{r:08X},1,game/x.cpp,matched,"),
+                             kwargs={"who": "t", "root": tmp_path, "deps": {"game/x.cpp": "b"}})
+            for r in range(0x100, 0x100 + 24)]
+    for job in jobs:
+        job.start()
+    for job in jobs:
+        job.join(timeout=30)
+    assert sorted(int(e["rva"], 16) for e in claims.pending(tmp_path)) == list(range(0x100, 0x118))
+
+
+def test_a_directory_inside_a_checkout_never_inherits_its_origin(hosts, monkeypatch):
+    # review 2026-09-29: pytest's basetemp under a real checkout let a
+    # "no origin" fixture discover the enclosing repo and push real claims.
+    a = hosts("a")
+    inner = a / "build" / "fixture"
+    inner.mkdir(parents=True)
+    assert not claims.configured(inner)
+    with pytest.raises(claims.ClaimsUnavailable):
+        claims.claim([0x500], root=inner)
+    assert _git(hosts.origin, "for-each-ref", "refs/claims/") == ""
