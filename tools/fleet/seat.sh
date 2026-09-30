@@ -9,7 +9,6 @@
 #            grokbig | solbig | lunabig -> claim ONE large body (1KB..2.5KB) and stay on it
 #            for up to 3 sessions while it is still a dump and the last banked partial
 #            scored >= 0.5 (each session restarts from the stash)
-#            provider                -> tools/fleet/provider_seat.py: link-selection repairs, script-only (no model)
 #   luna* = codex gpt-6-astra (medium; high/xhigh variants), FLEET_LUNA=1 for gpt-5.6-luna; sol = codex gpt-5.6-sol medium
 cd "$(git -C "$(dirname "$0")" rev-parse --show-toplevel)" || exit 1  # works from tools/fleet/ or a build/ copy
 ENGINE="$1"; SEAT="$2"
@@ -95,25 +94,7 @@ dry_check() {
 }
 
 while true; do
-  if [ "$ENGINE" = provider ]; then
-    # provider lane (tools/fleet/provider_seat.py): a script, not a model session.
-    # provider_repair.py next -> apply -> check; PASS commits and hands the commit
-    # to the landing queue (landing_service.py drain lands it under the publish
-    # window), FAIL abandons. Its own worktree, never this one.
-    python tools/fleet/provider_seat.py --seat "$SEAT"; rc=$?
-    echo "$(date '+%H:%M') seat $ENGINE$SEAT provider pass exit $rc" >> build/fleet_logs/seats.log
-    case "$rc" in
-      0) DRY=0 ;;
-      3) sleep "${FLEET_PROVIDER_IDLE:-600}" ;;               # nothing to serve
-      *) DRY=$((DRY + 1))
-         if [ "${FLEET_DRY_LIMIT:-3}" -gt 0 ] && [ "$DRY" -ge "${FLEET_DRY_LIMIT:-3}" ]; then
-           echo "$(date '+%H:%M') seat $ENGINE$SEAT dry streak $DRY (provider); pausing ${FLEET_DRY_PAUSE:-1800}s" >> build/fleet_logs/seats.log
-           sleep "${FLEET_DRY_PAUSE:-1800}"
-           DRY=0
-         fi ;;
-    esac
-    [ -n "${FLEET_PROVIDER_ONCE:-}" ] && exit "$rc"          # tests: one pass
-  elif [ "${ENGINE%big}" != "$ENGINE" ]; then
+  if [ "${ENGINE%big}" != "$ENGINE" ]; then
     RVA=$(python tools/fleet/pick_big.py 1 | tr -d '\r' | head -1)
     [ -z "$RVA" ] && { echo "seat $SEAT: no big body picked; retry in 60s"; sleep 60; continue; }
     for PASS in 1 2 3; do

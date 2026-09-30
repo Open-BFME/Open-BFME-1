@@ -76,3 +76,6 @@ tools/tests/test_fps60.py
 # Retired 2026-09-28: folded into the 031-earlysend and 033-retrytime READMEs and mods/README.md.
 docs/net-fixes.md
 docs/fps60.md
+# Retired 2026-09-30 (effectiveness audit: 0 bar bytes, no live caller).
+tools/fleet/provider_seat.py
+tools/tests/test_provider_seat.py

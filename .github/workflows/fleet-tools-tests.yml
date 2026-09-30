@@ -90,4 +90,3 @@ jobs:
           tools/tests/test_landing_service.py
           tools/tests/test_publish_window.py
           tools/tests/test_reloc_names_generated.py
-          tools/tests/test_provider_seat.py
