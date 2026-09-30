@@ -1,14 +1,10 @@
 // ?update@AIAttackState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.5857 date=2026-09-28
+// partial score=0.5948 date=2026-09-30
 // cl: /DNDEBUG /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Source/GameLogic/Object
 // ?update@AIAttackState@@UAE?AW4StateReturnType@@XZ
-// partial 2026-09-28 opus-5.5: 1102/1108 B, 447 differing bytes, shape 0.968
-// (prior bank 1099 B / 853). Rewritten on the matched onEnter sibling's
-// declarations and object.h. Residue: retail holds &m_lockedWeaponOnEnter in
-// EBX across the weapon-name accessor (lea ebx,[ebp+0x40] at +0x254), keeps
-// weapon in the action slot and the name temporary in its own slot (frame
-// 0x14 vs 0x10), result in BL; ours keeps weapon in EBX. Tried: const-ref
-// local, inline two-string helper, named bool (no change).
+// partial 2026-09-30 opus-5.5: 1100/1108 B, 433 differing bytes (prior bank 1102 B / 447).
+// Residue: retail spills weapon (reloads into ecx), keeps &m_lockedWeaponOnEnter and
+// then the compare result in EBX, frame 0x14; ours keeps weapon in EBX, frame 0x10.
 // AIAttackState::update: retail RVA 0017CAE0, 1108 bytes.
 // Identity: constructor 0017C910 installs 0109A0C8; the Zero Hour update twin
 // and the matched onEnter (00184580) / onExit (0017D050) siblings share the
@@ -18,7 +14,6 @@
 #include "string_base.h"
 template<> inline StringBase<char>::~StringBase() { releaseBuffer(); }
 template<> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
-template<> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 #include "ascii_string.h"
 struct Coord3D { float x,y,z; };
 #define BFME_HAVE_COORD3D 1
@@ -96,12 +91,6 @@ public:
  char pad08[0x2c];
  int m_field34;
 };
-void j_00027a48();
-typedef AsciiString(Weapon::*Rva0016F740ValueMethod)();
-static __forceinline Rva0016F740ValueMethod valueMethod0016F740() {
- union {void(*f)(); Rva0016F740ValueMethod m;} u;
- u.f=j_00027a48; return u.m;
-}
 class State {public:
  virtual void s0(); virtual void s1(); virtual void s2(); virtual void s3();
  virtual StateReturnType onEnter(); virtual void onExit(StateExitType); virtual StateReturnType update();
@@ -115,6 +104,7 @@ class AIAttackState : public State {public:
  unsigned m_bfmeAttackState48; bool m_bfmeAttackState4C,m_bfmeAttackState4D; char pad4e[2]; unsigned m_attackMachineType;
  private: bool chooseWeapon();
 };
+class Rva0016F9E0WeaponNameShim {public: AsciiString getName() const;};
 #define CONVERT_SLEEP_TO_CONTINUE(s) ((s) > 0 ? CONTINUE : (s))
 // ?update@AIAttackState@@UAE?AW4StateReturnType@@XZ
 StateReturnType AIAttackState::update() {
@@ -135,24 +125,26 @@ StateReturnType AIAttackState::update() {
   unsigned action=activeAI->getMoodMatrixAction();
   bool sourceFlag=((BFMEActionObject*)source)->testStatus(28);
   const bool &enemy=source->getRelationship(victim)==ENEMIES;
-  if(!enemy && m_bfmeAttackState4D && (action&2) && !sourceFlag && !victim->isKindOf((KindOfType)93))
-   goto rejectVictim;
+  if(!enemy && m_bfmeAttackState4D && (action&2) && !sourceFlag && !victim->isKindOf((KindOfType)93)) {
+   activeAI->friend_setGoalObject(0);
+   if(victim==source->getTeam()->getTeamTargetObject()) source->getTeam()->setTeamTargetObject(0);
+   activeAI->notifyVictimIsDead();
+   return FAILURE;
+  }
   source->getAI()->setCurrentVictim(victim);
   if(victim->getTeam()!=m_victimTeam) {
-   activeAI=ai;
-   if(activeAI && !((BFMEActionObject*)victim)->testStatus(1) && victim->getContain() &&
+   if(ai && !((BFMEActionObject*)victim)->testStatus(1) && victim->getContain() &&
       victim->getContain()->isGarrisonable() && victim->getContain()->getContainCount(0)==0 &&
       source->getRelationship(victim)==NEUTRAL) {
-    activeAI->friend_setGoalObject(0);
+    ai->friend_setGoalObject(0);
     if(victim==source->getTeam()->getTeamTargetObject()) source->getTeam()->setTeamTargetObject(0);
-    activeAI->notifyVictimIsDead();
+    ai->notifyVictimIsDead();
     return FAILURE;
    }
    if(source->getRelationship(victim)!=ENEMIES) {
-rejectVictim:
-    activeAI->friend_setGoalObject(0);
+    ai->friend_setGoalObject(0);
     if(victim==source->getTeam()->getTeamTargetObject()) source->getTeam()->setTeamTargetObject(0);
-    activeAI->notifyVictimIsDead();
+    ai->notifyVictimIsDead();
     return FAILURE;
    }
   }
@@ -162,9 +154,9 @@ rejectVictim:
  if(related && related->getContain() && related->getContain()->vetoesAttack(source,victim)) return FAILURE;
  if(!chooseWeapon()) return FAILURE;
  Weapon* weapon=source->getCurrentWeapon(0);
- if(!m_lockedWeaponOnEnter.isEmpty() && weapon && m_lockedWeaponOnEnter.compare((weapon->*valueMethod0016F740())().str())) {
+ if(!m_lockedWeaponOnEnter.isEmpty() && weapon && m_lockedWeaponOnEnter.compare(((const Rva0016F9E0WeaponNameShim*)weapon)->getName().str())) {
   const ThingTemplate *tmpl=*(const ThingTemplate**)((char*)source+4);
-  if(tmpl && tmpl->m_nextOverride) tmpl=(const ThingTemplate*)tmpl->getFinalOverride();
+  if(tmpl && tmpl->m_nextOverride) tmpl=(const ThingTemplate*)tmpl->m_nextOverride->getFinalOverride();
   if(tmpl->m_name.compare("GondorTrebuchet")) return FAILURE;
  }
  if(!weapon || weapon->m_field34<=0) return FAILURE;
