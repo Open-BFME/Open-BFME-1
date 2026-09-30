@@ -81146,6 +81146,7 @@ name,address,notes
 ?forceEmotion@EmotionTrackerUpdate@@QAEXW4EmotionType@@MPBVObject@@@Z,0x0003F4EF,Open-BFME5 EmotionTrackerUpdate force-emotion ILT thunk to body 0x0028F3E0; writes forced type duration frames and source Object ID in the recovered tracker layout
 ?forceEmotion@Object@@QAEXW4EmotionType@@MPBV1@@Z,0x000218FF,Open-BFME5 canonical Object force-emotion ILT thunk to body 0x001C2030; UNIT TEAM and PLAYER_FORCE_EMOTION ScriptActions prove the three-argument signature
 ?forceFireWeapon@Weapon@@QAEPAVObject@@PBV2@PBUCoord3D@@@Z,0x00040746,retail callee of ScriptActions::doNamedFireWeaponFollowingWaypointPath; Weapon body at 0x001EA700
+?forceFireWeapon@Weapon@@QAEPAVObject@@PBV2@PBVCoord3D@@@Z,0x00040746,class-tag spelling of matched struct-tag forceFireWeapon at the same ILT; WeaponFireSpecialAbilityUpdate::triggerAbilityEffect 0x0026DA00 includes the WWMath class Coord3D
 ?forceRefreshUpgrade@UpgradeMux@@UAEXXZ,0x002d6930,vtable-slot ??_7ModelConditionUpgrade@@6BUpgradeMux@@@ slot 7 anchors=3
 ?format@AsciiString@@QAAXV1@ZZ,0x00888FF0,populateSideInfo AsciiString::format by-value overload
 ?format@AsciiStringYW@@QAAXV1@ZZ,0x00888FF0,pin
