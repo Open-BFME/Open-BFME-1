@@ -1,4 +1,4 @@
-// cl: /MD -Iinputs/reference/shims/gamespy /Igame/GameEngine/Source/GameNetwork/GameSpy
+// cl: /MD -Iinputs/reference/shims/gamespy /Igame/GameEngine/Source/GameNetwork/GameSpy /Dhtons=ntohs
 /* GameSpy SDK, 2004 vintage -- upstream C source with retail availability-check behavior.
    Sourced from the Area 51 (Inevitable Entertainment / Midway) source release,
    github.com/bisc67/Area51, Support/NetworkMgr/GameSpy -- the only public

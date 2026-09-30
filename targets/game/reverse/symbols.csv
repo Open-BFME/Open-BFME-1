@@ -89895,3 +89895,4 @@ __imp___AIL_set_file_callbacks@16,0x0135966C,AudioManagerInit 0x006B8220 mss32 I
 ?adjust@Sink006E2540@@QAEXPAUTriple006E2540@@_N@Z,0x00034608,0x006E2540 witnessed caller ABI;route=0x00711130
 ?read@Sink006E2540@@QAEXPAVOpen2Triple@@@Z,0x0003ED6F,0x006E2540 witnessed caller ABI;route=0x007110B0
 ?bfmeFlag@Gen_0039B020@@QBEEXZ,0x00049FDA,0x006E2540 witnessed caller ABI;route=0x0039B020
+_ntohs@4,0x0081BE14,route=WSOCK32.dll!ntohs

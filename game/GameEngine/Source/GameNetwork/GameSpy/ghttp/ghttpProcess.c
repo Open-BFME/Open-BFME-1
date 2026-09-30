@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD -Iinputs/reference/shims/gamespy
+// cl: /DNDEBUG /MD -Iinputs/reference/shims/gamespy /Dhtons=ntohs
 /* GameSpy SDK, 2004 vintage -- upstream C source PLUS a reconstruction of
    EA's own edits to THIS file, inferred from retail's bytes.  Not pristine:
    see PROVENANCE.txt, "What differs from upstream", which lists every such

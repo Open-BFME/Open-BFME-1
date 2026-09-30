@@ -3,6 +3,7 @@ import collections
 import struct
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import link_census as L  # noqa: E402
@@ -10,13 +11,14 @@ import link_census as L  # noqa: E402
 TEXT = 0x1000
 
 
-def truth(image, ledger=None, pinned=None, shared=()):
+def truth(image, ledger=None, pinned=None, shared=(), import_routes=None):
     """A RetailTruth over a synthetic .text at TEXT, without reading the repo."""
     t = object.__new__(L.RetailTruth)
     t.image = bytes(image)
     t.sections = [{"name": ".text", "rva": TEXT, "size": len(image), "raw_pointer": 0}]
     t.ledger = collections.defaultdict(set, {k: set(v) for k, v in (ledger or {}).items()})
     t.pinned = collections.defaultdict(set, {k: set(v) for k, v in (pinned or {}).items()})
+    t.import_routes = {k: set(v) for k, v in (import_routes or {}).items()}
     t.slots = collections.defaultdict(set)
     t.shared = set(shared)
     t._cache = {}
@@ -85,6 +87,69 @@ def test_packed_jumps_in_data_are_not_ilt_stubs():
     assert t._stub(0x2005) is None
     assert t.verdict(symbol("caller"), b"\xe8\0\0\0\0",
                      [(1, L.RetailTruth.REL32, referent("release"))], "data-jumps", 5) == "wrong"
+
+
+def test_only_rederived_import_thunks_add_rel32_targets(monkeypatch):
+    import build
+    import pin_consistency
+
+    image = bytearray(0x80)
+    slot = 0x2000
+    for address in (0x1040, 0x1046, 0x104C, 0x1058):
+        image[address - TEXT:address - TEXT + 6] = b"\xff\x25" + struct.pack("<I", slot)
+    image[0x52:0x58] = b"\xff\x25" + struct.pack("<I", slot + 4)
+    image[0x5E:0x63] = jmp(0x105E, 0x1040)  # a jump route is not an import route
+    for caller, target in ((0x1008, 0x1040), (0x1010, 0x1046), (0x1018, 0x104C),
+                           (0x1020, 0x1052), (0x1028, 0x1058), (0x1030, 0x105E)):
+        image[caller - TEXT:caller - TEXT + 5] = b"\xe8" + struct.pack("<i", target - caller - 5)
+    scanner = SimpleNamespace(
+        image=SimpleNamespace(in_text=lambda address: 0x1000 <= address < 0x1080,
+                              resolve=lambda address: (0x1040, [address, 0x1040])),
+        identities={0x1040: {"_ntohs@4"}})
+    read = lambda address, size: bytes(image[address - TEXT:address - TEXT + size])
+    monkeypatch.setattr(build, "read_target_bytes", read)
+    monkeypatch.setattr(L.build, "read_target_bytes", read)  # another test may reload build during collection
+    monkeypatch.setattr(pin_consistency, "import_table", lambda: {
+        slot: ("WSOCK32.dll", "ntohs"), slot + 4: ("WSOCK32.dll", "htons")})
+    monkeypatch.setattr(pin_consistency, "gen_import_targets", lambda: {
+        address: "ntohs" for address in (0x1040, 0x1046, 0x104C, 0x1058)})
+    routes = {("_ntohs@4", 0x1040): "WSOCK32.dll!ntohs",
+              ("_ntohs@4", 0x1046): "WSOCK32.dll!ntohs",
+              ("_ntohs@4", 0x104C): "WSOCK32.dll!htons",  # wrong claim
+              ("_ntohs@4", 0x1052): "WSOCK32.dll!htons",  # wrong export
+              ("_ntohs@4", 0x105E): "0x00001040"}  # valid jump route still cannot add an import target
+    approved = L.validated_import_routes(routes, scanner)
+    assert approved == {"_ntohs@4": {0x1040, 0x1046}}
+    ledger = {f"caller_{address:X}": {address} for address in (0x1008, 0x1010, 0x1018, 0x1020, 0x1028, 0x1030)}
+    t = truth(image, ledger, pinned={"_ntohs@4": {0x1038}}, import_routes=approved)
+    body = b"\xe8\0\0\0\0"
+    for address, expected in ((0x1008, "retail"), (0x1010, "retail"), (0x1018, "wrong"),
+                              (0x1020, "wrong"), (0x1028, "wrong"), (0x1030, "wrong")):
+        assert t.verdict(symbol(f"caller_{address:X}"), body,
+                         [(1, L.RetailTruth.REL32, referent("_ntohs@4"))], address, 5) == expected
+
+
+def test_import_call_route_never_becomes_a_body_home_or_dir32_identity():
+    image = bytearray(0x60)
+    image[0x30:0x36] = b"\x90" * 6  # first pin is the only function-body home
+    route_body = b"\xff\x25" + struct.pack("<I", 0x2000)
+    image[0x40:0x46] = route_body
+    image[0x08:0x0D] = b"\x68" + struct.pack("<I", L.BASE + 0x1040)
+    pinned = {"_ntohs@4": {0x1030}}
+    routes = {"_ntohs@4": {0x1040}}
+    t = truth(image, {"pointer": {0x1008}}, pinned=pinned, import_routes=routes)
+    assert t.addresses("_ntohs@4", L.RetailTruth.REL32) == {0x1030, 0x1040}
+    assert t.addresses("_ntohs@4", L.RetailTruth.DIR32) == {0x1030}
+    assert t.verdict(symbol("pointer"), b"\x68\0\0\0\0",
+                     [(1, L.RetailTruth.DIR32, referent("_ntohs@4"))], "data", 5) == "wrong"
+    assert t.verdict(symbol("_ntohs@4"), route_body, [], "home", 6) == "wrong"
+    t.ledger["_ntohs@4"].add(0x1030)
+    assert t.addresses("_ntohs@4", L.RetailTruth.REL32) == {0x1030}  # canonical ledger wins
+    image[0x00:0x05] = b"\xe8" + struct.pack("<i", 0x1040 - 0x1005)
+    canonical = truth(image, {"caller": {0x1000}, "_ntohs@4": {0x1030}},
+                      pinned=pinned, import_routes=routes)
+    assert canonical.verdict(symbol("caller"), b"\xe8\0\0\0\0",
+                             [(1, L.RetailTruth.REL32, referent("_ntohs@4"))], "ledger", 5) == "wrong"
 
 
 def test_static_referent_is_unknown_and_absolute_symbol_is_checked():

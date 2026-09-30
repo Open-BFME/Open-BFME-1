@@ -71,8 +71,9 @@ def ledger():
 
 
 def pins(routes=None):
-    """{name: address} from symbols.csv (first pin wins, as the resolver does).
-    `routes`, when given, collects {name: target} from `route=0x...` notes."""
+    """{name: address} from symbols.csv (first pin for diagnostic identity).
+    The byte resolver checks additive candidates. `routes`, when given,
+    collects {name: target} from `route=0x...` notes."""
     found = {}
     with (ROOT / "targets/game/reverse/symbols.csv").open(newline="", encoding="utf-8") as handle:
         for row in csv.reader(handle):
@@ -82,6 +83,29 @@ def pins(routes=None):
                 if routes is not None and route:
                     routes.setdefault(row[0], int(route.group(1), 16))
     return found
+
+
+def validated_import_routes(routes=None, scanner=None):
+    """Additional REL32 targets that are proven retail import thunks.
+
+    A second symbols.csv pin is not identity evidence. Only an explicit
+    `route=` claim re-derived by pin_consistency, at a matched FF 25 import
+    thunk, may supplement the first pin when checking a call relocation.
+    These addresses never become function-body homes or DIR32 targets.
+    """
+    import pin_consistency
+
+    routes = pin_consistency.load_routes() if routes is None else routes
+    if not routes:
+        return {}
+    scanner = pin_consistency.Scanner() if scanner is None else scanner
+    approved = collections.defaultdict(set)
+    for (name, address), claim in routes.items():
+        if pin_consistency.route_verdict(scanner, name, address, claim) is not None:
+            continue
+        if build.read_target_bytes(address, 2) == b"\xff\x25":
+            approved[_normal(name)].add(address)
+    return dict(approved)
 
 
 BASE = 0x400000
@@ -435,7 +459,7 @@ class RetailTruth:
     target NAME is resolved the way an identity is, not the way the byte gate
     resolves a call: a ledger row first (never an icf-owner= over-claim:
     __purecall's row sits on one of many `xor eax,eax; ret` bodies), and a
-    symbols.csv pin only for a name with no row (plus its route=), because
+    symbols.csv pin only for a name with no row (plus its numeric route=), because
     symbols.csv is an ADDITIVE candidate list and a pin on the wrong body
     still byte-matches. That is exactly how
     ??1AsciiString@@QAE@XZ's owner copy passed the gate: retail 0x5EE90 is
@@ -452,7 +476,9 @@ class RetailTruth:
     has no address to check; a string literal or float constant (`??_C@`,
     `__real@`) is named by its content and retail holds several copies of
     some ("" at least twice), so it is checked by content: retail's bytes at
-    the target must be the constant's own.
+    the target must be the constant's own. Additional FF 25 import routes
+    independently verified by pin_consistency may match REL32 calls, but
+    never supply body homes or data-pointer targets.
 
     An address several ledger names claim (0x5E6F0 for ??8 of eight
     VectorClass instances) proves nothing when it disagrees: retail had no
@@ -499,6 +525,7 @@ class RetailTruth:
         for name, address in routes.items():  # where calls ENCODE the name: an ILT or import stub
             key = _normal(name)
             (self.ledger[key] if key in self.ledger else self.pinned[key]).update(self._rvas(address))
+        self.import_routes = validated_import_routes()
         with (ROOT / "targets/game/reverse/dir32_addresses.csv").open(newline="", encoding="utf-8") as handle:
             for row in csv.DictReader(handle):  # a data name: pin or dir32 entry, either may be right
                 self.pinned[_normal(row["name"])].add(int(row["va"], 16) - BASE)
@@ -508,11 +535,13 @@ class RetailTruth:
         self.image, self.sections = build.exe_image()
         self._cache = {}
 
-    def addresses(self, name):
-        """Retail addresses a name may resolve to, or None when none is known."""
+    def addresses(self, name, kind=None):
+        """Retail relocation targets, with proven import routes for REL32 only."""
         key = _normal(name)
         if key in self.ledger:
             return self.ledger[key]
+        if kind == self.REL32 and key in self.import_routes:
+            return set(self.pinned.get(key, ())) | self.import_routes[key]
         if key in self.pinned:
             return self.pinned[key]
         if name.startswith("__imp_"):
@@ -631,7 +660,7 @@ class RetailTruth:
             if referent["section"] == symbol["section"] and referent["storage"] != EXTERNAL:
                 expected = {start + referent["value"]}  # a label in this very section
             elif referent["storage"] in (EXTERNAL, WEAK_EXTERNAL):
-                expected = self.addresses(referent["name"])
+                expected = self.addresses(referent["name"], kind)
             else:  # a static's name is per TU (_$E2, $SG1234): no address to check
                 expected = None
             if not expected:
