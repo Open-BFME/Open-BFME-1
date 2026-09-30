@@ -2,6 +2,8 @@
 // DX8Wrapper::Reset_Device calls this helper at 0x009082B0 after the mesh
 // renderer cleanup and before it clears the reset state.
 
+#include <windows.h>
+
 struct BfmeLockTEA
 {
 	char m_pad[0x18];
@@ -48,6 +50,8 @@ public:
 };
 
 extern Gen_00C71060Target TheBfmeObject_00C71060;
+extern CRITICAL_SECTION g_bfmeRva012D6DE0CriticalSection;
+extern bool g_012D6DF8;
 
 extern void W3DRadarResetLock(void);
 extern void W3DRadarResetUnlock(void);
@@ -61,7 +65,7 @@ void Rva0090F050()
 		return;
 	}
 
-	Rva00886F60Class guard(reinterpret_cast<BfmeLockTEA *>(0x012D6DE0u));
+	Rva00886F60Class guard(reinterpret_cast<BfmeLockTEA *>(&g_bfmeRva012D6DE0CriticalSection));
 	W3DRadarResetLock();
 	for (Rva0090F050Resource **it = TheBfmeObject_00C71060.m_begin;
 		it != TheBfmeObject_00C71060.m_end; ++it)
@@ -69,11 +73,10 @@ void Rva0090F050()
 		(*it)->releaseResources();
 	}
 	W3DRadarResetUnlock();
-	bool armed = *reinterpret_cast<bool *>(0x012D6DF8u);
-	*reinterpret_cast<Rva0090F050Resource ***>(0x013411F4u) =
-		*reinterpret_cast<Rva0090F050Resource ***>(0x013411F0u);
+	bool armed = g_012D6DF8;
+	TheBfmeObject_00C71060.m_end = TheBfmeObject_00C71060.m_begin;
 	if (armed)
 	{
-		bfmeLeaveTEA(reinterpret_cast<BfmeLockTEA *>(0x012D6DE0u));
+		bfmeLeaveTEA(reinterpret_cast<BfmeLockTEA *>(&g_bfmeRva012D6DE0CriticalSection));
 	}
 }
