@@ -122,6 +122,7 @@ public:
 extern __int64 Counter0040F780;
 extern volatile __int64 g_012F1290;
 extern double Interval0040F780;
+extern void j_0004ab1f();
 
 #define g_bfmeClock Counter0040F780
 #define g_bfmeClockResult g_012F1290
@@ -155,7 +156,7 @@ void BfmeStrVM0::bfmeGoVM0(int state)
 		return;
 
 	m_5C = state;
-	void *thread = CreateThread(0, 0, (unsigned long (__stdcall *)(void *))0x0044AB1F, this, 0, 0);
+	void *thread = CreateThread(0, 0, (unsigned long (__stdcall *)(void *))j_0004ab1f, this, 0, 0);
 	if (!SetThreadPriority(thread, 2))
 	{
 		_bfme_debugRecordCallsite(1);

@@ -9,6 +9,7 @@
 
 // Retail vtable 0x0107C7D0, pinned as _bfmeVftVE (targets/game/reverse/symbols.csv).
 extern "C" int _bfmeVftVE[];
+extern void j_0001579e();
 
 class UserParser;
 class DataChunkInput;
@@ -31,7 +32,7 @@ public:
         m_vftable = _bfmeVftVE;
         m_table = table;
         m_parser = table->registerParser(*name, *label,
-            (BfmeParserCallback)0x0041579E, this);
+            (BfmeParserCallback)j_0001579e, this);
     }
     ~BfmeParserRegistrationVE();
 
