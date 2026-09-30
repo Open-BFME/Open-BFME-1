@@ -89933,3 +89933,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?bfmeSetVKP@BfmeThingVKP@@QAEXHH@Z,0x000095ED,Caller 0x002A21F0 operands +0x4F and +0x89 encode ILT 0x000095ED; independently decoded jump reaches sole matched 104-byte body 0x001C7720;route=0x001C7720
 g_012F3930,0x012F3930,address-derived callback global; independently zeroed by retail bfmeReg1033 body 0x004C6AA0+0x17
 g_012F3934,0x012F3934,address-derived callback global; independently zeroed by retail bfmeReg1033 body 0x004C6AA0+0x1C
+?initializeBuckets@Rva000F4250Hash@@AAEXI@Z,0x000276B5,Team ctor retail CALL at 0x000F77F2 targets this ILT which jumps to 0x000F6AC0; same +0x1C member the matched Team dtor 0x000F4250 clears via ?clear@Rva000F4250Hash@@QAEXXZ at 0x0001F1BD

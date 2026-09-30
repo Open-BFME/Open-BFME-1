@@ -10798,5 +10798,15 @@
   "after_sha256": "f09487e1e12ba347b164a69d418ca53cc5c43a69885956f49e6ea383ca5814c2",
   "evidence": "targets/game/reverse/identity_evidence/0x00721380-native-bank.md",
   "reason": "Old inline accessor was invented from measured offset2A0, not a retail named call. New free opaque accessor avoids redeclaring native ThingTemplate or guessing which module-info member occupies BFME offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000f7790.cpp",
+  "new_path": "game/GameEngine/Source/Common/RTS/TeamConstructor.cpp",
+  "old_name": "RelationHash",
+  "new_name": "Rva000F4250Hash",
+  "before_sha256": "6f04f83474dcbfdacbce46e96a6a8bf8dba8b5c649b8dcb848e7205ca25be349",
+  "after_sha256": "63feb1b48c3addcd67f342ab6fbd2bce9f81a932d004ad3db966db49a5bdd301",
+  "evidence": "targets/game/reverse/identity_evidence/000F7790-team-constructor.md",
+  "reason": "The bank RelationHash models an UnsignedInt-keyed hash_map with a trivially destructible 12-byte value whose instantiated clear frees 0x14-byte nodes with no element-destructor call. Retail clear at 0x000F1C80 calls ILT 0x000479D3 on the node+4 pair and frees 0x0c-byte nodes, proving a non-trivially-destructible pair (the AsciiString-keyed byte-valued map the 0x000F75B0 twin witnesses). The banked name claims a container retail refutes; the file-scope Rva000F4250Hash reuses the matched Team destructor 0x000F4250 proven spelling for the same +0x1C member."
  }
 ]
