@@ -10558,5 +10558,45 @@
   "after_sha256": "dc03467da760c5129b0ebb6477165edfcd97e20a4322f637e0a3b23a9bf7b57a",
   "evidence": "targets/game/reverse/functions.csv",
   "reason": "The bank's invented helper name sweep is replaced by the ledger name of its body: functions.csv matches 0x006A5570 as ?rva006A5570@Rva006A9800This@@QAEXXZ."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00242a30.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/Rva002458B0FormationPosition.cpp",
+  "old_name": "Coord3D",
+  "new_name": "Rva00242A30Value",
+  "before_sha256": "d8aa83e51260d24df6fe28af56cbef35d41eb40397eae9bcd28987f8d449781f",
+  "after_sha256": "a36a9f80a9220b3ee93ad31b1a6edaba727573c0a2a364e7c2b10f54e5776b15",
+  "evidence": "targets/game/reverse/identity_evidence/00242a30-names.md",
+  "reason": "Rva00242A30Value models the 12-byte return layout and adds constructors that reproduce retail code. The real Coord3D declaration remains in coord.h."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00242a30.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/Rva002458B0FormationPosition.cpp",
+  "old_name": "m_busy",
+  "new_name": "m_byte10",
+  "before_sha256": "d8aa83e51260d24df6fe28af56cbef35d41eb40397eae9bcd28987f8d449781f",
+  "after_sha256": "a36a9f80a9220b3ee93ad31b1a6edaba727573c0a2a364e7c2b10f54e5776b15",
+  "evidence": "targets/game/reverse/identity_evidence/00242a30-names.md",
+  "reason": "Retail tests byte +0x10. No BFME witness identifies that byte as busy, so the replacement keeps only its offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00242a30.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/Rva002458B0FormationPosition.cpp",
+  "old_name": "m_indices120",
+  "new_name": "m_at120",
+  "before_sha256": "d8aa83e51260d24df6fe28af56cbef35d41eb40397eae9bcd28987f8d449781f",
+  "after_sha256": "a36a9f80a9220b3ee93ad31b1a6edaba727573c0a2a364e7c2b10f54e5776b15",
+  "evidence": "targets/game/reverse/identity_evidence/00242a30-names.md",
+  "reason": "Retail passes the address +0x120 to thunk 0x0001F91F. No BFME witness names the storage, so the replacement keeps its offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00242a30.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/Rva002458B0FormationPosition.cpp",
+  "old_name": "m_readyFlag",
+  "new_name": "m_byte1fc",
+  "before_sha256": "d8aa83e51260d24df6fe28af56cbef35d41eb40397eae9bcd28987f8d449781f",
+  "after_sha256": "a36a9f80a9220b3ee93ad31b1a6edaba727573c0a2a364e7c2b10f54e5776b15",
+  "evidence": "targets/game/reverse/identity_evidence/00242a30-names.md",
+  "reason": "Retail reads byte +0x1FC as a condition. No BFME witness identifies it as a ready flag, so the replacement keeps its offset."
  }
 ]

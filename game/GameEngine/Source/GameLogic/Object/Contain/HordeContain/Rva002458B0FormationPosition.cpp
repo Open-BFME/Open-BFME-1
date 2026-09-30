@@ -26,10 +26,18 @@ struct FormationSlot
 };
 
 // still a dump: 0x0001F91F -> pinned ?bfmeTwoDSU@BfmeSubDSU@@QAEPAPAXPAPAX@Z
+extern void j_0001f91f();
 class BfmeSubDSU
 {
 public:
 	void **bfmeTwoDSU(void **key);
+	int &lookup(const unsigned &key)
+	{
+		typedef int &(BfmeSubDSU::*Fn)(const unsigned &);
+		union { void (*raw)(); Fn member; } f;
+		f.raw = j_0001f91f;
+		return (this->*f.member)(key);
+	}
 };
 
 extern void j_0002c53e();
@@ -80,4 +88,96 @@ Coord3D *Rva002458B0Host::rva002458b0(Coord3D *out, Object *member, float scalar
 	}
 	((Rva002458B0Owner *)((char *)this - 0xe4))->rva00242a30(out, member, scalar);
 	return out;
+}
+
+struct BfmeHordeSlot
+{
+	void *m_key;
+	UnsignedByte m_tail[0xc];
+};
+
+// Retail writes the 12-byte return value into the first stack argument.
+struct Rva00242A30Value
+{
+	Real x;
+	Real y;
+	Real z;
+	Rva00242A30Value() {}
+	Rva00242A30Value(const Rva00242A30Value &other)
+		: x(other.x), y(other.y), z(other.z) {}
+};
+
+struct Rva00242A30FormationEntry
+{
+	UnsignedByte m_pad00[4];
+	Rva00242A30Value m_coord04;
+	UnsignedByte m_byte10;
+	UnsignedByte m_pad11[0x1c - 0x11];
+};
+
+template<class T> struct Rva00242A30VectorView
+{
+	T *m_begin;
+	T *m_end;
+	T *m_endStorage;
+	unsigned size() const { return (unsigned)(m_end - m_begin); }
+	T *begin() { return m_begin; }
+};
+
+struct Rva00233F30Offset { Real x, y; };
+
+struct BfmeRva44E60Record
+{
+	Int m_dword00;
+	Rva00233F30Offset m_pair04;
+	Real m_float0C;
+};
+
+extern void j_00019736();
+
+class Rva00242A30Owner
+{
+public:
+	Rva00242A30Value rva00242a30(Object *member, Real *outThird);
+
+private:
+	UnsignedByte m_pad00[8];
+	Object *m_object08;
+	UnsignedByte m_pad0c[0x120 - 0xc];
+	UnsignedByte m_at120[0xc];
+	Rva00242A30VectorView<BfmeHordeSlot> m_vector12c;
+	UnsignedByte m_pad138[0x1d8 - 0x138];
+	Rva00242A30VectorView<Rva00242A30FormationEntry> m_vector1d8;
+	UnsignedByte m_pad1e4[0x1fc - 0x1e4];
+	UnsignedByte m_byte1fc;
+};
+
+Rva00242A30Value Rva00242A30Owner::rva00242a30(Object *member, Real *outThird)
+{
+	Rva00242A30Value *pos = (Rva00242A30Value *)&m_object08->m_cachedPos;
+	unsigned key = (unsigned)member->m_id;
+	int index = ((BfmeSubDSU *)m_at120)->lookup(key);
+	{
+		Rva00242A30Value result;
+		result = *pos;
+		if (index >= 0 && (unsigned)index <= m_vector12c.size()) {
+			if (m_byte1fc && !m_vector1d8.begin()[index].m_byte10) {
+				result = m_vector1d8.begin()[index].m_coord04;
+				return result;
+			}
+		} else return result;
+	}
+	{
+		typedef void (Rva00242A30Owner::*RecordFn)(BfmeRva44E60Record *, Int);
+		union { void (*raw)(); RecordFn member; } recordCall;
+		recordCall.raw = j_00019736;
+		BfmeRva44E60Record record;
+		(this->*recordCall.member)(&record, index);
+		Rva00242A30Value result;
+		result.x = record.m_pair04.x + pos->x;
+		result.y = record.m_pair04.y + pos->y;
+		result.z = pos->z;
+		*outThird = record.m_float0C;
+		return result;
+	}
 }
