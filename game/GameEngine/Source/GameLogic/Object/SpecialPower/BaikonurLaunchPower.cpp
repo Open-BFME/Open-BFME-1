@@ -57,11 +57,7 @@
 #include "GameLogic/Object.h"
 #include "GameLogic/Module/BaikonurLaunchPower.h"
 
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/SpecialPower/BaikonurLaunchPowerModuleDataConstructor.cpp
-// ??0BaikonurLaunchPowerModuleData@@ present-unmatched
-BaikonurLaunchPowerModuleData::BaikonurLaunchPowerModuleData( void )
-{
-}
+// Retail BaikonurLaunchPowerModuleData::BaikonurLaunchPowerModuleData (0x00212C10) is implemented in BaikonurLaunchPowerModuleDataConstructor.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
