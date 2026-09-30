@@ -30,8 +30,7 @@
 #define __PLACEMENT_VEC_NEW_INLINE
 #define ASCIISTRING_H
 #define UNICODESTRING_H
-#include "ascii_string.h"
-#include "unicode_string.h"
+#include "string_base.h"
 
 template <> inline const char *StringBase<char>::str() const {
   return m_data ? m_data->data : "";
@@ -40,6 +39,9 @@ template <>
 inline const unsigned short *StringBase<unsigned short>::str() const {
   return m_data ? m_data->data : (const unsigned short *)L"";
 }
+
+#include "ascii_string.h"
+#include "unicode_string.h"
 
 inline UnicodeString::UnicodeString() { m_text = 0; }
 inline UnicodeString::UnicodeString(const wchar_t *s) {
