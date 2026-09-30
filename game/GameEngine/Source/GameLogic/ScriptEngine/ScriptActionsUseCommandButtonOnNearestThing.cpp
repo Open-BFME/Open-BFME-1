@@ -38,6 +38,23 @@ public:
 	UnsignedInt m_flagsD0;
 };
 
+// ZH Override.h: dereferencing yields null or the template's final override.
+template <class T>
+class OVERRIDE
+{
+public:
+	const T *operator*() const
+	{
+		if (!m_overridable)
+			return 0;
+		return bfmeFinalOf(m_overridable);
+	}
+	operator const T *() const { return operator*(); }
+
+private:
+	const T *m_overridable;
+};
+
 class CommandButton
 {
 public:
@@ -52,7 +69,7 @@ class Object
 {
 public:
 	void *m_vtable;
-	ThingTemplate *m_template;
+	OVERRIDE<ThingTemplate> m_template;
 	unsigned char m_beforePosition[0x30];
 	Coord3D m_position;
 
@@ -264,6 +281,7 @@ static void useCommandButtonOnNearestThing_002FDAC0(Object *unit,
 	}
 }
 
+// Overridable::getFinalOverride inlined one level; the recursion calls the retail body.
 static __forceinline const ThingTemplate *bfmeFinalOf(const ThingTemplate *t)
 {
 	if (t->m_nextOverride)
@@ -279,7 +297,6 @@ protected:
 		const AsciiString &objectTypeName);
 };
 
-// ?doNamedUseCommandButtonOnNearestObjectType@ScriptActions@@IAEXABVAsciiString@@00@Z present-unmatched
 // Retail 0x002FDCD0 (173 B), action 429; supplies the helper's private-ABI call site.
 void ScriptActions::doNamedUseCommandButtonOnNearestObjectType(
 	const AsciiString &unitName, const AsciiString &commandAbility,
@@ -298,8 +315,7 @@ void ScriptActions::doNamedUseCommandButtonOnNearestObjectType(
 		if (!nearest)
 			return;
 
-		thingTemplate = nearest->getTemplate()
-			? bfmeFinalOf(nearest->getTemplate()) : 0;
+		thingTemplate = nearest->getTemplate();
 	}
 	else
 	{
