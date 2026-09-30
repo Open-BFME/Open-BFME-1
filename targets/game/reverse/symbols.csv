@@ -89899,3 +89899,4 @@ __imp___AIL_set_file_callbacks@16,0x0135966C,AudioManagerInit 0x006B8220 mss32 I
 ?read@Sink006E2540@@QAEXPAVOpen2Triple@@@Z,0x0003ED6F,0x006E2540 witnessed caller ABI;route=0x007110B0
 ?bfmeFlag@Gen_0039B020@@QBEEXZ,0x00049FDA,0x006E2540 witnessed caller ABI;route=0x0039B020
 _ntohs@4,0x0081BE14,route=WSOCK32.dll!ntohs
+?rva008C4A30@@YA_NPAVAptValue@@@Z,0x008C4A30,Opaque typed ASM bridge;008C6800 caller pushes AptValue pointer and performs cdecl cleanup;callee returns bool in AL

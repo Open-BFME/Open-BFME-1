@@ -275,7 +275,8 @@ extern void __cdecl d_0089abc0();
 // value callbacks installed at BfmeA1029+0x20
 extern void __cdecl d_008c64c0();
 extern void __cdecl d_008c66a0();
-extern void __cdecl d_008c6800();
+class AptBoolean;
+extern AptBoolean *__cdecl rva008C6800(void *, int);
 extern void __cdecl d_008c6ad0();
 Rva008A9B00 *rva008C6840StringTransform();
 Rva008A9B00 *rva008C6990StringTransform(void *unknown, int count);
@@ -402,7 +403,7 @@ void Rva0089BBF0InitGlobals()
 	value->m_bits.m_bits16to27 = 100;
 	rva0089BBF0ResetBits6to13(g_Va013379C4);
 
-	value = new BfmeA1029(reinterpret_cast<int>(&d_008c6800));
+	value = new BfmeA1029(reinterpret_cast<int>(&rva008C6800));
 	g_Va013379C8 = value;
 	value->m_bits.m_bits16to27 = 100;
 	rva0089BBF0ResetBits6to13(g_Va013379C8);
