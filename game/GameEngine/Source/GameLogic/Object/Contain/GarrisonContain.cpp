@@ -363,47 +363,8 @@ inline Real calcDistSqr(const Coord3D& a, const Coord3D& b)
 	return sqr(a.x - b.x) + sqr(a.y - b.y) + sqr(a.z - b.z);
 }
 
-// ------------------------------------------------------------------------------------------------
-/** Given the target position, find the garrison point that is closest to it */
-// ------------------------------------------------------------------------------------------------
-// ?findClosestFreeGarrisonPointIndex@GarrisonContain@@IAEHHPBUCoord3D@@@Z present-unmatched
-Int GarrisonContain::findClosestFreeGarrisonPointIndex( Int conditionIndex, 
-																												const Coord3D *targetPos )
-{
-	DEBUG_ASSERTCRASH(m_garrisonPointsInitialized, ("garrisonPoints are not inited"));
-
-	// sanity
-	if( targetPos == NULL || m_garrisonPointsInUse == MAX_GARRISON_POINTS )
-		return GARRISON_INDEX_INVALID;
-
-	Int closestIndex = GARRISON_INDEX_INVALID;
-	Real closestDistSq = -1.0f;
-	Real distSq;
-	for( Int i = 0; i < MAX_GARRISON_POINTS; ++i )
-	{
-
-		// only consider free garrison points
-		if( m_garrisonPointData[ i ].object == NULL )
-		{
-
-			// compute the squared distance between these two points
-			distSq = calcDistSqr(*targetPos, m_garrisonPoint[ conditionIndex ][ i ]);
-
-			if( distSq < closestDistSq || closestDistSq == -1.0f )
-			{
-
-				closestDistSq = distSq;
-				closestIndex = i;
-
-			}  // end if
-
-		}  // end if
-
-	}  // end for i
-
-	return closestIndex;
-
-}  // end findClosestFreeGarrisonPointIndex
+// Retail GarrisonContain::findClosestFreeGarrisonPointIndex (0x0021DDA0) is
+// implemented in GarrisonContainTrackTargets.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** Given the object, return the garrison point index the object is placed at ... if any */
