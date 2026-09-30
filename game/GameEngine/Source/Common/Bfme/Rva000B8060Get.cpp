@@ -1,6 +1,14 @@
 // cl: /DNDEBUG /MD /EHsc
 
+struct FieldParse;
+
+class ControlBarSchemeManager
+{
+public:
+	static const FieldParse m_controlBarSchemeFieldParseTable[];
+};
+
 void *Rva000B8060Get()
 {
-	return reinterpret_cast<void *>(0x010FC430u);
+	return (void *)ControlBarSchemeManager::m_controlBarSchemeFieldParseTable;
 }

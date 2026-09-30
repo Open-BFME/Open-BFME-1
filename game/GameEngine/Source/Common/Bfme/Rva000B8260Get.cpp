@@ -1,6 +1,14 @@
 // cl: /DNDEBUG /MD /EHsc
 
+struct FieldParse;
+
+class SkyboxTextureSet
+{
+public:
+	static const FieldParse m_fieldParseTable[];
+};
+
 void *Rva000B8260Get()
 {
-	return reinterpret_cast<void *>(0x010F1638u);
+	return (void *)SkyboxTextureSet::m_fieldParseTable;
 }
