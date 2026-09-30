@@ -204,8 +204,11 @@ def test_an_unrelated_upstream_change_needs_no_second_check(seat, tmp_path, monk
     peer = _peer(origin, tmp_path)
 
     def unrelated():
-        (peer / "notes.txt").write_text("unrelated\n")
-        git(peer, "add", "notes.txt")
+        # prose and a game source the check never compiled
+        (peer / "docs").mkdir()
+        (peer / "docs/notes.md").write_text("unrelated\n")
+        (peer / "game/other.cpp").write_text("void other() {}\n")
+        git(peer, "add", "docs/notes.md", "game/other.cpp")
         git(peer, "commit", "-q", "-m", "unrelated")
         git(peer, "push", "-q", "origin", "HEAD:master")
     _after_first_check(monkeypatch, unrelated)
@@ -251,3 +254,49 @@ def test_no_lease_means_no_landing(seat, monkeypatch):
     before = git(origin, "rev-parse", "master")
     assert ps.once(wt) == ps.FAILED
     assert git(origin, "rev-parse", "master") == before
+
+
+def test_an_upstream_ledger_change_forces_a_second_check(seat, tmp_path, monkeypatch):
+    # review 2026-09-30 cycle 2: a symbols.csv change after check landed with
+    # one check; every ledger is a verification input.
+    wt, origin = seat
+    monkeypatch.setenv("FAKE_MODE", "pass")
+    peer = _peer(origin, tmp_path)
+
+    def upstream():
+        path = peer / "targets/game/reverse/symbols.csv"
+        path.parent.mkdir(parents=True)
+        path.write_text("name,address\ncallee,0x00401234\n")
+        git(peer, "add", str(path))
+        git(peer, "commit", "-q", "-m", "new resolver inputs")
+        git(peer, "push", "-q", "origin", "HEAD:master")
+    _after_first_check(monkeypatch, upstream)
+    assert ps.once(wt) == ps.LANDED
+    assert (wt / "checks.txt").read_text().count("check") == 2
+
+
+def test_the_published_digest_is_the_final_receipt(seat, tmp_path, monkeypatch):
+    # review 2026-09-30 cycle 2: the message kept the first receipt's digest
+    # after a re-check rewrote the receipt.
+    import hashlib
+    wt, origin = seat
+    monkeypatch.setenv("FAKE_MODE", "pass")
+    fake = wt / "tools/provider_repair.py"
+    fake.write_text(FAKE.replace('"pass": True, "inputs": inputs,',
+                                 '"pass": True, "check_number": (ROOT / "checks.txt").read_text()'
+                                 '.count("check"), "inputs": inputs,'), encoding="utf-8")
+    git(wt, "commit", "-q", "-am", "fixture receipt includes check number")
+    git(wt, "push", "-q", "origin", "HEAD:master")
+    peer = _peer(origin, tmp_path)
+
+    def upstream():
+        (peer / "game/new.h").write_text("struct Added;\n")
+        git(peer, "add", "game/new.h")
+        git(peer, "commit", "-q", "-m", "new header")
+        git(peer, "push", "-q", "origin", "HEAD:master")
+    _after_first_check(monkeypatch, upstream)
+    assert ps.once(wt) == ps.LANDED
+    receipt = wt / "build/provider_repair/0x00000100/receipt.json"
+    assert json.loads(receipt.read_text())["check_number"] == 2
+    message = git(origin, "log", "-1", "--format=%B", "master")
+    assert "receipt sha256: " + hashlib.sha256(receipt.read_bytes()).hexdigest() in message

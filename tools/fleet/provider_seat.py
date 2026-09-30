@@ -6,11 +6,12 @@ The lane is a script, not a model session: tools/provider_repair.py decides.
   apply    removes the competing legacy definition(s)
   check    byte gate + objdiff + strict harness: PASS or FAIL, with a receipt
   land     PASS: commit exactly the edited competitor sources (hooks run),
-           rebase; if the rebase changed any receipt input or brought a
-           header/inputs/tool change, run `check` AGAIN on the rebased tree
-           (FAIL: retract and abandon); re-read the claim lease right before
-           each push (lost: retract, publish nothing); push to master,
-           confirm by ancestry, release the claim by its lease
+           rebase; if the rebase changed any receipt input or any other
+           verification input (ledgers, headers, inputs/, tools/, hooks),
+           run `check` AGAIN on the rebased tree (FAIL: retract and
+           abandon) and re-commit with the NEW receipt's digest; right
+           before each push re-validate that digest and the lease (lost:
+           retract, publish nothing); push, confirm by ancestry, release
   abandon  FAIL (or a commit the hooks refuse): restore, record a blocked
            verdict, release the claim
 No add_match: the tool's own PASS/FAIL is the verdict.
@@ -103,19 +104,48 @@ def lease_of(wt, rva):
 # Upstream changes that can alter what `check` proved even when none of the
 # receipt's input files changed: headers, the reference/shim tree, the
 # toolchain, and the tools that compile and judge.
-RECHECK = ("*.h", "*.hpp", "*.hh", "*.hxx", "*.inl", "*.inc", "inputs/", "tools/build.py",
-           "tools/provider_repair.py", "tools/link_census.py")
+# An upstream change needs no second `check` only if it is one of these: prose,
+# banked evidence, or a game SOURCE file the check did not compile (the check
+# rebuilds the owner and competitor TUs, and those are its recorded inputs).
+# Everything else -- ledgers (functions.csv, symbols.csv and every other file
+# under targets/), headers, inputs/, tools/, hooks, build scripts -- is a
+# verification input (review 2026-09-30: a symbols.csv change after check
+# landed with one check). Unknown means recheck.
+HARMLESS_PREFIXES = ("docs/", "targets/game/reverse/attempts/")
+HARMLESS_FILES = ("README.md", "AGENTS.md", "targets/game/reverse/re_attempts.log")
+UNCOMPILED_SOURCE = (".cpp", ".c", ".cc", ".cxx", ".asm")
+
+
+def recheck_reasons(wt, old_base, new_base, inputs):
+    """Upstream paths between the checked base and the new one that the
+    check could have read."""
+    if old_base == new_base:
+        return []
+    changed = git(wt, "diff", "--name-only", old_base, new_base).stdout.split()
+    out = []
+    for path in changed:
+        if path in HARMLESS_FILES or path.startswith(HARMLESS_PREFIXES):
+            continue
+        if path.startswith("game/") and path.endswith(UNCOMPILED_SOURCE) and path not in inputs:
+            continue
+        out.append(path)
+    return out
+
+
+def receipt_inputs(receipt_path):
+    try:
+        return json.loads(Path(receipt_path).read_text(encoding="utf-8")).get("inputs") or {}
+    except (OSError, ValueError):
+        return {}
 
 
 def stale(wt, receipt_path, old_base, new_base):
     """Why the receipt no longer describes the tree about to be published, or
-    None. Every input hash must match the file as it is now, and nothing in
-    RECHECK may have changed between the two upstream bases."""
-    try:
-        receipt = json.loads(Path(receipt_path).read_text(encoding="utf-8"))
-    except (OSError, ValueError):
+    None: every recorded input hash must match the file as it is now, and no
+    verification input may have changed upstream since the checked base."""
+    if not Path(receipt_path).exists():
         return "no readable receipt"
-    inputs = receipt.get("inputs") or {}
+    inputs = receipt_inputs(receipt_path)
     if not inputs:
         return "the receipt records no input hashes"
     for path, digest in sorted(inputs.items()):
@@ -125,11 +155,9 @@ def stale(wt, receipt_path, old_base, new_base):
             return f"{path} is gone"
         if now != digest:
             return f"{path} changed since check"
-    if old_base != new_base:
-        changed = git(wt, "diff", "--name-only", old_base, new_base, "--", *(
-            f":(glob)**/{p}" if p.startswith("*") else p for p in RECHECK)).stdout.split()
-        if changed:
-            return f"upstream changed {changed[0]}" + (f" (+{len(changed) - 1})" if len(changed) > 1 else "")
+    changed = recheck_reasons(wt, old_base, new_base, inputs)
+    if changed:
+        return f"upstream changed {changed[0]}" + (f" (+{len(changed) - 1})" if len(changed) > 1 else "")
     return None
 
 
@@ -144,6 +172,42 @@ def retract(wt, facts, sources, reason, record=True):
         log(f"dropped {facts['symbol']}: {reason}")
 
 
+def digest(receipt_path):
+    try:
+        return hashlib.sha256(Path(receipt_path).read_bytes()).hexdigest()
+    except OSError:
+        return None
+
+
+def compose(facts, sources, lease, receipt_path):
+    """The commit message: the receipt summary and the digest of the receipt
+    file AS IT IS NOW (recomposed after every re-check)."""
+    rva = f"0x{int(facts['rva'], 16):08X}"
+    try:
+        gate = json.loads(Path(receipt_path).read_text(encoding="utf-8")).get(
+            "steps", {}).get("gate", {}).get("result", "?")
+    except (OSError, ValueError):
+        gate = "?"
+    return (f"provider: select retail {facts['symbol']} at {rva}\n\n"
+            f"tools/provider_repair.py check PASS; {gate}\n"
+            f"removed the competing definition from: {', '.join(sources)}\n"
+            f"owner: {facts['owner']['source']}\n"
+            f"receipt sha256: {digest(receipt_path)}\n\n"
+            f"Model: {model()}\n"
+            f"Claim-Lease: {rva}={lease}\n")
+
+
+def published_digest(wt):
+    found = re.search(r"^receipt sha256: ([0-9a-f]{64})$",
+                      git(wt, "log", "-1", "--format=%B").stdout, re.MULTILINE)
+    return found.group(1) if found else None
+
+
+def commit(wt, message, amend=False):
+    return subprocess.run(["git", "commit", "-q", *(["--amend"] if amend else []), "-F", "-"],
+                          cwd=wt, input=message, capture_output=True, text=True)
+
+
 def land(wt, facts, receipt_path):
     sources = sorted({c["source"] for c in facts["competitors"]})
     rva = f"0x{int(facts['rva'], 16):08X}"
@@ -155,19 +219,8 @@ def land(wt, facts, receipt_path):
         git(wt, "checkout", "--", *sources)
         log(f"dropped {facts['symbol']}: this checkout holds no claim lease for it")
         return FAILED
-    receipt = Path(receipt_path).read_bytes() if Path(receipt_path).exists() else b""
-    gate = (json.loads(receipt).get("steps", {}).get("gate", {}).get("result", "?")
-            if receipt else "?")
-    message = (f"provider: select retail {facts['symbol']} at {rva}\n\n"
-               f"tools/provider_repair.py check PASS; {gate}\n"
-               f"removed the competing definition from: {', '.join(sources)}\n"
-               f"owner: {facts['owner']['source']}\n"
-               f"receipt sha256: {hashlib.sha256(receipt).hexdigest()}\n\n"
-               f"Model: {model()}\n"
-               f"Claim-Lease: {rva}={lease}\n")
     git(wt, "add", "--", *sources, check=True)
-    committed = subprocess.run(["git", "commit", "-q", "-F", "-"], cwd=wt, input=message,
-                               capture_output=True, text=True)
+    committed = commit(wt, compose(facts, sources, lease, receipt_path))
     if committed.returncode:
         abandon(wt, facts, "commit refused by hooks: " + (committed.stderr or committed.stdout)[-300:],
                 sources)
@@ -179,10 +232,10 @@ def land(wt, facts, receipt_path):
         if pulled.returncode:
             git(wt, "rebase", "--abort")
             break
-        sha = git(wt, "rev-parse", "HEAD").stdout.strip()
         base = git(wt, "rev-parse", "HEAD~1").stdout.strip()
         # The rebase may have brought changes the check never saw (review
-        # 2026-09-30: an owner-source change landed on a stale receipt).
+        # 2026-09-30: an owner-source change, then a symbols.csv change,
+        # landed on a stale receipt).
         why = stale(wt, receipt_path, checked_base, base)
         if why:
             log(f"rebased onto {base[:10]}: {why}; checking again")
@@ -192,12 +245,24 @@ def land(wt, facts, receipt_path):
                         + (again.stdout.strip().splitlines() or ["?"])[-1][:240])
                 return FAILED
             checked_base = base
+            amended = commit(wt, compose(facts, sources, lease, receipt_path), amend=True)
+            if amended.returncode:
+                retract(wt, facts, sources, "re-commit refused by hooks: "
+                        + (amended.stderr or amended.stdout)[-240:])
+                return FAILED
+        sha = git(wt, "rev-parse", "HEAD").stdout.strip()
+        # Immediately before the push: the message names THIS receipt, and the
+        # receipt still describes this exact tree.
+        if published_digest(wt) != digest(receipt_path) or stale(wt, receipt_path, checked_base, base):
+            retract(wt, facts, sources, "receipt does not match the commit about to be pushed",
+                    record=False)
+            return FAILED
         # fail closed if the claim was lost while we checked or rebased
         import claims
         try:
             held = claims.lease_holder(int(facts["rva"], 16), lease, root=wt)
-        except claims.ClaimsUnavailable as error:
-            held, why = None, str(error)
+        except claims.ClaimsUnavailable:
+            held = None
         if not held:
             retract(wt, facts, sources, "claim lease lost before publication", record=False)
             return FAILED
