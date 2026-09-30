@@ -337,3 +337,42 @@ def test_a_lease_survives_renewal_and_dies_with_a_takeover(hosts):
     claims.claim([0x100])
     hosts("a")
     assert claims.lease_holder(0x100, lease) is None
+
+
+def test_a_landing_queued_during_settlement_keeps_its_claim(hosts, monkeypatch):
+    # review 2026-09-30: the queue was snapshotted before the fetch, so a
+    # repair queued meanwhile was never evaluated and its claim was released.
+    a = hosts("a")
+    row = "?f@@YAXXZ,,0x00000100,16,game/x.cpp,matched,model=m"
+    _commit_ledger(a, [row], "published", {"game/x.cpp": "void f() {}\n"})
+    _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
+    claims.claim([0x100])
+    claims.queue_landed(0x100, row)                    # settled on origin
+    real_fetch = claims._fetch_master
+
+    def queue_while_on_network(root=None):
+        (a / "game/x.cpp").write_text("void f() { local_repair(); }\n", encoding="utf-8")
+        claims.queue_landed(0x100, row)
+        return real_fetch(root)
+    monkeypatch.setattr(claims, "_fetch_master", queue_while_on_network)
+    released, waiting = claims.release_landed()
+    assert released == [] and 0x100 in waiting
+    assert len(claims.pending()) == 1 and 0x100 in claims.active()
+
+
+def test_settlement_releases_only_the_claim_generation_it_evaluated(hosts, monkeypatch):
+    a = hosts("a")
+    row = "?f@@YAXXZ,,0x00000100,16,game/x.cpp,matched,model=m"
+    _commit_ledger(a, [row], "published", {"game/x.cpp": "void f() {}\n"})
+    _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
+    claims.claim([0x100])
+    claims.queue_landed(0x100, row)
+    real_release = claims.release
+
+    def reclaimed_first(rvas, **kwargs):
+        # the claim is re-taken (a new generation) between evaluation and release
+        claims.claim([0x100], who="a")
+        return real_release(rvas, **kwargs)
+    monkeypatch.setattr(claims, "release", reclaimed_first)
+    assert claims.release_landed()[0] == []
+    assert 0x100 in claims.active()

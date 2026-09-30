@@ -123,7 +123,7 @@ def test_a_crash_after_the_push_is_recorded_as_landed(world):
     tip, _ = service._apply(base, [unit_id])
     git(service.work, "push", "-q", "origin", f"{tip}:refs/heads/master")   # pushed, then "crashed"
     service._phase(phase="publishing", base=base, tip=tip, units=[unit_id], gate_exit=0)
-    assert service.run_once() == {"landed": [], "rejected": []}
+    assert service.run_once() == {"landed": [unit_id], "rejected": []}
     assert (service.state / "landed" / f"{unit_id}.json").exists()
     assert json.loads((service.state / "receipts" / f"{unit_id}.json").read_text())["note"]
 
@@ -228,3 +228,57 @@ def test_the_receipt_names_what_was_verified(world):
     assert receipt["artifacts_sha256"] == hashlib.sha256(
         json.dumps(manifest, sort_keys=True).encode()).hexdigest()
     assert receipt["versions"]["python"] and receipt["versions"]["git"].startswith("git version")
+
+
+# ---- 2026-09-30 review (gpt-6.1-sol, review_20260930_0006.md) ----
+
+def test_the_journal_survives_a_receipt_failure_and_recovery_writes_it(world):
+    service, unit, origin = world
+    uid = service.enqueue(unit("receipt_crash"))
+    real = service._receipts
+
+    def fail(*args, **kwargs):
+        raise RuntimeError("simulated disk failure after a successful push")
+    service._receipts = fail
+    with pytest.raises(RuntimeError, match="simulated disk"):
+        service.run_once()
+    assert "receipt_crash.txt" in origin_files(origin)
+    assert (service.state / "state.json").exists()           # the journal survived
+    service._receipts = real
+    assert service.run_once()["landed"] == [uid]
+    assert (service.state / "receipts" / f"{uid}.json").exists()
+    assert not (service.state / "state.json").exists()
+
+
+def test_a_takeover_after_ref_advertisement_blocks_publication(claimed):
+    # The push's own pre-push hook moves the claim ref after the refs were
+    # advertised; only a real expected-token update catches that.
+    service, unit, origin, claims, got = claimed
+    before = git(origin, "rev-parse", "master")
+    uid = service.enqueue(unit("post_advertisement"), {"claims": {"0x100": got.leases[0x100]}})
+    tree = git(service.repo, "mktree", input="")
+    rival = git(service.repo, "commit-tree", tree, "-m", "rival")
+    git(service.repo, "push", "-q", "origin", f"{rival}:refs/test/rival")
+    hooks = service.state / "hooks"
+    hooks.mkdir()
+    (hooks / "pre-push").write_text(
+        "#!/bin/sh\n" + f'git --git-dir="{origin.as_posix()}" update-ref refs/claims/0x00000100 {rival}\n',
+        encoding="utf-8")
+    git(service.repo, "config", "core.hooksPath", hooks.as_posix())
+    result = service.run_once()
+    assert result == {"landed": [], "rejected": [uid]}
+    assert git(origin, "rev-parse", "master") == before
+    assert git(origin, "rev-parse", "refs/claims/0x00000100") == rival
+
+
+def test_publication_rewrites_the_claim_and_the_owner_keeps_renewing(claimed):
+    service, unit, origin, claims, got = claimed
+    uid = service.enqueue(unit("published"), {"claims": {"0x100": got.leases[0x100]}})
+    assert service.run_once()["landed"] == [uid]
+    now = git(origin, "rev-parse", "refs/claims/0x00000100")
+    assert now != got.tokens[0x100]
+    body = json.loads(git(origin, "log", "-1", "--format=%B", now))
+    assert body["published"] == git(origin, "rev-parse", "master")
+    assert body["lease"] == got.leases[0x100] and body["owner"] == "worker"
+    renewed, lost = claims.renew(got.tokens, root=service.repo)   # the worker's old token
+    assert lost == [] and 0x100 in renewed

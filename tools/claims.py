@@ -311,14 +311,25 @@ def renew(tokens, who=None, ttl_hours=TTL_HOURS, note="", root=None):
     if not fetch(root):
         raise ClaimsUnavailable("claims: cannot fetch refs/claims/* to renew")
     current = _read_local(root)
+    # the lease each token belongs to, read from the token's own claim commit
+    leases = {}
+    for rva, token in tokens.items():
+        body = _git("log", "-1", "--format=%B", token, cwd=root)
+        try:
+            leases[rva] = json.loads(body.stdout).get("lease") if body.returncode == 0 else None
+        except ValueError:
+            leases[rva] = None
     renewed, lost = {}, []
     for rva, token in sorted(tokens.items()):
         entry = current.get(rva)
-        if not entry or entry[0] != token or entry[1].get("owner") != who:
+        same = entry and (entry[0] == token or (
+            entry[1].get("lease") and entry[1].get("lease") == leases.get(rva)))
+        if not same or entry[1].get("owner") != who:
             lost.append(rva)
             continue
         sha = _record(who, ttl_hours, note or entry[1].get("note", ""), root,
                       lease=entry[1].get("lease") or token)
+        token = entry[0]                                    # the generation we replace
         pushed = _git("push", "-q", f"--force-with-lease={ref_of(rva)}:{token}", REMOTE,
                       f"+{sha}:{ref_of(rva)}", cwd=root, timeout=120)
         if pushed.returncode == 0:
@@ -350,6 +361,25 @@ def lease_holder(rva, lease, root=None):
     if not entry or entry[1].get("expires", 0) <= time.time():
         return None
     return entry[0] if lease in (entry[0], entry[1].get("lease")) else None
+
+
+def publication(token, tip, root=None):
+    """A new claim commit that copies claim `token` (owner, lease, expiry)
+    and records that `tip` published it. A publisher pushes it in the same
+    atomic push as master with --force-with-lease=<ref>:<token>, so the
+    server itself checks the claim generation in that transaction. The lease
+    is kept, so the owner's heartbeat continues from the new commit."""
+    body = _git("log", "-1", "--format=%B", token, cwd=root)
+    if body.returncode:
+        raise ClaimsUnavailable(f"claims: claim commit {token} is not available locally")
+    info = json.loads(body.stdout)
+    info.update(published=tip, nonce=uuid.uuid4().hex, lease=info.get("lease") or token)
+    tree = _git("mktree", input_text="", cwd=root).stdout.strip()
+    made = _git("-c", "user.name=claims", "-c", "user.email=claims@localhost",
+                "commit-tree", tree, "-m", json.dumps(info, sort_keys=True), cwd=root)
+    if made.returncode:
+        raise RuntimeError(made.stderr.strip())
+    return made.stdout.strip()
 
 
 def holds(rva, token, root=None):
@@ -600,19 +630,38 @@ def release_landed(sha=None, root=None, who=None, keep_days=1.0):
     # 2026-09-29: `release --landed <old sha>` freed a body whose replacement
     # source was still local).
     released = []
-    for holder, rvas in by_owner.items():
-        rvas -= unsettled
-        if rvas:
-            released += release(sorted(rvas), who=holder, root=root)
-    if queue:
-        # drop only the entries settled here: ones queued while we were on
-        # the network survive the rewrite
-        kept = {json.dumps(e, sort_keys=True) for e in keep}
-        settled = {json.dumps(e, sort_keys=True) for e in queue} - kept
-        with _queue_lock(root) as path:
-            _write_queue(path, [e for e in _read_queue(path)
-                                if json.dumps(e, sort_keys=True) not in settled])
-    return sorted(set(released)), sorted(set(waiting))
+    if not any(by_owner.values()) and not queue:
+        return [], sorted(set(waiting))
+    # The claim generation this evaluation saw: a release deletes a claim
+    # ref only while it still carries exactly that token, so a body
+    # re-claimed (or renewed into a new generation by a publisher) since is
+    # not released on stale evidence.
+    if not fetch(root):
+        raise ClaimsUnavailable("claims: cannot fetch refs/claims/* to settle")
+    generation = {rva: sha for rva, (sha, _) in _read_local(root).items()}
+    snapshot = {json.dumps(e, sort_keys=True) for e in queue}
+    kept = {json.dumps(e, sort_keys=True) for e in keep}
+    with _queue_lock(root) as path:
+        # Re-read under the lock, right before releasing: an entry queued
+        # while we were on the network was never evaluated, so its body stays
+        # claimed (review 2026-09-30: a repair queued during the fetch had its
+        # claim released). queue_landed waits on this lock meanwhile.
+        current = _read_queue(path)
+        for entry in current:
+            if json.dumps(entry, sort_keys=True) not in snapshot:
+                try:
+                    unsettled.add(int(entry["rva"], 16))
+                except (KeyError, ValueError):
+                    continue
+        for holder, rvas in by_owner.items():
+            rvas = sorted(rvas - unsettled)
+            if rvas:
+                released += release(rvas, who=holder, root=root,
+                                    tokens={r: generation[r] for r in rvas if r in generation})
+        # drop only the entries settled here
+        settled = snapshot - kept
+        _write_queue(path, [e for e in current if json.dumps(e, sort_keys=True) not in settled])
+    return sorted(set(released)), sorted(set(waiting) | (unsettled - set(released)))
 
 
 def main(argv=None):

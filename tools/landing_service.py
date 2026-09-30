@@ -30,9 +30,12 @@ service lands them.
             (a claim can be lost DURING a 17-minute gate), a unit whose lease
             origin no longer holds is rejected (`claim-lost`) and the batch
             is re-gated without it. The publication itself is one `git push
-            --atomic` that updates master AND leases every unit's claim ref
-            at its current token (--force-with-lease), so a takeover between
-            that last read and the push rejects the whole push.
+            --atomic` that updates master AND rewrites every unit's claim ref
+            (lease and owner kept, `published` recorded; claims.publication)
+            with --force-with-lease at the token just read. Because each
+            claim ref is a real update, the server checks every old value in
+            the same transaction: a takeover at any point before it, even
+            inside the push's own pre-push hook, rejects the whole push.
   GATE      Run the gate ONCE per batch on the exact batch tip: by default the
             repository's own .githooks/pre-push fed the ref line for
             snapshot..tip (protected_paths, conversion_gate, check_csv,
@@ -56,9 +59,11 @@ service lands them.
             the python/git versions and host. The landed sha is what
             `claims.py release --landed SHA` takes.
   RECOVERY  state.json records the phase (verifying/publishing) with the
-            snapshot and tip before each step. On start, a `publishing` tip
-            that is an ancestor of origin/master is recorded as landed;
-            anything else returns to the queue.
+            snapshot, tip and verification evidence before each step, and is
+            removed only after receipts and queue settlement are written. On
+            start (and after every push, whatever it reported), a
+            `publishing` tip that is an ancestor of origin/master is recorded
+            as landed with its receipts; anything else returns to the queue.
 
 AUTHENTICATION IS NOT SOLVED. model=, run= and host= in a receipt are values
 a worker process could have set. Proposal: fleet_run signs a run receipt
@@ -247,19 +252,25 @@ class Service:
         return current
 
     # ---- one pass -------------------------------------------------------
-    def recover(self):
+    def recover(self, note=""):
+        """Settle a journalled publication: if its tip is on the branch, write
+        the receipts and move the units to landed/, THEN drop the journal (a
+        failure before that leaves it for the next start). Returns the units
+        it recorded as landed."""
         path = self.state / "state.json"
         if not path.exists():
-            return
+            return []
         data = json.loads(path.read_text(encoding="utf-8"))
+        done = []
         if data.get("phase") == "publishing":
             tip = self.snapshot()
-            landed = git("merge-base", "--is-ancestor", data["tip"], tip, cwd=self.repo,
-                         check=False).returncode == 0
-            if landed:
+            if git("merge-base", "--is-ancestor", data["tip"], tip, cwd=self.repo,
+                   check=False).returncode == 0:
                 self._receipts(data["units"], data["base"], data["tip"], data.get("verified") or {},
-                               note="recovered after a crash")
+                               note=note)
+                done = list(data["units"])
         path.unlink()
+        return done
 
     def _reject(self, result, records, unit, reason, **extra):
         self._finish(unit, "rejected", reason=reason, **extra)
@@ -268,9 +279,9 @@ class Service:
 
     def run_once(self, max_batch=20, publish=True, attempts=3):
         """Land up to `max_batch` queued units. Returns {landed, rejected}."""
-        self.recover()
+        recovered = self.recover(note="recovered after a crash")
         records = {r["id"]: r for r in self.queued()[:max_batch]}
-        result = {"landed": [], "rejected": []}
+        result = {"landed": recovered, "rejected": []}
         for unit, record in list(records.items()):
             if not self.fence(record):
                 self._reject(result, records, unit, "claim-lost")
@@ -328,17 +339,25 @@ class Service:
                 for unit in lost:
                     self._reject(result, records, unit, "claim-lost", snapshot=base)
                 continue                        # re-gate without them
-            self._phase(phase="publishing", base=base, tip=tip, units=good, verified=evidence)
+            # Each claim ref is REWRITTEN (lease kept, publication recorded) with
+            # an expected-token lease in the same --atomic push as master: a
+            # no-op refspec is only checked against the ref advertisement, so
+            # a takeover after it still published (review 2026-09-30). A real
+            # update makes the server check every old value in one transaction.
+            import claims
             spec = [f"--force-with-lease={ref}:{token}" for ref, token in sorted(leases.items())]
-            refs = [f"{token}:{ref}" for ref, token in sorted(leases.items())]
-            pushed = git("push", "-q", "--atomic", *spec, self.remote,
-                         f"{tip}:refs/heads/{self.branch}", *refs, cwd=self.work, check=False)
-            (self.state / "state.json").unlink()
-            if pushed.returncode == 0:
-                self._receipts(good, base, tip, evidence)
-                result["landed"] += good
-                for unit in good:
-                    del records[unit]
+            refs = [f"{claims.publication(token, tip, root=self.repo)}:{ref}"
+                    for ref, token in sorted(leases.items())]
+            # The journal outlives the push until receipts and queue
+            # settlement are written; recover() finishes an interrupted one.
+            self._phase(phase="publishing", base=base, tip=tip, units=good, verified=evidence)
+            git("push", "-q", "--atomic", *spec, self.remote,
+                f"{tip}:refs/heads/{self.branch}", *refs, cwd=self.work, check=False)
+            landed = self.recover()
+            if landed:
+                result["landed"] += landed
+                for unit in landed:
+                    records.pop(unit, None)
                 return result
             # master moved or a claim changed under the lease: re-read, redo
         return result
