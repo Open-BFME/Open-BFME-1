@@ -1,17 +1,15 @@
 // ?rva000d6030@Rva000D6030Owner@@QAEMPBVThingTemplate@@@Z
-// partial score=0.55 date=2026-09-21
+// partial score=0.9383 date=2026-09-21
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-// retail RVA 0x000D6030. If the incoming ThingTemplate is null, returns
-// g_bfmeDefaultBU. Otherwise walks the (sentinel-headed, doubly linked)
-// list of Rva000D6030Item* at this+0x640; for each item whose object
-// (GameLogic::findObjectByID on m_objectId) exists and clears both status
-// flags, and whose accepts() approves the template, reads
-// m_arrayStart[globalIndex] (globalIndex shared across accepted items,
-// incrementing once per accepted read) into the running result and keeps
-// going -- an item whose own array is too short for the current index ends
-// the walk immediately. The final result adds g_bfmeDefaultBU. No caller or
-// owner class identifies this body, so it is address-derived.
+// Retail RVA 0x000D6030: a null template returns the pinned unit float.
+// Otherwise walk the sentinel-headed list at this+0x640. For each node,
+// look up its object's ID and skip absent objects or objects with either
+// disqualifying flag set. An accepted item overwrites the result with
+// m_arrayStart[index] when index is below its array length; the shared index
+// increments after every accepted item, including an out-of-range one.
+// Return the last in-range value (initially zero) plus the unit float. The
+// caller does not prove the owning class identity.
 
 class ThingTemplate;
 class Object;
@@ -24,11 +22,13 @@ public:
 };
 
 extern GameLogic *TheBfmeGameLogic;
-extern float g_bfmeDefaultBU;
+extern const float Rva00C75334One;
+
+class Player;
 
 struct Rva0039F0A0
 {
-	bool accepts(const ThingTemplate *tmpl, void *unused, bool flag);
+	bool accepts(const void *tmpl, Player *player1, Player *player2);
 };
 
 struct Rva000D6030Item
@@ -58,15 +58,15 @@ struct Rva000D6030Owner
 // retail RVA 0x000D6030
 float Rva000D6030Owner::rva000d6030(const ThingTemplate *tmpl)
 {
+	Rva000D6030Owner *owner = this;
 	if (!tmpl)
-		return g_bfmeDefaultBU;
+		return Rva00C75334One;
 
-	Rva000D6030Node *sentinel = m_bfmeSentinel;
-	Rva000D6030Node *node = sentinel->m_next;
-	int index = 0;
+	Rva000D6030Node *node = owner->m_bfmeSentinel->m_next;
 	float result = 0.0f;
+	unsigned int index = 0;
 
-	while (node != sentinel)
+	while (node != owner->m_bfmeSentinel)
 	{
 		Rva000D6030Item *item = node->m_data;
 		Object *obj = TheBfmeGameLogic->findObjectByID(item->m_objectId);
@@ -78,14 +78,15 @@ float Rva000D6030Owner::rva000d6030(const ThingTemplate *tmpl)
 
 			if (!(flagsA & 8) && !(flagsB & 0x80000))
 			{
-				if (item->m_accepts->accepts(tmpl, 0, false))
+				if (item->m_accepts->accepts(tmpl, 0, 0))
 				{
-					int count = item->m_arrayEnd - item->m_arrayStart;
+					float *arrayEnd = item->m_arrayEnd;
+					float *arrayStart = item->m_arrayStart;
+					int count = arrayEnd - arrayStart;
 
-					if (index >= count)
-						break;
+					if (index < count)
+						result = arrayStart[index];
 
-					result = item->m_arrayStart[index];
 					++index;
 				}
 			}
@@ -94,5 +95,6 @@ float Rva000D6030Owner::rva000d6030(const ThingTemplate *tmpl)
 		node = node->m_next;
 	}
 
-	return result + g_bfmeDefaultBU;
+	result += Rva00C75334One;
+	return result;
 }
