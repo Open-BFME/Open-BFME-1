@@ -1,18 +1,38 @@
-// ?d_00744360@@YAXXZ
-// partial score=0.81 date=2026-09-27
+// ?rva00744360HasClearShot@W3DView@@UAE_NW4ObjectID@@0H@Z
+// partial score=0.9665 date=2026-09-30
 // cl: /DNDEBUG /MD /EHsc
-// Retail 0x00744360 (358 B). Draft 2: TU-local ABI adapters for the four ILT
-// callees, so the call sites compile through the real ledger thunks.
+// BFME W3DView virtual at vtable 0x011217A0 slot 155 (ILT 0x000217E7), retail 0x00744360.
+// Casts a ray between two objects; false when a different object's drawable blocks it.
 typedef int Int;
 typedef bool Bool;
+typedef float Real;
 
-struct Rva00744360Vec
+enum ObjectID
 {
-	float x;
-	float y;
-	float z;
+	INVALID_ID = 0,
+	FORCE_OBJECTID_TO_LONG_SIZE = 0x7FFFFFFF
 };
 
+struct Coord3D
+{
+	Real x;
+	Real y;
+	Real z;
+};
+
+class Vector3
+{
+public:
+	Vector3() {}
+	Vector3(float x, float y, float z) { X = x; Y = y; Z = z; }
+	void Set(float x, float y, float z) { X = x; Y = y; Z = z; }
+
+	float X;
+	float Y;
+	float Z;
+};
+
+// Only the Thing position (+0x38), the id (+0x74) and virtual slot 10 are used.
 class Object
 {
 public:
@@ -27,79 +47,62 @@ public:
 	virtual void slot08();
 	virtual void slot09();
 	virtual Int rva00744360Able() const;
+
+	const Coord3D *getPosition() const { return &m_cachedPos; }
+	ObjectID getID() const { return m_id; }
+
+private:
+	char m_unreconstructed_004[0x34];
+	Coord3D m_cachedPos;
+	char m_unreconstructed_044[0x30];
+	ObjectID m_id;
 };
 
 class GameLogic
 {
 public:
-	typedef Object *(GameLogic::*FindCall)(int id);
-	Object *findObjectByID(int id);
+	Object *findObjectByID(ObjectID id);
 };
 
-extern void j_0001f253(void);
-extern void j_0004935a(void);
-extern void j_0001b757(void);
-extern void j_00019cc2(void);
+extern GameLogic *TheGameLogic;
 
-static __forceinline Object *Rva00744360Find(GameLogic *logic, int id)
-{
-	union { void (*raw)(void); GameLogic::FindCall member; } route;
-	route.raw = j_0001f253;
-	return (logic->*route.member)(id);
-}
-
-struct Rva00744360Vec3
-{
-	float x;
-	float y;
-	float z;
-};
-
-class Rva00744360Seg
+// Retail calls the out-of-line Set at 0x003FEB40 through ILT 0x0004935A.
+class LineSegClass
 {
 public:
-	void set(const struct Rva00744360Vec3 &a, const struct Rva00744360Vec3 &b);
+	LineSegClass() {}
+	void Set(const Vector3 &p0, const Vector3 &p1);
 
-	Rva00744360Vec3 m_p0;
-	Rva00744360Vec3 m_p1;
-	Rva00744360Vec3 m_dp;
-	Rva00744360Vec3 m_dir;
+	Vector3 m_p0;
+	Vector3 m_p1;
+	Vector3 m_dp;
+	Vector3 m_dir;
 	float m_length;
 };
 
-struct Rva00744360RayResult
+struct CastResultStruct
 {
+	CastResultStruct() { Reset(); }
+	void Reset()
+	{
+		m_startBad = false;
+		m_fraction = 1.0f;
+		m_normal.Set(0, 0, 0);
+		m_surfaceType = 0;
+		m_computeContact = false;
+		m_contact.Set(0, 0, 0);
+	}
+
 	Bool m_startBad;
 	float m_fraction;
-	Rva00744360Vec3 m_normal;
+	Vector3 m_normal;
 	unsigned int m_surfaceType;
 	Bool m_computeContact;
-	Rva00744360Vec3 m_contact;
+	Vector3 m_contact;
 };
 
-class Rva00744360Ray
-{
-public:
-	typedef void (Rva00744360Ray::*BuildCall)(const Rva00744360Seg &seg,
-		Rva00744360RayResult *res, int type, Bool translucent, Bool hidden);
-
-	Rva00744360RayResult *m_result;
-	int m_collisionType;
-	void *m_hit;
-	Rva00744360Seg m_seg;
-	Bool m_checkTranslucent;
-	Bool m_checkHidden;
-};
-
-class Rva00744360Scene
-{
-public:
-	typedef Bool (Rva00744360Scene::*CastCall)(Rva00744360Ray &raytest,
-		Bool testAll, Int collisionType);
-	Bool castRay(Rva00744360Ray &raytest, Bool testAll, Int collisionType);
-};
-
-class Rva00744360DrawLink
+// Get_User_Data is RenderObjClass vtable slot 86 (+0x158).
+class RenderObjClass
 {
 public:
 	virtual void d60slot00(); virtual void d60slot01(); virtual void d60slot02(); virtual void d60slot03();
@@ -124,101 +127,93 @@ public:
 	virtual void d60slot76(); virtual void d60slot77(); virtual void d60slot78(); virtual void d60slot79();
 	virtual void d60slot80(); virtual void d60slot81(); virtual void d60slot82(); virtual void d60slot83();
 	virtual void d60slot84(); virtual void d60slot85();
-	virtual void *renderLink00744360();
+	virtual void *Get_User_Data();
 };
 
-struct Rva00744360RenderLink
+// Out-of-line constructor at 0x00609A20, called through ILT 0x0001B757.
+class RayCollisionTestClass
+{
+public:
+	RayCollisionTestClass(const LineSegClass &ray, CastResultStruct *res, int collision_type,
+		bool check_translucent, bool check_hidden);
+
+	CastResultStruct *m_result;
+	int m_collisionType;
+	RenderObjClass *m_hit;
+	LineSegClass m_seg;
+	Bool m_checkTranslucent;
+	Bool m_checkHidden;
+};
+
+class RTS3DScene
+{
+public:
+	Bool castRay(RayCollisionTestClass &raytest, Bool testAll, Int collisionType);
+};
+
+class W3DDisplay
+{
+public:
+	static RTS3DScene *m_3DScene;
+};
+
+class Drawable
+{
+public:
+	Object *getObject() { return m_object; }
+
+private:
+	char m_unreconstructed_000[0xfc];
+	Object *m_object;
+};
+
+struct DrawableInfo
 {
 	void *m_vtable;
-	void *m_drawable;
+	Drawable *m_drawable;
 };
 
-struct Rva00744360OwnerLink
+class W3DView
 {
-	unsigned char m_pad[0xfc];
-	void *m_owner;
+public:
+	virtual Bool rva00744360HasClearShot(ObjectID firstID, ObjectID secondID, Int pickType);
 };
 
-#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
-#define g_bfmeGlobPB (*(Rva00744360Scene **)0x012F8058)
-
-static __forceinline void Rva00744360SetSeg(Rva00744360Seg *seg,
-	const Rva00744360Vec3 *a, const Rva00744360Vec3 *b)
+Bool W3DView::rva00744360HasClearShot(ObjectID firstID, ObjectID secondID, Int pickType)
 {
-	union { void (*raw)(void); void (Rva00744360Seg::*member)(const struct Rva00744360Vec3 &, const struct Rva00744360Vec3 &); } route;
-	route.raw = j_0004935a;
-	(seg->*route.member)(*a, *b);
-}
-
-static __forceinline void Rva00744360BuildRay(Rva00744360Ray *ray,
-	const Rva00744360Seg &seg, Rva00744360RayResult *res)
-{
-	union { void (*raw)(void); Rva00744360Ray::BuildCall member; } route;
-	route.raw = j_0001b757;
-	(ray->*route.member)(seg, res, 1, false, false);
-}
-
-static __forceinline Bool Rva00744360Cast(Rva00744360Scene *scene,
-	Rva00744360Ray &ray, Bool all, Int type)
-{
-	union { void (*raw)(void); Rva00744360Scene::CastCall member; } route;
-	route.raw = j_00019cc2;
-	return (scene->*route.member)(ray, all, type);
-}
-
-Bool __stdcall rva00744360HasClearShot(int firstID, int secondID, void *extra)
-{
-	GameLogic *logic = TheBfmeGameLogic;
-	Object *first = Rva00744360Find(logic, firstID);
-	Object *second = Rva00744360Find(logic, secondID);
+	GameLogic *logic = TheGameLogic;
+	Object *first = logic->findObjectByID(firstID);
+	Object *second = logic->findObjectByID(secondID);
 	if (first == 0 || !first->rva00744360Able() || second == 0 || !second->rva00744360Able())
 		return false;
 
-	const Rva00744360Vec *firstVec = (const Rva00744360Vec *)((const char *)first + 0x38);
-	const Rva00744360Vec *secondVec = (const Rva00744360Vec *)((const char *)second + 0x38);
-	Rva00744360Vec3 firstPos;
-	firstPos.x = firstVec->x;
-	firstPos.y = firstVec->y;
-	firstPos.z = firstVec->z;
-	Rva00744360Vec3 secondPos;
-	secondPos.x = secondVec->x;
-	secondPos.y = secondVec->y;
-	secondPos.z = secondVec->z;
+	const Coord3D *firstPos = first->getPosition();
+	const Coord3D *secondPos = second->getPosition();
 
-	Rva00744360Seg seg;
-	Rva00744360SetSeg(&seg, &firstPos, &secondPos);
+	LineSegClass lineseg;
+	lineseg.Set(Vector3(firstPos->x, firstPos->y, firstPos->z), Vector3(secondPos->x, secondPos->y, secondPos->z));
 
-	Rva00744360RayResult result;
-	result.m_startBad = false;
-	result.m_fraction = 1.0f;
-	result.m_normal.x = 0.0f;
-	result.m_normal.y = 0.0f;
-	result.m_normal.z = 0.0f;
-	result.m_surfaceType = 0;
-	result.m_contact.x = 0.0f;
-	result.m_contact.y = 0.0f;
-	result.m_contact.z = 0.0f;
+	CastResultStruct result;
 	result.m_computeContact = true;
+	RayCollisionTestClass raytest(lineseg, &result, 1, false, false);
 
-	Rva00744360Ray ray;
-	Rva00744360BuildRay(&ray, seg, &result);
-
-	if (!Rva00744360Cast(g_bfmeGlobPB, ray, false, (Int)extra))
-		return false;
-
-	Rva00744360DrawLink *link = (Rva00744360DrawLink *)ray.m_hit;
-	if (link == 0)
-		return false;
-	Rva00744360RenderLink *robj = (Rva00744360RenderLink *)link->renderLink00744360();
-	if (robj == 0)
-		return false;
-	void *draw = robj->m_drawable;
-	if (draw == 0)
-		return false;
-	void *owner = ((Rva00744360OwnerLink *)draw)->m_owner;
-	if (owner == 0)
-		return false;
-	if (*(int *)((char *)owner + 0x74) != secondID)
-		return false;
+	if (W3DDisplay::m_3DScene->castRay(raytest, false, pickType))
+	{
+		RenderObjClass *renderObj = raytest.m_hit;
+		if (renderObj)
+		{
+			DrawableInfo *info = (DrawableInfo *)renderObj->Get_User_Data();
+			if (info)
+			{
+				Drawable *draw = info->m_drawable;
+				if (draw)
+				{
+					Object *obj = draw->getObject();
+					if (obj && obj->getID() != secondID)
+						return false;
+				}
+			}
+		}
+	}
 	return true;
 }
