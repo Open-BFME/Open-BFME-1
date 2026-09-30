@@ -38,6 +38,8 @@ extern FontLibrary *TheFontLibrary;
 // ?BfmeZeroRange@@3MB, the shared 0.0f constant at 0x01075350.
 extern const Real BfmeZeroRange;
 
+extern int g_target_00472DD0;
+
 class RefCounted
 {
 public:
@@ -52,7 +54,7 @@ class __declspec( novtable ) FontDefaultSettings : public RefCounted
 	FontDefaultSettings()
 	{
 		m_references = 0;
-		*(unsigned int *)this = 0x010F7624;
+		*(unsigned int *)this = (unsigned int)&g_target_00472DD0;
 	}
 
 	unsigned char m_antialiased;

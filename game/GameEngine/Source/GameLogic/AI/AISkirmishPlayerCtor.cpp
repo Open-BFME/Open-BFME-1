@@ -20,6 +20,9 @@ struct GameLogic
 
 extern GameLogic *TheGameLogic;
 
+extern "C" const void *bfmeVftAISkirmishPlayer[];
+#pragma comment(linker, "/alternatename:_bfmeVftAISkirmishPlayer=??_7AISkirmishPlayer@@6B@")
+
 class AIPlayer
 {
 public:
@@ -62,7 +65,7 @@ AISkirmishPlayer::AISkirmishPlayer(Player *player) :
 	m_frameToCheckEnemy(0),
 	m_currentEnemy(0)
 {
-	*(UnsignedInt *)this = 0x01096fb0;
+	*(UnsignedInt *)this = (UnsignedInt)bfmeVftAISkirmishPlayer;
 	m_skillsetSelector = TheGameLogic->m_frame;
 	player->m_canBuildUnits = 1;
 }

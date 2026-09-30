@@ -176,6 +176,7 @@ public:
 
 extern void j_000338ed();
 extern void j_0003df14();
+extern void j_0002567b();
 
 void _bfme_setAptScreenRef( const AsciiString &name,
 	Rva0050F840FunctorHolder callback );
@@ -247,7 +248,7 @@ BfmeAptScreenOnlineChat::BfmeAptScreenOnlineChat( int context )
 
 		{
 			AsciiString name( "AptOnline::OnlineChat::QuickMatch" );
-			_bfme_showAptScreen( name, Rva0050F8B0FunctorHolder( 0x0042567B ) );
+			_bfme_showAptScreen( name, Rva0050F8B0FunctorHolder( (unsigned int)j_0002567b ) );
 		}
 		{
 			AsciiString name( "AptOnline::OnlineChat::OnBttnCancel" );

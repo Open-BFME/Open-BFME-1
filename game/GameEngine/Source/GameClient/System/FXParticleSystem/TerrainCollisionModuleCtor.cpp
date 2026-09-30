@@ -27,6 +27,9 @@ class FXList;
 
 extern const char Rva006A16B0Empty[];
 
+extern "C" const void *bfmeVftCategoryModuleInfo8[];
+#pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo8=??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@")
+
 class GameClientRandomVariable
 {
 public:
@@ -66,7 +69,7 @@ class TerrainCollisionFlagsSlice
 public:
     TerrainCollisionFlagsSlice()
     {
-        *(volatile unsigned int *)this = 0x0107375c;
+        *(volatile unsigned int *)this = (unsigned int)bfmeVftCategoryModuleInfo8;
         bool one = true;
         *(volatile unsigned char *)((unsigned char *)this + 4) = one;
         *(volatile unsigned char *)((unsigned char *)this + 5) = one;
