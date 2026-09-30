@@ -115,8 +115,13 @@ def index_tables(present, facts, selection):
 
 def load_index():
     if not INDEX.exists():
-        raise SystemExit(f"link_check: no index at {INDEX.relative_to(ROOT).as_posix()}; run "
-                         "`python3 tools/link_census.py --build --history` (or --status on the census's tree)")
+        common = _git("rev-parse", "--path-format=absolute", "--git-common-dir").strip()
+        census = Path(common).parent / "build" / "wt_link" / INDEX.relative_to(ROOT)
+        raise SystemExit(
+            f"link_check: no census index at {INDEX.relative_to(ROOT).as_posix()} (134 MB, never tracked).\n"
+            f"  copy the daily census's:  mkdir -p build/link_census && cp '{census.as_posix()}' build/link_census/\n"
+            "  or build one (~35 min):   python3 tools/link_census.py --build --history\n"
+            "  `link_check.py next` needs neither: it reads targets/game/reverse/link_queue.csv")
     with INDEX.open("rb") as handle:
         return pickle.load(handle)
 
@@ -139,6 +144,26 @@ def duplicate(name, position, exclusive, own, index):
     if position < first:  # this object is the first definition: every later one is compared with it
         return exclusive or any(others.values())
     return exclusive or others[first]
+
+
+def refresh(index, objects, truth):
+    """Replace the census's definitions of `objects` with their current
+    object files', so a fix in one file (a removed duplicate, a new datum) is
+    seen when checking the others. Blockers of files not passed stay as the
+    census saw them."""
+    positions = {index["objects"].index(obj.name): obj for obj in objects if obj.name in index["objects"]}
+    if not positions:
+        return
+    for table, at in (("strong", lambda entry: entry), ("comdat", lambda entry: entry[0])):
+        for name, entries in index[table].items():
+            if any(at(entry) in positions for entry in entries):
+                index[table][name] = [entry for entry in entries if at(entry) not in positions]
+    for position, obj in positions.items():
+        copies, defined, _, _ = link_census.object_facts(obj, truth)
+        for name in defined:
+            index["strong"].setdefault(name, []).append(position)
+        for name, digest, _, verdict in copies:
+            index["comdat"].setdefault(name, []).append((position, digest, verdict))
 
 
 def check_object(obj, index, truth, source=None):
@@ -425,6 +450,8 @@ def main(argv=None):
     ap.add_argument("paths", nargs="*", help="sources (compiled when stale) or objects; or `next [-h]`")
     ap.add_argument("--next", action="store_true", help="rank blocker names by the bytes their fix alone unlocks")
     ap.add_argument("--limit", type=int, default=30)
+    ap.add_argument("--census-only", action="store_true",
+                    help="check against the census's definitions of the given files, not their current objects")
     ap.add_argument("--publish", metavar="CSV", nargs="?", const=str(QUEUE),
                     help=f"write the queue's top {QUEUE_LIMIT} rows (default {QUEUE.relative_to(ROOT).as_posix()})")
     args = ap.parse_args(argv)
@@ -440,8 +467,10 @@ def main(argv=None):
         return 0
     truth = link_census.RetailTruth(link_census.ledger())
     resolved = [resolve(path, index) for path in args.paths]
+    if not args.census_only:
+        refresh(index, [obj for _, obj in resolved], truth)
     now = source_bytes({source for source, _ in resolved if source})
-    clean = []
+    clean, before, after = [], 0, 0
     for source, obj in resolved:
         try:
             result = check_object(obj, index, truth, source)
@@ -450,7 +479,11 @@ def main(argv=None):
             clean.append(False)
             continue
         clean.append(report(source, obj, result, index, now.get(source, 0)))
-    print(f"link_check: {sum(clean)} of {len(clean)} link cleanly ({time.time() - started:.1f}s)")
+        entry = index["blockers"].get(source or "", {})
+        before += index["bytes"].get(source, 0) if entry.get("linked") else 0
+        after += now.get(source, 0) if clean[-1] else 0
+    print(f"link_check: {sum(clean)} of {len(clean)} link cleanly; LINKED {before:,} -> {after:,} bytes "
+          f"({time.time() - started:.1f}s)")
     return 0 if all(clean) else 1
 
 

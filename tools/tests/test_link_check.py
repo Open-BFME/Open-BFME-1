@@ -119,3 +119,15 @@ def test_publish_and_serve_skip_changed_landed_and_family_rows(tmp_path, monkeyp
     assert "link queue #4 (census c): open" in out and "1 family strings" in out
     assert C.main(["next", "--no-claim", "--family", "strings", "--queue", str(queue)]) == 0
     assert "??1AsciiString@@QAE@XZ" in capsys.readouterr().out
+
+
+def test_refresh_replaces_a_passed_objects_census_definitions(monkeypatch):
+    """A duplicate removed from b.obj since the census no longer charges a.obj."""
+    import link_census
+    from types import SimpleNamespace
+    ix = index(strong={"f": [0, 1], "g": [1]}, comdat={"h": [(1, "x", None)]})
+    assert C.duplicate("f", 0, True, 0, ix)
+    monkeypatch.setattr(link_census, "object_facts", lambda obj, truth: ([], ["g"], [], []))
+    C.refresh(ix, [SimpleNamespace(name="b.obj"), SimpleNamespace(name="new.obj")], None)
+    assert ix["strong"] == {"f": [0], "g": [1]} and ix["comdat"] == {"h": []}
+    assert not C.duplicate("f", 0, True, 0, ix)
