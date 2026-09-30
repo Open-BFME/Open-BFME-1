@@ -1,5 +1,5 @@
 // ?rvaSetField@Rva0049C2E0Owner@@QAEXHH@Z
-// partial score=0.5 date=2026-09-21
+// partial score=1.0 date=2026-09-30
 // cl: /DNDEBUG /MD /EHsc
 
 // Retail 0x0049C2E0, 127 bytes, __thiscall(ret 8, 2 stack args p1,p2). No
@@ -54,39 +54,20 @@ private:
 // ?rvaSetField@Rva0049C2E0Owner@@QAEXHH@Z
 void Rva0049C2E0Owner::rvaSetField(Int p1, Int p2)
 {
-	bool callNotify;
-
-	if (m_18 & 0x800000)
-	{
-		if (m_10 == 0x22)
-		{
-			Int result;
-			if (p1 == m_70)
-				result = (m_74 != 3) ? m_74 : m_70;
-			else if (p1 == m_74)
-				result = (m_78 != 3) ? m_78 : m_70;
-			else if (p1 == m_78)
-				result = m_70;
-			else
-				result = p1;
-
-			m_148 = result;
-			return;
-		}
-
-		if (m_10 != 0x2e)
-			return;
-
-		callNotify = true;
-	}
-	else
-	{
-		callNotify = (m_18 & 0x3000000) != 0;
-	}
-
-	if (!callNotify)
-		return;
-
-	Object *object = ((GameLogic *)TheBfmeGameLogic)->findObjectByID(p1);
-	rvaNotifyObject(object, p2);
+    if (m_18 & 0x800000) {
+        switch (m_10) {
+        case 0x22: {
+            if (p1 == m_70) { p1=m_74; if(p1==3) p1=m_70; }
+            else if (p1 == m_74) { p1=m_78; if(p1==3) p1=m_70; }
+            else if(p1==m_78) p1=m_70;
+            m_148=p1;
+            return;
+        }
+        case 0x2e:
+            rvaNotifyObject(((GameLogic *)TheBfmeGameLogic)->findObjectByID(p1), p2);
+            return;
+        default: return;
+        }
+    } else if (!(m_18 & 0x3000000)) return;
+    rvaNotifyObject(((GameLogic *)TheBfmeGameLogic)->findObjectByID(p1), p2);
 }
