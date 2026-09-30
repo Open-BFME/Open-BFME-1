@@ -117,7 +117,6 @@ private:
 
 class GlobalData;
 extern GlobalData *TheWritableGlobalData;				///< retail [0x012ED5C8]
-extern GlobalData *g_bfmeGlobalDataOriginal;			///< retail [0x012ED5CC] (static GlobalData::m_theOriginal)
 
 class GlobalData : public SubsystemInterface
 {
@@ -126,6 +125,7 @@ public:
 	void cleanupBeforeMembers();
 
 private:
+	static GlobalData *m_theOriginal;				///< retail [0x012ED5CC]
 	BFMERetailAsciiString m_s08, m_s0c, m_s10, m_s14;			// +0x08..+0x18
 	unsigned char m_pad18[0x94 - 0x18];
 	BFMERetailAsciiString m_s94;								// +0x94
@@ -187,15 +187,22 @@ private:
 	BFMERetailAsciiString m_s1284, m_s1288;					// +0x1284, +0x1288
 };
 
+// GlobalData.cpp's two globals, defined once here with Zero Hour's
+// initializers (GlobalData.cpp: TheWritableGlobalData = NULL,
+// GlobalData::m_theOriginal = NULL). Retail keeps them adjacent in .data at
+// 0x012ED5C8 / 0x012ED5CC, both zero.
+GlobalData *TheWritableGlobalData = 0;
+GlobalData *GlobalData::m_theOriginal = 0;
+
 __declspec(nothrow) __forceinline void GlobalData::cleanupBeforeMembers()
 {
 	if (m_weaponBonusSet)
 		::operator delete(m_weaponBonusSet);
 	m_weaponBonusSet = 0;
 
-	if (g_bfmeGlobalDataOriginal == this)
+	if (m_theOriginal == this)
 	{
-		g_bfmeGlobalDataOriginal = 0;
+		m_theOriginal = 0;
 		TheWritableGlobalData = 0;
 	}
 }
