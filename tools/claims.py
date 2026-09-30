@@ -147,6 +147,21 @@ def owner(root=None):
     return f"{name}@{socket.gethostname()}/{tag}"
 
 
+def _mirror(rva, sha, root=None):
+    """Record in refs/claims-seen/ a claim write origin just accepted."""
+    seen = SEEN + ref_of(rva)[len(NS):]
+    _git(*(("update-ref", seen, sha) if sha else ("update-ref", "-d", seen)), cwd=root)
+
+
+def current_lease(rva, who=None, root=None):
+    """The lease id of `who`'s claim on `rva` in the local mirror (no network),
+    or None. queue_landed binds a landing to it."""
+    entry = _read_local(root).get(int(rva, 16) if isinstance(rva, str) else int(rva))
+    if not entry or entry[1].get("owner") != (who or owner(root)):
+        return None
+    return entry[1].get("lease") or entry[0]
+
+
 def ref_of(rva):
     return f"{NS}0x{int(rva, 16) if isinstance(rva, str) else rva:08X}"
 
@@ -155,16 +170,17 @@ def _ints(rvas):
     return sorted({int(r, 16) if isinstance(r, str) else int(r) for r in rvas})
 
 
-def _record(who, ttl_hours, note="", root=None, lease=None):
+def _record(who, ttl_hours, note="", root=None, lease=None, since=None):
     """A parentless commit carrying the claim JSON; returns its sha, which is
     the claim's fencing token (the nonce makes every claim's sha unique).
-    `lease` is kept across renewals; a fresh claim starts a new one."""
+    `lease` and its start time `since` are kept across renewals; a fresh
+    claim starts a new lease."""
     tree = _git("mktree", input_text="", cwd=root).stdout.strip()
     now = time.time()
     nonce = uuid.uuid4().hex
     body = json.dumps({"owner": who, "host": socket.gethostname(), "note": note,
                        "run": os.environ.get("BFME_RUN_ID", ""), "nonce": nonce,
-                       "lease": lease or nonce,
+                       "lease": lease or nonce, "since": int(since or now),
                        "created": int(now), "expires": int(now + ttl_hours * 3600)}, sort_keys=True)
     made = _git("-c", "user.name=claims", "-c", "user.email=claims@localhost",
                 "commit-tree", tree, "-m", body, cwd=root)
@@ -292,6 +308,8 @@ def claim(rvas, who=None, ttl_hours=TTL_HOURS, note="", root=None):
                                     "the bodies; nothing claimed")
     claimed = sorted(claimed)
     refused = sorted(set(rvas) - set(claimed))
+    for rva in claimed:
+        _mirror(rva, sha, root)
     active.cache_clear()
     return ClaimResult(claimed, refused, tokens={r: sha for r in claimed},
                        leases={r: lease for r in claimed},
@@ -328,12 +346,14 @@ def renew(tokens, who=None, ttl_hours=TTL_HOURS, note="", root=None):
             lost.append(rva)
             continue
         sha = _record(who, ttl_hours, note or entry[1].get("note", ""), root,
-                      lease=entry[1].get("lease") or token)
+                      lease=entry[1].get("lease") or token,
+                      since=entry[1].get("since") or entry[1].get("created"))
         token = entry[0]                                    # the generation we replace
         pushed = _git("push", "-q", f"--force-with-lease={ref_of(rva)}:{token}", REMOTE,
                       f"+{sha}:{ref_of(rva)}", cwd=root, timeout=120)
         if pushed.returncode == 0:
             renewed[rva] = sha
+            _mirror(rva, sha, root)
             continue
         if not fetch(root):
             raise ClaimsUnavailable("claims: renew push failed and origin cannot be re-read")
@@ -415,6 +435,7 @@ def release(rvas, who=None, force=False, root=None, tokens=None):
                     f":{ref_of(rva)}", cwd=root, timeout=120)
         if gone.returncode == 0:
             done.append(rva)
+            _mirror(rva, None, root)
     active.cache_clear()
     return done
 
@@ -510,7 +531,9 @@ def queue_landed(rva, row, who=None, root=None, deps=None):
         if deps is None:
             deps, truncated = landing_deps(source, root) if source else ({}, True)
         now = int(time.time())
-        entry = {"rva": f"0x{int(rva):08X}", "row": row.strip(), "owner": who or owner(root),
+        who = who or owner(root)
+        entry = {"rva": f"0x{int(rva):08X}", "row": row.strip(), "owner": who,
+                 "lease": current_lease(rva, who, root),
                  "queued": now, "deps": deps, "deps_truncated": truncated,
                  "id": uuid.uuid4().hex}
         with _queue_lock(root) as path:
@@ -607,6 +630,8 @@ def release_landed(sha=None, root=None, who=None, keep_days=1.0):
             return False
         return all(published.get(path, "") == blob for path, blob in deps.items())
     extra = landed_rvas(sha, root, tip) if sha else []
+    sha_time = int(_git("log", "-1", "--format=%ct", sha, cwd=root).stdout.strip() or 0) if sha else 0
+    # holder -> {rva: set of leases a landed entry was built under}
     by_owner, waiting, keep, unsettled = {}, [], [], set()
     now = time.time()
     for entry in queue:
@@ -614,15 +639,17 @@ def release_landed(sha=None, root=None, who=None, keep_days=1.0):
             rva = int(entry["rva"], 16)
         except (KeyError, ValueError):
             continue
-        if landed(entry):
-            by_owner.setdefault(entry.get("owner") or who or owner(root), set()).add(rva)
+        if landed(entry) and entry.get("lease"):
+            holder = entry.get("owner") or who or owner(root)
+            by_owner.setdefault(holder, {}).setdefault(rva, set()).add(entry["lease"])
         else:
             unsettled.add(rva)
             if now - entry.get("queued", 0) < keep_days * 86400:
                 keep.append(entry)
                 waiting.append(rva)
-    if extra:
-        by_owner.setdefault(who or owner(root), set()).update(extra)
+    sha_holder = who or owner(root)
+    for rva in extra:
+        by_owner.setdefault(sha_holder, {}).setdefault(rva, set()).add(("before", sha_time))
     # A body with ANY queued landing whose row and blobs are not all on
     # origin/master stays claimed, however it was selected: an older commit
     # that adds the same RVA (release --landed SHA), or an earlier queued
@@ -632,13 +659,6 @@ def release_landed(sha=None, root=None, who=None, keep_days=1.0):
     released = []
     if not any(by_owner.values()) and not queue:
         return [], sorted(set(waiting))
-    # The claim generation this evaluation saw: a release deletes a claim
-    # ref only while it still carries exactly that token, so a body
-    # re-claimed (or renewed into a new generation by a publisher) since is
-    # not released on stale evidence.
-    if not fetch(root):
-        raise ClaimsUnavailable("claims: cannot fetch refs/claims/* to settle")
-    generation = {rva: sha for rva, (sha, _) in _read_local(root).items()}
     snapshot = {json.dumps(e, sort_keys=True) for e in queue}
     kept = {json.dumps(e, sort_keys=True) for e in keep}
     with _queue_lock(root) as path:
@@ -653,11 +673,27 @@ def release_landed(sha=None, root=None, who=None, keep_days=1.0):
                     unsettled.add(int(entry["rva"], 16))
                 except (KeyError, ValueError):
                     continue
-        for holder, rvas in by_owner.items():
-            rvas = sorted(rvas - unsettled)
-            if rvas:
-                released += release(rvas, who=holder, root=root,
-                                    tokens={r: generation[r] for r in rvas if r in generation})
+        # The generation is read NOW, after the evidence: a body re-claimed
+        # since the landing (a FRESH lease, even by the same owner) is not
+        # the claim that landing was built under, and survives (review
+        # 2026-09-30). Renewals and publications keep the lease, so they do
+        # not block a release. The release itself is a compare-and-swap on
+        # the generation read here.
+        if not fetch(root):
+            raise ClaimsUnavailable("claims: cannot fetch refs/claims/* to settle")
+        generation = _read_local(root)
+        for holder, wanted_leases in by_owner.items():
+            tokens = {}
+            for rva, leases in wanted_leases.items():
+                if rva in unsettled or rva not in generation:
+                    continue
+                token, info = generation[rva]
+                lease = info.get("lease") or token
+                since = info.get("since") or info.get("created") or 0
+                if lease in leases or any(isinstance(x, tuple) and since <= x[1] for x in leases):
+                    tokens[rva] = token
+            if tokens:
+                released += release(sorted(tokens), who=holder, root=root, tokens=tokens)
         # drop only the entries settled here
         settled = snapshot - kept
         _write_queue(path, [e for e in current if json.dumps(e, sort_keys=True) not in settled])

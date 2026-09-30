@@ -376,3 +376,55 @@ def test_settlement_releases_only_the_claim_generation_it_evaluated(hosts, monke
     monkeypatch.setattr(claims, "release", reclaimed_first)
     assert claims.release_landed()[0] == []
     assert 0x100 in claims.active()
+
+
+def _published_and_queued(a):
+    row = "?f@@YAXXZ,,0x00000100,16,game/x.cpp,matched,model=m"
+    _commit_ledger(a, [row], "published", {"game/x.cpp": "void f() {}\n"})
+    _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
+    old = claims.claim([0x100])
+    claims.queue_landed(0x100, row)
+    assert claims.pending()[0]["lease"] == old.leases[0x100]
+    return old
+
+
+def test_a_fresh_claim_during_settlement_survives_the_old_landing(hosts, monkeypatch):
+    # review 2026-09-30 (test_review_probes.py): the body was re-claimed by the
+    # same owner while settlement fetched; the old landing deleted the NEW claim.
+    a = hosts("a")
+    old = _published_and_queued(a)
+    real_fetch = claims._fetch_master
+    fresh = []
+
+    def replace_before_evaluation(root=None):
+        fresh.append(claims.claim([0x100], who="a"))
+        return real_fetch(root)
+    monkeypatch.setattr(claims, "_fetch_master", replace_before_evaluation)
+    released, _ = claims.release_landed()
+    assert fresh[0].leases[0x100] != old.leases[0x100]
+    assert released == [] and 0x100 in claims.active()
+    assert claims.holds(0x100, fresh[0].tokens[0x100])
+
+
+def test_a_renewal_keeps_the_lease_so_the_landing_still_releases(hosts):
+    a = hosts("a")
+    old = _published_and_queued(a)
+    renewed, lost = claims.renew(old.tokens)
+    assert lost == [] and renewed[0x100] != old.tokens[0x100]
+    assert claims.release_landed() == ([0x100], [])
+    assert claims.active() == {}
+
+
+def test_release_landed_sha_spares_a_claim_taken_after_that_commit(hosts, monkeypatch):
+    a = hosts("a")
+    _commit_ledger(a, [], "base")
+    sha = _commit_ledger(a, ["?g@@YAXXZ,,0x00000300,8,game/y.cpp,matched,"], "land")
+    _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
+    commit_time = int(_git(a, "log", "-1", "--format=%ct", sha))
+    monkeypatch.setattr(claims.time, "time", lambda: commit_time + 60)   # a later, fresh claim
+    claims.claim([0x300])
+    monkeypatch.undo()
+    monkeypatch.setenv("BFME_CLAIM_OWNER", "a")
+    monkeypatch.setattr(claims, "ROOT", a)
+    assert claims.release_landed(sha)[0] == []
+    assert 0x300 in claims.active()
