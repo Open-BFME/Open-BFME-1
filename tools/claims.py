@@ -90,9 +90,12 @@ class ClaimResult(tuple):
     refused whose push failed while nobody else held the body) and `worker`,
     the owner string written into each claim."""
 
-    def __new__(cls, claimed, refused, tokens=None, unconfirmed=(), worker=""):
+    def __new__(cls, claimed, refused, tokens=None, unconfirmed=(), worker="", leases=None):
         self = tuple.__new__(cls, (list(claimed), list(refused)))
         self.tokens = dict(tokens or {})
+        # the LEASE id survives renewals (the token rotates every heartbeat),
+        # so it is what a queued unit refers to; see lease_holder()
+        self.leases = dict(leases or {})
         self.unconfirmed = list(unconfirmed)
         self.worker = worker
         return self
@@ -152,13 +155,16 @@ def _ints(rvas):
     return sorted({int(r, 16) if isinstance(r, str) else int(r) for r in rvas})
 
 
-def _record(who, ttl_hours, note="", root=None):
+def _record(who, ttl_hours, note="", root=None, lease=None):
     """A parentless commit carrying the claim JSON; returns its sha, which is
-    the claim's fencing token (the nonce makes every claim's sha unique)."""
+    the claim's fencing token (the nonce makes every claim's sha unique).
+    `lease` is kept across renewals; a fresh claim starts a new one."""
     tree = _git("mktree", input_text="", cwd=root).stdout.strip()
     now = time.time()
+    nonce = uuid.uuid4().hex
     body = json.dumps({"owner": who, "host": socket.gethostname(), "note": note,
-                       "run": os.environ.get("BFME_RUN_ID", ""), "nonce": uuid.uuid4().hex,
+                       "run": os.environ.get("BFME_RUN_ID", ""), "nonce": nonce,
+                       "lease": lease or nonce,
                        "created": int(now), "expires": int(now + ttl_hours * 3600)}, sort_keys=True)
     made = _git("-c", "user.name=claims", "-c", "user.email=claims@localhost",
                 "commit-tree", tree, "-m", body, cwd=root)
@@ -245,7 +251,8 @@ def claim(rvas, who=None, ttl_hours=TTL_HOURS, note="", root=None):
     held = {r for r in rvas if r in current and current[r][1].get("expires", 0) > now
             and current[r][1].get("owner") != who}
     wanted = [r for r in rvas if r not in held]
-    sha = _record(who, ttl_hours, note, root)
+    lease = uuid.uuid4().hex
+    sha = _record(who, ttl_hours, note, root, lease=lease)
 
     def spec(rva):
         old = current.get(rva)
@@ -287,6 +294,7 @@ def claim(rvas, who=None, ttl_hours=TTL_HOURS, note="", root=None):
     refused = sorted(set(rvas) - set(claimed))
     active.cache_clear()
     return ClaimResult(claimed, refused, tokens={r: sha for r in claimed},
+                       leases={r: lease for r in claimed},
                        unconfirmed=sorted(unconfirmed), worker=who)
 
 
@@ -309,7 +317,8 @@ def renew(tokens, who=None, ttl_hours=TTL_HOURS, note="", root=None):
         if not entry or entry[0] != token or entry[1].get("owner") != who:
             lost.append(rva)
             continue
-        sha = _record(who, ttl_hours, note or entry[1].get("note", ""), root)
+        sha = _record(who, ttl_hours, note or entry[1].get("note", ""), root,
+                      lease=entry[1].get("lease") or token)
         pushed = _git("push", "-q", f"--force-with-lease={ref_of(rva)}:{token}", REMOTE,
                       f"+{sha}:{ref_of(rva)}", cwd=root, timeout=120)
         if pushed.returncode == 0:
@@ -326,6 +335,21 @@ def renew(tokens, who=None, ttl_hours=TTL_HOURS, note="", root=None):
             lost.append(rva)
     active.cache_clear()
     return renewed, lost
+
+
+def lease_holder(rva, lease, root=None):
+    """The CURRENT token of the live claim on `rva` that belongs to `lease`
+    (a lease id from ClaimResult.leases, or a claim sha from any renewal of
+    it), else None. A publisher reads this right before its atomic push and
+    leases the ref at the returned token, so a heartbeat's rotation neither
+    invalidates a queued unit nor lets a taken-over claim publish. Raises
+    ClaimsUnavailable when origin cannot be read."""
+    if not fetch(root):
+        raise ClaimsUnavailable("claims: cannot fetch refs/claims/*")
+    entry = _read_local(root).get(int(rva, 16) if isinstance(rva, str) else int(rva))
+    if not entry or entry[1].get("expires", 0) <= time.time():
+        return None
+    return entry[0] if lease in (entry[0], entry[1].get("lease")) else None
 
 
 def holds(rva, token, root=None):

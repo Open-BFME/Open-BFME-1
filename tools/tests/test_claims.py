@@ -307,3 +307,33 @@ def test_an_earlier_settled_landing_does_not_release_a_newer_pending_one(hosts):
     claims.queue_landed(0x100, row)                          # a second, local-only pass
     assert claims.release_landed() == ([], [0x100])
     assert 0x100 in claims.active()
+
+
+def test_a_committed_but_unpushed_repair_is_not_released(hosts):
+    # 2026-09-29 audit fixture: the row was on origin, the repaired source was
+    # committed locally but never pushed, and release_landed released.
+    a = hosts("a")
+    row = "?f@@YAXXZ,,0x00000100,16,game/x.cpp,matched,model=old"
+    _commit_ledger(a, [row], "old landing", {"game/x.cpp": "old source\n"})
+    _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
+    _git(a, "fetch", "-q", "origin")
+    claims.claim([0x100])
+    _commit_ledger(a, [row], "unpublished repair", {"game/x.cpp": "repaired source\n"})
+    claims.queue_landed(0x100, row.replace("model=old", "model=new"))
+    assert claims.release_landed() == ([], [0x100])
+    assert 0x100 in claims.active()
+
+
+def test_a_lease_survives_renewal_and_dies_with_a_takeover(hosts):
+    a = hosts("a")
+    got = claims.claim([0x100], ttl_hours=-1)                       # expired at once
+    lease = got.leases[0x100]
+    assert claims.lease_holder(0x100, lease) is None                # expired: not held
+    renewed, _ = claims.renew(got.tokens)
+    assert claims.lease_holder(0x100, lease) == renewed[0x100]      # same lease, new token
+    assert claims.lease_holder(0x100, got.tokens[0x100]) is None    # the old token alone is dead
+    hosts("b")
+    claims.release([0x100], force=True)
+    claims.claim([0x100])
+    hosts("a")
+    assert claims.lease_holder(0x100, lease) is None

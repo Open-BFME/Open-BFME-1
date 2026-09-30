@@ -15,7 +15,9 @@ service lands them.
   UNIT      One `git format-patch` mbox (a commit keeps its message, author
             and trailers), stored by the sha256 of its bytes, so the same
             unit enqueued twice is one unit (idempotent). Optional metadata:
-            the claim tokens it was built under ({rva: sha}, tools/claims.py),
+            the claims it was built under ({rva: LEASE id}, tools/claims.py
+            ClaimResult.leases -- the lease survives heartbeat renewals, the
+            token does not, so queued metadata never goes stale by rotation),
             model/run/host as recorded, never trusted.
   QUEUE     A directory: queue/<id>.patch + <id>.json. Terminal states move
             the metadata to landed/ or rejected/ with the reason. Nothing is
@@ -24,9 +26,13 @@ service lands them.
             private worktree to the fetched origin/master (the snapshot) and
             `git am -3` the batch. A unit that does not apply is rejected
             (`conflict`) and the rest continue.
-  FENCE     A unit carrying claim tokens is rejected (`claim-lost`) when
-            origin no longer holds one (claims.holds): its worker's lease
-            expired and someone else owns the body now.
+  FENCE     Twice. Before the batch, and again right before publication
+            (a claim can be lost DURING a 17-minute gate), a unit whose lease
+            origin no longer holds is rejected (`claim-lost`) and the batch
+            is re-gated without it. The publication itself is one `git push
+            --atomic` that updates master AND leases every unit's claim ref
+            at its current token (--force-with-lease), so a takeover between
+            that last read and the push rejects the whole push.
   GATE      Run the gate ONCE per batch on the exact batch tip: by default the
             repository's own .githooks/pre-push fed the ref line for
             snapshot..tip (protected_paths, conversion_gate, check_csv,
@@ -35,13 +41,19 @@ service lands them.
   BISECT    A red batch is split in halves; each half is re-gated on top of
             the units already accepted (bisect() below), so one bad unit
             costs O(log n) gates and never sinks its neighbours.
-  PUBLISH   Push the gated tip to master. The push hook runs again; the
-            verification cache (tools/verification_cache.py) makes the
-            repeat cheap. If master moved, re-fetch and redo the batch on the
-            new snapshot: a receipt is only ever for the snapshot it names.
-  RECEIPT   receipts/<id>.json per landed unit: unit id, snapshot sha, batch
-            tip sha, the landed commit sha, tree sha, gate command and exit,
-            batch size, bisect depth, host, time. The landed sha is what
+  PUBLISH   Push the EXACT commit object the gate verified (kept under
+            refs/landing/verified), never a re-application: `git am` again
+            makes a new commit with a new committer time. The push hook runs
+            again; the verification cache makes the repeat cheap. If master
+            moved, re-fetch and redo the batch on the new snapshot: a receipt
+            is only ever for the snapshot it names.
+  RECEIPT   receipts/<id>.json per landed unit: unit id, snapshot, the
+            verified-and-published tip, the unit's commit, the tip's tree
+            (every tracked source, header, config, tool, baseline, library
+            and toolchain file) plus the subtree hash of each of those
+            groups, the gate command, exit and log sha256, a manifest
+            (sha256 per file) of the objects/images/maps the gate wrote, and
+            the python/git versions and host. The landed sha is what
             `claims.py release --landed SHA` takes.
   RECOVERY  state.json records the phase (verifying/publishing) with the
             snapshot and tip before each step. On start, a `publishing` tip
@@ -56,13 +68,13 @@ or a signing daemon outside the cgroup), and pushes it to refs/receipts/<run>;
 the service accepts a unit's model/run only when a verifying signature
 covers that run and its touched rvas include the unit's rows.
 
-STATUS. Prototype: queue, bisect, am-based batching, fencing, gate, publish,
-receipts and recovery are implemented and tested on fixture repositories
-(tools/tests/test_landing_service.py). It does not yet run anywhere; seats
-still push directly. Next: run it beside the harvest loop on one host with
---gate defaulted to pre-push, then point fleet seats at `enqueue`.
+STATUS. Prototype: queue, bisect, am-based batching, two-point fencing with
+an atomic leased push, exact-tip publication, receipts and recovery are
+tested on fixture repositories (tools/tests/test_landing_service.py,
+including the 2026-09-29 audit reproductions). It does not run anywhere yet;
+seats still push directly.
 
-  python3 tools/landing_service.py enqueue <patch-file | commit> [--claim 0xRVA=TOKEN ...]
+  python3 tools/landing_service.py enqueue <patch-file | commit> [--claim 0xRVA=LEASE ...]
   python3 tools/landing_service.py status
   python3 tools/landing_service.py run-once [--max-batch 20] [--gate CMD] [--no-publish]
 """
@@ -71,6 +83,7 @@ import datetime
 import hashlib
 import json
 import os
+import platform
 import socket
 import subprocess
 import sys
@@ -114,14 +127,25 @@ def bisect(units, verify, accepted=()):
     return left_good + right_good, left_bad + right_bad
 
 
+# what a receipt names by subtree hash, beside the whole tree
+VERIFIED_INPUTS = ("game", "inputs/reference", "inputs/toolchains", "inputs/baselines", "tools",
+                   ".githooks", "targets/game/reverse", "build.sh", "build.cmd")
+ARTIFACTS = (".obj", ".lib", ".exe", ".dll", ".map", ".pdb")
+
+
+class LostClaim(RuntimeError):
+    """A unit's claim is no longer its worker's."""
+
+
 class Service:
     def __init__(self, repo=ROOT, state=None, remote="origin", branch="master", gate=DEFAULT_GATE,
-                 fence=None):
+                 fence=None, leases=None):
         self.repo = Path(repo)
         self.state = Path(state) if state else STATE
         self.remote, self.branch, self.gate = remote, branch, gate
         self.fence = fence or self.claims_fence
-        for sub in ("queue", "landed", "rejected", "receipts"):
+        self.leases = leases or self.claim_leases
+        for sub in ("queue", "landed", "rejected", "receipts", "logs"):
             (self.state / sub).mkdir(parents=True, exist_ok=True)
         self.work = self.state / "wt"
         self.gates_run = 0
@@ -183,19 +207,44 @@ class Service:
         return out("rev-parse", "HEAD", cwd=self.work), None
 
     def _gate(self, base, tip):
+        """Exit code of the gate on the worktree at `tip`; its output is kept
+        in logs/<tip>.log for the receipt."""
         self.gates_run += 1
         env = dict(os.environ, LANDING_BASE=base, LANDING_TIP=tip)
         got = subprocess.run(["bash", "-c", self.gate], cwd=self.work, env=env,
-                             capture_output=True, timeout=6 * 3600)
+                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=6 * 3600)
+        (self.state / "logs" / f"{tip}.log").write_bytes(got.stdout or b"")
         return got.returncode
 
+    def _artifacts(self, since):
+        """{path: sha256} of build products the gate wrote in the worktree."""
+        found = {}
+        for path in sorted(self.work.rglob("*")):
+            if path.suffix.lower() in ARTIFACTS and ".git" not in path.parts and path.is_file():
+                if path.stat().st_mtime >= since - 1:
+                    found[path.relative_to(self.work).as_posix()] = hashlib.sha256(
+                        path.read_bytes()).hexdigest()
+        return found
+
     def claims_fence(self, record):
-        tokens = record.get("claims") or {}
-        if not tokens:
-            return True
+        """True while origin still holds every claim the unit names."""
+        return self.claim_leases(record) is not None
+
+    def claim_leases(self, record):
+        """{claim ref: current token} for the unit's claims, None if any is
+        lost or expired. Accepts lease ids and (older units) tokens."""
+        named = record.get("claims") or {}
+        if not named:
+            return {}
         sys.path.insert(0, str(ROOT / "tools"))
         import claims
-        return all(claims.holds(int(rva, 16), token, root=self.repo) for rva, token in tokens.items())
+        current = {}
+        for rva, lease in named.items():
+            token = claims.lease_holder(int(rva, 16), lease, root=self.repo)
+            if not token:
+                return None
+            current[claims.ref_of(int(rva, 16))] = token
+        return current
 
     # ---- one pass -------------------------------------------------------
     def recover(self):
@@ -208,9 +257,14 @@ class Service:
             landed = git("merge-base", "--is-ancestor", data["tip"], tip, cwd=self.repo,
                          check=False).returncode == 0
             if landed:
-                self._receipts(data["units"], data["base"], data["tip"], data.get("gate_exit", 0),
+                self._receipts(data["units"], data["base"], data["tip"], data.get("verified") or {},
                                note="recovered after a crash")
         path.unlink()
+
+    def _reject(self, result, records, unit, reason, **extra):
+        self._finish(unit, "rejected", reason=reason, **extra)
+        result["rejected"].append(unit)
+        records.pop(unit, None)
 
     def run_once(self, max_batch=20, publish=True, attempts=3):
         """Land up to `max_batch` queued units. Returns {landed, rejected}."""
@@ -219,10 +273,8 @@ class Service:
         result = {"landed": [], "rejected": []}
         for unit, record in list(records.items()):
             if not self.fence(record):
-                self._finish(unit, "rejected", reason="claim-lost")
-                result["rejected"].append(unit)
-                del records[unit]
-        for _ in range(attempts):
+                self._reject(result, records, unit, "claim-lost")
+        for _ in range(attempts + len(records)):
             if not records:
                 return result
             base = self.snapshot()
@@ -232,51 +284,88 @@ class Service:
                 tip, bad = self._apply(base, order)
                 if not bad:
                     break
-                self._finish(bad, "rejected", reason="conflict", snapshot=base)
-                result["rejected"].append(bad)
+                self._reject(result, records, bad, "conflict", snapshot=base)
                 order.remove(bad)
-                del records[bad]
             if not order:
                 return result
-            gate_exit = {}
+            verified = {}
 
             def verify(prefix):
                 tip, bad = self._apply(base, prefix)
                 if bad:
                     return False
+                started = time.time()
                 code = self._gate(base, tip)
-                gate_exit[tuple(prefix)] = code
+                if code == 0:
+                    verified[tuple(prefix)] = dict(tip=tip, started=started,
+                                                   artifacts=self._artifacts(started))
                 return code == 0
             good, bad = bisect(order, verify)
             for unit in bad:
-                self._finish(unit, "rejected", reason="gate", snapshot=base)
-                result["rejected"].append(unit)
-                del records[unit]
+                self._reject(result, records, unit, "gate", snapshot=base)
             if not good:
                 return result
-            tip, _ = self._apply(base, good)
+            if tuple(good) not in verified and not verify(good):
+                continue                        # not reproducible as a whole: retry the pass
+            evidence = verified[tuple(good)]
+            tip = evidence["tip"]
+            # keep the verified object alive; publication pushes THIS sha
+            git("update-ref", "refs/landing/verified", tip, cwd=self.repo)
             if not publish:
                 return dict(result, would_land=good, tip=tip)
-            self._phase(phase="publishing", base=base, tip=tip, units=good, gate_exit=0)
-            pushed = git("push", "-q", self.remote, f"{tip}:refs/heads/{self.branch}",
-                         cwd=self.work, check=False)
+            # fence again: a claim can be lost while the gate runs
+            lost = [u for u in good if not self.fence(records[u])]
+            leases = {}
+            for unit in good:
+                if unit in lost:
+                    continue
+                held = self.leases(records[unit])
+                if held is None:
+                    lost.append(unit)
+                else:
+                    leases.update(held)
+            if lost:
+                for unit in lost:
+                    self._reject(result, records, unit, "claim-lost", snapshot=base)
+                continue                        # re-gate without them
+            self._phase(phase="publishing", base=base, tip=tip, units=good, verified=evidence)
+            spec = [f"--force-with-lease={ref}:{token}" for ref, token in sorted(leases.items())]
+            refs = [f"{token}:{ref}" for ref, token in sorted(leases.items())]
+            pushed = git("push", "-q", "--atomic", *spec, self.remote,
+                         f"{tip}:refs/heads/{self.branch}", *refs, cwd=self.work, check=False)
+            (self.state / "state.json").unlink()
             if pushed.returncode == 0:
-                self._receipts(good, base, tip, 0)
-                (self.state / "state.json").unlink()
+                self._receipts(good, base, tip, evidence)
                 result["landed"] += good
                 for unit in good:
                     del records[unit]
                 return result
-            (self.state / "state.json").unlink()   # master moved: redo on the new snapshot
+            # master moved or a claim changed under the lease: re-read, redo
         return result
 
-    def _receipts(self, units, base, tip, gate_exit, note=""):
+    def _receipts(self, units, base, tip, evidence, note=""):
         commits = out("rev-list", "--reverse", f"{base}..{tip}", cwd=self.repo).split()
         tree = out("rev-parse", f"{tip}^{{tree}}", cwd=self.repo)
+        inputs = {}
+        for path in VERIFIED_INPUTS:
+            got = git("rev-parse", f"{tip}:{path}", cwd=self.repo, check=False)
+            if got.returncode == 0:
+                inputs[path] = got.stdout.decode().strip()
+        log = self.state / "logs" / f"{tip}.log"
+        artifacts = evidence.get("artifacts") or {}
+        manifest = json.dumps(artifacts, sort_keys=True).encode()
+        (self.state / "receipts" / f"{tip}.artifacts.json").write_bytes(manifest)
+        versions = dict(python=platform.python_version(),
+                        git=out("--version", cwd=self.repo))
         for unit, commit in zip(units, commits):
             receipt = dict(unit=unit, snapshot=base, batch_tip=tip, commit=commit, tree=tree,
-                           gate=self.gate, gate_exit=gate_exit, batch=len(units),
-                           host=socket.gethostname(), note=note,
+                           inputs=inputs, gate=self.gate, gate_exit=0,
+                           gate_log_sha256=hashlib.sha256(log.read_bytes()).hexdigest()
+                           if log.exists() else None,
+                           artifacts=len(artifacts),
+                           artifacts_sha256=hashlib.sha256(manifest).hexdigest(),
+                           batch=len(units), host=socket.gethostname(), note=note,
+                           versions=versions,
                            time=datetime.datetime.now(datetime.timezone.utc).isoformat())
             self._write(self.state / "receipts" / f"{unit}.json", receipt)
             if (self.state / "queue" / f"{unit}.json").exists():
@@ -288,7 +377,8 @@ def main(argv=None):
     sub = ap.add_subparsers(dest="action", required=True)
     en = sub.add_parser("enqueue")
     en.add_argument("units", nargs="+", help="format-patch files or commits")
-    en.add_argument("--claim", action="append", default=[], metavar="0xRVA=TOKEN")
+    en.add_argument("--claim", action="append", default=[], metavar="0xRVA=LEASE",
+                    help="a claim the unit was built under: its lease id (claims.ClaimResult.leases)")
     sub.add_parser("status")
     run = sub.add_parser("run-once")
     run.add_argument("--max-batch", type=int, default=20)

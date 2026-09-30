@@ -858,6 +858,8 @@ def claim_shared(root, run, targets, engine, seat, record, lock=None, on_lost=No
         raise SharedClaimsUnavailable(str(error)) from error
     record["shared_claims"] = [f"0x{r:08x}" for r in result.claimed]
     record["shared_claim_tokens"] = {f"0x{r:08x}": t for r, t in result.tokens.items()}
+    # stable across heartbeats: what a landing-service unit names (landing_service.py)
+    record["shared_claim_leases"] = {f"0x{r:08x}": t for r, t in result.leases.items()}
     record["shared_claim_worker"] = result.worker
     if result.refused:
         held = [r for r in result.refused if r not in result.unconfirmed]

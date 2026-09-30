@@ -12,8 +12,9 @@ import landing_service as ls  # noqa: E402
 GATE = "! ls | grep -q bad"            # red when the tree holds a file named bad*
 
 
-def git(cwd, *args):
-    return subprocess.run(["git", *args], cwd=cwd, check=True, capture_output=True, text=True).stdout.strip()
+def git(cwd, *args, input=None):
+    return subprocess.run(["git", *args], cwd=cwd, check=True, capture_output=True, text=True,
+                          input=input).stdout.strip()
 
 
 def test_bisect_keeps_good_units_around_bad_ones():
@@ -125,3 +126,105 @@ def test_a_crash_after_the_push_is_recorded_as_landed(world):
     assert service.run_once() == {"landed": [], "rejected": []}
     assert (service.state / "landed" / f"{unit_id}.json").exists()
     assert json.loads((service.state / "receipts" / f"{unit_id}.json").read_text())["note"]
+
+
+# ---- 2026-09-29 audit reproductions (gpt-6.1-sol, BFME_LINKING_AUDIT.md) ----
+
+def test_the_verified_tip_itself_is_published(world):
+    # audit: a second `git am` after the gate made a different commit (new
+    # committer time) and THAT was pushed, so the receipt named an unverified tip.
+    import time
+    service, unit, origin = world
+    uid = service.enqueue(unit("tip"))
+    gated = []
+    real_gate = service._gate
+
+    def gate(base, tip):
+        gated.append(tip)
+        time.sleep(1.1)                    # a re-application would get a new timestamp
+        return real_gate(base, tip)
+    service._gate = gate
+    assert service.run_once()["landed"] == [uid]
+    receipt = json.loads((service.state / "receipts" / f"{uid}.json").read_text())
+    assert receipt["batch_tip"] == gated[-1] == git(origin, "rev-parse", "master")
+
+
+def test_a_claim_lost_during_the_gate_does_not_publish(world):
+    # audit: the fence ran once before the gate; a takeover during a long gate
+    # still published.
+    service, unit, origin = world
+    held, checks = [True], []
+    service.fence = lambda record: checks.append(held[0]) or held[0]
+    before = git(origin, "rev-parse", "master")
+    uid = service.enqueue(unit("takeover"), {"claims": {"0x100": "lease"}})
+    real_gate = service._gate
+
+    def gate(base, tip):
+        held[0] = False
+        return real_gate(base, tip)
+    service._gate = gate
+    service.leases = lambda record: {}
+    result = service.run_once()
+    assert result == {"landed": [], "rejected": [uid]}
+    assert checks[-1] is False and git(origin, "rev-parse", "master") == before
+
+
+@pytest.fixture
+def claimed(world, monkeypatch):
+    import claims
+    service, unit, origin = world
+    monkeypatch.setenv("BFME_CLAIM_OWNER", "worker")
+    monkeypatch.delenv("BFME_RUN_ID", raising=False)
+    service.fence = service.claims_fence
+    got = claims.claim([0x100], root=service.repo)
+    assert got.claimed == [0x100]
+    return service, unit, origin, claims, got
+
+
+def test_a_heartbeat_rotation_during_the_gate_still_lands(claimed):
+    # audit: renewal replaced the token that immutable queued metadata named.
+    service, unit, origin, claims, got = claimed
+    uid = service.enqueue(unit("renewed"), {"claims": {"0x100": got.leases[0x100]}})
+    real_gate = service._gate
+
+    def gate(base, tip):
+        renewed, lost = claims.renew(got.tokens, root=service.repo)
+        assert lost == [] and renewed[0x100] != got.tokens[0x100]
+        return real_gate(base, tip)
+    service._gate = gate
+    assert service.run_once()["landed"] == [uid]
+
+
+def test_a_takeover_racing_the_push_is_refused_atomically(claimed):
+    service, unit, origin, claims, got = claimed
+    before = git(origin, "rev-parse", "master")
+    uid = service.enqueue(unit("raced"), {"claims": {"0x100": got.leases[0x100]}})
+    real_leases = service.claim_leases
+
+    def leases_then_race(record):
+        held = real_leases(record)          # read the current token ...
+        rival = git(service.repo, "commit-tree", git(service.repo, "mktree", input="") or
+                    "4b825dc642cb6eb9a060e54bf8d69288fbee4904", "-m", "rival")
+        git(service.repo, "push", "-q", "-f", "origin", f"{rival}:refs/claims/0x00000100")
+        return held                         # ... and lose it before the push
+    service.leases = leases_then_race
+    result = service.run_once()
+    assert result == {"landed": [], "rejected": [uid]}
+    assert git(origin, "rev-parse", "master") == before
+
+
+def test_the_receipt_names_what_was_verified(world):
+    service, unit, origin = world
+    service.gate = "mkdir -p out && printf obj > out/body.obj && " + GATE
+    uid = service.enqueue(unit("inputs"))
+    assert service.run_once()["landed"] == [uid]
+    receipt = json.loads((service.state / "receipts" / f"{uid}.json").read_text())
+    tip = receipt["batch_tip"]
+    assert receipt["tree"] == git(origin, "rev-parse", "master^{tree}")
+    assert receipt["artifacts"] == 1 and receipt["gate_log_sha256"]
+    manifest = json.loads((service.state / "receipts" / f"{tip}.artifacts.json").read_text())
+    import hashlib
+    assert manifest == {"out/body.obj": hashlib.sha256(b"obj").hexdigest()}
+    assert receipt["artifacts_sha256"] == hashlib.sha256(
+        json.dumps(manifest, sort_keys=True).encode()).hexdigest()
+    assert receipt["versions"]["python"] and receipt["versions"]["git"].startswith("git version")
