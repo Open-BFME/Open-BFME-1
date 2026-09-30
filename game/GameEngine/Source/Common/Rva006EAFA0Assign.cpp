@@ -1,13 +1,9 @@
-// cl: /O2 /Ob0
+// cl: /O2 /Ob0 /Igame
 
-class Rva0036CA00Str
-{
-public:
-	Rva0036CA00Str &operator=(const Rva0036CA00Str &other);
+// Retail string calls target the existing void StringBase<char>::set body
+// at RVA 0x00887C90. Adopt its canonical header and exact signature.
+#include "Libraries/Source/WWVegas/WWLib/string_base.h"
 
-private:
-	void *m_item;
-};
 
 struct Rva006EAFA0Pod
 {
@@ -16,8 +12,8 @@ struct Rva006EAFA0Pod
 
 class Rva006EAFA0
 {
-	Rva0036CA00Str m_00;
-	Rva0036CA00Str m_04;
+	StringBase<char> m_00;
+	StringBase<char> m_04;
 	Rva006EAFA0Pod m_08;
 	int m_30;
 	int m_34;
@@ -28,8 +24,8 @@ public:
 
 Rva006EAFA0 &Rva006EAFA0::operator=(const Rva006EAFA0 &other)
 {
-	m_00 = other.m_00;
-	m_04 = other.m_04;
+	m_00.set(other.m_00);
+	m_04.set(other.m_04);
 	m_08 = other.m_08;
 	m_30 = other.m_30;
 	m_34 = other.m_34;
