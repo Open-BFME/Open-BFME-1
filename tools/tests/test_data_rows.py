@@ -103,3 +103,16 @@ def test_a_relocation_to_a_tu_local_cannot_be_placed(tmp_path, monkeypatch):
              [("?p@@3PBDB", 0, 1), ("$SG1", 0, 2)])
     ok, message = verify(img, row("?p@@3PBDB"), {})
     assert not ok and "TU-local" in message
+
+
+def test_provider_repair_data_mode_names_globals_and_ranks_the_queue(tmp_path):
+    import provider_repair
+    assert provider_repair.data_identifier("?OurLanguage@@3W4LanguageID@@A") == ("OurLanguage", "OurLanguage")
+    assert provider_repair.data_identifier("?s_x@Foo@@2HA") == ("Foo::s_x", "s_x")
+    assert provider_repair.data_identifier("??_7Foo@@6B@") is None
+    queue = tmp_path / "queue.csv"
+    queue.write_text("name,class,cause,referring_objects,referrers_first5,suggested_owner_row,evidence\n"
+                     "?a@@3HA,data:unplaced,data:unplaced,1,,,\n"
+                     "?b@@3HA,unpinned,static/global data,5,,,\n"
+                     "?f@@YAXXZ,unpinned,other method or function,9,,,\n")
+    assert [r["name"] for r in provider_repair.data_candidates(queue)] == ["?b@@3HA", "?a@@3HA"]

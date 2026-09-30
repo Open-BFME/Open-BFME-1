@@ -11,6 +11,9 @@ not fix it; removing the competing definition does, if nothing verified moves.
   python3 tools/provider_repair.py check <symbol>      # verify; one PASS/FAIL and a JSON receipt
   python3 tools/provider_repair.py abandon <symbol> --model M   # restore, record blocked, release
   python3 tools/provider_repair.py status              # briefs and receipts in this checkout
+  python3 tools/provider_repair.py data-next [--model M]  # data mode: serve ONE unresolved global with its
+                               # one ZH definition; land it with tools/add_data_match.py
+  python3 tools/provider_repair.py data-check <symbol>    # its data_rows.csv row verifies: PASS/FAIL + receipt
 
 `next` reads the census index (build/link_census/link_index.pkl, as
 link_check does; --index to point elsewhere) and serves a name only when
@@ -718,6 +721,133 @@ def cmd_status(_args):
     return 0
 
 
+# ---------------------------------------------------------------- data mode
+# A global the link cannot find (the trial link's queue, class data:* or the
+# unpinned static/global data group) whose Zero Hour definition is one line in
+# one reference .cpp: serve it so a seat writes that definition in its honest
+# owner and lands it with tools/add_data_match.py (data_rows.csv).
+REFERENCE = ROOT / "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code"
+DATA_QUEUE = ROOT / "build" / "data_scaffold" / "queue.csv"
+
+
+def data_identifier(symbol):
+    """(qualified C++ name, bare identifier) a mangled global or static data member
+    spells, or None: `?x@@3HA` -> ("x", "x"), `?x@C@@2HA` -> ("C::x", "x")."""
+    m = re.match(r"^\?(\w+)@(?:(\w+)@)?@[23]", symbol)
+    if not m:
+        return None
+    return (f"{m.group(2)}::{m.group(1)}" if m.group(2) else m.group(1)), m.group(1)
+
+
+def reference_definitions(qualified):
+    """[(file, line, text)] of file-scope definitions of `qualified` in the ZH tree."""
+    pattern = (r"^[A-Za-z_][\w:<>,\s\*&]*[\s\*&]" + re.escape(qualified)
+               + r"\s*(\[[^\]]*\]\s*)*(=[^;]*)?;?\s*(//.*)?$")
+    proc = subprocess.run(["rg", "-n", "--no-heading", "-g", "*.cpp", "-e", pattern,
+                           REFERENCE.relative_to(ROOT).as_posix()],
+                          capture_output=True, text=True, errors="replace", cwd=str(ROOT))
+    out = []
+    for line in proc.stdout.splitlines():
+        path, number, text = line.split(":", 2)
+        if text.lstrip().startswith(("extern", "return", "//", "typedef")) or "(" in text.split("=")[0]:
+            continue
+        out.append((path.replace("\\", "/"), int(number), text.strip()))
+    return out
+
+
+def data_candidates(queue):
+    """Queue rows naming a data global, most-referenced first."""
+    with Path(queue).open(newline="", encoding="utf-8") as fh:
+        rows = [r for r in csv.DictReader(fh)
+                if r["class"].startswith("data:") or r["cause"] == "static/global data"]
+    rows.sort(key=lambda r: (-int(r["referring_objects"] or 0), r["name"]))
+    return rows
+
+
+def cmd_data_next(args):
+    import claims
+    import data_rows
+    import eligibility
+    import reloc_ledger
+    dir32 = {r["name"]: int(r["va"], 16) for r in reloc_ledger.read_csv_rows(build.DIR32_ADDRESSES)}
+    owned = {r["name"] for r in data_rows.load()}
+    busy = set()
+    for token in (eligibility.busy_rvas() if not args.no_claim else ()):
+        try:
+            busy.add(int(str(token), 16))
+        except ValueError:
+            pass
+    img = reloc_ledger.Image()
+    tally = {}
+    for row in data_candidates(args.queue):
+        name = row["name"]
+        ident = data_identifier(name)
+        va = dir32.get(name)
+        verdict = ("owned" if name in owned else "no-dir32-address" if va is None
+                   else "not-a-simple-global" if ident is None
+                   else "busy" if (va - 0x400000) in busy or recorded(hex(va - 0x400000)) else None)
+        if verdict is None:
+            found = reference_definitions(ident[0])
+            files = {f for f, _, _ in found}
+            # a ZH `static` is TU-local: the external name our code spells cannot be
+            # landed from that definition without changing its linkage -- not served
+            verdict = ("no-reference-definition" if not found else "several-reference-definitions"
+                       if len(files) != 1 else "reference-definition-is-static"
+                       if found[0][2].startswith("static") else None)
+        if verdict:
+            tally[verdict] = tally.get(verdict, 0) + 1
+            continue
+        rva = f"0x{va - 0x400000:08X}"
+        if not args.no_claim:
+            got = claims.claim([rva], note="provider_repair data")
+            if not got.claimed:
+                tally["claimed-elsewhere"] = tally.get("claimed-elsewhere", 0) + 1
+                continue
+        ref_file, ref_line, ref_text = found[0]
+        game_path = "game/" + ref_file.split("/Code/", 1)[1]
+        facts = {"mode": "data", "symbol": name, "rva": rva, "va": f"0x{va:08X}", "section": img.section(va),
+                 "retail_bytes": (img.read(va, 16) or b"").hex(), "referring_objects": row["referring_objects"],
+                 "reference": {"file": ref_file, "line": ref_line, "definition": ref_text},
+                 "owner": game_path, "owner_exists": (ROOT / game_path).exists(),
+                 "steps": [f"write the definition in {game_path} (ZH's own file; copy its `// cl:` line "
+                           "from a sibling that compiles)",
+                           f"python3 tools/add_data_match.py '{name}' 0x{va:08X} --va {game_path} "
+                           "--model <you> --evidence '<ZH file:line and why this address>'",
+                           f"python3 tools/provider_repair.py data-check '{name}'"]}
+        d = OUT / f"data_{rva.lower()}"
+        d.mkdir(parents=True, exist_ok=True)
+        (d / "brief.json").write_text(json.dumps(facts, indent=1), encoding="utf-8")
+        print(json.dumps(facts, indent=1))
+        return 0
+    print("provider_repair data: nothing to serve; " + ", ".join(f"{k} {v}" for k, v in sorted(tally.items())))
+    return 1
+
+
+def cmd_data_check(args):
+    """PASS when the symbol's data row verifies and the data ledger is clean."""
+    import data_rows
+    rows = [r for r in data_rows.load() if r["name"] == args.symbol]
+    failures = []
+    problems = []
+    data_rows.check(data_rows.DATA_ROWS.read_bytes(), problems)
+    failures += problems
+    if len(rows) != 1:
+        failures.append(f"{args.symbol} has {len(rows)} data_rows.csv row(s), expected one")
+    else:
+        try:
+            data_rows.verify(rows=rows, log=lambda text: failures.append(text.strip())
+                             if "FAIL" in text or text.startswith("    ") else None)
+        except SystemExit:
+            pass
+    rva = f"0x{data_rows.va_of(rows[0]) - 0x400000:08X}" if len(rows) == 1 else "unknown"
+    receipt = {"mode": "data", "symbol": args.symbol, "rva": rva, "pass": not failures, "failures": failures}
+    d = OUT / f"data_{rva.lower()}"
+    d.mkdir(parents=True, exist_ok=True)
+    (d / "receipt.json").write_text(json.dumps(receipt, indent=1), encoding="utf-8")
+    print(("PASS " if not failures else "FAIL ") + args.symbol + ("" if not failures else ": " + "; ".join(failures)))
+    return 0 if not failures else 1
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -737,9 +867,15 @@ def main(argv=None):
     b.add_argument("--blocker", default="inline")
     b.add_argument("--reason", default="")
     sub.add_parser("status")
+    dn = sub.add_parser("data-next", help="serve + claim ONE global the link cannot find, with its ZH definition")
+    dn.add_argument("--queue", default=str(DATA_QUEUE), help="tools/data_scaffold.py --trial-link's queue.csv")
+    dn.add_argument("--model", default="")
+    dn.add_argument("--no-claim", action="store_true", help="list without claiming (dry run)")
+    dc = sub.add_parser("data-check", help="verify the symbol's data_rows.csv row; one PASS/FAIL and a receipt")
+    dc.add_argument("symbol")
     args = ap.parse_args(argv)
     return {"next": cmd_next, "apply": cmd_apply, "check": cmd_check, "abandon": cmd_abandon,
-            "status": cmd_status}[args.cmd](args)
+            "status": cmd_status, "data-next": cmd_data_next, "data-check": cmd_data_check}[args.cmd](args)
 
 
 if __name__ == "__main__":
