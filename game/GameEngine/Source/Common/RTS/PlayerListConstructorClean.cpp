@@ -17,12 +17,15 @@ private:
 
 class Player;
 
+extern "C" const void *bfmeVftSnapshot[];
+#pragma comment(linker, "/alternatename:_bfmeVftSnapshot=??_7Snapshot@@6B@")
+
 class Snapshot
 {
 public:
 	Snapshot()
 	{
-		*(volatile unsigned int *)this = 0x01073744;
+		*(volatile unsigned int *)this = (unsigned int)bfmeVftSnapshot;
 	}
 	virtual ~Snapshot() {}
 	virtual void crc() = 0;
