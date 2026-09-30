@@ -104,6 +104,8 @@ extern int g_guiFxWindowHandle;
 AsciiString g_guiFxFile( "GuiFX.apt" );
 extern unsigned char g_guiFxLoaded;
 extern void construct00510AC0();
+extern void j_000279df();
+extern void j_0003ef8b();
 
 void registerGuiFXCallbacks00510FA0()
 {
@@ -119,14 +121,14 @@ void registerGuiFXCallbacks00510FA0()
 		BFMERetailAsciiString name( "AptGuiFX::OnInitialized" );
 		g_theWindowManager->registerAptCallback( name,
 			BannerAptCallbackHolder(
-				reinterpret_cast<AptGuiFxCallback>( 0x004279DF ) ) );
+				j_000279df ) );
 	}
 
 	{
 		AsciiString name( "ToolTipText" );
 		g_theWindowManager->registerAptCallback( name,
 			AptMapPreviewFunctorHolder(
-				reinterpret_cast<AptGuiFxCallback>( 0x0043EF8B ) ) );
+				j_0003ef8b ) );
 	}
 
 	construct00510AC0();

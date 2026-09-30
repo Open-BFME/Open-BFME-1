@@ -7,13 +7,16 @@ public:
     virtual void dispatch();
 };
 
+class Rva00899FC0;
+extern Rva00899FC0 *g_rva01337abc;
+
 void Rva008A4AA0Invoke()
 {
     Rva008A4AA0Target *target =
-        *reinterpret_cast<Rva008A4AA0Target **>(0x01337ABCu);
+        reinterpret_cast<Rva008A4AA0Target *>(g_rva01337abc);
     if (target)
     {
         target->dispatch();
-        *reinterpret_cast<Rva008A4AA0Target **>(0x01337ABCu) = 0;
+        g_rva01337abc = 0;
     }
 }

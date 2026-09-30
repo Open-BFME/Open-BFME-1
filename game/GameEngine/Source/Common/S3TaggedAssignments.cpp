@@ -160,7 +160,7 @@ Gen_0090DB10 &Gen_0090DB10::operator=(const Gen_0090DB10 &other)
 
 	if (source)
 	{
-		if (source->bfmeTag() != 0x00544558)			// 'TEX'
+		if (source->bfmeTag() != 'TEX')
 		{
 			if (m_bfmePtr)
 			{
@@ -346,7 +346,7 @@ Gen_00972340 &Gen_00972340::operator=(const Gen_00972340 &other)
 
 	if (source)
 	{
-		if (source->bfmeTag() != 0x00424F58)			// 'BOX'
+		if (source->bfmeTag() != 'BOX')
 		{
 			if (m_bfmePtr)
 			{
