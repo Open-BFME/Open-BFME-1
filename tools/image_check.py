@@ -462,7 +462,8 @@ class Image:
         body = item.body()
         fields = self._fields(item)
         covered = self._covered(fields)
-        for off, insn in self._instructions(body, fields, covered):
+        insns, _ = self._instructions(item, body, fields, covered)
+        for off, insn in insns:
             branch = self._branch(insn)
             if branch is None or off + insn.imm_offset in covered:
                 continue
@@ -638,19 +639,21 @@ class Image:
         addresses (wrong); a push/mov imm32 inside the image is ambiguous
         (unknown), and wrong when a ledger row, pin or placed item starts at
         it; any other imm32 (cmp, test, arithmetic) is a number. Data has no
-        operand to read: an unrelocated in-image dword is counted per item
-        (`literals`, items.csv) as an unproven boundary and changes no
-        verdict. Retail has no base relocations to say which dwords are
+        operand to read: an item holding an unrelocated in-image dword is
+        unknown (`literals`, items.csv) until typed evidence says pointer or
+        scalar. Retail has no base relocations to say which dwords are
         pointers, and on 2026-09-30 all 16 data dwords that hit the
         ledger-start evidence were byte or short tables (Lua's opcode
         properties 0x01000000, zlib's configuration_table, D3DX shader
-        tables)."""
+        tables): such an item is retail-true at retail's placement (the
+        non-strict figures) and blocks only closed strict."""
         body = item.body()
         if body is None or item.constant:
             return None
         fields = self._fields(item)
         covered = self._covered(fields)
         if not item.code:
+            first = None
             for off in range((-item.start) % 4, len(body) - 3, 4):
                 if off in covered or off + 3 in covered:
                     continue
@@ -658,6 +661,10 @@ class Image:
                 if self.in_image(value) and value >= BASE + 0x1000:
                     item.literals += 1
                     self.numbers += 1
+                    first = first or (off, value)
+            if first:
+                return "unknown", (f"{item.literals} unrelocated in-image dword(s), first 0x{first[1]:08X} at "
+                                   f"+0x{first[0]:X}: pointer or scalar unproven (needs typed evidence)")
             return None
         return self._scan_code(item, body, fields, covered)
 
@@ -688,32 +695,100 @@ class Image:
             covered.update(range(low, high))
         return covered
 
-    def _instructions(self, body, fields, covered):
-        """(offset, instruction) by linear sweep of a function's code. It
-        stops at the first relocation that is not an operand of the
-        instruction around it, or at a relocated field where an instruction
-        should start: MSVC puts a switch's jump and index tables after the
-        code."""
+    def _instructions(self, item, body, fields, covered):
+        """([(offset, instruction)], problem) by recursive descent from the
+        item's start: fall-through, rel branch and call targets inside the
+        item, and the entries of its own switch tables (a relocation back
+        into the item that is no instruction's operand). A table sits where
+        code reaches it only as data, so code after a table is decoded
+        whenever a branch reaches it. `problem` says why the code could not
+        be fully inspected: an undecodable byte, an instruction overlapping
+        a relocation field, a relocation field reached as code, or bytes
+        before the first table that nothing reaches (0xCC/NOP padding
+        aside)."""
         if self._md is None:
             from capstone import CS_ARCH_X86, CS_MODE_32, Cs
             self._md = Cs(CS_ARCH_X86, CS_MODE_32)
             self._md.detail = True
+        from capstone import CS_GRP_JUMP, CS_GRP_RET
         starts = {low for low, _ in fields}
-        off, size = 0, len(body)
-        while off < size:
-            if off in covered:
-                return
-            insn = next(self._md.disasm(body[off:off + 16], self._VA + off, 1), None)
-            if insn is None:
-                off += 1
-                continue
-            end = off + insn.size
-            operand_fields = {off + insn.disp_offset if insn.disp_size else None,
-                              off + insn.imm_offset if insn.imm_size else None}
-            if any(off < low < end and low not in operand_fields for low in starts):
-                return
-            yield off, insn
-            off = end
+        size = len(body)
+        own = {where - item.start: position - item.start
+               for where, kind, target, position, _ in item.edges if target is item and kind != DECODED}
+        found, operands, problem = {}, set(), None
+        pending, seen_entries = [0], {0}
+        while True:
+            while pending:
+                off = pending.pop()
+                while 0 <= off < size and off not in found:
+                    if off in covered:
+                        problem = problem or f"a relocation field at +0x{off:X} is reached as code"
+                        break
+                    insn = next(self._md.disasm(body[off:off + 16], self._VA + off, 1), None)
+                    if insn is None:
+                        problem = problem or f"undecodable byte at +0x{off:X}"
+                        break
+                    end = off + insn.size
+                    fields_here = {off + insn.disp_offset if insn.disp_size else None,
+                                   off + insn.imm_offset if insn.imm_size else None}
+                    if any(off < low < end and low not in fields_here for low in starts):
+                        problem = problem or f"the instruction at +0x{off:X} overlaps a relocation field"
+                        break
+                    found[off] = insn
+                    operands |= fields_here
+                    groups = set(insn.groups)
+                    if CS_GRP_RET in groups or insn.mnemonic in ("int3", "hlt", "ud2"):
+                        break
+                    branch = self._branch(insn)
+                    if branch is not None:
+                        destination = branch - self._VA
+                        if 0 <= destination < size and destination not in found:
+                            pending.append(destination)
+                        if insn.mnemonic == "jmp":
+                            break
+                    elif CS_GRP_JUMP in groups:
+                        break  # an indirect jmp: its switch-table entries are followed below
+                    off = end
+            entries = {target for field, target in own.items() if field not in operands and 0 <= target < size}
+            fresh = entries - seen_entries
+            if not fresh:
+                break
+            seen_entries |= fresh
+            pending.extend(fresh)
+        tables = [field for field in own if field not in operands] + \
+            [target for field, target in own.items() if field in operands and target not in found]
+        data_start = min(tables, default=size)
+        spans = set()
+        for off, insn in found.items():
+            spans.update(range(off, off + insn.size))
+        unreached = [i for i in range(data_start) if i not in spans and i not in covered]
+        unreached = self._not_filler(body, unreached)
+        if unreached and problem is None:
+            problem = (f"{len(unreached)} bytes before any table are reached by no decoded path "
+                       f"(first +0x{unreached[0]:X})")
+        return sorted(found.items()), problem
+
+    FILLER = re.compile(r"^(?:(?:lea|mov|xchg) (\w+), \[?\1\]?)?$")
+
+    def _not_filler(self, body, offsets):
+        """The offsets of `offsets` that are not padding: int3, nop, and
+        MSVC's alignment fillers (lea r,[r+0], mov r,r, xchg r,r)."""
+        out, runs = [], []
+        for off in offsets:
+            if runs and runs[-1][1] == off:
+                runs[-1][1] = off + 1
+            else:
+                runs.append([off, off + 1])
+        for low, high in runs:
+            off = low
+            while off < high:
+                insn = next(self._md.disasm(body[off:high], self._VA + off, 1), None)
+                text = f"{insn.mnemonic} {insn.op_str}".strip() if insn else ""
+                if insn is None or not (insn.mnemonic in ("int3", "nop") or self.FILLER.match(text)):
+                    out.extend(range(off, high))
+                    break
+                off += insn.size
+        return out
 
     @staticmethod
     def _branch(insn):
@@ -735,7 +810,10 @@ class Image:
         from capstone.x86 import X86_OP_IMM, X86_OP_MEM, X86_REG_FS, X86_REG_GS, X86_REG_INVALID
         targets = {where - item.start: target for where, _, target, _, _ in item.edges}
         unknown, indirect = None, 0
-        for off, insn in self._instructions(body, fields, covered):
+        insns, problem = self._instructions(item, body, fields, covered)
+        if problem:  # code this check could not fully inspect proves nothing about moving
+            unknown = ("unknown", f"not fully inspected: {problem}")
+        for off, insn in insns:
             ops = insn.operands
             branch = self._branch(insn)
             if branch is not None:

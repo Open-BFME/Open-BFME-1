@@ -438,3 +438,23 @@ def test_an_unexplained_linker_exit_records_nothing(tmp_path, monkeypatch):
         L.main([])
     L.unexplained_exit(0, "")  # a clean exit needs no diagnostic
     L.unexplained_exit(1120, "x.obj : error LNK2001: unresolved external symbol _f")  # explained
+
+
+def test_a_crashed_linker_records_nothing_whatever_it_printed(tmp_path, monkeypatch):
+    # gpt-6.1-sol review of 9311a6ada0: LNK4099, then an access violation, was recorded as a clean census
+    import pytest
+    monkeypatch.setattr(L, "OUT", tmp_path)
+    monkeypatch.setattr(L, "ledger", lambda: [])
+    monkeypatch.setattr(L, "objects", lambda rows: ([], []))
+    monkeypatch.setattr(L, "link", lambda *a, **k: ("x.obj : warning LNK4099: PDB was not found\n", 0, 0xC0000005))
+    with pytest.raises(SystemExit, match="abnormally"):
+        L.main([])
+    assert not (tmp_path / "census.json").exists()
+    monkeypatch.setattr(L, "link", lambda *a, **k: ("x.obj : warning LNK4099: PDB was not found\n", 0, -11))
+    with pytest.raises(SystemExit, match="abnormally"):
+        L.main([])
+    # a clean exit with no image written is no completed link either
+    monkeypatch.setattr(L, "link", lambda *a, **k: ("", 0, 0))
+    with pytest.raises(SystemExit, match="wrote no census.exe"):
+        L.main([])
+    assert not (tmp_path / "census.json").exists()

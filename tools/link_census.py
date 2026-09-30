@@ -306,13 +306,20 @@ def link(objs, aliases=None, tag="census", extra=(), options=()):
     return result.stdout + result.stderr, time.time() - started, result.returncode
 
 
-def unexplained_exit(code, log):
-    """A failing link.exe exit must be explained by the linker's own
-    diagnostics (under /FORCE, the LNK errors and warnings the census
-    counts); an exit with none, a crash of the tool or its host, is never
-    recorded as a census with nothing wrong."""
+def unexplained_exit(code, log, output=None, started=None):
+    """Refuse a link that did not complete: a termination by exception or
+    signal (an NTSTATUS such as 0xC0000005, a negative code) whatever the log
+    says before it; a failing exit the linker's own diagnostics do not
+    explain (under /FORCE, the LNK errors and warnings the census counts);
+    and, given `output` and `started`, no output image written by this run.
+    Nothing is ever recorded as a census with nothing wrong."""
+    if code < 0 or code > 0xFFFF:
+        raise SystemExit(f"link_census: link.exe terminated abnormally (exit 0x{code & 0xFFFFFFFF:08X}); "
+                         "no counts recorded")
     if code and not re.search(r"\b(?:error|warning) LNK\d+", log):
         raise SystemExit(f"link_census: link.exe exited {code} with no linker diagnostic; no counts recorded")
+    if output is not None and (not output.exists() or output.stat().st_mtime < started - 2):
+        raise SystemExit(f"link_census: link.exe exited {code} but wrote no {output.name}; no counts recorded")
 
 
 def classify(log, rows):
@@ -1191,8 +1198,9 @@ def main(argv=None):
     if missing:
         print(f"link_census: {len(missing):,} objects missing (run the full ./build.sh first); "
               f"linking the {len(present):,} present", file=sys.stderr)
+    started = time.time()
     log, seconds, code = link(present)
-    unexplained_exit(code, log)
+    unexplained_exit(code, log, OUT / "census.exe", started)
     crashed = FATAL.search(log)
     if crashed:
         # A linker that dies prints no per-symbol errors, which would read as
@@ -1208,8 +1216,9 @@ def main(argv=None):
         table = alias_scaffold(rows, wanted)
         if args.scaffold_limit:
             table = dict(sorted(table.items())[:args.scaffold_limit])
+        started = time.time()
         log, seconds, code = link(present, table, tag="scaffold")
-        unexplained_exit(code, log)
+        unexplained_exit(code, log, OUT / "scaffold.exe", started)
         crashed = FATAL.search(log)
         after, after_detail, after_dup_kinds, _ = classify(log, rows)
         census["scaffold"] = {"aliases": len(table), "seconds": seconds,

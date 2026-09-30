@@ -334,16 +334,22 @@ def test_unrelocated_branch_and_address_are_wrong_when_moved():
     assert item(image, "_num").verdict == "retail"
 
 
-def test_data_dword_is_a_counted_boundary_not_a_verdict():
-    # retail has no base relocations: a data dword in the image range may be a pointer or a table of shorts
+def test_data_dword_is_unproven_for_strict_acceptance_only():
+    # retail has no base relocations: a data dword in the image range may be a pointer or a table of
+    # shorts. Retail-true at retail's placement; unknown for the movable (strict) verdict.
     retail = bytearray(RETAIL)
+    retail[0x1040:0x1046] = b"\xa1" + struct.pack("<I", I.BASE + 0x2040) + b"\xc3"  # mov eax, [_table]
     for value in (I.BASE + 0x1020, I.BASE + 0x2800):  # _c's start; an in-image value nothing starts at
         retail[0x2040:0x2044] = struct.pack("<I", value)
         table = coff([(".rdata", RDATA_FLAGS, struct.pack("<I", value), [], None)],
                      [("_table", 1, 0, I.EXTERNAL, 0, None)])
-        image = build(CHAIN + [("T.obj", table)], {"_a": "A.obj", "_b": "B.obj", "_c": "C2.obj", "_table": "T.obj"},
-                      retail, {**LEDGER, "_table": {0x2040}})
-        assert item(image, "_table").verdict == "retail" and item(image, "_table").literals == 1
+        reader = function("_f", b"\xa1\0\0\0\0\xc3", [(1, "_table", I.DIR32)])
+        image = build(CHAIN + [("T.obj", table), ("F.obj", reader)],
+                      {"_a": "A.obj", "_b": "B.obj", "_c": "C2.obj", "_table": "T.obj", "_f": "F.obj"},
+                      retail, {**LEDGER, "_table": {0x2040}, "_f": {0x1040}})
+        t, f = item(image, "_table"), item(image, "_f")
+        assert t.retail_verdict == "retail" and t.verdict == "unknown" and t.literals == 1
+        assert image.badset_retail[f.id] == frozenset() and image.badset[f.id] == frozenset({t.id})
         assert I.results(image)[0]["unproven_in_image_data_dwords"] == 1
 
 
@@ -407,3 +413,47 @@ def test_indirect_transfer_is_an_unproven_boundary():
     assert image.badset[v.id] == frozenset() and image.badset_direct[v.id] == frozenset({v.id})
     summary = I.results(image)[0]
     assert summary["closed_strict_bytes"] == 4 and summary["closed_strict_direct_bytes"] == 0
+
+
+# gpt-6.1-sol review of 9311a6ada0 (build/rtreview_scratch/test_review_probes.py)
+
+def test_reachable_code_after_an_embedded_relocation_is_checked():
+    retail = bytearray(RETAIL)
+    # jmp +4 over an embedded pointer, then mov eax, [0x402000] with no relocation
+    raw = b"\xeb\x04" + struct.pack("<I", I.BASE + 0x2040) + b"\xa1" + struct.pack("<I", I.BASE + 0x2000) + b"\xc3"
+    retail[0x1040:0x1040 + len(raw)] = raw
+    obj = coff([(".text", CODE_FLAGS, raw[:2] + bytes(4) + raw[6:], [(2, "_g", I.DIR32)], None),
+                (".data", DATA_FLAGS, bytes(4), [], None)],
+               [("_f", 1, 0, I.EXTERNAL, 0x20, None), ("_g", 2, 0, I.EXTERNAL, 0, None)])
+    image = build([("F.obj", obj)], {"_f": "F.obj", "_g": "F.obj"}, retail, {"_f": {0x1040}, "_g": {0x2040}})
+    f = item(image, "_f")
+    assert f.verdict == "wrong" and "unrelocated address 0x00402000" in f.reason
+    assert I.results(image)[0]["closed_strict_bytes"] == 0
+
+
+def test_code_that_is_not_fully_inspected_is_unknown():
+    retail = bytearray(RETAIL)
+    raw = b"\xeb\x01\xff" + b"\xc3"  # jmp over a byte nothing reaches or explains
+    retail[0x1040:0x1044] = raw
+    image = build([("F.obj", function("_f", raw))], {"_f": "F.obj"}, retail, {"_f": {0x1040}})
+    assert item(image, "_f").verdict == "unknown" and "not fully inspected" in item(image, "_f").reason
+
+
+def test_msvc_alignment_filler_before_a_table_is_padding():
+    retail = bytearray(RETAIL)
+    raw = b"\xc3" + b"\x8d\x49\x00" + b"\x8b\xff"  # ret; lea ecx,[ecx+0]; mov edi,edi
+    retail[0x1040:0x1046] = raw
+    image = build([("F.obj", function("_f", raw))], {"_f": "F.obj"}, retail, {"_f": {0x1040}})
+    assert item(image, "_f").verdict == "retail"
+
+
+def test_pointer_payload_reached_by_code_is_not_proven_movable():
+    retail = bytearray(RETAIL)
+    retail[0x1040:0x1046] = b"\xa1" + struct.pack("<I", I.BASE + 0x2040) + b"\xc3"
+    retail[0x2040:0x2044] = struct.pack("<I", I.BASE + 0x2000)
+    obj = coff([(".text", CODE_FLAGS, b"\xa1" + bytes(4) + b"\xc3", [(1, "_p", I.DIR32)], None),
+                (".data", DATA_FLAGS, struct.pack("<I", I.BASE + 0x2000), [], None)],
+               [("_f", 1, 0, I.EXTERNAL, 0x20, None), ("_p", 2, 0, I.EXTERNAL, 0, None)])
+    image = build([("F.obj", obj)], {"_f": "F.obj", "_p": "F.obj"}, retail, {"_f": {0x1040}, "_p": {0x2040}})
+    summary = I.results(image)[0]
+    assert summary["closed_strict_bytes"] == 0 and summary["closed_bytes"] == 6
