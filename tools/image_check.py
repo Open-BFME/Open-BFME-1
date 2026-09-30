@@ -1426,6 +1426,8 @@ def load(tree, census_tree, scalars_path=None):
     read, text, size = retail_reader(build)
     image = Image(objs, kept, truth, statics, read, excused, lanes, text, size, kinds,
                   {int(row["target_rva"], 16) for row in rows}, read_scalars(scalars_path), map_commons)
+    image.paths = {path.name: path for path in paths}  # image_compose seals the selected objects
+    image.baseline = build.EXE
     linked = {"commit": commit, "date": history.get("date"), "linked_bytes": int(history.get("linked_bytes") or 0),
               "linked_authored": int(history.get("linked_authored") or 0)}
     return image, linked
