@@ -999,77 +999,9 @@ void Bridge::updateDamageState( void )
 }
 
 
-//-------------------------------------------------------------------------------------------------
-/** getHeight - Get the height for an object on bridge.. */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/BridgeGetBridgeHeightThunk.cpp
-// ?getBridgeHeight@Bridge@@QAEMPBUCoord3D@@PAU2@@Z present-unmatched
-// DECLINED under the anti-lift rule, not merely unattempted. The donor is a
-// 5-byte ILT whose whole content is a cast-and-call into an unnamed shim, and
-// its jump lands at 0x001a7520 -- still an unconverted dump (game/gen_asm/d_001a38b0.asm).
-// This body is therefore the only readable statement of what the function does,
-// and folding would replace it with a three-line stub forwarding into a dump.
-Real Bridge::getBridgeHeight(const Coord3D *pLoc, Coord3D* normal)
-{
-	Vector3 left1(m_bridgeInfo.fromLeft.x, m_bridgeInfo.fromLeft.y, m_bridgeInfo.fromLeft.z);
-	Vector3 right1(m_bridgeInfo.fromRight.x, m_bridgeInfo.fromRight.y, m_bridgeInfo.fromRight.z);
-	Vector3 left2(m_bridgeInfo.toLeft.x, m_bridgeInfo.toLeft.y, m_bridgeInfo.toLeft.z);
-	PlaneClass plane(left1, right1, left2);
-	const Real factor = 1000.0f;
-	Vector3 bottom(pLoc->x, pLoc->y, 0);
-	Vector3 top(pLoc->x, pLoc->y, factor);
-	Real t;
-	plane.Compute_Intersection(bottom, top, &t);
-	if (normal) {
-		normal->x = plane.N.X;
-		normal->y = plane.N.Y;
-		normal->z = plane.N.Z;
-	}
+// Retail Bridge::getBridgeHeight (0x0000B802) is implemented in BridgeMemberThunks.cpp.
 
-	return t*factor;
-}
-
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicCtorThunk.cpp
-// ??0TerrainLogic@@QAE@XZ present-unmatched
-// Blocked on class shape, which no view or alias pin reaches. Retail's is 46
-// bytes and the class it constructs is sizeof 0x1904 with TWO vptrs, at +0x00
-// and +0x04, both rewritten after the base constructor returns; the base
-// subobject reaches at least +0x2c and +0x0c is a BASE member this constructor
-// assigns, not a member of TerrainLogic. A constructor's codegen is a function
-// of the real hierarchy, so reproducing it means changing the class, and
-// TerrainLogic.h is not a header this lane edits for one body.
-TerrainLogic::TerrainLogic()
-{
-	Int i;
-	
-	//Added By Sadullah Nader
-	//Initialization(s) inserted
-	m_activeBoundary = 0;
-	m_waterGridEnabled = FALSE;
-	//
-	for( i = 0; i < MAX_DYNAMIC_WATER; ++i )
-	{
-
-		m_waterToUpdate[ i ].waterTable = NULL;
-		m_waterToUpdate[ i ].changePerFrame = 0.0f;
-		m_waterToUpdate[ i ].targetHeight = 0.0f;
-		m_waterToUpdate[ i ].damageAmount = 0.0f;
-		m_waterToUpdate[ i ].currentHeight = 0.0f;
-
-	}  // end for i
-	m_numWaterToUpdate = 0;
-
-	m_waypointListHead = NULL;
-	m_bridgeListHead = NULL;
-	m_mapData = NULL;
-	m_bridgeDamageStatesChanged = FALSE;
-	m_mapDX = 0;
-	m_mapDY = 0;
-
-
-}  // end TerrainLogic
+// Retail TerrainLogic::TerrainLogic (0x006BE070) is implemented in TerrainLogicCtorThunk.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -1091,19 +1023,7 @@ void TerrainLogic::init( void )
 
 }  // end init
 
-//-------------------------------------------------------------------------------------------------
-/** Reset */
-//-------------------------------------------------------------------------------------------------
-// ?reset@TerrainLogic@@UAEXXZ present-unmatched
-void TerrainLogic::reset( void )
-{
-
-	deleteWaypoints();
-	deleteBridges();
-	PolygonTrigger::deleteTriggers();
-	m_numWaterToUpdate = 0;
-
-}  // end reset
+// Retail TerrainLogic::reset (0x001ACF90) is implemented in TerrainLogic_reset.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Update */
@@ -1205,32 +1125,7 @@ void TerrainLogic::update( void )
 
 }  // end update
 
-//-------------------------------------------------------------------------------------------------
-/** newMap */
-//-------------------------------------------------------------------------------------------------
-// ?newMap@TerrainLogic@@UAEX_N@Z present-unmatched
-void TerrainLogic::newMap( Bool saveGame )
-{
-
-	// Set waypoint's z value, now that the height map is loaded.
-	for( Waypoint *way = m_waypointListHead; way; way = way->getNext() ) 
-	{
-		const Coord3D* loc = way->getLocation();
-		way->setLocationZ(getGroundHeight(loc->x, loc->y));
-	}
-	//
-	// until we have a real way to specify different water planes in the map, we will check
-	// for a special waypoint name that we will put in maps that we want to have a 
-	// water grid
-	/// @todo Mark W, remove this when you have water plane placements in the map done (Colin)
-	//
-	Waypoint *waypoint = getWaypointByName( "WaveGuide1" );
-	Bool enable = FALSE;
-	if( waypoint )
-		enable = TRUE;
-	enableWaterGrid( enable );
-
-}  // end newMap
+// Retail TerrainLogic::newMap (0x001AE190) is implemented in TerrainLogicNewMap.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
@@ -1752,18 +1647,7 @@ Waypoint *TerrainLogic::getWaypointByName( AsciiString name )
 	return NULL;
 }
 
-//-------------------------------------------------------------------------------------------------
-/** Given a unique integer ID, return the associated waypoint. */
-//-------------------------------------------------------------------------------------------------
-// ?getWaypointByID@TerrainLogic@@UAEPAVWaypoint@@I@Z present-unmatched
-Waypoint *TerrainLogic::getWaypointByID( UnsignedInt id )
-{
-	for( Waypoint *way = m_waypointListHead; way; way = way->getNext() )
-		if (way->getID() == id)
-			return way;
-
-	return NULL;
-}
+// Retail TerrainLogic::getWaypointByID (0x001ACE10) is implemented in TerrainLogicGetWaypointByID.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Return the closest waypoint on the labeled path. */
@@ -1911,44 +1795,7 @@ PathfindLayerEnum TerrainLogic::getLayerForDestination(const Coord3D *pos)
 	return(bestLayer);
 }
 
-//-------------------------------------------------------------------------------------------------
-// this is just like getLayerForDestination, but always return the highest layer that will be <= z at that point
-// (unlike getLayerForDestination, which will return the closest layer)
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicGetHighestLayer.cpp
-// ?getHighestLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PBUCoord3D@@_N@Z present-unmatched
-PathfindLayerEnum TerrainLogic::getHighestLayerForDestination(const Coord3D *pos, Bool onlyHealthyBridges)
-{
-	PathfindLayerEnum bestLayer = LAYER_GROUND;
-	Real bestDistance = pos->z - getGroundHeight(pos->x, pos->y);	// NOT fabs in this case.
-
-	if (bestDistance > TheAI->pathfinder()->getWallHeight()/2) {
-		// check wall.
-		if (TheAI->pathfinder()->isPointOnWall(pos)) {
-			Real delta = pos->z - TheAI->pathfinder()->getWallHeight();
-			// must be ABOVE (or on) the wall for this call. (srj)
-			if (delta >= 0 && fabs(delta) < fabs(bestDistance)) {
-				bestLayer = (PathfindLayerEnum)LAYER_WALL;
-				bestDistance = delta;
-			}
-		}
-	}
-
-	for (Bridge *pBridge = getFirstBridge(); pBridge != NULL; pBridge = pBridge->getNext()) {
-
-		if (onlyHealthyBridges && pBridge->peekBridgeInfo()->curDamageState == BODY_RUBBLE)
-			continue;
-
-		if (pBridge->isPointOnBridge(pos) ) {
-			Real delta = pos->z - pBridge->getBridgeHeight(pos, NULL);
-			// must be ABOVE (or on) the bridge for this call. (srj)
-			if (delta >= 0 && fabs(delta) < fabs(bestDistance)) {
-				bestLayer = pBridge->getLayer();
-				bestDistance = delta;
-			}
-		}
-	}
-	return(bestLayer);
-}
+// Retail TerrainLogic::getHighestLayerForDestination (0x001A7D60) is implemented in TerrainLogicGetHighestLayer.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Determines whether the object interacts with the bridge on specified layer. */
@@ -2089,20 +1936,7 @@ Bool TerrainLogic::objectInteractsWithBridgeEnd(Object *obj, Int layer) const
 	return(false);
 }
 
-//-------------------------------------------------------------------------------------------------
-/** Updates the damage state of the bridge from the logic. */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicBridges.cpp
-// ?updateBridgeDamageStates@TerrainLogic@@UAEXXZ present-unmatched here - the matched copy has the flag at +0x38
-void TerrainLogic::updateBridgeDamageStates( void )
-{
-	Bridge *pBridge = getFirstBridge();
-	while (pBridge) {
-		pBridge->updateDamageState();
-		pBridge = pBridge->getNext();
-	}
-	m_bridgeDamageStatesChanged = true;
-}
+// Retail TerrainLogic::updateBridgeDamageStates (0x001AAD70) is implemented in TerrainLogicBridges.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Checks if a bridge is repaired. */
@@ -2216,129 +2050,11 @@ Bool TerrainLogic::pickBridge(const Vector3 &from, const Vector3 &to, Vector3 *p
 	return(curDraw);
 }
 
-//-------------------------------------------------------------------------------------------------
-/** Deletes the bridges list. */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicBridges.cpp
-// ?deleteBridges@TerrainLogic@@IAEXXZ present-unmatched
-void TerrainLogic::deleteBridges(void)
-{
-	Bridge *pNext = NULL;
-	Bridge *pBridge;
-	// Traverse all waypoints.
-	for (pBridge = getFirstBridge(); pBridge; pBridge = pNext) {
-		pNext = pBridge->getNext();
-		pBridge->setNext(NULL);
-		pBridge->deleteInstance();
-	}
-	m_bridgeListHead = NULL;
-}
+// Retail TerrainLogic::deleteBridges (0x001AB150) is implemented in TerrainLogicBridges.cpp.
 
-//-------------------------------------------------------------------------------------------------
-/** Delete the bridge specified */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicBridges.cpp
-// ?deleteBridge@TerrainLogic@@UAEXPAVBridge@@@Z present-unmatched
-void TerrainLogic::deleteBridge( Bridge *bridge )
-{
+// Retail TerrainLogic::deleteBridge (0x001AAF00) is implemented in TerrainLogicBridges.cpp.
 
-	// sanity
-	if( bridge == NULL )
-		return;
-
-	// check for removing the head
-	if( m_bridgeListHead == bridge )
-	{
-
-		m_bridgeListHead = bridge->getNext();
-
-	}  // end if
-	else
-	{
-
-		for( Bridge *otherBridge = getFirstBridge(); 
-				 otherBridge; 
-				 otherBridge = otherBridge->getNext() )
-		{
-
-			//
-			// if the next bridge is the one in question to delete, set this bridge to point
-			// to the next pointer of the bridge we are deleting
-			//
-			if( otherBridge->getNext() == bridge )
-			{
-
-				otherBridge->setNext( bridge->getNext() );
-				break;  // exit for
-
-			}  // end if
-
-		}  // end for, otherBridge
-
-	}  // end else
-
-	// delete object associated with bridge if present
-	BridgeInfo bridgeInfo;
-	bridge->getBridgeInfo( &bridgeInfo );
-	TheAI->pathfinder()->changeBridgeState(bridge->getLayer(), false);
-
-	Object *bridgeObj = TheGameLogic->findObjectByID( bridgeInfo.bridgeObjectID );
-	if( bridgeObj )
-		TheGameLogic->destroyObject( bridgeObj );
-
-	// delete the bridge in question
-	bridge->deleteInstance();
-
-}  // end deleteBridge
-
-//-------------------------------------------------------------------------------------------------
-/** Returns the ground aligned point on the bounding box closest to the given point*/
-//-------------------------------------------------------------------------------------------------
-// ?findClosestEdgePoint@TerrainLogic@@UBE?AUCoord3D@@PBU2@@Z present-unmatched
-Coord3D TerrainLogic::findClosestEdgePoint ( const Coord3D *closestTo ) const 
-{
-	Region3D mapExtent;
-	getExtent( &mapExtent );
-
-	Real distances[4];
-	distances[0] = fabs( closestTo->y - mapExtent.lo.y );//top
-	distances[1] = fabs( closestTo->x - mapExtent.hi.x );//right
-	distances[2] = fabs( closestTo->y - mapExtent.hi.y );//bottom
-	distances[3] = fabs( closestTo->x - mapExtent.lo.x );//left
-	Real bestDistance = distances[0];
-	Int bestDistanceIndex = 0;
-	for( Int lameIndex = 1; lameIndex < 4; lameIndex++ )
-	{
-		if( distances[lameIndex] < bestDistance )
-		{
-			bestDistance = distances[lameIndex];
-			bestDistanceIndex = lameIndex;
-		}
-	}
-
-	Coord3D retVal = *closestTo;
-	if( bestDistanceIndex == 0 )
-	{
-		retVal.y = mapExtent.lo.y;
-	}
-	else if( bestDistanceIndex == 1 )
-	{
-		retVal.x = mapExtent.hi.x;
-	}
-	else if( bestDistanceIndex == 2 )
-	{
-		retVal.y = mapExtent.hi.y;
-	}
-	else
-	{
-		retVal.x = mapExtent.lo.x;
-	}
-
-	retVal.z = getGroundHeight( retVal.x, retVal.y );
-
-	return retVal;
-
-}
+// Retail TerrainLogic::findClosestEdgePoint (0x001A3770) is implemented in TerrainLogic_findClosestEdgePoint.cpp.
 
 
 
@@ -2376,48 +2092,7 @@ Coord3D TerrainLogic::findFarthestEdgePoint( const Coord3D *farthestFrom ) const
 
 
 
-//-------------------------------------------------------------------------------------------------
-/** See if a location is underwater, and what the water height is. */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicIsUnderwater.cpp
-// ?isUnderwater@TerrainLogic@@UAE_NMMPAM0@Z present-unmatched
-Bool TerrainLogic::isUnderwater( Real x, Real y, Real *waterZ, Real *terrainZ )
-{
-
-	// get the water handle at this location
-	const WaterHandle *waterHandle = getWaterHandle( x, y );
-
-	// if no water here, no height, no nuttin
-	if( waterHandle == NULL )
-  {
-    // but we have to return the terrain Z if requested!
-    if (terrainZ)
-      *terrainZ=getGroundHeight(x,y);
-		return FALSE;
-  }
-
-	//
-	// if this water handle is a grid water use the grid height function, otherwise look into
-	// the polygon trigger
-	//
-	Real wZ = 0.0f;
-	if( waterHandle == &m_gridWaterHandle )
-		TheTerrainVisual->getWaterGridHeight( x, y, &wZ );
-	else
-		wZ = getWaterHeight( waterHandle );
-
-	// fill out the waterZ parameter with the water height
-	if( waterZ )
-		*waterZ = wZ;
-
-	// see if the terrain height here is below the water
-	Real terrainHeight = getGroundHeight( x, y );
-	if (terrainZ)
-		*terrainZ = terrainHeight;
-
-	return terrainHeight < wZ;
-
-}
+// Retail TerrainLogic::isUnderwater (0x001A3970) is implemented in TerrainLogicIsUnderwater.cpp.
 
 // BFME moved PolygonTrigger's water-query fields and the TerrainVisual water-grid
 // slot, so the Zero Hour headers above cannot express the retail accesses.
@@ -2811,100 +2486,7 @@ void TerrainLogic::changeWaterHeightOverTime( const WaterHandle *water,
 
 }  // end chanageWaterHeightOverTime
 
-// ------------------------------------------------------------------------------------------------
-/** Find the axis aligned bounding region around a water table */
-// ------------------------------------------------------------------------------------------------
-// byte-exact BFME reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicFindAxisAlignedBoundingRect.cpp
-// ?findAxisAlignedBoundingRect@TerrainLogic@@IAEXPBVWaterHandle@@PAURegion3D@@@Z present-unmatched
-void TerrainLogic::findAxisAlignedBoundingRect( const WaterHandle *water, Region3D *region )
-{
-
-	// sanity
-	if( water == NULL || region == NULL )
-		return;
-
-	// setup the lo and high of the region to the *opposite* side of the map plus some big number
-	#define BUFFER 99999.9f  /// just to have extreme regions outside of the map
-	Region3D mapExtent;
-	getExtent( &mapExtent );
-	region->lo.x = mapExtent.hi.x + BUFFER;
-	region->lo.y = mapExtent.hi.y + BUFFER;
-	region->hi.x = mapExtent.lo.x - BUFFER;
-	region->hi.y = mapExtent.lo.y - BUFFER;
-	// for water grid we must access the transform
-	if( water == &m_gridWaterHandle )
-	{
-		Int i;
-		ICoord3D p[ 4 ];
-
-		// compute the 4 corners of the table according to the grids and grid spacing
-		Real gridX, gridY, cellSize;
-		TheTerrainVisual->getWaterGridResolution( water, &gridX, &gridY, &cellSize );
-		p[ 0 ].x = 0;
-		p[ 0 ].y = 0;
-		p[ 1 ].x = gridX * cellSize;
-		p[ 1 ].y = 0;
-		p[ 2 ].x = gridX * cellSize;
-		p[ 2 ].y = gridY * cellSize;
-		p[ 3 ].x = 0;
-		p[ 3 ].y = gridY * cellSize;
-
-		// transform the 4 points using the transform matrix of the water
-		Vector3 v;
-		Matrix3D transform;
-		TheTerrainVisual->getWaterTransform( water, &transform );
-		for( i = 0; i < 4; i++ )
-		{
-
-			v.Set( p[ i ].x, p[ i ].y, p[ i ].z );
-			transform.Transform_Vector( transform, v, &v );
-
-			// do the region compares
-			if( v.X < region->lo.x )
-				region->lo.x = v.X;
-			if( v.X > region->hi.x )
-				region->hi.x = v.X;
-			if( v.Y < region->lo.y )
-				region->lo.y = v.Y;
-			if( v.Y > region->hi.y )
-				region->hi.y = v.Y;
-
-		}  // end for i
-
-	}  // end if
-	else
-	{
-
-		// go through each polygon point and find the extents
-		const ICoord3D *p;
-		Int numPoints = water->m_polygon->getNumPoints();
-		for( Int i = 0; i < numPoints; i++ )
-		{
-		
-			// get this point
-			p = water->m_polygon->getPoint( i );
-
-			// compare to our region
-			if( p->x < region->lo.x )
-				region->lo.x = p->x;
-			if( p->x > region->hi.x )
-				region->hi.x = p->x;
-
-			if( p->y < region->lo.y )
-				region->lo.y = p->y;
-			if( p->y > region->hi.y )
-				region->hi.y = p->y;
-
-			if( p->z < region->lo.z )
-				region->lo.z = p->z;
-			if( p->z > region->hi.z )
-				region->hi.z = p->z;
-
-		}  // end for i
-				
-	}  // end else
-
-}  // end findAxisAlignedBoundingRect
+// Retail TerrainLogic::findAxisAlignedBoundingRect (0x001A66C0) is implemented in TerrainLogicFindAxisAlignedBoundingRect.cpp.
 
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/TerrainLogic_setActiveBoundary_Thunk.cpp
 // ?setActiveBoundary@TerrainLogic@@QAEXH@Z present-unmatched
