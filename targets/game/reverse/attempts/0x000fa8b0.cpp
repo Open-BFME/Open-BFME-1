@@ -1,5 +1,5 @@
 // ?findBuildIndex@Rva000FA8B0@@QAEHPBVRva000FA8B0Query@@H@Z
-// partial score=0.973 date=2026-09-27
+// partial score=0.2606 date=2026-09-27
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 typedef int Int;
