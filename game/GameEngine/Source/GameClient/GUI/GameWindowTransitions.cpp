@@ -1,8 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
-// The vendored GameWindowTransitions.h has the Zero Hour class layout; the
-// BFME caller TU blocks it because that layout differs. This provider needs
-// only the opaque pointer type, whose exact spelling is established by the
-// matched GameWindowManager caller and the upstream definition.
+// The matched GameWindowManager caller's compiled relocations and the upstream
+// definition establish this exact pointer type. This provider only needs its
+// opaque declaration because it stores a pointer without accessing the object.
 class GameWindowTransitionsHandler;
 
 GameWindowTransitionsHandler *TheTransitionHandler = 0;
