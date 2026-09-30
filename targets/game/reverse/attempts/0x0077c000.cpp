@@ -1,5 +1,5 @@
 // ?_M_insert_overflow@?$vector@UModelConditionInfo@@V?$allocator@UModelConditionInfo@@@_STL@@@_STL@@IAEXPAUModelConditionInfo@@ABU3@ABU__false_type@2@I_N@Z
-// partial score=0.95 date=2026-09-28
+// partial score=1.0 date=2026-09-28
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
 // Instantiating vector<ModelConditionInfo>::_M_insert_overflow at retail 0x0077C000.

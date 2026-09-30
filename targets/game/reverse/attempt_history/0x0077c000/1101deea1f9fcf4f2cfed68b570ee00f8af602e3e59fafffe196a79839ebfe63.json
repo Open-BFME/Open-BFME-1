@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "1101deea1f9fcf4f2cfed68b570ee00f8af602e3e59fafffe196a79839ebfe63",
+  "symbol": "?_M_insert_overflow@?$vector@UModelConditionInfo@@V?$allocator@UModelConditionInfo@@@_STL@@@_STL@@IAEXPAUModelConditionInfo@@ABU3@ABU__false_type@2@I_N@Z",
+  "score_kind": "measured",
+  "score": 1.0,
+  "source": "// ?_M_insert_overflow@?$vector@UModelConditionInfo@@V?$allocator@UModelConditionInfo@@@_STL@@@_STL@@IAEXPAUModelConditionInfo@@ABU3@ABU__false_type@2@I_N@Z\n// partial score=1.0 date=2026-09-30\n// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB\n// stlport\n// Instantiating vector<ModelConditionInfo>::_M_insert_overflow at retail 0x0077C000.\n#define _STLP_NO_EXCEPTIONS 1\n#include <vector>\n\nstruct ModelConditionInfo\n{\n\tModelConditionInfo(const ModelConditionInfo &);\n\t~ModelConditionInfo();\n\n\tchar m_body[0x128];\n};\n\nvoid ModelConditionInfoVectorInsertOverflowAnchor(\n\t_STL::vector<ModelConditionInfo> &items, const ModelConditionInfo &value)\n{\n\titems.insert(items.begin(), value);\n}\n"
+}

@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "1f232d14de4661d7f362a76fab4120529ac2abcccfd96e29d849c9cb5aa13bd1",
+  "symbol": "?rva008824e0@Rva008824E0Block@@QAEXI@Z",
+  "score_kind": "measured",
+  "score": 0.9904,
+  "source": "// ?rva008824e0@Rva008824E0Block@@QAEXI@Z\n// partial score=0.9904 date=2026-09-30\n// The caller has no matched name, so the class and method keep the RVA.\n// The fields at +0, +4, and +8 follow the block view used at 0x00882550 and 0x00882580.\nextern int Rva0130EA00GuardWords;\nextern void __cdecl memset32(void *ptr, int value, unsigned int bytesToFill);\n\nclass Rva008824E0Block\n{\npublic:\n\tvoid rva008824e0(unsigned int used);\n\nprivate:\n\tvoid *m_field00;\n\tvoid *m_field04;\n\tunsigned int m_size08;\n};\n\nvoid Rva008824E0Block::rva008824e0(unsigned int used)\n{\n\tm_size08 = used;\n\tunsigned int guardWords = Rva0130EA00GuardWords;\n\tm_field00 = 0;\n\tif (guardWords != 0)\n\t{\n\t\tunsigned int guardBytes = guardWords * 4;\n\t\tmemset32((char *)this - guardBytes, 0x0BADF00D, guardBytes);\n\t\tmemset32((char *)(m_size08 + (unsigned int)this) + 0x0c, 0x0BADF00D, guardBytes);\n\t}\n\tif (*(volatile unsigned int *)0x0130EA04 != 0)\n\t\tmemset32((char *)this + 0x0c, 0xDEADC0DE, m_size08);\n}\n"
+}
