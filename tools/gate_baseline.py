@@ -100,13 +100,34 @@ def dir32_symbols(report_text):
     return sorted({line.split("\t", 1)[0] for line in report_text.splitlines() if line.strip()})
 
 
-def check(output, baseline, dir32_baseline=None, dir32_report=None):
+def verdict(output):
+    """'OK', 'FAIL', or None when the transcript has no final FULL GATE line:
+    a gate interrupted after the byte comparison proves nothing about the
+    checks that run after it."""
+    line = next((line for line in reversed(output.splitlines()) if line.startswith("FULL GATE: ")), "")
+    if line.startswith("FULL GATE: OK"):
+        return "OK"
+    return "FAIL" if FULL_GATE_RE.match(line) else None
+
+
+def check(output, baseline, dir32_baseline=None, dir32_report=None, returncode=None):
     """dir32_report is the gate's own dir32_inconsistent.txt text, or None when the
-    gate did not write one. dir32_baseline None skips the DIR32 comparison."""
+    gate did not write one. dir32_baseline None skips the DIR32 comparison.
+    returncode is the gate process's exit status when this run started it; it
+    must agree with the transcript's verdict (build.py exits 1 on FAIL)."""
     now = red_rows(output)
     if now is None:
         print("gate_baseline: the gate died before byte comparison; nothing is proven")
         print("\n".join(output.splitlines()[-15:]), file=sys.stderr)
+        return 2
+    final = verdict(output)
+    if final is None:
+        print("gate_baseline: the gate did not finish (no FULL GATE verdict); nothing is proven")
+        print("\n".join(output.splitlines()[-15:]), file=sys.stderr)
+        return 2
+    if returncode is not None and (returncode == 0) != (final == "OK"):
+        print(f"gate_baseline: the gate exited {returncode} but its transcript says FULL GATE: {final}; "
+              "nothing is proven")
         return 2
     full_gate = next((line for line in reversed(output.splitlines())
                       if line.startswith("FULL GATE: ")), None)
@@ -193,11 +214,15 @@ def main():
         sys.exit(validate_staged())
     if not (a.record or a.check):
         ap.error("one of --record, --check, --validate")
-    output = a.output.read_text(encoding="utf-8", errors="replace") if a.output else run_gate()[1]
+    if a.output:  # a saved transcript has no exit status; its verdict line must stand alone
+        returncode, output = None, a.output.read_text(encoding="utf-8", errors="replace")
+    else:
+        returncode, output = run_gate()
     if a.record:
         now = red_rows(output)
-        if now is None:
-            print("gate_baseline: the gate died before byte comparison; refusing to record")
+        final = verdict(output)
+        if now is None or final is None or (returncode is not None and (returncode == 0) != (final == "OK")):
+            print("gate_baseline: the gate died, did not finish, or exited against its verdict; refusing to record")
             print("\n".join(output.splitlines()[-15:]), file=sys.stderr)
             sys.exit(2)
         write_baseline(now)
@@ -206,7 +231,8 @@ def main():
         print(f"gate_baseline: recorded {len(now)} red row(s) to {BASELINE.relative_to(ROOT).as_posix()} "
               f"and {len(dir32_now)} DIR32 symbol(s) to {DIR32_BASELINE.relative_to(ROOT).as_posix()}")
         sys.exit(0)
-    sys.exit(check(output, load_baseline(), load_baseline(DIR32_BASELINE) or [], read_dir32_report(output)))
+    sys.exit(check(output, load_baseline(), load_baseline(DIR32_BASELINE) or [], read_dir32_report(output),
+                   returncode))
 
 
 if __name__ == "__main__":

@@ -17,7 +17,9 @@ GATE_OK_SHAPE = """Compile: 3 of 3 TU(s)
   FAIL ??1Bar@@QAE@XZ (game/Libraries/Source/WWVegas/WWLib/bar.cpp)
 Functions: FAIL 2/100
 DIR32 consistency: FAIL 3 NEW inconsistent symbol(s)
+FULL GATE: FAIL — 2 red: functions, dir32 consistency
 """
+GATE_OK = "Functions: OK 5/5\n\nFULL GATE: OK \u2014 every check green\n"
 GATE_DIED = """Compile: 1 of 3 TU(s)
 compile failed: game/GameEngine/Source/Common/T3Atl.cpp
 """
@@ -78,7 +80,7 @@ def test_dead_gate_never_passes_or_records(tmp_path):
 def test_no_baseline_is_strict():
     code, out = run(gb.check, GATE_OK_SHAPE, None)
     assert code == 1 and "no baseline recorded" in out
-    code, _ = run(gb.check, "Functions: OK 5/5\n", None)
+    code, _ = run(gb.check, GATE_OK, None)
     assert code == 0
 
 
@@ -159,3 +161,20 @@ def test_a_red_check_with_no_known_list_fails():
 def test_the_noop_patch_is_only_excused_while_functions_are_red():
     gate = "Functions: OK 5/5\n\nFULL GATE: FAIL — 1 red: no-op patch (unrunnable)\n"
     assert run(gb.check, gate, [], [], None)[0] == 1
+
+
+def test_an_interrupted_gate_proves_nothing():
+    # Byte comparison passed, then the run stopped before the later checks and the verdict.
+    code, out = run(gb.check, "Compile: 3 of 3 TU(s)\nFunctions: OK 5/5\nDIR32 addresses: OK\n", [])
+    assert code == 2 and "did not finish" in out
+    code, _ = run(gb.check, GATE_OK_SHAPE.replace("FULL GATE", "FULL GATE?"), gb.red_rows(GATE_OK_SHAPE))
+    assert code == 2
+
+
+def test_exit_status_must_agree_with_the_verdict():
+    assert run(gb.check, GATE_OK, [], None, None, 0)[0] == 0
+    code, out = run(gb.check, GATE_OK, [], None, None, 1)       # OK transcript, failed process
+    assert code == 2 and "exited 1" in out
+    code, out = run(gb.check, GATE_OK_SHAPE, KNOWN_ROWS, None, None, 0)  # FAIL transcript, clean exit
+    assert code == 2 and "exited 0" in out
+    assert run(gb.check, GATE_OK_SHAPE, KNOWN_ROWS, None, None, 1)[0] == 0
