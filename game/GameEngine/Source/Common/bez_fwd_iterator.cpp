@@ -39,19 +39,7 @@ BezFwdIterator::BezFwdIterator(): mStep(0), mStepsDesired(0)
 	mDq.zero();
 } 
 
-//-------------------------------------------------------------------------------------------------
-BezFwdIterator::BezFwdIterator(Int stepsDesired, const BezierSegment *bezSeg)
-{
-	// Added by Sadullah Nader
-	mCurrPoint.zero();
-	mDDDq.zero();
-	mDDq.zero();
-	mDq.zero();
-	//
-
-	mStepsDesired = stepsDesired;
-	mBezSeg = (*bezSeg);
-}
+// Retail BezFwdIterator::BezFwdIterator (0x000B65C0) is implemented in BezFwdIterator.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?BezFwdIterator::start present-unmatched
