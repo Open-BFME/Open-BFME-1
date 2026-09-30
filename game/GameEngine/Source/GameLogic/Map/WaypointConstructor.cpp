@@ -12,6 +12,7 @@
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
+	Coord3D() {}
 	Coord3D(const Coord3D &that) : x(that.x), y(that.y), z(that.z) {}
 
 	float x, y, z;
@@ -51,6 +52,7 @@ struct Rva001AB600Slot
 class Waypoint
 {
 public:
+	Waypoint();
 	Waypoint(int id, AsciiString name, const Coord3D *pLoc,
 		AsciiString label1, AsciiString label2,
 		AsciiString label3, bool biDirectional, int extraField,
@@ -96,6 +98,49 @@ Waypoint::Waypoint(int id, AsciiString name, const Coord3D *pLoc,
 	  m_extraLabel(extraLabel), m_hasInclude(false), m_hasExclude(false),
 	  m_skipRelationship(false), m_unreconstructed_a4(0), m_linkedObjectId(0)
 {
+	m_includeMask.zeroData();
+	m_excludeMask.zeroData();
+
+	for (int i = 0; i < 8; i++)
+		m_links[i] = 0;
+	m_linkSource = 0;
+
+	if (g_waypointListHead == 0)
+		g_Va012ACC30 = 0x40000000;
+	if (m_id == WAYPOINT_ID_AUTO)
+	{
+		m_id = g_Va012ACC30;
+		++g_Va012ACC30;
+	}
+
+	m_next = g_waypointListHead;
+	if (m_next)
+		m_next->m_prev = this;
+	m_prev = 0;
+	g_waypointListHead = this;
+
+	m_frameThreshold = 0;
+
+	if (TheTerrainLogic)
+		TheTerrainLogic->m_map550.clear();
+}
+
+// Default constructor, retail 0x001AB8B0 (371 bytes); the load path fills the fields afterwards.
+Waypoint::Waypoint()
+{
+	m_id = 0;
+	m_numLinks = 0;
+	m_biDirectional = false;
+	m_extraField = 0;
+	m_field44 = 0;
+	m_field48 = false;
+	m_hasInclude = false;
+	m_hasExclude = false;
+	m_skipRelationship = false;
+	m_location.x = 0;
+	m_location.y = 0;
+	m_location.z = 0;
+	m_unreconstructed_a4 = 0;
 	m_includeMask.zeroData();
 	m_excludeMask.zeroData();
 
