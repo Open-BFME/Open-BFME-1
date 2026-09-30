@@ -3637,13 +3637,13 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 							}
 						}
 					}
-					else if (!stricmp(resp.command.c_str(), "NAT"))
+					else if (!_strcmpi(resp.command.c_str(), "NAT"))
 					{
 						if (TheNAT != NULL) {
 							TheNAT->processGlobalMessage(-1, resp.commandOptions.c_str());
 						}
 					}
-					else if (!stricmp(resp.command.c_str(), "Pings"))
+					else if (!_strcmpi(resp.command.c_str(), "Pings"))
 					{
 						if (!((BfmeWolUpdateInfo *)TheGameSpyInfo)->amIHost())
 						{
@@ -3688,7 +3688,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
                         else
                             playerName = resp.nick.c_str();
 						Int slotNum = game->getSlotNum(playerName);
-						if ((slotNum >= 0) && (slotNum < MAX_SLOTS) && (!stricmp(resp.command.c_str(), "NAT"))) {
+						if ((slotNum >= 0) && (slotNum < MAX_SLOTS) && (!_strcmpi(resp.command.c_str(), "NAT"))) {
 							// this is a command for NAT negotiations, pass if off to TheNAT
 							if (TheNAT != NULL) {
 								TheNAT->processGlobalMessage(slotNum, resp.commandOptions.c_str());

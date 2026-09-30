@@ -20,7 +20,7 @@ typedef wchar_t WideChar;
 
 #define MAX_UITEXT_LENGTH (10*1024)
 
-extern "C" __declspec(dllimport) int __cdecl _stricmp( const char *a, const char *b );
+extern "C" __declspec(dllimport) int __cdecl _strcmpi( const char *a, const char *b );
 
 inline UnicodeString::UnicodeString( const wchar_t *str )
 {
@@ -130,7 +130,7 @@ Bool GameTextManager::parseMapStringFile( File *file )
 		for( Int i = 0; i < listCount; i++ )
 		{
 			StringInfo *info = &m_mapStringInfo[ i ];
-			if( !_stricmp( labelText( info->label ), m_buffer ) )
+			if( !_strcmpi( labelText( info->label ), m_buffer ) )
 			{
 			}
 		}
@@ -168,7 +168,7 @@ Bool GameTextManager::parseMapStringFile( File *file )
 					readString = true;
 				}
 			}
-			else if( !_stricmp( m_buffer, "END" ) )
+			else if( !_strcmpi( m_buffer, "END" ) )
 			{
 				break;
 			}

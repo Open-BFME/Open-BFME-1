@@ -198,7 +198,7 @@ public:
     Bool doesFileExist(const char *filename) const;
 };
 
-__declspec(dllimport) unsigned int bfmeLenVGI(const unsigned short *source);
+extern "C" __declspec(dllimport) unsigned int wcslen(const unsigned short *source);
 
 typedef void (*GameWinMsgBoxFunc)(void);
 
@@ -285,7 +285,7 @@ void reallySaveReplay(void)
             sizeof(errorBuffers.copyErrorBuffer), 0);
         UnicodeString errorStr;
         errorStr.set(errorBuffers.copyErrorBuffer,
-            bfmeLenVGI((const unsigned short *)errorBuffers.copyErrorBuffer));
+            wcslen((const unsigned short *)errorBuffers.copyErrorBuffer));
         errorStr.trim();
         if (messageBoxWin)
         {

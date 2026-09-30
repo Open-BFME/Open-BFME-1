@@ -6,8 +6,8 @@
 
 extern "C" __declspec(dllimport) int __cdecl isdigit(int c);
 extern "C" __declspec(dllimport) int __cdecl _strnicmp(const char *a, const char *b, unsigned n);
-extern "C" __declspec(dllimport) int __cdecl bfmeAtoi1027(char *text);
-extern "C" __declspec(dllimport) int __cdecl bfmeScanDYG(const char *s, const char *fmt, ...);
+extern "C" __declspec(dllimport) int __cdecl atoi(char *text);
+extern "C" __declspec(dllimport) int __cdecl sscanf(const char *s, const char *fmt, ...);
 
 // Landed in BfmeConv1494.cpp; declared with the same spelling so the call binds to that body.
 class BfmeStrVMZ
@@ -68,7 +68,7 @@ void __cdecl Rva004605F0(void *nodeArg, void *textArg)
 			values.r = 1.0f;
 			values.g = 1.0f;
 			values.b = 1.0f;
-			bfmeScanDYG(p, "%d=%f,%f,%f", &values.index, &values.r,
+			sscanf(p, "%d=%f,%f,%f", &values.index, &values.r,
 				&values.g, &values.b);
 			node->setLight(values.index, values.r, values.g, values.b);
 		}
@@ -76,7 +76,7 @@ void __cdecl Rva004605F0(void *nodeArg, void *textArg)
 		{
 			AsciiString tmp;
 			bfmeGetParamVMZ(text, "_AnimMode", (BfmeStrVMZ *)&tmp);
-			int frame = bfmeAtoi1027(p + 7);
+			int frame = atoi(p + 7);
 			node->setFrame(frame, &tmp);
 		}
 

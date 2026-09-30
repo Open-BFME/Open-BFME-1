@@ -716,7 +716,7 @@ void Rva00506720Layout::update(void *userData) {
           nick = found->second.baseName;
         else
           nick = resp.nick.c_str();
-        if (!stricmp(resp.command.c_str(), "STATS")) {
+        if (!_strcmpi(resp.command.c_str(), "STATS")) {
           AsciiString data = resp.commandOptions.c_str();
           AsciiString idStr;
           data.nextToken(&idStr, " ");
@@ -743,7 +743,7 @@ void Rva00506720Layout::update(void *userData) {
         }
         Int slotNum = TheGameSpyGame->getSlotNum(nick);
         if ((slotNum >= 0) && (slotNum < MAX_SLOTS) &&
-            (!stricmp(resp.command.c_str(), "NAT"))) {
+            (!_strcmpi(resp.command.c_str(), "NAT"))) {
 
           sawImportantMessage = TRUE;
           if (TheNAT != NULL) {

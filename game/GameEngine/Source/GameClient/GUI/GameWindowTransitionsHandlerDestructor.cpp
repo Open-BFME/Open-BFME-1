@@ -43,7 +43,7 @@ private:
 	unsigned char m_storage[0x14];
 };
 
-extern "C" __declspec(dllimport) void __stdcall bfmeInitDXB( void *criticalSection );
+extern "C" __declspec(dllimport) void __stdcall DeleteCriticalSection( void *criticalSection );
 
 class GameWindowTransitionsHandler : public SubsystemInterface
 {
@@ -94,7 +94,7 @@ GameWindowTransitionsHandler::~GameWindowTransitionsHandler( void )
 
 	if (m_unknown4C)
 	{
-		bfmeInitDXB( &m_unknown34[0] );
+		DeleteCriticalSection( &m_unknown34[0] );
 		m_unknown4C = 0;
 	}
 

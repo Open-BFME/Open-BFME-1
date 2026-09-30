@@ -92,7 +92,7 @@ public:
 
 AsciiString UnicodeStringToQuotedPrintable(UnicodeString original);
 
-__declspec(dllimport) unsigned __cdecl bfmeLenVGI(const WideChar *text);
+extern "C" __declspec(dllimport) unsigned __cdecl wcslen(const WideChar *text);
 
 struct PreferenceNode
 {
@@ -152,7 +152,7 @@ void Gen0009FC90Owner::Rva0009FC90(void)
 		names.concat(it->m_value.str(), it->m_value.getLength());
 
 		const WideChar *comma = g_010806D8;
-		names.concat(comma, bfmeLenVGI(comma));
+		names.concat(comma, wcslen(comma));
 		it = it->m_next;
 	}
 

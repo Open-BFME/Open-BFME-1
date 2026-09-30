@@ -242,7 +242,7 @@ static Bool parseBitFlag( const char *flagString, UnsignedInt *bits,
 	for( i = 0, c = flagList; *c; i++, c++ )
 	{
 
-		if( !stricmp( *c, flagString ) )
+		if( !_strcmpi( *c, flagString ) )
 		{
 			*bits |= (1 << i);
 			return TRUE;
@@ -901,7 +901,7 @@ static Bool parseListboxData( char *token, WinInstanceData *instData,
 
 	// "SCROLLIFATEND" (optional)
 	c = strtok( NULL, seps );  // label
-	if ( !stricmp(c, "ScrollIfAtEnd") )
+	if ( !_strcmpi(c, "ScrollIfAtEnd") )
 	{
 		c = strtok( NULL, seps );  // value
 		scanBool( c, listData->scrollIfAtEnd );
