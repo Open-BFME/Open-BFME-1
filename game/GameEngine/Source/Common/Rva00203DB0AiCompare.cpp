@@ -54,6 +54,18 @@ public:
 	PartitionFilter *m_next;
 };
 
+extern "C" void *bfmeVftRva0014A580FunctorValueWrapper[];
+extern "C" void *bfmeVftRva0014A5E0FunctorValueWrapper[];
+extern "C" void *bfmeVftBfmeObjEQT[];
+extern "C" void *bfmeVftRva00149F20VptrZeroObject[];
+extern "C" void *bfmeVftHLodPrototypeClass[];
+extern const void *g_010956C4[];
+#pragma comment(linker, "/alternatename:_bfmeVftRva0014A580FunctorValueWrapper=??_7Rva0014A580FunctorValueWrapper@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva0014A5E0FunctorValueWrapper=??_7Rva0014A5E0FunctorValueWrapper@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftBfmeObjEQT=??_7BfmeObjEQT@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftRva00149F20VptrZeroObject=??_7Rva00149F20VptrZeroObject@@6B@")
+#pragma comment(linker, "/alternatename:_bfmeVftHLodPrototypeClass=??_7HLodPrototypeClass@@6B@")
+
 static __forceinline void setFilterVptr(void *filter, unsigned int value)
 {
 	*reinterpret_cast<unsigned int *>(filter) = value;
@@ -64,7 +76,7 @@ class __declspec(novtable) Rva00203DB0FilterA : public PartitionFilter
 public:
 	explicit Rva00203DB0FilterA(const Object *object) : PartitionFilter()
 	{
-		setFilterVptr(this, 0x01095734);
+		setFilterVptr(this, (unsigned int)bfmeVftRva0014A580FunctorValueWrapper);
 		m_object = object;
 	}
 	virtual ~Rva00203DB0FilterA() {}
@@ -76,7 +88,7 @@ class __declspec(novtable) Rva00203DB0FilterC : public PartitionFilter
 public:
 	explicit Rva00203DB0FilterC(const Object *object) : PartitionFilter()
 	{
-		setFilterVptr(this, 0x01095744);
+		setFilterVptr(this, (unsigned int)bfmeVftRva0014A5E0FunctorValueWrapper);
 		m_object = object;
 	}
 	virtual ~Rva00203DB0FilterC() {}
@@ -115,7 +127,7 @@ class Rva00203DB0ObjectFilter : public PartitionFilter
 public:
 	explicit Rva00203DB0ObjectFilter(void *owner) : PartitionFilter()
 	{
-		setFilterVptr(this, 0x010956B0);
+		setFilterVptr(this, (unsigned int)bfmeVftBfmeObjEQT);
 		m_owner = owner;
 	}
 	virtual ~Rva00203DB0ObjectFilter() {}
@@ -127,7 +139,7 @@ class __declspec(novtable) Rva00203DB0RelationFilter : public PartitionFilter
 public:
 	explicit Rva00203DB0RelationFilter(const Object *object) : PartitionFilter()
 	{
-		setFilterVptr(this, 0x010956C4);
+		setFilterVptr(this, (unsigned int)g_010956C4);
 		m_object = object;
 		m_flags = 2;
 		m_state = 0;
@@ -143,7 +155,7 @@ class __declspec(novtable) Rva00203DB0InsignificantFilter : public PartitionFilt
 public:
 	Rva00203DB0InsignificantFilter() : PartitionFilter()
 	{
-		setFilterVptr(this, 0x010956E4);
+		setFilterVptr(this, (unsigned int)bfmeVftRva00149F20VptrZeroObject);
 		m_allowNonBuildings = 1;
 		m_allowInsignificant = 0;
 	}
@@ -157,7 +169,7 @@ class __declspec(novtable) Rva00203DB0FogFilter : public PartitionFilter
 public:
 	explicit Rva00203DB0FogFilter(int player) : PartitionFilter()
 	{
-		setFilterVptr(this, 0x010956F4);
+		setFilterVptr(this, (unsigned int)bfmeVftHLodPrototypeClass);
 		m_player = player;
 	}
 	virtual ~Rva00203DB0FogFilter() {}

@@ -79,9 +79,12 @@ public:
     AsciiString rva0010e580MapPathCode(const AsciiString &path) const;
 };
 
-static __forceinline const char *rva0010e580String(unsigned int address)
+extern const char *PORTABLE_SAVE;
+extern const char *g_012ABFC8;
+
+static __forceinline const char *rva0010e580String(const char *const &value)
 {
-    return *(const char *const *)address;
+    return value;
 }
 
 const char *rva0010e580MapsCode = "M";
@@ -97,17 +100,17 @@ AsciiString Rva0010E580GameState::rva0010e580MapPathCode(
     AsciiString prefix;
 
     if (((const StringBase<char> *)&path)->startsWithNoCase(
-            rva0010e580String(0x012ABFC8),
-            rva0010e580String(0x012ABFC8)
-                ? (int)strlen(rva0010e580String(0x012ABFC8)) : 0))
+            rva0010e580String(g_012ABFC8),
+            rva0010e580String(g_012ABFC8)
+                ? (int)strlen(rva0010e580String(g_012ABFC8)) : 0))
     {
         ((StringBase<char> *)&prefix)->concat(
-            rva0010e580String(0x012ABFBC),
-            rva0010e580String(0x012ABFBC)
-                ? (int)strlen(rva0010e580String(0x012ABFBC)) : 0);
+            rva0010e580String(PORTABLE_SAVE),
+            rva0010e580String(PORTABLE_SAVE)
+                ? (int)strlen(rva0010e580String(PORTABLE_SAVE)) : 0);
 
         const int tailOffset =
-            (int)strlen(rva0010e580String(0x012ABFC8));
+            (int)strlen(rva0010e580String(g_012ABFC8));
         const char *tail = path.str() + tailOffset;
         const int tailLength = tail ? (int)strlen(tail) : 0;
         ((StringBase<char> *)&prefix)->concat(tail, tailLength);
