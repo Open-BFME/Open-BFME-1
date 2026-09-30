@@ -70,8 +70,8 @@ bool Load_Asset_Catalog(void *stream)
             _strlwr(name);
             if (!Render_Obj_Exists(name)) {
                 switch (type) {
-                case 0x544558: rva0090e690RegisterSJThing(name); break;
-                case 0x424f58: Register_Rva009723C0_Prototype(name, offset, length); break;
+                case 'TEX': rva0090e690RegisterSJThing(name); break;
+                case 'BOX': Register_Rva009723C0_Prototype(name, offset, length); break;
                 case 0x41474752: Register_Aggregate_Prototype(name, offset, length); break;
                 case 0x414e494d: Register_Animation_Prototype(name, offset, length); break;
                 case 0x48494552: Register_Hierarchy_Prototype(name, offset, length); break;

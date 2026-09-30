@@ -33,8 +33,8 @@ Bool Gen_006C6F60Terrain::query(float first, float second)
 	if (m_map == 0)
 		return false;
 
-	int x = m_map->m_origin - (int)(first * BFME_AT(float, 0x010C2E78));
-	int y = m_map->m_origin - (int)(second * BFME_AT(float, 0x010C2E78));
+	int x = m_map->m_origin - (int)(first * -0.1f);
+	int y = m_map->m_origin - (int)(second * -0.1f);
 	if (x < 0)
 		x = 0;
 	if (y < 0)

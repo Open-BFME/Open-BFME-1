@@ -36,9 +36,9 @@ Bool Gen006C6EC0Terrain::query(float first, float second)
 		return false;
 
 	int firstCoordinate = m_map->m_border -
-		(int)(first * BFME_AT(float, 0x010C2E78));
+		(int)(first * -0.1f);
 	int secondCoordinate = m_map->m_border -
-		(int)(second * BFME_AT(float, 0x010C2E78));
+		(int)(second * -0.1f);
 	if (firstCoordinate < 0)
 		firstCoordinate = 0;
 	if (secondCoordinate < 0)
